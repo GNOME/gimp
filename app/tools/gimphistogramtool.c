@@ -212,8 +212,8 @@ gimp_histogram_tool_initialize (GimpTool    *tool,
   /* calculate the histogram */
   pixel_region_init (&PR, gimp_drawable_data (drawable),
 		     0, 0,
-		     gimp_drawable_width (drawable),
-		     gimp_drawable_height (drawable),
+		     gimp_item_width  (GIMP_ITEM (drawable)),
+		     gimp_item_height (GIMP_ITEM (drawable)),
 		     FALSE);
   gimp_histogram_calculate (histogram_dialog->hist, &PR, NULL);
 

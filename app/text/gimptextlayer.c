@@ -288,26 +288,28 @@ gimp_text_layer_idle_render (GimpTextLayer *layer)
 static gboolean
 gimp_text_layer_render (GimpTextLayer *layer)
 {
-  GimpImage      *image;
   GimpDrawable   *drawable;
+  GimpItem       *item;
+  GimpImage      *image;
   GimpTextLayout *layout;
   gint            width;
   gint            height;
 
-  image    = gimp_item_get_image (GIMP_ITEM (layer));
   drawable = GIMP_DRAWABLE (layer);
+  item     = GIMP_ITEM (layer);
+  image    = gimp_item_get_image (item);
 
   layout = gimp_text_layout_new (layer->text, image);
 
   if (gimp_text_layout_get_size (layout, &width, &height))
     {
-      if (width  != gimp_drawable_width (drawable) ||
-          height != gimp_drawable_height (drawable))
+      if (width  != gimp_item_width (item) ||
+          height != gimp_item_height (item))
         {
           gimp_drawable_update (drawable,
                                 0, 0,
-                                gimp_drawable_width (drawable),
-                                gimp_drawable_height (drawable));
+                                gimp_item_width (item),
+                                gimp_item_height (item));
           
           GIMP_ITEM (drawable)->width  = width;
           GIMP_ITEM (drawable)->height = height;
@@ -338,17 +340,21 @@ static void
 gimp_text_layer_render_layout (GimpTextLayer  *layer,
 			       GimpTextLayout *layout)
 {
-  GimpDrawable *drawable = GIMP_DRAWABLE (layer);
+  GimpDrawable *drawable;
+  GimpItem     *item;
   TileManager  *mask;
   PixelRegion   textPR;
   PixelRegion   maskPR;
   gint          width;
   gint          height;
- 
+
+  drawable = GIMP_DRAWABLE (layer);
+  item     = GIMP_ITEM (layer);
+
   gimp_drawable_fill (drawable, &layer->text->color);
 
-  width  = gimp_drawable_width  (drawable);
-  height = gimp_drawable_height (drawable);
+  width  = gimp_item_width  (item);
+  height = gimp_item_height (item);
 
   mask = gimp_text_layout_render (layout, width, height);
 

@@ -406,11 +406,11 @@ gimp_display_coords_in_active_drawable (GimpDisplay      *gdisp,
   gimp_drawable_offsets (drawable, &x, &y);
 
   x = ROUND (coords->x) - x;
-  if (x < 0 || x > gimp_drawable_width (drawable))
+  if (x < 0 || x > gimp_item_width (GIMP_ITEM (drawable)))
     return FALSE;
 
   y = ROUND (coords->y) - y;
-  if (y < 0 || y > gimp_drawable_height (drawable))
+  if (y < 0 || y > gimp_item_height (GIMP_ITEM (drawable)))
     return FALSE;
 
   return TRUE;

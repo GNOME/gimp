@@ -192,9 +192,9 @@ gimp_image_crop (GimpImage *gimage,
 
 		  lx1 = CLAMP (off_x, 0, gimage->width);
 		  ly1 = CLAMP (off_y, 0, gimage->height);
-		  lx2 = CLAMP ((gimp_drawable_width (GIMP_DRAWABLE (layer)) + off_x),
+		  lx2 = CLAMP ((gimp_item_width (GIMP_ITEM (layer)) + off_x),
 			       0, gimage->width);
-		  ly2 = CLAMP ((gimp_drawable_height (GIMP_DRAWABLE (layer)) + off_y),
+		  ly2 = CLAMP ((gimp_item_height (GIMP_ITEM (layer)) + off_y),
 			       0, gimage->height);
 		  width = lx2 - lx1;
 		  height = ly2 - ly1;

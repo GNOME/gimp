@@ -328,6 +328,22 @@ gimp_item_rename (GimpItem    *item,
     item_class->rename (item, new_name, item_class->rename_desc);
 }
 
+gint
+gimp_item_width (const GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), -1);
+
+  return item->width;
+}
+
+gint
+gimp_item_height (const GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), -1);
+
+  return item->height;
+}
+
 void
 gimp_item_scale (GimpItem              *item,
                  gint                   new_width,

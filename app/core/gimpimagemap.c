@@ -435,8 +435,8 @@ gimp_image_map_get_color_at (GimpImageMap *image_map,
 
   g_return_val_if_fail (GIMP_IS_IMAGE_MAP (image_map), NULL);
 
-  if (x >= 0 && x < gimp_drawable_width (image_map->drawable) && 
-      y >= 0 && y < gimp_drawable_height (image_map->drawable))
+  if (x >= 0 && x < gimp_item_width  (GIMP_ITEM (image_map->drawable)) && 
+      y >= 0 && y < gimp_item_height (GIMP_ITEM (image_map->drawable)))
     {
       /* Check if done damage to original image */
       if (! image_map->undo_tiles)

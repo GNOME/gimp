@@ -588,6 +588,7 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
 {
   GimpImageBaseType  src_base_type;
   GimpDrawable      *new_drawable;
+  GimpItem          *new_item;
   GimpImageBaseType  new_base_type;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -596,9 +597,11 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
   src_base_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
   new_base_type = gimp_image_base_type (dest_image);
 
-  new_drawable = GIMP_DRAWABLE (gimp_item_duplicate (GIMP_ITEM (drawable),
-                                                     GIMP_TYPE_LAYER,
-                                                     TRUE));
+  new_item = gimp_item_duplicate (GIMP_ITEM (drawable),
+                                  GIMP_TYPE_LAYER,
+                                  TRUE);
+
+  new_drawable = GIMP_DRAWABLE (new_item);
 
   if (src_base_type != new_base_type)
     {
@@ -610,8 +613,8 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
       if (gimp_drawable_has_alpha (new_drawable))
         new_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_type);
 
-      new_tiles = tile_manager_new (gimp_drawable_width (new_drawable),
-                                    gimp_drawable_height (new_drawable),
+      new_tiles = tile_manager_new (gimp_item_width (new_item),
+                                    gimp_item_height (new_item),
                                     GIMP_IMAGE_TYPE_BYTES (new_type));
 
       switch (new_base_type)
@@ -635,13 +638,13 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
 
             pixel_region_init (&layerPR, new_drawable->tiles,
                                0, 0,
-                               gimp_drawable_width (new_drawable),
-                               gimp_drawable_height (new_drawable),
+                               gimp_item_width (new_item),
+                               gimp_item_height (new_item),
                                FALSE);
             pixel_region_init (&newPR, new_tiles,
                                0, 0,
-                               gimp_drawable_width (new_drawable),
-                               gimp_drawable_height (new_drawable),
+                               gimp_item_width (new_item),
+                               gimp_item_height (new_item),
                                TRUE);
 
             gimp_layer_transform_color (dest_image,
@@ -660,7 +663,7 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
       new_drawable->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (new_type);
     }
 
-  gimp_item_set_image (GIMP_ITEM (new_drawable), dest_image);
+  gimp_item_set_image (new_item, dest_image);
 
   return GIMP_LAYER (new_drawable);
 }
@@ -698,10 +701,10 @@ gimp_layer_add_mask (GimpLayer     *layer,
       return NULL;
     }
 
-  if ((gimp_drawable_width (GIMP_DRAWABLE (layer)) !=
-       gimp_drawable_width (GIMP_DRAWABLE (mask))) ||
-      (gimp_drawable_height (GIMP_DRAWABLE (layer)) !=
-       gimp_drawable_height (GIMP_DRAWABLE (mask))))
+  if ((gimp_item_width (GIMP_ITEM (layer)) !=
+       gimp_item_width (GIMP_ITEM (mask))) ||
+      (gimp_item_height (GIMP_ITEM (layer)) !=
+       gimp_item_height (GIMP_ITEM (mask))))
     {
       g_message(_("Cannot add layer mask of different "
                   "dimensions than specified layer."));

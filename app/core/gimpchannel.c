@@ -1269,8 +1269,8 @@ gimp_channel_feather (GimpChannel *mask,
 
   pixel_region_init (&srcPR, GIMP_DRAWABLE (mask)->tiles,
 		     0, 0,
-                     gimp_drawable_width (GIMP_DRAWABLE (mask)),
-                     gimp_drawable_height (GIMP_DRAWABLE (mask)),
+                     gimp_item_width  (GIMP_ITEM (mask)),
+                     gimp_item_height (GIMP_ITEM (mask)),
                      FALSE);
   gaussian_blur_region (&srcPR, radius_x, radius_y);
 
@@ -1291,8 +1291,9 @@ gimp_channel_sharpen (GimpChannel *mask,
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
 		     0, 0,
-		     GIMP_ITEM (mask)->width,
-		     GIMP_ITEM (mask)->height, TRUE);
+                     gimp_item_width  (GIMP_ITEM (mask)),
+                     gimp_item_height (GIMP_ITEM (mask)),
+		     TRUE);
   lut = threshold_lut_new (0.5, 1);
 
   pixel_regions_process_parallel ((p_func) gimp_lut_process_inline,

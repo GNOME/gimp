@@ -475,8 +475,8 @@ gimp_ink_tool_cursor_update (GimpTool        *tool,
 
       if (coords->x >= off_x &&
           coords->y >= off_y &&
-	  coords->x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
-	  coords->y < (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))))
+	  coords->x < (off_x + gimp_item_width  (GIMP_ITEM (layer))) &&
+	  coords->y < (off_y + gimp_item_height (GIMP_ITEM (layer))))
 	{
 	  /*  One more test--is there a selected region?
 	   *  if so, is cursor inside?
@@ -691,6 +691,8 @@ ink_init (GimpInkTool  *ink_tool,
 	  gdouble       x,
 	  gdouble       y)
 {
+  GimpItem *item = GIMP_ITEM (drawable);
+
   /*  free the block structures  */
   if (undo_tiles)
     tile_manager_destroy (undo_tiles);
@@ -698,13 +700,13 @@ ink_init (GimpInkTool  *ink_tool,
     tile_manager_destroy (canvas_tiles);
 
   /*  Allocate the undo structure  */
-  undo_tiles = tile_manager_new (gimp_drawable_width (drawable),
-				 gimp_drawable_height (drawable),
+  undo_tiles = tile_manager_new (gimp_item_width  (item),
+				 gimp_item_height (item),
 				 gimp_drawable_bytes (drawable));
 
   /*  Allocate the canvas blocks structure  */
-  canvas_tiles = tile_manager_new (gimp_drawable_width (drawable),
-				   gimp_drawable_height (drawable), 1);
+  canvas_tiles = tile_manager_new (gimp_item_width  (item),
+				   gimp_item_height (item), 1);
 
   /*  Get the initial undo extents  */
   ink_tool->x1 = ink_tool->x2 = x;
@@ -770,19 +772,20 @@ ink_set_paint_area (GimpInkTool  *ink_tool,
 		    GimpDrawable *drawable, 
 		    Blob         *blob)
 {
-  gint x, y, width, height;
-  gint x1, y1, x2, y2;
-  gint bytes;
+  GimpItem *item = GIMP_ITEM (drawable);
+  gint      x, y, width, height;
+  gint      x1, y1, x2, y2;
+  gint      bytes;
 
   blob_bounds (blob, &x, &y, &width, &height);
 
   bytes = gimp_drawable_has_alpha (drawable) ?
     gimp_drawable_bytes (drawable) : gimp_drawable_bytes (drawable) + 1;
 
-  x1 = CLAMP (x/SUBSAMPLE - 1,            0, gimp_drawable_width (drawable));
-  y1 = CLAMP (y/SUBSAMPLE - 1,            0, gimp_drawable_height (drawable));
-  x2 = CLAMP ((x + width)/SUBSAMPLE + 2,  0, gimp_drawable_width (drawable));
-  y2 = CLAMP ((y + height)/SUBSAMPLE + 2, 0, gimp_drawable_height (drawable));
+  x1 = CLAMP (x/SUBSAMPLE - 1,            0, gimp_item_width  (item));
+  y1 = CLAMP (y/SUBSAMPLE - 1,            0, gimp_item_height (item));
+  x2 = CLAMP ((x + width)/SUBSAMPLE + 2,  0, gimp_item_width  (item));
+  y2 = CLAMP ((y + height)/SUBSAMPLE + 2, 0, gimp_item_height (item));
 
   /*  configure the canvas buffer  */
   if ((x2 - x1) && (y2 - y1))

@@ -111,8 +111,6 @@ TileManager   * gimp_drawable_data               (const GimpDrawable *drawable);
 TileManager   * gimp_drawable_shadow             (GimpDrawable       *drawable);
 gint            gimp_drawable_bytes              (const GimpDrawable *drawable);
 gint            gimp_drawable_bytes_with_alpha   (const GimpDrawable *drawable);
-gint            gimp_drawable_width              (const GimpDrawable *drawable);
-gint            gimp_drawable_height             (const GimpDrawable *drawable);
 
 gboolean	gimp_drawable_get_visible        (const GimpDrawable *drawable);
 void            gimp_drawable_set_visible        (GimpDrawable       *drawable,

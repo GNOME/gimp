@@ -109,9 +109,9 @@ gimp_image_mask_boundary (GimpImage  *gimage,
       gimp_drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
       x1 = CLAMP (off_x, 0, gimage->width);
       y1 = CLAMP (off_y, 0, gimage->height);
-      x2 = CLAMP (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer)), 0,
+      x2 = CLAMP (off_x + gimp_item_width (GIMP_ITEM (layer)), 0,
 		  gimage->width);
-      y2 = CLAMP (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer)), 0,
+      y2 = CLAMP (off_y + gimp_item_height (GIMP_ITEM (layer)), 0,
 		  gimage->height);
 
       return gimp_channel_boundary (gimp_image_get_mask (gimage),

@@ -353,8 +353,8 @@ gimp_transform_tool_button_press (GimpTool        *tool,
 
       if (coords->x >= off_x &&
           coords->y >= off_y &&
-          coords->x < (off_x + gimp_drawable_width (drawable))  &&
-          coords->y < (off_y + gimp_drawable_height (drawable)) &&
+          coords->x < (off_x + gimp_item_width  (GIMP_ITEM (drawable))) &&
+          coords->y < (off_y + gimp_item_height (GIMP_ITEM (drawable))) &&
 
           (gimp_image_mask_is_empty (gdisp->gimage) ||
            gimp_image_mask_value (gdisp->gimage, coords->x, coords->y)))

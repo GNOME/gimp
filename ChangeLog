@@ -1,5 +1,60 @@
 2003-05-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable.[ch]: removed gimp_drawable_width,height().
+
+	* app/core/gimpitem.[ch]: added gimp_item_width,height().
+
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpdrawable-offset.c
+	* app/core/gimpdrawable-preview.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpimage-contiguous-region.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-preview.c
+	* app/core/gimpimage-projection.c
+	* app/core/gimpimage-undo-push.c
+	* app/core/gimpimage.c
+	* app/core/gimpimagemap.c
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimplayer.c
+	* app/core/gimplayermask.c
+	* app/core/gimpscanconvert.c
+	* app/display/gimpdisplay.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/channels-commands.c
+	* app/gui/layers-commands.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimppaintcore.c
+	* app/paint/gimpsmudge.c
+	* app/text/gimptextlayer.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimptransformtool.c
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimptoolbox.c
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/selection.pdb: changed accordingly.
+
+	* app/pdb/drawable_cmds.c
+	* app/pdb/selection_cmds.c: regenerated.
+
+2003-05-08  Michael Natterer  <mitch@gimp.org>
+
 	More transform virtualization preparation:
 
 	* app/core/gimpdrawable.[ch]: removed "width", "height", "offset_x"

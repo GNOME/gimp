@@ -89,20 +89,23 @@ gimp_image_undo_push_image (GimpImage    *gimage,
                             gint          y2)
 {
   GimpUndo *new;
+  GimpItem *item;
   gsize     size;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  x1 = CLAMP (x1, 0, gimp_drawable_width (drawable));
-  y1 = CLAMP (y1, 0, gimp_drawable_height (drawable));
-  x2 = CLAMP (x2, 0, gimp_drawable_width (drawable));
-  y2 = CLAMP (y2, 0, gimp_drawable_height (drawable));
+  item = GIMP_ITEM (drawable);
+
+  x1 = CLAMP (x1, 0, gimp_item_width  (item));
+  y1 = CLAMP (y1, 0, gimp_item_height (item));
+  x2 = CLAMP (x2, 0, gimp_item_width  (item));
+  y2 = CLAMP (y2, 0, gimp_item_height (item));
 
   size = sizeof (ImageUndo) + ((x2 - x1) * (y2 - y1) *
                                gimp_drawable_bytes (drawable));
 
-  if ((new = gimp_image_undo_push_item (gimage, GIMP_ITEM (drawable),
+  if ((new = gimp_image_undo_push_item (gimage, item,
                                         size, sizeof (ImageUndo),
                                         GIMP_UNDO_IMAGE, undo_desc,
                                         TRUE,
@@ -153,6 +156,7 @@ gimp_image_undo_push_image_mod (GimpImage    *gimage,
                                 gboolean      sparse)
 {
   GimpUndo *new;
+  GimpItem *item;
   gsize     size;
   gint      dwidth, dheight;
 
@@ -160,8 +164,10 @@ gimp_image_undo_push_image_mod (GimpImage    *gimage,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (tiles != NULL, FALSE);
 
-  dwidth  = gimp_drawable_width (drawable);
-  dheight = gimp_drawable_height (drawable);
+  item = GIMP_ITEM (drawable);
+
+  dwidth  = gimp_item_width  (item);
+  dheight = gimp_item_height (item);
 
   x1 = CLAMP (x1, 0, dwidth);
   y1 = CLAMP (y1, 0, dheight);
@@ -170,7 +176,7 @@ gimp_image_undo_push_image_mod (GimpImage    *gimage,
 
   size = sizeof (ImageUndo) + tile_manager_get_memsize (tiles);
 
-  if ((new = gimp_image_undo_push_item (gimage, GIMP_ITEM (drawable),
+  if ((new = gimp_image_undo_push_item (gimage, item,
                                         size, sizeof (ImageUndo),
                                         GIMP_UNDO_IMAGE_MOD, undo_desc,
                                         TRUE,

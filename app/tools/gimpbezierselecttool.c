@@ -2535,8 +2535,8 @@ bezier_convert (GimpBezierSelectTool *bezier_sel,
   pixel_region_init (&maskPR,
 		     gimp_drawable_data (GIMP_DRAWABLE (bezier_sel->mask)), 
 		     0, 0,
-		     gimp_drawable_width (GIMP_DRAWABLE (bezier_sel->mask)),
-		     gimp_drawable_height (GIMP_DRAWABLE (bezier_sel->mask)),
+		     gimp_item_width (GIMP_ITEM (bezier_sel->mask)),
+		     gimp_item_height (GIMP_ITEM (bezier_sel->mask)),
 		     TRUE);
 
   for (i = 0; i < height; i++)
@@ -2588,7 +2588,7 @@ bezier_convert (GimpBezierSelectTool *bezier_sel,
 	    }
 
 	  pixel_region_set_row (&maskPR, 0, (i / SUPERSAMPLE), 
-				gimp_drawable_width (GIMP_DRAWABLE (bezier_sel->mask)), buf);
+				gimp_item_width (GIMP_ITEM (bezier_sel->mask)), buf);
 	}
 
       g_slist_free (bezier_sel->scanlines[i]);

@@ -263,8 +263,8 @@ gimp_bucket_fill_tool_cursor_update (GimpTool        *tool,
 
       if (coords->x >= off_x &&
           coords->y >= off_y &&
-	  coords->x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
-	  coords->y < (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))))
+	  coords->x < (off_x + gimp_item_width (GIMP_ITEM (layer))) &&
+	  coords->y < (off_y + gimp_item_height (GIMP_ITEM (layer))))
 	{
 	  /*  One more test--is there a selected region?
 	   *  if so, is cursor inside?

@@ -335,13 +335,13 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
       temp_buf_data_clear (area);
 
       x1 = CLAMP (area->x + offset_x,
-                  0, gimp_drawable_width (clone->src_drawable));
+                  0, gimp_item_width  (GIMP_ITEM (clone->src_drawable)));
       y1 = CLAMP (area->y + offset_y,
-                  0, gimp_drawable_height (clone->src_drawable));
+                  0, gimp_item_height (GIMP_ITEM (clone->src_drawable)));
       x2 = CLAMP (area->x + offset_x + area->width,
-                  0, gimp_drawable_width (clone->src_drawable));
+                  0, gimp_item_width  (GIMP_ITEM (clone->src_drawable)));
       y2 = CLAMP (area->y + offset_y + area->height,
-                  0, gimp_drawable_height (clone->src_drawable));
+                  0, gimp_item_height (GIMP_ITEM (clone->src_drawable)));
 
       if (!(x2 - x1) || !(y2 - y1))
         return;

@@ -245,8 +245,8 @@ gimp_image_merge_layers (GimpImage     *gimage,
 	    {
 	      x1 = off_x;
 	      y1 = off_y;
-	      x2 = off_x + gimp_drawable_width (GIMP_DRAWABLE (layer));
-	      y2 = off_y + gimp_drawable_height (GIMP_DRAWABLE (layer));
+	      x2 = off_x + gimp_item_width (GIMP_ITEM (layer));
+	      y2 = off_y + gimp_item_height (GIMP_ITEM (layer));
 	    }
 	  else
 	    {
@@ -254,10 +254,10 @@ gimp_image_merge_layers (GimpImage     *gimage,
 		x1 = off_x;
 	      if (off_y < y1)
 		y1 = off_y;
-	      if ((off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) > x2)
-		x2 = (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer)));
-	      if ((off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))) > y2)
-		y2 = (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer)));
+	      if ((off_x + gimp_item_width (GIMP_ITEM (layer))) > x2)
+		x2 = (off_x + gimp_item_width (GIMP_ITEM (layer)));
+	      if ((off_y + gimp_item_height (GIMP_ITEM (layer))) > y2)
+		y2 = (off_y + gimp_item_height (GIMP_ITEM (layer)));
 	    }
 	  if (merge_type == GIMP_CLIP_TO_IMAGE)
 	    {
@@ -273,8 +273,8 @@ gimp_image_merge_layers (GimpImage     *gimage,
 	    {
 	      x1 = off_x;
 	      y1 = off_y;
-	      x2 = off_x + gimp_drawable_width (GIMP_DRAWABLE (layer));
-	      y2 = off_y + gimp_drawable_height (GIMP_DRAWABLE (layer));
+	      x2 = off_x + gimp_item_width (GIMP_ITEM (layer));
+	      y2 = off_y + gimp_item_height (GIMP_ITEM (layer));
 	    }
 	  break;
 
@@ -412,8 +412,8 @@ gimp_image_merge_layers (GimpImage     *gimage,
       gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
       x3 = CLAMP (off_x, x1, x2);
       y3 = CLAMP (off_y, y1, y2);
-      x4 = CLAMP (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer)), x1, x2);
-      y4 = CLAMP (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer)), y1, y2);
+      x4 = CLAMP (off_x + gimp_item_width (GIMP_ITEM (layer)), x1, x2);
+      y4 = CLAMP (off_y + gimp_item_height (GIMP_ITEM (layer)), y1, y2);
 
       /* configure the pixel regions  */
       pixel_region_init (&src1PR, 
@@ -494,8 +494,8 @@ gimp_image_merge_layers (GimpImage     *gimage,
 
   gimp_drawable_update (GIMP_DRAWABLE (merge_layer), 
 			0, 0, 
-			gimp_drawable_width (GIMP_DRAWABLE (merge_layer)), 
-			gimp_drawable_height (GIMP_DRAWABLE (merge_layer)));
+			gimp_item_width  (GIMP_ITEM (merge_layer)), 
+			gimp_item_height (GIMP_ITEM (merge_layer)));
 
   return merge_layer;
 }

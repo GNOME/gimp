@@ -94,6 +94,9 @@ GimpItem      * gimp_item_duplicate       (GimpItem       *item,
 void            gimp_item_rename          (GimpItem       *item,
                                            const gchar    *new_name);
 
+gint            gimp_item_width           (const GimpItem *item);
+gint            gimp_item_height          (const GimpItem *item);
+
 void            gimp_item_scale           (GimpItem       *item,
                                            gint            new_width,
                                            gint            new_height,

@@ -905,9 +905,9 @@ selection_load_invoker (Gimp     *gimp,
   if (success)
     {
       gimage = gimp_item_get_image (GIMP_ITEM (channel));
-       
-      if (gimp_drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
-	  gimp_drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)
+    
+      if (gimp_item_width  (GIMP_ITEM (channel)) == gimage->width &&
+	  gimp_item_height (GIMP_ITEM (channel)) == gimage->height)
 	gimp_image_mask_load (gimage, channel);
       else
 	success = FALSE;
@@ -1020,9 +1020,9 @@ selection_combine_invoker (Gimp     *gimp,
   if (success)
     {
       gimage = gimp_item_get_image (GIMP_ITEM (channel));
-       
-      if (gimp_drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
-	  gimp_drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)
+    
+      if (gimp_item_width  (GIMP_ITEM (channel)) == gimage->width &&
+	  gimp_item_height (GIMP_ITEM (channel)) == gimage->height)
 	{
 	  new_channel = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (gimage)),
 							   G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),

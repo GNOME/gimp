@@ -394,10 +394,8 @@ gimp_image_construct_layers (GimpImage *gimage,
 
       x1 = CLAMP (off_x, x, x + w);
       y1 = CLAMP (off_y, y, y + h);
-      x2 = CLAMP (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer)), 
-                  x, x + w);
-      y2 = CLAMP (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer)), 
-                  y, y + h);
+      x2 = CLAMP (off_x + gimp_item_width  (GIMP_ITEM (layer)), x, x + w);
+      y2 = CLAMP (off_y + gimp_item_height (GIMP_ITEM (layer)), y, y + h);
 
       /* configure the pixel regions  */
       pixel_region_init (&src1PR, gimp_image_projection (gimage), 
@@ -545,8 +543,8 @@ gimp_image_initialize_projection (GimpImage *gimage,
 	  ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)) &&
 	  (off_x <= x) &&
 	  (off_y <= y) &&
-	  (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer)) >= x + w) &&
-	  (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer)) >= y + h))
+	  (off_x + gimp_item_width (GIMP_ITEM (layer)) >= x + w) &&
+	  (off_y + gimp_item_height (GIMP_ITEM (layer)) >= y + h))
 	{
 	  coverage = 1;
 	  break;
@@ -591,9 +589,9 @@ gimp_image_construct (GimpImage *gimage,
                                                   /* It's !flat.           */
       (gimp_drawable_get_visible (GIMP_DRAWABLE (gimage->layers->data))) &&
                                                   /* It's visible.         */
-      (gimp_drawable_width (GIMP_DRAWABLE (gimage->layers->data)) ==
+      (gimp_item_width  (GIMP_ITEM (gimage->layers->data)) ==
        gimage->width) &&
-      (gimp_drawable_height (GIMP_DRAWABLE (gimage->layers->data)) ==
+      (gimp_item_height (GIMP_ITEM (gimage->layers->data)) ==
        gimage->height) &&                         /* Covers all.           */
       (!gimp_drawable_is_indexed (GIMP_DRAWABLE (gimage->layers->data))) &&
                                                   /* Not indexed.          */

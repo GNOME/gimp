@@ -210,8 +210,8 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
 
       if (coords->x >= off_x &&
           coords->y >= off_y &&
-	  coords->x < (off_x + gimp_drawable_width (drawable)) &&
-	  coords->y < (off_y + gimp_drawable_height (drawable)))
+	  coords->x < (off_x + gimp_item_width  (GIMP_ITEM (drawable))) &&
+	  coords->y < (off_y + gimp_item_height (GIMP_ITEM (drawable))))
 	{
 	  /*  Is there a selected region? If so, is cursor inside? */
 	  if (gimp_image_mask_is_empty (gdisp->gimage) ||

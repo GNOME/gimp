@@ -42,7 +42,10 @@ sub pixel_arg () {{
 }}
 
 sub drawable_prop_proc {
-    my ($return, $name, $type, $func, $desc) = @_;
+    my ($return, $name, $type, $func, $desc, $core_type, $core_var) = @_;
+
+    $core_type = 'drawable' unless $core_type;
+    $core_var  = 'drawable' unless $core_var;
 
     $blurb = "Returns $return.";
 
@@ -52,7 +55,7 @@ sub drawable_prop_proc {
 
     @outargs = (
 	{ name => $name, type => $type, desc => $desc, 
-	  alias => "gimp_drawable_$func (drawable)", no_declare => 1 }
+	  alias => "gimp_${core_type}_$func (${core_var})", no_declare => 1 }
     );
 }
 
@@ -292,14 +295,16 @@ sub drawable_width {
     $help = "This procedure returns the specified drawable's width in pixels.";
 
     &drawable_prop_proc('the width of the drawable', 'width', 'int32',
-			'width', 'Width of drawable');
+			'width', 'Width of drawable',
+                        'item', 'GIMP_ITEM (drawable)');
 }
 
 sub drawable_height {
     $help = "This procedure returns the specified drawable's height in pixels.";
 
     &drawable_prop_proc('the height of the drawable', 'height', 'int32',
-			'height', 'Height of drawable');
+			'height', 'Height of drawable',
+                        'item', 'GIMP_ITEM (drawable)');
 }
 
 sub drawable_offsets {
@@ -356,7 +361,8 @@ HELP
 	vars => [ 'guint8 *p', 'gint b', 'Tile *tile' ],
 	code => <<'CODE'
 {
-  if (x < gimp_drawable_width (drawable) && y < gimp_drawable_height (drawable))
+  if (x < gimp_item_width  (GIMP_ITEM (drawable)) &&
+      y < gimp_item_height (GIMP_ITEM (drawable)))
     {  
       num_channels = gimp_drawable_bytes (drawable);
       pixel = g_new (guint8, num_channels);
@@ -399,8 +405,8 @@ HELP
 	vars => [ 'guint8 *p', 'gint b', 'Tile *tile' ],
 	code => <<'CODE'
 {
-  if (x < gimp_drawable_width (drawable) &&
-      y < gimp_drawable_height (drawable) &&
+  if (x < gimp_item_width  (GIMP_ITEM (drawable)) &&
+      y < gimp_item_height (GIMP_ITEM (drawable)) &&
       num_channels == gimp_drawable_bytes (drawable))
     {
       tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
@@ -492,8 +498,8 @@ HELP
   if (req_width <= 128 && req_height <= 128)
     {	
       /* Adjust the width/height ratio */
-      dwidth  = gimp_drawable_width (GIMP_DRAWABLE (drawable));
-      dheight = gimp_drawable_height (GIMP_DRAWABLE (drawable));
+      dwidth  = gimp_item_width  (GIMP_ITEM (drawable));
+      dheight = gimp_item_height (GIMP_ITEM (drawable));
 
       if (dwidth > dheight)
 	req_height = MAX (1, (req_width * dheight) / dwidth);

@@ -333,9 +333,9 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
       fillcolor = gimp_drawable_get_color_at
 	(drawable,
 	 CLAMP ((gint) paint_core->cur_coords.x,
-                0, gimp_drawable_width (drawable) - 1),
+                0, gimp_item_width  (GIMP_ITEM (drawable)) - 1),
 	 CLAMP ((gint) paint_core->cur_coords.y,
-                0, gimp_drawable_height (drawable) - 1));
+                0, gimp_item_height (GIMP_ITEM (drawable)) - 1));
 
       marginx *= (marginx < 0) ? -1 : 0;
       marginy *= (marginy < 0) ? -1 : 0;

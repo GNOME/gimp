@@ -233,11 +233,12 @@ gimp_smudge_start (GimpPaintCore *paint_core,
      that may enter into the blend */
 
   if (was_clipped)
-    do_fill = gimp_drawable_get_color_at (drawable,
-                 CLAMP ((gint) paint_core->cur_coords.x,
-                        0, gimp_drawable_width (drawable) - 1),
-                 CLAMP ((gint) paint_core->cur_coords.y,
-                        0, gimp_drawable_height (drawable) - 1));
+    do_fill = gimp_drawable_get_color_at
+      (drawable,
+       CLAMP ((gint) paint_core->cur_coords.x,
+              0, gimp_item_width  (GIMP_ITEM (drawable)) - 1),
+       CLAMP ((gint) paint_core->cur_coords.y,
+              0, gimp_item_height (GIMP_ITEM (drawable)) - 1));
 
   gimp_smudge_allocate_accum_buffer (smudge,
                                      w, h, 

@@ -481,8 +481,8 @@ gimp_crop_tool_motion (GimpTool        *tool,
     {
       layer = gimp_image_get_active_layer (gdisp->gimage);
       gimp_drawable_offsets (GIMP_DRAWABLE (layer), &min_x, &min_y);
-      max_x = gimp_drawable_width (GIMP_DRAWABLE (layer)) + min_x;
-      max_y = gimp_drawable_height (GIMP_DRAWABLE (layer)) + min_y;
+      max_x = gimp_item_width  (GIMP_ITEM (layer)) + min_x;
+      max_y = gimp_item_height (GIMP_ITEM (layer)) + min_y;
     }
   else
     {
@@ -642,8 +642,8 @@ gimp_crop_tool_arrow_key (GimpTool    *tool,
 	{
 	  layer = gimp_image_get_active_layer (gdisp->gimage);
 	  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &min_x, &min_y);
-	  max_x = gimp_drawable_width (GIMP_DRAWABLE (layer)) + min_x;
-	  max_y = gimp_drawable_height (GIMP_DRAWABLE (layer)) + min_y;
+	  max_x = gimp_item_width (GIMP_ITEM (layer)) + min_x;
+	  max_y = gimp_item_height (GIMP_ITEM (layer)) + min_y;
 	}
       else
 	{
@@ -1172,8 +1172,8 @@ crop_selection_callback (GtkWidget    *widget,
           layer = gimp_image_get_active_layer (gdisp->gimage);
           gimp_drawable_offsets (GIMP_DRAWABLE (layer),
                                  &crop->x1, &crop->y1);
-          crop->x2 = gimp_drawable_width  (GIMP_DRAWABLE (layer)) + crop->x1;
-          crop->y2 = gimp_drawable_height (GIMP_DRAWABLE (layer)) + crop->y1;
+          crop->x2 = gimp_item_width  (GIMP_ITEM (layer)) + crop->x1;
+          crop->y2 = gimp_item_height (GIMP_ITEM (layer)) + crop->y1;
         }
       else
         {
@@ -1214,8 +1214,8 @@ crop_automatic_callback (GtkWidget    *widget,
       if (! active_drawable)
         return;
 
-      width  = gimp_drawable_width  (GIMP_DRAWABLE (active_drawable)); 
-      height = gimp_drawable_height (GIMP_DRAWABLE (active_drawable));
+      width  = gimp_item_width  (GIMP_ITEM (active_drawable)); 
+      height = gimp_item_height (GIMP_ITEM (active_drawable));
       gimp_drawable_offsets (GIMP_DRAWABLE (active_drawable),
                              &offset_x, &offset_y);
     }

@@ -838,6 +838,7 @@ toolbox_drop_drawable (GtkWidget    *widget,
 		       gpointer      data)
 {
   GimpDrawable      *drawable;
+  GimpItem          *item;
   GimpImage         *gimage;
   GimpImage         *new_gimage;
   GimpLayer         *new_layer;
@@ -847,10 +848,11 @@ toolbox_drop_drawable (GtkWidget    *widget,
   GimpImageBaseType  type;
 
   drawable = GIMP_DRAWABLE (viewable);
+  item     = GIMP_ITEM (viewable);
+  gimage   = gimp_item_get_image (item);
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-  width  = gimp_drawable_width (drawable);
-  height = gimp_drawable_height (drawable);
+  width  = gimp_item_width  (item);
+  height = gimp_item_height (item);
   bytes  = gimp_drawable_bytes (drawable);
 
   type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));

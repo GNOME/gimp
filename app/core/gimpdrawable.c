@@ -581,6 +581,7 @@ void
 gimp_drawable_fill (GimpDrawable  *drawable,
 		    const GimpRGB *color)
 {
+  GimpItem    *item;
   GimpImage   *gimage;
   PixelRegion  destPR;
   guchar       c[MAX_CHANNELS];
@@ -588,7 +589,8 @@ gimp_drawable_fill (GimpDrawable  *drawable,
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  item   = GIMP_ITEM (drawable);
+  gimage = gimp_item_get_image (item);
 
   g_return_if_fail (gimage != NULL);
 
@@ -638,15 +640,15 @@ gimp_drawable_fill (GimpDrawable  *drawable,
   pixel_region_init (&destPR,
 		     gimp_drawable_data (drawable),
 		     0, 0,
-		     gimp_drawable_width  (drawable),
-		     gimp_drawable_height (drawable),
+		     gimp_item_width  (item),
+		     gimp_item_height (item),
 		     TRUE);
   color_region (&destPR, c);
 
   gimp_drawable_update (drawable,
 			0, 0,
-			gimp_drawable_width  (drawable),
-			gimp_drawable_height (drawable));
+			gimp_item_width  (item),
+			gimp_item_height (item));
 }
 
 void
@@ -696,28 +698,32 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
 			   gint         *x2,
 			   gint         *y2)
 {
+  GimpItem  *item;
   GimpImage *gimage;
-  gint       off_x, off_y;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  item   = GIMP_ITEM (drawable);
+  gimage = gimp_item_get_image (item);
 
   g_return_val_if_fail (gimage != NULL, FALSE);
 
   if (gimp_image_mask_bounds (gimage, x1, y1, x2, y2))
     {
+      gint off_x, off_y;
+
       gimp_drawable_offsets (drawable, &off_x, &off_y);
-      *x1 = CLAMP (*x1 - off_x, 0, gimp_drawable_width  (drawable));
-      *y1 = CLAMP (*y1 - off_y, 0, gimp_drawable_height (drawable));
-      *x2 = CLAMP (*x2 - off_x, 0, gimp_drawable_width  (drawable));
-      *y2 = CLAMP (*y2 - off_y, 0, gimp_drawable_height (drawable));
+
+      *x1 = CLAMP (*x1 - off_x, 0, gimp_item_width  (item));
+      *y1 = CLAMP (*y1 - off_y, 0, gimp_item_height (item));
+      *x2 = CLAMP (*x2 - off_x, 0, gimp_item_width  (item));
+      *y2 = CLAMP (*y2 - off_y, 0, gimp_item_height (item));
       return TRUE;
     }
   else
     {
-      *x2 = gimp_drawable_width  (drawable);
-      *y2 = gimp_drawable_height (drawable);
+      *x2 = gimp_item_width  (item);
+      *y2 = gimp_item_height (item);
       return FALSE;
     }
 }
@@ -813,22 +819,6 @@ gimp_drawable_bytes_with_alpha (const GimpDrawable *drawable)
   type = GIMP_IMAGE_TYPE_WITH_ALPHA (gimp_drawable_type (drawable));
 
   return GIMP_IMAGE_TYPE_BYTES (type);
-}
-
-gint
-gimp_drawable_width (const GimpDrawable *drawable)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
-
-  return GIMP_ITEM (drawable)->width;
-}
-
-gint
-gimp_drawable_height (const GimpDrawable *drawable)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
-
-  return GIMP_ITEM (drawable)->height;
 }
 
 gboolean

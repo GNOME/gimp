@@ -176,9 +176,11 @@ gimp_scan_convert_to_channel (GimpScanConvert *sc,
   svp2 = art_svp_uncross (svp);
   svp3 = art_svp_rewind_uncrossed (svp2, ART_WIND_RULE_ODDEVEN);
 
-  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 0, 0, 
-		     gimp_drawable_width (GIMP_DRAWABLE (mask)), 
-		     gimp_drawable_height (GIMP_DRAWABLE (mask)), TRUE);
+  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
+                     0, 0, 
+		     gimp_item_width (GIMP_ITEM (mask)), 
+		     gimp_item_height (GIMP_ITEM (mask)),
+                     TRUE);
 
   g_return_val_if_fail (maskPR.bytes == 1, NULL);
 

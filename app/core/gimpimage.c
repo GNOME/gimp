@@ -1635,6 +1635,7 @@ gimp_image_apply_image (GimpImage	     *gimage,
 			gint                  x,
 			gint                  y)
 {
+  GimpItem        *item;
   GimpChannel     *mask;
   gint             x1, y1, x2, y2;
   gint             offset_x, offset_y;
@@ -1643,6 +1644,9 @@ gimp_image_apply_image (GimpImage	     *gimage,
   gboolean         active_components[MAX_CHANNELS];
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  item = GIMP_ITEM (drawable);
 
   /*  get the selection mask if one exists  */
   mask = (gimp_image_mask_is_empty (gimage) ? 
@@ -1666,10 +1670,10 @@ gimp_image_apply_image (GimpImage	     *gimage,
   gimp_drawable_offsets (drawable, &offset_x, &offset_y);
 
   /*  make sure the image application coordinates are within gimage bounds  */
-  x1 = CLAMP (x, 0, gimp_drawable_width  (drawable));
-  y1 = CLAMP (y, 0, gimp_drawable_height (drawable));
-  x2 = CLAMP (x + src2PR->w, 0, gimp_drawable_width  (drawable));
-  y2 = CLAMP (y + src2PR->h, 0, gimp_drawable_height (drawable));
+  x1 = CLAMP (x, 0, gimp_item_width  (item));
+  y1 = CLAMP (y, 0, gimp_item_height (item));
+  x2 = CLAMP (x + src2PR->w, 0, gimp_item_width  (item));
+  y2 = CLAMP (y + src2PR->h, 0, gimp_item_height (item));
 
   if (mask)
     {
@@ -1677,10 +1681,10 @@ gimp_image_apply_image (GimpImage	     *gimage,
        *  we need to add the layer offset to transform coords
        *  into the mask coordinate system
        */
-      x1 = CLAMP (x1, -offset_x, gimp_drawable_width  (GIMP_DRAWABLE (mask))-offset_x);
-      y1 = CLAMP (y1, -offset_y, gimp_drawable_height (GIMP_DRAWABLE (mask))-offset_y);
-      x2 = CLAMP (x2, -offset_x, gimp_drawable_width  (GIMP_DRAWABLE (mask))-offset_x);
-      y2 = CLAMP (y2, -offset_y, gimp_drawable_height (GIMP_DRAWABLE (mask))-offset_y);
+      x1 = CLAMP (x1, -offset_x, gimp_item_width  (GIMP_ITEM (mask))-offset_x);
+      y1 = CLAMP (y1, -offset_y, gimp_item_height (GIMP_ITEM (mask))-offset_y);
+      x2 = CLAMP (x2, -offset_x, gimp_item_width  (GIMP_ITEM (mask))-offset_x);
+      y2 = CLAMP (y2, -offset_y, gimp_item_height (GIMP_ITEM (mask))-offset_y);
     }
 
   /*  If the calling procedure specified an undo step...  */
@@ -1752,6 +1756,7 @@ gimp_image_replace_image (GimpImage    *gimage,
 			  gint          x, 
 			  gint          y)
 {
+  GimpItem        *item;
   GimpChannel     *mask;
   gint             x1, y1, x2, y2;
   gint             offset_x, offset_y;
@@ -1762,6 +1767,9 @@ gimp_image_replace_image (GimpImage    *gimage,
   gboolean         active_components[MAX_CHANNELS];
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  item = GIMP_ITEM (drawable);
 
   /*  get the selection mask if one exists  */
   mask = (gimp_image_mask_is_empty (gimage)) ? NULL : gimp_image_get_mask (gimage);
@@ -1784,10 +1792,10 @@ gimp_image_replace_image (GimpImage    *gimage,
   gimp_drawable_offsets (drawable, &offset_x, &offset_y);
 
   /*  make sure the image application coordinates are within gimage bounds  */
-  x1 = CLAMP (x, 0, gimp_drawable_width (drawable));
-  y1 = CLAMP (y, 0, gimp_drawable_height (drawable));
-  x2 = CLAMP (x + src2PR->w, 0, gimp_drawable_width (drawable));
-  y2 = CLAMP (y + src2PR->h, 0, gimp_drawable_height (drawable));
+  x1 = CLAMP (x, 0, gimp_item_width (item));
+  y1 = CLAMP (y, 0, gimp_item_height (item));
+  x2 = CLAMP (x + src2PR->w, 0, gimp_item_width (item));
+  y2 = CLAMP (y + src2PR->h, 0, gimp_item_height (item));
 
   if (mask)
     {
@@ -1795,10 +1803,10 @@ gimp_image_replace_image (GimpImage    *gimage,
        *  we need to add the layer offset to transform coords
        *  into the mask coordinate system
        */
-      x1 = CLAMP (x1, -offset_x, gimp_drawable_width (GIMP_DRAWABLE (mask))-offset_x);
-      y1 = CLAMP (y1, -offset_y, gimp_drawable_height(GIMP_DRAWABLE (mask))-offset_y);
-      x2 = CLAMP (x2, -offset_x, gimp_drawable_width (GIMP_DRAWABLE (mask))-offset_x);
-      y2 = CLAMP (y2, -offset_y, gimp_drawable_height(GIMP_DRAWABLE (mask))-offset_y);
+      x1 = CLAMP (x1, -offset_x, gimp_item_width (GIMP_ITEM (mask))-offset_x);
+      y1 = CLAMP (y1, -offset_y, gimp_item_height(GIMP_ITEM (mask))-offset_y);
+      x2 = CLAMP (x2, -offset_x, gimp_item_width (GIMP_ITEM (mask))-offset_x);
+      y2 = CLAMP (y2, -offset_y, gimp_item_height(GIMP_ITEM (mask))-offset_y);
     }
 
   /*  If the calling procedure specified an undo step...  */
@@ -2553,8 +2561,8 @@ gimp_image_add_layer (GimpImage *gimage,
   /*  update the new layer's area  */
   gimp_drawable_update (GIMP_DRAWABLE (layer),
 			0, 0,
-			gimp_drawable_width  (GIMP_DRAWABLE (layer)),
-			gimp_drawable_height (GIMP_DRAWABLE (layer)));
+			gimp_item_width  (GIMP_ITEM (layer)),
+			gimp_item_height (GIMP_ITEM (layer)));
 
   if (alpha_changed)
     gimp_image_alpha_changed (gimage);
@@ -2609,8 +2617,8 @@ gimp_image_remove_layer (GimpImage *gimage,
   gimp_item_removed (GIMP_ITEM (layer));
 
   gimp_drawable_offsets (GIMP_DRAWABLE (layer), &x, &y);
-  w = gimp_drawable_width (GIMP_DRAWABLE (layer));
-  h = gimp_drawable_height (GIMP_DRAWABLE (layer));
+  w = gimp_item_width (GIMP_ITEM (layer));
+  h = gimp_item_height (GIMP_ITEM (layer));
 
   g_object_unref (layer);
 
@@ -2782,8 +2790,8 @@ gimp_image_position_layer (GimpImage   *gimage,
 
   gimp_image_update (gimage,
 		     off_x, off_y,
-		     gimp_drawable_width (GIMP_DRAWABLE (layer)),
-		     gimp_drawable_height (GIMP_DRAWABLE (layer)));
+		     gimp_item_width (GIMP_ITEM (layer)),
+		     gimp_item_height (GIMP_ITEM (layer)));
 
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 
@@ -2849,8 +2857,8 @@ gimp_image_add_channel (GimpImage   *gimage,
   if (gimp_drawable_get_visible (GIMP_DRAWABLE (channel)))
     gimp_drawable_update (GIMP_DRAWABLE (channel), 
 			  0, 0, 
-			  gimp_drawable_width (GIMP_DRAWABLE (channel)), 
-			  gimp_drawable_height (GIMP_DRAWABLE (channel)));
+			  gimp_item_width  (GIMP_ITEM (channel)), 
+			  gimp_item_height (GIMP_ITEM (channel)));
 
   return TRUE;
 }
@@ -2975,8 +2983,8 @@ gimp_image_position_channel (GimpImage   *gimage,
 
   gimp_drawable_update (GIMP_DRAWABLE (channel),
 			0, 0,
-			gimp_drawable_width  (GIMP_DRAWABLE (channel)),
-			gimp_drawable_height (GIMP_DRAWABLE (channel)));
+			gimp_item_width  (GIMP_ITEM (channel)),
+			gimp_item_height (GIMP_ITEM (channel)));
 
   return TRUE;
 }

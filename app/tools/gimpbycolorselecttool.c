@@ -205,8 +205,8 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
     {
       if (by_color_sel->x >= 0 &&
 	  by_color_sel->y >= 0 &&
-          by_color_sel->x < gimp_drawable_width (drawable) && 
-          by_color_sel->y < gimp_drawable_height (drawable))
+          by_color_sel->x < gimp_item_width  (GIMP_ITEM (drawable)) && 
+          by_color_sel->y < gimp_item_height (GIMP_ITEM (drawable)))
 	{
 	  /*  Get the start color  */
 	  if (options->sample_merged)

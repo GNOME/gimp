@@ -318,8 +318,8 @@ init_edit_selection (GimpTool    *tool,
           x1 = off_x;
           y1 = off_y;
 
-          x2 = x1 + gimp_drawable_width (active_drawable);
-          y2 = y1 + gimp_drawable_height (active_drawable);
+          x2 = x1 + gimp_item_width  (GIMP_ITEM (active_drawable));
+          y2 = y1 + gimp_item_height (GIMP_ITEM (active_drawable));
 
           /*  Now, expand the rectangle to include all linked layers as well  */
           for (layer_list = GIMP_LIST (gdisp->gimage->layers)->list;
@@ -335,8 +335,8 @@ init_edit_selection (GimpTool    *tool,
 
                   gimp_drawable_offsets (GIMP_DRAWABLE (layer), &x3, &y3);
 
-                  x4 = x3 + gimp_drawable_width (GIMP_DRAWABLE (layer));
-                  y4 = y3 + gimp_drawable_height (GIMP_DRAWABLE (layer));
+                  x4 = x3 + gimp_item_width  (GIMP_ITEM (layer));
+                  y4 = y3 + gimp_item_height (GIMP_ITEM (layer));
 
                   if (x3 < x1)
                     x1 = x3;
@@ -727,8 +727,8 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
       gimp_drawable_offsets (GIMP_DRAWABLE (gdisp->gimage->active_layer),
                              &x1, &y1);
 
-      x2 = x1 + gimp_drawable_width (GIMP_DRAWABLE (gdisp->gimage->active_layer));
-      y2 = y1 + gimp_drawable_height (GIMP_DRAWABLE (gdisp->gimage->active_layer));
+      x2 = x1 + gimp_item_width  (GIMP_ITEM (gdisp->gimage->active_layer));
+      y2 = y1 + gimp_item_height (GIMP_ITEM (gdisp->gimage->active_layer));
 
       /*  Now, expand the rectangle to include all linked layers as well  */
       for (layer_list = GIMP_LIST (gdisp->gimage->layers)->list;
@@ -742,8 +742,8 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             {
               gimp_drawable_offsets (GIMP_DRAWABLE (layer), &x3, &y3);
 
-              x4 = x3 + gimp_drawable_width (GIMP_DRAWABLE (layer));
-              y4 = y3 + gimp_drawable_height (GIMP_DRAWABLE (layer));
+              x4 = x3 + gimp_item_width  (GIMP_ITEM (layer));
+              y4 = y3 + gimp_item_height (GIMP_ITEM (layer));
 
               if (x3 < x1)
                 x1 = x3;

@@ -536,13 +536,16 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
       if (! options->shrink_merged)
         {
           GimpDrawable *drawable;
+          GimpItem     *item;
           gint          off_x, off_y;
           gint          width, height;
 
           drawable = gimp_image_active_drawable (tool->gdisp->gimage);
+          item     = GIMP_ITEM (drawable);
+
           gimp_drawable_offsets (drawable, &off_x, &off_y);
-          width  = gimp_drawable_width (drawable);
-          height = gimp_drawable_height (drawable);
+          width  = gimp_item_width  (item);
+          height = gimp_item_height (item);
 
           x = CLAMP (x, off_x, off_x + width);
           y = CLAMP (y, off_y, off_y + height);

@@ -352,16 +352,19 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
     }
   else
     {
-      gint off_x, off_y;
+      GimpItem *item;
+      gint      off_x, off_y;
+
+      item = GIMP_ITEM (drawable);
 
       gimp_drawable_offsets (drawable, &off_x, &off_y);
 
       x -= off_x;
       y -= off_y;
 
-      if (x < 0 || y < 0 ||
-	  x >= gimp_drawable_width (drawable) ||
-          y >= gimp_drawable_height (drawable))
+      if (x < 0 || y < 0               ||
+	  x >= gimp_item_width  (item) ||
+          y >= gimp_item_height (item))
 	return TRUE;
 
       col = gimp_drawable_get_color_at (drawable, x, y);

@@ -240,8 +240,8 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 
       x = (gint) RINT (ratio * off_x);
       y = (gint) RINT (ratio * off_y);
-      w = (gint) RINT (ratio * gimp_drawable_width (GIMP_DRAWABLE (layer)));
-      h = (gint) RINT (ratio * gimp_drawable_height (GIMP_DRAWABLE (layer)));
+      w = (gint) RINT (ratio * gimp_item_width (GIMP_ITEM (layer)));
+      h = (gint) RINT (ratio * gimp_item_height (GIMP_ITEM (layer)));
 
       if (w < 1 || h < 1)
 	continue;

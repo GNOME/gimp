@@ -112,8 +112,8 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
     {
       pixel_region_init (&srcPR, gimp_drawable_data (drawable),
 			 0, 0,
-			 gimp_drawable_width (drawable),
-			 gimp_drawable_height (drawable),
+			 gimp_item_width  (GIMP_ITEM (drawable)),
+			 gimp_item_height (GIMP_ITEM (drawable)),
 			 FALSE);
 
       has_alpha = gimp_drawable_has_alpha (drawable);
@@ -127,8 +127,8 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
   mask = gimp_channel_new_mask (gimage, srcPR.w, srcPR.h);
   pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
 		     0, 0, 
-		     gimp_drawable_width (GIMP_DRAWABLE (mask)), 
-		     gimp_drawable_height (GIMP_DRAWABLE (mask)), 
+		     gimp_item_width  (GIMP_ITEM (mask)), 
+		     gimp_item_height (GIMP_ITEM (mask)), 
 		     TRUE);
 
   tile = tile_manager_get_tile (srcPR.tiles, x, y, TRUE, FALSE);
@@ -217,8 +217,8 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
       d_type    = gimp_drawable_type (drawable);
       has_alpha = gimp_drawable_has_alpha (drawable);
       indexed   = gimp_drawable_is_indexed (drawable);
-      width     = gimp_drawable_width (drawable);
-      height    = gimp_drawable_height (drawable);
+      width     = gimp_item_width  (GIMP_ITEM (drawable));
+      height    = gimp_item_height (GIMP_ITEM (drawable));
 
       pixel_region_init (&imagePR, gimp_drawable_data (drawable),
 			 0, 0,

@@ -259,14 +259,18 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
       /*  make sure we handle the mask correctly if it was sample-merged  */
       if (sample_merged)
 	{
-	  gint off_x, off_y;
+          GimpItem *item;
+	  gint      off_x, off_y;
+
+          item = GIMP_ITEM (drawable);
 
 	  /*  Limit the channel bounds to the drawable's extents  */
 	  gimp_drawable_offsets (drawable, &off_x, &off_y);
-	  x1 = CLAMP (x1, off_x, (off_x + gimp_drawable_width (drawable)));
-	  y1 = CLAMP (y1, off_y, (off_y + gimp_drawable_height (drawable)));
-	  x2 = CLAMP (x2, off_x, (off_x + gimp_drawable_width (drawable)));
-	  y2 = CLAMP (y2, off_y, (off_y + gimp_drawable_height (drawable)));
+
+	  x1 = CLAMP (x1, off_x, (off_x + gimp_item_width (item)));
+	  y1 = CLAMP (y1, off_y, (off_y + gimp_item_height (item)));
+	  x2 = CLAMP (x2, off_x, (off_x + gimp_item_width (item)));
+	  y2 = CLAMP (y2, off_y, (off_y + gimp_item_height (item)));
 
 	  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 
 			     x1, y1, (x2 - x1), (y2 - y1), TRUE);

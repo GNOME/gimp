@@ -241,12 +241,15 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
    * paint from this stroke yet)
    */
   {
-    gint x1, y1, x2, y2;
+    GimpItem *item;
+    gint      x1, y1, x2, y2;
 
-    x1 = CLAMP (area->x, 0, gimp_drawable_width (drawable));
-    y1 = CLAMP (area->y, 0, gimp_drawable_height (drawable));
-    x2 = CLAMP (area->x + area->width,  0, gimp_drawable_width (drawable));
-    y2 = CLAMP (area->y + area->height, 0, gimp_drawable_height (drawable));
+    item = GIMP_ITEM (drawable);
+
+    x1 = CLAMP (area->x, 0, gimp_item_width  (item));
+    y1 = CLAMP (area->y, 0, gimp_item_height (item));
+    x2 = CLAMP (area->x + area->width,  0, gimp_item_width  (item));
+    y2 = CLAMP (area->y + area->height, 0, gimp_item_height (item));
 
     if (!(x2 - x1) || !(y2 - y1))
       return;

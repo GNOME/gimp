@@ -821,7 +821,7 @@ drawable_width_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&drawable_width_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_width (drawable);
+    return_args[1].value.pdb_int = gimp_item_width (GIMP_ITEM (drawable));
 
   return return_args;
 }
@@ -875,7 +875,7 @@ drawable_height_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&drawable_height_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_height (drawable);
+    return_args[1].value.pdb_int = gimp_item_height (GIMP_ITEM (drawable));
 
   return return_args;
 }
@@ -1172,7 +1172,8 @@ drawable_get_pixel_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if (x < gimp_drawable_width (drawable) && y < gimp_drawable_height (drawable))
+      if (x < gimp_item_width  (GIMP_ITEM (drawable)) &&
+	  y < gimp_item_height (GIMP_ITEM (drawable)))
 	{  
 	  num_channels = gimp_drawable_bytes (drawable);
 	  pixel = g_new (guint8, num_channels);
@@ -1285,8 +1286,8 @@ drawable_set_pixel_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if (x < gimp_drawable_width (drawable) &&
-	  y < gimp_drawable_height (drawable) &&
+      if (x < gimp_item_width  (GIMP_ITEM (drawable)) &&
+	  y < gimp_item_height (GIMP_ITEM (drawable)) &&
 	  num_channels == gimp_drawable_bytes (drawable))
 	{
 	  tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
@@ -1440,8 +1441,8 @@ drawable_thumbnail_invoker (Gimp     *gimp,
       if (req_width <= 128 && req_height <= 128)
 	{        
 	  /* Adjust the width/height ratio */
-	  dwidth  = gimp_drawable_width (GIMP_DRAWABLE (drawable));
-	  dheight = gimp_drawable_height (GIMP_DRAWABLE (drawable));
+	  dwidth  = gimp_item_width  (GIMP_ITEM (drawable));
+	  dheight = gimp_item_height (GIMP_ITEM (drawable));
     
 	  if (dwidth > dheight)
 	    req_height = MAX (1, (req_width * dheight) / dwidth);

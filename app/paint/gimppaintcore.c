@@ -345,6 +345,7 @@ gimp_paint_core_start (GimpPaintCore    *core,
                        GimpPaintOptions *paint_options,
                        GimpCoords       *coords)
 {
+  GimpItem  *item;
   GimpImage *gimage;
 
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
@@ -352,7 +353,8 @@ gimp_paint_core_start (GimpPaintCore    *core,
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), FALSE);
   g_return_val_if_fail (coords != NULL, FALSE);
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  item   = GIMP_ITEM (drawable);
+  gimage = gimp_item_get_image (item);
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
@@ -392,16 +394,16 @@ gimp_paint_core_start (GimpPaintCore    *core,
   if (core->undo_tiles)
     tile_manager_destroy (core->undo_tiles);
 
-  core->undo_tiles = tile_manager_new (gimp_drawable_width (drawable),
-                                       gimp_drawable_height (drawable),
+  core->undo_tiles = tile_manager_new (gimp_item_width (item),
+                                       gimp_item_height (item),
                                        gimp_drawable_bytes (drawable));
 
   /*  Allocate the canvas blocks structure  */
   if (core->canvas_tiles)
     tile_manager_destroy (core->canvas_tiles);
 
-  core->canvas_tiles = tile_manager_new (gimp_drawable_width (drawable),
-                                         gimp_drawable_height (drawable),
+  core->canvas_tiles = tile_manager_new (gimp_item_width (item),
+                                         gimp_item_height (item),
                                          1);
 
   /*  Get the initial undo extents  */
@@ -844,8 +846,8 @@ gimp_paint_core_get_paint_area (GimpPaintCore *core,
   x = (gint) floor (core->cur_coords.x) - (bwidth  >> 1);
   y = (gint) floor (core->cur_coords.y) - (bheight >> 1);
 
-  dwidth  = gimp_drawable_width  (drawable);
-  dheight = gimp_drawable_height (drawable);
+  dwidth  = gimp_item_width  (GIMP_ITEM (drawable));
+  dheight = gimp_item_height (GIMP_ITEM (drawable));
 
   x1 = CLAMP (x - 1, 0, dwidth);
   y1 = CLAMP (y - 1, 0, dheight);
@@ -888,8 +890,8 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
                                     x1, y1,
                                     (x2 - x1), (y2 - y1));
 
-  dwidth  = gimp_drawable_width  (drawable);
-  dheight = gimp_drawable_height (drawable);
+  dwidth  = gimp_item_width  (GIMP_ITEM (drawable));
+  dheight = gimp_item_height (GIMP_ITEM (drawable));
 
   x1 = CLAMP (x1, 0, dwidth);
   y1 = CLAMP (y1, 0, dheight);

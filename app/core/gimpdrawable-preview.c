@@ -223,6 +223,8 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
   /*  The hard way  */
   else
     {
+      GimpItem *item = GIMP_ITEM (drawable);
+
       type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
 
       switch (type)
@@ -244,14 +246,14 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
       if (width < 1) width = 1;
       if (height < 1) height = 1;
 
-      while ((width  * (subsample + 1) * 2 < gimp_drawable_width  (drawable)) &&
-	     (height * (subsample + 1) * 2 < gimp_drawable_height (drawable))) 
+      while ((width  * (subsample + 1) * 2 < gimp_item_width  (item)) &&
+	     (height * (subsample + 1) * 2 < gimp_item_height (item)))
 	subsample += 1;
 
       pixel_region_init (&srcPR, gimp_drawable_data (drawable),
 			 0, 0,
-			 gimp_drawable_width (drawable),
-			 gimp_drawable_height (drawable),
+			 gimp_item_width  (item),
+			 gimp_item_height (item),
 			 FALSE);
 
       preview_buf = temp_buf_new (width, height, bytes, 0, 0, NULL);
