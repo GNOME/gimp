@@ -35,6 +35,7 @@
 
 #include "core/gimpbuffer.h"
 #include "core/gimpcontext.h"
+#include "core/gimpedit.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
@@ -54,7 +55,6 @@
 #include "dialogs.h"
 #include "dialogs-commands.h"
 #include "gdisplay.h"
-#include "global_edit.h"
 #include "indicator-area.h"
 #include "menus.h"
 

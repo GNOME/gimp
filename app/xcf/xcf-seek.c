@@ -16,25 +16,32 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_EDIT_H__
-#define __GIMP_EDIT_H__
+#include "config.h"
+
+#include <stdio.h>
+
+#include <glib.h>
+
+#include "core/core-types.h"
+
+#include "xcf-private.h"
+#include "xcf-seek.h"
 
 
-TileManager * gimp_edit_cut          (GimpImage    *gimage,
-				      GimpDrawable *drawable);
-TileManager * gimp_edit_copy         (GimpImage    *gimage,
-				      GimpDrawable *drawable);
-GimpLayer   * gimp_edit_paste        (GimpImage    *gimage,
-				      GimpDrawable *drawable,
-				      TileManager  *paste,
-				      gboolean      paste_into);
-GimpImage   * gimp_edit_paste_as_new (GimpImage    *gimage,
-				      TileManager  *tiles);
-gboolean      gimp_edit_clear        (GimpImage    *gimage,
-				      GimpDrawable *drawable);
-gboolean      gimp_edit_fill         (GimpImage    *gimage,
-				      GimpDrawable *drawable,
-				      GimpFillType  fill_type);
+void
+xcf_seek_pos (XcfInfo *info,
+	      guint    pos)
+{
+  if (info->cp != pos)
+    {
+      info->cp = pos;
+      fseek (info->fp, info->cp, SEEK_SET);
+    }
+}
 
-
-#endif  /*  __GIMP_EDIT_H__  */
+void
+xcf_seek_end (XcfInfo *info)
+{
+  fseek (info->fp, 0, SEEK_END);
+  info->cp = ftell (info->fp);
+}

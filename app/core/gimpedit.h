@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GLOBAL_EDIT_H__
-#define __GLOBAL_EDIT_H__
+#ifndef __GIMP_EDIT_H__
+#define __GIMP_EDIT_H__
 
 
 TileManager * gimp_edit_cut          (GimpImage    *gimage,
@@ -37,4 +37,4 @@ gboolean      gimp_edit_fill         (GimpImage    *gimage,
 				      GimpFillType  fill_type);
 
 
-#endif  /*  __GLOBAL_EDIT_H__  */
+#endif  /*  __GIMP_EDIT_H__  */

@@ -20,26 +20,8 @@
 #define __XCF_H__
 
 
-typedef struct _XcfInfo  XcfInfo;
-
-struct _XcfInfo
-{
-  FILE         *fp;
-  guint         cp;
-  gchar        *filename;
-  GimpLayer    *active_layer;
-  GimpChannel  *active_channel;
-  GimpDrawable *floating_sel_drawable;
-  GimpLayer    *floating_sel;
-  guint         floating_sel_offset;
-  gint          swap_num;
-  gint         *ref_count;
-  gint          compression;
-  gint          file_version;
-};
-
-
-void xcf_init (void);
+void   xcf_init (void);
+void   xcf_exit (void);
 
 
 #endif /* __XCF_H__ */

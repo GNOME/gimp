@@ -16,8 +16,46 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __XCF_H__
-#define __XCF_H__
+#ifndef __XCF_PRIVATE_H__
+#define __XCF_PRIVATE_H__
+
+
+typedef enum
+{
+  PROP_END = 0,
+  PROP_COLORMAP = 1,
+  PROP_ACTIVE_LAYER = 2,
+  PROP_ACTIVE_CHANNEL = 3,
+  PROP_SELECTION = 4,
+  PROP_FLOATING_SELECTION = 5,
+  PROP_OPACITY = 6,
+  PROP_MODE = 7,
+  PROP_VISIBLE = 8,
+  PROP_LINKED = 9,
+  PROP_PRESERVE_TRANSPARENCY = 10,
+  PROP_APPLY_MASK = 11,
+  PROP_EDIT_MASK = 12,
+  PROP_SHOW_MASK = 13,
+  PROP_SHOW_MASKED = 14,
+  PROP_OFFSETS = 15,
+  PROP_COLOR = 16,
+  PROP_COMPRESSION = 17,
+  PROP_GUIDES = 18,
+  PROP_RESOLUTION = 19,
+  PROP_TATTOO = 20,
+  PROP_PARASITES = 21,
+  PROP_UNIT = 22,
+  PROP_PATHS = 23,
+  PROP_USER_UNIT = 24
+} PropType;
+
+typedef enum
+{
+  COMPRESS_NONE = 0,
+  COMPRESS_RLE = 1,
+  COMPRESS_ZLIB = 2,
+  COMPRESS_FRACTAL = 3  /* Unused. */
+} CompressionType;
 
 
 typedef struct _XcfInfo  XcfInfo;
@@ -39,7 +77,4 @@ struct _XcfInfo
 };
 
 
-void xcf_init (void);
-
-
-#endif /* __XCF_H__ */
+#endif /* __XCF_PRIVATE_H__ */

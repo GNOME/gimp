@@ -39,6 +39,8 @@ libappcore_a_SOURCES = @STRIP_BEGIN@ \
 	gimpdrawable-offset.h		\
 	gimpdrawable-preview.c		\
 	gimpdrawable-preview.h		\
+	gimpedit.c			\
+	gimpedit.h			\
 	gimpgradient.c			\
 	gimpgradient.h			\
 	gimpimage.c			\

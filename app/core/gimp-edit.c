@@ -34,16 +34,17 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "core/gimpbuffer.h"
-#include "core/gimpchannel.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
-#include "core/gimplayer.h"
-#include "core/gimplist.h"
-
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
+
+#include "gimpbuffer.h"
+#include "gimpchannel.h"
+#include "gimpcontext.h"
+#include "gimpedit.h"
+#include "gimpimage.h"
+#include "gimpimage-mask.h"
+#include "gimplayer.h"
+#include "gimplist.h"
 
 #include "context_manager.h"
 #include "drawable.h"
@@ -52,7 +53,6 @@
 #include "gimage.h"
 #include "gimpparasite.h"
 #include "gimprc.h"
-#include "global_edit.h"
 #include "image_new.h"
 #include "undo.h"
 

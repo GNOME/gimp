@@ -1,3 +1,33 @@
+2001-07-03  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: new directory app/xcf/
+
+	* app/Makefile.am
+	* app/global_edit.[ch]
+	* app/xcf.[ch]: removed.
+
+	* app/core/Makefile.am
+	* app/core/gimpedit.[ch]: added here...
+
+	* app/xcf/.cvsignore
+	* app/xcf/Makefile.am
+	* app/xcf/xcf-load.[ch]
+	* app/xcf/xcf-private.h
+	* app/xcf/xcf-read.[ch]
+	* app/xcf/xcf-save.[ch]
+	* app/xcf/xcf-seek.[ch]
+	* app/xcf/xcf-write.[ch]
+	* app/xcf/xcf.[ch]: ...and here (chopped up).
+
+	* app/app_procs.c
+	* app/disp_callbacks.c
+	* app/floating_sel.c
+	* app/gui/edit-commands.c
+	* app/gui/toolbox.c
+	* app/pdb/edit_cmds.c
+	* app/widgets/gimpbufferview.c
+	* tools/pdbgen/pdb/edit.pdb: changed accordingly.
+
 2001-07-03  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/xwd.c: applied patch from Peter Kirchgessner 

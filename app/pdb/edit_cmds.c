@@ -29,10 +29,10 @@
 #include "procedural_db.h"
 
 #include "core/core-types.h"
+#include "core/gimpedit.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 #include "drawable.h"
-#include "global_edit.h"
 
 extern TileManager *global_buffer;
 

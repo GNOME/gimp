@@ -29,6 +29,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpedit.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
@@ -41,7 +42,6 @@
 
 #include "context_manager.h"
 #include "gdisplay.h"
-#include "global_edit.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

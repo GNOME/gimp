@@ -16,25 +16,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_EDIT_H__
-#define __GIMP_EDIT_H__
+#ifndef __XCF_SAVE_H__
+#define __XCF_SAVE_H__
 
 
-TileManager * gimp_edit_cut          (GimpImage    *gimage,
-				      GimpDrawable *drawable);
-TileManager * gimp_edit_copy         (GimpImage    *gimage,
-				      GimpDrawable *drawable);
-GimpLayer   * gimp_edit_paste        (GimpImage    *gimage,
-				      GimpDrawable *drawable,
-				      TileManager  *paste,
-				      gboolean      paste_into);
-GimpImage   * gimp_edit_paste_as_new (GimpImage    *gimage,
-				      TileManager  *tiles);
-gboolean      gimp_edit_clear        (GimpImage    *gimage,
-				      GimpDrawable *drawable);
-gboolean      gimp_edit_fill         (GimpImage    *gimage,
-				      GimpDrawable *drawable,
-				      GimpFillType  fill_type);
+void   xcf_save_choose_format (XcfInfo   *info,
+			       GimpImage *gimage);
+gint   xcf_save_image         (XcfInfo   *info,
+			       GimpImage *gimage);
 
 
-#endif  /*  __GIMP_EDIT_H__  */
+#endif  /* __XCF_SAVE_H__ */

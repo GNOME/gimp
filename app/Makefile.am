@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = paint-funcs base core pdb tools widgets gui
+SUBDIRS = paint-funcs base core pdb xcf tools widgets gui
 
 scriptdata =
 
@@ -70,8 +70,6 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 ##
 ## stuff that needs to be split up in core / ui files
 ##
-	global_edit.c		\
-	global_edit.h		\
 	image_map.c		\
 	image_map.h		\
 	module_db.c		\
@@ -81,51 +79,49 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 ##
 ## stuff for core/
 ##
-	datafiles.c		\
-	datafiles.h		\
-	floating_sel.c		\
-	floating_sel.h		\
-	parasitelist.c		\
-	parasitelist.h		\
-##
-## stuff that needs to be sorted into yet undecided subsystems, split up,
-## removed or otherwise tortured
-##
-	app_procs.c		\
-	app_procs.h		\
-	appenums.h		\
-	appenv.h		\
-	apptypes.h		\
-	batch.c			\
-	batch.h			\
 	context_manager.c	\
 	context_manager.h	\
+	datafiles.c		\
+	datafiles.h		\
 	drawable.c		\
 	drawable.h		\
-	errors.c		\
-	errors.h		\
+	floating_sel.c		\
+	floating_sel.h		\
+	gimage.c		\
+	gimage.h		\
+	gimpparasite.c		\
+	gimpparasite.h		\
+	gimpunit.c		\
+	image_new.c		\
+	image_new.h		\
+	parasitelist.c		\
+	parasitelist.h		\
+	unitrc.h		\
+##
+## config stuff
+##
+	appenv.h		\
+	general.c		\
+	general.h		\
+	gimprc.c		\
+	gimprc.h		\
+##
+## file load/save stuff
+##
 	file-open.c		\
 	file-open.h		\
 	file-save.c		\
 	file-save.h		\
 	file-utils.h		\
 	file-utils.c		\
-	general.c		\
-	general.h		\
-	gimage.c		\
-	gimage.h		\
-	gimphelp.c		\
-	gimphelp.h		\
-	gimpparasite.c		\
-	gimpparasite.h		\
-	gimprc.c		\
-	gimprc.h		\
-	gimpunit.c		\
-	image_new.c		\
-	image_new.h		\
-	libgimp_glue.c		\
-	libgimp_glue.h		\
-	main.c			\
+##
+## stuff for plug-in/
+##
+	plug_in.c		\
+	plug_in.h		\
+##
+## stuff which is about to be replaced by new subsystems
+##
 	path.c			\
 	path.h			\
 	pathP.h			\
@@ -134,14 +130,26 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 	path_curves.c		\
 	path_bezier.h		\
 	path_bezier.c		\
-	plug_in.c		\
-	plug_in.h		\
 	undo.c			\
 	undo.h			\
 	undo_types.h		\
-	unitrc.h		\
-	xcf.c			\
-	xcf.h			\
+##
+## stuff
+##
+	app_procs.c		\
+	app_procs.h		\
+	appenums.h		\
+	apptypes.h		\
+	main.c			\
+	\
+	batch.c			\
+	batch.h			\
+	errors.c		\
+	errors.h		\
+	gimphelp.c		\
+	gimphelp.h		\
+	libgimp_glue.c		\
+	libgimp_glue.h		\
 	$(regex_sources)	\
 	$(mmx_sources)		\
 @STRIP_END@
@@ -178,12 +186,13 @@ INCLUDES = @STRIP_BEGIN@ \
 @STRIP_END@
 
 gimp_LDADD = @STRIP_BEGIN@ \
-	paint-funcs/libapppaint-funcs.a					\
-	pdb/libapppdb.a							\
-	tools/libapptools.a						\
 	gui/libappgui.a							\
+	tools/libapptools.a						\
 	widgets/libappwidgets.a						\
+	xcf/libappxcf.a							\
+	pdb/libapppdb.a							\
 	core/libappcore.a						\
+	paint-funcs/libapppaint-funcs.a					\
 	base/libappbase.a						\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\

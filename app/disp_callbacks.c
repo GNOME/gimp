@@ -36,6 +36,7 @@
 
 #include "core/gimpbuffer.h"
 #include "core/gimpcontext.h"
+#include "core/gimpedit.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimppattern.h"
@@ -59,7 +60,6 @@
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimprc.h"
-#include "global_edit.h"
 #include "scale.h"
 #include "scroll.h"
 #include "selection.h"

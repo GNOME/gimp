@@ -37,6 +37,8 @@
 
 #include "pdb/internal_procs.h"
 
+#include "xcf/xcf.h"
+
 #include "tools/tools.h"
 
 #include "gui/color-notebook.h"
@@ -58,7 +60,6 @@
 
 #include "undo.h"
 #include "unitrc.h"
-#include "xcf.h"
 #include "errors.h"
 #include "docindex.h"
 
@@ -278,6 +279,8 @@ app_exit_finish (void)
     {
       gui_exit ();
     }
+
+  xcf_exit ();
 
   base_exit ();
 

@@ -37,7 +37,6 @@
 
 #include "drawable.h"
 #include "floating_sel.h"
-#include "gdisplay.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
