@@ -26,7 +26,6 @@
 
 #include "core/gimptoolinfo.h"
 
-#include "paint/gimpairbrush.h"
 #include "paint/gimpairbrushoptions.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -39,13 +38,8 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_airbrush_tool_class_init  (GimpAirbrushToolClass *klass);
-static void   gimp_airbrush_tool_init        (GimpAirbrushTool      *airbrush);
-
-static GtkWidget * gimp_airbrush_options_gui (GimpToolOptions *tool_options);
-
-
-static GimpPaintbrushToolClass *parent_class = NULL;
+static void        gimp_airbrush_tool_init   (GimpAirbrushTool *airbrush);
+static GtkWidget * gimp_airbrush_options_gui (GimpToolOptions  *tool_options);
 
 
 /*  functions  */
@@ -77,14 +71,14 @@ gimp_airbrush_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpAirbrushToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_airbrush_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpAirbrushTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_airbrush_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        NULL,           /* class_init     */
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpAirbrushTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_airbrush_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_PAINTBRUSH_TOOL,
@@ -93,16 +87,6 @@ gimp_airbrush_tool_get_type (void)
     }
 
   return tool_type;
-}
-
-static void
-gimp_airbrush_tool_class_init (GimpAirbrushToolClass *klass)
-{
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 }
 
 static void
@@ -117,7 +101,6 @@ gimp_airbrush_tool_init (GimpAirbrushTool *airbrush)
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_AIRBRUSH_TOOL_CURSOR);
 
   paint_tool->pick_colors = TRUE;
-  paint_tool->core        = g_object_new (GIMP_TYPE_AIRBRUSH, NULL);
 }
 
 

@@ -89,7 +89,6 @@ struct _GimpTransformTool
                                    */
   gdouble	 *tgrid_coords;   /*  transformed grid_coords          */
 
-  gboolean                notify_connected;
   GimpTransformType       type;
   GimpTransformDirection  direction;
 

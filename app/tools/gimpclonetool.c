@@ -51,6 +51,9 @@
 static void   gimp_clone_tool_class_init       (GimpCloneToolClass *klass);
 static void   gimp_clone_tool_init             (GimpCloneTool      *tool);
 
+static GObject * gimp_clone_tool_constructor   (GType            type,
+                                                guint            n_params,
+                                                GObjectConstructParam *params);
 static void   gimp_clone_tool_button_press     (GimpTool        *tool,
                                                 GimpCoords      *coords,
                                                 guint32          time,
@@ -114,18 +117,18 @@ gimp_clone_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpCloneToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_clone_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpCloneTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_clone_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_clone_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpCloneTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_clone_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
-					  "GimpCloneTool",
+                                          "GimpCloneTool",
                                           &tool_info, 0);
     }
 
@@ -137,13 +140,17 @@ gimp_clone_tool_get_type (void)
 static void
 gimp_clone_tool_class_init (GimpCloneToolClass *klass)
 {
+  GObjectClass      *object_class;
   GimpToolClass     *tool_class;
   GimpDrawToolClass *draw_tool_class;
 
+  object_class    = G_OBJECT_CLASS (klass);
   tool_class      = GIMP_TOOL_CLASS (klass);
   draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->constructor = gimp_clone_tool_constructor;
 
   tool_class->button_press  = gimp_clone_tool_button_press;
   tool_class->motion        = gimp_clone_tool_motion;
@@ -157,22 +164,35 @@ gimp_clone_tool_init (GimpCloneTool *clone)
 {
   GimpTool      *tool;
   GimpPaintTool *paint_tool;
-  GimpClone     *clone_core;
 
   tool       = GIMP_TOOL (clone);
   paint_tool = GIMP_PAINT_TOOL (clone);
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_CLONE_TOOL_CURSOR);
+}
 
-  clone_core = g_object_new (GIMP_TYPE_CLONE, NULL);
+static GObject *
+gimp_clone_tool_constructor (GType                  type,
+                             guint                  n_params,
+                             GObjectConstructParam *params)
+{
+  GObject       *object;
+  GimpPaintTool *paint_tool;
+  GimpClone     *clone_core;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  paint_tool = GIMP_PAINT_TOOL (object);
+
+  clone_core = GIMP_CLONE (paint_tool->core);
 
   clone_core->init_callback      = gimp_clone_init_callback;
   clone_core->finish_callback    = gimp_clone_finish_callback;
   clone_core->pretrace_callback  = gimp_clone_pretrace_callback;
   clone_core->posttrace_callback = gimp_clone_posttrace_callback;
-  clone_core->callback_data      = clone;
+  clone_core->callback_data      = object;
 
-  paint_tool->core = GIMP_PAINT_CORE (clone_core);
+  return object;
 }
 
 static void
@@ -187,18 +207,11 @@ gimp_clone_tool_button_press (GimpTool        *tool,
   paint_tool = GIMP_PAINT_TOOL (tool);
 
   if (state & GDK_CONTROL_MASK)
-    {
-      GIMP_CLONE (paint_tool->core)->set_source = TRUE;
-    }
+    GIMP_CLONE (paint_tool->core)->set_source = TRUE;
   else
-    {
-      GIMP_CLONE (paint_tool->core)->set_source = FALSE;
-    }
+    GIMP_CLONE (paint_tool->core)->set_source = FALSE;
 
-  GIMP_TOOL_CLASS (parent_class)->button_press (tool,
-                                                coords,
-                                                time,
-                                                state,
+  GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
                                                 gdisp);
 }
 
@@ -214,19 +227,11 @@ gimp_clone_tool_motion (GimpTool        *tool,
   paint_tool = GIMP_PAINT_TOOL (tool);
 
   if (state & GDK_CONTROL_MASK)
-    {
-      GIMP_CLONE (paint_tool->core)->set_source = TRUE;
-    }
+    GIMP_CLONE (paint_tool->core)->set_source = TRUE;
   else
-    {
-      GIMP_CLONE (paint_tool->core)->set_source = FALSE;
-    }
+    GIMP_CLONE (paint_tool->core)->set_source = FALSE;
 
-  GIMP_TOOL_CLASS (parent_class)->motion (tool,
-                                          coords,
-                                          time,
-                                          state,
-                                          gdisp);
+  GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, gdisp);
 }
 
 void
@@ -311,45 +316,29 @@ static void
 gimp_clone_init_callback (GimpClone *clone,
                           gpointer   data)
 {
-  GimpCloneTool *clone_tool;
-
-  clone_tool = GIMP_CLONE_TOOL (data);
-
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (clone_tool),
-                        GIMP_TOOL (clone_tool)->gdisp);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (data),
+                        GIMP_TOOL (data)->gdisp);
 }
 
 static void
 gimp_clone_finish_callback (GimpClone *clone,
                             gpointer   data)
 {
-  GimpCloneTool *clone_tool;
-
-  clone_tool = GIMP_CLONE_TOOL (data);
-
-  gimp_draw_tool_stop (GIMP_DRAW_TOOL (clone_tool));
+  gimp_draw_tool_stop (GIMP_DRAW_TOOL (data));
 }
 
 static void
 gimp_clone_pretrace_callback (GimpClone *clone,
                               gpointer   data)
 {
-  GimpCloneTool *clone_tool;
-
-  clone_tool = GIMP_CLONE_TOOL (data);
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (clone_tool));
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (data));
 }
 
 static void
 gimp_clone_posttrace_callback (GimpClone *clone,
                                gpointer   data)
 {
-  GimpCloneTool *clone_tool;
-
-  clone_tool = GIMP_CLONE_TOOL (data);
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (clone_tool));
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (data));
 }
 
 

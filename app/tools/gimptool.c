@@ -23,6 +23,7 @@
 #include "tools-types.h"
 
 #include "core/gimpimage.h"
+#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -33,9 +34,25 @@
 #include "gimptoolcontrol.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_TOOL_INFO
+};
+
+
 static void   gimp_tool_class_init          (GimpToolClass   *klass);
 static void   gimp_tool_init                (GimpTool        *tool);
+
 static void   gimp_tool_finalize            (GObject         *object);
+static void   gimp_tool_set_property        (GObject         *object,
+                                             guint            property_id,
+                                             const GValue    *value,
+                                             GParamSpec      *pspec);
+static void   gimp_tool_get_property        (GObject         *object,
+                                             guint            property_id,
+                                             GValue          *value,
+                                             GParamSpec      *pspec);
 
 static void   gimp_tool_real_initialize     (GimpTool        *tool,
                                              GimpDisplay     *gdisp);
@@ -117,7 +134,9 @@ gimp_tool_class_init (GimpToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize = gimp_tool_finalize;
+  object_class->finalize     = gimp_tool_finalize;
+  object_class->set_property = gimp_tool_set_property;
+  object_class->get_property = gimp_tool_get_property;
 
   klass->initialize     = gimp_tool_real_initialize;
   klass->control        = gimp_tool_real_control;
@@ -128,6 +147,14 @@ gimp_tool_class_init (GimpToolClass *klass)
   klass->modifier_key   = gimp_tool_real_modifier_key;
   klass->oper_update    = gimp_tool_real_oper_update;
   klass->cursor_update  = gimp_tool_real_cursor_update;
+
+  g_object_class_install_property (object_class, PROP_TOOL_INFO,
+                                   g_param_spec_object ("tool-info",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_TOOL_INFO,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
 }
 
 static void
@@ -145,6 +172,12 @@ gimp_tool_finalize (GObject *object)
 {
   GimpTool *tool = GIMP_TOOL (object);
 
+  if (tool->tool_info)
+    {
+      g_object_unref (tool->tool_info);
+      tool->tool_info = NULL;
+    }
+
   if (tool->control)
     {
       g_object_unref (tool->control);
@@ -152,6 +185,50 @@ gimp_tool_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_tool_set_property (GObject      *object,
+                        guint         property_id,
+                        const GValue *value,
+                        GParamSpec   *pspec)
+{
+  GimpTool *tool;
+
+  tool = GIMP_TOOL (object);
+
+  switch (property_id)
+    {
+    case PROP_TOOL_INFO:
+      tool->tool_info = GIMP_TOOL_INFO (g_value_dup_object (value));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_tool_get_property (GObject    *object,
+                        guint       property_id,
+                        GValue     *value,
+                        GParamSpec *pspec)
+{
+  GimpTool *tool;
+
+  tool = GIMP_TOOL (object);
+
+  switch (property_id)
+    {
+    case PROP_TOOL_INFO:
+      g_value_set_object (value, tool->tool_info);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 

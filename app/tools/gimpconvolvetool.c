@@ -37,7 +37,6 @@
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
 
-#include "paint/gimpconvolve.h"
 #include "paint/gimpconvolveoptions.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -51,11 +50,11 @@
 #include "gimp-intl.h"
 
 
-#define FIELD_COLS    4
+#define FIELD_COLS     4
 #define MIN_BLUR      64         /*  (8/9 original pixel)   */
-#define MAX_BLUR      0.25       /*  (1/33 original pixel)  */
-#define MIN_SHARPEN   -512
-#define MAX_SHARPEN   -64
+#define MAX_BLUR       0.25      /*  (1/33 original pixel)  */
+#define MIN_SHARPEN -512
+#define MAX_SHARPEN  -64
 
 
 static void   gimp_convolve_tool_class_init     (GimpConvolveToolClass *klass);
@@ -106,18 +105,18 @@ gimp_convolve_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpConvolveToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_convolve_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpConvolveTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_convolve_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_convolve_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpConvolveTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_convolve_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
-					  "GimpConvolveTool",
+                                          "GimpConvolveTool",
                                           &tool_info, 0);
     }
 
@@ -154,9 +153,6 @@ gimp_convolve_tool_init (GimpConvolveTool *convolve)
                                                 GIMP_BLUR_TOOL_CURSOR);
   gimp_tool_control_set_toggle_cursor_modifier (tool->control,
                                                 GIMP_CURSOR_MODIFIER_MINUS);
-
-
-  paint_tool->core = g_object_new (GIMP_TYPE_CONVOLVE, NULL);
 }
 
 static void

@@ -39,6 +39,7 @@
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimppaintinfo.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimppaintcore.h"
@@ -66,6 +67,9 @@
 static void   gimp_paint_tool_class_init     (GimpPaintToolClass  *klass);
 static void   gimp_paint_tool_init           (GimpPaintTool       *paint_tool);
 
+static GObject * gimp_paint_tool_constructor (GType                type,
+                                              guint                n_params,
+                                              GObjectConstructParam *params);
 static void   gimp_paint_tool_finalize       (GObject             *object);
 
 static void   gimp_paint_tool_control        (GimpTool	          *tool,
@@ -161,6 +165,7 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  object_class->constructor  = gimp_paint_tool_constructor;
   object_class->finalize     = gimp_paint_tool_finalize;
 
   tool_class->control        = gimp_paint_tool_control;
@@ -184,16 +189,44 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
 
   gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
 
-  paint_tool->pick_colors      = FALSE;
-  paint_tool->draw_line        = FALSE;
+  paint_tool->pick_colors = FALSE;
+  paint_tool->draw_line   = FALSE;
 
-  paint_tool->notify_connected = FALSE;
-  paint_tool->draw_brush       = TRUE;
+  paint_tool->draw_brush  = TRUE;
+  paint_tool->brush_x     = 0.0;
+  paint_tool->brush_y     = 0.0;
 
-  paint_tool->brush_x          = 0.0;
-  paint_tool->brush_y          = 0.0;
+  paint_tool->core        = NULL;
+}
 
-  paint_tool->core             = NULL;
+static GObject *
+gimp_paint_tool_constructor (GType                  type,
+                             guint                  n_params,
+                             GObjectConstructParam *params)
+{
+  GObject       *object;
+  GimpTool      *tool;
+  GimpPaintTool *paint_tool;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  tool       = GIMP_TOOL (object);
+  paint_tool = GIMP_PAINT_TOOL (object);
+
+  g_assert (GIMP_IS_TOOL_INFO (tool->tool_info));
+
+  paint_tool->draw_brush =
+    GIMP_DISPLAY_CONFIG (tool->tool_info->gimp->config)->show_brush_outline;
+
+  g_signal_connect_object (tool->tool_info->gimp->config,
+                           "notify::show-brush-outline",
+                           G_CALLBACK (gimp_paint_tool_notify_brush),
+                           paint_tool, 0);
+
+  paint_tool->core = g_object_new (tool->tool_info->paint_info->paint_type,
+                                   NULL);
+
+  return object;
 }
 
 static void
@@ -568,19 +601,6 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
     {
       GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
       return;
-    }
-
-  if (! paint_tool->notify_connected)
-    {
-      paint_tool->draw_brush =
-        GIMP_DISPLAY_CONFIG (tool->tool_info->gimp->config)->show_brush_outline;
-
-      g_signal_connect_object (tool->tool_info->gimp->config,
-                               "notify::show-brush-outline",
-                               G_CALLBACK (gimp_paint_tool_notify_brush),
-                               paint_tool, 0);
-
-      paint_tool->notify_connected = TRUE;
     }
 
   core = paint_tool->core;

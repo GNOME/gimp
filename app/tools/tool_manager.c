@@ -686,9 +686,9 @@ tool_manager_tool_changed (GimpContext  *user_context,
 
   if (g_type_is_a (tool_info->tool_type, GIMP_TYPE_TOOL))
     {
-      new_tool = g_object_new (tool_info->tool_type, NULL);
-
-      new_tool->tool_info = tool_info;
+      new_tool = g_object_new (tool_info->tool_type,
+                               "tool-info", tool_info,
+                               NULL);
     }
   else
     {

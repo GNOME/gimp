@@ -72,6 +72,9 @@
 static void   gimp_transform_tool_init        (GimpTransformTool      *tool);
 static void   gimp_transform_tool_class_init  (GimpTransformToolClass *tool);
 
+static GObject * gimp_transform_tool_constructor   (GType              type,
+                                                    guint              n_params,
+                                                    GObjectConstructParam *params);
 static void   gimp_transform_tool_finalize         (GObject           *object);
 
 static void   gimp_transform_tool_initialize       (GimpTool          *tool,
@@ -186,6 +189,7 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  object_class->constructor  = gimp_transform_tool_constructor;
   object_class->finalize     = gimp_transform_tool_finalize;
 
   tool_class->initialize     = gimp_transform_tool_initialize;
@@ -235,13 +239,56 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
   tr_tool->grid_coords      = NULL;
   tr_tool->tgrid_coords     = NULL;
 
-  tr_tool->notify_connected = FALSE;
   tr_tool->type             = GIMP_TRANSFORM_TYPE_LAYER;
   tr_tool->direction        = GIMP_TRANSFORM_FORWARD;
 
   tr_tool->shell_desc       = NULL;
   tr_tool->progress_text    = _("Transforming...");
   tr_tool->info_dialog      = NULL;
+}
+
+static GObject *
+gimp_transform_tool_constructor (GType                  type,
+                                 guint                  n_params,
+                                 GObjectConstructParam *params)
+{
+  GObject           *object;
+  GimpTool          *tool;
+  GimpTransformTool *tr_tool;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  tool    = GIMP_TOOL (object);
+  tr_tool = GIMP_TRANSFORM_TOOL (object);
+
+  g_assert (GIMP_IS_TOOL_INFO (tool->tool_info));
+
+  if (tr_tool->use_grid)
+    {
+      tr_tool->type =
+        GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options)->type;
+      tr_tool->direction =
+        GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options)->direction;
+
+      g_signal_connect_object (tool->tool_info->tool_options,
+                               "notify::type",
+                               G_CALLBACK (gimp_transform_tool_notify_type),
+                               tr_tool, 0);
+      g_signal_connect_object (tool->tool_info->tool_options,
+                               "notify::direction",
+                               G_CALLBACK (gimp_transform_tool_notify_type),
+                               tr_tool, 0);
+      g_signal_connect_object (tool->tool_info->tool_options,
+                               "notify::grid-type",
+                               G_CALLBACK (gimp_transform_tool_notify_grid),
+                               tr_tool, 0);
+      g_signal_connect_object (tool->tool_info->tool_options,
+                               "notify::grid-size",
+                               G_CALLBACK (gimp_transform_tool_notify_grid),
+                               tr_tool, 0);
+    }
+
+  return object;
 }
 
 static void
@@ -315,33 +362,6 @@ gimp_transform_tool_initialize (GimpTool    *tool,
 
       /*  Recalculate the transform tool  */
       gimp_transform_tool_recalc (tr_tool, gdisp);
-
-      if (tr_tool->use_grid && ! tr_tool->notify_connected)
-        {
-          tr_tool->type =
-            GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options)->type;
-          tr_tool->direction =
-            GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options)->direction;
-
-          g_signal_connect_object (tool->tool_info->tool_options,
-                                   "notify::type",
-                                   G_CALLBACK (gimp_transform_tool_notify_type),
-                                   tr_tool, 0);
-          g_signal_connect_object (tool->tool_info->tool_options,
-                                   "notify::direction",
-                                   G_CALLBACK (gimp_transform_tool_notify_type),
-                                   tr_tool, 0);
-          g_signal_connect_object (tool->tool_info->tool_options,
-                                   "notify::grid-type",
-                                   G_CALLBACK (gimp_transform_tool_notify_grid),
-                                   tr_tool, 0);
-          g_signal_connect_object (tool->tool_info->tool_options,
-                                   "notify::grid-size",
-                                   G_CALLBACK (gimp_transform_tool_notify_grid),
-                                   tr_tool, 0);
-
-          tr_tool->notify_connected = TRUE;
-        }
 
       /*  start drawing the bounding box and handles...  */
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);

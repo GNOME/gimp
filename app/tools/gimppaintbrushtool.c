@@ -24,7 +24,6 @@
 
 #include "tools-types.h"
 
-#include "paint/gimppaintbrush.h"
 #include "paint/gimppaintoptions.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -36,11 +35,7 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_paintbrush_tool_class_init (GimpPaintbrushToolClass *klass);
-static void   gimp_paintbrush_tool_init       (GimpPaintbrushTool      *tool);
-
-
-static GimpPaintToolClass *parent_class = NULL;
+static void   gimp_paintbrush_tool_init (GimpPaintbrushTool *tool);
 
 
 /*  public functions  */
@@ -73,18 +68,18 @@ gimp_paintbrush_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpPaintbrushToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_paintbrush_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpPaintbrushTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_paintbrush_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        NULL,           /* class_init     */
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpPaintbrushTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_paintbrush_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
-					  "GimpPaintbrushTool",
+                                          "GimpPaintbrushTool",
                                           &tool_info, 0);
     }
 
@@ -93,16 +88,6 @@ gimp_paintbrush_tool_get_type (void)
 
 
 /*  private functions  */
-
-static void
-gimp_paintbrush_tool_class_init (GimpPaintbrushToolClass *klass)
-{
-  GimpPaintToolClass *paint_tool_class;
-
-  paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
-}
 
 static void
 gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)
@@ -117,5 +102,4 @@ gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)
                                      GIMP_PAINTBRUSH_TOOL_CURSOR);
 
   paint_tool->pick_colors = TRUE;
-  paint_tool->core        = g_object_new (GIMP_TYPE_PAINTBRUSH, NULL);
 }

@@ -1,5 +1,31 @@
 2003-08-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimptool.c: made "tool-info" a G_PARAM_CONSTRUCT_ONLY
+	property.
+
+	* app/tools/tool_manager.c (tool_manager_tool_changed): pass it to
+	g_object_new() instead of setting it after tool creation.
+
+	* app/tools/gimppainttool.[ch]
+	* app/tools/gimptransformtool.[ch]: removed ugly
+	"gboolean notify_connected" hacks and connect to the signals in
+	GObject::constructor().
+
+	* app/tools/gimppainttool.c (gimp_paint_tool_contstructor): create
+	paint_tool->core here from tool->tool_info->paint_info->paint_type.
+
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimppaintbrushtool.c
+	* app/tools/gimppenciltool.c
+	* app/tools/gimpsmudgetool.c: changed accordingly. Removed lots of
+	useless class_init functions. Converted tabs to spaces. Cleanup.
+
+2003-08-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpchannel.[ch] (gimp_channel_boundary)
 	* app/core/gimpimage-mask.[ch] (gimp_image_mask_boundary)
 	* app/core/gimplayer-floating-sel.[ch] (floating_sel_boundary):

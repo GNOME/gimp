@@ -26,7 +26,6 @@
 
 #include "core/gimptoolinfo.h"
 
-#include "paint/gimperaser.h"
 #include "paint/gimperaseroptions.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -86,18 +85,18 @@ gimp_eraser_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpEraserToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_eraser_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpEraserTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_eraser_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_eraser_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpEraserTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_eraser_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
-					  "GimpEraserTool",
+                                          "GimpEraserTool",
                                           &tool_info, 0);
     }
 
@@ -132,8 +131,6 @@ gimp_eraser_tool_init (GimpEraserTool *eraser)
                                                 GIMP_ERASER_TOOL_CURSOR);
   gimp_tool_control_set_toggle_cursor_modifier (tool->control,
                                                 GIMP_CURSOR_MODIFIER_MINUS);
-
-  paint_tool->core = g_object_new (GIMP_TYPE_ERASER, NULL);
 }
 
 static void

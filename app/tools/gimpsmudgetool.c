@@ -26,7 +26,6 @@
 
 #include "core/gimptoolinfo.h"
 
-#include "paint/gimpsmudge.h"
 #include "paint/gimpsmudgeoptions.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -39,13 +38,8 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_smudge_tool_class_init  (GimpSmudgeToolClass *klass);
-static void   gimp_smudge_tool_init        (GimpSmudgeTool      *tool);
-
-static GtkWidget * gimp_smudge_options_gui (GimpToolOptions     *tool_options);
-
-
-static GimpPaintToolClass *parent_class = NULL;
+static void        gimp_smudge_tool_init   (GimpSmudgeTool  *tool);
+static GtkWidget * gimp_smudge_options_gui (GimpToolOptions *tool_options);
 
 
 /* global functions  */
@@ -77,32 +71,22 @@ gimp_smudge_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpSmudgeToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_smudge_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpSmudgeTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_smudge_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        NULL,           /* class_init     */
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpSmudgeTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_smudge_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
-					  "GimpSmudgeTool",
+                                          "GimpSmudgeTool",
                                           &tool_info, 0);
     }
 
   return tool_type;
-}
-
-static void
-gimp_smudge_tool_class_init (GimpSmudgeToolClass *klass)
-{
-  GimpPaintToolClass *paint_tool_class;
-
-  paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 }
 
 static void
@@ -117,7 +101,6 @@ gimp_smudge_tool_init (GimpSmudgeTool *smudge)
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_SMUDGE_TOOL_CURSOR);
 
   paint_tool->pick_colors = TRUE;
-  paint_tool->core        = g_object_new (GIMP_TYPE_SMUDGE, NULL);
 }
 
 

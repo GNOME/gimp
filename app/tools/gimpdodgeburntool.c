@@ -26,7 +26,6 @@
 
 #include "core/gimptoolinfo.h"
 
-#include "paint/gimpdodgeburn.h"
 #include "paint/gimpdodgeburnoptions.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -86,18 +85,18 @@ gimp_dodgeburn_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpDodgeBurnToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_dodgeburn_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpDodgeBurnTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_dodgeburn_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_dodgeburn_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpDodgeBurnTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_dodgeburn_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
-					  "GimpDodgeBurnTool",
+                                          "GimpDodgeBurnTool",
                                           &tool_info, 0);
     }
 
@@ -130,8 +129,6 @@ gimp_dodgeburn_tool_init (GimpDodgeBurnTool *dodgeburn)
                                             GIMP_DODGE_TOOL_CURSOR);
   gimp_tool_control_set_toggle_tool_cursor (tool->control,
                                             GIMP_BURN_TOOL_CURSOR);
-
-  paint_tool->core = g_object_new (GIMP_TYPE_DODGE_BURN, NULL);
 }
 
 static void
@@ -163,8 +160,7 @@ gimp_dodgeburn_tool_modifier_key (GimpTool        *tool,
         }
     }
 
-  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool,
-                                                key, press, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state, gdisp);
 }
 
 static void
@@ -176,7 +172,6 @@ gimp_dodgeburn_tool_cursor_update (GimpTool        *tool,
   GimpDodgeBurnOptions *options;
 
   options = GIMP_DODGE_BURN_OPTIONS (tool->tool_info->tool_options);
-
 
   gimp_tool_control_set_toggle (tool->control, (options->type == GIMP_BURN));
 

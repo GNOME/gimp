@@ -24,7 +24,6 @@
 
 #include "tools-types.h"
 
-#include "paint/gimppencil.h"
 #include "paint/gimppenciloptions.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -36,11 +35,7 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_pencil_tool_class_init (GimpPencilToolClass *klass);
-static void   gimp_pencil_tool_init       (GimpPencilTool      *pancil);
-
-
-static GimpPaintbrushToolClass *parent_class = NULL;
+static void   gimp_pencil_tool_init (GimpPencilTool *pencil);
 
 
 /*  functions  */
@@ -72,32 +67,22 @@ gimp_pencil_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpPencilToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_pencil_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpPencilTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_pencil_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        NULL,           /* class_init     */
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpPencilTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_pencil_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_PAINTBRUSH_TOOL,
-					  "GimpPencilTool",
+                                          "GimpPencilTool",
                                           &tool_info, 0);
     }
 
   return tool_type;
-}
-
-static void
-gimp_pencil_tool_class_init (GimpPencilToolClass *klass)
-{
-  GimpPaintToolClass *paint_tool_class;
-
-  paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 }
 
 static void
@@ -113,5 +98,4 @@ gimp_pencil_tool_init (GimpPencilTool *pencil)
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_PENCIL_TOOL_CURSOR);
 
   paint_tool->pick_colors = TRUE;
-  paint_tool->core        = g_object_new (GIMP_TYPE_PENCIL, NULL);
 }
