@@ -91,27 +91,35 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (gchar      *name,
-                          gint        nparams,
-                          GimpParam  *param,
-                          gint       *nreturn_vals,
-                          GimpParam **return_vals);
+static void   run        (const gchar      *name,
+                          gint              nparams,
+                          const GimpParam  *param,
+                          gint             *nreturn_vals,
+                          GimpParam       **return_vals);
 
-static gint32 load_image (gchar   *filename);
-static gint   save_image (gchar   *filename,
-                          gint32   image_ID,
-                          gint32   drawable_ID);
+static gint32 load_image (const gchar      *filename);
+static gint   save_image (const gchar      *filename,
+                          gint32            image_ID,
+                          gint32            drawable_ID);
 
 static void set_color_table (gint32, L_SUNFILEHEADER *, unsigned char *);
 
-static gint32 create_new_image (char *filename, guint width, guint height,
-				GimpImageBaseType type, gint32 *layer_ID, GimpDrawable **drawable,
-				GimpPixelRgn *pixel_rgn);
+static gint32 create_new_image (const gchar   *filename,
+                                guint          width,
+                                guint          height,
+				GimpImageBaseType type,
+                                gint32        *layer_ID,
+                                GimpDrawable **drawable,
+				GimpPixelRgn  *pixel_rgn);
 
-static gint32 load_sun_d1   (char *, FILE *, L_SUNFILEHEADER *, unsigned char *);
-static gint32 load_sun_d8   (char *, FILE *, L_SUNFILEHEADER *, unsigned char *);
-static gint32 load_sun_d24  (char *, FILE *, L_SUNFILEHEADER *, unsigned char *);
-static gint32 load_sun_d32  (char *, FILE *, L_SUNFILEHEADER *, unsigned char *);
+static gint32 load_sun_d1   (const gchar *,
+                             FILE *, L_SUNFILEHEADER *, unsigned char *);
+static gint32 load_sun_d8   (const gchar *,
+                             FILE *, L_SUNFILEHEADER *, unsigned char *);
+static gint32 load_sun_d24  (const gchar *,
+                             FILE *, L_SUNFILEHEADER *, unsigned char *);
+static gint32 load_sun_d32  (const gchar *,
+                             FILE *, L_SUNFILEHEADER *, unsigned char *);
 
 static L_CARD32 read_card32 (FILE *, int *);
 
@@ -162,12 +170,12 @@ GimpPlugInInfo PLUG_IN_INFO =
 /* Save info  */
 typedef struct
 {
-  gint  rle;  /*  rle or standard */
+  gboolean  rle;  /*  rle or standard */
 } SUNRASSaveVals;
 
 typedef struct
 {
-  gint  run;  /*  run  */
+  gboolean  run;  /*  run  */
 } SUNRASSaveInterface;
 
 
@@ -250,11 +258,11 @@ query (void)
 
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam     values[2];
   GimpRunMode          run_mode;
@@ -371,7 +379,7 @@ run (gchar      *name,
 
 
 static gint32
-load_image (gchar *filename)
+load_image (const gchar *filename)
 {
   gint32 image_ID;
   FILE *ifp;
@@ -475,9 +483,9 @@ load_image (gchar *filename)
 
 
 static gint
-save_image (gchar  *filename,
-            gint32  image_ID,
-            gint32  drawable_ID)
+save_image (const gchar *filename,
+            gint32       image_ID,
+            gint32       drawable_ID)
 {
   FILE* ofp;
   GimpImageType drawable_type;
@@ -890,7 +898,7 @@ set_color_table (gint32           image_ID,
 
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image_ID */
 static gint32
-create_new_image (gchar              *filename,
+create_new_image (const gchar        *filename,
                   guint               width,
                   guint               height,
                   GimpImageBaseType   type,
@@ -934,7 +942,7 @@ create_new_image (gchar              *filename,
 
 /* Load SUN-raster-file with depth 1 */
 static gint32
-load_sun_d1 (gchar           *filename,
+load_sun_d1 (const gchar     *filename,
              FILE            *ifp,
              L_SUNFILEHEADER *sunhdr,
              guchar          *suncolmap)
@@ -1038,7 +1046,7 @@ load_sun_d1 (gchar           *filename,
 /* Load SUN-raster-file with depth 8 */
 
 static gint32
-load_sun_d8 (gchar           *filename,
+load_sun_d8 (const gchar     *filename,
              FILE            *ifp,
              L_SUNFILEHEADER *sunhdr,
              guchar          *suncolmap)
@@ -1128,7 +1136,7 @@ load_sun_d8 (gchar           *filename,
 
 /* Load SUN-raster-file with depth 24 */
 static gint32
-load_sun_d24 (gchar            *filename,
+load_sun_d24 (const gchar      *filename,
               FILE             *ifp,
               L_SUNFILEHEADER  *sunhdr,
               guchar           *suncolmap)
@@ -1210,7 +1218,7 @@ load_sun_d24 (gchar            *filename,
 /* Load SUN-raster-file with depth 32 */
 
 static gint32
-load_sun_d32 (gchar           *filename,
+load_sun_d32 (const gchar     *filename,
               FILE            *ifp,
               L_SUNFILEHEADER *sunhdr,
               guchar          *suncolmap)

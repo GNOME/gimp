@@ -142,7 +142,7 @@ static RandomizeVals pivals =
 
 typedef struct
 {
-  gint run;
+  gboolean  run;
 } RandomizeInterface;
 
 static RandomizeInterface rndm_int =
@@ -158,11 +158,11 @@ static RandomizeInterface rndm_int =
  ********************************/
 
 static void query (void);
-static void run   (gchar      *name,
-		   gint        nparams,
-		   GimpParam  *param,
-		   gint       *nreturn_vals,
-		   GimpParam **return_vals);
+static void run   (const gchar      *name,
+		   gint              nparams,
+		   const GimpParam  *param,
+		   gint             *nreturn_vals,
+		   GimpParam       **return_vals);
 
 static void randomize                    (GimpDrawable *drawable,
                                           GRand        *gr);
@@ -275,11 +275,11 @@ query (void)
  ********************************/
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   GimpDrawable      *drawable;
   GimpRunMode        run_mode;

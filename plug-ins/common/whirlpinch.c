@@ -93,17 +93,17 @@ typedef struct
   guchar    *image;
   guchar    *dimage;
 
-  gint run;
+  gboolean   run;
 } whirl_pinch_interface_t;
 
 /***** Prototypes *****/
 
 static void query (void);
-static void run   (gchar      *name,
-		   gint        nparams,
-		   GimpParam  *param,
-		   gint       *nreturn_vals,
-		   GimpParam **return_vals);
+static void run   (const gchar      *name,
+		   gint              nparams,
+		   const GimpParam  *param,
+		   gint             *nreturn_vals,
+		   GimpParam       **return_vals);
 
 static void   whirl_pinch (void);
 static int    calc_undistorted_coords (double wx, double wy,
@@ -194,11 +194,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam values[1];
 

@@ -106,7 +106,7 @@ static TgaSaveVals tsvals =
 
 typedef struct _TgaSaveInterface
 {
-  gint run;
+  gboolean  run;
 } TgaSaveInterface;
 
 static TgaSaveInterface tsint =
@@ -178,24 +178,24 @@ typedef struct tga_info_struct
 /* Declare some local functions.
  */
 static void   query               (void);
-static void   run                 (gchar      *name,
-				   gint        nparams,
-				   GimpParam  *param,
-				   gint       *nreturn_vals,
-				   GimpParam **return_vals);
+static void   run                 (const gchar      *name,
+				   gint              nparams,
+				   const GimpParam  *param,
+				   gint             *nreturn_vals,
+				   GimpParam       **return_vals);
 
-static gint32 load_image           (gchar     *filename);
-static gint   save_image           (gchar     *filename,
-				    gint32     image_ID,
-				    gint32     drawable_ID);
+static gint32 load_image           (const gchar     *filename);
+static gint   save_image           (const gchar     *filename,
+				    gint32           image_ID,
+				    gint32           drawable_ID);
 
 static gint   save_dialog          (void);
-static void   save_ok_callback     (GtkWidget *widget,
-				    gpointer   data);
+static void   save_ok_callback     (GtkWidget       *widget,
+				    gpointer         data);
 
-static gint32 ReadImage            (FILE      *fp,
-				    tga_info  *info,
-				    gchar     *filename);
+static gint32 ReadImage            (FILE            *fp,
+				    tga_info        *info,
+				    const gchar     *filename);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -267,11 +267,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam     values[2];
   GimpRunMode          run_mode;
@@ -407,7 +407,7 @@ run (gchar      *name,
 }
 
 static gint32
-load_image (gchar *filename)
+load_image (const gchar *filename)
 {
   FILE     *fp;
   gchar    *name_buf;
@@ -843,9 +843,9 @@ read_line (FILE         *fp,
 }
 
 static gint32
-ReadImage (FILE     *fp,
-	   tga_info *info,
-	   gchar    *filename)
+ReadImage (FILE        *fp,
+	   tga_info    *info,
+	   const gchar *filename)
 {
   static gint32 image_ID;
   gint32        layer_ID;
@@ -990,9 +990,9 @@ ReadImage (FILE     *fp,
 
 
 static gint
-save_image (gchar  *filename,
-	    gint32  image_ID,
-	    gint32  drawable_ID)
+save_image (const gchar *filename,
+	    gint32       image_ID,
+	    gint32       drawable_ID)
 {
   GimpPixelRgn   pixel_rgn;
   GimpDrawable  *drawable;

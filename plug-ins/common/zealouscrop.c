@@ -23,17 +23,17 @@
 
 /* Declare local functions. */
 static void        query         (void);
-static void        run           (gchar         *name,
-				  gint           nparams,
-				  GimpParam     *param,
-				  gint          *nreturn_vals,
-				  GimpParam    **return_vals);
+static void        run           (const gchar      *name,
+				  gint              nparams,
+				  const GimpParam  *param,
+				  gint             *nreturn_vals,
+				  GimpParam       **return_vals);
 
-static inline gint colours_equal (guchar        *col1,
-				  guchar        *col2,
-				  gint           bytes);
-static void        do_zcrop      (GimpDrawable  *drawable,
-				  gint32         image_id);
+static inline gint colours_equal (const guchar     *col1,
+				  const guchar     *col2,
+				  gint              bytes);
+static void        do_zcrop      (GimpDrawable     *drawable,
+				  gint32            image_id);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -74,11 +74,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        n_params,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              n_params,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
@@ -266,9 +266,9 @@ do_zcrop (GimpDrawable *drawable,
 
 
 static inline gint
-colours_equal (guchar *col1,
-	       guchar *col2,
-	       gint    bytes)
+colours_equal (const guchar *col1,
+	       const guchar *col2,
+	       gint          bytes)
 {
   gint b;
 

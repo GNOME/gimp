@@ -62,11 +62,11 @@ static GtkWidget *mw_preview_new (GtkWidget *parent,
 				  GimpDrawable *drawable);
 
 static void query (void);
-static void run   (gchar      *name,
-		   gint        nparam,
-		   GimpParam  *param,
-		   gint       *nretvals,
-		   GimpParam **retvals);
+static void run   (const gchar      *name,
+		   gint              nparam,
+		   const GimpParam  *param,
+		   gint             *nretvals,
+		   GimpParam       **retvals);
 
 static gint pluginCore       (piArgs *argp,
 			      GimpDrawable *drawable);
@@ -129,14 +129,14 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparam,
-     GimpParam  *param,
-     gint       *nretvals,
-     GimpParam **retvals)
+run (const gchar      *name,
+     gint              nparam,
+     const GimpParam  *param,
+     gint             *nretvals,
+     GimpParam       **retvals)
 {
-  static GimpParam rvals[1];
-  GimpDrawable *drawable;
+  static GimpParam  rvals[1];
+  GimpDrawable     *drawable;
 
   piArgs args;
 

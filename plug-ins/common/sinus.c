@@ -1082,20 +1082,20 @@ static GimpDrawable     *drawable;
 
 #define PREVIEW_SIZE 100
 
-static gint do_preview = TRUE;
+static gboolean do_preview = TRUE;
 
-static GtkWidget        * mw_preview_new          (GtkWidget        *parent,
-						   mwPreview *mwp);
-static mwPreview * mw_preview_build_virgin (GimpDrawable     *drw);
+static GtkWidget        * mw_preview_new   (GtkWidget    *parent,
+                                            mwPreview    *mwp);
+static mwPreview * mw_preview_build_virgin (GimpDrawable *drw);
 
 /* Declare functions */
 
 static void query (void);
-static void run   (gchar      *name,
-		   gint        nparams,
-		   GimpParam  *param,
-		   gint       *nreturn_vals,
-		   GimpParam **return_vals);
+static void run   (const gchar      *name,
+		   gint              nparams,
+		   const GimpParam  *param,
+		   gint             *nreturn_vals,
+		   GimpParam       **return_vals);
 static void sinus (void);
 
 static gdouble linear   (gdouble v);
@@ -1167,11 +1167,11 @@ query (void)
 }
 
 static void 
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   GimpRunMode       run_mode;

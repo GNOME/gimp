@@ -71,11 +71,11 @@ static ScreenShotValues shootvals =
 
 
 static void      query (void);
-static void      run   (gchar      *name,
-			gint        nparams,
-			GimpParam  *param, 
-			gint       *nreturn_vals,
-			GimpParam **return_vals);
+static void      run   (const gchar      *name,
+			gint              nparams,
+			const GimpParam  *param, 
+			gint             *nreturn_vals,
+			GimpParam       **return_vals);
 
 static void      shoot                (void);
 static gboolean  shoot_dialog         (void);
@@ -141,11 +141,11 @@ query (void)
 }
 
 static void 
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint             nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   /* Get the runmode from the in-parameters */
   GimpRunMode run_mode = param[0].data.d_int32;	

@@ -45,18 +45,18 @@ typedef struct
 {
   GtkWidget *sizeentry;
   GtkWidget *chainbutton;
-  gint       run;
+  gboolean   run;
 } TileInterface;
 
 
 /* Declare local functions.
  */
 static void    query  (void);
-static void    run    (gchar      *name,
-		       gint        nparams,
-		       GimpParam  *param,
-		       gint       *nreturn_vals,
-		       GimpParam **return_vals);
+static void    run    (const gchar      *name,
+		       gint              nparams,
+		       const GimpParam  *param,
+		       gint             *nreturn_vals,
+		       GimpParam       **return_vals);
 
 static gint32  tile             (gint32     image_id,
 				 gint32     drawable_id,
@@ -133,11 +133,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam  values[3];
   GimpRunMode       run_mode;

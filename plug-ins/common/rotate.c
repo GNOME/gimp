@@ -84,11 +84,11 @@ static RotateValues rotvals =
 
 
 static void  query   (void);
-static void  run     (gchar      *name,
-		      gint        nparams,	
-		      GimpParam  *param,	
-		      gint       *nreturn_vals,  
-		      GimpParam **return_vals);
+static void  run     (const gchar      *name,
+		      gint              nparams,	
+		      const GimpParam  *param,	
+		      gint             *nreturn_vals,  
+		      GimpParam       **return_vals);
  
 static void  rotate                 (void);
 static void  rotate_drawable        (GimpDrawable *drawable);
@@ -145,11 +145,11 @@ query (void)
 }
 
 static void 
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   /* Get the runmode from the in-parameters */
   GimpRunMode run_mode = param[0].data.d_int32;	
@@ -431,7 +431,8 @@ rotate (void)
 	}
     }
   else
-    /* if we are trying to rotate a chennel or a mask, create an error message and exit */
+    /* if we are trying to rotate a channel or a mask,
+       create an error message and exit */
     {
       if ( !gimp_drawable_is_layer (active_drawable->drawable_id) )
 	{
@@ -466,7 +467,8 @@ rotate (void)
 	{
 	  guide = g_new (GuideInfo, 1);
 	  guide->ID = guide_ID;
-	  guide->orientation = gimp_image_get_guide_orientation (image_ID, guide_ID);
+	  guide->orientation = gimp_image_get_guide_orientation (image_ID,
+                                                                 guide_ID);
 	  guide->position = gimp_image_get_guide_position (image_ID, guide_ID);
 	  guides = g_list_prepend (guides, guide);
 	}

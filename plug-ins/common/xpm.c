@@ -71,7 +71,7 @@ typedef struct
 
 typedef struct
 {
-  gint run;
+  gboolean  run;
 } XpmSaveInterface;
 
 
@@ -94,24 +94,24 @@ static gint       cpp;
 
 /* Declare local functions */
 static void     query               (void);
-static void     run                 (gchar         *name,
-				     gint           nparams,
-				     GimpParam     *param,
-				     gint          *nreturn_vals,
-				     GimpParam    **return_vals);
+static void     run                 (const gchar      *name,
+				     gint              nparams,
+				     const GimpParam  *param,
+				     gint             *nreturn_vals,
+				     GimpParam       **return_vals);
 
-static gint32   load_image          (gchar         *filename);
-static guchar  *parse_colors        (XpmImage      *xpm_image);
-static void     parse_image         (gint32         image_ID,
-				     XpmImage      *xpm_image,
-				     guchar        *cmap);
-static gboolean save_image          (gchar         *filename,
-				     gint32         image_ID,
-				     gint32         drawable_ID);
+static gint32   load_image          (const gchar      *filename);
+static guchar  *parse_colors        (XpmImage         *xpm_image);
+static void     parse_image         (gint32            image_ID,
+				     XpmImage         *xpm_image,
+				     guchar           *cmap);
+static gboolean save_image          (const gchar      *filename,
+				     gint32            image_ID,
+				     gint32            drawable_ID);
 
 static gint     save_dialog         (void);
-static void     save_ok_callback    (GtkWidget     *widget,
-				     gpointer       data);
+static void     save_ok_callback    (GtkWidget        *widget,
+				     gpointer          data);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -195,11 +195,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam     values[2];
   GimpRunMode          run_mode;
@@ -323,7 +323,7 @@ run (gchar      *name,
 }
 
 static gint32
-load_image (gchar *filename)
+load_image (const gchar *filename)
 {
   XpmImage  xpm_image;
   guchar   *cmap;
@@ -336,7 +336,7 @@ load_image (gchar *filename)
   g_free (name);
 
   /* read the raw file */
-  XpmReadFileToXpmImage (filename, &xpm_image, NULL);
+  XpmReadFileToXpmImage ((char *) filename, &xpm_image, NULL);
 
   /* parse out the colors into a cmap */
   cmap = parse_colors (&xpm_image);
@@ -543,9 +543,9 @@ create_colormap_from_hash (gpointer gkey,
 }
 
 static gboolean
-save_image (gchar  *filename,
-            gint32  image_ID,
-            gint32  drawable_ID)
+save_image (const gchar *filename,
+            gint32       image_ID,
+            gint32       drawable_ID)
 {
   GimpDrawable *drawable;    
   GimpPixelRgn  pixel_rgn;
@@ -721,7 +721,8 @@ save_image (gchar  *filename,
   image->data       = ibuff;
   
   /* do the save */
-  rc = (XpmWriteFileFromXpmImage (filename, image, NULL) == XpmSuccess);
+  rc = (XpmWriteFileFromXpmImage ((char *) filename,
+                                  image, NULL) == XpmSuccess);
 
  cleanup:
   /* clean up resources */  

@@ -149,7 +149,7 @@ rgb_to_bgr(guchar *rgbin,
 /* Respond to a plug-in query. */
 
 static void
-query(void)
+query (void)
 {
   static GimpParamDef	print_args[] =
   {
@@ -207,17 +207,17 @@ query(void)
  */
 
 static void
-run (gchar   *name,
-     gint     nparams,
-     GimpParam  *param,
-     gint    *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
-  GimpDrawable    *drawable;
-  GimpRunMode	run_mode;
+  GimpDrawable       *drawable;
+  GimpRunMode	      run_mode;
   GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  GimpParam       *values;
-  GimpPixelRgn	rgn;
+  GimpParam          *values;
+  GimpPixelRgn	      rgn;
   guchar       *cmap;		/* Colourmap (indexed images only) */
   DEVMODE      *dmp;
   int		ncolours;

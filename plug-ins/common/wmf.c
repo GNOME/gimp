@@ -546,7 +546,7 @@ typedef struct _GdiCommentMultiFormats
 
 typedef struct
 {
-  double scale;
+  gdouble scale;
 } WMFLoadVals;
 
 static WMFLoadVals load_vals =
@@ -556,7 +556,7 @@ static WMFLoadVals load_vals =
 
 typedef struct
 {
-  gint run;
+  gboolean  run;
 } WMFLoadInterface;
 
 static WMFLoadInterface load_interface =
@@ -663,12 +663,12 @@ typedef struct
 } OrgAndExt;
 
 static void   query      (void);
-static void   run        (gchar   *name,
-                          gint     nparams,
-                          GimpParam  *param,
-                          gint    *nreturn_vals,
-                          GimpParam **return_vals);
-static gint32 load_image (gchar   *filename);
+static void   run        (const gchar      *name,
+                          gint              nparams,
+                          const GimpParam  *param,
+                          gint             *nreturn_vals,
+                          GimpParam       **return_vals);
+static gint32 load_image (const gchar      *filename);
 
 static gint readparams (DWORD  size,
 			guint  nparams,
@@ -845,11 +845,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam  values[2];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
@@ -1044,7 +1044,7 @@ set_color (WORD *params,
 }
 
 static gint32
-load_image (char *filename)
+load_image (const gchar *filename)
 {
   FILE *fp;
   char *name_buf;

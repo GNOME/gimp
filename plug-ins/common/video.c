@@ -1757,12 +1757,12 @@ typedef struct
 
 typedef struct
 {
-  gint run;
+  gboolean  run;
 } VideoInterface;
 
 
-static GtkWidget *preview = NULL;
-static gint       in_main_loop = FALSE;
+static GtkWidget *preview      = NULL;
+static gboolean   in_main_loop = FALSE;
 
 static VideoValues vvals =
 {
@@ -1780,13 +1780,13 @@ static VideoInterface vint =
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (gchar      *name,
-			 gint        nparams,
-			 GimpParam  *param,
-			 gint       *nreturn_vals,
-			 GimpParam **return_vals);
+static void      run    (const gchar      *name,
+			 gint              nparams,
+			 const GimpParam  *param,
+			 gint             *nreturn_vals,
+			 GimpParam       **return_vals);
 
-static void      video  (GimpDrawable  *drawable);
+static void      video  (GimpDrawable     *drawable);
 
 
 static gint      video_dialog          (void);
@@ -1845,11 +1845,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;

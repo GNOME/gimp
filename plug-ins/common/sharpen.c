@@ -76,11 +76,11 @@
  */
 
 static void	query (void);
-static void	run   (gchar      *name,
-		       gint        nparams,
-		       GimpParam  *param,
-		       gint       *nreturn_vals,
-		       GimpParam **returm_vals);
+static void	run   (const gchar      *name,
+		       gint              nparams,
+		       const GimpParam  *param,
+		       gint             *nreturn_vals,
+		       GimpParam       **returm_vals);
 
 static void	compute_luts   (void);
 static void	sharpen        (void);
@@ -176,11 +176,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   GimpRunMode        run_mode;  /* Current run mode */
   GimpPDBStatusType  status;    /* Return status */

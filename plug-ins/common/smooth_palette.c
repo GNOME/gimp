@@ -35,17 +35,17 @@
 
 
 /* Declare local functions. */
-static void query      (void);
-static void run        (gchar        *name,
-                        gint          nparams,
-                        GimpParam    *param,
-                        gint         *nreturn_vals,
-                        GimpParam   **return_vals);
+static void     query  (void);
+static void     run    (const gchar      *name,
+                        gint              nparams,
+                        const GimpParam  *param,
+                        gint             *nreturn_vals,
+                        GimpParam       **return_vals);
 
-static gboolean dialog (GimpDrawable *drawable);
+static gboolean dialog (GimpDrawable     *drawable);
 
-static gint32   doit   (GimpDrawable *drawable,
-                        gint32       *layer_id);
+static gint32   doit   (GimpDrawable     *drawable,
+                        gint32           *layer_id);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -110,11 +110,11 @@ static struct
 };
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[3];
   GimpRunMode        run_mode;

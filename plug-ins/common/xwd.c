@@ -139,19 +139,23 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query               (void);
-static void   run                 (gchar      *name,
-				   gint        nparams,
-				   GimpParam  *param,
-				   gint       *nreturn_vals,
-				   GimpParam **return_vals);
+static void   run                 (const gchar      *name,
+				   gint              nparams,
+				   const GimpParam  *param,
+				   gint             *nreturn_vals,
+				   GimpParam       **return_vals);
 
-static gint32 load_image          (gchar  *filename);
-static gint   save_image          (gchar  *filename,
-				   gint32  image_ID,
-				   gint32  drawable_ID);
-static gint32 create_new_image    (char *filename, guint width, guint height,
-				   GimpImageBaseType type, gint32 *layer_ID, 
-				   GimpDrawable **drawable, GimpPixelRgn *pixel_rgn);
+static gint32 load_image          (const gchar      *filename);
+static gint   save_image          (const gchar      *filename,
+				   gint32            image_ID,
+				   gint32            drawable_ID);
+static gint32 create_new_image    (const gchar      *filename,
+                                   guint             width,
+                                   guint             height,
+				   GimpImageBaseType type,
+                                   gint32           *layer_ID, 
+				   GimpDrawable    **drawable,
+                                   GimpPixelRgn     *pixel_rgn);
 
 static int    set_pixelmap        (int, L_XWDCOLOR *,PIXEL_MAP *);
 static int    get_pixelmap        (L_CARD32, PIXEL_MAP *,unsigned char *,
@@ -159,15 +163,15 @@ static int    get_pixelmap        (L_CARD32, PIXEL_MAP *,unsigned char *,
 static void   set_bw_color_table  (gint32);
 static void   set_color_table     (gint32, L_XWDFILEHEADER *, L_XWDCOLOR *);
 
-static gint32 load_xwd_f2_d1_b1   (char *, FILE *, L_XWDFILEHEADER *,
+static gint32 load_xwd_f2_d1_b1   (const gchar *, FILE *, L_XWDFILEHEADER *,
 				   L_XWDCOLOR *);
-static gint32 load_xwd_f2_d8_b8   (char *, FILE *, L_XWDFILEHEADER *,
+static gint32 load_xwd_f2_d8_b8   (const gchar *, FILE *, L_XWDFILEHEADER *,
 				   L_XWDCOLOR *);
-static gint32 load_xwd_f2_d16_b16 (char *, FILE *, L_XWDFILEHEADER *,
+static gint32 load_xwd_f2_d16_b16 (const gchar *, FILE *, L_XWDFILEHEADER *,
                                    L_XWDCOLOR *);
-static gint32 load_xwd_f2_d24_b32 (char *, FILE *, L_XWDFILEHEADER *,
+static gint32 load_xwd_f2_d24_b32 (const gchar *, FILE *, L_XWDFILEHEADER *,
                                    L_XWDCOLOR *);
-static gint32 load_xwd_f1_d24_b1  (char *, FILE *, L_XWDFILEHEADER *,
+static gint32 load_xwd_f1_d24_b1  (const gchar *, FILE *, L_XWDFILEHEADER *,
                                    L_XWDCOLOR *);
 
 static L_CARD32 read_card32  (FILE *, int *);
@@ -265,11 +269,11 @@ those with alpha channels.",
 
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam     values[2];
   GimpRunMode          run_mode;
@@ -364,7 +368,7 @@ run (gchar      *name,
 }
 
 static gint32
-load_image (gchar *filename)
+load_image (const gchar *filename)
 {
   FILE *ifp;
   int depth, bpp;
@@ -487,9 +491,9 @@ and bits per pixel %d.\nCurrently this is not supported.\n"),
 }
 
 static gint
-save_image (char   *filename,
-            gint32  image_ID,
-            gint32  drawable_ID)
+save_image (const gchar *filename,
+            gint32       image_ID,
+            gint32       drawable_ID)
 
 {
   FILE* ofp;
@@ -1048,7 +1052,7 @@ set_color_table (gint32           image_ID,
 
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image_ID */
 static gint32
-create_new_image (char                *filename, 
+create_new_image (const gchar         *filename, 
                   guint                width,
                   guint                height,
                   GimpImageBaseType    type,
@@ -1092,7 +1096,7 @@ create_new_image (char                *filename,
 /* Load XWD with pixmap_format 2, pixmap_depth 1, bits_per_pixel 1 */
 
 static gint32
-load_xwd_f2_d1_b1 (char            *filename,
+load_xwd_f2_d1_b1 (const gchar     *filename,
                    FILE            *ifp,
                    L_XWDFILEHEADER *xwdhdr,
                    L_XWDCOLOR      *xwdcolmap)
@@ -1236,7 +1240,7 @@ load_xwd_f2_d1_b1 (char            *filename,
 /* Load XWD with pixmap_format 2, pixmap_depth 8, bits_per_pixel 8 */
 
 static gint32
-load_xwd_f2_d8_b8 (char            *filename,
+load_xwd_f2_d8_b8 (const gchar     *filename,
                    FILE            *ifp,
                    L_XWDFILEHEADER *xwdhdr,
                    L_XWDCOLOR      *xwdcolmap)
@@ -1334,8 +1338,8 @@ load_xwd_f2_d8_b8 (char            *filename,
 /* Load XWD with pixmap_format 2, pixmap_depth up to 16, bits_per_pixel 16 */
 
 static gint32
-load_xwd_f2_d16_b16 (char            *filename,
-                     FILE             *ifp,
+load_xwd_f2_d16_b16 (const gchar     *filename,
+                     FILE            *ifp,
                      L_XWDFILEHEADER *xwdhdr,
                      L_XWDCOLOR      *xwdcolmap)
 {
@@ -1496,7 +1500,7 @@ load_xwd_f2_d16_b16 (char            *filename,
 /* Load XWD with pixmap_format 2, pixmap_depth up to 24, bits_per_pixel 24/32 */
 
 static gint32
-load_xwd_f2_d24_b32 (char            *filename,
+load_xwd_f2_d24_b32 (const gchar     *filename,
                      FILE            *ifp,
                      L_XWDFILEHEADER *xwdhdr,
                      L_XWDCOLOR      *xwdcolmap)
@@ -1693,7 +1697,7 @@ load_xwd_f2_d24_b32 (char            *filename,
 /* Load XWD with pixmap_format 1, pixmap_depth up to 24, bits_per_pixel 1 */
 
 static gint32
-load_xwd_f1_d24_b1 (char            *filename,
+load_xwd_f1_d24_b1 (const gchar     *filename,
                     FILE            *ifp,
                     L_XWDFILEHEADER *xwdhdr,
                     L_XWDCOLOR      *xwdcolmap)

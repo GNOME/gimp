@@ -59,9 +59,9 @@
 #define Top2Bottom	3
 
 static void	    query	               (void);
-static void	    run                        (gchar             *name,
+static void	    run                        (const gchar       *name,
 					        gint               nparams,
-					        GimpParam         *param,   
+					        const GimpParam   *param,   
                                                 gint              *nreturn_vals,
 					        GimpParam        **return_vals);
 
@@ -278,11 +278,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;

@@ -61,46 +61,46 @@ typedef struct
 
 typedef struct
 {
-  gint run;
+  gboolean  run;
 } UnsharpMaskInterface;
 
 /* local function prototypes */
 static void query (void);
-static void run   (gchar      *name,
-		   gint        nparams,
-		   GimpParam  *param,
-		   gint       *nreturn_vals,
-		   GimpParam **return_vals);
+static void run   (const gchar      *name,
+		   gint              nparams,
+		   const GimpParam  *param,
+		   gint             *nreturn_vals,
+		   GimpParam       **return_vals);
 
-static inline void blur_line     (gdouble    *ctable,
-				  gdouble    *cmatrix,
-				  gint        cmatrix_length,
-				  guchar     *cur_col,
-				  guchar     *dest_col,
-				  gint        y,
-				  glong       bytes);
-static int gen_convolve_matrix   (gdouble     std_dev,
-				  gdouble   **cmatrix);
-static gdouble* gen_lookup_table (gdouble*    cmatrix,
-				  gint        cmatrix_length);
+static inline void blur_line     (gdouble       *ctable,
+				  gdouble       *cmatrix,
+				  gint           cmatrix_length,
+				  guchar        *cur_col,
+				  guchar        *dest_col,
+				  gint           y,
+				  glong          bytes);
+static int gen_convolve_matrix   (gdouble        std_dev,
+				  gdouble      **cmatrix);
+static gdouble* gen_lookup_table (gdouble       *cmatrix,
+				  gint           cmatrix_length);
 static void unsharp_region       (GimpPixelRgn   srcPTR,
 				  GimpPixelRgn   dstPTR,
-				  gint        width,
-				  gint        height,
-				  gint        bytes,
-				  gdouble     radius,
-				  gdouble     amount,
-				  gint        x1,
-				  gint        x2,
-				  gint        y1,
-				  gint        y2);
+				  gint           width,
+				  gint           height,
+				  gint           bytes,
+				  gdouble        radius,
+				  gdouble        amount,
+				  gint           x1,
+				  gint           x2,
+				  gint           y1,
+				  gint           y2);
 
-static void unsharp_mask         (GimpDrawable *drawable,
-				  gdouble    radius,
-				  gdouble    amount);
+static void unsharp_mask         (GimpDrawable  *drawable,
+				  gdouble        radius,
+				  gdouble        amount);
 
-static void unsharp_ok_callback  (GtkWidget *widget,
-				  gpointer   data);
+static void unsharp_ok_callback  (GtkWidget     *widget,
+				  gpointer       data);
 static gint unsharp_mask_dialog  (void);
 
 static gint       run_filter = FALSE;
@@ -159,11 +159,11 @@ query (void)
 
 /* this is the actual function */
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
@@ -246,8 +246,8 @@ run (gchar      *name,
 
 static void
 unsharp_mask (GimpDrawable *drawable,
-	      gdouble    radius,
-	      gdouble    amount)
+	      gdouble       radius,
+	      gdouble       amount)
 {
   GimpPixelRgn srcPR, destPR;
   glong width, height;
@@ -281,15 +281,15 @@ unsharp_mask (GimpDrawable *drawable,
 static void
 unsharp_region (GimpPixelRgn srcPR,
 		GimpPixelRgn destPR,
-		gint      width,
-		gint      height,
-		gint      bytes,
-		gdouble   radius,
-		gdouble   amount,
-		gint      x1,
-		gint      x2,
-		gint      y1,
-		gint      y2)
+		gint         width,
+		gint         height,
+		gint         bytes,
+		gdouble      radius,
+		gdouble      amount,
+		gint         x1,
+		gint         x2,
+		gint         y1,
+		gint         y2)
 {
   guchar  *cur_col;
   guchar  *dest_col;

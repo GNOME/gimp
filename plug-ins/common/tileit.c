@@ -79,8 +79,7 @@ typedef struct
   guchar     preview_row[PREVIEW_SIZE * 4];
   gint       img_bpp;
   guchar    *pv_cache;
-
-  gint       run;
+  gboolean   run;
 } TileItInterface;
 
 static TileItInterface tint =
@@ -99,12 +98,11 @@ static GimpDrawable *tileitdrawable;
 static gint          img_bpp;
 
 static void      query  (void);
-static void      run    (gchar       *name,
-			 gint         nparams,
-			 GimpParam   *param,
-			 gint        *nreturn_vals,
-			 GimpParam  **return_vals);
-/* static void      check  (GimpDrawable * drawable); */
+static void      run    (const gchar      *name,
+			 gint              nparams,
+			 const GimpParam  *param,
+			 gint             *nreturn_vals,
+			 GimpParam       **return_vals);
 
 static gint      tileit_dialog          (void);
 
@@ -241,11 +239,11 @@ query (void)
 }
 
 static void
-run (gchar       *name,
-     gint         nparams,
-     GimpParam   *param,
-     gint        *nreturn_vals,
-     GimpParam  **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;

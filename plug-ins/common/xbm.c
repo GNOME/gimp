@@ -90,7 +90,7 @@ static XBMSaveVals xsvals =
 
 typedef struct _XBMSaveInterface
 {
-  gint run;
+  gboolean  run;
 } XBMSaveInterface;
 
 static XBMSaveInterface xsint =
@@ -102,31 +102,31 @@ static XBMSaveInterface xsint =
 /* Declare some local functions.
  */
 static void   query   (void);
-static void   run     (gchar      *name,
-		       gint        nparams,
-		       GimpParam  *param,
-		       gint       *nreturn_vals,
-		       GimpParam **return_vals);
+static void   run     (const gchar      *name,
+		       gint              nparams,
+		       const GimpParam  *param,
+		       gint             *nreturn_vals,
+		       GimpParam       **return_vals);
 
-static gint32 load_image              (gchar     *filename);
-static gint   save_image              (gchar     *filename,
-				       gchar     *prefix,
-				       gchar     *comment,
-				       gboolean   save_mask,
-				       gint32     image_ID, 
-				       gint32     drawable_ID);
-static gint   save_dialog             (gint32     drawable_ID);
-static void   save_ok_callback        (GtkWidget *widget,
-				       gpointer   data);
+static gint32 load_image              (const gchar *filename);
+static gint   save_image              (const gchar *filename,
+				       const gchar *prefix,
+				       const gchar *comment,
+				       gboolean     save_mask,
+				       gint32       image_ID, 
+				       gint32       drawable_ID);
+static gint   save_dialog             (gint32       drawable_ID);
+static void   save_ok_callback        (GtkWidget   *widget,
+				       gpointer     data);
 #if 0
 /* DISABLED - see http://bugzilla.gnome.org/show_bug.cgi?id=82763 */
-static void   comment_entry_callback  (GtkWidget *widget,
-				       gpointer   data);
+static void   comment_entry_callback  (GtkWidget   *widget,
+				       gpointer     data);
 #endif
-static void   prefix_entry_callback   (GtkWidget *widget,
-				       gpointer   data);
-static void   mask_ext_entry_callback (GtkWidget *widget,
-				       gpointer   data);
+static void   prefix_entry_callback   (GtkWidget   *widget,
+				       gpointer     data);
+static void   mask_ext_entry_callback (GtkWidget   *widget,
+				       gpointer     data);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -233,11 +233,11 @@ init_prefix (const gchar *filename)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[2];
   GimpRunMode        run_mode;
@@ -442,7 +442,8 @@ run (gchar      *name,
 	      temp ++;
 	    }
 
-	  mask_prefix = g_strdup_printf ("%s%s", xsvals.prefix, xsvals.mask_ext);
+	  mask_prefix = g_strdup_printf ("%s%s",
+                                         xsvals.prefix, xsvals.mask_ext);
 
 	  if (save_image (param[3].data.d_string,
 			  xsvals.prefix,
@@ -698,7 +699,7 @@ get_int (FILE *fp)
 
 
 static gint
-load_image (gchar *filename)
+load_image (const gchar *filename)
 {
   FILE *fp;
   gint32 image_ID, layer_ID;
@@ -933,16 +934,16 @@ load_image (gchar *filename)
 }
 
 static gboolean
-save_image (gchar    *filename,
-	    gchar    *prefix,
-	    gchar    *comment,
-	    gboolean  save_mask,
-	    gint32    image_ID,
-	    gint32    drawable_ID)
+save_image (const gchar *filename,
+	    const gchar *prefix,
+	    const gchar *comment,
+	    gboolean     save_mask,
+	    gint32       image_ID,
+	    gint32       drawable_ID)
 {
   GimpDrawable *drawable;
   GimpPixelRgn  pixel_rgn;
-  FILE *fp;
+  FILE         *fp;
 
   gint width, height, colors, dark;
   gint intbits, lineints, need_comma, nints, rowoffset, tileheight;

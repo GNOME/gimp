@@ -72,11 +72,11 @@ typedef enum
 
 
 static void query (void);
-static void run   (gchar      *name,
-		   gint        nparams,
-		   GimpParam  *param,
-		   gint       *nreturn_vals,
-		   GimpParam **return_vals);
+static void run   (const gchar      *name,
+		   gint              nparams,
+		   const GimpParam  *param,
+		   gint             *nreturn_vals,
+		   GimpParam       **return_vals);
 
 static void dialog_box       (GimpDrawable   *drawable);
 static void ok_callback      (GtkWidget   *widget, 
@@ -200,11 +200,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
@@ -277,7 +277,7 @@ run (gchar      *name,
 
 static gint
 render_effect (GimpDrawable *drawable, 
-	       gboolean   preview_mode)
+	       gboolean      preview_mode)
 {
   if (config.alg == RENDER_WIND)
     {
@@ -293,12 +293,12 @@ render_effect (GimpDrawable *drawable,
 }
 
 static void
-render_blast (GimpDrawable   *drawable,
-	      gint         threshold,
-	      gint         strength,
-	      direction_t  direction,
-	      edge_t       edge,
-	      gboolean     preview_mode)
+render_blast (GimpDrawable *drawable,
+	      gint          threshold,
+	      gint          strength,
+	      direction_t   direction,
+	      edge_t        edge,
+	      gboolean      preview_mode)
 {
   gint x1, x2, y1, y2;
   gint width;
@@ -412,12 +412,12 @@ render_blast (GimpDrawable   *drawable,
 }
 
 static void
-render_wind (GimpDrawable   *drawable,
-	     gint         threshold,
-	     gint         strength,
-	     direction_t  direction,
-	     edge_t       edge,
-	     gboolean     preview_mode)
+render_wind (GimpDrawable *drawable,
+	     gint          threshold,
+	     gint          strength,
+	     direction_t   direction,
+	     edge_t        edge,
+	     gboolean      preview_mode)
 {
   GimpPixelRgn src_region, dest_region;
   gint width;
