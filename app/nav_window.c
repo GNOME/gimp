@@ -26,6 +26,7 @@
 #include "info_dialog.h"
 #include "info_window.h"
 #include "gdisplay.h"
+#include "gimprc.h"
 #include "gximage.h"
 #include "interface.h"
 #include "scroll.h"
@@ -46,15 +47,9 @@
                        GDK_KEY_RELEASE_MASK
                                                           
 /* Navigation preview sizes */
-#if 0
-#define NAV_PREVIEW_WIDTH  48
-#define NAV_PREVIEW_HEIGHT 48
-#define BORDER_PEN_WIDTH   2
-#else
 #define NAV_PREVIEW_WIDTH  112
 #define NAV_PREVIEW_HEIGHT 112
 #define BORDER_PEN_WIDTH   3
-#endif /* 0 */
 
 #define MAX_SCALE_BUF 20
 
@@ -109,14 +104,6 @@ static gint
 nav_window_expose_events (GtkWidget *,
 			   GdkEvent  *,
 			   gpointer  *);
-
-#if 0 
-static gint
-nav_window_preview_resized (GtkWidget      *,
-			    GtkAllocation  *,
-			    gpointer       *);
-
-#endif /* 0 */
 
 static void
 nav_window_update_preview (NavWinData *);
@@ -424,7 +411,7 @@ nav_window_update_preview(NavWinData *iwd)
   gint xoff = 0;
   gint yoff = 0;
 
-  gimp_add_busy_cursors();
+  gimp_add_busy_cursors(); 
 
   gdisp = (GDisplay *) iwd->gdisp_ptr;
 
@@ -728,18 +715,8 @@ nav_window_preview_events (GtkWidget *widget,
 	      iwd->motion_offsety = ty - iwd->dispy;
 	    }
 	  
-#if 0
-	  /* Now grab the square */
-	  iwd->sq_grabbed = TRUE;
-	  gtk_grab_add(widget);
-	  gdk_pointer_grab (widget->window, TRUE,
-			    GDK_BUTTON_RELEASE_MASK |
-			    GDK_POINTER_MOTION_HINT_MASK |
-			    GDK_BUTTON_MOTION_MASK,
-			    widget->window, NULL, 0);
-#else
 	  nav_window_grab_pointer(iwd,widget);
-#endif /* 0 */
+
 	  break;
 	default:
 	  break;
@@ -1135,8 +1112,10 @@ create_dummy_iwd(void *gdisp_ptr,NavWinType ptype)
   iwd->sq_grabbed = FALSE;
   iwd->ratio = 1.0;
   iwd->block_window_marker = FALSE;
-  iwd->nav_preview_width = NAV_PREVIEW_WIDTH;
-  iwd->nav_preview_height = NAV_PREVIEW_HEIGHT;
+  iwd->nav_preview_width = 
+    (nav_preview_size < 0 || nav_preview_size > 256)?NAV_PREVIEW_WIDTH:nav_preview_size;
+  iwd->nav_preview_height = 
+    (nav_preview_size < 0 || nav_preview_size > 256)?NAV_PREVIEW_HEIGHT:nav_preview_size;
   iwd->block_adj_sig = FALSE;
   
   return(iwd);
@@ -1166,8 +1145,6 @@ nav_window_create (void *gdisp_ptr)
 		      (GtkSignalFunc) nav_window_destroy_callback,
 		      info_win);
   g_free (title_buf);
-/*   gtk_window_set_policy (GTK_WINDOW (info_win->shell), */
-/* 			 FALSE,FALSE,FALSE); */
   
   iwd = create_dummy_iwd(gdisp_ptr,NAV_WINDOW);
   info_win->user_data = iwd;
@@ -1175,8 +1152,6 @@ nav_window_create (void *gdisp_ptr)
 
   /* Add preview */
   container = info_window_image_preview_new(info_win);
-/*   gtk_container_set_focus_child(GTK_CONTAINER(container),iwd->preview); */
-  gtk_window_set_focus(GTK_WINDOW (info_win->shell),iwd->preview); 
   gtk_table_attach_defaults (GTK_TABLE (info_win->info_table), container, 
  			     0, 2, 0, 1); 
   /* Create the action area  */
@@ -1219,16 +1194,6 @@ nav_window_update_window_marker(InfoDialog *info_win)
   /* Update to new size */
   nav_window_disp_area(iwd,iwd->gdisp_ptr);
 
-#if 0 
-  /* do the same for the popup widget..*/
-  if(((GDisplay *)iwd->gdisp_ptr)->nav_popup)
-    {
-      NavWinData *iwp;  /* dummy shorter version for the popups */
-      iwp = (NavWinData *)gtk_object_get_data(GTK_OBJECT(((GDisplay *)iwd->gdisp_ptr)->nav_popup),"navpop_prt");
-      nav_window_disp_area(iwp,iwp->gdisp_ptr);
-    }
-#endif /* 0 */ 
-  
   /* and redraw */
   nav_window_draw_sqr(iwd,
 		       FALSE,
@@ -1353,4 +1318,43 @@ void
 nav_popup_free(GtkWidget *nav_popup)
 {
   gtk_widget_destroy(nav_popup);
+}
+
+void 
+nav_window_preview_resized(InfoDialog *idialog)
+{
+  NavWinData *iwd;
+
+  if (!idialog)
+    return;
+
+  iwd = (NavWinData *)idialog->user_data;
+
+  /* force regeneration of the widgets */
+  /* bit of a fiddle... could cause if the image really is 1x1
+   * but the preview would not really matter in that case.
+   */
+  iwd->imagewidth = 1;
+  iwd->imageheight = 1;
+
+  iwd->nav_preview_width = 
+    (nav_preview_size < 0 || nav_preview_size > 256)?NAV_PREVIEW_WIDTH:nav_preview_size;
+  iwd->nav_preview_height = 
+    (nav_preview_size < 0 || nav_preview_size > 256)?NAV_PREVIEW_HEIGHT:nav_preview_size;
+
+  nav_window_update_window_marker(idialog); 
+}
+
+void 
+nav_window_popup_preview_resized (GtkWidget **widget)
+{
+  NavWinData *iwp;  /* dummy shorter version for the popups */
+
+  iwp = (NavWinData *)gtk_object_get_data(GTK_OBJECT(*widget),"navpop_prt");
+
+  g_free(iwp);
+
+  gtk_widget_destroy(*widget);
+
+  *widget = NULL;
 }

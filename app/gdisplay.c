@@ -2025,6 +2025,26 @@ gdisplays_expose_full ()
     }
 }
 
+void
+gdisplays_nav_preview_resized ()
+{
+  GDisplay *gdisp;
+  GSList *list = display_list;
+
+  /*  traverse the linked list of displays, handling each one  */
+  while (list)
+    {
+      gdisp = (GDisplay *) list->data;
+
+      if(gdisp->window_nav_dialog)
+	nav_window_preview_resized(gdisp->window_nav_dialog);
+      
+      if(gdisp->nav_popup)
+	nav_window_popup_preview_resized(&gdisp->nav_popup);
+
+      list = g_slist_next (list);
+    }
+}
 
 void
 gdisplays_selection_visibility (GimpImage* gimage,

@@ -21,6 +21,7 @@
 #include "colormaps.h"
 #include "context_manager.h"
 #include "gdisplay_ops.h"
+#include "gdisplay.h"
 #include "gimprc.h"
 #include "image_render.h"
 #include "interface.h"
@@ -43,6 +44,7 @@ static void file_prefs_cancel_callback (GtkWidget *, GtkWidget *);
 
 static void file_prefs_toggle_callback             (GtkWidget *, gpointer);
 static void file_prefs_preview_size_callback       (GtkWidget *, gpointer);
+static void file_prefs_nav_preview_size_callback   (GtkWidget *, gpointer);
 static void file_prefs_mem_size_callback           (GtkWidget *, gpointer);
 static void file_prefs_mem_size_unit_callback      (GtkWidget *, gpointer);
 static void file_prefs_int_adjustment_callback     (GtkAdjustment *, gpointer);
@@ -64,6 +66,7 @@ static int        old_marching_speed;
 static int        old_allow_resize_windows;
 static int        old_auto_save;
 static int        old_preview_size;
+static int        old_nav_preview_size;
 static int        old_no_cursor_updating;
 static int        old_show_tool_tips;
 static int        old_show_rulers;
@@ -404,6 +407,8 @@ file_prefs_save_callback (GtkWidget *widget,
     update = g_list_append (update, "default-image-type");
   if (preview_size != old_preview_size)
     update = g_list_append (update, "preview-size");
+  if (nav_preview_size != old_nav_preview_size)
+    update = g_list_append (update, "nav-preview-size");
   if (perfectmouse != old_perfectmouse)
     update = g_list_append (update, "perfect-mouse");
   if (transparency_type != old_transparency_type)
@@ -592,6 +597,12 @@ file_prefs_cancel_callback (GtkWidget *widget,
       layer_select_update_preview_size ();
     }
 
+  if (nav_preview_size != old_nav_preview_size)
+    {
+      nav_preview_size = old_nav_preview_size;
+      gdisplays_nav_preview_resized();
+    }
+
   if ((transparency_type != old_transparency_type) ||
       (transparency_size != old_transparency_size))
     {
@@ -699,6 +710,14 @@ file_prefs_preview_size_callback (GtkWidget *widget,
 {
   lc_dialog_rebuild ((long)data);
   layer_select_update_preview_size ();
+}
+
+static void
+file_prefs_nav_preview_size_callback (GtkWidget *widget,
+				      gpointer   data)
+{
+  nav_preview_size = (gint)data;
+  gdisplays_nav_preview_resized();
 }
 
 static void
@@ -1433,6 +1452,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_allow_resize_windows = allow_resize_windows;
   old_auto_save = auto_save;
   old_preview_size = preview_size;
+  old_nav_preview_size = nav_preview_size;
   old_no_cursor_updating = no_cursor_updating;
   old_show_tool_tips = show_tool_tips;
   old_show_rulers = show_rulers;
@@ -1751,7 +1771,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  table = gtk_table_new (3, 2, FALSE);
+  table = gtk_table_new (4, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -1782,13 +1802,23 @@ file_pref_cmd_callback (GtkWidget *widget,
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
 			     _("Preview Size:"), 1.0, 0.5, optionmenu, TRUE);
 
+  optionmenu =
+    gimp_option_menu_new (file_prefs_nav_preview_size_callback,
+			  (gpointer) nav_preview_size,
+			  _("Small"),  (gpointer)  48, (gpointer)  48,
+			  _("Medium"), (gpointer)  80, (gpointer)  80,
+			  _("Large"),  (gpointer) 112, (gpointer) 112,
+			  NULL);
+  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+			     _("Nav Preview Size:"), 1.0, 0.5, optionmenu, TRUE);
+
   spinbutton =
     gimp_spin_button_new (&adjustment,
 			  levels_of_undo, 0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      (GtkSignalFunc) file_prefs_int_adjustment_callback,
 		      &levels_of_undo);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 2,
 			     _("Levels of Undo:"), 1.0, 0.5, spinbutton, TRUE);
 
   spinbutton =
@@ -1797,7 +1827,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      (GtkSignalFunc) file_prefs_int_adjustment_callback,
 		      &edit_last_opened_size);
-  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 3,
 			     _("Recent Documents List Size:"), 1.0, 0.5,
 			     spinbutton, TRUE);
 

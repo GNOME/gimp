@@ -25,6 +25,8 @@ InfoDialog *nav_window_create (void *);
 void        nav_window_free   (InfoDialog *);
 void        nav_window_update_window_marker(InfoDialog *);
 void        nav_dialog_popup (InfoDialog *idialog);
+void        nav_window_preview_resized (InfoDialog *idialog);
+void        nav_window_popup_preview_resized (GtkWidget **widget);
 
 /* popup functions */
 void        nav_popup_click_handler(GtkWidget *widget, GdkEventButton *event, gpointer data);

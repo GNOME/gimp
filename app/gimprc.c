@@ -74,7 +74,8 @@ typedef enum {
   TT_XDEVICE,
   TT_XSESSIONINFO,
   TT_XUNITINFO,
-  TT_XPARASITE
+  TT_XPARASITE,
+  TT_XNAVPREVSIZE
 } TokenType;
 
 typedef struct _ParseFunc ParseFunc;
@@ -127,6 +128,7 @@ int       stingy_memory_use = 0;
 int       allow_resize_windows = 0;
 int       no_cursor_updating = 0;
 int       preview_size = 64;
+int       nav_preview_size = 112;
 int       show_rulers = TRUE;
 int       show_statusbar = TRUE;
 GUnit     default_units = UNIT_INCH;
@@ -173,6 +175,7 @@ static int parse_image_type (gpointer val1p, gpointer val2p);
 static int parse_interpolation_type (gpointer val1p, gpointer val2p);
 static int parse_color_cube (gpointer val1p, gpointer val2p);
 static int parse_preview_size (gpointer val1p, gpointer val2p);
+static int parse_nav_preview_size (gpointer val1p, gpointer val2p);
 static int parse_units (gpointer val1p, gpointer val2p);
 static int parse_plug_in (gpointer val1p, gpointer val2p);
 static int parse_plug_in_def (gpointer val1p, gpointer val2p);
@@ -201,6 +204,7 @@ static inline char* image_type_to_str (gpointer val1p, gpointer val2p);
 static inline char* interpolation_type_to_str (gpointer val1p, gpointer val2p);
 static inline char* color_cube_to_str (gpointer val1p, gpointer val2p);
 static inline char* preview_size_to_str (gpointer val1p, gpointer val2p);
+static inline char* nav_preview_size_to_str (gpointer val1p, gpointer val2p);
 static inline char* units_to_str (gpointer val1p, gpointer val2p);
 
 static char* transform_path (char *path, int destroy);
@@ -257,6 +261,7 @@ static ParseFunc funcs[] =
   { "cursor-updating",           TT_BOOLEAN,    NULL, &no_cursor_updating },
   { "no-cursor-updating",        TT_BOOLEAN,    &no_cursor_updating, NULL },
   { "preview-size",              TT_XPREVSIZE,  NULL, NULL },
+  { "nav-preview-size",          TT_XNAVPREVSIZE,  NULL, NULL },
   { "show-rulers",               TT_BOOLEAN,    &show_rulers, NULL },
   { "dont-show-rulers",          TT_BOOLEAN,    NULL, &show_rulers },
   { "show-statusbar",            TT_BOOLEAN,    &show_statusbar, NULL },
@@ -779,6 +784,8 @@ parse_statement ()
 	  return parse_color_cube (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPREVSIZE:
 	  return parse_preview_size (funcs[i].val1p, funcs[i].val2p);
+	case TT_XNAVPREVSIZE:
+	  return parse_nav_preview_size (funcs[i].val1p, funcs[i].val2p);
 	case TT_XUNIT:
 	  return parse_units (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPLUGIN:
@@ -1212,6 +1219,42 @@ parse_preview_size (gpointer val1p,
     }
   else if (token == TOKEN_NUMBER)
     preview_size = token_num;
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_RIGHT_PAREN))
+    return ERROR;
+  token = get_next_token ();
+
+  return OK;
+}
+
+static int
+parse_nav_preview_size (gpointer val1p,
+			gpointer val2p)
+{
+  int token;
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_SYMBOL && token != TOKEN_NUMBER))
+    return ERROR;
+  token = get_next_token ();
+
+  if (token == TOKEN_SYMBOL)
+    {
+/*       if (strcmp (token_sym, "none") == 0) */
+/* 	preview_size = 0; */
+/*       else  */
+      if (strcmp (token_sym, "small") == 0)
+	nav_preview_size = 48;
+      else if (strcmp (token_sym, "medium") == 0)
+	nav_preview_size = 80;
+      else if (strcmp (token_sym, "large") == 0)
+	nav_preview_size = 112;
+      else
+	nav_preview_size = 112;
+    }
+  else if (token == TOKEN_NUMBER)
+    nav_preview_size = token_num;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_RIGHT_PAREN))
@@ -2352,6 +2395,8 @@ value_to_str (char *name)
 	  return color_cube_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPREVSIZE:
 	  return preview_size_to_str (funcs[i].val1p, funcs[i].val2p);
+	case TT_XNAVPREVSIZE:
+	  return nav_preview_size_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XUNIT:
 	  return units_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPLUGIN:
@@ -2504,6 +2549,21 @@ preview_size_to_str (gpointer val1p,
   else
     return g_strdup ("none");
 }
+
+static inline char *
+nav_preview_size_to_str (gpointer val1p,
+			 gpointer val2p)
+{
+  if (nav_preview_size >= 112)
+    return g_strdup ("large");
+  else if (nav_preview_size >= 80)
+    return g_strdup ("medium");
+  else if (nav_preview_size >= 48)
+    return g_strdup ("small");
+  else
+    return g_strdup ("large");
+}
+
 
 static inline char *
 units_to_str (gpointer val1p,

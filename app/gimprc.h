@@ -53,6 +53,7 @@ extern int       stingy_memory_use;
 extern int       allow_resize_windows;
 extern int       no_cursor_updating;
 extern int       preview_size;
+extern int       nav_preview_size;
 extern int       show_rulers;
 extern GUnit     default_units;
 extern int       show_statusbar;
