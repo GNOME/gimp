@@ -42,7 +42,7 @@ static int perl_init(void)
             dTHR; /* NOT earlier! */
 
             perl_parse(interp, xs_init, 3, embedding, NULL);
-            perl_eval_pv ("require Gimp::Module", TRUE);
+            perl_eval_pv ("require Gimp::Module", FALSE);
 
             if (SvTRUE (ERRSV))
               {

@@ -275,6 +275,8 @@ $GIMP_INC_NOUI = "-I../../ $GIMP_INC_NOUI" if $IN_GIMP;
 @DIRS= 'Gimp';
 
 $build_module = $IN_GIMP || $ENV{GIMP_PERL_MODULE_INC};
+# temporarily disabled because of politics
+$build_module = $ENV{GIMP_PERL_MODULE_INC};
 
 print "building embedded perl module... ";
 if ($build_module) {
