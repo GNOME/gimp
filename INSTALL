@@ -12,13 +12,6 @@ GIMP 2.2 is fully backward compatible to GIMP 2.0. Plug-ins and
 scripts written for GIMP 2.0 will continue to work and don't need to
 be changed nor recompiled to be used with GIMP 2.2.
 
-Please do not install this pre-releae of GIMP 2.2 into the same prefix
-as GIMP 2.0. It would overwrite most of the GIMP 2.0 installation. To
-install in parallel to 2.0, please use a different prefix which is not
-in your default library search path. If you wish to replace GIMP 2.0
-with this pre-release, then please remove the GIMP 2.0 installation
-before installing this software.
-
 The most important part is to make sure the requirements for a build
 are fulfilled.  We depend on a number of tools and libraries which are
 listed below. For libraries this means you need to also have the
