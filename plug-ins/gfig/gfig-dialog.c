@@ -360,9 +360,16 @@ gfig_dialog (void)
   create_notebook_pages (tool_options_notebook);
 
   /* Stroke frame on right side */
-  frame = gimp_frame_new (_("Stroke"));
+  frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  gfig_context->paint_type_toggle =
+    toggle = gtk_check_button_new_with_mnemonic (_("_Stroke"));
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), selvals.painttype);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
+  gtk_widget_show (toggle);
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
@@ -372,16 +379,10 @@ gfig_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  gfig_context->paint_type_toggle =
-    gtk_check_button_new_with_mnemonic (_("Stro_ke"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_context->paint_type_toggle),
-                                selvals.painttype);
-  g_signal_connect (gfig_context->paint_type_toggle, "toggled",
+  gtk_widget_set_sensitive (vbox, selvals.painttype);
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (set_paint_type_callback),
-                    NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), gfig_context->paint_type_toggle,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (gfig_context->paint_type_toggle);
+                    vbox);
 
   /* foreground color button in Stroke frame*/
   gfig_context->fg_color = g_new (GimpRGB, 1);

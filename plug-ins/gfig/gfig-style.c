@@ -440,6 +440,8 @@ set_paint_type_callback (GtkToggleButton *toggle,
   gfig_context->default_style.paint_type = paint_type;
   gfig_context->current_style->paint_type = paint_type;
   gfig_paint_callback ();
+
+  gtk_widget_set_sensitive (GTK_WIDGET (data), paint_type);
 }
 
 /*

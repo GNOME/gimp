@@ -1,5 +1,11 @@
 2004-11-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-style.c: combined two "Stroke" labels into a
+	single one.
+
+2004-11-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/noisify.c: applied a (modified) patch that adds
 	the possibility to correlate the noise with the signal. Adds the
 	new PDB procedure "plug_in_scatter_rgb". Fixes bug #158700.
@@ -17,8 +23,8 @@
 2004-11-19  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/selection-round.scm: moved into the
-	<Image>/Select/Modify now that we can safely use placeholders from
-	Script-Fu.
+	<Image>/Select/Modify menu now that we can safely use placeholders
+	from Script-Fu.
 
 2004-11-19  Michael Natterer  <mitch@gimp.org>
 
