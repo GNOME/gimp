@@ -1,5 +1,10 @@
 2004-09-10  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppreview.c: fixed positioning of the
+	navigation marker and handling of motion events.
+
+2004-09-10  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppreview.c
 	* libgimpwidgets/gimppreviewarea.c: documented new functions.
 

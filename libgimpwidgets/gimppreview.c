@@ -764,8 +764,15 @@ gimp_preview_nav_popup_event (GtkWidget   *widget,
         y = (motion_event->y *
              (vadj->upper - vadj->lower) / widget->allocation.height);
 
-        gtk_adjustment_set_value (hadj, x + hadj->lower - hadj->page_size / 2);
-        gtk_adjustment_set_value (vadj, y + vadj->lower - vadj->page_size / 2);
+        x += hadj->lower - hadj->page_size / 2;
+        y += vadj->lower - vadj->page_size / 2;
+
+        gtk_adjustment_set_value (hadj, CLAMP (x,
+                                               hadj->lower,
+                                               hadj->upper - hadj->page_size));
+        gtk_adjustment_set_value (vadj, CLAMP (y,
+                                               vadj->lower,
+                                               vadj->upper - vadj->page_size));
 
         gtk_widget_queue_draw (widget);
       }
@@ -796,10 +803,12 @@ gimp_preview_nav_popup_expose (GtkWidget      *widget,
 
   gdk_draw_rectangle (widget->window, preview->nav_gc,
                       FALSE,
-                      x * (gdouble) widget->allocation.width,
-                      y * (gdouble) widget->allocation.height,
-                      MAX (1, ceil (w * widget->allocation.width)),
-                      MAX (1, ceil (h * widget->allocation.height)));
+                      x * (gdouble) widget->allocation.width  + PEN_WIDTH / 2,
+                      y * (gdouble) widget->allocation.height + PEN_WIDTH / 2,
+                      MAX (1,
+                           ceil (w * widget->allocation.width)  - PEN_WIDTH),
+                      MAX (1,
+                           ceil (h * widget->allocation.height) - PEN_WIDTH));
 
   return FALSE;
 }
