@@ -220,7 +220,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TOOLBOX_IMAGE_AREA,
                                     "toolbox-image-area",
                                     TOOLBOX_IMAGE_AREA_BLURB,
-                                    TRUE,
+                                    FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_THEME_PATH,
                                  "theme-path", THEME_PATH_BLURB,
