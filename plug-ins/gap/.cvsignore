@@ -1,0 +1,7 @@
+Makefile.in
+Makefile
+.deps
+_libs
+.libs
+gap_filter
+gap_plugins

@@ -1,0 +1,299 @@
+Here is a result List of the "Animated Filtercall" Tests
+  I tested more than 100 PDB-Procedures and the GAP's _iter_ALT Procedures
+  on a 3-Layer Testimage with Menu:
+   
+  <Image>/Filters/Animation/Filter All Layers   using "Apply Varying" Button
+
+---------------------------------------------------
+Testresults (used in Makefile 1.1)
+--------------------------------------------------
+14.03.1999
+
+   Test with PDB-Procedures (Plugins) that came with
+   gimp release 1.1.3
+   and all the generated (or manually changed) _iter_ALT Procedures
+
+State:
++ ... Passed simple "Aplly Varying" Test OK
+- ... Failed Test
+. ... not tested
+
+ REM ... Removed the generated _iter_ALT Procedure
+           Plugin did not work with last value interface
+           but it would make sense if Interface would be OK.
+ Del ... Deleted the generated _iter_ALT Procedure
+           It does not make sense to call the Plugin
+           with varying Values
+
+   * ... Iter_ALT modified by Hand
+
+
+
+State Procedure_name                  Testnotes
+---------------------------------------------------------------------------
+. *   Colorify                        (not part of 1.1.3)                                               
+-Del  perl_fu_blowinout               (not tested, perl )                           
+-Del  perl_fu_feedback                (not tested, perl )                            
+-Del  perl_fu_prep4gif                (not tested, perl )                            
+-Del  perl_fu_scratches               (not tested, perl )                          
+-Del  perl_fu_terraltext              (not tested, perl )                        
+-Del  perl_fu_tex_string_to_float     (not tested, perl )         
+-Del  perl_fu_webify                  (not tested, perl )                              
+-Del  perl_fu_windify                 (not tested, perl )                             
+-Del  perl_fu_xach_blocks             (not tested, perl )                        
+-Del  perl_fu_xach_shadows            (not tested, perl )                      
+-Del  perl_fu_xachvision              (not tested, perl )                         
+-     plug_in_CML_explorer                     
+.  *  plug_in_CentralReflection       (not part of 1.1.3)
++  *  plug_in_Twist                                              
++  *  plug_in_alienmap                                        
+.Del  plug_in_align_layers                                
+.     plug_in_alpha2color             (not tested, perl required)               
+.     plug_in_anamorphose             (not part of 1.1.3)                  
+.Del  plug_in_animationoptimize                      
+.Del  plug_in_animationplay                              
+.Del  plug_in_animationunoptimize                  
+-REM  plug_in_apply_canvas            ERROR: no stored data found for Key plug_in_apply_canvas             
++     plug_in_applylens                           
+-Del  plug_in_autocrop                ERROR: no stored data found for Key plug_in_autocrop
+-Del  plug_in_autostretch_hsv         ERROR: no stored data found for Key plug_in_autostretch_hsv      
++     plug_in_blinds                                 
++  *  plug_in_blur                                             
+.  *  plug_in_blur2                   (not part of 1.1.3)            
+-Del  plug_in_blur_randomize          ERROR: no stored data found for Key plug_in_blur_randomize     
++     plug_in_borderaverage                   
++     plug_in_bump_map                             
+-Del  plug_in_c_astretch              ERROR: no stored data found for Key plug_in_c_astretch
++     plug_in_checkerboard                     
+-Del  plug_in_color_adjust            ERROR: no stored data found for Key plug_in_color_adjust
++     plug_in_color_map                           
+-REM  plug_in_colorify                ERROR: no stored data found for Key plug_in_colorify                        
+.Del  plug_in_compose                               
+-     plug_in_convmatrix              ERROR: p_plug_in_convmatrix_iter_ALT  stored Data missmatch in size 140 != 0                    
++     plug_in_cubism                                 
+.Del  plug_in_decompose                                      
+.Del  plug_in_deinterlace                                  
++ *   plug_in_depth_merge                                  
++ *   plug_in_despeckle                                      
++     plug_in_destripe                             
++     plug_in_diffraction                       
++     plug_in_displace                             
+-Del  plug_in_ditherize               ERROR: no stored data found for Key plug_in_ditherize (perl)
++     plug_in_edge                                     
++  *  plug_in_emboss                                            
+.  *  plug_in_encript                (not part of 1.1.3)                                       
++     plug_in_engrave                               
+-  *  plug_in_exchange               (interface changed since 1.0, CRASH:   gimp_get_data  missing when  RUN_WITH_LAST_VALS)
+.Del  plug_in_export_palette                 
+.  *  plug_in_figures                (not part of 1.1.3)      
+.Del  plug_in_film                                     
+-REM  plug_in_filter_pack            ERROR: no stored data found for Key plug_in_filter_pack                  
+-     plug_in_flame  
++     plug_in_flarefx                               
+-  *  plug_in_fractal_trace          OK Button disappeared at 1.st press ?????                
++     plug_in_gauss_iir                           
++     plug_in_gauss_rle                           
+.Del  plug_in_gfig                   ERROR: no stored data found for Key plug_in_gfig
+.  *  plug_in_gflare                 (not part of 1.1.3)                            
++     plug_in_glasstile                           
+.Del  plug_in_gradmap                ERROR: no stored data found for Key plug_in_gradmap                
++     plug_in_grid                                     
+-Del  plug_in_guillotine             ERROR: no stored data found for Key plug_in_guillotine                    
+.  *  plug_in_holes                  (not part of 1.1.3)                           
+-Del  plug_in_hot                    
+-Del  plug_in_ifs_compose            ERROR: no stored data found for Key plug_in_ifs_compose                     
+-Del  plug_in_illusion               OK Button disappeared at 1.st press ?????                       
+.Del  plug_in_image_rot270                     
+.Del  plug_in_image_rot90                       
+-Del  plug_in_iwarp                  Has No RUN_WITH_LAST_VALS support, (but can animate
++     plug_in_jigsaw                                 
+.     plug_in_julia                  (not part of 1.1.3)                               
+-Del  plug_in_laplace                ERROR: no stored data found for Key plug_in_laplace
+.Del  plug_in_layer_rot270                     
+.Del  plug_in_layer_rot90                       
+.Del  plug_in_layers_import                   
+-Del  plug_in_lic                    CRASH + ERROR: no stored data found for Key plug_in_lic                              
++  *  plug_in_lighting             
+.  *  plug_in_magic_eye             (not part of 1.1.3)   
+.Del  plug_in_mail_image                                    
+-Del  plug_in_make_seamless          ERROR: no stored data found for Key plug_in_make_seamless                 
+.  *  plug_in_mandelbrot             (not part of 1.1.3)                                   
++  *  plug_in_map_object             see report below:
+.Del  plug_in_max_rgb                               
++  *  plug_in_maze                   (interface changed)
++     plug_in_mblur                                   
++     plug_in_mosaic                                 
++     plug_in_newsprint                           
++  *  plug_in_nlfilt                                            
++     plug_in_noisify                               
+-Del  plug_in_normalize               ERROR: no stored data found for Key plug_in_normalize                     
++  *  plug_in_nova                                                
++  *  plug_in_oilify                 (interface changed)                                     
+-  *  plug_in_pagecurl               ERROR: no stored data found for Key plug_in_pagecurl                     
+-     plug_in_paper_tile             OK Button disappeared at 1.st press ?????
++     plug_in_pixelize                             
++  *  plug_in_plasma                                 
++  *  plug_in_polar_coords           (interface changed)            
+-Del  plug_in_qbist                                   
+.  *  plug_in_randomize              (not part of 1.1.3)                             
++     plug_in_randomize_hurl                 
++     plug_in_randomize_pick                 
++     plug_in_randomize_slur                 
+.     plug_in_refract                (not part of 1.1.3)                              
++     plug_in_ripple                                 
++     plug_in_rotate                                 
++  *  plug_in_sample_colorize               
++     plug_in_scatter_hsv                       
+.Del  plug_in_semiflatten                       
++     plug_in_sharpen                               
++     plug_in_shift                                   
++     plug_in_sinus                                   
+-     plug_in_small_tiles            ERROR: no stored data found for Key plug_in_small_tiles                 
+.Del  plug_in_smooth_palette                 
+.Del  plug_in_sobel                                              
++  *  plug_in_solid_noise                       
++  *  plug_in_sparkle                                          
++     plug_in_spread                                 
+.     plug_in_struc                 (not part of 1.1.3)                                    
+-Del  plug_in_the_egg               ERROR: no stored data found for Key plug_in_the_egg               
+-Del  plug_in_threshold_alpha       ERROR: no stored data found for Key plug_in_threshold_alpha     
+-Del  plug_in_tile                                     
+.     plug_in_tileit               (not part of 1.1.3)                       
+.     plug_in_universal_filter     (not part of 1.1.3)            
++     plug_in_video                                   
+-Del  plug_in_vinvert              ERROR: no stored data found for Key plug_in_vinvert                
++     plug_in_vpropagate                         
+.  *  plug_in_warp                 (not part of 1.1.3)                                           
++     plug_in_waves                                   
++     plug_in_whirl_pinch                                  
++     plug_in_wind                                     
+.Del  plug_in_zealouscrop                       
+
+
+Summary 
+  +   55  Procedures
+  -   31  Procedures
+  .   51  Procedures
+----------------------
+     137  
+
+plug_in_map_object Testreport:
+   
+   - The MapObject has an implicite feature:
+     If the handled layer has NO ALPHA Channel (as backgrounds often do)
+     and the "Transparent background" is ON
+     it forces the creation of a new image.
+     (regardless if the "Create new image" option is on or not)
+
+     It took me hours to find out about that feature
+     that looks more like a bug to me.
+     I would prefere to add the alpha channel in such a case.
+     
+     If you want to do animated calls to MapObject ("Apply Varying" Button)
+     please make sure that the background layer has an Alphachannel
+     (Open Layers & Channels dialog, and "Add Apha Channel"
+      to the bg layer)
+
+  - If you call MapObject a 2nd time in the same gimp session
+    gimp will crash if one of the drawables (that were used
+    in the 1.st call) has become invalid.
+    
+    The BUG is in the GIMP-core Procedure(s)
+       gimp_layer_get_image_id
+       gimp_drawable_image_id
+       
+    (in older GIMP releases these Procedures did return -1
+     on invalid Ids, in Gimp 1.1.3 it comes to a crash
+     I hope that this Bug will be fixed in gimp 1.2)
+
+---------------------------------------------------
+older Testresults (used in Makefile 1.0)
+--------------------------------------------------
+with Plugins from the gimp release 0.99.16
+
+Each Plugin listed below was called with varying values.
+Some Plugins did not work correct when called in 
+RUN_WITH_LAST_VALS mode.
+
+
+TEST: + tested OK
+      * generated code did not work (changed manually)
+      ? not sure if useful
+      Del  Not ueseful, deleted
+      
+
+ *?  Colorify_iter_ALT                 (crash at 1.call)
+  ?  plug_in_CML_explorer_iter_ALT
+ *?  plug_in_CentralReflection_iter_ALT (crash at 1.call)
++*   plug_in_Twist_iter_ALT
++*   plug_in_alienmap_iter_ALT
+Del  plug_in_align_layers_iter_ALT
++?   plug_in_anamorphose_iter_ALT
++    plug_in_applylens_iter_ALT
++    plug_in_blinds_iter_ALT
++*   plug_in_blur2_iter_ALT
++    plug_in_bump_map_iter_ALT
++    plug_in_checkerboard_iter_ALT
+Del  plug_in_coordmap_iter_ALT
++    plug_in_cubism_iter_ALT
+Del  plug_in_curtain_iter_ALT
+Del  plug_in_decompose_iter_ALT
+Del  plug_in_deinterlace_iter_ALT
++*?  plug_in_depth_merge_iter_ALT
++*?  plug_in_despeckle_iter_ALT  (crash at 1.call)
++    plug_in_destripe_iter_ALT
++    plug_in_diffraction_iter_ALT
++    plug_in_displace_iter_ALT
++    plug_in_edge_iter_ALT
++*   plug_in_emboss_iter_ALT
+ *   plug_in_encript_iter_ALT  (crash at noniteractive calls)
++    plug_in_engrave_iter_ALT
+ *?  plug_in_exchange_iter_ALT
++*   plug_in_figures_iter_ALT
++*   plug_in_fractal_trace_iter_ALT
++    plug_in_gauss_iir_iter_ALT
++    plug_in_gauss_rle_iter_ALT
+ *   plug_in_gflare_iter_ALT
++    plug_in_glasstile_iter_ALT
++    plug_in_grid_iter_ALT
+ *   plug_in_holes_iter_ALT        (crash at 1.call)
++    plug_in_illusion_iter_ALT
++*   plug_in_julia_iter_ALT
+ *   plug_in_magic_eye_iter_ALT   (crash at 1.call)
+Del  plug_in_mail_image_iter_ALT
++*   plug_in_mandelbrot_iter_ALT
++*   plug_in_map_object_iter_ALT
+Del  plug_in_max_rgb_iter_ALT
++    plug_in_maze_iter_ALT
++    plug_in_mblur_iter_ALT
++    plug_in_mosaic_iter_ALT
++*   plug_in_nlfilt_iter_ALT
++    plug_in_noisify_iter_ALT
++*   plug_in_nova_iter_ALT
++*   plug_in_oilify_iter_ALT
++    plug_in_paper_tile_iter_ALT
++    plug_in_pixelize_iter_ALT
++    plug_in_plasma_iter_ALT
++    plug_in_polar_coords_iter_ALT
++*   plug_in_randomize_iter_ALT
++    plug_in_refract_iter_ALT
++    plug_in_ripple_iter_ALT
+?    plug_in_rotate_iter_ALT
++    plug_in_scatter_hsv_iter_ALT
+?    plug_in_sharpen_iter_ALT
++    plug_in_shift_iter_ALT
++*   plug_in_sinus_iter_ALT
+Del  plug_in_sobel_iter_ALT
++    plug_in_solid_noise_iter_ALT
++*   plug_in_sparkle_iter_ALT
++    plug_in_spread_iter_ALT
++    plug_in_struc_iter_ALT
+?    plug_in_tileit_iter_ALT
+?    plug_in_universal_filter_iter_ALT
++    plug_in_video_iter_ALT
++    plug_in_vpropagate_iter_ALT
++*   plug_in_warp_iter_ALT
++    plug_in_waves_iter_ALT
++*   plug_in_whirl_pinch_iter_ALT
+
+--------------------------------------------------

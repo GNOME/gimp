@@ -1,0 +1,259 @@
+This README_developers file should be read by Plug-In authors:
+
+How to make a GIMP Plug-In an "Animated" one:
+---------------------------------------------
+
+First of all:
+
+   the plugin must be able to operate on a single Drawable,
+                              ----------------------------
+   further it must be able to run with last_values and in interactive mode.
+                              --------------------        -----------                                
+   
+   For the Animated Plugin Call we need an Iterator Procedure.
+   This Procedure is named like the Plugin with the extension "_Iterator".
+   The Iterator Procedure has to know the Plugin's internal datastructure
+   and has to modify Its "LastValues" step by step at each call.
+   
+   The GAP-PDB-Browser <Image>/Filters/Animation/Filter All Layers
+   checks for the existance of Iterator Procedures in the PDB
+     1.)  <plugin_name>_Iterator
+     2.)  <plugin_name>_iter_ALT
+     
+   If one of the iterator procedures was found in the PDB, the
+   "Apply Varying" Button is set sensitive to allow animated calls
+   for the selected procedure.
+   
+   
+   If you have gap prerelease 0.93.00 or later you can generate 
+   the "plug_in_XXXX_Iterator"
+   for a Plugin as seperated Sourcefile, ready to compile.
+   (The Plugin must be found in the PDB at generation time)
+   
+   # this example uses the Plugin whirlpinch
+   
+   1.a  # for bourne and ksh users:
+   
+        GAP_DEBUG=y
+        export GAP_DEBUG
+        
+   1.b # for csh users
+       setenv GAP_DEBUG y
+    
+   2.  # change to the directory, where you like to generate the sourcecode
+       cd /usr/local/gimp-0.99.17/plug-ins/whirlpinch
+   
+   3.  # start the Gimp
+       gimp
+
+   4.  # open or create any image
+       File->New
+   
+   5.  # call the GAP Plugin for Animated Filter apply
+       # from within the image
+       Filters->Animation->Filter all Layers
+       
+       # if you have set GAP_DEBUG as shown above,
+       # the Window should contain the Button "Gen Code by name"
+       
+       # Type the name of your Plugin into the Search Inputfield
+       # (Click "Search by Name" Button, to check if the Plugin
+       # is available in the PDB)
+       
+       # Then click "Gen Code by Name" Button and then "Cancel" Button.
+       
+       # This will generate 4 files in the current directory:
+           gen_filter_iter_forward.c
+           gen_filter_iter_tab.c
+           plug_in_whirl_pinch_iter_ALT.inc
+           plug_in_whirl_pinch_iter.c
+           
+       # You can quit the gimp and delete the 3 files named "gen_filter_iter_*"
+       
+  6. # compile and link the generated Source,  plug_in_whirl_pinch_iter.c
+     # and install the linked executeable
+     # in global or private plug-in directory
+     
+     gimptool --install  plug_in_whirl_pinch_iter.c
+     
+     # (if you dont have gimptool, you can use a copy of the original Plugin's Makefile
+     # and change the Plugins <name> by <name_iter> to do that job.)
+     
+
+  7. # start the gimp again,
+     # and open or create an Image that has at least 3 Layers.
+     # Test the "Animated Filter apply"
+  
+     Filters->Animation->Filter all Layers
+     
+     # Use the "Apply Varying" Button, 
+     # it should be sensitive now (if all went well so far).
+  
+  8. # In case of error:
+     # If you get an Error Message (in the shell, where you started the gimp)
+     # that looks like:
+     
+        ERROR: xxxx_Iterator stored Data missmatch in size N != M
+    
+     # you have to change the generated code manually.
+     # (check for calls to "gimp_set_data" or "gimp_get_data" that are using
+     # the plugins name as key argument within the plugin's sourcecode.
+     # The passed datastructure has to match exactly in size with the generated one
+     # for the example above the generated structure is:
+     # plug_in_whirl_pinch_iter.c: 
+         typedef struct t_plug_in_whirl_pinch_Vals 
+         {
+           gdouble   whirl;
+           gdouble   pinch;
+           gdouble   radius;
+         } t_plug_in_whirl_pinch_Vals;        
+
+
+If you are the Author of a Plugin you may decide to include the _Iterator
+within the original Sources of your Plugin. In that case you have to check
+the name argument in the run procedure.
+
+
+
+
+Example Code:
+
+query()
+{
+  static GParamDef args_plugin[] =
+  {
+    {PARAM_INT32, "run_mode", "non-interactive"},
+    {PARAM_IMAGE, "image", "the image"},
+    {PARAM_DRAWABLE, "drawable", "the drawable"},
+    {PARAM_INT32, "value", "my_parameter value"},
+  };
+  static int nargs_plugin = sizeof(args_plugin) / sizeof(args_plugin[0]);
+
+  static GParamDef args_iter[] =
+  {
+    {PARAM_INT32, "run_mode", "non-interactive"},
+    {PARAM_INT32, "total_steps", "total number of steps (# of layers-1 to apply the related plug-in)"},
+    {PARAM_FLOAT, "current_step", "current (for linear iterations this is the layerstack position, otherwise some value inbetween)"},
+    {PARAM_INT32, "len_struct", "length of stored data structure with id is equal to the plug_in  proc_name"},
+  };
+  static int nargs_iter = sizeof(args_iter) / sizeof(args_iter[0]);
+
+  static GParamDef *return_vals = NULL;
+  static int nreturn_vals = 0;
+
+  gimp_install_procedure("plug_in_XXXX,
+			 "plug_in_XXXX can do ....",
+			 "",
+			 "Authors Name",
+			 "Copyright",
+			 "Date",
+			 "<Image>/Filters/Effects/XXXX",
+		         "RGB*, INDEXED*, GRAY*",
+                         PROC_PLUG_IN,
+			 nargs_plugin, nreturn_vals,
+			 args_plugin, return_vals);
+
+
+  gimp_install_procedure("plug_in_XXXX_Iterator,
+			 "This extension calculates the modified values for one iterationstep for the call of plug_in_XXXX",
+			 "",
+			 "Authors Name",
+			 "Copyright",
+			 "Date",
+			 NULL,    /* do not appear in menus */
+			 NULL,
+			 PROC_EXTENSION,
+			 nargs_iter, nreturn_vals,
+			 args_iter, return_vals);
+}
+
+
+
+
+static void p_delta_long(long *val, long val_from, long val_to, gint32 total_steps, gdouble current_step)
+{
+    double     delta;
+
+    if(total_steps < 1) return;
+
+    delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
+    *val  = val_from + delta; 
+
+}
+
+
+
+static void
+run (char    *name,
+     int      n_params,
+     GParam  *param,
+     int     *nreturn_vals,
+     GParam **return_vals)
+{
+  static GParam values[1];
+  GStatusType status = STATUS_SUCCESS;
+  GRunModeType run_mode;
+  gint32  len_struct;
+  gint32  total_steps;
+  gdouble current_step;
+
+  long    pval;                  /* plug_in_XXXX has one parameter of type long */
+  long   *pval_from, *pval_to;   /* values for 1.st and last layer
+                                  * when they were processed by "plug_in_gap_layers_run_animfilter"
+                                  */
+
+  *nreturn_vals = 1;
+  *return_vals = values;
+   values[0].type = PARAM_STATUS;
+ 
+  
+  run_mode = param[0].data.d_int32;
+  
+  if (strcmp (name, "plug_in_XXXX") == 0)
+  {
+     ....  /* start the plugin itself */
+  }
+  else  if (strcmp (name, "plug_in_XXXX_Iterator") == 0)
+  {
+      /* Iterator procedure is usually called from
+       * "plug_in_gap_layers_run_animfilter"
+       * (always run noninteractive)
+       */
+      if ((run_mode == RUN_NONINTERACTIVE) && (n_params == 4))
+      {
+        total_steps  =  param[1].data.d_int32;
+        current_step =  param[2].data.d_float;
+        len_struct   =  param[3].data.d_int32;
+
+        if(len_struct == sizeof(pval))
+        {
+          /* get _FROM and _TO data, 
+           * This data was stored by plug_in_gap_layers_run_animfilter
+           */
+        
+          gimp_get_data("plug_in_XXXX_ITER_FROM", pval_from); 
+          gimp_get_data("plug_in_XXXX_ITER_TO",   pval_to); 
+
+          p_delta_long(&pval, *pval_from, *pval_to, total_steps, current_step);
+
+          gimp_set_data("plug_in_XXXX", &pval, sizeof(pval));
+        }
+        else status = STATUS_CALLING_ERROR;
+      }
+      else status = STATUS_CALLING_ERROR;
+  }
+
+   values[0].type = PARAM_STATUS;
+   values[0].type = PARAM_STATUS;
+
+}
+
+
+Important for Plugin_Authors:
+   I have made Iterator Procedures for more than 50 existing Procedures.
+   (see gap_filter_iterators.c and subdirectories iter_ALT/*/*.inc)
+   If your Plugin is found in gap_filter_iterators.c, and You make updates 
+   to your Plugin's interface, you should write (or generate) your own _Iterator Procedure,
+   to keep its Animated capabilities intact.
+   (You don't need to change gap sources to do that, because the Iterator
+   named "plug_in_XXXX_Iterator" is used rather than "plug_in_XXXX_Iterator_ALT" )

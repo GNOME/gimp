@@ -1,0 +1,1030 @@
+Project gap "Gimp Animation Package"   17. Mar 1999  release 0.99.00
+
+--------------------------------------------------------------------
+Introduction
+--------------------------------------------------------------------
+
+The GIMP (1.0.2) is a great Program for creating and manipulating
+Pixelbased Images of many types. The Plugin Concept and the Procedural Database
+allows Programmers to extend the Gimp's Functions in many ways.
+
+For now there are some Plugins that supports Animation Features,
+based on Layers. Each Layer of the Image is considered as one frame
+of the Animation.
+GAP is a collection of Plugins that extends the GIMP's animation capabilities
+by supporting the creation of more complex animations.
+(Additional Informations about the GAP can be found in the GimpUserManual 1.0.0
+ Chapter Advanced Animation)
+
+Idea:
+	With some little changes to the gimp-core and a few new plug-ins
+	gimp can operate on a series of images as if they were
+	a single one.
+	Each frame of an Animation can have multiple Layers.
+	The user can step from frame to frame by pressing an Accelerator Key.
+
+	Layeranimated Images can be combined with frames (multiple images)
+	as I  have done in "Move Path" Plugin  (see below).
+	
+Concept:
+	An animation consists of a series of Images of the same size & Type
+	(Frames).
+	In my Concept each Frame is stored seperate on Disk, using a filename
+	convention that includes the frame Number and extension.
+
+	Example: film_0001.xcf, 
+	         film_0002.xcf
+	         ..
+	         film_0012.xcf
+	
+	gimp's xcf Fileformat should be used to store the frames,
+	so that each frame can have more Layers.
+	(Notes: Sound is not supported in this Concept,
+	Playbackrates have to be added when save as animation format)
+	
+	This requires a lot of Diskspace but offers much more flexibility
+	while working on the animation.
+
+	To save diskspace you may optional use gziped xcf frames
+	(takes extra time to un/compress) by using the extension .xcfgz
+	(gzip has to be installed on your system to do that)
+	If you can accept lossy compression you may also use 
+	the xjt fileformat to store your frames on jpeg based compression.
+	(xjt load and save plugins are available in the Plugin Registry)
+	
+	The final Product can be converted to one multilayerd Image
+	that can be saved as Animated-Gif.
+	(or, in the future in other Animation Formats 
+	when other Load/Save Modules were added to the gimp)
+	
+	GAP provides frontend dialog interfaces for
+	2 different software MPEG encoder programs.
+	(mpeg_encode and mpeg2encode)
+	
+	GAP also provides a way to load AnimFrames from multimedia fileformats
+	(avi, quicktime, ....) based on the famous xanim multimedia player.
+	see the file README_xanim_hack for more details.
+	
+
+--------------------------------------------------------------------
+Installation
+--------------------------------------------------------------------
+
+This GAP-release 0.99.00 runs stable under GIMP 1.0.2 when
+some Patches are made to the GIMP-core.
+
+Most of the GAP 0.99.00 Functions are now changed to run 
+on the latest Development release of GIMP 1.1.3 / gtk 1.2 too.
+
+   1. copy the tar file to gimp's plugin directory  <gimp_dir>/plug-ins
+       then:
+       cd  <gimp_dir>/plug-ins
+
+    2. extract the tar file (should expand to a directory named gap
+    2.a
+       # if you have gnu tar:
+       tar -xzvf gap.tgz
+    2.b 
+       # if you dont have gnu tar:
+       # gunzip, then extract 
+       gzip -cfd <gap.tgz >gap.tar
+       tar -xvf gap.tar
+     
+    3 # IF you have GIMP 1.1 (latest) 
+        #    No Patches to the GIMP 1.1 core are needed !
+        #    (goto Step 4.)
+        #
+        # IF you have GIMP 1.0.2 (or older GIMP releases)
+        #   check if your gimp version is supported by
+        #   the ./apply_patch.sh  script
+        #
+        #   to do this, read the comments within this script
+
+    3.1 
+        #   check if your gimp version is supported by
+        #   the ./apply_patch.sh  script
+
+    
+    3.2 # Apply the patch to gimp core and install it
+        #   check if your gimp version is supported by
+        #   the ./apply_patch.sh  script
+        #
+        #   to do this, read the comments within this script
+   
+       cd <gimp_dir>/plug-ins/gap
+       ./apply_patch.sh   1.0.0     # specify your gimp version here
+       cd ../../app
+       make install
+
+    4. Compile GAP Plugins and install it
+
+       cd  $GIMP/plug-ins/gap
+       
+       # for GIMP 1.0.2 (and older)  
+       cp Makefile.1.0 Makefile
+      
+       # for GIMP 1.1  
+       cp Makefile.1.1 Makefile       
+
+       # Edit the Makefile to fit your configuration
+       
+       make
+       make install
+       
+    5. Install Script-Fu Scripts
+       # Just copy *.scm to  /usr/local/share/gimp/scripts
+       #              (or to $HOME/.gimp/scripts )
+       cd  $GIMP/plug-ins/gap
+       cp *.scm  /usr/local/share/gimp/scripts
+
+    
+   Notes:
+   - GAP provides frontend dialog for mpeg_encode (V1.5R2)
+     and mpeg2encode (V1.2)
+     If you like to use that stuff, you should install
+       mpeg_encode and mpeg_play
+       mpeg2encode and mpeg2decode
+     on your system.
+     
+     (There is no need to install the mpeg encoders to compile GAP)
+        
+   - GAP-Patch support for some older gimp releases
+     is available at the Registry:
+     
+        http://registry.gimp.org/detailview.phtml?plugin=gap_patches
+
+
+   - See the File README_xanim_hack for further optional Installation
+    
+
+
+--------------------------------------------------------------------
+Change Log
+--------------------------------------------------------------------
+- 0.99.00 - Move Path bugfix in the dialog
+            (update preview did'nt work with gimp 1.1.2 and gtk 1.1)
+          - Animated Filtercalls:
+            added a 2.nd Set of Iterators (iter_ALT Procedures) for
+            Plugins of GIMP 1.1.3 that is compiled with Makefile 1.1
+            (Makefile 1.0 still uses Iterators for the old 1.0 PDB-Interfaces)
+          - bugfixes in iterator code generator.
+          - GAP now uses gimp standard procedures to copy layers and channels.
+          - prepared filename-handling for win/dos conventions.
+- 0.98.02 - GAP_DB_BROWSER (1.1 variant) show help like the dbbrowser in gimp-1.1.1
+- 0.98.01 - GAP_DB_BROWSER variants for GIMP 1.0 and GIMP 1.1
+            new e-mail adress
+            xanim-hack
+- 0.98.00 - Sarted porting GAP to GIMP 1.1
+            Changed internal interfaces to work with
+            both GIMP 1.0.2 and GIMP 1.1 PDB.
+            
+            MovePath: The Layermask of imported Source Layerobjects
+                      is no longer ignored.
+- 0.97.01 - Added Patches for the XJT Load/Save filters
+            (XJT support for gimp 1.0.0 upto gimp 1.0.2)
+- 0.97.00 - Patches updated to work with gimp 1.0.2
+          - New Plugin 'Frames Modify'
+          - Bugfix in patchcode layer_cmds.c 
+            (get/set linked state didnt work since gimp 0.99.18)
+- 0.96.04 - Patches updated to work with gimp 1.0.1
+- 0.96.03 - Extended Pitstop-Dialog in 'Filter All layers'
+                  (now you can specify a backup file to store the
+		  Image after each non-interactive filtercall,
+		  futher you may skip the filtercall.
+		  These extensions were done because the MapObject
+		  Plugin crashes sometimes
+		  (after 3 hours calculating time on a PII 300Mhz processor)
+          - Extended Parameters for non-interactive call of 
+                  plug_in_gap_range_to_multilayer and
+                  plug_in_gap_split
+                  (the image_id of the created image is now returned)                
+- 0.96.02 - Added Clip To Image Option and Tooltips in MovePath Plugin.
+          _ Added Plugin 'Framesequence shift'
+          - Exended 'Frames To Image' Plugin 
+                  (now you can set framerate and framename
+                  for the generated layers) 
+          - Extended 'Duplicate Frames' Plugin
+                  (now you can use a framerange as source,
+                   not just the current frame)
+- 0.96.01 - Bugfix (refresh problems when GAP's array dialog was used twice
+                    in one plugin -- because of double call to gtk_init)
+- 0.96.00 - Added AnimFrames scale, resize and crop
+          - Added 'Split Image to Frames" (plug_in_gap_split)
+          - Added 'Frames MPEG_encode'  plug_in_gap_mpeg_encode
+                   (Requires free software 'mpeg_encode' to run)
+          - Added 'Frames MPEG2_encode'  plug_in_gap_mpeg2encode
+                   (Requires software 'mpeg2encode' to run)
+          - Most Dialogs changed  (some have got tooltips)
+            (now based on the new gap_arr_dialog module)
+          - internal changes (header files for all modules)
+          - bugfix: memory leak in gap_layer_copy.c
+- 0.95.04 - Iterator Generation: added support for iteration on PARAM_DRAWABLE type
+            Updated Iterator_ALT procedures for:
+            - BumpMap          (now you can use animated bumpmaps)
+            - DepthMerge
+            - Displace
+            - Refract
+- 0.95.03 - Patches updated to work with gimp 1.0.0
+            (Removed patches for gimp 0.99.19 due to sizelimit
+            in the Plugin registry)
+- 0.95.02 - Added Script sel-to-anim-img.scm
+- 0.95.01 - Made Patches usable for GIMP release 0.99.31
+            (there were no updates needed, just added some links
+             from 0.99.29 to 0.99.31)
+- 0.95.00 - extended MovePath plugin.
+            Now you can specify an angle for each point of the path
+            how to rotate the moving object layer.
+- 0.94.02 - Patches updated to work with gimp 0.99.29
+- 0.94.01 - Added new features to 'Frames to Image' Plugin:
+            Select of flatten_modes, and optional exclude of the BG-Layer.
+- 0.94.00 - Move Path Plugin uses now 1 Point per default.
+            (If you want to move an Object, you'll have to)
+            add Point(s) explicit.
+          - bugfix: Move Path Plugin initial value for src_paintmode
+                    undefined values sometimes caused 'cant get new layer' Error
+                    and Sourcelayers were not copied to the frames
+          - Patches updated to work with gimp 0.99.28
+          - Updated Foundation adress
+- 0.93.06 - Patches updated to work with gimp 0.99.27
+            implemented new versions of
+              gimage:gimage_lower_top_layer
+              gimage:gimage_lower_bot_layer
+            (the old versions were slow and failed
+             on Images with many layers)
+- 0.93.05 - Patches updated to work with gimp 0.99.24
+            Patches extended:
+            Added gimp-core functions to layers dialog:
+            raising/lowering a Layer to Top/Bottom of the layerstack
+- 0.93.04 - Patches updated to work with gimp 0.99.22
+            Window with Info Message if no Source Image was
+            selected in MovePath
+- 0.93.03 - Bugfix of the Patches updated to work with gimp 0.99.19
+            (duplicate_into should now copy channels too)
+- 0.93.02 - Patches updated to work with gimp 0.99.19
+
+- 0.93.01 - Bugfix
+           (GAP filters now should work on frames that are not 
+           in the current directory)
+
+- 0.93.00 - Internal "Gen Code by name" Button
+            generates additional file <plugin_name>_Iterator.c
+            (see README_Developers for more details)
+          - The Patches to the gimp core
+            (needed to run GAP bend, movel, adjust, implayer Plugins)
+            are now available for gimp releases:
+              0.99.16
+              0.99.17
+              0.99.18
+              0.99.19
+            the patches are stored in seperate versioned directories,
+            The apply_patch.sh script now expects the gimp-version
+            as calling argument.
+
+- 0.92.00 - "Filter all Layers"  Dialog Window after 1.st and 2.nd
+            Interactive Plugin call. (to give a chance to see
+            the effects caused by the plugin or to cancel
+            before proceeding) 
+          - New Patches to the gimp core
+              "gimp_layer_get_linked"
+              "gimp_layer_set_linked"
+          
+            (for Plugins "adjust", "bend", "movel"
+             these Plugins are not part of GAP, you can get them
+             from the Plugin Registry)
+                          
+          - Internal"Gen Code by name" Button if GAP_DEBUG environment is set.
+
+- 0.91.01 - "Apply Varying" Button insensitive if animated call
+             not available.
+          - Convert Frames Dialog window
+             now hides Colors and Dither entries
+             if Conv to INDEXED is not selected.
+             
+
+- 0.91.00  - Patches to the gimp core were updated to work with gimp 0.99.16
+             (plus: gimage_update_full was added for GAP)
+             (The Patches do work with  gimp 0.99.17 too)
+
+            - "plug_in_gap_layers_run_animfilter"
+              New Plugin allows animated calls to (more than 50) existing Plugins
+
+--------------------------------------------------------------------
+How to use
+--------------------------------------------------------------------
+
+WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
+	contains an illustrated GAP-tutorial, some demo-animations
+	and other plugins.
+	
+	The chapter "Advanced Animation" in the Gimp User Manual 1.0
+	(by Karin & Olof Kylander) also describes GAP with many
+	Illustrations.
+
+
+
+- Creating multiple frames (AnimFrames)
+
+      - from an existing single image
+           Save your Image as XCF file.  (File->Save as)
+           use a Name that ends up in _0001.xcf (or _0001.xcfgz)
+           
+           Then duplicate your image (AnimFrames->Duplicate)
+           You'll be asked how much Copies you need.
+           (Note: all copies are stored on disk immediate
+                  without explicite save)
+ 
+       - from an existing (layeranimated) multilayer image
+           use
+               AnimFrames->Split Img to frames
+               
+           This will create Frames, a series of Images on disk,
+           with a Name that ends up in _0001.xcf).
+           Optional you may use other extensions. (.xcfgz, .jpg ...)
+
+           WARNING: The extension defines the fileformat
+                    of the Frames. Most of the other Formats
+                    (than GIMP's .xcf Format) can NOT save
+                    multilayer frames or frames with alpha channels.
+          
+      - from outside the gimp
+           You may rename and copy existing XCF Images
+           according to the frame naming conventions.
+           <img>_0001.xcf
+           <img>_0002.xcf
+           ...
+           Then load (only one of them) into the GIMP.
+           
+- Navigation (Goto)
+      It is recommanded to define some Accelerator Keys for quick
+      walk through the frames.
+      Here are my settings (excerpt from my $HOME/.gimp/menurc )
+
+      (menu-path "<Image>/AnimFrames/Goto First" "<control><alt>1")
+      (menu-path "<Image>/AnimFrames/Goto Prev" "<alt>1")
+      (menu-path "<Image>/AnimFrames/Goto Next" "<alt>2")
+      (menu-path "<Image>/AnimFrames/Goto Any" "<alt>3")
+      (menu-path "<Image>/AnimFrames/Goto Last" "<control><alt>2")
+     
+
+- Playback
+      playbak of multilayered image is not available.
+      (it would be very slow)
+      But you can convert your frames to one Multilayer Image
+         (AnimFrames->Frames to Image)
+      And then playback the newly created Image
+         (Filters->Animation->Playback)          
+
+- Move Path (Make Things Move)
+      For this Plugin you need a series of frames
+      and one single image (that may have more layers).
+
+      - The Source Image must be opened in the gimp
+      - The Source Image must be another Image than the destination frame
+        (if you really want to copy layers from destination frame
+         to destination frame(s) you have to duplicate it first)
+      - The Source Image must be from the same type (RGB, INDEXED ..) as
+        the destination frame.
+
+        In other words: To run the 'Move Path' Plugin you have to open at
+                        least 2 Images of the same type.      
+      
+      
+      
+      Invoke this Plugin from one of the frames:
+      (Menu: AnimFrames->Move Path)
+      
+      The selected Layer(s) of the Source Image
+         is (are) copied into the selected range of frames.
+         Each handled frame recieves exactly one Copy of the selected Layer
+         from the Source Image.
+         
+      If you use other Stepmodes than "None",
+        the Layers of the SourceImage are stepped through,
+        and the next handled frame recieves the next
+        Layer from the Source_images Layerstack.
+      
+      The copies of the SourceLayer(s) were modified by transitions
+        with varying Parameters.
+        Parameters:
+        - Position (X/Y)
+        - Size     (Width/Height)
+        - Opacity
+        - Rotation (angle from -360 to +360 degrees)
+       - SourceLayer (depends on Stepmode)
+
+      The Parameters were changed linear from one starting point to
+      the next point. Per default the move Path has only only 1 Point.
+      (So the Src-Layers(s) are copied to all frames of the framerange
+       at constant Position, Size and Opacity)
+      If you want your Source_layers to move, grow, rotate or to fade (in or out)
+      you have to add one more points (limited to 256) to define a Path.
+
+      The affected range is selected by  Start Frame - End Frame.
+      Each affected frame recieves exactly one copy of the (current)
+      Sourcelayer adjusted to the current Prameters.
+      The Layerstack defines if the pasted copy appears
+      in the foreground (0 == on top) or below other layers that are
+      already in the frame.
+      With the toggle button 'Clip To Frame' the the copied layer
+      is clipped to the destination Frames Image Width and Height.
+       
+      With PreviewFrame you can select the frame Number to display
+      in the "Mov Path Preview".
+      You first have to Adjust the PreviewFrame
+      then press the "UpdPreview" Button.
+      
+      Tips:
+         - with the UpdPreview Button you can blend in the
+           selected Layer of the Source Image.
+           If you want to adjust position it may be useful to see
+           the background.
+           Therfore you can make the source image
+           transparent (modify the opacity value) or
+           put the sourcelayer below the background
+           (set the Layerstack to higher value)
+           Then pres UpdPreview Button again.
+         
+         - If you let your objects (source layers) rotatate or
+           change their size, set Handle mode to 'Center'.
+           (If you use another Handle mode you may get unwanted
+           moves of your object, caused by resizing)
+         
+         - Speed:
+           Move path alternates the settings linear from
+           point to point, so things move (or happen) in constant speed
+           between 2 Points.
+           
+           If you want to make accelerated moving Obcets, you'll
+           have to set more points with growing distances.
+           
+           Example:
+           
+           [1] [2]  [3]   [4]    [5]     [6]
+            +---+----+-----+------+-------+
+
+           The affected range has 25 frames, and you have set 6 points
+           with growing distances in one straight line.
+           That gives 5 frames (== equal time) for each part of the path,
+           but each part has another length. This results in different
+           (growing) speeds for each part of the path.
+           
+     
+- Convert frames to one multilayered Image.
+    This can be done with
+    
+          (AnimFrames->Frames to Image)
+          
+    The selected Source Range of Frames is copied into one
+    new created multilayered destination Image.
+    Each frame results in one Layer in the destination Image.
+    (or nothing if the source frame has no selected layer)
+    
+    With Layer Basename you can chosse a name for the resulting
+    Layers in the destination Image. The string [####] is replaced
+    by the frame number. 
+       Example: my_layer_[##]  results in: my_layer_01, my_layer_02 .... 
+    
+    Layer Mergemode:
+      - Extend as necessary   Build a destination Layer by merging
+                              selected Layers of one Sourceframe.
+                              The destination Layer's size will be
+                              the outline-rectangle of all selected
+                              Layers.
+                              
+      - Clipped to image      Build a destination Layer by merging 
+                              selected Layers of one Sourceframe.
+                              The destination Layer's size will be
+                              the Imagesize.
+                              
+      - Clipped to bottom layer  Build a destination Layer by merging
+                              selected Layers of one Sourceframe.
+                              The destination Layer's size will be
+                              the size of the lowest selected Layer.
+                              
+      - Flattened image       Build destination Layer by flattening
+                              the source_layers copied from one Sourceframe
+                              There will be no transparent parts
+                              in the destination Layers.
+                              The destination Layer's size will be
+                              the Imagesize.
+    
+    With the 'Exclude BG-Layer' check_button pressed,
+    the Backgrund-Layers of all the Sourceframes are excluded
+    from the copy, regardless if they are selected or not.
+    Otherwise BG-Layers are handled like all other Layers.
+   
+    (If you are using Flatten_mode 'Flatten' the BG-Color will fill all
+     transparent parts of the resulting destination layer(s).)
+
+    Layer Selection:
+    ----------------
+    Here you can select which layer(s) of a frame is(are) used
+    to build the destination Layer.
+    
+    Select Layer(s):
+       Pattern is equal to LayerName
+       Pattern is Start of LayerName
+       Pattern is End of Layername
+       Pattern is a Part of LayerName
+           With these settings you can select Layers
+           by their Layername.
+           (All Layers with a layername matching the Select Pattern
+           are selected).
+        
+       Pattern is LayerstackNumber List
+           Layers are selected by their Layerstackposition,
+           where 0 is the top layer.
+           The Pattern is a list of layerstack numbers or
+           number ranges. (0-3 matches to the upper 4 layers)       
+       Pattern is REVERSE-stack List"
+           Here you can specify Layerstacknumbers in REVERSE order.
+           (where 0 is the background Layer)
+           
+       All Visible (ignore Pattern)
+           All visible Layers are selected.
+           (The Select Pattern is ignored)
+       
+    Select Pattern:
+       String to identify a Layer. It can be a part of the layername
+       or a List of Layerstacknumbers (like this one: "0, 2-5, 9")
+       depending on your choice in Select Layer(s) above.
+    Case Sensitive:
+       Lowercase and UPPPERCASE letters are considered as equal
+       if this checkbutton is set to off.
+    Invert Selection:
+       Select all unselected Layers.
+
+
+
+- Modify Frames
+    
+    The GAP-tool 'Frames Modify' provides the feature to perform functions
+    on one ore more selected Layer(s) in all frames of the selected framerange.
+    
+    The Layers can be selected by (parts of) their name, or by their
+    layerstack numbers.
+    (for more information on Layer Selection see above).
+    
+    Available Functions are:
+	    "0:set_visible,
+	     1:set_invisible,
+	     2:set_linked,
+	     3:set_unlinked,
+	     4:raise,
+	     5:lower,
+	     6:merge_expand,
+	     7:merge_img,
+	     8:merge_bg,
+	     9:apply_filter,
+	     10:duplicate,
+	     11:delete,
+	     12:rename"
+    
+    
+    The function 'apply_filter' brigs up a dialog window that is
+    similar to the PDB-Browser, where you can select any available
+    filter.
+
+    If you use the PDB-Browser's button "Apply Varying", the
+       filterparameters will slightly change in each handled frame
+       from start to end.
+
+       - If there is more than one selected layer in a frame
+         each of the selected layers within the same frame
+         will be processed with the same filterparameter values.
+    
+         (for more info se 'Animated calls of Plug-In Filters' below)
+ 
+
+
+    It is a good idea to use the same layerstack structure in all
+    your frames. Another hint is that you assign useful names to
+    your layers. that should be done consequent for all frames.
+    
+    Example 1 (useful Layertack structure/names)
+    
+    
+                    film_0001.xcf    film_0002.xcf  ....  film_0010.xcf       
+    ---------------------------------------------------------------------
+    
+    layerstack [0]  mouse_01         mouse_02              mouse_10
+    layerstack [1]  cat_01           cat_02                cat_10
+    layerstack [2]  tree_01          tree_02               tree_10
+    layerstack [3]  background       background            background
+    
+
+    
+    Example 2 (not recommanded)
+    
+    
+                    film_0001.xcf    film_0002.xcf  ....  film_0010.xcf       
+    ---------------------------------------------------------------------
+    
+    layerstack [0]  tree             layer                 mouse_10
+    layerstack [1]  bg               layer                 cat_10
+    layerstack [2]                   layer                 background 
+    layerstack [3]                   background                       
+    
+
+
+
+- Saving MPEG files:
+
+    GAP provides only frontend dialogs to call MPEG encoding programs.
+    You must have installed one of them if you want to save
+    your finished AnimFrames in MPEG Video Fileformat.
+
+    The MPEG-encoders are:
+
+        1) mpeg_encode 1.5	
+	   freely distributed Berkeley MPEG-1 Video  Encoder
+	   ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz
+	   
+	   (Can read AnimFrame in the Fileformats:
+	      .yuv 
+	      .ppm
+	      .pnm
+	      .jpg
+	   )
+	   (can call filterprograms to convert from other fileformats)
+	
+	2) mpeg2encode 1.2
+	   MPEG-2 and MPEG-1 Encoder / Decoder, Version 1.2
+	   (MPEG Software Simulation Group)
+	   
+	   Web:      http://www.mpeg.org/MSSG
+	   FTP:      ftp://ftp.mpeg.org/pub/mpeg/mssg
+	   E-mail:   mssg@mpeg.org  (author contact)
+
+	   (Can read AnimFrame in the Fileformats:
+	      .yuv 
+	      .ppm
+	   )
+
+     To Prepare for MPEG encoding:
+     
+     - Use 'Frames Convert' from the AnimFrames Menu 
+       to convert your AnimFrames to .ppm 
+       (or another Fileformat that can be read directly by
+        your encoder)
+      
+     - If you have a Layerstack-Animated Multilayer Image
+       You can use 'Split Img to Frames' from the AnimFrames Menu.
+     
+     - If you are using mpeg_encode and
+       height or width are not multiples of 16:
+          Use 'Frames Scale' or 'Frames Crop' from the AnimFrames Menu
+          on the newly converted/created AnimFrames.
+     
+     - Then use 'Frames MPEG2_encode' or 'Frames MPEG_encode'
+       from the AnimFrames Menu.
+       (Invoked from one of the prepared AnimFrames)
+	   
+       Both encoders offer a lot of Parameter Settings for the experienced
+       User. The Parameters are passed to the encoder in a Parameterfile.
+       The frontend dialog shows only the most important Parameters,
+       but generates a documented Parameterfile with default values
+       for the other Parameters.
+       You can generate the Parameterfile with or without starting
+       the encoder.
+       (You may start the encoder later by executing the Startscript
+        from a Unixshell. The Startscript is generated by the frontend dialog)
+       
+       For more information on the Parameters please refer to the encoders
+       documentations.
+	   
+
+- Tips:
+  - Convert one multilayer Image to a series of frames:
+   
+     This can be done if you create a series of empty frames.
+     The Number of frames should be equal to the number of layers
+     in your multilayered image.
+     (File->New, AnimFrames->Duplicate)
+     
+     Then use the "Move Path" Plugin (AnimFrames->Move Path)
+     to copy the layers to all your frames.
+     Use 2 Points with both X=0, Y=0, Opacity=100%, Width=100%, Height=100%,
+     select the 1.st Layer of your multilayer Image as Source,
+     Handle=LeftTop, Mode=Normal, Stepmode=Loop
+    
+     Finally you can delete the (empty) backround Layers
+     (AnimFrames->Frames LayerDel)  with Layerstack Parameter >= 1
+
+  - Reverse the order of Layers within one multilayer Image
+      Convert one multilayer Image to a series of frames (see above)
+      then select AnimFrames->FramesToImage and use an invers Range
+      from N to 1. 
+
+  - Convert multiple frames from one Fileformat to another:
+      rename your images to fit GAP framename conventions
+      (Example: img_0001.tif, img_0003.tif img_0004.tif)
+      
+      then load the 1.st image into the gimp (File->Load)
+      and select (AnimFrames->Frames Convert)
+      In the following dialog window you can select
+      the desired destination filtype by its typical extension
+      (.jpg, .bmp or so on)
+
+      If your source images have layers and/or cannels
+      but your destination filtype do not support layers/cannels
+      you may optional choose flatten (1), to collapse all layers
+      into one before saving destination frames.
+      (flatten has no affect to your source frames)
+      
+      Type conversions to RGB, GRAY and INDEXED were needed
+      if your desired destination filetype does not support
+      the type of the source image.
+      Example: to convert from (.jpg) to (.gif)
+              you have to set the destinationtype "INDEXED",
+              (.gif can not handle RGB, only GRAY and INDEXED)
+              
+              Convert to INDEXED reduces the number of colors
+              downto 256 (or less).
+
+      
+- NO UNDO
+      There is no Undo for the AnimFrame Plugins.
+      Note: If you step to the next frame (AnimFrames->Goto Next)
+            the current frame is saved to disk and the next frame
+            is loaded into the image. 
+            All Undo steps were cleared at this time.
+      
+      Tip: "undo" for Move Path
+         You can Delete the Layers at desired Layerstackposition
+         (0 == on top) by (AnimFrames->Frames LayerDel)
+         So you can remove all the Layers inserted by "Move Path" plugin.
+
+- About Locks
+   All the GAP Plugins are using a lock, based on the image_id
+   (that is common to all frame images within one gimp session).
+   This lock disables to run other gap-plugins (or the same plugin twice)
+   from the frames Image menu
+   while the current GAP-plugin is working on that frame.
+   If you cancel a running GAP-plugin (Cancel Button in the progress window,
+   or kill it from a shell) the lock remains. To unlock save the current
+   frame image, close all views to that image, then reload the frame image.
+   (or quit and restart the gimp)
+
+  WARNING:
+  It is not recommanded to open more than one frame of
+  an animation at the same time.
+  (File->Open "img_0001.xcf"
+   File->Open "img_0002.xcf")
+  
+  In this constellation both gap plugins may concurrent 
+  in save/load to/from the same file.
+  Example:
+     call from "img_0001.xcf" AnimFrames->Delete Frames (range 0001 to 0003)
+           now img_0004.xcf is renamed to img_0001.xcf
+               img_0005.xcf is renamed to img_0002.xcf
+ 
+     then  
+     call from "img_0002.xcf" AnimFrames->Goto First
+            the img_0002.xcf (its old content) is saved,
+                             overwiting wht was img_0004.xcf before.
+  If you make the 2nd call while the 1st one is in progress,
+  you may trash your frames (2 writers on one file) and/or crash
+  your gimp session.
+
+- Animated calls of Plug-In Filters:
+
+  First of all, you need a multilayered Image.
+  You can use "<Image>->AnimFrames->Frames to Image"
+  to create one from a series of Frames,
+  or Duplicate the backround Layer of a single Layered Image
+  (Press Ctrl-C within the layers_dialog Window N-times)
+
+  Then call from wihin the multilayer Image:
+
+      "<Image>->Filters->Animation->Filter all Layers"
+  
+  You'll get a window similar to the PDB-Browser, that shows
+  all available Plug-Ins in a listbox (and informations about
+  the selected Plugin on the right side).
+
+  Note: The Listbox does not show the full PDB.
+        (Plugins without RunMode, Image, Drawable Parameters
+         are never listed here, regardless to your wildcard selection)
+  
+  Select one of the listed Plugins and press one of the Buttons:
+
+  "Apply Varying":
+      The selected Plugin is called 2 times in Interactive mode,
+      1. for the backround Layer
+      2. for the Top Layer.
+      
+      For all further Layers, the Plug-In will work non-interactive
+      with the Iterated Inbetween Values.
+      Therefore the plugin must have an _Iterator or _Iterator_ALT
+      procedure, to modify the "last stored values"
+       
+      (GAP provides such procedures for more than 50 existing plugins)
+      
+      If the Iterator Procedure is not available, the
+      "Apply Varying" Button is set insensitive on the selected procedure.
+      
+      Note:
+            It is possible to Iterate Values of the Type PARAM_DRAWABLE,
+            (such as the BumpMap in plug_in_bump_map:
+            You may use a layerstack-animated Image as animated Bump-map)
+            This will only work, if from and to Values are Layers within the same Image.
+            The Iteration is done on the Layerstackindex in that case.
+            and the inbetween values for the non-interactive filtercalls
+            will be the Layers between the from and to Layerstackindex.
+            (an animation sequence as the user might expect)             
+  
+  "Apply Constant":
+      The selected Plugin is called 2 times in Interactive mode,
+      For all further Layers, the Plug-In will work non-interactive
+      using the last stored values.
+
+
+  The Script sel-to-anim-img.scm simplifies the creation of Animated
+  Images. Invoke the Script from:
+
+             "<Image>->Script-Fu->Animators->Sel To AnimImage"
+             
+  The Script creates a new Image with n copies of the current selection.
+  Then it invokes the animated call of Plug-In Filters (optional)
+  on the generated new Image.
+
+  Note: - Some Plugins may not work correct or crash when called
+          in NON_INTERACTIVE mode. (see TESTPROT_iter_ALT)
+        
+        - Some Pugin's in your PDB can have earlier or later versions
+          If their Interfaces were changed
+          you get the message:(in the shell window)
+        
+               ERROR: xxxx_Iterator stored Data missmatch in size N != M
+               
+          when using the "Apply Varying" Button.
+          In that case you can try to generate the needed _Iterator Procedure
+          for your Plugins current Interface by yourself.
+          (see file: README_devlopers)
+        
+        - The wr_trans plugin collection (available in the Plugin Registry)
+          provides plugin interfaces for animated calls of the GIMP's transformer
+          Tools. (Rotate, Scale, Shear, Perspective)
+
+- How to write (or generate) Animated Plugins:
+      (see file: README_devlopers)
+
+--------------------------------------------------------------------
+changes to the gimp-core:
+--------------------------------------------------------------------
+
+Please note that NO CHANGES are needed if you have GIMP 1.1
+
+	For my Plugins I added NEW internals 
+	(they are not part of the official gimp 1.0.2,
+	 in most cases the Patch just offers a PDB-Interface
+	 for already existing GIMP-core internal Functions)
+
+	- gimp_drawable_set_image
+        - gimage_update_full
+        - gimp_layer_get_linked
+        - gimp_layer_set_linked
+        - floating_sel_attach_proc
+        - floating_sel_rigor_proc
+        - floating_sel_relax_proc
+        - gimage_floating_sel_attached_to
+        
+        my private extension for the layers_dialog Window
+        
+        - gimage_lower_top_layer
+        - gimage_lower_bot_layer
+        
+        Affected gimp-core sources (in directory app/)
+             gimage.c
+             gimage.h
+             gimage_cmds.c
+             gimage_cmds.h
+             layer_cmds.c
+             layer_cmds.h
+             layers_dialog.c
+             internal_procs.c
+             floating_sel_cmds.c
+             floating_sel_cmds.h
+
+=============================================
+plugin's included in release gap 0.99.00:
+=============================================
+
+  plug_in_gap_next
+	"This plugin exchanges current image with (next nubered) image from disk.",
+	 "<Image>/AnimFrames/Goto Next",
+
+  plug_in_gap_prev
+	 "This plugin exchanges current image with (previous nubered) image from disk.",
+	 "<Image>/AnimFrames/Goto Prev",
+
+  plug_in_gap_first
+	 "This plugin exchanges current image with (lowest nubered) image from disk.",
+	 "<Image>/AnimFrames/Goto First",
+
+  plug_in_gap_last
+	 "This plugin exchanges current image with (highest nubered) image from disk.",
+	 "<Image>/AnimFrames/Goto Last",
+
+  plug_in_gap_goto
+	 "This plugin exchanges current image with requested image (nr) from disk.",
+	 "<Image>/AnimFrames/Goto Any",
+
+  plug_in_gap_del
+	 "This plugin deltes the given number of frames from disk
+	  including the current frame.",
+	 "<Image>/AnimFrames/Delete Frames",
+
+  plug_in_gap_dup
+	 "This plugin duplicates the current frames on disk n-times.",
+	 "<Image>/AnimFrames/Duplicate Frames",
+
+  plug_in_gap_exchg
+	 "This plugin exchanges content of the current with destination frame.",
+	 "<Image>/AnimFrames/Exchange Frame",
+
+
+  plug_in_gap_move
+	 "This plugin copies layer(s) from one sourceimage to multiple frames on disk,
+	  varying position, size and opacity.",
+	 "<Image>/AnimFrames/Move Path",
+
+  plug_in_gap_range_to_multilayer
+         "This plugin creates a new image from the given range of frame-images.
+          Each frame is converted to one layer in the new image, according to flatten_mode.
+          (the frames on disk are not changed).",
+	 "<Image>/AnimFrames/Frames to Image",
+
+  plug_in_gap_range_flatten
+	 "This plugin flattens the given range of frame-images (on disk)",
+	 "<Image>/AnimFrames/Frames Flatten",
+
+  plug_in_gap_range_layer_del
+	 "This plugin deletes one layer in the given range of frame-images (on disk).
+	  exception: the last remaining layer of a frame is not deleted",
+	 "<Image>/AnimFrames/Frames LayerDel",
+
+  plug_in_gap_range_convert
+	 "This plugin converts the given range of frame-images to other fileformats
+	  (on disk) depending on extension",
+	 "<Image>/AnimFrames/Frames Convert",
+
+  plug_in_gap_layers_run_animfilter
+	 "This plugin calls another plugin for each layer of an image,
+	  varying its settings (to produce animated effects).
+	  The called plugin must work on a single drawable
+	  and must be able to RUN_WITH_LAST_VALS",
+         "<Image>/Filters/Animation/Filter all Layers"
+
+  plug_in_gap_anim_resize
+	 "This plugin resizes all anim_frames (images on disk)
+	  to the given new_width/new_height",
+	 "<Image>/AnimFrames/Frames Resize",
+
+  plug_in_gap_anim_crop
+	 "This plugin crops all anim_frames (images on disk)
+	  to the given new_width/new_height",
+	 "<Image>/AnimFrames/Frames Crop",
+			 "RGB*, INDEXED*, GRAY*",
+			 PROC_PLUG_IN,
+			 nargs_resize, nreturn_vals,
+			 args_resize, return_vals);
+
+  plug_in_gap_anim_scale
+	"This plugin scales all anim_frames (images on disk)
+	 to the given new_width/new_height",
+	 "<Image>/AnimFrames/Frames Scale",
+
+  plug_in_gap_split
+	"This plugin splits the current image to anim frames (images on disk).
+	 Each layer is saved as one frame",
+	 "<Image>/AnimFrames/Split Img to Frames",
+
+  plug_in_gap_mpeg_encode
+	"This plugin calls mpeg_encode to convert anim frames to MPEG1,
+	 or just generates a param file for mpeg_encode.
+	 (mpeg_encode must be installed on your system)",
+	 "<Image>/AnimFrames/Frames MPEG_encode",
+
+  plug_in_gap_mpeg2encode
+         "This plugin calls mpeg2encode to convert anim frames to MPEG1 or MPEG2,
+          or just generates a param file for mpeg2encode.
+          (mpeg2encode must be installed on your system)",
+         "<Image>/AnimFrames/Frames MPEG2_encode",
+
+  plug_in_gap_shift
+	 "This plugin Exchanges frames numbers in the given range.
+	 (discfile frame_0001.xcf is renamed to frame_0002.xcf,
+	  2->3, 3->4 ... n->1)",
+	  "<Image>/AnimFrames/Framesequence Shift",
+
+  plug_in_gap_modify
+	 "This plugin performs a modifying action on each selected layer
+	  in each selected framerange"
+	 <Image>/AnimFrames/Frames Modify
+  
+  script-fu-selection-to-anim-image
+	 "Create a multilayer image from current selection and
+	  apply any PDB Filter to all layer-copies"
+         "<Image>->Script-Fu->Animators->Sel To AnimImage"
