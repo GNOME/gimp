@@ -107,6 +107,10 @@ static const gchar * midi_get_event_blurb (GimpController *controller,
 
 static gboolean      midi_set_device      (ControllerMidi *controller,
                                            const gchar    *device);
+static void          midi_event           (ControllerMidi *midi,
+                                           gint            event_id,
+                                           gdouble         value);
+
 static gboolean      midi_read_event      (GIOChannel     *io,
                                            GIOCondition    cond,
                                            gpointer        data);
@@ -379,6 +383,25 @@ midi_set_device (ControllerMidi *midi,
   return FALSE;
 }
 
+static void
+midi_event (ControllerMidi *midi,
+            gint            event_id,
+            gdouble         value)
+{
+  GimpControllerEvent event = { 0, };
+
+  event.any.type     = GIMP_CONTROLLER_EVENT_VALUE;
+  event.any.source   = GIMP_CONTROLLER (midi);
+  event.any.event_id = event_id;
+
+  g_value_init (&event.value.value, G_TYPE_DOUBLE);
+  g_value_set_double (&event.value.value, value);
+
+  gimp_controller_event (GIMP_CONTROLLER (midi), &event);
+
+  g_value_unset (&event.value.value);
+}
+
 
 #define D(stmnt) stmnt;
 
@@ -521,41 +544,19 @@ midi_read_event (GIOChannel   *io,
 
               if (midi->command == 0x9)
                 {
-                  GimpControllerEvent event = { 0, };
-
                   D (g_print ("MIDI: note on (%02x vel %02x)\n",
                               midi->key, midi->velocity));
 
-                  event.any.type     = GIMP_CONTROLLER_EVENT_VALUE;
-                  event.any.source   = GIMP_CONTROLLER (data);
-                  event.any.event_id = midi->key;
-
-                  g_value_init (&event.value.value, G_TYPE_DOUBLE);
-                  g_value_set_double (&event.value.value,
-                                      (gdouble) midi->velocity / 127.0);
-
-                  gimp_controller_event (GIMP_CONTROLLER (midi), &event);
-
-                  g_value_unset (&event.value.value);
+                  midi_event (midi, midi->key,
+                              (gdouble) midi->velocity / 127.0);
                 }
               else if (midi->command == 0x8)
                 {
-                  GimpControllerEvent event = { 0, };
-
                   D (g_print ("MIDI: note off (%02x vel %02x)\n",
                               midi->key, midi->velocity));
 
-                  event.any.type     = GIMP_CONTROLLER_EVENT_VALUE;
-                  event.any.source   = GIMP_CONTROLLER (data);
-                  event.any.event_id = midi->key + 128;
-
-                  g_value_init (&event.value.value, G_TYPE_DOUBLE);
-                  g_value_set_double (&event.value.value,
-                                      (gdouble) midi->velocity / 127.0);
-
-                  gimp_controller_event (GIMP_CONTROLLER (midi), &event);
-
-                  g_value_unset (&event.value.value);
+                  midi_event (midi, midi->key + 128,
+                              (gdouble) midi->velocity / 127.0);
                 }
               else
                 {
@@ -568,6 +569,7 @@ midi_read_event (GIOChannel   *io,
               break;
 
             case 0xb:  /* controllers, sustain */
+
               if (midi->key == -1)
                 {
                   midi->key = buf[pos++];
@@ -580,21 +582,8 @@ midi_read_event (GIOChannel   *io,
               D (g_print ("MIDI: controller %d (value %d)\n",
                           midi->key, midi->velocity));
 
-              {
-                GimpControllerEvent event = { 0, };
-
-                event.any.type     = GIMP_CONTROLLER_EVENT_VALUE;
-                event.any.source   = GIMP_CONTROLLER (data);
-                event.any.event_id = midi->key + 128 + 128;
-
-                g_value_init (&event.value.value, G_TYPE_DOUBLE);
-                g_value_set_double (&event.value.value,
-                                    (gdouble) midi->velocity / 127.0);
-
-                gimp_controller_event (GIMP_CONTROLLER (midi), &event);
-
-                g_value_unset (&event.value.value);
-              }
+              midi_event (midi, midi->key + 128 + 128,
+                          (gdouble) midi->velocity / 127.0);
 
               midi->key      = -1;
               midi->velocity = -1;

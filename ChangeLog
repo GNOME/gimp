@@ -1,5 +1,10 @@
 2004-06-23  Michael Natterer  <mitch@gimp.org>
 
+	* modules/controller_midi.c: added utility function midi_event()
+	which assembles a GimpControllerEventValue and emits it.
+
+2004-06-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpenumaction.[ch]
 	* app/widgets/gimppluginaction.[ch]
 	* app/widgets/gimpstringaction.[ch]: added parameters to the
