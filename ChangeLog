@@ -1,3 +1,8 @@
+2004-03-23  Michael Natterer  <mitch@gimp.org>
+
+	* autogen.sh: be verbose about AUTOGEN_CONFIGURE_ARGS in the
+	message that is printed if no arguments were passed.
+
 2004-03-23  Sven Neumann  <sven@gimp.org>
 	    Michael Natterer <mitch@gimp.org>
 
