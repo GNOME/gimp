@@ -242,7 +242,8 @@ N_("Sets whether GIMP should create previews of layers and channels. " \
    "can slow things down when working with large images.")
 
 #define LAYER_PREVIEW_SIZE_BLURB \
-N_("Sets the default preview size for layers and channels.")
+N_("Sets the preview size used for layers and channel previews in newly " \
+   "created dialogs.")
 
 #define RESIZE_WINDOWS_ON_RESIZE_BLURB \
 N_("When enabled, the image window will automatically resize itself, " \

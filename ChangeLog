@@ -1,3 +1,9 @@
+2004-09-24  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimprc-blurbs.h (LAYER_PREVIEW_SIZE_BLURB): try to
+	improve the tooltip for the layer-preview-size gimprc setting.
+	Addresses bug #153603.
+
 2004-09-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-undo-push.c (undo_pop_fs_to_layer): factored
