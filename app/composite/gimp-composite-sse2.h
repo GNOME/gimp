@@ -10,4 +10,7 @@ extern void gimp_composite_sse2_init (void);
 extern void gimp_composite_sse2_install (void);
 
 extern void gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *);
+extern void gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *);
+extern void gimp_composite_subtract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *);
+extern void gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *);
 #endif

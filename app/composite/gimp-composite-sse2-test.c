@@ -56,6 +56,42 @@ gimp_composite_sse2_test (int iterations, int n_pixels)
     va8M[i].a = i;
   }
 
+
+  gimp_composite_context_init (&special_ctx, GIMP_COMPOSITE_DIFFERENCE, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D2);
+  gimp_composite_context_init (&generic_ctx, GIMP_COMPOSITE_DIFFERENCE, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D1);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_difference_rgba8_rgba8_rgba8_sse2, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("difference", &generic_ctx, &special_ctx)) {
+    return (1);
+  }
+  gimp_composite_regression_timer_report ("difference", ft0, ft1);
+
+  gimp_composite_context_init (&special_ctx, GIMP_COMPOSITE_ADDITION, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D2);
+  gimp_composite_context_init (&generic_ctx, GIMP_COMPOSITE_ADDITION, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D1);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_addition_rgba8_rgba8_rgba8_sse2, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("addition", &generic_ctx, &special_ctx)) {
+    return (1);
+  }
+  gimp_composite_regression_timer_report ("addition", ft0, ft1);
+
+  gimp_composite_context_init (&special_ctx, GIMP_COMPOSITE_SUBTRACT, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D2);
+  gimp_composite_context_init (&generic_ctx, GIMP_COMPOSITE_SUBTRACT, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D1);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_subtract_rgba8_rgba8_rgba8_sse2, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("subtract", &generic_ctx, &special_ctx)) {
+    return (1);
+  }
+  gimp_composite_regression_timer_report ("subtract", ft0, ft1);
+
+  gimp_composite_context_init (&special_ctx, GIMP_COMPOSITE_SWAP, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D2);
+  gimp_composite_context_init (&generic_ctx, GIMP_COMPOSITE_SWAP, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D1);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_swap_rgba8_rgba8_rgba8_sse2, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("swap", &generic_ctx, &special_ctx)) {
+    return (1);
+  }
+  gimp_composite_regression_timer_report ("swap", ft0, ft1);
 #endif
   return (0);
 }

@@ -1116,7 +1116,9 @@ void
 gimp_composite_color_erase_any_any_any_generic (GimpCompositeContext *ctx)
 {
   ctx->D = ctx->B;
-  ctx->combine = (gimp_composite_pixel_alphap[ctx->pixelformat_A] && gimp_composite_pixel_alphap[ctx->pixelformat_B]) ? COLOR_ERASE_INTEN : 0;
+  ctx->combine = (gimp_composite_pixel_alphap[ctx->pixelformat_A] && gimp_composite_pixel_alphap[ctx->pixelformat_B])
+				? COLOR_ERASE_INTEN
+				: 0;
 }
 
 

@@ -1,3 +1,19 @@
+2003-09-13  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* gimp-composite-sse2-installer.c, gimp-composite-sse2-test.c:
+	  regenerated with new functions.
+
+	* gimp-composite-sse.c, gimp-composite-sse2.c:
+	  Distinguish between 64bit and 128bit constants with a little
+	  faux hungarian notation.
+
+	* gimp-composite-sse2.[ch]: Added implementations of
+	  addition_rgba8_rgba8_rgba8, subtract_rgba8_rgba8_rgba8, and
+	  swap_rgba8_rgba8_rgba8
+
+	* gimp-composite-generic.c:
+	  Some formating beautification
+
 2003-09-13  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/imagemap/grid.xpm: removed
