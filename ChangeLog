@@ -1,3 +1,10 @@
+2004-03-22  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptextlayer.c (gimp_text_layer_duplicate): put some
+	code back in that I removed accidentally.
+	(gimp_text_layer_render) freeze/thaw notifications to avoid that
+	two "notify::modified" signals are emitted.
+
 2004-03-22  Raphaël Quinet  <quinet@gamers.org>
 
 	* autogen.sh: Added a test for the version of intltool because

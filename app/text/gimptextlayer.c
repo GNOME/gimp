@@ -286,6 +286,7 @@ gimp_text_layer_duplicate (GimpItem *item,
                            gboolean  add_alpha)
 {
   GimpTextLayer *layer;
+  GimpTextLayer *new_layer;
   GimpItem      *new_item;
 
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
@@ -297,18 +298,23 @@ gimp_text_layer_duplicate (GimpItem *item,
   if (! GIMP_IS_TEXT_LAYER (new_item))
     return new_item;
 
-  layer = GIMP_TEXT_LAYER (item);
+  layer     = GIMP_TEXT_LAYER (item);
+  new_layer = GIMP_TEXT_LAYER (new_item);
 
-  gimp_config_sync (GIMP_CONFIG (item), GIMP_CONFIG (new_item), 0);
+  gimp_config_sync (GIMP_CONFIG (layer), GIMP_CONFIG (new_layer), 0);
 
   if (layer->text)
     {
       GimpText *text = gimp_config_duplicate (GIMP_CONFIG (layer->text));
 
-      gimp_text_layer_set_text (GIMP_TEXT_LAYER (new_item), text);
+      gimp_text_layer_set_text (new_layer, text);
 
       g_object_unref (text);
     }
+
+  /*  this is just the parasite name, not a pointer to the parasite  */
+  if (layer->text_parasite)
+    new_layer->text_parasite = layer->text_parasite;
 
   return new_item;
 }
@@ -585,6 +591,8 @@ gimp_text_layer_render (GimpTextLayer *layer)
 
   layout = gimp_text_layout_new (layer->text, image);
 
+  g_object_freeze_notify (G_OBJECT (drawable));
+
   if (gimp_text_layout_get_size (layout, &width, &height) &&
       (width  != gimp_item_width (item) ||
        height != gimp_item_height (item)))
@@ -610,6 +618,8 @@ gimp_text_layer_render (GimpTextLayer *layer)
   g_object_unref (layout);
 
   g_object_set (drawable, "modified", FALSE, NULL);
+
+  g_object_thaw_notify (G_OBJECT (drawable));
 
   return (width > 0 && height > 0);
 }
