@@ -3289,6 +3289,7 @@ duplicate (GImage *gimage)
       list = g_slist_next (list);
 
       new_channel = channel_copy (channel);
+      GIMP_DRAWABLE(new_channel)->gimage_ID = new_gimage->ID;
 
       /*  Make sure the copied channel doesn't say: "<old channel> copy"  */
       g_free (drawable_name (GIMP_DRAWABLE(new_channel)));

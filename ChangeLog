@@ -1,3 +1,8 @@
+Sat Feb 28 00:09:46 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/gimage_cmds.c (duplicate): Duplicate image wasn't copying
+	channels to the new image.  Fixed.
+
 Fri Feb 27 23:02:10 MET 1998 Sven Neumann (sven@gimp.org)
 
 	* app/about_dialog.c: (about_dialog_load_logo) 
