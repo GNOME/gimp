@@ -1,3 +1,14 @@
+2002-06-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/helpbrowser/Makefile.am	
+	* plug-ins/helpbrowser/uri.[ch]: added new files that implement
+	conversion of a relative URI and an absolute base URI to a new
+	absolute URI according to RFC 2396. This code has been kindly
+	provided by Jacob Schroeder <jacob@convergence.de>.
+
+	* plug-ins/helpbrowser/helpbrowser.c: more work on the help
+	browser using the new URI functions. Still work in progress.
+ 
 2002-06-09  Michael Natterer  <mitch@gimp.org>
 
 	* themes/Default/imagerc

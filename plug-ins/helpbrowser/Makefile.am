@@ -7,7 +7,9 @@ libexec_PROGRAMS = helpbrowser
 helpbrowser_SOURCES = \
 	helpbrowser.c	\
 	queue.c		\
-	queue.h
+	queue.h		\
+	uri.c		\
+	uri.h
 
 INCLUDES = \
 	-I$(top_srcdir)		\

@@ -27,9 +27,10 @@
 #include <string.h> 
 #include <stdio.h>
 #include <stdlib.h>
-#if HAVE_UNISTD_H
-#include <unistd.h>
-#endif
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -40,6 +41,7 @@
 #include <libgimp/gimpui.h>
 
 #include "queue.h"
+#include "uri.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -91,26 +93,7 @@ N_("<html><head><title>Document not found</title></head>"
    "</body>"
    "</html>");
 
-static gchar *dir_not_found_format_string =
-N_("<html><head><title>Directory not found</title></head>"
-   "<body bgcolor=\"#ffffff\">"
-   "<center>"
-   "<p>"
-   "%s"
-   "<h3>Couldn't change to directory</h3>"
-   "<tt>%s</tt>"
-   "<h3>while trying to access</h3>"
-   "<tt>%s</tt>"
-   "</center>"
-   "<p>"
-   "<small>This either means that the help for this topic has not been written "
-   "yet or that something is wrong with your installation. "
-   "Please check carefully before you report this as a bug.</small>" 
-   "</body>"
-   "</html>");
-
 static gchar *eek_png_tag = "<h1>Eeek!</h1>";
-
 
 
 static gchar     *gimp_help_root = NULL;
@@ -151,8 +134,15 @@ static gboolean temp_proc_installed = FALSE;
 
 /*  forward declaration  */
 
-static gint load_page (const gchar *ref,
-		       gboolean     add_to_queue);
+static gboolean load_page   (const gchar  *ref,
+                             gboolean      add_to_queue);
+static void     request_url (HtmlDocument *doc,
+                             const gchar  *url,
+                             HtmlStream   *stream,
+                             gpointer      data);
+static gboolean io_handler  (GIOChannel   *io, 
+                             GIOCondition  condition, 
+                             gpointer      data);
 
 /*  functions  */
 
@@ -347,125 +337,28 @@ load_page (const gchar *ref,
 	   gboolean     add_to_queue)
 {
   HtmlDocument *doc;
-  FILE     *fp = NULL;
-  gchar     buf[8192];
-  gchar    *old_dir;
-  gchar    *new_dir;
-  gchar    *new_base;
-  gchar    *new_ref;
-  gchar    *tmp;
-  gsize     bytes_read;
-  gboolean  page_valid  = FALSE;
-  gboolean  filters_dir = FALSE;
+  gchar        *new_ref;
 
   g_return_val_if_fail (ref != NULL, FALSE);
 
   doc = HTML_VIEW (html)->document;
 
-  old_dir  = g_path_get_dirname (current_ref);
-  new_dir  = g_path_get_dirname (ref);
-  new_base = g_path_get_basename (ref);
+  new_ref = uri_to_abs (ref, current_ref);
 
-  /* return value is intentionally ignored */
-  chdir (old_dir);
+  if (!new_ref)
+    return FALSE;
 
-  if (chdir (new_dir) == -1)
+  g_print ("load_page %s\n", new_ref);
+
+  if (strcmp (current_ref, new_ref))
     {
-      gchar *msg;
-
-      if (g_path_is_absolute (ref))
-	new_ref = g_strdup (ref);
-      else
-	new_ref = g_build_filename (old_dir, ref, NULL);
-
-      msg = g_strdup_printf (gettext (dir_not_found_format_string),
-                             eek_png_tag, new_dir, new_ref);
-
       html_document_clear (doc);
       html_document_open_stream (doc, "text/html");
-      html_document_write_stream (doc, msg, strlen (msg));
-      html_document_close_stream (doc);
-      
-      g_free (msg);
-      
-      goto FINISH;
+      gtk_adjustment_set_value (gtk_layout_get_vadjustment (GTK_LAYOUT (html)),
+                                0);
+
+      request_url (doc, new_ref, doc->current_stream, NULL);
     }
-
-  tmp = new_dir;
-  new_dir = g_path_get_basename (tmp);
-  g_free (tmp);
-
-  if (strcmp (new_dir, "filters") == 0)
-    filters_dir = TRUE;
-
-  g_free (new_dir);
-  new_dir = g_get_current_dir ();
-
-  new_ref = g_build_filename (new_dir, new_base, NULL);
-
-  if (strcmp (current_ref, new_ref) == 0)
-    {
-      if (add_to_queue)
-	queue_add (queue, new_ref);
-
-      goto FINISH;
-    }
-
-  html_document_clear (doc);
-  html_document_open_stream (doc, "text/html");
-
-  /*
-   *  handle basename like: filename.html#11111 -> filename.html
-   */ 
-  g_strdelimit (new_base, "#", '\0');
-
-  fp = fopen (new_base, "rt");
-
-  if (fp != NULL)
-    {
-      while ((bytes_read = 
-              fread (buf, sizeof (gchar), sizeof (buf), fp)) > 0)
-	html_document_write_stream (doc, buf, bytes_read);
-    }
-  else if (filters_dir)
-    {
-      gchar *undocumented_filter = 
-        g_build_filename (new_dir, "undocumented_filter.html", NULL);
-
-      fp = fopen (undocumented_filter, "rt");
-
-      if (fp != NULL)
-	{
-          while ((bytes_read = 
-                  fread (buf, sizeof (gchar), sizeof (buf), fp)) > 0)
-            html_document_write_stream (doc, buf, bytes_read);
-	}
-
-      g_free (undocumented_filter);
-    }
-
-  if (fp)
-    {
-      fclose (fp);
-      page_valid = TRUE;
-    }
-  else
-    {
-      gchar *msg = g_strdup_printf (gettext (doc_not_found_format_string),
-                                    eek_png_tag, ref);
-      
-      chdir (old_dir);
-      html_document_write_stream (doc, msg, strlen (msg));
-      g_free (msg);
-    }
-
-  html_document_close_stream (doc);
-
- FINISH:
-  
-  g_free (old_dir);
-  g_free (new_dir);
-  g_free (new_base);
 
   g_free (current_ref);
   current_ref = new_ref;
@@ -475,7 +368,7 @@ load_page (const gchar *ref,
   
   update_toolbar ();
 
-  return (page_valid);
+  return TRUE;
 }
 
 static void
@@ -514,6 +407,106 @@ link_clicked (HtmlDocument *doc,
 }
 
 static void
+request_url (HtmlDocument *doc,
+             const gchar  *url,
+             HtmlStream   *stream,
+             gpointer      data)
+{
+  gchar *abs;
+  gchar *filename;
+
+  g_return_if_fail (url != NULL);
+  g_return_if_fail (stream != NULL);
+
+  abs = uri_to_abs (url, current_ref);
+  if (!abs)
+    return;
+
+  filename = g_filename_from_uri (abs, NULL, NULL);
+
+  if (filename)
+    {
+      gint fd;
+
+      fd = open (filename, O_RDONLY);
+
+      if (fd == -1)
+        {
+          gchar *msg = g_strdup_printf (gettext (doc_not_found_format_string),
+                                        eek_png_tag, filename);
+
+          html_document_write_stream (doc, msg, strlen (msg));
+        }
+      else
+        {
+          GIOChannel *io = g_io_channel_unix_new (fd);
+
+          g_print ("loading %s\n", filename);
+
+          g_io_channel_set_close_on_unref (io, TRUE);
+          g_io_channel_set_encoding (io, NULL, NULL);
+
+          g_io_add_watch (io, G_IO_IN | G_IO_ERR | G_IO_HUP | G_IO_NVAL, 
+                          io_handler, stream);
+        }
+
+      g_free (filename);
+    }
+  else
+    {
+      g_print ("no filename for %s\n", filename);
+    }
+
+  g_free (abs);
+}
+
+static gboolean
+io_handler (GIOChannel   *io,
+            GIOCondition  condition, 
+            gpointer      data)
+{
+  HtmlStream *stream;
+  gchar       buffer[8192];
+  guint       bytes;
+
+  stream = (HtmlStream *) data;
+
+  if (condition & G_IO_IN) 
+    {
+      if (g_io_channel_read_chars (io, buffer, sizeof (buffer),
+                                   &bytes, NULL) != G_IO_STATUS_ERROR
+          && bytes > 0)
+        {
+          html_stream_write (stream, buffer, bytes);
+        }
+      else
+	{
+	  return FALSE;
+	}
+
+      if (condition & G_IO_HUP) 
+        {
+          while (g_io_channel_read_chars (io, buffer, sizeof (buffer),
+                                          &bytes, NULL) != G_IO_STATUS_ERROR
+                 && bytes > 0)
+            {
+              html_stream_write (stream, buffer, bytes);
+            }
+        }
+    }
+
+  if (condition & (G_IO_ERR | G_IO_HUP | G_IO_NVAL)) 
+    {
+      html_stream_close (stream);
+      g_io_channel_unref (io);
+
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+static void
 drag_begin (GtkWidget      *widget,
             GdkDragContext *context,
             gpointer        data)
@@ -539,10 +532,10 @@ drag_data_get (GtkWidget        *widget,
                           strlen (current_ref));
 }
 
-gboolean
-open_browser_dialog (gchar *help_path,
-		     gchar *locale,
-		     gchar *help_file)
+static gboolean
+open_browser_dialog (const gchar *help_path,
+		     const gchar *locale,
+		     const gchar *help_file)
 {
   GtkWidget *window;
   GtkWidget *vbox;
@@ -552,37 +545,16 @@ open_browser_dialog (gchar *help_path,
   GtkWidget *button;
   GtkWidget *drag_source;
   GtkWidget *image;
-  gchar     *initial_dir;
-  gchar     *initial_ref;
   gchar     *eek_png_path;
-  gint       success;
 
   gimp_ui_init ("helpbrowser", TRUE);
 
-  if (chdir (gimp_help_root) == -1)
-    {
-      g_message (_("GIMP Help Browser Error.\n\n"
-		   "Couldn't find my root html directory.\n"
-		   "(%s)"), gimp_help_root);
-      return FALSE;
-    }
-
   eek_png_path = g_build_filename (gimp_help_root, "images", "eek.png", NULL);
 
-  if (access (eek_png_path, R_OK) == 0)
+  if (g_file_test (eek_png_path, G_FILE_TEST_EXISTS))
     eek_png_tag = g_strdup_printf ("<img src=\"%s\">", eek_png_path);
 
   g_free (eek_png_path);
-
-  if (chdir (help_path) == -1)
-    {
-      g_message (_("GIMP Help Browser Error.\n\n"
-		   "Couldn't find my root html directory.\n"
-		   "(%s)"), help_path);
-      return FALSE;
-    }
-
-  initial_dir = g_get_current_dir ();
 
   /*  the dialog window  */
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -698,18 +670,15 @@ open_browser_dialog (gchar *help_path,
   g_signal_connect (G_OBJECT (HTML_VIEW (html)->document), "link_clicked",
                     G_CALLBACK (link_clicked),
                     NULL);
+  g_signal_connect (G_OBJECT (HTML_VIEW (html)->document), "request_url",
+                    G_CALLBACK (request_url),
+                    NULL);
 
   gtk_widget_show (window);
 
-  current_ref = g_build_filename (initial_dir, locale, NULL);
+  current_ref = g_strconcat ("file://", help_path, "/", locale, "/", NULL);
 
-  initial_ref = g_build_filename (initial_dir, locale, help_file, NULL);
-  success = load_page (initial_ref, TRUE);
-  g_free (initial_ref);
-
-  g_free (initial_dir);
-
-  return TRUE;
+  return load_page (help_file, TRUE);
 }
 
 static gboolean
@@ -827,9 +796,9 @@ install_temp_proc (void)
 }
 
 static gboolean
-open_url (gchar *help_path,
-	  gchar *locale,
-	  gchar *help_file)
+open_url (const gchar *help_path,
+	  const gchar *locale,
+	  const gchar *help_file)
 {
   if (! open_browser_dialog (help_path, locale, help_file))
     return FALSE;
@@ -906,7 +875,7 @@ run (gchar      *name,
 
 	  if (env_root_dir)
 	    {
-	      if (chdir (env_root_dir) == -1)
+	      if (!g_file_test (env_root_dir, G_FILE_TEST_IS_DIR))
 		{
 		  g_message (_("GIMP Help Browser Error.\n\n"
 			       "Couldn't find GIMP_HELP_ROOT html directory.\n"
