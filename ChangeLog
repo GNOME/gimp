@@ -1,5 +1,7 @@
 Fri Apr 23 08:31:50 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
+	* app/gimpbrushlist.c: <sys/types.h> before <sys/stat.h>
+
 	* plug-ins/lic/lic.c: MAIN at the end of file.
 	* plug-ins/despeckle/despeckle.c: 
 	* plug-ins/destripe/destripe.c: 
