@@ -1,5 +1,9 @@
 2002-01-02  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/pagecurl/pagecurl.c: compile with GTK_DISABLE_DEPRECATED.
+
+2002-01-02  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimppixmap.c: made a warning more verbose.
 
 	* libgimpwidgets/gimppixmap.h: no need to fiddle around with evil

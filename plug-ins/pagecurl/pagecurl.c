@@ -142,12 +142,21 @@ static CurlParams curl;
 
 /* Image parameters */
 
-static gint32     image_id;
+static gint32        image_id;
 static GimpDrawable *curl_layer;
 static GimpDrawable *drawable;
 
-static GdkPixmap *gdk_curl_pixmaps[8];
-static GdkBitmap *gdk_curl_masks[8];
+static gchar **curl_pixmaps[] =
+{
+  curl0_xpm,
+  curl1_xpm,
+  curl2_xpm,
+  curl3_xpm,
+  curl4_xpm,
+  curl5_xpm,
+  curl6_xpm,
+  curl7_xpm
+};
 
 static GtkWidget *curl_pixmap_widget;
 
@@ -477,13 +486,14 @@ dialog_toggle_update (GtkWidget *widget,
       curl.do_lower_left + curl.do_lower_right == 1 &&
       curl.do_horizontal + curl.do_vertical == 1)
     {
-      pixmapindex = curl.do_lower_left + curl.do_upper_right * 2 +
-	curl.do_upper_left * 3 + curl.do_horizontal * 4;
+      pixmapindex = (curl.do_lower_left + curl.do_upper_right * 2 +
+                     curl.do_upper_left * 3 + curl.do_horizontal * 4);
+
       if (pixmapindex < 0 || pixmapindex > 7)
 	pixmapindex = 0;
-      gtk_pixmap_set (GTK_PIXMAP (curl_pixmap_widget),
-		      gdk_curl_pixmaps[pixmapindex],
-		      gdk_curl_masks[pixmapindex]);
+
+      gimp_pixmap_set (GIMP_PIXMAP (curl_pixmap_widget),
+                       curl_pixmaps[pixmapindex]);
     }
 }
 
@@ -503,9 +513,8 @@ do_dialog (void)
   GtkWidget *gradient_button;
   GtkWidget *button;
   GtkWidget *scale;
-  GtkStyle  *style;
   GtkObject *adjustment;
-  gint pixmapindex;
+  gint       pixmapindex;
 
   gimp_ui_init ("pagecurl", FALSE);
 
@@ -540,56 +549,14 @@ do_dialog (void)
    gtk_container_set_border_width (GTK_CONTAINER (table), 2);
    gtk_container_add (GTK_CONTAINER (frame), table);
 
-   gtk_widget_realize (dialog);
-   style = gtk_widget_get_style (dialog);
+   pixmapindex = (curl.do_lower_left + curl.do_upper_right * 2 +
+                  curl.do_upper_left * 3 + curl.do_horizontal * 4);
 
-   gdk_curl_pixmaps[0] =
-     gdk_pixmap_create_from_xpm_d (dialog->window,
-				   &(gdk_curl_masks[0]),
-				   &style->bg[GTK_STATE_NORMAL],
-				   curl0_xpm);
-   gdk_curl_pixmaps[1] =
-     gdk_pixmap_create_from_xpm_d (dialog->window,
-				   &(gdk_curl_masks[1]),
-				   &style->bg[GTK_STATE_NORMAL],
-				   curl1_xpm);
-   gdk_curl_pixmaps[2] =
-     gdk_pixmap_create_from_xpm_d (dialog->window,
-				   &(gdk_curl_masks[2]),
-				   &style->bg[GTK_STATE_NORMAL],
-				   curl2_xpm);
-   gdk_curl_pixmaps[3] =
-     gdk_pixmap_create_from_xpm_d (dialog->window,
-				   &(gdk_curl_masks[3]),
-				   &style->bg[GTK_STATE_NORMAL],
-				   curl3_xpm);
-   gdk_curl_pixmaps[4] =
-     gdk_pixmap_create_from_xpm_d (dialog->window,
-				   &(gdk_curl_masks[4]),
-				   &style->bg[GTK_STATE_NORMAL],
-				   curl4_xpm);
-   gdk_curl_pixmaps[5] =
-     gdk_pixmap_create_from_xpm_d (dialog->window,
-				   &(gdk_curl_masks[5]),
-				   &style->bg[GTK_STATE_NORMAL],
-				   curl5_xpm);
-   gdk_curl_pixmaps[6] =
-     gdk_pixmap_create_from_xpm_d (dialog->window,
-				   &(gdk_curl_masks[6]),
-				   &style->bg[GTK_STATE_NORMAL],
-				   curl6_xpm);
-   gdk_curl_pixmaps[7] =
-     gdk_pixmap_create_from_xpm_d (dialog->window,
-				   &(gdk_curl_masks[7]),
-				   &style->bg[GTK_STATE_NORMAL],
-				   curl7_xpm);
-
-   pixmapindex = curl.do_lower_left + curl.do_upper_right * 2 +
-      curl.do_upper_left * 3 + curl.do_horizontal * 4;
    if (pixmapindex < 0 || pixmapindex > 7)
-      pixmapindex = 0;
-   curl_pixmap_widget = gtk_pixmap_new (gdk_curl_pixmaps[pixmapindex],
-					gdk_curl_masks[pixmapindex]);
+     pixmapindex = 0;
+
+   curl_pixmap_widget = gimp_pixmap_new (curl_pixmaps[pixmapindex]);
+
    gtk_table_attach (GTK_TABLE (table), curl_pixmap_widget, 1, 2, 1, 2,
 		     GTK_SHRINK, GTK_SHRINK, 0, 0);
    gtk_widget_show (curl_pixmap_widget);
