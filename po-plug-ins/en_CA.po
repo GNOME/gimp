@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-13 10:33-0500\n"
-"PO-Revision-Date: 2005-02-13 14:31-0400\n"
+"POT-Creation-Date: 2005-02-14 10:26-0500\n"
+"PO-Revision-Date: 2005-02-14 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -381,7 +381,7 @@ msgstr "_Fractals"
 #: plug-ins/common/mng.c:941 plug-ins/common/pat.c:431
 #: plug-ins/common/pcx.c:581 plug-ins/common/pix.c:511
 #: plug-ins/common/png.c:1175 plug-ins/common/pnm.c:807
-#: plug-ins/common/postscript.c:1121 plug-ins/common/psd_save.c:1611
+#: plug-ins/common/postscript.c:1121 plug-ins/common/psd_save.c:1335
 #: plug-ins/common/raw.c:517 plug-ins/common/raw.c:544
 #: plug-ins/common/spheredesigner.c:2099 plug-ins/common/sunras.c:510
 #: plug-ins/common/tga.c:1027 plug-ins/common/tiff.c:1917
@@ -1247,7 +1247,7 @@ msgstr "Cannot operate on unknown image types."
 #: plug-ins/common/pat.c:437 plug-ins/common/pcx.c:543
 #: plug-ins/common/pix.c:517 plug-ins/common/png.c:1183
 #: plug-ins/common/pnm.c:812 plug-ins/common/postscript.c:1127
-#: plug-ins/common/psd_save.c:1617 plug-ins/common/sunras.c:516
+#: plug-ins/common/psd_save.c:1341 plug-ins/common/sunras.c:516
 #: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1923
 #: plug-ins/common/xbm.c:998 plug-ins/common/xpm.c:622
 #: plug-ins/common/xwd.c:573 plug-ins/fits/fits.c:455 plug-ins/gfli/gfli.c:681
@@ -3291,8 +3291,8 @@ msgid "_Polar"
 msgstr "_Polar"
 
 #: plug-ins/common/displace.c:452
-msgid "Edge behaviour"
-msgstr "Edge behaviour"
+msgid "Edge Behavior"
+msgstr "Edge Behaviour"
 
 #: plug-ins/common/displace.c:458 plug-ins/common/edge.c:734
 #: plug-ins/common/ripple.c:566 plug-ins/common/waves.c:279
@@ -5825,11 +5825,11 @@ msgstr "Preview _size:"
 msgid "Invalid UTF-8 string in PSD file"
 msgstr "Invalid UTF-8 string in PSD file"
 
-#: plug-ins/common/psd_save.c:183
+#: plug-ins/common/psd_save.c:192
 msgid "Photoshop image"
 msgstr "Photoshop image"
 
-#: plug-ins/common/psd_save.c:1587
+#: plug-ins/common/psd_save.c:1311
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
@@ -5838,7 +5838,7 @@ msgstr ""
 "Unable to save '%s'.  The PSD file format does not support images that are "
 "more than 30000 pixels wide or tall."
 
-#: plug-ins/common/psd_save.c:1599
+#: plug-ins/common/psd_save.c:1323
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
