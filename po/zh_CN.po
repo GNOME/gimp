@@ -3332,7 +3332,7 @@ msgstr "/滤镜/艺术"
 
 #: app/gui/menus.c:924
 msgid "/Filters/Map"
-msgstr "/滤镜/图纸"
+msgstr "/滤镜/影射"
 
 #: app/gui/menus.c:925
 msgid "/Filters/Render"
@@ -4753,7 +4753,7 @@ msgstr "The GIMP"
 
 #: app/gui/tips-dialog.c:79
 msgid "gimp_tips.txt"
-msgstr "gimp_tips.txt"
+msgstr "gimp_tips.zh_CN.txt"
 
 #: app/gui/tips-dialog.c:94
 msgid "GIMP Tip of the Day"

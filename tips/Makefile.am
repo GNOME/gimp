@@ -15,7 +15,8 @@ tipsdata_DATA = \
 	gimp_tips.pl.txt	\
 	gimp_tips.ru.txt	\
 	gimp_tips.tr.txt	\
-	gimp_tips.uk.txt
+	gimp_tips.uk.txt	\
+	gimp_tips.zh_CN.txt
 
 EXTRA_DIST = \
 	$(tipsdata_DATA)	\

@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgimp\n"
+"Project-Id-Version: gimp-libgimp\n"
 "POT-Creation-Date: 2001-10-25 22:50+0800\n"
-"PO-Revision-Date: 2001-10-26 17:00+0800\n"
+"PO-Revision-Date: 2001-11-17 22:31+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"

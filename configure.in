@@ -106,7 +106,7 @@ AC_SUBST(STRIP_BEGIN)
 AC_SUBST(STRIP_END)
 
 dnl i18n stuff
-ALL_LINGUAS="ca cs da de en_GB es fi fr ga gl hu hr it ja ko nl no pl pt_BR ro ru sk sv tr uk zh_TW"
+ALL_LINGUAS="ca cs da de en_GB es fi fr ga gl hu hr it ja ko nl no pl pt_BR ro ru sk sv tr uk zh_CN zh_TW"
 AM_GLIB_GNU_GETTEXT
 
 AC_PATH_XTRA

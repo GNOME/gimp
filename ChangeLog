@@ -1,3 +1,7 @@
+2001-11-17  Wang Jian  <lark@linux.net.cn>
+
+	* configure.in(ALL_LINGUAS): Added zh_CN for Simplified Chinese.
+
 2001-11-17  Daniel Egger  <egger@fhm.edu>
 
 	* app/base/base.c: Prevent from crash if swap_path == NULL. 
