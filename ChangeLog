@@ -1,3 +1,9 @@
+2004-03-22  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimplayer-floating-sel.c (floating_sel_attach): don't
+	do a type-checking cast on an object that was released a few lines
+	above. Fixes bug #137957.
+
 2004-03-22  Tor Lillqvist  <tml@iki.fi>
 
 	* app/plug-in/plug-in.c (plug_in_recv_message): Win32-only

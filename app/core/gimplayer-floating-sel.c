@@ -65,7 +65,7 @@ floating_sel_attach (GimpLayer    *layer,
       /*  if we were pasting to the old floating selection, paste now
        *  to the drawable
        */
-      if (drawable == GIMP_DRAWABLE (floating_sel))
+      if (drawable == (GimpDrawable *) floating_sel)
 	drawable = gimp_image_active_drawable (gimage);
     }
 
