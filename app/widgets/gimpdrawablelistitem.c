@@ -45,8 +45,7 @@ static void   gimp_drawable_list_item_class_init (GimpDrawableListItemClass *kla
 static void   gimp_drawable_list_item_init       (GimpDrawableListItem      *list_item);
 
 static void   gimp_drawable_list_item_set_viewable    (GimpListItem      *list_item,
-                                                       GimpViewable      *viewable,
-                                                       gint               preview_size);
+                                                       GimpViewable      *viewable);
 
 static gboolean   gimp_drawable_list_item_drag_motion (GtkWidget         *widget,
                                                        GdkDragContext    *context,
@@ -149,17 +148,14 @@ gimp_drawable_list_item_init (GimpDrawableListItem *list_item)
 
 static void
 gimp_drawable_list_item_set_viewable (GimpListItem *list_item,
-                                      GimpViewable *viewable,
-                                      gint          preview_size)
+                                      GimpViewable *viewable)
 {
   GimpDrawableListItem *drawable_item;
   GimpDrawable         *drawable;
   gboolean              visible;
 
   if (GIMP_LIST_ITEM_CLASS (parent_class)->set_viewable)
-    GIMP_LIST_ITEM_CLASS (parent_class)->set_viewable (list_item,
-                                                       viewable,
-                                                       preview_size);
+    GIMP_LIST_ITEM_CLASS (parent_class)->set_viewable (list_item, viewable);
 
   drawable_item = GIMP_DRAWABLE_LIST_ITEM (list_item);
   drawable      = GIMP_DRAWABLE (GIMP_PREVIEW (list_item->preview)->viewable);

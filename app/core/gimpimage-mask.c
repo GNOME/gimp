@@ -334,9 +334,8 @@ gimage_mask_extract (GImage       *gimage,
 	}
       else if (cut_gimage && GIMP_IS_LAYER_MASK (drawable))
 	{
-	  gimp_image_remove_layer_mask (gimage, 
-					gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)),
-					DISCARD);
+	  gimp_layer_apply_mask (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)),
+                                 DISCARD, TRUE);
 	}
       else if (cut_gimage && GIMP_IS_CHANNEL (drawable))
 	gimp_image_remove_channel (gimage, GIMP_CHANNEL (drawable));

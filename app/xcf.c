@@ -2311,7 +2311,7 @@ xcf_load_layer (XcfInfo *info,
       edit_mask  = layer->edit_mask;
       show_mask  = layer->show_mask;
 
-      gimp_layer_add_mask (layer, layer_mask);
+      gimp_layer_add_mask (layer, layer_mask, FALSE);
 
       layer->apply_mask = apply_mask;
       layer->edit_mask  = edit_mask;

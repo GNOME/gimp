@@ -303,6 +303,8 @@ gimp_SOURCES = \
 	gimpgradientpreview.c		\
 	gimpimagepreview.h		\
 	gimpimagepreview.c		\
+	gimplayerlistitem.h		\
+	gimplayerlistitem.c		\
 	gimplistitem.h			\
 	gimplistitem.c			\
 	gimppalettepreview.h		\

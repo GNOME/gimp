@@ -1702,39 +1702,18 @@ undo_pop_layer_mask (GimpImage *gimage,
   if ((state == UNDO && type == LAYER_MASK_ADD_UNDO) ||
       (state == REDO && type == LAYER_MASK_REMOVE_UNDO))
     {
-      /*  remove the layer mask  */
-      lmu->layer->mask       = NULL;
-      lmu->layer->apply_mask = FALSE;
-      lmu->layer->edit_mask  = FALSE;
-      lmu->layer->show_mask  = FALSE;
-
-      /*  if this is redoing a remove operation &
-       *  the mode of application was DISCARD or
-       *  this is undoing an add...
-       */
-      if ((state == REDO && lmu->mode == DISCARD) || state == UNDO)
-	drawable_update (GIMP_DRAWABLE (lmu->layer), 0, 0, 
-			 GIMP_DRAWABLE (lmu->layer)->width,
-			 GIMP_DRAWABLE (lmu->layer)->height);
+      gimp_layer_apply_mask (lmu->layer, lmu->mode, FALSE);
     }
   /*  restore layer  */
   else
     {
-      lmu->layer->mask       = lmu->mask;
+      gimp_layer_add_mask (lmu->layer, lmu->mask, FALSE);
+
       lmu->layer->apply_mask = lmu->apply_mask;
       lmu->layer->edit_mask  = lmu->edit_mask;
       lmu->layer->show_mask  = lmu->show_mask;
 
       gimage_set_layer_mask_edit (gimage, lmu->layer, lmu->edit_mask);
-
-      /*  if this is undoing a remove operation &
-       *  the mode of application was DISCARD or
-       *  this is redoing an add
-       */
-      if ((state == UNDO && lmu->mode == DISCARD) || state == REDO)
-	drawable_update (GIMP_DRAWABLE (lmu->layer), 0, 0, 
-			 GIMP_DRAWABLE (lmu->layer)->width,
-			 GIMP_DRAWABLE (lmu->layer)->height);
     }
 
   return TRUE;

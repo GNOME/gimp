@@ -1774,8 +1774,7 @@ layers_dialog_apply_layer_mask_callback (GtkWidget *widget,
     {
       gboolean flush = ! layer->apply_mask || layer->show_mask;
 
-      gimp_image_remove_layer_mask (gimp_drawable_gimage (GIMP_DRAWABLE (layer)),
-				    layer, APPLY);
+      gimp_layer_apply_mask (layer, APPLY, TRUE);
 
       if (flush)
 	{
@@ -1808,8 +1807,7 @@ layers_dialog_delete_layer_mask_callback (GtkWidget *widget,
     {
       gboolean flush = layer->apply_mask || layer->show_mask;
 
-      gimp_image_remove_layer_mask (gimp_drawable_gimage (GIMP_DRAWABLE (layer)),
-				    layer, DISCARD);
+      gimp_layer_apply_mask (layer, DISCARD, TRUE);
 
       if (flush)
 	{
@@ -3837,11 +3835,12 @@ add_mask_query_ok_callback (GtkWidget *widget,
   GimpLayer      *layer;
 
   options = (AddMaskOptions *) data;
+
   if ((layer = (options->layer)) &&
       (gimage = GIMP_DRAWABLE (layer)->gimage))
     {
       mask = gimp_layer_create_mask (layer, options->add_mask_type);
-      gimp_image_add_layer_mask (gimage, layer, mask);
+      gimp_layer_add_mask (layer, mask, TRUE);
       gdisplays_flush ();
     }
 

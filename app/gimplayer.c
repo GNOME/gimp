@@ -51,6 +51,13 @@
 #include "libgimp/gimpintl.h"
 
 
+enum
+{
+  MASK_CHANGED,
+  LAST_SIGNAL
+};
+
+
 static void      gimp_layer_class_init           (GimpLayerClass     *klass);
 static void      gimp_layer_init                 (GimpLayer          *layer);
 static void      gimp_layer_destroy              (GtkObject          *object);
@@ -63,7 +70,9 @@ static void      gimp_layer_transform_color      (GimpImage          *gimage,
 						  GimpImageBaseType   type);
 
 
-static GimpDrawableClass *parent_class = NULL;
+static guint  layer_signals[LAST_SIGNAL] = { 0 };
+
+static GimpDrawableClass *parent_class   = NULL;
 
 
 GtkType
@@ -104,9 +113,22 @@ gimp_layer_class_init (GimpLayerClass *klass)
 
   parent_class = gtk_type_class (GIMP_TYPE_DRAWABLE);
 
+  layer_signals[MASK_CHANGED] =
+    gtk_signal_new ("mask_changed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpLayerClass,
+				       mask_changed),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
+  gtk_object_class_add_signals (object_class, layer_signals, LAST_SIGNAL);
+
   object_class->destroy = gimp_layer_destroy;
 
   viewable_class->invalidate_preview = gimp_layer_invalidate_preview;
+
+  klass->mask_changed = NULL;
 }
 
 static void
@@ -420,10 +442,57 @@ gimp_layer_new_from_tiles (GimpImage        *gimage,
 
 GimpLayerMask *
 gimp_layer_add_mask (GimpLayer     *layer,
-		     GimpLayerMask *mask)
+		     GimpLayerMask *mask,
+                     gboolean       push_undo)
 {
+  GimpImage     *gimage;
+  LayerMaskUndo *lmu;
+
+  g_return_val_if_fail (layer != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
+
+  g_return_val_if_fail (mask != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_LAYER_MASK (mask), NULL);
+
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer));
+
+  if (! gimage)
+    {
+      g_message (_("Cannot add layer mask to layer\n"
+                   "which is not part of an image."));
+      return NULL;
+    }
+
   if (layer->mask)
-    return NULL;
+    {
+      g_message(_("Unable to add a layer mask since\n"
+                  "the layer already has one."));
+      return NULL;
+    }
+
+  if (gimp_drawable_is_indexed (GIMP_DRAWABLE (layer)))
+    {
+      g_message(_("Unable to add a layer mask to a\n"
+                  "layer in an indexed image."));
+      return NULL;
+    }
+
+  if (! gimp_layer_has_alpha (layer))
+    {
+      g_message (_("Cannot add layer mask to a layer\n"
+                   "with no alpha channel."));
+      return NULL;
+    }
+
+  if ((gimp_drawable_width (GIMP_DRAWABLE (layer)) !=
+       gimp_drawable_width (GIMP_DRAWABLE (mask))) ||
+      (gimp_drawable_height (GIMP_DRAWABLE (layer)) !=
+       gimp_drawable_height (GIMP_DRAWABLE (mask))))
+    {
+      g_message(_("Cannot add layer mask of different\n"
+                  "dimensions than specified layer."));
+      return NULL;
+    }
 
   layer->mask = mask;
 
@@ -441,6 +510,20 @@ gimp_layer_add_mask (GimpLayer     *layer,
 		   0, 0,
 		   GIMP_DRAWABLE (layer)->width, 
 		   GIMP_DRAWABLE (layer)->height);
+
+  if (push_undo)
+    {
+      /*  Prepare a layer undo and push it  */
+      lmu = g_new (LayerMaskUndo, 1);
+      lmu->layer      = layer;
+      lmu->mask       = mask;
+      lmu->apply_mask = layer->apply_mask;
+      lmu->edit_mask  = layer->edit_mask;
+      lmu->show_mask  = layer->show_mask;
+      undo_push_layer_mask (gimage, LAYER_MASK_ADD_UNDO, lmu);
+    }
+
+  gtk_signal_emit (GTK_OBJECT (layer), layer_signals[MASK_CHANGED]);
 
   return layer->mask;
 }
@@ -466,10 +549,7 @@ gimp_layer_create_mask (GimpLayer   *layer,
   mask_name = g_strdup_printf (_("%s mask"),
 			       gimp_object_get_name (GIMP_OBJECT (layer)));
 
-  /* Start an undo group.  Needed if we are modifying the selection */
-  undo_push_group_start (gimage, LAYER_MASK_ADD_UNDO);
   /*  Create the layer mask  */
-
   mask = gimp_layer_mask_new (GIMP_DRAWABLE (layer)->gimage,
 			      GIMP_DRAWABLE (layer)->width,
 			      GIMP_DRAWABLE (layer)->height,
@@ -510,7 +590,6 @@ gimp_layer_create_mask (GimpLayer   *layer,
 			  GIMP_DRAWABLE (layer)->height, 
 			  FALSE);
        copy_region (&layerPR, &maskPR);
-       gimage_mask_none (gimage);
        break;
      case ADD_INV_SELECTION_MASK:
        pixel_region_init (&layerPR, GIMP_DRAWABLE (selection)->tiles, 
@@ -520,13 +599,9 @@ gimp_layer_create_mask (GimpLayer   *layer,
 			  GIMP_DRAWABLE (layer)->height, 
 			  FALSE);
        copy_region (&layerPR, &maskPR);
-       gimage_mask_none (gimage);
        invert(GIMP_DRAWABLE(mask));
        break;
     }
-
-  /* finish the undo group. */
-  undo_push_group_end (gimage);
 
   g_free (mask_name);
 
@@ -563,9 +638,18 @@ gimp_layer_destroy (GtkObject *object)
 
 void
 gimp_layer_apply_mask (GimpLayer     *layer,
-		       MaskApplyMode  mode)
+		       MaskApplyMode  mode,
+                       gboolean       push_undo)
 {
-  PixelRegion srcPR, maskPR;
+  GimpImage     *gimage;
+  LayerMaskUndo *lmu = NULL;
+  gint           off_x;
+  gint           off_y;
+  PixelRegion    srcPR, maskPR;
+  gboolean       view_changed = FALSE;
+
+  g_return_if_fail (layer != NULL);
+  g_return_if_fail (GIMP_IS_LAYER (layer));
 
   if (! layer->mask)
     return;
@@ -574,44 +658,92 @@ gimp_layer_apply_mask (GimpLayer     *layer,
   if (! gimp_layer_has_alpha (layer))
     return;
 
-  /*  Need to save the mask here for undo  */
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer));
+
+  if (! gimage)
+    return;
+
+  if (push_undo)
+    {
+      /*  Start an undo group  */
+      undo_push_group_start (gimage, LAYER_APPLY_MASK_UNDO);
+
+      /*  Prepare a layer mask undo--push it below  */
+      lmu = g_new (LayerMaskUndo, 1);
+      lmu->layer      = layer;
+      lmu->mask       = layer->mask;
+      lmu->mode       = mode;
+      lmu->apply_mask = layer->apply_mask;
+      lmu->edit_mask  = layer->edit_mask;
+      lmu->show_mask  = layer->show_mask;
+    }
+
+  /*  check if applying the mask changes the projection  */
+  if ((mode == APPLY   && (!layer->apply_mask || layer->show_mask)) ||
+      (mode == DISCARD && ( layer->apply_mask || layer->show_mask)))
+    {
+      view_changed = TRUE;
+    }
 
   if (mode == APPLY)
     {
-      /*  Put this apply mask operation on the undo stack  */
-      drawable_apply_image (GIMP_DRAWABLE (layer),
-			    0, 0,
-			    GIMP_DRAWABLE (layer)->width,
-			    GIMP_DRAWABLE (layer)->height,
-			    NULL, FALSE);
+      if (push_undo)
+        {
+          /*  Put this apply mask operation on the undo stack  */
+          drawable_apply_image (GIMP_DRAWABLE (layer),
+                                0, 0,
+                                GIMP_DRAWABLE (layer)->width,
+                                GIMP_DRAWABLE (layer)->height,
+                                NULL, FALSE);
+        }
 
       /*  Combine the current layer's alpha channel and the mask  */
       pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles, 
 			 0, 0, 
 			 GIMP_DRAWABLE (layer)->width, 
-			 GIMP_DRAWABLE(layer)->height, 
+			 GIMP_DRAWABLE (layer)->height, 
 			 TRUE);
       pixel_region_init (&maskPR, GIMP_DRAWABLE (layer->mask)->tiles, 
 			 0, 0, 
 			 GIMP_DRAWABLE (layer)->width, 
-			 GIMP_DRAWABLE(layer)->height, 
+			 GIMP_DRAWABLE (layer)->height, 
 			 FALSE);
 
       apply_mask_to_region (&srcPR, &maskPR, OPAQUE_OPACITY);
       GIMP_DRAWABLE (layer)->preview_valid = FALSE;
+    }
 
-      layer->mask       = NULL;
-      layer->apply_mask = FALSE;
-      layer->edit_mask  = FALSE;
-      layer->show_mask  = FALSE;
-    }
-  else if (mode == DISCARD)
+  layer->mask       = NULL;
+  layer->apply_mask = FALSE;
+  layer->edit_mask  = FALSE;
+  layer->show_mask  = FALSE;
+
+  if (push_undo)
     {
-      layer->mask       = NULL;
-      layer->apply_mask = FALSE;
-      layer->edit_mask  = FALSE;
-      layer->show_mask  = FALSE;
+      /*  Push the undo--Important to do it here, AFTER applying
+       *   the mask, in case the undo push fails and the
+       *   mask is deleted
+       */
+      undo_push_layer_mask (gimage, LAYER_MASK_REMOVE_UNDO, lmu);
+
+      /*  end the undo group  */
+      undo_push_group_end (gimage);
     }
+
+  /*  If applying actually changed the view  */
+  if (view_changed)
+    {
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
+
+      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+
+      drawable_update (GIMP_DRAWABLE (layer),
+                       0, 0,
+		       gimp_drawable_width  (GIMP_DRAWABLE (layer)),
+		       gimp_drawable_height (GIMP_DRAWABLE (layer)));
+    }
+
+  gtk_signal_emit (GTK_OBJECT (layer), layer_signals[MASK_CHANGED]);
 }
 
 void

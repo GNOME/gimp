@@ -49,6 +49,9 @@ struct _GimpListItem
   GtkWidget     *preview;
   GtkWidget     *name_label;
 
+  /*< protected >*/
+  gint           preview_size;
+
   /*< private >*/
   gboolean       reorderable;
   GimpContainer *container;
@@ -60,8 +63,7 @@ struct _GimpListItemClass
   GtkListItemClass  parent_class;
 
   void (* set_viewable) (GimpListItem *list_item,
-                         GimpViewable *viewable,
-                         gint          preview_size);
+                         GimpViewable *viewable);
 };
 
 

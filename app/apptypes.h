@@ -101,6 +101,7 @@ typedef struct _GimpDrawableListView  GimpDrawableListView;
 
 typedef struct _GimpListItem          GimpListItem;
 typedef struct _GimpDrawableListItem  GimpDrawableListItem;
+typedef struct _GimpLayerListItem     GimpLayerListItem;
 
 typedef struct _HistogramWidget       HistogramWidget;
 

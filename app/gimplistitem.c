@@ -29,6 +29,8 @@
 #include "gimpdnd.h"
 #include "gimpdrawable.h"
 #include "gimpdrawablelistitem.h"
+#include "gimplayer.h"
+#include "gimplayerlistitem.h"
 #include "gimplistitem.h"
 #include "gimpmarshal.h"
 #include "gimppreview.h"
@@ -46,11 +48,10 @@ static void           gimp_list_item_class_init    (GimpListItemClass *klass);
 static void           gimp_list_item_init          (GimpListItem      *list_item);
 
 static void           gimp_list_item_set_viewable  (GimpListItem      *list_item,
-                                                    GimpViewable      *viewable,
-                                                    gint               preview_size);
+                                                    GimpViewable      *viewable);
+
 static void           gimp_list_item_real_set_viewable (GimpListItem  *list_item,
-                                                        GimpViewable  *viewable,
-                                                        gint           preview_size);
+                                                        GimpViewable  *viewable);
 
 static void           gimp_list_item_draw          (GtkWidget         *widget,
                                                     GdkRectangle      *area);
@@ -121,10 +122,9 @@ gimp_list_item_class_init (GimpListItemClass *klass)
                     object_class->type,
                     GTK_SIGNAL_OFFSET (GimpListItemClass,
                                        set_viewable),
-                    gimp_marshal_NONE__OBJECT_INT,
-                    GTK_TYPE_NONE, 2,
-                    GIMP_TYPE_VIEWABLE,
-                    GTK_TYPE_INT);
+                    gtk_marshal_NONE__OBJECT,
+                    GTK_TYPE_NONE, 1,
+                    GIMP_TYPE_VIEWABLE);
 
   widget_class->draw        = gimp_list_item_draw;
   widget_class->drag_leave  = gimp_list_item_drag_leave;
@@ -142,12 +142,14 @@ gimp_list_item_init (GimpListItem *list_item)
   gtk_container_add (GTK_CONTAINER (list_item), list_item->hbox);
   gtk_widget_show (list_item->hbox);
 
-  list_item->preview     = NULL;
-  list_item->name_label  = NULL;
+  list_item->preview      = NULL;
+  list_item->name_label   = NULL;
 
-  list_item->reorderable = FALSE;
-  list_item->drop_type   = GIMP_DROP_NONE;
-  list_item->container   = NULL;
+  list_item->preview_size = 0;
+
+  list_item->reorderable  = FALSE;
+  list_item->drop_type    = GIMP_DROP_NONE;
+  list_item->container    = NULL;
 }
 
 static void
@@ -263,8 +265,13 @@ gimp_list_item_new (GimpViewable  *viewable,
 
   g_return_val_if_fail (viewable != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (preview_size > 0 && preview_size <= 256, NULL);
 
-  if (GIMP_IS_DRAWABLE (viewable))
+  if (GIMP_IS_LAYER (viewable))
+    {
+      list_item = gtk_type_new (GIMP_TYPE_LAYER_LIST_ITEM);
+    }
+  else if (GIMP_IS_DRAWABLE (viewable))
     {
       list_item = gtk_type_new (GIMP_TYPE_DRAWABLE_LIST_ITEM);
     }
@@ -273,26 +280,27 @@ gimp_list_item_new (GimpViewable  *viewable,
       list_item = gtk_type_new (GIMP_TYPE_LIST_ITEM);
     }
 
-  gimp_list_item_set_viewable (list_item, viewable, preview_size);
+  list_item->preview_size = preview_size;
+
+  gimp_list_item_set_viewable (list_item, viewable);
 
   return GTK_WIDGET (list_item);
 }
 
 static void
 gimp_list_item_set_viewable (GimpListItem *list_item,
-                             GimpViewable *viewable,
-                             gint          preview_size)
+                             GimpViewable *viewable)
 {
   gtk_signal_emit (GTK_OBJECT (list_item), list_item_signals[SET_VIEWABLE],
-                   viewable, preview_size);
+                   viewable);
 }
 
 static void
 gimp_list_item_real_set_viewable (GimpListItem *list_item,
-                                  GimpViewable *viewable,
-                                  gint          preview_size)
+                                  GimpViewable *viewable)
 {
-  list_item->preview = gimp_preview_new (viewable, preview_size, 1, FALSE);
+  list_item->preview = gimp_preview_new (viewable, list_item->preview_size,
+                                         1, FALSE);
   gtk_box_pack_start (GTK_BOX (list_item->hbox), list_item->preview,
                       FALSE, FALSE, 0);
   gtk_widget_show (list_item->preview);

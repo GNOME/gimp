@@ -63,6 +63,8 @@ struct _GimpLayer
 struct _GimpLayerClass
 {
   GimpDrawableClass  parent_class;
+
+  void (* mask_changed) (GimpLayer *layer);
 };
 
 
@@ -108,9 +110,11 @@ gboolean        gimp_layer_check_scaling       (GimpLayer        *layer,
 GimpLayerMask * gimp_layer_create_mask         (GimpLayer        *layer,
 						AddMaskType       add_mask_type);
 GimpLayerMask * gimp_layer_add_mask            (GimpLayer        *layer,
-						GimpLayerMask    *mask);
+						GimpLayerMask    *mask,
+                                                gboolean          push_undo);
 void            gimp_layer_apply_mask          (GimpLayer        *layer,
-						MaskApplyMode     mode);
+						MaskApplyMode     mode,
+                                                gboolean          push_undo);
 void            gimp_layer_translate           (GimpLayer        *layer,
 						gint              off_x,
 						gint              off_y);

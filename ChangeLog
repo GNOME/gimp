@@ -1,5 +1,35 @@
 2001-03-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/apptypes.h
+	* app/gimplayerlistitem.[ch]: new widget derived from
+	GimpDrawableListItem (additionally displays the layer mask),
+
+	* app/gimplistitem.[ch]: added the preview_size to the struct so
+	subclasses can create previews at arbitrary times. Removed the
+	"preview_size" parameter from "set_viewable".
+
+	* app/gimpimage.[ch]: removed the layer mask functions because
+	they belong to GimpLayer.
+
+	* app/gimplayer.[ch]: folded the layer mask code from GimpImage
+	into GimpLayer's layer mask functions. Added a "mask_changed"
+	signal which is emitted when a mask is added/removed. Added
+	"push_undo" parameters to the functions so we can use them from
+	the undo system.
+
+	* app/undo.c: instead of badly poking the GimpLayer struct, use
+	the accessors with push_undo = FALSE.
+
+	* app/gimage_mask.c
+	* app/gimpdrawablelistitem.c
+	* app/layers_dialog.c
+	* app/xcf.c
+	* app/pdb/image_cmds.c
+	* tools/pdbgen/pdb/image.pdb: changed accordingly.
+
+2001-03-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimpdrawable.[ch]: new function gimp_drawable_set_visible().
 	Renamed gimp_drawable_visible() to gimp_drawable_get_visible().
 	Added a "visibility_changed" signal.

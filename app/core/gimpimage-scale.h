@@ -354,12 +354,6 @@ gboolean        gimp_image_add_layer             (GimpImage         *gimage,
 						  gint               position);
 void            gimp_image_remove_layer          (GimpImage         *gimage,
 						  GimpLayer         *layer);
-GimpLayerMask * gimp_image_add_layer_mask        (GimpImage         *gimage,
-						  GimpLayer         *layer,
-						  GimpLayerMask     *mask);
-GimpChannel   * gimp_image_remove_layer_mask     (GimpImage         *gimage,
-						  GimpLayer         *layer,
-						  MaskApplyMode      mode);
 gboolean        gimp_image_raise_channel         (GimpImage         *gimage,
 						  GimpChannel       *channel);
 gboolean        gimp_image_lower_channel         (GimpImage         *gimage,

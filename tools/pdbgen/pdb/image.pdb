@@ -628,7 +628,7 @@ HELP
 
     %invoke = (
 	code => <<'CODE'
-success = gimp_image_add_layer_mask (gimage, layer, mask) != NULL;
+success = gimp_layer_add_mask (layer, mask, TRUE) != NULL;
 CODE
     );
 }
@@ -651,7 +651,7 @@ HELP
     );
     $inargs[1]->{desc} .= ' from which to remove mask';
 
-    %invoke = ( code => 'gimp_image_remove_layer_mask (gimage, layer, mode);' );
+    %invoke = ( code => 'gimp_layer_apply_mask (layer, mode, TRUE);' );
 }
 
 sub image_raise_channel {
@@ -1434,7 +1434,7 @@ CODE
 
 
 @headers = qw(<string.h> "gimage.h" "context_manager.h" "gimpcontainer.h"
-	      "gimplist.h"  "temp_buf.h" 
+	      "gimplist.h" "temp_buf.h" 
 	      "libgimpmath/gimpmath.h" "libgimp/gimplimits.h"
               "libgimp/gimpintl.h");
 

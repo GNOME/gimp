@@ -1357,7 +1357,7 @@ image_add_layer_mask_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    success = gimp_image_add_layer_mask (gimage, layer, mask) != NULL;
+    success = gimp_layer_add_mask (layer, mask, TRUE) != NULL;
 
   return procedural_db_return_args (&image_add_layer_mask_proc, success);
 }
@@ -1418,7 +1418,7 @@ image_remove_layer_mask_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    gimp_image_remove_layer_mask (gimage, layer, mode);
+    gimp_layer_apply_mask (layer, mode, TRUE);
 
   return procedural_db_return_args (&image_remove_layer_mask_proc, success);
 }
