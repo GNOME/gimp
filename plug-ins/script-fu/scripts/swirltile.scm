@@ -18,9 +18,10 @@
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
+
+    (gimp-image-add-layer img layer-one 0)
     (gimp-context-set-background bg-color)
     (gimp-edit-fill layer-one BACKGROUND-FILL)
-    (gimp-image-add-layer img layer-one 0)
     (plug-in-noisify 1 img layer-one FALSE noise-level noise-level noise-level 1.0)
 
     (plug-in-whirl-pinch 1 img layer-one whirl-amount 0.0 1.0)

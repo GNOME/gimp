@@ -176,6 +176,9 @@
 	   (hole hole-start)
 	   (top-y (* height 0.06))
 	   (bottom-y(* height 0.855)))
+
+      (gimp-layer-add-mask film-layer film-mask)
+
       (gimp-selection-none image)
       (while (< hole 8)
 	     (gimp-rect-select image
@@ -202,7 +205,6 @@
       (plug-in-gauss-rle 1 image film-mask hole-radius TRUE TRUE)
       (gimp-threshold film-mask 127 255)
 
-      (gimp-layer-add-mask film-layer film-mask)
       (gimp-layer-remove-mask film-layer MASK-APPLY))
 
 ; reorder the layers

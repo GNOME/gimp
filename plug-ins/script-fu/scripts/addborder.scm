@@ -111,7 +111,10 @@
     (gimp-context-push)
 
     (gimp-image-undo-group-start img)
+
     (gimp-drawable-fill layer TRANSPARENT-FILL)
+    (gimp-image-add-layer img layer 0)
+
     (gimp-image-resize img
 		       width
     		       height
@@ -156,7 +159,6 @@
 
     (gimp-edit-fill layer BACKGROUND-FILL)
     (gimp-selection-none img)
-    (gimp-image-add-layer img layer 0)
     (gimp-image-undo-group-end img)
     (gimp-displays-flush)
 

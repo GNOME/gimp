@@ -75,8 +75,8 @@
 	  (gimp-context-set-background '(255 255 255))
 	  (gimp-context-set-foreground '(0 0 0))))
 
-    (gimp-edit-clear drawable)
     (gimp-image-add-layer img drawable 0)
+    (gimp-edit-clear drawable)
 
     (if (= labels TRUE)
 	(begin
@@ -84,8 +84,8 @@
 					      (if (= colors 0)
 						  GRAYA-IMAGE RGBA-IMAGE)
 					      "Labels" 100 NORMAL-MODE)))
-	  (gimp-edit-clear drawable)
 	  (gimp-image-add-layer img drawable -1)))
+	  (gimp-edit-clear drawable)
 
     (while font-list
 	   (set! font (car font-list))

@@ -65,6 +65,8 @@
 	(gimp-edit-bucket-fill bg-layer 2 NORMAL-MODE 100 255 FALSE 1 1)
 	(gimp-edit-fill bg-layer BACKGROUND-FILL))
 
+    (gimp-image-add-layer img bump-layer 1)
+
     (gimp-selection-all img)
     (gimp-edit-clear bump-layer)
     (gimp-selection-none img)
@@ -72,8 +74,6 @@
     (gimp-edit-fill bump-layer BACKGROUND-FILL)
     (gimp-edit-bucket-fill logo-layer 2 NORMAL-MODE 100 255 FALSE 1 1)
     (gimp-selection-none img)
-
-    (gimp-image-add-layer img bump-layer 1)
 
     (gimp-layer-set-preserve-trans bump-layer FALSE)
     (plug-in-spread 1 img bump-layer spread-amount spread-amount)
@@ -89,6 +89,7 @@
      (if (= drop-shadow TRUE)
 	(begin
 	  (let* ((shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE "Shadow layer" 100 NORMAL-MODE))))
+	    (gimp-image-add-layer img shadow-layer 1)
 	    (gimp-selection-all img)
 	    (gimp-edit-clear shadow-layer)
 	    (gimp-selection-none img)
@@ -97,7 +98,6 @@
 	    (gimp-edit-fill shadow-layer BACKGROUND-FILL)
 	    (gimp-selection-none img)
 	    (plug-in-gauss-rle 1 img shadow-layer 5 TRUE TRUE)
-	    (gimp-image-add-layer img shadow-layer 1)
 	    (gimp-layer-translate shadow-layer 6 6))))
 
      (if (= keep-bump FALSE)

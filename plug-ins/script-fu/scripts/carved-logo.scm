@@ -54,6 +54,8 @@
 
     (gimp-image-set-filename img "")
 
+    (gimp-image-add-channel img mask 0)
+
     (gimp-layer-set-preserve-trans mask-layer TRUE)
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill mask-layer BACKGROUND-FILL)
@@ -62,7 +64,6 @@
 
     (plug-in-tile 1 img layer1 width height FALSE)
 
-    (gimp-image-add-channel img mask 0)
     (gimp-edit-copy mask-layer)
     (set! mask-fs (car (gimp-edit-paste mask FALSE)))
     (gimp-floating-sel-anchor mask-fs)

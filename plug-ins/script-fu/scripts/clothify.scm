@@ -17,9 +17,11 @@
 	  (gimp-context-push)
 
 	  (gimp-image-undo-disable img)
+
+	  (gimp-image-add-layer img layer-one 0)
+
 	  (gimp-context-set-background '(255 255 255))
 	  (gimp-edit-fill layer-one BACKGROUND-FILL)
-	  (gimp-image-add-layer img layer-one 0)
 
 	  (plug-in-noisify 1 img layer-one FALSE 0.7 0.7 0.7 0.7)
 

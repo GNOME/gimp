@@ -78,16 +78,18 @@
 
     (gimp-context-push)
 
-    ; If the layer we're bevelling is offset from the image's origin, we
-    ; have to do the same to the bumpmap
-    (gimp-layer-set-offsets bump-layer (- (car offsets) 1)
-                                       (- (cadr offsets) 1))
-
     ; disable undo on copy, start group otherwise
     (if (= work-on-copy TRUE)
       (gimp-image-undo-disable image)
       (gimp-image-undo-group-start image)
     )
+
+    (gimp-image-add-layer image bump-layer 1)
+
+    ; If the layer we're bevelling is offset from the image's origin, we
+    ; have to do the same to the bumpmap
+    (gimp-layer-set-offsets bump-layer (- (car offsets) 1)
+                                       (- (cadr offsets) 1))
 
     ;------------------------------------------------------------
     ;
@@ -159,10 +161,8 @@
     ; clean up
     (gimp-image-remove-channel image select)
     (if (= keep-bump-layer TRUE)
-        (begin
-          (gimp-image-add-layer image bump-layer 1)
-          (gimp-drawable-set-visible bump-layer 0))
-        (gimp-drawable-delete bump-layer))
+	(gimp-drawable-set-visible bump-layer 0)
+        (gimp-image-remove-layer image bump-layer))
 
     (gimp-image-set-active-layer image pic-layer)
 
