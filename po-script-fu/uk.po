@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins-1.1.19\n"
-"POT-Creation-Date: 2000-10-13 11:16+0300\n"
+"POT-Creation-Date: 2000-08-30 00:31-0700\n"
 "PO-Revision-Date: 2000-03-10 11:26+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -636,7 +636,8 @@ msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий в╕зерунок/Заголовок..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
-msgstr "<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий в╕зерунок/Горизонтальна л╕н╕йка..."
+msgstr ""
+"<Toolbox>/Розш./Теми стор╕нок WWW/Опуклий в╕зерунок/Горизонтальна л╕н╕йка..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."

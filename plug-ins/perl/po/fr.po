@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.1.26\n"
-"POT-Creation-Date: 2000-10-04 16:01:46 2000\n"
+"POT-Creation-Date: Mon Oct 16 11:48:38 2000\n"
 "PO-Revision-Date: 2000-10-09 12:40+02:00\n"
 "Last-Translator: Christophe Merlet (RedFox) <christophe@merlet.net>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
@@ -50,7 +50,8 @@ msgid ""
 "PORT)\n"
 "                                      (for more info, see Gimp::Net(3))\n"
 msgstr ""
-"Usage : $0 [arguments Gimp...] [arguments interface...] [arguments script...]\n"
+"Usage : $0 [arguments Gimp...] [arguments interface...] [arguments "
+"script...]\n"
 "        Les arguments de Gimp sont :\n"
 "            -gimp <n'importe quoi>       à usage interne seulement\n"
 "            -h | -help | --help | -?     affiche l'aide\n"
@@ -75,23 +76,30 @@ msgstr "$_ : option d'enregistrement de fichier illégale"
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
 "a-z and _ allowed"
-msgstr "$function : le nom d'argument '$p->[1]' contient des caractères illégaux. Seuls 0-9, a-z et _ sont permis."
+msgstr ""
+"$function : le nom d'argument '$p->[1]' contient des caractères illégaux. "
+"Seuls 0-9, a-z et _ sont permis."
 
 #: Gimp/Fu.pm:0
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
-msgstr "$function : argument/valeur de retour '$p->[1]' de type illégal '$p->[0]'."
+msgstr ""
+"$function : argument/valeur de retour '$p->[1]' de type illégal '$p->[0]'."
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
-msgstr "$function : appeler $AUTOLOAD sans spécifier le label d'importation :auto est obsolète !\n"
+msgstr ""
+"$function : appeler $AUTOLOAD sans spécifier le label d'importation :auto "
+"est obsolète !\n"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "$function: function name contains unusual characters, good style is to use "
 "only 0-9, a-z and _"
-msgstr "$function : le nom de la fonction contient des caractères inhabituels, il est recommandé de n'utiliser que 0-9, a-z et _."
+msgstr ""
+"$function : le nom de la fonction contient des caractères inhabituels, il "
+"est recommandé de n'utiliser que 0-9, a-z et _."
 
 #: Gimp/Fu.pm:0
 msgid "$s: not an integer\n"
@@ -103,7 +111,9 @@ msgstr "%s arguments pour la fonction '%s'"
 
 #: Gimp/Lib.xs:0
 msgid "%s: procedural database execution failed on invalid input arguments"
-msgstr "%s : l'exécution de la procédure a échoué en raison d'arguments d'entrée incorrects."
+msgstr ""
+"%s : l'exécution de la procédure a échoué en raison d'arguments d'entrée "
+"incorrects."
 
 #: Gimp/Lib.xs:0
 msgid "%s: procedural database execution failed"
@@ -161,7 +171,9 @@ msgstr "9x15bold"
 
 #: Gimp/Fu.pm:0
 msgid "<Image> plug-in called without both image and drawable arguments!\n"
-msgstr "<Image> plug-in appelé avec à la fois une image et un drawable en argument !\n"
+msgstr ""
+"<Image> plug-in appelé avec à la fois une image et un drawable en argument "
+"!\n"
 
 #: examples/repdup:0
 msgid "<Image>/Edit/Repeat & Duplicate..."

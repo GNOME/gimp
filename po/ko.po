@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.12\n"
-"POT-Creation-Date: 2000-10-04 16:01-0700\n"
+"POT-Creation-Date: 2000-10-16 11:48-0700\n"
 "PO-Revision-Date: 1999-11-26 03:49:46+0900\n"
 "Last-Translator: Sung-Hyun Nam <namsh@kldp.org>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -509,7 +509,7 @@ msgstr "옵셋 X:"
 
 #: app/channel_ops.c:115 app/crop.c:1077 app/file_new_dialog.c:530
 #: app/resize.c:343 app/resize.c:435 app/resize.c:572 app/rotate_tool.c:106
-#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1206
+#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1208
 msgid "Y:"
 msgstr "Y:"
 
@@ -1228,7 +1228,7 @@ msgid "New Image"
 msgstr "새 이미지"
 
 #: app/file_new_dialog.c:453 app/preferences_dialog.c:1533
-#: app/preferences_dialog.c:1570 app/user_install.c:1193
+#: app/preferences_dialog.c:1570 app/user_install.c:1195
 msgid "Pixels"
 msgstr "픽셀"
 
@@ -4686,7 +4686,7 @@ msgstr "보존 메모리 사용"
 msgid "Levels of Undo:"
 msgstr "편집 취소 레벨:"
 
-#: app/preferences_dialog.c:2195 app/user_install.c:1106
+#: app/preferences_dialog.c:2195 app/user_install.c:1108
 msgid "Tile Cache Size:"
 msgstr "타일 캐쉬 크기:"
 
@@ -4782,7 +4782,7 @@ msgstr "모니터 해상도 얻기"
 msgid "(Currently %d x %d dpi)"
 msgstr "(현재 %d x %d dpi)"
 
-#: app/preferences_dialog.c:2408 app/user_install.c:1244
+#: app/preferences_dialog.c:2408 app/user_install.c:1246
 msgid "Calibrate"
 msgstr ""
 
@@ -4810,7 +4810,7 @@ msgstr "임시 디렉토리 선택"
 msgid "Swap Dir:"
 msgstr "스왑 디렉토리:"
 
-#: app/preferences_dialog.c:2476 app/user_install.c:1126
+#: app/preferences_dialog.c:2476 app/user_install.c:1128
 msgid "Select Swap Dir"
 msgstr "스왑 디렉토리 선택"
 
@@ -6362,7 +6362,7 @@ msgstr ""
 "는 옳지않은 권한을 갖고 있습니다.\n"
 "설치할 수 없습니다."
 
-#: app/user_install.c:998
+#: app/user_install.c:1000
 #, fuzzy
 msgid ""
 "Did you notice any error messages in the console window?\n"
@@ -6374,7 +6374,7 @@ msgstr ""
 "에러가 났다면, 종료하시고 왜 에러가 났는지를\n"
 "찾아보시기 바랍니다...\n"
 
-#: app/user_install.c:1054
+#: app/user_install.c:1056
 #, fuzzy
 msgid ""
 "Did you notice any error messages in the lines above?\n"
@@ -6386,25 +6386,25 @@ msgstr ""
 "에러가 났다면, 종료하시고 왜 에러가 났는지를\n"
 "찾아보시기 바랍니다...\n"
 
-#: app/user_install.c:1066
+#: app/user_install.c:1068
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr ""
 
-#: app/user_install.c:1071
+#: app/user_install.c:1073
 #, fuzzy
 msgid "Installation failed.  Contact system administrator."
 msgstr ""
 "\n"
 "설치 실패. 시스템 관리자를 만나보십시오.\n"
 
-#: app/user_install.c:1092
+#: app/user_install.c:1094
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
-"\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
+"\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
 
-#: app/user_install.c:1117
+#: app/user_install.c:1119
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -6412,32 +6412,32 @@ msgid ""
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
 
-#: app/user_install.c:1131
+#: app/user_install.c:1133
 #, fuzzy
 msgid "Swap Directory:"
 msgstr "스왑 디렉토리:"
 
-#: app/user_install.c:1166
+#: app/user_install.c:1168
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
 msgstr ""
 
-#: app/user_install.c:1173
+#: app/user_install.c:1175
 #, fuzzy, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "(현재 %d x %d dpi)"
 
-#: app/user_install.c:1187
+#: app/user_install.c:1189
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr ""
 
-#: app/user_install.c:1200
+#: app/user_install.c:1202
 #, fuzzy
 msgid "Monitor Resolution X:"
 msgstr "모니터 해상도 얻기"
 
-#: app/user_install.c:1237
+#: app/user_install.c:1239
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."

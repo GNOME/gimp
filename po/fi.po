@@ -15,7 +15,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
-"POT-Creation-Date: 2000-10-04 16:01-0700\n"
+"POT-Creation-Date: 2000-10-16 11:48-0700\n"
 "PO-Revision-Date: 2000-07-20 20:47+02:00\n"
 "Last-Translator: Ville Hautamäki <villeh@cs.joensuu.fi>\n"
 "Language-Team: fi <fi@li.org>\n"
@@ -510,7 +510,7 @@ msgstr "Siirtymä X:"
 
 #: app/channel_ops.c:115 app/crop.c:1077 app/file_new_dialog.c:530
 #: app/resize.c:343 app/resize.c:435 app/resize.c:572 app/rotate_tool.c:106
-#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1206
+#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1208
 msgid "Y:"
 msgstr "Y:"
 
@@ -1213,7 +1213,7 @@ msgid "New Image"
 msgstr "Uusi kuva"
 
 #: app/file_new_dialog.c:453 app/preferences_dialog.c:1533
-#: app/preferences_dialog.c:1570 app/user_install.c:1193
+#: app/preferences_dialog.c:1570 app/user_install.c:1195
 msgid "Pixels"
 msgstr "pikseleitä"
 
@@ -2908,7 +2908,8 @@ msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
 msgstr ""
-"  -d, --no-data            Älä lataa kuvioita, väriliukumia, paletteja tai siveltimiä.\n"
+"  -d, --no-data            Älä lataa kuvioita, väriliukumia, paletteja tai "
+"siveltimiä.\n"
 
 #: app/main.c:310
 msgid "  -i, --no-interface       Run without a user interface.\n"
@@ -2958,7 +2959,8 @@ msgstr "  --no-xshm               Älä käytä X:n Shared Memory -piirrettä.\n"
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
-"  --debug-handlers         Mahdollista vähemmän vakavien virheitten tutkinta.\n"
+"  --debug-handlers         Mahdollista vähemmän vakavien virheitten "
+"tutkinta.\n"
 
 #: app/main.c:321
 msgid "  --display <display>      Use the designated X display.\n"
@@ -2966,7 +2968,8 @@ msgstr "  --display <näyttö>       Käytä toista X-näyttöä.\n"
 
 #: app/main.c:322
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr "  --system-gimprc <gimprc> Käytä vaihtoehtoista yleistä gimprc-tiedostoa.\n"
+msgstr ""
+"  --system-gimprc <gimprc> Käytä vaihtoehtoista yleistä gimprc-tiedostoa.\n"
 
 #: app/main.c:324
 msgid ""
@@ -4628,7 +4631,7 @@ msgstr "Säästä muistia"
 msgid "Levels of Undo:"
 msgstr "Kumoamistasoja"
 
-#: app/preferences_dialog.c:2195 app/user_install.c:1106
+#: app/preferences_dialog.c:2195 app/user_install.c:1108
 msgid "Tile Cache Size:"
 msgstr "Kuvavälimuistin koko:"
 
@@ -4721,7 +4724,7 @@ msgstr "Hae näytön resoluutio"
 msgid "(Currently %d x %d dpi)"
 msgstr "(Nyt %d x %d dpi)"
 
-#: app/preferences_dialog.c:2408 app/user_install.c:1244
+#: app/preferences_dialog.c:2408 app/user_install.c:1246
 msgid "Calibrate"
 msgstr "Kalibroi"
 
@@ -4749,7 +4752,7 @@ msgstr "Valitse tilapäistiedostojen kansio"
 msgid "Swap Dir:"
 msgstr "Sivutuskansio:"
 
-#: app/preferences_dialog.c:2476 app/user_install.c:1126
+#: app/preferences_dialog.c:2476 app/user_install.c:1128
 msgid "Select Swap Dir"
 msgstr "Valitse sivutuskansio"
 
@@ -6238,7 +6241,7 @@ msgstr "ei ole olemassa. Asennusta ei voi tehdä."
 msgid "has invalid permissions.  Cannot install."
 msgstr "on suojattu virheellisesti. Asennusta ei voi tehdä."
 
-#: app/user_install.c:998
+#: app/user_install.c:1000
 msgid ""
 "Did you notice any error messages in the console window?\n"
 "If not, installation was successful!\n"
@@ -6247,7 +6250,7 @@ msgstr ""
 "Huomasitko mitään virheilmoituksia konsoli-ikkunassa? Jos et, niin asennus\n"
 "onnistui! Muuten, poistu ja tutki mistä virheet mahtoivat johtua..."
 
-#: app/user_install.c:1054
+#: app/user_install.c:1056
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
@@ -6258,25 +6261,26 @@ msgstr ""
 "onnistui! Muuten, poistu ja tutki mistä\n"
 "virheet mahtoivat johtua..."
 
-#: app/user_install.c:1066
+#: app/user_install.c:1068
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr "Napsauta \"Jatka\" GIMP-asennuksen loppuunsaattamiseksi."
 
-#: app/user_install.c:1071
+#: app/user_install.c:1073
 msgid "Installation failed.  Contact system administrator."
 msgstr "Asennus epäonnistui. Ota yhteys ylläpitoon."
 
-#: app/user_install.c:1092
+#: app/user_install.c:1094
+#, fuzzy
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
-"\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
+"\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
 "GIMP käyttää osaa keskusmuistista kuvatiedolle, ns \"kuvavälimuisti\".\n"
 "Säädä sen kokoa niin että se mahtuu keskusmuistiin. Ota huomioon\n"
 "muitten ajossa olevien ohjelmien vaatima muistitila."
 
-#: app/user_install.c:1117
+#: app/user_install.c:1119
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -6288,11 +6292,11 @@ msgstr ""
 "tiedostojärjestelmällä jossa on tarpeeksi tilaa (useita satoja megoja).\n"
 "Unix-järjestelmässä sopiva paikka on /tmp tai /var/tmp -hakemisto."
 
-#: app/user_install.c:1131
+#: app/user_install.c:1133
 msgid "Swap Directory:"
 msgstr "Sivutuskansio:"
 
-#: app/user_install.c:1166
+#: app/user_install.c:1168
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -6300,20 +6304,20 @@ msgstr ""
 "GIMP voi hakea tätä tietoa ikkunointijärjestelmästä.\n"
 "Huom: Useimmat X-palvelinohjelmat eivät kerro todenmukaisia arvoja."
 
-#: app/user_install.c:1173
+#: app/user_install.c:1175
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Ikkunointijärjestelmän tieto (%d x %d dpi)"
 
-#: app/user_install.c:1187
+#: app/user_install.c:1189
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "Vaihtoehtoisesti voit asettaa näytön tarkkuuden itse."
 
-#: app/user_install.c:1200
+#: app/user_install.c:1202
 msgid "Monitor Resolution X:"
 msgstr "Näytön resoluutio X:"
 
-#: app/user_install.c:1237
+#: app/user_install.c:1239
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."

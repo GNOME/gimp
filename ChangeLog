@@ -1,3 +1,14 @@
+Mon Oct 16 11:57:17 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* Made 1.1.28 release (1.2pre)
+
+Mon Oct 16 11:53:29 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* Makefile.am: added docs/Wilber.svg to EXTRA_DIST
+
+	* plug-ins/common/pnm.c: fix usage of %s in a CHECK_FOR_ERROR
+	(can't do that with that macro)
+
 2000-10-16  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpfeatures.h.in: added GIMP_HAVE_SYSCONFDIR

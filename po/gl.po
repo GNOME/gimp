@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp CVS\n"
-"POT-Creation-Date: 2000-10-03 10:45+0200\n"
+"POT-Creation-Date: 2000-10-16 11:48-0700\n"
 "PO-Revision-Date: 2000-10-15 19:35+0200\n"
 "Last-Translator: Francisco Xosé Vázquez Grandal <grandal@mundivia.es>\n"
 "Language-Team: Galician <trasno@ceu.fi.udc.es>\n"
@@ -118,7 +118,7 @@ msgstr "Sair"
 #. the cancel button
 #: app/app_procs.c:754 app/brightness_contrast.c:224 app/channel_ops.c:93
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
-#: app/color_balance.c:280 app/color_notebook.c:126 app/convert.c:508
+#: app/color_balance.c:280 app/color_notebook.c:126 app/convert.c:513
 #: app/curves.c:567 app/file_new_dialog.c:207 app/file_new_dialog.c:357
 #: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimphelp.c:196
 #: app/gimpprogress.c:112 app/global_edit.c:772 app/gradient.c:1768
@@ -279,7 +279,7 @@ msgstr "Brillo-contraste non opera en debuxos indexados."
 
 #: app/brightness_contrast.c:220 app/channel_ops.c:91
 #: app/channels_dialog.c:2500 app/channels_dialog.c:2663
-#: app/color_balance.c:276 app/color_notebook.c:123 app/convert.c:506
+#: app/color_balance.c:276 app/color_notebook.c:123 app/convert.c:511
 #: app/curves.c:563 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:375
 #: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3759
@@ -502,7 +502,7 @@ msgstr "Compensación en X:"
 
 #: app/channel_ops.c:115 app/crop.c:1077 app/file_new_dialog.c:530
 #: app/resize.c:343 app/resize.c:435 app/resize.c:572 app/rotate_tool.c:106
-#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1206
+#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1208
 msgid "Y:"
 msgstr "Y:"
 
@@ -831,72 +831,72 @@ msgstr "Seleccionar beira por"
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "Erro no redimensionado: O ancho e o longo deben ser meirandes ca cero."
 
-#: app/convert.c:500
+#: app/convert.c:505
 msgid "Indexed Color Conversion"
 msgstr "Conversión a cor indexado"
 
-#: app/convert.c:519
+#: app/convert.c:524
 msgid "General Palette Options"
 msgstr "Opcións xerais de paleta"
 
-#: app/convert.c:532
+#: app/convert.c:537
 msgid "Generate Optimal Palette:"
 msgstr "Xerar paleta optima:"
 
-#: app/convert.c:565
+#: app/convert.c:570
 msgid "# of Colors:"
 msgstr "# de Cores:"
 
 #. create the custom_frame here, it'll be added later
-#: app/convert.c:581
+#: app/convert.c:586
 msgid "Custom Palette Options"
 msgstr "Opcións de paleta persoalizada"
 
-#: app/convert.c:587
+#: app/convert.c:592
 msgid "Remove Unused Colors from Final Palette"
 msgstr "Eliminar cores non usadas da paleta final"
 
-#: app/convert.c:599
+#: app/convert.c:604
 msgid "Use Custom Palette:"
 msgstr "Usar paleta persoalizada:"
 
-#: app/convert.c:633
+#: app/convert.c:638
 msgid "Use WWW-Optimized Palette"
 msgstr "Usar paleta optimizada para a WWW"
 
-#: app/convert.c:649
+#: app/convert.c:654
 msgid "Use Black/White (1-Bit) Palette"
 msgstr "Usar pateta de Branco e Negro (1 bit)"
 
-#: app/convert.c:660
+#: app/convert.c:665
 msgid "Dither Options"
 msgstr "Opcións de Tramado"
 
-#: app/convert.c:673
+#: app/convert.c:678
 msgid "No Color Dithering"
 msgstr "Sen tramado de cor"
 
-#: app/convert.c:687
+#: app/convert.c:692
 msgid "Positioned Color Dithering"
 msgstr "Tramado de cores por posición"
 
-#: app/convert.c:701
+#: app/convert.c:706
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
 msgstr "Tramado de cor Floyd-Steinberg (Reducción de cor sangrante)"
 
-#: app/convert.c:714
+#: app/convert.c:719
 msgid "Floyd-Steinberg Color Dithering (Normal)"
 msgstr "Tramado de cor Floyd-Steinberg (Normal)"
 
-#: app/convert.c:728
+#: app/convert.c:733
 msgid "Enable Dithering of Transparency"
 msgstr "Habilitar tramado de transparencia"
 
-#: app/convert.c:757
+#: app/convert.c:762
 msgid "[ Warning ]"
 msgstr "[ Atención ]"
 
-#: app/convert.c:767
+#: app/convert.c:772
 msgid ""
 "You are attempting to convert an image with alpha/layers from RGB/GRAY to "
 "INDEXED.\n"
@@ -907,7 +907,7 @@ msgstr ""
 "Non debe xerar unha paleta de máis de 255 cores se tenta crear un gif "
 "transparente ou animado con esta imaxe."
 
-#: app/convert.c:978
+#: app/convert.c:983
 msgid "Select Custom Palette"
 msgstr "Seleccionar paleta persoalizada"
 
@@ -1039,7 +1039,7 @@ msgid "Load/Save Curves"
 msgstr "Cargar/Gardar Curvas"
 
 #: app/curves.c:1629 app/curves.c:1647 app/levels.c:1457 app/levels.c:1475
-#: app/paths_dialog.c:1905
+#: app/paths_dialog.c:1904
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Incapaz de abrir ficheiro %s"
@@ -1200,7 +1200,7 @@ msgid "New Image"
 msgstr "Nova Imaxe"
 
 #: app/file_new_dialog.c:453 app/preferences_dialog.c:1533
-#: app/preferences_dialog.c:1570 app/user_install.c:1193
+#: app/preferences_dialog.c:1570 app/user_install.c:1195
 msgid "Pixels"
 msgstr "Pixels"
 
@@ -1570,7 +1570,7 @@ msgstr ""
 msgid "Brush pipes should have at least one brush."
 msgstr "O cano dos pinceis debe conter ó menos un pincel."
 
-#: app/gimpbrushpipe.c:416 app/gimpbrushpipe.c:42
+#: app/gimpbrushpipe.c:416 app/gimpbrushpipe.c:424
 msgid "Failed to load one of the brushes in the brush pipe."
 msgstr "Fallo ó cargar un dos pinceis no cano dos pinceis."
 
@@ -4627,7 +4627,7 @@ msgstr "Uso Conservativo da Memoria"
 msgid "Levels of Undo:"
 msgstr "Niveis de desfacer"
 
-#: app/preferences_dialog.c:2195 app/user_install.c:1106
+#: app/preferences_dialog.c:2195 app/user_install.c:1108
 msgid "Tile Cache Size:"
 msgstr "Tamaño da caché de bloques:"
 
@@ -4720,7 +4720,7 @@ msgstr "Obter resolución do monitor"
 msgid "(Currently %d x %d dpi)"
 msgstr "(Actualmente %d x %d ppp)"
 
-#: app/preferences_dialog.c:2408 app/user_install.c:1244
+#: app/preferences_dialog.c:2408 app/user_install.c:1246
 msgid "Calibrate"
 msgstr "Calibrar"
 
@@ -4748,7 +4748,7 @@ msgstr "Seleccionar directorio temporal"
 msgid "Swap Dir:"
 msgstr "Directorio de Intercambio:"
 
-#: app/preferences_dialog.c:2476 app/user_install.c:1126
+#: app/preferences_dialog.c:2476 app/user_install.c:1128
 msgid "Select Swap Dir"
 msgstr "Seleccionar directorio de intercambio"
 
@@ -6262,7 +6262,7 @@ msgstr " non existe.  Non se pode instalar."
 msgid "has invalid permissions.  Cannot install."
 msgstr "ten permisos invalidos. Non se pode instalar."
 
-#: app/user_install.c:998
+#: app/user_install.c:1000
 msgid ""
 "Did you notice any error messages in the console window?\n"
 "If not, installation was successful!\n"
@@ -6272,7 +6272,7 @@ msgstr ""
 "Se non, ¡a instalación foi satisfactoria!\n"
 "Doutro xeito, saia e investigue a posible razon..."
 
-#: app/user_install.c:1054
+#: app/user_install.c:1056
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
@@ -6282,18 +6282,19 @@ msgstr ""
 "Se non, ¡a instalación foi satisfactoria!\n"
 "Doutro xeito, saia e investigue a posible razon..."
 
-#: app/user_install.c:1066
+#: app/user_install.c:1068
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr "Pique \"Continuar\" para completa-la instalación do GIMP."
 
-#: app/user_install.c:1071
+#: app/user_install.c:1073
 msgid "Installation failed.  Contact system administrator."
 msgstr "Fallo na instalación.  Contacte co administrador do sistema."
 
-#: app/user_install.c:1092
+#: app/user_install.c:1094
+#, fuzzy
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
-"\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
+"\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
 "GIMP usa unha cantidade limitada de memoria para almacena-los datos de "
@@ -6302,7 +6303,7 @@ msgstr ""
 "Considere\n"
 "a cantidade de memoria usada por outros procesos en execución."
 
-#: app/user_install.c:1117
+#: app/user_install.c:1119
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -6317,11 +6318,11 @@ msgstr ""
 "querer\n"
 "usar o directorio temporal do sistema ((\"/tmp\" ou \"/var/tmp\")."
 
-#: app/user_install.c:1131
+#: app/user_install.c:1133
 msgid "Swap Directory:"
 msgstr "Directorio de intercambio:"
 
-#: app/user_install.c:1166
+#: app/user_install.c:1168
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -6329,20 +6330,20 @@ msgstr ""
 "O GIMP pode obter esta información do seu sistema de fiestras.\n"
 "Ainda asi, a miudo non devolve valores útiles."
 
-#: app/user_install.c:1173
+#: app/user_install.c:1175
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Obter resolución do sistema de fiestras (Actualmente %d x %d ppp)"
 
-#: app/user_install.c:1187
+#: app/user_install.c:1189
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "Alternativamente, pode configura-la resolución do monitor manualmente."
 
-#: app/user_install.c:1200
+#: app/user_install.c:1202
 msgid "Monitor Resolution X:"
 msgstr "Resolución do monitor en X:"
 
-#: app/user_install.c:1237
+#: app/user_install.c:1239
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."

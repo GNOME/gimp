@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2000-08-30 00:31-0700\n"
+"POT-Creation-Date: 2000-10-15 12:23-0700\n"
 "PO-Revision-Date: 2000-04-08 13:25+0200\n"
 "Last-Translator: Artur Polaczyñski <artie@kmfms.com>\n"
 "Language-Team: Polish <pl@li.org>\n"

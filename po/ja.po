@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.0\n"
-"POT-Creation-Date: 2000-10-09 12:42+0900\n"
+"POT-Creation-Date: 2000-10-16 11:48-0700\n"
 "PO-Revision-Date: 2000-10-09 12:42+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -502,7 +502,7 @@ msgstr "X オフセット:"
 
 #: app/channel_ops.c:115 app/crop.c:1077 app/file_new_dialog.c:530
 #: app/resize.c:343 app/resize.c:435 app/resize.c:572 app/rotate_tool.c:106
-#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1206
+#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1208
 msgid "Y:"
 msgstr "Y:"
 
@@ -1205,7 +1205,7 @@ msgid "New Image"
 msgstr "新規画像"
 
 #: app/file_new_dialog.c:453 app/preferences_dialog.c:1533
-#: app/preferences_dialog.c:1570 app/user_install.c:1193
+#: app/preferences_dialog.c:1570 app/user_install.c:1195
 msgid "Pixels"
 msgstr "ピクセル"
 
@@ -4619,7 +4619,7 @@ msgstr "メモリ使用をけちる"
 msgid "Levels of Undo:"
 msgstr "アンドゥレベル:"
 
-#: app/preferences_dialog.c:2195 app/user_install.c:1106
+#: app/preferences_dialog.c:2195 app/user_install.c:1108
 msgid "Tile Cache Size:"
 msgstr "タイルキャッシュサイズ:"
 
@@ -4712,7 +4712,7 @@ msgstr "モニタ解像度を"
 msgid "(Currently %d x %d dpi)"
 msgstr "(現在 %d x %d dpi)"
 
-#: app/preferences_dialog.c:2408 app/user_install.c:1244
+#: app/preferences_dialog.c:2408 app/user_install.c:1246
 msgid "Calibrate"
 msgstr "測定"
 
@@ -4740,7 +4740,7 @@ msgstr "テンポラリ Dir を選択"
 msgid "Swap Dir:"
 msgstr "スワップ:"
 
-#: app/preferences_dialog.c:2476 app/user_install.c:1126
+#: app/preferences_dialog.c:2476 app/user_install.c:1128
 msgid "Select Swap Dir"
 msgstr "スワップディレクトリを選択"
 
@@ -6253,7 +6253,7 @@ msgstr "が存在しません.  インストールできません."
 msgid "has invalid permissions.  Cannot install."
 msgstr "が不正なパーミッションです.  インストールできません."
 
-#: app/user_install.c:998
+#: app/user_install.c:1000
 msgid ""
 "Did you notice any error messages in the console window?\n"
 "If not, installation was successful!\n"
@@ -6264,7 +6264,7 @@ msgstr ""
 "は成功です! 何か表示された場合にはここで中断\n"
 "して原因を調査しましょう..."
 
-#: app/user_install.c:1054
+#: app/user_install.c:1056
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
@@ -6274,18 +6274,19 @@ msgstr ""
 "出ていなければインストールは成功です! 何か表示された\n"
 "場合にはここで中断して原因を調査しましょう..."
 
-#: app/user_install.c:1066
+#: app/user_install.c:1068
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr "GIMP インストールを完了するには「次へ」をクリックして下さい."
 
-#: app/user_install.c:1071
+#: app/user_install.c:1073
 msgid "Installation failed.  Contact system administrator."
 msgstr "インストール失敗.  システム管理者とご相談ください."
 
-#: app/user_install.c:1092
+#: app/user_install.c:1094
+#, fuzzy
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
-"\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
+"\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
 "GIMP "
@@ -6293,7 +6294,7 @@ msgstr ""
 "他の実行中のプロセス等のことも考えつつ, 実メモリ量に基づいて適切に設定して\n"
 "やる必要があります."
 
-#: app/user_install.c:1117
+#: app/user_install.c:1119
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -6305,11 +6306,11 @@ msgstr ""
 "システム上に置くようにします. UNIX システムでは, /tmp や /var/tmp といった\n"
 "システムのテンポラリディレクトリにしてもよいかもしれません."
 
-#: app/user_install.c:1131
+#: app/user_install.c:1133
 msgid "Swap Directory:"
 msgstr "スワップディレクトリ:"
 
-#: app/user_install.c:1166
+#: app/user_install.c:1168
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -6317,20 +6318,20 @@ msgstr ""
 "GIMP がウインドウシステムからこの情報を得るようにすることもできます.\n"
 "しかし, 多くの場合には無意味な値を返すようです."
 
-#: app/user_install.c:1173
+#: app/user_install.c:1175
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "ウインドウシステムから解像度を得る (現在 %d x %d dpi)"
 
-#: app/user_install.c:1187
+#: app/user_install.c:1189
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "その代わりに, 直接モニタ解像度を設定することもできます."
 
-#: app/user_install.c:1200
+#: app/user_install.c:1202
 msgid "Monitor Resolution X:"
 msgstr "モニタ解像度 X:"
 
-#: app/user_install.c:1237
+#: app/user_install.c:1239
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."

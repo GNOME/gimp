@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.27\n"
-"POT-Creation-Date: 2000-10-14 20:20+0200\n"
+"POT-Creation-Date: 2000-10-16 11:48-0700\n"
 "PO-Revision-Date: 2000-10-14 20:22+02:00\n"
 "Last-Translator: Christian Meyer <cm@ggtt.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -502,7 +502,7 @@ msgstr "Versatz X:"
 
 #: app/channel_ops.c:115 app/crop.c:1077 app/file_new_dialog.c:530
 #: app/resize.c:343 app/resize.c:435 app/resize.c:572 app/rotate_tool.c:106
-#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1206
+#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1208
 msgid "Y:"
 msgstr "Y:"
 
@@ -1207,7 +1207,7 @@ msgid "New Image"
 msgstr "Neues Bild"
 
 #: app/file_new_dialog.c:453 app/preferences_dialog.c:1533
-#: app/preferences_dialog.c:1570 app/user_install.c:1193
+#: app/preferences_dialog.c:1570 app/user_install.c:1195
 msgid "Pixels"
 msgstr "Pixel"
 
@@ -4638,7 +4638,7 @@ msgstr "Zurückhaltende Speicherausnutzung"
 msgid "Levels of Undo:"
 msgstr "Stufen der Rückgängigmachung:"
 
-#: app/preferences_dialog.c:2195 app/user_install.c:1106
+#: app/preferences_dialog.c:2195 app/user_install.c:1108
 msgid "Tile Cache Size:"
 msgstr "Größe des Datenspeichers:"
 
@@ -4731,7 +4731,7 @@ msgstr "Quelle für Bildschirmauflösung"
 msgid "(Currently %d x %d dpi)"
 msgstr "(Zur Zeit %d x %d dpi)"
 
-#: app/preferences_dialog.c:2408 app/user_install.c:1244
+#: app/preferences_dialog.c:2408 app/user_install.c:1246
 msgid "Calibrate"
 msgstr "Kalibrieren"
 
@@ -4759,7 +4759,7 @@ msgstr "Temporäres Verzeichnis wählen"
 msgid "Swap Dir:"
 msgstr "Auslagerungsverzeichnis:"
 
-#: app/preferences_dialog.c:2476 app/user_install.c:1126
+#: app/preferences_dialog.c:2476 app/user_install.c:1128
 msgid "Select Swap Dir"
 msgstr "Auslagerverzeichnis wählen"
 
@@ -6294,7 +6294,7 @@ msgstr "existiert nicht. Kann nicht installieren."
 msgid "has invalid permissions.  Cannot install."
 msgstr "hat falsche Zugriffsrechte. Kann nicht installieren."
 
-#: app/user_install.c:998
+#: app/user_install.c:1000
 msgid ""
 "Did you notice any error messages in the console window?\n"
 "If not, installation was successful!\n"
@@ -6305,7 +6305,7 @@ msgstr ""
 "Ansonsten beenden Sie die Installation und suchen Sie nach der möglichen "
 "Fehlerursache..."
 
-#: app/user_install.c:1054
+#: app/user_install.c:1056
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
@@ -6316,15 +6316,15 @@ msgstr ""
 "Ansonsten beenden Sie die Installation und suchen Sie nach der möglichen "
 "Fehlerursache..."
 
-#: app/user_install.c:1066
+#: app/user_install.c:1068
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr "Drücken Sie \"Weiter\" um die GIMP-Installation abzuschliessen."
 
-#: app/user_install.c:1071
+#: app/user_install.c:1073
 msgid "Installation failed.  Contact system administrator."
 msgstr "Installation fehlgeschlagen. Wenden Sie sich an den Systemverwalter."
 
-#: app/user_install.c:1092
+#: app/user_install.c:1094
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
@@ -6335,7 +6335,7 @@ msgstr ""
 "in den Arbeitsspeicher passt. Bedenken Sie dabei die Menge an\n"
 "Arbeitsspeicher, die bereits von anderen Programmen benutzt wird."
 
-#: app/user_install.c:1117
+#: app/user_install.c:1119
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -6348,11 +6348,11 @@ msgstr ""
 "Unter UNIX ist das systemweite temporäre Verzeichnis eine gute Wahl\n"
 "(meist \"/tmp\" oder \"/var/tmp\")."
 
-#: app/user_install.c:1131
+#: app/user_install.c:1133
 msgid "Swap Directory:"
 msgstr "Auslagerungsverzeichnis:"
 
-#: app/user_install.c:1166
+#: app/user_install.c:1168
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -6360,20 +6360,20 @@ msgstr ""
 "GIMP kann diese Information vom Fenstersystem erfragen.\n"
 "Allerdings liefern die wenigsten Systeme hier vernünftige Werte."
 
-#: app/user_install.c:1173
+#: app/user_install.c:1175
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Auflösung vom Fenstersystem beziehen (zur Zeit %d x %d dpi)"
 
-#: app/user_install.c:1187
+#: app/user_install.c:1189
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "Alternativ können Sie die Bildschirmauflösung von Hand einstellen."
 
-#: app/user_install.c:1200
+#: app/user_install.c:1202
 msgid "Monitor Resolution X:"
 msgstr "Bildschirmauflösung X:"
 
-#: app/user_install.c:1237
+#: app/user_install.c:1239
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."

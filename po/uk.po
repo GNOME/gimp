@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.19\n"
-"POT-Creation-Date: 2000-10-13 11:24+0300\n"
+"POT-Creation-Date: 2000-10-16 11:48-0700\n"
 "PO-Revision-Date: 2000-01-11 12:44+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -500,7 +500,7 @@ msgstr "Зм╕щення X:"
 
 #: app/channel_ops.c:115 app/crop.c:1077 app/file_new_dialog.c:530
 #: app/resize.c:343 app/resize.c:435 app/resize.c:572 app/rotate_tool.c:106
-#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1206
+#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1208
 msgid "Y:"
 msgstr "Y:"
 
@@ -1203,7 +1203,7 @@ msgid "New Image"
 msgstr "Нове зображення"
 
 #: app/file_new_dialog.c:453 app/preferences_dialog.c:1533
-#: app/preferences_dialog.c:1570 app/user_install.c:1193
+#: app/preferences_dialog.c:1570 app/user_install.c:1195
 msgid "Pixels"
 msgstr "П╕ксел╕в"
 
@@ -4633,7 +4633,7 @@ msgstr "Консервативне використання пам'ят╕"
 msgid "Levels of Undo:"
 msgstr "Р╕вн╕в в╕дм╕н:"
 
-#: app/preferences_dialog.c:2195 app/user_install.c:1106
+#: app/preferences_dialog.c:2195 app/user_install.c:1108
 msgid "Tile Cache Size:"
 msgstr "Розм╕р кешу для орнамент╕в:"
 
@@ -4726,7 +4726,7 @@ msgstr "Отримати розд╕льну здатн╕сть мон╕тора"
 msgid "(Currently %d x %d dpi)"
 msgstr "(Зараз %d x %d т/д)"
 
-#: app/preferences_dialog.c:2408 app/user_install.c:1244
+#: app/preferences_dialog.c:2408 app/user_install.c:1246
 msgid "Calibrate"
 msgstr "В╕дкал╕брувати"
 
@@ -4754,7 +4754,7 @@ msgstr "Вибер╕ть каталог тимчасових файл╕в"
 msgid "Swap Dir:"
 msgstr "Каталог своп╕нгу:"
 
-#: app/preferences_dialog.c:2476 app/user_install.c:1126
+#: app/preferences_dialog.c:2476 app/user_install.c:1128
 msgid "Select Swap Dir"
 msgstr "Вибер╕ть каталог своп╕нгу"
 
@@ -6262,7 +6262,7 @@ msgstr " не ╕сну╓.  ╤нсталяц╕я неможлива."
 msgid "has invalid permissions.  Cannot install."
 msgstr " ма╓ нев╕рн╕ права доступу. ╤нсталяц╕я неможлива."
 
-#: app/user_install.c:998
+#: app/user_install.c:1000
 msgid ""
 "Did you notice any error messages in the console window?\n"
 "If not, installation was successful!\n"
@@ -6272,7 +6272,7 @@ msgstr ""
 "в╕кн╕? Якщ╕ н╕ - ╕нсталяц╕я була усп╕шною!\n"
 "╤накше, вийд╕ть та досл╕д╕ть можлив╕ причини..."
 
-#: app/user_install.c:1054
+#: app/user_install.c:1056
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
@@ -6282,18 +6282,19 @@ msgstr ""
 "Якщо н╕ - ╕нсталяц╕я була усп╕шною!\n"
 "╤накше, вийд╕ть та досл╕д╕ть можлив╕ причини..."
 
-#: app/user_install.c:1066
+#: app/user_install.c:1068
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr "Клацн╕ть \"Продовжити\" щоб завершити ╕нсталяц╕ю GIMP."
 
-#: app/user_install.c:1071
+#: app/user_install.c:1073
 msgid "Installation failed.  Contact system administrator."
 msgstr "╤нсталяц╕я не вдалась.  Зверн╕ться до системного адм╕н╕стратора."
 
-#: app/user_install.c:1092
+#: app/user_install.c:1094
+#, fuzzy
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
-"\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
+"\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
 "GIMP використову╓ обмежену к╕льк╕сть пам'ят╕ для збер╕гання даних "
@@ -6303,7 +6304,7 @@ msgstr ""
 "Обм╕ркуйте к╕льк╕сть пам'ят╕, що використову╓ться ╕ншими запущеними "
 "процесами."
 
-#: app/user_install.c:1117
+#: app/user_install.c:1119
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -6318,11 +6319,11 @@ msgstr ""
 "ви можете використовувати системний каталог тимчасових файл╕в (\"/tmp\" чи "
 "\"/var/tmp\")."
 
-#: app/user_install.c:1131
+#: app/user_install.c:1133
 msgid "Swap Directory:"
 msgstr "Каталог своп╕нгу:"
 
-#: app/user_install.c:1166
+#: app/user_install.c:1168
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -6330,20 +6331,20 @@ msgstr ""
 "GIMP може отримати цю ╕нформац╕ю в╕д вашо╖ в╕конно╖ системи.\n"
 "Але звичайно це не да╓ корисних результат╕в."
 
-#: app/user_install.c:1173
+#: app/user_install.c:1175
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Отримати розд╕льну здатн╕сть в╕д в╕конно╖ системи (Зараз %d x %d т/д)"
 
-#: app/user_install.c:1187
+#: app/user_install.c:1189
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "Кр╕м того, ви можете встановити розд╕льну здатн╕сть монитора вручну."
 
-#: app/user_install.c:1200
+#: app/user_install.c:1202
 msgid "Monitor Resolution X:"
 msgstr "Розд╕льна здатн╕сть мон╕тора X:"
 
-#: app/user_install.c:1237
+#: app/user_install.c:1239
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
@@ -6404,7 +6405,8 @@ msgstr "Трикутник"
 
 #: modules/colorsel_water.c:76
 msgid "Watercolor style color selector as a pluggable module"
-msgstr "Перемикач кольору у акварельному стил╕ як зовн╕шн╕й перемикач кольор╕в."
+msgstr ""
+"Перемикач кольору у акварельному стил╕ як зовн╕шн╕й перемикач кольор╕в."
 
 #: modules/colorsel_water.c:97 modules/colorsel_water.c:100
 msgid "Watercolor"
