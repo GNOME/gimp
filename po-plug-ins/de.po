@@ -7,10 +7,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.22\n"
+"Project-Id-Version: GIMP 1.1.24\n"
 "POT-Creation-Date: 2000-06-18 19:40-0700\n"
-"PO-Revision-Date: 2000-05-23 21:19+02:00\n"
-"Last-Translator: Felix Natter <fnatter@gmx.net>\n"
+"PO-Revision-Date: 2000-06-23 02:45+02:00\n"
+"Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -6906,11 +6906,12 @@ msgstr ""
 "Bild und versuchen Sie es nochmal."
 
 #: plug-ins/common/xbm.c:976
-#, fuzzy
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
-msgstr "Bildern mit Alpha-Kanal können nicht in Postscript gespeichert werden"
+msgstr ""
+"Sie können keine Cursor-Maske abspeichern, \n"
+"wenn das Bild keinen Alpha-Kanal hat."
 
 #: plug-ins/common/xbm.c:1005
 #, c-format
@@ -6946,18 +6947,16 @@ msgstr "Hot Spot X:"
 
 #. mask file
 #: plug-ins/common/xbm.c:1248
-#, fuzzy
 msgid "Mask File"
-msgstr "Maskengrösse:"
+msgstr "Maskendatei:"
 
 #: plug-ins/common/xbm.c:1259
 msgid "Write Extra Mask File"
-msgstr ""
+msgstr "Separate Maskendatei schreiben"
 
 #: plug-ins/common/xbm.c:1270
-#, fuzzy
 msgid "Mask File Extension:"
-msgstr "Erweiterung:"
+msgstr "Maskendatei Erweiterung:"
 
 #: plug-ins/common/xpm.c:795
 msgid "Save as XPM"
@@ -8843,20 +8842,21 @@ msgstr ""
 "Standardwerte zurücksetzen"
 
 #: plug-ins/gap/gap_mov_dialog.c:2408
-#, fuzzy
 msgid "Clear All Points"
-msgstr "Punkt zurücksetzen"
+msgstr "Alle Punkte zurücksetzen"
 
 #: plug-ins/gap/gap_mov_dialog.c:2416
 msgid ""
 "Reset all Controlpoints to default Values\n"
 "but dont change the path (X/Y Values)"
 msgstr ""
+"Alle Kontrollpunkte auf Standardwerte\n"
+"zurücksetzen ohne den Pfad zu ändern\n"
+"(X/Y Werte)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2423
-#, fuzzy
 msgid "Rotate Follow"
-msgstr "Drehen: "
+msgstr "Rotation folgend"
 
 #: plug-ins/gap/gap_mov_dialog.c:2434
 msgid ""
@@ -8864,16 +8864,18 @@ msgid ""
 "to follow the shape of the path.\n"
 "(Shift: use Rotation of contolpoint 1 as offset)"
 msgstr ""
+"Setze die Rotation aller Kontrollpunkte so, \n"
+"daß sie der From des Pfades folgen.\n"
+"(Shift: Benutze Rotation von Kontrollpunkt 1\n"
+"als Versatz)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2441
-#, fuzzy
 msgid "Delete All Points"
-msgstr "Punkt löschen"
+msgstr "Alle Punkte löschen"
 
 #: plug-ins/gap/gap_mov_dialog.c:2449
-#, fuzzy
 msgid "Delete all Controlpoints"
-msgstr "Aktuellen Kontrollpunkt löschen"
+msgstr "Alle Kontrollpunkte löschen"
 
 #: plug-ins/gap/gap_mov_dialog.c:2456
 msgid "Load Points"
@@ -12977,9 +12979,8 @@ msgid "No selection to convert"
 msgstr "Keine Auswahl vorhanden"
 
 #: plug-ins/sel2path/sel2path.c:333
-#, fuzzy
 msgid "Sel2Path Advanced Settings"
-msgstr "Erweiterte Einstellungen"
+msgstr "Sel2Path Erweiterte Einstellungen"
 
 #: plug-ins/sel2path/sel2path.c:542
 #, c-format

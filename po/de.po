@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.22\n"
+"Project-Id-Version: GIMP 1.1.24\n"
 "POT-Creation-Date: 2000-06-18 19:40-0700\n"
-"PO-Revision-Date: 2000-06-08 14:59+02:00\n"
+"PO-Revision-Date: 2000-06-23 02:32+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2713,9 +2713,8 @@ msgid "Keep Trans."
 msgstr "Erhalte Transp."
 
 #: app/layers_dialog.c:405
-#, fuzzy
 msgid "Keep Transparency"
-msgstr "Transparenz"
+msgstr "Erhalte Transparenz"
 
 #: app/layers_dialog.c:1907
 msgid "Empty Layer Copy"
