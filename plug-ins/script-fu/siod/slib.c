@@ -697,7 +697,7 @@ void
 err_stack (char *ptr)
      /* The user could be given an option to continue here */
 {
-  my_err ("the currently assigned stack limit has been exceded", NIL);
+  my_err ("the currently assigned stack limit has been exceeded", NIL);
 }
 
 LISP

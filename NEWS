@@ -15,8 +15,8 @@ Overview of Changes in GIMP 1.3.4
 - More framework for tool plug-ins, landed a first tool [Nathan]
 - Started core/UI separation for the paint tools [Mitch]
 - Win32 fixes [Hans Breuer]
-- Plug-in code cleanups (aa, colortoalpha, glasstile, vinvert, pagecurl) 
-  [Maurits Rijk, Sven]
+- Plug-in code cleanups (aa, colortoalpha, glasstile, guillotine, vinvert,
+  pagecurl) [Maurits Rijk, Sven]
 - I18n changes, we now use glib-gettextize and intltoolize [Sven]
 - New layer mask initialization modes [Mitch]
 - Colorpicker, Transform tool and PDB fixes [Mitch]

@@ -117,157 +117,104 @@ run (gchar      *name,
 
 
 static gint
-unexciting (const void *a,
-	    const void *b)
+guide_sort_func (gconstpointer a,
+		 gconstpointer b)
 {
-  gint j = * (gint *) a;
-  gint k = * (gint *) b;
-
-  return (j - k);
+  return GPOINTER_TO_INT (a) - GPOINTER_TO_INT (b);
 }
-
 
 static void
 guillotine (gint32 image_ID)
 {
-  gint  num_vguides;
-  gint  num_hguides;
   gint  guide_num;
-  gint *hguides;
-  gint *vguides;
-  gchar filename[1024];
-  gint  i, x, y;
+  gboolean guides_found;
+  GList *hguides, *hg;
+  GList *vguides, *vg;
 
-  num_vguides = 0;
-  num_hguides = 0;
+  hguides = g_list_append (NULL, GINT_TO_POINTER (0));
+  vguides = g_list_append (NULL, GINT_TO_POINTER (0));
+
+  hguides = g_list_append (hguides, 
+			   GINT_TO_POINTER (gimp_image_height (image_ID)));
+  vguides = g_list_append (vguides, 
+			   GINT_TO_POINTER (gimp_image_width (image_ID)));
 
   guide_num = gimp_image_find_next_guide (image_ID, 0);
+  guides_found = (guide_num != 0);
 
-  /* Count the guides so we can allocate appropriate memory */
-  if (guide_num > 0)
+  while (guide_num > 0)
     {
-      do
-	{
-	  switch (gimp_image_get_guide_orientation (image_ID, guide_num))
-	    {
-	    case GIMP_VERTICAL:
-	      num_vguides++;
-	      break;
-	    case GIMP_HORIZONTAL:
-	      num_hguides++;
-	      break;
-	    default:
-	      g_print ("Aie!  Aie!  Aie!\n");
-	      gimp_quit ();
-	      break;
-	    }
-	  guide_num = gimp_image_find_next_guide (image_ID, guide_num);
+      gint position = gimp_image_get_guide_position (image_ID, guide_num);
+
+      switch (gimp_image_get_guide_orientation (image_ID, guide_num))
+        {
+        case GIMP_HORIZONTAL:
+	  hguides = g_list_insert_sorted (hguides, GINT_TO_POINTER (position),
+					  guide_sort_func);
+          break;
+
+        case GIMP_VERTICAL:
+	  vguides = g_list_insert_sorted (vguides, GINT_TO_POINTER (position),
+					  guide_sort_func);
+          break;
+
+        case GIMP_UNKNOWN:
+          g_assert_not_reached ();
+          break;
 	}
-      while (guide_num > 0);
+
+      guide_num = gimp_image_find_next_guide (image_ID, guide_num);
     }
 
-  if (num_vguides+num_hguides)
+  if (guides_found)
     {
-      g_print ("Yay... found %d horizontal guides and %d vertical guides.\n",
-	       num_hguides, num_vguides);
-    }
-  else
-    {
-      g_print ("Poopy, no guides.\n");
-      return;
-    }
+      gchar *filename;
+      gint   x, y;
 
+      filename = gimp_image_get_filename (image_ID);
 
-  /* Allocate memory for the arrays of guide offsets, build arrays */
-  vguides = g_new (gint, num_vguides+2);
-  hguides = g_new (gint, num_hguides+2);
-  num_vguides = 0;
-  num_hguides = 0;
-  vguides[num_vguides++] = 0;
-  hguides[num_hguides++] = 0;
-  guide_num = gimp_image_find_next_guide(image_ID, 0);
+      /* Do the actual dup'ing and cropping... this isn't a too naive a
+	 way to do this since we got copy-on-write tiles, either. */
 
-  if (guide_num>0)
-    {
-      do
+      for (y = 0, hg = hguides; hg && hg->next; y++, hg = hg->next)
 	{
-	  switch (gimp_image_get_guide_orientation (image_ID, guide_num))
+	  for (x = 0, vg = vguides; vg && vg->next; x++, vg = vg->next)
 	    {
-	    case GIMP_VERTICAL:
-	      vguides[num_vguides++] =
-		gimp_image_get_guide_position( image_ID, guide_num);
-	      break;
-	    case GIMP_HORIZONTAL:
-	      hguides[num_hguides++] =
-		gimp_image_get_guide_position (image_ID, guide_num);
-	      break;
-	    default:
-	      g_print ("Aie!  Aie!  Aie!  Too!\n");
-	      gimp_quit();
-	      break;
+	      gint32 new_image = gimp_image_duplicate (image_ID);
+	      gchar *new_filename;
+
+	      if (new_image == -1)
+		{
+		  g_warning ("Couldn't create new image.");
+		  return;
+		}
+
+	      gimp_image_undo_disable (new_image);
+
+	      gimp_image_crop (new_image, 
+			       GPOINTER_TO_INT (vg->next->data) - 
+			       GPOINTER_TO_INT (vg->data),
+			       GPOINTER_TO_INT (hg->next->data) - 
+			       GPOINTER_TO_INT (hg->data),
+			       GPOINTER_TO_INT (vg->data),
+			       GPOINTER_TO_INT (hg->data));
+
+	      /* show the rough coordinates of the image in the title */
+	      new_filename = g_strdup_printf ("%s-(%i,%i)",
+					      filename,
+					      x, y);
+	      gimp_image_set_filename (new_image, new_filename);
+	      g_free (new_filename);
+
+	      gimp_image_undo_enable (new_image);
+
+	      gimp_display_new (new_image);
 	    }
-	  guide_num = gimp_image_find_next_guide(image_ID, guide_num);
 	}
-      while (guide_num > 0);
+
+      g_free (filename);
     }
 
-  vguides[num_vguides++] = gimp_image_width (image_ID);
-  hguides[num_hguides++] = gimp_image_height (image_ID);
-
-  qsort (hguides, num_hguides, sizeof (gint), &unexciting);
-  qsort (vguides, num_vguides, sizeof (gint), &unexciting);
-
-  for (i=0;i<num_vguides;i++)
-    g_print ("%d,",vguides[i]);
-  g_print ("\n");
-  for (i=0;i<num_hguides;i++)
-    g_print ("%d,",hguides[i]);
-  g_print ("\n");
-
-
-  /* Do the actual dup'ing and cropping... this isn't a too naive a
-     way to do this since we got copy-on-write tiles, either. */
-  for (y = 0; y < num_hguides-1; y++)
-    {
-      for (x=0; x < num_vguides-1; x++)
-	{
-	  gint32 new_image;
-
-	  new_image = gimp_image_duplicate (image_ID);
-
-	  if (new_image == -1)
-	    {
-	      g_print ("Aie3!\n");
-	      return;
-	    }
-
-	  gimp_image_undo_disable (new_image);
-
-/*  	  gimp_undo_push_group_start (new_image); */
-
-/* 	  printf("(%dx%d:%d,%d:%d,%d)\n", */
-/* 		 (vguides[x+1]-vguides[x]), */
-/* 		 (hguides[y+1]-hguides[y]), */
-/* 		 vguides[x], hguides[y],x, y);  */
-
-
-	  gimp_image_crop (new_image, 
-			   vguides[x+1] - vguides[x],
-			   hguides[y+1] - hguides[y],
-			   vguides[x],
-			   hguides[y]);
-
-/*  	  gimp_undo_push_group_end (new_image); */
-
-	  gimp_image_undo_enable (new_image);
-
-	  /* show the rough coordinates of the image in the title */
-  	  g_snprintf (filename, sizeof (filename), "%s-(%i,%i)",
-		      gimp_image_get_filename (image_ID), 
-		      x, y);
-	  gimp_image_set_filename (new_image, filename);
-
-	  gimp_display_new (new_image);
-	}
-    }
+  g_list_free (hguides);
+  g_list_free (vguides);
 }

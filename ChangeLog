@@ -1,3 +1,10 @@
+2002-02-26  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/guillotine.c: code cleanup by Maurits Rijk 
+	<lpeek.mrijk@consunet.nl> (#72288).
+
+	* plug-ins/script-fu/interp_slib.c: fixed typo (#72673).
+
 2002-02-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpitemlistview.[ch]: added a "item_activate_func"
