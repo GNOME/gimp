@@ -693,6 +693,8 @@ shoot_dialog (void)
   /*  select window delay  */
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
   label = gtk_label_new_with_mnemonic (_("S_elect Window After"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -702,6 +704,8 @@ shoot_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), spinner, FALSE, FALSE, 0);
   gtk_widget_show (spinner);
 
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinner);
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &shootvals.select_delay);
@@ -709,8 +713,6 @@ shoot_dialog (void)
   label = gtk_label_new (_("Seconds Delay"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-
-  gtk_widget_show (hbox);
 
   /*  root window  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,
@@ -733,6 +735,8 @@ shoot_dialog (void)
   /*  grab delay  */
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
   label = gtk_label_new_with_mnemonic (_("Grab _After"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -742,6 +746,8 @@ shoot_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), spinner, FALSE, FALSE, 0);
   gtk_widget_show (spinner);
 
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinner);
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &shootvals.grab_delay);
@@ -750,7 +756,6 @@ shoot_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  gtk_widget_show (hbox);
   gtk_widget_show (dialog);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);

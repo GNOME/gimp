@@ -1,5 +1,10 @@
 2004-10-19  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/screenshot.c (shoot_dialog): don't forget to set
+	the mnemonic widgets for the labels. Fixes bug #155811.
+
+2004-10-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/Makefile.am
 	* app/dialogs/channel-options-dialog.[ch]: new files implementing
 	the channel options dialog with a horrid number of 13 construction
