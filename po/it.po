@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-08-27 12:08+0200\n"
-"PO-Revision-Date: 2003-08-22 16:22+0200\n"
+"PO-Revision-Date: 2003-09-04 11:27+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -416,15 +416,15 @@ msgstr "Imposta il browser di default usato dall'aiuto in linea."
 
 #: app/config/gimprc-blurbs.h:139
 msgid "Sets the text to appear in image window status bars."
-msgstr ""
+msgstr "Imposta il testo che appare nella barra di stato della finestra immagine"
 
 #: app/config/gimprc-blurbs.h:142
 msgid "Sets the text to appear in image window titles."
-msgstr ""
+msgstr "Imposta il testo che appare nei titoli della finestra immagine"
 
 #: app/config/gimprc-blurbs.h:145
 msgid "When enabled, the GIMP will use a different info window per image view."
-msgstr ""
+msgstr "Se abilitato, GIMP userà una finestra informazioni diversa per ogni finestra immagine."
 
 #: app/config/gimprc-blurbs.h:148
 msgid ""
@@ -434,12 +434,12 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:152
 msgid "Install a private colormap; might be useful on pseudocolor visuals."
-msgstr ""
+msgstr "Installa una mappa colori privata; è utile per visualizzazioni in pseudocolori."
 
 #: app/config/gimprc-blurbs.h:155
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
-msgstr ""
+msgstr "Imposta il livello di interpolazione usato per scalare e altre trasformazioni."
 
 #: app/config/gimprc-blurbs.h:159
 msgid "How many recently opened image filenames to keep on the File menu."
@@ -670,45 +670,42 @@ msgstr ""
 
 #: app/config/gimpscanner.c:90 app/tools/gimpcurvestool.c:1292
 #: app/tools/gimplevelstool.c:1490
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open file: '%s': %s"
-msgstr "Impossibile aprire il file %s"
+msgstr "Impossibile aprire il file:  '%s': %s"
 
 #: app/config/gimpscanner.c:212
-#, fuzzy
 msgid "invalid UTF-8 string"
-msgstr "Errore nel file pattern di GIMP \"%s\""
+msgstr "stringa UTF-8 non valida"
 
 #: app/config/gimpscanner.c:490
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error while parsing '%s' in line %d:\n"
 "%s"
-msgstr "Errore aprendo il file %s: %s"
+msgstr ""
+"Errore durante l'elaborazione di '%s' alla riga  %d:\n"
+"%s"
 
 #: app/core/core-enums.c:13
-#, fuzzy
 msgid "_White (Full Opacity)"
-msgstr "Bianco (totale opacità)"
+msgstr "_Bianco (totale opacità)"
 
 #: app/core/core-enums.c:14
-#, fuzzy
 msgid "_Black (Full Transparency)"
-msgstr "Nero (Trasparenza Totale)"
+msgstr "_Nero (Trasparenza Totale)"
 
 #: app/core/core-enums.c:15
-#, fuzzy
 msgid "Layer's _Alpha Channel"
-msgstr "Canale alpha del livello"
+msgstr "Canale _alpha del livello"
 
 #: app/core/core-enums.c:16
-#, fuzzy
 msgid "_Selection"
-msgstr "Selezione"
+msgstr "_Selezione"
 
 #: app/core/core-enums.c:17
 msgid "_Grayscale Copy of Layer"
-msgstr ""
+msgstr "Copia in scala di _grigi del livello"
 
 #: app/core/core-enums.c:35 app/core/gimp-gradients.c:70
 msgid "FG to BG (RGB)"
@@ -739,24 +736,20 @@ msgid "Pattern Fill"
 msgstr "Riempimento pattern"
 
 #: app/core/core-enums.c:76
-#, fuzzy
 msgid "Add to the current selection"
-msgstr "/Aggiungi a selezione"
+msgstr "Aggiungi alla selezione"
 
 #: app/core/core-enums.c:77
-#, fuzzy
 msgid "Subtract from the current selection"
-msgstr "/Sottrai da selezione"
+msgstr "Sottrai dalla selezione"
 
 #: app/core/core-enums.c:78
-#, fuzzy
 msgid "Replace the current selection"
-msgstr "Sostituisci la corrente selezione"
+msgstr "Sostituisci la selezione"
 
 #: app/core/core-enums.c:79
-#, fuzzy
 msgid "Intersect with the current selection"
-msgstr "/Interseca con selezione"
+msgstr "Interseca con la selezione"
 
 #: app/core/core-enums.c:100
 msgid "Gray"
@@ -844,27 +837,24 @@ msgid "Spiral (anticlockwise)"
 msgstr "Spirale (senso antiorario)"
 
 #: app/core/core-enums.c:237
-#, fuzzy
 msgid "Intersections (dots)"
-msgstr "Interseca"
+msgstr "Intersezioni (punti)"
 
 #: app/core/core-enums.c:238
-#, fuzzy
 msgid "Intersections (crosshairs)"
-msgstr "Interseca"
+msgstr "Intersezioni (crocino)"
 
 #: app/core/core-enums.c:239
 msgid "Dashed"
-msgstr ""
+msgstr "Tratteggio"
 
 #: app/core/core-enums.c:240
 msgid "Double Dashed"
-msgstr ""
+msgstr "Doppio tratteggio"
 
 #: app/core/core-enums.c:241
-#, fuzzy
 msgid "Solid"
-msgstr "Dividi"
+msgstr "Solido"
 
 #: app/core/core-enums.c:259 app/core/core-enums.c:279
 #: app/display/gimpdisplayshell-title.c:163
@@ -877,19 +867,16 @@ msgid "Grayscale"
 msgstr "Scala di grigio"
 
 #: app/core/core-enums.c:280
-#, fuzzy
 msgid "RGB-Alpha"
-msgstr "Alpha"
+msgstr "Alpha-RGB"
 
 #: app/core/core-enums.c:282
-#, fuzzy
 msgid "Grayscale-Alpha"
-msgstr "Scala di grigio"
+msgstr "Scala di grigio-Alpha"
 
 #: app/core/core-enums.c:284
-#, fuzzy
 msgid "Indexed-Alpha"
-msgstr "Scala di colore"
+msgstr "Indicizzato-Alpha"
 
 #: app/core/core-enums.c:302 app/gui/preferences-dialog.c:1078
 #: app/gui/preferences-dialog.c:1734 app/gui/user-install-dialog.c:1353
@@ -903,37 +890,35 @@ msgstr "Verticale"
 
 #: app/core/core-enums.c:304
 msgid "Unknown"
-msgstr ""
+msgstr "Sconosciuto"
 
 #: app/core/core-enums.c:342
 msgid "Tiny"
-msgstr "Molto piccola"
+msgstr "Molto piccolo"
 
 #: app/core/core-enums.c:343
-#, fuzzy
 msgid "Very Small"
-msgstr "Piccola"
+msgstr "Molto piccolo"
 
 #: app/core/core-enums.c:347
-#, fuzzy
 msgid "Very Large"
-msgstr "Grande"
+msgstr "Molto grande"
 
 #: app/core/core-enums.c:348
 msgid "Huge"
-msgstr "Molto grande"
+msgstr "Grandissimo"
 
 #: app/core/core-enums.c:349
 msgid "Enormous"
-msgstr ""
+msgstr "Enorme"
 
 #: app/core/core-enums.c:350
 msgid "Gigantic"
-msgstr ""
+msgstr "Gigante"
 
 #: app/core/core-enums.c:369
 msgid "Sawtooth Wave"
-msgstr "Onde Sawtooth"
+msgstr "Onde a dente di sega"
 
 #: app/core/core-enums.c:370
 msgid "Triangular Wave"
@@ -945,21 +930,19 @@ msgstr ""
 
 #: app/core/core-enums.c:411
 msgid "Normal (128x128)"
-msgstr ""
+msgstr "Normale (128x128)"
 
 #: app/core/core-enums.c:412
 msgid "Large (256x256)"
-msgstr ""
+msgstr "Larga (256x256)"
 
 #: app/core/core-enums.c:430
-#, fuzzy
 msgid "Forward (Traditional)"
-msgstr "Tradizionale"
+msgstr "In avanti (tradizionale)"
 
 #: app/core/core-enums.c:431
-#, fuzzy
 msgid "Backward (Corrective)"
-msgstr "Correttivo"
+msgstr "Indietro (correttivo)"
 
 #: app/core/core-enums.c:491
 msgid "<<invalid>>"
@@ -972,24 +955,20 @@ msgstr "Scala immagine"
 
 #: app/core/core-enums.c:493 app/core/gimpimage-crop.c:145
 #: app/core/gimpimage-resize.c:68
-#, fuzzy
 msgid "Resize Image"
-msgstr "Salva immagine"
+msgstr "Ridimensiona immagine"
 
 #: app/core/core-enums.c:494
-#, fuzzy
 msgid "Flip Image"
-msgstr "Nuova immagine"
+msgstr "Ribalta immagine"
 
 #: app/core/core-enums.c:495
-#, fuzzy
 msgid "Rotate Image"
-msgstr "gimage"
+msgstr "Ruota immagine"
 
 #: app/core/core-enums.c:496
-#, fuzzy
 msgid "Convert Image"
-msgstr "Salva immagine"
+msgstr "Converte immagine"
 
 #: app/core/core-enums.c:497 app/core/gimpimage-crop.c:142
 #, fuzzy
@@ -997,25 +976,21 @@ msgid "Crop Image"
 msgstr "Carica immagine"
 
 #: app/core/core-enums.c:498 app/gui/image-commands.c:378
-#, fuzzy
 msgid "Merge Layers"
-msgstr "Ridimensiona Livello"
+msgstr "Fonde i ivelli"
 
 #: app/core/core-enums.c:499 app/core/core-enums.c:527
-#, fuzzy
 msgid "QuickMask"
-msgstr "quickmask"
+msgstr "Maschera veloce"
 
 #: app/core/core-enums.c:500 app/core/core-enums.c:528
 #: app/core/gimpimage-grid.c:63 app/gui/grid-dialog.c:417
-#, fuzzy
 msgid "Grid"
-msgstr "/Guide"
+msgstr "Griglia"
 
 #: app/core/core-enums.c:501 app/core/core-enums.c:529
-#, fuzzy
 msgid "Guide"
-msgstr "/Guide"
+msgstr "Guida"
 
 #: app/core/core-enums.c:502 app/core/core-enums.c:531
 #: app/core/gimpchannel.c:768
@@ -1023,19 +998,16 @@ msgid "Selection Mask"
 msgstr "Maschera di selezione"
 
 #: app/core/core-enums.c:503
-#, fuzzy
 msgid "Item Properties"
-msgstr "ridimensiona livello"
+msgstr "Proprietà dell'elemento"
 
 #: app/core/core-enums.c:504 app/core/core-enums.c:533
-#, fuzzy
 msgid "Move Item"
-msgstr "Muovi: "
+msgstr "Sposta voce"
 
 #: app/core/core-enums.c:505
-#, fuzzy
 msgid "Linked Item"
-msgstr "livello collegato"
+msgstr "Elemento collegato"
 
 #: app/core/core-enums.c:506 app/core/core-enums.c:535
 msgid "Drawable Visibility"
@@ -1054,24 +1026,20 @@ msgid "Resize Layer"
 msgstr "Ridimensiona Livello"
 
 #: app/core/core-enums.c:509 app/core/gimplayer.c:1079
-#, fuzzy
 msgid "Apply Layer Mask"
-msgstr "/Applica livello maschera"
+msgstr "Applica livello maschera"
 
 #: app/core/core-enums.c:510 app/core/gimplayer-floating-sel.c:222
-#, fuzzy
 msgid "Floating Selection to Layer"
-msgstr "Selezione fluttuante"
+msgstr "Selezione fluttuante al livello"
 
 #: app/core/core-enums.c:511 app/core/gimpimage-mask.c:384
-#, fuzzy
 msgid "Float Selection"
 msgstr "Selezione fluttuante"
 
 #: app/core/core-enums.c:512 app/core/gimplayer-floating-sel.c:131
-#, fuzzy
 msgid "Anchor Floating Selection"
-msgstr "Selezione fluttuante"
+msgstr "Ancora selezione fluttuante"
 
 #: app/core/core-enums.c:513 app/core/gimpedit.c:199
 #: app/widgets/gimpbufferview.c:143
@@ -1079,14 +1047,12 @@ msgid "Paste"
 msgstr "Incolla"
 
 #: app/core/core-enums.c:514 app/core/gimpedit.c:61
-#, fuzzy
 msgid "Cut"
-msgstr "Conteggio:"
+msgstr "Taglia"
 
 #: app/core/core-enums.c:515 app/core/gimpedit.c:119
-#, fuzzy
 msgid "Copy"
-msgstr "copia"
+msgstr "Copia"
 
 #: app/core/core-enums.c:516 app/tools/gimptexttool.c:115
 #: app/widgets/widgets-enums.c:73
@@ -1100,22 +1066,18 @@ msgstr "Trasforma"
 
 #: app/core/core-enums.c:518 app/core/core-enums.c:558
 #: app/paint/gimppaintcore.c:479
-#, fuzzy
 msgid "Paint"
-msgstr "disegna"
+msgstr "Disegna"
 
 #: app/core/core-enums.c:519 app/core/core-enums.c:559 app/core/gimpitem.c:791
-#, fuzzy
 msgid "Attach Parasite"
-msgstr "attaccate parasite all'immagine"
+msgstr "Allega parasite"
 
 #: app/core/core-enums.c:520 app/core/core-enums.c:560
-#, fuzzy
 msgid "Remove Parasite"
-msgstr "rimuovi parasite"
+msgstr "Rimuovi parasite"
 
 #: app/core/core-enums.c:521 app/pdb/drawable_cmds.c:117
-#, fuzzy
 msgid "Plug-In"
 msgstr "Plug-in"
 
@@ -1124,9 +1086,8 @@ msgid "Image"
 msgstr "Immagine"
 
 #: app/core/core-enums.c:523
-#, fuzzy
 msgid "Image Mod"
-msgstr "/Immagine/Modalità"
+msgstr "Immagine/Modalità"
 
 #: app/core/core-enums.c:524 app/widgets/gimptemplateeditor.c:370
 msgid "Image Type"
@@ -1134,29 +1095,24 @@ msgstr "Tipo di immagine"
 
 #. Image size frame
 #: app/core/core-enums.c:525 app/widgets/gimptemplateeditor.c:134
-#, fuzzy
 msgid "Image Size"
-msgstr "Dimensione immagine: %s"
+msgstr "Dimensione immagine"
 
 #: app/core/core-enums.c:526
-#, fuzzy
 msgid "Resolution Change"
-msgstr "cambio risoluzione"
+msgstr "Cambio risoluzione"
 
 #: app/core/core-enums.c:530
-#, fuzzy
 msgid "Change Indexed Palette"
-msgstr "Palette scala di colore"
+msgstr "Palette indicizzata"
 
 #: app/core/core-enums.c:532
-#, fuzzy
 msgid "Rename Item"
-msgstr "Rinomina tracciato"
+msgstr "Rinomina elemento"
 
 #: app/core/core-enums.c:534
-#, fuzzy
 msgid "Set Item Linked"
-msgstr "Opzioni nuovo livello"
+msgstr "Imposta elemento come collegato"
 
 #: app/core/core-enums.c:536 app/gui/layers-commands.c:612
 #: app/gui/layers-commands.c:644 app/gui/layers-commands.c:676
@@ -1169,40 +1125,34 @@ msgid "Delete Layer"
 msgstr "Cancella livello"
 
 #: app/core/core-enums.c:538
-#, fuzzy
 msgid "Layer Mod"
 msgstr "Mod livello"
 
 #: app/core/core-enums.c:539 app/core/gimplayer.c:876
 #: app/gui/layers-commands.c:926
-#, fuzzy
 msgid "Add Layer Mask"
-msgstr "/Aggiungi livello maschera..."
+msgstr "Aggiungi livello maschera..."
 
 #: app/core/core-enums.c:540
-#, fuzzy
 msgid "Delete Layer Mask"
-msgstr "/Elimina livello maschera"
+msgstr "Elimina livello maschera"
 
 #: app/core/core-enums.c:541
-#, fuzzy
 msgid "Reposition Layer"
 msgstr "Riposizionamento dei livelli"
 
 #: app/core/core-enums.c:542
-#, fuzzy
 msgid "Set Layer Mode"
-msgstr "Mod livello"
+msgstr "Imposta modalità livello"
 
 #: app/core/core-enums.c:543
-#, fuzzy
 msgid "Set Layer Opacity"
-msgstr "Opzioni nuovo livello"
+msgstr "Imposta opacità livello"
 
 #: app/core/core-enums.c:544
 #, fuzzy
 msgid "Set Preserve Trans"
-msgstr "Salva le preferenze?"
+msgstr "Preserva le trans"
 
 #: app/core/core-enums.c:545 app/gui/channels-commands.c:312
 #: app/gui/channels-commands.c:343 app/gui/channels-commands.c:380
@@ -1215,69 +1165,56 @@ msgid "Delete Channel"
 msgstr "Elimina canale"
 
 #: app/core/core-enums.c:547
-#, fuzzy
 msgid "Channel Mod"
-msgstr "mod canale"
+msgstr "Mod canale"
 
 #: app/core/core-enums.c:548
-#, fuzzy
 msgid "Reposition Channel"
-msgstr "Canale superiore"
+msgstr "Riposiziona canale"
 
 #: app/core/core-enums.c:549
-#, fuzzy
 msgid "Channel Color"
-msgstr "Nuovo canale"
+msgstr "Canale colore"
 
 #: app/core/core-enums.c:550
-#, fuzzy
 msgid "New Vectors"
-msgstr "Nuovo livello"
+msgstr "Nuovi vettori"
 
 #: app/core/core-enums.c:551
-#, fuzzy
 msgid "Delete Vectors"
-msgstr "Elimina la selezione"
+msgstr "Elimina vettori"
 
 #: app/core/core-enums.c:552
-#, fuzzy
 msgid "Vectors Mod"
-msgstr "Modalità di selezione"
+msgstr "Mod vettori"
 
 #: app/core/core-enums.c:553
-#, fuzzy
 msgid "Reposition Vectors"
-msgstr "Riposizionamento dei livelli"
+msgstr "Riposizionamento vettori"
 
 #: app/core/core-enums.c:554
-#, fuzzy
 msgid "FS to Layer"
 msgstr "FS a livello"
 
 #: app/core/core-enums.c:555
-#, fuzzy
 msgid "FS Rigor"
 msgstr "FS rigore"
 
 #: app/core/core-enums.c:556
-#, fuzzy
 msgid "FS Relax"
 msgstr "FS relax"
 
 #: app/core/core-enums.c:561
-#, fuzzy
 msgid "EEK: can't undo"
-msgstr "Impossibile annullare %s"
+msgstr "Impossibile annullare!"
 
 #: app/core/gimp-gradients.c:75
-#, fuzzy
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr "HSV (contatore tonalità in senso orario)"
+msgstr "Da primo piano a sfondo (HSV in senso antiorario)"
 
 #: app/core/gimp-gradients.c:80
-#, fuzzy
 msgid "FG to BG (HSV clockwise hue)"
-msgstr "Primo Piano a Sfondo (HSV)"
+msgstr "Da primo piano a sfondo (hue HSV in senso orario)"
 
 #. register all internal procedures
 #: app/core/gimp.c:757
@@ -1285,9 +1222,8 @@ msgid "Procedural Database"
 msgstr "Database procedurale"
 
 #: app/core/gimp.c:760
-#, fuzzy
 msgid "Plug-In Environment"
-msgstr "Ambiente"
+msgstr "Ambiente plug-in"
 
 #. initialize  the global parasite table
 #: app/core/gimp.c:776
@@ -1329,33 +1265,30 @@ msgstr "Gradienti"
 #. initialize the list of gimp fonts
 #: app/core/gimp.c:796 app/gui/dialogs-constructors.c:432
 #: app/gui/dialogs-constructors.c:656
-#, fuzzy
 msgid "Fonts"
-msgstr "punti"
+msgstr "Caratteri"
 
 #. initialize the document history
 #: app/core/gimp.c:802
-#, fuzzy
 msgid "Documents"
-msgstr "Indice Documenti"
+msgstr "Documenti"
 
 #. initialize the template list
 #: app/core/gimp.c:806 app/gui/dialogs-constructors.c:523
-#, fuzzy
 msgid "Templates"
-msgstr "Replica"
+msgstr "Modelli"
 
 #: app/core/gimpbrush.c:411 app/core/gimpbrushgenerated.c:377
 #: app/core/gimpbrushpipe.c:352 app/core/gimpgradient.c:355
 #: app/core/gimppalette.c:385 app/core/gimppattern.c:347
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "Non è possibile aprire \"%s\""
+msgstr "Impossibile aprire '%s' in lettura: %s"
 
 #: app/core/gimpbrush.c:550 app/core/gimppattern.c:356
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read %d bytes from '%s': %s"
-msgstr "Impossibile aprire il file %s"
+msgstr "Impossibile leggere %d byte da '%s': %s"
 
 #: app/core/gimpbrush.c:570
 #, c-format
@@ -10296,49 +10229,3 @@ msgstr ""
 msgid "The GIMP (unstable)"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Channel from Alpha"
-#~ msgstr "mod canale"
-
-#, fuzzy
-#~ msgid "Channel from Mask"
-#~ msgstr "mod canale"
-
-#, fuzzy
-#~ msgid "Selection from Alpha"
-#~ msgstr "Selezione a tracciato "
-
-#~ msgid ""
-#~ "The active layer has no alpha channel\n"
-#~ "to convert to a selection."
-#~ msgstr ""
-#~ "Il livello attivo non ha canali alpha\n"
-#~ "da convertire ad una selezione."
-
-#, fuzzy
-#~ msgid "Selection from Mask"
-#~ msgstr "Maschera di selezione"
-
-#~ msgid ""
-#~ "The active layer has no mask\n"
-#~ "to convert to a selection."
-#~ msgstr ""
-#~ "Il livello attivo non ha maschere\n"
-#~ "da convertire a selezione."
-
-#~ msgid "Blend: 0, 0"
-#~ msgstr "Unione: 0, 0"
-
-#~ msgid "Crop: 0 x 0"
-#~ msgstr "Taglierino: 0 x 0"
-
-#~ msgid "Move: 0, 0"
-#~ msgstr "Muovi: 0, 0"
-
-#, fuzzy
-#~ msgid "Vectors"
-#~ msgstr "Nuovo livello"
-
-#, fuzzy
-#~ msgid "/Tools/_Vectors"
-#~ msgstr "/Strumenti/Testo"
