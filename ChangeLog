@@ -1,3 +1,8 @@
+2003-05-19  Manish Singh  <yosh@gimp.org>
+                                                                                
+	* plug-ins/script-fu/script-fu-console.c: Add SIOD banner to console
+	startup.
+
 2003-05-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/drawable-commands.h: eek, forgot to commit this file.

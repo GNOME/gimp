@@ -241,7 +241,9 @@ script_fu_console_interface (void)
       "weak",     "See the GNU General Public License for more details.\n\n",
       "weak",     "You should have received a copy of the GNU General Public License\n",
       "weak",     "along with this program; if not, write to the Free Software\n",
-      "weak",     "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n\n\n",
+      "weak",     "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n\n",
+      "strong",   "Welcome to SIOD, Scheme In One Defun\n",
+      "weak",     "(C) Copyright 1988-1994 Paradigm Associates Inc.\n\n\n",
       "strong",   "Script-Fu Console - ",
       "emphasis", "Interactive Scheme Development\n\n",
       NULL
