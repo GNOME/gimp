@@ -526,7 +526,7 @@ load_image (const gchar *filename)
           }
         break;
       case TGA_TYPE_GRAY:
-        if (info.bpp != 8 && (info.alphaBits != 8 || (info.bpp != 16 || info.bpp != 15)))
+        if (info.bpp != 8 && (info.alphaBits != 8 || (info.bpp != 16 && info.bpp != 15)))
           {
             g_message ("Unhandled sub-format in '%s'",
                        gimp_filename_to_utf8 (filename));

@@ -1,3 +1,14 @@
+2004-04-18  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* plug-ins/common/gauss_iir.c: Change tabs to spaces all over the
+	file, in preparation for other changes. Minor cleanup.
+
+	* plug-ins/common/gauss_rle.c (gauss_rle): Plug a leak with the
+	returned value from make_curve().
+
+	* plug-ins/common/tga.c (load_image): Fix a condition which was
+	preventing GRAYA images from loading.
+
 2004-04-18  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/Makefile.am

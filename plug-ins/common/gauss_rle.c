@@ -585,7 +585,7 @@ gauss_rle (GimpDrawable *drawable,
 
       total = sum[length] - sum[-length];
 
-       for (col = 0; col < width; col++)
+      for (col = 0; col < width; col++)
 	{
 	  gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, (y2 - y1));
           if (has_alpha)
@@ -656,6 +656,7 @@ gauss_rle (GimpDrawable *drawable,
 	{
 	  std_dev = sqrt (-(horz * horz) / (2 * log (1.0 / 255.0)));
 
+          g_free (curve);
 	  curve = make_curve (std_dev, &length);
 	  sum = g_new (gint, 2 * length + 1);
 
@@ -734,6 +735,7 @@ gauss_rle (GimpDrawable *drawable,
   g_free (buf);
   g_free (src);
   g_free (dest);
+  g_free (curve);
 }
 
 /*

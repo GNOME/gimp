@@ -48,37 +48,37 @@ typedef struct
  */
 static void      query  (void);
 static void      run    (const gchar      *name,
-			 gint              nparams,
-			 const GimpParam  *param,
-			 gint             *nreturn_vals,
-			 GimpParam       **return_vals);
+                         gint              nparams,
+                         const GimpParam  *param,
+                         gint             *nreturn_vals,
+                         GimpParam       **return_vals);
 
 static void      gauss_iir         (GimpDrawable *drawable,
-				    gdouble       horizontal,
-				    gdouble       vertical);
+                                    gdouble       horizontal,
+                                    gdouble       vertical);
 
 /*
  * Gaussian blur interface
  */
 static gint      gauss_iir_dialog  (void);
 static gint      gauss_iir2_dialog (gint32        image_ID,
-				    GimpDrawable *drawable);
+                                    GimpDrawable *drawable);
 
 /*
  * Gaussian blur helper functions
  */
 static void      find_constants    (gdouble  n_p[],
-				    gdouble  n_m[],
-				    gdouble  d_p[],
-				    gdouble  d_m[],
-				    gdouble  bd_p[],
-				    gdouble  bd_m[],
-				    gdouble  std_dev);
+                                    gdouble  n_m[],
+                                    gdouble  d_p[],
+                                    gdouble  d_m[],
+                                    gdouble  bd_p[],
+                                    gdouble  bd_m[],
+                                    gdouble  std_dev);
 static void      transfer_pixels   (gdouble *src1,
-				    gdouble *src2,
-				    guchar  *dest,
-				    gint     bytes,
-				    gint     width);
+                                    gdouble *src2,
+                                    guchar  *dest,
+                                    gint     bytes,
+                                    gint     width);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -128,44 +128,44 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_gauss_iir",
-			  "Applies a gaussian blur to the specified drawable.",
-			  "Applies a gaussian blur to the drawable, with "
-			  "specified radius of affect.  The standard deviation "
-			  "of the normal distribution used to modify pixel "
-			  "values is calculated based on the supplied radius.  "
-			  "Horizontal and vertical blurring can be "
-			  "independently invoked by specifying only one to "
-			  "run.  The IIR gaussian blurring works best for "
-			  "large radius values and for images which are not "
-			  "computer-generated.",
-			  "Spencer Kimball & Peter Mattis",
-			  "Spencer Kimball & Peter Mattis",
-			  "1995-1996",
-			  NULL,
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Applies a gaussian blur to the specified drawable.",
+                          "Applies a gaussian blur to the drawable, with "
+                          "specified radius of affect.  The standard deviation "
+                          "of the normal distribution used to modify pixel "
+                          "values is calculated based on the supplied radius.  "
+                          "Horizontal and vertical blurring can be "
+                          "independently invoked by specifying only one to "
+                          "run.  The IIR gaussian blurring works best for "
+                          "large radius values and for images which are not "
+                          "computer-generated.",
+                          "Spencer Kimball & Peter Mattis",
+                          "Spencer Kimball & Peter Mattis",
+                          "1995-1996",
+                          NULL,
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_install_procedure ("plug_in_gauss_iir2",
-			  "Applies a gaussian blur to the specified drawable.",
-			  "Applies a gaussian blur to the drawable, with "
-			  "specified radius of affect.  The standard deviation "
-			  "of the normal distribution used to modify pixel "
-			  "values is calculated based on the supplied radius.  "
-			  "This radius can be specified indepently on for the "
-			  "horizontal and the vertical direction. The IIR "
-			  "gaussian blurring works best for large radius "
-			  "values and for images which are not "
-			  "computer-generated.",
-			  "Spencer Kimball, Peter Mattis & Sven Neumann",
-			  "Spencer Kimball, Peter Mattis & Sven Neumann",
-			  "1995-2000",
-			  N_("<Image>/Filters/Blur/Gaussian Blur (_IIR)..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args2), 0,
-			  args2, NULL);
+                          "Applies a gaussian blur to the specified drawable.",
+                          "Applies a gaussian blur to the drawable, with "
+                          "specified radius of affect.  The standard deviation "
+                          "of the normal distribution used to modify pixel "
+                          "values is calculated based on the supplied radius.  "
+                          "This radius can be specified indepently on for the "
+                          "horizontal and the vertical direction. The IIR "
+                          "gaussian blurring works best for large radius "
+                          "values and for images which are not "
+                          "computer-generated.",
+                          "Spencer Kimball, Peter Mattis & Sven Neumann",
+                          "Spencer Kimball, Peter Mattis & Sven Neumann",
+                          "1995-2000",
+                          N_("<Image>/Filters/Blur/Gaussian Blur (_IIR)..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args2), 0,
+                          args2, NULL);
 }
 
 static void
@@ -198,80 +198,80 @@ run (const gchar      *name,
   if (strcmp (name, "plug_in_gauss_iir") == 0)   /* the old-fashioned way of calling it */
     {
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	  /*  Possibly retrieve data  */
-	  gimp_get_data ("plug_in_gauss_iir", &bvals);
+        {
+        case GIMP_RUN_INTERACTIVE:
+          /*  Possibly retrieve data  */
+          gimp_get_data ("plug_in_gauss_iir", &bvals);
 
-	  /*  First acquire information with a dialog  */
-	  if (! gauss_iir_dialog ())
-	    return;
-	  break;
+          /*  First acquire information with a dialog  */
+          if (! gauss_iir_dialog ())
+            return;
+          break;
 
-	case GIMP_RUN_NONINTERACTIVE:
-	  /*  Make sure all the arguments are there!  */
-	  if (nparams != 6)
-	    status = GIMP_PDB_CALLING_ERROR;
-	  if (status == GIMP_PDB_SUCCESS)
-	    {
-	      bvals.radius     = param[3].data.d_float;
-	      bvals.horizontal = (param[4].data.d_int32) ? TRUE : FALSE;
-	      bvals.vertical   = (param[5].data.d_int32) ? TRUE : FALSE;
-	    }
-	  if (status == GIMP_PDB_SUCCESS && (bvals.radius <= 0.0))
-	    status = GIMP_PDB_CALLING_ERROR;
-	  break;
+        case GIMP_RUN_NONINTERACTIVE:
+          /*  Make sure all the arguments are there!  */
+          if (nparams != 6)
+            status = GIMP_PDB_CALLING_ERROR;
+          if (status == GIMP_PDB_SUCCESS)
+            {
+              bvals.radius     = param[3].data.d_float;
+              bvals.horizontal = (param[4].data.d_int32) ? TRUE : FALSE;
+              bvals.vertical   = (param[5].data.d_int32) ? TRUE : FALSE;
+            }
+          if (status == GIMP_PDB_SUCCESS && (bvals.radius <= 0.0))
+            status = GIMP_PDB_CALLING_ERROR;
+          break;
 
-	case GIMP_RUN_WITH_LAST_VALS:
-	  /*  Possibly retrieve data  */
-	  gimp_get_data ("plug_in_gauss_iir", &bvals);
-	  break;
+        case GIMP_RUN_WITH_LAST_VALS:
+          /*  Possibly retrieve data  */
+          gimp_get_data ("plug_in_gauss_iir", &bvals);
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
 
       if (!(bvals.horizontal || bvals.vertical))
-	{
-	  g_message (_("You must specify either horizontal "
+        {
+          g_message (_("You must specify either horizontal "
                        "or vertical (or both)"));
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+          status = GIMP_PDB_CALLING_ERROR;
+        }
     }
   else if (strcmp (name, "plug_in_gauss_iir2") == 0)
     {
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	  /*  Possibly retrieve data  */
-	  gimp_get_data ("plug_in_gauss_iir2", &b2vals);
+        {
+        case GIMP_RUN_INTERACTIVE:
+          /*  Possibly retrieve data  */
+          gimp_get_data ("plug_in_gauss_iir2", &b2vals);
 
-	  /*  First acquire information with a dialog  */
-	  if (! gauss_iir2_dialog (image_ID, drawable))
-	    return;
-	  break;
-	case GIMP_RUN_NONINTERACTIVE:
-	  /*  Make sure all the arguments are there!  */
-	  if (nparams != 5)
-	    status = GIMP_PDB_CALLING_ERROR;
-	  if (status == GIMP_PDB_SUCCESS)
-	    {
-	      b2vals.horizontal = param[3].data.d_float;
-	      b2vals.vertical   = param[4].data.d_float;
-	    }
-	  if (status == GIMP_PDB_SUCCESS &&
+          /*  First acquire information with a dialog  */
+          if (! gauss_iir2_dialog (image_ID, drawable))
+            return;
+          break;
+        case GIMP_RUN_NONINTERACTIVE:
+          /*  Make sure all the arguments are there!  */
+          if (nparams != 5)
+            status = GIMP_PDB_CALLING_ERROR;
+          if (status == GIMP_PDB_SUCCESS)
+            {
+              b2vals.horizontal = param[3].data.d_float;
+              b2vals.vertical   = param[4].data.d_float;
+            }
+          if (status == GIMP_PDB_SUCCESS &&
               (b2vals.horizontal <= 0.0 && b2vals.vertical <= 0.0))
-	    status = GIMP_PDB_CALLING_ERROR;
-	  break;
+            status = GIMP_PDB_CALLING_ERROR;
+          break;
 
-	case GIMP_RUN_WITH_LAST_VALS:
-	  /*  Possibly retrieve data  */
-	  gimp_get_data ("plug_in_gauss_iir2", &b2vals);
-	  break;
+        case GIMP_RUN_WITH_LAST_VALS:
+          /*  Possibly retrieve data  */
+          gimp_get_data ("plug_in_gauss_iir2", &b2vals);
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
     }
   else
     status = GIMP_PDB_CALLING_ERROR;
@@ -280,38 +280,38 @@ run (const gchar      *name,
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
-	  gimp_drawable_is_gray (drawable->drawable_id))
-	{
-	  gimp_progress_init (_("IIR Gaussian Blur"));
+          gimp_drawable_is_gray (drawable->drawable_id))
+        {
+          gimp_progress_init (_("IIR Gaussian Blur"));
 
           /*  set the tile cache size so that the gaussian blur works well  */
           gimp_tile_cache_ntiles (2 *
                                   (MAX (drawable->width, drawable->height) /
-				  gimp_tile_width () + 1));
+                                   gimp_tile_width () + 1));
 
           /*  run the gaussian blur  */
-	  if (strcmp (name, "plug_in_gauss_iir") == 0)
-	    {
-	      gauss_iir (drawable, (bvals.horizontal ? bvals.radius : 0.0),
+          if (strcmp (name, "plug_in_gauss_iir") == 0)
+            {
+              gauss_iir (drawable, (bvals.horizontal ? bvals.radius : 0.0),
                                    (bvals.vertical ? bvals.radius : 0.0));
 
-	      /*  Store data  */
-	      if (run_mode == GIMP_RUN_INTERACTIVE)
-		gimp_set_data ("plug_in_gauss_iir",
+              /*  Store data  */
+              if (run_mode == GIMP_RUN_INTERACTIVE)
+                gimp_set_data ("plug_in_gauss_iir",
                                &bvals, sizeof (BlurValues));
-	    }
-	  else
-	    {
-	      gauss_iir (drawable, b2vals.horizontal, b2vals.vertical);
+            }
+          else
+            {
+              gauss_iir (drawable, b2vals.horizontal, b2vals.vertical);
 
-	      /*  Store data  */
-	      if (run_mode == GIMP_RUN_INTERACTIVE)
-		gimp_set_data ("plug_in_gauss_iir2",
+              /*  Store data  */
+              if (run_mode == GIMP_RUN_INTERACTIVE)
+                gimp_set_data ("plug_in_gauss_iir2",
                                &b2vals, sizeof (Blur2Values));
-	    }
+            }
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
+            gimp_displays_flush ();
         }
       else
         {
@@ -342,12 +342,12 @@ gauss_iir_dialog (void)
 
   dlg = gimp_dialog_new (_("IIR Gaussian Blur"), "gauss_iir",
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-gauss-iir",
+                         gimp_standard_help_func, "plug-in-gauss-iir",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -386,8 +386,8 @@ gauss_iir_dialog (void)
   gtk_widget_show (label);
 
   spinbutton = gimp_spin_button_new (&adj,
-				     bvals.radius, 0.0, GIMP_MAX_IMAGE_SIZE,
-				     0.0, 5.0, 0, 1, 2);
+                                     bvals.radius, 0.0, GIMP_MAX_IMAGE_SIZE,
+                                     0.0, 5.0, 0, 1, 2);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, TRUE, TRUE, 0);
   gtk_widget_show (spinbutton);
 
@@ -408,7 +408,7 @@ gauss_iir_dialog (void)
 
 static gint
 gauss_iir2_dialog (gint32        image_ID,
-		   GimpDrawable *drawable)
+                   GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
@@ -422,12 +422,12 @@ gauss_iir2_dialog (gint32        image_ID,
 
   dlg = gimp_dialog_new (_("IIR Gaussian Blur"), "gauss_iir",
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-gauss-iir2",
+                         gimp_standard_help_func, "plug-in-gauss-iir2",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Blur Radius"));
@@ -439,18 +439,18 @@ gauss_iir2_dialog (gint32        image_ID,
   unit = gimp_image_get_unit (image_ID);
 
   size = gimp_coordinates_new (unit, "%a", TRUE, FALSE, -1,
-			       GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                               GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
-			       b2vals.horizontal == b2vals.vertical,
-			       FALSE,
+                               b2vals.horizontal == b2vals.vertical,
+                               FALSE,
 
-			       _("_Horizontal:"), b2vals.horizontal, xres,
-			       0, 8 * MAX (drawable->width, drawable->height),
-			       0, 0,
+                               _("_Horizontal:"), b2vals.horizontal, xres,
+                               0, 8 * MAX (drawable->width, drawable->height),
+                               0, 0,
 
-			       _("_Vertical:"), b2vals.vertical, yres,
-			       0, 8 * MAX (drawable->width, drawable->height),
-			       0, 0);
+                               _("_Vertical:"), b2vals.vertical, yres,
+                               0, 8 * MAX (drawable->width, drawable->height),
+                               0, 0);
   gtk_container_set_border_width (GTK_CONTAINER (size), 4);
   gtk_container_add (GTK_CONTAINER (frame), size);
 
@@ -477,8 +477,8 @@ gauss_iir2_dialog (gint32        image_ID,
 /* Convert from separated to premultiplied alpha, on a single scan line. */
 static void
 multiply_alpha (guchar *buf,
-		gint    width,
-		gint    bytes)
+                gint    width,
+                gint    bytes)
 {
   gint i, j;
   gdouble alpha;
@@ -487,7 +487,7 @@ multiply_alpha (guchar *buf,
     {
       alpha = buf[i + bytes - 1] * (1.0 / 255.0);
       for (j = 0; j < bytes - 1; j++)
-	buf[i + j] *= alpha;
+        buf[i + j] *= alpha;
     }
 }
 
@@ -495,8 +495,8 @@ multiply_alpha (guchar *buf,
    line. */
 static void
 separate_alpha (guchar *buf,
-		gint    width,
-		gint    bytes)
+                gint    width,
+                gint    bytes)
 {
   gint i, j;
   guchar alpha;
@@ -507,21 +507,21 @@ separate_alpha (guchar *buf,
     {
       alpha = buf[i + bytes - 1];
       if (alpha != 0 && alpha != 255)
-	{
-	  recip_alpha = 255.0 / alpha;
-	  for (j = 0; j < bytes - 1; j++)
-	    {
-	      new_val = buf[i + j] * recip_alpha;
-	      buf[i + j] = MIN (255, new_val);
-	    }
-	}
+        {
+          recip_alpha = 255.0 / alpha;
+          for (j = 0; j < bytes - 1; j++)
+            {
+              new_val = buf[i + j] * recip_alpha;
+              buf[i + j] = MIN (255, new_val);
+            }
+        }
     }
 }
 
 static void
 gauss_iir (GimpDrawable *drawable,
-	   gdouble       horz,
-	   gdouble       vert)
+           gdouble       horz,
+           gdouble       vert)
 {
   GimpPixelRgn src_rgn, dest_rgn;
   gint width, height;
@@ -570,8 +570,8 @@ gauss_iir (GimpDrawable *drawable,
                        TRUE, TRUE);
 
   progress = 0.0;
-  max_progress  = (horz <= 0.0 ) ? 0 : width * height * horz;
-  max_progress += (vert <= 0.0 ) ? 0 : width * height * vert;
+  max_progress  = (horz <= 0.0) ? 0 : width * height * horz;
+  max_progress += (vert <= 0.0) ? 0 : width * height * vert;
 
 
   /*  First the vertical pass  */
@@ -584,64 +584,64 @@ gauss_iir (GimpDrawable *drawable,
       find_constants (n_p, n_m, d_p, d_m, bd_p, bd_m, std_dev);
 
       for (col = 0; col < width; col++)
-	{
-	  memset(val_p, 0, height * bytes * sizeof (gdouble));
-	  memset(val_m, 0, height * bytes * sizeof (gdouble));
+        {
+          memset(val_p, 0, height * bytes * sizeof (gdouble));
+          memset(val_m, 0, height * bytes * sizeof (gdouble));
 
-	  gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, (y2 - y1));
+          gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, (y2 - y1));
           if (has_alpha)
-              multiply_alpha (src, height, bytes);
+            multiply_alpha (src, height, bytes);
 
-	  sp_p = src;
-	  sp_m = src + (height - 1) * bytes;
-	  vp = val_p;
-	  vm = val_m + (height - 1) * bytes;
+          sp_p = src;
+          sp_m = src + (height - 1) * bytes;
+          vp = val_p;
+          vm = val_m + (height - 1) * bytes;
 
-	  /*  Set up the first vals  */
-	  for (i = 0; i < bytes; i++)
-	    {
-	      initial_p[i] = sp_p[i];
-	      initial_m[i] = sp_m[i];
-	    }
+          /*  Set up the first vals  */
+          for (i = 0; i < bytes; i++)
+            {
+              initial_p[i] = sp_p[i];
+              initial_m[i] = sp_m[i];
+            }
 
-	  for (row = 0; row < height; row++)
-	    {
-	      gdouble *vpptr, *vmptr;
-	      terms = (row < 4) ? row : 4;
+          for (row = 0; row < height; row++)
+            {
+              gdouble *vpptr, *vmptr;
+              terms = (row < 4) ? row : 4;
 
-	      for (b = 0; b < bytes; b++)
-		{
-		  vpptr = vp + b; vmptr = vm + b;
-		  for (i = 0; i <= terms; i++)
-		    {
-		      *vpptr += n_p[i] * sp_p[(-i * bytes) + b] -
-			d_p[i] * vp[(-i * bytes) + b];
-		      *vmptr += n_m[i] * sp_m[(i * bytes) + b] -
-			d_m[i] * vm[(i * bytes) + b];
-		    }
-		  for (j = i; j <= 4; j++)
-		    {
-		      *vpptr += (n_p[j] - bd_p[j]) * initial_p[b];
-		      *vmptr += (n_m[j] - bd_m[j]) * initial_m[b];
-		    }
-		}
+              for (b = 0; b < bytes; b++)
+                {
+                  vpptr = vp + b; vmptr = vm + b;
+                  for (i = 0; i <= terms; i++)
+                    {
+                      *vpptr += n_p[i] * sp_p[(-i * bytes) + b] -
+                        d_p[i] * vp[(-i * bytes) + b];
+                      *vmptr += n_m[i] * sp_m[(i * bytes) + b] -
+                        d_m[i] * vm[(i * bytes) + b];
+                    }
+                  for (j = i; j <= 4; j++)
+                    {
+                      *vpptr += (n_p[j] - bd_p[j]) * initial_p[b];
+                      *vmptr += (n_m[j] - bd_m[j]) * initial_m[b];
+                    }
+                }
 
-	      sp_p += bytes;
-	      sp_m -= bytes;
-	      vp += bytes;
-	      vm -= bytes;
-	    }
+              sp_p += bytes;
+              sp_m -= bytes;
+              vp += bytes;
+              vm -= bytes;
+            }
 
-	  transfer_pixels (val_p, val_m, dest, bytes, height);
+          transfer_pixels (val_p, val_m, dest, bytes, height);
           if (has_alpha)
-              separate_alpha (src, height, bytes);
+            separate_alpha (src, height, bytes);
 
-	  gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x1, y1, (y2 - y1));
+          gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x1, y1, (y2 - y1));
 
-	  progress += height * vert;
-	  if ((col % 5) == 0)
-	    gimp_progress_update (progress / max_progress);
-	}
+          progress += height * vert;
+          if ((col % 5) == 0)
+            gimp_progress_update (progress / max_progress);
+        }
 
       /*  prepare for the horizontal pass  */
       gimp_pixel_rgn_init (&src_rgn,
@@ -650,77 +650,77 @@ gauss_iir (GimpDrawable *drawable,
     }
 
   /*  Now the horizontal pass  */
-if (horz > 0.0)
+  if (horz > 0.0)
     {
       horz = fabs (horz) + 1.0;
 
       if (horz != vert)
-	{
-	  std_dev = sqrt (-(horz * horz) / (2 * log (1.0 / 255.0)));
+        {
+          std_dev = sqrt (-(horz * horz) / (2 * log (1.0 / 255.0)));
 
-	  /*  derive the constants for calculating the gaussian from the std dev  */
-	  find_constants (n_p, n_m, d_p, d_m, bd_p, bd_m, std_dev);
-	}
+          /*  derive the constants for calculating the gaussian from the std dev  */
+          find_constants (n_p, n_m, d_p, d_m, bd_p, bd_m, std_dev);
+        }
 
       for (row = 0; row < height; row++)
-	{
-	  memset(val_p, 0, width * bytes * sizeof (gdouble));
-	  memset(val_m, 0, width * bytes * sizeof (gdouble));
+        {
+          memset(val_p, 0, width * bytes * sizeof (gdouble));
+          memset(val_m, 0, width * bytes * sizeof (gdouble));
 
-	  gimp_pixel_rgn_get_row (&src_rgn, src, x1, row + y1, (x2 - x1));
+          gimp_pixel_rgn_get_row (&src_rgn, src, x1, row + y1, (x2 - x1));
           if (has_alpha)
-              multiply_alpha (dest, width, bytes);
+            multiply_alpha (dest, width, bytes);
 
-	  sp_p = src;
-	  sp_m = src + (width - 1) * bytes;
-	  vp = val_p;
-	  vm = val_m + (width - 1) * bytes;
+          sp_p = src;
+          sp_m = src + (width - 1) * bytes;
+          vp = val_p;
+          vm = val_m + (width - 1) * bytes;
 
-	  /*  Set up the first vals  */
-	  for (i = 0; i < bytes; i++)
-	    {
-	      initial_p[i] = sp_p[i];
-	      initial_m[i] = sp_m[i];
-	    }
+          /*  Set up the first vals  */
+          for (i = 0; i < bytes; i++)
+            {
+              initial_p[i] = sp_p[i];
+              initial_m[i] = sp_m[i];
+            }
 
-	  for (col = 0; col < width; col++)
-	    {
-	      gdouble *vpptr, *vmptr;
-	      terms = (col < 4) ? col : 4;
+          for (col = 0; col < width; col++)
+            {
+              gdouble *vpptr, *vmptr;
+              terms = (col < 4) ? col : 4;
 
-	      for (b = 0; b < bytes; b++)
-		{
-		  vpptr = vp + b; vmptr = vm + b;
-		  for (i = 0; i <= terms; i++)
-		    {
-		      *vpptr += n_p[i] * sp_p[(-i * bytes) + b] -
-			d_p[i] * vp[(-i * bytes) + b];
-		      *vmptr += n_m[i] * sp_m[(i * bytes) + b] -
-			d_m[i] * vm[(i * bytes) + b];
-		    }
-		  for (j = i; j <= 4; j++)
-		    {
-		      *vpptr += (n_p[j] - bd_p[j]) * initial_p[b];
-		      *vmptr += (n_m[j] - bd_m[j]) * initial_m[b];
-		    }
-		}
+              for (b = 0; b < bytes; b++)
+                {
+                  vpptr = vp + b; vmptr = vm + b;
+                  for (i = 0; i <= terms; i++)
+                    {
+                      *vpptr += n_p[i] * sp_p[(-i * bytes) + b] -
+                        d_p[i] * vp[(-i * bytes) + b];
+                      *vmptr += n_m[i] * sp_m[(i * bytes) + b] -
+                        d_m[i] * vm[(i * bytes) + b];
+                    }
+                  for (j = i; j <= 4; j++)
+                    {
+                      *vpptr += (n_p[j] - bd_p[j]) * initial_p[b];
+                      *vmptr += (n_m[j] - bd_m[j]) * initial_m[b];
+                    }
+                }
 
-	      sp_p += bytes;
-	      sp_m -= bytes;
-	      vp += bytes;
-	      vm -= bytes;
-	    }
+              sp_p += bytes;
+              sp_m -= bytes;
+              vp += bytes;
+              vm -= bytes;
+            }
 
-	  transfer_pixels (val_p, val_m, dest, bytes, width);
+          transfer_pixels (val_p, val_m, dest, bytes, width);
           if (has_alpha)
-              separate_alpha (dest, width, bytes);
+            separate_alpha (dest, width, bytes);
 
-	  gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, (x2 - x1));
+          gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, (x2 - x1));
 
-	  progress += width * horz;
-	  if ((row % 5) == 0)
-	    gimp_progress_update (progress / max_progress);
-	}
+          progress += width * horz;
+          if ((row % 5) == 0)
+            gimp_progress_update (progress / max_progress);
+        }
     }
 
   /*  merge the shadow, update the drawable  */
@@ -737,10 +737,10 @@ if (horz > 0.0)
 
 static void
 transfer_pixels (gdouble *src1,
-		 gdouble *src2,
-		 guchar  *dest,
-		 gint     bytes,
-		 gint     width)
+                 gdouble *src2,
+                 guchar  *dest,
+                 gint     bytes,
+                 gint     width)
 {
   gint b;
   gint bend = bytes * width;
@@ -749,21 +749,18 @@ transfer_pixels (gdouble *src1,
   for(b = 0; b < bend; b++)
     {
       sum = *src1++ + *src2++;
-      if (sum > 255) sum = 255;
-      else if(sum < 0) sum = 0;
-
-      *dest++ = (guchar) sum;
+      *dest++ = (guchar) CLAMP (sum, 0.0, 255.0);
     }
 }
 
 static void
 find_constants (gdouble n_p[],
-		gdouble n_m[],
-		gdouble d_p[],
-		gdouble d_m[],
-		gdouble bd_p[],
-		gdouble bd_m[],
-		gdouble std_dev)
+                gdouble n_m[],
+                gdouble d_p[],
+                gdouble d_m[],
+                gdouble bd_p[],
+                gdouble bd_m[],
+                gdouble std_dev)
 {
   gint i;
   gdouble constants [8];
@@ -788,18 +785,18 @@ find_constants (gdouble n_p[],
     (constants[7] * sin (constants[3]) -
      (constants[6] + 2 * constants[4]) * cos (constants[3])) +
        exp (constants[0]) *
-	 (constants[5] * sin (constants[2]) -
-	  (2 * constants[6] + constants[4]) * cos (constants[2]));
+         (constants[5] * sin (constants[2]) -
+          (2 * constants[6] + constants[4]) * cos (constants[2]));
   n_p [2] = 2 * exp (constants[0] + constants[1]) *
     ((constants[4] + constants[6]) * cos (constants[3]) * cos (constants[2]) -
      constants[5] * cos (constants[3]) * sin (constants[2]) -
      constants[7] * cos (constants[2]) * sin (constants[3])) +
        constants[6] * exp (2 * constants[0]) +
-	 constants[4] * exp (2 * constants[1]);
+         constants[4] * exp (2 * constants[1]);
   n_p [3] = exp (constants[1] + 2 * constants[0]) *
     (constants[7] * sin (constants[3]) - constants[6] * cos (constants[3])) +
       exp (constants[0] + 2 * constants[1]) *
-	(constants[5] * sin (constants[2]) - constants[4] * cos (constants[2]));
+        (constants[5] * sin (constants[2]) - constants[4] * cos (constants[2]));
   n_p [4] = 0.0;
 
   d_p [0] = 0.0;
@@ -827,9 +824,9 @@ find_constants (gdouble n_p[],
     sum_d = 0.0;
     for (i = 0; i <= 4; i++)
       {
-	sum_n_p += n_p[i];
-	sum_n_m += n_m[i];
-	sum_d += d_p[i];
+        sum_n_p += n_p[i];
+        sum_n_m += n_m[i];
+        sum_d += d_p[i];
       }
 
     a = sum_n_p / (1.0 + sum_d);
@@ -837,8 +834,8 @@ find_constants (gdouble n_p[],
 
     for (i = 0; i <= 4; i++)
       {
-	bd_p[i] = d_p[i] * a;
-	bd_m[i] = d_m[i] * b;
+        bd_p[i] = d_p[i] * a;
+        bd_m[i] = d_m[i] * b;
       }
   }
 }
