@@ -26,6 +26,10 @@
 	the .def files, so that people with other compilers can build
 	import libraries if needed.
 
+	* libgimp/gimpmath.h: On Win32, define G_MAXRAND as G_MAXINT.
+	(GIMP_WIN32_RAND_FUNC, GIMP_WIN32_SRAND_FUNC): Define on Win32 as
+	calls to g_random_int_range() and g_random_set_seed().
+
 2002-02-08  Manish Singh  <yosh@gimp.org>
 
         * app/paint-funcs/paint-funcs.c: 64-bit cleaniless cleanups.

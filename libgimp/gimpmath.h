@@ -58,13 +58,19 @@ extern "C" {
 #define G_SQRT2 1.4142135623730951
 #endif
 
+
+#ifdef G_OS_WIN32
+#define G_MAXRAND G_MAXINT
+#define GIMP_WIN32_RAND_FUNC() g_random_int_range (0, G_MAXRAND)
+#define GIMP_WIN32_SRAND_FUNC(seed) g_random_set_seed (seed)
+#else
 #ifndef RAND_MAX
 #define G_MAXRAND G_MAXINT
 #else
 #define G_MAXRAND RAND_MAX
 #endif
+#endif
 
-/* Use RINT() instead of rint() */
 #ifdef HAVE_RINT
 #define RINT(x) rint(x)
 #else
