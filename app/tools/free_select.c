@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -22,6 +23,7 @@
 #include "draw_core.h"
 #include "edit_selection.h"
 #include "errors.h"
+#include "floating_sel.h"
 #include "free_select.h"
 #include "gimage_mask.h"
 #include "gdisplay.h"
@@ -30,6 +32,7 @@
 #include "scan_convert.h"
 
 #include "libgimp/gimpmath.h"
+
 
 #define DEFAULT_MAX_INC  1024
 #define SUPERSAMPLE      3
@@ -207,6 +210,19 @@ free_select_button_release (Tool           *tool,
   /*  First take care of the case where the user "cancels" the action  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
+      if (free_sel->op == SELECTION_ANCHOR)
+	{
+	  /*  If there is a floating selection, anchor it  */
+	  if (gimage_floating_sel (gdisp->gimage))
+	    floating_sel_anchor (gimage_floating_sel (gdisp->gimage));
+	  /*  Otherwise, clear the selection mask  */
+	  else
+	    gimage_mask_clear (gdisp->gimage);
+	  
+	  gdisplays_flush ();
+	  return;
+	}
+
       pts = g_new (ScanConvertPoint, free_sel->num_pts);
 
       for (i = 0; i < free_sel->num_pts; i++)
@@ -242,6 +258,13 @@ free_select_motion (Tool           *tool,
 
   if (tool->state != ACTIVE)
     return;
+
+  if (free_sel->op == SELECTION_ANCHOR)
+    {
+      free_sel->op = SELECTION_REPLACE;
+
+      rect_select_cursor_update (tool, mevent, gdisp_ptr);
+    }
 
   if (add_point (free_sel->num_pts, mevent->x, mevent->y))
     {

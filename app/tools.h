@@ -48,7 +48,8 @@ typedef enum
   SELECTION_REPLACE   = REPLACE,
   SELECTION_INTERSECT = INTERSECT,
   SELECTION_MOVE_MASK,
-  SELECTION_MOVE
+  SELECTION_MOVE,
+  SELECTION_ANCHOR
 } SelectOps;
 
 /*  The possibilities for where the cursor lies  */

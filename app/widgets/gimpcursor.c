@@ -49,6 +49,12 @@
 #include "cursors/control_mask.xbm"
 #include "cursors/anchor.xbm"
 #include "cursors/anchor_mask.xbm"
+#include "cursors/foreground.xbm"
+#include "cursors/foreground_mask.xbm"
+#include "cursors/background.xbm"
+#include "cursors/background_mask.xbm"
+#include "cursors/pattern.xbm"
+#include "cursors/pattern_mask.xbm"
 #include "cursors/hand.xbm"
 #include "cursors/hand_mask.xbm"
 
@@ -100,6 +106,9 @@ enum
   GIMP_RESIZE_CURSOR,
   GIMP_CONTROL_CURSOR,
   GIMP_ANCHOR_CURSOR,
+  GIMP_FOREGROUND_CURSOR,
+  GIMP_BACKGROUND_CURSOR,
+  GIMP_PATTERN_CURSOR,
   GIMP_HAND_CURSOR
 };
 
@@ -140,6 +149,21 @@ static BitmapCursor modifier_cursors[] =
     anchor_bits, anchor_mask_bits,
     anchor_width, anchor_height,
     anchor_x_hot, anchor_y_hot, NULL, NULL, NULL
+  },
+  {
+    foreground_bits, foreground_mask_bits,
+    foreground_width, foreground_height,
+    foreground_x_hot, foreground_y_hot, NULL, NULL, NULL
+  },
+  {
+    background_bits, background_mask_bits,
+    background_width, background_height,
+    background_x_hot, background_y_hot, NULL, NULL, NULL
+  },
+  {
+    pattern_bits, pattern_mask_bits,
+    pattern_width, pattern_height,
+    pattern_x_hot, pattern_y_hot, NULL, NULL, NULL
   },
   {
     hand_bits, hand_mask_bits,
@@ -265,6 +289,15 @@ gimp_change_win_cursor (GdkWindow      *win,
       break;
     case CURSOR_MODIFIER_ANCHOR:
       modtype = GIMP_ANCHOR_CURSOR;
+      break;
+    case CURSOR_MODIFIER_FOREGROUND:
+      modtype = GIMP_FOREGROUND_CURSOR;
+      break;
+    case CURSOR_MODIFIER_BACKGROUND:
+      modtype = GIMP_BACKGROUND_CURSOR;
+      break;
+    case CURSOR_MODIFIER_PATTERN:
+      modtype = GIMP_PATTERN_CURSOR;
       break;
     case CURSOR_MODIFIER_HAND:
       modtype = GIMP_HAND_CURSOR;

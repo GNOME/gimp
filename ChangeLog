@@ -1,5 +1,36 @@
 2000-07-29  Michael Natterer  <mitch@gimp.org>
 
+	* cursors/background.xbm
+	* cursors/background_mask.xbm
+	* cursors/foreground.xbm
+	* cursors/foreground_mask.xbm
+	* cursors/pattern.xbm
+	* cursors/pattern_mask.xbm: new files.
+
+	* cursors/gimp-tool-cursors.xcf
+	* app/cursorutil.[ch]: new cursor modifiers for bucket_fill.
+
+	* app/bucket_fill.c: use the new modifiers. Closes #17871.
+
+	* app/convolve.c
+	* app/dodgeburn.c: added cursor_update functions which update the
+	tools' "toggled" state before they call the cursor_update "method"
+	of the paint_core "class" -- eek -- I-want-real-objects!
+	Closes #17872 and #17873.
+
+	* app/tools.h: added SELECTION_ANCHOR to the SelectOps enum.
+
+	* app/free_select.c
+	* app/rect_select.c: use the new enum value in the "oper_update"
+	and "cursor_update" functions. In the "motion" function, set the
+	tool's operation type back to SELECTION_REPLACE if the tool is
+	active and call the "cursor_update" function explicitly.
+	Closes #17870.
+
+	* app/by_color_select.c: fixed warning caused by the new enum value.
+
+2000-07-29  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpdrawable.[ch]: gimp_drawable_set_visible(): the
 	"visible" parameter is boolean.
 

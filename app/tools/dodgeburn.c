@@ -332,6 +332,16 @@ dodgeburn_modifier_key_func (Tool        *tool,
   tool->toggled = (dodgeburn_options->type == BURN);
 }
 
+static void
+dodgeburn_cursor_update_func (Tool           *tool,
+			      GdkEventMotion *mevent,
+			      gpointer        gdisp_ptr)
+{
+  tool->toggled = (dodgeburn_options->type == BURN);
+
+  paint_core_cursor_update (tool, mevent, gdisp_ptr);
+}
+
 Tool *
 tools_new_dodgeburn (void)
 {
@@ -349,12 +359,13 @@ tools_new_dodgeburn (void)
     }
 
   tool = paint_core_new (DODGEBURN);
-  private = (PaintCore *) tool->private;
+  tool->modifier_key_func  = dodgeburn_modifier_key_func;
+  tool->cursor_update_func = dodgeburn_cursor_update_func;
 
+  private = (PaintCore *) tool->private;
   private->paint_func = dodgeburn_paint_func;
   private->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 
-  tool->modifier_key_func = dodgeburn_modifier_key_func;
 
   return tool;
 }

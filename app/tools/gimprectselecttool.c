@@ -15,7 +15,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
+
 #include <stdlib.h>
+
 #include "gdk/gdkkeysyms.h"
 
 #include "appenv.h"
@@ -28,9 +32,10 @@
 #include "selection_options.h"
 #include "cursorutil.h"
 
-#include "config.h"
 #include "libgimp/gimpunitmenu.h"
+
 #include "libgimp/gimpintl.h"
+
 
 #define STATUSBAR_SIZE 128
 
@@ -309,6 +314,13 @@ rect_select_motion (Tool           *tool,
   if (tool->state != ACTIVE)
     return;
 
+  if (rect_sel->op == SELECTION_ANCHOR)
+    {
+      rect_sel->op = SELECTION_REPLACE;
+
+      rect_select_cursor_update (tool, mevent, gdisp_ptr);
+    }
+
   draw_core_pause (rect_sel->core, tool);
 
   /* Calculate starting point */
@@ -520,6 +532,10 @@ selection_tool_update_op_state (RectSelect *rect_sel,
     {
       rect_sel->op = SELECTION_INTERSECT; /* intersect with selection */
     }
+  else if (floating_sel)
+    {
+      rect_sel->op = SELECTION_ANCHOR;    /* anchor the selection */
+    }
   else
     {
       rect_sel->op = SELECTION_REPLACE;   /* replace the selection */
@@ -628,10 +644,16 @@ rect_select_cursor_update (Tool           *tool,
 				    CURSOR_MODIFIER_MOVE,
 				    FALSE);
       break;
-    case SELECTION_MOVE: 
+    case SELECTION_MOVE:
       gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
 				    MOVE,
 				    CURSOR_MODIFIER_NONE,
+				    FALSE);
+      break;
+    case SELECTION_ANCHOR:
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+				    tool->type,
+				    CURSOR_MODIFIER_ANCHOR,
 				    FALSE);
       break;
     }

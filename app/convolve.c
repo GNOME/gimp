@@ -259,6 +259,16 @@ convolve_modifier_key_func (Tool        *tool,
   tool->toggled = (convolve_options->type == SHARPEN_CONVOLVE);
 }
 
+static void
+convolve_cursor_update_func (Tool           *tool,
+			     GdkEventMotion *mevent,
+			     gpointer        gdisp_ptr)
+{
+  tool->toggled = (convolve_options->type == SHARPEN_CONVOLVE);
+
+  paint_core_cursor_update (tool, mevent, gdisp_ptr);
+}
+
 Tool *
 tools_new_convolve (void)
 {
@@ -276,7 +286,8 @@ tools_new_convolve (void)
     }
 
   tool = paint_core_new (CONVOLVE);
-  tool->modifier_key_func = convolve_modifier_key_func;
+  tool->modifier_key_func  = convolve_modifier_key_func;
+  tool->cursor_update_func = convolve_cursor_update_func;
 
   private = (PaintCore *) tool->private;
   private->paint_func = convolve_paint_func;

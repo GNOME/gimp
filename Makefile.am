@@ -50,6 +50,12 @@ EXTRA_DIST = \
 	cursors/control_mask.xbm		\
 	cursors/anchor.xbm			\
 	cursors/anchor_mask.xbm			\
+	cursors/foreground.xbm			\
+	cursors/foreground_mask.xbm		\
+	cursors/background.xbm			\
+	cursors/background_mask.xbm		\
+	cursors/pattern.xbm			\
+	cursors/pattern_mask.xbm		\
 	cursors/hand.xbm			\
 	cursors/hand_mask.xbm			\
 	\

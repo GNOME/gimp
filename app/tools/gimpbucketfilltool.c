@@ -255,8 +255,9 @@ bucket_fill_cursor_update (Tool           *tool,
 			   gpointer        gdisp_ptr)
 {
   GDisplay *gdisp;
-  Layer *layer;
-  GdkCursorType ctype = GDK_TOP_LEFT_ARROW;
+  Layer    *layer;
+  GdkCursorType ctype      = GDK_TOP_LEFT_ARROW;
+  CursorModifier cmodifier = CURSOR_MODIFIER_NONE;
   gint x, y;
   gint off_x, off_y;
 
@@ -267,6 +268,7 @@ bucket_fill_cursor_update (Tool           *tool,
   if ((layer = gimage_get_active_layer (gdisp->gimage))) 
     {
       drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+
       if (x >= off_x && y >= off_y &&
 	  x < (off_x + drawable_width (GIMP_DRAWABLE (layer))) &&
 	  y < (off_y + drawable_height (GIMP_DRAWABLE (layer))))
@@ -274,15 +276,30 @@ bucket_fill_cursor_update (Tool           *tool,
 	  /*  One more test--is there a selected region?
 	   *  if so, is cursor inside?
 	   */
-	  if (gimage_mask_is_empty (gdisp->gimage))
-	    ctype = GIMP_MOUSE_CURSOR;
-	  else if (gimage_mask_value (gdisp->gimage, x, y))
-	    ctype = GIMP_MOUSE_CURSOR;
+	  if (gimage_mask_is_empty (gdisp->gimage) ||
+	      gimage_mask_value (gdisp->gimage, x, y))
+	    {
+	      ctype = GIMP_MOUSE_CURSOR;
+
+	      switch (bucket_options->fill_mode)
+		{
+		case FG_BUCKET_FILL:
+		  cmodifier = CURSOR_MODIFIER_FOREGROUND;
+		  break;
+		case BG_BUCKET_FILL:
+		  cmodifier = CURSOR_MODIFIER_BACKGROUND;
+		  break;
+		case PATTERN_BUCKET_FILL:
+		  cmodifier = CURSOR_MODIFIER_PATTERN;
+		  break;
+		}
+	    }
 	}
     }
+
   gdisplay_install_tool_cursor (gdisp, ctype,
 				BUCKET_FILL,
-				CURSOR_MODIFIER_NONE,
+				cmodifier,
 				FALSE);
 }
 

@@ -498,6 +498,12 @@ by_color_select_cursor_update (Tool           *tool,
 					MOVE,
 					CURSOR_MODIFIER_NONE,
 					FALSE);
+	  break;
+	case SELECTION_ANCHOR:
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					RECT_SELECT,
+					CURSOR_MODIFIER_ANCHOR,
+					FALSE);
 	}
 
       return;
