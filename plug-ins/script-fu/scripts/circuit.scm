@@ -118,7 +118,7 @@
     (gimp-image-undo-enable image)
     (gimp-image-remove-channel image active-selection)
     (gimp-image-set-active-layer image drawable)
-    (gimp-displays-flush)))
+    (gimp-displays-flush))))
 
 (script-fu-register "script-fu-circuit"
 		    "<Image>/Script-Fu/Render/Circuit..."
