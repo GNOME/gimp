@@ -1,5 +1,9 @@
 2004-08-02  DindinX  <david@dindinx.org>
 
+	* plug-ins/common/whirlpinch.c: ported to GimpPreviewArea.
+
+2004-08-02  DindinX  <david@dindinx.org>
+
 	* plug-ins/common/video.c: ported to GimpPreviewArea.
 
 2004-08-02  DindinX  <david@dindinx.org>
