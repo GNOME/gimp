@@ -118,9 +118,12 @@ static GimpItemFactoryEntry toolbox_entries[] =
     NULL,
     "file/dialogs/file_open.html", NULL },
 
-  /*  <Toolbox>/File/Acquire  */
+  /*  <Toolbox>/File/Open Recent  */
 
-  SEPARATOR ("/File/---"),
+  { { N_("/File/Open Recent/(None)"), NULL, NULL, 0 },
+    NULL, NULL, NULL },
+
+  /*  <Toolbox>/File/Acquire  */
 
   BRANCH (N_("/File/Acquire")),
 
@@ -134,12 +137,14 @@ static GimpItemFactoryEntry toolbox_entries[] =
 
   /*  <Toolbox>/File/Dialogs  */
 
-  SEPARATOR ("/File/---"),
-
   { { N_("/File/Dialogs/Layers, Channels & Paths..."), "<control>L",
       dialogs_create_lc_cmd_callback, 0 },
     NULL,
     "file/dialogs/layers_and_channels.html", NULL },
+  { { N_("/File/Dialogs/Brushes, Patterns & Stuff..."), NULL,
+      dialogs_create_stuff_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
   { { N_("/File/Dialogs/Tool Options..."), "<control><shift>T",
       dialogs_create_toplevel_cmd_callback, 0 },
     "gimp:tool-options-dialog",
@@ -235,10 +240,6 @@ static GimpItemFactoryEntry toolbox_entries[] =
 #endif /* DISPLAY_FILTERS */
 
   SEPARATOR ("/File/---"),
-
-  /*  MRU entries are inserted here  */
-
-  SEPARATOR ("/File/---MRU"),
 
   { { N_("/File/Quit"), "<control>Q",
       file_quit_cmd_callback, 0,
@@ -804,6 +805,10 @@ static GimpItemFactoryEntry image_entries[] =
       dialogs_create_lc_cmd_callback, 0 },
     NULL,
     "dialogs/layers_and_channels.html", NULL },
+  { { N_("/File/Dialogs/Brushes, Patterns & Stuff..."), NULL,
+      dialogs_create_stuff_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
   { { N_("/Dialogs/Tool Options..."), NULL,
       dialogs_create_toplevel_cmd_callback, 0 },
     "gimp:tool-options-dialog",
@@ -1762,7 +1767,6 @@ menus_init (Gimp *gimp)
   /*  the toolbox factory  */
   {
     GimpItemFactoryEntry *last_opened_entries;
-    GtkWidget            *menu_item;
     gint                  i;
 
     toolbox_factory = gimp_item_factory_new (GTK_TYPE_MENU_BAR,
@@ -1778,7 +1782,7 @@ menus_init (Gimp *gimp)
     for (i = 0; i < gimprc.last_opened_size; i++)
       {
         last_opened_entries[i].entry.path = 
-          g_strdup_printf ("/File/MRU%02d", i + 1);
+          g_strdup_printf ("/File/Open Recent/%02d", i + 1);
 
         if (i < 9)
           last_opened_entries[i].entry.accelerator =
@@ -1801,20 +1805,14 @@ menus_init (Gimp *gimp)
 
     for (i = 0; i < gimprc.last_opened_size; i++)
       {
-        menu_item =
-          gtk_item_factory_get_widget (toolbox_factory,
-                                       last_opened_entries[i].entry.path);
-        gtk_widget_hide (menu_item);
+        gimp_item_factory_set_visible (toolbox_factory,
+                                       last_opened_entries[i].entry.path,
+                                       FALSE);
       }
 
-    menu_item = gtk_item_factory_get_widget (toolbox_factory, "/File/---MRU");
-    if (menu_item && menu_item->parent)
-      gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
-    gtk_widget_hide (menu_item);
-
-    menu_item = gtk_item_factory_get_widget (toolbox_factory, "/File/Quit");
-    if (menu_item && menu_item->parent)
-      gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
+    gimp_item_factory_set_sensitive (toolbox_factory,
+                                     "/File/Open Recent/(None)",
+                                     FALSE);
 
     for (i = 0; i < gimprc.last_opened_size; i++)
       {
@@ -2377,18 +2375,15 @@ menus_last_opened_update_labels (GimpContainer *container,
 
   num_documents = gimp_container_num_children (container);
 
-  widget = gtk_item_factory_get_widget (toolbox_factory, "/File/---MRU");
-
-  if (num_documents > 0)
-    gtk_widget_show (widget);
-  else
-    gtk_widget_hide (widget);
+  gimp_item_factory_set_visible (toolbox_factory,
+                                 "/File/Open Recent/(None)",
+                                 num_documents == 0);
 
   for (i = 0; i < gimprc.last_opened_size; i++)
     {
       gchar *path_str;
 
-      path_str = g_strdup_printf ("/File/MRU%02d", i + 1);
+      path_str = g_strdup_printf ("/File/Open Recent/%02d", i + 1);
 
       widget = gtk_item_factory_get_widget (toolbox_factory, path_str);
 

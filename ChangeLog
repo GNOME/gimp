@@ -1,5 +1,17 @@
 2001-11-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/menus.c: put the last_opened menu entries in a
+	submenu called "Open Recent", added items to create a dock
+	with some useful tabs in it ("Brushes, Patterns & Stuff..."),
+
+	* app/gui/dialogs-commands.[ch]: added a callback for the new
+	"Stuff" menu entry.
+
+	* app/gui/dialogs-constructors.h: removed dialogs_lc_get()
+	declaration because it doesn't exist.
+
+2001-11-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.[ch]: replaced the QMask radio
 	buttons ba a single check button. Still needs some tuning.
 

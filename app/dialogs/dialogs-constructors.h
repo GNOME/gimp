@@ -23,9 +23,6 @@
 GtkWidget * dialogs_toolbox_get            (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
-GtkWidget * dialogs_lc_get                 (GimpDialogFactory *factory,
-					    GimpContext       *context,
-                                            gint               preview_size);
 GtkWidget * dialogs_tool_options_get       (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
