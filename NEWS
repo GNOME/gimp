@@ -9,11 +9,11 @@ GIMP version 2.0.
 
 Overview of Changes in GIMP 2.0 pre1
 ==================================
-- Replaced old "About" dialog [Nomis]
+- Replaced old "About" dialog [Simon]
 - Allow removal of text attributes from text layer [Sven]
 - Add optimisation option to png (clear transparent pixels) [Joao]
 - Add POSIX shared memory implementation, and use it on MacOS X [Yosh]
-- Dashed selection and path stroking [Nomis]
+- Dashed selection and path stroking [Simon]
 - Grey picker in Levels dialog conserves lightness [Bolsh]
 - Created a library for handling thumbnails [Sven]
 - Support for multipage TIFFs [Andrey Kiselev]
