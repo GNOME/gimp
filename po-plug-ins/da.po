@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "POT-Creation-Date: 2000-04-27 01:42+0200\n"
-"PO-Revision-Date: 2000-05-15 23:34+01:00\n"
+"PO-Revision-Date: 2000-05-16 16:34+01:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "Om"
 #: plug-ins/FractalExplorer/FractalExplorer.c:850
 #: plug-ins/FractalExplorer/FractalExplorer.c:1476
 #: plug-ins/Lighting/lighting_ui.c:1076 plug-ins/MapObject/mapobject_ui.c:1383
-#: plug-ins/bmp/bmpwrite.c:562 plug-ins/common/CML_explorer.c:1174
+#: plug-ins/bmp/bmpwrite.c:564 plug-ins/common/CML_explorer.c:1174
 #: plug-ins/common/CML_explorer.c:1932 plug-ins/common/CML_explorer.c:2252
 #: plug-ins/common/aa.c:346 plug-ins/common/align_layers.c:425
 #: plug-ins/common/apply_lens.c:392 plug-ins/common/blinds.c:323
@@ -67,7 +67,7 @@ msgstr "Om"
 #: plug-ins/common/gauss_rle.c:443 plug-ins/common/gbr.c:456
 #: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1140
 #: plug-ins/common/gif.c:1211 plug-ins/common/glasstile.c:228
-#: plug-ins/common/gpb.c:270 plug-ins/common/gqbist.c:640
+#: plug-ins/common/gpb.c:269 plug-ins/common/gqbist.c:640
 #: plug-ins/common/grid.c:564 plug-ins/common/gtm.c:375
 #: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:305
 #: plug-ins/common/iwarp.c:1141 plug-ins/common/jigsaw.c:2304
@@ -78,7 +78,7 @@ msgstr "Om"
 #: plug-ins/common/noisify.c:325 plug-ins/common/nova.c:339
 #: plug-ins/common/oilify.c:458 plug-ins/common/papertile.c:250
 #: plug-ins/common/pat.c:412 plug-ins/common/pixelize.c:280
-#: plug-ins/common/plasma.c:287 plug-ins/common/png.c:1012
+#: plug-ins/common/plasma.c:287 plug-ins/common/png.c:1021
 #: plug-ins/common/pnm.c:933 plug-ins/common/polar.c:914
 #: plug-ins/common/ps.c:2533 plug-ins/common/ps.c:2714
 #: plug-ins/common/psp.c:428 plug-ins/common/randomize.c:702
@@ -89,7 +89,7 @@ msgstr "Om"
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2232
 #: plug-ins/common/spread.c:382 plug-ins/common/sunras.c:1577
 #: plug-ins/common/tga.c:1448 plug-ins/common/threshold_alpha.c:268
-#: plug-ins/common/tiff.c:1480 plug-ins/common/tile.c:398
+#: plug-ins/common/tiff.c:1485 plug-ins/common/tile.c:398
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:172
 #: plug-ins/common/unsharp.c:786 plug-ins/common/video.c:2155
 #: plug-ins/common/vpropagate.c:934 plug-ins/common/warp.c:437
@@ -99,8 +99,8 @@ msgstr "Om"
 #: plug-ins/fits/fits.c:987 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:913 plug-ins/fp/fp_gtk.c:895
 #: plug-ins/gap/gap_arr_dialog.c:768 plug-ins/gap/gap_arr_dialog.c:1010
-#: plug-ins/gap/gap_decode_xanim.c:177 plug-ins/gap/gap_lib.c:215
-#: plug-ins/gap/gap_mod_layer.c:145 plug-ins/gap/gap_mov_dialog.c:452
+#: plug-ins/gap/gap_decode_xanim.c:177 plug-ins/gap/gap_lib.c:221
+#: plug-ins/gap/gap_mod_layer.c:145 plug-ins/gap/gap_mov_dialog.c:469
 #: plug-ins/gap/gap_mpege.c:191 plug-ins/gap/gap_resi_dialog.c:149
 #: plug-ins/gdyntext/gdyntext_ui.c:201 plug-ins/gdyntext/gdyntext_ui.c:621
 #: plug-ins/gfig/gfig.c:4088 plug-ins/gfig/gfig.c:4433
@@ -128,7 +128,7 @@ msgstr "Ok"
 #: plug-ins/FractalExplorer/FractalExplorer.c:859
 #: plug-ins/FractalExplorer/FractalExplorer.c:1478
 #: plug-ins/Lighting/lighting_ui.c:1078 plug-ins/MapObject/mapobject_ui.c:1385
-#: plug-ins/bmp/bmpwrite.c:564 plug-ins/common/CML_explorer.c:1176
+#: plug-ins/bmp/bmpwrite.c:566 plug-ins/common/CML_explorer.c:1176
 #: plug-ins/common/CML_explorer.c:2254 plug-ins/common/aa.c:348
 #: plug-ins/common/align_layers.c:427 plug-ins/common/apply_lens.c:394
 #: plug-ins/common/blinds.c:325 plug-ins/common/blur.c:615
@@ -148,7 +148,7 @@ msgstr "Ok"
 #: plug-ins/common/gauss_rle.c:362 plug-ins/common/gauss_rle.c:445
 #: plug-ins/common/gbr.c:458 plug-ins/common/gicon.c:443
 #: plug-ins/common/gif.c:1142 plug-ins/common/gif.c:1213
-#: plug-ins/common/glasstile.c:230 plug-ins/common/gpb.c:272
+#: plug-ins/common/glasstile.c:230 plug-ins/common/gpb.c:271
 #: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:566
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
 #: plug-ins/common/illusion.c:307 plug-ins/common/iwarp.c:1145
@@ -160,7 +160,7 @@ msgstr "Ok"
 #: plug-ins/common/nova.c:341 plug-ins/common/oilify.c:460
 #: plug-ins/common/papertile.c:252 plug-ins/common/pat.c:414
 #: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:289
-#: plug-ins/common/png.c:1014 plug-ins/common/pnm.c:935
+#: plug-ins/common/png.c:1023 plug-ins/common/pnm.c:935
 #: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2535
 #: plug-ins/common/ps.c:2716 plug-ins/common/psp.c:430
 #: plug-ins/common/randomize.c:704 plug-ins/common/ripple.c:582
@@ -171,7 +171,7 @@ msgstr "Ok"
 #: plug-ins/common/sparkle.c:351 plug-ins/common/spheredesigner.c:2236
 #: plug-ins/common/spread.c:384 plug-ins/common/sunras.c:1579
 #: plug-ins/common/tga.c:1450 plug-ins/common/threshold_alpha.c:270
-#: plug-ins/common/tiff.c:1482 plug-ins/common/tile.c:400
+#: plug-ins/common/tiff.c:1487 plug-ins/common/tile.c:400
 #: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:174
 #: plug-ins/common/unsharp.c:788 plug-ins/common/video.c:2157
 #: plug-ins/common/vpropagate.c:936 plug-ins/common/warp.c:439
@@ -184,16 +184,16 @@ msgstr "Ok"
 #: plug-ins/gap/gap_dbbrowser_utils.c:211
 #: plug-ins/gap/gap_decode_mpeg_main.c:336 plug-ins/gap/gap_decode_xanim.c:175
 #: plug-ins/gap/gap_decode_xanim.c:340 plug-ins/gap/gap_filter_foreach.c:132
-#: plug-ins/gap/gap_lib.c:1012 plug-ins/gap/gap_mod_layer.c:147
-#: plug-ins/gap/gap_mod_layer.c:261 plug-ins/gap/gap_mov_dialog.c:472
-#: plug-ins/gap/gap_mpege.c:189 plug-ins/gap/gap_mpege.c:240
-#: plug-ins/gap/gap_range_ops.c:1204 plug-ins/gap/gap_resi_dialog.c:158
-#: plug-ins/gfig/gfig.c:3941 plug-ins/gfig/gfig.c:4088
-#: plug-ins/gfig/gfig.c:4435 plug-ins/gfig/gfig.c:4518
-#: plug-ins/gfig/gfig.c:5070 plug-ins/gflare/gflare.c:2467
-#: plug-ins/gflare/gflare.c:3376 plug-ins/gflare/gflare.c:3477
-#: plug-ins/gfli/gfli.c:835 plug-ins/gfli/gfli.c:904
-#: plug-ins/gimpressionist/gimpressionist.c:496
+#: plug-ins/gap/gap_lib.c:1018 plug-ins/gap/gap_mod_layer.c:147
+#: plug-ins/gap/gap_mod_layer.c:261 plug-ins/gap/gap_mov_dialog.c:500
+#: plug-ins/gap/gap_mov_dialog.c:2740 plug-ins/gap/gap_mpege.c:189
+#: plug-ins/gap/gap_mpege.c:240 plug-ins/gap/gap_range_ops.c:1204
+#: plug-ins/gap/gap_resi_dialog.c:158 plug-ins/gfig/gfig.c:3941
+#: plug-ins/gfig/gfig.c:4088 plug-ins/gfig/gfig.c:4435
+#: plug-ins/gfig/gfig.c:4518 plug-ins/gfig/gfig.c:5070
+#: plug-ins/gflare/gflare.c:2467 plug-ins/gflare/gflare.c:3376
+#: plug-ins/gflare/gflare.c:3477 plug-ins/gfli/gfli.c:835
+#: plug-ins/gfli/gfli.c:904 plug-ins/gimpressionist/gimpressionist.c:496
 #: plug-ins/gimpressionist/orientmap.c:640
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/ifscompose/ifscompose.c:788
@@ -276,8 +276,8 @@ msgstr "Kosinus"
 #: plug-ins/FractalExplorer/Dialogs.c:802 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2640 plug-ins/common/ps.c:2653
-#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1501
-#: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:276
+#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1506
+#: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:284
 msgid "None"
 msgstr "Ingen"
 
@@ -373,7 +373,7 @@ msgstr "G/S-frekvens"
 
 #: plug-ins/AlienMap2/AlienMap2.c:674
 msgid "Change frequency of the green/saturation channel"
-msgstr "Ændr intensitet af den grønne/saturations kanal"
+msgstr "Ændr intensitet af den grønne/mætnings kanal"
 
 #: plug-ins/AlienMap2/AlienMap2.c:681
 msgid "G/S-Phaseshift:"
@@ -471,7 +471,9 @@ msgstr "Realtidsvisning"
 
 #: plug-ins/FractalExplorer/Dialogs.c:358
 msgid "If you enable this option the preview will be redrawn automatically"
-msgstr "Ved aktivering af denne funktion bliver forhåndsvisningen automatisk gentegnet"
+msgstr ""
+"Ved aktivering af denne funktion bliver forhåndsvisningen automatisk "
+"gentegnet"
 
 #: plug-ins/FractalExplorer/Dialogs.c:361
 msgid "Redraw"
@@ -564,8 +566,8 @@ msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
 msgstr ""
-"Ændr iterationsærdien. Jo højere den er, desto flere detaljer bliver beregnet, "
-"hvilket bil tage mere tid"
+"Ændr iterationsværdien. Jo højere den er, desto flere detaljer bliver "
+"beregnet, hvilket bil tage mere tid"
 
 #: plug-ins/FractalExplorer/Dialogs.c:493
 msgid "CX:"
@@ -576,8 +578,8 @@ msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
-"Ændr CX værdi (ændrer aspekt for fraktaler, for alle fraktaler "
-"undtagen Mandelbrot og Sierpinski)"
+"Ændr CX værdi (ændrer aspekt for fraktaler, for alle fraktaler undtagen "
+"Mandelbrot og Sierpinski)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:505
 msgid "CY:"
@@ -588,8 +590,8 @@ msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
-"Ændr CY værdi (ændrer aspekt for fraktaler, for alle fraktaler "
-"undtagen Mandelbrot og Sierpinski)"
+"Ændr CY værdi (ændrer aspekt for fraktaler, for alle fraktaler undtagen "
+"Mandelbrot og Sierpinski)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:519 plug-ins/common/CML_explorer.c:1227
 #: plug-ins/common/gqbist.c:686 plug-ins/common/spheredesigner.c:2329
@@ -692,8 +694,7 @@ msgstr "Brug loglog udjævning"
 
 #: plug-ins/FractalExplorer/Dialogs.c:654
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr ""
-"Benyt log log udglatning for at forhindre \"streger\" i resultatet"
+msgstr "Benyt log log udglatning for at forhindre \"streger\" i resultatet"
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:658
@@ -736,8 +737,8 @@ msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr ""
-"Benyt linær afbildning i stedet for enhver trigonometrisk funktion for "
-"denne farvekanal"
+"Benyt lineær afbildning i stedet for enhver trigonometrisk funktion for denne "
+"farvekanal"
 
 #: plug-ins/FractalExplorer/Dialogs.c:740
 #: plug-ins/FractalExplorer/Dialogs.c:781
@@ -752,8 +753,8 @@ msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr ""
-"Ved aktivering af denne funktion vil højere farveværdier blive "
-"ombyttet med lavere og omvendt"
+"Ved aktivering af denne funktion vil højere farveværdier blive ombyttet med "
+"lavere og omvendt"
 
 #. Colormode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:835
@@ -778,7 +779,7 @@ msgstr "Tilføj aktiv gradient på endelig billede"
 
 #: plug-ins/FractalExplorer/Dialogs.c:878
 msgid "Create a color-map using a gradient from the gradient editor"
-msgstr "Oppret et farvekort ved at bruge en gradient fra gradient-editoren"
+msgstr "Opret et farvekort ved at bruge en gradient fra gradient-editoren"
 
 #: plug-ins/FractalExplorer/Dialogs.c:883
 msgid "FractalExplorer Gradient"
@@ -901,17 +902,17 @@ msgid ""
 "(fractalexplorer-path \"%s\")\n"
 "to your %s file."
 msgstr ""
-"Ingen fractalexplorer-sti i gimprc:\n"
+"Ingen FractalExplorer-sti i gimprc:\n"
 "Du skal tilføje en indgang ala\n"
-"(fractalexplorer-path \"%s\")\n"
+"(FractalExplorer- \"%s\")\n"
 "i din %s fil."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1177
 msgid ""
 "fractalexplorer-path misconfigured - the following directories were not found"
 msgstr ""
-"fraktaludforsker-sti fejlkonfigureret - "
-"De følgende kataloger kunne ikke findes:"
+"fraktaludforsker-sti fejlkonfigureret - De følgende kataloger kunne ikke "
+"findes:"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1353
 msgid "My first fractal"
@@ -1094,7 +1095,7 @@ msgstr "Placering"
 #: plug-ins/MapObject/mapobject_ui.c:1084 plug-ins/common/flarefx.c:720
 #: plug-ins/common/nova.c:469 plug-ins/common/papertile.c:285
 #: plug-ins/flame/flame.c:1182 plug-ins/flame/flame.c:1195
-#: plug-ins/gap/gap_mov_dialog.c:1557 plug-ins/gflare/gflare.c:2874
+#: plug-ins/gap/gap_mov_dialog.c:1855 plug-ins/gflare/gflare.c:2874
 #: plug-ins/ifscompose/ifscompose.c:512
 msgid "X:"
 msgstr "X:"
@@ -1111,7 +1112,7 @@ msgstr "Lyskildens X-position i XYZ-rummet"
 #: plug-ins/MapObject/mapobject_ui.c:1093
 #: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:738
 #: plug-ins/common/nova.c:487 plug-ins/common/papertile.c:294
-#: plug-ins/common/xbm.c:1219 plug-ins/gap/gap_mov_dialog.c:1575
+#: plug-ins/common/xbm.c:1219 plug-ins/gap/gap_mov_dialog.c:1873
 #: plug-ins/gflare/gflare.c:2878 plug-ins/ifscompose/ifscompose.c:526
 msgid "Y:"
 msgstr "Y:"
@@ -1248,7 +1249,7 @@ msgstr "Miljøbillede:"
 #. Options section
 #: plug-ins/Lighting/lighting_ui.c:1014 plug-ins/MapObject/mapobject_ui.c:1314
 #: plug-ins/common/lic.c:1037 plug-ins/common/ripple.c:604
-#: plug-ins/gfig/gfig.c:4018
+#: plug-ins/gap/gap_mov_dialog.c:841 plug-ins/gfig/gfig.c:4018
 msgid "Options"
 msgstr "Opsætning"
 
@@ -1454,7 +1455,7 @@ msgstr "Vis/skjul gitter for forhåndsvisning"
 
 #. memory mapped file data
 #. must check file size
-#: plug-ins/bmp/bmpread.c:54 plug-ins/common/CEL.c:266
+#: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:266
 #: plug-ins/common/gbr.c:281 plug-ins/common/gifload.c:306
 #: plug-ins/common/hrz.c:338 plug-ins/common/jpeg.c:745
 #: plug-ins/common/pat.c:261 plug-ins/common/pcx.c:301
@@ -1470,35 +1471,32 @@ msgstr "Vis/skjul gitter for forhåndsvisning"
 msgid "Loading %s:"
 msgstr "Indlæser %s:"
 
-#: plug-ins/bmp/bmpread.c:66
+#: plug-ins/bmp/bmpread.c:64
 #, c-format
-msgid "%s: can't open \"%s\"\n"
-msgstr "%s: kan ikke åbne \"%s\"\n"
+msgid "%s: can't open \"%s\""
+msgstr "%s: kan ikke åbne \"%s\""
 
-#: plug-ins/bmp/bmpread.c:74
+#: plug-ins/bmp/bmpread.c:72
 #, c-format
-msgid "%s: not a valid BMP file %s\n"
-msgstr "%s: ikke en gyldig BMP-fil %s\n"
+msgid "%s: %s is not a valid BMP file"
+msgstr "%s: %s er ikke en gyldig BMP-fil"
 
-#: plug-ins/bmp/bmpread.c:82 plug-ins/bmp/bmpread.c:99
-#: plug-ins/bmp/bmpread.c:109 plug-ins/bmp/bmpread.c:132
+#: plug-ins/bmp/bmpread.c:90 plug-ins/bmp/bmpread.c:108
+#: plug-ins/bmp/bmpread.c:128 plug-ins/bmp/bmpread.c:146
+#: plug-ins/bmp/bmpread.c:164 plug-ins/bmp/bmpread.c:169
+#: plug-ins/bmp/bmpread.c:174
 #, c-format
-msgid "%s: error reading BMP file header\n"
-msgstr "%s: fejl under læsning af BMP-filens header\n"
+msgid "%s: error reading BMP file header"
+msgstr "%s: fejl ved læsning af BMP-filens header"
 
-#: plug-ins/bmp/bmpread.c:155
+#: plug-ins/bmp/bmpread.c:247
 #, c-format
-msgid "%s: too many colors: %u\n"
-msgstr "%s: for mange farver: %u\n"
-
-#: plug-ins/bmp/bmpread.c:245
-#, c-format
-msgid "%s: bad colormap\n"
-msgstr "%s: ugyldig farvekort\n"
+msgid "%s: bad colormap"
+msgstr "%s: forkert farvekort"
 
 #. Create an indexed-alpha layer to hold the image...
-#: plug-ins/bmp/bmpread.c:298 plug-ins/bmp/bmpread.c:307
-#: plug-ins/bmp/bmpread.c:314 plug-ins/common/CEL.c:304
+#: plug-ins/bmp/bmpread.c:289 plug-ins/bmp/bmpread.c:296
+#: plug-ins/bmp/bmpread.c:303 plug-ins/common/CEL.c:304
 #: plug-ins/common/blinds.c:380 plug-ins/common/compose.c:543
 #: plug-ins/common/decompose.c:445 plug-ins/common/film.c:1006
 #: plug-ins/common/gbr.c:343 plug-ins/common/gifload.c:850
@@ -1506,7 +1504,7 @@ msgstr "%s: ugyldig farvekort\n"
 #: plug-ins/common/lic.c:904 plug-ins/common/papertile.c:316
 #: plug-ins/common/pat.c:304 plug-ins/common/pcx.c:332
 #: plug-ins/common/pcx.c:338 plug-ins/common/pix.c:370
-#: plug-ins/common/png.c:567 plug-ins/common/pnm.c:502
+#: plug-ins/common/png.c:576 plug-ins/common/pnm.c:502
 #: plug-ins/common/psd.c:2094 plug-ins/common/smooth_palette.c:240
 #: plug-ins/common/sunras.c:919 plug-ins/common/tga.c:1014
 #: plug-ins/common/tiff.c:653 plug-ins/common/tile.c:269
@@ -1519,25 +1517,25 @@ msgid "Background"
 msgstr "Baggrund"
 
 #: plug-ins/bmp/bmpwrite.c:104
-msgid "bmp: cannot operate on unknown image types or alpha images"
-msgstr "bmp: kan ikke operere på ukendte billedtyper eller alfa-billeder"
+msgid "BMP: cannot operate on unknown image types or alpha images"
+msgstr "BMP: kan ikke arbejde på ukendte billedtyper eller alfa-billeder"
 
 #: plug-ins/bmp/bmpwrite.c:167
 #, c-format
-msgid "can't open %s\n"
-msgstr "kan ikke åbne %s\n"
+msgid "Can't open %s"
+msgstr "Kan ikke åbne %s"
 
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:510
 #: plug-ins/common/gbr.c:387 plug-ins/common/gif.c:936
-#: plug-ins/common/gpb.c:769 plug-ins/common/gpb.c:809
+#: plug-ins/common/gpb.c:768 plug-ins/common/gpb.c:808
 #: plug-ins/common/gtm.c:247 plug-ins/common/hrz.c:476
 #: plug-ins/common/jpeg.c:1193 plug-ins/common/pat.c:343
 #: plug-ins/common/pcx.c:547 plug-ins/common/pix.c:532
-#: plug-ins/common/png.c:747 plug-ins/common/png.c:749
+#: plug-ins/common/png.c:756 plug-ins/common/png.c:758
 #: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:999
 #: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1196
-#: plug-ins/common/tiff.c:1254 plug-ins/common/xbm.c:958
+#: plug-ins/common/tiff.c:1259 plug-ins/common/xbm.c:958
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
 #: plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:548
 #: plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
@@ -1545,16 +1543,16 @@ msgstr "kan ikke åbne %s\n"
 msgid "Saving %s:"
 msgstr "Gemmer %s:"
 
-#: plug-ins/bmp/bmpwrite.c:557
+#: plug-ins/bmp/bmpwrite.c:559
 msgid "Save as BMP"
 msgstr "Gem som BMP"
 
 #. parameter settings
-#: plug-ins/bmp/bmpwrite.c:574
+#: plug-ins/bmp/bmpwrite.c:576
 msgid "Save Options"
 msgstr "Gemmeindstillinger"
 
-#: plug-ins/bmp/bmpwrite.c:582
+#: plug-ins/bmp/bmpwrite.c:584
 msgid "RLE encoded"
 msgstr "RLE-indkodet"
 
@@ -1583,8 +1581,7 @@ msgstr "Ikke understøttet antal farver (%d)"
 
 #: plug-ins/common/CEL.c:492
 msgid "Only an indexed-alpha image can be saved in CEL format"
-msgstr ""
-"Kin indekserede billeder kan gemmes i CEL format"
+msgstr "Kun indekserede billeder kan gemmes i CEL format"
 
 #: plug-ins/common/CEL.c:506
 #, c-format
@@ -1762,7 +1759,7 @@ msgstr "Den første række i billedet"
 
 #: plug-ins/common/CML_explorer.c:226
 msgid "Continuous gradient"
-msgstr "Kontiuerlig gradient"
+msgstr "Kontinuerlig gradient"
 
 #: plug-ins/common/CML_explorer.c:227
 msgid "Continuous grad. w/o gap"
@@ -1787,7 +1784,7 @@ msgstr "Tilfældige tal fra startværdi (delt)"
 #: plug-ins/common/CML_explorer.c:299 plug-ins/common/CML_explorer.c:1280
 #: plug-ins/common/decompose.c:122 plug-ins/common/lic.c:1058
 #: plug-ins/fp/fp_gtk.c:281 plug-ins/fp/fp_gtk.c:413
-#: plug-ins/gap/gap_mov_dialog.c:249 plug-ins/gimpressionist/orientation.c:188
+#: plug-ins/gap/gap_mov_dialog.c:257 plug-ins/gimpressionist/orientation.c:188
 #: plug-ins/gimpressionist/size.c:186
 msgid "Hue"
 msgstr "Glød"
@@ -1795,13 +1792,13 @@ msgstr "Glød"
 #: plug-ins/common/CML_explorer.c:300 plug-ins/common/CML_explorer.c:1285
 #: plug-ins/common/decompose.c:123 plug-ins/common/lic.c:1059
 #: plug-ins/fp/fp_gtk.c:285 plug-ins/fp/fp_gtk.c:417 plug-ins/fp/fp_gtk.c:481
-#: plug-ins/gap/gap_mov_dialog.c:250 plug-ins/rcm/rcm_dialog.c:509
+#: plug-ins/gap/gap_mov_dialog.c:258 plug-ins/rcm/rcm_dialog.c:509
 msgid "Saturation"
 msgstr "Mætning"
 
 #: plug-ins/common/CML_explorer.c:301 plug-ins/common/CML_explorer.c:1290
 #: plug-ins/common/decompose.c:124 plug-ins/fp/fp_gtk.c:289
-#: plug-ins/fp/fp_gtk.c:421 plug-ins/gap/gap_mov_dialog.c:252
+#: plug-ins/fp/fp_gtk.c:421 plug-ins/gap/gap_mov_dialog.c:260
 #: plug-ins/gimpressionist/orientation.c:131
 #: plug-ins/gimpressionist/size.c:130
 msgid "Value"
@@ -1857,7 +1854,7 @@ msgstr "Andre parameterindstillinger"
 
 #: plug-ins/common/CML_explorer.c:1313
 msgid "Channel Independed Parameters"
-msgstr "Parametere uafhængig af kanal"
+msgstr "Parametre uafhængig af kanal"
 
 #: plug-ins/common/CML_explorer.c:1364
 msgid "Initial Value:"
@@ -1873,11 +1870,11 @@ msgstr "Start-afstand:"
 
 #: plug-ins/common/CML_explorer.c:1384
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr "Seed for vilkårlig (kun for \"fra startværdi\" modus)"
+msgstr "Startværdi for vilkårlig (kun for \"fra startværdi\" modus)"
 
 #: plug-ins/common/CML_explorer.c:1396 plug-ins/maze/maze_face.c:297
 msgid "Seed:"
-msgstr "Seed:"
+msgstr "Startværdi:"
 
 #: plug-ins/common/CML_explorer.c:1408
 msgid "Switch to \"From Seed\" with the last Seed"
@@ -1921,7 +1918,7 @@ msgstr "Parametre for kopiering"
 
 #: plug-ins/common/CML_explorer.c:1495
 msgid "Selective Load Settings"
-msgstr "Selektive instillinger for indlæsning"
+msgstr "Selektive indstillinger for indlæsning"
 
 #: plug-ins/common/CML_explorer.c:1510 plug-ins/common/CML_explorer.c:1528
 msgid "NULL"
@@ -2107,7 +2104,7 @@ msgstr "Justér synlige lag"
 #: plug-ins/common/max_rgb.c:269 plug-ins/common/nlfilt.c:389
 #: plug-ins/common/noisify.c:337 plug-ins/common/nova.c:351
 #: plug-ins/common/oilify.c:470 plug-ins/common/pixelize.c:292
-#: plug-ins/common/plasma.c:301 plug-ins/common/png.c:1023
+#: plug-ins/common/plasma.c:301 plug-ins/common/png.c:1032
 #: plug-ins/common/polar.c:955 plug-ins/common/randomize.c:720
 #: plug-ins/common/ripple.c:676 plug-ins/common/scatter_hsv.c:426
 #: plug-ins/common/sel_gauss.c:254 plug-ins/common/sharpen.c:610
@@ -2149,7 +2146,7 @@ msgid "Left Edge"
 msgstr "Venstre kant"
 
 #: plug-ins/common/align_layers.c:473 plug-ins/common/align_layers.c:506
-#: plug-ins/gap/gap_mov_dialog.c:263 plug-ins/gflare/gflare.c:2862
+#: plug-ins/gap/gap_mov_dialog.c:271 plug-ins/gflare/gflare.c:2862
 msgid "Center"
 msgstr "Center"
 
@@ -2206,7 +2203,7 @@ msgstr "Animations-afspilning: "
 #: plug-ins/common/sample_colorize.c:1373 plug-ins/common/uniteditor.c:525
 #: plug-ins/dbbrowser/dbbrowser_utils.c:158
 #: plug-ins/dbbrowser/dbbrowser_utils.c:175 plug-ins/gap/gap_arr_dialog.c:783
-#: plug-ins/gap/gap_navigator_dialog.c:2852
+#: plug-ins/gap/gap_navigator_dialog.c:3158
 #: plug-ins/gdyntext/charmap_window.c:143 plug-ins/gdyntext/gdyntext_ui.c:636
 #: plug-ins/gfig/gfig.c:1986 plug-ins/gfig/gfig.c:2046
 #: plug-ins/helpbrowser/helpbrowser.c:787
@@ -2523,7 +2520,7 @@ msgstr "Farvelæg"
 
 #: plug-ins/common/colorify.c:338 plug-ins/common/colortoalpha.c:414
 #: plug-ins/common/ps.c:2625 plug-ins/common/xpm.c:439
-#: plug-ins/gap/gap_mov_dialog.c:251 plug-ins/gimpressionist/color.c:51
+#: plug-ins/gap/gap_mov_dialog.c:259 plug-ins/gimpressionist/color.c:51
 #: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
 #: plug-ins/print/gimp_main_window.c:425
 msgid "Color"
@@ -2547,7 +2544,7 @@ msgstr "Farve til alfa"
 
 #: plug-ins/common/colortoalpha.c:425 plug-ins/common/mapcolor.c:648
 #: plug-ins/gap/gap_decode_mpeg_main.c:652 plug-ins/gap/gap_decode_xanim.c:223
-#: plug-ins/gap/gap_lib.c:2092 plug-ins/gap/gap_lib.c:2271
+#: plug-ins/gap/gap_lib.c:2103 plug-ins/gap/gap_lib.c:2282
 #: plug-ins/gap/gap_range_ops.c:251 plug-ins/gap/gap_range_ops.c:600
 #: plug-ins/gfli/gfli.c:859 plug-ins/gfli/gfli.c:928
 msgid "From:"
@@ -2764,7 +2761,7 @@ msgid "Prefixed Name:"
 msgstr "Prefiksnavn:"
 
 #: plug-ins/common/csource.c:689 plug-ins/common/mail.c:556
-#: plug-ins/common/tiff.c:1516 plug-ins/common/xbm.c:1178
+#: plug-ins/common/tiff.c:1521 plug-ins/common/xbm.c:1178
 msgid "Comment:"
 msgstr "Kommentar:"
 
@@ -2801,7 +2798,7 @@ msgstr "Gem alfakanal (RGBA/RGB)"
 #. Opacity
 #. table col, row
 #: plug-ins/common/csource.c:757 plug-ins/common/sparkle.c:443
-#: plug-ins/common/tileit.c:587 plug-ins/gap/gap_mov_dialog.c:1627
+#: plug-ins/common/tileit.c:587 plug-ins/gap/gap_mov_dialog.c:1925
 #: plug-ins/gflare/gflare.c:3602 plug-ins/gflare/gflare.c:3632
 #: plug-ins/gflare/gflare.c:3662
 msgid "Opacity:"
@@ -2861,9 +2858,10 @@ msgstr ""
 msgid "Curve Bend"
 msgstr "Kurvebøj"
 
-#: plug-ins/common/curve_bend.c:1365 plug-ins/gfig/gfig.c:2869
-#: plug-ins/gfig/gfig.c:5332 plug-ins/gflare/gflare.c:3099
-#: plug-ins/imagemap/imap_cmd_copy.c:49
+#. menu_item copy
+#: plug-ins/common/curve_bend.c:1365 plug-ins/gap/gap_navigator_dialog.c:2920
+#: plug-ins/gfig/gfig.c:2869 plug-ins/gfig/gfig.c:5332
+#: plug-ins/gflare/gflare.c:3099 plug-ins/imagemap/imap_cmd_copy.c:49
 #: plug-ins/imagemap/imap_cmd_copy_object.c:50
 #: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:132
 msgid "Copy"
@@ -3173,7 +3171,7 @@ msgstr "Opret histogram"
 #: plug-ins/common/destripe.c:670 plug-ins/common/gtm.c:551
 #: plug-ins/common/ps.c:2582 plug-ins/common/ps.c:2757
 #: plug-ins/common/smooth_palette.c:429 plug-ins/common/tile.c:421
-#: plug-ins/gap/gap_mov_dialog.c:1593 plug-ins/imagemap/imap_rectangle.c:387
+#: plug-ins/gap/gap_mov_dialog.c:1891 plug-ins/imagemap/imap_rectangle.c:387
 msgid "Width:"
 msgstr "Bredde:"
 
@@ -3325,7 +3323,7 @@ msgstr "Begræns linjebredde"
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1243
 #: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2591
 #: plug-ins/common/ps.c:2766 plug-ins/common/smooth_palette.c:438
-#: plug-ins/common/tile.c:425 plug-ins/gap/gap_mov_dialog.c:1610
+#: plug-ins/common/tile.c:425 plug-ins/gap/gap_mov_dialog.c:1908
 #: plug-ins/imagemap/imap_rectangle.c:393
 msgid "Height:"
 msgstr "Højde:"
@@ -3511,7 +3509,7 @@ msgstr "FlareFX"
 #. to avoid side effects while initialization
 #: plug-ins/common/flarefx.c:706
 msgid "Center of FlareFX"
-msgstr "Center af FlareFx"
+msgstr "Center af FlareFX"
 
 #: plug-ins/common/fractaltrace.c:126
 msgid "<Image>/Filters/Map/Fractal Trace..."
@@ -3606,7 +3604,7 @@ msgstr "Gem som pensel"
 msgid "Spacing:"
 msgstr "Mellemrum:"
 
-#: plug-ins/common/gbr.c:487 plug-ins/common/gpb.c:296
+#: plug-ins/common/gbr.c:487 plug-ins/common/gpb.c:295
 #: plug-ins/common/pat.c:435 plug-ins/gimpressionist/presets.c:373
 #: plug-ins/imagemap/imap_settings.c:93
 msgid "Description:"
@@ -3711,7 +3709,7 @@ msgstr "Millisekunder"
 
 #: plug-ins/common/gif.c:1348
 msgid "Frame Disposal where Unspecified: "
-msgstr "Overgang mellem rammer hvis ikke angivet:" 
+msgstr "Overgang mellem rammer hvis ikke angivet:"
 
 #: plug-ins/common/gif.c:1357
 msgid "I don't Care"
@@ -3769,63 +3767,63 @@ msgstr "Flisebredde:"
 msgid "Tile Height:"
 msgstr "Flisehøjde:"
 
-#: plug-ins/common/gpb.c:283
+#: plug-ins/common/gpb.c:282
 msgid "Spacing (Percent):"
 msgstr "Mellemrum (procent):"
 
-#: plug-ins/common/gpb.c:309
+#: plug-ins/common/gpb.c:308
 msgid "Save as Pixmap Brush"
 msgstr "Gem som billedbørste"
 
-#: plug-ins/common/gpb.c:366
+#: plug-ins/common/gpb.c:365
 msgid "Save as Pixmap Brush Pipe"
 msgstr "Gem som animeret pensel"
 
-#: plug-ins/common/gpb.c:429
+#: plug-ins/common/gpb.c:428
 msgid "Pixels"
 msgstr "Piksler"
 
-#: plug-ins/common/gpb.c:434 plug-ins/common/newsprint.c:1274
+#: plug-ins/common/gpb.c:433 plug-ins/common/newsprint.c:1274
 msgid "Cell Size:"
 msgstr "Cellestørrelse:"
 
-#: plug-ins/common/gpb.c:446
+#: plug-ins/common/gpb.c:445
 msgid "Number of Cells:"
 msgstr "Antal celler:"
 
-#: plug-ins/common/gpb.c:470
+#: plug-ins/common/gpb.c:469
 msgid " Rows of "
 msgstr " Rækker med "
 
-#: plug-ins/common/gpb.c:482
+#: plug-ins/common/gpb.c:481
 msgid " Columns on each Layer"
 msgstr " Kolonner i hvert lag"
 
-#: plug-ins/common/gpb.c:486
+#: plug-ins/common/gpb.c:485
 msgid " (Width Mismatch!) "
 msgstr " (Bredde passer ikke!) "
 
-#: plug-ins/common/gpb.c:490
+#: plug-ins/common/gpb.c:489
 msgid " (Height Mismatch!) "
 msgstr " (Højde passer ikke!)"
 
-#: plug-ins/common/gpb.c:495
+#: plug-ins/common/gpb.c:494
 msgid "Display as:"
 msgstr "Vis som:"
 
-#: plug-ins/common/gpb.c:504
+#: plug-ins/common/gpb.c:503
 msgid "Dimension:"
 msgstr "Dimension:"
 
-#: plug-ins/common/gpb.c:539
+#: plug-ins/common/gpb.c:538
 msgid "Ranks:"
 msgstr "Rang:"
 
-#: plug-ins/common/gpb.c:572
+#: plug-ins/common/gpb.c:571
 msgid "Selection:"
 msgstr "Udvalg:"
 
-#: plug-ins/common/gpb.c:1024
+#: plug-ins/common/gpb.c:1023
 #, c-format
 msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr "Lag %s har ikke en alfa-kanal, sprunget over"
@@ -3939,8 +3937,8 @@ msgid ""
 "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
 msgstr ""
-"Hvis valgt vil GTM udskrive et komplet HTML dokument med <HTML>, "
-"<BODY> etc. angivelser istedet for bare html for tabellen."
+"Hvis valgt vil GTM udskrive et komplet HTML dokument med <HTML>, <BODY> etc. "
+"angivelser istedet for bare html for tabellen."
 
 #. HTML Table Creation Options
 #: plug-ins/common/gtm.c:447
@@ -3956,8 +3954,8 @@ msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
 msgstr ""
-"Hvis valgt vil GTM erstatte ethver firkantet sektion af ensfarvede "
-"blokke med en stor celle med ROWSPAN og COLSPAN værdier."
+"Hvis valgt vil GTM erstatte enhver firkantet sektion af ensfarvede blokke "
+"med en stor celle med ROWSPAN og COLSPAN værdier."
 
 #: plug-ins/common/gtm.c:470
 msgid "Compress TD tags"
@@ -3970,8 +3968,7 @@ msgid ""
 "control."
 msgstr ""
 "Hvis valgt vil få GTM til at ikke lave mellemrum mellem TD tag og "
-"celleindholdet. Dette er kun nødvendigt for positionskontrol "
-"på pikselniveau."
+"celleindholdet. Dette er kun nødvendigt for positionskontrol på pikselniveau."
 
 #: plug-ins/common/gtm.c:484
 msgid "Caption"
@@ -3991,7 +3988,7 @@ msgstr "Celleindhold:"
 
 #: plug-ins/common/gtm.c:520
 msgid "The text to go into each cell."
-msgstr "Den tekst, der lagges ind i enhver celle."
+msgstr "Den tekst, der lægges ind i enhver celle."
 
 #. HTML Table Options
 #: plug-ins/common/gtm.c:526
@@ -4044,7 +4041,8 @@ msgstr "gz: ingen fornuftig filnavnudvidelse, gemmer som gzip-et xcf\n"
 
 #: plug-ins/common/gz.c:480
 msgid "gz: no sensible extension, attempting to load with file magic\n"
-msgstr "gz: ingen fornuftig filnavnudvidelse, prøver at indlæse efter fil-'magick'\n"
+msgstr ""
+"gz: ingen fornuftig filnavnudvidelse, prøver at indlæse efter fil-'magick'\n"
 
 #: plug-ins/common/hot.c:234
 msgid "<Image>/Filters/Colors/Hot..."
@@ -4172,7 +4170,7 @@ msgstr "Tærskel:"
 #: plug-ins/gap/gap_mod_layer.c:219 plug-ins/gfig/gfig.c:3975
 #: plug-ins/gflare/gflare.c:3039 plug-ins/sinus/sinus.c:891
 msgid "Settings"
-msgstr "Instillinger"
+msgstr "Indstillinger"
 
 #: plug-ins/common/iwarp.c:1136
 msgid "IWarp"
@@ -4378,9 +4376,8 @@ msgid "Gradient"
 msgstr "Farveforløb"
 
 #: plug-ins/common/lic.c:1078
-#, fuzzy
 msgid "Convolve"
-msgstr "Aufrollen"
+msgstr "Convolér"
 
 #: plug-ins/common/lic.c:1083
 msgid "With White Noise"
@@ -4513,8 +4510,8 @@ msgid "Destination color range"
 msgstr "Farveområde for mål"
 
 #: plug-ins/common/mapcolor.c:648 plug-ins/gap/gap_decode_mpeg_main.c:662
-#: plug-ins/gap/gap_decode_xanim.c:233 plug-ins/gap/gap_lib.c:2100
-#: plug-ins/gap/gap_lib.c:2279 plug-ins/gap/gap_range_ops.c:258
+#: plug-ins/gap/gap_decode_xanim.c:233 plug-ins/gap/gap_lib.c:2111
+#: plug-ins/gap/gap_lib.c:2290 plug-ins/gap/gap_range_ops.c:258
 #: plug-ins/gap/gap_range_ops.c:608 plug-ins/gfli/gfli.c:868
 #: plug-ins/gfli/gfli.c:937
 msgid "To:"
@@ -4538,7 +4535,7 @@ msgstr "Maks RGB"
 
 #: plug-ins/common/max_rgb.c:273
 msgid "Hold the Maximal Channels"
-msgstr "Hold de maskimale kanaler"
+msgstr "Hold de maksimale kanaler"
 
 #: plug-ins/common/max_rgb.c:275
 msgid "Hold the Minimal Channels"
@@ -4638,7 +4635,7 @@ msgid "Output LPI:"
 msgstr "Udskriv LPI:"
 
 #. screen settings
-#: plug-ins/common/newsprint.c:1287 plug-ins/gap/gap_mov_dialog.c:242
+#: plug-ins/common/newsprint.c:1287 plug-ins/gap/gap_mov_dialog.c:250
 #: plug-ins/gflare/gflare.c:597
 msgid "Screen"
 msgstr "Skærm"
@@ -4676,9 +4673,8 @@ msgid "Filter"
 msgstr "Filter"
 
 #: plug-ins/common/nlfilt.c:377
-#, fuzzy
 msgid "Alpha Trimmed Mean"
-msgstr "Alfa baseret gennemsnit"
+msgstr "Alfa slanket gennemsnit"
 
 #: plug-ins/common/nlfilt.c:379
 msgid "Optimal Estimation"
@@ -4998,7 +4994,7 @@ msgstr ""
 "PNG fejl. fil ødelagt?"
 
 #. Aie! Unknown type
-#: plug-ins/common/png.c:512
+#: plug-ins/common/png.c:521
 #, c-format
 msgid ""
 "%s\n"
@@ -5007,7 +5003,7 @@ msgstr ""
 "%s\n"
 "PNG ukendt farvemodel"
 
-#: plug-ins/common/png.c:730
+#: plug-ins/common/png.c:739
 #, c-format
 msgid ""
 "%s\n"
@@ -5016,7 +5012,7 @@ msgstr ""
 "%s\n"
 "PNG-fejl: Kunne ikke gemme billede."
 
-#: plug-ins/common/png.c:740
+#: plug-ins/common/png.c:749
 #, c-format
 msgid ""
 "%s\n"
@@ -5025,19 +5021,19 @@ msgstr ""
 "%s\n"
 "Kunne ikke oprette fil"
 
-#: plug-ins/common/png.c:1007
+#: plug-ins/common/png.c:1016
 msgid "Save as PNG"
 msgstr "Gem som PNG"
 
-#: plug-ins/common/png.c:1036
+#: plug-ins/common/png.c:1045
 msgid "Interlacing (Adam7)"
 msgstr "Interlacing (Adam7)"
 
-#: plug-ins/common/png.c:1045
+#: plug-ins/common/png.c:1054
 msgid "Skip Ancillary Chunks"
 msgstr "Oversporing underordnede blokke"
 
-#: plug-ins/common/png.c:1062
+#: plug-ins/common/png.c:1071
 msgid "Compression Level:"
 msgstr "Kompressionsniveau:"
 
@@ -5071,7 +5067,7 @@ msgstr "PNM: Ugyldig Y opløsning."
 
 #: plug-ins/common/pnm.c:493
 msgid "PNM: Invalid maximum value."
-msgstr "PNM: Ungyldig maksimumværdi."
+msgstr "PNM: Ugyldig maksimumværdi."
 
 #: plug-ins/common/pnm.c:666
 msgid "PNM: Error reading file."
@@ -5122,34 +5118,32 @@ msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr ""
-"Hvis valgt, vil afbildingen begynde i højre side, i stedet for at "
-"begynde i venstre side."
+"Hvis valgt, vil afbildingen begynde i højre side, i stedet for at begynde i "
+"venstre side."
 
 #: plug-ins/common/polar.c:1004
 msgid "Map from Top"
 msgstr "Start fra oven"
 
 #: plug-ins/common/polar.c:1012
-#, fuzzy
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
 msgstr ""
-"Normalerweise wird die unterste Zeile på die Mitte abgebildet og die "
-"oberste nach außen. Dies kann her umgedreht werden."
+"Hvis ikke valgt vil afbildingen sætte bundrækken i midten af "
+"toprækken udenfor. Hvis valgt vil det være omvendt."
 
 #: plug-ins/common/polar.c:1017
 msgid "To Polar"
 msgstr "Til Polar"
 
 #: plug-ins/common/polar.c:1025
-#, fuzzy
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
 msgstr ""
-"Wenn angeklickt, wird das billede kreisførmig på ein Rechteck abgebildet. Wenn "
-"nicht, wird das billede på einen Kreis abgebildet."
+"Hvis ikke valgt vil billedet blive cirkulært afbildet på et "
+"rektangel. Hvis valgt vil billedt blive afbildet på en cirkel."
 
 #: plug-ins/common/ps.c:870
 msgid "PS: can't open file for reading"
@@ -5162,7 +5156,7 @@ msgstr "Fortolk og indlæs %s:"
 
 #: plug-ins/common/ps.c:885
 msgid "PS: can't interprete file"
-msgstr "PS: kan ikke fortokle fil"
+msgstr "PS: kan ikke fortolke fil"
 
 #: plug-ins/common/ps.c:973
 msgid "PostScript save cannot handle images with alpha channels"
@@ -5372,27 +5366,27 @@ msgstr "Amplitude:"
 
 #: plug-ins/common/rotate.c:168
 msgid "<Image>/Layers/Rotate/90 degrees"
-msgstr "<Image>/Lag/Roteren/90 grader"
+msgstr "<Image>/Lag/Rotér/90 grader"
 
 #: plug-ins/common/rotate.c:179
 msgid "<Image>/Layers/Rotate/180 degrees"
-msgstr "<Image>/Lag/Roteren/180 grader"
+msgstr "<Image>/Lag/Rotér/180 grader"
 
 #: plug-ins/common/rotate.c:190
 msgid "<Image>/Layers/Rotate/270 degrees"
-msgstr "<Image>/Lag/Roteren/270 grader"
+msgstr "<Image>/Lag/Rotér/270 grader"
 
 #: plug-ins/common/rotate.c:202
 msgid "<Image>/Image/Transforms/Rotate/90 degrees"
-msgstr "<Image>/Billede/Transformering/Roteren/90 grader"
+msgstr "<Image>/Billede/Transformering/Rotér/90 grader"
 
 #: plug-ins/common/rotate.c:213
 msgid "<Image>/Image/Transforms/Rotate/180 degrees"
-msgstr "<Image>/Billede/Transformering/Roteren/180 grader"
+msgstr "<Image>/Billede/Transformering/Rotér/180 grader"
 
 #: plug-ins/common/rotate.c:224
 msgid "<Image>/Image/Transforms/Rotate/270 degrees"
-msgstr "<Image>/Billede/Transformering/Roteren/270 grader"
+msgstr "<Image>/Billede/Transformering/Rotér/270 grader"
 
 #: plug-ins/common/rotate.c:531
 msgid "You can not rotate the whole image if there's a selection."
@@ -6080,27 +6074,27 @@ msgstr "Alfatærskel"
 msgid "TIFF Channel"
 msgstr "TIFF-kanal"
 
-#: plug-ins/common/tiff.c:1475
+#: plug-ins/common/tiff.c:1480
 msgid "Save as TIFF"
 msgstr "Gem som TIFF"
 
-#: plug-ins/common/tiff.c:1497
+#: plug-ins/common/tiff.c:1502
 msgid "Compression"
 msgstr "Kompression"
 
-#: plug-ins/common/tiff.c:1502
+#: plug-ins/common/tiff.c:1507
 msgid "LZW"
 msgstr "LZW"
 
-#: plug-ins/common/tiff.c:1503
+#: plug-ins/common/tiff.c:1508
 msgid "Pack Bits"
 msgstr "Pak bit"
 
-#: plug-ins/common/tiff.c:1504
+#: plug-ins/common/tiff.c:1509
 msgid "Deflate"
 msgstr "Udpak"
 
-#: plug-ins/common/tiff.c:1505
+#: plug-ins/common/tiff.c:1510
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -6138,7 +6132,7 @@ msgstr "Drejer"
 
 #: plug-ins/common/tileit.c:474
 msgid "Applied to Tile"
-msgstr "Anvendn på flise"
+msgstr "Anvend på flise"
 
 #: plug-ins/common/tileit.c:487
 msgid "All Tiles"
@@ -6230,8 +6224,8 @@ msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
 msgstr ""
-"Definitionen af enheden vil kun blive gemt før GIMP afslutter hvis "
-"denne kolonne er valgt."
+"Definitionen af enheden vil kun blive gemt før GIMP afslutter hvis denne "
+"kolonne er valgt."
 
 #: plug-ins/common/uniteditor.c:538
 msgid ""
@@ -6249,9 +6243,9 @@ msgid ""
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
-"Dette felt er en hjælp for numeriske indatafelter. Det angiver hvor "
-"mange decimale cifre inddatefeltet bør have for at få tilnærmelsesvis "
-"den samme præcision som et 'tomme' inddatafelt med to decimale cifre."
+"Dette felt er en hjælp for numeriske inddatafelter. Det angiver hvor mange "
+"decimale cifre inddatefeltet bør have for at få tilnærmelsesvis den samme "
+"præcision som et 'tomme' inddatafelt med to decimale cifre."
 
 #: plug-ins/common/uniteditor.c:547
 msgid ""
@@ -6263,7 +6257,7 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:550
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
-msgstr "Forkortelsen for enheded (fx  \"cm\" for centimeter)."
+msgstr "Forkortelsen for enheden (fx  \"cm\" for centimeter)."
 
 #: plug-ins/common/uniteditor.c:552
 msgid "The unit's singular form."
@@ -6346,14 +6340,12 @@ msgid "Unsharp Mask"
 msgstr "Uskarp maskering"
 
 #: plug-ins/common/video.c:44
-#, fuzzy
 msgid "Staggered"
-msgstr "Gestaffelt"
+msgstr "Stavret"
 
 #: plug-ins/common/video.c:45
-#, fuzzy
 msgid "Large staggered"
-msgstr "Weit gestaffelt"
+msgstr "Stor-stavret"
 
 #: plug-ins/common/video.c:46
 msgid "Striped"
@@ -6364,9 +6356,8 @@ msgid "Wide-striped"
 msgstr "Bredstribet"
 
 #: plug-ins/common/video.c:48
-#, fuzzy
 msgid "Long-staggered"
-msgstr "Lang gestaffelt"
+msgstr "Lang-stavret"
 
 #: plug-ins/common/video.c:49
 msgid "3x3"
@@ -6403,7 +6394,7 @@ msgstr "RGB Mønstertype"
 
 #: plug-ins/common/video.c:2188
 msgid "Additive"
-msgstr "Additiv"
+msgstr "Auditiv"
 
 #: plug-ins/common/video.c:2196 plug-ins/rcm/rcm_dialog.c:118
 msgid "Rotated"
@@ -6797,7 +6788,7 @@ msgstr "PageSetupDlg fejlede: %d"
 
 #: plug-ins/common/wmf.c:926
 msgid "Load Windows Metafile"
-msgstr "Indlæs Windows Metafiles"
+msgstr "Indlæs Windows metafil"
 
 #. Rendering
 #: plug-ins/common/wmf.c:943
@@ -7056,7 +7047,7 @@ msgstr "Af DATAMIN/DATAMAX"
 
 #: plug-ins/fits/fits.c:1028
 msgid "Image Composing"
-msgstr "Sammensætning af billleder"
+msgstr "Sammensætning af billeder"
 
 #: plug-ins/flame/flame.c:137
 msgid "<Image>/Filters/Render/Nature/Flame..."
@@ -7150,9 +7141,8 @@ msgid "Sample Density:"
 msgstr "Stikprøvetæthed:"
 
 #: plug-ins/flame/flame.c:1053
-#, fuzzy
 msgid "Spatial Oversample:"
-msgstr "Rumlig Hochrechnung:"
+msgstr "Rumlig overindsamling:"
 
 #: plug-ins/flame/flame.c:1063
 msgid "Spatial Filter Radius:"
@@ -7306,9 +7296,8 @@ msgid "Advanced Filter Pack Options"
 msgstr "Avancerede filterpakkke indstillinger"
 
 #: plug-ins/fp/fp_gtk.c:1035
-#, fuzzy
 msgid "Smoothness of Aliasing"
-msgstr "Glætte der Kanten"
+msgstr "Glathed ved aliasing"
 
 #. ****************** MISC OPTIONS **************************
 #: plug-ins/fp/fp_gtk.c:1122
@@ -7402,7 +7391,7 @@ msgid "Overwrite All"
 msgstr "Overskriv alt"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:342 plug-ins/gap/gap_decode_xanim.c:346
-#: plug-ins/gap/gap_lib.c:1020 plug-ins/gap/gap_range_ops.c:1207
+#: plug-ins/gap/gap_lib.c:1026 plug-ins/gap/gap_range_ops.c:1207
 msgid "GAP Question"
 msgstr "GAP spørgsmål"
 
@@ -7463,7 +7452,7 @@ msgid ""
 msgstr ""
 "\n"
 "ADVARSEL: Forsøg ikke at opdele andre filer end MPEG1 videoer.\n"
-"Før du går videre bør du gemme all åbne billeder."
+"Før du går videre bør du gemme alle åbne billeder."
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:688
 msgid "Split MPEG1 Video to Frames"
@@ -7494,8 +7483,8 @@ msgstr "    du kan få xanim med eksport-funktioner her:"
 msgid ""
 "2.) if your xanim exporting edition is not in your PATH or is not named xanim"
 msgstr ""
-"2.) hvis din xanim eksport-udgave ikke er i din sti (PATH) eller ikke "
-"er kaldt xanim"
+"2.) hvis din xanim eksport-udgave ikke er i din sti (PATH) eller ikke er "
+"kaldt xanim"
 
 #: plug-ins/gap/gap_decode_xanim.c:149
 msgid "    you have to set Environment variable GAP_XANIM_PROG "
@@ -7621,8 +7610,7 @@ msgstr ""
 #: plug-ins/gap/gap_decode_xanim.c:564
 #, c-format
 msgid "frames are not extracted, because overwrite of %s was cancelled"
-msgstr ""
-"rammer blev ikke udtrukket, da overskrivning af %s blev afbrudt"
+msgstr "rammer blev ikke udtrukket, da overskrivning af %s blev afbrudt"
 
 #: plug-ins/gap/gap_decode_xanim.c:574
 #, c-format
@@ -7725,7 +7713,7 @@ msgid ""
 "(define end-settings)"
 msgstr ""
 "2. kald af %s\n"
-"(indstil slut-oarametre)"
+"(indstil slut-parametre)"
 
 #: plug-ins/gap/gap_filter_foreach.c:157
 #, c-format
@@ -7772,11 +7760,11 @@ msgstr "<Image>/Video/Indkod/MPEG1..."
 msgid "<Image>/Video/Encode/MPEG2..."
 msgstr "<Image>/Video/Indkod/MPEG2..."
 
-#: plug-ins/gap/gap_lib.c:226
+#: plug-ins/gap/gap_lib.c:232
 msgid "GAP Message"
 msgstr "GAP besked"
 
-#: plug-ins/gap/gap_lib.c:889
+#: plug-ins/gap/gap_lib.c:895
 msgid ""
 "OPERATION CANCELLED.\n"
 "Current frame changed while dialog was open."
@@ -7785,7 +7773,7 @@ msgstr ""
 "Aktuelle ramme blev ændret\n"
 "mens dialogen var åben."
 
-#: plug-ins/gap/gap_lib.c:911
+#: plug-ins/gap/gap_lib.c:917
 msgid ""
 "OPERATION CANCELLED.\n"
 "GAP-plugins works only with filenames\n"
@@ -7793,87 +7781,86 @@ msgid ""
 "==> Rename your image, then try again."
 msgstr ""
 "OPERATION AFBRUDT.\n"
-"GAP-instikket virker kun med billeder,\n"
+"GAP-indstikket virker kun med billeder,\n"
 "hvis navne ender på _NNNN.xcf (fx: ani_0001.xcf)\n"
 "==> Omdøb dit billede og prøv igen."
 
-#: plug-ins/gap/gap_lib.c:998
+#: plug-ins/gap/gap_lib.c:1004
 msgid ""
 "You are using a file format != xcf\n"
 "Save Operations may result\n"
 "in loss of layer information."
 msgstr ""
 "Du benytter ikke XCF formatet.\n"
-"Gemning kan resultere i"
-"tab af information om lag."
+"Gemning kan resultere i tab af information om lag."
 
-#: plug-ins/gap/gap_lib.c:1014
+#: plug-ins/gap/gap_lib.c:1020
 msgid "Save Flattened"
 msgstr "Gem sammenføjet "
 
-#: plug-ins/gap/gap_lib.c:1016
+#: plug-ins/gap/gap_lib.c:1022
 msgid "Save As Is"
 msgstr "Gem som det er"
 
-#: plug-ins/gap/gap_lib.c:1486 plug-ins/gap/gap_lib.c:1603
-#: plug-ins/gap/gap_lib.c:1682 plug-ins/gap/gap_lib.c:1689
-#: plug-ins/gap/gap_lib.c:1696 plug-ins/gap/gap_lib.c:1779
-#: plug-ins/gap/gap_lib.c:1801
+#: plug-ins/gap/gap_lib.c:1497 plug-ins/gap/gap_lib.c:1614
+#: plug-ins/gap/gap_lib.c:1693 plug-ins/gap/gap_lib.c:1700
+#: plug-ins/gap/gap_lib.c:1707 plug-ins/gap/gap_lib.c:1790
+#: plug-ins/gap/gap_lib.c:1812 plug-ins/gap/gap_lib.c:2701
 #, c-format
 msgid "Error: could not rename frame %ld to %ld"
 msgstr "fejl: Kunne ikke omdøbe ramme %ld til %ld."
 
-#: plug-ins/gap/gap_lib.c:1591
+#: plug-ins/gap/gap_lib.c:1602
 msgid "Duplicating frames..."
 msgstr "Duplikér rammer..."
 
-#: plug-ins/gap/gap_lib.c:1767
+#: plug-ins/gap/gap_lib.c:1778
 msgid "Renumber Framesequence..."
 msgstr "Renummerér rammesekvens..."
 
-#: plug-ins/gap/gap_lib.c:1953
+#: plug-ins/gap/gap_lib.c:1964
 #, c-format
 msgid "Goto Frame (%ld/%ld)"
 msgstr "Gå til ramme (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:1956
+#: plug-ins/gap/gap_lib.c:1967
 #, c-format
 msgid "Destination Frame Number (%ld  - %ld)"
 msgstr "Numre på mål-rammerne (%ld - %ld)"
 
-#: plug-ins/gap/gap_lib.c:1960 plug-ins/gap/gap_lib.c:2037
-#: plug-ins/gap/gap_lib.c:2225
+#: plug-ins/gap/gap_lib.c:1971 plug-ins/gap/gap_lib.c:2048
+#: plug-ins/gap/gap_lib.c:2236
 msgid "Number:"
 msgstr "Nummer:"
 
-#: plug-ins/gap/gap_lib.c:2021
+#: plug-ins/gap/gap_lib.c:2032
 #, c-format
 msgid "Delete Frames (%ld/%ld)"
 msgstr "Slet rammer (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2024
+#: plug-ins/gap/gap_lib.c:2035
 #, c-format
 msgid "Delete Frames from %ld to (number)"
 msgstr "Slet rammer fra %ld til (nummer)"
 
-#: plug-ins/gap/gap_lib.c:2087
+#: plug-ins/gap/gap_lib.c:2098
 #, c-format
 msgid "Duplicate Frames (%ld/%ld)"
 msgstr "Duplikér rammer (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2097
+#: plug-ins/gap/gap_lib.c:2108
 msgid "Source Range starts at this framenumber"
 msgstr "Kildeområdet starter ved dette rammenummer"
 
-#: plug-ins/gap/gap_lib.c:2105
+#: plug-ins/gap/gap_lib.c:2116
 msgid "Source Range ends at this framenumber"
 msgstr "Kildeområdet slutter ved dette rammenummer"
 
-#: plug-ins/gap/gap_lib.c:2108
+#: plug-ins/gap/gap_lib.c:2119
 msgid "N times:"
 msgstr "N gange:"
 
-#: plug-ins/gap/gap_lib.c:2115
+#: plug-ins/gap/gap_lib.c:2126
 msgid ""
 "Copy selected Range n-times  \n"
 "(you may type in Values > 99)"
@@ -7881,37 +7868,37 @@ msgstr ""
 "Kopier udvalgte rammer n gange \n"
 "(du kan indtaste værdier under 99)"
 
-#: plug-ins/gap/gap_lib.c:2117
+#: plug-ins/gap/gap_lib.c:2128
 msgid "Duplicate Frame Range"
 msgstr "Duplikér rammeområde"
 
-#: plug-ins/gap/gap_lib.c:2220
+#: plug-ins/gap/gap_lib.c:2231
 #, c-format
 msgid "Exchange current Frame (%ld)"
 msgstr "ombyt nuværende ramme (%ld)"
 
-#: plug-ins/gap/gap_lib.c:2224
+#: plug-ins/gap/gap_lib.c:2235
 msgid "With Frame (number)"
 msgstr "Med ramme (nummer)"
 
-#: plug-ins/gap/gap_lib.c:2266
+#: plug-ins/gap/gap_lib.c:2277
 #, c-format
 msgid "Framesequence Shift (%ld/%ld)"
 msgstr "Forskydning af rammesekvens (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2276
+#: plug-ins/gap/gap_lib.c:2287
 msgid "Affected Range starts at this framenumber"
 msgstr "Det berørte område starter ved dette rammenummer"
 
-#: plug-ins/gap/gap_lib.c:2284
+#: plug-ins/gap/gap_lib.c:2295
 msgid "Affected Range ends at this framenumber"
 msgstr "Det berørte område slutter ved dette rammenummer"
 
-#: plug-ins/gap/gap_lib.c:2287
+#: plug-ins/gap/gap_lib.c:2298
 msgid "N-Shift:"
 msgstr "N-forskydning:"
 
-#: plug-ins/gap/gap_lib.c:2292
+#: plug-ins/gap/gap_lib.c:2303
 msgid ""
 "Renumber the affected framesequence     \n"
 "(numbers are shifted in circle by N)"
@@ -7919,83 +7906,83 @@ msgstr ""
 "Renummerér den påvirkede rammesekvens     \n"
 "(numrene er forskudt cyklisk med N)"
 
-#: plug-ins/gap/gap_lib.c:2294
+#: plug-ins/gap/gap_lib.c:2305
 msgid "Framesequence shift"
 msgstr "Forskydning af rammerækkefølge"
 
-#: plug-ins/gap/gap_main.c:343
+#: plug-ins/gap/gap_main.c:374
 msgid "<Image>/Video/Goto/Next Frame"
 msgstr "<Image>/Video/Gå til/Næste ramme"
 
-#: plug-ins/gap/gap_main.c:355
+#: plug-ins/gap/gap_main.c:386
 msgid "<Image>/Video/Goto/Previous Frame"
 msgstr "<Image>/Video/Gå til/Forrige ramme"
 
-#: plug-ins/gap/gap_main.c:367
+#: plug-ins/gap/gap_main.c:398
 msgid "<Image>/Video/Goto/First Frame"
 msgstr "<Image>/Video/Gå til/Første ramme"
 
-#: plug-ins/gap/gap_main.c:379
+#: plug-ins/gap/gap_main.c:410
 msgid "<Image>/Video/Goto/Last Frame"
 msgstr "<Image>/Video/Gå til/Sidste ramme"
 
-#: plug-ins/gap/gap_main.c:391
+#: plug-ins/gap/gap_main.c:422
 msgid "<Image>/Video/Goto/Any Frame..."
 msgstr "<Image>/Video/Gå til/Hvilketsomhelst ramme..."
 
-#: plug-ins/gap/gap_main.c:403
+#: plug-ins/gap/gap_main.c:434
 msgid "<Image>/Video/Delete Frames..."
 msgstr "<Image>/Video/Slet ramme..."
 
-#: plug-ins/gap/gap_main.c:415
+#: plug-ins/gap/gap_main.c:446
 msgid "<Image>/Video/Duplicate Frames..."
 msgstr "<Image>/Video/Dupliker ramme..."
 
-#: plug-ins/gap/gap_main.c:427
+#: plug-ins/gap/gap_main.c:458
 msgid "<Image>/Video/Exchange Frame..."
 msgstr "<Image>/Video/Ombyt ramme..."
 
-#: plug-ins/gap/gap_main.c:439
+#: plug-ins/gap/gap_main.c:470
 msgid "<Image>/Video/Move Path..."
 msgstr "<Image>/Video/Flytte-sti..."
 
-#: plug-ins/gap/gap_main.c:451
+#: plug-ins/gap/gap_main.c:482
 msgid "<Image>/Video/Frames to Image..."
 msgstr "<Image>/Video/ramme til enkeltbillede..."
 
-#: plug-ins/gap/gap_main.c:463
+#: plug-ins/gap/gap_main.c:494
 msgid "<Image>/Video/Frames Flatten..."
 msgstr "<Image>/Video/Sammenføj rammer..."
 
-#: plug-ins/gap/gap_main.c:475
+#: plug-ins/gap/gap_main.c:506
 msgid "<Image>/Video/Frames LayerDel..."
 msgstr "<Image>/Video/Fjern lag fra rammer..."
 
-#: plug-ins/gap/gap_main.c:499
+#: plug-ins/gap/gap_main.c:530
 msgid "<Image>/Video/Frames Convert..."
 msgstr "<Image>/Video/Konvertér rammer..."
 
-#: plug-ins/gap/gap_main.c:511
+#: plug-ins/gap/gap_main.c:542
 msgid "<Image>/Video/Frames Resize..."
 msgstr "<Image>/Video/Ændr ramme-størrelse..."
 
-#: plug-ins/gap/gap_main.c:523
+#: plug-ins/gap/gap_main.c:554
 msgid "<Image>/Video/Frames Crop..."
 msgstr "<Image>/Video/Tilskær rammer..."
 
-#: plug-ins/gap/gap_main.c:535
+#: plug-ins/gap/gap_main.c:566
 msgid "<Image>/Video/Frames Scale..."
 msgstr "<Image>/Video/Skalér rammer..."
 
-#: plug-ins/gap/gap_main.c:547
+#: plug-ins/gap/gap_main.c:578
 msgid "<Image>/Video/Split Image to Frames..."
 msgstr "<Image>/Video/Opdel billede i rammer..."
 
-#: plug-ins/gap/gap_main.c:560
+#: plug-ins/gap/gap_main.c:591
 msgid "<Image>/Video/Framesequence Shift..."
 msgstr "<Image>/Video/Forskyd rammesekvens..."
 
-#: plug-ins/gap/gap_main.c:572
+#: plug-ins/gap/gap_main.c:603
 msgid "<Image>/Video/Frames Modify..."
 msgstr "<Image>/Video/Ændr rammer..."
 
@@ -8078,14 +8065,12 @@ msgid "Set Layer(s) invisible"
 msgstr "Gør lag usynlig(e)"
 
 #: plug-ins/gap/gap_mod_layer.c:102
-#, fuzzy
 msgid "Set Layer(s) linked"
-msgstr "lag(n) verknypfen"
+msgstr "Sæt lag som forbundne"
 
 #: plug-ins/gap/gap_mod_layer.c:103
-#, fuzzy
 msgid "Set Layer(s) unlinked"
-msgstr "lag(n) trennen"
+msgstr "Sæt lag som uforbundne"
 
 #: plug-ins/gap/gap_mod_layer.c:104
 msgid "Raise Layer(s)"
@@ -8105,7 +8090,7 @@ msgstr "Forén lag, afskær til billede"
 
 #: plug-ins/gap/gap_mod_layer.c:108
 msgid "Merge Layer(s) clipped to bg-layer"
-msgstr "Forén lag, afskær til bg-lag"
+msgstr "Forén lag, afskær til BG-lag"
 
 #: plug-ins/gap/gap_mod_layer.c:109
 msgid "Apply filter on Layer(s)"
@@ -8144,7 +8129,7 @@ msgstr "Fra ramme:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mod_layer.c:156 plug-ins/gap/gap_mov_dialog.c:521
+#: plug-ins/gap/gap_mod_layer.c:156 plug-ins/gap/gap_mov_dialog.c:550
 #: plug-ins/gap/gap_mpege.c:259 plug-ins/gap/gap_range_ops.c:442
 #: plug-ins/gap/gap_range_ops.c:601
 msgid "first handled frame"
@@ -8162,7 +8147,7 @@ msgstr "Til ramme:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mod_layer.c:164 plug-ins/gap/gap_mov_dialog.c:536
+#: plug-ins/gap/gap_mod_layer.c:164 plug-ins/gap/gap_mov_dialog.c:565
 #: plug-ins/gap/gap_mpege.c:267 plug-ins/gap/gap_range_ops.c:450
 #: plug-ins/gap/gap_range_ops.c:609
 msgid "last handled frame"
@@ -8184,7 +8169,7 @@ msgid ""
 "0,3-5"
 msgstr ""
 "Streng til identifikation af lag-navne     \n"
-"eller positionsnummre i lag-stak\n"
+"eller positionsnumre i lag-stak\n"
 "0,3-5"
 
 #: plug-ins/gap/gap_mod_layer.c:189 plug-ins/gap/gap_range_ops.c:665
@@ -8193,7 +8178,7 @@ msgstr "Forskel på store og små bogstaver"
 
 #: plug-ins/gap/gap_mod_layer.c:190 plug-ins/gap/gap_range_ops.c:666
 msgid "Lowercase and UPPERCASE letters are considered as different"
-msgstr "Små og STORE bogstaver anses for at være forskelleige"
+msgstr "Små og STORE bogstaver anses for at være forskellige"
 
 #: plug-ins/gap/gap_mod_layer.c:195 plug-ins/gap/gap_range_ops.c:671
 msgid "Invert Selection"
@@ -8247,8 +8232,7 @@ msgstr "Vælg filter for 'Anvend animerede-rammer'"
 
 #: plug-ins/gap/gap_mod_layer.c:802
 msgid "GAP Modify: No layer selected in last handled frame"
-msgstr ""
-"GAP ændring: Intet lag galg i siste bearbejdede ramme"
+msgstr "GAP ændring: Intet lag galg i sidste bearbejdede ramme"
 
 #: plug-ins/gap/gap_mod_layer.c:888
 msgid "Modifying Frames/Layer(s)..."
@@ -8258,89 +8242,89 @@ msgstr "Ændrer rammer/lag..."
 msgid "No selected Layer in start frame"
 msgstr "Intet lag valgt i første ramme"
 
-#: plug-ins/gap/gap_mov_dialog.c:239 plug-ins/gfig/gfig.c:3327
+#: plug-ins/gap/gap_mov_dialog.c:247 plug-ins/gfig/gfig.c:3327
 #: plug-ins/gflare/gflare.c:594 plug-ins/gimpressionist/orientmap.c:590
 msgid "Normal"
 msgstr "Normal"
 
-#: plug-ins/gap/gap_mov_dialog.c:240
+#: plug-ins/gap/gap_mov_dialog.c:248
 msgid "Dissolve"
 msgstr "Opløs"
 
-#: plug-ins/gap/gap_mov_dialog.c:241
+#: plug-ins/gap/gap_mov_dialog.c:249
 msgid "Multiply"
 msgstr "Multiplicér"
 
-#: plug-ins/gap/gap_mov_dialog.c:243 plug-ins/gflare/gflare.c:596
+#: plug-ins/gap/gap_mov_dialog.c:251 plug-ins/gflare/gflare.c:596
 #: plug-ins/gimpressionist/paper.c:152
 msgid "Overlay"
 msgstr "Overlæg"
 
-#: plug-ins/gap/gap_mov_dialog.c:244
+#: plug-ins/gap/gap_mov_dialog.c:252
 msgid "Difference"
 msgstr "Forskel"
 
-#: plug-ins/gap/gap_mov_dialog.c:245 plug-ins/gflare/gflare.c:595
+#: plug-ins/gap/gap_mov_dialog.c:253 plug-ins/gflare/gflare.c:595
 msgid "Addition"
 msgstr "Addér"
 
-#: plug-ins/gap/gap_mov_dialog.c:246 plug-ins/gfig/gfig.c:3148
+#: plug-ins/gap/gap_mov_dialog.c:254 plug-ins/gfig/gfig.c:3148
 msgid "Subtract"
 msgstr "Subtrahér"
 
-#: plug-ins/gap/gap_mov_dialog.c:247
+#: plug-ins/gap/gap_mov_dialog.c:255
 msgid "Darken Only"
 msgstr "Gør kun mørkere"
 
-#: plug-ins/gap/gap_mov_dialog.c:248
+#: plug-ins/gap/gap_mov_dialog.c:256
 msgid "Lighten Only"
 msgstr "Gør kun lysere"
 
-#: plug-ins/gap/gap_mov_dialog.c:259
+#: plug-ins/gap/gap_mov_dialog.c:267
 msgid "Left  Top"
 msgstr "Øverst til"
 
-#: plug-ins/gap/gap_mov_dialog.c:260
+#: plug-ins/gap/gap_mov_dialog.c:268
 msgid "Left  Bottom"
 msgstr "Nederst til venstre"
 
-#: plug-ins/gap/gap_mov_dialog.c:261
+#: plug-ins/gap/gap_mov_dialog.c:269
 msgid "Right Top"
 msgstr "Øverst til højre"
 
-#: plug-ins/gap/gap_mov_dialog.c:262
+#: plug-ins/gap/gap_mov_dialog.c:270
 msgid "Right Bottom"
 msgstr "Neders til højre"
 
-#: plug-ins/gap/gap_mov_dialog.c:271
+#: plug-ins/gap/gap_mov_dialog.c:279
 msgid "Loop"
 msgstr "Sløjfe"
 
-#: plug-ins/gap/gap_mov_dialog.c:272
+#: plug-ins/gap/gap_mov_dialog.c:280
 msgid "Loop Reverse"
 msgstr "Omvendt sløjfe"
 
-#: plug-ins/gap/gap_mov_dialog.c:273
+#: plug-ins/gap/gap_mov_dialog.c:281
 msgid "Once"
 msgstr "En gang"
 
-#: plug-ins/gap/gap_mov_dialog.c:274
+#: plug-ins/gap/gap_mov_dialog.c:282
 msgid "OnceReverse"
 msgstr "En gang - omvendt"
 
-#: plug-ins/gap/gap_mov_dialog.c:275
+#: plug-ins/gap/gap_mov_dialog.c:283
 msgid "PingPong"
 msgstr "Ping-Pong"
 
-#: plug-ins/gap/gap_mov_dialog.c:434
+#: plug-ins/gap/gap_mov_dialog.c:451
 msgid "Move Path"
-msgstr "Bevægleses-sti"
+msgstr "Bevægelses-sti"
 
-#: plug-ins/gap/gap_mov_dialog.c:461
+#: plug-ins/gap/gap_mov_dialog.c:478
 msgid "Update Preview"
 msgstr "Opdater forhåndsvisning"
 
-#: plug-ins/gap/gap_mov_dialog.c:468
+#: plug-ins/gap/gap_mov_dialog.c:485
 msgid ""
 "Show PreviewFrame with Selected       \n"
 "SrcLayer at current Controlpoint"
@@ -8348,26 +8332,38 @@ msgstr ""
 "Vis Forhåndsvisnings-ramme med valgte\n"
 "kilde-lag på nuværende kontrolpunkt"
 
+#: plug-ins/gap/gap_mov_dialog.c:489
+msgid "Anim Preview"
+msgstr "Anim forhåndsvisning"
+
+#: plug-ins/gap/gap_mov_dialog.c:496
+msgid ""
+"Generate Animated Preview\n"
+"as multilayer image"
+msgstr ""
+"genererer animeret forhåndsvisning\n"
+"som flerlags-billede"
+
 #. parameter settings
-#: plug-ins/gap/gap_mov_dialog.c:481
+#: plug-ins/gap/gap_mov_dialog.c:509
 msgid "Copy moving source-layer(s) into frames"
 msgstr "Kopiér kilde-lag der bevæger sig ind i rammer"
 
 #. the start frame scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:513
+#: plug-ins/gap/gap_mov_dialog.c:542
 msgid "Start Frame:"
 msgstr "Første ramme:"
 
 #. the end frame scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:528
+#: plug-ins/gap/gap_mov_dialog.c:557
 msgid "End Frame:"
 msgstr "Sidste ramme:"
 
 #. the Preview Frame scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:543
+#: plug-ins/gap/gap_mov_dialog.c:572
 msgid "Preview Frame:"
 msgstr "Forhåndsvisnings-ramme:"
 
@@ -8379,7 +8375,7 @@ msgstr "Forhåndsvisnings-ramme:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:551
+#: plug-ins/gap/gap_mov_dialog.c:580
 msgid ""
 "frame to show when UpdPreview\n"
 "button is pressed"
@@ -8389,7 +8385,7 @@ msgstr ""
 
 #. the Layerstack scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:559 plug-ins/gap/gap_range_ops.c:265
+#: plug-ins/gap/gap_mov_dialog.c:588 plug-ins/gap/gap_range_ops.c:265
 msgid "Layerstack:"
 msgstr "lag-stak:"
 
@@ -8401,7 +8397,7 @@ msgstr "lag-stak:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:567
+#: plug-ins/gap/gap_mov_dialog.c:596
 msgid ""
 "How to insert SrcLayer into the\n"
 "Dst. Frame's Layerstack\n"
@@ -8411,70 +8407,132 @@ msgstr ""
 "lag-stakken på mål-rammen\n"
 "0 er for oven"
 
+#. toggle force visibility
+#: plug-ins/gap/gap_mov_dialog.c:608
+msgid "Force visibility"
+msgstr "Tving synlighed"
+
+#: plug-ins/gap/gap_mov_dialog.c:614
+msgid "Force visibility for all copied Src-Layers"
+msgstr "Tving synlighed for alle kopierede kilde-lag"
+
 #. toggle clip_to_image
-#: plug-ins/gap/gap_mov_dialog.c:574
+#: plug-ins/gap/gap_mov_dialog.c:620
 msgid "Clip To Frame"
 msgstr "Klip til ramme"
 
-#: plug-ins/gap/gap_mov_dialog.c:580
+#: plug-ins/gap/gap_mov_dialog.c:626
 msgid ""
 "Clip all copied Src-Layers\n"
 "at Frame Boundaries"
 msgstr "Beskær alle kopierede kilde-lag ved ramme-grænser"
 
-#: plug-ins/gap/gap_mov_dialog.c:626
+#: plug-ins/gap/gap_mov_dialog.c:674
 msgid ""
 "No Source Image was selected\n"
 "(Please open a 2nd Image of the same type before opening Move Path)"
 msgstr ""
 "Intet kilde-billede valgt\n"
-"(Venligst åbn et 2. billede af samme type før åbning af 'flyt sti'"
-"aufrufen)"
+"(Venligst åbn et 2. billede af samme type før åbning af 'flyt sti')"
+
+#: plug-ins/gap/gap_mov_dialog.c:770
+msgid "Object on empty frames"
+msgstr "Objekt på tomme rammer"
+
+#: plug-ins/gap/gap_mov_dialog.c:771
+msgid "Object on one frame"
+msgstr "Objekt på én ramme"
+
+#: plug-ins/gap/gap_mov_dialog.c:772
+msgid "Exact Object on frames"
+msgstr "Udtræk objekt af rammer"
+
+#: plug-ins/gap/gap_mov_dialog.c:802
+msgid "Anim Preview Mode"
+msgstr "Anim forhåndsvisning modus"
+
+#: plug-ins/gap/gap_mov_dialog.c:810
+msgid "Scale Preview"
+msgstr "Skalér forhåndsvisning"
+
+#: plug-ins/gap/gap_mov_dialog.c:811
+msgid "Scale down size of the generated animated preview (in %)"
+msgstr "Nedskalér størrelse på det genererede animerede "
+"forhåndsvisning i %)"
+
+#: plug-ins/gap/gap_mov_dialog.c:819
+msgid "Framerate"
+msgstr "Rammefrekvens"
+
+#: plug-ins/gap/gap_mov_dialog.c:820
+msgid "Framerate to use in the animated preview in frames/sec"
+msgstr "Rammefrekvens der skal bruges i den animerede "
+"forhåndsvisning i rammer/sek"
+
+#: plug-ins/gap/gap_mov_dialog.c:834
+msgid "Copy to Video Buffer"
+msgstr "Kopiér til videobuffer"
+
+#: plug-ins/gap/gap_mov_dialog.c:835
+msgid ""
+"Save all single frames of animated preview to video buffer\n"
+"(configured in gimprc by video-paste-dir and video-paste-basename)"
+msgstr ""
+"Gem alle enkelte rammer fra en animeret forhåndsvisning i en "
+"videobuffer (konfigureret i gimprc med video-paste-dir og "
+"video-paste-basename)"
+
+#: plug-ins/gap/gap_mov_dialog.c:840
+msgid "Move Path Animated Preview"
+msgstr "Animeret forhåndsvisning af bevægelses-sti"
+
+#: plug-ins/gap/gap_mov_dialog.c:886
+msgid "Generate Animate Preview failed\n"
+msgstr "Generering af animeret forhåndsvisning fejlede\n"
 
 #. filesel is already open
-#: plug-ins/gap/gap_mov_dialog.c:897
+#: plug-ins/gap/gap_mov_dialog.c:1098
 msgid "Load Path Points from file"
 msgstr "Indlæs sti-punkter fra fil"
 
 #. filesel is already open
-#: plug-ins/gap/gap_mov_dialog.c:933
+#: plug-ins/gap/gap_mov_dialog.c:1134
 msgid "Save Path Points to file"
 msgstr "Gem sti-punkter til fil"
 
-
-#: plug-ins/gap/gap_mov_dialog.c:1210
+#: plug-ins/gap/gap_mov_dialog.c:1479
 #, c-format
 msgid "Current Point: [ %3d ] of [ %3d ]"
 msgstr "Aktuelt Punkt: [ %3d ] af [ %3d ]"
 
-#: plug-ins/gap/gap_mov_dialog.c:1373
+#: plug-ins/gap/gap_mov_dialog.c:1670
 msgid "Source Select"
 msgstr "Vælg kilde"
 
 #. Source Layer menu
-#: plug-ins/gap/gap_mov_dialog.c:1390
+#: plug-ins/gap/gap_mov_dialog.c:1687
 msgid "Source Image/Layer:"
 msgstr "Kilde billede eller lag:"
 
-#: plug-ins/gap/gap_mov_dialog.c:1400
+#: plug-ins/gap/gap_mov_dialog.c:1697
 msgid "Source Object to insert into Frame Range"
 msgstr "Kildeobjekt der skal indsættes i rammeområdet"
 
 #. Paintmode menu
-#: plug-ins/gap/gap_mov_dialog.c:1415
+#: plug-ins/gap/gap_mov_dialog.c:1712
 msgid "Mode:"
 msgstr "Modus:"
 
-#: plug-ins/gap/gap_mov_dialog.c:1424
+#: plug-ins/gap/gap_mov_dialog.c:1721
 msgid "Paintmode"
 msgstr "Tegnemodus"
 
 #. Loop Stepmode menu
-#: plug-ins/gap/gap_mov_dialog.c:1439
+#: plug-ins/gap/gap_mov_dialog.c:1736
 msgid "Stepmode:"
 msgstr "Skridtmodus:"
 
-#: plug-ins/gap/gap_mov_dialog.c:1457
+#: plug-ins/gap/gap_mov_dialog.c:1754
 msgid ""
 "How to fetch the next SrcLayer   \n"
 "at the next handled frame"
@@ -8483,11 +8541,11 @@ msgstr ""
 "fra den næste bearbejdede ramme."
 
 #. Source Image Handle menu
-#: plug-ins/gap/gap_mov_dialog.c:1463
+#: plug-ins/gap/gap_mov_dialog.c:1760
 msgid "Handle:"
 msgstr "Anker:"
 
-#: plug-ins/gap/gap_mov_dialog.c:1481
+#: plug-ins/gap/gap_mov_dialog.c:1778
 msgid ""
 "How to place the SrcLayer at   \n"
 "Controlpoint Coordinates"
@@ -8497,17 +8555,17 @@ msgstr ""
 
 #. to avoid side effects while initialization
 #. the frame
-#: plug-ins/gap/gap_mov_dialog.c:1534
+#: plug-ins/gap/gap_mov_dialog.c:1832
 msgid "Move Path Preview"
 msgstr "Forhåndsvisning af bevægelses-sti"
 
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1566
+#: plug-ins/gap/gap_mov_dialog.c:1864
 msgid "X Coordinate"
 msgstr "X koordinat"
 
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1584
+#: plug-ins/gap/gap_mov_dialog.c:1882
 msgid "Y Coordinate"
 msgstr "Y koordinat"
 
@@ -8519,7 +8577,7 @@ msgstr "Y koordinat"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1601
+#: plug-ins/gap/gap_mov_dialog.c:1899
 msgid "Scale Source Layer's Width in percent"
 msgstr "Skalér kilde-lags bredde i procent"
 
@@ -8531,11 +8589,12 @@ msgstr "Skalér kilde-lags bredde i procent"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1618
+#: plug-ins/gap/gap_mov_dialog.c:1916
 msgid ""
 "Scale SrcLayer's Height\n"
 "in percent"
-msgstr "Skalér kilde-lags højde\n"
+msgstr ""
+"Skalér kilde-lags højde\n"
 "i procent"
 
 #. label text
@@ -8546,7 +8605,7 @@ msgstr "Skalér kilde-lags højde\n"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1635
+#: plug-ins/gap/gap_mov_dialog.c:1933
 msgid ""
 "SrcLayer's Opacity\n"
 "in percent"
@@ -8554,7 +8613,7 @@ msgstr "Kilde-lagets uigennemsigtighed i procent"
 
 #. Rotation
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:1644
+#: plug-ins/gap/gap_mov_dialog.c:1942
 msgid "Rotate:"
 msgstr "Drej:"
 
@@ -8566,15 +8625,37 @@ msgstr "Drej:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1652
+#: plug-ins/gap/gap_mov_dialog.c:1950
 msgid "Rotate SrcLayer (in degree)"
 msgstr "Rotér kilde-lag (i grader)"
 
-#: plug-ins/gap/gap_mov_dialog.c:1725
+#. Keyframe
+#. table col, row
+#: plug-ins/gap/gap_mov_dialog.c:1961
+msgid "Keyframe:"
+msgstr "Nøgleramme:"
+
+#. label text
+#. scalesize spinsize
+#. value
+#. lower, upper
+#. step, page
+#. digits
+#. constrain
+#. lower, upper (unconstrained)
+#: plug-ins/gap/gap_mov_dialog.c:1969
+msgid ""
+"Fix Controlpoint to Keyframe number\n"
+"(0 == No Keyframe)"
+msgstr ""
+"Fastgør kontrolpunkt til nøgleramme nummer\n"
+"(0 == ingen nøgleramme)"
+
+#: plug-ins/gap/gap_mov_dialog.c:2044
 msgid "Add Point"
 msgstr "Tilføj punkt"
 
-#: plug-ins/gap/gap_mov_dialog.c:1733
+#: plug-ins/gap/gap_mov_dialog.c:2052
 msgid ""
 "Add Controlpoint at end        \n"
 "(the last Point is duplicated)"
@@ -8583,11 +8664,11 @@ msgstr ""
 "(det sidste punkt bliver duplikeret)"
 
 #. toggle clip_to_image
-#: plug-ins/gap/gap_mov_dialog.c:1738
+#: plug-ins/gap/gap_mov_dialog.c:2057
 msgid "Show Path"
 msgstr "Vis sti"
 
-#: plug-ins/gap/gap_mov_dialog.c:1744
+#: plug-ins/gap/gap_mov_dialog.c:2063
 msgid ""
 "Show Path Lines and enable\n"
 "pick/drag with left button\n"
@@ -8597,13 +8678,13 @@ msgstr ""
 "vælg/træk med venstre knap\n"
 "eller flyt med højre knap"
 
-#: plug-ins/gap/gap_mov_dialog.c:1754
+#: plug-ins/gap/gap_mov_dialog.c:2073
 #: plug-ins/imagemap/imap_cmd_insert_point.c:57
 #: plug-ins/imagemap/imap_polygon.c:683
 msgid "Insert Point"
 msgstr "Indsæt punkt"
 
-#: plug-ins/gap/gap_mov_dialog.c:1762
+#: plug-ins/gap/gap_mov_dialog.c:2081
 msgid ""
 "Insert Controlpoint          \n"
 "(the current Point is duplicated)"
@@ -8611,53 +8692,53 @@ msgstr ""
 "Indsæt kontrolpunkt \n"
 "(det aktuelle punkt bliver duplikeret)"
 
-#: plug-ins/gap/gap_mov_dialog.c:1766
+#: plug-ins/gap/gap_mov_dialog.c:2085
 #: plug-ins/imagemap/imap_cmd_delete_point.c:57
 #: plug-ins/imagemap/imap_polygon.c:669
 msgid "Delete Point"
 msgstr "Slet punkt"
 
-#: plug-ins/gap/gap_mov_dialog.c:1774
+#: plug-ins/gap/gap_mov_dialog.c:2093
 msgid "Delete current Controlpoint"
 msgstr "Slet aktuelle kontrolpunkt"
 
-#: plug-ins/gap/gap_mov_dialog.c:1780
+#: plug-ins/gap/gap_mov_dialog.c:2099
 msgid "Prev Point"
 msgstr "Forrige punkt"
 
-#: plug-ins/gap/gap_mov_dialog.c:1788
+#: plug-ins/gap/gap_mov_dialog.c:2107
 msgid "Show Previous Controlpoint"
 msgstr "Vis forrige kontrolpunkt"
 
-#: plug-ins/gap/gap_mov_dialog.c:1792
+#: plug-ins/gap/gap_mov_dialog.c:2111
 msgid "Next Point"
 msgstr "Næste punkt"
 
-#: plug-ins/gap/gap_mov_dialog.c:1800
+#: plug-ins/gap/gap_mov_dialog.c:2119
 msgid "Show Next Controlpoint"
 msgstr "Vis næste kontrolpunkt"
 
-#: plug-ins/gap/gap_mov_dialog.c:1806
+#: plug-ins/gap/gap_mov_dialog.c:2125
 msgid "First Point"
 msgstr "Første punkt"
 
-#: plug-ins/gap/gap_mov_dialog.c:1814
+#: plug-ins/gap/gap_mov_dialog.c:2133
 msgid "Show First Controlpoint"
 msgstr "Vis første kontrolpunkt"
 
-#: plug-ins/gap/gap_mov_dialog.c:1818
+#: plug-ins/gap/gap_mov_dialog.c:2137
 msgid "Last Point"
 msgstr "Sidste punkt"
 
-#: plug-ins/gap/gap_mov_dialog.c:1826
+#: plug-ins/gap/gap_mov_dialog.c:2145
 msgid "Show Last Controlpoint"
 msgstr "Vis sidste kontrolpunkt"
 
-#: plug-ins/gap/gap_mov_dialog.c:1832
+#: plug-ins/gap/gap_mov_dialog.c:2151
 msgid "Clear Point"
 msgstr "Fjern punkt"
 
-#: plug-ins/gap/gap_mov_dialog.c:1840
+#: plug-ins/gap/gap_mov_dialog.c:2159
 msgid ""
 "Reset the current Controlpoint\n"
 "to default Values"
@@ -8665,12 +8746,11 @@ msgstr ""
 "Sæt det aktuelle kontrolpunkt tilbage\n"
 "til standardværdier"
 
-#: plug-ins/gap/gap_mov_dialog.c:1844
-#, fuzzy
+#: plug-ins/gap/gap_mov_dialog.c:2163
 msgid "Reset Points"
-msgstr "Punkte zurycksetzen"
+msgstr "Geninitialiser punkter"
 
-#: plug-ins/gap/gap_mov_dialog.c:1852
+#: plug-ins/gap/gap_mov_dialog.c:2171
 msgid ""
 "Reset Controlpoints  \n"
 "to one Defaultpoint"
@@ -8678,23 +8758,93 @@ msgstr ""
 "Sæt kontrolpunkter tilbage  \n"
 "til et standardpunkt"
 
-#: plug-ins/gap/gap_mov_dialog.c:1858
+#: plug-ins/gap/gap_mov_dialog.c:2177
 msgid "Load Points"
 msgstr "Indlæs punkter"
 
-#: plug-ins/gap/gap_mov_dialog.c:1866
+#: plug-ins/gap/gap_mov_dialog.c:2185
 msgid "Load Controlpoints from file"
 msgstr "Indlæs kontrolpunkter fra Fil"
 
-#: plug-ins/gap/gap_mov_dialog.c:1870
+#: plug-ins/gap/gap_mov_dialog.c:2189
 msgid "Save Points"
 msgstr "Gem punkter"
 
-#: plug-ins/gap/gap_mov_dialog.c:1878
+#: plug-ins/gap/gap_mov_dialog.c:2197
 msgid "Save Controlpoints to file"
 msgstr "Gem kontrolpunkter i fil"
 
-#: plug-ins/gap/gap_mov_exec.c:220
+#: plug-ins/gap/gap_mov_dialog.c:2668
+#, c-format
+msgid ""
+"\n"
+"Error: Keyframe %d at point [%d] higher or equal than last handled frame"
+msgstr ""
+"\n"
+"Fejl: Nøgleramme %d ved punkt [%d] højere eller lig med sidst "
+"behandlede ramme"
+
+#: plug-ins/gap/gap_mov_dialog.c:2676
+#, c-format
+msgid ""
+"\n"
+"Error: Keyframe %d at point [%d] leaves not enough space (frames)\n"
+"for the previous controlpoints"
+msgstr ""
+"\n"
+"Fejl: Nøgleramme %d ved punkt [%d] efterlader ikke nok plads "
+"(rammer for de foregående kontrolpunkter)"
+
+#: plug-ins/gap/gap_mov_dialog.c:2686
+#, c-format
+msgid ""
+"\n"
+"Error: Keyframe %d is not in sequence at point [%d]"
+msgstr ""
+"\n"
+"Error: Nøgleramme %d er ikke i rækkefølge ved punkt [%d]"
+
+#: plug-ins/gap/gap_mov_dialog.c:2704
+#, c-format
+msgid ""
+"\n"
+"Error: controlpoint [%d] is out of handled framerange"
+msgstr ""
+"\n"
+"Fejl: kontrolpunkt [%d] er udenfor behandlet rammeområde"
+
+#: plug-ins/gap/gap_mov_dialog.c:2718
+#, c-format
+msgid ""
+"\n"
+"Error: more controlpoints (%d) than handled frames (%d)\n"
+"please reduce controlpoints or select more frames"
+msgstr ""
+"\n"
+"Fejl: flere kontrolpunkter (%d) end behandlede rammer (%d)\n"
+"Venligst reducér kontrolpunkter eller udvælg flere rammer"
+
+#: plug-ins/gap/gap_mov_dialog.c:2731
+msgid ""
+"Cant operate with current Controlpoint\n"
+"or Keyframe settings"
+msgstr ""
+"Kan ikke arbejde med det aktuelle kontrolpunkt\n"
+"eller nøgleramme indstillinger"
+
+#: plug-ins/gap/gap_mov_dialog.c:2738
+msgid "Reset Keyframes"
+msgstr "Gendan nøglerammer"
+
+#: plug-ins/gap/gap_mov_dialog.c:2743
+msgid "Move Path Controlpointcheck"
+msgstr "Flyt sti kontrolpunkttjek"
+
+#: plug-ins/gap/gap_mov_dialog.c:2744
+msgid "Errors:"
+msgstr "Fejl:"
+
+#: plug-ins/gap/gap_mov_exec.c:337
 msgid ""
 "No Source Image was selected.\n"
 "Please open a 2nd Image of the same type before opening Move Path."
@@ -8702,9 +8852,13 @@ msgstr ""
 "Intet kilde-billede blev valgt.\n"
 "Venligst åbn et 2. billede af samme type før åbning af Flyt sti."
 
-#: plug-ins/gap/gap_mov_exec.c:229
+#: plug-ins/gap/gap_mov_exec.c:348
 msgid "Copying Layers into Frames..."
 msgstr "Kopiér lag ind i rammer..."
+
+#: plug-ins/gap/gap_mov_exec.c:352
+msgid "Generating Animated Preview..."
+msgstr "Fremstiller animeret forhåndsvisning..."
 
 #: plug-ins/gap/gap_mpege.c:111
 msgid "Conditions to run mpeg_encode 1.5:"
@@ -8999,76 +9153,104 @@ msgstr ""
 "\n"
 "FEJL: Kaldt far et enkelt billede, AnimFrame kræves"
 
-#: plug-ins/gap/gap_navigator_dialog.c:353
+#: plug-ins/gap/gap_navigator_dialog.c:367
 msgid ""
 "Playback         \n"
 "<Shift> optimized"
 msgstr ""
 "Afspilning       \n"
-"<Shift> optimeret"
+"<Skift> optimeret"
 
-#: plug-ins/gap/gap_navigator_dialog.c:358
+#: plug-ins/gap/gap_navigator_dialog.c:372
 msgid ""
 "Smart Update .xvpics\n"
 "<Shift> forced upd"
 msgstr ""
 "Smart opdatering .xvpics\n"
-"<Shift> tvunget opdatering"
+"<Skift> tvunget opdatering"
 
-#: plug-ins/gap/gap_navigator_dialog.c:363
+#: plug-ins/gap/gap_navigator_dialog.c:377
 msgid "Duplicate selected Frames"
 msgstr "Duplikér valgte rammer"
 
-#: plug-ins/gap/gap_navigator_dialog.c:367
+#: plug-ins/gap/gap_navigator_dialog.c:381
 msgid "Delete selected Frames"
 msgstr "Slet valgte rammer"
 
-#: plug-ins/gap/gap_navigator_dialog.c:376
+#: plug-ins/gap/gap_navigator_dialog.c:390
 msgid "Goto 1st Frame"
 msgstr "Gå til første ramme"
 
-#: plug-ins/gap/gap_navigator_dialog.c:380
+#: plug-ins/gap/gap_navigator_dialog.c:394
 msgid ""
 "Goto prev Frame\n"
 "<Shift> use timezoom stepsize"
 msgstr ""
 "Gå til forrige ramme\n"
-"<Shift> benyt \"tidszoom\" som skridtstørrelse"
+"<Skift> benyt \"tidszoom\" som skridtstørrelse"
 
-#: plug-ins/gap/gap_navigator_dialog.c:385
+#: plug-ins/gap/gap_navigator_dialog.c:399
 msgid ""
 "Goto next Frame\n"
 "<Shift> use timezoom stepsize"
 msgstr ""
 "Gå til næste ramme\n"
-"<Shift> benyt \"tidszoom\" som skridtstørrelse"
+"<Skift> benyt \"tidszoom\" som skridtstørrelse"
 
-#: plug-ins/gap/gap_navigator_dialog.c:390
+#: plug-ins/gap/gap_navigator_dialog.c:404
 msgid "Goto last Frame"
 msgstr "Gå til sidste ramme"
 
-#: plug-ins/gap/gap_navigator_dialog.c:448
+#: plug-ins/gap/gap_navigator_dialog.c:462
 msgid "<Image>/Video/VCR Navigator..."
 msgstr "<Image>/Video/VCR-Navigator..."
 
-#: plug-ins/gap/gap_navigator_dialog.c:511
+#: plug-ins/gap/gap_navigator_dialog.c:525
 msgid "Cant open two or more Video Navigator Windows."
 msgstr "Kan ikke åbne mere end et Video-Navigator-vindue."
 
-#: plug-ins/gap/gap_navigator_dialog.c:2689
+#. menu_item cut
+#: plug-ins/gap/gap_navigator_dialog.c:2930
+#: plug-ins/imagemap/imap_cmd_cut.c:53
+#: plug-ins/imagemap/imap_cmd_cut_object.c:51
+#: plug-ins/imagemap/imap_menu.c:284 plug-ins/imagemap/imap_toolbar.c:129
+msgid "Cut"
+msgstr "Klip"
+
+#. menu_item paste before
+#: plug-ins/gap/gap_navigator_dialog.c:2940
+msgid "Paste before"
+msgstr "Indsæt før"
+
+#. menu_item copy
+#: plug-ins/gap/gap_navigator_dialog.c:2950
+msgid "Paste after"
+msgstr "Indsæt efter"
+
+#. menu_item copy
+#: plug-ins/gap/gap_navigator_dialog.c:2960
+msgid "Paste replace"
+msgstr "Indsæt som ændring"
+
+#. menu_item copy
+#: plug-ins/gap/gap_navigator_dialog.c:2970
+msgid "Clear Video Buffer"
+msgstr "Ryd videobuffer"
+
+#: plug-ins/gap/gap_navigator_dialog.c:2995
 msgid "Videoframes:"
 msgstr "Videorammer:"
 
-#: plug-ins/gap/gap_navigator_dialog.c:2704
+#: plug-ins/gap/gap_navigator_dialog.c:3010
 msgid "Framerate:"
 msgstr "Rammefrekvens"
 
-#: plug-ins/gap/gap_navigator_dialog.c:2727
+#: plug-ins/gap/gap_navigator_dialog.c:3033
 msgid "Timezoom:"
-msgstr "tidszoom:"
+msgstr "Tidszoom:"
 
 #. The main shell
-#: plug-ins/gap/gap_navigator_dialog.c:2821
+#: plug-ins/gap/gap_navigator_dialog.c:3127
 msgid "Video Navigator"
 msgstr "Video Navigator"
 
@@ -9317,8 +9499,9 @@ msgstr "Størrelse på det resulterende lag er ramme-størrelsen"
 msgid ""
 "Resulting Layer Size is the size of the bottom layer\n"
 "(may differ from frame to frame)"
-msgstr "Størrelse på det resulterende lag er størrelsen på bund-laget"
-"(kan være forskelligt fra ramme til ramme)"
+msgstr ""
+"Størrelse på det resulterende lag er størrelsen på bund-laget(kan være "
+"forskelligt fra ramme til ramme)"
 
 #: plug-ins/gap/gap_range_ops.c:570
 msgid ""
@@ -9488,7 +9671,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_split.c:226
 msgid "Make a frame (diskfile) from each Layer"
-msgstr "Lav en ramme (på disk) udaf hvert lag"
+msgstr "Lav en ramme (på disk) ud af hvert lag"
 
 #: plug-ins/gap/gap_split.c:227
 msgid "frames are named: base_nr.extension"
@@ -9497,8 +9680,8 @@ msgstr "Rammer bliver kaldt: base_nr.udvidelse"
 #: plug-ins/gap/gap_split.c:235
 msgid "extension of resulting frames (is also used to define Fileformat)"
 msgstr ""
-"udvidelse for resulterende ramme (bliver også brugt til at "
-"bestemme filformat)"
+"udvidelse for resulterende ramme (bliver også brugt til at bestemme "
+"filformat)"
 
 #: plug-ins/gap/gap_split.c:240
 msgid "Inverse Order:"
@@ -9513,8 +9696,8 @@ msgid ""
 "Remove Alpha Channel in resulting Frames. Transparent parts are filled with "
 "BG color."
 msgstr ""
-"Fjern alfa-kanal fra resulterende rammer. Gennemsigtige dele bliver "
-"opfyldt med BG-farve."
+"Fjern alfa-kanal fra resulterende rammer. Gennemsigtige dele bliver opfyldt "
+"med BG-farve."
 
 #: plug-ins/gap/gap_split.c:249
 msgid "Split Image into Frames"
@@ -9578,11 +9761,11 @@ msgstr "Indsæt"
 
 #: plug-ins/gdyntext/charmap_window.c:140
 msgid "Insert the selected char at the cursor position"
-msgstr "Insæt det valgte tegn på markørpositionen"
+msgstr "Indsæt det valgte tegn på markørpositionen"
 
 #: plug-ins/gdyntext/font_selection.c:142
 msgid "MAX_FONTS exceeded. Some fonts may be missing."
-msgstr "MAX_FONTS overskredet. Måske mangler mogle skrifttyper."
+msgstr "MAX_FONTS overskredet. Måske mangler nogle skrifttyper."
 
 #. "-*-(fn)-(wg)-(sl)-(sp)-*-(px)-(po * 10)-*-*-*-*-*-*"
 #: plug-ins/gdyntext/font_selection.c:214
@@ -9607,7 +9790,7 @@ msgstr "Punkter"
 #: plug-ins/gdyntext/font_selection.c:315
 #, c-format
 msgid "Unknown font family \"%s\".\n"
-msgstr "Ukent familie af skriftyper: \"%s\".\n"
+msgstr "Ukendt familie af skrifttyper: \"%s\".\n"
 
 #: plug-ins/gdyntext/font_selection.c:339
 #, c-format
@@ -9624,7 +9807,7 @@ msgid ""
 "  Forcing new layer creation.\n"
 msgstr ""
 "Det aktive lag er intet GDynText-lag eller har ingen alfa-kanal.\n"
-"  Fremtving oprettels af et nyt lag.\n"
+"  Fremtving oprettelse af et nyt lag.\n"
 
 #: plug-ins/gdyntext/gdyntext.c:354
 #, c-format
@@ -9682,9 +9865,8 @@ msgid "Text color"
 msgstr "Tekstfarve"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:385
-#, fuzzy
 msgid "Toggle anti-aliased text"
-msgstr "Kantenglættung einschalten"
+msgstr "Skift mellemanti-aliaset tekst "
 
 #: plug-ins/gdyntext/gdyntext_ui.c:408
 msgid "Left aligned text"
@@ -9699,9 +9881,8 @@ msgid "Right aligned text"
 msgstr "Højrejusteret tekst"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:465
-#, fuzzy
 msgid "Toggle text font preview"
-msgstr "Text Font Vorschau"
+msgstr "Skift mellem tekst skrifttype forhåndsvisning"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:486
 msgid "Toggle CharMap window"
@@ -9724,22 +9905,20 @@ msgid "Editable text sample"
 msgstr "Redigerbart tekst eksempel"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:561
-#, fuzzy
 msgid "Clear preview"
-msgstr "Vorschau løschen"
+msgstr "Renvisk forhåndsvisning"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:570
 msgid "Preview default text sample"
 msgstr "Forhåndsvis standard tekst eksempel"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:632
-#, fuzzy
 msgid ""
 "Holding the Shift key while pressing this button will force GDynText in "
 "changing the layer name as done in GIMP 1.0."
 msgstr ""
-"Wenn du die Shift-Taste gedryckt halten og diesen Button drycken, wird\n"
-"GDynText den lagnnamen ændern, so wie es in GIMP 1.0 der Fall war."
+"Hold skifte-tasten nede og tryk denne tast for at tvinge "
+"GDynText til at ændre lag-navnet som i GIMP 1.0."
 
 #: plug-ins/gdyntext/gdyntext_ui.c:1015
 msgid "GDynText: CharMap"
@@ -9783,8 +9962,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:869
 msgid "gfig-path misconfigured - the following directories were not found"
-msgstr ""
-"gfig-sti forkert konfigureret - de følgende kataloger blev ikke fundet"
+msgstr "gfig-sti forkert konfigureret - de følgende kataloger blev ikke fundet"
 
 #: plug-ins/gfig/gfig.c:1092
 msgid "First Gfig"
@@ -9848,8 +10026,7 @@ msgstr "Vis linie-ramme"
 
 #: plug-ins/gfig/gfig.c:2076
 msgid "Draws lines between the control points. Only during curve creation"
-msgstr ""
-"Tegner linier mellem kontrolpunkter. Kun under skabelse af kurve."
+msgstr "Tegner linier mellem kontrolpunkter. Kun under skabelse af kurve."
 
 #: plug-ins/gfig/gfig.c:2092
 msgid "Regular Polygon Number of Sides"
@@ -9864,9 +10041,8 @@ msgid "Spiral Number of Points"
 msgstr "Antal punkter i spiral"
 
 #: plug-ins/gfig/gfig.c:2140
-#, fuzzy
 msgid "Ops"
-msgstr "Akt."
+msgstr "Aktioner"
 
 #: plug-ins/gfig/gfig.c:2153
 msgid "Create line"
@@ -9890,7 +10066,7 @@ msgstr "Lav regulær polygon"
 
 #: plug-ins/gfig/gfig.c:2194
 msgid "Create spiral"
-msgstr "Lav spirale"
+msgstr "Lav spiral"
 
 #: plug-ins/gfig/gfig.c:2204
 msgid "Create bezier curve. Shift + Button ends object creation."
@@ -9936,7 +10112,7 @@ msgid ""
 "paints with currently selected brush with a pattern. Only applies to "
 "circles/ellipses if Approx. Circles/Ellipses toggle is set."
 msgstr ""
-"Benyt pensel/blyant eller sprøltemaling til at tegne på billedet.\n"
+"Benyt pensel/blyant eller sprøjtemaling til at tegne på billedet.\n"
 "\"Mønster\" tegner med den valgte pensel med et mønster.\n"
 "Bruges kun på cirkler/ellipser, når \"tilnærm cirkler og ellipser\"\n"
 "er valgt."
@@ -9958,8 +10134,7 @@ msgstr "Flere"
 #: plug-ins/gfig/gfig.c:2812
 msgid "Draw all objects on one layer (original or new) or one object per layer"
 msgstr ""
-"Tegn alle objekter på et lag (oprindelig eller ny) eller et objekt "
-"per lag"
+"Tegn alle objekter på et lag (oprindelig eller ny) eller et objekt per lag"
 
 #: plug-ins/gfig/gfig.c:2817
 msgid "Draw on:"
@@ -9992,8 +10167,8 @@ msgid ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
 msgstr ""
-"lag-baggrundsltype. \"Kopiér\" gør at det forrige lag kopieres før "
-"tegningen udføres"
+"lag-baggrundstype. \"Kopiér\" gør at det forrige lag kopieres før tegningen "
+"udføres"
 
 #: plug-ins/gfig/gfig.c:2878
 msgid "With BG of:"
@@ -10024,8 +10199,8 @@ msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
 msgstr ""
-"Tilnærm cirkler og ellipser ved brug af rette linier. Tillader brug "
-"af pensel-falmen med disse objekter."
+"Tilnærm cirkler og ellipser ved brug af rette linier. Tillader brug af "
+"pensel-falmen med disse objekter."
 
 #: plug-ins/gfig/gfig.c:3008
 msgid "Fade out:"
@@ -10303,8 +10478,7 @@ msgstr "<INGEN>"
 
 #: plug-ins/gfig/gfig.c:5171
 msgid "Editing read-only object - you will not be able to save it"
-msgstr ""
-"Redigerer et objekt, der kun kan læses - du vil ikke kunne gemme det"
+msgstr "Redigerer et objekt, der kun kan læses - du vil ikke kunne gemme det"
 
 #. Create new entry with name + copy at end & copy object into it
 #: plug-ins/gfig/gfig.c:5274
@@ -10326,7 +10500,7 @@ msgstr "Hov Hvor er objektet henne ?"
 
 #: plug-ins/gflare/gflare.c:826
 msgid "<Image>/Filters/Light Effects/GFlare..."
-msgstr "<Image>/Filter/Licht-Effekter/GFlare..."
+msgstr "<Image>/Filter/Lys-effekter/GFlare..."
 
 #: plug-ins/gflare/gflare.c:942
 msgid "Gradient Flare..."
@@ -10420,9 +10594,8 @@ msgid "Vector Length:"
 msgstr "Vektorlængde:"
 
 #: plug-ins/gflare/gflare.c:2984
-#, fuzzy
 msgid "Adaptive Supersampling"
-msgstr "Tilpassende højopløsning"
+msgstr "Tilpassende superindsamling"
 
 #: plug-ins/gflare/gflare.c:3027
 msgid "Auto Update Preview"
@@ -10527,9 +10700,8 @@ msgid "Angular Gradient:"
 msgstr "Dreje-gradient:"
 
 #: plug-ins/gflare/gflare.c:3728 plug-ins/gflare/gflare.c:3838
-#, fuzzy
 msgid "Angular Size Gradient:"
-msgstr "Umfangs-Gradient:"
+msgstr "Størrelse på dreje-gradient:"
 
 #: plug-ins/gflare/gflare.c:3749 plug-ins/gflare/gflare.c:3859
 #: plug-ins/gflare/gflare.c:4001
@@ -10606,8 +10778,7 @@ msgstr "Ramme (%i)"
 
 #: plug-ins/gfli/gfli.c:687
 msgid "FLI: Sorry, I can save only INDEXED and GRAY images."
-msgstr ""
-"FLI: Kan kun gemme indekserede eller grå billeder."
+msgstr "FLI: Kan kun gemme indekserede eller grå billeder."
 
 #: plug-ins/gfli/gfli.c:828
 msgid "GFLI 1.3 - Load framestack"
@@ -10659,8 +10830,7 @@ msgstr "Angiver aspektratio for penslen"
 
 #: plug-ins/gimpressionist/brush.c:488
 msgid "Specifies the amount of embossing to apply to each brush stroke"
-msgstr ""
-"Angiver hvor meget penselstrøg skal laves i relief/forhøjet (i %)"
+msgstr "Angiver hvor meget penselstrøg skal laves i relief/forhøjet (i %)"
 
 #: plug-ins/gimpressionist/color.c:86
 msgid "Average under brush"
@@ -10712,7 +10882,7 @@ msgstr "Fra papir"
 
 #: plug-ins/gimpressionist/general.c:204
 msgid "Copy the texture of the selected paper as a background"
-msgstr "Kopiér teksturen fra det valgte papier som baggrund"
+msgstr "Kopiér teksturen fra det valgte papir som baggrund"
 
 #: plug-ins/gimpressionist/general.c:223
 msgid "Solid colored background"
@@ -10729,7 +10899,7 @@ msgstr "Tegn kanter"
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:269 plug-ins/maze/maze_face.c:282
 msgid "Tileable"
-msgstr "Tlisérbar"
+msgstr "Flisérbar"
 
 #: plug-ins/gimpressionist/general.c:273
 msgid "Selects if the resulting image should be seamlessly tileable"
@@ -10741,7 +10911,7 @@ msgstr "Dråbe-skygge"
 
 #: plug-ins/gimpressionist/general.c:285
 msgid "Adds a shadow effect to each brush stroke"
-msgstr "wTilføjer en skyggeeffekt til alle penselsstrøg"
+msgstr "tilføjer en skyggeeffekt til alle penselsstrøg"
 
 #: plug-ins/gimpressionist/general.c:296
 msgid "How much to \"darken\" the drop shadow"
@@ -10754,8 +10924,7 @@ msgstr "Dybde på skygge:"
 #: plug-ins/gimpressionist/general.c:313
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr ""
-"Dråbe-skyggens dybde, dvs. hvor langt fra objektet den skal være"
+msgstr "Dråbe-skyggens dybde, dvs. hvor langt fra objektet den skal være"
 
 #: plug-ins/gimpressionist/general.c:319
 msgid "Shadow blur:"
@@ -10805,7 +10974,7 @@ msgstr "Kør med de valgte indstillinger"
 
 #: plug-ins/gimpressionist/gimpressionist.c:501
 msgid "Quit the program"
-msgstr "Aflsut program"
+msgstr "Afslut program"
 
 #: plug-ins/gimpressionist/gimpressionist.c:503
 msgid "About..."
@@ -10813,7 +10982,7 @@ msgstr "Om..."
 
 #: plug-ins/gimpressionist/gimpressionist.c:508
 msgid "Show some information about program"
-msgstr "Vis nogen informationen om dette programm"
+msgstr "Vis nogen informationen om dette program"
 
 #: plug-ins/gimpressionist/orientation.c:73
 msgid "Directions:"
@@ -10843,8 +11012,7 @@ msgstr "Hvor stor vinklen skal være (360=hel cirkel)"
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
-msgstr ""
-"Lysstyrken i området bestemmer penselstrøgenes retning"
+msgstr "Lysstyrken i området bestemmer penselstrøgenes retning"
 
 #: plug-ins/gimpressionist/orientation.c:141
 #: plug-ins/gimpressionist/size.c:140
@@ -10855,18 +11023,15 @@ msgstr "Radius"
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
-msgstr ""
-"Afstanden fra billedets midtpunkt bestemmer penselstrøgenes retning"
+msgstr "Afstanden fra billedets midtpunkt bestemmer penselstrøgenes retning"
 
 #: plug-ins/gimpressionist/orientation.c:157
 msgid "Selects a random direction of each stroke"
-msgstr ""
-"Vælger en tilfældig retning for hvert penselstrøg"
+msgstr "Vælger en tilfældig retning for hvert penselstrøg"
 
 #: plug-ins/gimpressionist/orientation.c:167
 msgid "Let the direction from the center determine the direction of the stroke"
-msgstr ""
-"Retningen fra billedets midtpunkt bestemmer hvert penselstrøgs retning"
+msgstr "Retningen fra billedets midtpunkt bestemmer hvert penselstrøgs retning"
 
 #: plug-ins/gimpressionist/orientation.c:176
 #: plug-ins/gimpressionist/size.c:175
@@ -10880,14 +11045,13 @@ msgstr "Strøgene følger et flydende mønster"
 
 #: plug-ins/gimpressionist/orientation.c:194
 msgid "The hue of the region determines the direction of the stroke"
-msgstr ""
-"Farvetonen i området bestemmer penselstrøgenes retning"
+msgstr "Farvetonen i området bestemmer penselstrøgenes retning"
 
 #: plug-ins/gimpressionist/orientation.c:204
 msgid "The direction that matches the original image the closest is selected"
 msgstr ""
-"Retningen der bedts passer til edet oprindelige billede "
-"bestemmer hvert penselstrøgs retning"
+"Retningen der bedst passer til det oprindelige billede bestemmer hvert "
+"penselstrøgs retning"
 
 #: plug-ins/gimpressionist/orientation.c:213
 #: plug-ins/gimpressionist/size.c:210
@@ -11034,9 +11198,7 @@ msgstr "Invertér papertekstur"
 
 #: plug-ins/gimpressionist/paper.c:156
 msgid "Applies the paper as it is (without embossing it)"
-msgstr ""
-"Bruger papir som det er (uden først at \"udstanse\" det "
-"(emboss))"
+msgstr "Bruger papir som det er (uden først at \"udstanse\" det (emboss))"
 
 #: plug-ins/gimpressionist/paper.c:188
 msgid "Specifies the scale of the texture (in percent of original file)"
@@ -11124,8 +11286,8 @@ msgid ""
 "for inclusion into the next release!\n"
 msgstr ""
 "\n"
-"Hvis du komme frem til nogle gode forindstillinger,n"
-"(også for pensel eller paper)\n"
+"Hvis du komme frem til nogle gode forindstillinger,n(også for pensel eller "
+"paper)\n"
 "så send dem gerne til mig (vidar@prosalg.no),\n"
 "for inkludering i den næste udgave!\n"
 
@@ -11182,8 +11344,7 @@ msgstr "Farvetonen på omgivelserne bestemmer størrelsen på penselsstrøget"
 
 #: plug-ins/gimpressionist/size.c:202
 msgid "The brush-size that matches the original image the closest is selected"
-msgstr ""
-"Penselsstørrelsen som kommer nærmest det oprindelige billede vælges"
+msgstr "Penselsstørrelsen som kommer nærmest det oprindelige billede vælges"
 
 #: plug-ins/gimpressionist/size.c:216
 msgid "Manually specify the stroke size"
@@ -11206,7 +11367,7 @@ msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
-"SM-Vektor-feltet. Venstre-klik for at flytte valgte smvmektor,\n"
+"SM-Vektor-feltet. Venstre-klik for at flytte valgte smvektor,\n"
 "Højre-klik for at få vektoren til at pege mod musen,\n"
 "Midter-klik for at tilføje en ny smvektor."
 
@@ -11252,12 +11413,11 @@ msgid ""
 "bug.</small></body></html>"
 msgstr ""
 "<html><head><title>Dokument ikke fundet</title></head><body "
-"bgcolor=\"#ffffff\"><center><p>%s<h3>Kunne ikke finde dokument"
-"</h3><tt>%s</tt></center><p><small>"
-"Enten betyder det at hjælpen for dette emne ikke er skrevet endnu "
-"eller at noget er galt med din installation. Venligst tjek omhyggeligt "
-"før du rapporteret dette som en fejl."
-"</small></body></html>"
+"bgcolor=\"#ffffff\"><center><p>%s<h3>Kunne ikke finde "
+"dokument</h3><tt>%s</tt></center><p><small>Enten betyder det at hjælpen for "
+"dette emne ikke er skrevet endnu eller at noget er galt med din "
+"installation. Venligst tjek omhyggeligt før du rapporteret dette som en "
+"fejl.</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:111
 #, c-format
@@ -11272,12 +11432,11 @@ msgid ""
 msgstr ""
 "<html><head><title>Katalog ikke fundet</title></head><body "
 "bgcolor=\"#ffffff\"><center><p>%s<h3>Kunne ikke ændre til katalog "
-"</h3><tt>%s</tt><h3>ved forsøg på at få adgang til"
-"</h3><tt>%s</tt></center><p><small>"
-"Enten betyder det at hjælpen for dette emne ikke er skrevet endnu "
-"eller at noget er galt med din installation. Venligst tjek omhyggeligt "
-"før du rapporteret dette som en fejl."
-"</small></body></html>"
+"</h3><tt>%s</tt><h3>ved forsøg på at få adgang "
+"til</h3><tt>%s</tt></center><p><small>Enten betyder det at hjælpen for dette "
+"emne ikke er skrevet endnu eller at noget er galt med din installation. "
+"Venligst tjek omhyggeligt før du rapporteret dette som en "
+"fejl.</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:137
 msgid "Contents"
@@ -11472,12 +11631,6 @@ msgstr "Center y:"
 msgid "Create"
 msgstr "Opret"
 
-#: plug-ins/imagemap/imap_cmd_cut.c:53
-#: plug-ins/imagemap/imap_cmd_cut_object.c:51
-#: plug-ins/imagemap/imap_menu.c:284 plug-ins/imagemap/imap_toolbar.c:129
-msgid "Cut"
-msgstr "Klip"
-
 #: plug-ins/imagemap/imap_cmd_edit_object.c:50
 msgid "Edit Object"
 msgstr "Redigér objekt"
@@ -11644,8 +11797,7 @@ msgstr "e-post"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:225
 msgid "URL to activate when this area is clicked: (required)"
-msgstr ""
-"URL som bliver aktiveret, når denne flade bliver klikket på: (krævet)"
+msgstr "URL som bliver aktiveret, når denne flade bliver klikket på: (krævet)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:227
 msgid "Select HTML file"
@@ -11874,7 +12026,7 @@ msgstr "Hjælpemidler"
 
 #: plug-ins/imagemap/imap_menu.c:401 plug-ins/imagemap/imap_popup.c:149
 msgid "Grid Settings..."
-msgstr "Instillinger for gitter"
+msgstr "Indstillinger for gitter"
 
 #: plug-ins/imagemap/imap_menu.c:403
 msgid "Create Guides..."
@@ -12091,7 +12243,7 @@ msgstr "Tegn labyrint..."
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:220
 msgid "Width (Pixels):"
-msgstr "Bredde pPiksler):"
+msgstr "Bredde piksler):"
 
 #: plug-ins/maze/maze_face.c:232 plug-ins/maze/maze_face.c:248
 msgid "Pieces:"
@@ -12349,7 +12501,7 @@ msgstr "Normal skala"
 
 #: plug-ins/print/gimp_main_window.c:453
 msgid "Experimental Linear Scale"
-msgstr "Experimentel lineær skalering"
+msgstr "Eksperimentel lineær skalering"
 
 #.
 #. * Scaling...
@@ -12559,7 +12711,7 @@ msgstr "Skift til mod uret"
 
 #: plug-ins/rcm/rcm_dialog.c:269
 msgid "Change order of arrows"
-msgstr "Ændr rekkefølge på pile"
+msgstr "Ændr rækkefølge på pile"
 
 #: plug-ins/rcm/rcm_dialog.c:275
 msgid "Select all"
@@ -12613,7 +12765,7 @@ msgstr "Grader"
 
 #: plug-ins/rcm/rcm_dialog.c:635
 msgid "Continuous update"
-msgstr "Kontinurlig opdatering"
+msgstr "Kontinuerlig opdatering"
 
 #: plug-ins/rcm/rcm_dialog.c:650
 msgid "Area:"
@@ -12634,7 +12786,7 @@ msgstr "Hovedindstillinger"
 
 #: plug-ins/rcm/rcm_dialog.c:776
 msgid "Misc"
-msgstr "Divs"
+msgstr "Forskelligt"
 
 #: plug-ins/sel2path/sel2path.c:155
 msgid "<Image>/Select/To Path"
@@ -12915,12 +13067,12 @@ msgstr "xjt: kan ikke operere på ukendt billedtype"
 #: plug-ins/xjt/xjt.c:1638 plug-ins/xjt/xjt.c:3256
 #, c-format
 msgid "Can't create working dir: %s"
-msgstr "Kan ikke oprette arbejskatalog: %s"
+msgstr "Kan ikke oprette arbejdskatalog: %s"
 
 #: plug-ins/xjt/xjt.c:1647
 #, c-format
-msgid "Can't open : %s"
-msgstr "kan ikke åbne %s"
+msgid "Can't open: %s"
+msgstr "Kan ikke åbne %s"
 
 #. stat error (file does not exist)
 #: plug-ins/xjt/xjt.c:2468 plug-ins/xjt/xjt.c:2475
@@ -12935,5 +13087,5 @@ msgstr "Fejl: Kan ikke læse fil %s med egenskaper for XJT"
 
 #: plug-ins/xjt/xjt.c:3124
 #, c-format
-msgid "Error, XJT propertyfile %s is empty"
-msgstr "Fejl, fil %s med egenskaber for XJT er tom"
+msgid "Error: XJT propertyfile %s is empty"
+msgstr "Fejl: fil %s med egenskaber for XJT er tom"
