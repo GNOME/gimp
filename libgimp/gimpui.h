@@ -32,7 +32,6 @@
 #include <libgimp/gimpfontmenu.h>
 #include <libgimp/gimpgradientmenu.h>
 #include <libgimp/gimppatternmenu.h>
-#include <libgimp/gimpmiscui.h>
 
 G_BEGIN_DECLS
 
