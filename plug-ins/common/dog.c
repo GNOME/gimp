@@ -24,10 +24,9 @@
  * subtracting the results.  Blurring is done using code taken from
  * gauss_rle.c (as of Gimp 2.1, incorporated into gauss.c).
  */
+
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -66,7 +65,7 @@ typedef struct
   GtkObject    *hadjust;
   GtkObject    *vadjust;
   gboolean      update_policy;
-} 
+}
 Preview;
 
 
@@ -104,13 +103,13 @@ static void      dog    (GimpDrawable *drawable,
 
 static Preview*  preview_new (gint32 drawable_id);
 
-static void      preview_update_src_view (GtkWidget *widget, 
+static void      preview_update_src_view (GtkWidget *widget,
                                           gpointer d);
 
-static void      preview_update_preview (GtkWidget *wg, 
+static void      preview_update_preview (GtkWidget *wg,
                                          gpointer d);
 
-static void      change_radius_callback (GtkWidget *wg, 
+static void      change_radius_callback (GtkWidget *wg,
                                          gpointer d);
 
 
@@ -262,9 +261,9 @@ run (const gchar      *name,
           /*  run the Difference of Gaussians  */
           gimp_image_undo_group_start (image_ID);
           dog (drawable, dogvals.inner, dogvals.outer, TRUE);
-          
+
           gimp_image_undo_group_end (image_ID);
-          
+
           /*  Store data  */
           if (run_mode == GIMP_RUN_INTERACTIVE)
             {
@@ -315,7 +314,7 @@ dog_dialog (gint32        image_ID,
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-  
+
   preview = preview_new (drawable->drawable_id);
   gtk_box_pack_start (GTK_BOX (hbox), preview->vbox, FALSE, FALSE, 12);
   gtk_widget_show (preview->vbox);
@@ -336,14 +335,14 @@ dog_dialog (gint32        image_ID,
 
   coord = gimp_coordinates_new (unit, "%a", TRUE, FALSE, -1,
                                      GIMP_SIZE_ENTRY_UPDATE_SIZE,
-                                     
+
                                      FALSE,
                                      TRUE,
-                                     
+
                                      _("_Radius 1:"), dogvals.inner, xres,
                                      0, 8 * MAX (drawable->width, drawable->height),
                                      0, 0,
-                                     
+
                                      _("R_adius 2:"), dogvals.outer, yres,
                                      0, 8 * MAX (drawable->width, drawable->height),
                                      0, 0);
@@ -472,8 +471,10 @@ dog (GimpDrawable *drawable,
   gauss_rle (drawable1, inner, 0, show_progress);
   gauss_rle (drawable2, outer, 1, show_progress);
 
+#if 0
   _gimp_tile_cache_flush_drawable (drawable1);
   _gimp_tile_cache_flush_drawable (drawable2);
+#endif
 
   compute_difference (drawable, drawable1, drawable2, &maxval);
 
@@ -493,7 +494,9 @@ dog (GimpDrawable *drawable,
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable_id, TRUE);
       gimp_drawable_update (drawable_id, x1, y1, width, height);
+#if 0
       _gimp_tile_cache_flush_drawable (drawable);
+#endif
     }
 
   if (dogvals.invert)
@@ -642,11 +645,11 @@ invert (GimpDrawable *drawable)
                   for (k = 0; k < bpp; k++)
                     d[k] = 255 - s[k];
                 }
-              
+
               s += bpp;
               d += bpp;
             }
-          
+
           src += src_rgn.rowstride;
           dest += dest_rgn.rowstride;
         }
@@ -708,11 +711,11 @@ normalize (GimpDrawable *drawable,
                   for (k = 0; k < bpp; k++)
                     d[k] = factor * s[k];
                 }
-              
+
               s += bpp;
               d += bpp;
             }
-          
+
           src += src_rgn.rowstride;
           dest += dest_rgn.rowstride;
         }
@@ -779,48 +782,48 @@ gauss_rle (GimpDrawable *drawable,
   /*  First the vertical pass  */
   radius = fabs (radius) + 1.0;
   std_dev = sqrt (-(radius * radius) / (2 * log (1.0 / 255.0)));
-  
+
   curve = make_curve (std_dev, &length);
   sum = g_new (gint, 2 * length + 1);
-  
+
   sum[0] = 0;
-  
+
   for (i = 1; i <= length*2; i++)
     sum[i] = curve[i-length-1] + sum[i-1];
   sum += length;
-  
+
   total = sum[length] - sum[-length];
-  
+
   for (col = 0; col < width; col++)
     {
       gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, (y2 - y1));
       if (has_alpha)
         multiply_alpha (src, height, bytes);
-      
+
       sp = src;
       dp = dest;
-      
+
       for (b = 0; b < bytes; b++)
         {
           initial_p = sp[b];
           initial_m = sp[(height-1) * bytes + b];
-          
+
           /*  Determine a run-length encoded version of the row  */
           run_length_encode (sp + b, buf, bytes, height);
-          
+
           for (row = 0; row < height; row++)
             {
               start = (row < length) ? -row : -length;
               end = (height <= (row + length) ?
                      (height - row - 1) : length);
-              
+
               val = 0;
               i = start;
               bb = buf + (row + i) * 2;
-              
+
               if (start != -length)
                 val += initial_p * (sum[start] - sum[-length]);
-              
+
               while (i < end)
                 {
                   pixels = bb[0];
@@ -831,16 +834,16 @@ gauss_rle (GimpDrawable *drawable,
                   bb += (pixels * 2);
                   start = i;
                 }
-              
+
               if (end != length)
                 val += initial_m * (sum[length] - sum[end]);
-              
+
               dp[row * bytes + b] = val / total;
             }
         }
       if (has_alpha)
         separate_alpha (dest, height, bytes);
-      
+
       gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x1, y1, (y2 - y1));
       if (show_progress)
         {
@@ -849,7 +852,7 @@ gauss_rle (GimpDrawable *drawable,
             gimp_progress_update (0.5 * (pass + progress / max_progress));
         }
     }
-  
+
   /*  prepare for the horizontal pass  */
   gimp_pixel_rgn_init (&src_rgn,
                        drawable, 0, 0, drawable->width, drawable->height,
@@ -861,30 +864,30 @@ gauss_rle (GimpDrawable *drawable,
       gimp_pixel_rgn_get_row (&src_rgn, src, x1, row + y1, (x2 - x1));
       if (has_alpha)
         multiply_alpha (src, width, bytes);
-      
+
       sp = src;
       dp = dest;
-      
+
       for (b = 0; b < bytes; b++)
         {
           initial_p = sp[b];
           initial_m = sp[(width-1) * bytes + b];
-          
+
           /*  Determine a run-length encoded version of the row  */
           run_length_encode (sp + b, buf, bytes, width);
-          
+
           for (col = 0; col < width; col++)
             {
               start = (col < length) ? -col : -length;
               end = (width <= (col + length)) ? (width - col - 1) : length;
-              
+
               val = 0;
               i = start;
               bb = buf + (col + i) * 2;
-              
+
               if (start != -length)
                 val += initial_p * (sum[start] - sum[-length]);
-              
+
               while (i < end)
                 {
                   pixels = bb[0];
@@ -895,16 +898,16 @@ gauss_rle (GimpDrawable *drawable,
                   bb += (pixels * 2);
                   start = i;
                 }
-              
+
               if (end != length)
                 val += initial_m * (sum[length] - sum[end]);
-              
+
               dp[col * bytes + b] = val / total;
             }
         }
       if (has_alpha)
         separate_alpha (dest, width, bytes);
-      
+
       gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, (x2 - x1));
       if (show_progress)
         {
@@ -1002,7 +1005,7 @@ run_length_encode (guchar *src,
 
 
 
-static Preview* 
+static Preview*
 preview_new (gint32 drawable_id)
 {
   GtkWidget *box1, *tmpw;
@@ -1035,14 +1038,14 @@ preview_new (gint32 drawable_id)
 
   /* GtkImage for peek at original in second row, first column */
   preview->src_buffer = (guchar *)g_malloc (bpp*w*w);
-  gimp_pixel_rgn_init (&preview->src_rgn, gimp_drawable_get (drawable_id), 
+  gimp_pixel_rgn_init (&preview->src_rgn, gimp_drawable_get (drawable_id),
                        0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_get_rect (&preview->src_rgn, preview->src_buffer, 0, 0, w, w);
-  pixbuf = gdk_pixbuf_new_from_data (preview->src_buffer, 
-                                     GDK_COLORSPACE_RGB, 
+  pixbuf = gdk_pixbuf_new_from_data (preview->src_buffer,
+                                     GDK_COLORSPACE_RGB,
                                      gimp_drawable_has_alpha (drawable_id),
-                                     8, w, w, 
-                                     bpp*w, 
+                                     8, w, w,
+                                     bpp*w,
                                      NULL, NULL);
   preview->sourceimage = gtk_image_new_from_pixbuf (pixbuf);
   g_object_unref (pixbuf);
@@ -1051,10 +1054,10 @@ preview_new (gint32 drawable_id)
 
   /* vertical scrollbar in second row, second column */
   y0 = CLAMP (dogvals.preview_y0, 0., (gdouble)(height - w));
-  preview->vadjust = gtk_adjustment_new (y0, 0., (gdouble)height, 1., 10., (gdouble)w); 
-  g_signal_connect (preview->vadjust, "value-changed", 
+  preview->vadjust = gtk_adjustment_new (y0, 0., (gdouble)height, 1., 10., (gdouble)w);
+  g_signal_connect (preview->vadjust, "value-changed",
                     G_CALLBACK (preview_update_src_view), (gpointer)preview);
-  g_signal_connect (preview->vadjust, "value-changed", 
+  g_signal_connect (preview->vadjust, "value-changed",
                     G_CALLBACK (preview_update_preview), (gpointer)preview);
   vscroll = gtk_vscrollbar_new (GTK_ADJUSTMENT (preview->vadjust));
   gtk_range_set_update_policy (GTK_RANGE (vscroll), GTK_UPDATE_DISCONTINUOUS);
@@ -1064,9 +1067,9 @@ preview_new (gint32 drawable_id)
   /* horizontal scrollbar in third row, first column */
   x0 = CLAMP (dogvals.preview_x0, 0., (gdouble)(width - w));
   preview->hadjust = gtk_adjustment_new (x0, 0., (gdouble)width, 1., 10., (gdouble)w);
-  g_signal_connect (preview->hadjust, "value-changed", 
+  g_signal_connect (preview->hadjust, "value-changed",
                     G_CALLBACK (preview_update_src_view), (gpointer)preview);
-  g_signal_connect (preview->hadjust, "value-changed", 
+  g_signal_connect (preview->hadjust, "value-changed",
                     G_CALLBACK (preview_update_preview), (gpointer)preview);
   hscroll = gtk_hscrollbar_new (GTK_ADJUSTMENT (preview->hadjust));
   gtk_range_set_update_policy (GTK_RANGE (hscroll), GTK_UPDATE_DISCONTINUOUS);
@@ -1086,7 +1089,7 @@ preview_new (gint32 drawable_id)
   /*gimp_image_undo_disable (preview->gimpimageid);*/
   preview->preview_id = gimp_layer_new (preview->gimpimageid, "preview", w, w,
                                         gimp_drawable_type (preview->src_id),
-                                        100, 
+                                        100,
                                         GIMP_NORMAL_MODE);
   preview->drawable = gimp_drawable_get (preview->preview_id);
   gimp_image_add_layer (preview->gimpimageid, preview->preview_id, 0);
@@ -1099,13 +1102,13 @@ preview_new (gint32 drawable_id)
 
   /* GtkImage for preview in second row, third column */
   preview->preview_buffer = (guchar *)g_malloc (bpp*w*w);
-  pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, 
-                          gimp_drawable_has_alpha (preview->preview_id), 
+  pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+                          gimp_drawable_has_alpha (preview->preview_id),
                            8, w, w);
   gdk_pixbuf_fill (pixbuf, 0x000000ff /* opaque black */);
   preview->previewimage = tmpw = gtk_image_new_from_pixbuf (pixbuf);
   g_object_unref (pixbuf);
-  gtk_table_attach (GTK_TABLE (table), preview->previewimage, 
+  gtk_table_attach (GTK_TABLE (table), preview->previewimage,
                     2, 3, 1, 2, 0, 0, 5, 0);
   gtk_widget_show (tmpw);
 
@@ -1119,8 +1122,8 @@ preview_new (gint32 drawable_id)
 }
 
 
-static void 
-preview_update_src_view (GtkWidget *widget, 
+static void
+preview_update_src_view (GtkWidget *widget,
                          gpointer d)
 {
   gint x0, y0;
@@ -1130,21 +1133,21 @@ preview_update_src_view (GtkWidget *widget,
 
   x0 = gtk_adjustment_get_value (GTK_ADJUSTMENT (preview->hadjust));
   y0 = gtk_adjustment_get_value (GTK_ADJUSTMENT (preview->vadjust));
-  gimp_pixel_rgn_get_rect (&preview->src_rgn, preview->src_buffer, 
+  gimp_pixel_rgn_get_rect (&preview->src_rgn, preview->src_buffer,
                            x0, y0, w, w);
-  pixbuf = gdk_pixbuf_new_from_data (preview->src_buffer, 
-                                     GDK_COLORSPACE_RGB, 
+  pixbuf = gdk_pixbuf_new_from_data (preview->src_buffer,
+                                     GDK_COLORSPACE_RGB,
                                      gimp_drawable_has_alpha (preview->src_id),
-                                     8, w, w, 
-                                     w*gimp_drawable_bpp (preview->src_id), 
+                                     8, w, w,
+                                     w*gimp_drawable_bpp (preview->src_id),
                                      NULL, NULL);
   gtk_image_set_from_pixbuf (GTK_IMAGE (preview->sourceimage), pixbuf);
   g_object_unref (pixbuf);
 }
 
 
-static void 
-preview_update_preview (GtkWidget *wg, 
+static void
+preview_update_preview (GtkWidget *wg,
                         gpointer d)
 {
   gint x0, y0;
@@ -1153,16 +1156,16 @@ preview_update_preview (GtkWidget *wg,
   gint bpp;
   Preview *preview = (Preview*)d;
 
-  dogvals.preview_x0 = x0 
+  dogvals.preview_x0 = x0
     = gtk_adjustment_get_value (GTK_ADJUSTMENT (preview->hadjust));
-  dogvals.preview_y0 = y0 
+  dogvals.preview_y0 = y0
     = gtk_adjustment_get_value (GTK_ADJUSTMENT (preview->vadjust));
   bpp = gimp_drawable_bpp (preview->preview_id);
 
 
-  gimp_pixel_rgn_get_rect (&preview->src_rgn, preview->preview_buffer, 
+  gimp_pixel_rgn_get_rect (&preview->src_rgn, preview->preview_buffer,
                            x0, y0, w, w);
-  gimp_pixel_rgn_set_rect (&preview->preview_rgn, preview->preview_buffer, 
+  gimp_pixel_rgn_set_rect (&preview->preview_rgn, preview->preview_buffer,
                            0, 0, w, w);
   gimp_drawable_flush (preview->drawable);
   gimp_drawable_merge_shadow (preview->preview_id, TRUE);
@@ -1170,13 +1173,13 @@ preview_update_preview (GtkWidget *wg,
 
   dog (preview->drawable, dogvals.inner, dogvals.outer, FALSE);
 
-  gimp_pixel_rgn_get_rect (&preview->preview_rgn, preview->preview_buffer, 
+  gimp_pixel_rgn_get_rect (&preview->preview_rgn, preview->preview_buffer,
                            0, 0, w, w);
-  pixbuf = gdk_pixbuf_new_from_data (preview->preview_buffer, 
-                                     GDK_COLORSPACE_RGB, 
+  pixbuf = gdk_pixbuf_new_from_data (preview->preview_buffer,
+                                     GDK_COLORSPACE_RGB,
                                      gimp_drawable_has_alpha (preview->preview_id),
-                                     8, w, w, 
-                                     w*bpp, 
+                                     8, w, w,
+                                     w*bpp,
                                      NULL, NULL);
   gtk_image_set_from_pixbuf (GTK_IMAGE (preview->previewimage), pixbuf);
   g_object_unref (pixbuf);
@@ -1192,4 +1195,4 @@ change_radius_callback (GtkWidget *wg,
    preview_update_preview (wg, d);
 }
 
-  
+

@@ -1,7 +1,6 @@
 EXPORTS
 	_gimp_drawable_thumbnail
 	_gimp_image_thumbnail
-	_gimp_tile_cache_flush_drawable
 	gimp_airbrush
 	gimp_airbrush_default
 	gimp_attach_new_parasite

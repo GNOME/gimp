@@ -1,3 +1,11 @@
+2004-06-28  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/dog.c (dog): ifdef'ed out calls to
+	_gimp_tile_cache_flush_drawable() since it can't be used from a
+	plug-in. Removed trailing whitespace and redundant includes.
+
+	* libgimp/gimp.def: removed _gimp_tile_cache_flush_drawable again.
+
 2004-06-28  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.c: fixed drawing code to properly
