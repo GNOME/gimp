@@ -236,18 +236,11 @@ static void     dialog_fill_src_rows       (gint           start,
 static void     dialog_fill_bumpmap_rows   (gint           start,
                                             gint           how_many,
                                             gint           yofs);
-
-static void     dialog_compensate_callback (GtkWidget     *widget,
-                                            GimpPreview   *preview);
-static void     dialog_invert_callback     (GtkWidget     *widget,
-                                            GimpPreview   *preview);
-static void     dialog_tiled_callback      (GtkWidget     *widget,
-                                            GimpPreview   *preview);
 static gint     dialog_constrain           (gint32         image_id,
                                             gint32         drawable_id,
                                             gpointer       data);
 static void     dialog_bumpmap_callback    (GtkWidget     *widget,
-                                            gpointer       data);
+                                            GimpPreview   *preview);
 
 
 /***** Variables *****/
@@ -270,7 +263,7 @@ static bumpmap_vals_t bmvals =
   0,      /* yofs */
   0,      /* waterlevel */
   0,      /* ambient */
-  FALSE,  /* compensate */
+  TRUE,   /* compensate */
   FALSE,  /* invert */
   LINEAR, /* type */
   FALSE   /* tiled */
@@ -620,7 +613,8 @@ bumpmap (void)
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, sel_x1, sel_y1, sel_width, sel_height);
+  gimp_drawable_update (drawable->drawable_id,
+                        sel_x1, sel_y1, sel_width, sel_height);
 }
 
 static void
@@ -664,7 +658,8 @@ bumpmap_init_params (bumpmap_params_t *params)
 
         case SINUSOIDAL:
           n = i / 255.0;
-          params->lut[i] = (int) (255.0 * (sin((-G_PI / 2.0) + G_PI * n) + 1.0) /
+          params->lut[i] = (int) (255.0 *
+                                  (sin((-G_PI / 2.0) + G_PI * n) + 1.0) /
                                   2.0 + 0.5);
           break;
 
@@ -897,8 +892,11 @@ bumpmap_dialog (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), bmvals.compensate);
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (dialog_compensate_callback),
-                    preview);
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &bmvals.compensate);
+  g_signal_connect_swapped (button, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /* Invert bumpmap */
   button = gtk_check_button_new_with_mnemonic (_("I_nvert bumpmap"));
@@ -908,8 +906,11 @@ bumpmap_dialog (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), bmvals.invert);
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (dialog_invert_callback),
-                    preview);
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &bmvals.invert);
+  g_signal_connect_swapped (button, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /* Tile bumpmap */
   button = gtk_check_button_new_with_mnemonic (_("_Tile bumpmap"));
@@ -919,8 +920,11 @@ bumpmap_dialog (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), bmvals.tiled);
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (dialog_tiled_callback),
-                    preview);
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &bmvals.tiled);
+  g_signal_connect_swapped (button, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
                               _("_Azimuth:"), SCALE_WIDTH, 6,
@@ -957,14 +961,15 @@ bumpmap_dialog (void)
   g_signal_connect_swapped (adj, "value_changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
-  gtk_table_set_row_spacing (GTK_TABLE (table), row++, 8);
+  gtk_table_set_row_spacing (GTK_TABLE (table), row++, 12);
 
   bmint.offset_adj_x = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
                           _("_X offset:"), SCALE_WIDTH, 6,
                           bmvals.xofs, -1000.0, 1001.0, 1.0, 10.0, 0,
                           TRUE, 0, 0,
-                          NULL, NULL);
+                          _("The offset can be adjusted by dragging the "
+                            "preview using the middle mouse button."), NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &bmvals.xofs);
@@ -977,14 +982,15 @@ bumpmap_dialog (void)
                           _("_Y offset:"), SCALE_WIDTH, 6,
                           bmvals.yofs, -1000.0, 1001.0, 1.0, 10.0, 0,
                           TRUE, 0, 0,
-                          NULL, NULL);
+                          _("The offset can be adjusted by dragging the "
+                            "preview using the middle mouse button."), NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &bmvals.yofs);
   g_signal_connect_swapped (adj, "value_changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
-  gtk_table_set_row_spacing (GTK_TABLE (table), row++, 8);
+  gtk_table_set_row_spacing (GTK_TABLE (table), row++, 12);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
                               _("_Waterlevel:"), SCALE_WIDTH, 6,
@@ -1315,7 +1321,8 @@ dialog_get_rows (GimpPixelRgn  *pr,
 
           for (ty = y; ty < yboundary; ty++)
             {
-              src  = tile->data + tile->bpp * (tile->ewidth * (ty % tile_height) +
+              src  = tile->data + tile->bpp * (tile->ewidth *
+                                               (ty % tile_height) +
                                                (x % tile_width));
               dest = rows[ty - ystart] + bpp * (x - xstart);
 
@@ -1425,30 +1432,6 @@ dialog_fill_bumpmap_rows (gint start,
     }
 }
 
-static void
-dialog_compensate_callback (GtkWidget   *widget,
-                            GimpPreview *preview)
-{
-  bmvals.compensate = GTK_TOGGLE_BUTTON (widget)->active;
-  gimp_preview_invalidate (preview);
-}
-
-static void
-dialog_invert_callback (GtkWidget   *widget,
-                        GimpPreview *preview)
-{
-  bmvals.invert = GTK_TOGGLE_BUTTON (widget)->active;
-  gimp_preview_invalidate (preview);
-}
-
-static void
-dialog_tiled_callback (GtkWidget   *widget,
-                       GimpPreview *preview)
-{
-  bmvals.tiled = GTK_TOGGLE_BUTTON (widget)->active;
-  gimp_preview_invalidate (preview);
-}
-
 static gboolean
 dialog_constrain (gint32   image_id,
                   gint32   drawable_id,
@@ -1459,11 +1442,10 @@ dialog_constrain (gint32   image_id,
 }
 
 static void
-dialog_bumpmap_callback (GtkWidget *widget,
-                         gpointer   data)
+dialog_bumpmap_callback (GtkWidget   *widget,
+                         GimpPreview *preview)
 {
-  gint         value;
-  GimpPreview *preview = GIMP_PREVIEW (data);
+  gint value;
 
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value);
 
@@ -1476,5 +1458,6 @@ dialog_bumpmap_callback (GtkWidget *widget,
       bmvals.bumpmap_id = value;
       dialog_new_bumpmap (TRUE);
     }
+
   gimp_preview_invalidate (preview);
 }
