@@ -1,5 +1,10 @@
 2003-01-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/starscape-logo.scm: merged fix for
+	bug #73894 from HEAD branch.
+
+2003-01-05  Sven Neumann  <sven@gimp.org>
+
 	* app/gimpimage.c (gimp_image_merge_layers): redid the fix for bug
 	#101036 since Garry's fix introduced a crash if the flattened
 	image has undo disabled. Instead of temporarily changing the layer

@@ -63,6 +63,7 @@
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img glow-layer 1)
     (gimp-image-add-layer img shadow-layer 1)
+    (gimp-image-add-channel img bump-channel 0)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
 
     (gimp-palette-set-background '(0 0 0))
