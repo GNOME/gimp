@@ -190,6 +190,8 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   statusbar->unit_combo = gimp_unit_combo_box_new_with_model (store);
   g_object_unref (store);
 
+  GTK_WIDGET_UNSET_FLAGS (statusbar->unit_combo, GTK_CAN_FOCUS);
+  g_object_set (statusbar->unit_combo, "focus-on-click", FALSE, NULL);
   gtk_container_add (GTK_CONTAINER (hbox), statusbar->unit_combo);
   gtk_widget_show (statusbar->unit_combo);
 
@@ -203,6 +205,8 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_widget_show (frame);
 
   statusbar->scale_combo = gimp_scale_combo_box_new ();
+  GTK_WIDGET_UNSET_FLAGS (statusbar->scale_combo, GTK_CAN_FOCUS);
+  g_object_set (statusbar->scale_combo, "focus-on-click", FALSE, NULL);
   gtk_container_add (GTK_CONTAINER (frame), statusbar->scale_combo);
   gtk_widget_show (statusbar->scale_combo);
 
@@ -220,6 +224,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   statusbar->cancel_button = gtk_button_new_with_label (_("Cancel"));
   gtk_widget_set_sensitive (statusbar->cancel_button, FALSE);
   gtk_box_pack_start (box, statusbar->cancel_button, FALSE, FALSE, 0);
+  GTK_WIDGET_UNSET_FLAGS (statusbar->cancel_button, GTK_CAN_FOCUS);
   gtk_widget_show (statusbar->cancel_button);
 
   g_signal_connect (statusbar->cancel_button, "clicked",

@@ -1,3 +1,9 @@
+2005-02-18  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpstatusbar.c: unset the CAN_FOCUS flag on the
+	combo boxes and the cancel button. Set "focus-on-click" to FALSE
+	for the combo boxes. Fixes bug #167809.
+
 2005-02-18  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpexport.c (export_dialog): applied patch from Patrice
