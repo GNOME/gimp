@@ -1,3 +1,7 @@
+2004-05-23  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am (tips_POFILES): added lt.po (Lithuanian).
+
 2004-05-23  žygimantas Beručka  <uid0@akl.lt>
 
 	* lt.po: Updated Lithuanian translation.
