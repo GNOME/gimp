@@ -536,9 +536,7 @@ channel_get_color_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    {
-      gimp_channel_get_color (channel, &color);
-    }
+    gimp_channel_get_color (channel, &color);
 
   return_args = procedural_db_return_args (&channel_get_color_proc, success);
 

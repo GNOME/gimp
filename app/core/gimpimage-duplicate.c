@@ -197,6 +197,9 @@ gimp_image_duplicate (GimpImage *gimage)
     new_gimage->selection_mask->boundary_known = FALSE;
   }
 
+  if (floating_layer)
+    floating_sel_attach (floating_layer, new_floating_sel_drawable);
+
   /*  Set active layer, active channel, active vectors  */
   if (active_layer)
     gimp_image_set_active_layer (new_gimage, active_layer);
@@ -206,9 +209,6 @@ gimp_image_duplicate (GimpImage *gimage)
 
   if (active_vectors)
     gimp_image_set_active_vectors (new_gimage, active_vectors);
-
-  if (floating_layer)
-    floating_sel_attach (floating_layer, new_floating_sel_drawable);
 
   /*  Copy state of all color channels  */
   for (count = 0; count < MAX_CHANNELS; count++)

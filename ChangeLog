@@ -1,3 +1,54 @@
+2004-01-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage.c (gimp_image_set_active_layer): don't allow
+	to select anything but the floating selection. Fixes bug #128025.
+
+	(gimp_image_set_active_layer,channel,vectors): allow to pass NULL
+	to unselect the active item. Removed the silly feature that
+	passing some random item of another image would select the first
+	item in the list (was unused anyway).
+
+	(gimp_image_unset_active_channel): use gimp_image_set_active_channel()
+	now that it accepts NULL.
+
+	(gimp_image_add_layer,channel,vectors): cleaned up / simplified.
+
+	(gimp_image_remove_layer,channel,vectors): cleanup,
+	simplification, use gimp_image_set_active_layer,channel,vectors()
+	now that they accept NULL, make sure the item next to the removed
+	item becomes the active one (and not the first in the list, which
+	was a severe usability problem in the dialogs).
+
+	* app/core/gimpimage-undo-push.c (undo_pop_layer,channel): pass
+	NULL to the set_active functions, cleanup.
+
+	* app/core/gimpimage-duplicate.c: attach the floating selection
+	before setting the active layer. Code relied on broken
+	gimp_image_set_active_layer() behaviour before.
+
+	* app/core/gimplayer-floating-sel.c: no need to set
+	gimage->floating_sel before calling gimp_image_add_layer(). The
+	weird GUI mentioned in the comment existed in 1.2 only.
+
+	* app/display/gimpdisplayshell-layer-select.c (layer_select_advance):
+	don't assume that setting the active_layer always succeeds.
+
+	* tools/pdbgen/pdb/image.pdb: behave as the documentation says
+	and return an execution error if setting the active layer or
+	channel failed.
+
+	Unrelated:
+
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/layer.pdb: removed leftover cruft from the old
+	guchar based color API.
+
+	* tools/pdbgen/pdb/channel.pdb: simplified code which handles the
+	channel's color.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/image_cmds.c: regenerated.
+
 2004-01-18  Simon Budig  <simon@gimp.org>
 
 	* app/gui/about-dialog.c: fixed typo.

@@ -2893,7 +2893,7 @@ image_set_active_layer_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_image_set_active_layer (gimage, active_layer);
+    success = (gimp_image_set_active_layer (gimage, active_layer) == active_layer);
 
   return procedural_db_return_args (&image_set_active_layer_proc, success);
 }
@@ -3003,7 +3003,7 @@ image_set_active_channel_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_image_set_active_channel (gimage, active_channel);
+    success = (gimp_image_set_active_channel (gimage, active_channel) == active_channel);
 
   return procedural_db_return_args (&image_set_active_channel_proc, success);
 }

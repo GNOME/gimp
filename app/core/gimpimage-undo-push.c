@@ -1511,7 +1511,6 @@ undo_pop_layer (GimpUndo            *undo,
       /*  record the current position  */
       lu->prev_position = gimp_image_get_layer_index (undo->gimage, layer);
 
-      /*  remove the layer  */
       gimp_container_remove (undo->gimage->layers, GIMP_OBJECT (layer));
       undo->gimage->layer_stack = g_slist_remove (undo->gimage->layer_stack,
                                                   layer);
@@ -1539,8 +1538,7 @@ undo_pop_layer (GimpUndo            *undo,
             }
           else
             {
-              undo->gimage->active_layer = NULL;
-              gimp_image_active_layer_changed (undo->gimage);
+              gimp_image_set_active_layer (undo->gimage, NULL);
             }
         }
 
@@ -1567,7 +1565,6 @@ undo_pop_layer (GimpUndo            *undo,
       if (gimp_layer_is_floating_sel (layer))
 	undo->gimage->floating_sel = layer;
 
-      /*  add the new layer  */
       gimp_container_insert (undo->gimage->layers,
 			     GIMP_OBJECT (layer), lu->prev_position);
       gimp_image_set_active_layer (undo->gimage, layer);
@@ -2277,9 +2274,7 @@ undo_pop_channel (GimpUndo            *undo,
       cu->prev_position = gimp_image_get_channel_index (undo->gimage,
                                                         channel);
 
-      /*  remove the channel  */
       gimp_container_remove (undo->gimage->channels, GIMP_OBJECT (channel));
-
       gimp_item_removed (GIMP_ITEM (channel));
 
       if (channel == gimp_image_get_active_channel (undo->gimage))
@@ -2299,7 +2294,6 @@ undo_pop_channel (GimpUndo            *undo,
       /*  record the active channel  */
       cu->prev_channel = gimp_image_get_active_channel (undo->gimage);
 
-      /*  add the new channel  */
       gimp_container_insert (undo->gimage->channels,
 			     GIMP_OBJECT (channel), cu->prev_position);
       gimp_image_set_active_channel (undo->gimage, channel);
@@ -2694,23 +2688,11 @@ undo_pop_vectors (GimpUndo            *undo,
       vu->prev_position = gimp_image_get_vectors_index (undo->gimage,
                                                         vectors);
 
-      /*  remove the vectors  */
       gimp_container_remove (undo->gimage->vectors, GIMP_OBJECT (vectors));
-
       gimp_item_removed (GIMP_ITEM (vectors));
 
       if (vectors == gimp_image_get_active_vectors (undo->gimage))
-        {
-          if (vu->prev_vectors)
-            {
-              gimp_image_set_active_vectors (undo->gimage, vu->prev_vectors);
-            }
-          else
-            {
-              undo->gimage->active_vectors = NULL;
-              gimp_image_active_vectors_changed (undo->gimage);
-            }
-        }
+        gimp_image_set_active_vectors (undo->gimage, vu->prev_vectors);
     }
   else
     {
@@ -2721,7 +2703,6 @@ undo_pop_vectors (GimpUndo            *undo,
       /*  record the active vectors  */
       vu->prev_vectors = gimp_image_get_active_vectors (undo->gimage);
 
-      /*  add the new vectors  */
       gimp_container_insert (undo->gimage->vectors,
 			     GIMP_OBJECT (vectors), vu->prev_position);
       gimp_image_set_active_vectors (undo->gimage, vectors);

@@ -217,12 +217,16 @@ layer_select_advance (LayerSelect *layer_select,
 
   if (next_layer && next_layer != current_layer)
     {
-      gimp_preview_set_viewable (GIMP_PREVIEW (layer_select->preview),
-				 GIMP_VIEWABLE (next_layer));
-      gtk_label_set_text (GTK_LABEL (layer_select->label),
-			  GIMP_OBJECT (next_layer)->name);
+      current_layer = gimp_image_set_active_layer (layer_select->gimage,
+                                                   next_layer);
 
-      gimp_image_set_active_layer (layer_select->gimage, next_layer);
+      if (current_layer)
+        {
+          gimp_preview_set_viewable (GIMP_PREVIEW (layer_select->preview),
+                                     GIMP_VIEWABLE (current_layer));
+          gtk_label_set_text (GTK_LABEL (layer_select->label),
+                              GIMP_OBJECT (current_layer)->name);
+        }
     }
 }
 

@@ -129,19 +129,6 @@ sub layer_get_prop_proc {
     my $alias = "gimp_${core_type}_get_$prop ($core_var)";
     $alias = "g_strdup ($alias)" if $type eq 'string';
     $outargs[0]->{alias} .= "$alias";
-
-    if ($type eq 'color') {
-	$outargs[0]->{init} = 1;
-	delete @{$outargs[0]}{qw(alias no_declare)};
-
-	$invoke{headers} = [ qw("gimpimage.h") ];
-
-	$invoke{code} = "{\n  color = g_new (guchar, 3);\n";
-	foreach (map { "${_}_PIX" } qw(RED GREEN BLUE)) {
-	    $invoke{code} .= "  $prop\[$_] = layer->col[$_];\n";
-	}
-	$invoke{code} .= "}\n";
-    }
 }
 
 sub layer_set_prop_proc {
@@ -168,16 +155,6 @@ sub layer_set_prop_proc {
 
     $invoke{code} = $undo ? "gimp_${core_type}_set_$prop ($core_var, $prop, TRUE);"
                           : "gimp_${core_type}_set_$prop ($core_var, $prop);";
-
-    if ($type eq 'color') {
-	%invoke = (
-	    vars => [ 'int i' ],
-	    code => <<CODE
-for (i = 0; i < 3; i++)
-  layer->col[i] = $prop\[i];
-CODE
-	);
-    }
 }
 
 sub layer_accessors {

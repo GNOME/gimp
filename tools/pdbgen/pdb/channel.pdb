@@ -53,16 +53,8 @@ sub channel_get_prop_proc {
     $outargs[0]->{alias} .= "$alias";
 
     if ($type eq 'color') {
-	$outargs[0]->{init} = 1;
 	delete @{$outargs[0]}{qw(alias no_declare)};
-
-	$invoke{headers} = [ qw("core/gimpimage.h") ];
-
-	$invoke{code} = <<'CODE'
-{
-  gimp_channel_get_color (channel, &color);
-}
-CODE
+	$invoke{code} = 'gimp_channel_get_color (channel, &color);';
     }
 }
 
@@ -92,8 +84,7 @@ sub channel_set_prop_proc {
 			  : "gimp_${core_type}_set_$prop ($core_var, $prop);";
 
     if ($type eq 'color') {
-	%invoke = (
-	    code => <<'CODE'
+	$invoke{code} = <<'CODE'
 {
   GimpRGB rgb_color = color;
 
@@ -101,7 +92,6 @@ sub channel_set_prop_proc {
   gimp_channel_set_color (channel, &rgb_color, TRUE);
 }
 CODE
-	);
     }
 }
 

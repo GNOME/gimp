@@ -70,12 +70,6 @@ floating_sel_attach (GimpLayer    *layer,
                                               GIMP_ITEM (layer)->height,
                                               gimp_drawable_bytes (drawable));
 
-  /*  Set gimage->floating_sel *before* adding the floating layer to
-   *  the image so views can recognize the newly added floating layer
-   *  and treat it accordingly.
-   */
-  gimage->floating_sel = layer;
-
   /*  add the layer to the gimage  */
   gimp_image_add_layer (gimage, layer, 0);
 

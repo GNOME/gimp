@@ -135,17 +135,6 @@ sub image_get_prop_proc {
     my $alias = $func ? "gimp_image_get_$prop (gimage)" : "gimage->$prop";
     $alias = "g_strdup ($alias)" if $type eq 'string';
     $outargs[0]->{alias} .= "$alias";
-
-    if ($type eq 'color') {
-	$outargs[0]->{init} = 1;
-	delete @{$outargs[0]}{qw(alias no_declare)};
-
-	$invoke{code} = "{\n  color = g_new (guchar, 3);\n";
-	foreach (map { "${_}_PIX" } qw(RED GREEN BLUE)) {
-	    $invoke{code} .= "  $prop\[$_] = image->col[$_];\n";
-	}
-	$invoke{code} .= "}\n";
-    }
 }
 
 sub image_set_prop_proc {
@@ -173,16 +162,6 @@ sub image_set_prop_proc {
 
     $invoke{code} = $func ? "gimp_image_set_$prop (gimage, $prop);"
 			  : "gimage->$prop = $prop;";
-
-    if ($type eq 'color') {
-	%invoke = (
-	    vars => [ 'int i' ],
-	    code => <<CODE
-for (i = 0; i < 3; i++)
-  gimage->col[i] = $prop\[i];
-CODE
-	);
-    }
 }
 
 sub image_accessors {
@@ -1123,11 +1102,14 @@ channel is currently active, then no layer will be. If a layer mask is active,
 then this will return the associated layer.
 HELP
 CODE1
+    $invoke{code} =~ s/;//g;
+    $invoke{code} = "success = ($invoke{code} == active_layer);";
+
     $help = <<'HELP';
-If the layer exists, it is set as the active layer in the image. Any previous
-active layer or channel is set to inactive. An exception is a previously
-existing floating selection, in which case this procedure will return an
-execution error.
+If the layer exists, it is set as the active layer in the image. Any
+previous active layer or channel is set to inactive. An exception is a
+previously existing floating selection, in which case this procedure
+will return an execution error.
 HELP
 CODE2
 
@@ -1142,11 +1124,14 @@ CODE2
 If there is an active channel, this will return the channel ID, otherwise, -1.
 HELP
 CODE1
+    $invoke{code} =~ s/;//g;
+    $invoke{code} = "success = ($invoke{code} == active_channel);";
+
     $help = <<'HELP';
-If the channel exists, it is set as the active channel in the image. Any
-previous active channel or channel is set to inactive. An exception is a
-previously existing floating selection, in which case this procedure will
-return an execution error.
+If the channel exists, it is set as the active channel in the
+image. Any previous active channel or channel is set to inactive. An
+exception is a previously existing floating selection, in which case
+this procedure will return an execution error.
 HELP
 CODE2
 
