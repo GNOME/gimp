@@ -46,6 +46,9 @@
 #include "core/gimpparasitelist.h"
 #include "core/gimpunit.h"
 
+#include "text/gimptextlayer.h"
+#include "text/gimptext-parasite.h"
+
 #include "vectors/gimpvectors.h"
 #include "vectors/gimpvectors-compat.h"
 
@@ -724,6 +727,7 @@ xcf_load_layer (XcfInfo   *info,
 {
   GimpLayer     *layer;
   GimpLayerMask *layer_mask;
+  GimpParasite  *parasite;
   guint32        hierarchy_offset;
   guint32        layer_mask_offset;
   gboolean       apply_mask;
@@ -751,23 +755,47 @@ xcf_load_layer (XcfInfo   *info,
   layer = gimp_layer_new (gimage, width, height, 
                           type, name, 255, GIMP_NORMAL_MODE);
   g_free (name);
-  if (!layer)
+  if (! layer)
     return NULL;
 
   /* read in the layer properties */
-  if (!xcf_load_layer_props (info, gimage, layer,
-                             &apply_mask, &edit_mask, &show_mask))
+  if (! xcf_load_layer_props (info, gimage, layer,
+                              &apply_mask, &edit_mask, &show_mask))
     goto error;
+
+  /* check for a gimp-text parasite */
+  parasite = gimp_item_parasite_find (GIMP_ITEM (layer),
+                                      gimp_text_parasite_name ());
+  if (parasite)
+    {
+      GimpText *text = gimp_text_from_parasite (parasite);
+
+      if (text)
+        {
+          gboolean active;
+
+          gimp_parasite_list_remove (GIMP_ITEM (layer)->parasites,
+                                     gimp_parasite_name (parasite));
+
+          active = (info->active_layer == layer);
+
+          /* convert the layer to a text layer */
+          layer = gimp_text_layer_from_layer (layer, text);
+
+          if (active)
+            info->active_layer = layer;
+        }
+    }
 
   /* read the hierarchy and layer mask offsets */
   info->cp += xcf_read_int32 (info->fp, &hierarchy_offset, 1);
   info->cp += xcf_read_int32 (info->fp, &layer_mask_offset, 1);
 
   /* read in the hierarchy */
-  if (!xcf_seek_pos (info, hierarchy_offset, NULL))
+  if (! xcf_seek_pos (info, hierarchy_offset, NULL))
     goto error;
 
-  if (!xcf_load_hierarchy (info, GIMP_DRAWABLE(layer)->tiles))
+  if (! xcf_load_hierarchy (info, GIMP_DRAWABLE (layer)->tiles))
     goto error;
 
   /* read in the layer mask */
@@ -777,7 +805,7 @@ xcf_load_layer (XcfInfo   *info,
         goto error;
 
       layer_mask = xcf_load_layer_mask (info, gimage);
-      if (!layer_mask)
+      if (! layer_mask)
 	goto error;
 
       /* set the offsets of the layer_mask */

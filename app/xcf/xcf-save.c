@@ -43,6 +43,9 @@
 #include "core/gimpparasitelist.h"
 #include "core/gimpunit.h"
 
+#include "text/gimptextlayer.h"
+#include "text/gimptext-parasite.h"
+
 #include "vectors/gimpvectors.h"
 #include "vectors/gimpvectors-compat.h"
 
@@ -407,7 +410,7 @@ xcf_save_image_props (XcfInfo   *info,
   xcf_check_error (xcf_save_prop (info, gimage, PROP_TATTOO, error, 
                                   gimage->tattoo_state));
 
-  if (gimp_parasite_list_length(gimage->parasites) > 0)
+  if (gimp_parasite_list_length (gimage->parasites) > 0)
     xcf_check_error (xcf_save_prop (info, gimage, PROP_PARASITES, 
                                     error, gimage->parasites));
 
@@ -433,6 +436,8 @@ xcf_save_layer_props (XcfInfo   *info,
 		      GimpLayer *layer,
 		      GError   **error)
 {
+  GimpParasite *parasite = NULL;
+
   if (layer == gimp_image_get_active_layer (gimage))
     xcf_check_error (xcf_save_prop (info, gimage, PROP_ACTIVE_LAYER, error));
 
@@ -479,9 +484,26 @@ xcf_save_layer_props (XcfInfo   *info,
   xcf_check_error (xcf_save_prop (info, gimage, PROP_TATTOO, error, 
                                   GIMP_ITEM (layer)->tattoo));
 
+  if (GIMP_IS_TEXT_LAYER (layer))
+    {
+      GimpText *text = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer));
+
+      parasite = gimp_text_to_parasite (text);
+      gimp_parasite_list_add (GIMP_ITEM (layer)->parasites, parasite);
+    }
+
   if (gimp_parasite_list_length (GIMP_ITEM (layer)->parasites) > 0)
-    xcf_check_error (xcf_save_prop (info, gimage, PROP_PARASITES, error,
-		                    GIMP_ITEM (layer)->parasites));
+    {
+      xcf_check_error (xcf_save_prop (info, gimage, PROP_PARASITES, error,
+                                      GIMP_ITEM (layer)->parasites));
+    }
+
+  if (parasite)
+    {
+      gimp_parasite_list_remove (GIMP_ITEM (layer)->parasites,
+                                 gimp_parasite_name (parasite));
+      gimp_parasite_free (parasite);
+    }
 
   xcf_check_error (xcf_save_prop (info, gimage, PROP_END, error));
 
@@ -936,7 +958,7 @@ xcf_save_layer (XcfInfo   *info,
   /* check and see if this is the drawable that the floating
    *  selection is attached to.
    */
-  if (GIMP_DRAWABLE(layer) == info->floating_sel_drawable)
+  if (GIMP_DRAWABLE (layer) == info->floating_sel_drawable)
     {
       saved_pos = info->cp;
       xcf_check_error (xcf_seek_pos (info, info->floating_sel_offset, error));

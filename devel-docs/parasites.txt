@@ -76,6 +76,13 @@ Global data follows no strict rules.
 		think of ;-) Determines how one index from each dimension is
 		selected (until we have pinpointed the brush to use).
 
+"gimp-text-layer" (LAYER, PERSISTENT)
+        The associated GimpText object serialized to a string. For
+        convenience the string is terminated by a trailing '\0'.
+        The idea of using a parasite for text layers is to keep the XCF
+        files backward compatible. Although gimp-1.2 doesn't know how
+        to handle the text layer, it keeps the parasite intact.
+
 "tiff-save-options" (IMAGE)
         The TiffSaveVals structure from the TIFF plugin.
 
