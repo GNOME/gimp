@@ -15,7 +15,7 @@
 	and initializations.
 
 	(undo_pop_layer_mod)
-	(undo_pop_channel_mod): use gimp_channel_set_tiles() instead of
+	(undo_pop_channel_mod): use gimp_drawable_set_tiles() instead of
 	touching drawable->tiles manually. Now all pixel manipulation
 	(at least on layers) should be virtualized and can be detected by
 	the text layer.
