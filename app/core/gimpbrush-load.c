@@ -530,8 +530,8 @@ gimp_brush_load_brush (gint         fd,
       name = g_new (gchar, bn_size);
       if ((read (fd, name, bn_size)) < bn_size)
 	{
-	  g_message (_("Fatal parsing error:\nBrush file '%s' appears truncated."),
-		     filename);
+	  g_message (_("Fatal parsing error:\n"
+                       "Brush file '%s' appears truncated."), filename);
 	  g_free (name);
 	  return NULL;
 	}
@@ -558,8 +558,8 @@ gimp_brush_load_brush (gint         fd,
 		temp_buf_data (brush->mask), header.width * header.height) <
 	  header.width * header.height)
 	{
-	  g_message (_("Fatal parsing error:\nBrush file '%s' appears truncated."),
-		     filename);
+	  g_message (_("Fatal parsing error:\n"
+                       "Brush file '%s' appears truncated."), filename);
 	  g_free (name);
 	  g_object_unref (G_OBJECT (brush));
 	  return NULL;
@@ -577,8 +577,8 @@ gimp_brush_load_brush (gint         fd,
 		    + i * 3, 3) != 3 ||
 	      read (fd, temp_buf_data (brush->mask) + i, 1) != 1)
 	    {
-	      g_message (_("Fatal parsing error:\nBrush file '%s' appears truncated."),
-			 filename);
+	      g_message (_("Fatal parsing error:\n"
+                           "Brush file '%s' appears truncated."), filename);
 	      g_free (name);
 	      g_object_unref (G_OBJECT (brush));
 	      return NULL;

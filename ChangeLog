@@ -1,5 +1,12 @@
 2002-11-27  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimprc.[ch]: added (yet unused) autosave feature.
+
+	* app/core/gimpbrush.c
+	* app/core/gimpbrushpipe.c: simplified user-visible messages.
+
+2002-11-27  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/preferences-dialog.c (preferences_dialog_create):
 	added a missing cast to please the compiler.
 

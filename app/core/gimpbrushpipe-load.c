@@ -342,8 +342,8 @@ gimp_brush_pipe_load (const gchar *filename)
 
   if (!pipe)
     {
-      g_message (_("Fatal parsing error:\nBrush pipe file '%s' is corrupt."), 
-		 filename);
+      g_message (_("Fatal parsing error:\n"
+                   "Brush file '%s' is corrupt."), filename);
       close (fd);
       return NULL;
     }
@@ -360,8 +360,8 @@ gimp_brush_pipe_load (const gchar *filename)
 
   if (num_of_brushes < 1)
     {
-      g_message (_("Fatal parsing error:\nBrush pipe file '%s' is corrupt."), 
-		 filename);
+      g_message (_("Fatal parsing error:\n"
+                   "Brush file '%s' is corrupt."), filename);
       close (fd);
       g_object_unref (G_OBJECT (pipe));
       g_string_free (buffer, TRUE);
@@ -449,7 +449,7 @@ gimp_brush_pipe_load (const gchar *filename)
       else
 	{
 	  g_message (_("Fatal parsing error:\n"
-                       "Brush pipe file '%s' is corrupt."), filename);
+                       "Brush file '%s' is corrupt."), filename);
 	  close (fd);
 	  g_object_unref (G_OBJECT (pipe));
 	  return NULL;

@@ -58,6 +58,8 @@ enum {
 static void       gimp_rc_class_init        (GimpRcClass  *klass);
 static void       gimp_rc_config_iface_init (gpointer      iface,
                                              gpointer      iface_data);
+static void       gimp_rc_init              (GimpRc       *rc);
+static void       gimp_rc_dispose           (GObject      *object);
 static void       gimp_rc_finalize          (GObject      *object);
 static void       gimp_rc_set_property      (GObject      *object,
                                              guint         property_id,
@@ -77,6 +79,10 @@ static gboolean   gimp_rc_deserialize       (GObject      *object,
                                              gpointer      data);
 static GObject  * gimp_rc_duplicate         (GObject      *object);
 static void       gimp_rc_load              (GimpRc       *rc);
+static gboolean   gimp_rc_idle_save         (GimpRc       *rc);
+static void       gimp_rc_notify            (GimpRc       *rc,
+                                             GParamSpec   *param,
+                                             gpointer      data);
 
 
 static GObjectClass *parent_class = NULL;
@@ -99,7 +105,7 @@ gimp_rc_get_type (void)
 	NULL,           /* class_data     */
 	sizeof (GimpRc),
 	0,              /* n_preallocs    */
-	NULL            /* instance_init  */
+	(GInstanceInitFunc) gimp_rc_init
       };
       static const GInterfaceInfo rc_iface_info = 
       { 
@@ -109,8 +115,7 @@ gimp_rc_get_type (void)
       };
 
       rc_type = g_type_register_static (GIMP_TYPE_GUI_CONFIG, 
-                                        "GimpRc", 
-                                        &rc_info, 0);
+                                        "GimpRc", &rc_info, 0);
 
       g_type_add_interface_static (rc_type,
                                    GIMP_TYPE_CONFIG_INTERFACE,
@@ -129,6 +134,7 @@ gimp_rc_class_init (GimpRcClass *klass)
 
   object_class = G_OBJECT_CLASS (klass);
 
+  object_class->dispose      = gimp_rc_dispose;
   object_class->finalize     = gimp_rc_finalize;
   object_class->set_property = gimp_rc_set_property;
   object_class->get_property = gimp_rc_get_property;
@@ -143,6 +149,25 @@ gimp_rc_class_init (GimpRcClass *klass)
                                                         NULL, NULL, NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+}
+
+static void
+gimp_rc_init (GimpRc *rc)
+{
+  rc->system_gimprc = NULL;
+  rc->user_gimprc   = NULL;
+  rc->verbose       = FALSE;
+  rc->autosave      = FALSE;
+  rc->save_idle_id  = 0;
+}
+
+static void
+gimp_rc_dispose (GObject *object)
+{
+  GimpRc *rc = GIMP_RC (object);
+
+  if (rc->save_idle_id)
+    gimp_rc_idle_save (rc);
 }
 
 static void
@@ -178,7 +203,6 @@ gimp_rc_set_property (GObject      *object,
     case PROP_SYSTEM_GIMPRC:
     case PROP_USER_GIMPRC:
       filename = g_value_get_string (value);
-      g_return_if_fail (filename == NULL || g_path_is_absolute (filename));
       break;
     }
 
@@ -286,8 +310,7 @@ gimp_rc_duplicate (GObject *object)
   gimp_config_copy_properties (object, dup);
 
   gimp_config_foreach_unknown_token (object,
-                                     gimp_rc_duplicate_unknown_token,
-                                     dup);
+                                     gimp_rc_duplicate_unknown_token, dup);
 
   return dup;
 }
@@ -324,6 +347,41 @@ gimp_rc_load (GimpRc *rc)
     }
 }
 
+static gboolean
+gimp_rc_idle_save (GimpRc *rc)
+{
+  gimp_rc_save (rc);
+
+  rc->save_idle_id = 0;
+
+  return FALSE;
+}
+
+static void
+gimp_rc_notify (GimpRc     *rc,
+                GParamSpec *param,
+                gpointer    data)
+{
+  if (!rc->autosave)
+    return;
+
+  if (!rc->save_idle_id)
+    rc->save_idle_id = g_idle_add ((GSourceFunc) gimp_rc_idle_save, rc);
+}
+
+/**
+ * gimp_rc_new:
+ * @system_gimprc: the name of the system-wide gimprc file or %NULL to
+ *                 use the standard location
+ * @user_gimprc: the name of the user gimprc file or %NULL to use the
+ *               standard location
+ * @verbose:
+ *
+ * Creates a new GimpRc object and loads the system-wide and the user
+ * configuration files.
+ *
+ * Returns: the new #GimpRc.
+ */
 GimpRc *
 gimp_rc_new (const gchar *system_gimprc,
              const gchar *user_gimprc,
@@ -331,22 +389,41 @@ gimp_rc_new (const gchar *system_gimprc,
 {
   GimpRc *rc;
 
-  g_return_val_if_fail (system_gimprc == NULL ||
-                        g_path_is_absolute (system_gimprc), NULL);
-  g_return_val_if_fail (user_gimprc == NULL || 
-                        g_path_is_absolute (user_gimprc), NULL);
-
   rc = GIMP_RC (g_object_new (GIMP_TYPE_RC,
                               "system-gimprc", system_gimprc,
                               "user-gimprc",   user_gimprc,
                               NULL));
 
   rc->verbose = verbose ? TRUE : FALSE;
+  g_return_val_if_fail (GIMP_IS_RC (rc), NULL);
 
   gimp_rc_load (rc);
 
   return rc;
 }
+
+void
+gimp_rc_set_autosave (GimpRc   *rc,
+                      gboolean  autosave)
+{
+  g_return_if_fail (GIMP_IS_RC (rc));
+
+  autosave = autosave ? TRUE : FALSE;
+
+  if (rc->autosave == autosave)
+    return;
+
+  if (autosave)
+    g_signal_connect (G_OBJECT (rc), "notify",
+                      G_CALLBACK (gimp_rc_notify),
+                      NULL);
+  else
+    g_signal_handlers_disconnect_by_func (G_OBJECT (rc),
+                                          gimp_rc_notify, NULL);
+
+  rc->autosave = autosave;
+}
+
 
 /**
  * gimp_rc_query:
