@@ -25,6 +25,7 @@ struct _HueSaturation
   gdouble hue[7];
   gdouble lightness[7];
   gdouble saturation[7];
+  gdouble overlap;
 
   gint    hue_transfer[6][256];
   gint    lightness_transfer[6][256];

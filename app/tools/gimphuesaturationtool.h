@@ -43,6 +43,7 @@ struct _GimpHueSaturationTool
   /*  dialog  */
   GimpHueRange      hue_partition;
   GtkWidget        *hue_partition_da[6];
+  GtkAdjustment    *overlap_data;
   GtkAdjustment    *hue_data;
   GtkAdjustment    *lightness_data;
   GtkAdjustment    *saturation_data;

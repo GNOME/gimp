@@ -1,3 +1,11 @@
+2005-03-12  Sven Neumann  <sven@gimp.org>
+
+	* app/base/hue-saturation.[ch]
+	* app/tools/gimphuesaturationtool.[ch]: applied a patch from Joao
+	S. O. Bueno Calligaris and modified it a little. This adds a way
+	to control the overlap between hue ranges in the Hue Saturation
+	tool (bug #166628).
+
 2005-03-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/despeckle.c: test intensity against white and

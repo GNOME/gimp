@@ -36,6 +36,7 @@ hue_saturation_init (HueSaturation *hs)
 
   g_return_if_fail (hs != NULL);
 
+  hs->overlap = 0.0;
   for (partition = GIMP_ALL_HUES; partition <= GIMP_MAGENTA_HUES; partition++)
     hue_saturation_partition_reset (hs, partition);
 }
@@ -104,10 +105,17 @@ hue_saturation (HueSaturation *hs,
 {
   const guchar *src, *s;
   guchar       *dest, *d;
-  gboolean      alpha;
+  const gint    hue_thresholds[]    = { 21, 64, 106, 149, 192, 234, 255 };
+  gint          alpha;
   gint          w, h;
   gint          r, g, b;
   gint          hue;
+  gint          hue_counter;
+  gint          secondary_hue       = 0;
+  gboolean      use_secondary_hue   = FALSE;
+  gfloat        primary_intensity   = 0.0;
+  gfloat        secondary_intensity = 0.0;
+  gfloat        overlap_hue         = (hs->overlap / 100.0) * 21;
 
   /*  Set the transfer arrays  (for speed)  */
   h     = srcPR->h;
@@ -123,32 +131,60 @@ hue_saturation (HueSaturation *hs,
 
       while (w--)
 	{
-	  r = s[RED_PIX];
-	  g = s[GREEN_PIX];
-	  b = s[BLUE_PIX];
+          r = s[RED_PIX];
+          g = s[GREEN_PIX];
+          b = s[BLUE_PIX];
 
 	  gimp_rgb_to_hsl_int (&r, &g, &b);
 
           hue = (r + (128 / 6)) / 6;
 
-	  if (r < 21)
-	    hue = 0;
-	  else if (r < 64)
-	    hue = 1;
-	  else if (r < 106)
-	    hue = 2;
-	  else if (r < 149)
-	    hue = 3;
-	  else if (r < 192)
-	    hue = 4;
-	  else if (r < 234)
-	    hue = 5;
-          else
-            hue = 0;
+          for (hue_counter = 0; hue_counter < 7; hue_counter++)
+            if (r < hue_thresholds[hue_counter] + overlap_hue)
+              {
+                gint  hue_threshold = hue_thresholds[hue_counter];
 
-	  r = hs->hue_transfer[hue][r];
-	  g = hs->saturation_transfer[hue][g];
-	  b = hs->lightness_transfer[hue][b];
+                hue = hue_counter;
+
+                if (overlap_hue > 1.0 && r > hue_threshold - overlap_hue)
+                  {
+                    secondary_hue = hue_counter + 1;
+                    use_secondary_hue = TRUE;
+                    secondary_intensity =
+                      (r - hue_threshold + overlap_hue) / (2.0 * overlap_hue);
+                    primary_intensity = 1.0 - secondary_intensity;
+                  }
+                else
+                  {
+                    use_secondary_hue = FALSE;
+                  }
+                break;
+              }
+
+          if (hue >= 6)
+            {
+              hue = 0;
+              use_secondary_hue = FALSE;
+            }
+
+          if (secondary_hue >= 6)
+            secondary_hue = 0;
+
+          if (use_secondary_hue)
+            {
+              r = hs->hue_transfer[hue][r] * primary_intensity +
+                  hs->hue_transfer[secondary_hue][r] * secondary_intensity;
+              g = hs->saturation_transfer[hue][g] * primary_intensity +
+                  hs->saturation_transfer[secondary_hue][g] * secondary_intensity;
+              b = hs->lightness_transfer[hue][b] * primary_intensity +
+                  hs->lightness_transfer[secondary_hue][b] * secondary_intensity;
+            }
+          else
+            {
+              r = hs->hue_transfer[hue][r];
+              g = hs->saturation_transfer[hue][g];
+              b = hs->lightness_transfer[hue][b];
+            }
 
 	  gimp_hsl_to_rgb_int (&r, &g, &b);
 
