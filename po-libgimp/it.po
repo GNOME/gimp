@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
-"PO-Revision-Date: 2004-04-12 21:40+0200\n"
+"POT-Creation-Date: 2004-05-10 17:04+0200\n"
+"PO-Revision-Date: 2004-05-10 17:04+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -154,7 +154,6 @@ msgstr "_Ignora"
 msgid "_Export"
 msgstr "_Esporta"
 
-#. the headline
 #: libgimp/gimpexport.c:485
 #, c-format
 msgid ""
@@ -194,9 +193,9 @@ msgstr "Selezione caratteri"
 msgid "Gradient Selection"
 msgstr "Selezione gradiente"
 
-#: libgimp/gimpmenu.c:407
-msgid "None"
-msgstr "Nessuno"
+#: libgimp/gimpmenu.c:411 libgimpwidgets/gimpintstore.c:183
+msgid "(Empty)"
+msgstr "(Vuoto)"
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -351,7 +350,7 @@ msgid "Hue"
 msgstr "Tonalità"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
-#: modules/cdisplay_proof.c:323
+#: modules/cdisplay_proof.c:318
 msgid "Saturation"
 msgstr "Saturazione"
 
@@ -391,23 +390,23 @@ msgstr "Corrente:"
 msgid "Old:"
 msgstr "Vecchio:"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
 msgstr "Seleziona cartella"
 
-#: libgimpwidgets/gimpfileentry.c:364
+#: libgimpwidgets/gimpfileentry.c:353
 msgid "Select File"
 msgstr "Seleziona file"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:232
 msgid "KiloBytes"
 msgstr "KByte"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:233
 msgid "MegaBytes"
 msgstr "MegaByte"
 
-#: libgimpwidgets/gimpmemsizeentry.c:236
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "GigaBytes"
 msgstr "GigaByte"
 
@@ -507,7 +506,7 @@ msgstr "Unità"
 msgid "Factor"
 msgstr "Fattore"
 
-#: libgimpwidgets/gimpwidgets.c:1291
+#: libgimpwidgets/gimpwidgets.c:808
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -516,15 +515,15 @@ msgstr ""
 "permette \n"
 "di ripetere una data operazione \"casuale\""
 
-#: libgimpwidgets/gimpwidgets.c:1295
+#: libgimpwidgets/gimpwidgets.c:812
 msgid "_New Seed"
 msgstr "_Nuovo seme"
 
-#: libgimpwidgets/gimpwidgets.c:1308
+#: libgimpwidgets/gimpwidgets.c:825
 msgid "Seed random number generator with a generated random number"
 msgstr "Generatore del seme di casualità con un numero generato casualmente"
 
-#: libgimpwidgets/gimpwidgets.c:1312
+#: libgimpwidgets/gimpwidgets.c:829
 msgid "_Randomize"
 msgstr "_Casualizza"
 
@@ -540,15 +539,15 @@ msgstr "Visione con deficit di colore"
 msgid "Color _Deficiency Type:"
 msgstr "Tipo di _deficit di colore:"
 
-#: modules/cdisplay_colorblind.c:473
+#: modules/cdisplay_colorblind.c:469
 msgid "Protanopia (insensitivity to red)"
 msgstr "Prostanopia (insensibilità al rosso)"
 
-#: modules/cdisplay_colorblind.c:476
+#: modules/cdisplay_colorblind.c:471
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (insensibilità al verde)"
 
-#: modules/cdisplay_colorblind.c:479
+#: modules/cdisplay_colorblind.c:473
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (insensibilità al blu)"
 
@@ -584,15 +583,15 @@ msgstr "Fitro a prova di colore usando i profili di colore ICC"
 msgid "Color Proof"
 msgstr "A prova di colore"
 
-#: modules/cdisplay_proof.c:319
+#: modules/cdisplay_proof.c:314
 msgid "Perceptual"
 msgstr "Percettivo"
 
-#: modules/cdisplay_proof.c:321
+#: modules/cdisplay_proof.c:316
 msgid "Relative Colorimetric"
 msgstr "Colorimetrico relativo"
 
-#: modules/cdisplay_proof.c:325
+#: modules/cdisplay_proof.c:320
 msgid "Absolute Colorimetric"
 msgstr "Colorimetrico assoluto"
 
