@@ -1,3 +1,9 @@
+2004-06-15  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* app/core/gimpdrawable-transform.c (gimp_drawable_transform_tiles_affine):
+	Don't round texture coordinates when not using interpolation. Fixes
+	bug #144352 for the nearest neighbor case only. Merged from HEAD.
+
 2004-06-15  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/mng.c (respin_cmap): applied the fix for empty
