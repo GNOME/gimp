@@ -1,9 +1,10 @@
 2002-04-23  Nathan Summers  <rock@gimp.org>
 
-        * libgimptool/gimptoolmodule.[ch]
-        * plug-ins/tools/tool-safe-mode.c: More error checking. Introduced a
-        versioning scheme. Increment GIMP_TOOL_MODULE_ABI_VERSION any time you
+        * libgimptool/gimptoolmodule.[ch]: More error checking. Also introduced
+        a versioning scheme. Increment GIMP_TOOL_MODULE_ABI_VERSION any time you
         break binary compatiblity.
+        
+	* plug-ins/tools/tool-safe-mode.c: call g_type_init().
 
 2002-04-22  Michael Natterer  <mitch@gimp.org>
 
