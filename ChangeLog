@@ -1,5 +1,11 @@
 2004-02-08  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpiscissorstool.c (gimp_iscissors_tool_button_press): 
+	don't activate the iscissors tool if it's already active
+	(bug #132351).
+
+2004-02-08  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptexttool.c (gimp_text_tool_set_layer): implemented
 	so that double-clicking a text layer now only activates the text
 	tool but also set the layer's text on the tool options.

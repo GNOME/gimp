@@ -435,13 +435,20 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
 
   /*  If the tool was being used in another image...reset it  */
 
-  if (gimp_tool_control_is_active (tool->control) && gdisp != tool->gdisp)
+  if (gimp_tool_control_is_active (tool->control))
     {
-      gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
-      gimp_iscissors_tool_reset (iscissors);
+      if (gdisp != tool->gdisp)
+        {
+          gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+          gimp_iscissors_tool_reset (iscissors);
+          gimp_tool_control_activate (tool->control);
+        }
+    }
+  else
+    {
+      gimp_tool_control_activate (tool->control);
     }
 
-  gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
 
   switch (iscissors->state)
