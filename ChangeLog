@@ -1,3 +1,8 @@
+2002-02-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/vectors/Makefile
+	* app/vectors/Makefile.in: removed.
+
 2002-02-22  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/Makefile
