@@ -1,5 +1,10 @@
 2004-06-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/pdb/fileops_cmds.c: fixed incorrect documentation for
+	gimp_file_load, which was the root cause of bug #118811.
+	
+2004-06-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* plug-ins: finish implementing HIG capitalization in dialogs.
 	Scripts remain to be done.  More progress on bug #123699.
 
