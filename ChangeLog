@@ -1,3 +1,10 @@
+2004-01-09  Dave Neary  <bolsh@gimp.org>
+
+	* app/display/gimpdisplayshell-scale.c: Modify behaviour of 
+	the magnify tool to always change the zoom factor by the 
+	golden ratio, rather than modify the numerator and denominator
+	directly. Fixes bug #124073.
+
 2004-01-09  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/tiff.c (load_image): applied a patch from 

@@ -72,38 +72,38 @@ gimp_display_shell_scale_zoom_fraction (GimpZoomType  zoom_type,
                                         gint         *scalesrc,
                                         gint         *scaledest)
 {
-  gint src, dest;
+  gdouble ratio;
+
+  /* The golden ratio is (1 + sqrt 5)/2. It has some nice 
+   * properties which make it a good choice for a zoom ratio.
+   */
+#define GOLDEN_RATIO 1.618033989
 
   g_return_if_fail (scalesrc != NULL);
   g_return_if_fail (scaledest != NULL);
 
-  src  = *scalesrc;
-  dest = *scaledest;
+  ratio = (double) *scaledest/ *scalesrc;
 
   switch (zoom_type)
     {
     case GIMP_ZOOM_IN:
-      if (src > 1)
-        src--;
-      else if (dest < 0xFF)
-        dest++;
+      
+      ratio *= GOLDEN_RATIO;
       break;
 
     case GIMP_ZOOM_OUT:
-      if (dest > 1)
-        dest--;
-      else if (src < 0xFF)
-        src++;
+      ratio /= GOLDEN_RATIO;
       break;
 
     default:
-      src  = CLAMP (zoom_type % 100, 1, 0xFF);
-      dest = CLAMP (zoom_type / 100, 1, 0xFF);
+      *scalesrc  = CLAMP (zoom_type % 100, 1, 0xFF);
+      *scaledest = CLAMP (zoom_type / 100, 1, 0xFF);
+      return;
       break;
     }
 
-  *scalesrc  = src;
-  *scaledest = dest;
+  /* set scalesrc and scaledest to a fraction close to ratio */
+  gimp_display_shell_scale_calc_fraction (ratio, scalesrc, scaledest);
 }
 
 void
