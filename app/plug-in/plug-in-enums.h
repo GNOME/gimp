@@ -16,13 +16,26 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PLUG_IN_TYPES_H__
-#define __PLUG_IN_TYPES_H__
+#ifndef __PLUG_IN_ENUMS_H__
+#define __PLUG_IN_ENUMS_H__
 
 
-#include "core/core-types.h"
+typedef enum
+{
+  GIMP_RUN_INTERACTIVE,
+  GIMP_RUN_NONINTERACTIVE,
+  GIMP_RUN_WITH_LAST_VALS
+} GimpRunMode;
 
-#include "plug-in/plug-in-enums.h"
+typedef enum /*< pdb-skip >*/ /*< skip >*/
+{
+  PLUG_IN_RGB_IMAGE      = 1 << 0,
+  PLUG_IN_GRAY_IMAGE     = 1 << 1,
+  PLUG_IN_INDEXED_IMAGE  = 1 << 2,
+  PLUG_IN_RGBA_IMAGE     = 1 << 3,
+  PLUG_IN_GRAYA_IMAGE    = 1 << 4,
+  PLUG_IN_INDEXEDA_IMAGE = 1 << 5
+} PlugInImageType;
 
 
 typedef struct _PlugIn          PlugIn;
@@ -32,4 +45,4 @@ typedef struct _PlugInProcFrame PlugInProcFrame;
 typedef struct _PlugInShm       PlugInShm;
 
 
-#endif /* __PLUG_IN_TYPES_H__ */
+#endif /* __PLUG_IN_ENUMS_H__ */

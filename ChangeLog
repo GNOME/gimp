@@ -1,5 +1,14 @@
 2005-01-23  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/Makefile.am
+	* app/plug-in/plug-in-enums.h: new file with enums moved from ...
+
+	* app/plug-in/plug-in-types.h: ... here.
+
+	* tools/pdbgen/Makefile.am (enum_headers): changed accordingly.
+
+2005-01-23  Sven Neumann  <sven@gimp.org>
+
 	* app/core/core-enums.h
 	* libgimpbase/gimpbaseenums.h: moved enums to libgimpbase (from
 	app/core and libgimp). The remaining enums in app/core/core-enums.h

@@ -14,6 +14,7 @@ INCLUDES = \
 noinst_LIBRARIES = libappplug-in.a
 
 libappplug_in_a_SOURCES = \
+	plug-in-enums.h 	\
 	plug-in-types.h 	\
 	plug-in.c		\
 	plug-in.h		\
