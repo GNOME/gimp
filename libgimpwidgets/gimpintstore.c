@@ -108,14 +108,13 @@ gimp_int_store_tree_model_init (GtkTreeModelIface *iface)
 static void
 gimp_int_store_init (GimpIntStore *store)
 {
-  GType types[GIMP_INT_STORE_NUM_COLUMNS] =
-  {
-    G_TYPE_INT,       /*  GIMP_INT_STORE_VALUE      */
-    G_TYPE_STRING,    /*  GIMP_INT_STORE_LABEL      */
-    G_TYPE_STRING,    /*  GIMP_INT_STORE_STOCK_ID   */
-    GDK_TYPE_PIXBUF,  /*  GIMP_INT_STORE_PIXBUF     */
-    G_TYPE_POINTER    /*  GIMP_INT_STORE_USER_DATA  */
-  };
+  GType types[GIMP_INT_STORE_NUM_COLUMNS];
+
+  types[GIMP_INT_STORE_VALUE]     = G_TYPE_INT;
+  types[GIMP_INT_STORE_LABEL]     = G_TYPE_STRING;
+  types[GIMP_INT_STORE_STOCK_ID]  = G_TYPE_STRING;
+  types[GIMP_INT_STORE_PIXBUF]    = GDK_TYPE_PIXBUF;
+  types[GIMP_INT_STORE_USER_DATA] = G_TYPE_POINTER;
 
   store->empty_iter = NULL;
 

@@ -1,3 +1,10 @@
+2004-11-11  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpintstore.c
+	* app/vectors/gimpvectors-import.c: please the overly pedantic
+	IRIX MIPSpro compiler and don't initialize structs with
+	non-constant values.
+
 2004-11-10  Sven Neumann  <sven@gimp.org>
 
 	* app/file/file-open.c (file_open_layer): add the image to the

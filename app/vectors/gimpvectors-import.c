@@ -686,7 +686,11 @@ svg_handler_rect_start (SvgHandler   *handler,
 
       if (rx)
         {
-          GimpCoords  end = { x + width, y + ry, 1.0, 0.5, 0.5, 0.5 };
+          GimpCoords  end = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+
+          end.x = x + width;
+          end.y = y + ry;
+
           gimp_bezier_stroke_arcto (stroke, rx, ry, 0, FALSE, TRUE, &end);
         }
 
@@ -696,7 +700,11 @@ svg_handler_rect_start (SvgHandler   *handler,
 
       if (rx)
         {
-          GimpCoords  end = { x + width - rx, y + height, 1.0, 0.5, 0.5, 0.5 };
+          GimpCoords  end = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+
+          end.x = x + width - rx;
+          end.y = y + height;
+
           gimp_bezier_stroke_arcto (stroke, rx, ry, 0, FALSE, TRUE, &end);
         }
 
@@ -706,7 +714,11 @@ svg_handler_rect_start (SvgHandler   *handler,
 
       if (rx)
         {
-          GimpCoords  end = { x, y + height - ry, 1.0, 0.5, 0.5, 0.5 };
+          GimpCoords  end = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+
+          end.x = x;
+          end.y = y + height - ry;
+
           gimp_bezier_stroke_arcto (stroke, rx, ry, 0, FALSE, TRUE, &end);
         }
 
@@ -716,7 +728,11 @@ svg_handler_rect_start (SvgHandler   *handler,
 
       if (rx)
         {
-          GimpCoords  end = { x + rx, y, 1.0, 0.5, 0.5, 0.5 };
+          GimpCoords  end = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+
+          end.x = x + rx;
+          end.y = y;
+
           gimp_bezier_stroke_arcto (stroke, rx, ry, 0, FALSE, TRUE, &end);
         }
 
