@@ -27,6 +27,7 @@ typedef enum {
   DEVICE_BRUSH = 1 << 3,
   DEVICE_TOOL = 1 << 4,
   DEVICE_FOREGROUND = 1 << 5,
+  DEVICE_PATTERN = 1 << 6,
 } DeviceValues;
 
 /* Create device info dialog */
@@ -53,7 +54,7 @@ void devices_rc_update (gchar *name, DeviceValues values,
 			GdkInputMode mode, gint num_axes,
 			GdkAxisUse *axes, gint num_keys, GdkDeviceKey *keys,
 			gchar *brush_name, ToolType tool,
-			guchar foreground[]);
+			guchar foreground[],gchar *pattern_name);
 
 /* Free device status (only for session-managment) */
 void device_status_free (void);

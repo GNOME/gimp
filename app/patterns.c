@@ -25,6 +25,7 @@
 #include "appenv.h"
 #include "colormaps.h"
 #include "datafiles.h"
+#include "devices.h"
 #include "patterns.h"
 #include "pattern_header.h"
 #include "pattern_select.h"
@@ -248,6 +249,23 @@ load_pattern (char *filename)
   } /* if */
 }
 
+GPatternP           
+pattern_list_get_pattern (GSList *list, char *name)
+{
+  GPatternP patternp;
+
+  while (list)
+    {
+      patternp = (GPatternP) list->data;
+      
+      if (!strcmp (patternp->name, name))
+	{
+	  return patternp;
+	}
+      list = g_slist_next (list);
+    }
+  return NULL;
+}
 
 GPatternP
 get_pattern_by_index (int index)
@@ -276,6 +294,8 @@ select_pattern (pattern)
   /*  Keep up appearances in the pattern dialog  */
   if (pattern_select_dialog)
     pattern_select_select (pattern_select_dialog, pattern->index);
+
+  device_status_update (current_device);
 }
 
 

@@ -1590,6 +1590,7 @@ parse_device (gpointer val1p,
   gint num_keys = 0;
   GdkDeviceKey *keys = NULL;
   gchar *brush_name = NULL;
+  gchar *pattern_name = NULL;
   ToolType tool = RECT_SELECT;
   guchar foreground[3] = { 0, 0, 0 };
 
@@ -1697,6 +1698,17 @@ parse_device (gpointer val1p,
 
 	  brush_name = g_strdup (token_str);
 	}
+      else if (!strcmp ("pattern", token_sym))
+	{
+	  values |= DEVICE_PATTERN;
+	  
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_STRING))
+	    goto error;
+	  token = get_next_token ();
+
+	  pattern_name = g_strdup (token_str);
+	}
       else if (!strcmp ("tool", token_sym))
 	{
 	  values |= DEVICE_TOOL;
@@ -1744,9 +1756,10 @@ parse_device (gpointer val1p,
   token = get_next_token ();
 
   devices_rc_update (name, values, mode, num_axes, axes, num_keys, keys,
-		     brush_name, tool, foreground);
+		     brush_name, tool, foreground,pattern_name);
 
   g_free (brush_name);
+  g_free (pattern_name);
   g_free (name);
   g_free (axes);
   g_free (keys);
@@ -1754,6 +1767,7 @@ parse_device (gpointer val1p,
   return OK;
 
 error:
+  g_free (pattern_name);
   g_free (brush_name);
   g_free (name);
   g_free (axes);

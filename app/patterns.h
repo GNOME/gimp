@@ -39,6 +39,7 @@ void                pattern_select_dialog_free (void);
 void                select_pattern             (GPatternP);
 GPatternP           get_pattern_by_index       (int);
 GPatternP           get_active_pattern         (void);
+GPatternP           pattern_list_get_pattern   (GSList *list, char *name);
 void                create_pattern_dialog      (void);
 
 /*  global variables  */
