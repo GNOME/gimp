@@ -5,45 +5,39 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-02-11 10:24-0800\n"
-"PO-Revision-Date: 2000-01-27 17:47-05:00\n"
+"POT-Creation-Date: 2000-02-19 21:02+0100\n"
+"PO-Revision-Date: 2000-02-19 21:07+01:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: libgimp/gimpcolorbutton.c:105
+#: libgimp/gimpcolorbutton.c:115
 msgid "/Use Foreground Color"
-msgstr ""
+msgstr "/Bruk forgrunnsfarge"
 
-#: libgimp/gimpcolorbutton.c:106
-#, fuzzy
+#: libgimp/gimpcolorbutton.c:116
 msgid "/Use Background Color"
-msgstr "Bakgrunn"
+msgstr "/Bruk bakgrunnsfarge"
 
 #: libgimp/gimpexport.c:155
-#, fuzzy
 msgid "can't Handle Layers"
 msgstr "kan ikke håndtere lag"
 
 #: libgimp/gimpexport.c:156 libgimp/gimpexport.c:165
-#, fuzzy
 msgid "Merge Visible Layers"
 msgstr "Flett sammen synlige lag"
 
 #: libgimp/gimpexport.c:164
-#, fuzzy
 msgid "can only Handle Layers as Animation Frames"
 msgstr "kan kun håndtere lag som animasjonsbilder"
 
 #: libgimp/gimpexport.c:165
-#, fuzzy
 msgid "Save as Animation"
 msgstr "Lagre som en animasjon"
 
 #: libgimp/gimpexport.c:173
-#, fuzzy
 msgid "can't Handle Transparency"
 msgstr "kan ikke håndtere gjennomsiktighet"
 
@@ -52,7 +46,6 @@ msgid "Flatten Image"
 msgstr "Flate ut bilde"
 
 #: libgimp/gimpexport.c:182
-#, fuzzy
 msgid "can only Handle RGB Images"
 msgstr "kan kun håndtere RGB-bilder"
 
@@ -61,17 +54,14 @@ msgid "Convert to RGB"
 msgstr "Konverter til RGB"
 
 #: libgimp/gimpexport.c:191
-#, fuzzy
 msgid "can only Handle Grayscale Images"
 msgstr "kan kun håndtere bilder i gråtoner"
 
 #: libgimp/gimpexport.c:192 libgimp/gimpexport.c:211 libgimp/gimpexport.c:232
-#, fuzzy
 msgid "Convert to Grayscale"
 msgstr "Konverter til gråtoner"
 
 #: libgimp/gimpexport.c:200
-#, fuzzy
 msgid "can only Handle Indexed Images"
 msgstr "kan kun håndtere indekserte bilder"
 
@@ -85,27 +75,22 @@ msgstr ""
 "justere resultatet)"
 
 #: libgimp/gimpexport.c:210
-#, fuzzy
 msgid "can only Handle RGB or Grayscale Images"
 msgstr "kan kun håndtere RGB eller gråskala bilder"
 
 #: libgimp/gimpexport.c:219
-#, fuzzy
 msgid "can only Handle RGB or Indexed Images"
 msgstr "kan kun håndtere RGB eller indekserte bilder"
 
 #: libgimp/gimpexport.c:229
-#, fuzzy
 msgid "can only Handle Grayscale or Indexed Images"
 msgstr "kan kun håndtere gråtone eller indekserte bilder"
 
 #: libgimp/gimpexport.c:240
-#, fuzzy
 msgid "needs an Alpha Channel"
 msgstr "må ha en alfakanal"
 
 #: libgimp/gimpexport.c:241
-#, fuzzy
 msgid "Add Alpha Channel"
 msgstr "Legg til alfakanal"
 
@@ -126,9 +111,9 @@ msgstr "Eksporter"
 msgid "Ignore"
 msgstr "Ignorer"
 
-#: libgimp/gimpexport.c:319 libgimp/gimpquerybox.c:160
-#: libgimp/gimpquerybox.c:197 libgimp/gimpquerybox.c:235
-#: libgimp/gimpquerybox.c:275
+#: libgimp/gimpexport.c:319 libgimp/gimpquerybox.c:177
+#: libgimp/gimpquerybox.c:231 libgimp/gimpquerybox.c:287
+#: libgimp/gimpquerybox.c:350
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -143,32 +128,31 @@ msgstr "Du bør eksportere bildet ditt før det kan lagres av følgende gunner:"
 msgid "The export conversion won't modify your original image."
 msgstr "Konverteringen under eksport vil ikke endre ditt originale bilde."
 
-#: libgimp/gimpfileselection.c:394
+#: libgimp/gimpfileselection.c:348
 msgid "Select File"
 msgstr "Velg fil"
 
-#: libgimp/gimpfileselection.c:404 libgimp/gimpunitmenu.c:484
-#, fuzzy
+#: libgimp/gimpfileselection.c:360 libgimp/gimpunitmenu.c:484
 msgid "Select"
-msgstr "Seed"
+msgstr "Velg"
 
-#: libgimp/gimpfileselection.c:405 libgimp/gimpunitmenu.c:486
+#: libgimp/gimpfileselection.c:361 libgimp/gimpunitmenu.c:486
 msgid "Close"
 msgstr "Lukk"
 
-#: libgimp/gimpquerybox.c:160 libgimp/gimpquerybox.c:197
-#: libgimp/gimpquerybox.c:235 libgimp/gimpquerybox.c:275
+#: libgimp/gimpquerybox.c:177 libgimp/gimpquerybox.c:231
+#: libgimp/gimpquerybox.c:287 libgimp/gimpquerybox.c:350
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. pseudo unit
 #: libgimp/gimpunit.c:47
 msgid "pixel"
-msgstr ""
+msgstr "piksel"
 
 #: libgimp/gimpunit.c:47
 msgid "pixels"
-msgstr ""
+msgstr "piksler"
 
 #. standard units
 #: libgimp/gimpunit.c:50
@@ -223,3 +207,19 @@ msgstr "Enhet"
 #: libgimp/gimpunitmenu.c:517
 msgid "Factor"
 msgstr "Faktor"
+
+#: libgimp/gimpwidgets.c:695
+msgid ""
+"If the \"Time\" button is not pressed, use this value for random number "
+"generator seed - this allows you to repeat a given \"random\" operation"
+msgstr "Hvis \"Tid\" knappen ikke er trykket ned, bruker du denne verdieb som startverdi for generering av tilfeldige tall - dette lar deg gjenta en gitt \"tilfeldig\" operasjon"
+
+#: libgimp/gimpwidgets.c:700
+msgid "Time"
+msgstr "Tid"
+
+#: libgimp/gimpwidgets.c:712
+msgid ""
+"Seed random number generator from the current time - this guarantees a "
+"reasonable randomization"
+msgstr "Startverdi til generator av tilfeldige tall fra tiden nå - dette garanterer en noen lunde tilfeldig verdi"

@@ -1,3 +1,7 @@
+2000-02-19  Kjartan Maraas  <kmaraas@online.no>
+
+	* no.po: Updated Norwegian translation.
+	
 Sat Feb 19 17:43:36 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* POTFILES.in: Path Tool and XInput Airbrush are not built
