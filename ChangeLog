@@ -1,3 +1,9 @@
+2001-12-05  Sven Neumann  <sven@gimp.org>
+
+	* app/scan_convert.c (convert_segment): corrected wrong clipping code
+	and plugged a memleak. A more verbose description of the problems and
+	the fix can be found with bug report #66003.
+
 2001-12-02  Abel Cheung  <maddog@linux.org.hk>
 
 	* tips/gimp_tips.zh_CN.txt: Converted to native encoding.
