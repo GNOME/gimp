@@ -1,5 +1,13 @@
 2003-11-12  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimppropwidgets.c: set the boundaries for the
+	coordinates widget from the property limits.
+
+	* app/widgets/gimpgrideditor.c: removed the explicit calls to
+	gimp_size_entry_set_refval_boundaries().
+
+2003-11-12  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/color-history.[ch]: changed COLOR_HISTORY_SIZE to 12 to
 	reduce the minimum size of the color selector dialog.
 

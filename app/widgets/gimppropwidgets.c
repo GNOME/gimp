@@ -1709,7 +1709,6 @@ gimp_prop_coordinates_new (GObject                   *config,
   if (has_chainbutton)
     {
       chainbutton = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-
       gtk_table_attach_defaults (GTK_TABLE (sizeentry), chainbutton,
                                  1, 3, 3, 4);
       gtk_widget_show (chainbutton);
@@ -1744,13 +1743,13 @@ gimp_prop_coordinates_connect (GObject     *config,
   GParamSpec *x_param_spec;
   GParamSpec *y_param_spec;
   GParamSpec *unit_param_spec;
-  gdouble     x_value;
-  gdouble     y_value;
+  gdouble     x_value, x_lower, x_upper;
+  gdouble     y_value, y_lower, y_upper;
   GimpUnit    unit_value;
   gdouble    *old_x_value;
   gdouble    *old_y_value;
   GimpUnit   *old_unit_value;
-  gboolean    chain_checked = FALSE;
+  gboolean    chain_checked;
 
   g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (sizeentry), FALSE);
   g_return_val_if_fail (GIMP_SIZE_ENTRY (sizeentry)->number_of_fields == 2,
@@ -1764,6 +1763,12 @@ gimp_prop_coordinates_connect (GObject     *config,
 
   y_param_spec = find_param_spec (config, y_property_name, G_STRLOC);
   if (! y_param_spec)
+    return FALSE;
+
+  if (! get_numeric_values (config, x_param_spec,
+                            &x_value, &x_lower, &x_upper, G_STRLOC) ||
+      ! get_numeric_values (config, y_param_spec,
+                            &y_value, &y_lower, &y_upper, G_STRLOC))
     return FALSE;
 
   if (unit_property_name)
@@ -1781,37 +1786,6 @@ gimp_prop_coordinates_connect (GObject     *config,
     {
       unit_param_spec = NULL;
       unit_value      = GIMP_UNIT_INCH;
-    }
-
-  if (G_IS_PARAM_SPEC_INT (x_param_spec) &&
-      G_IS_PARAM_SPEC_INT (y_param_spec))
-    {
-      gint int_x;
-      gint int_y;
-
-      g_object_get (config,
-                    x_property_name, &int_x,
-                    y_property_name, &int_y,
-                    NULL);
-
-      x_value = int_x;
-      y_value = int_y;
-    }
-  else if (G_IS_PARAM_SPEC_DOUBLE (x_param_spec) &&
-           G_IS_PARAM_SPEC_DOUBLE (y_param_spec))
-    {
-      g_object_get (config,
-                    x_property_name, &x_value,
-                    y_property_name, &y_value,
-                    NULL);
-    }
-  else
-    {
-      g_warning ("%s: properties '%s' and '%s' of %s are not either "
-                 " both int or both double",
-                 G_STRLOC, x_property_name, y_property_name,
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)));
-      return FALSE;
     }
 
   set_param_spec (NULL,
@@ -1836,33 +1810,22 @@ gimp_prop_coordinates_connect (GObject     *config,
                                       xresolution, FALSE);
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1,
                                       yresolution, FALSE);
-
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
-                                             GIMP_MIN_IMAGE_SIZE,
-                                             GIMP_MAX_IMAGE_SIZE);
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
-                                             GIMP_MIN_IMAGE_SIZE,
-                                             GIMP_MAX_IMAGE_SIZE);
-
-      if (ABS (x_value - y_value) < 1)
-        chain_checked = TRUE;
+      chain_checked = (ABS (x_value - y_value) < 1);
       break;
 
     case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
-                                             GIMP_MIN_RESOLUTION,
-                                             GIMP_MAX_RESOLUTION);
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
-                                             GIMP_MIN_RESOLUTION,
-                                             GIMP_MAX_RESOLUTION);
-
-      if (ABS (x_value - y_value) < GIMP_MIN_RESOLUTION)
-        chain_checked = TRUE;
+      chain_checked = (ABS (x_value - y_value) < GIMP_MIN_RESOLUTION);
       break;
 
     default:
+      chain_checked = (x_value == y_value);
       break;
     }
+
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
+                                         x_lower, x_upper);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
+                                         y_lower, y_upper);
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0, x_value);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1, y_value);
@@ -1997,16 +1960,17 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
   if (old_unit_value)
     *old_unit_value = unit_value;
 
+  if (unit_param_spec)
+    g_object_set (config,
+                  unit_param_spec->name, unit_value,
+                  NULL);
+
   if (G_IS_PARAM_SPEC_INT (x_param_spec) &&
       G_IS_PARAM_SPEC_INT (y_param_spec))
     {
       g_object_set (config,
                     x_param_spec->name, ROUND (x_value),
                     y_param_spec->name, ROUND (y_value),
-
-                    unit_param_spec ?
-                    unit_param_spec->name : NULL, unit_value,
-
                     NULL);
     }
   else if (G_IS_PARAM_SPEC_DOUBLE (x_param_spec) &&
@@ -2015,10 +1979,6 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
       g_object_set (config,
                     x_param_spec->name, x_value,
                     y_param_spec->name, y_value,
-
-                    unit_param_spec ?
-                    unit_param_spec->name : NULL, unit_value,
-
                     NULL);
     }
 }
@@ -2559,8 +2519,6 @@ gimp_prop_stock_image_new (GObject     *config,
   g_object_get (config,
                 property_name, &stock_id,
                 NULL);
-
-  g_print ("stock_id: %s\n", stock_id);
 
   image = gtk_image_new_from_stock (stock_id, icon_size);
 

@@ -255,11 +255,6 @@ gimp_grid_editor_constructor (GType                  type,
                                          editor->yresolution,
                                          TRUE);
 
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry),
-                                         0, 1.0, GIMP_MAX_IMAGE_SIZE);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry),
-                                         1, 1.0, GIMP_MAX_IMAGE_SIZE);
-
   gtk_table_set_col_spacings (GTK_TABLE (sizeentry), 2);
   gtk_table_set_row_spacings (GTK_TABLE (sizeentry), 2);
 
@@ -292,19 +287,6 @@ gimp_grid_editor_constructor (GType                  type,
                                          editor->xresolution,
                                          editor->yresolution,
                                          TRUE);
-
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry),
-                                         0, - GIMP_MAX_IMAGE_SIZE,
-                                         GIMP_MAX_IMAGE_SIZE);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry),
-                                         1, - GIMP_MAX_IMAGE_SIZE,
-                                         GIMP_MAX_IMAGE_SIZE);
-
-#ifdef __GNUC__
-#warning FIXME: remove this hack when gimp_prop_coordinates_new() accepts boundaries
-#endif
-  g_object_notify (G_OBJECT (editor->grid), "xoffset");
-  g_object_notify (G_OBJECT (editor->grid), "yoffset");
 
   gtk_table_set_col_spacings (GTK_TABLE (sizeentry), 2);
   gtk_table_set_row_spacings (GTK_TABLE (sizeentry), 2);
