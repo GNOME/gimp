@@ -36,37 +36,68 @@
 
 typedef struct
 {
-  gboolean  delete_on_exit;
-  gdouble   factor;
-  gint      digits;
-  gchar    *identifier;
-  gchar    *symbol;
-  gchar    *abbreviation;
-  gchar    *singular;
-  gchar    *plural;
+  gdouble      factor;
+  gint         digits;
+  const gchar *identifier;
+  const gchar *symbol;
+  const gchar *abbreviation;
+  const gchar *singular;
+  const gchar *plural;
 } GimpUnitDef;
 
-static GimpUnitDef gimp_unit_defs[GIMP_UNIT_END] =
-{
-  /* pseudo unit */
-  { FALSE,  0.0, 0, "pixels",      "px", "px", N_("pixel"),      N_("pixels") },
 
-  /* standard units */
-  { FALSE,  1.0, 2, "inches",      "''", "in", N_("inch"),       N_("inches") },
-  { FALSE, 25.4, 1, "millimeters", "mm", "mm", N_("millimeter"), N_("millimeters") },
-
-  /* professional units */
-  { FALSE, 72.0, 0, "points",      "pt", "pt", N_("point"),      N_("points") },
-  { FALSE,  6.0, 1, "picas",       "pc", "pc", N_("pica"),       N_("picas") },
-};
+static GimpUnitDef * gimp_unit_defs         = NULL;
+static GimpUnit      gimp_units_initialized = 0;
 
 /*  not a unit at all but kept here to have the strings in one place
  */
 static GimpUnitDef gimp_unit_percent =
 {
-  FALSE,    0.0, 0, "percent",     "%",  "%",  N_("percent"),    N_("percent")
+  0.0, 0, "percent", "%", "%",  N_("percent"), N_("percent")
 };
 
+
+static void  gimp_unit_def_init (GimpUnitDef *unit_def,
+                                 GimpUnit     unit);
+
+
+static gboolean
+gimp_unit_init (GimpUnit unit)
+{
+  gint i, n;
+
+  if (unit < gimp_units_initialized)
+    return TRUE;
+
+  n = _gimp_unit_get_number_of_units ();
+
+  if (unit >= n)
+    return FALSE;
+
+  gimp_unit_defs = g_renew (GimpUnitDef, gimp_unit_defs, n);
+
+  for (i = gimp_units_initialized; i < n; i++)
+    {
+      gimp_unit_def_init (&gimp_unit_defs[i], i);
+    }
+
+  gimp_units_initialized = n;
+
+  return TRUE;
+}
+
+static void
+gimp_unit_def_init (GimpUnitDef *unit_def,
+                    GimpUnit     unit)
+{
+  unit_def->factor       = _gimp_unit_get_factor (unit);
+  unit_def->digits       = _gimp_unit_get_digits (unit);
+  unit_def->identifier   = _gimp_unit_get_identifier (unit);
+  unit_def->symbol       = _gimp_unit_get_symbol (unit);
+  unit_def->abbreviation = _gimp_unit_get_abbreviation (unit);
+  unit_def->singular     = _gimp_unit_get_singular (unit);
+  unit_def->plural       = _gimp_unit_get_plural (unit);  
+}
 
 /**
  * gimp_unit_get_number_of_units:
@@ -74,7 +105,6 @@ static GimpUnitDef gimp_unit_percent =
  * Returns the number of units which are known to the #GimpUnit system.
  *
  * Returns: The number of defined units.
- *
  */
 gint
 gimp_unit_get_number_of_units (void)
@@ -90,7 +120,6 @@ gimp_unit_get_number_of_units (void)
  *  UNIT_PIXEL).
  *
  * Returns: The number of built-in units.
- *
  */
 gint
 gimp_unit_get_number_of_built_in_units (void)
@@ -115,7 +144,6 @@ gimp_unit_get_number_of_built_in_units (void)
  * gimp_unit_set_deletion_flag() to make the unit definition persistent.
  *
  * Returns: The ID of the new unit.
- *
  */
 GimpUnit
 gimp_unit_new (gchar   *identifier,
@@ -140,7 +168,6 @@ gimp_unit_new (gchar   *identifier,
  * @unit: The unit you want to know the @deletion_flag of.
  *
  * Returns: The unit's @deletion_flag.
- *
  */
 gboolean
 gimp_unit_get_deletion_flag (GimpUnit unit)
@@ -164,7 +191,6 @@ gimp_unit_get_deletion_flag (GimpUnit unit)
  *
  * Trying to change the @deletion_flag of a built-in unit will be silently
  * ignored.
- *
  */
 void
 gimp_unit_set_deletion_flag (GimpUnit unit,
@@ -190,17 +216,19 @@ gimp_unit_set_deletion_flag (GimpUnit unit,
  * Returns 0 for @unit == GIMP_UNIT_PIXEL.
  *
  * Returns: The unit's factor.
- *
  */
 gdouble
 gimp_unit_get_factor (GimpUnit unit)
 {
   g_return_val_if_fail (unit >= GIMP_UNIT_INCH, 1.0);
 
-  if (unit < GIMP_UNIT_END)
-    return gimp_unit_defs[unit].factor;
+  if (unit == GIMP_UNIT_PERCENT)
+    return gimp_unit_percent.factor;
 
-  return _gimp_unit_get_factor (unit);
+  if (!gimp_unit_init (unit))
+    return 1.0;
+
+  return gimp_unit_defs[unit].factor;
 }
 
 /**
@@ -213,43 +241,41 @@ gimp_unit_get_factor (GimpUnit unit)
  * Returns 0 for @unit == GIMP_UNIT_PIXEL.
  *
  * Returns: The suggested number of digits.
- *
  */
 gint
 gimp_unit_get_digits (GimpUnit unit)
 {
   g_return_val_if_fail (unit >= GIMP_UNIT_INCH, 0);
 
-  if (unit < GIMP_UNIT_END)
-    return gimp_unit_defs[unit].digits;
+  if (unit == GIMP_UNIT_PERCENT)
+    return gimp_unit_percent.digits;
 
-  return _gimp_unit_get_digits (unit);
+  if (!gimp_unit_init (unit))
+    return 0;
+
+  return gimp_unit_defs[unit].digits;
 }
 
 /**
  * gimp_unit_get_identifier:
  * @unit: The unit you want to know the identifier of.
  *
- * This is an unstranslated string.
- *
- * NOTE: This string has to be g_free()'d by plugins but is a pointer to a
- *       constant string when this function is used from inside the GIMP.
+ * This is an unstranslated string and must not be changed or freed.
  *
  * Returns: The unit's identifier.
- *
  */
-gchar * 
+const gchar * 
 gimp_unit_get_identifier (GimpUnit unit)
 {
-  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, g_strdup (""));
-
-  if (unit < GIMP_UNIT_END)
-    return g_strdup (gimp_unit_defs[unit].identifier);
+  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, NULL);
 
   if (unit == GIMP_UNIT_PERCENT)
-    return g_strdup (gimp_unit_percent.identifier);
+    return gimp_unit_percent.identifier;
 
-  return _gimp_unit_get_identifier (unit);
+  if (!gimp_unit_init (unit))
+    return NULL;
+
+  return gimp_unit_defs[unit].identifier;
 }
 
 /**
@@ -258,24 +284,22 @@ gimp_unit_get_identifier (GimpUnit unit)
  *
  * This is e.g. "''" for UNIT_INCH.
  *
- * NOTE: This string has to be g_free()'d by plugins but is a pointer to a
- *       constant string when this function is used from inside the GIMP.
+ * NOTE: This string must not be changed or freed.
  *
  * Returns: The unit's symbol.
- *
  */
-gchar *
+const gchar *
 gimp_unit_get_symbol (GimpUnit unit)
 {
-  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, g_strdup (""));
-
-  if (unit < GIMP_UNIT_END)
-    return g_strdup (gimp_unit_defs[unit].symbol);
+  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, NULL);
 
   if (unit == GIMP_UNIT_PERCENT)
-    return g_strdup (gimp_unit_percent.symbol);
+    return gimp_unit_percent.symbol;
 
-  return _gimp_unit_get_symbol (unit);
+  if (!gimp_unit_init (unit))
+    return NULL;
+
+  return gimp_unit_defs[unit].symbol;
 }
 
 /**
@@ -285,24 +309,22 @@ gimp_unit_get_symbol (GimpUnit unit)
  * For built-in units, this function returns the translated abbreviation
  * of the unit.
  *
- * NOTE: This string has to be g_free()'d by plugins but is a pointer to a
- *       constant string when this function is used from inside the GIMP.
+ * NOTE: This string must not be changed or freed.
  *
  * Returns: The unit's abbreviation.
- *
  */
-gchar *
+const gchar *
 gimp_unit_get_abbreviation (GimpUnit unit)
 {
-  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, g_strdup (""));
-
-  if (unit < GIMP_UNIT_END)
-    return g_strdup (gimp_unit_defs[unit].abbreviation);
+  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, NULL);
 
   if (unit == GIMP_UNIT_PERCENT)
-    return g_strdup (gimp_unit_percent.abbreviation);
+    return gimp_unit_percent.abbreviation;
 
-  return _gimp_unit_get_abbreviation (unit);
+  if (!gimp_unit_init (unit))
+    return NULL;
+
+  return gimp_unit_defs[unit].abbreviation;
 }
 
 /**
@@ -312,24 +334,22 @@ gimp_unit_get_abbreviation (GimpUnit unit)
  * For built-in units, this function returns the translated singular form
  * of the unit's name.
  *
- * NOTE: This string has to be g_free()'d by plugins but is a pointer to a
- *       constant string when this function is used from inside the GIMP.
+ * NOTE: This string must not be changed or freed.
  *
  * Returns: The unit's singular form.
- *
  */
-gchar *
+const gchar *
 gimp_unit_get_singular (GimpUnit unit)
 {
-  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, g_strdup (""));
-
-  if (unit < GIMP_UNIT_END)
-    return g_strdup (gettext (gimp_unit_defs[unit].singular));
+  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, NULL);
 
   if (unit == GIMP_UNIT_PERCENT)
-    return g_strdup (gettext (gimp_unit_percent.singular));
+    return gettext (gimp_unit_percent.singular);
 
-  return _gimp_unit_get_singular (unit);
+  if (!gimp_unit_init (unit))
+    return NULL;
+
+  return gettext (gimp_unit_defs[unit].singular);
 }
 
 /**
@@ -339,22 +359,21 @@ gimp_unit_get_singular (GimpUnit unit)
  * For built-in units, this function returns the translated plural form
  * of the unit's name.
  *
- * NOTE: This string has to be g_free()'d by plugins but is a pointer to a
- *       constant string when this function is used from inside the GIMP.
+ * NOTE: This string must not be changed or freed.
  *
  * Returns: The unit's plural form.
  *
  */
-gchar *
+const gchar *
 gimp_unit_get_plural (GimpUnit unit)
 {
-  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, g_strdup (""));
-
-  if (unit < GIMP_UNIT_END)
-    return g_strdup (gettext (gimp_unit_defs[unit].plural));
+  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, NULL);
 
   if (unit == GIMP_UNIT_PERCENT)
-    return g_strdup (gettext (gimp_unit_percent.plural));
+    return gettext (gimp_unit_percent.plural);
 
-  return _gimp_unit_get_plural (unit);
+  if (!gimp_unit_init (unit))
+    return NULL;
+
+  return gettext (gimp_unit_defs[unit].plural);
 }

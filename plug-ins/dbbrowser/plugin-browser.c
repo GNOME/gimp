@@ -800,8 +800,8 @@ insert_into_ctree (PDesc      *pdesc,
 }
 
 static void
-get_plugin_info (PDesc *pdesc,
-		 gchar *search_text)
+get_plugin_info (PDesc       *pdesc,
+		 const gchar *search_text)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -906,8 +906,8 @@ static void
 dialog_search_callback (GtkWidget *widget, 
 			gpointer   data)
 {
-  PDesc *pdesc = data;
-  gchar *search_text = NULL;
+  PDesc       *pdesc = data;
+  const gchar *search_text = NULL;
  
   if (widget != NULL)
     {

@@ -163,7 +163,6 @@ new_unit (GimpUnit template)
   GtkWidget *singular_entry;
   GtkWidget *plural_entry;
 
-  gchar    *str;
   gboolean  ok   = FALSE;
   GimpUnit  unit = GIMP_UNIT_PIXEL;
 
@@ -174,10 +173,11 @@ new_unit (GimpUnit template)
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_OK, new_unit_ok_callback,
-			    &ok, NULL, NULL, TRUE, FALSE,
 			    GTK_STOCK_CANCEL, gtk_main_quit,
 			    NULL, 1, NULL, FALSE, TRUE,
+
+			    GTK_STOCK_OK, new_unit_ok_callback,
+			    &ok, NULL, NULL, TRUE, FALSE,
 
 			    NULL);
 
@@ -192,9 +192,8 @@ new_unit (GimpUnit template)
   entry = identifier_entry = gtk_entry_new ();
   if (template != GIMP_UNIT_PIXEL)
     {
-      str = gimp_unit_get_identifier (template);
-      gtk_entry_set_text (GTK_ENTRY (entry), str);
-      g_free (str);
+      gtk_entry_set_text (GTK_ENTRY (entry), 
+                          gimp_unit_get_identifier (template));
     }
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("ID:"), 1.0, 0.5,
@@ -228,9 +227,8 @@ new_unit (GimpUnit template)
   entry = symbol_entry = gtk_entry_new ();
   if (template != GIMP_UNIT_PIXEL)
     {
-      str = gimp_unit_get_symbol (template);
-      gtk_entry_set_text (GTK_ENTRY (entry), str);
-      g_free (str);
+      gtk_entry_set_text (GTK_ENTRY (entry), 
+                          gimp_unit_get_symbol (template));
     }
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Symbol:"), 1.0, 0.5,
@@ -241,9 +239,8 @@ new_unit (GimpUnit template)
   entry = abbreviation_entry = gtk_entry_new ();
   if (template != GIMP_UNIT_PIXEL)
     {
-      str = gimp_unit_get_abbreviation (template);
-      gtk_entry_set_text (GTK_ENTRY (entry), str);
-      g_free (str);
+      gtk_entry_set_text (GTK_ENTRY (entry), 
+                          gimp_unit_get_abbreviation (template));
     }
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
 			     _("Abbreviation:"), 1.0, 0.5,
@@ -254,9 +251,8 @@ new_unit (GimpUnit template)
   entry = singular_entry = gtk_entry_new ();
   if (template != GIMP_UNIT_PIXEL)
     {
-      str = gimp_unit_get_singular (template);
-      gtk_entry_set_text (GTK_ENTRY (entry), str);
-      g_free (str);
+      gtk_entry_set_text (GTK_ENTRY (entry),
+                          gimp_unit_get_singular (template));
     }
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
 			     _("Singular:"), 1.0, 0.5,
@@ -267,9 +263,8 @@ new_unit (GimpUnit template)
   entry = plural_entry = gtk_entry_new ();
   if (template != GIMP_UNIT_PIXEL)
     {
-      str = gimp_unit_get_plural (template);
-      gtk_entry_set_text (GTK_ENTRY (entry), str);
-      g_free (str);
+      gtk_entry_set_text (GTK_ENTRY (entry),
+                          gimp_unit_get_plural (template));
     }
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
 			     _("Plural:"), 1.0, 0.5,
@@ -293,13 +288,13 @@ new_unit (GimpUnit template)
 	  gchar   *singular;
 	  gchar   *plural;
 
-	  identifier   = (gchar *) gtk_entry_get_text (GTK_ENTRY (identifier_entry));
+	  identifier   = g_strdup (gtk_entry_get_text (GTK_ENTRY (identifier_entry)));
 	  factor       = GTK_ADJUSTMENT (factor_adj)->value;
 	  digits       = ROUND (GTK_ADJUSTMENT (digits_adj)->value);
-	  symbol       = (gchar *) gtk_entry_get_text (GTK_ENTRY (symbol_entry));
-	  abbreviation = (gchar *) gtk_entry_get_text (GTK_ENTRY (abbreviation_entry));
-	  singular     = (gchar *) gtk_entry_get_text (GTK_ENTRY (singular_entry));
-	  plural       = (gchar *) gtk_entry_get_text (GTK_ENTRY (plural_entry));
+	  symbol       = g_strdup (gtk_entry_get_text (GTK_ENTRY (symbol_entry)));
+	  abbreviation = g_strdup (gtk_entry_get_text (GTK_ENTRY (abbreviation_entry)));
+	  singular     = g_strdup (gtk_entry_get_text (GTK_ENTRY (singular_entry)));
+	  plural       = g_strdup (gtk_entry_get_text (GTK_ENTRY (plural_entry)));
 
 	  identifier   = g_strstrip (identifier);
 	  symbol       = g_strstrip (symbol);
@@ -344,7 +339,6 @@ new_unit (GimpUnit template)
     }
 
   gtk_widget_destroy (dialog);
-  gdk_flush ();
 
   gtk_widget_set_sensitive (main_dialog, TRUE);
 
@@ -368,13 +362,13 @@ clist_init (void)
     {
       row = unit - GIMP_UNIT_INCH;
 
-      entries[1] = gimp_unit_get_identifier (unit);
+      entries[1] = (gchar *) gimp_unit_get_identifier (unit);
       entries[2] = g_strdup_printf ("%.5f", gimp_unit_get_factor (unit));
       entries[3] = g_strdup_printf ("%d", gimp_unit_get_digits (unit));
-      entries[4] = gimp_unit_get_symbol (unit);
-      entries[5] = gimp_unit_get_abbreviation (unit);
-      entries[6] = gimp_unit_get_singular (unit);
-      entries[7] = gimp_unit_get_plural (unit);
+      entries[4] = (gchar *) gimp_unit_get_symbol (unit);
+      entries[5] = (gchar *) gimp_unit_get_abbreviation (unit);
+      entries[6] = (gchar *) gimp_unit_get_singular (unit);
+      entries[7] = (gchar *) gimp_unit_get_plural (unit);
 
       gtk_clist_append (GTK_CLIST (clist), entries);
       gtk_clist_set_row_data (GTK_CLIST (clist), row,
@@ -394,8 +388,8 @@ clist_init (void)
 				yes_pixmap, yes_mask);
 	}
 
-      for (i = 1; i < 8; i++)
-	g_free (entries[i]);
+      g_free (entries[2]);
+      g_free (entries[3]);
     }
 
   for (i = 0; i < 8; i++)

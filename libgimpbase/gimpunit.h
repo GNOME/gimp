@@ -35,31 +35,31 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint       gimp_unit_get_number_of_units          (void);
-gint       gimp_unit_get_number_of_built_in_units (void) G_GNUC_CONST;
+gint          gimp_unit_get_number_of_units          (void);
+gint          gimp_unit_get_number_of_built_in_units (void) G_GNUC_CONST;
 
-GimpUnit   gimp_unit_new                 (gchar    *identifier,
-					  gdouble   factor,
-					  gint      digits,
-					  gchar    *symbol,
-					  gchar    *abbreviation,
-					  gchar    *singular,
-					  gchar    *plural);
+GimpUnit      gimp_unit_new                 (gchar    *identifier,
+                                             gdouble   factor,
+                                             gint      digits,
+                                             gchar    *symbol,
+                                             gchar    *abbreviation,
+                                             gchar    *singular,
+                                             gchar    *plural);
 
-gboolean   gimp_unit_get_deletion_flag   (GimpUnit  unit);
-void       gimp_unit_set_deletion_flag   (GimpUnit  unit,
-					  gboolean  deletion_flag);
+gboolean      gimp_unit_get_deletion_flag   (GimpUnit  unit);
+void          gimp_unit_set_deletion_flag   (GimpUnit  unit,
+                                             gboolean  deletion_flag);
 
-gdouble    gimp_unit_get_factor          (GimpUnit  unit);
+gdouble       gimp_unit_get_factor          (GimpUnit  unit);
 
-gint       gimp_unit_get_digits          (GimpUnit  unit);
+gint          gimp_unit_get_digits          (GimpUnit  unit);
 
-gchar    * gimp_unit_get_identifier      (GimpUnit  unit);
+const gchar * gimp_unit_get_identifier      (GimpUnit  unit);
 
-gchar    * gimp_unit_get_symbol          (GimpUnit  unit);
-gchar    * gimp_unit_get_abbreviation    (GimpUnit  unit);
-gchar    * gimp_unit_get_singular        (GimpUnit  unit);
-gchar    * gimp_unit_get_plural          (GimpUnit  unit);
+const gchar * gimp_unit_get_symbol          (GimpUnit  unit);
+const gchar * gimp_unit_get_abbreviation    (GimpUnit  unit);
+const gchar * gimp_unit_get_singular        (GimpUnit  unit);
+const gchar * gimp_unit_get_plural          (GimpUnit  unit);
 
 
 G_END_DECLS

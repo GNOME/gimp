@@ -12,7 +12,7 @@ AM_CPPFLAGS = @STRIP_BEGIN@ \
 
 INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)		\
-	$(GTK_CFLAGS)		\
+	$(GLIB_CFLAGS)		\
 	-I$(includedir)		\
 @STRIP_END@
 

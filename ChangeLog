@@ -1,3 +1,19 @@
+2001-12-31  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/Makefile.am
+	* libgimpmath/Makefile.am: use GLIB_CFLAGS instead of GTK_CFLAGS.
+
+	* app/libgimp_glue.[ch]: do not allow anyone but app/libgimp_glue.c
+	to include libgimp_glue.h.
+
+	* libgimpbase/gimpunit.h
+	* libgimp/gimpunit.c: cache return values of GimpUnit PDB calls and 
+	return const strings from the GimpUnit accessor functions just like
+	the equivalent functions in the application do.
+	
+	* plug-ins/common/uniteditor.c: don't free GimpUnit strings. Don't
+	free the result of gtk_entry_get_text() neither.
+
 2001-12-31  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/nlfilt.c

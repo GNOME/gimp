@@ -20,6 +20,11 @@
 #define __LIBGIMP_GLUE_H__
 
 
+#if !defined (__LIBGIMP_GLUE_C__)
+#error "You must not include app/libgimp_glue.h."
+#endif
+
+
 /*  This files lets various libgimp files link against the application.
  *
  *  NEVER include this header, it's only here for documentation.

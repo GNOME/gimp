@@ -29,6 +29,8 @@
 #include "core/gimpunit.h"
 
 #include "app_procs.h"
+
+#define __LIBGIMP_GLUE_C__
 #include "libgimp_glue.h"
 
 
