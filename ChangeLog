@@ -1,3 +1,8 @@
+2003-11-12  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpquerybox.c (create_query_box): set proper
+	alignments for the GtkImage and GtkLabel of the query_box.
+
 2003-11-12  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimppropwidgets.c: set the boundaries for the

@@ -153,19 +153,16 @@ create_query_box (const gchar   *title,
     {
       GtkWidget *image;
 
+      hbox = gtk_hbox_new (FALSE, 10);
+      gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
+      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (query_box->qbox)->vbox),
+                         hbox);
+      gtk_widget_show (hbox);
+
       image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_DIALOG);
-
-      if (image)
-        {
-          hbox = gtk_hbox_new (FALSE, 10);
-          gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
-          gtk_container_add (GTK_CONTAINER (GTK_DIALOG (query_box->qbox)->vbox),
-                             hbox);
-          gtk_widget_show (hbox);
-
-          gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-          gtk_widget_show (image);
-        }
+      gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
+      gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+      gtk_widget_show (image);
     }
 
   query_box->vbox = gtk_vbox_new (FALSE, 6);
@@ -189,6 +186,7 @@ create_query_box (const gchar   *title,
   if (message)
     {
       label = gtk_label_new (message);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_box_pack_start (GTK_BOX (query_box->vbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
     }
