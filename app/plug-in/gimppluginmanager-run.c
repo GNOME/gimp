@@ -3099,14 +3099,14 @@ plug_in_args_destroy (Argument *args,
 int
 plug_in_image_types_parse (char *image_types)
 {
-  int types;
+  int types = 0;
 
+  /* 
+   *  If the plug_in registers with image_type == NULL or "", return 0
+   *  By doing so it won't be touched by plug_in_set_menu_sensitivity() 
+   */
   if (!image_types)
-    return (PLUG_IN_RGB_IMAGE | PLUG_IN_RGBA_IMAGE | 
-	    PLUG_IN_GRAY_IMAGE | PLUG_IN_GRAYA_IMAGE |
-	    PLUG_IN_INDEXED_IMAGE | PLUG_IN_INDEXEDA_IMAGE);
-
-  types = 0;
+    return types;
 
   while (*image_types)
     {

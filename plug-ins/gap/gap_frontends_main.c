@@ -127,7 +127,7 @@ query ()
 			 "Wolfgang Hofer",
 			 gap_main_version,
 			 N_("<Image>/Video/Split Video to Frames/Any XANIM readable..."),
-			 "RGB*, INDEXED*, GRAY*",
+			 NULL,
 			 PROC_PLUG_IN,
 			 nargs_xanim, nreturn_vals,
 			 args_xanim, return_vals);
@@ -139,7 +139,7 @@ query ()
 			 "Wolfgang Hofer",
 			 gap_main_version,
 			 N_("<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."),
-			 "RGB*, INDEXED*, GRAY*",
+			 NULL,
 			 PROC_EXTENSION,
 			 nargs_xanim_ext, nreturn_vals,
 			 args_xanim_ext, return_vals);
@@ -151,7 +151,7 @@ query ()
 			 "Wolfgang Hofer",
 			 gap_main_version,
 			 N_("<Image>/Video/Encode/MPEG1..."),
-			 "RGB*, INDEXED*, GRAY*",
+			 "*",
 			 PROC_PLUG_IN,
 			 nargs_mpege, nreturn_vals,
 			 args_mpege, return_vals);
@@ -164,7 +164,7 @@ query ()
 			 "Wolfgang Hofer",
 			 gap_main_version,
 			 N_("<Image>/Video/Encode/MPEG2..."),
-			 "RGB*, INDEXED*, GRAY*",
+			 "*",
 			 PROC_PLUG_IN,
 			 nargs_mpege, nreturn_vals,
 			 args_mpege, return_vals);

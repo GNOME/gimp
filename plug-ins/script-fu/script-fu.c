@@ -156,7 +156,7 @@ query (void)
 			  "Spencer Kimball & Peter Mattis",
 			  "1997",
 			  N_("<Toolbox>/Xtns/Script-Fu/Console..."),
-			  "",
+			  NULL,
 			  PROC_EXTENSION,
 			  nconsole_args, 0,
 			  console_args, NULL);
@@ -168,7 +168,7 @@ query (void)
 			  "Spencer Kimball & Peter Mattis",
 			  "1997",
 			  N_("<Toolbox>/Xtns/Script-Fu/Server..."),
-			  "",
+			  NULL,
 			  PROC_EXTENSION,
 			  nserver_args, 0,
 			  server_args, NULL);

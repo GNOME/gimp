@@ -271,6 +271,7 @@ open_url_dialog ()
   gtk_widget_show (hbbox);
   
   button = gtk_button_new_with_label (_("About"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		     (GtkSignalFunc) about_callback,
 		     dlg);

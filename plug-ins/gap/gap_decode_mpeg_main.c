@@ -166,7 +166,7 @@ query ()
                           "Wolfgang Hofer",
                           "1999/11/18",
                           N_("<Image>/Video/Split Video to Frames/MPEG1"),
-			  "RGB*, INDEXED*, GRAY*",
+			  NULL,
                           PROC_PLUG_IN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
@@ -178,7 +178,7 @@ query ()
                           "Wolfgang Hofer",
                           "1999/11/18",
                           N_("<Toolbox>/Xtns/Split Video to Frames/MPEG1"),
-			  "RGB*, INDEXED*, GRAY*",
+			  NULL,
                           PROC_EXTENSION,
                           next_args, nload_return_vals,
                           ext_args, load_return_vals);

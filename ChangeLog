@@ -1,3 +1,16 @@
+Sun Jan  2 21:46:46 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/plug_in.c: Redid my latest change here, since it didn't solve
+	the problem. Now, registering with image_types == NULL means the same
+	as what "" used to mean: No image is required and the menu entry will
+	always be sensitive. 
+	
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/gap/gap_decode_mpeg_main.c
+	* plug-ins/gap/gap_frontends_main.c
+	* plug-ins/gap/gap_mpege.c: Use NULL instead of the empty string
+	when registering the image_types.
+
 2000-01-02  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
 
 	* configure.in: bumped GTK req. to 1.2.6 -- I hadn't updated GTK
