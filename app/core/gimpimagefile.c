@@ -733,7 +733,7 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
       width  = gimage->width;
       height = gimage->height;
 
-      size = MIN (size, MAX (width, height));
+      size = MAX (width, height);
     }
   else
     {

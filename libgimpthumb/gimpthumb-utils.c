@@ -557,17 +557,20 @@ _gimp_thumbs_delete_others (const gchar   *uri,
   g_return_if_fail (gimp_thumb_initialized);
   g_return_if_fail (uri != NULL);
 
+  size = gimp_thumb_size (size);
+
   for (i = 0; i < thumb_num_sizes; i++)
     {
-      if (thumb_sizes[i] != size)
-        {
-          gchar *filename = gimp_thumb_name_from_uri (uri, thumb_sizes[i]);
+      gchar *filename;
 
-          if (filename)
-            {
-              unlink (filename);
-              g_free (filename);
-            }
+      if (i == size)
+        continue;
+
+      filename = gimp_thumb_name_from_uri (uri, thumb_sizes[i]);
+      if (filename)
+        {
+          unlink (filename);
+          g_free (filename);
         }
     }
 }

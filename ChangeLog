@@ -1,5 +1,14 @@
 2004-11-02  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimagefile.c (gimp_imagefile_save_thumb): minor
+	cleanup.
+
+	* libgimpthumb/gimpthumb-utils.c (_gimp_thumbs_delete_others): do
+	the right thing. Used to do the wrong thing when called with a
+	thumbnail size which is not from the GimpThumbSize enum.
+
+2004-11-02  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/image-commands.c (image_new_from_image_cmd_callback):
 	call image_new_dialog_set() unconditionally. Fixes bug #157096.
 
