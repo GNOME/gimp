@@ -839,7 +839,7 @@
       <xi:include href="xml/qmask-commands.xml"/>
       <xi:include href="xml/templates-menu.xml"/>
       <xi:include href="xml/templates-commands.xml"/>
-      <xi:include href="xml/tool-options-menus.xml"/>
+      <xi:include href="xml/tool-options-menu.xml"/>
       <xi:include href="xml/tool-options-commands.xml"/>
     </chapter>
   </part>
