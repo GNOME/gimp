@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2002-11-17 17:51+0100\n"
-"PO-Revision-Date: 2002-11-17 17:53+0100\n"
+"POT-Creation-Date: 2002-12-15 18:48+0100\n"
+"PO-Revision-Date: 2002-12-15 18:48+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -218,67 +218,67 @@ msgstr "/Sort"
 msgid "/White"
 msgstr "/Hvid"
 
-#: libgimpwidgets/gimpcolorscales.c:162 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
 msgid "_H"
 msgstr "_T"
 
-#: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
 msgid "_S"
 msgstr "_M"
 
-#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
 msgid "_B"
 msgstr "_B"
 
-#: libgimpwidgets/gimpcolorscales.c:168
+#: libgimpwidgets/gimpcolorscales.c:169
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:172 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:173 libgimpwidgets/gimpcolorselect.c:357
 msgid "Hue"
 msgstr "Farvetone"
 
-#: libgimpwidgets/gimpcolorscales.c:173 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Saturation"
 msgstr "Mætning"
 
-#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
 msgid "Value"
 msgstr "Værdi"
 
-#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
 msgid "Red"
 msgstr "Rød"
 
-#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Green"
 msgstr "Grøn"
 
-#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Blue"
 msgstr "Blå"
 
-#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Alpha"
 msgstr "Alfa"
 
-#: libgimpwidgets/gimpcolorscales.c:252
+#: libgimpwidgets/gimpcolorscales.c:253
 msgid "Hexadecimal color notation as used in HTML"
 msgstr "Hexadecimal farvenotation ligesom i HTML"
 
-#: libgimpwidgets/gimpcolorscales.c:266
+#: libgimpwidgets/gimpcolorscales.c:267
 msgid "He_x Triplet:"
 msgstr "He_x-triplet:"
 
@@ -294,7 +294,9 @@ msgstr "Vælg fil"
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr "Klik på farvevælgeren og klik derefter på en hvilken som helst farve på skærmen for at vælge den farve."
+msgstr ""
+"Klik på farvevælgeren og klik derefter på en hvilken som helst farve på "
+"skærmen for at vælge den farve."
 
 #: libgimpwidgets/gimpstock.c:88
 msgid "Anchor"
@@ -376,40 +378,35 @@ msgstr "Enhed"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:976
+#: libgimpwidgets/gimpwidgets.c:960
 msgid ""
-"If the \"Time\" button is not pressed, use this value for random number "
-"generator seed - this allows you to repeat a given \"random\" operation"
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
 msgstr ""
-"Hvis \"Tid\"-knappen ikke aktiveres, så brug denne værdi som startværdi til "
-"generatoren af tilfældige tal - dette tillader dig at gentage en given "
-"\"tilfældig\" operation"
+"Benyt denne værdi som startværdi til generatoren af tilfældige tal - dette "
+"tillader dig at gentage en given \"tilfældig\" handling"
 
-#: libgimpwidgets/gimpwidgets.c:981
-msgid "_Time"
-msgstr "_Tid"
+#: libgimpwidgets/gimpwidgets.c:964
+msgid "_Randomize"
+msgstr "_Tilfældiggør"
 
-#: libgimpwidgets/gimpwidgets.c:990
-msgid ""
-"Seed random number generator from the current time - this guarantees a "
-"reasonable randomization"
-msgstr ""
-"Start generatoren af tilfældige tal med den aktuelle tid - dette garanterer "
-"en god tilfældighed"
+#: libgimpwidgets/gimpwidgets.c:975
+msgid "Seed random number generator with a generated random number"
+msgstr "Start generatoren af tilfældige tal med et genereret tilfældigt tal"
 
-#: libgimpwidgets/gimpwidgets.c:1316
+#: libgimpwidgets/gimpwidgets.c:1289
 msgid "Bytes"
 msgstr "Byte"
 
-#: libgimpwidgets/gimpwidgets.c:1317
+#: libgimpwidgets/gimpwidgets.c:1290
 msgid "KiloBytes"
 msgstr "Kilobyte"
 
-#: libgimpwidgets/gimpwidgets.c:1318
+#: libgimpwidgets/gimpwidgets.c:1291
 msgid "MegaBytes"
 msgstr "Megabyte"
 
-#: libgimpwidgets/gimpwidgets.c:1319
+#: libgimpwidgets/gimpwidgets.c:1292
 msgid "GigaBytes"
 msgstr "Gigabyte"
 
@@ -456,6 +453,9 @@ msgstr "_Vandfarve"
 #: modules/colorsel_water.c:250
 msgid "Pressure"
 msgstr "Tryk"
+
+#~ msgid "_Time"
+#~ msgstr "_Tid"
 
 #~ msgid "Unloaded OK"
 #~ msgstr "Afvikling lykkedes"
