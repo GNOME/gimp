@@ -1542,7 +1542,7 @@ ps_open (const gchar      *filename,
 
       goto out;
     }
-  
+
 #ifdef PS_DEBUG
   g_print ("Ghostscript started with pid=%d\n", *ChildPidPtr);
 #endif
@@ -1565,7 +1565,7 @@ ps_open (const gchar      *filename,
                       NULL,       /* exit code */
                       &Gerr) )
     {
-      g_message (_("Error starting ghostscript (%s)"), Gerr->message);
+      g_message (_("Error starting ghostscript: %s"), Gerr->message);
       g_error_free (Gerr);
 
       unlink (pnmfile);
@@ -1575,7 +1575,7 @@ ps_open (const gchar      *filename,
 
   /* Don't care about exit status of ghostscript. */
   /* Just try to read what it wrote. */
- 
+
   fd_popen = fopen (pnmfile, "rb");
 
 #endif
