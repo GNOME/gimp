@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-19 17:44+0900\n"
-"PO-Revision-Date: 2004-03-19 17:46+0900\n"
+"POT-Creation-Date: 2004-03-20 06:20+0900\n"
+"PO-Revision-Date: 2004-03-20 06:25+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1305,7 +1305,7 @@ msgid "Cut"
 msgstr "Klipp ut"
 
 #: app/core/core-enums.c:608 app/core/core-enums.c:636
-#: app/tools/gimptexttool.c:120 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:125 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Text"
 
@@ -2438,53 +2438,53 @@ msgid "Custom Color"
 msgstr "Egen färg"
 
 #. create the contents of the right_vbox  ********************************
-#: app/display/gimpdisplayshell.c:788
+#: app/display/gimpdisplayshell.c:796
 msgid "Set Canvas Padding Color"
 msgstr "Ställ in färg på canvasutfyllnad"
 
-#: app/display/gimpdisplayshell.c:797
+#: app/display/gimpdisplayshell.c:805
 msgid "Set canvas padding color"
 msgstr "Ställ in färg på canvasutfyllnad"
 
-#: app/display/gimpdisplayshell.c:810
+#: app/display/gimpdisplayshell.c:818
 msgid "/From _Theme"
 msgstr "/Från _tema"
 
-#: app/display/gimpdisplayshell.c:813
+#: app/display/gimpdisplayshell.c:821
 msgid "/_Light Check Color"
 msgstr "/_Ljus rutfärg"
 
-#: app/display/gimpdisplayshell.c:816
+#: app/display/gimpdisplayshell.c:824
 msgid "/_Dark Check Color"
 msgstr "/_Mörk rutfärg"
 
-#: app/display/gimpdisplayshell.c:822
+#: app/display/gimpdisplayshell.c:830
 msgid "/Select _Custom Color..."
 msgstr "/Välj _egen färg..."
 
-#: app/display/gimpdisplayshell.c:826
+#: app/display/gimpdisplayshell.c:834
 msgid "/As in _Preferences"
 msgstr "/Som i _inställningarna"
 
-#: app/display/gimpdisplayshell.c:855
+#: app/display/gimpdisplayshell.c:863
 msgid "Toggle QuickMask"
 msgstr "Visa snabbmask"
 
-#: app/display/gimpdisplayshell.c:1395
+#: app/display/gimpdisplayshell.c:1403
 #, c-format
 msgid "Close %s?"
 msgstr "Stänga %s?"
 
-#: app/display/gimpdisplayshell.c:1405
+#: app/display/gimpdisplayshell.c:1413
 msgid "_Discard changes"
 msgstr "_Förkasta ändringar"
 
-#: app/display/gimpdisplayshell.c:1445
+#: app/display/gimpdisplayshell.c:1453
 #, c-format
 msgid "Changes were made to '%s'."
 msgstr "\"%s\" har ändrats."
 
-#: app/display/gimpdisplayshell.c:1459
+#: app/display/gimpdisplayshell.c:1467
 msgid "Unsaved changes will be lost."
 msgstr "Osparade ändringar kommer förloras."
 
@@ -2770,7 +2770,7 @@ msgstr "/_Ta bort från markering"
 msgid "/_Intersect with Selection"
 msgstr "/_Snitt med markering"
 
-#: app/gui/color-notebook.c:185
+#: app/gui/color-notebook.c:184
 msgid "Add the current color to the color history"
 msgstr "Lägg till aktuell färg till färghistoriken"
 
@@ -7348,7 +7348,7 @@ msgstr ""
 "Flygande bäckasiner söka\n"
 "strax hwila på mjuka tuvor."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:561
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:568
 msgid "Add Text Layer"
 msgstr "Lägg till textlager"
 
@@ -7368,7 +7368,7 @@ msgstr "Förkasta textinformation"
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "På grund av brist på typsnitt är textfunktioner inte tillgängliga."
 
-#: app/text/gimptextlayer.c:563
+#: app/text/gimptextlayer.c:570
 msgid "Empty Text Layer"
 msgstr "Tomt textlager"
 
@@ -8554,17 +8554,33 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "Skapa väg från text"
 
-#: app/tools/gimptexttool.c:121
+#: app/tools/gimptexttool.c:126
 msgid "Add text to the image"
 msgstr "Skriv text i bilden"
 
-#: app/tools/gimptexttool.c:122
+#: app/tools/gimptexttool.c:127
 msgid "/Tools/Te_xt"
 msgstr "/Verktyg/Te_xt"
 
-#: app/tools/gimptexttool.c:594
+#: app/tools/gimptexttool.c:601
 msgid "GIMP Text Editor"
 msgstr "GIMP-textredigerare"
+
+#: app/tools/gimptexttool.c:691 app/tools/gimptexttool.c:694
+msgid "Confirm Text Editing"
+msgstr "Bekräfta texteditering"
+
+#: app/tools/gimptexttool.c:715
+msgid ""
+"The layer you selected is a text layer but it has been modified using other "
+"tools. Editing the layer with the text tool will discard these "
+"modifications.\n"
+"\n"
+"You can edit the layer or create a new text layer from its text attributes."
+msgstr ""
+"Lagret du har valt är ett textlager, men har blivit ändrat av andra "
+"verktyg. Om du ändrar lagret med textverktyget så slänger du bort dessa "
+"förändringar.\n"
 
 #: app/tools/gimpthresholdtool.c:93
 msgid "Reduce image to two colors using a threshold"
