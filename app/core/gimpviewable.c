@@ -184,6 +184,7 @@ gimp_viewable_real_invalidate_preview (GimpViewable *viewable)
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
   g_object_set_data (G_OBJECT (viewable), "static-viewable-preview", NULL);
+  g_object_set_data (G_OBJECT (viewable), "static-viewable-preview-pixbuf", NULL);
 }
 
 TempBuf *

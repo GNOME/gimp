@@ -1,5 +1,10 @@
 2002-09-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpviewable.c (gimp_viewable_real_invalidate_preview):
+	remove the attached preview pixbuf just as the preview temp_buf.
+
+2002-09-02  Michael Natterer  <mitch@gimp.org>
+
 	DND cleanup part 1:
 
 	* app/widgets/gimpdnd.[ch]: changed all gimp_dnd_*_dest_set() and
