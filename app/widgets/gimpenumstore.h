@@ -50,7 +50,7 @@ struct _GimpEnumStore
 
 GType          gimp_enum_store_get_type               (void) G_GNUC_CONST;
 
-GtkListStore * gimp_enum_store_new                    (GType    enum_type);;
+GtkListStore * gimp_enum_store_new                    (GType    enum_type);
 GtkListStore * gimp_enum_store_new_with_range         (GType    enum_type,
                                                        gint     minimum,
                                                        gint     maximum);

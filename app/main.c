@@ -533,7 +533,7 @@ gimp_show_help (const gchar *progname)
              "                           The procedure to process batch commands with.\n"));
   g_print (_("  -b, --batch <commands>   Process commands in batch mode.\n"));
   g_print ("\n");
-};
+}
 
 
 #ifdef G_OS_WIN32

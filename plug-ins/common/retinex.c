@@ -137,7 +137,7 @@ static GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-MAIN ();
+MAIN ()
 
 static void
 query (void)

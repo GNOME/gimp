@@ -1,7 +1,15 @@
 2004-11-27  Sven Neumann  <sven@gimp.org>
 
+	* app/main.c
+	* app/widgets/gimpenumstore.h
+	* app/widgets/gimpunitstore.c
+	* plug-ins/common/retinex.c: applied patch by Tim Mooney that
+	removes extraneous ;
+
+2004-11-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/wmf.c (run): applied patch by Tim Mooney that
-	increase the size of values[] + to accomodate the use of
+	increase the size of values[] to accomodate the use of
 	file_wmf_load_thumb (bug #159601).
 
 2004-11-27  Sven Neumann  <sven@gimp.org>
