@@ -1,3 +1,16 @@
+Fri Feb 26 21:19:10 GMT 1999  Adam D. Moss  <adam@gimp.org>
+
+	* app/convert.c: 
+	Many revisions to the box-cut quantizer used in RGB->INDEXED
+	conversion.  Box to be cut is chosen on the basis of posessing an
+	axis with the largest sum of weighted perceptible error, rather
+	than based on volume or population.  The box is split along this
+	axis rather than its longest axis, at the point of error mean
+	rather than simply at its centre.  Error-limiting in the F-S
+	dither has been disabled - it may become optional again later.  If
+	you're convinced that you have an image where the old dither looks
+	better, let me know.
+
 Thu Feb 25 11:40:36 1999  Raph Levien  <raph@gimp.org>
 
 	* app/hue_saturation.c (hue_saturation_calculate_transfers):

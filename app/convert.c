@@ -17,16 +17,25 @@
  */
 
   /*
-   * TODO for Convert:
+   * (out of date) TODO for Convert:
    *
    *   Use palette of another open INDEXED image
-   *
    *   Different dither types
-   *
    *   Alpha dithering
+   *
+   *   Do error-splitting trick for GREY->INDEXED
    */
 
 /*
+ * 99/02/24 - Many revisions to the box-cut quantizer used in RGB->INDEXED
+ *  conversion.  Box to be cut is chosen on the basis of posessing an axis
+ *  with the largest sum of weighted perceptible error, rather than based on
+ *  volume or population.  The box is split along this axis rather than its
+ *  longest axis, at the point of error mean rather than simply at its centre.
+ *  Error-limiting in the F-S dither has been disabled - it may become optional
+ *  again later.  If you're convinced that you have an image where the old
+ *  dither looks better, let me know.  [Adam]
+ *
  * 99/01/10 - Hourglass... [Adam]
  *
  * 98/07/25 - Convert-to-indexed now remembers the last invocation's
@@ -190,14 +199,25 @@ typedef struct
 {
   /*  The bounds of the box (inclusive); expressed as histogram indexes  */
   int   Rmin, Rmax;
+  int   Rhalferror;
   int   Gmin, Gmax;
+  int   Ghalferror;
   int   Bmin, Bmax;
+  int   Bhalferror;
 
   /*  The volume (actually 2-norm) of the box  */
   int   volume;
 
   /*  The number of nonzero histogram cells within this box  */
   long  colorcount;
+
+  /* The sum of the weighted error within this box */
+  guint64 error;
+  /* The sum of the unweighted error within this box */
+  guint64 rerror;
+  guint64 gerror;
+  guint64 berror;
+
 } box, *boxptr;
 
 typedef struct
@@ -242,6 +262,12 @@ static void generate_histogram_gray (Histogram, Layer *);
 static void generate_histogram_rgb  (Histogram, Layer *, int col_limit);
 
 static QuantizeObj* initialize_median_cut (int, int, int, int);
+
+static void
+compute_color_rgb (QuantizeObj *quantobj,
+		   Histogram    histogram,
+		   boxptr       boxp,
+		   int          icolor);
 
 static unsigned char found_cols[MAXNUMCOLORS][3];
 static int num_found_cols;
@@ -1235,28 +1261,50 @@ generate_histogram_rgb (Histogram  histogram,
 
 
 static boxptr
-find_biggest_color_pop (boxptr boxlist,
-			int    numboxes)
-/* Find the splittable box with the largest color population */
-/* Returns NULL if no splittable boxes remain */
+find_split_candidate (boxptr boxlist,
+		      int numboxes)
 {
   boxptr boxp;
   int i;
-  long maxc = 0;
+  guint64 maxc = 0;
   boxptr which = NULL;
 
   for (i = 0, boxp = boxlist; i < numboxes; i++, boxp++)
     {
-      if (boxp->colorcount > maxc && boxp->volume > 0)
+      if (boxp->volume > 0)
 	{
-	  which = boxp;
-	  maxc = boxp->colorcount;
+	  if (boxp->gerror*G_SCALE > maxc)
+	    {
+	      which = boxp;
+	      maxc = boxp->gerror*G_SCALE;
+	    }
+	  if (boxp->rerror*R_SCALE > maxc)
+	    {
+	      which = boxp;
+	      maxc = boxp->rerror*R_SCALE;
+	    }
+	  if (boxp->berror*B_SCALE > maxc)
+	    {
+	      which = boxp;
+	      maxc = boxp->berror*B_SCALE;
+	    }
 	}
     }
 
   return which;
 }
 
+
+#if 0
+static boxptr
+find_biggest_color_pop (boxptr boxlist,
+			int    numboxes)
+/* Find the splittable box with the largest color population */
+/* Returns NULL if no splittable boxes remain */
+{
+  
+}
+#endif
 
 static boxptr
 find_biggest_volume (boxptr boxlist,
@@ -1338,13 +1386,18 @@ static void
 update_box_rgb (Histogram histogram,
 		boxptr    boxp)
 /* Shrink the min/max bounds of a box to enclose only nonzero elements, */
-/* and recompute its volume and population */
+/* and recompute its volume, population and error */
 {
   ColorFreq * histp;
   int R,G,B;
   int Rmin,Rmax,Gmin,Gmax,Bmin,Bmax;
   int dist0,dist1,dist2;
   long ccount;
+  guint64 tempRerror;
+  guint64 tempGerror;
+  guint64 tempBerror;
+  QuantizeObj dummyqo;
+  box dummybox;
 
   Rmin = boxp->Rmin;  Rmax = boxp->Rmax;
   Gmin = boxp->Gmin;  Gmax = boxp->Gmax;
@@ -1437,13 +1490,22 @@ update_box_rgb (Histogram histogram,
    * we have to shift back to JSAMPLE units to get consistent distances;
    * after which, we scale according to the selected distance scale factors.
    */
-  dist0 = ((Rmax - Rmin) << R_SHIFT) * R_SCALE;
-  dist1 = ((Gmax - Gmin) << G_SHIFT) * G_SCALE;
-  dist2 = ((Bmax - Bmin) << B_SHIFT) * B_SCALE;
+  dist0 = (( + Rmax - Rmin) << R_SHIFT) * R_SCALE;
+  dist1 = (( + Gmax - Gmin) << G_SHIFT) * G_SCALE;
+  dist2 = (( + Bmax - Bmin) << B_SHIFT) * B_SCALE;
   boxp->volume = dist0*dist0 + dist1*dist1 + dist2*dist2;
+
+  compute_color_rgb(&dummyqo, histogram, boxp, 0);
+
+  /*printf("(%d %d %d)\n", dummyqo.cmap[0].red,dummyqo.cmap[0].green,dummyqo.cmap[0].blue);
+    fflush(stdout);*/
 
   /* Now scan remaining volume of box and compute population */
   ccount = 0;
+  boxp->error = 0;
+  boxp->rerror = 0;
+  boxp->gerror = 0;
+  boxp->berror = 0;
   for (R = Rmin; R <= Rmax; R++)
     for (G = Gmin; G <= Gmax; G++)
       {
@@ -1451,9 +1513,139 @@ update_box_rgb (Histogram histogram,
 	for (B = Bmin; B <= Bmax; B++, histp++)
 	  if (*histp != 0)
 	    {
-	      ccount++;
+	      int ge, be, re;
+
+	      dummybox.Rmin = dummybox.Rmax = R;
+	      dummybox.Gmin = dummybox.Gmax = G;
+	      dummybox.Bmin = dummybox.Bmax = B;
+	      compute_color_rgb(&dummyqo, histogram, &dummybox, 1);
+
+	      re = dummyqo.cmap[0].red   - dummyqo.cmap[1].red;
+	      ge = dummyqo.cmap[0].green - dummyqo.cmap[1].green;
+	      be = dummyqo.cmap[0].blue  - dummyqo.cmap[1].blue;
+
+	      boxp->rerror += (*histp) * re*re;
+	      boxp->gerror += (*histp) * ge*ge;
+	      boxp->berror += (*histp) * be*be;
+
+	      boxp->error += (*histp) *
+		(
+		 re*re*R_SCALE + ge*ge*G_SCALE + be*be*B_SCALE
+		 );
+
+	      ccount += *histp;
 	    }
       }
+
+  /* Scan again, taking note of halfway error point for red axis */
+  tempRerror = 0;
+  boxp->Rhalferror = Rmin;
+  for (R = Rmin; R < Rmax; R++)
+    {
+      dummybox.Rmin = dummybox.Rmax = R;
+      for (G = Gmin; G <= Gmax; G++)
+	{
+	  dummybox.Gmin = dummybox.Gmax = G;
+	  histp = histogram + R*MR + G*MG + Bmin;
+	  for (B = Bmin; B <= Bmax; B++, histp++)
+	    if (*histp != 0)
+	      {
+		int re;
+		dummybox.Bmin = dummybox.Bmax = B;
+		compute_color_rgb(&dummyqo, histogram, &dummybox, 1);
+		
+		re = dummyqo.cmap[0].red   - dummyqo.cmap[1].red;
+		
+		tempRerror += (*histp)*re*re;
+
+		if (tempRerror*2 > boxp->rerror)
+		  goto green_axisscan;
+		else
+		  boxp->Rhalferror = R;
+	      }
+	}
+    }
+
+ green_axisscan:
+  /* Scan again, taking note of halfway error point for green axis */
+  tempGerror = 0;
+  boxp->Ghalferror = Gmin;
+  for (G = Gmin; G < Gmax; G++)
+    {
+      dummybox.Gmin = dummybox.Gmax = G;
+      for (R = Rmin; R <= Rmax; R++)
+	{
+	  dummybox.Rmin = dummybox.Rmax = R;
+	  histp = histogram + R*MR + G*MG + Bmin;
+	  for (B = Bmin; B <= Bmax; B++, histp++)
+	    if (*histp != 0)
+	      {
+		int ge;
+		dummybox.Bmin = dummybox.Bmax = B;
+		compute_color_rgb(&dummyqo, histogram, &dummybox, 1);
+		
+		ge = dummyqo.cmap[0].green - dummyqo.cmap[1].green;
+				
+		tempGerror += (*histp)*ge*ge;
+
+		if (tempGerror*2 > boxp->gerror)
+		  goto blue_axisscan;
+		else
+		  boxp->Ghalferror = G;
+	      }
+	}
+    }
+
+ blue_axisscan:
+  /* Scan again, taking note of halfway error point for blue axis */
+  tempBerror = 0;
+  boxp->Bhalferror = Bmin;
+  for (B = Bmin; B < Bmax; B++)
+    {
+      dummybox.Bmin = dummybox.Bmax = B;
+      for (R = Rmin; R <= Rmax; R++)
+	{
+	  dummybox.Rmin = dummybox.Rmax = R;
+	  for (G = Gmin; G <= Gmax; G++)
+	    {
+	      histp = histogram + R*MR + G*MG + B;
+	      if (*histp != 0)
+		{
+		  int be;		  
+		  dummybox.Gmin = dummybox.Gmax = G;
+		  compute_color_rgb(&dummyqo, histogram, &dummybox, 1);
+		  
+		  be = dummyqo.cmap[0].blue  - dummyqo.cmap[1].blue;
+		  
+		  tempBerror += (*histp)*be*be;
+
+		  if (tempBerror*2 > boxp->berror)
+		    goto finished_axesscan;
+		  else
+		    boxp->Bhalferror = B;
+		}
+	    }
+	}
+    }
+ finished_axesscan:
+
+  /*
+    //  boxp->Rhalferror = (Rmin+Rmax)/2;
+    //  boxp->Ghalferror = (Gmin+Gmax)/2;
+    //  boxp->Bhalferror = (Bmin+Bmax)/2;
+  */
+
+  /*boxp->error = (sqrt((double)(boxp->error/ccount)));*/
+  /*  boxp->rerror = (sqrt((double)((boxp->rerror)/ccount)));
+  boxp->gerror = (sqrt((double)((boxp->gerror)/ccount)));
+  boxp->berror = (sqrt((double)((boxp->berror)/ccount)));*/
+  /*printf(":%lld / %ld: ", boxp->error, ccount);
+  printf("(%d-%d-%d)(%d-%d-%d)(%d-%d-%d)\n",
+	 Rmin, boxp->Rhalferror, Rmax,
+	 Gmin, boxp->Ghalferror, Gmax,
+	 Bmin, boxp->Bhalferror, Bmax
+	 );
+	 fflush(stdout);*/
 
   boxp->colorcount = ccount;
 }
@@ -1474,11 +1666,13 @@ median_cut_gray (Histogram histogram,
       /* Select box to split.
        * Current algorithm: by population for first half, then by volume.
        */
+#if 0
       if (numboxes*2 <= desired_colors)
 	{
 	  b1 = find_biggest_color_pop (boxlist, numboxes);
 	}
       else
+#endif
 	{
 	  b1 = find_biggest_volume (boxlist, numboxes);
 	}
@@ -1517,21 +1711,26 @@ median_cut_rgb (Histogram histogram,
 /* Repeatedly select and split the largest box until we have enough boxes */
 {
   int n,lb;
-  int R,G,B,cmax;
+  guint64 R,G,B,cmax;
   boxptr b1,b2;
 
   while (numboxes < desired_colors) {
+#if 0
     /* Select box to split.
      * Current algorithm: by population for first half, then by volume.
      */
-    if (numboxes*2 <= desired_colors)
+    if (1 || numboxes*2 <= desired_colors)
       {
+	printf("O ");
 	b1 = find_biggest_color_pop (boxlist, numboxes);
       }
     else
       {
+	printf(". ");
 	b1 = find_biggest_volume (boxlist, numboxes);
       }
+#endif
+    b1 = find_split_candidate (boxlist, numboxes);
 
     if (b1 == NULL)		/* no splittable boxes left! */
       break;
@@ -1540,12 +1739,16 @@ median_cut_rgb (Histogram histogram,
     b2->Rmax = b1->Rmax; b2->Gmax = b1->Gmax; b2->Bmax = b1->Bmax;
     b2->Rmin = b1->Rmin; b2->Gmin = b1->Gmin; b2->Bmin = b1->Bmin;
     /* Choose which axis to split the box on.
-     * Current algorithm: longest scaled axis.
      * See notes in update_box about scaling distances.
      */
-    R = ((b1->Rmax - b1->Rmin) << R_SHIFT) * R_SCALE;
-    G = ((b1->Gmax - b1->Gmin) << G_SHIFT) * G_SCALE;
-    B = ((b1->Bmax - b1->Bmin) << B_SHIFT) * B_SCALE;
+    /*
+    //        R = ((b1->Rmax - b1->Rmin) << R_SHIFT) * R_SCALE;
+	//        G = ((b1->Gmax - b1->Gmin) << G_SHIFT) * G_SCALE;
+        //B = ((b1->Bmax - b1->Bmin) << B_SHIFT) * B_SCALE;
+    */
+    R = R_SCALE*b1->rerror;/* * (((b1->Rmax - b1->Rmin) << R_SHIFT)) * R_SCALE; */
+    G = G_SCALE*b1->gerror;/* * (((b1->Gmax - b1->Gmin) << G_SHIFT)) * G_SCALE; */
+    B = B_SCALE*b1->berror;/* * (((b1->Bmax - b1->Bmin) << B_SHIFT)) * B_SCALE; */
     /* We want to break any ties in favor of green, then red, blue last.
      */
     cmax = G; n = 1;
@@ -1553,27 +1756,30 @@ median_cut_rgb (Histogram histogram,
     if (B > cmax) { n = 2; }
 
     /* Choose split point along selected axis, and update box bounds.
-     * Current algorithm: split at halfway point.
-     * (Since the box has been shrunk to minimum volume,
-     * any split will produce two nonempty subboxes.)
      * Note that lb value is max for lower box, so must be < old max.
      */
     switch (n)
       {
       case 0:
-	lb = (b1->Rmax + b1->Rmin) / 2;
+	lb = b1->Rhalferror;/* *0 + (b1->Rmax + b1->Rmin) / 2; */
 	b1->Rmax = lb;
 	b2->Rmin = lb+1;
+	g_assert(b1->Rmax >= b1->Rmin);
+	g_assert(b2->Rmax >= b2->Rmin);
 	break;
       case 1:
-	lb = (b1->Gmax + b1->Gmin) / 2;
+	lb = b1->Ghalferror;/* *0 + (b1->Gmax + b1->Gmin) / 2; */
 	b1->Gmax = lb;
 	b2->Gmin = lb+1;
+	g_assert(b1->Gmax >= b1->Gmin);
+	g_assert(b2->Gmax >= b2->Gmin);
 	break;
       case 2:
-	lb = (b1->Bmax + b1->Bmin) / 2;
+	lb = b1->Bhalferror;/* *0 + (b1->Bmax + b1->Bmin) / 2; */
 	b1->Bmax = lb;
 	b2->Bmin = lb+1;
+	g_assert(b1->Bmax >= b1->Bmin);
+	g_assert(b2->Bmax >= b2->Bmin);
 	break;
       }
     /* Update stats for boxes */
@@ -2419,7 +2625,20 @@ init_error_limit (void)
   table = g_malloc (sizeof (int) * (255 * 2 + 1));
   table += 255;                 /* so we can index -255 ... +255 */
 
-#define STEPSIZE 16
+  /* #define STEPSIZE 16 */
+#define STEPSIZE 200
+
+  for (in = 0; in < STEPSIZE; in++)
+    {
+      table[in] = in;
+      table[-in] = -in;
+    }
+  for (; in <= 255; in++)
+    {
+      table[in] = STEPSIZE;
+      table[-in] = -STEPSIZE;
+    }
+  return (table);
 
   /* Map errors 1:1 up to +- 16 */
   out = 0;
