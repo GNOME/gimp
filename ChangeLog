@@ -1,5 +1,11 @@
 2004-11-13  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimputils.c (gimp_strip_uline): changed based on a
+	patch by Joao S. O. Bueno to remove mnemonics as used in languages
+	like Chinese. Fixes bug #157561.
+
+2004-11-13  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/ifscompose/README.ifscompose: updated link to the
 	tutorial (pointed out by Alan Horkan) and added another link.
 

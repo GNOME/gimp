@@ -220,20 +220,26 @@ gimp_filename_to_utf8 (const gchar *filename)
 
 /**
  * gimp_strip_uline:
- * @str: Underline infested string (or %NULL)
+ * @str: underline infested string (or %NULL)
  *
  * This function returns a copy of @str stripped of underline
  * characters. This comes in handy when needing to strip mnemonics
  * from menu paths etc.
  *
+ * In some languages, mnemonics are handled by adding the mnemonic
+ * character in brackets (like "File (_F)"). This function recognizes
+ * this construct and removes the whole bracket construction to get
+ * rid of the mnemonic (see bug #157561).
+ *
  * Return value: A (possibly stripped) copy of @str which should be
- * freed using g_free() when it is not needed any longer.
+ *               freed using g_free() when it is not needed any longer.
  **/
 gchar *
 gimp_strip_uline (const gchar *str)
 {
-  gchar *escaped;
-  gchar *p;
+  gchar    *escaped;
+  gchar    *p;
+  gboolean  past_bracket = FALSE;
 
   if (! str)
     return NULL;
@@ -246,12 +252,26 @@ gimp_strip_uline (const gchar *str)
         {
           /*  "__" means a literal "_" in the menu path  */
           if (str[1] == '_')
-            *p++ = *str++;
+            {
+             *p++ = *str++;
+             *p++ = *str++;
+            }
 
-          str++;
+          /*  find the "(_X)" construct and remove it entirely  */
+          if (past_bracket && str[1] && *(g_utf8_next_char (str + 1)) == ')')
+            {
+              str = g_utf8_next_char (str + 1) + 1;
+              p--;
+            }
+          else
+            {
+              str++;
+            }
         }
       else
         {
+          past_bracket = (*str == '(');
+
           *p++ = *str++;
         }
     }
