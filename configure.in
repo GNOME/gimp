@@ -100,7 +100,7 @@ ALL_LINGUAS="fr sv ja it fi ko de hu nl pl"
 AM_GNU_GETTEXT
 
 dnl Check for GTK+
-AM_PATH_GTK(1.1.9,,
+AM_PATH_GTK(1.1.13,,
   AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
 
 changequote(,)dnl

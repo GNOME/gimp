@@ -1,3 +1,10 @@
+Wed Jan 20 19:57:34 EST 1999 Mandrake <mandrake@mandrake.net>
+	* app/gradients.c
+	  app/menus.c: 
+	  s/gtk_check_menu_item_set_state/gtk_check_menu_item_set_active/
+	  configure.in: upped gtk+ requirement to 1.1.13, since that's
+	  where it first occurs.
+
 Thu Jan 21 00:10:33 GMT 1999  Adam D. Moss  <adam@gimp.org>
 
 	* app/gimpimage.c: Backed out last change for now, since I'm a

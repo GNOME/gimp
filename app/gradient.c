@@ -3373,12 +3373,12 @@ cpopup_adjust_blending_menu(void)
 	/* Set state */
 
 	if (equal) {
-		gtk_check_menu_item_set_state(GTK_CHECK_MENU_ITEM(g_editor->control_blending_items[type]),
+		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(g_editor->control_blending_items[type]),
 					      TRUE);
 		gtk_widget_hide(g_editor->control_blending_items[num_items - 1]);
 	} else {
 		gtk_widget_show(g_editor->control_blending_items[num_items - 1]);
-		gtk_check_menu_item_set_state(GTK_CHECK_MENU_ITEM(g_editor->control_blending_items
+		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(g_editor->control_blending_items
 								  [num_items - 1]),
 					      TRUE);
 	} /* else */
@@ -3415,13 +3415,13 @@ cpopup_adjust_coloring_menu(void)
 	/* Set state */
 
 	if (equal) {
-		gtk_check_menu_item_set_state(GTK_CHECK_MENU_ITEM(g_editor->control_coloring_items
+		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(g_editor->control_coloring_items
 								  [coloring]),
 					      TRUE);
 		gtk_widget_hide(g_editor->control_coloring_items[num_items - 1]);
 	} else {
 		gtk_widget_show(g_editor->control_coloring_items[num_items - 1]);
-		gtk_check_menu_item_set_state(GTK_CHECK_MENU_ITEM(g_editor->control_coloring_items
+		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(g_editor->control_coloring_items
 								  [num_items - 1]),
 					      TRUE);
 	} /* else */

@@ -354,7 +354,7 @@ menus_set_state (char *path,
       widget = gtk_item_factory_get_widget (ifactory, path);
 
       if (widget && GTK_IS_CHECK_MENU_ITEM (widget))
-	gtk_check_menu_item_set_state (GTK_CHECK_MENU_ITEM (widget), state);
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (widget), state);
       else
 	widget = NULL;
     }
