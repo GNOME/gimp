@@ -18,10 +18,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -227,9 +223,7 @@ static void
 gimp_selection_editor_set_image (GimpImageEditor *image_editor,
                                  GimpImage       *gimage)
 {
-  GimpSelectionEditor *editor;
-
-  editor = GIMP_SELECTION_EDITOR (image_editor);
+  GimpSelectionEditor *editor = GIMP_SELECTION_EDITOR (image_editor);
 
   if (image_editor->gimage)
     {
@@ -266,7 +260,7 @@ gimp_selection_editor_new (GimpImage *gimage)
 {
   GimpSelectionEditor *editor;
 
-  g_return_val_if_fail (! gimage || GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage), NULL);
 
   editor = g_object_new (GIMP_TYPE_SELECTION_EDITOR, NULL);
 
@@ -363,7 +357,7 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
                                      GdkEventButton      *bevent,
                                      GimpSelectionEditor *editor)
 {
-  GimpImageEditor      *image_editor;
+  GimpImageEditor      *image_editor = GIMP_IMAGE_EDITOR (editor);
   GimpPreviewRenderer  *renderer;
   GimpToolInfo         *tool_info;
   GimpSelectionOptions *options;
@@ -372,8 +366,6 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
   gint                  x, y;
   guchar               *col;
   GimpRGB               color;
-
-  image_editor = GIMP_IMAGE_EDITOR (editor);
 
   if (! image_editor->gimage)
     return TRUE;
@@ -467,12 +459,10 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
                                   const GimpRGB *color,
                                   gpointer       data)
 {
+  GimpImageEditor      *editor = GIMP_IMAGE_EDITOR (data);
   GimpToolInfo         *tool_info;
   GimpSelectionOptions *options;
   GimpDrawable         *drawable;
-  GimpImageEditor      *editor;
-
-  editor = GIMP_IMAGE_EDITOR (data);
 
   if (! editor->gimage)
     return;

@@ -18,8 +18,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-
 #include <glib-object.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -331,7 +329,7 @@ posterize_lut_setup (GimpLut *lut,
   g_return_if_fail (lut != NULL);
 
   gimp_lut_setup_exact (lut, (GimpLutFunc) posterize_lut_func,
-			(gpointer) &levels , n_channels);
+			(gpointer) &levels, n_channels);
 }
 
 /* --------------- equalize ------------- */

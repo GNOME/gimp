@@ -18,8 +18,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
@@ -179,7 +177,7 @@ about_dialog_create (void)
       g_signal_connect (widget, "key_press_event",
                         G_CALLBACK (about_dialog_key),
                         NULL);
-      
+
       gtk_widget_set_events (widget, GDK_BUTTON_PRESS_MASK);
 
       if (! about_dialog_load_logo (widget))
@@ -244,7 +242,7 @@ about_dialog_create (void)
                                      0, 0);
       about_info.layout = gtk_widget_create_pango_layout (about_info.logo_area,
                                                           NULL);
-      g_object_weak_ref (G_OBJECT (about_info.logo_area), 
+      g_object_weak_ref (G_OBJECT (about_info.logo_area),
                          (GWeakNotify) g_object_unref, about_info.layout);
 
       font_desc = pango_font_description_from_string ("Sans, 11");
@@ -347,7 +345,7 @@ about_dialog_logo_expose (GtkWidget      *widget,
 
       /* weird magic to determine the way the logo should be shown */
       mask &= ~GDK_BUTTON3_MASK;
-      pp = (mask &= (GDK_SHIFT_MASK | GDK_CONTROL_MASK) & 
+      pp = (mask &= (GDK_SHIFT_MASK | GDK_CONTROL_MASK) &
                     (GDK_CONTROL_MASK | GDK_MOD1_MASK) &
                     (GDK_MOD1_MASK | ~GDK_SHIFT_MASK),
       height = mask ? (about_info.pixmaparea.height > 0) &&
@@ -380,7 +378,7 @@ about_dialog_logo_expose (GtkWidget      *widget,
                           widget->style->black_gc,
                           TRUE,
                           0, 0, about_info.pixmaparea.width, 158);
-                          
+
     }
 
   if (about_info.visible == TRUE)
@@ -393,7 +391,7 @@ about_dialog_logo_expose (GtkWidget      *widget,
                         (about_info.textarea.width - width) / 2;
       layout_y = about_info.textarea.y +
                         (about_info.textarea.height - height) / 2;
-      
+
       if (about_info.textrange[1] > 0)
         {
           GdkRegion *covered_region = NULL;
@@ -451,7 +449,7 @@ about_dialog_key (GtkWidget      *widget,
     default:
         break;
     }
-  
+
   return FALSE;
 }
 
@@ -497,7 +495,7 @@ mix_gradient (PangoColor *gradient, guint ncolors,
       target->blue  = gradient[ncolors-1].blue;
       return;
     }
-  
+
   index = (int) floor (pos * (ncolors-1));
   pos = pos * (ncolors - 1) - index;
 
@@ -528,17 +526,17 @@ reshuffle_array (void)
   GRand *gr = g_rand_new ();
   gint i;
 
-  for (i = 0; i < nscroll_texts; i++) 
+  for (i = 0; i < nscroll_texts; i++)
     {
       shuffle_array[i] = i;
     }
 
-  for (i = 0; i < nscroll_texts; i++) 
+  for (i = 0; i < nscroll_texts; i++)
     {
       gint j;
 
       j = g_rand_int_range (gr, 0, nscroll_texts);
-      if (i != j) 
+      if (i != j)
         {
           gint t;
 
@@ -729,7 +727,7 @@ decorate_text (PangoLayout *layout, gint anim_type, gdouble time)
       g_printerr ("Unknown animation type %d\n", anim_type);
   }
 
-  
+
   pango_layout_set_attributes (layout, attrlist);
   pango_attr_list_unref (attrlist);
 
@@ -797,7 +795,7 @@ about_dialog_timer (gpointer data)
           if (about_info.index >= G_N_ELEMENTS (founders))
             {
               about_info.index = 0;
-              
+
               /* skip the translators section when the translator
                * did not provide a translation with his name
                */
@@ -853,7 +851,7 @@ about_dialog_timer (gpointer data)
               about_info.index++;
             }
         }
-      
+
       if (about_info.state == 4)
         {
           if (about_info.index >= G_N_ELEMENTS (contri_intro))
@@ -871,11 +869,11 @@ about_dialog_timer (gpointer data)
 
       if (about_info.state == 5)
         {
-        
+
           about_info.index += 1;
           if (about_info.index == nscroll_texts)
             about_info.index = 0;
-        
+
           text = insert_spacers (scroll_text[shuffle_array[about_info.index]]);
         }
 
@@ -998,7 +996,7 @@ about_dialog_load_logo (GtkWidget *window)
   pango_layout_set_font_description (layout, desc);
   pango_layout_set_justify (layout, PANGO_ALIGN_CENTER);
   pango_layout_set_text (layout, GIMP_VERSION, -1);
-  
+
   gc = gdk_gc_new (about_info.logo_pixmap);
 
   /* draw a defined content to the Pixmap */
@@ -1007,7 +1005,7 @@ about_dialog_load_logo (GtkWidget *window)
                       0, 0,
                       about_info.pixmaparea.width,
                       about_info.pixmaparea.height * 2);
-  
+
   gdk_draw_pixbuf (GDK_DRAWABLE (about_info.logo_pixmap),
                    gc, pixbuf,
                    0, 0, 0, 0,
@@ -1162,7 +1160,7 @@ about_dialog_load_logo (GtkWidget *window)
     {
       gdk_draw_pixbuf (GDK_DRAWABLE (about_info.logo_pixmap),
                        gc, white (noise), 0, 0,
-                       (about_info.pixmaparea.width - 
+                       (about_info.pixmaparea.width -
                         level (white (noise))) / 2,
                        about_info.pixmaparea.height +
                        (about_info.pixmaparea.height -

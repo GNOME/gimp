@@ -23,15 +23,7 @@
 
 #include <string.h>
 
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <glib-object.h>
-
-#ifdef G_OS_WIN32
-#include <io.h>
-#endif
 
 #include "libgimpbase/gimpbase.h"
 
@@ -173,12 +165,14 @@ gimp_rc_dispose (GObject *object)
 
   if (rc->save_idle_id)
     gimp_rc_idle_save (rc);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
 gimp_rc_finalize (GObject *object)
 {
-  GimpRc *rc = (GimpRc *) object;
+  GimpRc *rc = GIMP_RC (object);
 
   if (rc->system_gimprc)
     {

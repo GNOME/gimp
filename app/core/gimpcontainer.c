@@ -22,15 +22,8 @@
 #include "config.h"
 
 #include <string.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #include <glib-object.h>
-
-#ifdef G_OS_WIN32
-#include <io.h>
-#endif
 
 #include "core-types.h"
 
@@ -270,9 +263,7 @@ gimp_container_config_iface_init (GimpConfigInterface *config_iface)
 static void
 gimp_container_dispose (GObject *object)
 {
-  GimpContainer *container;
-
-  container = GIMP_CONTAINER (object);
+  GimpContainer *container = GIMP_CONTAINER (object);
 
   while (container->handlers)
     gimp_container_remove_handler (container,
@@ -294,9 +285,7 @@ gimp_container_set_property (GObject      *object,
                              const GValue *value,
                              GParamSpec   *pspec)
 {
-  GimpContainer *container;
-
-  container = GIMP_CONTAINER (object);
+  GimpContainer *container = GIMP_CONTAINER (object);
 
   switch (property_id)
     {
@@ -319,9 +308,7 @@ gimp_container_get_property (GObject    *object,
                              GValue     *value,
                              GParamSpec *pspec)
 {
-  GimpContainer *container;
-
-  container = GIMP_CONTAINER (object);
+  GimpContainer *container = GIMP_CONTAINER (object);
 
   switch (property_id)
     {
@@ -341,11 +328,9 @@ static gint64
 gimp_container_get_memsize (GimpObject *object,
                             gint64     *gui_size)
 {
-  GimpContainer *container;
+  GimpContainer *container = GIMP_CONTAINER (object);
+  gint64         memsize   = 0;
   GList         *list;
-  gint64         memsize = 0;
-
-  container = GIMP_CONTAINER (object);
 
   for (list = container->handlers; list; list = g_list_next (list))
     {

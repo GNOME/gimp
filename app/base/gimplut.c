@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-
 #include <glib-object.h>
 
 #include "base-types.h"

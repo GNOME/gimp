@@ -18,8 +18,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -129,11 +127,7 @@ gimp_color_panel_init (GimpColorPanel *panel)
 static void
 gimp_color_panel_destroy (GtkObject *object)
 {
-  GimpColorPanel *panel;
-
-  g_return_if_fail (GIMP_IS_COLOR_PANEL (object));
-
-  panel = GIMP_COLOR_PANEL (object);
+  GimpColorPanel *panel = GIMP_COLOR_PANEL (object);
 
   if (panel->color_notebook)
     {
@@ -234,10 +228,8 @@ gimp_color_panel_set_context (GimpColorPanel *panel,
 static void
 gimp_color_panel_color_changed (GimpColorButton *button)
 {
-  GimpColorPanel *panel;
+  GimpColorPanel *panel = GIMP_COLOR_PANEL (button);
   GimpRGB         color;
-
-  panel = GIMP_COLOR_PANEL (button);
 
   if (panel->color_notebook)
     {
@@ -249,10 +241,8 @@ gimp_color_panel_color_changed (GimpColorButton *button)
 static void
 gimp_color_panel_clicked (GtkButton *button)
 {
-  GimpColorPanel *panel;
+  GimpColorPanel *panel = GIMP_COLOR_PANEL (button);
   GimpRGB         color;
-
-  panel = GIMP_COLOR_PANEL (button);
 
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (button), &color);
 
@@ -280,9 +270,7 @@ gimp_color_panel_select_callback (ColorNotebook      *notebook,
 				  ColorNotebookState  state,
 				  gpointer            data)
 {
-  GimpColorPanel *panel;
-
-  panel = GIMP_COLOR_PANEL (data);
+  GimpColorPanel *panel = GIMP_COLOR_PANEL (data);
 
   if (panel->color_notebook)
     {

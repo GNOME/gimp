@@ -21,14 +21,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <string.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-#include <time.h>
-
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -157,7 +149,7 @@ gimp_modules_load (Gimp *gimp)
 }
 
 static void
-add_to_inhibit_string (gpointer data, 
+add_to_inhibit_string (gpointer data,
 		       gpointer user_data)
 {
   GimpModule *module = data;

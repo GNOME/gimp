@@ -1,5 +1,43 @@
 2004-02-18  Michael Natterer  <mitch@gimp.org>
 
+	Some code review:
+
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-serialize.c: removed obsolete code which
+	made sure serialize_property()/deserialize_property() are only
+	called for properties of the correct class. We do it the right way
+	for quite a while now and clear the inherited function pointers in
+	gimp_config_iface_base_init().
+
+	* app/config/gimprc.c (gimp_rc_dispose): don't forget to chain up.
+
+	* app/base/gimplut.c
+	* app/base/lut-funcs.c
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-serialize.c
+	* app/config/gimpconfig-types.c
+	* app/config/gimprc.c
+	* app/core/gimp-modules.c
+	* app/core/gimpbrush.c
+	* app/core/gimpcontainer.c
+	* app/core/gimpdocumentlist.c
+	* app/core/gimpitem.c
+	* app/gui/about-dialog.c
+	* app/gui/color-notebook.c
+	* app/gui/gui.c
+	* app/gui/tips-dialog.c
+	* app/paint/gimppaintcore.c
+	* app/paint-funcs/paint-funcs.c
+	* app/widgets/gimpcolorpanel.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainermenuimpl.c
+	* app/widgets/gimpselectioneditor.c: removed I/O includes from
+	files which don't use lowlevel APIs any more. Also removes
+	a whole bunch of G_OS_WIN32 special casing. Removed trailing
+	whitespace. Misc tiny cleanups.
+
+2004-02-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-handlers.c
 	(gimp_display_shell_disconnect): disconnect from the correct
 	config objects. Fixes bug #134694.

@@ -18,16 +18,7 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <glib-object.h>
-
-#ifdef G_OS_WIN32
-#include <io.h>
-#endif
 
 #include "core-types.h"
 

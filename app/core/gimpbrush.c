@@ -40,8 +40,6 @@
 #define _O_BINARY 0
 #endif
 
-#include <stdio.h>
-
 #include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
