@@ -36,6 +36,14 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#if !defined(WIN32) || defined(__MINGW32__)
+#define BI_RGB 		0
+#define BI_RLE8  	1
+#define BI_RLE4  	2
+#define BI_BITFIELDS  	3
+#endif
+
+static gboolean using565;
 
 static gint32
 ToL (guchar *puffer)
@@ -254,11 +262,38 @@ ReadBMP (const gchar *name)
           Bitmap_File_Head.bfSize,Bitmap_Head.biClrUsed,Bitmap_Head.biBitCnt,Bitmap_Head.biWidth,
           Bitmap_Head.biHeight, Bitmap_Head.biCompr, rowbytes);
 #endif
+  
+  if (Bitmap_Head.biCompr == BI_BITFIELDS &&
+      (Bitmap_Head.biBitCnt == 16 || Bitmap_Head.biBitCnt == 16))
+    {
+      gint32 tmp[3];
+      gint32 green_mask;
+      gint i, green;
 
-  /* Get the Colormap */
+      if (!ReadOK(fd, tmp, 3 * sizeof(gint32)))
+	{
+          g_message (_("'%s' is not a valid BMP file"), filename);
+          return -1;
+        }
 
-  if (!ReadColorMap (fd, ColorMap, ColormapSize, Maps, &Grey))
-    return -1;
+      green_mask = ToL ((guchar*) &tmp[1]);
+
+      green = 0;
+      for (i = 0; i < 32; i++)
+	{
+	  if (green_mask & 1)
+	    green++;
+	  green_mask = green_mask >> 1;
+	}
+
+      using565 = green == 6;
+    }
+  else
+    {
+      /* Get the Colormap */
+      if (!ReadColorMap (fd, ColorMap, ColormapSize, Maps, &Grey))
+	return -1;
+    }
 
 #ifdef DEBUG
   printf("Colormap read\n");
@@ -294,7 +329,7 @@ ReadBMP (const gchar *name)
       gimp_image_set_resolution (image_ID, xresolution, yresolution);
     }
 
-  return (image_ID);
+  return image_ID;
 }
 
 Image
@@ -410,9 +445,18 @@ ReadImage (FILE   *fd,
           for (xpos= 0; xpos < width; ++xpos)
             {
                rgb= ToS(&buffer[xpos * 2]);
-               *(temp++)= ((rgb >> 10) & 0x1f) * 8;
-               *(temp++)= ((rgb >> 5)  & 0x1f) * 8;
-               *(temp++)= ((rgb)       & 0x1f) * 8;
+	       if (using565) /* rgb 565 encoded */
+		 {
+		   *(temp++)= ((rgb >> 11) & 0x1f) * 8;
+		   *(temp++)= ((rgb >> 5)  & 0x3f) * 4;
+		   *(temp++)= ((rgb)       & 0x1f) * 8;
+		 }
+	       else /* rgb555 */
+		 {
+		   *(temp++)= ((rgb >> 10) & 0x1f) * 8;
+		   *(temp++)= ((rgb >> 5)  & 0x1f) * 8;
+		   *(temp++)= ((rgb)       & 0x1f) * 8;
+		 }
             }
           --ypos; /* next line */
           cur_progress++;
