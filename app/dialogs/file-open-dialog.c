@@ -165,20 +165,54 @@ file_open_dialog_menu_reset (void)
 }
 
 void
-file_open_dialog_show (Gimp *gimp)
+file_open_dialog_show (Gimp        *gimp,
+                       GimpImage   *gimage,
+                       const gchar *uri)
 {
+  gchar *filename = NULL;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
 
   if (! fileload)
     fileload = file_open_dialog_create (gimp);
 
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
+
   if (GTK_WIDGET_VISIBLE (fileload))
-    return;
+    {
+      gtk_window_present (GTK_WINDOW (fileload));
+      return;
+    }
+
+  if (gimage)
+    {
+      filename = gimp_image_get_filename (gimage);
+
+      if (filename)
+        {
+          gchar *dirname;
+
+          dirname = g_path_get_dirname (filename);
+          g_free (filename);
+
+          filename = g_build_filename (dirname, ".", NULL);
+          g_free (dirname);
+        }
+    }
+  else if (uri)
+    {
+      filename = g_filename_from_uri (uri, NULL, NULL);
+    }
+
+  gtk_window_set_title (GTK_WINDOW (fileload), _("Open Image"));
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (fileload),
-				   "." G_DIR_SEPARATOR_S);
-  gtk_window_set_title (GTK_WINDOW (fileload), _("Open Image"));
+				   filename ?
+				   filename :
+                                   "." G_DIR_SEPARATOR_S);
+
+  g_free (filename);
 
   file_dialog_show (fileload);
 }

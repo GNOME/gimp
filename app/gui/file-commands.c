@@ -78,25 +78,34 @@ file_new_cmd_callback (GtkWidget *widget,
 
   /*  if called from the image menu  */
   if (action)
-    {
-      gimage = gimp_context_get_image (gimp_get_user_context (gimp));
-    }
+    gimage = gimp_context_get_image (gimp_get_user_context (gimp));
 
   file_new_dialog_create (gimp, gimage);
 }
 
 void
 file_open_by_extension_cmd_callback (GtkWidget *widget,
-				     gpointer   data)
+				     gpointer   data,
+                                     guint      action)
 {
   file_open_dialog_menu_reset ();
 }
 
 void
 file_open_cmd_callback (GtkWidget *widget,
-			gpointer   data)
+			gpointer   data,
+                        guint      action)
 {
-  file_open_dialog_show (GIMP (data));
+  Gimp      *gimp;
+  GimpImage *gimage = NULL;
+
+  gimp = GIMP (data);
+
+  /*  if called from the image menu  */
+  if (action)
+    gimage = gimp_context_get_image (gimp_get_user_context (gimp));
+
+  file_open_dialog_show (gimp, gimage, NULL);
 }
 
 void
@@ -129,14 +138,16 @@ file_last_opened_cmd_callback (GtkWidget *widget,
 
 void
 file_save_by_extension_cmd_callback (GtkWidget *widget,
-				     gpointer   data)
+				     gpointer   data,
+                                     guint      action)
 {
   file_save_dialog_menu_reset ();
 }
 
 void
 file_save_cmd_callback (GtkWidget *widget,
-			gpointer   data)
+			gpointer   data,
+                        guint      action)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
@@ -153,7 +164,7 @@ file_save_cmd_callback (GtkWidget *widget,
 
       if (! uri)
 	{
-	  file_save_as_cmd_callback (widget, data);
+	  file_save_as_cmd_callback (widget, data, action);
 	}
       else
 	{
@@ -178,7 +189,8 @@ file_save_cmd_callback (GtkWidget *widget,
 
 void
 file_save_as_cmd_callback (GtkWidget *widget,
-			   gpointer   data)
+			   gpointer   data,
+                           guint      action)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
@@ -188,7 +200,8 @@ file_save_as_cmd_callback (GtkWidget *widget,
 
 void
 file_save_a_copy_cmd_callback (GtkWidget *widget,
-                               gpointer   data)
+                               gpointer   data,
+                               guint      action)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
@@ -198,7 +211,8 @@ file_save_a_copy_cmd_callback (GtkWidget *widget,
 
 void
 file_revert_cmd_callback (GtkWidget *widget,
-			  gpointer   data)
+			  gpointer   data,
+                          guint      action)
 {
   GimpDisplay *gdisp;
   GtkWidget   *query_box;
@@ -256,7 +270,8 @@ file_revert_cmd_callback (GtkWidget *widget,
 
 void
 file_close_cmd_callback (GtkWidget *widget,
-			 gpointer   data)
+			 gpointer   data,
+                         guint      action)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
@@ -266,7 +281,8 @@ file_close_cmd_callback (GtkWidget *widget,
 
 void
 file_quit_cmd_callback (GtkWidget *widget,
-			gpointer   data)
+			gpointer   data,
+                        guint      action)
 {
   app_exit (FALSE);
 }

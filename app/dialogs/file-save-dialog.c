@@ -148,8 +148,7 @@ file_save_dialog_menu_reset (void)
 void
 file_save_dialog_show (GimpImage *gimage)
 {
-  const gchar *uri;
-  gchar       *filename = NULL;
+  gchar *filename;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
@@ -159,24 +158,27 @@ file_save_dialog_show (GimpImage *gimage)
   the_gimage = gimage;
   set_uri    = TRUE;
 
-  uri = gimp_object_get_name (GIMP_OBJECT (gimage));
-
-  if (uri)
-    filename = g_filename_from_uri (uri, NULL, NULL);
-
   if (! filesave)
     filesave = file_save_dialog_create (gimage->gimp);
 
   gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
+
   if (GTK_WIDGET_VISIBLE (filesave))
-    return;
+    {
+      gtk_window_present (GTK_WINDOW (filesave));
+      return;
+    }
 
   gtk_window_set_title (GTK_WINDOW (filesave), _("Save Image"));
+
+  filename = gimp_image_get_filename (gimage);
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesave),
                                    filename ?
 				   filename :
                                    "." G_DIR_SEPARATOR_S);
+
+  g_free (filename);
 
   file_dialog_update_menus (gimage->gimp->save_procs,
                             gimp_drawable_type (gimp_image_active_drawable (gimage)));
@@ -207,8 +209,12 @@ file_save_a_copy_dialog_show (GimpImage *gimage)
     filesave = file_save_dialog_create (gimage->gimp);
 
   gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
+
   if (GTK_WIDGET_VISIBLE (filesave))
-    return;
+    {
+      gtk_window_present (GTK_WINDOW (filesave));
+      return;
+    }
 
   gtk_window_set_title (GTK_WINDOW (filesave), _("Save a Copy of the Image"));
 

@@ -1,5 +1,24 @@
 2002-11-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/file-open-dialog.[ch]: added "gimage" and "uri"
+	parameters to file_open_dialog_show(). If an image is passed, go
+	to that image's directory, for an uri, preselect the file.
+	Fixes bug #96779.
+
+	* app/gui/menus.c: pass "action" to file_open_cmd_callback() so we
+	can distinguish if it was invoked from the toolbox or an image.
+
+	* app/gui/file-commands.[ch]: if invoked from an image, pass it to
+	file_open_dialog_show().
+
+	* app/widgets/gimpdocumentview.c: pass the selected document's uri
+	to file_open_dialog_show().
+
+	* app/gui/file-save-dialog.c: use gimp_image_get_filename()
+	instead of fiddling with the image's uri manually.
+
+2002-11-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdataeditor.c
 	* app/widgets/gimpimageview.c: changed some debugging output to
 	say "TODO: ...".

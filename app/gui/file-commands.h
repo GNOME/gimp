@@ -25,30 +25,40 @@ void   file_new_cmd_callback               (GtkWidget *widget,
 					    guint      action);
 
 void   file_open_by_extension_cmd_callback (GtkWidget *widget,
-					    gpointer   data);
+					    gpointer   data,
+					    guint      action);
 void   file_open_cmd_callback              (GtkWidget *widget,
-					    gpointer   data);
+					    gpointer   data,
+					    guint      action);
 void   file_last_opened_cmd_callback       (GtkWidget *widget,
 					    gpointer   data,
 					    guint      action);
 
 void   file_save_by_extension_cmd_callback (GtkWidget *widget,
-					    gpointer   data);
+					    gpointer   data,
+					    guint      action);
 void   file_save_cmd_callback              (GtkWidget *widget,
-					    gpointer   data);
+					    gpointer   data,
+					    guint      action);
 void   file_save_as_cmd_callback           (GtkWidget *widget,
-					    gpointer   data);
+					    gpointer   data,
+					    guint      action);
 void   file_save_a_copy_cmd_callback       (GtkWidget *widget,
-					    gpointer   data);
+					    gpointer   data,
+					    guint      action);
 
 void   file_revert_cmd_callback            (GtkWidget *widget,
-					    gpointer   data);
+					    gpointer   data,
+					    guint      action);
 void   file_pref_cmd_callback              (GtkWidget *widget,
-					    gpointer   data);
+					    gpointer   data,
+					    guint      action);
 void   file_close_cmd_callback             (GtkWidget *widget,
-					    gpointer   data);
+					    gpointer   data,
+					    guint      action);
 void   file_quit_cmd_callback              (GtkWidget *widget,
-					    gpointer   data);
+					    gpointer   data,
+					    guint      action);
 
 
 #endif /* __FILE_COMMANDS_H__ */

@@ -225,7 +225,7 @@ gimp_document_view_open_clicked (GtkWidget        *widget,
     }
   else
     {
-      file_open_dialog_show (editor->view->context->gimp);
+      file_open_dialog_show (editor->view->context->gimp, NULL, NULL);
     }
 }
 
@@ -275,7 +275,8 @@ gimp_document_view_open_extended_clicked (GtkWidget        *widget,
     {
       if (state & GDK_CONTROL_MASK)
         {
-          file_open_dialog_show (editor->view->context->gimp);
+          file_open_dialog_show (editor->view->context->gimp, NULL,
+                                 gimp_object_get_name (GIMP_OBJECT (imagefile)));
         }
       else if (state & GDK_SHIFT_MASK)
         {
@@ -300,7 +301,7 @@ gimp_document_view_open_extended_clicked (GtkWidget        *widget,
     }
   else
     {
-      file_open_dialog_show (editor->view->context->gimp);
+      file_open_dialog_show (editor->view->context->gimp, NULL, NULL);
     }
 }
 

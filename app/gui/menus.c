@@ -308,7 +308,7 @@ static GimpItemFactoryEntry image_entries[] =
     NULL,
     "file/dialogs/file_new.html", NULL },
   { { N_("/File/Open..."), "<control>O",
-      file_open_cmd_callback, 0,
+      file_open_cmd_callback, 1,
       "<StockItem>", GTK_STOCK_OPEN },
     NULL,
     "file/dialogs/file_open.html", NULL },
