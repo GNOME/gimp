@@ -1957,6 +1957,7 @@ gimp_context_real_set_foreground (GimpContext   *context,
     return;
 
   context->foreground = *color;
+  gimp_rgb_set_alpha (&context->foreground, GIMP_OPACITY_OPAQUE);
 
   g_object_notify (G_OBJECT (context), "foreground");
   gimp_context_foreground_changed (context);
@@ -2006,6 +2007,7 @@ gimp_context_real_set_background (GimpContext   *context,
     return;
 
   context->background = *color;
+  gimp_rgb_set_alpha (&context->background, GIMP_OPACITY_OPAQUE);
 
   g_object_notify (G_OBJECT (context), "background");
   gimp_context_background_changed (context);

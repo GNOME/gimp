@@ -1,5 +1,11 @@
 2003-08-28  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpcontext.c (gimp_context_real_set_foreground)
+	(gimp_context_real_set_background): keep the context colors always
+	opaque. Fixes bug #120912.
+
+2003-08-28  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/image.pdb: removed a historical enum constraint
 	that caused bug #120915.
 
