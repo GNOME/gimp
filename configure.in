@@ -152,12 +152,12 @@ dnl Test for libtcl
   if test -z "$LIBTCL_LIB"; then
 	AC_CHECK_LIB(dl, dlopen, DL_LIBRARY=-ldl)
 	AC_ARG_WITH(tcl, --with-{tcl/tk}		use this tcl/tk library,
-    AC_CHECK_LIB($with_tcl, Tcl_Init,
+    AC_CHECK_LIB($with_tcl, Tcl_StaticPackage,
       GIMPTCL='gimptcl'; LIBTCL_LIB="-l$with_tcl -l$with_tk $DL_LIBRARY",
-      AC_MSG_WARN(*** gimptcl plug-in will not be built ***), -lm),
+      AC_MSG_WARN(*** gimptcl plug-in will not be built ***), -lm $DL_LIBRARY),
     AC_CHECK_LIB(tcl, Tcl_StaticPackage,
       GIMPTCL='gimptcl'; LIBTCL_LIB="-ltcl -ltk $DL_LIBRARY",
-      AC_MSG_WARN(*** gimptcl plug-in will not be built ***), -lm))
+      AC_MSG_WARN(*** gimptcl plug-in will not be built ***), -lm $DL_LIBRARY))
   fi
 
 dnl Test for libxdelta
