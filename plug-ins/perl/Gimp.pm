@@ -13,7 +13,7 @@ use subs qw(init end lock unlock canonicalize_color);
 require DynaLoader;
 
 @ISA=qw(DynaLoader);
-$VERSION = 1.091;
+$VERSION = 1.092;
 
 @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
@@ -50,6 +50,7 @@ $VERSION = 1.091;
         'PARASITE_PARENT_PERSISTENT',	'PARASITE_ATTACH_GRANDPARENT',	'PARASITE_GRANDPARENT_PERSISTENT',
         'PARASITE_UNDOABLE',		'PARASITE_PARENT_UNDOABLE',	'PARASITE_GRANDPARENT_UNDOABLE',
 	'TRACE_NONE',	'TRACE_CALL',	'TRACE_TYPE',	'TRACE_NAME',	'TRACE_DESC',	'TRACE_ALL',
+	'COMPRESSION_NONE',		'COMPRESSION_LZW',		'COMPRESSION_PACKBITS',
 );
 
 @_procs = ('main','xlfd_size');
@@ -87,6 +88,11 @@ sub BG_BUCKET_FILL      (){ 1} sub FG_BUCKET_FILL      (){ 0} sub PATTERN_BUCKET
 sub WRAP		(){ 0 }
 sub SMEAR		(){ 1 }
 sub BLACK		(){ 2 }
+
+# file_tiff_*
+sub COMPRESSION_NONE		(){ 0 }
+sub COMPRESSION_LZW		(){ 1 }
+sub COMPRESSION_PACKBITS	(){ 2 }
 
 # internal constants shared with Perl-Server
 

@@ -187,7 +187,7 @@ sub set_clist {
 sub complete_function {
    my $name = shift;
    $name=~s/[-_]/[-_]/g;
-   my @matches = sort grep /$name/i,@function;
+   my @matches = eval { sort grep /$name/i,@function };
    if(@matches>70) {
       set_clist map(($_,$_),@matches[0..69]);
       $synopsis->set("showing only the first 70 matches (of ".(scalar@matches).")");

@@ -58,6 +58,7 @@ $|=1;
 use Parse::RecDescent;
 
 $RD_HINT=1;
+#$RD_TRACE=1;
 
 unless(@ARGV) {
    print STDERR "Script-Fu to Perl Translator 1.0\n";
@@ -152,8 +153,9 @@ nth	=> 'sub nth {
 }',
 
    );
+   my $xskip;
+
    my $compat_fun = join("|",map {quotemeta} sort {length($b) <=> length($a)} keys %compat_fun);
-   my $skip;
    
    sub func2perl {
       my($name)=@_;
@@ -392,10 +394,10 @@ constant: /(?:$constants)(?=[ \t;)\n\r])/ gen[$constant{$item[-1]}]
 nl:		gen["\n".("   " x $indent)]
 incindent:	{ printf STDERR " %2d%%\b\b\b\b",$thisoffset*100/$::filesize unless $::quiet } { $indent++ }
 decindent:	{ $indent-- }
-skip:		{ $skip++ }
-unskip:		{ $skip-- }
-gen:		( <reject:$skip> <defer: print ::OUT $arg[0] > )[@arg](?)
-#gen:		{ $skip or print $arg[0] } #d#
+skip:		{ $xskip++ }
+unskip:		{ $xskip-- }
+gen:		( <reject:$xskip> <defer: print ::OUT $arg[0] > )[@arg](?)
+#gen:		{ $xskip or print $arg[0] } #d#
 
 EOA
 
