@@ -3337,7 +3337,8 @@ separate_alpha_region (PixelRegion *srcR)
 
 void
 gaussian_blur_region (PixelRegion *srcR,
-		      double       radius)
+		      double       radius_x,
+		      double       radius_y)
 {
   double std_dev;
   long width, height;
@@ -3357,24 +3358,17 @@ gaussian_blur_region (PixelRegion *srcR,
   int alpha;
   int initial_p, initial_m;
 
-  if (radius == 0.0) return;		/* zero blur is a no-op */
+  total = 0;
+  start = 0;
+  end = 0;
+
+  if (radius_x == 0.0 && radius_y == 0.0) return;    /* zero blur is a no-op */
 
   /*  allocate the result buffer  */
   length = MAXIMUM (srcR->w, srcR->h) * srcR->bytes;
   data = paint_funcs_get_buffer (length * 2);
   src = data;
   dest = data + length;
-
-  std_dev = sqrt (-(radius * radius) / (2 * log (1.0 / 255.0)));
-
-  curve = make_curve (std_dev, &length);
-  sum = g_malloc (sizeof (int) * (2 * length + 1));
-
-  sum[0] = 0;
-
-  for (i = 1; i <= length*2; i++)
-    sum[i] = curve[i-length-1] + sum[i-1];
-  sum += length;
 
   width = srcR->w;
   height = srcR->h;
@@ -3383,100 +3377,130 @@ gaussian_blur_region (PixelRegion *srcR,
 
   buf = g_malloc (sizeof (int) * MAXIMUM (width, height) * 2);
 
-  total = sum[length] - sum[-length];
-
-  for (col = 0; col < width; col++)
+  if (radius_y != 0.0)
     {
-      pixel_region_get_col (srcR, col + srcR->x, srcR->y, height, src, 1);
-      sp = src + alpha;
+      std_dev = sqrt (-(radius_y * radius_y) / (2 * log (1.0 / 255.0)));
+      curve = make_curve (std_dev, &length);
+      sum = g_malloc (sizeof (int) * (2 * length + 1));
+      sum[0] = 0;
 
-      initial_p = sp[0];
-      initial_m = sp[(height-1) * bytes];
+      for (i = 1; i <= length*2; i++)
+	sum[i] = curve[i-length-1] + sum[i-1];
+      sum += length;
 
-      /*  Determine a run-length encoded version of the column  */
-      run_length_encode (sp, buf, height, bytes);
-
-      for (row = 0; row < height; row++)
-	{
-	  start = (row < length) ? -row : -length;
-	  end = (height <= (row + length)) ? (height - row - 1) : length;
-
-	  val = 0;
-	  i = start;
-	  b = buf + (row + i) * 2;
-
-	  if (start != -length)
-	    val += initial_p * (sum[start] - sum[-length]);
-
-	  while (i < end)
-	    {
-	      pixels = b[0];
-	      i += pixels;
-	      if (i > end)
-		i = end;
-	      val += b[1] * (sum[i] - sum[start]);
-	      b += (pixels * 2);
-	      start = i;
-	    }
-
-	  if (end != length)
-	    val += initial_m * (sum[length] - sum[end]);
-
-	  sp[row * bytes] = val / total;
-	}
-
-      pixel_region_set_col (srcR, col + srcR->x, srcR->y, height, src);
-    }
-
-  for (row = 0; row < height; row++)
-    {
-      pixel_region_get_row (srcR, srcR->x, row + srcR->y, width, src, 1);
-      sp = src + alpha;
-      dp = dest + alpha;
-
-      initial_p = sp[0];
-      initial_m = sp[(width-1) * bytes];
-
-      /*  Determine a run-length encoded version of the row  */
-      run_length_encode (sp, buf, width, bytes);
+      total = sum[length] - sum[-length];
 
       for (col = 0; col < width; col++)
 	{
-	  start = (col < length) ? -col : -length;
-	  end = (width <= (col + length)) ? (width - col - 1) : length;
+	  pixel_region_get_col (srcR, col + srcR->x, srcR->y, height, src, 1);
+	  sp = src + alpha;
 
-	  val = 0;
-	  i = start;
-	  b = buf + (col + i) * 2;
+	  initial_p = sp[0];
+	  initial_m = sp[(height-1) * bytes];
 
-	  if (start != -length)
-	    val += initial_p * (sum[start] - sum[-length]);
+	  /*  Determine a run-length encoded version of the column  */
+	  run_length_encode (sp, buf, height, bytes);
 
-	  while (i < end)
+	  for (row = 0; row < height; row++)
 	    {
-	      pixels = b[0];
-	      i += pixels;
-	      if (i > end)
-		i = end;
-	      val += b[1] * (sum[i] - sum[start]);
-	      b += (pixels * 2);
-	      start = i;
+	      start = (row < length) ? -row : -length;
+	      end = (height <= (row + length)) ? (height - row - 1) : length;
+
+	      val = 0;
+	      i = start;
+	      b = buf + (row + i) * 2;
+
+	      if (start != -length)
+		val += initial_p * (sum[start] - sum[-length]);
+
+	      while (i < end)
+		{
+		  pixels = b[0];
+		  i += pixels;
+		  if (i > end)
+		    i = end;
+		  val += b[1] * (sum[i] - sum[start]);
+		  b += (pixels * 2);
+		  start = i;
+		}
+
+	      if (end != length)
+		val += initial_m * (sum[length] - sum[end]);
+
+	      sp[row * bytes] = val / total;
 	    }
 
-	  if (end != length)
-	    val += initial_m * (sum[length] - sum[end]);
-
-	  val = val / total;
-
-	  dp[col * bytes] = val;
+	  pixel_region_set_col (srcR, col + srcR->x, srcR->y, height, src);
 	}
+
+      g_free (sum - length);
+      g_free (curve - length);
+    }
+
+  if (radius_x != 0.0)
+    {
+      std_dev = sqrt (-(radius_x * radius_x) / (2 * log (1.0 / 255.0)));
+      curve = make_curve (std_dev, &length);
+      sum = g_malloc (sizeof (int) * (2 * length + 1));
+      sum[0] = 0;
+
+      for (i = 1; i <= length*2; i++)
+	sum[i] = curve[i-length-1] + sum[i-1];
+      sum += length;
+
+      total = sum[length] - sum[-length];
+
+      for (row = 0; row < height; row++)
+	{
+	  pixel_region_get_row (srcR, srcR->x, row + srcR->y, width, src, 1);
+	  sp = src + alpha;
+	  dp = dest + alpha;
+
+	  initial_p = sp[0];
+	  initial_m = sp[(width-1) * bytes];
+
+	  /*  Determine a run-length encoded version of the row  */
+	  run_length_encode (sp, buf, width, bytes);
+
+	  for (col = 0; col < width; col++)
+	    {
+	      start = (col < length) ? -col : -length;
+	      end = (width <= (col + length)) ? (width - col - 1) : length;
+
+	      val = 0;
+	      i = start;
+	      b = buf + (col + i) * 2;
+
+	      if (start != -length)
+		val += initial_p * (sum[start] - sum[-length]);
+
+	      while (i < end)
+		{
+		  pixels = b[0];
+		  i += pixels;
+		  if (i > end)
+		    i = end;
+		  val += b[1] * (sum[i] - sum[start]);
+		  b += (pixels * 2);
+		  start = i;
+		}
+
+	      if (end != length)
+		val += initial_m * (sum[length] - sum[end]);
+
+	      val = val / total;
+
+	      dp[col * bytes] = val;
+	    }
       
-      pixel_region_set_row (srcR, srcR->x, row + srcR->y, width, dest);
+	  pixel_region_set_row (srcR, srcR->x, row + srcR->y, width, dest);
+	}
+
+      g_free (sum - length);
+      g_free (curve - length);
     }
 
   g_free (buf);
-  g_free (sum - length);
-  g_free (curve - length);
 }
 
 

@@ -115,15 +115,26 @@ void            channel_inter_segment   (Channel *, int, int, int, int);
 void            channel_combine_rect    (Channel *, int, int, int, int, int);
 void            channel_combine_ellipse (Channel *, int, int, int, int, int, int);
 void            channel_combine_mask    (Channel *, Channel *, int, int, int);
-void            channel_feather         (Channel *, Channel *, double, int, int, int);
+void            channel_feather         (Channel *, Channel *,
+					 double, double,
+					 int, int, int);
 void            channel_push_undo       (Channel *);
 void            channel_clear           (Channel *);
 void            channel_invert          (Channel *);
 void            channel_sharpen         (Channel *);
 void            channel_all             (Channel *);
-void            channel_border          (Channel *, int);
-void            channel_grow            (Channel *, int);
-void            channel_shrink          (Channel *, int);
+
+void            channel_border          (Channel * channel,
+					 int       radius_x,
+					 int       radius_y);
+void            channel_grow            (Channel * channel,
+					 int       radius_x,
+					 int       radius_y);
+void            channel_shrink          (Channel * channel,
+					 int       radius_x,
+					 int       radius_y,
+					 int       edge_lock);
+
 void            channel_translate       (Channel *, int, int);
 void            channel_load            (Channel *, Channel *);
 void		channel_invalidate_bounds (Channel *);

@@ -1162,6 +1162,11 @@ size_query_box_ok_callback (GtkWidget *w,
   *float_value =
     gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (query_box->entry), 0);
 
+  /*  Pass the selected unit to the callback  */
+  gtk_object_set_data
+    (GTK_OBJECT (w), "size_query_unit",
+     (gpointer) gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (query_box->entry)));
+
   /*  Call the user defined callback  */
   (* query_box->callback) (w, query_box->data, (gpointer) float_value);
 

@@ -189,7 +189,7 @@ HELP
 
 sub unit_get_plural {
     $help = <<'HELP';
-This procedure returns the singular form of the unit.
+This procedure returns the plural form of the unit.
 HELP
 
     &unit_prop_proc('plural', 'string', 'plural form');

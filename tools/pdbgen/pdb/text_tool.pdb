@@ -45,6 +45,15 @@ sub size_args () {(
       desc => 'The units of specified size: %%desc%%' }
 )}
 
+sub res_args () {(
+    { name => 'xresolution', type => '(1.0 / 65536.0) < float < 65536.0',
+      desc => 'The horizontal resolution (in dpi) of the image the
+	       text will be rendered to' },
+    { name => 'yersolution', type => '(1.0 / 65536.0) < float < 65536.0',
+      desc => 'The vertical resolution (in dpi) of the image the
+	       text will be rendered to' }
+)}
+
 sub render_args () {(
     &std_image_arg,
     { name => 'drawable', type => 'drawable',
@@ -130,8 +139,9 @@ HELP
 	vars => [ 'gchar *real_fontname' ],
 	code => <<'CODE'
 {
+  /*  default to pixels by passing 0.0 as resolution  */
   real_fontname = text_xlfd_insert_size (fontname, size, size_type,
-					 antialias);
+					 0.0, 0.0, antialias);
 
   text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
 			    border, antialias);
@@ -169,7 +179,9 @@ HELP
 	vars => [ 'gchar *real_fontname' ],
 	code => <<'CODE'
 {
-  real_fontname = text_xlfd_insert_size (fontname, size, size_type, FALSE);
+  /*  default to pixels by passing 0.0 as resolution  */
+  real_fontname = text_xlfd_insert_size (fontname, size, size_type,
+					 0.0, 0.0, FALSE);
 
   success = text_get_extents (real_fontname, text,
 			      &width, &height,
@@ -245,31 +257,76 @@ HELP
     );
 }
 
-@headers = qw("text_tool.h" <stdio.h> <string.h>);
+@headers = qw("appenv.h" "text_tool.h" <stdio.h> <string.h>);
 
 $extra{app}->{code} = <<'CODE';
 static gchar *
 text_xlfd_insert_size (gchar    *fontname,
 		       gdouble   size,
 		       SizeType  metric,
+		       gdouble   xresolution,
+		       gdouble   yresolution,
 		       gboolean  antialias)
 {
   gchar *newfont, *workfont;
-  gchar buffer[16];
+  gchar size_buffer[16];
+  gchar xres_buffer[16];
+  gchar yres_buffer[16];
   gint pos = 0;
 
   if (size <= 0)
     return NULL;
 
+  if (xresolution < (1.0 / 65536.0) ||
+      yresolution < (1.0 / 65536.0) ||
+      metric == PIXELS)
+    {
+      xresolution = yresolution = 0.0;
+    }
+  else
+    {
+      xresolution = MIN (xresolution, 65536.0);
+      yresolution = MIN (yresolution, 65536.0);
+    }
+
   if (antialias)
     size *= SUPERSAMPLE;
 
-  if (metric == POINTS)
-    size *= 10;
+  /*  Note: if metric == POINTS we either use the passed resolution (if
+   *        statement below) or we (implicitly) use the resolution hidden
+   *        in the fontname.
+   */
+  if (metric == POINTS && xresolution != 0.0)
+    {
+      /*  X allows only integer resolution values, so we do some
+       *  ugly calculations (starting with yres because the size of
+       *  a font is it's height)
+       */
+      if (yresolution < 1.0)
+	{
+	  size *= (1.0 / yresolution);
+	  xresolution *= (1.0 / yresolution);
+	  yresolution = 1.0;
+	}
 
-  sprintf (buffer, "%d", (int) size);
+      /*  res may be != (int) res
+       *  (important only for very small resolutions)
+       */
+      xresolution /= yresolution / (double) (int) yresolution;
+      size /= yresolution / (double) (int) yresolution;
 
-  newfont = workfont = g_new (char, strlen (fontname) + 16);
+      /*  finally, if xres became invalid by the above calculations  */
+      xresolution = BOUNDS (xresolution, 1.0, 65536.0);
+
+      /*  the xlfd uses decipoints  */
+      size *= 10;
+    }
+
+  sprintf (size_buffer, "%d", (int) size);
+  sprintf (xres_buffer, "%d", (int) xresolution);
+  sprintf (yres_buffer, "%d", (int) yresolution);
+
+  newfont = workfont = g_new (char, strlen (fontname) + 32);
 
   while (*fontname)
     {
@@ -281,8 +338,26 @@ text_xlfd_insert_size (gchar    *fontname,
 	  if ((pos == 7 && metric == PIXELS) ||
 	      (pos == 8 && metric == POINTS))
 	    {
-	      int len = strlen (buffer);
-	      memcpy (workfont, buffer, len);
+	      int len = strlen (size_buffer);
+	      memcpy (workfont, size_buffer, len);
+	      workfont += len;
+
+	      while (*fontname != '-')
+		fontname++;
+	    }
+	  else if (pos == 9 && metric == POINTS && xresolution != 0.0)
+	    {
+	      int len = strlen (xres_buffer);
+	      memcpy (workfont, xres_buffer, len);
+	      workfont += len;
+
+	      while (*fontname != '-')
+		fontname++;
+	    }
+	  else if (pos == 10 && metric == POINTS && yresolution != 0.0)
+	    {
+	      int len = strlen (yres_buffer);
+	      memcpy (workfont, yres_buffer, len);
 	      workfont += len;
 
 	      while (*fontname != '-')

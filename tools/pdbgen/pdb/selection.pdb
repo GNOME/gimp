@@ -36,7 +36,7 @@ sub selection_simple_proc {
 }
 
 sub selection_change_proc {
-    my ($op, $arg, $type) = @_;
+    my ($op, $arg, $type, $edge_lock) = @_;
 
     $blurb = ucfirst($op) . " the image's selection";
 
@@ -50,7 +50,7 @@ sub selection_change_proc {
 	  desc => ucfirst($arg) . " of $op (in pixels)" }
     );
 
-    %invoke = ( code => "gimage_mask_$op (gimage, $arg);" );
+    %invoke = ( code => "gimage_mask_$op (gimage, $arg, $arg$edge_lock);" );
 }
 
 # The defs
@@ -238,13 +238,13 @@ HELP
 }
 
 sub selection_feather {
-    &selection_change_proc('feather', 'radius', 'float');
+    &selection_change_proc('feather', 'radius', 'float', '');
 
     $help .= 'Feathering is implemented using a gaussian blur.';
 }
 
 sub selection_border {
-    &selection_change_proc('border', 'radius', 'int32');
+    &selection_change_proc('border', 'radius', 'int32', '');
 
     $help .= <<'HELP';
 Bordering creates a new selection which is defined along the boundary of the
@@ -253,7 +253,7 @@ HELP
 }
 
 sub selection_grow {
-    &selection_change_proc('grow', 'steps', 'int32');
+    &selection_change_proc('grow', 'steps', 'int32', '');
 
     $help .= <<'HELP';
 Growing involves expanding the boundary in all directions by the specified
@@ -262,7 +262,7 @@ HELP
 }
 
 sub selection_shrink {
-    &selection_change_proc('shrink', 'radius', 'int32');
+    &selection_change_proc('shrink', 'radius', 'int32', ', FALSE');
 
     $help .= <<'HELP';
 Shrinking invovles trimming the existing selection boundary on all sides by the

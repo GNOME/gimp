@@ -274,7 +274,9 @@ by_color_select (GImage        *gimage,
 
   if (feather)
     channel_feather (new_mask, gimage_get_mask (gimage),
-		     feather_radius, op, off_x, off_y);
+		     feather_radius,
+		     feather_radius,
+		     op, off_x, off_y);
   else
     channel_combine_mask (gimage_get_mask (gimage),
 			  new_mask, op, off_x, off_y);

@@ -661,7 +661,7 @@ static ProcRecord unit_get_plural_proc =
 {
   "gimp_unit_get_plural",
   "Returns the plural form of the unit.",
-  "This procedure returns the singular form of the unit.",
+  "This procedure returns the plural form of the unit.",
   "Michael Natterer",
   "Michael Natterer",
   "1999",

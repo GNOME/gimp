@@ -486,7 +486,7 @@ void  multiply_alpha_region               (PixelRegion *);
 
 void  separate_alpha_region               (PixelRegion *);
 
-void  gaussian_blur_region                (PixelRegion *, double);
+void  gaussian_blur_region                (PixelRegion *, double, double);
 
 void  border_region                       (PixelRegion *, gint16, gint16);
 

@@ -630,7 +630,7 @@ selection_feather_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    gimage_mask_feather (gimage, radius);
+    gimage_mask_feather (gimage, radius, radius);
 
   return procedural_db_return_args (&selection_feather_proc, success);
 }
@@ -681,7 +681,7 @@ selection_border_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    gimage_mask_border (gimage, radius);
+    gimage_mask_border (gimage, radius, radius);
 
   return procedural_db_return_args (&selection_border_proc, success);
 }
@@ -732,7 +732,7 @@ selection_grow_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    gimage_mask_grow (gimage, steps);
+    gimage_mask_grow (gimage, steps, steps);
 
   return procedural_db_return_args (&selection_grow_proc, success);
 }
@@ -783,7 +783,7 @@ selection_shrink_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    gimage_mask_shrink (gimage, radius);
+    gimage_mask_shrink (gimage, radius, radius, FALSE);
 
   return procedural_db_return_args (&selection_shrink_proc, success);
 }

@@ -576,6 +576,7 @@ iscissors_button_press (Tool           *tool,
 	    channel_feather (iscissors->mask,
 			     gimage_get_mask (gdisp->gimage),
 			     ((SelectionOptions *) iscissors_options)->feather_radius,
+			     ((SelectionOptions *) iscissors_options)->feather_radius,
 			     op, 0, 0);
 	  else
 	    channel_combine_mask (gimage_get_mask (gdisp->gimage),

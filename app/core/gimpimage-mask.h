@@ -64,16 +64,21 @@ void            gimage_mask_all           (GImage       *gimage);
 void            gimage_mask_none          (GImage       *gimage);
 
 void            gimage_mask_feather       (GImage       *gimage,
-					   double        feather_radius);
+					   double        feather_radius_x,
+					   double        feather_radius_y);
 
 void            gimage_mask_border        (GImage       *gimage,
-					   int           border_radius);
+					   int           border_radius_x,
+					   int           border_radius_y);
 
 void            gimage_mask_grow          (GImage       *gimage,
-					   int           grow_pixels);
+					   int           grow_pixels_x,
+					   int           grow_pixels_y);
 
 void            gimage_mask_shrink        (GImage       *gimage,
-					   int           shrink_pixels);
+					   int           shrink_pixels_x,
+					   int           shrink_pixels_y,
+					   int           edge_lock);
 
 void            gimage_mask_layer_alpha   (GImage       *gimage,
 					   Layer        *layer);

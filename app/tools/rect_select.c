@@ -73,7 +73,9 @@ rect_select (GimpImage *gimage,
       new_mask = channel_new_mask (gimage, gimage->width, gimage->height);
       channel_combine_rect (new_mask, ADD, x, y, w, h);
       channel_feather (new_mask, gimage_get_mask (gimage),
-		       feather_radius, op, 0, 0);
+		       feather_radius,
+		       feather_radius,
+		       op, 0, 0);
       channel_delete (new_mask);
     }
   else if (op == SELECTION_INTERSECT)

@@ -272,7 +272,7 @@ scan_convert (GimpImage* gimage, int num_pts, FreeSelectPoint *pts,
 
 
 /*************************************/
-/*  Polygonal selection apparatus  */
+/*  Polygonal selection apparatus    */
 
 void
 free_select (GImage *gimage, int num_pts, FreeSelectPoint *pts, int op,
@@ -293,7 +293,9 @@ free_select (GImage *gimage, int num_pts, FreeSelectPoint *pts, int op,
     {
       if (feather)
 	channel_feather (mask, gimage_get_mask (gimage),
-			 feather_radius, op, 0, 0);
+			 feather_radius,
+			 feather_radius,
+			 op, 0, 0);
       else
 	channel_combine_mask (gimage_get_mask (gimage),
 			      mask, op, 0, 0);

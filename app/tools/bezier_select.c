@@ -1799,7 +1799,9 @@ bezier_to_sel_internal(BezierSelect  *bezier_sel,
   if (bezier_options->feather)
     channel_feather (bezier_sel->mask,
 		     gimage_get_mask (gdisp->gimage),
-		     bezier_options->feather_radius, op, 0, 0);
+		     bezier_options->feather_radius,
+		     bezier_options->feather_radius,
+		     op, 0, 0);
   else
     channel_combine_mask (gimage_get_mask (gdisp->gimage),
 			  bezier_sel->mask, op, 0, 0);

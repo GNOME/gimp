@@ -37,12 +37,8 @@
 #include "tile_manager_pvt.h"
 #include "drawable_pvt.h"
 
-/*  feathering variables  */
-double gimage_mask_feather_radius = 5.0;
-int    gimage_mask_border_radius = 5;
-int    gimage_mask_grow_pixels = 1;
-int    gimage_mask_shrink_pixels = 1;
-int    gimage_mask_stroking = FALSE;
+/*  local variables  */
+static int gimage_mask_stroking = FALSE;
 
 /*  local functions  */
 static void *
@@ -425,10 +421,9 @@ gimage_mask_none (GImage *gimage)
 
 void
 gimage_mask_feather (GImage *gimage,
-		     double  feather_radius)
+		     double  feather_radius_x,
+		     double  feather_radius_y)
 {
-  gimage_mask_feather_radius = feather_radius;
-
   /*  push the current mask onto the undo stack--need to do this here because
    *  channel_feather doesn't do it
    */
@@ -437,42 +432,47 @@ gimage_mask_feather (GImage *gimage,
   /*  feather the region  */
   channel_feather (gimage_get_mask (gimage),
 		   gimage_get_mask (gimage),
-		   gimage_mask_feather_radius, REPLACE, 0, 0);
+		   feather_radius_x,
+		   feather_radius_y,
+		   REPLACE, 0, 0);
 }
 
 
 void
 gimage_mask_border (GImage *gimage,
-		    int     border_radius)
+		    int     border_radius_x,
+		    int     border_radius_y)
 {
-  gimage_mask_border_radius = border_radius;
-
   /*  feather the region  */
   channel_border (gimage_get_mask (gimage),
-		  gimage_mask_border_radius);
+		  border_radius_x,
+		  border_radius_y);
 }
 
 
 void
 gimage_mask_grow (GImage *gimage,
-		  int     grow_pixels)
+		  int     grow_pixels_x,
+		  int     grow_pixels_y)
 {
-  gimage_mask_grow_pixels = grow_pixels;
-
   /*  feather the region  */
   channel_grow (gimage_get_mask (gimage),
-		gimage_mask_grow_pixels);
+		grow_pixels_x,
+		grow_pixels_y);
 }
 
 
 void
 gimage_mask_shrink (GImage *gimage,
-		    int     shrink_pixels)
+		    int     shrink_pixels_x,
+		    int     shrink_pixels_y,
+		    int     edge_lock)
 {
-  gimage_mask_shrink_pixels = shrink_pixels;
   /*  feather the region  */
   channel_shrink (gimage_get_mask (gimage),
-		  gimage_mask_shrink_pixels);
+		  shrink_pixels_x,
+		  shrink_pixels_y,
+		  edge_lock);
 }
 
 

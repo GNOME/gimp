@@ -309,7 +309,9 @@ fuzzy_select (GImage *gimage, GimpDrawable *drawable, int op, int feather,
   drawable_offsets (drawable, &off_x, &off_y);
   if (feather)
     channel_feather (fuzzy_mask, gimage_get_mask (gimage),
-		     feather_radius, op, off_x, off_y);
+		     feather_radius,
+		     feather_radius,
+		     op, off_x, off_y);
   else
     channel_combine_mask (gimage_get_mask (gimage),
 			  fuzzy_mask, op, off_x, off_y);
