@@ -47,7 +47,7 @@ if ($ARGV[0] ne "--writemakefile") {
    );
 @pdl_pins =
    qw(
-      border gouge map_to_gradient pixelmap view3d
+      border gouge map_to_gradient pixelmap view3d clear_alpha
 
       fire
    ); # fire should use nmormal gradient map!

@@ -37,6 +37,8 @@ Revision history for Gimp-Perl extension.
 	- pxgettext exits with success instead of error on version check,
 	  so the build doesn't completely die. (Yosh)
         - fixed examples/image_tile to use die instead of exit.
+        - improved croak behaviour.
+        - new plug-in: clear alpha.
 
 1.19  Thu Jan  6 00:21:58 CET 2000
         - used N_ to mark all the menu paths, since gimp now tries to

@@ -504,7 +504,7 @@ sub ignore_functions(@) {
 }
 
 sub recroak($) {
-  $_[0] =~ s/ at .*? line \d+.*$//s;
+  $_[0] =~ s/ at \S+ line \d+.*$//s;
   croak $_[0];
 }
 
