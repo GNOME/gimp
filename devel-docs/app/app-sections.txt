@@ -3668,8 +3668,9 @@ gimp_dialog_factories_session_save
 gimp_dialog_factories_session_restore
 gimp_dialog_factories_session_clear
 gimp_dialog_factories_toggle
-gimp_dialog_factories_idle
-gimp_dialog_factories_unidle
+gimp_dialog_factories_set_busy
+gimp_dialog_factories_unset_busy
+gimp_dialog_factory_from_widget
 <SUBSECTION Standard>
 GimpDialogFactoryClass
 GIMP_DIALOG_FACTORY
@@ -4336,10 +4337,10 @@ GimpSessionInfoAux
 GimpSessionInfoBook
 GimpSessionInfoDockable
 gimp_session_info_free
-gimp_session_info_aux_new
-gimp_session_info_aux_free
 gimp_session_info_book_free
 gimp_session_info_dockable_free
+gimp_session_info_aux_new
+gimp_session_info_aux_free
 gimp_session_info_save
 gimp_session_info_deserialize
 gimp_session_info_restore
@@ -4454,7 +4455,6 @@ gimp_toolbox_dnd_init
 <FILE>gimptoolbox-color-area</FILE>
 <TITLE>GimpToolbox-color-area</TITLE>
 gimp_toolbox_color_area_create
-color_area_gdisp
 </SECTION>
 
 <SECTION>
