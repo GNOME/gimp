@@ -2,20 +2,20 @@ Please add things to this file when the need to do them is
 discovered.
 
 gui/functionality seperation
-	both file scope wise and in use, particulay so that
+	both file scope wise and in use, particulary so that
 	the gui version of the tool uses the pdb whenever possible
-	)for finding bugs, and for macro recording)
+	(for finding bugs, and for macro recording)
 
 
 fix the palette dialogs (it would be nice to be able to actually edit
  palettes and the like), also replace that menubox with a list or
  something
 
-tools...er, fix em or soemthing
+tools...er, fix em or something
 
 integrate palette saving into core
 
-more configurebilty (eek)
+more configurabilty (eek)
 
 fix stuff so that the tile size could actually be changed eventually?
 
@@ -39,7 +39,7 @@ curve deal in the gradient editor?
 
 some degree of drawing tools, straight line, etc...
 
-paths, and better beziers would be a nice toch
+paths, and better beziers would be a nice touch
 
 Macro recording and better scripting support
 
@@ -49,18 +49,20 @@ natural media tools (raph?)
 
 A "Revert To" menu options
 
-Redesign of the Blend Tool dialog? (its rather large...)
+Redesign of the Blend Tool dialog? (it's rather large...)
 
 "Fit text to selection"? make selection, scare text to fit it...
 
 a complete groundup rewrite of iscissors?
 
-Interactive resixing of layers (maybe with handles on the edges)
+Interactive resizing/scaling of layers (maybe with handles on the edges)
 
 progress bars on long proccesses?
 
-status bars on image window (maybe swallow pluign progress bars, show
-current x,Y, file type, etc...)
+status bars on image window (maybe swallow plug-in progress bars, show
+current x,y, file type, etc...)
+	- optionally show that information in the toolbar ?
+	- probably dragable to the toolbar and vice versa
 
 "open into layer" and new image from cut buffer stuff should
 perhaps be in core?
@@ -68,7 +70,7 @@ perhaps be in core?
 drag & drop for layers (both in the dialog, and from image to image)
 
 more indicators of current status (X,Y position, selection size and
-placemtn etc ), maybe in another dialog, maybe a status bar?
+placement etc ), maybe in another dialog, maybe a status bar?
 
 Clean up swapfiles?
 
@@ -86,9 +88,9 @@ in the image
 indexed/color reducing to arbitrary number of colors?
 
 Folding box for the toolbar. So you can have it be 9x3 like now, or
-1x27, or whatever... gyve has rought outlines of a widget to do this...
+1x27, or whatever... gyve has rough outlines of a widget to do this...
 
-optimise transform_core (special cases, fft stuff?, optimizations only
+optimize transform_core (special cases, fft stuff?, optimizations only
 	raph understands, etc...)
 
 brush-shaped cursors...
@@ -124,5 +126,28 @@ some sort of image locking, so we don't munge images by doing >1 ops
 on them at once
 
 
-Suggestions from Ville Hautamaki (CW):
+Suggestion from Ville Hautamaki (CW): 
 Pattern groups
+
+
+Overwork the transform tools UI. It would be nice if the transformation
+wouldn't automatically start when releasing the mouse. Instead have a window
+that shows the currently choosen transformation numerically 
+(e.g. Scale X: 0.75 | Scale Y: 1.00). The transformation should be editable
+there and with handles on the outline. Perform the transformation when "OK" is
+clicked in the dialog or when you doubleclick(?) into the image. 
+
+Probably have a "Preview" button too that performs the transformation 
+without interpolation?
+
+
+Selections should always be bezierifyable.
+
+Selections should be transformable (e.g. rotate an elliptical selection; the
+selection, not it's content!!).
+
+Have a possibility to add a text as selection (is this doable with
+Type1-fonts?). If selections would be editable as described above, we'd 
+then have editable vector-text.
+
+
