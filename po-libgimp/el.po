@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:24+0100\n"
+"POT-Creation-Date: 2004-01-19 03:08+0100\n"
 "PO-Revision-Date: 2003-08-19 01:21-0200\n"
 "Last-Translator: Nikos Charonitakis <charosn@her.fothnet.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -198,7 +198,7 @@ msgstr "Επιλογή Γραμματοσειράς"
 msgid "Gradient Selection"
 msgstr "Επιλογή Γραμματοσειράς"
 
-#: libgimp/gimpmenu.c:401
+#: libgimp/gimpmenu.c:407
 msgid "None"
 msgstr ""
 
@@ -216,86 +216,86 @@ msgstr "ποσοστό"
 msgid "(invalid UTF-8 string)"
 msgstr ""
 
-#: libgimpbase/gimputils.c:198
+#: libgimpbase/gimputils.c:244
 #, fuzzy, c-format
 msgid "%d Bytes"
 msgstr "Byte"
 
-#: libgimpbase/gimputils.c:203
+#: libgimpbase/gimputils.c:249
 #, c-format
 msgid "%.2f KB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:207
+#: libgimpbase/gimputils.c:253
 #, c-format
 msgid "%.1f KB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:211
+#: libgimpbase/gimputils.c:257
 #, c-format
 msgid "%d KB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:218
+#: libgimpbase/gimputils.c:264
 #, c-format
 msgid "%.2f MB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:222
+#: libgimpbase/gimputils.c:268
 #, c-format
 msgid "%.1f MB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:226
+#: libgimpbase/gimputils.c:272
 #, fuzzy, c-format
 msgid "%d MB"
 msgstr "Byte"
 
-#: libgimpbase/gimputils.c:233
+#: libgimpbase/gimputils.c:279
 #, c-format
 msgid "%.2f GB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:237
+#: libgimpbase/gimputils.c:283
 #, c-format
 msgid "%.1f GB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:241
+#: libgimpbase/gimputils.c:287
 #, fuzzy, c-format
 msgid "%d GB"
 msgstr "Byte"
 
-#: libgimpmodule/gimpmodule.c:175
+#: libgimpmodule/gimpmodule.c:178
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:191 libgimpmodule/gimpmodule.c:208
-#: libgimpmodule/gimpmodule.c:315 libgimpmodule/gimpmodule.c:342
-#: libgimpmodule/gimpmodule.c:435
+#: libgimpmodule/gimpmodule.c:200 libgimpmodule/gimpmodule.c:220
+#: libgimpmodule/gimpmodule.c:341 libgimpmodule/gimpmodule.c:373
+#: libgimpmodule/gimpmodule.c:471
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:272
+#: libgimpmodule/gimpmodule.c:293
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:442
 msgid "Module error"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:410
+#: libgimpmodule/gimpmodule.c:443
 msgid "Loaded"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:411
+#: libgimpmodule/gimpmodule.c:444
 msgid "Load failed"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:412
+#: libgimpmodule/gimpmodule.c:445
 msgid "Not loaded"
 msgstr ""
 

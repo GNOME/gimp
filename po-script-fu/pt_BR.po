@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:25+0100\n"
+"POT-Creation-Date: 2004-01-19 00:54+0100\n"
 "PO-Revision-Date: 2003-02-20 04:00-0300\n"
 "Last-Translator: Alexandre Folle de Menezes <afmenez@terra.com.br>\n"
 "Language-Team: GNOME-BR <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -49,80 +49,80 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "O modo de avaliação Script-Fu permite apenas invocação não interativa"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1119
-#: plug-ins/script-fu/script-fu-scripts.c:1121
+#: plug-ins/script-fu/script-fu-scripts.c:1115
+#: plug-ins/script-fu/script-fu-scripts.c:1117
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1133
+#: plug-ins/script-fu/script-fu-scripts.c:1129
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1168
+#: plug-ins/script-fu/script-fu-scripts.c:1164
 msgid "About"
 msgstr "Sobre"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1178
+#: plug-ins/script-fu/script-fu-scripts.c:1174
 msgid "Script Arguments"
 msgstr "Parâmetro de script"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1206
+#: plug-ins/script-fu/script-fu-scripts.c:1202
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1250
+#: plug-ins/script-fu/script-fu-scripts.c:1246
 msgid "Script-Fu Color Selection"
 msgstr "Seleção de cores do Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1323
+#: plug-ins/script-fu/script-fu-scripts.c:1319
 msgid "Script-Fu File Selection"
 msgstr "Seleção de arquivo Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1327
+#: plug-ins/script-fu/script-fu-scripts.c:1323
 msgid "Script-Fu Folder Selection"
 msgstr "Seleção de Pasta Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1341
+#: plug-ins/script-fu/script-fu-scripts.c:1337
 msgid "Script-Fu Font Selection"
 msgstr "Seleção de fonte de Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1348
+#: plug-ins/script-fu/script-fu-scripts.c:1344
 msgid "Script-fu Pattern Selection"
 msgstr "Seleção de padrão Script-fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1354
+#: plug-ins/script-fu/script-fu-scripts.c:1350
 msgid "Script-Fu Gradient Selection"
 msgstr "Seleção de gradiente Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1361
+#: plug-ins/script-fu/script-fu-scripts.c:1357
 msgid "Script-Fu Brush Selection"
 msgstr "Seleção de pincel Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1947
+#: plug-ins/script-fu/script-fu-scripts.c:1943
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1953
+#: plug-ins/script-fu/script-fu-scripts.c:1949
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1959
+#: plug-ins/script-fu/script-fu-scripts.c:1955
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1967
+#: plug-ins/script-fu/script-fu-scripts.c:1963
 msgid "Image Types:"
 msgstr "Tipos de imagens:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1996
+#: plug-ins/script-fu/script-fu-scripts.c:1992
 #, fuzzy, c-format
 msgid ""
 "Error while executing\n"
@@ -668,7 +668,8 @@ msgid "Width of Gaps"
 msgstr "Largura dos intervalos"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:1
-msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
+#, fuzzy
+msgid "<Image>/Script-Fu/Utils/_ASCII to Layer..."
 msgstr "<Image>/Script-Fu/Utilidades/ASCII para camada de imagem..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2

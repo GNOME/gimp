@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-libgimp 1.3.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:24+0100\n"
+"POT-Creation-Date: 2004-01-19 03:08+0100\n"
 "PO-Revision-Date: 2003-01-30 23:28+0700\n"
 "Last-Translator: Trinh Minh Thanh <tmthanh@yahoo.com>\n"
 "Language-Team: Gnome-Vi <Gnomevi-list@lists.sourceforge.net>\n"
@@ -196,7 +196,7 @@ msgstr "Chọn Đơn Vị"
 msgid "Gradient Selection"
 msgstr "Chọn Đơn Vị"
 
-#: libgimp/gimpmenu.c:401
+#: libgimp/gimpmenu.c:407
 msgid "None"
 msgstr "Không"
 
@@ -213,88 +213,88 @@ msgstr "phần trăm"
 msgid "(invalid UTF-8 string)"
 msgstr ""
 
-#: libgimpbase/gimputils.c:198
+#: libgimpbase/gimputils.c:244
 #, fuzzy, c-format
 msgid "%d Bytes"
 msgstr "Byte"
 
-#: libgimpbase/gimputils.c:203
+#: libgimpbase/gimputils.c:249
 #, c-format
 msgid "%.2f KB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:207
+#: libgimpbase/gimputils.c:253
 #, c-format
 msgid "%.1f KB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:211
+#: libgimpbase/gimputils.c:257
 #, c-format
 msgid "%d KB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:218
+#: libgimpbase/gimputils.c:264
 #, c-format
 msgid "%.2f MB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:222
+#: libgimpbase/gimputils.c:268
 #, c-format
 msgid "%.1f MB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:226
+#: libgimpbase/gimputils.c:272
 #, fuzzy, c-format
 msgid "%d MB"
 msgstr "Byte"
 
-#: libgimpbase/gimputils.c:233
+#: libgimpbase/gimputils.c:279
 #, c-format
 msgid "%.2f GB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:237
+#: libgimpbase/gimputils.c:283
 #, c-format
 msgid "%.1f GB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:241
+#: libgimpbase/gimputils.c:287
 #, fuzzy, c-format
 msgid "%d GB"
 msgstr "Byte"
 
-#: libgimpmodule/gimpmodule.c:175
+#: libgimpmodule/gimpmodule.c:178
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "Đang nạp module: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:191 libgimpmodule/gimpmodule.c:208
-#: libgimpmodule/gimpmodule.c:315 libgimpmodule/gimpmodule.c:342
-#: libgimpmodule/gimpmodule.c:435
+#: libgimpmodule/gimpmodule.c:200 libgimpmodule/gimpmodule.c:220
+#: libgimpmodule/gimpmodule.c:341 libgimpmodule/gimpmodule.c:373
+#: libgimpmodule/gimpmodule.c:471
 #, fuzzy, c-format
 msgid "Module '%s' load error: %s"
 msgstr ""
 "Lỗi nạp module '%s':\n"
 "%s"
 
-#: libgimpmodule/gimpmodule.c:272
+#: libgimpmodule/gimpmodule.c:293
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Đang bỏ qua module: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:442
 msgid "Module error"
 msgstr "Lỗi module"
 
-#: libgimpmodule/gimpmodule.c:410
+#: libgimpmodule/gimpmodule.c:443
 msgid "Loaded"
 msgstr "Đã nạp"
 
-#: libgimpmodule/gimpmodule.c:411
+#: libgimpmodule/gimpmodule.c:444
 msgid "Load failed"
 msgstr "Không nạp được"
 
-#: libgimpmodule/gimpmodule.c:412
+#: libgimpmodule/gimpmodule.c:445
 msgid "Not loaded"
 msgstr "Không được nạp"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:25+0100\n"
+"POT-Creation-Date: 2004-01-19 00:54+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -51,89 +51,89 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1119
-#: plug-ins/script-fu/script-fu-scripts.c:1121
+#: plug-ins/script-fu/script-fu-scripts.c:1115
+#: plug-ins/script-fu/script-fu-scripts.c:1117
 msgid "/Script-Fu/"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1133
+#: plug-ins/script-fu/script-fu-scripts.c:1129
 #, c-format
 msgid "Script-Fu: %s"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1168
+#: plug-ins/script-fu/script-fu-scripts.c:1164
 #, fuzzy
 msgid "About"
 msgstr "Automat"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1178
+#: plug-ins/script-fu/script-fu-scripts.c:1174
 msgid "Script Arguments"
 msgstr ""
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1206
+#: plug-ins/script-fu/script-fu-scripts.c:1202
 #, c-format
 msgid "%s:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1250
+#: plug-ins/script-fu/script-fu-scripts.c:1246
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Selecţie culoare"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1323
+#: plug-ins/script-fu/script-fu-scripts.c:1319
 #, fuzzy
 msgid "Script-Fu File Selection"
 msgstr "Micşorează selecţia"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1327
+#: plug-ins/script-fu/script-fu-scripts.c:1323
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Micşorează selecţia"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1341
+#: plug-ins/script-fu/script-fu-scripts.c:1337
 #, fuzzy
 msgid "Script-Fu Font Selection"
 msgstr "Micşorează selecţia"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1348
+#: plug-ins/script-fu/script-fu-scripts.c:1344
 #, fuzzy
 msgid "Script-fu Pattern Selection"
 msgstr "Selecţie model"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1354
+#: plug-ins/script-fu/script-fu-scripts.c:1350
 #, fuzzy
 msgid "Script-Fu Gradient Selection"
 msgstr "Selectie Gradient"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1361
+#: plug-ins/script-fu/script-fu-scripts.c:1357
 #, fuzzy
 msgid "Script-Fu Brush Selection"
 msgstr "Selecţie pensulă"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1947
+#: plug-ins/script-fu/script-fu-scripts.c:1943
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1953
+#: plug-ins/script-fu/script-fu-scripts.c:1949
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1959
+#: plug-ins/script-fu/script-fu-scripts.c:1955
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1967
+#: plug-ins/script-fu/script-fu-scripts.c:1963
 #, fuzzy
 msgid "Image Types:"
 msgstr "Tip imagine"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1996
+#: plug-ins/script-fu/script-fu-scripts.c:1992
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -707,7 +707,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:1
 #, fuzzy
-msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
+msgid "<Image>/Script-Fu/Utils/_ASCII to Layer..."
 msgstr "Micşorează selecţia"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2

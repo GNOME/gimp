@@ -305,7 +305,7 @@ When enabled, all paint tools will show a preview of the current brush's
 outline.  Possible values are yes and no.
 
 .TP
-(image-title-format "%f-%p.%i (%t, %L) %z%%")
+(image-title-format "%D*%f-%p.%i (%t, %L) %z%%")
 
 Sets the text to appear in image window titles.  This is a format string;
 certain % character sequences are recognised and expanded as follows:
@@ -615,14 +615,14 @@ contains '%s' it will be replaced with the URL, else the URL will be appended
 to the command with a space separating the two.  This is a single filename.
 
 .TP
-(toolbox-window-type normal)
+(toolbox-window-hint normal)
 
 The window type hint that is set on the toolbox. This may affect how your
 window manager decorates and handles the toolbox window.  Possible values are
 normal and utility.
 
 .TP
-(dock-window-type normal)
+(dock-window-hint normal)
 
 The window type hint that is set on dock windows. This may affect the way your
 window manager decorates and handles dock windows.  Possible values are normal

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:24+0100\n"
+"POT-Creation-Date: 2004-01-19 03:08+0100\n"
 "PO-Revision-Date: 2003-12-12 18:43+0100\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -193,7 +193,7 @@ msgstr "Výběr písma"
 msgid "Gradient Selection"
 msgstr "Výběr přechodu"
 
-#: libgimp/gimpmenu.c:401
+#: libgimp/gimpmenu.c:407
 msgid "None"
 msgstr "Nic"
 
@@ -209,86 +209,86 @@ msgstr "procenta"
 msgid "(invalid UTF-8 string)"
 msgstr "(neplatný řetězec v UTF-8)"
 
-#: libgimpbase/gimputils.c:198
+#: libgimpbase/gimputils.c:244
 #, c-format
 msgid "%d Bytes"
 msgstr "%d bajtů"
 
-#: libgimpbase/gimputils.c:203
+#: libgimpbase/gimputils.c:249
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: libgimpbase/gimputils.c:207
+#: libgimpbase/gimputils.c:253
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: libgimpbase/gimputils.c:211
+#: libgimpbase/gimputils.c:257
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: libgimpbase/gimputils.c:218
+#: libgimpbase/gimputils.c:264
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: libgimpbase/gimputils.c:222
+#: libgimpbase/gimputils.c:268
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: libgimpbase/gimputils.c:226
+#: libgimpbase/gimputils.c:272
 #, c-format
 msgid "%d MB"
 msgstr "%d MB"
 
-#: libgimpbase/gimputils.c:233
+#: libgimpbase/gimputils.c:279
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f GB"
 
-#: libgimpbase/gimputils.c:237
+#: libgimpbase/gimputils.c:283
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
 
-#: libgimpbase/gimputils.c:241
+#: libgimpbase/gimputils.c:287
 #, c-format
 msgid "%d GB"
 msgstr "%d GB"
 
-#: libgimpmodule/gimpmodule.c:175
+#: libgimpmodule/gimpmodule.c:178
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "Načítá se modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:191 libgimpmodule/gimpmodule.c:208
-#: libgimpmodule/gimpmodule.c:315 libgimpmodule/gimpmodule.c:342
-#: libgimpmodule/gimpmodule.c:435
+#: libgimpmodule/gimpmodule.c:200 libgimpmodule/gimpmodule.c:220
+#: libgimpmodule/gimpmodule.c:341 libgimpmodule/gimpmodule.c:373
+#: libgimpmodule/gimpmodule.c:471
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Chyba při načítání modulu '%s': %s"
 
-#: libgimpmodule/gimpmodule.c:272
+#: libgimpmodule/gimpmodule.c:293
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Vynechává se modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:442
 msgid "Module error"
 msgstr "Chyba modulu"
 
-#: libgimpmodule/gimpmodule.c:410
+#: libgimpmodule/gimpmodule.c:443
 msgid "Loaded"
 msgstr "Načteno"
 
-#: libgimpmodule/gimpmodule.c:411
+#: libgimpmodule/gimpmodule.c:444
 msgid "Load failed"
 msgstr "Načtení selhalo"
 
-#: libgimpmodule/gimpmodule.c:412
+#: libgimpmodule/gimpmodule.c:445
 msgid "Not loaded"
 msgstr "Nenačteno"
 

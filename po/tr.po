@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD.tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:22+0100\n"
+"POT-Creation-Date: 2004-01-19 03:08+0100\n"
 "PO-Revision-Date: 2003-12-31 16:56+0000\n"
 "Last-Translator: Görkem Çetin <gorkem@kde.org>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -17,14 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/app_procs.c:180
+#: app/app_procs.c:183
 msgid ""
 "GIMP is not properly installed for the current user.\n"
 "User installation was skipped because the '--no-interface' flag was used.\n"
 "To perform user installation, run the GIMP without the '--no-interface' flag."
 msgstr ""
 
-#: app/app_procs.c:266
+#: app/app_procs.c:269
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "%s dosyasını açma başarısız oldu: %s"
@@ -163,7 +163,7 @@ msgstr "                           Hayati sinyaller için hata ayıklama kipi.\n
 #: app/main.c:527
 msgid ""
 "  --pdb-compat-mode <off | on | warn>\n"
-"                           Procedural Database compat mode.\n"
+"                           Procedural Database compatibility mode.\n"
 msgstr ""
 
 #: app/main.c:529
@@ -271,10 +271,10 @@ msgid "Highlights"
 msgstr "Yüksektonlar"
 
 #: app/config/gimpconfig-deserialize.c:212 app/config/gimpconfig.c:424
-#: app/config/gimpconfig.c:437 app/config/gimpscanner.c:396
-#: app/config/gimpscanner.c:467 app/core/gimp-modules.c:134
+#: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
+#: app/config/gimpscanner.c:470 app/core/gimp-modules.c:134
 #: app/core/gimp-units.c:171 app/gui/session.c:145
-#: app/plug-in/plug-in-rc.c:161
+#: app/plug-in/plug-in-rc.c:162
 msgid "fatal parse error"
 msgstr ""
 
@@ -304,32 +304,32 @@ msgstr "Dosya %s acılamadı: %s"
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "%s anahtarına verilen değer geçerli bir UTF-8 dizgesi değil"
 
-#: app/config/gimpconfig-path.c:144
+#: app/config/gimpconfig-path.c:153
 #, fuzzy, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Geriye alınamıyor: %s"
 
 #: app/config/gimpconfig-utils.c:472 app/config/gimpscanner.c:92
-#: app/core/gimpbrush.c:414 app/core/gimpbrushgenerated.c:377
-#: app/core/gimpbrushpipe.c:352 app/core/gimpgradient.c:356
+#: app/core/gimpbrush.c:414 app/core/gimpbrushgenerated.c:379
+#: app/core/gimpbrushpipe.c:353 app/core/gimpgradient.c:356
 #: app/core/gimppalette.c:379 app/core/gimppattern.c:344
-#: app/tools/gimpcurvestool.c:1324 app/tools/gimplevelstool.c:1493
-#: app/widgets/gimptexteditor.c:372 app/xcf/xcf.c:273
+#: app/tools/gimpcurvestool.c:1319 app/tools/gimplevelstool.c:1494
+#: app/widgets/gimptexteditor.c:373 app/xcf/xcf.c:273
 #, fuzzy, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "'%s' dosyası açılamadı"
 
 #: app/config/gimpconfig-utils.c:481 app/config/gimpconfigwriter.c:118
-#: app/core/gimpbrushgenerated.c:129 app/core/gimpgradient.c:509
-#: app/core/gimpgradient.c:594 app/core/gimppalette.c:590 app/gui/themes.c:237
-#: app/tools/gimpcurvestool.c:1323 app/tools/gimplevelstool.c:1492
-#: app/vectors/gimpvectors-export.c:81 app/xcf/xcf.c:334
+#: app/core/gimpbrushgenerated.c:130 app/core/gimpgradient.c:509
+#: app/core/gimpgradient.c:595 app/core/gimppalette.c:590 app/gui/themes.c:238
+#: app/tools/gimpcurvestool.c:1318 app/tools/gimplevelstool.c:1493
+#: app/vectors/gimpvectors-export.c:83 app/xcf/xcf.c:330
 #, fuzzy, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "'%s' dosyası açılamadı"
 
 #: app/config/gimpconfig-utils.c:492 app/config/gimpconfig-utils.c:515
-#: app/vectors/gimpvectors-export.c:94
+#: app/vectors/gimpvectors-export.c:96
 #, fuzzy, c-format
 msgid "Error while writing '%s': %s"
 msgstr "Dosya %s acılamadı: %s"
@@ -375,12 +375,12 @@ msgstr "taranırken hata oldu: \"%s\"\n"
 msgid "Could not create '%s': %s"
 msgstr "'%s' dosyası açılamadı"
 
-#: app/config/gimprc.c:341 app/config/gimprc.c:353
+#: app/config/gimprc.c:341 app/config/gimprc.c:354
 #, fuzzy, c-format
 msgid "Parsing '%s'\n"
 msgstr "\"%s\" ayrıştırılıyor\n"
 
-#: app/config/gimprc.c:577
+#: app/config/gimprc.c:579
 #, fuzzy, c-format
 msgid "Saving '%s'\n"
 msgstr "\"%s\" ayrıştırılıyor\n"
@@ -716,12 +716,12 @@ msgid ""
 "appended to the command with a space separating the two."
 msgstr ""
 
-#: app/config/gimpscanner.c:217
+#: app/config/gimpscanner.c:220
 #, fuzzy
 msgid "invalid UTF-8 string"
 msgstr "%s anahtarına verilen değer geçerli bir UTF-8 dizgesi değil"
 
-#: app/config/gimpscanner.c:494
+#: app/config/gimpscanner.c:497
 #, fuzzy, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Dosya %s acılamadı: %s"
@@ -983,7 +983,7 @@ msgid "RGB"
 msgstr "RGB"
 
 #: app/core/core-enums.c:349 app/core/core-enums.c:370
-#: app/gui/info-window.c:87 app/gui/info-window.c:554
+#: app/gui/info-window.c:85 app/gui/info-window.c:552
 msgid "Grayscale"
 msgstr "Griölçekli"
 
@@ -1003,12 +1003,12 @@ msgid "Indexed-Alpha"
 msgstr "Dizinli"
 
 #: app/core/core-enums.c:391 app/gui/preferences-dialog.c:1714
-#: app/gui/user-install-dialog.c:1292
+#: app/gui/user-install-dialog.c:1303
 msgid "Horizontal"
 msgstr "Yatay"
 
 #: app/core/core-enums.c:392 app/gui/preferences-dialog.c:1716
-#: app/gui/user-install-dialog.c:1294
+#: app/gui/user-install-dialog.c:1305
 msgid "Vertical"
 msgstr "Dikey"
 
@@ -1127,7 +1127,7 @@ msgid "Guide"
 msgstr "Kılavuz"
 
 #: app/core/core-enums.c:594 app/core/core-enums.c:624
-#: app/core/gimpchannel.c:1599 app/core/gimpselection.c:565
+#: app/core/gimpchannel.c:1597 app/core/gimpselection.c:565
 msgid "Selection Mask"
 msgstr "Seçim Maskesi"
 
@@ -1149,20 +1149,20 @@ msgid "Linked Item"
 msgstr "Bağlantılı Öğe"
 
 #: app/core/core-enums.c:599 app/core/gimplayer.c:569 app/core/gimplayer.c:571
-#: app/gui/layers-commands.c:1070 app/gui/resize-dialog.c:204
+#: app/gui/layers-commands.c:1126 app/gui/resize-dialog.c:204
 #: app/pdb/layer_cmds.c:453
 msgid "Scale Layer"
 msgstr "Katmanı Ölçekle"
 
 #: app/core/core-enums.c:600 app/core/gimpimage-crop.c:117
 #: app/core/gimplayer.c:607 app/core/gimplayer.c:609
-#: app/gui/layers-commands.c:1164 app/pdb/layer_cmds.c:548
+#: app/gui/layers-commands.c:1220 app/pdb/layer_cmds.c:548
 msgid "Resize Layer"
 msgstr "Katman Boyutunu Değiştir"
 
 #: app/core/core-enums.c:601 app/core/core-enums.c:632
-#: app/core/gimplayer.c:982 app/gui/layers-commands.c:945
-#: app/gui/layers-commands.c:984
+#: app/core/gimplayer.c:982 app/gui/layers-commands.c:1001
+#: app/gui/layers-commands.c:1040
 msgid "Add Layer Mask"
 msgstr "Katman Maskesi Ekle"
 
@@ -1170,7 +1170,7 @@ msgstr "Katman Maskesi Ekle"
 msgid "Apply Layer Mask"
 msgstr "Katman Maskesini Uygula"
 
-#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:218
+#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:212
 msgid "Floating Selection to Layer"
 msgstr "Katmana Yüzen Seçim"
 
@@ -1178,16 +1178,16 @@ msgstr "Katmana Yüzen Seçim"
 msgid "Float Selection"
 msgstr "Seçimi Yüzdür"
 
-#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:128
+#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:122
 msgid "Anchor Floating Selection"
 msgstr "Yüzen Seçimi Çıpala"
 
-#: app/core/core-enums.c:606 app/core/gimp-edit.c:119
-#: app/widgets/gimpbufferview.c:143
+#: app/core/core-enums.c:606 app/core/gimp-edit.c:124
+#: app/widgets/gimpbufferview.c:154
 msgid "Paste"
 msgstr "Yapıştır"
 
-#: app/core/core-enums.c:607 app/core/gimp-edit.c:281
+#: app/core/core-enums.c:607 app/core/gimp-edit.c:319
 msgid "Cut"
 msgstr "Kes"
 
@@ -1257,8 +1257,8 @@ msgstr "Parça Adlandır"
 msgid "Set Item Linked"
 msgstr "Yeni Katman Seçenekleri"
 
-#: app/core/core-enums.c:629 app/gui/layers-commands.c:655
-#: app/gui/layers-commands.c:686 app/gui/layers-commands.c:720
+#: app/core/core-enums.c:629 app/gui/layers-commands.c:711
+#: app/gui/layers-commands.c:742 app/gui/layers-commands.c:776
 #: app/widgets/gimpdrawabletreeview.c:219 app/widgets/gimplayertreeview.c:212
 msgid "New Layer"
 msgstr "Yeni Katman"
@@ -1348,31 +1348,31 @@ msgstr "FS Relax"
 msgid "EEK: can't undo"
 msgstr "EYVAH: Geriye alınamıyor"
 
-#: app/core/gimp-edit.c:111 app/core/gimp-edit.c:187
+#: app/core/gimp-edit.c:116 app/core/gimp-edit.c:225
 msgid "Pasted Layer"
 msgstr "Yapıştırılan Katman"
 
-#: app/core/gimp-edit.c:216
+#: app/core/gimp-edit.c:254
 msgid "Clear"
 msgstr "Temizle"
 
-#: app/core/gimp-edit.c:232
+#: app/core/gimp-edit.c:270
 msgid "Fill with FG Color"
 msgstr "ÖP rengiyle doldur"
 
-#: app/core/gimp-edit.c:236 app/core/gimp-edit.c:257
+#: app/core/gimp-edit.c:274 app/core/gimp-edit.c:295
 msgid "Fill with BG Color"
 msgstr "AP rengiyle doldur"
 
-#: app/core/gimp-edit.c:240
+#: app/core/gimp-edit.c:278
 msgid "Fill with White"
 msgstr "Beyaz ile Doldur"
 
-#: app/core/gimp-edit.c:244
+#: app/core/gimp-edit.c:282
 msgid "Fill with Transparency"
 msgstr "Şeffaf doldur"
 
-#: app/core/gimp-edit.c:248
+#: app/core/gimp-edit.c:286
 #, fuzzy
 msgid "Fill with Pattern"
 msgstr "/Düzenle/_Desen ile Doldur"
@@ -1455,7 +1455,7 @@ msgstr "Şablonlar"
 msgid "Modules"
 msgstr "Modüller"
 
-#: app/core/gimp.c:1043 app/widgets/gimperrorconsole.c:259
+#: app/core/gimp.c:1043 app/widgets/gimperrorconsole.c:260
 #: app/widgets/gimpwidgets-utils.c:93
 msgid "GIMP"
 msgstr "GIMP"
@@ -1465,52 +1465,52 @@ msgstr "GIMP"
 msgid "Could not read %d bytes from '%s': %s"
 msgstr "'%s' dosyası açılamıyor: %s"
 
-#: app/core/gimpbrush.c:590
+#: app/core/gimpbrush.c:591
 #, fuzzy, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr "GIMP desen dosyası kesilmiş gibi gözüküyor: \"%s\"."
 
-#: app/core/gimpbrush.c:603
+#: app/core/gimpbrush.c:604
 #, fuzzy, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr "GIMP desen dosyası kesilmiş gibi gözüküyor: \"%s\"."
 
-#: app/core/gimpbrush.c:619 app/core/gimpbrush.c:735
+#: app/core/gimpbrush.c:620 app/core/gimpbrush.c:736
 #, fuzzy, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr "GIMP desen dosyası kesilmiş gibi gözüküyor: \"%s\"."
 
-#: app/core/gimpbrush.c:627 app/core/gimpbrushpipe.c:374
+#: app/core/gimpbrush.c:628 app/core/gimpbrushpipe.c:375
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr ""
 
-#: app/core/gimpbrush.c:634 app/core/gimpbrushpipe.c:376
+#: app/core/gimpbrush.c:635 app/core/gimpbrushpipe.c:377
 #: app/core/gimpcontext.c:1272 app/core/gimpitem.c:444
-#: app/core/gimppattern.c:413 app/gui/templates-commands.c:150
+#: app/core/gimppattern.c:415 app/gui/templates-commands.c:150
 #: app/tools/gimpvectortool.c:335
 msgid "Unnamed"
 msgstr "Isimsiz"
 
-#: app/core/gimpbrush.c:723
+#: app/core/gimpbrush.c:724
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
 
-#: app/core/gimpbrushgenerated.c:388
+#: app/core/gimpbrushgenerated.c:390
 #, fuzzy, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
 msgstr "GIMP desen dosyası kesilmiş gibi gözüküyor: \"%s\"."
 
-#: app/core/gimpbrushgenerated.c:399
+#: app/core/gimpbrushgenerated.c:401
 #, fuzzy, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
 msgstr "GIMP desen dosyası kesilmiş gibi gözüküyor: \"%s\"."
 
-#: app/core/gimpbrushpipe.c:384 app/core/gimpbrushpipe.c:404
-#: app/core/gimpbrushpipe.c:494
+#: app/core/gimpbrushpipe.c:385 app/core/gimpbrushpipe.c:405
+#: app/core/gimpbrushpipe.c:495
 #, fuzzy, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "GIMP desen dosyası kesilmiş gibi gözüküyor: \"%s\"."
@@ -1524,7 +1524,8 @@ msgstr "Kanal"
 msgid "Rename Channel"
 msgstr "Kanalı Yükselt"
 
-#: app/core/gimpchannel.c:255 app/tools/gimpeditselectiontool.c:1122
+#: app/core/gimpchannel.c:255 app/tools/gimpeditselectiontool.c:251
+#: app/tools/gimpeditselectiontool.c:1215
 msgid "Move Channel"
 msgstr "Kanalı Taşı"
 
@@ -1560,27 +1561,27 @@ msgstr "Kanalı Büyüt"
 msgid "Shrink Channel"
 msgstr "Kanalı Küçült"
 
-#: app/core/gimpchannel.c:467
+#: app/core/gimpchannel.c:465
 msgid "Scale Channel"
 msgstr "Kanalı Boyutlandır"
 
-#: app/core/gimpchannel.c:494
+#: app/core/gimpchannel.c:492
 msgid "Resize Channel"
 msgstr "Kanalın Boyutunu Değiştir"
 
-#: app/core/gimpchannel.c:523
+#: app/core/gimpchannel.c:521
 msgid "Flip Channel"
 msgstr "Kanalı Döndür"
 
-#: app/core/gimpchannel.c:550
+#: app/core/gimpchannel.c:548
 msgid "Rotate Channel"
 msgstr "Kanalı Çevir"
 
-#: app/core/gimpchannel.c:580 app/core/gimpdrawable-transform.c:1108
+#: app/core/gimpchannel.c:578 app/core/gimpdrawable-transform.c:1108
 msgid "Transform Channel"
 msgstr "Kanalı Dönüştür"
 
-#: app/core/gimpchannel.c:620
+#: app/core/gimpchannel.c:618
 msgid "Cannot stroke empty channel."
 msgstr ""
 
@@ -1588,7 +1589,7 @@ msgstr ""
 msgid "Set Channel Color"
 msgstr "Kanal Rengini Belirle"
 
-#: app/core/gimpchannel.c:1527
+#: app/core/gimpchannel.c:1525
 msgid "Set Channel Opacity"
 msgstr "Kanal Opaklığını Belirle"
 
@@ -1855,172 +1856,172 @@ msgstr "Hızlı Maskeyi Etkinleştir"
 msgid "Disable QuickMask"
 msgstr "Hızlı Maskeyi Kapat"
 
-#: app/core/gimpimage-undo-push.c:3433
+#: app/core/gimpimage-undo-push.c:3408
 #, c-format
 msgid "Can't undo %s"
 msgstr "Geriye alınamıyor: %s"
 
-#: app/core/gimpimage.c:1064 app/core/gimppalette-import.c:205
-#: app/core/gimppalette.c:661 app/gui/palette-import-dialog.c:587
-#: app/pdb/image_cmds.c:3520 app/widgets/gimpdatafactoryview.c:299
+#: app/core/gimpimage.c:1061 app/core/gimppalette-import.c:205
+#: app/core/gimppalette.c:662 app/gui/palette-import-dialog.c:587
+#: app/pdb/image_cmds.c:3518 app/widgets/gimpdatafactoryview.c:299
 msgid "Untitled"
 msgstr "İsimsiz"
 
-#: app/core/gimpimage.c:1138
+#: app/core/gimpimage.c:1135
 msgid "Change Image Resolution"
 msgstr "Resim Çözünürlüğünü Değiştir"
 
-#: app/core/gimpimage.c:1177
+#: app/core/gimpimage.c:1174
 msgid "Change Image Unit"
 msgstr "Resim Birimini Değiştir"
 
-#: app/core/gimpimage.c:1931
+#: app/core/gimpimage.c:1940
 #, fuzzy
-msgid "Attach Paraite to Image"
+msgid "Attach Parasite to Image"
 msgstr "Parazit İlişkile"
 
-#: app/core/gimpimage.c:1964
+#: app/core/gimpimage.c:1973
 msgid "Remove Parasite from Image"
 msgstr "Resimdeki Paraziti Kaldır"
 
-#: app/core/gimpimage.c:2450
+#: app/core/gimpimage.c:2445
 msgid "Add Layer"
 msgstr "Katman Ekle"
 
-#: app/core/gimpimage.c:2524
+#: app/core/gimpimage.c:2509
 msgid "Remove Layer"
 msgstr "Katmanı Sil"
 
-#: app/core/gimpimage.c:2586
+#: app/core/gimpimage.c:2577
 msgid "Layer cannot be raised higher."
 msgstr "Katman daha fazla yükseltilemez."
 
-#: app/core/gimpimage.c:2591 app/widgets/gimplayertreeview.c:218
-msgid "Raise Layer"
-msgstr "Katmanı Yükselt"
-
-#: app/core/gimpimage.c:2611
-msgid "Layer cannot be lowered more."
-msgstr "Katman daha fazla alçaltılamaz."
-
-#: app/core/gimpimage.c:2616 app/widgets/gimplayertreeview.c:222
-msgid "Lower Layer"
-msgstr "Katmanı Alçalt"
-
-#: app/core/gimpimage.c:2633
-msgid "Layer is already on top."
-msgstr "Katman zaten en üstte."
-
-#: app/core/gimpimage.c:2639
+#: app/core/gimpimage.c:2583 app/core/gimpimage.c:2633
 msgid "Cannot raise a layer without alpha."
 msgstr "Alfa kanalı olmadan katman yükseltilemez."
 
-#: app/core/gimpimage.c:2644 app/widgets/gimplayertreeview.c:220
+#: app/core/gimpimage.c:2588 app/widgets/gimplayertreeview.c:218
+msgid "Raise Layer"
+msgstr "Katmanı Yükselt"
+
+#: app/core/gimpimage.c:2605
+msgid "Layer cannot be lowered more."
+msgstr "Katman daha fazla alçaltılamaz."
+
+#: app/core/gimpimage.c:2610 app/widgets/gimplayertreeview.c:222
+msgid "Lower Layer"
+msgstr "Katmanı Alçalt"
+
+#: app/core/gimpimage.c:2627
+msgid "Layer is already on top."
+msgstr "Katman zaten en üstte."
+
+#: app/core/gimpimage.c:2638 app/widgets/gimplayertreeview.c:220
 msgid "Raise Layer to Top"
 msgstr "Katmanı En Üste Çıkart"
 
-#: app/core/gimpimage.c:2664
+#: app/core/gimpimage.c:2658
 msgid "Layer is already on the bottom."
 msgstr "Katman zaten en altta."
 
-#: app/core/gimpimage.c:2669 app/widgets/gimplayertreeview.c:224
+#: app/core/gimpimage.c:2663 app/widgets/gimplayertreeview.c:224
 msgid "Lower Layer to Bottom"
 msgstr "Katmanı En Alta İndir"
 
-#: app/core/gimpimage.c:2712
+#: app/core/gimpimage.c:2702
 #, fuzzy, c-format
 msgid "Layer '%s' has no alpha. Layer was placed above it."
 msgstr ""
 "\"%s\" katmanının alfası yok.\n"
 "Katman onun üzerine yerleştirildi."
 
-#: app/core/gimpimage.c:2765
+#: app/core/gimpimage.c:2756
 msgid "Add Channel"
 msgstr "Kanal Ekle"
 
-#: app/core/gimpimage.c:2810
+#: app/core/gimpimage.c:2801
 msgid "Remove Channel"
 msgstr "Kanal Sil"
 
-#: app/core/gimpimage.c:2854
+#: app/core/gimpimage.c:2845
 msgid "Channel cannot be raised higher."
 msgstr "Kanal daha fazla yükseltilemez."
 
-#: app/core/gimpimage.c:2859 app/widgets/gimpchanneltreeview.c:127
+#: app/core/gimpimage.c:2850 app/widgets/gimpchanneltreeview.c:127
 msgid "Raise Channel"
 msgstr "Kanalı Yükselt"
 
-#: app/core/gimpimage.c:2875
+#: app/core/gimpimage.c:2867
 msgid "Channel cannot be lowered more."
 msgstr "Kanal daha fazla alçaltılamaz."
 
-#: app/core/gimpimage.c:2880 app/widgets/gimpchanneltreeview.c:131
+#: app/core/gimpimage.c:2872 app/widgets/gimpchanneltreeview.c:131
 msgid "Lower Channel"
 msgstr "Kanalı Alçalt"
 
-#: app/core/gimpimage.c:2953
+#: app/core/gimpimage.c:2949
 msgid "Add Path"
 msgstr "Yol Ekle"
 
-#: app/core/gimpimage.c:3000
+#: app/core/gimpimage.c:2994
 msgid "Remove Path"
 msgstr "Yolu Sil"
 
-#: app/core/gimpimage.c:3045
+#: app/core/gimpimage.c:3038
 msgid "Path cannot be raised higher."
 msgstr "Yol daha fazla yükseltilemez."
 
-#: app/core/gimpimage.c:3050 app/widgets/gimpvectorstreeview.c:137
+#: app/core/gimpimage.c:3043 app/widgets/gimpvectorstreeview.c:137
 msgid "Raise Path"
 msgstr "Yolu Yükselt"
 
-#: app/core/gimpimage.c:3066
+#: app/core/gimpimage.c:3060
 msgid "Path cannot be lowered more."
 msgstr "Yol daha fazla alçaltılamaz."
 
-#: app/core/gimpimage.c:3071 app/widgets/gimpvectorstreeview.c:141
+#: app/core/gimpimage.c:3065 app/widgets/gimpvectorstreeview.c:141
 msgid "Lower Path"
 msgstr "Yolu Alçalt"
 
-#: app/core/gimpimagefile.c:469
+#: app/core/gimpimagefile.c:458
 msgid "Remote image"
 msgstr "Uzak resim"
 
-#: app/core/gimpimagefile.c:474
+#: app/core/gimpimagefile.c:463
 msgid "Could not open"
 msgstr "Açılamadı"
 
-#: app/core/gimpimagefile.c:495
+#: app/core/gimpimagefile.c:484
 msgid "No preview available"
 msgstr "Önizleme yok"
 
-#: app/core/gimpimagefile.c:499
+#: app/core/gimpimagefile.c:488
 msgid "Loading preview ..."
 msgstr "Önizleme yükleniyor..."
 
-#: app/core/gimpimagefile.c:503
+#: app/core/gimpimagefile.c:492
 msgid "Preview is out of date"
 msgstr "Önizlemenin tarihi geçmiş"
 
-#: app/core/gimpimagefile.c:507
+#: app/core/gimpimagefile.c:496
 msgid "Cannot create preview"
 msgstr "Önizleme oluşturulamıyor"
 
-#: app/core/gimpimagefile.c:514 app/gui/info-window.c:505
+#: app/core/gimpimagefile.c:503 app/gui/info-window.c:503
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d piksel"
 
-#: app/core/gimpimagefile.c:529
+#: app/core/gimpimagefile.c:518
 msgid "1 Layer"
 msgstr "1 Katman"
 
-#: app/core/gimpimagefile.c:531
+#: app/core/gimpimagefile.c:520
 #, c-format
 msgid "%d Layers"
 msgstr "%d Katman"
 
-#: app/core/gimpimagefile.c:568
+#: app/core/gimpimagefile.c:557
 #, fuzzy, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr ""
@@ -2037,14 +2038,14 @@ msgstr "Parazit İlişkile"
 msgid "Remove Parasite from Item"
 msgstr "Paraziti Kaldır"
 
-#: app/core/gimplayer-floating-sel.c:121
+#: app/core/gimplayer-floating-sel.c:115
 #, fuzzy
 msgid "Cannot anchor this layer because it is not a floating selection."
 msgstr ""
 "Bu katman çıpalanamıyor çünkü\n"
 "yüzen seçim değil."
 
-#: app/core/gimplayer-floating-sel.c:199
+#: app/core/gimplayer-floating-sel.c:193
 #, fuzzy
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
@@ -2063,8 +2064,8 @@ msgid "Rename Layer"
 msgstr "Katmanın Adını Değiştir"
 
 #: app/core/gimplayer.c:528 app/pdb/layer_cmds.c:685 app/pdb/layer_cmds.c:774
-#: app/tools/gimpeditselectiontool.c:251
-#: app/tools/gimpeditselectiontool.c:1124
+#: app/tools/gimpeditselectiontool.c:263
+#: app/tools/gimpeditselectiontool.c:1225
 msgid "Move Layer"
 msgstr "Katmanı Taşı"
 
@@ -2189,36 +2190,36 @@ msgstr ""
 "'%s' paleti yüklenirken:\n"
 "Okuma hatası (satır %d)"
 
-#: app/core/gimppalette.c:707
+#: app/core/gimppalette.c:708
 msgid "Black"
 msgstr "Siyah"
 
-#: app/core/gimppattern.c:353 app/core/gimppattern.c:399
-#: app/core/gimppattern.c:424
+#: app/core/gimppattern.c:353 app/core/gimppattern.c:400
+#: app/core/gimppattern.c:426
 #, fuzzy, c-format
 msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
 msgstr "GIMP desen dosyası kesilmiş gibi gözüküyor: \"%s\"."
 
-#: app/core/gimppattern.c:372
+#: app/core/gimppattern.c:373
 #, fuzzy, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr "GIMP desen dosyası kesilmiş gibi gözüküyor: \"%s\"."
 
-#: app/core/gimppattern.c:382
+#: app/core/gimppattern.c:383
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
 
-#: app/core/gimppattern.c:406
+#: app/core/gimppattern.c:408
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr ""
 
-#: app/core/gimpselection.c:196 app/tools/gimpeditselectiontool.c:247
-#: app/tools/gimpeditselectiontool.c:1031 app/tools/gimpmoveoptions.c:184
+#: app/core/gimpselection.c:196 app/tools/gimpeditselectiontool.c:259
+#: app/tools/gimpeditselectiontool.c:1127 app/tools/gimpmoveoptions.c:184
 #: app/tools/gimpmoveoptions.c:185
 msgid "Move Selection"
 msgstr "Seçimi Taşı"
@@ -2278,7 +2279,7 @@ msgstr "Kesme veya kopyalama yapılamaz çünkü seçili alan boş."
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Seçim yüzdürülemez çünkü seçili alan boş."
 
-#: app/core/gimpselection.c:837 app/gui/layers-commands.c:903
+#: app/core/gimpselection.c:837 app/gui/layers-commands.c:959
 msgid "Floating Selection"
 msgstr "Yüzen Seçim"
 
@@ -2421,7 +2422,7 @@ msgstr "%s dosyasında değişiklikler yapılmıştır. Pencere kapatılsın mı
 msgid "Drop New Layer"
 msgstr "Yeni Katmanı Düşür"
 
-#: app/display/gimpdisplayshell-dnd.c:121
+#: app/display/gimpdisplayshell-dnd.c:123
 msgid "Drop New Path"
 msgstr ""
 
@@ -2433,15 +2434,15 @@ msgstr "Renk Görünüm Filtreleri"
 msgid "Layer Select"
 msgstr "Katman Seçimi"
 
-#: app/display/gimpdisplayshell-scale.c:468
+#: app/display/gimpdisplayshell-scale.c:499
 msgid "Zoom Ratio"
 msgstr "Ölçek Oranı"
 
-#: app/display/gimpdisplayshell-scale.c:470
+#: app/display/gimpdisplayshell-scale.c:501
 msgid "Select Zoom Ratio"
 msgstr "Ölçek Oranını Seçin"
 
-#: app/display/gimpdisplayshell-scale.c:499
+#: app/display/gimpdisplayshell-scale.c:530
 msgid "Zoom Ratio:"
 msgstr "Ölçek Oranı:"
 
@@ -2556,7 +2557,7 @@ msgstr ""
 msgid "Contributions by"
 msgstr ""
 
-#: app/gui/about-dialog.c:156
+#: app/gui/about-dialog.c:160
 msgid "About The GIMP"
 msgstr "GIMP Hakkında"
 
@@ -3120,19 +3121,19 @@ msgstr "Terse Çevrim dizinli çizilebilirlere uygulanamaz."
 msgid "Equalize does not operate on indexed layers."
 msgstr "Eşitleme dizinli çizilebilirlerde uygulanamaz."
 
-#: app/gui/edit-commands.c:194
+#: app/gui/edit-commands.c:188
 msgid "Cut Named"
 msgstr "İsimle Kes"
 
-#: app/gui/edit-commands.c:198 app/gui/edit-commands.c:217
+#: app/gui/edit-commands.c:192 app/gui/edit-commands.c:211
 msgid "Enter a name for this buffer"
 msgstr "Bu bellek için bir isim yazın"
 
-#: app/gui/edit-commands.c:213
+#: app/gui/edit-commands.c:207
 msgid "Copy Named"
 msgstr "İsimle Kopyala"
 
-#: app/gui/edit-commands.c:285 app/gui/stroke-dialog.c:295
+#: app/gui/edit-commands.c:279 app/gui/stroke-dialog.c:295
 #: app/gui/vectors-commands.c:289
 #, fuzzy
 msgid "There is no active layer or channel to stroke to."
@@ -3140,7 +3141,7 @@ msgstr ""
 "Aktif katmanın seçime dönüştürülebilecek\n"
 "alfa kanalı yok."
 
-#: app/gui/edit-commands.c:316 app/gui/edit-commands.c:345
+#: app/gui/edit-commands.c:307 app/gui/edit-commands.c:334
 #, fuzzy
 msgid "(Unnamed Buffer)"
 msgstr "Isimli Tampondan Yapıştır"
@@ -3157,8 +3158,8 @@ msgstr "/Bütün _Hataları Dosyaya Kaydet..."
 msgid "/Save _Selection to File..."
 msgstr "/Seçimi _Dosyaya Kaydet..."
 
-#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:714
-#: app/widgets/gimpdnd.c:1286 app/widgets/gimpdocumentview.c:477
+#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:692
+#: app/widgets/gimpdnd.c:1286 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3292,7 +3293,7 @@ msgstr "Öniz_leme"
 msgid "No Selection"
 msgstr "Seçim Yok"
 
-#: app/gui/file-open-dialog.c:503 app/gui/file-open-dialog.c:534
+#: app/gui/file-open-dialog.c:488 app/gui/file-open-dialog.c:519
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr ""
@@ -3721,7 +3722,7 @@ msgstr "Ölçekleniyor..."
 msgid "Rotating..."
 msgstr "Döndürüyor..."
 
-#: app/gui/image-commands.c:264 app/gui/layers-commands.c:361
+#: app/gui/image-commands.c:264 app/gui/layers-commands.c:365
 #, fuzzy
 msgid "Cannot crop because the current selection is empty."
 msgstr "Kesme/Kopyalama yapılamaz çünkü seçili alan boş."
@@ -4729,195 +4730,195 @@ msgstr "/_Resmi Sil"
 msgid "General"
 msgstr "Genel"
 
-#: app/gui/info-window.c:86
+#: app/gui/info-window.c:84
 msgid "Static Gray"
 msgstr "Durağan Gri"
 
-#: app/gui/info-window.c:88
+#: app/gui/info-window.c:86
 msgid "Static Color"
 msgstr "Durağan Renkli"
 
-#: app/gui/info-window.c:89
+#: app/gui/info-window.c:87
 msgid "Pseudo Color"
 msgstr "Yarı Renkli"
 
-#: app/gui/info-window.c:90
+#: app/gui/info-window.c:88
 msgid "True Color"
 msgstr "Gerçek Renkli"
 
-#: app/gui/info-window.c:91
+#: app/gui/info-window.c:89
 msgid "Direct Color"
 msgstr "Doğrudan Renkli"
 
-#: app/gui/info-window.c:139
+#: app/gui/info-window.c:137
 msgid "Extended"
 msgstr "Gelişmiş"
 
-#: app/gui/info-window.c:149 app/gui/preferences-dialog.c:1696
-#: app/gui/user-install-dialog.c:1277 app/widgets/gimpgrideditor.c:266
+#: app/gui/info-window.c:147 app/gui/preferences-dialog.c:1696
+#: app/gui/user-install-dialog.c:1288 app/widgets/gimpgrideditor.c:266
 #: app/widgets/gimpgrideditor.c:299 app/widgets/gimptemplateeditor.c:303
 msgid "Pixels"
 msgstr "Piksel"
 
-#: app/gui/info-window.c:160 app/gui/info-window.c:166
-#: app/gui/info-window.c:183 app/gui/info-window.c:189
+#: app/gui/info-window.c:158 app/gui/info-window.c:164
+#: app/gui/info-window.c:181 app/gui/info-window.c:187
+#: app/gui/info-window.c:376 app/gui/info-window.c:377
 #: app/gui/info-window.c:378 app/gui/info-window.c:379
-#: app/gui/info-window.c:380 app/gui/info-window.c:381
 #: app/widgets/gimpcolorframe.c:342
 msgid "n/a"
 msgstr ""
 
-#: app/gui/info-window.c:163 app/gui/info-window.c:186
+#: app/gui/info-window.c:161 app/gui/info-window.c:184
 msgid "X:"
 msgstr "X:"
 
-#: app/gui/info-window.c:169 app/gui/info-window.c:192
+#: app/gui/info-window.c:167 app/gui/info-window.c:190
 #: app/gui/resize-dialog.c:391 app/gui/resize-dialog.c:637
-#: app/tools/gimpcroptool.c:982 app/tools/gimprotatetool.c:195
+#: app/tools/gimpcroptool.c:985 app/tools/gimprotatetool.c:195
 #: app/tools/gimpscaletool.c:200 app/tools/gimpsheartool.c:175
 #: app/widgets/gimptemplateeditor.c:380
 msgid "Y:"
 msgstr "Y:"
 
-#: app/gui/info-window.c:172 app/pdb/internal_procs.c:188
+#: app/gui/info-window.c:170 app/pdb/internal_procs.c:188
 msgid "Units"
 msgstr "Birimler"
 
-#: app/gui/info-window.c:234
+#: app/gui/info-window.c:232
 msgid "Info Window"
 msgstr "Bilgi Penceresi"
 
-#: app/gui/info-window.c:236
+#: app/gui/info-window.c:234
 msgid "Image Information"
 msgstr "Resim Bilgisi"
 
 #. add the information fields
-#: app/gui/info-window.c:253
+#: app/gui/info-window.c:251
 msgid "Pixel Dimensions:"
 msgstr "Piksel Ölçüleri:"
 
-#: app/gui/info-window.c:255
+#: app/gui/info-window.c:253
 msgid "Print Size:"
 msgstr "Yazdırma Boyutu:"
 
-#: app/gui/info-window.c:257
+#: app/gui/info-window.c:255
 msgid "Resolution:"
 msgstr "Çözünürlük:"
 
-#: app/gui/info-window.c:259
+#: app/gui/info-window.c:257
 msgid "Scale Ratio:"
 msgstr "Ölçek Oranı:"
 
-#: app/gui/info-window.c:261
+#: app/gui/info-window.c:259
 msgid "Number of Layers:"
 msgstr "Katman Sayısı:"
 
-#: app/gui/info-window.c:263
+#: app/gui/info-window.c:261
 msgid "Size in Memory:"
 msgstr "Bellekte Kapladığı Yer:"
 
-#: app/gui/info-window.c:265
+#: app/gui/info-window.c:263
 msgid "Display Type:"
 msgstr "Görüntü Tipi:"
 
-#: app/gui/info-window.c:267
+#: app/gui/info-window.c:265
 msgid "Visual Class:"
 msgstr "Görsel Sınıf:"
 
-#: app/gui/info-window.c:269
+#: app/gui/info-window.c:267
 msgid "Visual Depth:"
 msgstr "Görsel Derinlik:"
 
-#: app/gui/info-window.c:518
+#: app/gui/info-window.c:516
 #, c-format
 msgid "pixels/%s"
 msgstr "piksel/%s"
 
-#: app/gui/info-window.c:520
+#: app/gui/info-window.c:518
 #, c-format
 msgid "%g x %g %s"
 msgstr "%g x %g %s"
 
-#: app/gui/info-window.c:523 app/gui/preferences-dialog.c:1718
-#: app/gui/user-install-dialog.c:1296
+#: app/gui/info-window.c:521 app/gui/preferences-dialog.c:1718
+#: app/gui/user-install-dialog.c:1307
 msgid "dpi"
 msgstr "DPI"
 
-#: app/gui/info-window.c:551
+#: app/gui/info-window.c:549
 msgid "RGB Color"
 msgstr "RGB Rengi"
 
-#: app/gui/info-window.c:558
+#: app/gui/info-window.c:556
 msgid "Indexed Color"
 msgstr "Dizinli Renkli"
 
-#: app/gui/info-window.c:558
+#: app/gui/info-window.c:556
 msgid "colors"
 msgstr "renk"
 
-#: app/gui/layers-commands.c:371
+#: app/gui/layers-commands.c:375
 msgid "Crop Layer"
 msgstr ""
 
-#: app/gui/layers-commands.c:449
+#: app/gui/layers-commands.c:453
 #, fuzzy
 msgid "Layer Mask to Selection"
 msgstr "/Katmanlar/Maskeden Seçime"
 
-#: app/gui/layers-commands.c:661
+#: app/gui/layers-commands.c:717
 msgid "Empty Layer Copy"
 msgstr "Boş Kanal Kopyası"
 
-#: app/gui/layers-commands.c:688
+#: app/gui/layers-commands.c:744
 msgid "Create a New Layer"
 msgstr "Yeni Katman Oluştur"
 
-#: app/gui/layers-commands.c:722
+#: app/gui/layers-commands.c:778
 msgid "Layer _Name:"
 msgstr "Katman _Adı:"
 
 #. The size labels
-#: app/gui/layers-commands.c:726
+#: app/gui/layers-commands.c:782
 msgid "Layer Width:"
 msgstr "Katman Genişliği:"
 
-#: app/gui/layers-commands.c:732 app/gui/resize-dialog.c:299
+#: app/gui/layers-commands.c:788 app/gui/resize-dialog.c:299
 #: app/gui/resize-dialog.c:324 app/gui/resize-dialog.c:570
-#: app/tools/gimpcroptool.c:999 app/tools/gimpscaletool.c:174
+#: app/tools/gimpcroptool.c:1002 app/tools/gimpscaletool.c:174
 #: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
 #: app/widgets/gimptemplateeditor.c:241 app/widgets/gimptemplateeditor.c:259
 msgid "Height:"
 msgstr "Yükseklik:"
 
-#: app/gui/layers-commands.c:791
+#: app/gui/layers-commands.c:847
 msgid "Layer Fill Type"
 msgstr "Katman Doldurma Tipi"
 
-#: app/gui/layers-commands.c:868
+#: app/gui/layers-commands.c:924
 msgid "Layer Attributes"
 msgstr "Katman Öznitelikleri"
 
-#: app/gui/layers-commands.c:870 app/widgets/gimplayertreeview.c:210
+#: app/gui/layers-commands.c:926 app/widgets/gimplayertreeview.c:210
 msgid "Edit Layer Attributes"
 msgstr "Katman Özniteliklerini Düzenle"
 
-#: app/gui/layers-commands.c:906
+#: app/gui/layers-commands.c:962
 msgid "Layer _Name"
 msgstr "Katman _Adı"
 
-#: app/gui/layers-commands.c:986
+#: app/gui/layers-commands.c:1042
 msgid "Add a Mask to the Layer"
 msgstr "Katmana Maske Ekle"
 
-#: app/gui/layers-commands.c:1005
+#: app/gui/layers-commands.c:1061
 msgid "Initialize Layer Mask to:"
 msgstr "İlklendirilen Maske:"
 
-#: app/gui/layers-commands.c:1022
+#: app/gui/layers-commands.c:1078
 msgid "In_vert Mask"
 msgstr "Maskeyi _Tersine Çevir"
 
-#: app/gui/layers-commands.c:1095 app/gui/layers-commands.c:1189
+#: app/gui/layers-commands.c:1151 app/gui/layers-commands.c:1245
 #, fuzzy
 msgid "Invalid width or height. Both must be positive."
 msgstr ""
@@ -4925,93 +4926,100 @@ msgstr ""
 "İkisi de pozitif olmalı."
 
 #: app/gui/layers-menu.c:46
+#, fuzzy
+msgid "/Te_xt Tool"
+msgstr "Metin Aleti"
+
+#: app/gui/layers-menu.c:51
 msgid "/_Edit Layer Attributes..."
 msgstr "/Katma_n Özniteliklerini Düzenle"
 
-#: app/gui/layers-menu.c:54
+#: app/gui/layers-menu.c:59
 msgid "/_New Layer..."
 msgstr "/Y_eni Katman..."
 
-#: app/gui/layers-menu.c:60
+#: app/gui/layers-menu.c:65
 msgid "/_Raise Layer"
 msgstr "/K_atmanı Yükselt"
 
-#: app/gui/layers-menu.c:65
+#: app/gui/layers-menu.c:70
 msgid "/Layer to _Top"
 msgstr "/_Katmanı En Üste Çıkart"
 
-#: app/gui/layers-menu.c:70
+#: app/gui/layers-menu.c:75
 msgid "/_Lower Layer"
 msgstr "/K_atmanı Alçalt"
 
-#: app/gui/layers-menu.c:75
+#: app/gui/layers-menu.c:80
 msgid "/Layer to _Bottom"
 msgstr "/Katmanı _En Alta İndir"
 
-#: app/gui/layers-menu.c:81
+#: app/gui/layers-menu.c:86
 msgid "/D_uplicate Layer"
 msgstr "/Katmanı Ç_oğalt"
 
-#: app/gui/layers-menu.c:86
+#: app/gui/layers-menu.c:91
 msgid "/_Anchor Layer"
 msgstr "/Kat_manı Çıpala"
 
-#: app/gui/layers-menu.c:91
+#: app/gui/layers-menu.c:96
 msgid "/Merge Do_wn"
 msgstr "/Aşağı _Birleştir"
 
-#: app/gui/layers-menu.c:96
+#: app/gui/layers-menu.c:101
 msgid "/_Delete Layer"
 msgstr "/Katma_nı Sil"
 
-#: app/gui/layers-menu.c:101
+#: app/gui/layers-menu.c:106
 #, fuzzy
 msgid "/_Discard Text Information"
 msgstr "Resim Bilgisi"
 
-#: app/gui/layers-menu.c:109
+#: app/gui/layers-menu.c:114
 msgid "/Layer B_oundary Size..."
 msgstr "/Katman Sınır _Boyutları"
 
-#: app/gui/layers-menu.c:114
+#: app/gui/layers-menu.c:119
 #, fuzzy
 msgid "/Layer to _Image Size"
 msgstr "/Resim Boyutu"
 
-#: app/gui/layers-menu.c:119
+#: app/gui/layers-menu.c:124
 msgid "/_Scale Layer..."
 msgstr "/Katmanı Ölçe_klendir..."
 
-#: app/gui/layers-menu.c:127
+#: app/gui/layers-menu.c:132
 msgid "/Add La_yer Mask..."
 msgstr "/Katman Maske_si Ekle..."
 
-#: app/gui/layers-menu.c:131
+#: app/gui/layers-menu.c:136
 msgid "/Apply Layer _Mask"
 msgstr "/Katm_an Maskesini Uygula"
 
-#: app/gui/layers-menu.c:135
+#: app/gui/layers-menu.c:140
 msgid "/Delete Layer Mas_k"
 msgstr "/K_atman Maskesini Sil"
 
-#: app/gui/layers-menu.c:140
+#: app/gui/layers-menu.c:145
 msgid "/Mask to Sele_ction"
 msgstr "/Maskeden _Seçime"
 
-#: app/gui/layers-menu.c:148
+#: app/gui/layers-menu.c:153
 msgid "/Add Alpha C_hannel"
 msgstr "/Alfa Kan_alı Ekle"
 
-#: app/gui/layers-menu.c:153
+#: app/gui/layers-menu.c:158
 msgid "/Al_pha to Selection"
 msgstr "/Alfa_dan Seçime"
 
-#: app/gui/layers-menu.c:161
-msgid "/Merge Visible Layers..."
+#: app/gui/layers-menu.c:166
+#, fuzzy
+msgid "/Merge _Visible Layers..."
 msgstr "/_Görünen Katmanları Birleştir..."
 
-#: app/gui/layers-menu.c:166
-msgid "/Flatten Image"
+#: app/gui/layers-menu.c:171
+#, fuzzy
+msgid "/_Flatten Image"
 msgstr "/Resmi Düzleştir"
 
 #: app/gui/menus.c:113
@@ -5075,7 +5083,8 @@ msgid "Documents Menu"
 msgstr "Belgeler Menüsü"
 
 #: app/gui/menus.c:219
-msgid "Templaes Menu"
+#, fuzzy
+msgid "Templates Menu"
 msgstr "Şablonlar Menüsü"
 
 #: app/gui/menus.c:226
@@ -5383,44 +5392,45 @@ msgstr ""
 
 #: app/gui/patterns-menu.c:45
 #, fuzzy
-msgid "/Edit Pattern..."
+msgid "/_Edit Pattern..."
 msgstr "/Yol Özniteliklerini Düzenle..."
 
 #: app/gui/patterns-menu.c:53
-msgid "/New Pattern"
+#, fuzzy
+msgid "/_New Pattern"
 msgstr "/Yeni Desen"
 
 #: app/gui/patterns-menu.c:58
 #, fuzzy
-msgid "/Duplicate Pattern"
+msgid "/D_uplicate Pattern"
 msgstr "/Yolu Çoğalt"
 
 #: app/gui/patterns-menu.c:63
 #, fuzzy
-msgid "/Delete Pattern..."
+msgid "/_Delete Pattern..."
 msgstr "Paleti Sil"
 
 #: app/gui/patterns-menu.c:71
 #, fuzzy
-msgid "/Refresh Patterns"
+msgid "/_Refresh Patterns"
 msgstr "Desenler"
 
-#: app/gui/plug-in-menus.c:339
+#: app/gui/plug-in-menus.c:343
 #, fuzzy, c-format
 msgid "Re_peat \"%s\""
 msgstr "Tekrarlama:"
 
-#: app/gui/plug-in-menus.c:340
+#: app/gui/plug-in-menus.c:344
 #, fuzzy, c-format
 msgid "R_e-show \"%s\""
 msgstr "/Filtreler/Sonuncuyu Göster"
 
-#: app/gui/plug-in-menus.c:366
+#: app/gui/plug-in-menus.c:370
 #, fuzzy
 msgid "Repeat Last"
 msgstr "/Filtreler/Sonuncuyu Tekrarla"
 
-#: app/gui/plug-in-menus.c:369
+#: app/gui/plug-in-menus.c:373
 #, fuzzy
 msgid "Re-Show Last"
 msgstr "/Filtreler/Sonuncuyu Göster"
@@ -5780,7 +5790,7 @@ msgstr "Asgari Renk Sayısı:"
 msgid "Install Colormap"
 msgstr "Renk Haritası Kur"
 
-#: app/gui/preferences-dialog.c:1669 app/gui/user-install-dialog.c:960
+#: app/gui/preferences-dialog.c:1669 app/gui/user-install-dialog.c:962
 msgid "Monitor Resolution"
 msgstr "Ekran çözünürlüğü"
 
@@ -5850,7 +5860,7 @@ msgstr "Asgari Geri Alma Sayısı"
 msgid "Maximum Undo Memory:"
 msgstr "Azami Geri Alma Belleği"
 
-#: app/gui/preferences-dialog.c:1846 app/gui/user-install-dialog.c:1169
+#: app/gui/preferences-dialog.c:1846 app/gui/user-install-dialog.c:1176
 msgid "Tile Cache Size:"
 msgstr "Döşeme Önbelleği Boyutu:"
 
@@ -5961,7 +5971,7 @@ msgstr "Geçici Dosyalar Dizinini Seç"
 msgid "Swap Dir:"
 msgstr "Takas Dizini:"
 
-#: app/gui/preferences-dialog.c:2014 app/gui/user-install-dialog.c:1191
+#: app/gui/preferences-dialog.c:2014 app/gui/user-install-dialog.c:1199
 msgid "Select Swap Dir"
 msgstr "Takas Dizinini Seç"
 
@@ -6167,6 +6177,12 @@ msgstr "piksel/%a"
 msgid "Interpolation:"
 msgstr "Aradeğerleme:"
 
+#: app/gui/resize-dialog.c:723
+msgid ""
+"Indexed color layers are always scaled without interpolation. The chosen "
+"interpolation type will affect scaling channels and masks only."
+msgstr ""
+
 #: app/gui/resolution-calibrate-dialog.c:85
 msgid "Calibrate Monitor Resolution"
 msgstr "Ekran Çözünürlüğünü Kalibre Et"
@@ -6262,44 +6278,44 @@ msgstr "/Şab_lonu Düzenle..."
 msgid "/_Delete Template"
 msgstr "/Ş_ablonu Sil"
 
-#: app/gui/themes.c:231 app/plug-in/plug-ins.c:218
+#: app/gui/themes.c:231 app/plug-in/plug-ins.c:221
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "\"%s\" yazılıyor\n"
 
-#: app/gui/themes.c:283
+#: app/gui/themes.c:284
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr ""
 
-#: app/gui/tips-dialog.c:94
+#: app/gui/tips-dialog.c:93
 msgid "<b>Your GIMP tips file appears to be missing!</b>"
 msgstr ""
 
-#: app/gui/tips-dialog.c:96
+#: app/gui/tips-dialog.c:95
 #, fuzzy, c-format
 msgid "There should be a file called '%s'. Please check your installation."
 msgstr ""
 "GIMP ipuçları dosyası bulunamadı. \"%s\" isimli bir dosyanın sistemde "
 "bulunması gerekiyor. Lütfen kurulumu yeniden gözden geçirin."
 
-#: app/gui/tips-dialog.c:102
+#: app/gui/tips-dialog.c:101
 msgid "<b>The GIMP tips file could not be parsed!</b>"
 msgstr "<b>GIMP ipuçları dosyası okunamadı!</b>"
 
-#: app/gui/tips-dialog.c:133
+#: app/gui/tips-dialog.c:134
 msgid "GIMP Tip of the Day"
 msgstr "Günün GIMP İpucu"
 
-#: app/gui/tips-dialog.c:197
+#: app/gui/tips-dialog.c:198
 msgid "Show tip next time GIMP starts"
 msgstr "GIMP tekrar başlatıldığında yeni ipuçlarını göster"
 
-#: app/gui/tips-dialog.c:221
+#: app/gui/tips-dialog.c:222
 msgid "_Previous Tip"
 msgstr "Ö_nceki İpucu"
 
-#: app/gui/tips-dialog.c:231
+#: app/gui/tips-dialog.c:232
 msgid "_Next Tip"
 msgstr "_Sonraki İpucu"
 
@@ -6336,31 +6352,32 @@ msgstr "Yol için yeni bir isim belirle"
 
 #: app/gui/tool-options-menu.c:57
 #, fuzzy
-msgid "/Save Options to/New Entry..."
+msgid "/_Save Options to/_New Entry..."
 msgstr "/Seçimi _Dosyaya Kaydet..."
 
 #: app/gui/tool-options-menu.c:68
-msgid "/Restore Options from/(None)"
-msgstr ""
+#, fuzzy
+msgid "/_Restore Options from/(None)"
+msgstr "Kaynak Harcaması"
 
 #: app/gui/tool-options-menu.c:74
 #, fuzzy
-msgid "/Rename Saved Options/(None)"
+msgid "/Re_name Saved Options/(None)"
 msgstr "Kaydetme seçenekleri"
 
 #: app/gui/tool-options-menu.c:80
 #, fuzzy
-msgid "/Delete Saved Options/(None)"
+msgid "/_Delete Saved Options/(None)"
 msgstr "Kaydetme seçenekleri"
 
 #: app/gui/tool-options-menu.c:89
 #, fuzzy
-msgid "/Reset Tool Options"
+msgid "/R_eset Tool Options"
 msgstr "Alet Seçenekleri"
 
 #: app/gui/tool-options-menu.c:94
 #, fuzzy
-msgid "/Reset all Tool Options..."
+msgid "/Reset _all Tool Options..."
 msgstr "/Sekme Ekle/_Araç Seçenekleri..."
 
 #. <Toolbox>/File/Acquire
@@ -6521,12 +6538,11 @@ msgid "/Help/_About"
 msgstr "/Yardım/Gimp _Hakkında"
 
 #: app/gui/user-install-dialog.c:132
+#, fuzzy
 msgid ""
-"The gimprc is used to store personal preferences\n"
-"that affect GIMP's default behavior.\n"
-"Paths to search for brushes, palettes, gradients,\n"
-"patterns, plug-ins and modules can also configured\n"
-"here."
+"The gimprc is used to store personal preferences that affect GIMP's default "
+"behavior.  Paths to search for brushes, palettes, gradients, patterns, plug-"
+"ins and modules can also configured here."
 msgstr ""
 "gimprc GIMP'in çalışmasını etkileyecek kişisel\n"
 "ayarların saklanmasında kullanılır.\n"
@@ -6535,21 +6551,21 @@ msgstr ""
 "burada belirlenir."
 
 #: app/gui/user-install-dialog.c:141
+#, fuzzy
 msgid ""
-"GIMP uses an additional gtkrc file so you can\n"
-"configure it to look differently than other GTK apps."
+"GIMP uses an additional gtkrc file so you can configure it to look "
+"differently than other GTK apps."
 msgstr ""
 "GIMP ekstra bir gtkrc dosyası kullanır, böylelikle\n"
 "diğer GTK programlarından farklı görünmesini sağlayabilirsiniz."
 
 #: app/gui/user-install-dialog.c:147
+#, fuzzy
 msgid ""
-"Plug-ins and extensions are external programs run\n"
-"by the GIMP which provide additional functionality.\n"
-"These programs are searched for at run-time and\n"
-"information about their functionality and mod-times\n"
-"is cached in this file.  This file is intended to\n"
-"be GIMP-readable only, and should not be edited."
+"Plug-ins and extensions are external programs run by the GIMP which provide "
+"additional functionality.  These programs are searched for at run-time and "
+"information about their functionality and mod-times is cached in this file.  "
+"This file is intended to be GIMP-readable only, and should not be edited."
 msgstr ""
 "Eklentiler ve uzantılar GIMP tarafından çalıştırılan\n"
 "ve ekstra işlevsellik kazandıran harici yazılımlardır.\n"
@@ -6559,13 +6575,12 @@ msgstr ""
 "değiştirilmemelidir."
 
 #: app/gui/user-install-dialog.c:157
+#, fuzzy
 msgid ""
-"Key shortcuts can be dynamically redefined in The GIMP.\n"
-"The menurc is a dump of your configuration so it can.\n"
-"be remembered for the next session.  You may edit this\n"
-"file if you wish, but it is much easier to define the\n"
-"keys from within The GIMP.  Deleting this file will\n"
-"restore the default shortcuts."
+"Key shortcuts can be dynamically redefined in The GIMP. The menurc is a dump "
+"of your configuration so it can. be remembered for the next session.  You "
+"may edit this file if you wish, but it is much easier to define the keys "
+"from within The GIMP.  Deleting this file will restore the default shortcuts."
 msgstr ""
 "Basam tuşlar dinamik olarak GIMP içinde yeniden atanabilir.\n"
 "menurc bu ayarların çıktısıdır böylece bir sonraki oturumda\n"
@@ -6574,10 +6589,11 @@ msgstr ""
 "dosyanın silinmesi öntanımlı basam tuşları geri çağırır."
 
 #: app/gui/user-install-dialog.c:167
+#, fuzzy
 msgid ""
-"The sessionrc is used to store what dialog windows were\n"
-"open the last time you quit The GIMP.  You can configure\n"
-"The GIMP to reopen these dialogs at the saved position."
+"The sessionrc is used to store what dialog windows were open the last time "
+"you quit The GIMP.  You can configure The GIMP to reopen these dialogs at "
+"the saved position."
 msgstr ""
 "sessionrc GIMP'ten son cıktığınızda hangi pencerelerin açık\n"
 "olduğunun saklandığı dosyadır. GIMP'i bu pencereleri kaydedilen\n"
@@ -6585,17 +6601,17 @@ msgstr ""
 
 #: app/gui/user-install-dialog.c:174
 msgid ""
-"This file holds a collection of standard media sizes that\n"
-"serve as image templates."
+"This file holds a collection of standard media sizes that serve as image "
+"templates."
 msgstr ""
 
 #: app/gui/user-install-dialog.c:180
+#, fuzzy
 msgid ""
-"The unitrc is used to store your user units database.\n"
-"You can define additional units and use them just\n"
-"like you use the built-in units inches, millimeters,\n"
-"points and picas.  This file is overwritten each time\n"
-"you quit the GIMP."
+"The unitrc is used to store your user units database.  You can define "
+"additional units and use them just like you use the built-in units inches, "
+"millimeters, points and picas.  This file is overwritten each time you quit "
+"the GIMP."
 msgstr ""
 "unitrc kullanıcı birimlerinizin saklandığı yerdir. Kendiniz\n"
 "ekstra birimler tanımlayabilir ve tıpkı öntanımlı birimler olan\n"
@@ -6605,10 +6621,9 @@ msgstr ""
 #: app/gui/user-install-dialog.c:189
 #, fuzzy
 msgid ""
-"This folder is used to store user defined brushes.\n"
-"The GIMP checks this folder in addition to the system-\n"
-"wide GIMP brushes installation when searching for\n"
-"brushes."
+"This folder is used to store user defined brushes. The GIMP checks this "
+"folder in addition to the system-wide GIMP brushes installation when "
+"searching for brushes."
 msgstr ""
 "Burası kullanıcının oluşturduğu fırçaların saklandığı\n"
 "alt dizindir. Öntanımlı gimprc, fırçaları tararken sistem\n"
@@ -6617,12 +6632,10 @@ msgstr ""
 #: app/gui/user-install-dialog.c:197
 #, fuzzy
 msgid ""
-"This folder is used to store fonts you only want\n"
-"visible in the GIMP. The GIMP checks this folder in\n"
-"addition to the system-wide GIMP fonts installation\n"
-"when searching for fonts. Use this only if you really\n"
-"want to have GIMP-only fonts, otherwise put things\n"
-"in your global font directory."
+"This folder is used to store fonts you only want visible in the GIMP. The "
+"GIMP checks this folder in addition to the system-wide GIMP fonts "
+"installation when searching for fonts. Use this only if you really want to "
+"have GIMP-only fonts, otherwise put things in your global font directory."
 msgstr ""
 "Burası kullanıcının belirlediği desenlerin saklandığı\n"
 "bir alt dizindir. Öntanımlı gimprc, desenleri tararken\n"
@@ -6632,112 +6645,105 @@ msgstr ""
 #: app/gui/user-install-dialog.c:207
 #, fuzzy
 msgid ""
-"This folder is used to store user defined gradients.\n"
-"The GIMP checks this folder in addition to the system-\n"
-"wide GIMP gradients installation when searching for\n"
-"gradients."
+"This folder is used to store user defined gradients.  The GIMP checks this "
+"folder in addition to the system-wide GIMP gradients installation when "
+"searching for gradients."
 msgstr ""
 "Burası kullanıcının belirlediği gradyanların saklandığı alt\n"
 "dizindir. Öntanımlı gimprc, gradyanları tararken sistem\n"
 "gradyanlarına ek gradyanlar için bu alt dizini kontrol eder."
 
-#: app/gui/user-install-dialog.c:215
+#: app/gui/user-install-dialog.c:214
 #, fuzzy
 msgid ""
-"This folder is used to store user defined palettes.\n"
-"The GIMP checks this folder in addition to the system-\n"
-"wide GIMP palettes installation when searching for\n"
-"palettes."
+"This folder is used to store user defined palettes.  The GIMP checks this "
+"folder in addition to the system-wide GIMP palettes installation when "
+"searching for palettes."
 msgstr ""
 "Burası kullanıcının belirlediği desenlerin saklandığı\n"
 "bir alt dizindir. Öntanımlı gimprc, desenleri tararken\n"
 "sistem desenlerine ek desenler için bu alt dizini kontrol\n"
 "eder."
 
-#: app/gui/user-install-dialog.c:223
+#: app/gui/user-install-dialog.c:221
 #, fuzzy
 msgid ""
-"This folder is used to store user defined patterns.\n"
-"The GIMP checks this folder in addition to the system-\n"
-"wide GIMP patterns installation when searching for\n"
-"patterns."
+"This folder is used to store user defined patterns.  The GIMP checks this "
+"folder in addition to the system-wide GIMP patterns installation when "
+"searching for patterns."
 msgstr ""
 "Burası kullanıcının belirlediği desenlerin saklandığı\n"
 "bir alt dizindir. Öntanımlı gimprc, desenleri tararken\n"
 "sistem desenlerine ek desenler için bu alt dizini kontrol\n"
 "eder."
 
-#: app/gui/user-install-dialog.c:231
+#: app/gui/user-install-dialog.c:228
+#, fuzzy
 msgid ""
-"This folder is used to store user created, temporary,\n"
-"or otherwise non-system-supported plug-ins.  The GIMP\n"
-"checks this folder in addition to the system-wide\n"
-"GIMP plug-in folder when searching for plug-ins."
+"This folder is used to store user created, temporary, or otherwise non-"
+"system-supported plug-ins.  The GIMP checks this folder in addition to the "
+"system-wide GIMP plug-in folder when searching for plug-ins."
 msgstr ""
 "Burası oluşturulan, geciçi veya diğer her türlü sistem\n"
 "dışı eklentilerinin saklanabileceği bir alt dizindir. Öntanımlı\n"
 "gimprc, eklentileri tararken sistem eklentilerine ek eklentiler\n"
 "için bu alt dizini kontrol eder."
 
-#: app/gui/user-install-dialog.c:239
+#: app/gui/user-install-dialog.c:236
 #, fuzzy
 msgid ""
-"This folder is used to store user created, temporary,\n"
-"or otherwise non-system-supported DLL modules.  The\n"
-"GIMP checks this folder in addition to the system-wide\n"
-"GIMP module folder when searching for modules to load\n"
-"during initialization."
+"This folder is used to store user created, temporary, or otherwise non-"
+"system-supported DLL modules.  The GIMP checks this folder in addition to "
+"the system-wide GIMP module folder when searching for modules to load during "
+"initialization."
 msgstr ""
 "Burası oluşturulan, geciçi veya diğer her türlü sistem\n"
 "dışı DLL modülün saklanabileceği bir alt dizindir.\n"
 "Öntanımlı gimprc, modülleri tararken sistem modüllerine\n"
 "ek modüller için bu alt dizini kontrol eder."
 
-#: app/gui/user-install-dialog.c:248
+#: app/gui/user-install-dialog.c:245
+#, fuzzy
 msgid ""
-"This folder is used to store user created, temporary,\n"
-"or otherwise non-system-supported additions to the\n"
-"plug-in environment.  The GIMP checks this folder in\n"
-"addition to the system-wide GIMP environment folder\n"
-"when searching for plug-in environment modification\n"
-"files."
+"This folder is used to store user created, temporary, or otherwise non-"
+"system-supported additions to the plug-in environment.  The GIMP checks this "
+"folder in addition to the system-wide GIMP environment folder when searching "
+"for plug-in environment modification files."
 msgstr ""
 "Burası oluşturulan, geciçi veya diğer her türlü sistem\n"
 "dışı eklentilerin saklanabileceği bir alt dizindir. Öntanımlı\n"
 "gimprc, eklentileri tararken sisteme ek eklentiler\n"
 "için bu alt dizini kontrol eder."
 
-#: app/gui/user-install-dialog.c:258
+#: app/gui/user-install-dialog.c:255
 #, fuzzy
 msgid ""
-"This folder is used to store user created and installed\n"
-"scripts.  The GIMP checks this folder in addition to\n"
-"the systemwide GIMP scripts folder when searching for\n"
-"scripts."
+"This folder is used to store user created and installed scripts.  The GIMP "
+"checks this folder in addition to the systemwide GIMP scripts folder when "
+"searching for scripts."
 msgstr ""
 "Burası GIMP tarafından kullanıcının oluşturduğu ve kurduğu\n"
 "senaryoların saklamak için kullanılan alt dizindir. Öntanımlı\n"
 "gimprc, sistem GIMP senaryolarını tararken ek senaryolar için\n"
 "bu alt dizini tarar."
 
-#: app/gui/user-install-dialog.c:266
+#: app/gui/user-install-dialog.c:263
 #, fuzzy
 msgid "This folder is searched for image templates."
 msgstr ""
 "Bu dizin Seviyeler aletinin paremetre dosyalarını saklamak\n"
 "için kullanılabilir."
 
-#: app/gui/user-install-dialog.c:271
+#: app/gui/user-install-dialog.c:268
 msgid "This folder is searched for user-installed themes."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:276
+#: app/gui/user-install-dialog.c:273
 #, fuzzy
 msgid ""
-"This folder is used to temporarily store undo buffers\n"
-"to reduce memory usage.  If The GIMP is unceremoniously\n"
-"killed, files of the form: gimp<#>.<#> may persist in\n"
-"this folder.  These files are useless across GIMP\n"
+"This folder is used to temporarily store undo buffers to reduce memory "
+"usage.  If The GIMP is unceremoniously killed, files of the form: gimp<#>."
+"<#> may persist in this folder.  These files are useless across GIMP "
 "sessions and can be destroyed with impunity."
 msgstr ""
 "Burası bellek kullanımını azaltmak üzere GIMP'in geri alma\n"
@@ -6746,56 +6752,50 @@ msgstr ""
 "şeklinde bu dizinde kalabilir. Bu dosyalar GIMP oturumları\n"
 "arasında paylaşılamaz, bu sebeple düşünmeden silebilirsiniz."
 
-#: app/gui/user-install-dialog.c:285
+#: app/gui/user-install-dialog.c:282
 #, fuzzy
 msgid "This folder is used to store tool options."
 msgstr ""
 "Bu dizin Seviyeler aletinin paremetre dosyalarını saklamak\n"
 "için kullanılabilir."
 
-#: app/gui/user-install-dialog.c:290
+#: app/gui/user-install-dialog.c:287
 #, fuzzy
-msgid ""
-"This folder is used to store parameter files for the\n"
-"Curves tool."
+msgid "This folder is used to store parameter files for the Curves tool."
 msgstr ""
 "Bu dizin Eğriler aletinin paremetre dosyalarını saklamak\n"
 "için kullanılabilir."
 
-#: app/gui/user-install-dialog.c:296
+#: app/gui/user-install-dialog.c:292
 #, fuzzy
-msgid ""
-"This folder is used to store parameter files for the\n"
-"Levels tool."
+msgid "This folder is used to store parameter files for the Levels tool."
 msgstr ""
 "Bu dizin Seviyeler aletinin paremetre dosyalarını saklamak\n"
 "için kullanılabilir."
 
-#: app/gui/user-install-dialog.c:397
-msgid ""
-"Installation successful.\n"
-"Click \"Continue\" to proceed."
+#: app/gui/user-install-dialog.c:392
+#, fuzzy
+msgid "Installation successful.  Click \"Continue\" to proceed."
 msgstr ""
 "Kurulum başarıyla tamamlandı.\n"
 "Devam etmek için \"Devam\" düğmesine tıklayın."
 
-#: app/gui/user-install-dialog.c:403
-msgid ""
-"Installation failed.\n"
-"Contact system administrator."
+#: app/gui/user-install-dialog.c:398
+#, fuzzy
+msgid "Installation failed.  Contact system administrator."
 msgstr ""
 "Kurulum tamamlanamadı.\n"
 "Sistem yöneticisi ile görüşün."
 
-#: app/gui/user-install-dialog.c:595
+#: app/gui/user-install-dialog.c:591
 msgid "GIMP User Installation"
 msgstr "GIMP kullanıcı kurulumu"
 
-#: app/gui/user-install-dialog.c:600
+#: app/gui/user-install-dialog.c:596
 msgid "Continue"
 msgstr "Devam"
 
-#: app/gui/user-install-dialog.c:750
+#: app/gui/user-install-dialog.c:748
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
@@ -6803,46 +6803,48 @@ msgstr ""
 "GIMP Kullanıcı Kurulumuna\n"
 "Hoşgeldiniz"
 
-#: app/gui/user-install-dialog.c:752
+#: app/gui/user-install-dialog.c:750
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr "GIMP Kullanıcı Kurulumunu başlatmak için \"Devam\"a basın."
 
-#: app/gui/user-install-dialog.c:757
+#: app/gui/user-install-dialog.c:755
+#, fuzzy
 msgid ""
 "<b>The GIMP - GNU Image Manipulation Program</b>\n"
-"Copyright (C) 1995-2003\n"
+"Copyright (C) 1995-2004\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
 "<b>GIMP GNU Resim Düzenleme Programı</b>\n"
 "Telif hakkı (C) 1995-2003\n"
 "Spencer Kimball, Peter Mattis ve GIMP Geliştiricileri Grubu."
 
-#: app/gui/user-install-dialog.c:767
+#: app/gui/user-install-dialog.c:765
+#, fuzzy
 msgid ""
-"This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version."
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version."
 msgstr ""
 "Bu bir serbest yazılımdır. Bu Yazılın Gnu Gpl Lisansı altında \n"
 "tamamı veya bir bölümü yazarın isim hakları korunmak şartı ile \n"
 "kopyalanabilir veya düzenlenilebilir. GNU Gpl Lisansının \n"
 "2. sürümü ve sonrası ile korunmuştur."
 
-#: app/gui/user-install-dialog.c:773
+#: app/gui/user-install-dialog.c:771
 msgid ""
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
-"See the GNU General Public License for more details."
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
+"more details."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:779
+#: app/gui/user-install-dialog.c:777
+#, fuzzy
 msgid ""
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
-"MA 02111-1307, USA."
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
+"Place - Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
 "GNU Gpl Lisansının bir kopyasını almanız gerekmektedir.\n"
 "Bunun için Aşağıdaki adrese (isteğinizi) yazabilirsiniz\n"
@@ -6850,28 +6852,28 @@ msgstr ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, USA."
 
-#: app/gui/user-install-dialog.c:804
+#: app/gui/user-install-dialog.c:802
 msgid "Personal GIMP Folder"
 msgstr "Kişisel GIMP Dizini"
 
-#: app/gui/user-install-dialog.c:805
+#: app/gui/user-install-dialog.c:803
 msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr "Kişisel GIMP dizininizin oluşturulması için \"Devam\"a basın."
 
-#: app/gui/user-install-dialog.c:849
-#, c-format
+#: app/gui/user-install-dialog.c:847
+#, fuzzy, c-format
 msgid ""
-"For a proper GIMP installation, a folder named\n"
-"'<b>%s</b>' needs to be created."
+"For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
+"created."
 msgstr ""
 "GIMP kurulumu için <b>%s</b> isimli bir alt dizininin\n"
 "oluşturulması gereklidir."
 
-#: app/gui/user-install-dialog.c:856
+#: app/gui/user-install-dialog.c:854
+#, fuzzy
 msgid ""
-"This folder will contain a number of important files.\n"
-"Click on one of the files or folders in the tree\n"
-"to get more information about the selected item."
+"This folder will contain a number of important files.  Click on one of the "
+"files or folders in the tree to get more information about the selected item."
 msgstr ""
 "Bu alt dizin bir çok önemli dosyayı barındıracaktır.\n"
 "Herhangi bir alt dizin veya dosya hakkında daha\n"
@@ -6884,9 +6886,7 @@ msgstr "Kullanıcı Kurulum Kaydı"
 
 #: app/gui/user-install-dialog.c:943
 #, fuzzy
-msgid ""
-"Please wait while your personal\n"
-"GIMP folder is being created..."
+msgid "Please wait while your personal GIMP folder is being created..."
 msgstr ""
 "Kişisel GIMP dizininin oluşturulurken\n"
 "lütfen bekleyin..."
@@ -6899,18 +6899,18 @@ msgstr "GIMP Performans Ayarlaması"
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "Yukarıdaki seçenekleri kabul etmek için \"Devam\"a basın."
 
-#: app/gui/user-install-dialog.c:955
+#: app/gui/user-install-dialog.c:956
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>Optimum GIMP perfomansı için bazı ayarların değiştirilmesi gerekebilir.</"
 "b>"
 
-#: app/gui/user-install-dialog.c:961
+#: app/gui/user-install-dialog.c:963
 msgid "Click \"Continue\" to start The GIMP."
 msgstr "GIMP'i başlatmak içim \"Devam\"a basın."
 
-#: app/gui/user-install-dialog.c:965
+#: app/gui/user-install-dialog.c:968
 msgid ""
 "<b>To display images in their natural size, GIMP needs to know your monitor "
 "resolution.</b>"
@@ -6918,34 +6918,35 @@ msgstr ""
 "<b>Resimleri doğal boyutlarında gösterebilmek için, GIMP'in ekran "
 "çözünürlüğünüzü bilmesi gerekir.</b>"
 
-#: app/gui/user-install-dialog.c:970
+#: app/gui/user-install-dialog.c:973
 msgid "Aborting Installation..."
 msgstr "Kurulum Iptal Ediliyor..."
 
-#: app/gui/user-install-dialog.c:1053 app/gui/user-install-dialog.c:1086
+#: app/gui/user-install-dialog.c:1056 app/gui/user-install-dialog.c:1089
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "'%s' dizini oluşturuluyor..."
 
-#: app/gui/user-install-dialog.c:1067
+#: app/gui/user-install-dialog.c:1070
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "'%s' dizini oluşturulamadı: %s"
 
-#: app/gui/user-install-dialog.c:1099
+#: app/gui/user-install-dialog.c:1103
 #, c-format
 msgid "Cannot create folder: %s"
 msgstr "%s dizini oluşturulamadı."
 
-#: app/gui/user-install-dialog.c:1111
+#: app/gui/user-install-dialog.c:1115
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:1157
+#: app/gui/user-install-dialog.c:1163
+#, fuzzy
 msgid ""
-"GIMP uses a limited amount of memory to store image data, the so-called\n"
-"\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
+"GIMP uses a limited amount of memory to store image data, the so-called "
+"\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
 "the amount of memory used by other running processes."
 msgstr ""
 "GIMP resim verilerini saklamak için sınırlı miktarda bellek kullanır,\n"
@@ -6953,53 +6954,55 @@ msgstr ""
 "ayarlamalısınız. Diğer çalışan programlar tarafından kullanılacak bellek\n"
 "miktarını hesaba katmayı unutmayın."
 
-#: app/gui/user-install-dialog.c:1181
+#: app/gui/user-install-dialog.c:1188
+#, fuzzy
 msgid ""
-"All image and undo data which doesn't fit into the Tile Cache will be\n"
-"written to a swap file. This file should be located on a local filesystem\n"
-"with enough free space (several hundred MB). On a UNIX system, you\n"
-"may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
+"All image and undo data which doesn't fit into the Tile Cache will be "
+"written to a swap file.  This file should be located on a local filesystem "
+"with enough free space (several hundred MB). On a UNIX system, you may want "
+"to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
 "Döşeme önbelleğine sığmayan tüm resim ve geri alma verileri bir takas\n"
 "dosyasında saklanır. Bu dosya yeterince boş yeri (birkaç yüz MB) olan\n"
 "yerel bir dosyalama sisteminde olmalıdır. UNIX sisteminde, sistemin\n"
 "geçici dizinini kullanabilirsiniz (\"/tmp\" veya \"/var/tmp\")."
 
-#: app/gui/user-install-dialog.c:1196
+#: app/gui/user-install-dialog.c:1204
 msgid "Swap Folder:"
 msgstr "Takas Dizini:"
 
-#: app/gui/user-install-dialog.c:1247
+#: app/gui/user-install-dialog.c:1255
+#, fuzzy
 msgid ""
-"GIMP can obtain this information from the windowing system.\n"
-"However, usually this does not give useful values."
+"GIMP can obtain this information from the windowing system.  However, "
+"usually this does not give useful values."
 msgstr ""
 "GIMP bu bilgiyi pencereleme sisteminden alabilir. Fakat, bu genellikle\n"
 "kullanılabilir değerler vermez."
 
-#: app/gui/user-install-dialog.c:1255
+#: app/gui/user-install-dialog.c:1263
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Çözünürlüğü pencereleme sisteminden al (Şu anda %d x %d dpi)"
 
-#: app/gui/user-install-dialog.c:1275
-msgid ""
-"Alternatively, you can set\n"
-"the monitor resolution manually."
+#: app/gui/user-install-dialog.c:1282
+#, fuzzy
+msgid "Alternatively, you can set the monitor resolution manually."
 msgstr ""
 "Alternatif olarak, ekran \n"
 "çözünürlüğünü kendiniz de\n"
 "ayarlayabilirsiniz."
 
-#: app/gui/user-install-dialog.c:1320
+#: app/gui/user-install-dialog.c:1331
+#, fuzzy
 msgid ""
-"You can also press the \"Calibrate\" button to open a window\n"
-"which lets you determine your monitor resolution interactively."
+"You can also press the \"Calibrate\" button to open a window which lets you "
+"determine your monitor resolution interactively."
 msgstr ""
 "Ek olarak, \"Kalibrasyon\" düğmesiyle açılan bir pencere yardımıyla\n"
 "etkileşimli olarak çözünürlüğü belirleyebilirsiniz."
 
-#: app/gui/user-install-dialog.c:1323
+#: app/gui/user-install-dialog.c:1335
 msgid "Calibrate"
 msgstr "Kalibrasyon"
 
@@ -7191,37 +7194,37 @@ msgstr "Sabit"
 msgid "Incremental"
 msgstr "Artımlı"
 
-#: app/pdb/color_cmds.c:132 app/tools/gimpbrightnesscontrasttool.c:84
+#: app/pdb/color_cmds.c:134 app/tools/gimpbrightnesscontrasttool.c:84
 msgid "Brightness-Contrast"
 msgstr "Parlaklık-Kontrast"
 
-#: app/pdb/color_cmds.c:257 app/pdb/color_cmds.c:374
-#: app/tools/gimplevelstool.c:164
+#: app/pdb/color_cmds.c:266 app/pdb/color_cmds.c:384
+#: app/tools/gimplevelstool.c:171
 msgid "Levels"
 msgstr "Seviyeler"
 
-#: app/pdb/color_cmds.c:449 app/tools/gimpposterizetool.c:77
+#: app/pdb/color_cmds.c:461 app/tools/gimpposterizetool.c:77
 msgid "Posterize"
 msgstr "Posterleştirme"
 
-#: app/pdb/color_cmds.c:701 app/pdb/color_cmds.c:808
+#: app/pdb/color_cmds.c:722 app/pdb/color_cmds.c:839
 #: app/tools/gimpcurvestool.c:167
 msgid "Curves"
 msgstr "Eğriler"
 
-#: app/pdb/color_cmds.c:925 app/tools/gimpcolorbalancetool.c:95
+#: app/pdb/color_cmds.c:957 app/tools/gimpcolorbalancetool.c:95
 msgid "Color Balance"
 msgstr "Renk Dengesi"
 
-#: app/pdb/color_cmds.c:1221 app/tools/gimphuesaturationtool.c:109
+#: app/pdb/color_cmds.c:1235 app/tools/gimphuesaturationtool.c:109
 msgid "Hue-Saturation"
 msgstr "Renk-Doygunluk"
 
-#: app/pdb/color_cmds.c:1319 app/tools/gimpthresholdtool.c:91
+#: app/pdb/color_cmds.c:1334 app/tools/gimpthresholdtool.c:91
 msgid "Threshold"
 msgstr "Alt Sınır"
 
-#: app/pdb/image_cmds.c:3652
+#: app/pdb/image_cmds.c:3650
 #, fuzzy
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
@@ -7377,7 +7380,7 @@ msgstr "Geçici İşlem"
 msgid "Free Select"
 msgstr "Serbest Seçim"
 
-#: app/plug-in/plug-in.c:696
+#: app/plug-in/plug-in.c:687
 #, fuzzy, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -7405,30 +7408,30 @@ msgstr "Kaynak ayarları"
 #. Query any plug-ins that have changed since we last wrote out
 #. *  the pluginrc file.
 #.
-#: app/plug-in/plug-ins.c:145
+#: app/plug-in/plug-ins.c:146
 msgid "Querying new Plug-ins"
 msgstr "Yeni eklentiler aranıyor"
 
-#: app/plug-in/plug-ins.c:163
+#: app/plug-in/plug-ins.c:165
 #, fuzzy, c-format
 msgid "Querying plug-in: '%s'\n"
 msgstr "Eklenti bulunuyor: \"%s\"\n"
 
 #. initial the plug-ins
-#: app/plug-in/plug-ins.c:288
+#: app/plug-in/plug-ins.c:292
 msgid "Initializing Plug-ins"
 msgstr "Eklentiler Çalıştırılıyor"
 
-#: app/plug-in/plug-ins.c:303
+#: app/plug-in/plug-ins.c:308
 #, fuzzy, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "Eklenti çalıştırılıyor: \"%s\"\n"
 
-#: app/plug-in/plug-ins.c:332
+#: app/plug-in/plug-ins.c:337
 msgid "Starting Extensions"
 msgstr "Uzantılar başlatılıyor"
 
-#: app/plug-in/plug-ins.c:341
+#: app/plug-in/plug-ins.c:346
 #, fuzzy, c-format
 msgid "Starting extension: '%s'\n"
 msgstr "Eklenti başlatılıyor: \"%s\"\n"
@@ -7465,7 +7468,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr ""
 
-#: app/text/gimptext-compat.c:104 app/tools/gimptexttool.c:328
+#: app/text/gimptext-compat.c:104 app/tools/gimptexttool.c:327
 msgid "Add Text Layer"
 msgstr "Metin Katmanı Ekle"
 
@@ -7945,30 +7948,30 @@ msgid "/Tools/Transform Tools/_Crop & Resize"
 msgstr "/Aletler/Dönüşüm Aletleri/Kes & Boyutlandır"
 
 #. initialize the statusbar display
-#: app/tools/gimpcroptool.c:499 app/tools/gimpcroptool.c:929
+#: app/tools/gimpcroptool.c:499 app/tools/gimpcroptool.c:932
 msgid "Crop: "
 msgstr "Kes: "
 
-#: app/tools/gimpcroptool.c:961
+#: app/tools/gimpcroptool.c:964
 msgid "Crop & Resize Information"
 msgstr "Kesim & Boyutlandırma Bilgileri"
 
 #. add the information fields
-#: app/tools/gimpcroptool.c:979
+#: app/tools/gimpcroptool.c:982
 msgid "Origin X:"
 msgstr "Orjin X:"
 
 #. the pixel size labels
-#: app/tools/gimpcroptool.c:996 app/tools/gimpselectionoptions.c:565
+#: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
 msgstr "Genişlik:"
 
-#: app/tools/gimpcroptool.c:1022
+#: app/tools/gimpcroptool.c:1025
 msgid "From Selection"
 msgstr "Seçimden"
 
-#: app/tools/gimpcroptool.c:1030
+#: app/tools/gimpcroptool.c:1033
 msgid "Auto Shrink"
 msgstr "Otomatik Küçült"
 
@@ -7991,7 +7994,7 @@ msgstr "Renk eğrilerini ayarla"
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Dizinli çizilebilirlerin eğrileri ayarlanamaz."
 
-#: app/tools/gimpcurvestool.c:507 app/tools/gimplevelstool.c:430
+#: app/tools/gimpcurvestool.c:507 app/tools/gimplevelstool.c:436
 msgid "R_eset Channel"
 msgstr "Kanalı _Sıfırla"
 
@@ -8000,7 +8003,7 @@ msgid "Modify Curves for Channel:"
 msgstr "Eğrisi Değiştirilecek Kanal:"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:593 app/tools/gimplevelstool.c:653
+#: app/tools/gimpcurvestool.c:593 app/tools/gimplevelstool.c:665
 msgid "All Channels"
 msgstr "Tüm Kanallar"
 
@@ -8020,11 +8023,11 @@ msgstr "Çıkarken Aygıt Durumlarını Kaydet"
 msgid "Curve Type"
 msgstr "Eğri Tipi:"
 
-#: app/tools/gimpcurvestool.c:1248
+#: app/tools/gimpcurvestool.c:1243
 msgid "Load Curves"
 msgstr "Eğriler Yükle"
 
-#: app/tools/gimpcurvestool.c:1267
+#: app/tools/gimpcurvestool.c:1262
 msgid "Save Curves"
 msgstr "Eğrileri Kaydet"
 
@@ -8052,19 +8055,25 @@ msgstr "Kip"
 msgid "Exposure:"
 msgstr "Belirlilik:"
 
-#: app/tools/gimpeditselectiontool.c:249
-#: app/tools/gimpeditselectiontool.c:1071 app/vectors/gimpvectors.c:352
+#: app/tools/gimpeditselectiontool.c:247
+#: app/tools/gimpeditselectiontool.c:1167 app/vectors/gimpvectors.c:352
 #, fuzzy
 msgid "Move Path"
 msgstr "Parça Adlandır"
 
-#: app/tools/gimpeditselectiontool.c:253
-#: app/tools/gimpeditselectiontool.c:1115
+#: app/tools/gimpeditselectiontool.c:255
+#: app/tools/gimpeditselectiontool.c:1210
+#, fuzzy
+msgid "Move Layer Mask"
+msgstr "Katmanı Taşı"
+
+#: app/tools/gimpeditselectiontool.c:267
+#: app/tools/gimpeditselectiontool.c:1220
 #, fuzzy
 msgid "Move Floating Layer"
 msgstr "Yüzen Seçimi Çıpala"
 
-#: app/tools/gimpeditselectiontool.c:429 app/tools/gimpeditselectiontool.c:709
+#: app/tools/gimpeditselectiontool.c:474 app/tools/gimpeditselectiontool.c:777
 msgid "Move: "
 msgstr "Taşı: "
 
@@ -8272,77 +8281,77 @@ msgstr "Resimden şekillerin seçimi"
 msgid "/Tools/Selection Tools/_Intelligent Scissors"
 msgstr "/Aletler/Seçim Aletleri/Akıllı Makas"
 
-#: app/tools/gimplevelstool.c:165
+#: app/tools/gimplevelstool.c:172
 msgid "Adjust color levels"
 msgstr "Renk seviyelerini ayarla"
 
-#: app/tools/gimplevelstool.c:166
+#: app/tools/gimplevelstool.c:173
 #, fuzzy
 msgid "/Tools/Color Tools/_Levels..."
 msgstr "/Resim/Renkler/Seviyeler..."
 
-#: app/tools/gimplevelstool.c:234
+#: app/tools/gimplevelstool.c:241
 #, fuzzy
 msgid "Adjust Color Levels"
 msgstr "Renk seviyelerini ayarla"
 
-#: app/tools/gimplevelstool.c:285
+#: app/tools/gimplevelstool.c:292
 #, fuzzy
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Dizinli renkli çizilebilirlerin renk seviyeleri ayarlanamaz."
 
-#: app/tools/gimplevelstool.c:353
+#: app/tools/gimplevelstool.c:358
 msgid "Pick Black Point"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:357
+#: app/tools/gimplevelstool.c:362
 msgid "Pick Gray Point"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:361
+#: app/tools/gimplevelstool.c:366
 #, fuzzy
 msgid "Pick White Point"
 msgstr "Noktayı Düzenle"
 
-#: app/tools/gimplevelstool.c:416
+#: app/tools/gimplevelstool.c:422
 msgid "Modify Levels for Channel:"
 msgstr "Kanalın Seviyelerini Ayarla:"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:440
+#: app/tools/gimplevelstool.c:446
 msgid "Input Levels"
 msgstr "Giriş Seviyeleri"
 
-#: app/tools/gimplevelstool.c:545
+#: app/tools/gimplevelstool.c:554
 msgid "Gamma"
 msgstr ""
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:575
+#: app/tools/gimplevelstool.c:584
 msgid "Output Levels"
 msgstr "Çıkış Seviyeleri"
 
-#: app/tools/gimplevelstool.c:671
+#: app/tools/gimplevelstool.c:683
 msgid "Read levels settings from file"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:681
+#: app/tools/gimplevelstool.c:693
 msgid "Save levels settings to file"
 msgstr "Seviye ayarlarını dosyaya kaydet"
 
-#: app/tools/gimplevelstool.c:693
+#: app/tools/gimplevelstool.c:705
 msgid "_Auto"
 msgstr "_Otomatik"
 
-#: app/tools/gimplevelstool.c:695
+#: app/tools/gimplevelstool.c:707
 msgid "Adjust levels automatically"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:1417
+#: app/tools/gimplevelstool.c:1418
 msgid "Load Levels"
 msgstr "Seviyeleri Yükle"
 
-#: app/tools/gimplevelstool.c:1436
+#: app/tools/gimplevelstool.c:1437
 msgid "Save Levels"
 msgstr "Seviyeleri Kaydet"
 
@@ -8777,7 +8786,7 @@ msgstr "Resme metin ekle"
 msgid "/Tools/Te_xt"
 msgstr "/Aletler/Met_in"
 
-#: app/tools/gimptexttool.c:416
+#: app/tools/gimptexttool.c:415
 msgid "GIMP Text Editor"
 msgstr "GIMP Metin Düzenleyici"
 
@@ -9096,17 +9105,17 @@ msgstr "Boşluk:"
 msgid "Percentage of width of brush"
 msgstr ""
 
-#: app/widgets/gimpbufferview.c:151
+#: app/widgets/gimpbufferview.c:162
 #, fuzzy
 msgid "Paste Into"
 msgstr "/Düzenle/İçine Yapıştır"
 
-#: app/widgets/gimpbufferview.c:159
+#: app/widgets/gimpbufferview.c:170
 #, fuzzy
 msgid "Paste as New"
 msgstr "/Düzenle/Yeniye Yapıştır"
 
-#: app/widgets/gimpbufferview.c:167 app/widgets/gimpdatafactoryview.c:240
+#: app/widgets/gimpbufferview.c:178 app/widgets/gimpdatafactoryview.c:240
 msgid "Delete"
 msgstr "Sil"
 
@@ -9384,7 +9393,7 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "%s anahtarına verilen değer geçerli bir UTF-8 dizgesi değil"
 
-#: app/widgets/gimpdock.c:378
+#: app/widgets/gimpdock.c:377
 msgid "You can drop dockable dialogs here."
 msgstr ""
 
@@ -9417,33 +9426,33 @@ msgid ""
 "%s  Remove Dangling Entries"
 msgstr ""
 
-#: app/widgets/gimperrorconsole.c:175
+#: app/widgets/gimperrorconsole.c:176
 msgid "Clear Errors"
 msgstr "Hataları Temizle"
 
-#: app/widgets/gimperrorconsole.c:181
+#: app/widgets/gimperrorconsole.c:182
 #, c-format
 msgid ""
 "Save all Errors\n"
 "%s  Save Selection"
 msgstr ""
 
-#: app/widgets/gimperrorconsole.c:270 app/widgets/gimpwidgets-utils.c:195
+#: app/widgets/gimperrorconsole.c:271 app/widgets/gimpwidgets-utils.c:195
 #, fuzzy, c-format
 msgid "%s Message"
 msgstr "GIMP İletisi"
 
-#: app/widgets/gimperrorconsole.c:346
+#: app/widgets/gimperrorconsole.c:347
 #, fuzzy
 msgid "Cannot save. Nothing is selected."
 msgstr "Kaydedilemiyor, hiçbirşey seçili değil!"
 
-#: app/widgets/gimperrorconsole.c:356
+#: app/widgets/gimperrorconsole.c:357
 #, fuzzy
 msgid "Save Error Log to File"
 msgstr "Hata kaydını dosyaya kaydet..."
 
-#: app/widgets/gimperrorconsole.c:398
+#: app/widgets/gimperrorconsole.c:399
 #, fuzzy, c-format
 msgid ""
 "Error writing file '%s':\n"
@@ -9454,97 +9463,97 @@ msgstr "Dosya %s acılamadı: %s"
 msgid "Rescan Font List"
 msgstr "Yazıtipi Listesini Yeniden Tara"
 
-#: app/widgets/gimpgradienteditor.c:369 app/widgets/gimppaletteeditor.c:332
+#: app/widgets/gimpgradienteditor.c:364 app/widgets/gimppaletteeditor.c:332
 msgid "Zoom Out"
 msgstr "Uzaklaş"
 
-#: app/widgets/gimpgradienteditor.c:375 app/widgets/gimppaletteeditor.c:340
+#: app/widgets/gimpgradienteditor.c:370 app/widgets/gimppaletteeditor.c:340
 #, fuzzy
 msgid "Zoom In"
 msgstr "Yakınlaş"
 
-#: app/widgets/gimpgradienteditor.c:381 app/widgets/gimppaletteeditor.c:348
+#: app/widgets/gimpgradienteditor.c:376 app/widgets/gimppaletteeditor.c:348
 #, fuzzy
 msgid "Zoom All"
 msgstr "Tamamını Göster"
 
-#: app/widgets/gimpgradienteditor.c:390
+#: app/widgets/gimpgradienteditor.c:389
 msgid "Instant update"
 msgstr "Anında tazeleme"
 
-#: app/widgets/gimpgradienteditor.c:517
+#: app/widgets/gimpgradienteditor.c:516
 #, c-format
 msgid "Zoom factor: %d:1"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:520
+#: app/widgets/gimpgradienteditor.c:519
 #, fuzzy, c-format
 msgid "Displaying [%0.6f, %0.6f]"
 msgstr "Odaklama çarpanı: %d:1    Gösterilen [%0.6f, %0.6f]"
 
-#: app/widgets/gimpgradienteditor.c:795
+#: app/widgets/gimpgradienteditor.c:794
 #, fuzzy, c-format
 msgid "Position: %0.6f"
 msgstr "Tutacak konumu: %0.6f"
 
-#: app/widgets/gimpgradienteditor.c:797
+#: app/widgets/gimpgradienteditor.c:796
 #, fuzzy, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)    Opacity: %0.3f"
 msgstr "KYMA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpgradienteditor.c:800
+#: app/widgets/gimpgradienteditor.c:799
 #, fuzzy, c-format
 msgid "HSV (%0.3f, %0.3f, %0.3f)"
 msgstr "KYMA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpgradienteditor.c:831 app/widgets/gimpgradienteditor.c:865
+#: app/widgets/gimpgradienteditor.c:830 app/widgets/gimpgradienteditor.c:864
 #, fuzzy, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "Arkaplan"
 
-#: app/widgets/gimpgradienteditor.c:838
+#: app/widgets/gimpgradienteditor.c:837
 msgid "Foreground color set to:"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:870
+#: app/widgets/gimpgradienteditor.c:869
 #, c-format
 msgid "(%0.3f, %0.3f, %0.3f)"
 msgstr "(%0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpgradienteditor.c:873
+#: app/widgets/gimpgradienteditor.c:872
 msgid "Background color set to:"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:1060 app/widgets/gimpgradienteditor.c:1122
+#: app/widgets/gimpgradienteditor.c:1059 app/widgets/gimpgradienteditor.c:1121
 #, c-format
 msgid "%s%sDrag: move & compress"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:1066
+#: app/widgets/gimpgradienteditor.c:1065
 msgid "Drag: move"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:1072 app/widgets/gimpgradienteditor.c:1085
-#: app/widgets/gimpgradienteditor.c:1098 app/widgets/gimpgradienteditor.c:1119
+#: app/widgets/gimpgradienteditor.c:1071 app/widgets/gimpgradienteditor.c:1084
+#: app/widgets/gimpgradienteditor.c:1097 app/widgets/gimpgradienteditor.c:1118
 #, fuzzy, c-format
 msgid "%s%sClick: extend selection"
 msgstr "Tıklama: seç    Shift+tıklama: seçimi genişlet"
 
-#: app/widgets/gimpgradienteditor.c:1078 app/widgets/gimpgradienteditor.c:1091
+#: app/widgets/gimpgradienteditor.c:1077 app/widgets/gimpgradienteditor.c:1090
 msgid "Click: select"
 msgstr "Tıkla: seç"
 
-#: app/widgets/gimpgradienteditor.c:1104 app/widgets/gimpgradienteditor.c:1127
+#: app/widgets/gimpgradienteditor.c:1103 app/widgets/gimpgradienteditor.c:1126
 #, fuzzy
 msgid "Click: select    Drag: move"
 msgstr "Tıklama: seç    Shift+tıklama: seçimi genişlet    Sürükleme: taşı"
 
-#: app/widgets/gimpgradienteditor.c:1356 app/widgets/gimpgradienteditor.c:1365
+#: app/widgets/gimpgradienteditor.c:1355 app/widgets/gimpgradienteditor.c:1364
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Tutacak konumu: %0.6f"
 
-#: app/widgets/gimpgradienteditor.c:1384
+#: app/widgets/gimpgradienteditor.c:1383
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Uzaklık: %0.6f"
@@ -9852,20 +9861,20 @@ msgstr ""
 msgid "Delete Template"
 msgstr "/Katmanı Sil"
 
-#: app/widgets/gimptexteditor.c:194
+#: app/widgets/gimptexteditor.c:195
 #, fuzzy
 msgid "Load Text from File"
 msgstr "Yuklerken Hata"
 
-#: app/widgets/gimptexteditor.c:198
+#: app/widgets/gimptexteditor.c:199
 msgid "Clear all Text"
 msgstr ""
 
-#: app/widgets/gimptexteditor.c:320
+#: app/widgets/gimptexteditor.c:321
 msgid "Open Text File (UTF-8)"
 msgstr ""
 
-#: app/widgets/gimptexteditor.c:401
+#: app/widgets/gimptexteditor.c:402
 #, fuzzy, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "'%s' GIMP gradyan dosyasında geçersiz UTF-8 dizge."
@@ -9907,7 +9916,7 @@ msgstr ""
 "Etkin gradyan.\n"
 "Gradyan Penceresini açmak için basın."
 
-#: app/widgets/gimptoolbox.c:739
+#: app/widgets/gimptoolbox.c:738
 #, fuzzy
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
@@ -9989,7 +9998,7 @@ msgid "Reorder Path"
 msgstr "Yolu Göster"
 
 #: app/widgets/gimpwidgets-constructors.c:45
-#: app/widgets/gimpwidgets-constructors.c:80 app/widgets/widgets-enums.c:136
+#: app/widgets/gimpwidgets-constructors.c:80
 msgid "Normal"
 msgstr "Normal"
 
@@ -10190,9 +10199,15 @@ msgstr "Resim histogramını göster"
 msgid "View as Grid"
 msgstr "/Görüntü/Kılavuzlara Yapıştır"
 
+#: app/widgets/widgets-enums.c:136
+#, fuzzy
+msgid "Normal Window"
+msgstr "Resim Pencereleri"
+
 #: app/widgets/widgets-enums.c:137
-msgid "Utility"
-msgstr ""
+#, fuzzy
+msgid "Utility Window"
+msgstr "Pencereye Uydur"
 
 #: app/xcf/xcf-load.c:291
 msgid ""
@@ -10210,7 +10225,7 @@ msgid "Invalid UTF-8 string in XCF file"
 msgstr "'%s' GIMP gradyan dosyasında geçersiz UTF-8 dizge."
 
 #: app/xcf/xcf-save.c:157 app/xcf/xcf-save.c:167 app/xcf/xcf-save.c:177
-#: app/xcf/xcf-save.c:187 app/xcf/xcf-save.c:201 app/xcf/xcf.c:326
+#: app/xcf/xcf-save.c:187 app/xcf/xcf-save.c:201 app/xcf/xcf.c:324
 #, fuzzy, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Dosya acılırken hata oldu: %s\n"
@@ -10225,7 +10240,7 @@ msgstr "taranırken hata oldu: \"%s\"\n"
 msgid "Could not seek in XCF file: %s"
 msgstr "'%s' dosyası açılamadı"
 
-#: app/xcf/xcf.c:262
+#: app/xcf/xcf.c:264
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF hatası: desteklenmeyen %d XCF dosya sürümüyle karşılaşıldı"
@@ -11184,9 +11199,6 @@ msgstr "The GIMP"
 #, fuzzy
 #~ msgid "Shear Tool"
 #~ msgstr "Ölçüm Aleti"
-
-#~ msgid "Text Tool"
-#~ msgstr "Metin Aleti"
 
 #, fuzzy
 #~ msgid "Vector Tool"

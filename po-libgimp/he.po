@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:24+0100\n"
+"POT-Creation-Date: 2004-01-19 03:08+0100\n"
 "PO-Revision-Date: 2003-08-13 22:08+0300\n"
 "Last-Translator: Gil 'Dolfin' Osher <dolfin@rpg.org.il>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -196,7 +196,7 @@ msgstr "בחירת גופן"
 msgid "Gradient Selection"
 msgstr "בחירת מדרג צבעים"
 
-#: libgimp/gimpmenu.c:401
+#: libgimp/gimpmenu.c:407
 msgid "None"
 msgstr "כלום"
 
@@ -212,88 +212,88 @@ msgstr "אחוז"
 msgid "(invalid UTF-8 string)"
 msgstr ""
 
-#: libgimpbase/gimputils.c:198
+#: libgimpbase/gimputils.c:244
 #, c-format
 msgid "%d Bytes"
 msgstr "%d בתים"
 
-#: libgimpbase/gimputils.c:203
+#: libgimpbase/gimputils.c:249
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f ק\"ב"
 
-#: libgimpbase/gimputils.c:207
+#: libgimpbase/gimputils.c:253
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f ק\"ב"
 
-#: libgimpbase/gimputils.c:211
+#: libgimpbase/gimputils.c:257
 #, c-format
 msgid "%d KB"
 msgstr "%d ק\"ב"
 
-#: libgimpbase/gimputils.c:218
+#: libgimpbase/gimputils.c:264
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f מ\"ב"
 
-#: libgimpbase/gimputils.c:222
+#: libgimpbase/gimputils.c:268
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f מ\"ב"
 
-#: libgimpbase/gimputils.c:226
+#: libgimpbase/gimputils.c:272
 #, fuzzy, c-format
 msgid "%d MB"
 msgstr "%d ק\"ב"
 
-#: libgimpbase/gimputils.c:233
+#: libgimpbase/gimputils.c:279
 #, fuzzy, c-format
 msgid "%.2f GB"
 msgstr "%.2f מ\"ב"
 
-#: libgimpbase/gimputils.c:237
+#: libgimpbase/gimputils.c:283
 #, fuzzy, c-format
 msgid "%.1f GB"
 msgstr "%.1f מ\"ב"
 
-#: libgimpbase/gimputils.c:241
+#: libgimpbase/gimputils.c:287
 #, fuzzy, c-format
 msgid "%d GB"
 msgstr "%d ק\"ב"
 
-#: libgimpmodule/gimpmodule.c:175
+#: libgimpmodule/gimpmodule.c:178
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "טוען את המודול: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:191 libgimpmodule/gimpmodule.c:208
-#: libgimpmodule/gimpmodule.c:315 libgimpmodule/gimpmodule.c:342
-#: libgimpmodule/gimpmodule.c:435
+#: libgimpmodule/gimpmodule.c:200 libgimpmodule/gimpmodule.c:220
+#: libgimpmodule/gimpmodule.c:341 libgimpmodule/gimpmodule.c:373
+#: libgimpmodule/gimpmodule.c:471
 #, fuzzy, c-format
 msgid "Module '%s' load error: %s"
 msgstr ""
 "שגיאת טעינה במודול '%s':\n"
 "%s"
 
-#: libgimpmodule/gimpmodule.c:272
+#: libgimpmodule/gimpmodule.c:293
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "מדלג על מודול: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:442
 msgid "Module error"
 msgstr "שגיאת מודול"
 
-#: libgimpmodule/gimpmodule.c:410
+#: libgimpmodule/gimpmodule.c:443
 msgid "Loaded"
 msgstr "טעון"
 
-#: libgimpmodule/gimpmodule.c:411
+#: libgimpmodule/gimpmodule.c:444
 msgid "Load failed"
 msgstr "הטעינה נכשלה"
 
-#: libgimpmodule/gimpmodule.c:412
+#: libgimpmodule/gimpmodule.c:445
 msgid "Not loaded"
 msgstr "לא טעון"
 

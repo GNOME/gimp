@@ -1,3 +1,7 @@
+2004-01-19  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.0pre2 release.
+
 2004-01-19  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/FractalExplorer/Dialogs.c
