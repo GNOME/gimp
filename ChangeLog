@@ -1,5 +1,11 @@
 2001-02-06  Simon Budig  <simon@gimp.org>
 
+        * libgimpwidgets/gimpdialog.c
+
+	fixed the documentation.
+
+2001-02-06  Simon Budig  <simon@gimp.org>
+
 	* libgimpwidgets/gimpdialog.c
 	* app/tools/tool_options_dialog.c
 

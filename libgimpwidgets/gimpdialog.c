@@ -267,15 +267,7 @@ gimp_dialog_create_action_area (GtkDialog *dialog,
  * gimp_dialog_create_action_areav:
  * @dialog: The #GtkDialog you want to create the action_area for.
  * @args: A @va_list as obtained with va_start() describing the action_area
- *        buttons. First a label for the new button, then a callback that
- *        will be connected to the buttons "clicked" signal, then some
- *        arbitrary data that will be passed to the callback, a slot
- *        object (???), a pointer to a Widgetpointer, that will return
- *        the widget (usually the button), a boolean that indicates that
- *        this button is able to become the default action of the dialog
- *        when the user presses Return, and a boolean that indicates, that
- *        the delete_event of the dialog will be connected to this
- *        callback.
+ *        buttons.
  *
  * Please note that the delete_event will only be connected to the first
  * button with the "connect_delete" boolean set to true. It is possible
