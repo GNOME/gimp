@@ -61,7 +61,6 @@ enum
   PROP_0,
   PROP_INTERPOLATION_TYPE,
   PROP_PLUG_IN_PATH,
-  PROP_TOOL_PLUG_IN_PATH,
   PROP_MODULE_PATH,
   PROP_ENVIRON_PATH,
   PROP_BRUSH_PATH,
@@ -147,11 +146,6 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  "plug-in-path", PLUG_IN_PATH_BLURB,
 				 GIMP_PARAM_PATH_DIR_LIST,
                                  gimp_config_build_plug_in_path ("plug-ins"),
-                                 GIMP_PARAM_RESTART);
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_TOOL_PLUG_IN_PATH,
-                                 "tool-plug-in-path", TOOL_PLUG_IN_PATH_BLURB,
-				 GIMP_PARAM_PATH_DIR_LIST,
-                                 gimp_config_build_plug_in_path ("tool-plug-ins"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_MODULE_PATH,
                                  "module-path", MODULE_PATH_BLURB,
@@ -299,7 +293,6 @@ gimp_core_config_finalize (GObject *object)
   core_config = GIMP_CORE_CONFIG (object);
   
   g_free (core_config->plug_in_path);
-  g_free (core_config->tool_plug_in_path);
   g_free (core_config->module_path);
   g_free (core_config->environ_path);
   g_free (core_config->brush_path);
@@ -336,10 +329,6 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_PLUG_IN_PATH:
       g_free (core_config->plug_in_path);
       core_config->plug_in_path = g_value_dup_string (value);
-      break;
-    case PROP_TOOL_PLUG_IN_PATH:
-      g_free (core_config->tool_plug_in_path);
-      core_config->tool_plug_in_path = g_value_dup_string (value);
       break;
     case PROP_MODULE_PATH:
       g_free (core_config->module_path);
@@ -466,9 +455,6 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_PLUG_IN_PATH:
       g_value_set_string (value, core_config->plug_in_path);
-      break;
-    case PROP_TOOL_PLUG_IN_PATH:
-      g_value_set_string (value, core_config->tool_plug_in_path);
       break;
     case PROP_MODULE_PATH:
       g_value_set_string (value, core_config->module_path);

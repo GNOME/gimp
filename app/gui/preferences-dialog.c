@@ -459,14 +459,14 @@ prefs_input_dialog_able_callback (GtkWidget *widget,
 static GtkWidget *
 prefs_notebook_append_page (Gimp          *gimp,
                             GtkNotebook   *notebook,
-			    const gchar   *notebook_label,
+                            const gchar   *notebook_label,
                             const gchar   *notebook_icon,
-			    GtkTreeStore  *tree,
-			    const gchar   *tree_label,
-			    const gchar   *help_data,
-			    GtkTreeIter   *parent,
-			    GtkTreeIter   *iter,
-			    gint           page_index)
+                            GtkTreeStore  *tree,
+                            const gchar   *tree_label,
+                            const gchar   *help_data,
+                            GtkTreeIter   *parent,
+                            GtkTreeIter   *iter,
+                            gint           page_index)
 {
   GtkWidget   *event_box;
   GtkWidget   *vbox;
@@ -479,8 +479,8 @@ prefs_notebook_append_page (Gimp          *gimp,
 
   gimp_help_set_help_data (event_box, NULL, help_data);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_container_add (GTK_CONTAINER (event_box), vbox);
   gtk_widget_show (vbox);
 
@@ -571,16 +571,15 @@ prefs_format_string_select_callback (GtkTreeSelection *sel,
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
-  GValue        val = { 0, };
 
-  if (! gtk_tree_selection_get_selected (sel, &model, &iter))
-    return;
+  if (gtk_tree_selection_get_selected (sel, &model, &iter))
+    {
+      GValue val = { 0, };
 
-  gtk_tree_model_get_value (model, &iter, 1, &val);
-
-  gtk_entry_set_text (entry, g_value_get_string (&val));
-
-  g_value_unset (&val);
+      gtk_tree_model_get_value (model, &iter, 1, &val);
+      gtk_entry_set_text (entry, g_value_get_string (&val));
+      g_value_unset (&val);
+    }
 }
 
 static GtkWidget *
@@ -591,14 +590,17 @@ prefs_frame_new (gchar        *label,
   GtkWidget *frame;
   GtkWidget *vbox;
 
-  frame = gtk_frame_new (label);
+  gboolean   hig_compliant = FALSE;
 
-  if (FALSE)
+  if (hig_compliant)
     {
+      GtkWidget      *hbox;
+      GtkWidget      *title;
+      GtkWidget      *space;
       PangoAttrList  *attrs;
       PangoAttribute *attr;
 
-      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_NONE);
+      frame = gtk_vbox_new (FALSE, 4);
 
       attrs = pango_attr_list_new ();
 
@@ -612,8 +614,34 @@ prefs_frame_new (gchar        *label,
       attr->end_index   = -1;
       pango_attr_list_insert (attrs, attr);
 
-      gtk_label_set_attributes (GTK_LABEL (gtk_frame_get_label_widget (GTK_FRAME (frame))), attrs);
+      title = gtk_label_new (label);
+      gtk_misc_set_alignment (GTK_MISC (title), 0.0, 0.5);
+      gtk_label_set_attributes (GTK_LABEL (title), attrs);
+      gtk_box_pack_start (GTK_BOX (frame), title, FALSE, FALSE, 0);
+      gtk_widget_show (title);
+
       pango_attr_list_unref (attrs);
+
+      hbox = gtk_hbox_new (FALSE, 0);
+      gtk_container_add (GTK_CONTAINER (frame), hbox);
+      gtk_widget_show (hbox);
+
+      space = gtk_label_new ("   ");
+      gtk_box_pack_start (GTK_BOX (hbox), space, FALSE, FALSE, 0);
+      gtk_widget_show (space);
+
+      vbox = gtk_vbox_new (FALSE, 2);
+      gtk_container_add (GTK_CONTAINER (hbox), vbox);
+      gtk_widget_show (vbox);
+    }
+  else
+    {
+      frame = gtk_frame_new (label);
+
+      vbox = gtk_vbox_new (FALSE, 2);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
+      gtk_widget_show (vbox);
     }
 
   if (GTK_IS_BOX (parent))
@@ -622,11 +650,6 @@ prefs_frame_new (gchar        *label,
     gtk_container_add (parent, frame);
 
   gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
 
   return vbox;
 }
@@ -883,8 +906,8 @@ prefs_dialog_new (Gimp    *gimp,
                             NULL);
 
   /* The main hbox */
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  hbox = gtk_hbox_new (FALSE, 8);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 8);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
   gtk_widget_show (hbox);
 
@@ -1864,10 +1887,6 @@ prefs_dialog_new (Gimp    *gimp,
 	"dialogs/preferences/folders.html#plug_ins",
 	N_("Select Plug-In Folders"),
         "plug-in-path" },
-      { N_("Tool Plug-Ins"), N_("Tool Plug-In Folders"), "folders-tool-plug-ins.png",
-	"dialogs/preferences/folders.html#tool_plug_ins",
-	N_("Select Tool Plug-In Folders"),
-        "tool-plug-in-path" },
       { N_("Modules"), N_("Module Folders"), "folders-modules.png",
 	"dialogs/preferences/folders.html#modules",
 	N_("Select Module Folders"),

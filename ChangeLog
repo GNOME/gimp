@@ -1,3 +1,11 @@
+2003-06-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpcoreconfig.c
+	* app/config/gimprc-blurbs.h: removed "tool-plug-in-path" property.
+
+	* app/gui/preferences-dialog.c: changed accordingly. Some
+	preparation for more HIG compliance.
+
 2003-06-11  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolorselect.c: handle all mouse buttons

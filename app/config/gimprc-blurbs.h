@@ -309,9 +309,6 @@ N_("The tile cache is used to make sure the GIMP doesn't thrash " \
    "the GIMP to use more memory. Conversely, a smaller cache size " \
    "causes the GIMP to use more swap space and less memory.")
 
-#define TOOL_PLUG_IN_PATH_BLURB \
-"Sets the tool-plug-in search path."
-
 #define TRANSPARENCY_TYPE_BLURB \
 N_("Sets the manner in which transparency is displayed in images.")
 
