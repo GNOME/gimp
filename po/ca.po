@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.21\n"
-"POT-Creation-Date: 2000-10-16 11:48-0700\n"
-"PO-Revision-Date: 1999-10-26 14:55+0200\n"
-"Last-Translator: Softcatala <linux@softcatala.org>\n"
+"Project-Id-Version: gimp 1.1.28\n"
+"POT-Creation-Date: 2000-10-22 00:06+0200\n"
+"PO-Revision-Date: 2000-10-21 21:14+0200\n"
+"Last-Translator: Quico Llach <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -20,16 +20,16 @@ msgstr "Quant al GIMP"
 #. this is a font, provide only one single font definition
 #: app/about_dialog.c:197
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
-msgstr ""
+msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
 #: app/about_dialog.c:207
-#, fuzzy, c-format
+#, c-format
 msgid "Version %s brought to you by"
-msgstr " que us porta"
+msgstr "La versió %s que us porta"
 
 #: app/about_dialog.c:257
 msgid "Please visit http://www.gimp.org/ for more info"
-msgstr "Si us plau, visiteu http://www.gimp.org/ per més informació"
+msgstr "Si us plau, visiteu http://www.gimp.org/ per a més informació"
 
 #: app/airbrush.c:141 app/convolve.c:154 app/smudge.c:117
 msgid "Rate:"
@@ -42,7 +42,7 @@ msgstr "Pressió:"
 #. this is a font, provide only one single font definition
 #: app/app_procs.c:267
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
-msgstr ""
+msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 
 #: app/app_procs.c:278 app/app_procs.c:280 app/interface.c:558
 msgid "The GIMP"
@@ -51,12 +51,11 @@ msgstr "El GIMP"
 #. this is a fontset, e.g. multiple comma-separated font definitions
 #: app/app_procs.c:285
 msgid "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
-msgstr ""
+msgstr "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 
 #: app/app_procs.c:302 app/app_procs.c:304
-#, fuzzy
 msgid "brought to you by"
-msgstr " que us porta"
+msgstr "que us porta"
 
 #: app/app_procs.c:373
 msgid "GIMP Startup"
@@ -106,7 +105,7 @@ msgid ""
 "\n"
 "Quit the GIMP?"
 msgstr ""
-"Hi han fitxers sense desar.\n"
+"Hi ha fitxers sense desar.\n"
 "\n"
 "Voleu sortir del GIMP?"
 
@@ -125,7 +124,7 @@ msgstr "Surt"
 #: app/interface.c:1039 app/layers_dialog.c:3484 app/layers_dialog.c:3666
 #: app/layers_dialog.c:3761 app/layers_dialog.c:4021 app/levels.c:346
 #: app/palette.c:1818 app/posterize.c:207 app/preferences_dialog.c:1462
-#: app/qmask.c:278 app/resize.c:194 app/resize.c:1324
+#: app/qmask.c:278 app/resize.c:200 app/resize.c:1367
 #: app/resolution_calibrate.c:111 app/threshold.c:280 app/user_install.c:549
 #: modules/cdisplay_gamma.c:332 modules/cdisplay_highcontrast.c:325
 msgid "Cancel"
@@ -145,7 +144,7 @@ msgstr "Corba no tancada!"
 
 #: app/bezier_select.c:3282 app/gimage_mask.c:620
 msgid "Paintbrush operation failed."
-msgstr "Ha fallit l'operació del pinzell"
+msgstr "No s'ha pogut pintar amb el pinzell"
 
 #: app/blend.c:294
 msgid "Offset:"
@@ -161,12 +160,11 @@ msgstr "De primer a segon terme (HSV)"
 
 #: app/blend.c:307
 msgid "FG to Transparent"
-msgstr "De primer terme a Transparent"
+msgstr "De primer terme a transparent"
 
 #: app/blend.c:308
-#, fuzzy
 msgid "Custom Gradient"
-msgstr "Copia el degradat"
+msgstr "Degradat personalitzat"
 
 #: app/blend.c:312
 msgid "Blend:"
@@ -225,12 +223,10 @@ msgid "None"
 msgstr "Cap"
 
 #: app/blend.c:343
-#, fuzzy
 msgid "Sawtooth Wave"
-msgstr "Ona de dent de serra"
+msgstr "Ona de dents de serra"
 
 #: app/blend.c:344
-#, fuzzy
 msgid "Triangular Wave"
 msgstr "Ona triangular"
 
@@ -239,12 +235,10 @@ msgid "Repeat:"
 msgstr "Repeteix:"
 
 #: app/blend.c:367
-#, fuzzy
 msgid "Adaptive Supersampling"
 msgstr "Supermostratge adaptable"
 
 #: app/blend.c:395
-#, fuzzy
 msgid "Max Depth:"
 msgstr "Profunditat màxima:"
 
@@ -254,15 +248,15 @@ msgstr "Llindar:"
 
 #: app/blend.c:435
 msgid "Blend: Invalid for indexed images."
-msgstr "Mescla: No és vàlida per imatges indexades"
+msgstr "Mescla: No és vàlida per a imatges indexades."
 
 #: app/blend.c:460
 msgid "Blend: 0, 0"
-msgstr "Mescla: 0,0"
+msgstr "Mescla: 0, 0"
 
 #: app/blend.c:523
 msgid "Blend operation failed."
-msgstr "Ha fallit l'operació de mescla"
+msgstr "No s'ha pogut mesclar."
 
 #: app/blend.c:529
 msgid "Blending..."
@@ -279,7 +273,7 @@ msgstr "Brillantor-Contrast"
 
 #: app/brightness_contrast.c:169
 msgid "Brightness-Contrast does not operate on indexed drawables."
-msgstr "L'opció Brillantor-contrast no funciona en imatges indexades"
+msgstr "L'opció Brillantor-contrast no funciona en imatges indexades."
 
 #: app/brightness_contrast.c:220 app/channel_ops.c:91
 #: app/channels_dialog.c:2500 app/channels_dialog.c:2663
@@ -289,7 +283,7 @@ msgstr "L'opció Brillantor-contrast no funciona en imatges indexades"
 #: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3759
 #: app/layers_dialog.c:4019 app/levels.c:342 app/module_db.c:314
 #: app/posterize.c:203 app/preferences_dialog.c:1458 app/qmask.c:276
-#: app/resize.c:192 app/resize.c:1324 app/resolution_calibrate.c:109
+#: app/resize.c:194 app/resize.c:1367 app/resolution_calibrate.c:109
 #: app/threshold.c:276 modules/cdisplay_gamma.c:330
 #: modules/cdisplay_highcontrast.c:323
 msgid "OK"
@@ -298,22 +292,20 @@ msgstr "D'acord"
 #: app/brightness_contrast.c:222 app/by_color_select.c:721
 #: app/color_balance.c:278 app/curves.c:565 app/file_new_dialog.c:355
 #: app/hue_saturation.c:377 app/levels.c:344 app/posterize.c:205
-#: app/threshold.c:278 app/tools.c:1542 app/transform_core.c:406
-#: modules/colorsel_water.c:634
+#: app/resize.c:197 app/threshold.c:278 app/tools.c:1542
+#: app/transform_core.c:406 modules/colorsel_water.c:634
 msgid "Reset"
 msgstr "Reinicialitza"
 
 #. Create the brightness scale widget
 #: app/brightness_contrast.c:240
-#, fuzzy
 msgid "Brightness:"
-msgstr "Brillantor"
+msgstr "Brillantor:"
 
 #. Create the contrast scale widget
 #: app/brightness_contrast.c:271
-#, fuzzy
 msgid "Contrast:"
-msgstr "Contrast"
+msgstr "Contrast:"
 
 #. The preview toggle
 #: app/brightness_contrast.c:306 app/color_balance.c:446 app/curves.c:687
@@ -367,13 +359,12 @@ msgid "Refresh"
 msgstr "Refresca"
 
 #: app/brush_select.c:407
-#, fuzzy
 msgid "No Brushes available"
-msgstr "no està disponible la previsualització"
+msgstr "No hi ha pinzells disponibles"
 
 #: app/brush_select.c:448 app/layers_dialog.c:413 app/tool_options.c:526
 msgid "Opacity:"
-msgstr "Opacitat"
+msgstr "Opacitat:"
 
 #: app/brush_select.c:456 app/layers_dialog.c:365 app/tool_options.c:550
 msgid "Mode:"
@@ -402,12 +393,12 @@ msgstr "Espaiat:"
 #. this should never happen
 #: app/brush_select.c:1850
 msgid "Sorry, this brush can't be edited."
-msgstr ""
+msgstr "Ho sento, aquest pinzell no es pot editar."
 
 #. this should never happen
 #: app/brush_select.c:1879
 msgid "Sorry, this brush can't be deleted."
-msgstr ""
+msgstr "Ho sento, aquest pinzell no es pot suprimir."
 
 #: app/bucket_fill.c:124 app/color_picker.c:156 app/tool_options.c:270
 msgid "Sample Merged"
@@ -432,11 +423,11 @@ msgstr "Omplint amb el Patró"
 
 #: app/bucket_fill.c:244
 msgid "Bucket Fill operation failed."
-msgstr "Ha fallit l'operació d'omplerta amb el cubell"
+msgstr "No s'ha pogut omplir amb el cubell."
 
 #: app/bucket_fill.c:368
 msgid "No available patterns for this operation."
-msgstr "No hi han patrons per aquesta operació"
+msgstr "No hi ha patrons per a aquesta operació."
 
 #. The shell and main vbox
 #: app/by_color_select.c:716
@@ -473,22 +464,20 @@ msgid "Fuzziness Threshold"
 msgstr "Llindar del difuminat"
 
 #: app/by_color_select.c:819
-#, fuzzy
 msgid "Selection"
-msgstr "Selecció: "
+msgstr "Selecció"
 
 #: app/by_color_select.c:830
-#, fuzzy
 msgid "Invert"
-msgstr "Converteix"
+msgstr "Inverteix"
 
 #: app/by_color_select.c:837
 msgid "All"
-msgstr ""
+msgstr "Tot"
 
 #: app/channel.c:188 app/channel.c:190 app/layer.c:321 app/layer.c:323
 msgid "copy"
-msgstr "copia"
+msgstr "còpia"
 
 #. formulate the new layer_mask name
 #: app/channel.c:196 app/gradient.c:1599 app/layer.c:329 app/layer.c:1752
@@ -500,7 +489,7 @@ msgstr "%s còpia"
 msgid "Selection Mask"
 msgstr "Màscara de selecció"
 
-#: app/channel_ops.c:85 app/resize.c:405
+#: app/channel_ops.c:85 app/resize.c:411
 msgid "Offset"
 msgstr "Compensació"
 
@@ -510,16 +499,15 @@ msgid "Offset X:"
 msgstr "Compensa X:"
 
 #: app/channel_ops.c:115 app/crop.c:1077 app/file_new_dialog.c:530
-#: app/resize.c:343 app/resize.c:435 app/resize.c:572 app/rotate_tool.c:106
+#: app/resize.c:349 app/resize.c:441 app/resize.c:578 app/rotate_tool.c:106
 #: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1208
 msgid "Y:"
 msgstr "Y:"
 
 #. The wrap around option
 #: app/channel_ops.c:164
-#, fuzzy
 msgid "Wrap Around"
-msgstr "Wrap-Around"
+msgstr "Ajusta al voltant"
 
 #: app/channel_ops.c:174 app/image_new.c:76 app/image_new.c:290
 #: app/layers_dialog.c:3584
@@ -537,15 +525,15 @@ msgstr "Compensació amb (x/2),(y/2)"
 
 #: app/channels_dialog.c:225 app/channels_dialog.c:2538
 msgid "New Channel"
-msgstr "Nou canal"
+msgstr "Canal nou"
 
 #: app/channels_dialog.c:229
 msgid "Raise Channel"
-msgstr "Puja el canal"
+msgstr "Apuja el canal"
 
 #: app/channels_dialog.c:233
 msgid "Lower Channel"
-msgstr "Baixa el canal"
+msgstr "Abaixa el canal"
 
 #: app/channels_dialog.c:237
 msgid "Duplicate Channel"
@@ -618,7 +606,7 @@ msgstr "Origen de la imatge"
 
 #: app/clone.c:139
 msgid "Pattern Source"
-msgstr "Origen del motiu"
+msgstr "Origen del patró"
 
 #: app/clone.c:147
 msgid "Alignment"
@@ -659,12 +647,11 @@ msgstr "Tons mitjans"
 
 #: app/color_balance.c:262 app/dodgeburn.c:179
 msgid "Highlights"
-msgstr "Altes llums"
+msgstr "Resaltar"
 
 #: app/color_balance.c:293
-#, fuzzy
 msgid "Color Levels:"
-msgstr "Nivells de color: "
+msgstr "Nivells de color:"
 
 #. Create the cyan-red scale widget
 #: app/color_balance.c:333
@@ -684,7 +671,7 @@ msgstr "Groc"
 #. The preserve luminosity toggle
 #: app/color_balance.c:436
 msgid "Preserve Luminosity"
-msgstr "Conservar la lluminositat"
+msgstr "Conserva la lluminositat"
 
 #: app/color_notebook.c:118
 msgid "Color Selection"
@@ -692,7 +679,7 @@ msgstr "Selecció de color"
 
 #: app/color_notebook.c:126
 msgid "Revert to Old Color"
-msgstr "Tornar al color vell"
+msgstr "Torna al color vell"
 
 #: app/color_picker.c:144 app/color_picker.c:248 app/tools.c:568
 msgid "Color Picker"
@@ -747,7 +734,7 @@ msgstr "Intensitat:"
 #: app/info_window.c:422 app/info_window.c:423 app/info_window.c:424
 #: app/info_window.c:425 app/info_window.c:447
 msgid "N/A"
-msgstr "N/A"
+msgstr "N/D"
 
 #: app/color_select.c:238
 msgid "H"
@@ -763,11 +750,11 @@ msgstr ""
 
 #: app/color_select.c:241 app/hue_saturation.c:357
 msgid "R"
-msgstr "R"
+msgstr "V"
 
 #: app/color_select.c:242 app/hue_saturation.c:359
 msgid "G"
-msgstr "G"
+msgstr "V"
 
 #: app/color_select.c:243 app/hue_saturation.c:361
 msgid "B"
@@ -807,18 +794,16 @@ msgid "Feather Selection"
 msgstr "Selecció de la ploma"
 
 #: app/commands.c:335
-#, fuzzy
 msgid "Feather Selection by:"
-msgstr "Ploma seleccionada per:"
+msgstr "Selecció de ploma per:"
 
 #: app/commands.c:368
 msgid "Shrink Selection"
-msgstr "Encongeix la selecció"
+msgstr "Selecció d'encongiment"
 
 #: app/commands.c:371
-#, fuzzy
 msgid "Shrink Selection by:"
-msgstr "Encongeix la selecció en:"
+msgstr "Selecció d'encongiment per:"
 
 #: app/commands.c:380
 msgid "Shrink from image border"
@@ -826,27 +811,25 @@ msgstr "Encongeix des de la vora de la imatge"
 
 #: app/commands.c:402
 msgid "Grow Selection"
-msgstr "Selecció de l'augment"
+msgstr "Selecció d'augment"
 
 #: app/commands.c:405
-#, fuzzy
 msgid "Grow Selection by:"
-msgstr "Augmenta la selecció en:"
+msgstr "Selecció d'augment per:"
 
 #: app/commands.c:425
 msgid "Border Selection"
-msgstr "Selecció del contorn"
+msgstr "Selecció de contorn"
 
 #: app/commands.c:428
-#, fuzzy
 msgid "Border Selection by:"
-msgstr "Contorn seleccionat per:"
+msgstr "Selecció de contorn per:"
 
 #: app/commands.c:1324
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
-"Error en el canvi de la mida: tant l'amplada com l'alçada han de ser més "
-"grans de zero."
+"Error en el canvi de la mida: tant l'amplada com l'alçada han de ser "
+"mésgrans de zero."
 
 #: app/convert.c:505
 msgid "Indexed Color Conversion"
@@ -857,14 +840,12 @@ msgid "General Palette Options"
 msgstr "Opcions de la paleta general"
 
 #: app/convert.c:537
-#, fuzzy
 msgid "Generate Optimal Palette:"
-msgstr "Genera la paleta òptima: "
+msgstr "Genera la paleta òptima:"
 
 #: app/convert.c:570
-#, fuzzy
 msgid "# of Colors:"
-msgstr "# de colors: "
+msgstr "Nombre de colors:"
 
 #. create the custom_frame here, it'll be added later
 #: app/convert.c:586
@@ -872,22 +853,18 @@ msgid "Custom Palette Options"
 msgstr "Opcions de la paleta personalitzada"
 
 #: app/convert.c:592
-#, fuzzy
 msgid "Remove Unused Colors from Final Palette"
-msgstr "Elimina els color no utilitzats de la paleta final"
+msgstr "Elimina els colors no utilitzats de la paleta final"
 
 #: app/convert.c:604
-#, fuzzy
 msgid "Use Custom Palette:"
-msgstr "Utilitza la paleta personalitzada"
+msgstr "Utilitza la paleta personalitzada:"
 
 #: app/convert.c:638
-#, fuzzy
 msgid "Use WWW-Optimized Palette"
-msgstr "Utilitza la paleta www-optimitzada"
+msgstr "Utilitza la paleta optimitzada per a la WWW"
 
 #: app/convert.c:654
-#, fuzzy
 msgid "Use Black/White (1-Bit) Palette"
 msgstr "Utilitza la paleta blanc/negre (1 bit)"
 
@@ -896,34 +873,28 @@ msgid "Dither Options"
 msgstr "Opcions de simulació"
 
 #: app/convert.c:678
-#, fuzzy
 msgid "No Color Dithering"
-msgstr "Sense colors simulats"
+msgstr "Sense simulació de color"
 
 #: app/convert.c:692
-#, fuzzy
 msgid "Positioned Color Dithering"
-msgstr "Posicionat el color simulat"
+msgstr "Simulació de color posicionat"
 
 #: app/convert.c:706
-#, fuzzy
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
-msgstr "Color de Floyd-Steinberg simulat (barreja reduïda de color)"
+msgstr "Simulació de color Floyd-Steinberg (barreja reduïda de color)"
 
 #: app/convert.c:719
-#, fuzzy
 msgid "Floyd-Steinberg Color Dithering (Normal)"
-msgstr "Color de Floyd-Steinberg simulat (normal)"
+msgstr "Simulació de color Floyd-Steinberg (normal)"
 
 #: app/convert.c:733
-#, fuzzy
 msgid "Enable Dithering of Transparency"
 msgstr "Habilita la simulació de transparència"
 
 #: app/convert.c:762
-#, fuzzy
 msgid "[ Warning ]"
-msgstr " [ Advertència ] "
+msgstr "[ Advertència ]"
 
 #: app/convert.c:772
 msgid ""
@@ -932,14 +903,13 @@ msgid ""
 "You should not generate a palette of more than 255 colors if you intend to "
 "create a transparent or animated GIF file from this image."
 msgstr ""
-"Estàs intentant convertir una imatge amb alfa/capes de RGB/Gris a INDEXAT.\n"
-"No hauries de generar una paleta amb més de 255 colors si vols crear un "
+"Esteu intentant convertir una imatge amb alfa/capes de RGB/Gris a INDEXAT.\n"
+"No haurieu de generar una paleta amb més de 255 colors si voleu crear un "
 "fitxer transparent o un GIF animat amb aquesta imatge."
 
 #: app/convert.c:983
-#, fuzzy
 msgid "Select Custom Palette"
-msgstr "Utilitza la paleta personalitzada"
+msgstr "Selecciona la paleta personalitzada"
 
 #: app/convolve.c:171
 msgid "Convolve Type"
@@ -958,7 +928,6 @@ msgid "Crop & Resize"
 msgstr "Escapça i canvia la mida"
 
 #: app/crop.c:189
-#, fuzzy
 msgid "Current Layer only"
 msgstr "Només la capa actual"
 
@@ -1005,7 +974,7 @@ msgid "Width:"
 msgstr "Amplada:"
 
 #: app/crop.c:1093 app/file_new_dialog.c:395 app/file_new_dialog.c:413
-#: app/layers_dialog.c:3525 app/resize.c:253 app/resize.c:278 app/resize.c:509
+#: app/layers_dialog.c:3525 app/resize.c:259 app/resize.c:284 app/resize.c:515
 #: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:364
 msgid "Height:"
 msgstr "Alçada:"
@@ -1028,9 +997,8 @@ msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Les corbes dels dibuixables indexats no es poden ajustar."
 
 #: app/curves.c:580
-#, fuzzy
 msgid "Modify Curves for Channel:"
-msgstr "Modifica les corbes per al canal: "
+msgstr "Modifica les corbes per al canal:"
 
 #: app/curves.c:591 app/levels.c:378
 msgid "Alpha"
@@ -1038,9 +1006,8 @@ msgstr "Alfa"
 
 #. The option menu for selecting the drawing method
 #: app/curves.c:670
-#, fuzzy
 msgid "Curve Type:"
-msgstr "Tipus de corba: "
+msgstr "Tipus de corba:"
 
 #: app/curves.c:677
 msgid "Smooth"
@@ -1060,19 +1027,16 @@ msgid "Save"
 msgstr "Desa"
 
 #: app/curves.c:1278
-#, fuzzy
 msgid "Load Curves"
-msgstr "Carrega nivells"
+msgstr "Carrega les corbes"
 
 #: app/curves.c:1293
-#, fuzzy
 msgid "Save Curves"
-msgstr "Desa nivells"
+msgstr "Desa les corbes"
 
 #: app/curves.c:1584
-#, fuzzy
 msgid "Load/Save Curves"
-msgstr "Carrega/desa nivells"
+msgstr "Carrega/Desa les corbes"
 
 #: app/curves.c:1629 app/curves.c:1647 app/levels.c:1457 app/levels.c:1475
 #: app/paths_dialog.c:1904
@@ -1082,7 +1046,7 @@ msgstr "No es pot obrir el fitxer %s"
 
 #: app/desaturate.c:36
 msgid "Desaturate operates only on RGB color drawables."
-msgstr "La desaturació només funciona en dibuixables de color RGB"
+msgstr "La desaturació només funciona en dibuixables de color RGB."
 
 #: app/devices.c:747
 msgid "Device Status"
@@ -1157,14 +1121,13 @@ msgstr "No es poden equalitzar dibuixables indexats."
 
 #. the hard toggle
 #: app/eraser.c:108
-#, fuzzy
 msgid "Hard Edge"
 msgstr "Contorn dur"
 
 #. the anti_erase toggle
 #: app/eraser.c:118 app/paint_funcs.c:102
 msgid "Anti Erase"
-msgstr "Antiesborra"
+msgstr "Antiesborrat"
 
 #: app/errorconsole.c:170
 #, c-format
@@ -1181,7 +1144,7 @@ msgstr "Desa el registre d'errors a l'arxiu..."
 
 #: app/errorconsole.c:273
 msgid "GIMP Error Console"
-msgstr "Error en la consola GIMP"
+msgstr "Consola d'errors GIMP"
 
 #: app/errorconsole.c:279
 msgid "Clear"
@@ -1241,11 +1204,11 @@ msgid "Pixels"
 msgstr "Píxels"
 
 #. the resolution labels
-#: app/file_new_dialog.c:524 app/resize.c:566
+#: app/file_new_dialog.c:524 app/resize.c:572
 msgid "Resolution X:"
 msgstr "Resolució X:"
 
-#: app/file_new_dialog.c:545 app/resize.c:587
+#: app/file_new_dialog.c:545 app/resize.c:593
 msgid "pixels/%a"
 msgstr "píxels/%a"
 
@@ -1260,30 +1223,29 @@ msgstr "Carrega la imatge"
 
 #. format-chooser frame
 #: app/fileops.c:313
-#, fuzzy
 msgid "Determine File Type"
-msgstr "Determina el tipus de fitxer:"
+msgstr "Determina el tipus de fitxer"
 
 #: app/fileops.c:386
-#, fuzzy
 msgid ""
 "Generate\n"
 "Preview"
 msgstr ""
-"genera\n"
-"previsualitza"
+"Genera una\n"
+"previsualització"
 
 #: app/fileops.c:405
-#, fuzzy
 msgid "No Selection."
-msgstr "No selecció"
+msgstr "Cap selecció."
 
 #: app/fileops.c:453 app/fileops.c:1722
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s"
-msgstr "No s'ha pogut desar: "
+msgstr ""
+"No s'ha pogut desar.\n"
+"%s"
 
 #: app/fileops.c:478 app/fileops.c:510
 msgid "Save Image"
@@ -1294,29 +1256,29 @@ msgid "Save Options"
 msgstr "Desar les opcions"
 
 #: app/fileops.c:536
-#, fuzzy
 msgid "Determine File Type:"
 msgstr "Determina el tipus de fitxer:"
 
 #: app/fileops.c:596
-#, fuzzy
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
 msgstr ""
-"No es pot anar enrere. No hi ha cap nom de fitxer associat a aquesta imatge"
+"No es pot revertir.\n"
+"No hi ha cap nom de fitxer associat a aquesta imatge"
 
 #: app/fileops.c:603
-#, fuzzy
 msgid "Revert"
-msgstr "Reinicialitza"
+msgstr "Revertir"
 
 #: app/fileops.c:614
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Revert failed.\n"
 "%s"
-msgstr "No s'ha pogut anar enrere"
+msgstr ""
+"No s'ha pogut revertir.\n"
+"%s"
 
 #: app/fileops.c:711
 #, fuzzy, c-format
@@ -1365,50 +1327,46 @@ msgid ""
 msgstr ""
 
 #: app/fileops.c:1389
-#, fuzzy
 msgid "(This thumbnail may be out of date)"
-msgstr "(és possible que aquesta icona sigui obsoleta)"
+msgstr "(És possible que aquesta miniatura sigui obsoleta)"
 
 #: app/fileops.c:1390
-#, fuzzy
 msgid "(No Information)"
-msgstr "(sense informació)"
+msgstr "(Sense informació)"
 
 #: app/fileops.c:1400
-#, fuzzy
 msgid "(Thumbnail saving is disabled)"
-msgstr "(s'ha desactivat l'opció de desar icones)"
+msgstr "(S'ha inhabilitat l'opció de desar miniatures)"
 
 #: app/fileops.c:1404
-#, fuzzy
 msgid "(Could not write thumbnail file)"
-msgstr "(no s'ha pogut escriure el fitxer d'icones)"
+msgstr "(No s'ha pogut escriure el fitxer de miniatures)"
 
 #: app/fileops.c:1408
-#, fuzzy
 msgid "(Thumbnail file not written)"
-msgstr "(no s'ha escrit el fitxer d'icones)"
+msgstr "(No s'ha escrit el fitxer de miniatures)"
 
 #: app/fileops.c:1425
-#, fuzzy
 msgid "No preview available"
-msgstr "no està disponible la previsualització"
+msgstr "No hi ha cap previsualització disponible"
 
 #: app/fileops.c:1532
 msgid "(could not make preview)"
-msgstr "(no s'ha pogut previsualitzar)"
+msgstr "(No s'ha pogut previsualitzar)"
 
 #: app/fileops.c:1606 app/fileops.c:1648
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Open failed.\n"
 "%s"
-msgstr "No s'ha pogut obrir:"
+msgstr ""
+"No s'ha pogut obrir.\n"
+"%s"
 
 #: app/fileops.c:1814
 #, c-format
 msgid "%s exists, overwrite?"
-msgstr "%s ja existeix, voleu sobreescriure'l?"
+msgstr "%s ja existeix, el voleu sobreescriure?"
 
 #: app/fileops.c:1816
 msgid "File Exists!"
@@ -1423,9 +1381,8 @@ msgid "No"
 msgstr "No"
 
 #: app/flip_tool.c:79
-#, fuzzy
 msgid "Flip Tool"
-msgstr "Opcions de les eines de canvi de pàgina"
+msgstr "Eina Inverteix"
 
 #: app/flip_tool.c:92 app/preferences_dialog.c:1584
 #: app/preferences_dialog.c:2378
@@ -1522,7 +1479,7 @@ msgid ""
 "region is empty."
 msgstr ""
 "No s'ha pogut retallar/copiar perquè l'àrea\n"
-"seleccionada està buida"
+"seleccionada està buida."
 
 #: app/gimage_mask.c:346
 msgid "Float Selection: No selection to float."
@@ -1554,7 +1511,7 @@ msgstr "No hi ha res seleccionat per traçar!"
 
 #: app/gimpbrush.c:282
 msgid "Error in GIMP brush file...aborting."
-msgstr "Error al fitxer de pinzell GIMP...avortant."
+msgstr "Error al fitxer de pinzell GIMP... s'està avortant."
 
 #: app/gimpbrush.c:290 app/patterns.c:211
 msgid "Unnamed"
@@ -1575,6 +1532,8 @@ msgid ""
 "Warning: Failed to load brush\n"
 "\"%s\""
 msgstr ""
+"Advertència: No s'ha pogut carregar el pinzell\n"
+"\"%s\""
 
 #: app/gimpbrushlist.c:217
 #, c-format
@@ -1582,6 +1541,8 @@ msgid ""
 "Warning: Failed to load pixmap brush\n"
 "\"%s\""
 msgstr ""
+"Advertència: No s'ha pogut carregar el pinzell del mapa de píxels\n"
+"\"%s\""
 
 #: app/gimpbrushlist.c:228
 #, c-format
@@ -1589,19 +1550,23 @@ msgid ""
 "Warning: Failed to load pixmap pipe\n"
 "\"%s\""
 msgstr ""
+"Advertència: No s'ha pogut carregar la paleta del mapa de píxels\n"
+"\"%s\""
 
 #: app/gimpbrushpipe.c:315
 msgid "Brush pipes should have at least one brush."
-msgstr ""
+msgstr "A la paleta del pinzell n'hi hauria de haver almenys un."
 
 #: app/gimpbrushpipe.c:416 app/gimpbrushpipe.c:424
+#, fuzzy
 msgid "Failed to load one of the brushes in the brush pipe."
 msgstr ""
+"No s'han pogut carregar els\n"
+"pinzells a la paleta de pinzells."
 
 #: app/gimpbrushpipe.c:484 app/gimpbrushpipe.c:492
-#, fuzzy
 msgid "Failed to load pixmap brush."
-msgstr "Impossible de llegir el camí des de %s"
+msgstr "No s'ha pogut carregar el pinzell del mapa de píxels."
 
 #: app/gimpdrawable.c:171
 msgid "Can't fill unknown image type."
@@ -1609,7 +1574,7 @@ msgstr "No es pot omplir el tipus d'imatge desconegut."
 
 #: app/gimpdrawable.c:505
 msgid "parasite attach to drawable"
-msgstr "adjunció paràsita al dibuix"
+msgstr "adjunt paràsit al dibuix"
 
 #: app/gimpdrawable.c:540
 msgid "detach parasite from drawable"
@@ -1634,6 +1599,9 @@ msgid ""
 "It probably was not compiled because\n"
 "you don't have GtkXmHTML installed."
 msgstr ""
+"No es pot trobar el procediment per navegar en\n"
+"l'ajuda del GIMP. És probable que no fos compilat\n"
+"per què no heu instal·lat el GtkXmHTML."
 
 #: app/gimphelp.c:195
 msgid "Use Netscape instead"
@@ -1661,7 +1629,7 @@ msgstr "La capa ja és al capdavall"
 
 #: app/gimpimage.c:2465
 msgid "BG has no alpha, layer was placed above"
-msgstr "El BG no té alfa, s'ha situat la capa damunt"
+msgstr "El BG no té alfa, s'ha situat la capa al damunt"
 
 #: app/gimpimage.c:2536
 msgid ""
@@ -1702,12 +1670,12 @@ msgstr ""
 #: app/gimpimage.c:3058
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
-"No es pot afegir una capa de màscara de dimensions diferents de lacapa "
+"No es pot afegir una capa de màscara de dimensions diferents de la capa "
 "especificada"
 
 #: app/gimpimage.c:3165
 msgid "Channel cannot be raised any further"
-msgstr "El canal no es pot aixecar més"
+msgstr "El canal no es pot apujar més"
 
 #: app/gimpimage.c:3216
 msgid "Channel cannot be lowered any further"
@@ -1724,7 +1692,7 @@ msgstr "En procés"
 
 #: app/gimpprogress.c:123 app/gimpprogress.c:170
 msgid "Please wait..."
-msgstr ""
+msgstr "Espereu..."
 
 #: app/gimprc.c:471
 #, c-format
@@ -1770,11 +1738,11 @@ msgstr "No es pot escriure a %s; %s"
 #: app/gimpui.c:83
 #, c-format
 msgid "Message repeated %d times"
-msgstr ""
+msgstr "Missatge repetit %d vegades"
 
 #: app/gimpui.c:96
 msgid "Message repeated once"
-msgstr ""
+msgstr "Missatge repetit una sola vegada"
 
 #: app/gimpui.c:110
 msgid ""
@@ -1782,10 +1750,14 @@ msgid ""
 "Too many open message dialogs.\n"
 "Messages are redirected to stderr."
 msgstr ""
+"Advertència:\n"
+"Hi ha massa diàlegs de missatges\n"
+"oberts. Els missatges són redireccionats\n"
+"cap el fitxer stderr."
 
 #: app/gimpui.c:117
 msgid "GIMP Message"
-msgstr ""
+msgstr "Missatge del GIMP"
 
 #. pseudo unit
 #: app/gimpunit.c:63
@@ -1836,24 +1808,23 @@ msgstr "percentatge"
 
 #: app/global_edit.c:748
 msgid "Paste"
-msgstr "Enganxar"
+msgstr "Enganxa"
 
 #: app/global_edit.c:749
 msgid "Paste Into"
-msgstr "Enganxar a"
+msgstr "Enganxa a"
 
 #: app/global_edit.c:750
-#, fuzzy
 msgid "Paste as New"
-msgstr "Enganxar com a nou"
+msgstr "Enganxa com a nou"
 
 #: app/global_edit.c:764
 msgid "Paste Named Buffer"
-msgstr "Enganxar la memòria intermèdia"
+msgstr "Enganxa la memòria intermèdia"
 
 #: app/global_edit.c:782
 msgid "Select a buffer to paste:"
-msgstr "Seleccioneu una memòriaintermèdia per enganxar"
+msgstr "Selecciona una memòria intermèdia per enganxar:"
 
 #: app/global_edit.c:863
 msgid "Cut Named"
@@ -1861,7 +1832,7 @@ msgstr "Talla allò designat"
 
 #: app/global_edit.c:866 app/global_edit.c:898
 msgid "Enter a name for this buffer"
-msgstr "Entreu un nom per a aquestamemòria intermèdia"
+msgstr "Entra un nom per a aquesta memòria intermèdia"
 
 #: app/global_edit.c:895
 msgid "Copy Named"
@@ -1982,7 +1953,7 @@ msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
 msgstr ""
-"Esteu segur que voleu suprimir\n"
+"Esteu segurs que voleu suprimir\n"
 "\"%s\" de la llista i del disc?"
 
 #: app/gradient.c:2002
@@ -2028,7 +1999,7 @@ msgid ""
 "move & compress"
 msgstr ""
 "Clic: seleccionar   Majúscules+clic: estendre la selecció   Arrossegar: "
-"moureMajúscules+arrossegar: moure i comprimir"
+"moure Majúscules+arrossegar: moure i comprimir"
 
 #: app/gradient.c:2872 app/gradient.c:2881
 #, c-format
@@ -2050,7 +2021,7 @@ msgstr "Carregar de"
 
 #: app/gradient.c:3401
 msgid "Left neighbor's right endpoint"
-msgstr "L'esquerra és aprop del límit dret"
+msgstr "L'esquerra és a prop del límit dret"
 
 #: app/gradient.c:3402
 msgid "Right endpoint"
@@ -2078,7 +2049,7 @@ msgstr "Operacions de selecció"
 
 #: app/gradient.c:3727
 msgid "Blending function for segment"
-msgstr "S'està mesclant la funció peral segment"
+msgstr "S'està mesclant la funció per al segment"
 
 #: app/gradient.c:3729
 msgid "Coloring type for segment"
@@ -2114,11 +2085,11 @@ msgstr "Replicar el segment"
 
 #: app/gradient.c:3748
 msgid "Blending function for selection"
-msgstr "S'està mesclant la funció per ala selecció"
+msgstr "S'està mesclant la funció per a la selecció"
 
 #: app/gradient.c:3750
 msgid "Coloring type for selection"
-msgstr "Tipus de acolorit per la selecció"
+msgstr "Tipus d'acolorit per la selecció"
 
 #: app/gradient.c:3752
 msgid "Split segments at midpoints"
@@ -2184,7 +2155,7 @@ msgstr "Combinar els colors dels extrems"
 
 #: app/gradient.c:5231
 msgid "Blend endpoints' opacity"
-msgstr "Combinar la opacitat dels extrems"
+msgstr "Combinar l'opacitat dels extrems"
 
 #: app/gradient.c:5399
 msgid "Replicate"
@@ -2215,7 +2186,7 @@ msgstr "Histograma"
 
 #: app/histogram_tool.c:203
 msgid "Histogram does not operate on indexed drawables."
-msgstr "L'histograma no pot funcionar amb indexats desplaçables"
+msgstr "L'histograma no pot funcionar amb dibuixos indexats."
 
 #: app/histogram_tool.c:255
 msgid "Mean:"
@@ -2223,7 +2194,7 @@ msgstr "Mitjana:"
 
 #: app/histogram_tool.c:256
 msgid "Std Dev:"
-msgstr "Std Dev:"
+msgstr "Desv. est.:"
 
 #: app/histogram_tool.c:257
 msgid "Median:"
@@ -2243,7 +2214,7 @@ msgstr "Percentil:"
 
 #: app/histogram_tool.c:294
 msgid "Information on Channel:"
-msgstr "Informació al canal:"
+msgstr "Informació del canal:"
 
 #. The shell and main vbox
 #: app/hue_saturation.c:244 app/hue_saturation.c:370 app/tools.c:1077
@@ -2260,7 +2231,7 @@ msgstr "Màster"
 
 #: app/hue_saturation.c:358
 msgid "Y"
-msgstr "Y"
+msgstr "G"
 
 #: app/hue_saturation.c:360
 msgid "C"
@@ -2272,7 +2243,7 @@ msgstr "M"
 
 #: app/hue_saturation.c:447
 msgid "Hue / Lightness / Saturation Adjustments"
-msgstr "Color / Lluminositat / Ajustaments de saturació"
+msgstr "Color / Lluminositat / Ajustaments de la saturació"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:459
@@ -2282,21 +2253,22 @@ msgstr "Color"
 
 #. Create the lightness scale widget
 #: app/hue_saturation.c:493
-#, fuzzy
 msgid "Lightness:"
-msgstr "Lluminositat"
+msgstr "Lluminositat:"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:527
-#, fuzzy
 msgid "Saturation:"
-msgstr "Saturació"
+msgstr "Saturació:"
 
 #: app/image_cmds.c:3463
 msgid ""
 "Image resolution is out of bounds,\n"
 "using the default resolution instead."
 msgstr ""
+"La resolució de la imatge està fora\n"
+"de limits, en el seu lloc es fa servir\n"
+"la resolució per defecte."
 
 #: app/image_new.c:65 app/info_window.c:65 app/info_window.c:534
 #: app/preferences_dialog.c:1631
@@ -2384,39 +2356,36 @@ msgstr "Pseudo color"
 
 #: app/info_window.c:68
 msgid "True Color"
-msgstr "Color vertader"
+msgstr "Color real"
 
 #: app/info_window.c:69
 msgid "Direct Color"
 msgstr "Color directe"
 
 #: app/info_window.c:161
-#, fuzzy
 msgid "R:"
-msgstr "Vermell:"
+msgstr "R:"
 
 #: app/info_window.c:167
-#, fuzzy
 msgid "G:"
-msgstr "G"
+msgstr "V:"
 
 #: app/info_window.c:173
-#, fuzzy
 msgid "B:"
-msgstr "B"
+msgstr "B:"
 
 #: app/info_window.c:179
 msgid "A:"
-msgstr ""
+msgstr "A:"
 
 #: app/info_window.c:211
 msgid "Extended"
-msgstr "Extès"
+msgstr "Estès"
 
 #. add the information fields
 #: app/info_window.c:274
 msgid "Dimensions (w x h):"
-msgstr "Dimensions (w x h):"
+msgstr "Dimensions (ample x alt):"
 
 #: app/info_window.c:278
 msgid "Resolution:"
@@ -2424,7 +2393,7 @@ msgstr "Resolució:"
 
 #: app/info_window.c:280
 msgid "Scale Ratio:"
-msgstr "Raó de l'escala:"
+msgstr "Ràtio de l'escala:"
 
 #: app/info_window.c:282
 msgid "Display Type:"
@@ -2442,18 +2411,18 @@ msgstr "Profunditat visual:"
 #: app/info_window.c:314
 #, c-format
 msgid "Info: %s-%d.%d"
-msgstr ""
+msgstr "Informació: %s-%d.%d"
 
 #: app/info_window.c:508
-#, fuzzy, c-format
+#, c-format
 msgid "%d x %d pixels"
-msgstr "píxels"
+msgstr "%d x %d píxels"
 
 #. image resolution
 #: app/info_window.c:520
 #, c-format
 msgid "%g x %g dpi"
-msgstr ""
+msgstr "%g x %g dpi"
 
 #: app/info_window.c:532
 msgid "RGB Color"
@@ -2464,15 +2433,13 @@ msgid "Indexed Color"
 msgstr "Color indexat"
 
 #: app/info_window.c:537
-#, fuzzy
 msgid "colors"
-msgstr "Color"
+msgstr "colors"
 
 #. adjust sliders
 #: app/ink.c:291
-#, fuzzy
 msgid "Adjustment"
-msgstr "Ajust"
+msgstr "Ajustament"
 
 #: app/ink.c:308 app/ink.c:346
 msgid "Size:"
@@ -2480,19 +2447,16 @@ msgstr "Mida:"
 
 #. sens sliders
 #: app/ink.c:329
-#, fuzzy
 msgid "Sensitivity"
-msgstr "Sensibilitat:"
+msgstr "Sensibilitat"
 
 #: app/ink.c:359
-#, fuzzy
 msgid "Tilt:"
-msgstr "Inclinació"
+msgstr "Inclinació:"
 
 #: app/ink.c:372
-#, fuzzy
 msgid "Speed:"
-msgstr "Velocitat"
+msgstr "Velocitat:"
 
 #. Brush shape widget
 #: app/ink.c:454
@@ -2505,8 +2469,8 @@ msgid ""
 "The arrows swap colors. Double click to select a color from a colorrequester."
 msgstr ""
 "Colors en primer terme i de fons. Els quadrats blancs i negres restableixen "
-"els colors. Les fletxes canvien els colors. Feu un doble clic per "
-"seleccionar un color del menú de colors."
+"els colors. Les fletxes canvien els colors. Feu doble clic per seleccionar "
+"un color del menú de colors."
 
 #: app/internal_procs.c:68
 msgid "Internal Procedures"
@@ -2555,7 +2519,7 @@ msgstr "Seleccions movibles"
 
 #: app/internal_procs.c:101
 msgid "Gimprc procedures"
-msgstr "Procediments de Gimprc"
+msgstr "Procediments del Gimprc"
 
 #: app/internal_procs.c:107
 msgid "Gradient UI"
@@ -2566,9 +2530,8 @@ msgid "Guide procedures"
 msgstr "Procediments de guia"
 
 #: app/internal_procs.c:113
-#, fuzzy
 msgid "Help procedures"
-msgstr "Procediments de text"
+msgstr "Procediments d'ajuda"
 
 #: app/internal_procs.c:116 app/palette.c:3162
 msgid "Image"
@@ -2603,7 +2566,7 @@ msgstr "Camins"
 
 #: app/internal_procs.c:137
 msgid "Pattern UI"
-msgstr "IU de trames"
+msgstr "UI de trames"
 
 #: app/internal_procs.c:143
 msgid "Plug-in"
@@ -2639,7 +2602,7 @@ msgstr "La inversió no funciona amb dibuixos indexats."
 
 #: app/invert.c:51
 msgid "Invert operation failed."
-msgstr "Ha fallat l'operació d'inversió."
+msgstr "No s'ha pogut invertir."
 
 #: app/layer.c:259
 msgid "Zero width or height layers not allowed."
@@ -2663,17 +2626,16 @@ msgid ""
 "Raise Layer    \n"
 "<Shift> To Top"
 msgstr ""
-"Apropar la capa \n"
-"<Shift> fins al capdavant"
+"Apropa la capa    \n"
+"<Maj> fins a la part superior"
 
 #: app/layers_dialog.c:273
-#, fuzzy
 msgid ""
 "Lower Layer       \n"
 "<Shift> To Bottom"
 msgstr ""
-"Allunyar la capa  \n"
-"<Shift> fins al capdavall"
+"Allunya la capa      \n"
+"<Maj> fins a la part inferior"
 
 #: app/layers_dialog.c:278
 msgid "Duplicate Layer"
@@ -2729,7 +2691,7 @@ msgstr "Només aclarir"
 
 #: app/layers_dialog.c:396
 msgid "Keep Trans."
-msgstr "Deixa Trans."
+msgstr "Deixa trans."
 
 #: app/layers_dialog.c:405
 #, fuzzy
@@ -2796,20 +2758,21 @@ msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
 msgstr ""
-"L'amplada o l'alçària no són vàlides. \n"
-"Ambdues han de ser positives."
+"L'amplada o l'alçària no\n"
+"són vàlides. Totes dues han\n"
+"de ser positives."
 
 #: app/layers_dialog.c:4013
 msgid "Layer Merge Options"
-msgstr "Opcions de combinació de capes"
+msgstr "Opcions per combinar capes"
 
 #: app/layers_dialog.c:4038
 msgid "Final, Merged Layer should be:"
-msgstr "La capa combinada resultant ha de ser:"
+msgstr "La capa combinada resultant hauria de ser:"
 
 #: app/layers_dialog.c:4039
 msgid "Final, Anchored Layer should be:"
-msgstr "La capa fixada resultant ha de ser:"
+msgstr "La capa fixada resultant hauria de ser:"
 
 #: app/layers_dialog.c:4044
 msgid "Expanded as necessary"
@@ -2824,9 +2787,8 @@ msgid "Clipped to bottom layer"
 msgstr "Tallat a la mida de la capa de darrere"
 
 #: app/lc_dialog.c:99
-#, fuzzy
 msgid "Layers, Channels & Paths"
-msgstr "Capes i canals"
+msgstr "Capes, canals i camins"
 
 #. The Auto-button
 #: app/lc_dialog.c:147 app/levels.c:593
@@ -2851,19 +2813,16 @@ msgid "Levels for indexed drawables cannot be adjusted."
 msgstr "Els nivells dels dibuixos indexats no es poden ajustar."
 
 #: app/levels.c:366
-#, fuzzy
 msgid "Modify Levels for Channel:"
-msgstr "Modifica els nivells pel canal: "
+msgstr "Modifica els nivells per al canal:"
 
 #: app/levels.c:390
-#, fuzzy
 msgid "Input Levels:"
-msgstr "Nivells d'entrada: "
+msgstr "Nivells d'entrada:"
 
 #: app/levels.c:499
-#, fuzzy
 msgid "Output Levels:"
-msgstr "Nivells de sortida: "
+msgstr "Nivells de sortida:"
 
 #: app/levels.c:1068
 msgid "Load Levels"
@@ -2878,23 +2837,20 @@ msgid "Load/Save Levels"
 msgstr "Carrega/desa nivells"
 
 #: app/magnify.c:111
-#, fuzzy
 msgid "Magnify Tool"
-msgstr "Augmenta"
+msgstr "Eina per augmentar"
 
 #: app/magnify.c:121
 msgid "Allow Window Resizing"
 msgstr "Permet el redimensionament de finestres"
 
 #: app/magnify.c:136
-#, fuzzy
 msgid "Zoom in"
-msgstr "Amplia i redueix el zoom"
+msgstr "Amplia el zoom"
 
 #: app/magnify.c:138
-#, fuzzy
 msgid "Zoom out"
-msgstr "Amplia i redueix el zoom"
+msgstr "Redueix el zoom"
 
 #: app/main.c:285
 #, fuzzy
@@ -2905,15 +2861,18 @@ msgstr "Les opcions vàlides són:\n"
 
 #: app/main.c:301
 msgid "GIMP version"
-msgstr "Versió de GIMP"
+msgstr "Versió del GIMP"
 
 #: app/main.c:305
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "Usage: %s [option ... ] [file ... ]\n"
 "\n"
-msgstr "Utilització: %s [opció...] [fitxers...]\n"
+msgstr ""
+"\n"
+"Utilització: %s [opció...] [fitxers...]\n"
+"\n"
 
 #: app/main.c:306
 #, fuzzy
@@ -2921,100 +2880,85 @@ msgid "Options:\n"
 msgstr "Operacions"
 
 #: app/main.c:307
-#, fuzzy
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
-msgstr "  -b --batch <instruccions> Execució en mode desatès. (batch) \n"
+msgstr "  -b, --batch <instruccions> Execució en processament per lots.\n"
 
 #: app/main.c:308
-#, fuzzy
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
 msgstr ""
-"  --console-messages       Mostra els avisos a la consola per comptes d'usar "
+"  -c, --console-messages    Mostra els avisos a la consola en comptes d'usar "
 "un quadre de diàleg\n"
 
 #: app/main.c:309
-#, fuzzy
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
 msgstr ""
-"  --no-data                No carreguis trames, gradacions, paletes,  ni "
+"  -d, --no-data             No carreguis trames, gradacions, paletes,  ni "
 "pinzells.\n"
 
 #: app/main.c:310
-#, fuzzy
 msgid "  -i, --no-interface       Run without a user interface.\n"
-msgstr "  -n --no-interface        Execució sense interfície d'usuari. \n"
+msgstr "  -i, --no-interface        Execució sense interfície d'usuari.\n"
 
 #: app/main.c:311
-#, fuzzy
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
-msgstr "  -g --gimprc <gimprc>     Utilitza un fitxer gimprc alternatiu. \n"
+msgstr "  -g, --gimprc <gimprc>     Utilitza un fitxer gimprc alternatiu.\n"
 
 #: app/main.c:312
-#, fuzzy
 msgid "  -h, --help               Output this help.\n"
-msgstr "  -h --help                Escriu aquesta ajuda. \n"
+msgstr "  -h, --help                Escriu aquesta ajuda.\n"
 
 #: app/main.c:313
-#, fuzzy
 msgid "  -r, --restore-session    Try to restore saved session.\n"
-msgstr "  -r --restore-session     Intenta recuperar una sessió desada.\n"
+msgstr "  -r, --restore-session     Intenta recuperar una sessió desada.\n"
 
 #: app/main.c:314
-#, fuzzy
 msgid "  -s, --no-splash          Do not show the startup window.\n"
-msgstr "  --no-splash              No mostris la finestra inicial.\n"
+msgstr "  -s, --no-splash           No mostris la finestra inicial.\n"
 
 #: app/main.c:315
-#, fuzzy
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
 msgstr ""
-"  --no-splash-image        No posis una imatge a la finestra inicial.\n"
+"  -S, --no-splash-image     No posis una imatge a la finestra inicial.\n"
 
 #: app/main.c:316
-#, fuzzy
 msgid "  -v, --version            Output version information.\n"
-msgstr "  -v --version             Escriu la informació de la versió. \n"
+msgstr "  -v, --version            Escriu la informació de la versió.\n"
 
 #: app/main.c:317
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Mostra els missatges inicials.\n"
 
 #: app/main.c:318
-#, fuzzy
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
-"  --no-shm                 No usis memòria compartida entre GIMP i les seves "
-"extensions.\n"
+"  --no-shm                  No usis memòria compartida entre GIMP i les "
+"seves extensions.\n"
 
 #: app/main.c:319
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr ""
-"  --no-xshm                No usis l'extensió de memòria compartida X.\n"
+"  --no-xshm                 No usis l'extensió de memòria compartida X.\n"
 
 #: app/main.c:320
-#, fuzzy
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
-"  --debug-handlers         Activa la depuració de gestors de senyals.\n"
+"  --debug-handlers          Activa la depuració de gestors de senyals.\n"
 
 #: app/main.c:321
-#, fuzzy
 msgid "  --display <display>      Use the designated X display.\n"
-msgstr ""
-"  --display <monitor>      Utilitza el monitor X especificat.\n"
-"\n"
+msgstr "  --display <monitor>       Utilitza el monitor X indicat.\n"
 
 #: app/main.c:322
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
-"  --system-gimprc <gimprc> Utilitza un fitxer gimprc de sistema alternatiu.\n"
+"  --system-gimprc <gimprc>  Usa un fitxer gimprc de sistema alternatiu.\n"
 
 #: app/main.c:324
 msgid ""
@@ -3024,7 +2968,7 @@ msgstr ""
 
 #: app/main.c:341
 msgid "(This console window will close in ten seconds)\n"
-msgstr ""
+msgstr "(Aquesta consola finestra es tancarà en deu segons)\n"
 
 #: app/measure.c:121 app/measure.c:314
 msgid "Measure Tool"
@@ -3045,34 +2989,29 @@ msgstr "graus"
 #. <Toolbox>/File
 #. the underscore installs an accelerator using the character that follows
 #: app/menus.c:94
-#, fuzzy
 msgid "/_File"
-msgstr "/Filtres"
+msgstr "/_Fitxer"
 
 #. <Image>/File
 #: app/menus.c:96 app/menus.c:202
-#, fuzzy
 msgid "/File/New..."
-msgstr "/Fitxer/Nou"
+msgstr "/Fitxer/Nou..."
 
 #: app/menus.c:98 app/menus.c:204
-#, fuzzy
 msgid "/File/Open..."
-msgstr "/Fitxer/Obrir"
+msgstr "/Fitxer/Obre..."
 
 #: app/menus.c:105
-#, fuzzy
 msgid "/File/Acquire"
-msgstr "/Fitxer/Adquireix/tearoff1"
+msgstr "/Fitxer/Adquireix"
 
 #: app/menus.c:110
 msgid "/File/Preferences..."
 msgstr "/Fitxer/Preferències..."
 
 #: app/menus.c:117
-#, fuzzy
 msgid "/File/Dialogs/Layers, Channels & Paths..."
-msgstr "/Fitxer/Diàlegs/Capes i canals..."
+msgstr "/Fitxer/Diàlegs/Capes, canals i camins..."
 
 #: app/menus.c:119
 msgid "/File/Dialogs/Tool Options..."
@@ -3126,54 +3065,49 @@ msgstr "/Fitxer/Surt"
 #. the underscore installs an accelerator using the character that follows
 #: app/menus.c:164
 msgid "/_Xtns"
-msgstr ""
+msgstr "/_Xtensions"
 
 #: app/menus.c:166
-#, fuzzy
 msgid "/Xtns/Module Browser..."
-msgstr "/Xtns/Explorador del mòdul"
+msgstr "/Xtns/Explorador de mòduls..."
 
 #. <Toolbox>/Help
 #. the underscore installs an accelerator using the character that follows
 #: app/menus.c:175
 msgid "/_Help"
-msgstr ""
+msgstr "/_Ajuda"
 
 #: app/menus.c:177
-#, fuzzy
 msgid "/Help/Help..."
-msgstr "/Fitxer/Ajuda..."
+msgstr "/Ajuda/Ajuda..."
 
 #: app/menus.c:179
 msgid "/Help/Context Help..."
-msgstr ""
+msgstr "/Ajuda/Ajuda contextual..."
 
 #: app/menus.c:181
-#, fuzzy
 msgid "/Help/Tip of the Day..."
-msgstr "/Fitxer/Consell del dia"
+msgstr "/Ajuda/Consell del dia..."
 
 #: app/menus.c:183
-#, fuzzy
 msgid "/Help/About..."
-msgstr "/Fitxer/Quant a..."
+msgstr "/Ajuda/Quant a..."
 
 #: app/menus.c:185
 msgid "/Help/Dump Items (Debug)"
-msgstr ""
+msgstr "/Ajuda/Pila d'ítems (Depurar)"
 
 #: app/menus.c:206
 msgid "/File/Save"
-msgstr "/Fitxer/Desar"
+msgstr "/Fitxer/Desa"
 
 #: app/menus.c:208
-#, fuzzy
 msgid "/File/Save As..."
-msgstr "/Fitxer/Anomena i desa"
+msgstr "/Fitxer/Anomena i desa..."
 
 #: app/menus.c:210
 msgid "/File/Revert"
-msgstr "/Fitxer/Anar enrere"
+msgstr "/Fitxer/Reverteix"
 
 #: app/menus.c:215
 msgid "/File/Close"
@@ -3202,42 +3136,36 @@ msgstr "/Edita/Enganxa"
 
 #: app/menus.c:238
 msgid "/Edit/Paste Into"
-msgstr "/Edita/Enganxa dins"
+msgstr "/Edita/Enganxa a dins"
 
 #: app/menus.c:240
-#, fuzzy
 msgid "/Edit/Paste as New"
 msgstr "/Edita/Enganxa com a nou"
 
 #. <Image>/Edit/Buffer
 #: app/menus.c:245
-#, fuzzy
 msgid "/Edit/Buffer/Cut Named..."
-msgstr "/Edita/Retalla l'objecte designat"
+msgstr "/Edita/Memòria intermèdia/Retalla l'objecte designat..."
 
 #: app/menus.c:247
-#, fuzzy
 msgid "/Edit/Buffer/Copy Named..."
-msgstr "/Edita/Copia l'objecte designat"
+msgstr "/Edita/Memòria intermèdia/Copia l'objecte designat..."
 
 #: app/menus.c:249
-#, fuzzy
 msgid "/Edit/Buffer/Paste Named..."
-msgstr "/Edita/Enganxa l'objecte designat"
+msgstr "/Edita/Memòria intermèdia/Enganxa l'objecte designat..."
 
 #: app/menus.c:254
 msgid "/Edit/Clear"
 msgstr "/Edita/Buida"
 
 #: app/menus.c:256
-#, fuzzy
 msgid "/Edit/Fill with FG Color"
-msgstr "Omple amb un gradient de color"
+msgstr "/Edita/Omple amb el color de primer pla"
 
 #: app/menus.c:258
-#, fuzzy
 msgid "/Edit/Fill with BG Color"
-msgstr "Omple amb un gradient de color"
+msgstr "/Edita/Omple amb el color de fons"
 
 #: app/menus.c:260
 msgid "/Edit/Stroke"
@@ -3261,31 +3189,26 @@ msgid "/Select/Float"
 msgstr "/Selecciona/Flota"
 
 #: app/menus.c:279
-#, fuzzy
 msgid "/Select/Feather..."
-msgstr "/Selecciona/Ploma"
+msgstr "/Selecciona/Ploma..."
 
 #: app/menus.c:281
 msgid "/Select/Sharpen"
 msgstr "/Selecciona/Afila"
 
 #: app/menus.c:283
-#, fuzzy
 msgid "/Select/Shrink..."
-msgstr "/Selecciona/Redueix"
+msgstr "/Selecciona/Redueix..."
 
 #: app/menus.c:285
-#, fuzzy
 msgid "/Select/Grow..."
-msgstr "/Selecciona/Augmenta"
+msgstr "/Selecciona/Augmenta..."
 
 #: app/menus.c:287
-#, fuzzy
 msgid "/Select/Border..."
-msgstr "/Selecciona/Vora"
+msgstr "/Selecciona/Vora..."
 
 #: app/menus.c:292
-#, fuzzy
 msgid "/Select/Save to Channel"
 msgstr "/Selecciona/Desa al canal"
 
@@ -3336,7 +3259,6 @@ msgid "/View/Zoom/1:16"
 msgstr "/Visualitza/Zoom/1:16"
 
 #: app/menus.c:323
-#, fuzzy
 msgid "/View/Dot for Dot"
 msgstr "/Visualitza/Punt per punt"
 
@@ -3362,10 +3284,9 @@ msgstr "/Visualitza/Commuta la barra d'estat"
 
 #: app/menus.c:341
 msgid "/View/Toggle Guides"
-msgstr "/Visualitza/Commutar les guies"
+msgstr "/Visualitza/Commuta les guies"
 
 #: app/menus.c:343
-#, fuzzy
 msgid "/View/Snap to Guides"
 msgstr "/Visualitza/Desplaça a les guies"
 
@@ -3379,19 +3300,16 @@ msgstr "/Visualitza/Redueix entorn"
 
 #. <Image>/Image/Mode
 #: app/menus.c:355
-#, fuzzy
 msgid "/Image/Mode/RGB"
-msgstr "/Imatge/RGB"
+msgstr "/Imatge/Mode/RGB"
 
 #: app/menus.c:357
-#, fuzzy
 msgid "/Image/Mode/Grayscale"
-msgstr "/Imatge/Escala de grisos"
+msgstr "/Imatge/Mode/Escala de grisos"
 
 #: app/menus.c:359
-#, fuzzy
 msgid "/Image/Mode/Indexed..."
-msgstr "/Imatge/Indexat"
+msgstr "/Imatge/Mode/Indexat..."
 
 #. <Image>/Image/Colors
 #: app/menus.c:367
@@ -3404,9 +3322,8 @@ msgstr "/Imatge/Colors/Invertir"
 
 #. <Image>/Image/Colors/Auto
 #: app/menus.c:377
-#, fuzzy
 msgid "/Image/Colors/Auto/Equalize"
-msgstr "/Imatge/Colors/Iguala"
+msgstr "/Imatge/Colors/Automàtic/Iguala"
 
 #. <Image>/Image/Alpha
 #: app/menus.c:385
@@ -3415,24 +3332,20 @@ msgstr "/Imatge/Alfa/Afegir canal alfa"
 
 #. <Image>/Image/Transforms
 #: app/menus.c:390
-#, fuzzy
 msgid "/Image/Transforms/Offset..."
-msgstr "/Imatge/Transforma/Offset"
+msgstr "/Imatge/Transforma/Offset..."
 
 #: app/menus.c:392
-#, fuzzy
 msgid "/Image/Transforms/Rotate"
-msgstr "/Imatge/Transformar"
+msgstr "/Imatge/Transforma/Gira"
 
 #: app/menus.c:399
-#, fuzzy
 msgid "/Image/Canvas Size..."
-msgstr "/Imatge/Varia la mida"
+msgstr "/Imatge/Mida de l'àrea de dibuix..."
 
 #: app/menus.c:401
-#, fuzzy
 msgid "/Image/Scale Image..."
-msgstr "/Imatge/Escala"
+msgstr "/Imatge/Escala la imatge..."
 
 #: app/menus.c:403
 msgid "/Image/Duplicate"
@@ -3440,72 +3353,66 @@ msgstr "/Imatge/Duplica"
 
 #. <Image>/Layers
 #: app/menus.c:411
-#, fuzzy
 msgid "/Layers/Layers, Channels & Paths..."
-msgstr "/Capes/Capes i canals..."
+msgstr "/Capes/Capes, canals i camins..."
 
 #: app/menus.c:415
-#, fuzzy
 msgid "/Layers/Layer to Imagesize"
-msgstr "/Capes/Aplanar la imatge"
+msgstr "/Capes/Capa a la mida de la imatge"
 
 #. <Image>/Layers/Stack
 #: app/menus.c:420
 msgid "/Layers/Stack/Previous Layer"
-msgstr "/Capes/Piles/Capa anterior"
+msgstr "/Capes/Pila/Capa anterior"
 
 #: app/menus.c:422
 msgid "/Layers/Stack/Next Layer"
-msgstr "/Capes/Piles/Capa següent"
+msgstr "/Capes/Pila/Capa següent"
 
 #: app/menus.c:424
 msgid "/Layers/Stack/Raise Layer"
-msgstr "/Capes/Piles/Aixeca capa"
+msgstr "/Capes/Pila/Aixeca la capa"
 
 #: app/menus.c:426
 msgid "/Layers/Stack/Lower Layer"
-msgstr "/Capes/Piles/Baixa capa"
+msgstr "/Capes/Pila/Abaixa la capa"
 
 #: app/menus.c:428
 msgid "/Layers/Stack/Layer to Top"
-msgstr "/Capes/Piles/Capa al capdamunt"
+msgstr "/Capes/Pila/Capa al capdamunt"
 
 #: app/menus.c:430
 msgid "/Layers/Stack/Layer to Bottom"
-msgstr "/Capes/Piles/Capa al capdavall"
+msgstr "/Capes/Pila/Capa al capdavall"
 
 #. <Image>/Layers/Rotate
 #: app/menus.c:437
-#, fuzzy
 msgid "/Layers/Rotate"
-msgstr "/Capes/Piles"
+msgstr "/Capes/Gira"
 
 #: app/menus.c:442
 msgid "/Layers/Anchor Layer"
 msgstr "/Capes/Ancorar la capa"
 
 #: app/menus.c:444
-#, fuzzy
 msgid "/Layers/Merge Visible Layers..."
-msgstr "/Capes/Combinar les capes visibles"
+msgstr "/Capes/Combina les capes visibles..."
 
 #: app/menus.c:446
 msgid "/Layers/Flatten Image"
 msgstr "/Capes/Aplanar la imatge"
 
 #: app/menus.c:451
-#, fuzzy
 msgid "/Layers/Mask to Selection"
-msgstr "/Capes/Màscara a selecció"
+msgstr "/Capes/Màscara a la selecció"
 
 #: app/menus.c:456
 msgid "/Layers/Add Alpha Channel"
 msgstr "/Capes/Afegeix canal alfa"
 
 #: app/menus.c:458
-#, fuzzy
 msgid "/Layers/Alpha to Selection"
-msgstr "/Capes/Alfa a selecció"
+msgstr "/Capes/Alfa a la selecció"
 
 #. <Image>/Tools
 #: app/menus.c:466
@@ -3522,9 +3429,8 @@ msgstr "/Eines/Intercanvia els colors"
 
 #. <Image>/Dialogs
 #: app/menus.c:477
-#, fuzzy
 msgid "/Dialogs/Layers, Channels & Paths..."
-msgstr "/Diàlegs/Capes i canals..."
+msgstr "/Diàlegs/Capes, canals i camins..."
 
 #: app/menus.c:479
 msgid "/Dialogs/Tool Options..."
@@ -3571,114 +3477,93 @@ msgid "/Dialogs/Display Filters..."
 msgstr "/Diàlegs/Visualitza els filtres..."
 
 #: app/menus.c:510
-#, fuzzy
 msgid "/Dialogs/Undo History..."
-msgstr "/Edició/Desfés l'historial..."
+msgstr "/Diàlegs/Desfés l'historial..."
 
 #. <Image>/Filters
 #: app/menus.c:519
-#, fuzzy
 msgid "/Filters/Repeat Last"
 msgstr "/Filtres/Repeteix l'últim"
 
 #: app/menus.c:521
-#, fuzzy
 msgid "/Filters/Re-Show Last"
 msgstr "/Filtres/Torna a ensenyar l'últim"
 
 #: app/menus.c:526
-#, fuzzy
 msgid "/Filters/Blur"
-msgstr "/Filtres"
+msgstr "/Filtres/Desenfoca"
 
 #: app/menus.c:528
-#, fuzzy
 msgid "/Filters/Colors"
-msgstr "/Fitxer/Tanca"
+msgstr "/Filtres/Colors"
 
 #: app/menus.c:530
-#, fuzzy
 msgid "/Filters/Noise"
-msgstr "/Filtres"
+msgstr "/Filtres/Soroll"
 
 #: app/menus.c:532
-#, fuzzy
 msgid "/Filters/Edge-Detect"
-msgstr "/Filtres/Repeteix l'últim"
+msgstr "/Filtres/Detecció dels contorns"
 
 #: app/menus.c:534
-#, fuzzy
 msgid "/Filters/Enhance"
-msgstr "/Filtres"
+msgstr "/Filtres/Destaca"
 
 #: app/menus.c:536
-#, fuzzy
 msgid "/Filters/Generic"
-msgstr "/Filtres"
+msgstr "/Filtres/Genèric"
 
 #: app/menus.c:541
-#, fuzzy
 msgid "/Filters/Glass Effects"
-msgstr "/Filtres/Repeteix l'últim"
+msgstr "/Filtres/Efectes de vidre"
 
 #: app/menus.c:543
-#, fuzzy
 msgid "/Filters/Light Effects"
-msgstr "/Filtres/tearoff1"
+msgstr "/Filtres/Efectes de llum"
 
 #: app/menus.c:545
-#, fuzzy
 msgid "/Filters/Distorts"
-msgstr "/Fitxer/Diàlegs"
+msgstr "/Filtres/Distorsions"
 
 #: app/menus.c:547
-#, fuzzy
 msgid "/Filters/Artistic"
-msgstr "/Filtres/Repeteix l'últim"
+msgstr "/Filtres/Artístic"
 
 #: app/menus.c:549
-#, fuzzy
 msgid "/Filters/Map"
-msgstr "/Filtres"
+msgstr "/Filtres/Mapa"
 
 #: app/menus.c:551
-#, fuzzy
 msgid "/Filters/Render"
-msgstr "/Fitxer/Anar enrere"
+msgstr "/Filtres/Representació"
 
 #: app/menus.c:553
-#, fuzzy
 msgid "/Filters/Web"
-msgstr "/Filtres"
+msgstr "/Filtres/Web"
 
 #: app/menus.c:558
-#, fuzzy
 msgid "/Filters/Animation"
-msgstr "/Filtres/tearoff1"
+msgstr "/Filtres/Animació"
 
 #: app/menus.c:560
-#, fuzzy
 msgid "/Filters/Combine"
-msgstr "/Fitxer/Tanca"
+msgstr "/Filtres/Combina"
 
 #: app/menus.c:565
-#, fuzzy
 msgid "/Filters/Toys"
-msgstr "/Filtres"
+msgstr "/Filtres/Joguines"
 
 #: app/menus.c:576
 msgid "/Automatic"
 msgstr "/Automàtic"
 
 #: app/menus.c:590
-#, fuzzy
 msgid "/By Extension"
 msgstr "/Per extensió"
 
 #: app/menus.c:604
-#, fuzzy
 msgid "/New Layer..."
-msgstr "/Capa Nova"
+msgstr "/Capa nova..."
 
 #. <Layers>/Stack
 #: app/menus.c:609
@@ -3711,44 +3596,39 @@ msgstr "/Suprimeix la capa"
 
 #: app/menus.c:627
 msgid "/Layer Boundary Size..."
-msgstr ""
+msgstr "/Capa tamany de la frontera..."
 
 #: app/menus.c:629
-#, fuzzy
 msgid "/Layer to Imagesize"
-msgstr "/Capes/Aplanar la imatge"
+msgstr "/Capa a mida de la imatge"
 
 #: app/menus.c:631
-#, fuzzy
 msgid "/Scale Layer..."
-msgstr "/Canvia l'escala de la capa"
+msgstr "/Escala la capa..."
 
 #: app/menus.c:636
-#, fuzzy
 msgid "/Merge Visible Layers..."
-msgstr "/Combina les dues capes visibles"
+msgstr "/Combina les capes visibles..."
 
 #: app/menus.c:638
 msgid "/Merge Down"
-msgstr "Combina al capdavall "
+msgstr "/Combina al capdavall"
 
 #: app/menus.c:640
 msgid "/Flatten Image"
 msgstr "/Aplana la imatge"
 
 #: app/menus.c:645
-#, fuzzy
 msgid "/Add Layer Mask..."
-msgstr "/Afegeix una màscara de capa"
+msgstr "/Afegeix una màscara de capa..."
 
 #: app/menus.c:647
 msgid "/Apply Layer Mask"
 msgstr "/Aplica una màscara de capa"
 
 #: app/menus.c:649
-#, fuzzy
 msgid "/Delete Layer Mask"
-msgstr "/Suprimeix la capa"
+msgstr "/Suprimeix la màscara de capa"
 
 #: app/menus.c:651
 msgid "/Mask to Selection"
@@ -3763,18 +3643,16 @@ msgid "/Alpha to Selection"
 msgstr "/Alfa cap a la selecció"
 
 #: app/menus.c:663
-#, fuzzy
 msgid "/Edit Layer Attributes..."
-msgstr "Edició dels atributs de la capa"
+msgstr "/Edita els atributs de la capa..."
 
 #: app/menus.c:674
-#, fuzzy
 msgid "/New Channel..."
-msgstr "/Nou canal"
+msgstr "/Canal nou..."
 
 #: app/menus.c:676
 msgid "/Raise Channel"
-msgstr "/Puja el canal"
+msgstr "/Incrementa el canal"
 
 #: app/menus.c:678
 msgid "/Lower Channel"
@@ -3793,23 +3671,20 @@ msgid "/Add to Selection"
 msgstr "/Afegir a la selecció"
 
 #: app/menus.c:689
-#, fuzzy
 msgid "/Subtract from Selection"
-msgstr "/sostreure de la selecció"
+msgstr "/Treu de la selecció"
 
 #: app/menus.c:691
-#, fuzzy
 msgid "/Intersect with Selection"
-msgstr "/Creuar amb la selecció"
+msgstr "/Creua amb la selecció"
 
 #: app/menus.c:696
 msgid "/Delete Channel"
 msgstr "/Suprimeix el canal"
 
 #: app/menus.c:701
-#, fuzzy
 msgid "/Edit Channel Attributes..."
-msgstr "Edita els atributs del canal"
+msgstr "/Edita els atributs del canal..."
 
 #: app/menus.c:712
 msgid "/New Path"
@@ -3824,9 +3699,8 @@ msgid "/Path to Selection"
 msgstr "/Camí de la selecció"
 
 #: app/menus.c:718
-#, fuzzy
 msgid "/Selection to Path"
-msgstr "Selecció cap al camí"
+msgstr "/Selecció cap al camí"
 
 #: app/menus.c:720
 msgid "/Stroke Path"
@@ -3845,19 +3719,16 @@ msgid "/Paste Path"
 msgstr "/Enganxa el camí"
 
 #: app/menus.c:731
-#, fuzzy
 msgid "/Import Path..."
-msgstr "/Importa el camí"
+msgstr "/Importa el camí..."
 
 #: app/menus.c:733
-#, fuzzy
 msgid "/Export Path..."
-msgstr "/Exporta el camí"
+msgstr "/Exporta el camí..."
 
 #: app/menus.c:738
-#, fuzzy
 msgid "/Edit Path Attributes..."
-msgstr "Edició dels atributs de la capa"
+msgstr "/Edita els atributs del camí..."
 
 #: app/menus.c:1291
 #, c-format
@@ -3865,28 +3736,24 @@ msgid "Error opening file: %s\n"
 msgstr "Error en obrir el fitxer: %s\n"
 
 #: app/module_db.c:62
-#, fuzzy
 msgid "Module error"
-msgstr "Mòdul DB"
+msgstr "Error del mòdul"
 
 #: app/module_db.c:63
-#, fuzzy
 msgid "Loaded OK"
-msgstr "Carrega"
+msgstr "S'ha carregat correctament"
 
 #: app/module_db.c:64
-#, fuzzy
 msgid "Load failed"
-msgstr "Carrega la imatge"
+msgstr "No s'ha pogut carregar"
 
 #: app/module_db.c:65
 msgid "Unload requested"
-msgstr ""
+msgstr "Descàrrega sol·licitada"
 
 #: app/module_db.c:66
-#, fuzzy
 msgid "Unloaded OK"
-msgstr "Descarrega"
+msgstr "S'ha descarregat correctament"
 
 #: app/module_db.c:308
 msgid "Module DB"
@@ -3905,7 +3772,7 @@ msgstr "s'està saltant el mòdul: \"%s\"\n"
 #: app/module_db.c:634
 #, c-format
 msgid "module load error: %s: %s"
-msgstr "error de carrega del mòdul: %s: %s"
+msgstr "error de càrrega del mòdul: %s: %s"
 
 #: app/module_db.c:813
 msgid "<No modules>"
@@ -3928,58 +3795,50 @@ msgid "Unload"
 msgstr "Descarrega"
 
 #: app/module_db.c:890
-#, fuzzy
 msgid "Purpose:"
-msgstr "Finalitat: "
+msgstr "Finalitat:"
 
 #: app/module_db.c:891
-#, fuzzy
 msgid "Author:"
-msgstr "Autor: "
+msgstr "Autor:"
 
 #: app/module_db.c:892
-#, fuzzy
 msgid "Version:"
-msgstr "Versió: "
+msgstr "Versió:"
 
 #: app/module_db.c:893
-#, fuzzy
 msgid "Copyright:"
-msgstr "Copyright: "
+msgstr "Copyright:"
 
 #: app/module_db.c:894
-#, fuzzy
 msgid "Date:"
-msgstr "Data: "
+msgstr "Data:"
 
 #: app/module_db.c:895
-#, fuzzy
 msgid "Location:"
-msgstr "Ubicació: "
+msgstr "Ubicació:"
 
 #: app/module_db.c:896
-#, fuzzy
 msgid "State:"
-msgstr "Estat: "
+msgstr "Estat:"
 
 #: app/module_db.c:915
 msgid "Autoload during startup"
 msgstr "Autocarrega a l'inici"
 
 #: app/move.c:494
-#, fuzzy
 msgid "Move Tool"
-msgstr "Mou les opcions d'eina"
+msgstr "Eina Mou"
 
 #. create the info dialog
 #: app/nav_window.c:1232
 #, c-format
 msgid "Navigation: %s-%d.%d"
-msgstr ""
+msgstr "Navega: %s-%d.%d"
 
 #: app/nav_window.c:1530
 msgid "Navigation: No Image"
-msgstr ""
+msgstr "Navega: Sense imatge"
 
 #: app/paint_core.c:791
 msgid "No brushes available for use with this tool."
@@ -3987,7 +3846,7 @@ msgstr "No es disposa de cap pinzell per utilitzar amb aquesta eina."
 
 #: app/paint_funcs.c:86 app/tool_options.c:919
 msgid "Behind"
-msgstr "Darrera"
+msgstr "Darrere"
 
 #: app/paint_funcs.c:92
 msgid "Subtraction"
@@ -4008,11 +3867,11 @@ msgstr "Tipus:"
 
 #: app/paintbrush.c:313
 msgid "Once Forward"
-msgstr "Un cop endavant"
+msgstr "Endavant un cop"
 
 #: app/paintbrush.c:314
 msgid "Once Backward"
-msgstr "Un cop endarrera"
+msgstr "Endarrere un cop"
 
 #: app/paintbrush.c:315
 msgid "Loop Sawtooth"
@@ -4091,9 +3950,9 @@ msgstr ""
 "Valor RGB fora de límits"
 
 #: app/palette.c:507
-#, fuzzy, c-format
+#, c-format
 msgid "Can't save palette \"%s\"\n"
-msgstr "no es pot desar la paleta \"%s\"\n"
+msgstr "No es pot desar la paleta \"%s\"\n"
 
 #: app/palette.c:1150
 msgid "Black"
@@ -4105,16 +3964,15 @@ msgstr "No definit"
 
 #: app/palette.c:1756
 msgid "New Palette"
-msgstr "Nova paleta"
+msgstr "Paleta nova"
 
 #: app/palette.c:1759
 msgid "Enter a name for new palette"
 msgstr "Introdueix un nom per a una nova paleta"
 
 #: app/palette.c:1813
-#, fuzzy
 msgid "Delete Palette"
-msgstr "Suprimeix el camí"
+msgstr "Suprimeix la paleta"
 
 #: app/palette.c:1892
 msgid "Merge Palette"
@@ -4138,7 +3996,7 @@ msgstr "Selecciona"
 
 #: app/palette.c:2190 app/palette_select.c:88
 msgid "Ncols"
-msgstr "Ncols"
+msgstr "Nombre de colors"
 
 #: app/palette.c:2210
 msgid "Palette Ops"
@@ -4160,31 +4018,30 @@ msgstr "Importar una paleta"
 #. The source's name
 #: app/palette.c:3126
 msgid "Name:"
-msgstr "Nom"
+msgstr "Nom:"
 
 #: app/palette.c:3139
 msgid "new_import"
-msgstr "Nova importació"
+msgstr "_Importació nova"
 
 #. The source type
 #: app/palette.c:3144
 msgid "Source:"
-msgstr "Origen"
+msgstr "Origen:"
 
 #: app/palette.c:3172
-#, fuzzy
 msgid "Indexed Palette"
-msgstr "Paleta de color indexada"
+msgstr "Paleta indexada"
 
 #. The sample size
 #: app/palette.c:3185
 msgid "Sample Size:"
-msgstr "Mida de mostra"
+msgstr "Mida de mostra:"
 
 #. The interval
 #: app/palette.c:3198
 msgid "Interval:"
-msgstr "Intèrval"
+msgstr "Interval:"
 
 #. The shell and main vbox
 #: app/palette_select.c:57
@@ -4193,7 +4050,7 @@ msgstr "Selecció de la paleta"
 
 #: app/paths_dialog.c:163
 msgid "New Path"
-msgstr "Nou camí"
+msgstr "Camí nou"
 
 #: app/paths_dialog.c:167
 msgid "Duplicate Path"
@@ -4217,7 +4074,7 @@ msgstr "Suprimeix el camí"
 
 #: app/paths_dialog.c:192
 msgid "New Point"
-msgstr "Nou punt"
+msgstr "Punt nou"
 
 #: app/paths_dialog.c:196
 msgid "Add Point"
@@ -4237,9 +4094,8 @@ msgid "Path %d"
 msgstr "Camí %d"
 
 #: app/paths_dialog.c:985
-#, fuzzy
 msgid "Edit Path Attributes"
-msgstr "Edició dels atributs de la capa"
+msgstr "Edita els atributs del camí"
 
 #: app/paths_dialog.c:988
 msgid "Enter a new name for the path"
@@ -4248,12 +4104,12 @@ msgstr "Introdueix un nom nou per al camí"
 #: app/paths_dialog.c:1919
 #, c-format
 msgid "Failed to read from %s"
-msgstr "Impossible de llegir des de %s"
+msgstr "No s'ha pogut llegir des de %s"
 
 #: app/paths_dialog.c:1934
 #, c-format
 msgid "Failed to read path from %s"
-msgstr "Impossible de llegir el camí des de %s"
+msgstr "No s'ha pogut llegir el camí des de %s"
 
 #: app/paths_dialog.c:1941
 #, c-format
@@ -4263,12 +4119,12 @@ msgstr "No s'han especificat punts al fitxer de camí %s"
 #: app/paths_dialog.c:1952
 #, c-format
 msgid "Failed to read path points from %s"
-msgstr "Impossible de llegir punts de camí des de %s"
+msgstr "Mo s'han pogut llegir els punts de camí des de %s"
 
 #: app/paths_dialog.c:2025 app/xcf.c:436
 #, c-format
 msgid "open failed on %s: %s\n"
-msgstr "Impossible d'obrir a %s: %s\n"
+msgstr "No s'ha pogut obrir a %s: %s\n"
 
 #: app/paths_dialog.c:2047
 msgid "Load/Store Bezier Curves"
@@ -4288,24 +4144,23 @@ msgid "Pattern Selection"
 msgstr "Selecció de model"
 
 #: app/pattern_select.c:227
-#, fuzzy
 msgid "No Patterns available"
-msgstr "Omplint amb el Patró"
+msgstr "No hi ha patrons disponibles"
 
 #: app/patterns.c:187
 #, fuzzy, c-format
 msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
-msgstr "Versió desconeguda de GIMP #%d a \"%s\"\n"
+msgstr "Versió desconeguda del GIMP #%d a \"%s\"\n"
 
 #: app/patterns.c:204
 #, fuzzy, c-format
 msgid "Error in GIMP pattern file \"%s\""
-msgstr "Error en el fitxer model de GIMP...avortant"
+msgstr "Error en el fitxer model del GIMP... avortant"
 
 #: app/patterns.c:219
 #, fuzzy, c-format
 msgid "GIMP pattern file \"%s\" appears to be truncated."
-msgstr "Sembla que el fitxer model de GIMP és truncat"
+msgstr "Sembla que el fitxer model del GIMP és truncat"
 
 #: app/patterns.c:278
 #, fuzzy, c-format
@@ -4314,12 +4169,11 @@ msgstr "Error en obrir el fitxer: %s\n"
 
 #: app/perspective_tool.c:59
 msgid "Perspective Transform Information"
-msgstr "Informació de transformació de perspectiva"
+msgstr "Informació de la transformació de la perspectiva"
 
 #: app/perspective_tool.c:62
-#, fuzzy
 msgid "Matrix:"
-msgstr "Màster"
+msgstr "Matriu:"
 
 #: app/perspective_tool.c:302
 msgid "Perspective..."
@@ -4352,9 +4206,9 @@ msgid "Extensions"
 msgstr "Extensions"
 
 #: app/plug_in.c:840
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to locate Plug-In: \"%s\""
-msgstr "impossible de localitzar l'extensió: \"%s\""
+msgstr "No es pot localitzar l'extensió: \"%s\""
 
 #: app/plug_in.c:1467
 #, c-format
@@ -4369,20 +4223,19 @@ msgstr ""
 
 #: app/posterize.c:153
 msgid "Posterize does not operate on indexed drawables."
-msgstr "La 'posterització' no funciona amb els 'drawables' indexats"
+msgstr "La conversió a cartell no funciona amb els dibuixos indexats"
 
 #: app/posterize.c:198 app/tools.c:1105
 msgid "Posterize"
-msgstr "Posteritza"
+msgstr "Conversió a cartell"
 
 #: app/posterize.c:220
-#, fuzzy
 msgid "Posterize Levels:"
-msgstr "Nivells de 'posterització'"
+msgstr "Nivells de conversió a cartell:"
 
 #: app/preferences_dialog.c:247
 msgid "Error: Levels of undo must be zero or greater."
-msgstr "Error: els nivells de desfer han de ser zero o més."
+msgstr "Error: els nivells per desfer han de ser zero o més."
 
 #: app/preferences_dialog.c:253
 msgid "Error: Marching speed must be 50 or greater."
@@ -4401,7 +4254,6 @@ msgid "Error: Default unit must be within unit range."
 msgstr "Error: la unitat per defecte ha d'estar dins del límit d'unitat"
 
 #: app/preferences_dialog.c:279
-#, fuzzy
 msgid "Error: Default resolution must not be zero."
 msgstr "Error: la resolució per defecte no ha de ser zero."
 
@@ -4424,9 +4276,8 @@ msgid "Error: Number of processors must be between 1 and 30."
 msgstr "Error: el nombre de processadors ha d'estar entre 1 i 30."
 
 #: app/preferences_dialog.c:358
-#, fuzzy
 msgid "Save Preferences ?"
-msgstr "Preferències"
+msgstr "Voleu desar les preferències?"
 
 #: app/preferences_dialog.c:379
 msgid ""
@@ -4438,6 +4289,13 @@ msgid ""
 "and the critical parts of your changes will not\n"
 "be applied."
 msgstr ""
+"Almenys un dels canvis que heu fet només\n"
+"tindrà efecte un cop hagueu reiniciat el GIMP.\n"
+"\n"
+"Ara podeu escollir 'Desa' per fer els canvis\n"
+"permanents i poder reiniciar el GIMP o prémer\n"
+"'Tanca' perquè les parts crítiques dels\n"
+"vostres canvis no es duguin a terme."
 
 #: app/preferences_dialog.c:472
 msgid "You will need to restart GIMP for these changes to take effect."
@@ -4446,7 +4304,7 @@ msgstr "Cal que reinicialitzeu el GIMP perquè els canvis tinguin efecte."
 #: app/preferences_dialog.c:1024
 #, c-format
 msgid "The default comment is limited to %d characters."
-msgstr ""
+msgstr "El comentari per defecte està limitat a %d caràcters."
 
 #: app/preferences_dialog.c:1452
 msgid "Preferences"
@@ -4459,7 +4317,7 @@ msgstr "Categories"
 
 #: app/preferences_dialog.c:1502 app/preferences_dialog.c:1504
 msgid "New File"
-msgstr "Nou fitxer"
+msgstr "Fitxer nou"
 
 #: app/preferences_dialog.c:1515
 msgid "Default Image Size and Unit"
@@ -4487,16 +4345,15 @@ msgstr "Tipus d'imatge per defecte"
 
 #: app/preferences_dialog.c:1647
 msgid "Maximum Image Size:"
-msgstr "Mida màxima d'imatge"
+msgstr "Mida màxima d'imatge:"
 
 #: app/preferences_dialog.c:1652 app/preferences_dialog.c:1654
-#, fuzzy
 msgid "Default Comment"
-msgstr "Per defecte"
+msgstr "Comentari per defecte"
 
 #: app/preferences_dialog.c:1662
 msgid "Comment Used for New Images"
-msgstr ""
+msgstr "Comentari utilitzat per a les noves imatges"
 
 #: app/preferences_dialog.c:1682 app/preferences_dialog.c:1684
 msgid "Display"
@@ -4508,7 +4365,7 @@ msgstr "Transparència"
 
 #: app/preferences_dialog.c:1711
 msgid "Light Checks"
-msgstr "Comprovacions de llum"
+msgstr "Comprovacions de la llum"
 
 #: app/preferences_dialog.c:1712
 msgid "Mid-Tone Checks"
@@ -4559,7 +4416,7 @@ msgstr "Pantalla de 8-bits"
 
 #: app/preferences_dialog.c:1757
 msgid "Minimum Number of Colors:"
-msgstr ""
+msgstr "Nombre mínim de colors:"
 
 #: app/preferences_dialog.c:1760
 msgid "Install Colormap"
@@ -4579,38 +4436,37 @@ msgstr "Enorme"
 
 #: app/preferences_dialog.c:1826
 msgid "Preview Size:"
-msgstr "Mida de previsualització"
+msgstr "Mida de previsualització:"
 
 #: app/preferences_dialog.c:1839
 msgid "Nav Preview Size:"
-msgstr "Mida de previsualització Nav"
+msgstr "Mida de previsualització del Navegador:"
 
 #: app/preferences_dialog.c:1849
 msgid "Recent Documents List Size:"
-msgstr "Mida de la llista de documents recents"
+msgstr "Mida de la llista de documents recents:"
 
 #. Indicators
 #: app/preferences_dialog.c:1853
-#, fuzzy
 msgid "Toolbox"
-msgstr "/Eines/Caixa d'eines"
+msgstr "Caixa d'eines"
 
 #: app/preferences_dialog.c:1856
-#, fuzzy
 msgid "Display Brush, Pattern and Gradient Indicators"
-msgstr "Mostra els indicadors de brotxa i de patró a la barra d'eines"
+msgstr ""
+"Mostra els indicadors de brotxa, de patró i de gradient a la barra d'eines"
 
 #: app/preferences_dialog.c:1865
 msgid "Dialog Behaviour"
-msgstr ""
+msgstr "Comportament del diàleg"
 
 #: app/preferences_dialog.c:1867
 msgid "Navigation Window per Display"
-msgstr ""
+msgstr "Navegació de la finestra per pantalla"
 
 #: app/preferences_dialog.c:1876
 msgid "Info Window Follows Mouse"
-msgstr ""
+msgstr "Informació del seguiment per la finestra del ratolí"
 
 #: app/preferences_dialog.c:1887 app/preferences_dialog.c:1889
 msgid "Help System"
@@ -4625,22 +4481,20 @@ msgid "Context Sensitive Help with \"F1\""
 msgstr "Ajuda sensitiva al context amb \"F1\""
 
 #: app/preferences_dialog.c:1918
-#, fuzzy
 msgid "Help Browser"
-msgstr "Sistema d'ajuda"
+msgstr "Navegador de l'ajuda"
 
 #: app/preferences_dialog.c:1930
-#, fuzzy
 msgid "Internal"
-msgstr "Intèrval"
+msgstr "Intern"
 
 #: app/preferences_dialog.c:1931
 msgid "Netscape"
-msgstr ""
+msgstr "Netscape"
 
 #: app/preferences_dialog.c:1935
 msgid "Help Browser to Use:"
-msgstr ""
+msgstr "Ajuda del navegador a l'usuari:"
 
 #: app/preferences_dialog.c:1940 app/preferences_dialog.c:1942
 msgid "Image Windows"
@@ -4652,7 +4506,7 @@ msgstr "Aparença"
 
 #: app/preferences_dialog.c:1952
 msgid "Use \"Dot for Dot\" by default"
-msgstr ""
+msgstr "Useu \"Dot for Dot\" per defecte"
 
 #: app/preferences_dialog.c:1961
 msgid "Resize Window on Zoom"
@@ -4668,7 +4522,7 @@ msgstr "Mostrar la barra d'estat"
 
 #: app/preferences_dialog.c:2003
 msgid "Marching Ants Speed:"
-msgstr "Velocitat de formiga"
+msgstr "Velocitat de formiga:"
 
 #. Set the currently used string as "Custom"
 #: app/preferences_dialog.c:2011
@@ -4686,11 +4540,11 @@ msgstr "Mostrar el percentatge del zoom"
 
 #: app/preferences_dialog.c:2027
 msgid "Show zoom ratio"
-msgstr "Mostrar la proporció del zoom"
+msgstr "Mostrar la ràtio del zoom"
 
 #: app/preferences_dialog.c:2032
 msgid "Show reversed zoom ratio"
-msgstr "Mostrar la proporció inversa del zoom"
+msgstr "Mostrar la ràtio inversa del zoom"
 
 #: app/preferences_dialog.c:2043
 msgid "Image Title Format:"
@@ -4702,9 +4556,8 @@ msgid "Pointer Movement Feedback"
 msgstr "Traça del moviment del punter"
 
 #: app/preferences_dialog.c:2050
-#, fuzzy
 msgid "Perfect-but-Slow Pointer Tracking"
-msgstr "Seguiment perfecte però lent del punter"
+msgstr "Seguiment perfecte, però lent, del punter"
 
 #: app/preferences_dialog.c:2059
 msgid "Disable Cursor Updating"
@@ -4741,14 +4594,12 @@ msgid "Use Global Paint Options"
 msgstr "Usa les opcions globals de pintat"
 
 #: app/preferences_dialog.c:2115
-#, fuzzy
 msgid "Finding Contiguous Regions"
-msgstr "Selecciona les regions contínues"
+msgstr "Cerca les regions contígües"
 
 #: app/preferences_dialog.c:2134
-#, fuzzy
 msgid "Default Threshold:"
-msgstr "Llindar:"
+msgstr "Llindar per defecte:"
 
 #: app/preferences_dialog.c:2143 app/preferences_dialog.c:2145
 msgid "Environment"
@@ -4764,11 +4615,11 @@ msgstr "Utilització conservadora de la memòria"
 
 #: app/preferences_dialog.c:2183
 msgid "Levels of Undo:"
-msgstr "Nivells de desfer"
+msgstr "Nivells de desfer:"
 
 #: app/preferences_dialog.c:2195 app/user_install.c:1108
 msgid "Tile Cache Size:"
-msgstr "Mida de la memòria cau en mosaic"
+msgstr "Mida de la memòria cau en mosaic:"
 
 #: app/preferences_dialog.c:2206
 msgid "Number of Processors to Use:"
@@ -4779,17 +4630,16 @@ msgid "Scaling"
 msgstr "Escalat"
 
 #: app/preferences_dialog.c:2228
-#, fuzzy
 msgid "Nearest Neighbor (Fast)"
-msgstr "Veí mes proper"
+msgstr "Veí mes proper (Ràpid)"
 
 #: app/preferences_dialog.c:2232
 msgid "Cubic (Slow)"
-msgstr ""
+msgstr "Cúbic (lent)"
 
 #: app/preferences_dialog.c:2237
 msgid "Interpolation Type:"
-msgstr ""
+msgstr "Tipus d'interpolació:"
 
 #: app/preferences_dialog.c:2240
 msgid "File Saving"
@@ -4805,17 +4655,15 @@ msgstr "Mai"
 
 #: app/preferences_dialog.c:2262
 msgid "Try to Write a Thumbnail File:"
-msgstr "Proveu d'escriure un arxiu amb miniatura:"
+msgstr "Prova d'escriure un arxiu amb miniatura:"
 
 #: app/preferences_dialog.c:2269
-#, fuzzy
 msgid "Only when Modified"
-msgstr "Només quan sigui modificat"
+msgstr "Només quan s'hagi modificat"
 
 #: app/preferences_dialog.c:2274
-#, fuzzy
 msgid "\"File > Save\" Saves the Image:"
-msgstr "'Arxiu > Desa' desa la imatge:"
+msgstr "\"Fitxer > Desa\" Desa la imatge:"
 
 #: app/preferences_dialog.c:2280
 msgid "Session Management"
@@ -4834,9 +4682,8 @@ msgid "Save Window Positions on Exit"
 msgstr "Desa les posicions de les finestres en sortir"
 
 #: app/preferences_dialog.c:2306
-#, fuzzy
 msgid "Clear Saved Window Positions Now"
-msgstr "Esborra les posicions de finestra desades"
+msgstr "Esborra ara les posicions de finestra desades"
 
 #: app/preferences_dialog.c:2314
 msgid "Always Try to Restore Session"
@@ -4865,7 +4712,7 @@ msgstr "(Actualment %d x %d ppp)"
 
 #: app/preferences_dialog.c:2408 app/user_install.c:1246
 msgid "Calibrate"
-msgstr ""
+msgstr "Calibració"
 
 #: app/preferences_dialog.c:2418
 msgid "From windowing system"
@@ -4970,12 +4817,12 @@ msgstr "Base de dades processal"
 #: app/procedural_db.c:137 app/procedural_db.c:149
 #, c-format
 msgid "PDB calling error %s not found"
-msgstr "PDB l'error anomenat %s no s'ha trobat"
+msgstr "L'error %s en la base de dades processal no s'ha trobat"
 
 #: app/procedural_db.c:167
 #, c-format
 msgid "PDB calling error %s"
-msgstr "PDB error anomenat %s"
+msgstr "Error en base de dades processal%s"
 
 #: app/procedural_db.c:243
 #, c-format
@@ -5009,11 +4856,11 @@ msgstr "Edita els atributs del Qmask"
 #. The opacity scale
 #: app/qmask.c:298
 msgid "Mask Opacity:"
-msgstr "Opacitat de la màscara"
+msgstr "Opacitat de la màscara:"
 
 #: app/rect_select.c:200
 msgid "Selection: ADD"
-msgstr "Selecció: ADD"
+msgstr "Selecció: AFEGIR"
 
 #: app/rect_select.c:203
 msgid "Selection: SUBTRACT"
@@ -5031,88 +4878,87 @@ msgstr "Selecció: REEMPLAÇAR"
 msgid "Selection: "
 msgstr "Selecció: "
 
-#: app/resize.c:155
+#: app/resize.c:157
 msgid "Scale Layer"
 msgstr "Escala de la capa"
 
-#: app/resize.c:157 app/resize.c:182 app/tool_options.c:796
+#: app/resize.c:159 app/resize.c:184 app/tool_options.c:796
 msgid "Size"
 msgstr "Mida"
 
-#: app/resize.c:161
-#, fuzzy
-msgid "Scale Image"
-msgstr "Desar la imatge"
-
 #: app/resize.c:163
+msgid "Scale Image"
+msgstr "Escala la imatge"
+
+#: app/resize.c:165
 msgid "Pixel Dimensions"
 msgstr "Dimensions del píxel"
 
-#: app/resize.c:173
+#: app/resize.c:175
 msgid "Set Layer Boundary Size"
-msgstr ""
+msgstr "Paràmetres del tamany frontera de la capa"
 
-#: app/resize.c:178
+#: app/resize.c:180
 msgid "Set Canvas Size"
-msgstr ""
+msgstr "Paràmetres del tamany de l'oli"
 
 #. the original width & height labels
-#: app/resize.c:247 app/scale_tool.c:77
+#: app/resize.c:253 app/scale_tool.c:77
 msgid "Original Width:"
 msgstr "Amplada original:"
 
 #. the new size labels
-#: app/resize.c:272 app/resize.c:503
+#: app/resize.c:278 app/resize.c:509
 msgid "New Width:"
 msgstr "Nova amplada:"
 
 #. the scale ratio labels
-#: app/resize.c:337
+#: app/resize.c:343
 msgid "Ratio X:"
 msgstr "Ràtio X:"
 
-#: app/resize.c:433
+#: app/resize.c:439
 msgid "X:"
 msgstr "X:"
 
-#: app/resize.c:489
+#: app/resize.c:495
 msgid "Print Size & Display Unit"
 msgstr "Imprimeix la mida i mostra la unitat"
 
-#: app/resize.c:1236
+#: app/resize.c:1279
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr ""
 "Error en l'escala: tant l'alçada com l'amplada han de ser més grans de zero."
 
-#: app/resize.c:1317
+#: app/resize.c:1360
 msgid "Layer Too Small"
-msgstr ""
+msgstr "Capa massa petita"
 
-#: app/resize.c:1321
+#: app/resize.c:1364
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
 "Is this what you want?"
 msgstr ""
+"El tamany de capa escollida farà\n"
+"encongir també algunes capes\n"
+"completament. És això el que voleu?"
 
 #: app/resolution_calibrate.c:103
-#, fuzzy
 msgid "Calibrate Monitor Resolution"
-msgstr "Recupera la resolució del monitor"
+msgstr "Calibra la resolució del monitor"
 
 #: app/resolution_calibrate.c:216
 msgid "Measure the rulers and enter their lengths below."
-msgstr ""
+msgstr "Mesura els regles i entra'n la llargada a continuació."
 
 #: app/resolution_calibrate.c:236
-#, fuzzy
 msgid "Horizontal:"
-msgstr "Horitzontal"
+msgstr "Horitzontal:"
 
 #: app/resolution_calibrate.c:241
-#, fuzzy
 msgid "Vertical:"
-msgstr "Vertical"
+msgstr "Vertical:"
 
 #: app/rotate_tool.c:83
 msgid "Rotation Information"
@@ -5172,14 +5018,14 @@ msgid "Use Dynamic Text"
 msgstr "Utilitza text dinàmic"
 
 #: app/text_tool.c:609
-#, fuzzy, c-format
+#, c-format
 msgid "Font '%s' not found."
-msgstr "No es troba el tipus de lletra '%s'. %s"
+msgstr "No s'ha trobat el tipus de lletra '%s'."
 
 #: app/text_tool.c:628
 #, c-format
 msgid "Font '%s' not found.%s"
-msgstr "No es troba el tipus de lletra '%s'. %s"
+msgstr "No es troba el tipus de lletra '%s'.%s"
 
 #: app/text_tool.c:631
 msgid ""
@@ -5204,23 +5050,20 @@ msgid "Threshold does not operate on indexed drawables."
 msgstr "El llindar no funciona en dibuixos indexats."
 
 #: app/threshold.c:293
-#, fuzzy
 msgid "Threshold Range:"
-msgstr "Límits del llindar: "
+msgstr "Abast del llindar:"
 
 #: app/tips_dialog.c:72
 msgid "gimp_tips.txt"
 msgstr "gimp_tips.txt"
 
 #: app/tips_dialog.c:84
-#, fuzzy
 msgid "GIMP Tip of the Day"
-msgstr "GIMP Consell del dia"
+msgstr "Consell del dia del GIMP"
 
 #: app/tips_dialog.c:145
-#, fuzzy
 msgid "Show tip next time GIMP starts"
-msgstr "Mostra un consell la propera vegada"
+msgstr "Mostra un consell la propera vegada del GIMP"
 
 #: app/tips_dialog.c:175
 msgid "Previous Tip"
@@ -5228,7 +5071,7 @@ msgstr "Consell anterior"
 
 #: app/tips_dialog.c:183
 msgid "Next Tip"
-msgstr "Consell següent "
+msgstr "Consell següent"
 
 #: app/tips_dialog.c:285
 #, fuzzy
@@ -5238,36 +5081,31 @@ msgid ""
 "the tips subdirectory of the GIMP data directory.\n"
 "Please check your installation."
 msgstr ""
-"El fitxer on hi ha els consells del vostre GIMP s'ha perdut!\n"
-"Ha d'haver-hi un fitxer anomenat gimp_tips.txt en el directori\n"
-"de dades GIMP. Si us plau, comproveu la vostra instal·lació."
+"Sembla que s'ha perdut el fitxer on hi ha els consells del vostre GIMP!\n"
+"Haurieu de tenir un fitxer anomenat gimp_tips.txt en el directori\n"
+"de dades GIMP. Si us plau, comproveu la instal·lació."
 
 #: app/tool_options.c:121
 msgid "This tool has no options."
 msgstr "Aquesta eina no té opcions."
 
 #: app/tool_options.c:145
-#, fuzzy
 msgid "Rectangular Selection"
-msgstr "Opcions de selecció del rectangle"
+msgstr "Selecció rectangular"
 
 #: app/tool_options.c:147
-#, fuzzy
 msgid "Elliptical Selection"
-msgstr "Opcions de selecció d'el·lipsis"
+msgstr "Selecció el·líptica"
 
 #: app/tool_options.c:149
-#, fuzzy
 msgid "Free-Hand Selection"
-msgstr "Opcions de selecció del free-hand"
+msgstr "Selecció lliure"
 
 #: app/tool_options.c:151
-#, fuzzy
 msgid "Fuzzy Selection"
 msgstr "Selecció difusa"
 
 #: app/tool_options.c:153
-#, fuzzy
 msgid "Bezier Selection"
 msgstr "Selecció Bezier"
 
@@ -5276,18 +5114,16 @@ msgid "Intelligent Scissors"
 msgstr "Tisores intel·ligents"
 
 #: app/tool_options.c:157
-#, fuzzy
 msgid "By-Color Selection"
-msgstr "Amb la selecció de color"
+msgstr "Selecció per color"
 
 #: app/tool_options.c:190
 msgid "Feather"
 msgstr "Ploma"
 
 #: app/tool_options.c:311
-#, fuzzy
 msgid "Fixed Size / Aspect Ratio"
-msgstr "Mida fixada / ràtio d'aspecte"
+msgstr "Mida fixa / Ràtio d'aspecte"
 
 #: app/tool_options.c:377
 msgid "Unit:"
@@ -5298,9 +5134,8 @@ msgid "Bucket Fill"
 msgstr "Omple amb el cubell"
 
 #: app/tool_options.c:471
-#, fuzzy
 msgid "Blend Tool"
-msgstr "Mescla: "
+msgstr "Eina de mescla"
 
 #: app/tool_options.c:473 app/tools.c:652
 msgid "Pencil"
@@ -5308,7 +5143,7 @@ msgstr "Llapis"
 
 #: app/tool_options.c:475 app/tools.c:680
 msgid "Paintbrush"
-msgstr "Pincell"
+msgstr "Pinzell"
 
 #: app/tool_options.c:477 app/tools.c:708
 msgid "Eraser"
@@ -5319,34 +5154,30 @@ msgid "Airbrush"
 msgstr "Esprai"
 
 #: app/tool_options.c:481
-#, fuzzy
 msgid "Clone Tool"
-msgstr "Opcions de l'eina de clonatge"
+msgstr "Eina de clonatge"
 
 #: app/tool_options.c:483
-#, fuzzy
 msgid "Convolver"
-msgstr "Convolve"
+msgstr "Convolver"
 
 #: app/tool_options.c:485
 msgid "Ink Tool"
-msgstr ""
+msgstr "Eina de tintar"
 
 #: app/tool_options.c:487 app/tools.c:848 app/tools.c:854
 msgid "Dodge or Burn"
 msgstr "Esvaeix o crema"
 
 #: app/tool_options.c:489
-#, fuzzy
 msgid "Smudge Tool"
-msgstr "Taca"
+msgstr "Eina d'esborrallar"
 
 #: app/tool_options.c:604
 msgid "Incremental"
-msgstr "Augment"
+msgstr "Incremental"
 
 #: app/tool_options.c:710
-#, fuzzy
 msgid "Pressure Sensitivity"
 msgstr "Sensibilitat de la pressió"
 
@@ -5355,23 +5186,20 @@ msgid "Opacity"
 msgstr "Opacitat"
 
 #: app/tool_options.c:752
-#, fuzzy
 msgid "Hardness"
-msgstr "Duresa:"
+msgstr "Duresa"
 
 #: app/tool_options.c:772
-#, fuzzy
 msgid "Rate"
-msgstr "Velocitat:"
+msgstr "Velocitat"
 
 #: app/tools.c:148
 msgid "Rect Select"
 msgstr "Selecciona rectangle"
 
 #: app/tools.c:149
-#, fuzzy
 msgid "/Tools/Select Tools/Rect Select"
-msgstr "/Eines/Selecciona rectangle"
+msgstr "/Eines/Eines de selecció/Selecció de rectangle"
 
 #: app/tools.c:154
 msgid "Select rectangular regions"
@@ -5379,12 +5207,11 @@ msgstr "Selecciona regions rectangulars"
 
 #: app/tools.c:176
 msgid "Ellipse Select"
-msgstr "Selecciona el·lipsi"
+msgstr "Selecciona l'el·lipse"
 
 #: app/tools.c:177
-#, fuzzy
 msgid "/Tools/Select Tools/Ellipse Select"
-msgstr "/Eines/Selecciona el·lipsi"
+msgstr "/Eines/Eines de selecció/Selecció d'el·lipse"
 
 #: app/tools.c:182
 msgid "Select elliptical regions"
@@ -5395,9 +5222,8 @@ msgid "Free Select"
 msgstr "Selecció lliure"
 
 #: app/tools.c:205
-#, fuzzy
 msgid "/Tools/Select Tools/Free Select"
-msgstr "/Eines/Selecció lliure"
+msgstr "/Eines/Eines de selecció/Selecció lliure"
 
 #: app/tools.c:210
 msgid "Select hand-drawn regions"
@@ -5408,9 +5234,8 @@ msgid "Fuzzy Select"
 msgstr "Selecció difusa"
 
 #: app/tools.c:233
-#, fuzzy
 msgid "/Tools/Select Tools/Fuzzy Select"
-msgstr "/Eines/Selecció difusa"
+msgstr "/Eines/Eines de selecció/Selecció difusa"
 
 #: app/tools.c:238
 msgid "Select contiguous regions"
@@ -5421,18 +5246,16 @@ msgid "Bezier Select"
 msgstr "Selecció Bezier"
 
 #: app/tools.c:261
-#, fuzzy
 msgid "/Tools/Select Tools/Bezier Select"
-msgstr "/Eines/Selecció Bezier"
+msgstr "/Eines/Eines de selecció/Selecció Bezier"
 
 #: app/tools.c:266
 msgid "Select regions using Bezier curves"
 msgstr "Selecciona les regions utilitzant corbes Bezier"
 
 #: app/tools.c:289
-#, fuzzy
 msgid "/Tools/Select Tools/Intelligent Scissors"
-msgstr "/Eines/Tisores intel·ligents"
+msgstr "/Eines/Eines de selecció/Tisores intel·ligents"
 
 #: app/tools.c:294
 msgid "Select shapes from image"
@@ -5443,9 +5266,8 @@ msgid "Move"
 msgstr "Mou"
 
 #: app/tools.c:317
-#, fuzzy
 msgid "/Tools/Transform Tools/Move"
-msgstr "/Eines/Transforma"
+msgstr "/Eines/Eines de transformació/Mou"
 
 #: app/tools.c:322
 msgid "Move layers & selections"
@@ -5456,18 +5278,16 @@ msgid "Magnify"
 msgstr "Augmenta"
 
 #: app/tools.c:345
-#, fuzzy
 msgid "/Tools/Transform Tools/Magnify"
-msgstr "/Eines/Transforma"
+msgstr "/Eines/Eines de transformació/Augmenta"
 
 #: app/tools.c:350
 msgid "Zoom in & out"
 msgstr "Amplia i redueix el zoom"
 
 #: app/tools.c:373
-#, fuzzy
 msgid "/Tools/Transform Tools/Crop & Resize"
-msgstr "/Eines/Escapça i canvia la mida"
+msgstr "/Eines/Eines de transformació/Escapça i canvia la mida"
 
 #: app/tools.c:378
 msgid "Crop or resize the image"
@@ -5477,25 +5297,23 @@ msgstr "Escapça o canvia la mida de la imatge"
 #: app/tools.c:400 app/tools.c:428 app/tools.c:456 app/tools.c:484
 #: app/transform_core.c:252 app/transform_tool.c:211
 msgid "Transform"
-msgstr "transforma"
+msgstr "Transforma"
 
 #: app/tools.c:401
-#, fuzzy
 msgid "/Tools/Transform Tools/Transform"
-msgstr "/Eines/Transforma"
+msgstr "/Eines/Eines de transformació/Transforma"
 
 #: app/tools.c:406 app/tools.c:434 app/tools.c:462 app/tools.c:490
 msgid "Rotation, scaling, shearing, perspective."
-msgstr ""
+msgstr "Rotació, escalatge, retall i perspectiva"
 
 #: app/tools.c:512
 msgid "Flip"
 msgstr "Volteja"
 
 #: app/tools.c:513
-#, fuzzy
 msgid "/Tools/Transform Tools/Flip"
-msgstr "/Eines/Transforma"
+msgstr "/Eines/Eines de transformació/Volteja"
 
 #: app/tools.c:518
 msgid "Flip the layer or selection"
@@ -5522,9 +5340,8 @@ msgid "Pick colors from the image"
 msgstr "Tria els colors de la imatge"
 
 #: app/tools.c:597
-#, fuzzy
 msgid "/Tools/Paint Tools/Bucket Fill"
-msgstr "/Eines/Omple amb el cubell"
+msgstr "/Eines/Eines de pintura/Omple amb el cubell"
 
 #: app/tools.c:602
 msgid "Fill with a color or pattern"
@@ -5535,45 +5352,40 @@ msgid "Blend"
 msgstr "Mescla"
 
 #: app/tools.c:625
-#, fuzzy
 msgid "/Tools/Paint Tools/Blend"
-msgstr "/Eines/Mescla"
+msgstr "/Eines/Eines de pintura/Mescla"
 
 #: app/tools.c:630
 msgid "Fill with a color gradient"
 msgstr "Omple amb un gradient de color"
 
 #: app/tools.c:653
-#, fuzzy
 msgid "/Tools/Paint Tools/Pencil"
-msgstr "/Eines/Llapis"
+msgstr "/Eines/Eines de pintura/Llapis"
 
 #: app/tools.c:658
 msgid "Draw sharp pencil strokes"
 msgstr "Dibuixa amb pinzells de traç afinat"
 
 #: app/tools.c:681
-#, fuzzy
 msgid "/Tools/Paint Tools/Paintbrush"
-msgstr "/Eines/Pincell"
+msgstr "/Eines/Eines de pintura/Pinzell"
 
 #: app/tools.c:686
 msgid "Paint fuzzy brush strokes"
-msgstr "Pinta amb pinzells de traç borrós"
+msgstr "Pinta amb pinzells de traç difús"
 
 #: app/tools.c:709
-#, fuzzy
 msgid "/Tools/Paint Tools/Eraser"
-msgstr "/Eines/Goma d'esborrar"
+msgstr "/Eines/Eines de pintura/Goma d'esborrar"
 
 #: app/tools.c:714
 msgid "Erase to background or transparency"
-msgstr "Esborra fins el fons o la transparència"
+msgstr "Esborra fins al fons o la transparència"
 
 #: app/tools.c:737
-#, fuzzy
 msgid "/Tools/Paint Tools/Airbrush"
-msgstr "/Eines/Pincell"
+msgstr "/Eines/Eines de pintura/Vaporitzador"
 
 #: app/tools.c:742
 msgid "Airbrush with variable pressure"
@@ -5584,9 +5396,8 @@ msgid "Clone"
 msgstr "Clona"
 
 #: app/tools.c:765
-#, fuzzy
 msgid "/Tools/Paint Tools/Clone"
-msgstr "/Eines/Clona"
+msgstr "/Eines/Eines de pintura/Clona"
 
 #: app/tools.c:770
 msgid "Paint using patterns or image regions"
@@ -5597,9 +5408,8 @@ msgid "Convolve"
 msgstr "Convolve"
 
 #: app/tools.c:793
-#, fuzzy
 msgid "/Tools/Paint Tools/Convolve"
-msgstr "/Eines/Convolve"
+msgstr "/Eines/Eines de pintura/Convolve"
 
 #: app/tools.c:798
 msgid "Blur or sharpen"
@@ -5610,27 +5420,24 @@ msgid "Ink"
 msgstr "Tinta"
 
 #: app/tools.c:821
-#, fuzzy
 msgid "/Tools/Paint Tools/Ink"
-msgstr "/Eines/Pincell"
+msgstr "/Eines/Eines de pintura/Tinta"
 
 #: app/tools.c:826
 msgid "Draw in ink"
 msgstr "Dibuixa amb tinta"
 
 #: app/tools.c:849
-#, fuzzy
 msgid "/Tools/Paint Tools/DodgeBurn"
-msgstr "/Eines/EsvairCremar"
+msgstr "/Eines/Eines de intura/EsvairCremar"
 
 #: app/tools.c:876 app/tools.c:882
 msgid "Smudge"
 msgstr "Taca"
 
 #: app/tools.c:877
-#, fuzzy
 msgid "/Tools/Paint Tools/Smudge"
-msgstr "/Eines/Taca"
+msgstr "/Eines/Eines de pintura/Taca"
 
 #: app/tools.c:934
 msgid "Measure"
@@ -5650,88 +5457,75 @@ msgstr "Selecció per color"
 
 #: app/tools.c:994
 msgid "/Select/By Color..."
-msgstr "/Selecciona/Per color"
+msgstr "/Selecciona/Per color..."
 
 #: app/tools.c:999
-#, fuzzy
 msgid "Select regions by color"
-msgstr "Selecciona les regions utilitzant corbes Bezier"
+msgstr "Selecciona les regions per color"
 
 #: app/tools.c:1022
-#, fuzzy
 msgid "/Image/Colors/Color Balance..."
-msgstr "/Imatge/Colors/Equilibri de Colors"
+msgstr "/Imatge/Colors/Balanç de colors..."
 
 #: app/tools.c:1027
-#, fuzzy
 msgid "Adjust color balance"
-msgstr "Balanç de color"
+msgstr "Ajusta el balanç de color"
 
 #: app/tools.c:1050
-#, fuzzy
 msgid "/Image/Colors/Brightness-Contrast..."
-msgstr "/Imatge/Colors/Lluminositat-Contrast"
+msgstr "/Imatge/Colors/Brillantor-Contrast..."
 
 #: app/tools.c:1055
-#, fuzzy
 msgid "Adjust brightness and contrast"
-msgstr "Brillantor-Contrast"
+msgstr "Ajusta la brillantor i el contrast"
 
 #: app/tools.c:1078
-#, fuzzy
 msgid "/Image/Colors/Hue-Saturation..."
-msgstr "/Imatge/Colors/Saturació Hue"
+msgstr "/Imatge/Colors/Saturació de color..."
 
 #: app/tools.c:1083
 msgid "Adjust hue and saturation"
-msgstr ""
+msgstr "Ajusta el buit i la saturació"
 
 #: app/tools.c:1106
-#, fuzzy
 msgid "/Image/Colors/Posterize..."
-msgstr "/Imatge/Colors/Convertir a cartell"
+msgstr "/Imatge/Colors/Convertir a cartell..."
 
 #: app/tools.c:1111
 msgid "Reduce image to a fixed numer of colors"
-msgstr ""
+msgstr "Redueix la imatge a un nombre fix de colors"
 
 #: app/tools.c:1134
-#, fuzzy
 msgid "/Image/Colors/Threshold..."
-msgstr "/Imatge/Colors/Llindar"
+msgstr "/Imatge/Colors/Llindar..."
 
 #: app/tools.c:1139
 msgid "Reduce image to two colors using a threshold"
-msgstr ""
+msgstr "Redueix la imatge a dos colors fent servir un llindar"
 
 #: app/tools.c:1162
-#, fuzzy
 msgid "/Image/Colors/Curves..."
-msgstr "/Imatge/Colors/Corbes"
+msgstr "/Imatge/Colors/Corbes..."
 
 #: app/tools.c:1167
 msgid "Adjust color curves"
-msgstr ""
+msgstr "Ajunta les corbes de color"
 
 #: app/tools.c:1190
-#, fuzzy
 msgid "/Image/Colors/Levels..."
-msgstr "/Imatge/Colors/Nivells"
+msgstr "/Imatge/Colors/Nivells..."
 
 #: app/tools.c:1195
-#, fuzzy
 msgid "Adjust color levels"
-msgstr "Nivells automàtics"
+msgstr "Ajusta els nivells de color"
 
 #: app/tools.c:1218
-#, fuzzy
 msgid "/Image/Histogram..."
-msgstr "/Imatge/Histograma"
+msgstr "/Imatge/Histograma..."
 
 #: app/tools.c:1223
-#, fuzzy
 msgid "View image histogram"
-msgstr "/Imatge/Histograma"
+msgstr "Visualitza l'histograma de la imatge"
 
 #: app/transform_core.c:249
 msgid "Rotate"
@@ -5758,9 +5552,8 @@ msgid "Transformation"
 msgstr "Transformació"
 
 #: app/transform_tool.c:190
-#, fuzzy
 msgid "Transform Tool"
-msgstr "transforma"
+msgstr "Eina de transformació"
 
 #: app/transform_tool.c:213
 msgid "Rotation"
@@ -5776,9 +5569,8 @@ msgstr "Perspectiva"
 
 #. the second radio frame and box, for transform direction
 #: app/transform_tool.c:234
-#, fuzzy
 msgid "Tool Paradigm"
-msgstr "Paradigma d'eina"
+msgstr "Eina Paradigma"
 
 #: app/transform_tool.c:236
 msgid "Traditional"
@@ -5790,14 +5582,12 @@ msgstr "Correctiu"
 
 #. the show grid toggle button
 #: app/transform_tool.c:257
-#, fuzzy
 msgid "Show Grid"
 msgstr "Mostra la quadrícula"
 
 #: app/transform_tool.c:268
-#, fuzzy
 msgid "Density:"
-msgstr "Intensitat:"
+msgstr "Densitat:"
 
 #. the smoothing toggle button
 #: app/transform_tool.c:295
@@ -5806,242 +5596,206 @@ msgstr "S'està suavitzant"
 
 #. the showpath toggle button
 #: app/transform_tool.c:304
-#, fuzzy
 msgid "Show Path"
 msgstr "Mostra el camí"
 
 #. the clip resulting image toggle button
 #: app/transform_tool.c:315
-#, fuzzy
 msgid "Clip Result"
-msgstr "Clip resultant"
+msgstr "Posa el resultat al porta-retalls"
 
 #: app/undo.c:2871
-#, fuzzy, c-format
+#, c-format
 msgid "Can't undo %s"
-msgstr "No es pot obrir %s; %s"
+msgstr "No es pot desfer %s"
 
 #: app/undo.c:2902
 msgid "<<invalid>>"
-msgstr ""
+msgstr "<<invalid>>"
 
 #: app/undo.c:2903
-#, fuzzy
 msgid "image"
-msgstr "Imatge"
+msgstr "imatge"
 
 #: app/undo.c:2904
-#, fuzzy
 msgid "image mod"
-msgstr "Màscara d'imatge"
+msgstr "mod de la imatge"
 
 #: app/undo.c:2905
-#, fuzzy
 msgid "mask"
-msgstr "màscara %s"
+msgstr "màscara"
 
 #: app/undo.c:2906
-#, fuzzy
 msgid "layer move"
-msgstr "Nom de la capa:"
+msgstr "moviment de la capa"
 
 #. ok
 #: app/undo.c:2907
-#, fuzzy
 msgid "transform"
 msgstr "transforma"
 
 #: app/undo.c:2908
-#, fuzzy
 msgid "paint"
-msgstr "punt"
+msgstr "pinta"
 
 #: app/undo.c:2909
-#, fuzzy
 msgid "new layer"
-msgstr "Capa nova"
+msgstr "capa nova"
 
 #: app/undo.c:2910
-#, fuzzy
 msgid "delete layer"
-msgstr "Suprimeix la capa"
+msgstr "suprimeix la capa"
 
 #: app/undo.c:2911
-#, fuzzy
 msgid "layer mod"
-msgstr "Nom de la capa:"
+msgstr "mod de la capa"
 
 #: app/undo.c:2912
-#, fuzzy
 msgid "add layer mask"
-msgstr "/Afegeix una màscara de capa"
+msgstr "afegeix una màscara de capa"
 
 #. ok
 #: app/undo.c:2913
-#, fuzzy
 msgid "delete layer mask"
-msgstr "Aplico la màscara de capa?"
+msgstr "suprimeix la màscara de capa"
 
 #. ok
 #: app/undo.c:2914
-#, fuzzy
 msgid "rename layer"
-msgstr "Canvia el nom del camí"
+msgstr "canvia el nom de la capa"
 
 #: app/undo.c:2915
-#, fuzzy
 msgid "layer reposition"
-msgstr "Opcions de combinació de capes"
+msgstr "reposició de la capa"
 
 #. ok
 #: app/undo.c:2916
-#, fuzzy
 msgid "new channel"
-msgstr "Nou canal"
+msgstr "canal nou"
 
 #: app/undo.c:2917
-#, fuzzy
 msgid "delete channel"
-msgstr "Suprimeix el canal"
+msgstr "suprimeix el canal"
 
 #: app/undo.c:2918
-#, fuzzy
 msgid "channel mod"
-msgstr "Nom del canal:"
+msgstr "mod del canal"
 
 #: app/undo.c:2919
 msgid "FS to layer"
-msgstr ""
+msgstr "FS a la capa"
 
 #. ok
 #: app/undo.c:2920
-#, fuzzy
 msgid "gimage"
-msgstr "Imatge"
+msgstr "gimatge"
 
 #: app/undo.c:2921
 msgid "FS rigor"
-msgstr ""
+msgstr "FS rigor"
 
 #: app/undo.c:2922
 msgid "FS relax"
-msgstr ""
+msgstr "FS relax"
 
 #: app/undo.c:2923
 msgid "guide"
-msgstr ""
+msgstr "guia"
 
 #: app/undo.c:2924
-#, fuzzy
 msgid "text"
-msgstr "Text"
+msgstr "text"
 
 #: app/undo.c:2925
-#, fuzzy
 msgid "float selection"
-msgstr "Seleccions movibles"
+msgstr "selecció flotant"
 
 #: app/undo.c:2926
-#, fuzzy
 msgid "paste"
-msgstr "Enganxar"
+msgstr "enganxa"
 
 #: app/undo.c:2927
 msgid "cut"
-msgstr ""
+msgstr "talla"
 
 #: app/undo.c:2928
-#, fuzzy
 msgid "transform core"
-msgstr "transforma"
+msgstr "transforma el nucli"
 
 #: app/undo.c:2929
 msgid "paint core"
-msgstr ""
+msgstr "pinta el nucli"
 
 #: app/undo.c:2930
-#, fuzzy
 msgid "floating layer"
-msgstr "Capa flotant"
+msgstr "capa flotant"
 
 #. unused!
 #: app/undo.c:2931
-#, fuzzy
 msgid "linked layer"
-msgstr "Capa flotant"
+msgstr "capa enllaçada"
 
 #: app/undo.c:2932
-#, fuzzy
 msgid "apply layer mask"
-msgstr "Aplico la màscara de capa?"
+msgstr "aplica la màscara de la capa"
 
 #. ok
 #: app/undo.c:2933
-#, fuzzy
 msgid "layer merge"
-msgstr "Nom de la capa:"
+msgstr "fusió de la capa"
 
 #: app/undo.c:2934
-#, fuzzy
 msgid "FS anchor"
-msgstr "Factor"
+msgstr "FS àncora"
 
 #: app/undo.c:2935
-#, fuzzy
 msgid "gimage mod"
-msgstr "Màscara d'imatge"
+msgstr "mod de la gimatge"
 
 #: app/undo.c:2936
-#, fuzzy
 msgid "crop"
-msgstr "copia"
+msgstr "retalla"
 
 #: app/undo.c:2937
-#, fuzzy
 msgid "layer scale"
-msgstr "escala de grisos"
+msgstr "escala de la capa"
 
 #: app/undo.c:2938
-#, fuzzy
 msgid "layer resize"
-msgstr "Canvia la mida de la imatge"
+msgstr "canvia la mida de la capa"
 
 #: app/undo.c:2939
 msgid "quickmask"
-msgstr ""
+msgstr "màscara ràpida"
 
 #: app/undo.c:2940
-#, fuzzy
 msgid "attach parasite"
-msgstr "adjuntar paràsit a la imatge"
+msgstr "adjuntar paràsits"
 
 #: app/undo.c:2941
 msgid "remove parasite"
-msgstr ""
+msgstr "suprimeix el paràsit"
 
 #: app/undo.c:2942
-#, fuzzy
 msgid "resolution change"
-msgstr "Resolució X:"
+msgstr "canvi de resolució"
 
 #: app/undo.c:2943
-#, fuzzy
 msgid "image scale"
-msgstr "Escala de la imatge"
+msgstr "escala de la imatge"
 
 #: app/undo.c:2944
-#, fuzzy
 msgid "image resize"
-msgstr "Canvia la mida de la imatge"
+msgstr "canvia la mida de la imatge"
 
 #: app/undo.c:2945
 msgid "misc"
-msgstr ""
+msgstr "miscel·lània"
 
 #: app/undo_history.c:427 app/undo_history.c:751
-#, fuzzy, c-format
+#, c-format
 msgid "Undo History: %s"
-msgstr "%s: desfés l'historial"
+msgstr "Desfés l'historial: %s"
 
 #: app/undo_history.c:483
 msgid "[ base image ]"
@@ -6060,8 +5814,7 @@ msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
 msgstr ""
-"S'ha omès la instal·lació per a l'usuari perquè s'ha trobat el commutador "
-"'--no interface\n"
+"S'ha omès la instal·lació perquè s'ha trobat el commutador '--no interface\n"
 
 #: app/user_install.c:103
 msgid ""
@@ -6071,7 +5824,6 @@ msgstr ""
 "'--nointerface'\n"
 
 #: app/user_install.c:152
-#, fuzzy
 msgid ""
 "The gimprc is used to store personal preferences\n"
 "that affect GIMP's default behavior.\n"
@@ -6079,19 +5831,21 @@ msgid ""
 "patterns, plug-ins and modules can also configured\n"
 "here."
 msgstr ""
-"\t\tEl gimprc s'utilitza per emmagatzemar les preferències personals\n"
-"\t\tcom comportaments per defecte del GIMP i les tecles ràpides plug-in.\n"
-"\t\tEls camins per buscar pinzells, paletes, patrons de\n"
-"\t\tgradients, plug-ins i mòduls també es configuren aquí.\n"
+"El gimprc s'utilitza per emmagatzemar les preferències\n"
+"personals que poden afectar al comportament per defecte\n"
+"del GIMP.\n"
+"Els camins per buscar pinzells, paletes, gradients,\n"
+"patrons, extensions i mòduls també es poden configurar aquí."
 
 #: app/user_install.c:160
 msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
 msgstr ""
+"El GIMP fa servir un fitxet gtkrc addicional perque\n"
+"el pogueu configurar perquè es vegi diferent d'altresaplicacions GTK."
 
 #: app/user_install.c:165
-#, fuzzy
 msgid ""
 "Plug-ins and extensions are external programs run\n"
 "by the GIMP which provide additional functionality.\n"
@@ -6100,12 +5854,12 @@ msgid ""
 "is cached in this file.  This file is intended to\n"
 "be GIMP-readable only, and should not be edited."
 msgstr ""
-"\t\tEls pug-ins i les extensions són programes externs executats per\n"
-"\t\tGIMP que proporcionen una funcionalitat addicional.\n"
-"\t\tAquests programes es busquen en executar el programa i\n"
-"\t\tla informació sobre la seva funcionalitat i temps mod\n"
-"\t\ts'emmagatzema en aquest fitxer. Se suposa que aquest fitxer només\n"
-"\t\tpot llegir-se des de GIMP, i no s'hauria d'editar.\n"
+"Les extensions són programes externs executats pel\n"
+"GIMP que proporcionen una funcionalitat addicional.\n"
+"Aquests programes es cerquen en executar el programa i\n"
+"la informació sobre la seva funcionalitat i temps mod\n"
+"s'emmagatzema en aquest fitxer. Se suposa que aquest fitxer\n"
+"només es pot llegir des del GIMP i no s'ha d'editar."
 
 #: app/user_install.c:174
 msgid ""
@@ -6116,6 +5870,12 @@ msgid ""
 "keys from within The GIMP.  Deleting this file will\n"
 "restore the default shortcuts."
 msgstr ""
+"Les dreceres del teclat es poden redefinir en el GIMP.\n"
+"El menurc és un buidatge de la vostra configuració; es pot\n"
+"recuperar per a la sessió següent. Podeu editar aquest\n"
+"fitxer, si voleu, però és molt més fàcil definir \n"
+"el teclat des del GIMP. Si suprimiu aquest fitxer\n"
+"es restauraran les dreceres per defecte."
 
 #: app/user_install.c:183
 msgid ""
@@ -6123,9 +5883,11 @@ msgid ""
 "open the last time you quit The GIMP.  You can configure\n"
 "The GIMP to reopen these dialogs at the saved position."
 msgstr ""
+"La sessionrc es fa servir per emmagatzemar les finestres\n"
+"de diàleg obertes l'últim cop que vau sortir del GIMP. Podeu configurar\n"
+"el GIMP per obrir-les de nou en la posició desada."
 
 #: app/user_install.c:189
-#, fuzzy
 msgid ""
 "The unitrc is used to store your user units database.\n"
 "You can define additional units and use them just\n"
@@ -6133,16 +5895,13 @@ msgid ""
 "points and picas.  This file is overwritten each time\n"
 "you quit the GIMP."
 msgstr ""
-"\t\tEl unitrc s'utilitza per emmagatzemar la vostra base de dades d'unitats "
-"d'usuari.\n"
-"\t\tPodeu definir unitats addicionals i utilitzar-les tal com\n"
-"\t\tutilitzeu les polzades, mil·límetres, punts i\n"
-"\t\tpiques que ja venen predefinits. Aquest fitxer se sobrescriu cada "
-"vegada\n"
-"\t\tque sortiu de GIMP.\n"
+"L'unitrc s'utilitza per emmagatzemar la vostra base\n"
+"de dades de les unitats. Podeu definir unitats addicionals\n"
+"i utilitzar-les tal com utilitzeu les polzades, mil·límetres,\n"
+"punts i piques que ja venen predefinits. Aquest fitxer\n"
+"se sobrescriu cada vegada que sortiu del GIMP."
 
 #: app/user_install.c:197
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined brushes.  The default gimprc file\n"
@@ -6150,26 +5909,25 @@ msgid ""
 "wide GIMP brushes installation when searching for\n"
 "brushes."
 msgstr ""
-"\t\tEs tracta d'un subdirectori que pot utilitzar-se per emmagatzemar\n"
-"\t\tpinzells definits per l'usuari. El fitxer gimprc per defecte\n"
-"\t\tcomprova aquest subdirectori a més dels pinzells instal·lats al\n"
-"\t\tgimp quan es busquen pinzells.\n"
+"Es tracta d'un subdirectori que pot utilitzar-se per\n"
+"emmagatzemar pinzells definits per l'usuari. El fitxer\n"
+"gimprc per defecte comprova aquest subdirectori a més\n"
+"dels pinzells instal·lats al gimp quan es busquen\n"
+"pinzells."
 
 #: app/user_install.c:205
-#, fuzzy
 msgid ""
 "This is a subdirectory which is used to store brushes\n"
 "that are created with the brush editor.  The default\n"
 "gimprc file checks this subdirectory when searching\n"
 "for generated brushes."
 msgstr ""
-"\t\tÉs un subdirectori utilitzat per emmagatzemar pinzells\n"
-"\t\tcreats amb l'editor de pinzells. El fitxer per defecte\n"
-"\t\tgimprc comprova aquest subdirectori quan es busquen\n"
-"\t\tpinzells gnerats.\n"
+"Es tracta d'un subdirectori utilitzat per emmagatzemar pinzells\n"
+"creats amb l'editor de pinzells. El fitxer gimprc per defecte\n"
+"comprova aquest subdirectori quan es busquen\n"
+"pinzells generats."
 
 #: app/user_install.c:212
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gradients.  The default gimprc file\n"
@@ -6177,13 +5935,13 @@ msgid ""
 "wide GIMP gradients installation when searching\n"
 "for gradients."
 msgstr ""
-"\t\tÉs un subdirectori que pot utilitzar-se per emmagatzemar\n"
-"\t\tgradients definits per l'usuari. El fitxer per defecte gimprc\n"
-"\t\tcomprova aquest subdirectori a més dels gradients instal·lats al\n"
-"\t\tgimp quan es busquen gradients.\n"
+"Es tracta d'un subdirectori que es pot utilitzar per\n"
+"emmagatzemar gradients definits per l'usuari. El\n"
+"fitxer gimprc per defecte comprova aquest subdirectori\n"
+"a més dels gradients instal·lats al gimp quan es\n"
+"busquen gradients."
 
 #: app/user_install.c:220
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined palettes.  The default gimprc file\n"
@@ -6194,13 +5952,13 @@ msgid ""
 "palettes during GIMP execution to persist across\n"
 "sessions."
 msgstr ""
-"\t\tÉs un sudirectori que pot utilitzar-se per emmagatzemar\n"
-"\t\tpaletes definides per l'usuari. El fitxer per defecte gimprc\n"
-"\t\tcomprova només aquest subdirectori (no tota la instal·lació\n"
-"\t\tdel sistema) quan es busquen paletes. Durant\n"
-"\t\tla instal·lació, les paletes del sistema es copien aquí.\n"
-"\t\tAixò és fa per fer possibles les modificacions quan\n"
-"\t\ts'executa GIMP, per tal que es mantinguin entre sessions.\n"
+"Es tracta d'un sudirectori que es pot utilitzar per emmagatzemar\n"
+"paletes definides per l'usuari. El fitxer gimprc per defecte\n"
+"comprova només aquest subdirectori (no tota la instal·lació\n"
+"del sistema) quan busca paletes. Durant la instal·lació,\n"
+"les paletes del sistema es copien aquí.\n"
+"Això es fa per permetre que les modificacions fetes en les\n"
+"paletes durant l'execució del GIMP es mantinguin entre sessions."
 
 #: app/user_install.c:231
 msgid ""
@@ -6210,13 +5968,12 @@ msgid ""
 "wide GIMP patterns installation when searching for\n"
 "patterns."
 msgstr ""
-"És un subdirectori que pot utilitzar-se per emmagatzemar\n"
-"patrons definits per l'usuari. El fitxer per defecte gimprc\n"
+"Es tracta d'un subdirectori que es pot utilitzar per emmagatzemar\n"
+"patrons definits per l'usuari. El fitxer gimprc per defecte\n"
 "comprova aquest subdirectori a més dels patrons de la instal·lació\n"
 "del sistema gimp quan es busquen patrons."
 
 #: app/user_install.c:239
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user created, temporary, or otherwise non-system-\n"
@@ -6224,14 +5981,13 @@ msgid ""
 "this subdirectory in addition to the systemwide\n"
 "GIMP plug-in directories when searching for plug-ins."
 msgstr ""
-"\t\tÉs un subdirectori que pot utilitzar-se per emmagatzemar\n"
-"\t\tplugins creats per l'usuari, temporals o no suportats\n"
-"\t\tpel sistema. El fitxer per defecte gimprc comprova\n"
-"\t\taquest subdirectori a més dels directoris de plugins del\n"
-"\t\tsistema GIMP quan es busquen plugins.\n"
+"Es tracta d'un subdirectori que es pot utilitzar per emmagatzemar\n"
+"extensions creades per l'usuari, temporals o en general no suportades\n"
+"pel sistema. El fitxer gimprc per defecte comprova\n"
+"aquest subdirectori a més dels directoris d'extensions\n"
+"del sistema GIMP quan es busquen extensions."
 
 #: app/user_install.c:247
-#, fuzzy
 msgid ""
 "This subdirectory can be used to store user created,\n"
 "temporary, or otherwise non-system-supported DLL\n"
@@ -6239,27 +5995,27 @@ msgid ""
 "in addition to the system-wide GIMP module directory\n"
 "when searching for modules to load when initializing."
 msgstr ""
-"\t\tÉs un subdirectori que pot utilitzar-se per emmagatzemar\n"
-"\t\tmòduls DLL creats per l'usuari, temporals o no suportats\n"
-"\t\tpel sistema. El fitxer per defecte gimprc comprova\n"
-"\t\taquest subdirectori a més del directori de mòduls del sistema\n"
-"\t\tGIMP quan es busquen mòduls que s'han de carregar en la inicialització.\n"
+"Es tracta d'un subdirectori que es pot utilitzar per emmagatzemar\n"
+"mòduls DLL creats per l'usuari, temporals o en general no suportats\n"
+"pel sistema. El fitxer gimprc per defecte comprova\n"
+"aquest subdirectori a més del directori de mòduls del sistema\n"
+"GIMP quan es busquen mòduls que s'han de carregar en la\n"
+"inicialització."
 
 #: app/user_install.c:255
-#, fuzzy
 msgid ""
 "This subdirectory is used by the GIMP to store user\n"
 "created and installed scripts.  The default gimprc file\n"
 "checks this subdirectory in addition to the systemwide\n"
 "GIMP scripts subdirectory when searching for scripts"
 msgstr ""
-"\t\tEl GIMP utilitza aquest subdirectori per emmagatzemar \n"
-"\t\tscripts creats i instal·lats per l'usuari. El fitxer per defecte\n"
-"\t\tgimprc comprova aquest subdirectori a més del subdirectori\n"
-"\t\tde scripts per defecte del sistema quan es busquen scripts.\n"
+"El GIMP utilitza aquest subdirectori per emmagatzemar \n"
+"scripts creats i instal·lats per l'usuari. El fitxer gimprc per\n"
+"defecte comprova aquest subdirectori a més del\n"
+"subdirectori de scripts per defecte del sistema quan es\n"
+"busquen scripts."
 
 #: app/user_install.c:262
-#, fuzzy
 msgid ""
 "This subdirectory is used by the GIMP to temporarily\n"
 "store undo buffers to reduce memory usage.  If GIMP is\n"
@@ -6267,27 +6023,30 @@ msgid ""
 "of the form: gimp<#>.<#>.  These files are useless across\n"
 "GIMP sessions and can be destroyed with impunity."
 msgstr ""
-"\t\tEl GIMP utilitza aquest subdirectori per emmagatzemar temporalment\n"
-"\t\tinformació en memòria intermèdia per limitar l'ús de memòria. Si el "
-"GIMP\n"
-"\t\ts'interromp de forma anòmala, poden quedar fitxers en aquest directori\n"
-"\t\tde la forma següent: gimp<#>.<#>. Són fitxers inútils per a les\n"
-"\t\tsessions GIMP i poden eliminar-se tranquil·lament.\n"
+"El GIMP utilitza aquest subdirectori per emmagatzemar\n"
+"temporalment informació en memòria intermèdia per limitar\n"
+"l'ús de memòria. Si el GIMP s'interromp de manera anòmala,\n"
+"poden quedar fitxers en aquest directori amb la forma\n"
+"següent: gimp<#>.<#>. Són fitxers inútils per a les\n"
+"sessions GIMP i es poden eliminar tranquil·lament."
 
 #: app/user_install.c:270
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Curves tool."
 msgstr ""
+"Aquest subdirectory és utilitzat per emmagatzemar fitxers\n"
+"per a l'eina Curves."
 
 #: app/user_install.c:275
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
 msgstr ""
+"Aquest subdirectory és utilitzat per emmagatzemar fitxers\n"
+"per a l'eina Levels."
 
 #: app/user_install.c:280
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined fractals to be used by the FractalExplorer\n"
@@ -6295,14 +6054,13 @@ msgid ""
 "in addition to the systemwide GIMP FractalExplorer\n"
 "installation when searching for fractals."
 msgstr ""
-"\t\tÉsun subdirectori que pot utilitzar-se per emmagatzemar\n"
-"\t\tfractals definits per l'usuari que utilitza el plug-in FractalExplorer.\n"
-"\t\tEl fitxer per defecte gimprc comprova aquest subdirectori\n"
-"\t\ta més de la instal·lació FractalExplorer del gimp quan es\n"
-"\t\tbusquen fractals.\n"
+"És un subdirectori que es pot utilitzar per emmagatzemar\n"
+"fractals definits per l'usuari per utilitzar amb l'extensió\n"
+"FractalExplorer. El fitxer gimprc per defecte comprova\n"
+"aquest subdirectori a més de la instal·lació de\n"
+"FractalExplorer del GIMP quan es busquen fractals."
 
 #: app/user_install.c:288
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined figures to be used by the GFig plug-in.\n"
@@ -6310,14 +6068,13 @@ msgid ""
 "addition to the systemwide GIMP GFig installation\n"
 "when searching for gfig figures."
 msgstr ""
-"\t\tÉs un subdirectori que pot utilizar-se per emmagatzemar\n"
-"\t\tfigures definides per l'usuari que utilitza  el plug-in gfig.\n"
-"\t\tEl fitxer per defete gimprc comprova aquest subdirectori a\n"
-"\t\tmés de la instal·lació gfig del gimp quan es\n"
-"\t\tbusquen figures gfig.\n"
+"És un subdirectori que es pot utilizar per emmagatzemar\n"
+"figures definides per l'usuari per utilitzar amb l'extensió\n"
+"GFig. El fitxer gimprc per defecte comprova aquest\n"
+"subdirectori a més de la instal·lació GFig del GIMP quan\n"
+"es busquen figures gfig."
 
 #: app/user_install.c:296
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gflares to be used by the GFlare plug-in.\n"
@@ -6325,14 +6082,13 @@ msgid ""
 "addition to the systemwide GIMP GFlares installation\n"
 "when searching for gflares."
 msgstr ""
-"\t\tÉs un subdirectori que pot utilitzar-se per emmagatzemar\n"
-"\t\tgflares definits per l'usuari que utilitza el plug-in gflare.\n"
-"\t\tEl fitxer per defecte gimprc comprova aquest subdirectori\n"
-"\t\ta més de la instal·lació gflares del gimp quan es\n"
-"\t\tbusquen gflares.\n"
+"És un subdirectori que es pot utilitzar per emmagatzemar\n"
+"gflares definits per l'usuari que utilitza l'extensió\n"
+"GFlare. El fitxer gimprc per defecte comprova aquest\n"
+"subdirectori a més de la instal·lació del GFlares del GIMP\n"
+"quan es busquen gflares."
 
 #: app/user_install.c:304
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined data to be used by the Gimpressionist\n"
@@ -6340,22 +6096,23 @@ msgid ""
 "in addition to the systemwide GIMP Gimpressionist\n"
 "installation when searching for data."
 msgstr ""
-"\t\tÉs un subdirectori que pot utilitzar-se per emmagatzemar\n"
-"\t\tgflares definits per l'usuari que utilitza el plug-in gflare.\n"
-"\t\tEl fitxer per defecte gimprc comprova aquest subdirectori\n"
-"\t\ta més de la instal·lació gflares del gimp quan es\n"
-"\t\tbusquen gflares.\n"
+"És un subdirectori que pot utilitzar-se per emmagatzemar\n"
+"dades definides per l'usuari que utilitza l'extensió\n"
+"Gimpressionist. El fitxer gimprc per defecte comprova\n"
+"aquest subdirectori a més de la instal·lació del Gimpressionist\n"
+"del GIMP quan es busquen dades."
 
 #: app/user_install.c:361
 msgid ""
 "Please wait while your personal\n"
 "GIMP directory is being created..."
 msgstr ""
+"Espereu mentre es crea el vostre\n"
+"directori personal GIMP..."
 
 #: app/user_install.c:542
-#, fuzzy
 msgid "GIMP User Installation"
-msgstr "Instal·lació del GIMP"
+msgstr "Instal·lació d'usuari del GIMP"
 
 #: app/user_install.c:547
 msgid "Continue"
@@ -6364,18 +6121,20 @@ msgstr "Continua"
 #. this is a fontset, e.g. multiple comma-separated font definitions
 #: app/user_install.c:588
 msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
-msgstr ""
+msgstr "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 
 #: app/user_install.c:685
-#, fuzzy
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
-msgstr "Instal·lació del GIMP"
+msgstr ""
+"Benvingut a\n"
+"la instal·lació d'usuari del GIMP"
 
 #: app/user_install.c:687
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr ""
+"Feu clic a \"Continua\" per entrar a la instal·lació d'usuari del GIMP."
 
 #: app/user_install.c:691
 msgid ""
@@ -6383,64 +6142,63 @@ msgid ""
 "Copyright (C) 1995-2000\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
+"GIMP - Programa de retoc d'imatges GNU\n"
+"Copyright (C) 1995-2000\n"
+"Spencer Kimball, Peter Mattis i l'equip de desenvolupament del GIMP."
 
 #: app/user_install.c:700
-#, fuzzy
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
 "the Free Software Foundation; either version 2 of the License, or\n"
 "(at your option) any later version."
 msgstr ""
-"Aquest programa és de lliure distribució; podeu distibuir-lo i/o "
-"modificar-lo\n"
-"en els termes de la llicència pública general GNU publicats per la\n"
-"Free Software Foundation; bé a la versió 2 de la llicència, o\n"
-"(si és el vostre cas) a qualsevol versió posterior.\n"
+"Aquest programa és de lliure distribució; el podeu distribuir i/o\n"
+" modificar sota els termes de la llicència pública general de GNU publicada\n"
+"per la Free Software Foundation, ja sigui la versió 2 de la Llicència o\n"
+"(com desitgeu) qualsevol versió posterior."
 
 #: app/user_install.c:705
-#, fuzzy
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
 "See the GNU General Public License for more details."
 msgstr ""
-"Aquest programa es distribueix confiant que serà útil,\n"
+"Aquest programa es distribueix esperant que serà útil,\n"
 "però SENSE CAP GARANTIA; ni tan sols garanties implícites de\n"
-"COMERCIALITZACIÓ o UTILITZACIÓ PER A UN PROPÒSIT PARTICULAR.\n"
-"Veieu la llicència pública general GNU per tenir més detalls.\n"
+"COMERCIALITZACIÓ o ADEQUACIÓ A UN ÚS DETERMINAT.\n"
+"Consulteu la llicència pública general de GNU per a més informació."
 
 #: app/user_install.c:710
-#, fuzzy
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, USA."
 msgstr ""
-"Heu de tenir una còpia de la llicència pública general GNU\n"
+"Heu d'haver rebut una còpia de la llicència pública general de GNU\n"
 "amb aquest programa; si no és així, demaneu-la a la Free Software\n"
 "Foundation, Inc. , 59 Temple Place - Suite 330, Boston,\n"
-"MA 02111-1307, USA.\n"
+"MA 02111-1307, EUA."
 
 #: app/user_install.c:736
-#, fuzzy
 msgid "Personal GIMP Directory"
-msgstr ""
-"Instal·lació GIMP personalitzada\n"
-"\n"
+msgstr "Directori personal del GIMP"
 
 #: app/user_install.c:737
 msgid "Click \"Continue\" to create your personal GIMP directory."
 msgstr ""
+"Feu clic a \"Continua\" per crear el vostre directori personal del GIMP."
 
 #: app/user_install.c:756
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "For a proper GIMP installation, a subdirectory named\n"
 "%s needs to be created."
-msgstr "Per a una instal·lació correcta del GIMP, un subdirectori anomenat\n"
+msgstr ""
+"Per instal·lar el GIMP correctament, cal crear\n"
+"un subdirectori anomenat %s."
 
 #: app/user_install.c:762
 msgid ""
@@ -6448,100 +6206,100 @@ msgid ""
 "Click on one of the files or subdirectories in the tree\n"
 "to get more information about the selected item."
 msgstr ""
+"Aquest subdirectori contindrà un nombre important de fitxers.\n"
+"Feu clic en un d'aquests fitxers o subdirectoris de\n"
+"l'arbre per aconseguir més informació sobre l'ítem seleccionat."
 
 #: app/user_install.c:846
-#, fuzzy
 msgid "User Installation Log"
-msgstr ""
-"Registre d'instal·lació de l'usuari\n"
-"\n"
+msgstr "Registre d'instal·lació de l'usuari"
 
 #: app/user_install.c:852
 msgid "GIMP Performance Tuning"
-msgstr ""
+msgstr "Ajust del rendiment del GIMP"
 
 #: app/user_install.c:853
 msgid "Click \"Continue\" to accept the settings above."
-msgstr ""
+msgstr "Feu clic a \"Continua\" per acceptar els paràmetres anteriors."
 
 #: app/user_install.c:856
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr ""
+"Perquè el GIMP rendeixi de manera òptima, potser cal ajustar alguns "
+"paràmetres."
 
 #: app/user_install.c:865
-#, fuzzy
 msgid "Monitor Resolution"
-msgstr "Recupera la resolució del monitor"
+msgstr "Resolució del monitor"
 
 #: app/user_install.c:866
 msgid "Click \"Continue\" to start The GIMP."
-msgstr ""
+msgstr "Feu clic a \"Continua\" per iniciar el GIMP."
 
 #: app/user_install.c:869
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
 msgstr ""
+"Per visualitzar les imatges en mida natural, el GIMP ha de saber\n"
+"quina és la resolució del monitor."
 
 #: app/user_install.c:878
-#, fuzzy
 msgid "Aborting Installation..."
-msgstr "Instal·lació del GIMP"
+msgstr "S'està avortant la instal·lació..."
 
 #: app/user_install.c:948
-#, fuzzy
 msgid "does not exist.  Cannot install."
-msgstr " no existeix. No es pot completar la instal·lació.\n"
+msgstr "no existeix. No es pot realitzar la instal·lació."
 
 #: app/user_install.c:960
-#, fuzzy
 msgid "has invalid permissions.  Cannot install."
-msgstr ""
-" té permisos que no són vàlids.\n"
-"No es pot completar la instal·lació."
+msgstr "té permisos que no són vàlids. No es pot realitzar la instal·lació."
 
 #: app/user_install.c:1000
-#, fuzzy
 msgid ""
 "Did you notice any error messages in the console window?\n"
 "If not, installation was successful!\n"
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
-"Heu observat algun missatge d'error\n"
-"a la finestra de la consola? En cas negatiu, la instal·lació\n"
-"s'ha completat correctament! Si no és així, abandoneu i investigueu\n"
-"les possibles raons...\n"
+"Heu observat algun missatge d'error a la finestra de\n"
+"la consola? En cas negatiu, la instal·lació s'ha\n"
+"completat correctament! Si no és així, sortiu del programa\n"
+"i intenteu esbrinar les possibles causes..."
 
 #: app/user_install.c:1056
-#, fuzzy
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
-"Heu observat algun missatge d'error\n"
-"a la finestra de la consola? En cas negatiu, la instal·lació\n"
-"s'ha completat correctament! Si no és així, abandoneu i investigueu\n"
-"les possibles raons...\n"
+"Heu observat algun missatge d'error a les línies superiors?\n"
+"En cas negatiu, la instal·lació s'ha\n"
+"completat correctament! Si no és així, sortiu del programa\n"
+"i busqueu les causes possibles..."
 
 #: app/user_install.c:1068
 msgid "Click \"Continue\" to complete GIMP installation."
-msgstr ""
+msgstr "Feu clic a \"Continua\" per completar la instal·lació del GIMP."
 
 #: app/user_install.c:1073
-#, fuzzy
 msgid "Installation failed.  Contact system administrator."
 msgstr ""
-"\n"
-"La instal·lació no s'ha completat. Poseu-vos en contacte amb\n"
-"l'administrador del sistema.\n"
+"La instal·lació ha fallat. Poseu-vos en contacte amb l'administrador del "
+"sistema."
 
 #: app/user_install.c:1094
+#, fuzzy
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
+"El GIMP utilitza una quantitat limitada de memòria per emmagatzemar les "
+"dades\n"
+"de la imatge, és la tant anomenada \"Tile Cache\". Haurieu d'ajustar\n"
+"aquesta mida per ajustar-la amb la memòria. Tingueu en compte la quantitat \n"
+"de memòria emprada pels altres processos d'execució."
 
 #: app/user_install.c:1119
 msgid ""
@@ -6550,42 +6308,52 @@ msgid ""
 "with enough free space (several hundred MB). On a UNIX system, you\n"
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
+"Totes les imatges i les dades per desfer que no caben en la memòria "
+"s'escriuen\n"
+"en un fitxer d'intercanvi. Caldria posar-lo en un fitxer de sistema local\n"
+"amb prou memòria lliure (alguns centenars de MB). En sistemes UNIX, potser\n"
+"voldreu fer servir el directori temporal del sistema (\"/tmp\" o "
+"\"/var/tmp\")."
 
 #: app/user_install.c:1133
-#, fuzzy
 msgid "Swap Directory:"
 msgstr "Directori d'intercanvi:"
 
 #: app/user_install.c:1168
+#, fuzzy
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
 msgstr ""
+"El GIMP pot obtenir aquesta informació del teu servidor X.\n"
+"Tantmateix, la majoria de servidors X no retornen valors útils."
 
 #: app/user_install.c:1175
 #, fuzzy, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
-msgstr "(Actualment %d x %d ppp)"
+msgstr "Aconsegueix la resolució del servidor X (actualment, %d x %d ppp)"
 
 #: app/user_install.c:1189
 msgid "Alternatively, you can set the monitor resolution manually."
-msgstr ""
+msgstr "Altrament, podeu configurar la resolució del monitor manualment."
 
 #: app/user_install.c:1202
-#, fuzzy
 msgid "Monitor Resolution X:"
-msgstr "Recupera la resolució del monitor"
+msgstr "Resolució del monitor X:"
 
 #: app/user_install.c:1239
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
 msgstr ""
+"També podeu fer clic al botó \"Calibració\" per obrir una\n"
+"finestra que us permeti determinar la resolució del vostre\n"
+"monitor interactivament."
 
 #: app/xcf.c:382
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "Error XCF: Trobada %d una versió del fitxer XCF no suportada"
+msgstr "Error XCF: s'ha trobat %d una versió del fitxer XCF no suportada"
 
 #: app/xcf.c:1814
 msgid ""
@@ -6593,27 +6361,27 @@ msgid ""
 "did not save indexed colormaps correctly.\n"
 "Substituting grayscale map."
 msgstr ""
-"Advertència del XCF: versió 0 del format de fitxer XCF\n"
-"no s'han desat correctament els mapes de color indexats.\n"
-"S'està substituint el mapa d'escala de grisos."
+"Advertència del XCF: la versió 0 del format de\n"
+"fitxer XCF no ha desat correctament els\n"
+"mapes de color indexats. S'està substituint\n"
+"el mapa d'escala de grisos."
 
 #: modules/cdisplay_gamma.c:96
-#, fuzzy
 msgid "Gamma color display filter"
-msgstr "Filtres de visualització de colors"
+msgstr "Filtre de visualització de color gamma"
 
 #: modules/cdisplay_gamma.c:325
 msgid "Gamma"
-msgstr ""
+msgstr "Gamma"
 
 #: modules/cdisplay_gamma.c:344
 msgid "Gamma:"
-msgstr ""
+msgstr "Gamma:"
 
 #: modules/cdisplay_highcontrast.c:96
 #, fuzzy
 msgid "High Contrast color display filter"
-msgstr "Filtres de visualització de colors"
+msgstr "Filtre de visualització de color gamma"
 
 #: modules/cdisplay_highcontrast.c:318
 #, fuzzy
@@ -6627,45 +6395,28 @@ msgstr "Contrast"
 
 #: modules/colorsel_gtk.c:53
 msgid "GTK color selector as a pluggable color selector"
-msgstr ""
+msgstr "Selector de color GTK com a selector de color addicional"
 
 #: modules/colorsel_triangle.c:79
 msgid "Painter-style color selector as a pluggable color selector"
 msgstr ""
+"Selector de color d'estil de pintura com a selector de color addicional"
 
 #: modules/colorsel_triangle.c:148 modules/colorsel_triangle.c:150
-#, fuzzy
 msgid "Triangle"
-msgstr "Encercla amb triangles"
+msgstr "Triangle"
 
 #: modules/colorsel_water.c:76
 msgid "Watercolor style color selector as a pluggable module"
-msgstr ""
+msgstr "Selector de color d'estil d'aquarel·la com a mòdul adicional"
 
 #: modules/colorsel_water.c:97 modules/colorsel_water.c:100
-#, fuzzy
 msgid "Watercolor"
-msgstr "Color estàtic"
+msgstr "Aquarel·la"
 
 #: modules/colorsel_water.c:640
-#, fuzzy
 msgid "Color History"
-msgstr "Capturador de color"
-
-#~ msgid "Pattern load failed"
-#~ msgstr "Impossible de carregar el model"
-
-#~ msgid "attach parasite to image"
-#~ msgstr "adjuntar paràsit a la imatge"
-
-#~ msgid "detach parasite from image"
-#~ msgstr "extreure paràsit de la imatge"
-
-#~ msgid "From X Server"
-#~ msgstr "Des del servidor X"
-
-#~ msgid "/Tools/Magnify"
-#~ msgstr "/Eines/Augmenta"
+msgstr "Historial del color"
 
 #~ msgid "This file cannot be moved up."
 #~ msgstr "Aquest fitxer no es pot pujar."
@@ -6691,12 +6442,26 @@ msgstr "Capturador de color"
 #~ msgid "GTK successfully started"
 #~ msgstr "El GTK s'ha iniciat amb èxit"
 
+#~ msgid "attach parasite to image"
+#~ msgstr "adjuntar paràsit a la imatge"
+
+#~ msgid "detach parasite from image"
+#~ msgstr "extreure paràsit de la imatge"
+
+#~ msgid "Pattern load failed"
+#~ msgstr "No s'ha pogut carregar el model"
+
+#~ msgid "From X Server"
+#~ msgstr "Des del servidor X"
+
+#~ msgid "/Tools/Magnify"
+#~ msgstr "/Eines/Augmenta"
+
 #~ msgid "Version "
 #~ msgstr "Versió "
 
 #~ msgid "killing stray timer, please report to lewing@gimp.org"
-#~ msgstr ""
-#~ "Eliminant el temporitzador perdut, si us plau informeu a lewing@gimp.org"
+#~ msgstr "eliminant el temporitzador perdut, informeu lewing@gimp.org"
 
 #~ msgid "Custom from editor"
 #~ msgstr "Personalitzat des de l'editor"
@@ -6724,7 +6489,7 @@ msgstr "Capturador de color"
 #~ msgstr "En Wilber diu:\"No sé com suprimir aquest pinzell.\""
 
 #~ msgid "Fill Options"
-#~ msgstr "Opcions d'emplenat"
+#~ msgstr "Opcions d'omplenat"
 
 #~ msgid "Color Balance Options"
 #~ msgstr "Opcions del balanç de color"
@@ -6746,7 +6511,7 @@ msgstr "Capturador de color"
 #~ msgstr "S'ha cridat un drawable_fill amb un tipus d'emplenament desconegut"
 
 #~ msgid "Anti erase"
-#~ msgstr "Antieliminar"
+#~ msgstr "Inesborrable"
 
 #~ msgid "%s: fatal error: %s\n"
 #~ msgstr "%s: error fatal: %s\n"
@@ -6795,7 +6560,7 @@ msgstr "Capturador de color"
 #~ "\n"
 #~ msgstr ""
 #~ "# parasiterc del GIMP\n"
-#~ "# El fitxer es rescriurà totalment cada cop que sortiu del gimp.\n"
+#~ "# Aquest fitxer es reescriurà totalment cada cop que sortiu del GIMP.\n"
 #~ "\n"
 
 #~ msgid "transform_path(): gimprc token referenced but not defined: %s"
@@ -6814,11 +6579,11 @@ msgstr "Capturador de color"
 #~ "# Aquest fitxer conté la vostra base de dades d'unitats.\n"
 #~ "# La podeu modificar amb l'editor d'unitats. Se suposa que no\n"
 #~ "# ho fareu manualment, però -per descomptat- ho podeu fer.\n"
-#~ "# El fitxer es rescriu completament cada cop que\n"
-#~ "# sortiu del gimp.\n"
+#~ "# El fitxer es reescriu completament cada cop que\n"
+#~ "# sortiu del GIMP.\n"
 
 #~ msgid "grad_get_color_at(): Unknown gradient type %d"
-#~ msgstr "grad_get_color_at(): Degradat tipus %d desconegut "
+#~ msgstr "grad_get_color_at(): Tipus de degradat %d desconegut "
 
 #~ msgid "grad_get_color_at(): Unknown coloring mode %d"
 #~ msgstr "grad_get_color_at(): Mode d'acolorit %d desconegut"
@@ -6836,7 +6601,7 @@ msgstr "Capturador de color"
 #~ msgid ""
 #~ "ed_do_rename_gradient_callback(): oops, can't find gradient to rename"
 #~ msgstr ""
-#~ "ed_do_rename_gradient_callback(): ep!, no trobo el degradat aquè s'ha de "
+#~ "ed_do_rename_gradient_callback(): ep!, no trobo el degradat què se li ha de "
 #~ "canviar el nom"
 
 #~ msgid "Delete gradient"
@@ -6853,7 +6618,7 @@ msgstr "Capturador de color"
 #~ msgstr "control_motion(): Intent de moure la nansa falsa %d"
 
 #~ msgid "grad_load_gradient(): invalid number of segments in \"%s\""
-#~ msgstr "grad_load_gradient(): nombre de segments no vàlid a \"%s\""
+#~ msgstr "grad_load_gradient(): nombre de segments no vàlids a \"%s\""
 
 #~ msgid ""
 #~ "grad_load_gradient(): badly formatted gradient segment %d in \"%s\" --- bad "
@@ -6874,7 +6639,7 @@ msgstr "Capturador de color"
 #~ "seg_get_segment_at(): No hi ha cap segment que lligui amb la posició %0.15f"
 
 #~ msgid "Histogram Options"
-#~ msgstr "Opcions d'histograma"
+#~ msgstr "Opcions de l'histograma"
 
 #~ msgid "Hue-Saturation Options"
 #~ msgstr "Opcions de saturació de color"
@@ -6893,7 +6658,7 @@ msgstr "Capturador de color"
 #~ msgstr "Ombres de color:"
 
 #~ msgid "Shades:"
-#~ msgstr "Ombres"
+#~ msgstr "Ombres:"
 
 #~ msgid "Shades of Gray:"
 #~ msgstr "Ombres de gris:"
@@ -6905,7 +6670,7 @@ msgstr "Capturador de color"
 #~ "The GIMP - GNU Image Manipulation Program\n"
 #~ "\n"
 #~ msgstr ""
-#~ "Programa de manipulació d'imatges GIMP - GNU\n"
+#~ "GIMP - Programa de retoc d'imatges GNU\n"
 #~ "\n"
 
 #~ msgid ""
@@ -6927,10 +6692,10 @@ msgstr "Capturador de color"
 #~ msgstr "pluginrc\n"
 
 #~ msgid "brushes\n"
-#~ msgstr "brushes\n"
+#~ msgstr "pinzells\n"
 
 #~ msgid "generated_brushes\n"
-#~ msgstr "generated_brushes\n"
+#~ msgstr "pinzells_generats\n"
 
 #~ msgid "gradients\n"
 #~ msgstr "gradients\n"
@@ -6951,7 +6716,7 @@ msgstr "Capturador de color"
 #~ msgstr "patrons\n"
 
 #~ msgid "plug-ins\n"
-#~ msgstr "plug-ins\n"
+#~ msgstr "extensions\n"
 
 #~ msgid "modules\n"
 #~ msgstr "mòduls\n"
@@ -6979,10 +6744,10 @@ msgstr "Capturador de color"
 #~ "Instal·lació completa!\n"
 
 #~ msgid "layer_copy: could not allocate new layer"
-#~ msgstr "layer_copy: no he pogut assignar la capa nova"
+#~ msgstr "layer_copy: no s'ha pogut assignar una capa nova"
 
 #~ msgid "layer_from_tiles: could not allocate new layer"
-#~ msgstr "layer_from_tiles: no he pogut assignar la capa nova"
+#~ msgstr "layer_from_tiles: no s'ha pogut assignar una capa nova"
 
 #~ msgid "/Stack/Previous Layer"
 #~ msgstr "/Pila/Capa anterior"
@@ -7126,7 +6891,7 @@ msgstr "Capturador de color"
 #~ msgstr "/Filtres/---"
 
 #~ msgid "/Script-Fu/tearoff1"
-#~ msgstr "/Script-fu/tearoff1"
+#~ msgstr "/Script-Fu/tearoff1"
 
 #~ msgid "/Dialogs/tearoff1"
 #~ msgstr "/Diàlegs/tearoff1"
@@ -7190,7 +6955,7 @@ msgstr "Capturador de color"
 #~ msgstr "Informació del monitor"
 
 #~ msgid "Directories Settings"
-#~ msgstr "Paràmetres dels directoris"
+#~ msgstr "Configuració dels directoris"
 
 #~ msgid "Resize Layer"
 #~ msgstr "Canvia la mida de la capa"
@@ -7206,13 +6971,14 @@ msgstr "Capturador de color"
 #~ "\n"
 #~ msgstr ""
 #~ "# GIMP sessionrc\n"
-#~ "# Aquest arxiu agafa informació específica de la sessió (aquesta "
-#~ "informació,\n"
-#~ "# potser la necessitareu conservar entre dues sessions del gimp). No "
-#~ "haurieu\n"
-#~ "# d'editar-lo manualment, però naturalment podeu fer-ho. Aquest arxiu es\n"
-#~ "# reescriurà sencer cada vegada que sortiu del gimp. Si no es troba aquest\n"
-#~ "# arxiu, s'utilitzaran els paràmetres predeterminats.\n"
+#~ "# Aquest arxiu agafa informació específica de la sessió\n"
+#~ "# (és a dir, informació que potser voleu conservar\n"
+#~ "# entre dues sessions del GIMP). No l'haurieu d'editar\n"
+#~ "# manualment, però naturalment podeu fer-ho. Aquest arxiu\n"
+#~ "# es reescriurà sencer cada vegada que sortiu del gimp.\n"
+#~ "# Si no es troba aquest arxiu, s'utilitzaran els\n"
+#~ "# paràmetres predeterminats.\n"
+#~ "\n"
 
 #~ msgid "Cannot convert from indexed color."
 #~ msgstr "No es pot convertir des d'un color indexat"
@@ -7365,7 +7131,7 @@ msgstr "Capturador de color"
 #~ msgstr "xcf: compressió fractal no implementada"
 
 #~ msgid "xcf: uh oh! xcf rle tile saving error: %d"
-#~ msgstr "xcf: uh oh! error en desar el mosaic xcf rle: %d"
+#~ msgstr "xcf: oh oh! error en desar el mosaic xcf rle: %d"
 
 #~ msgid "unknown compression type: %d"
 #~ msgstr "tipus de compressió desconeguda: %d"
@@ -7394,7 +7160,7 @@ msgstr "Capturador de color"
 #~ msgstr "no s'han trobat suficients mosaics en el nivell"
 
 #~ msgid "xcf: uh oh! xcf rle tile loading error: %d"
-#~ msgstr "xcf: uh oh! error en carregar el mosaic xcf rle: %d"
+#~ msgstr "xcf: oh oh! error en carregar el mosaic xcf rle: %d"
 
 #~ msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
 #~ msgstr ""
@@ -7424,37 +7190,37 @@ msgstr "Capturador de color"
 #~ msgstr "Unitat "
 
 #~ msgid "can't handle layers"
-#~ msgstr "no es poden manejar les capes"
+#~ msgstr "no es poden tractar les capes"
 
 #~ msgid "Merge visible layers"
 #~ msgstr "Uneix les capes visibles"
 
 #~ msgid "can only handle layers as animation frames"
-#~ msgstr "només es poden manejar les capes com a marcs animats"
+#~ msgstr "només es poden tractar les capes com a marcs animats"
 
 #~ msgid "Save as animation"
 #~ msgstr "Desa com una animació"
 
 #~ msgid "can't handle transparency"
-#~ msgstr "no es pot manejar la transparència"
+#~ msgstr "no es pot tractar la transparència"
 
 #~ msgid "Flatten Image"
 #~ msgstr "Aplana la imatge"
 
 #~ msgid "can only handle RGB images"
-#~ msgstr "només es poden manejar les imatges RGB"
+#~ msgstr "només es poden tractar les imatges RGB"
 
 #~ msgid "Convert to RGB"
 #~ msgstr "Converteix a RGB"
 
 #~ msgid "can only handle grayscale images"
-#~ msgstr "només es poden manejar les imatges en escala de grisos"
+#~ msgstr "només es poden tractar les imatges en escala de grisos"
 
 #~ msgid "Convert to grayscale"
 #~ msgstr "Converteix a escala de grisos"
 
 #~ msgid "can only handle indexed images"
-#~ msgstr "només es poden manejar les imatges indexades"
+#~ msgstr "només es poden tractar les imatges indexades"
 
 #~ msgid ""
 #~ "Convert to indexed using default settings\n"
@@ -7465,16 +7231,16 @@ msgstr "Capturador de color"
 
 #~ msgid "can only handle RGB or grayscale images"
 #~ msgstr ""
-#~ "només es poden manejar les imatges RGB o les imatges en escala de grisos"
+#~ "només es poden tractar les imatges RGB o les imatges en escala de grisos"
 
 #~ msgid "can only handle RGB or indexed images"
-#~ msgstr "només es poden manejar les imatges RGB o les indexades"
+#~ msgstr "només es poden tractar les imatges RGB o les indexades"
 
 #~ msgid "can only handle grayscale or indexed images"
-#~ msgstr "només es pot manejar l'escala de grisos o les imatges indexades"
+#~ msgstr "només es pot tractar l'escala de grisos o les imatges indexades"
 
 #~ msgid "needs an alpha channel"
-#~ msgstr "necessita un canal alfa"
+#~ msgstr "es necessita un canal alfa"
 
 #~ msgid "Add alpha channel"
 #~ msgstr "Afegeix el canal alfa"
@@ -7489,8 +7255,7 @@ msgstr "Capturador de color"
 #~ "Your image should be exported before it can be saved for the following "
 #~ "reasons:"
 #~ msgstr ""
-#~ "S'ha d'exportar la vostra imatge abans de poder-la desar per les següents "
-#~ "raons:"
+#~ "S'ha d'exportar la imatge abans de poder-la desar per les següents raons:"
 
 #~ msgid "The export conversion won't modify your original image."
 #~ msgstr "La conversió d'exportació no modificarà la vostra imatge original."
