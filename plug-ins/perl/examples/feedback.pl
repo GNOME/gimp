@@ -1,5 +1,8 @@
 #!/usr/bin/perl -w
 
+# Revision 1.0: Released it
+#          1.1: Marc Lehman added undo capability! <pcg@goof.com>
+
 use Gimp;
 use Gimp::Fu;
 
@@ -8,7 +11,7 @@ register "feedback",
          "This plug-in simulates video feedback.  It makes for kinda a neat desktop if you're into that sort of thing",
          "Seth Burgess",
          "Seth Burgess",
-         "1.0",
+         "1.1",
          "<Image>/Filters/Misc/feedback",
          "RGB, GRAY",
          [

@@ -13,6 +13,8 @@
 # Because the way xach does it is a bit ackward, I'm switching it around a bit
 # and working from the bottom up..
 
+# Revision 1.1: Marc Lehman <pcg@goof.com> added undo capability
+
 # Here's the boring start of every script...
 
 use Gimp;
@@ -23,7 +25,7 @@ register "Xach Shadows",
          "Screen of 50% of your drawing into a dropshadowed layer.",
          "Seth Burgess",
          "Seth Burgess",
-         "1.0",
+         "1.1",
          "<Image>/Filters/Misc/Xach Shadows",
          "RGB*, GRAY*",
          [

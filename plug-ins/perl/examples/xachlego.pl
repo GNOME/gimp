@@ -23,6 +23,7 @@
 #                   causing bad things to happen with refcounts.  I hope
 #                   gimp is cleaning up this memory on its own...
 #            1.2:   Fixed buggy selection handling - oops ;)  
+#            1.3:   Added undo capability by Marc Lehman <pcg@goof.com>
 
 # Here's the boring start of every script...
 
@@ -35,7 +36,7 @@ register "Xach Blocks",
           building block creation",
          "Seth Burgess",
          "Seth Burgess",
-         "1.2",
+         "1.3",
          "<Image>/Filters/Misc/Xach Blocks",
          "*",
          [
