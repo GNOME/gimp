@@ -1,5 +1,20 @@
 2001-04-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/menus.[ch]: changed all menus_get_*() functions to return
+	the GtkItemFactory, not separate widget, and accel_group
+	pointers. Disabled automatic tearoff item creation for all
+	factories axcept the toolbox and image factory.
+
+	* app/channels_dialog.c
+	* app/file-open.c
+	* app/file-save.c
+	* app/interface.c
+	* app/layers_dialog.c
+	* app/paths_dialog.c
+	* app/toolbox.c: changed accordingly.
+
+2001-04-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/paletteP.h: removed
 

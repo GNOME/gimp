@@ -59,12 +59,14 @@
 static void   menus_create_item     (GtkItemFactory       *item_factory,
 				     GimpItemFactoryEntry *entry,
 				     gpointer              callback_data,
-				     guint                 callback_type);
+				     guint                 callback_type,
+				     gboolean              create_tearoff);
 static void   menus_create_items    (GtkItemFactory       *item_factory,
 				     guint                 n_entries,
 				     GimpItemFactoryEntry *entries,
 				     gpointer              callback_data,
-				     guint                 callback_type);
+				     guint                 callback_type,
+				     gboolean              create_tearoff);
 static void   menus_create_branches (GtkItemFactory	  *item_factory,
 				     GimpItemFactoryEntry *entry);
 static void   menus_init            (void);
@@ -879,101 +881,74 @@ static GtkItemFactory *dialogs_factory = NULL;
 
 static gboolean menus_initialized = FALSE;
 
-void
-menus_get_toolbox_menubar (GtkWidget     **menubar,
-			   GtkAccelGroup **accel_group)
+
+GtkItemFactory *
+menus_get_toolbox_factory (void)
 {
-  if (!menus_initialized)
+  if (! menus_initialized)
     menus_init ();
-  
-  if (menubar)
-    *menubar = toolbox_factory->widget;
-  if (accel_group)
-    *accel_group = toolbox_factory->accel_group;
+
+  return toolbox_factory;
 }
 
-void
-menus_get_image_menu (GtkWidget     **menu,
-		      GtkAccelGroup **accel_group)
+GtkItemFactory *
+menus_get_image_factory (void)
 {
-  if (!menus_initialized)
+  if (! menus_initialized)
     menus_init ();
 
-  if (menu)
-    *menu = image_factory->widget;
-  if (accel_group)
-    *accel_group = image_factory->accel_group;
+  return image_factory;
 }
 
-void
-menus_get_load_menu (GtkWidget     **menu,
-		     GtkAccelGroup **accel_group)
+GtkItemFactory *
+menus_get_load_factory (void)
 {
-  if (!menus_initialized)
+  if (! menus_initialized)
     menus_init ();
 
-  if (menu)
-    *menu = load_factory->widget;
-  if (accel_group)
-    *accel_group = load_factory->accel_group;
+  return load_factory;
 }
 
-void
-menus_get_save_menu (GtkWidget     **menu,
-		     GtkAccelGroup **accel_group)
+GtkItemFactory *
+menus_get_save_factory (void)
 {
-  if (!menus_initialized)
+  if (! menus_initialized)
     menus_init ();
 
-  if (menu)
-    *menu = save_factory->widget;
-  if (accel_group)
-    *accel_group = save_factory->accel_group;
+  return save_factory;
 }
 
-void
-menus_get_layers_menu (GtkWidget     **menu,
-		       GtkAccelGroup **accel_group)
+GtkItemFactory *
+menus_get_layers_factory (void)
 {
-  if (!menus_initialized)
+  if (! menus_initialized)
     menus_init ();
 
-  if (menu)
-    *menu = layers_factory->widget;
-  if (accel_group)
-    *accel_group = layers_factory->accel_group;
+  return layers_factory;
 }
 
-void
-menus_get_channels_menu (GtkWidget     **menu,
-			 GtkAccelGroup **accel_group)
+GtkItemFactory *
+menus_get_channels_factory (void)
 {
-  if (!menus_initialized)
+  if (! menus_initialized)
     menus_init ();
 
-  if (menu)
-    *menu = channels_factory->widget;
-  if (accel_group)
-    *accel_group = channels_factory->accel_group;
+  return channels_factory;
 }
 
-void
-menus_get_paths_menu (GtkWidget     **menu,
-		      GtkAccelGroup **accel_group)
+GtkItemFactory *
+menus_get_paths_factory (void)
 {
-  if (!menus_initialized)
+  if (! menus_initialized)
     menus_init ();
 
-  if (menu)
-    *menu = paths_factory->widget;
-  if (accel_group)
-    *accel_group = paths_factory->accel_group;
+  return paths_factory;
 }
 
 GtkItemFactory *
 menus_get_dialogs_factory (void)
 {
-  if (!menus_initialized)
+  if (! menus_initialized)
     menus_init ();
 
   return dialogs_factory;
@@ -1014,7 +989,7 @@ menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
 
   entry->entry.path = path;
 
-  menus_create_item (item_factory, entry, callback_data, 2);
+  menus_create_item (item_factory, entry, callback_data, 2, TRUE);
 }
 
 static void
@@ -1055,7 +1030,7 @@ menus_create_branches (GtkItemFactory       *item_factory,
 
 	  branch_entry.entry.path = tearoff_path->str;
 	  gtk_object_set_data (GTK_OBJECT (item_factory), "complete", path);
-	  menus_create_item (item_factory, &branch_entry, NULL, 2);
+	  menus_create_item (item_factory, &branch_entry, NULL, 2, TRUE);
 	  gtk_object_remove_data (GTK_OBJECT (item_factory), "complete");
 	}
 
@@ -1071,7 +1046,7 @@ menus_create_branches (GtkItemFactory       *item_factory,
 	  };
 
 	  tearoff_entry.entry.path = tearoff_path->str;
-	  menus_create_item (item_factory, &tearoff_entry, NULL, 2);
+	  menus_create_item (item_factory, &tearoff_entry, NULL, 2, TRUE);
 	}
 
       p = strchr (p + 1, '/');
@@ -1335,7 +1310,7 @@ menus_tools_create (GimpToolInfo *tool_info)
   entry.help_page             = tool_info->help_data;
   entry.description           = NULL;
 
-  menus_create_item (image_factory, &entry, (gpointer) tool_info, 2);
+  menus_create_item (image_factory, &entry, (gpointer) tool_info, 2, TRUE);
 }
 
 void
@@ -1553,7 +1528,7 @@ menus_init_mru (void)
   gchar                *paths;
   gchar                *accelerators;
   gint                  i;
-  
+
   last_opened_entries = g_new (GimpItemFactoryEntry, last_opened_size);
 
   paths = g_new (gchar, last_opened_size * MRU_MENU_ENTRY_SIZE);
@@ -1584,8 +1559,8 @@ menus_init_mru (void)
     }
 
   menus_create_items (toolbox_factory, last_opened_size,
-		      last_opened_entries, NULL, 2);
-  
+		      last_opened_entries, NULL, 2, TRUE);
+
   for (i=0; i < last_opened_size; i++)
     {
       menu_item =
@@ -1724,18 +1699,19 @@ static void
 menus_create_item (GtkItemFactory       *item_factory,
 		   GimpItemFactoryEntry *entry,
 		   gpointer              callback_data,
-		   guint                 callback_type)
+		   guint                 callback_type,
+		   gboolean              create_tearoff)
 {
   GtkWidget *menu_item;
 
   if (! (strstr (entry->entry.path, "tearoff1")))
     {
-      if (! disable_tearoff_menus)
+      if (! disable_tearoff_menus && create_tearoff)
 	{
 	  menus_create_branches (item_factory, entry);
 	}
     }
-  else if (disable_tearoff_menus)
+  else if (disable_tearoff_menus || ! create_tearoff)
     {
       return;
     }
@@ -1764,7 +1740,8 @@ menus_create_items (GtkItemFactory       *item_factory,
 		    guint                 n_entries,
 		    GimpItemFactoryEntry *entries,
 		    gpointer              callback_data,
-		    guint                 callback_type)
+		    guint                 callback_type,
+		    gboolean              create_tearoff)
 {
   gint i;
 
@@ -1773,7 +1750,8 @@ menus_create_items (GtkItemFactory       *item_factory,
       menus_create_item (item_factory,
 			 entries + i,
 			 callback_data,
-			 callback_type);
+			 callback_type,
+			 create_tearoff);
     }
 }
 
@@ -1799,7 +1777,8 @@ menus_init (void)
   menus_create_items (toolbox_factory,
 		      n_toolbox_entries,
 		      toolbox_entries,
-		      NULL, 2);
+		      NULL, 2,
+		      TRUE);
 
   menus_init_mru ();
 
@@ -1811,7 +1790,8 @@ menus_init (void)
   menus_create_items (image_factory,
 		      n_image_entries,
 		      image_entries,
-		      NULL, 2);
+		      NULL, 2,
+		      TRUE);
 
   load_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Load>", NULL);
   gtk_object_set_data (GTK_OBJECT (load_factory), "factory_path",
@@ -1821,7 +1801,8 @@ menus_init (void)
   menus_create_items (load_factory,
 		      n_load_entries,
 		      load_entries,
-		      NULL, 2);
+		      NULL, 2,
+		      FALSE);
 
   save_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Save>", NULL);
   gtk_object_set_data (GTK_OBJECT (save_factory), "factory_path",
@@ -1831,7 +1812,8 @@ menus_init (void)
   menus_create_items (save_factory,
 		      n_save_entries,
 		      save_entries,
-		      NULL, 2);
+		      NULL, 2,
+		      FALSE);
 
   layers_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Layers>", NULL);
   gtk_object_set_data (GTK_OBJECT (layers_factory), "factory_path",
@@ -1841,7 +1823,8 @@ menus_init (void)
   menus_create_items (layers_factory,
 		      n_layers_entries,
 		      layers_entries,
-		      NULL, 2);
+		      NULL, 2,
+		      FALSE);
 
   channels_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Channels>", NULL);
   gtk_object_set_data (GTK_OBJECT (channels_factory), "factory_path",
@@ -1851,7 +1834,8 @@ menus_init (void)
   menus_create_items (channels_factory,
 		      n_channels_entries,
 		      channels_entries,
-		      NULL, 2);
+		      NULL, 2,
+		      FALSE);
 
   paths_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Paths>", NULL);
   gtk_object_set_data (GTK_OBJECT (paths_factory), "factory_path",
@@ -1861,7 +1845,8 @@ menus_init (void)
   menus_create_items (paths_factory,
 		      n_paths_entries,
 		      paths_entries,
-		      NULL, 2);
+		      NULL, 2,
+		      FALSE);
 
   dialogs_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Dialogs>", NULL);
   gtk_object_set_data (GTK_OBJECT (paths_factory), "factory_path",
@@ -1871,7 +1856,8 @@ menus_init (void)
   menus_create_items (dialogs_factory,
 		      n_dialogs_entries,
 		      dialogs_entries,
-		      NULL, 2);
+		      NULL, 2,
+		      FALSE);
 
 
   for (list = GIMP_LIST (global_tool_info_list)->list;

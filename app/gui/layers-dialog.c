@@ -335,11 +335,12 @@ static guint n_trashcan_targets = (sizeof (trashcan_target_table) /
 GtkWidget *
 layers_dialog_create (void)
 {
-  GtkWidget *vbox;
-  GtkWidget *util_box;
-  GtkWidget *button_box;
-  GtkWidget *label;
-  GtkWidget *slider;
+  GtkItemFactory *layers_factory;
+  GtkWidget      *vbox;
+  GtkWidget      *util_box;
+  GtkWidget      *button_box;
+  GtkWidget      *label;
+  GtkWidget      *slider;
  
   if (layersD)
     return layersD->vbox;
@@ -371,7 +372,10 @@ layers_dialog_create (void)
   gtk_container_add (GTK_CONTAINER (layersD->vbox), vbox);
 
   /*  The layers commands pulldown menu  */
-  menus_get_layers_menu (&layersD->ops_menu, &layersD->accel_group);
+  layers_factory = menus_get_layers_factory ();
+
+  layersD->ops_menu  =   layers_factory->widget;
+  layersD->accel_group = layers_factory->accel_group;
 
   /*  The Mode option menu, and the preserve transparency  */
   layersD->mode_box = util_box = gtk_hbox_new (FALSE, 1);

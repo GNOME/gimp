@@ -327,7 +327,7 @@ file_open_dialog_create (void)
     gtk_box_pack_start (GTK_BOX (hbox), option_menu, FALSE, FALSE, 0);
     gtk_widget_show (option_menu);
 
-    menus_get_load_menu (&load_menu, NULL);
+    load_menu = menus_get_load_factory ()->widget;
     gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), load_menu);
 
     gtk_widget_show (vbox);

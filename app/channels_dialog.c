@@ -298,8 +298,9 @@ static guint n_component_targets = (sizeof (component_target_table) /
 GtkWidget *
 channels_dialog_create (void)
 {
-  GtkWidget *vbox;
-  GtkWidget *button_box;
+  GtkItemFactory *channels_factory;
+  GtkWidget      *vbox;
+  GtkWidget      *button_box;
 
   if (channelsD)
     return channelsD->vbox;
@@ -329,7 +330,10 @@ channels_dialog_create (void)
   gtk_container_add (GTK_CONTAINER (channelsD->vbox), vbox);
 
   /*  The channels commands pulldown menu  */
-  menus_get_channels_menu (&channelsD->ops_menu, &channelsD->accel_group);
+  channels_factory = menus_get_channels_factory ();
+
+  channelsD->ops_menu    = channels_factory->widget;
+  channelsD->accel_group = channels_factory->accel_group;
 
   /*  The channels listbox  */
   channelsD->scrolled_win = gtk_scrolled_window_new (NULL, NULL);

@@ -31,24 +31,14 @@ struct _GimpItemFactoryEntry
 };
 
 
-void   menus_get_toolbox_menubar        (GtkWidget            **menubar,
-					 GtkAccelGroup        **accel_group);
-void   menus_get_image_menu             (GtkWidget            **menu,
-					 GtkAccelGroup        **accel_group);
-void   menus_get_load_menu              (GtkWidget            **menu,
-					 GtkAccelGroup        **accel_group);
-void   menus_get_save_menu              (GtkWidget            **menu,
-					 GtkAccelGroup        **accel_group);
-void   menus_get_layers_menu            (GtkWidget            **menu,
-					 GtkAccelGroup        **accel_group);
-void   menus_get_channels_menu          (GtkWidget            **menu,
-					 GtkAccelGroup        **accel_group);
-void   menus_get_paths_menu             (GtkWidget            **menu,
-					 GtkAccelGroup        **accel_group);
-
-/*  finally, all above functions will return the factory
- */
-GtkItemFactory * menus_get_dialogs_factory (void);
+GtkItemFactory * menus_get_toolbox_factory  (void);
+GtkItemFactory * menus_get_image_factory    (void);
+GtkItemFactory * menus_get_load_factory     (void);
+GtkItemFactory * menus_get_save_factory     (void);
+GtkItemFactory * menus_get_layers_factory   (void);
+GtkItemFactory * menus_get_channels_factory (void);
+GtkItemFactory * menus_get_paths_factory    (void);
+GtkItemFactory * menus_get_dialogs_factory  (void);
 
 
 void   menus_create_item_from_full_path (GimpItemFactoryEntry  *entry,
@@ -57,15 +47,13 @@ void   menus_create_item_from_full_path (GimpItemFactoryEntry  *entry,
 
 void   menus_reorder_plugins            (void);
 
-void   menus_destroy                    (gchar                 *path);
-
 void   menus_quit                       (void);
 
 void   menus_set_sensitive              (gchar                 *path,
 					 gboolean               sensitive);
-
 void   menus_set_state                  (gchar                 *path,
 					 gboolean               state);
+void   menus_destroy                    (gchar                 *path);
 
 void   menus_last_opened_add            (gchar                 *filename);
 

@@ -184,7 +184,14 @@ create_display_shell (GDisplay *gdisp,
 			      gdisplay_drop_viewable, gdisp);
 
   if (! image_popup_menu)
-    menus_get_image_menu (&image_popup_menu, &image_accel_group);
+    {
+      GtkItemFactory *image_factory;
+
+      image_factory = menus_get_image_factory ();
+
+      image_popup_menu  = image_factory->widget;
+      image_accel_group = image_factory->accel_group;
+    }
 
   /*  the popup menu  */
   gdisp->popup = image_popup_menu;

@@ -396,7 +396,7 @@ file_save_dialog_create (void)
     gtk_box_pack_start (GTK_BOX (hbox), option_menu, TRUE, TRUE, 0);
     gtk_widget_show (option_menu);
 
-    menus_get_save_menu (&save_menu, NULL);
+    save_menu = menus_get_save_factory ()->widget;
     gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), save_menu);
 
     gtk_widget_show (frame);

@@ -327,12 +327,13 @@ create_tools (GtkWidget   *parent,
 void
 toolbox_create (void)
 {
-  GtkWidget     *window;
-  GtkWidget     *main_vbox;
-  GtkWidget     *wbox;
-  GtkWidget     *menubar;
-  GList         *list;
-  GtkAccelGroup *table;
+  GtkItemFactory *toolbox_factory;
+  GtkWidget      *window;
+  GtkWidget      *main_vbox;
+  GtkWidget      *wbox;
+  GtkWidget      *menubar;
+  GList          *list;
+  GtkAccelGroup  *table;
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
@@ -394,7 +395,11 @@ toolbox_create (void)
     gimp_help_disable_tooltips ();
 
   /*  Build the menu bar with menus  */
-  menus_get_toolbox_menubar (&menubar, &table);
+  toolbox_factory = menus_get_toolbox_factory ();
+
+  menubar = toolbox_factory->widget;
+  table   = toolbox_factory->accel_group;
+
   gtk_box_pack_start (GTK_BOX (main_vbox), menubar, FALSE, TRUE, 0);
   gtk_widget_show (menubar);
 

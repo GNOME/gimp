@@ -292,10 +292,11 @@ paths_dialog_set_default_op (void)
 GtkWidget *
 paths_dialog_create (void)
 {
-  GtkWidget *vbox;
-  GtkWidget *paths_list;
-  GtkWidget *scrolled_win;  
-  GtkWidget *button_box;  
+  GtkItemFactory *paths_factory;
+  GtkWidget      *vbox;
+  GtkWidget      *paths_list;
+  GtkWidget      *scrolled_win;  
+  GtkWidget      *button_box;  
 
   if (paths_dialog)
     return paths_dialog->vbox;
@@ -369,8 +370,10 @@ paths_dialog_create (void)
   gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, FALSE, 2);
   gtk_widget_show (button_box);
 
-  menus_get_paths_menu (&paths_dialog->ops_menu,
-			&paths_dialog->accel_group);
+  paths_factory = menus_get_paths_factory ();
+
+  paths_dialog->ops_menu    = paths_factory->widget;
+  paths_dialog->accel_group = paths_factory->accel_group;;
 
   /*  Set up signals for map/unmap for the accelerators  */
   gtk_signal_connect (GTK_OBJECT (vbox), "map",
