@@ -48,6 +48,7 @@ enum
 
 
 static void   gimp_controller_class_init   (GimpControllerClass *klass);
+static void   gimp_controller_finalize     (GObject             *object);
 static void   gimp_controller_set_property (GObject             *object,
                                             guint                property_id,
                                             const GValue        *value,
@@ -114,6 +115,7 @@ gimp_controller_class_init (GimpControllerClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  object_class->finalize     = gimp_controller_finalize;
   object_class->set_property = gimp_controller_set_property;
   object_class->get_property = gimp_controller_get_property;
 
@@ -146,6 +148,20 @@ gimp_controller_class_init (GimpControllerClass *klass)
   klass->get_n_events   = NULL;
   klass->get_event_name = NULL;
   klass->event          = NULL;
+}
+
+static void
+gimp_controller_finalize (GObject *object)
+{
+  GimpController *controller = GIMP_CONTROLLER (object);
+
+  if (controller->name)
+    g_free (controller->name);
+
+  if (controller->state)
+    g_free (controller->state);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void

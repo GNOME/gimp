@@ -1,3 +1,12 @@
+2005-04-07  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/widgets/gimpmessagebox.c: plugged a small memleak.
+
+	* libgimpwidgets/gimpcontroller.c: added a finalizer and free the
+	allocated strings.
+
 2005-04-05  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD branch:
