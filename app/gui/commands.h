@@ -51,6 +51,7 @@ void view_zoom_1_16_callback (GtkWidget *, gpointer);
 void view_window_info_cmd_callback (GtkWidget *, gpointer);
 void view_toggle_rulers_cmd_callback (GtkWidget *, gpointer);
 void view_toggle_guides_cmd_callback (GtkWidget *, gpointer);
+void view_toggle_statusbar_cmd_callback (GtkWidget *, gpointer);
 void view_snap_to_guides_cmd_callback (GtkWidget *, gpointer);
 void view_new_view_cmd_callback (GtkWidget *, gpointer);
 void view_shrink_wrap_cmd_callback (GtkWidget *, gpointer);

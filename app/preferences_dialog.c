@@ -82,6 +82,8 @@ static   int          old_auto_save;
 static   int          old_preview_size;
 static   int          old_no_cursor_updating;
 static   int          old_show_tool_tips;
+static   int          old_show_rulers;
+static   int          old_show_statusbar;
 static   int          old_cubic_interpolation;
 static   int          old_confirm_on_close;
 static   int          old_save_session_info;
@@ -296,6 +298,16 @@ file_prefs_save_callback (GtkWidget *widget,
       update = g_list_append (update, "show-tool-tips");
       remove = g_list_append (remove, "dont-show-tool-tips");
     }
+  if (show_rulers != old_show_rulers)
+    {
+      update = g_list_append (update, "show-rulers");
+      remove = g_list_append (remove, "dont-show-rulers");
+    }
+  if (show_statusbar != old_show_statusbar)
+    {
+      update = g_list_append (update, "show-statusbar");
+      remove = g_list_append (remove, "dont-show-statusbar");
+    }
   if (cubic_interpolation != old_cubic_interpolation)
     update = g_list_append (update, "cubic-interpolation");
   if (confirm_on_close != old_confirm_on_close)
@@ -443,6 +455,8 @@ file_prefs_cancel_callback (GtkWidget *widget,
   no_cursor_updating = old_no_cursor_updating;
   perfectmouse = old_perfectmouse;
   show_tool_tips = old_show_tool_tips;
+  show_rulers = old_show_rulers;
+  show_statusbar = old_show_statusbar;
   cubic_interpolation = old_cubic_interpolation;
   confirm_on_close = old_confirm_on_close;
   save_session_info = old_save_session_info;
@@ -499,6 +513,10 @@ file_prefs_toggle_callback (GtkWidget *widget,
     perfectmouse = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &show_tool_tips)
     show_tool_tips = GTK_TOGGLE_BUTTON (widget)->active;
+  else if (data == &show_rulers)
+    show_rulers = GTK_TOGGLE_BUTTON (widget)->active;
+  else if (data == &show_statusbar)
+    show_statusbar = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &cubic_interpolation)
     cubic_interpolation = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &confirm_on_close)
@@ -713,6 +731,8 @@ file_pref_cmd_callback (GtkWidget *widget,
       old_preview_size = preview_size;
       old_no_cursor_updating = no_cursor_updating;
       old_show_tool_tips = show_tool_tips;
+      old_show_rulers = show_rulers;
+      old_show_statusbar = show_statusbar;
       old_cubic_interpolation = cubic_interpolation;
       old_confirm_on_close = confirm_on_close;
       old_save_session_info = save_session_info;
@@ -1028,6 +1048,24 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
                           &show_tool_tips);
+      gtk_widget_show (button);
+
+      button = gtk_check_button_new_with_label("Show rulers");
+      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
+                                   show_rulers);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+                          (GtkSignalFunc) file_prefs_toggle_callback,
+                          &show_rulers);
+      gtk_widget_show (button);
+
+      button = gtk_check_button_new_with_label("Show statusbar");
+      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
+                                   show_statusbar);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+                          (GtkSignalFunc) file_prefs_toggle_callback,
+                          &show_statusbar);
       gtk_widget_show (button);
 
       hbox = gtk_hbox_new (FALSE, 2);

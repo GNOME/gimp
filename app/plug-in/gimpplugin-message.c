@@ -3006,8 +3006,8 @@ plug_in_progress_init (PlugIn *plug_in,
   if (gdisp_ID > 0) 
       gdisp = gdisplay_get_ID(gdisp_ID);
 
-  if (gdisp_ID > 0 && (gdisp->progressid == 0 || 
-		       plug_in->progress_gdisp_ID > 0))
+  if (gdisp_ID > 0 && GTK_WIDGET_VISIBLE (gdisp->statusarea)
+		   && (gdisp->progressid == 0 || plug_in->progress_gdisp_ID > 0))
     {
       context_id = gtk_statusbar_get_context_id(GTK_STATUSBAR(gdisp->statusbar),
 						"progress");

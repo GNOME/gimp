@@ -553,7 +553,6 @@ create_display_shell (GDisplay* gdisp,
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *table_inner;
-  GtkWidget *hbox;
   GtkWidget *frame;
   GtkWidget *arrow;
   int n_width, n_height;
@@ -627,8 +626,8 @@ create_display_shell (GDisplay* gdisp,
 
 
   /* hbox for statusbar area */
-  hbox = gtk_hbox_new(0,2);
-  gtk_box_pack_start(GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
+  gdisp->statusarea = gtk_hbox_new(0,2);
+  gtk_box_pack_start(GTK_BOX (vbox), gdisp->statusarea, FALSE, TRUE, 0);
 
   /*  scrollbars, rulers, canvas, menu popup button  */
   gdisp->origin = gtk_button_new ();
@@ -702,36 +701,37 @@ create_display_shell (GDisplay* gdisp,
   if (! image_popup_menu)
     menus_get_image_menu (&image_popup_menu, &image_accel_group);
 
-  gtk_container_set_resize_mode(GTK_CONTAINER(hbox), GTK_RESIZE_QUEUE);
+  gtk_container_set_resize_mode (GTK_CONTAINER (gdisp->statusarea), 
+				 GTK_RESIZE_QUEUE);
 
   /* cursor, statusbar, progressbar  */
-  frame = gtk_frame_new(NULL);
-  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, TRUE, 0);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (gdisp->statusarea), frame, FALSE, TRUE, 0);
 
-  gdisp->cursor_label = gtk_label_new(" 0000, 0000 ");
+  gdisp->cursor_label = gtk_label_new (" 0000, 0000 ");
   /* This usize should be more intelligent and get the information
    * size of the above string or some similar method */
-  gtk_widget_set_usize(gdisp->cursor_label, 50, -1);
-  gtk_container_add(GTK_CONTAINER (frame), gdisp->cursor_label);
+  gtk_widget_set_usize (gdisp->cursor_label, 50, -1);
+  gtk_container_add (GTK_CONTAINER (frame), gdisp->cursor_label);
 
-  gdisp->statusbar = gtk_statusbar_new();
-  gtk_widget_set_usize(gdisp->statusbar, 1, -1);
+  gdisp->statusbar = gtk_statusbar_new ();
+  gtk_widget_set_usize (gdisp->statusbar, 1, -1);
   gtk_container_set_resize_mode (GTK_CONTAINER (gdisp->statusbar),
 				 GTK_RESIZE_QUEUE);
-  gtk_box_pack_start (GTK_BOX (hbox), gdisp->statusbar, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gdisp->statusarea), gdisp->statusbar, TRUE, TRUE, 0);
   contextid = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar),
 					    "title");
-  gtk_statusbar_push(GTK_STATUSBAR (gdisp->statusbar),
-		     contextid,
-		     title);
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar),
+		      contextid,
+		      title);
 
   gdisp->progressbar = gtk_progress_bar_new();
-  gtk_widget_set_usize(gdisp->progressbar, 80, -1);
-  gtk_box_pack_start (GTK_BOX (hbox), gdisp->progressbar, FALSE, TRUE, 0);
+  gtk_widget_set_usize (gdisp->progressbar, 80, -1);
+  gtk_box_pack_start (GTK_BOX (gdisp->statusarea), gdisp->progressbar, FALSE, TRUE, 0);
 
   gdisp->cancelbutton = gtk_button_new_with_label("Cancel");
-  gtk_box_pack_start (GTK_BOX (hbox), gdisp->cancelbutton, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gdisp->statusarea), gdisp->cancelbutton, FALSE, TRUE, 0);
   gtk_widget_set_sensitive (gdisp->cancelbutton, FALSE);
 
   /*  the popup menu  */
@@ -743,9 +743,12 @@ create_display_shell (GDisplay* gdisp,
   gtk_widget_show (arrow);
   gtk_widget_show (gdisp->hsb);
   gtk_widget_show (gdisp->vsb);
-  gtk_widget_show (gdisp->origin);
-  gtk_widget_show (gdisp->hrule);
-  gtk_widget_show (gdisp->vrule);
+  if (show_rulers)
+    {
+      gtk_widget_show (gdisp->origin);
+      gtk_widget_show (gdisp->hrule);
+      gtk_widget_show (gdisp->vrule);
+    }
   gtk_widget_show (gdisp->canvas);
   gtk_widget_show (frame);
   gtk_widget_show (gdisp->cursor_label);
@@ -754,7 +757,10 @@ create_display_shell (GDisplay* gdisp,
   gtk_widget_show (gdisp->cancelbutton);
   gtk_widget_show (table_inner);
   gtk_widget_show (table);
-  gtk_widget_show (hbox);
+  if (show_statusbar)
+    {
+      gtk_widget_show (gdisp->statusarea);
+    }
   gtk_widget_show (vbox);
   gtk_widget_show (gdisp->shell);
 

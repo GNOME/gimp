@@ -1141,6 +1141,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   menus_set_state ("<Image>/View/Toggle Rulers", GTK_WIDGET_VISIBLE (gdisp->origin) ? 1 : 0);
   menus_set_state ("<Image>/View/Toggle Guides", gdisp->draw_guides);
   menus_set_state ("<Image>/View/Snap To Guides", gdisp->snap_to_guides);
+  menus_set_state ("<Image>/View/Toggle Statusbar", GTK_WIDGET_VISIBLE (gdisp->statusarea) ? 1 : 0);
 
   plug_in_set_menu_sensitivity (type);
 }

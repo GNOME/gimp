@@ -52,6 +52,7 @@ extern int       no_cursor_updating;
 extern int       preview_size;
 extern int       show_rulers;
 extern int       ruler_units;
+extern int       show_statusbar;
 extern int       auto_save;
 extern int       cubic_interpolation;
 extern int       confirm_on_close;

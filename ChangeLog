@@ -1,3 +1,16 @@
+Wed Aug  5 14:32:51 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* gimprc.in
+	* app/commands.[ch]
+	* app/gdisplay.[ch]
+	* app/gimprc.[ch]
+	* app/interface.c
+	* app/menus.c
+	* app/plug_in.c
+	* app/preferences_dialog.c: The statusbar can now be switched off
+	like the rulers. Screen estate purists can make this the default 
+	behaviour in their gimprc ;-)
+ 
 1998-08-03  Federico Mena Quintero  <federico@nuclecu.unam.mx>
 
 	* app/gradient.c: Fixed typo (sinuosidal -> sinusoidal).

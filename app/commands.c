@@ -604,6 +604,26 @@ view_snap_to_guides_cmd_callback (GtkWidget *widget,
 }
 
 void
+view_toggle_statusbar_cmd_callback (GtkWidget *widget,
+				    gpointer   client_data)
+{
+  GDisplay * gdisp;
+
+  gdisp = gdisplay_active ();
+
+  if (!GTK_CHECK_MENU_ITEM (widget)->active)
+    {
+      if (GTK_WIDGET_VISIBLE (gdisp->statusarea))
+	gtk_widget_hide (gdisp->statusarea);
+    }
+  else
+    {
+      if (!GTK_WIDGET_VISIBLE (gdisp->statusarea))
+	gtk_widget_show (gdisp->statusarea);
+    }
+}
+
+void
 view_new_view_cmd_callback (GtkWidget *widget,
 			    gpointer   client_data)
 {

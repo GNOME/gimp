@@ -147,14 +147,21 @@
 # (dont-show-tool-tips)
 
 # Controlling ruler visibility
-#  The default behavior is for rulers to be ON
-#  This can also be toggled with the View->Show Rulers command or shift+control+r
+#  The default behavior is for rulers to be ON.
+#  This can also be toggled with the View->Toggle Rulers command
+#  or shift+control+r
 # (dont-show-rulers)
 
 # Ruler units
 #  The units of rulers can be one of: (pixels inches centimeters)
 #  The default is pixels
 (ruler-units pixels)
+
+# Controlling statusbar visibility
+#  The default behavior is to show the statusbar.
+#  This can also be toggled with the View->Toggle Statusbar command
+#  or shift+control+s
+# (dont-show-statusbar)
 
 # Disable auto saving
 #  Auto saving is not yet implemented! Nothing will be auto-saved, no matter

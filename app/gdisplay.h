@@ -58,6 +58,7 @@ struct _GDisplay
   GtkWidget *hrule, *vrule;       /*  widgets for rulers                      */
   GtkWidget *origin;              /*  widgets for rulers                      */
   GtkWidget *popup;               /*  widget for popup menu                   */
+  GtkWidget *statusarea;          /*  hbox holding the statusbar and stuff    */ 
   GtkWidget *statusbar;           /*  widget for statusbar                    */
   GtkWidget *progressbar;         /*  widget for progressbar                  */
   GtkWidget *cursor_label;        /*  widget for cursor position              */

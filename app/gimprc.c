@@ -107,6 +107,7 @@ int       allow_resize_windows = 0;
 int       no_cursor_updating = 0;
 int       preview_size = 64;
 int       show_rulers = TRUE;
+int       show_statusbar = TRUE;
 int       ruler_units = GTK_PIXELS;
 int       auto_save = TRUE;
 int       cubic_interpolation = FALSE;
@@ -213,6 +214,8 @@ static ParseFunc funcs[] =
   { "preview-size",          TT_XPREVSIZE,  NULL, NULL },
   { "show-rulers",           TT_BOOLEAN,    &show_rulers, NULL },
   { "dont-show-rulers",      TT_BOOLEAN,    NULL, &show_rulers },
+  { "show-statusbar",        TT_BOOLEAN,    &show_statusbar, NULL },
+  { "dont-show-statusbar",   TT_BOOLEAN,    NULL, &show_statusbar },
   { "ruler-units",           TT_XRULERUNIT, NULL, NULL },
   { "auto-save",             TT_BOOLEAN,    &auto_save, NULL },
   { "dont-auto-save",        TT_BOOLEAN,    NULL, &auto_save },
