@@ -42,6 +42,7 @@
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
 
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpfontselection.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -373,6 +374,10 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
 
   g_object_add_weak_pointer (G_OBJECT (text_tool->editor),
 			     (gpointer *) &text_tool->editor);
+
+  gimp_dialog_factory_add_foreign (gimp_dialog_factory_from_name ("toplevel"),
+                                   "gimp-text-tool-dialog",
+                                   text_tool->editor);
 
   gtk_widget_show (text_tool->editor);
 

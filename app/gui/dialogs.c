@@ -74,6 +74,8 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
     NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
   { "gimp-shear-tool-dialog",
     NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+  { "gimp-text-tool-dialog",
+    NULL, 0, TRUE,  TRUE,  TRUE,  FALSE },
   { "gimp-threshold-tool-dialog",
     NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
   { "gimp-perspective-tool-dialog",

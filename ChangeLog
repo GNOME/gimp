@@ -1,5 +1,14 @@
 2003-06-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/dialogs.c (toplevel_entries): added an entry for the
+	text tool editor.
+
+	* app/tools/gimptexttool.c (gimp_text_tool_editor): register
+	the editor window with the dialog factory so it becomes
+	session-menaged.
+
+2003-06-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/grid-dialog.c: #include "config/gimpconfig.h"
 
 2003-06-26  Sven Neumann  <sven@gimp.org>
