@@ -598,7 +598,10 @@ gih_load_one_brush (gint   fd,
                                brush_buf, 0, 0, bh.width, bh.height);
 
       if (image_type == GIMP_GRAY_IMAGE)
-	gimp_invert (layer_ID);
+        {
+          gimp_invert (layer_ID);
+          gimp_layer_add_alpha (layer_ID);
+        }
     }
 
   g_free (brush_buf);

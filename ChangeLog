@@ -1,5 +1,10 @@
 2003-11-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/gih.c (gih_load_one_brush): add an alpha channel
+	to grayscale layers created from brush pipes.
+
+2003-11-15  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpcanvas.c (gimp_canvas_gc_new): no need to set
 	colors on the GCs that use GDK_INVERT.
 
