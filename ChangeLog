@@ -1,3 +1,9 @@
+2004-08-15  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdevicestatus.c: removed non-functional button
+	labelled "Configure input devices". Fixes bug #150177 for the
+	stable branch.
+
 2004-08-09  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD:
