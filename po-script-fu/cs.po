@@ -1,12 +1,12 @@
-# Czech translation of GIMP script-fu 1.2.1.
+# Czech translation of GIMP script-fu 1.2.3.
 # Copyright (C) 2001 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@penguin.cz>, 2000-2001.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 1.2.1\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
-"PO-Revision-Date: 2001-02-17 19:20+01:00\n"
+"Project-Id-Version: gimp-script-fu 1.2.3\n"
+"POT-Creation-Date: 2001-11-16 13:27+0100\n"
+"PO-Revision-Date: 2001-11-16 15:11+0100\n"
 "Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,8 +22,10 @@ msgid "Script-Fu Console"
 msgstr "Konzole skript-fu"
 
 #. Action area
+#: plug-ins/dbbrowser/dbbrowser_utils.c:159
+#: plug-ins/dbbrowser/dbbrowser_utils.c:176
 #: plug-ins/script-fu/script-fu-console.c:199
-#: plug-ins/script-fu/script-fu-scripts.c:2033
+#: plug-ins/script-fu/script-fu-scripts.c:2005
 msgid "Close"
 msgstr "Zavøít"
 
@@ -54,70 +56,70 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Pouze neinteraktivní spu¹tìní umo¾òuje re¾im provádìní Skript-fu"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1206
-#: plug-ins/script-fu/script-fu-scripts.c:1209
+#: plug-ins/script-fu/script-fu-scripts.c:1178
+#: plug-ins/script-fu/script-fu-scripts.c:1181
 msgid "/Script-Fu/"
 msgstr "/Skript-fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1208
-#: plug-ins/script-fu/script-fu-scripts.c:1211
+#: plug-ins/script-fu/script-fu-scripts.c:1180
+#: plug-ins/script-fu/script-fu-scripts.c:1183
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Skript-fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1234
+#: plug-ins/script-fu/script-fu-scripts.c:1206
 msgid "Script Arguments"
 msgstr "Argumenty skriptu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1257
+#: plug-ins/script-fu/script-fu-scripts.c:1229
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1304
+#: plug-ins/script-fu/script-fu-scripts.c:1276
 msgid "Script-Fu Color Selection"
 msgstr "Skript-fu výbìr barvy"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1374
+#: plug-ins/script-fu/script-fu-scripts.c:1346
 msgid "Script-Fu File Selection"
 msgstr "Skript-fu výbìr souboru"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1406
+#: plug-ins/script-fu/script-fu-scripts.c:1378
 msgid "Script-fu Pattern Selection"
 msgstr "Skript-fu výbìr vzorku"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1413
+#: plug-ins/script-fu/script-fu-scripts.c:1385
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-fu výbìr pøechodu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1421
+#: plug-ins/script-fu/script-fu-scripts.c:1393
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-fu výbìr stopy"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1467
+#: plug-ins/script-fu/script-fu-scripts.c:1439
 msgid "Reset to Defaults"
-msgstr "Nastavit na implicitní hodnody"
+msgstr "Nastavit na implicitní hodnoty"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1493
+#: plug-ins/script-fu/script-fu-scripts.c:1465
 msgid "About"
 msgstr "O programu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1507
-#: plug-ins/script-fu/script-fu-server.c:544
+#: plug-ins/script-fu/script-fu-scripts.c:1479
+#: plug-ins/script-fu/script-fu-server.c:549
 msgid "OK"
 msgstr "OK"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1516
-#: plug-ins/script-fu/script-fu-server.c:546
+#: plug-ins/script-fu/script-fu-scripts.c:1488
+#: plug-ins/script-fu/script-fu-server.c:551
 msgid "Cancel"
 msgstr "Zru¹it"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1682
+#: plug-ins/script-fu/script-fu-scripts.c:1654
 msgid "NOT SET"
 msgstr "NENÍ URÈENO"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1711
+#: plug-ins/script-fu/script-fu-scripts.c:1683
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -125,27 +127,31 @@ msgstr ""
 "Nejménì jedno ze zvolených písem je neplatné.\n"
 "Zkontrolujte si nastavení.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2004
+#. show the author & the copyright
+#: plug-ins/dbbrowser/dbbrowser_utils.c:518
+#: plug-ins/script-fu/script-fu-scripts.c:1976
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2010
+#: plug-ins/dbbrowser/dbbrowser_utils.c:548
+#: plug-ins/script-fu/script-fu-scripts.c:1982
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2016
+#: plug-ins/dbbrowser/dbbrowser_utils.c:533
+#: plug-ins/script-fu/script-fu-scripts.c:1988
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2024
+#: plug-ins/script-fu/script-fu-scripts.c:1996
 msgid "Image Types:"
 msgstr "Typy obrázku:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2189
+#: plug-ins/script-fu/script-fu-scripts.c:2161
 msgid "Script-Fu Font Selection"
 msgstr "Výbìr písma Skript-fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2256
+#: plug-ins/script-fu/script-fu-scripts.c:2228
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -156,15 +162,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:539
+#: plug-ins/script-fu/script-fu-server.c:544
 msgid "Script-Fu Server Options"
 msgstr "Volby serveru Skript-fu"
 
-#: plug-ins/script-fu/script-fu-server.c:566
+#: plug-ins/script-fu/script-fu-server.c:571
 msgid "Server Port:"
 msgstr "Port serveru:"
 
-#: plug-ins/script-fu/script-fu-server.c:572
+#: plug-ins/script-fu/script-fu-server.c:577
 msgid "Server Logfile:"
 msgstr "®urnálový soubor serveru:"
 
@@ -183,6 +189,67 @@ msgstr "Znovu naèíst v¹echny dostupné skripty"
 #: plug-ins/script-fu/script-fu.c:1110
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Roz¹./Skript-fu/Zaktualizovat"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:148
+#: plug-ins/dbbrowser/dbbrowser_utils.c:167
+msgid "DB Browser (init...)"
+msgstr "Prohlí¾eè DB (inicializace...)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:153
+#: plug-ins/dbbrowser/dbbrowser_utils.c:172
+msgid "Search by Name"
+msgstr "Hledat podle jména"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:155
+#: plug-ins/dbbrowser/dbbrowser_utils.c:174
+msgid "Search by Blurb"
+msgstr "Hledat podle popisu"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:157
+msgid "Apply"
+msgstr "Pou¾ít"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:226
+msgid "Search:"
+msgstr "Hledat:"
+
+#. show the name
+#: plug-ins/dbbrowser/dbbrowser_utils.c:344
+msgid "Name:"
+msgstr "Jméno:"
+
+#. show the description
+#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+msgid "Blurb:"
+msgstr "Popis:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:382
+msgid "In:"
+msgstr "Vstup:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:429
+msgid "Out:"
+msgstr "Výstup:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:479
+msgid "Help:"
+msgstr "Nápovìda:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:643
+msgid "DB Browser (by name - please wait)"
+msgstr "Prohlí¾eè DB (podle jména - prosím èekejte)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:667
+msgid "DB Browser (by blurb - please wait)"
+msgstr "Prohlí¾eè DB (podle popisu - prosím èekejte)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:677
+msgid "DB Browser (please wait)"
+msgstr "Prohlí¾eè DB (prosím èekejte)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:743
+msgid "DB Browser"
+msgstr "Prohlí¾eè DB"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm:0
 msgid "<Image>/Edit/Copy Visible"
@@ -828,7 +895,7 @@ msgstr "Krytí pozadí"
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Background Color"
-msgstr "Parva pozadí"
+msgstr "Barva pozadí"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
@@ -848,8 +915,8 @@ msgid "Base Color"
 msgstr "Barva základny"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Base Radius (pixel)"
-msgstr "Polomìr základny (pixly)"
+msgid "Base Radius (pixels)"
+msgstr "Polomìr základny (pixely)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Behaviour"
@@ -904,7 +971,7 @@ msgstr "Polomìr rozostøení"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Blur Type"
-msgstr "Typ rozostøení"
+msgstr "Typ rozmáznutí"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Blur Vertically"
@@ -944,7 +1011,7 @@ msgstr "Velikost Y okraje"
 #: plug-ins/script-fu/scripts/font-map.scm:0
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Border"
-msgstr "Okraj"
+msgstr "Obvod"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "Buffer Amount (% Height of Text)"
@@ -1125,7 +1192,7 @@ msgstr "Y posun vr¾eného stínu"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Drop Shadow"
-msgstr "Vr¾ení stínu"
+msgstr "Vrhat stín"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Edge Amount"
@@ -1190,7 +1257,7 @@ msgstr "Koncové splývání"
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Environment Map"
-msgstr "Mapa prostøedí"
+msgstr "Mapování prostøedí"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Erase before Draw"
@@ -1362,7 +1429,7 @@ msgstr "Písma"
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Foreground Color"
-msgstr "Barva popøedí"
+msgstr "Barva pozadí"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 msgid "Frame Color"
@@ -1439,7 +1506,7 @@ msgstr "Vý¹ka"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Hexagons"
-msgstr ""
+msgstr "©estiúhelníky"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
@@ -1546,7 +1613,7 @@ msgstr "Vý¹ka zemì"
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Left"
-msgstr "Nalevo"
+msgstr "Doleva"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Lighting (degrees)"
@@ -1646,7 +1713,7 @@ msgstr "Poèet"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Octagons"
-msgstr ""
+msgstr "Osmiúhelníky"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
@@ -1767,7 +1834,7 @@ msgstr "Velikost pixelù"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Pixelize"
-msgstr "Pixelizovat"
+msgstr "Pixelizace"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
@@ -1796,7 +1863,7 @@ msgstr "Polomìr"
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Random Seed"
-msgstr "Hnízdo náhodných èísel"
+msgstr "Náhodné hnízdo"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Randomness"
@@ -1830,7 +1897,7 @@ msgstr "©íøka pásky"
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Right"
-msgstr "Napravo"
+msgstr "Doprava"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "Rippling Strength"
@@ -1839,7 +1906,7 @@ msgstr "Síla èeøení"
 #: plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Roughness"
-msgstr "Drsnost"
+msgstr "Výraznost"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Round Ratio"
@@ -1864,9 +1931,8 @@ msgid "Scale Y"
 msgstr "Zvìt¹ení Y"
 
 #: plug-ins/script-fu/scripts/land.scm:0
-#, fuzzy
 msgid "Sea Depth"
-msgstr "Hloubka stínu"
+msgstr "Hloubka moøe"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"
@@ -1950,7 +2016,7 @@ msgstr "Vyhladit svisle"
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth"
-msgstr "Vyhladit"
+msgstr "Plynulá"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Space Between Layers"
@@ -1975,7 +2041,7 @@ msgstr "Y hustota teèek"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Spread"
-msgstr "Roz¹íøit"
+msgstr "Rozprostøení"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Squares"
@@ -2194,4 +2260,4 @@ msgstr "©íøka"
 #: plug-ins/script-fu/scripts/slide.scm:0
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
-msgstr "Pracovat s kopií"
+msgstr "Pracovat na kopii"
