@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -107,7 +107,7 @@ static StatusBar_t *_statusbar;
 static ToolBar_t   *_toolbar;
 static ObjectList_t *_shapes;
 static gint	    _zoom_factor = 1;
-static void (*_button_press_func)(GtkWidget*, GdkEventButton*, gpointer);
+static gboolean (*_button_press_func)(GtkWidget*, GdkEventButton*, gpointer);
 static gpointer _button_press_param;
 
 /* Declare local functions. */
@@ -146,7 +146,7 @@ static void query()
 			  "",
 			  "Maurits Rijk",
 			  "Maurits Rijk",
-			  "1998-1999",
+			  "1998-2002",
 			  N_("<Image>/Filters/Web/ImageMap..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
@@ -435,8 +435,8 @@ set_arrow_func(void)
 }
 
 static void 
-set_object_func(void (*func)(GtkWidget*, GdkEventButton*, 
-			     gpointer), gpointer param)
+set_object_func(gboolean (*func)(GtkWidget*, GdkEventButton*, 
+				 gpointer), gpointer param)
 {
    _button_press_func = func;
    _button_press_param = param;
@@ -514,7 +514,7 @@ main_set_title(const char *filename)
    
    g_strreplace(&_filename, filename);
    p = (filename) ? g_path_get_basename(filename) : _("<Untitled>");
-   title = g_strdup_printf("%s - ImageMap 1.3", p);
+   title = g_strdup_printf("%s - ImageMap 2.0", p);
    if (filename)
      g_free (p);
    gtk_window_set_title(GTK_WINDOW(_dlg), title);
@@ -773,7 +773,7 @@ save_as_cern(gpointer param, OutputFunc_t output)
    write_cern_comment(param, output);
    output(param, "-:Please do not edit lines starting with \"#$\"\n");
    write_cern_comment(param, output);
-   output(param, "VERSION:1.3\n");
+   output(param, "VERSION:2.0\n");
    write_cern_comment(param, output);
    output(param, "TITLE:%s\n", _map_info.title);
    write_cern_comment(param, output);
@@ -809,7 +809,7 @@ save_as_csim(gpointer param, OutputFunc_t output)
    output(param, "<!-- #$-:GIMP Imagemap Plugin by Maurits Rijk -->\n");
    output(param, 
 	  "<!-- #$-:Please do not edit lines starting with \"#$\" -->\n");
-   output(param, "<!-- #$VERSION:1.3 -->\n");
+   output(param, "<!-- #$VERSION:2.0 -->\n");
    output(param, "<!-- #$AUTHOR:%s -->\n", _map_info.author);
    
    description = g_strdup(_map_info.description);
@@ -833,7 +833,7 @@ save_as_ncsa(gpointer param, OutputFunc_t output)
    output(param, "#$-:Image Map file created by GIMP Imagemap Plugin\n");
    output(param, "#$-:GIMP Imagemap Plugin by Maurits Rijk\n");
    output(param, "#$-:Please do not edit lines starting with \"#$\"\n");
-   output(param, "#$VERSION:1.3\n");
+   output(param, "#$VERSION:2.0\n");
    output(param, "#$TITLE:%s\n", _map_info.title);
    output(param, "#$AUTHOR:%s\n", _map_info.author);
    output(param, "#$FORMAT:ncsa\n");
@@ -975,7 +975,7 @@ close_callback(GtkWidget *widget, gpointer data)
    gtk_main_quit();
 }
 
-static void
+static gboolean
 preview_move(GtkWidget *widget, GdkEventMotion *event)
 {
    gint x = GET_REAL_COORD((gint) event->x);
@@ -1003,6 +1003,7 @@ preview_move(GtkWidget *widget, GdkEventMotion *event)
       }
    }
 #endif
+   return FALSE;
 }
 
 static void
@@ -1018,10 +1019,10 @@ preview_leave(GtkWidget *widget, GdkEventCrossing *event)
    statusbar_clear_xy(_statusbar);
 }
 
-static void 
+static gboolean
 button_press(GtkWidget* widget, GdkEventButton* event, gpointer data)
 {
-   _button_press_func(widget, event, _button_press_param);
+   return _button_press_func(widget, event, _button_press_param);
 }
 
 /* A few global vars for key movement */
@@ -1337,8 +1338,6 @@ dialog(GimpDrawable *drawable)
 
    _dlg = dlg = gtk_window_new(GTK_WINDOW_TOPLEVEL);
    gtk_window_set_resizable(GTK_WINDOW(dlg), TRUE);
-   gtk_widget_set_size_request(dlg, 0, 0);
-   gtk_widget_realize(dlg);
 
    main_set_title(NULL);
    gimp_help_connect (dlg, gimp_standard_help_func, "filters/imagemap.html");

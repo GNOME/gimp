@@ -405,11 +405,8 @@ noisify (GimpDrawable *drawable,
 
       gtk_widget_queue_draw (preview);
 
-      if(even)
-	g_free(even);
-      
-      if(odd)
-	g_free(odd);
+      g_free(even);
+      g_free(odd);
 
     } 
   else 
@@ -538,7 +535,7 @@ noisify_dialog (GimpDrawable *drawable,
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  toggle = gtk_check_button_new_with_label (_("_Independent"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Independent"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), nvals.independent);
   gtk_widget_show (toggle);

@@ -607,7 +607,7 @@ mosaic_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
-  toggle = gtk_check_button_new_with_label (_("Antialiasing"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Antialiasing"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mvals.antialiasing);
   gtk_widget_show (toggle);
@@ -616,7 +616,7 @@ mosaic_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &mvals.antialiasing);
 
-  toggle = gtk_check_button_new_with_label ( _("Color Averaging"));
+  toggle = gtk_check_button_new_with_mnemonic ( _("Co_lor Averaging"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mvals.color_averaging);
@@ -626,7 +626,7 @@ mosaic_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &mvals.color_averaging);
 
-  toggle = gtk_check_button_new_with_label ( _("Allow Tile splitting"));
+  toggle = gtk_check_button_new_with_mnemonic ( _("Allo_w Tile splitting"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mvals.tile_allow_split);
@@ -636,7 +636,7 @@ mosaic_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &mvals.tile_allow_split);
 
-  toggle = gtk_check_button_new_with_label ( _("Pitted Surfaces"));
+  toggle = gtk_check_button_new_with_mnemonic ( _("_Pitted Surfaces"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				(mvals.tile_surface == ROUGH));
@@ -646,7 +646,7 @@ mosaic_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &mvals.tile_surface);
 
-  toggle = gtk_check_button_new_with_label ( _("FG/BG Lighting"));
+  toggle = gtk_check_button_new_with_mnemonic ( _("_FG/BG Lighting"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				(mvals.grout_color == FG_BG));
@@ -665,11 +665,11 @@ mosaic_dialog (void)
 				 G_CALLBACK (gimp_radio_button_update),
 				 &mvals.tile_type, (gpointer) mvals.tile_type,
 
-				 _("Squares"),
+				 _("_Squares"),
 				 (gpointer) SQUARES, NULL,
-				 _("Hexagons"),
+				 _("He_xagons"),
 				 (gpointer) HEXAGONS, NULL,
-				 _("Octagons & Squares"),
+				 _("Oc_tagons & Squares"),
 				 (gpointer) OCTAGONS, NULL,
 
 				 NULL);
@@ -690,7 +690,7 @@ mosaic_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("Tile Size:"), SCALE_WIDTH, 0,
+				     _("T_ile Size:"), SCALE_WIDTH, 0,
 				     mvals.tile_size, 5.0, 100.0, 1.0, 10.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -699,7 +699,7 @@ mosaic_dialog (void)
                     &mvals.tile_size);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				     _("Tile Height:"), SCALE_WIDTH, 0,
+				     _("Tile _Height:"), SCALE_WIDTH, 0,
 				     mvals.tile_height, 1.0, 50.0, 1.0, 10.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -708,7 +708,7 @@ mosaic_dialog (void)
                     &mvals.tile_height);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-				     _("Tile Spacing:"), SCALE_WIDTH, 0,
+				     _("Til_e Spacing:"), SCALE_WIDTH, 0,
 				     mvals.tile_spacing, 1.0, 50.0, 1.0, 10.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -717,7 +717,7 @@ mosaic_dialog (void)
                     &mvals.tile_spacing);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-				     _("Tile Neatness:"), SCALE_WIDTH, 0,
+				     _("Tile _Neatness:"), SCALE_WIDTH, 0,
 				     mvals.tile_neatness,
 				     0.0, 1.0, 0.10, 0.1, 2,
 				     TRUE, 0, 0,
@@ -727,7 +727,7 @@ mosaic_dialog (void)
                     &mvals.tile_neatness);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-				     _("Light Direction:"), SCALE_WIDTH, 0,
+				     _("Light _Direction:"), SCALE_WIDTH, 0,
 				     mvals.light_dir, 0.0, 360.0, 1.0, 15.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -736,7 +736,7 @@ mosaic_dialog (void)
                     &mvals.light_dir);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-				     _("Color Variation:"), SCALE_WIDTH, 0,
+				     _("Color _Variation:"), SCALE_WIDTH, 0,
 				     mvals.color_variation,
 				     0.0, 1.0, 0.01, 0.1, 2,
 				     TRUE, 0, 0,

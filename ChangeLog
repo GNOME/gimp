@@ -1,3 +1,40 @@
+2002-06-01  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/imagemap/imap_preferences.[ch]
+	* plug-ins/imagemap/imap_table.c: enable mnemonics
+
+	* plug-ins/imagemap/imap_grid.[ch]: Add mnemonics to dialog and added 
+	option to couple Width/Height and Left/Top offset in grid with 
+	GimpChainButton.
+
+	* plug-ins/imagemap/imap_tools.c (make_tools)
+	* plug-ins/imagemap/imap_selection.c (make_selection_toolbar)
+	* plug-ins/imagemap/imap_toolbar.c (make_toolbar): set style to only 
+	show icons (GTK_TOOLBAR_ICONS).
+
+	* plug-ins/imagemap/imap_object.[ch] (object_on_button_press): event 
+	function now returns boolean value.
+
+	* plug-ins/imagemap/imap_main.c (dialog): removed some obsolete code 
+	that caused strange startup size of plug-in.
+
+2002-06-01  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/convmatrix.c: enable mnemonics and removed some
+	global variables.
+
+	* plug-ins/mosaic/mosaic.c (mosaic_dialog): 
+	* plug-ins/common/nova.c (nova_center_create)
+	* plug-ins/common/nlfilt.c (mw_preview_new)
+	* plug-ins/common/noisify.c (noisify_dialog)
+	* plug-ins/common/borderaverage.c (borderaverage_dialog): enable 
+	mnemonics
+
+2002-05-31  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/borderaverage.c (borderaverage_dialog)
+	* plug-ins/common/blur.c (blur_dialog): enable mnemonics
+
 2002-05-31  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/tools/stock-tool-blend-22.png: make it

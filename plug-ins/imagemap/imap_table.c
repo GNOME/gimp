@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,14 @@
 
 #include "imap_table.h"
 
+static GtkWidget*
+add_widget_to_table(GtkWidget *table, int row, int col, GtkWidget *w)
+{
+   gtk_table_attach_defaults(GTK_TABLE(table), w, col, col + 1, row, row + 1);
+   gtk_widget_show(w);
+   return w;
+}
+
 GtkWidget*
 create_spin_button_in_table(GtkWidget *table, int row, int col,
 			    int value, int min, int max)
@@ -34,43 +42,31 @@ create_spin_button_in_table(GtkWidget *table, int row, int col,
    GtkObject *adj = gtk_adjustment_new(value, min, max, 1, 1, 1);
    GtkWidget *button = gtk_spin_button_new(GTK_ADJUSTMENT(adj), 1, 0);
    gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(button), TRUE);
-   gtk_table_attach_defaults(GTK_TABLE(table), button, col, col + 1,
-			     row, row + 1);
-   gtk_widget_show(button);
-   return button;
+   return add_widget_to_table(table, row, col, button);
 }
 
 GtkWidget*
 create_check_button_in_table(GtkWidget *table, int row, int col,
 			     const char *text)
 {
-   GtkWidget *button = gtk_check_button_new_with_label(text);
-   gtk_table_attach_defaults(GTK_TABLE(table), button, col, col + 1,
-			     row, row + 1);
-   gtk_widget_show(button);
-   return button;
+   GtkWidget *button = gtk_check_button_new_with_mnemonic(text);
+   return add_widget_to_table(table, row, col, button);
 }
 
 GtkWidget*
 create_radio_button_in_table(GtkWidget *table, GSList *group, 
 			     int row, int col, const char *text)
 {
-   GtkWidget *button = gtk_radio_button_new_with_label(group, text);
-   gtk_table_attach_defaults(GTK_TABLE(table), button, col, col + 1,
-			     row, row + 1);
-   gtk_widget_show(button);
-   return button;
+   GtkWidget *button = gtk_radio_button_new_with_mnemonic(group, text);
+   return add_widget_to_table(table, row, col, button);
 }
 
 GtkWidget*
 create_label_in_table(GtkWidget *table, int row, int col, const char *text)
 {
-   GtkWidget *label = gtk_label_new(text);
-   gtk_table_attach_defaults(GTK_TABLE(table), label, col, col + 1, 
-			     row, row + 1);
+   GtkWidget *label = gtk_label_new_with_mnemonic(text);
    gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-   gtk_widget_show(label);
-   return label;
+   return add_widget_to_table(table, row, col, label);
 }
 
 GtkWidget*

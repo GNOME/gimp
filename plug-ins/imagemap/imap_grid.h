@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,26 +23,6 @@
 
 #ifndef _IMAP_GRID_H
 #define _IMAP_GRID_H
-
-#include "imap_default_dialog.h"
-
-typedef struct {
-   DefaultDialog_t *dialog;
-   GtkWidget *type_frame;
-   GtkWidget *granularity_frame;
-   GtkWidget *offset_frame;
-   GtkWidget *snap;
-   GtkWidget *width;
-   GtkWidget *height;
-   GtkWidget *left;
-   GtkWidget *top;
-   GtkWidget *hidden;
-   GtkWidget *lines;
-   GtkWidget *crosses;
-   GtkWidget *preview;
-
-   gboolean   enable_preview;
-} GridDialog_t;
 
 void do_grid_settings_dialog();
 void draw_grid(GtkWidget *preview);

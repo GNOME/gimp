@@ -78,22 +78,22 @@ typedef enum
   MIRROR
 } BorderMode;
 
-GimpDrawable *drawable;
+static GimpDrawable *drawable;
 
-gchar * const channel_labels[] =
+static gchar * const channel_labels[] =
 {
-  N_("Grey"),
-  N_("Red"),
-  N_("Green"),
-  N_("Blue"),
-  N_("Alpha")
+  N_("Gr_ey"),
+  N_("Re_d"),
+  N_("_Green"),
+  N_("_Blue"),
+  N_("_Alpha")
 };
 
-gchar * const bmode_labels[] =
+static gchar * const bmode_labels[] =
 {
-  N_("Extend"),
-  N_("Wrap"),
-  N_("Crop")
+  N_("E_xtend"),
+  N_("_Wrap"),
+  N_("Cro_p")
 };
 
 /* Declare local functions. */
@@ -117,9 +117,8 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,    /* run_proc   */
 };
 
-gint bytes;
-gint sx1, sy1, sx2, sy2;
-gint run_flag = 0;
+static gint bytes;
+static gint run_flag = 0;
 
 typedef struct
 {
@@ -132,7 +131,7 @@ typedef struct
   gint       autoset;
 } config;
 
-const config default_config =
+static const config default_config =
 {
   {
     { 0.0, 0.0, 0.0, 0.0, 0.0 },
@@ -149,7 +148,7 @@ const config default_config =
   0                  /* autoset */
 };
 
-config my_config;
+static config my_config;
 
 struct
 {
@@ -503,6 +502,7 @@ doit (void)
   GimpPixelRgn  srcPR, destPR;
   gint          width, height, row, col;
   gint          w, h, i;
+  gint 		sx1, sy1, sx2, sy2;
   gint          x1, x2, y1, y2;
   guchar       *destrow[3];
   guchar       *srcrow[5];
@@ -918,7 +918,7 @@ dialog (void)
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (box), table, TRUE, FALSE, 0);
 
-  label = gtk_label_new (_("Divisor:"));
+  label = gtk_label_new_with_mnemonic (_("D_ivisor:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 0, 1);
   gtk_widget_show (label);
@@ -927,6 +927,7 @@ dialog (void)
   gtk_widget_set_size_request (entry, 40, -1);
   gtk_table_attach_defaults (GTK_TABLE (table), entry, 1, 2, 0, 1);
   gtk_widget_show (entry);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
 
   g_signal_connect (G_OBJECT (entry), "changed",
                     G_CALLBACK (entry_callback),
@@ -938,7 +939,7 @@ dialog (void)
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (box), table, TRUE, FALSE, 0);
 
-  label = gtk_label_new (_("Offset:"));
+  label = gtk_label_new_with_mnemonic (_("O_ffset:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 0, 1);
   gtk_widget_show (label);
@@ -947,6 +948,7 @@ dialog (void)
   gtk_widget_set_size_request (entry, 40, -1);
   gtk_table_attach_defaults (GTK_TABLE (table), entry, 1, 2, 0, 1);
   gtk_widget_show (entry);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
 
   g_signal_connect (G_OBJECT (entry), "changed",
                     G_CALLBACK (entry_callback),
@@ -963,7 +965,7 @@ dialog (void)
   gtk_box_pack_start (GTK_BOX (yetanotherbox), box, FALSE, FALSE, 0);
 
   my_widgets.autoset = button =
-    gtk_check_button_new_with_label (_("Automatic"));
+    gtk_check_button_new_with_mnemonic (_("A_utomatic"));
   gtk_box_pack_start (GTK_BOX (box), button, TRUE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -972,7 +974,7 @@ dialog (void)
                     &my_config.autoset);
 
   my_widgets.alpha_alg = button =
-    gtk_check_button_new_with_label (_("Alpha-weighting"));
+    gtk_check_button_new_with_mnemonic (_("A_lpha-weighting"));
   if (my_config.alpha_alg == -1)
     gtk_widget_set_sensitive (button, FALSE);
   gtk_box_pack_start (GTK_BOX (box), button, TRUE, FALSE, 0);
@@ -1001,7 +1003,7 @@ dialog (void)
   for (i = 0; i < 3; i++)
     {
       my_widgets.bmode[i] = button =
-	gtk_radio_button_new_with_label (group, gettext (bmode_labels[i]));
+	gtk_radio_button_new_with_mnemonic (group, gettext (bmode_labels[i]));
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
@@ -1025,7 +1027,7 @@ dialog (void)
   for (i = 0; i < 5; i++)
     {
       my_widgets.channels[i] = button =
-	gtk_check_button_new_with_label (gettext (channel_labels[i]));
+	gtk_check_button_new_with_mnemonic (gettext (channel_labels[i]));
 
       if (my_config.channels[i] < 0)
 	gtk_widget_set_sensitive (button, FALSE);

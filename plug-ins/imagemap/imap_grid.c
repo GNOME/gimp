@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,8 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "imap_grid.h"
 #include "imap_main.h"
@@ -38,6 +39,27 @@
 #include "libgimp/stdplugins-intl.h"
 
 typedef enum {GRID_HIDDEN, GRID_LINES, GRID_CROSSES} GridType_t;
+
+typedef struct {
+   DefaultDialog_t *dialog;
+   GtkWidget *type_frame;
+   GtkWidget *granularity_frame;
+   GtkWidget *offset_frame;
+   GtkWidget *snap;
+   GtkWidget *width;
+   GtkWidget *height;
+   GtkWidget *chain_width_height;
+   GtkWidget *left;
+   GtkWidget *top;
+   GtkWidget *chain_left_top;
+   GtkWidget *hidden;
+   GtkWidget *lines;
+   GtkWidget *crosses;
+   GtkWidget *preview;
+
+   gboolean   enable_preview;
+} GridDialog_t;
+
 
 static GdkGC *grid_gc;
 static gboolean grid_snap = FALSE;
@@ -114,25 +136,53 @@ grid_assign_value(GtkWidget *widget, gpointer data, gint *value)
 static void
 width_changed_cb(GtkWidget *widget, gpointer data)
 {
+   GridDialog_t *dialog = (GridDialog_t*) data;
+
    grid_assign_value(widget, data, &grid_width);
+   if (gimp_chain_button_get_active(
+	  GIMP_CHAIN_BUTTON(dialog->chain_width_height))) {
+      gint value = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
+      gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->height), value);
+   }
 }
 
 static void
 height_changed_cb(GtkWidget *widget, gpointer data)
 {
+   GridDialog_t *dialog = (GridDialog_t*) data;
+
    grid_assign_value(widget, data, &grid_height);
+   if (gimp_chain_button_get_active(
+	  GIMP_CHAIN_BUTTON(dialog->chain_width_height))) {
+      gint value = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
+      gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->width), value);
+   }
 }
 
 static void
 left_changed_cb(GtkWidget *widget, gpointer data)
 {
+   GridDialog_t *dialog = (GridDialog_t*) data;
+
    grid_assign_value(widget, data, &grid_left);
+   if (gimp_chain_button_get_active(
+	  GIMP_CHAIN_BUTTON(dialog->chain_left_top))) {
+      gint value = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
+      gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->top), value);
+   }
 }
 
 static void
 top_changed_cb(GtkWidget *widget, gpointer data)
 {
+   GridDialog_t *dialog = (GridDialog_t*) data;
+
    grid_assign_value(widget, data, &grid_top);
+   if (gimp_chain_button_get_active(
+	  GIMP_CHAIN_BUTTON(dialog->chain_left_top))) {
+      gint value = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
+      gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->left), value);
+   }
 }
 
 static GridDialog_t*
@@ -140,11 +190,11 @@ create_grid_settings_dialog()
 {
    GridDialog_t *data = g_new(GridDialog_t, 1);
    DefaultDialog_t *dialog;
-   GtkWidget *main_table, *table;
+   GtkWidget *main_table, *table, *label;
    GtkWidget *frame;
    GtkWidget *hbox;
    GtkWidget *button;
-   GSList* group;
+   GtkWidget *chain_button;
    
    data->dialog = dialog = make_default_dialog(_("Grid Settings"));
    default_dialog_set_ok_cb(dialog, grid_settings_ok_cb, (gpointer) data);
@@ -157,7 +207,7 @@ create_grid_settings_dialog()
 		      main_table, TRUE, TRUE, 10);
    gtk_widget_show(main_table);
    
-   data->snap = gtk_check_button_new_with_label(_("Snap-To Grid Enabled"));
+   data->snap = gtk_check_button_new_with_mnemonic(_("_Snap-To Grid Enabled"));
    g_signal_connect(G_OBJECT(data->snap), "toggled", 
                     G_CALLBACK (snap_toggled_cb), data);
    gtk_table_attach_defaults(GTK_TABLE(main_table), data->snap, 0, 1, 0, 1);
@@ -170,23 +220,25 @@ create_grid_settings_dialog()
    gtk_container_add(GTK_CONTAINER(frame), hbox);
    gtk_widget_show(hbox);
 
-   data->hidden = button = gtk_radio_button_new_with_label(NULL, _("Hidden"));
+   button = gtk_radio_button_new_with_mnemonic_from_widget(NULL, _("_Hidden"));
+   data->hidden = button;
    g_signal_connect(G_OBJECT(button), "toggled", 
                     G_CALLBACK (type_toggled_cb), (gpointer) GRID_HIDDEN);
    gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 10);
    gtk_widget_show(button);
 
-   group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(button));
-   data->lines = button = gtk_radio_button_new_with_label(group, _("Lines"));
+   button = gtk_radio_button_new_with_mnemonic_from_widget(
+      GTK_RADIO_BUTTON(button), _("_Lines"));
+   data->lines = button;
    g_signal_connect(G_OBJECT(button), "toggled", 
                     G_CALLBACK (type_toggled_cb), (gpointer) GRID_LINES);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
    gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 10);
    gtk_widget_show(button);
 
-   group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(button));
-   data->crosses = button = gtk_radio_button_new_with_label(group, 
-							    _("Crosses"));
+   button = gtk_radio_button_new_with_mnemonic_from_widget(
+      GTK_RADIO_BUTTON(button), _("C_rosses"));
+   data->crosses = button;
    g_signal_connect(G_OBJECT(button), "toggled", 
                     G_CALLBACK (type_toggled_cb), 
                     (gpointer) GRID_CROSSES);
@@ -195,47 +247,57 @@ create_grid_settings_dialog()
    
    data->granularity_frame = frame = gtk_frame_new(_("Grid Granularity"));
    gtk_table_attach_defaults(GTK_TABLE(main_table), frame, 0, 1, 2, 3);
-   table = gtk_table_new(2, 3, FALSE);
+   table = gtk_table_new(2, 4, FALSE);
    gtk_container_set_border_width(GTK_CONTAINER(table), 10);
    gtk_table_set_row_spacings(GTK_TABLE(table), 10);
    gtk_table_set_col_spacings(GTK_TABLE(table), 10);
    gtk_container_add(GTK_CONTAINER(frame), table);
 
-   create_label_in_table(table, 0, 0, _("Width"));
+   label = create_label_in_table(table, 0, 0, _("_Width"));
    data->width = create_spin_button_in_table(table, 0, 1, 15, 1, 100);
-   g_signal_connect(G_OBJECT(data->width), "changed", 
+   g_signal_connect(G_OBJECT(data->width), "value_changed", 
                     G_CALLBACK (width_changed_cb), (gpointer) data);
-   create_label_in_table(table, 0, 2, _("pixels"));
+   create_label_in_table(table, 0, 3, _("pixels"));
 
-   create_label_in_table(table, 1, 0, _("Height"));
+   label = create_label_in_table(table, 1, 0, _("_Height"));
    data->height = create_spin_button_in_table(table, 1, 1, 15, 1, 100);
-   g_signal_connect(G_OBJECT(data->height), "changed", 
+   g_signal_connect(G_OBJECT(data->height), "value_changed", 
                     G_CALLBACK (height_changed_cb), (gpointer) data);
-   create_label_in_table(table, 1, 2, _("pixels"));
+   create_label_in_table(table, 1, 3, _("pixels"));
+
+   chain_button = gimp_chain_button_new(GIMP_CHAIN_RIGHT);
+   data->chain_width_height = chain_button;
+   gtk_table_attach_defaults(GTK_TABLE(table), chain_button, 2, 3, 0, 2);
+   gtk_widget_show(chain_button);
 
    gtk_widget_show(table);
    gtk_widget_show(frame);
    
    data->offset_frame = frame = gtk_frame_new(_("Grid Offset"));
    gtk_table_attach_defaults(GTK_TABLE(main_table), frame, 1, 2, 2, 3);
-   table = gtk_table_new(2, 2, FALSE);
+   table = gtk_table_new(2, 3, FALSE);
    gtk_container_set_border_width(GTK_CONTAINER(table), 10);
    gtk_table_set_row_spacings(GTK_TABLE(table), 10);
    gtk_table_set_col_spacings(GTK_TABLE(table), 10);
    gtk_container_add(GTK_CONTAINER(frame), table);
 
+   label = create_label_in_table(table, 0, 2, _("pixels from l_eft"));
    data->left = create_spin_button_in_table(table, 0, 0, 0, 0, 100);
-   g_signal_connect(G_OBJECT(data->left), "changed", 
+   g_signal_connect(G_OBJECT(data->left), "value_changed", 
                     G_CALLBACK (left_changed_cb), (gpointer) data);
-   create_label_in_table(table, 0, 1, _("pixels from left"));
 
+   label = create_label_in_table(table, 1, 2, _("pixels from _top"));
    data->top = create_spin_button_in_table(table, 1, 0, 0, 0, 100);
-   g_signal_connect(G_OBJECT(data->top), "changed", 
+   g_signal_connect(G_OBJECT(data->top), "value_changed", 
                     G_CALLBACK (top_changed_cb), (gpointer) data);
-   create_label_in_table(table, 1, 1, _("pixels from top"));
+
+   chain_button = gimp_chain_button_new(GIMP_CHAIN_RIGHT);
+   data->chain_left_top = chain_button;
+   gtk_table_attach_defaults(GTK_TABLE(table), chain_button, 1, 2, 0, 2);
+   gtk_widget_show(chain_button);
 
    data->preview = create_check_button_in_table(main_table, 3, 0, 
-						_("Preview"));
+						_("_Preview"));
    g_signal_connect(G_OBJECT(data->preview), "toggled", 
                     G_CALLBACK (toggle_preview_cb), (gpointer) data);
    gtk_widget_show(data->preview);

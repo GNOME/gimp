@@ -702,7 +702,7 @@ nova_center_create (GimpDrawable *drawable)
 
   gtk_widget_show (frame);
 
-  check = gtk_check_button_new_with_label (_("S_how Cursor"));
+  check = gtk_check_button_new_with_mnemonic (_("S_how Cursor"));
   gtk_table_attach (GTK_TABLE (table), check, 0, 4, 2, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), show_cursor);

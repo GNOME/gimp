@@ -399,7 +399,7 @@ borderaverage_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new (_("Thickness:"));
+  label = gtk_label_new_with_mnemonic (_("_Thickness:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -407,6 +407,7 @@ borderaverage_dialog (void)
 				     0, 256, 1, 5, 0, 0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -421,7 +422,7 @@ borderaverage_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new (_("Bucket Size:"));
+  label = gtk_label_new_with_mnemonic (_("_Bucket Size:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -442,6 +443,7 @@ borderaverage_dialog (void)
 				NULL);
   gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), menu);
 
   gtk_widget_show (dlg);
 

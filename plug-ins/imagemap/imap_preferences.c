@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -431,7 +431,6 @@ create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    GtkWidget *table;
    GtkWidget *frame;
    GtkWidget *hbox;
-   GSList    *group;
    GtkWidget *label;
 
    table = gtk_table_new(7, 2, FALSE);
@@ -446,34 +445,34 @@ create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    hbox = gtk_hbox_new(FALSE, 1);
    gtk_container_add(GTK_CONTAINER(frame), hbox);
    gtk_widget_show(hbox);
-   data->ncsa = gtk_radio_button_new_with_label(NULL, "NCSA");
+   data->ncsa = gtk_radio_button_new_with_mnemonic_from_widget(NULL, "_NCSA");
    gtk_box_pack_start(GTK_BOX(hbox), data->ncsa, TRUE, TRUE, 10);
    gtk_widget_show(data->ncsa);
-   group = gtk_radio_button_group(GTK_RADIO_BUTTON(data->ncsa));
-   data->cern = gtk_radio_button_new_with_label(group, "CERN");
+   data->cern = gtk_radio_button_new_with_mnemonic_from_widget(
+      GTK_RADIO_BUTTON(data->ncsa), "C_ERN");
    gtk_box_pack_start(GTK_BOX(hbox), data->cern, TRUE, TRUE, 10);
    gtk_widget_show(data->cern);
-   group = gtk_radio_button_group(GTK_RADIO_BUTTON(data->cern));
-   data->csim = gtk_radio_button_new_with_label(group, "CSIM");
+   data->csim = gtk_radio_button_new_with_mnemonic_from_widget(
+      GTK_RADIO_BUTTON(data->cern), "C_SIM");
    gtk_box_pack_start(GTK_BOX(hbox), data->csim, TRUE, TRUE, 10);
    gtk_widget_show(data->csim);
 
    data->prompt_for_area_info = 
-      create_check_button_in_table(table, 1, 0, _("Prompt for area info"));
+      create_check_button_in_table(table, 1, 0, _("_Prompt for area info"));
    data->require_default_url = 
-      create_check_button_in_table(table, 2, 0, _("Require default URL"));
+      create_check_button_in_table(table, 2, 0, _("_Require default URL"));
    data->show_area_handle = 
-      create_check_button_in_table(table, 3, 0, _("Show area handles"));
+      create_check_button_in_table(table, 3, 0, _("Show area _handles"));
    data->keep_circles_round = 
-      create_check_button_in_table(table, 4, 0, _("Keep NCSA circles true"));
+      create_check_button_in_table(table, 4, 0, _("_Keep NCSA circles true"));
    data->show_url_tip =
-      create_check_button_in_table(table, 5, 0, _("Show area URL tip"));
+      create_check_button_in_table(table, 5, 0, _("Show area URL _tip"));
    data->use_doublesized = 
       create_check_button_in_table(table, 6, 0,
-				   _("Use double-sized grab handles"));
+				   _("_Use double-sized grab handles"));
    gtk_widget_show(frame);
 
-   label = gtk_label_new( _("General"));
+   label = gtk_label_new_with_mnemonic( _("_General"));
    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), table, label);
 }
 
@@ -494,13 +493,16 @@ create_menu_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    gtk_table_set_col_spacings(GTK_TABLE(table), 10);
    gtk_widget_show(table);
 
-   create_label_in_table(table, 0, 0, _("Number of Undo levels (1 - 99):"));
-   data->undo_levels = create_spin_button_in_table(table, 0, 1, 1, 1, 99);
+   label = create_label_in_table(table, 0, 0, 
+				 _("Number of Undo _levels (1 - 99):"));
+   data->undo_levels = create_spin_button_in_table(table, 0, 1, 1, 1, 
+						   99);
 
-   create_label_in_table(table, 1, 0, _("Number of MRU entries (1 - 16):"));
+   label = create_label_in_table(table, 1, 0, 
+				 _("Number of MRU _entries (1 - 16):"));
    data->mru_size = create_spin_button_in_table(table, 1, 1, 1, 1, 16);
 
-   label = gtk_label_new( _("Menu"));
+   label = gtk_label_new_with_mnemonic( _("_Menu"));
    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
 }
 
@@ -548,7 +550,7 @@ create_colors_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    data->selected_bg = create_color_field(data, table, 1, 2,
 					  (GtkSignalFunc) edit_selected_bg);
 
-   label = gtk_label_new( _("Colors"));
+   label = gtk_label_new_with_mnemonic( _("Co_lors"));
    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
 }
 

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -139,8 +139,8 @@ typedef struct {
    void (*set_xy)(Object_t *obj, guint state, gint x, gint y);
 } ObjectFactory_t;
 
-void object_on_button_press(GtkWidget *widget, GdkEventButton *event,
-			    gpointer data);
+gboolean object_on_button_press(GtkWidget *widget, GdkEventButton *event,
+				gpointer data);
 
 typedef struct {
    GList *list;

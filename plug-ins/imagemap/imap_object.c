@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -423,7 +423,7 @@ button_motion(GtkWidget *widget, GdkEventMotion *event,
    object_draw(factory->obj, widget->window);
 }
 
-void 
+gboolean
 object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
    static ObjectFactory_t *factory;
@@ -433,7 +433,7 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
    static Object_t *obj;
 
    if (event->type == GDK_2BUTTON_PRESS)
-      return;
+      return FALSE;
 
    round_to_grid(&x, &y);
 
@@ -484,6 +484,7 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
                           factory);   
       }
    }
+   return FALSE;
 }
 
 ObjectList_t*
