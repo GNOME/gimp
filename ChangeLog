@@ -1,3 +1,8 @@
+2000-06-13  Jay Cox  <jaycox@gimp.org>
+
+	* tools/pdbgen/pdb/help.pdb, app/help_cmds.c:
+ 	#include plug_in.h
+
 Tue Jun 13 19:55:30 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
         * tips/gimp_tips.cs.txt: Updated translation.

@@ -21,6 +21,7 @@
 #include "procedural_db.h"
 
 #include "gimphelp.h"
+#include "plug_in.h"
 
 static ProcRecord help_proc;
 

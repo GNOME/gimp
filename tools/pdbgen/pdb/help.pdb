@@ -50,7 +50,7 @@ HELP
     );
 }
 
-@headers = qw("gimphelp.h");
+@headers = qw("gimphelp.h" "plug_in.h");
 
 @procs = qw(help);
 %exports = (app => [@procs], lib => [@procs]);
