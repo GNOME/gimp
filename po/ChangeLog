@@ -1,3 +1,7 @@
+2004-11-26  Sven Neumann  <sven@gimp.org>
+
+	* sk.po: reverted last commit, it only contained binary gibberish.
+
 2004-11-26  Stanislav Visnovsky <visnovsky@nenya.ms.mff.cuni.cz>
 
 	* sk.po: Updated Slovak translation by Zdeno Podobny.
