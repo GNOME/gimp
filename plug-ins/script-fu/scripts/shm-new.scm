@@ -1,11 +1,4 @@
-;  Create a 3D sphere with optional shadow
-;  The sphere's principle color will be the foreground
-;  Parameters:
-;   bg-color: background color
-;   sphere-color: color of sphere
-;   radius: radius of the sphere in pixels
-;   light:  angle of light source in degrees
-;   shadow: whather to create a shadow as well
+;  Shared memory interface
 
 (define script-fu-shmseg-new shmseg-new)
 (script-fu-register "script-fu-shmseg-new"
@@ -38,7 +31,8 @@
 		    "Ray Lehtiniemi"
 		    "1998"
 		    ""
-		    SF-VALUE "Shmid" "100")
+		    SF-VALUE "Shmid" "100"
+		    SF-VALUE "Offset" "0")
 
 (define script-fu-shmseg-detach shmseg-detach)
 (script-fu-register "script-fu-shmseg-detach"
