@@ -1,6 +1,6 @@
 2000-11-07  Sven Neumann  <sven@gimp.org>
 
-	* app/text_tool.c (text_get_extends): use gdk_fonset_load() as we
+	* app/text_tool.c (text_get_extents): use gdk_fonset_load() as we
 	do in text_render(). Supposed to fix #31099.
 
 2000-11-07  Sven Neumann  <sven@gimp.org>
