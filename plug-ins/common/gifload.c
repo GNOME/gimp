@@ -600,7 +600,7 @@ GetCode (FILE *fd,
       curbit = 0;
       lastbit = 0;
       done = FALSE;
-      last_byte = 0;
+      last_byte = 2;
       return 0;
     }
 
@@ -615,6 +615,8 @@ GetCode (FILE *fd,
 	    }
 	  return -1;
 	}
+
+      fprintf(stderr," %d ",last_byte);
 
       buf[0] = buf[last_byte - 2];
       buf[1] = buf[last_byte - 1];
