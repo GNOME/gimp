@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2001-12-29 18:05+0100\n"
-"PO-Revision-Date: 2001-12-15 16:30+0800\n"
+"POT-Creation-Date: 2002-01-28 23:36+0800\n"
+"PO-Revision-Date: 2002-01-28 23:39+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #: plug-ins/script-fu/script-fu-console.c:143
 msgid "Script-Fu console mode allows only interactive invocation"
-msgstr ""
+msgstr "Script-Fu 控制台模式仅允许交互式激活"
 
 #: plug-ins/script-fu/script-fu-console.c:170
 msgid "Script-Fu Console"
@@ -110,17 +110,17 @@ msgstr ""
 "你所选的字体中至少有一种是无效的。\n"
 "请检查你的设置。\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:510
+#: plug-ins/dbbrowser/dbbrowser_utils.c:485
 #: plug-ins/script-fu/script-fu-scripts.c:1997
 msgid "Author:"
 msgstr "作者："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:526
+#: plug-ins/dbbrowser/dbbrowser_utils.c:501
 #: plug-ins/script-fu/script-fu-scripts.c:2003
 msgid "Copyright:"
 msgstr "版权所有："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:518
+#: plug-ins/dbbrowser/dbbrowser_utils.c:493
 #: plug-ins/script-fu/script-fu-scripts.c:2009
 msgid "Date:"
 msgstr "日期："
@@ -172,58 +172,58 @@ msgstr "重新读入所有可用的脚本"
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Xtns/Script-Fu/刷新"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:149
-#: plug-ins/dbbrowser/dbbrowser_utils.c:168
+#: plug-ins/dbbrowser/dbbrowser_utils.c:125
+#: plug-ins/dbbrowser/dbbrowser_utils.c:144
 msgid "DB Browser (init...)"
 msgstr "DB 浏览器 (初始化...)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:154
-#: plug-ins/dbbrowser/dbbrowser_utils.c:173
+#: plug-ins/dbbrowser/dbbrowser_utils.c:130
+#: plug-ins/dbbrowser/dbbrowser_utils.c:149
 msgid "Search by Name"
 msgstr "按名字搜索"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:156
-#: plug-ins/dbbrowser/dbbrowser_utils.c:175
+#: plug-ins/dbbrowser/dbbrowser_utils.c:132
+#: plug-ins/dbbrowser/dbbrowser_utils.c:151
 msgid "Search by Blurb"
 msgstr "按描述搜索"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:227
+#: plug-ins/dbbrowser/dbbrowser_utils.c:215
 msgid "Search:"
 msgstr "搜索："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:358
+#: plug-ins/dbbrowser/dbbrowser_utils.c:344
 msgid "Name:"
 msgstr "名字"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:367
+#: plug-ins/dbbrowser/dbbrowser_utils.c:353
 msgid "Blurb:"
 msgstr "描述："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:379
+#: plug-ins/dbbrowser/dbbrowser_utils.c:365
 msgid "In:"
 msgstr "输入："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:426
+#: plug-ins/dbbrowser/dbbrowser_utils.c:413
 msgid "Out:"
 msgstr "输出："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:480
+#: plug-ins/dbbrowser/dbbrowser_utils.c:467
 msgid "Help:"
 msgstr "帮助："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:601
+#: plug-ins/dbbrowser/dbbrowser_utils.c:570
 msgid "DB Browser (by name - please wait)"
 msgstr "DB 浏览器 (按名字 - 请等待)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:625
+#: plug-ins/dbbrowser/dbbrowser_utils.c:594
 msgid "DB Browser (by blurb - please wait)"
 msgstr "DB 浏览器 (按描述 - 请等待)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:635
+#: plug-ins/dbbrowser/dbbrowser_utils.c:604
 msgid "DB Browser (please wait)"
 msgstr "DB 浏览器 (请等待)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:701
+#: plug-ins/dbbrowser/dbbrowser_utils.c:630
 msgid "DB Browser"
 msgstr "DB 浏览器"
 
@@ -247,15 +247,15 @@ msgstr "<Image>/滤镜/模糊/可平铺模糊..."
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Clothify..."
-msgstr ""
+msgstr "<Image>/Script-Fu/炼金术/布状效果..."
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
-msgstr ""
+msgstr "<Image>/Script-Fu/炼金术/隔行擦除..."
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Predator..."
-msgstr ""
+msgstr "<Image>/Script-Fu/炼金术/掠夺者..."
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
@@ -263,11 +263,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Weave..."
-msgstr ""
+msgstr "<Image>/Script-Fu/炼金术/编织..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alpha 到徽标/3D 轮廓..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
@@ -279,23 +279,23 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alpha 到徽标/基本 I..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alpha 到徽标/基本 II..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Blended..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alpha 到徽标/混和..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alpha 到徽标/奶牛..."
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alpha 到徽标/粉笔..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
@@ -307,23 +307,23 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alpha 到徽标/漫画书..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alpha 到徽标/冰凉金属..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Frosty..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alpha 到徽标/霜冻..."
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alpha 到徽标/光泽..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alpha 到徽标/炽热..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
@@ -331,39 +331,44 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alpha 到徽标/霓虹灯..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alpha 到徽标/粒子径迹..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alpha 到徽标/恒星爆发..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alpha 到徽标/恒星景色..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alpha 到徽标/材质..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Blend..."
-msgstr ""
+msgstr "<Image>/Script-Fu/动画/混和..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr ""
+msgstr "<Image>/Script-Fu/动画/荡漾..."
+
+#: plug-ins/gap/sel-to-anim-img.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+msgstr "<Image>/Script-Fu/动画/旋转球..."
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
-msgstr ""
+msgstr "<Image>/Script-Fu/动画/旋转球..."
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Waves..."
-msgstr ""
+msgstr "<Image>/Script-Fu/动画/波纹..."
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 msgid "<Image>/Script-Fu/Decor/Add Bevel..."
@@ -371,35 +376,35 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "<Image>/Script-Fu/Decor/Add Border..."
-msgstr ""
+msgstr "<Image>/Script-Fu/装饰/添加边框..."
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
-msgstr ""
+msgstr "<Image>/Script-Fu/装饰/咖啡迹..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
-msgstr ""
+msgstr "<Image>/Script-Fu/装饰/边缘模糊..."
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "<Image>/Script-Fu/Decor/Old Photo..."
-msgstr ""
+msgstr "<Image>/Script-Fu/装饰/老照片..."
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "<Image>/Script-Fu/Decor/Round Corners..."
-msgstr ""
+msgstr "<Image>/Script-Fu/装饰/圆角..."
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "<Image>/Script-Fu/Decor/Slide..."
-msgstr ""
+msgstr "<Image>/Script-Fu/装饰/幻灯片..."
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "<Image>/Script-Fu/Render/Circuit..."
-msgstr ""
+msgstr "<Image>/Script-Fu/绘制/电路板..."
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "<Image>/Script-Fu/Render/Lava..."
-msgstr ""
+msgstr "<Image>/Script-Fu/绘制/熔岩..."
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "<Image>/Script-Fu/Render/Line Nova..."
@@ -407,35 +412,35 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "<Image>/Script-Fu/Render/Make Grid System..."
-msgstr ""
+msgstr "<Image>/Script-Fu/绘制/网格制作..."
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "<Image>/Script-Fu/Selection/Distress Selection..."
-msgstr ""
+msgstr "<Image>/Script-Fu/选择/花式选择..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "<Image>/Script-Fu/Selection/Fade Outline..."
-msgstr ""
+msgstr "<Image>/Script-Fu/选择/轮廓淡化..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm:0
 msgid "<Image>/Script-Fu/Selection/Round..."
-msgstr ""
+msgstr "<Image>/Script-Fu/选择/圆角..."
 
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "<Image>/Script-Fu/Selection/To Brush..."
-msgstr ""
+msgstr "<Image>/Script-Fu/选择/到画笔..."
 
 #: plug-ins/script-fu/scripts/select_to_image.scm:0
 msgid "<Image>/Script-Fu/Selection/To Image"
-msgstr ""
+msgstr "<Image>/Script-Fu/选择/到图像"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
-msgstr ""
+msgstr "<Image>/Script-Fu/阴影/投影..."
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "<Image>/Script-Fu/Shadow/Perspective..."
-msgstr ""
+msgstr "<Image>/Script-Fu/阴影/透视..."
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
@@ -451,27 +456,27 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
-msgstr ""
+msgstr "<Image>/Script-Fu/工具/ASCII 到图像图层..."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
-msgstr ""
+msgstr "<Image>/Script-Fu/工具/绘制 HSV 图线..."
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
-msgstr ""
+msgstr "<Image>/Script-Fu/工具/显示图像结构..."
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/按钮/圆角按钮..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/按钮/简单立体按钮..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/3D 轮廓..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
@@ -483,27 +488,27 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/基础 I..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/基础 II..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/基础 II..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/奶牛..."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/雕刻..."
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/粉笔..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
@@ -515,27 +520,27 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/漫画书..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/冰凉金属..."
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/晶体..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/霜冻..."
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/光泽..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/炽热..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
@@ -547,15 +552,15 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/霓虹灯..."
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/新闻印刷..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/粒子径迹..."
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
@@ -567,43 +572,43 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/恒星爆发..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/恒星景色..."
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/文本环..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/材质..."
 
 #: plug-ins/script-fu/scripts/title-header.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/徽标/网页题头..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/制作画笔/椭圆、羽化..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/制作画笔/椭圆..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/制作画笔/矩形、羽化..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/制作画笔/矩形..."
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/其它/球体..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
@@ -611,7 +616,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/图案/迷彩..."
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
@@ -619,11 +624,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/图案/陆地与海洋..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/图案/绘制地图..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
@@ -635,7 +640,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/图案/次摆线..."
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
@@ -643,11 +648,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/工具/ASCII 到图像..."
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/工具/自定义渐变..."
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
@@ -719,71 +724,71 @@ msgstr ""
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web 浏览器/开发人员常见问题"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web 浏览器/GIMP 缺陷"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web 浏览器/GIMP 手册"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web 浏览器/GIMP 新闻"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web 浏览器/GIMP 使用教程"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web 浏览器/GIMP.ORG/文档"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web 浏览器/GIMP.ORG/下载"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web 浏览器/GIMP.ORG/GIMP 艺术"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web 浏览器/GIMP.ORG/GTK"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web 浏览器/GIMP.ORG/连接"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web 浏览器/GIMP.ORG/邮件列表"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web 浏览器/GIMP.ORG/资源"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web 浏览器/GIMP.ORG/The GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web 浏览器/Gimp-Savvy.com"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web 浏览器/Grokking the GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web 浏览器/插件注册"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web 浏览器/用户常见问题"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Background"
@@ -791,7 +796,7 @@ msgstr "添加背景"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Drop-Shadow"
-msgstr ""
+msgstr "添加投影"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "Add Glowing"
@@ -799,7 +804,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Add Shadow"
-msgstr ""
+msgstr "添加阴影"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "After Glow"
@@ -808,19 +813,23 @@ msgstr ""
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Allow Resizing"
-msgstr ""
+msgstr "允许改变大小"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Amplitude"
-msgstr ""
+msgstr "振幅"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Angle"
+msgstr "角度"
+
+#: plug-ins/gap/sel-to-anim-img.scm:0
+msgid "Anim-Filter for all Copies"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Antialias"
-msgstr ""
+msgstr "边缘平滑"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Apply Generated Layermask"
@@ -828,7 +837,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Apply Layer Mask (or discard)"
-msgstr ""
+msgstr "应用图层蒙板(或丢弃)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "AutoCrop"
@@ -837,11 +846,11 @@ msgstr ""
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Azimuth"
-msgstr ""
+msgstr "方位角"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "BG Opacity"
-msgstr ""
+msgstr "背景不透明度"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
@@ -891,54 +900,54 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Base Color"
-msgstr ""
+msgstr "基本颜色"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Base Radius (pixels)"
-msgstr ""
+msgstr "基圆半径(像素)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Behaviour"
-msgstr ""
+msgstr "表现"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "Bevel Height (Sharpness)"
-msgstr ""
+msgstr "截面高度(锐度)"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Bevel Width"
-msgstr ""
+msgstr "截面宽度"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Blend Gradient (Outline)"
-msgstr ""
+msgstr "混和渐变(轮廓)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Blend Gradient (Text)"
-msgstr ""
+msgstr "混和渐变(文字)"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "Blend Mode"
-msgstr ""
+msgstr "混和模式"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Block Size"
-msgstr ""
+msgstr "方块大小"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Blur Amount"
-msgstr ""
+msgstr "模糊量"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Blur Border"
-msgstr ""
+msgstr "边缘模糊"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Blur Horizontally"
-msgstr ""
+msgstr "水平模糊"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/news-text.scm:0
@@ -946,51 +955,51 @@ msgstr ""
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Blur Radius"
-msgstr ""
+msgstr "模糊半径"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Blur Type"
-msgstr ""
+msgstr "模糊类型"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Blur Vertically"
-msgstr ""
+msgstr "垂直模糊"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 msgid "Blur X"
-msgstr ""
+msgstr "模糊 X"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 msgid "Blur Y"
-msgstr ""
+msgstr "模糊 Y"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border Color"
-msgstr ""
+msgstr "边缘颜色"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Border Size (pixels)"
-msgstr ""
+msgstr "边缘大小(像素)"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Border Size"
-msgstr ""
+msgstr "边缘大小"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border X Size"
-msgstr ""
+msgstr "边缘 X 大小"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border Y Size"
-msgstr ""
+msgstr "边缘 Y 大小"
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Border"
-msgstr ""
+msgstr "边缘"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "Buffer Amount (% Height of Text)"
@@ -998,15 +1007,15 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Bumpmap (Alpha Layer) Blur Radius"
-msgstr ""
+msgstr "凸起映射(Alpha 图层)模糊半径"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "Burst Color"
-msgstr ""
+msgstr "爆发颜色"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "Carve Raised Text"
-msgstr ""
+msgstr "雕刻凸起文字"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 msgid "Carve White Areas"
@@ -1018,7 +1027,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
 msgid "Chalk Color"
-msgstr ""
+msgstr "粉笔颜色"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Chip Amount"
@@ -1051,7 +1060,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "Circuit Seed"
-msgstr ""
+msgstr "电路种子"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Clear Unselected Maskarea"
@@ -1059,25 +1068,25 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "Color 1"
-msgstr ""
+msgstr "颜色 1"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "Color 2"
-msgstr ""
+msgstr "颜色 2"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "Color 3"
-msgstr ""
+msgstr "颜色 3"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Color"
-msgstr ""
+msgstr "颜色"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Columns"
-msgstr ""
+msgstr "列"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "Corona Width"
@@ -1085,15 +1094,15 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Create New Image"
-msgstr ""
+msgstr "创建新图像"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 msgid "Create Shadow"
-msgstr ""
+msgstr "创建阴影"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "Custom Gradient"
-msgstr ""
+msgstr "自定义渐变"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "Dark Color"
@@ -1104,39 +1113,41 @@ msgid ""
 "Darken Only\n"
 "(Better, but only for Images with alot of White)"
 msgstr ""
+"仅仅进行加深\n"
+"(好一些，但只对有许多白色的图像)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Default Bumpmap Settings"
-msgstr ""
+msgstr "默认的凸起映射设置"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Defocus"
-msgstr ""
+msgstr "模糊"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Delta Value on Color"
-msgstr ""
+msgstr "颜色变化增量"
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
 #: plug-ins/script-fu/scripts/speed-text.scm:0
 msgid "Density (%)"
-msgstr ""
+msgstr "密度(%)"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Depth"
-msgstr ""
+msgstr "深度"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Detail Level"
-msgstr ""
+msgstr "细节等级"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Detail in Middle"
@@ -1149,90 +1160,90 @@ msgstr ""
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Down"
-msgstr ""
+msgstr "下"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Blur Radius"
-msgstr ""
+msgstr "投影模糊半径"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Color"
-msgstr ""
+msgstr "投影颜色"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Opacity"
-msgstr ""
+msgstr "投影不透明度"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow X Offset"
-msgstr ""
+msgstr "投影 X 位移"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Y Offset"
-msgstr ""
+msgstr "投影 Y 位移"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Drop Shadow"
-msgstr ""
+msgstr "投影"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Edge Amount"
-msgstr ""
+msgstr "边缘量"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Edge Only"
-msgstr ""
+msgstr "只有边缘"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Edge Radius"
-msgstr ""
+msgstr "边缘半径"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Edge Width"
-msgstr ""
+msgstr "边缘宽度"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
 msgid "Effect Size (pixels * 3)"
-msgstr ""
+msgstr "效果大小(像素 * 3)"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "Effect Size (pixels * 30)"
-msgstr ""
+msgstr "效果大小(像素 * 30)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "Effect Size (pixels * 4)"
-msgstr ""
+msgstr "效果大小(像素 * 4)"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 msgid "Effect Size (pixels * 5)"
-msgstr ""
+msgstr "效果大小(像素 * 5)"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
 msgid "Effect Size (pixels)"
-msgstr ""
+msgstr "效果大小(像素)"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Elevation"
-msgstr ""
+msgstr "仰角"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "End Blend"
-msgstr ""
+msgstr "混和终止颜色"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "End X"
-msgstr ""
+msgstr "终止 X"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "End Y"
-msgstr ""
+msgstr "终止 Y"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Ending Blend"
-msgstr ""
+msgstr "混和终止颜色"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
@@ -1246,31 +1257,31 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Erase"
-msgstr ""
+msgstr "擦除"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Erase/Fill"
-msgstr ""
+msgstr "擦除/填充"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even"
-msgstr ""
+msgstr "偶数"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even/Odd"
-msgstr ""
+msgstr "偶数/奇数"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "FG-BG-HSV"
-msgstr ""
+msgstr "前景-背景-HSV"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "FG-BG-RGB"
-msgstr ""
+msgstr "前景-背景-RGB"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "FG-Transparent"
-msgstr ""
+msgstr "前景-透明"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Fade Away"
@@ -1278,11 +1289,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Fade From %"
-msgstr ""
+msgstr "淡化从 %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Fade To   %"
-msgstr ""
+msgstr "淡化到 %"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "Fadeout Width"
@@ -1294,24 +1305,29 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "Feathering"
-msgstr ""
+msgstr "羽化"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "Filename"
-msgstr ""
+msgstr "文件名"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Fill Angle"
-msgstr ""
+msgstr "填充角度"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Fill BG with Pattern"
-msgstr ""
+msgstr "以图案填充背景"
+
+#: plug-ins/gap/sel-to-anim-img.scm:0
+#, fuzzy
+msgid "Fill with BG Color"
+msgstr "以背景填充"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Fill with BG"
-msgstr ""
+msgstr "以背景填充"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
@@ -1320,11 +1336,11 @@ msgstr ""
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Flatten Image"
-msgstr ""
+msgstr "平整图像"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Font Color"
-msgstr ""
+msgstr "字体颜色"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
@@ -1365,7 +1381,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #: plug-ins/script-fu/scripts/title-header.scm:0
 msgid "Font Size (pixels)"
-msgstr ""
+msgstr "字体大小(像素)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
@@ -1406,31 +1422,31 @@ msgstr ""
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #: plug-ins/script-fu/scripts/title-header.scm:0
 msgid "Font"
-msgstr ""
+msgstr "字体"
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 msgid "Fonts"
-msgstr ""
+msgstr "字体"
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Foreground Color"
-msgstr ""
+msgstr "前景色"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 msgid "Frame Color"
-msgstr ""
+msgstr "框架颜色"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 msgid "Frame Size"
-msgstr ""
+msgstr "框架大小"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Frames"
-msgstr ""
+msgstr "帧数"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "From Top-Left to Bottom-Right"
-msgstr ""
+msgstr "从左上方到右下方"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
@@ -1442,15 +1458,15 @@ msgstr ""
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "Glow Color"
-msgstr ""
+msgstr "生长颜色"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 msgid "Glow Radius"
-msgstr ""
+msgstr "生长半径"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "Glow Size (pixels * 4)"
-msgstr ""
+msgstr "生长大小(像素 * 4)"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
@@ -1458,29 +1474,29 @@ msgstr ""
 #: plug-ins/script-fu/scripts/land.scm:0 plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Gradient"
-msgstr ""
+msgstr "渐变"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Granularity (1 is Low)"
-msgstr ""
+msgstr "粒度(1 为低)"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Granularity"
-msgstr ""
+msgstr "粒度"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Graph Scale"
-msgstr ""
+msgstr "图像缩放"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "Grids X"
-msgstr ""
+msgstr "网格 X"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "Grids Y"
-msgstr ""
+msgstr "网格 Y"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1488,11 +1504,11 @@ msgstr ""
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Height"
-msgstr ""
+msgstr "高度"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Hexagons"
-msgstr ""
+msgstr "六边形"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
@@ -1518,43 +1534,43 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Hit Rate"
-msgstr ""
+msgstr "击中率"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Hue Rate"
-msgstr ""
+msgstr "色调比率"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "IIR"
-msgstr ""
+msgstr "IIR"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Image Height"
-msgstr ""
+msgstr "图像高度"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Image Size"
-msgstr ""
+msgstr "图像大小"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Image Width"
-msgstr ""
+msgstr "图像宽度"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 msgid "Image to Carve"
-msgstr ""
+msgstr "图像到雕刻"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Index Image"
-msgstr ""
+msgstr "索引图像"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Index to n Colors (0 = Remain RGB)"
-msgstr ""
+msgstr "索引颜色数(0 = 保持 RGB)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Insert Layer Names"
@@ -1562,7 +1578,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Intermediate Frames"
-msgstr ""
+msgstr "间隔帧数"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Interpolate"
@@ -1570,56 +1586,56 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Invert direction"
-msgstr ""
+msgstr "反向"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Invert"
-msgstr ""
+msgstr "反转"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Keep Background"
-msgstr ""
+msgstr "保持背景"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Keep Bump Layer"
-msgstr ""
+msgstr "保持凸起图层"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 #: plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/predator.scm:0
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Keep Selection"
-msgstr ""
+msgstr "保持选择"
 
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Land Height"
-msgstr ""
+msgstr "地面高度"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Left"
-msgstr ""
+msgstr "左"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Lighting (degrees)"
-msgstr ""
+msgstr "光照(角度)"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Looped"
-msgstr ""
+msgstr "循环"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Lower Color (Active)"
-msgstr ""
+msgstr "下方颜色(活动)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Lower Color"
-msgstr ""
+msgstr "下方颜色"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Lower-Right color"
-msgstr ""
+msgstr "右下方颜色"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Make New Background"
@@ -1627,35 +1643,35 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
 msgid "Mask Opacity"
-msgstr ""
+msgstr "蒙板不透明度"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
 msgid "Mask Size"
-msgstr ""
+msgstr "蒙板大小"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Max. Blur Radius"
-msgstr ""
+msgstr "最大模糊半径"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Mosaic Tile Type"
-msgstr ""
+msgstr "马赛克瓦片类型"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Mottle"
-msgstr ""
+msgstr "斑迹"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "No Background (only for separate layer)"
-msgstr ""
+msgstr "没有背景(只对分离的图层)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Not Pressed (Active)"
-msgstr ""
+msgstr "没有按下(活动)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Not Pressed"
-msgstr ""
+msgstr "没有按下"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Number of Bands"
@@ -1664,16 +1680,21 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Number of Colors"
-msgstr ""
+msgstr "颜色数量"
+
+#: plug-ins/gap/sel-to-anim-img.scm:0
+#, fuzzy
+msgid "Number of Copies"
+msgstr "线的数量"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Number of Frames"
-msgstr ""
+msgstr "帧数"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Number of Lines"
-msgstr ""
+msgstr "线的数量"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Number of Times to Whirl"
@@ -1682,60 +1703,60 @@ msgstr ""
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Number of X Tiles"
-msgstr ""
+msgstr "X 方向块数"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Number of Y Tiles"
-msgstr ""
+msgstr "Y 方向块数"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
-msgstr ""
+msgstr "数字"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Octagons"
-msgstr ""
+msgstr "八边形"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
-msgstr ""
+msgstr "奇数"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "Offset (pixels)"
-msgstr ""
+msgstr "位移(像素)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Offset Radius"
-msgstr ""
+msgstr "位移半径"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Offset X"
-msgstr ""
+msgstr "位移 X"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Offset Y"
-msgstr ""
+msgstr "位移 Y"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
 msgid "Offsets (pixels * 2)"
-msgstr ""
+msgstr "位移(像素 * 2)"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "Oilify Mask Size"
-msgstr ""
+msgstr "油层掩蔽大小"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Opacity"
-msgstr ""
+msgstr "不透明度"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Orientation"
-msgstr ""
+msgstr "方向"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Outer Border"
@@ -1743,36 +1764,36 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Outline Blur Radius"
-msgstr ""
+msgstr "轮廓模糊半径"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 msgid "Outline Color"
-msgstr ""
+msgstr "轮廓颜色"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Outline Size"
-msgstr ""
+msgstr "轮廓大小"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Pad Color"
-msgstr ""
+msgstr "衬垫颜色"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Pad Opacity"
-msgstr ""
+msgstr "衬垫不透明度"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "Padding Around Text"
-msgstr ""
+msgstr "文字衬垫宽度"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Padding X"
-msgstr ""
+msgstr "衬垫 X"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Padding Y"
-msgstr ""
+msgstr "衬垫 Y"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Padding for Transparent Regions"
@@ -1785,15 +1806,15 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Outline)"
-msgstr ""
+msgstr "图案(轮廓)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Overlay)"
-msgstr ""
+msgstr "图案(覆盖)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Text)"
-msgstr ""
+msgstr "图案(文字)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -1804,15 +1825,15 @@ msgstr ""
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Pattern"
-msgstr ""
+msgstr "图案"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-msgstr ""
+msgstr "笔半径/滚轮半径 [0.0:1.0]"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Pixel Amount"
-msgstr ""
+msgstr "像素量"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Pixelize"
@@ -1826,7 +1847,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Pressed"
-msgstr ""
+msgstr "按下"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Quarter Size"
@@ -1834,127 +1855,127 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "RLE"
-msgstr ""
+msgstr "RLE"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Radius (pixels)"
-msgstr ""
+msgstr "半径(像素)"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Radius"
-msgstr ""
+msgstr "半径"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Random Seed"
-msgstr ""
+msgstr "随机数种子"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Randomness"
-msgstr ""
+msgstr "随机度"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Relative Distance of Horizon"
-msgstr ""
+msgstr "水平的相对距离"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Relative Length of Shadow"
-msgstr ""
+msgstr "阴影的相对长度"
 
 #: plug-ins/script-fu/scripts/selection-round.scm:0
 msgid "Relative Radius"
-msgstr ""
+msgstr "相对半径"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Remove Background"
-msgstr ""
+msgstr "去掉背景"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Ribbon Spacing"
-msgstr ""
+msgstr "织条间距"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Ribbon Width"
-msgstr ""
+msgstr "织条宽度"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Right"
-msgstr ""
+msgstr "右"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "Rippling Strength"
-msgstr ""
+msgstr "荡漾强度"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Roughness"
-msgstr ""
+msgstr "粗略度"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Round Ratio"
-msgstr ""
+msgstr "圆角比例"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows"
-msgstr ""
+msgstr "行"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows/Cols"
-msgstr ""
+msgstr "行/列"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Scale X"
-msgstr ""
+msgstr "缩放 X"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Scale Y"
-msgstr ""
+msgstr "缩放 Y"
 
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Sea Depth"
-msgstr ""
+msgstr "海洋深度"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"
-msgstr ""
+msgstr "种子"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Select-By-Color Threshold"
-msgstr ""
+msgstr "按颜色选择阈值"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 #: plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Separate Layer"
-msgstr ""
+msgstr "分离的图层"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Sepia"
-msgstr ""
+msgstr "褐色"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Shadow Blur Radius"
-msgstr ""
+msgstr "阴影模糊半径"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Shadow Color"
-msgstr ""
+msgstr "阴影颜色"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Shadow Darkness"
-msgstr ""
+msgstr "阴影颜色深度"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Shadow Depth"
-msgstr ""
+msgstr "阴影凹陷深度"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Shadow Weight (%)"
@@ -1964,18 +1985,18 @@ msgstr ""
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Shadow X Offset"
-msgstr ""
+msgstr "阴影 X 位移"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Shadow Y Offset"
-msgstr ""
+msgstr "阴影 Y 位移"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Shadow"
-msgstr ""
+msgstr "阴影"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Sharpness (degrees)"
@@ -1989,20 +2010,20 @@ msgstr ""
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Size"
-msgstr ""
+msgstr "大小"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth Horizontally"
-msgstr ""
+msgstr "水平平滑"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth Vertically"
-msgstr ""
+msgstr "垂直平滑"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth"
-msgstr ""
+msgstr "平滑"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Space Between Layers"
@@ -2011,56 +2032,56 @@ msgstr ""
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "Spacing"
-msgstr ""
+msgstr "间距"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "Speed (pixels/frame)"
-msgstr ""
+msgstr "速度(像素/帧)"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Sphere Color"
-msgstr ""
+msgstr "球体颜色"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "Spots density X"
-msgstr ""
+msgstr "斑块密度 X"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "Spots density Y"
-msgstr ""
+msgstr "斑块密度 Y"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Spread"
-msgstr ""
+msgstr "延伸"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Squares"
-msgstr ""
+msgstr "方块"
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid "Stains"
-msgstr ""
+msgstr "迹数"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Start Angle"
-msgstr ""
+msgstr "起始角度"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "Start Blend"
-msgstr ""
+msgstr "混和起始颜色"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Start X"
-msgstr ""
+msgstr "起始 X"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Start Y"
-msgstr ""
+msgstr "起始 Y"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Starting Blend"
-msgstr ""
+msgstr "混和起始颜色"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "Supersample"
@@ -2068,7 +2089,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Text Color (Active)"
-msgstr ""
+msgstr "文字颜色(活动)"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #: plug-ins/script-fu/scripts/asc2img.scm:0
@@ -2084,11 +2105,11 @@ msgstr ""
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #: plug-ins/script-fu/scripts/speed-text.scm:0
 msgid "Text Color"
-msgstr ""
+msgstr "文字颜色"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Text Pattern"
-msgstr ""
+msgstr "文字图案"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
@@ -2128,69 +2149,69 @@ msgstr ""
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #: plug-ins/script-fu/scripts/title-header.scm:0
 msgid "Text"
-msgstr ""
+msgstr "文字"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Thickness"
-msgstr ""
+msgstr "厚度"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Thread Density"
-msgstr ""
+msgstr "线密度"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Thread Intensity"
-msgstr ""
+msgstr "线亮度"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Thread Length"
-msgstr ""
+msgstr "线长度"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Threshold (Bigger 1<-->255 Smaller)"
-msgstr ""
+msgstr "阈值(更大 1<-->255 更小)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Tile"
-msgstr ""
+msgstr "平铺"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Transparent Background"
-msgstr ""
+msgstr "透明背景"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Turn from Left to Right"
-msgstr ""
+msgstr "从左往右转"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Up"
-msgstr ""
+msgstr "上"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Upper Color (Active)"
-msgstr ""
+msgstr "上方颜色(活动)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Upper Color"
-msgstr ""
+msgstr "上方颜色"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Upper-Left color"
-msgstr ""
+msgstr "左上方颜色"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Use Brush"
-msgstr ""
+msgstr "使用画笔"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Use Current Gradient"
-msgstr ""
+msgstr "使用当前渐变"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Use Growing Selection"
@@ -2198,15 +2219,15 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern Overlay"
-msgstr ""
+msgstr "使用覆盖图案"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern for Outline instead of Gradient"
-msgstr ""
+msgstr "对轮廓使用图案而不是渐变"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern for Text instead of Gradient"
-msgstr ""
+msgstr "对文字使用图案而不是渐变"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Use Selection Bounds Instead of Belows"
@@ -2214,11 +2235,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Wavelength"
-msgstr ""
+msgstr "波长"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Wheel Radius (hypo < 0 < epi)"
-msgstr ""
+msgstr "滚轮半径(hypo < 0 < epi)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Whirl Amount"
@@ -2241,7 +2262,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Width"
-msgstr ""
+msgstr "宽度"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
@@ -2250,4 +2271,4 @@ msgstr ""
 #: plug-ins/script-fu/scripts/slide.scm:0
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
-msgstr ""
+msgstr "在副本中操作"
