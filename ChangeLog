@@ -1,5 +1,13 @@
 2000-06-14  Michael Natterer  <mitch@gimp.org>
 
+	* Makefile.am: typo.
+
+	* cursors/mouse_intersect[_mask].xbm: forgot to remove this one.
+
+	* cursors/gimp-tool-cursors.xcf: new file containing all cursors.
+
+2000-06-14  Michael Natterer  <mitch@gimp.org>
+
 	* Makefile.am
 	* app/cursorutil.[ch]
 	* app/tools.c

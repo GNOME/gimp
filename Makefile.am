@@ -44,7 +44,7 @@ EXTRA_DIST = \
 	cursors/move.xbm			\
 	cursors/move_mask.xbm			\
 	cursors/resize.xbm			\
-	cursors/rexize_mask.xbm			\
+	cursors/resize_mask.xbm			\
 	cursors/control.xbm			\
 	cursors/control_mask.xbm		\
 	cursors/hand.xbm			\
