@@ -1,3 +1,8 @@
+2001-10-07  DindinX <dindinx@wanadoo.fr>
+
+	* plug-ins/common/apply_lens.c: little optimisation by avoiding some
+	useless recalculation.
+
 2001-10-04  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpfontselection-dialog.c: inserted some extra checks

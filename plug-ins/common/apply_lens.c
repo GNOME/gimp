@@ -210,25 +210,22 @@ run (gchar   *name,
   Ellipsoid formula: x^2/a^2 + y^2/b^2 + z^2/c^2 = 1
  */
 static void
-find_projected_pos (gfloat  a,
-		    gfloat  b,
+find_projected_pos (gfloat  a2,
+		    gfloat  b2,
+		    gfloat  c2,
 		    gfloat  x,
 		    gfloat  y,
 		    gfloat *projx,
 		    gfloat *projy)
 {
-  gfloat c;
   gfloat n[3];
   gfloat nxangle, nyangle, theta1, theta2;
   gfloat ri1 = 1.0;
   gfloat ri2 = lvals.refraction;
 
-  /* PARAM */
-  c = MIN (a, b);
-
   n[0] = x;
   n[1] = y;
-  n[2] = sqrt ((1 - x * x / (a * a) - y * y / (b * b)) * (c * c));
+  n[2] = sqrt ((1 - x * x / a2 - y * y / b2) * c2);
 
   nxangle = acos (n[0] / sqrt(n[0] * n[0] + n[2] * n[2]));
   theta1 = G_PI / 2 - nxangle;
@@ -255,7 +252,7 @@ drawlens (GimpDrawable *drawable)
   guchar  *src, *dest;
   gint     i, col;
   gfloat   regionwidth, regionheight, dx, dy, xsqr, ysqr;
-  gfloat   a, b, asqr, bsqr, x, y;
+  gfloat   a, b, c, asqr, bsqr, csqr, x, y;
   glong    pixelpos, pos;
   GimpRGB  background;
   guchar   bgr_red, bgr_blue, bgr_green;
@@ -271,8 +268,11 @@ drawlens (GimpDrawable *drawable)
   regionheight = y2 - y1;
   b = regionheight / 2;
 
+  c = MIN (a, b);
+
   asqr = a * a;
   bsqr = b * b;
+  csqr = c * c;
 
   width = drawable->width;
   height = drawable->height;
@@ -296,7 +296,7 @@ drawlens (GimpDrawable *drawable)
 	  ysqr = dy * dy;
 	  if (ysqr < (bsqr - (bsqr * xsqr) / asqr))
 	    {
-	      find_projected_pos (a, b, dx, dy, &x, &y);
+	      find_projected_pos (asqr, bsqr, csqr, dx, dy, &x, &y);
 	      y = -y;
 	      pos = ((gint) (y + b) * regionwidth + (gint) (x + a)) * bytes;
 
