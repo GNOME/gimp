@@ -39,6 +39,7 @@
 
 #include "gimpflipoptions.h"
 #include "gimpfliptool.h"
+#include "gimptoolcontrol.h"
 
 #include "path_transform.h"
 

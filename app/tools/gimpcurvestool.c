@@ -50,6 +50,7 @@
 #include "display/gimpdisplay.h"
 
 #include "gimpcurvestool.h"
+#include "gimptoolcontrol.h"
 #include "tool_manager.h"
 
 #include "gimp-intl.h"

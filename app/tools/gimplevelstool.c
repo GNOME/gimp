@@ -54,6 +54,7 @@
 #include "display/gimpdisplay.h"
 
 #include "gimplevelstool.h"
+#include "gimptoolcontrol.h"
 #include "tool_manager.h"
 
 #include "gimp-intl.h"

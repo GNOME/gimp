@@ -42,6 +42,7 @@
 
 #include "gimpmagnifyoptions.h"
 #include "gimpmagnifytool.h"
+#include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
 

@@ -32,6 +32,7 @@
 #include "widgets/gimppropwidgets.h"
 
 #include "gimpairbrushtool.h"
+#include "gimptoolcontrol.h"
 #include "paint_options.h"
 
 #include "gimp-intl.h"

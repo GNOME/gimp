@@ -54,6 +54,7 @@
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpprogress.h"
 
+#include "gimptoolcontrol.h"
 #include "gimptransformoptions.h"
 #include "gimptransformtool.h"
 #include "gimptransformtool-undo.h"

@@ -44,6 +44,7 @@
 #include "gimpeditselectiontool.h"
 #include "gimpmoveoptions.h"
 #include "gimpmovetool.h"
+#include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
 

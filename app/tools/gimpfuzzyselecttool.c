@@ -32,7 +32,6 @@
 #include "base/pixel-region.h"
 
 #include "core/gimpchannel.h"
-#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-contiguous-region.h"
 #include "core/gimpimage-mask.h"
@@ -48,6 +47,7 @@
 #include "gimpeditselectiontool.h"
 #include "gimpfuzzyselecttool.h"
 #include "gimpselectionoptions.h"
+#include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
 

@@ -38,6 +38,7 @@
 
 #include "gimpbucketfilloptions.h"
 #include "gimpbucketfilltool.h"
+#include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
 

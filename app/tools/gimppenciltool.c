@@ -28,6 +28,7 @@
 #include "paint/gimppaintoptions.h"
 
 #include "gimppenciltool.h"
+#include "gimptoolcontrol.h"
 #include "paint_options.h"
 
 #include "gimp-intl.h"

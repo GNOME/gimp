@@ -44,6 +44,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
+#include "gimptoolcontrol.h"
 #include "gimpvectoroptions.h"
 #include "gimpvectortool.h"
 

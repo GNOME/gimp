@@ -48,6 +48,7 @@
 #include "gimpinkoptions.h"
 #include "gimpinktool.h"
 #include "gimpinktool-blob.h"
+#include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
 

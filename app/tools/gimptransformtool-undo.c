@@ -28,6 +28,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpundo.h"
 
+#include "gimptoolcontrol.h"
 #include "gimptransformtool.h"
 #include "gimptransformtool-undo.h"
 #include "tool_manager.h"

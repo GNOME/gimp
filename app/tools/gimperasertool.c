@@ -33,6 +33,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimperasertool.h"
+#include "gimptoolcontrol.h"
 #include "paint_options.h"
 
 #include "gimp-intl.h"

@@ -46,6 +46,7 @@
 #include "gimpcolorpickeroptions.h"
 #include "gimpcolorpickertool.h"
 #include "gimppainttool.h"
+#include "gimptoolcontrol.h"
 #include "tool_manager.h"
 
 #include "gimp-intl.h"

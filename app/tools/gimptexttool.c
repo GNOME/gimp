@@ -50,6 +50,7 @@
 
 #include "gimptextoptions.h"
 #include "gimptexttool.h"
+#include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
 

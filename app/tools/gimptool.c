@@ -170,7 +170,28 @@ gimp_tool_real_control (GimpTool       *tool,
 {
 }
 
+static void
+gimp_tool_real_button_press (GimpTool        *tool,
+                             GimpCoords      *coords,
+                             guint32          time,
+                             GdkModifierType  state,
+                             GimpDisplay     *gdisp)
+{
+  tool->gdisp    = gdisp;
+  tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
+  gimp_tool_control_activate (tool->control);
+}
+
+static void
+gimp_tool_real_button_release (GimpTool        *tool,
+                               GimpCoords      *coords,
+                               guint32          time,
+                               GdkModifierType  state,
+                               GimpDisplay     *gdisp)
+{
+  gimp_tool_control_halt (tool->control);
+}
 
 static void
 gimp_tool_real_motion (GimpTool        *tool,
@@ -235,6 +256,7 @@ gimp_tool_initialize (GimpTool    *tool,
                       GimpDisplay *gdisp)
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   GIMP_TOOL_GET_CLASS (tool)->initialize (tool, gdisp);
 }
@@ -291,9 +313,7 @@ gimp_tool_button_press (GimpTool        *tool,
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (coords != NULL);
-
-  /* FIXME */
-  /*g_return_if_fail (GIMP_IS_DISPLAY (gdisp));*/
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   GIMP_TOOL_GET_CLASS (tool)->button_press (tool, coords, time, state, gdisp);
 }
@@ -307,9 +327,7 @@ gimp_tool_button_release (GimpTool        *tool,
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (coords != NULL);
-  
-  /* FIXME */
-  /*g_return_if_fail (GIMP_IS_DISPLAY (gdisp));*/
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   GIMP_TOOL_GET_CLASS (tool)->button_release (tool, coords, time, state, gdisp);
 }
@@ -323,8 +341,7 @@ gimp_tool_motion (GimpTool        *tool,
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (coords != NULL);
-  /* FIXME */
-  /*g_return_if_fail (GIMP_IS_DISPLAY (gdisp));*/
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   GIMP_TOOL_GET_CLASS (tool)->motion (tool, coords, time, state, gdisp);
 }
@@ -335,8 +352,7 @@ gimp_tool_arrow_key (GimpTool    *tool,
                      GimpDisplay *gdisp)
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
-  /* FIXME */
-  /* g_return_if_fail (GIMP_IS_DISPLAY (gdisp)); */
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   GIMP_TOOL_GET_CLASS (tool)->arrow_key (tool, kevent, gdisp);
 }
@@ -349,8 +365,7 @@ gimp_tool_modifier_key (GimpTool        *tool,
                         GimpDisplay     *gdisp)
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
-  /* FIXME */
-  /* g_return_if_fail (GIMP_IS_DISPLAY (gdisp)); */
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   GIMP_TOOL_GET_CLASS (tool)->modifier_key (tool, key, press, state, gdisp);
 }
@@ -363,8 +378,7 @@ gimp_tool_oper_update (GimpTool        *tool,
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (coords != NULL);
-  /* FIXME*/
-  /*g_return_if_fail (GIMP_IS_DISPLAY (gdisp));*/
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   GIMP_TOOL_GET_CLASS (tool)->oper_update (tool, coords, state, gdisp);
 }
@@ -377,8 +391,7 @@ gimp_tool_cursor_update (GimpTool        *tool,
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (coords != NULL);
-  /* FIXME */
-  /* g_return_if_fail (GIMP_IS_DISPLAY (gdisp)); */
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   GIMP_TOOL_GET_CLASS (tool)->cursor_update (tool, coords, state, gdisp);
 }
@@ -453,27 +466,3 @@ gimp_tool_set_cursor (GimpTool           *tool,
                                  tool_cursor,
                                  modifier);
 }
-
-void
-gimp_tool_real_button_press (GimpTool        *tool,
-                             GimpCoords      *coords,
-                             guint32          time,
-                             GdkModifierType  state,
-                             GimpDisplay     *gdisp)
-{
-  tool->gdisp    = gdisp;
-  tool->drawable = gimp_image_active_drawable (gdisp->gimage);
-
-  gimp_tool_control_activate (tool->control);
-}
-
-void
-gimp_tool_real_button_release (GimpTool        *tool,
-                               GimpCoords      *coords,
-                               guint32          time,
-                               GdkModifierType  state,
-                               GimpDisplay     *gdisp)
-{
-  gimp_tool_control_halt (tool->control);
-}
-

@@ -46,6 +46,7 @@
 
 #include "gimpcropoptions.h"
 #include "gimpcroptool.h"
+#include "gimptoolcontrol.h"
 #include "tool_manager.h"
 
 #include "gimp-intl.h"

@@ -43,6 +43,7 @@
 #include "gimpeditselectiontool.h"
 #include "gimprectselecttool.h"
 #include "gimpselectionoptions.h"
+#include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
 

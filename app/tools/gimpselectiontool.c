@@ -34,6 +34,7 @@
 #include "gimpeditselectiontool.h"
 #include "gimpselectiontool.h"
 #include "gimpselectionoptions.h"
+#include "gimptoolcontrol.h"
 
 
 static void   gimp_selection_tool_class_init    (GimpSelectionToolClass *klass);

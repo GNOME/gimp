@@ -19,8 +19,8 @@
 #ifndef __GIMP_TOOL_H__
 #define __GIMP_TOOL_H__
 
+
 #include "core/gimpobject.h"
-#include "gimptoolcontrol.h"
 
 
 #define GIMP_TYPE_TOOL            (gimp_tool_get_type ())
@@ -35,16 +35,16 @@ typedef struct _GimpToolClass GimpToolClass;
 
 struct _GimpTool
 {
-  GimpObject         parent_instance;
+  GimpObject       parent_instance;
 
-  GimpToolInfo      *tool_info;
+  GimpToolInfo    *tool_info;
 
-  gint               ID;           /*  unique tool ID                         */
+  gint             ID;           /*  unique tool ID                         */
 
-  GimpToolControl   *control;
+  GimpToolControl *control;
 
-  GimpDisplay       *gdisp;        /*  pointer to currently active gdisp      */
-  GimpDrawable      *drawable;     /*  pointer to the tool's current drawable */
+  GimpDisplay     *gdisp;        /*  pointer to currently active gdisp      */
+  GimpDrawable    *drawable;     /*  pointer to the tool's current drawable */
 };
 
 struct _GimpToolClass

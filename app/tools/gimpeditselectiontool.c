@@ -31,7 +31,6 @@
 
 #include "base/boundary.h"
 
-#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-mask.h"
@@ -47,8 +46,9 @@
 #include "display/gimpdisplayshell-selection.h"
 #include "display/gimpdisplayshell-transform.h"
 
-#include "gimpeditselectiontool.h"
 #include "gimpdrawtool.h"
+#include "gimpeditselectiontool.h"
+#include "gimptoolcontrol.h"
 #include "tool_manager.h"
 
 #include "path_transform.h"

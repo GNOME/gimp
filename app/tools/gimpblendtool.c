@@ -39,6 +39,7 @@
 
 #include "gimpblendoptions.h"
 #include "gimpblendtool.h"
+#include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
 

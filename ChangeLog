@@ -1,3 +1,11 @@
+2003-04-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptool.c: check for GIMP_IS_DISPLAY(gdisp) again.
+
+	* app/tools/gimptool.h: don't #include "gimptoolcontrol.h"
+
+	* app/tools/[all tools].c: #include "gimptoolcontrol.h"
+
 2003-04-15  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/Makefile.am

@@ -51,6 +51,7 @@
 
 #include "gimpmeasureoptions.h"
 #include "gimpmeasuretool.h"
+#include "gimptoolcontrol.h"
 #include "tool_manager.h"
 
 #include "gimp-intl.h"

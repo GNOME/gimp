@@ -40,6 +40,7 @@
 #include "gui/info-dialog.h"
 
 #include "gimpperspectivetool.h"
+#include "gimptoolcontrol.h"
 #include "gimptransformoptions.h"
 
 #include "gimp-intl.h"
