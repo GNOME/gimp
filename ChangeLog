@@ -1,5 +1,9 @@
 2004-11-06  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/preferences-dialog.c: fixed typo (bug #157513).
+
+2004-11-06  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/convert-dialog.c (convert_dialog_new): removed
 	trailing period from check button label. Fixes bug #157511.
 

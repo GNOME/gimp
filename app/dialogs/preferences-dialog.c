@@ -597,7 +597,7 @@ prefs_session_clear_callback (GtkWidget *widget,
     {
       gtk_widget_set_sensitive (widget, FALSE);
 
-      g_message (_("Your window setup will be reset to default values. "
+      g_message (_("Your window setup will be reset to default values "
                    "the next time you start GIMP."));
     }
 }
