@@ -1,5 +1,10 @@
 2004-03-07  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpfontmenu.c (gimp_font_select_widget_new): use
+	GIMP_STOCK_FONT instead of GTK_STOCK_SELECT_FONT.
+
+2004-03-07  Sven Neumann  <sven@gimp.org>
+
 	Made size of undo previews configurable. Not dynamic for now, but
 	at least not hardcoded any longer. Fixes bug #119905:
 	
