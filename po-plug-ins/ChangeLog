@@ -1,3 +1,7 @@
+2003-06-08  Abel Cheung  <maddog@linux.org.hk>
+
+	* POTFILES.skip: New file. (gdyntext is not compiled)
+
 2003-06-07  Jan Morén  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.

@@ -3,6 +3,7 @@
 
 libgimp/gimpexport.c
 libgimp/gimpmenu.c
+libgimp/gimpmiscui.c
 libgimp/gimpunit.c
 
 libgimpbase/gimputils.c
