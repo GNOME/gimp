@@ -79,6 +79,7 @@ typedef struct
 {
   guint32   seed;
   gdouble   turbulence;
+  gboolean  random_seed;
 } PlasmaValues;
 
 
@@ -141,8 +142,9 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static PlasmaValues pvals =
 {
-  0,     /* seed       */
-  1.0,   /* turbulence */
+  0,     /* seed            */
+  1.0,   /* turbulence      */
+  FALSE, /* Use random seed */
 };
 
 /*
@@ -246,6 +248,8 @@ run (const gchar      *name,
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_plasma", &pvals);
+      if (pvals.random_seed)
+        pvals.seed = g_random_int ();
       break;
 
     default:
@@ -294,7 +298,6 @@ plasma_dialog (GimpDrawable  *drawable,
   GtkWidget *seed;
   GtkObject *adj;
   gboolean   run;
-  gboolean   randomize = FALSE;
 
   gimp_ui_init ("plasma", TRUE);
 
@@ -316,7 +319,7 @@ plasma_dialog (GimpDrawable  *drawable,
   preview = gimp_old_preview_new2 (drawable_type, TRUE);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview->frame, FALSE, FALSE, 0);
 
-  plasma (drawable, TRUE); /* preview image */
+  plasma_seed_changed_callback (drawable, NULL); /* preview image */
 
   gtk_widget_show (preview->widget);
 
@@ -332,7 +335,7 @@ plasma_dialog (GimpDrawable  *drawable,
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  seed = gimp_random_seed_new (&pvals.seed, &randomize);
+  seed = gimp_random_seed_new (&pvals.seed, &pvals.random_seed);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				     _("Random _Seed:"), 1.0, 0.5,
 				     seed, 1, TRUE);
@@ -341,6 +344,11 @@ plasma_dialog (GimpDrawable  *drawable,
 
   g_signal_connect_swapped (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (seed),
                             "value_changed",
+                            G_CALLBACK (plasma_seed_changed_callback),
+                            drawable);
+
+  g_signal_connect_swapped (GIMP_RANDOM_SEED_TOGGLE (seed),
+                            "toggled",
                             G_CALLBACK (plasma_seed_changed_callback),
                             drawable);
 
@@ -370,6 +378,9 @@ static void
 plasma_seed_changed_callback (GimpDrawable *drawable,
                               gpointer      data)
 {
+  if (pvals.random_seed)
+       pvals.seed = g_random_int ();
+
   plasma (drawable, TRUE);
 }
 

@@ -86,12 +86,13 @@
 
 typedef struct
 {
-  gint    tilable;
-  gint    turbulent;
-  guint   seed;
-  gint    detail;
-  gdouble xsize;
-  gdouble ysize;
+  gint     tilable;
+  gint     turbulent;
+  guint    seed;
+  gint     detail;
+  gdouble  xsize;
+  gdouble  ysize;
+  gboolean random_seed;
 } SolidNoiseValues;
 
 
@@ -133,6 +134,7 @@ static SolidNoiseValues snvals =
   1,   /* detail        */
   4.0, /* xsize         */
   4.0, /* ysize         */
+  FALSE,
 };
 
 static gint        xclip, yclip;
@@ -356,6 +358,8 @@ solid_noise_init (void)
   GRand  *gr;
 
   gr = g_rand_new ();
+  if (!snvals.random_seed)
+    g_rand_set_seed (gr, snvals.seed);
 
   /*  Force sane parameters  */
   snvals.detail = CLAMP (snvals.detail, 0, 15);
@@ -487,7 +491,6 @@ solid_noise_dialog (void)
   GtkWidget *spinbutton;
   GtkObject *adj;
   gboolean   run;
-  gboolean   randomize = FALSE;
 
   gimp_ui_init ("snoise", FALSE);
 
@@ -515,7 +518,7 @@ solid_noise_dialog (void)
   gtk_widget_show (table);
 
   /*  Random Seed  */
-  seed_hbox = gimp_random_seed_new (&snvals.seed, &randomize);
+  seed_hbox = gimp_random_seed_new (&snvals.seed, &snvals.random_seed);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				     _("_Random Seed:"), 1.0, 0.5,
 				     seed_hbox, 1, TRUE);

@@ -167,6 +167,7 @@ typedef struct
   GFlareShape   sflare_shape;
   gint          sflare_nverts;
   guint32       sflare_seed;
+  gboolean      random_seed;
 } GFlare;
 
 typedef struct
@@ -538,6 +539,7 @@ GFlare default_gflare =
   GF_CIRCLE,	/* sflare_shape */
   6,		/* sflare_nverts */
   0,		/* sflare_seed */
+  TRUE,         /* random_seed */
 };
 
 /* These are keywords to be written to disk files specifying flares. */
@@ -1881,7 +1883,8 @@ calc_place_sflare (void)
       prob[i] = sum2 / sum;
     }
 
-  g_rand_set_seed (gr, gflare->sflare_seed);
+  if (!gflare->random_seed)
+    g_rand_set_seed (gr, gflare->sflare_seed);
 
   for (n = 0; n < SFLARE_NUM; n++)
     {
@@ -3849,7 +3852,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (seed_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  seed = gimp_random_seed_new (&gflare->sflare_seed, &randomize);
+  seed = gimp_random_seed_new (&gflare->sflare_seed, &gflare->random_seed);
 
   entry = GTK_WIDGET (GIMP_RANDOM_SEED_SPINBUTTON (seed));
 

@@ -313,7 +313,8 @@ run (const gchar      *name,
           /*
            *  Initialize the rand() function seed
            */
-          g_random_set_seed (pivals.blur_seed);
+          if (pivals.blur_randomize)
+            g_random_set_seed (pivals.blur_seed);
 
           blur (drawable);
           /*

@@ -387,7 +387,8 @@ run (const gchar      *name,
 	  /*
 	   *  Initialize the g_rand() function seed
 	   */
-	  g_rand_set_seed (gr, pivals.seed);
+          if (!pivals.randomize)
+            g_rand_set_seed (gr, pivals.seed);
 
 	  randomize (drawable, gr);
 	  /*

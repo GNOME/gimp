@@ -32,6 +32,7 @@ typedef struct {
      gint multiple;
      gint offset;
      MazeAlgoType algorithm;
+     gboolean random_seed;
      /* Interface options. */
 } MazeValues;
 

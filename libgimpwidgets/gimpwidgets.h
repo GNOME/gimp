@@ -237,6 +237,8 @@ void    gimp_scale_entry_set_sensitive (GtkObject          *adjustment,
 #define GIMP_RANDOM_SEED_SPINBUTTON_ADJ(hbox) \
         gtk_spin_button_get_adjustment \
         (GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (hbox), "spinbutton")))
+#define GIMP_RANDOM_SEED_TOGGLE(hbox) \
+        (g_object_get_data (G_OBJECT(hbox), "toggle"))
 
 GtkWidget * gimp_random_seed_new   (guint32            *seed,
 				    gboolean           *random_seed);

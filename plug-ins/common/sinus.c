@@ -72,6 +72,7 @@ typedef struct
   glong     colors;
   GimpRGB   col1;
   GimpRGB   col2;
+  gboolean random_seed;
 } SinusVals;
 
 static SinusVals svals =
@@ -312,7 +313,8 @@ prepare_coef (params *p)
 
   gr = g_rand_new ();
 
-  g_rand_set_seed (gr, svals.seed);
+  if (!svals.random_seed)
+    g_rand_set_seed (gr, svals.seed);
 
   switch (svals.colorization)
     {
@@ -633,7 +635,6 @@ sinus_dialog (void)
   GtkWidget *push_col2 = NULL;
   GtkObject *adj;
   gboolean   run;
-  gboolean   randomize;
 
   gimp_ui_init ("sinus", TRUE);
 
@@ -726,7 +727,7 @@ sinus_dialog (void)
   table = gtk_table_new(3, 1, FALSE);
   gtk_table_set_col_spacings(GTK_TABLE(table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  hbox = gimp_random_seed_new (&svals.seed, &randomize);
+  hbox = gimp_random_seed_new (&svals.seed, &svals.random_seed);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				     _("R_andom Seed:"), 1.0, 0.5,
 				     hbox, 1, TRUE);

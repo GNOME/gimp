@@ -280,7 +280,14 @@ prim(gint pos, gchar *maz, guint x, guint y)
      guint progress=0, max_progress;
      char d, i;
      guint c=0;
-     gint rnd = mvals.seed;
+     gint rnd;
+
+     if (mvals.random_seed) 
+       rnd = g_random_int ();
+     else
+       rnd = mvals.seed;
+       
+     g_rand_set_seed (gr,  rnd);
 
      gimp_progress_init (_("Constructing maze using Prim's Algorithm..."));
 
@@ -454,7 +461,14 @@ prim_tileable(gchar *maz, guint x, guint y)
      guint progress=0, max_progress;
      char d, i;
      guint c=0;
-     gint rnd = mvals.seed;
+     gint rnd;
+
+     if (mvals.random_seed) 
+       rnd = g_random_int ();
+     else
+       rnd = mvals.seed;
+       
+     g_rand_set_seed (gr,  rnd);
 
      gimp_progress_init (_("Constructing tileable maze using Prim's Algorithm..."));
 
@@ -463,7 +477,6 @@ prim_tileable(gchar *maz, guint x, guint y)
      max_progress=x*y/4;
 
      /* Pick someplace to start. */
-     g_rand_set_seed (gr, rnd);
 
      pos = x * 2 * g_rand_int_range (gr, 0, y/2) + 2 * g_rand_int_range(gr, 0, x/2);
 

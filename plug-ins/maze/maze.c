@@ -124,6 +124,7 @@ MazeValues mvals =
     57,    /* multiple * These two had "Experiment with this?" comments */
     1,     /* offset   * in the maz.c source, so, lets expiriment.  :) */
     DEPTH_FIRST, /* Algorithm */
+    TRUE, /* random_seed */
 };
 
 GRand *gr;
@@ -366,7 +367,10 @@ maze (GimpDrawable * drawable)
       switch (mvals.algorithm)
         {
         case DEPTH_FIRST:
-          mazegen_tileable (0, maz, mw, mh, mvals.seed);
+          if (mvals.random_seed)
+            mazegen_tileable (0, maz, mw, mh, g_random_int ());
+          else
+            mazegen_tileable (0, maz, mw, mh, mvals.seed);
           break;
 
         case PRIMS_ALGORITHM:
@@ -396,7 +400,10 @@ maze (GimpDrawable * drawable)
                       switch (mvals.algorithm)
                         {
                         case DEPTH_FIRST:
-                          mazegen (maz_yy+maz_xx, maz, mw, mh, mvals.seed);
+                          if (mvals.random_seed)
+                            mazegen (maz_yy+maz_xx, maz, mw, mh, g_random_int());
+                          else
+                            mazegen (maz_yy+maz_xx, maz, mw, mh, mvals.seed);
                           break;
 
                         case PRIMS_ALGORITHM:
@@ -418,7 +425,10 @@ maze (GimpDrawable * drawable)
           switch (mvals.algorithm)
             {
 	    case DEPTH_FIRST:
-              mazegen (pos, maz, mw, mh, mvals.seed);
+              if (mvals.random_seed)
+                mazegen (pos, maz, mw, mh, g_random_int ());
+              else
+                mazegen (pos, maz, mw, mh, mvals.seed);
               break;
 
 	    case PRIMS_ALGORITHM:
