@@ -776,6 +776,8 @@ gimp_image_convert (GimpImage              *gimage,
       break;
     }
 
+  g_object_freeze_notify (G_OBJECT (gimage));
+
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_CONVERT,
                                undo_desc);
 
@@ -784,7 +786,8 @@ gimp_image_convert (GimpImage              *gimage,
 
   /*  Set the new base type  */
   old_type = gimage->base_type;
-  gimage->base_type = new_type;
+
+  g_object_set (gimage, "base-type", new_type, NULL);
 
   /* initialize the colour conversion routines */
   cpercep_init_conversions ();
@@ -1023,6 +1026,7 @@ gimp_image_convert (GimpImage              *gimage,
 
   gimp_image_invalidate_layer_previews (gimage);
   gimp_image_mode_changed (gimage);
+  g_object_thaw_notify (G_OBJECT (gimage));
 
   gimp_unset_busy (gimage->gimp);
 }

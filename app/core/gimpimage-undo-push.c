@@ -111,7 +111,7 @@ undo_pop_image_type (GimpUndo            *undo,
 
   tmp = itu->base_type;
   itu->base_type = undo->gimage->base_type;
-  undo->gimage->base_type = tmp;
+  g_object_set (undo->gimage, "base-type", tmp, NULL);
 
   gimp_image_colormap_changed (undo->gimage, -1);
 
@@ -190,8 +190,10 @@ undo_pop_image_size (GimpUndo            *undo,
   isu->width  = undo->gimage->width;
   isu->height = undo->gimage->height;
 
-  undo->gimage->width  = width;
-  undo->gimage->height = height;
+  g_object_set (undo->gimage,
+                "width",  width,
+                "height", height,
+                NULL);
 
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimp_image_get_mask (undo->gimage)));
 

@@ -288,39 +288,43 @@ gimp_image_undo_pop_stack (GimpImage     *gimage,
   GimpUndo            *undo;
   GimpUndoAccumulator  accum = { 0, };
 
+  g_object_freeze_notify (G_OBJECT (gimage));
+
   undo = gimp_undo_stack_pop_undo (undo_stack, undo_mode, &accum);
 
-  if (! undo)
-    return;
+  if (undo)
+    {
+      if (GIMP_IS_UNDO_STACK (undo))
+        gimp_list_reverse (GIMP_LIST (GIMP_UNDO_STACK (undo)->undos));
 
-  if (GIMP_IS_UNDO_STACK (undo))
-    gimp_list_reverse (GIMP_LIST (GIMP_UNDO_STACK (undo)->undos));
+      gimp_undo_stack_push_undo (redo_stack, undo);
 
-  gimp_undo_stack_push_undo (redo_stack, undo);
+      if (accum.mode_changed)
+        gimp_image_mode_changed (gimage);
 
-  if (accum.mode_changed)
-    gimp_image_mode_changed (gimage);
+      if (accum.size_changed)
+        gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
 
-  if (accum.size_changed)
-    gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
+      if (accum.resolution_changed)
+        gimp_image_resolution_changed (gimage);
 
-  if (accum.resolution_changed)
-    gimp_image_resolution_changed (gimage);
+      if (accum.unit_changed)
+        gimp_image_unit_changed (gimage);
 
-  if (accum.unit_changed)
-    gimp_image_unit_changed (gimage);
+      if (accum.qmask_changed)
+        gimp_image_qmask_changed (gimage);
 
-  if (accum.qmask_changed)
-    gimp_image_qmask_changed (gimage);
+      if (accum.alpha_changed)
+        gimp_image_alpha_changed (gimage);
 
-  if (accum.alpha_changed)
-    gimp_image_alpha_changed (gimage);
+      /* let others know that we just popped an action */
+      gimp_image_undo_event (gimage,
+                             (undo_mode == GIMP_UNDO_MODE_UNDO) ?
+                             GIMP_UNDO_EVENT_UNDO : GIMP_UNDO_EVENT_REDO,
+                             undo);
+    }
 
-  /* let others know that we just popped an action */
-  gimp_image_undo_event (gimage,
-                         (undo_mode == GIMP_UNDO_MODE_UNDO) ?
-                         GIMP_UNDO_EVENT_UNDO : GIMP_UNDO_EVENT_REDO,
-                         undo);
+  g_object_thaw_notify (G_OBJECT (gimage));
 }
 
 static void

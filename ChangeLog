@@ -1,5 +1,24 @@
 2004-07-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.c: added properties "gimp", "id", "width",
+	"height" and "base-type". Moved all code from gimp_image_new()
+	to GObject::constructor().
+
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-rotate.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage-undo-push.c: set "width", "height" and
+	"base-type" with g_object_set() so "notify" is emitted on the
+	properties.
+
+	* app/core/gimpimage-undo.c (gimp_image_undo_pop_stack):
+	freeze/thaw property notifications around undoing/redoing so they
+	are not emitted in the middle of the undo operation.
+
+2004-07-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpitem.c: converted tabs to spaces, cleanup,
 	reviewed new API docs.
 

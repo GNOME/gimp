@@ -72,6 +72,8 @@ gimp_image_rotate (GimpImage        *gimage,
                   gimage->vectors->num_children  +
                   1 /* selection */);
 
+  g_object_freeze_notify (G_OBJECT (gimage));
+
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_ROTATE, NULL);
 
   /*  Resize the image (if needed)  */
@@ -171,8 +173,10 @@ gimp_image_rotate (GimpImage        *gimage,
     {
       gimp_image_undo_push_image_size (gimage, NULL);
 
-      gimage->width  = new_image_width;
-      gimage->height = new_image_height;
+      g_object_set (gimage,
+                    "width",  new_image_width,
+                    "height", new_image_height,
+                    NULL);
 
       if (gimage->xresolution != gimage->yresolution)
         {
@@ -190,6 +194,8 @@ gimp_image_rotate (GimpImage        *gimage,
 
   if (size_changed)
     gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
+
+  g_object_thaw_notify (G_OBJECT (gimage));
 
   gimp_unset_busy (gimage->gimp);
 }

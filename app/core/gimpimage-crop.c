@@ -116,6 +116,8 @@ gimp_image_crop (GimpImage   *gimage,
       GimpItem *item;
       GList    *list;
 
+      g_object_freeze_notify (G_OBJECT (gimage));
+
       if (crop_layers)
         gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_CROP,
                                      _("Crop Image"));
@@ -127,8 +129,10 @@ gimp_image_crop (GimpImage   *gimage,
       gimp_image_undo_push_image_size (gimage, NULL);
 
       /*  Set the new width and height  */
-      gimage->width  = width;
-      gimage->height = height;
+      g_object_set (gimage,
+                    "width",  width,
+                    "height", height,
+                    NULL);
 
       /*  Resize all channels  */
       for (list = GIMP_LIST (gimage->channels)->list;
@@ -230,6 +234,7 @@ gimp_image_crop (GimpImage   *gimage,
       gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
 
       gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
+      g_object_thaw_notify (G_OBJECT (gimage));
     }
 
   gimp_unset_busy (gimage->gimp);

@@ -60,6 +60,8 @@ gimp_image_resize (GimpImage        *gimage,
                   gimage->vectors->num_children  +
                   1 /* selection */);
 
+  g_object_freeze_notify (G_OBJECT (gimage));
+
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_RESIZE,
                                _("Resize Image"));
 
@@ -67,8 +69,10 @@ gimp_image_resize (GimpImage        *gimage,
   gimp_image_undo_push_image_size (gimage, NULL);
 
   /*  Set the new width and height  */
-  gimage->width  = new_width;
-  gimage->height = new_height;
+  g_object_set (gimage,
+                "width",  new_width,
+                "height", new_height,
+                NULL);
 
   /*  Resize all channels  */
   for (list = GIMP_LIST (gimage->channels)->list;
@@ -155,6 +159,7 @@ gimp_image_resize (GimpImage        *gimage,
   gimp_image_undo_group_end (gimage);
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
+  g_object_thaw_notify (G_OBJECT (gimage));
 
   gimp_unset_busy (gimage->gimp);
 }

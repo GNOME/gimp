@@ -99,12 +99,33 @@ enum
   LAST_SIGNAL
 };
 
+enum
+{
+  PROP_0,
+  PROP_GIMP,
+  PROP_ID,
+  PROP_WIDTH,
+  PROP_HEIGHT,
+  PROP_BASE_TYPE
+};
+
 
 /*  local function prototypes  */
 
 static void     gimp_image_class_init            (GimpImageClass *klass);
 static void     gimp_image_init                  (GimpImage      *gimage);
 
+static GObject *gimp_image_constructor           (GType           type,
+                                                  guint           n_params,
+                                                  GObjectConstructParam *params);
+static void     gimp_image_set_property          (GObject        *object,
+                                                  guint           property_id,
+                                                  const GValue   *value,
+                                                  GParamSpec     *pspec);
+static void     gimp_image_get_property          (GObject        *object,
+                                                  guint           property_id,
+                                                  GValue         *value,
+                                                  GParamSpec     *pspec);
 static void     gimp_image_dispose               (GObject        *object);
 static void     gimp_image_finalize              (GObject        *object);
 
@@ -117,7 +138,7 @@ static void     gimp_image_size_changed          (GimpViewable   *viewable);
 static gchar  * gimp_image_get_description       (GimpViewable   *viewable,
                                                   gchar         **tooltip);
 static void     gimp_image_real_colormap_changed (GimpImage      *gimage,
-						  gint            color_index);
+                                                  gint            color_index);
 static void     gimp_image_real_flush            (GimpImage      *gimage);
 
 static void     gimp_image_mask_update           (GimpDrawable   *drawable,
@@ -196,8 +217,8 @@ gimp_image_get_type (void)
       };
 
       image_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-					   "GimpImage",
-					   &image_info, 0);
+                                           "GimpImage",
+                                           &image_info, 0);
     }
 
   return image_type;
@@ -209,216 +230,215 @@ gimp_image_get_type (void)
 static void
 gimp_image_class_init (GimpImageClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpObjectClass   *gimp_object_class;
-  GimpViewableClass *viewable_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   gimp_image_signals[MODE_CHANGED] =
     g_signal_new ("mode_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, mode_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, mode_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   gimp_image_signals[ALPHA_CHANGED] =
     g_signal_new ("alpha_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, alpha_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, alpha_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   gimp_image_signals[FLOATING_SELECTION_CHANGED] =
     g_signal_new ("floating_selection_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, floating_selection_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, floating_selection_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   gimp_image_signals[ACTIVE_LAYER_CHANGED] =
     g_signal_new ("active_layer_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, active_layer_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, active_layer_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   gimp_image_signals[ACTIVE_CHANNEL_CHANGED] =
     g_signal_new ("active_channel_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, active_channel_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, active_channel_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   gimp_image_signals[ACTIVE_VECTORS_CHANGED] =
     g_signal_new ("active_vectors_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, active_vectors_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, active_vectors_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   gimp_image_signals[COMPONENT_VISIBILITY_CHANGED] =
     g_signal_new ("component_visibility_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, component_visibility_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__ENUM,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_CHANNEL_TYPE);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, component_visibility_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__ENUM,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_CHANNEL_TYPE);
 
   gimp_image_signals[COMPONENT_ACTIVE_CHANGED] =
     g_signal_new ("component_active_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, component_active_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__ENUM,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_CHANNEL_TYPE);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, component_active_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__ENUM,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_CHANNEL_TYPE);
 
   gimp_image_signals[MASK_CHANGED] =
     g_signal_new ("mask_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, mask_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, mask_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   gimp_image_signals[RESOLUTION_CHANGED] =
     g_signal_new ("resolution_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, resolution_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, resolution_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   gimp_image_signals[UNIT_CHANGED] =
     g_signal_new ("unit_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, unit_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, unit_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   gimp_image_signals[QMASK_CHANGED] =
     g_signal_new ("qmask_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, qmask_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, qmask_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   gimp_image_signals[SELECTION_CONTROL] =
     g_signal_new ("selection_control",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, selection_control),
-		  NULL, NULL,
-		  gimp_marshal_VOID__ENUM,
-		  G_TYPE_NONE, 1,
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, selection_control),
+                  NULL, NULL,
+                  gimp_marshal_VOID__ENUM,
+                  G_TYPE_NONE, 1,
                   GIMP_TYPE_SELECTION_CONTROL);
 
   gimp_image_signals[CLEAN] =
     g_signal_new ("clean",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, clean),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, clean),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   gimp_image_signals[DIRTY] =
     g_signal_new ("dirty",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, dirty),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, dirty),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   gimp_image_signals[UPDATE] =
     g_signal_new ("update",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, update),
-		  NULL, NULL,
-		  gimp_marshal_VOID__INT_INT_INT_INT,
-		  G_TYPE_NONE, 4,
-		  G_TYPE_INT,
-		  G_TYPE_INT,
-		  G_TYPE_INT,
-		  G_TYPE_INT);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, update),
+                  NULL, NULL,
+                  gimp_marshal_VOID__INT_INT_INT_INT,
+                  G_TYPE_NONE, 4,
+                  G_TYPE_INT,
+                  G_TYPE_INT,
+                  G_TYPE_INT,
+                  G_TYPE_INT);
 
   gimp_image_signals[UPDATE_GUIDE] =
     g_signal_new ("update_guide",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, update_guide),
-		  NULL, NULL,
-		  gimp_marshal_VOID__POINTER,
-		  G_TYPE_NONE, 1,
-		  G_TYPE_POINTER);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, update_guide),
+                  NULL, NULL,
+                  gimp_marshal_VOID__POINTER,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_POINTER);
 
   gimp_image_signals[COLORMAP_CHANGED] =
     g_signal_new ("colormap_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, colormap_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__INT,
-		  G_TYPE_NONE, 1,
-		  G_TYPE_INT);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, colormap_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__INT,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_INT);
 
   gimp_image_signals[UNDO_START] =
     g_signal_new ("undo_start",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, undo_start),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, undo_start),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   gimp_image_signals[UNDO_EVENT] =
     g_signal_new ("undo_event",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, undo_event),
-		  NULL, NULL,
-		  gimp_marshal_VOID__ENUM_OBJECT,
-		  G_TYPE_NONE, 2,
-		  GIMP_TYPE_UNDO_EVENT,
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, undo_event),
+                  NULL, NULL,
+                  gimp_marshal_VOID__ENUM_OBJECT,
+                  G_TYPE_NONE, 2,
+                  GIMP_TYPE_UNDO_EVENT,
                   GIMP_TYPE_UNDO);
 
   gimp_image_signals[FLUSH] =
     g_signal_new ("flush",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImageClass, flush),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, flush),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
+  object_class->constructor           = gimp_image_constructor;
+  object_class->set_property          = gimp_image_set_property;
+  object_class->get_property          = gimp_image_get_property;
   object_class->dispose               = gimp_image_dispose;
   object_class->finalize              = gimp_image_finalize;
 
@@ -452,6 +472,36 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->undo_start                   = NULL;
   klass->undo_event                   = NULL;
   klass->flush                        = gimp_image_real_flush;
+
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp", NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_ID,
+                                   g_param_spec_int ("id", NULL, NULL,
+                                                     0, G_MAXINT, 0,
+                                                     G_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_WIDTH,
+                                   g_param_spec_int ("width", NULL, NULL,
+                                                     1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                     G_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_HEIGHT,
+                                   g_param_spec_int ("height", NULL, NULL,
+                                                     1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                     G_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_BASE_TYPE,
+                                   g_param_spec_enum ("base-type", NULL, NULL,
+                                                      GIMP_TYPE_IMAGE_BASE_TYPE,
+                                                      GIMP_RGB,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
 
   gimp_image_color_hash_init ();
 }
@@ -571,6 +621,135 @@ gimp_image_init (GimpImage *gimage)
   gimage->flush_accum.mask_changed  = FALSE;
 }
 
+static GObject *
+gimp_image_constructor (GType                  type,
+                        guint                  n_params,
+                        GObjectConstructParam *params)
+{
+  GObject        *object;
+  GimpImage      *gimage;
+  GimpCoreConfig *config;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  gimage = GIMP_IMAGE (object);
+
+  g_assert (GIMP_IS_GIMP (gimage->gimp));
+
+  config = gimage->gimp->config;
+
+  gimage->ID = gimage->gimp->next_image_ID++;
+
+  g_hash_table_insert (gimage->gimp->image_table,
+                       GINT_TO_POINTER (gimage->ID),
+                       gimage);
+
+  gimage->xresolution = config->default_image->xresolution;
+  gimage->yresolution = config->default_image->yresolution;
+  gimage->unit        = config->default_image->resolution_unit;
+
+  gimage->grid = gimp_config_duplicate (GIMP_CONFIG (config->default_grid));
+
+  switch (gimage->base_type)
+    {
+    case GIMP_RGB:
+    case GIMP_GRAY:
+      break;
+    case GIMP_INDEXED:
+      /* always allocate 256 colors for the colormap */
+      gimage->num_cols = 0;
+      gimage->cmap     = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
+      break;
+    default:
+      break;
+    }
+
+  /* create the selection mask */
+  gimage->selection_mask = gimp_selection_new (gimage,
+                                               gimage->width,
+                                               gimage->height);
+  g_object_ref (gimage->selection_mask);
+  gimp_item_sink (GIMP_ITEM (gimage->selection_mask));
+
+  g_signal_connect (gimage->selection_mask, "update",
+                    G_CALLBACK (gimp_image_mask_update),
+                    gimage);
+
+  g_signal_connect_object (config, "notify::transparency-type",
+                           G_CALLBACK (gimp_image_invalidate_layer_previews),
+                           gimage, G_CONNECT_SWAPPED);
+  g_signal_connect_object (config, "notify::transparency-size",
+                           G_CALLBACK (gimp_image_invalidate_layer_previews),
+                           gimage, G_CONNECT_SWAPPED);
+  g_signal_connect_object (config, "notify::layer-previews",
+                           G_CALLBACK (gimp_viewable_size_changed),
+                           gimage, G_CONNECT_SWAPPED);
+
+  return object;
+}
+
+static void
+gimp_image_set_property (GObject      *object,
+                         guint         property_id,
+                         const GValue *value,
+                         GParamSpec   *pspec)
+{
+  GimpImage *gimage = GIMP_IMAGE (object);
+
+  switch (property_id)
+    {
+    case PROP_GIMP:
+      gimage->gimp = g_value_get_object (value);
+      break;
+    case PROP_ID:
+      g_assert_not_reached ();
+      break;
+    case PROP_WIDTH:
+      gimage->width = g_value_get_int (value);
+      break;
+    case PROP_HEIGHT:
+      gimage->height = g_value_get_int (value);
+      break;
+    case PROP_BASE_TYPE:
+      gimage->base_type = g_value_get_enum (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_image_get_property (GObject    *object,
+                         guint       property_id,
+                         GValue     *value,
+                         GParamSpec *pspec)
+{
+  GimpImage *gimage = GIMP_IMAGE (object);
+
+  switch (property_id)
+    {
+    case PROP_GIMP:
+      g_value_set_object (value, gimage->gimp);
+      break;
+    case PROP_ID:
+      g_value_set_int (value, gimage->ID);
+      break;
+    case PROP_WIDTH:
+      g_value_set_int (value, gimage->width);
+      break;
+    case PROP_HEIGHT:
+      g_value_set_int (value, gimage->height);
+      break;
+    case PROP_BASE_TYPE:
+      g_value_set_enum (value, gimage->base_type);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
 static void
 gimp_image_dispose (GObject *object)
 {
@@ -623,7 +802,7 @@ gimp_image_finalize (GObject *object)
   if (gimage->gimp && gimage->gimp->image_table)
     {
       g_hash_table_remove (gimage->gimp->image_table,
-			   GINT_TO_POINTER (gimage->ID));
+                           GINT_TO_POINTER (gimage->ID));
       gimage->gimp = NULL;
     }
 
@@ -802,14 +981,14 @@ gimp_image_size_changed (GimpViewable *viewable)
     GIMP_VIEWABLE_CLASS (parent_class)->size_changed (viewable);
 
   gimp_container_foreach (gimage->layers,
-			  (GFunc) gimp_viewable_size_changed,
-			  NULL);
+                          (GFunc) gimp_viewable_size_changed,
+                          NULL);
   gimp_container_foreach (gimage->channels,
-			  (GFunc) gimp_viewable_size_changed,
-			  NULL);
+                          (GFunc) gimp_viewable_size_changed,
+                          NULL);
   gimp_container_foreach (gimage->vectors,
-			  (GFunc) gimp_viewable_size_changed,
-			  NULL);
+                          (GFunc) gimp_viewable_size_changed,
+                          NULL);
 
   for (list = GIMP_LIST (gimage->layers)->list; list; list = g_list_next (list))
     {
@@ -847,7 +1026,7 @@ gimp_image_get_description (GimpViewable  *viewable,
 
 static void
 gimp_image_real_colormap_changed (GimpImage *gimage,
-				  gint       color_index)
+                                  gint       color_index)
 {
   if (gimp_image_base_type (gimage) == GIMP_INDEXED)
     {
@@ -1022,69 +1201,18 @@ gimp_image_channel_color_changed (GimpChannel *channel,
 
 GimpImage *
 gimp_image_new (Gimp              *gimp,
-		gint               width,
-		gint               height,
-		GimpImageBaseType  base_type)
+                gint               width,
+                gint               height,
+                GimpImageBaseType  base_type)
 {
-  GimpImage *gimage;
-
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  gimage = g_object_new (GIMP_TYPE_IMAGE, NULL);
-
-  gimage->gimp        = gimp;
-  gimage->ID          = gimp->next_image_ID++;
-
-  g_hash_table_insert (gimp->image_table,
-		       GINT_TO_POINTER (gimage->ID),
-		       (gpointer) gimage);
-
-  gimage->width       = width;
-  gimage->height      = height;
-  gimage->base_type   = base_type;
-
-  gimage->xresolution = gimp->config->default_image->xresolution;
-  gimage->yresolution = gimp->config->default_image->yresolution;
-  gimage->unit        = gimp->config->default_image->resolution_unit;
-
-  gimage->grid        = gimp_config_duplicate (GIMP_CONFIG (gimp->config->default_grid));
-
-  switch (base_type)
-    {
-    case GIMP_RGB:
-    case GIMP_GRAY:
-      break;
-    case GIMP_INDEXED:
-      /* always allocate 256 colors for the colormap */
-      gimage->num_cols = 0;
-      gimage->cmap     = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
-      break;
-    default:
-      break;
-    }
-
-  /* create the selection mask */
-  gimage->selection_mask = gimp_selection_new (gimage,
-                                               gimage->width,
-                                               gimage->height);
-  g_object_ref (gimage->selection_mask);
-  gimp_item_sink (GIMP_ITEM (gimage->selection_mask));
-
-  g_signal_connect (gimage->selection_mask, "update",
-                    G_CALLBACK (gimp_image_mask_update),
-                    gimage);
-
-  g_signal_connect_object (gimp->config, "notify::transparency-type",
-                           G_CALLBACK (gimp_image_invalidate_layer_previews),
-                           gimage, G_CONNECT_SWAPPED);
-  g_signal_connect_object (gimp->config, "notify::transparency-size",
-                           G_CALLBACK (gimp_image_invalidate_layer_previews),
-                           gimage, G_CONNECT_SWAPPED);
-  g_signal_connect_object (gimp->config, "notify::layer-previews",
-                           G_CALLBACK (gimp_viewable_size_changed),
-                           gimage, G_CONNECT_SWAPPED);
-
-  return gimage;
+  return g_object_new (GIMP_TYPE_IMAGE,
+                       "gimp",      gimp,
+                       "width",     width,
+                       "height",    height,
+                       "base-type", base_type,
+                       NULL);
 }
 
 GimpImageBaseType
@@ -1130,7 +1258,7 @@ gimp_image_get_ID (const GimpImage *gimage)
 
 GimpImage *
 gimp_image_get_by_ID (Gimp *gimp,
-		      gint  image_id)
+                      gint  image_id)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -1138,7 +1266,7 @@ gimp_image_get_by_ID (Gimp *gimp,
     return NULL;
 
   return (GimpImage *) g_hash_table_lookup (gimp->image_table,
-					    GINT_TO_POINTER (image_id));
+                                            GINT_TO_POINTER (image_id));
 }
 
 void
@@ -1202,7 +1330,7 @@ gimp_image_get_filename (const GimpImage *gimage)
 
 void
 gimp_image_set_save_proc (GimpImage     *gimage,
-			  PlugInProcDef *proc)
+                          PlugInProcDef *proc)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
@@ -1219,8 +1347,8 @@ gimp_image_get_save_proc (const GimpImage *gimage)
 
 void
 gimp_image_set_resolution (GimpImage *gimage,
-			   gdouble    xresolution,
-			   gdouble    yresolution)
+                           gdouble    xresolution,
+                           gdouble    yresolution)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
@@ -1245,8 +1373,8 @@ gimp_image_set_resolution (GimpImage *gimage,
 
 void
 gimp_image_get_resolution (const GimpImage *gimage,
-			   gdouble         *xresolution,
-			   gdouble         *yresolution)
+                           gdouble         *xresolution,
+                           gdouble         *yresolution)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (xresolution && yresolution);
@@ -1265,7 +1393,7 @@ gimp_image_resolution_changed (GimpImage *gimage)
 
 void
 gimp_image_set_unit (GimpImage *gimage,
-		     GimpUnit   unit)
+                     GimpUnit   unit)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (unit > GIMP_UNIT_PIXEL);
@@ -1380,11 +1508,11 @@ gimp_image_get_component_index (const GimpImage *gimage,
     case GIMP_INDEXED_CHANNEL: return INDEXED_PIX;
     case GIMP_ALPHA_CHANNEL:
       switch (gimp_image_base_type (gimage))
-	{
-	case GIMP_RGB:     return ALPHA_PIX;
-	case GIMP_GRAY:    return ALPHA_G_PIX;
-	case GIMP_INDEXED: return ALPHA_I_PIX;
-	}
+        {
+        case GIMP_RGB:     return ALPHA_PIX;
+        case GIMP_GRAY:    return ALPHA_G_PIX;
+        case GIMP_INDEXED: return ALPHA_I_PIX;
+        }
     }
 
   return -1;
@@ -1392,8 +1520,8 @@ gimp_image_get_component_index (const GimpImage *gimage,
 
 void
 gimp_image_set_component_active (GimpImage       *gimage,
-				 GimpChannelType  channel,
-				 gboolean         active)
+                                 GimpChannelType  channel,
+                                 gboolean         active)
 {
   gint index = -1;
 
@@ -1411,14 +1539,14 @@ gimp_image_set_component_active (GimpImage       *gimage,
       gimp_image_unset_active_channel (gimage);
 
       g_signal_emit (gimage,
-		     gimp_image_signals[COMPONENT_ACTIVE_CHANGED], 0,
-		     channel);
+                     gimp_image_signals[COMPONENT_ACTIVE_CHANGED], 0,
+                     channel);
     }
 }
 
 gboolean
 gimp_image_get_component_active (const GimpImage *gimage,
-				 GimpChannelType  channel)
+                                 GimpChannelType  channel)
 {
   gint index = -1;
 
@@ -1434,8 +1562,8 @@ gimp_image_get_component_active (const GimpImage *gimage,
 
 void
 gimp_image_set_component_visible (GimpImage       *gimage,
-				  GimpChannelType  channel,
-				  gboolean         visible)
+                                  GimpChannelType  channel,
+                                  gboolean         visible)
 {
   gint index = -1;
 
@@ -1448,8 +1576,8 @@ gimp_image_set_component_visible (GimpImage       *gimage,
       gimage->visible[index] = visible ? TRUE : FALSE;
 
       g_signal_emit (gimage,
-		     gimp_image_signals[COMPONENT_VISIBILITY_CHANGED], 0,
-		     channel);
+                     gimp_image_signals[COMPONENT_VISIBILITY_CHANGED], 0,
+                     channel);
 
       gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
@@ -1458,7 +1586,7 @@ gimp_image_set_component_visible (GimpImage       *gimage,
 
 gboolean
 gimp_image_get_component_visible (const GimpImage *gimage,
-				  GimpChannelType  channel)
+                                  GimpChannelType  channel)
 {
   gint index = -1;
 
@@ -1490,15 +1618,15 @@ gimp_image_alpha_changed (GimpImage *gimage)
 
 void
 gimp_image_update (GimpImage *gimage,
-		   gint       x,
-		   gint       y,
-		   gint       width,
-		   gint       height)
+                   gint       x,
+                   gint       y,
+                   gint       width,
+                   gint       height)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   g_signal_emit (gimage, gimp_image_signals[UPDATE], 0,
-		 x, y, width, height);
+                 x, y, width, height);
 }
 
 void
@@ -1513,13 +1641,13 @@ gimp_image_update_guide (GimpImage *gimage,
 
 void
 gimp_image_colormap_changed (GimpImage *gimage,
-			     gint       color_index)
+                             gint       color_index)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (color_index >= -1 && color_index < gimage->num_cols);
 
   g_signal_emit (gimage, gimp_image_signals[COLORMAP_CHANGED], 0,
-		 color_index);
+                 color_index);
 }
 
 void
@@ -1606,7 +1734,7 @@ gimp_image_undo_start (GimpImage *gimage)
 
 void
 gimp_image_undo_event (GimpImage     *gimage,
-		       GimpUndoEvent  event,
+                       GimpUndoEvent  event,
                        GimpUndo      *undo)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
@@ -1703,9 +1831,9 @@ gimp_image_flush (GimpImage *gimage)
 
 void
 gimp_image_get_foreground (const GimpImage    *gimage,
-			   const GimpDrawable *drawable,
+                           const GimpDrawable *drawable,
                            GimpContext        *context,
-			   guchar             *fg)
+                           guchar             *fg)
 {
   GimpRGB  color;
   guchar   pfg[3];
@@ -1724,9 +1852,9 @@ gimp_image_get_foreground (const GimpImage    *gimage,
 
 void
 gimp_image_get_background (const GimpImage    *gimage,
-			   const GimpDrawable *drawable,
+                           const GimpDrawable *drawable,
                            GimpContext        *context,
-			   guchar             *bg)
+                           guchar             *bg)
 {
   GimpRGB  color;
   guchar   pbg[3];
@@ -1745,9 +1873,9 @@ gimp_image_get_background (const GimpImage    *gimage,
 
 void
 gimp_image_get_color (const GimpImage *src_gimage,
-		      GimpImageType    src_type,
-		      const guchar    *src,
-		      guchar          *rgba)
+                      GimpImageType    src_type,
+                      const guchar    *src,
+                      guchar          *rgba)
 {
   gboolean has_alpha = FALSE;
 
@@ -1781,11 +1909,11 @@ gimp_image_get_color (const GimpImage *src_gimage,
     case GIMP_INDEXED_IMAGE:
       /*  Indexed palette lookup  */
       {
-	gint index = *src++ * 3;
+        gint index = *src++ * 3;
 
-	*rgba++ = src_gimage->cmap[index++];
-	*rgba++ = src_gimage->cmap[index++];
-	*rgba++ = src_gimage->cmap[index++];
+        *rgba++ = src_gimage->cmap[index++];
+        *rgba++ = src_gimage->cmap[index++];
+        *rgba++ = src_gimage->cmap[index++];
       }
       break;
     }
@@ -1816,10 +1944,10 @@ gimp_image_transform_rgb (const GimpImage    *dest_gimage,
 
 void
 gimp_image_transform_color (const GimpImage    *dest_gimage,
-			    const GimpDrawable *dest_drawable,
-			    guchar             *dest,
-			    GimpImageBaseType   src_type,
-			    const guchar       *src)
+                            const GimpDrawable *dest_drawable,
+                            guchar             *dest,
+                            GimpImageBaseType   src_type,
+                            const guchar       *src)
 {
   GimpImageType dest_type;
 
@@ -1834,60 +1962,60 @@ gimp_image_transform_color (const GimpImage    *dest_gimage,
     {
     case GIMP_RGB:
       switch (dest_type)
-	{
-	case GIMP_RGB_IMAGE:
+        {
+        case GIMP_RGB_IMAGE:
         case GIMP_RGBA_IMAGE:
-	  /*  Straight copy  */
-	  *dest++ = *src++;
-	  *dest++ = *src++;
-	  *dest++ = *src++;
-	  break;
+          /*  Straight copy  */
+          *dest++ = *src++;
+          *dest++ = *src++;
+          *dest++ = *src++;
+          break;
 
-	case GIMP_GRAY_IMAGE:
+        case GIMP_GRAY_IMAGE:
         case GIMP_GRAYA_IMAGE:
-	  /*  NTSC conversion  */
-	  *dest = GIMP_RGB_INTENSITY (src[RED_PIX],
+          /*  NTSC conversion  */
+          *dest = GIMP_RGB_INTENSITY (src[RED_PIX],
                                       src[GREEN_PIX],
                                       src[BLUE_PIX]) + 0.5;
-	  break;
+          break;
 
-	case GIMP_INDEXED_IMAGE:
+        case GIMP_INDEXED_IMAGE:
         case GIMP_INDEXEDA_IMAGE:
-	  /*  Least squares method  */
-	  *dest = gimp_image_color_hash_rgb_to_indexed (dest_gimage,
-							src[RED_PIX],
-							src[GREEN_PIX],
-							src[BLUE_PIX]);
-	  break;
-	}
+          /*  Least squares method  */
+          *dest = gimp_image_color_hash_rgb_to_indexed (dest_gimage,
+                                                        src[RED_PIX],
+                                                        src[GREEN_PIX],
+                                                        src[BLUE_PIX]);
+          break;
+        }
       break;
 
     case GIMP_GRAY:
       switch (dest_type)
-	{
-	case GIMP_RGB_IMAGE:
+        {
+        case GIMP_RGB_IMAGE:
         case GIMP_RGBA_IMAGE:
-	  /*  Gray to RG&B */
-	  *dest++ = *src;
-	  *dest++ = *src;
-	  *dest++ = *src;
-	  break;
+          /*  Gray to RG&B */
+          *dest++ = *src;
+          *dest++ = *src;
+          *dest++ = *src;
+          break;
 
-	case GIMP_GRAY_IMAGE:
+        case GIMP_GRAY_IMAGE:
         case GIMP_GRAYA_IMAGE:
-	  /*  Straight copy  */
-	  *dest = *src;
-	  break;
+          /*  Straight copy  */
+          *dest = *src;
+          break;
 
-	case GIMP_INDEXED_IMAGE:
+        case GIMP_INDEXED_IMAGE:
         case GIMP_INDEXEDA_IMAGE:
-	  /*  Least squares method  */
-	  *dest = gimp_image_color_hash_rgb_to_indexed (dest_gimage,
-							src[GRAY_PIX],
-							src[GRAY_PIX],
-							src[GRAY_PIX]);
-	  break;
-	}
+          /*  Least squares method  */
+          *dest = gimp_image_color_hash_rgb_to_indexed (dest_gimage,
+                                                        src[GRAY_PIX],
+                                                        src[GRAY_PIX],
+                                                        src[GRAY_PIX]);
+          break;
+        }
       break;
 
     default:
@@ -1971,17 +2099,17 @@ gimp_image_transform_temp_buf (const GimpImage    *dest_image,
 
 TileManager *
 gimp_image_shadow (GimpImage *gimage,
-		   gint       width,
-		   gint       height,
-		   gint       bpp)
+                   gint       width,
+                   gint       height,
+                   gint       bpp)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   if (gimage->shadow)
     {
-      if ((width != tile_manager_width (gimage->shadow)) ||
+      if ((width  != tile_manager_width  (gimage->shadow)) ||
           (height != tile_manager_height (gimage->shadow)) ||
-          (bpp != tile_manager_bpp (gimage->shadow)))
+          (bpp    != tile_manager_bpp    (gimage->shadow)))
         {
           gimp_image_free_shadow (gimage);
         }
@@ -2013,7 +2141,7 @@ gimp_image_free_shadow (GimpImage *gimage)
 
 GimpParasite *
 gimp_image_parasite_find (const GimpImage *gimage,
-			  const gchar     *name)
+                          const gchar     *name)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -2022,15 +2150,15 @@ gimp_image_parasite_find (const GimpImage *gimage,
 
 static void
 list_func (gchar          *key,
-	   GimpParasite   *p,
-	   gchar        ***cur)
+           GimpParasite   *p,
+           gchar        ***cur)
 {
   *(*cur)++ = (gchar *) g_strdup (key);
 }
 
 gchar **
 gimp_image_parasite_list (const GimpImage *gimage,
-			  gint            *count)
+                          gint            *count)
 {
   gchar **list;
   gchar **cur;
@@ -2047,7 +2175,7 @@ gimp_image_parasite_list (const GimpImage *gimage,
 
 void
 gimp_image_parasite_attach (GimpImage    *gimage,
-			    GimpParasite *parasite)
+                            GimpParasite *parasite)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage) && parasite != NULL);
 
@@ -2076,7 +2204,7 @@ gimp_image_parasite_attach (GimpImage    *gimage,
 
 void
 gimp_image_parasite_detach (GimpImage   *gimage,
-			    const gchar *parasite)
+                            const gchar *parasite)
 {
   GimpParasite *p;
 
@@ -2120,7 +2248,7 @@ gimp_image_get_tattoo_state (GimpImage *gimage)
 
 gboolean
 gimp_image_set_tattoo_state (GimpImage  *gimage,
-			     GimpTattoo  val)
+                             GimpTattoo  val)
 {
   GList      *list;
   gboolean    retval = TRUE;
@@ -2137,7 +2265,7 @@ gimp_image_set_tattoo_state (GimpImage  *gimage,
 
       ltattoo = gimp_item_get_tattoo (GIMP_ITEM (list->data));
       if (ltattoo > maxval)
-	maxval = ltattoo;
+        maxval = ltattoo;
 
       if (gimp_image_get_channel_by_tattoo (gimage, ltattoo))
         retval = FALSE; /* Oopps duplicated tattoo in channel */
@@ -2155,7 +2283,7 @@ gimp_image_set_tattoo_state (GimpImage  *gimage,
 
       ctattoo = gimp_item_get_tattoo (GIMP_ITEM (list->data));
       if (ctattoo > maxval)
-	maxval = ctattoo;
+        maxval = ctattoo;
 
       if (gimp_image_get_vectors_by_tattoo (gimage, ctattoo))
         retval = FALSE; /* Oopps duplicated tattoo in vectors */
@@ -2170,7 +2298,7 @@ gimp_image_set_tattoo_state (GimpImage  *gimage,
 
       vtattoo = gimp_item_get_tattoo (GIMP_ITEM (list->data));
       if (vtattoo > maxval)
-	maxval = vtattoo;
+        maxval = vtattoo;
     }
 
   if (val < maxval)
@@ -2227,9 +2355,9 @@ gimp_image_active_drawable (const GimpImage *gimage)
       GimpLayer *layer = gimage->active_layer;
 
       if (layer->mask && layer->mask->edit_mask)
-	return GIMP_DRAWABLE (layer->mask);
+        return GIMP_DRAWABLE (layer->mask);
       else
-	return GIMP_DRAWABLE (layer);
+        return GIMP_DRAWABLE (layer);
     }
 
   return NULL;
@@ -2261,7 +2389,7 @@ gimp_image_get_active_vectors (const GimpImage *gimage)
 
 GimpLayer *
 gimp_image_set_active_layer (GimpImage *gimage,
-			     GimpLayer *layer)
+                             GimpLayer *layer)
 {
   GimpLayer *floating_sel;
 
@@ -2295,7 +2423,7 @@ gimp_image_set_active_layer (GimpImage *gimage,
       g_signal_emit (gimage, gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
 
       if (layer && gimage->active_channel)
-	gimp_image_set_active_channel (gimage, NULL);
+        gimp_image_set_active_channel (gimage, NULL);
     }
 
   return gimage->active_layer;
@@ -2303,7 +2431,7 @@ gimp_image_set_active_layer (GimpImage *gimage,
 
 GimpChannel *
 gimp_image_set_active_channel (GimpImage   *gimage,
-			       GimpChannel *channel)
+                               GimpChannel *channel)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (channel == NULL || GIMP_IS_CHANNEL (channel), NULL);
@@ -2350,7 +2478,7 @@ gimp_image_unset_active_channel (GimpImage *gimage)
 
 GimpVectors *
 gimp_image_set_active_vectors (GimpImage   *gimage,
-			       GimpVectors *vectors)
+                               GimpVectors *vectors)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), NULL);
@@ -2394,7 +2522,7 @@ gimp_image_active_vectors_changed (GimpImage *gimage)
 
 gint
 gimp_image_get_layer_index (const GimpImage   *gimage,
-			    const GimpLayer   *layer)
+                            const GimpLayer   *layer)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), -1);
@@ -2405,7 +2533,7 @@ gimp_image_get_layer_index (const GimpImage   *gimage,
 
 gint
 gimp_image_get_channel_index (const GimpImage   *gimage,
-			      const GimpChannel *channel)
+                              const GimpChannel *channel)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), -1);
@@ -2416,7 +2544,7 @@ gimp_image_get_channel_index (const GimpImage   *gimage,
 
 gint
 gimp_image_get_vectors_index (const GimpImage   *gimage,
-			      const GimpVectors *vectors)
+                              const GimpVectors *vectors)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), -1);
@@ -2427,7 +2555,7 @@ gimp_image_get_vectors_index (const GimpImage   *gimage,
 
 GimpLayer *
 gimp_image_get_layer_by_tattoo (const GimpImage *gimage,
-				GimpTattoo       tattoo)
+                                GimpTattoo       tattoo)
 {
   GList *list;
 
@@ -2448,7 +2576,7 @@ gimp_image_get_layer_by_tattoo (const GimpImage *gimage,
 
 GimpChannel *
 gimp_image_get_channel_by_tattoo (const GimpImage *gimage,
-				  GimpTattoo       tattoo)
+                                  GimpTattoo       tattoo)
 {
   GList *list;
 
@@ -2469,7 +2597,7 @@ gimp_image_get_channel_by_tattoo (const GimpImage *gimage,
 
 GimpVectors *
 gimp_image_get_vectors_by_tattoo (const GimpImage *gimage,
-				  GimpTattoo       tattoo)
+                                  GimpTattoo       tattoo)
 {
   GList *list;
 
@@ -2500,7 +2628,7 @@ gimp_image_get_layer_by_name (const GimpImage *gimage,
 
 GimpChannel *
 gimp_image_get_channel_by_name (const GimpImage *gimage,
-				const gchar     *name)
+                                const gchar     *name)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -2510,7 +2638,7 @@ gimp_image_get_channel_by_name (const GimpImage *gimage,
 
 GimpVectors *
 gimp_image_get_vectors_by_name (const GimpImage *gimage,
-				const gchar     *name)
+                                const gchar     *name)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -2520,8 +2648,8 @@ gimp_image_get_vectors_by_name (const GimpImage *gimage,
 
 gboolean
 gimp_image_add_layer (GimpImage *gimage,
-		      GimpLayer *layer,
-		      gint       position)
+                      GimpLayer *layer,
+                      gint       position)
 {
   GimpLayer *active_layer;
   GimpLayer *floating_sel;
@@ -2605,7 +2733,7 @@ gimp_image_add_layer (GimpImage *gimage,
 
 void
 gimp_image_remove_layer (GimpImage *gimage,
-			 GimpLayer *layer)
+                         GimpLayer *layer)
 {
   GimpLayer *active_layer;
   gint       index;
@@ -2649,11 +2777,11 @@ gimp_image_remove_layer (GimpImage *gimage,
   else if (layer == active_layer)
     {
       if (gimage->layer_stack)
-	{
-	  active_layer = gimage->layer_stack->data;
-	}
+        {
+          active_layer = gimage->layer_stack->data;
+        }
       else
-	{
+        {
           gint n_children = gimp_container_num_children (gimage->layers);
 
           if (n_children > 0)
@@ -2682,7 +2810,7 @@ gimp_image_remove_layer (GimpImage *gimage,
 
 gboolean
 gimp_image_raise_layer (GimpImage *gimage,
-			GimpLayer *layer)
+                        GimpLayer *layer)
 {
   gint index;
 
@@ -2710,7 +2838,7 @@ gimp_image_raise_layer (GimpImage *gimage,
 
 gboolean
 gimp_image_lower_layer (GimpImage *gimage,
-			GimpLayer *layer)
+                        GimpLayer *layer)
 {
   gint index;
 
@@ -2732,7 +2860,7 @@ gimp_image_lower_layer (GimpImage *gimage,
 
 gboolean
 gimp_image_raise_layer_to_top (GimpImage *gimage,
-			       GimpLayer *layer)
+                               GimpLayer *layer)
 {
   gint index;
 
@@ -2760,7 +2888,7 @@ gimp_image_raise_layer_to_top (GimpImage *gimage,
 
 gboolean
 gimp_image_lower_layer_to_bottom (GimpImage *gimage,
-				  GimpLayer *layer)
+                                  GimpLayer *layer)
 {
   gint index;
   gint length;
@@ -2785,9 +2913,9 @@ gimp_image_lower_layer_to_bottom (GimpImage *gimage,
 
 gboolean
 gimp_image_position_layer (GimpImage   *gimage,
-			   GimpLayer   *layer,
-			   gint         new_index,
-			   gboolean     push_undo,
+                           GimpLayer   *layer,
+                           gint         new_index,
+                           gboolean     push_undo,
                            const gchar *undo_desc)
 {
   gint index;
@@ -2797,7 +2925,7 @@ gimp_image_position_layer (GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
   index = gimp_container_get_child_index (gimage->layers,
-					  GIMP_OBJECT (layer));
+                                          GIMP_OBJECT (layer));
   if (index < 0)
     return FALSE;
 
@@ -2814,15 +2942,15 @@ gimp_image_position_layer (GimpImage   *gimage,
       GimpLayer *tmp;
 
       tmp = (GimpLayer *) gimp_container_get_child_by_index (gimage->layers,
-							     num_layers - 1);
+                                                             num_layers - 1);
 
       if (new_index == num_layers - 1 &&
-	  ! gimp_drawable_has_alpha (GIMP_DRAWABLE (tmp)))
-	{
-	  g_message (_("Layer '%s' has no alpha. Layer was placed above it."),
-		     GIMP_OBJECT (tmp)->name);
-	  new_index--;
-	}
+          ! gimp_drawable_has_alpha (GIMP_DRAWABLE (tmp)))
+        {
+          g_message (_("Layer '%s' has no alpha. Layer was placed above it."),
+                     GIMP_OBJECT (tmp)->name);
+          new_index--;
+        }
     }
 
   if (push_undo)
@@ -2848,8 +2976,8 @@ gimp_image_position_layer (GimpImage   *gimage,
 
 gboolean
 gimp_image_add_channel (GimpImage   *gimage,
-			GimpChannel *channel,
-			gint         position)
+                        GimpChannel *channel,
+                        gint         position)
 {
   GimpChannel *active_channel;
 
@@ -2901,7 +3029,7 @@ gimp_image_add_channel (GimpImage   *gimage,
 
 void
 gimp_image_remove_channel (GimpImage   *gimage,
-			   GimpChannel *channel)
+                           GimpChannel *channel)
 {
   GimpChannel *active_channel;
   gint         index;
@@ -2909,7 +3037,7 @@ gimp_image_remove_channel (GimpImage   *gimage,
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (gimp_container_have (gimage->channels,
-					 GIMP_OBJECT (channel)));
+                                         GIMP_OBJECT (channel)));
 
   active_channel = gimp_image_get_active_channel (gimage);
 
@@ -2929,18 +3057,18 @@ gimp_image_remove_channel (GimpImage   *gimage,
       gint n_children = gimp_container_num_children (gimage->channels);
 
       if (n_children > 0)
-	{
+        {
           index = CLAMP (index, 0, n_children - 1);
 
           active_channel = (GimpChannel *)
             gimp_container_get_child_by_index (gimage->channels, index);
 
           gimp_image_set_active_channel (gimage, active_channel);
-	}
+        }
       else
-	{
-	  gimp_image_unset_active_channel (gimage);
-	}
+        {
+          gimp_image_unset_active_channel (gimage);
+        }
     }
 
   g_object_unref (channel);
@@ -2948,7 +3076,7 @@ gimp_image_remove_channel (GimpImage   *gimage,
 
 gboolean
 gimp_image_raise_channel (GimpImage   *gimage,
-			  GimpChannel *channel)
+                          GimpChannel *channel)
 {
   gint index;
 
@@ -2956,7 +3084,7 @@ gimp_image_raise_channel (GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
 
   index = gimp_container_get_child_index (gimage->channels,
-					  GIMP_OBJECT (channel));
+                                          GIMP_OBJECT (channel));
 
   if (index == 0)
     {
@@ -2978,7 +3106,7 @@ gimp_image_raise_channel_to_top (GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
 
   index = gimp_container_get_child_index (gimage->channels,
-					  GIMP_OBJECT (channel));
+                                          GIMP_OBJECT (channel));
 
   if (index == 0)
     {
@@ -2992,7 +3120,7 @@ gimp_image_raise_channel_to_top (GimpImage   *gimage,
 
 gboolean
 gimp_image_lower_channel (GimpImage   *gimage,
-			  GimpChannel *channel)
+                          GimpChannel *channel)
 {
   gint index;
 
@@ -3000,7 +3128,7 @@ gimp_image_lower_channel (GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
 
   index = gimp_container_get_child_index (gimage->channels,
-					  GIMP_OBJECT (channel));
+                                          GIMP_OBJECT (channel));
 
   if (index == gimp_container_num_children (gimage->channels) - 1)
     {
@@ -3023,7 +3151,7 @@ gimp_image_lower_channel_to_bottom (GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
 
   index = gimp_container_get_child_index (gimage->channels,
-					  GIMP_OBJECT (channel));
+                                          GIMP_OBJECT (channel));
 
   length = gimp_container_num_children (gimage->channels);
 
@@ -3039,8 +3167,8 @@ gimp_image_lower_channel_to_bottom (GimpImage   *gimage,
 
 gboolean
 gimp_image_position_channel (GimpImage   *gimage,
-			     GimpChannel *channel,
-			     gint         new_index,
+                             GimpChannel *channel,
+                             gint         new_index,
                              gboolean     push_undo,
                              const gchar *undo_desc)
 {
@@ -3051,7 +3179,7 @@ gimp_image_position_channel (GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
 
   index = gimp_container_get_child_index (gimage->channels,
-					  GIMP_OBJECT (channel));
+                                          GIMP_OBJECT (channel));
   if (index < 0)
     return FALSE;
 
@@ -3066,7 +3194,7 @@ gimp_image_position_channel (GimpImage   *gimage,
     gimp_image_undo_push_channel_reposition (gimage, undo_desc, channel);
 
   gimp_container_reorder (gimage->channels,
-			  GIMP_OBJECT (channel), new_index);
+                          GIMP_OBJECT (channel), new_index);
 
   if (gimp_item_get_visible (GIMP_ITEM (channel)))
     {
@@ -3086,8 +3214,8 @@ gimp_image_position_channel (GimpImage   *gimage,
 
 gboolean
 gimp_image_add_vectors (GimpImage   *gimage,
-			GimpVectors *vectors,
-			gint         position)
+                        GimpVectors *vectors,
+                        gint         position)
 {
   GimpVectors *active_vectors;
 
@@ -3139,7 +3267,7 @@ gimp_image_add_vectors (GimpImage   *gimage,
 
 void
 gimp_image_remove_vectors (GimpImage   *gimage,
-			   GimpVectors *vectors)
+                           GimpVectors *vectors)
 {
   GimpVectors *active_vectors;
   gint         index;
@@ -3147,7 +3275,7 @@ gimp_image_remove_vectors (GimpImage   *gimage,
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_VECTORS (vectors));
   g_return_if_fail (gimp_container_have (gimage->vectors,
-					 GIMP_OBJECT (vectors)));
+                                         GIMP_OBJECT (vectors)));
 
   active_vectors = gimp_image_get_active_vectors (gimage);
 
@@ -3176,7 +3304,7 @@ gimp_image_remove_vectors (GimpImage   *gimage,
       else
         {
           active_vectors = NULL;
-	}
+        }
 
       gimp_image_set_active_vectors (gimage, active_vectors);
     }
@@ -3186,7 +3314,7 @@ gimp_image_remove_vectors (GimpImage   *gimage,
 
 gboolean
 gimp_image_raise_vectors (GimpImage   *gimage,
-			  GimpVectors *vectors)
+                          GimpVectors *vectors)
 {
   gint index;
 
@@ -3194,7 +3322,7 @@ gimp_image_raise_vectors (GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
 
   index = gimp_container_get_child_index (gimage->vectors,
-					  GIMP_OBJECT (vectors));
+                                          GIMP_OBJECT (vectors));
 
   if (index == 0)
     {
@@ -3216,7 +3344,7 @@ gimp_image_raise_vectors_to_top (GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
 
   index = gimp_container_get_child_index (gimage->vectors,
-					  GIMP_OBJECT (vectors));
+                                          GIMP_OBJECT (vectors));
 
   if (index == 0)
     {
@@ -3230,7 +3358,7 @@ gimp_image_raise_vectors_to_top (GimpImage   *gimage,
 
 gboolean
 gimp_image_lower_vectors (GimpImage   *gimage,
-			  GimpVectors *vectors)
+                          GimpVectors *vectors)
 {
   gint index;
 
@@ -3238,7 +3366,7 @@ gimp_image_lower_vectors (GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
 
   index = gimp_container_get_child_index (gimage->vectors,
-					  GIMP_OBJECT (vectors));
+                                          GIMP_OBJECT (vectors));
 
   if (index == gimp_container_num_children (gimage->vectors) - 1)
     {
@@ -3261,7 +3389,7 @@ gimp_image_lower_vectors_to_bottom (GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
 
   index = gimp_container_get_child_index (gimage->vectors,
-					  GIMP_OBJECT (vectors));
+                                          GIMP_OBJECT (vectors));
 
   length = gimp_container_num_children (gimage->vectors);
 
@@ -3277,8 +3405,8 @@ gimp_image_lower_vectors_to_bottom (GimpImage   *gimage,
 
 gboolean
 gimp_image_position_vectors (GimpImage   *gimage,
-			     GimpVectors *vectors,
-			     gint         new_index,
+                             GimpVectors *vectors,
+                             gint         new_index,
                              gboolean     push_undo,
                              const gchar *undo_desc)
 {
@@ -3289,7 +3417,7 @@ gimp_image_position_vectors (GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
 
   index = gimp_container_get_child_index (gimage->vectors,
-					  GIMP_OBJECT (vectors));
+                                          GIMP_OBJECT (vectors));
   if (index < 0)
     return FALSE;
 
@@ -3304,15 +3432,15 @@ gimp_image_position_vectors (GimpImage   *gimage,
     gimp_image_undo_push_vectors_reposition (gimage, undo_desc, vectors);
 
   gimp_container_reorder (gimage->vectors,
-			  GIMP_OBJECT (vectors), new_index);
+                          GIMP_OBJECT (vectors), new_index);
 
   return TRUE;
 }
 
 gboolean
 gimp_image_layer_boundary (const GimpImage  *gimage,
-			   BoundSeg        **segs,
-			   gint             *n_segs)
+                           BoundSeg        **segs,
+                           gint             *n_segs)
 {
   GimpLayer *layer;
 
@@ -3340,8 +3468,8 @@ gimp_image_layer_boundary (const GimpImage  *gimage,
 
 GimpLayer *
 gimp_image_pick_correlate_layer (const GimpImage *gimage,
-				 gint             x,
-				 gint             y)
+                                 gint             x,
+                                 gint             y)
 {
   GList *list;
 
@@ -3354,7 +3482,7 @@ gimp_image_pick_correlate_layer (const GimpImage *gimage,
       GimpLayer *layer = list->data;
 
       if (gimp_layer_pick_correlate (layer, x, y))
-	return layer;
+        return layer;
     }
 
   return NULL;
@@ -3398,8 +3526,8 @@ gimp_image_invalidate_layer_previews (GimpImage *gimage)
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   gimp_container_foreach (gimage->layers,
-			  (GFunc) gimp_viewable_invalidate_preview,
-			  NULL);
+                          (GFunc) gimp_viewable_invalidate_preview,
+                          NULL);
 }
 
 void
@@ -3408,6 +3536,6 @@ gimp_image_invalidate_channel_previews (GimpImage *gimage)
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   gimp_container_foreach (gimage->channels,
-			  (GFunc) gimp_viewable_invalidate_preview,
-			  NULL);
+                          (GFunc) gimp_viewable_invalidate_preview,
+                          NULL);
 }

@@ -64,20 +64,24 @@ gimp_image_scale (GimpImage             *gimage,
                   gimage->vectors->num_children  +
                   1 /* selection */);
 
+  g_object_freeze_notify (G_OBJECT (gimage));
+
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_SCALE,
                                _("Scale Image"));
 
   /*  Push the image size to the stack  */
   gimp_image_undo_push_image_size (gimage, NULL);
 
-  /*  Set the new width and height  */
-
   old_width      = gimage->width;
   old_height     = gimage->height;
-  gimage->width  = new_width;
-  gimage->height = new_height;
   img_scale_w    = (gdouble) new_width  / (gdouble) old_width;
   img_scale_h    = (gdouble) new_height / (gdouble) old_height;
+
+  /*  Set the new width and height  */
+  g_object_set (gimage,
+                "width",  new_width,
+                "height", new_height,
+                NULL);
 
   /*  Scale all channels  */
   for (list = GIMP_LIST (gimage->channels)->list;
@@ -179,6 +183,7 @@ gimp_image_scale (GimpImage             *gimage,
   gimp_image_undo_group_end (gimage);
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
+  g_object_thaw_notify (G_OBJECT (gimage));
 
   gimp_unset_busy (gimage->gimp);
 }
