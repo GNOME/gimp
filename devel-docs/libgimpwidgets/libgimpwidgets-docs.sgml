@@ -20,6 +20,7 @@
     </chapter>    
 
     <xi:include href="xml/gimpbutton.xml" />
+    <xi:include href="xml/gimpcellrenderercolor.xml" />
     <xi:include href="xml/gimpchainbutton.xml" />
     <xi:include href="xml/gimpcolorarea.xml" />
     <xi:include href="xml/gimpcolorbutton.xml" />

@@ -1,4 +1,37 @@
 <SECTION>
+<FILE>gimpbutton</FILE>
+<TITLE>GimpButton</TITLE>
+GimpButton
+gimp_button_new
+gimp_button_extended_clicked
+<SUBSECTION Standard>
+GIMP_BUTTON
+GIMP_IS_BUTTON
+GIMP_TYPE_BUTTON
+gimp_button_get_type
+GimpButtonClass
+GIMP_BUTTON_CLASS
+GIMP_IS_BUTTON_CLASS
+GIMP_BUTTON_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpcellrenderercolor</FILE>
+<TITLE>GimpCellRendererColor</TITLE>
+GimpCellRendererColor
+gimp_cell_renderer_color_new
+<SUBSECTION Standard>
+GimpCellRendererColorClass
+GIMP_CELL_RENDERER_COLOR
+GIMP_IS_CELL_RENDERER_COLOR
+GIMP_TYPE_CELL_RENDERER_COLOR
+gimp_cell_renderer_color_get_type
+GIMP_CELL_RENDERER_COLOR_CLASS
+GIMP_IS_CELL_RENDERER_COLOR_CLASS
+GIMP_CELL_RENDERER_COLOR_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpchainbutton</FILE>
 <TITLE>GimpChainButton</TITLE>
 GimpChainButton
@@ -305,23 +338,6 @@ GimpUnitMenuClass
 GIMP_UNIT_MENU_CLASS
 GIMP_IS_UNIT_MENU_CLASS
 GIMP_UNIT_MENU_GET_CLASS
-</SECTION>
-
-<SECTION>
-<FILE>gimpbutton</FILE>
-<TITLE>GimpButton</TITLE>
-GimpButton
-gimp_button_new
-gimp_button_extended_clicked
-<SUBSECTION Standard>
-GIMP_BUTTON
-GIMP_IS_BUTTON
-GIMP_TYPE_BUTTON
-gimp_button_get_type
-GimpButtonClass
-GIMP_BUTTON_CLASS
-GIMP_IS_BUTTON_CLASS
-GIMP_BUTTON_GET_CLASS
 </SECTION>
 
 <SECTION>

@@ -31,6 +31,7 @@
 
 #include "gimpwidgetstypes.h"
 
+#include "gimpcellrenderercolor.h"
 #include "gimpcolorhexentry.h"
 
 
@@ -43,6 +44,7 @@ enum
 enum
 {
   COLUMN_NAME,
+  COLUMN_COLOR,
   NUM_COLUMNS
 };
 
@@ -108,6 +110,7 @@ static void
 gimp_color_hex_entry_init (GimpColorHexEntry *entry)
 {
   GtkEntryCompletion  *completion;
+  GtkCellRenderer     *cell;
   GtkListStore        *store;
   GimpRGB             *colors;
   const gchar        **names;
@@ -116,7 +119,7 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
 
   gimp_rgba_set (&entry->color, 0.0, 0.0, 0.0, 1.0);
 
-  store = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, G_TYPE_STRING);
+  store = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, GIMP_TYPE_RGB);
 
   num_colors = gimp_rgb_list_names (&names, &colors);
 
@@ -126,7 +129,8 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
 
       gtk_list_store_append (store, &iter);
       gtk_list_store_set (store, &iter,
-                          COLUMN_NAME, names[i],
+                          COLUMN_NAME,  names[i],
+                          COLUMN_COLOR, colors + i,
                           -1);
     }
 
@@ -137,6 +141,12 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
                              "model", store,
                              NULL);
   g_object_unref (store);
+
+  cell = gimp_cell_renderer_color_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (completion), cell, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (completion), cell,
+                                  "color", COLUMN_COLOR,
+                                  NULL);
 
   gtk_entry_completion_set_text_column (completion, COLUMN_NAME);
 
@@ -257,9 +267,11 @@ gimp_color_hex_entry_events (GtkWidget *widget,
               (gimp_rgb_parse_name (&color, text, -1)))
 	    {
               gimp_color_hex_entry_set_color (entry, &color);
-
-              return FALSE;
 	    }
+          else
+            {
+              gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+            }
         }
       break;
 

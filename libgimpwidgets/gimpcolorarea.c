@@ -380,10 +380,14 @@ gimp_color_area_set_draw_border (GimpColorArea *area,
   gtk_widget_queue_draw (GTK_WIDGET (area));
 }
 
-static void
-gimp_color_area_render (GimpColorArea *area)
+void
+_gimp_color_area_render_buf (GimpColorAreaType  type,
+                             guchar            *buf,
+                             guint              width,
+                             guint              height,
+                             guint              rowstride,
+                             GimpRGB           *color)
 {
-  guint    width, height;
   guint    x, y;
   guint    check_size = 0;
   guchar   light[3];
@@ -392,15 +396,7 @@ gimp_color_area_render (GimpColorArea *area)
   guchar  *p;
   gdouble  frac;
 
-  area->needs_render = FALSE;
-
-  if (! area->buf)
-    return;
-
-  width  = area->width;
-  height = area->height;
-
-  switch (area->type)
+  switch (type)
     {
     case GIMP_COLOR_AREA_FLAT:
       check_size = 0;
@@ -415,13 +411,13 @@ gimp_color_area_render (GimpColorArea *area)
       break;
     }
 
-  gimp_rgb_get_uchar (&area->color, opaque, opaque + 1, opaque + 2);
+  gimp_rgb_get_uchar (color, opaque, opaque + 1, opaque + 2);
 
-  if (area->color.a == 1.0 || !check_size)
+  if (color->a == 1.0 || !check_size)
     {
       for (y = 0; y < height; y++)
         {
-          p = area->buf + y * area->rowstride;
+          p = buf + y * rowstride;
 
           for (x = 0; x < width; x++)
             {
@@ -435,21 +431,21 @@ gimp_color_area_render (GimpColorArea *area)
     }
 
   light[0] = (GIMP_CHECK_LIGHT +
-              (area->color.r - GIMP_CHECK_LIGHT) * area->color.a) * 255.999;
+              (color->r - GIMP_CHECK_LIGHT) * color->a) * 255.999;
   dark[0]  = (GIMP_CHECK_DARK +
-              (area->color.r - GIMP_CHECK_DARK)  * area->color.a) * 255.999;
+              (color->r - GIMP_CHECK_DARK)  * color->a) * 255.999;
   light[1] = (GIMP_CHECK_LIGHT +
-              (area->color.g - GIMP_CHECK_LIGHT) * area->color.a) * 255.999;
+              (color->g - GIMP_CHECK_LIGHT) * color->a) * 255.999;
   dark[1]  = (GIMP_CHECK_DARK +
-              (area->color.g - GIMP_CHECK_DARK)  * area->color.a) * 255.999;
+              (color->g - GIMP_CHECK_DARK)  * color->a) * 255.999;
   light[2] = (GIMP_CHECK_LIGHT +
-              (area->color.b - GIMP_CHECK_LIGHT) * area->color.a) * 255.999;
+              (color->b - GIMP_CHECK_LIGHT) * color->a) * 255.999;
   dark[2]  = (GIMP_CHECK_DARK +
-              (area->color.b - GIMP_CHECK_DARK)  * area->color.a) * 255.999;
+              (color->b - GIMP_CHECK_DARK)  * color->a) * 255.999;
 
   for (y = 0; y < height; y++)
     {
-      p = area->buf + y * area->rowstride;
+      p = buf + y * rowstride;
 
       for (x = 0; x < width; x++)
         {
@@ -502,6 +498,19 @@ gimp_color_area_render (GimpColorArea *area)
             }
         }
     }
+}
+static void
+gimp_color_area_render (GimpColorArea *area)
+{
+  area->needs_render = FALSE;
+
+  if (! area->buf)
+    return;
+
+  _gimp_color_area_render_buf (area->type,
+                               area->buf,
+                               area->width, area->height, area->rowstride,
+                               &area->color);
 }
 
 static void

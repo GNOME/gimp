@@ -27,6 +27,7 @@
 #include <libgimpwidgets/gimpwidgetstypes.h>
 
 #include <libgimpwidgets/gimpbutton.h>
+#include <libgimpwidgets/gimpcellrenderercolor.h>
 #include <libgimpwidgets/gimpchainbutton.h>
 #include <libgimpwidgets/gimpcolorarea.h>
 #include <libgimpwidgets/gimpcolorbutton.h>
