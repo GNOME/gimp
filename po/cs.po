@@ -1,12 +1,12 @@
-# Czech translation of GIMP 1.2.0.
-# Copyright (C) 2000 Free Software Foundation, Inc.
-# Stanislav Brabec <utx@penguin.cz>, 1998-2000.
+# Czech translation of GIMP 1.2.1.
+# Copyright (C) 2001 Free Software Foundation, Inc.
+# Stanislav Brabec <utx@penguin.cz>, 1998-2001.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.2.0\n"
-"POT-Creation-Date: 2001-01-21 19:10-0800\n"
-"PO-Revision-Date: 2000-12-28 12:45+01:00\n"
+"Project-Id-Version: GIMP 1.2.1\n"
+"POT-Creation-Date: 2001-02-17 17:41+0100\n"
+"PO-Revision-Date: 2001-02-17 19:23+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -280,7 +280,7 @@ msgstr "Jas-kontrast nefunguje na indexovaných obrazovkách."
 #: app/curves.c:567 app/file_new_dialog.c:212 app/file_new_dialog.c:358
 #: app/gimpui.c:126 app/hue_saturation.c:379 app/layers_dialog.c:3559
 #: app/layers_dialog.c:3743 app/layers_dialog.c:3838 app/layers_dialog.c:4099
-#: app/levels.c:346 app/module_db.c:319 app/posterize.c:208
+#: app/levels.c:346 app/module_db.c:315 app/posterize.c:208
 #: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
 #: app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
 msgid "OK"
@@ -350,7 +350,7 @@ msgstr "Úhel:"
 msgid "Brush Selection"
 msgstr "Výbìr stopy"
 
-#: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:359
+#: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:355
 #: app/palette.c:2056 app/pattern_select.c:176
 msgid "Refresh"
 msgstr "Zaktualizovat"
@@ -1012,7 +1012,7 @@ msgstr "Plynulá"
 msgid "Free"
 msgstr "Volná"
 
-#: app/curves.c:708 app/levels.c:607 app/module_db.c:878
+#: app/curves.c:708 app/levels.c:607 app/module_db.c:874
 msgid "Load"
 msgstr "Naèíst"
 
@@ -3745,74 +3745,74 @@ msgstr "Vy¾ádáno vypu¹tìní"
 msgid "Unloaded OK"
 msgstr "Vypu¹tìno bez problémù"
 
-#: app/module_db.c:313
+#: app/module_db.c:309
 msgid "Module DB"
 msgstr "Databáze modulù"
 
-#: app/module_db.c:606
+#: app/module_db.c:602
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr "naèten modul: \"%s\"\n"
 
-#: app/module_db.c:613
+#: app/module_db.c:609
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr "pøeskoèen modul: \"%s\"\n"
 
-#: app/module_db.c:639
+#: app/module_db.c:635
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "chyba ètení modulu: %s: %s"
 
-#: app/module_db.c:826
+#: app/module_db.c:822
 msgid "<No modules>"
 msgstr "<®ádné moduly>"
 
-#: app/module_db.c:839 app/module_db.c:848
+#: app/module_db.c:835 app/module_db.c:844
 msgid "on disk"
 msgstr "na disku"
 
-#: app/module_db.c:839
+#: app/module_db.c:835
 msgid "only in memory"
 msgstr "pouze v pamìti"
 
-#: app/module_db.c:848
+#: app/module_db.c:844
 msgid "nowhere (click 'refresh')"
 msgstr "nikde (stisknìte 'Zaktualizovat')"
 
-#: app/module_db.c:887
+#: app/module_db.c:883
 msgid "Unload"
 msgstr "Uvolnit"
 
-#: app/module_db.c:903
+#: app/module_db.c:899
 msgid "Purpose:"
 msgstr "Úèel:"
 
-#: app/module_db.c:904
+#: app/module_db.c:900
 msgid "Author:"
 msgstr "Autor:"
 
-#: app/module_db.c:905
+#: app/module_db.c:901
 msgid "Version:"
 msgstr "Verze:"
 
-#: app/module_db.c:906
+#: app/module_db.c:902
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: app/module_db.c:907
+#: app/module_db.c:903
 msgid "Date:"
 msgstr "Datum:"
 
-#: app/module_db.c:908
+#: app/module_db.c:904
 msgid "Location:"
 msgstr "Umístìní:"
 
-#: app/module_db.c:909
+#: app/module_db.c:905
 msgid "State:"
 msgstr "Stav:"
 
-#: app/module_db.c:928
+#: app/module_db.c:924
 msgid "Autoload during startup"
 msgstr "Èíst automaticky bìhem spou¹tìní"
 

@@ -1,12 +1,12 @@
-# Czech translation of GIMP plugins 1.2.0.
-# Copyright (C) 2000 Free Software Foundation, Inc.
-# Stanislav Brabec <utx@penguin.cz>, 1999-2000.
+# Czech translation of GIMP plugins 1.2.1.
+# Copyright (C) 2001 Free Software Foundation, Inc.
+# Stanislav Brabec <utx@penguin.cz>, 1999-2001.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plugins 1.2.0\n"
-"POT-Creation-Date: 2001-01-15 14:06-0800\n"
-"PO-Revision-Date: 2001-01-06 23:53+01:00\n"
+"Project-Id-Version: gimp-std-plugins 1.2.1\n"
+"POT-Creation-Date: 2001-02-17 17:43+0100\n"
+"PO-Revision-Date: 2001-02-17 19:19+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1441,15 +1441,15 @@ msgstr "RLE kódované"
 
 #: plug-ins/common/AlienMap.c:964
 msgid "<Image>/Filters/Colors/Map/Alien Map..."
-msgstr "<Image>/Filtry/Barvy/Mapování/Cizí mapování..."
+msgstr "<Image>/Filtry/Barvy/Mapování/Mimozemské mapování..."
 
 #: plug-ins/common/AlienMap.c:1162
 msgid "AlienMap: Transforming..."
-msgstr "Cizí mapování: Transformuje se..."
+msgstr "Mimozemské mapování: Transformuje se..."
 
 #: plug-ins/common/AlienMap.c:1391
 msgid "AlienMap"
-msgstr "Cizí mapování"
+msgstr "Mimozemské mapování"
 
 #: plug-ins/common/AlienMap.c:1442
 msgid "Change intensity of the red channel"
@@ -1506,19 +1506,19 @@ msgstr ""
 
 #: plug-ins/common/AlienMap.c:1657
 msgid "About AlienMap"
-msgstr "O cizím mapování"
+msgstr "O mimozemském mapování"
 
 #: plug-ins/common/AlienMap2.c:988
 msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
-msgstr "<Image>/Filtry/Barvy/Mapování/Cizí mapování 2..."
+msgstr "<Image>/Filtry/Barvy/Mapování/Mimozemské mapování 2..."
 
 #: plug-ins/common/AlienMap2.c:1161
 msgid "AlienMap2: Transforming..."
-msgstr "Cizí mapování 2: Transformuje se..."
+msgstr "Mimozemské mapování 2: Transformuje se..."
 
 #: plug-ins/common/AlienMap2.c:1383
 msgid "AlienMap2"
-msgstr "Cizí mapování 2"
+msgstr "Mimozemské mapování 2"
 
 #: plug-ins/common/AlienMap2.c:1432
 msgid "R/H-Frequency:"
@@ -1609,7 +1609,7 @@ msgstr "U¾ití funkce pro komponentu modrá/jas"
 
 #: plug-ins/common/AlienMap2.c:1671
 msgid "About AlienMap2"
-msgstr "O cizím mapování 2"
+msgstr "O mimozemském mapování 2"
 
 #. Let user choose KCF palette (cancel ignores)
 #: plug-ins/common/CEL.c:194
@@ -13135,12 +13135,3 @@ msgstr "Chyba: Nelze naèíst soubor %s XJT vlastností"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Chyba: Soubor XJT vlastností %s je prázdný"
-
-#~ msgid "Enable/disable jagged edges removal(antialiasing)"
-#~ msgstr "Povolení/zákaz odstraòování zubatých hran (vyhlazování)"
-
-#~ msgid "Treshold:"
-#~ msgstr "Práh:"
-
-#~ msgid "Allow Tile splitting"
-#~ msgstr "Povolit rozdìlìní dla¾dic"
