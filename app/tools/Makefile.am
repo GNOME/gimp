@@ -106,6 +106,8 @@ libapptools_a_sources = \
 	gimpperspectivetool.h		\
 	gimpposterizetool.c		\
 	gimpposterizetool.h		\
+	gimpnewrectselecttool.c		\
+	gimpnewrectselecttool.h		\
 	gimprectselecttool.c		\
 	gimprectselecttool.h		\
 	gimprotatetool.c		\

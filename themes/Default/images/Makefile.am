@@ -297,6 +297,8 @@ STOCK_TOOL_IMAGES = \
 	tools/stock-tool-perspective-22.png		\
 	tools/stock-tool-posterize-16.png		\
 	tools/stock-tool-posterize-22.png		\
+	tools/stock-tool-new-rect-select-16.png		\
+	tools/stock-tool-new-rect-select-22.png		\
 	tools/stock-tool-rect-select-16.png		\
 	tools/stock-tool-rect-select-22.png		\
 	tools/stock-tool-rotate-16.png			\

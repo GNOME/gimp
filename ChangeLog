@@ -1,3 +1,19 @@
+2005-01-31  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimpnewrectselecttool.[ch]: new rectangle select tool
+
+	* app/tools/Makefile.am
+	* app/tools/gimp-tools.c: add it to toolbox
+
+	* app/tools/gimpselectionoptions.[ch]: set its options
+	
+	* themes/Default/images/tools/stock-tool-new-rect-select-16.png
+	* themes/Default/images/tools/stock-tool-new-rect-select-22.png: toolbox
+	icon
+	
+	* libgimpwidgets/gimpstock.[ch]
+	* themes/Default/images/Makefile.am: add the toolbox icon
+
 2005-01-31  Michael Natterer  <mitch@gimp.org>
 
 	Some cleanup to make plug-in menu creation less hackish and

@@ -58,6 +58,9 @@ struct _GimpSelectionOptions
   gdouble             fixed_height;
   GimpUnit            fixed_unit;
 
+  gboolean            adjustable;
+  gboolean            show_dialog;
+
   /*  used by iscissors */
   gboolean            interactive;
 };
