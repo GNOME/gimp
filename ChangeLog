@@ -1,5 +1,11 @@
 2004-02-16  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcroptool.c (crop_info_create): use limits from
+	libgimpbase instead of arbitrary numbers. Don't allow a crop width
+	or height smaller than 1 (or GIMP_MIN_IMAGE_SIZE actually).
+
+2004-02-16  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpcanvas.c (gimp_canvas_gc_new): fixed my last
 	change here; of course only the guide GCs need a stipple pattern.
 

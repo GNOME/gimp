@@ -992,9 +992,9 @@ crop_info_create (GimpCropTool *crop)
 			     GTK_SPIN_BUTTON (spinbutton), NULL);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (crop->origin_sizeentry),
-                                         0, -65536, 65536);
+                                         0, -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (crop->origin_sizeentry),
-                                         1, -65536, 65536);
+                                         1, -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
 
   spinbutton = info_dialog_add_spinbutton (crop->crop_info, _("Width:"), NULL,
 					    -1, 1, 1, 10, 1, 1, 2, NULL, NULL);
@@ -1009,9 +1009,9 @@ crop_info_create (GimpCropTool *crop)
 			     GTK_SPIN_BUTTON (spinbutton), NULL);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (crop->size_sizeentry),
-                                         0, -65536, 65536);
+                                         0, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (crop->size_sizeentry),
-                                         1, -65536, 65536);
+                                         1, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
 
   gtk_table_set_row_spacing (GTK_TABLE (crop->crop_info->info_table), 0, 0);
   gtk_table_set_row_spacing (GTK_TABLE (crop->crop_info->info_table), 1, 6);
