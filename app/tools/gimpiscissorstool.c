@@ -749,6 +749,9 @@ iscissors_draw_CR (GDisplay  *gdisp,
   int index;
   int i;
 
+  GimpDrawable *drawable;
+  drawable = gimage_active_drawable (gdisp->gimage);
+
   /* construct the geometry matrix from the segment */
   /* assumes that a valid segment containing 4 points is passed in */
 
@@ -836,7 +839,11 @@ iscissors_draw_CR (GDisplay  *gdisp,
 	{
 	  /* add the point to the point buffer */
 		      	  
-	  gdisplay_transform_coords (gdisp, newx, newy, &tx, &ty,1 );
+	  /*gdisplay_transform_coords (gdisp, newx, newy, &tx, &ty,1 );*/
+	  drawable_offsets(drawable, &tx, &ty);
+	  tx += newx;
+	  ty += newy;
+	  
 	  gdk_points[index].x = tx;
 	  gdk_points[index].y = ty;
 

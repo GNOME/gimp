@@ -1,6 +1,11 @@
+Thu Mar 26 12:15:38 MST 1998 Nathan Summers <rock@gimp.org>
+	* app/iscissors.c: fixes the display artifact where the preview
+	outline of the selected area would not appear or would appear in the 
+	wrong place or have the wrong shape
+
 Thu Mar 26 12:00:47 MST 1998 Nathan Summers <rock@gimp.org>
 
-	* iscissors.c: This should hopefully fix most of the UMRs
+	* app/iscissors.c: This should hopefully fix most of the UMRs
 	(uninitialized memory reads) found with Purify.  No noticable
 	change in iscissors's behavior, unfortunately.
 
@@ -21,7 +26,7 @@ Thu Mar 26 18:38:54 MET 1998 Sven Neumann <sven@gimp.org>
 
 Wed Mar 25 22:46:36 MST 1998 Nathan Summers <rock@gimp.org>
 
-	* iscissors.c: fixed a problem with unintialized variables
+	* app/iscissors.c: fixed a problem with unintialized variables
 
 Wed Mar 25 19:29:09 PST 1998 Manish Singh <yosh@gimp.org>
 
