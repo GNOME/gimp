@@ -1,3 +1,8 @@
+2005-01-02  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/mosaic.c: Added a preview.  This still needs some
+	work and some testing.  Calculating the preview takes ages.
+
 2005-01-01  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/jpeg/exif-handling.txt:  added summary of how Gimp should
