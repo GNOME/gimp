@@ -1,3 +1,10 @@
+Thu Aug 13 23:00:39 EDT 1998 Adrian Likins <adrian@gimp.org>
+
+	* plug-ins/script-fu/scripts: tileblur.scm, title-header.scm,
+	trochoid.scm,truchet.scm, unsharp-mask.scm, waves-anim.scm,
+	weave.scm,xach-effect.scm: first wave of scripts to
+	use some of the new script-fu options
+
 Thu Aug 13 22:20:06 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/transform_tool.[ch]: minor cosmetic changes

@@ -22,12 +22,12 @@
 
 (define (script-fu-title-header text
 				size
-				foundry
-				family
-				weight
-				slant
-				set-width
-				spacing)
+;				foundry
+;				family
+;				weight
+;				slant
+;				set-width
+				fontname)
   (let* (; Parameters
 	 
 	 (padding 8)
@@ -44,7 +44,7 @@
 
 	 ; Text layer
 	 
-	 (text-layer (car (gimp-text
+	 (text-layer (car (gimp-text-fontname
 			   img
 			   -1
 			   0
@@ -54,12 +54,7 @@
 			   TRUE
 			   size
 			   PIXELS
-			   foundry
-			   family
-			   weight
-			   slant
-			   set-width
-			   spacing)))
+			   fontname)))
 	 (text-width (car (gimp-drawable-width text-layer)))
 	 (text-height (car (gimp-drawable-height text-layer)))
 
@@ -172,10 +167,5 @@
 		    "June 1997"
 		    ""
 		    SF-STRING "Text" "Hello world!"
-		    SF-VALUE "Text size" "32"
-		    SF-STRING "Foundry" "adobe"
-		    SF-STRING "Family" "helvetica"
-		    SF-STRING "Weight" "bold"
-		    SF-STRING "Slant" "r"
-		    SF-STRING "Set width" "normal"
-		    SF-STRING "Spacing" "p")
+		    SF-ADJUSTMENT  "Text size" '(32 2 256 1 10 0 0)
+		    SF-FONT "Font" "-adobe-helvetica-bold-r-normal-*-30-*-*-*-p-*-*-*")

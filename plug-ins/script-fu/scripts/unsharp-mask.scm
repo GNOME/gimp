@@ -73,7 +73,7 @@
  "RGB*, GRAY*"
  SF-IMAGE "Image" 0
  SF-DRAWABLE "Drawable to apply" 0
- SF-VALUE "Mask size" (number->string script-fu-unsharp-mask-mask-size)
+ SF-VALUE "Mask size" (number->string script-fu-unsharp-mask-mask-size )
 )
 
 ;;; unsharp-mask.scm ends here

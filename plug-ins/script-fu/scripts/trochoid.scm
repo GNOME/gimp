@@ -387,10 +387,10 @@
 		    "Shuji Narazaki"
 		    "1997"
 		    ""
-		    SF-VALUE "Base radius (pixel)" "40"
-		    SF-VALUE "Wheel Radius (hypo < 0 < epi)" "60"
-		    SF-VALUE "Pen rad./wheel rad. [0.0:1.0]" "0.8"
-		    SF-VALUE "Hue rate " "1.0"
+		    SF-ADJUSTMENT "Base radius (pixel)" '(40 0 512 1 1 0 0)
+		    SF-ADJUSTMENT "Wheel Radius (hypo < 0 < epi)" '(60 0 512 1 1 0 0)
+		    SF-ADJUSTMENT "Pen rad./wheel rad. [0.0:1.0]" '(0.8 0 1 .01 .01 2 0)
+		    SF-ADJUSTMENT "Hue Rate" '(1.0 0 1 .01 .01 2 0)
 		    SF-VALUE "Erase before draw? [0/1]" "0"
 )
 

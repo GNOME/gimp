@@ -360,10 +360,10 @@
 		    "RGB*, GRAY*"
 		    SF-IMAGE "Image to weave" 0
 		    SF-DRAWABLE "Drawable to weave" 0
-		    SF-VALUE "Ribbon width" "30"
-		    SF-VALUE "Ribbon spacing" "10"
-		    SF-VALUE "Shadow darkness" "75"
-		    SF-VALUE "Shadow depth" "75"
-		    SF-VALUE "Thread length" "20"
-		    SF-VALUE "Thread density" "50"
-		    SF-VALUE "Thread intensity" "100")
+		    SF-ADJUSTMENT "Ribbon width"     '(30  0 256 1 10 1 1)
+		    SF-ADJUSTMENT "Ribbon spacing"   '(10  0 256 1 10 1 1)
+		    SF-ADJUSTMENT "Shadow darkness"  '(75  0 100 1 10 1 1)
+		    SF-ADJUSTMENT "Shadow depth"     '(75  0 100 1 10 1 1) 
+		    SF-ADJUSTMENT "Thread length"    '(200 0 256 1 10 1 1)
+		    SF-ADJUSTMENT "Thread density"   '(50  0 100 1 10 1 1)
+		    SF-ADJUSTMENT "Thread intensity" '(100 0 512 1 10 1 1))

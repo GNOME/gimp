@@ -30,7 +30,7 @@
 			       hl-offset-x
 			       hl-offset-y
 			       hl-color
-			       hl-opacity
+			       hl-opacity-comp
 			       ds-color
 			       ds-opacity
 			       ds-blur
@@ -42,11 +42,14 @@
 	 (ds-opacity (max ds-opacity 0))
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image-width (car (gimp-image-width image)))
+	 (hl-opacity (list hl-opacity-comp hl-opacity-comp hl-opacity-comp))
 	 (image-height (car (gimp-image-height image)))
 	 (old-bg (car (gimp-palette-get-background))))
     
     (gimp-image-disable-undo image)
     (gimp-layer-add-alpha drawable)
+    
+
     
     (if (= (car (gimp-selection-is-empty image)) TRUE)
 	(begin
@@ -118,15 +121,16 @@
 		    "RGB RGBA GRAY GRAYA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-VALUE "highlight X offset" "-1"
-		    SF-VALUE "highlight Y offset" "-1"
+		    SF-ADJUSTMENT "highlight X offset" '(-1 -100 100 1 10 0 1)
+		    SF-ADJUSTMENT "highlight Y offset" '(-1 -100 100 1 10 0 1)
 		    SF-COLOR "Highlight Color" '(255 255 255)
-		    SF-COLOR "Opacity" '(66 66 66)
+		    SF-ADJUSTMENT "Opacity" '(66 0 255 1 10 0 0)
+;		    SF-COLOR "Opacity" '(66 66 66)
 		    SF-COLOR "Drop Shadow Color" '(0 0 0)
-		    SF-VALUE "Drop shadow Opacity" "100"
-		    SF-VALUE "Drop shadow Blur Radius" "12"
-		    SF-VALUE "Drop shadow X offset" "5"
-                    SF-VALUE "Drop shadow Y offset" "5"
+		    SF-ADJUSTMENT "Drop Shadow Opacity" '(100 0 100 1 10 0 0)
+		    SF-ADJUSTMENT "Drop Shadow Blur Radius" '(12 0 255 1 10 0 1)
+		    SF-ADJUSTMENT "Drop shadow X offset" '(5 0 255 1 10 0 1)
+		    SF-ADJUSTMENT "Drop shadow Y offset" '(5 0 255 1 10 0 1)
 		    SF-TOGGLE "Keep Selection?" TRUE)
 
 

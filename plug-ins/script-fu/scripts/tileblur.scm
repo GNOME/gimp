@@ -70,7 +70,8 @@
     "RGBA RGB"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
-    SF-VALUE "Radius:" "5"
+;    SF-VALUE "Radius:" "5"
+    SF-ADJUSTMENT "Radius:" '(5 0 128 1 1 0 0)
     SF-TOGGLE "Blur Vertically?" TRUE
     SF-TOGGLE "Blur Horizontally?" TRUE
     SF-TOGGLE "Blur Type: TRUE=RLE, FALSE=IIR" FALSE
