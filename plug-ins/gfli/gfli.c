@@ -503,7 +503,7 @@ load_image (gchar  *filename,
       to_frame = fli_header.frames;
     }
 
-  image_id = gimp_image_new (fli_header.width, fli_header.height, INDEXED);
+  image_id = gimp_image_new (fli_header.width, fli_header.height, GIMP_INDEXED);
   gimp_image_set_filename (image_id, filename);
 
   fb = g_malloc (fli_header.width * fli_header.height);
