@@ -1,5 +1,11 @@
 2005-02-09  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpscalecombobox.[ch]
+	* app/display/gimpstatusbar.c: pass an action label to
+	gimp_scale_combo_box_add_action().
+
+2005-02-09  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpscalecombobox.c: fixed brokeness introduced by
 	the latest changes.
 

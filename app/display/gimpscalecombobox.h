@@ -54,7 +54,8 @@ GType       gimp_scale_combo_box_get_type   (void) G_GNUC_CONST;
 
 GtkWidget * gimp_scale_combo_box_new        (void);
 void        gimp_scale_combo_box_add_action (GimpScaleComboBox *combo_box,
-                                             GtkAction         *action);
+                                             GtkAction         *action,
+                                             const gchar       *label);
 void        gimp_scale_combo_box_set_scale  (GimpScaleComboBox *combo_box,
                                              gdouble            scale);
 gdouble     gimp_scale_combo_box_get_scale  (GimpScaleComboBox *combo_box);

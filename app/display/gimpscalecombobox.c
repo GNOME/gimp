@@ -315,13 +315,12 @@ gimp_scale_combo_box_new (void)
 
 void
 gimp_scale_combo_box_add_action (GimpScaleComboBox *combo_box,
-                                 GtkAction         *action)
+                                 GtkAction         *action,
+                                 const gchar       *label)
 {
   GtkTreeModel *model;
   GtkListStore *store;
   GtkTreeIter   iter;
-  gchar        *label;
-  gchar        *stripped_label;
 
   g_return_if_fail (GIMP_IS_SCALE_COMBO_BOX (combo_box));
   g_return_if_fail (GTK_IS_ACTION (action));
@@ -340,19 +339,13 @@ gimp_scale_combo_box_add_action (GimpScaleComboBox *combo_box,
       combo_box->actions_added = TRUE;
     }
 
-  g_object_get (action, "label", &label, NULL);
-  stripped_label = gimp_strip_uline (label);
-  g_free (label);
-
   gtk_list_store_append (store, &iter);
   gtk_list_store_set (store, &iter,
-                      LABEL,       stripped_label,
+                      LABEL,       label,
                       LABEL_ALIGN, 0.0,
                       PERSISTENT,  TRUE,
                       ACTION,      action,
                       -1);
-
-  g_free (stripped_label);
 }
 
 void

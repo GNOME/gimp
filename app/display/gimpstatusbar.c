@@ -422,7 +422,7 @@ gimp_statusbar_new (GimpDisplayShell *shell)
     {
       GimpScaleComboBox *combo = GIMP_SCALE_COMBO_BOX (statusbar->scale_combo);
 
-      gimp_scale_combo_box_add_action (combo, action);
+      gimp_scale_combo_box_add_action (combo, action, _("Other..."));
     }
 
   g_signal_connect_object (shell, "scaled",
