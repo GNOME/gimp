@@ -143,7 +143,7 @@ while test $# -gt 0; do
 
   case $1 in
     --version)
-      echo @GIMP_VERSION@
+      echo @GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.@GIMP_MICRO_VERSION@
       exit 0
       ;;
     --help)
