@@ -2653,7 +2653,7 @@ image_set_component_active_invoker (Argument *args)
     
       if (success)
 	gimage_set_component_active (gimage, component, active);
-     }
+    }
 
   return procedural_db_return_args (&image_set_component_active_proc, success);
 }
@@ -2795,7 +2795,7 @@ image_set_component_visible_invoker (Argument *args)
     
       if (success)
 	gimage_set_component_visible (gimage, component, visible);
-     }
+    }
 
   return procedural_db_return_args (&image_set_component_visible_proc, success);
 }

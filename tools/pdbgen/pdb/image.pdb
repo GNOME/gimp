@@ -1065,7 +1065,7 @@ CODE1
     \$invoke{code}
 CODE
 	$comp_arg;
-	\$invoke{code} =~ s/}/\$code}/e;
+	\$invoke{code} =~ s/}/"\$code}"/e;
 	\$invoke{code} =~ s/ component_$_/ component, $_/;
 	\$inargs[2]->{name} = '$_';
 	\$inargs[2]->{desc} = 'Component is $_ (%%desc%%)';

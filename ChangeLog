@@ -1,3 +1,8 @@
+Mon May  3 14:03:35 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/gimage_cmds.c
+	* tools/pdbgen/pdb/gimage.pdb: fix rotten regexp eval
+	
 Mon May  3 21:44:27 BST 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/palette.c: put up messages telling user about corrupted
