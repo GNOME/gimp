@@ -64,8 +64,8 @@ void
 gimp_pixpipe_params_parse (gchar            *string,
 			   GimpPixPipeParams *params)
 {
-  gchar *p, *q, *r;		/* Don't you love single-char identifiers?  */
-  gint i;                       /*          No, we don't!!   <Sven>         */
+  gchar *p, *q, *r;
+  gint   i;
 
   q = string;
   while ((p = strtok (q, " \r\n")) != NULL)
@@ -88,8 +88,11 @@ gimp_pixpipe_params_parse (gchar            *string,
       else if (strcmp (p, "dim") == 0)
 	{
 	  if (r)
-	    params->dim = atoi (r + 1);
-	}
+            {
+              params->dim = atoi (r + 1);
+              params->dim = CLAMP (params->dim, 1, GIMP_PIXPIPE_MAXDIM);
+            }
+        }
       else if (strcmp (p, "cols") == 0)
 	{
 	  if (r)
@@ -148,7 +151,7 @@ gchar *
 gimp_pixpipe_params_build (GimpPixPipeParams *params)
 {
   GString *s = g_string_new (NULL);
-  gchar *str;
+  gchar   *str;
 
   gint i;
 

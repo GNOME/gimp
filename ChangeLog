@@ -1,5 +1,10 @@
 2004-03-22  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpparasiteio.c (gimp_pixpipe_params_parse): clamp
+	the pixpipe dimension to the allowed range. Fixes bug #137902.
+
+2004-03-22  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptextlayer.c (gimp_text_layer_duplicate): put some
 	code back in that I removed accidentally.
 	(gimp_text_layer_render) freeze/thaw notifications to avoid that
