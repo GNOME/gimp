@@ -1,3 +1,7 @@
+Mon Jul  6 5:12:00 CST  1998 Seth Burgess <sjburges@gimp.org>
+        
+        * plug-ins/gbr/gbr.c: added gbr version 1 support
+
 Mon Jul  6 12:07:37 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/convert.c: check for > 256 colors palettes when indexing,
