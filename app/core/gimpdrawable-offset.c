@@ -85,7 +85,7 @@ channel_ops_offset (GimpImage* gimage)
 
   off_d->dlg = gimp_dialog_new (_("Offset"), "offset",
 				gimp_standard_help_func,
-				"dialogs/offset_dialog.html",
+				"dialogs/offset.html",
 				GTK_WIN_POS_NONE,
 				FALSE, TRUE, FALSE,
 

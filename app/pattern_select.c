@@ -95,7 +95,7 @@ pattern_select_new (gchar *title,
       psp->shell =
 	gimp_dialog_new (title, "pattern_selection",
 			 gimp_standard_help_func,
-			 "dialogs/pattern_selection_dialog.html",
+			 "dialogs/pattern_selection.html",
 			 GTK_WIN_POS_NONE,
 			 FALSE, TRUE, FALSE,
 
@@ -114,7 +114,7 @@ pattern_select_new (gchar *title,
       psp->shell =
 	gimp_dialog_new (_("Pattern Selection"), "pattern_selection",
 			 gimp_standard_help_func,
-			 "dialogs/pattern_selection_dialog.html",
+			 "dialogs/pattern_selection.html",
 			 GTK_WIN_POS_NONE,
 			 FALSE, TRUE, FALSE,
 

@@ -591,7 +591,7 @@ create_toolbox (void)
   /*  Connect the "F1" help key  */
   gimp_help_connect_help_accel (window,
 				gimp_standard_help_func,
-				"dialogs/toolbox.html");
+				"toolbox/index.html");
 
   wbox = gtk_vwrap_box_new (FALSE);
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (wbox), GTK_JUSTIFY_FILL);
@@ -954,7 +954,7 @@ create_display_shell (GDisplay* gdisp,
   /*  Connect the "F1" help key  */
   gimp_help_connect_help_accel (gdisp->shell,
 				gimp_standard_help_func,
-				"dialogs/image_window.html");
+				"image/index.html");
 
   gtk_widget_show (arrow);
   gtk_widget_show (gdisp->qmaskon);

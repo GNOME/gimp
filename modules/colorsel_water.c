@@ -90,7 +90,8 @@ module_init (GimpModuleInfo **inforet)
 {
   GimpColorSelectorID id;
 
-  id = gimp_color_selector_register ("Watercolor", &methods);
+  id = gimp_color_selector_register ("Watercolor", "watercolor.html",
+				     &methods);
 
   if (id)
   {

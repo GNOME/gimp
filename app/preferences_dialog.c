@@ -1164,7 +1164,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   prefs_dlg =
     gimp_dialog_new (_("Preferences"), "gimp_preferences",
 		     gimp_standard_help_func,
-		     "dialogs/preferences_dialog.html",
+		     "dialogs/preferences.html",
 		     GTK_WIN_POS_NONE,
 		     FALSE, FALSE, FALSE,
 

@@ -86,6 +86,7 @@ typedef void *GimpColorSelectorID;
  * the name and method table are internalised, so may be freed after
  * this call. */
 GimpColorSelectorID gimp_color_selector_register (const char *name,
+						  const char *help_page,
 				  GimpColorSelectorMethods *methods);
 
 /* Remove the selector "id" from active service.  New instances of the

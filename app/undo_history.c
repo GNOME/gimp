@@ -427,7 +427,7 @@ undo_history_new (GImage *gimage)
 				     g_basename (gimage_filename (gimage)));
       st->shell = gimp_dialog_new (title, "undo_history",
 				   gimp_standard_help_func,
-				   "dialogs/undo_histroy_dialog.html",
+				   "dialogs/undo_histroy.html",
 				   GTK_WIN_POS_NONE,
 				   FALSE, TRUE, FALSE,
 

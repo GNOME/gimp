@@ -261,7 +261,7 @@ module_db_browser_new (void)
 
   shell = gimp_dialog_new (_("Module DB"), "module_db_dialog",
 			   gimp_standard_help_func,
-			   "dialogs/module_db_dialog.html",
+			   "dialogs/module_browser.html",
 			   GTK_WIN_POS_NONE,
 			   FALSE, TRUE, FALSE,
 

@@ -200,7 +200,7 @@ brush_select_new (gchar   *title,
     {
       bsp->shell = gimp_dialog_new (title, "brush_selection",
 				    gimp_standard_help_func,
-				    "dialogs/brush_selection_dialog.html",
+				    "dialogs/brush_selection.html",
 				    GTK_WIN_POS_NONE,
 				    FALSE, TRUE, FALSE,
 
@@ -218,7 +218,7 @@ brush_select_new (gchar   *title,
     {
       bsp->shell = gimp_dialog_new (_("Brush Selection"), "brush_selection",
 				    gimp_standard_help_func,
-				    "dialogs/brush_selection_dialog.html",
+				    "dialogs/brush_selection.html",
 				    GTK_WIN_POS_NONE,
 				    FALSE, TRUE, FALSE,
 

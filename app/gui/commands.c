@@ -352,7 +352,7 @@ select_border_cmd_callback (GtkWidget *widget,
 
   qbox = gimp_query_size_box (_("Border Selection"),
 			      gimp_standard_help_func,
-			      "dialogs/border_selection_dialog.html",
+			      "dialogs/border_selection.html",
 			      _("Border selection by:"),
 			      selection_border_radius, 1, 32767, 0,
 			      gdisp->gimage->unit,
@@ -375,7 +375,7 @@ select_feather_cmd_callback (GtkWidget *widget,
 
   qbox = gimp_query_size_box (_("Feather Selection"),
 			      gimp_standard_help_func,
-			      "dialogs/feather_selection_dialog.html",
+			      "dialogs/feather_selection.html",
 			      _("Feather selection by:"),
 			      selection_feather_radius, 0, 32767, 3,
 			      gdisp->gimage->unit,
@@ -398,7 +398,7 @@ select_grow_cmd_callback (GtkWidget *widget,
 
   qbox = gimp_query_size_box (_("Grow Selection"),
 			      gimp_standard_help_func,
-			      "dialogs/grow_selection_dialog.html",
+			      "dialogs/grow_selection.html",
 			      _("Grow selection by:"),
 			      selection_grow_pixels, 1, 32767, 0,
 			      gdisp->gimage->unit,
@@ -423,7 +423,7 @@ select_shrink_cmd_callback (GtkWidget *widget,
   shrink_dialog =
     gimp_query_size_box (N_("Shrink Selection"),
 			 gimp_standard_help_func,
-			 "dialogs/shrink_selection_dialog.html",
+			 "dialogs/shrink_selection.html",
 			 N_("Shrink selection by:"),
 			 selection_shrink_pixels, 1, 32767, 0,
 			 gdisp->gimage->unit,
@@ -1195,7 +1195,7 @@ void
 gimp_help_cmd_callback (GtkWidget *widget,
 			gpointer   client_data)
 {
-  gimp_help ("");
+  gimp_help (NULL);
 }
 
 void

@@ -703,7 +703,7 @@ paste_named_buffer (GDisplay *gdisp)
   pn_dlg->shell =
     gimp_dialog_new (_("Paste Named Buffer"), "paste_named_buffer",
 		     gimp_standard_help_func,
-		     "dialogs/paste_named_buffer_dialog.html",
+		     "dialogs/paste_named.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
@@ -806,7 +806,7 @@ named_edit_cut (void *gdisp_ptr)
 
   qbox = gimp_query_string_box (_("Cut Named"),
 				gimp_standard_help_func,
-				"dialogs/cut_named_dialog.html",
+				"dialogs/cut_named.html",
 				_("Enter a name for this buffer"),
 				NULL,
 				GTK_OBJECT (gdisp->gimage), "destroy",
@@ -843,7 +843,7 @@ named_edit_copy (void *gdisp_ptr)
 
   qbox = gimp_query_string_box (_("Copy Named"),
 				gimp_standard_help_func,
-				"dialogs/copy_named_dialog.html",
+				"dialogs/copy_named.html",
 				_("Enter a name for this buffer"),
 				NULL,
 				GTK_OBJECT (gdisp->gimage), "destroy",

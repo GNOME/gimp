@@ -153,6 +153,7 @@ static HelpPage pages[] =
   }
 };
 
+static gchar     *current_locale = "C";
 
 static HelpPage  *current_page = &pages[HELP];
 static GList     *history = NULL;
@@ -735,6 +736,7 @@ open_browser_dialog (gchar *path)
     }
 
   eek_png_path = g_strconcat (root_dir, G_DIR_SEPARATOR_S,
+			      "images", G_DIR_SEPARATOR_S,
 			      "eek.png", NULL);
   if (access (eek_png_path, R_OK) == 0)
     eek_png_tag = g_strdup_printf ("<img src=\"%s\">", eek_png_path);
@@ -804,6 +806,7 @@ open_browser_dialog (gchar *path)
       pages[i].html = gtk_xmhtml_new ();
       pages[i].queue = queue_new ();
       pages[i].current_ref = g_strconcat (initial_dir, G_DIR_SEPARATOR_S,
+					  current_locale, G_DIR_SEPARATOR_S,
 					  ".", NULL);
 
       gtk_xmhtml_set_anchor_underline_type (GTK_XMHTML (pages[i].html),
@@ -865,10 +868,12 @@ open_browser_dialog (gchar *path)
 	    initial_ref = g_strdup (path);
 	  else
 	    initial_ref = g_strconcat (initial_dir, G_DIR_SEPARATOR_S,
+				       current_locale, G_DIR_SEPARATOR_S,
 				       path, NULL);
 	}
       else
 	initial_ref = g_strconcat (initial_dir, G_DIR_SEPARATOR_S,
+				   current_locale, G_DIR_SEPARATOR_S,
 				   pages[i].home, NULL);
 
       success = load_page (&pages[i], &pages[i], initial_ref, 0, TRUE, FALSE);
@@ -945,16 +950,20 @@ run_temp_proc (gchar   *name,
 
   /*  Make sure all the arguments are there!  */
   if ((nparams != 1) ||
+      !param[0].data.d_string ||
       !strlen (param[0].data.d_string))
     path = "welcome.html";
   else
     path = param[0].data.d_string;
+
+  g_strdelimit (path, "/", G_DIR_SEPARATOR);
 
   if (g_path_is_absolute (path))
     path = g_strdup (path);
   else
     path = g_strconcat (gimp_data_directory (), G_DIR_SEPARATOR_S, 
 			GIMP_HELP_PREFIX, G_DIR_SEPARATOR_S,
+			current_locale, G_DIR_SEPARATOR_S,
 			path, NULL);
 
   gtk_idle_add (idle_load_page, path);
@@ -1088,6 +1097,7 @@ run (char    *name,
 	case RUN_WITH_LAST_VALS:
          /*  Make sure all the arguments are there!  */
           if ((nparams != 2) ||
+	      !param[1].data.d_string ||
 	      !strlen (param[1].data.d_string))
 	    path = g_strdup ("welcome.html");
 	  else
@@ -1096,6 +1106,8 @@ run (char    *name,
         default:
           break;
         }
+
+      g_strdelimit (path, "/", G_DIR_SEPARATOR);
 
       if (status == STATUS_SUCCESS)
         {

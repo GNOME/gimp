@@ -61,6 +61,9 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
   GtkAccelGroup *accel_group;
   static guint help_signal_id = 0;
 
+  if (! help_func)
+    return;
+
   /*  create the help signal if not already done  */
   if (! help_signal_id)
     {
@@ -86,6 +89,13 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
 
   /*  a new accelerator group for this widget  */
   accel_group = gtk_accel_group_new ();
+
+  /*  FIXME: does not work for some reason...
+  gtk_widget_add_accelerator (widget, "help", accel_group,
+			      GDK_F1, 0, GTK_ACCEL_LOCKED);
+  */
+
+  /*  ...while using this internal stuff works  */
   gtk_accel_group_add (accel_group, GDK_F1, 0, 0,
 		       GTK_OBJECT (widget), "help");
   gtk_accel_group_attach (accel_group, GTK_OBJECT (widget));

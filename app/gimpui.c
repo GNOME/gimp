@@ -51,7 +51,7 @@ gimp_dialog_delete_callback (GtkWidget *widget,
 }
 
 /*
-#include "/home/mitschel/gimpfiles/wilber.xpm"
+#include "/home/mitch/gimp.xpm"
 
 static void
 gimp_dialog_realize_callback (GtkWidget *widget,
@@ -68,7 +68,7 @@ gimp_dialog_realize_callback (GtkWidget *widget,
       gdk_pixmap_create_from_xpm_d (widget->window,
 				    &wilber_mask,
 				    &style->bg[GTK_STATE_NORMAL],
-				    wilber_xpm);
+				    gimp_xpm);
 
   gdk_window_set_icon (widget->window, NULL,
 		       wilber_pixmap, wilber_mask);
@@ -86,11 +86,12 @@ gimp_dialog_new (const gchar       *title,
 		 gint               auto_shrink,
 
 		 /* specify action area buttons as va_list:
-		  *  gchar         *label,
-		  *  GtkSignalFunc  callback,
-		  *  gpointer       data,
-		  *  gboolean       default_action,
-		  *  gboolean       connect_delete,
+		  *  gchar          *label,
+		  *  GtkSignalFunc   callback,
+		  *  gpointer        data,
+		  *  GtkWidget     **widget_ptr,
+		  *  gboolean        default_action,
+		  *  gboolean        connect_delete,
 		  */
 
 		 ...)
@@ -219,7 +220,6 @@ gimp_dialog_newv (const gchar       *title,
   gtk_signal_connect (GTK_OBJECT (dialog), "realize",
 		      (GtkSignalFunc) gimp_dialog_realize_callback,
 		      NULL);
-  
   */
 
   /*  connect the "F1" help key  */

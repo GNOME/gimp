@@ -1,3 +1,76 @@
+1999-10-03  Michael Natterer  <mitch@gimp.org>
+
+	The GIMP Help System part II: press "F1" while browsing a menu
+	to show the help page for the menu entry you're currently over
+	with the mouse.
+
+	* app/color_notebook.c: all color selectors have to register with
+	a help page now.
+
+	* app/color_select.[ch]: register with a help string. Removed
+	the dialog part of the files because it's use was deprecated
+	anyway (use color notebooks instead).
+
+	* app/colormap_dialog.i.c
+	* app/colormap_dialog.p.h
+	* app/palette.c
+	* app/palette_select.c: use a color notebook instead of a color
+	selector.
+
+	* app/gimphelp.c
+	* app/gimpui.c: minor changes.
+
+	* app/gimprc.c: "use help" defaults to TRUE now.
+
+	* app/lc_dialog.c
+	* app/lc_dialogP.h: a special help function which shows the help
+	for the currently selected notebook page.
+
+	* app/menus.c: some weird code which catches "key_press_event"
+	in all menu shells and pops up the corresp. help page for the
+	selected item. Embedded the GtkItemFactoryEntry in a new
+	GimpItemFactoryEntry to allow a help path to be stored.
+	Will be partially exported and moved to gimphelp.[ch] later to
+	catch key_press for plug-in menu items (don't try this now ;-)
+
+	* app/app_procs.c
+	* app/brush_edit.c
+	* app/brush_select.c
+	* app/channel_ops.c
+	* app/channels_dialog.c
+	* app/commands.c
+	* app/convert.c
+	* app/devices.c
+	* app/file_new_dialog.c
+	* app/fileops.c
+	* app/gdisplay.c
+	* app/gdisplay_color.c
+	* app/gdisplay_color_ui.c
+	* app/gdisplay_ops.c
+	* app/global_edit.c
+	* app/gradient.c
+	* app/gradient_select.c
+	* app/interface.c
+	* app/layers_dialog.c
+	* app/module_db.c
+	* app/paths_dialog.c
+	* app/pattern_select.c
+	* app/preferences_dialog.c
+	* app/qmask.c
+	* app/resize.c
+	* app/undo_history.c: changed all dialog constructors to point
+	to the right place in the new help file structure.
+
+	* configure.in
+	* help/*: the basic new help file structure.
+
+	* modules/colorsel_gtk.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c: register a help page.
+
+	* plug-ins/helpbrowser/helpbrowser.c: load the help files
+	according to the new help file structure.
+
 1999-10-03  Tor Lillqvist  <tml@iki.fi>
 
 	* app/cursorutil.h app/session.c app/text_tool.c: Change the

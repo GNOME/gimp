@@ -83,7 +83,7 @@ module_init (GimpModuleInfo **inforet)
   GimpColorSelectorID id;
 
 #ifndef __EMX__
-  id = gimp_color_selector_register ("GTK", &methods);
+  id = gimp_color_selector_register ("GTK", "gtk.html", &methods);
 
   if (id)
 #else

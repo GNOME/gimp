@@ -187,7 +187,7 @@ file_new_confirm_dialog (NewImageInfo *info)
   info->confirm_dlg =
     gimp_dialog_new (_("Confirm Image Size"), "confirm_size",
 		     gimp_standard_help_func,
-		     "dialogs/file_new_dialog.html#confirm_size_dialog",
+		     "dialogs/file_new.html#confirm_size",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, FALSE, FALSE,
 
@@ -367,7 +367,7 @@ ui_new_image_window_create (const GimpImageNewValues *values_orig)
 
   info->dlg = gimp_dialog_new (_("New Image"), "new_image",
 			       gimp_standard_help_func,
-			       "dialogs/file_new_dialog.html",
+			       "dialogs/file_new.html",
 			       GTK_WIN_POS_MOUSE,
 			       FALSE, FALSE, TRUE,
 

@@ -47,6 +47,13 @@
 
 typedef enum
 {
+  COLOR_SELECT_OK,
+  COLOR_SELECT_CANCEL,
+  COLOR_SELECT_UPDATE
+} ColorSelectState;
+
+typedef enum
+{
   HUE = 0,
   SATURATION,
   VALUE,
@@ -71,6 +78,33 @@ typedef enum
   UPDATE_ORIG_COLOR = 1 << 5,
   UPDATE_CALLER     = 1 << 6
 } ColorSelectUpdateType;
+
+typedef void (*ColorSelectCallback) (gint, gint, gint, ColorSelectState, void *);
+
+typedef struct _ColorSelect ColorSelect, *ColorSelectP;
+
+struct _ColorSelect
+{
+  GtkWidget     *xy_color;
+  GtkWidget     *z_color;
+  GtkWidget     *new_color;
+  GtkWidget     *orig_color;
+  GtkWidget     *toggles[6];
+  GtkWidget     *entries[6];
+  GtkWidget     *hex_entry;
+  GtkAdjustment *slider_data[6];
+
+  gint      pos[3];
+  gint      values[6];
+  gint      z_color_fill;
+  gint      xy_color_fill;
+  gint      orig_values[3];
+  gboolean  wants_updates;
+  GdkGC    *gc;
+
+  ColorSelectCallback  callback;
+  void                *client_data;
+};
 
 typedef struct _ColorSelectFill ColorSelectFill;
 
@@ -110,8 +144,6 @@ static void color_select_update_sliders    (ColorSelect *, gint);
 static void color_select_update_entries    (ColorSelect *, gint);
 static void color_select_update_colors     (ColorSelect *, gint);
 
-static void color_select_ok_callback     (GtkWidget *, gpointer);
-static void color_select_cancel_callback (GtkWidget *, gpointer);
 static gint color_select_xy_expose       (GtkWidget *, GdkEventExpose *,
 					  ColorSelect *);
 static gint color_select_xy_events       (GtkWidget *, GdkEvent *,
@@ -180,59 +212,21 @@ static GtkTargetEntry color_select_target_table[] =
 static guint n_color_select_targets = (sizeof (color_select_target_table) /
 				       sizeof (color_select_target_table[0]));
 
-ColorSelect *
-color_select_new (gint                 r,
-		  gint                 g,
-		  gint                 b,
-		  ColorSelectCallback  callback,
-		  gpointer             data,
-		  gboolean             wants_updates)
+
+/*  Register the GIMP colour selector with the color notebook  */
+void
+color_select_init (void)
 {
-  ColorSelect *csp;
-  GtkWidget   *main_vbox;
+  GimpColorSelectorMethods methods =
+  {
+    color_select_notebook_new,
+    color_select_notebook_free,
+    color_select_notebook_setcolor
+  };
 
-  csp = g_new (ColorSelect, 1);
-
-  csp->callback      = callback;
-  csp->client_data   = data;
-  csp->z_color_fill  = HUE;
-  csp->xy_color_fill = SATURATION_VALUE;
-  csp->gc            = NULL;
-  csp->wants_updates = wants_updates;
-
-  csp->values[RED]   = csp->orig_values[0] = r;
-  csp->values[GREEN] = csp->orig_values[1] = g;
-  csp->values[BLUE]  = csp->orig_values[2] = b;
-  color_select_update_hsv_values (csp);
-  color_select_update_pos (csp);
-
-  csp->shell =
-    gimp_dialog_new (_("Color Selection"), "color_selection",
-		     gimp_standard_help_func,
-		     "dialogs/color_selection_dialog.html",
-		     GTK_WIN_POS_NONE,
-		     FALSE, FALSE, FALSE,
-
-		     wants_updates ? _("Close") : _("OK"),
-		     color_select_ok_callback,
-		     csp, NULL, TRUE, FALSE,
-		     wants_updates ? _("Revert to Old Color") : _("Cancel"),
-		     color_select_cancel_callback,
-		     csp, NULL, FALSE, TRUE,
-
-		     NULL);
-
-  main_vbox = color_select_widget_new (csp, r, g, b);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (csp->shell)->vbox), main_vbox);
-  gtk_widget_show (main_vbox);
-
-  color_select_image_fill (csp->z_color, csp->z_color_fill, csp->values);
-  color_select_image_fill (csp->xy_color, csp->xy_color_fill, csp->values);
-
-  gtk_widget_show (csp->shell);
-
-  return csp;
+  gimp_color_selector_register ("GIMP", "built_in.html", &methods);
 }
+
 
 static GtkWidget *
 color_select_widget_new (ColorSelect *csp,
@@ -504,47 +498,7 @@ color_select_drag_old_color (GtkWidget *widget,
   *b = (guchar) csp->orig_values[2];
 }
 
-/* Register the GIMP colour selector with the color notebook */
-void
-color_select_init (void)
-{
-  GimpColorSelectorMethods methods =
-  {
-    color_select_notebook_new,
-    color_select_notebook_free,
-    color_select_notebook_setcolor
-  };
-
-  gimp_color_selector_register ("GIMP", &methods);
-}
-
-void
-color_select_show (ColorSelect *csp)
-{
-  if (csp)
-    gtk_widget_show (csp->shell);
-}
-
-void
-color_select_hide (ColorSelect *csp)
-{
-  if (csp)
-    gtk_widget_hide (csp->shell);
-}
-
-void
-color_select_free (ColorSelect *csp)
-{
-  if (csp)
-    {
-      if (csp->shell)
-	gtk_widget_destroy (csp->shell);
-      gdk_gc_destroy (csp->gc);
-      g_free (csp);
-    }
-}
-
-void
+static void
 color_select_set_color (ColorSelect *csp,
 			gint         r,
 			gint         g,
@@ -960,42 +914,6 @@ color_select_update_colors (ColorSelect *csp,
 				red, green, blue);
 #endif
 	}
-    }
-}
-
-static void
-color_select_ok_callback (GtkWidget *widget,
-			  gpointer   data)
-{
-  ColorSelect *csp;
-
-  csp = (ColorSelect *) data;
-  if (csp)
-    {
-      if (csp->callback)
-	(* csp->callback) (csp->values[RED],
-			   csp->values[GREEN],
-			   csp->values[BLUE],
-			   COLOR_SELECT_OK,
-			   csp->client_data);
-    }
-}
-
-static void
-color_select_cancel_callback (GtkWidget *widget,
-			      gpointer   data)
-{
-  ColorSelect *csp;
-
-  csp = (ColorSelect *) data;
-  if (csp)
-    {
-      if (csp->callback)
-	(* csp->callback) (csp->orig_values[0],
-			   csp->orig_values[1],
-			   csp->orig_values[2],
-			   COLOR_SELECT_CANCEL,
-			   csp->client_data);
     }
 }
 
@@ -2176,9 +2094,6 @@ color_select_notebook_new (gint                         r,
 
   glue->main_vbox = color_select_widget_new (csp, r, g, b);
 
-  /* the shell is provided by the notebook */
-  csp->shell = NULL;
-
   color_select_image_fill (csp->z_color, csp->z_color_fill, csp->values);
   color_select_image_fill (csp->xy_color, csp->xy_color_fill, csp->values);
 
@@ -2186,13 +2101,13 @@ color_select_notebook_new (gint                         r,
   return glue->main_vbox;
 }
 
-
 static void
 color_select_notebook_free (void *data)
 {
   notebook_glue *glue = data;
 
-  color_select_free (glue->csp);
+  gdk_gc_destroy (glue->csp->gc);
+  g_free (glue->csp);
   /* don't need to destroy the widget, since it's done by the caller
    * of this function */
   g_free (glue);

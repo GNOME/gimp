@@ -728,7 +728,7 @@ really_quit_dialog (void)
 
   dialog = gimp_dialog_new (_("Really Quit?"), "really_quit",
 			    gimp_standard_help_func,
-			    "dialogs/really_quit_dialog.html",
+			    "dialogs/really_quit.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 

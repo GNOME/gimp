@@ -248,7 +248,7 @@ edit_qmask_channel_query (GDisplay * gdisp)
   options->query_box =
     gimp_dialog_new (_("Edit Qmask Attributes"), "edit_qmask_attributes",
 		     gimp_standard_help_func,
-		     "dialogs/edit_qmask_attributes_dialog.html",
+		     "dialogs/edit_qmask_attributes.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 

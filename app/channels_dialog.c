@@ -2391,7 +2391,7 @@ channels_dialog_new_channel_query (GimpImage* gimage)
   options->query_box =
     gimp_dialog_new (_("New Channel Options"), "new_channel_options",
 		     gimp_standard_help_func,
-		     "dialogs/channels_dialog.html",
+		     "dialogs/channels/dialogs/new_channel.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
@@ -2565,7 +2565,7 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   options->query_box =
     gimp_dialog_new (_("Edit Channel Attributes"), "edit_channel_attributes",
 		     gimp_standard_help_func,
-		     "dialogs/channels_dialog.html",
+		     "dialogs/channels/dialogs/edit_channel_attributes.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 

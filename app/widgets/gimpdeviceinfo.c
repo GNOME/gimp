@@ -185,7 +185,7 @@ create_input_dialog (void)
       /*  Connect the "F1" help key  */
       gimp_help_connect_help_accel (inputd,
 				    gimp_standard_help_func,
-				    "dialogs/input_devices_dialog.html");
+				    "dialogs/input_devices.html");
 
       gtk_widget_show (inputd);
     }
@@ -706,7 +706,7 @@ create_device_status (void)
       deviceD->shell =
 	gimp_dialog_new (_("Device Status"), "device_status",
 			 gimp_standard_help_func,
-			 "dialogs/device_status_dialog.html",
+			 "dialogs/device_status.html",
 			 GTK_WIN_POS_NONE,
 			 FALSE, FALSE, TRUE,
 

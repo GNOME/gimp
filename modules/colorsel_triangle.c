@@ -169,7 +169,7 @@ module_init (GimpModuleInfo **inforet)
   GimpColorSelectorID id;
 
 #ifndef __EMX__
-  id = gimp_color_selector_register ("Triangle", &methods);
+  id = gimp_color_selector_register ("Triangle", "triangle.html", &methods);
 
   if (id)
 #else

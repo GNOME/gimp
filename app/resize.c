@@ -152,13 +152,13 @@ resize_widget_new (ResizeType    type,
 	  case ResizeLayer:
 	    wmclass = "scale_layer";
 	    window_title = _("Scale Layer");
-	    help_page = "dialogs/scale_layer_dialog.html";
+	    help_page = "dialogs/layers/dialogs/scale_layer.html";
 	    frame = gtk_frame_new (_("Size"));
 	    break;
 	  case ResizeImage:
 	    wmclass = "image_scale";
 	    window_title = _("Image Scale");
-	    help_page = "dialogs/scale_image_dialog.html";
+	    help_page = "dialogs/scale_image.html";
 	    frame = gtk_frame_new (_("Pixel Dimensions"));
 	    break;
 	  }
@@ -170,12 +170,12 @@ resize_widget_new (ResizeType    type,
 	  case ResizeLayer:
 	    wmclass = "resize_layer";
 	    window_title = _("Resize Layer");
-	    help_page = "dialogs/resize_layer_dialog.html";
+	    help_page = "dialogs/layers/dialogs/resize_layer.html";
 	    break;
 	  case ResizeImage:
 	    wmclass = "image_resize";
 	    window_title = _("Image Resize");
-	    help_page = "dialogs/resize_image_dialog.html";
+	    help_page = "dialogs/resize_image.html";
 	    break;
 	  }
 	frame = gtk_frame_new (_("Size"));

@@ -729,6 +729,8 @@ intl/Makefile
 tools/Makefile
 tools/pdbgen/Makefile
 help/Makefile
+help/C/Makefile
+help/images/Makefile
 tips/Makefile],
 [
    chmod +x gimptool

@@ -347,7 +347,7 @@ gdisplay_close_warning_dialog (char     *image_name,
   warning_dialog = mbox =
     gimp_dialog_new (image_name, "really_close",
 		     gimp_standard_help_func,
-		     "dialogs/really_close_dialog.html",
+		     "dialogs/really_close.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 

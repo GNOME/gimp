@@ -37,11 +37,14 @@
 static void color_notebook_ok_callback     (GtkWidget *, gpointer);
 static void color_notebook_cancel_callback (GtkWidget *, gpointer);
 static void color_notebook_update_callback (void *, int, int, int);
-static void color_notebook_page_switch (GtkWidget *, GtkNotebookPage *, guint);
+static void color_notebook_page_switch     (GtkWidget *, GtkNotebookPage *,
+					    guint);
+static void color_notebook_help_func       (gpointer data);
 
 /* information we keep on each registered colour selector */
 typedef struct _ColorSelectorInfo {
   char                          *name;    /* label used in notebook tab */
+  char                          *help_page;
   GimpColorSelectorMethods       m;
   int                            refs;    /* number of instances around */
   gboolean                       active;
@@ -100,8 +103,7 @@ color_notebook_new (int                    r,
 
   cnp->shell =
     gimp_dialog_new (_("Color Selection"), "color_selection",
-		     gimp_standard_help_func,
-		     "dialogs/color_notebook_dialog.html",
+		     color_notebook_help_func, cnp,
 		     GTK_WIN_POS_NONE,
 		     FALSE, FALSE, FALSE,
 
@@ -134,7 +136,7 @@ color_notebook_new (int                    r,
       if (info->active)
 	{
 
-	  csel = g_malloc (sizeof (ColorSelectorInstance));
+	  csel = g_new (ColorSelectorInstance, 1);
 	  csel->color_notebook = cnp;
 	  csel->info = info;
 	  info->refs++;
@@ -336,12 +338,28 @@ color_notebook_page_switch (GtkWidget       *widget,
 			  TRUE);
 }
 
+static void
+color_notebook_help_func (gpointer data)
+{
+  ColorNotebookP cnp;
+  gchar *help_path;
+
+  cnp = (ColorNotebookP) data;
+
+  help_path = g_strconcat ("dialogs/color_selectors/",
+			   cnp->cur_page->info->help_page,
+			   NULL);
+  gimp_help (help_path);
+  g_free (help_path);
+}
+
 /**************************************************************/
 /* Registration functions */
 
 G_MODULE_EXPORT
 GimpColorSelectorID
 gimp_color_selector_register (const char *name,
+			      const char *help_page,
 			      GimpColorSelectorMethods *methods)
 {
   ColorSelectorInfo *info;
@@ -355,9 +373,10 @@ gimp_color_selector_register (const char *name,
       info = info->next;
     }
 
-  info = g_malloc (sizeof (ColorSelectorInfo));
+  info = g_new (ColorSelectorInfo, 1);
 
   info->name = g_strdup (name);
+  info->help_page = g_strdup (help_page);
   info->m = *methods;
   info->refs = 0;
   info->active = TRUE;

@@ -30,6 +30,8 @@ struct _LCDialog
 
   GimpImage *gimage;
   gboolean   auto_follow_active;
+
+  GtkWidget *notebook;
 };
 
 GtkWidget *  layers_dialog_create    (void);

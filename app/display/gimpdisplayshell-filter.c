@@ -412,7 +412,7 @@ gamma_configure (gpointer cd_ID)
       context->shell =
 	gimp_dialog_new (_("Gamma"), "gamma",
 			 gimp_standard_help_func,
-			 "dialogs/gamma_dialog.html",
+			 "dialogs/display_filters/gamma.html",
 			 GTK_WIN_POS_NONE,
 			 FALSE, TRUE, FALSE,
 

@@ -34,7 +34,7 @@
 #include "buildmenu.h"
 #include "colormaps.h"
 #include "color_area.h"
-#include "color_select.h"
+#include "color_notebook.h"
 #include "datafiles.h"
 #include "devices.h"
 #include "errors.h"
@@ -110,8 +110,8 @@ struct _PaletteDialog
   GtkWidget *clist;
   GtkWidget *popup_menu;
   GtkWidget *popup_small_menu;
-  ColorSelectP color_select;
-  int color_select_active;
+  ColorNotebookP color_notebook;
+  gboolean color_notebook_active;
   PaletteEntriesP entries;
   PaletteEntryP color;
   GdkGC *gc;
@@ -470,8 +470,8 @@ palette_free ()
 
       gdk_gc_destroy (top_level_edit_palette->gc); 
       
-      if (top_level_edit_palette->color_select) 
-	color_select_free (top_level_edit_palette->color_select); 
+      if (top_level_edit_palette->color_notebook) 
+	color_notebook_free (top_level_edit_palette->color_notebook); 
       
       g_free (top_level_edit_palette); 
       
@@ -1078,7 +1078,7 @@ palette_new_entries_callback (GtkWidget *widget,
 
   qbox = gimp_query_string_box (_("New Palette"),
 				gimp_standard_help_func,
-				"dialogs/color_palette_edit_dialog.html",
+				"dialogs/palette_editor/new_palette.html",
 				_("Enter a name for new palette"),
 				NULL,
 				NULL, NULL,
@@ -1135,10 +1135,10 @@ palette_refresh (PaletteDialog *palette)
       palette->entries = NULL;
 
       /*  If a color selection dialog is up, hide it  */
-      if (palette->color_select_active)
+      if (palette->color_notebook_active)
 	{
-	  palette->color_select_active = 0;
-	  color_select_hide (palette->color_select);
+	  palette->color_notebook_active = FALSE;
+	  color_notebook_hide (palette->color_notebook);
 	}
       palette_free_palettes ();   /*  free palettes, don't save any modified versions  */
       palette_init_palettes (FALSE);   /*  reload palettes  */
@@ -1234,11 +1234,11 @@ palette_draw_small_preview(GdkGC           *gc,
 
 
 static void
-palette_select_callback (gint              r,
-			 gint              g,
-			 gint              b,
-			 ColorSelectState  state,
-			 void             *data)
+palette_select_callback (gint                r,
+			 gint                g,
+			 gint                b,
+			 ColorNotebookState  state,
+			 void               *data)
 {
   PaletteDialog *palette;
   guchar  *color;
@@ -1252,9 +1252,9 @@ palette_select_callback (gint              r,
     {
       switch (state)
 	{
-	case COLOR_SELECT_UPDATE:
+	case COLOR_NOTEBOOK_UPDATE:
 	  break;
-	case COLOR_SELECT_OK:
+	case COLOR_NOTEBOOK_OK:
 	  if (palette->color)
 	    {
 	      color = palette->color->color;
@@ -1298,9 +1298,9 @@ palette_select_callback (gint              r,
 	      palette_select2_set_text_all (palette->entries);
 	    }
 	  /* Fallthrough */
-	case COLOR_SELECT_CANCEL:
-	  color_select_hide (palette->color_select);
-	  palette->color_select_active = 0;
+	case COLOR_NOTEBOOK_CANCEL:
+	  color_notebook_hide (palette->color_notebook);
+	  palette->color_notebook_active = FALSE;
 	}
     }
 }
@@ -1361,10 +1361,10 @@ palette_close_callback (GtkWidget *widget,
   palette = data;
   if (palette)
     {
-      if (palette->color_select_active)
+      if (palette->color_notebook_active)
 	{
-	  palette->color_select_active = 0;
-	  color_select_hide (palette->color_select);
+	  palette->color_notebook_active = FALSE;
+	  color_notebook_hide (palette->color_notebook);
 	}
 
       if(import_dialog)
@@ -1406,24 +1406,24 @@ palette_edit_callback (GtkWidget *widget,
     {
       color = palette->color->color;
 
-      if (!palette->color_select)
+      if (!palette->color_notebook)
 	{
-	  palette->color_select =
-	    color_select_new (color[0], color[1], color[2],
-			      palette_select_callback, palette,
-			      FALSE);
-	  palette->color_select_active = 1;
+	  palette->color_notebook =
+	    color_notebook_new (color[0], color[1], color[2],
+				palette_select_callback, palette,
+				FALSE);
+	  palette->color_notebook_active = TRUE;
 	}
       else
 	{
-	  if (!palette->color_select_active)
+	  if (!palette->color_notebook_active)
 	    {
-	      color_select_show (palette->color_select);
-	      palette->color_select_active = 1;
+	      color_notebook_show (palette->color_notebook);
+	      palette->color_notebook_active = TRUE;
 	    }
 
-	  color_select_set_color (palette->color_select,
-				  color[0], color[1], color[2], 1);
+	  color_notebook_set_color (palette->color_notebook,
+				    color[0], color[1], color[2], 1);
 	}
     }
 }
@@ -1931,15 +1931,15 @@ palette_list_item_update (GtkWidget      *widget,
 
   palette = (PaletteDialog *) data;
 
-  if (palette->color_select_active)
+  if (palette->color_notebook_active)
     {
-      palette->color_select_active = 0;
-      color_select_hide (palette->color_select);
+      palette->color_notebook_active = FALSE;
+      color_notebook_hide (palette->color_notebook);
     }
 
-  if (palette->color_select)
-    color_select_free (palette->color_select);
-  palette->color_select = NULL;
+  if (palette->color_notebook)
+    color_notebook_free (palette->color_notebook);
+  palette->color_notebook = NULL;
 
   p_entries = 
     (PaletteEntriesP) gtk_clist_get_row_data (GTK_CLIST (palette->clist), row);
@@ -2013,8 +2013,8 @@ create_palette_dialog (gint vert)
 
   palette->entries = default_palette_entries;
   palette->color = NULL;
-  palette->color_select = NULL;
-  palette->color_select_active = 0;
+  palette->color_notebook = NULL;
+  palette->color_notebook_active = FALSE;
   palette->zoom_factor = 1.0;
   palette->columns = COLUMNS;
   palette->columns_valid = TRUE;
@@ -2025,7 +2025,7 @@ create_palette_dialog (gint vert)
       palette->shell =
 	gimp_dialog_new (_("Color Palette Edit"), "color_palette_edit",
 			 gimp_standard_help_func,
-			 "dialogs/color_palette_edit_dialog.html",
+			 "dialogs/palette_editor/index.html",
 			 GTK_WIN_POS_NONE,
 			 FALSE, TRUE, FALSE,
 
@@ -2044,7 +2044,7 @@ create_palette_dialog (gint vert)
       palette->shell =
 	gimp_dialog_new (_("Color Palette"), "color_palette",
 			 gimp_standard_help_func,
-			 "dialogs/color_palette_dialog.html",
+			 "dialogs/palette_selection.html",
 			 GTK_WIN_POS_NONE,
 			 FALSE, TRUE, FALSE,
 
@@ -2484,7 +2484,7 @@ palette_merge_dialog_callback (GtkWidget *widget,
 
   qbox = gimp_query_string_box (_("Merge Palette"),
 				gimp_standard_help_func,
-				"dialogs/color_palette_edit_dialog.html",
+				"dialogs/palette_editor/merge_palette.html",
 				_("Enter a name for merged palette"),
 				NULL,
 				NULL, NULL,
@@ -2829,7 +2829,7 @@ palette_import_dialog (PaletteDialog *palette)
   import_dialog->dialog = dialog =
     gimp_dialog_new (_("Import Palette"), "import_palette",
 		     gimp_standard_help_func,
-		     "dialogs/import_palette_dialog.html",
+		     "dialogs/palette_editor/import_palette.html",
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 

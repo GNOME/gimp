@@ -51,6 +51,7 @@ static void  lc_dialog_remove_cb           (GimpSet *, GimpImage *, gpointer);
 static void  lc_dialog_destroy_cb          (GimpImage *, gpointer);
 static void  lc_dialog_change_image        (GimpContext *, GimpImage *,
 					    gpointer);
+static void  lc_dialog_help_func           (gpointer);
 static void  lc_dialog_image_menu_preview_update_cb (GtkWidget *,gpointer);
 static void  lc_dialog_fill_preview_with_thumb(GtkWidget *,
 					       GimpImage *,
@@ -77,7 +78,6 @@ lc_dialog_create (GimpImage* gimage)
   GtkWidget *auto_button;
   GtkWidget *button;
   GtkWidget *label;
-  GtkWidget *notebook;
   GtkWidget *separator;
   int default_index;
 
@@ -103,8 +103,7 @@ lc_dialog_create (GimpImage* gimage)
   lc_dialog = g_new (LCDialog, 1);
   lc_dialog->shell =
     gimp_dialog_new (_("Layers & Channels"), "layers_and_channels",
-		     gimp_standard_help_func,
-		     "dialogs/layers_and_channels_dialog.html",
+		     lc_dialog_help_func, NULL,
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 		     NULL);
@@ -165,22 +164,23 @@ lc_dialog_create (GimpImage* gimage)
   gtk_widget_show (separator);
 
   /*  The notebook widget  */
-  notebook = gtk_notebook_new ();
-  gtk_container_set_border_width (GTK_CONTAINER (notebook), 2);
-  gtk_box_pack_start (GTK_BOX (lc_dialog->subshell), notebook, TRUE, TRUE, 0);
+  lc_dialog->notebook = gtk_notebook_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (lc_dialog->notebook), 2);
+  gtk_box_pack_start (GTK_BOX (lc_dialog->subshell), lc_dialog->notebook,
+		      TRUE, TRUE, 0);
 
   label = gtk_label_new (_("Layers"));
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+  gtk_notebook_append_page (GTK_NOTEBOOK (lc_dialog->notebook),
 			    layers_dialog_create (), label);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("Channels"));
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+  gtk_notebook_append_page (GTK_NOTEBOOK (lc_dialog->notebook),
 			    channels_dialog_create (), label);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("Paths"));
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+  gtk_notebook_append_page (GTK_NOTEBOOK (lc_dialog->notebook),
 			    paths_dialog_create (), label);
   gtk_widget_show (label);
 
@@ -188,7 +188,7 @@ lc_dialog_create (GimpImage* gimage)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (auto_button),
 				lc_dialog->auto_follow_active);
 
-  gtk_widget_show (notebook);
+  gtk_widget_show (lc_dialog->notebook);
 
   /*  The action area  */
   gtk_container_set_border_width
@@ -204,8 +204,8 @@ lc_dialog_create (GimpImage* gimage)
   gtk_widget_show (button);
 
   /*  Make sure the channels page is realized  */
-  gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 1);
-  gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 0);
+  gtk_notebook_set_page (GTK_NOTEBOOK (lc_dialog->notebook), 1);
+  gtk_notebook_set_page (GTK_NOTEBOOK (lc_dialog->notebook), 0);
 
   gtk_signal_connect (GTK_OBJECT (image_context), "add",
 		      GTK_SIGNAL_FUNC (lc_dialog_add_cb), NULL);
@@ -408,10 +408,10 @@ typedef struct
 } IMCBData;
 
 static void
-lc_dialog_fill_preview_with_thumb(GtkWidget *w,
-				  GimpImage *gimage,
-				  gint       width,
-				  gint       height)
+lc_dialog_fill_preview_with_thumb (GtkWidget *w,
+				   GimpImage *gimage,
+				   gint       width,
+				   gint       height)
 {
   guchar    *drawable_data;
   TempBuf   *buf;
@@ -712,4 +712,21 @@ lc_dialog_change_image (GimpContext *context,
     }
 
   lc_dialog_update_image_list ();
+}
+
+static void
+lc_dialog_help_func (gpointer data)
+{
+  gchar *help_page;
+  gint page_num;
+
+  page_num =
+    gtk_notebook_get_current_page (GTK_NOTEBOOK (lc_dialog->notebook));
+
+  help_page = g_strconcat ((page_num == 0) ? "layers" :
+			   ((page_num == 1) ? "channels" : "paths"),
+			   "/index.html",
+			   NULL);
+  gimp_help (help_page);
+  g_free (help_page);
 }

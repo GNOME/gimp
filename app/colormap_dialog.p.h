@@ -9,7 +9,7 @@
 #include <gtk/gtkoptionmenu.h>
 #include <gimpset.h>
 #include <gtk/gtkentry.h>
-#include <color_select.h>
+#include <color_notebook.h>
 
 
 typedef struct _GimpColormapDialogClass GimpColormapDialogClass;
@@ -35,7 +35,7 @@ struct _GimpColormapDialog {
 	GimpSetHandlerId rename_handler;
 	GimpSetHandlerId cmap_changed_handler;
 	GtkWidget* add_item;
-	ColorSelectP color_select;
+	ColorNotebookP color_notebook;
 };
 void gimp_colormap_dialog_selected (
 	GimpColormapDialog* colormap_dialog);

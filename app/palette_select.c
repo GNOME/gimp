@@ -16,25 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include "config.h"
-
-#include <stdlib.h>
-#include <string.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-#include <sys/types.h>
-#include <sys/stat.h>
-
-#include "colormaps.h"
-#include "color_area.h"
-#include "color_select.h"
-#include "datafiles.h"
-#include "errors.h"
-#include "gimprc.h"
 #include "gimpui.h"
-#include "interface.h"
-#include "palette.h"
 #include "palette_entries.h"
 #include "session.h"
 #include "palette_select.h"
@@ -234,7 +216,7 @@ palette_new_selection (gchar *title,
   psp->shell = gimp_dialog_new (title ? title : _("Palette Selection"),
 				"palette_selection",
 				gimp_standard_help_func,
-				"dialogs/palette_selection_dialog.html",
+				"dialogs/palette_selection.html",
 				GTK_WIN_POS_NONE,
 				FALSE, TRUE, FALSE,
 

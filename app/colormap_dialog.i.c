@@ -5,7 +5,7 @@
 #include "gdk/gdkkeysyms.h"
 
 #include "actionarea.h"
-#include "color_select.h"
+#include "color_notebook.h"
 #include "image_render.h"
 #include "dialog_handler.h"
 #include "buildmenu.h"
@@ -41,7 +41,7 @@ static void ipal_update_image_list (GimpColormapDialog* ipal);
 static void ipal_add_callback (GtkWidget *, gpointer);
 static void ipal_edit_callback (GtkWidget *, gpointer);
 static void ipal_close_callback (GtkWidget *, gpointer);
-static void ipal_select_callback (int, int, int, ColorSelectState, void *);
+static void ipal_select_callback (int, int, int, ColorNotebookState, void *);
 
 /*  event callback  */
 static gint ipal_area_events (GtkWidget *, GdkEvent *, GimpColormapDialog *);
@@ -281,7 +281,7 @@ ipal_create (GimpSet* context)
   /*  Connect the "F1" help key  */
   gimp_help_connect_help_accel (GTK_WIDGET (ipal),
 				gimp_standard_help_func,
-				"dialogs/indexed_palette_dialog.html");
+				"dialogs/indexed_palette.html");
 
   gtk_widget_show_all (vbox);
   /* gtk_widget_show (ipal); */
@@ -662,8 +662,8 @@ ipal_set_image (GimpColormapDialog* ipal, GimpImage* gimage)
     ipal_draw (ipal);
     gtk_container_queue_resize(GTK_CONTAINER(ipal));
   }else{
-    if(ipal->color_select)
-      color_select_hide(ipal->color_select);
+    if(ipal->color_notebook)
+      color_notebook_hide(ipal->color_notebook);
   }
   
   ipal->col_index = 0;
@@ -698,16 +698,16 @@ ipal_edit_callback (GtkWidget *w,
   r = ipal->image->cmap[ipal->col_index*3];
   g = ipal->image->cmap[ipal->col_index*3+1];
   b = ipal->image->cmap[ipal->col_index*3+2];
-  if (! ipal->color_select)
+  if (! ipal->color_notebook)
     {
-      ipal->color_select
-	= color_select_new (r, g, b,
-			    ipal_select_callback, ipal, FALSE);
+      ipal->color_notebook
+	= color_notebook_new (r, g, b,
+			      ipal_select_callback, ipal, FALSE);
     }
   else
     {
-      color_select_show (ipal->color_select);
-      color_select_set_color (ipal->color_select, r, g, b, 1);
+      color_notebook_show (ipal->color_notebook);
+      color_notebook_set_color (ipal->color_notebook, r, g, b, 1);
     }
 }
 
@@ -724,7 +724,7 @@ static void
 ipal_select_callback (int   r,
 		      int   g,
 		      int   b,
-		      ColorSelectState state,
+		      ColorNotebookState state,
 		      void *client_data)
 {
   GimpImage *gimage;
@@ -732,21 +732,21 @@ ipal_select_callback (int   r,
   
   g_return_if_fail (ipal);
   g_return_if_fail (ipal->image);
-  g_return_if_fail (ipal->color_select);
+  g_return_if_fail (ipal->color_notebook);
 
   gimage = ipal->image;
   
   switch (state) {
-  case COLOR_SELECT_UPDATE:
+  case COLOR_NOTEBOOK_UPDATE:
 	  break;
-  case COLOR_SELECT_OK:
+  case COLOR_NOTEBOOK_OK:
 	  gimage->cmap[ipal->col_index * 3 + 0] = r;
 	  gimage->cmap[ipal->col_index * 3 + 1] = g;
 	  gimage->cmap[ipal->col_index * 3 + 2] = b;
 	  gimp_image_colormap_changed (gimage, ipal->col_index);
 	  /* Fall through */
-  case COLOR_SELECT_CANCEL:
-	  color_select_hide (ipal->color_select);
+  case COLOR_NOTEBOOK_CANCEL:
+	  color_notebook_hide (ipal->color_notebook);
   }
 }
 
@@ -796,16 +796,16 @@ ipal_area_events (GtkWidget *widget,
       if (bevent->button == 3)
 	{
 	  ipal->col_index = col;
-	  if (! ipal->color_select)
+	  if (! ipal->color_notebook)
 	    {
-	      ipal->color_select
-		= color_select_new (r, g, b,
-				    ipal_select_callback, ipal, FALSE);
+	      ipal->color_notebook
+		= color_notebook_new (r, g, b,
+				      ipal_select_callback, ipal, FALSE);
 	    }
 	  else
 	    {
-	      color_select_show (ipal->color_select);
-	      color_select_set_color (ipal->color_select, r, g, b, 1);
+	      color_notebook_show (ipal->color_notebook);
+	      color_notebook_set_color (ipal->color_notebook, r, g, b, 1);
 	    }
 	}
       break;

@@ -490,7 +490,7 @@ convert_to_indexed (GimpImage *gimage)
   dialog->shell =
     gimp_dialog_new (_("Indexed Color Conversion"), "indexed_color_conversion",
 		     gimp_standard_help_func,
-		     "dialogs/indexed_color_conversion_dialog.html",
+		     "dialogs/convert_to_indexed.html",
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 

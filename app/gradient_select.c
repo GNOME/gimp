@@ -447,7 +447,7 @@ gsel_new_selection (gchar *title,
   gsp->shell = gimp_dialog_new (title ? title : _("Gradient Selection"),
 				"gradient_selection",
 				gimp_standard_help_func,
-				"dialogs/gradient_selection_dialog.html",
+				"dialogs/gradient_selection.html",
 				GTK_WIN_POS_NONE,
 				FALSE, TRUE, FALSE,
 

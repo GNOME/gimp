@@ -1230,7 +1230,7 @@ paths_dialog_edit_path_query (GtkWidget *widget)
 
   qbox = gimp_query_string_box (_("Rename path"),
 				gimp_standard_help_func,
-				"dialogs/paths_dialog.html",
+				"dialogs/paths/rename_path.html",
 				_("Enter a new name for the path"),
 				text,
 				NULL, NULL,

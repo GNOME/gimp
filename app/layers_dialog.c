@@ -3302,7 +3302,7 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   options->query_box =
     gimp_dialog_new (_("New Layer Options"), "new_layer_options",
 		     gimp_standard_help_func,
-		     "dialogs/layers_dialog.html",
+		     "dialogs/layers/new_layer.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
@@ -3508,7 +3508,7 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
   options->query_box =
     gimp_dialog_new (_("Edit Layer Attributes"), "edit_layer_attributes",
 		     gimp_standard_help_func,
-		     "dialogs/layers_dialog.html",
+		     "dialogs/layers/edit_layer_attributes.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
@@ -3633,7 +3633,7 @@ layers_dialog_add_mask_query (Layer *layer)
   options->query_box =
     gimp_dialog_new (_("Add Mask Options"), "add_mask_options",
 		     gimp_standard_help_func,
-		     "dialogs/layers_dialog.html",
+		     "dialogs/layers/add_mask.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
@@ -3745,7 +3745,7 @@ layers_dialog_apply_mask_query (Layer *layer)
   options->query_box =
     gimp_dialog_new (_("Layer Mask Options"), "layer_mask_options",
 		     gimp_standard_help_func,
-		     "dialogs/layers_dialog.html",
+		     "dialogs/layers/apply_mask.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
@@ -4034,7 +4034,7 @@ layers_dialog_layer_merge_query (GImage   *gimage,
   options->query_box =
     gimp_dialog_new (_("Layer Merge Options"), "layer_merge_options",
 		     gimp_standard_help_func,
-		     "dialogs/layers_dialog.html",
+		     "dialogs/layers/merge_visible_layers.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 

@@ -1670,8 +1670,9 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
 
   SET_SENSITIVE (N_("/Image"), gdisp);
   SET_SENSITIVE (N_("/Image/Colors"), gdisp);
-  SET_SENSITIVE (N_("/Image/Channel Ops"), gdisp);
+  SET_SENSITIVE (N_("/Image/Channels"), gdisp);
   SET_SENSITIVE (N_("/Image/Alpha"), gdisp);
+  SET_SENSITIVE (N_("/Image/Transforms"), gdisp);
   if (gdisp)
     {
       SET_SENSITIVE (N_("/Image/RGB"), (base_type != RGB));
@@ -1695,7 +1696,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       SET_SENSITIVE (N_("/Image/Alpha/Add Alpha Channel"),
 		     !fs && !aux && lp && !lm && !alpha);
 
-      SET_SENSITIVE (N_("/Image/Channel Ops/Offset"), lp);
+      SET_SENSITIVE (N_("/Image/Transforms/Offset"), lp);
     }
 
   SET_SENSITIVE (N_("/Layers/Stack"), gdisp);

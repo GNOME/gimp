@@ -157,7 +157,7 @@ int       show_indicators = TRUE;
 int       max_new_image_size = 33554432;  /* 32 MB */
 int       thumbnail_mode = 1;
 int	  trust_dirty_flag = FALSE;
-int       use_help = FALSE;
+int       use_help = TRUE;
 
 extern char * module_db_load_inhibit;
 

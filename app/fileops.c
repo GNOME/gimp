@@ -234,7 +234,7 @@ file_open_callback (GtkWidget *widget,
       /*  Connect the "F1" help key  */
       gimp_help_connect_help_accel (fileload,
 				    gimp_standard_help_func,
-				    "dialogs/file_load_dialog.html");
+				    "dialogs/file_open.html");
     }
   else
     {
@@ -461,7 +461,7 @@ file_save_as_callback (GtkWidget *widget,
       /*  Connect the "F1" help key  */
       gimp_help_connect_help_accel (filesave,
 				    gimp_standard_help_func,
-				    "dialogs/file_save_dialog.html");
+				    "dialogs/file_save.html");
     }
 
   gdisplay = gdisplay_active ();
@@ -1592,7 +1592,7 @@ file_overwrite (char *filename,
   overwrite_box->obox =
     gimp_dialog_new (_("File Exists!"), "file_exists",
 		     gimp_standard_help_func,
-		     "dialogs/file_exists_dialog.html",
+		     "dialogs/file_exists.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
