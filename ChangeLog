@@ -1,6 +1,11 @@
+Mon Aug 16 03:46:43 1999  Jay Cox  (jaycox@earthlink.net)
+
+	* app/transform_core.c: put the gimp_matrix_is_simple 
+	optimization back in.
+
 Mon Aug 16 01:24:42 1999  Jay Cox  (jaycox@earthlink.net)
 
-	* app/transform_core.c: data access optomizations from
+	* app/transform_core.c: data access optimizations from
 	David Hodson <hodsond@acm.org>
 
 1999-08-16  Tor Lillqvist  <tml@iki.fi>

@@ -1138,6 +1138,10 @@ transform_core_do (GImage          *gimage,
 
   alpha = 0;
 
+  /*  turn interpolation off for simple transformations (e.g. rot90)  */
+  if (gimp_matrix_is_simple (matrix))
+    interpolation = FALSE;
+
   /*  Get the background color  */
   gimage_get_background (gimage, drawable, bg_col);
 
