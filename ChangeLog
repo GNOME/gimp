@@ -1,3 +1,9 @@
+2000-03-20  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/gfig/gfig.c: fixed a SEGV I have introduced by
+	accidentially replacing g_malloc0() with g_new() instead of
+	g_new0(). Andy found the crash, thanks.
+
 Mon Mar 20 19:15:19 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* app/preferences_dialog.c: Typo fix.

@@ -7460,7 +7460,7 @@ d_update_circle (GdkPoint *pnt)
 
   draw_circle (pnt);
 
-  edge_pnt = g_new (DobjPoints, 1);
+  edge_pnt = g_new0 (DobjPoints, 1);
 
   edge_pnt->pnt.x = pnt->x;
   edge_pnt->pnt.y = pnt->y;

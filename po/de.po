@@ -2721,7 +2721,9 @@ msgstr ""
 
 #: app/install.c:665
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr "Drücken Sie \"Weiter\" um die GIMP Benutzerinstallation zu starten."
+msgstr ""
+"Drücken Sie \"Weiter\" um die\n"
+"GIMP Benutzerinstallation zu starten."
 
 #: app/install.c:668
 msgid ""
@@ -2777,7 +2779,9 @@ msgstr "Persönliches GIMP Verzeichnis"
 
 #: app/install.c:714
 msgid "Click \"Continue\" to create your personal GIMP directory."
-msgstr "Drücken Sie \"Weiter\" um Ihr persönliches GIMP-Verzeichnis anzulegen."
+msgstr ""
+"Drücken Sie \"Weiter\" um Ihr\n"
+"persönliches GIMP-Verzeichnis anzulegen."
 
 #: app/install.c:731
 #, c-format

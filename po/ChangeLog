@@ -1,3 +1,11 @@
+2000-03-20  Michael Natterer  <mitch@gimp.org>
+
+	* de.po: added newlines to some strings appearing in the
+	installation dialog's footer line.
+
+	Please do the same for your langunage if this line determines the
+	width of the dialog.
+
 Mon Mar 20 14:11:57 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.
