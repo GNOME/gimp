@@ -168,25 +168,19 @@ gimp_aspect_preview_draw_buffer (GimpPreview  *preview,
       guchar *sel;
       guchar *src;
       gint    selection_id;
-      gint    width, height, bpp;
+      gint    width, height;
+      gint    bpp;
 
       selection_id = gimp_image_get_selection (image_id);
-      bpp = gimp_drawable_bpp (drawable->drawable_id);
 
       width  = preview->width;
       height = preview->height;
+
       src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
                                               &width, &height, &bpp);
-      bpp = 1;
       sel = gimp_drawable_get_thumbnail_data (selection_id,
                                               &width, &height, &bpp);
 
-/*      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
-                              0, 0,
-                              preview->width, preview->height,
-                              GIMP_GRAY_IMAGE,
-                              sel,
-                              preview->width);*/
       gimp_preview_area_mask (GIMP_PREVIEW_AREA (preview->area),
                               0, 0, preview->width, preview->height,
                               gimp_drawable_type (drawable->drawable_id),
