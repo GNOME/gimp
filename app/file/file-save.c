@@ -157,17 +157,12 @@ file_save (GimpImage     *gimage,
       /* gimage_set_save_proc(gimage, file_proc); */
 
       /* Write a thumbnail for the saved image, where appropriate */
-      switch (gimage->gimp->config->thumbnail_mode)
+      if (gimage->gimp->config->write_thumbnails)
 	{
-	case 0:
-	  break;
-	default:
-	  {
-	    TempBuf *tempbuf;
+          TempBuf *tempbuf;
 
-	    tempbuf = make_thumb_tempbuf (gimage);
-	    file_save_thumbnail (gimage, filename, tempbuf);
-	  }
+          tempbuf = make_thumb_tempbuf (gimage);
+          file_save_thumbnail (gimage, filename, tempbuf);
 	}
 
       if (set_filename)

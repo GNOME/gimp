@@ -404,7 +404,7 @@ gimprc_init (Gimp *gimp)
       core_funcs[17].val1p = &gimp->config->levels_of_undo;
       core_funcs[18].val1p = &gimp->config->pluginrc_path;
       core_funcs[19].val1p = &gimp->config->module_db_load_inhibit;
-      core_funcs[20].val1p = &gimp->config->thumbnail_mode;
+      core_funcs[20].val1p = &gimp->config->write_thumbnails;
 
       parse_func_hash = g_hash_table_new (g_str_hash, g_str_equal);
 

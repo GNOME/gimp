@@ -154,7 +154,7 @@ static gint               old_num_processors;
 static gchar            * old_image_title_format;
 static gboolean           old_global_paint_options;
 static guint              old_max_new_image_size;
-static gint               old_thumbnail_mode;
+static gboolean           old_write_thumbnails;
 static gboolean           old_show_indicators;
 static gboolean	          old_trust_dirty_flag;
 static gboolean           old_use_help;
@@ -703,7 +703,7 @@ prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "max-new-image-size");
     }
-  if (gimp->config->thumbnail_mode != old_thumbnail_mode)
+  if (gimp->config->write_thumbnails != old_write_thumbnails)
     {
       update = g_list_append (update, "thumbnail-mode");
     }
@@ -895,7 +895,7 @@ prefs_cancel_callback (GtkWidget *widget,
   gimp->config->default_yresolution      = old_default_yresolution;
   gimp->config->default_resolution_units = old_default_resolution_units;
   gimp->config->levels_of_undo           = old_levels_of_undo;
-  gimp->config->thumbnail_mode           = old_thumbnail_mode;
+  gimp->config->write_thumbnails         = old_write_thumbnails;
 
   gimprc.marching_speed                  = old_marching_speed;
   gimprc.resize_windows_on_zoom          = old_resize_windows_on_zoom;
@@ -1034,7 +1034,7 @@ prefs_toggle_callback (GtkWidget *widget,
   /*  radio buttons  */
   else if (data == &base_config->interpolation_type ||
 	   data == &gimp->config->default_type      ||
-	   data == &gimp->config->thumbnail_mode    ||
+	   data == &gimp->config->write_thumbnails  ||
            data == &gimprc.trust_dirty_flag         ||
 	   data == &gimprc.help_browser             ||
 	   data == &gimprc.cursor_mode)
@@ -1530,7 +1530,7 @@ preferences_dialog_create (Gimp *gimp)
   old_default_yresolution      = gimp->config->default_yresolution;
   old_default_resolution_units = gimp->config->default_resolution_units;
   old_levels_of_undo           = gimp->config->levels_of_undo;
-  old_thumbnail_mode           = gimp->config->thumbnail_mode;
+  old_write_thumbnails         = gimp->config->write_thumbnails;
 
   old_perfectmouse             = gimprc.perfectmouse;
   old_transparency_type        = gimprc.transparency_type;
@@ -2506,8 +2506,8 @@ preferences_dialog_create (Gimp *gimp)
   optionmenu =
     gimp_option_menu_new2 (FALSE,
 			   G_CALLBACK (prefs_toggle_callback),
-			   &gimp->config->thumbnail_mode,
-			   GINT_TO_POINTER (gimp->config->thumbnail_mode),
+			   &gimp->config->write_thumbnails,
+			   GINT_TO_POINTER (gimp->config->write_thumbnails),
 
 			   _("Always"), GINT_TO_POINTER (TRUE),  NULL,
 			   _("Never"),  GINT_TO_POINTER (FALSE), NULL,

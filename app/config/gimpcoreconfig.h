@@ -66,12 +66,8 @@ struct _GimpCoreConfig
   gint                 levels_of_undo;
   gchar               *plug_in_rc_path;
 
-  /* the remaining fields are not yet implemented as properties
-
-  gchar               *module_db_load_inhibit;
-  gint                 thumbnail_mode;
-
-  */
+  gchar               *module_load_inhibit;
+  gboolean             write_thumbnails;
 };
 
 struct _GimpCoreConfigClass

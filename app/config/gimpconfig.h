@@ -22,8 +22,6 @@
 #ifndef __GIMP_CONFIG_H__
 #define __GIMP_CONFIG_H__
 
-#include <stdio.h>
-
 
 #define GIMP_TYPE_CONFIG_INTERFACE     (gimp_config_interface_get_type ())
 #define GIMP_GET_CONFIG_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_CONFIG_INTERFACE, GimpConfigInterface))

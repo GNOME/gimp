@@ -47,7 +47,7 @@ struct _GimpCoreConfig
   gint               levels_of_undo;
   gchar             *pluginrc_path;
   gchar             *module_db_load_inhibit;
-  gint               thumbnail_mode;
+  gboolean           write_thumbnails;
 };
 
 

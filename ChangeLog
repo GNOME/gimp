@@ -1,5 +1,19 @@
 2001-12-16  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpcoreconfig.[ch]: changed thumbnail_mode to boolean
+	write_thumbnails. thumbnail_mode used to have only two defined
+	values; if we need more later, we can change that easily when the 
+	new GimpConfig system is in place.
+
+	* app/gimprc.c
+	* app/file/file-save.c
+	* app/gui/file-open-dialog.c
+	* app/gui/preferences-dialog.c: changed accordingly.
+	
+	* app/config/gimpcoreconfig.[ch]: finished GimpCoreConfig class.
+
+2001-12-16  Sven Neumann  <sven@gimp.org>
+
 	* docs/make-todo: added icon for developer.gimp.org.
 
 2001-12-16  Sven Neumann  <sven@gimp.org>

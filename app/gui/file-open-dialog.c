@@ -510,19 +510,15 @@ set_preview (Gimp        *gimp,
 	}
       else
 	{
-	  switch (gimp->config->thumbnail_mode)
-	    {
-	    case 0:
-	      gtk_label_set_text (GTK_LABEL(open_options_label),
-				  _("Thumbnail saving is disabled."));
-	      break;
-	    case 1:
+          if (gimp->config->write_thumbnails)
+            {
 	      gtk_label_set_text (GTK_LABEL(open_options_label),
 				  _("Could not write thumbnail file."));
-	      break;
-	    default:
+            }
+          else
+            {
 	      gtk_label_set_text (GTK_LABEL(open_options_label),
-				  _("Thumbnail file not written."));
+				  _("Thumbnail saving is disabled."));
 	    }
 	}
 
@@ -642,7 +638,7 @@ file_open_genbutton_callback (GtkWidget *widget,
               RGBbuf  = make_RGBbuf_from_tempbuf (tempbuf,
                                                   &RGBbuf_w,
                                                   &RGBbuf_h);
-              if (gimp->config->thumbnail_mode)
+              if (gimp->config->write_thumbnails)
                 {
                   file_save_thumbnail (gimage_to_be_thumbed,
                                        full_filename, tempbuf);

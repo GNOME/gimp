@@ -59,5 +59,5 @@ gimp_core_config_init (Gimp *gimp)
   gimp->config->levels_of_undo           = 5;
   gimp->config->pluginrc_path            = NULL;
   gimp->config->module_db_load_inhibit   = NULL;
-  gimp->config->thumbnail_mode           = 1;
+  gimp->config->write_thumbnails         = TRUE;
 }

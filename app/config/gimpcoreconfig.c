@@ -76,6 +76,8 @@ enum
   PROP_DEFAULT_RESOLUTION_UNIT,
   PROP_UNDO_LEVELS,
   PROP_PLUGINRC_PATH,
+  PROP_MODULE_LOAD_INHIBIT,
+  PROP_WRITE_THUMBNAILS
 };
 
 
@@ -177,6 +179,12 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PLUGINRC_PATH,
                                  "pluginrc-path",
                                  "${gimp_dir}" G_DIR_SEPARATOR_S "pluginrc");
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_MODULE_LOAD_INHIBIT,
+                                   "module-load-inhibit",
+                                   NULL);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_WRITE_THUMBNAILS,
+                                    "write-thumbnails",
+                                    TRUE);
 }
 
 static void
@@ -263,6 +271,14 @@ gimp_core_config_set_property (GObject      *object,
       g_free (core_config->plug_in_rc_path);
       core_config->plug_in_rc_path = g_value_dup_string (value);
       break;
+    case PROP_MODULE_LOAD_INHIBIT:
+      g_free (core_config->module_load_inhibit);
+      core_config->module_load_inhibit = g_value_dup_string (value);
+      break;
+    case PROP_WRITE_THUMBNAILS:
+      core_config->write_thumbnails = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -341,6 +357,13 @@ gimp_core_config_get_property (GObject    *object,
     case PROP_PLUGINRC_PATH:
       g_value_set_string (value, core_config->plug_in_rc_path);
       break;
+    case PROP_MODULE_LOAD_INHIBIT:
+      g_value_set_string (value, core_config->module_load_inhibit);
+      break;
+    case PROP_WRITE_THUMBNAILS:
+      g_value_set_boolean (value, core_config->write_thumbnails);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
