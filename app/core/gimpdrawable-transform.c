@@ -55,7 +55,7 @@
 
 /* recursion level should be a usersettable parameter,
    3 seems to be a reasonable default */
-#define RECURSION_LEVEL 3
+#define RECURSION_LEVEL 0
 
 
 /*  forward function prototypes  */

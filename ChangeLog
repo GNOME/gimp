@@ -1,3 +1,11 @@
+2004-03-12  Raphaël Quinet  <quinet@gamers.org>
+
+	* app/core/gimpdrawable-transform.c (RECURSION_LEVEL): Set to 0 in
+	order to avoid nasty blurring effects.  Fixes bug #136702, but
+	re-opens bug #109817.  This is the best compromise for 2.0.
+	Later, we will have to make the supersampling optional as
+	suggested in the original patch to bug #109817.
+
 2004-03-12  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call):
