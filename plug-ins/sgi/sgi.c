@@ -649,7 +649,7 @@ save_dialog (void)
 		      NULL);
 
   frame = gimp_radio_group_new2 (TRUE, _("Compression Type"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &compression, (gpointer) compression,
 
 				 _("No Compression"),

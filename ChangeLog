@@ -1,5 +1,19 @@
 2001-07-29  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_ui.c
+	* plug-ins/fits/fits.c
+	* plug-ins/flame/flame.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/maze/maze_face.c
+	* plug-ins/mosaic/mosaic.c
+	* plug-ins/rcm/rcm_dialog.c
+	* plug-ins/sgi/sgi.c: removed compiler warnings by adding G_CALLBACK()
+	casts and const declarations.
+
+2001-07-29  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/AlienMap.c
 	* plug-ins/common/AlienMap2.c
 	* plug-ins/common/CML_explorer.c

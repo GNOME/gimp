@@ -652,7 +652,7 @@ mosaic_dialog (void)
 
   /*  tiling primitive  */
   frame = gimp_radio_group_new2 (TRUE, _("Tiling Primitives"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &mvals.tile_type, (gpointer) mvals.tile_type,
 
 				 _("Squares"),

@@ -560,7 +560,8 @@ create_options_page (void)
   gtk_widget_show (label);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, mapmenu_callback,
+    gimp_option_menu_new2 (FALSE, 
+                           G_CALLBACK (mapmenu_callback),
 			   &mapvals.maptype,
 			   (gpointer) mapvals.maptype,
 
@@ -712,7 +713,8 @@ create_light_page (void)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);  gtk_widget_show (table);
 
-  optionmenu = gimp_option_menu_new2 (FALSE, lightmenu_callback,
+  optionmenu = gimp_option_menu_new2 (FALSE, 
+                                      G_CALLBACK (lightmenu_callback),
 				      &mapvals.lightsource.type,
 				      (gpointer) mapvals.lightsource.type,
 

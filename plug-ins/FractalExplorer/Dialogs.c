@@ -553,7 +553,7 @@ explorer_dialog (void)
 
   toggle_vbox =
     gimp_radio_group_new2 (FALSE, NULL,
-			   explorer_radio_update,
+			   G_CALLBACK (explorer_radio_update),
 			   &wvals.fractaltype,
 			   (gpointer) &wvals.fractaltype,
 
@@ -712,7 +712,7 @@ explorer_dialog (void)
 
   /*  Redmode radio frame  */
   frame = gimp_radio_group_new2 (TRUE, _("Red"),
-				 explorer_radio_update,
+				 G_CALLBACK (explorer_radio_update),
 				 &wvals.redmode, (gpointer) wvals.redmode,
 
 				 _("Sine"), (gpointer) SINUS,
@@ -753,7 +753,7 @@ explorer_dialog (void)
 
   /*  Greenmode radio frame  */
   frame = gimp_radio_group_new2 (TRUE, _("Green"),
-				 explorer_radio_update,
+				 G_CALLBACK (explorer_radio_update),
 				 &wvals.greenmode, (gpointer) wvals.greenmode,
 
 				 _("Sine"), (gpointer) SINUS,
@@ -794,7 +794,7 @@ explorer_dialog (void)
 
   /*  Bluemode radio frame  */
   frame = gimp_radio_group_new2 (TRUE, _("Blue"),
-				 explorer_radio_update,
+				 G_CALLBACK (explorer_radio_update),
 				 &wvals.bluemode, (gpointer) wvals.bluemode,
 
 				 _("Sine"), (gpointer) SINUS,
@@ -1596,14 +1596,14 @@ file_selection_ok (GtkWidget        *w,
 		   GtkFileSelection *fs,
 		   gpointer          data)
 {
-  gchar       *filenamebuf;
+  const gchar *filenamebuf;
   struct stat  filestat;
   gint         err;
 
   filenamebuf = gtk_file_selection_get_filename (GTK_FILE_SELECTION(fs));
 
   /* Get the name */
-  if (strlen (filenamebuf) == 0)
+  if (!filenamebuf || strlen (filenamebuf) == 0)
     {
       g_message (_("Save: No filename given"));
       return;

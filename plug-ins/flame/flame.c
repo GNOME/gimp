@@ -402,7 +402,7 @@ file_ok_callback (GtkWidget *widget,
 		  gpointer   data) 
 {
   GtkFileSelection *fs;
-  gchar            *filename;
+  const gchar      *filename;
   struct stat       filestat;
 
   fs = GTK_FILE_SELECTION (data);
@@ -715,7 +715,7 @@ edit_callback (GtkWidget *widget,
       gtk_widget_show (button);
 
       optionmenu =
-	gimp_option_menu_new2 (FALSE, menu_cb,
+	gimp_option_menu_new2 (FALSE, G_CALLBACK (menu_cb),
 			       &config.variation,
 			       (gpointer) VARIATION_SAME,
 
@@ -1137,7 +1137,7 @@ dialog (void)
 	  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			      GTK_SIGNAL_FUNC (gradient_cb),
 			      (gpointer) d);
-	  gtk_menu_prepend (GTK_MENU (menu), menuitem);
+	  gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), menuitem);
 	  if (d == save_drawable)
 	    gtk_menu_set_active (GTK_MENU (menu), 0);
 	  gtk_widget_show (menuitem);
@@ -1148,7 +1148,7 @@ dialog (void)
     gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			GTK_SIGNAL_FUNC (gradient_cb),
 			(gpointer) GRADIENT_DRAWABLE);
-    gtk_menu_prepend (GTK_MENU (menu), menuitem);
+    gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), menuitem);
     if (GRADIENT_DRAWABLE == save_drawable)
       gtk_menu_set_active (GTK_MENU (menu), 0);
     gtk_widget_show (menuitem);

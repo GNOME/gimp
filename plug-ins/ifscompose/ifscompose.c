@@ -1124,7 +1124,7 @@ design_op_menu_create (GtkWidget *window)
   gtk_window_add_accel_group(GTK_WINDOW(window),accel_group);
 
   menu_item = gtk_menu_item_new_with_label(_("Move"));
-  gtk_menu_append(GTK_MENU(ifsDesign->op_menu),menu_item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (ifsDesign->op_menu), menu_item);
   gtk_widget_show(menu_item);
   gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
 		     (GtkSignalFunc)design_op_update_callback,
@@ -1136,7 +1136,7 @@ design_op_menu_create (GtkWidget *window)
 			     GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
   menu_item = gtk_menu_item_new_with_label(_("Rotate/Scale"));
-  gtk_menu_append(GTK_MENU(ifsDesign->op_menu),menu_item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (ifsDesign->op_menu), menu_item);
   gtk_widget_show(menu_item);
   gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
 		     (GtkSignalFunc)design_op_update_callback,
@@ -1148,7 +1148,7 @@ design_op_menu_create (GtkWidget *window)
 			     GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
   menu_item = gtk_menu_item_new_with_label(_("Stretch"));
-  gtk_menu_append(GTK_MENU(ifsDesign->op_menu),menu_item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (ifsDesign->op_menu), menu_item);
   gtk_widget_show(menu_item);
   gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
 		     (GtkSignalFunc)design_op_update_callback,
@@ -1161,11 +1161,11 @@ design_op_menu_create (GtkWidget *window)
 
   /* A separator */
   menu_item = gtk_menu_item_new();
-  gtk_menu_append(GTK_MENU(ifsDesign->op_menu),menu_item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (ifsDesign->op_menu), menu_item);
   gtk_widget_show(menu_item);
 
   menu_item = gtk_menu_item_new_with_label(_("Select All"));
-  gtk_menu_append(GTK_MENU(ifsDesign->op_menu),menu_item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (ifsDesign->op_menu), menu_item);
   gtk_widget_show(menu_item);
   gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
 		     (GtkSignalFunc)design_area_select_all_callback,
@@ -1177,7 +1177,7 @@ design_op_menu_create (GtkWidget *window)
 			     GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
   menu_item = gtk_menu_item_new_with_label(_("Recompute Center"));
-  gtk_menu_append(GTK_MENU(ifsDesign->op_menu),menu_item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (ifsDesign->op_menu), menu_item);
   gtk_widget_show(menu_item);
   gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
 		     (GtkSignalFunc)recompute_center_cb,
@@ -1189,7 +1189,7 @@ design_op_menu_create (GtkWidget *window)
 			     GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
   menu_item = gtk_menu_item_new_with_label(_("Undo"));
-  gtk_menu_append(GTK_MENU(ifsDesign->op_menu),menu_item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (ifsDesign->op_menu), menu_item);
   gtk_widget_show(menu_item);
   gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
 		     (GtkSignalFunc)undo,
@@ -1201,7 +1201,7 @@ design_op_menu_create (GtkWidget *window)
 			     GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
   menu_item = gtk_menu_item_new_with_label(_("Redo"));
-  gtk_menu_append(GTK_MENU(ifsDesign->op_menu),menu_item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (ifsDesign->op_menu), menu_item);
   gtk_widget_show(menu_item);
   gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
 		     (GtkSignalFunc)redo,

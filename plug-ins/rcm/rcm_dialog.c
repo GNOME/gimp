@@ -80,11 +80,11 @@
 /* Previews: create one preview */
 /*---------------------------------------------------------------------------*/
 
-void 
+static void 
 rcm_create_one_preview (GtkWidget **preview, 
 			GtkWidget **frame,
-			int         previewWidth, 
-			int         previewHeight)
+			gint        previewWidth, 
+			gint        previewHeight)
 {
   *frame = gtk_frame_new(NULL);
   gtk_frame_set_shadow_type(GTK_FRAME(*frame), GTK_SHADOW_IN);
@@ -102,7 +102,7 @@ rcm_create_one_preview (GtkWidget **preview,
 /* Previews */
 /*---------------------------------------------------------------------------*/
 
-GtkWidget* 
+static GtkWidget* 
 rcm_create_previews (void)
 {
   GtkWidget *frame, *blabel, *alabel, *bframe, *aframe, *table;
@@ -153,15 +153,15 @@ rcm_create_previews (void)
 /* Main: Create one pixmap button */
 /*---------------------------------------------------------------------------*/
 
-void 
-rcm_create_pixmap_button (GtkWidget     **label, 
-			  GtkWidget     **xpm_button,
-			  GtkWidget     **label_box, 
-			  GtkSignalFunc   callback,
-			  gpointer        data, 
-			  gchar          *text, 
-			  GtkWidget      *parent, 
-			  gint            pos)
+static void 
+rcm_create_pixmap_button (GtkWidget  **label, 
+			  GtkWidget  **xpm_button,
+			  GtkWidget  **label_box, 
+			  GCallback    callback,
+			  gpointer     data, 
+			  const gchar *text, 
+			  GtkWidget   *parent, 
+			  gint         pos)
 {
   /* create button */
   *xpm_button = gtk_button_new();
@@ -190,7 +190,7 @@ rcm_create_pixmap_button (GtkWidget     **label,
 /* Set buttons pixmaps */
 /*---------------------------------------------------------------------------*/
 
-void 
+static void 
 rcm_set_pixmaps (RcmCircle *circle)
 {
   rcm_set_pixmap(&circle->cw_ccw_pixmap, circle->cw_ccw_button->parent, circle->cw_ccw_box, rcm_cw_xpm);
@@ -202,7 +202,7 @@ rcm_set_pixmaps (RcmCircle *circle)
 /* Main: One circles with values and buttons */
 /*---------------------------------------------------------------------------*/
 
-RcmCircle*
+static RcmCircle*
 rcm_create_one_circle (gint   height, 
 		       gchar *label_content)
 {
@@ -260,7 +260,8 @@ rcm_create_one_circle (gint   height,
   gtk_widget_show(button_table);
 
   /** Main: Circle: Buttons **/
-  rcm_create_pixmap_button(&label, &xpm_button, &label_box, rcm_cw_ccw, st,
+  rcm_create_pixmap_button(&label, &xpm_button, &label_box, 
+                           G_CALLBACK (rcm_cw_ccw), st,
 			   (st->angle->cw_ccw>0) ?
 			   _("Switch to clockwise") : _("Switch to c/clockwise"),
 			   button_table, 0);
@@ -269,13 +270,15 @@ rcm_create_one_circle (gint   height,
   st->cw_ccw_box = label_box;
   st->cw_ccw_label = label;
 
-  rcm_create_pixmap_button(&label, &xpm_button, &label_box, rcm_a_to_b, st,
+  rcm_create_pixmap_button(&label, &xpm_button, &label_box, 
+                           G_CALLBACK (rcm_a_to_b), st,
 			   _("Change order of arrows"), button_table, 1);
   st->a_b_pixmap = NULL;
   st->a_b_box = label_box;
   st->a_b_button = xpm_button;
 
-  rcm_create_pixmap_button(&label, &xpm_button, &label_box, rcm_360_degrees, st,
+  rcm_create_pixmap_button(&label, &xpm_button, &label_box, 
+                           G_CALLBACK (rcm_360_degrees), st,
 			   _("Select all"), button_table, 2);
   st->f360_pixmap = NULL;
   st->f360_box = label_box;
@@ -352,7 +355,7 @@ rcm_create_one_circle (gint   height,
 /* Main */
 /*---------------------------------------------------------------------------*/
 
-GtkWidget*
+static GtkWidget*
 rcm_create_main (void)
 {
   GtkWidget *vbox;
@@ -376,7 +379,7 @@ rcm_create_main (void)
 /* Misc: Gray */
 /*---------------------------------------------------------------------------*/
 
-RcmGray*
+static RcmGray*
 rcm_create_gray (void)
 {
   GtkWidget *frame, *preview, *as_or_to_frame;
@@ -574,7 +577,7 @@ rcm_create_gray (void)
 /* Misc */
 /*----------------------------------------------------------------------------*/
 
-GtkWidget *
+static GtkWidget *
 rcm_create_misc (void)
 {
   GtkWidget *label, *table;
@@ -660,14 +663,14 @@ rcm_create_misc (void)
 
   item = gtk_radio_menu_item_new_with_label (preview_group, _("Entire Image"));
   preview_group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (item));
-  gtk_menu_append (GTK_MENU (menu), item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
   gtk_widget_show (item);
   gtk_signal_connect (GTK_OBJECT (item), "activate",
 		      (GtkSignalFunc) rcm_entire_image, NULL);
     
   item = gtk_radio_menu_item_new_with_label (preview_group, _("Selection"));
   preview_group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (item));
-  gtk_menu_append (GTK_MENU (menu), item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
   gtk_widget_show (item);
   gtk_signal_connect (GTK_OBJECT (item), "activate",
 		      (GtkSignalFunc) rcm_selection, NULL);
@@ -675,7 +678,7 @@ rcm_create_misc (void)
   item = gtk_radio_menu_item_new_with_label (preview_group, _("Context"));
   preview_group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (item));
   gtk_widget_show (item);
-  gtk_menu_append (GTK_MENU (menu), item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
   gtk_signal_connect (GTK_OBJECT (item), "activate",
 		      (GtkSignalFunc) rcm_selection_in_context, NULL);
 

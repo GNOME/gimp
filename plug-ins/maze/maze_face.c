@@ -420,9 +420,9 @@ static void
 div_button_callback (GtkWidget *button,
 		     GtkWidget *entry)
 {
-  guint  max, divs;
-  gchar *text;
-  gint   direction;
+  const gchar *text;
+  guint        max, divs;
+  gint         direction;
 
   direction = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (button), "direction"));
   max = *((guint*) gtk_object_get_data (GTK_OBJECT (entry), "max"));

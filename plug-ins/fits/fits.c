@@ -1002,7 +1002,7 @@ load_dialog (void)
   gtk_widget_show (vbox);
 
   frame = gimp_radio_group_new2 (TRUE, _("BLANK/NaN Pixel Replacement"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &plvals.replace, (gpointer) plvals.replace,
 
 				 _("Black"), (gpointer) 0, NULL,
@@ -1014,7 +1014,7 @@ load_dialog (void)
 
   frame =
     gimp_radio_group_new2 (TRUE, _("Pixel Value Scaling"),
-			   gimp_radio_button_update,
+			   G_CALLBACK (gimp_radio_button_update),
 			   &plvals.use_datamin, (gpointer) plvals.use_datamin,
 
 			   _("Automatic"),          (gpointer) FALSE, NULL,
@@ -1026,7 +1026,7 @@ load_dialog (void)
 
   frame =
     gimp_radio_group_new2 (TRUE, _("Image Composing"),
-			   gimp_radio_button_update,
+			   G_CALLBACK (gimp_radio_button_update),
 			   &plvals.compose, (gpointer) plvals.compose,
 
 			   _("None"),                 (gpointer) FALSE, NULL,
