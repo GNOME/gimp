@@ -1639,7 +1639,7 @@ gimp_plist_build_combo (GtkWidget      *combo,       /* I - Combo widget */
         i = 0;
     }
 
-  gtk_entry_set_text (entry, items[i].text);
+  gtk_entry_set_text (entry, g_strdup (items[i].text));
 
   gtk_combo_set_value_in_list (GTK_COMBO (combo), TRUE, FALSE);
   gtk_widget_set_sensitive (combo, TRUE);
