@@ -1,5 +1,10 @@
 2000-12-11  Vidar Madsen  <vidar@gimp.org>
 
+	* plug-ins/gimpressionist/repaint.c: Fixed a bug appearing
+	when using Tileable + Center of Brush coloring, closing #14221.
+
+2000-12-11  Vidar Madsen  <vidar@gimp.org>
+
 	* plug-ins/gimpressionist/repaint.c: Fixed a bug when using
 	Paper Relief, closing bug #34667.
 	* plug-ins/gimpressionist/gimpressionist.c: Moved the Presets tab

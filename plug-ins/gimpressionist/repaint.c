@@ -741,7 +741,10 @@ void repaint(struct ppm *p, struct ppm *a)
       g = g * 255.0 / thissum;
       b = b * 255.0 / thissum;
     } else if(runningvals.colortype == 1) {
-      guchar *pixel = &p->col[(ty+brush->height/2)*p->width*3 + (tx+brush->width)*3];
+      guchar *pixel;
+      y = ty + (brush->height / 2);
+      x = tx + (brush->width / 2);
+      pixel = &p->col[y*p->width*3 + x*3];
       r = pixel[0];
       g = pixel[1];
       b = pixel[2];
