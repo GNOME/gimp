@@ -1,3 +1,9 @@
+2004-04-18  Henrik Brix Andersen  <brix@gimp.org>
+
+	* app/widgets/gimptemplateeditor.c
+	(gimp_template_editor_constructor): use g_signal_connect_object()
+	instead of g_signal_connect(). Fixes bug #140315.
+
 2004-04-18  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* plug-ins/common/gauss_rle.c (gauss_rle): Oops, fixed my fix.
