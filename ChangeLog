@@ -1,3 +1,8 @@
+2005-01-27  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpgrid.c: changed default grid distance to 32 as
+	suggested in bug #165367.
+
 2005-01-26  Manish Singh  <yosh@gimp.org>
 
 	* libgimpconfig/Makefile.am: make LIBADD really work.

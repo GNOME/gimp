@@ -141,12 +141,12 @@ gimp_grid_class_init (GimpGridClass *klass)
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_XSPACING,
 				   "xspacing",
                                    N_("Horizontal spacing of grid lines."),
-				   1.0, GIMP_MAX_IMAGE_SIZE, 10.0,
+				   1.0, GIMP_MAX_IMAGE_SIZE, 32.0,
 				   0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_YSPACING,
 				   "yspacing",
                                    N_("Vertical spacing of grid lines."),
-				   1.0, GIMP_MAX_IMAGE_SIZE, 10.0,
+				   1.0, GIMP_MAX_IMAGE_SIZE, 32.0,
 				   0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_SPACING_UNIT,
 				 "spacing-unit", NULL,
