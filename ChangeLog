@@ -1,5 +1,15 @@
 2004-10-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/dialogs.c (toplevel_entries): added foreign entries
+	for the keyboard shortcut and the controller action dialogs.
+
+	* app/dialogs/preferences-dialog.c
+	* app/widgets/gimpcontrollereditor.c: register the dialogs with
+	the "toplevel" dialog factory so they remember their size and
+	position.
+
+2004-10-29  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/dbbrowser/gimpprocbrowser.c
 	* plug-ins/dbbrowser/plugin-browser.c: don't say "1 Procedures" or
 	"1 Plug-In Interfaces" but use the singular form instead.

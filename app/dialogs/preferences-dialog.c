@@ -508,6 +508,9 @@ prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
   g_object_set_data (G_OBJECT (gtk_widget_get_toplevel (widget)),
                      "gimp-keyboard-shortcuts-dialog", dialog);
 
+  gimp_dialog_factory_add_foreign (gimp_dialog_factory_from_name ("toplevel"),
+                                   "gimp-keyboard-shortcuts-dialog", dialog);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gtk_widget_destroy),
                     NULL);
