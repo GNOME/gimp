@@ -152,5 +152,6 @@ gimp_1_3_LDADD = @STRIP_BEGIN@ \
 	$(REGEXREPL)							\
 @STRIP_END@
 
-makefile.mingw: $(top_builddir)/config.status $(top_srcdir)/app/makefile.mingw.in
-	cd $(top_builddir) && CONFIG_FILES=app/$@ CONFIG_HEADERS= $(SHELL) ./config.status
+## this is probably cruft, but may not be.  -klm
+## makefile.mingw: $(top_builddir)/config.status $(top_srcdir)/app/makefile.mingw.in
+##	cd $(top_builddir) && CONFIG_FILES=app/$@ CONFIG_HEADERS= $(SHELL) ./config.status
