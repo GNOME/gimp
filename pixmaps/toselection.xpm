@@ -1,5 +1,5 @@
 /* XPM */
-static char * ptoselection_xpm[] = {
+static char * toselection_xpm[] = {
 "17 17 4 1",
 " 	c None",
 ".	c #000000",

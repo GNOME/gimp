@@ -1,3 +1,13 @@
+Sat Mar 13 19:46:54 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* Makefile.am
+	* pixmaps/ptoselection.xpm -> pixmaps/toselection.xpm
+	* app/channels_dialog.c
+	* app/paths_dialog.c: Provide a button to convert a channel
+	into a selection. Share the xpm with the paths-dialog. Add two new
+	menu entries that allow to add or subtract the channel to/from the 
+	current selection (as suggested by Wolfgang Hofer). 
+
 1999-03-12  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
         Moved all pixmaps and bitmaps from app/ and libgimp/ to pixmaps/

@@ -61,7 +61,7 @@
 #include "pixmaps/pendel.xpm"
 #include "pixmaps/penedit.xpm"
 #include "pixmaps/penstroke.xpm"
-#include "pixmaps/ptoselection.xpm"
+#include "pixmaps/toselection.xpm"
 #include "pixmaps/path.xbm"
 
 #define PREVIEW_EVENT_MASK GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | GDK_ENTER_NOTIFY_MASK
@@ -156,7 +156,7 @@ static OpsButton paths_ops_buttons[] =
 {
   { new_xpm, paths_dialog_new_path_callback, N_("New Path"), NULL },
   { duplicate_xpm, paths_dialog_dup_path_callback, N_("Duplicate Path"), NULL },
-  { ptoselection_xpm, paths_dialog_path_to_sel_callback, N_("Path to Selection"), NULL },
+  { toselection_xpm, paths_dialog_path_to_sel_callback, N_("Path to Selection"), NULL },
   { penstroke_xpm, paths_dialog_stroke_path_callback, N_("Stroke Path"), NULL },
   { delete_xpm, paths_dialog_delete_path_callback, N_("Delete Path"), NULL },
   { NULL, NULL, NULL, NULL }

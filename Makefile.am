@@ -23,7 +23,7 @@ EXTRA_DIST = \
 	pixmaps/penedit.xpm	 \
 	pixmaps/pennorm.xpm	 \
 	pixmaps/penstroke.xpm	 \
-	pixmaps/ptoselection.xpm \
+	pixmaps/toselection.xpm  \
 	pixmaps/zoom_in.xpm	 \
 	pixmaps/zoom_out.xpm	 \
 	README.i18n		 \
