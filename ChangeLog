@@ -1,4 +1,11 @@
 2000-04-12  Sven Neumann  <sven@gimp.org>
+
+	* docs/quick_reference.tar.gz: updated the tool icons and added
+	new ones. Removed the dvi and ps files from the tarball. Added 
+	a TODO which describes what needs to be done to update the
+	quick_reference for gimp-1.2. Any volunteers?
+
+2000-04-12  Sven Neumann  <sven@gimp.org>
 	
         * docs/keybindings.txt: applied gimp-cornwell-000412-0, a 
 	patch from  Piers Cornwell <piers.cornwell@usa.net>, that 
