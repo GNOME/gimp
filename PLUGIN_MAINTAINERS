@@ -198,8 +198,8 @@ SIZE       :  22.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : curve_bend
-AUTHOR     : Wolfgang Hofer (hof@hotbot.com)
-MAINTAINER : 
+AUTHOR     : Wolfgang Hofer <hof@hotbot.com>
+MAINTAINER : Wolfgang Hofer <hof@hotbot.com>
 SIZE       : 107.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -318,8 +318,8 @@ SIZE       :  26.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gap
-AUTHOR     : Wolfgang Hofer (hof@hotbot.com)
-MAINTAINER : 
+AUTHOR     : Wolfgang Hofer <hof@hotbot.com>
+MAINTAINER : Wolfgang Hofer <hof@hotbot.com>
 SIZE       : 649.5 kB  in 24 files (only C files counted)
 COMMENT    : 
 -----------
@@ -739,7 +739,7 @@ COMMENT    :
 -----------
 NAME       : sample_colorize
 AUTHOR     : Wolfgang Hofer
-MAINTAINER : 
+MAINTAINER : Wolfgang Hofer <hof@hotbot.com>
 SIZE       :  92.3 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -985,7 +985,7 @@ COMMENT    :
 -----------
 NAME       : xjt
 AUTHOR     : Wolfgang Hofer
-MAINTAINER : 
+MAINTAINER : Wolfgang Hofer <hof@hotbot.com>
 SIZE       : 129.1 kB  in  3 files (only C files counted)
 COMMENT    : 
 -----------

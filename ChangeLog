@@ -1,3 +1,9 @@
+Mon Feb  7 23:22:53 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/curve_bend.c: found a bug that I introduced 
+	myself a while ago but couldn't figure out how this is supposed
+	to work. It does strange things with the undo stack!
+
 2000-02-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/*
