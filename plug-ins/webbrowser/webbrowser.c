@@ -390,14 +390,6 @@ url_callback (GtkWidget *widget,
  * Copyright © 1996 Netscape Communications Corporation, all rights reserved.
  * Created: Jamie Zawinski <jwz@netscape.com>, 24-Dec-94.
  *
- * Permission to use, copy, modify, distribute, and sell this software and its
- * documentation for any purpose is hereby granted without fee, provided that
- * the above copyright notice appear in all copies and that both that
- * copyright notice and this permission notice appear in supporting
- * documentation.  No representations are made about the suitability of this
- * software for any purpose.  It is provided "as is" without express or 
- * implied warranty.
- *
  * To compile:
  *
  *    cc -o netscape-remote remote.c -DSTANDALONE -lXmu -lX11
@@ -433,9 +425,7 @@ url_callback (GtkWidget *widget,
 /**    Permission to use, copy, modify, and distribute this software and    **/
 /**    its documentation  for  any  purpose  and  without  fee is hereby    **/
 /**    granted, provided that the above copyright notice appear  in  all    **/
-/**    copies and that both  that  copyright  notice  and  this  permis-    **/
-/**    sion  notice appear in supporting  documentation,  and  that  the    **/
-/**    name of Solbourne not be used in advertising                         **/
+/**    copies and  that  the  name of Solbourne not be used in advertising  **/
 /**    in publicity pertaining to distribution of the  software  without    **/
 /**    specific, written prior permission.                                  **/
 /**                                                                         **/

@@ -1,5 +1,14 @@
 2003-05-16  Dave Neary  <bolsh@gimp.org>
 
+	* plug-ins/common/edge.c
+	* plug-ins/common/tiff.c
+	* plug-ins/common/mail.c
+	* plug-ins/webbrowser/webbrowser.c: Removed GPL
+	conflicting parts of permission notices on these files,
+	in line with what has been said in bug #83362. 
+
+2003-05-16  Dave Neary  <bolsh@gimp.org>
+
 	* plug-ins/common/nlfilt.c: Changed licence for Graeme
 	Gill's code in this filter. Fixes part of bug #83362.
 
