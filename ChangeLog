@@ -1,5 +1,11 @@
 2004-07-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gfig/Makefile.am (SUBDIRS): added back gfig-examples
+
+	* plug-ins/gfig/gfig-examples/Makefile.am: cleanup.
+
+2004-07-20  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/Lighting/lighting_ui.c: fixed some GUI issues:
 	left-align labels, use stock buttons, added line-breaks to make
 	the code fit into 80 columns.

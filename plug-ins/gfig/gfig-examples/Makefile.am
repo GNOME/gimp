@@ -15,8 +15,3 @@ gfigdata_DATA = \
 	stars
 
 EXTRA_DIST = $(gfigdata_DATA)
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done

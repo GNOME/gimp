@@ -12,7 +12,7 @@ endif
 
 AM_LDFLAGS = $(mwindows)
 
-SUBDIRS = images
+SUBDIRS = gfig-examples images
 
 libexecdir = $(gimpplugindir)/plug-ins
 
