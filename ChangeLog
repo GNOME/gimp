@@ -1,3 +1,8 @@
+2005-02-16  Sven Neumann  <sven@gimp.org>
+
+	* app/base/pixel-processor.c: switched to using a thread pool.
+	Enables the progress callback for the threaded case.
+
 2005-02-16  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/plug-ins/script-fu/scripts/guides-new.scm:  committted

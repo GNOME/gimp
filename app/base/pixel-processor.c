@@ -38,10 +38,13 @@
 #endif
 
 
+#define TILES_PER_THREAD  8
 #define PROGRESS_TIMEOUT  64
 
 
-static gint  max_threads = 0;
+static GThreadPool *pool       = NULL;
+static GMutex      *pool_mutex = NULL;
+static GCond       *pool_cond  = NULL;
 
 
 typedef void (* p1_func) (gpointer     data,
@@ -166,7 +169,20 @@ do_parallel_regions (PixelProcessor *processor)
   while (processor->PRI &&
 	 (processor->PRI = pixel_regions_process (processor->PRI)));
 
-  g_static_mutex_unlock (&processor->mutex);
+  processor->threads--;
+
+  if (processor->threads == 0)
+    {
+      g_static_mutex_unlock (&processor->mutex);
+
+      g_mutex_lock (pool_mutex);
+      g_cond_signal (pool_cond);
+      g_mutex_unlock (pool_mutex);
+    }
+  else
+    {
+      g_static_mutex_unlock (&processor->mutex);
+    }
 }
 #endif
 
@@ -249,9 +265,6 @@ do_parallel_regions_single (PixelProcessor             *processor,
   return NULL;
 }
 
-
-#define TILES_PER_THREAD  8
-
 static void
 pixel_regions_do_parallel (PixelProcessor             *processor,
                            PixelProcessorProgressFunc  progress_func,
@@ -259,38 +272,53 @@ pixel_regions_do_parallel (PixelProcessor             *processor,
 {
   gulong pixels = (processor->PRI->region_width *
                    processor->PRI->region_height);
-
-#ifdef ENABLE_MP
   gulong tiles  = pixels / (TILE_WIDTH * TILE_HEIGHT);
 
-  if (max_threads > 1 && tiles > TILES_PER_THREAD)
+#ifdef ENABLE_MP
+  if (pool && tiles > TILES_PER_THREAD)
     {
-      GThread *threads[GIMP_MAX_NUM_THREADS];
-      gint     nthreads = MIN (max_threads, tiles / TILES_PER_THREAD);
-      gint     i;
+      gint tasks = MIN (tiles / TILES_PER_THREAD,
+                        g_thread_pool_get_max_threads (pool));
 
-      /* g_printerr ("starting %d threads to process >= %ld tiles\n",
-       *              nthreads, tiles);
+      /*
+       * g_printerr ("pushing %d tasks into the thread pool (for %lu tiles)\n",
+       *             tasks, tiles);
        */
 
-      for (i = 0; i < nthreads; i++)
-        {
-          GError *error = NULL;
+      g_mutex_lock (pool_mutex);
 
-          threads[i] = g_thread_create ((GThreadFunc) do_parallel_regions,
-                                        processor,
-                                        TRUE, &error);
-          if (! threads[i])
+      while (tasks--)
+        g_thread_pool_push (pool, processor, NULL);
+
+      if (progress_func)
+        {
+          GTimeVal timeout;
+
+          g_get_current_time (&timeout);
+          g_time_val_add (&timeout, PROGRESS_TIMEOUT * 1024);
+
+          while (! g_cond_timed_wait (pool_cond, pool_mutex, &timeout))
             {
-              g_warning ("cannot create thread: %s\n", error->message);
-              g_clear_error (&error);
+              gulong  progress;
+
+              g_static_mutex_lock (&processor->mutex);
+              progress = processor->progress;
+              g_static_mutex_unlock (&processor->mutex);
+
+              progress_func (progress_data,
+                             (gdouble) progress / (gdouble) pixels);
+
+              g_get_current_time (&timeout);
+              g_time_val_add (&timeout, PROGRESS_TIMEOUT * 1024);
             }
+
+        }
+      else
+        {
+          g_cond_wait (pool_cond, pool_mutex);
         }
 
-      for (i = 0; i < nthreads; i++)
-	{
-          g_thread_join (threads[i]);
-	}
+      g_mutex_unlock (pool_mutex);
     }
   else
 #endif
@@ -298,6 +326,9 @@ pixel_regions_do_parallel (PixelProcessor             *processor,
       do_parallel_regions_single (processor,
                                   progress_func, progress_data, pixels);
     }
+
+  if (progress_func)
+    progress_func (progress_data, 1.0);
 }
 
 static void
@@ -374,17 +405,55 @@ pixel_processor_init (gint num_threads)
 void
 pixel_processor_set_num_threads (gint num_threads)
 {
-  g_return_if_fail (num_threads > 0);
+#ifdef ENABLE_MP
 
-  max_threads = CLAMP (num_threads, 1, GIMP_MAX_NUM_THREADS);
+  g_return_if_fail (num_threads > 0 && num_threads <= GIMP_MAX_NUM_THREADS);
 
-  g_printerr ("max_threads: %d\n", max_threads);
+  if (num_threads < 2)
+    {
+      if (pool)
+        {
+          g_thread_pool_free (pool, TRUE, TRUE);
+          pool = NULL;
+
+          g_cond_free (pool_cond);
+          pool_cond = NULL;
+
+          g_mutex_free (pool_mutex);
+          pool_mutex = NULL;
+        }
+    }
+  else
+    {
+      GError *error = NULL;
+
+      if (pool)
+        {
+          g_thread_pool_set_max_threads (pool, num_threads, &error);
+        }
+      else
+        {
+          pool = g_thread_pool_new ((GFunc) do_parallel_regions, NULL,
+                                    num_threads, TRUE, &error);
+
+          pool_mutex = g_mutex_new ();
+          pool_cond  = g_cond_new ();
+        }
+
+      if (error)
+        {
+          g_warning ("changing the number of threads to %d failed: %s\n",
+                     num_threads, error->message);
+          g_clear_error (&error);
+        }
+    }
+#endif
 }
 
 void
 pixel_processor_exit (void)
 {
-  max_threads = 0;
+  pixel_processor_set_num_threads (1);
 }
 
 void
