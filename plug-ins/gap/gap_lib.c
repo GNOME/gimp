@@ -28,6 +28,7 @@
  */
 
 /* revision history:
+ * 1.1.17b; 2000/02/27   hof: bug/style fixes
  * 1.1.14a; 1999/12/18   hof: handle .xvpics on fileops (copy, rename and delete)
  *                            new: p_get_frame_nr,
  * 1.1.9a;  1999/09/14   hof: handle frame filenames with framenumbers
@@ -96,8 +97,6 @@
 #include "gap_exchange_image.h"
 
 extern      int gap_debug; /* ==0  ... dont print debug infos */
-
-static char g_errtxt[1024];  /* buffer for current message- or errortext */
  
 /* ------------------------------------------ */
 /* forward  working procedures */
@@ -536,14 +535,15 @@ char*  p_alloc_extension(char *imagename)
  */
 char*  p_alloc_fname(char *basename, long nr, char *extension)
 {
-  char *l_fname;
-  int   l_leading_zeroes;
-  long  l_nr_chk;
+  gchar *l_fname;
+  gint   l_leading_zeroes;
+  gint   l_len;
+  long   l_nr_chk;
   
   if(basename == NULL) return (NULL);
-  l_fname = (char *)g_malloc(strlen(basename)  + strlen(extension) + 8);
-  if(l_fname != NULL)
-  {
+  l_len = (strlen(basename)  + strlen(extension) + 10);
+  l_fname = (char *)g_malloc(l_len);
+
     l_leading_zeroes = TRUE;
     if(nr < 1000)
     {
@@ -556,14 +556,14 @@ char*  p_alloc_fname(char *basename, long nr, char *extension)
        while(l_nr_chk >= 0)
        {
          /* check if frame is on disk with 4-digit style framenumber */
-         sprintf(l_fname, "%s%04ld%s", basename, l_nr_chk, extension);
+         g_snprintf(l_fname, l_len, "%s%04ld%s", basename, l_nr_chk, extension);
          if (p_file_exists(l_fname))
          {
             break;
          }
 
          /* now check for filename without leading zeroes in the framenumber */
-         sprintf(l_fname, "%s%ld%s", basename, l_nr_chk, extension);
+         g_snprintf(l_fname, l_len, "%s%ld%s", basename, l_nr_chk, extension);
          if (p_file_exists(l_fname))
          {
             l_leading_zeroes = FALSE;
@@ -586,9 +586,11 @@ char*  p_alloc_fname(char *basename, long nr, char *extension)
       l_leading_zeroes = FALSE;
     }
 
-    if(l_leading_zeroes)  sprintf(l_fname, "%s%04ld%s", basename, nr, extension);
-    else                  sprintf(l_fname, "%s%ld%s", basename, nr, extension);
-  }
+  g_free(l_fname);
+
+  if(l_leading_zeroes) l_fname = g_strdup_printf("%s%04ld%s", basename, nr, extension);
+  else                 l_fname = g_strdup_printf("%s%ld%s", basename, nr, extension);
+
   return(l_fname);
 }    /* end p_alloc_fname */
 
@@ -617,8 +619,7 @@ t_anim_info *p_alloc_ainfo(gint32 image_id, GRunModeType run_mode)
    l_ainfo_ptr->old_filename = gimp_image_get_filename(image_id);
    if(l_ainfo_ptr->old_filename == NULL)
    {
-     l_ainfo_ptr->old_filename = g_malloc(30);
-     sprintf(l_ainfo_ptr->old_filename, "frame_0001.xcf");    /* assign a defaultname */
+     l_ainfo_ptr->old_filename = g_strdup("frame_0001.xcf");    /* assign a defaultname */
      gimp_image_set_filename (image_id, l_ainfo_ptr->old_filename);
    }
 
@@ -727,16 +728,16 @@ int p_dir_ainfo(t_anim_info *ainfo_ptr)
          switch(l_dirflag)
          {
            case 0:
-            sprintf(dirname_buff, "%s", l_dp->d_name);
+            g_snprintf(dirname_buff, sizeof(dirname_buff), "%s", l_dp->d_name);
             break;
            case 1:
-            sprintf(dirname_buff, "%c%s",  G_DIR_SEPARATOR, l_dp->d_name);
+            g_snprintf(dirname_buff, sizeof(dirname_buff), "%c%s",  G_DIR_SEPARATOR, l_dp->d_name);
             break;
            default:
             /* UNIX:  "/dir/file"
              * DOS:   "drv:\dir\file"
              */
-            sprintf(dirname_buff, "%s%c%s", l_dirname_ptr,  G_DIR_SEPARATOR,  l_dp->d_name);
+            g_snprintf(dirname_buff, sizeof(dirname_buff), "%s%c%s", l_dirname_ptr,  G_DIR_SEPARATOR,  l_dp->d_name);
             break;
          }
          
@@ -923,21 +924,15 @@ int p_chk_framerange(t_anim_info *ainfo_ptr)
  */
 char * p_gzip (char *orig_name, char *new_name, char *zip)
 {
-  char*   l_cmd;
-  char*   l_tmpname;
-  int     l_rc, l_rc2;
+  gchar*   l_cmd;
+  gchar*   l_tmpname;
+  gint     l_rc, l_rc2;
 
   if(zip == NULL) return NULL;
   
   l_cmd = NULL;
   l_tmpname = new_name;
   
-  l_cmd = g_malloc((strlen(l_tmpname) + strlen(orig_name) + 20));
-  if(l_cmd == NULL)
-  {
-    return NULL;
-  }
-
   /* used gzip options:
    *     -c --stdout --to-stdout
    *          Write  output  on  standard  output
@@ -949,11 +944,11 @@ char * p_gzip (char *orig_name, char *new_name, char *zip)
 
   if(*zip == 'u')
   {
-    sprintf(l_cmd, "gzip -cfd <\"%s\"  >\"%s\"", orig_name, l_tmpname);
+    l_cmd = g_strdup_printf("gzip -cfd <\"%s\"  >\"%s\"", orig_name, l_tmpname);
   }
   else
   {
-    sprintf(l_cmd, "gzip -cf  <\"%s\"  >\"%s\"", orig_name, l_tmpname);
+    l_cmd = g_strdup_printf("gzip -cf  <\"%s\"  >\"%s\"", orig_name, l_tmpname);
   }
 
   if(gap_debug) fprintf(stderr, "system: %s\n", l_cmd);
@@ -999,8 +994,8 @@ int p_decide_save_as(gint32 image_id, char *sav_name)
   l_msg = _("You are using a file format != xcf\nSave Operations may result\nin loss of layer information");
   /* check if there are SAVE_AS_MODE settings (from privious calls within one gimp session) */
   l_save_as_mode = -1;
-  /* sprintf(l_save_as_name, "plug_in_gap_plugins_SAVE_AS_MODE_%d", (int)image_id);*/
-  sprintf(l_save_as_name, "plug_in_gap_plugins_SAVE_AS_MODE");
+  /* g_snprintf(l_save_as_name, sizeof(l_save_as_name), "plug_in_gap_plugins_SAVE_AS_MODE_%d", (int)image_id);*/
+  g_snprintf(l_save_as_name, sizeof(l_save_as_name), "plug_in_gap_plugins_SAVE_AS_MODE");
   gimp_get_data (l_save_as_name, &l_save_as_mode);
 
   if(l_save_as_mode == -1)
@@ -1146,12 +1141,7 @@ int p_save_named_frame(gint32 image_id, char *sav_name)
    * that resides on the same filesystem as sav_name
    * and has the same extension as the original sav_name 
    */
-  l_tmpname = (char *)g_malloc(strlen(sav_name) + strlen(".gtmp") + strlen(l_ext) +2);
-  if(l_tmpname == NULL)
-  {
-    return -1;
-  }
-  sprintf(l_tmpname, "%s.gtmp%s", sav_name, l_ext);
+  l_tmpname = g_strdup_printf("%s.gtmp%s", sav_name, l_ext);
   if(1 == p_file_exists(l_tmpname))
   {
       /* FILE exists: let gimp find another temp name */
@@ -1485,9 +1475,12 @@ int p_del(t_anim_info *ainfo_ptr, long cnt)
    {
      if(0 != p_rename_frame(ainfo_ptr, l_hi, l_lo))
      {
-        sprintf(g_errtxt, "Error: could not rename frame %ld to %ld\n"
+        gchar *tmp_errtxt;
+	
+        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld\n")
                , l_hi, l_lo);
-        p_msg_win(ainfo_ptr->run_mode, g_errtxt);
+        p_msg_win(ainfo_ptr->run_mode, tmp_errtxt);
+	g_free(tmp_errtxt);
         return -1;
      }
      l_lo++;
@@ -1598,12 +1591,13 @@ int p_dup(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
    l_lo   = ainfo_ptr->last_frame_nr;
    l_hi   = l_lo + l_cnt2;
    while(l_lo > l_src_nr_max)
-   {
-     sprintf(g_errtxt, "BEFORE rename frame %ld to %ld\n", l_lo, l_hi);
+   {     
      if(0 != p_rename_frame(ainfo_ptr, l_lo, l_hi))
      {
-        sprintf(g_errtxt, "Error: could not rename frame %ld to %ld\n", l_lo, l_hi);
-        p_msg_win(ainfo_ptr->run_mode, g_errtxt);
+        gchar *tmp_errtxt;
+        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld\n"), l_lo, l_hi);
+        p_msg_win(ainfo_ptr->run_mode, tmp_errtxt);
+	g_free(tmp_errtxt);
         return -1;
      }
      l_lo--;
@@ -1666,6 +1660,7 @@ int p_dup(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
 int p_exchg(t_anim_info *ainfo_ptr, long dest)
 {
    long  l_tmp_nr;
+   gchar *tmp_errtxt;
 
    l_tmp_nr = ainfo_ptr->last_frame_nr + 4;  /* use a free frame_nr for temp name */
 
@@ -1679,20 +1674,23 @@ int p_exchg(t_anim_info *ainfo_ptr, long dest)
    /* rename (renumber) frames */
    if(0 != p_rename_frame(ainfo_ptr, dest, l_tmp_nr))
    {
-        sprintf(g_errtxt, "Error: could not rename frame %ld to %ld\n", dest, l_tmp_nr);
-        p_msg_win(ainfo_ptr->run_mode, g_errtxt);
+        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld\n"), dest, l_tmp_nr);
+        p_msg_win(ainfo_ptr->run_mode, tmp_errtxt);
+	g_free(tmp_errtxt);
         return -1;
    }
    if(0 != p_rename_frame(ainfo_ptr, ainfo_ptr->curr_frame_nr, dest))
    {
-        sprintf(g_errtxt, "Error: could not rename frame %ld to %ld\n", ainfo_ptr->curr_frame_nr, dest);
-        p_msg_win(ainfo_ptr->run_mode, g_errtxt);
+        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld\n"), ainfo_ptr->curr_frame_nr, dest);
+        p_msg_win(ainfo_ptr->run_mode, tmp_errtxt);
+	g_free(tmp_errtxt);
         return -1;
    }
    if(0 != p_rename_frame(ainfo_ptr, l_tmp_nr, ainfo_ptr->curr_frame_nr))
    {
-        sprintf(g_errtxt, "Error: could not rename frame %ld to %ld\n", l_tmp_nr, ainfo_ptr->curr_frame_nr);
-        p_msg_win(ainfo_ptr->run_mode, g_errtxt);
+        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld\n"), l_tmp_nr, ainfo_ptr->curr_frame_nr);
+        p_msg_win(ainfo_ptr->run_mode, tmp_errtxt);
+	g_free(tmp_errtxt);
         return -1;
    }
 
@@ -1720,7 +1718,9 @@ p_shift(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
    long  l_lo, l_hi, l_curr, l_dst;
    long  l_upper;
    long  l_shift;
-   char  *l_curr_name;
+   gchar *l_curr_name;
+   gchar *tmp_errtxt;
+	
    gdouble    l_percentage, l_percentage_step;  
 
    if(gap_debug) fprintf(stderr, "DEBUG  p_shift fr:%d to:%d cnt:%d\n",
@@ -1771,8 +1771,9 @@ p_shift(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
    {
      if(0 != p_rename_frame(ainfo_ptr, l_curr, l_curr + l_upper))
      {
-        sprintf(g_errtxt, "Error: could not rename frame %ld to %ld\n", l_lo, l_hi);
-        p_msg_win(ainfo_ptr->run_mode, g_errtxt);
+        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld\n"), l_lo, l_hi);
+        p_msg_win(ainfo_ptr->run_mode, tmp_errtxt);
+	g_free(tmp_errtxt);
         return -1;
      }
      if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
@@ -1792,8 +1793,9 @@ p_shift(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
      if (l_dst > l_hi) { l_dst = l_lo; }
      if(0 != p_rename_frame(ainfo_ptr, l_curr, l_dst))
      {
-        sprintf(g_errtxt, "Error: could not rename frame %ld to %ld\n", l_lo, l_hi);
-        p_msg_win(ainfo_ptr->run_mode, g_errtxt);
+        tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld\n"), l_lo, l_hi);
+        p_msg_win(ainfo_ptr->run_mode, tmp_errtxt);
+	g_free(tmp_errtxt);
         return -1;
      }
      if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
@@ -2103,6 +2105,8 @@ int p_dup_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
   argv[2].int_min   = 0;
   argv[2].int_max   = 99;
   argv[2].int_ret   = 1;
+  argv[2].umin      = 0;
+  argv[2].umax      = 9999;
   argv[2].help_txt  = _("Copy selected Range n-times  \n(you may type in Values > 99)");
   
   if(TRUE == p_array_dialog(l_title, _("Duplicate Framerange"),  3, argv))
@@ -2274,7 +2278,7 @@ int p_shift_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
     
   p_init_arr_arg(&argv[2], WGT_INT_PAIR);
   argv[2].label_txt = _("N-Shift :");
-  argv[2].constraint = FALSE;
+  argv[2].constraint = TRUE;
   argv[2].int_min   = -1 * (gint)ainfo_ptr->last_frame_nr;
   argv[2].int_max   = (gint)ainfo_ptr->last_frame_nr;
   argv[2].int_ret   = 1;

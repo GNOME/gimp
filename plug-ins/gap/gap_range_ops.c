@@ -32,6 +32,7 @@
  */
 
 /* revision history
+ * 1.1.17b  2000/02/26   hof: bugfixes
  * 1.1.14a  2000/01/06   hof: gap_range_to_multilayer: use framerate (from video info file) in framenames
  *                            bugfix: gap_range_to_multilayer: first save current frame
  * 1.1.10a  1999/10/22   hof: bugfix: have to use the changed PDB-Interface
@@ -118,6 +119,8 @@ p_anim_sizechange_dialog(t_anim_info *ainfo_ptr, t_gap_asiz asiz_mode,
   argv[0].constraint = FALSE;
   argv[0].int_min   = 1;
   argv[0].int_max   = 1024;
+  argv[0].umin      = 1;
+  argv[0].umax      = 10000;
   argv[0].int_ret   = l_width;
   
   p_init_arr_arg(&argv[1], WGT_INT_PAIR);
@@ -125,6 +128,8 @@ p_anim_sizechange_dialog(t_anim_info *ainfo_ptr, t_gap_asiz asiz_mode,
   argv[1].constraint = FALSE;
   argv[1].int_min    = 1;
   argv[1].int_max    = 1024;
+  argv[1].umin       = 1;
+  argv[1].umax       = 10000;
   argv[1].int_ret   = l_height;
   
   p_init_arr_arg(&argv[2], WGT_INT_PAIR);
@@ -132,6 +137,8 @@ p_anim_sizechange_dialog(t_anim_info *ainfo_ptr, t_gap_asiz asiz_mode,
   argv[2].constraint = FALSE;
   argv[2].int_min    = 0;
   argv[2].int_max    = l_width;
+  argv[2].umin       = 0;
+  argv[2].umax       = 10000;
   argv[2].int_ret   = 0;
   
   p_init_arr_arg(&argv[3], WGT_INT_PAIR);
@@ -139,6 +146,8 @@ p_anim_sizechange_dialog(t_anim_info *ainfo_ptr, t_gap_asiz asiz_mode,
   argv[3].constraint = FALSE;
   argv[3].int_min    = 0;
   argv[3].int_max    = l_height;
+  argv[3].umin       = 0;
+  argv[3].umax       = 10000;
   argv[3].int_ret   = 0;
 
   switch(asiz_mode)
@@ -257,6 +266,8 @@ p_range_dialog(t_anim_info *ainfo_ptr,
   argv[2].constraint = FALSE;
   argv[2].int_min   = 0;
   argv[2].int_max   = 99;
+  argv[2].umin      = 0;
+  argv[2].umax      = 999999;
   argv[2].int_ret   = 0;
   
   if(0 != p_chk_framerange(ainfo_ptr))   return -1;
@@ -636,7 +647,7 @@ p_range_to_multilayer_dialog(t_anim_info *ainfo_ptr,
   argv[6].radio_ret  = 6;
 
   /* Layer select pattern string */
-  sprintf (sel_pattern, "0");
+  g_snprintf (sel_pattern, 2, "0");
   p_init_arr_arg(&argv[7], WGT_TEXT);
   argv[7].label_txt = _("Select Pattern:");
   argv[7].entry_width = 140;       /* pixel */
@@ -944,7 +955,7 @@ gint32 gap_range_to_multilayer(GRunModeType run_mode, gint32 image_id,
 	   if(vin_ptr->framerate > 0) l_framerate = vin_ptr->framerate;
 	   g_free(vin_ptr);
 	 }	 
-         sprintf(frame_basename, "frame_[####] (%dms)", (int)(1000/l_framerate));
+         g_snprintf(frame_basename, frame_basename_len, "frame_[####] (%dms)", (int)(1000/l_framerate));
          framerate = 0;
          l_rc = p_range_to_multilayer_dialog (ainfo_ptr, &l_from, &l_to,
                                 &flatten_mode, &bg_visible,

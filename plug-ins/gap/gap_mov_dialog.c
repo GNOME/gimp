@@ -30,6 +30,10 @@
  */
 
 /* revision history:
+ * gimp    1.1.17b; 2000/02/23  hof: bugfix: dont flatten the preview, just merge visible layers
+ *                                   bugfix: for current frame never use diskfile for the preview
+ *                                           (to avoid inconsitencies, and to speed up a little)
+ *                                   added "Show Path", pick and drag Controlpoints
  * gimp    1.1.17a; 2000/02/20  hof: use gimp_help_set_help_data for tooltips
  *                                   added spinbuttons, and more layout cosmetics.
  * gimp    1.1.15a; 2000/01/26  hof: removed gimp 1.0.x support
@@ -77,19 +81,21 @@
 
 extern      int gap_debug; /* ==0  ... dont print debug infos */
 
-#define POINT_FILE_MAXLEN 512
-
 #define ENTRY_WIDTH 60
 #define SCALE_WIDTH 125
 #define PREVIEW_SIZE 256
+#define RADIUS           3
 
-#define PREVIEW	  0x1
-#define CURSOR	  0x2
-#define ALL	  0xf
+#define PREVIEW	      0x1
+#define CURSOR        0x2
+#define PATH_LINE     0x4
+#define ALL	      0xf
 
+/*  event masks for the preview widget */
 #define PREVIEW_MASK   GDK_EXPOSURE_MASK | \
-		       GDK_BUTTON_PRESS_MASK | \
-		       GDK_BUTTON1_MOTION_MASK
+		       GDK_BUTTON_PRESS_MASK |\
+		       GDK_BUTTON_RELEASE_MASK |\
+		       GDK_BUTTON_MOTION_MASK
 
 
 #define LABEL_LENGTH 256
@@ -110,6 +116,10 @@ typedef struct
   gint		dwidth, dheight;
   gint		bpp;
   GtkWidget	*preview;
+  GPixelRgn	 src_rgn;
+  gint           PixelRgnIsInitialized;
+  gint           show_path;
+  gint           startup;
 
   gint		pwidth, pheight;
   gint		cursor;
@@ -155,7 +165,7 @@ struct _MenuItem
 {
   char *label;
   char  unused_accelerator_key;
-  int   unused_accelerator_mods;
+  gint  unused_accelerator_mods;
   MenuItemCallback callback;
   gpointer user_data;
   MenuItem *unused_subitems;
@@ -171,6 +181,7 @@ static void        p_update_point_labels    (t_mov_path_preview *path_ptr);
 static void        p_points_from_tab        (t_mov_path_preview *path_ptr);
 static void        p_points_to_tab          (t_mov_path_preview *path_ptr);
 static void        p_point_refresh          (t_mov_path_preview *path_ptr);
+static void        p_pick_nearest_point     (gint px, gint py);
 static void        p_reset_points           ();
 static void        p_clear_point            ();
 static void        p_load_points            (char *filename);
@@ -218,7 +229,8 @@ static void mov_imglayer_menu_callback  (gint32 id, gpointer data);
 static void mov_paintmode_menu_callback (GtkWidget *, gpointer);
 static void mov_handmode_menu_callback  (GtkWidget *, gpointer);
 static void mov_stepmode_menu_callback  (GtkWidget *, gpointer);
-static void mov_clip_to_img_callback    (GtkWidget *, gpointer);
+static void mov_gint_toggle_callback    (GtkWidget *, gpointer);
+static void mov_show_path_callback      (GtkWidget *, gpointer);
 
 
 /*  the option menu items -- the paint modes  */
@@ -290,17 +302,9 @@ long      p_move_dialog    (t_mov_data *mov_ptr)
   gint       l_first, l_last;  
   char      *l_str;
   t_mov_path_preview *path_ptr;
-  static char l_pointfile_name[POINT_FILE_MAXLEN];
 
 
   if(gap_debug) printf("GAP-DEBUG: START p_move_dialog\n");
-
-  l_pointfile_name[POINT_FILE_MAXLEN -1 ] = '\0';
-  l_str = p_strdup_del_underscore(mov_ptr->dst_ainfo_ptr->basename);
-  sprintf(l_pointfile_name, "%s.path_points", l_str);
-  g_free(l_str);
-
-  pvals = mov_ptr->val_ptr;
 
   path_ptr = g_new( t_mov_path_preview, 1 );
   if(path_ptr == NULL)
@@ -308,6 +312,16 @@ long      p_move_dialog    (t_mov_data *mov_ptr)
     printf("error cant alloc path_preview structure\n");
     return -1;
   }
+  path_ptr->show_path = TRUE;
+  path_ptr->startup = TRUE;
+  path_ptr->PixelRgnIsInitialized = FALSE;
+  
+  pvals = mov_ptr->val_ptr;
+
+  l_str = p_strdup_del_underscore(mov_ptr->dst_ainfo_ptr->basename);
+  path_ptr->pointfile_name  = g_strdup_printf("%s.path_points", l_str);
+  g_free(l_str);
+
   
   l_first = mov_ptr->dst_ainfo_ptr->first_frame_nr;
   l_last  = mov_ptr->dst_ainfo_ptr->last_frame_nr;
@@ -336,7 +350,6 @@ long      p_move_dialog    (t_mov_data *mov_ptr)
   path_ptr->preview_frame_nr     = mov_ptr->dst_ainfo_ptr->curr_frame_nr;
   path_ptr->old_preview_frame_nr = path_ptr->preview_frame_nr;
   path_ptr->PointIndex_LabelPtr = NULL;
-  path_ptr->pointfile_name    = l_pointfile_name;
   
   p_points_from_tab(path_ptr);
   p_update_point_labels(path_ptr);
@@ -558,8 +571,8 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   /* toggle clip_to_image */
   check_button = gtk_check_button_new_with_label ( _("Clip To Frame"));
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
-                      (GtkSignalFunc) mov_clip_to_img_callback,
-                       path_ptr);
+                      (GtkSignalFunc) mov_gint_toggle_callback,
+                       &pvals->clip_to_img);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button), pvals->clip_to_img);
   gimp_help_set_help_data(check_button,
                        _("Clip all copied Src-Layers\nat Frame Boundaries")
@@ -570,6 +583,8 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_widget_show (frame);
   gtk_widget_show (table);
   gtk_widget_show (dlg);
+
+  path_ptr->startup = FALSE;
 
   gtk_main ();
   gdk_flush ();
@@ -647,8 +662,15 @@ mov_upvw_callback (GtkWidget *widget,
                                 path_ptr->ainfo_ptr->extension);
      if(l_filename != NULL)
      {
-        /* replace the temporary image */        
-        l_new_tmp_image_id = p_load_image(l_filename);
+        /* replace the temporary image */
+        if(path_ptr->preview_frame_nr  == path_ptr->ainfo_ptr->curr_frame_nr)
+        {
+          l_new_tmp_image_id = p_gimp_channel_ops_duplicate(path_ptr->ainfo_ptr->image_id);
+        }
+        else
+        {
+           l_new_tmp_image_id = p_load_image(l_filename);
+        }
         g_free(l_filename);
         if (l_new_tmp_image_id >= 0)
         {
@@ -666,6 +688,7 @@ mov_upvw_callback (GtkWidget *widget,
            path_ptr->old_preview_frame_nr = path_ptr->preview_frame_nr;
 
            gtk_widget_draw(path_ptr->preview, NULL);
+	   mov_path_prevw_draw ( path_ptr, CURSOR | PATH_LINE );
            gdk_flush();  
 
            /* destroy the old tmp image */
@@ -936,13 +959,14 @@ p_points_load_from_file (GtkWidget *widget,
 		      gpointer	 data)
 {
   t_mov_path_preview *path_ptr = data;
-  char	    *filename;
+  gchar	    *filename;
   
   if(gap_debug) printf("p_points_load_from_file\n");
   if(path_ptr->filesel == NULL) return;
   
   filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (path_ptr->filesel));
-  strncpy(path_ptr->pointfile_name, filename, POINT_FILE_MAXLEN -1);
+  g_free(path_ptr->pointfile_name);
+  path_ptr->pointfile_name = g_strdup(filename);
 
   if(gap_debug) printf("p_points_load_from_file %s\n", path_ptr->pointfile_name);
 
@@ -965,7 +989,8 @@ p_points_save_to_file (GtkWidget *widget,
   if(path_ptr->filesel == NULL) return;
   
   filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (path_ptr->filesel));
-  strncpy(path_ptr->pointfile_name, filename, POINT_FILE_MAXLEN -1);
+  g_free(path_ptr->pointfile_name);
+  path_ptr->pointfile_name = g_strdup(filename);
 
   if(gap_debug) printf("p_points_save_to_file %s\n", path_ptr->pointfile_name);
 
@@ -978,7 +1003,8 @@ p_points_save_to_file (GtkWidget *widget,
 }
 
 
-static void p_point_refresh(t_mov_path_preview *path_ptr)
+static void
+p_point_refresh(t_mov_path_preview *path_ptr)
 {
   p_points_from_tab(path_ptr);
   p_update_point_labels(path_ptr);
@@ -987,26 +1013,69 @@ static void p_point_refresh(t_mov_path_preview *path_ptr)
   if( !path_ptr->in_call )
   {
       mov_path_prevw_cursor_update( path_ptr );
-      mov_path_prevw_draw ( path_ptr, CURSOR );
-
-      path_ptr->in_call = TRUE;
-
-      gtk_adjustment_set_value (path_ptr->x_adj,
-				(gfloat)path_ptr->p_x);
-      gtk_adjustment_set_value (path_ptr->y_adj,
-				(gfloat)path_ptr->p_y);    
-      gtk_adjustment_set_value (path_ptr->wres_adj,
-				(gfloat)path_ptr->w_resize);
-      gtk_adjustment_set_value (path_ptr->hres_adj,
-				(gfloat)path_ptr->h_resize);
-      gtk_adjustment_set_value (path_ptr->opacity_adj,
-				(gfloat)path_ptr->opacity);
-      gtk_adjustment_set_value (path_ptr->rotation_adj,
-				(gfloat)path_ptr->rotation);
-      
-      path_ptr->in_call = FALSE;
+      mov_path_prevw_draw ( path_ptr, CURSOR | PATH_LINE );
   }
+  path_ptr->in_call = TRUE;
+
+  gtk_adjustment_set_value (path_ptr->x_adj,
+			    (gfloat)path_ptr->p_x);
+  gtk_adjustment_set_value (path_ptr->y_adj,
+			    (gfloat)path_ptr->p_y);    
+  gtk_adjustment_set_value (path_ptr->wres_adj,
+			    (gfloat)path_ptr->w_resize);
+  gtk_adjustment_set_value (path_ptr->hres_adj,
+			    (gfloat)path_ptr->h_resize);
+  gtk_adjustment_set_value (path_ptr->opacity_adj,
+			    (gfloat)path_ptr->opacity);
+  gtk_adjustment_set_value (path_ptr->rotation_adj,
+			    (gfloat)path_ptr->rotation);
+  path_ptr->in_call = FALSE;
 }	/* end p_point_refresh */
+
+static void
+p_pick_nearest_point(gint px, gint py)
+{
+  gint l_idx;
+  gint l_idx_min;
+  gdouble l_sq_dist;
+  gdouble l_dx, l_dy;
+  gdouble l_sq_dist_min;
+  
+  l_idx_min = 0;
+  l_sq_dist_min = G_MAXDOUBLE;
+
+  if(gap_debug) printf("\np_pick_nearest_point: near to %4d %4d\n", (int)px, (int)py);
+
+  for(l_idx = pvals->point_idx_max; l_idx >= 0; l_idx--)
+  {
+    /* calculate x and y distance */
+    l_dx = pvals->point[l_idx].p_x - px;
+    l_dy = pvals->point[l_idx].p_y - py;
+    
+    /* calculate square of the distance */
+    l_sq_dist = (l_dx * l_dx) + (l_dy * l_dy);
+    if(l_sq_dist < l_sq_dist_min)
+    {
+      l_sq_dist_min = l_sq_dist;
+      l_idx_min = l_idx;
+    }
+
+    if(gap_debug)
+    {
+       printf("  [%2d] %4d %4d %f\n",
+             (int)l_idx, 
+             (int)pvals->point[l_idx].p_x,
+             (int)pvals->point[l_idx].p_y,
+             (float)l_sq_dist
+             );
+    }
+  }
+  if(gap_debug) printf("p_pick_nearest_point: selected %d\n", (int)l_idx_min);
+     
+  pvals->point_idx = l_idx_min;
+  pvals->point[pvals->point_idx].p_x = px;
+  pvals->point[pvals->point_idx].p_y = py;
+}	/* end p_pick_nearest_point */
 
 
 
@@ -1055,32 +1124,55 @@ mov_imglayer_constrain(gint32 image_id, gint32 drawable_id, gpointer data)
 static void
 mov_paintmode_menu_callback (GtkWidget *w,  gpointer   client_data)
 {
-  pvals->src_paintmode = (int)client_data;
+  pvals->src_paintmode = (gint)client_data;
 }
 
 static void
 mov_handmode_menu_callback (GtkWidget *w,  gpointer   client_data)
 {
-  pvals->src_handle = (int)client_data;
+  pvals->src_handle = (gint)client_data;
 }
 
 static void
 mov_stepmode_menu_callback (GtkWidget *w, gpointer   client_data)
 {
-  pvals->src_stepmode = (int)client_data;
+  pvals->src_stepmode = (gint)client_data;
 }
 
 static void
-mov_clip_to_img_callback(GtkWidget *w, gpointer   client_data)
+mov_gint_toggle_callback(GtkWidget *w, gpointer   client_data)
 {
+  gint *data;
+  
+  data = (gint*)client_data;
+  
   if (GTK_TOGGLE_BUTTON (w)->active)
   {
-    pvals->clip_to_img = 1;
+    *data = 1;
   }
   else
   {
-    pvals->clip_to_img = 0;
+    *data = 0;
   }
+}
+
+static void
+mov_show_path_callback(GtkWidget *widget, gpointer   client_data)
+{
+  t_mov_path_preview *path_ptr;
+  
+  path_ptr = (t_mov_path_preview *)client_data;
+  mov_gint_toggle_callback(widget, &path_ptr->show_path);
+
+  if(path_ptr == NULL) return;
+  if(path_ptr->startup) return;
+  if(path_ptr->preview == NULL) return;
+  if(path_ptr->drawable == NULL) return;
+  
+  p_point_refresh(path_ptr);
+  mov_path_prevw_draw ( path_ptr, CURSOR | PATH_LINE );
+  gtk_widget_draw(path_ptr->preview, NULL);
+  gdk_flush();  
 }
 
 /* ============================================================================
@@ -1109,9 +1201,10 @@ p_points_to_tab(t_mov_path_preview *path_ptr)
   pvals->point[pvals->point_idx].rotation  = path_ptr->rotation;
 }
 
-void p_update_point_labels(t_mov_path_preview *path_ptr)
+void
+p_update_point_labels(t_mov_path_preview *path_ptr)
 { 
-  g_snprintf (&path_ptr->PointIndex_Label[0], LABEL_LENGTH, _("Current Point: [ %d ] of [ %d ]"), 
+  g_snprintf (&path_ptr->PointIndex_Label[0], LABEL_LENGTH, _("Current Point: [ %3d ] of [ %3d ]"), 
 	      pvals->point_idx + 1, pvals->point_idx_max +1);
 
   if(NULL != path_ptr->PointIndex_LabelPtr)
@@ -1128,13 +1221,11 @@ void p_update_point_labels(t_mov_path_preview *path_ptr)
  */
 void p_clear_point()
 {
-  int l_idx;
+  gint l_idx;
   
   l_idx = pvals->point_idx; 
   if((l_idx >= 0) && (l_idx <= pvals->point_idx_max))
   {
-    pvals->point[l_idx].p_x = 0;
-    pvals->point[l_idx].p_y = 0;
     pvals->point[l_idx].opacity  = 100; /* 100 percent (no transparecy) */
     pvals->point[l_idx].w_resize = 100; /* 100%  no resizize (1:1) */
     pvals->point[l_idx].h_resize = 100; /* 100%  no resizize (1:1) */
@@ -1147,6 +1238,8 @@ void p_reset_points()
   pvals->point_idx = 0;        /* 0 == current point */
   pvals->point_idx_max = 0;    /* 0 == there is only one valid point */
   p_clear_point();
+  pvals->point[0].p_x = 0;
+  pvals->point[0].p_y = 0;
 }	/* end p_reset_points */
 
 /* ============================================================================
@@ -1161,11 +1254,11 @@ void p_load_points(char *filename)
 #define POINT_REC_MAX 128
 
   FILE *l_fp;
-  int   l_idx;
+  gint   l_idx;
   char  l_buff[POINT_REC_MAX +1 ];
   char *l_ptr;
-  int   l_cnt;
-  int   l_v1, l_v2, l_v3, l_v4, l_v5, l_v6;
+  gint   l_cnt;
+  gint   l_v1, l_v2, l_v3, l_v4, l_v5, l_v6;
 
   if(filename == NULL) return;
   
@@ -1225,7 +1318,7 @@ void p_load_points(char *filename)
 void p_save_points(char *filename)
 {
   FILE *l_fp;
-  int l_idx;
+  gint l_idx;
   
   if(filename == NULL) return;
   
@@ -1271,7 +1364,7 @@ mov_src_sel_create()
   GtkWidget  *option_menu;
   GtkWidget  *menu;
   GtkWidget  *label;
-  int gettextize_loop;
+  gint gettextize_loop;
 
 
   frame = gtk_frame_new ( _("Source Select") );
@@ -1417,6 +1510,7 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
   GtkWidget      *button_table;
   GtkWidget      *pv_table;
   GtkWidget      *button;
+  GtkWidget      *check_button;
   GtkObject      *adj;
   gint           row;
 
@@ -1618,8 +1712,8 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
   /* the PointIndex label */
   label = gtk_label_new ( &path_ptr->PointIndex_Label[0] );  /* "Current Point: 1" */
   gtk_misc_set_alignment( GTK_MISC(label), 0.0, 0.5 );
-  gtk_table_attach( GTK_TABLE(button_table), label, 0, 1, row, row+1,
-		    0, 0, 0, 0 );
+  gtk_table_attach( GTK_TABLE(button_table), label, 0, 2, row, row+1,
+		    GTK_FILL, 0, 4, 0 );
   gtk_widget_show(label);
   path_ptr->PointIndex_LabelPtr = label;  /* store label ptr for later update */
 
@@ -1636,6 +1730,21 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
                        _("Add Controlpoint at end        \n(the last Point is duplicated)")
                        , NULL);
   gtk_widget_show (button);
+
+  /* toggle clip_to_image */
+  check_button = gtk_check_button_new_with_label ( _("Show Path"));
+  gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
+                      (GtkSignalFunc) mov_show_path_callback,
+                       path_ptr);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button), path_ptr->show_path);
+  gimp_help_set_help_data(check_button,
+                       _("Show Path Lines and enable\n"
+                         "pick/drag with left button\n"
+                         "or move with right button")
+                       , NULL);
+  gtk_widget_show (check_button);
+  gtk_table_attach(GTK_TABLE(button_table), check_button, 1, 2, row, row+1,
+                   0, 0, 0, 0);
 
   row++;
 
@@ -1801,23 +1910,14 @@ static void render_preview ( GtkWidget *preview, GPixelRgn *srcrgn );
  *    Draw the contents into the internal buffer of the preview widget
  * ============================================================================
  */
+
 static void
 mov_path_prevw_preview_init ( t_mov_path_preview *path_ptr )
 {
-  GtkWidget	 *preview;
-  GPixelRgn	 src_rgn;
-  gint		 dwidth, dheight, pwidth, pheight, bpp;
-
-  preview = path_ptr->preview;
-  dwidth = path_ptr->dwidth;
-  dheight = path_ptr->dheight;
-  pwidth = path_ptr->pwidth;
-  pheight = path_ptr->pheight;
-  bpp = path_ptr->bpp;
-
-  gimp_pixel_rgn_init ( &src_rgn, path_ptr->drawable, 0, 0,
+  gimp_pixel_rgn_init ( &path_ptr->src_rgn, path_ptr->drawable, 0, 0,
 			path_ptr->dwidth, path_ptr->dheight, FALSE, FALSE );
-  render_preview( path_ptr->preview, &src_rgn );
+  path_ptr->PixelRgnIsInitialized = TRUE;
+  render_preview( path_ptr->preview, &path_ptr->src_rgn );
 }
 
 
@@ -1827,7 +1927,7 @@ mov_path_prevw_preview_init ( t_mov_path_preview *path_ptr )
  * ============================================================================
  */
 
-#define CHECKWIDTH 4
+#define CHECKWIDTH 8
 #define LIGHTCHECK 192
 #define DARKCHECK  128
 #ifndef OPAQUE
@@ -1921,7 +2021,7 @@ render_preview ( GtkWidget *preview, GPixelRgn *srcrgn )
 /* ============================================================================
  * mov_path_prevw_draw
  *   Preview Rendering Util routine End
- *     if update & PREVIEW, draw preview
+ *     if update & PATH_LINE, draw the path lines
  *     if update & CURSOR,  draw cross cursor
  * ============================================================================
  */
@@ -1929,11 +2029,66 @@ render_preview ( GtkWidget *preview, GPixelRgn *srcrgn )
 static void
 mov_path_prevw_draw ( t_mov_path_preview *path_ptr, gint update )
 {
+  gint l_idx;
+  GdkColor fg;
+  guchar l_red, l_green, l_blue;
+
   if( update & PREVIEW )
     {
       path_ptr->cursor = FALSE;
       if(gap_debug) printf("draw-preview\n");
     }
+
+
+  /* alternate cross cursor OR path graph */
+
+  if((path_ptr->show_path)
+  && ( pvals != NULL )
+  && (update & PATH_LINE))
+    {
+      if(gap_debug) printf("draw-preview re-render for PATH draw\n");
+      if((path_ptr->PixelRgnIsInitialized)
+      && (path_ptr->preview))
+      {
+         /* redraw the preview
+          * (to clear path lines and cross cursor)
+          */
+         gtk_widget_draw(path_ptr->preview, NULL);
+      }
+ 
+      gimp_palette_get_foreground(&l_red, &l_green, &l_blue);
+      fg.pixel = gdk_rgb_xpixel_from_rgb ((l_red << 16) | (l_green << 8) | l_blue);
+        
+      gdk_gc_set_foreground (path_ptr->preview->style->black_gc, &fg);
+
+      p_points_to_tab(path_ptr);
+      for(l_idx = 0; l_idx < pvals->point_idx_max; l_idx++)
+        {
+           /* draw the path line(s) */
+	   gdk_draw_line (path_ptr->preview->window,
+			  path_ptr->preview->style->black_gc,
+			  (pvals->point[l_idx].p_x    * path_ptr->pwidth) / path_ptr->dwidth,
+			  (pvals->point[l_idx].p_y    * path_ptr->pheight) / path_ptr->dheight, 
+			  (pvals->point[l_idx +1].p_x * path_ptr->pwidth) / path_ptr->dwidth,
+			  (pvals->point[l_idx +1].p_y * path_ptr->pheight) / path_ptr->dheight
+			  );
+           /* draw the path point(s) */
+	   gdk_draw_arc (path_ptr->preview->window, path_ptr->preview->style->black_gc, TRUE,
+			    (pvals->point[l_idx +1].p_x  * path_ptr->pwidth / path_ptr->dwidth) -RADIUS,
+			    (pvals->point[l_idx +1].p_y  * path_ptr->pheight / path_ptr->dheight) -RADIUS,
+			    RADIUS * 2, RADIUS * 2, 0, 23040);
+        }
+        /* draw the start point */
+	gdk_draw_arc (path_ptr->preview->window, path_ptr->preview->style->black_gc, TRUE,
+		     (pvals->point[0].p_x * path_ptr->pwidth / path_ptr->dwidth) -RADIUS,
+		     (pvals->point[0].p_y * path_ptr->pheight / path_ptr->dheight) -RADIUS,
+		     RADIUS * 2, RADIUS * 2, 0, 23040);
+
+        /* restore black gc */
+        fg.pixel = gdk_rgb_xpixel_from_rgb (0);
+        gdk_gc_set_foreground (path_ptr->preview->style->black_gc, &fg);
+    }
+
 
   if( update & CURSOR )
     {
@@ -1985,7 +2140,7 @@ mov_path_x_adjustment_update( GtkWidget *widget,
       if( !path_ptr->in_call )
       {
 	  mov_path_prevw_cursor_update( path_ptr );
-	  mov_path_prevw_draw ( path_ptr, CURSOR );
+	  mov_path_prevw_draw ( path_ptr, CURSOR | PATH_LINE );
       }
   }
 }
@@ -2006,7 +2161,7 @@ mov_path_y_adjustment_update( GtkWidget *widget,
       if( !path_ptr->in_call )
       {
 	  mov_path_prevw_cursor_update( path_ptr );
-	  mov_path_prevw_draw ( path_ptr, CURSOR );
+	  mov_path_prevw_draw ( path_ptr, CURSOR | PATH_LINE );
       }
   }
 }
@@ -2042,7 +2197,16 @@ mov_path_prevw_preview_expose( GtkWidget *widget,
   t_mov_path_preview *path_ptr;
 
   path_ptr = gtk_object_get_user_data( GTK_OBJECT(widget) );
+
+  if((!path_ptr->PixelRgnIsInitialized)
+  || (path_ptr->in_call))
+    {
+       return FALSE;
+    }
+
+  path_ptr->in_call = TRUE;
   mov_path_prevw_draw( path_ptr, ALL );
+  path_ptr->in_call = FALSE;
   return FALSE;
 }
 
@@ -2058,18 +2222,39 @@ mov_path_prevw_preview_events ( GtkWidget *widget,
   t_mov_path_preview *path_ptr;
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
+  gint upd_flag;
+  gint mouse_button;
 
   path_ptr = gtk_object_get_user_data ( GTK_OBJECT(widget) );
 
+ /* HINT:
+  * smooth update of both CURSOR and PATH_LINE
+  * on every mousemove works fine on machines with 300MHz.
+  * for slower machines it is better to paint just the cross cursor,
+  * and refresh the path lines only at
+  * button press and release events
+  */
+  /* upd_flag = CURSOR | PATH_LINE; */
+  upd_flag = CURSOR;
+       
+  mouse_button = 0;
+  
   switch (event->type)
     {
     case GDK_EXPOSE:
       break;
 
+    case GDK_BUTTON_RELEASE:
+      bevent = (GdkEventButton *) event;
+      mouse_button = 0 - bevent->button;
+      goto mbuttons;
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
+      mouse_button = bevent->button;
+    mbuttons:
       path_ptr->curx = bevent->x;
       path_ptr->cury = bevent->y;
+      upd_flag = CURSOR | PATH_LINE;    
       goto mouse;
 
     case GDK_MOTION_NOTIFY:
@@ -2078,11 +2263,28 @@ mov_path_prevw_preview_events ( GtkWidget *widget,
       path_ptr->curx = mevent->x;
       path_ptr->cury = mevent->y;
     mouse:
-      mov_path_prevw_draw( path_ptr, CURSOR );
+      if((mouse_button == 1)
+      && (path_ptr->show_path))
+      {
+         /* Picking of pathpoints is done only if
+          *   the left mousebutton goes down (mouse_button == 1)
+          *   and only if Path is visible
+          */
+         p_points_to_tab(path_ptr);
+         path_ptr->p_x = path_ptr->curx * path_ptr->dwidth / path_ptr->pwidth;     
+         path_ptr->p_y = path_ptr->cury * path_ptr->dheight / path_ptr->pheight;
+         p_pick_nearest_point(path_ptr->p_x, path_ptr->p_y);
+         p_point_refresh(path_ptr);
+      }
+      else
+      {
+         path_ptr->p_x = path_ptr->curx * path_ptr->dwidth / path_ptr->pwidth;     
+         path_ptr->p_y = path_ptr->cury * path_ptr->dheight / path_ptr->pheight;
+         p_points_to_tab(path_ptr);
+         mov_path_prevw_cursor_update( path_ptr );
+      }
+      mov_path_prevw_draw( path_ptr, upd_flag);
       path_ptr->in_call = TRUE;
- 
-      path_ptr->p_x = path_ptr->curx * path_ptr->dwidth / path_ptr->pwidth;     
-      path_ptr->p_y = path_ptr->cury * path_ptr->dheight / path_ptr->pheight;
       gtk_adjustment_set_value (path_ptr->x_adj,
 				(gfloat)path_ptr->p_x);
       gtk_adjustment_set_value (path_ptr->y_adj,
@@ -2108,18 +2310,34 @@ GDrawable *
 p_get_flattened_drawable(gint32 image_id)
 {
   GDrawable *l_drawable_ptr ;
-  gint       l_nlayers;
-  gint32    *l_layers_list;
+  GImageType l_type;
+  guint   l_width, l_height;
+  gint32  l_layer_id;
+ 
+  /* get info about the image */
+  l_width  = gimp_image_width(image_id);
+  l_height = gimp_image_height(image_id);
+  l_type   = gimp_image_base_type(image_id);
 
-  gimp_image_flatten (image_id);
-  
-  /* get a list of layers for this image_ID */
-  l_layers_list = gimp_image_get_layers (image_id, &l_nlayers);
-  /* use top layer for preview (should be the onnly layer after flatten) */  
-  l_drawable_ptr = gimp_drawable_get (l_layers_list[0]);
+  l_type   = (l_type * 2); /* convert from GImageType to GDrawableType */
 
-  g_free (l_layers_list);
-  
+  /* add 2 full transparent dummy layers at top
+   * (because gimp_image_merge_visible_layers complains
+   * if there are less than 2 visible layers)
+   */
+  l_layer_id = gimp_layer_new(image_id, "dummy",
+                                 l_width, l_height,  l_type,
+                                 0.0,       /* Opacity full transparent */     
+                                 0);        /* NORMAL */
+  gimp_image_add_layer(image_id, l_layer_id, 0);
+
+  l_layer_id = gimp_layer_new(image_id, "dummy",
+                                 10, 10,  l_type,
+                                 0.0,       /* Opacity full transparent */     
+                                 0);        /* NORMAL */
+  gimp_image_add_layer(image_id, l_layer_id, 0);
+
+  l_drawable_ptr = gimp_drawable_get (gimp_image_merge_visible_layers (image_id, GIMP_CLIP_TO_IMAGE));
   return l_drawable_ptr;
 }	/* end p_get_flattened_drawable */
 
@@ -2133,10 +2351,11 @@ p_get_flattened_drawable(gint32 image_id)
  * ============================================================================
  */
 
-GDrawable * p_get_prevw_drawable (t_mov_path_preview *path_ptr)
+GDrawable * 
+p_get_prevw_drawable (t_mov_path_preview *path_ptr)
 {
   t_mov_current l_curr;
-  int      l_nlayers;
+  gint      l_nlayers;
  
 
   /* check if we have a source layer (to add to the preview) */
@@ -2246,7 +2465,8 @@ void p_set_handle_offsets(t_mov_values *val_ptr, t_mov_current *cur_ptr)
    *    use my 'private' version of layercopy
    */
 
-int p_mov_render(gint32 image_id, t_mov_values *val_ptr, t_mov_current *cur_ptr)
+gint
+p_mov_render(gint32 image_id, t_mov_values *val_ptr, t_mov_current *cur_ptr)
 {
   gint32       l_cp_layer_id;
   gint32       l_cp_layer_mask_id;
@@ -2258,7 +2478,7 @@ int p_mov_render(gint32 image_id, t_mov_values *val_ptr, t_mov_current *cur_ptr)
   guint        l_orig_height;
   gint         l_resized_flag;
   gint32       l_interpolation;   
-  int          lx1, ly1, lx2, ly2;
+  gint          lx1, ly1, lx2, ly2;
   guint        l_image_width;
   guint        l_image_height;
  

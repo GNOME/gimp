@@ -40,6 +40,7 @@
  */
 
 /* revision history:
+ * gimp    1.1.17b; 2000/01/26  hof: 
  * version 0.96.03; 1998/08/15  hof: p_arr_gtk_init 
  * version 0.96.00; 1998/07/09  hof: 1.st release 
  *                                   (re-implementation of gap_sld_dialog.c)
@@ -64,7 +65,9 @@ typedef enum
   ,WGT_FLT_PAIR   
   ,WGT_INT_PAIR   
   ,WGT_ACT_BUTTON 
-  ,WGT_FILESEL 
+  ,WGT_FILESEL
+  ,WGT_LABEL_LEFT
+  ,WGT_LABEL_RIGHT
 } t_gap_widget;
 
 typedef int (*t_action_func) ( gpointer action_data);
@@ -86,22 +89,26 @@ typedef struct {
   gint     has_default;  /* TRUE: default value available */
   
   /* flt_ fileds are used for WGT_FLT and WGT_FLT_PAIR */
-  char    *flt_format;    /* NULL or something like "%0.2f" */
+  gint     flt_digits;    /* digits behind comma */
   gdouble  flt_min;
   gdouble  flt_max;
   gdouble  flt_step;
   gdouble  flt_default;
   gdouble  flt_ret;
-  gdouble  flt_ret_lim;
   
   /* int_ fileds are used for WGT_INT and WGT_INT_PAIR WGT_TOGGLE */
-  char    *int_format;    /* NULL or something like "%d" */
   gint     int_min;
   gint     int_max;
   gint     int_step;
   gint     int_default;
   gint     int_ret;
   gint     int_ret_lim;  /* for private (arr_dialog.c) use only */
+
+  /* uncontraint lower /upper limit for WGT_FLT_PAIR and WGT_INT_PAIR */
+  gfloat   umin;
+  gfloat   umax;
+  gfloat   pagestep;
+
 
   /* togg_ field are used for WGT_TOGGLE */
   char    *togg_label;    /* extra label attached right to toggle button */

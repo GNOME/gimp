@@ -14,7 +14,7 @@ gint p_plug_in_papertile_iter_ALT(GRunModeType run_mode, gint32 total_steps, gdo
       long      centering;
       long      wrap_around;
       long      background_type;
-      gdouble   background_color[4];
+      guchar    background_color[4];
     } t_plug_in_papertile_Vals;
     int l_idx;
 
@@ -45,7 +45,7 @@ gint p_plug_in_papertile_iter_ALT(GRunModeType run_mode, gint32 total_steps, gdo
 
     for(l_idx=0; l_idx < 4; l_idx++)
     {
-      p_delta_gdouble(&buf.background_color[l_idx], buf_from->background_color[l_idx], buf_to->background_color[l_idx], total_steps, current_step);
+      p_delta_guchar(&buf.background_color[l_idx], buf_from->background_color[l_idx], buf_to->background_color[l_idx], total_steps, current_step);
     }
 
     gimp_set_data("plug_in_papertile", &buf, sizeof(buf)); 

@@ -64,6 +64,7 @@
  */
 
 /* Change Log:
+ * version gimp 1.1.17b  2000.02.22  hof: - removed limit PLUGIN_DATA_SIZE
  * 1999.11.16 hof: added p_delta_gintdrawable
  * 1999.06.21 hof: removed Colorify iterator
  * 1999.03.14 hof: added iterators for gimp 1.1.3 prerelease
@@ -93,13 +94,28 @@
 #include "gap_filter_iterators.h"
 
 
-static char g_plugin_data_from[PLUGIN_DATA_SIZE + 1];
-static char g_plugin_data_to[PLUGIN_DATA_SIZE + 1];
-
-
-
+static gchar *g_plugin_data_from = NULL;
+static gchar *g_plugin_data_to = NULL;
 
 extern int gap_debug;
+
+static gchar *
+p_alloc_plugin_data(char *key)
+{
+   int l_len;
+   gchar *l_plugin_data;
+   
+   l_len = gimp_get_data_size (key);
+   if(l_len < 1)
+   {
+      fprintf(stderr, "ERROR: no stored data found for Key %s\n", key);
+      return NULL;
+   }
+   l_plugin_data = g_malloc0(l_len+1);
+
+   if(gap_debug) printf("DEBUG  Key:%s  plugin_data length %d\n", key, (int)l_len);
+   return (l_plugin_data);
+}
 
 typedef struct {
 	guchar color[3];
@@ -125,7 +141,7 @@ static void p_delta_long(long *val, long val_from, long val_to, gint32 total_ste
     delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
     *val  = val_from + delta; 
 
-    if(gap_debug) fprintf(stderr, "DEBUG: p_delta_long from: %ld to: %ld curr: %ld    delta: %f\n",
+    if(gap_debug) printf("DEBUG: p_delta_long from: %ld to: %ld curr: %ld    delta: %f\n",
                                   val_from, val_to, *val, delta);
 }
 static void p_delta_short(short *val, short val_from, short val_to, gint32 total_steps, gdouble current_step)
@@ -182,7 +198,7 @@ static void p_delta_gdouble(double *val, double val_from, double val_to, gint32 
    delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
    *val  = val_from + delta;
     
-   if(gap_debug) fprintf(stderr, "DEBUG: p_delta_gdouble total: %d  from: %f to: %f curr: %f    delta: %f\n",
+   if(gap_debug) printf("DEBUG: p_delta_gdouble total: %d  from: %f to: %f curr: %f    delta: %f\n",
                                   (int)total_steps, val_from, val_to, *val, delta);
 }
 static void p_delta_gfloat(gfloat *val, gfloat val_from, gfloat val_to, gint32 total_steps, gdouble current_step)
@@ -194,7 +210,7 @@ static void p_delta_gfloat(gfloat *val, gfloat val_from, gfloat val_to, gint32 t
     delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
     *val  = val_from + delta;
      
-    if(gap_debug) fprintf(stderr, "DEBUG: p_delta_gfloat total: %d  from: %f to: %f curr: %f    delta: %f\n",
+    if(gap_debug) printf("DEBUG: p_delta_gfloat total: %d  from: %f to: %f curr: %f    delta: %f\n",
                                    (int)total_steps, val_from, val_to, *val, delta);
 }
 
@@ -207,7 +223,7 @@ static void p_delta_float(float *val, float val_from, float val_to, gint32 total
     delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
     *val  = val_from + delta;
     
-    if(gap_debug) fprintf(stderr, "DEBUG: p_delta_gdouble total: %d  from: %f to: %f curr: %f    delta: %f\n",
+    if(gap_debug) printf("DEBUG: p_delta_gdouble total: %d  from: %f to: %f curr: %f    delta: %f\n",
                                   (int)total_steps, val_from, val_to, *val, delta);
 }
 static void p_delta_color(t_color *val, t_color *val_from, t_color *val_to, gint32 total_steps, gdouble current_step)
@@ -222,7 +238,7 @@ static void p_delta_color(t_color *val, t_color *val_from, t_color *val_to, gint
        delta = ((double)(val_to->color[l_idx] - val_from->color[l_idx]) / (double)total_steps) * ((double)total_steps - current_step);
        val->color[l_idx]  = val_from->color[l_idx] + delta; 
 
-       if(gap_debug) fprintf(stderr, "DEBUG: p_delta_color[%d] total: %d  from: %d to: %d curr: %d    delta: %f  current_step: %f\n",
+       if(gap_debug) printf("DEBUG: p_delta_color[%d] total: %d  from: %d to: %d curr: %d    delta: %f  current_step: %f\n",
                                   (int)l_idx, (int)total_steps, 
                                   (int)val_from->color[l_idx], (int)val_to->color[l_idx], (int)val->color[l_idx],
                                   delta, current_step);
@@ -639,8 +655,8 @@ static t_iter_ALT_tab   g_iter_ALT_tab[] =
 
 static void p_install_proc_iter_ALT(char *name)
 {
-  char l_iter_proc_name[256];
-  char l_blurb_text[300];
+  gchar *l_iter_proc_name;
+  gchar *l_blurb_text;
 
   static GParamDef args_iter[] =
   {
@@ -654,21 +670,23 @@ static void p_install_proc_iter_ALT(char *name)
   static GParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
 
-  sprintf(l_iter_proc_name, "%s_Iterator_ALT", name);
-  sprintf(l_blurb_text, "This extension calculates the modified values for one iterationstep for the call of %s", name);
+  l_iter_proc_name = g_strdup_printf("%s_Iterator_ALT", name);
+  l_blurb_text = g_strdup_printf("This extension calculates the modified values for one iterationstep for the call of %s", name);
   
   gimp_install_procedure(l_iter_proc_name,
 			 l_blurb_text,
 			 "",
 			 "Wolfgang Hofer",
 			 "Wolfgang Hofer",
-			 "Dec. 1997",
+			 "Feb. 2000",
 			 NULL,    /* do not appear in menus */
 			 NULL,
 			 PROC_EXTENSION,
 			 nargs_iter, nreturn_vals,
 			 args_iter, return_vals);
-  
+
+  g_free(l_iter_proc_name);
+  g_free(l_blurb_text);
 }
 
 void gap_query_iterators_ALT()
@@ -706,18 +724,33 @@ gint gap_run_iterators_ALT(char *name, GRunModeType run_mode, gint32 total_steps
   }
 
 
-  l_name[l_cut] = '\0';  /* cut off "_Iterator_ALT" from l_name end */
   l_rc = -1;
-  for(l_idx = 0; l_idx < MAX_ITER_ALT; l_idx++)
+  l_name[l_cut] = '\0';  /* cut off "_Iterator_ALT" from l_name end */
+
+  /* allocate from/to plugin_data buffers 
+   * as big as needed for the current plugin named l_name
+   */  
+  g_plugin_data_from = p_alloc_plugin_data(l_name);
+  g_plugin_data_to = p_alloc_plugin_data(l_name);
+
+  if((g_plugin_data_from != NULL)
+  && (g_plugin_data_to != NULL))
   {
-      if (strcmp (l_name, g_iter_ALT_tab[l_idx].proc_name) == 0)
-      {
-        if(gap_debug) fprintf(stderr, "DEBUG: gap_run_iterators_ALT: FOUND %s\n", l_name);
-        l_rc =  (g_iter_ALT_tab[l_idx].proc_func)(run_mode, total_steps, current_step, len_struct);
-      }
+    for(l_idx = 0; l_idx < MAX_ITER_ALT; l_idx++)
+    {
+        if (strcmp (l_name, g_iter_ALT_tab[l_idx].proc_name) == 0)
+        {
+          if(gap_debug) printf("DEBUG: gap_run_iterators_ALT: FOUND %s\n", l_name);
+          l_rc =  (g_iter_ALT_tab[l_idx].proc_func)(run_mode, total_steps, current_step, len_struct);
+        }
+    }
   }
   
   if(l_rc < 0) fprintf(stderr, "ERROR: gap_run_iterators_ALT: NOT FOUND proc_name=%s (%s)\n", name, l_name);
+
+  /* free from/to plugin_data buffers */  
+  if(g_plugin_data_from) g_free(g_plugin_data_from);
+  if(g_plugin_data_to)   g_free(g_plugin_data_to);
 
   return l_rc;
 }

@@ -8,7 +8,7 @@ gint p_plug_in_nova_iter_ALT(GRunModeType run_mode, gint32 total_steps, gdouble 
     {
       gint      xcenter;
       gint      ycenter;
-      t_gint_color   color;
+      t_color   color;
       gint      radius;
       gint      nspoke;
       gint      randomhue;
@@ -32,7 +32,7 @@ gint p_plug_in_nova_iter_ALT(GRunModeType run_mode, gint32 total_steps, gdouble 
 
     p_delta_gint(&buf.xcenter, buf_from->xcenter, buf_to->xcenter, total_steps, current_step);
     p_delta_gint(&buf.ycenter, buf_from->ycenter, buf_to->ycenter, total_steps, current_step);
-    p_delta_gint_color(&buf.color, &buf_from->color, &buf_to->color, total_steps, current_step);
+    p_delta_color(&buf.color, &buf_from->color, &buf_to->color, total_steps, current_step);
     p_delta_gint(&buf.radius, buf_from->radius, buf_to->radius, total_steps, current_step);
     p_delta_gint(&buf.nspoke, buf_from->nspoke, buf_to->nspoke, total_steps, current_step);
     p_delta_gint(&buf.randomhue, buf_from->randomhue, buf_to->randomhue, total_steps, current_step);

@@ -27,7 +27,9 @@
  */
 
 /* revision history:
- * version 0.97.00              hof: - created module (as extract gap_filter_foreach)
+ * version gimp 1.1.17b  2000.02.22  hof: - removed limit PLUGIN_DATA_SIZE
+ *                                        - removed support for old gimp 1.0.x PDB-interface.
+ * version 0.97.00                   hof: - created module (as extract gap_filter_foreach)
  */
 #include "config.h"
 
@@ -63,7 +65,7 @@
 
 extern int gap_debug;
 
-static char g_plugin_data[PLUGIN_DATA_SIZE + 1];
+static char *global_plugin_data = NULL;
 
 static gint32 g_current_image_id;
 
@@ -215,76 +217,41 @@ p_save_xcf(gint32 image_id, char *sav_name)
  *    and check for the length of the retrieved data.
  * if all done OK return the length of the retrieved data,
  * return -1 in case of errors.
- *
- * RISK: this procedure may crash if the retrieved data
- *       is longer than PLUGIN_DATA_SIZE and gimp_get_data_size
- *       is not available
- *       (there was no way for a plugin to findout the length
- *        in older GIMP releases)
  * ============================================================================
  */
 gint p_get_data(char *key)
 {
    int l_len;
 
-#ifdef GIMP_HAVE_PROCEDURAL_DB_GET_DATA_SIZE
    l_len = gimp_get_data_size (key);
-   if(l_len >= PLUGIN_DATA_SIZE)
-   {
-      fprintf(stderr, "ERROR: stored data too big Key %s (%d > %d)\n",
-                      key, (int)l_len, (int)PLUGIN_DATA_SIZE);
-      return -1;
-   }
-   gimp_get_data(key, g_plugin_data);
-
-#else
-  {
-    int l_l1, l_l2;
-
-     memset(g_plugin_data, 'X', PLUGIN_DATA_SIZE);
-     gimp_get_data(key, g_plugin_data);
-
-     for(l_l1 = PLUGIN_DATA_SIZE -1; l_l1 >= 0; l_l1--)
-     { 
-       if (g_plugin_data[l_l1] != 'X' )
-          break;
-     }
-
-     memset(g_plugin_data, '\0', PLUGIN_DATA_SIZE);
-     gimp_get_data(key, g_plugin_data);
-
-     for(l_l2 = PLUGIN_DATA_SIZE -1; l_l2 >= 0; l_l2--)
-     { 
-       if (g_plugin_data[l_l2] != '\0' )
-          break;
-     }
-
-     if(l_l1 > l_l2) l_len = l_l1;
-     else            l_len = l_l2;
-
-     l_len++;  /* length is index of last valid byte + 1 */
-  }
-#endif
-
    if(l_len < 1)
    {
       fprintf(stderr, "ERROR: no stored data found for Key %s\n", key);
       return -1;
    }
+   if(global_plugin_data)
+   {
+     g_free(global_plugin_data);
+   }
+   global_plugin_data = g_malloc0(l_len+1);
+   gimp_get_data(key, global_plugin_data);
 
-   if(gap_debug) fprintf(stderr, "DEBUG p_get_data Key:%s  retrieved bytes %d\n", key, (int)l_len);
+   if(gap_debug) printf("DEBUG p_get_data Key:%s  retrieved bytes %d\n", key, (int)l_len);
    return (l_len);
 }
 
 /* ============================================================================
  * p_set_data
  *
- *    set g_plugin_data
+ *    set global_plugin_data
  * ============================================================================
  */
 void p_set_data(char *key, gint plugin_data_len)
 {
-     gimp_set_data(key, g_plugin_data, plugin_data_len);
+  if(global_plugin_data)
+  {
+    gimp_set_data(key, global_plugin_data, plugin_data_len);
+  }
 }
 
 /* ============================================================================
@@ -372,7 +339,7 @@ gint p_procedure_available(char  *proc_name, t_proc_type ptype)
  * p_get_iterator_proc
  *   check the PDB for Iterator Procedures (suffix "_Iterator" or "_Iterator_ALT"
  * return Pointer to the name of the Iterator Procedure
- *        or NULL if not found (or malloc error)
+ *        or NULL if not found
  * ============================================================================
  */
 
@@ -381,28 +348,25 @@ char * p_get_iterator_proc(char *plugin_name)
   char      *l_plugin_iterator;
 
   /* check for matching Iterator PluginProcedures */
-  l_plugin_iterator = g_malloc(strlen(plugin_name) + strlen("_Iterator_ALT") +2);
-  if(l_plugin_iterator != NULL)
-  {
-     sprintf(l_plugin_iterator, "%s_Iterator", plugin_name);
+  l_plugin_iterator = g_strdup_printf("%s_Iterator", plugin_name);
      
-     /* check if iterator is available in PDB */
+  /* check if iterator is available in PDB */
+  if(p_procedure_available(l_plugin_iterator, PTYP_ITERATOR) < 0)
+  {
+     g_free(l_plugin_iterator);
+     l_plugin_iterator = g_strdup_printf("%s_Iterator_ALT", plugin_name);
+     
+     /* check for alternative Iterator   _Iterator_ALT
+      * for now i made some Iterator Plugins using the ending _ALT,
+      * If New plugins were added or existing ones were updated
+      * the Authors should supply original _Iterator Procedures
+      * to be used instead of my Hacked versions without name conflicts.
+      */
      if(p_procedure_available(l_plugin_iterator, PTYP_ITERATOR) < 0)
      {
-        sprintf(l_plugin_iterator, "%s_Iterator_ALT", plugin_name);
-        
-        /* check for alternative Iterator   _Iterator_ALT
-         * for now i made some Iterator Plugins using the ending _ALT,
-         * If New plugins were added or existing ones were updated
-         * the Authors should supply original _Iterator Procedures
-         * to be used instead of my Hacked versions without name conflicts.
-         */
-        if(p_procedure_available(l_plugin_iterator, PTYP_ITERATOR) < 0)
-        {
-           /* both iterator names are not available */
-           g_free(l_plugin_iterator);
-           l_plugin_iterator = NULL;
-        }
+        /* both iterator names are not available */
+        g_free(l_plugin_iterator);
+        l_plugin_iterator = NULL;
      }
   }
   

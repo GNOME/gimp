@@ -38,6 +38,8 @@
  */
 
 /* revision history:
+ * gimp    1.1.17b; 2000/01/26  hof: bugfix gimp_help_init
+ *                                   use gimp_scale_entry_new for WGT_FLT_PAIR, WGT_INT_PAIR
  * gimp    1.1.17a; 2000/02/20  hof: use gimp_help_set_help_data for tooltips
  * gimp    1.1.13b; 1999/12/04  hof: some cosmetic gtk fixes
  *                                   changed border_width spacing and Buttons in action area
@@ -72,12 +74,6 @@
 
 typedef void (*t_entry_cb_func) (GtkWidget *widget, t_arr_arg *arr_ptr);
 
-typedef struct {
-  GtkWidget *scale;
-  GtkWidget *entry;
-  GtkWidget *label;
-} t_pair;
-
 typedef struct
 {
   t_arr_arg *arr_ptr;
@@ -109,7 +105,8 @@ static void   but_array_callback           (GtkWidget *widget, gpointer data);
 
 static void   entry_create_value        (char *title, GtkTable *table, int row, t_arr_arg *arr_ptr,
                                          t_entry_cb_func entry_update_cb, char *init_txt);
-static void   label_create_value         (char *title, GtkTable *table, int row, t_arr_arg *arr_ptr);
+static void   label_create_value         (char *title, GtkTable *table, int row, t_arr_arg *arr_ptr,
+                                          gfloat align);
 static void   text_entry_update_cb       (GtkWidget *widget, t_arr_arg *arr_ptr);
 static void   text_create_value          (char *title, GtkTable *table, int row, t_arr_arg *arr_ptr);
 static void   filesel_close_cb           (GtkWidget *widget, t_arr_arg *arr_ptr);
@@ -129,13 +126,8 @@ static void   radio_update_cb            (GtkWidget *widget, t_radio_arg *radio_
 static void   radio_create_value         (char *title, GtkTable *table, int row, t_arr_arg *arr_ptr);
 static void   optionmenu_create_value    (char *title, GtkTable *table, int row, t_arr_arg *arr_ptr);
 
-static void   pair_flt_scale_update_cb  (GtkAdjustment *adjustment, t_arr_arg *arr_ptr);
-static void   pair_flt_entry_update_cb  (GtkWidget *widget, t_arr_arg *arr_ptr);
-static void   pair_flt_create_value     (t_pair *pair,
-                                         char *title,
-				         GtkTable *table,
-				         int row,
-				         t_arr_arg *arr_ptr);
+static void   pair_int_create_value     (gchar *title, GtkTable *table, gint row, t_arr_arg *arr_ptr);
+static void   pair_flt_create_value     (gchar *title, GtkTable *table, gint row, t_arr_arg *arr_ptr);
 
 
 gint
@@ -179,8 +171,8 @@ entry_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr,
 
 
     label = gtk_label_new(title);
-    gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-    gtk_table_attach(table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
+    gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
+    gtk_table_attach(table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
     gtk_widget_show(label);
 
     entry = gtk_entry_new();
@@ -206,13 +198,26 @@ entry_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr,
  */
 
 static void
-label_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
+label_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr, gfloat align)
 {
     GtkWidget *label;
+    GtkWidget *hbox;
 
     label = gtk_label_new(title);
-    gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-    gtk_table_attach(table, label, 0, 3, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
+    gtk_misc_set_alignment(GTK_MISC(label), align, 0.5);
+
+    if(align != 0.5)
+    {
+      hbox = gtk_hbox_new (FALSE, 2);
+      gtk_widget_show (hbox);
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
+      gtk_table_attach(table, hbox, 0, 3, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
+    }
+    else
+    {
+      gtk_table_attach(table, label, 0, 3, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
+    }
+
     gtk_widget_show(label);
 }
 
@@ -335,10 +340,11 @@ int_entry_update_cb(GtkWidget *widget, t_arr_arg *arr_ptr)
 static void
 int_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
 {
-    char       buf[256];
+    char       *buf;
 
-    sprintf(buf, arr_ptr->int_format, arr_ptr->int_ret);
+    buf = g_strdup_printf("%d", arr_ptr->int_ret);
     entry_create_value(title, table, row, arr_ptr,  int_entry_update_cb, buf);
+    g_free(buf);
 }
 
 /* --------------------------
@@ -357,10 +363,15 @@ flt_entry_update_cb(GtkWidget *widget, t_arr_arg *arr_ptr)
 static void
 flt_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
 {
-    char       buf[256];
-
-    sprintf(buf, arr_ptr->int_format, arr_ptr->int_ret);
+    char       *buf;
+    char       *fmt;
+    
+    /* fmt should result something like "%.2f"  */ 
+    fmt = g_strdup_printf("%%.%df", arr_ptr->flt_digits);
+    buf = g_strdup_printf(fmt, arr_ptr->flt_ret);
     entry_create_value(title, table, row, arr_ptr,  flt_entry_update_cb, buf);
+    g_free(fmt);
+    g_free(buf);
 }
 
 /* --------------------------
@@ -392,8 +403,8 @@ toggle_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
 
 
   label = gtk_label_new(title);
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-  gtk_table_attach(table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
+  gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
+  gtk_table_attach(table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
 
   /* (make sure there is only 0 or 1) */
@@ -452,8 +463,8 @@ radio_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
 
 
   label = gtk_label_new(title);
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-  gtk_table_attach( GTK_TABLE (table), label, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 4, 0);
+  gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
+  gtk_table_attach( GTK_TABLE (table), label, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
 
   /* radio_table */
@@ -531,8 +542,8 @@ optionmenu_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_pt
   
   /* label */
   label = gtk_label_new(title);
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-  gtk_table_attach( GTK_TABLE (table), label, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 4, 0);
+  gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
+  gtk_table_attach( GTK_TABLE (table), label, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
 
   /* optionmenu */
@@ -595,299 +606,89 @@ optionmenu_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_pt
  * --------------------------
  */
 
-
 static void
-pair_flt_entry_update_cb(GtkWidget *widget, t_arr_arg *arr_ptr)
+pair_flt_create_value(gchar *title, GtkTable *table, gint row, t_arr_arg *arr_ptr)
 {
-   GtkAdjustment *adjustment;
-   gdouble        new_value;
-   gdouble        new_value_lim;
+  GtkObject *adj;
+  gfloat     umin, umax;
+  
+  if(arr_ptr->constraint)
+  {
+    umin = arr_ptr->flt_min;
+    umax = arr_ptr->flt_max;
+  }
+  else
+  {
+    umin = arr_ptr->umin;
+    umax = arr_ptr->umax;
+  }
+  
 
-   if (arr_ptr->widget_type != WGT_FLT_PAIR) return;
+  adj = 
+  gimp_scale_entry_new( GTK_TABLE (table), 0, row,        /* table col, row */
+		        title,                            /* label text */
+		        arr_ptr->scale_width,             /* scalesize */
+			arr_ptr->entry_width,             /* entrysize */
+		       (gfloat)arr_ptr->flt_ret,          /* init value */
+		       (gfloat)arr_ptr->flt_min,          /* lower,  */
+		       (gfloat)arr_ptr->flt_max,          /* upper */
+		        arr_ptr->flt_step,                /* step */
+			arr_ptr->pagestep,                /* pagestep */
+		        arr_ptr->flt_digits,              /* digits */
+		        arr_ptr->constraint,              /* constrain */
+		        umin, umax,                       /* lower, upper (unconstrained) */
+		        arr_ptr->help_txt,                /* tooltip */
+		        NULL);                            /* privatetip */
 
-   new_value = atof(gtk_entry_get_text(GTK_ENTRY(widget)));
-
-   /* printf("pair_flt_entry_update_cb: val: %f  lim: %f new_value %f\n", arr_ptr->flt_ret, arr_ptr->flt_ret_lim, new_value);
-    */
-    
-   if (arr_ptr->flt_ret_lim != new_value)
-   {
-       adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-       new_value_lim = new_value;
-       if (new_value < adjustment->lower) new_value_lim = adjustment->lower;
-       if (new_value > adjustment->upper) new_value_lim = adjustment->upper;
-
-       /* if constraint use limit both for entry and scale */
-       if(arr_ptr->constraint == TRUE) arr_ptr->flt_ret =  new_value_lim;
-       else                            arr_ptr->flt_ret  = new_value;
-
-       arr_ptr->flt_ret_lim = new_value_lim;
-       adjustment->value = new_value_lim;
-
-       gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
-   }
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &arr_ptr->flt_ret);
 }
-
-static void
-pair_flt_scale_update_cb (GtkAdjustment *adjustment, t_arr_arg *arr_ptr)
-{
-   GtkWidget *entry;
-   char       buf[256];
-
-   /* printf("pair_flt_scale_update_cb: val: %f  lim: %f  new_value %f\n", arr_ptr->flt_ret, arr_ptr->flt_ret_lim, (float)adjustment->value);
-    */
-    
-   if (arr_ptr->widget_type != WGT_FLT_PAIR) return;
-
-   if (arr_ptr->flt_ret_lim != adjustment->value)
-   {
-	   arr_ptr->flt_ret = adjustment->value;
-	   arr_ptr->flt_ret_lim = adjustment->value;
-
-	   entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-	   sprintf(buf, arr_ptr->flt_format, arr_ptr->flt_ret);
-
-	   gtk_signal_handler_block_by_data(GTK_OBJECT(entry), arr_ptr);
-	   gtk_entry_set_text(GTK_ENTRY(entry), buf);
-	   gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), arr_ptr);
-   }
-}
-
-
-static void
-pair_flt_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
-{
-    GtkObject *scale_data;
-    GtkWidget *hbox;
-    char       buf[256];
-
-    if(arr_ptr->flt_format == NULL)
-    {
-       arr_ptr->flt_format = "%0.2f";    /* use default format */
-    }
-    else
-    {
-       /* short check if formatstring starts with % and ends with f */
-       if((*arr_ptr->flt_format != '%') 
-       || (arr_ptr->flt_format[strlen(arr_ptr->flt_format) -1] != 'f'))
-       {
-          printf( "pair_flt_create_value: Bad FloatFormat ignored %s\n", arr_ptr->flt_format);
-          arr_ptr->flt_format = "%0.2f";
-       }
-    }
-
-    /* init the limitied value */
-    arr_ptr->flt_ret_lim = arr_ptr->flt_ret;
-    if (arr_ptr->flt_ret < arr_ptr->flt_min) arr_ptr->flt_ret_lim = arr_ptr->flt_min;
-    if (arr_ptr->flt_ret > arr_ptr->flt_max) arr_ptr->flt_ret_lim = arr_ptr->flt_max;
-
-    pair->label = gtk_label_new(title);
-    gtk_misc_set_alignment(GTK_MISC(pair->label), 0.0, 0.5);
-    gtk_table_attach(table, pair->label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
-    gtk_widget_show(pair->label);
-
-    scale_data = gtk_adjustment_new((double)arr_ptr->flt_ret,
-	                            (double)arr_ptr->flt_min,
-	                            (double)arr_ptr->flt_max,
-				    (double)arr_ptr->flt_step,
-				    (double)arr_ptr->flt_step,
-				     0.0);
-
-
-    gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-		       (GtkSignalFunc) pair_flt_scale_update_cb,
-		       arr_ptr);
-
-    pair->scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-    gtk_widget_set_usize(pair->scale, arr_ptr->scale_width, 0);
-    /* gtk_table_attach(table, pair->scale, 2, 3, row, row + 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0); */
-    gtk_scale_set_draw_value(GTK_SCALE(pair->scale), FALSE);
-    gtk_scale_set_digits(GTK_SCALE(pair->scale), 3);
-    gtk_range_set_update_policy(GTK_RANGE(pair->scale), GTK_UPDATE_CONTINUOUS);
-    if(arr_ptr->help_txt != NULL)
-    { 
-       gimp_help_set_help_data(pair->scale, arr_ptr->help_txt,NULL);
-    }
-    gtk_widget_show(pair->scale);
-
-    pair->entry = gtk_entry_new();
-    gtk_object_set_user_data(GTK_OBJECT(pair->entry), scale_data);
-    gtk_object_set_user_data(scale_data, pair->entry);
-    gtk_widget_set_usize(pair->entry, arr_ptr->entry_width, 0);
-    sprintf(buf, arr_ptr->flt_format, arr_ptr->flt_ret);
-    gtk_entry_set_text(GTK_ENTRY(pair->entry), buf);
-    gtk_signal_connect(GTK_OBJECT(pair->entry), "changed",
-		       (GtkSignalFunc) pair_flt_entry_update_cb,
-		       arr_ptr);
-    /* gtk_table_attach(GTK_TABLE(table), pair->entry, 1, 2, row, row + 1, GTK_FILL, GTK_FILL, 4, 0); */
-    if(arr_ptr->help_txt != NULL)
-    { 
-       gimp_help_set_help_data(pair->entry, arr_ptr->help_txt,NULL);
-    }
-    gtk_widget_show(pair->entry);
-
-    /*  Horizontal box for entry and scale */
-    hbox = gtk_hbox_new (FALSE, 2+3);
-    gtk_box_pack_start (GTK_BOX (hbox), pair->entry, FALSE, TRUE, 0);
-    gtk_box_pack_start (GTK_BOX (hbox), pair->scale, TRUE, TRUE, 0);
-    gtk_widget_show(hbox);
-
-    gtk_table_attach(GTK_TABLE(table), hbox, 1, 3, row, row + 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 4, 0);
-}
-
 
 /* --------------------------
  * INT_PAIR
  * --------------------------
  */
 
-
 static void
-pair_int_entry_update_cb(GtkWidget *widget, t_arr_arg *arr_ptr)
+pair_int_create_value(gchar *title, GtkTable *table, gint row, t_arr_arg *arr_ptr)
 {
-   GtkAdjustment *adjustment;
-   gint           new_value;
-   gint           new_value_lim;
+  GtkObject *adj;
+  gfloat     umin, umax;
+  
+  if(arr_ptr->constraint)
+  {
+    umin = (gfloat)arr_ptr->int_min;
+    umax = (gfloat)arr_ptr->int_max;
+  }
+  else
+  {
+    umin = arr_ptr->umin;
+    umax = arr_ptr->umax;
+  }
 
-   if (arr_ptr->widget_type != WGT_INT_PAIR) return;
+  adj = 
+  gimp_scale_entry_new( GTK_TABLE (table), 0, row,        /* table col, row */
+		        title,                            /* label text */
+		        arr_ptr->scale_width,             /* scalesize */
+			arr_ptr->entry_width,             /* entrysize */
+		       (gfloat)arr_ptr->int_ret,          /* init value */
+		       (gfloat)arr_ptr->int_min,          /* lower,  */
+		       (gfloat)arr_ptr->int_max,          /* upper */
+		        arr_ptr->int_step,                /* step */
+			arr_ptr->pagestep,                /* pagestep */
+		        0,                                /* digits */
+		        arr_ptr->constraint,              /* constrain */
+		        umin, umax,                       /* lower, upper (unconstrained) */
+		        arr_ptr->help_txt,                /* tooltip */
+		        NULL);                            /* privatetip */
 
-   new_value = atol(gtk_entry_get_text(GTK_ENTRY(widget)));
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &arr_ptr->int_ret);
 
-   /* printf("pair_int_entry_update_cb: val: %d  lim: %d new_value %d\n", arr_ptr->int_ret, arr_ptr->int_ret_lim, new_value);
-    */
-        
-   if (arr_ptr->int_ret_lim != new_value)
-   {
-       adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-       new_value_lim = new_value;
-       if (new_value < (gint)adjustment->lower) new_value_lim = (gint)adjustment->lower;
-       if (new_value > (gint)adjustment->upper) new_value_lim = (gint)adjustment->upper;
-
-       /* if constraint use limit both for entry and scale */
-       if(arr_ptr->constraint == TRUE)
-       {
-          arr_ptr->int_ret =  new_value_lim;
-       }
-       else
-       {
-          arr_ptr->int_ret  = new_value;
-       }
-
-       arr_ptr->int_ret_lim = new_value_lim;
-       adjustment->value = new_value_lim;
-
-       gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
-   }
 }
 
-static void
-pair_int_scale_update_cb (GtkAdjustment *adjustment, t_arr_arg *arr_ptr)
-{
-   GtkWidget *entry;
-   char       buf[256];
-
-   /* printf("pair_int_scale_update_cb: val: %d  lim: %d  new_value %f\n", arr_ptr->int_ret, arr_ptr->int_ret_lim, (float)adjustment->value);
-    */
-    
-   if (arr_ptr->widget_type != WGT_INT_PAIR) return;
-
-   if (arr_ptr->int_ret_lim != (gint)adjustment->value)
-   {
-	   arr_ptr->int_ret = (gint)adjustment->value;
-	   arr_ptr->int_ret_lim = (gint)adjustment->value;
-
-	   entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-	   sprintf(buf, arr_ptr->int_format, arr_ptr->int_ret);
-
-	   gtk_signal_handler_block_by_data(GTK_OBJECT(entry), arr_ptr);
-	   gtk_entry_set_text(GTK_ENTRY(entry), buf);
-	   gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), arr_ptr);
-   }
-}
-
-
-static void
-pair_int_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
-{
-    GtkObject *scale_data;
-    GtkWidget *hbox;
-    char       buf[256];
-
-    if(arr_ptr->int_format == NULL)
-    {
-       arr_ptr->int_format = "%d";    /* use default format */
-    }
-    else
-    {
-       /* short check if formatstring starts with % and ends with d */
-       if((*arr_ptr->int_format != '%') 
-       || (arr_ptr->int_format[strlen(arr_ptr->int_format) -1] != 'd'))
-       {
-          printf ("pair_int_create_value: Bad IntFormat ignored %s\n", arr_ptr->int_format);
-          arr_ptr->int_format = "%d";
-       }
-    }
-
-    /* init the limitied value */
-    arr_ptr->int_ret_lim = arr_ptr->int_ret;
-    if (arr_ptr->int_ret < arr_ptr->int_min) arr_ptr->int_ret_lim = arr_ptr->int_min;
-    if (arr_ptr->int_ret > arr_ptr->int_max) arr_ptr->int_ret_lim = arr_ptr->int_max;
-
-    pair->label = gtk_label_new(title);
-    gtk_misc_set_alignment(GTK_MISC(pair->label), 0.0, 0.5);
-    gtk_table_attach(table, pair->label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
-    gtk_widget_show(pair->label);
-    
-    scale_data = gtk_adjustment_new((double)arr_ptr->int_ret,
-	                            (double)arr_ptr->int_min,
-	                            (double)arr_ptr->int_max,
-				    (double)arr_ptr->int_step,
-				    (double)arr_ptr->int_step,
-				     0.0);
-
-
-    gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-		       (GtkSignalFunc) pair_int_scale_update_cb,
-		       arr_ptr);
-
-    pair->scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-    gtk_widget_set_usize(pair->scale, arr_ptr->scale_width, 0);
-    /* gtk_table_attach(table, pair->scale, 2, 3, row, row + 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0); */
-    gtk_scale_set_draw_value(GTK_SCALE(pair->scale), FALSE);
-    gtk_scale_set_digits(GTK_SCALE(pair->scale), 3);
-    gtk_range_set_update_policy(GTK_RANGE(pair->scale), GTK_UPDATE_CONTINUOUS);
-    if(arr_ptr->help_txt != NULL)
-    { 
-       gimp_help_set_help_data(pair->scale, arr_ptr->help_txt,NULL);
-    }
-    gtk_widget_show(pair->scale);
-
-    pair->entry = gtk_entry_new();
-    gtk_object_set_user_data(GTK_OBJECT(pair->entry), scale_data);
-    gtk_object_set_user_data(scale_data, pair->entry);
-    gtk_widget_set_usize(pair->entry, arr_ptr->entry_width, 0);
-    sprintf(buf, arr_ptr->int_format, arr_ptr->int_ret);
-    gtk_entry_set_text(GTK_ENTRY(pair->entry), buf);
-    gtk_signal_connect(GTK_OBJECT(pair->entry), "changed",
-		       (GtkSignalFunc) pair_int_entry_update_cb,
-		       arr_ptr);
-    /* gtk_table_attach(GTK_TABLE(table), pair->entry, 1, 2, row, row + 1, GTK_FILL, GTK_FILL, 4, 0); */
-    if(arr_ptr->help_txt != NULL)
-    { 
-       gimp_help_set_help_data(pair->entry, arr_ptr->help_txt,NULL);
-    }
-    gtk_widget_show(pair->entry);
-
-    /*  Horizontal box for entry and scale */
-    hbox = gtk_hbox_new (FALSE, 2+3);
-    gtk_box_pack_start (GTK_BOX (hbox), pair->entry, FALSE, TRUE, 0);
-    gtk_box_pack_start (GTK_BOX (hbox), pair->scale, TRUE, TRUE, 0);
-    gtk_widget_show(hbox);
-
-    gtk_table_attach(GTK_TABLE(table), hbox, 1, 3, row, row + 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 4, 0);
-}
 
 /* ============================================================================
  * p_array_std_dialog
@@ -915,7 +716,6 @@ gint p_array_std_dialog(char *title_txt,
   gint    l_idx;
   gint    l_ok_value;
   char   *l_label_txt;
-  t_pair  l_pair;
   t_arr_arg  *arr_ptr;
     
   g_arrint.run = b_def_val;           /* prepare default retcode (if window is closed without button) */
@@ -941,10 +741,10 @@ gint p_array_std_dialog(char *title_txt,
      l_argsv[0] = g_strdup ("gap_std_dialog");
      gtk_init (&l_argsc, &l_argsv);
      g_first_call = FALSE;
-
-     /* Initialize Tooltips */
-     gimp_help_init ();
   }
+
+  /* Initialize Tooltips */
+  gimp_help_init ();
 
   /* dialog */
   g_arrint.dlg = gtk_dialog_new ();
@@ -1014,10 +814,10 @@ gint p_array_std_dialog(char *title_txt,
        switch(arr_ptr->widget_type)
        {
          case WGT_FLT_PAIR:
-            pair_flt_create_value(&l_pair, l_label_txt, GTK_TABLE(table), (l_idx + 1), arr_ptr);
+            pair_flt_create_value(l_label_txt, GTK_TABLE(table), (l_idx + 1), arr_ptr);
             break;
          case WGT_INT_PAIR:
-            pair_int_create_value(&l_pair, l_label_txt, GTK_TABLE(table), (l_idx + 1), arr_ptr);
+            pair_int_create_value(l_label_txt, GTK_TABLE(table), (l_idx + 1), arr_ptr);
             break;
          case WGT_TOGGLE:
             toggle_create_value(l_label_txt, GTK_TABLE(table), (l_idx + 1),  arr_ptr);
@@ -1041,7 +841,13 @@ gint p_array_std_dialog(char *title_txt,
             flt_create_value(l_label_txt, GTK_TABLE(table), (l_idx + 1),  arr_ptr);
             break;
          case WGT_LABEL:
-            label_create_value(l_label_txt, GTK_TABLE(table), (l_idx + 1),  arr_ptr);
+            label_create_value(l_label_txt, GTK_TABLE(table), (l_idx + 1),  arr_ptr, 0.5);
+            break;
+         case WGT_LABEL_LEFT:
+            label_create_value(l_label_txt, GTK_TABLE(table), (l_idx + 1),  arr_ptr, 0.0);
+            break;
+         case WGT_LABEL_RIGHT:
+            label_create_value(l_label_txt, GTK_TABLE(table), (l_idx + 1),  arr_ptr, 1.0);
             break;
          case WGT_ACT_BUTTON:
             printf ("WGT_ACT_BUTTON not implemented yet, widget type ignored\n");
@@ -1113,31 +919,41 @@ void     p_init_arr_arg  (t_arr_arg *arr_ptr,
    arr_ptr->label_txt   = NULL;
    arr_ptr->help_txt    = NULL;
    arr_ptr->togg_label  = NULL;
-   arr_ptr->entry_width = 50;
-   arr_ptr->scale_width = 180;
+   arr_ptr->entry_width = 60;
+   arr_ptr->scale_width = 200;
    arr_ptr->constraint  = TRUE;
    arr_ptr->has_default = FALSE;
    arr_ptr->text_entry  = NULL;
 
    switch(widget_type)
    {
+     case WGT_LABEL:
+     case WGT_LABEL_LEFT:
+     case WGT_LABEL_RIGHT:
+        arr_ptr->widget_type = widget_type;
+        break;
      case WGT_INT_PAIR:
      case WGT_INT:
         arr_ptr->widget_type = widget_type;
-        arr_ptr->int_format  = "%d";
+        arr_ptr->umin        = (gfloat)G_MININT;
+        arr_ptr->umax        = (gfloat)G_MAXINT;
         arr_ptr->int_min     = 0;
         arr_ptr->int_max     = 100;
         arr_ptr->int_step    = 1;
+        arr_ptr->pagestep    = 10.0;
         arr_ptr->int_default = 0;
         arr_ptr->int_ret     = 0;
         break;
      case WGT_FLT_PAIR:
      case WGT_FLT:
         arr_ptr->widget_type = widget_type;
-        arr_ptr->flt_format  = "%0.2f";
+        arr_ptr->flt_digits  = 2;
+        arr_ptr->umin        = G_MINFLOAT;
+        arr_ptr->umax        = G_MAXFLOAT;
         arr_ptr->flt_min     = 0.0;
         arr_ptr->flt_max     = 100.0;
         arr_ptr->flt_step    = 0.1;
+        arr_ptr->pagestep    = 10.0;
         arr_ptr->flt_default = 0.0;
         arr_ptr->flt_ret     = 0.0;
         break;

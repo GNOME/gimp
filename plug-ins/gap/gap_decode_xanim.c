@@ -48,6 +48,7 @@
  */
 
 /* revision history
+ * 1.1.17b;  2000/02/26  hof: bugfixes
  * 1.1.14a;  1999/11/22  hof: fixed gcc warning (too many arguments for format)
  * 1.1.13a;  1999/11/22  hof: first release
  */
@@ -86,8 +87,8 @@ extern      int gap_debug; /* ==0  ... dont print debug infos */
 
 static char *global_xanim_input_dir    = "input";
 
-char global_xanim_prog[500];
-char global_errlist[500];
+gchar global_xanim_prog[500];
+gchar *global_errlist = NULL;
 
 gint32  global_delete_number;
 
@@ -108,64 +109,64 @@ p_xanim_info(char *errlist)
   
 
   l_idx = 0;
-  p_init_arr_arg(&argv[l_idx], WGT_LABEL);
+  p_init_arr_arg(&argv[l_idx], WGT_LABEL_LEFT);
   argv[l_idx].label_txt = _("Conditions to run the xanim based video split");
 
   l_idx++;
-  p_init_arr_arg(&argv[l_idx], WGT_LABEL);
+  p_init_arr_arg(&argv[l_idx], WGT_LABEL_LEFT);
   argv[l_idx].label_txt = "";
 
   l_idx++;
-  p_init_arr_arg(&argv[l_idx], WGT_LABEL);
+  p_init_arr_arg(&argv[l_idx], WGT_LABEL_LEFT);
   argv[l_idx].label_txt = _("1.) xanim 2.80.0 exporting edition (the loki version)");
 
   l_idx++;
-  p_init_arr_arg(&argv[l_idx], WGT_LABEL);
+  p_init_arr_arg(&argv[l_idx], WGT_LABEL_LEFT);
   argv[l_idx].label_txt = _("    must be installed somewhere in your PATH");
 
   l_idx++;
-  p_init_arr_arg(&argv[l_idx], WGT_LABEL);
+  p_init_arr_arg(&argv[l_idx], WGT_LABEL_LEFT);
   argv[l_idx].label_txt = _("    you can get xanim exporting edition at");
 
   l_idx++;
-  p_init_arr_arg(&argv[l_idx], WGT_LABEL);
+  p_init_arr_arg(&argv[l_idx], WGT_LABEL_LEFT);
   argv[l_idx].label_txt = "    http://heroine.linuxbox.com/toys.html";
 
   l_idx++;
-  p_init_arr_arg(&argv[l_idx], WGT_LABEL);
+  p_init_arr_arg(&argv[l_idx], WGT_LABEL_LEFT);
   argv[l_idx].label_txt = "    http://www.lokigames.com/development/download/smjpeg/xanim2801-loki090899.tar.gz";
 
   l_idx++;
-  p_init_arr_arg(&argv[l_idx], WGT_LABEL);
+  p_init_arr_arg(&argv[l_idx], WGT_LABEL_LEFT);
   argv[l_idx].label_txt = "";
 
   l_idx++;
-  p_init_arr_arg(&argv[l_idx], WGT_LABEL);
+  p_init_arr_arg(&argv[l_idx], WGT_LABEL_LEFT);
   argv[l_idx].label_txt = _("2.) if your xanim exporting edition is not in your PATH or is not named xanim");
 
   l_idx++;
-  p_init_arr_arg(&argv[l_idx], WGT_LABEL);
+  p_init_arr_arg(&argv[l_idx], WGT_LABEL_LEFT);
   argv[l_idx].label_txt = _("    you have to set Environment variable GAP_XANIM_PROG ");
 
   l_idx++;
-  p_init_arr_arg(&argv[l_idx], WGT_LABEL);
+  p_init_arr_arg(&argv[l_idx], WGT_LABEL_LEFT);
   argv[l_idx].label_txt = _("    to your xanim exporting program and restart gimp");
 
   l_idx++;
-  p_init_arr_arg(&argv[l_idx], WGT_LABEL);
+  p_init_arr_arg(&argv[l_idx], WGT_LABEL_LEFT);
   argv[l_idx].label_txt = "";
 
   l_idx++;
-  p_init_arr_arg(&argv[l_idx], WGT_LABEL);
+  p_init_arr_arg(&argv[l_idx], WGT_LABEL_LEFT);
   argv[l_idx].label_txt = _("An ERROR occured while trying to call xanim:");  
 
   l_idx++;
-  p_init_arr_arg(&argv[l_idx], WGT_LABEL);
+  p_init_arr_arg(&argv[l_idx], WGT_LABEL_LEFT);
   argv[l_idx].label_txt = "--------------------------------------------";  
 
 
   l_idx++;
-  p_init_arr_arg(&argv[l_idx], WGT_LABEL);
+  p_init_arr_arg(&argv[l_idx], WGT_LABEL_LEFT);
   argv[l_idx].label_txt = errlist;
 
   l_idx++;
@@ -204,7 +205,7 @@ p_xanim_dialog   (gint32 *first_frame,
 		  gint32  *autoload,
 		  gint32  *run_xanim_asynchron)
 {
-#define XADIALOG_NUM_ARGS 11
+#define XADIALOG_NUM_ARGS 12
   static t_arr_arg  argv[XADIALOG_NUM_ARGS];
   static char *radio_args[3]  = { N_("XCF"), N_("PPM"), N_("JPEG") };
 
@@ -225,6 +226,8 @@ p_xanim_dialog   (gint32 *first_frame,
   argv[1].int_min    = 0;
   argv[1].int_max    = 9999;
   argv[1].int_ret    = 0;
+  argv[1].umin       = 0;
+  argv[1].entry_width = 80;
   
   p_init_arr_arg(&argv[2], WGT_INT_PAIR);
   argv[2].label_txt = _("To :");
@@ -233,6 +236,8 @@ p_xanim_dialog   (gint32 *first_frame,
   argv[2].int_min    = 0;
   argv[2].int_max    = 9999;
   argv[2].int_ret    = 9999;
+  argv[2].umin       = 0;
+  argv[2].entry_width = 80;
   
   p_init_arr_arg(&argv[3], WGT_FILESEL);
   argv[3].label_txt = _("Framenames:");
@@ -271,8 +276,7 @@ p_xanim_dialog   (gint32 *first_frame,
   argv[7].int_ret    = 90;
 
   p_init_arr_arg(&argv[8], WGT_LABEL);
-  argv[8].label_txt = _("\nWarning: xanim 2.80 has just limited MPEG support\n"
-                        "most of the frames (type P and B) will be skipped");
+  argv[8].label_txt = "";
 
   p_init_arr_arg(&argv[9], WGT_TOGGLE);
   argv[9].label_txt = _("Open");
@@ -284,6 +288,10 @@ p_xanim_dialog   (gint32 *first_frame,
   argv[10].help_txt  = _("Run xanim asynchronously and delete unwanted frames\n"
                         "(out of the specified range) while xanim is still running");
   argv[10].int_ret   = 1;
+
+  p_init_arr_arg(&argv[11], WGT_LABEL_LEFT);
+  argv[11].label_txt = _("\nWarning: xanim 2.80 has just limited MPEG support\n"
+                        "most of the frames (type P and B) will be skipped");
    
   if(TRUE == p_array_dialog(_("Split any Xanim readable Video to Frames"), 
 			    _("Select Frame range"), XADIALOG_NUM_ARGS, argv))
@@ -527,7 +535,7 @@ p_rename_frames(gint32 frame_from, gint32 frame_to, char *basename, char *ext)
   l_max_found = p_find_max_xanim_frame (frame_from, ext);
   if(l_max_found < 0)
   {
-       sprintf(global_errlist,
+       global_errlist = g_strdup_printf(
 	       _("cant find any extracted frames,\n%s\nmaybe xanim has failed or was canclled"),
 	       l_src_frame);
        return(-1);
@@ -552,7 +560,7 @@ p_rename_frames(gint32 frame_from, gint32 frame_to, char *basename, char *ext)
 	l_overwrite_mode = p_overwrite_dialog(l_dst_frame, l_overwrite_mode);
 	if (l_overwrite_mode < 0)
 	{
-	     sprintf(global_errlist,
+	     global_errlist = g_strdup_printf(
 	             _("frames are not extracted, because overwrite of %s was cancelled"),
 	             l_dst_frame);
 	     return(-1);
@@ -562,7 +570,7 @@ p_rename_frames(gint32 frame_from, gint32 frame_to, char *basename, char *ext)
 	   remove(l_dst_frame);
 	   if (p_file_exists(l_dst_frame))
            {
-	     sprintf(global_errlist,
+	     global_errlist = g_strdup_printf(
 	             _("failed to overwrite %s (check permissions ?)"),
 	             l_dst_frame);
 	     return(-1);
@@ -584,7 +592,7 @@ p_rename_frames(gint32 frame_from, gint32 frame_to, char *basename, char *ext)
 	   }
 	   else
 	   {
-	      sprintf(global_errlist,
+	      global_errlist = g_strdup_printf(
 	             _("failed to write %s (check permissions ?)"),
 	             l_dst_frame);
 	      return(-1);
@@ -666,11 +674,12 @@ p_poll(pid_t xanim_pid, char *one_past_last_frame, gint32 frame_from, gint32 fra
 static int
 p_grep(char *pattern, char *file)
 {
-  int l_rc;
-  char l_cmd[300];
+  gint    l_rc;
+  gchar  *l_cmd;
 
-  sprintf(l_cmd, "grep -c '%s' \"%s\" >/dev/null", pattern, file);
+  l_cmd = g_strdup_printf("grep -c '%s' \"%s\" >/dev/null", pattern, file);
   l_rc =  system(l_cmd);
+  g_free(l_cmd);
   if (l_rc == 0)
   {
      return(0); /* pattern found */
@@ -678,21 +687,21 @@ p_grep(char *pattern, char *file)
   return(1);    /* pattern NOT found */
 }
 
-static int
+static gint
 p_check_xanim()
 {
-  int l_rc;
-  int l_grep_counter1;
-  int l_grep_counter2;
-  int l_grep_counter3;
-  char l_cmd[300];
+  gint l_rc;
+  gint l_grep_counter1;
+  gint l_grep_counter2;
+  gint l_grep_counter3;
+  gchar *l_cmd;
   static char *l_xanim_help_output = "tmp_xanim_help.output";
   FILE *l_fp;
 
   l_fp = fopen(l_xanim_help_output, "w+");
   if (l_fp == NULL)
   {
-    sprintf(global_errlist, "no write permission for current directory");
+    global_errlist = g_strdup_printf("no write permission for current directory");
     return(10);
   }
   fprintf(l_fp, "dummy");
@@ -701,14 +710,15 @@ p_check_xanim()
   /* execute xanim with -h option and 
    * store its output in a file.
    */
-  sprintf(l_cmd, "%s -h 2>&1 >>%s", global_xanim_prog, l_xanim_help_output);
+  l_cmd = g_strdup_printf("%s -h 2>&1 >>%s", global_xanim_prog, l_xanim_help_output);
   l_rc =  system(l_cmd);
 
-  printf("DEBUG: executed :%s\n  Retcode: %d\n", l_cmd, (int)l_rc);
+  if(gap_debug) printf("DEBUG: executed :%s\n  Retcode: %d\n", l_cmd, (int)l_rc);
+  g_free(l_cmd);
   
   if ((l_rc == 127) || (l_rc == (127 << 8)))
   {
-        sprintf(global_errlist,
+        global_errlist = g_strdup_printf(
                 _("could not execute %s (check if xanim is installed)"),
                 global_xanim_prog  );
         return(10);
@@ -716,7 +726,7 @@ p_check_xanim()
 
   if(!p_file_exists(l_xanim_help_output)) 
   {
-    sprintf(global_errlist, 
+    global_errlist = g_strdup_printf(
             _("%s does not look like xanim"),
             global_xanim_prog  );
     return(10);
@@ -740,14 +750,14 @@ p_check_xanim()
 
   if(l_grep_counter2 != 0)
   {
-     sprintf(global_errlist,
+     global_errlist = g_strdup_printf(
              _("The xanim program on your system \"%s\"\ndoes not support the exporting options Ea, Ee, Eq"),
              global_xanim_prog  );
      return(10);
   }
   if(l_grep_counter3 != 0)
   {
-     sprintf(global_errlist,
+     global_errlist = g_strdup_printf(
              _("The xanim program on your system \"%s\"\ndoes not support exporting of single frames"),
              global_xanim_prog  );
      return(10);
@@ -765,8 +775,8 @@ p_start_xanim_process(gint32 first_frame, gint32 last_frame,
 		  char *one_past_last_frame,
 		  gint32  run_xanim_asynchron)
 {
-   char  l_cmd[300];
-   char  l_buf[40];
+   gchar  l_cmd[500];
+   gchar  l_buf[40];
    pid_t l_xanim_pid;
    int   l_rc;
    FILE  *l_fp;
@@ -985,7 +995,7 @@ gap_xanim_decode(GRunModeType run_mode)
   
   l_rc = 0;
   l_input_dir_created_by_myself = FALSE;
-  global_errlist[0] = '\0';
+  global_errlist = NULL;
   p_init_xanim_global_name();
   
   filename[0] = '\0';
@@ -1010,7 +1020,7 @@ gap_xanim_decode(GRunModeType run_mode)
   
   if(!p_file_exists(filename))
   {
-     sprintf(global_errlist,
+     global_errlist = g_strdup_printf(
             _("videofile %s not existent or empty\n"),
             filename);
             l_rc = 10;
@@ -1063,7 +1073,7 @@ gap_xanim_decode(GRunModeType run_mode)
             }
             else
             {
-               sprintf(global_errlist,
+               global_errlist = g_strdup_printf(
                       _("could not create %s directory\n"
                        "(that is required for xanim frame export)"),
                        global_xanim_input_dir);
@@ -1099,7 +1109,7 @@ gap_xanim_decode(GRunModeType run_mode)
 
      if (l_xanim_pid == -1 )
      {
-        sprintf(global_errlist, 
+        global_errlist = g_strdup_printf(
            _("could not start xanim process\n(program=%s)"),
            global_xanim_prog  );
 	l_rc = -1;
@@ -1120,7 +1130,7 @@ gap_xanim_decode(GRunModeType run_mode)
      
      if (p_find_max_xanim_frame (first_frame, extension) < first_frame)
      {
-        sprintf(global_errlist,
+        global_errlist = g_strdup_printf(
 	       _("cant find any extracted frames,\n"
 	         "xanim has failed or was canclled"));
         l_rc = -1;
@@ -1166,7 +1176,7 @@ gap_xanim_decode(GRunModeType run_mode)
 
    if(l_rc != 0)
    {
-      if(global_errlist[0] == '\0')
+      if(global_errlist == NULL)
       {
          p_xanim_info("ERROR: could not execute xanim");
       }

@@ -29,9 +29,6 @@
 
 #include "libgimp/gimp.h"
 
-/* max buffer size for plugin' stored valus
- */
-#define  PLUGIN_DATA_SIZE       8192
 
 /* ------------------------
  * gap_filter_foreach.h

@@ -26,11 +26,6 @@
 
 #include "libgimp/gimp.h"
 
-/* max buffer size for plugin' stored valus
- */
-#define  PLUGIN_DATA_SIZE       8192
-
-
 typedef enum
 {  PTYP_ANY                     = 0,
    PTYP_ITERATOR                = 1,

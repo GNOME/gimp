@@ -655,6 +655,8 @@ load_range_dialog(gint32 *first_frame,
   argv[1].int_min    = 1;
   argv[1].int_max    = 9999;
   argv[1].int_ret    = 1;
+  argv[1].umin       = 0;
+  argv[1].entry_width = 80;
   
   p_init_arr_arg(&argv[2], WGT_INT_PAIR);
   argv[2].label_txt = _("To");
@@ -663,6 +665,8 @@ load_range_dialog(gint32 *first_frame,
   argv[2].int_min    = 1;
   argv[2].int_max    = 9999;
   argv[2].int_ret    = 9999;
+  argv[2].umin       = 0;
+  argv[2].entry_width = 80;
   
   p_init_arr_arg(&argv[3], WGT_FILESEL);
   argv[3].label_txt = _("Framenames");
@@ -677,7 +681,7 @@ load_range_dialog(gint32 *first_frame,
   argv[4].help_txt  = _("Open the 1.st one of the extracted frames");
   argv[4].int_ret    = 1;
   
-  p_init_arr_arg(&argv[5], WGT_LABEL);
+  p_init_arr_arg(&argv[5], WGT_LABEL_LEFT);
   argv[5].label_txt = _("\nWARNING: do not attempt to split other files than MPEG1 videos\n"
                          "before you proceed, you should save all open images");
   
