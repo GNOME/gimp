@@ -62,6 +62,8 @@ static void gtk_multi_option_menu_position        (GtkMenu            *menu,
 						   gint               *x,
 						   gint               *y,
 						   gpointer            user_data);
+static void gtk_multi_option_menu_show_all        (GtkWidget          *widget);
+static void gtk_multi_option_menu_hide_all        (GtkWidget          *widget);
 
 
 static GtkButtonClass *parent_class = NULL;
@@ -112,6 +114,8 @@ gtk_multi_option_menu_class_init (GtkMultiOptionMenuClass *class)
   widget_class->size_allocate = gtk_multi_option_menu_size_allocate;
   widget_class->expose_event = gtk_multi_option_menu_expose;
   widget_class->button_press_event = gtk_multi_option_menu_button_press;
+  widget_class->show_all = gtk_multi_option_menu_show_all;
+  widget_class->hide_all = gtk_multi_option_menu_hide_all;
 }
 
 static void
@@ -140,6 +144,25 @@ gtk_multi_option_menu_get_menu (GtkMultiOptionMenu *multi_option_menu)
   return multi_option_menu->menu;
 }
 
+static void
+gtk_multi_option_menu_detacher (GtkWidget     *widget,
+				GtkMenu       *menu)
+{
+  GtkMultiOptionMenu *multi_option_menu;
+
+  g_return_if_fail (widget != NULL);
+  g_return_if_fail (GTK_IS_MULTI_OPTION_MENU (widget));
+
+  multi_option_menu = GTK_MULTI_OPTION_MENU (widget);
+  g_return_if_fail (multi_option_menu->menu == (GtkWidget*) menu);
+
+  gtk_multi_option_menu_remove_contents (multi_option_menu);
+  gtk_signal_disconnect_by_data (GTK_OBJECT (multi_option_menu->menu),
+                                 multi_option_menu);
+
+  multi_option_menu->menu = NULL;
+}
+
 void
 gtk_multi_option_menu_set_menu (GtkMultiOptionMenu *multi_option_menu,
 				GtkWidget     *menu)
@@ -149,21 +172,26 @@ gtk_multi_option_menu_set_menu (GtkMultiOptionMenu *multi_option_menu,
   g_return_if_fail (menu != NULL);
   g_return_if_fail (GTK_IS_MENU (menu));
 
-  gtk_multi_option_menu_remove_menu (multi_option_menu);
+  if (multi_option_menu->menu != menu)
+    {
+      gtk_multi_option_menu_remove_menu (multi_option_menu);
 
-  multi_option_menu->menu = menu;
-  gtk_object_ref (GTK_OBJECT (multi_option_menu->menu));
+      multi_option_menu->menu = menu;
+      gtk_menu_attach_to_widget (GTK_MENU (menu),
+				 GTK_WIDGET (multi_option_menu),
+				 gtk_multi_option_menu_detacher);
 
-  gtk_multi_option_menu_calc_size (multi_option_menu);
+      gtk_multi_option_menu_calc_size (multi_option_menu);
 
-  gtk_signal_connect (GTK_OBJECT (multi_option_menu->menu), "deactivate",
-		      (GtkSignalFunc) gtk_multi_option_menu_deactivate,
-		      multi_option_menu);
+      gtk_signal_connect (GTK_OBJECT (multi_option_menu->menu), "deactivate",
+			  (GtkSignalFunc) gtk_multi_option_menu_deactivate,
+			  multi_option_menu);
 
-  if (GTK_WIDGET (multi_option_menu)->parent)
-    gtk_widget_queue_resize (GTK_WIDGET (multi_option_menu)->parent);
+      if (GTK_WIDGET (multi_option_menu)->parent)
+        gtk_widget_queue_resize (GTK_WIDGET (multi_option_menu)->parent);
 
-  gtk_multi_option_menu_update_contents (multi_option_menu);
+      gtk_multi_option_menu_update_contents (multi_option_menu);
+    }
 }
 
 void
@@ -173,14 +201,7 @@ gtk_multi_option_menu_remove_menu (GtkMultiOptionMenu *multi_option_menu)
   g_return_if_fail (GTK_IS_MULTI_OPTION_MENU (multi_option_menu));
 
   if (multi_option_menu->menu)
-    {
-      gtk_multi_option_menu_remove_contents (multi_option_menu);
-      gtk_signal_disconnect_by_data (GTK_OBJECT (multi_option_menu->menu),
-				     multi_option_menu);
-
-      gtk_object_unref (GTK_OBJECT (multi_option_menu->menu));
-      multi_option_menu->menu = NULL;
-    }
+      gtk_menu_detach (GTK_MENU (multi_option_menu->menu));
 }
 
 void
@@ -216,12 +237,8 @@ gtk_multi_option_menu_destroy (GtkObject *object)
 
   multi_option_menu = GTK_MULTI_OPTION_MENU (object);
 
-  gtk_multi_option_menu_remove_contents (multi_option_menu);
   if (multi_option_menu->menu)
-    {
-      gtk_object_unref (GTK_OBJECT (multi_option_menu->menu));
       gtk_widget_destroy (multi_option_menu->menu);
-    }
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
@@ -452,6 +469,7 @@ gtk_multi_option_menu_update_contents (GtkMultiOptionMenu *multi_option_menu)
       
       if (multi_option_menu->menu_item)
 	{
+	  gtk_widget_ref (multi_option_menu->menu_item);
 	  child = GTK_BIN (multi_option_menu->menu_item)->child;
 	  if (child)
 	    {
@@ -462,11 +480,12 @@ gtk_multi_option_menu_update_contents (GtkMultiOptionMenu *multi_option_menu)
 	      gtk_container_unblock_resize (GTK_CONTAINER (multi_option_menu));
 	    }
 
+	  gtk_widget_size_request (child, &child->requisition);
 	  gtk_widget_size_allocate (GTK_WIDGET (multi_option_menu),
 				    &(GTK_WIDGET (multi_option_menu)->allocation));
 
 	  if (GTK_WIDGET_DRAWABLE (multi_option_menu))
-	    gtk_widget_draw (GTK_WIDGET (multi_option_menu), NULL);
+	    gtk_widget_queue_draw (GTK_WIDGET (multi_option_menu));
 	}
     }
 }
@@ -483,12 +502,14 @@ gtk_multi_option_menu_remove_contents (GtkMultiOptionMenu *multi_option_menu)
       if (GTK_WIDGET (multi_option_menu->menu_item)->state != GTK_BUTTON (multi_option_menu)->child->state)
 	gtk_widget_set_state (GTK_BUTTON (multi_option_menu)->child,
 			      GTK_WIDGET (multi_option_menu->menu_item)->state);
-      GTK_WIDGET_UNSET_FLAGS (GTK_BUTTON (multi_option_menu)->child, GTK_MAPPED | GTK_REALIZED);
+      gtk_widget_unrealize (GTK_BUTTON (multi_option_menu)->child);
       gtk_widget_reparent (GTK_BUTTON (multi_option_menu)->child, multi_option_menu->menu_item);
-      gtk_container_unblock_resize (GTK_CONTAINER (multi_option_menu));
+      gtk_widget_unref (multi_option_menu->menu_item);
       multi_option_menu->menu_item = NULL;
+      gtk_container_unblock_resize (GTK_CONTAINER (multi_option_menu));
     }
 }
+
 static void
 gtk_multi_option_menu_calc_size (GtkMultiOptionMenu *multi_option_menu)
 {
@@ -565,7 +586,10 @@ gtk_multi_option_menu_position (GtkMenu  *menu,
   children = GTK_MENU_SHELL (multi_option_menu->menu)->children;
   gdk_window_get_origin (GTK_WIDGET (multi_option_menu)->window, &menu_xpos, &menu_ypos);
 
-  menu_ypos += (GTK_WIDGET (multi_option_menu)->allocation.height - active->requisition.height) / 2 - 2;
+  menu_ypos += (GTK_WIDGET (multi_option_menu)->allocation.height) / 2 - 2;
+
+  if (active != NULL)
+    menu_ypos -= active->requisition.height / 2;
 
   while (children)
     {
@@ -609,3 +633,38 @@ gtk_multi_option_menu_position (GtkMenu  *menu,
   *x = menu_xpos;
   *y = menu_ypos;
 }
+
+
+static void
+gtk_multi_option_menu_show_all (GtkWidget *widget)
+{
+  GtkContainer *container;
+  GtkMultiOptionMenu *multi_option_menu;
+  
+  g_return_if_fail (widget != NULL);
+  g_return_if_fail (GTK_IS_MULTI_OPTION_MENU (widget));
+  container = GTK_CONTAINER (widget);
+  multi_option_menu = GTK_MULTI_OPTION_MENU (widget);
+
+  gtk_widget_show (widget);
+  gtk_container_foreach (container, (GtkCallback) gtk_widget_show_all, NULL);
+  if (multi_option_menu->menu)
+    gtk_widget_show_all (multi_option_menu->menu);
+  if (multi_option_menu->menu_item)
+    gtk_widget_show_all (multi_option_menu->menu_item);
+}
+
+
+static void
+gtk_multi_option_menu_hide_all (GtkWidget *widget)
+{
+  GtkContainer *container;
+
+  g_return_if_fail (widget != NULL);
+  g_return_if_fail (GTK_IS_MULTI_OPTION_MENU (widget));
+  container = GTK_CONTAINER (widget);
+
+  gtk_widget_hide (widget);
+  gtk_container_foreach (container, (GtkCallback) gtk_widget_hide_all, NULL);
+}
+
