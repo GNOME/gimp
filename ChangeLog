@@ -1,5 +1,9 @@
 2003-03-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-resize.c (gimp_image_resize): shut up compiler.
+
+2003-03-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-resize.c (gimp_image_resize): fixed to check
 	the *new* guide position to be within bounds, not the old
 	one. Cleanup.

@@ -86,7 +86,7 @@ gimp_image_resize (GimpImage *gimage,
     {
       GimpGuide *guide        = list->data;
       gboolean   remove_guide = FALSE;
-      gint       new_position;
+      gint       new_position = 0;
 
       list = g_list_next (list);
 
