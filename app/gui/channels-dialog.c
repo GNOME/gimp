@@ -169,13 +169,13 @@ static OpsButton channels_ops_buttons[] =
     N_("Lower Channel"), NULL, 0 },
   { duplicate_xpm, channels_dialog_duplicate_channel_callback, NULL,
     N_("Duplicate Channel"), NULL, 0 },
-  { delete_xpm, channels_dialog_delete_channel_callback, NULL,
-    N_("Delete Channel"), NULL, 0 },
   { toselection_xpm, channels_dialog_channel_to_sel_callback, to_selection_ext_callbacks,
     N_("Channel to Selection \n"
        "<Shift> Add          "
        "<Ctrl> Subtract      "
        "<Shift><Ctrl> Intersect"), NULL, 0 },
+  { delete_xpm, channels_dialog_delete_channel_callback, NULL,
+    N_("Delete Channel"), NULL, 0 },
   { NULL, NULL, NULL, NULL, NULL, 0 }
 };
 
@@ -549,12 +549,12 @@ channels_dialog_set_menu_sensitivity ()
   gtk_widget_set_sensitive (channels_ops_buttons[3].widget,
 			    !fs_sens && aux_sens);
 
-  menus_set_sensitive_locale ("<Channels>", N_("/Delete Channel"), !fs_sens && aux_sens);
-  gtk_widget_set_sensitive (channels_ops_buttons[4].widget,
-			    !fs_sens && aux_sens);
-
   menus_set_sensitive_locale ("<Channels>", N_("/Channel to Selection"), aux_sens);
-  gtk_widget_set_sensitive (channels_ops_buttons[5].widget, aux_sens);
+  gtk_widget_set_sensitive (channels_ops_buttons[4].widget, aux_sens);
+
+  menus_set_sensitive_locale ("<Channels>", N_("/Delete Channel"), !fs_sens && aux_sens);
+  gtk_widget_set_sensitive (channels_ops_buttons[5].widget,
+			    !fs_sens && aux_sens);
 
   menus_set_sensitive_locale ("<Channels>", N_("/Add to Selection"), aux_sens);
   menus_set_sensitive_locale ("<Channels>", N_("/Subtract From Selection"), aux_sens);

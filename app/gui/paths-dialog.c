@@ -154,9 +154,9 @@ static OpsButton paths_ops_buttons[] =
 {
   { new_xpm, paths_dialog_new_path_callback, NULL, N_("New Path"), NULL, 0 },
   { duplicate_xpm, paths_dialog_dup_path_callback, NULL, N_("Duplicate Path"), NULL, 0 },
-  { delete_xpm, paths_dialog_delete_path_callback, NULL, N_("Delete Path"), NULL, 0 },
   { toselection_xpm, paths_dialog_path_to_sel_callback, NULL, N_("Path to Selection"), NULL, 0 },
   { penstroke_xpm, paths_dialog_stroke_path_callback, NULL, N_("Stroke Path"), NULL, 0 },
+  { delete_xpm, paths_dialog_delete_path_callback, NULL, N_("Delete Path"), NULL, 0 },
   { NULL, NULL, NULL, NULL, NULL, 0 }
 };
 
@@ -188,16 +188,16 @@ paths_ops_button_set_sensitive (gint     but,
       menus_set_sensitive_locale ("<Paths>", N_("/Duplicate Path"), sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[1].widget,sensitive);
       break;
-    case DEL_PATH_BUTTON:
-      menus_set_sensitive_locale ("<Paths>", N_("/Delete Path"), sensitive);
-      gtk_widget_set_sensitive(paths_ops_buttons[2].widget,sensitive);
-      break;
     case PATH_TO_SEL_BUTTON:
       menus_set_sensitive_locale ("<Paths>", N_("/Path to Selection"), sensitive);
-      gtk_widget_set_sensitive(paths_ops_buttons[3].widget,sensitive);
+      gtk_widget_set_sensitive(paths_ops_buttons[2].widget,sensitive);
       break;
     case STROKE_PATH_BUTTON:
       menus_set_sensitive_locale ("<Paths>", N_("/Stroke Path"), sensitive);
+      gtk_widget_set_sensitive(paths_ops_buttons[3].widget,sensitive);
+      break;
+    case DEL_PATH_BUTTON:
+      menus_set_sensitive_locale ("<Paths>", N_("/Delete Path"), sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[4].widget,sensitive);
       break;
     case COPY_PATH_BUTTON:

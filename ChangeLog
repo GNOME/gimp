@@ -1,3 +1,10 @@
+1999-06-21  Tuomas Kuosmanen  <tigert@interaktiivinen.satama.saunalahti.fi>
+
+	* app/paths_dialog.c app/channels_dialog.c: changed the button 
+	order so that the Delete button (trashcan) is always the rightmost
+	button. Good for consistency. I hope nothing blows up because of
+	this :)
+	
 1999-06-21  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* app/layers_dialog.c: Changed the order of the layer ops buttons
