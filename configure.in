@@ -47,6 +47,7 @@ m4_define([gimpprint_required_version], [4.2.0])
 m4_define([gimpprint_toonew_version], [4.3.0])
 m4_define([rsvg_required_version], [2.2.0])
 m4_define([wmf_required_version], [0.2.8])
+m4_define([pygtk_required_version], [1.99.15])
 
 AC_INIT([GIMP], [gimp_version],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=GIMP],
@@ -1188,7 +1189,7 @@ if test "x$enable_python" != xno; then
   AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
 
   dnl check for PyGTK
-  PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= 1.99.15)
+  PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= pygtk_required_version)
   AC_SUBST(PYGTK_CFLAGS)
 fi
 AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)

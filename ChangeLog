@@ -1,3 +1,7 @@
+2004-01-23  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: made the pygtk minimum version an m4 define as well.
+
 2004-01-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/app_procs.c
