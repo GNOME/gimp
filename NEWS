@@ -18,7 +18,7 @@ Overview of Changes in GIMP 1.3.17
 - Finally a brush-shaped cursor for all paint tools [Mitch]
 - Started to integrate new composite functions [Helvetix]
 - Made the style for dockable tabs configurable [Mitch]
-- Some preparations for text transformations [Sven]
+- Some preparations for text transformations and vectors from text [Sven]
 - Store grid settings in XCF [Brix]
 - Redone assembly checks and run-time checks for CPU features [Sven]
 - Added lots of mnemonics to the menus [Jimmac]
@@ -29,7 +29,7 @@ Overview of Changes in GIMP 1.3.17
 - Lots of bug fixes
 
 Other contributors:
-  Eric Pierce, Joao S. O. Bueno, Alastair M. Robinson
+  Eric Pierce, Joao S. O. Bueno, Alastair M. Robinson, Tor Lillqvist
 
 
 Overview of Changes in GIMP 1.3.16

@@ -1,3 +1,7 @@
+2003-07-21  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdevicestatus.c: removed an unused function.
+
 2003-07-20  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimp.def

@@ -70,7 +70,6 @@ static void gimp_device_status_class_init      (GimpDeviceStatusClass *klass);
 static void gimp_device_status_init            (GimpDeviceStatus      *editor);
 
 static void gimp_device_status_destroy         (GtkObject             *object);
-static void gimp_device_status_unmap           (GtkWidget             *widget);
 
 static void gimp_device_status_update_entry    (GimpDeviceInfo        *device_info,
                                                 GimpDeviceStatusEntry *entry);
@@ -126,7 +125,6 @@ gimp_device_status_class_init (GimpDeviceStatusClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_device_status_destroy;
-  widget_class->unmap   = gimp_device_status_unmap;
 }
 
 static void
@@ -324,14 +322,6 @@ gimp_device_status_destroy (GtkObject *object)
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-static void
-gimp_device_status_unmap (GtkWidget *widget)
-{
-  GimpDeviceStatus *status = GIMP_DEVICE_STATUS (widget);
-
-  GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
 
 GtkWidget *
