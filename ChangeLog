@@ -1,4 +1,4 @@
-2004-07-25  Shlomi Fish  <shlomif@iglu.org.il>
+2004-07-26  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/: placed all the orientation map-related
 	public functions in orientmap.h. Now we're freeing the PPM's that it
