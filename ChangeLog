@@ -1,5 +1,18 @@
 2003-04-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/config/gimpdisplayconfig.[ch]: added gboolean show_scrollbars
+	to be consistent with show_menubar etc.
+
+	* app/config/gimprc-blurbs.h: added its blurb and made all
+	SHOW_FOO_BLURBs consistent.
+
+	* app/display/gimpdisplayshell.c: take the scrollbar visibility
+	default value from GimpDisplayConfig.
+
+	* app/gui/preferences-dialog.c: GUI for the new property.
+
+2003-04-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpmarshal.list: added VOID__DOUBLE_DOUBLE
 
 	* app/widgets/gimpnavigationpreview.[ch]: applied patch from

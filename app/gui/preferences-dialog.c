@@ -1317,6 +1317,9 @@ prefs_dialog_new (Gimp    *gimp,
   prefs_check_button_add (config, "show-rulers",
                           _("Show _Rulers"),
                           GTK_BOX (vbox2));
+  prefs_check_button_add (config, "show-scrollbars",
+                          _("Show Scrollbars"),
+                          GTK_BOX (vbox2));
   prefs_check_button_add (config, "show-statusbar",
                           _("Show S_tatusbar"),
                           GTK_BOX (vbox2));

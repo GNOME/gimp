@@ -53,6 +53,7 @@ struct _GimpDisplayConfig
   gchar                  *image_status_format;
   gboolean                show_menubar;
   gboolean                show_rulers;
+  gboolean                show_scrollbars;
   gboolean                show_statusbar;
   gboolean                confirm_on_close;
   gdouble                 monitor_xres;

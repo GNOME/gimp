@@ -69,6 +69,7 @@ enum
   PROP_IMAGE_STATUS_FORMAT,
   PROP_SHOW_MENUBAR,
   PROP_SHOW_RULERS,
+  PROP_SHOW_SCROLLBARS,
   PROP_SHOW_STATUSBAR,
   PROP_CONFIRM_ON_CLOSE,
   PROP_MONITOR_XRESOLUTION,
@@ -186,6 +187,10 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                     "show-rulers", SHOW_RULERS_BLURB,
                                     TRUE,
                                     0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SCROLLBARS,
+                                    "show-scrollbars", SHOW_SCROLLBARS_BLURB,
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
                                     "show-statusbar", SHOW_STATUSBAR_BLURB,
                                     TRUE,
@@ -294,6 +299,9 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_SHOW_RULERS:
       display_config->show_rulers = g_value_get_boolean (value);
       break;
+    case PROP_SHOW_SCROLLBARS:
+      display_config->show_scrollbars = g_value_get_boolean (value);
+      break;
     case PROP_SHOW_STATUSBAR:
       display_config->show_statusbar = g_value_get_boolean (value);
       break;
@@ -375,6 +383,9 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_SHOW_RULERS:
       g_value_set_boolean (value, display_config->show_rulers);
+      break;
+    case PROP_SHOW_SCROLLBARS:
+      g_value_set_boolean (value, display_config->show_scrollbars);
       break;
     case PROP_SHOW_STATUSBAR:
       g_value_set_boolean (value, display_config->show_statusbar);

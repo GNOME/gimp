@@ -467,7 +467,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   shell->visibility.menubar    = config->show_menubar;
   shell->visibility.rulers     = config->show_rulers;
-  shell->visibility.scrollbars = TRUE;
+  shell->visibility.scrollbars = config->show_scrollbars;
   shell->visibility.statusbar  = config->show_statusbar;
 
   /* adjust the initial scale -- so that window fits on screen the 75%

@@ -239,16 +239,20 @@ N_("Save the positions and sizes of the main dialogs when the GIMP exits.")
 "This path will be searched for scripts when the Script-Fu plug-in is run."
 
 #define SHOW_MENUBAR_BLURB \
-N_("Sets the default menubar visibility. This can also be toggled with the "\
-   "\"View->Toggle\" Menubar command.")
+N_("When enabled, the menubar is visible by default. This can also be " \
+   "toggled with the \"View->Show Menubar\" command.")
 
 #define SHOW_RULERS_BLURB \
-N_("Sets the default ruler visibility. This can also be toggled with the " \
-   "\"View->Toggle Rulers\" command.")
+N_("When enabled, the rulers are visible by default. This can also be " \
+   "toggled with the \"View->Show Rulers\" command.")
+
+#define SHOW_SCROLLBARS_BLURB \
+N_("When enabled, the scrollbars are visible by default. This can also be " \
+   "toggled with the \"View->Show Scrollbars\" command.")
 
 #define SHOW_STATUSBAR_BLURB \
 N_("When enabled, the statusbar is visible by default. This can also be " \
-   "toggled with the \"View->Toggle Statusbar\" command.")
+   "toggled with the \"View->Show Statusbar\" command.")
 
 #define SHOW_TIPS_BLURB \
 N_("Enable to display a handy GIMP tip on startup.")
