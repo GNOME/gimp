@@ -40,16 +40,16 @@ GimpUnit _gimp_unit_new                          (gchar    *identifier,
 						  gchar    *abbreviation,
 						  gchar    *singular,
 						  gchar    *plural);
-gboolean _gimp_unit_get_deletion_flag            (GimpUnit  unit_ID);
-void     _gimp_unit_set_deletion_flag            (GimpUnit  unit_ID,
+gboolean _gimp_unit_get_deletion_flag            (GimpUnit  unit_id);
+void     _gimp_unit_set_deletion_flag            (GimpUnit  unit_id,
 						  gboolean  deletion_flag);
-gchar*   _gimp_unit_get_identifier               (GimpUnit  unit_ID);
-gdouble  _gimp_unit_get_factor                   (GimpUnit  unit_ID);
-gint     _gimp_unit_get_digits                   (GimpUnit  unit_ID);
-gchar*   _gimp_unit_get_symbol                   (GimpUnit  unit_ID);
-gchar*   _gimp_unit_get_abbreviation             (GimpUnit  unit_ID);
-gchar*   _gimp_unit_get_singular                 (GimpUnit  unit_ID);
-gchar*   _gimp_unit_get_plural                   (GimpUnit  unit_ID);
+gchar*   _gimp_unit_get_identifier               (GimpUnit  unit_id);
+gdouble  _gimp_unit_get_factor                   (GimpUnit  unit_id);
+gint     _gimp_unit_get_digits                   (GimpUnit  unit_id);
+gchar*   _gimp_unit_get_symbol                   (GimpUnit  unit_id);
+gchar*   _gimp_unit_get_abbreviation             (GimpUnit  unit_id);
+gchar*   _gimp_unit_get_singular                 (GimpUnit  unit_id);
+gchar*   _gimp_unit_get_plural                   (GimpUnit  unit_id);
 
 
 #ifdef __cplusplus

@@ -1,3 +1,13 @@
+Mon Aug 21 14:09:55 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/unit.pdb: added get_number_of_built_in_units
+
+	* tools/pdbgen/Makefile.am: gen files in $top_srcdir/libgimp
+
+	* tools/pdbgen/lib.pl
+	* tools/pdbgen/pdb/procedural_db.pdb: libgimp pdbgen munging, final
+	landing
+
 Mon Aug 21 11:57:48 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/lib.pl

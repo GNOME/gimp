@@ -23,6 +23,7 @@
 #include "libgimp/gimpunit.h"
 
 static ProcRecord unit_get_number_of_units_proc;
+static ProcRecord unit_get_number_of_built_in_units_proc;
 static ProcRecord unit_new_proc;
 static ProcRecord unit_get_deletion_flag_proc;
 static ProcRecord unit_set_deletion_flag_proc;
@@ -38,6 +39,7 @@ void
 register_unit_procs (void)
 {
   procedural_db_register (&unit_get_number_of_units_proc);
+  procedural_db_register (&unit_get_number_of_built_in_units_proc);
   procedural_db_register (&unit_new_proc);
   procedural_db_register (&unit_get_deletion_flag_proc);
   procedural_db_register (&unit_set_deletion_flag_proc);
@@ -84,6 +86,42 @@ static ProcRecord unit_get_number_of_units_proc =
   1,
   unit_get_number_of_units_outargs,
   { { unit_get_number_of_units_invoker } }
+};
+
+static Argument *
+unit_get_number_of_built_in_units_invoker (Argument *args)
+{
+  Argument *return_args;
+
+  return_args = procedural_db_return_args (&unit_get_number_of_built_in_units_proc, TRUE);
+  return_args[1].value.pdb_int = gimp_unit_get_number_of_units ();
+
+  return return_args;
+}
+
+static ProcArg unit_get_number_of_built_in_units_outargs[] =
+{
+  {
+    PDB_INT32,
+    "num_units",
+    "The number of built-in units"
+  }
+};
+
+static ProcRecord unit_get_number_of_built_in_units_proc =
+{
+  "gimp_unit_get_number_of_built_in_units",
+  "Returns the number of built-in units.",
+  "This procedure returns the number of defined units built-in to the GIMP.",
+  "Michael Natterer",
+  "Michael Natterer",
+  "1999",
+  PDB_INTERNAL,
+  0,
+  NULL,
+  1,
+  unit_get_number_of_built_in_units_outargs,
+  { { unit_get_number_of_built_in_units_invoker } }
 };
 
 static Argument *

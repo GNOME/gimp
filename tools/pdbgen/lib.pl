@@ -275,7 +275,12 @@ CODE
 		    my $var = $_->{libname}; my $dh = ""; my $df = "";
 		    unless (exists $_->{retval}) {
 			$var = "*$var"; $dh = "(*"; $df = ")";
-			$arglist .= "$datatype **$_->{libname}";
+			if ($type eq 'stringarray') {
+			    $arglist .= "$datatype**$_->{libname}";
+			}
+			else {
+			    $arglist .= "$datatype **$_->{libname}";
+			}
 		    }
 
 		    if ($ch || $cf) {

@@ -114,6 +114,14 @@ stamp-app: $(srcdir)/app.pl $(pdb_scripts) $(pdb_sources)
 	   $(PERL) pdbgen.pl app \
 	&& echo timestamp > $$rootme/stamp-app
 
+stamp-lib: $(srcdir)/lib.pl $(pdb_scripts) $(pdb_sources)
+	rootme=`pwd`; \
+	destdir=`cd $(top_srcdir) && pwd`; export destdir; \
+	cd $(srcdir) && \
+	   PDBGEN_BACKUP=$(PDBGEN_BACKUP) PDBGEN_GROUPS=$(PDBGEN_GROUPS) \
+	   $(PERL) pdbgen.pl lib \
+	&& echo timestamp > $$rootme/stamp-lib
+
 stamp-enum-code: $(srcdir)/enumcode.pl enums.pl util.pl
 	rootme=`pwd`; \
 	destdir=`cd $(top_srcdir) && pwd`; export destdir; \
@@ -122,4 +130,4 @@ stamp-enum-code: $(srcdir)/enumcode.pl enums.pl util.pl
 	  $(PERL) enumcode.pl \
 	 && echo timestamp > $$rootme/stamp-enum-code
 
-all-local: stamp-app stamp-enum-code
+all-local: stamp-app stamp-lib stamp-enum-code

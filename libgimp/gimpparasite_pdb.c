@@ -72,8 +72,8 @@ gimp_parasite_detach (gchar *name)
 }
 
 void
-gimp_parasite_list (gint   *num_parasites,
-		    gchar **parasites)
+gimp_parasite_list (gint    *num_parasites,
+		    gchar ***parasites)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -85,12 +85,13 @@ gimp_parasite_list (gint   *num_parasites,
 
   *num_parasites = 0;
   *parasites = NULL;
+
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *num_parasites = return_vals[1].data.d_int32;
-      parasites = g_new (gchar *, *num_parasites);
+      *parasites = g_new (gchar *, *num_parasites);
       for (i = 0; i < *num_parasites; i++)
-	parasites[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+	(*parasites)[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -151,10 +152,9 @@ gimp_drawable_parasite_detach (gint32  drawable_ID,
 }
 
 void
-gimp_drawable_parasite_list (gint32  drawable_ID,
-			     gint   *num_parasites,
-			     gchar **parasites)
-
+gimp_drawable_parasite_list (gint32    drawable_ID,
+			     gint     *num_parasites,
+			     gchar  ***parasites)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -167,12 +167,13 @@ gimp_drawable_parasite_list (gint32  drawable_ID,
 
   *num_parasites = 0;
   *parasites = NULL;
+
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *num_parasites = return_vals[1].data.d_int32;
-      parasites = g_new (gchar *, *num_parasites);
+      *parasites = g_new (gchar *, *num_parasites);
       for (i = 0; i < *num_parasites; i++)
-	parasites[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+	(*parasites)[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -233,9 +234,9 @@ gimp_image_parasite_detach (gint32  image_ID,
 }
 
 void
-gimp_image_parasite_list (gint32  image_ID,
-			  gint   *num_parasites,
-			  gchar **parasites)
+gimp_image_parasite_list (gint32    image_ID,
+			  gint     *num_parasites,
+			  gchar  ***parasites)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -248,12 +249,13 @@ gimp_image_parasite_list (gint32  image_ID,
 
   *num_parasites = 0;
   *parasites = NULL;
+
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *num_parasites = return_vals[1].data.d_int32;
-      parasites = g_new (gchar *, *num_parasites);
+      *parasites = g_new (gchar *, *num_parasites);
       for (i = 0; i < *num_parasites; i++)
-	parasites[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+	(*parasites)[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

@@ -31,29 +31,29 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-GimpParasite* gimp_parasite_find                (gchar        *name);
-void          gimp_parasite_attach              (GimpParasite *parasite);
-void          gimp_parasite_detach              (gchar        *name);
-void          gimp_parasite_list                (gint         *num_parasites,
-						 gchar**       parasites);
-GimpParasite* gimp_drawable_parasite_find       (gint32        drawable_ID,
-						 gchar        *name);
-void          gimp_drawable_parasite_attach     (gint32        drawable_ID,
-						 GimpParasite *parasite);
-void          gimp_drawable_parasite_detach     (gint32        drawable_ID,
-						 gchar        *name);
-void          gimp_drawable_parasite_list       (gint32        drawable_ID,
-						 gint         *num_parasites,
-						 gchar**       parasites);
-GimpParasite* gimp_image_parasite_find          (gint32        image_ID,
-						 gchar        *name);
-void          gimp_image_parasite_attach        (gint32        image_ID,
-						 GimpParasite *parasite);
-void          gimp_image_parasite_detach        (gint32        image_ID,
-						 gchar        *name);
-void          gimp_image_parasite_list          (gint32        image_ID,
-						 gint         *num_parasites,
-						 gchar**       parasites);
+GimpParasite* gimp_parasite_find            (gchar          *name);
+void          gimp_parasite_attach          (GimpParasite   *parasite);
+void          gimp_parasite_detach          (gchar          *name);
+void          gimp_parasite_list            (gint           *num_parasites,
+					     gchar        ***parasites);
+GimpParasite* gimp_drawable_parasite_find   (gint32          drawable_ID,
+					     gchar          *name);
+void          gimp_drawable_parasite_attach (gint32          drawable_ID,
+					     GimpParasite   *parasite);
+void          gimp_drawable_parasite_detach (gint32          drawable_ID,
+					     gchar          *name);
+void          gimp_drawable_parasite_list   (gint32          drawable_ID,
+					     gint           *num_parasites,
+					     gchar        ***parasites);
+GimpParasite* gimp_image_parasite_find      (gint32          image_ID,
+					     gchar          *name);
+void          gimp_image_parasite_attach    (gint32          image_ID,
+					     GimpParasite   *parasite);
+void          gimp_image_parasite_detach    (gint32          image_ID,
+					     gchar          *name);
+void          gimp_image_parasite_list      (gint32          image_ID,
+					     gint           *num_parasites,
+					     gchar        ***parasites);
 
 
 #ifdef __cplusplus
