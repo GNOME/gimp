@@ -576,7 +576,7 @@ procedural_db_execute (gchar    *name,
 	{
 	  if (args[i].arg_type != procedure->args[i].arg_type)
 	    {
-	      return_args = (Argument *) g_malloc (sizeof (Argument));
+	      return_args = (Argument *) g_malloc (sizeof (Argument) * (procedure->num_values + 1));
 	      return_args->arg_type = PDB_STATUS;
 	      return_args->value.pdb_int = PDB_CALLING_ERROR;
 
@@ -606,7 +606,7 @@ procedural_db_execute (gchar    *name,
 	  break;
 
 	default:
-	  return_args = (Argument *) g_malloc (sizeof (Argument));
+	  return_args = (Argument *) g_malloc (sizeof (Argument) * (procedure->num_values + 1));
 	  return_args->arg_type = PDB_STATUS;
 	  return_args->value.pdb_int = PDB_EXECUTION_ERROR;
 	  break;

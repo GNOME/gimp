@@ -751,6 +751,7 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
 	      success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
 	      break;
 	    default:
+	      success = FALSE;
 	      break;
 	    }
 

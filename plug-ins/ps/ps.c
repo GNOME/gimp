@@ -37,10 +37,11 @@
  *                        If GS_OPTIONS are not set, use at least "-dSAFER"
  * V 1.03, nn, 20-Dec-97: Initialize some variables
  * V 1.04, PK, 20-Dec-97: Add Encapsulated PostScript output and preview
+ * V 1.05, PK, 21-Sep-98: Write b/w-images (indexed) using image-operator
  */
-#define VERSIO                                               1.04
-static char dversio[] =                                    "v1.04  20-Dec-97";
-static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.04  20-Dec-97";
+#define VERSIO                                               1.05
+static char dversio[] =                                    "v1.05  26-Sep-98";
+static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.05  26-Sep-98";
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -141,6 +142,9 @@ static gint   save_image (char *filename,
                           gint32  drawable_ID);
 
 static gint save_gray  (FILE *ofp,
+                        gint32 image_ID,
+                        gint32 drawable_ID);
+static gint save_bw    (FILE *ofp,
                         gint32 image_ID,
                         gint32 drawable_ID);
 static gint save_index (FILE *ofp,
@@ -1379,8 +1383,13 @@ save_ps_setup (FILE *ofp,
 
   /* Write the PostScript procedures to read the image */
   fprintf (ofp, "%% Variable to keep one line of raster data\n");
-  fprintf (ofp, "/scanline %d %d mul string def\n", width, bpp);
-  fprintf (ofp, "%% Image geometry\n%d %d 8\n", width, height);
+  if (bpp == 1)
+    fprintf (ofp, "/scanline %d string def\n", (width+7)/8);
+  else
+    fprintf (ofp, "/scanline %d %d mul string def\n", width, bpp);
+
+  fprintf (ofp, "%% Image geometry\n%d %d %d\n", width, height,
+           (bpp == 1) ? 1 : 8);
   fprintf (ofp, "%% Transformation matrix\n");
   xtrans = ytrans = 0;
   if (psvals.width < 0.0) { width = -width; xtrans = -width; }
@@ -1630,7 +1639,7 @@ save_gray  (FILE *ofp,
   src = data = (unsigned char *)g_malloc (tile_height * width * drawable->bpp);
 
   /* Set up transformation in PostScript */
-  save_ps_setup (ofp, drawable_ID, width, height, 1);
+  save_ps_setup (ofp, drawable_ID, width, height, 1*8);
 
   /* Write read image procedure */
   fprintf (ofp, "{ currentfile scanline readhexstring pop }\n");
@@ -1671,12 +1680,109 @@ save_gray  (FILE *ofp,
 
 
 static gint
+save_bw (FILE *ofp,
+         gint32 image_ID,
+         gint32 drawable_ID)
+
+{ int height, width, i, j;
+  int ncols, nbsl, nwrite;
+  int tile_height;
+  unsigned char *cmap, *ct;
+  unsigned char *data, *src;
+  unsigned char *scanline, *dst, mask;
+  unsigned char *hex_scanline;
+  GPixelRgn pixel_rgn;
+  GDrawable *drawable;
+  GDrawableType drawable_type;
+  static char *hex = "0123456789abcdef";
+
+  cmap = gimp_image_get_cmap (image_ID, &ncols);
+
+  drawable = gimp_drawable_get (drawable_ID);
+  drawable_type = gimp_drawable_type (drawable_ID);
+  width = drawable->width;
+  height = drawable->height;
+  tile_height = gimp_tile_height ();
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
+
+  /* allocate a buffer for retrieving information from the pixel region  */
+  src = data = (unsigned char *)g_malloc (tile_height * width * drawable->bpp);
+  nbsl = (width+7)/8;
+  scanline = (char *)g_malloc (nbsl + 1);
+  hex_scanline = (char *)g_malloc ((nbsl + 1)*2);
+
+  /* Set up transformation in PostScript */
+  save_ps_setup (ofp, drawable_ID, width, height, 1);
+
+  /* Write read image procedure */
+  fprintf (ofp, "{ currentfile scanline readhexstring pop }\n");
+  fprintf (ofp, "image\n");
+
+#define GET_BW_TILE(begin) \
+  {int scan_lines; \
+    scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i); \
+    gimp_pixel_rgn_get_rect (&pixel_rgn, begin, 0, i, width, scan_lines); \
+    src = begin; }
+
+  for (i = 0; i < height; i++)
+  {
+    if ((i % tile_height) == 0) GET_BW_TILE (data); /* Get more data */
+    dst = scanline;
+    memset (dst, 0, nbsl);
+    mask = 0x80;
+    /* Build a bitmap for a scanline */
+    for (j = 0; j < width; j++)
+    {
+      ct = cmap + *(src++)*3;
+      if (ct[0] || ct[1] || ct[2])
+        *dst |= mask;
+      if (mask == 0x01) { mask = 0x80; dst++; } else mask >>= 1;
+    }
+    /* Convert to hexstring */
+    for (j = 0; j < nbsl; j++)
+    {
+      hex_scanline[j*2] = (unsigned char)hex[scanline[j] >> 4];
+      hex_scanline[j*2+1] = (unsigned char)hex[scanline[j] & 0x0f];
+    }
+    /* Write out hexstring */
+    j = nbsl * 2;
+    dst = hex_scanline;
+    while (j > 0)
+    {
+      nwrite = (j > 78) ? 78 : j;
+      fwrite (dst, nwrite, 1, ofp);
+      putc ('\n', ofp);
+      j -= nwrite;
+      dst += nwrite;
+    }
+    if ((l_run_mode != RUN_NONINTERACTIVE) && ((i % 20) == 0))
+      gimp_progress_update ((double) i / (double) height);
+  }
+  fprintf (ofp, "showpage\n");
+
+  g_free (hex_scanline);
+  g_free (scanline);
+  g_free (data);
+
+  gimp_drawable_detach (drawable);
+
+  if (ferror (ofp))
+  {
+    g_message ("write error occured");
+    return (FALSE);
+  }
+  return (TRUE);
+#undef GET_BW_TILE
+}
+
+
+static gint
 save_index (FILE *ofp,
             gint32 image_ID,
             gint32 drawable_ID)
 
 { int height, width, i, j;
-  int ncols;
+  int ncols, bw;
   int tile_height;
   unsigned char *cmap;
   unsigned char *data, *src;
@@ -1686,6 +1792,31 @@ save_index (FILE *ofp,
   GDrawableType drawable_type;
   static char *hex = "0123456789abcdef";
   static char *background = "000000";
+
+  cmap = gimp_image_get_cmap (image_ID, &ncols);
+
+  ct = coltab;
+  bw = 1;
+  for (j = 0; j < 256; j++)
+  {
+    if (j >= ncols)
+    {
+      memcpy (ct, background, 6);
+      ct += 6;
+    }
+    else
+    {
+      bw &=    ((cmap[0] == 0) && (cmap[1] == 0) && (cmap[2] == 0))
+            || ((cmap[0] == 255) && (cmap[1] == 255) && (cmap[2] == 255));
+      *(ct++) = (unsigned char)hex[(*cmap) >> 4];
+      *(ct++) = (unsigned char)hex[(*(cmap++)) & 0x0f];
+      *(ct++) = (unsigned char)hex[(*cmap) >> 4];
+      *(ct++) = (unsigned char)hex[(*(cmap++)) & 0x0f];
+      *(ct++) = (unsigned char)hex[(*cmap) >> 4];
+      *(ct++) = (unsigned char)hex[(*(cmap++)) & 0x0f];
+    }
+  }
+  if (bw) return (save_bw (ofp, image_ID, drawable_ID));
 
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
@@ -1697,29 +1828,8 @@ save_index (FILE *ofp,
   /* allocate a buffer for retrieving information from the pixel region  */
   src = data = (unsigned char *)g_malloc (tile_height * width * drawable->bpp);
 
-  cmap = gimp_image_get_cmap (image_ID, &ncols);
-
-  ct = coltab;
-  for (j = 0; j < 256; j++)
-  {
-    if (j >= ncols)
-    {
-      memcpy (ct, background, 6);
-      ct += 6;
-    }
-    else
-    {
-      *(ct++) = (unsigned char)hex[(*cmap) >> 4];
-      *(ct++) = (unsigned char)hex[(*(cmap++)) & 0x0f];
-      *(ct++) = (unsigned char)hex[(*cmap) >> 4];
-      *(ct++) = (unsigned char)hex[(*(cmap++)) & 0x0f];
-      *(ct++) = (unsigned char)hex[(*cmap) >> 4];
-      *(ct++) = (unsigned char)hex[(*(cmap++)) & 0x0f];
-    }
-  }
-
   /* Set up transformation in PostScript */
-  save_ps_setup (ofp, drawable_ID, width, height, 3);
+  save_ps_setup (ofp, drawable_ID, width, height, 3*8);
 
   /* Write read image procedure */
   fprintf (ofp, "{ currentfile scanline readhexstring pop } false 3\n");
@@ -1784,7 +1894,7 @@ save_rgb (FILE *ofp,
   src = data = (unsigned char *)g_malloc (tile_height * width * drawable->bpp);
 
   /* Set up transformation in PostScript */
-  save_ps_setup (ofp, drawable_ID, width, height, 3);
+  save_ps_setup (ofp, drawable_ID, width, height, 3*8);
 
   /* Write read image procedure */
   fprintf (ofp, "{ currentfile scanline readhexstring pop } false 3\n");

@@ -1,3 +1,20 @@
+Tue Oct 13 18:16:38 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/color_select.c: applied gimp-austin-981011-1, fixes color
+	selector redraw bug
+
+	* plug-ins/compose/compose.c
+	* plug-ins/decompose/decompose.c
+	* plug-ins/ps/ps.c: updates from the registry
+
+	* libgimp/gimp.h
+	* plug-ins/jpeg.c
+	* plug-ins/tiff.c: applied gimp-austin-981010-0, fixes compilation
+	warnings for jpeg and tiff plugin
+
+	* app/procedural_db.c: fix PDB arg allocation bug, thanks to
+	Frank Loemker <floemker@TechFak.Uni-Bielefeld.DE>
+
 Fri Oct  9 15:36:52 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/temp_buf.c: applied gimp-entity-980929-1, adds

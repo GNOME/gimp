@@ -25,8 +25,15 @@
 /* Event history:
  * V 1.00, PK, 29-Jul-97, Creation
  * V 1.01, nn, 20-Dec-97, Add default case in switch for hsv_to_rgb ()
+ * V 1.02, PK, 18-Sep-98, Change variable names in Parameter definition.
+ *         Otherwise script-fu merges parameters (reported by Patrick Valsecchi)
+ *         Check images for same width/height (interactive mode)
+ *         Use drawables in interactive menu
+ *         Use g_message in interactive mode
+ *         Check sensitivity of menues (thanks to Kevin Turner,
+ *           kevint@poboxes.com)
  */
-static char ident[] = "@(#) GIMP Compose plug-in v1.01 20-Dec-97";
+static char ident[] = "@(#) GIMP Compose plug-in v1.02 03-Oct-98";
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,8 +52,11 @@ static void      run    (char      *name,
 			 int       *nreturn_vals,
 			 GParam   **return_vals);
 
+static void      show_message (char *message);
+
 static gint32    compose (char *compose_type,
-                          gint32 *compose_ID);
+                          gint32 *compose_ID,
+                          int compose_by_drawable);
 
 static gint32    create_new_image (char *filename, guint width, guint height,
                    GDrawableType gdtype, gint32 *layer_ID, GDrawable **drawable,
@@ -54,22 +64,22 @@ static gint32    create_new_image (char *filename, guint width, guint height,
 
 static int       cmp_icase (char *s1, char *s2);
 
-static void      compose_rgb  (unsigned char **src, int numpix,
+static void      compose_rgb  (unsigned char **src, int *incr, int numpix,
                                unsigned char *dst);
-static void      compose_rgba (unsigned char **src, int numpix,
+static void      compose_rgba (unsigned char **src, int *incr, int numpix,
                                unsigned char *dst);
-static void      compose_hsv  (unsigned char **src, int numpix,
+static void      compose_hsv  (unsigned char **src, int *incr, int numpix,
                                unsigned char *dst);
-static void      compose_cmy  (unsigned char **src, int numpix,
+static void      compose_cmy  (unsigned char **src, int *incr, int numpix,
                                unsigned char *dst);
-static void      compose_cmyk (unsigned char **src, int numpix,
+static void      compose_cmyk (unsigned char **src, int *incr, int numpix,
                                unsigned char *dst);
 
 static void      hsv_to_rgb (unsigned char *h, unsigned char *s,
                              unsigned char *v, unsigned char *rgb);
 
 static gint      compose_dialog (char *compose_type,
-                                 gint32 image_ID);
+                                 gint32 drawable_ID);
 
 static gint      check_gray (gint32 image_id,
                              gint32 drawable_id,
@@ -96,18 +106,21 @@ typedef struct {
   char *channel_name[MAX_COMPOSE_IMAGES];  /* channel names for dialog */
   char *filename;                 /* Name of new image */
                                   /* Compose functon */
-  void (*compose_fun)(unsigned char **src, int numpix, unsigned char *dst);
+  void (*compose_fun)(unsigned char **src, int *incr_src, int numpix,
+                      unsigned char *dst);
 } COMPOSE_DSC;
 
 /* Array of available compositions. */
+#define CHNL_NA "N/A"
+
 static COMPOSE_DSC compose_dsc[] = {
- { "RGB",  3, { "Red:",   "Green:     ", "Blue:",   "N/A" },
+ { "RGB",  3, { "Red:",   "Green:     ", "Blue:",   CHNL_NA },
               "rgb-compose",  compose_rgb },
  { "RGBA", 4, { "Red:",   "Green:     ", "Blue:",   "Alpha:" },
               "rgba-compose",  compose_rgba },
- { "HSV",  3, { "Hue:",   "Saturation:", "Value:",  "N/A" },
+ { "HSV",  3, { "Hue:",   "Saturation:", "Value:",  CHNL_NA },
               "hsv-compose",  compose_hsv },
- { "CMY",  3, { "Cyan:",  "Magenta:   ", "Yellow:", "N/A" },
+ { "CMY",  3, { "Cyan:",  "Magenta:   ", "Yellow:", CHNL_NA },
               "cmy-compose",  compose_cmy },
  { "CMYK", 4, { "Cyan:",  "Magenta:   ", "Yellow:", "Black:" },
               "cmyk-compose", compose_cmyk }
@@ -123,7 +136,10 @@ typedef struct {
 
 /* Dialog structure */
 typedef struct {
+  int width, height;                     /* Size of selected image */
+
   GtkWidget *channel_label[MAX_COMPOSE_IMAGES]; /* The labels to change */
+  GtkWidget *channel_menu[MAX_COMPOSE_IMAGES];  /* The menues */
 
   gint32 select_ID[MAX_COMPOSE_IMAGES];  /* Image Ids selected by menu */
   gint compose_flag[MAX_COMPOSE_TYPES];  /* toggle data of compose type */
@@ -146,7 +162,9 @@ static ComposeVals composevals =
 
 static ComposeInterface composeint =
 {
+  0, 0,     /* width, height */
   { NULL }, /* Label Widgets */
+  { NULL }, /* Menu Widgets */
   { 0 },    /* Image IDs from menues */
   { 0 },    /* Compose type toggle flags */
   FALSE     /* run */
@@ -163,11 +181,11 @@ query ()
   static GParamDef args[] =
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "First input image" },
+    { PARAM_IMAGE, "image1", "First input image" },
     { PARAM_DRAWABLE, "drawable", "Input drawable (not used)" },
-    { PARAM_IMAGE, "image", "Second input image" },
-    { PARAM_IMAGE, "image", "Third input image" },
-    { PARAM_IMAGE, "image", "Fourth input image" },
+    { PARAM_IMAGE, "image2", "Second input image" },
+    { PARAM_IMAGE, "image3", "Third input image" },
+    { PARAM_IMAGE, "image4", "Fourth input image" },
     { PARAM_STRING, "compose_type", "What to compose: RGB, RGBA, HSV,\
  CMY, CMYK" }
   };
@@ -178,19 +196,61 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
+  static GParamDef drw_args[] =
+  {
+    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
+    { PARAM_IMAGE, "image1", "First input image (not used)" },
+    { PARAM_DRAWABLE, "drawable1", "First input drawable" },
+    { PARAM_DRAWABLE, "drawable2", "Second input drawable" },
+    { PARAM_DRAWABLE, "drawable3", "Third input drawable" },
+    { PARAM_DRAWABLE, "drawable4", "Fourth input drawable" },
+    { PARAM_STRING, "compose_type", "What to compose: RGB, RGBA, HSV,\
+ CMY, CMYK" }
+  };
+  static GParamDef drw_return_vals[] =
+  {
+    { PARAM_IMAGE, "new_image", "Output image" }
+  };
+  static int drw_nargs = sizeof (args) / sizeof (args[0]);
+  static int drw_nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
+
   gimp_install_procedure ("plug_in_compose",
-			  "Compose an image from different types of channels",
+			  "Compose an image from multiple gray images",
 			  "This function creates a new image from\
- different channel informations kept in gray images",
+ multiple gray images",
 			  "Peter Kirchgessner",
 			  "Peter Kirchgessner (pkirchg@aol.com)",
 			  "1997",
 			  "<Image>/Image/Channel Ops/Compose",
-			  "GRAY",
+			  "GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
+
+  gimp_install_procedure ("plug_in_drawable_compose",
+			  "Compose an image from multiple drawables of gray images",
+			  "This function creates a new image from\
+ multiple drawables of gray images",
+			  "Peter Kirchgessner",
+			  "Peter Kirchgessner (pkirchg@aol.com)",
+			  "1998",
+			  NULL,   /* It is not available in interactive mode */
+			  "GRAY*",
+			  PROC_PLUG_IN,
+			  drw_nargs, drw_nreturn_vals,
+			  drw_args, drw_return_vals);
 }
+
+
+static void show_message (char *message)
+
+{
+ if (run_mode == 0)
+   g_message (message);
+ else
+   printf (message);
+}
+
 
 static void
 run (char    *name,
@@ -201,9 +261,12 @@ run (char    *name,
 {
   static GParam values[2];
   GStatusType status = STATUS_SUCCESS;
-  gint32 image_ID;
+  gint32 image_ID, drawable_ID;
+  int compose_by_drawable;
+  char msg[256];
 
   run_mode = param[0].data.d_int32;
+  compose_by_drawable = (strcmp (name, "plug_in_drawable_compose") == 0);
 
   *nreturn_vals = 2;
   *return_vals = values;
@@ -217,32 +280,56 @@ run (char    *name,
     {
     case RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_compose", &composevals);
+      gimp_get_data (name , &composevals);
+
+      /* The dialog is now drawable based. Get a drawable-ID of the image */
+      if (strcmp (name, "plug_in_compose") == 0)
+      {gint32 *layer_list;
+       gint nlayers;
+
+        layer_list = gimp_image_get_layers (param[1].data.d_int32, &nlayers);
+        if ((layer_list == NULL) || (nlayers <= 0))
+        {
+          sprintf (msg, "compose: Could not get layers for image %d",
+                   (int)param[1].data.d_int32);
+          show_message (msg);
+          return;
+        }
+        drawable_ID = layer_list[0];
+        g_free (layer_list);
+      }
+      else
+        drawable_ID = param[2].data.d_int32;
+
+      compose_by_drawable = 1;
 
       /*  First acquire information with a dialog  */
-      if (! compose_dialog (composevals.compose_type, param[1].data.d_int32))
+      if (! compose_dialog (composevals.compose_type, drawable_ID))
 	return;
+
       break;
 
     case RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 7)
 	status = STATUS_CALLING_ERROR;
+
       if (status == STATUS_SUCCESS)
-	{
-          composevals.compose_ID[0] = param[1].data.d_int32;
-          composevals.compose_ID[1] = param[3].data.d_int32;
-          composevals.compose_ID[2] = param[4].data.d_int32;
-          composevals.compose_ID[3] = param[5].data.d_int32;
-          strncpy (composevals.compose_type, param[6].data.d_string,
-                   sizeof (composevals.compose_type));
-          composevals.compose_type[sizeof (composevals.compose_type)-1] = '\0';
-	}
+      {
+        composevals.compose_ID[0] =
+          compose_by_drawable ? param[2].data.d_int32 : param[1].data.d_int32;
+        composevals.compose_ID[1] = param[3].data.d_int32;
+        composevals.compose_ID[2] = param[4].data.d_int32;
+        composevals.compose_ID[3] = param[5].data.d_int32;
+        strncpy (composevals.compose_type, param[6].data.d_string,
+                 sizeof (composevals.compose_type));
+        composevals.compose_type[sizeof (composevals.compose_type)-1] = '\0';
+      }
       break;
 
     case RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_compose", &composevals);
+      gimp_get_data (name, &composevals);
       break;
 
     default:
@@ -254,7 +341,8 @@ run (char    *name,
       if (run_mode != RUN_NONINTERACTIVE)
         gimp_progress_init ("Composing...");
 
-      image_ID = compose (composevals.compose_type, composevals.compose_ID);
+      image_ID = compose (composevals.compose_type, composevals.compose_ID,
+                          compose_by_drawable);
 
       if (image_ID <= 0)
       {
@@ -271,7 +359,7 @@ run (char    *name,
 
       /*  Store data  */
       if (run_mode == RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_compose", &composevals, sizeof (ComposeVals));
+        gimp_set_data (name, &composevals, sizeof (ComposeVals));
     }
 
   values[0].data.d_status = status;
@@ -281,13 +369,14 @@ run (char    *name,
 /* Compose an image from several gray-images */
 static gint32
 compose (char *compose_type,
-         gint32 *compose_ID)
+         gint32 *compose_ID,
+         int compose_by_drawable)
 
 {int width, height, tile_height, scan_lines;
- int num_images, compose_idx;
+ int num_images, compose_idx, incr_src[MAX_COMPOSE_IMAGES];
  int i, j;
  gint num_layers;
- gint32 *g32, layer_ID_src[MAX_COMPOSE_IMAGES], layer_ID_dst, image_ID_dst;
+ gint32 layer_ID_dst, image_ID_dst;
  unsigned char *src[MAX_COMPOSE_IMAGES], *dst = (unsigned char *)ident;
  GDrawableType gdtype_dst;
  GDrawable *drawable_src[MAX_COMPOSE_IMAGES], *drawable_dst;
@@ -304,39 +393,69 @@ compose (char *compose_type,
     return (-1);
 
   num_images = compose_dsc[compose_idx].num_images;
-
-  /* Check image sizes */
-  width = gimp_image_width (compose_ID[0]);
-  height = gimp_image_height (compose_ID[0]);
   tile_height = gimp_tile_height ();
 
-  for (j = 1; j < num_images; j++)
+  /* Check image sizes */
+  if (compose_by_drawable)
   {
-    if (   (width != (int)gimp_image_width (compose_ID[j]))
-        || (height != (int)gimp_image_height (compose_ID[j])))
+    width = gimp_drawable_width (compose_ID[0]);
+    height = gimp_drawable_height (compose_ID[0]);
+
+    for (j = 1; j < num_images; j++)
     {
-      printf ("compose: images have different size\n");
-      return -1;
+      if (   (width != (int)gimp_drawable_width (compose_ID[j]))
+          || (height != (int)gimp_drawable_height (compose_ID[j])))
+      {
+        show_message ("compose: drawables have different size");
+        return -1;
+      }
+    }
+    for (j = 0; j < num_images; j++)
+      drawable_src[j] = gimp_drawable_get (compose_ID[j]);
+  }
+  else    /* Compose by image ID */
+  {
+    width = gimp_image_width (compose_ID[0]);
+    height = gimp_image_height (compose_ID[0]);
+
+    for (j = 1; j < num_images; j++)
+    {
+      if (   (width != (int)gimp_image_width (compose_ID[j]))
+          || (height != (int)gimp_image_height (compose_ID[j])))
+      {
+        show_message ("compose: images have different size");
+        return -1;
+      }
+    }
+
+    /* Get first layer/drawable for all input images */
+    for (j = 0; j < num_images; j++)
+    {gint32 *g32;
+
+      /* Get first layer of image */
+      g32 = gimp_image_get_layers (compose_ID[j], &num_layers);
+      if ((g32 == NULL) || (num_layers <= 0))
+      {
+        show_message ("compose: error in getting layer IDs");
+        return (-1);
+      }
+
+      /* Get drawable for layer */
+      drawable_src[j] = gimp_drawable_get (g32[0]);
+      g_free (g32);
     }
   }
 
-  /* Get first layer/drawable/pixel region for all input images */
+  /* Get pixel region for all input drawables */
   for (j = 0; j < num_images; j++)
   {
-    /* Get first layer of image */
-    g32 = gimp_image_get_layers (compose_ID[j], &num_layers);
-    if ((g32 == NULL) || (num_layers <= 0))
-    {
-      printf ("compose: error in getting layer IDs\n");
-      return (-1);
-    }
-    layer_ID_src[j] = g32[0];
-
-    /* Get drawable for layer */
-    drawable_src[j] = gimp_drawable_get (layer_ID_src[j]);
-    if (drawable_src[j]->bpp != 1)
-    {
-      printf ("compose: image is not a gray image\n");
+    /* Check bytes per pixel */
+    incr_src[j] = drawable_src[j]->bpp;
+    if ((incr_src[j] != 1) && (incr_src[j] != 2))
+    {char msg[256];
+      sprintf (msg, "compose: image is not a gray image (bpp=%d)\n",
+               incr_src[j]);
+      show_message (msg);
       return (-1);
     }
 
@@ -349,7 +468,7 @@ compose (char *compose_type,
                                         * drawable_src[j]->bpp);
     if (src[j] == NULL)
     {
-      printf ("compose: not enough memory\n");
+      show_message ("compose: not enough memory");
       return (-1);
     }
   }
@@ -364,7 +483,7 @@ compose (char *compose_type,
   if (dst == NULL)
   {
     for (j = 0; j < num_images; j++) g_free (src[j]);
-    printf ("compose: not enough memory\n");
+    show_message ("compose: not enough memory");
     return (-1);
   }
 
@@ -380,7 +499,7 @@ compose (char *compose_type,
                                width, scan_lines);
 
     /* Do the composition */
-    compose_dsc[compose_idx].compose_fun (src, width*tile_height, dst);
+    compose_dsc[compose_idx].compose_fun (src,incr_src,width*tile_height,dst);
 
     /* Set destination pixel region */
     gimp_pixel_rgn_set_rect (&pixel_rgn_dst, dst, 0, i, width, scan_lines);
@@ -458,6 +577,7 @@ static int cmp_icase (char *s1, char *s2)
 
 static void
 compose_rgb (unsigned char **src,
+             int *incr_src,
              int numpix,
              unsigned char *dst)
 
@@ -466,18 +586,32 @@ compose_rgb (unsigned char **src,
  register unsigned char *blue_src = src[2];
  register unsigned char *rgb_dst = dst;
  register int count = numpix;
+ int red_incr = incr_src[0], green_incr = incr_src[1], blue_incr = incr_src[2];
 
- while (count-- > 0)
+ if ((red_incr == 1) && (green_incr == 1) && (blue_incr == 1))
  {
-   *(rgb_dst++) = *(red_src++);
-   *(rgb_dst++) = *(green_src++);
-   *(rgb_dst++) = *(blue_src++);
+   while (count-- > 0)
+   {
+     *(rgb_dst++) = *(red_src++);
+     *(rgb_dst++) = *(green_src++);
+     *(rgb_dst++) = *(blue_src++);
+   }
+ }
+ else
+ {
+   while (count-- > 0)
+   {
+     *(rgb_dst++) = *red_src;     red_src += red_incr;
+     *(rgb_dst++) = *green_src;   green_src += green_incr;
+     *(rgb_dst++) = *blue_src;    blue_src += blue_incr;
+   }
  }
 }
 
 
 static void
 compose_rgba (unsigned char **src,
+              int *incr_src,
               int numpix,
               unsigned char *dst)
 
@@ -487,19 +621,36 @@ compose_rgba (unsigned char **src,
  register unsigned char *alpha_src = src[3];
  register unsigned char *rgb_dst = dst;
  register int count = numpix;
+ int red_incr = incr_src[0], green_incr = incr_src[1],
+     blue_incr = incr_src[2], alpha_incr = incr_src[3];
 
- while (count-- > 0)
+ if (   (red_incr == 1) && (green_incr == 1) && (blue_incr == 1)
+     && (alpha_incr == 1))
  {
-   *(rgb_dst++) = *(red_src++);
-   *(rgb_dst++) = *(green_src++);
-   *(rgb_dst++) = *(blue_src++);
-   *(rgb_dst++) = *(alpha_src++);
+   while (count-- > 0)
+   {
+     *(rgb_dst++) = *(red_src++);
+     *(rgb_dst++) = *(green_src++);
+     *(rgb_dst++) = *(blue_src++);
+     *(rgb_dst++) = *(alpha_src++);
+   }
+ }
+ else
+ {
+   while (count-- > 0)
+   {
+     *(rgb_dst++) = *red_src;    red_src += red_incr;
+     *(rgb_dst++) = *green_src;  green_src += green_incr;
+     *(rgb_dst++) = *blue_src;   blue_src += blue_incr;
+     *(rgb_dst++) = *alpha_src;  alpha_src += alpha_incr;
+   }
  }
 }
 
 
 static void
 compose_hsv (unsigned char **src,
+             int *incr_src,
              int numpix,
              unsigned char *dst)
 
@@ -508,17 +659,22 @@ compose_hsv (unsigned char **src,
  register unsigned char *val_src = src[2];
  register unsigned char *rgb_dst = dst;
  register int count = numpix;
+ int hue_incr = incr_src[0], sat_incr = incr_src[1], val_incr = incr_src[2];
 
  while (count-- > 0)
  {
-   hsv_to_rgb (hue_src++, sat_src++, val_src++, rgb_dst);
+   hsv_to_rgb (hue_src, sat_src, val_src, rgb_dst);
    rgb_dst += 3;
+   hue_src += hue_incr;
+   sat_src += sat_incr;
+   val_src += val_incr;
  }
 }
 
 
 static void
 compose_cmy (unsigned char **src,
+             int *incr_src,
              int numpix,
              unsigned char *dst)
 
@@ -527,18 +683,36 @@ compose_cmy (unsigned char **src,
  register unsigned char *yellow_src = src[2];
  register unsigned char *rgb_dst = dst;
  register int count = numpix;
+ int cyan_incr = incr_src[0], magenta_incr = incr_src[1],
+     yellow_incr = incr_src[2];
 
- while (count-- > 0)
+ if (   (cyan_incr == 1) && (magenta_incr == 1) && (yellow_incr == 1))
  {
-   *(rgb_dst++) = 255 - *(cyan_src++);
-   *(rgb_dst++) = 255 - *(magenta_src++);
-   *(rgb_dst++) = 255 - *(yellow_src++);
+   while (count-- > 0)
+   {
+     *(rgb_dst++) = 255 - *(cyan_src++);
+     *(rgb_dst++) = 255 - *(magenta_src++);
+     *(rgb_dst++) = 255 - *(yellow_src++);
+   }
+ }
+ else
+ {
+   while (count-- > 0)
+   {
+     *(rgb_dst++) = 255 - *cyan_src;
+     *(rgb_dst++) = 255 - *magenta_src;
+     *(rgb_dst++) = 255 - *yellow_src;
+     cyan_src += cyan_incr;
+     magenta_src += magenta_incr;
+     yellow_src += yellow_incr;
+   }
  }
 }
 
 
 static void
 compose_cmyk (unsigned char **src,
+              int *incr_src,
               int numpix,
               unsigned char *dst)
 
@@ -549,15 +723,17 @@ compose_cmyk (unsigned char **src,
  register unsigned char *rgb_dst = dst;
  register int count = numpix;
  int cyan, magenta, yellow, black;
+ int cyan_incr = incr_src[0], magenta_incr = incr_src[1],
+     yellow_incr = incr_src[2], black_incr = incr_src[3];
 
  while (count-- > 0)
  {
-   black = (int)*(black_src++);
+   black = (int)*black_src;
    if (black)
    {
-     cyan = (int)*(cyan_src++);
-     magenta = (int)*(magenta_src++);
-     yellow = (int)*(yellow_src++);
+     cyan = (int)*cyan_src;
+     magenta = (int)*magenta_src;
+     yellow = (int)*yellow_src;
      cyan += black; if (cyan > 255) cyan = 255;
      magenta += black; if (magenta > 255) magenta = 255;
      yellow += black; if (yellow > 255) yellow = 255;
@@ -567,17 +743,21 @@ compose_cmyk (unsigned char **src,
    }
    else
    {
-     *(rgb_dst++) = 255 - *(cyan_src++);
-     *(rgb_dst++) = 255 - *(magenta_src++);
-     *(rgb_dst++) = 255 - *(yellow_src++);
+     *(rgb_dst++) = 255 - *cyan_src;
+     *(rgb_dst++) = 255 - *magenta_src;
+     *(rgb_dst++) = 255 - *yellow_src;
    }
+   cyan_src += cyan_incr;
+   magenta_src += magenta_incr;
+   yellow_src += yellow_incr;
+   black_src += black_incr;
  }
 }
 
 
 static gint
 compose_dialog (char *compose_type,
-                gint32 image_ID)
+                gint32 drawable_ID)
 {
   GtkWidget *dlg;
   GtkWidget *button;
@@ -591,7 +771,7 @@ compose_dialog (char *compose_type,
   GSList *group;
   gchar **argv;
   gint argc;
-  int j, compose_idx;
+  int j, compose_idx, sensitive;
 
   /* Check default compose type */
   compose_idx = -1;
@@ -601,6 +781,10 @@ compose_dialog (char *compose_type,
       compose_idx = j;
   }
   if (compose_idx < 0) compose_idx = 0;
+
+  /* Save original image width/height */
+  composeint.width = gimp_drawable_width (drawable_ID);
+  composeint.height = gimp_drawable_height (drawable_ID);
 
   argc = 1;
   argv = g_new (gchar *, 1);
@@ -681,13 +865,17 @@ compose_dialog (char *compose_type,
                       GTK_FILL, GTK_FILL, 0, 0);
     gtk_widget_show (label);
   }
+  /* Set sensitivity of last label */
+  sensitive = (strcmp (compose_dsc[compose_idx].channel_name[3],
+                       CHNL_NA) != 0);
+  gtk_widget_set_sensitive (composeint.channel_label[3], sensitive);
 
   /* Menues to select images */
   for (j = 0; j <  MAX_COMPOSE_IMAGES; j++)
   {
-    composeint.select_ID[j] = image_ID;
-    image_option_menu = gtk_option_menu_new ();
-    image_menu = gimp_image_menu_new (check_gray, image_menu_callback,
+    composeint.select_ID[j] = drawable_ID;
+    composeint.channel_menu[j] = image_option_menu = gtk_option_menu_new ();
+    image_menu = gimp_drawable_menu_new (check_gray, image_menu_callback,
                         &(composeint.select_ID[j]), composeint.select_ID[j]);
     gtk_table_attach (GTK_TABLE (table), image_option_menu, 2, 3, j, j+1,
                       GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -695,6 +883,7 @@ compose_dialog (char *compose_type,
     gtk_widget_show (image_option_menu);
     gtk_option_menu_set_menu (GTK_OPTION_MENU (image_option_menu), image_menu);
   }
+  gtk_widget_set_sensitive (composeint.channel_menu[3], sensitive);
 
   /* Compose types */
   group = NULL;
@@ -809,7 +998,9 @@ check_gray (gint32 image_id,
             gpointer data)
 
 {
-  return (gimp_image_base_type (image_id) == GRAY);
+  return (   (gimp_image_base_type (image_id) == GRAY)
+          && (gimp_image_width (image_id) == composeint.width)
+          && (gimp_image_height (image_id) == composeint.height));
 }
 
 
@@ -857,6 +1048,7 @@ compose_type_toggle_update (GtkWidget *widget,
 {
   gint *toggle_val;
   gint compose_idx, j;
+  int sensitive;
 
   toggle_val = (gint *) data;
 
@@ -867,6 +1059,12 @@ compose_type_toggle_update (GtkWidget *widget,
     for (j = 0; j < MAX_COMPOSE_IMAGES; j++)
       gtk_label_set (GTK_LABEL (composeint.channel_label[j]),
                      compose_dsc[compose_idx].channel_name[j]);
+
+    /* Set sensitivity of last label */
+    sensitive = (strcmp (compose_dsc[compose_idx].channel_name[3],
+                         CHNL_NA) != 0);
+    gtk_widget_set_sensitive (composeint.channel_label[3], sensitive);
+    gtk_widget_set_sensitive (composeint.channel_menu[3], sensitive);
   }
   else
     *toggle_val = FALSE;
