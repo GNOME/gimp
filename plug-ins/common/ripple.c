@@ -104,7 +104,7 @@ static RippleValues rvals =
   WRAP,       /* edges       */
   SINE,       /* waveform    */
   TRUE,       /* antialias   */
-  TRUE,       /* tile        */
+  FALSE,      /* tile        */
   TRUE        /* preview     */
 };
 
@@ -386,11 +386,25 @@ ripple (GimpDrawable *drawable,
         GimpPreview  *preview)
 {
   RippleParam_t param;
+  gint          edges;
+  gint          period;
 
   param.pft       = gimp_pixel_fetcher_new (drawable, FALSE);
   param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   param.width     = drawable->width;
   param.height    = drawable->height;
+
+  edges  = rvals.edges;
+  period = rvals.period;
+
+  if (rvals.tile)
+    {
+      rvals.edges = WRAP;
+      rvals.period = (param.width / (param.width / rvals.period) *
+                      (rvals.orientation == HORIZONTAL) +
+                      param.height / (param.height / rvals.period) *
+                      (rvals.orientation == VERTICAL));
+    }
 
   if (preview)
     {
@@ -402,7 +416,9 @@ ripple (GimpDrawable *drawable,
 
       gimp_preview_get_position (preview, &x1, &y1);
       gimp_preview_get_size (preview, &width, &height);
+
       d = buffer = g_new (guchar, width * height * bpp);
+
       for (y = 0; y < height ; y++)
         for (x = 0; x < width ; x++)
           {
@@ -412,6 +428,7 @@ ripple (GimpDrawable *drawable,
                ripple_horizontal (x1 + x, y1 + y, d, bpp, &param);
              d += bpp;
           }
+
       gimp_preview_draw_buffer (preview, buffer, width * bpp);
       g_free (buffer);
     }
@@ -419,20 +436,15 @@ ripple (GimpDrawable *drawable,
     {
       GimpRgnIterator *iter;
 
-      if ( rvals.tile )
-        {
-          rvals.edges = WRAP;
-          rvals.period = (param.width / (param.width / rvals.period) *
-                          (rvals.orientation == HORIZONTAL) +
-                          param.height / (param.height / rvals.period) *
-                          (rvals.orientation == VERTICAL));
-        }
-
       iter = gimp_rgn_iterator_new (drawable, 0);
       gimp_rgn_iterator_dest (iter, (rvals.orientation == VERTICAL)
                               ? ripple_vertical : ripple_horizontal, &param);
       gimp_rgn_iterator_free (iter);
     }
+
+  rvals.edges  = edges;
+  rvals.period = period;
+
   gimp_pixel_fetcher_destroy (param.pft);
 }
 
@@ -551,9 +563,13 @@ ripple_dialog (GimpDrawable *drawable)
                                     _("_Black"), BLACK, &black,
 
                                     NULL);
+
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 1, 2,
                     GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
   gtk_widget_show (frame);
+
+  g_object_set_data (G_OBJECT (toggle), "inverse_sensitive", frame);
+  gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (toggle));
 
   g_signal_connect_swapped (wrap, "toggled",
                             G_CALLBACK (gimp_preview_invalidate),
