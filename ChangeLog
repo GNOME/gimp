@@ -1,3 +1,9 @@
+Sat Apr 24 21:50:58 BST 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/edit_selection.c: Finished the opaque-move stuff...
+	hopefully.  Float and selection-mask movement behaviour
+	repaired, etc.
+
 Sat Apr 24 13:28:13 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/layer_cmds.[ch]: pdbgened, header file removed

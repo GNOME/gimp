@@ -285,6 +285,25 @@ edit_selection_button_release (Tool           *tool,
 
 #else
 
+  if (edit_select.cumlx == 0 && edit_select.cumly == 0)
+    {
+      /* The user either didn't actually move the selection,
+	 or moved it around and eventually just put it back in
+	 exactly the same spot. */
+
+      if ((edit_select.edit_type == MaskTranslate) ||
+	  (edit_select.edit_type == MaskToLayerTranslate))
+	gimage_mask_clear (gdisp->gimage);
+      /*  if no movement occured and the type is LayerTranslate,
+	  check if the layer is a floating selection.  If so, anchor. */
+      else if (edit_select.edit_type == FloatingSelTranslate)
+	{
+	  layer = gimage_get_active_layer (gdisp->gimage);
+	  if (layer_is_floating_sel (layer))
+	    floating_sel_anchor (layer);
+	}
+    }
+  
   undo_push_group_end (gdisp->gimage);
 
   if (bevent->state & GDK_BUTTON2_MASK) /* OPERATION CANCELLED */
@@ -351,11 +370,15 @@ edit_selection_motion (Tool           *tool,
 	  case MaskTranslate:
 	    /*  translate the selection  */
 	    gimage_mask_translate (gdisp->gimage, xoffset, yoffset);
-	    break;
-	
-	  case MaskToLayerTranslate:
-	    gimage_mask_float (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
-			       xoffset, yoffset);
+	    /*g_warning("%d,%d  %d,%d  %d,%d  %d,%d  %d,%d  %d,%d",
+		      edit_select.origx,edit_select.origy,
+		      edit_select.cumlx,edit_select.cumly,
+		      xoffset,yoffset,
+		      x,y,
+		      edit_select.x1,edit_select.y1,
+		      edit_select.x2,edit_select.y2);*/
+	    edit_select.origx = x;
+	    edit_select.origy = y;
 	    break;
 	
 	  case LayerTranslate:
@@ -377,6 +400,15 @@ edit_selection_motion (Tool           *tool,
       
 	    if (floating_layer)
 	      floating_sel_rigor (floating_layer, TRUE);
+	    break;
+	
+	  case MaskToLayerTranslate:
+	    gimage_mask_float (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
+			       0, 0);
+	    edit_select.edit_type = FloatingSelTranslate;
+
+	    edit_select.origx -= edit_select.x1;
+	    edit_select.origy -= edit_select.y1;
 	    break;
       
 	  case FloatingSelTranslate:
@@ -447,7 +479,8 @@ edit_selection_draw (Tool *tool)
   gdisp = (GDisplay *) tool->gdisp_ptr;
   select = gdisp->select;
 
-  if (edit_select.edit_type == FloatingSelTranslate)
+  if (edit_select.edit_type == FloatingSelTranslate ||
+      edit_select.edit_type == MaskTranslate)
     {
       diff_x = SCALEX (gdisp, edit_select.cumlx);
       diff_y = SCALEY (gdisp, edit_select.cumly);
