@@ -43,6 +43,14 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.18  1999/11/23 23:49:42  neo
+ *   added dots to all menu entries of interactive plug-ins and did the usual
+ *   action area fixes on lots of them
+ *
+ *
+ *
+ *   --Sven
+ *
  *   Revision 1.17  1999/10/24 20:48:58  pcg
  *   api change #2, fix #1
  *
@@ -274,7 +282,8 @@ query(void)
       "Michael Sweet <mike@easysw.com>",
       "Copyright 1997-1998 by Michael Sweet",
       PLUG_IN_VERSION,
-      "<Image>/Filters/Enhance/Despeckle", "RGB*, GRAY*",
+      "<Image>/Filters/Enhance/Despeckle...",
+      "RGB*, GRAY*",
       PROC_PLUG_IN, nargs, nreturn_vals, args, return_vals);
 }
 

@@ -75,7 +75,7 @@ query ()
 			  "Andrew Kieschnick",
 			  "Andrew Kieschnick",
 			  "1997",
-			  "<Image>/Filters/Enhance/Deinterlace",
+			  "<Image>/Filters/Enhance/Deinterlace...",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

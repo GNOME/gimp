@@ -50,7 +50,7 @@
 #define PLUG_IN_NAME        "plug_in_curve_bend"
 #define PLUG_IN_PRINT_NAME  "CurveBend"
 #define PLUG_IN_VERSION     "v1.01 (1999/09/13)"
-#define PLUG_IN_MENU_PATH   "<Image>/Filters/Distorts/CurveBend"
+#define PLUG_IN_MENU_PATH   "<Image>/Filters/Distorts/CurveBend..."
 #define PLUG_IN_IMAGE_TYPES "RGB*, GRAY*"
 #define PLUG_IN_AUTHOR      "Wolfgang Hofer (hof@hotbot.com)"
 #define PLUG_IN_COPYRIGHT   "Wolfgang Hofer"
