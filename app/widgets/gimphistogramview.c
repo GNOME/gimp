@@ -292,7 +292,7 @@ gimp_histogram_view_expose (GtkWidget      *widget,
 
   /*  Draw the outer border  */
   gdk_draw_rectangle (widget->window,
-                      widget->style->text_aa_gc[GTK_STATE_NORMAL], FALSE,
+                      widget->style->dark_gc[GTK_STATE_NORMAL], FALSE,
                       border, border,
                       width - 1, height - 1);
 
@@ -325,7 +325,7 @@ gimp_histogram_view_expose (GtkWidget      *widget,
       if (view->subdivisions > 1 && x >= (xstop * width / view->subdivisions))
         {
           gdk_draw_line (widget->window,
-                         widget->style->text_aa_gc[GTK_STATE_NORMAL],
+                         widget->style->dark_gc[GTK_STATE_NORMAL],
                          x + border, border,
                          x + border, border + height - 1);
           xstop++;

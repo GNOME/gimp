@@ -1147,13 +1147,13 @@ curves_graph_expose (GtkWidget      *widget,
   for (i = 1; i < 4; i++)
     {
       gdk_draw_line (widget->window,
-                     c_tool->graph->style->text_aa_gc[GTK_STATE_NORMAL],
+                     c_tool->graph->style->dark_gc[GTK_STATE_NORMAL],
                      RADIUS,
                      RADIUS + i * (GRAPH_HEIGHT / 4),
                      RADIUS + GRAPH_WIDTH - 1,
                      RADIUS + i * (GRAPH_HEIGHT / 4));
       gdk_draw_line (widget->window,
-                     c_tool->graph->style->text_aa_gc[GTK_STATE_NORMAL],
+                     c_tool->graph->style->dark_gc[GTK_STATE_NORMAL],
                      RADIUS + i * (GRAPH_WIDTH / 4),
                      RADIUS,
                      RADIUS + i * (GRAPH_WIDTH / 4),

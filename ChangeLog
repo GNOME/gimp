@@ -1,3 +1,10 @@
+2004-01-26  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcurvestool.c
+	* app/widgets/gimphistogramview.c: use dark_gc instead of
+	text_aa_gc to draw the histogram and curves grid lines. dark_gc is
+	slightly lighter, looks better and fixes bug #132565.
+
 2004-01-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.[ch]: removed gimp_image_owns_item() again.
