@@ -342,8 +342,15 @@ gimp_pick_button_mouse_motion (GtkWidget      *invisible,
                                GdkEventMotion *event,
                                GimpPickButton *button)
 {
+  gint x_root;
+  gint y_root;
+
+  gdk_window_get_origin (event->window, &x_root, &y_root);
+  x_root += event->x;
+  y_root += event->y;
+
   gimp_pick_button_pick (gdk_event_get_screen ((GdkEvent *) event),
-                         event->x_root, event->y_root, button);
+                         x_root, y_root, button);
 
   return TRUE;
 }
@@ -353,11 +360,18 @@ gimp_pick_button_mouse_release (GtkWidget      *invisible,
                                 GdkEventButton *event,
                                 GimpPickButton *button)
 {
+  gint x_root;
+  gint y_root;
+
   if (event->button != 1)
     return FALSE;
 
+  gdk_window_get_origin (event->window, &x_root, &y_root);
+  x_root += event->x;
+  y_root += event->y;
+
   gimp_pick_button_pick (gdk_event_get_screen ((GdkEvent *) event),
-                         event->x_root, event->y_root, button);
+                         x_root, y_root, button);
 
   gimp_pick_button_shutdown (button);
 
