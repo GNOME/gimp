@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.21\n"
 "POT-Creation-Date: 2000-05-08 15:44+0200\n"
-"PO-Revision-Date: 2000-05-08 15:46+02:00\n"
+"PO-Revision-Date: 2000-05-11 18:28+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -6474,15 +6474,15 @@ msgstr "Mehr Transparenz"
 
 #: plug-ins/common/vpropagate.c:217
 msgid "<Image>/Filters/Distorts/Value Propagate..."
-msgstr "<Image>/Filter/Verzerren/Propagierter Wert..."
+msgstr "<Image>/Filter/Verzerren/Wert propagieren..."
 
 #: plug-ins/common/vpropagate.c:364
 msgid "Value propagating..."
-msgstr "Propagierter Wert..."
+msgstr "Wert propagieren..."
 
 #: plug-ins/common/vpropagate.c:930
 msgid "Value Propagate"
-msgstr "Propagierter Wert"
+msgstr "Wert propagieren"
 
 #. Propagate Mode
 #: plug-ins/common/vpropagate.c:950
