@@ -224,7 +224,6 @@
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text 30 TRUE size PIXELS font))))
     (gimp-image-undo-disable img)
-    (gimp-drawable-set-name text-layer text)
     (apply-glossy-logo-effect img text-layer
 			      blend-gradient-text
 			      blend-gradient-text-reverse

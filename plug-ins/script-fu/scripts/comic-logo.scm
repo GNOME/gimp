@@ -137,7 +137,6 @@
 	 (text-layer (car (gimp-text-fontname
 			   img -1 0 0 text border TRUE size PIXELS font))))
     (gimp-image-undo-disable img)
-    (gimp-drawable-set-name text-layer text)
     (apply-comic-logo-effect img text-layer gradient gradient-reverse
 			     ol-width ol-color bg-color)
     (gimp-image-undo-enable img)

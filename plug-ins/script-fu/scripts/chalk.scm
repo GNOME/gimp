@@ -92,7 +92,6 @@
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
-    (gimp-drawable-set-name text-layer text)
     (gimp-context-set-foreground chalk-color)
     (gimp-layer-set-preserve-trans text-layer TRUE)
     (gimp-edit-fill text-layer FOREGROUND-FILL)

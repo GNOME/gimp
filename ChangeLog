@@ -1,5 +1,29 @@
 2005-03-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/alien-glow-logo.scm
+	* plug-ins/script-fu/scripts/alien-neon-logo.scm
+	* plug-ins/script-fu/scripts/basic1-logo.scm
+	* plug-ins/script-fu/scripts/basic2-logo.scm
+	* plug-ins/script-fu/scripts/blended-logo.scm
+	* plug-ins/script-fu/scripts/bovinated-logo.scm
+	* plug-ins/script-fu/scripts/chalk.scm
+	* plug-ins/script-fu/scripts/chip-away.scm
+	* plug-ins/script-fu/scripts/chrome-logo.scm
+	* plug-ins/script-fu/scripts/comic-logo.scm
+	* plug-ins/script-fu/scripts/coolmetal-logo.scm
+	* plug-ins/script-fu/scripts/frosty-logo.scm
+	* plug-ins/script-fu/scripts/glossy.scm
+	* plug-ins/script-fu/scripts/gradient-bevel-logo.scm
+	* plug-ins/script-fu/scripts/neon-logo.scm
+	* plug-ins/script-fu/scripts/starburst-logo.scm
+	* plug-ins/script-fu/scripts/starscape-logo.scm
+	* plug-ins/script-fu/scripts/t-o-p-logo.scm
+	* plug-ins/script-fu/scripts/textured-logo.scm: no need to set the
+	text as name of the text layer. The text layer is created with that
+	name already.
+
+2005-03-24  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpmessagebox.h
 	* libgimpconfig/gimpconfigwriter.h: added G_GNUC_PRINTF attributes.
 

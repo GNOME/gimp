@@ -85,7 +85,6 @@
 	 (height (car (gimp-drawable-height text-layer))))
 
     (gimp-image-undo-disable img)
-    (gimp-drawable-set-name text-layer text)
     (apply-alien-glow-logo-effect img text-layer size glow-color)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))

@@ -203,7 +203,6 @@
 	 (border (/ size 4))
 	 (tube-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font))))
     (gimp-image-undo-disable img)
-    (gimp-drawable-set-name tube-layer text)
     (apply-neon-logo-effect img tube-layer size bg-color glow-color shadow)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))

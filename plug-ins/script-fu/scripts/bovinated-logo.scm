@@ -109,7 +109,6 @@
          (border (/ size 4))
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font))))
     (gimp-image-undo-disable img)
-    (gimp-drawable-set-name text-layer text)
     (apply-bovinated-logo-effect img text-layer spots-x spots-y bg-color)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))

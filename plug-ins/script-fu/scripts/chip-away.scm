@@ -163,7 +163,6 @@
 	 (text-layer (car (gimp-text-fontname img -1 0 0
 				     text 30 TRUE font-size PIXELS font))))
     (gimp-image-undo-disable img)
-    (gimp-drawable-set-name text-layer text)
     (apply-chip-away-logo-effect img text-layer spread-amount blur-amount
 				 invert drop-shadow keep-bump bg-fill
 				 keep-back pattern)

@@ -98,7 +98,6 @@
 	 (b-size (* size 0.2))
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text b-size TRUE size PIXELS font))))
     (gimp-image-undo-disable img)
-    (gimp-drawable-set-name text-layer text)
     (apply-chrome-logo-effect img text-layer (* size 0.1) bg-color)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
