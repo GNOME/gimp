@@ -38,6 +38,7 @@ struct _GimpEnvironTable
   GObject      parent_instance;
 
   GHashTable  *vars;
+  GHashTable  *internal;
 
   gchar      **envp;
 };
@@ -48,14 +49,22 @@ struct _GimpEnvironTableClass
 };
 
 
-GType               gimp_environ_table_get_type (void) G_GNUC_CONST;
-GimpEnvironTable  * gimp_environ_table_new      (void);
+GType               gimp_environ_table_get_type  (void) G_GNUC_CONST;
+GimpEnvironTable  * gimp_environ_table_new       (void);
 
-void                gimp_environ_table_load     (GimpEnvironTable *environ_table,
-                                                 const gchar      *env_path);
-void                gimp_environ_table_clear    (GimpEnvironTable *environ_table);
+void                gimp_environ_table_load      (GimpEnvironTable *environ_table,
+                                                  const gchar      *env_path);
 
-gchar            ** gimp_environ_table_get_envp (GimpEnvironTable *environ_table);
+void                gimp_environ_table_add       (GimpEnvironTable *environ_table,
+                                                  const gchar      *name,
+						  const gchar      *value);
+void                gimp_environ_table_remove    (GimpEnvironTable *environ_table,
+						  const gchar      *name);
+
+void                gimp_environ_table_clear     (GimpEnvironTable *environ_table);
+void                gimp_environ_table_clear_all (GimpEnvironTable *environ_table);
+
+gchar            ** gimp_environ_table_get_envp  (GimpEnvironTable *environ_table);
 
 
 #endif /* __GIMP_ENVIRON_TABLE_H__ */

@@ -38,17 +38,20 @@
 extern char **environ;
 
 
-static void gimp_environ_table_class_init    (GimpEnvironTableClass *class);
-static void gimp_environ_table_init          (GimpEnvironTable      *environ_table);
+static void gimp_environ_table_class_init     (GimpEnvironTableClass *class);
+static void gimp_environ_table_init           (GimpEnvironTable      *environ_table);
 
-static void gimp_environ_table_finalize      (GObject               *object);
+static void gimp_environ_table_finalize       (GObject               *object);
 
-static void gimp_environ_table_load_env_file (GimpDatafileData      *file_data);
+static void gimp_environ_table_load_env_file  (GimpDatafileData      *file_data);
 
-static void gimp_environ_table_populate      (GimpEnvironTable      *environ_table);
-static void gimp_environ_table_populate_one  (const gchar           *name,
-                                              const gchar           *value,
-                                              GPtrArray             *env_array);
+static void gimp_environ_table_populate       (GimpEnvironTable      *environ_table);
+static void gimp_environ_table_populate_one   (const gchar           *name,
+                                               const gchar           *value,
+                                               GPtrArray             *env_array);
+static void gimp_environ_table_clear_vars     (GimpEnvironTable      *environ_table);
+static void gimp_environ_table_clear_internal (GimpEnvironTable      *environ_table);
+static void gimp_environ_table_clear_envp     (GimpEnvironTable      *environ_table);
 
 
 static GObjectClass *parent_class = NULL;
@@ -95,20 +98,22 @@ gimp_environ_table_class_init (GimpEnvironTableClass *class)
 }
 
 static void
-gimp_environ_table_init (GimpEnvironTable *env)
+gimp_environ_table_init (GimpEnvironTable *environ_table)
 {
-  env->vars = NULL;
-  env->envp = NULL;
+  environ_table->vars = NULL;
+  environ_table->internal = NULL;
+
+  environ_table->envp = NULL;
 }
 
 static void
 gimp_environ_table_finalize (GObject *object)
 {
-  GimpEnvironTable *env;
+  GimpEnvironTable *environ_table;
 
-  env = GIMP_ENVIRON_TABLE (object);
+  environ_table = GIMP_ENVIRON_TABLE (object);
 
-  gimp_environ_table_clear (env);
+  gimp_environ_table_clear_all (environ_table);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -134,8 +139,41 @@ gimp_environ_table_load (GimpEnvironTable *environ_table,
                                    G_FILE_TEST_EXISTS,
                                    gimp_environ_table_load_env_file,
                                    environ_table);
+}
 
-  gimp_environ_table_populate (environ_table);
+void
+gimp_environ_table_add (GimpEnvironTable *environ_table,
+                        const gchar      *name,
+                        const gchar      *value)
+{
+  g_return_if_fail (GIMP_IS_ENVIRON_TABLE (environ_table));
+
+  gimp_environ_table_clear_envp (environ_table);
+
+  if (! environ_table->internal)
+    environ_table->internal = g_hash_table_new_full (g_str_hash, g_str_equal,
+                                                     g_free, g_free);
+
+  g_hash_table_insert (environ_table->internal,
+                       g_strdup (name),
+                       g_strdup (value));
+}
+
+void
+gimp_environ_table_remove (GimpEnvironTable *environ_table,
+                           const gchar      *name)
+{
+  g_return_if_fail (GIMP_IS_ENVIRON_TABLE (environ_table));
+
+  if (! environ_table->internal)
+    return;
+
+  gimp_environ_table_clear_envp (environ_table);
+
+  g_hash_table_remove (environ_table->internal, name);
+
+  if (g_hash_table_size (environ_table->internal) == 0)
+    gimp_environ_table_clear_internal (environ_table);
 }
 
 void
@@ -143,17 +181,20 @@ gimp_environ_table_clear (GimpEnvironTable *environ_table)
 {
   g_return_if_fail (GIMP_IS_ENVIRON_TABLE (environ_table));
 
-  if (environ_table->vars)
-    {
-      g_hash_table_destroy (environ_table->vars);
-      environ_table->vars = NULL;
-    }
+  gimp_environ_table_clear_envp (environ_table);
 
-  if (environ_table->envp)
-    {
-      g_strfreev (environ_table->envp);
-      environ_table->envp = NULL;
-    }
+  gimp_environ_table_clear_vars (environ_table);
+}
+
+void
+gimp_environ_table_clear_all (GimpEnvironTable *environ_table)
+{
+  g_return_if_fail (GIMP_IS_ENVIRON_TABLE (environ_table));
+
+  gimp_environ_table_clear_envp (environ_table);
+
+  gimp_environ_table_clear_vars (environ_table);
+  gimp_environ_table_clear_internal (environ_table);
 }
 
 gchar **
@@ -166,10 +207,7 @@ gimp_environ_table_get_envp (GimpEnvironTable *environ_table)
    */ 
 
   if (! environ_table->envp)
-    {
-      environ_table->envp = g_new (gchar *, 1);
-      *(environ_table->envp) = NULL;
-    }
+    gimp_environ_table_populate (environ_table);
 
   return environ_table->envp;
 }
@@ -251,9 +289,15 @@ gimp_environ_table_populate (GimpEnvironTable *environ_table)
       var++;
     }
 
-  g_hash_table_foreach (environ_table->vars,
-                        (GHFunc) gimp_environ_table_populate_one,
-                        env_array);
+  if (environ_table->vars)
+    g_hash_table_foreach (environ_table->vars,
+                          (GHFunc) gimp_environ_table_populate_one,
+                          env_array);
+
+  if (environ_table->internal)
+    g_hash_table_foreach (environ_table->internal,
+                          (GHFunc) gimp_environ_table_populate_one,
+                          env_array);
 
   g_ptr_array_add (env_array, NULL);
 
@@ -280,4 +324,34 @@ gimp_environ_table_populate_one (const gchar *name,
 
   var = g_strconcat (name, "=", value, NULL);
   g_ptr_array_add (env_array, var);
+}
+
+static void
+gimp_environ_table_clear_vars (GimpEnvironTable *environ_table)
+{
+  if (environ_table->vars)
+    {
+      g_hash_table_destroy (environ_table->vars);
+      environ_table->vars = NULL;
+    }
+}
+
+static void
+gimp_environ_table_clear_internal (GimpEnvironTable *environ_table)
+{
+  if (environ_table->internal)
+    {
+      g_hash_table_destroy (environ_table->internal);
+      environ_table->internal = NULL;
+    }
+}
+
+static void
+gimp_environ_table_clear_envp (GimpEnvironTable *environ_table)
+{
+  if (environ_table->envp)
+    {
+      g_strfreev (environ_table->envp);
+      environ_table->envp = NULL;
+    }
 }

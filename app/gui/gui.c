@@ -33,6 +33,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
+#include "core/gimpenvirontable.h"
 #include "core/gimpimage.h"
 
 #include "display/gimpdisplay.h"
@@ -102,23 +103,31 @@ void
 gui_libs_init (gint    *argc,
 	       gchar ***argv)
 {
-#ifdef HAVE_PUTENV
-  gchar *display_env;
-#endif
-
   g_return_if_fail (argc != NULL);
   g_return_if_fail (argv != NULL);
 
   gtk_init (argc, argv);
 
-#ifdef HAVE_PUTENV
-  display_env = g_strconcat ("DISPLAY=", gdk_get_display (), NULL);
-  putenv (display_env);
-#endif
-
   gimp_widgets_init ();
 
   g_type_class_ref (GIMP_TYPE_COLOR_SELECT);
+}
+
+void
+gui_environ_init (Gimp *gimp)
+{
+  gchar *name = NULL;
+
+#if defined (GDK_WINDOWING_X11)
+  name = "DISPLAY";
+#elif defined (GDK_WINDOWING_DIRECTFB) || defined (GDK_WINDOWING_FB)
+  name = "GDK_DISPLAY";
+#endif
+
+  /* TODO: Need to care about display migration with GTK+ 2.2 at some point */
+
+  if (name)
+    gimp_environ_table_add (gimp->environ_table, name, gdk_get_display ());
 }
 
 void

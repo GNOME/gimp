@@ -1,3 +1,26 @@
+2002-11-24  Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb: moved FINITE definition to $extra
+	code. Changed to use #elif, much cleaner.
+
+	* app/pdb/image_cmds.c: regenerated
+
+	* app/core/gimpenvirontable.[ch]: added support for app internal
+	environment variable settings. These override any *.env files if
+	there are collisions. Not sure on that policy. Also, envp is now
+	generated on the first get_envp call.
+
+	* app/gui/gui.[ch]: added gui_environ_init, which uses
+	gimp_environ_table_add. Moved the setting of DISPLAY to here.
+	Added setting of GDK_DISPLAY instead for the fb backends. Hm,
+	perhaps GDK should do this itself...
+
+	* app_procs.c: call gui_environ_init.
+
+	* libgimpwidgets/gimpcolorscale.c
+	* libgimpwidgets/gimpcolorscales.c: #include <string.h> for
+	strlen and memcpy.
+
 2002-11-24  Dave Neary  <bolsh@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.c

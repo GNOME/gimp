@@ -155,6 +155,7 @@ app_init (gint    gimp_argc,
 
   if (! no_interface)
     {
+      gui_environ_init (the_gimp);
       tool_manager_init (the_gimp);
     }
 

@@ -181,6 +181,18 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_get_channel_by_tattoo_proc);
 }
 
+#if defined (HAVE_FINITE)
+#define FINITE(x) finite(x)
+#elif defined (HAVE_ISFINITE)
+#define FINITE(x) isfinite(x)
+#elif defined (G_OS_WIN32)
+#define FINITE(x) _finite(x)
+#elif defined (__EMX__)
+#define FINITE(x) isfinite(x)
+#else
+#error "no FINITE() implementation available?!"
+#endif
+
 /* Yuup, this is somewhat unsmooth, to say the least */
 
 static void
@@ -3756,24 +3768,6 @@ image_set_resolution_invoker (Gimp     *gimp,
 
   if (success)
     {
-    #ifdef HAVE_FINITE
-    #define FINITE(x) finite(x)
-    #else
-    #ifdef HAVE_ISFINITE
-    #define FINITE(x) isfinite(x)
-    #else
-    #ifdef G_OS_WIN32
-    #define FINITE(x) _finite(x)
-    #else
-    #ifdef __EMX__
-    #define FINITE(x) isfinite(x)
-    #else
-    #error "no FINITE() implementation available?!"
-    #endif /* __EMX__ */
-    #endif /* G_OS_WIN32 */
-    #endif /* HAVE_ISFINITE */
-    #endif /* HAVE_FINITE */
-    
       if (!FINITE (xresolution) || 
 	  xresolution < GIMP_MIN_RESOLUTION || xresolution > GIMP_MAX_RESOLUTION ||
 	  !FINITE (yresolution) || 

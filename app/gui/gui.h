@@ -23,6 +23,8 @@
 void          gui_libs_init             (gint      *argc,
                                          gchar   ***argv);
 
+void          gui_environ_init          (Gimp      *gimp);
+
 void          gui_themes_init           (Gimp      *gimp);
 const gchar * gui_themes_get_theme_dir  (Gimp      *gimp);
 
