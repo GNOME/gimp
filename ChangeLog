@@ -1,3 +1,8 @@
+2004-09-19  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimppaintoptions-gui.c: rearrange tool options as 
+	described in bug #153014.
+
 2004-09-19  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimperrordialog.c (gimp_error_dialog_add): fixed
