@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.x\n"
-"POT-Creation-Date: 2003-02-18 00:43+0100\n"
-"PO-Revision-Date: 2003-02-12 14:59-0300\n"
+"POT-Creation-Date: 2003-02-21 12:01+0100\n"
+"PO-Revision-Date: 2003-02-21 12:42-0300\n"
 "Last-Translator: Pablo Gonzalo del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,8 +30,8 @@ msgstr "Acerca de..."
 #: plug-ins/common/blinds.c:346 plug-ins/common/curve_bend.c:1383
 #: plug-ins/common/destripe.c:578 plug-ins/common/emboss.c:723
 #: plug-ins/common/fractaltrace.c:750 plug-ins/common/grid.c:664
-#: plug-ins/common/iwarp.c:1187 plug-ins/common/mapcolor.c:578
-#: plug-ins/common/nlfilt.c:559 plug-ins/common/polar.c:799
+#: plug-ins/common/iwarp.c:1207 plug-ins/common/mapcolor.c:578
+#: plug-ins/common/nlfilt.c:559 plug-ins/common/polar.c:825
 #: plug-ins/common/sharpen.c:558 plug-ins/common/sinus.c:2047
 #: plug-ins/common/spheredesigner.c:2296 plug-ins/common/tileit.c:406
 #: plug-ins/common/waves.c:451 plug-ins/common/whirlpinch.c:684
@@ -594,8 +594,7 @@ msgstr "U_mbral:"
 
 #: plug-ins/Lighting/lighting_ui.c:460 plug-ins/MapObject/mapobject_ui.c:655
 msgid "Stop when pixel differences are smaller than this value"
-msgstr ""
-"Parar cuando las diferencias entre píxeles sean más pequeñas que este valor"
+msgstr "Parar cuando las diferencias entre píxeles sean más pequeñas que este valor"
 
 #: plug-ins/Lighting/lighting_ui.c:502 plug-ins/MapObject/mapobject_ui.c:681
 msgid "Light Settings"
@@ -1077,7 +1076,7 @@ msgstr "R_adio:"
 msgid "Cylinder radius"
 msgstr "Radio del cilindro"
 
-#: plug-ins/MapObject/mapobject_ui.c:1300 plug-ins/common/mblur.c:719
+#: plug-ins/MapObject/mapobject_ui.c:1300 plug-ins/common/mblur.c:787
 msgid "L_ength:"
 msgstr "L_ongitud:"
 
@@ -1125,8 +1124,8 @@ msgstr "%s: mapa de colores malo"
 #. memory mapped file data
 #. must check file size
 #: plug-ins/bmp/bmpread.c:93 plug-ins/common/CEL.c:263
-#: plug-ins/common/gbr.c:294 plug-ins/common/gifload.c:302
-#: plug-ins/common/gih.c:630 plug-ins/common/hrz.c:332
+#: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:630
+#: plug-ins/common/gifload.c:302 plug-ins/common/hrz.c:332
 #: plug-ins/common/jpeg.c:734 plug-ins/common/pat.c:263
 #: plug-ins/common/pcx.c:298 plug-ins/common/pix.c:328
 #: plug-ins/common/png.c:473 plug-ins/common/png.c:475
@@ -1291,8 +1290,7 @@ msgstr "Usar función coseno para componente roja."
 
 #: plug-ins/common/AlienMap.c:1243
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Canal rojo: usar un mapeo lineal en lugar de cualquier función trigonométrica"
+msgstr "Canal rojo: usar un mapeo lineal en lugar de cualquier función trigonométrica"
 
 #: plug-ins/common/AlienMap.c:1262
 msgid "Use sine-function for green component."
@@ -1303,8 +1301,7 @@ msgid "Use cosine-function for green component."
 msgstr "Usar función coseno para componente verde."
 
 #: plug-ins/common/AlienMap.c:1266
-msgid ""
-"Green channel: use linear mapping instead of any trigonometrical function"
+msgid "Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 "Canal verde: usar un mapeo lineal en lugar de cualquier función "
 "trigonométrica"
@@ -1318,10 +1315,8 @@ msgid "Use cosine-function for blue component."
 msgstr "Usar función coseno para componente azul."
 
 #: plug-ins/common/AlienMap.c:1289
-msgid ""
-"Blue channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Canal azul: usar un mapeo lineal en lugar de cualquier función trigonométrica"
+msgid "Blue channel: use linear mapping instead of any trigonometrical function"
+msgstr "Canal azul: usar un mapeo lineal en lugar de cualquier función trigonométrica"
 
 #: plug-ins/common/AlienMap.c:1355
 msgid "About AlienMap"
@@ -1388,7 +1383,7 @@ msgid "Change angle of the blue/luminance channel"
 msgstr "Cambia el ángulo entre el canal azul/luminosidad"
 
 #. * Gray: Operation-Mode *
-#: plug-ins/common/AlienMap2.c:1248 plug-ins/common/deinterlace.c:286
+#: plug-ins/common/AlienMap2.c:1248 plug-ins/common/deinterlace.c:316
 #: plug-ins/common/hot.c:612 plug-ins/common/waves.c:331
 #: plug-ins/rcm/rcm_dialog.c:501
 msgid "Mode"
@@ -1970,9 +1965,9 @@ msgstr "Alinear capas visibles"
 #: plug-ins/common/lic.c:898 plug-ins/common/max_rgb.c:301
 #: plug-ins/common/nlfilt.c:399 plug-ins/common/noisify.c:338
 #: plug-ins/common/nova.c:347 plug-ins/common/oilify.c:469
-#: plug-ins/common/pixelize.c:339 plug-ins/common/plasma.c:340
-#: plug-ins/common/png.c:1209 plug-ins/common/polar.c:819
-#: plug-ins/common/randomize.c:720 plug-ins/common/ripple.c:602
+#: plug-ins/common/pixelize.c:340 plug-ins/common/plasma.c:340
+#: plug-ins/common/png.c:1209 plug-ins/common/polar.c:845
+#: plug-ins/common/randomize.c:720 plug-ins/common/ripple.c:591
 #: plug-ins/common/scatter_hsv.c:402 plug-ins/common/sel_gauss.c:255
 #: plug-ins/common/sharpen.c:618 plug-ins/common/shift.c:345
 #: plug-ins/common/smooth_palette.c:435 plug-ins/common/snoise.c:519
@@ -2188,16 +2183,16 @@ msgid "Blinds"
 msgstr "Persiana"
 
 #. Orientation toggle box
-#: plug-ins/common/blinds.c:372 plug-ins/common/ripple.c:555
+#: plug-ins/common/blinds.c:372 plug-ins/common/ripple.c:544
 msgid "Orientation"
 msgstr "Orientación"
 
-#: plug-ins/common/blinds.c:376 plug-ins/common/ripple.c:560
+#: plug-ins/common/blinds.c:376 plug-ins/common/ripple.c:549
 #: plug-ins/common/tileit.c:449
 msgid "_Horizontal"
 msgstr "_Horizontal"
 
-#: plug-ins/common/blinds.c:377 plug-ins/common/ripple.c:563
+#: plug-ins/common/blinds.c:377 plug-ins/common/ripple.c:552
 #: plug-ins/common/tileit.c:459
 msgid "_Vertical"
 msgstr "_Vertical"
@@ -2222,7 +2217,7 @@ msgstr "<Image>/Filtros/Desenfoque/Desenfoque..."
 #.
 #. *  JUST DO IT!
 #.
-#: plug-ins/common/blur.c:316 plug-ins/common/mblur.c:597
+#: plug-ins/common/blur.c:316 plug-ins/common/mblur.c:665
 #: plug-ins/common/unsharp.c:259
 msgid "Blurring..."
 msgstr "Desenfocando..."
@@ -2626,7 +2621,7 @@ msgid "E_xtend"
 msgstr "E_xtender"
 
 #: plug-ins/common/convmatrix.c:95 plug-ins/common/displace.c:389
-#: plug-ins/common/edge.c:471 plug-ins/common/ripple.c:577
+#: plug-ins/common/edge.c:471 plug-ins/common/ripple.c:566
 msgid "_Wrap"
 msgstr "A_justar"
 
@@ -2795,7 +2790,7 @@ msgstr "_Vista previa automática"
 
 #. Options area, bottom of column
 #: plug-ins/common/curve_bend.c:1436 plug-ins/common/lic.c:845
-#: plug-ins/common/ripple.c:524 plug-ins/gfig/gfig.c:3911
+#: plug-ins/common/ripple.c:513 plug-ins/gfig/gfig.c:3911
 #: plug-ins/mosaic/mosaic.c:602
 msgid "Options"
 msgstr "Opciones"
@@ -2812,7 +2807,7 @@ msgstr "Suavizad_o"
 
 #. The antialiasing toggle
 #: plug-ins/common/curve_bend.c:1479 plug-ins/common/gqbist.c:866
-#: plug-ins/common/ripple.c:533 plug-ins/mosaic/mosaic.c:610
+#: plug-ins/common/ripple.c:522 plug-ins/mosaic/mosaic.c:610
 msgid "_Antialiasing"
 msgstr "_Alisado"
 
@@ -3047,15 +3042,15 @@ msgstr "<Image>/Filtros/Realce/Desentrelazar..."
 msgid "Deinterlace..."
 msgstr "Desentrelazando..."
 
-#: plug-ins/common/deinterlace.c:265
+#: plug-ins/common/deinterlace.c:295
 msgid "Deinterlace"
 msgstr "Desentrelazar"
 
-#: plug-ins/common/deinterlace.c:291
+#: plug-ins/common/deinterlace.c:321
 msgid "Keep O_dd Fields"
 msgstr "Mantener los campos im_pares"
 
-#: plug-ins/common/deinterlace.c:294
+#: plug-ins/common/deinterlace.c:324
 msgid "Keep _Even Fields"
 msgstr "Mant_ener los campos pares"
 
@@ -3266,13 +3261,13 @@ msgid "On Edges:"
 msgstr "En los bordes:"
 
 #: plug-ins/common/displace.c:403 plug-ins/common/edge.c:481
-#: plug-ins/common/ripple.c:578 plug-ins/common/waves.c:335
+#: plug-ins/common/ripple.c:567 plug-ins/common/waves.c:335
 msgid "_Smear"
 msgstr "Mancha_r"
 
 #: plug-ins/common/displace.c:417 plug-ins/common/edge.c:491
 #: plug-ins/common/fractaltrace.c:778 plug-ins/common/newsprint.c:435
-#: plug-ins/common/ripple.c:579
+#: plug-ins/common/ripple.c:568
 msgid "_Black"
 msgstr "_Negro"
 
@@ -3587,8 +3582,7 @@ msgstr "<Image>/Filtros/Desenfoque/Desenfoque gaussiano (IIR)..."
 
 #: plug-ins/common/gauss_iir.c:250
 msgid "gauss_iir: you must specify either horizontal or vertical (or both)"
-msgstr ""
-"Desenfoque gaussiano IIR: Debe especificar si horizontal o vertical (o ambos)"
+msgstr "Desenfoque gaussiano IIR: Debe especificar si horizontal o vertical (o ambos)"
 
 #: plug-ins/common/gauss_iir.c:300 plug-ins/common/gauss_iir.c:354
 #: plug-ins/common/gauss_iir.c:441
@@ -3628,8 +3622,7 @@ msgstr "<Image>/Filtros/Desenfoque/Desenfoque gaussiano (RLE)..."
 
 #: plug-ins/common/gauss_rle.c:243
 msgid "gauss_rle: you must specify either horizontal or vertical (or both)"
-msgstr ""
-"Desenfoque gaussiano RLE: Debe especificar si horizontal o vertical (o ambos)"
+msgstr "Desenfoque gaussiano RLE: Debe especificar si horizontal o vertical (o ambos)"
 
 #: plug-ins/common/gauss_rle.c:294 plug-ins/common/gauss_rle.c:348
 #: plug-ins/common/gauss_rle.c:435
@@ -3894,8 +3887,8 @@ msgstr "Selección:"
 msgid "Background (%dms)"
 msgstr "Fondo (%dms)"
 
-#: plug-ins/common/gifload.c:897 plug-ins/common/iwarp.c:745
-#: plug-ins/common/iwarp.c:770
+#: plug-ins/common/gifload.c:897 plug-ins/common/iwarp.c:765
+#: plug-ins/common/iwarp.c:790
 #, c-format
 msgid "Frame %d"
 msgstr "Cuadro %d"
@@ -4116,8 +4109,7 @@ msgstr "El número de píxeles en el borde de la tabla."
 
 #: plug-ins/common/gtm.c:566
 msgid "The width for each table cell.  Can be a number or a percent."
-msgstr ""
-"La anchura de cada celda de tabla. Puede ser un número o un porcentaje."
+msgstr "La anchura de cada celda de tabla. Puede ser un número o un porcentaje."
 
 #: plug-ins/common/gtm.c:582
 msgid "The height for each table cell.  Can be a number or a percent."
@@ -4149,13 +4141,11 @@ msgstr "Guillotina..."
 
 #: plug-ins/common/gz.c:319
 msgid "gz: no sensible extension, saving as gzip'd xcf\n"
-msgstr ""
-"gz: No hay una extensión razonable, guardando como XCF comprimido con GZIP\n"
+msgstr "gz: No hay una extensión razonable, guardando como XCF comprimido con GZIP\n"
 
 #: plug-ins/common/gz.c:444
 msgid "gz: no sensible extension, attempting to load with file magic\n"
-msgstr ""
-"gz: No hay una extensión razonable, intentando cargar con detección mágica\n"
+msgstr "gz: No hay una extensión razonable, intentando cargar con detección mágica\n"
 
 #: plug-ins/common/hot.c:217
 msgid "<Image>/Filters/Colors/Hot..."
@@ -4213,97 +4203,97 @@ msgstr "Modo _2"
 msgid "<Image>/Filters/Distorts/IWarp..."
 msgstr "<Image>/Filtros/Distorsión/Deformación interactiva..."
 
-#: plug-ins/common/iwarp.c:655
+#: plug-ins/common/iwarp.c:678
 msgid "Warping..."
 msgstr "Deformando..."
 
-#: plug-ins/common/iwarp.c:751 plug-ins/common/iwarp.c:762
+#: plug-ins/common/iwarp.c:771 plug-ins/common/iwarp.c:782
 #, c-format
 msgid "Warping Frame Nr %d ..."
 msgstr "Deformando cuadro nº %d ..."
 
-#: plug-ins/common/iwarp.c:763
+#: plug-ins/common/iwarp.c:783
 msgid "Ping Pong"
 msgstr "Ping Pong"
 
-#: plug-ins/common/iwarp.c:937
+#: plug-ins/common/iwarp.c:957
 msgid "A_nimate"
 msgstr "A_nimar"
 
-#: plug-ins/common/iwarp.c:957
+#: plug-ins/common/iwarp.c:977
 msgid "Number of _Frames:"
 msgstr "Cantidad de c_uadros:"
 
-#: plug-ins/common/iwarp.c:966
+#: plug-ins/common/iwarp.c:986
 msgid "R_everse"
 msgstr "Inv_erso"
 
-#: plug-ins/common/iwarp.c:975
+#: plug-ins/common/iwarp.c:995
 msgid "_Ping Pong"
 msgstr "_Ping Pong"
 
-#: plug-ins/common/iwarp.c:988
+#: plug-ins/common/iwarp.c:1008
 msgid "_Animate"
 msgstr "_Animar"
 
-#: plug-ins/common/iwarp.c:1016
+#: plug-ins/common/iwarp.c:1036
 msgid "_Deform Radius:"
 msgstr "Radio de _deformación:"
 
-#: plug-ins/common/iwarp.c:1026
+#: plug-ins/common/iwarp.c:1046
 msgid "D_eform Amount:"
 msgstr "Cantidad de d_eformación:"
 
-#: plug-ins/common/iwarp.c:1035
+#: plug-ins/common/iwarp.c:1055
 msgid "Deform Mode"
 msgstr "Modo de deformación"
 
-#: plug-ins/common/iwarp.c:1049
+#: plug-ins/common/iwarp.c:1069
 msgid "_Move"
 msgstr "_Mover"
 
-#: plug-ins/common/iwarp.c:1052
+#: plug-ins/common/iwarp.c:1072
 msgid "_Grow"
 msgstr "C_recer"
 
-#: plug-ins/common/iwarp.c:1055
+#: plug-ins/common/iwarp.c:1075
 msgid "S_wirl CCW"
 msgstr "T_orbellino (Antihorario)"
 
-#: plug-ins/common/iwarp.c:1058
+#: plug-ins/common/iwarp.c:1078
 msgid "Remo_ve"
 msgstr "Q_uitar"
 
-#: plug-ins/common/iwarp.c:1061
+#: plug-ins/common/iwarp.c:1081
 msgid "S_hrink"
 msgstr "E_ncoger"
 
-#: plug-ins/common/iwarp.c:1064
+#: plug-ins/common/iwarp.c:1084
 msgid "Sw_irl CW"
 msgstr "Torbell_ino (Horario)"
 
-#: plug-ins/common/iwarp.c:1087
+#: plug-ins/common/iwarp.c:1107
 msgid "_Bilinear"
 msgstr "_Bilineal"
 
-#: plug-ins/common/iwarp.c:1101
+#: plug-ins/common/iwarp.c:1121
 msgid "Adaptive S_upersample"
 msgstr "Sobrem_uestreo adaptativo"
 
-#: plug-ins/common/iwarp.c:1122
+#: plug-ins/common/iwarp.c:1142
 msgid "Ma_x Depth:"
 msgstr "Profundidad má_xima:"
 
-#: plug-ins/common/iwarp.c:1132
+#: plug-ins/common/iwarp.c:1152
 msgid "Thresho_ld:"
 msgstr "U_mbral:"
 
-#: plug-ins/common/iwarp.c:1145 plug-ins/common/sinus.c:1774
+#: plug-ins/common/iwarp.c:1165 plug-ins/common/sinus.c:1774
 #: plug-ins/gflare/gflare.c:2801
 msgid "_Settings"
 msgstr "C_onfiguración"
 
-#: plug-ins/common/iwarp.c:1162
+#: plug-ins/common/iwarp.c:1182
 msgid "IWarp"
 msgstr "Deformación Interactiva"
 
@@ -4466,7 +4456,7 @@ msgstr "<Image>/Filtros/Detectar bordes/Laplace"
 msgid "Laplace..."
 msgstr "Laplace..."
 
-#: plug-ins/common/laplace.c:299
+#: plug-ins/common/laplace.c:302
 msgid "Cleanup..."
 msgstr "Limpiando..."
 
@@ -4676,35 +4666,35 @@ msgstr "F_ijar los canales máximos"
 msgid "Ho_ld the Minimal Channels"
 msgstr "Fi_jar los canales mínimos"
 
-#: plug-ins/common/mblur.c:149
+#: plug-ins/common/mblur.c:150
 msgid "<Image>/Filters/Blur/Motion Blur..."
 msgstr "<Image>/Filtros/Desenfoque/Desenfoque de movimiento..."
 
-#: plug-ins/common/mblur.c:666
+#: plug-ins/common/mblur.c:734
 msgid "Motion Blur"
 msgstr "Desenfoque de movimiento"
 
-#: plug-ins/common/mblur.c:688
+#: plug-ins/common/mblur.c:756
 msgid "Blur Type"
 msgstr "Tipo de desenfoque"
 
-#: plug-ins/common/mblur.c:693
+#: plug-ins/common/mblur.c:761
 msgid "_Linear"
 msgstr "_Lineal"
 
-#: plug-ins/common/mblur.c:696
+#: plug-ins/common/mblur.c:764
 msgid "_Radial"
 msgstr "_Radial"
 
-#: plug-ins/common/mblur.c:699
+#: plug-ins/common/mblur.c:767
 msgid "_Zoom"
 msgstr "A_cercamiento"
 
-#: plug-ins/common/mblur.c:707
+#: plug-ins/common/mblur.c:775
 msgid "Blur Parameters"
 msgstr "Parámetros de desenfoque"
 
-#: plug-ins/common/mblur.c:728 plug-ins/common/newsprint.c:1035
+#: plug-ins/common/mblur.c:796 plug-ins/common/newsprint.c:1035
 msgid "_Angle:"
 msgstr "Án_gulo:"
 
@@ -5040,23 +5030,23 @@ msgstr "<Image>/Filtros/Mapa/Mosaico de papel..."
 msgid "Save as Pattern"
 msgstr "Guardar como patrón"
 
-#: plug-ins/common/pixelize.c:183
+#: plug-ins/common/pixelize.c:184
 msgid "<Image>/Filters/Blur/Pixelize..."
 msgstr "<Image>/Filtros/Desenfoque/Pixelizar..."
 
-#: plug-ins/common/pixelize.c:282
+#: plug-ins/common/pixelize.c:283
 msgid "Pixelizing..."
 msgstr "Pixelizando..."
 
-#: plug-ins/common/pixelize.c:321
+#: plug-ins/common/pixelize.c:322
 msgid "Pixelize"
 msgstr "Pixelar"
 
-#: plug-ins/common/pixelize.c:358
+#: plug-ins/common/pixelize.c:359
 msgid "Pixel _Width:"
 msgstr "A_nchura del pixel:"
 
-#: plug-ins/common/pixelize.c:363
+#: plug-ins/common/pixelize.c:364
 msgid "Pixel _Height:"
 msgstr "A_ltura del pixel:"
 
@@ -5261,8 +5251,7 @@ msgstr "Nivel de co_mpresión:"
 
 #: plug-ins/common/png.c:1285
 msgid "Choose a high compression level for small file size"
-msgstr ""
-"Seleccione un nivel de compresión alto para achicar el tamaño del archivo"
+msgstr "Seleccione un nivel de compresión alto para achicar el tamaño del archivo"
 
 #: plug-ins/common/pnm.c:417
 #, c-format
@@ -5323,23 +5312,23 @@ msgstr "<Image>/Filtros/Distorsión/Coordenadas polares..."
 msgid "Polarizing..."
 msgstr "Proyección polar..."
 
-#: plug-ins/common/polar.c:776
+#: plug-ins/common/polar.c:802
 msgid "Polarize"
 msgstr "Proyección polar"
 
-#: plug-ins/common/polar.c:835
+#: plug-ins/common/polar.c:861
 msgid "Circle _Depth in Percent:"
 msgstr "P_rofundidad circular en porcentaje:"
 
-#: plug-ins/common/polar.c:844
+#: plug-ins/common/polar.c:870
 msgid "Offset _Angle:"
 msgstr "Ángulo de desf_ase:"
 
-#: plug-ins/common/polar.c:856
+#: plug-ins/common/polar.c:882
 msgid "_Map Backwards"
 msgstr "_Mapear al revés"
 
-#: plug-ins/common/polar.c:862
+#: plug-ins/common/polar.c:888
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
@@ -5347,11 +5336,11 @@ msgstr ""
 "Si se activa el mapeo comenzará por el lado derecho, en vez de comenzar por "
 "el izquierdo."
 
-#: plug-ins/common/polar.c:870
+#: plug-ins/common/polar.c:896
 msgid "Map from _Top"
 msgstr "Mapear desde a_rriba"
 
-#: plug-ins/common/polar.c:876
+#: plug-ins/common/polar.c:902
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
@@ -5359,11 +5348,11 @@ msgstr ""
 "Si no se activa el mapeo pondrá la fila de abajo en el medio y la de arriba "
 "en el exterior. Si se activa lo hará al revés."
 
-#: plug-ins/common/polar.c:885
+#: plug-ins/common/polar.c:911
 msgid "To _Polar"
 msgstr "A _polares"
 
-#: plug-ins/common/polar.c:891
+#: plug-ins/common/polar.c:917
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
@@ -5565,45 +5554,45 @@ msgstr "<Image>/Filtros/Ruido/Derretir..."
 msgid "R_andomization (%):"
 msgstr "_Aleatorización (%):"
 
-#: plug-ins/common/ripple.c:141
+#: plug-ins/common/ripple.c:147
 msgid "<Image>/Filters/Distorts/Ripple..."
 msgstr "<Image>/Filtros/Distorsión/Ondular..."
 
-#: plug-ins/common/ripple.c:221
+#: plug-ins/common/ripple.c:227
 msgid "Rippling..."
 msgstr "Ondulando..."
 
-#: plug-ins/common/ripple.c:495
+#: plug-ins/common/ripple.c:484
 msgid "Ripple"
 msgstr "Ondular"
 
-#: plug-ins/common/ripple.c:542
+#: plug-ins/common/ripple.c:531
 msgid "_Retain Tilability"
 msgstr "Conserva_r enlosabilidad"
 
 #. Edges toggle box
-#: plug-ins/common/ripple.c:573
+#: plug-ins/common/ripple.c:562
 msgid "Edges"
 msgstr "Bordes"
 
 #. Wave toggle box
-#: plug-ins/common/ripple.c:587
+#: plug-ins/common/ripple.c:576
 msgid "Wave Type"
 msgstr "Tipo de onda"
 
-#: plug-ins/common/ripple.c:591
+#: plug-ins/common/ripple.c:580
 msgid "Saw_tooth"
 msgstr "Dien_te de sierra"
 
-#: plug-ins/common/ripple.c:592
+#: plug-ins/common/ripple.c:581
 msgid "S_ine"
 msgstr "S_eno"
 
-#: plug-ins/common/ripple.c:614
+#: plug-ins/common/ripple.c:603
 msgid "_Period:"
 msgstr "_Periodo:"
 
-#: plug-ins/common/ripple.c:624
+#: plug-ins/common/ripple.c:613
 msgid "A_mplitude:"
 msgstr "A_mplitud:"
 
@@ -6153,8 +6142,7 @@ msgstr "Saturació_n aleatoria:"
 
 #: plug-ins/common/sparkle.c:468
 msgid "Adjust the Value how much the Saturation should be changed randomly"
-msgstr ""
-"Ajusta el valor de cuánto debe cambiarse la saturación de forma aleatoria"
+msgstr "Ajusta el valor de cuánto debe cambiarse la saturación de forma aleatoria"
 
 #: plug-ins/common/sparkle.c:486
 msgid "_Preserve Luminosity"
@@ -6696,8 +6684,7 @@ msgid "ID"
 msgstr "Identificador"
 
 #: plug-ins/common/uniteditor.c:83
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Esta cadena será usada para identificar una unidad en los archivos de "
 "configuración de El GIMP."
@@ -6717,7 +6704,7 @@ msgstr "Dígitos"
 #: plug-ins/common/uniteditor.c:86
 msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
-"decimal digits the input field should provide to get approximately  the same "
+"decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
 "Este campo se utiliza como orientación en campos numéricos de entrada. "
@@ -8022,8 +8009,7 @@ msgstr "Crear una espiral"
 
 #: plug-ins/gfig/gfig.c:2053
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr ""
-"Crear una curva de Bezier. Mays + botón termina la creación del objeto."
+msgstr "Crear una curva de Bezier. Mays + botón termina la creación del objeto."
 
 #: plug-ins/gfig/gfig.c:2059
 msgid "Move an object"
@@ -8764,8 +8750,7 @@ msgstr "Cuadro (%i)"
 
 #: plug-ins/gfli/gfli.c:673
 msgid "FLI: Sorry, I can save only INDEXED and GRAY images."
-msgstr ""
-"FLI: Lo siento, sólo se pueden guardar imágenes INDEXADAS y en TONOS DE GRIS"
+msgstr "FLI: Lo siento, sólo se pueden guardar imágenes INDEXADAS y en TONOS DE GRIS"
 
 #: plug-ins/gfli/gfli.c:814
 msgid "GFLI 1.3 - Load framestack"
@@ -8822,8 +8807,7 @@ msgstr "Relieve:"
 
 #: plug-ins/gimpressionist/brush.c:460 plug-ins/gimpressionist/paper.c:165
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
-msgstr ""
-"Especifica la cantidad de relieve a aplicar a la imagen (en porcentaje)"
+msgstr "Especifica la cantidad de relieve a aplicar a la imagen (en porcentaje)"
 
 #: plug-ins/gimpressionist/color.c:34
 msgid "Co_lor"
@@ -8839,8 +8823,7 @@ msgstr "C_entro de la brocha"
 
 #: plug-ins/gimpressionist/color.c:57
 msgid "Color is computed from the average of all pixels under the brush"
-msgstr ""
-"Se calcula el color con el promedio de todos los píxeles bajo la brocha"
+msgstr "Se calcula el color con el promedio de todos los píxeles bajo la brocha"
 
 #: plug-ins/gimpressionist/color.c:59
 msgid "Samples the color from the pixel in the center of the brush"
@@ -8880,8 +8863,7 @@ msgstr "Fondo con color sólido"
 
 #: plug-ins/gimpressionist/general.c:124
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr ""
-"Usar un fondo transparente; sólo las pinceladas pintadas serán visibles"
+msgstr "Usar un fondo transparente; sólo las pinceladas pintadas serán visibles"
 
 #: plug-ins/gimpressionist/general.c:139
 msgid "Paint edges"
@@ -8889,8 +8871,7 @@ msgstr "Pintar bordes"
 
 #: plug-ins/gimpressionist/general.c:143
 msgid "Selects if to place strokes all the way out to the edges of the image"
-msgstr ""
-"Seleccione si se colocarán pinceladas a lo largo de los bordes de la imagen"
+msgstr "Seleccione si se colocarán pinceladas a lo largo de los bordes de la imagen"
 
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:147 plug-ins/maze/maze_face.c:283
@@ -8899,8 +8880,7 @@ msgstr "Convertible en mosaico"
 
 #: plug-ins/gimpressionist/general.c:150
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr ""
-"Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
+msgstr "Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
 
 #: plug-ins/gimpressionist/general.c:154
 msgid "Drop Shadow"
@@ -8931,8 +8911,7 @@ msgid "Shadow depth:"
 msgstr "Profundidad de sombras:"
 
 #: plug-ins/gimpressionist/general.c:191
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 "La profundidad de las sombras arrojadas, es decir, cómo de apartada del "
 "objeto debería estar"
@@ -9027,8 +9006,7 @@ msgstr "Radio"
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
-msgstr ""
-"La distancia al centro de la imagen determina la dirección de la pincelada"
+msgstr "La distancia al centro de la imagen determina la dirección de la pincelada"
 
 #: plug-ins/gimpressionist/orientation.c:125
 msgid "Selects a random direction of each stroke"
@@ -9041,8 +9019,7 @@ msgstr "Radial"
 
 #: plug-ins/gimpressionist/orientation.c:132
 msgid "Let the direction from the center determine the direction of the stroke"
-msgstr ""
-"Hace que la dirección desde el centro determine la dirección de la pincelada"
+msgstr "Hace que la dirección desde el centro determine la dirección de la pincelada"
 
 #: plug-ins/gimpressionist/orientation.c:138
 #: plug-ins/gimpressionist/size.c:138
@@ -9212,8 +9189,7 @@ msgstr "Aplica el papel como está (sin darle relieve)"
 
 #: plug-ins/gimpressionist/paper.c:153
 msgid "Specifies the scale of the texture (in percent of original file)"
-msgstr ""
-"Especifica la escala de la textura (en porcentaje con el archivo original)"
+msgstr "Especifica la escala de la textura (en porcentaje con el archivo original)"
 
 #: plug-ins/gimpressionist/placement.c:36
 msgid "Pl_acement"
@@ -9356,16 +9332,12 @@ msgid "Size:"
 msgstr "Tamaño:"
 
 #: plug-ins/gimpressionist/size.c:111
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
-msgstr ""
-"Hace que el valor (brillo) de la región determine el tamaño de la pincelada"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
+msgstr "Hace que el valor (brillo) de la región determine el tamaño de la pincelada"
 
 #: plug-ins/gimpressionist/size.c:118
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
-msgstr ""
-"La distancia al centro de la imagen determina el tamaño de la pincelada"
+msgid "The distance from the center of the image determines the size of the stroke"
+msgstr "La distancia al centro de la imagen determina el tamaño de la pincelada"
 
 #: plug-ins/gimpressionist/size.c:125
 msgid "Selects a random size for each stroke"
@@ -9381,8 +9353,7 @@ msgstr "El tono de la región determina el tamaño de la pincelada"
 
 #: plug-ins/gimpressionist/size.c:157
 msgid "The brush-size that matches the original image the closest is selected"
-msgstr ""
-"Selecciona el tamaño de la pincelada que más se parece a la imagen original"
+msgstr "Selecciona el tamaño de la pincelada que más se parece a la imagen original"
 
 #: plug-ins/gimpressionist/size.c:168
 msgid "Manually specify the stroke size"
@@ -9449,36 +9420,36 @@ msgstr ""
 "El modo Voronoi hace que sólo el vector-tmño más próximo a un punto dado "
 "tenga alguna influencia"
 
-#: plug-ins/helpbrowser/helpbrowser.c:79
-#, c-format
-msgid ""
-"<html><head><title>Document Not Found</title></head><body bgcolor=\"white"
-"\"><div align=\"center\"><div>%s</div><h3>Could not locate help "
-"documentation</h3><tt>%s</tt></div><br /><br /><div align=\"justify"
-"\"><small>The requested document could not be found in your GIMP-Help path "
-"as shown above. This means that the topic has not yet been written or your "
-"installation is not complete. Ensure that your installation is complete "
-"before reporting this error as a bug.</small></div></body></html>"
-msgstr ""
-"<html><head><title>Documento no encontrado</title></head><body bgcolor="
-"\"white\"><div align=\"center\"><div>%s</div><h3>No se ha podido encontrar "
-"la documentación de la ayuda</h3><tt>%s</tt></div><br /><br /> <div align="
-"\"justify\"><small>El documento solicitado no ha podido ser encontrado en su "
-"ruta de ayuda de El GIMP como se muestra a continuación. Esto significa que "
-"el tópico no ha sido escrito aún o que su instalación no esta completa. "
-"Asegúrese de que su instalación esta completa antes de reportar esta falla "
-"como un error.</small></div></body></html>"
-
-#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:582
+#: plug-ins/helpbrowser/helpbrowser.c:319 plug-ins/imagemap/imap_main.c:582
 #: plug-ins/imagemap/imap_settings.c:167
 msgid "<Untitled>"
 msgstr "<Sin_nombre>"
 
-#: plug-ins/helpbrowser/helpbrowser.c:587
+#: plug-ins/helpbrowser/helpbrowser.c:458
+msgid "Document Not Found"
+msgstr "Documento no encontrado"
+
+#: plug-ins/helpbrowser/helpbrowser.c:460
+msgid "Could not locate help documentation"
+msgstr "No se ha podido encontrar la documentación de la ayuda"
+
+#: plug-ins/helpbrowser/helpbrowser.c:462
+msgid ""
+"The requested document could not be found in your GIMP help path as shown "
+"above. This means that the topic has not yet been written or your "
+"installation is not complete. Ensure that your installation is complete "
+"before reporting this error as a bug."
+msgstr ""
+"El documento solicitado no ha podido ser encontrado en su ruta de ayuda de "
+"El GIMP como se muestra a continuación. Esto significa que el tópico no ha "
+"sido escrito aún o que su instalación no esta completa. Asegúrese de que su "
+"instalación esta completa antes de reportar esta falla como un error."
+
+#: plug-ins/helpbrowser/helpbrowser.c:595
 msgid "GIMP Help Browser"
 msgstr "Navegador de ayuda de El GIMP"
 
-#: plug-ins/helpbrowser/helpbrowser.c:900
+#: plug-ins/helpbrowser/helpbrowser.c:908
 #, c-format
 msgid ""
 "GIMP Help Browser Error.\n"
@@ -11203,8 +11174,7 @@ msgid "Adjust Output..."
 msgstr "Ajustar la salida..."
 
 #: plug-ins/print/gimp_main_window.c:1461
-msgid ""
-"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
 "Ajustar el balance de color, brillo, contraste, saturación y el algoritmo de "
 "entramado"
@@ -11483,3 +11453,4 @@ msgstr "Error: No se puede leer el archivo de propiedades XJT %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Error: El archivo de propiedades XJT %s está vacío"
+
