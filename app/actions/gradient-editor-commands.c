@@ -32,6 +32,7 @@
 #include "widgets/gimpcolordialog.h"
 #include "widgets/gimpgradienteditor.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpuimanager.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "dialogs/dialogs.h"
@@ -99,6 +100,8 @@ gradient_editor_left_color_cmd_callback (GtkAction *action,
                     editor);
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
+  gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
+                          GIMP_EDITOR (editor)->popup_data);
 
   gtk_window_present (GTK_WINDOW (editor->color_dialog));
 }
@@ -201,6 +204,8 @@ gradient_editor_right_color_cmd_callback (GtkAction *action,
                     editor);
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
+  gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
+                          GIMP_EDITOR (editor)->popup_data);
 
   gtk_window_present (GTK_WINDOW (editor->color_dialog));
 }
@@ -406,8 +411,11 @@ gradient_editor_replicate_cmd_callback (GtkAction *action,
 		    G_CALLBACK (gimp_int_adjustment_update),
 		    &editor->replicate_times);
 
-  gtk_widget_show (dialog);
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
+  gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
+                          GIMP_EDITOR (editor)->popup_data);
+
+  gtk_widget_show (dialog);
 }
 
 void
@@ -498,9 +506,11 @@ gradient_editor_split_uniformly_cmd_callback (GtkAction *action,
 		    G_CALLBACK (gimp_int_adjustment_update),
 		    &editor->split_parts);
 
-  /*  Show!  */
-  gtk_widget_show (dialog);
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
+  gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
+                          GIMP_EDITOR (editor)->popup_data);
+
+  gtk_widget_show (dialog);
 }
 
 void
@@ -624,6 +634,8 @@ gradient_editor_left_color_update (GimpColorDialog      *dialog,
       gtk_widget_destroy (editor->color_dialog);
       editor->color_dialog = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
+      gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
+                              GIMP_EDITOR (editor)->popup_data);
       break;
 
     case GIMP_COLOR_DIALOG_CANCEL:
@@ -633,6 +645,8 @@ gradient_editor_left_color_update (GimpColorDialog      *dialog,
       gtk_widget_destroy (editor->color_dialog);
       editor->color_dialog = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
+      gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
+                              GIMP_EDITOR (editor)->popup_data);
       break;
     }
 }
@@ -667,6 +681,8 @@ gradient_editor_right_color_update (GimpColorDialog      *dialog,
       gtk_widget_destroy (editor->color_dialog);
       editor->color_dialog = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
+      gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
+                              GIMP_EDITOR (editor)->popup_data);
       break;
 
     case GIMP_COLOR_DIALOG_CANCEL:
@@ -676,6 +692,8 @@ gradient_editor_right_color_update (GimpColorDialog      *dialog,
       gtk_widget_destroy (editor->color_dialog);
       editor->color_dialog = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
+      gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
+                              GIMP_EDITOR (editor)->popup_data);
       break;
     }
 }
@@ -763,6 +781,8 @@ gradient_editor_split_uniform_response (GtkWidget          *widget,
 {
   gtk_widget_destroy (widget);
   gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
+  gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
+                          GIMP_EDITOR (editor)->popup_data);
 
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -784,6 +804,8 @@ gradient_editor_replicate_response (GtkWidget          *widget,
 {
   gtk_widget_destroy (widget);
   gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
+  gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
+                          GIMP_EDITOR (editor)->popup_data);
 
   if (response_id == GTK_RESPONSE_OK)
     {

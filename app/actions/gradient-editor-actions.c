@@ -429,6 +429,13 @@ gradient_editor_actions_update (GimpActionGroup *group,
       gimp_context_get_background (context, &bg);
     }
 
+  /*  pretend the gradient not being editable while the dialog is
+   *  insensitive. prevents the gradient from being modified while a
+   *  dialog is running. bug #161411 --mitch
+   */
+  if (! GTK_WIDGET_SENSITIVE (editor))
+    editable = FALSE;
+
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 #define SET_COLOR(action,color,set_label) \

@@ -1,3 +1,12 @@
+2004-12-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/gradient-editor-actions.c
+	(gradient_editor_actions_update): if the dialog is insensitive,
+	disable all actions which modify the gradient. Fixes bug #161411.
+
+	* app/actions/gradient-editor-commands.c: update the UI manager
+	after setting the dialog sensitive/insensitive so te above works.
+
 2004-12-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/unsharp.c: more code cleanup.
