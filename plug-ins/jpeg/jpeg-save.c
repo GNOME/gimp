@@ -1913,7 +1913,9 @@ save_dialog (void)
                     &jsvals.save_exif);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (exif_toggle),
-                                jsvals.save_exif);
+                                jsvals.save_exif && exif_data);
+
+  gtk_widget_set_sensitive (exif_toggle, exif_data != NULL);
 #endif
 
   /* Subsampling */

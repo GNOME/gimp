@@ -31,8 +31,8 @@ The communication protocol between GIMP and it's plug-ins.
 @tile_width: 
 @tile_height: 
 @shm_ID: 
-@gimp_reserved_1: 
-@gimp_reserved_2: 
+@check_size: 
+@check_type: 
 @gimp_reserved_3: 
 @gimp_reserved_4: 
 @gimp_reserved_5: 
@@ -41,8 +41,6 @@ The communication protocol between GIMP and it's plug-ins.
 @gimp_reserved_8: 
 @install_cmap: 
 @show_tool_tips: 
-@check_size: 
-@check_type: 
 @min_colors: 
 @gdisp_ID: 
 @app_name: 

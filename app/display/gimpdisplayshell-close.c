@@ -33,6 +33,7 @@
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
+#include "widgets/gimpuimanager.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -43,11 +44,13 @@
 
 /*  local function prototypes  */
 
-static void  gimp_display_shell_close_dialog   (GimpDisplayShell *shell,
-                                                GimpImage        *gimage);
-static void  gimp_display_shell_close_response (GtkWidget        *widget,
-                                                gboolean          close,
-                                                GimpDisplayShell *shell);
+static void  gimp_display_shell_close_dialog       (GimpDisplayShell *shell,
+                                                    GimpImage        *gimage);
+static void  gimp_display_shell_close_name_changed (GimpImage        *image,
+                                                    GtkWidget        *dialog);
+static void  gimp_display_shell_close_response     (GtkWidget        *widget,
+                                                    gboolean          close,
+                                                    GimpDisplayShell *shell);
 
 
 /*  public functions  */
@@ -88,6 +91,9 @@ gimp_display_shell_close (GimpDisplayShell *shell,
 
 /*  private functions  */
 
+#define RESPONSE_SAVE  1
+
+
 static void
 gimp_display_shell_close_dialog (GimpDisplayShell *shell,
                                  GimpImage        *gimage)
@@ -105,7 +111,8 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
 
   name = file_utils_uri_to_utf8_basename (gimp_image_get_uri (gimage));
 
-  title = g_strdup_printf (_("Close %s?"), name);
+  title = g_strdup_printf (_("Close %s"), name);
+  g_free (name);
 
   shell->close_dialog =
     dialog = gimp_dialog_new (title,
@@ -114,12 +121,15 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
                               gimp_standard_help_func,
                               GIMP_HELP_FILE_CLOSE_CONFIRM,
 
-                              GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
-                              _("_Discard changes"), GTK_RESPONSE_OK,
+                              _("_Close without Saving"), GTK_RESPONSE_CLOSE,
+                              GTK_STOCK_CANCEL,           GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_SAVE,             RESPONSE_SAVE,
 
                               NULL);
 
   g_free (title);
+
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), RESPONSE_SAVE);
 
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
@@ -134,15 +144,39 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), box);
   gtk_widget_show (box);
 
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box),
-                                     _("Changes were made to '%s'."), name);
+  g_object_set_data (G_OBJECT (dialog), "message-box", box);
 
-  g_free (name);
+  g_signal_connect_object (gimage, "name_changed",
+                           G_CALLBACK (gimp_display_shell_close_name_changed),
+                           dialog, 0);
+
+  gimp_display_shell_close_name_changed (gimage, dialog);
 
   gimp_message_box_set_text (GIMP_MESSAGE_BOX (box),
-                             _("Unsaved changes will be lost."));
+                             _("If you don't save the image, "
+                               "changes will be lost."));
 
   gtk_widget_show (dialog);
+}
+
+static void
+gimp_display_shell_close_name_changed (GimpImage *image,
+                                       GtkWidget *dialog)
+{
+  GtkWidget *box = g_object_get_data (G_OBJECT (dialog), "message-box");
+  gchar     *name;
+  gchar     *title;
+
+  name = file_utils_uri_to_utf8_basename (gimp_image_get_uri (image));
+
+  title = g_strdup_printf (_("Close %s"), name);
+  gtk_window_set_title (GTK_WINDOW (dialog), title);
+  g_free (title);
+
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box),
+                                     _("Save the changes to image '%s' "
+                                       "before closing?"), name);
+  g_free (name);
 }
 
 static void
@@ -152,6 +186,31 @@ gimp_display_shell_close_response (GtkWidget        *widget,
 {
   gtk_widget_destroy (widget);
 
-  if (response_id == GTK_RESPONSE_OK)
-    gimp_display_delete (shell->gdisp);
+  switch (response_id)
+    {
+    case GTK_RESPONSE_CLOSE:
+      gimp_display_delete (shell->gdisp);
+      break;
+
+    case RESPONSE_SAVE:
+      {
+        GimpActionGroup *group;
+        GtkAction       *action;
+
+        group = gimp_ui_manager_get_action_group (shell->menubar_manager,
+                                                  "file");
+        action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                              "file-save");
+        g_return_if_fail (action != NULL);
+
+        gtk_action_activate (action);
+
+        if (! shell->gdisp->gimage->dirty)
+          gimp_display_delete (shell->gdisp);
+      }
+      break;
+
+    default:
+      break;
+    }
 }
