@@ -755,30 +755,34 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   shell->menubar = gimp_ui_manager_ui_get (shell->menubar_manager,
                                            "/image-menubar");
-  gtk_box_pack_start (GTK_BOX (main_vbox), shell->menubar, FALSE, FALSE, 0);
 
-  if (shell->options->show_menubar)
-    gtk_widget_show (shell->menubar);
-  else
-    gtk_widget_hide (shell->menubar);
+  if (shell->menubar)
+    {
+      gtk_box_pack_start (GTK_BOX (main_vbox), shell->menubar, FALSE, FALSE, 0);
 
-  /*  make sure we can activate accels even if the menubar is invisible
-   *  (see http://bugzilla.gnome.org/show_bug.cgi?id=137151)
-   */
-  g_signal_connect (shell->menubar, "can-activate-accel",
-                    G_CALLBACK (gtk_true),
-                    NULL);
+      if (shell->options->show_menubar)
+        gtk_widget_show (shell->menubar);
+      else
+        gtk_widget_hide (shell->menubar);
 
-  /*  active display callback  */
-  g_signal_connect (shell->menubar, "button_press_event",
-                    G_CALLBACK (gimp_display_shell_events),
-                    shell);
-  g_signal_connect (shell->menubar, "button_release_event",
-                    G_CALLBACK (gimp_display_shell_events),
-                    shell);
-  g_signal_connect (shell->menubar, "key_press_event",
-                    G_CALLBACK (gimp_display_shell_events),
-                    shell);
+      /*  make sure we can activate accels even if the menubar is invisible
+       *  (see http://bugzilla.gnome.org/show_bug.cgi?id=137151)
+       */
+      g_signal_connect (shell->menubar, "can-activate-accel",
+                        G_CALLBACK (gtk_true),
+                        NULL);
+
+      /*  active display callback  */
+      g_signal_connect (shell->menubar, "button_press_event",
+                        G_CALLBACK (gimp_display_shell_events),
+                        shell);
+      g_signal_connect (shell->menubar, "button_release_event",
+                        G_CALLBACK (gimp_display_shell_events),
+                        shell);
+      g_signal_connect (shell->menubar, "key_press_event",
+                        G_CALLBACK (gimp_display_shell_events),
+                        shell);
+    }
 
   /*  another vbox for everything except the statusbar  */
   disp_vbox = gtk_vbox_new (FALSE, 1);

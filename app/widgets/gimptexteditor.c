@@ -165,9 +165,13 @@ gimp_text_editor_new (const gchar     *title,
 
   toolbar = gimp_ui_manager_ui_get (editor->ui_manager,
                                     "/text-editor-toolbar");
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (editor)->vbox), toolbar,
-		      FALSE, FALSE, 0);
-  gtk_widget_show (toolbar);
+
+  if (toolbar)
+    {
+      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (editor)->vbox), toolbar,
+                          FALSE, FALSE, 0);
+      gtk_widget_show (toolbar);
+    }
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),

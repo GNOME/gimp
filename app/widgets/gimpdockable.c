@@ -939,7 +939,9 @@ gimp_dockable_menu_end (GimpDockable *dockable)
 
       child_menu_widget = gimp_ui_manager_ui_get (dialog_ui_manager,
                                                   dialog_ui_path);
-      gtk_menu_detach (GTK_MENU (child_menu_widget));
+
+      if (child_menu_widget)
+        gtk_menu_detach (GTK_MENU (child_menu_widget));
     }
 
   /*  release gimp_dockable_show_menu()'s references  */
@@ -968,6 +970,9 @@ gimp_dockable_show_menu (GimpDockable *dockable)
     gtk_ui_manager_get_action (GTK_UI_MANAGER (dockbook_ui_manager),
                                "/dockable-popup/dockable-menu");
 
+  if (! parent_menu_widget || ! parent_menu_action)
+    return FALSE;
+
   dialog_ui_manager = gimp_dockable_get_menu (dockable,
                                               &dialog_ui_path,
                                               &dialog_popup_data);
@@ -984,6 +989,9 @@ gimp_dockable_show_menu (GimpDockable *dockable)
       child_menu_action =
         gtk_ui_manager_get_action (GTK_UI_MANAGER (dialog_ui_manager),
                                    dialog_ui_path);
+
+      if (! child_menu_widget || ! child_menu_action)
+        return FALSE;
 
       g_object_get (child_menu_action,
                     "label", &label,

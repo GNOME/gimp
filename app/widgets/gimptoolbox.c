@@ -221,8 +221,12 @@ gimp_toolbox_constructor (GType                  type,
   manager = gimp_ui_managers_from_name ("<Image>")->data;
 
   toolbox->menu_bar = gimp_ui_manager_ui_get (manager, "/toolbox-menubar");
-  gtk_box_pack_start (GTK_BOX (vbox), toolbox->menu_bar, FALSE, FALSE, 0);
-  gtk_widget_show (toolbox->menu_bar);
+
+  if (toolbox->menu_bar)
+    {
+      gtk_box_pack_start (GTK_BOX (vbox), toolbox->menu_bar, FALSE, FALSE, 0);
+      gtk_widget_show (toolbox->menu_bar);
+    }
 
   gtk_window_add_accel_group (GTK_WINDOW (toolbox),
                               gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (manager)));
@@ -512,15 +516,17 @@ gimp_toolbox_set_geometry (GimpToolbox *toolbox)
   if (tool_button)
     {
       GtkWidget      *main_vbox;
-      GtkRequisition  menubar_requisition;
+      GtkRequisition  menubar_requisition = { 0, 0 };
       GtkRequisition  button_requisition;
       gint            border_width;
       GdkGeometry     geometry;
 
       main_vbox = GIMP_DOCK (toolbox)->main_vbox;
 
-      gtk_widget_size_request (toolbox->menu_bar,   &menubar_requisition);
-      gtk_widget_size_request (tool_button,         &button_requisition);
+      if (toolbox->menu_bar)
+        gtk_widget_size_request (toolbox->menu_bar, &menubar_requisition);
+
+      gtk_widget_size_request (tool_button, &button_requisition);
 
       border_width = gtk_container_get_border_width (GTK_CONTAINER (main_vbox));
 

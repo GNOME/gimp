@@ -1,5 +1,15 @@
 2004-12-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-appearance.c
+	* app/display/gimpdisplayshell.c
+	* app/widgets/gimpdockable.c
+	* app/widgets/gimptexteditor.c
+	* app/widgets/gimptoolbox.c: check if gimp_ui_manager_ui_get()
+	actually returns something. Prevents crashes caused by missing
+	ui manager xml files. Fixes bug #159346.
+
+2004-12-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimptoolview.c (gimp_tool_view_select_item): no need
 	to update the ui manager here, the parent class already does it.
 

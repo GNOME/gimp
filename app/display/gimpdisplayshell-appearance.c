@@ -101,10 +101,13 @@ gimp_display_shell_set_show_menubar (GimpDisplayShell *shell,
 
   vbox = GTK_CONTAINER (shell->qmask_button->parent->parent);
 
-  if (show)
-    gtk_widget_show (shell->menubar);
-  else
-    gtk_widget_hide (shell->menubar);
+  if (shell->menubar)
+    {
+      if (show)
+        gtk_widget_show (shell->menubar);
+      else
+        gtk_widget_hide (shell->menubar);
+    }
 
   if (options->show_menubar || options->show_statusbar)
     gtk_container_set_border_width (vbox, 2);
