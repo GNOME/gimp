@@ -5,10 +5,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2002-03-09 00:09+0100\n"
+"POT-Creation-Date: 2002-03-14 01:09+0100\n"
 "PO-Revision-Date: 2002-01-26 15:15GMT+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
-"Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
+"Language-Team: Slovak <sk-i18n@linux.sk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -105,7 +105,7 @@ msgstr "Potvrdi»"
 
 #: libgimp/gimpexport.c:362
 msgid "Cancel"
-msgstr "Storno"
+msgstr "Zru¹i»"
 
 #: libgimp/gimpexport.c:376
 #, c-format
@@ -280,10 +280,10 @@ msgid "MegaBytes"
 msgstr "v megabytoch"
 
 #~ msgid "pixel"
-#~ msgstr "pixelov"
+#~ msgstr "bod"
 
 #~ msgid "pixels"
-#~ msgstr "pixelov"
+#~ msgstr "bodov"
 
 #~ msgid "inches"
 #~ msgstr "palcov"

@@ -1,13 +1,13 @@
-# Slovak translation of gimp-std-plugins
-# Slovenský preklad gimp-std-plugins
-# Copyright (C) 1999 Free Software Foundation, Inc.
+# Slovak translation of GIMP Plug-Ins 1.4
+# Slovenský preklad GIMP PlugIns
+# Copyright (C) 2002 Free Software Foundation, Inc.
 # Zdenko Podobný <zdpo@mailbox.sk>, 2002.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plugins 1.2.2\n"
-"POT-Creation-Date: 2002-03-07 18:12+0100\n"
-"PO-Revision-Date: 2002-02-27 16:27+0100\n"
+"Project-Id-Version: gimp-plug-ins 1.4\n"
+"POT-Creation-Date: 2002-03-07 19:29-0500\n"
+"PO-Revision-Date: 2002-03-13 14:41+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -53,7 +53,9 @@ msgstr "Realtime náhµad"
 
 #: plug-ins/FractalExplorer/Dialogs.c:367
 msgid "If you enable this option the preview will be redrawn automatically"
-msgstr "Ak povolíte tú mo¾nos», potom náhµad bude automaticky prekresµovaný"
+msgstr ""
+"Ak povolíte tú mo¾nos», potom náhµad bude automaticky "
+"prekresµovaný"
 
 #: plug-ins/FractalExplorer/Dialogs.c:370
 msgid "Redraw"
@@ -146,8 +148,8 @@ msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
 msgstr ""
-"Zmena poètu iterácií. Èím je ich viac, tým viac detailov, ktoré zaberú viac "
-"èasu, bude poèítaných."
+"Zmena poètu iterácií. Èím je ich viac, tým viac detailov, ktoré zaberú "
+"viac èasu, bude poèítaných."
 
 #: plug-ins/FractalExplorer/Dialogs.c:502
 msgid "CX:"
@@ -158,8 +160,8 @@ msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
-"Zmena CX hodnoty (zmení vzhµad v¹etkých fraktálov okrem Mandelbrotovho a "
-"Sierpinskeho)"
+"Zmena CX hodnoty (zmení vzhµad v¹etkých fraktálov okrem "
+"Mandelbrotovho a Sierpinskeho)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:514
 msgid "CY:"
@@ -170,8 +172,8 @@ msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
-"Zmena CY hodnoty (zmení vzhµad v¹etkých fraktálov okrem Mandelbrotovho a "
-"Sierpinskeho)"
+"Zmena CY hodnoty (zmení vzhµad v¹etkých fraktálov okrem "
+"Mandelbrotovho a Sierpinskeho)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:528 plug-ins/common/CML_explorer.c:1234
 #: plug-ins/gfig/gfig.c:3549
@@ -271,7 +273,8 @@ msgstr "Pou¾i» loglog vyhladzovanie"
 #: plug-ins/FractalExplorer/Dialogs.c:667
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr ""
-"Na eliminovanie \"páskovania\" vo výsledkoch sa pou¾ije loglog vyhladzovanie"
+"Na eliminovanie \"páskovania\" vo výsledkoch sa pou¾ije "
+"log log vyhladzovanie"
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:671
@@ -378,8 +381,8 @@ msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr ""
-"Pou¾ije lineárne mapovanie namiesto trigonometrických funkcií pre tento "
-"farebný kanál"
+"Pou¾ije lineárne mapovanie namiesto trigonometrických funkcií "
+"pre tento farebný kanál"
 
 #: plug-ins/FractalExplorer/Dialogs.c:753
 #: plug-ins/FractalExplorer/Dialogs.c:794
@@ -394,8 +397,8 @@ msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr ""
-"Ak povolíte toto nastavenie, tak vy¹¹ie farebné hodnoty budú nahradené "
-"ni¾¹ími a naopak"
+"Ak povolíte toto nastavenie, tak vy¹¹ie farebné hodnoty budú "
+"nahradené ni¾¹ími a naopak"
 
 #. Greenmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:766 plug-ins/common/AlienMap.c:1496
@@ -425,8 +428,9 @@ msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
 msgstr ""
-"Vytvorí farebnú mapu s vy¹¹ie ¹pecifikovanými vlastnos»ami (farebná "
-"intenzita/funkcia). Výsledok je viditeµný na obrázku v náhµade."
+"Vytvorí farebnú mapu s vy¹¹ie ¹pecifikovanými vlastnos»ami "
+"(farebná intenzita/funkcia). Výsledok je viditeµný na obrázku "
+"v náhµade."
 
 #: plug-ins/FractalExplorer/Dialogs.c:881
 msgid "Apply Active Gradient to Final Image"
@@ -463,9 +467,8 @@ msgstr "Ukladanie: Nebol zadný názov súboru"
 
 #. Can't save to directory
 #: plug-ins/FractalExplorer/Dialogs.c:1626
-#, fuzzy
 msgid "Save: Can't save to a folder."
-msgstr "Ukladanie: Do prieèinku nie je mo¾né zapisova»"
+msgstr "Ukladanie: Nie je mo¾né ulo¾i» do prieèinka."
 
 #: plug-ins/FractalExplorer/Dialogs.c:1671
 msgid "Load Fractal Parameters"
@@ -555,12 +558,8 @@ msgstr ""
 "do súboru %s."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1172
-#, fuzzy
-msgid ""
-"fractalexplorer-path misconfigured - the following folders were not found:"
-msgstr ""
-"fractalexplorer-path zle nakonfigurované - nasledujúce prieèinky neboli "
-"nájdené"
+msgid "fractalexplorer-path misconfigured - the following folders were not found:"
+msgstr "Zle nakonfigurovaná fractalexplorer-path - nasledujúce prieèinky neboli nájdené:"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1339
 msgid "My first fractal"
@@ -576,7 +575,6 @@ msgid "Rescan"
 msgstr "Skontrolova»"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1394
-#, fuzzy
 msgid "Select folder and rescan collection"
 msgstr "Zvoµte prieèinok a skontrolujte zbierku"
 
@@ -693,7 +691,7 @@ msgstr "Prah:"
 
 #: plug-ins/Lighting/lighting_ui.c:512 plug-ins/MapObject/mapobject_ui.c:689
 msgid "Stop when pixel differences are smaller than this value"
-msgstr "Zastavi», keï rozdiely pixelov sú men¹ie ako je táto hodnota"
+msgstr "Zastavi», keï rozdiely bodov sú men¹ie ako je táto hodnota"
 
 #: plug-ins/Lighting/lighting_ui.c:555 plug-ins/MapObject/mapobject_ui.c:715
 msgid "Light Settings"
@@ -807,8 +805,7 @@ msgstr "Okolie:"
 
 #: plug-ins/Lighting/lighting_ui.c:757 plug-ins/MapObject/mapobject_ui.c:922
 msgid "Amount of original color to show where no direct light falls"
-msgstr ""
-"Mno¾stvo pôvodnej farby na zobrazenie miesta, kam nedopadá priame svetlo"
+msgstr "Mno¾stvo pôvodnej farby na zobrazenie miesta, kam nedopadá priame svetlo"
 
 #: plug-ins/Lighting/lighting_ui.c:769 plug-ins/Lighting/lighting_ui.c:808
 #: plug-ins/MapObject/mapobject_ui.c:934 plug-ins/MapObject/mapobject_ui.c:974
@@ -1173,8 +1170,8 @@ msgstr "Zobrazi»/skry» náhµad na drátový model"
 #. memory mapped file data
 #. must check file size
 #: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:263
-#: plug-ins/common/gbr.c:294 plug-ins/common/gifload.c:302
-#: plug-ins/common/gih.c:630 plug-ins/common/hrz.c:332
+#: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:630
+#: plug-ins/common/gifload.c:302 plug-ins/common/hrz.c:332
 #: plug-ins/common/jpeg.c:731 plug-ins/common/pat.c:263
 #: plug-ins/common/pcx.c:298 plug-ins/common/pix.c:323
 #: plug-ins/common/png.c:424 plug-ins/common/png.c:426
@@ -1236,8 +1233,7 @@ msgstr "Pozadie"
 
 #: plug-ins/bmp/bmpwrite.c:104
 msgid "BMP: cannot operate on unknown image types or alpha images"
-msgstr ""
-"BMP: nie je mo¾né pracova» s neznámym typom obrázku alebo s alfa obrázkami"
+msgstr "BMP: nie je mo¾né pracova» s neznámym typom obrázku alebo s alfa obrázkami"
 
 #: plug-ins/bmp/bmpwrite.c:167
 #, c-format
@@ -1308,8 +1304,7 @@ msgstr "Pou¾i» funkciu kosínus na èervený komponent"
 
 #: plug-ins/common/AlienMap.c:1488
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Èervený kanál: pou¾i» linerálne mapovanie namiesto trigometrickej funkcie"
+msgstr "Èervený kanál: pou¾i» linerálne mapovanie namiesto trigometrickej funkcie"
 
 #: plug-ins/common/AlienMap.c:1507
 msgid "Use sine-function for green component."
@@ -1320,10 +1315,8 @@ msgid "Use cosine-function for green component."
 msgstr "Pou¾i» funkciu kosínus na zelený komponent"
 
 #: plug-ins/common/AlienMap.c:1511
-msgid ""
-"Green channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Zelený kanál: pou¾i» linerálne mapovanie namiesto trigometrickej funkcie"
+msgid "Green channel: use linear mapping instead of any trigonometrical function"
+msgstr "Zelený kanál: pou¾i» linerálne mapovanie namiesto trigometrickej funkcie"
 
 #: plug-ins/common/AlienMap.c:1530
 msgid "Use sine-function for blue component."
@@ -1334,10 +1327,8 @@ msgid "Use cosine-function for blue component."
 msgstr "Pou¾i» funkciu kosínus na modrý komponent"
 
 #: plug-ins/common/AlienMap.c:1534
-msgid ""
-"Blue channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Modrý kanál: pou¾i» linerálne mapovanie namiesto trigometrickej funkcie"
+msgid "Blue channel: use linear mapping instead of any trigonometrical function"
+msgstr "Modrý kanál: pou¾i» linerálne mapovanie namiesto trigometrickej funkcie"
 
 #: plug-ins/common/AlienMap.c:1664
 msgid "About AlienMap"
@@ -1777,8 +1768,8 @@ msgid ""
 "(2) all mutation rates equal to zero."
 msgstr ""
 "Tlaèítko \"Upravi» hniezdo\" je odkaz na mòa.\n"
-"Rovnaké hniezdo vytvára rovnaký obrázok, pokiaµ (1) ¹írky obrázkov sú "
-"rovnaké (to je dôvod, preèo sú obrázky na obrazovke iné ako v náhµade) a (2) "
+"Rovnaké hniezdo vytvára rovnaký obrázok, pokiaµ (1) ¹írky obrázkov sú rovnaké "
+"(to je dôvod, preèo sú obrázky na obrazovke iné ako v náhµade) a (2) "
 "a v¹etky miery mutácií sú nulové."
 
 #: plug-ins/common/CML_explorer.c:1439
@@ -1946,9 +1937,7 @@ msgstr "Varovanie: toto je starý formát súboru."
 
 #: plug-ins/common/CML_explorer.c:2437
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
-msgstr ""
-"Varovanie: Hmm, toto je súbor parametrov pre nov¹í CML_prieskumník ako je "
-"tento."
+msgstr "Varovanie: Hmm, toto je súbor parametrov pre nov¹í CML_prieskumník ako je tento."
 
 #: plug-ins/common/CML_explorer.c:2498
 msgid "Error: failed to load parameters"
@@ -1966,9 +1955,8 @@ msgid "Data Formatting"
 msgstr "Formátovanie dát"
 
 #: plug-ins/common/align_layers.c:151
-#, fuzzy
 msgid "<Image>/Layer/Align Visible Layers..."
-msgstr "<Image>/Vrstvy/Zarovnanie viditeµných vrstiev..."
+msgstr "<Image>/Vrstva/Zarovnanie viditeµných vrstiev..."
 
 #: plug-ins/common/align_layers.c:186
 msgid "Align Visible Layers: there are too few layers."
@@ -2096,7 +2084,7 @@ msgstr "Prehratie animácie:"
 #. The 'playback' half of the dialog
 #: plug-ins/common/animationplay.c:691 plug-ins/common/animationplay.c:694
 msgid "Playback: "
-msgstr "Prehrávanie"
+msgstr "Prehrávanie: "
 
 #: plug-ins/common/animationplay.c:724
 msgid "Play/Stop"
@@ -2123,28 +2111,24 @@ msgid "<Image>/Filters/Animation/Animation UnOptimize"
 msgstr "<Image>/Filtre/Animácia/Deoptimalizova» animáciu..."
 
 #: plug-ins/common/animoptimize.c:208
-#, fuzzy
 msgid "<Image>/Filters/Animation/Animation: Remove Backdrop"
-msgstr "<Image>/Filtre/Animácia/Optimalizova» animáciu..."
+msgstr "<Image>/Filtre/Animácia/Animácia: Odstráni» horizont"
 
 #: plug-ins/common/animoptimize.c:224
-#, fuzzy
 msgid "<Image>/Filters/Animation/Animation: Find Backdrop"
-msgstr "<Image>/Filtre/Animácia/Prehra» animáciu..."
+msgstr "<Image>/Filtre/Animácia/Animácia: Nájs» horizont"
 
 #: plug-ins/common/animoptimize.c:425
 msgid "UnOptimizing Animation..."
 msgstr "Animácia sa deoptimalizuje..."
 
 #: plug-ins/common/animoptimize.c:428
-#, fuzzy
 msgid "Removing Animation Background..."
-msgstr "Mení sa veµkos» plochy v¹etkých snímok animácie..."
+msgstr "Odstraòujem pozadie animácie..."
 
 #: plug-ins/common/animoptimize.c:431
-#, fuzzy
 msgid "Finding Animation Background..."
-msgstr "Animácia sa optimalizuje..."
+msgstr "Hµadám pozadie animácie..."
 
 #: plug-ins/common/animoptimize.c:435
 msgid "Optimizing Animation..."
@@ -2187,7 +2171,6 @@ msgid "Lens Refraction Index:"
 msgstr "Index refrakcie ¹o¹oviek:"
 
 #: plug-ins/common/autocrop.c:75
-#, fuzzy
 msgid "<Image>/Image/Transform/Autocrop"
 msgstr "<Image>/Obrázok/Transformácie/Automatické orezanie"
 
@@ -2196,9 +2179,8 @@ msgid "Cropping..."
 msgstr "Orezáva sa..."
 
 #: plug-ins/common/autostretch_hsv.c:91
-#, fuzzy
 msgid "<Image>/Layer/Colors/Auto/Stretch HSV"
-msgstr "<Image>/Obrázok/Farby/Auto/Roztiahnutie HSV"
+msgstr "<Image>/Vrstva/Farby/Auto/Roztiahnutie HSV"
 
 #: plug-ins/common/autostretch_hsv.c:124
 msgid "Auto-Stretching HSV..."
@@ -2370,9 +2352,8 @@ msgid "bz2: can't open bzip2ed file without a sensible extension\n"
 msgstr "bz2: nie je mo¾né otvori» bzip2ovaný súbor bez rozli¹ovacej koncovky\n"
 
 #: plug-ins/common/c_astretch.c:87
-#, fuzzy
 msgid "<Image>/Layer/Colors/Auto/Stretch Contrast"
-msgstr "<Image>/Obrázok/Farby/Auto/Roztiahnu» kontrast"
+msgstr "<Image>/Vrstva/Farby/Auto/Roztiahnu» kontrast"
 
 #: plug-ins/common/c_astretch.c:120
 msgid "Auto-Stretching Contrast..."
@@ -2399,9 +2380,8 @@ msgid "Check Size:"
 msgstr "Veµkos» polí ¹achovnice:"
 
 #: plug-ins/common/color_enhance.c:91
-#, fuzzy
 msgid "<Image>/Layer/Colors/Auto/Color Enhance"
-msgstr "<Image>/Obrázok/Farby/Auto/Vylep¹enie farieb"
+msgstr "<Image>/Vrstva/Farby/Auto/Vylep¹enie farieb"
 
 #: plug-ins/common/color_enhance.c:124
 msgid "Color Enhance..."
@@ -2755,8 +2735,7 @@ msgstr "<Image>/Filtre/Deformácie/Ohýbanie podµa krivky..."
 
 #: plug-ins/common/curve_bend.c:815
 msgid "CurveBend operates on layers only (but was called on channel or mask)"
-msgstr ""
-"Ohýbanie pracuje iba s vrstvami (alebo bolo volané na kanál alebo masku)"
+msgstr "Ohýbanie pracuje iba s vrstvami (alebo bolo volané na kanál alebo masku)"
 
 #. The shell and main vbox
 #: plug-ins/common/curve_bend.c:1358
@@ -3585,7 +3564,8 @@ msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
-"Zastaralý výtvor Adama D. Mossa / adam@gimp.org / adam@foxbox.org / 1998-2000"
+"Zastaralý výtvor Adama D. Mossa / adam@gimp.org / adam@foxbox.org / "
+"1998-2000"
 
 #: plug-ins/common/gicon.c:434
 msgid "Save as GIcon"
@@ -3631,8 +3611,8 @@ msgid ""
 "the image borders, or cancel this save."
 msgstr ""
 "Obrázok, ktorý sa pokú¹ate ulo¾i» ako GIF,\n"
-"obsahuje vrstvy ktoré presahujú aktuálne okrajeobrázku. Obávam sa, ¾e to nie "
-"je v GIFe nie je\n"
+"obsahuje vrstvy ktoré presahujú aktuálne okraje"
+"obrázku. Obávam sa, ¾e to nie je v GIFe nie je\n"
 "povolené.\n"
 "\n"
 "Mô¾ete si vybra» bu¹ orezanie vrstiev, alebo\n"
@@ -3695,7 +3675,7 @@ msgstr "GIF: chyba pri zápise do výstupného súboru\n"
 #: plug-ins/common/gif.c:2467
 #, c-format
 msgid "The default comment is limited to %d characters."
-msgstr ""
+msgstr "Prednastavený komentár je obmedzený na %d znakov."
 
 #: plug-ins/common/gih.c:310
 #, c-format
@@ -3807,9 +3787,8 @@ msgid "<Image>/Filters/Render/Pattern/Qbist..."
 msgstr "<Image>/Filtre/Generovanie/Vzorky/Qbist..."
 
 #: plug-ins/common/gqbist.c:531
-#, fuzzy
 msgid "Qbist ..."
-msgstr "Qbist..."
+msgstr "Qbist ..."
 
 #: plug-ins/common/gqbist.c:739
 msgid "Load QBE file..."
@@ -3820,9 +3799,8 @@ msgid "Save (middle transform) as QBE file..."
 msgstr "Ulo¾i» (stredná transformácia) ako QBE súbor..."
 
 #: plug-ins/common/gqbist.c:808
-#, fuzzy
 msgid "G-Qbist 1.12"
-msgstr "G-Qbist 1.10"
+msgstr "G-Qbist 1.12"
 
 #: plug-ins/common/gradmap.c:122
 msgid "<Image>/Filters/Colors/Map/Gradient Map"
@@ -3929,8 +3907,8 @@ msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
 msgstr ""
-"So za¹krtnutou voµbou GTM budú µubovoµné identicky zafarbené obdå¾nikové "
-"plochy nahradené jednou veµkou bunkou s hodnotami ROWSPAN a COLSPAN."
+"So za¹krtnutou voµbou GTM budú µubovoµné identicky zafarbené obdå¾nikové plochy "
+"nahradené jednou veµkou bunkou s hodnotami ROWSPAN a COLSPAN."
 
 #: plug-ins/common/gtm.c:474
 msgid "Compress TD tags"
@@ -3942,8 +3920,8 @@ msgid ""
 "and the cellcontent.  This is only necessary for pixel level positioning "
 "control."
 msgstr ""
-"Za¹trnutie tejto znaèky spôsobí, ¾e v GTM nebude vynechaný biely priestor  "
-"medzi znaèkami TD a obsahom bunky. Toto je nevyhnutné pre ovládanie bodovej "
+"Za¹trnutie tejto znaèky spôsobí, ¾e v GTM nebude vynechaný biely priestor "
+" medzi znaèkami TD a obsahom bunky. Toto je nevyhnutné pre ovládanie bodovej "
 "úrovne pozícií."
 
 #: plug-ins/common/gtm.c:490
@@ -4004,7 +3982,6 @@ msgid "The amount of cellspacing."
 msgstr "Miera rozostupu buniek."
 
 #: plug-ins/common/guillotine.c:79
-#, fuzzy
 msgid "<Image>/Image/Transform/Guillotine"
 msgstr "<Image>/Obrázok/Transformácia/Gilotína"
 
@@ -4018,8 +3995,7 @@ msgstr "gz: chýba rozli¹ujúca prípona, zapisuje sa ako gzipovaný xcf\n"
 
 #: plug-ins/common/gz.c:444
 msgid "gz: no sensible extension, attempting to load with file magic\n"
-msgstr ""
-"gz: chýba rozli¹ujúca prípona, pokú¹am sa naèíta» súbor magických èísel\n"
+msgstr "gz: chýba rozli¹ujúca prípona, pokú¹am sa naèíta» súbor magických èísel\n"
 
 #: plug-ins/common/hot.c:233
 msgid "<Image>/Filters/Colors/Hot..."
@@ -4185,7 +4161,7 @@ msgstr "Poèet kusov idúcich dole"
 
 #: plug-ins/common/jigsaw.c:2576
 msgid "Bevel Edges"
-msgstr "Skúsenie hrán"
+msgstr "Skosenie hrán"
 
 #: plug-ins/common/jigsaw.c:2588
 msgid "Bevel Width:"
@@ -4288,7 +4264,7 @@ msgstr "Progresívny"
 
 #: plug-ins/common/jpeg.c:1791
 msgid "Force baseline JPEG (Readable by all decoders)"
-msgstr ""
+msgstr "Vnúti» základnú linku JPEG (Èitateµná v¹etkými dekódermi)"
 
 #: plug-ins/common/jpeg.c:1817
 msgid "Subsampling:"
@@ -4689,9 +4665,8 @@ msgid "Channel #%d:"
 msgstr "Kanál #%d:"
 
 #: plug-ins/common/normalize.c:88
-#, fuzzy
 msgid "<Image>/Layer/Colors/Auto/Normalize"
-msgstr "<Image>/Obrázok/Farby/Auto/Normalizova»"
+msgstr "<Image>/Vrstva/Farby/Auto/Normalizova»"
 
 #: plug-ins/common/normalize.c:120
 msgid "Normalizing..."
@@ -4843,9 +4818,8 @@ msgid "Pixel Width:"
 msgstr "©írka bodu"
 
 #: plug-ins/common/pixelize.c:362
-#, fuzzy
 msgid "Pixel Height:"
-msgstr "Vý¹ka dla¾dice:"
+msgstr "Vý¹ka bodu:"
 
 #. don't translate '<Image>', it's a special
 #. * keyword of the gtk toolkit
@@ -5130,8 +5104,8 @@ msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
 msgstr ""
-"Bez za¹krtnutia zaène uklada» dolný riadok do stredu a hornú radu von. Pri "
-"za¹krtnutej voµbe je to naopak."
+"Bez za¹krtnutia zaène uklada» dolný riadok do stredu a hornú radu von. "
+"Pri za¹krtnutej voµbe je to naopak."
 
 #: plug-ins/common/polar.c:1029
 msgid "To Polar"
@@ -5142,8 +5116,8 @@ msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
 msgstr ""
-"Bez za¹krtnutia bude obrázok kruhovo mapovaný na obdå¾nik.Pri za¹krtnutej "
-"voµbe je to naopak."
+"Bez za¹krtnutia bude obrázok kruhovo mapovaný na obdå¾nik."
+"Pri za¹krtnutej voµbe je to naopak."
 
 #: plug-ins/common/ps.c:865
 msgid "PS: can't open file for reading"
@@ -5252,8 +5226,8 @@ msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
-"Pri zapnutí bude veµkos» obrázku zvolená tak, aby vyplnila dané rozmery bez "
-"zmeny pomeru strán"
+"Pri zapnutí bude veµkos» obrázku zvolená tak, aby vyplnila dané rozmery "
+"bez zmeny pomeru strán"
 
 #. Unit
 #: plug-ins/common/ps.c:2880
@@ -5373,34 +5347,28 @@ msgid "Amplitude:"
 msgstr "Amplitúda:"
 
 #: plug-ins/common/rotate.c:159
-#, fuzzy
 msgid "<Image>/Layer/Transform/Rotate 90 degrees"
-msgstr "<Image>/Obrázok/Transformácie/Otoèenie/90 stupòov"
+msgstr "<Image>/Vrstva/Transformácia/Otoèenie o 90 stupòov"
 
 #: plug-ins/common/rotate.c:170
-#, fuzzy
 msgid "<Image>/Layer/Transform/Rotate 180 degrees"
-msgstr "<Image>/Obrázok/Transformácie/Otoèenie/180 stupòov"
+msgstr "<Image>/Vrstva/Transformácia/Otoèenie o 180 stupòov"
 
 #: plug-ins/common/rotate.c:181
-#, fuzzy
 msgid "<Image>/Layer/Transform/Rotate 270 degrees"
-msgstr "<Image>/Obrázok/Transformácie/Otoèenie/270 stupòov"
+msgstr "<Image>/Vrstva/Transformácia/Otoèenie o 270 stupòov"
 
 #: plug-ins/common/rotate.c:193
-#, fuzzy
 msgid "<Image>/Image/Transform/Rotate 90 degrees"
-msgstr "<Image>/Obrázok/Transformácie/Otoèenie/90 stupòov"
+msgstr "<Image>/Obrázok/Transformácia/Otoèenie o 90 stupòov"
 
 #: plug-ins/common/rotate.c:204
-#, fuzzy
 msgid "<Image>/Image/Transform/Rotate 180 degrees"
-msgstr "<Image>/Obrázok/Transformácie/Otoèenie/180 stupòov"
+msgstr "<Image>/Obrázok/Transformácia/Otoèenie o 180 stupòov"
 
 #: plug-ins/common/rotate.c:215
-#, fuzzy
 msgid "<Image>/Image/Transform/Rotate 270 degrees"
-msgstr "<Image>/Obrázok/Transformácie/Otoèenie/270 stupòov"
+msgstr "<Image>/Obrázok/Transformácia/Otoèenie o 270 stupòov"
 
 #: plug-ins/common/rotate.c:524
 msgid "You can not rotate the whole image if there's a selection."
@@ -5570,7 +5538,7 @@ msgstr "Výberové Gaussove rozmazanie"
 
 #: plug-ins/common/sel_gauss.c:217
 msgid "sel_gauss: Cannot operate on indexed color images"
-msgstr "výb_gauss: Neviem pracova» s farebnými indexovanými obrázkami"
+msgstr "sel_gauss: Neviem pracova» s farebnými indexovanými obrázkami"
 
 #: plug-ins/common/sel_gauss.c:277
 msgid "Max. Delta:"
@@ -6060,9 +6028,8 @@ msgid "Origin at bottom left"
 msgstr "Zaèiatok vµavo dole"
 
 #: plug-ins/common/threshold_alpha.c:105
-#, fuzzy
 msgid "<Image>/Layer/Alpha/Threshold Alpha..."
-msgstr "<Image>/Obrázok/Alfa/Prah alfy..."
+msgstr "<Image>/Vrstva/Alfa/Prah alfy..."
 
 #: plug-ins/common/threshold_alpha.c:148
 msgid "The layer preserves transparency."
@@ -6235,11 +6202,10 @@ msgstr ""
 "za¹krtnutí tohoto ståpca."
 
 #: plug-ins/common/uniteditor.c:547
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
-"Tento re»azec bude pou¾itý na identifikáciu jednotky v konfiguraènom súbore "
-"programu GIMP."
+"Tento re»azec bude pou¾itý na identifikáciu jednotky v konfiguraènom "
+"súbore programu GIMP."
 
 #: plug-ins/common/uniteditor.c:549
 msgid "How many units make up an inch."
@@ -6260,8 +6226,8 @@ msgid ""
 "The unit's symbol if it has one (e.g. \"'\" for inches). Use the unit's "
 "abbreviation if it doesn't have a symbol."
 msgstr ""
-"Symbol jednotky, ak je nejaký (napr. \"'\" pre palce). Pou¾ite jednotka nemá "
-"symbol, tak pou¾ite jej skratku."
+"Symbol jednotky, ak je nejaký (napr. \"'\" pre palce). Pou¾ite jednotka "
+"nemá symbol, tak pou¾ite jej skratku."
 
 #: plug-ins/common/uniteditor.c:559
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
@@ -6453,14 +6419,12 @@ msgid "<Image>/Filters/Distorts/Value Propagate..."
 msgstr "<Image>/Filtre/Skreslenie/Roz¹íri» hodnotu..."
 
 #: plug-ins/common/vpropagate.c:232
-#, fuzzy
 msgid "<Image>/Filters/Generic/Erode..."
-msgstr "<Image>/Filtre/Detekcia hrán/Hrany..."
+msgstr "<Image>/Filtre/V¹eobecné/Erodova»"
 
 #: plug-ins/common/vpropagate.c:244
-#, fuzzy
 msgid "<Image>/Filters/Generic/Dilate..."
-msgstr "<Image>/Filtre/Generovanie/Gfig..."
+msgstr "<Image>/Filtre/V¹eobecné/Roztiahnu»..."
 
 #: plug-ins/common/vpropagate.c:431
 msgid "Value propagating..."
@@ -6990,9 +6954,8 @@ msgid "Error during writing rgb image"
 msgstr "Chyba poèas zápisu rgb obrázku"
 
 #: plug-ins/common/zealouscrop.c:69
-#, fuzzy
 msgid "<Image>/Layer/Transform/Zealous Crop"
-msgstr "<Image>/Obrázok/Transformácie/Horlivý orez"
+msgstr "<Image>/Vrstva/Transformácia/Horlivý orez"
 
 #: plug-ins/common/zealouscrop.c:115
 msgid "ZealousCropping(tm)..."
@@ -7102,14 +7065,14 @@ msgid "Flame works only on RGB drawables."
 msgstr "Plameò pracuje iba na RGB kresbách"
 
 #: plug-ins/flame/flame.c:424
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a regular file"
-msgstr "%s: Nie je be¾ný súbor"
+msgstr "'%s' nie je regulárny súbor"
 
 #: plug-ins/flame/flame.c:432
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open '%s': %s"
-msgstr "Nie je mo¾né otvori»: %s"
+msgstr "Nie je mo¾né otvori» '%s': %s"
 
 #: plug-ins/flame/flame.c:627 plug-ins/flame/flame.c:979
 msgid "Edit Flame"
@@ -7210,9 +7173,8 @@ msgid "Zoom:"
 msgstr "Lupa:"
 
 #: plug-ins/fp/fp.c:92
-#, fuzzy
 msgid "<Image>/Layer/Colors/Filter Pack..."
-msgstr "<Image>/Obrázok/Farby/Sada filtrov..."
+msgstr "<Image>/Vrstva/Farby/Sada filtrov..."
 
 #: plug-ins/fp/fp.c:127
 msgid "Convert the image to RGB first!"
@@ -7376,9 +7338,8 @@ msgstr ""
 "do svojho %s súboru."
 
 #: plug-ins/gfig/gfig.c:838
-#, fuzzy
 msgid "gfig-path misconfigured - the following folders were not found:"
-msgstr "Zle nakonfigurovaná gfig-path - nasledujúce prieèinky neboli nájdené"
+msgstr "zle nakonfigurovaná gfig-path - nasledujúce prieèinky neboli nájdené:"
 
 #: plug-ins/gfig/gfig.c:1055
 msgid "First Gfig"
@@ -7495,8 +7456,8 @@ msgstr "Vytvori» ¹pirálu"
 #: plug-ins/gfig/gfig.c:2165
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr ""
-"Vytvorenie Bézierovej krivky. Shift + tlaèítko my¹i ukonèí vytváranie "
-"objektu."
+"Vytvorenie Bézierovej krivky. Shift + tlaèítko my¹i "
+"ukonèí vytváranie objektu."
 
 #: plug-ins/gfig/gfig.c:2171
 msgid "Move an object"
@@ -7539,8 +7500,8 @@ msgid ""
 "ellipses if Approx. Circles/Ellipses toggle is set."
 msgstr ""
 "Pri kreslení obrázku pou¾ite ¹tetec/ceruzku alebo rozpra¹ovaè. Vzorka kreslí "
-"s aktuálnym ¹tetcom vzorku. Pou¾ije sa na kru¾niciach/elipsách, ak je "
-"nastavený prepínaè Pribli¾né kru¾nice/elipsy."
+"s aktuálnym ¹tetcom vzorku. Pou¾ije sa na kru¾niciach/elipsách, ak je nastavený "
+"prepínaè Pribli¾né kru¾nice/elipsy."
 
 #: plug-ins/gfig/gfig.c:2771 plug-ins/rcm/rcm_dialog.c:130
 msgid "Original"
@@ -7629,8 +7590,8 @@ msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
 msgstr ""
-"Pribli¾né kru¾nice a elipsy pou¾ívajúce èiary. Umo¾òujú pou¾itie miznúceho "
-"¹tetca pri tomto type objektov."
+"Pribli¾né kru¾nice a elipsy pou¾ívajúce èiary. Umo¾òujú pou¾itie "
+"miznúceho ¹tetca pri tomto type objektov."
 
 #: plug-ins/gfig/gfig.c:2935
 msgid "Gfig brush selection"
@@ -7792,7 +7753,6 @@ msgid "Object"
 msgstr "Objekt"
 
 #: plug-ins/gfig/gfig.c:3543
-#, fuzzy
 msgid "Select folder and rescan Gfig object collection"
 msgstr "Výber prieèinka a aktualizácia súhrnov Gfig objektov"
 
@@ -7984,9 +7944,8 @@ msgstr ""
 "do vá¹ho %s súboru."
 
 #: plug-ins/gflare/gflare.c:1052
-#, fuzzy
 msgid "gflare-path misconfigured - the following folders were not found:"
-msgstr "gflare-path je zle nastavená - nasledujúce prieèinky neboli nájdené"
+msgstr "zle nakonfigurovaná gflare-path - nasledujúce prieèinky neboli nájdené:"
 
 #: plug-ins/gflare/gflare.c:1418
 #, c-format
@@ -7999,7 +7958,7 @@ msgid "invalid formatted GFlare file: %s\n"
 msgstr "neplatný formát súboru G-¾iara: %s\n"
 
 #: plug-ins/gflare/gflare.c:1600
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "GFlare `%s' is not saved.\n"
 "If you add a new entry in %s, like:\n"
@@ -8019,9 +7978,9 @@ msgid "could not open \"%s\""
 msgstr "nie je mo¾né otvori» \"%s\""
 
 #: plug-ins/gflare/gflare.c:1828
-#, fuzzy, c-format
+#, c-format
 msgid "error reading GFlare folder \"%s\""
-msgstr "chyba pri èítaní GFlare prieèinku \"%s\""
+msgstr "chyba èítania prieèinka G-¾iary \"%s\""
 
 #: plug-ins/gflare/gflare.c:2526
 msgid "GFlare"
@@ -8392,8 +8351,7 @@ msgid "Shadow depth:"
 msgstr "Håbka tieòa:"
 
 #: plug-ins/gimpressionist/general.c:317
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Håbka vrhaného tieòa, t.j. ako ïaleko od objektov budú"
 
 #: plug-ins/gimpressionist/general.c:323
@@ -8422,16 +8380,15 @@ msgstr "Kreslím..."
 
 #. don't translate the gimprc entry
 #: plug-ins/gimpressionist/gimpressionist.c:80
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "It is highly recommended to add\n"
 " (gimpressionist-path \"%s\")\n"
 "(or similar) to your gimprc file."
 msgstr ""
-"*** Varovanie ***\n"
 "Je veµmi vhodné prida»\n"
-"  (gimpressionist-path \"%s\")\n"
-"(alebo podobné) do svojho súboru gimprc.\n"
+" (gimpressionist-path \"%s\")\n"
+"(alebo podobné) do vlastného súboru gimprc."
 
 #: plug-ins/gimpressionist/gimpressionist.c:346
 #: plug-ins/gimpressionist/gimpressionist.c:441
@@ -8694,7 +8651,7 @@ msgstr "Náhodne"
 
 #: plug-ins/gimpressionist/placement.c:96
 msgid "Place strokes randomly around the image"
-msgstr "Náhodne umiestni »ahy v obrázku"
+msgstr "Náhodne umiestni» »ahy v obrázku"
 
 #: plug-ins/gimpressionist/placement.c:100
 msgid "Evenly distributed"
@@ -8745,9 +8702,8 @@ msgid "Refresh"
 msgstr "Aktualizova»"
 
 #: plug-ins/gimpressionist/presets.c:695
-#, fuzzy
 msgid "Reread the folder of Presets"
-msgstr "Znovu naèíta» prieèinok s prednastaveniami"
+msgstr "Znovu naèítanie prieèinka s predvoµbami"
 
 #: plug-ins/gimpressionist/presets.c:697
 msgid "(Desc)"
@@ -8805,13 +8761,11 @@ msgid "The largest brush to create"
 msgstr "Najväè¹í vytváraný ¹tetec"
 
 #: plug-ins/gimpressionist/size.c:140
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Nech hodnota (jas) oblasti urèí rozmer »ahu"
 
 #: plug-ins/gimpressionist/size.c:150
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
+msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "Vzdialenos» od stredu obrázka urèí rozmer »ahu"
 
 #: plug-ins/gimpressionist/size.c:160
@@ -8901,7 +8855,7 @@ msgstr "Skosenie:"
 #. Flip
 #: plug-ins/ifscompose/ifscompose.c:620
 msgid "Flip"
-msgstr "Zrkadlenie"
+msgstr "Preklopenie"
 
 #. Simple color control section
 #: plug-ins/ifscompose/ifscompose.c:651
@@ -9046,7 +9000,7 @@ msgstr "Stred x:"
 #: plug-ins/imagemap/imap_rectangle.c:401
 #: plug-ins/imagemap/imap_rectangle.c:407
 msgid "pixels"
-msgstr "pix."
+msgstr "bodov"
 
 #: plug-ins/imagemap/imap_circle.c:276
 msgid "Center y:"
@@ -9762,9 +9716,8 @@ msgid "See %s"
 msgstr "Pozrite %s"
 
 #: plug-ins/mosaic/mosaic.c:332
-#, fuzzy
 msgid "<Image>/Filters/Distorts/Mosaic..."
-msgstr "<Image>/Filtre/Skreslenie/Reliéf..."
+msgstr "<Image>/Filtre/Skreslenie/Mozaika..."
 
 #. progress bar for gradient finding
 #: plug-ins/mosaic/mosaic.c:457
@@ -9785,9 +9738,8 @@ msgid "Color Averaging"
 msgstr "Priemerovanie farby"
 
 #: plug-ins/mosaic/mosaic.c:629
-#, fuzzy
 msgid "Allow Tile splitting"
-msgstr "V¹etky dla¾dice"
+msgstr "Povoli» dla¾dicové delenie"
 
 #: plug-ins/mosaic/mosaic.c:639
 msgid "Pitted Surfaces"
@@ -10106,9 +10058,8 @@ msgid "<Image>/File/Print..."
 msgstr "<Image>/Súbor/Tlaè..."
 
 #: plug-ins/rcm/rcm.c:113
-#, fuzzy
 msgid "<Image>/Layer/Colors/Colormap Rotation..."
-msgstr "<Image>/Obrázok/Farby/Otoèenie farebnej mapy...."
+msgstr "<Image>/Vrstva/Farby/Otoèenie farebnej mapy..."
 
 #: plug-ins/rcm/rcm.c:276
 msgid "Rotating the colormap..."
@@ -10377,2052 +10328,3 @@ msgstr "Chyba: Súbor XJT vlastností %s nie je mo¾né èíta»"
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Chyba: Súbor XJT vlastností %s je prázdny"
 
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Cancel"
-#~ msgstr "Zru¹i»"
-
-#~ msgid "Close"
-#~ msgstr "Zatvori»"
-
-#~ msgid "GIF save: Your comment string is too long.\n"
-#~ msgstr "GIF zápis: Re»azec s komentárom je príli¹ dlhý\n"
-
-#~ msgid "<Image>/Layers/Rotate/90 degrees"
-#~ msgstr "<Image>/Vrstvy/Otoèenie/90 stupòov"
-
-#~ msgid "<Image>/Layers/Rotate/180 degrees"
-#~ msgstr "<Image>/Vrstvy/Otoèenie/180 stupòov"
-
-#~ msgid "<Image>/Layers/Rotate/270 degrees"
-#~ msgstr "<Image>/Vrstvy/Otoèenie/270 stupòov"
-
-#~ msgid "File-Browser"
-#~ msgstr "Prehliadaè súborov"
-
-#~ msgid "Enter Values"
-#~ msgstr "Vlo¾i» hodnoty"
-
-#~ msgid "Value: "
-#~ msgstr "Hodnota: "
-
-#~ msgid "Press Button"
-#~ msgstr "Stlaèi» tlaèítko"
-
-#~ msgid "GAP Animated Filter apply"
-#~ msgstr "Pou¾i» animovaný filter GAP"
-
-#~ msgid "Animated Filter apply (init)"
-#~ msgstr "Pou¾i» animovaný filter (inicializácia)"
-
-#~ msgid "Gen Code by name"
-#~ msgstr "Generova» kód podµa mena"
-
-#~ msgid "Animated Filter apply (by name - please wait)"
-#~ msgstr "Pou¾i» animovaný filter (podµa mena - prosím èakajte)"
-
-#~ msgid "Animated Filter apply (by blurb - please wait)"
-#~ msgstr "Pou¾i» animovaný filter (podµa zálo¾ky - prosím èakajte)"
-
-#~ msgid "Animated Filter apply (please wait)"
-#~ msgstr "Pou¾i» animovaný filter (prosím èakajte)"
-
-#~ msgid "Animated Filter apply"
-#~ msgstr "Pou¾i» animovaný filter"
-
-#~ msgid "<Image>/Video/Split Video to Frames"
-#~ msgstr "<Image>/Video/Rozdeli» video do snímok"
-
-#~ msgid "<Toolbox>/Xtns/Split Video to Frames"
-#~ msgstr "<Toolbox>/Roz¹./Rozdeli» video do snímok"
-
-#~ msgid "<Image>/Video/Split Video to Frames/MPEG1"
-#~ msgstr "<Image>/Video/Rozdeli» video do snímok/MPEG1"
-
-#~ msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
-#~ msgstr "<Toolbox>/Roz¹./Rozdeli» video do snímok/MPEG1"
-
-#~ msgid "Overwrite Frame"
-#~ msgstr "Prepísa» snímku"
-
-#~ msgid "Overwrite All"
-#~ msgstr "Prepísa» v¹etko"
-
-#~ msgid "GAP Question"
-#~ msgstr "GAP otázka"
-
-#~ msgid "File already exists"
-#~ msgstr "Súbor u¾ existuje"
-
-#~ msgid "Decoding MPEG Movie..."
-#~ msgstr "Dekódujem MPEG film..."
-
-#~ msgid ""
-#~ "Name of the MPEG1 videofile to READ.\n"
-#~ "Frames are extracted from the videofile\n"
-#~ "and written to seperate diskfiles.\n"
-#~ "Audiotracks in the videofile are ignored."
-#~ msgstr ""
-#~ "Názov MPEG1 videosúbora na èítanie.\n"
-#~ "Snímky sú extrahované z videosúbora\n"
-#~ "a zapisované do oddelených diskových súborov.\n"
-#~ "Audiostopy vo videosúbore sú ignorované."
-
-#~ msgid "Framenumber of 1st frame to extract"
-#~ msgstr "Èíslo prvej snímky na extrahovanie"
-
-#~ msgid "Framenumber of last frame to extract"
-#~ msgstr "Èíslo poslednej snímky na extrahovanie"
-
-#~ msgid "Framenames:"
-#~ msgstr "Názvy snímok:"
-
-#~ msgid ""
-#~ "Basename for the AnimFrames to write on disk\n"
-#~ "(framenumber and .xcf is added)"
-#~ msgstr ""
-#~ "Základný názov pre zápis snímok animácie na disk\n"
-#~ "(èíslo snímky a .xcf bude pridané)"
-
-#~ msgid "Open the 1st one of the extracted frames"
-#~ msgstr "Otvori» prvé z extrahovaných snímok"
-
-#~ msgid ""
-#~ "\n"
-#~ "WARNING: Do not attempt to split other files than MPEG1 videos.\n"
-#~ "Before you proceed, you should save all open images."
-#~ msgstr ""
-#~ "\n"
-#~ "VAROVANIE: Nepokú¹ajte sa rozdeli» iné súbory ako MPEG1 video.\n"
-#~ "Skôr ako budete pokraèova», mali by ste ulo¾i» v¹etky obrázky."
-
-#~ msgid "Split MPEG1 Video to Frames"
-#~ msgstr "Rozdeli» MPEG1 video do snímok"
-
-#~ msgid "Select Frame Range"
-#~ msgstr "Výber rozsahu snímok"
-
-#~ msgid "Conditions to run the xanim based video split"
-#~ msgstr "Podmienky na spustenie rozdelenia videa zalo¾eného na xanim"
-
-#~ msgid "1.) xanim 2.80.0 exporting edition (the loki version)"
-#~ msgstr "1.) xanim 2.80.0 exportujúce vydanie (loki verzia)"
-
-#~ msgid "    must be installed somewhere in your PATH"
-#~ msgstr "    musí by» nain¹talované nikde vo va¹ej PATH"
-
-#~ msgid "    you can get xanim exporting edition at"
-#~ msgstr "    exportujúcu edíciu xanim mô¾ete získa» na"
-
-#~ msgid ""
-#~ "2.) if your xanim exporting edition is not in your PATH or is not named "
-#~ "xanim"
-#~ msgstr ""
-#~ "2.) ak va¹a exportujúca verzia xanim nie je vo va¹ej PATH alebo nie je "
-#~ "pomenovaná ako xanim"
-
-#~ msgid "    you have to set Environment variable GAP_XANIM_PROG "
-#~ msgstr "    musíte nastavi» premennú prostredia GAP_XANIM_PROG "
-
-#~ msgid "    to your xanim exporting program and restart gimp"
-#~ msgstr "    k vá¹mu exportujúcemu programu xanim a znovu spusti» gimp"
-
-#~ msgid "An ERROR occured while trying to call xanim:"
-#~ msgstr "Poèas volania xanim sa vyskytla chyba:"
-
-#~ msgid "XANIM Information"
-#~ msgstr "XANIM informácie"
-
-#~ msgid "Video:"
-#~ msgstr "Video:"
-
-#~ msgid ""
-#~ "Name of a videofile to READ by xanim.\n"
-#~ "Frames are extracted from the videofile\n"
-#~ "and written to separate diskfiles.\n"
-#~ "xanim exporting edition is required."
-#~ msgstr ""
-#~ "Názov videosúbora na èítanie programom xanim.\n"
-#~ "Snímky sú extrahované z video súbora\n"
-#~ "a zapisované do oddelených diskových súborov.\n"
-#~ "Vy¾aduje exportujúcu edíciu xanim"
-
-#~ msgid ""
-#~ "Basename for the AnimFrames to write on disk\n"
-#~ "(framenumber and extension is added)"
-#~ msgstr ""
-#~ "Základný názov animovaných snímok pre zápis na disk.\n"
-#~ "(èíslo snímky a prípona bude pridaná)"
-
-#~ msgid "Format"
-#~ msgstr "Formát"
-
-#~ msgid ""
-#~ "Fileformat for the extracted AnimFrames\n"
-#~ "(xcf is extracted as ppm and converted to xcf)"
-#~ msgstr ""
-#~ "Súborový formát pre extrahované animované snímky\n"
-#~ "(xcf je extrahované ako ppm a konvertované do xcf)"
-
-#~ msgid "Extract Frames"
-#~ msgstr "Extrahova» snímky"
-
-#~ msgid "Enable extraction of Frames"
-#~ msgstr "Povoli» extrakciu snímok"
-
-#~ msgid "Extract Audio"
-#~ msgstr "Extrahova» audio"
-
-#~ msgid ""
-#~ "Enable extraction of audio to raw audiofile\n"
-#~ "(frame range limits are ignored for audio)"
-#~ msgstr ""
-#~ "Povolí extrahovanie zvuku do raw audio súboru\n"
-#~ "(limity pre rozsah snímok sú pre audio ignorované)"
-
-#~ msgid "Jpeg Quality:"
-#~ msgstr "Jpeg kvalita:"
-
-#~ msgid ""
-#~ "Quality for resulting Jpeg frames\n"
-#~ "(is ignored when other formats are used)"
-#~ msgstr ""
-#~ "Kvalita výsledných Jpeg snímok\n"
-#~ "(je ignorovaná keï sa pou¾ije iný formát)"
-
-#~ msgid "Run asynchronously"
-#~ msgstr "Spusti» asynchrónne"
-
-#~ msgid ""
-#~ "Run xanim asynchronously and delete unwanted frames\n"
-#~ "(out of the specified range) while xanim is still running"
-#~ msgstr ""
-#~ "Spustí xanim asynchrónne a zma¾e ne¾iadúce snímky\n"
-#~ "(mimo urèený rozsah) poèas behu xanim"
-
-#~ msgid ""
-#~ "\n"
-#~ "Warning: xanim 2.80 has only limited MPEG support.\n"
-#~ "Most of the frames (type P and B) will be skipped."
-#~ msgstr ""
-#~ "\n"
-#~ "Varovanie: xanim 2.80 ma iba limitovanú podporu MPEG.\n"
-#~ "Väè¹ina snímok (typ P a B) bude preskoèená."
-
-#~ msgid "Split any Xanim readable Video to Frames"
-#~ msgstr "Rozdeli» video èitateµné programom Xanim do snímok"
-
-#~ msgid ""
-#~ "can't find any extracted frames,\n"
-#~ "%s\n"
-#~ "maybe xanim has failed or was cancelled"
-#~ msgstr ""
-#~ "nemô¾em nájs» ¾iadne extrahované snímky,\n"
-#~ "%s\n"
-#~ "mo¾no xanim spadol alebo bol preru¹ený"
-
-#~ msgid "frames are not extracted, because overwrite of %s was cancelled"
-#~ msgstr "snímky nie sú extrahované, preto¾e prepisovanie %s bolo preru¹ené"
-
-#~ msgid "failed to overwrite %s (check permissions ?)"
-#~ msgstr "nepodarilo sa prepísa» %s (skontrolovali ste prístupové práva?)"
-
-#~ msgid "failed to write %s (check permissions ?)"
-#~ msgstr "nepodarilo sa zapísa» do %s (skontrolovali ste prístupové práva?)"
-
-#~ msgid "could not execute %s (check if xanim is installed)"
-#~ msgstr "nie je mo¾né spusti» %s (skontrolujte, èi je xanim nain¹talovaný)"
-
-#~ msgid "%s does not look like xanim"
-#~ msgstr "Nezdá sa, ¾e %s je xanim"
-
-#~ msgid ""
-#~ "The xanim program on your system \"%s\"\n"
-#~ "does not support the exporting options Ea, Ee, Eq"
-#~ msgstr ""
-#~ "Program xanim, ktorý máte vo svojom systéme \"%s\"\n"
-#~ "nepodporuje exportné voµby Ea, Ee, Eq"
-
-#~ msgid ""
-#~ "The xanim program on your system \"%s\"\n"
-#~ "does not support exporting of single frames"
-#~ msgstr ""
-#~ "Program xanim, ktorý máte vo svojom systéme \"%s\"\n"
-#~ "nepodporuje exportné jednotlivých snímky"
-
-#~ msgid "videofile %s not existent or empty\n"
-#~ msgstr "video súbor %s neexistuje alebo je prázdny\n"
-
-#~ msgid ""
-#~ "could not create %s directory\n"
-#~ "(that is required for xanim frame export)"
-#~ msgstr ""
-#~ "Nie je mo¾né vytvori» prieèinok %s\n"
-#~ "(ktorý vy¾aduje xanim pri exporte snímok)"
-
-#~ msgid "extracting frames..."
-#~ msgstr "extrahujem snímky..."
-
-#~ msgid ""
-#~ "could not start xanim process\n"
-#~ "(program=%s)"
-#~ msgstr ""
-#~ "nie je mo¾né zaèa» xanim proces\n"
-#~ "(program=%s)"
-
-#~ msgid ""
-#~ "can't find any extracted frames,\n"
-#~ "xanim has failed or was cancelled"
-#~ msgstr ""
-#~ "nie je mo¾né nájs» ¾iadne extrahované snímky,\n"
-#~ "xanim zlyhal, alebo bol preru¹ený"
-
-#~ msgid "renaming frames..."
-#~ msgstr "mením názvy snímok..."
-
-#~ msgid "converting frames..."
-#~ msgstr "konvetujem snímky..."
-
-#~ msgid "backup to file"
-#~ msgstr "zálohovanie do súboru"
-
-#~ msgid "Make backup of the image after each step"
-#~ msgstr "Vytvori» zálohu obrázka po ka¾dom kroku"
-
-#~ msgid "Continue"
-#~ msgstr "Pokraèova»"
-
-#~ msgid "Skip %d"
-#~ msgstr "Preskoèi» %d"
-
-#~ msgid ""
-#~ "2nd call of %s\n"
-#~ "(define end-settings)"
-#~ msgstr ""
-#~ "2. volanie z %s\n"
-#~ "(definuje koncové nastavenie)"
-
-#~ msgid ""
-#~ "Non-Interactive call of %s\n"
-#~ "(for all layers in between)"
-#~ msgstr ""
-#~ "Neinteraktívne volanie %s\n"
-#~ "(na v¹etky vrstvy rozsahu)"
-
-#~ msgid "Applying Filter to all Layers..."
-#~ msgstr "Aplikujem filter na v¹etky vrstvy..."
-
-#~ msgid "Select Filter for Animated apply"
-#~ msgstr "Výber filtra pre animované pou¾itie"
-
-#~ msgid "Apply Constant"
-#~ msgstr "Kon¹tantné"
-
-#~ msgid "Apply Varying"
-#~ msgstr "Premenlivé pou¾itie"
-
-#~ msgid "<Image>/Filters/Filter all Layers..."
-#~ msgstr "<Image>/Filtre/Filter pre v¹etky vrstvy..."
-
-#~ msgid "<Image>/Video/Split Video to Frames/Any XANIM readable..."
-#~ msgstr ""
-#~ "<Image>/Video/Rozdeli» video do snímok/Akékoµvek spracovateµné XANIMom..."
-
-#~ msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
-#~ msgstr ""
-#~ "<Toolbox>/Roz¹./Rozdeli» video do snímok/Akékoµvek spracovateµné "
-#~ "XANIMom..."
-
-#~ msgid "<Image>/Video/Encode/MPEG1..."
-#~ msgstr "<Image>/Video/Kódovanie/MPEG1..."
-
-#~ msgid "<Image>/Video/Encode/MPEG2..."
-#~ msgstr "<Image>/Video/Kódovanie/MPEG2..."
-
-#~ msgid "GAP Message"
-#~ msgstr "GAP správa"
-
-#~ msgid ""
-#~ "OPERATION CANCELLED.\n"
-#~ "Current frame changed while dialog was open."
-#~ msgstr ""
-#~ "OPERÁCIA ZRU©ENÁ.\n"
-#~ "Aktuálna snímka bola zmenené poèas otvárania dialógu."
-
-#~ msgid ""
-#~ "OPERATION CANCELLED.\n"
-#~ "GAP plug-ins only work with filenames\n"
-#~ "that end in numbers like _0001.xcf.\n"
-#~ "==> Rename your image, then try again."
-#~ msgstr ""
-#~ "OPERÁCIA ZRU©ENÁ.\n"
-#~ "GAP zásuvný modul pracuje iba s názvami súborov,\n"
-#~ "ktoré konèia na èíslo ako napr. _0001.xcf.\n"
-#~ "==> Premenujte svoj obrázok a potom skúste znova."
-
-#~ msgid ""
-#~ "You are using a file format != xcf\n"
-#~ "Save Operations may result\n"
-#~ "in loss of layer information."
-#~ msgstr ""
-#~ "Pou¾ívanie iný formát ako xcf\n"
-#~ "Operácie zápisu mô¾u spôsobi»,\n"
-#~ "¾e stratíte informácie o vrstvách."
-
-#~ msgid "Save Flattened"
-#~ msgstr "Ulo¾i» zlúèené"
-
-#~ msgid "Save As Is"
-#~ msgstr "Ulo¾í ako, je"
-
-#~ msgid "Error: could not rename frame %ld to %ld"
-#~ msgstr "Chyba: nie je mo¾né premenova» snímku %ld na %ld"
-
-#~ msgid "Error: could not save frame %s"
-#~ msgstr "Chyba: nie je mo¾né ulo¾i» snímku %s"
-
-#~ msgid "Duplicating frames..."
-#~ msgstr "Duplikujem snímky..."
-
-#~ msgid "Renumber Framesequence..."
-#~ msgstr "Preèíslujem sekvenciu snímok..."
-
-#~ msgid "Goto Frame (%ld/%ld)"
-#~ msgstr "Prejs» na snímku (%ld/%ld)"
-
-#~ msgid "Destination Frame Number (%ld  - %ld)"
-#~ msgstr "Cieµové èíslo snímky (%ld  - %ld)"
-
-#~ msgid "Number:"
-#~ msgstr "Poèet:"
-
-#~ msgid "Delete Frames (%ld/%ld)"
-#~ msgstr "Zmaza» snímky (%ld/%ld)"
-
-#~ msgid "Delete Frames from %ld to (number)"
-#~ msgstr "Zmaza» snímky od %ld po (èíslo)"
-
-#~ msgid "Duplicate Frames (%ld/%ld)"
-#~ msgstr "Duplikovanie snímok (%ld/%ld)"
-
-#~ msgid "Source Range starts at this framenumber"
-#~ msgstr "Zdrojový rozsah zaèína na tomto èísle snímky"
-
-#~ msgid "Source Range ends at this framenumber"
-#~ msgstr "Zdrojový rozsah konèí na tomto èísle snímky"
-
-#~ msgid "N times:"
-#~ msgstr "N krát:"
-
-#~ msgid ""
-#~ "Copy selected Range n-times  \n"
-#~ "(you may type in Values > 99)"
-#~ msgstr ""
-#~ "Kopíruje zvolený rozsah n-krát  \n"
-#~ "(je mo¾né vlo¾i» hodnoty > 99)"
-
-#~ msgid "Duplicate Frame Range"
-#~ msgstr "Duplikova» rozsah snímok"
-
-#~ msgid "Exchange current Frame (%ld)"
-#~ msgstr "Zameni» aktuálnu snímku (%ld)"
-
-#~ msgid "With Frame (number)"
-#~ msgstr "So snímkou (èíslo)"
-
-#~ msgid "Framesequence Shift (%ld/%ld)"
-#~ msgstr "Posun sekvencie snímok (%ld/%ld)"
-
-#~ msgid "Affected Range starts at this framenumber"
-#~ msgstr "Ovplyvnený rozsah zaèína na tejto snímke"
-
-#~ msgid "Affected Range ends at this framenumber"
-#~ msgstr "Ovplyvnený rozsah konèí na tejto snímke"
-
-#~ msgid "N-Shift:"
-#~ msgstr "N-posun:"
-
-#~ msgid ""
-#~ "Renumber the affected framesequence     \n"
-#~ "(numbers are shifted in circle by N)"
-#~ msgstr ""
-#~ "Preèíslovanie ovlyvnenej sekvencie snímok     \n"
-#~ "(èísla sú cyklicky posunuté o N)"
-
-#~ msgid "Framesequence shift"
-#~ msgstr "Posunutie sekvencie snímok"
-
-#~ msgid ""
-#~ "Can't execute more than 1 Video Function\n"
-#~ "on the same AnimFrame Image at the same time\n"
-#~ "LOCK ID:%s\n"
-#~ msgstr ""
-#~ "Nie je mo¾né spusti» viac ako len jednu video funkciu\n"
-#~ "na tú istú snímku animácie v tom istom èase\n"
-#~ "ID uzamknutia:%s\n"
-
-#~ msgid "<Image>/Video/Goto/Next Frame"
-#~ msgstr "<Image>/Video/Prejs»/Na ïal¹iu snímku"
-
-#~ msgid "<Image>/Video/Goto/Previous Frame"
-#~ msgstr "<Image>/Video/Prejs»/Na prechádzajúcu snímku"
-
-#~ msgid "<Image>/Video/Goto/First Frame"
-#~ msgstr "<Image>/Video/Prejs»/Na prvú snímku"
-
-#~ msgid "<Image>/Video/Goto/Last Frame"
-#~ msgstr "<Image>/Video/Prejs»/Na poslednú snímku"
-
-#~ msgid "<Image>/Video/Goto/Any Frame..."
-#~ msgstr "<Image>/Video/Prejs»/Na ktorúkoµvek snímku"
-
-#~ msgid "<Image>/Video/Delete Frames..."
-#~ msgstr "<Image>/Video/Zmaza» snímky..."
-
-#~ msgid "<Image>/Video/Duplicate Frames..."
-#~ msgstr "<Image>/Video/Duplikova» snímky..."
-
-#~ msgid "<Image>/Video/Exchange Frame..."
-#~ msgstr "<Image>/Video/Vymeni» snímky..."
-
-#~ msgid "<Image>/Video/Move Path..."
-#~ msgstr "<Image>/Video/Cesta presunu..."
-
-#~ msgid "<Image>/Video/Frames to Image..."
-#~ msgstr "<Image>/Video/Snímky do obrázku..."
-
-#~ msgid "<Image>/Video/Frames Flatten..."
-#~ msgstr "<Image>/Video/Zlúèi» snímky..."
-
-#~ msgid "<Image>/Video/Frames LayerDel..."
-#~ msgstr "<Image>/Video/Zmaza» vrstvu snímok..."
-
-#~ msgid "<Image>/Video/Frames Convert..."
-#~ msgstr "<Image>/Video/Konvertova» snímky..."
-
-#~ msgid "<Image>/Video/Frames Resize..."
-#~ msgstr "<Image>/Video/Zmeni» veµkos» plochy..."
-
-#~ msgid "<Image>/Video/Frames Crop..."
-#~ msgstr "<Image>/Video/Orezanie snímok..."
-
-#~ msgid "<Image>/Video/Frames Scale..."
-#~ msgstr "<Image>/Video/Zmeni» veµkos» snímok"
-
-#~ msgid "<Image>/Video/Split Image to Frames..."
-#~ msgstr "<Image>/Video/Rozdeli» obrázok do snímok..."
-
-#~ msgid "<Image>/Video/Framesequence Shift..."
-#~ msgstr "<Image>/Video/Posun sekvencie snímok..."
-
-#~ msgid "<Image>/Video/Frames Modify..."
-#~ msgstr "<Image>/Video/Upravi» snímky..."
-
-#~ msgid "Pattern is equal to LayerName"
-#~ msgstr "Vzorka je zhodná sa názvom vrstvy"
-
-#~ msgid "Pattern is Start of LayerName"
-#~ msgstr "Vzorka je zaèiatok názvu vrstvy"
-
-#~ msgid "Pattern is End of Layername"
-#~ msgstr "Vzorka je koniec názvu vrstvy"
-
-#~ msgid "Pattern is a Part of LayerName"
-#~ msgstr "Vzorka je èas» názvu vrstvy"
-
-#~ msgid "Pattern is LayerstackNumber List"
-#~ msgstr "Vzorka je zoznam èísiel zásobníka vrstiev"
-
-#~ msgid "Pattern is REVERSE-stack List"
-#~ msgstr "Vzorka je zoznam obráteného zásobníka"
-
-#~ msgid "All Visible (ignore Pattern)"
-#~ msgstr "V¹etko viditeµné (ignorovanie vzorky)"
-
-#~ msgid "Select all Layers where Layername is equal to Pattern"
-#~ msgstr "Zvolí v¹etky vrstvy, ktorých názov je zhodný so vzorkou"
-
-#~ msgid "Select all Layers where Layername starts with Pattern"
-#~ msgstr "Zvolí v¹etky vrstvy, ktorých názov zaèína vzorkou"
-
-#~ msgid "Select all Layers where Layername ends up with Pattern"
-#~ msgstr "Zvolí v¹etky vrstvy, ktorých názov konèí vzorkou"
-
-#~ msgid "Select all Layers where Layername contains Pattern"
-#~ msgstr "Zvolí v¹etky vrstvy, ktorých názov obsahuje vzorku"
-
-#~ msgid ""
-#~ "Select Layerstack positions.\n"
-#~ "0, 4-5, 8\n"
-#~ "where 0 == Top-layer"
-#~ msgstr ""
-#~ "Zvolí pozíciu v zásobníku vrstiev.\n"
-#~ "0, 4-5, 8\n"
-#~ "kde 0 == horná vrstva"
-
-#~ msgid ""
-#~ "Select Layerstack positions.\n"
-#~ "0, 4-5, 8\n"
-#~ "where 0 == BG-layer"
-#~ msgstr ""
-#~ "Zvolí pozíciu v zásobníku vrstiev.\n"
-#~ "0, 4-5, 8\n"
-#~ "kde 0 == vrstva pozadia"
-
-#~ msgid "Select all visible Layers"
-#~ msgstr "Vybra» v¹etky viditeµné vrstvy"
-
-#~ msgid "Set Layer(s) visible"
-#~ msgstr "Nastavi» vrstvy ako viditeµné"
-
-#~ msgid "Set Layer(s) invisible"
-#~ msgstr "Nastavi» vrstvy ako neviditeµné"
-
-#~ msgid "Set Layer(s) linked"
-#~ msgstr "Nastavi» vrstvy ako spojené"
-
-#~ msgid "Set Layer(s) unlinked"
-#~ msgstr "Nastavi» vrstvy ako rozpojené"
-
-#~ msgid "Raise Layer(s)"
-#~ msgstr "Posunú» vrstvu vy¹¹ie"
-
-#~ msgid "Lower Layer(s)"
-#~ msgstr "Posunú» vrstvu ni¾¹ie"
-
-#~ msgid "Merge Layer(s) expand as necessary"
-#~ msgstr "Spoji» vrstvy roz¹írené podµa potreby"
-
-#~ msgid "Merge Layer(s) clipped to image"
-#~ msgstr "Spoji» vrstvy orezané podµa obrázka"
-
-#~ msgid "Merge Layer(s) clipped to bg-layer"
-#~ msgstr "Spoji» vrstvy orezané podµa vrstvy pozadia"
-
-#~ msgid "Apply filter on Layer(s)"
-#~ msgstr "Pou¾i» filter na vrstvy"
-
-#~ msgid "Duplicate Layer(s)"
-#~ msgstr "Duplikova» vrstvy"
-
-#~ msgid "Delete Layer(s)"
-#~ msgstr "Zmaza» vrstvy"
-
-#~ msgid "Rename Layer(s)"
-#~ msgstr "Premenova» vrstvy"
-
-#~ msgid ""
-#~ "Perform function on one or more Layer(s)\n"
-#~ "in all frames of the selected frame range\n"
-#~ msgstr ""
-#~ "Vykonáva funkciu na jednej alebo viacerých vrstvách\n"
-#~ "vo v¹etkých snímkach vybraného rozsahu snímok\n"
-
-#~ msgid "From Frame:"
-#~ msgstr "Od snímky:"
-
-#~ msgid "first handled frame"
-#~ msgstr "prvá spracovaná snímka"
-
-#~ msgid "To Frame:"
-#~ msgstr "Po snímku:"
-
-#~ msgid "last handled frame"
-#~ msgstr "posledná spracovaná snímka"
-
-#~ msgid "Select Layer(s):"
-#~ msgstr "Výber vrstiev:"
-
-#~ msgid "Select Pattern:"
-#~ msgstr "Výber vzorky:"
-
-#~ msgid ""
-#~ "String to identify layer names    \n"
-#~ "or layerstack position numbers\n"
-#~ "0,3-5"
-#~ msgstr ""
-#~ "Re»azec na identifikáciu názvov vrstiev    \n"
-#~ "alebo èíslo pozície v zásobníku vrstiev\n"
-#~ "0,3-5"
-
-#~ msgid "Case sensitive"
-#~ msgstr "Rozli¹ova» veµkos» písmen"
-
-#~ msgid "Lowercase and UPPERCASE letters are considered as different"
-#~ msgstr "Malé a VE¥KÉ písmená sa rozli¹ujú"
-
-#~ msgid "Invert Selection"
-#~ msgstr "Obráti» výber"
-
-#~ msgid "Perform actions on all unselected Layers"
-#~ msgstr "Vykonanie akcií na v¹etkých nevybraných vrstvách"
-
-#~ msgid "Function:"
-#~ msgstr "Funkcia:"
-
-#~ msgid "Function to be performed on all selected layers"
-#~ msgstr "Funkcia sa vykoná na v¹etkých vybraných vrstvách"
-
-#~ msgid "New Layername:"
-#~ msgstr "Nový názov vrstvy:"
-
-#~ msgid ""
-#~ "New Layername for all handled layers \n"
-#~ "[####] is replaced by frame number\n"
-#~ "(is used on function rename only)"
-#~ msgstr ""
-#~ "Nový názov vrstvy pre v¹etky spracovávané vrstvy \n"
-#~ "[####] je nahradené èíslom snímky\n"
-#~ "(pou¾ije sa iba vo funkcií premenovanie)"
-
-#~ msgid "Frames Modify"
-#~ msgstr "Úprava políèok"
-
-#~ msgid ""
-#~ "Non-Interactive call of %s\n"
-#~ "(for all selected layers)"
-#~ msgstr ""
-#~ "Neinteraktívne volanie %s\n"
-#~ "(pre v¹etky zvolené vrstvy)"
-
-#~ msgid "Select Filter for Animated frames-apply"
-#~ msgstr "Výber filtra pre pou¾itie na animované snímky"
-
-#~ msgid "GAP Modify: No layer selected in last handled frame"
-#~ msgstr ""
-#~ "Úprava GAP: V poslednej spracovávanej vrstve nie je zvolená ¾iadna vrstva"
-
-#~ msgid "Modifying Frames/Layer(s)..."
-#~ msgstr "Modifikujú sa snímky/vrstvy..."
-
-#~ msgid "No selected Layer in start frame"
-#~ msgstr "Nie je zvolená ¾iadna vrstva v poèiatoènom políèku"
-
-#~ msgid "Dissolve"
-#~ msgstr "Rozpustenie"
-
-#~ msgid "Multiply"
-#~ msgstr "Vynásobi»"
-
-#~ msgid "Difference"
-#~ msgstr "Rozdiely"
-
-#~ msgid "Darken Only"
-#~ msgstr "Len stmavnutie"
-
-#~ msgid "Lighten Only"
-#~ msgstr "Len zosvetlenie"
-
-#~ msgid "Left  Top"
-#~ msgstr "¥avý horný"
-
-#~ msgid "Left  Bottom"
-#~ msgstr "¥avý dolný"
-
-#~ msgid "Right Top"
-#~ msgstr "Pravý horný"
-
-#~ msgid "Right Bottom"
-#~ msgstr "Pravý dolný"
-
-#~ msgid "Loop"
-#~ msgstr "Sluèka"
-
-#~ msgid "Loop Reverse"
-#~ msgstr "Spätná sluèka"
-
-#~ msgid "Once"
-#~ msgstr "Raz"
-
-#~ msgid "OnceReverse"
-#~ msgstr "Raz dozadu"
-
-#~ msgid "PingPong"
-#~ msgstr "Tam a spä»"
-
-#~ msgid "Frame Loop"
-#~ msgstr "Snímka sluèky"
-
-#~ msgid "Frame Loop Reverse"
-#~ msgstr "Snímka spätnej sluèky"
-
-#~ msgid "Frame Once"
-#~ msgstr "Snímka raz"
-
-#~ msgid "Frame OnceReverse"
-#~ msgstr "Snímka raz dozadu"
-
-#~ msgid "Frame PingPong"
-#~ msgstr "Snímka tam a spä»"
-
-#~ msgid "Frame None"
-#~ msgstr "Snímka nièoho"
-
-#~ msgid "Move Path"
-#~ msgstr "Cesta presunu"
-
-#~ msgid "Show PreviewFrame with Selected SrcLayer at current Controlpoint"
-#~ msgstr ""
-#~ "Zobrazi» políèko náhµadu so zvolenou zdrojovou vrstvou v aktuálnom "
-#~ "riadiacom bode"
-
-#~ msgid "Anim Preview"
-#~ msgstr "Animovaný náhµad"
-
-#~ msgid "Generate Animated Preview as multilayer image"
-#~ msgstr "Generova» animovaný náhµad ako viacvrstvový obrázok"
-
-#~ msgid "Copy moving source-layer(s) into frames"
-#~ msgstr "Kopírova» presun zdrojovej vrstvy do snímok"
-
-#~ msgid "Start Frame:"
-#~ msgstr "Poèiatoèná snímka:"
-
-#~ msgid "First handled frame"
-#~ msgstr "Prvá spracovávaná snímka"
-
-#~ msgid "End Frame:"
-#~ msgstr "Koneèná snímka"
-
-#~ msgid "Last handled frame"
-#~ msgstr "Posledná spracovávaná snímka"
-
-#~ msgid "Preview Frame:"
-#~ msgstr "Snímka náhµadu:"
-
-#~ msgid "Frame to show when UpdPreview button is pressed"
-#~ msgstr ""
-#~ "Snímka, ktorá sa uká¾e, ak je stlaèené tlaèítko na aktualizáciu náhµadu"
-
-#~ msgid "Layerstack:"
-#~ msgstr "Zásobník vrstiev:"
-
-#~ msgid ""
-#~ "How to insert SrcLayer into the Dst. Frame's Layerstack\n"
-#~ "0 means on top i.e. in front"
-#~ msgstr ""
-#~ "Spôsob vlo¾enia zdrojovej vrstvy do zásobníka vrstiev cieµa\n"
-#~ "0 znamená navrch, t.j. dopredu"
-
-#~ msgid "Force visibility"
-#~ msgstr "Vnúti» viditeµnos»"
-
-#~ msgid "Force visibility for all copied Src-Layers"
-#~ msgstr "Vnúti» viditeµnos» v¹etkým kopírovaným zdrojovým vrstvám"
-
-#~ msgid "Clip To Frame"
-#~ msgstr "Oreza» podµa snímky"
-
-#~ msgid "Clip all copied Src-Layers at Frame Boundaries"
-#~ msgstr "Oreza» v¹etky kopírované zdrojové vrstvy podµa okrajov snímky"
-
-#~ msgid ""
-#~ "No Source Image was selected\n"
-#~ "(Please open a 2nd Image of the same type before opening Move Path)"
-#~ msgstr ""
-#~ "Nebol zvolený zdrojový obrázok\n"
-#~ "(Zvoµte prosím druhý obrázok rovnakého typu pred otvorením Cesty presunu)"
-
-#~ msgid "Object on empty frames"
-#~ msgstr "Objekt v prázdnych snímkach"
-
-#~ msgid "Object on one frame"
-#~ msgstr "Objekt v jednej snímke"
-
-#~ msgid "Exact Object on frames"
-#~ msgstr "Presné objekty na snímkach"
-
-#~ msgid "Anim Preview Mode"
-#~ msgstr "Re¾im animovaného náhµadu"
-
-#~ msgid "Scale Preview"
-#~ msgstr "Zmena veµkosti náhµadu"
-
-#~ msgid "Scale down size of the generated animated preview (in %)"
-#~ msgstr "Zmen¹i» veµkos» generovaného animovaného náhµadu (v %)"
-
-#~ msgid "Framerate"
-#~ msgstr "Frekvencia snímok"
-
-#~ msgid "Framerate to use in the animated preview in frames/sec"
-#~ msgstr "Frekvencia snímok v animovanom náhµade v snímkach/sekundu"
-
-#~ msgid "Copy to Video Buffer"
-#~ msgstr "Kopírova» do video zásobníka"
-
-#~ msgid ""
-#~ "Save all single frames of animated preview to video buffer\n"
-#~ "(configured in gimprc by video-paste-dir and video-paste-basename)"
-#~ msgstr ""
-#~ "Ulo¾i» v¹etky jednotlivé snímky animovaného náhµadu do video zásobníka\n"
-#~ "(nastavené v gimprc pomocou video-paste-dir a video-paste-basename)"
-
-#~ msgid "Move Path Animated Preview"
-#~ msgstr "Cesta posunu animovaného náhµadu"
-
-#~ msgid "Generate Animated Preview failed\n"
-#~ msgstr "Generovanie animované náhµadu zlyhalo\n"
-
-#~ msgid "Load Path Points from file"
-#~ msgstr "Naèíta» body cesty zo súboru"
-
-#~ msgid "Save Path Points to file"
-#~ msgstr "Zápis bodov cesty do súboru"
-
-#~ msgid "Current Point: [ %3d ] of [ %3d ]"
-#~ msgstr "Aktuálny bod: [ %3d ] z [ %3d ]"
-
-#~ msgid "Source Select"
-#~ msgstr "Výber zdroja:"
-
-#~ msgid "Source Image/Layer:"
-#~ msgstr "Zdrojový obrázok/vrstva:"
-
-#~ msgid "Source Object to insert into Frame Range"
-#~ msgstr "Zdrojový objekt na vlo¾enie do rozsahu snímok"
-
-#~ msgid "Mode:"
-#~ msgstr "Re¾im:"
-
-#~ msgid "Paintmode"
-#~ msgstr "Re¾im kreslenia"
-
-#~ msgid "Stepmode:"
-#~ msgstr "Re¾im krokovania:"
-
-#~ msgid "How to fetch the next SrcLayer at the next handled frame"
-#~ msgstr ""
-#~ "Spôsob vyvolania nasledujúcej zdrojovej vrstvy na ïal¹ej spracovávanej "
-#~ "snímke"
-
-#~ msgid "Handle:"
-#~ msgstr "Ovládanie:"
-
-#~ msgid "How to place the SrcLayer at Controlpoint Coordinates"
-#~ msgstr "Spôsob umiestnenia zdrojovej vrstvy na súradnice riadiaceho bodu"
-
-#~ msgid "Move Path Preview"
-#~ msgstr "Náhµad na cestu posunu"
-
-#~ msgid "X Coordinate"
-#~ msgstr "Súradnica X"
-
-#~ msgid "Y Coordinate"
-#~ msgstr "Súradnica Y"
-
-#~ msgid "Scale Source Layer's Width in percent"
-#~ msgstr "Zmena ¹írka zdrojovej vrstvy v percentách"
-
-#~ msgid "Scale SrcLayer's Height in percent"
-#~ msgstr "Zmena vý¹ky zdrojovej vrstvy v percentách"
-
-#~ msgid "SrcLayer's Opacity in percent"
-#~ msgstr "Krytie zdrojovej vrstvy v percentách"
-
-#~ msgid "Rotate:"
-#~ msgstr "Otoèi»:"
-
-#~ msgid "Rotate SrcLayer (in degree)"
-#~ msgstr "Otoèenie zdrojovej vrstvy (v stupòoch)"
-
-#~ msgid "Keyframe:"
-#~ msgstr "Kµúèová snímka:"
-
-#~ msgid ""
-#~ "Fix Controlpoint to Keyframe number\n"
-#~ "(0 == No Keyframe)"
-#~ msgstr ""
-#~ "Upevnenie riadiaceho bodu podµa èísla kµúèovej snímky\n"
-#~ "(0 == bez kµúèovej snímky)"
-
-#~ msgid "Add Point"
-#~ msgstr "Prida» bod"
-
-#~ msgid ""
-#~ "Add Controlpoint at end\n"
-#~ "(the last Point is duplicated)"
-#~ msgstr ""
-#~ "Prida» riadiaci bod na koniec\n"
-#~ "(posledný bod je zduplikovaný)"
-
-#~ msgid "Show Path"
-#~ msgstr "Zobrazi» cestu"
-
-#~ msgid ""
-#~ "Show Path Lines and enable pick/drag with left button or move with right "
-#~ "button"
-#~ msgstr ""
-#~ "Zobrazi» cestu a povoli» chytenie/»ahanie µavým tlaèítkom alebo presun "
-#~ "pravým tlaèítkom"
-
-#~ msgid ""
-#~ "Insert Controlpoint\n"
-#~ "(the current Point is duplicated)"
-#~ msgstr ""
-#~ "Vlo¾i» riadiaci bod\n"
-#~ "(aktuálny bod je zduplikovaný)"
-
-#~ msgid "Delete current Controlpoint"
-#~ msgstr "Zmaza» aktuálny riadiaci bod"
-
-#~ msgid "Prev Point"
-#~ msgstr "Predchádzajúci bod"
-
-#~ msgid "Show Previous Controlpoint"
-#~ msgstr "Zobrazi» predchádzajúci bod"
-
-#~ msgid "Next Point"
-#~ msgstr "Nasledujúci bod"
-
-#~ msgid "Show Next Controlpoint"
-#~ msgstr "Zobrazi» nasledujúci riadiaci bod"
-
-#~ msgid "First Point"
-#~ msgstr "Prvý bod"
-
-#~ msgid "Show First Controlpoint"
-#~ msgstr "Zobrazi» prvý riadiaci bod"
-
-#~ msgid "Last Point"
-#~ msgstr "Posledný bod"
-
-#~ msgid "Show Last Controlpoint"
-#~ msgstr "Zobrazi» posledný riadiaci bod"
-
-#~ msgid "Clear Point"
-#~ msgstr "Zmaza» bod"
-
-#~ msgid "Reset the current Controlpoint to default Values"
-#~ msgstr "Nastaví aktuálny riadiaci bod na ¹tandardnú hodnotu"
-
-#~ msgid "Clear All Points"
-#~ msgstr "Zmaza» v¹etky body"
-
-#~ msgid ""
-#~ "Reset all Controlpoints to default Values but dont change the path (X/Y "
-#~ "Values)"
-#~ msgstr ""
-#~ "Nastaví v¹etky riadiace body na ¹tandardné hodnoty, ale nezmení cestu "
-#~ "(hodnoty X/Y"
-
-#~ msgid "Rotate Follow"
-#~ msgstr "Sledova» otoèenie"
-
-#~ msgid ""
-#~ "Set Rotation for all Controlpoints to follow the shape of the path.\n"
-#~ "(Shift: use Rotation of contolpoint 1 as offset)"
-#~ msgstr ""
-#~ "Nastaví otoèenie pre v¹etky riadiace body, aby sledovali tvar cesty.\n"
-#~ "(Shift: pou¾ije otoèenie riadiaceho bodu 1 ako posun)"
-
-#~ msgid "Delete All Points"
-#~ msgstr "Zmaza» v¹etky body"
-
-#~ msgid "Delete all Controlpoints"
-#~ msgstr "Zmaza» v¹etky riadiace body"
-
-#~ msgid "Load Points"
-#~ msgstr "Naèíta» body"
-
-#~ msgid "Load Controlpoints from file"
-#~ msgstr "Naèíta» riadiace body zo súboru"
-
-#~ msgid "Save Points"
-#~ msgstr "Ulo¾i» body"
-
-#~ msgid "Save Controlpoints to file"
-#~ msgstr "Ulo¾i» riadiace body do súboru"
-
-#~ msgid ""
-#~ "Can't operate with current Controlpoint\n"
-#~ "or Keyframe settings"
-#~ msgstr ""
-#~ "Nie je mo¾né pracova» s aktuálnymi riadiacimi bodmi\n"
-#~ "alebo nastaveniami kµúèových snímok"
-
-#~ msgid "Reset Keyframes"
-#~ msgstr "Obnovi» kµúcové snímky"
-
-#~ msgid "Move Path Controlpointcheck"
-#~ msgstr "Kontrola riadiacich bodov cesty presunu"
-
-#~ msgid "Errors:"
-#~ msgstr "Chyby:"
-
-#~ msgid ""
-#~ "No Source Image was selected.\n"
-#~ "Please open a 2nd Image of the same type before opening Move Path."
-#~ msgstr ""
-#~ "Nebol vybraný zdrojový obrázok.\n"
-#~ "Otvorte prosím druhý obrázok toho istého typu pre otvorením Cesty presunu."
-
-#~ msgid "Copying Layers into Frames..."
-#~ msgstr "Kopíruje vrstvy do snímok..."
-
-#~ msgid "Generating Animated Preview..."
-#~ msgstr "Generujem animovaný náhµad..."
-
-#~ msgid ""
-#~ "\n"
-#~ "Error: Keyframe %d at point [%d] higher or equal than last handled frame"
-#~ msgstr ""
-#~ "\n"
-#~ "Chyba: Kµúèová snímka %d v bode [%d] väè¹ia alebo rovná poslednej "
-#~ "obslu¾nej snímke"
-
-#~ msgid ""
-#~ "\n"
-#~ "Error: Keyframe %d at point [%d] leaves not enough space (frames)\n"
-#~ "for the previous controlpoints"
-#~ msgstr ""
-#~ "\n"
-#~ "Chyba: Kµúèová snímka %d v bode [%d] nenecháva dostatoèný priestor "
-#~ "(snímky)\n"
-#~ "pre predchádzajúce riadiace body"
-
-#~ msgid ""
-#~ "\n"
-#~ "Error: Keyframe %d is not in sequence at point [%d]"
-#~ msgstr ""
-#~ "\n"
-#~ "Chyba: Kµúèová snímka %d nie je v sekvencií v bode [%d]"
-
-#~ msgid ""
-#~ "\n"
-#~ "Error: controlpoint [%d] is out of handled framerange"
-#~ msgstr ""
-#~ "\n"
-#~ "Chyba: Riadiaci bod [%d] je mimo obslu¾ný rozsah snímok"
-
-#~ msgid ""
-#~ "\n"
-#~ "Error: more controlpoints (%d) than handled frames (%d)\n"
-#~ "please reduce controlpoints or select more frames"
-#~ msgstr ""
-#~ "\n"
-#~ "Chyba: Viac riadiacich bodov (%d) ne¾ obsluhujúcich snímok (%d),\n"
-#~ "zredukujte prosím riadiace body alebo vyberte viac snímok"
-
-#~ msgid "Conditions to run mpeg_encode 1.5:"
-#~ msgstr "Podmienky pre spustenie mpeg2encode 1.5:"
-
-#~ msgid "Conditions to run mpeg2encode 1.2:"
-#~ msgstr "Podmienky pre spustenie mpeg2encode 1.2:"
-
-#~ msgid "1.) mpeg_encode 1.5 must be installed"
-#~ msgstr "1.) mpeg_encode 1.5 musí by» nain¹talované"
-
-#~ msgid "1.) mpeg2encode 1.2 must be installed"
-#~ msgstr "1.) mpeg2encode 1.2 musí by» nain¹talované"
-
-#~ msgid "    you can get mpeg_encode at"
-#~ msgstr "    mpeg_encode mô¾ete získa na"
-
-#~ msgid "    you can get mpeg2encode at http://www.mpeg.org/MSSG"
-#~ msgstr "    mpeg2encode mô¾ete získa» na http://www.mpeg.org/MSSG"
-
-#~ msgid "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
-#~ msgstr "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
-
-#~ msgid "   or at ftp://ftp.mpeg.org/pub/mpeg/mssg "
-#~ msgstr "   alebo na ftp://ftp.mpeg.org/pub/mpeg/mssg "
-
-#~ msgid "2.) You need a series of single Images on disk (AnimFrames)"
-#~ msgstr ""
-#~ "2.) Potrebujete sériu jednotlivých obrázkov na disku (snímky animácie)"
-
-#~ msgid "    all with fileformat JPEG (or YUV or PNM or PPM)"
-#~ msgstr "   v¹etko vo formáte JPEG (alebo YUV alebo PNM alebo PPM)"
-
-#~ msgid "   all with fileformat PPM (or YUV)"
-#~ msgstr "   v¹etko vo formáte PPM (alebo YUV)"
-
-#~ msgid "    (use 'Frames Convert' from the Video Menu"
-#~ msgstr "    (pou¾i» 'Konvertova» snímky' z ponuky Video)"
-
-#~ msgid "    or 'Split Image to Frames' from the Video Menu)"
-#~ msgstr "    alebo 'Rozdeli» obrázok do snímok' z ponuky Video)"
-
-#~ msgid "3.) All Images must have the same size,"
-#~ msgstr "3.) V¹etky obrázky musia ma» rovnakú veµkos»,"
-
-#~ msgid "    width and height must be a multiple of 16"
-#~ msgstr "    ¹írka a vý¹ka musia by» násobkami 16"
-
-#~ msgid "    (use Scale or Crop from the Video Menu)"
-#~ msgstr "    (pou¾i» mierku alebo orez z ponuky Video)"
-
-#~ msgid "MPEG_ENCODE Information"
-#~ msgstr "MPEG_ENCODE informácie"
-
-#~ msgid "generate MPEG1 (ISO/IEC 11172-2) stream"
-#~ msgstr "generova» MPEG1 tok (ISO/IEC 11172-2)"
-
-#~ msgid "generate MPEG2 (ISO/IEC DIS 13818-2) stream"
-#~ msgstr "generova» MPEG2 tok (ISO/IEC DIS 13818-2)"
-
-#~ msgid "GenParams"
-#~ msgstr "Parametre generovania"
-
-#~ msgid "Gen + Encode"
-#~ msgstr "Generovanie + kódovanie"
-
-#~ msgid "To   Frame:"
-#~ msgstr "Po   snímku:"
-
-#~ msgid "Framerate :"
-#~ msgstr "Frekvencia snímok:"
-
-#~ msgid "framerate in frames/second"
-#~ msgstr "frekvencia v snímkach za sekundu"
-
-#~ msgid "Bitrate:"
-#~ msgstr "Bitová frekvencia"
-
-#~ msgid ""
-#~ "used for constant bitrates (bit/sec)                  \n"
-#~ "(low rate gives good compression + bad quality)"
-#~ msgstr ""
-#~ "pou¾ité pre kon¹tantnú bitovú frekvenciu (bit/s)                  \n"
-#~ "(nízka hodnota poskytuje dobrú kompresiu a zlú kvalitu)"
-
-#~ msgid "Outputfile:"
-#~ msgstr "Výstupný súbor:"
-
-#~ msgid "Name of the resulting MPEG outputfile"
-#~ msgstr "Názov výsledného MPEG súboru"
-
-#~ msgid "Paramfile:"
-#~ msgstr "Parametrický súbor:"
-
-#~ msgid ""
-#~ "Name of the Encoder-Parameterfile\n"
-#~ "(is generated)"
-#~ msgstr ""
-#~ "Názov parametrického súbora enkodera\n"
-#~ "(je generovaný)"
-
-#~ msgid "Startscript:"
-#~ msgstr "©tartovací skript:"
-
-#~ msgid ""
-#~ "Name of the Startscript           \n"
-#~ "(is generated/executed)"
-#~ msgstr ""
-#~ "Názov ¹tartovacieho skriptu           \n"
-#~ "(je generované/spustené)"
-
-#~ msgid ""
-#~ "Generate parameterfile for mpeg_encode 1.5\n"
-#~ "(the freely distributed Berkeley MPEG-1 Video  Encoder.)\n"
-#~ msgstr ""
-#~ "Generova» parametrický súbor pre mpeg_encode 1.5\n"
-#~ "(voµne ¹íriteµný Berkeley MPEG-1 Video  Encoder.)\n"
-
-#~ msgid "Constant Bitrate :"
-#~ msgstr "Kon¹tantná bitová frekvencia :"
-
-#~ msgid "Iqnore I/P/QSCALE values and use constant bit-rate)"
-#~ msgstr ""
-#~ "Ignorova» hodnoty mierky kvality I/P a pou¾i» kon¹tantnú bitovú frekvenciu"
-
-#~ msgid "Pattern:"
-#~ msgstr "Vzorka:"
-
-#~ msgid "How to encode MPEG framesequence (I/P/B frames)"
-#~ msgstr "Ako kódova» MPEG sekvenciu snímok (I/P/B snímky)"
-
-#~ msgid "IQSCALE:"
-#~ msgstr "I-K_mierka:"
-
-#~ msgid ""
-#~ "Quality scale for I-Frames                       \n"
-#~ "(1 = best quality, 31 = best comression)"
-#~ msgstr ""
-#~ "Mierka kvality pre I-snímky                       \n"
-#~ "(1 = najlep¹ia kvalita, 31 = najlep¹ia kompresia)"
-
-#~ msgid "PQSCALE:"
-#~ msgstr "P-K_mierka:"
-
-#~ msgid ""
-#~ "Quality scale for P-Frames                  \n"
-#~ "(1 = best quality, 31 = best comression)"
-#~ msgstr ""
-#~ "Mierka kvality pre P-snímky                  \n"
-#~ "(1 = najlep¹ia kvalita, 31 = najlep¹ia kompresia)"
-
-#~ msgid "BQSCALE:"
-#~ msgstr "B-K_mierka:"
-
-#~ msgid ""
-#~ "Quality scale for B-Frames                  \n"
-#~ "(1 = best quality, 31 = best comression)"
-#~ msgstr ""
-#~ "Mierka kvality pre B-snímky                  \n"
-#~ "(1 = najlep¹ia kvalita, 31 = najlep¹ia kompresia)"
-
-#~ msgid "P-Search :"
-#~ msgstr "P-vyhµadávanie :"
-
-#~ msgid "Search Algorithmus used for P-frames"
-#~ msgstr "Vyhµadávací algoritmus pre P-snímky"
-
-#~ msgid "B-Search :"
-#~ msgstr "B-vyhµadávanie :"
-
-#~ msgid "Search Algorithmus used for B-frames"
-#~ msgstr "Vyhµadávací algoritmus pre B-snímky"
-
-#~ msgid "Gen MPEG_ENCODE Parameters"
-#~ msgstr "Parametre generovania MPEG_ENCODE"
-
-#~ msgid "Encode Values"
-#~ msgstr "Hodnoty kódovania"
-
-#~ msgid ""
-#~ "Generate parameterfile for mpeg2encode 1.2\n"
-#~ "(MPEG-2 Video  Encoder.)\n"
-#~ msgstr ""
-#~ "Generova» parametrický súbor pre mpeg2encode 1.2\n"
-#~ "(MPEG-2 Video  Encoder.)\n"
-
-#~ msgid "MPEG-type :"
-#~ msgstr "Typ MPEG :"
-
-#~ msgid "Videoformat :"
-#~ msgstr "Videoformát :"
-
-#~ msgid "Videoformat"
-#~ msgstr "Videoformát"
-
-#~ msgid "Gen MPEG2ENCODE Parameters"
-#~ msgstr "Parametre generovania MPEG2ENCODE"
-
-#~ msgid ""
-#~ "\n"
-#~ "WARNING: mpeg_encode does not support Fileformat "
-#~ msgstr ""
-#~ "\n"
-#~ "VAROVANIE: mpeg_encode nepodporuje formát súboru "
-
-#~ msgid ""
-#~ "\n"
-#~ "ERROR: width not a multiple of 16"
-#~ msgstr ""
-#~ "\n"
-#~ "VAROVANIE: ¹írka nie je násobkom 16"
-
-#~ msgid ""
-#~ "\n"
-#~ "ERROR: height not a multiple of 16"
-#~ msgstr ""
-#~ "\n"
-#~ "VAROVANIE: vý¹ka nie je násobkom 16"
-
-#~ msgid ""
-#~ "\n"
-#~ "WARNING: mpeg2encode does not support Fileformat "
-#~ msgstr ""
-#~ "\n"
-#~ "VAROVANIE: mpeg2encode nepodporuje formát súboru "
-
-#~ msgid ""
-#~ "\n"
-#~ "ERROR: invoked from a single image, animframe required"
-#~ msgstr ""
-#~ "\n"
-#~ "CHYBA: volané z jedného obrázku, vy¾adované sú snímky animácie"
-
-#~ msgid ""
-#~ "Playback         \n"
-#~ "<Shift> optimized"
-#~ msgstr ""
-#~ "Prehrávanie         \n"
-#~ "<Shift> optimalizované"
-
-#~ msgid ""
-#~ "Smart Update .xvpics\n"
-#~ "<Shift> forced upd"
-#~ msgstr ""
-#~ "Inteligentná aktualizácia .xvpics\n"
-#~ "<Shift> ju vnúti"
-
-#~ msgid "Duplicate selected Frames"
-#~ msgstr "Duplikova» oznaèené snímky"
-
-#~ msgid "Delete selected Frames"
-#~ msgstr "Zmaza» oznaèené snímky"
-
-#~ msgid "Goto 1st Frame"
-#~ msgstr "Prejs» na prvú snímku"
-
-#~ msgid ""
-#~ "Goto prev Frame\n"
-#~ "<Shift> use timezoom stepsize"
-#~ msgstr ""
-#~ "Prejs» na predchádzajúcu snímku\n"
-#~ "<Shift> pou¾i» krok èasovej lupy"
-
-#~ msgid ""
-#~ "Goto next Frame\n"
-#~ "<Shift> use timezoom stepsize"
-#~ msgstr ""
-#~ "Prejs» na nasledujúcu snímku\n"
-#~ "<Shift> pou¾i» krok èasovej lupy"
-
-#~ msgid "Goto last Frame"
-#~ msgstr "Prejs» na poslednú snímku"
-
-#~ msgid "<Image>/Video/VCR Navigator..."
-#~ msgstr "<Image>/Video/VCR navigátor..."
-
-#~ msgid "Cant open two or more Video Navigator Windows."
-#~ msgstr "Nie je mo¾né otvori» dva alebo viac okien Video navigátora."
-
-#~ msgid "Paste before"
-#~ msgstr "Vlo¾i» pred"
-
-#~ msgid "Paste after"
-#~ msgstr "Vlo¾i» po"
-
-#~ msgid "Paste replace"
-#~ msgstr "Vlo¾i» nahradi»"
-
-#~ msgid "Clear Video Buffer"
-#~ msgstr "Vymaza» video zásobník"
-
-#~ msgid "Videoframes:"
-#~ msgstr "Video snímky:"
-
-#~ msgid "Framerate:"
-#~ msgstr "Frekvencia snímok:"
-
-#~ msgid "Timezoom:"
-#~ msgstr "Èasová lupa:"
-
-#~ msgid "Video Navigator"
-#~ msgstr "Video navigátor"
-
-#~ msgid "New Width:"
-#~ msgstr "Nová ¹írka:"
-
-#~ msgid "New Height:"
-#~ msgstr "Nová vý¹ka:"
-
-#~ msgid "Offset X:"
-#~ msgstr "Posun X:"
-
-#~ msgid "Offset Y:"
-#~ msgstr "Posun Y:"
-
-#~ msgid "Crop AnimFrames (all)"
-#~ msgstr "Orezanie snímok animácie (v¹etkých)"
-
-#~ msgid "Crop (original %dx%d)"
-#~ msgstr "Oreza» (pôvodne %dx%d)"
-
-#~ msgid "Resize AnimFrames (all)"
-#~ msgstr "Zmena veµkos» snímiek animácie (v¹etkých)"
-
-#~ msgid "Resize (original %dx%d)"
-#~ msgstr "Zmena veµkosti plochy (pôvodne %dx%d)"
-
-#~ msgid "Scale AnimFrames (all)"
-#~ msgstr "Veµkos» snímok animácie (v¹etkých)"
-
-#~ msgid "Scale (original %dx%d)"
-#~ msgstr "Veµkos» (pôvodne %dx%d)"
-
-#~ msgid "Generate Optimal Palette"
-#~ msgstr "Generova» optimálnu paletu"
-
-#~ msgid "WEB Palette"
-#~ msgstr "Webová paleta"
-
-#~ msgid "Use Custom Palette"
-#~ msgstr "Pou¾i» vlastnú paletu"
-
-#~ msgid "Use Black/White (1-Bit) Palette"
-#~ msgstr "Pou¾i» èiernobielu (1-bitovú) paletu"
-
-#~ msgid "Floyd-Steinberg Color Dithering (Normal)"
-#~ msgstr "Floyd-Steinbergov rozptyl (normálny)"
-
-#~ msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
-#~ msgstr "Floyd-Steinbergov rozptyl (zní¾ený odber farieb)"
-
-#~ msgid "Positioned Color Dithering"
-#~ msgstr "Polohovaný rozptyl farieb"
-
-#~ msgid "No Color Dithering"
-#~ msgstr "Bez rozptylu farieb"
-
-#~ msgid "Palette Type"
-#~ msgstr "Typ palety"
-
-#~ msgid "Custom Palette"
-#~ msgstr "Vlastná paleta"
-
-#~ msgid ""
-#~ "Name of a cutom palette\n"
-#~ "(is ignored if Palette Type is not custom)"
-#~ msgstr ""
-#~ "Názov vlastnej palety\n"
-#~ "(je ignorované, ak typ palety nie je \"Vlastná\")"
-
-#~ msgid "Remove Unused"
-#~ msgstr "Odstráni» nepou¾ité"
-
-#~ msgid ""
-#~ "Remove unused or double colors\n"
-#~ "(is ignored if Palette Type is not custom)"
-#~ msgstr ""
-#~ "Odstráni nepou¾ité alebo zdvojené farby\n"
-#~ "(je ignorované, ak typ paleta nie je \"Vlastná\")"
-
-#~ msgid ""
-#~ "Number of resulting Colors\t\t \n"
-#~ "(ignored if Palette Type is not Generate optimal palette)"
-#~ msgstr ""
-#~ "Poèet výsledných farieb\t\t \n"
-#~ "(ignorované, ak typ palety nie je \"Generova» optimálnu paletu\")"
-
-#~ msgid "Dither Options"
-#~ msgstr "Voµby rozptylu"
-
-#~ msgid "Enable transparency"
-#~ msgstr "Povoli» priesvitnos»"
-
-#~ msgid "Enable dithering of transparency"
-#~ msgstr "Povoli» rozptyl priesvitnosti"
-
-#~ msgid "Convert Frames to Indexed"
-#~ msgstr "Konvertova» snímky na indexované"
-
-#~ msgid "Palette and Dither Settings"
-#~ msgstr "Nastavenia palety a rozptylu"
-
-#~ msgid "Keep Type"
-#~ msgstr "Zachova» typ"
-
-#~ msgid "Convert to RGB"
-#~ msgstr "Konverzia do RGB"
-
-#~ msgid "Convert to Gray"
-#~ msgstr "Konverzia do ©edi"
-
-#~ msgid "Convert to Indexed"
-#~ msgstr "Konverzia na indexované"
-
-#~ msgid ""
-#~ "\n"
-#~ "Select destination fileformat by extension\n"
-#~ "optionally convert imagetype\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Výber cieµového formátu súbora podµa prípony\n"
-#~ "voliteµné konvertuje typ obrázku\n"
-
-#~ msgid "Basename:"
-#~ msgstr "Základný názov"
-
-#~ msgid ""
-#~ "basename of the resulting frames       \n"
-#~ "(0001.ext is added)"
-#~ msgstr ""
-#~ "základný názov výsledných snímok       \n"
-#~ "(0001.prípona bude pridané)"
-
-#~ msgid "Extension:"
-#~ msgstr "Prípona:"
-
-#~ msgid ""
-#~ "extension of resulting frames       \n"
-#~ "(is also used to define Fileformat)"
-#~ msgstr ""
-#~ "roz¹írenie výsledných snímok       \n"
-#~ "(je tie¾ pou¾ité pri definovaní formátu súboru)"
-
-#~ msgid "Imagetype:"
-#~ msgstr "Typ obrázku:"
-
-#~ msgid ""
-#~ "Convert to, or keep imagetype           \n"
-#~ "(most fileformats can't handle all types)"
-#~ msgstr ""
-#~ "Konvertova» alebo zachova» typ obrázku           \n"
-#~ "(väè¹ina formátov nevie spracova» v¹etky typy)"
-
-#~ msgid "Flatten:"
-#~ msgstr "Zlúèi»:"
-
-#~ msgid ""
-#~ "Flatten all resulting frames               \n"
-#~ "(most fileformats need flattened frames)"
-#~ msgstr ""
-#~ "Zlúèi» v¹etky výsledné políèka               \n"
-#~ "(väè¹ina formátov vy¾aduje zlúèené políèka)"
-
-#~ msgid "Convert Frames to other Formats"
-#~ msgstr "Konvertovanie snímok do iného formátu"
-
-#~ msgid "Convert Settings"
-#~ msgstr "Nastavenie konverzie"
-
-#~ msgid "Expand as necessary"
-#~ msgstr "Zväè¹i» podµa potreby"
-
-#~ msgid "Clipped to image"
-#~ msgstr "Pripnú» k obrázku"
-
-#~ msgid "Clipped to bottom layer"
-#~ msgstr "Pripnú» k spodnej vrstvy"
-
-#~ msgid "Flattened image"
-#~ msgstr "Zlúèený obraz"
-
-#~ msgid ""
-#~ "Resulting Layer Size is made of the outline-rectangle \n"
-#~ "of all visible layers (may differ from frame to frame)"
-#~ msgstr ""
-#~ "Výsledná veµkos» vrstvy je vytvorená z obrysu obdå¾nika \n"
-#~ "zo v¹etkých viditeµných (mô¾e by» pre ka¾dú snímku rôzna)"
-
-#~ msgid "Resulting Layer Size is the frame size"
-#~ msgstr "Výsledná veµkos» vrstvy je veµkos» snímky"
-
-#~ msgid ""
-#~ "Resulting Layer Size is the size of the bottom layer\n"
-#~ "(may differ from frame to frame)"
-#~ msgstr ""
-#~ "Výsledná veµkos» vrstvy je veµkos» spodnej vrstvy\n"
-#~ "(mô¾e by» pre ka¾dú snímku rôzna)"
-
-#~ msgid ""
-#~ "Resulting Layer Size is the frame size     \n"
-#~ "transparent parts are filled with BG color"
-#~ msgstr ""
-#~ "Výsledná veµkos» vrstvy je veµkos» snímky,     \n"
-#~ "priesvitné èasti sú vyplnené farbou pozadia"
-
-#~ msgid "select all Layers where Layername is equal to Pattern"
-#~ msgstr "oznaèi» v¹etky vrstvy, kde názov vrstvy je rovnaký so vzorkou"
-
-#~ msgid "select all Layers where Layername starts with Pattern"
-#~ msgstr "oznaèi» v¹etky vrstvy, kde názov vrstvy zaèína vzorkou"
-
-#~ msgid "select all Layers where Layername ends up with Pattern"
-#~ msgstr "oznaèi» v¹etky vrstvy, kde názov vrstvy konèí vzorkou"
-
-#~ msgid "select all Layers where Layername contains Pattern"
-#~ msgstr "oznaèi» v¹etky vrstvy, ktoré obsahujú vzorku"
-
-#~ msgid ""
-#~ "select Layerstack positions.\n"
-#~ "0, 4-5, 8\n"
-#~ "where 0 == Top-layer"
-#~ msgstr ""
-#~ "výber pozície v zásobníku vrstiev\n"
-#~ "0, 4-5, 8\n"
-#~ "kde 0 == horná vrstva"
-
-#~ msgid ""
-#~ "select Layerstack positions.\n"
-#~ "0, 4-5, 8\n"
-#~ "where 0 == BG-layer"
-#~ msgstr ""
-#~ "výber pozície v zásobníku vrstiev\n"
-#~ "0, 4-5, 8\n"
-#~ "kde 0 == spodná vrstva-pozadie"
-
-#~ msgid "select all visible Layers"
-#~ msgstr "oznaèi» v¹etky viditeµné vrstvy"
-
-#~ msgid "Layer Basename:"
-#~ msgstr "Základ názvu vrstvy:"
-
-#~ msgid ""
-#~ "Basename for all Layers    \n"
-#~ "[####] is replaced by frame number"
-#~ msgstr ""
-#~ "Základ názvu v¹etkých vrstiev    \n"
-#~ "[####] je zamenené za èíslo políèka"
-
-#~ msgid "Layer Mergemode:"
-#~ msgstr "Re¾im zluèovania vrstiev:"
-
-#~ msgid "Exclude BG-Layer"
-#~ msgstr "Vylúèi» vrstvu pozadia"
-
-#~ msgid ""
-#~ "Exclude the BG-Layers    \n"
-#~ "in all handled frames\n"
-#~ "regardless to selection"
-#~ msgstr ""
-#~ "Vynechá spodnú vrstvu    \n"
-#~ "vo v¹etkých spracovávaných snímkach\n"
-#~ "bez ohµadu na výber"
-
-#~ msgid "Use all unselected Layers"
-#~ msgstr "Pou¾i» na v¹etky nevybrané vrstvy"
-
-#~ msgid "Creating Layer-Animated Image..."
-#~ msgstr "Vytváram vrstvami animovaný obrázok..."
-
-#~ msgid "Frames to Image"
-#~ msgstr "Snímky do obrázku"
-
-#~ msgid "Create Multilayer-Image from Frames"
-#~ msgstr "Vytvori» zo snímok viacvrstvový obrázok"
-
-#~ msgid "Flattening Frames..."
-#~ msgstr "Zluèujem snímky..."
-
-#~ msgid "Converting Frames..."
-#~ msgstr "Vykonáva sa konverzia snímok..."
-
-#~ msgid ""
-#~ "Convert Frames: SAVE operation FAILED.\n"
-#~ "Desired save plugin can't handle type\n"
-#~ "or desired save plugin not available."
-#~ msgstr ""
-#~ "Konverzia snímok: Operácia UKLADNIA ZLYHALA.\n"
-#~ "Po¾adovaný modul pre zápis nevie spracova» typ\n"
-#~ "alebo modul pre zápis nie je k dispozícií."
-
-#~ msgid "Cropping all Animation Frames..."
-#~ msgstr "Orezávajú sa v¹etky snímky animácie..."
-
-#~ msgid "Scaling all Animation Frames..."
-#~ msgstr "Mení sa veµkos» v¹etkých snímok animácie..."
-
-#~ msgid "Flatten Frames"
-#~ msgstr "Zlúèi» snímky"
-
-#~ msgid "Removing Layer (pos:%ld) from Frames..."
-#~ msgstr "Odstraòujem vrstvu (poz.:%ld) zo snímok..."
-
-#~ msgid "Delete Layers in Frames"
-#~ msgstr "Zmaza» vrstvy v snímkach"
-
-#~ msgid "Select Frame Range & Position"
-#~ msgstr "Vybra» rozsah snímok a pozíciu"
-
-#~ msgid "Splitting into Frames..."
-#~ msgstr "Rozdeµujem do snímok..."
-
-#~ msgid ""
-#~ "Split Frames: SAVE operation FAILED.\n"
-#~ "desired save plugin can't handle type\n"
-#~ "or desired save plugin not available."
-#~ msgstr ""
-#~ "Rozdelenie do snímok: operácia ULO®ENIA ZLYHALA.\n"
-#~ "Po¾adovaný modul pre zápis nevie spracova» typ\n"
-#~ "alebo modul pre zápis nie je k dispozícií."
-
-#~ msgid ""
-#~ "%s\n"
-#~ "%s\n"
-#~ "(%s_0001.%s)\n"
-#~ msgstr ""
-#~ "%s\n"
-#~ "%s\n"
-#~ "(%s_0001.%s)\n"
-
-#~ msgid "Make a frame (diskfile) from each Layer"
-#~ msgstr "Vytvori» snímku (diskový súbor) z ka¾dej vrstvy"
-
-#~ msgid "frames are named: base_nr.extension"
-#~ msgstr "snímky sú nazvané: základ_è.prípona"
-
-#~ msgid "extension of resulting frames (is also used to define Fileformat)"
-#~ msgstr ""
-#~ "prípona výsledných snímok (je tie¾ pou¾itá na urèenie formátu súbora)"
-
-#~ msgid "Inverse Order:"
-#~ msgstr "Opaèné poradie:"
-
-#~ msgid "Start frame 0001 at Top Layer"
-#~ msgstr "Poèiatoèná snímka 0001 na hornej vrstve"
-
-#~ msgid ""
-#~ "Remove Alpha Channel in resulting Frames. Transparent parts are filled "
-#~ "with BG color."
-#~ msgstr ""
-#~ "Odstráni alfa kanál vo výsledných snímkach. Priesvitné èasti budú "
-#~ "vyplnené s farbou pozadia."
-
-#~ msgid "Split Image into Frames"
-#~ msgstr "Rozdeli» obrázok do snímok"
-
-#~ msgid "Split Settings"
-#~ msgstr "Nastavenia rozdelenia"
-
-#~ msgid ""
-#~ "OPERATION CANCELLED.\n"
-#~ "This image is already an AnimFrame.\n"
-#~ "Try again on a Duplicate (Image/Duplicate)."
-#~ msgstr ""
-#~ "OPERÁCIA JE ZRU©ENÁ.\n"
-#~ "Tento obrázok je u¾ snímkou animácie.\n"
-#~ "Skúste znova na duplikáte (Obrázok/Duplikova»)."
-
-#~ msgid "Scale"
-#~ msgstr "Veµkos»"
-
-#~ msgid "Resize"
-#~ msgstr "Zmena rozmerov"
-
-#~ msgid "New width:"
-#~ msgstr "Nová ¹írka:"
-
-#~ msgid "New height:"
-#~ msgstr "Nová vý¹ka:"
-
-#~ msgid "X ratio:"
-#~ msgstr "Pomer X:"
-
-#~ msgid "Y ratio:"
-#~ msgstr "Pomer Y:"
-
-#~ msgid "Constrain Ratio"
-#~ msgstr "Vnútený pomer"
-
-#~ msgid "Char: %c, %d, 0x%02x"
-#~ msgstr "znak %c, %d, 0x%02x"
-
-#~ msgid "Selected char:"
-#~ msgstr "Vybraný znak"
-
-#~ msgid "Insert the selected char at the cursor position"
-#~ msgstr "Vlo¾i» zvolený znak na pozíciu kurzora"
-
-#~ msgid "points"
-#~ msgstr "bod"
-
-#~ msgid "<Image>/Filters/Render/Dynamic Text..."
-#~ msgstr "<Image>/Filtre/Generovanie/Dynamický text..."
-
-#~ msgid ""
-#~ " Current layer isn't a GDynText layer or it has no alpha channel. Forcing "
-#~ "new layer creation."
-#~ msgstr ""
-#~ " Aktuálna vrstva nie je GDynText vrstva alebo nemá alfa kanál. Vnucujem "
-#~ "vytvorenie novej vrstvy."
-
-#~ msgid "GDynText Layer"
-#~ msgstr "GDynText vrstva"
-
-#~ msgid "GIMP Dynamic Text"
-#~ msgstr "GIMP dynamický text"
-
-#~ msgid "GDynText: Messages Window"
-#~ msgstr "GDynText: Okno stráv"
-
-#~ msgid "GDynText: About ..."
-#~ msgstr "GDynText: O programe..."
-
-#~ msgid "bottom-left"
-#~ msgstr "dole vµavo"
-
-#~ msgid "bottom-center"
-#~ msgstr "dole na stred"
-
-#~ msgid "bottom-right"
-#~ msgstr "dole vpravo"
-
-#~ msgid "middle-left"
-#~ msgstr "doµava v strede"
-
-#~ msgid "center"
-#~ msgstr "v strede"
-
-#~ msgid "middle-right"
-#~ msgstr "doprava v strede"
-
-#~ msgid "top-left"
-#~ msgstr "hore vµavo"
-
-#~ msgid "top-center"
-#~ msgstr "hore na stred"
-
-#~ msgid "top-right"
-#~ msgstr "hore vpravo"
-
-#~ msgid "GDynText"
-#~ msgstr "GDynText"
-
-#~ msgid "Toggle creation of a new layer"
-#~ msgstr "Prepnutie vytvárania novej vrstvy"
-
-#~ msgid "Load text from file"
-#~ msgstr "Naèíta» text zo súbora"
-
-#~ msgid "GDynText: Select Color"
-#~ msgstr "GDynText: Výber farby"
-
-#~ msgid "Text color"
-#~ msgstr "Farba textu"
-
-#~ msgid "Toggle anti-aliased text"
-#~ msgstr "Prenú» vyhladzovanie textu"
-
-#~ msgid "Left aligned text"
-#~ msgstr "Zarovna» text doprava"
-
-#~ msgid "Centered text"
-#~ msgstr "Centrova» text"
-
-#~ msgid "Right aligned text"
-#~ msgstr "Zarovna» text doprava"
-
-#~ msgid "Toggle text font preview"
-#~ msgstr "Prepnutie náhµadu textového písma"
-
-#~ msgid "Toggle CharMap window"
-#~ msgstr "Prepnutie okna mapy znakov"
-
-#~ msgid ""
-#~ "Layer\n"
-#~ "Alignment"
-#~ msgstr ""
-#~ "Zarovnanie\n"
-#~ "vrstvy"
-
-#~ msgid "Set layer alignment"
-#~ msgstr "Nastavi» zarovnanie vrstvy"
-
-#~ msgid ""
-#~ "Line\n"
-#~ "Spacing"
-#~ msgstr ""
-#~ "Rozostup\n"
-#~ "riadkov"
-
-#~ msgid "Set text rotation (degrees)"
-#~ msgstr "Nastavenie otoèenia textu (v stupòoch)"
-
-#~ msgid "Editable text sample"
-#~ msgstr "Vzorka editovateµného textu"
-
-#~ msgid "Clear preview"
-#~ msgstr "Vymaza» náhµad"
-
-#~ msgid "Preview default text sample"
-#~ msgstr "Náhµad ¹tandardnej textovej vzorky"
-
-#~ msgid ""
-#~ "Holding the Shift key while pressing this button will force GDynText in "
-#~ "changing the layer name as done in GIMP 1.0."
-#~ msgstr ""
-#~ "Keï bude stlaèená klávesa Shift kliknutí na toto tlaèítko, donútite "
-#~ "GDynText, aby zmenil názov vrstvy tak, ako je to v GIMP 1.0."
-
-#~ msgid "GDynText: CharMap"
-#~ msgstr "GDynText:  Mapa znakov"
-
-#~ msgid "GDynText: Load text"
-#~ msgstr "GDynText: Naèítanie textu"
-
-#~ msgid ""
-#~ "Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
-#~ msgstr ""
-#~ "Varovanie: Súbor \"%s\" je väè¹í ne¾ maximálna povolená då¾ka textu (%"
-#~ "d).\n"
-
-#~ msgid "Error opening \"%s\"!\n"
-#~ msgstr "Chyba pri otváraní \"%s\"!\n"
-
-#~ msgid ""
-#~ " WARNING: GDynText is too old! A newer version is required to handle this "
-#~ "layer. Get it from %s"
-#~ msgstr ""
-#~ " Varovanie: GDynText je príli¹ starý! Nov¹ia verzia je po¾adovaná na "
-#~ "spracovanie tejto vrstvy. Mô¾ete ju získa» na %s."
-
-#~ msgid " Upgrading old GDynText layer to %s."
-#~ msgstr " Aktualizuje sa stará vrstva GDynText do %s."
-
-#~ msgid "Dismiss"
-#~ msgstr "Odmietnu»"
-
-#~ msgid "More..."
-#~ msgstr "Ïal¹ie..."
-
-#~ msgid ""
-#~ "<html><head><title>Document not found</title></head><body bgcolor="
-#~ "\"#ffffff\"><center><p>%s<h3>Couldn't find document</h3><tt>%s</tt></"
-#~ "center><p><small>This either means that the help for this topic has not "
-#~ "been written yet or that something is wrong with your installation. "
-#~ "Please check carefully before you report this as a bug.</small></body></"
-#~ "html>"
-#~ msgstr ""
-#~ "<html><head><title>Nena¹iel som prieèinok</title></head><body bgcolor="
-#~ "\"#ffffff\"><center><p>%s<h3>Nena¹iel som dokument</h3><tt>%s</tt></"
-#~ "center><p><small>To znamená, ¾e pomocník pre túto oblas» nebol e¹te "
-#~ "napísanýalebo nieèo nie je v poriadku s va¹ou in¹taláciou. Prosím pozorne "
-#~ "si preverteskôr ako by ste o tom podali hlásenie ako o chybe.</small></"
-#~ "body></html>"
-
-#~ msgid ""
-#~ "<html><head><title>Directory not found</title></head><body bgcolor="
-#~ "\"#ffffff\"><center><p>%s<h3>Couldn't change to directory</h3><tt>%s</"
-#~ "tt><h3>while trying to access</h3><tt>%s</tt></center><p><small>This "
-#~ "either means that the help for this topic has not been written yet or "
-#~ "that something is wrong with your installation. Please check carefully "
-#~ "before you report this as a bug.</small></body></html>"
-#~ msgstr ""
-#~ "<html><head><title>Nena¹iel som prieèinok</title></head><body bgcolor="
-#~ "\"#ffffff\"><center><p>%s<h3>Nepodarilo sa dosta» do prieèinka</h3><tt>%"
-#~ "s</tt><h3>pri pokuse o prístup</h3><tt>%s</tt></center><p><small>To "
-#~ "znamená, ¾e pomocník pre túto oblas» nebol e¹te napísaný alebo nieèo nie "
-#~ "je v poriadku s va¹ou in¹taláciou. Prosím pozorne si preverte skôr ako by "
-#~ "ste o tom podali hlásenie ako o chybe.</small></body></html>"
-
-#~ msgid "Contents"
-#~ msgstr "Obsah"
-
-#~ msgid "Index"
-#~ msgstr "Index"
-
-#~ msgid ""
-#~ "GIMP Help Browser Error.\n"
-#~ "\n"
-#~ "Couldn't find my root html directory.\n"
-#~ "(%s)"
-#~ msgstr ""
-#~ "Chyba prehliadaèa GIMP pomocníka.\n"
-#~ "\n"
-#~ "Nie je mo¾né nájs» svoj koreòový html prieèinok.\n"
-#~ "(%s)"
-
-#~ msgid "GIMP Help Browser"
-#~ msgstr "Prehliadaè GIMP pomocníka"
-
-#~ msgid "Back"
-#~ msgstr "Dozadu"
-
-#~ msgid "Forward"
-#~ msgstr "Dopredu"
-
-#~ msgid ""
-#~ "GIMP Help Browser Error.\n"
-#~ "\n"
-#~ "Couldn't find GIMP_HELP_ROOT html directory.\n"
-#~ "(%s)"
-#~ msgstr ""
-#~ "Chyba prehliadaèa GIMP pomocníka.\n"
-#~ "\n"
-#~ "Nie je mo¾né nájs» GIMP_HELP_ROOT html prieèinok.\n"
-#~ "(%s)"
-
-#~ msgid "<Image>/Filters/Render/Pattern/Mosaic..."
-#~ msgstr "<Image>/Filtre/Generovanie/Vzorka/Mozaika..."
-
-#~ msgid "<Image>/File/Print (Gtk)..."
-#~ msgstr "<Image>Súbor/Tlaè (Gtk)..."
-
-#~ msgid "<Image>/File/Print (Gimp)..."
-#~ msgstr "<Image>Súbor/Tlaè (Gimp)..."
