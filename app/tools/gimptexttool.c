@@ -33,6 +33,7 @@
 #include "base/base-types.h"
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
+#include "base/tile-manager-crop.h"
 
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
@@ -48,13 +49,16 @@
 
 #include "app_procs.h"
 #include "gdisplay.h"
+#include "libgimp_glue.h"
 #include "floating_sel.h"
 #include "undo_types.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
-#define DEFAULT_FONT "sans Normal"
+
+#define DEFAULT_FONT       "sans Normal"
+#define DEFAULT_FONT_SIZE  50
 
 
 /*  the text tool structures  */
@@ -64,7 +68,20 @@ typedef struct _TextOptions TextOptions;
 struct _TextOptions
 {
   GimpToolOptions  tool_options;
+
   GtkWidget       *font_selection;
+
+  gdouble          size;
+  gdouble          size_d;
+  GtkObject       *size_w;
+
+  gdouble          border;
+  gdouble          border_d;
+  GtkObject       *border_w;
+
+  GimpUnit         unit;
+  GimpUnit         unit_d;
+  GtkWidget       *unit_w;
 };
 
 
@@ -204,8 +221,29 @@ static void
 text_tool_options_reset (GimpToolOptions *tool_options)
 {
   TextOptions *options;
+  GtkWidget   *spinbutton;
 
   options = (TextOptions *) tool_options;
+
+  /* FIXME: reset font */
+  
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->size_w),
+			    options->size_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->border_w),
+			    options->border_d);
+  
+  options->unit = options->unit_d;
+  gimp_unit_menu_set_unit (GIMP_UNIT_MENU (options->unit_w),
+                           options->unit_d);
+
+  spinbutton =
+    g_object_get_data (G_OBJECT (options->unit_w), "set_digits");
+  while (spinbutton)
+    {
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), 0);
+      spinbutton =
+        g_object_get_data (G_OBJECT (spinbutton), "set_digits");
+    }
 }
 
 static TextOptions *
@@ -213,9 +251,15 @@ text_tool_options_new (GimpTextTool *text_tool)
 {
   TextOptions *options;
   GtkWidget   *vbox;
+  GtkWidget   *table;
+  GtkWidget   *spinbutton;
 
   options = g_new0 (TextOptions, 1);
   tool_options_init ((GimpToolOptions *) options, text_tool_options_reset);
+
+  options->border = options->border_d = 0;
+  options->size   = options->size_d   = DEFAULT_FONT_SIZE;
+  options->unit   = options->unit_d   = GIMP_UNIT_PIXEL;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
@@ -226,6 +270,49 @@ text_tool_options_new (GimpTextTool *text_tool)
                       FALSE, FALSE, 0);
   gtk_widget_show (options->font_selection);
   
+  /*  the size entries */
+  table = gtk_table_new (3, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (table), FALSE, FALSE, 0);
+
+  options->size_w = gtk_adjustment_new (options->size_d, 1e-5, 32767.0,
+                                        1.0, 50.0, 0.0);
+  spinbutton = 
+    gtk_spin_button_new (GTK_ADJUSTMENT (options->size_w), 1.0, 0.0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_widget_set_usize (spinbutton, 75, 0);
+  g_signal_connect (G_OBJECT (options->size_w), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &options->size);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Size:"), 1.0, 0.5,
+                             spinbutton, 1, FALSE);
+
+  options->border_w = gtk_adjustment_new (options->border_d, 1e-5, 32767.0,
+                                          1.0, 50.0, 0.0);
+  spinbutton =
+    gtk_spin_button_new (GTK_ADJUSTMENT (options->border_w), 1.0, 0.0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_widget_set_usize (spinbutton, 75, 0);
+  g_signal_connect (G_OBJECT (options->border_w), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &options->border);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                             _("Border:"), 1.0, 0.5,
+                             spinbutton, 1, FALSE);
+
+  options->unit_w =
+    gimp_unit_menu_new ("%a", options->unit_d, TRUE, FALSE, TRUE);
+  g_signal_connect (G_OBJECT (options->unit_w), "unit_changed",
+                    G_CALLBACK (gimp_unit_menu_update),
+                    &options->unit);
+  g_object_set_data (G_OBJECT (options->unit_w), "set_digits",
+                     spinbutton);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                             _("Unit:"), 1.0, 0.5,
+                             options->unit_w, 1, FALSE);
+  gtk_widget_show (table);
+
   return options;
 }
 
@@ -302,7 +389,7 @@ text_tool_render (GimpTextTool *text_tool)
   
   font_desc = gimp_font_selection_get_font_desc (GIMP_FONT_SELECTION (text_tool_options->font_selection));
   
-  font_desc->size = PANGO_SCALE * 60;  /* FIXME */
+  font_desc->size = (gdouble) PANGO_SCALE * text_tool_options->size;
   fontname = pango_font_description_to_string (font_desc);
   pango_font_description_free (font_desc);
 
@@ -310,7 +397,8 @@ text_tool_render (GimpTextTool *text_tool)
 
   text_render (gdisp->gimage, gimp_image_active_drawable (gdisp->gimage),
 	       text_tool->click_x, text_tool->click_y,
-	       fontname, text, 0 /*border*/, TRUE /* antialias */);
+	       fontname, text, text_tool_options->border,
+               TRUE /* antialias */);
 
   g_free (fontname);
 
@@ -359,19 +447,20 @@ text_render (GimpImage    *gimage,
   if (rect.width > 0 && rect.height > 0)
     {
       TileManager *mask;
-      PixelRegion textPR, maskPR;
-      FT_Bitmap   bitmap;
-      guchar      color[MAX_CHANNELS];
-      gint        y;
+      TileManager *tmpmask;
+      PixelRegion  textPR;
+      PixelRegion  maskPR;
+      FT_Bitmap    bitmap;
+      guchar       color[MAX_CHANNELS];
+      gint         y;
 
-      bitmap.width      = rect.width;
-      bitmap.rows       = rect.height;
-      bitmap.pitch      = rect.width;
+      bitmap.width  = rect.width;
+      bitmap.rows   = rect.height;
+      bitmap.pitch  = rect.width;
       if (bitmap.pitch & 3)
         bitmap.pitch += 4 - (bitmap.pitch & 3);
-      bitmap.buffer     = g_malloc0 (bitmap.rows * bitmap.pitch);
-      bitmap.num_grays  = 256;
-      bitmap.pixel_mode = ft_pixel_mode_grays;
+
+      bitmap.buffer = g_malloc0 (bitmap.rows * bitmap.pitch);
       
       pango_ft2_render_layout (&bitmap, layout, 0, 0);
       
@@ -383,6 +472,14 @@ text_render (GimpImage    *gimage,
                               bitmap.buffer + y * bitmap.pitch);
 
       g_free (bitmap.buffer);
+
+      /*  Crop the mask buffer  */
+      tmpmask = (border > 0) ? tile_manager_crop (mask, border) : mask;
+      if (tmpmask != mask)
+        {
+          tile_manager_destroy (mask);
+          mask = tmpmask;
+        }
 
       layer = gimp_layer_new (gimage, rect.width, rect.height, layer_type,
                               _("Text Layer"), OPAQUE_OPACITY, NORMAL_MODE);
@@ -406,13 +503,14 @@ text_render (GimpImage    *gimage,
 			 GIMP_DRAWABLE (layer)->width,
 			 GIMP_DRAWABLE (layer)->height, FALSE);
       apply_mask_to_region (&textPR, &maskPR, OPAQUE_OPACITY);
+      tile_manager_destroy (mask);
 
       /*  Start a group undo  */
       undo_push_group_start (gimage, TEXT_UNDO);
 
       /*  Set the layer offsets  */
-      GIMP_DRAWABLE (layer)->offset_x = text_x + rect.x;
-      GIMP_DRAWABLE (layer)->offset_y = text_y + rect.y;
+      GIMP_DRAWABLE (layer)->offset_x = text_x;
+      GIMP_DRAWABLE (layer)->offset_y = text_y;
 
       /*  If there is a selection mask clear it--
        *  this might not always be desired, but in general,
@@ -430,8 +528,6 @@ text_render (GimpImage    *gimage,
 
       /*  end the group undo  */
       undo_push_group_end (gimage);
-
-      tile_manager_destroy (mask);
     }
 
   g_object_unref (layout);

@@ -118,11 +118,14 @@ static void
 gimp_font_selection_init (GimpFontSelection *fontsel)
 {
   GtkWidget *button;
+  GtkWidget *image;
 
   fontsel->context   = NULL;
 
-  button = gtk_button_new_with_label (_("..."));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  button = gtk_button_new ();
+  image = gtk_image_new_from_stock (GTK_STOCK_SELECT_FONT, GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
   gtk_box_pack_end (GTK_BOX (fontsel), button, FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (gimp_font_selection_browse_callback),
@@ -196,7 +199,7 @@ gimp_font_selection_font_changed (GimpFontSelection *fontsel)
         }
 
       if (fontsel->dialog)
-        gimp_font_selection_dialog_set_font_desc (fontsel->dialog, 
+        gimp_font_selection_dialog_set_font_desc (GIMP_FONT_SELECTION_DIALOG (fontsel->dialog), 
                                                   fontsel->font_desc);
     }
 

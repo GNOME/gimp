@@ -1,5 +1,11 @@
 2001-08-11  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptexttool.c: allow to specify size and border. 
+	
+	* app/widgets/gimpfontselection.c: use GTK_STOCK_SELECT_FONT icon.
+
+2001-08-11  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: added dependency on PangoFT2 (Pango compiled with 
 	FreeType2 support).
 	
