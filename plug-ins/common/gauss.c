@@ -151,12 +151,11 @@ query (void)
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1995-1996",
-			  N_("<Image>/Filters/Blur/Gaussian Blur..."),
+			  N_("_Gaussian Blur..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
-
 
   gimp_install_procedure ("plug_in_gauss_iir",
 			  "Applies a gaussian blur to the specified drawable.",
@@ -237,6 +236,9 @@ query (void)
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args2), 0,
 			  args2, NULL);
+
+  gimp_plugin_menu_register ("plug_in_gauss",
+                             N_("<Image>/Filters/Blur"));
 }
 
 static void
