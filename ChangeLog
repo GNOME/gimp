@@ -1,3 +1,12 @@
+2001-06-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/gdisplay.c: fixed a longstanding display update bug by
+	applying the same fix to gdisplays_update_full() that has been
+	applied to gdisplays_update_area() ages ago.
+
+	* app/layers_dialog.c: no need to gdisplays_update_now() when
+	deleting the layer, gdisplays_update() works fine now.
+
 2001-06-20  Sven Neumann  <sven@gimp.org>
 
 	* app/histogram_tool.c: use GINT_TO_POINTER and GPOINTER_TO_INT 

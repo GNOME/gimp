@@ -2113,7 +2113,7 @@ gdisplays_update_full (GimpImage* gimage)
 {
   GDisplay *gdisp;
   GSList *list = display_list;
-  gint count = 0;
+  /* gint count = 0; */
 
   /*  traverse the linked list of displays, handling each one  */
   while (list)
@@ -2121,16 +2121,22 @@ gdisplays_update_full (GimpImage* gimage)
       gdisp = (GDisplay *) list->data;
       if (gdisp->gimage == gimage)
 	{
+	  /*  applied the gdisplays_update_area() fix here too --Mitch
 	  if (! count)
-	    gdisplay_add_update_area (gdisp, 0, 0,
-				      gdisp->gimage->width,
-				      gdisp->gimage->height);
+	  */
+
+	  gdisplay_add_update_area (gdisp, 0, 0,
+				    gdisp->gimage->width,
+				    gdisp->gimage->height);
+
+	  /*
 	  else
 	    gdisplay_add_display_area (gdisp, 0, 0,
 				       gdisp->disp_width,
 				       gdisp->disp_height);
 
 	  count++;
+	  */
 	}
 
       list = g_slist_next (list);
