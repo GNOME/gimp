@@ -24,7 +24,6 @@
 #include <string.h>
 
 #include "appenv.h"
-#include "gdisplay.h"
 #include "plug_in.h"
 #include "regex.h"
 
@@ -54,6 +53,7 @@ match_strings (regex_t *preg,
 static Argument *
 progress_init_invoker (Argument *args)
 {
+  gboolean success = FALSE;
   gchar *message;
   gint32 gdisplay;
 
@@ -61,10 +61,14 @@ progress_init_invoker (Argument *args)
 
   gdisplay = args[1].value.pdb_int;
 
-  if (current_plug_in && current_plug_in->open && !no_interface)
-    plug_in_progress_init (current_plug_in, message, gdisplay);
+  if (current_plug_in && current_plug_in->open)
+    {
+      success = TRUE;
+      if (!no_interface)
+	plug_in_progress_init (current_plug_in, message, gdisplay);
+    }
 
-  return procedural_db_return_args (&progress_init_proc, TRUE);
+  return procedural_db_return_args (&progress_init_proc, success);
 }
 
 static ProcArg progress_init_inargs[] =
@@ -75,7 +79,7 @@ static ProcArg progress_init_inargs[] =
     "Message to use in the progress dialog"
   },
   {
-    PDB_DISPLAY,
+    PDB_INT32,
     "gdisplay",
     "GDisplay to update progressbar in, or -1 for a seperate window"
   }
@@ -100,14 +104,19 @@ static ProcRecord progress_init_proc =
 static Argument *
 progress_update_invoker (Argument *args)
 {
+  gboolean success = FALSE;
   gdouble percentage;
 
   percentage = args[0].value.pdb_float;
 
-  if (current_plug_in && current_plug_in->open && !no_interface)
-    plug_in_progress_update (current_plug_in, percentage);
+  if (current_plug_in && current_plug_in->open)
+    {
+      success = TRUE;
+      if (!no_interface)
+	plug_in_progress_update (current_plug_in, percentage);
+    }
 
-  return procedural_db_return_args (&progress_update_proc, TRUE);
+  return procedural_db_return_args (&progress_update_proc, success);
 }
 
 static ProcArg progress_update_inargs[] =

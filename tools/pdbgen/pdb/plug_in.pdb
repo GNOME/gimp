@@ -37,16 +37,23 @@ HELP
     @inargs = (
 	{ name => 'message', type => 'string', no_success => 1,
 	  desc => 'Message to use in the progress dialog' },
-	{ name => 'gdisplay', type => 'display', no_success => 1,
+	{ name => 'gdisplay', type => 'int32',
 	  desc => 'GDisplay to update progressbar in, or -1 for a seperate
 		   window',
 	  no_id_lookup => 1 }
     );
 
     %invoke = (
+	success => 'FALSE',
 	code => <<'CODE'
-if (current_plug_in && current_plug_in->open && !no_interface)
-  plug_in_progress_init (current_plug_in, message, gdisplay);
+{
+  if (current_plug_in && current_plug_in->open)
+    {
+      success = TRUE;
+      if (!no_interface)
+	plug_in_progress_init (current_plug_in, message, gdisplay);
+    }
+}
 CODE
     );
 }
@@ -67,9 +74,16 @@ HELP
     );
 
     %invoke = (
+	success => 'FALSE',
 	code => <<'CODE'
-if (current_plug_in && current_plug_in->open && !no_interface)
-  plug_in_progress_update (current_plug_in, percentage);
+{
+  if (current_plug_in && current_plug_in->open)
+    {
+      success = TRUE;
+      if (!no_interface)
+	plug_in_progress_update (current_plug_in, percentage);
+    }
+}
 CODE
     );
 }
