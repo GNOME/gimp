@@ -1,5 +1,12 @@
 2003-08-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpcroptool.c: added GimpTool::oper_update()
+	implementation and moved stuff from button_press() and
+	cursor_update() there. Fixed the state of the tool to be only
+	ACTIVE while button1 is pressed. Cleanup.
+
+2003-08-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	(gimp_display_shell_canvas_tool_events): if the canvas has no
 	focus on button_press, set it explicitly instead of asuming that
