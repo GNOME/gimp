@@ -20,19 +20,20 @@
 #define __PLUG_IN_MENUS_H__
 
 
-void   plug_in_menus_init        (GSList          *plug_in_defs,
-                                  const gchar     *std_plugins_domain);
+void   plug_in_menus_init         (Gimp            *gimp,
+                                   GSList          *plug_in_defs,
+                                   const gchar     *std_plugins_domain);
 
-void   plug_in_make_menu         (GimpItemFactory *item_factory,
-                                  GSList          *proc_defs);
-void   plug_in_make_menu_entry   (GimpItemFactory *item_factory,
-                                  PlugInProcDef   *proc_def,
-                                  const gchar     *locale_domain,
-                                  const gchar     *help_path);
-void   plug_in_delete_menu_entry (const gchar     *menu_path);
+void   plug_in_menus_create       (GimpItemFactory *item_factory,
+                                   GSList          *proc_defs);
+void   plug_in_menus_create_entry (GimpItemFactory *item_factory,
+                                   PlugInProcDef   *proc_def,
+                                   const gchar     *locale_domain,
+                                   const gchar     *help_path);
+void   plug_in_menus_delete_entry (const gchar     *menu_path);
 
-void   plug_in_menus_update      (GimpItemFactory *item_factory,
-                                  GimpImageType    type);
+void   plug_in_menus_update       (GimpItemFactory *item_factory,
+                                   GimpImageType    type);
 
 
 #endif /* __PLUG_IN_MENUS_H__ */

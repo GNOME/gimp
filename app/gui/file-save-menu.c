@@ -59,8 +59,6 @@ file_save_menu_setup (GimpItemFactory *factory)
   PlugInProcDef        *file_proc;
   GSList               *list;
 
-  factory->gimp->save_procs = g_slist_reverse (factory->gimp->save_procs);
-
   for (list = factory->gimp->save_procs; list; list = g_slist_next (list))
     {
       gchar *basename;

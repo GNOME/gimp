@@ -46,7 +46,7 @@ HELP
 
     %invoke = (
         success => 'TRUE',
-	code => 'gimp_help (gimp, plug_ins_help_path (prog_name), help_page);'
+	code => 'gimp_help (gimp, plug_ins_help_path (gimp, prog_name), help_page);'
     );
 }
 

@@ -59,8 +59,6 @@ file_open_menu_setup (GimpItemFactory *factory)
   PlugInProcDef        *file_proc;
   GSList               *list;
 
-  factory->gimp->load_procs = g_slist_reverse (factory->gimp->load_procs);
-
   for (list = factory->gimp->load_procs; list; list = g_slist_next (list))
     {
       gchar *basename;

@@ -280,7 +280,7 @@ gimp_item_factory_create_item (GimpItemFactory       *item_factory,
 
   tearoffs = GIMP_GUI_CONFIG (item_factory->gimp->config)->tearoff_menus;
 
-  if (! (strstr (entry->entry.path, "tearoff1")))
+  if (! (strstr (entry->entry.path, "tearoff")))
     {
       if (tearoffs && create_tearoff)
 	{
@@ -873,7 +873,7 @@ gimp_item_factory_create_branches (GimpItemFactory      *factory,
 	  g_object_set_data (G_OBJECT (factory), "complete", NULL);
 	}
 
-      g_string_append (tearoff_path, "/tearoff1");
+      g_string_append (tearoff_path, "/tearoff");
 
       if (! gtk_item_factory_get_widget (GTK_ITEM_FACTORY (factory),
                                          tearoff_path->str))
@@ -1031,9 +1031,9 @@ gimp_item_factory_translate_func (const gchar *path,
 
   retval = menupath = g_strdup (path);
 
-  if ((strstr (path, "/tearoff1") != NULL) ||
-      (strstr (path, "/---")      != NULL) ||
-      (strstr (path, "/MRU")      != NULL))
+  if (strstr (path, "tearoff") ||
+      strstr (path, "/---")    ||
+      strstr (path, "/MRU"))
     return retval;
 
   domain   = g_object_get_data (G_OBJECT (item_factory), "textdomain");

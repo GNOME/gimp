@@ -20,47 +20,45 @@
 #define __PLUG_INS_H__
 
 
-void              plug_ins_init              (Gimp               *gimp,
-                                              GimpInitStatusFunc  status_callback);
-void              plug_ins_exit              (Gimp          *gimp);
-
-/* Get the "image_types" the plug-in works on. */
-gchar           * plug_ins_image_types       (gchar         *name);
-
-/* Add in the file load/save handler fields procedure. */
-PlugInProcDef   * plug_ins_file_handler      (gchar         *name,
-					      gchar         *extensions,
-					      gchar         *prefixes,
-					      gchar         *magics);
-
-/* Add a plug-in definition. */
-void              plug_ins_def_add           (PlugInDef     *plug_in_def);
-
-void              plug_ins_proc_def_add      (PlugInProcDef *proc_def,
-                                              Gimp          *gimp,
-                                              const gchar   *locale_domain,
-                                              const gchar   *help_path);
-void              plug_ins_proc_def_remove   (PlugInProcDef *proc_def,
-                                              Gimp          *gimp);
-
-/* Retrieve a plug-ins menu path */
-gchar           * plug_ins_menu_path         (gchar         *name);
-
-/* Retrieve a plug-ins locale domain */
-const gchar     * plug_ins_locale_domain     (const gchar   *prog_name,
-                                              const gchar  **locale_path);
-
-/* Retrieve a plug-ins help path */
-const gchar     * plug_ins_help_path         (const gchar   *prog_name);
-
+void              plug_ins_init                 (Gimp               *gimp,
+                                                 GimpInitStatusFunc  status_callback);
+void              plug_ins_exit                 (Gimp          *gimp);
 
 /* Register an internal plug-in.  This is for file load-save
  * handlers, which are organized around the plug-in data structure.
  * This could all be done a little better, but oh well.  -josh
  */
-void              plug_ins_add_internal      (PlugInProcDef *proc_def);
-GSList          * plug_ins_extensions_parse  (gchar         *extensions);
-PlugInImageType   plug_ins_image_types_parse (gchar         *image_types);
+void              plug_ins_add_internal         (PlugInProcDef *proc_def);
+
+/* Add in the file load/save handler fields procedure. */
+PlugInProcDef   * plug_ins_file_handler         (gchar         *name,
+                                                 gchar         *extensions,
+                                                 gchar         *prefixes,
+                                                 gchar         *magics);
+
+/* Add a plug-in definition. */
+void              plug_ins_def_add_from_rc      (PlugInDef     *plug_in_def);
+
+/* Add/Remove temporary procedures. */
+void              plug_ins_temp_proc_def_add    (Gimp          *gimp,
+                                                 PlugInProcDef *proc_def,
+                                                 const gchar   *locale_domain,
+                                                 const gchar   *help_path);
+void              plug_ins_temp_proc_def_remove (Gimp          *gimp,
+                                                 PlugInProcDef *proc_def);
+
+/* Retrieve a plug-ins locale domain */
+const gchar     * plug_ins_locale_domain        (Gimp          *gimp,
+                                                 const gchar   *prog_name,
+                                                 const gchar  **locale_path);
+
+/* Retrieve a plug-ins help path */
+const gchar     * plug_ins_help_path            (Gimp          *gimp,
+                                                 const gchar   *prog_name);
+
+
+GSList          * plug_ins_extensions_parse     (gchar         *extensions);
+PlugInImageType   plug_ins_image_types_parse    (gchar         *image_types);
 
 
 extern GSList *proc_defs;

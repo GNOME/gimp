@@ -71,7 +71,7 @@ static void   image_menu_background_changed (GimpContext     *context,
 
 GimpItemFactoryEntry image_menu_entries[] =
 {
-  { { "/tearoff1", NULL, gimp_item_factory_tearoff_callback, 0, "<Tearoff>" },
+  { { "/tearoff", NULL, gimp_item_factory_tearoff_callback, 0, "<Tearoff>" },
     NULL, NULL, NULL },
 
   /*  <Image>/File  */
@@ -794,7 +794,7 @@ GimpItemFactoryEntry image_menu_entries[] =
   MENU_BRANCH (N_("/Filters/Text")),
   MENU_BRANCH (N_("/Filters/Web")),
 
-  MENU_SEPARATOR ("/Filters/---INSERT"),
+  MENU_SEPARATOR ("/Filters/web-separator"),
 
   MENU_BRANCH (N_("/Filters/Animation")),
   MENU_BRANCH (N_("/Filters/Combine")),
@@ -813,7 +813,7 @@ image_menu_setup (GimpItemFactory *factory)
   if (GTK_IS_MENU_BAR (GTK_ITEM_FACTORY (factory)->widget))
     {
       gimp_item_factory_set_visible (GTK_ITEM_FACTORY (factory),
-                                     "/tearoff1", FALSE);
+                                     "/tearoff", FALSE);
       gimp_item_factory_set_visible (GTK_ITEM_FACTORY (factory),
                                      "/filters-separator", FALSE);
     }
@@ -908,7 +908,7 @@ image_menu_setup (GimpItemFactory *factory)
     image_menu_background_changed (user_context, &bg, factory);
   }
 
-  plug_in_make_menu (factory, proc_defs);
+  plug_in_menus_create (factory, proc_defs);
 
   {
     static gchar *rotate_plugins[]      = { "Rotate 90 degrees",
@@ -1032,7 +1032,7 @@ image_menu_setup (GimpItemFactory *factory)
      *  before the separator after "<Image>/Filters/Web"
      */
     menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (factory),
-                                             "/Filters/---INSERT");
+                                             "/Filters/web-separator");
 
     if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
       {

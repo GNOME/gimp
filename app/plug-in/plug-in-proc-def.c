@@ -22,20 +22,22 @@
 
 #include "plug-in-types.h"
 
+#include "plug-in.h"
 #include "plug-in-proc.h"
 
 
-ProcRecord * 
-plug_in_proc_def_get_proc (PlugInProcDef *proc_def)
+PlugInProcDef *
+plug_in_proc_def_new (void)
 {
-  g_return_val_if_fail (proc_def != NULL, NULL);
+  PlugInProcDef *proc_def;
 
-  return &proc_def->db_info;
+  proc_def = g_new0 (PlugInProcDef, 1);
+
+  return proc_def;
 }
 
 void
-plug_in_proc_def_destroy (PlugInProcDef *proc_def,
-			  gboolean       data_only)
+plug_in_proc_def_free (PlugInProcDef *proc_def)
 {
   gint i;
 
@@ -71,6 +73,34 @@ plug_in_proc_def_destroy (PlugInProcDef *proc_def,
   g_free (proc_def->magics);
   g_free (proc_def->image_types);
 
-  if (!data_only)
-    g_free (proc_def);
+  g_free (proc_def);
+}
+
+ProcRecord * 
+plug_in_proc_def_get_proc (PlugInProcDef *proc_def)
+{
+  g_return_val_if_fail (proc_def != NULL, NULL);
+
+  return &proc_def->db_info;
+}
+
+const gchar *
+plug_in_proc_def_get_progname (PlugInProcDef *proc_def)
+{
+  g_return_val_if_fail (proc_def != NULL, NULL);
+
+  switch (proc_def->db_info.proc_type)
+    {
+    case GIMP_PLUGIN:
+    case GIMP_EXTENSION:
+      return proc_def->prog;
+
+    case GIMP_TEMPORARY:
+      return ((PlugIn *) proc_def->db_info.exec_method.temporary.plug_in)->args[0];
+
+    default:
+      break;
+    }
+
+  return NULL;
 }

@@ -429,9 +429,9 @@ plugin_domain_register_invoker (Gimp     *gimp,
     {
       if (current_plug_in && current_plug_in->query)
 	{
-	  plug_in_def_set_locale_domain_name (current_plug_in->user_data, 
+	  plug_in_def_set_locale_domain_name (current_plug_in->plug_in_def,
 					      domain_name);
-	  plug_in_def_set_locale_domain_path (current_plug_in->user_data,
+	  plug_in_def_set_locale_domain_path (current_plug_in->plug_in_def,
 					      domain_path);
 	}
     }
@@ -484,7 +484,7 @@ plugin_help_register_invoker (Gimp     *gimp,
     {
       if (current_plug_in && current_plug_in->query)
 	{
-	  plug_in_def_set_help_path (current_plug_in->user_data, help_path);
+	  plug_in_def_set_help_path (current_plug_in->plug_in_def, help_path);
 	}
     }
 

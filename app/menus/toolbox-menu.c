@@ -256,7 +256,7 @@ toolbox_menu_setup (GimpItemFactory *factory)
 
   menus_last_opened_add (factory, factory->gimp);
 
-  plug_in_make_menu (factory, proc_defs);
+  plug_in_menus_create (factory, proc_defs);
 
   /*  Move all menu items under "<Toolbox>/Xtns" which are not submenus or
    *  separators to the top of the menu

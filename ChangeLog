@@ -1,3 +1,55 @@
+2003-01-17  Michael Natterer  <mitch@gimp.org>
+
+	One more Plug-In cleanup, it's still a mess...
+
+	* app/plug-in/plug-in-def.[ch]: renamed "gboolean query" field
+	to "needs_query". Added setters for all values. Added
+	g_return_if_fail() stuff to all functions.
+
+	* app/plug-in/plug-in-proc.[ch]: added plug_in_proc_def_new().
+	Removed the "gboolean data_only" parameter from
+	plug_in_proc_def_destroy() and renamed it to
+	plug_in_proc_def_free().  Added plug_in_proc_def_get_progname()
+	which handles GIMP_TEMPORARY procedures correctly.
+
+	* app/plug-in/plug-in-rc.c: use the new stuff above.
+
+	* app/plug-in/plug-in.[ch]: renamed field "user_data" to
+	"plug_in_def" and added a comment that it is valid only during
+	query() and init().  Use the new APIs above. Pass meaningful
+	locale_domains and help_paths when adding temporary procedures
+	(fixes Scrip-Fu menu translation the right way (TM)). Cleanup.
+
+	* app/plug-in/plug-ins.[ch]: renamed plug_ins_def_add() to
+	plug_ins_def_add_from_rc(). Renamed plug_ins_proc_def_[add|remove]()
+	to plug_ins_temp_proc_def_[add|remove](). Added "Gimp" parameters
+	to plug_ins_help_path() and plug_ins_locale_domain(). Removed
+	unused pre-1.2 cruft "gimprc_prof_defs" and plug_ins_image_types().
+	Reverse gimp->load_procs and gimp->save_procs after all procedures
+	are registered. Removed Script-Fu translation hack. Reordered stuff.
+
+	* app/gui/plug-in-menus.[ch]: changed accordingly. Named all
+	public functions plug_in_menus_*(). Fixed Script-Fu menu translation
+	by using plug_in_proc_def_get_progname(). Cleanup.
+
+	* app/gui/file-open-menu.c
+	* app/gui/file-save-menu.c: don't g_slist_reverse() gimp->load_procs
+	and gimp->save_procs here.
+
+	* app/gui/toolbox-menu.c
+	* app/gui/image-menu.c
+	* tools/pdbgen/pdb/help.pdb
+	* tools/pdbgen/pdb/plug_in.pdb: changed accordingly.
+
+	* app/pdb/help_cmds.c
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+	Unrelated:
+
+	* app/gui/image-menu.c
+	* app/widgets/gimpitemfactory.c: s/"tearoff1"/"tearoff"/g. I don't
+	get why the "1" was there. Minor cleanup.
+
 2003-01-17  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/sinus.c: fixes #81966 plus some code clean-up.
@@ -57,7 +109,7 @@
 2003-01-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptoolbox.c (gimp_toolbox_set_geometry): added
-	GDK_HINT_USER_POS again since it's set by gdk_window_parse_geometry()
+	GDK_HINT_USER_POS again since it's set by gtk_window_parse_geometry()
 	in gimpdialogfactory.c and we don't want to reset it.
 
 2003-01-14  Michael Natterer  <mitch@gimp.org>

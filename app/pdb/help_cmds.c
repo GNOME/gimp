@@ -57,7 +57,7 @@ help_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_help (gimp, plug_ins_help_path (prog_name), help_page);
+    gimp_help (gimp, plug_ins_help_path (gimp, prog_name), help_page);
 
   return procedural_db_return_args (&help_proc, success);
 }

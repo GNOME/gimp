@@ -53,7 +53,7 @@ struct _PlugIn
 
   GimpProgress *progress;         /*  Progress dialog                         */
 
-  PlugInDef    *user_data;        /*  DON'T USE!!                             */
+  PlugInDef    *plug_in_def;      /*  Valid only during query() and init()    */
 };
 
 

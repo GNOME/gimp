@@ -321,7 +321,7 @@ plug_in_call_query (Gimp      *gimp,
     {
       plug_in->query       = TRUE;
       plug_in->synchronous = TRUE;
-      plug_in->user_data   = plug_in_def;
+      plug_in->plug_in_def = plug_in_def;
 
       if (plug_in_open (plug_in))
 	{
@@ -359,7 +359,7 @@ plug_in_call_init (Gimp      *gimp,
     {
       plug_in->init        = TRUE;
       plug_in->synchronous = TRUE;
-      plug_in->user_data   = plug_in_def;
+      plug_in->plug_in_def = plug_in_def;
 
       if (plug_in_open (plug_in))
 	{
@@ -439,7 +439,7 @@ plug_in_new (Gimp  *gimp,
   plug_in->write_buffer_index = 0;
   plug_in->temp_proc_defs     = NULL;
   plug_in->progress           = NULL;
-  plug_in->user_data          = NULL;
+  plug_in->plug_in_def        = NULL;
 
   return plug_in;
 }
@@ -731,12 +731,12 @@ plug_in_close (PlugIn   *plug_in,
   /* Unregister any temporary procedures. */
   if (plug_in->temp_proc_defs)
     {
-      g_slist_foreach (plug_in->temp_proc_defs,
-		       (GFunc) plug_ins_proc_def_remove,
-		       plug_in->gimp);
-      g_slist_foreach (plug_in->temp_proc_defs,
-                       (GFunc) g_free,
-                       NULL);
+      GSList *list;
+
+      for (list = plug_in->temp_proc_defs; list; list = g_slist_next (list))
+        plug_ins_temp_proc_def_remove (plug_in->gimp,
+                                       (PlugInProcDef *) list->data);
+
       g_slist_free (plug_in->temp_proc_defs);
       plug_in->temp_proc_defs = NULL;
     }
@@ -1311,7 +1311,6 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
   ProcRecord    *proc = NULL;
   GSList        *tmp = NULL;
   gchar         *prog = NULL;
-  gboolean       add_proc_def;
   gboolean       valid;
   gint           i;
 
@@ -1473,14 +1472,15 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
     {
     case GIMP_PLUGIN:
     case GIMP_EXTENSION:
-      plug_in_def = plug_in->user_data;
-      prog = plug_in_def->prog;
+      plug_in_def = plug_in->plug_in_def;
+      prog        = plug_in_def->prog;
 
       tmp = plug_in_def->proc_defs;
       break;
 
     case GIMP_TEMPORARY:
-      prog = "none";
+      plug_in_def = NULL;
+      prog        = "none";
 
       tmp = plug_in->temp_proc_defs;
       break;
@@ -1494,22 +1494,25 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
       if (strcmp (proc_def->db_info.name, proc_install->name) == 0)
 	{
 	  if (proc_install->type == GIMP_TEMPORARY)
-	    plug_ins_proc_def_remove (proc_def, plug_in->gimp);
+            {
+              plug_in->temp_proc_defs = g_slist_remove (plug_in->temp_proc_defs,
+                                                        proc_def);
+
+              plug_ins_temp_proc_def_remove (plug_in->gimp, proc_def);
+            }
 	  else
-	    plug_in_proc_def_destroy (proc_def, TRUE); /* destroys data_only */
+            {
+              plug_in_def->proc_defs = g_slist_remove (plug_in_def->proc_defs,
+                                                       proc_def);
+
+              plug_in_proc_def_free (proc_def);
+            }
 
 	  break;
 	}
-
-      proc_def = NULL;
     }
 
-  add_proc_def = FALSE;
-  if (!proc_def)
-    {
-      add_proc_def = TRUE;
-      proc_def = g_new0 (PlugInProcDef, 1);
-    }
+  proc_def = plug_in_proc_def_new ();
 
   proc_def->prog = g_strdup (prog);
 
@@ -1538,8 +1541,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
   proc->num_args   = proc_install->nparams;
   proc->num_values = proc_install->nreturn_vals;
 
-  proc->args   = g_new (ProcArg, proc->num_args);
-  proc->values = g_new (ProcArg, proc->num_values);
+  proc->args   = g_new0 (ProcArg, proc->num_args);
+  proc->values = g_new0 (ProcArg, proc->num_values);
 
   for (i = 0; i < proc->num_args; i++)
     {
@@ -1559,20 +1562,22 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
     {
     case GIMP_PLUGIN:
     case GIMP_EXTENSION:
-      if (add_proc_def)
-	plug_in_def->proc_defs = g_slist_prepend (plug_in_def->proc_defs, proc_def);
+      plug_in_def->proc_defs = g_slist_prepend (plug_in_def->proc_defs,
+                                                proc_def);
       break;
 
     case GIMP_TEMPORARY:
-      if (add_proc_def)
-	plug_in->temp_proc_defs = g_slist_prepend (plug_in->temp_proc_defs,
-                                                   proc_def);
+      plug_in->temp_proc_defs = g_slist_prepend (plug_in->temp_proc_defs,
+                                                 proc_def);
 
       proc->exec_method.temporary.plug_in = plug_in;
 
-      plug_ins_proc_def_add (proc_def, plug_in->gimp,
-                             plug_in_def ? plug_in_def->locale_domain : NULL,
-                             plug_in_def ? plug_in_def->help_path     : NULL);
+      plug_ins_temp_proc_def_add (plug_in->gimp, proc_def,
+                                  plug_ins_locale_domain (plug_in->gimp,
+                                                          plug_in->args[0],
+                                                          NULL),
+                                  plug_ins_help_path (plug_in->gimp,
+                                                      plug_in->args[0]));
       break;
     }
 }
@@ -1581,19 +1586,19 @@ static void
 plug_in_handle_proc_uninstall (PlugIn          *plug_in,
                                GPProcUninstall *proc_uninstall)
 {
-  PlugInProcDef *proc_def;
-  GSList        *tmp;
+  GSList *tmp;
 
   for (tmp = plug_in->temp_proc_defs; tmp; tmp = g_slist_next (tmp))
     {
+      PlugInProcDef *proc_def;
+
       proc_def = tmp->data;
 
       if (! strcmp (proc_def->db_info.name, proc_uninstall->name))
 	{
 	  plug_in->temp_proc_defs = g_slist_remove (plug_in->temp_proc_defs,
                                                     proc_def);
-	  plug_ins_proc_def_remove (proc_def, plug_in->gimp);
-          g_free (proc_def);
+	  plug_ins_temp_proc_def_remove (plug_in->gimp, proc_def);
 	  break;
 	}
     }
@@ -1608,7 +1613,8 @@ plug_in_handle_extension_ack (PlugIn *plug_in)
 static void
 plug_in_handle_has_init (PlugIn *plug_in)
 {
-  plug_in->user_data->has_init = TRUE;
+  if (plug_in->query)
+    plug_in_def_set_has_init (plug_in->plug_in_def, TRUE);
 }
 
 static gboolean

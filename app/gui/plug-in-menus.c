@@ -61,7 +61,8 @@ static gchar  * plug_in_escape_uline            (const gchar     *menu_path);
 /*  public functions  */
 
 void
-plug_in_menus_init (GSList      *plug_in_defs,
+plug_in_menus_init (Gimp        *gimp,
+                    GSList      *plug_in_defs,
                     const gchar *std_plugins_domain)
 {
   GSList *domains = NULL;
@@ -86,7 +87,8 @@ plug_in_menus_init (GSList      *plug_in_defs,
       if (! plug_in_def->proc_defs)
         continue;
 
-      locale_domain = plug_ins_locale_domain (plug_in_def->prog,
+      locale_domain = plug_ins_locale_domain (gimp,
+                                              plug_in_def->prog,
                                               &locale_path);
 
       for (list = domains; list; list = list->next)
@@ -108,15 +110,14 @@ plug_in_menus_init (GSList      *plug_in_defs,
 }
 
 void
-plug_in_make_menu (GimpItemFactory *item_factory,
-                   GSList          *proc_defs)
+plug_in_menus_create (GimpItemFactory *item_factory,
+                      GSList          *proc_defs)
 {
   PlugInProcDef   *proc_def;
   GSList          *procs;
   GTree           *menu_entries;
 
-  g_return_if_fail (item_factory == NULL ||
-                    GIMP_IS_ITEM_FACTORY (item_factory));
+  g_return_if_fail (GIMP_IS_ITEM_FACTORY (item_factory));
   g_return_if_fail (proc_defs != NULL);
 
   menu_entries = g_tree_new_full ((GCompareDataFunc) g_utf8_collate, NULL,
@@ -133,15 +134,22 @@ plug_in_make_menu (GimpItemFactory *item_factory,
           ! proc_def->magics)
         {
           PlugInMenuEntry *menu_entry;
+          const gchar     *progname;
           const gchar     *locale_domain;
+          const gchar     *help_path;
 
-          locale_domain = plug_ins_locale_domain (proc_def->prog, NULL);
+          progname = plug_in_proc_def_get_progname (proc_def);
+
+          locale_domain = plug_ins_locale_domain (item_factory->gimp,
+                                                  progname, NULL);
+          help_path = plug_ins_help_path (item_factory->gimp,
+                                          progname);
 
           menu_entry = g_new0 (PlugInMenuEntry, 1);
 
           menu_entry->proc_def  = proc_def;
           menu_entry->domain    = locale_domain;
-          menu_entry->help_path = plug_ins_help_path (proc_def->prog);
+          menu_entry->help_path = help_path;
 
           g_tree_insert (menu_entries, 
                          dgettext (locale_domain, proc_def->menu_path),
@@ -156,10 +164,10 @@ plug_in_make_menu (GimpItemFactory *item_factory,
 }
 
 void
-plug_in_make_menu_entry (GimpItemFactory *item_factory,
-                         PlugInProcDef   *proc_def,
-                         const gchar     *domain,
-                         const gchar     *help_path)
+plug_in_menus_create_entry (GimpItemFactory *item_factory,
+                            PlugInProcDef   *proc_def,
+                            const gchar     *locale_domain,
+                            const gchar     *help_path)
 {
   GimpItemFactoryEntry  entry;
   gchar                *menu_path;
@@ -216,7 +224,7 @@ plug_in_make_menu_entry (GimpItemFactory *item_factory,
         {
           gimp_item_factory_create_item (item_factory,
                                          &entry,
-                                         domain,
+                                         locale_domain,
                                          &proc_def->db_info, 2,
                                          TRUE, FALSE);
         }
@@ -233,7 +241,7 @@ plug_in_make_menu_entry (GimpItemFactory *item_factory,
 
           gimp_item_factory_create_item (item_factory,
                                          &entry,
-                                         domain,
+                                         locale_domain,
                                          &proc_def->db_info, 2,
                                          TRUE, FALSE);
         }
@@ -244,7 +252,7 @@ plug_in_make_menu_entry (GimpItemFactory *item_factory,
 }
 
 void
-plug_in_delete_menu_entry (const gchar *menu_path)
+plug_in_menus_delete_entry (const gchar *menu_path)
 {
   GList *list;
 
@@ -379,10 +387,10 @@ plug_in_menu_tree_traverse_func (gpointer         foo,
                                  PlugInMenuEntry *menu_entry,
                                  GimpItemFactory *item_factory)
 {
-  plug_in_make_menu_entry (item_factory,
-                           menu_entry->proc_def,
-                           menu_entry->domain,
-                           menu_entry->help_path);
+  plug_in_menus_create_entry (item_factory,
+                              menu_entry->proc_def,
+                              menu_entry->domain,
+                              menu_entry->help_path);
 
   return FALSE;
 }
