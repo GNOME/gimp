@@ -525,6 +525,7 @@ gimp_progress_init
 gimp_progress_update
 gimp_plugin_domain_register
 gimp_plugin_help_register
+gimp_plugin_menu_register
 </SECTION>
 
 <SECTION>
