@@ -5,9 +5,9 @@
 1999-05-28  Tor Lillqvist  <tml@iki.fi>
 
 	Merge in Win32 changes to plug-ins. Small Win32-related changes
-	to app and libgimp.
+	to app, libgimp and modules.
 
-	* configure.in: Check for mmap.
+	* configure.in acconfig.h: Check for mmap.
 
 	* app/makefile.msc: Depend on gimpi.lib.
 	
@@ -103,6 +103,12 @@
  	g_strdup_printf() instead of separate malloc() and sprintf(). Use
  	g_strescape() for strings being passed to Scheme. Some Win32-only
  	stuff.
+
+	* modules/colorsel_triangle.c: No need to include gdkx.h. Define
+ 	M_PI if necessary.
+
+	* modules/makefile.msc: Update GLib and GTk+ version paths to
+ 	current preferences.
 
 Thu May 27 22:04:49 1999  Jay Cox  (jaycox@earthlink.net)
 

@@ -24,11 +24,14 @@
 #include <stdio.h>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
-#include <gdk/gdkx.h>
+
 #include <libgimp/color_selector.h>
 #include <libgimp/gimpmodule.h>
 #include <math.h>
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 /* prototypes */
 static GtkWidget * colorsel_triangle_new (int, int, int,

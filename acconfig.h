@@ -22,6 +22,7 @@
 #undef HAVE_GETTEXT
 #undef HAVE_IPC_H
 #undef HAVE_LC_MESSAGES
+#undef HAVE_MMAP
 #undef HAVE_NDIR_H
 #undef HAVE_PROGRESSIVE_JPEG
 #undef HAVE_PUTENV
