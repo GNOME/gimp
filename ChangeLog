@@ -1,5 +1,10 @@
 2004-10-11  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/flarefx.c: use a GimpSizeEntry for specifying
+	the flare center. Fixed flare center dragging. Lots of cleanup.
+
+2004-10-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/dialogs-types.h: removed ColorDialog typedef.
 
 2004-10-11  Michael Natterer  <mitch@gimp.org>
