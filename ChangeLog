@@ -1,3 +1,7 @@
+2002-01-23  Simos Xenitellis  <simos@hellug.gr>
+
+	* configure.in: Added "el" (Greek) to ALL_LINGUAS.
+
 2002-01-22  Sven Neumann  <sven@gimp.org>
 
 	* gimptool-1.3.in: fixed usage info.
