@@ -29,16 +29,17 @@
 
 #include "widgets/gimpdatafactoryview.h"
 
+#include "dialog_handler.h"
+#include "gimpdnd.h"
+#include "palette-editor.h"
+#include "palette-select.h"
+
 #include "appenv.h"
 #include "context_manager.h"
-#include "dialog_handler.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
-#include "gimpdnd.h"
 #include "gimppalette.h"
-#include "palette_select.h"
-#include "palette.h"
 
 #include "libgimp/gimpintl.h"
 

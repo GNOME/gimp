@@ -31,15 +31,16 @@
 
 #include "apptypes.h"
 
-#include "color_notebook.h"
+#include "color-notebook.h"
+#include "gimpdnd.h"
 #include "image_render.h"
 #include "dialog_handler.h"
-#include "colormap_dialog.h"
-#include "colormaps.h"
-#include "color_area.h"
+#include "colormap-dialog.h"
+#include "color-area.h"
 #include "gdisplay.h"
+
+#include "colormaps.h"
 #include "gimpcontainer.h"
-#include "gimpdnd.h"
 #include "gimpimage.h"
 
 #include "libgimp/gimpintl.h"

@@ -34,21 +34,21 @@
 #include "widgets/gimppreview.h"
 #include "widgets/gtkhwrapbox.h"
 
-#include "gui/dialogs-commands.h"
-
-#include "app_procs.h"
-#include "color_area.h"
+#include "color-area.h"
 #include "devices.h"
 #include "dialog_handler.h"
+#include "dialogs-commands.h"
 #include "gdisplay.h"
+#include "gimpdnd.h"
+#include "indicator-area.h"
+#include "menus.h"
+
+#include "app_procs.h"
 #include "gimage.h"
 #include "gimpcontext.h"
-#include "gimpdnd.h"
 #include "gimplayer.h"
 #include "gimplist.h"
 #include "gimprc.h"
-#include "indicator_area.h"
-#include "menus.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
 

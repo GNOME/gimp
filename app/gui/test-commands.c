@@ -25,8 +25,6 @@
 
 #include "apptypes.h"
 
-#include "gui/dialogs.h"
-
 #include "tools/tool_manager.h"
 
 #include "widgets/gimpcontainerlistview.h"
@@ -39,8 +37,10 @@
 #include "widgets/gimpdrawablelistview.h"
 #include "widgets/gimppreview.h"
 
+#include "dialogs.h"
+#include "gradient-editor.h"
+
 #include "context_manager.h"
-#include "gradient_editor.h"
 #include "gimpchannel.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"

@@ -29,26 +29,24 @@
 
 #include "apptypes.h"
 
-#include "gui/dialogs-commands.h"
-
 #include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 
-#include "channels_dialog.h"
+#include "channels-dialog.h"
 #include "commands.h"
 #include "dialog_handler.h"
+#include "dialogs-commands.h"
+#include "gdisplay.h"
+#include "layers-dialog.h"
+#include "menus.h"
+#include "paths-dialog.h"
+#include "test-commands.h"
+
 #include "file-open.h"
 #include "file-save.h"
-#include "gdisplay.h"
 #include "gimphelp.h"
 #include "gimplist.h"
 #include "gimprc.h"
-#include "layers_dialog.h"
-#include "menus.h"
-#include "paths_dialog.h"
-
-/* test dialogs */
-#include "test_commands.h"
 
 #include "libgimp/gimpintl.h"
 

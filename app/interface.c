@@ -27,13 +27,14 @@
 #include "disp_callbacks.h"
 #include "gdisplay_ops.h"
 #include "gimpdnd.h"
+#include "interface.h"
+#include "gui/menus.h"
+#include "nav_window.h"
+
 #include "gimphelp.h"
 #include "gimpimage.h"
 #include "gimppattern.h"
 #include "gimprc.h"
-#include "interface.h"
-#include "menus.h"
-#include "nav_window.h"
 #include "qmask.h"
 
 #include "pixmaps/qmasksel.xpm"

@@ -46,9 +46,6 @@
 
 #include "apptypes.h"
 
-#include "gui/gui.h"
-#include "gui/splash.h"
-
 #include "paint-funcs/paint-funcs.h"
 
 #include "pdb/internal_procs.h"
@@ -57,10 +54,20 @@
 #include "tools/hue_saturation.h"
 #include "tools/levels.h"
 
+#include "gui/color-notebook.h"
+#include "gui/color-select.h"
+#include "gui/colormap-dialog.h"
+#include "gui/brush-select.h"
+#include "gui/gui.h"
+#include "gui/gradient-select.h"
+#include "gui/palette-editor.h"
+#include "gui/pattern-select.h"
+#include "gui/splash.h"
+#include "gui/tips-dialog.h"
+
 #include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"
-#include "brush_select.h"
 #include "color_transfer.h"
 #include "colormaps.h"
 #include "context_manager.h"
@@ -75,29 +82,22 @@
 #include "gimprc.h"
 #include "gimpparasite.h"
 #include "global_edit.h"
-#include "gradient_select.h"
 #include "lc_dialog.h"
-#include "palette.h"
-#include "pattern_select.h"
 #include "plug_in.h"
 #include "module_db.h"
 
 #include "temp_buf.h"
 #include "tile_swap.h"
-#include "tips_dialog.h"
 #include "undo.h"
 #include "unitrc.h"
 #include "xcf.h"
 #include "errors.h"
 #include "docindex.h"
-#include "colormap_dialog.h"
 
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color.h"
 #endif /* DISPLAY_FILTERS */
 
-#include "color_notebook.h"
-#include "color_select.h"
 #include "gimpparasite.h"
 
 #include "libgimp/gimpintl.h"

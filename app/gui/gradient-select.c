@@ -27,19 +27,20 @@
 
 #include "apptypes.h"
 
+#include "pdb/procedural_db.h"
+
 #include "widgets/gimpdatafactoryview.h"
+
+#include "dialog_handler.h"
+#include "gradient-editor.h"
+#include "gradient-select.h"
 
 #include "appenv.h"
 #include "context_manager.h"
-#include "dialog_handler.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
 #include "gimpgradient.h"
-#include "gradient_editor.h"
-#include "gradient_select.h"
-
-#include "pdb/procedural_db.h"
 
 #include "libgimp/gimpintl.h"
 

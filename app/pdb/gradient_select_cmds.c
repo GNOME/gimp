@@ -32,7 +32,7 @@
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
 #include "gimpgradient.h"
-#include "gradient_select.h"
+#include "gui/gradient-select.h"
 
 static ProcRecord gradients_popup_proc;
 static ProcRecord gradients_close_popup_proc;

@@ -42,9 +42,11 @@
 
 #include "widgets/gimpdialogfactory.h"
 
+#include "gui/color-notebook.h"
+#include "gui/menus.h"
+
 #include "app_procs.h"
 #include "appenv.h"
-#include "color_notebook.h"
 #include "cursorutil.h"
 #include "devices.h"
 #include "errors.h"
@@ -52,7 +54,6 @@
 #include "gimphelp.h"
 #include "gimpparasite.h"
 #include "gimprc.h"
-#include "menus.h"
 #include "plug_in.h"
 #include "gimage.h"
 

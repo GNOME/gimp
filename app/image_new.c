@@ -24,20 +24,21 @@
 
 #include "apptypes.h"
 
+#include "libgimp/gimpparasite.h"
+
 #include "paint-funcs/paint-funcs.h"
+
+#include "gui/file-new-dialog.h"
+#include "gdisplay.h"
 
 #include "appenv.h"
 #include "drawable.h"
-#include "file_new_dialog.h"
-#include "gdisplay.h"
 #include "gimage.h"
 #include "gimpcontext.h"
 #include "gimplayer.h"
 #include "gimprc.h"
 #include "image_new.h"
 #include "tile_manager.h"
-
-#include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -27,8 +27,9 @@
 #include "apptypes.h"
 
 #include "dialog_handler.h"
+#include "info-dialog.h"
+
 #include "gimprc.h"
-#include "info_dialog.h"
 
 #include "libgimp/gimpintl.h"
 

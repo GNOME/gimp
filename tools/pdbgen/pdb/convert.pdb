@@ -97,7 +97,6 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw(<string.h> "palette.h") ],
 	code => <<'CODE'
 {
   if ((success = (gimp_image_base_type (gimage) != INDEXED)))

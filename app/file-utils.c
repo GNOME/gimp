@@ -44,11 +44,12 @@
 
 #include "apptypes.h"
 
-#include "file-utils.h"
 #include "gdisplay.h"
-#include "gimpimage.h"
 #include "gimpui.h"
-#include "menus.h"
+#include "gui/menus.h"
+
+#include "file-utils.h"
+#include "gimpimage.h"
 #include "plug_in.h"
 #include "temp_buf.h"
 

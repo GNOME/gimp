@@ -1,5 +1,73 @@
 2001-04-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/gui/Makefile.am
+	* app/about_dialog.[ch]
+	* app/brush_edit.[ch]
+	* app/brush_select.[ch]
+	* app/channels_dialog.[ch]
+	* app/color_area.[ch]
+	* app/color_notebook.[ch]
+	* app/color_select.[ch]
+	* app/colormap_dialog.[ch]
+	* app/commands.[ch]
+	* app/file_new_dialog.[ch]
+	* app/gradient_editor.[ch]
+	* app/gradient_select.[ch]
+	* app/indicator_area.[ch]
+	* app/info_dialog.[ch]
+	* app/info_window.[ch]
+	* app/layer_select.[ch]
+	* app/layers_dialog.[ch]
+	* app/menus.[ch]
+	* app/palette.[ch]
+	* app/palette_import.[ch]
+	* app/palette_select.[ch]
+	* app/paths_dialog.[ch]
+	* app/pattern_select.[ch]
+	* app/preferences_dialog.[ch]
+	* app/session.[ch]
+	* app/test_commands.[ch]
+	* app/tips_dialog.[ch]
+	* app/toolbox.[ch]: moved to gui/ (s/_/-/ and some more useful
+	filenames on the way).
+
+	* app/app_procs.c
+	* app/context_manager.c
+	* app/convert.c
+	* app/disp_callbacks.c
+	* app/errorconsole.c
+	* app/file-open.c
+	* app/file-save.c
+	* app/file-utils.c
+	* app/gdisplay.c
+	* app/gimage.c
+	* app/gimprc.c
+	* app/image_new.c
+	* app/interface.c
+	* app/nav_window.c
+	* app/path.c
+	* app/plug_in.c
+	* app/gui/dialogs-constructors.c
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/convert_cmds.c
+	* app/pdb/gradient_select_cmds.c
+	* app/pdb/pattern_select_cmds.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimptransformtool.c
+	* app/widgets/gimpcolorpanel.c
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/convert.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb
+	* po/POTFILES.in: changed accordingly.
+
+2001-04-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/session.[ch]
 	* app/gimprc.c: removed the old dialog session management code...
 

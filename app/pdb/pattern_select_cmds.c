@@ -32,7 +32,7 @@
 #include "gimpdatafactory.h"
 #include "gimplist.h"
 #include "gimppattern.h"
-#include "pattern_select.h"
+#include "gui/pattern-select.h"
 
 static ProcRecord patterns_popup_proc;
 static ProcRecord patterns_close_popup_proc;

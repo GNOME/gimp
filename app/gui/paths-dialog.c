@@ -32,26 +32,27 @@
 
 #include "apptypes.h"
 
+#include "tools/gimpbezierselecttool.h"
+
+#include "gdisplay.h"
+#include "menus.h"
+#include "ops_buttons.h"
+#include "paths-dialog.h"
+
 #include "floating_sel.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpdrawable.h"
 #include "gimage_mask.h"
-#include "gdisplay.h"
 #include "gimprc.h"
 #include "image_render.h"
 #include "lc_dialogP.h"
-#include "menus.h"
-#include "ops_buttons.h"
 #include "path.h"
 #include "pathP.h"
 #include "path_transform.h"
-#include "paths_dialog.h"
 #include "paths_dialogP.h"
 #include "plug_in.h"
 #include "undo.h"
-
-#include "tools/gimpbezierselecttool.h"
 
 #include "libgimp/gimpintl.h"
 

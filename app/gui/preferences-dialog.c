@@ -24,26 +24,26 @@
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimp/gimplimits.h"
 
 #include "apptypes.h"
 
+#include "cursorutil.h"
+#include "gdisplay.h"
+#include "layer-select.h"
+#include "session.h"
+
 #include "colormaps.h"
 #include "context_manager.h"
-#include "cursorutil.h"
 #include "gdisplay_ops.h"
-#include "gdisplay.h"
 #include "gimpcontainer.h"
 #include "gimphelp.h"
 #include "gimpimage.h"
 #include "gimprc.h"
 #include "image_render.h"
 #include "lc_dialog.h"
-#include "layer_select.h"
 #include "resolution_calibrate.h"
-#include "session.h"
 #include "tile_cache.h"
-
-#include "libgimp/gimplimits.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -30,14 +30,14 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimp/gimpcolorselector.h"
 
 #include "apptypes.h"
 
-#include "color_area.h"
-#include "color_notebook.h"
-#include "colormaps.h"
+#include "color-area.h"
+#include "color-notebook.h"
 
-#include "libgimp/gimpcolorselector.h"
+#include "colormaps.h"
 
 #include "libgimp/gimpintl.h"
 

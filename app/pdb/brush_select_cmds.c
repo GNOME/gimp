@@ -27,12 +27,12 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
-#include "brush_select.h"
 #include "context_manager.h"
 #include "gimpbrush.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
 #include "gimplist.h"
+#include "gui/brush-select.h"
 
 static ProcRecord brushes_popup_proc;
 static ProcRecord brushes_close_popup_proc;

@@ -26,6 +26,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimp/gimpfeatures.h"
+#include "libgimp/gimpenv.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -33,15 +35,12 @@
 
 #include "tools/gimptoolinfo.h"
 
+#include "about-dialog.h"
+
 #include "appenv.h"
-#include "about_dialog.h"
 #include "authors.h"
 #include "gimpdnd.h"
 #include "gimphelp.h"
-
-#include "libgimp/gimpfeatures.h"
-
-#include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -29,8 +29,9 @@
 
 #include "apptypes.h"
 
+#include "brush-editor.h"
+
 #include "gimpbrushgenerated.h"
-#include "brush_edit.h"
 #include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"

@@ -25,20 +25,21 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
-#include "cursorutil.h"
-#include "drawable.h"
+#include "gui/info-dialog.h"
+#include "gui/palette-editor.h"
 #include "gdisplay.h"
-#include "gimpimage.h"
+#include "cursorutil.h"
 #include "gimpui.h"
-#include "gimprc.h"
-#include "info_dialog.h"
-#include "palette.h"
 
 #include "gimpdrawtool.h"
 #include "gimpcolorpickertool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
+
+#include "appenv.h"
+#include "drawable.h"
+#include "gimpimage.h"
+#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -27,6 +27,10 @@
 
 #include "apptypes.h"
 
+#include "gradient-select.h"
+#include "palette-editor.h"
+#include "palette-import-dialog.h"
+
 #include "context_manager.h"
 #include "gimage.h"
 #include "gimpcontainer.h"
@@ -36,9 +40,6 @@
 #include "gimpimage.h"
 #include "gimppalette.h"
 #include "gimppalette-import.h"
-#include "gradient_select.h"
-#include "palette.h"
-#include "palette_import.h"
 #include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"

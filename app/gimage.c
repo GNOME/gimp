@@ -27,17 +27,18 @@
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
-#include "context_manager.h"
 #include "dialog_handler.h"
 #include "gdisplay.h"
+#include "lc_dialog.h"
+#include "gui/palette-import-dialog.h"
+
+#include "context_manager.h"
 #include "gimage.h"
 #include "gimpcontainer.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
-#include "lc_dialog.h"
-#include "palette_import.h"
 #include "undo.h"
 
 

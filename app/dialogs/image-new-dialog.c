@@ -22,15 +22,15 @@
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimp/gimplimits.h"
 
 #include "apptypes.h"
 
-#include "image_new.h"
-#include "file_new_dialog.h"
-#include "gimprc.h"
+#include "file-new-dialog.h"
 #include "gdisplay.h"
 
-#include "libgimp/gimplimits.h"
+#include "image_new.h"
+#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 

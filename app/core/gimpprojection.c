@@ -30,12 +30,18 @@
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
-#include "appenv.h"
-#include "colormaps.h"
 #include "cursorutil.h"
 #include "disp_callbacks.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
+#include "gui/info-window.h"
+#include "interface.h"
+#include "lc_dialog.h"
+#include "gui/menus.h"
+#include "nav_window.h"
+
+#include "appenv.h"
+#include "colormaps.h"
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "gimpchannel.h"
@@ -46,11 +52,6 @@
 #include "gimprc.h"
 #include "gximage.h"
 #include "image_render.h"
-#include "info_window.h"
-#include "interface.h"
-#include "lc_dialog.h"
-#include "menus.h"
-#include "nav_window.h"
 #include "plug_in.h"
 #include "qmask.h"
 #include "scale.h"
@@ -58,17 +59,17 @@
 #include "temp_buf.h"
 #include "undo.h"
 
-#include "pixmaps/wilber.xpm"
-
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color.h"
 #endif /* DISPLAY_FILTERS */
 
 #include "libgimp/gimpintl.h"
 
+#include "pixmaps/wilber.xpm"
 
-#define OVERHEAD          25  /*  in units of pixel area  */
-#define EPSILON           5
+
+#define OVERHEAD      25  /*  in units of pixel area  */
+#define EPSILON       5
 
 #define MAX_TITLE_BUF 256
 

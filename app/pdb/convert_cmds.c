@@ -20,7 +20,6 @@
 
 #include "config.h"
 
-#include <string.h>
 
 #include <gtk/gtk.h>
 
@@ -33,7 +32,6 @@
 #include "gimpdatafactory.h"
 #include "gimpimage.h"
 #include "gimppalette.h"
-#include "palette.h"
 
 static ProcRecord convert_rgb_proc;
 static ProcRecord convert_grayscale_proc;

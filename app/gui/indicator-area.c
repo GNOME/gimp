@@ -30,14 +30,14 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimppreview.h"
 
-#include "gui/dialogs.h"
+#include "dialogs.h"
+#include "gimpdnd.h"
+#include "indicator-area.h"
 
 #include "gimpbrush.h"
 #include "gimpcontext.h"
 #include "gimpgradient.h"
 #include "gimppattern.h"
-#include "gimpdnd.h"
-#include "indicator_area.h"
 
 #include "libgimp/gimpintl.h"
 

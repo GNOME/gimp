@@ -27,8 +27,9 @@
 #include "tools/paint_options.h"
 #include "tools/tool_manager.h"
 
+#include "gui/brush-select.h"
+
 #include "appenv.h"
-#include "brush_select.h"
 #include "cursorutil.h"
 #include "context_manager.h"
 #include "gdisplay.h"

@@ -22,61 +22,6 @@ endif
 bin_PROGRAMS = gimp
 
 gimp_SOURCES = \
-	about_dialog.c		\
-	about_dialog.h		\
-	brush_edit.c		\
-	brush_edit.h		\
-	brush_select.c		\
-	brush_select.h		\
-	channels_dialog.c	\
-	channels_dialog.h	\
-	color_area.c		\
-	color_area.h		\
-	color_notebook.c	\
-	color_notebook.h	\
-	color_select.c		\
-	color_select.h		\
-	colormap_dialog.c	\
-	colormap_dialog.h	\
-	commands.c		\
-	commands.h		\
-	file_new_dialog.c	\
-	file_new_dialog.h	\
-	gradient_editor.c	\
-	gradient_editor.h	\
-	gradient_select.h	\
-	gradient_select.c	\
-	indicator_area.c	\
-	indicator_area.h	\
-	info_dialog.c		\
-	info_dialog.h		\
-	info_window.c		\
-	info_window.h		\
-	layer_select.c		\
-	layer_select.h		\
-	layers_dialog.c		\
-	layers_dialog.h		\
-	menus.c			\
-	menus.h			\
-	palette.c		\
-	palette.h		\
-	palette_import.c	\
-	palette_import.h	\
-	palette_select.c	\
-	palette_select.h	\
-	paths_dialog.c		\
-	paths_dialog.h		\
-	preferences_dialog.c	\
-	preferences_dialog.h	\
-	session.c		\
-	session.h		\
-	test_commands.c		\
-	test_commands.h		\
-	tips_dialog.c		\
-	tips_dialog.h		\
-	toolbox.c		\
-	toolbox.h		\
-	\
 	cursorutil.c		\
 	cursorutil.h		\
 	devices.c		\
@@ -256,8 +201,6 @@ gimp_SOURCES = \
 	path_bezier.h		\
 	path_bezier.c		\
 	pattern_header.h	\
-	pattern_select.c	\
-	pattern_select.h	\
 	pixel_processor.c	\
 	pixel_processor.h	\
 	pixel_region.c		\

@@ -29,10 +29,13 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gui/info-dialog.h"
 #include "cursorutil.h"
+#include "gdisplay.h"
+#include "gimpui.h"
+
 #include "drawable.h"
 #include "floating_sel.h"
-#include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
@@ -40,8 +43,6 @@
 #include "gimplayer.h"
 #include "gimpmarshal.h"
 #include "gimprc.h"
-#include "gimpui.h"
-#include "info_dialog.h"
 #include "path_transform.h"
 #include "pixel_region.h"
 #include "pixel_surround.h"
@@ -63,6 +64,7 @@
 #include "tools/gimpfliptool.h"
 
 #include "libgimp/gimpintl.h"
+
 
 enum
 {

@@ -24,10 +24,11 @@
 
 #include "apptypes.h"
 
+#include "gui/color-notebook.h"
+
 #include "gimpcolorpanel.h"
 
 #include "appenv.h"
-#include "color_notebook.h"
 
 
 struct _GimpColorPanel

@@ -30,17 +30,17 @@
 
 #include "apptypes.h"
 
+#include "gui/info-dialog.h"
 #include "cursorutil.h"
 #include "gdisplay.h"
-#include "gimpimage.h"
-#include "info_dialog.h"
-#include "undo.h"
 
+#include "gimpdrawtool.h"
 #include "gimpmeasuretool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 
-#include "tools/gimpdrawtool.h"
+#include "gimpimage.h"
+#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -28,13 +28,14 @@
 
 #include "apptypes.h"
 
+#include "tools/gimpbezierselecttool.h"
+
 #include "gdisplay.h"
+#include "gui/paths-dialog.h"
+
 #include "gimpimage.h"
 #include "path.h"
 #include "pathP.h"
-#include "paths_dialog.h"
-
-#include "tools/gimpbezierselecttool.h"
 
 
 static gchar * unique_name (GimpImage *gimage,

@@ -26,19 +26,20 @@
 
 #include "apptypes.h"
 
+#include "pdb/procedural_db.h"
+
 #include "widgets/gimpdatafactoryview.h"
+
+#include "dialog_handler.h"
+#include "pattern-select.h"
 
 #include "appenv.h"
 #include "context_manager.h"
-#include "dialog_handler.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
 #include "gimppattern.h"
-#include "pattern_select.h"
 #include "temp_buf.h"
-
-#include "pdb/procedural_db.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -26,13 +26,13 @@
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimp/gimpenv.h"
 
 #include "apptypes.h"
 
-#include "gimprc.h"
-#include "tips_dialog.h"
+#include "tips-dialog.h"
 
-#include "libgimp/gimpenv.h"
+#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 

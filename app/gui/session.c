@@ -53,11 +53,12 @@
 
 #include "widgets/gimpdialogfactory.h"
 
+#include "color-notebook.h"
+#include "session.h"
+
 #include "app_procs.h"
 #include "appenv.h"
-#include "color_notebook.h"
 #include "gimprc.h"
-#include "session.h"
 
 
 

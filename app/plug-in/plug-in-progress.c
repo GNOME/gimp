@@ -79,28 +79,29 @@
 
 #include "apptypes.h"
 
+#include "libgimp/gimpenv.h"
+#include "libgimp/gimpprotocol.h"
+#include "libgimp/gimpwire.h"
+#include "libgimp/gimpparasite.h"
+
+#include "gui/brush-select.h"
+#include "gui/gradient-select.h"
+#include "gui/menus.h"
+#include "gui/pattern-select.h"
+#include "gdisplay.h"
+
 #include "app_procs.h"
 #include "appenv.h"
-#include "brush_select.h"
 #include "datafiles.h"
 #include "errors.h"
-#include "gdisplay.h"
 #include "general.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpprogress.h"
 #include "gimprc.h"
-#include "gradient_select.h"
-#include "menus.h"
-#include "pattern_select.h"
 #include "plug_in.h"
 #include "tile.h"
 #include "tile_manager.h"
-
-#include "libgimp/gimpenv.h"
-#include "libgimp/gimpprotocol.h"
-#include "libgimp/gimpwire.h"
-#include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 

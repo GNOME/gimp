@@ -159,7 +159,7 @@ CODE
 }
 
 @headers = qw(<string.h> "context_manager.h" "gimpcontext.h"
-	      "gimpdatafactory.h" "brush_select.h");
+	      "gimpdatafactory.h" "gui/brush-select.h");
 
 $extra{app}->{code} = <<'CODE';
 static BrushSelect *

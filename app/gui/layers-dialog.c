@@ -25,37 +25,37 @@
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimp/gimplimits.h"
 
 #include "apptypes.h"
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "tools/paint_options.h"
+
+#include "gdisplay.h"
+#include "gimpdnd.h"
+#include "layers-dialog.h"
+#include "menus.h"
+
 #include "appenv.h"
 #include "colormaps.h"
 #include "drawable.h"
 #include "floating_sel.h"
-#include "gdisplay.h"
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "gimpcontainer.h"
-#include "gimpdnd.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimplist.h"
 #include "gimprc.h"
 #include "image_render.h"
-#include "layers_dialog.h"
 #include "layers_dialogP.h"
 #include "lc_dialogP.h"
-#include "menus.h"
 #include "ops_buttons.h"
 #include "resize.h"
 #include "temp_buf.h"
 #include "undo.h"
-
-#include "tools/paint_options.h"
-
-#include "libgimp/gimplimits.h"
 
 #include "libgimp/gimpintl.h"
 

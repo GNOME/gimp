@@ -53,9 +53,10 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
-#include "commands.h"
+#include "gui/commands.h"
 #include "dialog_handler.h"
+
+#include "appenv.h"
 
 #include "libgimp/gimpintl.h"
 

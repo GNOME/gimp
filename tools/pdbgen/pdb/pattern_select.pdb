@@ -137,7 +137,7 @@ CODE
     );
 }
 
-@headers = qw(<string.h> "context_manager.h" "pattern_select.h"
+@headers = qw(<string.h> "context_manager.h" "gui/pattern-select.h"
               "gimpcontext.h" "gimpdatafactory.h" "gimplist.h"
               "gimppattern.h");
 

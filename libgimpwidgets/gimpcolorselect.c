@@ -27,16 +27,16 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimp/gimpcolorselector.h"
 
 #include "apptypes.h"
 
-#include "color_select.h"
-#include "colormaps.h"
+#include "color-select.h"
+#include "color-area.h"
 #include "gimpdnd.h"
-#include "gimprc.h"
-#include "color_area.h"
 
-#include "libgimp/gimpcolorselector.h"
+#include "colormaps.h"
+#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 

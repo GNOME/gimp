@@ -27,17 +27,18 @@
 
 #include "apptypes.h"
 
-#include "context_manager.h"
 #include "cursorutil.h"
 #include "dialog_handler.h"
-#include "info_dialog.h"
-#include "info_window.h"
+#include "gui/info-dialog.h"
+#include "gui/info-window.h"
 #include "gdisplay.h"
+#include "nav_window.h"
+
+#include "context_manager.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimage.h"
 #include "gimprc.h"
-#include "nav_window.h"
 #include "scroll.h"
 #include "scale.h"
 #include "temp_buf.h"

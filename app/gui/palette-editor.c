@@ -22,6 +22,7 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimp/gimpenv.h"
 
 #include "apptypes.h"
 
@@ -29,8 +30,12 @@
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimppreview.h"
 
-#include "color_area.h"
-#include "color_notebook.h"
+#include "color-area.h"
+#include "color-notebook.h"
+#include "palette-editor.h"
+#include "palette-import-dialog.h"
+#include "palette-select.h"
+
 #include "context_manager.h"
 #include "dialog_handler.h"
 #include "gimage.h"
@@ -40,11 +45,6 @@
 #include "gimpdnd.h"
 #include "gimppalette.h"
 #include "gimprc.h"
-#include "palette.h"
-#include "palette_import.h"
-#include "palette_select.h"
-
-#include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpintl.h"
 

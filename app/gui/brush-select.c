@@ -26,12 +26,17 @@
 
 #include "apptypes.h"
 
+#include "pdb/procedural_db.h"
+
+#include "tools/paint_options.h"
+
 #include "widgets/gimpdatafactoryview.h"
+
+#include "brush-editor.h"
+#include "brush-select.h"
 
 #include "appenv.h"
 #include "context_manager.h"
-#include "brush_edit.h"
-#include "brush_select.h"
 #include "dialog_handler.h"
 #include "gimpbrushgenerated.h"
 #include "gimpcontainer.h"
@@ -40,10 +45,6 @@
 #include "gimpdatafactory.h"
 #include "gimprc.h"
 #include "temp_buf.h"
-
-#include "tools/paint_options.h"
-
-#include "pdb/procedural_db.h"
 
 #include "libgimp/gimpintl.h"
 

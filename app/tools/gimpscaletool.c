@@ -22,27 +22,27 @@
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimp/gimplimits.h"
 
 #include "apptypes.h"
 
-#include "drawable.h"
+#include "gui/info-dialog.h"
 #include "gdisplay.h"
+
+#include "tool_options.h"
+#include "gimptool.h"
+#include "gimpdrawtool.h"
+#include "gimptransformtool.h"
+#include "gimpscaletool.h"
+#include "tool_manager.h"
+
+#include "drawable.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
 #include "gimpprogress.h"
-#include "info_dialog.h"
 #include "selection.h"
 #include "tile_manager.h"
 #include "undo.h"
-
-#include "tools/tool_options.h"
-#include "tools/gimptool.h"
-#include "tools/gimpdrawtool.h"
-#include "tools/gimptransformtool.h"
-#include "tools/gimpscaletool.h"
-#include "tools/tool_manager.h"
-
-#include "libgimp/gimplimits.h"
 
 #include "libgimp/gimpintl.h"
 

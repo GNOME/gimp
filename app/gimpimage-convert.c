@@ -105,23 +105,6 @@
 
 #include "apptypes.h"
 
-#include "context_manager.h"
-#include "convert.h"
-#include "cursorutil.h"
-#include "floating_sel.h"
-#include "fsdither.h"
-#include "gdisplay.h"
-#include "gimpdatafactory.h"
-#include "gimpdrawable.h"
-#include "gimpimage.h"
-#include "gimplist.h"
-#include "gimplayer.h"
-#include "gimppalette.h"
-#include "palette_select.h"
-#include "pixel_region.h"
-#include "tile_manager.h"
-#include "undo.h"
-
 #include "tools/brightness_contrast.h"
 #include "tools/color_balance.h"
 #include "tools/curves.h"
@@ -130,8 +113,25 @@
 #include "tools/posterize.h"
 #include "tools/threshold.h"
 
-#include "libgimp/gimpintl.h"
+#include "cursorutil.h"
+#include "gdisplay.h"
+#include "gui/palette-select.h"
 
+#include "context_manager.h"
+#include "convert.h"
+#include "floating_sel.h"
+#include "fsdither.h"
+#include "gimpdatafactory.h"
+#include "gimpdrawable.h"
+#include "gimpimage.h"
+#include "gimplist.h"
+#include "gimplayer.h"
+#include "gimppalette.h"
+#include "pixel_region.h"
+#include "tile_manager.h"
+#include "undo.h"
+
+#include "libgimp/gimpintl.h"
 
 
 /* bleh! */

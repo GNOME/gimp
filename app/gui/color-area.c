@@ -30,11 +30,12 @@
 
 #include "apptypes.h"
 
-#include "color_area.h"
-#include "color_notebook.h"
+#include "color-area.h"
+#include "color-notebook.h"
 #include "gdisplay.h"
-#include "gimpcontext.h"
 #include "gimpdnd.h"
+
+#include "gimpcontext.h"
 
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color.h"

@@ -30,14 +30,15 @@
 
 #include "widgets/gimppreview.h"
 
+#include "gdisplay.h"
+#include "info-dialog.h"
+#include "info-window.h"
+
 #include "context_manager.h"
 #include "colormaps.h"
-#include "gdisplay.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
-#include "info_dialog.h"
-#include "info_window.h"
 
 #include "libgimp/gimpintl.h"
 
