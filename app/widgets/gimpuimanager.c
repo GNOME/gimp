@@ -24,8 +24,10 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
@@ -33,6 +35,8 @@
 #include "core/gimpmarshal.h"
 
 #include "gimpactiongroup.h"
+#include "gimphelp.h"
+#include "gimphelp-ids.h"
 #include "gimpuimanager.h"
 
 
@@ -66,8 +70,19 @@ static void   gimp_ui_manager_get_property   (GObject               *object,
                                               guint                  prop_id,
                                               GValue                *value,
                                               GParamSpec            *pspec);
+static void   gimp_ui_manager_connect_proxy  (GtkUIManager          *manager,
+                                              GtkAction             *action,
+                                              GtkWidget             *proxy);
 static void   gimp_ui_manager_real_update    (GimpUIManager         *manager,
                                               gpointer               update_data);
+
+/*  help support  */
+
+static void     gimp_ui_manager_item_realize   (GtkWidget     *widget,
+                                                GimpUIManager *manager);
+static gboolean gimp_ui_manager_item_key_press (GtkWidget     *widget,
+                                                GdkEventKey   *kevent,
+                                                GimpUIManager *manager);
 
 
 static guint manager_signals[LAST_SIGNAL] = { 0 };
@@ -106,17 +121,24 @@ gimp_ui_manager_get_type (void)
 static void
 gimp_ui_manager_class_init (GimpUIManagerClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass      *object_class  = G_OBJECT_CLASS (klass);
+  GtkUIManagerClass *manager_class = GTK_UI_MANAGER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->constructor  = gimp_ui_manager_constructor;
-  object_class->dispose      = gimp_ui_manager_dispose;
-  object_class->finalize     = gimp_ui_manager_finalize;
-  object_class->set_property = gimp_ui_manager_set_property;
-  object_class->get_property = gimp_ui_manager_get_property;
+  object_class->constructor    = gimp_ui_manager_constructor;
+  object_class->dispose        = gimp_ui_manager_dispose;
+  object_class->finalize       = gimp_ui_manager_finalize;
+  object_class->set_property   = gimp_ui_manager_set_property;
+  object_class->get_property   = gimp_ui_manager_get_property;
 
-  klass->update              = gimp_ui_manager_real_update;
+#ifdef __GNUC__
+#warning FIXME: remove version check as soon as we depend on GTK+ 2.4.2
+#endif
+  if (! gtk_check_version (2, 4, 2))
+    manager_class->connect_proxy = gimp_ui_manager_connect_proxy;
+
+  klass->update                = gimp_ui_manager_real_update;
 
   manager_signals[UPDATE] =
     g_signal_new ("update",
@@ -151,6 +173,14 @@ gimp_ui_manager_init (GimpUIManager *manager)
 {
   manager->name = NULL;
   manager->gimp = NULL;
+
+#ifdef __GNUC__
+#warning FIXME: remove this hack as soon as we depend on GTK+ 2.4.2
+#endif
+  if (gtk_check_version (2, 4, 2))
+    g_signal_connect (manager, "connect-proxy",
+                      G_CALLBACK (gimp_ui_manager_connect_proxy),
+                      NULL);
 }
 
 static GObject *
@@ -208,6 +238,7 @@ gimp_ui_manager_dispose (GObject *object)
             g_hash_table_remove (manager_class->managers, manager->name);
         }
     }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -285,6 +316,21 @@ gimp_ui_manager_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
     }
+}
+
+static void
+gimp_ui_manager_connect_proxy (GtkUIManager *manager,
+                               GtkAction    *action,
+                               GtkWidget    *proxy)
+{
+  g_object_set_qdata (G_OBJECT (proxy), GIMP_HELP_ID,
+                      g_object_get_qdata (G_OBJECT (action),
+                                          GIMP_HELP_ID));
+
+  if (GTK_IS_MENU_ITEM (proxy))
+    g_signal_connect_after (proxy, "realize",
+                            G_CALLBACK (gimp_ui_manager_item_realize),
+                            manager);
 }
 
 static void
@@ -616,4 +662,149 @@ gimp_ui_manager_ui_popup (GimpUIManager        *manager,
                   NULL, NULL,
                   gimp_ui_manager_menu_pos, menu_pos,
                   button, activate_time);
+}
+
+
+/*  private functions  */
+
+static void
+gimp_ui_manager_item_realize (GtkWidget     *widget,
+                              GimpUIManager *manager)
+{
+  GtkWidget *submenu;
+
+  g_signal_handlers_disconnect_by_func (widget,
+                                        gimp_ui_manager_item_realize,
+                                        manager);
+
+  if (GTK_IS_MENU_SHELL (widget->parent))
+    {
+      static GQuark quark_key_press_connected = 0;
+
+      if (! quark_key_press_connected)
+        quark_key_press_connected =
+          g_quark_from_static_string ("gimp-menu-item-key-press-connected");
+
+      if (! GPOINTER_TO_INT (g_object_get_qdata (G_OBJECT (widget->parent),
+                                                 quark_key_press_connected)))
+        {
+          g_signal_connect (widget->parent, "key_press_event",
+                            G_CALLBACK (gimp_ui_manager_item_key_press),
+                            manager);
+
+          g_object_set_qdata (G_OBJECT (widget->parent),
+                              quark_key_press_connected,
+                              GINT_TO_POINTER (TRUE));
+        }
+    }
+
+  submenu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (widget));
+
+  if (submenu)
+    g_object_set_qdata (G_OBJECT (submenu), GIMP_HELP_ID,
+                        g_object_get_qdata (G_OBJECT (widget),
+                                            GIMP_HELP_ID));
+}
+
+static gboolean
+gimp_ui_manager_item_key_press (GtkWidget     *widget,
+                                GdkEventKey   *kevent,
+                                GimpUIManager *manager)
+{
+  gchar *help_id = NULL;
+
+  while (! help_id)
+    {
+      GtkWidget *menu_item;
+
+      menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
+
+      /*  first, get the help page from the item...
+       */
+      if (menu_item)
+        {
+          help_id = g_object_get_qdata (G_OBJECT (menu_item), GIMP_HELP_ID);
+
+          if (help_id && ! strlen (help_id))
+            help_id = NULL;
+        }
+
+      /*  ...then try the parent menu...
+       */
+      if (! help_id)
+        {
+          help_id = g_object_get_qdata (G_OBJECT (widget), GIMP_HELP_ID);
+
+          if (help_id && ! strlen (help_id))
+            help_id = NULL;
+        }
+
+      /*  ...finally try the menu's parent (if any)
+       */
+      if (! help_id)
+        {
+          menu_item = NULL;
+
+          if (GTK_IS_MENU (widget))
+            menu_item = gtk_menu_get_attach_widget (GTK_MENU (widget));
+
+          if (! menu_item)
+            break;
+
+          widget = menu_item->parent;
+
+          if (! widget)
+            break;
+        }
+    }
+
+  /*  For any valid accelerator key except F1, continue with the
+   *  standard GtkMenuShell callback and assign a new shortcut, but
+   *  don't assign a shortcut to the help menu entries ...
+   */
+  if (kevent->keyval != GDK_F1)
+    {
+      if (help_id                                   &&
+          gtk_accelerator_valid (kevent->keyval, 0) &&
+          (strcmp (help_id, GIMP_HELP_HELP)         == 0 ||
+           strcmp (help_id, GIMP_HELP_HELP_CONTEXT) == 0))
+        {
+          return TRUE;
+        }
+
+      return FALSE;
+    }
+
+  /*  ...finally, if F1 was pressed over any menu, show its help page...  */
+
+  if (help_id)
+    {
+      gchar *help_domain = NULL;
+      gchar *help_string = NULL;
+      gchar *domain_separator;
+
+      help_id = g_strdup (help_id);
+
+      domain_separator = strchr (help_id, '?');
+
+      if (domain_separator)
+        {
+          *domain_separator = '\0';
+
+          help_domain = g_strdup (help_id);
+          help_string = g_strdup (domain_separator + 1);
+        }
+      else
+        {
+          help_string = g_strdup (help_id);
+        }
+
+      gimp_help (manager->gimp, help_domain, help_string);
+
+      g_free (help_domain);
+      g_free (help_string);
+      g_free (help_id);
+    }
+
+  return TRUE;
 }
