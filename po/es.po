@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-25 00:01+0200\n"
-"PO-Revision-Date: 2004-07-05 23:25+0200\n"
+"POT-Creation-Date: 2004-09-26 11:34+0200\n"
+"PO-Revision-Date: 2004-09-26 18:11+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -4224,9 +4224,8 @@ msgid "/View/Zoom/1:16  (6.25%)"
 msgstr "/Ver/Aumento/1:16  (6.25%)"
 
 #: app/gui/image-menu.c:427
-#, fuzzy
 msgid "/View/Zoom/O_ther..."
-msgstr "/Ver/Aumento/_Disminuir"
+msgstr "/Ver/Aumento/O_tro..."
 
 #: app/gui/image-menu.c:434
 msgid "/View/_Info Window"
@@ -4306,7 +4305,6 @@ msgstr "/Imagen/_Modo"
 msgid "/Image/Mode/_RGB"
 msgstr "/Imagen/Modo/_RGB"
 
-# Ahora es escala de grises pero antes era Tonos de grises. FVD
 #: app/gui/image-menu.c:527
 msgid "/Image/Mode/_Grayscale"
 msgstr "/Imagen/Modo/Escala de _grises"
@@ -7633,11 +7631,11 @@ msgstr "Sólo seleccionar"
 
 #: app/tools/tools-enums.c:15
 msgid "Set Foreground Color"
-msgstr "Definir el color de frente"
+msgstr "Establecer el color de frente"
 
 #: app/tools/tools-enums.c:16
 msgid "Set Background Color"
-msgstr "Definir el color de fondo"
+msgstr "Establecer el color de fondo"
 
 #: app/tools/tools-enums.c:34
 msgid "Crop"
@@ -7792,7 +7790,7 @@ msgstr "Permitir a las regiones completamente transparentes ser rellenadas"
 
 #: app/tools/gimpbucketfilloptions.c:139
 msgid "Base filled area on all visible layers"
-msgstr "Área base rellenada en todas las capas visibles"
+msgstr "Basar el área de relleno en todas las capas visibles"
 
 #: app/tools/gimpbucketfilloptions.c:145 app/tools/gimpselectionoptions.c:164
 msgid "Maximum color difference"
@@ -7894,7 +7892,7 @@ msgstr "Modificar los niveles de color en el rango seleccionado"
 
 #: app/tools/gimpcolorbalancetool.c:303
 msgid "Cyan"
-msgstr "Cían"
+msgstr "Cian"
 
 #: app/tools/gimpcolorbalancetool.c:310
 msgid "Magenta"
@@ -7949,9 +7947,10 @@ msgstr "_Saturación:"
 msgid "_Lightness:"
 msgstr "_Luminosidad:"
 
+# Creo que es un verbo. FVD
 #: app/tools/gimpcoloroptions.c:185
 msgid "Sample Average"
-msgstr "Muestra ponderada"
+msgstr "Promediar muestra"
 
 #: app/tools/gimpcoloroptions.c:195 app/tools/gimpselectionoptions.c:436
 #: app/widgets/gimpbrusheditor.c:130
@@ -9274,7 +9273,7 @@ msgstr "Sat.:"
 
 #: app/widgets/gimpcolorframe.c:304
 msgid "Cyan:"
-msgstr "Cían:"
+msgstr "Cian:"
 
 #: app/widgets/gimpcolorframe.c:305
 msgid "Magenta:"
@@ -9949,10 +9948,11 @@ msgstr ""
 "Reiniciar con los valores predeterminados\n"
 "%s  Reiniciar todas las opciones de herramientas"
 
+# Esto era garrafal. FVD
 #: app/widgets/gimptooloptionseditor.c:268
 #, c-format
 msgid "%s Options"
-msgstr "%s Opciones"
+msgstr "Opciones de %s"
 
 #: app/widgets/gimptooloptionseditor.c:411
 msgid "Reset Tool Options"

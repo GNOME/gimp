@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-05 21:59+0200\n"
-"PO-Revision-Date: 2004-03-16 17:17-0300\n"
+"POT-Creation-Date: 2004-09-26 11:37+0200\n"
+"PO-Revision-Date: 2004-09-26 18:41+0200\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -63,11 +63,11 @@ msgstr "%s no puede manejar transparencia"
 #: libgimp/gimpexport.c:269
 #, c-format
 msgid "%s can't handle layer masks"
-msgstr "%s no puede manejar máscaras de capas"
+msgstr "%s no puede manejar máscaras de capa"
 
 #: libgimp/gimpexport.c:270
 msgid "Apply Layer Masks"
-msgstr "Aplicar las mascaras de capa"
+msgstr "Aplicar las máscaras de capa"
 
 #: libgimp/gimpexport.c:278
 #, c-format
@@ -170,7 +170,7 @@ msgstr ""
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
-msgstr "La conversión de exportación no modificará su imagen original"
+msgstr "La conversión de exportación no modificará su imagen original."
 
 #: libgimp/gimpexport.c:665
 #, c-format
@@ -352,7 +352,7 @@ msgstr "_A"
 
 #: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:357
 msgid "Hue"
-msgstr "Intensidad"
+msgstr "Color"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
 #: modules/cdisplay_proof.c:323
@@ -385,7 +385,7 @@ msgstr "Notación hexadecimal del color como la usada en HTML"
 
 #: libgimpwidgets/gimpcolorscales.c:268
 msgid "He_x Triplet:"
-msgstr "Triplete He_x:"
+msgstr "Triplete he_xad.:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -515,9 +515,7 @@ msgstr "Factor"
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
-msgstr ""
-"Use este valor como semilla para el generador de números aleatorios - "
-"permite que repita cualquier operación «aleatoria»"
+msgstr "Use este valor como semilla para el generador de números aleatorios; permite que repita cualquier operación «aleatoria»"
 
 #: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
@@ -525,9 +523,7 @@ msgstr "_Nueva semilla"
 
 #: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
-msgstr ""
-"Tomar semilla para generador de números aleatorios con un número aleatorio "
-"generado"
+msgstr "Sembrar el generador de números aleatorios con un número aleatorio generado"
 
 #: libgimpwidgets/gimpwidgets.c:1312
 msgid "_Randomize"
@@ -549,19 +545,19 @@ msgstr "Tipo de _deficiencia del color:"
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Protanopia (insensitivity to red)"
-msgstr "Protanopia (desviado al rojo)"
+msgstr "Protanopia (insensibilidad al rojo)"
 
 #: modules/cdisplay_colorblind.c:476
 msgid "Deuteranopia (insensitivity to green)"
-msgstr "Deuteranopia (desviado al verde)"
+msgstr "Deuteranopia (insensibilidad al verde)"
 
 #: modules/cdisplay_colorblind.c:479
 msgid "Tritanopia (insensitivity to blue)"
-msgstr "Tritanopia (desviado al azul)"
+msgstr "Tritanopia (insensibilidad al azul)"
 
 #: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
-msgstr "Filtro gamma del color "
+msgstr "Filtro de color gamma"
 
 #: modules/cdisplay_gamma.c:156
 msgid "Gamma"
@@ -573,7 +569,7 @@ msgstr "_Gamma:"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
-msgstr "Filtro del color de alto contraste"
+msgstr "Filtro de color de alto contraste"
 
 #: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
@@ -645,7 +641,7 @@ msgstr "_K"
 
 #: modules/colorsel_cmyk.c:156
 msgid "Cyan"
-msgstr "Cían"
+msgstr "Cian"
 
 #: modules/colorsel_cmyk.c:157
 msgid "Magenta"
