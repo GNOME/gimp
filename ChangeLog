@@ -1,3 +1,8 @@
+Sun Jul 12 00:44:57 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/session.c: disabled setting the size of the dialogs since
+	lewing pointed out that you can't make them smaller any more :-(
+
 Sun Jul 12 00:13:02 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* gimprc.in
