@@ -456,7 +456,7 @@ gimp_export_image (gint32                 *image_ID,
   gint32  nlayers;
   gint32* layers;
   gboolean added_flatten = FALSE;
-  gboolean background_has_alpha = FALSE;
+  gboolean background_has_alpha = TRUE;
   ExportAction *action;
 
   g_return_val_if_fail (*image_ID > -1 && *drawable_ID > -1, FALSE);
@@ -473,9 +473,6 @@ gimp_export_image (gint32                 *image_ID,
     {
       if (gimp_drawable_has_alpha (layers[i]))
 	{
-      	  if (i == nlayers - 1) 
-	    background_has_alpha = TRUE;
-
 
 	  if ( !(capabilities & CAN_HANDLE_ALPHA) )
 	    {
@@ -486,6 +483,11 @@ gimp_export_image (gint32                 *image_ID,
 	}
       else 
 	{
+          /* If this is the last layer, it's visible and has no alpha
+             channel, then the image has a "flat" background */
+      	  if (i == nlayers - 1 && gimp_layer_get_visible(layers[i])) 
+	    background_has_alpha = FALSE;
+
 	  if (capabilities & NEEDS_ALPHA)
 	    {
 	      actions = g_slist_prepend (actions, &export_action_add_alpha);
