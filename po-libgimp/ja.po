@@ -4,20 +4,20 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.16\n"
-"POT-Creation-Date: 2000-02-11 10:24-0800\n"
-"PO-Revision-Date: 2000-02-11 12:38+09:00\n"
+"Project-Id-Version: gimp 1.1.18\n"
+"POT-Creation-Date: 2000-02-19 17:08+0900\n"
+"PO-Revision-Date: 2000-02-19 17:09+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=EUC-JP\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpcolorbutton.c:105
+#: libgimp/gimpcolorbutton.c:115
 msgid "/Use Foreground Color"
 msgstr "/前景色を使用"
 
-#: libgimp/gimpcolorbutton.c:106
+#: libgimp/gimpcolorbutton.c:116
 msgid "/Use Background Color"
 msgstr "/背景色を使用"
 
@@ -110,9 +110,9 @@ msgstr "エクスポート"
 msgid "Ignore"
 msgstr "無視"
 
-#: libgimp/gimpexport.c:319 libgimp/gimpquerybox.c:160
-#: libgimp/gimpquerybox.c:197 libgimp/gimpquerybox.c:235
-#: libgimp/gimpquerybox.c:275
+#: libgimp/gimpexport.c:319 libgimp/gimpquerybox.c:177
+#: libgimp/gimpquerybox.c:231 libgimp/gimpquerybox.c:287
+#: libgimp/gimpquerybox.c:350
 msgid "Cancel"
 msgstr "取消"
 
@@ -127,20 +127,20 @@ msgstr "以下の理由のため画像のエクスポートを行う必要があります:"
 msgid "The export conversion won't modify your original image."
 msgstr "エクスポート変換は元画像には影響を与えません."
 
-#: libgimp/gimpfileselection.c:394
+#: libgimp/gimpfileselection.c:348
 msgid "Select File"
 msgstr "ファイル選択"
 
-#: libgimp/gimpfileselection.c:404 libgimp/gimpunitmenu.c:484
+#: libgimp/gimpfileselection.c:360 libgimp/gimpunitmenu.c:484
 msgid "Select"
 msgstr "選択"
 
-#: libgimp/gimpfileselection.c:405 libgimp/gimpunitmenu.c:486
+#: libgimp/gimpfileselection.c:361 libgimp/gimpunitmenu.c:486
 msgid "Close"
 msgstr "閉じる"
 
-#: libgimp/gimpquerybox.c:160 libgimp/gimpquerybox.c:197
-#: libgimp/gimpquerybox.c:235 libgimp/gimpquerybox.c:275
+#: libgimp/gimpquerybox.c:177 libgimp/gimpquerybox.c:231
+#: libgimp/gimpquerybox.c:287 libgimp/gimpquerybox.c:350
 msgid "OK"
 msgstr "了解"
 
@@ -206,3 +206,23 @@ msgstr "単位"
 #: libgimp/gimpunitmenu.c:517
 msgid "Factor"
 msgstr "倍率"
+
+#: libgimp/gimpwidgets.c:695
+msgid ""
+"If the \"Time\" button is not pressed, use this value for random number "
+"generator seed - this allows you to repeat a given \"random\" operation"
+msgstr ""
+"\"時間\" ボタンが押されていない場合には, この値を乱数の種として用います - "
+"そうすることで, 特定の \"乱数\" 操作を行うことができます"
+
+#: libgimp/gimpwidgets.c:700
+msgid "Time"
+msgstr "時間"
+
+#: libgimp/gimpwidgets.c:712
+msgid ""
+"Seed random number generator from the current time - this guarantees a "
+"reasonable randomization"
+msgstr ""
+"現在時刻をもとにした乱数を生成します - "
+"十分な精度の乱数を得ることができるでしょう"
