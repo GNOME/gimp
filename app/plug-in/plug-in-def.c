@@ -66,6 +66,7 @@
 #include <process.h>
 #define _O_BINARY O_BINARY
 #define _P_NOWAIT P_NOWAIT
+#define xspawnv spawnv
 #endif
 
 #ifdef HAVE_IPC_H
