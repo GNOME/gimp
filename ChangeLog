@@ -1,5 +1,10 @@
 2004-10-12  Sven Neumann  <sven@gimp.org>
 
+	* Makefile.am: defined DISTCHECK_CONFIGURE_FLAGS with the
+	configure options that are needed to run 'make dist'.
+
+2004-10-12  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimptemplateeditor.c: tweaked table spacings to get
 	the Height label aligned with the entry again.
 

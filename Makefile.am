@@ -67,6 +67,9 @@ EXTRA_DIST = \
 	po-plug-ins/update.sh	\
 	po-script-fu/update.sh
 
+
+DISTCHECK_CONFIGURE_FLAGS = --enable-gimp-console --enable-gtk-doc
+
 DISTCLEANFILES = \
 	intltool-extract	\
 	intltool-merge		\
