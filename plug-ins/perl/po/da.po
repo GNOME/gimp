@@ -1,141 +1,145 @@
-# Danish translation of GIMP-perl
-# Copyright (C) 1999 Free Software Foundation, Inc.
-# Keld Simonsen <keld@dkuug.dk>, 2001.
-# Kjartan Maraas <kmaraas@online.no>, 1999.
+# Danish translation of Perl plug-ins for the GIMP.
+# Copyright (C) 2000, 01, 02 Free Software Foundation, Inc.
+# Kenneth Christiansen <kenneth@gnome.dk>, 1999.
+# Keld Simonsen <keld@dkuug.dk>, 2000.
+# Ole Laursen <olau@hardworking.dk>, 2001, 02.
+#
+# Se ../po/da.po for en konventionsliste til hele Gimp'en.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-perl 1.21\n"
+"Project-Id-Version: gimp-perl 1.13\n"
 "POT-Creation-Date: 1999-09-12 17:58+0200\n"
-"PO-Revision-Date: 2001-10-19 13:49+01:00\n"
-"Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
+"PO-Revision-Date: 2002-03-02 17:51+0100\n"
+"Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
 msgid "expected perl-server at other end of socket, got @r\n"
-msgstr "forventede perl-server på den anden side af soklen, fandt @r\n"
+msgstr "forventet perl-server pÃ¥ den anden side af soklen, fandt @r\n"
 
 msgid "too many"
 msgstr "for mange"
 
 msgid "<Image>/Filters/Logulator/Transparent Logo..."
-msgstr "<Image>/Filtre/Logulator/Gennemsigtigt logo..."
+msgstr "<Image>/Filtre/Logulator/Gennemsigtigt logo"
 
 msgid "$s: not an integer\n"
 msgstr "$s: ikke et heltal\n"
 
 msgid "<Image>/Select/Round Rectangular Selection..."
-msgstr "<Image>/Vælg/Rundt rektangulært udvalg..."
+msgstr "<Image>/Markering/Afrundet rektangulÃ¦r..."
 
 msgid "<Image>/Guides/To Selection..."
-msgstr "<Image>/Guider/Til udvalg..."
+msgstr "<Image>/HjÃ¦lpelinjer/Til markering..."
 
 msgid "Help for "
-msgstr "Hjælp om "
+msgstr "HjÃ¦lp til "
 
 msgid "illegal parasite specification, expected three array members"
 msgstr "ulovlig parasit-specifikation, forventede tre tabelmedlemmer"
 
 msgid "Last Modified"
-msgstr "Sidst ændret"
+msgstr "Sidst Ã¦ndret"
 
 msgid "unable to read '$fn': $!"
-msgstr "kunne ikke læse '$fn': $!"
+msgstr "kunne ikke lÃ¦se '$fn': $!"
 
+# lÃ¦gger billedet flere gange ved siden af sÃ¥ der opstÃ¥r et stÃ¸rre billede
 msgid "<Image>/Filters/Map/Image Tile..."
-msgstr "<Image>/Filtre/Kort/Billedflise..."
+msgstr "<Image>/Filtre/Afbildning/LÃ¦g side om side..."
 
 msgid "<Image>/Filters/Logulator/Crystal"
-msgstr "<Image>/Filtre/Logulator/Krystal"
+msgstr "<Image>/Filter/Logulator/Krystal"
 
 msgid "Unable to read temporary image tile $tmp: $!"
-msgstr "Kunne ikke læse midlertidig billedflise $tmp: $!"
+msgstr "Kunne ikke lÃ¦se den midlertidige billedflise $tmp: $!"
 
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
 msgstr ""
-"run_mode skal være INTERACTIVE, NONINTERACTIVE eller RUN_WITH_LAST_VALS\n"
+"run_mode skal vÃ¦re INTERACTIVE, NONINTERACTIVE eller RUN_WITH_LAST_VALS\n"
 
 msgid "Font Selection Dialog ($desc)"
-msgstr "Skrifttypevalg dialog ($desc)"
+msgstr "SkrifttypevÃ¦lger ($desc)"
 
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
-msgstr "xlfd_unpack: ikke fundet XLFD '$fontnavn'\n"
+msgstr "xlfd_unpack: fandt ikke XLFD '$fontnavn'\n"
 
+# det giver sÃ¥dan en overvÃ¥gningskameraeffekt
 msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr "<Image>/Filtre/Støj/Xach vision..."
+msgstr "<Image>/Filtre/StÃ¸j/OvervÃ¥gelseskamera..."
 
 msgid ""
 "$function: function name contains unusual characters, good style is to use "
 "only 0-9, a-z and _"
 msgstr ""
-"$function: funktionsnavnet indeholder ualmindelige tegn, god stil er at bruge kun "
-"0-9, a-z og _"
+"$function: funktionsnavnet indeholder ikke-almindelige tegn, god stil er at "
+"bruge kun 0-9, a-z og _"
 
 msgid "Help"
-msgstr "Hjælp"
+msgstr "HjÃ¦lp"
 
 msgid "<Image>/Image/Alpha/Clear Alpha..."
-msgstr "<Image>/Bilde/Alpha/Nulstil alpha..."
+msgstr "<Image>/Billede/Alfa/Ryd alfa..."
 
 msgid "<Image>/Filters/Map/Pixelmap..."
-msgstr "<Image>/Filtre/Kort/Pixelkort..."
+msgstr "<Image>/Filtre/Afbildning/Punktafbildning..."
 
 msgid "unable to fork: $!"
-msgstr "kunne ikke køre fork: $!"
+msgstr "Kunne ikke fraspalte en proces: $!"
 
 msgid "FG"
-msgstr "FG"
+msgstr "Fg."
 
 msgid "FATAL: unable to create $tmp: $!\n"
-msgstr "FATAL: kunne ikke oprette $tmp: $!\n"
+msgstr "FATAL: kunne ikke oprette '$tmp': $!\n"
 
 msgid "/Filters/Logulator"
 msgstr "/Filtre/Logulator"
 
 msgid "dunno how to return param type %d"
-msgstr "kan ikke returnere parametertype %d"
+msgstr "Parametertype %d kan ikke returneres"
 
 msgid "<Image>/Image/Alpha/Alpha2Color..."
-msgstr "<Image>/Billed/Alpha/Alpha-til-farve..."
+msgstr "<Image>/Billede/Alfa/Til farve..."
 
 msgid "Image Types"
 msgstr "Billedtyper"
 
 msgid "<Image>/Filters/Render/Stampify..."
-msgstr "<Image>/Filtre/Render/Lav frimærker..."
+msgstr "<Image>/Filtre/GenerÃ©r/FrimÃ¦rke..."
 
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
-msgstr ""
-"kunne ikke koble til gimp-serveren (forsikr dig om at Perl-Server kører)"
+msgstr "kunne ikke koble til Gimp-serveren (kontrollÃ©r at Perl-serveren kÃ¸rer)"
 
 msgid "<Toolbox>/Xtns/Render/Stamps..."
-msgstr "<Toolbox>/Udvd/Render/Frimærker..."
+msgstr "<Toolbox>/Udvidelser/GenerÃ©r/FrimÃ¦rker..."
 
 msgid "More..."
-msgstr "Mer..."
+msgstr "Mere..."
 
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
-msgstr "<Toolbox>/Udvd/Render/Logoer/Flammetekst"
+msgstr "<Toolbox>/Udvidelser/GenerÃ©r/Logoer/Flammetekst..."
 
 msgid "interface=... tag is no longer supported\n"
-msgstr "grænseflade=... mærke er ikke længere understøttet\n"
+msgstr "'interface=...'-mÃ¦rke er ikke lÃ¦ngere understÃ¸ttet\n"
 
 msgid "Text"
 msgstr "Tekst"
 
 msgid "<Image>/Filters/Render/Random Blends..."
-msgstr "<Image>/Filtre/Render/Tilfældig blanding..."
+msgstr "<Image>/Filtre/GenerÃ©r/TilfÃ¦ldig blanding..."
 
 msgid "Synopsis"
 msgstr "Synopsis"
 
 msgid "Plug-In Path"
-msgstr "Sti til modul"
+msgstr "Udvidelsesmodulsti"
 
 msgid "Restore values to the previous ones"
-msgstr "Genopret værdier til de tidligere"
+msgstr "Genopret foregÃ¥ende vÃ¦rdier"
 
 msgid "Illegal default font description for $function: $val\n"
 msgstr "Ugyldig standard-skrifttypebeskrivelse for $function: $val\n"
@@ -147,36 +151,38 @@ msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 
 msgid "WARNING: client tried to unlock without holding a lock"
-msgstr "ADVARSEL: klienten forsøgte at fjerne en lås uden at holde den"
+msgstr ""
+"ADVARSEL: klienten forsÃ¸gte at fjerne en lÃ¥s uden at vÃ¦re i besiddelse af den"
 
 msgid "<Toolbox>/Xtns/Perl/Control Center..."
-msgstr "<Toolbox>/Udvd/Perl/Kontrolcenter..."
+msgstr "<Toolbox>/Udvidelser/Perl/Kontrolcenter..."
 
 msgid "register called with too many or wrong arguments\n"
-msgstr "register kaldt med for mange eller gale argumenter\n"
+msgstr "registrering kaldt med for mange eller forkerte argumenter\n"
 
 msgid "<Image>/Filters/Animation/Animate Cells..."
-msgstr "<Image>/Filtre/Animation/Animér celler..."
+msgstr "<Image>/Filtre/Animation/Celleanimation..."
 
 msgid "Spin Layer SRC (250ms)"
-msgstr "Spind lag SRC (250ms)"
+msgstr "Omdrejningslagkilde (250ms)"
 
 msgid ""
 "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
 "PARAM_TYPE"
 msgstr ""
-"fejlformateret paramdef, forventet [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] "
-"eller PARAM_TYPE"
+"ugyldig parameterdefinition, forventede [PARAM_TYPE,\"NAVN\",\"BESKRIVELSE"
+"\"] eller PARAM_TYPE"
 
 msgid ""
 "gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-"
 "1.1 and report this error"
 msgstr ""
-"gimp_pixel_rgns_register understøtter kun 1, 2 eller 3 argumenter, opgradér til "
-"gimp-1.1 og rapportér denne fejl"
+"gimp_pixel_rgns_register understÃ¸tter kun 1, 2 eller 3 parametre, opgradÃ©r "
+"til gimp-1.1 og rapportÃ©r denne fejl"
 
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
-msgstr "sidste argument til gimp_pattern_select_widget skal være en skalar ref"
+msgstr ""
+"sidste parameter til gimp_pattern_select_widget skal vÃ¦re en skalarreference"
 
 msgid ""
 "\n"
@@ -186,86 +192,86 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"INDBYGGET POD DOKUMENTATION:\n"
+"INDBYGGET POD-DOKUMENTATION:\n"
 
 msgid "Fileselector for $name"
-msgstr "Filvælger for $name"
+msgstr "FilvÃ¦lger for $name"
 
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
-msgstr "<Toolbox>/Udvd/Render/Pixelgenerator..."
+msgstr "<Toolbox>/Udvidelser/GenerÃ©r/Punktgenerering..."
 
 msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
 msgstr "kunne ikke konvertere Gimp::Drawable til Gimp::GimpDrawable (id %d)"
 
 msgid "<Image>/Filters/Distorts/MirrorSplit..."
-msgstr "<Image>/Filtre/Forvrængning/MirrorSplit..."
+msgstr "<Image>/Filtre/ForvrÃ¦ngning/Spejlopdeling..."
 
 msgid "<Image>/Filters/Noise/Feedback..."
-msgstr "<Image>/Filtre/Støj/Feedback..."
+msgstr "<Image>/Filtre/StÃ¸j/Feedback..."
 
 msgid "<Toolbox>/Xtns/Animation/Billboard..."
-msgstr "<Toolbox>/Udvd/Animation/Billboard..."
+msgstr "<Toolbox>/Udvidelser/Animation/Plakattavle..."
 
 msgid "unable to create listening unix socket: $!\n"
-msgstr "kunne ikke oprette lyttende unix-sokkel: $!\n"
+msgstr "kunne ikke oprette lyttende Unix-sokkel: $!\n"
 
 msgid ", %d bytes data]"
-msgstr ", %d bytes data]"
+msgstr ", %d byte data]"
 
 msgid "server requests authorization, but no authorization available\n"
-msgstr ""
-"serveren anmoder om autorisation, men ingen autorisation er tilgængelig\n"
+msgstr "serveren krÃ¦ver godkendelse, men ingen autorisation er tilgÃ¦ngelig\n"
 
+# RETMIG: hvad er pdl?
 msgid "pdl height != region height"
-msgstr "pdl-højde != regionhøjde"
+msgstr "pdl-hÃ¸jde != omrÃ¥dehÃ¸jde"
 
 msgid "<Image>/Guides/Center Guide..."
-msgstr "<Image>/Guider/Centreringsguide..."
+msgstr "<Image>/HjÃ¦lelinjer/Midterlinje..."
 
 msgid "Close"
 msgstr "Luk"
 
 msgid "unable to open $rgb_db_path"
-msgstr "kunne ikke åbne $rgb_db_path"
+msgstr "kunne ikke Ã¥bne $rgb_db_path"
 
 msgid "You can't run this script with an INDEXED image!!"
-msgstr "Du kan ikke køre dette skript på et INDEKSERET billede!!"
+msgstr "Du kan ikke kÃ¸re dette program pÃ¥ et indekseret billede!"
 
 msgid ""
 "An even number of frames is needed for spin back.\n"
 "Adjusted frames up to $frames"
 msgstr ""
-"Et lige antal rammer er nødvendigt for spin back.\n"
-"Justerede antal rammer op til $frames"
+"Et lige antal billeder er nÃ¸dvendigt for tilbagevending.\n"
+"Justerede antal billeder op til $frames."
 
 msgid "<Image>/Filters/Render/Add Glow"
-msgstr "<Image>/Filtre/Render/Tilføj glød"
+msgstr "<Image>/Filtre/GenerÃ©r/TilfÃ¸j glÃ¸d"
 
 msgid "function name contains dashes instead of underscores"
 msgstr "funktionsnavn indeholder bindestreger i stedet for understregning"
 
 msgid "required callback 'run' not found\n"
-msgstr "nødvendigt tilbagekald 'run' ikke fundet\n"
+msgstr "pÃ¥krÃ¦vet tilbagekaldsfunktion 'run' ikke fundet\n"
 
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-"
 "z and _ allowed"
 msgstr ""
-"$function: argumentnavn 'p->[1]' indeholder ugyldige tegn, kun 0-9, a-z og _ "
-"er tilladt"
+"$function: parameternavn 'p->[1]' indeholder ugyldige tegn, kun 0-9, a-z og "
+"_ er tilladt"
 
 msgid "required callback 'query' not found\n"
-msgstr "nødvendigt tilbagekald 'query' ikke fundet\n"
+msgstr "pÃ¥krÃ¦vet tilbagekaldsfunktion 'query' ikke fundet\n"
 
 msgid ""
 "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
 "string"
 msgstr ""
-"Forventede en INT32 men fik '%s'. Tilføj '*1' hvis du virkelig ønskede at "
-"sende en streng"
+"Forventede en INT32, men modtog '%s'. TilfÃ¸j '*1' hvis du virkelig Ã¸nsker at "
+"sende en streng."
 
 msgid "wrong authorization, aborting connection"
-msgstr "forkert autorisation, afbryder tilkoblingen"
+msgstr "forkert autorisation, afbryder forbindelsen"
 
 msgid ""
 "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
@@ -276,10 +282,7 @@ msgid "WARNING"
 msgstr "ADVARSEL"
 
 msgid "Brush Selection Dialog"
-msgstr "Børstevalg dialog"
-
-msgid "<Image>/Filters/Render/Terral Text..."
-msgstr "<Image>/Filtre/Render/Terral tekst..."
+msgstr "PenselvÃ¦lger"
 
 msgid "(none)"
 msgstr "(ingen)"
@@ -288,56 +291,59 @@ msgid ""
 "Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
 "'use strict'"
 msgstr ""
-"Forventede en INT32 men fik '%s'. Måske mente du '%s' i stedet, og glemte "
-"at 'use strict'"
+"Forventede en INT32, men modtog '%s'. MÃ¥ske du mente '%s' i stedet og glemte "
+"'use strict'?"
 
 msgid "authorization required for tcp connections"
-msgstr "autorisation nødvendig for tcp-forbindelser"
+msgstr "autorisation nÃ¸dvendig for tcp-forbindelser"
 
 msgid "[undefined]"
 msgstr "[udefineret]"
 
 msgid "<Image>/Guides/Remove Guides"
-msgstr "<Image>/Guider/Fjern guider"
+msgstr "<Image>/HjÃ¦lpelinjer/Fjern hjÃ¦lpelinjer"
 
 msgid "unable to open Gimp::Net communications socket: $!\n"
-msgstr "kunne ikke åbne Gimp::Net kommunikationssokkel: $!\n"
+msgstr "kunne ikke Ã¥bne Gimp::Net-kommunikationssokkel: $!\n"
 
 msgid "You can't run this script without an ALPHA CHANNEL!!"
-msgstr "Du kan ikke køre dette skript uden en ALPHA KANAL!!"
+msgstr "Du kan ikke kÃ¸re dette program uden en alfakanal!"
 
 msgid "WARNING: shared locking requested but not implemented"
-msgstr "ADVARSEL: delt låsning forespurgt men ikke implementeret"
+msgstr "ADVARSEL: delt lÃ¥s forespurgt, men ikke implementeret"
 
 msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
-msgstr "<Toolbox>/Udvd/Render/Yin-Yang..."
+msgstr "<Toolbox>/Udvidelser/GenerÃ©r/Yin-yang..."
 
+# SOTA stÃ¥r for "state of the art", "rÃ¥" mÃ¥ske ikke sÃ¥ direkte, men gÃ¥r
+# i mangel af bedre
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
-msgstr "<Image>/Filtre/Logulator/SOTA-krom"
+msgstr "<Image>/Filtre/Logulator/RÃ¥ krom"
 
 msgid "%s: procedural database execution failed"
-msgstr "%s: kørsel af proceduredatabasen mislykkedes"
+msgstr "%s: proceduredatabasekÃ¸rsel mislykkedes"
 
+# RETMIG: rigtigt?
 msgid "<Image>/Video/VCR Console..."
-msgstr "<Image>/Video/VCR-konsol..."
+msgstr "<Image>/Video/Fjernbetjeningskonsol..."
 
 msgid ", authorization required"
-msgstr ", autorisation nødvendig"
+msgstr ", autorisering nÃ¸dvendig"
 
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
-msgstr "<Toolbox>/Udvd/Render/Gylden middelværdi..."
+msgstr "<Toolbox>/Udvidelser/GenerÃ©r/Gyldent snit..."
 
 msgid "unable to create socketpair for gimp communications: $!"
-msgstr "kunne ikke oprette sokkelpar for gimp-kommunikation: $!"
+msgstr "kunne ikke oprette sokkelpar for Gimp-kommunikation: $!"
 
 msgid "<Image>/View/3D Surface..."
-msgstr "<Image>/Vis/3D overflade..."
+msgstr "<Image>/Vis/3d-overflade..."
 
 msgid "trying to start gimp with options \"$opt\"\n"
-msgstr "prøver at starte gimp med alternativerne \"$opt\"\n"
+msgstr "prÃ¸ver at starte Gimp'en med parametrene \"$opt\"\n"
 
-msgid "<Toolbox>/Xtns/Render/Logos/Inder Bevel..."
-msgstr "<Toolbox>/Udvd/Render/Logoer/Inder bevel..."
+msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
+msgstr "<Toolbox>/Udvidelser/GenerÃ©r/Logoer/Indre afrunding..."
 
 msgid ""
 "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
@@ -345,43 +351,44 @@ msgstr ""
 "menustien _skal_ starte med <Image>, <Toolbox>, <Load>, <Save> eller <None>!"
 
 msgid "<Image>/Filters/Misc/Magick..."
-msgstr "<Image>/Filtre/Forskellig/Magick..."
+msgstr "<Image>/Filtre/Diverse/Magick..."
 
 msgid "<Toolbox>/Xtns/Perl/Server"
-msgstr "<Toolbox>/Udvd/Perl/Server"
+msgstr "<Toolbox>/Udvidelser/Perl/Server"
 
 msgid "<Image>/Edit/Repeat & Duplicate..."
-msgstr "<Image>/Rediger/Gentag & duplikér..."
+msgstr "<Image>/RedigÃ©r/Gentag og kopiÃ©r..."
 
 msgid "accepted unix connection"
-msgstr "accepterede unix-forbindelse"
+msgstr "Unix-forbindelse accepteret"
 
 msgid "<Image>/Filters/Colors/Map To Gradient..."
-msgstr "<Image>/Filtre/Farver/Tilegn til gradient..."
+msgstr "<Image>/Filtre/Farver/Afbildning til farveovergang..."
 
+# navngivet i gimp/po-script-fu/da.po
 msgid "<Image>/Filters/Logulator/Imigre-26"
-msgstr "<Image>/Filtre/Logulator/Imigre-26"
+msgstr "<Image>/Filtre/Logulator/Tuschtegning"
 
 msgid "gimp_tile_get_data is not yet implemented\n"
-msgstr "gimp_tile_get_data er ikke implementeret endnu\n"
+msgstr "gimp_tile_get_data er endnu ikke implementeret\n"
 
 msgid "dunno how to pass arg type %d"
-msgstr "kan ikke sende argumenttype %d"
+msgstr "VÃ©d ikke hvordan parametertypen %d skal videresendes"
 
 msgid "Browse"
-msgstr "Bladr gennem"
+msgstr "Gennemse"
 
 msgid "Author"
 msgstr "Forfatter"
 
 msgid "unable to create '$fn': $!"
-msgstr "kunne ikke oprette '$fn': $!"
+msgstr "Kunne ikke oprette '$fn': $!"
 
 msgid "received QUIT request"
-msgstr "modtog AFSLUT-forespørgsel"
+msgstr "QUIT-forespÃ¸rgsel modtaget"
 
 msgid "unable to create listening tcp socket: $!\n"
-msgstr "kunne ikke oprette lyttende tcp-sokkel: $!\n"
+msgstr "Kunne ikke oprette lyttende TCP-sokkel: $!\n"
 
 msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
 msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
@@ -395,122 +402,134 @@ msgid ""
 "\n"
 "$help"
 msgstr ""
-"BLURB:\n"
+"ResumÃ©:\n"
 "\n"
 "$blurb\n"
 "\n"
-"HJÆLP:\n"
+"HjÃ¦lp:\n"
 "\n"
 "$help"
 
 msgid "OK"
-msgstr "OK"
+msgstr "O.k."
 
 msgid "gimp_tile_set_data is not yet implemented\n"
-msgstr "gimp_tile_set_data er ikke implementeret endnu\n"
+msgstr "gimp_tile_set_data er endnu ikke implementeret\n"
 
 msgid "argument incompatible with type IMAGE"
-msgstr "argumentet er ikke kompatibelt med type IMAGE"
+msgstr "parameteren er ikke kompatibel med typen IMAGE"
 
 msgid "accepting connections on port $port"
-msgstr "accepterer forbindelser på port $port"
+msgstr "accepterer forbindelser pÃ¥ port $port"
+
+# gad vide hvad "terral" skulle stÃ¥ for?
+msgid "<Image>/Filters/Text/Terral Text..."
+msgstr "<Image>/Filtre/Tekst/Terratekst..."
 
 msgid "Description"
 msgstr "Beskrivelse"
 
 msgid "params and return_vals must be array refs (even if empty)!"
-msgstr "params og return_vals skal være tabelreferencer (selv om de er tomme)!"
+msgstr ""
+"parametre og returvÃ¦rdier skal vÃ¦re tabelreferencer (ogsÃ¥ selv hvis de er "
+"tomme)!"
 
 msgid "<Image>/Filters/Logulator/Newsprint text"
-msgstr "<Image>/Filtre/Logulator/Newsprint tekst"
+msgstr "<Image>/Filtre/Logulator/Avistryk"
 
 msgid "<Image>/Filters/Animation/BlowInOut..."
-msgstr "<Image>/Filtre/Animation/BlæsIndUd..."
-
-msgid "<Image>/Filters/Render/Fit Text..."
-msgstr "<Image>/Filtre/Render/Tilpas tekst..."
+msgstr "<Image>/Filtre/Animation/BlÃ¦s ind og ud..."
 
 msgid "$_: illegal switch, try $0 --help\n"
-msgstr "$_: ugyldig flag, prøv $0 --help\n"
+msgstr "$_: ugyldigt tilvalg, prÃ¸v $0 --help\n"
 
 msgid "Unable to convert a reference to type '%s'"
-msgstr "Kunne ikke konvertere en reference til type '%s'"
+msgstr "Kunne ikke konvertere en reference til typen '%s'"
+
+msgid "<Image>/Filters/Text/TeX String..."
+msgstr "<Image>/Filtre/Tekst/TeX-tekst..."
 
 msgid "<Image>/Guides/Guide Grid..."
-msgstr "<Image>/Guider/Guide gitter..."
+msgstr "<Image>/HjÃ¦lpelinjer/HjÃ¦lpelinjegitter..."
 
+# der er allerede et menupunkt ved navn "proceduredatabase"
 msgid "<Toolbox>/Xtns/PDB Explorer..."
-msgstr "<Toolbox>/Udvd/PDB-læser..."
+msgstr "<Toolbox>/Udvidelser/Procedureudforsker..."
 
 msgid "<Image>/Filters/Distorts/Windify..."
-msgstr "<Image>/Filtre/Forvrængning/Vind..."
+msgstr "<Image>/Filtre/ForvrÃ¦ngning/Vind..."
 
 msgid "<Image>/Filters/Apply Perl Expression..."
-msgstr "<Image>/Filtre/Brug perl-udtryk..."
+msgstr "<Image>/Filtre/Anvend Perl-udtryk..."
 
 msgid "gimp procedure '%s' not found"
-msgstr "gimp-procedure '%s' ikke fundet"
+msgstr "Gimp-proceduren '%s' ikke fundet"
 
+# skal koordineres
 msgid "Visual Scriptor"
-msgstr "Visuel skripter"
+msgstr "Visuel programmering"
 
+# ligner byggeklodser, se evt. hjÃ¦lpen til modulet
 msgid "<Image>/Filters/Map/Xach Blocks..."
-msgstr "<Image>/Filtre/Kort/Xach blokke..."
+msgstr "<Image>/Filtre/Afbildning/Byggeklodser..."
 
 msgid "server going down..."
-msgstr "serveren lukkes ned..."
+msgstr "Server lukker ned..."
 
 msgid "unable to read temporary file $tmp: $!"
-msgstr "kunne ikke læse fra midlertidig fil $tmp: $!"
+msgstr "Kunne ikke lÃ¦se den midlertidige fil $tmp: $!"
 
 msgid "Saving '$filename' as COLORHTML..."
-msgstr "Gemmer '$filname' som COLORHTML..."
+msgstr "Gemmer '$filename' som COLORHTML..."
 
 msgid "being called as '%s', but '%s' not registered in the pdb"
-msgstr "bliver kaldt som '%s', men '%s' er ikke registreret i pdb"
+msgstr ""
+"bliver kaldt som '%s', men '%s' er ikke registreret i proceduredatabasen"
 
 msgid "Shortcuts"
 msgstr "Genveje"
 
 msgid "<Image>/Filters/Logulator/Speed text"
-msgstr "<Image>/Filtre/Logulator/Hurtigtekst"
+msgstr "<Image>/Filtre/Logulator/Farttekst"
 
 msgid "<Toolbox>/Xtns/Create_Images"
-msgstr "<Toolbox>/Udvd/Create_Images"
+msgstr "<Toolbox>/Udvidelser/Opret billeder"
 
 msgid "<Toolbox>/Xtns/Parasite Editor..."
-msgstr "<Toolbox>/Udvd/Parasit editor..."
+msgstr "<Toolbox>/Udvidelser/Parasitredigering..."
 
 msgid "9x15bold"
-msgstr "9x15fed"
+msgstr "9x15bold"
 
 msgid "unauthorized command received, aborting connection"
-msgstr "ikke-autoriseret kommando modtaget, afbryder forbindelsen"
+msgstr "ikke autoriseret kommando modtaget, afbryder forbindelsen"
 
 msgid "%s: procedural database execution failed on invalid input arguments"
-msgstr ""
-"%s: kørsel af proceduredatabasen mislykkedes ved ugyldige argumenter for inddata"
+msgstr "%s: proceduredatabasekÃ¸rsel mislykkedes pga. ugyldige inddataparametre"
 
+# skal koordineres
 msgid "<Toolbox>/Xtns/Visual Scriptor..."
-msgstr "<Toolbox>/Udvd/Visuel skripter..."
+msgstr "<Toolbox>/Udvidelser/Visuel programmering..."
 
 msgid "NAME"
 msgstr "NAVN"
 
 msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
-msgstr "ADVARSEL: $function returnerede noget som ikke er et billede: \"$img\"\n"
+msgstr ""
+"ADVARSEL: $function returnerede noget som ikke er et billede: \"$img\"\n"
 
 msgid "<Image>/Filters/Colors/Fire..."
-msgstr "<Image>/Filtre/Farver/Flamme..."
+msgstr "<Image>/Filtre/Farver/Ild..."
 
+# dÃ¦kker vist fint, titeloverskrift bliver lidt langt og lidt dobbelkonfektagtigt
 msgid "<Image>/Filters/Logulator/Web title header"
-msgstr "<Image>/Filtre/Logulator/Web titeloverskrift"
+msgstr "<Image>/Filtre/Logulator/Internetoverskrift"
 
 msgid "FATAL: canonicalize_colour did not return a value!"
-msgstr "FATAL: canonicalize_colour returnerede ikke en værdi!"
+msgstr "FATAL: canonicalize_colour returnerede ikke en vÃ¦rdi!"
 
 msgid "export failed"
-msgstr "eksport mislykkedes"
+msgstr "Eksport mislykkedes"
 
 msgid ""
 "       interface-arguments are\n"
@@ -518,25 +537,32 @@ msgid ""
 "           -i | --interact            let the user edit the values first\n"
 "       script-arguments are\n"
 msgstr ""
-"        grænseflade-argumenter er\n"
+"        grÃ¦nsefladeparametre er\n"
 "           -o | --output <filespec>    skriv billede til disk, vis ikke\n"
-"           -i | --interact             lad brugeren redigere værdierne først\n"
-"        skript-argumenter er\n"
+"           -i | --interact             lad brugeren redigere vÃ¦rdierne "
+"fÃ¸rst\n"
+"        programparametre er\n"
 
 msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
-msgstr "<Image>/Filtre/Find-kant/2x2 kantsøging"
+msgstr "<Image>/Filtre/Kantfinding/2x2-kantsÃ¸gning"
 
+# "center" er udsagnsord her
 msgid "<Image>/Layers/Center Layer"
-msgstr "<Image>/Lag/Centrér lag"
+msgstr "<Image>/Lag/CentrÃ©r lag"
 
 msgid "closing connection %d (%d requests in %g seconds)"
-msgstr "lukker forbindelse %d (%d forespørgsler på %g sekunder)"
+msgstr "Lukker forbindelse %d (%d forespÃ¸rgseler pÃ¥ %g sekunder)"
 
 msgid "Reset all values to their default"
-msgstr "Nulstil alle værdier til deres udgangsværdier"
+msgstr "Nulstil til standardvÃ¦rdier"
 
 msgid "<Image>/Filters/Misc/Border Average..."
-msgstr "<Image>/Filtre/Forskelligt/Gennemsnit for grænse..."
+msgstr "<Image>/Filtre/Diverse/Kantgennemsnit..."
+
+msgid ""
+"conversion from string to type $pf_type2string{$type} is not yet "
+"implemented\n"
+msgstr "konvertering fra streng til typen $pf_type2string{type} er ikke implementeret endnu\n"
 
 msgid ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
@@ -548,92 +574,94 @@ msgid ""
 "PORT)\n"
 "                                      (for more info, see Gimp::Net(3))\n"
 msgstr ""
-"Brug: $0 [gimp-arg..] [grænseflade-arg..] [skript-arg..]\n"
-"        gimp-argumenter er\n"
-"            -gimp <hvad-som-helst>\n"
-"            -h | -help | --help | -?   vis hjælpetekst\n"
-"            -v | --verbose             vis mere information\n"
-"            --host|--tcp VÆRT[:PORT]   kobl til VÆRT (alternativt kan PORT "
+"Brug: $0 [Gimp-parametre..] [grÃ¦nsefladeparametre..] [programparametre..]\n"
+"        Gimp-parametre er\n"
+"            -gimp <hvad-som-helst>     bruges kun internt\n"
+"            -h | -help | --help | -?   vis hjÃ¦lpetekst\n"
+"            -v | --verbose             vis mere information om handlinger\n"
+"            --host|--tcp VÃ†RT[:PORT]   kobl til VÃ†RT (alternativt kan PORT "
 "bruges)\n"
-"                                       (for mere info, se Gimp::Net(3)\n"
+"                                       (for mere info, se Gimp::Net(3))\n"
 
 msgid "too many arguments"
-msgstr "for mange argumenter"
+msgstr "for mange parametre"
 
 msgid ""
 "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
-msgstr "dimensionsfejl, pdl har dimension %d men mindst %d dimensioner tillades"
+msgstr ""
+"dimensionsfejl, pdl har dimension %d, men hÃ¸jst %d dimensioner er tilladt"
 
 msgid "Load"
-msgstr "Indlæs"
+msgstr "IndlÃ¦s"
 
 msgid "unable to grok colour specification"
-msgstr "kunne ikke forstå farvespecifikationen"
+msgstr "kunne ikke forstÃ¥ farvespecifikationen"
 
 msgid "no additional information available, use --help\n"
-msgstr "ingen yderligere information tilgængelig, brug --help\n"
+msgstr "ingen ekstra information tilgÃ¦ngelig, brug --help\n"
 
 msgid ""
 "the gtk perl module is required to open a dialog\n"
 "window, running with default values"
 msgstr ""
-"gtk perl modulet er nødvendigt for at åbne et dialog-\n"
-"vindue, under kørsel med standardværdier"
+"Gtk-Perl-modulet er nÃ¸dvendigt for at Ã¥bne et vindue,\n"
+"kÃ¸rer med standardvÃ¦rdier"
 
 msgid "Gradient Selection Dialog"
-msgstr "Gradientvælger dialog"
+msgstr "FarveovergangsvÃ¦lger"
 
 msgid " matching functions"
 msgstr " passende funktioner"
 
 msgid "authorization ok, but: $r[1]\n"
-msgstr "autorisation ok, men: %r[1]\n"
+msgstr "autorisering o.k., men: $r[1]\n"
 
 msgid "Cannot call '$AUTOLOAD' at this time"
-msgstr "Kan ikke kalde '$AUTOLOAD' på det nuværende tidspunkt"
+msgstr "Kan ikke kalde '$AUTOLOAD' lige nu"
 
 msgid "function/macro \"$name\" not found in $class"
 msgstr "funktion/makro \"$name\" ikke fundet i $class"
 
 msgid "arguments to main not yet supported!"
-msgstr "argumenter til main er ikke understøttet endnu!"
+msgstr "parametre til 'main' er ikke understÃ¸ttet endnu!"
 
 msgid "accepting connections in $host"
 msgstr "accepterer forbindelser i $host"
 
 msgid " (press Tab to complete)"
-msgstr " (tryk tab for at fuldføre)"
+msgstr " (tryk tabulator for at fuldfÃ¸re)"
 
 msgid "Save $name"
 msgstr "Gem $name"
 
-msgid "<Image>/Filters/Render/TeX String..."
-msgstr "<Image>/Filtre/Render/TeX streng..."
-
+# de uskarpe ting i billedet bliver vist undertrykt
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
-msgstr "<Image>/Filtre/Enhance/Warp sharp..."
+msgstr "<Image>/Filtre/Reparation/Skarphedsfordrejelse..."
 
 msgid "<Image>/Filters/Web/Prepare for GIF..."
-msgstr "<Image>/Filtre/Web/Forbered for GIF..."
+msgstr "<Image>/Filtre/Internet/Forbered til GIF..."
 
 msgid "illegal type for colour specification"
-msgstr "ugyldig type for farvespecifikation"
+msgstr "ugyldig type for farveangivelse"
 
 msgid "<Image> plug-in called without both image and drawable arguments!\n"
 msgstr ""
-"<Image> indstik kaldt uden argumenter for både billede og tegnbart objekt!\n"
+"<Image> udvidelsesmodul kaldet uden bÃ¥de billede- og tegneobjektparameter\n"
 
 msgid "Seth Spin..."
-msgstr "Seth spin..."
+msgstr "Seth-drej..."
 
 msgid "get current background colour from the gimp"
-msgstr "hent aktiv baggrundsfarve fra gimp"
+msgstr "hent aktuel baggrundsfarve fra Gimp'en"
+
+msgid "<Image>/Filters/Text/Fit Text..."
+msgstr "<Image>/Filtre/Tekst/Tilpas tekst..."
 
 msgid "No horizontal or vertical guides found. Aborted."
-msgstr "Ingen horisontale eller vertikale guider fundet. Afbrudt."
+msgstr "Ingen vandrette eller lodrette hjÃ¦lpelinjer fundet. Afbrudt."
 
 msgid "accepting connections on port $Gimp::Net::default_tcp_port"
-msgstr "accepterer forbindelser på port $Gimp::Net::default_tcp_port"
+msgstr "accepterer forbindelser pÃ¥ port $Gimp::Net::default_tcp_port"
 
 msgid "Menu Path"
 msgstr "Menusti"
@@ -641,106 +669,103 @@ msgstr "Menusti"
 msgid "TYPE"
 msgstr "TYPE"
 
+# PoV-Ray = Persistence of Vision Raytracer (3d-billedgenereringsprogram)
 msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
-msgstr "<Toolbox>Udvd/Render/Povray/Tekstur..."
+msgstr "<Toolbox>/Udvidelser/GenerÃ©r/PoV-Ray/Tekstur..."
 
 msgid "You need at least 2 layers to perform prep4gif"
-msgstr "Du skal have mindst 2 lag for at udføre prep4gif"
+msgstr "Du skal have mindst 2 lag for at udfÃ¸re prep4gif"
 
 msgid "<Image>/Filters/Blur/2x2 Blur"
-msgstr "<Image>/Filtre/Slør/2x2 slør"
-
-msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
-msgstr ""
-"konvertering til type $pf_type2string{type} er ikke implementeret endnu\n"
+msgstr "<Image>/Filtre/SlÃ¸r/2x2-slÃ¸r"
 
 msgid "interface '$interface_type' unsupported."
-msgstr "grænseflade '$interface_type' ikke understøttet."
+msgstr "grÃ¦nsefladen '$interface_type' ikke understÃ¸ttet."
 
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
-msgstr "<Image>/Filtre/Enhance/2x2 kontrast enhance"
+msgstr "<Image>/Filtre/Reparation/2x2-kontrastforbedring"
 
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
-msgstr "<Load> indstik kaldt uden de 3 standardargumenter!\n"
+msgstr "<Load> udvidelsesmodul kaldett uden de 3 standardparametre!\n"
 
 msgid "Unable to grok '%s' as colour specifier"
-msgstr "Kunne ikke forstå '%s' som farvespecifikation"
+msgstr "Kunne ikke finde forstÃ¥ '%s' som farveangivelse"
 
 msgid "gimp-perl-pixel functions require the PDL::Core module"
-msgstr "gimp-perl-pixel funktionerne behøver PDL::Core modulet"
+msgstr "gimp-perl-pixel-funktionerne krÃ¦ver PDL::Core-modulet"
 
 msgid "a color must have three components (array elements)"
-msgstr "en farve skal have tre komponenter (matrixelementer)"
+msgstr "en farve skal have tre komponenter (tabelelementer)"
 
 msgid "Defaults"
-msgstr "Standardværdier"
+msgstr "StandardvÃ¦rdier"
 
 msgid "Copyright"
-msgstr "Copyright"
+msgstr "Ophavsret"
 
 msgid "<Image>/Select/Triangle..."
-msgstr "<Image>/Vælg/Trekant..."
+msgstr "<Image>/Markering/Trekant..."
 
 msgid "<Image>/Filters/Render/Burst..."
-msgstr "<Image>/Filtre/Render/Burst..."
+msgstr "<Image>/Filtre/GenerÃ©r/Udbrud..."
 
 msgid "WARNING: client disconnected while holding an active lock\n"
-msgstr "ADVARSEL: klienten frakoblet mens den holdt en aktiv lås\n"
+msgstr "ADVARSEL: klienten koblede fra mens den holdt en aktiv lÃ¥s\n"
 
 msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
-msgstr "<Toolbox>/Udvd/Gimp::Fu eksempel..."
+msgstr "<Toolbox>/Udvidelser/Gimp::Fu-eksempel..."
 
 msgid "/Xtns/Render/Logos"
-msgstr "/Udvd/Render/Logoer"
+msgstr "/Udvidelser/GenerÃ©r/Logoer"
 
 msgid "argument is not of type %s"
-msgstr "argumentet er ikke af type %d"
+msgstr "parameter er ikke af typen %s"
 
 msgid "server version $Gimp::VERSION started"
-msgstr "server version $Gimp::VERSION startet"
+msgstr "serverversion $Gimp::VERSION startet"
 
 msgid "Background"
 msgstr "Baggrund"
 
 msgid "%s arguments for function '%s'"
-msgstr "%s argumenter for funktion '%s'"
+msgstr "%s-parametre til funktionen '%s'"
 
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr "<Toolbox>/Udvd/Render/Logoer/Glødende stål"
+msgstr "<Toolbox>/Udvidelser/GenerÃ©r/Logoer/GlÃ¸dende stÃ¥l"
 
 msgid "only blessed scalars accepted here"
-msgstr "kun velsignede skalarværdier accepteres her"
+msgstr "kun velsignede skalarvÃ¦rdier accepteres her"
 
 msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
 msgstr ""
-"forventet protokol version $Gimp::_PROT_VERSION, men serveren bruger $r[0]\n"
+"forventede protokolversion $Gimp::_PROT_VERSION, men serveren bruger $r[0]\n"
 
 msgid "illegal parasite specification, arrayref expected"
-msgstr "ugyldig parasitspecifikation, arraydef forventet"
+msgstr "ugyldig parasitangivelse, tabeldefinition forventet"
 
 msgid ""
 "dimension mismatch, pdl has dimension %d but at least %d dimensions required"
 msgstr ""
-"dimensionsfejl, pdl har dimension %d men mindst %d dimensioner er nødvendig"
+"dimensionsfejl, pdl har dimensionen %d, men mindst %d dimensioner er pÃ¥krÃ¦vet"
 
 msgid "Save"
 msgstr "Gem"
 
 msgid "<Image>/Filters/Logulator/Carved"
-msgstr "<Image>/Filtre/Logulator/Skåret"
+msgstr "<Image>/Filtre/Logulator/UdskÃ¥ret"
 
 msgid "Function Info"
 msgstr "Funktionsinfo"
 
 msgid "no font specified, using default"
-msgstr "ingen skrifttype specificeret, bruger standard"
+msgstr "ingen skrifttype angivet, bruger standard"
 
 msgid ""
 "the gtk perl module is required to run\n"
 "this plug-in in interactive mode\n"
 msgstr ""
-"gtk perl-modulet er nødvendig for at køre\n"
-"dette indstik i interaktiv modus\n"
+"Gtk-Perl-modulet er nÃ¸dvendigt for at kÃ¸re\n"
+"dette udvidelsesmodul i interaktiv tilstand\n"
 
 msgid "authorization failed: $r[1]\n"
 msgstr "autorisation mislykkedes: $r[1]\n"
@@ -755,74 +780,73 @@ msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
 msgstr ""
-"$function: kald af $AUTOLOAD uden at specificere :auto import mærket er "
-"forældet!\n"
+"$function: kald af $AUTOLOAD uden at angive ':auto import'-mÃ¦rket er "
+"forÃ¦ldet!\n"
 
 msgid "<Toolbox>/Xtns/Render/Bricks..."
-msgstr "<Toolbox>/Udvd/Render/Mursten..."
+msgstr "<Toolbox>/Udvidelser/GenerÃ©r/Mursten..."
 
 msgid "DESCRIPTION"
 msgstr "BESKRIVELSE"
 
 msgid "Accelerator"
-msgstr "Accelerator"
+msgstr "Genvejstast"
 
 msgid "Cancel"
-msgstr "Afbryd"
+msgstr "AnnullÃ©r"
 
+# ligner byggeklodser med skygge
 msgid "<Image>/Filters/Map/Xach Shadows..."
-msgstr "<Image>/Filtre/Kort/Xach skygger..."
+msgstr "<Image>/Filtre/Afbildning/Byggeklodsskygger..."
 
 msgid "argument type %s expected (not %s)"
-msgstr "argumenttype %s forventet (ikke %s)"
+msgstr "parameter af typen %s forventet (ikke %s)"
 
 msgid "BG"
-msgstr "BG"
+msgstr "Bg."
 
 msgid ""
 "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
-"pikselstørrelsen stemmer ikke, pdl har %d kanaler med pixler men %d kanaler "
-"behøves"
+"billedpunktstÃ¸rrelsen stemmer ikke, pdl har %d kanaler med punkter, men %d "
+"kanaler behÃ¸ves"
 
 msgid "<Image>/Filters/Render/Highlight Edges..."
-msgstr "<Image>/Filtre/Render/Lys op kanter..."
+msgstr "<Image>/Filtre/GenerÃ©r/Oplys kanter..."
 
 msgid "This module was built without support for PDL."
-msgstr "Dette modul blev bygget uden understøttelse for PDL."
+msgstr "Dette modul ble bygget uden understÃ¸ttelse af PDL."
 
 msgid "[unfinished]\n"
-msgstr "[ufærdig]\n"
+msgstr "[afbrudt]\n"
 
 msgid "Spin Layer DEST (250ms)"
-msgstr "Spin-lag DEST (250ms)"
-
-msgid "<Toolbox>/Xtns/Homepage-Logo"
-msgstr "<Toolbox>/Udvd/Hjemmesidelogo"
+msgstr "DrejningslagmÃ¥l (250ms)"
 
 msgid "Bumpmap"
-msgstr "Bumpmap"
+msgstr "HÃ¸jdekort"
 
 msgid "Date/Version"
 msgstr "Dato/version"
 
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
-msgstr "$function: argument/returværdi '$p->[1]' har ugyldig type 'p->[0]'"
+msgstr ""
+"$function: parameter/returvÃ¦rdi '$p->[1]' er af en ugyldig type 'p->[0]'"
 
 msgid "required callback 'net' not found\n"
-msgstr "nødvendig tilbagekald 'net' ikke fundet\n"
+msgstr "opkrÃ¦vet tilbagekaldsfunktion 'net' ikke fundet\n"
 
 msgid "function '$exe' not found in this script (must be one of "
-msgstr "funktionen '$exe' ikke fundet i dette skript (skal være en af "
+msgstr "funktionen '$exe' ikke fundet i dette program (skal vÃ¦re en af "
 
 msgid "<Image>/Filters/Colors/Colour To Alpha..."
-msgstr "<Image>/Filtre/Farver/Farve til alpha..."
+msgstr "<Image>/Filtre/Farver/Farve til alfa..."
 
 msgid "/Xtns/Perl"
-msgstr "/Udvd/Perl"
+msgstr "/Udvidelser/Perl"
 
 msgid "<Toolbox>/Xtns/Render/Random Art #1..."
-msgstr "<Toolbox>/Udvd/Render/Tilfældig kunst #1..."
+msgstr "<Toolbox>/Udvidelser/GenerÃ©r/TilfÃ¦ldig kunst 1..."
 
 msgid "accepted tcp connection from "
 msgstr "accepterede tcp-forbindelse fra "
@@ -831,121 +855,127 @@ msgid "Status"
 msgstr "Status"
 
 msgid "Load $name"
-msgstr "Indlæs $name"
+msgstr "IndlÃ¦s $name"
 
 msgid "<Save> plug-in called without the 5 standard arguments!\n"
-msgstr "<Save> indstik kaldt uden de 5 standardargumenter!\n"
+msgstr "<Save> udvidelsesmodul kaldet uden de 5 standardparametre!\n"
 
 msgid "unable to accept unix connection: $!\n"
-msgstr "kunne ikke acceptere unix-forbindelse: $!\n"
+msgstr "kunne ikke acceptere Unix-forbindelse: $!\n"
 
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr "<Toolbox>/Udvd/Perl eksempel indstik"
+msgstr "<Toolbox>/Udvidelser/Perl-eksempelmodul"
 
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
-msgstr "<Toolbox>/Udvd/Render/Povray/Brugervalg..."
+msgstr "<Toolbox>/Udvidelser/GenerÃ©r/PoV-Ray/Indstillinger..."
 
 msgid "unable to accept tcp connection: $!\n"
-msgstr "kunne ikke acceptere tcp forbindelse: $!\n"
+msgstr "kunne ikke acceptere tcp-forbindelse: $!\n"
 
 msgid "(UNINITIALIZED)"
-msgstr "(UINITIALISERET)"
+msgstr "(IKKE KLARGJORT)"
 
 msgid "<Image>/Filters/Render/Brushed Metal..."
-msgstr "<Image>/Filtre/Render/Børstet metal..."
+msgstr "<Image>/Filtre/GenerÃ©r/BÃ¸rstet metal..."
 
 msgid "perl-arrayref required as datatype for a gimp-array"
-msgstr "perl-arraydef behøves som datatype for en gimp-array"
+msgstr "Perl-tabeldefinition behÃ¸ves som datatype for en Gimp-tabel"
 
 msgid "<Image>/Filters/Web/Webify..."
-msgstr "<Image>/Filtre/Web/Webificér..."
+msgstr "<Image>/Filtre/Internet/NettificÃ©r..."
 
 msgid "Unable to open '$filename' for writing: $!\n"
-msgstr "Kunne ikke åbne '$filename' for skrivning: $!\n"
+msgstr "Kunne ikke Ã¥bne '$filename' til skrivning: $!\n"
 
 msgid "Unsupported argumenttype $type"
-msgstr "Ikke understøttet argumenttype $type"
+msgstr "Parametertypen $type er ikke understÃ¸ttet"
 
 msgid "/Xtns/Render/Povray"
-msgstr "/Udvd/Render/Povray"
+msgstr "/Udvidelser/GenerÃ©r/PoV-Ray"
 
 msgid "Color"
 msgstr "Farve"
 
 msgid "authorization unnecessary"
-msgstr "autorisation ikke nødvendig"
+msgstr "autorisering unÃ¸dvendig"
 
 msgid "illegal parasite specification, reference expected"
-msgstr "ugyldig parasit-specifikation, reference forventet"
+msgstr "ugyldig parasitangivelse, reference forventet"
+
+msgid "too many arguments, use --help\n"
+msgstr "for mange parametre, prÃ¸v --help\n"
 
 msgid "<Toolbox>/Xtns/Render/Font Table..."
-msgstr "<Toolbox>/Udvd/Render/Skrifttypetabel..."
+msgstr "<Toolbox>/Udvidelser/GenerÃ©r/Skrifttypetabel..."
 
 msgid "Edit"
-msgstr "Rediger"
+msgstr "RedigÃ©r"
 
 msgid "<Image>/Filters/Logulator/Blended II..."
 msgstr "<Image>/Filtre/Logulator/Blandet II..."
 
 msgid "Saving '$filename' as DATAURL..."
-msgstr "Gemmer '$filname' som DATAURL..."
+msgstr "Gemmer '$filename' som DATAURL..."
 
 msgid "text string is empty"
-msgstr "tekststrengen er tom"
+msgstr "tekststreng er tom"
 
 msgid "<Image>/Filters/Distorts/Scratches..."
-msgstr "<Image>/Filtre/Forvrængning/Skraping..."
+msgstr "<Image>/Filtre/ForvrÃ¦ngning/Ridser..."
 
 msgid "$_: unknown/illegal file-save option"
-msgstr "$_: ukendt/ugyldig fillagringsalternativ"
+msgstr "$_: Ukendt/ulovligt filgemningstilvalg"
 
 msgid "/Xtns/Render"
-msgstr "/Udvd/Render"
+msgstr "/Udvidelser/GenerÃ©r"
 
 msgid " = [argument error]\n"
-msgstr " = [argumentfejl]\n"
+msgstr " = [parameterfejl]\n"
 
 msgid "<Image>/Select/Round..."
-msgstr "<Image>/Vælg/Rund..."
+msgstr "<Image>/Markering/Afrund..."
 
 msgid "plug-in returned %d more values than expected"
-msgstr "indstikket returnerede %d flere værdier end forventet"
+msgstr "udvidelsesmodulet returnerede %d flere vÃ¦rdier end forventet"
 
 msgid "$_ is not a valid import tag for package $pkg"
-msgstr "$_ er ikke en gyldig import-tag for pakken $pkg"
+msgstr "$_ er ikke et gyldig importmÃ¦rke for pakken $pkg"
 
 msgid "url size is too large ($max > 1024)\n"
-msgstr "url størrelse er for stor ($max > 1024)\n"
+msgstr "url-stÃ¸rrelse er for stor ($max > 1024)\n"
 
 msgid "illegal command received, aborting connection"
 msgstr "ugyldig kommando modtaget, afbryder forbindelsen"
 
 msgid "<Image>/Filters/Noise/Ditherize..."
-msgstr "<Image>/Filtre/Støj/Ditherize..."
+msgstr "<Image>/Filtre/StÃ¸j/Farvereducering..."
 
 msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr "<Toolbox>/Udvd/Animation/Seth spin..."
+msgstr "<Toolbox>/Udvidelser/Animation/Seth-drej..."
 
 msgid "Pattern Selection Dialog"
-msgstr "Mønstervalg dialog"
+msgstr "MÃ¸nstervÃ¦lger"
 
 msgid "get current foreground colour from the gimp"
-msgstr "hent aktiv forgrundsfarve fra gimp"
+msgstr "hent aktuel forgrundsfarve fra Gimp'en"
 
 msgid "<Image>/Filters/Render/Add Dust..."
-msgstr "<Image>/Filtre/Render/Tilføj støv..."
+msgstr "<Image>/Filtre/GenerÃ©r/TilfÃ¸j stÃ¸v..."
 
 msgid "not enough"
 msgstr "ikke nok"
 
 msgid "PDB Explorer - the olof edition (yet still an alpha version)"
-msgstr "PDB-læser - olof udgaven (stadig en alpha-version)"
+msgstr "Proceduredatabaseudforsker - olof-udgaven (stadig en alfaversion)"
 
 msgid "<Image>/Filters/Web/Perl-o-tine..."
-msgstr "<Image>/Filtre/Web/Perl-o-tine..."
+msgstr "<Image>/Filtre/Internet/Perl-o-tine..."
 
 msgid "<Image>/Layers/Stack/Reorder Layers..."
-msgstr "<Image>/Lag/Stable/Omorganiser lagene..."
+msgstr "<Image>/Lag/Stack/OmorganisÃ©r lag..."
 
 msgid "accepting connections on $unix_path"
-msgstr "accepterer forbindelser på $unix_path"
+msgstr "accepterer forbindelser pÃ¥ $unix_path"
+
+msgid "<Toolbox>/Xtns/Homepage-Logo"
+msgstr "<Toolbox>/Udvidelser/Hjemmesidelogo"
