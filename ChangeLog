@@ -1,3 +1,14 @@
+2005-03-26  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_find_scripts):
+	removed menu branch registering here (this function is called on
+	each refresh).
+
+	* plug-ins/script-fu/script-fu.c (script_fu_extension_init):
+	renamed from script_fu_auxillary_init(), this function is only
+	called once when the extension starts up. Register the menu
+	branches here.
+
 2005-03-26  Sven Neumann  <sven@gimp.org>
 
 	* modules/cdisplay_colorblind.c (lut_lookup): actually do a binary
