@@ -1,5 +1,10 @@
 2004-01-21  Manish Singh  <yosh@gimp.org>
 
+	* m4macros/gimp-2.0.m4: quote AM_PATH_GIMP_2_O properly so automake
+	1.8 won't whine at us.
+
+2004-01-21  Manish Singh  <yosh@gimp.org>
+
 	* configure.in
 	* plug-ins/FractalExplorer/Makefile.am: renamed obnoxiously long
 	fractalexplorer-examples directory to simply examples.

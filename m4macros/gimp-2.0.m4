@@ -5,7 +5,7 @@
 dnl AM_PATH_GIMP_2_0([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
 dnl Test for GIMP, and define GIMP_CFLAGS and GIMP_LIBS
 dnl
-AC_DEFUN(AM_PATH_GIMP_2_0,
+AC_DEFUN([AM_PATH_GIMP_2_0],
 [dnl 
 dnl Get the cflags and libraries from pkg-config
 dnl
