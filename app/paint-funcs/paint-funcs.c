@@ -4320,7 +4320,7 @@ initial_sub_region (struct initial_regions_struct *st,
                   GimpCompositeContext ctx;
 
 																		ctx.A = NULL;
-																		ctx.pixelformat_A = GIMP_PIXELFORMAT_ANY;
+																		ctx.pixelformat_A = GIMP_PIXELFORMAT_RGBA8;
 
                   ctx.B = s;
                   ctx.pixelformat_B = (src->bytes   == 1 ? GIMP_PIXELFORMAT_V8
@@ -4329,7 +4329,7 @@ initial_sub_region (struct initial_regions_struct *st,
                                        : src->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8
                                        : GIMP_PIXELFORMAT_ANY);
                   ctx.D = buf;
-                  ctx.pixelformat_D = gimp_composite_pixel_alpha[ctx.pixelformat_A];
+                  ctx.pixelformat_D = ctx.pixelformat_B;
 
                   ctx.M = m;
 
@@ -4366,7 +4366,7 @@ initial_sub_region (struct initial_regions_struct *st,
                   GimpCompositeContext ctx;
 
 																		ctx.A = NULL;
-																		ctx.pixelformat_A = GIMP_PIXELFORMAT_ANY;
+																		ctx.pixelformat_A = GIMP_PIXELFORMAT_RGBA8;
 
                   ctx.B = s;
                   ctx.pixelformat_B = (src->bytes   == 1 ? GIMP_PIXELFORMAT_V8
@@ -4375,7 +4375,7 @@ initial_sub_region (struct initial_regions_struct *st,
                                        : src->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8
                                        : GIMP_PIXELFORMAT_ANY);
                   ctx.D = buf;
-                  ctx.pixelformat_D = gimp_composite_pixel_alpha[ctx.pixelformat_A];
+                  ctx.pixelformat_D = ctx.pixelformat_B;
 
                   ctx.M = m;
 

@@ -1,3 +1,15 @@
+2003-09-05  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/paint-funcs/paint-funcs.c (initial_sub_region): Fixed
+	  another bug in initialising the compositing context for the
+	  special case of dissolve mode.  A further attempt to fix bug
+	  #121438.
+ 
+	* app/composite/gimp-composite-generic.c
+	  (gimp_composite_dissolve_any_any_any_generic): Fixed bug in
+	  calculating whether the destination has an alpha channel (or
+	  not).
+
 2003-09-05  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-merge.c (gimp_image_merge_layers): unref

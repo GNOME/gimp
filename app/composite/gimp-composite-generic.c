@@ -989,7 +989,7 @@ gimp_composite_dissolve_any_any_any_generic (GimpCompositeContext * ctx)
   gint alpha;
   gint b;
   gint combined_opacity;
-  gint db = gimp_composite_pixel_bpp[ctx->pixelformat_B];
+  gint db;
   gint length = ctx->n_pixels;
   gint opacity = ctx->dissolve.opacity;
   gint sb = gimp_composite_pixel_bpp[ctx->pixelformat_B];
@@ -999,7 +999,7 @@ gimp_composite_dissolve_any_any_any_generic (GimpCompositeContext * ctx)
   gint32 rand_val;
   guchar *dest = ctx->D;
   guchar *src = ctx->B;
-  guint has_alpha = gimp_composite_pixel_alpha[ctx->pixelformat_B];
+  guint has_alpha = gimp_composite_pixel_alphap[ctx->pixelformat_B];
 
   /*
    * if destination does not have an alpha channel, add one to it.
@@ -1008,6 +1008,7 @@ gimp_composite_dissolve_any_any_any_generic (GimpCompositeContext * ctx)
   if (!gimp_composite_pixel_alphap[ctx->pixelformat_D]) {
     ctx->pixelformat_D = gimp_composite_pixel_alpha[ctx->pixelformat_D];
   }
+  db = gimp_composite_pixel_bpp[ctx->pixelformat_D];
 
   gr = g_rand_new_with_seed(random_table[y % RANDOM_TABLE_SIZE]);
 
