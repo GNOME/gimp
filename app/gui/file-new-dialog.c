@@ -588,12 +588,12 @@ file_new_cmd_callback (GtkWidget           *widget,
 
   /* menu and menu items for the units pop-up menu for the units entries */
   menu = gtk_menu_new();
-  menuitem = gtk_menu_item_new_with_label ("Inch");
+  menuitem = gtk_menu_item_new_with_label ("inches");
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
       (GtkSignalFunc) file_new_units_inch_menu_callback, vals); 
   gtk_widget_show(menuitem);
-  menuitem = gtk_menu_item_new_with_label ("Cm");
+  menuitem = gtk_menu_item_new_with_label ("cm");
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
       (GtkSignalFunc) file_new_units_cm_menu_callback, vals); 
@@ -641,12 +641,12 @@ file_new_cmd_callback (GtkWidget           *widget,
   */
 
   /* probabaly should be more general here */
-  menuitem = gtk_menu_item_new_with_label ("Inch");
+  menuitem = gtk_menu_item_new_with_label ("inch");
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
       (GtkSignalFunc) file_new_res_units_inch_callback, vals); 
   gtk_widget_show(menuitem);
-  menuitem = gtk_menu_item_new_with_label ("Cm");
+  menuitem = gtk_menu_item_new_with_label ("cm");
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
       (GtkSignalFunc) file_new_res_units_cm_callback, vals); 
   gtk_menu_append (GTK_MENU (menu), menuitem);
