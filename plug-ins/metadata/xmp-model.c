@@ -960,7 +960,7 @@ xmp_model_parse_file (XMPModel     *xmp_model,
                       GError      **error)
 {
   gchar    *buffer;
-  guint     buffer_length;
+  gssize    buffer_length;
 
   g_return_val_if_fail (filename != NULL, FALSE);
   if (! g_file_get_contents (filename, &buffer, &buffer_length, error))

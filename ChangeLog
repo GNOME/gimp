@@ -1,3 +1,8 @@
+2005-03-07  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/metadata/interface.c
+	* plug-ins/metadata/xmp-model.c: fix some gssize confusion.
+
 2005-03-07  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpellipseselecttool.c
