@@ -4,35 +4,49 @@ even better. Insight into possible ways to implement are even better
 than that.
 ===================================================================
 
-gui/functionality seperation
+gui/functionality separation
+
 	both file scope wise and in use, particulary so that
 	the gui version of the tool uses the pdb whenever possible
 	(for finding bugs, and for macro recording)
 
+	May be a good idea to actually put the core and the gui in
+	separate subdirectories.  --sg
 
-fix the palette dialogs:
-	 (it would be nice to be able to actually edit
+fix the palette dialogs
+
+	(it would be nice to be able to actually edit
 	palettes and the like), also replace that menubox with a clist or
 	something. Right now, the palette dialog is unresizeable, and
 	mostly useledd useless for anything other than picking colors.
 	Import/Export options for palettes here would be good to.
 
+	Palettes should become a first-class core data structure (like
+	layers) with their own PDB interface.  (Goes with below.)  --sg
 
-integrate palette saving into core:
-	 An option to save a current
-	images pallete to a file is handy. Theres currently a plugin to
-	do this, but for integration it might be better in the core. 
+integrate palette saving into core
+
+	An option to save a current images pallete to a file is
+	handy. Theres currently a plugin to do this, but for
+	integration it might be better in the core.
 
 more configurabilty (eek)
 
-fix stuff so that the tile size could actually be changed eventually:
+	I would like to be able to let the user stick arbitrary
+	buttons into the toolbox and attach arbitrary functions to
+	them.  --sg
+
+fix stuff so that the tile size could actually be changed eventually
+
 	Currently gimp core is mostly setup to use a potentially
-	variable tilesize, but lots of plugins and some internal stuff are
-	hardcoded to expect 64x64 tiles. This is good for 8-bit images on x86,
-	but with potential of deep images and other platforms, having this
-	variable could be a real gain in performance tweaking.
+	variable tilesize, but lots of plugins and some internal stuff
+	are hardcoded to expect 64x64 tiles. This is good for 8-bit
+	images on x86, but with potential of deep images and other
+	platforms, having this variable could be a real gain in
+	performance tweaking.  
 
 file new dialog stuff   (i'm working on this...Adrian)
+
 	1. default to size of cut buffer
 	2. add units and resolution options
 	3. make x,y values have dropdowns for last 5 or so used sizes
@@ -40,173 +54,230 @@ file new dialog stuff   (i'm working on this...Adrian)
 	5. maybe some "preset" common image sizes?
 
 export filters:
-	This is one that would make some alot of sense intuitively, and could
-	be very conveint for scripting. Currently, theres no "one step" way
-	to save images easily. This feaure would be useful for example in the
-	Mail plugin, where it could flatten, convert, etc the image in one step.
+
+	This is one that would make some alot of sense intuitively,
+	and could be very conveint for scripting. Currently, theres no
+	"one step" way to save images easily. This feaure would be
+	useful for example in the Mail plugin, where it could flatten,
+	convert, etc the image in one step.
 
 previews in file save (for jpeg compression, etc):
-	 Currently there is no easy way to see the effects of compression 
-	or other image saving effects before actually saving and reloading an image.
+
+	Currently there is no easy way to see the effects of
+	compression or other image saving effects before actually
+	saving and reloading an image.
 
 save/restore state of major dialogs:
-	Gimp currently has no way to save the state of the gimp desktop. Perhaps
-	some of the gnome session management stuff could be useful
-	here. It should be exported to the PDB too.
+
+	Gimp currently has no way to save the state of the gimp
+	desktop. Perhaps some of the gnome session management stuff
+	could be useful here. It should be exported to the PDB too.
 
 keybindings for simple "binary" tools:
-	 (for ex, flip should flip horiz normal, and shift+click 
-	to shift vertically). The more that can be done by power-users without
-	having to delve through dialogs the better.
+
+	(for ex, flip should flip horiz normal, and shift+click to
+	shift vertically). The more that can be done by power-users
+	without having to delve through dialogs the better.
 
 curve deal in the gradient editor?:
-	It could be useful to have a curve widget for each of the color
-	channels or hsv. For example, you have a custom palette you like, but
-	you want it to get dark from left to right. You pop up the "Value"
-	curve and make a curve getting darker. 
+
+	It could be useful to have a curve widget for each of the
+	color channels or hsv. For example, you have a custom palette
+	you like, but you want it to get dark from left to right. You
+	pop up the "Value" curve and make a curve getting darker.
+
+	(Note: this would require a complete rewrite of the gradient
+	_engine_, not just the editor. --sg)
 
 some degree of drawing tools, straight line, etc:
-	Perhaps large parts of gfig could be salvaged for this. Its not
-	something "paint" programs traditionaly do, but there usefulnes is
-	obvious. square/circle/ellipse are already there basically (just make
-	a wrapper to select and stroke). need a better straigh line drawing ui
-	though. 
+
+	Perhaps large parts of gfig could be salvaged for this. Its
+	not something "paint" programs traditionaly do, but there
+	usefulnes is obvious. square/circle/ellipse are already there
+	basically (just make a wrapper to select and stroke). need a
+	better straigh line drawing ui though.
 
 paths, and better beziers would be a nice touch:
-	 Being able to load, save bezier paths, and convert from bezier to
-	selection, and selection to bezier would be very benificial. This
-	combined with a working iscissors would make for extremely flexible selection mechanisms.
+
+	Being able to load, save bezier paths, and convert from bezier
+	to selection, and selection to bezier would be very
+	benificial. This combined with a working iscissors would make
+	for extremely flexible selection mechanisms.
 
 Macro recording and better scripting support:
-	This pretty much is going to require the aforementioned gui/func
-	seperation. More stuff needs to be triggered via pdb to make thsi a possibilty.
+
+	This pretty much is going to require the aforementioned
+	gui/func seperation. More stuff needs to be triggered via pdb
+	to make thsi a possibilty.
 
 More Xinput stuff ( gradient brushes, pen "strokes" ?):
-	 This is very important for "artist" types. The more value-added
-	utility we can make for Xinput stuff the better.
+
+	This is very important for "artist" types. The more
+	value-added utility we can make for Xinput stuff the better.
 
 natural media tools (raph?)
 
 A "Revert To" menu options:
-	Open a image, munge it around a whole bunch, decide you dont like the
-	results, and you dont have enough undo steps. File->revert
-	would easily reload the file from disk.
+
+	Open a image, munge it around a whole bunch, decide you dont
+	like the results, and you dont have enough undo
+	steps. File->revert would easily reload the file from disk.
 
 Redesign of the Blend Tool dialog? (it's rather large...)
 
 "Fit text to selection": 
-	make selection, scale text to fit it... A suggestion from Xach,
-	Perhaps instead of rendering the text and font size exactly, make a
-	bounding box of it, then scale the bounding box as approriate. When
-	the box size is chosen, figure out the best-fit font size and render it.
+
+	make selection, scale text to fit it... A suggestion from
+	Xach, Perhaps instead of rendering the text and font size
+	exactly, make a bounding box of it, then scale the bounding
+	box as approriate. When the box size is chosen, figure out the
+	best-fit font size and render it.
+
+	(Text should be redone entirely, with a native T1/TTF
+	interpreter.  Using X to render text is cheap but nasty. --sg)
 
 a complete groundup rewrite of iscissors: 
-	Isciissors in theory are very useful. 1.0 iscissors basically dont
-	work though. It has also been mentioned that the gui from .54 was much better. 
+
+	Isciissors in theory are very useful. 1.0 iscissors basically
+	dont work though. It has also been mentioned that the gui from
+	.54 was much better.
 
 Interactive resizing/scaling of layers (maybe with handles on the edges)
 
 progress bars on long proccesses:
-	 Xcf loading/saving, transforms, complicated blend's etc. The user
-	gets no feedback about what is going on. This is bad.
+
+	Xcf loading/saving, transforms, complicated blend's etc. The
+	user gets no feedback about what is going on. This is bad.
+
+	(Maybe run core image ops from the idle loop?  We already do
+	this for curves et al. --sg)
 
 status bars on image window: 
+
 	(maybe swallow plug-in progress bars, show current x,y, file
 	type, etc...) 
 	( I think snorfle is working on this)
 	- optionally show that information in the toolbar ?
 	- probably dragable to the toolbar and vice versa
 
-"open into layer" and new image from cut buffer stuff should perhaps be in core?: 
-	This would be "Paste into New" and/or "Copy to New". Should be simple. Theres a script to do this,
-	but the functionailty is so simple it perhaps would eb best to do in core.
+"open into layer" and new image from cut buffer stuff should perhaps
+be in core?:
+
+	This would be "Paste into New" and/or "Copy to New". Should be
+	simple. Theres a script to do this, but the functionailty is
+	so simple it perhaps would eb best to do in core.
 
 drag & drop for layers:
-	 (both in the dialog, and from image to image).
-	Changing postion of layers now is quite a pain. The onyl
-	choices are to raise by one, and lower by one. It would be much nicer
-	to be able to click & drag a layer to its new spot in the stack.
+
+	(both in the dialog, and from image to image).  Changing
+	postion of layers now is quite a pain. The onyl choices are to
+	raise by one, and lower by one. It would be much nicer to be
+	able to click & drag a layer to its new spot in the stack.
 
 more indicators of current status:
-	(X,Y position, selection size and placement etc ),
-	maybe in another dialog, maybe a status bar?
-	Lots of request for this. Think snorfle is working on it.
 
-Clean up swapfiles:
-	 Gimp is prone to leaving large swapfiles lying around. Perhaps on
-	startup or exit it could clean up unclaimed swapfiles. Problem: how to
-	tell a unclaimed swap file (one could be in use by another
-	gimp). Maybe add a  unique id to the swap file?
+	(X,Y position, selection size and placement etc ), maybe in
+	another dialog, maybe a status bar?  Lots of request for
+	this. Think snorfle is working on it.
+
+Clean up swapfiles: 
+
+        Gimp is prone to leaving large swapfiles lying around. Perhaps
+	on startup or exit it could clean up unclaimed
+	swapfiles. Problem: how to tell a unclaimed swap file (one
+	could be in use by another gimp). Maybe add a unique id to the
+	swap file?
+
+	Also should handle out-of-space on swap device better.
+	(Couldn't be much worse.) --sg
 
 Automagically guess whats a good tilecache size:
-	Not sure how to do this. maybe offer suggestions in the preference dialog or install.
+
+	Not sure how to do this. maybe offer suggestions in the
+	preference dialog or install.
 
 an artist palette type of color selector:
-	 (maybe based on raphs watercolor deal?) 
-	notebooked with the regular color selector? (believe seth is working on this).
+
+	(maybe based on raphs watercolor deal?)  notebooked with the
+	regular color selector? (believe seth is working on this).
 
 BETTER FONT SUPPORT! 
+
 	even if we have to go around X. and a better font selector
 	too. Perhaps the new gtk font selector could be used. It seems
-	handy. The actual support may require integration of type1lib or
-	freetype or similar. Probabaly be an extension, gimp could fall back
-	to X font rendering if  need be.
+	handy. The actual support may require integration of type1lib
+	or freetype or similar. Probabaly be an extension, gimp could
+	fall back to X font rendering if need be.
 
-ability to get an exact count of the total number of colors
-in the image:
-	 Xpm plugin has an algo to do this. Perhaps it should be in the core.
+	(There's a good argument for making all text operations run
+	thru an extension. --sg)
+
+ability to get an exact count of the total number of colors in the
+image:
+
+	Xpm plugin has an algo to do this. Perhaps it should be in the
+	core.
 
 indexed/color reducing to arbitrary number of colors:
-	Current convert.cis limited to indexing to 8-bit palettes or less.
-	Dont know what would be involved in making it work for larger
-	palettes. convert.c has some deep magic involved in it, so who 
-	knows.
-	
+
+	Current convert.c is limited to indexing to 8-bit palettes or
+	less.  Dont know what would be involved in making it work for
+	larger palettes. convert.c has some deep magic involved in it,
+	so who knows.
+
+	(Related: indexed images with more than 8 bits depth.  --sg)
 
 Folding box for the toolbar:
-	 So you can have it be 9x3 like now, or 1x27, or
-	whatever... gyve has  rough outlines of a widget to do this...
+
+	So you can have it be 9x3 like now, or 1x27, or
+	whatever... gyve has rough outlines of a widget to do this...
 	(belive msw is working on this)
 
 optimize transform_core (special cases, fft stuff?, optimizations only
-	raph understands, etc...)
+raph understands, etc...)
 
 brush-shaped cursors:
-	Possible solutions, generate cursors on the fly, use shaped pixmaps,
-	possibly just draw directly on the preview, any other ideas?
-	Raphs caanvas might offer the oppurtunity to do this in color and anti-aliased.
-	
+
+	Possible solutions, generate cursors on the fly, use shaped
+	pixmaps, possibly just draw directly on the preview, any other
+	ideas?  Raphs caanvas might offer the oppurtunity to do this
+	in color and anti-aliased.
 
 pixmap brushes:
-	Should be simple. maybe need a new format that would include data/mask
-	(probabaly just use a xcf). Once its loaded in as a tempbuf, a few
-	tweaks in the paint tools ought to handle it. Should it be a new tool?
-	jsut a new brush type for old paint to ls?
+
+	Should be simple. maybe need a new format that would include
+	data/mask (probabaly just use a xcf). Once its loaded in as a
+	tempbuf, a few tweaks in the paint tools ought to handle
+	it. Should it be a new tool?  jsut a new brush type for old
+	paint to ls?
 
 Quickmask/paintable selections:
-	Any ideas on the best way to do the ui? The fundamentals
-	of beng abl to do this are already there. Just need a good
-	way to present it.
+
+	Any ideas on the best way to do the ui? The fundamentals of
+	beng abl to do this are already there. Just need a good way to
+	present it.
 
 let pdb stuff register under the layers_dialog menu:
-	Lots of potential in scripts to do layer/channel manip.
-	Might as well let them register on those menus.
+
+	Lots of potential in scripts to do layer/channel manip.  Might
+	as well let them register on those menus.
 
 some sort of mdi for dialogs so you could tab them together or
 pull them apart:
+
 	Would be nice to be able to pile all the dialogs into one big
-	notebook.
-	(think msw is working on this)
+	notebook.  (think msw is working on this)
 
 make color picker able to choose from any color on the screen. 
+
 	This sounds really simple. Any ideas?
 
 dodge/burn/sponge/smudge tools:
+
 	several people have commented on the need for this. Anyone
 	know how to do it well?
 
 session management
-
 
 Text Tool
 	More complete font selection
