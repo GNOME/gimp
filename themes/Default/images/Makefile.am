@@ -197,6 +197,8 @@ STOCK_TOOL_IMAGES = \
 	tools/stock-tool-color-balance-22.png		\
 	tools/stock-tool-color-picker-16.png		\
 	tools/stock-tool-color-picker-22.png		\
+	tools/stock-tool-colorize-16.png		\
+	tools/stock-tool-colorize-22.png		\
 	tools/stock-tool-crop-16.png			\
 	tools/stock-tool-crop-22.png			\
 	tools/stock-tool-curves-16.png			\

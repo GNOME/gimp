@@ -216,9 +216,9 @@ gimp_rgb_to_hsl (const GimpRGB *rgb,
 }
 
 static gdouble
-_gimp_color_value (gdouble n1,
-		   gdouble n2,
-		   gdouble hue)
+gimp_hsl_value (gdouble n1,
+                gdouble n2,
+                gdouble hue)
 {
   gdouble val;
 
@@ -226,6 +226,7 @@ _gimp_color_value (gdouble n1,
     hue = hue - 360.0;
   else if (hue < 0.0)
     hue = hue + 360.0;
+
   if (hue < 60.0)
     val = n1 + (n2 - n1) * hue / 60.0;
   else if (hue < 180.0)
@@ -244,26 +245,30 @@ gimp_hsl_to_rgb (gdouble  hue,
 		 gdouble  lightness,
 		 GimpRGB *rgb)
 {
-  gdouble m1, m2;
 
   g_return_if_fail (rgb != NULL);
 
-  if (lightness <= 0.5)
-    m2 = lightness * (1.0 + saturation);
-  else
-    m2 = lightness + saturation - lightness * saturation;
-  m1 = 2.0 * lightness - m2;
-
   if (saturation == 0)
     {
-      if (hue == GIMP_HSV_UNDEFINED)
-        rgb->r = rgb->g = rgb->b = 1.0;
+      /*  achromatic case  */
+      rgb->r = lightness;
+      rgb->g = lightness;
+      rgb->b = lightness;
     }
   else
     {
-      rgb->r = _gimp_color_value (m1, m2, hue + 120.0);
-      rgb->g = _gimp_color_value (m1, m2, hue);
-      rgb->b = _gimp_color_value (m1, m2, hue - 120.0);
+      gdouble m1, m2;
+
+      if (lightness <= 0.5)
+        m2 = lightness * (1.0 + saturation);
+      else
+        m2 = lightness + saturation - lightness * saturation;
+
+      m1 = 2.0 * lightness - m2;
+
+      rgb->r = gimp_hsl_value (m1, m2, hue + 120.0);
+      rgb->g = gimp_hsl_value (m1, m2, hue);
+      rgb->b = gimp_hsl_value (m1, m2, hue - 120.0);
     }
 }
 
@@ -582,6 +587,7 @@ gimp_hls_value (gdouble n1,
     hue -= 255;
   else if (hue < 0)
     hue += 255;
+
   if (hue < 42.5)
     value = n1 + (n2 - n1) * (hue / 42.5);
   else if (hue < 127.5)
@@ -600,7 +606,6 @@ gimp_hls_to_rgb_int (gint *hue,
 		     gint *saturation)
 {
   gdouble h, l, s;
-  gdouble m1, m2;
 
   h = *hue;
   l = *lightness;
@@ -615,6 +620,8 @@ gimp_hls_to_rgb_int (gint *hue,
     }
   else
     {
+      gdouble m1, m2;
+
       if (l < 128)
 	m2 = (l * (255 + s)) / 65025.0;
       else

@@ -42,7 +42,6 @@
 #include "display/gimpdisplay.h"
 
 #include "gimpthresholdtool.h"
-#include "tool_manager.h"
 
 #include "gimp-intl.h"
 

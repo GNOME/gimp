@@ -1,3 +1,39 @@
+2003-05-19  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpcolor/gimpcolorspace.c (gimp_hsl_to_rgb): fixed to work
+	like gimp_hls_to_rgb_int() (does the right thing now for the
+	saturation == 0 case). Some minor cleanups.
+
+	Implemented "Colorize" as suggested in bug #20509. It's not a
+	toggle in the "Hue/Saturation" tool dialog (which would be a gross
+	hack IMHO) but a separate tool. Fixes bug #20509.
+
+	* app/base/Makefile.am
+	* app/base/base-types.h
+	* app/base/colorize.[ch]: the actual mapping function lives
+	here. Its algorithm was taken from the "colorify" plug-in.
+
+	* app/tools/Makefile.am
+	* app/tools/gimpcolorizetool.[ch]: the tool.
+
+	* app/tools/tools.c: register it.
+
+	* app/gui/dialogs.c: session-manage its dialog.
+
+	* libgimpwidgets/gimpstock.[ch]
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/tools/stock-tool-colorize-16.png
+	* themes/Default/images/tools/stock-tool-colorize-22.png: new
+	icons from Jimmac.
+
+	Unrelated:
+
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c: don't #include "tool_manager.h"
+
 2003-05-19  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: remove glibconfig.h inline check, it hasn't worked

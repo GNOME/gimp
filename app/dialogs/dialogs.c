@@ -50,6 +50,8 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
     NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
   { "gimp-color-picker-tool-dialog",
     NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+  { "gimp-colorize-tool-dialog",
+    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
   { "gimp-crop-tool-dialog",
     NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
   { "gimp-curves-tool-dialog",

@@ -35,7 +35,6 @@
 #include "display/gimpdisplay.h"
 
 #include "gimpbrightnesscontrasttool.h"
-#include "tool_manager.h"
 
 #include "gimp-intl.h"
 

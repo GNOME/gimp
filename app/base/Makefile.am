@@ -20,6 +20,8 @@ libappbase_a_SOURCES = \
 	brush-scale.h		\
 	color-balance.c		\
 	color-balance.h		\
+	colorize.c		\
+	colorize.h		\
 	curves.c		\
 	curves.h		\
 	$(mmx_sources)		\

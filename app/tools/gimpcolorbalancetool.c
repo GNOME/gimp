@@ -37,7 +37,6 @@
 #include "widgets/gimpenummenu.h"
 
 #include "gimpcolorbalancetool.h"
-#include "tool_manager.h"
 
 #include "gimp-intl.h"
 
