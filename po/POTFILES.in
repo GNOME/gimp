@@ -106,6 +106,7 @@ app/threshold.c
 app/tips_dialog.c
 app/tool_options.c
 app/tools.c
+app/tools_cmds.c
 app/transform_core.c
 app/transform_tool.c
 app/undo.c

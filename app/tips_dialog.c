@@ -181,6 +181,7 @@ tips_dialog_create (void)
 			  GTK_SIGNAL_FUNC (tips_show_previous),
 			  NULL);
       gtk_container_add (GTK_CONTAINER (bbox), button);
+      gtk_widget_set_sensitive (button, (tips_count > 1));
       gtk_widget_show (button);
 
       button = gtk_button_new_with_label (_("Next Tip"));
@@ -189,6 +190,7 @@ tips_dialog_create (void)
 			  GTK_SIGNAL_FUNC (tips_show_next),
 			  NULL);
       gtk_container_add (GTK_CONTAINER (bbox), button);
+      gtk_widget_set_sensitive (button, (tips_count > 1));
       gtk_widget_show (button);
 
      /*  Connect the "F1" help key  */

@@ -1,3 +1,24 @@
+2001-10-22  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/tools.pdb
+	* app/tools_cmds.c: don't allow to apply transformations to layers
+	that have a layer mask attached. We do not support this, but didn't
+	check the PDB calls to the transform tool. 
+
+	This fixes bug #62764 (rotate a gdyntext with layer mask applied 
+	freezes gimp), but GDynText should probably reflect the fact that
+	the text can not be rotated if it has a layer mask by graying out 
+	the rotation UI elements.
+
+	* app/tips_dialog.c: make Next and Previous buttons insensitive if
+	no tips could be loaded (as suggested by Branko Collin).
+	
+	* plug-ins/common/mblur.c (mblur_linear): avoid endless looping when
+	length == 1 in linear mode (fixes bug #62640).
+
+	* plug-ins/gap/gap_lib.c: applied patch from Wolfgang Hofer that fixes 
+	bug #61677 (error in duplicate frames GUI).
+
 2001-10-19  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/FractalExplorer/FractalExplorer.c

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
+"POT-Creation-Date: 2001-10-22 18:38+0200\n"
 "PO-Revision-Date: 2001-04-10 20:04+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -251,19 +251,19 @@ msgstr "Schwellwert:"
 msgid "Blend: Invalid for indexed images."
 msgstr "Übergang: Bei indizierten Bildern nicht möglich."
 
-#: app/blend.c:465
+#: app/blend.c:466
 msgid "Blend: 0, 0"
 msgstr "Übergang: 0, 0"
 
-#: app/blend.c:528
+#: app/blend.c:529
 msgid "Blend operation failed."
 msgstr "Übergang schlug fehl."
 
-#: app/blend.c:534
+#: app/blend.c:535
 msgid "Blending..."
 msgstr "Farbverlauf..."
 
-#: app/blend.c:612 app/blend.c:622
+#: app/blend.c:614 app/blend.c:624
 msgid "Blend: "
 msgstr "Farbverlauf: "
 
@@ -308,7 +308,7 @@ msgstr "Kontrast:"
 
 #. The preview toggle
 #: app/brightness_contrast.c:312 app/color_balance.c:452 app/curves.c:691
-#: app/fileops.c:420 app/hue_saturation.c:571 app/levels.c:579
+#: app/fileops.c:421 app/hue_saturation.c:571 app/levels.c:579
 #: app/palette.c:3229 app/posterize.c:249 app/threshold.c:358
 msgid "Preview"
 msgstr "Vorschau"
@@ -320,10 +320,10 @@ msgstr "Pinseleditor"
 #. The close button
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:727
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
-#: app/crop.c:1073 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
+#: app/crop.c:1073 app/devices.c:760 app/docindex.c:721 app/errorconsole.c:284
 #: app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161
 #: app/histogram_tool.c:294 app/info_window.c:261 app/lc_dialog.c:217
-#: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2058
+#: app/measure.c:331 app/nav_window.c:1426 app/palette.c:2058
 #: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:70
 #: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
 #: app/tools.c:1549 app/undo_history.c:759
@@ -343,7 +343,7 @@ msgstr "Härte:"
 msgid "Aspect Ratio:"
 msgstr "Seitenverhältnis:"
 
-#: app/brush_edit.c:330 app/ink.c:326 app/measure.c:322 app/rotate_tool.c:93
+#: app/brush_edit.c:330 app/ink.c:326 app/measure.c:327 app/rotate_tool.c:93
 msgid "Angle:"
 msgstr "Winkel:"
 
@@ -724,10 +724,10 @@ msgstr "Hex Triplet"
 msgid "Intensity:"
 msgstr "Intensität:"
 
-#: app/color_picker.c:638 app/color_picker.c:639 app/color_picker.c:640
-#: app/color_picker.c:641 app/color_picker.c:642 app/color_picker.c:643
-#: app/color_picker.c:644 app/color_picker.c:656 app/color_picker.c:663
-#: app/color_picker.c:681 app/color_picker.c:696 app/info_window.c:191
+#: app/color_picker.c:639 app/color_picker.c:640 app/color_picker.c:641
+#: app/color_picker.c:642 app/color_picker.c:643 app/color_picker.c:644
+#: app/color_picker.c:645 app/color_picker.c:657 app/color_picker.c:664
+#: app/color_picker.c:682 app/color_picker.c:697 app/info_window.c:191
 #: app/info_window.c:197 app/info_window.c:203 app/info_window.c:209
 #: app/info_window.c:428 app/info_window.c:429 app/info_window.c:430
 #: app/info_window.c:431 app/info_window.c:453
@@ -1057,7 +1057,7 @@ msgstr "Gerätestatus"
 msgid "Pasted Layer"
 msgstr "Eingefügte Ebene"
 
-#: app/docindex.c:116
+#: app/docindex.c:113
 msgid ""
 "Open the selected entry\n"
 "<Shift> Raise window if already open\n"
@@ -1067,7 +1067,7 @@ msgstr ""
 "<Shift> Fenster anheben wenn bereits geöffnet\n"
 "<Ctrl> Bild Öffnen-Dialog"
 
-#: app/docindex.c:121
+#: app/docindex.c:118
 msgid ""
 "Move the selected entry up in the index\n"
 "<Shift> To top"
@@ -1075,7 +1075,7 @@ msgstr ""
 "Bewege den ausgewählten Eintrag nach oben\n"
 "<Shift> Ganz nach oben"
 
-#: app/docindex.c:125
+#: app/docindex.c:122
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
@@ -1083,11 +1083,11 @@ msgstr ""
 "Bewege den ausgewählten Eintrag nach unten\n"
 "<Shift> Ganz nach unten"
 
-#: app/docindex.c:129
+#: app/docindex.c:126
 msgid "Remove the selected entry from the index"
 msgstr "Entferne den ausgewählten Eintrag aus der Liste"
 
-#: app/docindex.c:770
+#: app/docindex.c:715
 msgid "Document Index"
 msgstr "Dokumentenindex"
 
@@ -1221,16 +1221,16 @@ msgstr "Pixel/%a"
 msgid "Image Type"
 msgstr "Bildart"
 
-#: app/fileops.c:268 app/fileops.c:314
+#: app/fileops.c:269 app/fileops.c:315
 msgid "Load Image"
 msgstr "Bild öffnen"
 
 #. format-chooser frame
-#: app/fileops.c:329
+#: app/fileops.c:330
 msgid "Determine File Type"
 msgstr "Dateityp bestimmen"
 
-#: app/fileops.c:402
+#: app/fileops.c:403
 msgid ""
 "Generate\n"
 "Preview"
@@ -1238,11 +1238,11 @@ msgstr ""
 "Vorschau\n"
 "erzeugen"
 
-#: app/fileops.c:421
+#: app/fileops.c:422
 msgid "No Selection."
 msgstr "Keine Auswahl."
 
-#: app/fileops.c:469 app/fileops.c:1781
+#: app/fileops.c:470 app/fileops.c:1782
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1251,19 +1251,19 @@ msgstr ""
 "Sichern schlug fehl.\n"
 "%s"
 
-#: app/fileops.c:494 app/fileops.c:526
+#: app/fileops.c:495 app/fileops.c:527
 msgid "Save Image"
 msgstr "Bild sichern"
 
-#: app/fileops.c:543
+#: app/fileops.c:544
 msgid "Save Options"
 msgstr "Einstellungen"
 
-#: app/fileops.c:552
+#: app/fileops.c:553
 msgid "Determine File Type:"
 msgstr "Dateityp bestimmen:"
 
-#: app/fileops.c:615
+#: app/fileops.c:616
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
@@ -1271,7 +1271,7 @@ msgstr ""
 "Kann Bild nicht zurücksetzen,\n"
 "da kein Dateiname mit dem Bild verknüpft ist"
 
-#: app/fileops.c:626
+#: app/fileops.c:627
 #, c-format
 msgid ""
 "Reverting %s to\n"
@@ -1286,19 +1286,19 @@ msgstr ""
 "(Alle Änderungen inklusive aller\n"
 "Undo-Informationen gehen verloren)"
 
-#: app/fileops.c:633
+#: app/fileops.c:634
 msgid "Revert Image?"
 msgstr "Bild zurücksetzen?"
 
-#: app/fileops.c:638 app/fileops.c:1921
+#: app/fileops.c:639 app/fileops.c:1924
 msgid "Yes"
 msgstr "Ja"
 
-#: app/fileops.c:638 app/fileops.c:1921
+#: app/fileops.c:639 app/fileops.c:1924
 msgid "No"
 msgstr "Nein"
 
-#: app/fileops.c:741
+#: app/fileops.c:742
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1307,7 +1307,7 @@ msgstr ""
 "%s fehlgeschlagen.\n"
 "%s: Unbekannter Typ."
 
-#: app/fileops.c:758
+#: app/fileops.c:759
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1316,7 +1316,7 @@ msgstr ""
 "%s fehlgeschlagen.\n"
 "%s ist keine reguläre Datei."
 
-#: app/fileops.c:779
+#: app/fileops.c:780
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1325,11 +1325,11 @@ msgstr ""
 "%s fehlgeschlagen.\n"
 "%s: Zugriff verweigert."
 
-#: app/fileops.c:835 app/fileops.c:1556
+#: app/fileops.c:836 app/fileops.c:1557
 msgid "Open"
 msgstr "Öffnen"
 
-#: app/fileops.c:1153
+#: app/fileops.c:1154
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1338,7 +1338,7 @@ msgstr ""
 "Sichern fehlgeschlagen.\n"
 "%s: Unbekannter Dateityp."
 
-#: app/fileops.c:1168
+#: app/fileops.c:1169
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1347,7 +1347,7 @@ msgstr ""
 "Sichern fehlgeschlagen.\n"
 "%s ist keine reguläre Datei."
 
-#: app/fileops.c:1187
+#: app/fileops.c:1188
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1356,35 +1356,35 @@ msgstr ""
 "Sichern fehlgeschlagen.\n"
 "%s: Zugriff verweigert."
 
-#: app/fileops.c:1434
+#: app/fileops.c:1435
 msgid "(This thumbnail may be out of date)"
 msgstr "(Diese Vorschau könnte veraltet sein)"
 
-#: app/fileops.c:1435
+#: app/fileops.c:1436
 msgid "(No Information)"
 msgstr "(Keine Information)"
 
-#: app/fileops.c:1445
+#: app/fileops.c:1446
 msgid "(Thumbnail saving is disabled)"
 msgstr "(Vorschau-Sicherung ist abgeschaltet)"
 
-#: app/fileops.c:1449
+#: app/fileops.c:1450
 msgid "(Could not write thumbnail file)"
 msgstr "(Konnte Vorschau-Datei nicht schreiben)"
 
-#: app/fileops.c:1453
+#: app/fileops.c:1454
 msgid "(Thumbnail file not written)"
 msgstr "(Vorschau-Datei nicht geschrieben)"
 
-#: app/fileops.c:1471
+#: app/fileops.c:1472
 msgid "No preview available"
 msgstr "Keine Vorschau verfügbar"
 
-#: app/fileops.c:1581
+#: app/fileops.c:1582
 msgid "(could not make preview)"
 msgstr "(konnte keine Vorschau erstellen)"
 
-#: app/fileops.c:1662 app/fileops.c:1707
+#: app/fileops.c:1663 app/fileops.c:1708
 #, c-format
 msgid ""
 "Open failed.\n"
@@ -1393,20 +1393,20 @@ msgstr ""
 "Öffnen fehlgeschlagen.\n"
 "%s"
 
-#: app/fileops.c:1914
+#: app/fileops.c:1917
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s existiert, überschreiben?"
 
-#: app/fileops.c:1916
+#: app/fileops.c:1919
 msgid "File Exists!"
 msgstr "Datei Existiert!"
 
-#: app/fileops.c:1976
+#: app/fileops.c:1981
 msgid "Revert"
 msgstr "Zurücksetzen"
 
-#: app/fileops.c:1989
+#: app/fileops.c:1994
 #, c-format
 msgid ""
 "Revert failed.\n"
@@ -1516,26 +1516,26 @@ msgstr ""
 msgid "No selection to stroke!"
 msgstr "Es gibt keine Auswahl, die nachgezogen werden kann!"
 
-#: app/gimpbrush.c:298
+#: app/gimpbrush.c:301
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
 msgstr "Unbekanntes Pinselformat Version #%d in \"%s\"."
 
-#: app/gimpbrush.c:318
+#: app/gimpbrush.c:321
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
 msgstr "Fehler in GIMP Pinseldatei \"%s\"."
 
-#: app/gimpbrush.c:325 app/patterns.c:236
+#: app/gimpbrush.c:328 app/patterns.c:236
 msgid "Unnamed"
 msgstr "Unbenannt"
 
-#: app/gimpbrush.c:338 app/gimpbrush.c:383
+#: app/gimpbrush.c:341 app/gimpbrush.c:386
 #, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
 msgstr "GIMP Pinseldatei scheint nicht vollständig zu sein: \"%s\"."
 
-#: app/gimpbrush.c:363
+#: app/gimpbrush.c:366
 #, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
 msgstr "GIMP Pinseldatei scheint beschädigt zu sein: \"%s\"."
@@ -1771,7 +1771,7 @@ msgstr "GIMP Meldung"
 msgid "pixel"
 msgstr "Pixel"
 
-#: app/gimpunit.c:63 app/measure.c:512 app/measure.c:516 app/paint_core.c:544
+#: app/gimpunit.c:63 app/measure.c:518 app/measure.c:522 app/paint_core.c:545
 msgid "pixels"
 msgstr "Pixel"
 
@@ -2976,7 +2976,7 @@ msgstr ""
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Dieses Konsolenfenster wird in 10 Sekunden geschlossen)\n"
 
-#: app/measure.c:126 app/measure.c:319
+#: app/measure.c:126 app/measure.c:324
 msgid "Measure Tool"
 msgstr "Maßband"
 
@@ -2984,11 +2984,11 @@ msgstr "Maßband"
 msgid "Use Info Window"
 msgstr "Benutze Info-Fenster"
 
-#: app/measure.c:321
+#: app/measure.c:326
 msgid "Distance:"
 msgstr "Abstand:"
 
-#: app/measure.c:512 app/measure.c:517 app/measure.c:525 app/measure.c:553
+#: app/measure.c:518 app/measure.c:523 app/measure.c:531 app/measure.c:559
 msgid "degrees"
 msgstr "Grad"
 
@@ -3832,7 +3832,7 @@ msgstr "Status:"
 msgid "Autoload during startup"
 msgstr "Automatisch beim Start laden"
 
-#: app/move.c:500
+#: app/move.c:502
 msgid "Move Tool"
 msgstr "Verschieben"
 
@@ -3846,7 +3846,7 @@ msgstr "Navigation: %s-%d.%d"
 msgid "Navigation: No Image"
 msgstr "Navigation: Kein Bild"
 
-#: app/paint_core.c:805
+#: app/paint_core.c:806
 msgid "No brushes available for use with this tool."
 msgstr "Keine Pinsel für dieses Werkzeug vorhanden."
 
@@ -4865,23 +4865,23 @@ msgstr "QMask Attribute ändern"
 msgid "Mask Opacity:"
 msgstr "Maskendeckkraft:"
 
-#: app/rect_select.c:203
+#: app/rect_select.c:204
 msgid "Selection: ADD"
 msgstr "Auswahl: Hinzufügen"
 
-#: app/rect_select.c:206
+#: app/rect_select.c:207
 msgid "Selection: SUBTRACT"
 msgstr "Auswahl: Abziehen"
 
-#: app/rect_select.c:209
+#: app/rect_select.c:210
 msgid "Selection: INTERSECT"
 msgstr "Auswahl: Schneiden"
 
-#: app/rect_select.c:212
+#: app/rect_select.c:213
 msgid "Selection: REPLACE"
 msgstr "Auswahl: Ersetzen"
 
-#: app/rect_select.c:447 app/rect_select.c:454
+#: app/rect_select.c:450 app/rect_select.c:457
 msgid "Selection: "
 msgstr "Auswahl: "
 
@@ -5077,11 +5077,11 @@ msgstr "Tips beim nächsten Start anzeigen"
 msgid "Previous Tip"
 msgstr "Vorheriger Tip"
 
-#: app/tips_dialog.c:186
+#: app/tips_dialog.c:187
 msgid "Next Tip"
 msgstr "Nächster Tip"
 
-#: app/tips_dialog.c:288
+#: app/tips_dialog.c:290
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
 "There should be a file called gimp_tips.txt in\n"
@@ -5537,6 +5537,15 @@ msgstr "/Bild/Histogramm..."
 msgid "View image histogram"
 msgstr "Histogramm anzeigen"
 
+#: app/tools_cmds.c:2404 app/tools_cmds.c:2530 app/tools_cmds.c:2681
+#: app/tools_cmds.c:2962 app/transform_core.c:365
+msgid ""
+"Transformations do not work on\n"
+"layers that contain layer masks."
+msgstr ""
+"Transformationen funktionieren nicht\n"
+"auf Ebenen, die Masken enthalten."
+
 #: app/transform_core.c:254
 msgid "Rotate"
 msgstr "Rotieren"
@@ -5548,14 +5557,6 @@ msgstr "Skalieren"
 #: app/transform_core.c:256
 msgid "Shear"
 msgstr "Scheren"
-
-#: app/transform_core.c:365
-msgid ""
-"Transformations do not work on\n"
-"layers that contain layer masks."
-msgstr ""
-"Transformationen funktionieren nicht\n"
-"auf Ebenen, die Masken enthalten."
 
 #: app/transform_core.c:1609
 msgid "Transformation"

@@ -1,3 +1,9 @@
+2001-10-23  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added a new file (no new messages)
+	
+	* de.po: updated german translation
+
 2001-10-10  Sven Neumann  <sven@gimp.org>
 
 	* lt.po: translate gimp_tips.txt with gimp_tips.lt.txt so the tips

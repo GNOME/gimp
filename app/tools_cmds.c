@@ -50,6 +50,8 @@
 #include "transform_core.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
+
 static ProcRecord airbrush_proc;
 static ProcRecord airbrush_default_proc;
 static ProcRecord blend_proc;
@@ -2396,6 +2398,17 @@ rotate_invoker (Argument *args)
 
   if (success)
     {
+      if (GIMP_IS_LAYER (drawable) &&
+	  layer_get_mask (GIMP_LAYER (drawable)))
+	{
+	  g_message (_("Transformations do not work on\n"
+		       "layers that contain layer masks."));
+	  success = FALSE;
+	}
+    }
+    
+    if (success)
+    {
       gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
     
       /* Start a transform undo group */
@@ -2510,6 +2523,17 @@ scale_invoker (Argument *args)
   trans_info[Y1] = args[5].value.pdb_float;
 
   if (success)
+    {
+      if (GIMP_IS_LAYER (drawable) &&
+	  layer_get_mask (GIMP_LAYER (drawable)))
+	{
+	  g_message (_("Transformations do not work on\n"
+		       "layers that contain layer masks."));
+	  success = FALSE;
+	}
+    }
+    
+    if (success)
     {
       if (trans_info[X0] < trans_info[X1] &&
 	  trans_info[Y0] < trans_info[X1])
@@ -2650,6 +2674,17 @@ shear_invoker (Argument *args)
   magnitude = args[3].value.pdb_float;
 
   if (success)
+    {
+      if (GIMP_IS_LAYER (drawable) &&
+	  layer_get_mask (GIMP_LAYER (drawable)))
+	{
+	  g_message (_("Transformations do not work on\n"
+		       "layers that contain layer masks."));
+	  success = FALSE;
+	}
+    }
+    
+    if (success)
     {
       gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
     
@@ -2920,6 +2955,17 @@ transform_2d_invoker (Argument *args)
   dest_y = args[8].value.pdb_float;
 
   if (success)
+    {
+      if (GIMP_IS_LAYER (drawable) &&
+	  layer_get_mask (GIMP_LAYER (drawable)))
+	{
+	  g_message (_("Transformations do not work on\n"
+		       "layers that contain layer masks."));
+	  success = FALSE;
+	}
+    }
+    
+    if (success)
     {
       gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
 	
