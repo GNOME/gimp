@@ -1,3 +1,9 @@
+2004-09-04  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimppreviewarea.sgml: added
+	gimp_preview_area_menu_popup().
+
 2004-09-03  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-sections.txt: added gimp_check_size() and

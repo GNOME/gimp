@@ -783,6 +783,7 @@ gimp_preview_area_draw
 gimp_preview_area_fill
 gimp_preview_area_set_offsets
 gimp_preview_area_set_cmap
+gimp_preview_area_menu_popup
 <SUBSECTION Standard>
 GimpPreviewAreaClass
 GIMP_PREVIEW_AREA

@@ -90,3 +90,12 @@ GimpPreviewArea
 @num_colors: 
 
 
+<!-- ##### FUNCTION gimp_preview_area_menu_popup ##### -->
+<para>
+
+</para>
+
+@area: 
+@event: 
+
+
