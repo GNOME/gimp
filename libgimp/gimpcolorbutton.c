@@ -27,6 +27,8 @@
  *                        destroy all color-related widgets in the gtk colorselector.
  */
 
+#include "config.h"
+
 #include "gimp.h"
 #include "gimpcolorbutton.h"
 #include "gimpintl.h"
