@@ -1,7 +1,7 @@
 /*  
- *  ScreenShot plug-in v0.7 
+ *  ScreenShot plug-in v0.8 
  *  Sven Neumann, neumanns@uni-duesseldorf.de  
- *  1998/05/28
+ *  1998/06/04
  *
  *  Any suggestions, bug-reports or patches are very welcome.
  * 
@@ -38,6 +38,7 @@
  *                     itself correctly as extension
  *  (98/04/18)  v0.6   cosmetic change to the dialog
  *  (98/05/28)  v0.7   use g_message for error output
+ *  (98/06/04)  v0.8   added delay-time for root window shot
  */
 
 #include <stdio.h>
@@ -50,12 +51,12 @@
 /* Defines */
 #define PLUG_IN_NAME        "extension_screenshot"
 #define PLUG_IN_PRINT_NAME  "Screen Shot"
-#define PLUG_IN_VERSION     "v0.7 (98/05/28)"
+#define PLUG_IN_VERSION     "v0.8 (98/06/04)"
 #define PLUG_IN_MENU_PATH   "<Toolbox>/Xtns/Screen Shot"
 #define PLUG_IN_AUTHOR      "Sven Neumann (neumanns@uni-duesseldorf.de)"
 #define PLUG_IN_COPYRIGHT   "Sven Neumann"
 #define PLUG_IN_DESCRIBTION "Create a screenshot of a single window or the whole screen"
-#define PLUG_IN_HELP        "This extension serves as a simple frontend to the X-window utility xwd and the xwd-file-plug-in. After specifying some options, xwd is called, the user selects a window, and the resulting image is loaded into the gimp. When called non-interactively it may grab the root window or use the window-id passed as a parameter."
+#define PLUG_IN_HELP        "This extension serves as a simple frontend to the X-window utility xwd and the xwd-file-plug-in. After specifying some options, xwd is called, the user selects a window, and the resulting image is loaded into the gimp. Alternatively the whole screen can be grabbed. When called non-interactively it may grab the root window or use the window-id passed as a parameter."
 
 #define NUMBER_IN_ARGS 3
 #define IN_ARGS { PARAM_INT32,    "run_mode",  "Interactive, non-interactive" },\
@@ -72,11 +73,14 @@
 typedef struct {
   gint root;
   gchar *window_id;
+  guint delay;
   gint decor;
 } ScreenShotValues;
 
 typedef struct {
   GtkWidget *decor_button;
+  GtkWidget *delay_box;
+  GtkWidget *delay_spinner;
   GtkWidget *single_button;
   GtkWidget *root_button;
   gint run;
@@ -84,9 +88,10 @@ typedef struct {
 
 static ScreenShotValues shootvals = 
 { 
-  FALSE,    /* default to window */
-  NULL,      
-  TRUE      /* default to decorations */
+  FALSE,     /* root window */
+  NULL,      /* window ID */
+  0,         /* delay */
+  TRUE,      /* decorations */
 };
 
 static ScreenShotInterface shootint =
@@ -110,6 +115,8 @@ static void  shoot_ok_callback (GtkWidget *widget,
 static void  shoot_toggle_update (GtkWidget *widget,
 				  gpointer   radio_button);
 static void  shoot_display_image (gint32 image);
+static void  shoot_delay (gint32 delay);
+static gint shoot_delay_callback (gpointer data);
 
 /* Global Variables */
 GPlugInInfo PLUG_IN_INFO =
@@ -188,10 +195,11 @@ run (gchar *name,		/* name of plugin */
       break;
 
     case RUN_NONINTERACTIVE:
-      if (nparams == NUMBER_IN_ARGS)
+      if (nparams == NUMBER_IN_ARGS) 
 	{
 	  shootvals.root      = (gint) param[1].data.d_int32;
 	  shootvals.window_id = (gchar*) param[2].data.d_string;
+	  shootvals.delay     = 0;
 	  shootvals.decor     = FALSE;
 	}
       else
@@ -209,6 +217,8 @@ run (gchar *name,		/* name of plugin */
 
   if (status == STATUS_SUCCESS)
   {
+    if (shootvals.root && (shootvals.delay > 0)) 
+      shoot_delay(shootvals.delay);
     /* Run the main function */
     shoot();
   }
@@ -320,10 +330,12 @@ shoot_dialog (void)
   GtkWidget *vbox;
   GtkWidget *button;
   GtkWidget *hbox;
-  GtkWidget *radio_label;
+  GtkWidget *label;
   GSList    *radio_group = NULL;
+  GtkAdjustment *adj;
   gint radio_pressed[2];
   gint decorations;
+  guint delay;
   gint argc = 1;
   gchar **argv = g_new (gchar *, 1);
   argv[0] = g_strdup ("ScreenShot");
@@ -331,6 +343,7 @@ shoot_dialog (void)
   radio_pressed[0] = (shootvals.root == FALSE);
   radio_pressed[1] = (shootvals.root == TRUE);
   decorations = shootvals.decor;
+  delay = shootvals.delay;
 
   /* Init GTK  */
   gtk_init (&argc, &argv);
@@ -369,43 +382,37 @@ shoot_dialog (void)
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), 
-		      frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame, TRUE, TRUE, 0);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), 
-		      hbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   shootint.single_button = gtk_radio_button_new ( radio_group );
   radio_group = gtk_radio_button_group ( GTK_RADIO_BUTTON (shootint.single_button) );  
   gtk_box_pack_start (GTK_BOX (hbox),
-		      shootint.single_button, TRUE, TRUE, 0);
+		      shootint.single_button, FALSE, FALSE, 0);
   gtk_signal_connect ( GTK_OBJECT (shootint.single_button), "toggled",
 		       (GtkSignalFunc) shoot_toggle_update,
 		       &radio_pressed[0]); 
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (shootint.single_button), 
 				   radio_pressed[0]);
   gtk_widget_show (shootint.single_button);
-  radio_label = gtk_label_new ( "Grab a single window" );
-  gtk_box_pack_start (GTK_BOX (hbox),
-		      radio_label, TRUE, TRUE, 0);
-  gtk_widget_show (radio_label);
+  label = gtk_label_new ( "Grab a single window" );
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
   gtk_widget_show (hbox);
 
   /* with decorations */
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_end (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   shootint.decor_button = gtk_check_button_new_with_label ("Include decorations");
   gtk_signal_connect (GTK_OBJECT (shootint.decor_button), "toggled",
                       (GtkSignalFunc) shoot_toggle_update,
                       &decorations);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (shootint.decor_button), 
-			       decorations);
   gtk_box_pack_end (GTK_BOX (hbox), shootint.decor_button, FALSE, FALSE, 0);
-  gtk_widget_set_sensitive (shootint.decor_button, radio_pressed[0]);
   gtk_widget_show (shootint.decor_button);
   gtk_widget_show (hbox);
 
@@ -419,26 +426,55 @@ shoot_dialog (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), 
 		      frame, TRUE, TRUE, 0);
 
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
 
   shootint.root_button = gtk_radio_button_new ( radio_group );
   radio_group = gtk_radio_button_group ( GTK_RADIO_BUTTON (shootint.root_button) );  
-  gtk_box_pack_start (GTK_BOX (hbox),  shootint.root_button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox),  shootint.root_button, FALSE, FALSE, 0);
   gtk_signal_connect ( GTK_OBJECT (shootint.root_button), "toggled",
 		       (GtkSignalFunc) shoot_toggle_update,
 		       &radio_pressed[1]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (shootint.root_button), 
-				   radio_pressed[1]);
   gtk_widget_show (shootint.root_button);
 
-  radio_label = gtk_label_new ( "Grab the whole screen" );
-  gtk_box_pack_start (GTK_BOX (hbox), radio_label, TRUE, TRUE, 0);
-  gtk_widget_show (radio_label);
+  label = gtk_label_new ( "Grab the whole screen" );
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   gtk_widget_show (hbox);
+
+  /* with delay */
+  shootint.delay_box = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_end (GTK_BOX (vbox), shootint.delay_box, TRUE, TRUE, 0);
+
+  label = gtk_label_new ( "after " );
+  gtk_box_pack_start (GTK_BOX (shootint.delay_box), label, TRUE, TRUE, 0);
+  gtk_widget_show (label);
+ 
+  adj = (GtkAdjustment *) gtk_adjustment_new ((gfloat)delay, 0.0, 100.0, 1.0, 5.0, 0.0);
+  shootint.delay_spinner = gtk_spin_button_new (adj, 0, 0);
+  gtk_box_pack_start (GTK_BOX(shootint.delay_box), shootint.delay_spinner, FALSE, TRUE, 0);
+  gtk_widget_show(shootint.delay_spinner);
+
+  label = gtk_label_new ( " seconds delay" );
+  gtk_box_pack_start (GTK_BOX (shootint.delay_box), label, TRUE, TRUE, 0);
+  gtk_widget_show (label);
+
+  gtk_widget_show (shootint.delay_box);
+
+  gtk_widget_show (vbox);
   gtk_widget_show (frame);
+ 
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (shootint.decor_button), 
+			       decorations);
+  gtk_widget_set_sensitive (shootint.decor_button, radio_pressed[0]);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (shootint.root_button), 
+			       radio_pressed[1]);
+  gtk_widget_set_sensitive (shootint.delay_box, radio_pressed[1]);
 
   gtk_widget_show (dialog);
 
@@ -466,6 +502,7 @@ shoot_ok_callback (GtkWidget *widget,
 		    gpointer   data)
 {
   shootint.run = TRUE;
+  shootvals.delay = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(shootint.delay_spinner));
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
@@ -483,7 +520,38 @@ shoot_toggle_update (GtkWidget *widget,
     *toggle_val = FALSE;
 
   if (widget == shootint.single_button)
+    {
       gtk_widget_set_sensitive (shootint.decor_button, *toggle_val);
+      gtk_widget_set_sensitive (shootint.delay_box, !*toggle_val);
+    }
+  else 
+    {
+      gtk_widget_set_sensitive (shootint.decor_button, !*toggle_val);
+      gtk_widget_set_sensitive (shootint.delay_box, *toggle_val);
+    }    
+}
+
+/* Delay functions */
+
+void
+shoot_delay (gint delay)
+{
+  gint timeout;
+
+  timeout = gtk_timeout_add (1000, shoot_delay_callback, &delay);
+  gtk_main ();
+}
+
+gint 
+shoot_delay_callback (gpointer data)
+{
+  gint *seconds_left;
+  
+  seconds_left = (gint *)data;
+  (*seconds_left)--;
+  if (!*seconds_left) 
+    gtk_main_quit();
+  return (*seconds_left);
 }
 
 /* Display function */
