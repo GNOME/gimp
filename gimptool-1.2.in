@@ -7,6 +7,12 @@ exec_prefix_set=no
 usage="\
 Usage: gimptool [--prefix[=DIR]] [--exec-prefix[=DIR]] [--version] [--libs] [--cflags] [--build plug-in.c]"
 
+noarg="\
+Error: --build needs a filename to work with"
+
+notfound="\
+Error: Couldn't find source file to build"
+
 if test $# -eq 0; then
       echo "${usage}" 1>&2
       exit 1
@@ -70,9 +76,21 @@ while test $# -gt 0; do
         includes=-I@includedir@
       fi
       shift
-      cmd="$cc $cflags $includes `gtk-config --cflags` -o `echo $1|sed 's/\.[^\.]*$//'` $1 -L@libdir@ -lgimpui -lgimp `$gtk_config --libs`"
-      echo $cmd
-      eval $cmd
+      if test "x$1" != "x"; then
+        if test -e "$1"; then
+          cmd="$cc $cflags $includes `gtk-config --cflags` -o `echo $1|sed 's/\.[^\.]*$//'` $1 -L@libdir@ -lgimpui -lgimp `$gtk_config --libs`"
+          echo $cmd
+          eval $cmd
+        else
+          echo "${notfound}" 1>&2
+          echo "${usage}" 1>&2
+          exit 1
+        fi  
+      else
+        echo "${noarg}" 1>&2
+        echo "${usage}" 1>&2
+        exit 1
+      fi
       ;;
     *)
       echo "${usage}" 1>&2

@@ -1,3 +1,12 @@
+Mon May  4 04:12:54 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: define and export version number parts. Check for
+	gtk 1.0.1
+
+	* gimptool.in: do some arg check for --build
+
+	* app/fileops.c: handle file overwrite dialog too
+	
 Sun May  3 22:10:05 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* app/fileops.c: make fileselectors insensitive during

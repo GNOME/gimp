@@ -1019,6 +1019,8 @@ file_overwrite_yes_callback (GtkWidget *w,
   g_free (overwrite_box->full_filename);
   g_free (overwrite_box->raw_filename);
   g_free (overwrite_box);
+
+  gtk_widget_set_sensitive (GTK_WIDGET(filesave), TRUE);
 }
 
 static gint
@@ -1043,6 +1045,8 @@ file_overwrite_no_callback (GtkWidget *w,
   g_free (overwrite_box->full_filename);
   g_free (overwrite_box->raw_filename);
   g_free (overwrite_box);
+
+  gtk_widget_set_sensitive (GTK_WIDGET(filesave), TRUE);
 }
 
 static PlugInProcDef*

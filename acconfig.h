@@ -14,6 +14,9 @@
    Leave the following blank line there!!  Autoheader needs it.  */
 
 
+#undef GIMP_MAJOR_VERSION
+#undef GIMP_MINOR_VERSION
+#undef GIMP_MICRO_VERSION
 #undef GIMP_VERSION
 
 #undef HAVE_DIRENT_H
