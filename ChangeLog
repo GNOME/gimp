@@ -1,5 +1,11 @@
 2005-01-09  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpactionview.c (gimp_action_view_new): connect to
+	"button_press_event" and start editing immidiately instead of
+	waiting for a second click. Fixes bug #163385.
+
+2005-01-09  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdialogfactory.c (gimp_dialog_factories_toggle):
 	if called with (ensure_visibility == TRUE), raise the toolbox.
 	Fixes bug #163381.
