@@ -2050,6 +2050,9 @@ file_revert_confirm_callback (GtkWidget *widget,
 	{
 	  undo_free (new_gimage);
 	  gdisplays_reconnect (old_gimage, new_gimage);
+	  gdisplays_resize_cursor_label (new_gimage);
+	  gdisplays_update_full (new_gimage);
+	  gdisplays_shrink_wrap (new_gimage);
 	  gimp_image_clean_all (new_gimage);
 	}
       else if (status != PDB_CANCEL)

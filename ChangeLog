@@ -1,3 +1,8 @@
+2001-03-01  Daniel Egger  <egger@suse.de>
+
+	* app/fileops.c: Applied patch from Dave Neary to fix
+	bug 37633 "File->Revert doesn't resize canvas".
+
 2001-03-01  Stanislav Brabec  <utx@penguin.cz>
 
         * plugins/common/despeckle.c: Fixed black_level range.
