@@ -736,9 +736,7 @@ clear_map_info(void)
 static void
 do_data_changed_dialog(void (*continue_cb)(gpointer), gpointer param)
 {
-   GtkWidget *dialog;
-
-   dialog = gtk_message_dialog_new_with_markup 
+   GtkWidget *dialog = gtk_message_dialog_new_with_markup
      (NULL,
       GTK_DIALOG_DESTROY_WITH_PARENT,
       GTK_MESSAGE_QUESTION,
@@ -747,8 +745,7 @@ do_data_changed_dialog(void (*continue_cb)(gpointer), gpointer param)
       _("Some data has been changed!"),
       _("Do you really want to discard your changes?"));
 
-   gint result = gtk_dialog_run (GTK_DIALOG (dialog));
-   if (result == GTK_RESPONSE_YES)
+   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES)
      continue_cb (param);
 
    gtk_widget_destroy (dialog);
@@ -967,9 +964,7 @@ save_as(const gchar *filename)
 static void
 do_image_size_changed_dialog(void)
 {
-   GtkWidget *dialog;
-
-   dialog = gtk_message_dialog_new_with_markup 
+   GtkWidget *dialog = gtk_message_dialog_new_with_markup
      (NULL,
       GTK_DIALOG_DESTROY_WITH_PARENT,
       GTK_MESSAGE_QUESTION,
@@ -978,8 +973,7 @@ do_image_size_changed_dialog(void)
       _("Image size has changed."),
       _("Resize area's?"));
 
-   gint result = gtk_dialog_run (GTK_DIALOG (dialog));
-   if (result == GTK_RESPONSE_YES)
+   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES)
      {
        gint per_x = _image_width * 100 / _map_info.old_image_width;
        gint per_y = _image_height * 100 / _map_info.old_image_height;
