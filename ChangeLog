@@ -1,3 +1,9 @@
+Sun Dec  5 19:21:33 CET 1999  Marc Lehmann <marc@gimp.org>
+
+        * plug-ins/script-fu/script-fu-scripts.c: Install function names
+        with underscores instead of minus signs. Should improve the life
+        of almost all other languages.
+
 1999-12-05 Garry R. Osgood <gosgood@idt.net>
 	Inaugural checkin: Tile accounting
 	* app/tile_cache.c

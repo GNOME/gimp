@@ -132,6 +132,7 @@ typedef struct
 {
   GtkWidget ** args_widgets;
   gchar *      script_name;
+  gchar *      pdb_name;
   gchar *      description;
   gchar *      help;
   gchar *      author;
@@ -400,7 +401,7 @@ script_fu_add_script (LISP a)
   LISP color_list;
   LISP adj_list;
   LISP brush_list;
-  gchar *menu_path = NULL;
+  gchar *s, *menu_path = NULL;
 
   /*  Check the length of a  */
   if (nlength (a) < 7)
@@ -413,6 +414,15 @@ script_fu_add_script (LISP a)
   val = get_c_string (car (a));
   script->script_name = g_strdup (val);
   a = cdr (a);
+
+  /* transform the function name into a name containing "_" for each "-".
+   * this does not hurt anybody, yet improves the life of many... ;)
+   */
+  script->pdb_name = g_strdup (val);
+
+  for (s = script->pdb_name; *s; s++)
+    if (*s == '-')
+      *s = '_';
 
   /*  Find the script description  */
   val = get_c_string (car (a));
@@ -703,18 +713,18 @@ script_fu_add_script (LISP a)
 	}
     }
 
-  gimp_install_temp_proc (script->script_name,
-			  script->description,
-			  script->help,
-			  script->author,
-			  script->copyright,
-			  script->date,
-			  menu_path,
-			  script->img_types,
-			  PROC_TEMPORARY,
-			  script->num_args + 1, 0,
-			  args, NULL,
-			  script_fu_script_proc);
+  gimp_install_temp_proc (script->pdb_name,
+                          script->description,
+                          script->help,
+                          script->author,
+                          script->copyright,
+                          script->date,
+                          menu_path,
+                          script->img_types,
+                          PROC_TEMPORARY,
+                          script->num_args + 1, 0,
+                          args, NULL,
+                          script_fu_script_proc);
 
   g_free (args);
 
@@ -861,71 +871,71 @@ script_fu_script_proc (char     *name,
 	      c = command = g_new (char, length);
 
 	      if (script->num_args)
-	      {
-	      sprintf (command, "(%s ", script->script_name);
-	      c += strlen (script->script_name) + 2;
-	      for (i = 0; i < script->num_args; i++)
-		{
-		  switch (script->arg_types[i])
-		    {
-		    case SF_IMAGE:
-		    case SF_DRAWABLE:
-		    case SF_LAYER:
-		    case SF_CHANNEL:
-		      sprintf (buffer, "%d", params[i + 1].data.d_image);
-		      text = buffer;
-		      break;
-		    case SF_COLOR:
-		      sprintf (buffer, "'(%d %d %d)",
-			       params[i + 1].data.d_color.red,
-			       params[i + 1].data.d_color.green,
-			       params[i + 1].data.d_color.blue);
-		      text = buffer;
-		      break;
-		    case SF_TOGGLE:
-		      sprintf (buffer, "%s", (params[i + 1].data.d_int32) ? "TRUE" : "FALSE");
-		      text = buffer;
-		      break;
-		    case SF_VALUE:
-		      text = params[i + 1].data.d_string;
-		      break;
-		    case SF_STRING:
-		    case SF_FILENAME:
-		      escaped = ESCAPE (params[i + 1].data.d_string);
-		      g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", escaped);
-		      g_free (escaped);
-		      text = buffer;
-		      break;
-		    case SF_ADJUSTMENT:
-		      text = params[i + 1].data.d_string;
-		      break;
-		    case SF_FONT:
-		      g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
-		      text = buffer;
-		      break;  
-		    case SF_PATTERN:
-		      g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
-		      text = buffer;
-		      break;
-		    case SF_GRADIENT:
-		      g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
-		      text = buffer;
-		      break;
-		    case SF_BRUSH:
-		      g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
-		      text = buffer;
-		      break;
-		    default:
-		      break;
-		    }
+                {
+                  sprintf (command, "(%s ", script->script_name);
+                  c += strlen (script->script_name) + 2;
+                  for (i = 0; i < script->num_args; i++)
+                    {
+                      switch (script->arg_types[i])
+                        {
+                        case SF_IMAGE:
+                        case SF_DRAWABLE:
+                        case SF_LAYER:
+                        case SF_CHANNEL:
+                          sprintf (buffer, "%d", params[i + 1].data.d_image);
+                          text = buffer;
+                          break;
+                        case SF_COLOR:
+                          sprintf (buffer, "'(%d %d %d)",
+                                   params[i + 1].data.d_color.red,
+                                   params[i + 1].data.d_color.green,
+                                   params[i + 1].data.d_color.blue);
+                          text = buffer;
+                          break;
+                        case SF_TOGGLE:
+                          sprintf (buffer, "%s", (params[i + 1].data.d_int32) ? "TRUE" : "FALSE");
+                          text = buffer;
+                          break;
+                        case SF_VALUE:
+                          text = params[i + 1].data.d_string;
+                          break;
+                        case SF_STRING:
+                        case SF_FILENAME:
+                          escaped = ESCAPE (params[i + 1].data.d_string);
+                          g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", escaped);
+                          g_free (escaped);
+                          text = buffer;
+                          break;
+                        case SF_ADJUSTMENT:
+                          text = params[i + 1].data.d_string;
+                          break;
+                        case SF_FONT:
+                          g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
+                          text = buffer;
+                          break;  
+                        case SF_PATTERN:
+                          g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
+                          text = buffer;
+                          break;
+                        case SF_GRADIENT:
+                          g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
+                          text = buffer;
+                          break;
+                        case SF_BRUSH:
+                          g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
+                          text = buffer;
+                          break;
+                        default:
+                          break;
+                        }
 
-		  if (i == script->num_args - 1)
-		    sprintf (c, "%s)", text);
-		  else
-		    sprintf (c, "%s ", text);
-		  c += strlen (text) + 1;
-		}
-	      }
+                      if (i == script->num_args - 1)
+                        sprintf (c, "%s)", text);
+                      else
+                        sprintf (c, "%s ", text);
+                      c += strlen (text) + 1;
+                    }
+                }
 	      else
 		sprintf (command, "(%s)", script->script_name);
 
@@ -949,7 +959,7 @@ script_fu_script_proc (char     *name,
 }
 
 static SFScript *
-script_fu_find_script (gchar *script_name)
+script_fu_find_script (gchar *pdb_name)
 {
   GList *list;
   SFScript *script;
@@ -958,7 +968,7 @@ script_fu_find_script (gchar *script_name)
   while (list)
     {
       script = (SFScript *) list->data;
-      if (! strcmp (script->script_name, script_name))
+      if (! strcmp (script->pdb_name, pdb_name))
 	return script;
 
       list = list->next;
