@@ -30,12 +30,8 @@
 
 #define SIZE_MAX_VALUE 500000.0
 
-static void gimp_size_entry_unit_callback      (GtkWidget *widget,
-						gpointer   data);
-static void gimp_size_entry_value_callback     (GtkWidget *widget,
-						gpointer   data);
-static void gimp_size_entry_refval_callback    (GtkWidget *widget,
-						gpointer   data);
+#define GIMP_SIZE_ENTRY_DIGITS(unit) (MIN (gimp_unit_get_digits (unit), 5) + 1)
+
 
 enum
 {
@@ -68,6 +64,25 @@ struct _GimpSizeEntryField
 
   gint           stop_recursion;
 };
+
+
+static void   gimp_size_entry_destroy         (GtkObject          *object);
+static void   gimp_size_entry_class_init      (GimpSizeEntryClass *class);
+static void   gimp_size_entry_init            (GimpSizeEntry      *gse);
+
+static void   gimp_size_entry_update_value    (GimpSizeEntryField *gsef,
+					       gdouble             value);
+static void   gimp_size_entry_value_callback  (GtkWidget          *widget,
+					       gpointer            data);
+static void   gimp_size_entry_update_refval   (GimpSizeEntryField *gsef,
+					       gdouble             refval);
+static void   gimp_size_entry_refval_callback (GtkWidget          *widget,
+					       gpointer            data);
+static void   gimp_size_entry_update_unit     (GimpSizeEntry      *gse,
+					       GimpUnit            unit);
+static void   gimp_size_entry_unit_callback   (GtkWidget          *widget,
+					       gpointer            data);
+
 
 static guint gimp_size_entry_signals[LAST_SIGNAL] = { 0 };
 
@@ -266,7 +281,7 @@ gimp_size_entry_new (gint                       number_of_fields,
     {
       GimpSizeEntryField *gsef;
 
-      gsef = g_malloc (sizeof (GimpSizeEntryField));
+      gsef = g_new0 (GimpSizeEntryField, 1);
       gse->fields = g_slist_append (gse->fields, gsef);
 
       gsef->gse = gse;
@@ -291,8 +306,9 @@ gimp_size_entry_new (gint                       number_of_fields,
 						   1.0, 10.0, 0.0);
       gsef->value_spinbutton =
 	gtk_spin_button_new (GTK_ADJUSTMENT (gsef->value_adjustment), 1.0,
+			     (unit == GIMP_UNIT_PIXEL) ? gsef->refval_digits :
 			     (unit == GIMP_UNIT_PERCENT) ? 2 :
-			     (MIN (gimp_unit_get_digits (unit), 5) + 1));
+			     GIMP_SIZE_ENTRY_DIGITS (unit));
       gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(gsef->value_spinbutton),
 				       GTK_SHADOW_NONE);
       gtk_widget_set_usize (gsef->value_spinbutton, spinbutton_usize, 0);
@@ -300,7 +316,8 @@ gimp_size_entry_new (gint                       number_of_fields,
 				 i+1, i+2,
 				 gse->show_refval+1, gse->show_refval+2);
       gtk_signal_connect (GTK_OBJECT (gsef->value_adjustment), "value_changed",
-			  (GtkSignalFunc) gimp_size_entry_value_callback, gsef);
+			  GTK_SIGNAL_FUNC (gimp_size_entry_value_callback),
+			  gsef);
 
       gtk_widget_show (gsef->value_spinbutton);
 
@@ -318,10 +335,10 @@ gimp_size_entry_new (gint                       number_of_fields,
 					   GTK_SHADOW_NONE);
 	  gtk_widget_set_usize (gsef->refval_spinbutton, spinbutton_usize, 0);
 	  gtk_table_attach_defaults (GTK_TABLE (gse), gsef->refval_spinbutton,
-				     i+1, i+2, 1, 2);
+				     i + 1, i + 2, 1, 2);
 	  gtk_signal_connect (GTK_OBJECT (gsef->refval_adjustment),
 			      "value_changed",
-			      (GtkSignalFunc) gimp_size_entry_refval_callback,
+			      GTK_SIGNAL_FUNC (gimp_size_entry_refval_callback),
 			      gsef);
 
 	  gtk_widget_show (gsef->refval_spinbutton);
@@ -340,7 +357,8 @@ gimp_size_entry_new (gint                       number_of_fields,
 		    gse->show_refval+1, gse->show_refval+2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (gse->unitmenu), "unit_changed",
-		      (GtkSignalFunc) gimp_size_entry_unit_callback, gse);
+		      GTK_SIGNAL_FUNC (gimp_size_entry_unit_callback),
+		      gse);
   gtk_widget_show (gse->unitmenu);
   
   return GTK_WIDGET (gse);
@@ -378,20 +396,20 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
       g_return_if_fail (GTK_IS_SPIN_BUTTON (refval_spinbutton));
     }
 
-  gsef = g_malloc (sizeof (GimpSizeEntryField));
+  gsef = g_new0 (GimpSizeEntryField, 1);
   gse->fields = g_slist_prepend (gse->fields, gsef);
   gse->number_of_fields++;
 
-  gsef->gse = gse;
-  gsef->resolution = 1.0; /*  just to avoid division by zero  */
-  gsef->lower = 0.0;
-  gsef->upper = 100.0;
-  gsef->value = 0;
-  gsef->min_value = 0;
-  gsef->max_value = SIZE_MAX_VALUE;
-  gsef->refval = 0;
-  gsef->min_refval = 0;
-  gsef->max_refval = SIZE_MAX_VALUE;
+  gsef->gse           = gse;
+  gsef->resolution    = 1.0; /*  just to avoid division by zero  */
+  gsef->lower         = 0.0;
+  gsef->upper         = 100.0;
+  gsef->value         = 0;
+  gsef->min_value     = 0;
+  gsef->max_value     = SIZE_MAX_VALUE;
+  gsef->refval        = 0;
+  gsef->min_refval    = 0;
+  gsef->max_refval    = SIZE_MAX_VALUE;
   gsef->refval_digits =
     (gse->update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE) ? 0 : 3;
   gsef->stop_recursion = 0;
@@ -400,7 +418,8 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
     GTK_OBJECT (gtk_spin_button_get_adjustment (value_spinbutton));
   gsef->value_spinbutton = GTK_WIDGET (value_spinbutton);
   gtk_signal_connect (GTK_OBJECT (gsef->value_adjustment), "value_changed",
-		      (GtkSignalFunc) gimp_size_entry_value_callback, gsef);
+		      GTK_SIGNAL_FUNC (gimp_size_entry_value_callback),
+		      gsef);
 
   if (gse->show_refval)
     {
@@ -408,16 +427,22 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
 	GTK_OBJECT (gtk_spin_button_get_adjustment (refval_spinbutton));
       gsef->refval_spinbutton = GTK_WIDGET (refval_spinbutton);
       gtk_signal_connect (GTK_OBJECT (gsef->refval_adjustment), "value_changed",
-			  (GtkSignalFunc) gimp_size_entry_refval_callback,
+			  GTK_SIGNAL_FUNC (gimp_size_entry_refval_callback),
 			  gsef);
     }
 
   gtk_spin_button_set_digits (GTK_SPIN_BUTTON (value_spinbutton),
-			      MIN (gimp_unit_get_digits (gse->unit), 5) + 1);
+			      (gse->unit == GIMP_UNIT_PIXEL) ? gsef->refval_digits :
+			      (gse->unit == GIMP_UNIT_PERCENT) ? 2 :
+			      GIMP_SIZE_ENTRY_DIGITS (gse->unit));
 
-  if (gse->menu_show_pixels && !gse->show_refval && (gse->unit == GIMP_UNIT_PIXEL))
-    gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
-				gsef->refval_digits);
+  if (gse->menu_show_pixels &&
+      !gse->show_refval &&
+      (gse->unit == GIMP_UNIT_PIXEL))
+    {
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
+				  gsef->refval_digits);
+    }
 }
 
 /**
@@ -1062,7 +1087,7 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
 
   for (i = 0; i < gse->number_of_fields; i++)
     {
-      gsef = (GimpSizeEntryField*) g_slist_nth_data (gse->fields, i);
+      gsef = (GimpSizeEntryField *) g_slist_nth_data (gse->fields, i);
 
       if (gse->update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE)
 	{
@@ -1074,14 +1099,14 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
 					2);
 	  else
 	    gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
-					MIN(gimp_unit_get_digits (unit), 5) + 1);
+					GIMP_SIZE_ENTRY_DIGITS (unit));
 	}
       else if (gse->update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION)
 	{
 	  digits =
 	    -(gimp_unit_get_digits (unit) - gimp_unit_get_digits (GIMP_UNIT_INCH));
 	  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
-				      MAX(3 + digits, 3));
+				      MAX (3 + digits, 3));
 	}
 
       gsef->stop_recursion = 0; /* hack !!! */
@@ -1096,8 +1121,7 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
 					  gsef);
     }
 
-  gtk_signal_emit (GTK_OBJECT (gse),
-		   gimp_size_entry_signals[VALUE_CHANGED]);
+  gtk_signal_emit (GTK_OBJECT (gse), gimp_size_entry_signals[VALUE_CHANGED]);
 }
 
 /**
@@ -1130,8 +1154,8 @@ gimp_size_entry_unit_callback (GtkWidget *widget,
 {
   gimp_size_entry_update_unit (GIMP_SIZE_ENTRY (data),
 			       gimp_unit_menu_get_unit (GIMP_UNIT_MENU(widget)));
-  gtk_signal_emit (GTK_OBJECT (data),
-		   gimp_size_entry_signals[UNIT_CHANGED]);
+
+  gtk_signal_emit (GTK_OBJECT (data), gimp_size_entry_signals[UNIT_CHANGED]);
 }
 
 /**

@@ -1,3 +1,8 @@
+2000-10-24  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpsizeentry.c: don't ask for GIMP_UNIT_PIXEL's number
+	of digits, code cleanup.
+
 2000-10-22  Sven Neumann  <sven@gimp.org>
 
 	* app/edit_selection.[ch]: plugged memleak (similar to the one that 
