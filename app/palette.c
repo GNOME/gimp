@@ -48,8 +48,6 @@
 #define PALETTE_EVENT_MASK GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | GDK_ENTER_NOTIFY_MASK
 
 typedef struct _Palette _Palette, *PaletteP;
-typedef struct _PaletteEntries _PaletteEntries, *PaletteEntriesP;
-typedef struct _PaletteEntry _PaletteEntry, *PaletteEntryP;
 
 struct _Palette {
   GtkWidget *shell;
@@ -70,23 +68,6 @@ struct _Palette {
   int updating;
 };
 
-struct _PaletteEntries {
-  char *name;
-  char *filename;
-  link_ptr colors;
-  int n_colors;
-  int changed;
-};
-
-struct _PaletteEntry {
-  unsigned char color[3];
-  char *name;
-  int position;
-};
-
-
-static void palette_init_palettes (void);
-static void palette_free_palettes (void);
 static void palette_create_palette_menu (PaletteP, PaletteEntriesP);
 static PaletteEntryP palette_add_entry (PaletteEntriesP, char *, int, int, int);
 static void palette_delete_entry (PaletteP);
@@ -119,8 +100,9 @@ static void palette_draw_entries (PaletteP);
 static void palette_draw_current_entry (PaletteP);
 static void palette_update_current_entry (PaletteP);
 
+link_ptr palette_entries_list = NULL;
+
 static PaletteP         palette = NULL;
-static link_ptr         palette_entries_list = NULL;
 static PaletteEntriesP  default_palette_entries = NULL;
 static int              num_palette_entries = 0;
 static unsigned char    foreground[3] = { 0, 0, 0 };
@@ -375,19 +357,14 @@ palette_set_background (int r,
     }
 }
 
-
-/*****************************************/
-/*         Local functions               */
-/*****************************************/
-
-static void
+void
 palette_init_palettes (void)
 {
   datafiles_read_directories (palette_path, palette_entries_load, 0);
 }
 
 
-static void
+void
 palette_free_palettes (void)
 {
   link_ptr list;
@@ -420,6 +397,11 @@ palette_free_palettes (void)
   num_palette_entries = 0;
   palette_entries_list = NULL;
 }
+
+
+/*****************************************/
+/*         Local functions               */
+/*****************************************/
 
 static void
 palette_create_palette_menu (PaletteP        palette,

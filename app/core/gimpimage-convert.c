@@ -25,14 +25,15 @@
    *
    * Post-1.0 TODO:
    *
-   *   Use a GIMP palette
-   *
    *   Different dither types
    *
    *   Alpha dithering
    */
 
 /*
+ * 97/11/14 - added a proper pdb interface and support for dithering
+ *  to custom palettes (based on a patch by Eric Hernes) [Yosh]
+ *
  * 97/11/04 - fixed the accidental use of the colour-counting case
  *  when palette_type is WEB or MONO. [Adam]
  *
@@ -63,7 +64,7 @@
 #include "indexed_palette.h"
 #include "interface.h"
 #include "undo.h"
-
+#include "palette.h"
 
 #define MAXNUMCOLORS 256
 
@@ -76,6 +77,7 @@
 #define REUSE_PALETTE 1
 #define WEB_PALETTE 2
 #define MONO_PALETTE 3
+#define CUSTOM_PALETTE 4
 
 #define PRECISION_R 6
 #define PRECISION_G 6
@@ -193,13 +195,15 @@ typedef struct
   int          palette;
   int          makepal_flag;
   int          webpal_flag;
+  int          custompal_flag;
   int          monopal_flag;
   int          reusepal_flag;
 } IndexedDialog;
 
-static Argument * convert_rgb_invoker       (Argument *);
-static Argument * convert_grayscale_invoker (Argument *);
-static Argument * convert_indexed_invoker   (Argument *);
+static Argument * convert_rgb_invoker               (Argument *);
+static Argument * convert_grayscale_invoker         (Argument *);
+static Argument * convert_indexed_invoker           (Argument *);
+static Argument * convert_indexed_palette_invoker   (Argument *);
 
 static void indexed_ok_callback     (GtkWidget *, gpointer);
 static void indexed_cancel_callback (GtkWidget *, gpointer);
@@ -223,6 +227,9 @@ static unsigned char found_cols[MAXNUMCOLORS][3];
 static int num_found_cols;
 static gboolean needs_quantize;
 
+static GtkWidget *build_palette_menu(int *default_palette);
+static void palette_entries_callback(GtkWidget *w, gpointer client_data);
+static PaletteEntriesP theCustomPalette = NULL;
 
 void
 convert_to_rgb (void *gimage_ptr)
@@ -293,6 +300,7 @@ convert_to_indexed (void *gimage_ptr)
     }
   dialog->makepal_flag = TRUE;
   dialog->webpal_flag = FALSE;
+  dialog->custompal_flag = FALSE;
   dialog->monopal_flag = FALSE;
   dialog->reusepal_flag = FALSE;
   dialog->shell = gtk_dialog_new ();
@@ -353,6 +361,9 @@ convert_to_indexed (void *gimage_ptr)
 
   if (gimage->base_type == RGB)
     {
+		GtkWidget *menu;
+		GtkWidget *palette_option_menu;
+		int default_palette;
       /*  'web palette'  */
       hbox = gtk_hbox_new (FALSE, 1);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -365,6 +376,28 @@ convert_to_indexed (void *gimage_ptr)
 			  &(dialog->webpal_flag));
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), dialog->webpal_flag);
       gtk_widget_show (toggle);
+      gtk_widget_show (hbox);
+
+          /* 'custom' palette from dialog */
+      hbox = gtk_hbox_new (FALSE, 1);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      toggle = gtk_radio_button_new_with_label (group, "Use custom palette");
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
+      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			  (GtkSignalFunc) indexed_radio_update,
+			  &(dialog->custompal_flag));
+      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
+				   dialog->custompal_flag);
+      gtk_widget_show (toggle);
+
+      palette_option_menu = gtk_option_menu_new();
+      menu = build_palette_menu(&default_palette);
+      gtk_option_menu_set_menu (GTK_OPTION_MENU(palette_option_menu), menu);
+      gtk_option_menu_set_history(GTK_OPTION_MENU(palette_option_menu),
+				  default_palette);
+      gtk_box_pack_start(GTK_BOX(hbox), palette_option_menu, TRUE, TRUE, 2);
+		gtk_widget_show(palette_option_menu);
       gtk_widget_show (hbox);
     }
 
@@ -415,6 +448,51 @@ convert_to_indexed (void *gimage_ptr)
   gtk_widget_show (dialog->shell);
 }
 
+static GtkWidget *
+build_palette_menu(int *default_palette){
+  GtkWidget *menu;
+  GtkWidget *menu_item;
+  link_ptr list;
+  PaletteEntriesP entries;
+  int i;
+
+  menu = gtk_menu_new();
+  list = palette_entries_list;
+
+  if(!palette_entries_list) {
+    /* fprintf(stderr, "no palette_entries_list, building...\n");*/
+     palette_init_palettes();
+  }
+
+  for(i=0,list = palette_entries_list,*default_palette=-1;
+      list;
+      i++,list = next_item (list))
+    {
+      entries = (PaletteEntriesP) list->data;
+      /*      fprintf(stderr, "(palette %s)\n", entries->filename);*/
+      menu_item = gtk_menu_item_new_with_label (entries->name);
+      gtk_signal_connect( GTK_OBJECT(menu_item), "activate",
+			  (GtkSignalFunc) palette_entries_callback,
+			  (gpointer)entries);
+      gtk_container_add(GTK_CONTAINER(menu), menu_item);
+      gtk_widget_show(menu_item);
+      if (theCustomPalette == entries) *default_palette = i;
+    }
+
+   /* default to first one */
+   if(*default_palette==-1) {
+     theCustomPalette = (PaletteEntriesP) palette_entries_list->data;
+     /* fprintf(stderr, "setting default to `%s'\n", theCustomPalette->name);*/
+     *default_palette = 0;
+   }
+   return menu;
+}
+
+static void
+palette_entries_callback(GtkWidget *w, gpointer client_data){
+		  theCustomPalette = (PaletteEntriesP)client_data;
+}
+
 static void
 indexed_ok_callback (GtkWidget *widget,
 		     gpointer   client_data)
@@ -426,11 +504,13 @@ indexed_ok_callback (GtkWidget *widget,
 
   if (dialog->webpal_flag) palette_type = WEB_PALETTE;
   else
-    if (dialog->monopal_flag) palette_type = MONO_PALETTE;
+    if (dialog->custompal_flag) palette_type = CUSTOM_PALETTE;
     else
-      if (dialog->makepal_flag) palette_type = MAKE_PALETTE;
+      if (dialog->monopal_flag) palette_type = MONO_PALETTE;
       else
-	palette_type = REUSE_PALETTE;
+        if (dialog->makepal_flag) palette_type = MAKE_PALETTE;
+        else
+          palette_type = REUSE_PALETTE;
   /*  Convert the image to indexed color  */
   convert_image ((GImage *) dialog->gimage_ptr, INDEXED, dialog->num_cols, dialog->dither, palette_type);
   gdisplays_flush ();
@@ -507,8 +587,8 @@ convert_image (GImage *gimage,
   QuantizeObj *quantobj;
   Layer *layer;
   Layer *floating_layer;
-  link_ptr list;
   int old_type;
+  link_ptr list;
   int new_layer_type;
   int new_layer_bytes;
   int has_alpha;
@@ -1923,6 +2003,28 @@ webpal_pass1 (QuantizeObj *quantobj)
       quantobj->cmap[i].blue = webpal[i*3 +2];
     }
 }
+static void
+custompal_pass1 (QuantizeObj *quantobj)
+{
+  int i;
+  link_ptr list;
+  PaletteEntryP entry;
+
+  /*  fprintf(stderr, "custompal_pass1: using (theCustomPalette %s) from (file %s)\n",
+			 theCustomPalette->name, theCustomPalette->filename);*/
+
+  for (i=0,list=theCustomPalette->colors;
+       list;
+       i++,list=next_item(list))
+    {
+      entry=(PaletteEntryP)list->data;
+      quantobj->cmap[i].red = entry->color[0];
+      quantobj->cmap[i].green = entry->color[1];
+      quantobj->cmap[i].blue = entry->color[2];
+    }
+  quantobj -> actual_number_of_colors = i;
+}
+
 /*
  * Map some rows of pixels to the output colormapped representation.
  */
@@ -2579,12 +2681,16 @@ initialize_median_cut (int type,
 	case WEB_PALETTE:
 	  quantobj->first_pass = webpal_pass1;
 	  break;
+	case CUSTOM_PALETTE:
+	  quantobj->first_pass = custompal_pass1;
+	  needs_quantize=TRUE;
+	  break;
 	case MONO_PALETTE:
 	default:
 	  quantobj->first_pass = monopal_pass1;
 	}
       if (palette_type == WEB_PALETTE ||
-	  palette_type == MONO_PALETTE)
+	  palette_type == MONO_PALETTE || palette_type == CUSTOM_PALETTE)
 	switch (dither_type)
 	  {
 	  case NODITHER:
@@ -2613,6 +2719,11 @@ initialize_median_cut (int type,
 	  break;
 	case WEB_PALETTE:
 	  quantobj->first_pass = webpal_pass1;
+	  needs_quantize=TRUE;
+	  break;
+	case CUSTOM_PALETTE:
+	  quantobj->first_pass = custompal_pass1;
+	  needs_quantize=TRUE;
 	  break;
 	case MONO_PALETTE:
 	default:
@@ -2812,7 +2923,7 @@ convert_indexed_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
+        success = FALSE;
     }
   /*  make sure the drawable is not INDEXED color  */
   if (success)
@@ -2823,11 +2934,132 @@ convert_indexed_invoker (Argument *args)
     {
       num_cols = args[2].value.pdb_int;
       if (num_cols < 1 || num_cols > MAXNUMCOLORS)
-	success = FALSE;
+        success = FALSE;
     }
 
   if (success)
     convert_image ((void *) gimage, INDEXED, num_cols, dither, 0);
 
+  return procedural_db_return_args (&convert_indexed_proc, success);
+}
+
+
+
+/*  The convert-indexed-palette procedure definition  */
+ProcArg convert_indexed_palette_args[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "the image"
+  },
+  { PDB_INT32,
+    "dither",
+    "Floyd-Steinberg dithering"
+  },
+  { PDB_INT32,
+    "palette_type",
+    "The type of palette to use, (0 optimal) (1 reuse) (2 WWW) (3 Mono) (4 Custom)"
+  },
+  { PDB_INT32,
+    "num_cols",
+    "the number of colors to quantize to, ignored unless (palette_type == 0)"
+  },
+  { PDB_STRING,
+    "palette",
+    "The name of the custom palette to use, ignored unless (palette_type == 4)"
+  }
+};
+
+ProcRecord convert_indexed_palette_proc =
+{
+  "gimp_convert_indexed_palette",
+  "Convert specified image to indexed color",
+  "This procedure converts the specified image to indexed color.  This process requires an image of type GRAY or RGB.  The `palette_type' specifies what kind of palette to use, A type of `0' means to use an optimal palette of `num_cols' generated from the colors in the image.  A type of `1' means to re-use the previous palette.  A type of `2' means to use the WWW-optimized palette.  Type `3' means to use only black and white colors.  A type of `4' means to use a palette from the gimp palettes directories.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  5,
+  convert_indexed_palette_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { convert_indexed_palette_invoker } },
+};
+
+
+static Argument *
+convert_indexed_palette_invoker (Argument *args)
+{
+  int success = TRUE;
+  int int_value;
+  GImage *gimage;
+  int dither;
+  int num_cols=0;
+  int palette_type;
+  char *palette_name;
+
+  /*  the gimage  */
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if (! (gimage = gimage_get_ID (int_value)))
+	success = FALSE;
+    }
+  /*  make sure the drawable is not INDEXED color  */
+  if (success)
+    success = (gimage_base_type (gimage) != INDEXED);
+  if (success)
+    dither = (args[1].value.pdb_int) ? TRUE : FALSE;
+  if (success)
+    {
+      PaletteEntriesP entries, the_palette = NULL;
+      link_ptr list;
+
+		palette_type = args[2].value.pdb_int;
+		switch(palette_type) {
+		  case MAKE_PALETTE:
+          num_cols = args[3].value.pdb_int;
+          if (num_cols < 1 || num_cols > MAXNUMCOLORS)
+            success = FALSE;
+		  break;
+		  case REUSE_PALETTE:
+		  break;
+		  case WEB_PALETTE:
+		  break;
+		  case MONO_PALETTE:
+		  break;
+		  case CUSTOM_PALETTE:
+          palette_name = args[4].value.pdb_pointer;
+ /*         fprintf(stderr, "looking for palette `%s'\n", palette_name); */
+          if (!palette_entries_list) palette_init_palettes();
+		    for(list = palette_entries_list;
+              list;
+              list = next_item(list)) {
+                entries = (PaletteEntriesP) list->data;
+                if (strcmp(palette_name, entries->name)==0) {
+	/*					fprintf(stderr, "found it!\n"); */
+                  the_palette = entries;
+                  break;
+					 }
+			 }
+          if (the_palette == NULL) {
+	/*			fprintf(stderr, "didn't find it\n"); */
+            success = FALSE;
+			 }
+          else
+            theCustomPalette = the_palette;
+		  break;
+		  default:
+          success = FALSE;
+		}
+	 }
+    if (success)
+       convert_image ((void *) gimage, INDEXED, num_cols, dither, palette_type);
   return procedural_db_return_args (&convert_indexed_proc, success);
 }

@@ -1,3 +1,10 @@
+Sun Dec 14 03:41:27 PST 1997 Manish Singh <yosh@gimp.org>
+
+	* Support for dithering to custom palettes
+
+	* a proper PDB entry for indexed conversion
+	(gimp-convert-indexed-palette)
+
 Sun Dec 14 00:08:00 PST 1997 Raph Levien <raph@acm.org>
 	* a minor patch to make the file selection dialog not always
 	select the first file in a directory

@@ -29,5 +29,6 @@ void  convert_to_indexed    (void *);
 extern ProcRecord convert_rgb_proc;
 extern ProcRecord convert_grayscale_proc;
 extern ProcRecord convert_indexed_proc;
+extern ProcRecord convert_indexed_palette_proc;
 
 #endif  /*  __CONVERT_H__  */

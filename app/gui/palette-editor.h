@@ -36,6 +36,26 @@ void palette_set_foreground (int, int, int);
 void palette_set_background (int, int, int);
 void palette_set_active_color (int, int, int, int);
 
+struct _PaletteEntries {
+  char *name;
+  char *filename;
+  link_ptr colors;
+  int n_colors;
+  int changed;
+};
+typedef struct _PaletteEntries _PaletteEntries, *PaletteEntriesP;
+
+struct _PaletteEntry {
+  unsigned char color[3];
+  char *name;
+  int position;
+};
+typedef struct _PaletteEntry _PaletteEntry, *PaletteEntryP;
+
+extern link_ptr palette_entries_list;
+void palette_init_palettes (void);
+void palette_free_palettes (void);
+
 #include "procedural_db.h"
 
 /*  Procedure definition and marshalling function  */

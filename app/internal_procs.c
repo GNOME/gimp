@@ -295,6 +295,7 @@ internal_procs_init ()
   procedural_db_register (&convert_rgb_proc);
   procedural_db_register (&convert_grayscale_proc);
   procedural_db_register (&convert_indexed_proc);
+  procedural_db_register (&convert_indexed_palette_proc);
 
   /*  Channel Ops procedures  */
   procedural_db_register (&channel_ops_duplicate_proc);
