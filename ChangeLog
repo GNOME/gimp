@@ -1,3 +1,11 @@
+2000-04-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/user_install.c: Creating the user's gimp directory may take
+	some time on NFS, so users may be tempted to press the "Continue"
+	button again.
+	Inform the user that this step may take some time and set the
+	"Continue" and "Cancel" buttons insensitive until finished.
+
 2000-04-18  Sven Neumann  <sven@gimp.org>
 
         * INSTALL: we require gtk+-1.2.6 and we would like to have the 
