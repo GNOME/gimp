@@ -249,6 +249,49 @@ gimp_transform_direction_get_type (void)
 }
 
 
+static const GEnumValue gimp_channel_ops_enum_values[] =
+{
+  { GIMP_CHANNEL_OP_ADD, "GIMP_CHANNEL_OP_ADD", "add" },
+  { GIMP_CHANNEL_OP_SUBTRACT, "GIMP_CHANNEL_OP_SUBTRACT", "subtract" },
+  { GIMP_CHANNEL_OP_REPLACE, "GIMP_CHANNEL_OP_REPLACE", "replace" },
+  { GIMP_CHANNEL_OP_INTERSECT, "GIMP_CHANNEL_OP_INTERSECT", "intersect" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_channel_ops_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpChannelOps", gimp_channel_ops_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue gimp_convert_palette_type_enum_values[] =
+{
+  { GIMP_MAKE_PALETTE, "GIMP_MAKE_PALETTE", "make-palette" },
+  { GIMP_REUSE_PALETTE, "GIMP_REUSE_PALETTE", "reuse-palette" },
+  { GIMP_WEB_PALETTE, "GIMP_WEB_PALETTE", "web-palette" },
+  { GIMP_MONO_PALETTE, "GIMP_MONO_PALETTE", "mono-palette" },
+  { GIMP_CUSTOM_PALETTE, "GIMP_CUSTOM_PALETTE", "custom-palette" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_convert_palette_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpConvertPaletteType", gimp_convert_palette_type_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_gradient_segment_type_enum_values[] =
 {
   { GIMP_GRAD_LINEAR, "GIMP_GRAD_LINEAR", "linear" },
