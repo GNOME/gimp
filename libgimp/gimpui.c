@@ -45,6 +45,7 @@ gimp_ui_init (gchar    *prog_name,
 {
   gint    argc;
   gchar **argv;
+  gchar  *user_gtkrc;
 
   static gboolean initialized = FALSE;
 
@@ -59,6 +60,10 @@ gimp_ui_init (gchar    *prog_name,
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
+
+  user_gtkrc = gimp_personal_rc_file ("gtkrc");
+  gtk_rc_parse (user_gtkrc);
+  g_free (user_gtkrc);
 
   /*  It's only safe to switch Gdk SHM usage off  */
   if (! gimp_use_xshm ())

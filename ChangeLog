@@ -1,6 +1,20 @@
+2000-11-08  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.am
+	* gimp.spec.in
+	* user_install
+	* gtkrc_user: new file gtkrc_user which gets installed as
+	~/.gimp-1-1/gtkrc (We used to parse the same file twice if the
+	user didn't the change user-specific gtkrc. The new file has
+	comments only).
+
+	* app/app_procs.c: g_free() the user gtkrc filename after use.
+
+	* libgimp/gimpui.c: parse the user gtkrc here too.
+
 2000-11-07  Sven Neumann  <sven@gimp.org>
 
-	* app/text_tool.c (text_get_extents): use gdk_fonset_load() as we
+	* app/text_tool.c (text_get_extents): use gdk_fontset_load() as we
 	do in text_render(). Supposed to fix #31099.
 
 2000-11-07  Sven Neumann  <sven@gimp.org>
@@ -37,6 +51,7 @@
 	for generated brushes.
 
 2000-11-04 Garry R. Osgood <gosgood@idt.net>
+
 	* app/convolve.c
 	* app/convolve.h
 	When the  convolution tool finds itself

@@ -176,6 +176,7 @@ EXTRA_DIST = \
 	MAINTAINERS				\
 	TODO					\
 	gtkrc					\
+	gtkrc_user				\
 	unitrc					\
 	gimp_logo.ppm				\
 	gimp_splash.ppm				\
@@ -201,6 +202,7 @@ gimpsysconf_DATA = \
 	gimprc			\
 	gimprc_user		\
 	gtkrc			\
+	gtkrc_user		\
 	unitrc			\
 	ps-menurc
 

@@ -182,6 +182,7 @@ cat gimp-perl gimp-perl-plugin-files > gimp-perl-files
 %{sysconfdir}/gimp/%{subver}/gimprc
 %{sysconfdir}/gimp/%{subver}/gimprc_user
 %{sysconfdir}/gimp/%{subver}/gtkrc
+%{sysconfdir}/gimp/%{subver}/gtkrc_user
 %{sysconfdir}/gimp/%{subver}/unitrc
 %{sysconfdir}/gimp/%{subver}/ps-menurc
 

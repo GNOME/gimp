@@ -19,8 +19,8 @@ cp $3/gimprc_user $2/gimprc
 echo "cp $3/unitrc $2/unitrc"
 cp $3/unitrc $2/unitrc
 
-echo "cp $3/gtkrc $2/gtkrc"
-cp $3/gtkrc $2/gtkrc
+echo "cp $3/gtkrc_user $2/gtkrc"
+cp $3/gtkrc_user $2/gtkrc
 
 echo "mkdir $2/brushes"
 mkdir $2/brushes

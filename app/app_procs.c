@@ -499,6 +499,8 @@ app_init (void)
 
   gtk_rc_parse (filename);
 
+  g_free (filename);
+
   if (parse_buffers_init ())
     {
       parse_unitrc ();   /*  this needs to be done before gimprc loading  */
