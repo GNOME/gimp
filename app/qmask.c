@@ -372,7 +372,6 @@ edit_qmask_query_ok_callback (GtkWidget *widget,
       options->gimage->qmask_opacity = (gint) 100*opacity/255;
     }
 
-  color_panel_free (options->color_panel);
   gtk_widget_destroy (options->query_box);
   g_free (options);
 }
@@ -385,7 +384,6 @@ edit_qmask_query_cancel_callback (GtkWidget *widget,
 
   options = (EditQmaskOptions *) client_data;
 
-  color_panel_free (options->color_panel);
   gtk_widget_destroy (options->query_box);
   g_free (options);
 }

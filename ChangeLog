@@ -1,5 +1,17 @@
 2000-04-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/color_panel.[ch]
+	* app/color_picker.c
+	* app/qmask.c: removed the public function color_panel_free() and
+	fake a real widget's behaviour by connecting to the panel widget's
+	"destroy" signal.
+
+	* app/channels_dialog.c
+	* app/layers_dialog.c: cleaned up and sync'ed the code where
+	possible (without changing the logic).
+
+2000-04-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/channels_dialog.c
 	* app/layers_dialog.c: when dropping layers/channels around in the
 	stack, Gtk sometimes continues searching a drag destination
