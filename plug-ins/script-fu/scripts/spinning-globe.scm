@@ -28,15 +28,19 @@
 				  inTransparent 
 				  inIndex 
 				  inCopy)
-  (set! theImage (if (= inCopy TRUE)
-		     (car (gimp-image-duplicate inImage))
-		     inImage))
-  (set! theLayer (car (gimp-image-get-active-layer theImage)))
+  (let* (
+        (theImage (if (= inCopy TRUE)
+		            (car (gimp-image-duplicate inImage))
+		            inImage))
+        (theLayer (car (gimp-image-get-active-layer theImage)))
+        (n 0)
+        (ang (* (/ 360 inFrames) 
+	        (if (= inFromLeft TRUE) 1 -1) ))
+        (theFrame)
+        )
+
   (gimp-layer-add-alpha theLayer)
   
-  (set! n 0)
-  (set! ang (* (/ 360 inFrames) 
-	       (if (= inFromLeft TRUE) 1 -1) ))
   (while (> inFrames n)
 	 (set! n (+ n 1))
 	 (set! theFrame (car (gimp-layer-copy theLayer FALSE)))
@@ -97,6 +101,7 @@
       ())
 
   (gimp-displays-flush)
+  )
 )
 
 ; Register the function with the GIMP:

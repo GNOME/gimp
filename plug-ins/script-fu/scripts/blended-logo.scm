@@ -177,9 +177,9 @@
 		    SF-COLOR      _"Text color"         '(124 174 255)
 		    SF-COLOR      _"Background color"   '(255 255 255)
 		    SF-OPTION     _"Blend mode"         '(_"FG-BG-RGB"
-							   _"FG-BG-HSV"
-							   _"FG-Transparent"
-							   _"Custom Gradient")
+							  _"FG-BG-HSV"
+							  _"FG-Transparent"
+							  _"Custom Gradient")
 		    SF-COLOR      _"Start blend"        '(22 9 129)
 		    SF-COLOR      _"End blend"          '(129 9 82)
 		    SF-GRADIENT   _"Gradient"           "Golden"

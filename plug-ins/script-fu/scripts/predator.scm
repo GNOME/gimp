@@ -34,7 +34,16 @@
   (let* (
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image-width (car (gimp-image-width image)))
-	 (image-height (car (gimp-image-height image))))
+	 (image-height (car (gimp-image-height image)))
+     (active-selection)
+     (from-selection)
+     (selection-bounds)
+     (select-offset-x)
+     (select-offset-y)
+     (select-width)
+     (select-height)
+     (effect-layer)
+     (active-layer))
     
     (gimp-image-undo-group-start image)
     (gimp-layer-add-alpha drawable)

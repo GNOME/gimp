@@ -29,7 +29,8 @@
 	 (text-mask 0)
 	 (saved-select 0)
 	 (cell-size (/ font-size 8))
-	 (grey (/ (* density 255) 100)))
+	 (grey (/ (* density 255) 100))
+     (saved-sel))
 
     (gimp-context-push)
 

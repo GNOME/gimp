@@ -21,11 +21,16 @@
 
 (define (script-fu-camo-pattern inSize inGrain inColor1 inColor2 inColor3 inSmooth inFlatten)
 
-        (set! theWidth inSize)
-	(set! theHeight inSize)
-        (set! theImage (car (gimp-image-new theWidth theHeight RGB)))
+  (let* (
+        (theWidth inSize)
+        (theHeight inSize)
+        (theImage (car (gimp-image-new theWidth theHeight RGB)))
+        (baseLayer (car (gimp-layer-new theImage theWidth theHeight RGBA-IMAGE "Background" 100 NORMAL-MODE)))
+        (thickLayer)
+        (thinLayer)
+        (theBlur)
+        )
 
-        (set! baseLayer (car (gimp-layer-new theImage theWidth theHeight RGBA-IMAGE "Background" 100 NORMAL-MODE)))
         (gimp-image-add-layer theImage baseLayer 0)
 
         (set! thickLayer (car (gimp-layer-new theImage theWidth theHeight RGBA-IMAGE "Camo Thick Layer" 100 NORMAL-MODE)))
@@ -78,8 +83,7 @@
 
         (gimp-display-new theImage)
 
-	(gimp-context-pop))
-
+	(gimp-context-pop)))
 
 
 ; Register the function with the GIMP:

@@ -1,5 +1,22 @@
 2004-10-04  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/3d-outline.scm
+	* plug-ins/script-fu/scripts/blended-logo.scm
+	* plug-ins/script-fu/scripts/camo.scm
+	* plug-ins/script-fu/scripts/clothify.scm
+	* plug-ins/script-fu/scripts/flatland.scm
+	* plug-ins/script-fu/scripts/glossy.scm
+	* plug-ins/script-fu/scripts/land.scm
+	* plug-ins/script-fu/scripts/predator.scm
+	* plug-ins/script-fu/scripts/rendermap.scm
+	* plug-ins/script-fu/scripts/ripply-anim.scm
+	* plug-ins/script-fu/scripts/speed-text.scm
+	* plug-ins/script-fu/scripts/spinning-globe.scm: applied patches
+	from Kevin Cozens that define variables before first use (bug
+	#153900).
+
+2004-10-04  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpgradientmenu.c: handle allocation > requisition for
 	the gradient preview.
 

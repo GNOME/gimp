@@ -45,7 +45,8 @@
          (posx (- (car (gimp-drawable-offsets logo-layer))))
          (posy (- (cadr (gimp-drawable-offsets logo-layer))))
          (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
-         (grow-me (car (gimp-layer-copy logo-layer TRUE))))
+         (grow-me (car (gimp-layer-copy logo-layer TRUE)))
+         (dont-drop-me))
 
     (gimp-context-push)
 

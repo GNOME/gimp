@@ -35,7 +35,11 @@
          (bg-layer (car (gimp-layer-new img width height
 					RGB-IMAGE "Background" 100 NORMAL-MODE)))
          (pattern (car (gimp-layer-new img width height
-				       RGBA-IMAGE "Pattern" 100 NORMAL-MODE))))
+				       RGBA-IMAGE "Pattern" 100 NORMAL-MODE)))
+         (layer2)
+         (layer3)
+         (pattern-mask)
+         (floating-sel))
 
     (gimp-context-push)
 
@@ -71,8 +75,8 @@
 
     (gimp-selection-all img)
     (gimp-edit-copy layer3)
-    (set! floating_sel (car (gimp-edit-paste pattern-mask FALSE)))
-    (gimp-floating-sel-anchor floating_sel)
+    (set! floating-sel (car (gimp-edit-paste pattern-mask FALSE)))
+    (gimp-floating-sel-anchor floating-sel)
 
     (gimp-layer-remove-mask pattern MASK-APPLY)
     (gimp-invert layer3)

@@ -10,7 +10,9 @@
 	     (height (car (gimp-drawable-height tdrawable)))
 	     (img (car (gimp-image-new width height RGB)))
 					;		(layer-two (car (gimp-layer-new img width height RGB-IMAGE "Y Dots" 100 MULTIPLY-MODE)))
-	     (layer-one (car (gimp-layer-new img width height RGB-IMAGE "X Dots" 100 NORMAL-MODE))))
+	     (layer-one (car (gimp-layer-new img width height RGB-IMAGE "X Dots" 100 NORMAL-MODE)))
+         (layer-two)
+         (bump-layer))
 
 	  (gimp-context-push)
 

@@ -20,7 +20,16 @@
   (let* ((width (car (gimp-drawable-width drawable)))
 	 (height (car (gimp-drawable-height drawable)))
 	 (ripple-image (car (gimp-image-new width height GRAY)))
-	 (ripple-layer (car (gimp-layer-new ripple-image width height GRAY-IMAGE "Ripple Texture" 100 NORMAL-MODE))))
+	 (ripple-layer (car (gimp-layer-new ripple-image width height GRAY-IMAGE "Ripple Texture" 100 NORMAL-MODE)))
+     (rippletiled-ret)
+     (rippletiled-image)
+     (rippletiled-layer)
+     (remaining-frames)
+     (xpos)
+     (ypos)
+     (xoffset)
+     (yoffset)
+     )
 
  ; this script generates its own displacement map
 
@@ -56,7 +65,13 @@
     (set! xoffset (/ width num-frames))
     (set! yoffset (/ height num-frames))
 
-    (let* ((out-imagestack (car (gimp-image-new width height RGB))))
+    (let* (
+          (out-imagestack (car (gimp-image-new width height RGB)))
+          (dup-image)
+          (dup-layer)
+          (layer-name)
+          (this-layer)
+          )
 
       (gimp-image-undo-disable out-imagestack)
       

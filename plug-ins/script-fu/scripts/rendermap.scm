@@ -20,10 +20,13 @@
 			      inGrain
 			      inGrad
 			      inWiden)
-
-  (set! theWidth inSize)
-  (set! theHeight inSize)
-  (set! theImage (car(gimp-image-new theWidth theHeight RGB)))
+  (let* (
+        (theWidth inSize)
+        (theHeight inSize)
+        (theImage (car (gimp-image-new theWidth theHeight RGB)))
+        (theLayer)
+        (thinLayer)
+        )
 
   (gimp-context-push)
 
@@ -67,7 +70,7 @@
 
   (gimp-display-new theImage)
 
-  (gimp-context-pop))
+  (gimp-context-pop)))
 
 (script-fu-register "script-fu-render-map"
 		    _"<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
