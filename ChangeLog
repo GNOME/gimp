@@ -1,3 +1,8 @@
+Sat Aug 21 8:47:00 CST 1999  Seth Burgess <sjburges@gimp.org>
+
+	* plug-ins/common/jpeg.c : added a patch by Xach for slider
+        being inactive when checkbox isn't marked.
+
 Sat Aug 21 15:16:00 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/measure.c: corrected my last "fix"

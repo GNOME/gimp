@@ -242,6 +242,9 @@ static JpegSaveInterface jsint =
 
 char *image_comment=NULL;
 
+static GtkWidget *restart_markers_scale = NULL;
+static GtkWidget *restart_markers_label = NULL;
+
 MAIN ()
 
 static void
@@ -1482,7 +1485,7 @@ save_dialog ()
 
   /* sg - have to init scale here */
   scale_data = gtk_adjustment_new ((jsvals.restart == 0) ? 1 : jsvals.restart, 1, 64, 1, 1, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
+  restart_markers_scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
 
   restart = gtk_check_button_new_with_label(_("Restart markers"));
   gtk_table_attach(GTK_TABLE(table), restart, 0, 2, 2, 3, GTK_FILL, 0, 0, 0);
@@ -1490,20 +1493,24 @@ save_dialog ()
                      (GtkSignalFunc) save_restart_toggle_update, scale_data);
   gtk_widget_show(restart);
 
-  label = gtk_label_new (_("Restart frequency (rows)"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4, GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
+  restart_markers_label = gtk_label_new (_("Restart frequency (rows)"));
+  gtk_misc_set_alignment (GTK_MISC (restart_markers_label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), restart_markers_label, 0, 1, 3, 4, GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
 
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 3, 4, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_widget_set_usize (restart_markers_scale, SCALE_WIDTH, 0);
+  gtk_table_attach (GTK_TABLE (table), restart_markers_scale, 1, 2, 3, 4, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_scale_set_value_pos (GTK_SCALE (restart_markers_scale), GTK_POS_TOP);
+  gtk_scale_set_digits (GTK_SCALE (restart_markers_scale), 0);
+  gtk_range_set_update_policy (GTK_RANGE (restart_markers_scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
                       (GtkSignalFunc) save_restart_update,
                       restart);
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
+
+  gtk_widget_set_sensitive(restart_markers_label, (jsvals.restart ? TRUE : FALSE));
+  gtk_widget_set_sensitive(restart_markers_scale, (jsvals.restart ? TRUE : FALSE));
+  
+  gtk_widget_show (restart_markers_label);
+  gtk_widget_show (restart_markers_scale);
 
   toggle = gtk_check_button_new_with_label(_("Optimize"));
   gtk_table_attach(GTK_TABLE(table), toggle, 0, 2, 4, 5, GTK_FILL, 0, 0, 0);
@@ -1674,6 +1681,10 @@ save_restart_update (GtkAdjustment *adjustment,
 		     GtkWidget     *toggle)
 {
   jsvals.restart = GTK_TOGGLE_BUTTON (toggle)->active ? adjustment->value : 0;
+
+  gtk_widget_set_sensitive(restart_markers_label, (jsvals.restart ? TRUE : FALSE));
+  gtk_widget_set_sensitive(restart_markers_scale, (jsvals.restart ? TRUE : FALSE));
+          
   make_preview();
 }
 
