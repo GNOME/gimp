@@ -30,7 +30,7 @@
 			mask_size
 			gradient
 			keep-selection
-			seperate-layer
+			separate-layer
 			current-grad)
   (let* (
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
@@ -57,7 +57,7 @@
     (set! select-width (- (cadr (cddr selection-bounds)) select-offset-x))
     (set! select-height (- (caddr (cddr selection-bounds)) select-offset-y))
     
-    (if (= seperate-layer TRUE)
+    (if (= separate-layer TRUE)
 	(begin
 	  (set! lava-layer (car (gimp-layer-new image
 						select-width
@@ -112,5 +112,5 @@
 		    SF-VALUE    _"Roughness" "7"
 		    SF-GRADIENT _"Gradient" "German_flag_smooth"
 		    SF-TOGGLE   _"Keep Selection" TRUE
-		    SF-TOGGLE   _"Seperate Layer" TRUE
+		    SF-TOGGLE   _"Separate Layer" TRUE
 		    SF-TOGGLE   _"Use Current Gradient" FALSE)

@@ -208,9 +208,9 @@
 		    "Andrew Donkin"
 		    "1997/11/06"
 		    "RGB* GRAY*"
-		    SF-IMAGE _"Image" 0
-		    SF-DRAWABLE _"Drawable" 0
-		    SF-ADJUSTMENT _"Thickness" '(5 0 30 1 2 0 0)
-		    SF-TOGGLE _"Work on Copy" TRUE
-		    SF-TOGGLE _"Keep Bump Layer" FALSE
+		    SF-IMAGE "Image" 0
+		    SF-DRAWABLE "Drawable" 0
+		    SF-ADJUSTMENT _"Thickness"       '(5 0 30 1 2 0 0)
+		    SF-TOGGLE     _"Work on Copy"    TRUE
+		    SF-TOGGLE     _"Keep Bump Layer" FALSE
 		    )

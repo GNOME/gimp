@@ -1,3 +1,7 @@
+2000-04-02  Sven Neumann  <sven@gimp.org>
+
+	* de.po: corrected a few entries
+
 Thu Mar 30 07:11:26 CEST 2000  Marc Lehmann <pcg@goof.com>
 
         * Makefile.PL: implemented Sven's suggestions (well, at least some

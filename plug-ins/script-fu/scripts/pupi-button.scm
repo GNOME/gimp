@@ -209,8 +209,8 @@
 		    SF-VALUE      _"Padding Y" "4"
 		    SF-VALUE      _"Bevel Width" "2"
 		    SF-VALUE      _"Round Ratio" "1"
-		    SF-TOGGLE     _"Not-Pressed         " TRUE
-		    SF-TOGGLE     _"Not-Pressed (Active)" TRUE
-		    SF-TOGGLE     _"Pressed             " TRUE)
+		    SF-TOGGLE     _"Not Pressed" TRUE
+		    SF-TOGGLE     _"Not Pressed (Active)" TRUE
+		    SF-TOGGLE     _"Pressed" TRUE)
 
 

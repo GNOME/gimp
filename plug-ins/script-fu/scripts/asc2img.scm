@@ -214,12 +214,12 @@
  "8th April 1998"
  "Chris Gutteridge / ECS @ University of Southampton, England"
  "bar"
- SF-FILENAME _"File Name"       "afile"
- SF-FONT     _"Font"       "-*-Charter-*-r-*-*-24-*-*-*-p-*-*-*"
- SF-ADJUSTMENT _"Font Size (pixels)" '(45 2 1000 1 10 0 1)
- SF-COLOR    _"Text Color"      '(0 0 0)
- SF-TOGGLE   _"Transparent Background" FALSE
- SF-COLOR    _"Background Color"      '(255 255 255)
+ SF-FILENAME   _"Filename"               "afile"
+ SF-FONT       _"Font"                   "-*-Charter-*-r-*-*-24-*-*-*-p-*-*-*"
+ SF-ADJUSTMENT _"Font Size (pixels)"     '(45 2 1000 1 10 0 1)
+ SF-COLOR      _"Text Color"             '(0 0 0)
+ SF-TOGGLE     _"Transparent Background" FALSE
+ SF-COLOR      _"Background Color"       '(255 255 255)
  SF-ADJUSTMENT _"Buffer Amount (% Height of Text)" '(35 0 100 1 10 0 0)
 )
 
@@ -233,8 +233,8 @@
  "*"
  SF-IMAGE "Image" 0
  SF-DRAWABLE "Layer" 0
- SF-FILENAME _"File Name"       "afile"
- SF-FONT     _"Font"       "-*-Charter-*-r-*-*-24-*-*-*-p-*-*-*"
+ SF-FILENAME _"Filename"             "afile"
+ SF-FONT     _"Font"                 "-*-Charter-*-r-*-*-24-*-*-*-p-*-*-*"
  SF-ADJUSTMENT _"Font Size (pixels)" '(45 2 1000 1 10 0 1)
- SF-COLOR _"Text Color"      '(0 0 0)
+ SF-COLOR    _"Text Color"           '(0 0 0)
 )

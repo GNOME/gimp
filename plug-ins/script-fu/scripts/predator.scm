@@ -30,7 +30,7 @@
 			    pixelize
 			    pixel-size
 			    keep-selection
-			    seperate-layer)
+			    separate-layer)
   (let* (
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image-width (car (gimp-image-width image)))
@@ -55,7 +55,7 @@
     (set! select-width (- (cadr (cddr selection-bounds)) select-offset-x))
     (set! select-height (- (caddr (cddr selection-bounds)) select-offset-y))
     
-    (if (= seperate-layer TRUE)
+    (if (= separate-layer TRUE)
 	(begin
 	  (set! effect-layer (car (gimp-layer-new image
 						select-width
@@ -108,4 +108,4 @@
 		    SF-TOGGLE     _"Pixelize" TRUE
 		    SF-ADJUSTMENT _"Pixel Amount" '(3 1 16 1 1 0 0)
 		    SF-TOGGLE     _"Keep Selection" TRUE
-		    SF-TOGGLE     _"Seperate Layer" TRUE)
+		    SF-TOGGLE     _"Separate Layer" TRUE)
