@@ -1,3 +1,8 @@
+2001-07-25  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: only build X11 specific plug-ins and tools if 
+	building for GTK+ on X11.
+
 2001-07-25  Michael Natterer  <mitch@gimp.org>
 
 	* HACKING

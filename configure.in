@@ -230,17 +230,26 @@ else
 fi
 AM_CONDITIONAL(HAVE_ASM_MMX, test x$have_asm_mmx = xtrue)
 
-dnl Test for Xmu
-  if test -z "$LIBXMU"; then
-    AC_CHECK_LIB(Xmu, XmuClientWindow,
-      AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
-	WEBBROWSER="webbrowser"; GIMP_REMOTE="gimp-remote"; LIBXMU='-lXmu -lXt -lSM -lICE',
-	AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU header file not found) ***)),
-	AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
-	  AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
-	    WEBBROWSER="webbrowser"; GIMP_REMOTE="gimp-remote"; LIBXMU='-lXmu -lXt',
-	    AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU header file not found) ***)),
-	AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU library not found) ***), -lXt), -lXt -lSM -lICE)
+
+dnl Check if building for X11
+gdk_target=`$PKG_CONFIG --variable=target gtk+-2.0`
+if test "$gdk_target" = x11; then
+  dnl Test for Xmu
+    if test -z "$LIBXMU"; then
+      AC_CHECK_LIB(Xmu, XmuClientWindow,
+        AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
+	  WEBBROWSER="webbrowser"; GIMP_REMOTE="gimp-remote"; LIBXMU='-lXmu -lXt -lSM -lICE',
+	  AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU header file not found) ***)),
+	  AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
+	    AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
+	      WEBBROWSER="webbrowser"; GIMP_REMOTE="gimp-remote"; LIBXMU='-lXmu -lXt',
+	      AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU header file not found) ***)),
+	  AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU library not found) ***), -lXt), -lXt -lSM -lICE)
+    fi
+  else
+     AC_MSG_WARN([ 
+*** Not building for X11 (GDK backend is $gdk_target).
+*** Webbrowser plug-in and gimp-remote will not be built.])
   fi
 
 dnl Test for libaa
