@@ -51,9 +51,15 @@ static gchar *founders[] =
 static gchar *translators[] =
 {
   N_("Translation by"),
-  N_("<Translator: insert your name here>"),
+  N_("<Translators: insert your names here, separated by newline>"),
+};
+
+static gchar *contri_intro[] =
+{
   N_("Contributions by")
 };
+
+static gchar **translator_names = NULL;
 
 typedef struct
 {
@@ -717,13 +723,14 @@ about_dialog_timer (gpointer data)
           if (about_info.index >= G_N_ELEMENTS (founders))
             {
               about_info.index = 0;
-              about_info.state++;
-
+              
               /* skip the translators section when the translator
                * did not provide a translation with his name
                */
               if (gettext (translators[1]) == translators[1])
-                about_info.index = G_N_ELEMENTS (translators) - 1;
+                about_info.state = 3;
+              else
+                about_info.state = 1;
             }
           else
             {
@@ -745,7 +752,7 @@ about_dialog_timer (gpointer data)
       if (about_info.state == 1)
         {
           about_info.visible = TRUE;
-          if (about_info.index >= G_N_ELEMENTS (translators))
+          if (about_info.index >= G_N_ELEMENTS (translators) - 1)
             {
               about_info.index = 0;
               about_info.state++;
@@ -756,8 +763,42 @@ about_dialog_timer (gpointer data)
               about_info.index++;
             }
         }
-      
+
       if (about_info.state == 2)
+        {
+          if (!translator_names)
+            translator_names = g_strsplit (gettext (translators[1]), "\n", 0);
+
+          about_info.visible = TRUE;
+          if (translator_names[about_info.index] == NULL)
+            {
+              about_info.index = 0;
+              about_info.state++;
+            }
+          else
+            {
+              text = insert_spacers (translator_names[about_info.index]);
+              about_info.index++;
+            }
+        }
+      
+      if (about_info.state == 3)
+        {
+          about_info.visible = TRUE;
+          if (about_info.index >= G_N_ELEMENTS (contri_intro))
+            {
+              about_info.index = 0;
+              about_info.state++;
+            }
+          else
+            {
+              text = insert_spacers (gettext (contri_intro[about_info.index]));
+              about_info.index++;
+            }
+
+        }
+
+      if (about_info.state == 4)
         {
           about_info.visible = TRUE;
         

@@ -1,5 +1,13 @@
 2003-12-30  Simon Budig  <simon@gimp.org>
 
+	* app/gui/about-dialog.c: Made it possible to have multiple
+	lines of translators in the about dialog. Simply translate
+	"<Translators: insert your names here, separated by newline>".
+
+	Fixes bug #58507.
+
+2003-12-30  Simon Budig  <simon@gimp.org>
+
 	* app/vectors/gimpvectors-compat.c: When there is a visible
 	path, it cannot be stored in the XCF in a portable manner.
 
