@@ -658,7 +658,7 @@ curves_explicit_invoker (Argument *args)
   GimpDrawable *drawable;
   gint32 channel;
   gint32 num_bytes;
-  guint8 *curve;
+  gint8 *curve;
   CurvesDialog cd;
   int x1, y1, x2, y2;
   int i, j;
@@ -676,7 +676,7 @@ curves_explicit_invoker (Argument *args)
   if (num_bytes <= 0)
     success = FALSE;
 
-  curve = (guint8 *) args[3].value.pdb_pointer;
+  curve = (gint8 *) args[3].value.pdb_pointer;
 
   if (success)
     {

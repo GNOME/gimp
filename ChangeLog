@@ -1,3 +1,10 @@
+1999-10-04 Olof S Kylander <olof@gimp.org>
+
+	* app/color_cmds.c
+	
+	removed the bug fix for 2306 and 2208
+	It is autogen code so ...
+
 1999-10-04  Sven Neumann <sven@gimp.org>
 
 	* app/tool_options.c: fixed bug #2511
