@@ -45,6 +45,8 @@ static void   gimp_color_editor_init              (GimpColorEditor      *editor)
 static void   gimp_color_editor_docked_iface_init (GimpDockedInterface  *docked_iface);
 
 static void   gimp_color_editor_destroy         (GtkObject         *object);
+static void   gimp_color_editor_style_set       (GtkWidget         *widget,
+                                                 GtkStyle          *prev_style);
 
 static void   gimp_color_editor_set_aux_info     (GimpDocked       *docked,
                                                   GList            *aux_info);
@@ -120,12 +122,16 @@ static void
 gimp_color_editor_class_init (GimpColorEditorClass* klass)
 {
   GtkObjectClass *object_class;
+  GtkWidgetClass *widget_class;
 
   object_class = GTK_OBJECT_CLASS (klass);
+  widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_color_editor_destroy;
+
+  widget_class->style_set = gimp_color_editor_style_set;
 }
 
 static void
@@ -374,9 +380,7 @@ gimp_color_editor_set_docked_context (GimpDocked  *docked,
 static void
 gimp_color_editor_destroy (GtkObject *object)
 {
-  GimpColorEditor *editor;
-
-  editor = GIMP_COLOR_EDITOR (object);
+  GimpColorEditor *editor = GIMP_COLOR_EDITOR (object);
 
   if (editor->context)
     gimp_color_editor_set_context (editor, NULL);
@@ -400,6 +404,50 @@ gimp_color_editor_new (GimpContext *context)
     gimp_color_editor_set_context (editor, context);
 
   return GTK_WIDGET (editor);
+}
+
+static void
+gimp_color_editor_style_set (GtkWidget *widget,
+                             GtkStyle  *prev_style)
+{
+  GimpColorEditor *editor;
+  GtkIconSize      button_icon_size;
+  gint             button_spacing;
+
+  if (GTK_WIDGET_CLASS (parent_class)->style_set)
+    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  editor = GIMP_COLOR_EDITOR (widget);
+
+  gtk_widget_style_get (widget,
+                        "button_icon_size", &button_icon_size,
+			"button_spacing",   &button_spacing,
+			NULL);
+
+  if (editor->hbox)
+    {
+      GList  *children;
+      GList  *list;
+
+      gtk_box_set_spacing (GTK_BOX (editor->hbox), button_spacing);
+
+      children = gtk_container_get_children (GTK_CONTAINER (editor->hbox));
+
+      for (list = children; list; list = g_list_next (list))
+        {
+          GtkBin *bin;
+          gchar  *stock_id;
+
+          bin = GTK_BIN (list->data);
+
+          gtk_image_get_stock (GTK_IMAGE (bin->child), &stock_id, NULL);
+          gtk_image_set_from_stock (GTK_IMAGE (bin->child),
+                                    stock_id,
+                                    button_icon_size);
+        }
+
+      g_list_free (children);
+    }
 }
 
 void

@@ -1,5 +1,10 @@
 2003-11-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcoloreditor.c: implement GtkWidget::style_set()
+	and update the button box spacing and icons sizes accordingly.
+
+2003-11-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/themes.[ch]: split out function themes_apply_theme()
 	from themes_init(). Connect to "notify::theme" of gimp->config and
 	change the theme in the callback. Added themes_list_themes().
