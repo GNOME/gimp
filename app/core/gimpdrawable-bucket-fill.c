@@ -124,7 +124,6 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
   PixelRegion  bufPR, maskPR;
   GimpChannel *mask = NULL;
   gint         bytes;
-  gboolean     has_alpha;
   gint         x1, y1, x2, y2;
   guchar       col[MAX_CHANNELS];
   TempBuf     *pat_buf = NULL;
@@ -168,7 +167,6 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
   gimp_set_busy (gimage->gimp);
 
   bytes     = gimp_drawable_bytes (drawable);
-  has_alpha = gimp_drawable_has_alpha (drawable);
   selection = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   /*  Do a seed bucket fill...To do this, calculate a new
@@ -231,27 +229,21 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
                              x1, y1, (x2 - x1), (y2 - y1), TRUE);
         }
 
-      /*  if the gimage doesn't have an alpha channel,
-       *  make sure that the temp buf does.  We need the
-       *  alpha channel to fill with the region calculated above
+      /*  if the gimage doesn't have an alpha channel, make sure that
+       *  the buf_tiles have.  We need the alpha channel to fill with
+       *  the region calculated above
        */
-      if (! has_alpha)
-	{
-	  bytes ++;
-	  has_alpha = TRUE;
-	}
+      if (! gimp_drawable_has_alpha (drawable))
+        bytes++;
     }
   else if (fill_mode == GIMP_PATTERN_BUCKET_FILL &&
            (pat_buf->bytes == 2 || pat_buf->bytes == 4))
     {
-      /* If pattern being applied has an alpha channel,
-       * add one to the temp buffer from the image too.
+      /* If pattern being applied has an alpha channel, add one to the
+       * buf_tiles.
        */
-      if (! has_alpha)
-	{
-	  bytes++;
-	  has_alpha = TRUE;
-	}
+      if (! gimp_drawable_has_alpha (drawable))
+        bytes++;
     }
 
   buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), bytes);
@@ -268,7 +260,10 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
       break;
 
     case GIMP_PATTERN_BUCKET_FILL:
-      pattern_region (&bufPR, mask ? &maskPR : NULL, pat_buf, x1, y1);
+      if (mask)
+        pattern_region (&bufPR, &maskPR, pat_buf, x1, y1);
+      else
+        pattern_region (&bufPR, NULL, pat_buf, x1, y1);
       break;
     }
 
