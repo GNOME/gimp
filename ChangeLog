@@ -1,7 +1,7 @@
 2004-04-21  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpintcombobox.[ch]: added new functions
-	gimp_int_combo_box_[prepend|append}.
+	gimp_int_combo_box_[prepend|append].
 
 	* plug-ins/common/sample_colorize.c: ported to GimpDrawableComboBox.
 

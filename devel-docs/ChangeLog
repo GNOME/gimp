@@ -2,7 +2,7 @@
 
 	* libgimpwidgets/libgimpwidgets-sections.txt	
 	* libgimpwidgets/tmpl/gimpintcombobox.sgml: added new functions
-	gimp_int_combo_box_[prepend|append}.
+	gimp_int_combo_box_[prepend|append].
 
 2004-04-20  Sven Neumann  <sven@gimp.org>
 
