@@ -194,8 +194,6 @@ floating_sel_to_layer (GimpLayer *layer)
 {
   GimpItem  *item;
   GimpImage *gimage;
-  gint       off_x, off_y;
-  gint       width, height;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
   g_return_if_fail (gimp_layer_is_floating_sel (layer));
@@ -213,21 +211,15 @@ floating_sel_to_layer (GimpLayer *layer)
       return;
     }
 
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_FS_TO_LAYER,
+                               _("Floating Selection to Layer"));
+
   /*  restore the contents of the drawable  */
   floating_sel_restore (layer,
 			item->offset_x,
 			item->offset_y,
 			item->width,
 			item->height);
-
-  /*  determine whether the resulting layer needs an update  */
-  gimp_item_offsets (GIMP_ITEM (layer->fs.drawable), &off_x, &off_y);
-
-  width  = gimp_item_width  (GIMP_ITEM (layer->fs.drawable));
-  height = gimp_item_height (GIMP_ITEM (layer->fs.drawable));
-
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_FS_TO_LAYER,
-                               _("Floating Selection to Layer"));
 
   gimp_image_undo_push_fs_to_layer (gimage, NULL,
                                     layer, layer->fs.drawable);

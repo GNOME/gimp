@@ -2573,33 +2573,27 @@ undo_pop_fs_to_layer (GimpUndo            *undo,
       gimp_image_set_active_layer (undo->gimage, fsu->floating_layer);
       undo->gimage->floating_sel = fsu->floating_layer;
 
-      /*  restore the contents of the drawable  */
+      /*  store the contents of the drawable  */
       floating_sel_store (fsu->floating_layer,
-			  GIMP_ITEM (fsu->floating_layer)->offset_x,
-			  GIMP_ITEM (fsu->floating_layer)->offset_y,
-			  GIMP_ITEM (fsu->floating_layer)->width,
-			  GIMP_ITEM (fsu->floating_layer)->height);
+                          GIMP_ITEM (fsu->floating_layer)->offset_x,
+                          GIMP_ITEM (fsu->floating_layer)->offset_y,
+                          GIMP_ITEM (fsu->floating_layer)->width,
+                          GIMP_ITEM (fsu->floating_layer)->height);
       fsu->floating_layer->fs.initial = TRUE;
 
       /*  clear the selection  */
       gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (fsu->floating_layer));
-
-      /*  update the floating layer's name  */
-      gimp_object_name_changed (GIMP_OBJECT (fsu->floating_layer));
-
-      /*  Update the preview for the gimage and underlying drawable  */
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (fsu->floating_layer));
       break;
 
     case GIMP_UNDO_MODE_REDO:
       /*  restore the contents of the drawable  */
       floating_sel_restore (fsu->floating_layer,
-			    GIMP_ITEM (fsu->floating_layer)->offset_x,
-			    GIMP_ITEM (fsu->floating_layer)->offset_y,
-			    GIMP_ITEM (fsu->floating_layer)->width,
-			    GIMP_ITEM (fsu->floating_layer)->height);
+                            GIMP_ITEM (fsu->floating_layer)->offset_x,
+                            GIMP_ITEM (fsu->floating_layer)->offset_y,
+                            GIMP_ITEM (fsu->floating_layer)->width,
+                            GIMP_ITEM (fsu->floating_layer)->height);
 
-      /*  Update the preview for the gimage and underlying drawable  */
+      /*  Update the preview for the underlying drawable  */
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (fsu->floating_layer));
 
       /*  clear the selection  */
@@ -2607,15 +2601,16 @@ undo_pop_fs_to_layer (GimpUndo            *undo,
 
       /*  update the pointers  */
       fsu->floating_layer->fs.drawable = NULL;
-      undo->gimage->floating_sel = NULL;
-
-      /*  update the floating layer's name  */
-      gimp_object_name_changed (GIMP_OBJECT (fsu->floating_layer));
-
-      /*  Update the fs drawable  */
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (fsu->floating_layer));
+      undo->gimage->floating_sel       = NULL;
       break;
     }
+
+  gimp_object_name_changed (GIMP_OBJECT (fsu->floating_layer));
+
+  gimp_drawable_update (GIMP_DRAWABLE (fsu->floating_layer),
+			0, 0,
+			GIMP_ITEM (fsu->floating_layer)->width,
+			GIMP_ITEM (fsu->floating_layer)->height);
 
   gimp_image_floating_selection_changed (undo->gimage);
 

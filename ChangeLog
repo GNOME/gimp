@@ -1,13 +1,23 @@
 2004-09-24  Michael Natterer  <mitch@gimp.org>
 
-	* app/tools/gimpimagemaptool.c
-	(gimp_image_map_tool_settings_dialog): set the folder using
-	gtk_file_chooser_set_current_folder(), not set_filename().
+	* app/core/gimpimage-undo-push.c (undo_pop_fs_to_layer): factored
+	common code out of the UNDO amd REDO cases. Use gimp_drawable_update()
+	instead of gimp_viewable_invalidate_preview() so the projection
+	gets updated correctly. Fixes bug #149558.
+
+	* app/core/gimplayer-floating-sel.c (floating_sel_to_layer):
+	removed unused variables and their assignments.
 
 2004-09-24  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimptemplateeditor.[ch]: added a label that shows
 	the pixel size (as in the initial mockup done by Jimmac).
+
+2004-09-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpimagemaptool.c
+	(gimp_image_map_tool_settings_dialog): set the folder using
+	gtk_file_chooser_set_current_folder(), not set_filename().
 
 2004-09-24  Sven Neumann  <sven@gimp.org>
 
