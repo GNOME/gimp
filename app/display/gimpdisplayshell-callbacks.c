@@ -466,8 +466,8 @@ gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
 }
 
 
-#define AUTOSCROLL_DT 20
-#define AUTOSCROLL_DX 5
+#define AUTOSCROLL_DT  20
+#define AUTOSCROLL_DX  0.1
 
 static gboolean
 autoscroll_timeout (gpointer data)
@@ -485,14 +485,14 @@ autoscroll_timeout (gpointer data)
                                         info->device, &device_coords);
 
   if (device_coords.x < 0)
-    off_x = AUTOSCROLL_DX * device_coords.x / 50.0;
+    off_x = device_coords.x;
   else if (device_coords.x > info->shell->disp_width)
-    off_x = AUTOSCROLL_DX * (device_coords.x - info->shell->disp_width) / 50.0;
+    off_x = device_coords.x - info->shell->disp_width;
 
   if (device_coords.y < 0)
-    off_y = AUTOSCROLL_DX * device_coords.y / 50.0;
+    off_y = device_coords.y;
   else if (device_coords.y > info->shell->disp_height)
-    off_y = AUTOSCROLL_DX * (device_coords.y - info->shell->disp_height) / 50.0;
+    off_y = device_coords.y - info->shell->disp_height;
 
   if (off_x == 0 && off_y == 0)
     {
@@ -500,7 +500,9 @@ autoscroll_timeout (gpointer data)
       return FALSE;
     }
 
-  gimp_display_shell_scroll (info->shell, off_x, off_y);
+  gimp_display_shell_scroll (info->shell,
+                             AUTOSCROLL_DX * (gdouble) off_x,
+                             AUTOSCROLL_DX * (gdouble) off_y);
 
   gimp_display_shell_untransform_coords (info->shell,
                                          &device_coords, &image_coords);
