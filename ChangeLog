@@ -1,5 +1,13 @@
 2004-06-01  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/gradient_edit.pdb: use enums instead of
+	integers, cleanup.
+
+	* app/pdb/gradient_edit_cmds.c
+	* libgimp/gimpgradientedit_pdb.[ch]: regenerated.
+
+2004-06-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdatafactory.[ch]: added new function
 	gimp_data_factory_data_delete().
 

@@ -504,7 +504,7 @@ gimp_gradient_segment_get_blending_function (const gchar *name,
  * @name: The name of the gradient to operate on.
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
- * @blending_function: The Blending Function (GRAD-LINEAR, GRAD-CURVED, GRAD-SINE, GRAD-SPHERE-INCREASING, GRAD-SPHERE-DECREASING).
+ * @blending_function: The Blending Function.
  *
  * Change the blending function of a segments range
  *
@@ -514,10 +514,10 @@ gimp_gradient_segment_get_blending_function (const gchar *name,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_gradient_segment_set_blending_function (const gchar *name,
-					     gint         start_segment,
-					     gint         end_segment,
-					     gint         blending_function)
+gimp_gradient_segment_set_blending_function (const gchar             *name,
+					     gint                     start_segment,
+					     gint                     end_segment,
+					     GimpGradientSegmentType  blending_function)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -583,7 +583,7 @@ gimp_gradient_segment_get_coloring_type (const gchar *name,
  * @name: The name of the gradient to operate on.
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
- * @coloring_type: The Coloring Type (GRAD-RGB, GRAD-HSV-CCW, GRAD-HSV-CW).
+ * @coloring_type: The Coloring Type.
  *
  * Change the coloring type of a segments range
  *
@@ -593,10 +593,10 @@ gimp_gradient_segment_get_coloring_type (const gchar *name,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_gradient_segment_set_coloring_type (const gchar *name,
-					 gint         start_segment,
-					 gint         end_segment,
-					 gint         coloring_type)
+gimp_gradient_segment_set_coloring_type (const gchar              *name,
+					 gint                      start_segment,
+					 gint                      end_segment,
+					 GimpGradientSegmentColor  coloring_type)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

@@ -124,25 +124,22 @@ gradient_segment_get_left_color_invoker (Gimp        *gimp,
           gradient = gimp_context_get_gradient (context);
         }
 
-      if (gradient)
+      success = (gradient != NULL);
+
+      if (success)
         {
           GimpGradientSegment *seg;
+
           seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-          if (seg)
+
+          success = (seg != NULL);
+
+          if (success)
             {
-              /* Success */
               gimp_gradient_segment_get_left_color (gradient, seg, &color);
     opacity = color.a * 100.0;
 
             }
-          else
-            {
-              success = FALSE;
-            }
-        }
-      else
-        {
-          success = FALSE;
         }
     }
 
@@ -240,25 +237,22 @@ gradient_segment_set_left_color_invoker (Gimp        *gimp,
           gradient = gimp_context_get_gradient (context);
         }
 
-      if (gradient)
+      success = (gradient != NULL);
+
+      if (success)
         {
           GimpGradientSegment *seg;
+
           seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-          if (seg)
+
+          success = (seg != NULL);
+
+          if (success)
             {
-              /* Success */
               color.a = opacity / 100.0;
     gimp_gradient_segment_set_left_color (gradient, seg, &color);
 
             }
-          else
-            {
-              success = FALSE;
-            }
-        }
-      else
-        {
-          success = FALSE;
         }
     }
 
@@ -339,25 +333,22 @@ gradient_segment_get_right_color_invoker (Gimp        *gimp,
           gradient = gimp_context_get_gradient (context);
         }
 
-      if (gradient)
+      success = (gradient != NULL);
+
+      if (success)
         {
           GimpGradientSegment *seg;
+
           seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-          if (seg)
+
+          success = (seg != NULL);
+
+          if (success)
             {
-              /* Success */
               gimp_gradient_segment_get_right_color (gradient, seg, &color);
     opacity = color.a * 100.0;
 
             }
-          else
-            {
-              success = FALSE;
-            }
-        }
-      else
-        {
-          success = FALSE;
         }
     }
 
@@ -455,25 +446,22 @@ gradient_segment_set_right_color_invoker (Gimp        *gimp,
           gradient = gimp_context_get_gradient (context);
         }
 
-      if (gradient)
+      success = (gradient != NULL);
+
+      if (success)
         {
           GimpGradientSegment *seg;
+
           seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-          if (seg)
+
+          success = (seg != NULL);
+
+          if (success)
             {
-              /* Success */
               color.a = opacity / 100.0;
     gimp_gradient_segment_set_right_color (gradient, seg, &color);
 
             }
-          else
-            {
-              success = FALSE;
-            }
-        }
-      else
-        {
-          success = FALSE;
         }
     }
 
@@ -553,24 +541,21 @@ gradient_segment_get_left_pos_invoker (Gimp        *gimp,
           gradient = gimp_context_get_gradient (context);
         }
 
-      if (gradient)
+      success = (gradient != NULL);
+
+      if (success)
         {
           GimpGradientSegment *seg;
+
           seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-          if (seg)
+
+          success = (seg != NULL);
+
+          if (success)
             {
-              /* Success */
               pos = gimp_gradient_segment_get_left_pos (gradient, seg);
 
             }
-          else
-            {
-              success = FALSE;
-            }
-        }
-      else
-        {
-          success = FALSE;
         }
     }
 
@@ -659,24 +644,21 @@ gradient_segment_set_left_pos_invoker (Gimp        *gimp,
           gradient = gimp_context_get_gradient (context);
         }
 
-      if (gradient)
+      success = (gradient != NULL);
+
+      if (success)
         {
           GimpGradientSegment *seg;
+
           seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-          if (seg)
+
+          success = (seg != NULL);
+
+          if (success)
             {
-              /* Success */
               final_pos = gimp_gradient_segment_set_left_pos (gradient, seg, pos);
 
             }
-          else
-            {
-              success = FALSE;
-            }
-        }
-      else
-        {
-          success = FALSE;
         }
     }
 
@@ -765,24 +747,21 @@ gradient_segment_get_middle_pos_invoker (Gimp        *gimp,
           gradient = gimp_context_get_gradient (context);
         }
 
-      if (gradient)
+      success = (gradient != NULL);
+
+      if (success)
         {
           GimpGradientSegment *seg;
+
           seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-          if (seg)
+
+          success = (seg != NULL);
+
+          if (success)
             {
-              /* Success */
               pos = gimp_gradient_segment_get_middle_pos (gradient, seg);
 
             }
-          else
-            {
-              success = FALSE;
-            }
-        }
-      else
-        {
-          success = FALSE;
         }
     }
 
@@ -871,24 +850,21 @@ gradient_segment_set_middle_pos_invoker (Gimp        *gimp,
           gradient = gimp_context_get_gradient (context);
         }
 
-      if (gradient)
+      success = (gradient != NULL);
+
+      if (success)
         {
           GimpGradientSegment *seg;
+
           seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-          if (seg)
+
+          success = (seg != NULL);
+
+          if (success)
             {
-              /* Success */
               final_pos = gimp_gradient_segment_set_middle_pos (gradient, seg, pos);
 
             }
-          else
-            {
-              success = FALSE;
-            }
-        }
-      else
-        {
-          success = FALSE;
         }
     }
 
@@ -977,24 +953,21 @@ gradient_segment_get_right_pos_invoker (Gimp        *gimp,
           gradient = gimp_context_get_gradient (context);
         }
 
-      if (gradient)
+      success = (gradient != NULL);
+
+      if (success)
         {
           GimpGradientSegment *seg;
+
           seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-          if (seg)
+
+          success = (seg != NULL);
+
+          if (success)
             {
-              /* Success */
               pos = gimp_gradient_segment_get_right_pos (gradient, seg);
 
             }
-          else
-            {
-              success = FALSE;
-            }
-        }
-      else
-        {
-          success = FALSE;
         }
     }
 
@@ -1083,24 +1056,21 @@ gradient_segment_set_right_pos_invoker (Gimp        *gimp,
           gradient = gimp_context_get_gradient (context);
         }
 
-      if (gradient)
+      success = (gradient != NULL);
+
+      if (success)
         {
           GimpGradientSegment *seg;
+
           seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-          if (seg)
+
+          success = (seg != NULL);
+
+          if (success)
             {
-              /* Success */
               final_pos = gimp_gradient_segment_set_right_pos (gradient, seg, pos);
 
             }
-          else
-            {
-              success = FALSE;
-            }
-        }
-      else
-        {
-          success = FALSE;
         }
     }
 
@@ -1189,24 +1159,21 @@ gradient_segment_get_blending_function_invoker (Gimp        *gimp,
           gradient = gimp_context_get_gradient (context);
         }
 
-      if (gradient)
+      success = (gradient != NULL);
+
+      if (success)
         {
           GimpGradientSegment *seg;
+
           seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-          if (seg)
+
+          success = (seg != NULL);
+
+          if (success)
             {
-              /* Success */
               blend_func = gimp_gradient_segment_get_blending_function (gradient, seg);
 
             }
-          else
-            {
-              success = FALSE;
-            }
-        }
-      else
-        {
-          success = FALSE;
         }
     }
 
@@ -1280,7 +1247,7 @@ gradient_segment_set_blending_function_invoker (Gimp        *gimp,
   end_segment = args[2].value.pdb_int;
 
   blending_function = args[3].value.pdb_int;
-  if (blending_function < 0 || blending_function > 4)
+  if (blending_function < GIMP_GRADIENT_SEGMENT_LINEAR || blending_function > GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING)
     success = FALSE;
 
   if (success)
@@ -1357,7 +1324,7 @@ static ProcArg gradient_segment_set_blending_function_inargs[] =
   {
     GIMP_PDB_INT32,
     "blending_function",
-    "The Blending Function (GRAD-LINEAR, GRAD-CURVED, GRAD-SINE, GRAD-SPHERE-INCREASING, GRAD-SPHERE-DECREASING)"
+    "The Blending Function: { GIMP_GRADIENT_SEGMENT_LINEAR (0), GIMP_GRADIENT_SEGMENT_CURVED (1), GIMP_GRADIENT_SEGMENT_SINE (2), GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING (3), GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING (4) }"
   }
 };
 
@@ -1410,24 +1377,21 @@ gradient_segment_get_coloring_type_invoker (Gimp        *gimp,
           gradient = gimp_context_get_gradient (context);
         }
 
-      if (gradient)
+      success = (gradient != NULL);
+
+      if (success)
         {
           GimpGradientSegment *seg;
+
           seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-          if (seg)
+
+          success = (seg != NULL);
+
+          if (success)
             {
-              /* Success */
               coloring_type = gimp_gradient_segment_get_coloring_type (gradient, seg);
 
             }
-          else
-            {
-              success = FALSE;
-            }
-        }
-      else
-        {
-          success = FALSE;
         }
     }
 
@@ -1501,7 +1465,7 @@ gradient_segment_set_coloring_type_invoker (Gimp        *gimp,
   end_segment = args[2].value.pdb_int;
 
   coloring_type = args[3].value.pdb_int;
-  if (coloring_type < 0 || coloring_type > 2)
+  if (coloring_type < GIMP_GRADIENT_SEGMENT_RGB || coloring_type > GIMP_GRADIENT_SEGMENT_HSV_CW)
     success = FALSE;
 
   if (success)
@@ -1578,7 +1542,7 @@ static ProcArg gradient_segment_set_coloring_type_inargs[] =
   {
     GIMP_PDB_INT32,
     "coloring_type",
-    "The Coloring Type (GRAD-RGB, GRAD-HSV-CCW, GRAD-HSV-CW)"
+    "The Coloring Type: { GIMP_GRADIENT_SEGMENT_RGB (0), GIMP_GRADIENT_SEGMENT_HSV_CCW (1), GIMP_GRADIENT_SEGMENT_HSV_CW (2) }"
   }
 };
 

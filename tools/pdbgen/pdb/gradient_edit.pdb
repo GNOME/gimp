@@ -40,23 +40,21 @@ sub _gen_gradient_search_for_segment_code
     return <<"CODE";
 {
 $_get_gradient_from_name_code
-  if (gradient)
+
+  success = (gradient != NULL);
+
+  if (success)
     {
       GimpGradientSegment *seg;
+
       seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-      if (seg)
+
+      success = (seg != NULL);
+
+      if (success)
         {
-          /* Success */
           $action_on_success
         }
-      else
-        {
-          success = FALSE;
-        }
-    }
-  else
-    {
-      success = FALSE;
     }
 }
 
@@ -73,17 +71,10 @@ sub other_side
 sub _grad_and_seg_params
 {
     return
-        (
-                {
-                    name => 'name',
-                    type => 'string',
-                    desc => 'The name of the gradient to operate on',
-                },
-                {
-                    name => 'segment',
-                    type => '0 <= int32',
-                    desc => 'The index of the segment within the gradient',
-                },
+        ( { name => 'name', type => 'string',
+            desc => 'The name of the gradient to operate on' },
+          { name => 'segment', type => '0 <= int32',
+            desc => 'The index of the segment within the gradient' }
         );
 }
 
@@ -104,25 +95,18 @@ HELP
 
     @inargs = (
         &_grad_and_seg_params,
-        {
-            name => 'color',
-            type => 'color',
-            desc => "The color to set",
-        },
-        {
-            name => "opacity",
-            type => '0 <= float <= 100.0',
-            desc => "The opacity to set for the endpoint",
-        },
-
+        { name => 'color', type => 'color',
+          desc => "The color to set" },
+        { name => "opacity", type => '0 <= float <= 100.0',
+          desc => "The opacity to set for the endpoint" }
     );
 
     @outargs = (
     );
 
     my @blend_params = ("&color","&(seg->${other_side}_color)");
-    if ($side eq "right")
-    {
+
+    if ($side eq "right") {
         @blend_params = reverse(@blend_params);
     }
 
@@ -154,18 +138,10 @@ HELP
     );
 
     @outargs = (
-        {
-            name => 'color',
-            type => 'color',
-            desc => "The return color",
-            void_ret => 1,
-            init => 1,
-        },
-        {
-            name => "opacity",
-            type => 'float',
-            desc => "The opacity of the endpoint",
-        },
+        { name => 'color', type => 'color',
+          desc => "The return color", void_ret => 1, init => 1 },
+        { name => "opacity", type => 'float',
+          desc => "The opacity of the endpoint" }
     );
 
     %invoke = (
@@ -200,13 +176,8 @@ HELP
     @inargs = &_grad_and_seg_params;
 
     @outargs = (
-        {
-            name => 'pos',
-            type => 'float',
-            desc => "The return position",
-            void_ret => 1,
-            init => 1,
-        },
+        { name => 'pos', type => 'float',
+          desc => "The return position", void_ret => 1, init => 1 }
     );
 
     %invoke = (
@@ -250,21 +221,13 @@ HELP
 
     @inargs = (
         &_grad_and_seg_params,
-        {
-            name => 'pos',
-            type => "0.0 <= float <= 1.0",
-            desc => "The position to set the guidepoint in."
-        },
+        { name => 'pos', type => "0.0 <= float <= 1.0",
+          desc => "The position to set the guidepoint in." }
     );
 
     @outargs = (
-        {
-            name => 'final_pos',
-            type => 'float',
-            desc => "The return position",
-            void_ret => 1,
-            init => 1,
-        },
+        { name => 'final_pos', type => 'float',
+          desc => "The return position", void_ret => 1, init => 1 }
     );
 
     %invoke = (
@@ -339,13 +302,9 @@ HELP
     @inargs = &_grad_and_seg_params;
 
     @outargs = (
-        {
-            name => 'blend_func',
-            type => "int32",
-            desc => "The blending function of the segment",
-            void_ret => 1,
-            init => 1,
-        }
+        { name => 'blend_func', type => "int32",
+          desc => "The blending function of the segment", void_ret => 1,
+          init => 1 }
     );
 
     %invoke = (
@@ -370,13 +329,9 @@ HELP
     @inargs = &_grad_and_seg_params;
 
     @outargs = (
-        {
-            name => 'coloring_type',
-            type => "int32",
-            desc => "The coloring type of the segment",
-            void_ret => 1,
-            init => 1,
-        }
+        { name => 'coloring_type', type => "int32",
+          desc => "The coloring type of the segment", void_ret => 1,
+          init => 1 }
     );
 
     %invoke = (
@@ -397,25 +352,15 @@ sub _gen_gradient_operate_on_segments_range
 
     &pdb_misc;
 
-    @inargs =
-        (
-            {
-                name => 'name',
-                type => 'string',
-                desc => 'The name of the gradient to operate on.',
-            },
-            {
-                name => 'start_segment',
-                type => '0 <= int32',
-                desc => 'The index of the first segment to operate on',
-            },
-            {
-                name => 'end_segment',
-                type => 'int32',
-                desc => 'The index of the last segment to operate on. If negative, the selection will extend to the end of the string.',
-            },
-            @{$args{inargs}},
-        );
+    @inargs = (
+        { name => 'name', type => 'string',
+          desc => 'The name of the gradient to operate on.' },
+        { name => 'start_segment', type => '0 <= int32',
+          desc => 'The index of the first segment to operate on' },
+        { name => 'end_segment', type => 'int32',
+          desc => 'The index of the last segment to operate on. If negative, the selection will extend to the end of the string.' },
+        @{$args{inargs}},
+    );
 
     @outargs = @{$args{outargs}};
 
@@ -469,14 +414,11 @@ sub gradient_segment_set_blending_function
 This function changes the blending function of a segment range to the
 specified blending function.
 HELP
-        'inargs' =>
-            [
-                {
-                    name => "blending_function",
-                    type => "0 <= int32 <= 4",
-                    desc => "The Blending Function (GRAD-LINEAR, GRAD-CURVED, GRAD-SINE, GRAD-SPHERE-INCREASING, GRAD-SPHERE-DECREASING)"
-                },
-            ],
+        'inargs' => [
+             { name => "blending_function",
+               type => 'enum GimpGradientSegmentType',
+               desc => "The Blending Function: { %%desc%% }" }
+        ],
         'outargs' => [],
         'action_on_success' => <<'CODE',
 gimp_gradient_segment_range_set_blending_function (gradient,
@@ -495,14 +437,10 @@ sub gradient_segment_set_coloring_type
 This function changes the coloring type of a segment range to the
 specified coloring type.
 HELP
-        'inargs' =>
-            [
-                {
-                    name => "coloring_type",
-                    type => "0 <= int32 <= 2",
-                    desc => "The Coloring Type (GRAD-RGB, GRAD-HSV-CCW, GRAD-HSV-CW)"
-                },
-            ],
+        'inargs' => [
+            { name => "coloring_type", type => 'enum GimpGradientSegmentColor',
+              desc => "The Coloring Type: { %%desc%% }" }
+        ],
         'outargs' => [],
         'action_on_success' => <<'CODE',
 gimp_gradient_segment_range_set_coloring_type (gradient,
@@ -540,13 +478,9 @@ This function replicates a segment range a given number of times. Instead
 of the original segment range, several smaller scaled copies of it
 will appear in equal widths.
 HELP
-        'inargs' =>
-        [
-            {
-                'name' => "replicate_times",
-                'type' => "2 <= int32 <= 20",
-                'desc' => "The number of times to replicate",
-            }
+        'inargs' => [
+            { 'name' => "replicate_times", 'type' => "2 <= int32 <= 20",
+              'desc' => "The number of times to replicate" }
         ],
         'outargs' => [],
         'action_on_success' => <<'CODE',
@@ -585,13 +519,9 @@ sub gradient_segment_range_split_uniform
 This function splits each segment in the segment range uniformly according
 to the number of times specified by the parameter.
 HELP
-        'inargs' =>
-        [
-            {
-                'name' => "split_parts",
-                'type' => "2 <= int32 <= 20",
-                'desc' => "The number of uniform divisions to split each segment to",
-            }
+        'inargs' => [
+            { 'name' => "split_parts", 'type' => "2 <= int32 <= 20",
+              'desc' => "The number of uniform divisions to split each segment to" }
         ],
         'outargs' => [],
         'action_on_success' => <<'CODE',
@@ -689,26 +619,15 @@ This funtions moves the position of an entire segment range by a delta. The
 actual delta (which is returned) will be limited by the control points of the
 neighboring segments.
 HELP
-        'inargs' =>
-        [
-            {
-                'name' => "delta",
-                'type' => "-1.0 <= float <= 1.0",
-                'desc' => "The delta to move the segment range",
-            },
-            {
-                'name' => "control_compress",
-                'type' => "boolean",
-                'desc' => "Whether or not to compress the neighboring segments",
-            },
+        'inargs' => [
+            { 'name' => "delta", 'type' => "-1.0 <= float <= 1.0",
+              'desc' => "The delta to move the segment range" },
+            { 'name' => "control_compress", 'type' => "boolean",
+              'desc' => "Whether or not to compress the neighboring segments" }
         ],
-        'outargs' =>
-        [
-            {
-                'name' => "final_delta",
-                'type' => "float",
-                'desc' => "The final delta by which the range moved",
-            },
+        'outargs' => [
+            { 'name' => "final_delta", 'type' => "float",
+              'desc' => "The final delta by which the range moved" }
         ],
         'action_on_success' => <<'CODE',
 final_delta = gimp_gradient_segment_range_move (gradient,
