@@ -29,191 +29,155 @@
 
 #define MAX_CACHE_PREVIEWS 5
 
-#undef PREVIEW_CACHE_DEBUG
 
-
-typedef struct _PreviewCache 
+typedef struct
 {
-  TempBuf *preview;
+  TempBuf *buf;
   gint     width;
   gint     height;
-} PreviewCache;
-
-typedef struct _PreviewNearest 
-{
-  PreviewCache *pc;
-  gint          width;
-  gint          height;
 } PreviewNearest;
 
 
-static gint 
+static gint
 preview_cache_compare (gconstpointer  a,
 		       gconstpointer  b)
 {
-  PreviewCache *pc1 = (PreviewCache *) a;
-  PreviewCache *pc2 = (PreviewCache *) b;
+  TempBuf *buf1 = (TempBuf *) a;
+  TempBuf *buf2 = (TempBuf *) b;
 
-  if (pc1->width > pc2->width && pc1->height > pc2->height)
+  if (buf1->width > buf2->width && buf1->height > buf2->height)
     return -1;
 
   return 1;
 }
 
 static void
-preview_cache_find_exact (gpointer data, 
+preview_cache_find_exact (gpointer data,
 			  gpointer udata)
 {
-  PreviewCache   *pc       = (PreviewCache *) data;
-  PreviewNearest *pNearest = (PreviewNearest *) udata;
+  TempBuf        *buf     = (TempBuf *) data;
+  PreviewNearest *nearest = (PreviewNearest *) udata;
 
-/*   g_print ("this value w,h [%d,%d]\n",pc->width,pc->height); */
-
-/*   if (pNearest->pc) */
-/*       g_print ("current nearest value w,h [%d,%d]\n",
-                 pNearest->pc->width,pNearest->pc->height); */
-
-  if (pNearest->pc)
+  if (nearest->buf)
     return;
 
-  if(pc->width == pNearest->width &&
-     pc->height == pNearest->height)
+  if (buf->width  == nearest->width && buf->height == nearest->height)
     {
-      /* Ok we could make the preview out of this one...
-       * If we already have it are these bigger dimensions? 
-       */
-      pNearest->pc = pc;
-
+      nearest->buf = buf;
       return;
     }
 }
 
 static void
-preview_cache_find_biggest (gpointer data, 
+preview_cache_find_biggest (gpointer data,
 			    gpointer udata)
 {
-  PreviewCache   *pc       = (PreviewCache *) data;
-  PreviewNearest *pNearest = (PreviewNearest *) udata;
+  TempBuf        *buf     = (TempBuf *) data;
+  PreviewNearest *nearest = (PreviewNearest *) udata;
 
-/*   g_print ("this value w,h [%d,%d]\n",pc->width,pc->height); */
-
-/*   if (pNearest->pc) */
-/*       g_print ("current nearest value w,h [%d,%d]\n",
-                 pNearest->pc->width,pNearest->pc->height); */
-  
-  if (pc->width >= pNearest->width &&
-      pc->height >= pNearest->height)
+  if (buf->width  >= nearest->width && buf->height >= nearest->height)
     {
       /* Ok we could make the preview out of this one...
-       * If we already have it are these bigger dimensions? 
+       * If we already have it are these bigger dimensions?
        */
-      if (pNearest->pc)
+      if (nearest->buf)
 	{
-	  if (pNearest->pc->width > pc->width &&
-	      pNearest->pc->height > pc->height)
+	  if (nearest->buf->width > buf->width &&
+	      nearest->buf->height > buf->height)
 	    return;
 	}
-      pNearest->pc = pc;
+
+      nearest->buf = buf;
     }
 }
 
 static void
 preview_cache_remove_smallest (GSList **plist)
 {
-  GSList       *list;
-  PreviewCache *smallest = NULL;
-  
-/*   g_print ("Removing smallest\n"); */
+  GSList  *list;
+  TempBuf *smallest = NULL;
 
-  for (list = *plist; list; list = g_slist_next (list))
+#ifdef PREVIEW_CACHE_DEBUG
+  g_print ("preview_cache_remove_smallest\n");
+#endif
+
+  for (list = *plist; list; list = list->next)
     {
       if (!smallest)
 	{
 	  smallest = list->data;
-/* 	  g_print ("init smallest  %d,%d\n",
-	            smallest->width,smallest->height); */
 	}
       else
 	{
-	  PreviewCache *pcthis = list->data;
+	  TempBuf *this = list->data;
 
-/* 	  g_print ("Checking %d,%d\n",pcthis->width,pcthis->height); */
-	  if ((smallest->height * smallest->width) >=
-	      (pcthis->height * pcthis->width))
+	  if ((smallest->height * smallest->width) >
+              (this->height * this->width))
 	    {
-	      smallest = pcthis;
-/* 	      g_print ("smallest now  %d,%d\n",
-                      smallest->width,smallest->height); */
+	      smallest = this;
 	    }
 	}
-    } 
+    }
 
-  if (*plist && smallest)
-    *plist = g_slist_remove (*plist, smallest);
-/*   g_print ("removed %d,%d\n",smallest->width,smallest->height); */
-/*   g_print ("removed smallest\n"); */
+  if (smallest)
+    {
+      *plist = g_slist_remove (*plist, smallest);
+
+#ifdef PREVIEW_CACHE_DEBUG
+      g_print ("preview_cache_remove_smallest: removed %d x %d\n",
+               smallest->width, smallest->height);
+#endif
+
+      temp_buf_free (smallest);
+    }
 }
 
-static void
-preview_cache_invalidate (gpointer data, 
-			  gpointer udata)
-{
-  PreviewCache *pc = (PreviewCache *) data;
-
-  temp_buf_free (pc->preview);
-  g_free(pc);
-}
-
+#ifdef PREVIEW_CACHE_DEBUG
 static void
 preview_cache_print (GSList *plist)
 {
-#ifdef PREVIEW_CACHE_DEBUG  
-  GSList       *list;
-  PreviewCache *pc;
+  GSList  *list;
 
   g_print ("preview cache dump:\n");
 
-  for (list = plist; list; list = g_slist_next (list))
+  for (list = plist; list; list = list->next)
     {
-      pc = (PreviewCache *) list->data;
+      TempBuf *buf = (TempBuf *) list->data;
 
-      g_print ("\tvalue w,h [%d,%d] => %p\n", 
-	       pc->width, pc->height, pc->preview);
+      g_print ("\tvalue w,h [%d,%d]\n", buf->width, buf->height);
     }
-#endif  /* PREVIEW_CACHE_DEBUG */
 }
+#endif  /* PREVIEW_CACHE_DEBUG */
 
 void
 gimp_preview_cache_invalidate (GSList **plist)
 {
-/*   g_print ("gimp_preview_cache_invalidate\n"); */
+#ifdef PREVIEW_CACHE_DEBUG
+  g_print ("gimp_preview_cache_invalidate\n");
   preview_cache_print (*plist);
+#endif
 
-  g_slist_foreach (*plist, preview_cache_invalidate, NULL);
+  g_slist_foreach (*plist, (GFunc) temp_buf_free, NULL);
+
+  g_slist_free (*plist);
   *plist = NULL;
 }
 
-void 
+void
 gimp_preview_cache_add (GSList  **plist,
 			TempBuf  *buf)
 {
-  PreviewCache *pc;
-
-/*   g_print ("gimp_preview_cache_add %d %d\n",buf->width,buf->height); */
+#ifdef PREVIEW_CACHE_DEBUG
+  g_print ("gimp_preview_cache_add: %d x %d\n", buf->width, buf->height);
   preview_cache_print (*plist);
+#endif
 
-  if (g_slist_length (*plist) > MAX_CACHE_PREVIEWS)
+  if (g_slist_length (*plist) >= MAX_CACHE_PREVIEWS)
     {
-      /* Remove the smallest */
-      preview_cache_remove_smallest(plist);
+      preview_cache_remove_smallest (plist);
     }
 
-  pc = g_new0(PreviewCache,1);
-  pc->preview = buf; 
-  pc->width   = buf->width;
-  pc->height  = buf->height;
-
-  *plist = g_slist_insert_sorted (*plist, pc, preview_cache_compare);
+  *plist = g_slist_insert_sorted (*plist, buf, preview_cache_compare);
 }
 
 TempBuf *
@@ -221,29 +185,34 @@ gimp_preview_cache_get (GSList **plist,
 			gint     width,
 			gint     height)
 {
-  PreviewNearest  pn;
-  PreviewCache   *pc;
+  PreviewNearest pn;
 
-/*   g_print ("gimp_preview_cache_get %d %d\n",width,height); */
+#ifdef PREVIEW_CACHE_DEBUG
+  g_print ("gimp_preview_cache_get: %d x %d\n", width, height);
   preview_cache_print (*plist);
+#endif
 
-  pn.pc     = NULL;
+  pn.buf    = NULL;
   pn.width  = width;
   pn.height = height;
 
   g_slist_foreach (*plist, preview_cache_find_exact, &pn);
 
-  if (pn.pc && pn.pc->preview)
+  if (pn.buf)
     {
-/*       g_print ("extact value w,h [%d,%d] => %p\n",
-	           pn.pc->width,pn.pc->height,pn.pc->preview);  */
-      return pn.pc->preview;
+#ifdef PREVIEW_CACHE_DEBUG
+      g_print ("gimp_preview_cache_get: found exact match %d x %d\n",
+               pn.buf->width, pn.buf->height);
+#endif
+
+      return pn.buf;
     }
 
   g_slist_foreach (*plist, preview_cache_find_biggest, &pn);
 
-  if (pn.pc)
+  if (pn.buf)
     {
+      TempBuf *preview;
       gint     pwidth;
       gint     pheight;
       gdouble  x_ratio;
@@ -253,31 +222,19 @@ gimp_preview_cache_get (GSList **plist,
       gint     loop1;
       gint     loop2;
 
-/*       g_print ("nearest value w,h [%d,%d] => %p\n",
-                   pn.pc->width,pn.pc->height,pn.pc->preview); */
-
-/*       if(pn.pc->width == width && */
-/* 	   pn.pc->height == height) */
-/* 	 return pn.pc->preview; */
-
-      if (!pn.pc->preview)
-	{
-	  g_error ("gimp_preview_cache_get:: Invalid cache item");
-	  return NULL;
-	}
+#ifdef PREVIEW_CACHE_DEBUG
+      g_print ("gimp_preview_cache_get: nearest value: %d x %d\n",
+               pn.buf->width, pn.buf->height);
+#endif
 
       /* Make up new preview from the large one... */
-
-      pwidth  = pn.pc->preview->width;
-      pheight = pn.pc->preview->height;
+      pwidth  = pn.buf->width;
+      pheight = pn.buf->height;
 
       /* Now get the real one and add to cache */
-/*       g_print ("Must create from large preview\n"); */
-      pc = g_new0 (PreviewCache, 1);
-      pc->preview = temp_buf_new (width, height, pn.pc->preview->bytes, 
-				  0, 0, NULL);
-      /* preview from nearest bigger one */
+      preview = temp_buf_new (width, height, pn.buf->bytes, 0, 0, NULL);
 
+      /* preview from nearest bigger one */
       if (width)
         x_ratio = (gdouble) pwidth / (gdouble) width;
       else
@@ -288,10 +245,8 @@ gimp_preview_cache_get (GSList **plist,
       else
         y_ratio = 0.0;
 
-      src_data = temp_buf_data(pn.pc->preview);
-      dest_data = temp_buf_data(pc->preview);
-
-/*       g_print ("x_ratio , y_ratio [%f,%f]\n",x_ratio,y_ratio); */
+      src_data  = temp_buf_data (pn.buf);
+      dest_data = temp_buf_data (preview);
 
       for (loop1 = 0 ; loop1 < height ; loop1++)
 	for (loop2 = 0 ; loop2 < width ; loop2++)
@@ -301,26 +256,25 @@ gimp_preview_cache_get (GSList **plist,
 	    guchar *dest_pixel;
 
 	    src_pixel = src_data +
-	      ((gint) (loop2 * x_ratio)) * pn.pc->preview->bytes +
-	      ((gint) (loop1 * y_ratio)) * pwidth * pn.pc->preview->bytes;
+	      ((gint) (loop2 * x_ratio)) * preview->bytes +
+	      ((gint) (loop1 * y_ratio)) * pwidth * preview->bytes;
 
-	    dest_pixel = dest_data + 
-	      (loop2 + loop1 * width) * pn.pc->preview->bytes;
+	    dest_pixel = dest_data +
+	      (loop2 + loop1 * width) * preview->bytes;
 
-	    for (i = 0; i < pn.pc->preview->bytes; i++)
+	    for (i = 0; i < preview->bytes; i++)
 	      *dest_pixel++ = *src_pixel++;
 	  }
 
-      pc->width  = width;
-      pc->height = height;
-      *plist = g_slist_insert_sorted (*plist, pc, preview_cache_compare); 
-/*       g_print ("New preview created [%d,%d] => %p\n",
-	           pc->width,pc->height,pc->preview);  */
+      gimp_preview_cache_add (plist, preview);
 
-      return pc->preview;
+      return preview;
     }
 
-/*   g_print ("gimp_preview_cache_get returning NULL\n");  */
+#ifdef PREVIEW_CACHE_DEBUG
+  g_print ("gimp_preview_cache_get returning NULL\n");
+#endif
+
   return NULL;
 }
 
@@ -332,15 +286,8 @@ gimp_preview_cache_get_memsize (GSList *cache)
 
   g_return_val_if_fail (cache != NULL, 0);
 
-  for (list = cache; list; list = g_slist_next (list))
-    {
-      PreviewCache *pc;
-
-      pc = (PreviewCache *) list->data;
-
-      memsize += (sizeof (PreviewCache) +
-                  temp_buf_get_memsize (pc->preview));
-    }
+  for (list = cache; list; list = list->next)
+    memsize += sizeof (GSList) + temp_buf_get_memsize ((TempBuf *) list->data);
 
   return memsize;
 }

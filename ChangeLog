@@ -1,3 +1,11 @@
+2003-09-05  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimppreviewcache.[ch]: code cleanup. Removed the
+	PreviewCache struct that used to wrap TempBuf but didn't add any
+	additional information. Actually free the cached temp_buf when
+	removing an entry from cache. Free the GSList when invalidating
+	the preview cache.
+
 2003-09-05  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c (initial_sub_region): Fixed
