@@ -35,9 +35,11 @@
 #include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimpmarshal.h"
+#include "gimppalette.h"
 #include "gimppattern.h"
 #include "gimprc.h"
 #include "gradients.h"
+#include "palettes.h"
 #include "patterns.h"
 #include "temp_buf.h"
 
@@ -144,6 +146,17 @@ static void gimp_context_real_set_gradient   (GimpContext      *context,
 static void gimp_context_copy_gradient       (GimpContext      *src,
 					      GimpContext      *dest);
 
+/*  palette  */
+static void gimp_context_palette_dirty       (GimpPalette      *palette,
+					      GimpContext      *context);
+static void gimp_context_palette_removed     (GimpContainer    *brush_list,
+					      GimpPalette      *palatte,
+					      GimpContext      *context);
+static void gimp_context_real_set_palette    (GimpContext      *context,
+					      GimpPalette      *palatte);
+static void gimp_context_copy_palette        (GimpContext      *src,
+					      GimpContext      *dest);
+
 
 /*  arguments & signals  */
 
@@ -159,7 +172,8 @@ enum
   ARG_PAINT_MODE,
   ARG_BRUSH,
   ARG_PATTERN,
-  ARG_GRADIENT
+  ARG_GRADIENT,
+  ARG_PALETTE
 };
 
 enum
@@ -174,6 +188,7 @@ enum
   BRUSH_CHANGED,
   PATTERN_CHANGED,
   GRADIENT_CHANGED,
+  PALETTE_CHANGED,
   LAST_SIGNAL
 };
 
@@ -188,7 +203,8 @@ static gchar *gimp_context_arg_names[] =
   "GimpContext::paint_mode",
   "GimpContext::brush",
   "GimpContext::pattern",
-  "GimpContext::gradient"
+  "GimpContext::gradient",
+  "GimpContext::palette"
 };
 
 static GimpContextCopyArgFunc gimp_context_copy_arg_funcs[] =
@@ -202,7 +218,8 @@ static GimpContextCopyArgFunc gimp_context_copy_arg_funcs[] =
   gimp_context_copy_paint_mode,
   gimp_context_copy_brush,
   gimp_context_copy_pattern,
-  gimp_context_copy_gradient
+  gimp_context_copy_gradient,
+  gimp_context_copy_palette
 };
 
 static GtkType gimp_context_arg_types[] =
@@ -214,6 +231,7 @@ static GtkType gimp_context_arg_types[] =
   GTK_TYPE_NONE,
   GTK_TYPE_NONE,
   GTK_TYPE_NONE,
+  0,
   0,
   0,
   0
@@ -230,7 +248,8 @@ static gchar *gimp_context_signal_names[] =
   "paint_mode_changed",
   "brush_changed",
   "pattern_changed",
-  "gradient_changed"
+  "gradient_changed",
+  "palette_changed"
 };
 
 static GtkSignalFunc gimp_context_signal_handlers[] =
@@ -244,7 +263,8 @@ static GtkSignalFunc gimp_context_signal_handlers[] =
   gimp_context_real_set_paint_mode,
   gimp_context_real_set_brush,
   gimp_context_real_set_pattern,
-  gimp_context_real_set_gradient
+  gimp_context_real_set_gradient,
+  gimp_context_real_set_palette
 };
 
 
@@ -284,6 +304,7 @@ gimp_context_class_init (GimpContextClass *klass)
   gimp_context_arg_types[GIMP_CONTEXT_ARG_BRUSH]    = GIMP_TYPE_BRUSH;
   gimp_context_arg_types[GIMP_CONTEXT_ARG_PATTERN]  = GIMP_TYPE_PATTERN;
   gimp_context_arg_types[GIMP_CONTEXT_ARG_GRADIENT] = GIMP_TYPE_GRADIENT;
+  gimp_context_arg_types[GIMP_CONTEXT_ARG_PALETTE]  = GIMP_TYPE_PALETTE;
 
   gtk_object_add_arg_type (gimp_context_arg_names[IMAGE_CHANGED],
 			   GTK_TYPE_POINTER, GTK_ARG_READWRITE,
@@ -315,6 +336,9 @@ gimp_context_class_init (GimpContextClass *klass)
   gtk_object_add_arg_type (gimp_context_arg_names[GRADIENT_CHANGED],
 			   GTK_TYPE_POINTER, GTK_ARG_READWRITE,
 			   ARG_GRADIENT);
+  gtk_object_add_arg_type (gimp_context_arg_names[PALETTE_CHANGED],
+			   GTK_TYPE_POINTER, GTK_ARG_READWRITE,
+			   ARG_PALETTE);
 
   gimp_context_signals[IMAGE_CHANGED] =
     gtk_signal_new (gimp_context_signal_names[IMAGE_CHANGED],
@@ -416,6 +440,16 @@ gimp_context_class_init (GimpContextClass *klass)
 		    GTK_TYPE_NONE, 1,
 		    GTK_TYPE_POINTER);
 
+  gimp_context_signals[PALETTE_CHANGED] =
+    gtk_signal_new (gimp_context_signal_names[PALETTE_CHANGED],
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpContextClass,
+				       palette_changed),
+		    gtk_marshal_NONE__POINTER,
+		    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_POINTER);
+
   gtk_object_class_add_signals (object_class, gimp_context_signals,
 				LAST_SIGNAL);
 
@@ -433,34 +467,38 @@ gimp_context_class_init (GimpContextClass *klass)
   klass->brush_changed      = NULL;
   klass->pattern_changed    = NULL;
   klass->gradient_changed   = NULL;
+  klass->palette_changed    = NULL;
 }
 
 static void
 gimp_context_init (GimpContext *context)
 {
-  context->parent = NULL;
+  context->parent        = NULL;
 
-  context->defined_args = GIMP_CONTEXT_ALL_ARGS_MASK;
+  context->defined_args  = GIMP_CONTEXT_ALL_ARGS_MASK;
 
-  context->image   = NULL;
-  context->display = NULL;
+  context->image         = NULL;
+  context->display       = NULL;
 
-  context->tool = RECT_SELECT;
+  context->tool          = RECT_SELECT;
 
   gimp_rgba_set (&context->foreground, 0.0, 0.0, 0.0, 1.0);
   gimp_rgba_set (&context->background, 1.0, 1.0, 1.0, 1.0);
 
-  context->opacity    = 1.0;
-  context->paint_mode = NORMAL_MODE;
+  context->opacity       = 1.0;
+  context->paint_mode    = NORMAL_MODE;
 
-  context->brush      = NULL;
-  context->brush_name = NULL;
+  context->brush         = NULL;
+  context->brush_name    = NULL;
 
-  context->pattern      = NULL;
-  context->pattern_name = NULL;
+  context->pattern       = NULL;
+  context->pattern_name  = NULL;
 
   context->gradient      = NULL;
   context->gradient_name = NULL;
+
+  context->palette       = NULL;
+  context->palette_name  = NULL;
 
   context_list = g_slist_prepend (context_list, context);
 }
@@ -522,6 +560,23 @@ gimp_context_destroy (GtkObject *object)
       context->gradient_name = NULL;
     }
 
+  if (context->palette)
+    {
+      gtk_signal_disconnect_by_func (GTK_OBJECT (context->palette),
+				     gimp_context_palette_dirty,
+				     context);
+      gtk_signal_disconnect_by_func (GTK_OBJECT (global_palette_list),
+				     gimp_context_palette_removed,
+				     context);
+      gtk_object_unref (GTK_OBJECT (context->palette));
+    }
+
+  if (context->palette_name)
+    {
+      g_free (context->palette_name);
+      context->palette_name = NULL;
+    }
+
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 
@@ -569,6 +624,9 @@ gimp_context_set_arg (GtkObject *object,
     case ARG_GRADIENT:
       gimp_context_set_gradient (context, GTK_VALUE_POINTER (*arg));
       break;
+    case ARG_PALETTE:
+      gimp_context_set_palette (context, GTK_VALUE_POINTER (*arg));
+      break;
     default:
       break;
     }
@@ -614,6 +672,9 @@ gimp_context_get_arg (GtkObject *object,
       break;
     case ARG_GRADIENT:
       GTK_VALUE_POINTER (*arg) = gimp_context_get_gradient (context);
+      break;
+    case ARG_PALETTE:
+      GTK_VALUE_POINTER (*arg) = gimp_context_get_palette (context);
       break;
     default:
       arg->type = GTK_TYPE_INVALID;
@@ -1957,4 +2018,176 @@ void
 gimp_context_update_gradients (GimpGradient *gradient)
 {
   g_slist_foreach (context_list, (GFunc) gimp_context_update_gradient, gradient);
+}
+
+
+/*****************************************************************************/
+/*  palette  *****************************************************************/
+
+static GimpPalette *standard_palette = NULL;
+
+GimpPalette *
+gimp_context_get_palette (GimpContext *context)
+{
+  context_check_current (context);
+  context_return_val_if_fail (context, NULL);
+
+  return context->palette;
+}
+
+void
+gimp_context_set_palette (GimpContext *context,
+			  GimpPalette *palette)
+{
+  context_check_current (context);
+  context_return_if_fail (context);
+  context_find_defined (context, GIMP_CONTEXT_PALETTE_MASK);
+
+  gimp_context_real_set_palette (context, palette);
+}
+
+void
+gimp_context_palette_changed (GimpContext *context)
+{
+  context_check_current (context);
+  context_return_if_fail (context);
+
+  gtk_signal_emit (GTK_OBJECT (context),
+		   gimp_context_signals[PALETTE_CHANGED],
+		   context->palette);
+}
+
+/*  the active palette was modified  */
+static void
+gimp_context_palette_dirty (GimpPalette *palette,
+			    GimpContext *context)
+{
+  g_free (context->palette_name);
+  context->palette_name = g_strdup (GIMP_OBJECT (palette)->name);
+
+  gimp_context_palette_changed (context);
+}
+
+/*  the active palette disappeared  */
+static void
+gimp_context_palette_removed (GimpContainer *palette_list,
+			      GimpPalette   *palette,
+			      GimpContext   *context)
+{
+  if (palette == context->palette)
+    {
+      context->palette = NULL;
+
+      gtk_signal_disconnect_by_func (GTK_OBJECT (palette),
+				     gimp_context_palette_dirty,
+				     context);
+      gtk_signal_disconnect_by_func (GTK_OBJECT (palette_list),
+				     gimp_context_palette_removed,
+				     context);
+      gtk_object_unref (GTK_OBJECT (palette));
+    }
+}
+
+static void
+gimp_context_real_set_palette (GimpContext *context,
+			       GimpPalette *palette)
+{
+  if (! standard_palette)
+    standard_palette = palettes_get_standard_palette ();
+
+  if (context->palette == palette)
+    return;
+
+  if (context->palette_name && palette != standard_palette)
+    {
+      g_free (context->palette_name);
+      context->palette_name = NULL;
+    }
+
+  /*  disconnect from the old palette's signals  */
+  if (context->palette)
+    {
+      gtk_signal_disconnect_by_func (GTK_OBJECT (context->palette),
+				     gimp_context_palette_dirty,
+				     context);
+      gtk_object_unref (GTK_OBJECT (context->palette));
+
+      /*  if we don't get a new palette, also disconnect from the palette list */
+      if (! palette)
+	{
+	  gtk_signal_disconnect_by_func (GTK_OBJECT (global_palette_list),
+					 gimp_context_palette_removed,
+					 context);
+	}
+    }
+  /*  if we get a new palette but didn't have one before...  */
+  else if (palette)
+    {
+      /*  ...connect to the palette list  */
+      gtk_signal_connect (GTK_OBJECT (global_palette_list), "remove",
+			  GTK_SIGNAL_FUNC (gimp_context_palette_removed),
+			  context);
+    }
+
+  context->palette = palette;
+
+  if (palette)
+    {
+      gtk_object_ref (GTK_OBJECT (palette));
+      gtk_signal_connect (GTK_OBJECT (palette), "name_changed",
+			  GTK_SIGNAL_FUNC (gimp_context_palette_dirty),
+			  context);
+
+      if (palette != standard_palette)
+	context->palette_name = g_strdup (GIMP_OBJECT (palette)->name);
+    }
+
+  gimp_context_palette_changed (context);
+}
+
+static void
+gimp_context_copy_palette (GimpContext *src,
+			   GimpContext *dest)
+{
+  gimp_context_real_set_palette (dest, src->palette);
+
+  if ((!src->palette || src->palette == standard_palette) && src->palette_name)
+    {
+      g_free (dest->palette_name);
+      dest->palette_name = g_strdup (src->palette_name);
+    }
+}
+
+static void
+gimp_context_refresh_palette (GimpContext *context,
+			      gpointer     data)
+{
+  GimpPalette *palette;
+
+  if (! context->palette_name)
+    context->palette_name = g_strdup (default_palette);
+
+  if ((palette = (GimpPalette *)
+       gimp_container_get_child_by_name (global_palette_list,
+					 context->palette_name)))
+    {
+      gimp_context_real_set_palette (context, palette);
+      return;
+    }
+
+  if (gimp_container_num_children (GIMP_CONTAINER (global_palette_list)))
+    gimp_context_real_set_palette
+      (context,
+       GIMP_PALETTE (gimp_container_get_child_by_index (global_palette_list,
+							0)));
+  else
+    gimp_context_real_set_palette (context, palettes_get_standard_palette ());
+}
+
+void
+gimp_context_refresh_palettes (void)
+{
+  g_slist_foreach (context_list,
+		   (GFunc) gimp_context_refresh_palette,
+		   NULL);
 }

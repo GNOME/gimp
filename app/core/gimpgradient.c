@@ -263,7 +263,8 @@ gimp_gradient_load (const gchar *filename)
   fgets (line, 1024, file);
   if (! strncmp (line, "Name: ", strlen ("Name: ")))
     {
-      gimp_object_set_name (GIMP_OBJECT (gradient), &line[strlen ("Name: ")]);
+      gimp_object_set_name (GIMP_OBJECT (gradient),
+			    g_strstrip (&line[strlen ("Name: ")]));
 
       fgets (line, 1024, file);
     }
@@ -324,6 +325,8 @@ gimp_gradient_load (const gchar *filename)
     }
 
   fclose (file);
+
+  GIMP_DATA (gradient)->dirty = FALSE;
 
   return gradient;
 }

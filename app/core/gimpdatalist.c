@@ -28,6 +28,7 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "gimpdata.h"
 #include "gimpdatalist.h"
 
 
@@ -131,7 +132,7 @@ gimp_data_list_new (GtkType  children_type)
 {
   GimpDataList *list;
 
-  g_return_val_if_fail (gtk_type_is_a (children_type, GIMP_TYPE_OBJECT), NULL);
+  g_return_val_if_fail (gtk_type_is_a (children_type, GIMP_TYPE_DATA), NULL);
 
   list = GIMP_DATA_LIST (gtk_type_new (GIMP_TYPE_DATA_LIST));
 
@@ -139,6 +140,37 @@ gimp_data_list_new (GtkType  children_type)
   GIMP_CONTAINER (list)->policy        = GIMP_CONTAINER_POLICY_STRONG;
 
   return list;
+}
+
+void
+gimp_data_list_save_and_clear (GimpDataList *data_list,
+			       const gchar  *data_path,
+			       const gchar  *extension)
+{
+  GimpList *list;
+
+  g_return_if_fail (data_list != NULL);
+  g_return_if_fail (GIMP_IS_DATA_LIST (data_list));
+
+  list = GIMP_LIST (data_list);
+
+  while (list->list)
+    {
+      GimpData *data;
+
+      data = GIMP_DATA (list->list->data);
+
+      if (! data->filename)
+	gimp_data_create_filename (data,
+				   GIMP_OBJECT (data)->name,
+				   extension,
+				   data_path);
+
+      if (data->dirty)
+	gimp_data_save (data);
+
+      gimp_container_remove (GIMP_CONTAINER (data_list), GIMP_OBJECT (data));
+    }
 }
 
 static void

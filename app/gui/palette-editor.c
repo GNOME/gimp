@@ -18,32 +18,28 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <string.h>
-#include <sys/types.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
-
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
 
 #include "color_area.h"
 #include "color_notebook.h"
-#include "datafiles.h"
 #include "dialog_handler.h"
 #include "gimage.h"
 #include "gimpcontext.h"
+#include "gimpdatalist.h"
 #include "gimpdnd.h"
 #include "gimppalette.h"
 #include "gimprc.h"
 #include "palette.h"
-#include "paletteP.h"
 #include "palette_import.h"
-#include "session.h"
 #include "palette_select.h"
+#include "palettes.h"
+#include "paletteP.h"
+#include "session.h"
 
 #include "libgimp/gimpenv.h"
 
@@ -100,27 +96,19 @@ struct _PaletteDialog
 
 
 /*  local function prototypes  */
-static void   palette_load                   (const gchar    *filename);
-static void   palette_save_palettes          (void);
-
 static void   palette_dialog_draw_entries    (PaletteDialog  *palette,
 					      gint            row_start,
 					      gint            column_highlight);
 static void   palette_dialog_redraw          (PaletteDialog  *palette);
 static void   palette_dialog_scroll_top_left (PaletteDialog  *palette);
 
-static void   palette_insert_all             (GimpPalette    *palette);
-
-static PaletteDialog * palette_dialog_new        (gboolean       editor);
+static PaletteDialog * palette_dialog_new    (gboolean        editor);
 
 
-GSList                *palettes_list           = NULL;
+PaletteDialog      *top_level_edit_palette  = NULL;
+PaletteDialog      *top_level_palette       = NULL;
 
-PaletteDialog         *top_level_edit_palette  = NULL;
-PaletteDialog         *top_level_palette       = NULL;
-
-static GimpPalette    *default_palette_entries = NULL;
-static gint            num_palettes            = 0;
+static GimpPalette *default_palette_entries = NULL;
 
 
 /*  dnd stuff  */
@@ -131,39 +119,8 @@ static GtkTargetEntry color_palette_target_table[] =
 static guint n_color_palette_targets = (sizeof (color_palette_target_table) /
 					sizeof (color_palette_target_table[0]));
 
+
 /*  public functions  ********************************************************/
-
-void
-palettes_init (gboolean no_data)
-{
-  if (!no_data)
-    datafiles_read_directories (palette_path, palette_load, 0);
-
-  if (!default_palette_entries && palettes_list)
-    default_palette_entries = palettes_list->data;
-}
-
-void
-palettes_free (void)
-{
-  GimpPalette *entries;
-  GSList      *list;
-
-  for (list = palettes_list; list; list = g_slist_next (list))
-    {
-      entries = (GimpPalette *) list->data;
-
-      if (entries->changed)
-	gimp_palette_save (entries);
-
-      gtk_object_unref (GTK_OBJECT (entries));
-    }
-
-  g_slist_free (palettes_list);
-
-  num_palettes  = 0;
-  palettes_list = NULL;
-}
 
 void 
 palette_dialog_create (void)
@@ -193,12 +150,12 @@ palette_dialog_create (void)
 void
 palette_dialog_free (void)
 {
-  if (top_level_edit_palette) 
+  if (top_level_edit_palette)
     {
       palette_import_dialog_destroy ();
 
       gdk_gc_destroy (top_level_edit_palette->gc); 
-      
+
       if (top_level_edit_palette->color_notebook) 
 	color_notebook_free (top_level_edit_palette->color_notebook); 
 
@@ -220,75 +177,6 @@ palette_dialog_free (void)
     }
 }
 
-static void
-palette_load (const gchar *filename)
-{
-  GimpPalette *palette;
-
-  palette = gimp_palette_new_from_file (filename);
-
-  if (palette)
-    {
-      palettes_list_insert (palette);
-
-      /*  Check if the current palette is the default one  */
-      if (default_palette && 
-	  strcmp (default_palette, GIMP_OBJECT (palette)->name) == 0)
-	{
-	  default_palette_entries = palette;
-	}
-    }
-}
-
-static void
-palette_save_palettes (void)
-{
-  GimpPalette *palette;
-  GSList      *list;
-
-  for (list = palettes_list; list; list = g_slist_next (list))
-    {
-      palette = (GimpPalette *) list->data;
-
-      /*  If the palette has been changed, save it, if possible  */
-      if (palette->changed)
-	gimp_palette_save (palette);
-    }
-}
-
-void
-palettes_list_insert (GimpPalette *palette)
-{
-  GimpPalette *palette2;
-  GSList      *list;
-  gint         pos = 0;
-
-  for (list = palettes_list; list; list = g_slist_next (list))
-    {
-      palette2 = (GimpPalette *) list->data;
-
-      /*  to make sure we get something!  */
-      if (palette2 == NULL)
-	palette2 = default_palette_entries;
-
-      if (strcmp (GIMP_OBJECT (palette2)->name,
-		  GIMP_OBJECT (palette)->name) > 0)
-	break;
-
-      pos++;
-    }
-
-  /*  add it to the list  */
-  num_palettes++;
-
-  palettes_list = g_slist_insert (palettes_list,
-				  (gpointer) palette,
-				  pos);
-
-  /*  update all dialogs  */
-  palette_insert_all (palette);
-}
-
 /*  general palette clist update functions  **********************************/
 
 void
@@ -297,22 +185,16 @@ palette_clist_init (GtkWidget *clist,
 		    GdkGC     *gc)
 {
   GimpPalette *palette = NULL;
-  GSList      *list;
+  GList       *list;
   gint         pos;
 
-  pos = 0;
-
-  for (list = palettes_list; list; list = g_slist_next (list))
+  for (list = GIMP_LIST (global_palette_list)->list, pos = 0;
+       list;
+       list = g_list_next (list), pos++)
     {
       palette = (GimpPalette *) list->data;
 
-      /*  to make sure we get something!  */
-      if (! palette)
-	palette = default_palette_entries;
-
       palette_clist_insert (clist, shell, gc, palette, pos);
-
-      pos++;
     }
 }
 
@@ -344,7 +226,7 @@ palette_clist_insert (GtkWidget   *clist,
 
   gtk_clist_set_pixmap (GTK_CLIST (clist), pos, 0, palette->pixmap, NULL);
   gtk_clist_set_row_data (GTK_CLIST (clist), pos, (gpointer) palette);
-}  
+}
 
 /*  palette dialog clist update functions  ***********************************/
 
@@ -352,33 +234,19 @@ static void
 palette_dialog_clist_insert (PaletteDialog *palette_dialog,
 			     GimpPalette   *palette)
 {
-  GimpPalette *chk_palette;
-  GSList      *list;
-  gint         pos;
+  gint pos;
 
-  pos = 0;
-
-  for (list = palettes_list; list; list = g_slist_next (list))
-    {
-      chk_palette = (GimpPalette *) list->data;
-      
-      /*  to make sure we get something!  */
-      if (chk_palette == NULL)
-	return;
-
-      if (strcmp (GIMP_OBJECT (palette)->name,
-		  GIMP_OBJECT (chk_palette)->name) == 0)
-	break;
-
-      pos++;
-    }
+  pos = gimp_container_get_child_index (global_palette_list,
+					GIMP_OBJECT (palette));
 
   gtk_clist_freeze (GTK_CLIST (palette_dialog->clist));
+
   palette_clist_insert (palette_dialog->clist,
 			palette_dialog->shell,
 			palette_dialog->gc,
 			palette,
 			pos);
+
   gtk_clist_thaw (GTK_CLIST (palette_dialog->clist));
 }
 
@@ -386,25 +254,11 @@ static void
 palette_dialog_clist_set_text (PaletteDialog *palette_dialog,
 			       GimpPalette   *palette)
 {
-  GimpPalette *chk_palette = NULL;
-  GSList      *list;
-  gchar       *num_buf;
-  gint         pos;
+  gchar *num_buf;
+  gint   pos;
 
-  pos = 0;
-
-  for (list = palettes_list; list; list = g_slist_next (list))
-    {
-      chk_palette = (GimpPalette *) list->data;
-
-      if (palette == chk_palette)
-	break;
-
-      pos++;
-    }
-
-  if (chk_palette == NULL)
-    return; /* This is actually and error */
+  pos = gimp_container_get_child_index (global_palette_list,
+					GIMP_OBJECT (palette));
 
   num_buf = g_strdup_printf ("%d", palette->n_colors);;
 
@@ -425,30 +279,20 @@ palette_dialog_clist_refresh (PaletteDialog *palette_dialog)
 
   gtk_clist_thaw (GTK_CLIST (palette_dialog->clist));
 
-  palette_dialog->palette = (GimpPalette *) palettes_list->data;
+  palette_dialog->palette = (GimpPalette *)
+    gimp_container_get_child_by_index (global_palette_list, 0);
 }
 
 static void 
 palette_dialog_clist_scroll_to_current (PaletteDialog *palette_dialog)
 {
-  GimpPalette *palette;
-  GSList      *list;
-  gint         pos;
+  gint pos;
 
   if (! (palette_dialog && palette_dialog->palette))
     return;
 
-  pos = 0;
-
-  for (list = palettes_list; list; list = g_slist_next (list))
-    {
-      palette = (GimpPalette *) list->data;
-
-      if (palette == palette_dialog->palette)
-	break;
-
-      pos++;
-    }
+  pos = gimp_container_get_child_index (global_palette_list,
+					GIMP_OBJECT (palette_dialog->palette));
 
   gtk_clist_unselect_all (GTK_CLIST (palette_dialog->clist));
   gtk_clist_select_row (GTK_CLIST (palette_dialog->clist), pos, -1);
@@ -457,7 +301,7 @@ palette_dialog_clist_scroll_to_current (PaletteDialog *palette_dialog)
 
 /*  update functions for all palette dialogs  ********************************/
 
-static void
+void
 palette_insert_all (GimpPalette *palette)
 {
   PaletteDialog *palette_dialog;
@@ -569,7 +413,6 @@ palette_refresh_all (void)
 
   default_palette_entries = NULL;
 
-  palettes_free ();
   palettes_init (FALSE);
 
   if ((palette_dialog = top_level_palette))
@@ -1356,7 +1199,7 @@ palette_dialog_color_name_entry_changed (GtkWidget *widget,
   palette_dialog->color->name = 
     g_strdup (gtk_entry_get_text (GTK_ENTRY (palette_dialog->color_name)));
 
-  palette_dialog->palette->changed = TRUE;
+  gimp_data_dirty (GIMP_DATA (palette_dialog->palette));
 }
 
 /*  palette zoom functions & callbacks  **************************************/
@@ -1417,7 +1260,10 @@ palette_dialog_add_entries_callback (GtkWidget *widget,
 
   palette = gimp_palette_new (palette_name);
 
-  palettes_list_insert (palette);
+  gimp_container_add (global_palette_list, GIMP_OBJECT (palette));
+
+  /*  update all dialogs  */
+  palette_insert_all (palette);
 }
 
 static void
@@ -1456,12 +1302,10 @@ palette_dialog_do_delete_callback (GtkWidget *widget,
 
   palette = palette_dialog->palette;
 
-  if (palette->filename)
-    gimp_palette_delete (palette);
+  if (GIMP_DATA (palette)->filename)
+    gimp_data_delete_from_disk (GIMP_DATA (palette));
 
-  palettes_list = g_slist_remove (palettes_list, palette);
-
-  gtk_object_unref (GTK_OBJECT (palette));
+  gimp_container_remove (global_palette_list, GIMP_OBJECT (palette));
 
   palette_refresh_all ();
 }
@@ -1545,7 +1389,10 @@ palette_dialog_merge_entries_callback (GtkWidget *widget,
       sel_list = sel_list->next;
     }
 
-  palettes_list_insert (new_palette);
+  gimp_container_add (global_palette_list, GIMP_OBJECT (new_palette));
+
+  /*  update all dialogs  */
+  palette_insert_all (new_palette);
 }
 
 static void
@@ -1571,7 +1418,11 @@ static void
 palette_dialog_save_callback (GtkWidget *widget,
 			      gpointer   data)
 {
+  g_warning ("%s(): TODO", G_GNUC_FUNCTION);
+
+  /*
   palette_save_palettes ();
+  */
 }
 
 static void

@@ -38,6 +38,9 @@ struct _PaletteSelect
 PaletteSelect * palette_select_new              (const gchar *title,
 						 const gchar *initial_palette);
 
+void            palette_select_freeze_all       (void);
+void            palette_select_thaw_all         (void);
+
 void            palette_select_clist_insert_all (GimpPalette *palette);
 void            palette_select_set_text_all     (GimpPalette *palette);
 void            palette_select_refresh_all      (void);

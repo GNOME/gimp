@@ -101,10 +101,30 @@ is_script (const gchar *filename)
 #define is_script(filename) FALSE
 #endif
 
+gboolean
+datafiles_check_extension (const gchar *filename,
+			   const gchar *extension)
+{
+  gint name_len;
+  gint ext_len;
+
+  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (extension != NULL, FALSE);
+
+  name_len = strlen (filename);
+  ext_len  = strlen (extension);
+
+  if (! (name_len && ext_len && (name_len > ext_len)))
+    return FALSE;
+
+  return (strcmp (&filename[name_len - ext_len], extension) == 0);
+}
+
 void
 datafiles_read_directories (const gchar            *path_str,
+			    GimpDataFileFlags       flags,
 			    GimpDataFileLoaderFunc  loader_func,
-			    GimpDataFileFlags       flags)
+			    gpointer                loader_data)
 {
   gchar *local_path;
   GList *path;
@@ -114,8 +134,8 @@ datafiles_read_directories (const gchar            *path_str,
   DIR   *dir;
   struct dirent *dir_ent;
 
-  if (path_str == NULL)
-    return;
+  g_return_if_fail (path_str != NULL);
+  g_return_if_fail (loader_func != NULL);
 
   local_path = g_strdup (path_str);
 
@@ -158,7 +178,9 @@ datafiles_read_directories (const gchar            *path_str,
 		   is_script (filename)))
 		{
 		  filestat_valid = TRUE;
-		  (*loader_func) (filename);
+
+		  (* loader_func) (filename, loader_data);
+
 		  filestat_valid = FALSE;
 		}
 

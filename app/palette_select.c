@@ -27,6 +27,7 @@
 
 #include "apptypes.h"
 
+#include "gimpcontainer.h"
 #include "gimppalette.h"
 #include "palette_select.h"
 #include "palette.h"
@@ -57,14 +58,13 @@ PaletteSelect *
 palette_select_new (const gchar *title,
 		    const gchar *initial_palette)
 {
-  GimpPalette   *p_entries = NULL;
+  GimpPalette   *palette;
   PaletteSelect *psp;
-  GSList        *list;
   GtkWidget     *vbox;
   GtkWidget     *hbox;
   GtkWidget     *scrolled_win;
   gchar         *titles[3];
-  gint           select_pos;
+  gint           select_pos = -1;
 
   palette_select_palette_init ();
 
@@ -115,19 +115,13 @@ palette_select_new (const gchar *title,
   gtk_container_add (GTK_CONTAINER (scrolled_win), psp->clist);
   gtk_widget_show (psp->clist);
 
-  select_pos = -1;
-  if (initial_palette && strlen (initial_palette))
-    {
-      for (list = palettes_list; list; list = g_slist_next (list))
-	{
-	  p_entries = (GimpPalette *) list->data;
-	  
-	  if (strcmp (GIMP_OBJECT (p_entries)->name, initial_palette) > 0)
-	    break;
+  palette = (GimpPalette *)
+    gimp_container_get_child_by_name (global_palette_list,
+				      initial_palette);
 
-	  select_pos++;
-	}
-    }
+  if (palette)
+    select_pos = gimp_container_get_child_index (global_palette_list,
+						 GIMP_OBJECT (palette));
 
   gtk_widget_realize (psp->shell);
   psp->gc = gdk_gc_new (psp->shell->window);  
@@ -155,34 +149,31 @@ palette_select_new (const gchar *title,
 }
 
 void
-palette_select_clist_insert_all (GimpPalette *p_entries)
+palette_select_freeze_all (void)
 {
-  GimpPalette   *chk_entries;
+}
+
+void
+palette_select_thaw_all (void)
+{
+}
+
+void
+palette_select_clist_insert_all (GimpPalette *entries)
+{
   PaletteSelect *psp; 
   GSList        *list;
-  gint           pos = 0;
+  gint           pos;
 
-  for (list = palettes_list; list; list = g_slist_next (list))
-    {
-      chk_entries = (GimpPalette *) list->data;
-      
-      /*  to make sure we get something!  */
-      if (chk_entries == NULL)
-	return;
-
-      if (strcmp (GIMP_OBJECT (p_entries)->name,
-		  GIMP_OBJECT (chk_entries)->name) == 0)
-	break;
-
-      pos++;
-    }
+  pos = gimp_container_get_child_index (global_palette_list,
+					GIMP_OBJECT (entries));
 
   for (list = active_dialogs; list; list = g_slist_next (list))
     {
       psp = (PaletteSelect *) list->data;
 
       gtk_clist_freeze (GTK_CLIST (psp->clist));
-      palette_clist_insert (psp->clist, psp->shell, psp->gc, p_entries, pos);
+      palette_clist_insert (psp->clist, psp->shell, psp->gc, entries, pos);
       gtk_clist_thaw (GTK_CLIST (psp->clist));
     }
 }
@@ -190,26 +181,15 @@ palette_select_clist_insert_all (GimpPalette *p_entries)
 void
 palette_select_set_text_all (GimpPalette *entries)
 {
-  GimpPalette   *p_entries = NULL;
   PaletteSelect *psp; 
   GSList        *list;
   gchar         *num_buf;
-  gint           pos = 0;
+  gint           pos;
 
-  for (list = palettes_list; list;  list = g_slist_next (list))
-    {
-      p_entries = (GimpPalette *) list->data;
-      
-      if (p_entries == entries)
-	break;
+  pos = gimp_container_get_child_index (global_palette_list,
+					GIMP_OBJECT (entries));
 
-      pos++;
-    }
-
-  if (p_entries == NULL)
-    return; /* This is actually an error */
-
-  num_buf = g_strdup_printf ("%d",p_entries->n_colors);;
+  num_buf = g_strdup_printf ("%d", entries->n_colors);
 
   for (list = active_dialogs; list; list = g_slist_next (list))
     {

@@ -69,6 +69,7 @@
 #include "lc_dialog.h"
 #include "menus.h"
 #include "paint_funcs.h"
+#include "palettes.h"
 #include "palette.h"
 #include "pattern_select.h"
 #include "patterns.h"

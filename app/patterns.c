@@ -38,15 +38,12 @@
 
 
 /*  local function prototypes  */
-static void   patterns_load_pattern (const gchar *filename);
+static void   patterns_load_pattern (const gchar *filename,
+				     gpointer     loader_data);
 
 
 /*  global variables  */
 GimpContainer *global_pattern_list = NULL;
-
-
-/*  static variables  */
-static GimpPattern *standard_pattern = NULL;
 
 
 /*  public functions  */
@@ -57,13 +54,15 @@ patterns_init (gboolean no_data)
   if (global_pattern_list)
     patterns_free ();
   else
-    global_pattern_list = GIMP_CONTAINER (gimp_data_list_new (GIMP_TYPE_PATTERN));
+    global_pattern_list =
+      GIMP_CONTAINER (gimp_data_list_new (GIMP_TYPE_PATTERN));
 
   if (pattern_path != NULL && !no_data)
     {
       pattern_select_freeze_all ();
 
-      datafiles_read_directories (pattern_path, patterns_load_pattern, 0);
+      datafiles_read_directories (pattern_path, 0,
+				  patterns_load_pattern, global_pattern_list);
 
       pattern_select_thaw_all ();
     }
@@ -79,12 +78,9 @@ patterns_free (void)
 
   pattern_select_freeze_all ();
 
-  while (GIMP_LIST (global_pattern_list)->list)
-    {
-      gimp_container_remove
-	(global_pattern_list,
-	 GIMP_OBJECT (GIMP_LIST (global_pattern_list)->list->data));
-    }
+  gimp_data_list_save_and_clear (GIMP_DATA_LIST (global_pattern_list),
+				 pattern_path,
+				 GIMP_PATTERN_FILE_EXTENSION);
 
   pattern_select_thaw_all ();
 }
@@ -92,6 +88,8 @@ patterns_free (void)
 GimpPattern *
 patterns_get_standard_pattern (void)
 {
+  static GimpPattern *standard_pattern = NULL;
+
   if (! standard_pattern)
     {
       guchar *data;
@@ -121,18 +119,24 @@ patterns_get_standard_pattern (void)
   return standard_pattern;
 }
 
+
+/*  private functions  */
+
 static void
-patterns_load_pattern (const gchar *filename)
+patterns_load_pattern (const gchar *filename,
+		       gpointer     loader_data)
 {
-  GimpPattern   *pattern;
+  GimpPattern *pattern;
 
   g_return_if_fail (filename != NULL);
 
-  pattern = gimp_pattern_load (filename);
+  if (datafiles_check_extension (filename, GIMP_PATTERN_FILE_EXTENSION))
+    {
+      pattern = gimp_pattern_load (filename);
 
-  if (! pattern)
-    g_message (_("Warning: Failed to load pattern\n\"%s\""), filename);
-
-  if (pattern != NULL)
-    gimp_container_add (global_pattern_list, GIMP_OBJECT (pattern));
+      if (! pattern)
+	g_message (_("Warning: Failed to load pattern\n\"%s\""), filename);
+      else
+	gimp_container_add (GIMP_CONTAINER (loader_data), GIMP_OBJECT (pattern));
+    }
 }

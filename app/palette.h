@@ -26,10 +26,9 @@
 #define COLOR_UPDATE      2
 
 
-void   palettes_init            (gboolean     no_data);
-void   palettes_free            (void);
+/* EEK */
+void   palette_insert_all       (GimpPalette    *palette);
 
-void   palettes_list_insert     (GimpPalette *palette);
 
 void   palette_dialog_create    (void);
 void   palette_dialog_free      (void);
@@ -40,7 +39,7 @@ void   palette_set_active_color (gint         r,
 				 gint         state);
 
 
-extern GSList * palettes_list;
+extern GimpContainer *global_palette_list;
 
 
 #endif /* __PALETTE_H__ */

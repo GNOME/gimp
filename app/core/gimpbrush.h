@@ -23,6 +23,10 @@
 #include "gimpdata.h"
 
 
+#define GIMP_BRUSH_FILE_EXTENSION        ".gbr"
+#define GIMP_BRUSH_PIXMAP_FILE_EXTENSION ".gpb"
+
+
 #define GIMP_TYPE_BRUSH            (gimp_brush_get_type ())
 #define GIMP_BRUSH(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH, GimpBrush))
 #define GIMP_BRUSH_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH, GimpBrushClass))

@@ -33,9 +33,13 @@
 #include "gimpbrushpreview.h"
 #include "gimpdrawable.h"
 #include "gimpdrawablepreview.h"
+#include "gimpgradient.h"
+#include "gimpgradientpreview.h"
 #include "gimpimage.h"
 #include "gimpimagepreview.h"
 #include "gimpmarshal.h"
+#include "gimppalette.h"
+#include "gimppalettepreview.h"
 #include "gimppattern.h"
 #include "gimppatternpreview.h"
 #include "gimppreview.h"
@@ -282,6 +286,14 @@ gimp_preview_new_full (GimpViewable *viewable,
   else if (GIMP_IS_PATTERN (viewable))
     {
       preview = gtk_type_new (GIMP_TYPE_PATTERN_PREVIEW);
+    }
+  else if (GIMP_IS_GRADIENT (viewable))
+    {
+      preview = gtk_type_new (GIMP_TYPE_GRADIENT_PREVIEW);
+    }
+  else if (GIMP_IS_PALETTE (viewable))
+    {
+      preview = gtk_type_new (GIMP_TYPE_PALETTE_PREVIEW);
     }
   else
     {

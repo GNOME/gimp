@@ -216,6 +216,8 @@ gimp_SOURCES = \
 	palette_import.h	\
 	palette_select.c	\
 	palette_select.h	\
+	palettes.c		\
+	palettes.h		\
 	paletteP.h		\
 	parasitelist.c		\
 	parasitelist.h		\
@@ -297,8 +299,12 @@ gimp_SOURCES = \
 	gimpcontainerview.c		\
 	gimpdrawablepreview.c		\
 	gimpdrawablepreview.h		\
+	gimpgradientpreview.h		\
+	gimpgradientpreview.c		\
 	gimpimagepreview.h		\
 	gimpimagepreview.c		\
+	gimppalettepreview.h		\
+	gimppalettepreview.c		\
 	gimppatternpreview.h		\
 	gimppatternpreview.c		\
 	gimppreview.h			\

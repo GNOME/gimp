@@ -32,5 +32,7 @@ void   palette_clist_insert         (GtkWidget      *clist,
 void   palette_select_palette_init  (void);
 void   palette_create_edit          (GimpPalette    *palette);
 
+void   palette_insert_all           (GimpPalette    *palette);
+
 
 #endif /* __PALETTE_P_H__ */

@@ -150,7 +150,8 @@ static void plug_in_handle_proc_return    (GPProcReturn      *proc_return);
 static void plug_in_handle_proc_install   (GPProcInstall     *proc_install);
 static void plug_in_handle_proc_uninstall (GPProcUninstall   *proc_uninstall);
 static void plug_in_write_rc              (const gchar       *filename);
-static void plug_in_init_file             (const gchar       *filename);
+static void plug_in_init_file             (const gchar       *filename,
+					   gpointer           loader_data);
 static void plug_in_query                 (PlugInDef         *plug_in_def);
 static void plug_in_add_to_db             (void);
 static void plug_in_make_menu             (void);
@@ -315,7 +316,8 @@ plug_in_init (void)
     plug_in_init_shm ();
 
   /* search for binaries in the plug-in directory path */
-  datafiles_read_directories (plug_in_path, plug_in_init_file, MODE_EXECUTABLE);
+  datafiles_read_directories (plug_in_path, MODE_EXECUTABLE,
+			      plug_in_init_file, NULL);
 
   /* read the pluginrc file for cached data */
   filename = NULL;
@@ -2336,7 +2338,8 @@ plug_in_write_rc (const gchar *filename)
 }
 
 static void
-plug_in_init_file (const gchar *filename)
+plug_in_init_file (const gchar *filename,
+		   gpointer     loader_data)
 {
   GSList    *tmp;
   PlugInDef *plug_in_def;

@@ -1,5 +1,63 @@
 2001-02-11  Michael Natterer  <mitch@gimp.org>
 
+	Made a GimpContainer out of the palette list:
+
+	* app/Makefile.am
+	* app/palettes.[ch]: new files for the global palette list.
+
+	* app/gimpgradientpreview.[ch]
+	* app/gimppalettepreview.[ch]: new widgets.
+
+	* app/gimppalette.[ch]: derive it from GimpData to get all the
+	preview etc. stuff.
+
+	* app/datafiles.[ch]: new function datafiles_check_extension(),
+	added a "loader_data" parameter to datafiles_read_directories()
+	and pass it to the loader function.
+
+	* app/gimpcontext.[ch]: added the palette (not really used yet
+	except by the test dialogs).
+
+	* app/gimpdatalist.[ch]: new function gimp_data_list_save_and_clear()
+	which does everything needed for patterns_free(), brushes_free() ...
+
+	* app/gimpdnd.c: added palette DND.
+
+	* app/app_procs.c
+	* app/brushes.c
+	* app/color_notebook.h
+	* app/commands.c
+	* app/convert.c
+	* app/gimpbrush.h
+	* app/gimpbrushpipe.h
+	* app/gimpgradient.c
+	* app/gimppattern.h
+	* app/gimppreview.c
+	* app/gradients.c
+	* app/module_db.c
+	* app/palette.[ch]
+	* app/paletteP.h
+	* app/palette_import.c
+	* app/palette_select.[ch]
+	* app/patterns.c
+	* app/plug_in.c
+	* app/pdb/convert_cmds.c
+	* app/pdb/palette_cmds.c
+	* tools/pdbgen/pdb/convert.pdb
+	* tools/pdbgen/pdb/palette.pdb: lotsa stuff: changed due to the above
+	API changes, #define the file extensions in the GimpData subclasses'
+	header files instead of hardcoding them in several places, ...
+
+	* data/palettes/*: The same file format change as for the gradient
+	files:
+
+	- Save the palette name in a parsable form (as part of the file
+	  format, not in a comment.
+	- Removed unserscores from the palette names.
+	- Added an extension (Gimp PaLettes are ".gpl" files now ;-)
+
+2001-02-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/apptypes.h
 	* app/gimpdata.[ch]: new abstract base class for everything

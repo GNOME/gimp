@@ -104,9 +104,10 @@
 #include "gdisplay.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
+#include "gimplist.h"
 #include "gimplayer.h"
 #include "gimppalette.h"
-#include "palette.h"
+#include "palettes.h"
 #include "palette_select.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
@@ -783,7 +784,7 @@ convert_to_indexed (GimpImage *gimage)
 static GtkWidget *
 build_palette_button (void)
 {
-  GSList      *list;
+  GList       *list;
   GimpPalette *palette;
   GimpPalette *theWebPalette = NULL;
   gint         i;
@@ -791,21 +792,19 @@ build_palette_button (void)
 
   UserHasWebPal = FALSE;
 
-  if (!palettes_list)
-    {
-      palettes_init (FALSE);
-    }
+  if (! global_palette_list)
+    palettes_init (FALSE);
 
-  list = palettes_list;
+  list = GIMP_LIST (global_palette_list)->list;
 
-  if (!list)
+  if (! list)
     {
       return NULL;
     }
 
-  for (i = 0, list = palettes_list, default_palette = -1;
+  for (i = 0, default_palette = -1;
        list;
-       i++, list = g_slist_next (list))
+       i++, list = g_list_next (list))
     {
       palette = (GimpPalette *) list->data;
       
@@ -838,9 +837,9 @@ build_palette_button (void)
 	 }
        else
 	 {
-	   for (i = 0, list = palettes_list;
+	   for (i = 0, list = GIMP_LIST (global_palette_list)->list;
 		list && default_palette == -1;
-		i++, list = g_slist_next (list))
+		i++, list = g_list_next (list))
 	     {
 	       palette = (GimpPalette *) list->data;
 

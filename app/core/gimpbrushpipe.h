@@ -24,6 +24,9 @@
 #include "gimpbrush.h"
 
 
+#define GIMP_BRUSH_PIPE_FILE_EXTENSION ".gih"
+
+
 #define GIMP_TYPE_BRUSH_PIPE            (gimp_brush_pipe_get_type ())
 #define GIMP_BRUSH_PIPE(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_PIPE, GimpBrushPipe))
 #define GIMP_BRUSH_PIPE_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_PIPE, GimpBrushPipeClass))

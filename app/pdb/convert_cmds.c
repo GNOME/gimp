@@ -28,9 +28,11 @@
 #include "procedural_db.h"
 
 #include "convert.h"
+#include "gimpcontainer.h"
 #include "gimpimage.h"
 #include "gimppalette.h"
 #include "palette.h"
+#include "palettes.h"
 
 static ProcRecord convert_rgb_proc;
 static ProcRecord convert_grayscale_proc;
@@ -164,9 +166,7 @@ convert_indexed_invoker (Argument *args)
     {
       if ((success = (gimp_image_base_type (gimage) != INDEXED)))
 	{
-	  GimpPalette *palette;
-	  GimpPalette *the_palette = NULL;
-	  GSList      *list;
+	  GimpPalette *palette = NULL;
     
 	  switch (dither_type)
 	    {
@@ -193,24 +193,17 @@ convert_indexed_invoker (Argument *args)
 	      break;
     
 	    case CUSTOM_PALETTE:
-	      if (! palettes_list)
+	      if (! global_palette_list)
 		palettes_init (FALSE);
     
-	      for (list = palettes_list; list; list = list->next)
-		{
-		  palette = (GimpPalette *) list->data;
+	      palette = (GimpPalette *)
+		gimp_container_get_child_by_name (global_palette_list,
+						  palette_name);
     
-		  if (!strcmp (palette_name, GIMP_OBJECT (palette)->name))
-		    {
-		      the_palette = palette;
-		      break;
-		    }
-		}
-    
-	      if (the_palette == NULL)
+	      if (palette == NULL)
 		success = FALSE;
 	      else
-		theCustomPalette = the_palette;
+		theCustomPalette = palette;
     
 	      break;
     

@@ -102,9 +102,7 @@ HELP
 {
   if ((success = (gimp_image_base_type (gimage) != INDEXED)))
     {
-      GimpPalette *palette;
-      GimpPalette *the_palette = NULL;
-      GSList      *list;
+      GimpPalette *palette = NULL;
 
       switch (dither_type)
         {
@@ -131,24 +129,17 @@ HELP
 	  break;
 
 	case CUSTOM_PALETTE:
-	  if (! palettes_list)
+	  if (! global_palette_list)
 	    palettes_init (FALSE);
 
-	  for (list = palettes_list; list; list = list->next)
-	    {
-	      palette = (GimpPalette *) list->data;
+          palette = (GimpPalette *)
+            gimp_container_get_child_by_name (global_palette_list,
+                                              palette_name);
 
-	      if (!strcmp (palette_name, GIMP_OBJECT (palette)->name))
-		{
-		  the_palette = palette;
-		  break;
-		}
-	    }
-
-	  if (the_palette == NULL)
+	  if (palette == NULL)
 	    success = FALSE;
 	  else
-	    theCustomPalette = the_palette;
+	    theCustomPalette = palette;
 
 	  break;
 
@@ -165,7 +156,8 @@ CODE
     );
 }
 
-@headers = qw("gimpimage.h" "gimppalette.h" "palette.h" "convert.h");
+@headers = qw("gimpcontainer.h" "gimpimage.h" "gimppalette.h" "palettes.h"
+              "convert.h");
 
 @procs = qw(convert_rgb convert_grayscale convert_indexed);
 %exports = (app => [@procs], lib => [@procs]);

@@ -20,6 +20,9 @@
 #define __COLOR_NOTEBOOK_H__
 
 
+#include <stdio.h> /* for FILE */
+
+
 typedef enum
 {
   COLOR_NOTEBOOK_OK,

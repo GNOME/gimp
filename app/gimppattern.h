@@ -23,6 +23,9 @@
 #include "gimpdata.h"
 
 
+#define GIMP_PATTERN_FILE_EXTENSION ".pat"
+
+
 #define GIMP_TYPE_PATTERN            (gimp_pattern_get_type ())
 #define GIMP_PATTERN(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_PATTERN, GimpPattern))
 #define GIMP_PATTERN_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATTERN, GimpPatternClass))

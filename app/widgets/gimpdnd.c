@@ -32,14 +32,15 @@
 #include "gimpimage.h"
 #include "gimpbrush.h"
 #include "gimpcontainer.h"
-#include "gimpcontextpreview.h"
 #include "gimpdnd.h"
 #include "gimpdrawable.h"
 #include "gimpgradient.h"
+#include "gimppalette.h"
 #include "gimppattern.h"
 #include "gimppreview.h"
 #include "gimprc.h"
 #include "gradients.h"
+#include "palettes.h"
 #include "patterns.h"
 #include "temp_buf.h"
 
@@ -105,8 +106,8 @@ static GtkWidget * gimp_dnd_get_gradient_icon (GtkWidget     *widget,
 					       GtkSignalFunc  get_gradient_func,
 					       gpointer       get_gradient_data);
 static GtkWidget * gimp_dnd_get_palette_icon  (GtkWidget     *widget,
-					       GtkSignalFunc  get_gradient_func,
-					       gpointer       get_gradient_data);
+					       GtkSignalFunc  get_palette_func,
+					       gpointer       get_palette_data);
 static GtkWidget * gimp_dnd_get_tool_icon     (GtkWidget     *widget,
 					       GtkSignalFunc  get_tool_func,
 					       gpointer       get_tool_data);
@@ -132,8 +133,8 @@ static guchar    * gimp_dnd_get_gradient_data (GtkWidget     *widget,
 					       gint          *format,
 					       gint          *length);
 static guchar    * gimp_dnd_get_palette_data  (GtkWidget     *widget,
-					       GtkSignalFunc  get_gradient_func,
-					       gpointer       get_gradient_data,
+					       GtkSignalFunc  get_palette_func,
+					       gpointer       get_palette_data,
 					       gint          *format,
 					       gint          *length);
 static guchar    * gimp_dnd_get_tool_data     (GtkWidget     *widget,
@@ -648,6 +649,13 @@ gimp_gtk_drag_dest_set_by_type (GtkWidget       *widget,
   static const guint gradient_n_targets = (sizeof (gradient_target_table) /
 					   sizeof (gradient_target_table[0]));
 
+  static const GtkTargetEntry palette_target_table[] =
+  {
+    GIMP_TARGET_PALETTE
+  };
+  static const guint palette_n_targets = (sizeof (palette_target_table) /
+					  sizeof (palette_target_table[0]));
+
   if (type == GIMP_TYPE_BRUSH)
     {
       target_table = brush_target_table;
@@ -662,6 +670,11 @@ gimp_gtk_drag_dest_set_by_type (GtkWidget       *widget,
     {
       target_table = gradient_target_table;
       n_targets    = gradient_n_targets;
+    }
+  else if (type == GIMP_TYPE_PALETTE)
+    {
+      target_table = palette_target_table;
+      n_targets    = palette_n_targets;
     }
   else
     {
@@ -701,6 +714,12 @@ gimp_dnd_viewable_dest_set (GtkWidget               *widget,
 				  (GimpDndDropGradientFunc) set_viewable_func,
 				  data);
     }
+  else if (type == GIMP_TYPE_PALETTE)
+    {
+      gimp_dnd_palette_dest_set (widget,
+				 (GimpDndDropPaletteFunc) set_viewable_func,
+				 data);
+    }
   else
     {
       g_warning ("%s(): unsupported GtkType", G_GNUC_FUNCTION);
@@ -722,6 +741,10 @@ gimp_dnd_viewable_dest_unset (GtkWidget *widget,
   else if (type == GIMP_TYPE_GRADIENT)
     {
       gimp_dnd_gradient_dest_unset (widget);
+    }
+  else if (type == GIMP_TYPE_PALETTE)
+    {
+      gimp_dnd_palette_dest_unset (widget);
     }
   else
     {
@@ -953,12 +976,10 @@ gimp_dnd_get_gradient_icon (GtkWidget     *widget,
   if (! gradient)
     return NULL;
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), 
-                    DRAG_PREVIEW_SIZE * 2, DRAG_PREVIEW_SIZE / 2);      
-
-  draw_gradient (GTK_PREVIEW (preview), gradient,
-		 DRAG_PREVIEW_SIZE * 2, DRAG_PREVIEW_SIZE / 2);
+  preview = gimp_preview_new_full (GIMP_VIEWABLE (gradient),
+				   DRAG_PREVIEW_SIZE * 2, DRAG_PREVIEW_SIZE / 2,
+				   0,
+				   TRUE, FALSE, FALSE);
 
   return preview;
 }
@@ -1052,7 +1073,18 @@ gimp_dnd_get_palette_icon (GtkWidget     *widget,
 			   GtkSignalFunc  get_palette_func,
 			   gpointer       get_palette_data)
 {
-  return NULL;
+  GtkWidget   *preview;
+  GimpPalette *palette;
+
+  palette = (* (GimpDndDragPaletteFunc) get_palette_func) (widget,
+							   get_palette_data);
+
+  if (! palette)
+    return NULL;
+
+  preview = gimp_preview_new (GIMP_VIEWABLE (palette), DRAG_PREVIEW_SIZE, 0);
+
+  return preview;
 }
 
 static guchar *
@@ -1062,7 +1094,21 @@ gimp_dnd_get_palette_data (GtkWidget     *widget,
 			   gint          *format,
 			   gint          *length)
 {
-  return NULL;
+  GimpPalette *palette;
+  gchar       *name;
+
+  palette = (* (GimpDndDragPaletteFunc) get_palette_func) (widget,
+							   get_palette_data);
+
+  if (! palette)
+    return NULL;
+
+  name = g_strdup (GIMP_OBJECT (palette)->name);
+
+  *format = 8;
+  *length = strlen (name) + 1;
+
+  return (guchar *) name;
 }
 
 static void
@@ -1073,6 +1119,26 @@ gimp_dnd_set_palette_data (GtkWidget     *widget,
 			   gint           format,
 			   gint           length)
 {
+  GimpPalette *palette;
+  gchar       *name;
+
+  if ((format != 8) || (length < 1))
+    {
+      g_warning ("Received invalid palette data\n");
+      return;
+    }
+
+  name = (gchar *) vals;
+
+  if (strcmp (name, "Standard") == 0)
+    palette = palettes_get_standard_palette ();
+  else
+    palette = (GimpPalette *) gimp_container_get_child_by_name (global_palette_list,
+								name);
+
+  if (palette)
+    (* (GimpDndDropPaletteFunc) set_palette_func) (widget, palette,
+						   set_palette_data);
 }
 
 void

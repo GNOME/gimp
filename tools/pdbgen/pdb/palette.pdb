@@ -169,7 +169,7 @@ CODE
     );
 }
 
-@headers = qw("gimpcontext.h" "palette.h");
+@headers = qw("gimpcontext.h" "palettes.h");
 
 @procs = qw(palette_get_foreground palette_get_background
 	    palette_set_foreground palette_set_background

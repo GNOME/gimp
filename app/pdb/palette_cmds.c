@@ -28,7 +28,7 @@
 
 #include "gimpcontext.h"
 #include "gimpimage.h"
-#include "palette.h"
+#include "palettes.h"
 
 #include "libgimpcolor/gimpcolor.h"
 

@@ -20,7 +20,10 @@
 #define __GIMP_PALETTE_H__
 
 
-#include "gimpobject.h"
+#include "gimpdata.h"
+
+
+#define GIMP_PALETTE_FILE_EXTENSION ".gpl"
 
 
 #define GIMP_TYPE_PALETTE            (gimp_palette_get_type ())
@@ -46,14 +49,10 @@ typedef struct _GimpPaletteClass GimpPaletteClass;
 
 struct _GimpPalette
 {
-  GimpObject  parent_instance;
-
-  gchar      *filename;
+  GimpData  parent_instance;
 
   GList      *colors;
   gint        n_colors;
-
-  gboolean    changed;
 
   /* EEK */
   GdkPixmap  *pixmap;
@@ -61,25 +60,20 @@ struct _GimpPalette
 
 struct _GimpPaletteClass
 {
-  GimpObjectClass  parent_class;
-
-  void (* changed) (GimpPalette *palette);
+  GimpDataClass  parent_class;
 };
 
 
 GtkType            gimp_palette_get_type       (void);
 GimpPalette      * gimp_palette_new            (const gchar      *name);
 
-GimpPalette      * gimp_palette_new_from_file  (const gchar      *filename);
-gboolean           gimp_palette_save           (GimpPalette      *palette);
+GimpPalette      * gimp_palette_load           (const gchar      *filename);
 
 GimpPaletteEntry * gimp_palette_add_entry      (GimpPalette      *palette,
 					        const gchar      *name,
 					        GimpRGB          *color);
 void               gimp_palette_delete_entry   (GimpPalette      *palette,
 					        GimpPaletteEntry *entry);
-
-void               gimp_palette_delete         (GimpPalette      *palette);
 
 void               gimp_palette_update_preview (GimpPalette      *palette,
 						GdkGC            *gc);

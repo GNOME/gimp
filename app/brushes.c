@@ -42,15 +42,17 @@
 #include "libgimp/gimpintl.h"
 
 
+/*  local function prototypes  */
+static void   brushes_brush_load (const gchar   *filename,
+				  gpointer       loader_data);
+
+
 /*  global variables  */
 GimpContainer *global_brush_list = NULL;
 
 
-/*  local function prototypes  */
-static void   brushes_brush_load (const gchar   *filename);
+/*  public functions  */
 
-
-/*  function declarations  */
 void
 brushes_init (gboolean no_data)
 {
@@ -63,13 +65,31 @@ brushes_init (gboolean no_data)
     {
       brush_select_freeze_all ();
 
-      datafiles_read_directories (brush_path, brushes_brush_load, 0);
-      datafiles_read_directories (brush_vbr_path, brushes_brush_load, 0);
+      datafiles_read_directories (brush_path, 0,
+				  brushes_brush_load, global_brush_list);
+
+      datafiles_read_directories (brush_vbr_path, 0,
+				  brushes_brush_load, global_brush_list);
 
       brush_select_thaw_all ();
     }
 
   gimp_context_refresh_brushes ();
+}
+
+void
+brushes_free (void)
+{
+  if (! global_brush_list)
+    return;
+
+  brush_select_freeze_all ();
+
+  gimp_data_list_save_and_clear (GIMP_DATA_LIST (global_brush_list),
+				 brush_vbr_path,
+				 GIMP_BRUSH_GENERATED_FILE_EXTENSION);
+
+  brush_select_thaw_all ();
 }
 
 GimpBrush *
@@ -93,27 +113,33 @@ brushes_get_standard_brush (void)
   return standard_brush;
 }
 
+
+/*  private functions  */
+
 static void
-brushes_brush_load (const gchar *filename)
+brushes_brush_load (const gchar *filename,
+		    gpointer     loader_data)
 {
   GimpBrush *brush = NULL;
 
-  if (strcmp (&filename[strlen (filename) - 4], ".gbr") == 0 ||
-      strcmp (&filename[strlen (filename) - 4], ".gpb") == 0)
+  if (datafiles_check_extension (filename, GIMP_BRUSH_FILE_EXTENSION)       ||
+      datafiles_check_extension (filename, GIMP_BRUSH_PIXMAP_FILE_EXTENSION))
     {
       brush = gimp_brush_load (filename);
 
       if (! brush)
 	g_message (_("Warning: Failed to load brush\n\"%s\""), filename);
     }
-  else if (strcmp (&filename[strlen(filename) - 4], ".vbr") == 0)
+  else if (datafiles_check_extension (filename,
+				      GIMP_BRUSH_GENERATED_FILE_EXTENSION))
     {
       brush = gimp_brush_generated_load (filename);
 
       if (! brush)
 	g_message (_("Warning: Failed to load brush\n\"%s\""), filename);
     }
-  else if (strcmp (&filename[strlen (filename) - 4], ".gih") == 0)
+  else if (datafiles_check_extension (filename,
+				      GIMP_BRUSH_PIPE_FILE_EXTENSION))
     {
       brush = gimp_brush_pipe_load (filename);
 
@@ -121,35 +147,6 @@ brushes_brush_load (const gchar *filename)
 	g_message (_("Warning: Failed to load brush pipe\n\"%s\""), filename);
     }
 
-  if (brush != NULL)
-    gimp_container_add (global_brush_list, GIMP_OBJECT (brush));
-}
-
-void
-brushes_free (void)
-{
-  if (! global_brush_list)
-    return;
-
-  brush_select_freeze_all ();
-
-  while (GIMP_LIST (global_brush_list)->list)
-    {
-      GimpData *data;
-
-      data = GIMP_DATA (GIMP_LIST (global_brush_list)->list->data);
-
-      if (! GIMP_DATA (data)->filename)
-	gimp_data_create_filename (data,
-				   GIMP_OBJECT (data)->name,
-				   GIMP_BRUSH_GENERATED_FILE_EXTENSION,
-				   brush_path);
-
-      if (data->dirty)
-	gimp_data_save (data);
-
-      gimp_container_remove (global_brush_list, GIMP_OBJECT (data));
-    }
-
-  brush_select_thaw_all ();
+  if (brush)
+    gimp_container_add (GIMP_CONTAINER (loader_data), GIMP_OBJECT (brush));
 }

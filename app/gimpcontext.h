@@ -43,34 +43,37 @@ typedef enum
   GIMP_CONTEXT_ARG_BRUSH,
   GIMP_CONTEXT_ARG_PATTERN,
   GIMP_CONTEXT_ARG_GRADIENT,
+  GIMP_CONTEXT_ARG_PALETTE,
   GIMP_CONTEXT_NUM_ARGS
 } GimpContextArgType;
 
 typedef enum
 {
-  GIMP_CONTEXT_IMAGE_MASK      = 1 << 0,
-  GIMP_CONTEXT_DISPLAY_MASK    = 1 << 1,
-  GIMP_CONTEXT_TOOL_MASK       = 1 << 2,
-  GIMP_CONTEXT_FOREGROUND_MASK = 1 << 3,
-  GIMP_CONTEXT_BACKGROUND_MASK = 1 << 4,
-  GIMP_CONTEXT_OPACITY_MASK    = 1 << 5,
-  GIMP_CONTEXT_PAINT_MODE_MASK = 1 << 6,
-  GIMP_CONTEXT_BRUSH_MASK      = 1 << 7,
-  GIMP_CONTEXT_PATTERN_MASK    = 1 << 8,
-  GIMP_CONTEXT_GRADIENT_MASK   = 1 << 9,
+  GIMP_CONTEXT_IMAGE_MASK      = 1 <<  0,
+  GIMP_CONTEXT_DISPLAY_MASK    = 1 <<  1,
+  GIMP_CONTEXT_TOOL_MASK       = 1 <<  2,
+  GIMP_CONTEXT_FOREGROUND_MASK = 1 <<  3,
+  GIMP_CONTEXT_BACKGROUND_MASK = 1 <<  4,
+  GIMP_CONTEXT_OPACITY_MASK    = 1 <<  5,
+  GIMP_CONTEXT_PAINT_MODE_MASK = 1 <<  6,
+  GIMP_CONTEXT_BRUSH_MASK      = 1 <<  7,
+  GIMP_CONTEXT_PATTERN_MASK    = 1 <<  8,
+  GIMP_CONTEXT_GRADIENT_MASK   = 1 <<  9,
+  GIMP_CONTEXT_PALETTE_MASK    = 1 << 10,
 
   /*  aliases  */
-  GIMP_CONTEXT_PAINT_ARGS_MASK = GIMP_CONTEXT_FOREGROUND_MASK |
-                                 GIMP_CONTEXT_BACKGROUND_MASK |
-                                 GIMP_CONTEXT_OPACITY_MASK |
-                                 GIMP_CONTEXT_PAINT_MODE_MASK |
-                                 GIMP_CONTEXT_BRUSH_MASK |
-                                 GIMP_CONTEXT_PATTERN_MASK |
-                                 GIMP_CONTEXT_GRADIENT_MASK,
-  GIMP_CONTEXT_ALL_ARGS_MASK   = GIMP_CONTEXT_IMAGE_MASK |
-                                 GIMP_CONTEXT_DISPLAY_MASK |
-                                 GIMP_CONTEXT_TOOL_MASK |
-                                 GIMP_CONTEXT_PAINT_ARGS_MASK
+  GIMP_CONTEXT_PAINT_ARGS_MASK = (GIMP_CONTEXT_FOREGROUND_MASK |
+				  GIMP_CONTEXT_BACKGROUND_MASK |
+				  GIMP_CONTEXT_OPACITY_MASK    |
+				  GIMP_CONTEXT_PAINT_MODE_MASK |
+				  GIMP_CONTEXT_BRUSH_MASK      |
+				  GIMP_CONTEXT_PATTERN_MASK    |
+				  GIMP_CONTEXT_GRADIENT_MASK),
+  GIMP_CONTEXT_ALL_ARGS_MASK   = (GIMP_CONTEXT_IMAGE_MASK      |
+				  GIMP_CONTEXT_DISPLAY_MASK    |
+				  GIMP_CONTEXT_TOOL_MASK       |
+				  GIMP_CONTEXT_PALETTE_MASK    |
+				  GIMP_CONTEXT_PAINT_ARGS_MASK)
 } GimpContextArgMask;
 
 typedef struct _GimpContextClass GimpContextClass;
@@ -102,6 +105,9 @@ struct _GimpContext
 
   GimpGradient     *gradient;
   gchar            *gradient_name;
+
+  GimpPalette      *palette;
+  gchar            *palette_name;
 };
 
 struct _GimpContextClass
@@ -130,6 +136,8 @@ struct _GimpContextClass
 			       GimpPattern      *pattern);
   void (* gradient_changed)   (GimpContext      *context,
 			       GimpGradient     *gradient);
+  void (* palette_changed)    (GimpContext      *context,
+			       GimpPalette      *palette);
 };
 
 GtkType       gimp_context_get_type          (void);
@@ -277,6 +285,13 @@ void               gimp_context_set_gradient       (GimpContext     *context,
 void               gimp_context_gradient_changed   (GimpContext     *context);
 void               gimp_context_refresh_gradients  (void);
 void               gimp_context_update_gradients   (GimpGradient    *gradient);
+
+/*  palette  */
+GimpPalette      * gimp_context_get_palette        (GimpContext     *context);
+void               gimp_context_set_palette        (GimpContext     *context,
+						    GimpPalette     *palette);
+void               gimp_context_palette_changed    (GimpContext     *context);
+void               gimp_context_refresh_palettes   (void);
 
 
 #endif /* __GIMP_CONTEXT_H__ */

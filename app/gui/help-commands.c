@@ -79,6 +79,7 @@
 /* for the example dialogs */
 #include "brushes.h"
 #include "gradients.h"
+#include "palettes.h"
 #include "patterns.h"
 #include "gimpcontainer.h"
 #include "gimpcontainerlistview.h"
@@ -1407,6 +1408,26 @@ gradients_callback (GtkWidget         *widget,
 }
 
 static void
+palettes_callback (GtkWidget         *widget,
+		   GimpContainerView *view)
+{
+  gtk_drag_dest_unset (GTK_WIDGET (view));
+  gimp_dnd_viewable_dest_unset (GTK_WIDGET (view),
+				view->container->children_type);
+
+  gimp_container_view_set_container (view, global_palette_list);
+
+  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (view),
+				  GTK_DEST_DEFAULT_ALL,
+				  view->container->children_type,
+				  GDK_ACTION_COPY);
+  gimp_dnd_viewable_dest_set (GTK_WIDGET (view),
+			      view->container->children_type,
+			      drop_viewable_callback,
+			      NULL);
+}
+
+static void
 images_callback (GtkWidget         *widget,
 		 GimpContainerView *view)
 {
@@ -1592,6 +1613,24 @@ container_multi_view_new (gboolean       list,
   gtk_signal_connect_object_while_alive
     (GTK_OBJECT (context),
      "gradient_changed",
+     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
+     GTK_OBJECT (preview));
+
+  preview =
+    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_palette (context)),
+			   32, 32, 1,
+			   FALSE, TRUE, FALSE);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), preview,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (preview);
+
+  gtk_signal_connect (GTK_OBJECT (preview), "clicked",
+		      GTK_SIGNAL_FUNC (palettes_callback),
+		      view);
+
+  gtk_signal_connect_object_while_alive
+    (GTK_OBJECT (context),
+     "palette_changed",
      GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
      GTK_OBJECT (preview));
 

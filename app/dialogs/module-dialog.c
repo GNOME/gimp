@@ -159,7 +159,8 @@ static gboolean need_to_rewrite_modulerc = FALSE;
 
 
 /* prototypes */
-static void         module_initialize      (const gchar   *filename);
+static void         module_initialize      (const gchar   *filename,
+					    gpointer       loader_data);
 static void         mod_load               (ModuleInfo    *mod,
 					    gboolean       verbose);
 static void         mod_unload             (ModuleInfo    *mod,
@@ -219,8 +220,8 @@ module_db_init (void)
 					   GIMP_CONTAINER_POLICY_WEAK));
 
   if (g_module_supported ())
-    datafiles_read_directories (module_path,
-				module_initialize, 0 /* no flags */);
+    datafiles_read_directories (module_path, 0 /* no flags */,
+				module_initialize, NULL);
 #ifdef DUMP_DB
   gimp_container_foreach (modules, print_module_info, NULL);
 #endif
@@ -583,7 +584,8 @@ module_inhibited (const gchar *fullpath,
 
 
 static void
-module_initialize (const gchar *filename)
+module_initialize (const gchar *filename,
+		   gpointer     loader_data)
 {
   ModuleInfo *mod;
 
@@ -1136,8 +1138,8 @@ browser_refresh_callback (GtkWidget *widget,
   kill_list = NULL;
 
   /* walk filesystem and add new things we find */
-  datafiles_read_directories (module_path,
-			      module_initialize, 0 /* no flags */);
+  datafiles_read_directories (module_path, 0 /* no flags */,
+			      module_initialize, NULL);
 }
 
 

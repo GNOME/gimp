@@ -37,15 +37,12 @@
 
 
 /*  local function prototypes  */
-static void   gradients_load_gradient (const gchar *filename);
+static void   gradients_load_gradient (const gchar *filename,
+				       gpointer     loader_data);
 
 
 /*  global variables  */
 GimpContainer *global_gradient_list = NULL;
-
-
-/*  static variables  */
-static GimpGradient *standard_gradient = NULL;
 
 
 /*  public functions  */
@@ -63,7 +60,8 @@ gradients_init (gint no_data)
     {
       gradient_select_freeze_all ();
 
-      datafiles_read_directories (gradient_path, gradients_load_gradient, 0);
+      datafiles_read_directories (gradient_path, 0,
+				  gradients_load_gradient, global_gradient_list);
 
       gradient_select_thaw_all ();
     }
@@ -79,23 +77,9 @@ gradients_free (void)
 
   gradient_select_freeze_all ();
 
-  while (GIMP_LIST (global_gradient_list)->list)
-    {
-      GimpData *data;
-
-      data = GIMP_DATA (GIMP_LIST (global_gradient_list)->list->data);
-
-      if (! data->filename)
-	gimp_data_create_filename (data,
-				   GIMP_OBJECT (data)->name,
-				   GIMP_GRADIENT_FILE_EXTENSION,
-				   brush_path);
-
-      if (data->dirty)
-	gimp_data_save (data);
-
-      gimp_container_remove (global_gradient_list, GIMP_OBJECT (data));
-    }
+  gimp_data_list_save_and_clear (GIMP_DATA_LIST (global_gradient_list),
+				 gradient_path,
+				 GIMP_GRADIENT_FILE_EXTENSION);
 
   gradient_select_thaw_all ();
 }
@@ -103,6 +87,8 @@ gradients_free (void)
 GimpGradient *
 gradients_get_standard_gradient (void)
 {
+  static GimpGradient *standard_gradient = NULL;
+
   if (! standard_gradient)
     {
       standard_gradient = gimp_gradient_new ("Standard");
@@ -114,18 +100,28 @@ gradients_get_standard_gradient (void)
   return standard_gradient;
 }
 
+
+/*  private functions  */
+
 static void
-gradients_load_gradient (const gchar *filename)
+gradients_load_gradient (const gchar *filename,
+			 gpointer     loader_data)
 {
-  GimpGradient *gradient;
+  GimpGradient *gradient = NULL;
 
   g_return_if_fail (filename != NULL);
+
+  if (! datafiles_check_extension (filename, GIMP_GRADIENT_FILE_EXTENSION))
+    {
+      g_warning ("%s(): trying old gradient file format on file with "
+		 "unknown extension: %s",
+		 G_GNUC_FUNCTION, filename);
+    }
 
   gradient = gimp_gradient_load (filename);
 
   if (! gradient)
     g_message (_("Warning: Failed to load gradient\n\"%s\""), filename);
-
-  if (gradient != NULL)
-    gimp_container_add (global_gradient_list, GIMP_OBJECT (gradient));
+  else
+    gimp_container_add (GIMP_CONTAINER (loader_data), GIMP_OBJECT (gradient));
 }
