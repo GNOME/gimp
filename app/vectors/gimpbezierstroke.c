@@ -230,9 +230,6 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
 
       stroke->anchors = g_list_append (stroke->anchors, anchor);
 
-      g_printerr ("New Stroke at %f, %f, type %d\n",
-                  coords->x, coords->y, anchor->type);
-
       switch (extend_mode)
         {
         case EXTEND_SIMPLE:
@@ -245,9 +242,9 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
 
           gimp_stroke_anchor_select (stroke, anchor, TRUE);
 
-          neighbor = gimp_bezier_stroke_extend (bezier_stroke,
-                                                coords, anchor,
-                                                EXTEND_SIMPLE);
+          anchor = gimp_bezier_stroke_extend (bezier_stroke,
+                                              coords, anchor,
+                                              EXTEND_SIMPLE);
 
           break;
         default:
@@ -257,9 +254,13 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
     }
   else
     {
+      /* assure that there is a neighbor specified */
+      g_return_val_if_fail (neighbor != NULL, NULL);
+
       loose_end = 0;
       listneighbor = g_list_last (stroke->anchors);
 
+      /* Check if the neighbor is at an end of the control points */
       if (listneighbor->data == neighbor)
         {
           loose_end = 1;
@@ -273,8 +274,51 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
             }
           else
             {
-              listneighbor = NULL;
-              loose_end = 0;
+              /*
+               * it isnt. if we are on a handle go to the nearest
+               * anchor and see if we can find an end from it.
+               * Yes, this is tedious.
+               */
+
+              listneighbor = g_list_find (stroke->anchors, neighbor);
+
+              if (listneighbor && neighbor->type == GIMP_ANCHOR_CONTROL)
+                {
+                  if (listneighbor->prev &&
+                      ((GimpAnchor *) listneighbor->prev->data)->type == GIMP_ANCHOR_ANCHOR)
+                    {
+                      listneighbor = listneighbor->prev;
+                    }
+                  else if (listneighbor->next &&
+                           ((GimpAnchor *) listneighbor->next->data)->type == GIMP_ANCHOR_ANCHOR)
+                    {
+                      listneighbor = listneighbor->next;
+                    }
+                  else
+                    {
+                      loose_end = 0;
+                      listneighbor = NULL;
+                    }
+                }
+
+              if (listneighbor)
+                /* we found a suitable ANCHOR_ANCHOR now, lets
+                 * search for its loose end.
+                 */
+                {
+                  if (listneighbor->prev &&
+                      listneighbor->prev->prev == NULL)
+                    {
+                      loose_end = -1;
+                      listneighbor = listneighbor->prev;
+                    }
+                  else if (listneighbor->next &&
+                           listneighbor->next->next == NULL)
+                    {
+                      loose_end = 1;
+                      listneighbor = listneighbor->next;
+                    }
+                }
             }
         }
 
@@ -327,9 +371,6 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
                   g_printerr ("inconsistent bezier curve: "
                               "%d successive control handles", control_count);
                 }
-
-              g_printerr ("Extending at %f, %f, type %d\n",
-                          coords->x, coords->y, anchor->type);
 
               if (loose_end == 1)
                 stroke->anchors = g_list_append (stroke->anchors, anchor);
