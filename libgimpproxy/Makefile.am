@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimptoolincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimptool
+libgimpproxyincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpproxy
 
 AM_CPPFLAGS = @STRIP_BEGIN@ \
 	-DGIMPDIR=\""$(gimpdir)"\"		\
@@ -31,11 +31,11 @@ libgimpproxy_1_3_la_sources = @STRIP_BEGIN@ \
 libgimpproxy_1_3_la_SOURCES = 		\
 	$(libgimpproxy_1_3_la_sources)
 
-#libgimpproxy_include_HEADERS = @STRIP_BEGIN@ \
-#	gimpproxytypes.h	\
-#	gimpobject.h		\
-#	gimpchannel.h		\
-#@STRIP_END@
+libgimpproxyinclude_HEADERS = @STRIP_BEGIN@ \
+	gimpproxytypes.h	\
+	gimpobject.h		\
+	gimpchannel.h		\
+@STRIP_END@
 
 EXTRA_HEADERS = \
 	gimpproxytypes.h	\
