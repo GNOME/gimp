@@ -49,6 +49,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#define PLUG_IN_NAME  "plug_in_small_tiles"
 
 /***** Magic numbers *****/
 
@@ -214,7 +215,7 @@ query (void)
     { GIMP_PDB_INT32,    "number_of_tiles", "Number of tiles to make"      }
   };
 
-  gimp_install_procedure ("plug_in_small_tiles",
+  gimp_install_procedure (PLUG_IN_NAME,
                           "Tiles image into smaller versions of the orginal",
                           "More here later",
                           "Andy Thomas",
@@ -226,7 +227,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_small_tiles", "<Image>/Filters/Map");
+  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Map");
 }
 
 static void
@@ -282,7 +283,7 @@ run (const gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data ("plug_in_tileit", &itvals);
+      gimp_get_data (PLUG_IN_NAME, &itvals);
       if (! tileit_dialog ())
         {
           gimp_drawable_detach (drawable);
@@ -302,7 +303,7 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data ("plug_in_tileit", &itvals);
+      gimp_get_data (PLUG_IN_NAME, &itvals);
       break;
 
     default:
@@ -325,7 +326,7 @@ run (const gchar      *name,
         gimp_displays_flush ();
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_tileit", &itvals, sizeof (TileItVals));
+        gimp_set_data (PLUG_IN_NAME, &itvals, sizeof (TileItVals));
     }
   else
     {

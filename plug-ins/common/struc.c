@@ -42,6 +42,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#define PLUG_IN_NAME  "plug_in_apply_canvas"
 
 static const gchar sdata[] =
 {
@@ -1136,7 +1137,7 @@ query (void)
     { GIMP_PDB_INT32,    "depth",     "Texture depth (1 - 50)"       }
   };
 
-  gimp_install_procedure ("plug_in_apply_canvas",
+  gimp_install_procedure (PLUG_IN_NAME,
                           "Adds a canvas texture map to the picture",
                           "This function applies a canvas texture map to the drawable.",
                           "Karl-Johan Andersson", /* Author */
@@ -1148,8 +1149,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_apply_canvas",
-                             "<Image>/Filters/Artistic");
+  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Artistic");
 }
 
 static void
@@ -1181,7 +1181,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_struc", &svals);
+      gimp_get_data (PLUG_IN_NAME, &svals);
 
       /*  First acquire information with a dialog  */
       if (! struc_dialog (drawable))
@@ -1211,7 +1211,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_struc", &svals);
+      gimp_get_data (PLUG_IN_NAME, &svals);
       break;
 
     default:
@@ -1233,7 +1233,7 @@ run (const gchar      *name,
             gimp_displays_flush ();
           /*  Store data  */
           if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data ("plug_in_struc", &svals, sizeof (StrucValues));
+            gimp_set_data (PLUG_IN_NAME, &svals, sizeof (StrucValues));
         }
       else
         {

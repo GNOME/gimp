@@ -1,3 +1,11 @@
+2004-11-22  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/struc.c: applied patch from Wolfgang Hofer
+	which makes the plug-in use its procedure name for
+	storing the "last_vals" struct. Fixes bug #159028.
+
+	* plug-ins/common/tileit.c: ditto. Fixes bug #159029.
+
 2004-11-22  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/gfig-line.c: fixed a stupid bug which made all lines
