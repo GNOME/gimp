@@ -13,6 +13,7 @@ helpbrowser_SOURCES = \
 
 INCLUDES = \
 	-I$(top_srcdir)		\
+	-I$(top_srcdir)/intl	\
 	$(GTK_CFLAGS)		\
 	$(GTKXMHTML_CFLAGS)	\
 	-I$(includedir)

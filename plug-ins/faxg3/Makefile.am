@@ -15,6 +15,7 @@ AM_CPPFLAGS = \
 
 INCLUDES = \
 	-I$(top_srcdir)			\
+	-I$(top_srcdir)/intl		\
 	$(GLIB_CFLAGS)			\
 	-I$(includedir)
 

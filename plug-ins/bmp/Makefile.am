@@ -12,6 +12,7 @@ bmp_SOURCES = \
 
 INCLUDES = \
 	-I$(top_srcdir)			\
+	-I$(top_srcdir)/intl		\
 	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
