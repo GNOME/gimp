@@ -130,7 +130,7 @@
                     SF-FONT       _"Font" "-*-Eras-*-r-*-*-24-*-*-*-p-*-*-*"
                     SF-GRADIENT   _"Blend Gradient (Text)" "Shadows_2"
                     SF-GRADIENT   _"Blend Gradient (Outline)" "Shadows_2"
-                    SF-VALUE      _"Outline Size" "5"
+                    SF-ADJUSTMENT _"Outline Size" '(5 0 250 1 10 0 1)
 		    SF-COLOR      _"Background Color" '(255 255 255)
 		    SF-TOGGLE     _"Use Pattern for Text instead of Gradient" FALSE
 		    SF-PATTERN    _"Pattern (Text)" "Electric Blue"
@@ -140,7 +140,7 @@
 		    SF-PATTERN    _"Pattern (Overlay)" "Parque #1"
 		    SF-TOGGLE     _"Default Bumpmap Settings" TRUE
 		    SF-TOGGLE     _"Shadow" TRUE
-		    SF-VALUE      _"Shadow X Offset" "8"
-                    SF-VALUE      _"Shadow Y Offset" "8"
+		    SF-ADJUSTMENT _"Shadow X Offset" '(8 0 100 1 10 0 1)
+                    SF-ADJUSTMENT _"Shadow Y Offset" '(8 0 100 1 10 0 1)
 		    SF-TOGGLE     _"Flatten Image" FALSE)
 

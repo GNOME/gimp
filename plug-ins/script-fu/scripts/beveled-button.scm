@@ -164,6 +164,6 @@
 		    SF-COLOR      _"Upper-Left color" '(0 255 127)
 		    SF-COLOR      _"Lower-Right color" '(0 127 255)
 		    SF-COLOR      _"Text Color" '(0 0 0)
-		    SF-VALUE      _"Padding" "2"
-		    SF-VALUE      _"Bevel Width" "4"
+		    SF-ADJUSTMENT _"Padding" '(2 1 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Bevel Width" '(4 1 100 1 10 0 1)
 		    SF-TOGGLE     _"Pressed" FALSE)

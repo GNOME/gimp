@@ -127,7 +127,7 @@
 		    "Adrian Likins"
 		    "1997"
 		    ""
-		    SF-VALUE  _"Size" "32"
+		    SF-ADJUSTMENT  _"Size" '(32 5 150 1 10 0 1)
 		    SF-VALUE  _"Orientation" "'right"
 		    SF-COLOR  _"Glow Color" '(63 252 0)
 		    SF-COLOR  _"Background Color" '(0 0 0)

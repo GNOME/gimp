@@ -95,13 +95,13 @@
 ;;;
 
 (define (script-fu-tube-button-label-gimp-org text rm-bg index)
-  (script-fu-labels-gimp-org text "helvetica" 14 '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 8 0 30))
+  (script-fu-labels-gimp-org text "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*" 14 '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 8 0 30))
 
 (define (script-fu-tube-subbutton-label-gimp-org text rm-bg index)
-  (script-fu-labels-gimp-org text "helvetica" 12 '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 7 10 24))
+  (script-fu-labels-gimp-org text "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*" 12 '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 7 10 24))
   
 (define (script-fu-tube-subsubbutton-label-gimp-org text rm-bg index)
-  (script-fu-labels-gimp-org text "helvetica" 10 '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 6 20 18))
+  (script-fu-labels-gimp-org text "-*-helvetica-*-r-*-*-24-*-*-*-p-*-*-*" 10 '(86 114 172) '(255 255 255) '(255 255 255) rm-bg index 15 1 6 20 18))
 
 
 (script-fu-register "script-fu-tube-button-label-gimp-org"
@@ -153,8 +153,8 @@
 		    SF-COLOR  _"Background Color" '(255 255 255)
 		    SF-TOGGLE _"Remove Background" TRUE
 		    SF-TOGGLE _"Index Image" TRUE
-		    SF-VALUE  _"Number of Colors" "15"
-		    SF-VALUE  _"Select-By-Color Threshold" "1"
-		    SF-VALUE  _"Offset X" "8"
-		    SF-VALUE  _"Offset Y" "0"
-		    SF-VALUE  _"Height"   "30")
+		    SF-ADJUSTMENT _"Number of Colors" '(15 2 255 1 10 0 1)
+		    SF-ADJUSTMENT _"Select-By-Color Threshold" '(1 1 256 1 10 0 1)
+		    SF-ADJUSTMENT _"Offset X" '(8 0 50 1 10 0 1)
+		    SF-ADJUSTMENT _"Offset Y" '(0 0 50 1 10 0 1)
+		    SF-ADJUSTMENT _"Height"   '(30 2 1000 1 10 0 1))

@@ -61,7 +61,7 @@ User options:
   --uninstall-script plug-in      remove a script-fu script
 
 The --install and --uninstall options have "admin" counterparts (with
-prefix --install-admin instead of --installl) that can be used instead to
+prefix --install-admin instead of --install) that can be used instead to
 install/uninstall a plug-in or script in the site directory instead of a
 user directory.
 

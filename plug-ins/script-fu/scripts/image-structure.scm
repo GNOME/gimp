@@ -144,14 +144,14 @@
  SF-IMAGE "image" 0
  SF-DRAWABLE "Drawable (unused)" 0
  SF-TOGGLE _"Create New Image" script-fu-show-image-structure-new-image?
- SF-VALUE  _"Space Between Layers" (number->string script-fu-show-image-structure-space)
- SF-VALUE  _"Shear Length (> 0)" (number->string script-fu-show-image-structure-shear-length)
- SF-VALUE  _"Outer Border (>= 0)" (number->string script-fu-show-image-structure-border)
+ SF-ADJUSTMENT _"Space Between Layers" (cons script-fu-show-image-structure-space '(0 1000 1 10 0 1))
+ SF-ADJUSTMENT _"Shear Length" (cons script-fu-show-image-structure-shear-length '(1 1000 1 10 0 1))
+ SF-ADJUSTMENT _"Outer Border" (cons script-fu-show-image-structure-border '(0 250 1 10 0 1))
  SF-TOGGLE _"Apply Layer Mask (or discard)" script-fu-show-image-structure-apply-layer-mask?
  SF-TOGGLE _"Insert Layer Names" script-fu-show-image-structure-with-layer-name?
  SF-TOGGLE _"Padding for Transparent Regions" script-fu-show-image-structure-with-pad?
  SF-COLOR  _"Pad Color" script-fu-show-image-structure-padding-color
- SF-VALUE  _"Pad Opacity [0:100]" (number->string script-fu-show-image-structure-padding-opacity)
+ SF-ADJUSTMENT _"Pad Opacity" (cons script-fu-show-image-structure-padding-opacity '(0 100 1 10 1 0))
  SF-TOGGLE _"Make New Background" script-fu-show-image-structure-with-background?
  SF-COLOR  _"Background Color" script-fu-show-image-structure-background-color
 )

@@ -41,6 +41,7 @@
 	 (image-width (car (gimp-image-width image)))
 	 (image-height (car (gimp-image-height image)))
 	 (old-fg (car (gimp-palette-get-foreground)))
+	)
     
     (gimp-image-undo-disable image)
     (gimp-layer-add-alpha drawable)
@@ -70,8 +71,8 @@
 						  100
 						  NORMAL)))
 	  
-	  (gimp-layer-set-offsets effect-layer select-offset-x select-offset-y)
 	  (gimp-image-add-layer image effect-layer -1)
+	  (gimp-layer-set-offsets effect-layer select-offset-x select-offset-y)
 	  (gimp-selection-none image)
 	  (gimp-edit-clear effect-layer)
 	  (gimp-selection-load active-selection)
@@ -85,9 +86,9 @@
 
     (if (and
 	 (= remove-bg TRUE)
-	 (= old-bg '(0 0 0))
-	 (gimp-palette-set-foreground '(0 0 0))
-	 (gimp-palette-set-foreground '(14 14 14))))
+	 (= old-bg '(0 0 0)))
+	(gimp-palette-set-foreground '(0 0 0))
+	(gimp-palette-set-foreground '(14 14 14)))
     
     (gimp-selection-load active-selection)
     (plug-in-maze 1 image active-layer 5 5 TRUE 0 seed 57 1)
@@ -97,18 +98,18 @@
     
     (if (and
 	 (= remove-bg TRUE)
-	 (= seperate-layer TRUE)
-	 (begin
-	   (gimp-by-color-select
-	    active-layer
-	    '(0 0 0)
-	    15
-	    2
-	    TRUE
-	    FALSE
-	    10
-	    FALSE)
-	   (gimp-edit-clear active-layer))))
+	 (= seperate-layer TRUE))
+	(begin
+	  (gimp-by-color-select
+	   active-layer
+	   '(0 0 0)
+	   15
+	   2
+	   TRUE
+	   FALSE
+	   10
+	   FALSE)
+	  (gimp-edit-clear active-layer)))
     
     (gimp-palette-set-foreground old-fg)
     
@@ -118,7 +119,7 @@
     (gimp-image-undo-enable image)
     (gimp-image-remove-channel image active-selection)
     (gimp-image-set-active-layer image drawable)
-    (gimp-displays-flush))))
+    (gimp-displays-flush)))
 
 (script-fu-register "script-fu-circuit"
 		    _"<Image>/Script-Fu/Render/Circuit..."
@@ -130,8 +131,8 @@
 		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-VALUE _"Oilify Mask Size" "17"
-		    SF-VALUE _"Circuit Seed" "3"
+		    SF-ADJUSTMENT _"Oilify Mask Size" '(17 3 50 1 10 0 1)
+		    SF-ADJUSTMENT _"Circuit Seed" '(3 1 3000000 1 10 0 1)
 		    SF-TOGGLE _"No Background (only for separate layer)" FALSE
 		    SF-TOGGLE _"Keep Selection" TRUE
 		    SF-TOGGLE _"Separate Layer" TRUE)

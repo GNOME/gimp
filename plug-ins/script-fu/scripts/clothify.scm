@@ -48,8 +48,8 @@
 		    "RGB* GRAY*"
 		    SF-IMAGE "Input Image" 0
 		    SF-DRAWABLE "Input Drawable" 0
-		    SF-VALUE _"Blur X" "9"
-		    SF-VALUE _"Blur Y" "9"
-		    SF-VALUE _"Azimuth" "135"
-		    SF-VALUE _"Elevation" "45"
-		    SF-VALUE _"Depth" "3")
+		    SF-ADJUSTMENT _"Blur X" '(9 3 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Blur Y" '(9 3 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Azimuth" '(135 0 360 1 10 1 0)
+		    SF-ADJUSTMENT _"Elevation" '(45 0 90 1 10 1 0)
+		    SF-ADJUSTMENT _"Depth" '(3 1 50 1 10 0 1))

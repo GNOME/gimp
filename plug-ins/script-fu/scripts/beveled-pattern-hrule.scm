@@ -69,6 +69,6 @@
 		    "Federico Mena Quintero"
 		    "July 1997"
 		    ""
-		    SF-VALUE _"Width"   "480"
-		    SF-VALUE _"Height"  "16"
-		    SF-PATTERN _"Pattern" "Wood")
+                    SF-ADJUSTMENT _"Width" '(480 5 1500 1 10 0 1)
+                    SF-ADJUSTMENT _"Height" '(16 1 100 1 10 0 1)
+		    SF-PATTERN    _"Pattern" "Wood")

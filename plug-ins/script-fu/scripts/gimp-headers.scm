@@ -150,7 +150,7 @@
 		    SF-TOGGLE _"AutoCrop" TRUE
 		    SF-TOGGLE _"Remove Background" TRUE
 		    SF-TOGGLE _"Index Image" TRUE
-		    SF-VALUE  _"Number of Colors" "15")
+		    SF-ADJUSTMENT _"Number of Colors" '(15 2 255 1 10 0 1))
 
 (script-fu-register "script-fu-small-header-gimp-org"
 		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
@@ -169,6 +169,6 @@
 		    SF-TOGGLE _"AutoCrop" TRUE
 		    SF-TOGGLE _"Remove Background" TRUE
 		    SF-TOGGLE _"Index Image" TRUE
-		    SF-VALUE  _"Number of Colors" "15"
-		    SF-VALUE  _"Select-By-Color Threshold" "1")
+		    SF-ADJUSTMENT _"Number of Colors" '(15 2 255 1 10 0 1)
+		    SF-ADJUSTMENT _"Select-By-Color Threshold" '(1 1 256 1 10 0 1))
 

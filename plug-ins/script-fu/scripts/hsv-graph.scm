@@ -213,16 +213,16 @@
       (let ((offsets (gimp-drawable-offsets drawable)))
 	(set! beg-x (clamp-value beg-x 0
 				 (+ (nth 0 offsets)
-				    (gimp-drawable-width drawable))))
+				    (car (gimp-drawable-width drawable)))))
 	(set! end-x (clamp-value end-x 0
 				 (+ (nth 0 offsets)
-				    (gimp-drawable-width drawable))))
+				    (car (gimp-drawable-width drawable)))))
 	(set! beg-y (clamp-value beg-y 0
 				 (+ (nth 1 offsets)
-				    (gimp-drawable-height drawable))))
-	(set! end-y (clamp-value beg-y 0
+				    (car (gimp-drawable-height drawable)))))
+	(set! end-y (clamp-value end-y 0
 				 (+ (nth 1 offsets)
-				    (gimp-drawable-height drawable))))))
+				    (car (gimp-drawable-height drawable)))))))
   (set! opacity (clamp-value opacity 0 100))
   (let* ((x-len (- end-x beg-x))
 	 (y-len (- end-y beg-y))
@@ -345,14 +345,14 @@
  "RGB*"
  SF-IMAGE "Image to analyze" 0
  SF-DRAWABLE "Drawable to analyze" 0
- SF-VALUE  _"Graph Scale" (number->string script-fu-hsv-graph-scale)
- SF-VALUE  _"BG Opacity" (number->string script-fu-hsv-graph-opacity)
+ SF-ADJUSTMENT _"Graph Scale" (cons script-fu-hsv-graph-scale '(0.1 5 0.1 1 1 1))
+ SF-ADJUSTMENT _"BG Opacity" (cons script-fu-hsv-graph-opacity '(0 100 1 10 0 1))
  SF-TOGGLE _"Use Selection Bounds Instead of Belows" script-fu-hsv-graph-bounds?
  SF-TOGGLE _"From Top-Left to Bottom-Right" script-fu-hsv-graph-left2right?
- SF-VALUE  _"Start X" (number->string script-fu-hsv-graph-beg-x)
- SF-VALUE  _"Start Y" (number->string script-fu-hsv-graph-beg-y)
- SF-VALUE  _"End X" (number->string script-fu-hsv-graph-end-x)
- SF-VALUE  _"End Y" (number->string script-fu-hsv-graph-end-y)
+ SF-ADJUSTMENT _"Start X" (cons script-fu-hsv-graph-beg-x '(0 5000 1 10 0 1))
+ SF-ADJUSTMENT _"Start Y" (cons script-fu-hsv-graph-beg-y '(0 5000 1 10 0 1))
+ SF-ADJUSTMENT _"End X" (cons script-fu-hsv-graph-end-x '(0 5000 1 10 0 1))
+ SF-ADJUSTMENT _"End Y" (cons script-fu-hsv-graph-end-y '(0 5000 1 10 0 1))
 )
 
 ;;; hsv-graph.scm ends here

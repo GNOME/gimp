@@ -190,9 +190,9 @@
 		    "GRAY"
 		    SF-IMAGE "Chrome Image" 0
 		    SF-DRAWABLE "Chrome Mask" 0
-		    SF-VALUE _"Chrome Saturation" "-80"
-		    SF-VALUE _"Chrome Lightness" "-47"
-		    SF-VALUE _"Chrome Factor" "0.75"
+		    SF-ADJUSTMENT _"Chrome Saturation" '(-80 -100 100 1 10 0 0)
+		    SF-ADJUSTMENT _"Chrome Lightness" '(-47 -100 100 1 10 0 0)
+		    SF-ADJUSTMENT _"Chrome Factor" '(.75 0 1 .1 .01 2 0)
 		    SF-FILENAME _"Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
 		    SF-COLOR _"Highlight Balance" '(211 95 0)
 		    SF-COLOR _"Chrome Balance" '(0 0 0)

@@ -60,5 +60,5 @@
 		    "Federico Mena Quintero"
 		    "June 1997"
 		    ""
-		    SF-VALUE _"Width" "400"
-		    SF-VALUE _"Height" "32")
+		    SF-ADJUSTMENT _"Width" '(400 1 2000 1 10 0 1)
+		    SF-ADJUSTMENT _"Height" '(30 1 2000 1 10 0 1))

@@ -1,3 +1,33 @@
+Wed Apr 26 11:04:12 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* gimptool.in: typo fix
+
+	* plug-ins/script-fu/scripts/alien-glow-arrow.scm
+	* plug-ins/script-fu/scripts/alien-glow-bar.scm
+	* plug-ins/script-fu/scripts/alien-glow-bullet.scm
+	* plug-ins/script-fu/scripts/alien-glow-button.scm
+	* plug-ins/script-fu/scripts/beveled-button.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-arrow.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-bullet.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-button.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-hrule.scm
+	* plug-ins/script-fu/scripts/chrome-it.scm
+	* plug-ins/script-fu/scripts/circuit.scm
+	* plug-ins/script-fu/scripts/clothify.scm
+	* plug-ins/script-fu/scripts/distress_selection.scm
+	* plug-ins/script-fu/scripts/flatland.scm
+	* plug-ins/script-fu/scripts/font-map.scm
+	* plug-ins/script-fu/scripts/gimp-headers.scm
+	* plug-ins/script-fu/scripts/gimp-labels.scm
+	* plug-ins/script-fu/scripts/glossy.scm
+	* plug-ins/script-fu/scripts/gradient-bevel-logo.scm
+	* plug-ins/script-fu/scripts/gradient-example.scm
+	* plug-ins/script-fu/scripts/hsv-graph.scm
+	* plug-ins/script-fu/scripts/image-structure.scm
+	* plug-ins/script-fu/scripts/trochoid.scm:
+	applied gimp-simon-20000426-0, which makes more scripts use
+	SF-ADJUSTMENT instead of SF-VALUE.
+
 2000-04-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint_funcs.c: removed C++ comments (#9444).

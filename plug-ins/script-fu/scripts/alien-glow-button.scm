@@ -136,11 +136,11 @@
 		    "July 1997"
 		    ""
 		    SF-STRING _"Text" "Hello world!"
-		    SF-FONT   _ "Font" "-*-futura_poster-*-*-*-*-22-*-*-*-*-*-*-*"
+		    SF-FONT   _"Font" "-*-futura_poster-*-*-*-*-22-*-*-*-*-*-*-*"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(22 2 100 1 1 0 1)
-		    SF-COLOR  _"Text Color" '(0 0 0)
-		    SF-COLOR  _"Glow Color" '(63 252 0)
-		    SF-COLOR  _"Background Color" '(0 0 0)
-		    SF-VALUE  _"Padding" "6"
-		    SF-VALUE  _"Glow Radius" "10"
-		    SF-TOGGLE _"Flatten Image" TRUE)
+		    SF-COLOR      _"Text Color" '(0 0 0)
+		    SF-COLOR      _"Glow Color" '(63 252 0)
+		    SF-COLOR      _"Background Color" '(0 0 0)
+		    SF-ADJUSTMENT _"Padding" '(6 1 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Glow Radius" '(10 1 200 1 10 0 1)
+		    SF-TOGGLE     _"Flatten Image" TRUE)

@@ -69,5 +69,5 @@
 		    ""
 		    SF-VALUE _"Fonts" "'(\"Agate\" \"AlfredDrake\" \"Becker\" \"Blippo\" \"Bodoni\" \"Dragonwick\" \"Engraver\" \"Futura_Poster\" \"RoostHeavy\")"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(32 2 1000 1 10 0 1)
-		    SF-VALUE _"Border" "10"
+		    SF-ADJUSTMENT _"Border" '(10 0 150 1 10 0 1)
 )

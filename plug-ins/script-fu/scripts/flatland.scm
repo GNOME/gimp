@@ -61,9 +61,9 @@
 		    "Adrian Likins"
 		    "1997"
 		    ""
-       		    SF-VALUE _"Image Width" "256"
-		    SF-VALUE _"Image Height" "256"
-		    SF-VALUE _"Random Seed" "80"
-		    SF-VALUE _"Detail Level" "3.0"
-		    SF-VALUE _"Scale X" "4"
-		    SF-VALUE _"Scale Y" "4")
+		    SF-ADJUSTMENT _"Image Width" '(256 10 2000 1 10 0 1)
+		    SF-ADJUSTMENT _"Image Height" '(256 10 2000 1 10 0 1)
+		    SF-ADJUSTMENT _"Random Seed" '(80 1 2000000 1 10 0 1)
+		    SF-ADJUSTMENT _"Detail Level" '(3 1 15 1 10 1 0)
+		    SF-ADJUSTMENT _"Scale X" '(4 0.1 16 0.1 2 1 1)
+		    SF-ADJUSTMENT _"Scale Y" '(4 0.1 16 0.1 2 1 1))
