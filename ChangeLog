@@ -1,3 +1,25 @@
+2002-06-15  Jakub Steiner <jimmac@ximian.com>
+	
+	added:
+
+	* themes/Default/images/stock-invert-16.png: color invert
+	* themes/Default/images/stock-layer-to-imagesize-16.png: 
+	* themes/Default/images/stock-swap-colors-16.png:
+
+	replaced:
+
+	* themes/Default/images/stock-convert-rgb-16.png:
+	* themes/Default/images/stock-paste-16.png:
+	* themes/Default/images/stock-paste-as-new-16.png:
+	* themes/Default/images/stock-paste-into-16.png:
+
+	  removed themes/Default/images/stock-swap-colors-12.png: replaced
+	  by *-16.png
+
+	* themes/Default/images/Makefile.am: updated icons
+	* themes/Default/images/stock-icons.list: updated
+	* libgimpwidgets/gimpstock.c: replaced stock_swap_colors
+	
 2002-06-14  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/shift.c: #84588 (use standard size entry widget

@@ -66,6 +66,8 @@ STOCK_MENU_IMAGES = \
 	stock-convert-grayscale-16.png		\
 	stock-convert-indexed-16.png		\
 	stock-convert-rgb-16.png		\
+   stock-invert-16.png           \
+   stock-layer-to-imagesize-16.png  \
 	stock-merge-down-16.png			\
 	stock-plugin-16.png			\
 	stock-reshow-filter-16.png		\
@@ -79,7 +81,7 @@ STOCK_MENU_IMAGES = \
 	stock-qmask-off-16.png			\
 	stock-qmask-on-16.png			\
 	stock-default-colors-12.png		\
-	stock-swap-colors-12.png		\
+	stock-swap-colors-16.png		\
 	stock-tool-options-16.png		\
 	stock-info-16.png			\
 	stock-warning-16.png			\
