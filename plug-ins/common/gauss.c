@@ -469,15 +469,11 @@ gauss_dialog (gint32        image_ID,
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
   preview = gimp_drawable_preview_new (drawable, NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   hbox = gtk_hbox_new (FALSE, 12);
@@ -496,7 +492,7 @@ gauss_dialog (gint32        image_ID,
   size = gimp_coordinates_new (unit, "%a", TRUE, FALSE, -1,
                                GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
-                               bvals.horizontal == bvals.vertical,
+                               (bvals.horizontal == bvals.vertical),
                                FALSE,
 
                                _("_Horizontal:"), bvals.horizontal, xres,
@@ -651,7 +647,7 @@ gauss (GimpDrawable *drawable,
   if (horz <= 0.0 && vert <= 0.0)
     {
       if (preview)
-        gimp_preview_draw (preview);
+        gimp_preview_draw (GIMP_PREVIEW (preview));
 
       return;
     }

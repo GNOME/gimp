@@ -1,3 +1,20 @@
+2004-09-09  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppreviewarea.[ch]: allow to set a maximum size
+	and center the preview area if its allocation extends the maximum.
+
+	* libgimpwidgets/gimppreview.[ch]: derive from GtkVBox, moved the
+	toggle button out of the table and put the table into an aspect
+	frame. Added an API to set the preview boundaries. Set the maximum
+	size of the GimpPreviewArea from that function.
+
+	* libgimpwidgets/gimpwidgets.def: added new entries.
+
+	* libgimp/gimpdrawablepreview.c: use gimp_preview_set_bounds().
+
+	* plug-ins/common/gauss.c: pack the preview widget so that it
+	resizes with the dialog.
+
 2004-09-09  DindinX  <david@dindinx.org>
 
 	* libgimpwidgets/gimppreviewarea.c (gimp_preview_area_blend)

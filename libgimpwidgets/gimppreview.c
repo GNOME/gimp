@@ -83,7 +83,7 @@ static gboolean  gimp_preview_invalidate_now     (GimpPreview      *preview);
 
 static guint preview_signals[LAST_SIGNAL] = { 0 };
 
-static GtkTableClass *parent_class = NULL;
+static GtkVBoxClass *parent_class = NULL;
 
 
 GType
@@ -106,7 +106,7 @@ gimp_preview_get_type (void)
         (GInstanceInitFunc) gimp_preview_init,
       };
 
-      preview_type = g_type_register_static (GTK_TYPE_TABLE,
+      preview_type = g_type_register_static (GTK_TYPE_VBOX,
                                              "GimpPreview",
                                              &preview_info,
                                              G_TYPE_FLAG_ABSTRACT);
@@ -159,12 +159,21 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 static void
 gimp_preview_init (GimpPreview *preview)
 {
-  GtkTable  *table = GTK_TABLE (preview);
+  GtkWidget *table;
   GtkWidget *frame;
   GtkObject *adj;
 
-  gtk_table_resize (table, 3, 2);
-  gtk_table_set_homogeneous (table, FALSE);
+  gtk_box_set_homogeneous (GTK_BOX (preview), FALSE);
+  gtk_box_set_spacing (GTK_BOX (preview), 6);
+
+  frame = gtk_aspect_frame_new (NULL, 0.0, 0.0, 1.0, TRUE);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_NONE);
+  gtk_box_pack_start (GTK_BOX (preview), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (3, 2, FALSE);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
   preview->xoff       = 0;
   preview->yoff       = 0;
@@ -187,7 +196,7 @@ gimp_preview_init (GimpPreview *preview)
   preview->hscr = gtk_hscrollbar_new (GTK_ADJUSTMENT (adj));
   gtk_range_set_update_policy (GTK_RANGE (preview->hscr),
                                GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach (table, preview->hscr, 0,1, 1,2,
+  gtk_table_attach (GTK_TABLE (table), preview->hscr, 0,1, 1,2,
                     GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
 
   adj = gtk_adjustment_new (0, 0, preview->height - 1, 1.0,
@@ -200,13 +209,14 @@ gimp_preview_init (GimpPreview *preview)
   preview->vscr = gtk_vscrollbar_new (GTK_ADJUSTMENT (adj));
   gtk_range_set_update_policy (GTK_RANGE (preview->vscr),
                                GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach (table, preview->vscr, 1,2, 0,1,
+  gtk_table_attach (GTK_TABLE (table), preview->vscr, 1,2, 0,1,
                     GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
   /* the area itself */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach (table, frame, 0,1, 0,1, 0, 0, 0,0);
+  gtk_table_attach (GTK_TABLE (table), frame, 0,1, 0,1,
+                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0,0);
   gtk_widget_show (frame);
 
   preview->area = gimp_preview_area_new ();
@@ -246,10 +256,7 @@ gimp_preview_init (GimpPreview *preview)
   preview->toggle = gtk_check_button_new_with_mnemonic (_("_Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview->toggle),
                                 preview->update_preview);
-
-  gtk_table_set_row_spacing (GTK_TABLE (preview), 1, 6);
-  gtk_table_attach (table, preview->toggle,
-                    0, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_box_pack_start (GTK_BOX (preview), preview->toggle, FALSE, FALSE, 0);
   gtk_widget_show (preview->toggle);
 
   g_signal_connect (preview->toggle, "toggled",
@@ -370,8 +377,8 @@ gimp_preview_area_size_allocate (GtkWidget     *widget,
   gint       width  = preview->xmax - preview->xmin;
   gint       height = preview->ymax - preview->ymin;
 
-  preview->width  = allocation->width;
-  preview->height = allocation->height;
+  preview->width  = MIN (width,  allocation->width);
+  preview->height = MIN (height, allocation->height);
 
   if (width > preview->width)
     {
@@ -630,6 +637,37 @@ gimp_preview_get_update (GimpPreview *preview)
   g_return_val_if_fail (GIMP_IS_PREVIEW (preview), FALSE);
 
   return preview->update_preview;
+}
+
+/**
+ * gimp_preview_set_bounds:
+ * @preview: a #GimpPreview widget
+ * @xmin:
+ * @ymin:
+ * @xmax:
+ * @ymax:
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_preview_set_bounds (GimpPreview *preview,
+                         gint         xmin,
+                         gint         ymin,
+                         gint         xmax,
+                         gint         ymax)
+{
+  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (xmax > xmin);
+  g_return_if_fail (ymax > ymin);
+
+  preview->xmin = xmin;
+  preview->ymin = ymin;
+  preview->xmax = xmax;
+  preview->ymax = ymax;
+
+  gimp_preview_area_set_max_size (GIMP_PREVIEW_AREA (preview->area),
+                                  xmax - xmin,
+                                  ymax - ymin);
 }
 
 /**

@@ -22,7 +22,7 @@
 #ifndef __GIMP_PREVIEW_H__
 #define __GIMP_PREVIEW_H__
 
-#include <gtk/gtktable.h>
+#include <gtk/gtkvbox.h>
 
 G_BEGIN_DECLS
 
@@ -42,7 +42,7 @@ typedef struct _GimpPreviewClass  GimpPreviewClass;
 
 struct _GimpPreview
 {
-  GtkTable      parent_instance;
+  GtkVBox       parent_instance;
 
   gboolean      update_preview;
 
@@ -66,10 +66,10 @@ struct _GimpPreview
 };
 struct _GimpPreviewClass
 {
-  GtkTableClass parent_class;
+  GtkVBoxClass  parent_class;
 
   /* virtuals */
-  void (* draw) (GimpPreview *preview);
+  void (* draw)        (GimpPreview *preview);
 
   /* signal */
   void (* invalidated) (GimpPreview *preview);
@@ -81,6 +81,12 @@ GType     gimp_preview_get_type     (void) G_GNUC_CONST;
 void      gimp_preview_set_update   (GimpPreview *preview,
                                      gboolean     update);
 gboolean  gimp_preview_get_update   (GimpPreview *preview);
+
+void      gimp_preview_set_bounds   (GimpPreview *preview,
+                                     gint         xmin,
+                                     gint         ymin,
+                                     gint         xmax,
+                                     gint         ymax);
 
 void      gimp_preview_get_size     (GimpPreview *preview,
                                      gint        *width,

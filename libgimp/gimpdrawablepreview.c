@@ -169,10 +169,11 @@ gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  preview->xmin = MAX (x1 - SELECTION_BORDER, 0);
-  preview->ymin = MAX (y1 - SELECTION_BORDER, 0);
-  preview->xmax = MIN (x2 + SELECTION_BORDER, width);
-  preview->ymax = MIN (y2 + SELECTION_BORDER, height);
+  gimp_preview_set_bounds (preview,
+                           MAX (x1 - SELECTION_BORDER, 0),
+                           MAX (y1 - SELECTION_BORDER, 0),
+                           MIN (x2 + SELECTION_BORDER, width),
+                           MIN (y2 + SELECTION_BORDER, height));
 
   if (gimp_drawable_is_indexed (drawable->drawable_id))
     {

@@ -141,6 +141,8 @@ gimp_preview_area_init (GimpPreviewArea *area)
   area->width      = 0;
   area->height     = 0;
   area->rowstride  = 0;
+  area->max_width  = -1;
+  area->max_height = -1;
 }
 
 static void
@@ -213,12 +215,18 @@ gimp_preview_area_size_allocate (GtkWidget     *widget,
                                  GtkAllocation *allocation)
 {
   GimpPreviewArea *area = GIMP_PREVIEW_AREA (widget);
+  gint             width;
+  gint             height;
 
   if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
     GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
-  if (widget->allocation.width  != area->width ||
-      widget->allocation.height != area->height)
+  width  = (area->max_width > 0 ?
+            MIN (allocation->width, area->max_width) : allocation->width);
+  height = (area->max_height > 0 ?
+            MIN (allocation->height, area->max_height) : allocation->height);
+
+  if (width  != area->width || height != area->height)
     {
       if (area->buf)
         {
@@ -228,8 +236,8 @@ gimp_preview_area_size_allocate (GtkWidget     *widget,
           area->rowstride = 0;
         }
 
-      area->width  = widget->allocation.width;
-      area->height = widget->allocation.height;
+      area->width  = width;
+      area->height = height;
     }
 }
 
@@ -238,7 +246,8 @@ gimp_preview_area_expose (GtkWidget      *widget,
                           GdkEventExpose *event)
 {
   GimpPreviewArea *area;
-  guchar          *buf;
+  GdkRectangle     rect;
+  GdkRectangle     render;
 
   g_return_val_if_fail (GIMP_IS_PREVIEW_AREA (widget), FALSE);
 
@@ -247,19 +256,29 @@ gimp_preview_area_expose (GtkWidget      *widget,
   if (! area->buf)
     return FALSE;
 
-  buf = area->buf + event->area.x * 3 + event->area.y * area->rowstride;
+  rect.x      = (widget->allocation.width  - area->width)  / 2;
+  rect.y      = (widget->allocation.height - area->height) / 2;
+  rect.width  = area->width;
+  rect.height = area->height;
 
-  gdk_draw_rgb_image_dithalign (widget->window,
-                                widget->style->fg_gc[widget->state],
-                                event->area.x,
-                                event->area.y,
-                                event->area.width,
-                                event->area.height,
-                                GDK_RGB_DITHER_MAX,
-                                buf,
-                                area->rowstride,
-                                area->offset_x - event->area.x,
-                                area->offset_y - event->area.y);
+  if (gdk_rectangle_intersect (&rect, &event->area, &render))
+    {
+      gint    x   = render.x - rect.x;
+      gint    y   = render.y - rect.y;
+      guchar *buf = area->buf + x * 3 + y * area->rowstride;
+
+      gdk_draw_rgb_image_dithalign (widget->window,
+                                    widget->style->fg_gc[widget->state],
+                                    render.x,
+                                    render.y,
+                                    render.width,
+                                    render.height,
+                                    GDK_RGB_DITHER_MAX,
+                                    buf,
+                                    area->rowstride,
+                                    area->offset_x - render.x,
+                                    area->offset_y - render.y);
+    }
 
   return FALSE;
 }
@@ -697,10 +716,10 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
               if (s1[3] == s2[3])
                 {
-                  inter[3] = s1[3];
                   inter[0] = ((s1[0] << 8) + (s2[0] - s1[0]) * opacity) >> 8;
                   inter[1] = ((s1[1] << 8) + (s2[1] - s1[1]) * opacity) >> 8;
                   inter[2] = ((s1[2] << 8) + (s2[2] - s1[2]) * opacity) >> 8;
+                  inter[3] = s1[3];
                 }
               else
                 {
@@ -708,7 +727,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
                   if (inter[3])
                     {
-                      for (i=0 ; i<3 ; i++)
+                      for (i = 0; i < 3; i++)
                         {
                           gushort a = s1[i] * s1[3];
                           gushort b = s2[i] * s2[3];
@@ -782,8 +801,8 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
               if (s1[1] == s2[1])
                 {
-                  inter[1] = s1[1];
                   inter[0] = ((s1[0] << 8) + (s2[0] - s1[0]) * opacity) >> 8;
+                  inter[1] = s1[1];
                 }
               else
                 {
@@ -794,7 +813,8 @@ gimp_preview_area_blend (GimpPreviewArea *area,
                       gushort a = s1[0] * s1[1];
                       gushort b = s2[0] * s2[1];
 
-                      inter[0] = (((a << 8) + (b  - a) * opacity) >> 8) / inter[1];
+                      inter[0] =
+                        (((a << 8) + (b  - a) * opacity) >> 8) / inter[1];
                     }
                 }
 
@@ -866,10 +886,13 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
               if (s1[1] == s2[1])
                 {
+                  inter[0] = (((cmap1[0] << 8) +
+                               (cmap2[0] - cmap1[0]) * opacity) >> 8);
+                  inter[1] = (((cmap1[1] << 8) +
+                               (cmap2[1] - cmap1[1]) * opacity) >> 8);
+                  inter[2] = (((cmap1[2] << 8) +
+                               (cmap2[2] - cmap1[2]) * opacity) >> 8);
                   inter[3] = s1[1];
-                  inter[0] = ((cmap1[0] << 8) + (cmap2[0] - cmap1[0]) * opacity) >> 8;
-                  inter[1] = ((cmap1[1] << 8) + (cmap2[1] - cmap1[1]) * opacity) >> 8;
-                  inter[2] = ((cmap1[2] << 8) + (cmap2[2] - cmap1[2]) * opacity) >> 8;
                 }
               else
                 {
@@ -877,7 +900,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
                   if (inter[3])
                     {
-                      for (i = 0 ; i < 3 ; i++)
+                      for (i = 0; i < 3; i++)
                         {
                           gushort a = cmap1[i] * s1[1];
                           gushort b = cmap2[i] * s2[1];
@@ -1121,18 +1144,18 @@ gimp_preview_area_mask (GimpPreviewArea *area,
 
                     if (s1[3] == s2[3])
                       {
-                        inter[3] = s1[3];
                         inter[0] = ((s1[0] << 8) + (s2[0] - s1[0]) * m[0]) >> 8;
                         inter[1] = ((s1[1] << 8) + (s2[1] - s1[1]) * m[0]) >> 8;
                         inter[2] = ((s1[2] << 8) + (s2[2] - s1[2]) * m[0]) >> 8;
-                      }
+                        inter[3] = s1[3];
+                     }
                     else
                       {
                         inter[3] = ((s1[3] << 8) + (s2[3] - s1[3]) * m[0]) >> 8;
 
                         if (inter[3])
                           {
-                            for (i=0 ; i<3 ; i++)
+                            for (i = 0; i < 3; i++)
                              {
                                gushort a = s1[i] * s1[3];
                                gushort b = s2[i] * s2[3];
@@ -1160,9 +1183,12 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                           register guint alpha = inter[3] + 1;
                           register guint check = CHECK_COLOR (area, row, col);
 
-                          d[0] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
-                          d[1] = ((check << 8) + (inter[1] - check) * alpha) >> 8;
-                          d[2] = ((check << 8) + (inter[2] - check) * alpha) >> 8;
+                          d[0] = (((check << 8) +
+                                   (inter[0] - check) * alpha) >> 8);
+                          d[1] = (((check << 8) +
+                                   (inter[1] - check) * alpha) >> 8);
+                          d[2] = (((check << 8) +
+                                   (inter[2] - check) * alpha) >> 8);
                         }
                         break;
                       }
@@ -1262,8 +1288,8 @@ gimp_preview_area_mask (GimpPreviewArea *area,
 
                     if (s1[1] == s2[1])
                       {
-                        inter[1] = s1[1];
                         inter[0] = ((s1[0] << 8) + (s2[0] - s1[0]) * m[0]) >> 8;
+                        inter[1] = s1[1];
                       }
                     else
                       {
@@ -1411,10 +1437,13 @@ gimp_preview_area_mask (GimpPreviewArea *area,
 
                     if (s1[1] == s2[1])
                       {
+                        inter[0] = (((cmap1[0] << 8) +
+                                     (cmap2[0] - cmap1[0]) * m[0]) >> 8);
+                        inter[1] = (((cmap1[1] << 8) +
+                                     (cmap2[1] - cmap1[1]) * m[0]) >> 8);
+                        inter[2] = (((cmap1[2] << 8) +
+                                     (cmap2[2] - cmap1[2]) * m[0]) >> 8);
                         inter[3] = s1[1];
-                        inter[0] = ((cmap1[0] << 8) + (cmap2[0] - cmap1[0]) * m[0]) >> 8;
-                        inter[1] = ((cmap1[1] << 8) + (cmap2[1] - cmap1[1]) * m[0]) >> 8;
-                        inter[2] = ((cmap1[2] << 8) + (cmap2[2] - cmap1[2]) * m[0]) >> 8;
                       }
                     else
                       {
@@ -1612,6 +1641,26 @@ gimp_preview_area_set_cmap (GimpPreviewArea *area,
       area->cmap = NULL;
     }
 }
+
+/**
+ * gimp_preview_area_set_max_size:
+ * @area: a #GimpPreviewArea widget
+ * @width:
+ * @height:
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_preview_area_set_max_size (GimpPreviewArea *area,
+                                gint             width,
+                                gint             height)
+{
+  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+
+  area->max_width  = width;
+  area->max_height = height;
+}
+
 
 
 /*  popup menu  */
