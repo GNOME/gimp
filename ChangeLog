@@ -3,10 +3,10 @@
 	* app/Makefile.am
 	* app/paint_core.c
 	* app/paint_core_kernels.h: moved brush subsampling kernels
-	into its own header file and generated a slightly different
-	kernel (using the new kernelgen tool, see below). The new
-	kernel simulates a circular brush instead of a rectangular 
-	one and gives slightly different (lighter) results.
+	into its own header file and generated a different kernel 
+	(using the new kernelgen tool, see below). The new kernel 
+	simulates circular pixels instead of rectangular ones and 
+	gives slightly different results at brush edges.
 
 	* app/gimage_mask.c: when stroking a selection, offset the
 	points by 0.5 to align the brushes with the pixel grid. This 
