@@ -25,6 +25,7 @@
    */
 
 /*
+ * 2000/03/24 - Some speedups [Martin]
  * 2000/01/30 - Use palette_selector instead of option_menu for custom
  *  palette. Use libgimp callback functions.  [Sven]
  * 
@@ -128,9 +129,13 @@
 #define B_SHIFT  (BITS_IN_SAMPLE-PRECISION_B)
 
 /* this has to match the INTENSITY definition in libgimp/gimpcolorspace.h */
-#define R_SCALE 30               /*  scale R distances by this much  */
-#define G_SCALE 59               /*  scale G distances by this much  */
-#define B_SCALE 11               /*  and B by this much              */
+/* #define R_SCALE 30 */              /*  scale R distances by this much  */
+/* #define G_SCALE 59 */              /*  scale G distances by this much  */
+/* #define B_SCALE 11 */              /*  and B by this much              */
+/* not as precise as the above devlaration but much faster                */
+#define R_SCALE << 2  /* *4 = 36% */
+#define G_SCALE * 6   /* *6 = 55% */
+#define B_SCALE       /* *1 = 9 % */
 
 static const unsigned char webpal[] =
 {
@@ -1811,20 +1816,20 @@ find_split_candidate (boxptr boxlist,
     {
       if (boxp->volume > 0)
 	{
-	  if (boxp->gerror*G_SCALE > maxc)
+	  if (boxp->gerror G_SCALE > maxc)
 	    {
 	      which = boxp;
-	      maxc = boxp->gerror*G_SCALE;
+	      maxc = boxp->gerror G_SCALE;
 	    }
-	  if (boxp->rerror*R_SCALE > maxc)
+	  if (boxp->rerror R_SCALE > maxc)
 	    {
 	      which = boxp;
-	      maxc = boxp->rerror*R_SCALE;
+	      maxc = boxp->rerror R_SCALE;
 	    }
-	  if (boxp->berror*B_SCALE > maxc)
+	  if (boxp->berror B_SCALE > maxc)
 	    {
 	      which = boxp;
-	      maxc = boxp->berror*B_SCALE;
+	      maxc = boxp->berror B_SCALE;
 	    }
 	}
     }
@@ -2028,9 +2033,9 @@ update_box_rgb (Histogram histogram,
    * we have to shift back to JSAMPLE units to get consistent distances;
    * after which, we scale according to the selected distance scale factors.
    */
-  dist0 = (( + Rmax - Rmin) << R_SHIFT) * R_SCALE;
-  dist1 = (( + Gmax - Gmin) << G_SHIFT) * G_SCALE;
-  dist2 = (( + Bmax - Bmin) << B_SHIFT) * B_SCALE;
+  dist0 = (( + Rmax - Rmin) << R_SHIFT) R_SCALE;
+  dist1 = (( + Gmax - Gmin) << G_SHIFT) G_SCALE;
+  dist2 = (( + Bmax - Bmin) << B_SHIFT) B_SCALE;
   boxp->volume = dist0*dist0 + dist1*dist1 + dist2*dist2;
 
   compute_color_rgb(&dummyqo, histogram, boxp, 0);
@@ -2068,7 +2073,7 @@ update_box_rgb (Histogram histogram,
 
 	      boxp->error += (*histp) *
 		(
-		 re*re*R_SCALE + ge*ge*G_SCALE + be*be*B_SCALE
+		 (re*re R_SCALE) + (ge*ge G_SCALE) + (be*be B_SCALE)
 		 );
 
 	      ccount += *histp;
@@ -2096,7 +2101,7 @@ update_box_rgb (Histogram histogram,
 		
 		tempRerror += (*histp)*re*re;
 
-		if (tempRerror*2 > boxp->rerror)
+		if ((tempRerror<<1) > boxp->rerror)
 		  goto green_axisscan;
 		else
 		  boxp->Rhalferror = R;
@@ -2126,7 +2131,7 @@ update_box_rgb (Histogram histogram,
 				
 		tempGerror += (*histp)*ge*ge;
 
-		if (tempGerror*2 > boxp->gerror)
+		if ((tempGerror<<1) > boxp->gerror)
 		  goto blue_axisscan;
 		else
 		  boxp->Ghalferror = G;
@@ -2157,7 +2162,7 @@ update_box_rgb (Histogram histogram,
 		  
 		  tempBerror += (*histp)*be*be;
 
-		  if (tempBerror*2 > boxp->berror)
+		  if ((tempBerror<<1) > boxp->berror)
 		    goto finished_axesscan;
 		  else
 		    boxp->Bhalferror = B;
@@ -2205,7 +2210,7 @@ median_cut_gray (Histogram histogram,
        * Current algorithm: by population for first half, then by volume.
        */
 #if 0
-      if (numboxes*2 <= desired_colors)
+      if ((numboxes<<1) <= desired_colors)
 	{
 	  b1 = find_biggest_color_pop (boxlist, numboxes);
 	}
@@ -2257,7 +2262,7 @@ median_cut_rgb (Histogram histogram,
     /* Select box to split.
      * Current algorithm: by population for first half, then by volume.
      */
-    if (1 || numboxes*2 <= desired_colors)
+    if (1 || (numboxes<<1) <= desired_colors)
       {
 	g_print ("O ");
 	b1 = find_biggest_color_pop (boxlist, numboxes);
@@ -2284,9 +2289,9 @@ median_cut_rgb (Histogram histogram,
 	//        G = ((b1->Gmax - b1->Gmin) << G_SHIFT) * G_SCALE;
         //B = ((b1->Bmax - b1->Bmin) << B_SHIFT) * B_SCALE;
     */
-    R = R_SCALE*b1->rerror;/* * (((b1->Rmax - b1->Rmin) << R_SHIFT)) * R_SCALE; */
-    G = G_SCALE*b1->gerror;/* * (((b1->Gmax - b1->Gmin) << G_SHIFT)) * G_SCALE; */
-    B = B_SCALE*b1->berror;/* * (((b1->Bmax - b1->Bmin) << B_SHIFT)) * B_SCALE; */
+    R = b1->rerror R_SCALE;/* * (((b1->Rmax - b1->Rmin) << R_SHIFT)) * R_SCALE; */
+    G = b1->gerror G_SCALE;/* * (((b1->Gmax - b1->Gmin) << G_SHIFT)) * G_SCALE; */
+    B = b1->berror B_SCALE;/* * (((b1->Bmax - b1->Bmin) << B_SHIFT)) * B_SCALE; */
     /* We want to break any ties in favor of green, then red, blue last.
      */
     cmax = G; n = 1;
@@ -2619,67 +2624,67 @@ find_nearby_colors (QuantizeObj *quantobj,
     /* We compute the squared-R-distance term, then add in the other two. */
     x = quantobj->cmap[i].red;
     if (x < minR) {
-      tdist = (x - minR) * R_SCALE;
+      tdist = (x - minR) R_SCALE;
       min_dist = tdist*tdist;
-      tdist = (x - maxR) * R_SCALE;
+      tdist = (x - maxR) R_SCALE;
       max_dist = tdist*tdist;
     } else if (x > maxR) {
-      tdist = (x - maxR) * R_SCALE;
+      tdist = (x - maxR) R_SCALE;
       min_dist = tdist*tdist;
-      tdist = (x - minR) * R_SCALE;
+      tdist = (x - minR) R_SCALE;
       max_dist = tdist*tdist;
     } else {
       /* within cell range so no contribution to min_dist */
       min_dist = 0;
       if (x <= centerR) {
-	tdist = (x - maxR) * R_SCALE;
+	tdist = (x - maxR) R_SCALE;
 	max_dist = tdist*tdist;
       } else {
-	tdist = (x - minR) * R_SCALE;
+	tdist = (x - minR) R_SCALE;
 	max_dist = tdist*tdist;
       }
     }
 
     x = quantobj->cmap[i].green;
     if (x < minG) {
-      tdist = (x - minG) * G_SCALE;
+      tdist = (x - minG) G_SCALE;
       min_dist += tdist*tdist;
-      tdist = (x - maxG) * G_SCALE;
+      tdist = (x - maxG) G_SCALE;
       max_dist += tdist*tdist;
     } else if (x > maxG) {
-      tdist = (x - maxG) * G_SCALE;
+      tdist = (x - maxG) G_SCALE;
       min_dist += tdist*tdist;
-      tdist = (x - minG) * G_SCALE;
+      tdist = (x - minG) G_SCALE;
       max_dist += tdist*tdist;
     } else {
       /* within cell range so no contribution to min_dist */
       if (x <= centerG) {
-	tdist = (x - maxG) * G_SCALE;
+	tdist = (x - maxG) G_SCALE;
 	max_dist += tdist*tdist;
       } else {
-	tdist = (x - minG) * G_SCALE;
+	tdist = (x - minG) G_SCALE;
 	max_dist += tdist*tdist;
       }
     }
 
     x = quantobj->cmap[i].blue;
     if (x < minB) {
-      tdist = (x - minB) * B_SCALE;
+      tdist = (x - minB) B_SCALE;
       min_dist += tdist*tdist;
-      tdist = (x - maxB) * B_SCALE;
+      tdist = (x - maxB) B_SCALE;
       max_dist += tdist*tdist;
     } else if (x > maxB) {
-      tdist = (x - maxB) * B_SCALE;
+      tdist = (x - maxB) B_SCALE;
       min_dist += tdist*tdist;
-      tdist = (x - minB) * B_SCALE;
+      tdist = (x - minB) B_SCALE;
       max_dist += tdist*tdist;
     } else {
       /* within cell range so no contribution to min_dist */
       if (x <= centerB) {
-	tdist = (x - maxB) * B_SCALE;
+	tdist = (x - maxB) B_SCALE;
 	max_dist += tdist*tdist;
       } else {
-	tdist = (x - minB) * B_SCALE;
+	tdist = (x - minB) B_SCALE;
 	max_dist += tdist*tdist;
       }
     }
@@ -2741,23 +2746,23 @@ find_best_colors (QuantizeObj *quantobj,
    */
 
   /* Nominal steps between cell centers ("x" in Thomas article) */
-#define STEP_R  ((1 << R_SHIFT) * R_SCALE)
-#define STEP_G  ((1 << G_SHIFT) * G_SCALE)
-#define STEP_B  ((1 << B_SHIFT) * B_SCALE)
+#define STEP_R  ((1 << R_SHIFT) R_SCALE)
+#define STEP_G  ((1 << G_SHIFT) G_SCALE)
+#define STEP_B  ((1 << B_SHIFT) B_SCALE)
 
   for (i = 0; i < numcolors; i++) {
     icolor = colorlist[i];
     /* Compute (square of) distance from minR/G/B to this color */
-    inR = (minR - quantobj->cmap[icolor].red) * R_SCALE;
+    inR = (minR - quantobj->cmap[icolor].red) R_SCALE;
     dist0 = inR*inR;
-    inG = (minG - quantobj->cmap[icolor].green) * G_SCALE;
+    inG = (minG - quantobj->cmap[icolor].green) G_SCALE;
     dist0 += inG*inG;
-    inB = (minB - quantobj->cmap[icolor].blue) * B_SCALE;
+    inB = (minB - quantobj->cmap[icolor].blue) B_SCALE;
     dist0 += inB*inB;
     /* Form the initial difference increments */
-    inR = inR * (2 * STEP_R) + STEP_R * STEP_R;
-    inG = inG * (2 * STEP_G) + STEP_G * STEP_G;
-    inB = inB * (2 * STEP_B) + STEP_B * STEP_B;
+    inR = inR * (STEP_R<<1) + STEP_R * STEP_R;
+    inG = inG * (STEP_G<<1) + STEP_G * STEP_G;
+    inB = inB * (STEP_B<<1) + STEP_B * STEP_B;
     /* Now loop over all cells in box, updating distance per Thomas method */
     bptr = bestdist;
     cptr = bestcolor;
@@ -2774,15 +2779,15 @@ find_best_colors (QuantizeObj *quantobj,
 	    *cptr = icolor;
 	  }
 	  dist2 += xx2;
-	  xx2 += 2 * STEP_B * STEP_B;
+	  xx2 += (STEP_B<<1) * STEP_B;
 	  bptr++;
 	  cptr++;
 	}
 	dist1 += xx1;
-	xx1 += 2 * STEP_G * STEP_G;
+	xx1 += (STEP_G<<1) * STEP_G;
       }
       dist0 += xx0;
-      xx0 += 2 * STEP_R * STEP_R;
+      xx0 += (STEP_R<<1) * STEP_R;
     }
   }
 }
@@ -3240,9 +3245,9 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 	      ge = src[green_pix] - color->green;
 	      be = src[blue_pix] - color->blue;
 
-	      re = (re * dmval * 2) / 63;
-	      ge = (ge * dmval * 2) / 63;
-	      be = (be * dmval * 2) / 63;
+	      re = (re * (dmval<<1)) / 63;
+	      ge = (ge * (dmval<<1)) / 63;
+	      be = (be * (dmval<<1)) / 63;
 
 	      R = (CLAMP0255(color->red + re)) >> R_SHIFT;
 	      G = (CLAMP0255(color->green + ge)) >> G_SHIFT;

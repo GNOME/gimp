@@ -48,10 +48,14 @@
  * V 1.09, PK, 15-Feb-2000: Force showpage on EPS-files
  *                          Add "RunLength" compression
  *                          Fix problem with "Level 2" toggle
+ * V 1.10, PK, 13-Mar-2000: For load EPSF, allow negative Bounding Box Values
+ *                          Save PS: dont start lines of image data with %%
+ *                          to prevent problems with stupid PostScript
+ *                          analyzer programs (Stanislav Brabec)
  */
 #define VERSIO 1.09
-static char dversio[] = "v1.09  15-Feb-2000";
-static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.09  15-Feb-2000";
+static char dversio[] = "v1.10  13-Mar-2000";
+static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.10  13-Mar-2000";
 
 #include "config.h"
 
@@ -134,7 +138,7 @@ static PSSaveVals psvals =
   5.0, 5.0,       /* Offset */
   1,              /* Unit is mm */
   1,              /* Keep edge ratio */
-  0,              /* Rotate */
+  90,             /* Rotate */
   2,              /* PostScript Level */
   0,              /* Encapsulated PostScript flag */
   0,              /* Preview flag */
@@ -288,6 +292,7 @@ ascii85_flush (FILE *ofp)
   char c[5];
   int i;
   gboolean zero_case = (ascii85_buf == 0);
+  static int max_linewidth = 75;
 
   for (i=4; i >= 0; i--)
     {
@@ -298,20 +303,26 @@ ascii85_flush (FILE *ofp)
    * at end of data. */
   if (zero_case && (ascii85_len == 4))
     {
+      if (ascii85_linewidth >= max_linewidth)
+      {
+        putc ('\n', ofp);
+        ascii85_linewidth = 0;
+      }
       putc ('z', ofp);
       ascii85_linewidth++;
     }
   else
     {
-      ascii85_linewidth += ascii85_len+1;
       for (i=0; i < ascii85_len+1; i++)
+      {
+        if ((ascii85_linewidth >= max_linewidth) && (c[i] != '%'))
+        {
+          putc ('\n', ofp);
+          ascii85_linewidth = 0;
+        }
 	putc (c[i], ofp);
-    }
-
-  if (ascii85_linewidth >= 75)
-    {
-      putc ('\n', ofp);
-      ascii85_linewidth = 0;
+        ascii85_linewidth++;
+      }
     }
 
   ascii85_len = 0;
@@ -550,7 +561,7 @@ ps_set_save_size (PSSaveVals *vals,
   GimpUnit unit;
 
   gimp_image_get_resolution (image_ID, &xres, &yres);
-  if ((xres < GIMP_MIN_RESOLUTION) || (yres < GIMP_MIN_RESOLUTION))
+  if ((xres < 1e-5) || (yres < 1e-5))
     {
       xres = yres = 72.0;
     }
@@ -1168,8 +1179,10 @@ ps_open (gchar            *filename,
   FILE *fd_popen;
   int width, height, resolution;
   int x0, y0, x1, y1;
+  int offx = 0, offy = 0;
   int is_pdf;
   char TextAlphaBits[64], GraphicsAlphaBits[64], geometry[32];
+  char offset[32];
 
   resolution = loadopt->resolution;
   *llx = *lly = 0;
@@ -1210,16 +1223,23 @@ ps_open (gchar            *filename,
 
   if ((!is_pdf) && (loadopt->use_bbox))    /* Try the BoundingBox ? */
     {
-      if (   (get_bbox (filename, &x0, &y0, &x1, &y1) == 0)
-	     && (x0 >= 0) && (y0 >= 0) && (x1 > x0) && (y1 > y0))
-	{
-	  *llx = (int)((x0/72.0) * resolution + 0.01);
-	  *lly = (int)((y0/72.0) * resolution + 0.01);
-	  *urx = (int)((x1/72.0) * resolution + 0.01);
-	  *ury = (int)((y1/72.0) * resolution + 0.01);
-	  width = *urx + 1;
-	  height = *ury + 1;
-	}
+      if (get_bbox (filename, &x0, &y0, &x1, &y1) == 0)
+        {
+          if (*is_epsf)  /* Handle negative BoundingBox for EPSF */
+            {
+              offx = -x0; x1 += offx; x0 += offx;
+              offy = -y0; y1 += offy; y0 += offy;
+            }
+          if ((x0 >= 0) && (y0 >= 0) && (x1 > x0) && (y1 > y0))
+            {
+               *llx = (int)((x0/72.0) * resolution + 0.01);
+               *lly = (int)((y0/72.0) * resolution + 0.01);
+               *urx = (int)((x1/72.0) * resolution + 0.01);
+               *ury = (int)((y1/72.0) * resolution + 0.01);
+               width = *urx + 1;
+               height = *ury + 1;
+            }
+        }
     }
   if (loadopt->pnm_type == 4) driver = "pbmraw";
   else if (loadopt->pnm_type == 5) driver = "pgmraw";
@@ -1257,6 +1277,11 @@ ps_open (gchar            *filename,
     gs_opts = "";  /* Ghostscript will add these options */
 
   TextAlphaBits[0] = GraphicsAlphaBits[0] = geometry[0] = '\0';
+  offset[0] = '\0';
+
+  /* Offset command for gs to get image part with negative x/y-coord. */
+  if ((offx != 0) || (offy != 0))
+    sprintf (offset, "-c %d %d translate -- ", offx, offy);
 
   /* Antialiasing not available for PBM-device */
   if ((loadopt->pnm_type != 4) && (loadopt->textalpha != 1))
@@ -1270,10 +1295,10 @@ ps_open (gchar            *filename,
     sprintf (geometry,"-g%dx%d ", width, height);
 
   cmd = g_strdup_printf ("%s -sDEVICE=%s -r%d %s%s%s-q -dNOPAUSE %s \
--sOutputFile=%s %s %s-c quit",
+-sOutputFile=%s %s%s %s-c quit",
 			 gs, driver, resolution, geometry,
 			 TextAlphaBits, GraphicsAlphaBits,
-			 gs_opts, pnmfile, filename,
+			 gs_opts, pnmfile, offset, filename,
                          *is_epsf ? "-c showpage " : "");
 #ifdef PS_DEBUG
   g_print ("Going to start ghostscript with:\n%s\n", cmd);
@@ -2675,7 +2700,7 @@ save_dialog (void)
   /* Image Size */
   frame = gtk_frame_new (_("Image Size"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (main_vbox[0]), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox[0]), frame, FALSE, FALSE, 0);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
@@ -2741,7 +2766,7 @@ save_dialog (void)
 				  _("Millimeter"), (gpointer) TRUE, NULL,
 
 				  NULL);
-  gtk_box_pack_end (GTK_BOX (vbox), uframe, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), uframe, FALSE, FALSE, 0);
   gtk_widget_show (uframe);
 
   gtk_widget_show (vbox);

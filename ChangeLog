@@ -1,3 +1,13 @@
+Sat Mar 25 21:09:40 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+	* plug-ins/common/ps.c: Applied changes from Peter
+	Kirchgessner (V 1.10).
+
+Sat Mar 25 20:57:24 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	On request of Martin Weber <martweb@gmx.net>:
+	* app/convert.c: Speedups.
+	* app/paths_dialog.c: Include string.h.
+
 2000-03-25  Sven Neumann  <sven@gimp.org>
 
 	* README.i18n: added new sections explaining what catalogs 
