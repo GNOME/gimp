@@ -1,6 +1,6 @@
 2004-07-18  Philip Lafleur  <plafleur@cvs.gnome.org>
 
-	* app/paint/gimpink-blob.c (blob_make_convex): Check if the
+	* app/tools/gimpinktool-blob.c (blob_make_convex): Check if the
 	array index is legal before using it, not the other way around.
 	Fixes bug #144856, merged from HEAD.
 
