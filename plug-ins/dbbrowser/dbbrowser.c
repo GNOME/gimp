@@ -118,7 +118,7 @@ run (char    *name,
 	gtk_init (&argc, &argv);
 	gtk_rc_parse (gimp_gtkrc ());
 	
-	gimp_db_browser(NULL);
+	gtk_quit_add_destroy (1, (GtkObject*) gimp_db_browser (NULL));
 
 	gtk_main ();
 	gdk_flush ();

@@ -24,7 +24,7 @@
 
 #include "dbbrowser_utils.h"
 
-void 
+GtkWidget*
 gimp_db_browser(void (* apply_callback) ( gchar     *selected_proc_name,
 					  gchar     *selected_scheme_proc_name,
 					  gchar     *selected_proc_blurb,
@@ -54,7 +54,7 @@ gimp_db_browser(void (* apply_callback) ( gchar     *selected_proc_name,
   dbbrowser->apply_callback = apply_callback;
   
   /* the dialog box */
-  
+
   dbbrowser->dlg = gtk_dialog_new ();
   
   gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), "DB Browser (init)");
@@ -189,6 +189,8 @@ gimp_db_browser(void (* apply_callback) ( gchar     *selected_proc_name,
 
   /* first search (all procedures) */
   dialog_search_callback( NULL, (gpointer)dbbrowser );
+
+  return dbbrowser->dlg;
 }
 
 

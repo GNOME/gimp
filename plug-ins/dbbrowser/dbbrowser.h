@@ -25,7 +25,7 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
-void      
+GtkWidget*
 gimp_db_browser (void (* apply_callback) 
 		 ( gchar *selected_proc_name,
 		   gchar *selected_scheme_proc_name,

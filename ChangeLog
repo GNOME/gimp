@@ -1,3 +1,31 @@
+Fri Mar 13 12:53:22 1998  Tim Janik  <timj@gimp.org>
+
+
+	* app/layers_dialog.c: proper destruct at the end of gtk_main().
+	(layer_widget_delete): unreference the layer widget's list item.
+	(layers_dialog_free): instead of destroying the menu, sink it since
+	it is still floating because we didn't attach it to some other widget.
+	(layers_dialog_free): sink the preview, destroy doesn't work since it's
+	still floating. wonder what the preview is created for if it is never
+	used?.
+
+	* app/channels_dialog.c (channel_widget_delete): unreference the channel
+	widget's list item.
+	* app/channels_dialog.c (channels_dialog_free): sink the menu.
+	* app/channels_dialog.c (channels_dialog_free): sink the preview.
+
+	* app/indexed_palette.c (indexed_palette_create): update the image list
+	even on initial creation. fixed the option menu warning.
+
+	* plug-ins/script-fu/script-fu-console.c (script_fu_browse_callback):
+	properly destroy the browser when gtk_main() quits.
+
+	* plug-ins/dbbrowser/dbbrowser_utils.c (gimp_db_browser): pass a widget
+	pointer back to our caller, for enabling proper destruction.
+
+	* plug-ins/script-fu/script-fu-console.c (script_fu_console_interface):
+	only destroy the dialog on exit if it is still existing.
+
 Fri Mar 13 17:22:46 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* docs/gimp.1: fixed some typos in the man-page

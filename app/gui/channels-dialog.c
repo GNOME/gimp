@@ -454,10 +454,10 @@ channels_dialog_free ()
   channelsD->floating_sel = NULL;
 
   if (channelsD->preview)
-    gtk_widget_destroy (channelsD->preview);
+    gtk_object_sink (GTK_OBJECT (channelsD->preview));
 
   if (channelsD->ops_menu)
-    gtk_widget_destroy (channelsD->ops_menu);
+    gtk_object_sink (GTK_OBJECT (channelsD->ops_menu));
 
   g_free (channelsD);
   channelsD = NULL;
@@ -700,13 +700,10 @@ channels_dialog_remove_channel (ChannelWidget *channel_widget)
   list = g_list_append (list, channel_widget->list_item);
   gtk_list_remove_items (GTK_LIST (channelsD->channel_list), list);
 
-  gtk_widget_destroy (channel_widget->list_item);
-  gtk_widget_unref (channel_widget->list_item);
-
-  suspend_gimage_notify--;
-
   /*  Delete the channel_widget  */
   channel_widget_delete (channel_widget);
+
+  suspend_gimage_notify--;
 }
 
 
@@ -954,7 +951,6 @@ create_channel_widget (GImage      *gimage,
   GtkWidget *alignment;
 
   list_item = gtk_list_item_new ();
-  gtk_widget_ref (GTK_WIDGET (list_item));
 
   /*  create the channel widget and add it to the list  */
   channel_widget = (ChannelWidget *) g_malloc (sizeof (ChannelWidget));
@@ -1034,6 +1030,8 @@ create_channel_widget (GImage      *gimage,
   gtk_widget_show (vbox);
   gtk_widget_show (list_item);
 
+  gtk_widget_ref (GTK_WIDGET (channel_widget->list_item));
+
   return channel_widget;
 }
 
@@ -1048,6 +1046,7 @@ channel_widget_delete (ChannelWidget *channel_widget)
   channelsD->channel_widgets = g_slist_remove (channelsD->channel_widgets, channel_widget);
 
   /*  Free the widget  */
+  gtk_widget_unref (channel_widget->list_item);
   g_free (channel_widget);
 }
 

@@ -134,10 +134,10 @@ indexed_palette_create (int gimage_id)
       gtk_window_set_wmclass (GTK_WINDOW (indexedP->shell), "indexed_color_palette", "Gimp");
       gtk_window_set_title (GTK_WINDOW (indexedP->shell), "Indexed Color Palette");
       gtk_window_add_accelerator_table (GTK_WINDOW (indexedP->shell), table);
-
       gtk_signal_connect (GTK_OBJECT (indexedP->shell), "delete_event",
-			  GTK_SIGNAL_FUNC (gtk_widget_delete_hides),
+			  GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete),
 			  NULL);
+      gtk_quit_add (1, (GtkFunction) gtk_widget_destroy, indexedP->shell);
 
       indexedP->vbox = vbox = gtk_vbox_new (FALSE, 1);
       gtk_container_border_width (GTK_CONTAINER (vbox), 1);
@@ -151,14 +151,9 @@ indexed_palette_create (int gimage_id)
       label = gtk_label_new ("Image:");
       gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
       indexedP->image_option_menu = gtk_option_menu_new ();
-      indexedP->image_menu = create_image_menu (&gimage_id, &default_index, image_menu_callback);
-      gtk_signal_connect (GTK_OBJECT (indexedP->image_menu),
-			  "destroy",
-			  GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-			  &indexedP->image_menu);
       gtk_box_pack_start (GTK_BOX (util_box), indexedP->image_option_menu, TRUE, TRUE, 2);
-
       gtk_widget_show (indexedP->image_option_menu);
+      indexedP->image_menu = create_image_menu (&gimage_id, &default_index, image_menu_callback);
       gtk_option_menu_set_menu (GTK_OPTION_MENU (indexedP->image_option_menu), indexedP->image_menu);
       if (default_index != -1)
 	gtk_option_menu_set_history (GTK_OPTION_MENU (indexedP->image_option_menu), default_index);
@@ -219,6 +214,7 @@ indexed_palette_create (int gimage_id)
       gtk_widget_show (indexedP->shell);
 
       indexed_palette_update (gimage_id);
+      indexed_palette_update_image_list ();
     }
   else
     {
@@ -238,10 +234,6 @@ indexed_palette_update_image_list ()
 
   if (! indexedP)
     return;
-
-  gtk_option_menu_remove_menu (GTK_OPTION_MENU (indexedP->image_option_menu));
-  if (indexedP->image_menu)
-    g_warning ("indexedP->image_menu still exists?");
 
   default_id = indexedP->gimage_id;
   indexedP->image_menu = create_image_menu (&default_id, &default_index, image_menu_callback);
@@ -354,8 +346,7 @@ indexed_palette_close_callback (GtkWidget *w,
   if (!indexedP)
     return;
 
-  if (GTK_WIDGET_VISIBLE (indexedP->shell))
-    gtk_widget_hide (indexedP->shell);
+  gtk_widget_hide (indexedP->shell);
 }
 
 static void

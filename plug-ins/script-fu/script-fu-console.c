@@ -181,6 +181,10 @@ script_fu_console_interface ()
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) script_fu_close_callback,
 		      NULL);
+  gtk_signal_connect (GTK_OBJECT (dlg),
+		      "destroy",
+		      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+		      &dlg);
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), 2);
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
 
@@ -315,7 +319,8 @@ script_fu_console_interface ()
   gtk_main ();
 
   gdk_input_remove (cint.input_id);
-  gtk_widget_destroy (dlg);
+  if (dlg)
+    gtk_widget_destroy (dlg);
   gdk_flush ();
 }
 
@@ -358,7 +363,7 @@ static void
 script_fu_browse_callback(GtkWidget *widget,
 			  gpointer   data)
 {
-  gimp_db_browser(apply_callback);
+  gtk_quit_add_destroy (1, (GtkObject*) gimp_db_browser (apply_callback));
 }
 
 static void

@@ -272,14 +272,19 @@ lc_dialog_create (int gimage_id)
   if (lc_shell == NULL)
     {
       lc_shell = gtk_dialog_new ();
-      gtk_widget_ref (lc_shell);
       
       gtk_window_set_title (GTK_WINDOW (lc_shell), "Layers & Channels");
       gtk_window_set_wmclass (GTK_WINDOW (lc_shell), "layers_and_channels", "Gimp");
       gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (lc_shell)->vbox), 2);
-      gtk_signal_connect (GTK_OBJECT (lc_shell), "delete_event", 
+      gtk_signal_connect (GTK_OBJECT (lc_shell),
+			  "delete_event", 
 			  GTK_SIGNAL_FUNC (lc_dialog_close_callback),
 			  NULL);
+      gtk_signal_connect (GTK_OBJECT (lc_shell),
+			  "destroy",
+			  GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+			  &lc_shell);
+      gtk_quit_add_destroy (1, GTK_OBJECT (lc_shell));
 
       lc_subshell = gtk_vbox_new(FALSE, 1);
       gtk_box_pack_start (GTK_BOX(GTK_DIALOG(lc_shell)->vbox), lc_subshell, TRUE, TRUE, 0);
@@ -337,8 +342,7 @@ lc_dialog_create (int gimage_id)
 
       gtk_widget_hide (GTK_DIALOG(lc_shell)->action_area);
 
-      if (!GTK_WIDGET_VISIBLE (lc_shell))
-	gtk_widget_show (lc_shell);
+      gtk_widget_show (lc_shell);
 
       /*  Make sure the channels page is realized  */
       gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 1);
@@ -353,7 +357,7 @@ lc_dialog_create (int gimage_id)
       if (!GTK_WIDGET_VISIBLE (lc_shell))
 	gtk_widget_show (lc_shell);
       else 
-	gdk_window_raise (lc_shell->window); /* ??? */
+	gdk_window_raise (lc_shell->window);
 
       layers_dialog_update (gimage_id);
       channels_dialog_update (gimage_id);
@@ -370,9 +374,6 @@ lc_dialog_update_image_list ()
 
   if (lc_shell == NULL)
     return;
-
-  gtk_option_menu_remove_menu (GTK_OPTION_MENU (image_option_menu));
-  /* gtk_widget_destroy (image_menu); */
 
   default_id = layersD->gimage_id;
   layersD->gimage_id = -1;		/* ??? */
@@ -413,9 +414,6 @@ lc_dialog_free ()
   channels_dialog_free ();
 
   gtk_widget_destroy (lc_shell);
-  gtk_widget_unref (lc_shell);
-
-  lc_shell = NULL;
 }
 
 void
@@ -427,12 +425,10 @@ lc_dialog_rebuild (int new_preview_size)
   gimage_id = -1;
   
   flag = 0;
-  if (lc_shell!=NULL)
+  if (lc_shell)
     {
       flag = 1;
       gimage_id = layersD->gimage_id;
-      if (GTK_WIDGET_VISIBLE (lc_shell))
-        gtk_widget_hide (lc_shell);
       lc_dialog_free ();
     }
   preview_size = new_preview_size;
@@ -566,14 +562,14 @@ layers_dialog_free ()
   layersD->floating_sel = NULL;
 
   if (layersD->layer_preview)
-    gtk_widget_destroy (layersD->layer_preview);
+    gtk_object_sink (GTK_OBJECT (layersD->layer_preview));
   if (layersD->green_gc)
     gdk_gc_destroy (layersD->green_gc);
   if (layersD->red_gc)
     gdk_gc_destroy (layersD->red_gc);
 
   if (layersD->ops_menu)
-    gtk_widget_destroy (layersD->ops_menu);
+    gtk_object_sink (GTK_OBJECT (layersD->ops_menu));
 
   g_free (layersD);
   layersD = NULL;
@@ -789,7 +785,8 @@ layers_dialog_update (int gimage_id)
       list = g_slist_next(list);
       layer_widget_delete (lw);
     }
-  g_slist_free (layersD->layer_widgets);
+  if (layersD->layer_widgets)
+    g_warning ("layersD->layer_widgets not empty!");
   layersD->layer_widgets = NULL;
 
   if (! (gimage = gimage_get_ID (layersD->gimage_id)))
@@ -1288,14 +1285,10 @@ layers_dialog_remove_layer (Layer * layer)
   list = g_list_append (list, layer_widget->list_item);
   gtk_list_remove_items (GTK_LIST (layersD->layer_list), list);
 
-  /*  Delete the list item  */
-  gtk_widget_destroy (layer_widget->list_item);
-  gtk_widget_unref (layer_widget->list_item);
-
-  suspend_gimage_notify--;
-
   /*  Delete layer widget  */
   layer_widget_delete (layer_widget);
+
+  suspend_gimage_notify--;
 }
 
 
@@ -1808,14 +1801,10 @@ static gint
 lc_dialog_close_callback (GtkWidget *w,
 			  gpointer   client_data)
 {
-  if (!lc_shell)
-    return FALSE;
-
-  if (GTK_WIDGET_VISIBLE (lc_shell))
-    gtk_widget_hide (lc_shell);
-
   if (layersD) 
     layersD->gimage_id = -1;
+
+  gtk_widget_hide (lc_shell);
 
   return TRUE;
 }
@@ -1860,7 +1849,6 @@ create_layer_widget (GImage *gimage,
   GtkWidget *alignment;
 
   list_item = gtk_list_item_new ();
-  gtk_widget_ref (GTK_WIDGET (list_item));
 
   /*  create the layer widget and add it to the list  */
   layer_widget = (LayerWidget *) g_malloc (sizeof (LayerWidget));
@@ -1981,6 +1969,8 @@ create_layer_widget (GImage *gimage,
   gtk_widget_show (hbox);
   gtk_widget_show (vbox);
   gtk_widget_show (list_item);
+  
+  gtk_widget_ref (layer_widget->list_item);
 
   return layer_widget;
 }
@@ -1998,6 +1988,7 @@ layer_widget_delete (LayerWidget *layer_widget)
   layersD->layer_widgets = g_slist_remove (layersD->layer_widgets, layer_widget);
 
   /*  Free the widget  */
+  gtk_widget_unref (layer_widget->list_item);
   g_free (layer_widget);
 }
 
