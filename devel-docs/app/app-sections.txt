@@ -4294,10 +4294,7 @@ gimp_toolbox_dnd_init
 <SECTION>
 <FILE>gimptoolbox-color-area</FILE>
 <TITLE>GimpToolbox-color-area</TITLE>
-FOREGROUND
-BACKGROUND
-active_color
-color_area_gdisp
+2color_area_gdisp
 gimp_toolbox_color_area_create
 </SECTION>
 
@@ -6646,9 +6643,9 @@ tool_manager_cursor_update_active
 
 <SECTION>
 <FILE>tools-enums</FILE>
-GIMP_TYPE_CROP_TYPE
-gimp_crop_type_get_type
-GimpCropType
+GIMP_TYPE_CROP_MODE
+gimp_crop_mode_get_type
+GimpCropMode
 SelectOps
 GimpToolAction
 GimpMotionMode

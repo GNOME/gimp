@@ -47,6 +47,7 @@ gimp_matrix4_to_deg
 GimpVector2
 GimpVector3
 GimpVector4
+gimp_vector2_new
 gimp_vector2_inner_product
 gimp_vector2_inner_product_val
 gimp_vector2_cross_product
@@ -60,7 +61,6 @@ gimp_vector2_mul_val
 gimp_vector2_sub
 gimp_vector2_sub_val
 gimp_vector2_set
-gimp_vector2_new_val
 gimp_vector2_add
 gimp_vector2_add_val
 gimp_vector2_neg

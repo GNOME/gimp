@@ -1,3 +1,11 @@
+2003-09-28  Sven Neumann  <sven@gimp.org>
+
+	* app/app-sections.txt: some smaller updates.
+
+	* libgimpmath/libgimpmath-sections.txt
+	* libgimpmath/tmpl/gimpvector.sgml: removed reference to
+	nonexistant function gimp_vector2_new_val, added gimp_vector2_new.
+
 2003-09-27  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt

@@ -193,7 +193,6 @@ gimp_vector2_normalize (GimpVector2 *vector)
 
 /**
  * gimp_vector2_normalize_val:
- *
  * @vector: a #GimpVector2 (by value)
  *
  * Computes and returns the normalized vector corresponding with the one
@@ -606,7 +605,6 @@ gimp_vector3_normalize (GimpVector3 *vector)
 
 /**
  * gimp_vector3_normalize_val:
- *
  * @vector: a #GimpVector3 (by value)
  *
  * Computes and returns the normalized vector corresponding with the one

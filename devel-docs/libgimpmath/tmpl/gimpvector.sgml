@@ -45,6 +45,16 @@ Utilities to set up and manipulate vectors.
 @z: 
 @w: 
 
+<!-- ##### FUNCTION gimp_vector2_new ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_vector2_inner_product ##### -->
 <para>
 
