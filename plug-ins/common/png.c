@@ -6,6 +6,7 @@
  *
  *   Copyright 1997-1998 Michael Sweet (mike@easysw.com) and
  *   Daniel Skarda (0rfelyus@atrey.karlin.mff.cuni.cz).
+ *   and 1999 Nick Lamb (njl195@zepler.org.uk)
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -41,6 +42,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include <png.h>		/* PNG library definitions */
 
@@ -55,7 +57,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION		"1.1.9 - 2 Oct 1999"
+#define PLUG_IN_VERSION		"1.1.10 - 8 Nov 1999"
 #define SCALE_WIDTH		125
 
 #define DEFAULT_GAMMA		2.20
@@ -67,6 +69,7 @@
 typedef struct
 {
   gint	interlaced;
+  gint	noextras;
   gint	compression_level;
 } PngSaveVals;
 
@@ -101,6 +104,7 @@ GPlugInInfo	PLUG_IN_INFO =
 
 PngSaveVals	pngvals = 
 {
+  FALSE,
   FALSE,
   6
 };
@@ -140,8 +144,9 @@ query (void)
     { PARAM_DRAWABLE,	"drawable",	"Drawable to save" },
     { PARAM_STRING,	"filename",	"The name of the file to save the image in" },
     { PARAM_STRING,	"raw_filename",	"The name of the file to save the image in" },
-    { PARAM_INT32,	"interlace",	"Save with interlacing option enabled" },
-    { PARAM_INT32,	"compression",	"Compression level" }
+    { PARAM_INT32,	"interlace",	"Use Adam7 interlacing?" },
+    { PARAM_INT32,	"noextras",	"Skip ancillary chunks?" },
+    { PARAM_INT32,	"compression",	"Deflate Compression factor (0--9)" }
   };
   static int		nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -151,7 +156,7 @@ query (void)
       _("Loads files in PNG file format"),
       _("This plug-in loads Portable Network Graphics (PNG) files."),
       "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
-      "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
+      "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
       PLUG_IN_VERSION,
       "<Load>/PNG", NULL, PROC_PLUG_IN, nload_args, nload_return_vals,
       load_args, load_return_vals);
@@ -160,7 +165,7 @@ query (void)
       "Saves files in PNG file format",
       "This plug-in saves Portable Network Graphics (PNG) files.",
       "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
-      "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
+      "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
       PLUG_IN_VERSION,
       "<Save>/PNG", "RGB*,GRAY*,INDEXED", PROC_PLUG_IN, nsave_args, 0, save_args, NULL);
 
@@ -268,12 +273,13 @@ run (char    *name,		/* I - Name of filter program. */
           * Make sure all the arguments are there!
           */
 
-          if (nparams != 7)
+          if (nparams != 8)
             values[0].data.d_status = STATUS_CALLING_ERROR;
           else
           {
             pngvals.interlaced        = param[5].data.d_int32;
-            pngvals.compression_level = param[6].data.d_int32;
+            pngvals.noextras          = param[6].data.d_int32;
+            pngvals.compression_level = param[7].data.d_int32;
 
             if (pngvals.compression_level < 0 ||
                 pngvals.compression_level > 9)
@@ -644,11 +650,15 @@ save_image (char   *filename,	        /* I - File to save to */
   png_structp	pp;		/* PNG read pointer */
   png_infop	info;		/* PNG info pointer */
   gint		num_colors;	/* Number of colors in colormap */
+  gint		offx, offy;	/* Drawable offsets from origin */
   guchar	**pixels,	/* Pixel rows */
 		*pixel;		/* Pixel data */
   char		progress[255];	/* Title for progress display... */
   gdouble       xres, yres;	/* GIMP resolution (dpi) */
   gdouble	gamma;
+  guchar	red, green, blue; /* For palette background */
+  time_t	cutime;         /* Time since epoch */
+  struct tm	*gmt;		/* GMT broken down */
 
  /*
   * Setup the PNG data structures...
@@ -718,15 +728,47 @@ save_image (char   *filename,	        /* I - File to save to */
   info->sig_bit.gray   = 8;
   info->sig_bit.alpha  = 8;
   info->interlace_type = pngvals.interlaced;
-  info->valid          |= PNG_INFO_gAMA;
+  if (!pngvals.noextras) {
+    info->valid          |= PNG_INFO_gAMA;
+
+    if (type == RGBA_IMAGE || type == GRAYA_IMAGE
+                           || type == INDEXEDA_IMAGE) {
+      gimp_palette_get_background(&red, &green, &blue);
+      info->valid |= PNG_INFO_bKGD;
+      info->background.index = 0;
+      info->background.red = red;
+      info->background.green = green;
+      info->background.blue = blue;
+      info->background.gray = (red + green + blue) / 3;
+    }
+
+    gimp_drawable_offsets(drawable_ID, &offx, &offy);
+    if (offx != 0 || offy != 0) {
+      info->valid |= PNG_INFO_oFFs;
+      info->x_offset = offx;
+      info->y_offset = offy;
+      info->offset_unit_type= PNG_OFFSET_PIXEL;
+    }
+
+    cutime= time(NULL); /* time right NOW */
+    gmt = gmtime(&cutime);
+    info->valid |= PNG_INFO_tIME;
+    info->mod_time.year = gmt->tm_year + 1900;
+    info->mod_time.month = gmt->tm_mon + 1;
+    info->mod_time.day = gmt->tm_mday;
+    info->mod_time.hour = gmt->tm_hour;
+    info->mod_time.minute = gmt->tm_min;
+    info->mod_time.second = gmt->tm_sec;
 
 #ifdef GIMP_HAVE_RESOLUTION_INFO
-  info->valid |= PNG_INFO_pHYs;
-  gimp_image_get_resolution (orig_image_ID, &xres, &yres);
-  info->phys_unit_type = PNG_RESOLUTION_METER;
-  info->x_pixels_per_unit = (int) (xres * 39.37);
-  info->y_pixels_per_unit = (int) (yres * 39.37);
+    info->valid |= PNG_INFO_pHYs;
+    gimp_image_get_resolution (orig_image_ID, &xres, &yres);
+    info->phys_unit_type = PNG_RESOLUTION_METER;
+    info->x_pixels_per_unit = (int) (xres * 39.37);
+    info->y_pixels_per_unit = (int) (yres * 39.37);
 #endif /* GIMP_HAVE_RESOLUTION_INFO */
+
+  }
  
   switch (type)
   {
@@ -876,6 +918,13 @@ save_interlace_update (GtkWidget *widget,	/* I - Interlace toggle button */
   pngvals.interlaced = GTK_TOGGLE_BUTTON (widget)->active;
 }
 
+static void
+save_noextras_update (GtkWidget *widget,	/* I - Interlace toggle button */
+		       gpointer  data)		/* I - Callback data  */
+{
+  pngvals.noextras = GTK_TOGGLE_BUTTON (widget)->active;
+}
+
 static void 
 init_gtk ()
 {
@@ -946,27 +995,34 @@ save_dialog (void)
   gtk_container_border_width(GTK_CONTAINER(frame), 10);
   gtk_box_pack_start(GTK_BOX (GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new(2, 2, FALSE);
+  table = gtk_table_new(2, 3, FALSE);
   gtk_container_border_width(GTK_CONTAINER(table), 10);
   gtk_container_add(GTK_CONTAINER(frame), table);
 
-  toggle = gtk_check_button_new_with_label(_("Interlace"));
+  toggle = gtk_check_button_new_with_label(_("Interlacing (Adam7)"));
   gtk_table_attach(GTK_TABLE(table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
                      (GtkSignalFunc)save_interlace_update, NULL);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), pngvals.interlaced);
   gtk_widget_show(toggle);
 
+  toggle = gtk_check_button_new_with_label(_("Skip ancillary chunks"));
+  gtk_table_attach(GTK_TABLE(table), toggle, 0, 2, 1, 2, GTK_FILL, 0, 0, 0);
+  gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
+                     (GtkSignalFunc)save_noextras_update, NULL);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), pngvals.noextras);
+  gtk_widget_show(toggle);
+
   label = gtk_label_new(_("Compression level"));
   gtk_misc_set_alignment(GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
+  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3, GTK_FILL, 0, 5, 0);
 
   scale_data = gtk_adjustment_new(pngvals.compression_level, 1.0, 9.0, 1.0, 1.0, 0.0);
   scale      = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
   gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-  gtk_table_attach(GTK_TABLE(table), scale, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), scale, 1, 2, 2, 3, GTK_FILL, 0, 0, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits(GTK_SCALE (scale), 1);
+  gtk_scale_set_digits(GTK_SCALE (scale), 0);
   gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
                      (GtkSignalFunc)save_compression_update, NULL);

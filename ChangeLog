@@ -1,3 +1,8 @@
+Tue Nov  9 05:14:41 GMT 1999 Nick Lamb <njl195@zepler.org>
+
+	* plug-ins/common/png.c: Option to reduce file size further
+	and GUI clean-up
+
 Mon Nov  8 16:20:02 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/pdb.pl
