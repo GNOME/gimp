@@ -81,7 +81,7 @@ static void sv2net (int deobjectify, SV *s, SV *sv)
         {
           char *name = HvNAME (SvSTASH (rv));
 
-          sv_catpvf (s, "b%x:%s", strlen (name), name);
+          sv_catpvf (s, "b%x:%s", strlen (name), ame);
 
           if (is_dynamic (sv))
             {
@@ -198,7 +198,7 @@ args2net(deobjectify,...)
         (void) SvUPGRADE (RETVAL, SVt_PV);
         SvGROW (RETVAL, INITIAL_PV);
 
-	for (index = 1; index <= items; index++)
+	for (index = 1; index < items; index++)
           sv2net (deobjectify, RETVAL, ST(index));
 
         /*printf (">>>>%s\n",SvPV_nolen(RETVAL));*/
