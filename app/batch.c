@@ -70,7 +70,9 @@ batch_run (Gimp         *gimp,
                   batch_interpreter);
     }
 
-  if (strcmp (batch_interpreter, BATCH_DEFAULT_EVAL_PROC) == 0 &&
+  /*  script-fu text console, hardcoded for backward compatibility  */
+
+  if (strcmp (batch_interpreter, "plug_in_script_fu_eval") == 0 &&
       strcmp (batch_commands[0], "-") == 0)
     {
       batch_commands[0] = "(plug-in-script-fu-text-console RUN-INTERACTIVE)";

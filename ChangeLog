@@ -1,3 +1,7 @@
+2004-10-11  Sven Neumann  <sven@gimp.org>
+
+	* app/batch.c: clarified.
+
 2004-10-08  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* configure.in: removed duplicate GETTEXT_PACKAGE line.
