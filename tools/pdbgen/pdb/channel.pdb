@@ -187,8 +187,7 @@ HELP
     %invoke = ( code => 'channel_delete (channel);' );
 }
 
-&channel_accessors('name', 'string', 'name', 1,
-		   [ undef, '$inargs[1]->{no_success} = 1' ]);
+&channel_accessors('name', 'string', 'name', 1);
 
 &channel_accessors('visible', 'boolean', 'visibility', 0,
 		   [ '$outargs[0]->{alias} =~

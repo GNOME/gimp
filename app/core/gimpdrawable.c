@@ -323,6 +323,7 @@ gimp_drawable_set_name (GimpDrawable *drawable,
   gchar numberbuf[20];
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (name != NULL);
 
   if (drawable->name)
     {

@@ -963,6 +963,8 @@ layer_set_name_invoker (Argument *args)
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL)
+    success = FALSE;
 
   if (success)
     layer_set_name (layer, name);

@@ -1,3 +1,10 @@
+Mon Dec 20 16:32:39 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* app/gimpdrawable.c: added an assert for name != NULL
+
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/layer.pdb: sanity check the name parameters
+
 Mon Dec 20 18:42:51 EST 1999  Gregory McLean <gregm@comstar.net>
 
 	* gimp.spec: Slightly more upto date spec file. Work in progress.
