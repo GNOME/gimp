@@ -103,10 +103,16 @@ gimp_context_set_arg (GtkObject *object,
       gimp_context_set_tool (context, GTK_VALUE_INT (*arg));
       break;
     case ARG_FOREGROUND:
-      gimp_context_set_foreground (context, GTK_VALUE_POINTER (*arg));
+      {
+	guchar *col = GTK_VALUE_POINTER (*arg);
+	gimp_context_set_foreground (context, col[0], col[1], col[2]);
+      }
       break;
     case ARG_BACKGROUND:
-      gimp_context_set_background (context, GTK_VALUE_POINTER (*arg));
+      {
+	guchar *col = GTK_VALUE_POINTER (*arg);
+	gimp_context_set_background (context, col[0], col[1], col[2]);
+      }
       break;
     case ARG_OPACITY:
       gimp_context_set_opacity (context, GTK_VALUE_DOUBLE (*arg));
@@ -150,22 +156,14 @@ gimp_context_get_arg (GtkObject *object,
       break;
     case ARG_FOREGROUND:
       {
-	guchar *dest = GTK_VALUE_POINTER (*arg);
-	guchar  src[3];
-	gimp_context_get_foreground (context, src);
-	dest[0] = src[0];
-	dest[1] = src[1];
-	dest[2] = src[2];
+	guchar *col = GTK_VALUE_POINTER (*arg);
+	gimp_context_get_foreground (context, &col[0], &col[1], &col[2]);
       }
       break;
     case ARG_BACKGROUND:
       {
-	guchar *dest = GTK_VALUE_POINTER (*arg);
-	guchar  src[3];
-	gimp_context_get_background (context, src);
-	dest[0] = src[0];
-	dest[1] = src[1];
-	dest[2] = src[2];
+	guchar *col = GTK_VALUE_POINTER (*arg);
+	gimp_context_get_background (context, &col[0], &col[1], &col[2]);
       }
       break;
     case ARG_OPACITY:
@@ -265,7 +263,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		     object_class->type,
 		     GTK_SIGNAL_OFFSET (GimpContextClass,
 					foreground_changed),
-		     gimp_sigtype_pointer);
+		     gimp_sigtype_int_int_int);
 
   gimp_context_signals[BACKGROUND_CHANGED] =
     gimp_signal_new ("background_changed",
@@ -273,7 +271,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		     object_class->type,
 		     GTK_SIGNAL_OFFSET (GimpContextClass,
 					background_changed),
-		     gimp_sigtype_pointer);
+		     gimp_sigtype_int_int_int);
 
   gimp_context_signals[OPACITY_CHANGED] =
     gimp_signal_new ("opacity_changed",
@@ -427,19 +425,17 @@ gimp_context_new (gchar       *name,
 
   if (template)
     {
-      guchar col[3];
-
       context->image         = gimp_context_get_image (template);
       context->display       = gimp_context_get_display (template);
       context->tool          = gimp_context_get_tool (template);
-      gimp_context_get_foreground (template, col);
-      context->foreground[0] = col[0];
-      context->foreground[1] = col[1];
-      context->foreground[2] = col[2];
-      gimp_context_get_background (template, col);
-      context->background[0] = col[0];
-      context->background[1] = col[1];
-      context->background[2] = col[2];
+      gimp_context_get_foreground (template,
+				   &context->foreground[0],
+				   &context->foreground[1],
+				   &context->foreground[2]);
+      gimp_context_get_background (template,
+				   &context->background[0],
+				   &context->background[1],
+				   &context->background[2]);
       context->opacity       = gimp_context_get_opacity (template);
       context->paint_mode    = gimp_context_get_paint_mode (template);
       context->brush         = gimp_context_get_brush (template);
@@ -706,36 +702,40 @@ gimp_context_define_tool (GimpContext *context,
 
 void
 gimp_context_get_foreground (GimpContext *context,
-			     guchar       foreground[3])
+			     guchar      *r,
+			     guchar      *g,
+			     guchar      *b)
 {
   context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, foreground_defined);
 
-  foreground[0] = context->foreground[0];
-  foreground[1] = context->foreground[1];
-  foreground[2] = context->foreground[2];
+  *r = context->foreground[0];
+  *g = context->foreground[1];
+  *b = context->foreground[2];
 }
 
 void
 gimp_context_set_foreground (GimpContext *context,
-			     guchar       foreground[3])
+			     gint         r,
+			     gint         g,
+			     gint         b)
 {
   context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, foreground_defined);
 
-  if (context->foreground[0] == foreground[0] &&
-      context->foreground[1] == foreground[1] &&
-      context->foreground[2] == foreground[2]) return;
+  if (context->foreground[0] == r &&
+      context->foreground[1] == g &&
+      context->foreground[2] == b) return;
 
-  context->foreground[0] = foreground[0];
-  context->foreground[1] = foreground[1];
-  context->foreground[2] = foreground[2];
+  context->foreground[0] = r;
+  context->foreground[1] = g;
+  context->foreground[2] = b;
 
   gtk_signal_emit (GTK_OBJECT (context),
 		   gimp_context_signals[FOREGROUND_CHANGED],
-		   context->foreground);
+		   r, g, b);
 }
 
 gboolean
@@ -753,14 +753,10 @@ gimp_context_define_foreground (GimpContext *context,
   context_return_if_fail (context);
 
   if (defined)
-    {
-      guchar col[3];
-
-      gimp_context_get_foreground (context, col);
-      context->foreground[0] = col[0];
-      context->foreground[1] = col[1];
-      context->foreground[2] = col[2];
-    }
+    gimp_context_get_foreground (context,
+				 &context->foreground[0],
+				 &context->foreground[1],
+				 &context->foreground[2]);
 
   context->foreground_defined = defined;
 }
@@ -769,36 +765,40 @@ gimp_context_define_foreground (GimpContext *context,
 
 void
 gimp_context_get_background (GimpContext *context,
-			     guchar       background[3])
+			     guchar      *r,
+			     guchar      *g,
+			     guchar      *b)
 {
   context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, background_defined);
 
-  background[0] = context->background[0];
-  background[1] = context->background[1];
-  background[2] = context->background[2];
+  *r = context->background[0];
+  *g = context->background[1];
+  *b = context->background[2];
 }
 
 void
 gimp_context_set_background (GimpContext *context,
-			     guchar       background[3])
+			     gint         r,
+			     gint         g,
+			     gint         b)
 {
   context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, background_defined);
 
-  if (context->background[0] == background[0] &&
-      context->background[1] == background[1] &&
-      context->background[2] == background[2]) return;
+  if (context->background[0] == r &&
+      context->background[1] == g &&
+      context->background[2] == b) return;
 
-  context->background[0] = background[0];
-  context->background[1] = background[1];
-  context->background[2] = background[2];
+  context->background[0] = r;
+  context->background[1] = g;
+  context->background[2] = b;
 
   gtk_signal_emit (GTK_OBJECT (context),
 		   gimp_context_signals[BACKGROUND_CHANGED],
-		   context->background);
+		   r, g, b);
 }
 
 gboolean
@@ -816,14 +816,10 @@ gimp_context_define_background (GimpContext *context,
   context_return_if_fail (context);
 
   if (defined)
-    {
-      guchar col[3];
-
-      gimp_context_get_background (context, col);
-      context->background[0] = col[0];
-      context->background[1] = col[1];
-      context->background[2] = col[2];
-    }
+    gimp_context_get_background (context,
+				 &context->background[0],
+				 &context->background[1],
+				 &context->background[2]);
 
   context->background_defined = defined;
 }

@@ -1,5 +1,15 @@
 1999-10-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpsignal.[ch]: new GimpSignalType gimp_sigtype_int_int_int.
+
+	* app/gimpcontext.[ch]: set/get colors as separate r/g/b values
+	instead of a guchar[3] array.
+	The "[foreground|background]_changed" signal handlers must have
+	the following signature now:
+	color_changed_callback (GimpContext *, gint, gint, gint, gpointer).
+
+1999-10-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimpcontext.[ch]: added the possibility to store the current
 	tool, FG/BG color, brush, pattern and gradient, but don't use
 	these attributes yet.

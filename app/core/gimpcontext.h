@@ -59,7 +59,8 @@ typedef enum
                                 GIMP_CONTEXT_ARG_GRADIENT,
   GIMP_CONTEXT_ARG_ALL        = GIMP_CONTEXT_ARG_IMAGE |
                                 GIMP_CONTEXT_ARG_DISPLAY |
-                                GIMP_CONTEXT_ARG_TOOL
+                                GIMP_CONTEXT_ARG_TOOL |
+                                GIMP_CONTEXT_ARG_PAINT
 } GimpContextArgs;
 
 typedef struct _GimpContext GimpContext;
@@ -110,18 +111,32 @@ struct _GimpContextClass
 {
   GimpObjectClass parent_class;
 
-  void (* image_changed)      (GimpContext *context, gpointer image);
-  void (* display_changed)    (GimpContext *context, gpointer display);
+  void (* image_changed)      (GimpContext      *context,
+			       GimpImage        *image);
+  void (* display_changed)    (GimpContext      *context,
+			       GDisplay         *display);
 
-  void (* tool_changed)       (GimpContext *context, gint tool_type);
+  void (* tool_changed)       (GimpContext      *context,
+			       ToolType          tool);
 
-  void (* foreground_changed) (GimpContext *context, guchar foreground[3]);
-  void (* background_changed) (GimpContext *context, guchar background[3]);
-  void (* opacity_changed)    (GimpContext *context, gdouble opacity);
-  void (* paint_mode_changed) (GimpContext *context, gint paint_mode);
-  void (* brush_changed)      (GimpContext *context, gpointer brush);
-  void (* pattern_changed)    (GimpContext *context, gpointer pattern);
-  void (* gradient_changed)   (GimpContext *context, gpointer gradient);
+  void (* foreground_changed) (GimpContext      *context,
+			       gint              r,
+			       gint              g,
+			       gint              b);
+  void (* background_changed) (GimpContext      *context,
+			       gint              r,
+			       gint              g,
+			       gint              b);
+  void (* opacity_changed)    (GimpContext      *context,
+			       gdouble           opacity);
+  void (* paint_mode_changed) (GimpContext      *context,
+			       LayerModeEffects  paint_mode);
+  void (* brush_changed)      (GimpContext      *context,
+			       GimpBrush        *brush);
+  void (* pattern_changed)    (GimpContext      *context,
+			       GPattern         *pattern);
+  void (* gradient_changed)   (GimpContext      *context,
+			       gradient_t       *gradient);
 };
 
 GtkType       gimp_context_get_type       (void);
@@ -199,9 +214,13 @@ void               gimp_context_define_tool        (GimpContext     *context,
 /*  foreground color  */
 
 void               gimp_context_get_foreground     (GimpContext *context,
-						    guchar       foreground[3]);
+						    guchar      *r,
+						    guchar      *g,
+						    guchar      *b);
 void               gimp_context_set_foreground     (GimpContext *context,
-						    guchar       foreground[3]);
+						    gint         r,
+						    gint         g,
+						    gint         b);
 gboolean           gimp_context_foreground_defined (GimpContext *context);
 void               gimp_context_define_foreground  (GimpContext *context,
 						    gboolean     defined);
@@ -209,9 +228,13 @@ void               gimp_context_define_foreground  (GimpContext *context,
 /*  background color  */
 
 void               gimp_context_get_background     (GimpContext *context,
-						    guchar       background[3]);
+						    guchar      *r,
+						    guchar      *g,
+						    guchar      *b);
 void               gimp_context_set_background     (GimpContext *context,
-						    guchar       background[3]);
+						    gint         r,
+						    gint         g,
+						    gint         b);
 gboolean           gimp_context_background_defined (GimpContext *context);
 void               gimp_context_define_background  (GimpContext *context,
 						    gboolean     defined);

@@ -135,6 +135,36 @@ static GimpSignalType sigtype_double =
 GimpSignalType* const gimp_sigtype_double = &sigtype_double;
 
 static void
+gimp_marshaller_int_int_int (GtkObject     *object,
+			     GtkSignalFunc  func,
+			     gpointer       func_data,
+			     GtkArg        *args)
+{
+  (* (GimpHandlerIntIntInt) func) (object,
+				   GTK_VALUE_INT (args[0]),
+				   GTK_VALUE_INT (args[1]),
+				   GTK_VALUE_INT (args[2]),
+				   func_data);
+}
+
+static TypeArr int_int_int_types =
+{
+  GTK_TYPE_INT,
+  GTK_TYPE_INT,
+  GTK_TYPE_INT
+};
+
+static GimpSignalType sigtype_int_int_int =
+{
+  gimp_marshaller_int_int_int,
+  GTK_TYPE_NONE,
+  3,
+  int_int_int_types
+};
+
+GimpSignalType* const gimp_sigtype_int_int_int = &sigtype_int_int_int;
+
+static void
 gimp_marshaller_int_int_int_int (GtkObject     *object,
 				 GtkSignalFunc  func,
 				 gpointer       func_data,

@@ -28,16 +28,24 @@ typedef const struct _GimpSignalType GimpSignalType;
 /* The arguments are encoded in the names.. */
 
 extern GimpSignalType* const gimp_sigtype_void;
-typedef void (*GimpHandlerVoid) (GtkObject*, gpointer);
+typedef void (*GimpHandlerVoid) (GtkObject*,
+				 gpointer);
 
 extern GimpSignalType* const gimp_sigtype_pointer;
-typedef void (*GimpHandlerPointer) (GtkObject*, gpointer, gpointer);
+typedef void (*GimpHandlerPointer) (GtkObject*, gpointer,
+				    gpointer);
 
 extern GimpSignalType* const gimp_sigtype_int;
-typedef void (*GimpHandlerInt) (GtkObject*, gint, gpointer);
+typedef void (*GimpHandlerInt) (GtkObject*, gint,
+				gpointer);
 
 extern GimpSignalType* const gimp_sigtype_double;
-typedef void (*GimpHandlerDouble) (GtkObject*, gdouble, gpointer);
+typedef void (*GimpHandlerDouble) (GtkObject*, gdouble,
+				   gpointer);
+
+extern GimpSignalType* const gimp_sigtype_int_int_int;
+typedef void (*GimpHandlerIntIntInt) (GtkObject*, gint, gint, gint,
+				      gpointer);
 
 extern GimpSignalType* const gimp_sigtype_int_int_int_int;
 typedef void (*GimpHandlerIntIntIntInt) (GtkObject*, gint, gint, gint, gint,
