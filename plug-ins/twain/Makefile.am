@@ -47,7 +47,6 @@ EXTRA_DIST = \
 	gimp-twain.png	\
 	tw_dump.c	\
 	tw_dump.h	\
-	tw_sess.c	\
 	tw_win.c	\
 	tw_mac.c
 

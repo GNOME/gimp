@@ -1,3 +1,8 @@
+2004-08-06  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/twain/Makefile.am (EXTRA_DIST): forgot to remove
+	tw_sess.c here.
+
 2004-08-05  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/wind.c: ported to GimpPreviewArea (from
@@ -805,7 +810,7 @@
 
 2004-07-28  DindinX  <david.odin@cpe.fr>
 
-	*  plug-ins/common/unsharp.c: Added a toggle button to enable/disable
+	* plug-ins/common/unsharp.c: Added a toggle button to enable/disable
 	preview updating. Should fix #144972.
 
 2004-07-28  DindinX  <david.odin@cpe.fr>
