@@ -31,8 +31,8 @@
 #include "core/gimpimage.h"
 
 #include "gimptext.h"
+#include "gimptext-private.h"
 #include "gimptextlayout.h"
-#include "gimptextlayout-private.h"
 
 
 static void   gimp_text_layout_class_init  (GimpTextLayoutClass *klass);

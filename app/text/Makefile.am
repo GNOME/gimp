@@ -23,17 +23,21 @@ libapptext_a_sources = \
 	gimpfontlist.h		\
 	gimptext.c		\
 	gimptext.h		\
+	gimptext-bitmap.c	\
+	gimptext-bitmap.h	\
 	gimptext-compat.c	\
 	gimptext-compat.h	\
 	gimptext-parasite.c	\
 	gimptext-parasite.h	\
+	gimptext-private.h	\
+	gimptext-vectors.c	\
+	gimptext-vectors.h	\
 	gimptext-xlfd.c		\
 	gimptext-xlfd.h		\
 	gimptextlayer.c		\
 	gimptextlayer.h		\
 	gimptextlayout.c	\
 	gimptextlayout.h	\
-	gimptextlayout-private.h\
 	gimptextlayout-render.c	\
 	gimptextlayout-render.h
 

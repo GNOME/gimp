@@ -24,6 +24,7 @@
 #include <string.h>
 
 #include <glib-object.h>
+#include <pango/pangoft2.h>
 
 #include "text-types.h"
 
@@ -38,6 +39,8 @@
 #include "core/gimpimage.h"
 
 #include "gimptext.h"
+#include "gimptext-bitmap.h"
+#include "gimptext-private.h"
 #include "gimptextlayer.h"
 #include "gimptextlayout.h"
 #include "gimptextlayout-render.h"
@@ -430,27 +433,46 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   GimpDrawable *drawable;
   GimpItem     *item;
   TileManager  *mask;
+  FT_Bitmap     bitmap;
   PixelRegion   textPR;
   PixelRegion   maskPR;
-  gint          width;
-  gint          height;
+  gint          i;
 
   drawable = GIMP_DRAWABLE (layer);
   item     = GIMP_ITEM (layer);
 
   gimp_drawable_fill (drawable, &layer->text->color);
 
-  width  = gimp_item_width  (item);
-  height = gimp_item_height (item);
+  bitmap.width = gimp_item_width  (item);
+  bitmap.rows  = gimp_item_height (item);
+  bitmap.pitch = bitmap.width;
+  if (bitmap.pitch & 3)
+    bitmap.pitch += 4 - (bitmap.pitch & 3);
 
-  mask = gimp_text_layout_render (layout, width, height);
+  bitmap.buffer = g_malloc0 (bitmap.rows * bitmap.pitch);
 
-  pixel_region_init (&textPR, drawable->tiles, 0, 0, width, height, TRUE);
-  pixel_region_init (&maskPR, mask, 0, 0, width, height, FALSE);
+  gimp_text_layout_render (layout,
+			   (GimpTextRenderFunc) gimp_text_render_bitmap,
+			   &bitmap);
+
+  mask = tile_manager_new (bitmap.width, bitmap.rows, 1);
+  pixel_region_init (&maskPR, mask, 0, 0, bitmap.width, bitmap.rows, TRUE);
+
+  for (i = 0; i < bitmap.rows; i++)
+    pixel_region_set_row (&maskPR,
+			  0, i, bitmap.width,
+			  bitmap.buffer + i * bitmap.pitch);
+
+  g_free (bitmap.buffer);
+
+  pixel_region_init (&textPR, drawable->tiles,
+		     0, 0, bitmap.width, bitmap.rows, TRUE);
+  pixel_region_init (&maskPR, mask,
+		     0, 0, bitmap.width, bitmap.rows, FALSE);
 
   apply_mask_to_region (&textPR, &maskPR, OPAQUE_OPACITY);
   
   tile_manager_unref (mask);
 
-  gimp_drawable_update (drawable, 0, 0, width, height);
+  gimp_drawable_update (drawable, 0, 0, bitmap.width, bitmap.rows);
 }

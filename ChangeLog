@@ -1,5 +1,26 @@
 2003-07-20  Sven Neumann  <sven@gimp.org>
 
+	Generalized text rendering and added a framework for creating
+	GimpVectors objects with text outlines.
+
+	* app/text/Makefile.am
+	* app/text/gimptext-bitmap.[ch]: new files with bitmap render
+	function.
+
+	* app/text/gimptext-vectors.[ch]: new files for rendering to
+	vectors.
+
+	* app/text/gimptextlayout-private.h: removed ...
+	* app/text/gimptext-private.h: ... and readded with this name.
+
+	* app/text/gimptextlayout-render.[ch]: reduced to the generic parts
+	of text rendering.
+
+	* app/text/gimptextlayer.c
+	* app/text/gimptextlayout.c: changed accordingly.
+
+2003-07-20  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/psd_save.c: fixed confusion of GimpImageType and
 	GimpImageBaseType enums that broke the plug-in for non-RGB images.
 

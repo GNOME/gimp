@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GimpText
- * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,13 +19,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_TEXT_LAYOUT_RENDER_H__
-#define __GIMP_TEXT_LAYOUT_RENDER_H__
+#ifndef __GIMP_TEXT_BITMAP_H__
+#define __GIMP_TEXT_BITMAP_H__
 
 
-void  gimp_text_layout_render  (GimpTextLayout     *layout,
-				GimpTextRenderFunc  render_func,
-				gpointer            render_data);
+void  gimp_text_render_bitmap (PangoFont  *font,
+			       PangoGlyph  glyph,
+			       gint        flags,
+			       gint        x,
+			       gint        y,
+			       FT_Bitmap  *bitmap);
 
 
-#endif /* __GIMP_TEXT_LAYOUT_RENDER_H__ */
+#endif /* __GIMP_TEXT_BITMAP_H__ */
