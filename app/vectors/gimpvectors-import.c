@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GimpVectors Import
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2003-2004  Sven Neumann <sven@gimp.org>
  *
  * Some code here is based on code from librsvg that was originally
  * written by Raph Levien <raph@artofcode.com> for Gill.
@@ -131,12 +131,17 @@ static void  svg_handler_path_start  (SvgHandler   *handler,
                                       const gchar **names,
                                       const gchar **values,
                                       SvgParser    *parser);
+static void  svg_handler_line_start  (SvgHandler   *handler,
+                                      const gchar **names,
+                                      const gchar **values,
+                                      SvgParser    *parser);
 
 static const SvgHandler svg_handlers[] =
 {
-  { "svg", svg_handler_svg_start,   svg_handler_svg_end },
-  { "g",   svg_handler_group_start, NULL                },
-  { "path",svg_handler_path_start,  NULL                }
+  { "svg",  svg_handler_svg_start,   svg_handler_svg_end },
+  { "g",    svg_handler_group_start, NULL                },
+  { "path", svg_handler_path_start,  NULL                },
+  { "line", svg_handler_line_start,  NULL                }
 };
 
 
@@ -162,7 +167,7 @@ static GList    * parse_path_data     (const gchar  *data);
  * @position: position in the image's vectors stack where to add the vectors
  * @error:    location to store possible errors
  *
- * Imports one or more paths from a SVG file.
+ * Imports one or more paths and basic shapes from a SVG file.
  *
  * Return value: %TRUE on success, %FALSE if an error occured
  **/
@@ -191,7 +196,7 @@ gimp_vectors_import_file (GimpImage    *image,
  * @scale:  should the SVG be scaled to fit the image dimensions
  * @error:  location to store possible errors
  *
- * Imports one or more paths from a SVG file.
+ * Imports one or more paths and basic shapes from a SVG file.
  *
  * Return value: %TRUE on success, %FALSE if an error occured
  **/
@@ -571,6 +576,59 @@ svg_handler_path_start (SvgHandler   *handler,
       names++;
       values++;
     }
+
+  handler->paths = g_list_prepend (handler->paths, path);
+}
+
+static void
+svg_handler_line_start (SvgHandler   *handler,
+                        const gchar **names,
+                        const gchar **values,
+                        SvgParser    *parser)
+{
+  SvgPath    *path  = g_new0 (SvgPath, 1);
+  GimpCoords  start = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+  GimpCoords  end   = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+  GimpStroke *stroke;
+
+  while (*names)
+    {
+      if (strcmp (*names, "id") == 0 && !path->id)
+        {
+          path->id = g_strdup (*values);
+        }
+      else if (strcmp (*names, "x1") == 0)
+        {
+          start.x = g_ascii_strtod (*values, NULL);
+        }
+      else if (strcmp (*names, "y1") == 0)
+        {
+          start.y = g_ascii_strtod (*values, NULL);
+        }
+      else if (strcmp (*names, "x2") == 0)
+        {
+          end.x = g_ascii_strtod (*values, NULL);
+        }
+      else if (strcmp (*names, "y2") == 0)
+        {
+          end.y = g_ascii_strtod (*values, NULL);
+        }
+      else if (strcmp (*names, "transform") == 0 && !handler->transform)
+        {
+          GimpMatrix3  matrix;
+
+          if (parse_svg_transform (*values, &matrix))
+            handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+        }
+
+      names++;
+      values++;
+    }
+
+  stroke = gimp_bezier_stroke_new_moveto (&start);
+  gimp_bezier_stroke_lineto (stroke, &end);
+
+  path->strokes = g_list_prepend (path->strokes, stroke);
 
   handler->paths = g_list_prepend (handler->paths, path);
 }

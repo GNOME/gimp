@@ -1,5 +1,10 @@
 2004-08-21  Sven Neumann  <sven@gimp.org>
 
+	* app/vectors/gimpvectors-import.c: added support for importing
+	the basic SVG shape "line". Other shapes will follow...
+
+2004-08-21  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/layers-actions.[ch]
 	* app/actions/layers-commands.[ch]
 	* app/widgets/gimplayertreeview.c: added actions to handle layer
