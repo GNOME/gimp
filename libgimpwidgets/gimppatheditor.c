@@ -39,9 +39,9 @@ static void gimp_path_editor_select_callback  (GtkWidget *widget, gpointer data)
 static void gimp_path_editor_deselect_callback (GtkWidget *widget,
 						gpointer data);
 static void gimp_path_editor_new_callback     (GtkWidget *widget, gpointer data);
-static void gimp_path_editor_delete_callback  (GtkWidget *widget, gpointer data);
 static void gimp_path_editor_move_callback    (GtkWidget *widget, gpointer data);
 static void gimp_path_editor_filesel_callback (GtkWidget *widget, gpointer data);
+static void gimp_path_editor_delete_callback  (GtkWidget *widget, gpointer data);
 
 static void gimp_path_editor_data_destroy_callback (gpointer *data);
 
@@ -106,12 +106,6 @@ gimp_path_editor_init (GimpPathEditor *gpe)
   gtk_signal_connect (GTK_OBJECT(gpe->new_button), "clicked",
 		      GTK_SIGNAL_FUNC(gimp_path_editor_new_callback), gpe);
 
-  gpe->delete_button = gtk_button_new ();
-  gtk_widget_set_sensitive (gpe->delete_button, FALSE);
-  gtk_box_pack_start (GTK_BOX (button_box), gpe->delete_button, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT(gpe->delete_button), "clicked",
-		      GTK_SIGNAL_FUNC(gimp_path_editor_delete_callback), gpe);
-
   gpe->up_button = gtk_button_new ();
   gtk_widget_set_sensitive (gpe->up_button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), gpe->up_button, TRUE, TRUE, 0);
@@ -123,6 +117,12 @@ gimp_path_editor_init (GimpPathEditor *gpe)
   gtk_box_pack_start (GTK_BOX (button_box), gpe->down_button, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT(gpe->down_button), "clicked",
 		      GTK_SIGNAL_FUNC(gimp_path_editor_move_callback), gpe);
+
+  gpe->delete_button = gtk_button_new ();
+  gtk_widget_set_sensitive (gpe->delete_button, FALSE);
+  gtk_box_pack_start (GTK_BOX (button_box), gpe->delete_button, TRUE, TRUE, 0);
+  gtk_signal_connect (GTK_OBJECT(gpe->delete_button), "clicked",
+		      GTK_SIGNAL_FUNC(gimp_path_editor_delete_callback), gpe);
 
   hadjustment = gtk_adjustment_new (0.0, 0.0, 1.0, 0.1, 0.2, 1.0);
   vadjustment = gtk_adjustment_new (0.0, 0.0, 1.0, 0.1, 0.2, 1.0);
@@ -269,15 +269,6 @@ gimp_path_editor_realize (GtkWidget *widget,
   pixmap = gdk_pixmap_create_from_xpm_d (parent->window,
 					 &mask,
 					 &style->bg[GTK_STATE_NORMAL],
-					 delete_xpm);
-  gtk_pixmap = gtk_pixmap_new (pixmap, mask);
-  gtk_container_add (GTK_CONTAINER (gpe->delete_button), gtk_pixmap);
-  gtk_widget_show (gtk_pixmap);
-  gtk_widget_show (gpe->delete_button);
-
-  pixmap = gdk_pixmap_create_from_xpm_d (parent->window,
-					 &mask,
-					 &style->bg[GTK_STATE_NORMAL],
 					 raise_xpm);
   gtk_pixmap = gtk_pixmap_new (pixmap, mask);
   gtk_container_add (GTK_CONTAINER (gpe->up_button), gtk_pixmap);
@@ -292,6 +283,15 @@ gimp_path_editor_realize (GtkWidget *widget,
   gtk_container_add (GTK_CONTAINER (gpe->down_button), gtk_pixmap);
   gtk_widget_show (gtk_pixmap);
   gtk_widget_show (gpe->down_button);
+
+  pixmap = gdk_pixmap_create_from_xpm_d (parent->window,
+					 &mask,
+					 &style->bg[GTK_STATE_NORMAL],
+					 delete_xpm);
+  gtk_pixmap = gtk_pixmap_new (pixmap, mask);
+  gtk_container_add (GTK_CONTAINER (gpe->delete_button), gtk_pixmap);
+  gtk_widget_show (gtk_pixmap);
+  gtk_widget_show (gpe->delete_button);
 
   /*
   for (list = GTK_LIST (gpe->dir_list)->children; list; list = list->next)
@@ -413,6 +413,33 @@ gimp_path_editor_new_callback (GtkWidget *widget,
 
 
 static void
+gimp_path_editor_move_callback (GtkWidget *widget,
+				gpointer   data)
+{
+  GimpPathEditor *gpe = GIMP_PATH_EDITOR (data);
+  GList          *move_list = NULL;
+  gint            pos;
+  gint            distance;
+
+  if (gpe->selected_item == NULL)
+    return;
+
+  pos = gtk_list_child_position (GTK_LIST (gpe->dir_list), gpe->selected_item);
+  distance = (widget == gpe->up_button) ? - 1 : 1;
+  move_list = g_list_append (move_list, gpe->selected_item);
+
+  gtk_signal_handler_block_by_data (GTK_OBJECT (gpe->selected_item), gpe);
+  gtk_list_remove_items_no_unref (GTK_LIST (gpe->dir_list), move_list);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (gpe->selected_item), gpe);
+  gtk_list_insert_items (GTK_LIST (gpe->dir_list), move_list, pos + distance);
+  gtk_list_select_item (GTK_LIST (gpe->dir_list), pos + distance);
+
+  gtk_signal_emit (GTK_OBJECT (gpe),
+		   gimp_path_editor_signals[GPE_PATH_CHANGED_SIGNAL]);
+}
+
+
+static void
 gimp_path_editor_delete_callback (GtkWidget *widget,
 				  gpointer   data)
 {
@@ -444,33 +471,6 @@ gimp_path_editor_delete_callback (GtkWidget *widget,
   if ((pos == gpe->number_of_items) && (pos > 0))
     pos--;
   gtk_list_select_item (GTK_LIST (gpe->dir_list), pos);
-
-  gtk_signal_emit (GTK_OBJECT (gpe),
-		   gimp_path_editor_signals[GPE_PATH_CHANGED_SIGNAL]);
-}
-
-
-static void
-gimp_path_editor_move_callback (GtkWidget *widget,
-				gpointer   data)
-{
-  GimpPathEditor *gpe = GIMP_PATH_EDITOR (data);
-  GList          *move_list = NULL;
-  gint            pos;
-  gint            distance;
-
-  if (gpe->selected_item == NULL)
-    return;
-
-  pos = gtk_list_child_position (GTK_LIST (gpe->dir_list), gpe->selected_item);
-  distance = (widget == gpe->up_button) ? - 1 : 1;
-  move_list = g_list_append (move_list, gpe->selected_item);
-
-  gtk_signal_handler_block_by_data (GTK_OBJECT (gpe->selected_item), gpe);
-  gtk_list_remove_items_no_unref (GTK_LIST (gpe->dir_list), move_list);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (gpe->selected_item), gpe);
-  gtk_list_insert_items (GTK_LIST (gpe->dir_list), move_list, pos + distance);
-  gtk_list_select_item (GTK_LIST (gpe->dir_list), pos + distance);
 
   gtk_signal_emit (GTK_OBJECT (gpe),
 		   gimp_path_editor_signals[GPE_PATH_CHANGED_SIGNAL]);

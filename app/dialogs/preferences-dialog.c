@@ -107,6 +107,7 @@ static   char *       old_brush_path;
 static   char *       old_pattern_path;
 static   char *       old_palette_path;
 static   char *       old_plug_in_path;
+static   char *       old_module_path;
 static   char *       old_gradient_path;
 static   float        old_monitor_xres;
 static   float        old_monitor_yres;
@@ -120,6 +121,7 @@ static   char *       edit_brush_path = NULL;
 static   char *       edit_pattern_path = NULL;
 static   char *       edit_palette_path = NULL;
 static   char *       edit_plug_in_path = NULL;
+static   char *       edit_module_path = NULL;
 static   char *       edit_gradient_path = NULL;
 static   int          edit_stingy_memory_use;
 static   int          edit_tile_cache_size;
@@ -320,6 +322,7 @@ file_prefs_save_callback (GtkWidget *widget,
   gchar *save_pattern_path;
   gchar *save_palette_path;
   gchar *save_plug_in_path;
+  gchar *save_module_path;
   gchar *save_gradient_path;
   int restart_notification = FALSE;
 
@@ -337,6 +340,7 @@ file_prefs_save_callback (GtkWidget *widget,
   save_pattern_path = pattern_path;
   save_palette_path = palette_path;
   save_plug_in_path = plug_in_path;
+  save_module_path = module_path;
   save_gradient_path = gradient_path;
   save_num_processors = num_processors;
 
@@ -490,6 +494,12 @@ file_prefs_save_callback (GtkWidget *widget,
       plug_in_path = edit_plug_in_path;
       restart_notification = TRUE;
     }
+  if (file_prefs_strcmp (module_path, edit_module_path))
+    {
+      update = g_list_append (update, "module-path");
+      module_path = edit_module_path;
+      restart_notification = TRUE;
+    }
   if (file_prefs_strcmp (gradient_path, edit_gradient_path))
     {
       update = g_list_append (update, "gradient-path");
@@ -523,6 +533,7 @@ file_prefs_save_callback (GtkWidget *widget,
   pattern_path = save_pattern_path;
   palette_path = save_palette_path;
   plug_in_path = save_plug_in_path;
+  module_path = save_module_path;
   gradient_path = save_gradient_path;
 
   if (restart_notification)
@@ -611,6 +622,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   file_prefs_strset (&edit_pattern_path, old_pattern_path);
   file_prefs_strset (&edit_palette_path, old_palette_path);
   file_prefs_strset (&edit_plug_in_path, old_plug_in_path);
+  file_prefs_strset (&edit_module_path, old_module_path);
   file_prefs_strset (&edit_gradient_path, old_gradient_path);
 
   file_prefs_strset (&image_title_format, old_image_title_format);
@@ -975,8 +987,9 @@ file_pref_cmd_callback (GtkWidget *widget,
       {N_("Brushes"),   N_("Select Brushes Dir"),   &edit_brush_path},
       {N_("Gradients"), N_("Select Gradients Dir"), &edit_gradient_path},
       {N_("Patterns"),  N_("Select Patterns Dir"),  &edit_pattern_path},
-      {N_("Palettes"),  N_("Select Palette Dir"),   &edit_palette_path},
-      {N_("Plug-ins"),  N_("Select Plug-in Dir"),   &edit_plug_in_path}
+      {N_("Palettes"),  N_("Select Palettes Dir"),   &edit_palette_path},
+      {N_("Plug-ins"),  N_("Select Plug-ins Dir"),   &edit_plug_in_path},
+      {N_("Modules"),  N_("Select Modules Dir"),   &edit_module_path}
     };
   static const struct {
     char *label;
@@ -1008,6 +1021,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 	  edit_pattern_path = file_prefs_strdup (pattern_path);
 	  edit_palette_path = file_prefs_strdup (palette_path);
 	  edit_plug_in_path = file_prefs_strdup (plug_in_path);
+	  edit_module_path = file_prefs_strdup (module_path);
 	  edit_gradient_path = file_prefs_strdup (gradient_path);
 	  edit_stingy_memory_use = stingy_memory_use;
 	  edit_tile_cache_size = tile_cache_size;
@@ -1056,6 +1070,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       file_prefs_strset (&old_pattern_path, edit_pattern_path);
       file_prefs_strset (&old_palette_path, edit_palette_path);
       file_prefs_strset (&old_plug_in_path, edit_plug_in_path);
+      file_prefs_strset (&old_module_path, edit_module_path);
       file_prefs_strset (&old_gradient_path, edit_gradient_path);
 
       for (i = 0; i < nmem_size_units; i++)

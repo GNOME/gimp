@@ -1,3 +1,23 @@
+1999-03-14  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* gimprc.in: removed two unused directories from plug-in-path.
+
+	* app/file_new_dialog.c: make the first spinbutton grab the focus
+	and one more unit initialisation bugfix
+
+	* app/interface.c: grab focus in query_[string|int|..]_box()
+	This still needs to be done in many dialogs to be consistent.
+
+	* app/preferences_dialog.c: made the module-path configurable
+
+	* libgimp/gimppatheditor.[ch]: change the order of the buttons to
+	match the order in the L&C dialog
+
+	* libgimp/gimpsizeentry.[ch]: enabled highlighting of the
+	spinbuttons' contents on focus_in_event.
+	Ugly new function gimp_size_entry_grab_focus() because it seems
+	impossible to implement gtk_widget_grab_focus(sizeentry). 
+
 Sun Mar 14 17:56:14 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* app/preferences_dialog.c: correctly set the status of the

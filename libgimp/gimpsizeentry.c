@@ -27,13 +27,17 @@ static void gimp_size_entry_unit_callback             (GtkWidget *widget,
 
 static void gimp_size_entry_value_callback            (GtkWidget *widget,
 						       gpointer   data);
-static void gimp_size_entry_value_focus_out_callback  (GtkWidget *widget,
+static int  gimp_size_entry_value_focus_out_callback  (GtkWidget *widget,
 						       GdkEvent  *event,
 						       gpointer   data);
 
 static void gimp_size_entry_refval_callback           (GtkWidget *widget,
 						       gpointer   data);
-static void gimp_size_entry_refval_focus_out_callback (GtkWidget *widget,
+static int  gimp_size_entry_refval_focus_out_callback (GtkWidget *widget,
+						       GdkEvent  *event,
+						       gpointer   data);
+
+static int  gimp_size_entry_focus_in_callback         (GtkWidget *widget,
 						       GdkEvent  *event,
 						       gpointer   data);
 
@@ -239,6 +243,10 @@ gimp_size_entry_new (gint             number_of_fields,
       gtk_signal_connect (GTK_OBJECT (gsef->value_spinbutton), "changed",
 			  (GtkSignalFunc) gimp_size_entry_value_callback, gsef);
       gtk_signal_connect (GTK_OBJECT (gsef->value_spinbutton),
+			  "focus_in_event",
+			  (GdkEventFunc) gimp_size_entry_focus_in_callback,
+			  gsef);
+      gtk_signal_connect (GTK_OBJECT (gsef->value_spinbutton),
 			  "focus_out_event",
 			  (GdkEventFunc) gimp_size_entry_value_focus_out_callback,
 			  gsef);
@@ -261,6 +269,10 @@ gimp_size_entry_new (gint             number_of_fields,
 				     i+1, i+2, 1, 2);
 	  gtk_signal_connect (GTK_OBJECT (gsef->refval_spinbutton), "changed",
 			      (GtkSignalFunc) gimp_size_entry_refval_callback,
+			      gsef);
+	  gtk_signal_connect (GTK_OBJECT (gsef->refval_spinbutton),
+			      "focus_in_event",
+			      (GdkEventFunc) gimp_size_entry_focus_in_callback,
 			      gsef);
 	  gtk_signal_connect (GTK_OBJECT (gsef->refval_spinbutton),
 			      "focus_out_event",
@@ -504,7 +516,7 @@ gimp_size_entry_value_callback (GtkWidget *widget,
     }
 }
 
-static void
+static int
 gimp_size_entry_value_focus_out_callback (GtkWidget *widget,
 					  GdkEvent  *event,
 					  gpointer   data)
@@ -513,8 +525,12 @@ gimp_size_entry_value_focus_out_callback (GtkWidget *widget,
 
   gsef = (GimpSizeEntryField*)data;
 
+  gtk_editable_select_region (GTK_EDITABLE (widget), 0, 0);
+
   gtk_spin_button_update (GTK_SPIN_BUTTON (gsef->value_spinbutton));
   gimp_size_entry_value_callback (widget, data);
+
+  return TRUE;
 }
 
 
@@ -721,7 +737,7 @@ gimp_size_entry_refval_callback (GtkWidget *widget,
     }
 }
 
-static void
+static int
 gimp_size_entry_refval_focus_out_callback (GtkWidget *widget,
 					   GdkEvent  *event,
 					   gpointer   data)
@@ -730,8 +746,12 @@ gimp_size_entry_refval_focus_out_callback (GtkWidget *widget,
 
   gsef = (GimpSizeEntryField*)data;
 
+  gtk_editable_select_region (GTK_EDITABLE (widget), 0, 0);
+
   gtk_spin_button_update (GTK_SPIN_BUTTON (gsef->refval_spinbutton));
   gimp_size_entry_refval_callback (widget, data);
+
+  return TRUE;
 }
 
 
@@ -809,4 +829,34 @@ gimp_size_entry_unit_callback (GtkWidget *widget,
 			       gimp_unit_menu_get_unit(GIMP_UNIT_MENU(widget)));
   gtk_signal_emit (GTK_OBJECT (data),
 		   gimp_size_entry_signals[GSE_UNIT_CHANGED_SIGNAL]);
+}
+
+
+/*  focus stuff  **********/
+
+void
+gimp_size_entry_grab_focus (GimpSizeEntry *gse)
+{
+  GimpSizeEntryField *gsef;
+
+  g_return_if_fail (gse != NULL);
+  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+
+  gsef = (GimpSizeEntryField*) gse->fields->data;
+
+  gtk_widget_grab_focus (gse->show_refval ?
+			 gsef->refval_spinbutton : gsef->value_spinbutton);
+}
+
+
+/*  this one highlights the spinbutton's contents
+ */
+static int
+gimp_size_entry_focus_in_callback (GtkWidget *widget,
+				   GdkEvent  *event,
+				   gpointer   data)
+{
+  gtk_editable_select_region (GTK_EDITABLE (widget), 0, -1);
+
+  return TRUE;
 }

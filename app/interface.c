@@ -914,6 +914,7 @@ query_string_box (char        *title,
   gtk_box_pack_start (GTK_BOX (query_box->vbox), entry, TRUE, TRUE, 0);
   if (initial)
     gtk_entry_set_text (GTK_ENTRY (entry), gettext(initial));
+  gtk_widget_grab_focus (entry);
   gtk_widget_show (entry);
 
   query_box->entry = entry;
@@ -947,6 +948,7 @@ query_int_box (char        *title,
 						   1, 10, 0));
   spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_box_pack_start (GTK_BOX (query_box->vbox), spinbutton, TRUE, TRUE, 0);
+  gtk_widget_grab_focus (spinbutton);
   gtk_widget_show (spinbutton);
 
   query_box->entry = spinbutton;
@@ -981,6 +983,7 @@ query_float_box (char        *title,
 						   1, 10, 0));
   spinbutton = gtk_spin_button_new (adjustment, 1.0, digits);
   gtk_box_pack_start (GTK_BOX (query_box->vbox), spinbutton, TRUE, TRUE, 0);
+  gtk_widget_grab_focus (spinbutton);
   gtk_widget_show (spinbutton);
 
   query_box->entry = spinbutton;
@@ -1022,6 +1025,7 @@ query_size_box (char        *title,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0, initial);
 
   gtk_box_pack_start (GTK_BOX (query_box->vbox), sizeentry, TRUE, TRUE, 0);
+  gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (sizeentry));
   gtk_widget_show (sizeentry);
 
   query_box->entry = sizeentry;

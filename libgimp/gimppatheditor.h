@@ -45,9 +45,9 @@ struct _GimpPathEditor
   GtkWidget *upper_hbox;
 
   GtkWidget *new_button;
-  GtkWidget *delete_button;
   GtkWidget *up_button;
   GtkWidget *down_button;
+  GtkWidget *delete_button;
 
   GtkWidget *file_selection;
 

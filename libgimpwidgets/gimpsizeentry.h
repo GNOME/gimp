@@ -170,6 +170,10 @@ GUnit       gimp_size_entry_get_unit              (GimpSizeEntry *gse);
 void        gimp_size_entry_set_unit              (GimpSizeEntry *gse, 
 					           GUnit          unit);
 
+/* this makes the first spinbutton grab the focus
+ */
+void        gimp_size_entry_grab_focus            (GimpSizeEntry *gse);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

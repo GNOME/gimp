@@ -298,7 +298,7 @@ file_new_cmd_callback (GtkWidget           *widget,
       vals->xresolution = gdisp->gimage->xresolution;
       vals->yresolution = gdisp->gimage->yresolution;
       vals->unit = gdisp->gimage->unit;
-      vals->res_unit = UNIT_INCH;
+      vals->res_unit = last_res_unit;
     }
   else
     {
@@ -393,6 +393,7 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_container_set_border_width (GTK_CONTAINER (vals->size_sizeentry), 4);
   gtk_box_pack_start (GTK_BOX (vbox), vals->size_sizeentry, TRUE, TRUE, 0);
 
+  gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (vals->size_sizeentry));
   gtk_widget_show (vals->size_sizeentry);
 
   /* resolution frame */
