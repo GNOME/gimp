@@ -14,9 +14,9 @@ The \fIgimp\fP is the GNU Image Manipulation Program. It is used to edit and
 manipulate images. It can load and save a variety of image formats and can
 be used to convert between formats. 
 .PP
-Gimp can also be used as a paint program. It features a set of drawing and painting
-tools suchs as airbrush, clone, pencil, and paint brush. Painting and
-drawing tools can be applied to an image with a variety of paint modes.
+Gimp can also be used as a paint program. It features a set of drawing and 
+painting tools suchs as airbrush, clone, pencil, and paint brush. Painting 
+and drawing tools can be applied to an image with a variety of paint modes.
 It also offers an extensive array of selection tools like
  rectangle, ellipse, fuzzy select, bezier select,
  intelligent scissors, and select by color.  
@@ -46,7 +46,7 @@ Run without a user interface.
 .TP 8
 .B \-\-no\-data
 Do not load patterns, gradients, palettes, or brushes. Often useful
-in non-intractive situations where startup time is to be minimized.
+in non-interactive situations where startup time is to be minimized.
 .TP 8
 .B \-\-verbose
 Show startup messages. FIXME!
@@ -58,7 +58,7 @@ will result in slower performance than using shared memory.
 .TP 8
 .B \-\-no\-xshm
 Do not use the X Shared Memory extension. If GIMP is being displayed
-on a remote X server, this probabaly needs to be enabled. Also useful
+on a remote X server, this probably needs to be enabled. Also useful
 for any X server that doesnt properly support the X shared memory extension.
 This will result in slower performance than with X shared memory enabled.
 .TP 8
@@ -94,55 +94,54 @@ to get the name of a resource file that overrides the global resources
 stored in the RESOURCE_MANAGER property.
 .SH FILES
 
-	Most gimp configuration is in read from the users init file,
-\fB$HOME\fP/.gimp/gimprc. The sytem wide equilivent is in
+	Most gimp configuration is read in from the users init file,
+\fB$HOME\fP/.gimp/gimprc. The sytem wide equivalent is in
 \fB$PREFIX\fP/share/gimp/gimprc. The system wide file is parsed first
-and the user gimpirc can override the sytem
+and the user gimprc can override the sytem
 settings. \fB$PREFIX\fP/share/gimp/gimprc_user is the default gimprc
-placed in uses home directories the first time gimp is ran.
+placed in users home directories the first time gimp is ran.
 
 \fB$HOME\fP/.gimp/gtkrc - users set of GTK config settings. Options
 such as widget color and fonts sizes can be set here.
 
-\fB$PREFIX\fP/share/gtkrc - sytem wide default set of GTK config settigs.
+\fB$PREFIX\fP/share/gtkrc - sytem wide default set of GTK config settings.
 
-\fB$HOME\fP/.gimp/menurc - user's set of keybingings
+\fB$HOME\fP/.gimp/menurc - user's set of keybindings.
 
-\fB$PREFIX\fP/share/menurc - system wide set of keybindings
+\fB$PREFIX\fP/share/menurc - system wide set of keybindings.
 
-\fB$HOME\fP/.gimp/plug-ins - location of user installed plugins
+\fB$HOME\fP/.gimp/plug-ins - location of user installed plugins.
 
-\fB$HOME\fP/.gimp/pluginrc - plugin initilization values are stored
-here. This file is parsed onstartup and regeneated if need be.
+\fB$HOME\fP/.gimp/pluginrc - plugin initialization values are stored
+here. This file is parsed onstartup and regenerated if need be.
 
-\fB$HOME\fP/.gimp/tmp - default location of gimp use tmp space
+\fB$HOME\fP/.gimp/tmp - default location that gimp uses as temporary space.
 
 	Gimp's data files are stored in \fB$PREFIX\fP/share/gimp where
 \fB$PREFIX\fP is set on install, but is typically /usr/local.
 
-\fB$PREFIX\fP/share/gimp/brushes - system wide brush files
+\fB$PREFIX\fP/share/gimp/brushes - system wide brush files.
 
 \fB$HOME\fP/.gimp/palettes - user created and installed brush
 files. This files are in the .gbr (gimp brush) format.
 
-\fB$PREFIX\fP/share/gimp/palettes - the system wide
-palette files
+\fB$PREFIX\fP/share/gimp/palettes - the system wide palette files.
 
-\fB$HOME\fP/.gimp/palettes - user created and modified palette files
+\fB$HOME\fP/.gimp/palettes - user created and modified palette files.
 
 \fB$PREFIX\fP/share/gimp/patterns - basic set of patterns for use in
-gimp
+gimp.
 
 \fB$HOME\fP/.gimp/patterns - user created and installed gimp pattern
 files. This files are in the .pat format.
 
 \fB$PREFIX\fP/share/gimp/gradients - standard system wide set of
-gradient files
+gradient files.
 
 \fB$HOME\fP/.gimp/gradients - user created and installed gradient
-files
+files.
 
-\fB$PREFIX\fP/share/gimp/palettes - system wide palette files
+\fB$PREFIX\fP/share/gimp/palettes - system wide palette files.
 
 \fB$HOME\fP/.gimp/palettes - user created and installed palette files.
 
@@ -151,12 +150,13 @@ used in Script-Fu and other scripting extensions.
 
 \fB$HOME\fP/.gimp/scripts - user created and installed scripts.
 
-\fB$PREFIX\fP/share/gimp/gflares - system wide 
+\fB$PREFIX\fP/share/gimp/gflares - system wide directory used by the gflare 
+plug-in.
 
 \fB$HOME\fP/.gimp/palettes - user created and installed palette files.
 
 \fB$PREFIX\fP/share/gimp/gimp_splash.ppm - graphic file used for the
-gimp splash screen
+gimp splash screen.
 
 \fB$PREFIX\fP/share/gimp/gimp_logo.ppm - graphic file used in the gimp 
 about dialog.
@@ -185,7 +185,7 @@ check to see if the bug is mentioned in the FAQ's or the mailing list
 archive. See the section on Other Info for locations of these.
 	When supporting Gimp bugs, it is important to include a
 reliable way to reproduce the bug, verison number of Gimp (and
-probabaly GTK), OS name and verison, and any relevent hardware
+probabaly GTK), OS name and verison, and any relevant hardware
 specs. It is also very important to include as much info about the
 Xserver the problem was found on as possible including at least server 
 name, the visual, and the bit depth.
@@ -196,11 +196,11 @@ better.
 .SH OTHER INFO
 
 	The cannonical place to find GIMP info is at http://www.gimp.org.
-Here you can find links to just about every other gimp site, tutorials, data sets, 
-mailing list archives, and more.
+Here you can find links to just about every other gimp site, tutorials, data 
+sets, mailing list archives, and more.
 	There is also a Gimp User Manual available at 
-http://www.dtek.chalmers.se/~d95olofs/manual/ that goes into much more detail about
-the interactive use of Gimp.
+http://www.dtek.chalmers.se/~d95olofs/manual/ that goes into much more detail 
+about the interactive use of Gimp.
 	The latest verison of Gimp and the gtk libs is always available at 
 ftp://ftp.gimp.org.
 

@@ -1,3 +1,7 @@
+Fri Mar 13 17:22:46 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* docs/gimp.1: fixed some typos in the man-page
+
 Fri Mar 13 10:21:21 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/convert.c (generate_histogram_rgb): fixed buffer overrun in
