@@ -18,6 +18,33 @@ Utilities to set up and manipulate vectors.
 #GimpMatrix4
 </para>
 
+<!-- ##### STRUCT GimpVector2 ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+
+<!-- ##### STRUCT GimpVector3 ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+@z: 
+
+<!-- ##### STRUCT GimpVector4 ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+@z: 
+@w: 
+
 <!-- ##### FUNCTION gimp_vector2_inner_product ##### -->
 <para>
 

@@ -1,9 +1,5 @@
 <SECTION>
 <FILE>gimpmath</FILE>
-G_PI
-G_PI_2
-G_PI_4
-G_SQRT2
 G_MAXRAND
 RINT
 ROUND
@@ -16,16 +12,15 @@ FINITE
 </SECTION>
 
 <SECTION>
-<FILE>gimpmathtypes</FILE>
-GimpMatrix3[3][3]
-GimpMatrix4[4][4]
-GimpVector2
-GimpVector3
-GimpVector4
+<FILE>gimpmd5</FILE>
+<TITLE>GimpMD5</TITLE>
+gimp_md5_get_digest
 </SECTION>
 
 <SECTION>
 <FILE>gimpmatrix</FILE>
+GimpMatrix3[3][3]
+GimpMatrix4[4][4]
 gimp_matrix3_transform_point
 gimp_matrix3_mult
 gimp_matrix3_identity
@@ -45,6 +40,9 @@ gimp_matrix4_to_deg
 
 <SECTION>
 <FILE>gimpvector</FILE>
+GimpVector2
+GimpVector3
+GimpVector4
 gimp_vector2_inner_product
 gimp_vector2_inner_product_val
 gimp_vector2_cross_product
@@ -89,4 +87,3 @@ gimp_vector_2d_to_3d
 gimp_vector_2d_to_3d_val
 gimp_vector_3d_to_2d
 </SECTION>
-

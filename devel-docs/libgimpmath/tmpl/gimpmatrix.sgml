@@ -24,6 +24,18 @@ basic matrix manipulations and tests.
 #GimpVector4
 </para>
 
+<!-- ##### TYPEDEF GimpMatrix3[3][3] ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF GimpMatrix4[4][4] ##### -->
+<para>
+
+</para>
+
+
 <!-- ##### FUNCTION gimp_matrix3_transform_point ##### -->
 <para>
 

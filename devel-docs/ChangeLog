@@ -1,11 +1,25 @@
 2002-05-13  Sven Neumann  <sven@gimp.org>
 
+	* libgimpmath/libgimpmath-docs.sgml: added GimpMD5 section, removed
+	GimpMathTypes.
+
+	* libgimpmath/libgimpmath-sections.txt: updated.
+
+	* libgimpmath/tmpl/gimpmathtypes.sgml: removed.
+
+	* libgimpmath/tmpl/gimpmd5.sgml: added GimpMD5 template.
+
+	* libgimpmath/tmpl/gimpmatrix.sgml
+	* libgimpmath/tmpl/gimpvector.sgml: updated.
+
+2002-05-13  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/libgimpwidgets-docs.sgml: added GimpStock section,
 	removed GimpWidgetTypes.
 
 	* libgimpwidgets/libgimpwidgets-sections.txt: updated.
 
-	* libgimpwidgets/tmpl/gimpstock.sgml: added GimpStock templates.
+	* libgimpwidgets/tmpl/gimpstock.sgml: added GimpStock template.
 
 	* libgimpwidgets/tmpl/gimpwidgetstypes.sgml: removed.
 

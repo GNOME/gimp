@@ -1,8 +1,8 @@
 <!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
-<!entity libgimpmath-gimpmath SYSTEM "sgml/gimpmath.sgml">
-<!entity libgimpmath-gimpmathtypes SYSTEM "sgml/gimpmathtypes.sgml">
-<!entity libgimpmath-gimpmatrix SYSTEM "sgml/gimpmatrix.sgml">
-<!entity libgimpmath-gimpvector SYSTEM "sgml/gimpvector.sgml">
+<!entity GimpMath SYSTEM "sgml/gimpmath.sgml">
+<!entity GimpMatrix SYSTEM "sgml/gimpmatrix.sgml">
+<!entity GimpVector SYSTEM "sgml/gimpvector.sgml">
+<!entity GimpMD5 SYSTEM "sgml/gimpmd5.sgml">
 ]>
 <book id="index">
   <bookinfo>
@@ -11,9 +11,9 @@
 
   <chapter id="libgimpmath">
     <title>GIMP Math Library</title>
-    &libgimpmath-gimpmath;
-    &libgimpmath-gimpmathtypes;
-    &libgimpmath-gimpmatrix;
-    &libgimpmath-gimpvector;
+    &GimpMath;
+    &GimpMatrix;
+    &GimpVector;
+    &GimpMD5;
   </chapter>
 </book>
