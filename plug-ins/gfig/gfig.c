@@ -1049,7 +1049,7 @@ gfig_list_load_all (GList *plist)
 
 	      g_free (filename);
 	    }
-	  g_close_close (dir);
+	  g_dir_close (dir);
 	}
     }
 

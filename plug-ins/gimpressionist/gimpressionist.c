@@ -271,13 +271,13 @@ void readdirintolist_real(char *subdir, GtkWidget *list, char *selected)
     }
   }
 
-  dir = g_dir_open(subdir);
+  dir = g_dir_open(subdir, 0, NULL);
 
   if(!dir)
     return;
 
   for(;;) {
-    if(!(de = g_dir_read-name(dir))) break;
+    if(!(de = g_dir_read_name(dir))) break;
     fpath = g_strdup_printf("%s" G_DIR_SEPARATOR_S "%s", subdir, de);
     stat(fpath, &st);
     g_free(fpath);

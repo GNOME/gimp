@@ -411,21 +411,21 @@ static void    plugin_run   (gchar      *name,
 
 static void     plug_in_parse_gflare_path (void);
 
-static GFlare * gflare_new_with_default (gchar  *new_name);
-static GFlare * gflare_dup              (GFlare *src,
-                                         gchar  *new_name);
-static void     gflare_copy             (GFlare *dest,
-					 GFlare *src);
-static GFlare * gflare_load             (gchar  *filename,
-					 gchar  *name);
-static void     gflare_save             (GFlare *gflare);
-static void     gflare_name_copy        (gchar  *dest,
-					 gchar  *src);
+static GFlare * gflare_new_with_default (const gchar *new_name);
+static GFlare * gflare_dup              (GFlare      *src,
+                                         const gchar *new_name);
+static void     gflare_copy             (GFlare      *dest,
+					 GFlare      *src);
+static GFlare * gflare_load             (const gchar *filename,
+					 const gchar *name);
+static void     gflare_save             (GFlare      *gflare);
+static void     gflare_name_copy        (gchar       *dest,
+					 const gchar *src);
 
-static gint     gflares_list_insert     (GFlare *gflare);
-static GFlare * gflares_list_lookup     (gchar  *name);
-static gint     gflares_list_index      (GFlare *gflare);
-static gint     gflares_list_remove     (GFlare *gflare);
+static gint     gflares_list_insert     (GFlare      *gflare);
+static GFlare * gflares_list_lookup     (const gchar *name);
+static gint     gflares_list_index      (GFlare      *gflare);
+static gint     gflares_list_remove     (GFlare      *gflare);
 static void     gflares_list_load_all   (void);
 static void     gflares_list_free_all   (void);
 
@@ -1341,7 +1341,7 @@ gflare_new ()
 }
 
 GFlare *
-gflare_new_with_default (gchar *new_name)
+gflare_new_with_default (const gchar *new_name)
 {
   DEBUG_PRINT (("gflare_new_with_default %s\n", new_name));
 
@@ -1349,7 +1349,7 @@ gflare_new_with_default (gchar *new_name)
 }
 
 GFlare *
-gflare_dup (GFlare *src, gchar *new_name)
+gflare_dup (GFlare *src, const gchar *new_name)
 {
   GFlare	*dest;
 
@@ -1395,7 +1395,7 @@ gflare_free (GFlare *gflare)
 }
 
 GFlare *
-gflare_load (char *filename, char *name)
+gflare_load (const gchar *filename, const gchar *name)
 {
   FILE		*fp;
   GFlareFile	*gf;
@@ -1682,7 +1682,7 @@ gflare_write_gradient_name (GradientName name, FILE *fp)
 }
 
 void
-gflare_name_copy (gchar *dest, gchar *src)
+gflare_name_copy (gchar *dest, const gchar *src)
 {
   strncpy (dest, src, GFLARE_NAME_MAX);
   dest[GFLARE_NAME_MAX-1] = '\0';
@@ -1728,7 +1728,7 @@ gflares_list_insert (GFlare *gflare)
 }
 
 GFlare *
-gflares_list_lookup (gchar *name)
+gflares_list_lookup (const gchar *name)
 {
   GList		*tmp;
   GFlare	*gflare;

@@ -1,3 +1,17 @@
+2001-02-17  Manish Singh  <yosh@gimp.org>
+
+	* app/core/Makefile.am: add a -DGIMP_COMPILATION so cpercep can
+	optionally include glib.h. This needs to be done in the makefile.msc
+	too, but I'm unsure on the right way to do that.
+
+	* app/core/cpercep.c: guard #include <glib.h> in GIMP_COMPILATION.
+	cbrt() is a GNU extension, so define in terms of pow if we aren't
+	on glibc. Guard CLAMP against redefinition.
+
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gimpressionist/gimpressionist.c: make them build again
+
 2001-02-17  Hans Breuer  <hans@breuer.org>
 
 	* */*/makefile.msc */makefile.msc : from now on use 

@@ -57,12 +57,14 @@ from the Author.
 #include <stdlib.h>
 #include <math.h>
 
-#ifdef _MSC_VER
-/* msvc does not now cbrt() is it nonstandard ? */
+#ifndef __GLIBC__
+/* cbrt() is a GNU extension */
 #define cbrt(x) (pow(x, 1.0/3.0)) 
 #endif
 
+#ifdef GIMP_COMPILATION
 #include <glib.h> /* to get working 'inline' */
+#endif
 
 /* defines:
 
@@ -158,7 +160,9 @@ static double xnn, znn;
 static double powtable[256];
 
 
+#ifndef CLAMP
 #define CLAMP(x,l,u) ((x)<(l)?(l):((x)>(u)?(u):(x)))
+#endif
 
 
 static void
