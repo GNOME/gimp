@@ -1,3 +1,10 @@
+Sat May 15 14:11:46 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* app/clone.c
+	* app/paint_core.c: handle the clone tool differently (works as
+	usual without the line preview) until I figure out something 
+	nicer.
+	
 Sat May 15 03:15:49 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/paint_core.c: Works even better if the cursor position is

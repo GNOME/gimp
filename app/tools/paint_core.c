@@ -242,7 +242,6 @@ paint_core_button_press (tool, bevent, gdisp_ptr)
       paint_core->lastpressure = paint_core->curpressure;
       paint_core->lastxtilt = paint_core->curxtilt;
       paint_core->lastytilt = paint_core->curytilt;
-      ;
     }
   else
     (* paint_core->paint_func) (paint_core, drawable, MOTION_PAINT);
@@ -416,6 +415,7 @@ paint_core_control (tool, action, gdisp_ptr)
     }
 }
 
+
 void
 paint_core_draw (tool)
      Tool * tool;
@@ -470,6 +470,7 @@ paint_core_new (type)
   private = (PaintCore *) g_malloc (sizeof (PaintCore));
 
   private->core = draw_core_new (paint_core_draw);
+
   private->pick_colors = FALSE;
 
   tool->type = type;

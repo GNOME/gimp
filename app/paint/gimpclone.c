@@ -339,10 +339,48 @@ clone_paint_func (PaintCore *paint_core,
 		     src_gdisp->canvas->window,
 		     active_tool);
   else if (state == MOTION_PAINT)
-    draw_core_resume (paint_core->core, active_tool);
+    draw_core_resume (paint_core->core, active_tool);      
 
   return NULL;
 }
+
+void
+clone_cursor_update (tool, mevent, gdisp_ptr)
+     Tool *tool;
+     GdkEventMotion *mevent;
+     gpointer gdisp_ptr;
+{
+  GDisplay *gdisp;
+  Layer *layer;
+  GdkCursorType ctype = GDK_TOP_LEFT_ARROW;
+  int x, y;
+
+  gdisp = (GDisplay *) gdisp_ptr;
+
+  gdisplay_untransform_coords (gdisp, (double) mevent->x, (double) mevent->y,
+			       &x, &y, TRUE, FALSE);
+ 
+  if ((layer = gimage_get_active_layer (gdisp->gimage))) 
+    {
+      int off_x, off_y;
+      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+
+      if (x >= off_x && y >= off_y &&
+	  x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
+	  y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
+	{
+	  /*  One more test--is there a selected region?
+	   *  if so, is cursor inside?
+	   */
+	  if (gimage_mask_is_empty (gdisp->gimage))
+	    ctype = GDK_PENCIL;
+	  else if (gimage_mask_value (gdisp->gimage, x, y))
+	    ctype = GDK_PENCIL;
+	}
+    }
+  gdisplay_install_tool_cursor (gdisp, ctype);
+}
+
 
 Tool *
 tools_new_clone ()
@@ -361,6 +399,9 @@ tools_new_clone ()
     }
 
   tool = paint_core_new (CLONE);
+  /* the clone tool provides its own cursor_update_function 
+     until I figure out somethinh nicer -- Sven  */
+  tool->cursor_update_func = clone_cursor_update;
 
   private = (PaintCore *) tool->private;
   private->paint_func = clone_paint_func;
@@ -382,7 +423,7 @@ clone_draw (Tool *tool)
 
   paint_core = (PaintCore *) tool->private;
 
-  if (clone_options->type == IMAGE_CLONE)
+  if (paint_core->core->gc != NULL && clone_options->type == IMAGE_CLONE)
     {
       gdk_draw_line (paint_core->core->win, paint_core->core->gc,
 		     trans_tx - (TARGET_WIDTH >> 1), trans_ty,
@@ -547,6 +588,7 @@ clone_motion (PaintCore *paint_core,
 			   PAINT_OPTIONS_GET_PAINT_MODE (clone_options),
 			   SOFT, CONSTANT);
 }
+
 
 static void
 clone_line_image (GImage        *dest,
