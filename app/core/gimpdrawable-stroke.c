@@ -132,15 +132,14 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
 
   width = options->width;
 
-  if (options->resolution > 0.0 &&
-      options->unit != GIMP_UNIT_PIXEL)
+  if (options->unit != GIMP_UNIT_PIXEL)
     {
       gimp_scan_convert_set_resolution (scan_convert,
                                         gimage->xresolution,
                                         gimage->yresolution);
 
-      width *= options->resolution /
-                    _gimp_unit_get_factor (gimage->gimp, options->unit);
+      width *= (gimage->xresolution /
+                _gimp_unit_get_factor (gimage->gimp, options->unit));
     }
 
   gimp_scan_convert_stroke (scan_convert, width,

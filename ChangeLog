@@ -1,3 +1,11 @@
+2003-09-30  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-stroke.c
+	* app/core/gimpstrokeoptions.[ch]
+	* app/gui/stroke-dialog.c: removed the resolution property again.
+	The object should stay resolution independent. The resolution can
+	be taken from the image it is used with.
+
 2003-09-30  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpscanconvert.[ch]: Added support for setting

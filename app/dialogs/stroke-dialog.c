@@ -81,7 +81,6 @@ stroke_dialog_new (GimpItem    *item,
   if (!options)
     options = g_object_new (GIMP_TYPE_STROKE_OPTIONS,
                             "gimp", image->gimp,
-                            "resolution", gimp_item_get_image (item)->xresolution,
                             NULL);
 
   gimp_context_set_parent (GIMP_CONTEXT (options),
