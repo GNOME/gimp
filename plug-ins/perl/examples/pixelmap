@@ -3,6 +3,7 @@
 use Gimp::Feature 'pdl';
 use Gimp 1.099;
 use Gimp::Fu;
+use Gimp::Util;
 use PDL;
 
 use constant PI => 4 * atan2 1,1;
