@@ -122,7 +122,7 @@ blob_fill (Blob     *b,
 
 	  /* find bottom of gap */
 	  i2 = i1+2;
-	  while (!(present[i2] & EDGE_LEFT) && i2 < b->height) i2++;
+	  while (i2 < b->height && !(present[i2] & EDGE_LEFT)) i2++;
 	  
 	  if (i2 < b->height)
 	    {
@@ -173,7 +173,7 @@ blob_fill (Blob     *b,
 
 	  /* find bottom of gap */
 	  i2 = i1+2;
-	  while (!(present[i2] & EDGE_RIGHT) && i2 < b->height) i2++;
+	  while (i2 < b->height && !(present[i2] & EDGE_RIGHT)) i2++;
 	  
 	  if (i2 < b->height)
 	    {

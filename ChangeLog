@@ -1,3 +1,8 @@
+2004-02-23  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpinktool-blob.c: don't access the array before
+	checking if the index is within the valid bounds...
+
 2004-02-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-snap.[ch]: return the snapped coordinates as
