@@ -13,7 +13,7 @@
     (mapping 9 "context-gradient-previous")
     (mapping 10 "context-pattern-previous")
     (mapping 11 "context-brush-previous")
-    (mapping 12 "context-opacity-decreas-skip"))
+    (mapping 12 "context-opacity-decrease-skip"))
 
 (controller "ControllerLinuxInput"
     (options

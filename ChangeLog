@@ -1,3 +1,7 @@
+2004-06-16  Jakub Steiner <jimmac@ximian.com>
+
+	* etc/controllerrc: fix typo
+
 2004-06-16  Sven Neumann  <sven@gimp.org>
 
 	* modules/controller_linux_input.c
