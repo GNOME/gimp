@@ -167,8 +167,8 @@ ReadBMP (const gchar *name)
      !strncmp (magick,"PI",2) || !strncmp (magick,"CI",2)   ||
      !strncmp (magick,"CP",2)))
     {
-      g_message (_("'%s' is not a valid BMP file 0, magick = %c%c"),
-                 gimp_filename_to_utf8 (filename), magick[0], magick[1]);
+      g_message (_("'%s' is not a valid BMP file"),
+                 gimp_filename_to_utf8 (filename));
       return -1;
     }
 
@@ -176,13 +176,13 @@ ReadBMP (const gchar *name)
     {
       if (!ReadOK (fd, buffer, 12))
 	{
-          g_message (_("'%s' is not a valid BMP file 1"),
+          g_message (_("'%s' is not a valid BMP file"),
                       gimp_filename_to_utf8 (filename));
           return -1;
         }
       if (!ReadOK (fd, magick, 2))
 	{
-          g_message (_("'%s' is not a valid BMP file 2"),
+          g_message (_("'%s' is not a valid BMP file"),
                       gimp_filename_to_utf8 (filename));
           return -1;
         }
@@ -190,7 +190,7 @@ ReadBMP (const gchar *name)
 
   if (!ReadOK (fd, buffer, 12))
     {
-      g_message (_("'%s' is not a valid BMP file 3"),
+      g_message (_("'%s' is not a valid BMP file"),
                   gimp_filename_to_utf8 (filename));
       return -1;
     }
@@ -338,7 +338,7 @@ ReadBMP (const gchar *name)
       masks = g_new (Bitmap_Channel, 3);
       if (! ReadChannelMasks (fd, masks, 3))
         {
-          g_message (_("'%s' is not a valid BMP file 4"),
+          g_message (_("'%s' is not a valid BMP file"),
                       gimp_filename_to_utf8 (filename));
           return -1;
         }
