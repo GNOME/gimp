@@ -402,18 +402,30 @@ void
 gimp_data_create_filename (GimpData    *data,
                            const gchar *dest_dir)
 {
-  gchar *safename;
-  gchar *filename;
-  gchar *fullpath;
-  gint   i;
-  gint   unum = 1;
+  gchar  *safename;
+  gchar  *filename;
+  gchar  *fullpath;
+  gint    i;
+  gint    unum  = 1;
+  GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_DATA (data));
   g_return_if_fail (dest_dir != NULL);
   g_return_if_fail (g_path_is_absolute (dest_dir));
 
+  if (data->internal)
+    return;
+
   safename = g_filename_from_utf8 (gimp_object_get_name (GIMP_OBJECT (data)),
-                                                         -1, NULL, NULL, NULL);
+                                   -1, NULL, NULL, &error);
+  if (! safename)
+    {
+      g_warning ("gimp_data_create_filename:\n"
+                 "g_filename_from_utf8() failed for '%s': %s",
+                 gimp_object_get_name (GIMP_OBJECT (data)), error->message);
+      g_error_free (error);
+      return;
+    }
 
   if (safename[0] == '.')
     safename[0] = '-';

@@ -1,5 +1,10 @@
 2005-04-04  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdata.c (gimp_data_create_filename): return early if
+	called for an internal data object. Fixes bug #172581.
+
+2005-04-04  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/deinterlace.c (deinterlace): fixed boundary
 	conditions that led to incorrect preview (bug #172589).
 
