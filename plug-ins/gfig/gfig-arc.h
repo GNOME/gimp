@@ -26,8 +26,6 @@
 #ifndef __GFIG_ARC_H__
 #define __GFIG_ARC_H__
 
-Dobject *d_load_arc   (FILE *from);
-
 void     d_update_arc (GdkPoint *pnt);
 void     d_arc_start  (GdkPoint *pnt,
 		       gint      shift_down);

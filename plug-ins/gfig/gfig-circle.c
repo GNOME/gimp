@@ -35,49 +35,10 @@
 #include <libgimp/gimpui.h>
 
 #include "gfig.h"
+#include "gfig-dobject.h"
 #include "gfig-poly.h"
 
 #include "libgimp/stdplugins-intl.h"
-
-static Dobject *d_new_circle (gint x, gint y);
-
-static void
-d_save_circle (Dobject *obj,
-               GString *string)
-{
-  do_save_obj (obj, string);
-}
-
-Dobject *
-d_load_circle (FILE *from)
-{
-  Dobject *new_obj = NULL;
-  gint     xpnt;
-  gint     ypnt;
-  gchar    buf[MAX_LOAD_LINE];
-
-  while (get_line (buf, MAX_LOAD_LINE, from, 0))
-    {
-      /* kludge */
-      if (buf[0] == '<')
-          return new_obj;
-
-      if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
-        {
-          g_warning ("[%d] Internal load error while loading circle",
-                     line_no);
-          return NULL;
-        }
-
-      if (!new_obj)
-        new_obj = d_new_circle (xpnt, ypnt);
-      else
-        new_obj->points->next = new_dobjpoint (xpnt, ypnt);
-    }
-
-  g_warning ("[%d] Not enough points for circle", line_no);
-  return NULL;
-}
 
 static gint
 calc_radius (GdkPoint *center, GdkPoint *edge)
@@ -183,7 +144,7 @@ d_copy_circle (Dobject * obj)
 
   g_assert (obj->type == CIRCLE);
 
-  nc = d_new_circle (obj->points->pnt.x, obj->points->pnt.y);
+  nc = d_new_object (CIRCLE, obj->points->pnt.x, obj->points->pnt.y);
   nc->points->next = d_copy_dobjpoints (obj->points->next);
 
   return nc;
@@ -197,26 +158,8 @@ d_circle_object_class_init ()
   class->type      = CIRCLE;
   class->name      = "Circle";
   class->drawfunc  = d_draw_circle;
-  class->loadfunc  = d_load_circle;
-  class->savefunc  = d_save_circle;
   class->paintfunc = d_paint_circle;
   class->copyfunc  = d_copy_circle;
-  class->createfunc = d_new_circle;
-}
-
-static Dobject *
-d_new_circle (gint x,
-              gint y)
-{
-  Dobject *nobj;
-
-  nobj = g_new0 (Dobject, 1);
-
-  nobj->type   = CIRCLE;
-  nobj->class  = &dobj_class[CIRCLE];
-  nobj->points = new_dobjpoint (x, y);
-
-  return nobj;
 }
 
 void
@@ -270,7 +213,7 @@ void
 d_circle_start (GdkPoint *pnt,
                 gint      shift_down)
 {
-  obj_creating = d_new_circle (pnt->x, pnt->y);
+  obj_creating = d_new_object (CIRCLE, pnt->x, pnt->y);
 }
 
 void

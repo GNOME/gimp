@@ -160,7 +160,8 @@ typedef struct
 
 typedef enum
 {
-  LINE = 0,
+  OBJ_TYPE_NONE = 0,
+  LINE,
   CIRCLE,
   ELLIPSE,
   ARC,
@@ -168,6 +169,7 @@ typedef enum
   STAR,
   SPIRAL,
   BEZIER,
+  NUM_OBJ_TYPES,
   MOVE_OBJ,
   MOVE_POINT,
   COPY_OBJ,
@@ -190,9 +192,6 @@ typedef struct
   DobjFunc      drawfunc;   /* How do I draw myself */
   DobjFunc      paintfunc;  /* Draw me on canvas */
   DobjGenFunc   copyfunc;   /* copy */
-  DobjLoadFunc  loadfunc;   /* Load this type of object */
-  DobjSaveFunc  savefunc;   /* Save me out */
-  DobjCreateFunc createfunc; /* create a new one */
 } DobjClass;
 
 DobjClass dobj_class[10];

@@ -26,8 +26,6 @@
 #ifndef __GFIG_CIRCLE_H__
 #define __GFIG_CIRCLE_H__
 
-Dobject  * d_load_circle           (FILE *from);
-
 void    d_update_circle            (GdkPoint *pnt);
 void    d_circle_start             (GdkPoint *pnt,
 				    gint      shift_down);

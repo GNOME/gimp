@@ -141,7 +141,7 @@ gfig_read_parameter_double (gchar  **text,
           ptr++;
           if (!strcmp (tmpstr, name))
             {
-              *style_entry = g_strtod (g_strchug (ptr), &endptr);
+              *style_entry = g_ascii_strtod (g_strchug (ptr), &endptr);
               g_free (tmpstr);
               return;
             }
@@ -160,6 +160,11 @@ gfig_read_parameter_gimp_rgb (gchar  **text,
   gint  n = 0;
   gchar *ptr;
   gchar *tmpstr;
+  gchar *endptr;
+  gchar colorstr_r[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar colorstr_g[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar colorstr_b[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar colorstr_a[G_ASCII_DTOSTR_BUF_SIZE];
 
   style_entry->r = style_entry->g = style_entry->b = style_entry->a = 0.;
 
@@ -172,8 +177,11 @@ gfig_read_parameter_gimp_rgb (gchar  **text,
           ptr++;
           if (!strcmp (tmpstr, name))
             {
-              sscanf (ptr, "%lf %lf %lf %lf", &style_entry->r, &style_entry->g,
-                      &style_entry->b, &style_entry->a);
+              sscanf (ptr, "%s %s %s %s", colorstr_r, colorstr_g, colorstr_b, colorstr_a);
+              style_entry->r = g_ascii_strtod (colorstr_r, &endptr);
+              style_entry->g = g_ascii_strtod (colorstr_g, &endptr);
+              style_entry->b = g_ascii_strtod (colorstr_b, &endptr);
+              style_entry->a = g_ascii_strtod (colorstr_a, &endptr);
               g_free (tmpstr);
               return;
             }
@@ -308,6 +316,12 @@ void
 gfig_save_style (Style *style, 
                  GString *string)
 {
+  gchar buffer_r[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar buffer_g[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar buffer_b[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar buffer_a[G_ASCII_DTOSTR_BUF_SIZE];
+  gint  blen = G_ASCII_DTOSTR_BUF_SIZE;
+
   if (gfig_context->debug_styles)
     fprintf (stderr, "Saving style %s, brush name '%s'\n", style->name, style->brush_name);
 
@@ -322,12 +336,18 @@ gfig_save_style (Style *style,
   g_string_append_printf (string, "PatternSource:  %d\n",          style->pattern_source);
   g_string_append_printf (string, "Gradient:       %s\n",          style->gradient);
   g_string_append_printf (string, "GradientSource: %d\n",          style->gradient_source);
-  g_string_append_printf (string, "Foreground: %lg %lg %lg %lg\n", style->foreground.r,
-                          style->foreground.g, style->foreground.b, style->foreground.a);
+  g_string_append_printf (string, "Foreground: %s %s %s %s\n", 
+                          g_ascii_dtostr (buffer_r, blen, style->foreground.r),
+                          g_ascii_dtostr (buffer_g, blen, style->foreground.g), 
+                          g_ascii_dtostr (buffer_b, blen, style->foreground.b), 
+                          g_ascii_dtostr (buffer_a, blen, style->foreground.a));
   g_string_append_printf (string, "ForegroundSource: %d\n",  style->background_source);
-  g_string_append_printf (string, "Background: %lg %lg %lg %lg\n", style->background.r,
-                          style->background.g, style->background.b, style->background.a);
-  g_string_append_printf (string, "BackgroundSource: %d\n",        style->background_source);
+  g_string_append_printf (string, "Background: %s %s %s %s\n", 
+                          g_ascii_dtostr (buffer_r, blen, style->background.r),
+                          g_ascii_dtostr (buffer_g, blen, style->background.g), 
+                          g_ascii_dtostr (buffer_b, blen, style->background.b), 
+                          g_ascii_dtostr (buffer_a, blen, style->background.a));
+  g_string_append_printf (string, "BackgroundSource: %d\n", style->background_source);
   g_string_append_printf (string, "</Style>\n");
 }
 

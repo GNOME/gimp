@@ -36,13 +36,12 @@
 #include <libgimp/gimpui.h>
 
 #include "gfig.h"
-
+#include "gfig-dobject.h"
 #include "libgimp/stdplugins-intl.h"
 
 static void      d_draw_spiral           (Dobject *obj);
 static void      d_paint_spiral          (Dobject *obj);
 static Dobject  *d_copy_spiral           (Dobject * obj);
-static Dobject  *d_new_spiral            (gint x, gint y);
 
 static gint spiral_num_turns = 4; /* Default to 4 turns */
 static gint spiral_toggle    = 0; /* 0 = clockwise -1 = anti-clockwise */
@@ -59,69 +58,6 @@ spiral_button_press (GtkWidget      *widget,
   return FALSE;
 }
 
-static void
-d_save_spiral (Dobject *obj,
-               GString *string)
-{
-  do_save_obj (obj, string);
-  g_string_append_printf (string, "<EXTRA>\n");
-  g_string_append_printf (string, "%d\n</EXTRA>\n", obj->type_data);
-}
-
-/* Load a spiral from the specified stream */
-
-Dobject *
-d_load_spiral (FILE *from)
-{
-  Dobject *new_obj = NULL;
-  gint xpnt;
-  gint ypnt;
-  gchar buf[MAX_LOAD_LINE];
-
-  while (get_line (buf, MAX_LOAD_LINE, from, 0))
-    {
-      if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
-        {
-          /* Must be the end */
-          if (!strcmp ("<EXTRA>", buf))
-            {
-              gint nsides = 3;
-              /* Number of sides - data item */
-              if (!new_obj)
-                {
-                  g_warning ("[%d] Internal load error while loading spiral (extra area)",
-                            line_no);
-                  return (NULL);
-                }
-              get_line (buf, MAX_LOAD_LINE, from, 0);
-              if (sscanf (buf, "%d", &nsides) != 1)
-                {
-                  g_warning ("[%d] Internal load error while loading spiral (extra area scanf)",
-                            line_no);
-                  return (NULL);
-                }
-              new_obj->type_data = nsides;
-              get_line (buf, MAX_LOAD_LINE, from, 0);
-              if (strcmp ("</EXTRA>", buf))
-                {
-                  g_warning ("[%d] Internal load error while loading spiral",
-                            line_no);
-                  return (NULL);
-                } 
-              /* Go around and read the last line */
-              continue;
-            }
-          else 
-            return (new_obj);
-        }
-      
-      if (!new_obj)
-        new_obj = d_new_spiral (xpnt, ypnt);
-      else
-        d_pnt_add_line (new_obj, xpnt, ypnt,-1);
-    }
-  return (new_obj);
-}
 
 static void
 d_draw_spiral (Dobject *obj)
@@ -334,7 +270,7 @@ d_copy_spiral (Dobject *obj)
 
   g_assert (obj->type == SPIRAL);
 
-  np = d_new_spiral (obj->points->pnt.x, obj->points->pnt.y);
+  np = d_new_object (SPIRAL, obj->points->pnt.x, obj->points->pnt.y);
   np->points->next = d_copy_dobjpoints (obj->points->next);
   np->type_data = obj->type_data;
 
@@ -349,27 +285,8 @@ d_spiral_object_class_init ()
   class->type      = SPIRAL;
   class->name      = "Spiral";
   class->drawfunc  = d_draw_spiral;
-  class->loadfunc  = d_load_spiral;
-  class->savefunc  = d_save_spiral;
   class->paintfunc = d_paint_spiral;
   class->copyfunc  = d_copy_spiral;
-  class->createfunc = d_new_spiral;
-}
-
-static Dobject *
-d_new_spiral (gint x,
-              gint y)
-{
-  Dobject *nobj;
-
-  nobj = g_new0 (Dobject, 1);
-
-  nobj->type = SPIRAL;
-  nobj->class = &dobj_class[SPIRAL];
-  nobj->type_data = 4; /* Default to for turns */
-  nobj->points = new_dobjpoint (x, y);
-
-  return nobj;
 }
 
 void
@@ -424,7 +341,7 @@ void
 d_spiral_start (GdkPoint *pnt,
                 gint      shift_down)
 {
-  obj_creating = d_new_spiral (pnt->x, pnt->y);
+  obj_creating = d_new_object (SPIRAL, pnt->x, pnt->y);
   obj_creating->type_data = spiral_num_turns * ((spiral_toggle == 0) ? 1 : -1);
 }
 

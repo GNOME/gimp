@@ -35,17 +35,15 @@
 #include <libgimp/gimpui.h>
 
 #include "gfig.h"
+#include "gfig-dobject.h"
 #include "gfig-line.h"
 
 #include "libgimp/stdplugins-intl.h"
 
 static gint poly_num_sides = 3; /* Default to three sided object */
 
-static void       d_save_poly             (Dobject * obj, 
-                                           GString * string);
 static void       d_draw_poly             (Dobject *obj);
 static Dobject  * d_copy_poly             (Dobject * obj);
-static Dobject  * d_new_poly              (gint x, gint y);
 
 gboolean
 poly_button_press (GtkWidget      *widget,
@@ -57,69 +55,6 @@ poly_button_press (GtkWidget      *widget,
     num_sides_dialog (_("Regular Polygon Number of Sides"),
                       &poly_num_sides, NULL, 3, 200);
   return FALSE;
-}
-
-static void
-d_save_poly (Dobject * obj, 
-             GString *string)
-{
-  do_save_obj (obj, string);
-  g_string_append_printf (string, "<EXTRA>\n");
-  g_string_append_printf (string, "%d\n</EXTRA>\n", obj->type_data);
-  g_string_append_printf (string, "</POLY>\n");
-}
-
-Dobject *
-d_load_poly (FILE *from)
-{
-  Dobject *new_obj = NULL;
-  gint xpnt;
-  gint ypnt;
-  gchar buf[MAX_LOAD_LINE];
-
-  while (get_line (buf, MAX_LOAD_LINE, from, 0))
-    {
-      if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
-        {
-          /* Must be the end */
-          if (!strcmp ("<EXTRA>", buf))
-            {
-              gint nsides = 3;
-              /* Number of sides - data item */
-              if (!new_obj)
-                {
-                  g_warning ("[%d] Internal load error while loading poly (extra area)",
-                            line_no);
-                  return NULL;
-                }
-              get_line (buf, MAX_LOAD_LINE, from, 0);
-              if (sscanf (buf, "%d", &nsides) != 1)
-                {
-                  g_warning ("[%d] Internal load error while loading poly (extra area scanf)",
-                            line_no);
-                  return NULL;
-                }
-              new_obj->type_data = nsides;
-              get_line (buf, MAX_LOAD_LINE, from, 0);
-              if (strcmp ("</EXTRA>", buf))
-                {
-                  g_warning ("[%d] Internal load error while loading poly",
-                            line_no);
-                  return NULL;
-                } 
-              /* Go around and read the last line */
-              continue;
-            }
-          else 
-            return new_obj;
-        }
-      
-      if (!new_obj)
-        new_obj = d_new_poly (xpnt, ypnt);
-      else
-        d_pnt_add_line (new_obj, xpnt, ypnt, -1);
-    }
-  return new_obj;
 }
 
 static void
@@ -541,7 +476,7 @@ d_copy_poly (Dobject *obj)
 
   g_assert (obj->type == POLY);
 
-  np = d_new_poly (obj->points->pnt.x, obj->points->pnt.y);
+  np = d_new_object (POLY, obj->points->pnt.x, obj->points->pnt.y);
   np->points->next = d_copy_dobjpoints (obj->points->next);
   np->type_data = obj->type_data;
 
@@ -556,26 +491,8 @@ d_poly_object_class_init ()
   class->type      = POLY;
   class->name      = "Poly";
   class->drawfunc  = d_draw_poly;
-  class->loadfunc  = d_load_poly;
-  class->savefunc  = d_save_poly;
   class->paintfunc = d_paint_poly;
   class->copyfunc  = d_copy_poly;
-  class->createfunc = d_new_poly;
-}
-
-static Dobject *
-d_new_poly (gint x, gint y)
-{
-  Dobject *nobj;
-
-  nobj = g_new0 (Dobject, 1);
-
-  nobj->type = POLY;
-  nobj->class = &dobj_class[POLY];
-  nobj->type_data = 3; /* Default to three sides */
-  nobj->points = new_dobjpoint (x, y);
-
-  return nobj;
 }
 
 void
@@ -631,7 +548,7 @@ void
 d_poly_start (GdkPoint *pnt,
               gint      shift_down)
 {
-  obj_creating = d_new_poly (pnt->x, pnt->y);
+  obj_creating = d_new_object (POLY, pnt->x, pnt->y);
   obj_creating->type_data = poly_num_sides;
 }
 

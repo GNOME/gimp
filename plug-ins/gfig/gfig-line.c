@@ -35,47 +35,9 @@
 #include <libgimp/gimpui.h>
 
 #include "gfig.h"
+#include "gfig-dobject.h"
 
 #include "libgimp/stdplugins-intl.h"
-
-static Dobject  * d_new_line              (gint x, gint y);
-
-void
-d_save_line (Dobject *obj,
-             GString *string)
-{
-  do_save_obj (obj, string);
-}
-
-Dobject *
-d_load_line (FILE *from)
-{
-  Dobject *new_obj = NULL;
-  gint xpnt;
-  gint ypnt;
-  gchar buf[MAX_LOAD_LINE];
-
-  while (get_line (buf, MAX_LOAD_LINE, from, 0))
-    {
-      /* kludge */
-      if (buf[0] == '<')
-          return new_obj;
-
-      if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
-        {
-          g_warning ("[%d] Internal load error while loading line",
-                     line_no);
-          return NULL;
-        }
-
-      if (!new_obj)
-        new_obj = d_new_line (xpnt, ypnt);
-      else
-        d_pnt_add_line (new_obj, xpnt, ypnt, -1);
-    }
-
-  return new_obj;
-}
 
 Dobject *
 d_copy_line (Dobject *obj)
@@ -84,7 +46,7 @@ d_copy_line (Dobject *obj)
 
   g_assert (obj->type == LINE);
 
-  nl = d_new_line (obj->points->pnt.x, obj->points->pnt.y);  
+  nl = d_new_object (LINE, obj->points->pnt.x, obj->points->pnt.y);  
   nl->points->next = d_copy_dobjpoints (obj->points->next);
 
   return nl;
@@ -171,21 +133,6 @@ d_paint_line (Dobject *obj)
  * later.
  */
 
-static Dobject *
-d_new_line (gint x,
-            gint y)
-{
-  Dobject    *nobj;
-
-  nobj = g_new0 (Dobject, 1);
-
-  nobj->type = LINE;
-  nobj->class = &dobj_class[LINE];
-  nobj->points = new_dobjpoint (x, y);
-
-  return nobj;
-}
-
 void
 d_line_object_class_init ()
 {
@@ -194,11 +141,8 @@ d_line_object_class_init ()
   class->type      = LINE;
   class->name      = "Line";
   class->drawfunc  = d_draw_line;
-  class->loadfunc  = d_load_line;
-  class->savefunc  = d_save_line;
   class->paintfunc = d_paint_line;
   class->copyfunc  = d_copy_line;
-  class->createfunc = d_new_line;
 }
 
 /* You guessed it delete the object !*/
@@ -312,7 +256,7 @@ d_line_start (GdkPoint *pnt,
     {
       /* Draw square on point */
       /* Must delete obj_creating if we have one */
-      obj_creating = d_new_line (pnt->x, pnt->y);
+      obj_creating = d_new_object (LINE, pnt->x, pnt->y);
     }
   else
     {
@@ -350,7 +294,7 @@ d_line_end (GdkPoint *pnt,
           add_to_all_obj (gfig_context->current_obj, obj_creating);
         }
 
-      obj_creating = d_new_line (pnt->x, pnt->y);
+      obj_creating = d_new_object (LINE, pnt->x, pnt->y);
     }
   else
     {

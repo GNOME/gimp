@@ -36,48 +36,10 @@
 #include <libgimp/gimpui.h>
 
 #include "gfig.h"
+#include "gfig-dobject.h"
 #include "gfig-poly.h"
 
 #include "libgimp/stdplugins-intl.h"
-
-static Dobject *d_new_ellipse (gint x, gint y);
-
-static void
-d_save_ellipse (Dobject *obj,
-                GString *string)
-{
-  do_save_obj (obj, string);
-}
-
-Dobject *
-d_load_ellipse (FILE *from)
-{
-  Dobject *new_obj = NULL;
-  gint     xpnt;
-  gint     ypnt;
-  gchar    buf[MAX_LOAD_LINE];
-
-  while (get_line (buf, MAX_LOAD_LINE, from, 0))
-    {
-      /* kludge */
-      if (buf[0] == '<')
-          return new_obj;
-
-      if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
-        {
-          g_message ("[%d] Not enough points for ellipse", line_no);
-          return NULL;
-        }
-         
-      if (!new_obj)
-        new_obj = d_new_ellipse (xpnt, ypnt);
-      else
-        new_obj->points->next = new_dobjpoint (xpnt, ypnt);
-    }
-
-  g_message ("[%d] Not enough points for ellipse", line_no);
-  return NULL;
-}
 
 static void
 d_draw_ellipse (Dobject * obj)
@@ -319,7 +281,7 @@ d_copy_ellipse (Dobject * obj)
 
   g_assert (obj->type == ELLIPSE);
 
-  nc = d_new_ellipse (obj->points->pnt.x, obj->points->pnt.y);
+  nc = d_new_object (ELLIPSE, obj->points->pnt.x, obj->points->pnt.y);
   nc->points->next = d_copy_dobjpoints (obj->points->next);
 
   return nc;
@@ -333,25 +295,8 @@ d_ellipse_object_class_init ()
   class->type      = ELLIPSE;
   class->name      = "Ellipse";
   class->drawfunc  = d_draw_ellipse;
-  class->loadfunc  = d_load_ellipse;
-  class->savefunc  = d_save_ellipse;
   class->paintfunc = d_paint_ellipse;
   class->copyfunc  = d_copy_ellipse;
-  class->createfunc = d_new_ellipse;
-}
-
-static Dobject *
-d_new_ellipse (gint x, gint y)
-{
-  Dobject *nobj;
-
-  nobj = g_new0 (Dobject, 1);
-
-  nobj->type = ELLIPSE;
-  nobj->class = &dobj_class[ELLIPSE];
-  nobj->points = new_dobjpoint (x, y);
-
-  return nobj;
 }
 
 void
@@ -432,7 +377,7 @@ d_update_ellipse (GdkPoint *pnt)
 void
 d_ellipse_start (GdkPoint *pnt, gint shift_down)
 {
-  obj_creating = d_new_ellipse (pnt->x, pnt->y);
+  obj_creating = d_new_object (ELLIPSE, pnt->x, pnt->y);
 }
 
 void

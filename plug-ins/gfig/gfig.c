@@ -385,23 +385,6 @@ gfig_new (void)
   return g_new0 (GFigObj, 1);
 }
 
-static gboolean
-match_element (gchar *buf,
-               gchar *element_name)
-{
-  gchar *ptr = buf;
-
-  if (* ptr != '<')
-    return FALSE;
-
-  ptr++;
-
-  if (ptr == strstr (ptr, element_name))
-    return TRUE;
-
-  return FALSE;
-}
-
 static void
 gfig_load_objs (GFigObj *gfig,
                 gint     load_count,
@@ -422,42 +405,7 @@ gfig_load_objs (GFigObj *gfig,
       offset = ftell (fp);
       gfig_skip_style (&style, fp);
 
-      if (match_element (load_buf, "Line"))
-        {
-          obj = d_load_line (fp);
-        }
-      else if (match_element (load_buf, "Circle"))
-        {
-          obj = d_load_circle (fp);
-        }
-      else if (match_element (load_buf, "Ellipse"))
-        {
-          obj = d_load_ellipse (fp);
-        }
-      else if (match_element (load_buf, "Poly"))
-        {
-          obj = d_load_poly (fp);
-        }
-      else if (match_element (load_buf, "Star"))
-        {
-          obj = d_load_star (fp);
-        }
-      else if (match_element (load_buf, "Spiral"))
-        {
-          obj = d_load_spiral (fp);
-        }
-      else if (match_element (load_buf, "Bezier"))
-        {
-          obj = d_load_bezier (fp);
-        }
-      else if (match_element (load_buf, "Arc"))
-        {
-          obj = d_load_arc (fp);
-        }
-      else
-        {
-          g_warning ("Unknown obj type file %s line %d\n", gfig->filename, line_no);
-        }
+      obj = d_load_object (load_buf, fp);
 
       if (obj)
         {
@@ -466,6 +414,10 @@ gfig_load_objs (GFigObj *gfig,
           fseek (fp, offset, SEEK_SET);
           gfig_load_style (&obj->style, fp);
           fseek (fp, offset2, SEEK_SET);
+        }
+      else
+        {
+          g_message ("Failed to load object, load count = %d", load_count);
         }
     }
 }
@@ -779,9 +731,7 @@ gfig_save_as_string ()
       gfig_save_style (&objs->obj->style, string);
 
       if (objs->obj->points)
-        {
-          objs->obj->class->savefunc (objs->obj, string);
-        }
+        d_save_object (objs->obj, string);
 
       gfig_save_obj_end (objs->obj, string);
     }

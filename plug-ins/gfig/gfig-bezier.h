@@ -28,7 +28,6 @@
 
 extern Dobject *tmp_bezier;
 
-Dobject  * d_load_bezier           (FILE *from);
 void       d_draw_bezier           (Dobject *obj);
 
 void       d_update_bezier         (GdkPoint *pnt);

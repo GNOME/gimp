@@ -35,11 +35,10 @@
 #include <libgimp/gimp.h>
 
 #include "gfig.h"
+#include "gfig-dobject.h"
 #include "gfig-line.h"
 
 #include "libgimp/stdplugins-intl.h"
-
-static Dobject  *d_new_arc               (gint x, gint y);
 
 /* Distance between two lines */
 static gdouble
@@ -313,42 +312,6 @@ arc_angle (GdkPoint *pnt,
 }
 
 static void
-d_save_arc (Dobject *obj,
-            GString *string)
-{
-  do_save_obj (obj, string);
-}
-
-Dobject *
-d_load_arc (FILE *from)
-{
-  Dobject *new_obj = NULL;
-  gint xpnt;
-  gint ypnt;
-  gchar buf[MAX_LOAD_LINE];
-  gint num_pnts = 0;
-
-  while (get_line (buf, MAX_LOAD_LINE, from, 0))
-    {
-      if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
-        {
-          return new_obj;
-        }
-      
-      num_pnts++;
-
-      if (!new_obj)
-        new_obj = d_new_arc (xpnt, ypnt);
-      else
-        {
-          d_pnt_add_line (new_obj, xpnt, ypnt,-1);
-        }
-    }
-  g_warning ("[%d] Not enough points for arc", line_no);
-  return NULL;
-}
-
-static void
 arc_drawing_details (Dobject  *obj,
                      gdouble  *minang,
                      GdkPoint *center_pnt,
@@ -568,25 +531,10 @@ d_copy_arc (Dobject * obj)
 
   g_assert (obj->type == ARC);
 
-  nc = d_new_arc (obj->points->pnt.x, obj->points->pnt.y);
+  nc = d_new_object (ARC, obj->points->pnt.x, obj->points->pnt.y);
   nc->points->next = d_copy_dobjpoints (obj->points->next);
 
   return nc;
-}
-
-static Dobject *
-d_new_arc (gint x,
-           gint y)
-{
-  Dobject *nobj;
-
-  nobj = g_new0 (Dobject, 1);
-
-  nobj->type = ARC;
-  nobj->class = &dobj_class[ARC];
-  nobj->points = new_dobjpoint (x, y);
-
-  return nobj;
 }
 
 void
@@ -597,11 +545,8 @@ d_arc_object_class_init ()
   class->type      = ARC;
   class->name      = "Arc";
   class->drawfunc  = d_draw_arc;
-  class->loadfunc  = d_load_arc;
-  class->savefunc  = d_save_arc;
   class->paintfunc = d_paint_arc;
   class->copyfunc  = d_copy_arc;
-  class->createfunc = d_new_arc;
 }
 
 void

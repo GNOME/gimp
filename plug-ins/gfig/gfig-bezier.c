@@ -35,6 +35,7 @@
 #include <libgimp/gimpui.h>
 
 #include "gfig.h"
+#include "gfig-dobject.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -44,70 +45,6 @@ Dobject *tmp_bezier;               /* Needed when drawing bezier curves */
 
 static void       d_paint_bezier          (Dobject *obj);
 static Dobject  * d_copy_bezier           (Dobject * obj);
-static Dobject  * d_new_bezier            (gint x, gint y);
-
-static void
-d_save_bezier (Dobject *obj,
-               GString *string)
-{
-  do_save_obj (obj, string);
-  g_string_append_printf (string, "<EXTRA>\n");
-  g_string_append_printf (string, "%d\n</EXTRA>\n", obj->type_data);
-}
-
-Dobject *
-d_load_bezier (FILE *from)
-{
-  Dobject *new_obj = NULL;
-  gint xpnt;
-  gint ypnt;
-  gchar buf[MAX_LOAD_LINE];
-
-  while (get_line (buf, MAX_LOAD_LINE, from, 0))
-    {
-      if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
-        {
-          /* Must be the end */
-          if (!strcmp ("<EXTRA>", buf))
-            {
-              gint nsides = 3;
-              /* Number of sides - data item */
-              if ( !new_obj)
-                {
-                  g_message ("[%d] Internal load error while loading bezier "
-                             "(extra area)", line_no);
-                  return NULL;
-                }
-              get_line (buf, MAX_LOAD_LINE, from, 0);
-              if (sscanf (buf, "%d", &nsides) != 1)
-                {
-                  g_message ("[%d] Internal load error while loading bezier "
-                             "(extra area scanf)", line_no);
-                  return NULL;
-                }
-              new_obj->type_data = nsides;
-              get_line (buf, MAX_LOAD_LINE, from, 0);
-              if (strcmp ("</EXTRA>", buf))
-                {
-                  g_message ("[%d] Internal load error while loading bezier",
-                             line_no);
-                  return NULL;
-                }
-              /* Go around and read the last line */
-              continue;
-            }
-          else 
-            return new_obj;
-        }
-
-      if (!new_obj)
-        new_obj = d_new_bezier (xpnt, ypnt);
-      else
-        d_pnt_add_line (new_obj, xpnt, ypnt, -1);
-    }
-
-  return new_obj;
-}
 
 
 #define FP_PNT_MAX  10
@@ -347,7 +284,7 @@ d_copy_bezier (Dobject *obj)
 
   g_assert (obj->type == BEZIER);
 
-  np = d_new_bezier (obj->points->pnt.x, obj->points->pnt.y);
+  np = d_new_object (BEZIER, obj->points->pnt.x, obj->points->pnt.y);
   np->points->next = d_copy_dobjpoints (obj->points->next);
   np->type_data = obj->type_data;
 
@@ -362,26 +299,8 @@ d_bezier_object_class_init ()
   class->type      = BEZIER;
   class->name      = "Bezier";
   class->drawfunc  = d_draw_bezier;
-  class->loadfunc  = d_load_bezier;
-  class->savefunc  = d_save_bezier;
   class->paintfunc = d_paint_bezier;
   class->copyfunc  = d_copy_bezier;
-  class->createfunc = d_new_bezier;
-}
-
-static Dobject *
-d_new_bezier (gint x, gint y)
-{
-  Dobject *nobj;
-
-  nobj = g_new0 (Dobject, 1);
-
-  nobj->type = BEZIER;
-  nobj->class = &dobj_class[BEZIER];
-  nobj->type_data = 4; /* Default to four turns */
-  nobj->points = new_dobjpoint (x, y);
-
-  return nobj;
 }
 
 void
@@ -437,7 +356,7 @@ d_bezier_start (GdkPoint *pnt, gint shift_down)
   if (!tmp_bezier)
     {
       /* New curve */
-      tmp_bezier = obj_creating = d_new_bezier (pnt->x, pnt->y);
+      tmp_bezier = obj_creating = d_new_object (BEZIER, pnt->x, pnt->y);
     }
 }
 

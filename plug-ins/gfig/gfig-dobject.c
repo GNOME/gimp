@@ -65,6 +65,137 @@ static void     remove_obj_from_list (GFigObj *obj,
 static gint     scan_obj_points (DobjPoints *opnt,
                                  GdkPoint   *pnt);
 
+void
+d_save_object (Dobject *obj,
+               GString *string)
+{
+  do_save_obj (obj, string);
+  
+  switch (obj->type)
+    {
+    case BEZIER:
+    case POLY:
+    case SPIRAL:
+    case STAR:
+      g_string_append_printf (string, "<EXTRA>\n");
+      g_string_append_printf (string, "%d\n</EXTRA>\n", obj->type_data);
+      break;
+    default:
+      break;
+    }
+}
+
+static DobjType
+gfig_read_object_type (gchar *desc)
+{
+  gchar    *ptr = desc;
+  DobjType  type;
+  if (* ptr != '<')
+    return OBJ_TYPE_NONE;
+
+  ptr++;
+
+  for (type = LINE; type < NUM_OBJ_TYPES; type++)
+    {
+      if (ptr == strstr (ptr, dobj_class[type].name))
+        return type;
+    }
+
+  return OBJ_TYPE_NONE;
+}
+
+Dobject *
+d_load_object (gchar *desc,
+               FILE  *fp)
+{
+  Dobject *new_obj = NULL;
+  gint     xpnt;
+  gint     ypnt;
+  gchar    buf[MAX_LOAD_LINE];
+  DobjType type;
+
+  type = gfig_read_object_type (desc);
+  if (type == OBJ_TYPE_NONE)
+    {
+      g_message ("Error loading object: type not recognized.");
+      return NULL;
+    }
+
+  while (get_line (buf, MAX_LOAD_LINE, fp, 0))
+    {
+      if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
+        {
+          /* Read <EXTRA> block if there is one */
+          if (!strcmp ("<EXTRA>", buf))
+            {
+              if ( !new_obj)
+                {
+                  g_message ("Error while loading object (no points)");
+                  return NULL;
+                }
+
+              get_line (buf, MAX_LOAD_LINE, fp, 0);
+
+              if (sscanf (buf, "%d", &new_obj->type_data) != 1)
+                {
+                  g_message ("Error while loading object (no type data)");
+                  return NULL;
+                }
+
+              get_line (buf, MAX_LOAD_LINE, fp, 0);
+              if (strcmp ("</EXTRA>", buf))
+                {
+                  g_message ("Syntax error while loading object");
+                  return NULL;
+                }
+              /* Go around and read the last line */
+              continue;
+            }
+          else 
+            return new_obj;
+        }
+
+      if (!new_obj)
+        new_obj = d_new_object (type, xpnt, ypnt);
+      else
+        d_pnt_add_line (new_obj, xpnt, ypnt, -1);
+    }
+
+  return new_obj;
+}
+
+Dobject *
+d_new_object (DobjType    type,
+              gint        x,
+              gint        y)
+{
+  Dobject *nobj = g_new0 (Dobject, 1);
+
+  nobj->type = type;
+  nobj->class = &dobj_class[type];
+  nobj->points = new_dobjpoint (x, y);
+
+  nobj->type_data = 0;
+
+  if (type == BEZIER)
+    {
+      nobj->type_data = 4;
+    }
+  else if (type == POLY)
+    {
+      nobj->type_data = 3;  /* default to 3 sides */
+    }
+  else if (type == SPIRAL)
+    {
+      nobj->type_data = 4;  /* default to 4 turns */
+    }
+  else if (type == STAR)
+    {
+      nobj->type_data = 3;  /* default to 3 sides 6 points */
+    }
+    
+  return nobj;
+}
 
 void
 gfig_init_object_classes ()

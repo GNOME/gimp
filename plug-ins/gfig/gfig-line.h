@@ -26,7 +26,6 @@
 #ifndef __GFIG_LINE_H__
 #define __GFIG_LINE_H__
 
-Dobject  * d_load_line      (FILE        *from);
 void       d_save_line      (Dobject     *obj,
                              GString     *string);
 

@@ -1,3 +1,9 @@
+2004-07-07  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/gfig/*.[ch]: Use single centralized functions to
+	create, load, and save objects, instead of separate functions
+	for each type of object. A few other miscellaneous fixes.
+
 2004-07-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpclipboard.[ch]: changed to allow pasting any
