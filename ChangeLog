@@ -6,7 +6,7 @@
 2004-06-05  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptextlayer-transform.[ch]: updated the (still unused)
-	unused text transformation code.
+	text transformation code.
 
 	* app/text/gimptext-bitmap.c: removed a redundant transformation.
 
