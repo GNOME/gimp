@@ -1,5 +1,10 @@
 2001-12-01  Abel Cheung  <maddog@linux.org.hk>
 
+	* tips/{Makefile.am,makefile.mingw}: Added gimp_tips.zh_CN.txt
+	  as targets.
+
+2001-12-01  Abel Cheung  <maddog@linux.org.hk>
+
 	* configure.in: Added zh_CN to ALL_LINGUAS (simplified Chinese
 	  translation was taken from HEAD branch).
 	* tips/gimp_tips.zh_CN.txt: Take simplified Chinese tips file
