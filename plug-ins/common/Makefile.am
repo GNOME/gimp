@@ -88,7 +88,6 @@ libexec_PROGRAMS = \
 	normalize \
 	nova \
 	oilify \
-	palette \
 	papertile \
 	pat \
 	pcx \
@@ -736,14 +735,6 @@ oilify_SOURCES = \
 	oilify.c
 
 oilify_LDADD = \
-	$(top_builddir)/libgimp/libgimp.la	\
-	$(GTK_LIBS)				\
-	$(INTLLIBS)
-
-palette_SOURCES = \
-	palette.c
-
-palette_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)

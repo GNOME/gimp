@@ -70,7 +70,6 @@
     'normalize' => { libdep => 'glib' },
     'nova' => { libdep => 'gtk' },
     'oilify' => { libdep => 'gtk' },
-    'palette' => { libdep => 'gtk' },
     'papertile' => { libdep => 'gtk' },
     'pat' => { libdep => 'gtk' },
     'pcx' => { libdep => 'glib' },
