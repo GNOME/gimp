@@ -3577,7 +3577,7 @@ undo_name[] =
   { PARASITE_ATTACH_UNDO,          N_("Attach Parasite")           },
   { PARASITE_REMOVE_UNDO,          N_("Remove Parasite")           },
 
-  { CANT_UNDO,                     N_("EEK: can't undo")           }
+  { CANT_UNDO,                     "EEK: can't undo"               }
 };
 
 static const gchar *

@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -1793,13 +1794,14 @@ file_dialog_ok_callback (GtkWidget *widget,
 
       if (!f)
 	{
-	  g_message (_("Unable to open file %s"), filename);
+	  g_message (_("Failed to open file: '%s': %s"),
+                     filename, g_strerror (errno));
 	  return;
 	}
 
       if (!curves_read_from_file (f))
 	{
-	  g_message (("Error in reading file %s"), filename);
+	  g_message (("Error in reading file '%s'."), filename);
 	  return;
 	}
 
@@ -1811,7 +1813,8 @@ file_dialog_ok_callback (GtkWidget *widget,
 
       if (!f)
 	{
-	  g_message (_("Unable to open file %s"), filename);
+	  g_message (_("Failed to open file: '%s': %s"),
+                     filename, g_strerror (errno));
 	  return;
 	}
 

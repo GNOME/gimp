@@ -386,9 +386,9 @@ gimp_config_deserialize_fundamental (GValue     *value,
         g_value_set_boolean (value, FALSE);
       else
         {
-          /* don't translate 'yes' and 'no' */
           g_scanner_error 
             (scanner, 
+             /* please don't translate 'yes' and 'no' */
              _("expected 'yes' or 'no' for boolean token %s, got '%s'"), 
              prop_spec->name, scanner->value.v_identifier);
           return G_TOKEN_NONE;

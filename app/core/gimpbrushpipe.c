@@ -19,9 +19,9 @@
 
 #include "config.h"
 
-#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -305,7 +305,8 @@ gimp_brush_pipe_load (const gchar *filename)
   fd = open (filename, O_RDONLY | _O_BINARY);
   if (fd == -1)
     {
-      g_message (_("Could not open file '%s'"), filename);
+      g_message (_("Failed to open file: '%s': %s"),
+                 filename, g_strerror (errno));
       return NULL;
     }
 

@@ -450,13 +450,13 @@ gimp_imagefile_save_fail_thumb (GimpImagefile *imagefile,
                          TAG_THUMB_SIZE,         s_str,
                          NULL))
     {
-      g_message (_("Couldn't write thumbnail for '%s'\nas '%s'.\n%s"), 
+      g_message (_("Failed to write thumbnail for '%s' as '%s': %s"), 
                  uri, thumb_name, error->message);
       g_error_free (error);
     }
   else if (chmod (thumb_name, 0600))
     {
-      g_message (_("Couldn't set permissions of thumbnail '%s'.\n%s"),
+      g_message (_("Failed to set permissions of thumbnail '%s': %s"),
                  thumb_name, g_strerror (errno));
     }
 
@@ -660,7 +660,7 @@ gimp_imagefile_get_description (GimpImagefile *imagefile)
       break;
 
     case GIMP_IMAGEFILE_STATE_NOT_FOUND:
-      imagefile->description = _("Could not open image");
+      imagefile->description = _("Failed to open");
       imagefile->static_desc = TRUE;
       break;
 
@@ -806,7 +806,7 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
 
   if (!pixbuf)
     {
-      g_message (_("Could not open thumbnail\nfile '%s':\n%s"),
+      g_message (_("Failed to open thumbnail file '%s': %s"),
                  thumbname, error->message);
 
       goto cleanup;
@@ -961,13 +961,13 @@ gimp_imagefile_save_png_thumb (GimpImagefile *imagefile,
 
     if (! success)
       {
-        g_message (_("Couldn't write thumbnail for '%s'\nas '%s'.\n%s"), 
+        g_message (_("Failed to write thumbnail for '%s' as '%s': %s"), 
                    uri, thumb_name, error->message);
         g_error_free (error);
       }
     else if (chmod (thumb_name, 0600))
       {
-        g_message (_("Couldn't set permissions of thumbnail '%s'.\n%s"),
+        g_message (_("Failed to set permissions of thumbnail '%s': %s"),
                    thumb_name, g_strerror (errno));
       }
 
@@ -1055,7 +1055,7 @@ gimp_imagefile_png_thumb_path (const gchar *uri,
 
       if (! g_file_test (thumb_subdirs[i], G_FILE_TEST_IS_DIR))
         {
-          g_message (_("Couldn't create thumbnail directory '%s'"), 
+          g_message (_("Failed to create thumbnail directory '%s'."), 
                      thumb_subdirs[i]);
           return NULL;
         }

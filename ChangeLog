@@ -1,3 +1,17 @@
+2002-06-09  Sven Neumann  <sven@gimp.org>
+
+	* app/undo.c
+	* app/config/gimpconfig-deserialize.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpcontainer.c
+	* app/core/gimpimagefile.c
+	* app/gui/paths-dialog.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* app/widgets/gimpcomponentlistitem.c
+	* app/widgets/gimpgradienteditor.c: unified translatable strings
+	and unmarked a few for translation since they should never be seen.
+
 2002-06-08  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/shift.c (shift_dialog)

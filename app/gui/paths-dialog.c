@@ -1883,8 +1883,8 @@ file_ok_callback (GtkWidget *widget,
 
       if(!f)
 	{
-	  g_message (_("Unable to open file '%s'\nError: %s."), 
-		     filename, g_strerror(errno));
+	  g_message (_("Failed to open file: '%s': %s"), 
+		     filename, g_strerror (errno));
 	  return;
 	}
       
@@ -1899,7 +1899,7 @@ file_ok_callback (GtkWidget *widget,
 
 	  if(!fgets(txt,512,f) || strlen(txt) < 7)
 	    {
-	      g_message (_("Failed to read from '%s'"), filename);
+	      g_message (_("Failed to read from '%s'."), filename);
 	      gtk_widget_hide (file_dlg);  
 	      return;
 	    }
@@ -1914,14 +1914,14 @@ file_ok_callback (GtkWidget *widget,
 
 	  if(readfields != 4)
 	    {
-	      g_message (_("Failed to read path from '%s'"), filename);
+	      g_message (_("Failed to read path from '%s'."), filename);
 	      gtk_widget_hide (file_dlg);  
 	      return;
 	    }
 
 	  if(val <= 0)
 	    {
-	      g_message (_("No points specified in path file '%s'"), filename);
+	      g_message (_("No points specified in path file '%s'."), filename);
 	      gtk_widget_hide (file_dlg);  
 	      return;
 	    }
@@ -1932,7 +1932,7 @@ file_ok_callback (GtkWidget *widget,
 	      readfields = fscanf(f,"TYPE: %d X: %lg Y: %lg\n", &type, &x, &y);
 	      if(readfields != 3)
 		{
-		  g_message (_("Failed to read path points from %s"), 
+		  g_message (_("Failed to read path points from '%s'."), 
 			     filename);
 		  gtk_widget_hide (file_dlg);  
 		  return;
@@ -2008,8 +2008,8 @@ file_ok_callback (GtkWidget *widget,
       f = fopen(filename, "wb");
       if (NULL == f) 
 	{
-	  g_message (_("Opening '%s' failed:\n%s"), 
-		     filename, g_strerror(errno));
+	  g_message (_("Failed to open file: '%s': %s"), 
+		     filename, g_strerror (errno));
 	  return;
 	}
 

@@ -423,6 +423,6 @@ gimp_component_list_item_get_name (GtkWidget  *widget,
     case GIMP_ALPHA_CHANNEL:   return g_strdup (_("Alpha"));   break;
 
     default:
-      return g_strdup (_("EEEEK"));
+      return g_strdup ("EEEEK");
     }
 }

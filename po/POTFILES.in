@@ -19,7 +19,6 @@ app/core/gimp.c
 app/core/gimpbrush.c
 app/core/gimpbrushpipe.c
 app/core/gimpchannel.c
-app/core/gimpcontainer.c
 app/core/gimpcontext.c
 app/core/gimpdatafactory.c
 app/core/gimpdrawable.c
@@ -99,6 +98,7 @@ app/gui/qmask-commands.c
 app/gui/resize-dialog.c
 app/gui/resolution-calibrate-dialog.c
 app/gui/select-commands.c
+app/gui/session.c
 app/gui/splash.c
 app/gui/tips-dialog.c
 app/gui/tips-parser.c

@@ -876,8 +876,7 @@ preview_set_foreground (GimpGradientEditor *editor,
                           (gint) (color.g * 255.0),
                           (gint) (color.b * 255.0));
 
-  str3 = g_strdup_printf (_("(%0.3f, %0.3f, %0.3f)"),
-                          color.r, color.g, color.b);
+  str3 = g_strdup_printf ("(%0.3f, %0.3f, %0.3f)", color.r, color.g, color.b);
 
   gradient_editor_set_hint (editor, _("Foreground color set to:"), str2, str3);
 

@@ -38,8 +38,6 @@
 #include "config/gimpconfig-deserialize.h"
 #include "config/gimpscanner.h"
 
-#include "libgimp/gimpintl.h"
-
 
 /* #define DEBUG_CONTAINER */
 
@@ -506,7 +504,7 @@ gimp_container_deserialize (GObject  *object,
             if (! type)
               {
                 g_scanner_error (scanner,
-                                 _("unable to determine type of '%s'"),
+                                 "unable to determine type of '%s'",
                                  scanner->value.v_identifier);
                 return FALSE;
               }
@@ -514,7 +512,7 @@ gimp_container_deserialize (GObject  *object,
             if (! g_type_is_a (type, container->children_type))
               {
                 g_scanner_error (scanner,
-                                 _("'%s' is not a subclass of '%s'"),
+                                 "'%s' is not a subclass of '%s'",
                                  scanner->value.v_identifier,
                                  g_type_name (container->children_type));
                 return FALSE;
@@ -523,7 +521,7 @@ gimp_container_deserialize (GObject  *object,
             if (! g_type_is_a (type, GIMP_TYPE_CONFIG_INTERFACE))
               {
                 g_scanner_error (scanner,
-                                 _("'%s' does not implement GimpConfigInterface"),
+                                 "'%s' does not implement GimpConfigInterface",
                                  scanner->value.v_identifier);
                 return FALSE;
               }
