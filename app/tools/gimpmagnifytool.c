@@ -300,9 +300,6 @@ gimp_magnify_tool_motion (GimpTool        *tool,
 {
   GimpMagnifyTool *magnify;
 
-  if (!gimp_tool_control_is_active (tool->control))
-    return;
-
   magnify = GIMP_MAGNIFY_TOOL (tool);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));

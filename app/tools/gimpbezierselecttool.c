@@ -740,11 +740,6 @@ gimp_bezier_select_tool_motion (GimpTool        *tool,
   gint                   offsetx;
   gint                   offsety;
 
-  g_return_if_fail (GIMP_IS_BEZIER_SELECT_TOOL (tool));
-
-  if (!gimp_tool_control_is_active (tool->control))
-    return;
-
   bezier_sel = GIMP_BEZIER_SELECT_TOOL(tool);
 
   if (! (bezier_sel->cur_anchor && bezier_sel->cur_control))

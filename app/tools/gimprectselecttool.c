@@ -326,9 +326,6 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
   rect_sel = GIMP_RECT_SELECT_TOOL (tool);
   sel_tool = GIMP_SELECTION_TOOL (tool);
 
-  if (!gimp_tool_control_is_active (tool->control))
-    return;
-
   if (sel_tool->op == SELECTION_ANCHOR)
     {
       sel_tool->op = SELECTION_REPLACE;

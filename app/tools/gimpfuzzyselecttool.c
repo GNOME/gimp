@@ -337,9 +337,6 @@ gimp_fuzzy_select_tool_motion (GimpTool        *tool,
   sel_tool  = GIMP_SELECTION_TOOL (tool);
   options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  if (! gimp_tool_control_is_active (tool->control))
-    return;
-
   /* don't let the events come in too fast, ignore below a delay of 100 ms */
   if (ABS (time - last_time) < 100)
     return;

@@ -698,7 +698,7 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
   iscissors = GIMP_ISCISSORS_TOOL (tool);
   options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  if (!gimp_tool_control_is_active (tool->control) || iscissors->state == NO_ACTION)
+  if (iscissors->state == NO_ACTION)
     return;
 
   if (iscissors->state == SEED_PLACEMENT)

@@ -479,12 +479,6 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  if (!gimp_tool_control_is_active (tool->control))
-    {
-      g_warning ("BUG: Tracking motion while !ACTIVE");
-      return;
-    }
-
   gdk_flush ();
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));

@@ -342,6 +342,7 @@ gimp_tool_motion (GimpTool        *tool,
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+  g_return_if_fail (gimp_tool_control_is_active (tool->control));
 
   GIMP_TOOL_GET_CLASS (tool)->motion (tool, coords, time, state, gdisp);
 }

@@ -1,3 +1,18 @@
+2003-05-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptool.c (gimp_tool_motion): added
+	g_return_if_fail (gimp_tool_control_is_active (tool->control))
+	since that's a basic constraint of tool event handling.
+
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimprectselecttool.c (gimp_*_tool_motion):
+	removed checks for gimp_tool_control_is_active().
+
 2003-05-05  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/core/gimpdrawable-blend.c: Cleanups.
