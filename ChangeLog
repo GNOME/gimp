@@ -1,3 +1,10 @@
+2004-12-20  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version to 2.2.1.
+
+	* plug-ins/FractalExplorer/FractalExplorer.c: applied patch from
+	Yeti that fixes a memory corruption (bug #161729).
+
 2004-12-19  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.2.0 release.

@@ -458,8 +458,8 @@ explorer (GimpDrawable * drawable)
   bytes  = drawable->bpp;
 
   /*  allocate row buffers  */
-  src_row  = g_new (guchar, x2 - x1);
-  dest_row = g_new (guchar, x2 - x1);
+  src_row  = g_new (guchar, bytes * (x2 - x1));
+  dest_row = g_new (guchar, bytes * (x2 - x1));
 
   /*  initialize the pixel regions  */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
