@@ -1,3 +1,7 @@
+2004-09-20  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/shift.c: added a preview.
+
 2004-09-20  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcolorselect.c (gimp_color_select_xy_events):

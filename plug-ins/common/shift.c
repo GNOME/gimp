@@ -44,8 +44,9 @@
 
 typedef struct
 {
-  gint shift_amount;
-  gint orientation;
+  gint     shift_amount;
+  gint     orientation;
+  gboolean preview;
 } ShiftValues;
 
 
@@ -58,11 +59,13 @@ static void      run    (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static void      shift  (GimpDrawable     *drawable);
+static void      shift                 (GimpDrawable        *drawable,
+                                        GimpDrawablePreview *preview);
 
-static gboolean  shift_dialog          (gint32     image_ID);
-static void      shift_amount_callback (GtkWidget *widget,
-                                        gpointer   data);
+static gboolean  shift_dialog          (gint32        image_ID,
+                                        GimpDrawable *drawable);
+static void      shift_amount_callback (GtkWidget    *widget,
+                                        gpointer      data);
 
 
 /***** Local vars *****/
@@ -78,7 +81,8 @@ GimpPlugInInfo PLUG_IN_INFO =
 static ShiftValues shvals =
 {
   5,          /* shift amount */
-  HORIZONTAL  /* orientation  */
+  HORIZONTAL, /* orientation  */
+  TRUE        /* preview */
 };
 
 
@@ -150,7 +154,7 @@ run (const gchar      *name,
       gimp_get_data ("plug_in_shift", &shvals);
 
       /*  First acquire information with a dialog  */
-      if (! shift_dialog (image_ID))
+      if (! shift_dialog (image_ID, drawable))
         return;
       break;
 
@@ -191,7 +195,7 @@ run (const gchar      *name,
           gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
           /*  run the shift effect  */
-          shift (drawable);
+          shift (drawable, NULL);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
@@ -213,7 +217,8 @@ run (const gchar      *name,
 }
 
 static void
-shift (GimpDrawable *drawable)
+shift (GimpDrawable        *drawable,
+       GimpDrawablePreview *preview)
 {
   GimpPixelRgn      dest_rgn;
   gpointer          pr;
@@ -234,14 +239,22 @@ shift (GimpDrawable *drawable)
   pft = gimp_pixel_fetcher_new (drawable, FALSE);
   gimp_pixel_fetcher_set_edge_mode (pft, GIMP_PIXEL_FETCHER_EDGE_WRAP);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  if (preview)
+    {
+      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+    }
+  else
+    {
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+      width  = x2 - x1;
+      height = y2 - y1;
+    }
 
-  width  = drawable->width;
-  height = drawable->height;
   bytes  = drawable->bpp;
 
   progress     = 0;
-  max_progress = (x2 - x1) * (y2 - y1);
+  max_progress = width * height;
 
   amount = shvals.shift_amount;
 
@@ -254,7 +267,7 @@ shift (GimpDrawable *drawable)
   */
 
   gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+                       x1, y1, width, height, (preview == NULL), TRUE);
   for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
@@ -291,28 +304,41 @@ shift (GimpDrawable *drawable)
               destline += dest_rgn.rowstride;
             }
         }
-      progress += dest_rgn.w * dest_rgn.h;
-      gimp_progress_update ((double) progress / (double) max_progress);
+      if (preview)
+        {
+          gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
+                                             &dest_rgn);
+        }
+      else
+        {
+          progress += dest_rgn.w * dest_rgn.h;
+          gimp_progress_update ((double) progress / (double) max_progress);
+        }
     }
 
   gimp_pixel_fetcher_destroy (pft);
 
-  /*  update the region  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  if (!preview)
+    {
+      /*  update the region  */
+      gimp_drawable_flush (drawable);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+    }
 
   g_rand_free (gr);
 }
 
-
 static gboolean
-shift_dialog (gint32 image_ID)
+shift_dialog (gint32 image_ID, GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
   GtkWidget *frame;
-  GtkWidget *vbox;
   GtkWidget *size_entry;
+  GtkWidget *vertical;
+  GtkWidget *horizontal;
   GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
@@ -320,30 +346,43 @@ shift_dialog (gint32 image_ID)
 
   gimp_ui_init ("shift", FALSE);
 
-  dlg = gimp_dialog_new (_("Shift"), "shift",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-shift",
+  dialog = gimp_dialog_new (_("Shift"), "shift",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-shift",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
+
+  preview = gimp_drawable_preview_new (drawable, &shvals.preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (shift), drawable);
 
   frame = gimp_int_radio_group_new (FALSE, NULL,
                                     G_CALLBACK (gimp_radio_button_update),
                                     &shvals.orientation, shvals.orientation,
 
-                                    _("Shift _horizontally"), HORIZONTAL, NULL,
-                                    _("Shift _vertically"),   VERTICAL,   NULL,
+                                    _("Shift _horizontally"), HORIZONTAL, &horizontal,
+                                    _("Shift _vertically"),   VERTICAL,   &vertical,
 
                                     NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  g_signal_connect_swapped (horizontal, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (vertical, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  Get the image resolution and unit  */
   gimp_image_get_resolution (image_ID, &xres, &yres);
@@ -366,15 +405,15 @@ shift_dialog (gint32 image_ID)
 
   g_signal_connect (size_entry, "value_changed",
                     G_CALLBACK (shift_amount_callback),
-                    &shvals.shift_amount);
-  gtk_box_pack_start (GTK_BOX (vbox), size_entry, FALSE, FALSE, 0);
+                    preview);
+  gtk_box_pack_start (GTK_BOX (main_vbox), size_entry, FALSE, FALSE, 0);
   gtk_widget_show (size_entry);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }
@@ -383,6 +422,9 @@ static void
 shift_amount_callback (GtkWidget *widget,
                        gpointer   data)
 {
+  GimpPreview *preview = GIMP_PREVIEW (data);
+
   shvals.shift_amount = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget),
                                                     0);
+  gimp_preview_invalidate (preview);
 }
