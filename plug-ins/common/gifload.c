@@ -616,8 +616,6 @@ GetCode (FILE *fd,
 	  return -1;
 	}
 
-      fprintf(stderr," %d ",last_byte);
-
       buf[0] = buf[last_byte - 2];
       buf[1] = buf[last_byte - 1];
 
