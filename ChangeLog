@@ -1,3 +1,19 @@
+2003-04-01  Manish Singh  <yosh@gimp.org>
+
+	* config/gimpguiconfig.[ch]: added gboolean can_change_accels
+
+	* config/gimprc-blurbs.h: blurb for the above
+
+	* gui/preferences-dialog.c: UI for the above. Has warning about
+	not working in GNOME2 yet (pending resolution of Bug #109653)
+
+	* gui/menus.c: use can_change_accels. It simply parses the rc
+	string gtk-can-change-accels = [0|1] depending on the state
+	of can_change_accels in the gui config.
+
+	* etc/gimprc
+	* docs/gimprc-1.3.5.in: regenerated
+
 2003-04-01  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptext-compat.c (text_render): strip the size from

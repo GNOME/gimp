@@ -270,8 +270,11 @@ N_("Sets the swap file location. The gimp uses a tile based memory " \
    "a directory that is mounted over NFS.  For these reasons, it may " \
    "be desirable to put your swap file in \"/tmp\".")
 
-#define TEAROFF_MENUS_BLURB  \
+#define TEAROFF_MENUS_BLURB \
 N_("When enabled, menus can be torn off.")
+
+#define CAN_CHANGE_ACCELS_BLURB \
+N_("When enabled, you can change keyboard shortcuts for menu items on the fly.")
 
 #define TEMP_PATH_BLURB \
 N_("Sets the temporary storage directory. Files will appear here " \
@@ -279,10 +282,10 @@ N_("Sets the temporary storage directory. Files will appear here " \
    "when the GIMP exits, but some files are likely to remain, so it is " \
    "best if this directory not be one that is shared by other users.")
 
-#define THEME_BLURB  \
+#define THEME_BLURB \
 "The name of the theme to use." 
 
-#define THEME_PATH_BLURB  \
+#define THEME_PATH_BLURB \
 "Sets the theme search path."
 
 #define THUMBNAIL_SIZE_BLURB \

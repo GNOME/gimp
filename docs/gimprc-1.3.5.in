@@ -158,6 +158,12 @@ Specify a default gradient.  The gradient is searched for in the specified
 gradient path.  This is a string value.
 
 .TP
+(default-font "Sans")
+
+Specify a default font.  The font is searched for in the fontconfig font path.
+ This is a string value.
+
+.TP
 (default-comment "Created with The GIMP")
 
 Sets the default comment.  This is a string value.
@@ -564,6 +570,12 @@ Enable to display tooltips.  Possible values are yes and no.
 (tearoff-menus yes)
 
 When enabled, menus can be torn off.  Possible values are yes and no.
+
+.TP
+(can-change-accels no)
+
+When enabled, you can change keyboard shortcuts for menu items on the fly. 
+Possible values are yes and no.
 
 .TP
 (last-opened-size 4)

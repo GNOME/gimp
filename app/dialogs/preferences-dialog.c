@@ -1124,6 +1124,10 @@ prefs_dialog_new (Gimp    *gimp,
                           _("Enable _Tearoff Menus"),
                           GTK_BOX (vbox2));
 
+  prefs_check_button_add (config, "can-change-accels",
+                          _("Dynamic _Keyboard Shortcuts (does not work in GNOME2 yet)"),
+                          GTK_BOX (vbox2));
+
   /* Window Positions */
   vbox2 = prefs_frame_new (_("Window Positions"), GTK_CONTAINER (vbox), FALSE);
 

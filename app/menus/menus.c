@@ -72,6 +72,8 @@ static void   menus_last_opened_reorder (GimpContainer   *container,
                                          gint             unused2,
                                          GimpItemFactory *item_factory);
 
+static void   menu_can_change_accels    (GimpGuiConfig   *config);
+
 
 /*  global variables  */
 
@@ -94,6 +96,11 @@ menus_init (Gimp *gimp)
   g_return_if_fail (menus_initialized == FALSE);
 
   menus_initialized = TRUE;
+
+  g_signal_connect (gimp->config, "notify::can-change-accels",
+                    G_CALLBACK (menu_can_change_accels), NULL);
+
+  menu_can_change_accels (GIMP_GUI_CONFIG (gimp->config));
 
   global_menu_factory = gimp_menu_factory_new (gimp);
 
@@ -236,6 +243,10 @@ menus_exit (Gimp *gimp)
 
   g_object_unref (global_menu_factory);
   global_menu_factory = NULL;
+
+  g_signal_handlers_disconnect_by_func (gimp->config,
+                                        menu_can_change_accels,
+                                        NULL);
 }
 
 void
@@ -421,4 +432,17 @@ menus_last_opened_reorder (GimpContainer   *container,
                            GimpItemFactory *item_factory)
 {
   menus_last_opened_update (container, unused1, item_factory);
+}
+
+static void
+menu_can_change_accels (GimpGuiConfig *config)
+{
+  gchar *rc_string;
+
+  rc_string = g_strdup_printf ("gtk-can-change-accels = %s",
+                               config->can_change_accels ? "1" : "0");
+  
+  gtk_rc_parse_string (rc_string);
+
+  g_free (rc_string);
 }

@@ -117,6 +117,11 @@
 #
 # (default-gradient "FG to BG (RGB)")
 
+# Specify a default font.  The font is searched for in the fontconfig font
+# path.  This is a string value.
+#
+# (default-font "Sans")
+
 # Sets the default comment.  This is a string value.
 #
 # (default-comment "Created with The GIMP")
@@ -432,6 +437,11 @@
 # When enabled, menus can be torn off.  Possible values are yes and no.
 #
 # (tearoff-menus yes)
+
+# When enabled, you can change keyboard shortcuts for menu items on the fly. 
+# Possible values are yes and no.
+#
+# (can-change-accels no)
 
 # How many recently opened image filenames to keep on the File menu.  This is
 # an integer value.
