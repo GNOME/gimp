@@ -10,7 +10,9 @@ Revision history for Gimp-Perl extension.
         - do not install examples/gap-vcr.
         - added new sethspin, with slight changes.
         - do not install "feedback".
-        - updated xachlego.
+        - updated examples/xachlego.
+        - added examples/blended2, examples/translogo.
+        - removed examples/giflogo.
 
 1.19  Thu Jan  6 00:21:58 CET 2000
         - used N_ to mark all the menu paths, since gimp now tries to

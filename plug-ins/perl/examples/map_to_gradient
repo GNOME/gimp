@@ -42,7 +42,6 @@ register "map_to_gradient",
    $grad = $grad->xchg(0,1); # this form is later needed in index, so do it now
 
    my @bounds = $drawable->bounds;
-   my @off = $drawable->offsets;
    {
       my $src = new PixelRgn ($drawable,@bounds,0,0);
       my $dst = new PixelRgn ($drawable,@bounds,1,1);

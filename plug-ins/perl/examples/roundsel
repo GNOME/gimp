@@ -1,0 +1,39 @@
+#!/usr/bin/perl
+# Use gaussian blur and levels to round selection corners
+
+use Gimp qw(:auto __ N_);
+use Gimp::Fu;
+use Gimp::Util;
+
+# Gimp::set_trace(TRACE_ALL);
+
+register "round_sel", 
+         "Rounds a selection.",
+         "Rounds a selection.",
+         "Uri Zarfaty", 
+         "Uri Zarfaty <udz20\@cam.ac.uk>", 
+         "1999-03-25",
+         N_"<Image>/Select/Round...", 
+         "*", 
+         [ 
+           [PF_SPINNER, "roundness", "How much to round, in pixels", 16, [1,1000,1]], 
+         ], sub {
+    my($img,$drawable,$round) = @_;
+
+    eval { $img->undo_push_group_start };
+    
+    my $channel = gimp_selection_save($img);
+    gimp_selection_none($img);
+    plug_in_gauss_iir($img, $channel, $round, 1, 1);
+    gimp_levels($channel, 0, 123, 133, 1.0, 0, 255);
+    gimp_selection_load($channel);
+    gimp_image_remove_channel($img, $channel);
+    # gimp_channel_delete($channel);
+    
+    eval { $img->undo_push_group_end };
+
+    ();
+};
+
+exit main;
+

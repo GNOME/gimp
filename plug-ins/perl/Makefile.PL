@@ -28,8 +28,8 @@ if ($ARGV[0] ne "--writemakefile") {
 
 @pins =
    qw(windify prep4gif webify PDB tex-to-float ditherize
-      xachlego xachshadow parasite-editor roundsel
-      scratches blowinout terral_text xachvision perlcc giflogo
+      xachlego xachshadow parasite-editor roundsel blended2
+      scratches blowinout terral_text xachvision perlcc translogo
       animate_cells image_tile yinyang stamps font_table sethspin
       perlotine randomblends innerbevel fit-text guidegrid roundrectsel
       repdup centerguide stampify goldenmean triangle mirrorsplit
@@ -248,10 +248,7 @@ autoconf:
         
 # merge messages into potfile
 msgmerge:
-	./pxgettext `find . -name '*.pm' -o -name '*.xs' -o -path './examples/*'` Perl-Server | \\
-        msgmerge -w 83 po/gimp-perl.pot - >gimp-perl.pot~ && \\
-        mv gimp-perl.pot~ po/gimp-perl.pot
-	for po in po/*.po; do msgmerge -w 83 \$\$po po/gimp-perl.pot >\$\$po~ && mv \$\$po~ \$\$po; done
+	./po/update.sh
 
 # set \$VERSION in all modules
 setver:

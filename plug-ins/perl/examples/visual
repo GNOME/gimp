@@ -1,0 +1,327 @@
+#!/usr/bin/perl
+
+# this is just a very basic hack...
+
+use Gimp::Feature qw(perl-5.005 gtk-1.2);
+use Gimp (':consts','__','N_');
+use Gimp::Fu;
+use Gnome;
+#use Gtk 0.61231;
+use Gtk;
+use Gtk::Gdk;
+use Gimp::UI (); # for the logo
+
+$VERSION = 0.0;
+
+$tabw = 30;
+$tabh = 12;
+
+#Gimp::set_trace(TRACE_ALL);
+
+@stringtargets = (
+	{ target => "STRING",     flags => 0, info => TARGET_STRING },
+	{ target => "text/plain", flags => 0, info => TARGET_STRING },
+);
+
+@funcframetarget = (
+	{ target => "application/funcframe", flags => 0, info => TARGET_STRING },
+);
+
+%typetargets = (
+  &PF_IMAGE  => [{ target => "application/image-link", flags => 0, info => 0 }],
+  &PF_INT32  => [{ target => "application/value-link", flags => 0, info => 0 }],
+  &PF_STRING => [{ target => "application/value-link", flags => 0, info => 0 }],
+);
+
+my $ex;		# average font width for default font
+my $ey;		# average font height for default font
+
+my $window;	# the main window
+my $canvas;	# the gtklayout widget
+my $funclist;
+
+my %type2str = (
+   &PARAM_BOUNDARY    => 'BOUNDARY',
+   &PARAM_CHANNEL     => 'CHANNEL',
+   &PARAM_COLOR       => 'COLOR',
+   &PARAM_DISPLAY     => 'DISPLAY',
+   &PARAM_DRAWABLE    => 'DRAWABLE',
+   &PARAM_FLOAT       => 'FLOAT',
+   &PARAM_IMAGE       => 'IMAGE',
+   &PARAM_INT32       => 'INT32',
+   &PARAM_FLOATARRAY  => 'FLOATARRAY',
+   &PARAM_INT16       => 'INT16',
+   &PARAM_PARASITE    => 'PARASITE',
+   &PARAM_STRING      => 'STRING',
+   &PARAM_PATH        => 'PATH',
+   &PARAM_INT16ARRAY  => 'INT16ARRAY',
+   &PARAM_INT8        => 'INT8',
+   &PARAM_INT8ARRAY   => 'INT8ARRAY',
+   &PARAM_LAYER       => 'LAYER',
+   &PARAM_REGION      => 'REGION',
+   &PARAM_STRINGARRAY => 'STRINGARRAY',
+   &PARAM_SELECTION   => 'SELECTION',
+   &PARAM_STATUS      => 'STATUS',
+   &PARAM_INT32ARRAY  => 'INT32ARRAY',
+);
+
+sub add_func($$;) {
+   my($group,$func)=@_;
+   $funclist->append($func);
+}
+
+sub create_main {
+   my $t = new Gtk::Tooltips;
+   my $w = new Gtk::Window;
+
+   my $v = new Gtk::VBox 0,5;
+   my $h = new Gtk::HBox 0,5;
+
+   $canvas = new ProgShell;
+
+   $funclist = new Gtk::CList 1;
+   $funclist->set_usize(200,0);
+   $funclist->drag_source_set ([-button1_mask, -button3_mask], [-copy, -move], @::stringtargets);
+
+   $funclist->signal_connect ("drag_data_get", sub {
+      my ($widget, $context, $data, $info, $time) = @_;
+      $data->set ($data->target, 8, $widget->get_text($widget->selection,0));
+   });
+
+   $funclist->set_selection_mode(-extended);
+
+   $w->add ($h);
+   $h->add ($v);
+
+   my $sc = new Gtk::ScrolledWindow;
+   $sc->add ($funclist);
+   $v->add ($sc);
+   $h->add ($canvas);
+
+   for (sort Gimp->procedural_db_query("","","","","","","")) {
+      $group = "gimp";
+      $group = "image"    if /^gimp_image_/;
+      $group = "layer"    if /^gimp_layer_/;
+      $group = "channel"  if /^gimp_channel_/;
+      $group = "drawable" if /^gimp_drawable_/;
+      add_func $group, $_;
+      $gimpfunc{$_} = 1;
+   }
+   $window = $w;
+   $w->realize;
+   $ex = $w->style->font->string_width ('Mn')*0.5;
+   $ey = $w->style->font->string_width ('My');
+
+   $w->set_title(__"Visual Scriptor");
+   $w->signal_connect("destroy",sub {main_quit Gtk});
+
+   show_all $w;
+}
+
+register "extension_visual_scriptor",
+         "Visual Gimp Scripting Environment",
+         "=pod(DESCRIPTION)",
+         "Marc Lehmann",
+         "Marc Lehmann",
+         $VERSION,
+         N_"<Toolbox>/Xtns/Visual Scriptor",
+         "",
+         [],
+         sub {
+
+   Gimp::gtk_init;
+
+   create_main;
+   main Gtk;
+
+   ();
+};
+
+# the basic function/node-type
+package Func;
+
+use Gimp;
+
+sub new_from_gimp_func {
+   my $name = shift;
+   my $self = {};
+   my ($narg, $nval);
+   (
+      $self->{blurb},
+      $self->{help},
+      $self->{author},
+      $self->{copyright},
+      $self->{date},
+      $self->{proc_type},
+      $narg,
+      $nval,
+   ) = Gimp->procedural_db_proc_info($name);
+   $self->{in } = [map Gimp->procedural_db_proc_arg($name,$_), 0..$narg-1];
+   $self->{out} = [map Gimp->procedural_db_proc_val($name,$_), 0..$nval-1];
+   $self;
+}
+
+sub new_from_name {
+   my $class = shift;
+   my $name = shift;
+   $new{$name} = new_from_gimp_func($name) if !$new{$name} && $::gimpfunc{$name};
+   $new{$name} ?
+      bless {
+         name => $name,
+         %{$new{$name}},
+      }, $class
+   :
+      ();
+}
+
+# a connection tab
+package Tab;
+
+use Gimp::basewidget Gtk::Button;
+
+sub OPEN (){1}
+sub CONN (){2}
+sub BOUND(){3}
+
+sub GTK_CLASS_INIT {
+   my $class = shift;
+   add_arg_type $class "state", "gint", 3, 1;
+   add_arg_type $class "type" , "gint", 3, 2;
+   add_arg_type $class "dir"  , "gint", 3, 3;
+}
+
+sub GTK_OBJECT_SET_ARG {
+   my($self,$arg,$id,$value) = @_;
+   print "SA $self,$arg,$id,$value\n";
+   if ($id == 1) {
+      $self->{state} = $value;
+   } elsif ($id == 2) {
+      $self->{type}  = $value;
+      $self->drag_dest_set('all', ['copy'], $::typetargets{$value});
+      $self->drag_source_set ([-button1_mask], [-copy], $::typetargets{$value});
+   } elsif ($id == 3) {
+      $self->{dir}   = $value;
+   }
+}
+
+sub GTK_OBJECT_GET_ARG {
+   my($self,$arg,$id) = @_;
+   if ($id == 1) {
+      $self->{state};
+   } elsif ($id == 2) {
+      $self->{type};
+   } elsif ($id == 3) {
+      $self->{dir};
+   }
+}
+
+sub GTK_OBJECT_INIT {
+   shift unless ref $self; # care for "old" Gtk modules
+   $self->set_usize($::tabw, $::tabh);
+}
+
+sub new {
+   my $class = shift;
+   $class->SUPER::new(@_);
+   #$class->SUPER::new(shadow => out, @_);
+}
+
+# a single function or "block", can only exist
+# within a progshell
+package FuncFrame;
+
+use Gimp::basewidget Gtk::VBox;
+
+sub GTK_OBJECT_INIT {
+   my $self = shift;
+   
+   signal_connect $self draw => sub {
+      print "re-drawing @_\n\n";
+   };
+   signal_connect $self realize => sub {
+      print "realize @_\n\n";
+   };
+
+   $self->add ($self->{inbox } = new Gtk::HBox 1, $::tabw*0.6);
+   $self->add ($self->{button} = new Gtk::Button);
+   $self->add ($self->{outbox} = new Gtk::HBox 1, $::tabw*0.6);
+    
+   $self->{button}->add(
+      $self->{label} = new Gtk::Label
+   );
+}
+
+sub set_func {
+   my($self,$func)=@_;
+   $self->{func} = $func;
+   $self->{inbox }->remove($_) for $self->{inbox }->children;
+   $self->{outbox}->remove($_) for $self->{outbox}->children;
+   my $w = 1;
+   my $in  = $self->{func}->{in };
+   my $out = $self->{func}->{out};
+   for (@$in) {
+      $self->{inbox }->add (new Tab type => $_->[0], dir => 0);
+   }
+   for (@$out) {
+      $self->{outbox}->add (new Tab type => $_->[0], dir => 1);
+   }
+   $self->{label}->set($func->{name});
+}
+
+sub new_from_name {
+   my $class = shift;
+   my $func = Func->new_from_name (shift);
+   if ($func) {
+      my $self = $class->new(@_);
+      $self->set_func($func);
+      $self;
+   } else {
+      ();
+   }
+}
+
+# the shell canvas
+package ProgShell;
+
+use Gimp::basewidget Gtk::Layout;
+
+sub new {
+   print "new for progshell ",ProgShell->_object_type,"\n";
+   Gtk::Object::new("ProgShell");
+}
+
+sub GTK_CLASS_INIT { }
+sub GTK_OBJECT_INIT {
+   my $canvas = shift;
+   print "X @_\n";
+
+   $canvas->set_usize (600, 800);
+   $canvas->set_hadjustment(0);
+   $canvas->set_vadjustment(0);
+   $canvas->set_app_paintable(1);
+
+   $canvas->signal_connect (draw => sub {
+         print "DRAW @_ : ",@{$_[1]},"\n";
+   });
+
+   $canvas->signal_connect (drag_data_received => sub {
+      my ($widget, $context, $x, $y, $data, $info, $time) = @_;
+      my $type = Gtk::Gdk::Atom->name($data->type);
+      if (($type eq "STRING" || $type eq "text/plain") && $data->format == 8) {
+         my $widget = FuncFrame->new_from_name($data->data);
+         $widget->show_all;
+         $canvas ->put($widget,$x,$y);
+         #printf ("Received \"%s\" in trashcan at $x, $y\n", $data->data);
+      } else {
+         $context->finish (0, 0, $time);
+      }
+      $context->finish (1, 0, $time);
+   });
+
+   $canvas->drag_dest_set('all', ['copy'], @::stringtargets);
+}
+
+package main;
+
+exit main;
+

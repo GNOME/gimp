@@ -1,0 +1,88 @@
+#!/usr/bin/perl
+
+use Gimp qw(:auto __ N_);
+use Gimp::Fu;
+use Gimp::Util;
+
+#Gimp::set_trace(TRACE_CALL);
+
+sub my_innerbevel {
+	my ($image, $drawable, $bg_col, $bl1, $bl2, $elev, $depth, $rad_tog) = @_;
+	$drawable->has_alpha or die "You can't run this script without an ALPHA CHANNEL!!";
+	my $img = gimp_image_new (256, 100, RGB_IMAGE);
+	$drawable->image->selection_all;
+	$drawable->edit_copy;
+	gimp_selection_none ($image);
+	if ($rad_tog == 0) {
+		my $bg_layer;
+		$bg_layer=$img->layer_new($drawable->width,$drawable->height,$image->layertype(1), "Background", 100, NORMAL_MODE);
+		gimp_palette_set_background ($bg_col);
+		$bg_layer->drawable_fill(BG_IMAGE_FILL);
+		$img->add_layer($bg_layer,0);
+	}
+        $img->resize($drawable->width,$drawable->height, 0, 0);
+	my $text1_lay;
+	$text1_lay=$img->layer_new($drawable->width,$drawable->height,$image->layertype(1), "Text -1-", 100, NORMAL_MODE);
+	$img->add_layer($text1_lay,-1);
+	gimp_edit_clear ($text1_lay);
+	$text1_lay->edit_paste(0)->floating_sel_anchor;
+	$text1_lay->set_preserve_trans(1);
+	gimp_palette_set_foreground ($bl1);
+	gimp_palette_set_background ($bl2);
+	@start = ($text1_lay->width / 2 - 5, 0);
+	@end = ($text1_lay->width / 2 + 5, $text1_lay->height);
+	gimp_blend ($text1_lay, 0, 0, 0, 100, 0, 0, 0, 2, 0.30, @start, @end);
+	my $text2_lay;
+	$text2_lay=$text1_lay->copy(1);
+	$img->add_layer($text2_lay, -1);
+	gimp_palette_set_background ([255, 255, 255]);
+	$text2_lay->edit_fill;
+	$text2_lay->set_preserve_trans(0);
+	$text1_lay->set_preserve_trans(0);
+	plug_in_gauss_rle ($text2_lay, 6, 1, 1);
+	plug_in_bump_map ($img, $text1_lay, $text2_lay, 110.0, $elev, $depth, 0, 0, 0, 0, 0, 0, 0);
+	$text2_lay->invert;
+	$img->lower_layer($text2_lay);
+	$text2_lay->translate(2, 3);
+	$text2_lay->set_opacity(75);
+	if ($rad_tog == 1) {
+		$img->flatten;
+		gimp_convert_indexed ($img, 0, MAKE_PALETTE, 256, 0, 0, "");
+        	my $new = gimp_image_active_drawable ($img);
+        	gimp_layer_add_alpha ($new);
+        	gimp_by_color_select ($new, [255, 255, 255], 55, ADD, 0, 0, 0.0, 0);
+        	gimp_edit_clear ($new);
+        	gimp_selection_none ($img);
+        } else {
+		$img->flatten;
+	}
+	gimp_display_new ($img);
+	exit main;
+}
+$help=<<EOF.$help;
+This script will produce a nice blended beveled logo from your alpha
+layer, which must have a black text. You can choose the initial and finals colours
+of the blend, the background, and how to tweak the bevel effect.
+It uses a techinque quite similar to that in the Inner Bevel Logo.
+
+EOF
+
+register "make_bevel_logos",
+         "A script to get blended beveled logos",
+         $help,
+         "Michele Gherlone <mikem\@enet.it>",
+         "(c) 2000 M. Gherlone",
+         "20000130",
+         N_"<Image>/Filters/Logulator/Blended II",
+         "*",
+         [
+           [PF_COLOUR	, 'choose_bg_colour', "Choose the background colour", [255, 255, 255]],
+           [PF_COLOUR	, 'blend_start',  "Choose the 1st blend colour", [247, 231, 9]],
+           [PF_COLOUR	, 'blend_stop',   "Choose the 2nd blend colour", [255, 0, 0]],
+           [PF_SLIDER	, 'strength_of_bevel', "Strength of bevel", 45.00, [0.00, 60.00, 0.50]],
+           [PF_SLIDER	, 'depth_of_bevel', "Depth of bevel", 4, [0, 60, 1]],
+           [PF_RADIO	, 'user_choice', "The user's choice", 0, [Background => 0, Transparent => 1]],
+         ],
+         \&my_innerbevel;
+exit main;
+
