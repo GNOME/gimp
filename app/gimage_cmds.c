@@ -1856,7 +1856,7 @@ image_set_cmap_invoker (Argument *args)
 
   if (success)
     {
-      if (gimage->num_cols && gimage->cmap)
+      if (gimage->cmap)
 	{
 	  g_free (gimage->cmap);
 	  gimage->cmap = NULL;

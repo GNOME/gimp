@@ -338,7 +338,7 @@ file_open_callback (GtkWidget *widget,
 	      gtk_signal_connect (GTK_OBJECT (open_options_genbutton),
 				  "clicked",
 				  (GtkSignalFunc) genbutton_callback,
-				  open_options_genbutton);
+				  fileload);
 	      gtk_box_pack_end (GTK_BOX (hbox), open_options_genbutton,
 				TRUE, FALSE, 0);
 	    }
@@ -1165,7 +1165,7 @@ set_preview (const gchar *fullfname,
   gchar  *pname;
   gchar  *fname;
   gchar  *tname;
-  gchar  *imginfo;
+  gchar  *imginfo = NULL;
   struct stat file_stat;
   struct stat thumb_stat;
   gboolean thumb_may_be_outdated = FALSE;
@@ -1250,6 +1250,8 @@ set_preview (const gchar *fullfname,
 			      thumb_may_be_outdated ?
 			      _("(this thumbnail may be out of date)") :
 			      (imginfo ? imginfo : _("(no information)")));
+	  if (imginfo)
+	    g_free (imginfo);
 	}
       else
 	{
@@ -1315,13 +1317,26 @@ genbutton_callback (GtkWidget *widget,
 {
   GimpImage* gimage_to_be_thumbed;
   gchar* filename;
+  guchar* RGBbuf;
+  TempBuf* tempbuf;
+  gint RGBbuf_w;
+  gint RGBbuf_h;
+
+  /* added for multi-file preview generation... */
+  GtkFileSelection *fs;
+  gchar* mfilename = NULL;
+  gchar* filedirname;
+  struct stat buf;
+  int err;
+  
+  fs = GTK_FILE_SELECTION (data);
 
   if (!preview_fullname)
     {
       g_warning ("Tried to generate thumbnail for NULL filename.");
       return;
     }
-  
+
   filename = g_strdup (preview_fullname);
 
   gimp_add_busy_cursors ();
@@ -1330,9 +1345,6 @@ genbutton_callback (GtkWidget *widget,
  					       g_basename(filename),
 					       RUN_NONINTERACTIVE)))
     {
-      guchar* RGBbuf;
-      gint RGBbuf_w, RGBbuf_h;
-      TempBuf* tempbuf;
 
       tempbuf = make_thumb_tempbuf (gimage_to_be_thumbed);
       RGBbuf = make_RGBbuf_from_tempbuf (tempbuf, &RGBbuf_w, &RGBbuf_h);
@@ -1356,8 +1368,94 @@ genbutton_callback (GtkWidget *widget,
 			  _("(could not make preview)"));
     }
 
+  /* new mult-file preview make: */  
+  {
+    GList *row = GTK_CLIST(fs->file_list)->row_list;
+    gint rownum = 0;
+    gchar* temp;
+
+    /*printf("%d\n", GTK_CLIST(fs->file_list)->rows);*/
+
+    filedirname = g_dirname (filename);
+
+    while (row)
+      {
+	if (GTK_CLIST_ROW(row)->state == GTK_STATE_SELECTED)
+	  {
+	    if (gtk_clist_get_cell_type(GTK_CLIST(fs->file_list),
+					rownum, 0) == GTK_CELL_TEXT)
+	      {
+		gtk_clist_get_text (GTK_CLIST(fs->file_list),
+				    rownum, 0, &temp);
+		
+		mfilename = g_strdup (temp);
+		
+		err = stat (mfilename, &buf);
+		
+		if (! (err == 0 && (buf.st_mode & S_IFDIR)))
+		  { /* Is not directory. */
+		    
+		    if (err)
+		      {
+			g_free (mfilename);
+			mfilename = g_strconcat (filedirname,
+						 G_DIR_SEPARATOR_S,
+						 temp, NULL);
+		      }
+		    
+		    /* When doing multiple selections, the name
+		     * of the first item touched with the cursor will
+		     * become the text-field default - and we don't
+		     * want to load that twice.
+		     */
+		    if (strcmp (mfilename, filename) == 0)
+		      {
+			goto next_iter;
+		      }
+		    if ((gimage_to_be_thumbed = file_open_image (mfilename,
+								 temp,
+								 RUN_NONINTERACTIVE)))
+		      {			
+			tempbuf = make_thumb_tempbuf (gimage_to_be_thumbed);
+			RGBbuf = make_RGBbuf_from_tempbuf (tempbuf, &RGBbuf_w, &RGBbuf_h);
+			switch (thumbnail_mode)
+			  {
+			  case 0:
+			    break;
+			  default:
+			    file_save_thumbnail (gimage_to_be_thumbed, mfilename, tempbuf);
+			  }
+			set_preview (mfilename, RGBbuf, RGBbuf_w, RGBbuf_h);
+			
+			gimage_delete (gimage_to_be_thumbed);
+			
+			if (RGBbuf)
+			  g_free (RGBbuf);
+		      }
+		    else
+		      {
+			gtk_label_set_text (GTK_LABEL(open_options_label),
+					    _("(could not make preview)"));
+		      }
+		  }
+	      }
+	  }
+      next_iter:		
+	if (mfilename)
+	  {
+	    g_free (mfilename);
+	    mfilename = NULL;
+	  }
+      	rownum++;
+	row = g_list_next (row);
+      }
+  }
+
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
   gimp_remove_busy_cursors (NULL);
+
+  if (filedirname)
+    g_free (filedirname);
 
   g_free (filename);
 }
@@ -1367,8 +1465,10 @@ file_open_ok_callback (GtkWidget *widget,
 		       gpointer   data)
 {
   GtkFileSelection *fs;
-  char* filename, *raw_filename, *mfilename;
-  gchar* filedirname;
+  gchar *filename;
+  gchar *raw_filename;
+  gchar *mfilename = NULL;
+  gchar *filedirname;
   struct stat buf;
   int err;
   GString *s;
@@ -1447,8 +1547,6 @@ file_open_ok_callback (GtkWidget *widget,
     gint rownum = 0;
     gchar* temp;
 
-    /*printf("%d\n", GTK_CLIST(fs->file_list)->rows);*/
-
     while (row)
       {
 	if (GTK_CLIST_ROW(row)->state == GTK_STATE_SELECTED)
@@ -1459,15 +1557,11 @@ file_open_ok_callback (GtkWidget *widget,
 		gtk_clist_get_text (GTK_CLIST(fs->file_list),
 				    rownum, 0, &temp);
 		
-		/*printf("%s\n", temp);*/
-
 		/* When doing multiple selections, the name
 		 * of the first item touched with the cursor will
 		 * become the text-field default - and we don't
 		 * want to load that twice.
 		 */
-		/*printf("[%s]{%s}\n", temp, raw_filename);*/
-		/*		fflush(stdout);*/
 		if (strcmp(temp, raw_filename)==0)
 		  {
 		    goto next_iter;
@@ -1486,9 +1580,6 @@ file_open_ok_callback (GtkWidget *widget,
 			mfilename = g_strconcat (filedirname,
 						 G_DIR_SEPARATOR_S,
 						 temp, NULL);
-
-			/*printf(">>> %s\n", mfilename);*/
-			/*fflush (stdout);*/
 		      }
 		    
 		    if (file_open (mfilename, temp))
@@ -1504,28 +1595,22 @@ file_open_ok_callback (GtkWidget *widget,
 			g_string_free (s, TRUE);
 		      }
 		  }
-
-		if (mfilename)
-		  {
-		    g_free (mfilename);
-		    mfilename = NULL;
-		  }
 	      }
 	  }
 
       next_iter:
+	if (mfilename)
+	  {
+	    g_free (mfilename);
+	    mfilename = NULL;
+	  }
 	rownum++;
 	row = g_list_next (row);
       }
-
-    /*fflush(stdout);*/
   }
 
   if (filedirname)
-    {
-      g_free (filedirname);
-      filedirname = NULL;
-    }
+    g_free (filedirname);
 }
 
 static void

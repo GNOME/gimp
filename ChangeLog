@@ -1,3 +1,17 @@
+Tue Nov  9 15:08:13 MET 1999  Sven Neumann <sven@gimp.org>
+	
+	* app/fileops.c:
+	applied a (modified) patch from Rene Rebe <rene.rebe@okay.net>
+	that allows to generate previews for multiple files. Plugged
+	some small memleaks while I was on it.
+
+	* tools/pdbgen/pdb/gimage.pdb
+	* app/gimage_cmds.c
+	* app/xcf.c: plugged memleaks that occured on xcf and indexed load
+
+	* po/fr.po: applied a patch from Daniel Eggert that fixes a merging
+	problem in the french translation
+
 Tue Nov  9 05:14:41 GMT 1999 Nick Lamb <njl195@zepler.org>
 
 	* plug-ins/common/png.c: Option to reduce file size further

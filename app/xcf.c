@@ -2159,11 +2159,9 @@ xcf_load_layer (XcfInfo *info,
 
   /* create a new layer */
   layer = layer_new (gimage, width, height, type, name, 255, NORMAL_MODE);
+  g_free (name);
   if (!layer)
-    {
-      g_free (name);
-      return NULL;
-    }
+    return NULL;
 
   /* read in the layer properties */
   if (!xcf_load_layer_props (info, gimage, layer))
@@ -2243,11 +2241,9 @@ xcf_load_channel (XcfInfo *info,
 
   /* create a new channel */
   channel = channel_new (gimage, width, height, name, 255, color);
+  g_free (name);
   if (!channel)
-    {
-      g_free (name);
-      return NULL;
-    }
+    return NULL;
 
   /* read in the channel properties */
   if (!xcf_load_channel_props (info, gimage, channel))
@@ -2302,11 +2298,9 @@ xcf_load_layer_mask (XcfInfo *info,
 
   /* create a new layer mask */
   layer_mask = layer_mask_new (gimage, width, height, name, 255, color);
+  g_free (name);
   if (!layer_mask)
-    {
-      g_free (name);
-      return NULL;
-    }
+    return NULL;
 
   /* read in the layer_mask properties */
   if (!xcf_load_channel_props (info, gimage, GIMP_CHANNEL(layer_mask)))
