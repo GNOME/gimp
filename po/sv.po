@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
-"POT-Creation-Date: 2001-01-08 12:52+0100\n"
-"PO-Revision-Date: 2001-01-08 12:54+0100\n"
+"POT-Creation-Date: 2001-01-09 12:19+0100\n"
+"PO-Revision-Date: 2001-01-09 12:27+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr "Besök gärna http://www.gimp.org/ för mer information"
 msgid "Rate:"
 msgstr "Flöde:"
 
-#: app/airbrush.c:171 modules/colorsel_water.c:737
+#: app/airbrush.c:171 modules/colorsel_water.c:751
 msgid "Pressure:"
 msgstr "Tryck:"
 
@@ -119,13 +119,13 @@ msgstr "Avsluta"
 #. the cancel button
 #: app/app_procs.c:777 app/brightness_contrast.c:237 app/channel_ops.c:103
 #: app/channels_dialog.c:2551 app/channels_dialog.c:2721
-#: app/color_balance.c:303 app/color_notebook.c:198 app/convert.c:521
+#: app/color_balance.c:303 app/color_notebook.c:269 app/convert.c:521
 #: app/curves.c:602 app/file_new_dialog.c:218 app/file_new_dialog.c:368
 #: app/gdisplay_ops.c:313 app/gimphelp.c:201 app/gimpprogress.c:124
 #: app/global_edit.c:782 app/gradient.c:1881 app/gradient.c:4941
 #: app/gradient.c:5502 app/hue_saturation.c:400 app/interface.c:1054
-#: app/layers_dialog.c:3554 app/layers_dialog.c:3738 app/layers_dialog.c:3833
-#: app/layers_dialog.c:4094 app/levels.c:377 app/palette.c:1831
+#: app/layers_dialog.c:3557 app/layers_dialog.c:3741 app/layers_dialog.c:3836
+#: app/layers_dialog.c:4097 app/levels.c:377 app/palette.c:1831
 #: app/posterize.c:224 app/preferences_dialog.c:1501 app/qmask.c:283
 #: app/resize.c:228 app/resize.c:1401 app/resolution_calibrate.c:116
 #: app/threshold.c:307 app/user_install.c:553
@@ -279,10 +279,10 @@ msgstr "Ljusstyrka-Kontrast går inte att använda på indexerade bilder."
 
 #: app/brightness_contrast.c:233 app/channel_ops.c:101
 #: app/channels_dialog.c:2549 app/channels_dialog.c:2719
-#: app/color_balance.c:299 app/color_notebook.c:195 app/convert.c:519
+#: app/color_balance.c:299 app/color_notebook.c:266 app/convert.c:519
 #: app/curves.c:598 app/file_new_dialog.c:218 app/file_new_dialog.c:364
-#: app/gimpui.c:130 app/hue_saturation.c:396 app/layers_dialog.c:3552
-#: app/layers_dialog.c:3736 app/layers_dialog.c:3831 app/layers_dialog.c:4092
+#: app/gimpui.c:130 app/hue_saturation.c:396 app/layers_dialog.c:3555
+#: app/layers_dialog.c:3739 app/layers_dialog.c:3834 app/layers_dialog.c:4095
 #: app/levels.c:373 app/module_db.c:315 app/posterize.c:220
 #: app/preferences_dialog.c:1497 app/qmask.c:281 app/resize.c:222
 #: app/resize.c:1401 app/resolution_calibrate.c:114 app/threshold.c:303
@@ -293,7 +293,7 @@ msgstr "OK"
 #: app/color_balance.c:301 app/curves.c:600 app/file_new_dialog.c:366
 #: app/hue_saturation.c:398 app/levels.c:375 app/posterize.c:222
 #: app/resize.c:225 app/threshold.c:305 app/tools.c:1543
-#: app/transform_core.c:426 modules/colorsel_water.c:683
+#: app/transform_core.c:426 modules/colorsel_water.c:697
 msgid "Reset"
 msgstr "Återställ"
 
@@ -320,7 +320,7 @@ msgstr "Penseleditor"
 
 #. The close button
 #: app/brush_edit.c:235 app/brush_select.c:291 app/by_color_select.c:758
-#: app/color_notebook.c:195 app/color_picker.c:318 app/colormap_dialog.c:254
+#: app/color_notebook.c:266 app/color_picker.c:318 app/colormap_dialog.c:254
 #: app/crop.c:1112 app/devices.c:776 app/docindex.c:780 app/errorconsole.c:287
 #: app/gdisplay_ops.c:313 app/gradient.c:915 app/gradient_select.c:163
 #: app/histogram_tool.c:299 app/info_window.c:264 app/lc_dialog.c:219
@@ -362,7 +362,7 @@ msgstr "Uppdatera"
 msgid "No Brushes available"
 msgstr "Inga penslar tillgängliga"
 
-#: app/brush_select.c:458 app/layers_dialog.c:421 app/tool_options.c:557
+#: app/brush_select.c:458 app/layers_dialog.c:424 app/tool_options.c:557
 msgid "Opacity:"
 msgstr "Opacitet:"
 
@@ -371,7 +371,7 @@ msgid "Mode:"
 msgstr "Läge:"
 
 #: app/brush_select.c:477 app/palette.c:1177 app/palette.c:2235
-#: modules/colorsel_water.c:678
+#: modules/colorsel_water.c:692
 msgid "New"
 msgstr "Ny"
 
@@ -449,7 +449,7 @@ msgstr "Byt ut"
 msgid "Add"
 msgstr "Lägg till"
 
-#: app/by_color_select.c:823 app/layers_dialog.c:387 app/tool_options.c:957
+#: app/by_color_select.c:823 app/layers_dialog.c:390 app/tool_options.c:960
 msgid "Subtract"
 msgstr "Subtraktion"
 
@@ -508,11 +508,11 @@ msgid "Wrap Around"
 msgstr "Slå-runt"
 
 #: app/channel_ops.c:184 app/image_new.c:84 app/image_new.c:298
-#: app/layers_dialog.c:3656
+#: app/layers_dialog.c:3659
 msgid "Background"
 msgstr "Bakgrund"
 
-#: app/channel_ops.c:185 app/image_new.c:94 app/layers_dialog.c:3658
+#: app/channel_ops.c:185 app/image_new.c:94 app/layers_dialog.c:3661
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -553,17 +553,17 @@ msgstr "Ta bort kanal"
 msgid "Empty Channel Copy"
 msgstr "Töm kanalkopia"
 
-#: app/channels_dialog.c:1444 app/color_balance.c:371 app/color_select.c:287
+#: app/channels_dialog.c:1444 app/color_balance.c:371 app/color_notebook.c:232
 #: app/curves.c:623 app/histogram_tool.c:327 app/levels.c:406
 msgid "Red"
 msgstr "Röd"
 
-#: app/channels_dialog.c:1448 app/color_balance.c:396 app/color_select.c:288
+#: app/channels_dialog.c:1448 app/color_balance.c:396 app/color_notebook.c:233
 #: app/curves.c:624 app/histogram_tool.c:328 app/levels.c:407
 msgid "Green"
 msgstr "Grön"
 
-#: app/channels_dialog.c:1452 app/color_balance.c:421 app/color_select.c:289
+#: app/channels_dialog.c:1452 app/color_balance.c:421 app/color_notebook.c:234
 #: app/curves.c:625 app/histogram_tool.c:329 app/levels.c:408
 msgid "Blue"
 msgstr "Blå"
@@ -671,13 +671,66 @@ msgstr "Gul"
 msgid "Preserve Luminosity"
 msgstr "Behåll luminans"
 
-#: app/color_notebook.c:190
+#: app/color_notebook.c:219
+msgid "H"
+msgstr "N"
+
+#: app/color_notebook.c:220
+msgid "S"
+msgstr "M"
+
+#: app/color_notebook.c:221
+msgid "V"
+msgstr "V"
+
+#: app/color_notebook.c:222 app/hue_saturation.c:378
+msgid "R"
+msgstr "R"
+
+#: app/color_notebook.c:223 app/hue_saturation.c:380
+msgid "G"
+msgstr "G"
+
+#: app/color_notebook.c:224 app/hue_saturation.c:382
+msgid "B"
+msgstr "B"
+
+#: app/color_notebook.c:225
+msgid "A"
+msgstr "A"
+
+#: app/color_notebook.c:229 app/layers_dialog.c:393 app/paint_funcs.c:102
+#: app/tool_options.c:963
+msgid "Hue"
+msgstr "Nyans"
+
+#: app/color_notebook.c:230 app/layers_dialog.c:394 app/paint_funcs.c:103
+#: app/tool_options.c:964
+msgid "Saturation"
+msgstr "Mättnad"
+
+#: app/color_notebook.c:231 app/curves.c:622 app/histogram_tool.c:326
+#: app/layers_dialog.c:396 app/levels.c:405 app/paint_funcs.c:105
+#: app/tool_options.c:966
+msgid "Value"
+msgstr "Värde"
+
+#: app/color_notebook.c:235 app/curves.c:626 app/levels.c:409
+msgid "Alpha"
+msgstr "Alfa"
+
+#: app/color_notebook.c:261
 msgid "Color Selection"
 msgstr "Färgval"
 
-#: app/color_notebook.c:198
+#: app/color_notebook.c:269
 msgid "Revert to Old Color"
 msgstr "Återgå den gamla färgen"
+
+#: app/color_notebook.c:476 app/color_picker.c:278 app/color_picker.c:293
+#: app/colormap_dialog.c:361
+msgid "Hex Triplet:"
+msgstr "Hex-triplett:"
 
 #: app/color_picker.c:165 app/color_picker.c:267 app/tools.c:576
 msgid "Color Picker"
@@ -707,11 +760,6 @@ msgstr "Blå:"
 msgid "Alpha:"
 msgstr "Alfa:"
 
-#: app/color_picker.c:278 app/color_picker.c:293 app/color_select.c:409
-#: app/colormap_dialog.c:361
-msgid "Hex Triplet:"
-msgstr "Hex-triplett:"
-
 #: app/color_picker.c:282 app/colormap_dialog.c:350
 msgid "Index:"
 msgstr "Index:"
@@ -733,46 +781,6 @@ msgstr "Intensitet:"
 #: app/info_window.c:434 app/info_window.c:456
 msgid "N/A"
 msgstr "E/T"
-
-#: app/color_select.c:275
-msgid "H"
-msgstr "N"
-
-#: app/color_select.c:276
-msgid "S"
-msgstr "M"
-
-#: app/color_select.c:277
-msgid "V"
-msgstr "V"
-
-#: app/color_select.c:278 app/hue_saturation.c:378
-msgid "R"
-msgstr "R"
-
-#: app/color_select.c:279 app/hue_saturation.c:380
-msgid "G"
-msgstr "G"
-
-#: app/color_select.c:280 app/hue_saturation.c:382
-msgid "B"
-msgstr "B"
-
-#: app/color_select.c:284 app/layers_dialog.c:390 app/paint_funcs.c:102
-#: app/tool_options.c:960
-msgid "Hue"
-msgstr "Nyans"
-
-#: app/color_select.c:285 app/layers_dialog.c:391 app/paint_funcs.c:103
-#: app/tool_options.c:961
-msgid "Saturation"
-msgstr "Mättnad"
-
-#: app/color_select.c:286 app/curves.c:622 app/histogram_tool.c:326
-#: app/layers_dialog.c:393 app/levels.c:405 app/paint_funcs.c:105
-#: app/tool_options.c:963
-msgid "Value"
-msgstr "Värde"
 
 #: app/colormap_dialog.c:274
 msgid "Indexed Color Palette"
@@ -971,7 +979,7 @@ msgid "Width:"
 msgstr "Bredd:"
 
 #: app/crop.c:1137 app/file_new_dialog.c:406 app/file_new_dialog.c:424
-#: app/layers_dialog.c:3596 app/resize.c:287 app/resize.c:312 app/resize.c:544
+#: app/layers_dialog.c:3599 app/resize.c:287 app/resize.c:312 app/resize.c:544
 #: app/scale_tool.c:101 app/scale_tool.c:108 app/tool_options.c:389
 msgid "Height:"
 msgstr "Höjd:"
@@ -996,10 +1004,6 @@ msgstr "Kurvor för indexerade bilder kan inte justeras."
 #: app/curves.c:615
 msgid "Modify Curves for Channel:"
 msgstr "Modifiera kurvor för kanal:"
-
-#: app/curves.c:626 app/levels.c:409
-msgid "Alpha"
-msgstr "Alfa"
 
 #. The option menu for selecting the drawing method
 #: app/curves.c:705
@@ -1097,11 +1101,13 @@ msgstr "Exponering:"
 msgid "Type"
 msgstr "Typ"
 
-#: app/dodgeburn.c:189
+#: app/dodgeburn.c:189 app/layers_dialog.c:385 app/paint_funcs.c:110
+#: app/tool_options.c:955
 msgid "Dodge"
 msgstr "Bleka"
 
-#: app/dodgeburn.c:191
+#: app/dodgeburn.c:191 app/layers_dialog.c:386 app/paint_funcs.c:111
+#: app/tool_options.c:956
 msgid "Burn"
 msgstr "Bränna"
 
@@ -2279,11 +2285,11 @@ msgstr ""
 msgid "Grayscale"
 msgstr "Gråskala"
 
-#: app/image_new.c:79 app/layers_dialog.c:3655
+#: app/image_new.c:79 app/layers_dialog.c:3658
 msgid "Foreground"
 msgstr "Förgrund"
 
-#: app/image_new.c:89 app/layers_dialog.c:3657
+#: app/image_new.c:89 app/layers_dialog.c:3660
 msgid "White"
 msgstr "Vit"
 
@@ -2492,8 +2498,8 @@ msgstr "Kanal"
 msgid "Channel Ops"
 msgstr "Kanaloperationer"
 
-#: app/internal_procs.c:80 app/layers_dialog.c:392 app/paint_funcs.c:104
-#: app/tool_options.c:847 app/tool_options.c:962
+#: app/internal_procs.c:80 app/layers_dialog.c:395 app/paint_funcs.c:104
+#: app/tool_options.c:847 app/tool_options.c:965
 msgid "Color"
 msgstr "Färg"
 
@@ -2574,7 +2580,7 @@ msgstr "Mönsteranvändargränssnitt"
 
 #: app/internal_procs.c:143
 msgid "Plug-in"
-msgstr "Insticksprogram"
+msgstr "Insticksmodul"
 
 #: app/internal_procs.c:146
 msgid "Procedural database"
@@ -2621,7 +2627,7 @@ msgstr "%s mask"
 msgid "Layer Select"
 msgstr "Lagerval"
 
-#: app/layers_dialog.c:271 app/layers_dialog.c:3586
+#: app/layers_dialog.c:271 app/layers_dialog.c:3589
 msgid "New Layer"
 msgstr "Nytt lager"
 
@@ -2661,13 +2667,13 @@ msgstr "Normal"
 msgid "Dissolve"
 msgstr "Lösa upp"
 
-#: app/layers_dialog.c:381 app/paint_funcs.c:94 app/tool_options.c:951
-msgid "Multiply (Burn)"
-msgstr "Multiplicera (Blek)"
+#: app/layers_dialog.c:381 app/tool_options.c:951
+msgid "Multiply"
+msgstr "Multiplicera"
 
-#: app/layers_dialog.c:382 app/paint_funcs.c:106 app/tool_options.c:952
-msgid "Divide (Dodge)"
-msgstr "Dividera (Bränn)"
+#: app/layers_dialog.c:382 app/tool_options.c:952
+msgid "Divide"
+msgstr "Dividera"
 
 #: app/layers_dialog.c:383 app/paint_funcs.c:95 app/tool_options.c:953
 msgid "Screen"
@@ -2677,86 +2683,90 @@ msgstr "Mask"
 msgid "Overlay"
 msgstr "Överlagring"
 
-#: app/layers_dialog.c:385 app/paint_funcs.c:97 app/tool_options.c:955
+#: app/layers_dialog.c:387 app/paint_funcs.c:112 app/tool_options.c:957
+msgid "Hard Light"
+msgstr "Hårt ljus"
+
+#: app/layers_dialog.c:388 app/paint_funcs.c:97 app/tool_options.c:958
 msgid "Difference"
 msgstr "Skillnad"
 
-#: app/layers_dialog.c:386 app/paint_funcs.c:98 app/tool_options.c:956
+#: app/layers_dialog.c:389 app/paint_funcs.c:98 app/tool_options.c:959
 msgid "Addition"
 msgstr "Addition"
 
-#: app/layers_dialog.c:388 app/paint_funcs.c:100 app/tool_options.c:958
+#: app/layers_dialog.c:391 app/paint_funcs.c:100 app/tool_options.c:961
 msgid "Darken Only"
 msgstr "Gör endast mörkare"
 
-#: app/layers_dialog.c:389 app/paint_funcs.c:101 app/tool_options.c:959
+#: app/layers_dialog.c:392 app/paint_funcs.c:101 app/tool_options.c:962
 msgid "Lighten Only"
 msgstr "Gör endast ljusare"
 
-#: app/layers_dialog.c:404
+#: app/layers_dialog.c:407
 msgid "Keep Trans."
 msgstr "Behåll transp."
 
-#: app/layers_dialog.c:413
+#: app/layers_dialog.c:416
 msgid "Keep Transparency"
 msgstr "Behåll transparens"
 
-#: app/layers_dialog.c:1948
+#: app/layers_dialog.c:1951
 msgid "Empty Layer Copy"
 msgstr "Tom lagerkopia"
 
-#: app/layers_dialog.c:2212 app/layers_dialog.c:3395 app/layers_dialog.c:3765
+#: app/layers_dialog.c:2215 app/layers_dialog.c:3398 app/layers_dialog.c:3768
 msgid "Floating Selection"
 msgstr "Flytande markering"
 
-#: app/layers_dialog.c:3546
+#: app/layers_dialog.c:3549
 msgid "New Layer Options"
 msgstr "Inställningar för nytt lager"
 
 #. The name label and entry
-#: app/layers_dialog.c:3575
+#: app/layers_dialog.c:3578
 msgid "Layer Name:"
 msgstr "Lagernamn:"
 
 #. The size labels
-#: app/layers_dialog.c:3590
+#: app/layers_dialog.c:3593
 msgid "Layer Width:"
 msgstr "Lagerbredd:"
 
-#: app/layers_dialog.c:3651
+#: app/layers_dialog.c:3654
 msgid "Layer Fill Type"
 msgstr "Lagrets fyllnadstyp"
 
-#: app/layers_dialog.c:3730
+#: app/layers_dialog.c:3733
 msgid "Edit Layer Attributes"
 msgstr "Modifiera lagerattribut"
 
-#: app/layers_dialog.c:3757
+#: app/layers_dialog.c:3760
 msgid "Layer name:"
 msgstr "Lagernamn:"
 
-#: app/layers_dialog.c:3825
+#: app/layers_dialog.c:3828
 msgid "Add Mask Options"
 msgstr "Inställningar för addera mask"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3843
+#: app/layers_dialog.c:3846
 msgid "Initialize Layer Mask to:"
 msgstr "Initialisera lagermask till:"
 
-#: app/layers_dialog.c:3848
+#: app/layers_dialog.c:3851
 msgid "White (Full Opacity)"
 msgstr "Vit (Full opacitet)"
 
-#: app/layers_dialog.c:3850
+#: app/layers_dialog.c:3853
 msgid "Black (Full Transparency)"
 msgstr "Svart (Full transparenthet)"
 
-#: app/layers_dialog.c:3852
+#: app/layers_dialog.c:3855
 msgid "Layer's Alpha Channel"
 msgstr "Lagrets alfakanal"
 
-#: app/layers_dialog.c:3914 app/layers_dialog.c:4000
+#: app/layers_dialog.c:3917 app/layers_dialog.c:4003
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2764,27 +2774,27 @@ msgstr ""
 "Inte giltig bredd eller höjd.\n"
 "Båda måste vara positiva."
 
-#: app/layers_dialog.c:4086
+#: app/layers_dialog.c:4089
 msgid "Layer Merge Options"
 msgstr "Inställningar för lagersammanfogning"
 
-#: app/layers_dialog.c:4111
+#: app/layers_dialog.c:4114
 msgid "Final, Merged Layer should be:"
 msgstr "Det slutgiltiga, sammanfogade lagret ska vara:"
 
-#: app/layers_dialog.c:4112
+#: app/layers_dialog.c:4115
 msgid "Final, Anchored Layer should be:"
 msgstr "Det slutgiltiga, ankrade lagret ska vara:"
 
-#: app/layers_dialog.c:4117
+#: app/layers_dialog.c:4120
 msgid "Expanded as necessary"
 msgstr "Expanderad om så behövs"
 
-#: app/layers_dialog.c:4119
+#: app/layers_dialog.c:4122
 msgid "Clipped to image"
 msgstr "Klippt efter bilden"
 
-#: app/layers_dialog.c:4121
+#: app/layers_dialog.c:4124
 msgid "Clipped to bottom layer"
 msgstr "Klippt efter understa lagret"
 
@@ -3854,9 +3864,17 @@ msgstr "Det finns inga penslar tillgängliga för detta verktyg."
 msgid "Behind"
 msgstr "Bakom"
 
+#: app/paint_funcs.c:94
+msgid "Multiply (Burn)"
+msgstr "Multiplicera (Blek)"
+
 #: app/paint_funcs.c:99
 msgid "Subtraction"
 msgstr "Subtraktion"
+
+#: app/paint_funcs.c:106
+msgid "Divide (Dodge)"
+msgstr "Dividera (Bränn)"
 
 #: app/paint_funcs.c:107
 msgid "Erase"
@@ -4186,12 +4204,12 @@ msgstr "Resurskonfiguration"
 
 #: app/plug_in.c:340
 msgid "Plug-ins"
-msgstr "Insticksprogram"
+msgstr "Insticksmoduler"
 
 #: app/plug_in.c:353
 #, c-format
 msgid "query plug-in: \"%s\"\n"
-msgstr "kontrollerar insticksprogram: \"%s\"\n"
+msgstr "kontrollerar insticksmodul: \"%s\"\n"
 
 #: app/plug_in.c:391
 #, c-format
@@ -4209,7 +4227,7 @@ msgstr "Tillägg"
 #: app/plug_in.c:843
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
-msgstr "Kunde inte hitta insticksprogram: \"%s\""
+msgstr "Kunde inte hitta insticksmodul: \"%s\""
 
 #: app/plug_in.c:1470
 #, c-format
@@ -4221,10 +4239,10 @@ msgid ""
 "You may want to save your images and restart GIMP\n"
 "to be on the safe side."
 msgstr ""
-"Insticksprogrammet kraschade: \"%s\"\n"
+"Insticksmodulen kraschade: \"%s\"\n"
 "(%s)\n"
 "\n"
-"Insticksprogrammet som dog kan ha rört till GIMPs interna tillstånd.\n"
+"Insticksmodulen som dog kan ha rört till GIMPs interna tillstånd.\n"
 "Du bör nog spara dina bilder och starta om GIMP för att vara på den\n"
 "säkra sidan."
 
@@ -4798,15 +4816,15 @@ msgstr "Välj färgskalekatalog"
 
 #: app/preferences_dialog.c:2581
 msgid "Plug-Ins"
-msgstr "Insticksprogram"
+msgstr "Insticksmoduler"
 
 #: app/preferences_dialog.c:2581
 msgid "Plug-Ins Directories"
-msgstr "Insticksprogramkataloger"
+msgstr "Insticksmodulkataloger"
 
 #: app/preferences_dialog.c:2583
 msgid "Select Plug-Ins Dir"
-msgstr "Välj insticksprogramkatalog"
+msgstr "Välj insticksmodulkatalog"
 
 #: app/preferences_dialog.c:2585
 msgid "Modules"
@@ -4849,7 +4867,7 @@ msgstr "Interna GIMP-procedurer"
 
 #: app/procedural_db_cmds.c:74
 msgid "GIMP Plug-In"
-msgstr "GIMP Insticksprogram"
+msgstr "GIMP Insticksmodul"
 
 #: app/procedural_db_cmds.c:75
 msgid "GIMP Extension"
@@ -5848,8 +5866,8 @@ msgid ""
 msgstr ""
 "'gimprc' används för att lagra personliga inställningar\n"
 "såsom GIMPs standarduppförande.\n"
-"Sökvägar till penslar, färgkartor, färgskalor, mönster\n"
-"insticksprogram och moduler konfigureras även här."
+"Sökvägar till penslar, färgkartor, färgskalor, mönster,\n"
+"insticksmoduler och moduler konfigureras även här."
 
 #: app/user_install.c:164
 msgid ""
@@ -5869,8 +5887,8 @@ msgid ""
 "is cached in this file.  This file is intended to\n"
 "be GIMP-readable only, and should not be edited."
 msgstr ""
-"Insticksprogram och tillägg är externa program som körs av\n"
-"GIMP som kan bistå med utökad funktionalitet.\n"
+"Insticksmoduler och tillägg är externa program som körs\n"
+"av GIMP som kan bistå med utökad funktionalitet.\n"
 "Dessa program söks efter under körning och informationen\n"
 "om dess funktionalitet och modifieringstider lagras\n"
 "i denna fil.  Denna fil är endast avsedd för GIMP och bör\n"
@@ -5994,9 +6012,9 @@ msgid ""
 msgstr ""
 "Detta är en underkatalog som kan användas för att lagra\n"
 "användarskapade, temporära eller på annat sätt icke-\n"
-"systemstödda insticksprogram.  Standard-gimprc-filen\n"
-"söker i denna underkatalog utöver systemets insticksprogram-\n"
-"katalog när den söker efter insticksprogram."
+"systemstödda insticksmoduler.  Standard-gimprc-filen\n"
+"söker i denna underkatalog utöver systemets insticksmodul-\n"
+"katalog när den söker efter insticksmoduler."
 
 #: app/user_install.c:251
 msgid ""
@@ -6064,7 +6082,7 @@ msgid ""
 msgstr ""
 "Detta är en underkatalog som kan användas för att lagra\n"
 "användardefinerade fraktaler för att användas med\n"
-"FractalExplorer-insticksprogrammet. Standard gimprc-\n"
+"FractalExplorer-insticksmodulen. Standard gimprc-\n"
 "filen söker i denna underkatalog utöver systemets\n"
 "FractalExplorer-installation när den söker efter fraktaler."
 
@@ -6078,7 +6096,7 @@ msgid ""
 msgstr ""
 "Detta är en underkatalog som kan användas för att lagra\n"
 "användardefinerade figurer för att användas med gfig-\n"
-"insticksprogrammet.  Standard-gimprc-filen söker i\n"
+"insticksmodulen.  Standard-gimprc-filen söker i\n"
 "denna underkatalog utöver systemets gfig-installation\n"
 "när den söker efter figurer."
 
@@ -6092,8 +6110,8 @@ msgid ""
 msgstr ""
 "Detta är en underkatalog som kan användas för att lagra\n"
 "användardefinerade gflares för att användas med gflare-\n"
-"insticksprogrammet.  Standard-gimprc-filen söker i\n"
-"denna underkatalog utöver systemets gflare-installation\n"
+"insticksmodulen.  Standard-gimprc-filen söker denna\n"
+"underkatalog utöver systemets gflare-installation\n"
 "när den söker efter gflares."
 
 #: app/user_install.c:308
@@ -6106,8 +6124,8 @@ msgid ""
 msgstr ""
 "Detta är en underkatalog som kan användas för att lagra\n"
 "användardefinerade gflares för att användas med gflare-\n"
-"insticksprogrammet.  Standard-gimprc-filen söker i\n"
-"denna underkatalog utöver systemets gflare-installation\n"
+"insticksmodulen.  Standard-gimprc-filen söker denna\n"
+"underkatalog utöver systemets gflare-installation\n"
 "när den söker efter gflares."
 
 #: app/user_install.c:365
@@ -6357,27 +6375,27 @@ msgstr ""
 "sparade inte indexerade färgkartor rätt.\n"
 "Byter ut gråskalekartan."
 
-#: modules/colorsel_gtk.c:70
+#: modules/colorsel_gtk.c:81
 msgid "GTK color selector as a pluggable color selector"
 msgstr "GTKs färgväljare som insticksbar färgväljare"
 
-#: modules/colorsel_triangle.c:70
+#: modules/colorsel_triangle.c:79
 msgid "Painter-style color selector as a pluggable color selector"
 msgstr "Färgväljare i Painter-stil som insticksbar färgväljare"
 
-#: modules/colorsel_triangle.c:138 modules/colorsel_triangle.c:140
+#: modules/colorsel_triangle.c:149 modules/colorsel_triangle.c:151
 msgid "Triangle"
 msgstr "Triangel"
 
-#: modules/colorsel_water.c:85
+#: modules/colorsel_water.c:96
 msgid "Watercolor style color selector as a pluggable module"
 msgstr "Färgväljare i vattenfärgsstil som insticksbar färgväljare"
 
-#: modules/colorsel_water.c:107 modules/colorsel_water.c:110
+#: modules/colorsel_water.c:118 modules/colorsel_water.c:121
 msgid "Watercolor"
 msgstr "Vattenfärg"
 
-#: modules/colorsel_water.c:689
+#: modules/colorsel_water.c:703
 msgid "Color History"
 msgstr "Färghistorik"
 
