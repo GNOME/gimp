@@ -1,3 +1,9 @@
+2004-08-17  Simon Budig  <simon@gimp.org>
+
+	* modules/colorsel_triangle.c: Made the triangle colorselector
+	resizeable. Removed minimum size request (would probably need some
+	testing for *very* small sizes though).
+
 2004-08-17  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/widgets/gimpdock.c
