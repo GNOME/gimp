@@ -76,9 +76,7 @@ sub DESTROY {
    # dummy function, very necessary
 }
 
-sub new {
-   Gtk::Object::new @_;
-}
+*new = \&Gtk::Object::new;
 
 sub import {
    my $self  = shift;

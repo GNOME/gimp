@@ -107,6 +107,12 @@ my %type2str = (
    &PARAM_INT32ARRAY  => 'INT32ARRAY',
 );
 
+sub setheight {
+   my($w,$y)=@_;
+   $w->set_usize(-1, ($w->style->font->ascent + $w->style->font->descent) * $y);
+
+}
+
 sub new_cinfo {
    $cinfo->freeze;
    $cinfo->clear;
@@ -326,6 +332,7 @@ sub inputline {
    $inputline=$e;
 
    my $c = new Gtk::CList(1);
+   setheight $c, 6;
    $clist = $c;
    $c->set_selection_mode(-extended);
    $c->signal_connect("select_row", sub {
@@ -469,7 +476,7 @@ sub create_main {
    $cinfo->set_column_auto_resize (1,1);
    $cinfo->set_column_auto_resize (2,1);
    $cinfo->set_selection_mode('single');
-   #$cinfo->set_usize(0, $ey*4);
+   setheight $cinfo, 8;
    $sw->add ($cinfo);
    $f2->pack_start ($sw,1,1,5);
 

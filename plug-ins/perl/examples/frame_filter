@@ -9,7 +9,7 @@ register	"layer_apply",
 		"Marc Lehmann <pcg\@goof.com>",
 		"Marc Lehmann <pcg\@goof.com>",
 		"19990708",
-		N_"<Image>/Filters/Animation/Apply Perl Expression",
+		N_"<Image>/Filters/Apply Perl Expression...",
 		"*",
 		[
                  [PF_TEXT,	"expr",	"the perl expression to run for each layer",

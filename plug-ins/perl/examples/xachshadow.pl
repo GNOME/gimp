@@ -22,7 +22,7 @@
 #
 # Here's the boring start of every script...
 
-use Gimp;
+use Gimp qw(:auto __ N_);
 use Gimp::Fu;
 
 register "xach_shadows",
@@ -70,7 +70,7 @@ register "xach_shadows",
 	gimp_edit_clear($gridlayer);
 	gimp_palette_set_background([255,255,255]);
 	gimp_edit_fill($gridlayer);
-	$gridlayer->plug_in_grid($blocksize, $blocksize, 0, 0);
+	$gridlayer->plug_in_grid((1, $blocksize, 0, "black", 0) x 3);
 
 	gimp_layer_set_mode($gridlayer, 3);
 # Clean up stuff

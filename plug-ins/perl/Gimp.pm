@@ -727,7 +727,7 @@ The return code should be immediately handed out to exit:
 
 Before the call to C<Gimp::main>, I<no> other PDB function must be called.
 
-In a Gimp::Fu-script, you should call C<Gimp::Fu::main> instead:
+In a C<Gimp::Fu>-script, you should call C<Gimp::Fu::main> instead:
 
  exit main;		# Gimp::Fu::main is exported by default as well.
 
@@ -787,12 +787,12 @@ There are two different flavours of gimp-functions. Functions from the
 B<PDB> (the Procedural DataBase), and functions from B<libgimp> (the
 C-language interface library).
 
-You can get a listing and description of every PDB function by starting the
-B<DB Browser> extension in the Gimp-B<Xtns> menu (but remember that B<DB
-Browser> is buggy and displays "_" (underscores) as "-" (dashes), so you
-can't see the difference between gimp_quit and gimp-quit. As a rule of
-thumb, B<Script-Fu> registers scripts with dashes, and everything else uses
-underscores).
+You can get a listing and description of every PDB function by starting
+the B<DB Browser> extension in the Gimp-B<Xtns> menu (but remember that
+B<DB Browser> is buggy and displays "_" (underscores) as "-" (dashes), so
+you can't see the difference between gimp_quit and gimp-quit. As a rule
+of thumb, B<Script-Fu> in gimp versions before 1.2 registers scripts with
+dashes, and everything else uses underscores).
 
 B<libgimp> functions can't be traced (and won't be traceable in the
 foreseeable future).
@@ -818,11 +818,12 @@ syntax, so its actually shorter to write.
 perl book and learn perl! Anyway, newer perls understand a nice syntax (see
 also the description for C<gimp_call_procedure>):
 
- "plug-in-the-egg"->(RUN_INTERACTIVE,$image,$drawable);
+ "Gimp::plug-in-the-egg"->(RUN_INTERACTIVE,$image,$drawable);
 
-Very old perls may need:
+You can drop the C<Gimp::> when using the C<:auto>-import-tag. Very
+(very!) old perls may need:
 
- &{"plug-in-the-egg"}(RUN_INTERACTIVE,$image,$drawable);
+ &{"Gimp::plug-in-the-egg"}("Gimp",RUN_INTERACTIVE,$image,$drawable);
 
 (unfortunately. the plug-in in this example is actually called
 "plug_in_the_egg" *sigh*)
