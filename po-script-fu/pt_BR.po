@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: script-fu\n"
-"POT-Creation-Date: 2000-09-25 11:30-0300\n"
+"POT-Creation-Date: 2000-10-19 16:30-0200\n"
 "PO-Revision-Date: 2000-09-27 11:36-03:00\n"
 "Last-Translator: Marcia Norie Nakaza <norie@conectiva.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
