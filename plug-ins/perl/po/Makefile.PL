@@ -36,7 +36,7 @@ update-po: update-pot
 $updatepo
 
 update-pot:
-	\$(PERL) ../pxgettext `find .. -name '*.pm' -o -name '*.xs' -o -path './examples/*'` ../Perl-Server > gimp-perl.pot
+	\$(PERL) ../pxgettext `find .. -name '*.pm' -o -name '*.xs' -o -path '../examples/*'` ../Perl-Server > gimp-perl.pot
 
 install :: install-po
 
