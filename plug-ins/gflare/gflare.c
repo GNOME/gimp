@@ -1455,7 +1455,7 @@ gflare_save (GFlare *gflare)
   char *message =
     _("GFlare `%s' is not saved.	If you add a new entry in gimprc, like:\n"
     "(gflare-path \"${gimp_dir}/gflare\")\n"
-    "and make a directory ~/.gimp/gflare, then you can save your own GFlare's\n"
+    "and make a directory ~/.gimp-1.1/gflare, then you can save your own GFlare's\n"
     "into that directory.");
 
   if (gflare->filename == NULL)
@@ -3457,7 +3457,7 @@ dlg_selector_delete_callback (GtkWidget *widget,
 
   /* Question */
 
-  str = g_strdup_printf(_("Are you sure you want to delete"
+  str = g_strdup_printf(_("Are you sure you want to delete "
     "\"%s\" from the list and from disk?"), dlg->gflare->name);
   label = gtk_label_new(str);
   g_free(str);
