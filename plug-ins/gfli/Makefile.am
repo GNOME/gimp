@@ -5,6 +5,8 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = gfli
 
 gfli_SOURCES = \
+	fli.h	\
+	fli.c	\
 	gfli.c   
 
 INCLUDES = \

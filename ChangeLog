@@ -1,3 +1,8 @@
+Mon May 18 20:30:44 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* updated the gfli plug-in to the version on the registry and
+	folded the "chunk-type-7-bug"-patch back in
+
 Sun May 17 23:06:38 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* app/app_procs.c: applied patch from Michael Sweet to correct
@@ -157,7 +162,7 @@ Sun May  3 22:10:05 EDT 1998  Matthew Wilson  <msw@gimp.org>
 Sun May  3 00:24:31 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/channels_dialog.c: minimalistic change to the interface,
-	make it's possible to set the channel opacity to 100.0%
+	makes it possible to set the channel opacity to 100.0%
 	(was 99.0% before)
 
 Sat May  2 14:31:46 PDT 1998 Manish Singh <yosh@gimp.org>
