@@ -127,10 +127,12 @@ move_tool_button_press (Tool           *tool,
 
   /* if we've got an active tool grab the pointer */
   if (tool->state == ACTIVE)      
-    gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		      GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK |
-		      GDK_BUTTON_RELEASE_MASK,
-		      NULL, NULL, bevent->time);
+    {
+      gdk_pointer_grab (gdisp->canvas->window, FALSE,
+			GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK |
+			GDK_BUTTON_RELEASE_MASK,
+			NULL, NULL, bevent->time);
+    }
     
 }
 

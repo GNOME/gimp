@@ -19,8 +19,11 @@
 
 #include <stdlib.h>
 #include <stdarg.h>
-#include "gdk/gdkkeysyms.h"
+
+#include <gdk/gdkkeysyms.h>
+
 #include "appenv.h"
+#include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "tools.h"
@@ -282,10 +285,11 @@ edit_selection_motion (Tool           *tool,
 {
   GDisplay * gdisp;
   gchar offset[STATUSBAR_SIZE];
+  gdouble lastmotion_x, lastmotion_y;
 
   if (tool->state != ACTIVE)
     {
-      g_warning ("Tracking motion while !ACTIVE");
+      g_warning ("BUG: Tracking motion while !ACTIVE");
       return;
     }
 
@@ -295,9 +299,21 @@ edit_selection_motion (Tool           *tool,
 
   draw_core_pause (edit_select.core, tool);
 
-  edit_selection_snap (gdisp, mevent->x, mevent->y);
 
-  /**********************************************adam hack*************/
+  /* Perform motion compression so that we don't lag and/or waste time. */
+
+  if (!gtkutil_compress_motion(gtk_get_event_widget((GdkEvent*)mevent),
+			       &lastmotion_x, &lastmotion_y))
+    {
+      lastmotion_x = mevent->x;
+      lastmotion_y = mevent->y;
+    }
+
+  /* now do the actual move. */
+
+  edit_selection_snap (gdisp, RINT(lastmotion_x), RINT(lastmotion_y));
+
+  /******************************************* adam's live move *******/
   /********************************************************************/
   {
     gint x, y;
@@ -685,7 +701,7 @@ process_event_queue_keys (GdkEventKey *kevent, ...)
     }
 
     if (!discard_event)
-      list = g_list_prepend(list, event);
+      list = g_list_append(list, event);
     else
       gdk_event_free(event);
   }

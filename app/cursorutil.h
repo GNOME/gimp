@@ -18,11 +18,15 @@
 #ifndef __CURSORUTIL_H__
 #define __CURSORUTIL_H__
 
+#include <glib.h>
+
 #include <gdk/gdktypes.h>
 #if defined (GDK_WINDOWING_WIN32) || defined (GDK_WINDOWING_X11)
 /* Stopgap measure to detect build with current CVS GTk+ */
 #include <gdk/gdkcursor.h>
 #endif
+
+#include <gtk/gtk.h>
 
 typedef enum
 {
@@ -47,6 +51,9 @@ void unset_win_cursor  (GdkWindow *);
 
 void gimp_add_busy_cursors_until_idle (void);
 void gimp_add_busy_cursors            (void);
-int  gimp_remove_busy_cursors         (gpointer);
+gint gimp_remove_busy_cursors         (gpointer);
+
+gboolean gtkutil_compress_motion (GtkWidget *widget,
+				  gdouble *lastmotion_x, gdouble *lastmotion_y);
 
 #endif /*  __CURSORUTIL_H__  */

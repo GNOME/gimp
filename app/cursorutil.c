@@ -189,7 +189,7 @@ gimp_add_busy_cursors (void)
   gdk_flush();
 }
 
-int
+gint
 gimp_remove_busy_cursors (gpointer data)
 {
   GDisplay *gdisp;
@@ -213,5 +213,58 @@ gimp_remove_busy_cursors (gpointer data)
 }
 
 
+/***************************************************************/
+/* gtkutil_compress_motion:
 
+   This function walks the whole GDK event queue seeking motion events
+   corresponding to the widget 'widget'.  If it finds any it will
+   remove them from the queue, write the most recent motion offset
+   to 'lastmotion_x' and 'lastmotion_y', then return TRUE.  Otherwise
+   it will return FALSE and 'lastmotion_x' / 'lastmotion_y' will be
+   untouched.
+ */
+/* The gtkutil_compress_motion function source may be re-used under
+   the XFree86-style license. <adam@gimp.org> */
+gboolean
+gtkutil_compress_motion (GtkWidget *widget,
+			 gdouble *lastmotion_x,
+			 gdouble *lastmotion_y)
+{
+  GdkEvent *event;
+  GList *requeued_events = NULL;
+  gboolean success = FALSE;
 
+  /* Move the entire GDK event queue to a private list, filtering
+     out any motion events for the desired widget. */
+  while (gdk_events_pending ())
+    {
+      event = gdk_event_get ();
+
+      if ((gtk_get_event_widget (event) == widget) &&
+	  (event->any.type == GDK_MOTION_NOTIFY))
+	{
+	  *lastmotion_x = event->motion.x;
+	  *lastmotion_y = event->motion.y;
+	  
+	  gdk_event_free(event);
+	  success = TRUE;
+	}
+      else
+	{
+	  requeued_events = g_list_append (requeued_events, event);
+	}
+    }
+  
+  /* Replay the remains of our private event list back into the
+     event queue in order. */
+  while (requeued_events)
+    {
+      gdk_event_put ((GdkEvent*)requeued_events->data);
+
+      gdk_event_free ((GdkEvent*)requeued_events->data);      
+      requeued_events =
+	g_list_remove_link (requeued_events, requeued_events);
+    }
+  
+  return success;
+}

@@ -1,3 +1,22 @@
+Mon Feb 28 19:11:39 GMT 2000  Adam D. Moss <adam@gimp.org>
+
+	* app/cursorutil.c app/cursorutil.h:
+	added gtkutil_compress_motion() utility function to seek and
+	destroy outstanding pointer motion events from the gdk event queue
+	for a given widget.
+
+	* app/edit_selection.c:305: Use gtkutil_compress_motion() to
+	do a more thorough job of tracking motion (something recently
+	started interleaving our motion events with others, largely
+	nullifying the effectiveness of GDK_POINTER_MOTION_HINT_MASK).
+
+	* app/edit_selection.c:704: Yikes, the key-press snooping code
+	was turning part of the event queue back-to-front with each
+	compressed key-press.  (Still looks a bit bogus overall; looks
+	as though it could transplant a whole chunk of the start of
+	the event queue right onto the end.  I'll probably disable it
+	unless someone points out that I'm a doofus.)
+
 Mon Feb 28 19:37:25 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gap/gap_arr_dialog.[ch]
