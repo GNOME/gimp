@@ -119,7 +119,8 @@ gboolean
 gui_libs_init (gint    *argc,
 	       gchar ***argv)
 {
-  GimpWidgetsVTable vtable;
+  GimpWidgetsVTable  vtable;
+  const gchar       *mismatch;
 
   g_return_val_if_fail (argc != NULL, FALSE);
   g_return_val_if_fail (argv != NULL, FALSE);
@@ -144,6 +145,37 @@ gui_libs_init (gint    *argc,
                      gui_get_background_func);
 
   g_type_class_ref (GIMP_TYPE_COLOR_SELECT);
+
+#define REQUIRED_MAJOR 2
+#define REQUIRED_MINOR 2
+#define REQUIRED_MICRO 2
+
+  mismatch = gtk_check_version (REQUIRED_MAJOR, REQUIRED_MINOR, REQUIRED_MICRO);
+
+  if (mismatch)
+    {
+      gchar *message;
+
+      message =
+        g_strdup_printf ("%s\n\n"
+                         "The GIMP requires Gtk+ version %d.%d.%d or later.\n"
+                         "Installed Gtk+ version is %d.%d.%d.\n\n"
+                         "Somehow you or your software packager managed\n"
+                         "to install The GIMP with an older Gtk+ version.\n\n"
+                         "Please upgrade to Gtk+ version %d.%d.%d or later.",
+                         mismatch,
+                         REQUIRED_MAJOR, REQUIRED_MINOR, REQUIRED_MICRO,
+                         gtk_major_version, gtk_minor_version, gtk_micro_version,
+                         REQUIRED_MAJOR, REQUIRED_MINOR, REQUIRED_MICRO);
+
+      gimp_message_box (GIMP_STOCK_WILBER_EEK, NULL, message,
+                        (GtkCallback) gtk_main_quit, NULL);
+
+      g_free (message);
+
+      gtk_main ();
+      exit (EXIT_FAILURE);
+    }
 
   return TRUE;
 }

@@ -160,9 +160,7 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
 static void
 gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
 {
-  GimpContainerView *view;
-
-  view = GIMP_CONTAINER_VIEW (tree_view);
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (tree_view);
 
   tree_view->n_model_columns = NUM_COLUMNS;
 
@@ -424,9 +422,7 @@ static void
 gimp_container_tree_view_set_container (GimpContainerView *view,
                                         GimpContainer     *container)
 {
-  GimpContainerTreeView *tree_view;
-
-  tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
 
   if (view->container)
     {
@@ -490,10 +486,8 @@ gimp_container_tree_view_insert_item (GimpContainerView *view,
 				      GimpViewable      *viewable,
 				      gint               index)
 {
-  GimpContainerTreeView *tree_view;
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkTreeIter           *iter;
-
-  tree_view = GIMP_CONTAINER_TREE_VIEW (view);
 
   iter = g_new0 (GtkTreeIter, 1);
 
@@ -512,10 +506,8 @@ gimp_container_tree_view_remove_item (GimpContainerView *view,
 				      GimpViewable      *viewable,
 				      gpointer           insert_data)
 {
-  GimpContainerTreeView *tree_view;
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkTreeIter           *iter;
-
-  tree_view = GIMP_CONTAINER_TREE_VIEW (view);
 
   iter = (GtkTreeIter *) insert_data;
 
@@ -529,10 +521,8 @@ gimp_container_tree_view_reorder_item (GimpContainerView *view,
 				       gint               new_index,
 				       gpointer           insert_data)
 {
-  GimpContainerTreeView *tree_view;
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkTreeIter           *iter;
-
-  tree_view = GIMP_CONTAINER_TREE_VIEW (view);
 
   iter = (GtkTreeIter *) insert_data;
 
@@ -603,10 +593,8 @@ gimp_container_tree_view_select_item (GimpContainerView *view,
 				      GimpViewable      *viewable,
 				      gpointer           insert_data)
 {
-  GimpContainerTreeView *tree_view;
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkTreeIter           *iter;
-
-  tree_view = GIMP_CONTAINER_TREE_VIEW (view);
 
   iter = (GtkTreeIter *) insert_data;
 
@@ -620,20 +608,14 @@ gimp_container_tree_view_select_item (GimpContainerView *view,
 				       gimp_container_tree_view_selection_changed,
 				       tree_view);
 
-#ifdef __GNUC__
-#warning FIXME: remove this hack as soon as we depend on GTK+ 2.2.2
-#endif
-      if (! GTK_CHECK_VERSION (2, 2, 2) &&
-          tree_view->main_column->editable_widget)
-        gtk_cell_editable_remove_widget (tree_view->main_column->editable_widget);
-
       gtk_tree_view_set_cursor (tree_view->view, path, NULL, FALSE);
 
 #ifdef __GNUC__
-#warning FIXME: remove this hack as soon as #115871 is fixed
+#warning FIXME: remove this hack as soon as we depend on GTK+ 2.2.3
 #endif
       /*  gtk_tree_view_set_cursor() should be sufficient actually...  */
-      gtk_tree_selection_select_iter (tree_view->selection, iter);
+      if (gtk_check_version (2, 2, 3) != NULL)
+        gtk_tree_selection_select_iter (tree_view->selection, iter);
 
       g_signal_handlers_unblock_by_func (tree_view->selection,
 					 gimp_container_tree_view_selection_changed,
@@ -655,9 +637,7 @@ gimp_container_tree_view_select_item (GimpContainerView *view,
 static void
 gimp_container_tree_view_clear_items (GimpContainerView *view)
 {
-  GimpContainerTreeView *tree_view;
-
-  tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
 
   gtk_list_store_clear (GTK_LIST_STORE (tree_view->model));
 
@@ -750,15 +730,13 @@ gimp_container_tree_view_find_click_cell (GList             *cells,
                                           gint               tree_x,
                                           gint               tree_y)
 {
-  GtkCellRenderer *renderer;
-  GList           *list;
+  GList *list;
 
   for (list = cells; list; list = g_list_next (list))
     {
-      gint start_pos;
-      gint width;
-
-      renderer = (GtkCellRenderer *) list->data;
+      GtkCellRenderer *renderer = list->data;
+      gint             start_pos;
+      gint             width;
 
       if (renderer->visible &&
           gtk_tree_view_column_cell_get_position (column, renderer,
@@ -854,13 +832,6 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
             {
               gboolean success = TRUE;
 
-#ifdef __GNUC__
-#warning FIXME: remove this hack as soon as we depend on GTK+ 2.2.2
-#endif
-              if (! GTK_CHECK_VERSION (2, 2, 2) &&
-                  tree_view->main_column->editable_widget)
-                gtk_cell_editable_remove_widget (tree_view->main_column->editable_widget);
-
               /*  don't select item if a toggle was clicked */
               if (! toggled_cell)
                 success = gimp_container_view_item_selected (container_view,
@@ -913,13 +884,6 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                 {
                   if (edit_cell)
                     {
-#ifdef __GNUC__
-#warning FIXME: remove this hack as soon as we depend on GTK+ 2.2.2
-#endif
-                      if (! GTK_CHECK_VERSION (2, 2, 2) &&
-                          column->editable_widget)
-                        gtk_cell_editable_remove_widget (column->editable_widget);
-
 #ifdef __GNUC__
 #warning FIXME: make sure the orig text gets restored when cancelling editing
 #endif
@@ -979,10 +943,8 @@ static void
 gimp_container_tree_view_renderer_update (GimpPreviewRenderer   *renderer,
                                           GimpContainerTreeView *tree_view)
 {
-  GimpContainerView *view;
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (tree_view);
   GtkTreeIter       *iter;
-
-  view = GIMP_CONTAINER_VIEW (tree_view);
 
   iter = g_hash_table_lookup (view->hash_table, renderer->viewable);
 
@@ -1002,10 +964,8 @@ static void
 gimp_container_tree_view_name_changed (GimpObject            *object,
                                        GimpContainerTreeView *tree_view)
 {
-  GimpContainerView *view;
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (tree_view);
   GtkTreeIter       *iter;
-
-  view = GIMP_CONTAINER_VIEW (tree_view);
 
   iter = g_hash_table_lookup (view->hash_table, object);
 
@@ -1027,9 +987,7 @@ static GimpViewable *
 gimp_container_tree_view_drag_viewable (GtkWidget *widget,
                                         gpointer   data)
 {
-  GimpContainerTreeView *tree_view;
-
-  tree_view = GIMP_CONTAINER_TREE_VIEW (data);
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (data);
 
   return tree_view->dnd_viewable;
 }

@@ -90,8 +90,6 @@ static void   gimp_container_grid_view_highlight_item (GimpContainerView      *v
 static void gimp_container_grid_view_viewport_resized (GtkWidget              *widget,
                                                        GtkAllocation          *allocation,
                                                        GimpContainerGridView  *view);
-static void gimp_container_grid_view_viewport_realize (GtkWidget              *widget,
-                                                       GimpContainerGridView  *view);
 
 
 static GimpContainerViewClass *parent_class = NULL;
@@ -216,14 +214,6 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
   g_signal_connect (grid_view->wrap_box->parent, "size_allocate",
                     G_CALLBACK (gimp_container_grid_view_viewport_resized),
                     grid_view);
-
-#ifdef __GNUC__
-#warning FIXME: remove realize callback once we depend on GTK+ 2.2.2
-#endif
-  if (! GTK_CHECK_VERSION (2, 2, 2))
-    g_signal_connect (grid_view->wrap_box->parent, "realize",
-                      G_CALLBACK (gimp_container_grid_view_viewport_realize),
-                      grid_view);
 
   GTK_WIDGET_SET_FLAGS (grid_view, GTK_CAN_FOCUS);
 }
@@ -708,25 +698,5 @@ gimp_container_grid_view_viewport_resized (GtkWidget             *widget,
                                                    preview->viewable,
                                                    preview);
         }
-    }
-}
-
-static void
-gimp_container_grid_view_viewport_realize (GtkWidget             *widget,
-                                           GimpContainerGridView *grid_view)
-{
-  GimpContainerView *view;
-
-  view = GIMP_CONTAINER_VIEW (grid_view);
-
-  if (view->container && grid_view->selected_item)
-    {
-      GimpPreview *preview;
-
-      preview = grid_view->selected_item;
-
-      gimp_container_grid_view_highlight_item (view,
-                                               preview->viewable,
-                                               preview);
     }
 }
