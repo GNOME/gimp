@@ -69,6 +69,9 @@ struct _GimpContainerViewClass
   void     (* activate_item)    (GimpContainerView *view,
 				 GimpViewable      *object,
 				 gpointer           insert_data);
+  void     (* context_item)     (GimpContainerView *view,
+				 GimpViewable      *object,
+				 gpointer           insert_data);
   void     (* clear_items)      (GimpContainerView *view);
   void     (* set_preview_size) (GimpContainerView *view);
 };
@@ -86,13 +89,17 @@ void      gimp_container_view_select_item      (GimpContainerView *view,
 						GimpViewable      *viewable);
 void      gimp_container_view_activate_item    (GimpContainerView *view,
 						GimpViewable      *viewable);
+void      gimp_container_view_context_item     (GimpContainerView *view,
+						GimpViewable      *viewable);
 
 
-/*  private  */
+/*  protected  */
 
 void      gimp_container_view_item_selected    (GimpContainerView *view,
 						GimpViewable      *item);
 void      gimp_container_view_item_activated   (GimpContainerView *view,
+						GimpViewable      *item);
+void      gimp_container_view_item_context     (GimpContainerView *view,
 						GimpViewable      *item);
 
 

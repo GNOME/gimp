@@ -41,6 +41,7 @@
 #include "about-dialog.h"
 #include "brush-editor.h"
 #include "brush-select.h"
+#include "channels-commands.h"
 #include "color-area.h"
 #include "colormap-dialog.h"
 #include "devices.h"
@@ -50,6 +51,7 @@
 #include "gdisplay.h"
 #include "gradient-editor.h"
 #include "gradient-select.h"
+#include "layers-commands.h"
 #include "lc_dialog.h"
 #include "palette-editor.h"
 #include "pattern-select.h"
@@ -292,6 +294,8 @@ dialogs_dock_new (GimpDialogFactory *factory,
 }
 
 
+/*  list views  */
+
 GtkWidget *
 dialogs_image_list_view_new (GimpDialogFactory *factory,
 			     GimpContext       *context)
@@ -357,7 +361,7 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory,
 				     global_gradient_factory,
 				     dialogs_edit_gradient_func,
 				     context,
-				     32,
+				     32 / 2,
 				     5, 3);
 
   return dialogs_dockable_new (view,
@@ -538,7 +542,10 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
      (GimpReorderDrawableFunc) gimp_image_position_layer,
      (GimpAddDrawableFunc)     gimp_image_add_layer,
      (GimpRemoveDrawableFunc)  gimp_image_remove_layer,
-     (GimpCopyDrawableFunc)    gimp_layer_copy);
+     (GimpCopyDrawableFunc)    gimp_layer_copy,
+     (GimpNewDrawableFunc)     layers_new_layer_query,
+     (GimpEditDrawableFunc)    layers_edit_layer_query,
+     (GimpDrawableContextFunc) layers_show_context_menu);
 
   dockable = dialogs_dockable_new (view,
 				   "Layer List", "Layers",
@@ -570,7 +577,10 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
      (GimpReorderDrawableFunc) gimp_image_position_channel,
      (GimpAddDrawableFunc)     gimp_image_add_channel,
      (GimpRemoveDrawableFunc)  gimp_image_remove_channel,
-     (GimpCopyDrawableFunc)    gimp_channel_copy);
+     (GimpCopyDrawableFunc)    gimp_channel_copy,
+     (GimpNewDrawableFunc)     channels_new_channel_query,
+     (GimpEditDrawableFunc)    channels_edit_channel_query,
+     (GimpDrawableContextFunc) channels_show_context_menu);
 
   dockable = dialogs_dockable_new (view,
 				   "Channel List", "Channels",

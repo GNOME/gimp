@@ -69,6 +69,8 @@ void   layers_edit_attributes_cmd_callback   (GtkWidget *widet,
 
 void   layers_new_layer_query                (GimpImage *gimage);
 void   layers_edit_layer_query               (GimpLayer *layer);
+void   layers_show_context_menu              (GimpImage *gimage);
+
 void   layers_layer_merge_query              (GimpImage *gimage,
 					      gboolean   merge_visible);
 

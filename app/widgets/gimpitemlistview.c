@@ -64,6 +64,9 @@ static void   gimp_drawable_list_view_select_item       (GimpContainerView    *v
 static void   gimp_drawable_list_view_activate_item     (GimpContainerView    *view,
 							 GimpViewable         *item,
 							 gpointer              insert_data);
+static void   gimp_drawable_list_view_context_item      (GimpContainerView    *view,
+							 GimpViewable         *item,
+							 gpointer              insert_data);
 
 static void   gimp_drawable_list_view_new_drawable      (GimpDrawableListView *view,
 							 GimpDrawable         *drawable);
@@ -150,6 +153,7 @@ gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass)
   container_view_class->insert_item   = gimp_drawable_list_view_insert_item;
   container_view_class->select_item   = gimp_drawable_list_view_select_item;
   container_view_class->activate_item = gimp_drawable_list_view_activate_item;
+  container_view_class->context_item  = gimp_drawable_list_view_context_item;
 }
 
 static void
@@ -300,7 +304,10 @@ gimp_drawable_list_view_new (GimpImage               *gimage,
 			     GimpReorderDrawableFunc  reorder_drawable_func,
 			     GimpAddDrawableFunc      add_drawable_func,
 			     GimpRemoveDrawableFunc   remove_drawable_func,
-			     GimpCopyDrawableFunc     copy_drawable_func)
+			     GimpCopyDrawableFunc     copy_drawable_func,
+			     GimpNewDrawableFunc      new_drawable_func,
+			     GimpEditDrawableFunc     edit_drawable_func,
+			     GimpDrawableContextFunc  drawable_context_func)
 {
   GimpDrawableListView *list_view;
   GimpContainerView    *view;
@@ -314,6 +321,9 @@ gimp_drawable_list_view_new (GimpImage               *gimage,
   g_return_val_if_fail (add_drawable_func != NULL, NULL);
   g_return_val_if_fail (remove_drawable_func != NULL, NULL);
   g_return_val_if_fail (copy_drawable_func != NULL, NULL);
+  g_return_val_if_fail (new_drawable_func != NULL, NULL);
+  g_return_val_if_fail (edit_drawable_func != NULL, NULL);
+  g_return_val_if_fail (drawable_context_func != NULL, NULL);
 
   if (drawable_type == GIMP_TYPE_LAYER)
     {
@@ -337,6 +347,9 @@ gimp_drawable_list_view_new (GimpImage               *gimage,
   list_view->add_drawable_func     = add_drawable_func;
   list_view->remove_drawable_func  = remove_drawable_func;
   list_view->copy_drawable_func    = copy_drawable_func;
+  list_view->new_drawable_func     = new_drawable_func;
+  list_view->edit_drawable_func    = edit_drawable_func;
+  list_view->drawable_context_func = drawable_context_func;
 
   /*  drop to "new"  */
   gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (list_view->new_button),
@@ -518,6 +531,20 @@ gimp_drawable_list_view_activate_item (GimpContainerView *view,
 					 GIMP_DRAWABLE (item));
 }
 
+static void
+gimp_drawable_list_view_context_item (GimpContainerView *view,
+				      GimpViewable      *item,
+				      gpointer           insert_data)
+{
+  if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->context_item)
+    GIMP_CONTAINER_VIEW_CLASS (parent_class)->context_item (view,
+							    item,
+							    insert_data);
+
+  GIMP_DRAWABLE_LIST_VIEW (view)->drawable_context_func
+    (gimp_drawable_gimage (GIMP_DRAWABLE (item)));
+}
+
 
 /*  "New" functions  */
 
@@ -526,9 +553,13 @@ gimp_drawable_list_view_new_drawable (GimpDrawableListView *view,
 				      GimpDrawable         *drawable)
 {
   if (drawable)
-    g_print ("new with \"%s\"'s properties\n", GIMP_OBJECT (drawable)->name);
+    {
+      g_print ("new with \"%s\"'s properties\n", GIMP_OBJECT (drawable)->name);
+    }
   else
-    g_print ("new default\n");
+    {
+      view->new_drawable_func (view->gimage);
+    }
 }
 
 static void
@@ -649,7 +680,7 @@ static void
 gimp_drawable_list_view_edit_drawable (GimpDrawableListView *view,
 				       GimpDrawable         *drawable)
 {
-  g_print ("edit \"%s\"\n", GIMP_OBJECT (drawable)->name);
+  view->edit_drawable_func (drawable);
 }
 
 static void

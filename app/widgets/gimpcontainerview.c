@@ -41,6 +41,7 @@ enum
   REORDER_ITEM,
   SELECT_ITEM,
   ACTIVATE_ITEM,
+  CONTEXT_ITEM,
   CLEAR_ITEMS,
   SET_PREVIEW_SIZE,
   LAST_SIGNAL
@@ -183,6 +184,17 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
                     GIMP_TYPE_OBJECT,
 		    GTK_TYPE_POINTER);
 
+  view_signals[CONTEXT_ITEM] =
+    gtk_signal_new ("context_item",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpContainerViewClass,
+                                       context_item),
+                    gtk_marshal_NONE__POINTER_POINTER,
+                    GTK_TYPE_NONE, 2,
+                    GIMP_TYPE_OBJECT,
+		    GTK_TYPE_POINTER);
+
   view_signals[CLEAR_ITEMS] =
     gtk_signal_new ("clear_items",
                     GTK_RUN_FIRST,
@@ -211,6 +223,7 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
   klass->reorder_item     = NULL;
   klass->select_item      = NULL;
   klass->activate_item    = NULL;
+  klass->context_item     = NULL;
   klass->clear_items      = gimp_container_view_real_clear_items;
   klass->set_preview_size = NULL;
 }
@@ -447,6 +460,23 @@ gimp_container_view_activate_item (GimpContainerView *view,
 }
 
 void
+gimp_container_view_context_item (GimpContainerView *view,
+				  GimpViewable      *viewable)
+{
+  gpointer insert_data;
+
+  g_return_if_fail (view != NULL);
+  g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
+  g_return_if_fail (viewable != NULL);
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+
+  insert_data = g_hash_table_lookup (view->hash_table, viewable);
+
+  gtk_signal_emit (GTK_OBJECT (view), view_signals[CONTEXT_ITEM],
+		   viewable, insert_data);
+}
+
+void
 gimp_container_view_item_selected (GimpContainerView *view,
 				   GimpViewable      *viewable)
 {
@@ -475,6 +505,18 @@ gimp_container_view_item_activated (GimpContainerView *view,
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
   gimp_container_view_activate_item (view, viewable);
+}
+
+void
+gimp_container_view_item_context (GimpContainerView *view,
+				  GimpViewable      *viewable)
+{
+  g_return_if_fail (view != NULL);
+  g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
+  g_return_if_fail (viewable != NULL);
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+
+  gimp_container_view_context_item (view, viewable);
 }
 
 static void

@@ -43,6 +43,7 @@ void   channels_edit_channel_attributes_cmd_callback    (GtkWidget   *widget,
 
 void   channels_new_channel_query                       (GimpImage   *gimage);
 void   channels_edit_channel_query                      (GimpChannel *channel);
+void   channels_show_context_menu                       (GimpImage   *gimage);
 
 
 #endif /* __CHANNELS_COMMANDS_H__ */

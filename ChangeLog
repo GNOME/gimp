@@ -1,3 +1,30 @@
+2001-04-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainerview.[ch]: added virtual method
+	context_item() which works like select_item() and activate_item()
+	and a function to trigger the signal from subclasses (marked as
+	"protected").
+
+	* app/widgets/gimpcontainerlistview.c: invoke context_item() on
+	right click.
+
+	* app/widgets/gimpdrawablelistview.[ch]: implement context_item()
+	and show a context menu. The functions to show the menu as well as
+	functions to create a new drawable and to edit it's attriutes must
+	be passed to the constructor now.
+
+	* app/gui/channels-commands.[ch]
+	* app/gui/layers-commands.[ch]: added functions which show the
+	layers and channels context menus. No accelerators supported yet.
+	Auto-destroy all dialogs when their drawable is removed from the
+	image.
+
+	* app/gui/dialogs-constructors.c: changed the calls to
+	gimp_drawable_list_view_new() accordingly.
+
+	* app/gui/menus.c
+	* app/gui/test-commands.[ch]: removed some test dialogs.
+
 2001-04-28  David Neary  <dneary@eircom.net>
 
 	* app/tools/transform_options.[ch]: Separated the transform

@@ -36,11 +36,6 @@ void test_palette_container_grid_view_cmd_callback  (GtkWidget *, gpointer);
 void test_multi_container_list_view_cmd_callback    (GtkWidget *, gpointer);
 void test_multi_container_grid_view_cmd_callback    (GtkWidget *, gpointer);
 
-void test_layer_list_cmd_callback                   (GtkWidget *, gpointer);
-void test_layer_grid_cmd_callback                   (GtkWidget *, gpointer);
-void test_channel_list_cmd_callback                 (GtkWidget *, gpointer);
-void test_channel_grid_cmd_callback                 (GtkWidget *, gpointer);
-
 void test_list_dock_cmd_callback                    (GtkWidget *, gpointer);
 void test_grid_dock_cmd_callback                    (GtkWidget *, gpointer);
 void test_image_dock_cmd_callback                   (GtkWidget *, gpointer);

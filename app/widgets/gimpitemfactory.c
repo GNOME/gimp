@@ -171,14 +171,6 @@ static GimpItemFactoryEntry toolbox_entries[] =
   { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
 
-  { { N_("/File/Test Dialogs/Layer List..."), NULL, test_layer_list_cmd_callback, 1 },
-    NULL, NULL },
-  { { N_("/File/Test Dialogs/Channel List..."), NULL, test_channel_list_cmd_callback, 1 },
-    NULL, NULL },
-
-  { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
-    NULL, NULL },
-
   { { "/File/Test Dialogs/Images List...", NULL, test_image_container_list_view_cmd_callback, 0 },
     NULL, NULL },
   { { "/File/Test Dialogs/Images Grid...", NULL, test_image_container_grid_view_cmd_callback, 0 },

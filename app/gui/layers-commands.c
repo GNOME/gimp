@@ -33,6 +33,7 @@
 #include "gdisplay.h"
 #include "gimpui.h"
 #include "layers-commands.h"
+#include "menus.h"
 #include "resize.h"
 
 #include "drawable.h"
@@ -47,11 +48,12 @@
 #include "libgimp/gimpintl.h"
 
 
-static void   layers_add_mask_query     (GimpLayer *layer);
-static void   layers_scale_layer_query  (GimpImage *gimage,
-					 GimpLayer *layer);
-static void   layers_resize_layer_query (GimpImage *gimage,
-					 GimpLayer *layer);
+static void   layers_add_mask_query       (GimpLayer *layer);
+static void   layers_scale_layer_query    (GimpImage *gimage,
+					   GimpLayer *layer);
+static void   layers_resize_layer_query   (GimpImage *gimage,
+					   GimpLayer *layer);
+static void   layers_menu_set_sensitivity (GimpImage *gimage);
 
 
 void
@@ -567,8 +569,8 @@ layers_new_layer_query (GimpImage *gimage)
   GtkWidget       *spinbutton;
   GtkWidget       *frame;
 
-  /*  The new options structure  */
-  options = g_new (NewLayerOptions, 1);
+  options = g_new0 (NewLayerOptions, 1);
+
   options->fill_type = fill_type;
   options->gimage    = gimage;
 
@@ -775,6 +777,10 @@ layers_edit_layer_query (GimpLayer *layer)
 			     GTK_SIGNAL_FUNC (g_free),
 			     (GtkObject *) options);
 
+  gtk_signal_connect_object_while_alive (GTK_OBJECT (layer), "removed",
+					 GTK_SIGNAL_FUNC (gtk_widget_destroy),
+					 GTK_OBJECT (options->query_box));
+
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
@@ -873,6 +879,10 @@ layers_add_mask_query (GimpLayer *layer)
   gtk_signal_connect_object (GTK_OBJECT (options->query_box), "destroy",
 			     GTK_SIGNAL_FUNC (g_free),
 			     (GtkObject *) options);
+
+  gtk_signal_connect_object_while_alive (GTK_OBJECT (layer), "removed",
+					 GTK_SIGNAL_FUNC (gtk_widget_destroy),
+					 GTK_OBJECT (options->query_box));
 
   /*  The radio frame and box  */
   if (gimage->selection_mask)
@@ -1131,8 +1141,8 @@ layer_merge_query_ok_callback (GtkWidget *widget,
 
 void
 layers_layer_merge_query (GimpImage   *gimage,
-				 /*  if FALSE, anchor active layer  */
-				 gboolean     merge_visible)
+			  /*  if FALSE, anchor active layer  */
+			  gboolean     merge_visible)
 {
   LayerMergeOptions *options;
   GtkWidget         *vbox;
@@ -1191,4 +1201,112 @@ layers_layer_merge_query (GimpImage   *gimage,
 
   gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);
+}
+
+void
+layers_show_context_menu (GimpImage *gimage)
+{
+  GtkItemFactory *item_factory;
+  gint            x, y;
+
+  layers_menu_set_sensitivity (gimage);
+
+  item_factory = menus_get_layers_factory ();
+
+  gimp_menu_position (GTK_MENU (item_factory->widget), &x, &y);
+
+  gtk_item_factory_popup_with_data (item_factory,
+				    gimage, NULL,
+				    x, y,
+				    3, 0);
+}
+
+static void
+layers_menu_set_sensitivity (GimpImage *gimage)
+{
+  GimpLayer *layer;
+  gboolean   fs         = FALSE;    /*  no floating sel        */
+  gboolean   ac         = FALSE;    /*  no active channel      */
+  gboolean   lm         = FALSE;    /*  layer mask             */
+  gboolean   lp         = FALSE;    /*  layers present         */
+  gboolean   alpha      = FALSE;    /*  alpha channel present  */
+  gboolean   indexed    = FALSE;    /*  is indexed             */
+  gboolean   next_alpha = FALSE;
+  GList     *list;
+  GList     *next       = NULL;
+  GList     *prev       = NULL;
+
+  g_return_if_fail (gimage != NULL);
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  layer = gimp_image_get_active_layer (gimage);
+
+  if (layer)
+    lm = (gimp_layer_get_mask (layer)) ? TRUE : FALSE;
+
+  fs = (gimp_image_floating_sel (gimage) == NULL);
+  ac = (gimp_image_get_active_channel (gimage) == NULL);
+
+  alpha = layer && gimp_layer_has_alpha (layer);
+
+  lp      = ! gimp_image_is_empty (gimage);
+  indexed = (gimp_image_base_type (gimage) == INDEXED);
+
+  for (list = GIMP_LIST (gimage->layers)->list;
+       list;
+       list = g_list_next (list)) 
+    {
+      if (layer == (GimpLayer *) list->data)
+	{
+	  prev = g_list_previous (list);
+	  next = g_list_next (list);
+	  break;
+	}
+    }
+
+  if (next)
+    next_alpha = gimp_layer_has_alpha (GIMP_LAYER (next->data));
+  else
+    next_alpha = FALSE;
+
+#define SET_SENSITIVE(menu,condition) \
+        menus_set_sensitive ("<Layers>/" menu, (condition) != 0)
+
+  SET_SENSITIVE ("New Layer...", gimage);
+
+  SET_SENSITIVE ("Stack/Raise Layer",
+		 fs && ac && gimage && lp && alpha && prev);
+
+  SET_SENSITIVE ("Stack/Lower Layer",
+		 fs && ac && gimage && lp && next && next_alpha);
+
+  SET_SENSITIVE ("Stack/Layer to Top",
+		 fs && ac && gimage && lp && alpha && prev);
+  SET_SENSITIVE ("Stack/Layer to Bottom",
+		 fs && ac && gimage && lp && next && next_alpha);
+
+  SET_SENSITIVE ("Duplicate Layer", fs && ac && gimage && lp);
+  SET_SENSITIVE ("Anchor Layer", !fs && ac && gimage && lp);
+  SET_SENSITIVE ("Delete Layer", ac && gimage && lp);
+
+  SET_SENSITIVE ("Layer Boundary Size...", ac && gimage && lp);
+  SET_SENSITIVE ("Layer to Imagesize", ac && gimage && lp);
+  SET_SENSITIVE ("Scale Layer...", ac && gimage && lp);
+
+  SET_SENSITIVE ("Merge Visible Layers...", fs && ac && gimage && lp);
+  SET_SENSITIVE ("Merge Down", fs && ac && gimage && lp && next);
+  SET_SENSITIVE ("Flatten Image", fs && ac && gimage && lp);
+
+  SET_SENSITIVE ("Add Layer Mask...", 
+		 fs && ac && gimage && !lm && lp && alpha && !indexed);
+  SET_SENSITIVE ("Apply Layer Mask", fs && ac && gimage && lm && lp);
+  SET_SENSITIVE ("Delete Layer Mask", fs && ac && gimage && lm && lp);
+  SET_SENSITIVE ("Mask to Selection", fs && ac && gimage && lm && lp);
+
+  SET_SENSITIVE ("Add Alpha Channel", !alpha);
+  SET_SENSITIVE ("Alpha to Selection", fs && ac && gimage && lp && alpha);
+
+  SET_SENSITIVE ("Edit Layer Attributes...", ac && gimage && lp);
+
+#undef SET_SENSITIVE
 }

@@ -30,13 +30,18 @@
 #include "channels-commands.h"
 #include "gdisplay.h"
 #include "gimpui.h"
+#include "menus.h"
 
 #include "drawable.h"
 #include "gimage_mask.h"
 #include "gimpchannel.h"
 #include "gimpimage.h"
+#include "gimplist.h"
 
 #include "libgimp/gimpintl.h"
+
+
+static void   channels_menu_set_sensitivity (GimpImage *gimage);
 
 
 void
@@ -511,6 +516,10 @@ channels_edit_channel_query (GimpChannel *channel)
 			     GTK_SIGNAL_FUNC (g_free),
 			     (GtkObject *) options);
 
+  gtk_signal_connect_object_while_alive (GTK_OBJECT (channel), "removed",
+					 GTK_SIGNAL_FUNC (gtk_widget_destroy),
+					 GTK_OBJECT (options->query_box));
+
   /*  The main hbox  */
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
@@ -571,4 +580,68 @@ channels_edit_channel_query (GimpChannel *channel)
   gtk_widget_show (vbox);
   gtk_widget_show (hbox);
   gtk_widget_show (options->query_box);
+}
+
+void
+channels_show_context_menu (GimpImage *gimage)
+{
+  GtkItemFactory *item_factory;
+  gint            x, y;
+
+  channels_menu_set_sensitivity (gimage);
+
+  item_factory = menus_get_channels_factory ();
+
+  gimp_menu_position (GTK_MENU (item_factory->widget), &x, &y);
+
+  gtk_item_factory_popup_with_data (item_factory,
+				    gimage, NULL,
+				    x, y,
+				    3, 0);
+}
+
+
+static void
+channels_menu_set_sensitivity (GimpImage *gimage)
+{
+  GimpChannel *channel;
+  gboolean     fs;
+  GList       *list;
+  GList       *next = NULL;
+  GList       *prev = NULL;
+
+  g_return_if_fail (gimage != NULL);
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  channel = gimp_image_get_active_channel (gimage);
+
+  fs = (gimp_image_floating_sel (gimage) != NULL);
+
+  for (list = GIMP_LIST (gimage->channels)->list;
+       list;
+       list = g_list_next (list))
+    {
+      if (channel == (GimpChannel *) list->data)
+	{
+	  prev = g_list_previous (list);
+	  next = g_list_next (list);
+	  break;
+	}
+    }
+
+#define SET_SENSITIVE(menu,condition) \
+        menus_set_sensitive ("<Channels>/" menu, (condition) != 0)
+
+  SET_SENSITIVE ("New Channel...",             !fs);
+  SET_SENSITIVE ("Raise Channel",              channel && !fs && prev);
+  SET_SENSITIVE ("Lower Channel",              channel && !fs && next);
+  SET_SENSITIVE ("Duplicate Channel",          channel && !fs);
+  SET_SENSITIVE ("Channel to Selection",       channel);
+  SET_SENSITIVE ("Add to Selection",           channel);
+  SET_SENSITIVE ("Subtract from Selection",    channel);
+  SET_SENSITIVE ("Intersect with Selection",   channel);
+  SET_SENSITIVE ("Delete Channel",             channel && !fs);
+  SET_SENSITIVE ("Edit Channel Attributes...", channel && !fs);
+
+#undef SET_OPS_SENSITIVE
 }

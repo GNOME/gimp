@@ -42,6 +42,10 @@ typedef void            (* GimpRemoveDrawableFunc)  (GimpImage       *gimage,
 typedef GimpDrawable  * (* GimpCopyDrawableFunc)    (GimpDrawable    *drawable,
 						     gboolean         add_alpha);
 
+typedef void            (* GimpNewDrawableFunc)     (GimpImage       *gimage);
+typedef void            (* GimpEditDrawableFunc)    (GimpDrawable    *drawable);
+typedef void            (* GimpDrawableContextFunc) (GimpImage       *gimage);
+
 
 #define GIMP_TYPE_DRAWABLE_LIST_VIEW            (gimp_drawable_list_view_get_type ())
 #define GIMP_DRAWABLE_LIST_VIEW(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_DRAWABLE_LIST_VIEW, GimpDrawableListView))
@@ -68,6 +72,10 @@ struct _GimpDrawableListView
   GimpAddDrawableFunc      add_drawable_func;
   GimpRemoveDrawableFunc   remove_drawable_func;
   GimpCopyDrawableFunc     copy_drawable_func;
+
+  GimpNewDrawableFunc      new_drawable_func;
+  GimpEditDrawableFunc     edit_drawable_func;
+  GimpDrawableContextFunc  drawable_context_func;
 
   GtkWidget               *button_box;
 
@@ -96,7 +104,10 @@ GtkWidget * gimp_drawable_list_view_new      (GimpImage               *gimage,
 					      GimpReorderDrawableFunc  reorder_drawable_func,
 					      GimpAddDrawableFunc      add_drawable_func,
 					      GimpRemoveDrawableFunc   remove_drawable_func,
-					      GimpCopyDrawableFunc     copy_drawable_func);
+					      GimpCopyDrawableFunc     copy_drawable_func,
+					      GimpNewDrawableFunc      new_drawable_func,
+					      GimpEditDrawableFunc     edit_drawable_func,
+					      GimpDrawableContextFunc  drawable_context_func);
 
 void       gimp_drawable_list_view_set_image (GimpDrawableListView *view,
 					      GimpImage            *gimage);

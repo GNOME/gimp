@@ -414,13 +414,24 @@ gimp_container_list_view_item_activated (GtkWidget      *widget,
 					 GdkEventButton *bevent,
 					 gpointer        data)
 {
-  if (bevent->type == GDK_2BUTTON_PRESS)
+  GimpViewable *viewable;
+
+  viewable = GIMP_PREVIEW (GIMP_LIST_ITEM (widget)->preview)->viewable;
+
+  switch (bevent->button)
     {
-      GimpViewable *viewable;
+    case 1:
+      if (bevent->type == GDK_2BUTTON_PRESS)
+	gimp_container_view_item_activated (GIMP_CONTAINER_VIEW (data),
+					    viewable);
+      break;
 
-      viewable = GIMP_PREVIEW (GIMP_LIST_ITEM (widget)->preview)->viewable;
-
-      gimp_container_view_item_activated (GIMP_CONTAINER_VIEW (data), viewable);
+    case 3:
+      gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (data),
+					 viewable);
+      gimp_container_view_item_context (GIMP_CONTAINER_VIEW (data),
+					viewable);
+      break;
     }
 
   return FALSE;
