@@ -134,8 +134,8 @@ gimp_pattern_select_run_callback (GimpPdbDialog *dialog,
 {
   GimpPattern *pattern = GIMP_PATTERN (object);
 
-  return procedural_db_run_proc (dialog->context->gimp,
-                                 dialog->context,
+  return procedural_db_run_proc (dialog->caller_context->gimp,
+                                 dialog->caller_context,
                                  NULL,
                                  dialog->callback_name,
                                  n_return_vals,

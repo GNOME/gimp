@@ -175,8 +175,8 @@ gimp_gradient_select_run_callback (GimpPdbDialog *dialog,
       pos += delta;
     }
 
-  return procedural_db_run_proc (dialog->context->gimp,
-                                 dialog->context,
+  return procedural_db_run_proc (dialog->caller_context->gimp,
+                                 dialog->caller_context,
                                  NULL,
                                  dialog->callback_name,
                                  n_return_vals,

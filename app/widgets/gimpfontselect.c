@@ -130,8 +130,8 @@ gimp_font_select_run_callback (GimpPdbDialog *dialog,
                                gboolean       closing,
                                gint          *n_return_vals)
 {
-  return procedural_db_run_proc (dialog->context->gimp,
-                                 dialog->context,
+  return procedural_db_run_proc (dialog->caller_context->gimp,
+                                 dialog->caller_context,
                                  NULL,
                                  dialog->callback_name,
                                  n_return_vals,

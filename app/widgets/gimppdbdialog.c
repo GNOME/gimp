@@ -182,10 +182,10 @@ gimp_pdb_dialog_constructor (GType                  type,
 
   dialog = GIMP_PDB_DIALOG (object);
 
-  g_assert (GIMP_IS_CONTEXT (dialog->context));
+  g_assert (GIMP_IS_CONTEXT (dialog->caller_context));
   g_assert (g_type_is_a (dialog->select_type, GIMP_TYPE_OBJECT));
 
-  dialog->context = gimp_context_new (dialog->context->gimp,
+  dialog->context = gimp_context_new (dialog->caller_context->gimp,
                                       g_type_name (type),
                                       NULL);
 
@@ -224,8 +224,7 @@ gimp_pdb_dialog_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_CONTEXT:
-      /* don't ref, see constructor */
-      dialog->context = g_value_get_object (value);
+      dialog->caller_context = g_value_dup_object (value);
       break;
     case PROP_SELECT_TYPE:
       dialog->select_type = (GType) g_value_get_pointer (value);
@@ -252,6 +251,12 @@ static void
 gimp_pdb_dialog_destroy (GtkObject *object)
 {
   GimpPdbDialog *dialog = GIMP_PDB_DIALOG (object);
+
+  if (dialog->caller_context)
+    {
+      g_object_unref (dialog->caller_context);
+      dialog->caller_context = NULL;
+    }
 
   if (dialog->context)
     {
@@ -300,7 +305,8 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
     {
       dialog->callback_busy = TRUE;
 
-      if (procedural_db_lookup (dialog->context->gimp, dialog->callback_name))
+      if (procedural_db_lookup (dialog->caller_context->gimp,
+                                dialog->callback_name))
         {
           Argument *return_vals;
           gint      n_return_vals;
@@ -360,9 +366,9 @@ gimp_pdb_dialogs_check_callback (GimpPdbDialogClass *klass)
 
       list = g_list_next (list);
 
-      if (dialog->context && dialog->callback_name)
+      if (dialog->caller_context && dialog->callback_name)
         {
-          if (! procedural_db_lookup (dialog->context->gimp,
+          if (! procedural_db_lookup (dialog->caller_context->gimp,
                                       dialog->callback_name))
             {
               gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);

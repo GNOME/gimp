@@ -41,7 +41,16 @@ struct _GimpPdbDialog
 {
   GimpDialog       parent_instance;
 
+  /*  The context we were created with. This is the context the plug-in
+   *  exists in and must be used when calling the plug-in.
+   */
+  GimpContext     *caller_context;
+
+  /*  The dialog's private context, serves just as model for the
+   *  select widgets and must not be used when calling the plug-in.
+   */
   GimpContext     *context;
+
   GType            select_type;
   GimpObject      *initial_object;
   gchar           *callback_name;

@@ -1,3 +1,18 @@
+2004-12-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppdbdialog.[ch]: don't forget the context we
+	were created with but rmember it as pdb_dialog->caller_context.
+
+	* app/widgets/gimpbrushselect.c
+	* app/widgets/gimpfontselect.c
+	* app/widgets/gimpgradientselect.c
+	* app/widgets/gimppaletteselect.c
+	* app/widgets/gimppatternselect.c: use the caller_context when
+	calling the temp_proc so the temp_proc's stack frame doesn't
+	contain the dialog's private context (which is just a scratch
+	model for the container views) but the plug-in's real context
+	which is fully initialized. Fixes bug #161114.
+
 2004-12-13  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpdrawablecombobox.c: fixed gtk-doc comment.
