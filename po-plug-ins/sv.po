@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-11-29 14:09+0100\n"
-"PO-Revision-Date: 2002-11-29 14:10+0100\n"
+"POT-Creation-Date: 2002-11-30 22:15+0100\n"
+"PO-Revision-Date: 2002-11-30 22:17+0100\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -76,7 +76,7 @@ msgstr "Ångra senaste inzoomning"
 
 #: plug-ins/FractalExplorer/Dialogs.c:403
 msgid "Redo last zoom"
-msgstr "Gör om senaste inzoomning"
+msgstr "Upprepa senaste inzoomning"
 
 #.
 #. *  Scales
@@ -202,7 +202,7 @@ msgstr "Spindeln"
 
 #: plug-ins/FractalExplorer/Dialogs.c:585
 msgid "Man'o'war"
-msgstr "Man-o-war"
+msgstr "Man-of-war"
 
 #: plug-ins/FractalExplorer/Dialogs.c:587
 msgid "Lambda"
@@ -6488,55 +6488,7 @@ msgstr "<Image>/Filter/Mappa/Gör kantlös"
 msgid "Tiler..."
 msgstr "Plattläggare..."
 
-#: plug-ins/common/uniteditor.c:83
-msgid "<Toolbox>/Xtns/Unit Editor..."
-msgstr "<Toolbox>/Xtns/Enhetseditor..."
-
-#: plug-ins/common/uniteditor.c:180 plug-ins/common/uniteditor.c:634
-msgid "New Unit"
-msgstr "Ny enhet"
-
-#: plug-ins/common/uniteditor.c:208
-msgid "ID:"
-msgstr "ID:"
-
-#: plug-ins/common/uniteditor.c:220
-msgid "Factor:"
-msgstr "Faktor:"
-
-#: plug-ins/common/uniteditor.c:231
-msgid "Digits:"
-msgstr "Decimaler:"
-
-#: plug-ins/common/uniteditor.c:243
-msgid "Symbol:"
-msgstr "Symbol:"
-
-#: plug-ins/common/uniteditor.c:255
-msgid "Abbreviation:"
-msgstr "Förkortning:"
-
-#: plug-ins/common/uniteditor.c:267
-msgid "Singular:"
-msgstr "Singular:"
-
-#: plug-ins/common/uniteditor.c:279
-msgid "Plural:"
-msgstr "Plural:"
-
-#: plug-ins/common/uniteditor.c:316
-msgid "Unit factor must not be 0."
-msgstr "Enhetsfaktorn får inte vara 0."
-
-#: plug-ins/common/uniteditor.c:326
-msgid "All text fields must contain a value."
-msgstr "Alla textfält måste innehålla ett värde."
-
-#: plug-ins/common/uniteditor.c:526
-msgid "Unit Editor"
-msgstr "Enhetseditor"
-
-#: plug-ins/common/uniteditor.c:545
+#: plug-ins/common/uniteditor.c:77
 msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
@@ -6544,18 +6496,18 @@ msgstr ""
 "En enhetsdefinition sparas innan GIMP avslutas endast om kolumnen är "
 "markerad."
 
-#: plug-ins/common/uniteditor.c:547
+#: plug-ins/common/uniteditor.c:79
 msgid ""
 "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Den här strängen används för att identifiera en enhet i GIMP's "
 "konfigurationsfiler."
 
-#: plug-ins/common/uniteditor.c:549
+#: plug-ins/common/uniteditor.c:81
 msgid "How many units make up an inch."
 msgstr "Hur många enheter går det på en (amerikansk) tum."
 
-#: plug-ins/common/uniteditor.c:550
+#: plug-ins/common/uniteditor.c:82
 msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
@@ -6565,7 +6517,7 @@ msgstr ""
 "fältet bör använda för att få ungefär samma noggrannhet som inmatning i "
 "(amerikanska) tum med två decimalers noggrannhet."
 
-#: plug-ins/common/uniteditor.c:556
+#: plug-ins/common/uniteditor.c:86
 msgid ""
 "The unit's symbol if it has one (e.g. \"'\" for inches). Use the unit's "
 "abbreviation if it doesn't have a symbol."
@@ -6573,77 +6525,113 @@ msgstr ""
 "Enhetens symbol, om det har någon (t.ex. \"'\" för tum). Använd enhetens "
 "förkortning om den inte har en symbol."
 
-#: plug-ins/common/uniteditor.c:559
+#: plug-ins/common/uniteditor.c:88
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
 msgstr "Enhetens förkortning (t.ex. \"cm\" för centimeter)."
 
-#: plug-ins/common/uniteditor.c:561
+#: plug-ins/common/uniteditor.c:89
 msgid "The unit's singular form."
 msgstr "Enhetens namn i singular."
 
-#: plug-ins/common/uniteditor.c:562
+#: plug-ins/common/uniteditor.c:90
 msgid "The unit's plural form."
 msgstr "Enhetens namn i plural."
 
-#: plug-ins/common/uniteditor.c:578
+#: plug-ins/common/uniteditor.c:108
+msgid "<Toolbox>/Xtns/Unit Editor..."
+msgstr "<Toolbox>/Xtns/Enhetseditor..."
+
+#: plug-ins/common/uniteditor.c:172
+msgid "New Unit"
+msgstr "Ny enhet"
+
+#: plug-ins/common/uniteditor.c:203
+msgid "_ID:"
+msgstr "_ID:"
+
+#: plug-ins/common/uniteditor.c:214
+msgid "_Factor:"
+msgstr "_Faktor:"
+
+#: plug-ins/common/uniteditor.c:224
+msgid "_Digits:"
+msgstr "_Decimaler:"
+
+#: plug-ins/common/uniteditor.c:236
+msgid "_Symbol:"
+msgstr "_Symbol:"
+
+#: plug-ins/common/uniteditor.c:248
+msgid "_Abbreviation:"
+msgstr "_Förkortning:"
+
+#: plug-ins/common/uniteditor.c:260
+msgid "Si_ngular:"
+msgstr "_Singular:"
+
+#: plug-ins/common/uniteditor.c:272
+msgid "_Plural:"
+msgstr "_Plural:"
+
+#: plug-ins/common/uniteditor.c:309
+msgid "Unit factor must not be 0."
+msgstr "Enhetsfaktorn får inte vara 0."
+
+#: plug-ins/common/uniteditor.c:319
+msgid "All text fields must contain a value."
+msgstr "Alla textfält måste innehålla ett värde."
+
+#: plug-ins/common/uniteditor.c:536
+msgid "Unit Editor"
+msgstr "Enhetseditor"
+
+#: plug-ins/common/uniteditor.c:577
 msgid "Saved"
 msgstr "Sparad"
 
-#: plug-ins/common/uniteditor.c:579
+#: plug-ins/common/uniteditor.c:592
 msgid "ID"
 msgstr "ID"
 
-#: plug-ins/common/uniteditor.c:580
+#: plug-ins/common/uniteditor.c:601
 msgid "Factor"
 msgstr "Faktor"
 
-#: plug-ins/common/uniteditor.c:581
+#: plug-ins/common/uniteditor.c:609
 msgid "Digits"
 msgstr "Decimaler"
 
-#: plug-ins/common/uniteditor.c:582
+#: plug-ins/common/uniteditor.c:617
 msgid "Symbol"
 msgstr "Symbol"
 
-#: plug-ins/common/uniteditor.c:583
-msgid "Abbr."
-msgstr "Förk."
+#: plug-ins/common/uniteditor.c:625
+msgid "Abbreviation"
+msgstr "Förkortning"
 
-#: plug-ins/common/uniteditor.c:584
+#: plug-ins/common/uniteditor.c:633
 msgid "Singular"
 msgstr "Singular"
 
-#: plug-ins/common/uniteditor.c:585
+#: plug-ins/common/uniteditor.c:641
 msgid "Plural"
 msgstr "Plural"
 
-#: plug-ins/common/uniteditor.c:642
+#: plug-ins/common/uniteditor.c:654
+msgid "_New Unit"
+msgstr "_Ny enhet"
+
+#: plug-ins/common/uniteditor.c:662
 msgid "Create a new unit from scratch."
 msgstr "Skapa en ny enhet från början."
 
-#: plug-ins/common/uniteditor.c:644
-msgid "Duplicate Unit"
-msgstr "Duplicera enhet"
+#: plug-ins/common/uniteditor.c:664
+msgid "_Duplicate Unit"
+msgstr "_Duplicera enhet"
 
-#: plug-ins/common/uniteditor.c:652
+#: plug-ins/common/uniteditor.c:672
 msgid "Create a new unit with the currently seleted unit as template."
 msgstr "Skapa en ny enhet med den markerade enheten som förlaga."
-
-#: plug-ins/common/uniteditor.c:655
-msgid "Don't Save Unit"
-msgstr "Spara inte enheten"
-
-#: plug-ins/common/uniteditor.c:663
-msgid "Don't save the currently selected unit before GIMP exits."
-msgstr "Spara inte den markerade enheten när GIMP avlsutar."
-
-#: plug-ins/common/uniteditor.c:668
-msgid "Save Unit"
-msgstr "Spara enhet"
-
-#: plug-ins/common/uniteditor.c:676
-msgid "Save the currently selected unit before GIMP exits."
-msgstr "Spara den markerade enheten när GIMP avslutas."
 
 #: plug-ins/common/unsharp.c:153
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
@@ -9469,7 +9457,7 @@ msgstr "Ångra"
 # src/menus.c:306
 #: plug-ins/ifscompose/ifscompose.c:1211 plug-ins/imagemap/imap_toolbar.c:116
 msgid "Redo"
-msgstr "Gör om"
+msgstr "Upprepa"
 
 #: plug-ins/ifscompose/ifscompose.c:1244
 msgid "IfsCompose Options"
@@ -9902,7 +9890,7 @@ msgstr "_Ångra %s"
 #: plug-ins/imagemap/imap_menu.c:229
 #, c-format
 msgid "_Redo %s"
-msgstr "_Gör om %s"
+msgstr "_Upprepa %s"
 
 #: plug-ins/imagemap/imap_menu.c:257
 msgid "_Edit"
@@ -11259,6 +11247,21 @@ msgstr "Fel: Kan ej läsa XJT egenskapsfil %s"
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fel: XJT egenskapsfil %s är tom"
 
+#~ msgid "Abbr."
+#~ msgstr "Förk."
+
+#~ msgid "Don't Save Unit"
+#~ msgstr "Spara inte enheten"
+
+#~ msgid "Don't save the currently selected unit before GIMP exits."
+#~ msgstr "Spara inte den markerade enheten när GIMP avlsutar."
+
+#~ msgid "Save Unit"
+#~ msgstr "Spara enhet"
+
+#~ msgid "Save the currently selected unit before GIMP exits."
+#~ msgstr "Spara den markerade enheten när GIMP avslutas."
+
 #~ msgid "Save..."
 #~ msgstr "Spara..."
 
@@ -11312,7 +11315,7 @@ msgstr "Fel: XJT egenskapsfil %s är tom"
 #~ msgstr "Ångra inzoomning"
 
 #~ msgid "Redo Zoom"
-#~ msgstr "Gör om inzoomning"
+#~ msgstr "Upprepa inzoomning"
 
 #~ msgid "Step In"
 #~ msgstr "Stega in"
