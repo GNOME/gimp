@@ -30,11 +30,14 @@
 
 #include "gimphistogrambox.h"
 #include "gimphistogramview.h"
+#include "gimppropwidgets.h"
 
 #include "gimp-intl.h"
 
 
-#define GRADIENT_HEIGHT 12
+/* #define DEBUG_VIEW */
+
+#define GRADIENT_HEIGHT 10
 
 
 /*  local function prototypes  */
@@ -137,7 +140,8 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   gtk_widget_show (frame);
 
   box->gradient = gtk_drawing_area_new ();
-  gtk_widget_set_size_request (box->gradient, -1, GRADIENT_HEIGHT);
+  gtk_widget_set_size_request (box->gradient, -1,
+                               GRADIENT_HEIGHT + 2 * box->view->border_width);
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (box->gradient));
   gtk_widget_show (box->gradient);
 
@@ -148,8 +152,11 @@ gimp_histogram_box_init (GimpHistogramBox *box)
                     G_CALLBACK (gimp_histogram_box_gradient_expose),
                     box);
 
-  g_signal_connect_swapped (view, "notify::channel",
+  g_signal_connect_swapped (view, "notify::histogram-channel",
 			    G_CALLBACK (gtk_widget_queue_draw),
+			    box->gradient);
+  g_signal_connect_swapped (view, "notify::border-width",
+			    G_CALLBACK (gtk_widget_queue_resize),
 			    box->gradient);
 
   /*  The range selection */
@@ -184,6 +191,18 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   g_signal_connect (adjustment, "value_changed",
                     G_CALLBACK (gimp_histogram_box_high_adj_update),
                     box);
+
+#ifdef DEBUG_VIEW
+  spinbutton = gimp_prop_spin_button_new (G_OBJECT (box->view), "border-width",
+                                          1, 5, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
+
+  spinbutton = gimp_prop_spin_button_new (G_OBJECT (box->view), "subdivisions",
+                                          1, 5, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
+#endif
 }
 
 static void
@@ -249,10 +268,14 @@ gimp_histogram_box_gradient_size_allocate (GtkWidget     *widget,
                                            gpointer       data)
 {
   GimpHistogramBox *box = GIMP_HISTOGRAM_BOX (data);
+  gint              border;
+  gint              width, height;
 
-  box->gradient_buf = g_realloc (box->gradient_buf,
-                                 3 * ((allocation->width  - 2) *
-                                      (allocation->height - 2)));
+  border = box->view->border_width;
+  width  = allocation->width  - 2 * border;
+  height = allocation->height - 2 * border;
+
+  box->gradient_buf = g_realloc (box->gradient_buf, MAX (0, 3 * width * height));
 }
 
 static gboolean
@@ -264,11 +287,13 @@ gimp_histogram_box_gradient_expose (GtkWidget      *widget,
   GimpHistogramChannel  channel;
 
   gint    i;
+  gint    border;
   gint    width, height;
   guchar  r, g, b;
 
-  width  = widget->allocation.width  - 2;
-  height = widget->allocation.height - 2;
+  border = box->view->border_width;
+  width  = widget->allocation.width  - 2 * border;
+  height = widget->allocation.height - 2 * border;
 
   if (width <= 0 || height <= 0)
     return TRUE;
@@ -309,7 +334,7 @@ gimp_histogram_box_gradient_expose (GtkWidget      *widget,
     memcpy (box->gradient_buf + 3 * i * width, box->gradient_buf, 3 * width);
 
   gdk_draw_rgb_image (widget->window, widget->style->black_gc,
-                      1, 1, width, height, GDK_RGB_DITHER_NORMAL,
+                      border, border, width, height, GDK_RGB_DITHER_NORMAL,
                       box->gradient_buf, 3 * width);
 
   return TRUE;
@@ -331,9 +356,6 @@ gimp_histogram_box_set_channel (GimpHistogramBox     *box,
 {
   g_return_if_fail (GIMP_IS_HISTOGRAM_BOX (box));
 
-  if (!box->view)
-    return;
-
-  gimp_histogram_view_set_channel (box->view, channel);
+  if (box->view)
+    gimp_histogram_view_set_channel (box->view, channel);
 }
-

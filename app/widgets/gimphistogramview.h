@@ -43,6 +43,8 @@ struct _GimpHistogramView
   gint                   start;
   gint                   end;
 
+  gint                   border_width;
+  gint                   subdivisions;
   GdkGC                 *range_gc;
 };
 

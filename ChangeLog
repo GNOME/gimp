@@ -1,5 +1,17 @@
 2003-12-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimphistogramview.[ch]: added properties "border-width"
+	and "subdivisions". Fixed rendering (it off-by-one worked just
+	accidentially because border-width was hardcoded to 1).
+
+	* app/widgets/gimphistogrambox.c: use the histogram view's border
+	width for the color area below the histogram. Conect to the right
+	signal to update the area. Added (#ifdef DEBUG_VIEW) debugging
+	spinbuttons to change the histogram view's new properties on the
+	fly.
+
+2003-12-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimphistogramview.[ch]: applied (modified) patch
 	from Ed Halley which adds "quintile marks". Fixes bug #129050.
 	Render the histogram on a base_gc background and use text_gc and
