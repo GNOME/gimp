@@ -138,6 +138,7 @@ SUBDIRS = 			\
 	waves			\
 	whirlpinch		\
 	wind			\
+	wmf			\
 	xbm			\
 	xwd			\
 	zealouscrop

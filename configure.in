@@ -802,6 +802,7 @@ plug-ins/waterselect/Makefile
 plug-ins/waves/Makefile
 plug-ins/whirlpinch/Makefile
 plug-ins/wind/Makefile
+plug-ins/wmf/Makefile
 plug-ins/xbm/Makefile
 plug-ins/xwd/Makefile
 plug-ins/zealouscrop/Makefile
