@@ -16,6 +16,7 @@
 
 #undef ENABLE_MP
 #undef ENABLE_NLS
+#undef HAVE_ASM_MMX
 #undef HAVE_CATGETS
 #undef HAVE_DIRENT_H
 #undef HAVE_DOPRNT
@@ -49,7 +50,6 @@
 #undef SRAND_FUNC
 
 #undef USE_PTHREADS
-
 
 /* Leave that blank line there!!  Autoheader needs it.
    If you're adding to this file, keep in mind:

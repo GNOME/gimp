@@ -314,7 +314,8 @@ gimp_SOURCES = \
 	marching_ants.h		\
 	pixmaps.h		\
 	pixmaps2.h		\
-	wilber.h
+	wilber.h		\
+	paint_funcs_simd.S
 
 EXTRA_DIST = \
 	makefile.mingw		\
@@ -322,7 +323,8 @@ EXTRA_DIST = \
 	makefile.msc		\
 	gimp.rc			\
 	gimp.sym		\
-	wilber.ico
+	wilber.ico		\
+	arch/i386/mmx/paint_funcs_mmx.S
 
 
 gimp_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym

@@ -160,6 +160,50 @@ CPPFLAGS="$CPPFLAGS $GTK_CFLAGS"
 LDFLAGS="$LDFLAGS `echo $GTK_LIBS | sed 's/\(.*\)\(-lgtk.*\)/\1/'`"
 LIBS="$LIBS $GTK_LIBS"
 
+dnl Test for MMX stuff
+have_asm_mmx=false
+AC_MSG_CHECKING([for Intel Pentium architecture (IA32)])
+if test "$host_cpu" = "i386" -o "$host_cpu" = "i486"\
+  -o "$host_cpu" = "i586" -o "$host_cpu" = "i586"\
+  -o "$host_cpu" = "i686" -o "$host_cpu" = "i786" ;
+then
+  AC_MSG_RESULT(yes)  
+  AC_MSG_CHECKING([for support for gcc-style register parameters on Intel])
+  AC_TRY_COMPILE([],
+   [extern void x(
+    const unsigned char *src1,
+    const unsigned char *src2,
+    unsigned count,
+    unsigned char *dst) __attribute((regparm(3)));],
+
+   [AC_MSG_RESULT(yes)
+
+    AC_MSG_CHECKING([for support for MMX in assembly code])
+    cat > conftest.S <<EOF
+	  .text
+
+	  psubusb %mm3, %mm4
+EOF
+
+    if $CC -c conftest.S ; then
+      AC_MSG_RESULT(yes)
+      rm -f conftest.*
+      AC_DEFINE(HAVE_ASM_MMX)
+      have_asm_mmx=true
+    else
+      AC_MSG_RESULT(no)
+      echo "configure: failed program was:" >&AC_FD_CC
+      cat conftest.S >&AC_FD_CC
+      rm -rf conftest.* ;
+    fi
+   ],
+   [AC_MSG_RESULT(no)
+    AC_MSG_WARN(*** C compiler does not support  __attribute((regparm(3))), MMX code will not be built)]);
+else
+  AC_MSG_RESULT(no) ; 
+fi
+AM_CONDITIONAL(HAVE_ASM_MMX, test x$have_asm_mmx = xtrue)
+
 dnl Test for Xmu
   if test -z "$LIBXMU"; then
     AC_CHECK_LIB(Xmu, XmuClientWindow,

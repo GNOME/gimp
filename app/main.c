@@ -78,6 +78,12 @@ gboolean use_debug_handler = FALSE;
 gboolean console_messages  = FALSE;
 gboolean restore_session   = FALSE;
 gboolean double_speed      = FALSE;
+gboolean use_mmx           = FALSE;
+
+/* TODO: this should probably go into a header file */
+#ifdef USE_GCC_INTEL_MMX
+unsigned long intel_cpu_features(void);
+#endif
 
 MessageHandlerType message_handler = CONSOLE;
 
@@ -148,6 +154,11 @@ main (int    argc,
 #if defined (HAVE_SHM_H) || defined (G_OS_WIN32)
   use_shm = TRUE;
 #endif
+
+#ifdef HAVE_ASM_MMX
+  use_mmx = (intel_cpu_features() & (1 << 23)) ? 1 : 0;
+  fprintf(stderr, "MMX : %s\n", use_mmx ? "yes" : "no");
+#endif  
 
   batch_cmds    = g_new (char *, argc);
   batch_cmds[0] = NULL;

@@ -58,7 +58,6 @@
 
 #define INT_BLEND(a,b,alpha,tmp)  (INT_MULT((a)-(b), alpha, tmp) + (b))
 
-
 typedef enum
 {
   MinifyX_MinifyY,
@@ -153,7 +152,41 @@ static void     apply_layer_mode_replace (guchar   *src1,
 					  gboolean *affect);
 static void     rotate_pointers          (gpointer *p, 
 					  guint32   n);
+/* MMX stuff */
+extern gboolean use_mmx;
 
+#define USE_GCC_INTEL_MMX
+
+#ifdef USE_GCC_INTEL_MMX
+extern int use_mmx;
+
+#define MMX_PIXEL_OP(x) \
+void \
+x( \
+  const unsigned char *src1, \
+  const unsigned char *src2, \
+  unsigned count, \
+  unsigned char *dst) __attribute((regparm(3)));
+
+#define MMX_PIXEL_OP_3A_1A(op) \
+  MMX_PIXEL_OP(op##_pixels_3a_3a) \
+  MMX_PIXEL_OP(op##_pixels_1a_1a)
+
+#define USE_MMX_PIXEL_OP_3A_1A(op) \
+  if (use_mmx && has_alpha1 && has_alpha2) \
+    { \
+      if (bytes1==2 && bytes2==2) \
+	return op##_pixels_1a_1a(src1, src2, length, dest); \
+      if (bytes1==4 && bytes2==4) \
+	return op##_pixels_3a_3a(src1, src2, length, dest); \
+    } \
+  /*fprintf(stderr, "non-MMX: %s(%d, %d, %d, %d)\n", #op, \
+    bytes1, bytes2, has_alpha1, has_alpha2);*/
+#else
+
+#define MMX_PIXEL_OP_3A_1A(op)
+#define USE_MMX_PIXEL_OP_3A_1A(op)
+#endif
 
 
 void
@@ -715,6 +748,7 @@ extract_alpha_pixels (const guchar *src,
     }
 }
 
+MMX_PIXEL_OP_3A_1A(darken)
 void
 darken_pixels (const guchar *src1,
 	       const guchar *src2,
@@ -727,6 +761,8 @@ darken_pixels (const guchar *src1,
 {
   gint   b, alpha;
   guchar s1, s2;
+
+  USE_MMX_PIXEL_OP_3A_1A(darken)
 
   alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
@@ -750,7 +786,7 @@ darken_pixels (const guchar *src1,
     }
 }
 
-
+MMX_PIXEL_OP_3A_1A(lighten)
 void
 lighten_pixels (const guchar *src1,
 		const guchar *src2,
@@ -763,6 +799,8 @@ lighten_pixels (const guchar *src1,
 {
   gint   b, alpha;
   guchar s1, s2;
+
+  USE_MMX_PIXEL_OP_3A_1A(lighten)
 
   alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
@@ -881,6 +919,7 @@ color_only_pixels (const guchar *src1,
     }
 }
 
+MMX_PIXEL_OP_3A_1A(multiply)
 void
 multiply_pixels (const guchar *src1,
 		 const guchar *src2,
@@ -893,6 +932,8 @@ multiply_pixels (const guchar *src1,
 {
   gint alpha, b;
   gint tmp;
+
+  USE_MMX_PIXEL_OP_3A_1A(multiply)
 
   alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
@@ -973,6 +1014,8 @@ divide_pixels (const guchar *src1,
 }
 
 
+MMX_PIXEL_OP_3A_1A(screen)
+
 void
 screen_pixels (const guchar *src1,
 	       const guchar *src2,
@@ -985,6 +1028,8 @@ screen_pixels (const guchar *src1,
 {
   gint alpha, b;
   gint tmp;
+
+  USE_MMX_PIXEL_OP_3A_1A(screen)
 
   alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
@@ -1004,6 +1049,8 @@ screen_pixels (const guchar *src1,
     }
 }
 
+
+MMX_PIXEL_OP_3A_1A(overlay)
 
 void
 overlay_pixels (const guchar *src1,
@@ -1153,6 +1200,8 @@ hardlight_pixels (const guchar *src1,
 }
 
 
+MMX_PIXEL_OP_3A_1A(add)
+
 void
 add_pixels (const guchar *src1,
 	    const guchar *src2,
@@ -1164,6 +1213,8 @@ add_pixels (const guchar *src1,
 	    gint          has_alpha2)
 {
   gint alpha, b;
+
+  USE_MMX_PIXEL_OP_3A_1A(add)
 
   alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
@@ -1187,6 +1238,8 @@ add_pixels (const guchar *src1,
 }
 
 
+MMX_PIXEL_OP_3A_1A(substract)
+
 void
 subtract_pixels (const guchar *src1,
 		 const guchar *src2,
@@ -1199,6 +1252,8 @@ subtract_pixels (const guchar *src1,
 {
   gint alpha, b;
   gint diff;
+
+  USE_MMX_PIXEL_OP_3A_1A(substract)
 
   alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
@@ -1222,6 +1277,8 @@ subtract_pixels (const guchar *src1,
 }
 
 
+MMX_PIXEL_OP_3A_1A(difference)
+
 void
 difference_pixels (const guchar *src1,
 		   const guchar *src2,
@@ -1234,6 +1291,8 @@ difference_pixels (const guchar *src1,
 {
   gint alpha, b;
   gint diff;
+
+  USE_MMX_PIXEL_OP_3A_1A(difference)
 
   alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
