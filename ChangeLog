@@ -1,3 +1,7 @@
+2000-05-11  Sven Neumann  <sven@gimp.org>
+
+	* app/fileops.c: unified messages
+
 2000-05-11  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimp.c: define WAIT_ANY == -1 if it's undefined.

@@ -1615,7 +1615,7 @@ file_open_ok_callback (GtkWidget *widget,
     }
   else if (status != PDB_CANCEL)
     {
-      g_message (_("Open failed\n%s"), filename);
+      g_message (_("Open failed.\n%s"), filename);
     }
 
   gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);

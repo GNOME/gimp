@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.21\n"
-"POT-Creation-Date: 2000-05-07 11:42+0200\n"
-"PO-Revision-Date: 2000-05-08 15:09+02:00\n"
+"POT-Creation-Date: 2000-05-11 19:01+0200\n"
+"PO-Revision-Date: 2000-05-11 19:00+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -310,7 +310,7 @@ msgstr "Kontrast:"
 
 #. The preview toggle
 #: app/brightness_contrast.c:300 app/color_balance.c:441 app/curves.c:682
-#: app/fileops.c:378 app/hue_saturation.c:562 app/levels.c:569
+#: app/fileops.c:401 app/hue_saturation.c:562 app/levels.c:569
 #: app/palette.c:3236 app/posterize.c:239 app/threshold.c:348
 msgid "Preview"
 msgstr "Vorschau"
@@ -322,7 +322,7 @@ msgstr "Pinseleditor"
 #. The close button
 #: app/brush_edit.c:216 app/brush_select.c:281 app/by_color_select.c:696
 #: app/color_notebook.c:122 app/color_picker.c:297 app/colormap_dialog.i.c:173
-#: app/crop.c:1054 app/devices.c:755 app/docindex.c:759 app/errorconsole.c:281
+#: app/crop.c:1054 app/devices.c:755 app/docindex.c:772 app/errorconsole.c:281
 #: app/gdisplay_ops.c:305 app/gradient.c:800 app/gradient_select.c:153
 #: app/histogram_tool.c:276 app/info_window.c:255 app/lc_dialog.c:195
 #: app/measure.c:321 app/nav_window.c:1344 app/palette.c:2072
@@ -1002,11 +1002,11 @@ msgstr "Kurven öffnen"
 msgid "Save Curves"
 msgstr "Kurven sichern"
 
-#: app/curves.c:1569
+#: app/curves.c:1578
 msgid "Load/Save Curves"
 msgstr "Öffne/Sichere Kurven"
 
-#: app/curves.c:1614 app/curves.c:1632 app/levels.c:1429 app/levels.c:1447
+#: app/curves.c:1623 app/curves.c:1641 app/levels.c:1429 app/levels.c:1447
 #: app/paths_dialog.c:1902
 #, c-format
 msgid "Unable to open file %s"
@@ -1055,7 +1055,7 @@ msgstr ""
 msgid "Remove the selected entry from the index"
 msgstr "Entferne den ausgewählten Eintrag aus der Liste"
 
-#: app/docindex.c:753
+#: app/docindex.c:766
 msgid "Document Index"
 msgstr "Dokumentenindex"
 
@@ -1189,16 +1189,16 @@ msgstr "Pixel/%a"
 msgid "Image Type"
 msgstr "Bildart"
 
-#: app/fileops.c:226 app/fileops.c:272
+#: app/fileops.c:249 app/fileops.c:295
 msgid "Load Image"
 msgstr "Bild öffnen"
 
 #. format-chooser frame
-#: app/fileops.c:287
+#: app/fileops.c:310
 msgid "Determine File Type"
 msgstr "Dateityp bestimmen"
 
-#: app/fileops.c:360
+#: app/fileops.c:383
 msgid ""
 "Generate\n"
 "Preview"
@@ -1206,88 +1206,161 @@ msgstr ""
 "Vorschau\n"
 "erzeugen"
 
-#: app/fileops.c:379
+#: app/fileops.c:402
 msgid "No Selection."
 msgstr "Keine Auswahl."
 
-#: app/fileops.c:422 app/fileops.c:1641 app/fileops.c:1748
+#: app/fileops.c:450 app/fileops.c:1772 app/fileops.c:1867
 #, c-format
-msgid "Save failed: %s"
-msgstr "Sichern schlug fehl: %s"
+msgid ""
+"Save failed.\n"
+"%s"
+msgstr ""
+"Sichern schlug fehl.\n"
+"%s"
 
-#: app/fileops.c:442 app/fileops.c:474
+#: app/fileops.c:475 app/fileops.c:507
 msgid "Save Image"
 msgstr "Bild sichern"
 
-#: app/fileops.c:491
+#: app/fileops.c:524
 msgid "Save Options"
 msgstr "Einstellungen"
 
-#: app/fileops.c:500
+#: app/fileops.c:533
 msgid "Determine File Type:"
 msgstr "Dateityp bestimmen:"
 
-#: app/fileops.c:560
-msgid "Can't revert. No filename associated with this image"
+#: app/fileops.c:593
+msgid ""
+"Revert failed.\n"
+"No filename associated with this image."
 msgstr ""
-"Kann Bild nicht zurücksetzen, da kein Dateiname mit dem Bild verknüpft ist"
+"Kann Bild nicht zurücksetzen,\n"
+"da kein Dateiname mit dem Bild verknüpft ist"
 
-#: app/fileops.c:576
-msgid "Revert failed."
-msgstr "Zurücksetzen schlug fehl."
+#: app/fileops.c:600
+msgid "Revert"
+msgstr "Zurücksetzen"
 
-#: app/fileops.c:1257
+#: app/fileops.c:611
+#, c-format
+msgid ""
+"Revert failed.\n"
+"%s"
+msgstr ""
+"Zurücksetzen schlug fehl.\n"
+"%s"
+
+#: app/fileops.c:708
+#, c-format
+msgid ""
+"%s failed.\n"
+"%s: Unknown file type."
+msgstr ""
+"%s fehlgeschlagen.\n"
+"%s: Unbekannter Typ."
+
+#: app/fileops.c:725
+#, c-format
+msgid ""
+"%s failed.\n"
+"%s is not a regular file."
+msgstr ""
+"%s fehlgeschlagen.\n"
+"%s ist keine reguläre Datei."
+
+#: app/fileops.c:746
+#, c-format
+msgid ""
+"%s failed.\n"
+"%s: Permission denied."
+msgstr ""
+"%s fehlgeschlagen.\n"
+"%s: Zugriff verweigert."
+
+#: app/fileops.c:795
+msgid "Open"
+msgstr "Öffnen"
+
+#: app/fileops.c:1102
+#, c-format
+msgid ""
+"Save failed.\n"
+"%s: Unknown file type."
+msgstr ""
+"Sichern fehlgeschlagen.\n"
+"%s: Unbekannter Dateityp."
+
+#: app/fileops.c:1117
+#, c-format
+msgid ""
+"Save failed.\n"
+"%s is not a regular file."
+msgstr ""
+"Sichern fehlgeschlagen.\n"
+"%s ist keine reguläre Datei."
+
+#: app/fileops.c:1136
+#, c-format
+msgid ""
+"Save failed.\n"
+"%s: Permission denied."
+msgstr ""
+"Sichern fehlgeschlagen.\n"
+"%s: Zugriff verweigert."
+
+#: app/fileops.c:1386
 msgid "(This thumbnail may be out of date)"
 msgstr "(Diese Vorschau könnte veraltet sein)"
 
-#: app/fileops.c:1258
+#: app/fileops.c:1387
 msgid "(No Information)"
 msgstr "(Keine Information)"
 
-#: app/fileops.c:1268
+#: app/fileops.c:1397
 msgid "(Thumbnail saving is disabled)"
 msgstr "(Vorschau-Sicherung ist abgeschaltet)"
 
-#: app/fileops.c:1272
+#: app/fileops.c:1401
 msgid "(Could not write thumbnail file)"
 msgstr "(Konnte Vorschau-Datei nicht schreiben)"
 
-#: app/fileops.c:1276
+#: app/fileops.c:1405
 msgid "(Thumbnail file not written)"
 msgstr "(Vorschau-Datei nicht geschrieben)"
 
-#: app/fileops.c:1293
+#: app/fileops.c:1422
 msgid "No preview available"
 msgstr "Keine Vorschau verfügbar"
 
-#: app/fileops.c:1411
+#: app/fileops.c:1545
 msgid "(could not make preview)"
 msgstr "(konnte keine Vorschau erstellen)"
 
-#: app/fileops.c:1484 app/fileops.c:1563
+#: app/fileops.c:1618 app/fileops.c:1698
 #, c-format
-msgid "Open failed: %s"
-msgstr "Öffnen schlug fehl: %s"
+msgid ""
+"Open failed.\n"
+"%s"
+msgstr ""
+"Öffnen fehlgeschlagen.\n"
+"%s"
 
-#: app/fileops.c:1619
-#, c-format
-msgid "%s is an irregular file (%s)"
-msgstr "%s ist keine reguläre Datei (%s)"
-
-#: app/fileops.c:1687
+#: app/fileops.c:1820
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s existiert, überschreiben?"
 
-#: app/fileops.c:1691
+#: app/fileops.c:1822
 msgid "File Exists!"
 msgstr "Datei Existiert!"
 
-#: app/fileops.c:1697
+#: app/fileops.c:1827
 msgid "Yes"
 msgstr "Ja"
 
-#: app/fileops.c:1699
+#: app/fileops.c:1827
 msgid "No"
 msgstr "Nein"
 
@@ -1631,26 +1704,26 @@ msgstr "  in Zeile %d Spalte %d\n"
 msgid "  unexpected token: %s\n"
 msgstr "  unerwartetes Symbol: %s\n"
 
-#: app/gimprc.c:1423
+#: app/gimprc.c:1428
 msgid "error parsing pluginrc"
 msgstr "Fehler beim Lesen der pluginrc"
 
-#: app/gimprc.c:2805
+#: app/gimprc.c:2810
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "Kann %s nicht öffnen; %s"
 
-#: app/gimprc.c:2824
+#: app/gimprc.c:2829
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "Kann %s nicht in %s.old umbenennen; %s"
 
-#: app/gimprc.c:2830
+#: app/gimprc.c:2835
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "Konnte %s nicht wieder öffnen\n"
 
-#: app/gimprc.c:2842
+#: app/gimprc.c:2847
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "Kann nicht in %s schreiben; %s"
@@ -2776,46 +2849,46 @@ msgstr "Hineinzoomen"
 msgid "Zoom out"
 msgstr "Herauszoomen"
 
-#: app/main.c:279
+#: app/main.c:280
 msgid "GIMP version"
 msgstr "GIMP Version"
 
-#: app/main.c:283
+#: app/main.c:284
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
 msgstr "Benutzung: %s [Option ...] [Datei ...]\n"
 
-#: app/main.c:284
+#: app/main.c:285
 msgid "Valid options are:\n"
 msgstr "Gültige Möglichkeiten sind:\n"
 
-#: app/main.c:285
+#: app/main.c:286
 msgid "  -h --help                Output this help.\n"
 msgstr "  -h --help                Gibt diese Hilfe aus.\n"
 
-#: app/main.c:286
+#: app/main.c:287
 msgid "  -v --version             Output version info.\n"
 msgstr "  -v --version             Gibt Versionsinformationen aus.\n"
 
-#: app/main.c:287
+#: app/main.c:288
 msgid "  -b --batch <commands>    Run in batch mode.\n"
 msgstr "  -b --batch <Befehle>     Startet im Stapelmodus.\n"
 
-#: app/main.c:288
+#: app/main.c:289
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
 msgstr "  -g --gimprc <gimprc>     Benutzt ein alternatives Profil.\n"
 
-#: app/main.c:289
+#: app/main.c:290
 msgid "  -n --no-interface        Run without a user interface.\n"
 msgstr "  -n --no-interface        Startet ohne Oberfläche.\n"
 
-#: app/main.c:290
+#: app/main.c:291
 msgid "  -r --restore-session     Try to restore saved session.\n"
 msgstr ""
 "  -r --restore-session     Versucht eine abgelegte Sitzung "
 "wiederherzustellen.\n"
 
-#: app/main.c:291
+#: app/main.c:292
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
@@ -2823,19 +2896,19 @@ msgstr ""
 "  --no-data                Lädt keine Muster, Farbverläufe, Farbpaletten und "
 "Pinsel.\n"
 
-#: app/main.c:292
+#: app/main.c:293
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Zeigt Startmeldungen.\n"
 
-#: app/main.c:293
+#: app/main.c:294
 msgid "  --no-splash              Do not show the startup window.\n"
 msgstr "  --no-splash              Verbirgt Startfenster.\n"
 
-#: app/main.c:294
+#: app/main.c:295
 msgid "  --no-splash-image        Do not add an image to the startup window.\n"
 msgstr "  --no-splash-image        Lädt kein Bild ins Startfenster.\n"
 
-#: app/main.c:295
+#: app/main.c:296
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
@@ -2843,11 +2916,11 @@ msgstr ""
 "  --no-shm                 Keiner geteilter Speicher zwischen GIMP und "
 "Plug-ins.\n"
 
-#: app/main.c:296
+#: app/main.c:297
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm                Benutzt die Xshm Erweiterung nicht.\n"
 
-#: app/main.c:297
+#: app/main.c:298
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
@@ -2855,19 +2928,19 @@ msgstr ""
 "  --console-messages       Warnungen in einer Konsole statt in einem "
 "Dialog.\n"
 
-#: app/main.c:298
+#: app/main.c:299
 msgid "  --debug-handlers         Enable debugging signal handlers.\n"
 msgstr "  --debug-handlers         Aktiviert Fehlersuchroutinen.\n"
 
-#: app/main.c:299
+#: app/main.c:300
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <Anzeige>      Benutzt die angegebene X Anzeige.\n"
 
-#: app/main.c:300
+#: app/main.c:301
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Benutzt alternatives Systemprofil.\n"
 
-#: app/main.c:317
+#: app/main.c:318
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Dieses Konsolenfenster wird in 10 Sekunden geschlossen)\n"
 
@@ -3454,184 +3527,184 @@ msgstr "/Filter/Kombinieren"
 msgid "/Filters/Toys"
 msgstr "/Filter/Viel Spaß"
 
-#: app/menus.c:571
+#: app/menus.c:569
 msgid "/Automatic"
 msgstr "/Automatisch"
 
-#: app/menus.c:585
+#: app/menus.c:583
 msgid "/By Extension"
 msgstr "/Nach Endung"
 
-#: app/menus.c:599
+#: app/menus.c:597
 msgid "/New Layer..."
 msgstr "/Ebene anlegen..."
 
 #. <Layers>/Stack
-#: app/menus.c:604
+#: app/menus.c:602
 msgid "/Stack/Raise Layer"
 msgstr "/Stapel/Ebene erhöhen"
 
-#: app/menus.c:606
+#: app/menus.c:604
 msgid "/Stack/Lower Layer"
 msgstr "/Stapel/Ebene absenken"
 
-#: app/menus.c:608
+#: app/menus.c:606
 msgid "/Stack/Layer to Top"
 msgstr "/Stapel/Ebene nach ganz oben"
 
-#: app/menus.c:610
+#: app/menus.c:608
 msgid "/Stack/Layer to Bottom"
 msgstr "/Stapel/Ebene nach ganz unten"
 
-#: app/menus.c:613
+#: app/menus.c:611
 msgid "/Duplicate Layer"
 msgstr "/Ebene duplizieren"
 
-#: app/menus.c:615
+#: app/menus.c:613
 msgid "/Anchor Layer"
 msgstr "/Ebene verankern"
 
-#: app/menus.c:617
+#: app/menus.c:615
 msgid "/Delete Layer"
 msgstr "/Ebene löschen"
 
-#: app/menus.c:622
+#: app/menus.c:620
 msgid "/Layer Boundary Size..."
 msgstr "/Ebenengröße verändern... "
 
-#: app/menus.c:624
+#: app/menus.c:622
 msgid "/Layer to Imagesize"
 msgstr "/Ebene auf Bildgrösse"
 
-#: app/menus.c:626
+#: app/menus.c:624
 msgid "/Scale Layer..."
 msgstr "/Ebene skalieren..."
 
-#: app/menus.c:631
+#: app/menus.c:629
 msgid "/Merge Visible Layers..."
 msgstr "/Sichtbare Ebenen vereinen..."
 
-#: app/menus.c:633
+#: app/menus.c:631
 msgid "/Merge Down"
 msgstr "/Nach unten vereinen"
 
-#: app/menus.c:635
+#: app/menus.c:633
 msgid "/Flatten Image"
 msgstr "/Bild zusammenfügen"
 
-#: app/menus.c:640
+#: app/menus.c:638
 msgid "/Add Layer Mask..."
 msgstr "/Ebenenmaske hinzufügen..."
 
-#: app/menus.c:642
+#: app/menus.c:640
 msgid "/Apply Layer Mask"
 msgstr "/Ebenenmaske anwenden..."
 
-#: app/menus.c:644
+#: app/menus.c:642
 msgid "/Delete Layer Mask"
 msgstr "/Ebenenmaske löschen"
 
-#: app/menus.c:646
+#: app/menus.c:644
 msgid "/Mask to Selection"
 msgstr "/Auswahl aus Maske"
 
-#: app/menus.c:651
+#: app/menus.c:649
 msgid "/Add Alpha Channel"
 msgstr "/Alphakanal hinzufügen"
 
-#: app/menus.c:653
+#: app/menus.c:651
 msgid "/Alpha to Selection"
 msgstr "/Auswahl aus Alphakanal"
 
-#: app/menus.c:658
+#: app/menus.c:656
 msgid "/Edit Layer Attributes..."
 msgstr "/Ebeneneigenschaften..."
 
-#: app/menus.c:669
+#: app/menus.c:667
 msgid "/New Channel..."
 msgstr "/Kanal anlegen..."
 
-#: app/menus.c:671
+#: app/menus.c:669
 msgid "/Raise Channel"
 msgstr "/Kanal erhöhen"
 
-#: app/menus.c:673
+#: app/menus.c:671
 msgid "/Lower Channel"
 msgstr "/Kanal absenken"
 
-#: app/menus.c:675
+#: app/menus.c:673
 msgid "/Duplicate Channel"
 msgstr "/Kanal duplizieren"
 
-#: app/menus.c:680
+#: app/menus.c:678
 msgid "/Channel to Selection"
 msgstr "/Auswahl aus Kanal"
 
-#: app/menus.c:682
+#: app/menus.c:680
 msgid "/Add to Selection"
 msgstr "/Zur Auswahl hinzufügen"
 
-#: app/menus.c:684
+#: app/menus.c:682
 msgid "/Subtract from Selection"
 msgstr "/Von Auswahl abziehen"
 
-#: app/menus.c:686
+#: app/menus.c:684
 msgid "/Intersect with Selection"
 msgstr "/Mit Auswahl schneiden"
 
-#: app/menus.c:691
+#: app/menus.c:689
 msgid "/Delete Channel"
 msgstr "/Kanal löschen"
 
-#: app/menus.c:696
+#: app/menus.c:694
 msgid "/Edit Channel Attributes..."
 msgstr "/Kanaleigenschaften..."
 
-#: app/menus.c:707
+#: app/menus.c:705
 msgid "/New Path"
 msgstr "/Pfad anlegen"
 
-#: app/menus.c:709
+#: app/menus.c:707
 msgid "/Duplicate Path"
 msgstr "/Pfad duplizieren"
 
-#: app/menus.c:711
+#: app/menus.c:709
 msgid "/Path to Selection"
 msgstr "/Pfad zur Auswahl"
 
-#: app/menus.c:713
+#: app/menus.c:711
 msgid "/Selection to Path"
 msgstr "/Pfad aus Auswahl"
 
-#: app/menus.c:715
+#: app/menus.c:713
 msgid "/Stroke Path"
 msgstr "/Pfad nachziehen"
 
-#: app/menus.c:717
+#: app/menus.c:715
 msgid "/Delete Path"
 msgstr "/Pfad löschen"
 
-#: app/menus.c:722
+#: app/menus.c:720
 msgid "/Copy Path"
 msgstr "/Pfad kopieren"
 
-#: app/menus.c:724
+#: app/menus.c:722
 msgid "/Paste Path"
 msgstr "/Pfad einfügen"
 
-#: app/menus.c:726
+#: app/menus.c:724
 msgid "/Import Path..."
 msgstr "/Pfad importieren..."
 
-#: app/menus.c:728
+#: app/menus.c:726
 msgid "/Export Path..."
 msgstr "/Pfad exportieren..."
 
-#: app/menus.c:733
+#: app/menus.c:731
 msgid "/Edit Path Attributes..."
 msgstr "/Pfadeigenschaften..."
 
-#: app/menus.c:1263
+#: app/menus.c:1284
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Kann Datei nicht öffnen: %s\n"
@@ -4077,36 +4150,45 @@ msgstr "Matrix:"
 msgid "Perspective..."
 msgstr "Perspektivisch..."
 
-#: app/plug_in.c:302
+#: app/plug_in.c:314
 msgid "Resource configuration"
 msgstr "Ressourcen Konfiguration"
 
-#: app/plug_in.c:309
+#: app/plug_in.c:321
 msgid "Plug-ins"
 msgstr "Plugins"
 
-#: app/plug_in.c:321
+#: app/plug_in.c:333
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "Frage Plugin: \"%s\" ab\n"
 
-#: app/plug_in.c:359
+#: app/plug_in.c:369
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "schreibe \"%s\"\n"
 
-#: app/plug_in.c:374
+#: app/plug_in.c:384
 msgid "Starting extensions: "
 msgstr "Starte Erweiterung: "
 
-#: app/plug_in.c:375
+#: app/plug_in.c:385
 msgid "Extensions"
 msgstr "Erweiterungen"
 
-#: app/plug_in.c:773
+#: app/plug_in.c:781
 #, c-format
 msgid "Unable to locate plug-in: \"%s\""
 msgstr "Kann Plugin \"%s\" nicht finden"
+
+#: app/plug_in.c:1439
+#, c-format
+msgid ""
+"Plug-In crashed: %s\n"
+"(%s)"
+msgstr ""
+"Plugin abgestürzt: %s\n"
+"(%s)"
 
 #: app/posterize.c:148
 msgid "Posterize does not operate on indexed drawables."
