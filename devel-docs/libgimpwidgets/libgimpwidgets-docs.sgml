@@ -15,6 +15,7 @@
 <!ENTITY GimpFileSelection SYSTEM "xml/gimpfileselection.xml">
 <!ENTITY GimpHelpUI SYSTEM "xml/gimphelpui.xml">
 <!ENTITY GimpMemsizeEntry SYSTEM "xml/gimpmemsizeentry.xml">
+<!ENTITY GimpOffsetArea SYSTEM "xml/gimpoffsetarea.xml">
 <!ENTITY GimpPathEditor SYSTEM "xml/gimppatheditor.xml">
 <!ENTITY GimpPickButton SYSTEM "xml/gimppickbutton.xml">
 <!ENTITY GimpPixmap SYSTEM "xml/gimppixmap.xml">
@@ -41,6 +42,7 @@
     &GimpColorScale;
     &GimpFileSelection;
     &GimpMemsizeEntry;
+    &GimpOffsetArea;
     &GimpPathEditor;
     &GimpPickButton;
     &GimpPixmap;
