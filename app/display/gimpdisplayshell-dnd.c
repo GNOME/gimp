@@ -151,7 +151,7 @@ gimp_display_shell_drop_vectors (GtkWidget    *widget,
 
 void
 gimp_display_shell_drop_svg (GtkWidget     *widget,
-                             const gchar   *svg_data,
+                             const guchar  *svg_data,
                              gsize          svg_data_len,
                              gpointer       data)
 {
@@ -164,7 +164,8 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
   if (gimage->gimp->busy)
     return;
 
-  if (! gimp_vectors_import_buffer (gimage, svg_data, svg_data_len,
+  if (! gimp_vectors_import_buffer (gimage,
+                                    (const gchar *) svg_data, svg_data_len,
                                     TRUE, TRUE, -1, &error))
     {
       g_message (error->message);

@@ -36,6 +36,8 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
 
+#include "gui/clipboard.h"
+
 #include "actions.h"
 #include "edit-actions.h"
 #include "edit-commands.h"
@@ -196,6 +198,7 @@ edit_actions_update (GimpActionGroup *group,
   gchar        *undo_name    = NULL;
   gchar        *redo_name    = NULL;
   gboolean      undo_enabled = FALSE;
+  gboolean      clipboard    = FALSE;
 
   gimage = action_data_get_image (data);
 
@@ -223,7 +226,10 @@ edit_actions_update (GimpActionGroup *group,
               g_strdup_printf (_("_Redo %s"),
                                gimp_object_get_name (GIMP_OBJECT (redo)));
         }
+
+      clipboard = clipboard_is_available (gimage->gimp);
     }
+
 
 #define SET_LABEL(action,label) \
         gimp_action_group_set_action_label (group, action, (label))
@@ -240,14 +246,14 @@ edit_actions_update (GimpActionGroup *group,
   g_free (undo_name);
   g_free (redo_name);
 
-  SET_SENSITIVE ("edit-cut",        drawable);
-  SET_SENSITIVE ("edit-copy",       drawable);
-  SET_SENSITIVE ("edit-paste",      gimage && group->gimp->global_buffer);
-  SET_SENSITIVE ("edit-paste-into", gimage && group->gimp->global_buffer);
+  SET_SENSITIVE ("edit-cut",          drawable);
+  SET_SENSITIVE ("edit-copy",         drawable);
+  SET_SENSITIVE ("edit-paste",        clipboard);
+  SET_SENSITIVE ("edit-paste-into",   clipboard);
 
-  SET_SENSITIVE ("edit-named-cut",   drawable);
-  SET_SENSITIVE ("edit-named-copy",  drawable);
-  SET_SENSITIVE ("edit-named-paste", drawable);
+  SET_SENSITIVE ("edit-named-cut",    drawable);
+  SET_SENSITIVE ("edit-named-copy",   drawable);
+  SET_SENSITIVE ("edit-named-paste",  drawable);
 
   SET_SENSITIVE ("edit-clear",        drawable);
   SET_SENSITIVE ("edit-fill-fg",      drawable);
@@ -265,11 +271,11 @@ static void
 edit_actions_buffer_changed (Gimp            *gimp,
                              GimpActionGroup *group)
 {
-  gboolean buf = (gimp->global_buffer != NULL);
+  gboolean  paste = clipboard_is_available (gimp);
 
-  gimp_action_group_set_action_sensitive (group, "edit-paste",        buf);
-  gimp_action_group_set_action_sensitive (group, "edit-paste-into",   buf);
-  gimp_action_group_set_action_sensitive (group, "edit-paste-as-new", buf);
+  gimp_action_group_set_action_sensitive (group, "edit-paste",        paste);
+  gimp_action_group_set_action_sensitive (group, "edit-paste-into",   paste);
+  gimp_action_group_set_action_sensitive (group, "edit-paste-as-new", paste);
 }
 
 static void

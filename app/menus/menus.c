@@ -50,20 +50,13 @@ static void   menu_can_change_accels (GimpGuiConfig *config);
 GimpMenuFactory *global_menu_factory = NULL;
 
 
-/*  private variables  */
-
-static gboolean menus_initialized = FALSE;
-
-
 /*  public functions  */
 
 void
 menus_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (menus_initialized == FALSE);
-
-  menus_initialized = TRUE;
+  g_return_if_fail (global_menu_factory == NULL);
 
   /* We need to make sure the property is installed before using it */
   g_type_class_ref (GTK_TYPE_MENU);
@@ -288,6 +281,9 @@ void
 menus_exit (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (global_menu_factory != NULL);
+  g_return_if_fail (global_menu_factory->gimp == gimp);
+
 
   g_object_unref (global_menu_factory);
   global_menu_factory = NULL;

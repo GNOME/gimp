@@ -7,6 +7,8 @@ dialogs_sources = \
 	about-dialog.h			\
 	brush-select.c			\
 	brush-select.h			\
+	clipboard.c			\
+	clipboard.h			\
 	color-notebook.c		\
 	color-notebook.h		\
 	convert-dialog.c		\

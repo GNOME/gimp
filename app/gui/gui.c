@@ -62,6 +62,7 @@
 
 #include "menus/menus.h"
 
+#include "clipboard.h"
 #include "color-history.h"
 #include "dialogs.h"
 #include "gui.h"
@@ -324,6 +325,7 @@ gui_restore_callback (Gimp               *gimp,
 
   actions_init (gimp);
   menus_init (gimp);
+  clipboard_init (gimp);
   render_init (gimp);
 
   dialogs_init (gimp);
@@ -453,6 +455,7 @@ gui_exit_after_callback (Gimp     *gimp,
   g_object_unref (image_ui_manager);
   image_ui_manager = NULL;
 
+  clipboard_exit (gimp);
   menus_exit (gimp);
   actions_exit (gimp);
   render_exit (gimp);

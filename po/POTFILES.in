@@ -135,6 +135,7 @@ app/file/file-utils.c
 
 app/gui/about-dialog.c
 app/gui/brush-select.c
+app/gui/clipboard.c
 app/gui/color-notebook.c
 app/gui/convert-dialog.c
 app/gui/dialogs-constructors.c

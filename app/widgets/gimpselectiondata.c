@@ -421,7 +421,9 @@ gimp_selection_data_set_pixbuf (GtkSelectionData *selection,
   g_return_if_fail (atom != GDK_NONE);
   g_return_if_fail (GDK_IS_PIXBUF (pixbuf));
 
-  if (gdk_pixbuf_save_to_buffer (pixbuf, &buffer, &buffer_size, "png", &error))
+  if (gdk_pixbuf_save_to_buffer (pixbuf,
+                                 &buffer, &buffer_size, "png",
+                                 &error, NULL))
     {
       gtk_selection_data_set (selection, atom,
                               8, (guchar *) buffer, buffer_size);
@@ -452,9 +454,11 @@ gimp_selection_data_get_pixbuf (GtkSelectionData *selection)
   loader = gdk_pixbuf_loader_new ();
 
   if (gdk_pixbuf_loader_write (loader,
-                               selection->data, selection->length, &error))
+                               selection->data, selection->length, &error) &&
+      gdk_pixbuf_loader_close (loader, &error))
     {
       pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
+      g_object_ref (pixbuf);
     }
   else
     {

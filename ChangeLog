@@ -1,3 +1,25 @@
+2004-07-02  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/Makefile.am
+	* app/gui/clipboard.[ch]: new files implementing a clipboard for
+	image data based on GDK_SELECTION_CLIPBOARD (bug #133247).
+
+	* app/actions/edit-actions.c
+	* app/actions/edit-commands.c: use the new clipboard API.
+
+	* app/gui/gui.c: initialize and shutdown the clipboard.
+
+	* app/core/gimpbuffer.c: cosmetics.
+
+	* app/actions/actions.c
+	* app/menus/menus.c: added sanity checks to exit functions.
+
+	* app/display/gimpdisplayshell-dnd.[ch]: let
+	gimp_display_shell_drop_svg() take a guchar * buffer.
+
+	* app/widgets/gimpselectiondata.c (gimp_selection_data_get_pixbuf):
+	fixed the implementation.
+
 2004-07-02  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/gimpressionist/Makefile.am

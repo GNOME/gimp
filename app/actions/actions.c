@@ -187,8 +187,6 @@ static GimpActionFactoryEntry action_groups[] =
     view_actions_update }
 };
 
-static gboolean actions_initialized = FALSE;
-
 
 /*  public functions  */
 
@@ -198,9 +196,7 @@ actions_init (Gimp *gimp)
   gint i;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (actions_initialized == FALSE);
-
-  actions_initialized = TRUE;
+  g_return_if_fail (global_action_factory == NULL);
 
   global_action_factory = gimp_action_factory_new (gimp);
 
@@ -215,6 +211,8 @@ void
 actions_exit (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (global_action_factory != NULL);
+  g_return_if_fail (global_action_factory->gimp == gimp);
 
   g_object_unref (global_action_factory);
   global_action_factory = NULL;

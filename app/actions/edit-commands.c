@@ -42,6 +42,7 @@
 #include "widgets/gimpdialogfactory.h"
 
 #include "gui/dialogs.h"
+#include "gui/clipboard.h"
 
 #include "actions.h"
 #include "edit-commands.h"
@@ -149,22 +150,24 @@ static void
 edit_paste (GimpDisplay *gdisp,
             gboolean     paste_into)
 {
-  if (gdisp->gimage->gimp->global_buffer)
-    {
-      GimpDisplayShell *shell;
-      gint              x, y, width, height;
+  GimpBuffer *buffer = clipboard_get_buffer (gdisp->gimage->gimp);
 
-      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  if (buffer)
+    {
+      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+      gint              x, y;
+      gint              width, height;
 
       gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
 
       if (gimp_edit_paste (gdisp->gimage,
                            gimp_image_active_drawable (gdisp->gimage),
-                           gdisp->gimage->gimp->global_buffer,
-                           paste_into, x, y, width, height))
+                           buffer, paste_into, x, y, width, height))
 	{
           gimp_image_flush (gdisp->gimage);
 	}
+
+      g_object_unref (buffer);
     }
 }
 
@@ -192,12 +195,18 @@ void
 edit_paste_as_new_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
-  Gimp *gimp;
+  Gimp       *gimp;
+  GimpBuffer *buffer;
   return_if_no_gimp (gimp, data);
 
-  if (gimp->global_buffer)
-    gimp_edit_paste_as_new (gimp, action_data_get_image (data),
-                            gimp->global_buffer);
+  buffer = clipboard_get_buffer (gimp);
+
+  if (buffer)
+    {
+      gimp_edit_paste_as_new (gimp, action_data_get_image (data), buffer);
+
+      g_object_unref (buffer);
+    }
 }
 
 void

@@ -219,7 +219,7 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
 			     gint          width,
 			     gint          height)
 {
-  GimpBuffer  *buffer;
+  GimpBuffer  *buffer = GIMP_BUFFER (viewable);
   TempBuf     *temp_buf;
   gint         buffer_width;
   gint         buffer_height;
@@ -227,7 +227,6 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
   PixelRegion  destPR;
   gint         bytes;
 
-  buffer        = GIMP_BUFFER (viewable);
   buffer_width  = tile_manager_width (buffer->tiles);
   buffer_height = tile_manager_height (buffer->tiles);
 
@@ -277,9 +276,7 @@ static gchar *
 gimp_buffer_get_description (GimpViewable  *viewable,
                              gchar        **tooltip)
 {
-  GimpBuffer *buffer;
-
-  buffer = GIMP_BUFFER (viewable);
+  GimpBuffer *buffer = GIMP_BUFFER (viewable);
 
   if (tooltip)
     *tooltip = NULL;
