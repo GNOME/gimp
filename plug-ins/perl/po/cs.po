@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.1.23\n"
-"POT-Creation-Date: 2000-05-30 09:35+0200\n"
-"PO-Revision-Date: 2000-05-30 09:42+02:00\n"
+"POT-Creation-Date: 1999-09-12 17:58+0200\n"
+"PO-Revision-Date: 2000-06-13 12:06+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,9 +24,6 @@ msgstr "<Image>/Filtry/Logulátor/Základní I"
 
 msgid "FATAL: unable to create $tmp: $!\n"
 msgstr "FATÁLNÍ: nepodaøilo se vytvoøit$tmp: $!\n"
-
-msgid "<Image>/Filters/Animation/Seth Spin..."
-msgstr "<Image>/Filtry/Animace/Sethovo toèení..."
 
 msgid ""
 "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
@@ -139,6 +136,9 @@ msgstr "Pozadí"
 
 msgid "<Toolbox>/Xtns/Render/Bricks..."
 msgstr "<Toolbox>/Roz¹./Vyobrazení/Cihly..."
+
+msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
+msgstr "<Toolbox>/Roz¹./Animace/Sethovo víøení..."
 
 msgid "illegal type for colour specification"
 msgstr "neplatný typ pro barevnou specifikaci"
