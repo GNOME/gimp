@@ -1,3 +1,16 @@
+Sat Oct 10 00:48:30 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/temp_buf.c: applied gimp-entity-980929-1, adds
+	write error handling
+
+	* app/gimprc.c
+	* app/install.c
+	* app/tips_dialog.c: allow use of GIMP_DATADIR to override
+	compiled in default
+
+	* HACKING
+	* autogen.sh: we need libtool 1.2b now
+
 Fri Oct  9 18:52:52 BST 1998  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/gif/gif.c: Added support for persistant GIF

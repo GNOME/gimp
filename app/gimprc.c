@@ -324,6 +324,7 @@ parse_gimprc ()
 {
   char libfilename[512];
   char filename[512];
+  char *gimp_data_dir;
   char *gimp_dir;
 
   parse_info.buffer = g_new (char, 4096);
@@ -334,7 +335,11 @@ parse_gimprc ()
   gimp_dir = gimp_directory ();
   add_gimp_directory_token (gimp_dir);
 
-  sprintf (libfilename, "%s/gimprc", DATADIR);
+  if ((gimp_data_dir = getenv ("GIMP_DATADIR")) != NULL)
+    sprintf (libfilename, "%s/gimprc", gimp_data_dir);
+  else
+    sprintf (libfilename, "%s/gimprc", DATADIR);
+
   app_init_update_status("Resource configuration", libfilename, -1);
   if (alternate_system_gimprc != NULL) 
     {
