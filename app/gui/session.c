@@ -22,11 +22,16 @@
    I include a short description here on what is done and what problems 
    are left.
 
+   Since everything saved in sessionrc changes often (with each session?) 
+   the whole file is rewritten each time the gimp exits. I don't see any
+   use in implementing a more flexible scheme like it is used for gimprc.
+
    Right now session-managment is limited to window geometry. I plan to add 
    at least the saving of Last-Used-Images (using nuke's patch).
 
    There is a problem with the offset introduced by the window-manager adding
    decorations to the windows. This is annoying and should be fixed somehow.
+   ( Update: I was promised that this will be fixed in gtk. )
    
    Still not sure how to implement stuff for opening windows on start-up.
    Probably the best thing to do, would be to have a list of dialogs in
@@ -108,7 +113,11 @@ save_sessionrc (void)
       fprintf(fp, "# you quit the gimp. If this file isn't found, defaults\n");
       fprintf(fp, "# are used.\n\n");
 
+      /* save window geometries */
       g_list_foreach (session_geometry_updates, (GFunc)sessionrc_write_geometry, fp);
+
+      /* save last tip shown */
+      fprintf(fp, "(last-tip-shown %d)\n\n", last_tip + 1);
 
       fclose (fp);
     }

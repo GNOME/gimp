@@ -149,16 +149,15 @@ tips_dialog_hide (GtkWidget *widget,
 
   gtk_widget_hide (tips_dialog);
 
-  update = g_list_append (update, "last-tip-shown"); /* always save this */
+  /* the last-shown-tip is now saved in sessionrc */
+
   if (show_tips != old_show_tips)
     {
       update = g_list_append (update, "show-tips");
       remove = g_list_append (remove, "dont-show-tips");
       old_show_tips = show_tips;
+      save_gimprc (&update, &remove);
     }
-  last_tip++;
-  save_gimprc (&update, &remove);
-  last_tip--;
   g_list_free (update);
   g_list_free (remove);
 

@@ -201,6 +201,8 @@ static ParseFunc funcs[] =
   { "default-threshold",     TT_INT,        &default_threshold, NULL },
   { "stingy-memory-use",     TT_BOOLEAN,    &stingy_memory_use, NULL },
   { "allow-resize-windows",  TT_BOOLEAN,    &allow_resize_windows, NULL },
+  { "dont-allow-resize-windows",  
+                             TT_BOOLEAN,    NULL, &allow_resize_windows },
   { "cursor-updating",       TT_BOOLEAN,    NULL, &no_cursor_updating },
   { "no-cursor-updating",    TT_BOOLEAN,    &no_cursor_updating, NULL },
   { "preview-size",          TT_XPREVSIZE,  NULL, NULL },

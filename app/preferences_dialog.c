@@ -269,7 +269,10 @@ file_prefs_save_callback (GtkWidget *widget,
   if (marching_speed != old_marching_speed)
     update = g_list_append (update, "marching-ants-speed");
   if (allow_resize_windows != old_allow_resize_windows)
-    update = g_list_append (update, "allow-resize-windows");
+    {
+      update = g_list_append (update, "allow-resize-windows");
+      remove = g_list_append (remove, "dont-allow-resize-windows");
+    }
   if (auto_save != old_auto_save)
     {
       update = g_list_append (update, "auto-save");
@@ -288,9 +291,15 @@ file_prefs_save_callback (GtkWidget *widget,
   if (cubic_interpolation != old_cubic_interpolation)
     update = g_list_append (update, "cubic-interpolation");
   if (confirm_on_close != old_confirm_on_close)
-    update = g_list_append (update, "confirm-on-close");
+    {
+      update = g_list_append (update, "confirm-on-close");
+      remove = g_list_append (remove, "dont-confirm-on-close");
+    }
   if (save_window_positions_on_exit != old_save_window_positions_on_exit)
-    update = g_list_append (update, "save-window-positions-on-exit");
+    {
+      update = g_list_append (update, "save-window-positions-on-exit");
+      remove = g_list_append (remove, "dont-save-window-positions-on-exit");
+    }
   if (default_width != old_default_width ||
       default_height != old_default_height)
     update = g_list_append (update, "default-image-size");
