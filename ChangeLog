@@ -1,3 +1,9 @@
+2005-01-13  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/bmp/bmp.h
+	* plug-ins/bmp/bmpread.c: handle negative height values
+	as per spec, fixes bug #158033
+	
 2005-01-13  Michael Natterer  <mitch@gimp.org>
 
 	Allow to easily open brushes and patterns as images.

@@ -46,7 +46,7 @@ extern struct Bitmap_File_Head_Struct
 extern struct Bitmap_Head_Struct
 {
   gulong   biWidth;     /* 12 */
-  gulong   biHeight;    /* 16 */
+  glong    biHeight;    /* 16 */
   gushort  biPlanes;    /* 1A */
   gushort  biBitCnt;    /* 1C */
   gulong   biCompr;     /* 1E */

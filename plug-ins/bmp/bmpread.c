@@ -103,7 +103,7 @@ ReadChannelMasks (FILE *fd, Bitmap_Channel *masks, guint channels)
   guint32 tmp[3];
   guint32 mask;
   gint   i, nbits, offset, bit;
-  
+
   if (!ReadOK (fd, tmp, 3 * sizeof (guint32)))
     return FALSE;
 
@@ -167,8 +167,8 @@ ReadBMP (const gchar *name)
      !strncmp (magick,"PI",2) || !strncmp (magick,"CI",2)   ||
      !strncmp (magick,"CP",2)))
     {
-      g_message (_("'%s' is not a valid BMP file"),
-                 gimp_filename_to_utf8 (filename));
+      g_message (_("'%s' is not a valid BMP file 0, magick = %c%c"),
+                 gimp_filename_to_utf8 (filename), magick[0], magick[1]);
       return -1;
     }
 
@@ -176,13 +176,13 @@ ReadBMP (const gchar *name)
     {
       if (!ReadOK (fd, buffer, 12))
 	{
-          g_message (_("'%s' is not a valid BMP file"),
+          g_message (_("'%s' is not a valid BMP file 1"),
                       gimp_filename_to_utf8 (filename));
           return -1;
         }
       if (!ReadOK (fd, magick, 2))
 	{
-          g_message (_("'%s' is not a valid BMP file"),
+          g_message (_("'%s' is not a valid BMP file 2"),
                       gimp_filename_to_utf8 (filename));
           return -1;
         }
@@ -190,7 +190,7 @@ ReadBMP (const gchar *name)
 
   if (!ReadOK (fd, buffer, 12))
     {
-      g_message (_("'%s' is not a valid BMP file"),
+      g_message (_("'%s' is not a valid BMP file 3"),
                   gimp_filename_to_utf8 (filename));
       return -1;
     }
@@ -338,7 +338,7 @@ ReadBMP (const gchar *name)
       masks = g_new (Bitmap_Channel, 3);
       if (! ReadChannelMasks (fd, masks, 3))
         {
-          g_message (_("'%s' is not a valid BMP file"),
+          g_message (_("'%s' is not a valid BMP file 4"),
                       gimp_filename_to_utf8 (filename));
           return -1;
         }
@@ -374,7 +374,7 @@ ReadBMP (const gchar *name)
   /* Get the Image and return the ID or -1 on error*/
   image_ID = ReadImage (fd,
 			Bitmap_Head.biWidth,
-			Bitmap_Head.biHeight,
+			ABS (Bitmap_Head.biHeight),
 			ColorMap,
 			Bitmap_Head.biClrUsed,
 			Bitmap_Head.biBitCnt,
@@ -399,6 +399,9 @@ ReadBMP (const gchar *name)
 
       gimp_image_set_resolution (image_ID, xresolution, yresolution);
     }
+
+  if (Bitmap_Head.biHeight < 0)
+    gimp_image_flip (image_ID, GIMP_ORIENTATION_VERTICAL);
 
   return image_ID;
 }
