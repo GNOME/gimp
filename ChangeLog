@@ -1,3 +1,16 @@
+2001-04-28  David Neary  <dneary@eircom.net>
+
+	* app/tools/transform_options.[ch]: Separated the transform
+	options stuff from the gimptransformtool files so that each of the
+	transform tools to make is available to the other transform tools.
+
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/Makefile.am: Changed accordingly
+	
 2001-04-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/appenums.h: added RunModeType.
