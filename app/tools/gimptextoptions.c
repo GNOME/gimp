@@ -28,11 +28,14 @@
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-params.h"
 
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimptoolinfo.h"
 
 #include "text/gimptext.h"
 
 #include "widgets/gimpcolorpanel.h"
+#include "widgets/gimpcontainerpopup.h"
 #include "widgets/gimpfontselection.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptexteditor.h"
@@ -50,13 +53,16 @@ enum
 };
 
 
-static void  gimp_text_options_init         (GimpTextOptions      *options);
-static void  gimp_text_options_class_init   (GimpTextOptionsClass *options_class);
+static void  gimp_text_options_init       (GimpTextOptions      *options);
+static void  gimp_text_options_class_init (GimpTextOptionsClass *options_class);
 
-static void  gimp_text_options_get_property (GObject         *object,
-                                             guint            property_id,
-                                             GValue          *value,
-                                             GParamSpec      *pspec);
+static void  gimp_text_options_get_property (GObject     *object,
+                                             guint        property_id,
+                                             GValue      *value,
+                                             GParamSpec  *pspec);
+
+static void  gimp_text_options_font_clicked (GtkWidget   *widget, 
+                                             GimpContext *context);
 
 
 static GimpToolOptionsClass *parent_class = NULL;
@@ -147,6 +153,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkWidget       *vbox;
   GtkWidget       *table;
   GtkWidget       *button;
+  GtkWidget       *preview;
   GtkWidget       *menu;
   GtkWidget       *font_selection;
   GtkWidget       *box;
@@ -158,21 +165,34 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   vbox = gimp_tool_options_gui (tool_options);
 
-  table = gtk_table_new (6, 3, FALSE);
+  table = gtk_table_new (7, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  font_selection = gimp_prop_font_selection_new (config, "font");
+  button = gtk_button_new ();
+  preview = gimp_prop_preview_new (G_OBJECT (options), "font", 24);
+  gtk_container_add (GTK_CONTAINER (button), preview);
+  gtk_widget_show (preview);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Font:"), 1.0, 0.5,
+                             button, 2, TRUE);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (gimp_text_options_font_clicked),
+                    options);
+
+  font_selection = gimp_prop_font_selection_new (config, "font");
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("_Font:"), 1.0, 0.5,
                              font_selection, 2, FALSE);
 
   digits = gimp_unit_get_digits (options->text->font_size_unit);
   spinbutton = gimp_prop_spin_button_new (config, "font-size",
 					  1.0, 10.0, digits); 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("_Size:"), 1.0, 0.5,
                              spinbutton, 1, FALSE);
 
@@ -187,7 +207,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 				       -1, 24, GIMP_COLOR_AREA_FLAT);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 GIMP_CONTEXT (options));
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                              _("Color:"), 1.0, 0.5,
 			     button, 1, FALSE);
 
@@ -209,4 +229,15 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 			   spinbutton, 1, GIMP_STOCK_LINE_SPACING);
 
   return vbox;
+}
+
+static void
+gimp_text_options_font_clicked (GtkWidget   *widget, 
+                                GimpContext *context)
+{
+  GtkWidget *popup;
+
+  popup = gimp_container_popup_new (context->gimp->fonts, context);
+
+  gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), widget);
 }

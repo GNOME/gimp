@@ -1,3 +1,9 @@
+2003-03-26  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptextoptions.c (gimp_text_options_gui): added a
+	gimp_prop_preview on the font property. Doesn't do anything yet
+	but has a nice popup...
+
 2003-03-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/text/gimpfont.c: a nicer popup preview featuring five
