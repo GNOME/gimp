@@ -72,30 +72,6 @@ void     gimp_path_tool_register        (void);
 
 GtkType  gimp_path_tool_get_type        (void);
 
-void     gimp_path_tool_button_press    (GimpTool *, GdkEventButton *, GDisplay *);
-void     gimp_path_tool_button_release  (GimpTool *, GdkEventButton *, GDisplay *);
-void     gimp_path_tool_motion          (GimpTool *, GdkEventMotion *, GDisplay *);
-void     gimp_path_tool_cursor_update   (GimpTool *, GdkEventMotion *, GDisplay *);
-void     gimp_path_tool_control         (GimpTool *, ToolAction,       GDisplay *);
-void     gimp_path_tool_draw            (GimpDrawTool *);
-void     gimp_path_tool_draw_curve      (GimpPathTool *, PathCurve *);
-void     gimp_path_tool_draw_segment    (GimpPathTool *, PathSegment *);
-
-gdouble  gimp_path_tool_on_curve        (GimpPathTool *, gint, gint, gint,
-                                         NPath**, PathCurve**, PathSegment**);
-gboolean gimp_path_tool_on_anchors      (GimpPathTool *, gint, gint, gint,
-                                         NPath**, PathCurve**, PathSegment**);
-gint     gimp_path_tool_on_handles      (GimpPathTool *, gint, gint, gint,
-                                         NPath **, PathCurve **, PathSegment **);
-
-gint gimp_path_tool_button_press_canvas (GimpPathTool *, GdkEventButton *, GDisplay *);
-gint gimp_path_tool_button_press_anchor (GimpPathTool *, GdkEventButton *, GDisplay *);
-gint gimp_path_tool_button_press_handle (GimpPathTool *, GdkEventButton *, GDisplay *);
-gint gimp_path_tool_button_press_curve  (GimpPathTool *, GdkEventButton *, GDisplay *);
-void gimp_path_tool_motion_anchor       (GimpPathTool *, GdkEventMotion *, GDisplay *);
-void gimp_path_tool_motion_handle       (GimpPathTool *, GdkEventMotion *, GDisplay *);
-void gimp_path_tool_motion_curve        (GimpPathTool *, GdkEventMotion *, GDisplay *);
-
 
 
 #endif  /*  __GIMP_PATH_TOOL_H__  */

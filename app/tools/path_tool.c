@@ -139,6 +139,11 @@ void path_to_selection             (GimpPathTool *,
 
 /* Functions necessary for the tool */
 
+gboolean path_tool_on_anchors      (NPath *, gdouble, gdouble, gint,
+				    NPath**, PathCurve**, PathSegment**);
+gint     path_tool_on_handles      (NPath *, gdouble, gdouble, gint,
+		                    NPath **, PathCurve **, PathSegment **);
+
 #if 0
 void     path_tool_button_press    (Tool *, GdkEventButton *, gpointer);
 void     path_tool_button_release  (Tool *, GdkEventButton *, gpointer);
@@ -151,10 +156,6 @@ void     path_tool_draw_segment    (Tool *, PathSegment *);
 
 gdouble  path_tool_on_curve        (Tool *, gint, gint, gint,
 				    NPath**, PathCurve**, PathSegment**);
-gboolean path_tool_on_anchors      (Tool *, gint, gint, gint,
-				    NPath**, PathCurve**, PathSegment**);
-gint     path_tool_on_handles      (Tool *, gint, gint, gint,
-		                    NPath **, PathCurve **, PathSegment **);
 
 gint path_tool_button_press_canvas (Tool *, GdkEventButton *, GDisplay *);
 gint path_tool_button_press_anchor (Tool *, GdkEventButton *, GDisplay *);

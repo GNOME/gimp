@@ -56,17 +56,42 @@ static void   gimp_path_tool_control         (GimpTool       *tool,
 static void   gimp_path_tool_button_press    (GimpTool       *tool,
                                               GdkEventButton *bevent,
                                               GDisplay       *gdisp);
+static gint   gimp_path_tool_button_press_canvas (GimpPathTool *tool,
+						  GdkEventButton *bevent,
+						  GDisplay *gdisp);
+static gint   gimp_path_tool_button_press_anchor (GimpPathTool *tool,
+						  GdkEventButton *bevent,
+						  GDisplay *gdisp);
+static gint   gimp_path_tool_button_press_handle (GimpPathTool *tool,
+						  GdkEventButton *bevent,
+						  GDisplay *gdisp);
+static gint   gimp_path_tool_button_press_curve  (GimpPathTool *tool,
+						  GdkEventButton *bevent,
+						  GDisplay *gdisp);
+
 static void   gimp_path_tool_button_release  (GimpTool       *tool,
                                               GdkEventButton *bevent,
                                               GDisplay       *gdisp);
+
 static void   gimp_path_tool_motion          (GimpTool       *tool,
                                               GdkEventMotion *mevent,
                                               GDisplay       *gdisp);
+static void   gimp_path_tool_motion_anchor   (GimpPathTool *path_tool,
+					      GdkEventMotion *mevent,
+					      GDisplay *gdisp);
+static void   gimp_path_tool_motion_handle   (GimpPathTool *path_tool,
+					      GdkEventMotion *mevent,
+					      GDisplay *gdisp);
+static void   gimp_path_tool_motion_curve    (GimpPathTool *path_tool,
+					      GdkEventMotion *mevent,
+					      GDisplay *gdisp);
+
 static void   gimp_path_tool_cursor_update   (GimpTool       *tool,
                                               GdkEventMotion *mevent,
                                               GDisplay       *gdisp);
 
 static void   gimp_path_tool_draw            (GimpDrawTool   *draw_tool);
+
 
 
 
@@ -194,10 +219,10 @@ gimp_path_tool_destroy (GtkObject *object)
   fprintf (stderr, "gimp_path_tool_free start\n");
 #endif PATH_TOOL_DEBUG
 
+  path_free_path (path_tool->cur_path);
+
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
-
-  path_free_path (path_tool->cur_path);
 }
 
 static void
@@ -310,7 +335,7 @@ gimp_path_tool_button_press (GimpTool       *tool,
 
 }
 
-gint
+static gint
 gimp_path_tool_button_press_anchor (GimpPathTool *path_tool,
                                GdkEventButton *bevent,
                                GDisplay *gdisp)
@@ -434,7 +459,7 @@ gimp_path_tool_button_press_anchor (GimpPathTool *path_tool,
 }
 
 
-gint
+static gint
 gimp_path_tool_button_press_handle (GimpPathTool *path_tool,
 				    GdkEventButton *bevent,
 				    GDisplay *gdisp)
@@ -475,7 +500,7 @@ gimp_path_tool_button_press_handle (GimpPathTool *path_tool,
    return grab_pointer;
 }
 
-gint
+static gint
 gimp_path_tool_button_press_canvas (GimpPathTool *path_tool,
 				    GdkEventButton *bevent,
 				    GDisplay *gdisp)
@@ -530,7 +555,7 @@ gimp_path_tool_button_press_canvas (GimpPathTool *path_tool,
    return 0;
 }
 
-gint
+static gint
 gimp_path_tool_button_press_curve (GimpPathTool *path_tool,
 				   GdkEventButton *bevent,
 				   GDisplay *gdisp)
@@ -618,7 +643,7 @@ gimp_path_tool_motion (GimpTool       *tool,
 
 
 
-void
+static void
 gimp_path_tool_motion_anchor (GimpPathTool  *path_tool,
 			      GdkEventMotion *mevent,
 			      GDisplay       *gdisp)
@@ -684,7 +709,7 @@ gimp_path_tool_motion_anchor (GimpPathTool  *path_tool,
 
 }
 
-void
+static void
 gimp_path_tool_motion_handle (GimpPathTool   *path_tool,
 			      GdkEventMotion *mevent,
 			      GDisplay       *gdisp)
@@ -730,7 +755,7 @@ gimp_path_tool_motion_handle (GimpPathTool   *path_tool,
 }
    
 
-void
+static void
 gimp_path_tool_motion_curve (GimpPathTool   *path_tool,
 			     GdkEventMotion *mevent,
 			     GDisplay       *gdisp)

@@ -96,6 +96,23 @@ void          path_set_flags       (GimpPathTool *,
 				    guint32,
 				    guint32);
 
+gdouble  gimp_path_tool_on_curve   (GimpPathTool *, gint, gint, gint,
+		                    NPath**, PathCurve**, PathSegment**);
+gboolean gimp_path_tool_on_anchors (GimpPathTool *, gint, gint, gint,
+		                    NPath**, PathCurve**, PathSegment**);
+gint     gimp_path_tool_on_handles (GimpPathTool *, gint, gint, gint,
+		                    NPath **, PathCurve **, PathSegment **);
+
+gint     path_tool_cursor_position (NPath *path,
+                                    gdouble x,
+                                    gdouble y,
+                                    gint halfwidth,
+                                    NPath **pathP,
+                                    PathCurve **curveP,
+                                    PathSegment **segmentP,
+                                    gdouble *positionP,
+                                    gint *handle_idP);
+
 /* High level image-manipulation functions */
 
 void path_stroke                   (GimpPathTool *,

@@ -1,5 +1,12 @@
 2001-04-11  Simon Budig  <simon@gimp.org>
 
+	* app/tools/gimppathtool.[ch]
+	* app/tools/path_tool.[ch]
+
+	Some tweaks to make gcc and mitch more happy.
+
+2001-04-11  Simon Budig  <simon@gimp.org>
+
 	* app/path_curves.[ch]
 	* app/tools/gimpdrawtool.c
 	* app/tools/gimppathtool.[ch]
