@@ -22,6 +22,19 @@
 #include "sysmodule.h"
 #include "structmember.h"
 #include <libgimp/gimp.h>
+
+/* maximum bits per pixel ... */
+#define MAX_BPP 4
+
+/* part of Hans Breuer's pygimp on win32 patch */
+#if defined(_MSC_VER)
+/* reduce strict checking in glibconfig.h */
+# pragma warning(default:4047)
+# undef PyObject_HEAD_INIT
+# define PyObject_HEAD_INIT(a) \
+  1, NULL, /* must be set in init function */
+#endif
+
 static PyObject *ErrorObject;
 
 #ifndef GIMP_CHECK_VERSION
@@ -356,9 +369,9 @@ GParam_to_tuple(int nparams, GParam *params) {
 	    n = PyInt_AsLong(tmp);
 	    tmp = PyTuple_New(n);
 	    for (j = 0; j < n; j++)
-		PyTuple_SetItem(tmp,j,
-				PyString_FromString(
-						    params[i].data.d_stringarray[j]));
+		PyTuple_SetItem(tmp,j, params[i].data.d_stringarray[j] ?
+			PyString_FromString(params[i].data.d_stringarray[j]) :
+			PyString_FromString(""));
 	    PyTuple_SetItem(args, i, tmp);
 	    break;
 	case PARAM_COLOR:
@@ -1461,12 +1474,12 @@ img_parasite_find(self, args)
 }
 
 static PyObject *
-img_attach_parasite(self, args)
+img_parasite_attach(self, args)
      imgobject *self;
      PyObject *args;
 {
     paraobject *parasite;
-    if (!PyArg_ParseTuple(args, "O!:attach_parasite", &Paratype, &parasite))
+    if (!PyArg_ParseTuple(args, "O!:parasite_attach", &Paratype, &parasite))
 	return NULL;
     gimp_image_parasite_attach(self->ID, parasite->para);
     Py_INCREF(Py_None);
@@ -1489,12 +1502,12 @@ img_attach_new_parasite(self, args)
 }
 
 static PyObject *
-img_detach_parasite(self, args)
+img_parasite_detach(self, args)
      imgobject *self;
      PyObject *args;
 {
     char *name;
-    if (!PyArg_ParseTuple(args, "s:detach_parasite", &name))
+    if (!PyArg_ParseTuple(args, "s:parasite_detach", &name))
 	return NULL;
     gimp_image_parasite_detach(self->ID, name);
     Py_INCREF(Py_None);
@@ -1631,9 +1644,9 @@ static struct PyMethodDef img_methods[] = {
     {"set_component_visible",	(PyCFunction)img_set_component_visible,	METH_VARARGS},
 #ifdef GIMP_HAVE_PARASITES
     {"parasite_find",       (PyCFunction)img_parasite_find,      METH_VARARGS},
-    {"attach_parasite",     (PyCFunction)img_attach_parasite,    METH_VARARGS},
+    {"parasite_attach",     (PyCFunction)img_parasite_attach,    METH_VARARGS},
     {"attach_new_parasite", (PyCFunction)img_attach_new_parasite,METH_VARARGS},
-    {"detach_parasite",     (PyCFunction)img_detach_parasite,    METH_VARARGS},
+    {"parasite_detach",     (PyCFunction)img_parasite_detach,    METH_VARARGS},
 #endif
 #if GIMP_CHECK_VERSION(1,1,0)
     {"get_layer_by_tattoo",(PyCFunction)img_get_layer_by_tattoo,METH_VARARGS},
@@ -1971,7 +1984,8 @@ static PyTypeObject Disptype = {
 /* -------------------------------------------------------- */
 
 
-static ensure_drawable(self)
+static void
+ensure_drawable(self)
      drwobject *self;
 {
     if (!self->drawable)
@@ -2091,12 +2105,12 @@ drw_parasite_find(self, args)
 }
 
 static PyObject *
-drw_attach_parasite(self, args)
+drw_parasite_attach(self, args)
      drwobject *self;
      PyObject *args;
 {
     paraobject *parasite;
-    if (!PyArg_ParseTuple(args, "O!:attach_parasite", &Paratype, &parasite))
+    if (!PyArg_ParseTuple(args, "O!:parasite_attach", &Paratype, &parasite))
 	return NULL;
     gimp_drawable_parasite_attach(self->ID, parasite->para);
     Py_INCREF(Py_None);
@@ -2119,7 +2133,7 @@ drw_attach_new_parasite(self, args)
 }
 
 static PyObject *
-drw_detach_parasite(self, args)
+drw_parasite_detach(self, args)
      drwobject *self;
      PyObject *args;
 {
@@ -2142,10 +2156,10 @@ drw_detach_parasite(self, args)
     {"get_tile",	(PyCFunction)drw_get_tile,	METH_VARARGS}, \
     {"get_tile2",	(PyCFunction)drw_get_tile2,	METH_VARARGS}, \
     {"get_pixel_rgn", (PyCFunction)drw_get_pixel_rgn, METH_VARARGS}, \
-    {"parasite_find",       (PyCFunction)img_parasite_find, METH_VARARGS}, \
-    {"attach_parasite",     (PyCFunction)img_attach_parasite, METH_VARARGS},\
-    {"attach_new_parasite",(PyCFunction)img_attach_new_parasite,METH_VARARGS},\
-    {"detach_parasite",     (PyCFunction)img_detach_parasite, METH_VARARGS}
+    {"parasite_find",       (PyCFunction)drw_parasite_find, METH_VARARGS}, \
+    {"parasite_attach",     (PyCFunction)drw_parasite_attach, METH_VARARGS},\
+    {"attach_new_parasite",(PyCFunction)drw_attach_new_parasite,METH_VARARGS},\
+    {"parasite_detach",     (PyCFunction)drw_parasite_detach, METH_VARARGS}
 #else
 #define drw_methods() \
     {"flush",	(PyCFunction)drw_flush,	METH_VARARGS}, \
@@ -2370,11 +2384,11 @@ lay_getattr(self, name)
     gint32 id;
 	
     if (!strcmp(name, "__members__"))
-	return Py_BuildValue("[sssssssssssssssssss]", "ID", "apply_mask",
+	return Py_BuildValue("[ssssssssssssssssssss]", "ID", "apply_mask",
 			     "bpp", "edit_mask", "has_alpha", "height",
 			     "image", "is_color", "is_colour",
 			     "is_floating_selection", "is_gray", "is_grey",
-			     "is_indexed", "mask", "mask_bounds",
+			     "is_indexed", "is_rgb", "mask", "mask_bounds",
 			     "mode", "name", "offsets", "opacity",
 			     "preserve_transparency", "show_mask", "type",
 			     "visible", "width");
@@ -2394,7 +2408,8 @@ lay_getattr(self, name)
 	}
 	return (PyObject *)newimgobject(id);
     }
-    if (!strcmp(name, "is_color") || !strcmp(name, "is_colour"))
+    if (!strcmp(name, "is_color") || !strcmp(name, "is_colour") ||
+	!strcmp(name, "is_rgb"))
 	return PyInt_FromLong(gimp_drawable_is_rgb(self->ID));
     if (!strcmp(name, "is_floating_selection"))
 	return PyInt_FromLong(
@@ -2532,9 +2547,9 @@ lay_setattr(self, name, v)
 	!strcmp(name, "is_floating_selection") ||
 	!strcmp(name, "offsets") || !strcmp(name, "mask_bounds") ||
 	!strcmp(name, "has_alpha") || !strcmp(name, "is_color") ||
-	!strcmp(name, "is_colour") || !strcmp(name, "is_gray") ||
-	!strcmp(name, "is_grey") || !strcmp(name, "is_indexed") ||
-	!strcmp(name, "__members__")) {
+	!strcmp(name, "is_colour") || !strcmp(name, "is_rgb") ||
+	!strcmp(name, "is_gray") || !strcmp(name, "is_grey") ||
+	!strcmp(name, "is_indexed") || !strcmp(name, "__members__")) {
 	PyErr_SetString(PyExc_TypeError, "read-only attribute.");
 	return -1;
     }
@@ -2666,13 +2681,13 @@ chn_getattr(self, name)
     gint32 id;
 	
     if (!strcmp(name, "__members__"))
-	return Py_BuildValue("[ssssssssssssssssssssss]", "ID", "bpp", "color",
-			     "colour", "has_alpha", "height", "image", 
-			     "is_color", "is_colour", "is_gray", "is_grey",
-			     "is_indexed", "layer",
-			     "layer_mask", "mask_bounds", "name", "offsets",
-			     "opacity", "show_masked", "type", "visible",
-			     "width");
+	return Py_BuildValue("[ssssssssssssssssssssssss]", "ID",
+			     "bpp", "color", "colour", "has_alpha", "height",
+			     "image", "is_color", "is_colour", "is_gray",
+			     "is_grey", "is_indexed", "is_layer_mask",
+			     "is_rgb", "layer", "layer_mask", "mask_bounds",
+			     "name", "offsets", "opacity", "show_masked",
+			     "type", "visible", "width");
     if (!strcmp(name, "ID"))
 	return PyInt_FromLong(self->ID);
     if (!strcmp(name, "bpp"))
@@ -2693,7 +2708,8 @@ chn_getattr(self, name)
 	}
 	return (PyObject *)newimgobject(id);
     }
-    if (!strcmp(name, "is_color") || !strcmp(name, "is_colour"))
+    if (!strcmp(name, "is_color") || !strcmp(name, "is_colour") ||
+	!strcmp(name, "is_rgb"))
 	return PyInt_FromLong(gimp_drawable_is_rgb(self->ID));
     if (!strcmp(name, "is_gray") || !strcmp(name, "is_grey"))
 	return PyInt_FromLong(gimp_drawable_is_gray(self->ID));
@@ -2707,7 +2723,7 @@ chn_getattr(self, name)
 	}
 	return (PyObject *)newlayobject(id);
     }
-    if (!strcmp(name, "layer_mask"))
+    if (!strcmp(name, "layer_mask") || !strcmp(name, "is_layer_mask"))
 	return PyInt_FromLong(gimp_drawable_is_layer_mask(self->ID));
     if (!strcmp(name, "mask_bounds")) {
 	gint x1, y1, x2, y2;
@@ -2801,8 +2817,9 @@ chn_setattr(self, name, v)
 	!strcmp(name, "layer_mask") || !strcmp(name, "mask_bounds") ||
 	!strcmp(name, "offsets") || !strcmp(name, "type") ||
 	!strcmp(name, "has_alpha") || !strcmp(name, "is_color") ||
-	!strcmp(name, "is_colour") || !strcmp(name, "is_gray") ||
-	!strcmp(name, "is_grey") || !strcmp(name, "is_indexed") ||
+	!strcmp(name, "is_colour") || !strcmp(name, "is_rgb") ||
+	!strcmp(name, "is_gray") || !strcmp(name, "is_grey") ||
+	!strcmp(name, "is_indexed") || !strcmp(name, "is_layer_mask") ||
 	!strcmp(name, "__members__")) {
 	PyErr_SetString(PyExc_TypeError, "read-only attribute.");
 	return -1;
@@ -3166,7 +3183,7 @@ pr_subscript(self, key)
 	    return NULL;
 	}
 	if (PyInt_Check(y)) {
-	    char buf[bpp];
+	    char buf[MAX_BPP];
 			
 	    y1 = PyInt_AsLong(y);
 	    if (pr->y > y1 || y1 >= pr->y + pr->h) {
@@ -3185,12 +3202,14 @@ pr_subscript(self, key)
 				"invalid y slice");
 		return NULL;
 	    } else {
-		char buf[bpp * (y2 - y1)];
+		gchar *buf = g_new(gchar, bpp * (y2 - y1));
+		PyObject *ret;
 				
 		if (y1 == 0) y1 = pr->y;
 		gimp_pixel_rgn_get_col(pr, buf, x1, y1, y2-y1);
-		return PyString_FromStringAndSize(buf,
-						  bpp * (y2 - y1));
+		ret = PyString_FromStringAndSize(buf, bpp * (y2 - y1));
+		g_free(buf);
+		return ret;
 	    }
 	else {
 	    PyErr_SetString(PyExc_TypeError,"invalid y subscript");
@@ -3205,7 +3224,8 @@ pr_subscript(self, key)
 	}
 	if (x1 == 0) x1 = pr->x;
 	if (PyInt_Check(y)) {
-	    char buf[bpp * (x2 - x1)];
+	    char *buf;
+	    PyObject *ret;
 			
 	    y1 = PyInt_AsLong(y);
 	    if (pr->y > y1 || y1 >= pr->y + pr->h) {
@@ -3213,8 +3233,11 @@ pr_subscript(self, key)
 				"y subscript out of range");
 		return NULL;
 	    }
+	    buf = g_new(gchar, bpp * (x2 - x1));
 	    gimp_pixel_rgn_get_row(pr, buf, x1, y1, x2 - x1);
-	    return PyString_FromStringAndSize(buf, bpp * (x2-x1));
+	    ret = PyString_FromStringAndSize(buf, bpp * (x2-x1));
+	    g_free(buf);
+	    return ret;
 	} else if (PySlice_Check(y))
 	    if (PySlice_GetIndices((PySliceObject *)y,
 				   pr->y + pr->h, &y1, &y2, &ys) ||
@@ -3224,13 +3247,15 @@ pr_subscript(self, key)
 				"invalid y slice");
 		return NULL;
 	    } else {
-		char buf[bpp * (x2 - x1) * (y2 - y1)];
+		gchar *buf = g_new(gchar, bpp * (x2 - x1) * (y2 - y1));
+		PyObject *ret;
 				
 		if (y1 == 0) y1 = pr->y;
 		gimp_pixel_rgn_get_rect(pr, buf, x1, y1,
 					x2 - x1, y2 - y1);
-		return PyString_FromStringAndSize(buf,
-						  bpp * (x2 - x1) * (y2 - y1));
+		ret = PyString_FromStringAndSize(buf, bpp * (x2-x1) * (y2-y1));
+		g_free(buf);
+		return ret;
 	    }
 	else {
 	    PyErr_SetString(PyExc_TypeError,"invalid y subscript");
@@ -3520,8 +3545,6 @@ para_getattr(self, name)
      paraobject *self;
      char *name;
 {
-    PyObject *rv;
-
     if (!strcmp(name, "__members__")) {
 #if GIMP_CHECK_VERSION(1,1,5)
 	return Py_BuildValue("[sssss]", "data", "flags", "is_persistent",
@@ -3710,6 +3733,10 @@ gimp_Main(self, args)
 	PyErr_SetString(ErrorObject, "arguments must be callable.");
 	return NULL;
     }
+    if (query == Py_None) {
+	PyErr_SetString(ErrorObject, "a query procedure must be provided.");
+	return NULL;
+    }
 
     if (ip != Py_None) {
 	callbacks[0] = ip;
@@ -3735,7 +3762,14 @@ gimp_Main(self, args)
 
     for (i = 0; i < argc; i++)
 	argv[i] = g_strdup(PyString_AsString(PyList_GetItem(av, i)));
-	
+
+#ifdef NATIVE_WIN32
+    {
+	extern void set_gimp_PLUG_IN_INFO_PTR(GPlugInInfo *);
+	set_gimp_PLUG_IN_INFO_PTR(&PLUG_IN_INFO);
+    }
+#endif
+
     gimp_main(argc, argv);
 
     if (argv != NULL) {
@@ -4231,7 +4265,6 @@ static PyObject *
 gimp_layer(self, args)
      PyObject *self, *args;
 {
-    drwobject *drw;
     imgobject *img;
     char *name;
     unsigned int width, height;
@@ -4252,7 +4285,6 @@ static PyObject *
 gimp_channel(self, args)
      PyObject *self, *args;
 {
-    drwobject *drw;
     imgobject *img;
     char *name;
     unsigned int width, height, r, g, b;
@@ -4397,7 +4429,7 @@ new_parasite(self, args)
 }
 
 static PyObject *
-gimp_Find_parasite(self, args)
+gimp_Parasite_find(self, args)
      PyObject *self, *args;
 {
     char *name;
@@ -4407,11 +4439,11 @@ gimp_Find_parasite(self, args)
 }
 
 static PyObject *
-gimp_Attach_parasite(self, args)
+gimp_Parasite_attach(self, args)
      PyObject *self, *args;
 {
     paraobject *parasite;
-    if (!PyArg_ParseTuple(args, "O!:attach_parasite", &Paratype, &parasite))
+    if (!PyArg_ParseTuple(args, "O!:parasite_attach", &Paratype, &parasite))
 	return NULL;
     gimp_parasite_attach(parasite->para);
     Py_INCREF(Py_None);
@@ -4433,11 +4465,11 @@ gimp_Attach_new_parasite(self, args)
 }
 
 static PyObject *
-gimp_Detach_parasite(self, args)
+gimp_Parasite_detach(self, args)
      PyObject *self, *args;
 {
     char *name;
-    if (!PyArg_ParseTuple(args, "s:detach_parasite", &name))
+    if (!PyArg_ParseTuple(args, "s:parasite_detach", &name))
 	return NULL;
     gimp_parasite_detach(name);
     Py_INCREF(Py_None);
@@ -4540,10 +4572,10 @@ static struct PyMethodDef gimp_methods[] = {
     {"extension_process", (PyCFunction)gimp_Extension_process, METH_VARARGS},
 #ifdef GIMP_HAVE_PARASITES
     {"parasite",           (PyCFunction)new_parasite,            METH_VARARGS},
-    {"parasite_find",      (PyCFunction)gimp_Find_parasite,      METH_VARARGS},
-    {"attach_parasite",    (PyCFunction)gimp_Attach_parasite,    METH_VARARGS},
+    {"parasite_find",      (PyCFunction)gimp_Parasite_find,      METH_VARARGS},
+    {"parasite_attach",    (PyCFunction)gimp_Parasite_attach,    METH_VARARGS},
     {"attach_new_parasite",(PyCFunction)gimp_Attach_new_parasite,METH_VARARGS},
-    {"detach_parasite",    (PyCFunction)gimp_Detach_parasite,    METH_VARARGS},
+    {"parasite_detach",    (PyCFunction)gimp_Parasite_detach,    METH_VARARGS},
 #endif
 #ifdef GIMP_HAVE_DEFAULT_DISPLAY
     {"default_display",  (PyCFunction)gimp_Default_display,  METH_VARARGS},
@@ -4558,7 +4590,7 @@ static struct PyMethodDef gimp_methods[] = {
 /* Initialization function for the module (*must* be called initgimp) */
 
 static char gimp_module_documentation[] = 
-""
+"This module provides interfaces to allow you to write gimp plugins"
 ;
 
 void
@@ -4566,6 +4598,19 @@ initgimp()
 {
     PyObject *m, *d;
     PyObject *i;
+
+#if defined (_MSC_VER)
+    /* see: Python FAQ 3.24 "Initializer not a constant." */
+    Pdbtype.ob_type = &PyType_Type;
+    Pftype.ob_type = &PyType_Type;
+    Imgtype.ob_type = &PyType_Type;
+    Disptype.ob_type = &PyType_Type;
+    Laytype.ob_type = &PyType_Type;
+    Chntype.ob_type = &PyType_Type;
+    Tiletype.ob_type = &PyType_Type;
+    Prtype.ob_type = &PyType_Type;
+    Paratype.ob_type = &PyType_Type;
+#endif
 
     /* Create the module and add the functions */
     m = Py_InitModule4("gimp", gimp_methods,

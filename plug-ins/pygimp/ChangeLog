@@ -1,3 +1,21 @@
+1999-11-11  James Henstridge  <james@daa.com.au>
+
+	* doc/pygimp.sgml: updated documentation.
+
+	* gimpmodule.c: applied patches from Hans Breuer to fix portability
+	problems and also win32 compatibility.
+
+	(lay_getattr): take is_rgb as a synonym for is_color/is_colour.
+	(drw_parasite_attach):
+	(drw_parasite_detach): change to new naming scheme.
+	(img_parasite_attach): 
+	(img_parasite_detach): same here.
+	(gimp_Parasite_find): 
+	(gimp_Parasite_attach): 
+	(gimp_Parasite_detach): same here.
+	(chn_getattr): added is_rgb as a synonym for is_colour, and
+	is_layer_mask as a synonym for layer_mask.
+
 1999-07-08  James Henstridge  <james@daa.com.au>
 
 	* plug-ins/shadow_bevel.py: added {disable,enable}_undo() calls.  Also

@@ -984,7 +984,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
 	  </listitem>
 	</varlistentry>
 	<varlistentry>
-	  <term><function>attach_parasite</function>(<parameter>parasite</parameter>)</term>
+	  <term><function>parasite_attach</function>(<parameter>parasite</parameter>)</term>
 	  <listitem>
 	    <Para>Attach a parasite to this object.</Para>
 	  </listitem>
@@ -996,7 +996,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
 	  </listitem>
 	</varlistentry>
 	<varlistentry>
-	  <term><function>detach_parasite</function>(<parameter>name</parameter>)</term>
+	  <term><function>parasite_detach</function>(<parameter>name</parameter>)</term>
 	  <listitem>
 	    <Para>Detach the named parasite</Para>
 	  </listitem>
@@ -1571,7 +1571,9 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
 	  <VarListEntry>
 	    <Term><replaceable>drawable</replaceable>.<parameter>is_colour</parameter>
 	    or
-	    <replaceable>drawable</replaceable>.<parameter>is_color</parameter></Term>
+	    <replaceable>drawable</replaceable>.<parameter>is_color</parameter>
+	    or
+	    <replaceable>drawable</replaceable>.<parameter>is_rgb</parameter></Term>
 	    <ListItem>
 	      <Para>Non zero if the drawable is colour.</Para>
 	    </listitem>
