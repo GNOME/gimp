@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 03:08+0100\n"
-"PO-Revision-Date: 2004-01-13 14:36+0100\n"
+"POT-Creation-Date: 2004-01-21 03:52+0100\n"
+"PO-Revision-Date: 2004-01-21 17:37+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1281,7 +1281,7 @@ msgid "Cut"
 msgstr "Vyjmout"
 
 #: app/core/core-enums.c:608 app/core/core-enums.c:638
-#: app/tools/gimptexttool.c:112 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:113 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Text"
 
@@ -1954,9 +1954,8 @@ msgid "Change Image Unit"
 msgstr "Změna jednotky obrázku"
 
 #: app/core/gimpimage.c:1940
-#, fuzzy
 msgid "Attach Parasite to Image"
-msgstr "Připojení parazita k obrázku"
+msgstr "Připojit parazita k obrázku"
 
 #: app/core/gimpimage.c:1973
 msgid "Remove Parasite from Image"
@@ -3770,6 +3769,7 @@ msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Chyba velikosti: Jak šířka tak výška musí být větší než nula."
 
 #. <Image>/File
+#. <Toolbox>/File
 #: app/gui/image-menu.c:88 app/gui/toolbox-menu.c:49
 msgid "/_File"
 msgstr "/_Soubor"
@@ -3783,6 +3783,7 @@ msgid "/File/_Open..."
 msgstr "/Soubor/_Otevřít..."
 
 #. <Image>/File/Open Recent
+#. <Toolbox>/File/Open Recent
 #: app/gui/image-menu.c:103 app/gui/toolbox-menu.c:64
 msgid "/File/Open _Recent"
 msgstr "/Soubor/Ot_evřít nedávný"
@@ -4867,9 +4868,8 @@ msgid "Invalid width or height. Both must be positive."
 msgstr "Neplatná šířka nebo výška. Obě musí být kladné."
 
 #: app/gui/layers-menu.c:46
-#, fuzzy
 msgid "/Te_xt Tool"
-msgstr "Barva textu"
+msgstr "/Nástroj _text"
 
 #: app/gui/layers-menu.c:51
 msgid "/_Edit Layer Attributes..."
@@ -5020,7 +5020,6 @@ msgid "Documents Menu"
 msgstr "Menu Dokumenty"
 
 #: app/gui/menus.c:219
-#, fuzzy
 msgid "Templates Menu"
 msgstr "Menu Šablony"
 
@@ -5326,21 +5325,21 @@ msgstr "/_Odstranit vzorek..."
 msgid "/_Refresh Patterns"
 msgstr "/_Aktualizovat vzorky"
 
-#: app/gui/plug-in-menus.c:343
+#: app/gui/plug-in-menus.c:342
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Z_opakovat \"%s\""
 
-#: app/gui/plug-in-menus.c:344
+#: app/gui/plug-in-menus.c:343
 #, c-format
 msgid "R_e-show \"%s\""
 msgstr "Znovu z_obrazit \"%s\""
 
-#: app/gui/plug-in-menus.c:370
+#: app/gui/plug-in-menus.c:369
 msgid "Repeat Last"
 msgstr "Opakovat poslední"
 
-#: app/gui/plug-in-menus.c:373
+#: app/gui/plug-in-menus.c:372
 msgid "Re-Show Last"
 msgstr "Znovu zobrazit poslední"
 
@@ -6035,6 +6034,7 @@ msgid "Original Width:"
 msgstr "Původní šířka:"
 
 #. the new size labels
+#. the print size labels
 #: app/gui/resize-dialog.c:318 app/gui/resize-dialog.c:564
 msgid "New Width:"
 msgstr "Nová šířka:"
@@ -6078,7 +6078,7 @@ msgstr "Interpolace:"
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect scaling channels and masks only."
-msgstr ""
+msgstr "Vrstvy s indexovanými barvami jsou vždy škálovány bez interpolace. Zvolený typ interpolace bude mít vliv jen na škálování kanálů a masek."
 
 #: app/gui/resolution-calibrate-dialog.c:85
 msgid "Calibrate Monitor Resolution"
@@ -6844,6 +6844,7 @@ msgid "New Path Options"
 msgstr "Volby nové cesty"
 
 #. The name entry hbox, label and entry
+#. The name entry
 #: app/gui/vectors-commands.c:492 app/gui/vectors-commands.c:610
 msgid "Path name:"
 msgstr "Název cesty:"
@@ -7191,7 +7192,7 @@ msgstr "Pomocná procedura"
 msgid "Free Select"
 msgstr "Volný výběr"
 
-#: app/plug-in/plug-in.c:687
+#: app/plug-in/plug-in.c:688
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -7280,7 +7281,7 @@ msgstr ""
 "Příliš žluťoučký kůň\n"
 "úpěl ďábelské kódy."
 
-#: app/text/gimptext-compat.c:104 app/tools/gimptexttool.c:327
+#: app/text/gimptext-compat.c:104 app/tools/gimptexttool.c:335
 msgid "Add Text Layer"
 msgstr "Přidat textovou vrstvu"
 
@@ -7745,6 +7746,7 @@ msgid "Origin X:"
 msgstr "X počátek:"
 
 #. the pixel size labels
+#. the unit size labels
 #: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
@@ -8472,15 +8474,15 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "Vytvořit cestu z textu"
 
-#: app/tools/gimptexttool.c:113
+#: app/tools/gimptexttool.c:114
 msgid "Add text to the image"
 msgstr "Přidání textu do obrázku"
 
-#: app/tools/gimptexttool.c:114
+#: app/tools/gimptexttool.c:115
 msgid "/Tools/Te_xt"
 msgstr "/Nástroje/_Text"
 
-#: app/tools/gimptexttool.c:415
+#: app/tools/gimptexttool.c:433
 msgid "GIMP Text Editor"
 msgstr "Textový editor pro GIMP"
 
@@ -9777,14 +9779,12 @@ msgid "View as Grid"
 msgstr "Zobrazit jako mřížku"
 
 #: app/widgets/widgets-enums.c:136
-#, fuzzy
 msgid "Normal Window"
-msgstr "Okna obrázku"
+msgstr "Normální okno"
 
 #: app/widgets/widgets-enums.c:137
-#, fuzzy
 msgid "Utility Window"
-msgstr "Nástroj"
+msgstr "Okno nástrojů"
 
 #: app/xcf/xcf-load.c:291
 msgid ""
@@ -9828,9 +9828,6 @@ msgstr "Vytvářet a upravovat obrázky a fotografie"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "GIMP (nestabilní)"
-
-#~ msgid "Misc Tool procedures"
-#~ msgstr "Procedury různých nástrojů"
 
 #~ msgid "Copy"
 #~ msgstr "Kopírovat"
