@@ -1,3 +1,7 @@
+2001-02-04  Nick Lamb  <njl195@zepler.org.uk>
+
+	* app/brushes.c: New file == new missing includes! <string.h>
+
 2001-02-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
