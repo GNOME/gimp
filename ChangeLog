@@ -1,5 +1,12 @@
 2004-11-27  Manish Singh  <yosh@gimp.org>
 
+	* tools/pdbgen/pdb/drawable_transform.pdb: escape utf8 as hex, to
+	avoid perl trying to be so smart that it's stupid.
+
+	* app/pdb/drawable_transform_cmds.c: regenerated.
+
+2004-11-27  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/common/jpeg.c (save_image): thumbnail buffer variable
 	declarations should be guarded under HAVE_EXIF.
 

@@ -24,7 +24,7 @@
 # shortcuts
 
 sub pdb_misc {
-    $author = $copyright = 'João S. O. Bueno Calligaris';
+    $author = $copyright = 'Jo\xc3\xa3o S. O. Bueno Calligaris';
     $date = '2004';
     $since = '2.2';
 }
