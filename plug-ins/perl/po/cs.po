@@ -973,3 +973,4 @@ msgid "<Image>/Layers/Layer to Image Size"
 msgstr "<Image>/Vrstvy/Velikost vrstvy dle obrázku"
 
 msgid "(none)"
+msgstr "(nic)"
