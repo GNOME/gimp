@@ -38,12 +38,12 @@
 
 #include "widgets/gimpwidgets-utils.h"
 
-#include "gdisplay.h"
 #include "layers-commands.h"
 #include "menus.h"
-#include "resize.h"
+#include "resize-dialog.h"
 
 #include "drawable.h"
+#include "gdisplay.h"
 #include "floating_sel.h"
 #include "undo.h"
 

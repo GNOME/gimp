@@ -51,6 +51,7 @@
 #include "info-window.h"
 #include "layer-select.h"
 #include "offset-dialog.h"
+#include "resize-dialog.h"
 
 #include "app_procs.h"
 #include "context_manager.h"
@@ -62,7 +63,6 @@
 #include "image_render.h"
 #include "nav_window.h"
 #include "plug_in.h"
-#include "resize.h"
 #include "scale.h"
 #include "selection.h"
 #include "undo.h"

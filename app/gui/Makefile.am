@@ -69,6 +69,8 @@ libappgui_la_SOURCES = \
 	pattern-select.h		\
 	preferences-dialog.c		\
 	preferences-dialog.h		\
+	resize-dialog.c			\
+	resize-dialog.h			\
 	resolution-calibrate-dialog.c	\
 	resolution-calibrate-dialog.h	\
 	session.c			\

@@ -76,8 +76,6 @@ gimp_SOURCES = \
 	image_map.h		\
 	module_db.c		\
 	module_db.h		\
-	resize.c		\
-	resize.h		\
 	user_install.c		\
 	user_install.h		\
 ##

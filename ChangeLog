@@ -1,5 +1,16 @@
 2001-06-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/resize.[ch]: removed.
+
+	* app/gui/Makefile.am
+	* app/gui/resize-dialog.[ch]: added.
+
+	* app/gui/commands.c
+	* app/gui/layers-commands.c: changed accordingly.
+
+2001-06-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/global_edit.c: some s/0/FALSE/
 
 	* app/resize.[ch]: removed resize_scale_implement() and

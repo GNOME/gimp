@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __RESIZE_H__
-#define __RESIZE_H__
+#ifndef __RESIZE_DIALOG_H__
+#define __RESIZE_DIALOG_H__
 
 
 typedef enum
@@ -86,4 +86,4 @@ Resize * resize_widget_new (ResizeType    type,
 			    gpointer      user_data);
 
 
-#endif  /*  __RESIZE_H__  */
+#endif  /*  __RESIZE_DIALOG_H__  */

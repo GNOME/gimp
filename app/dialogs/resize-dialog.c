@@ -29,8 +29,9 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
+#include "resize-dialog.h"
+
 #include "gimprc.h"
-#include "resize.h"
 
 #include "libgimp/gimpintl.h"
 
