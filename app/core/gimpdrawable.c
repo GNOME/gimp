@@ -373,13 +373,13 @@ gimp_drawable_update (GimpDrawable *drawable,
 }
 
 void
-gimp_drawable_apply_image (GimpDrawable *drawable, 
-			   gint          x1,
-			   gint          y1,
-			   gint          x2,
-			   gint          y2, 
-			   TileManager  *tiles,
-			   gint          sparse)
+gimp_drawable_push_undo (GimpDrawable *drawable, 
+                         gint          x1,
+                         gint          y1,
+                         gint          x2,
+                         gint          y2, 
+                         TileManager  *tiles,
+                         gboolean      sparse)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
@@ -396,7 +396,7 @@ gimp_drawable_apply_image (GimpDrawable *drawable,
 
 void
 gimp_drawable_merge_shadow (GimpDrawable *drawable,
-			    gboolean      undo)
+			    gboolean      push_undo)
 {
   GimpImage   *gimage;
   PixelRegion  shadowPR;
@@ -416,7 +416,7 @@ gimp_drawable_merge_shadow (GimpDrawable *drawable,
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   pixel_region_init (&shadowPR, gimage->shadow, x1, y1,
 		     (x2 - x1), (y2 - y1), FALSE);
-  gimp_image_apply_image (gimage, drawable, &shadowPR, undo,
+  gimp_image_apply_image (gimage, drawable, &shadowPR, push_undo,
                           GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
                           NULL, x1, y1);
 }

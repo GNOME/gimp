@@ -282,7 +282,7 @@ gimp_image_mask_extract (GimpImage    *gimage,
    *  push an undo
    */
   if (cut_gimage && non_empty)
-    gimp_drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
+    gimp_drawable_push_undo (drawable, x1, y1, x2, y2, NULL, FALSE);
 
   gimp_drawable_offsets (drawable, &off_x, &off_y);
 

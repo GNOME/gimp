@@ -1,5 +1,24 @@
 2002-06-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable.[ch]: renamed gimp_drawable_apply_image()
+	to gimp_drawable_push_undo() because that's what it actually does.
+
+	* app/image_map.c
+	* app/core/gimpdrawable-offset.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage.c
+	* app/core/gimplayer.c
+	* app/paint/gimppaintcore.c
+	* app/tools/gimpinktool.c: changed accordingly. Removed redundant
+	comments because it's now obvious what the function does from
+	looking at its name.
+
+	* app/core/gimpdrawable.[ch]
+	* app/core/gimpimage.h: renamed "gboolean undo" parameters to
+	"gboolean push_undo".
+
+2002-06-06  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpproxy/gimpchannel.h: forgot to commit this one.
 
 2002-06-06  Michael Natterer  <mitch@gimp.org>

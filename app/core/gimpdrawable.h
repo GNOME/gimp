@@ -79,16 +79,16 @@ void            gimp_drawable_update             (GimpDrawable       *drawable,
 						  gint                w,
 						  gint                h);
 
-void            gimp_drawable_apply_image        (GimpDrawable       *drawable, 
+void            gimp_drawable_push_undo          (GimpDrawable       *drawable, 
 						  gint                x1,
 						  gint                y1,
 						  gint                x2,
 						  gint                y2, 
 						  TileManager        *tiles,
-						  gint                sparse);
+						  gboolean            sparse);
 
 void            gimp_drawable_merge_shadow       (GimpDrawable       *drawable,
-						  gboolean            undo);
+						  gboolean            push_undo);
 
 void            gimp_drawable_fill               (GimpDrawable       *drawable,
 						  const GimpRGB      *color);

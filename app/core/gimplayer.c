@@ -789,14 +789,11 @@ gimp_layer_apply_mask (GimpLayer         *layer,
   if (mode == GIMP_MASK_APPLY)
     {
       if (push_undo)
-        {
-          /*  Put this apply mask operation on the undo stack  */
-          gimp_drawable_apply_image (GIMP_DRAWABLE (layer),
-				     0, 0,
-				     GIMP_DRAWABLE (layer)->width,
-				     GIMP_DRAWABLE (layer)->height,
-				     NULL, FALSE);
-        }
+        gimp_drawable_push_undo (GIMP_DRAWABLE (layer),
+                                 0, 0,
+                                 GIMP_DRAWABLE (layer)->width,
+                                 GIMP_DRAWABLE (layer)->height,
+                                 NULL, FALSE);
 
       /*  Combine the current layer's alpha channel and the mask  */
       pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles, 

@@ -1996,7 +1996,7 @@ gimp_image_replace_image (GimpImage    *gimage,
 
   /*  If the calling procedure specified an undo step...  */
   if (push_undo)
-    gimp_drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
+    gimp_drawable_push_undo (drawable, x1, y1, x2, y2, NULL, FALSE);
 
   /* configure the pixel regions
    *  If an alternative to using the drawable's data as src1 was provided...

@@ -978,9 +978,10 @@ static void
 ink_finish (GimpInkTool  *ink_tool,
 	    GimpDrawable *drawable)
 {
-  /*  push an undo  */
-  gimp_drawable_apply_image (drawable, ink_tool->x1, ink_tool->y1,
-			     ink_tool->x2, ink_tool->y2, undo_tiles, TRUE);
+  gimp_drawable_push_undo (drawable,
+                           ink_tool->x1, ink_tool->y1,
+                           ink_tool->x2, ink_tool->y2,
+                           undo_tiles, TRUE);
   undo_tiles = NULL;
 
   /*  invalidate the drawable--have to do it here, because

@@ -438,15 +438,13 @@ gimp_paint_core_finish (GimpPaintCore *core,
                    G_TYPE_FROM_INSTANCE (core),
                    &core->start_coords);
 
-  /*  push an undo  */
-  gimp_drawable_apply_image (drawable,
-                             core->x1, core->y1,
-			     core->x2, core->y2,
-                             core->undo_tiles,
-                             TRUE);
+  gimp_drawable_push_undo (drawable,
+                           core->x1, core->y1,
+                           core->x2, core->y2,
+                           core->undo_tiles,
+                           TRUE);
   core->undo_tiles = NULL;
 
-  /*  push the group end  */
   undo_push_group_end (gimage);
 
   /*  invalidate the drawable--have to do it here, because

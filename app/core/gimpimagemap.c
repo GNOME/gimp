@@ -241,8 +241,9 @@ image_map_commit (ImageMap *image_map)
       x2 = x1 + tile_manager_width (image_map->undo_tiles);
       y2 = y1 + tile_manager_height (image_map->undo_tiles);
 
-      gimp_drawable_apply_image (image_map->drawable,
-				 x1, y1, x2, y2, image_map->undo_tiles, FALSE);
+      gimp_drawable_push_undo (image_map->drawable,
+                               x1, y1, x2, y2,
+                               image_map->undo_tiles, FALSE);
     }
 
   gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (image_map->gdisp->shell),
