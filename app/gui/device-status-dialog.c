@@ -680,13 +680,6 @@ devices_write_rc_device (DeviceInfo *device_info,
     }
   fprintf (fp,")");
 
-#warning FIXME
-  /* Fixme: hard coded last tool....  see gimprc
-  if (gimp_context_get_tool (device_info->context) >= FIRST_TOOLBOX_TOOL &&
-      gimp_context_get_tool (device_info->context) <= LAST_TOOLBOX_TOOL)
-    {
-  */
-
   if (gimp_context_get_tool (device_info->context))
     {
       fprintf (fp, "\n    (tool \"%s\")",

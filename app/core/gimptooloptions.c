@@ -34,7 +34,7 @@ tool_options_init (ToolOptions          *options,
 		   ToolOptionsResetFunc  reset_func)
 {
   options->main_vbox  = gtk_vbox_new (FALSE, 2);
-  options->title      = title;
+  options->title      = g_strdup (title);
   options->reset_func = reset_func;
 }
 

@@ -226,7 +226,6 @@ typedef enum /*< skip >*/
   PAUSE,
   RESUME,
   HALT,
-  UPDATE_CURSOR,
   DESTROY,
   RECREATE
 } ToolAction;

@@ -19,8 +19,8 @@
 #ifndef __TOOL_MANAGER_H__
 #define __TOOL_MANAGER_H__
 
-#include "gimpdrawable.h"
-#include "tool.h"
+
+#include "tool.h" /* EEEEEEEEEEK */
 
 
 /*  Function declarations  */
@@ -38,7 +38,6 @@ void        tool_manager_register              (GimpToolClass  *tool_type
 
 void        tool_manager_init                  (void);
 
-/*  these should to go their own file  */
 void        tool_manager_register_tool         (GtkType         tool_type,
 						const gchar    *tool_name,
 						const gchar    *menu_path,
@@ -49,10 +48,14 @@ void        tool_manager_register_tool         (GtkType         tool_type,
 						const gchar   **icon_data);
 
 GimpToolInfo * tool_manager_get_info_by_type   (GtkType         tool_type);
+GimpToolInfo * tool_manager_get_info_by_tool   (GimpTool       *tool);
 
 
-gchar     * tool_manager_get_active_PDB_string (void);
+gchar     * tool_manager_active_get_PDB_string (void);
 gchar     * tool_manager_active_get_help_data  (void);
+
+
+void	    tool_manager_help_func              (const gchar   *help_data);
 
 
 /*  Global Data Structures  */

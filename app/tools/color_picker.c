@@ -46,6 +46,7 @@
 #include "cursors/dropper_small.xbm"
 #include "cursors/dropper_small_mask.xbm"
 
+
 /*  maximum information buffer size  */
 #define MAX_INFO_BUF 8
 
@@ -148,8 +149,6 @@ BitmapCursor tool_cursor =
 static GimpToolClass *parent_class = NULL;
 
 
-/*  functions  */
-
 void
 gimp_color_picker_register (void)
 {
@@ -199,15 +198,7 @@ gimp_color_picker_class_init (GimpColorPickerClass *klass)
 
   object_class->destroy = gimp_color_picker_destroy;
 
-  tool_class->tool_name = N_("Color Picker");
-  tool_class->menu_path = N_("/Tools/Color Picker");
-  tool_class->menu_accel = "O";
-  tool_class->icon_data = (char **) colorpicker_bits;
-  tool_class->tool_desc = N_("Pick colors from the image"),
-  tool_class->help_data = "tools/color_picker.html";
-  tool_class->tool_id = COLOR_PICKER;
   tool_class->tool_cursor = &tool_cursor;
-
 
   tool_class->control        = color_picker_control;
   tool_class->button_press   = color_picker_button_press;
@@ -262,16 +253,6 @@ gimp_color_picker_destroy (GtkObject *object)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
-GimpTool *
-gimp_color_picker_new (void)
-{
-  GimpTool *tool;
-
-  tool = gtk_type_new (GIMP_TYPE_COLOR_PICKER);
-
-  return tool;
-} 
-      
 static void
 color_picker_options_reset (void)
 {
@@ -406,7 +387,7 @@ color_picker_button_press (GimpTool           *tool,
       GimpRGB    color;
 
       color_picker_info = info_dialog_new (_("Color Picker"),
-					   gimp_tool_help_func, NULL);
+					   tool_manager_help_func, NULL);
 
       /*  if the gdisplay is for a color image, the dialog must have RGB  */
       switch (gimp_drawable_type (tool->drawable))

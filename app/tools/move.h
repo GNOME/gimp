@@ -20,13 +20,42 @@
 #define __MOVE_H__
 
 
-void   move_tool_start_hguide (Tool     *tool,
-			       GDisplay *gdisp);
-void   move_tool_start_vguide (Tool     *tool,
-			       GDisplay *gdisp);
+#include "tool.h"
 
-Tool * tools_new_move_tool    (void);
-void   tools_free_move_tool   (Tool     *tool);
+
+#define GIMP_TYPE_MOVE_TOOL            (gimp_move_tool_get_type ())
+#define GIMP_MOVE_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_MOVE_TOOL, GimpMoveTool))
+#define GIMP_IS_MOVE_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_MOVE_TOOL))
+#define GIMP_MOVE_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MOVE_TOOL, GimpMoveToolClass))
+#define GIMP_IS_MOVE_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MOVE_TOOL))
+
+
+typedef struct _GimpMoveTool      GimpMoveTool;
+typedef struct _GimpMoveToolClass GimpMoveToolClass;
+
+struct _GimpMoveTool
+{
+  GimpTool   parent_instance;
+
+  GimpLayer *layer;
+  Guide     *guide;
+  GDisplay  *disp;
+};
+
+struct _GimpMoveToolClass
+{
+  GimpToolClass parent_class;
+};
+
+
+GtkType    gimp_move_tool_get_type     (void);
+
+void       gimp_move_tool_register     (void);
+
+void       gimp_move_tool_start_hguide (GimpTool *tool,
+					GDisplay *gdisp);
+void       gimp_move_tool_start_vguide (GimpTool *tool,
+					GDisplay *gdisp);
 
 
 #endif  /*  __MOVE_H__  */

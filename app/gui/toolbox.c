@@ -274,8 +274,35 @@ create_color_area (GtkWidget *parent)
   gtk_widget_show (frame);
 }
 
+
 static void
-create_tools (GtkWidget *parent)
+toolbox_tool_changed (GimpContext  *context,
+		      GimpToolInfo *tool_info,
+		      gpointer      data)
+{
+  if (tool_info)
+    {
+      GtkWidget *toolbox_button;
+
+      toolbox_button =
+	gtk_object_get_data (GTK_OBJECT (tool_info), "toolbox_button");
+
+      if (toolbox_button && ! GTK_TOGGLE_BUTTON (toolbox_button)->active)
+	{
+	  gtk_signal_handler_block_by_func (GTK_OBJECT (toolbox_button),
+					    tools_select_update, tool_info);
+
+	  gtk_widget_activate (toolbox_button);
+
+	  gtk_signal_handler_unblock_by_func (GTK_OBJECT (toolbox_button),
+					      tools_select_update, tool_info);
+	}
+    }
+}
+
+static void
+create_tools (GtkWidget   *parent,
+	      GimpContext *context)
 {
   GtkWidget     *wbox;
   GtkWidget     *button;
@@ -300,6 +327,9 @@ create_tools (GtkWidget *parent)
       tool_info = (GimpToolInfo *) list->data;
 
       button = gtk_radio_button_new (group);
+
+      gtk_object_set_data (GTK_OBJECT (tool_info), "toolbox_button", button);
+
       gtk_container_set_border_width (GTK_CONTAINER (button), 0);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
 
@@ -515,11 +545,13 @@ toolbox_create (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), wbox, TRUE, TRUE, 0);
   gtk_widget_show (wbox);
 
-  g_print ("before create_tools (wbox);\n");
+  create_tools (wbox, gimp_context_get_user ());
 
-  create_tools (wbox);
-
-  g_print ("after create_tools (wbox);\n");
+  gtk_signal_connect_while_alive (GTK_OBJECT (gimp_context_get_user ()),
+				  "tool_changed",
+				  GTK_SIGNAL_FUNC (toolbox_tool_changed),
+				  NULL,
+				  GTK_OBJECT (wbox));
 
   create_color_area (wbox);
   if (show_indicators)
@@ -534,21 +566,10 @@ toolbox_create (void)
 void
 toolbox_free (void)
 {
-  GSList *tools;
-  GimpToolClass *tool;
-
   session_get_window_info (toolbox_shell, &toolbox_session_info);
 
   gtk_widget_destroy (toolbox_shell);
-  for (tools = registered_tools; tools; tools=tools->next)
-    {
-      tool = GIMP_TOOL_CLASS (tools->data);
-      if (tool->icon_pixmap)
-	gdk_pixmap_unref (tool->icon_pixmap);
-      
-      if (!tool->icon_data)
-	gtk_object_sink (GTK_OBJECT (tool->tool_widget));
-    }
+
   gimp_help_free ();
 }
 

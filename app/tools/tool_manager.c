@@ -20,6 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -54,9 +56,7 @@ active_tool_unref (void)
   if (! active_tool)
     return;
 
-  gimp_tool_hide_options (active_tool);
-
-  gtk_object_unref (GTK_OBJECT(active_tool));
+  gtk_object_unref (GTK_OBJECT (active_tool));
 
   active_tool = NULL;
 }
@@ -68,8 +68,6 @@ tool_manager_select_tool (GimpTool *tool)
     active_tool_unref ();
 
   active_tool = tool;
-
-  tool_options_show (tool);
 }
 
 void
@@ -83,7 +81,7 @@ tool_manager_initialize_tool (GimpTool *tool, /* FIXME: remove tool param */
    */
   if (GIMP_TOOL_CLASS (GTK_OBJECT (tool)->klass)->initialize && ! gdisp)
     {
-#warning FIXME /* tool_type = RECT_SELECT; */
+#warning FIXME   tool_type = RECT_SELECT;
     }
 
   /*  Force the emission of the "tool_changed" signal
@@ -117,7 +115,7 @@ tool_manager_initialize_tool (GimpTool *tool, /* FIXME: remove tool param */
 
   active_tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
-#warning FIXME /*  don't set tool->gdisp here! (see commands.c)  */
+  /*  don't set tool->gdisp here! (see commands.c)  */
 }
 
 
@@ -168,7 +166,6 @@ tool_manager_control_active (ToolAction  action,
             case DESTROY:
               gtk_object_unref (GTK_OBJECT (active_tool));
 	      active_tool = NULL;
-              tool_options_hide_shell ();
               break;
 
             default:
@@ -216,31 +213,7 @@ tools_register (ToolType     tool_type,
 			   tool_info[(gint) tool_type].private_tip);
 }
 #endif
-/*  Tool options function  */
 
-
-gchar *
-tool_manager_get_active_PDB_string (void)
-{
-  gchar *toolStr = "gimp_paintbrush_default";
-
-  /*  Return the correct PDB function for the active tool
-   *  The default is paintbrush if the tool is not recognised
-   */
-
-  if (!active_tool)
-    return toolStr;
-
-  return gimp_tool_get_PDB_string(active_tool);
-}
-
-gchar *      
-tool_manager_active_get_help_data            (void)
-{
-  g_return_val_if_fail(active_tool, NULL);
-
-  return gimp_tool_get_help_data (active_tool);
-}
 
 void tool_manager_register (GimpToolClass *tool_type)
 {
@@ -303,4 +276,42 @@ tool_manager_get_info_by_type (GtkType tool_type)
     }
 
   return NULL;
+}
+
+GimpToolInfo *
+tool_manager_get_info_by_tool (GimpTool *tool)
+{
+  g_return_val_if_fail (tool != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_TOOL (tool), NULL);
+
+  return tool_manager_get_info_by_type (GTK_OBJECT (tool)->klass->type);
+}
+
+const gchar *
+tool_manager_active_get_PDB_string (void)
+{
+  const gchar *toolStr = "gimp_paintbrush_default";
+
+  /*  Return the correct PDB function for the active tool
+   *  The default is paintbrush if the tool is not recognised
+   */
+
+  if (! active_tool)
+    return toolStr;
+
+  return gimp_tool_get_PDB_string (active_tool);
+}
+
+const gchar *
+tool_manager_active_get_help_data (void)
+{
+  g_return_val_if_fail (active_tool != NULL, NULL);
+
+  return tool_manager_get_info_by_tool (active_tool)->help_data;
+}
+
+void
+tool_manager_help_func (const gchar *help_data)
+{
+  gimp_standard_help_func (tool_manager_active_get_help_data ());
 }

@@ -397,7 +397,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  gdk_pointer_ungrab (bevent->time);  /* fixes pointer grab bug */
 
 	  if (active_tool && (GIMP_IS_MOVE_TOOL(active_tool) ||
-			      !gimp_image_is_empty (gdisp->gimage)))
+			      ! gimp_image_is_empty (gdisp->gimage)))
 	    {
 	      if (active_tool->state == ACTIVE)
 		{
@@ -481,7 +481,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	}
 
       if (active_tool && (GIMP_IS_MOVE_TOOL(active_tool) ||
-			  !gimp_image_is_empty (gdisp->gimage)) &&
+			  ! gimp_image_is_empty (gdisp->gimage)) &&
 	  (mevent->state & GDK_BUTTON1_MASK))
 	{
 	  if (active_tool->state == ACTIVE)
@@ -670,8 +670,10 @@ gdisplay_hruler_button_press (GtkWidget      *widget,
     {
       gdisp = data;
 
-      gimp_context_set_tool (gimp_context_get_user (), MOVE);
-      move_tool_start_hguide (active_tool, gdisp);
+      gimp_context_set_tool (gimp_context_get_user (),
+			     tool_manager_get_info_by_type (GIMP_TYPE_MOVE_TOOL));
+
+      gimp_move_tool_start_hguide (active_tool, gdisp);
       gtk_grab_add (gdisp->canvas);
     }
 
@@ -692,8 +694,10 @@ gdisplay_vruler_button_press (GtkWidget      *widget,
     {
       gdisp = data;
 
-      gimp_context_set_tool (gimp_context_get_user (), MOVE);
-      move_tool_start_vguide (active_tool, gdisp);
+      gimp_context_set_tool (gimp_context_get_user (),
+			     tool_manager_get_info_by_type (GIMP_TYPE_MOVE_TOOL));
+
+      gimp_move_tool_start_vguide (active_tool, gdisp);
       gtk_grab_add (gdisp->canvas);
     }
 

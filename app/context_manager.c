@@ -103,11 +103,6 @@ context_manager_tool_changed (GimpContext  *user_context,
 					      context_manager_tool_changed,
 					      NULL);
 	}
-
-#warning FIXME (take care that the correct toolbox button gets re-activated)
-      /*
-      tool_type = active_tool->type;
-      */
     }
   else
     {
@@ -146,24 +141,6 @@ context_manager_tool_changed (GimpContext  *user_context,
 
       tool_manager_select_tool (new_tool);
     }
-
-#if 0
-  if (tool_type == SCALE ||
-      tool_type == SHEAR ||
-      tool_type == PERSPECTIVE)
-    tool_type = ROTATE;
-
-  if (! GTK_TOGGLE_BUTTON (tool_info[tool_type].tool_widget)->active)
-    {
-      gtk_signal_handler_block_by_data
-	(GTK_OBJECT (tool_info[tool_type].tool_widget), (gpointer) tool_type);
-
-      gtk_widget_activate (tool_info[tool_type].tool_widget);
-
-      gtk_signal_handler_unblock_by_data
-	(GTK_OBJECT (tool_info[tool_type].tool_widget), (gpointer) tool_type);
-    }
-#endif
 }
 
 void

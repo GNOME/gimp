@@ -318,7 +318,7 @@ gimp_change_win_cursor (GdkWindow      *win,
       modtype -= GIMP_PLUS_CURSOR;
       bmmodifier = &modifier_cursors[(int)modtype];
     }
-#warning Im obsolete
+#warning FIXME (check if toggle tool cursor work)
 #if 0
   if (tool_type != TOOL_TYPE_NONE)
     {

@@ -94,7 +94,8 @@ static GimpObjectClass *parent_class = NULL;
 
 
 #warning FIXME: check what global_tool_ID was used for
-static gint global_tool_ID = 0;
+
+/* static gint global_tool_ID = 0; */
 
 
 GtkType
@@ -374,61 +375,21 @@ gimp_tool_oper_update (GimpTool       *tool,
 }
 
 
-
-gchar *
+const gchar *
 gimp_tool_get_PDB_string (GimpTool *tool)
 {
-  GtkObject *object;
+  GtkObject     *object;
   GimpToolClass *klass;
 
-  g_return_val_if_fail(tool, "gimp_core_nothing");
+  g_return_val_if_fail (tool, NULL);
+  g_return_val_if_fail (GIMP_IS_TOOL (tool), NULL);
   
   object = GTK_OBJECT (tool);
-  
+
   klass = GIMP_TOOL_CLASS (object->klass);
-  
+
   return klass->pdb_string;
 }
-
-
-
-/* TODO: remove these */
-
-void
-gimp_tool_help_func (const gchar *help_data)
-{
-  gimp_standard_help_func (tool_manager_active_get_help_data());
-}
-
-GdkPixmap *
-gimp_tool_get_pixmap (GimpToolClass *type)
-{
-  g_return_val_if_fail(type, NULL);
-  return (type->icon_pixmap);
-}
-
-GdkPixmap *
-gimp_tool_get_mask (GimpToolClass *type)
-{
-  g_return_val_if_fail(type, NULL);
-  return (type->icon_mask);
-}
-
-gchar *
-gimp_tool_get_help_data (GimpTool *tool)
-{
-  GtkObject *object;
-  GimpToolClass *klass;
-
-  g_return_val_if_fail(tool, NULL);
-
-  object = GTK_OBJECT (tool);
-  
-  klass = GIMP_TOOL_CLASS (object->klass);
-	
-  return klass->help_data;
-}
-
 
 
 /*  standard member functions  */

@@ -26,6 +26,9 @@
 
 #include "apptypes.h"
 
+#include "tools/tool.h"
+#include "tools/tool_manager.h"
+
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
@@ -40,8 +43,6 @@
 #include "pixel_region.h"
 #include "tile_manager.h"
 #include "undo.h"
-
-#include "tools/tool.h"
 
 #include "libgimp/gimpintl.h"
 

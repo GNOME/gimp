@@ -22,6 +22,11 @@
 
 #include "apptypes.h"
 
+#include "tools/paint_core.h"
+#include "tools/paint_options.h"
+#include "tools/tool.h"
+#include "tools/tool_manager.h"
+
 #include "boundary.h"
 #include "drawable.h"
 #include "floating_sel.h"
@@ -36,10 +41,6 @@
 #include "pixel_region.h"
 #include "tile_manager.h"
 #include "undo.h"
-
-#include "tools/paint_core.h"
-#include "tools/paint_options.h"
-#include "tools/tool.h"
 
 #include "pdb/procedural_db.h"
 
@@ -627,7 +628,7 @@ gimage_mask_stroke (GImage       *gimage,
 
       /* Stroke with the correct tool */
       return_vals =
-	procedural_db_run_proc (tool_manager_get_active_PDB_string (),
+	procedural_db_run_proc (tool_manager_active_get_PDB_string (),
 				&nreturn_vals,
 				PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
 				PDB_INT32, (gint32) cpnt,

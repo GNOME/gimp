@@ -171,13 +171,6 @@ gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
 
   object_class->destroy = gimp_measure_tool_destroy;
 
-  tool_class->tool_name = N_("Measure");
-  tool_class->menu_path = N_("/Tools/Measure");
-  tool_class->menu_accel = "O";
-  tool_class->icon_data = (char **) measure_bits;
-  tool_class->tool_desc = N_("Measure angles and legnths");
-  tool_class->help_data = "tools/measure.html";
-  tool_class->tool_id = MEASURE;
   tool_class->tool_cursor = &measure_tool_cursor;
 
   tool_class->control        = measure_tool_control;
@@ -448,7 +441,7 @@ measure_tool_button_press (GimpTool       *tool,
        ! GTK_WIDGET_VISIBLE (gdisp->statusarea)))
     {
       measure_tool_info = info_dialog_new (_("Measure Tool"),
-					   gimp_tool_help_func, NULL);
+					   tool_manager_help_func, NULL);
       info_dialog_add_label (measure_tool_info, _("Distance:"), distance_buf);
       info_dialog_add_label (measure_tool_info, _("Angle:"), angle_buf);
 

@@ -23,6 +23,8 @@
 #include "apptypes.h"
 
 #include "tool.h"
+#include "tool_manager.h"
+
 #include "airbrush.h"
 #include "blend.h"
 #include "bucket_fill.h"
@@ -40,6 +42,7 @@
 #include "fuzzy_select.h"
 #include "gimpimage.h"
 #include "measure.h"
+#include "move.h"
 #include "paintbrush.h"
 #include "pencil.h"
 #include "perspective_tool.h"
@@ -55,12 +58,16 @@ register_tools (void)
 {
   GimpToolClass *color_picker = GIMP_TOOL_CLASS(gtk_type_class(GIMP_TYPE_COLOR_PICKER));
   GimpToolClass *measure_tool = GIMP_TOOL_CLASS(gtk_type_class(GIMP_TYPE_MEASURE_TOOL));
+  GimpToolClass *move_tool = GIMP_TOOL_CLASS(gtk_type_class(GIMP_TYPE_MOVE_TOOL));
 
   tool_manager_register (color_picker);
   tool_manager_register (measure_tool);
+  tool_manager_register (move_tool);
 
   gimp_color_picker_register ();
   gimp_measure_tool_register ();
+  gimp_move_tool_register ();
+
 /*
   procedural_db_register (&airbrush_proc);
   procedural_db_register (&airbrush_default_proc);

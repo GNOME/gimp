@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __TOOL_H__
-#define __TOOL_H__
+#ifndef __GIMP_TOOL_H__
+#define __GIMP_TOOL_H__
 
 
 #include "gimpobject.h"
@@ -64,27 +64,7 @@ struct _GimpToolClass
   /* stuff to be filled in by child classes */
 
   /* FIXME: most of this stuff must go away */
-  ToolOptions *tool_options;
-
   gchar	      *pdb_string;
-
-  gchar       *tool_name;
-
-  gchar       *menu_path;  
-  gchar       *menu_accel; 
-
-  gchar      **icon_data;
-  GdkPixmap   *icon_pixmap;
-  GdkBitmap   *icon_mask;
-
-  gchar       *tool_desc;
-  const gchar *help_data;
-
-  ToolType     tool_id;
-
-  GtkWidget   *tool_widget;
-
-  GimpContext *tool_context;
 
   BitmapCursor *tool_cursor;
   BitmapCursor *toggle_cursor;
@@ -121,51 +101,36 @@ struct _GimpToolClass
 
 /*  Function declarations  */
 
-GtkType     gimp_tool_get_type        (void);
+GtkType       gimp_tool_get_type        (void);
 
-void        gimp_tool_initialize      (GimpTool       *tool,
-				       GDisplay       *gdisplay);
-void	    gimp_tool_control	      (GimpTool       *tool,
-				       ToolAction      action,
-				       GDisplay       *gdisp);
-void        gimp_tool_button_press    (GimpTool       *tool,
-				       GdkEventButton *bevent,
-				       GDisplay       *gdisp);
-void        gimp_tool_button_release  (GimpTool       *tool,
-				       GdkEventButton *bevent,
-				       GDisplay       *gdisp);
-void        gimp_tool_motion          (GimpTool       *tool,
-				       GdkEventMotion *mevent,
-				       GDisplay       *gdisp);
-void        gimp_tool_arrow_key       (GimpTool       *tool,
-				       GdkEventKey    *kevent,
-				       GDisplay       *gdisp);
-void        gimp_tool_modifier_key    (GimpTool       *tool,
-				       GdkEventKey    *kevent,
-				       GDisplay       *gdisp);
-void        gimp_tool_cursor_update   (GimpTool       *tool,
-				       GdkEventMotion *mevent,
-				       GDisplay       *gdisp);
-void        gimp_tool_oper_update     (GimpTool       *tool,
-				       GdkEventMotion *mevent,
-				       GDisplay       *gdisp);
+void          gimp_tool_initialize      (GimpTool       *tool,
+					 GDisplay       *gdisplay);
+void	      gimp_tool_control         (GimpTool       *tool,
+					 ToolAction      action,
+					 GDisplay       *gdisp);
+void          gimp_tool_button_press    (GimpTool       *tool,
+					 GdkEventButton *bevent,
+					 GDisplay       *gdisp);
+void          gimp_tool_button_release  (GimpTool       *tool,
+					 GdkEventButton *bevent,
+					 GDisplay       *gdisp);
+void          gimp_tool_motion          (GimpTool       *tool,
+					 GdkEventMotion *mevent,
+					 GDisplay       *gdisp);
+void          gimp_tool_arrow_key       (GimpTool       *tool,
+					 GdkEventKey    *kevent,
+					 GDisplay       *gdisp);
+void          gimp_tool_modifier_key    (GimpTool       *tool,
+					 GdkEventKey    *kevent,
+					 GDisplay       *gdisp);
+void          gimp_tool_cursor_update   (GimpTool       *tool,
+					 GdkEventMotion *mevent,
+					 GDisplay       *gdisp);
+void          gimp_tool_oper_update     (GimpTool       *tool,
+					 GdkEventMotion *mevent,
+					 GDisplay       *gdisp);
 
-
-
-
-gchar     * tool_get_PDB_string       (GimpTool	*tool);
+const gchar * gimp_tool_get_PDB_string  (GimpTool       *tool);
 
 
-
-
-gchar *     gimp_tool_get_help_data   (GimpTool *tool);
-void	    gimp_tool_help_func       (const gchar *help_data);
-
-/*  don't unref these pixmaps, they are static!  */
-GdkPixmap * gimp_tool_get_pixmap           (GimpToolClass     *tool);
-GdkBitmap * gimp_tool_get_mask             (GimpToolClass     *tool);
-
-void      gimp_tool_show_options           (GimpTool *);
-
-
-#endif  /*  __TOOL_H__  */
+#endif  /*  __GIMP_TOOL_H__  */

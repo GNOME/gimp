@@ -886,7 +886,7 @@ help/C/toolbox/help/Makefile
 help/C/tools/Makefile
 help/images/Makefile],
 [
-   chmod +x gimptool
+   chmod +x gimptool-1.4
    sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile
    sed -e "/POTFILES =/r po-libgimp/POTFILES" po-libgimp/Makefile.in > po-libgimp/Makefile
    sed -e "/POTFILES =/r plug-ins/perl/po/POTFILES" plug-ins/perl/po/Makefile.in > plug-ins/perl/po/Makefile

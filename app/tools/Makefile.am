@@ -62,8 +62,8 @@ libapptools_la_SOURCES = \
 ##	magnify.h		\
 	measure.c		\
 	measure.h		\
-##	move.c			\
-##	move.h			\
+	move.c			\
+	move.h			\
 ##	paintbrush.c		\
 ##	paintbrush.h		\
 ##	paint_core.c		\

@@ -1,3 +1,38 @@
+2001-02-21  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: forgot one s/gimptool/gimptool-1.4/
+
+	* app/appenums.h: removed "UPDATE_CURSOR" from the ToolAction enum.
+
+	* app/context_manager.c: removed the toolbox toggle button updating
+	code here...
+
+	* app/toolbox.c: ...and handle it in the toolbox itself.
+
+	* app/devices.c: removed some obsolete old tool suff.
+
+	* app/tools/Makefile.am
+	* app/tools/move.[ch]: reactivated. Disabled the edit_selection
+	stuff for now. We need a way to temporary push tools to some stack
+	of the tool manager.
+
+	* app/tools/tool.[ch]: removed lot of stuff that is obsolete or
+	handled by the GimpToolInfo object now.
+
+	* app/tools/tool_manager.[ch]: stripped all tool options stuff
+	because they will be able to follow tool changes themselves.
+	Renamed some functions to be consistent.
+
+	* app/tools/tools.c: register the move tool again.
+
+	* app/cursorutil.c
+	* app/disp_callbacks.c
+	* app/gimage_mask.c
+	* app/global_edit.c
+	* app/tools/color_picker.c
+	* app/tools/measure.[ch]
+	* app/tools/tool_options.c: changed accordingly.
+
 2001-02-21  Simon Budig   <simon@gimp.org>
 
 	* app/disp_callbacks.c

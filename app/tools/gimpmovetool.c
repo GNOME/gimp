@@ -37,41 +37,39 @@
 
 #include "edit_selection.h"
 #include "move.h"
-#include "tools.h"
+#include "tool.h"
+#include "tool_manager.h"
 #include "tool_options.h"
 
 #include "libgimp/gimpintl.h"
 
-/*  the move structures  */
-
-typedef struct _MoveTool MoveTool;
-
-struct _MoveTool
-{
-  GimpLayer *layer;
-  Guide     *guide;
-  GDisplay  *disp;
-};
+#include "pixmaps2.h"
+#include "cursors/move_small.xbm"
+#include "cursors/move_small_mask.xbm"
 
 
-/*  move tool action functions  */
-static void   move_tool_button_press   (Tool           *tool,
-					GdkEventButton *bevent,
-					GDisplay       *gdisp);
-static void   move_tool_button_release (Tool           *tool,
-					GdkEventButton *bevent,
-					GDisplay       *gdisp);
-static void   move_tool_motion         (Tool           *tool,
-					GdkEventMotion *mevent,
-					GDisplay       *gdisp);
-static void   move_tool_cursor_update  (Tool           *tool,
-					GdkEventMotion *mevent,
-					GDisplay       *gdisp);
-static void   move_tool_control	       (Tool           *tool,
-					ToolAction      tool_action,
-					GDisplay       *gdisp);
+static void   gimp_move_tool_class_init (GimpMoveToolClass *klass);
+static void   gimp_move_tool_init       (GimpMoveTool      *move_tool);
 
-static void   move_create_gc           (GDisplay       *gdisp);
+static void   gimp_move_tool_destroy    (GtkObject         *object);
+
+static void   move_tool_button_press    (GimpTool          *tool,
+					 GdkEventButton    *bevent,
+					 GDisplay          *gdisp);
+static void   move_tool_button_release  (GimpTool          *tool,
+					 GdkEventButton    *bevent,
+					 GDisplay          *gdisp);
+static void   move_tool_motion          (GimpTool          *tool,
+					 GdkEventMotion    *mevent,
+					 GDisplay          *gdisp);
+static void   move_tool_cursor_update   (GimpTool          *tool,
+					 GdkEventMotion    *mevent,
+					 GDisplay          *gdisp);
+static void   move_tool_control	        (GimpTool          *tool,
+					 ToolAction         tool_action,
+					 GDisplay          *gdisp);
+
+static void   move_create_gc            (GDisplay          *gdisp);
 
 
 /*  the move tool options  */
@@ -80,20 +78,129 @@ static ToolOptions *move_options = NULL;
 /*  local variables  */
 static GdkGC *move_gc = NULL;
 
+BitmapCursor move_cursor =
+{
+  move_small_bits, move_small_mask_bits,
+  move_small_width, move_small_height,
+  0, 0, NULL, NULL, NULL
+};
+
+
+static GimpToolClass *parent_class = NULL;
+
+
+void
+gimp_move_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_MOVE_TOOL,
+			      N_("Move"),
+			      N_("/Tools/Transform Tools/Move"), "M",
+			      N_("Move layers & selections"),
+			      NULL, "tools/move.html",
+			      (const gchar **) move_bits);
+}
+
+GtkType
+gimp_move_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
+
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+        "GimpMoveTool",
+        sizeof (GimpMoveTool),
+        sizeof (GimpMoveToolClass),
+        (GtkClassInitFunc) gimp_move_tool_class_init,
+        (GtkObjectInitFunc) gimp_move_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL,
+      };
+      
+      tool_type = gtk_type_unique (GIMP_TYPE_TOOL, &tool_info);
+    }
+
+  return tool_type;
+}
+
+static void
+gimp_move_tool_class_init (GimpMoveToolClass *klass)
+{
+  GtkObjectClass *object_class;
+  GimpToolClass  *tool_class;
+
+  object_class = (GtkObjectClass *) klass;
+  tool_class   = (GimpToolClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_TOOL);
+
+  object_class->destroy = gimp_move_tool_destroy;
+
+  tool_class->tool_cursor = &move_cursor;
+
+  tool_class->control        = move_tool_control;
+  tool_class->button_press   = move_tool_button_press;
+  tool_class->button_release = move_tool_button_release;
+  tool_class->motion         = move_tool_motion;
+  tool_class->cursor_update  = move_tool_cursor_update;
+}
+
+static void
+gimp_move_tool_init (GimpMoveTool *move_tool)
+{
+  GimpTool *tool;
+
+  tool = GIMP_TOOL (move_tool);
+
+  /*  The tool options  */
+  if (! move_options)
+    {
+      move_options = tool_options_new (_("Move Tool"));
+
+      /* tools_register (MOVE, (ToolOptions *) move_options); */
+    }
+
+  move_tool->layer = NULL;
+  move_tool->guide = NULL;
+  move_tool->disp  = NULL;
+
+  tool->auto_snap_to = FALSE;  /*  Don't snap to guides  */
+}
+
+static void
+gimp_move_tool_destroy (GtkObject *object)
+{
+  GimpMoveTool *move_tool;
+  GimpTool     *tool;
+
+  move_tool = GIMP_MOVE_TOOL (object);
+  tool      = GIMP_TOOL (move_tool);
+
+  if (tool->gdisp)
+    {
+      if (move_tool->guide)
+	gdisplay_draw_guide (tool->gdisp, move_tool->guide, FALSE);
+    }
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
 
 /*  move action functions  */
 
 static void
-move_tool_button_press (Tool           *tool,
+move_tool_button_press (GimpTool       *tool,
 			GdkEventButton *bevent,
 			GDisplay       *gdisp)
 {
-  MoveTool  *move;
-  GimpLayer *layer;
-  Guide     *guide;
-  gint       x, y;
+  GimpMoveTool *move;
+  GimpLayer    *layer;
+  Guide        *guide;
+  gint          x, y;
 
-  move = (MoveTool *) tool->private;
+  move = GIMP_MOVE_TOOL (tool);
 
   tool->gdisp = gdisp;
   move->layer = NULL;
@@ -103,6 +210,8 @@ move_tool_button_press (Tool           *tool,
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
 			       FALSE, FALSE);
 
+#warning FIXME fix edit_selection (allow pushing of temp tools)
+#if 0
   if (bevent->state & GDK_MOD1_MASK &&
       !gimage_mask_is_empty (gdisp->gimage))
     {
@@ -116,6 +225,7 @@ move_tool_button_press (Tool           *tool,
     }
   else
     {
+#endif
       if (gdisp->draw_guides &&
 	  (guide = gdisplay_find_guide (gdisp, bevent->x, bevent->y)))
 	{
@@ -144,14 +254,18 @@ move_tool_button_press (Tool           *tool,
 	    {
 	      move->layer = gimp_image_floating_sel (gdisp->gimage);
 	    }
+#if 0
 	  /*  Otherwise, init the edit selection  */
 	  else
 	    {
 	      gimp_image_set_active_layer (gdisp->gimage, layer);
 	      init_edit_selection (tool, gdisp, bevent, EDIT_LAYER_TRANSLATE);
 	    }
+#endif
 	  tool->state = ACTIVE;
+#if 0
 	}
+#endif
     }
 
   /* if we've got an active tool grab the pointer */
@@ -210,16 +324,16 @@ move_draw_guide (GDisplay *gdisp,
 }
 
 static void
-move_tool_button_release (Tool           *tool,
+move_tool_button_release (GimpTool       *tool,
 			  GdkEventButton *bevent,
 			  GDisplay       *gdisp)
 {
-  MoveTool *move;
-  gboolean  delete_guide;
-  gint      x1, y1;
-  gint      x2, y2;
+  GimpMoveTool *move;
+  gboolean      delete_guide;
+  gint          x1, y1;
+  gint          x2, y2;
 
-  move = (MoveTool *) tool->private;
+  move = GIMP_MOVE_TOOL (tool);
 
   gdk_flush ();
 
@@ -291,15 +405,15 @@ move_tool_button_release (Tool           *tool,
 }
 
 static void
-move_tool_motion (Tool           *tool,
+move_tool_motion (GimpTool       *tool,
 		  GdkEventMotion *mevent,
 		  GDisplay       *gdisp)
 
 {
-  MoveTool *move;
-  gint      x, y;
+  GimpMoveTool *move;
+  gint          x, y;
 
-  move = (MoveTool *) tool->private;
+  move = GIMP_MOVE_TOOL (tool);
 
   if (move->guide)
     {
@@ -327,22 +441,22 @@ move_tool_motion (Tool           *tool,
 }
 
 static void
-move_tool_cursor_update (Tool           *tool,
+move_tool_cursor_update (GimpTool       *tool,
 			 GdkEventMotion *mevent,
 			 GDisplay       *gdisp)
 {
-  MoveTool  *move;
-  Guide     *guide;
-  GimpLayer *layer;
-  gint       x, y;
+  GimpMoveTool *move;
+  Guide        *guide;
+  GimpLayer    *layer;
+  gint          x, y;
 
-  move = (MoveTool *) tool->private;
+  move = GIMP_MOVE_TOOL (tool);
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
 			       FALSE, FALSE);
 
   if (mevent->state & GDK_MOD1_MASK &&
-      !gimage_mask_is_empty (gdisp->gimage))
+      ! gimage_mask_is_empty (gdisp->gimage))
     {
       gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
 				    RECT_SELECT,
@@ -412,15 +526,14 @@ move_tool_cursor_update (Tool           *tool,
     }
 }
 
-
 static void
-move_tool_control (Tool       *tool,
+move_tool_control (GimpTool   *tool,
 		   ToolAction  action,
 		   GDisplay   *gdisp)
 {
-  MoveTool *move;
+  GimpMoveTool *move;
 
-  move = tool->private;
+  move = GIMP_MOVE_TOOL (tool);
 
   switch (action)
     {
@@ -455,99 +568,49 @@ move_create_gc (GDisplay *gdisp)
 }
 
 void
-move_tool_start_hguide (Tool     *tool,
-			GDisplay *gdisp)
+gimp_move_tool_start_hguide (GimpTool *tool,
+			     GDisplay *gdisp)
 {
-  MoveTool *private;
+  GimpMoveTool *move;
+
+  move = GIMP_MOVE_TOOL (tool);
 
   selection_pause (gdisp->select);
 
   tool->gdisp       = gdisp;
   tool->scroll_lock = TRUE;
 
-  private = tool->private;
+  if (move->guide && move->disp && move->disp->gimage)
+    gdisplay_draw_guide (move->disp, move->guide, FALSE);
 
-  if (private->guide && private->disp && private->disp->gimage)
-    gdisplay_draw_guide (private->disp, private->guide, FALSE);
-
-  private->guide = gimp_image_add_hguide (gdisp->gimage);
-  private->disp  = gdisp;
+  move->guide = gimp_image_add_hguide (gdisp->gimage);
+  move->disp  = gdisp;
 
   tool->state = ACTIVE;
 
-  undo_push_guide (gdisp->gimage, private->guide);
+  undo_push_guide (gdisp->gimage, move->guide);
 }
 
 void
-move_tool_start_vguide (Tool     *tool,
-			GDisplay *gdisp)
+gimp_move_tool_start_vguide (GimpTool *tool,
+			     GDisplay *gdisp)
 {
-  MoveTool *private;
+  GimpMoveTool *move;
+
+  move = GIMP_MOVE_TOOL (tool);
 
   selection_pause (gdisp->select);
 
   tool->gdisp       = gdisp;
   tool->scroll_lock = TRUE;
 
-  private = tool->private;
+  if (move->guide && move->disp && move->disp->gimage)
+    gdisplay_draw_guide (move->disp, move->guide, FALSE);
 
-  if (private->guide && private->disp && private->disp->gimage)
-    gdisplay_draw_guide (private->disp, private->guide, FALSE);
-
-  private->guide = gimp_image_add_vguide (gdisp->gimage);
-  private->disp  = gdisp;
+  move->guide = gimp_image_add_vguide (gdisp->gimage);
+  move->disp  = gdisp;
 
   tool->state = ACTIVE;
 
-  undo_push_guide (gdisp->gimage, private->guide);
-}
-
-Tool *
-tools_new_move_tool (void)
-{
-  Tool     *tool;
-  MoveTool *private;
-
-  /*  The tool options  */
-  if (! move_options)
-    {
-      move_options = tool_options_new (_("Move Tool"));
-      tools_register (MOVE, (ToolOptions *) move_options);
-    }
-
-  tool = tools_new_tool (MOVE);
-  private = g_new0 (MoveTool, 1);
-
-  private->layer = NULL;
-  private->guide = NULL;
-  private->disp  = NULL;
-
-  tool->auto_snap_to = FALSE;  /*  Don't snap to guides  */
-
-  tool->private = (void *) private;
-
-  tool->button_press_func   = move_tool_button_press;
-  tool->button_release_func = move_tool_button_release;
-  tool->motion_func         = move_tool_motion;
-  tool->arrow_keys_func     = edit_sel_arrow_keys_func;
-  tool->cursor_update_func  = move_tool_cursor_update;
-  tool->control_func        = move_tool_control;
-
-  return tool;
-}
-
-void
-tools_free_move_tool (Tool *tool)
-{
-  MoveTool *move;
-
-  move = (MoveTool *) tool->private;
-
-  if (tool->gdisp)
-    {
-      if (move->guide)
-	gdisplay_draw_guide (tool->gdisp, move->guide, FALSE);
-    }
-
-  g_free (move);
+  undo_push_guide (gdisp->gimage, move->guide);
 }
