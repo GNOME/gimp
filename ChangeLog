@@ -1,5 +1,6 @@
 2001-06-15  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in
 	* plug-ins/print/README
 	* plug-ins/print/RELNOTES
 	* plug-ins/print/gimp_main_window.c
