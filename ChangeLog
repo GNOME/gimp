@@ -1,3 +1,8 @@
+2002-05-30  Sven Neumann  <sven@gimp.org>
+
+	* tools/Makefile.am (EXTRA_DIST): include gimp-mkproxy. Should fix
+	bug #83455.
+
 2002-05-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c: fixed #83418, which was caused by
