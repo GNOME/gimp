@@ -1,5 +1,8 @@
 2004-07-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gimpressionist/Makefile.am (gimpressionist_sources):
+	added paper.h.
+
 	* plug-ins/MapObject/Makefile.am (MapObject_SOURCES): added back
 	arcball.h.
 
