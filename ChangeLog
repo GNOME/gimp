@@ -1,5 +1,13 @@
 2005-01-11  Sven Neumann  <neumann@jpk.com>
 
+	* app/pdb/drawable_transform_cmds.c
+	* libgimp/gimpenums.h
+	* plug-ins/pygimp/gimpenums.py
+	* tools/pdbgen/enums.pl: regenerated after change of
+	GimpInterpolationType enum.
+
+2005-01-11  Sven Neumann  <neumann@jpk.com>
+
 	* app/base/base-enums.[ch]
 	* app/core/gimpdrawable-transform.c
 	* app/core/gimpdrawable.c

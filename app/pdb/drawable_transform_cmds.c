@@ -218,7 +218,7 @@ drawable_transform_flip_invoker (Gimp         *gimp,
     success = FALSE;
 
   interpolation = args[6].value.pdb_int;
-  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_CUBIC)
+  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_LANCZOS)
     success = FALSE;
 
   supersample = args[7].value.pdb_int ? TRUE : FALSE;
@@ -303,7 +303,7 @@ static ProcArg drawable_transform_flip_inargs[] =
   {
     GIMP_PDB_INT32,
     "interpolation",
-    "Type of interpolation: { GIMP_INTERPOLATION_NONE (0), GIMP_INTERPOLATION_LINEAR (1), GIMP_INTERPOLATION_CUBIC (2) }"
+    "Type of interpolation: { GIMP_INTERPOLATION_NONE (0), GIMP_INTERPOLATION_LINEAR (1), GIMP_INTERPOLATION_CUBIC (2), GIMP_INTERPOLATION_LANCZOS (3) }"
   },
   {
     GIMP_PDB_INT32,
@@ -529,7 +529,7 @@ drawable_transform_perspective_invoker (Gimp         *gimp,
     success = FALSE;
 
   interpolation = args[10].value.pdb_int;
-  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_CUBIC)
+  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_LANCZOS)
     success = FALSE;
 
   supersample = args[11].value.pdb_int ? TRUE : FALSE;
@@ -637,7 +637,7 @@ static ProcArg drawable_transform_perspective_inargs[] =
   {
     GIMP_PDB_INT32,
     "interpolation",
-    "Type of interpolation: { GIMP_INTERPOLATION_NONE (0), GIMP_INTERPOLATION_LINEAR (1), GIMP_INTERPOLATION_CUBIC (2) }"
+    "Type of interpolation: { GIMP_INTERPOLATION_NONE (0), GIMP_INTERPOLATION_LINEAR (1), GIMP_INTERPOLATION_CUBIC (2), GIMP_INTERPOLATION_LANCZOS (3) }"
   },
   {
     GIMP_PDB_INT32,
@@ -1001,7 +1001,7 @@ drawable_transform_rotate_invoker (Gimp         *gimp,
     success = FALSE;
 
   interpolation = args[6].value.pdb_int;
-  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_CUBIC)
+  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_LANCZOS)
     success = FALSE;
 
   supersample = args[7].value.pdb_int ? TRUE : FALSE;
@@ -1089,7 +1089,7 @@ static ProcArg drawable_transform_rotate_inargs[] =
   {
     GIMP_PDB_INT32,
     "interpolation",
-    "Type of interpolation: { GIMP_INTERPOLATION_NONE (0), GIMP_INTERPOLATION_LINEAR (1), GIMP_INTERPOLATION_CUBIC (2) }"
+    "Type of interpolation: { GIMP_INTERPOLATION_NONE (0), GIMP_INTERPOLATION_LINEAR (1), GIMP_INTERPOLATION_CUBIC (2), GIMP_INTERPOLATION_LANCZOS (3) }"
   },
   {
     GIMP_PDB_INT32,
@@ -1310,7 +1310,7 @@ drawable_transform_scale_invoker (Gimp         *gimp,
     success = FALSE;
 
   interpolation = args[6].value.pdb_int;
-  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_CUBIC)
+  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_LANCZOS)
     success = FALSE;
 
   supersample = args[7].value.pdb_int ? TRUE : FALSE;
@@ -1400,7 +1400,7 @@ static ProcArg drawable_transform_scale_inargs[] =
   {
     GIMP_PDB_INT32,
     "interpolation",
-    "Type of interpolation: { GIMP_INTERPOLATION_NONE (0), GIMP_INTERPOLATION_LINEAR (1), GIMP_INTERPOLATION_CUBIC (2) }"
+    "Type of interpolation: { GIMP_INTERPOLATION_NONE (0), GIMP_INTERPOLATION_LINEAR (1), GIMP_INTERPOLATION_CUBIC (2), GIMP_INTERPOLATION_LANCZOS (3) }"
   },
   {
     GIMP_PDB_INT32,
@@ -1619,7 +1619,7 @@ drawable_transform_shear_invoker (Gimp         *gimp,
     success = FALSE;
 
   interpolation = args[4].value.pdb_int;
-  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_CUBIC)
+  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_LANCZOS)
     success = FALSE;
 
   supersample = args[5].value.pdb_int ? TRUE : FALSE;
@@ -1694,7 +1694,7 @@ static ProcArg drawable_transform_shear_inargs[] =
   {
     GIMP_PDB_INT32,
     "interpolation",
-    "Type of interpolation: { GIMP_INTERPOLATION_NONE (0), GIMP_INTERPOLATION_LINEAR (1), GIMP_INTERPOLATION_CUBIC (2) }"
+    "Type of interpolation: { GIMP_INTERPOLATION_NONE (0), GIMP_INTERPOLATION_LINEAR (1), GIMP_INTERPOLATION_CUBIC (2), GIMP_INTERPOLATION_LANCZOS (3) }"
   },
   {
     GIMP_PDB_INT32,
@@ -1910,7 +1910,7 @@ drawable_transform_2d_invoker (Gimp         *gimp,
     success = FALSE;
 
   interpolation = args[9].value.pdb_int;
-  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_CUBIC)
+  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_LANCZOS)
     success = FALSE;
 
   supersample = args[10].value.pdb_int ? TRUE : FALSE;
@@ -2012,7 +2012,7 @@ static ProcArg drawable_transform_2d_inargs[] =
   {
     GIMP_PDB_INT32,
     "interpolation",
-    "Type of interpolation: { GIMP_INTERPOLATION_NONE (0), GIMP_INTERPOLATION_LINEAR (1), GIMP_INTERPOLATION_CUBIC (2) }"
+    "Type of interpolation: { GIMP_INTERPOLATION_NONE (0), GIMP_INTERPOLATION_LINEAR (1), GIMP_INTERPOLATION_CUBIC (2), GIMP_INTERPOLATION_LANCZOS (3) }"
   },
   {
     GIMP_PDB_INT32,
@@ -2274,7 +2274,7 @@ drawable_transform_matrix_invoker (Gimp         *gimp,
     success = FALSE;
 
   interpolation = args[11].value.pdb_int;
-  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_CUBIC)
+  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_LANCZOS)
     success = FALSE;
 
   supersample = args[12].value.pdb_int ? TRUE : FALSE;
@@ -2390,7 +2390,7 @@ static ProcArg drawable_transform_matrix_inargs[] =
   {
     GIMP_PDB_INT32,
     "interpolation",
-    "Type of interpolation: { GIMP_INTERPOLATION_NONE (0), GIMP_INTERPOLATION_LINEAR (1), GIMP_INTERPOLATION_CUBIC (2) }"
+    "Type of interpolation: { GIMP_INTERPOLATION_NONE (0), GIMP_INTERPOLATION_LINEAR (1), GIMP_INTERPOLATION_CUBIC (2), GIMP_INTERPOLATION_LANCZOS (3) }"
   },
   {
     GIMP_PDB_INT32,
