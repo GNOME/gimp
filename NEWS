@@ -1,4 +1,4 @@
-
+2
             The GNU Image Manipulation Program Version 1.3
                           A Colorspace Odyssey
 
@@ -33,6 +33,14 @@ Bugs fixed since the last release
 - 136937: allow translation of tool-option menus (Sven)
 - 136645: fixed crash when dropping pattern on a text layer (Sven)
 - 136907: fixed off-by-one error in gimp_pixel_fetcher_get_pixel() (Simon)
+- 73610:  improvements to Script-Fu error reporting (Kevin Cozen)
+- 136702: made supersampling in transform tools optional (Raphael, Mitch)
+- 118356: keep the font size fixed when changing the unit (Sven)
+- 136623: don't set the text color on modified text layers (Sven)
+- 135023: show mask state on unselected layers also (Simon)
+- 137076: don't discard session info for dialogs hidden with Tab (Mitch)
+- 124176: use a counter to track undo_[freeze|thaw] (Simon)
+- 128833: don't make tool dialogs transient to the image window (Sven)
 
 
 Bugs fixed in GIMP 2.0pre4
