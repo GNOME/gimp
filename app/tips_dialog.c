@@ -72,7 +72,15 @@ tips_dialog_create (void)
       temp = g_strdup_printf ("%s" G_DIR_SEPARATOR_S TIPS_DIR_NAME
                               G_DIR_SEPARATOR_S "%s",
 			      gimp_data_directory (),
+      /* 
+       *  The string "gimp_tips.txt" needs special handling by
+       *  translators. It is used to identify the tips file to
+       *  be used for the current locale. Please translate it
+       *  accordingly. For example for the german locale that
+       *  would be "gimp_tips.de.txt".
+       */
                               _("gimp_tips.txt"));
+
       read_tips_file (temp);
       g_free (temp);
     }

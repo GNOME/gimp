@@ -1,18 +1,23 @@
+2002-03-08  Sven Neumann  <sven@gimp.org>
+
+	* app/tips_dialog.c (tips_dialog_create): added a comment for 
+	translators to explain how to deal with "gimp_tips.txt".
+
 2002-03-07  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * configure.in: Added Portuguese locale (pt) to ALL_LINGUAS.
+	* configure.in: Added Portuguese locale (pt) to ALL_LINGUAS.
 
 2002-03-06  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * tips/gimp_tips.pt.txt: Finnished Portuguese translation.
+	* tips/gimp_tips.pt.txt: Finnished Portuguese translation.
 
 2002-03-05  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * tips/gimp_tips.pt.txt: Updated Portuguese translation.
+	* tips/gimp_tips.pt.txt: Updated Portuguese translation.
 
 2002-03-02  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * tips/gimp_tips.pt.txt: Added Portuguese translation.
+	* tips/gimp_tips.pt.txt: Added Portuguese translation.
 
 2002-02-26  Sven Neumann  <sven@gimp.org>
 
