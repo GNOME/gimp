@@ -44,7 +44,7 @@ struct _GimpTextTool
   gint           x2, y2;
 
   GimpText      *text;
-  GimpLayer     *layer;
+  GimpTextLayer *layer;
   GimpImage     *image;
 
   GtkWidget     *editor;

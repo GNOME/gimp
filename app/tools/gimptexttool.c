@@ -89,7 +89,11 @@ static void      gimp_text_tool_cursor_update  (GimpTool          *tool,
                                                 GimpDisplay       *gdisp);
 
 static void      gimp_text_tool_connect        (GimpTextTool      *text_tool,
+                                                GimpTextLayer     *layer,
                                                 GimpText          *text);
+static void      gimp_text_tool_layer_notify   (GimpTextLayer     *layer,
+                                                GParamSpec        *pspec,
+                                                GimpTextTool      *text_tool);
 static void      gimp_text_tool_proxy_notify   (GimpText          *text,
                                                 GParamSpec        *pspec,
                                                 GimpTextTool      *text_tool);
@@ -200,7 +204,7 @@ gimp_text_tool_init (GimpTextTool *text_tool)
   text_tool->image   = NULL;
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_preserve    (tool->control, FALSE);
+  gimp_tool_control_set_preserve    (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TEXT_TOOL_CURSOR);
 }
 
@@ -318,7 +322,7 @@ gimp_text_tool_button_press (GimpTool        *tool,
     }
 
   /*  create a new text layer  */
-  gimp_text_tool_connect (text_tool, NULL);
+  gimp_text_tool_connect (text_tool, NULL, NULL);
   gimp_text_tool_editor (text_tool);
 }
 
@@ -334,67 +338,99 @@ gimp_text_tool_cursor_update (GimpTool        *tool,
 }
 
 static void
-gimp_text_tool_connect (GimpTextTool *text_tool,
-                        GimpText     *text)
+gimp_text_tool_connect (GimpTextTool  *text_tool,
+                        GimpTextLayer *layer,
+                        GimpText      *text)
 {
-  GimpTool        *tool = GIMP_TOOL (text_tool);
-  GimpTextOptions *options;
-  GtkWidget       *button;
+  GimpTool *tool = GIMP_TOOL (text_tool);
 
-  if (text_tool->text == text)
-    return;
+  g_return_if_fail (text == NULL || (layer != NULL && layer->text == text));
 
-  options = GIMP_TEXT_OPTIONS (tool->tool_info->tool_options);
-
-  button = g_object_get_data (G_OBJECT (options), "gimp-text-to-vectors");
-
-  if (text_tool->text)
+  if (text_tool->text != text)
     {
-      g_signal_handlers_disconnect_by_func (text_tool->text,
-                                            gimp_text_tool_text_notify,
-                                            text_tool);
+      GimpTextOptions *options;
+      GtkWidget       *button;
 
-      if (text_tool->pending)
-        gimp_text_tool_apply (text_tool);
+      options = GIMP_TEXT_OPTIONS (tool->tool_info->tool_options);
+      button = g_object_get_data (G_OBJECT (options), "gimp-text-to-vectors");
 
-      if (button)
+      if (text_tool->text)
         {
-          gtk_widget_set_sensitive (button, FALSE);
-          g_signal_handlers_disconnect_by_func (button,
-                                                gimp_text_tool_create_vectors,
+          g_signal_handlers_disconnect_by_func (text_tool->text,
+                                                gimp_text_tool_text_notify,
                                                 text_tool);
+
+          if (text_tool->pending)
+            gimp_text_tool_apply (text_tool);
+
+          if (button)
+            {
+              gtk_widget_set_sensitive (button, FALSE);
+              g_signal_handlers_disconnect_by_func (button,
+                                                    gimp_text_tool_create_vectors,
+                                                    text_tool);
+            }
+
+          if (text_tool->editor)
+            gtk_widget_destroy (text_tool->editor);
+
+          g_object_unref (text_tool->text);
+          text_tool->text = NULL;
+
+          g_object_set (G_OBJECT (text_tool->proxy), "text", NULL, NULL);
         }
 
-      if (text_tool->editor)
-        gtk_widget_destroy (text_tool->editor);
+      gimp_context_define_property (GIMP_CONTEXT (options),
+                                    GIMP_CONTEXT_PROP_FOREGROUND,
+                                    text != NULL);
 
-      g_object_unref (text_tool->text);
-      text_tool->text = NULL;
-
-      g_object_set (G_OBJECT (text_tool->proxy), "text", NULL, NULL);
-    }
-
-  gimp_context_define_property (GIMP_CONTEXT (options),
-                                GIMP_CONTEXT_PROP_FOREGROUND, text != NULL);
-
-  if (text)
-    {
-      gimp_config_sync (GIMP_CONFIG (text), GIMP_CONFIG (text_tool->proxy), 0);
-
-      text_tool->text = g_object_ref (text);
-
-      g_signal_connect (text, "notify",
-                        G_CALLBACK (gimp_text_tool_text_notify),
-                        text_tool);
-
-      if (button)
+      if (text)
         {
-          g_signal_connect_swapped (button, "clicked",
-                                    G_CALLBACK (gimp_text_tool_create_vectors),
-                                    text_tool);
-          gtk_widget_set_sensitive (button, TRUE);
+          gimp_config_sync (GIMP_CONFIG (text),
+                            GIMP_CONFIG (text_tool->proxy), 0);
+
+          text_tool->text = g_object_ref (text);
+
+          g_signal_connect (text, "notify",
+                            G_CALLBACK (gimp_text_tool_text_notify),
+                            text_tool);
+
+          if (button)
+            {
+              g_signal_connect_swapped (button, "clicked",
+                                        G_CALLBACK (gimp_text_tool_create_vectors),
+                                        text_tool);
+              gtk_widget_set_sensitive (button, TRUE);
+            }
         }
     }
+
+  if (text_tool->layer != layer)
+    {
+      if (text_tool->layer)
+        {
+          g_signal_handlers_disconnect_by_func (text_tool->layer,
+                                                gimp_text_tool_layer_notify,
+                                                text_tool);
+          text_tool->layer = NULL;
+        }
+
+      text_tool->layer = layer;
+
+      if (layer)
+        g_signal_connect_object (text_tool->layer, "notify::modified",
+                                 G_CALLBACK (gimp_text_tool_layer_notify),
+                                 text_tool, 0);
+    }
+}
+
+static void
+gimp_text_tool_layer_notify (GimpTextLayer *layer,
+                             GParamSpec    *pspec,
+                             GimpTextTool  *text_tool)
+{
+  if (layer->modified)
+    gimp_text_tool_connect (text_tool, NULL, NULL);
 }
 
 static void
@@ -484,7 +520,7 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
 {
   const GParamSpec *pspec = NULL;
   GimpImage        *image;
-  GimpTextLayer    *text_layer;
+  GimpTextLayer    *layer;
   GObject          *src;
   GObject          *dest;
   GList            *list;
@@ -500,10 +536,10 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   g_return_if_fail (text_tool->text != NULL);
   g_return_if_fail (text_tool->layer != NULL);
 
-  image      = gimp_item_get_image (GIMP_ITEM (text_tool->layer));
-  text_layer = GIMP_TEXT_LAYER (text_tool->layer);
+  layer = text_tool->layer;
+  image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  g_return_if_fail (text_layer->text == text_tool->text);
+  g_return_if_fail (layer->text == text_tool->text);
 
   /*  Walk over the list of changes and figure out if we are changing
    *  a single property or need to push a full text undo.
@@ -533,7 +569,7 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
           GimpTextUndo *text_undo = GIMP_TEXT_UNDO (undo);
 
           if (text_undo->pspec == pspec &&
-              GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (text_layer))
+              GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
             {
               guint now = time (NULL);
 
@@ -550,20 +586,17 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
 
   if (push_undo)
     {
-      gimp_tool_control_set_preserve (GIMP_TOOL (text_tool)->control, TRUE);
-
       /*  If the layer contains a mask,
        *  gimp_text_layer_render() might have to resize it.
        */
-      undo_group = ((text_tool->layer->mask != NULL) || text_layer->modified);
+      undo_group = ((GIMP_LAYER (layer)->mask != NULL) || layer->modified);
       if (undo_group)
         gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, NULL);
 
-      if (text_layer->modified)
-        gimp_image_undo_push_drawable_mod (image, NULL,
-                                           GIMP_DRAWABLE (text_layer));
+      if (layer->modified)
+        gimp_image_undo_push_drawable_mod (image, NULL, GIMP_DRAWABLE (layer));
 
-      gimp_image_undo_push_text_layer (image, NULL, text_layer, pspec);
+      gimp_image_undo_push_text_layer (image, NULL, layer, pspec);
     }
 
   src  = G_OBJECT (text_tool->proxy);
@@ -600,13 +633,8 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   g_signal_handlers_unblock_by_func (dest,
                                      gimp_text_tool_text_notify, text_tool);
 
-  if (push_undo)
-    {
-      if (undo_group)
-        gimp_image_undo_group_end (image);
-
-      gimp_tool_control_set_preserve (GIMP_TOOL (text_tool)->control, FALSE);
-    }
+  if (push_undo && undo_group)
+    gimp_image_undo_group_end (image);
 
   gimp_image_flush (image);
 }
@@ -619,8 +647,6 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
   if (! text_tool->text || ! text_tool->image)
     return;
 
-  gimp_tool_control_set_preserve (GIMP_TOOL (text_tool)->control, TRUE);
-
   vectors = gimp_text_vectors_new (text_tool->image, text_tool->text);
 
   if (text_tool->layer)
@@ -632,8 +658,6 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
     }
 
   gimp_image_add_vectors (text_tool->image, vectors, -1);
-
-  gimp_tool_control_set_preserve (GIMP_TOOL (text_tool)->control, FALSE);
 
   gimp_image_flush (text_tool->image);
 }
@@ -668,9 +692,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
   if (! layer)
     return;
 
-  gimp_text_tool_connect (text_tool, GIMP_TEXT_LAYER (layer)->text);
-
-  gimp_tool_control_set_preserve (tool->control, TRUE);
+  gimp_text_tool_connect (text_tool, GIMP_TEXT_LAYER (layer), text);
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT,
                                _("Add Text Layer"));
@@ -684,8 +706,6 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
   gimp_image_add_layer (image, layer, -1);
 
   gimp_image_undo_group_end (image);
-
-  gimp_tool_control_set_preserve (tool->control, FALSE);
 
   gimp_image_flush (image);
 
@@ -753,24 +773,20 @@ gimp_text_tool_confirm_response (GtkWidget    *widget,
                                  gint          response_id,
                                  GimpTextTool *text_tool)
 {
-  GimpLayer *layer = text_tool->layer;
+  GimpTextLayer *layer = text_tool->layer;
 
   gtk_widget_destroy (widget);
 
-  if (layer &&
-      GIMP_IS_TEXT_LAYER (layer) && GIMP_TEXT_LAYER (layer)->text)
+  if (layer && layer->text)
     {
-      GimpTextLayer *text_layer = GIMP_TEXT_LAYER (layer);
-
       switch (response_id)
         {
         case RESPONSE_NEW:
-          gimp_text_tool_create_layer (text_tool, text_layer->text);
+          gimp_text_tool_create_layer (text_tool, layer->text);
           break;
 
         case GTK_RESPONSE_OK:
-          gimp_text_tool_connect (text_tool, text_layer->text);
-          text_tool->layer = layer;
+          gimp_text_tool_connect (text_tool, layer, layer->text);
           break;
 
         default:
@@ -904,34 +920,29 @@ gimp_text_tool_set_drawable (GimpTextTool *text_tool,
     {
       if (GIMP_IS_TEXT_LAYER (drawable) && GIMP_TEXT_LAYER (drawable)->text)
         {
-          GimpTextLayer *text_layer = GIMP_TEXT_LAYER (drawable);
+          GimpTextLayer *layer = GIMP_TEXT_LAYER (drawable);
 
-          if (text_layer->text == text_tool->text)
-            {
-              text_tool->layer = GIMP_LAYER (drawable);
-              return TRUE;
-            }
+          if (layer == text_tool->layer && layer->text == text_tool->text)
+            return TRUE;
 
-          if (text_layer->modified)
+          if (layer->modified)
             {
               if (confirm)
                 {
-                  gimp_text_tool_connect (text_tool, NULL);
-                  text_tool->layer = GIMP_LAYER (drawable);
+                  gimp_text_tool_connect (text_tool, layer, NULL);
                   gimp_text_tool_confirm_dialog (text_tool);
                   return TRUE;
                 }
             }
           else
             {
-              gimp_text_tool_connect (text_tool, text_layer->text);
-              text_tool->layer = GIMP_LAYER (drawable);
+              gimp_text_tool_connect (text_tool, layer, layer->text);
               return TRUE;
             }
         }
     }
 
-  gimp_text_tool_connect (text_tool, NULL);
+  gimp_text_tool_connect (text_tool, NULL, NULL);
   text_tool->layer = NULL;
 
   return FALSE;
