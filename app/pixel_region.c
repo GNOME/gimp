@@ -135,6 +135,7 @@ pixel_region_get_row (PR, x, y, w, data, subsample)
   int end;
   int boundary;
   int b;
+  int npixels;
 
   end = x + w;
 
@@ -144,16 +145,28 @@ pixel_region_get_row (PR, x, y, w, data, subsample)
     {
       tile = tile_manager_get_tile (PR->tiles, x, y, 0, TRUE, FALSE);
       tile_data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
-      boundary = x + (tile->ewidth - (x % TILE_WIDTH));
-      inc = subsample * tile->bpp;
+      npixels = tile->ewidth - (x % TILE_WIDTH);
 
-      for ( ; x < end && x < boundary; x += subsample)
+      if ((x + npixels) > end) /* make sure we don't write past the end */
+	npixels = end - x;
+
+      if (subsample == 1) /* optimize for the common case */
+      {
+	memcpy(data, tile_data, tile->bpp*npixels);
+	data += tile->bpp*npixels;
+	x += npixels;
+      }
+      else
+      {
+	boundary = x + npixels;
+	inc = subsample * tile->bpp;
+	for ( ; x < boundary; x += subsample)
 	{
 	  for (b = 0; b < tile->bpp; b++)
 	    *data++ = tile_data[b];
 	  tile_data += inc;
 	}
-
+      }
       tile_release (tile, FALSE);
     }
 }
@@ -169,8 +182,7 @@ pixel_region_set_row (PR, x, y, w, data)
   Tile *tile;
   unsigned char *tile_data;
   int end;
-  int boundary;
-  int b;
+  int npixels;
 
   end = x + w;
 
@@ -180,13 +192,16 @@ pixel_region_set_row (PR, x, y, w, data)
     {
       tile = tile_manager_get_tile (PR->tiles, x, y, 0, TRUE, TRUE);
       tile_data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
-      boundary = x + (tile->ewidth - (x % TILE_WIDTH));
 
-      for ( ; x < end && x < boundary; x++)
-	{
-	  for (b = 0; b < tile->bpp; b++)
-	    *tile_data++ = *data++;
-	}
+      npixels = tile->ewidth - (x % TILE_WIDTH);
+
+      if ((x + npixels) > end) /* make sure we don't write past the end */
+	npixels = end - x;
+
+      memcpy(tile_data, data, tile->bpp*npixels);
+
+      data += tile->bpp*npixels;
+      x += npixels;
 
       tile_release (tile, TRUE);
     }
@@ -217,9 +232,12 @@ pixel_region_get_col (PR, x, y, h, data, subsample)
       tile = tile_manager_get_tile (PR->tiles, x, y, 0, TRUE, FALSE);
       tile_data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
       boundary = y + (tile->eheight - (y % TILE_HEIGHT));
+      if (boundary > end) /* make sure we don't write past the end */
+	boundary = end;
+
       inc = subsample * tile->bpp * tile->ewidth;
 
-      for ( ; y < end && y < boundary; y += subsample)
+      for ( ; y < boundary; y += subsample)
 	{
 	  for (b = 0; b < tile->bpp; b++)
 	    *data++ = tile_data[b];
@@ -256,7 +274,10 @@ pixel_region_set_col (PR, x, y, h, data)
       boundary = y + (tile->eheight - (y % TILE_HEIGHT));
       inc = tile->bpp * tile->ewidth;
 
-      for ( ; y < end && y < boundary; y++)
+      if (boundary > end) /* make sure we don't write past the end */
+	boundary = end;
+
+      for ( ; y < boundary; y++)
 	{
 	  for (b = 0; b < tile->bpp; b++)
 	    tile_data[b] = *data++;
