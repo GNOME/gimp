@@ -531,6 +531,12 @@ EOF
    fi
 fi
 
+GIMPDOCS=
+if test -n "$DISTMAKE"; then
+  WEBBROWSER=webbrowser TIFF=tiff JPEG=jpeg PNG=png AA=aa MPEG=mpeg
+  XD=xd XPM=xpm GIMPDOCS=docs
+fi
+
 AM_CONDITIONAL(STATICLIBS, test x$enable_static = xyes)
 
 AC_SUBST(GIMP_MAJOR_VERSION)
@@ -578,6 +584,7 @@ AC_SUBST(LPC_DEF)
 AC_SUBST(MAILER)
 AC_SUBST(THREAD_LIBS)
 AC_SUBST(GIMP_PERL)
+AC_SUBST(GIMPDOCS)
 
 dnl Output the Makefiles
 
