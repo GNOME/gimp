@@ -5,6 +5,7 @@ noinst_PROGRAMS = gcg
 EXTRA_DIST = \
 	getopt.c	\
 	makefile.msc	\
+	makefile.cygwin \
 	gh/gcg.gh	\
 	gh/glib.gh	\
 	gh/gtk.gh

@@ -6,6 +6,8 @@
 
 	* makefile.cygwin: New file.
 
+	* Makefile.am: Distribute it.
+	
 Sun Jun  6 11:16:56 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* Makefile.am
