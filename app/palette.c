@@ -924,7 +924,7 @@ palette_entries_load (char *filename)
   entries = (PaletteEntriesP) g_malloc (sizeof (_PaletteEntries));
 
   entries->filename = g_strdup (filename);
-  entries->name = g_strdup (prune_filename (filename));
+  entries->name = g_strdup (g_basename (filename));
   entries->colors = NULL;
   entries->n_colors = 0;
   entries->pixmap = NULL;
@@ -995,7 +995,7 @@ palette_entries_load (char *filename)
   palette_entries_list = palette_entries_insert_list (palette_entries_list, entries,pos);
 
   /* Check if the current palette is the default one */
-  if (strcmp(default_palette, prune_filename(filename)) == 0)
+  if (strcmp(default_palette, g_basename(filename)) == 0)
     default_palette_entries = entries;
 }
 
@@ -2837,7 +2837,7 @@ import_image_sel_callback(GtkWidget *widget, gpointer data)
   import_image_update_image_preview(gimage);
 
   lab = g_strdup_printf("%s-%d",
-		       prune_filename(gimage_filename(import_dialog->gimage)),
+		       g_basename(gimage_filename(import_dialog->gimage)),
 		       pdb_image_to_id (import_dialog->gimage));
 
   gtk_entry_set_text (GTK_ENTRY (import_dialog->entry),lab);
@@ -2848,7 +2848,7 @@ import_image_menu_add(GimpImage *gimage)
 {
   GtkWidget *menuitem;
   gchar *lab = g_strdup_printf("%s-%d",
-			       prune_filename(gimage_filename(gimage)),
+			       g_basename(gimage_filename(gimage)),
 			       pdb_image_to_id (gimage));
   menuitem = gtk_menu_item_new_with_label(lab);
   gtk_widget_show (menuitem);
@@ -2932,7 +2932,7 @@ import_image_menu_activate(gint redo,GimpImage * del_image)
 	  if(redo && act_num >= 0)
 	    {
 	      gchar *lab = g_strdup_printf("%s-%d",
-			     prune_filename(gimage_filename(import_dialog->gimage)),
+			     g_basename(gimage_filename(import_dialog->gimage)),
 			     pdb_image_to_id (import_dialog->gimage));
 
 	      gtk_option_menu_set_history(GTK_OPTION_MENU(optionmenu1),act_num);
@@ -2942,7 +2942,7 @@ import_image_menu_activate(gint redo,GimpImage * del_image)
       g_slist_free(list);
 
       lab = g_strdup_printf("%s-%d",
-			    prune_filename(gimage_filename(import_dialog->gimage)),
+			    g_basename(gimage_filename(import_dialog->gimage)),
 			    pdb_image_to_id (import_dialog->gimage));
 
       gtk_entry_set_text (GTK_ENTRY (import_dialog->entry),lab);

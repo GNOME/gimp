@@ -133,7 +133,7 @@ info_window_create (void *gdisp_ptr)
 
   gdisp = (GDisplay *) gdisp_ptr;
 
-  title = prune_filename (gimage_filename (gdisp->gimage));
+  title = g_basename (gimage_filename (gdisp->gimage));
   type = gimage_base_type (gdisp->gimage);
 
   /*  create the info dialog  */

@@ -442,7 +442,7 @@ fi
 
 gimpdatadir=$datadir/gimp
 gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
-localedir=$datadir/locale
+localedir='${prefix}/${DATADIRNAME}/locale'
 
 brushdata=`ls -1 $srcdir/data/brushes | grep -v Makefile`
 gradientdata=`ls -1 $srcdir/data/gradients | grep -v Makefile`
@@ -814,7 +814,7 @@ data/patterns/Makefile],
    case "$CONFIG_FILES" in
    *plug-ins/perl*)
       if test -f plug-ins/perl/config.status; then
-         ( cd plug-ins/perl; . config.status )
+         ( cd plug-ins/perl; ${CONFIG_SHELL-/bin/sh} config.status )
       fi
       ;;
    esac

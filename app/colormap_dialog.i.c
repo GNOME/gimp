@@ -786,7 +786,7 @@ create_image_menu_cb (gpointer im, gpointer d)
       *data->default_index = data->num_items;
     }
 
-  image_name = prune_filename (gimage_filename (gimage));
+  image_name = g_basename (gimage_filename (gimage));
   menu_item_label = g_strdup_printf ("%s-%d", image_name, 
                                      pdb_image_to_id (gimage));
   menu_item = gtk_menu_item_new_with_label (menu_item_label);

@@ -218,7 +218,7 @@ gdisplay_format_title (GDisplay *gdisp,
 
       case 'f': /* pruned filename */
 	  i += print (title, title_len, i,
-		      "%s", prune_filename (gimage_filename (gimage)));
+		      "%s", g_basename (gimage_filename (gimage)));
 	  break;
 
       case 'F': /* full filename */

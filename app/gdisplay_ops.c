@@ -122,7 +122,7 @@ gdisplay_close_window (GDisplay *gdisp,
    */
   if (!kill_it && (gdisp->gimage->ref_count == 1) &&
       (gdisp->gimage->dirty > 0) && confirm_on_close )
-    gdisplay_close_warning_dialog (prune_filename (gimage_filename (gdisp->gimage)), gdisp);
+    gdisplay_close_warning_dialog (g_basename (gimage_filename (gdisp->gimage)), gdisp);
   else
     {
       /* If POPUP_SHELL references this shell, then reset it. */

@@ -5417,7 +5417,7 @@ grad_load_gradient(char *filename)
 	grad = grad_new_gradient();
 
 	grad->filename = g_strdup(filename);
-	grad->name     = g_strdup(prune_filename(filename));
+	grad->name     = g_strdup(g_basename(filename));
 
 	fgets(line, 1024, file);
 	num_segments = atoi(line);

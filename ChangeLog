@@ -1,3 +1,27 @@
+Sun Feb  7 02:44:44 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* configure.in: fix setting of $localedir, and use $CONFIG_SHELL
+	to run config.status (variation upon gimp-joke-990122-1)
+
+	* plug-ins/fp/fp_gtk.c: make label code consistent so we
+	don't get confused (gimp-ruth-990131-0)
+
+	* app/app_procs.c: toast stale swap files on startup
+
+	* app/general.[ch]: removed prune_filename
+
+	* app/by_color_select.c
+	* app/colormap_dialog.i.c
+	* app/fileops.c
+	* app/gdisplay.c
+	* app/gdisplay_ops.c
+	* app/gimpbrush.c
+	* app/gradient.c
+	* app/info_window.c
+	* app/menus.c
+	* app/palette.c
+	* app/patterns.c: s/prune_filename/g_basename/
+
 Sat Feb  6 18:16:57 GMT 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/gdisplay.c: gdisplay_format_title now parses a format string

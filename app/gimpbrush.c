@@ -241,7 +241,7 @@ gimp_brush_load(GimpBrush *brush, char *filename)
 
   /* Check if the current brush is the default one */
 /* lets see if it works with out this for now */
-/*  if (strcmp(default_brush, prune_filename(filename)) == 0) {
+/*  if (strcmp(default_brush, g_basename(filename)) == 0) {
 	  active_brush = brush;
 	  have_default_brush = 1;
   }*/ /* if */

@@ -245,7 +245,7 @@ load_pattern (char *filename)
 
   /* Check if the current pattern is the default one */
 
-  if (strcmp(default_pattern, prune_filename(filename)) == 0) {
+  if (strcmp(default_pattern, g_basename(filename)) == 0) {
 	  active_pattern = pattern;
 	  have_default_pattern = 1;
   } /* if */

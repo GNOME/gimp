@@ -401,7 +401,7 @@ menus_last_opened_cmd_callback (GtkWidget           *widget,
   gchar *filename, *raw_filename;
 
   raw_filename = ((GString *) g_slist_nth_data (last_opened_raw_filenames, num))->str;
-  filename = prune_filename (raw_filename);
+  filename = g_basename (raw_filename);
 
   if (!file_open(raw_filename, filename))
     g_message (_("Error opening file: %s\n"), raw_filename);
@@ -424,7 +424,7 @@ menus_last_opened_update_labels ()
 
   for (i = 1; i <= num_entries; i++)
     {
-      g_string_sprintf (entry_filename, "%d. %s", i, prune_filename (((GString *) filename_slist->data)->str));
+      g_string_sprintf (entry_filename, "%d. %s", i, g_basename (((GString *) filename_slist->data)->str));
 
       g_string_sprintf (path, _("/File/MRU%02d"), i);
 

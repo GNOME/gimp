@@ -20,6 +20,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/param.h>
+#include <sys/types.h>
+#include <dirent.h>
 #include <unistd.h>
 
 #include <gtk/gtk.h>
@@ -95,6 +97,7 @@ static int splash_logo_load_size (GtkWidget *window);
 static void splash_logo_draw (GtkWidget *widget);
 static void splash_text_draw (GtkWidget *widget);
 static void splash_logo_expose (GtkWidget *widget);
+static void toast_old_temp_files (void);
 
 
 static gint is_app_exit_finish_done = FALSE;
@@ -491,6 +494,7 @@ app_init (void)
 
   RESET_BAR();
   parse_gimprc ();         /*  parse the local GIMP configuration file  */
+  
   if (always_restore_session)
     restore_session = TRUE;
 
@@ -534,6 +538,7 @@ app_init (void)
   /* Add the swap file  */
   if (swap_path == NULL)
     swap_path = "/tmp";
+  toast_old_temp_files ();
   path = g_strdup_printf ("%s/gimpswap.%ld", swap_path, (long)getpid ());
   tile_swap_add (path, NULL, NULL);
   g_free (path);
@@ -730,13 +735,38 @@ quit_invoker (Argument *args)
   return return_args;
 }
 
+static void
+toast_old_temp_files (void)
+{
+  DIR *dir;
+  struct dirent *entry;
+  GString *filename = g_string_new ("");
 
+  dir = opendir (swap_path);
+  
+  if (!dir)
+    return;
+  
+  while ((entry = readdir (dir)) != NULL)
+    if (!strncmp (entry->d_name, "gimpswap.", 9))
+      {
+        /* don't try to kill swap files of running processes
+         * yes, I know they might not all be gimp processes, and when you
+         * unlink, it's refcounted, but lets not confuse the user by
+         * "where did my disk space go?" cause the filename is gone
+         * if the kill succeeds, and there running process isn't gimp
+         * we'll probably get it the next time around
+         */
 
+	int pid = atoi (entry->d_name + 9);
+	if (kill (pid, 0))
+	  {
+	    g_string_sprintf (filename, "%s/%s", swap_path, entry->d_name);
+	    unlink (filename->str);
+	  }
+      }
 
-
-
-
-
-
-
-
+  closedir (dir);
+  
+  g_string_free (filename, TRUE);
+}

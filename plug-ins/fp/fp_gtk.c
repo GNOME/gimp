@@ -653,9 +653,9 @@ selectionMade         (GtkWidget *widget,
   else if (!strcmp("Magenta:",data)) Update_Current_FP( HUE, MAGENTA );
   else if (!strcmp("Darker:",data))  Update_Current_FP( VALUE, DOWN );
   else if (!strcmp("Lighter:",data)) Update_Current_FP( VALUE, UP   );
-  else if (!strcmp("More Saturated:",data)) 
+  else if (!strcmp("More Sat:",data)) 
     Update_Current_FP( SATURATION, UP );
-  else if (!strcmp("Less Saturated:",data)) 
+  else if (!strcmp("Less Sat:",data)) 
     Update_Current_FP( SATURATION, DOWN );
   
   refreshPreviews(Current.VisibleFrames);

@@ -651,7 +651,7 @@ file_save_callback (GtkWidget *w,
 	}
       else
 	file_save (gdisplay->gimage, gimage_filename (gdisplay->gimage),
-		   prune_filename (gimage_filename(gdisplay->gimage)), 2);
+		   g_basename (gimage_filename(gdisplay->gimage)), 2);
     }
 }
 
@@ -751,7 +751,7 @@ file_revert_callback (GtkWidget *w,
   else
     {
       filename = gimage_filename (gdisplay->gimage);
-      raw_filename = prune_filename (filename);
+      raw_filename = g_basename (filename);
 
       if ((gimage = file_open_image (filename, raw_filename)) != NULL)
         gdisplay_reconnect (gdisplay, gimage);

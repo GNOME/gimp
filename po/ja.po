@@ -1,13 +1,13 @@
-# Japanese translation of GIMP 1.1.1
+# Japanese translation of GIMP 1.1
 # Copyright (C) 1998 Free Software Foundation, Inc.
 # Yasuhiro SHIRASAKI <joke@awa.tohoku.ac.jp>, 1998.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.1\n"
+"Project-Id-Version: GIMP 1.1.2\n"
 "POT-Creation-Date: 1999-02-03 16:44-0800\n"
-"PO-Revision-Date: 1998-01-26 00:00+0900\n"
+"PO-Revision-Date: 1998-02-04 22:22+0900\n"
 "Last-Translator: 白崎 泰弘 <joke@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1883,7 +1883,7 @@ msgstr "名称未設定"
 
 #: app/gimpprogress.c:115
 msgid "Progress"
-msgstr ""
+msgstr "進度"
 
 #: app/gimprc.c:312 app/gimprc.c:327
 msgid "warning: no home directory."
@@ -2595,9 +2595,8 @@ msgid "Angle adjust:"
 msgstr "角度補正:"
 
 #: app/ink.c:277
-#, fuzzy
 msgid "Type:"
-msgstr "塗りの種類: "
+msgstr "種類:"
 
 #: app/ink.c:333
 msgid "Shape:"
@@ -4166,7 +4165,7 @@ msgstr "源:"
 #. gtk_widget_set_usize (entry1, 100, -1);
 #: app/palette.c:3076
 msgid "new_import"
-msgstr ""
+msgstr "新規インポート"
 
 #: app/palette.c:3116
 msgid "select"
@@ -4296,7 +4295,7 @@ msgstr ""
 #: app/plug_in.c:1447 app/plug_in.c:1454 app/plug_in.c:1498 app/plug_in.c:1540
 #: app/plug_in.c:1549
 msgid "plug_in_handle_tile_req: ERROR"
-msgstr ""
+msgstr "plug_in_handle_tile_req: エラー"
 
 #: app/plug_in.c:1461
 #, c-format
@@ -4324,7 +4323,7 @@ msgstr "%s の PDB 調査失敗\n"
 
 #: app/plug_in.c:1604 app/plug_in.c:1648
 msgid "plug_in_handle_proc_run: ERROR"
-msgstr ""
+msgstr "plug_in_handle_proc_run: エラー"
 
 #: app/plug_in.c:1687 app/plug_in.c:1700 app/plug_in.c:1713 app/plug_in.c:1728
 #, c-format
@@ -4376,9 +4375,8 @@ msgid "the \"region\" arg type is not currently supported"
 msgstr "引き数種 \"region\" は正常にサポートされていません."
 
 #: app/plug_in.c:3365
-#, fuzzy
 msgid "Internal error counting plugins"
-msgstr "pluginrc 読み込み中にエラー発生"
+msgstr "プラグイン計数中に内部エラー発生"
 
 #: app/posterize.c:203
 msgid "Posterize Options"
@@ -4406,7 +4404,7 @@ msgstr "エラー: アンドゥレベルは0以上でなければなりません."
 
 #: app/preferences_dialog.c:222
 msgid "Error: Number of processors must be between 1 and 30."
-msgstr ""
+msgstr "エラー: プロセッサの数は 1 〜 30 でなければなりません."
 
 #: app/preferences_dialog.c:228
 msgid "Error: Marching speed must be 50 or greater."
@@ -4625,7 +4623,7 @@ msgstr "タイルキャッシュサイズ:"
 
 #: app/preferences_dialog.c:1306
 msgid "Number of processors to use:"
-msgstr ""
+msgstr "使用するプロセッサの数:"
 
 #: app/preferences_dialog.c:1327
 msgid "Install colormap (8-bit only)"

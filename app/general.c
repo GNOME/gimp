@@ -24,22 +24,6 @@
 #include <glib.h>
 #include "general.h"
 
-
-/* prune filename removes all of the leading path information to a filename */
-
-char *
-prune_filename (char *filename)
-{
-  char *last_slash = filename;
-
-  while (*filename)
-    if (*filename++ == '/')
-      last_slash = filename;
-
-  return last_slash;
-}
-
-
 char*
 search_in_path (char *search_path,
 		char *filename)

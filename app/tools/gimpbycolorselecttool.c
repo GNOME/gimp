@@ -805,7 +805,7 @@ by_color_select_draw (ByColorDialog *bcd,
   gtk_widget_draw (bcd->preview, NULL);
 
   /*  Update the gimage label to reflect the displayed gimage name  */
-  gtk_label_set_text (GTK_LABEL (bcd->gimage_name), prune_filename (gimage_filename (gimage)));
+  gtk_label_set_text (GTK_LABEL (bcd->gimage_name), g_basename (gimage_filename (gimage)));
 }
 
 static gint
