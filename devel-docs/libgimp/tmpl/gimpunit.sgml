@@ -23,18 +23,6 @@ user-defined units.
 
 </para>
 
-@GIMP_UNIT_PIXEL: This is a "pseudo unit" which needs a resolution to
-                  be transformed into inches, millimeters etc.
-@GIMP_UNIT_INCH: The GIMP base unit.
-@GIMP_UNIT_MM: There are 25.4 millimeters in an inch.
-@GIMP_UNIT_POINT: There are 72.0 points in an inch.
-@GIMP_UNIT_PICA: There are 6.0 picas in an inch.
-@GIMP_UNIT_END: This is an internal value. Please use
-                gimp_unit_get_number_of_built_in_units() instead.
-@GIMP_UNIT_PERCENT: This is a "pseudo unit" which does not really
-		    belong here. You can ask for it's strings but
-		    asking for @factor, @digits or @deletion_flag fill
-		    fail with an error.
 
 <!-- ##### FUNCTION gimp_unit_get_number_of_units ##### -->
 <para>

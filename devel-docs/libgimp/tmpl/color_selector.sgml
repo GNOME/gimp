@@ -64,9 +64,6 @@ color_selector
 
 </para>
 
-@new: 
-@free: 
-@setcolor: 
 
 <!-- ##### TYPEDEF GimpColorSelectorID ##### -->
 <para>

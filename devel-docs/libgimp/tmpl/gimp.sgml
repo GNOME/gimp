@@ -26,92 +26,48 @@ gimp
 
 </para>
 
-@init_proc: 
-@quit_proc: 
-@query_proc: 
-@run_proc: 
 
 <!-- ##### STRUCT GTile ##### -->
 <para>
 
 </para>
 
-@ewidth: 
-@eheight: 
-@bpp: 
-@tile_num: 
-@ref_count: 
-@dirty: 
-@shadow: 
-@data: 
-@drawable: 
 
 <!-- ##### STRUCT GDrawable ##### -->
 <para>
 
 </para>
 
-@id: 
-@width: 
-@height: 
-@bpp: 
-@ntile_rows: 
-@ntile_cols: 
-@tiles: 
-@shadow_tiles: 
 
 <!-- ##### STRUCT GPixelRgn ##### -->
 <para>
 
 </para>
 
-@data: 
-@drawable: 
-@bpp: 
-@rowstride: 
-@x: 
-@y: 
-@w: 
-@h: 
-@dirty: 
-@shadow: 
-@process_count: 
 
 <!-- ##### STRUCT GParamDef ##### -->
 <para>
 
 </para>
 
-@type: 
-@name: 
-@description: 
 
 <!-- ##### STRUCT GParamColor ##### -->
 <para>
 
 </para>
 
-@red: 
-@green: 
-@blue: 
 
 <!-- ##### STRUCT GParamRegion ##### -->
 <para>
 
 </para>
 
-@x: 
-@y: 
-@width: 
-@height: 
 
 <!-- ##### STRUCT GParam ##### -->
 <para>
 
 </para>
 
-@type: 
-@data: 
 
 <!-- ##### USER_FUNCTION GRunProc ##### -->
 <para>

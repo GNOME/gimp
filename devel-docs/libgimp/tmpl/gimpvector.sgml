@@ -22,27 +22,18 @@ Utilities to set up and manipulate vectors.
 
 </para>
 
-@x: 
-@y: 
 
 <!-- ##### STRUCT GimpVector3 ##### -->
 <para>
 
 </para>
 
-@x: 
-@y: 
-@z: 
 
 <!-- ##### STRUCT GimpVector4 ##### -->
 <para>
 
 </para>
 
-@x: 
-@y: 
-@z: 
-@w: 
 
 <!-- ##### FUNCTION gimp_vector2_set ##### -->
 <para>

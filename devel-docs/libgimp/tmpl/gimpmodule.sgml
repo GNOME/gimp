@@ -19,10 +19,8 @@ gimpmodule
 
 </para>
 
-@GIMP_MODULE_OK: 
-@GIMP_MODULE_UNLOAD: 
 
-<!-- ##### TYPEDEF GimpModuleInfo ##### -->
+<!-- ##### STRUCT GimpModuleInfo ##### -->
 <para>
 
 </para>

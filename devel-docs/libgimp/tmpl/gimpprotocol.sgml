@@ -26,24 +26,12 @@ gimpprotocol
 
 </para>
 
-@version: 
-@tile_width: 
-@tile_height: 
-@shm_ID: 
-@gamma: 
-@install_cmap: 
-@use_xshm: 
-@color_cube: 
-@gdisp_ID: 
 
 <!-- ##### STRUCT GPTileReq ##### -->
 <para>
 
 </para>
 
-@drawable_ID: 
-@tile_num: 
-@shadow: 
 
 <!-- ##### STRUCT GPTileAck ##### -->
 <para>
@@ -56,83 +44,42 @@ gimpprotocol
 
 </para>
 
-@drawable_ID: 
-@tile_num: 
-@shadow: 
-@bpp: 
-@width: 
-@height: 
-@use_shm: 
-@data: 
 
 <!-- ##### STRUCT GPParam ##### -->
 <para>
 
 </para>
 
-@type: 
-@d_display: 
-@d_image: 
-@d_layer: 
-@d_channel: 
-@d_drawable: 
-@d_selection: 
-@d_boundary: 
-@d_path: 
-@d_status: 
 
 <!-- ##### STRUCT GPParamDef ##### -->
 <para>
 
 </para>
 
-@type: 
-@name: 
-@description: 
 
 <!-- ##### STRUCT GPProcRun ##### -->
 <para>
 
 </para>
 
-@name: 
-@nparams: 
-@params: 
 
 <!-- ##### STRUCT GPProcReturn ##### -->
 <para>
 
 </para>
 
-@name: 
-@nparams: 
-@params: 
 
 <!-- ##### STRUCT GPProcInstall ##### -->
 <para>
 
 </para>
 
-@name: 
-@blurb: 
-@help: 
-@author: 
-@copyright: 
-@date: 
-@menu_path: 
-@image_types: 
-@type: 
-@nparams: 
-@nreturn_vals: 
-@params: 
-@return_vals: 
 
 <!-- ##### STRUCT GPProcUninstall ##### -->
 <para>
 
 </para>
 
-@name: 
 
 <!-- ##### FUNCTION gp_init ##### -->
 <para>

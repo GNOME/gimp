@@ -59,9 +59,6 @@ performs the cast if valid.
 
 </para>
 
-@GIMP_SIZE_ENTRY_UPDATE_NONE: 
-@GIMP_SIZE_ENTRY_UPDATE_SIZE: 
-@GIMP_SIZE_ENTRY_UPDATE_RESOLUTION: 
 
 <!-- ##### STRUCT GimpSizeEntryField ##### -->
 <para>

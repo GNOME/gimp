@@ -30,30 +30,12 @@ as it will most probably have to open a dialog.
 
 </para>
 
-@CAN_HANDLE_RGB: Use if the plug_in can save RGB images.
-@CAN_HANDLE_GRAY: Use if the plug_in can save GRAY images.
-@CAN_HANDLE_INDEXED: Use if the plug_in can save INDEXED images.
-@CAN_HANDLE_ALPHA: Use if the plugin can save an alpha channel with 
-                   all image_types.
-@CAN_HANDLE_LAYERS: Use if the plugin can save multiple layers.
-@CAN_HANDLE_LAYERS_AS_ANIMATION: Use if the plugin can save multiple layers
-                                 but treats them as frames in an animation.
-@NEEDS_ALPHA: Use if the plugin needs an alpha channels and can't save
-              flat images.
 
 <!-- ##### ENUM GimpExportReturnType ##### -->
 <para>
 
 </para>
 
-@EXPORT_CANCEL: The user chose Cancel in the export dialog. The plugin should
-                terminate itself.
-@EXPORT_IGNORE: The user chose Ignore in the export dialog. No conversion is 
-                performed and the plugin should try to save as usual.
-@EXPORT_EXPORT: The user chose Export in the export dialog. A copy of the 
-                image is created and then converted to fit the needs of the 
-                plugin. The plugin has to take care of deleting the copy when
-		it has finished saving it.
 
 <!-- ##### FUNCTION gimp_export_image ##### -->
 <para>

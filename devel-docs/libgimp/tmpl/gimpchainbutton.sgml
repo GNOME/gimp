@@ -46,14 +46,6 @@ performs the cast if valid.
 
 </para>
 
-@GIMP_CHAIN_TOP: Use if the GimpChainButton is used attached to the top of 
-                    the widgets it connects.
-@GIMP_CHAIN_LEFT: Use if the GimpChainButton is used attached to the left of 
-                    the widgets it connects.
-@GIMP_CHAIN_BOTTOM: Use if the GimpChainButton is used attached to the bottom 
-                    of the widgets it connects.
-@GIMP_CHAIN_RIGHT: Use if the GimpChainButton is used attached to the right of
-                    the widgets it connects.
 
 <!-- ##### FUNCTION gimp_chain_button_new ##### -->
 <para>
