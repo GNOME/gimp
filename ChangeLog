@@ -1,3 +1,10 @@
+2004-09-02  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/despeckle.c: don't assume the preview has always the
+	same size, and do the memory allocation in preview_update(). As a side
+	effect, this fix a segfault :-).  Also save the preview toggle state
+	between invocations.
+
 2004-09-02  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c (check_combos): light and

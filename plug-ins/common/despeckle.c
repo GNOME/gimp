@@ -53,6 +53,7 @@
 #define filter_type      (despeckle_vals[1])    /* Type of filter */
 #define black_level      (despeckle_vals[2])    /* Black level */
 #define white_level      (despeckle_vals[3])    /* White level */
+#define update_toggle    (despeckle_vals[4])    /* Update the preview? */
 
 /*
  * Local functions...
@@ -73,8 +74,6 @@ static void      dialog_iscale_update      (GtkAdjustment *, gint *);
 static void      dialog_adaptive_callback  (GtkWidget *, gpointer);
 static void      dialog_recursive_callback (GtkWidget *, gpointer);
 
-static void      preview_init              (void);
-static void      preview_exit              (void);
 static void      preview_update            (GtkWidget *preview);
 
 
@@ -91,9 +90,6 @@ GimpPlugInInfo PLUG_IN_INFO =
 };
 
 static GtkWidget      *preview;                 /* Preview widget */
-static guchar         *preview_src = NULL,      /* Source pixel rows */
-                      *preview_dst,             /* Destination pixel row */
-                      *preview_sort;            /* Pixel value sort array */
 
 static GimpDrawable   *drawable = NULL;         /* Current image */
 static gint            sel_x1,                  /* Selection bounds */
@@ -104,12 +100,13 @@ static gint            sel_width,               /* Selection width */
                        sel_height;              /* Selection height */
 static gint            img_bpp;                 /* Bytes-per-pixel in image */
 
-static gint despeckle_vals[4] =
+static gint despeckle_vals[5] =
 {
-  3,
-  FILTER_ADAPTIVE,
-  7,
-  248
+  3,                  /* Default value for the radius */
+  FILTER_ADAPTIVE,    /* Default value for the filter type */
+  7,                  /* Default value for the black level */
+  248,                /* Default value for the white level */
+  TRUE                /* Default value for the update toggle */
 };
 
 
@@ -256,7 +253,7 @@ run (const gchar      *name,
           filter_type      = param[4].data.d_int32;
           black_level      = param[5].data.d_int32;
           white_level      = param[6].data.d_int32;
-        };
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -271,7 +268,7 @@ run (const gchar      *name,
     default:
       status = GIMP_PDB_CALLING_ERROR;
       break;
-    };
+    }
 
   /*
    * Despeckle the image...
@@ -312,7 +309,7 @@ run (const gchar      *name,
         }
       else
         status = GIMP_PDB_EXECUTION_ERROR;
-    };
+    }
 
   /*
    * Reset the current run status...
@@ -433,7 +430,7 @@ despeckle (void)
           rowcount += i;
           lasty    += i;
           row      = (row + i) % max_row;
-        };
+        }
 
       /*
        * Now find the median pixels and save the results...
@@ -475,7 +472,7 @@ despeckle (void)
 
                     if (*sort_ptr < white_level && *sort_ptr > black_level)
                       sort_ptr ++;
-                  };
+                  }
 
               /*
                * Shell sort the color values...
@@ -494,7 +491,7 @@ despeckle (void)
                           t           = sort_ptr[0];
                           sort_ptr[0] = sort_ptr[d];
                           sort_ptr[d] = t;
-                        };
+                        }
 
                   /*
                    * Assign the median value...
@@ -515,7 +512,7 @@ despeckle (void)
                   if (filter_type & FILTER_RECURSIVE)
                     src_rows[(row + y - lasty + max_row) % max_row][x] =
                       dst_row[x];
-                };
+                }
 
               /*
                * Check the histogram and adjust the radius accordingly...
@@ -530,15 +527,15 @@ despeckle (void)
                     }
                   else if (radius > 1)
                     radius --;
-                };
-            };
-        };
+                }
+            }
+        }
 
       gimp_pixel_rgn_set_row (&dst_rgn, dst_row, sel_x1, y, sel_width);
 
       if ((y & 15) == 0)
         gimp_progress_update ((double) (y - sel_y1) / (double) sel_height);
-    };
+    }
 
   /*
    * OK, we're done.  Free all memory used...
@@ -598,13 +595,11 @@ despeckle_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  preview = gimp_drawable_preview_new (drawable, NULL);
+  preview = gimp_drawable_preview_new (drawable, &update_toggle);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
   g_signal_connect (preview, "invalidated",
                     G_CALLBACK (preview_update), NULL);
-
-  preview_init ();
 
   /*
    * Filter type controls...
@@ -694,46 +689,10 @@ despeckle_dialog (void)
   gtk_widget_destroy (dialog);
 
   /*
-   * Free the preview data...
-   */
-
-  preview_exit ();
-
-  /*
    * Return ok/cancel...
    */
 
   return run;
-}
-
-
-/*
- * 'preview_init()' - Initialize the preview window...
- */
-
-static void
-preview_init (void)
-{
-  gint  size,           /* Size of filter box */
-        width;          /* Byte width of the image */
-
-  /*
-   * Setup for preview filter...
-   */
-
-  size  = despeckle_radius * 2 + 1;
-  width = GIMP_PREVIEW (preview)->width * img_bpp;
-
-  if (preview_src != NULL)
-    {
-      g_free (preview_src);
-      g_free (preview_dst);
-      g_free (preview_sort);
-    }
-
-  preview_src  = g_new (guchar, width * GIMP_PREVIEW (preview)->height);
-  preview_dst  = g_new (guchar, width);
-  preview_sort = g_new (guchar, size * size);
 }
 
 /*
@@ -760,6 +719,10 @@ preview_update (GtkWidget *widget)
   guchar       *rgba;           /* Output image */
   GimpPreview  *preview;        /* The preview widget */
 
+  guchar       *preview_src;    /* Source pixel rows */
+  guchar       *preview_dst;    /* Destination pixel row */
+  guchar       *preview_sort;   /* Pixel value sort array */
+
   preview = GIMP_PREVIEW (widget);
   rgba = g_new (guchar, preview->width * preview->height * img_bpp);
   /*
@@ -777,6 +740,10 @@ preview_update (GtkWidget *widget)
 
   size  = despeckle_radius * 2 + 1;
   width = preview->width * img_bpp;
+
+  preview_src  = g_new (guchar, width * preview->height);
+  preview_dst  = g_new (guchar, width);
+  preview_sort = g_new (guchar, size * size);
 
   gimp_pixel_rgn_get_rect (&src_rgn, preview_src, x1, y1,
                            preview->width, preview->height);
@@ -823,7 +790,7 @@ preview_update (GtkWidget *widget)
 
                     if (*sort_ptr < white_level && *sort_ptr > black_level)
                       sort_ptr ++;
-                  };
+                  }
 
               /*
                * Shell preview_sort the color values...
@@ -842,7 +809,7 @@ preview_update (GtkWidget *widget)
                           t           = sort_ptr[0];
                           sort_ptr[0] = sort_ptr[d];
                           sort_ptr[d] = t;
-                        };
+                        }
 
                   /*
                    * Assign the median value...
@@ -862,7 +829,7 @@ preview_update (GtkWidget *widget)
 
                   if (filter_type & FILTER_RECURSIVE)
                     preview_src[y * width + x] = *dst_ptr;
-                };
+                }
 
               /*
                * Check the histogram and adjust the radius accordingly...
@@ -886,7 +853,7 @@ preview_update (GtkWidget *widget)
        */
 
       memcpy (rgba + y * width, preview_dst, width);
-    };
+    }
 
   /*
    * Update the screen...
@@ -894,11 +861,7 @@ preview_update (GtkWidget *widget)
 
   gimp_drawable_preview_draw (GIMP_DRAWABLE_PREVIEW (preview), rgba);
   g_free (rgba);
-}
 
-static void
-preview_exit (void)
-{
   g_free (preview_src);
   g_free (preview_dst);
   g_free (preview_sort);
@@ -909,9 +872,6 @@ dialog_iscale_update (GtkAdjustment *adjustment,
                       gint          *value)
 {
   *value = adjustment->value;
-
-  if (value == &despeckle_radius)
-    preview_init ();
 
   gimp_preview_invalidate (GIMP_PREVIEW (preview));
 }
