@@ -388,8 +388,6 @@ render_image_indexed (RenderInfo *info)
   gint    y, ye;
   gint    x, xe;
   gint    initial;
-  gfloat  error;
-  gfloat  step;
 
   cmap = gimp_image_get_colormap (info->shell->gdisp->gimage);
 
@@ -397,18 +395,16 @@ render_image_indexed (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  step = 1.0 / info->scaley;
-
-  error  = y * step;
-  error -= ((gint) error) - step;
-
   initial = TRUE;
   byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
-      if (!initial && (error < 1.0))
+      gint error = RINT (floor ((y + 1) / info->scaley)
+                         - floor (y / info->scaley));
+
+      if (!initial && (error == 0))
 	{
 	  memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
 	}
@@ -435,15 +431,12 @@ render_image_indexed (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1.0)
+      if (error >= 1)
 	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
+	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
 	  initial = TRUE;
 	}
-
-      error += step;
     }
 }
 
@@ -462,8 +455,6 @@ render_image_indexed_a (RenderInfo *info)
   gint    y, ye;
   gint    x, xe;
   gint    initial;
-  gfloat  error;
-  gfloat  step;
 
   cmap = gimp_image_get_colormap (info->shell->gdisp->gimage);
   alpha = info->alpha;
@@ -472,18 +463,16 @@ render_image_indexed_a (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  step = 1.0 / info->scaley;
-
-  error  = y * step;
-  error -= ((gint) error) - step;
-
   initial = TRUE;
   byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
-      if (!initial && (error < 1.0) && (y & check_mod))
+      gint error = RINT (floor ((y + 1) / info->scaley)
+                         - floor (y / info->scaley));
+
+      if (!initial && (error == 0) && (y & check_mod))
 	{
 	  memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
 	}
@@ -529,15 +518,12 @@ render_image_indexed_a (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1.0)
+      if (error >= 1)
 	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
+	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
 	  initial = TRUE;
 	}
-
-      error += step;
     }
 }
 
@@ -551,17 +537,10 @@ render_image_gray (RenderInfo *info)
   gint    y, ye;
   gint    x, xe;
   gint    initial;
-  gfloat  error;
-  gfloat  step;
 
   y  = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
-
-  step = 1.0 / info->scaley;
-
-  error  = y * step;
-  error -= ((gint) error) - step;
 
   initial = TRUE;
   byte_order = info->byte_order;
@@ -569,7 +548,10 @@ render_image_gray (RenderInfo *info)
 
   for (; y < ye; y++)
     {
-      if (!initial && (error < 1.0))
+      gint error = RINT (floor ((y + 1) / info->scaley)
+                         - floor (y / info->scaley));
+
+      if (!initial && (error == 0))
 	{
 	  memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
 	}
@@ -596,15 +578,12 @@ render_image_gray (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1.0)
+      if (error >= 1)
 	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
+	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
 	  initial = TRUE;
 	}
-
-      error += step;
     }
 }
 
@@ -621,8 +600,6 @@ render_image_gray_a (RenderInfo *info)
   gint    y, ye;
   gint    x, xe;
   gint    initial;
-  gfloat  error;
-  gfloat  step;
 
   alpha = info->alpha;
 
@@ -630,18 +607,16 @@ render_image_gray_a (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  step = 1.0 / info->scaley;
-
-  error  = y * step;
-  error -= ((gint) error) - step;
-
   initial = TRUE;
   byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
-      if (!initial && (error < 1.0) && (y & check_mod))
+      gint error = RINT (floor ((y + 1) / info->scaley)
+                         - floor (y / info->scaley));
+
+      if (!initial && (error == 0) && (y & check_mod))
 	{
 	  memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
 	}
@@ -677,15 +652,12 @@ render_image_gray_a (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1.0)
+      if (error >= 1)
 	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
+	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
 	  initial = TRUE;
 	}
-
-      error += step;
     }
 }
 
@@ -696,17 +668,10 @@ render_image_rgb (RenderInfo *info)
   gint    y, ye;
   gint    xe;
   gint    initial;
-  gfloat  error;
-  gfloat  step;
 
   y  = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
-
-  step = 1.0 / info->scaley;
-
-  error  = y * step;
-  error -= (gint) error - step;
 
   initial = TRUE;
   byte_order = info->byte_order;
@@ -714,7 +679,10 @@ render_image_rgb (RenderInfo *info)
 
   for (; y < ye; y++)
     {
-      if (!initial && (error < 1.0))
+      gint error = RINT (floor ((y + 1) / info->scaley)
+                         - floor (y / info->scaley));
+
+      if (!initial && (error == 0))
 	{
 	  memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
 	}
@@ -729,15 +697,12 @@ render_image_rgb (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1.0)
+      if (error >= 1)
 	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
+	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
 	  initial = TRUE;
 	}
-
-      error += step;
     }
 }
 
@@ -754,8 +719,6 @@ render_image_rgb_a (RenderInfo *info)
   gint    y, ye;
   gint    x, xe;
   gint    initial;
-  gfloat  error;
-  gfloat  step;
 
   alpha = info->alpha;
 
@@ -763,18 +726,16 @@ render_image_rgb_a (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  step = 1.0 / info->scaley;
-
-  error  = y * step;
-  error -= ((gint) error) - step;
-
   initial = TRUE;
   byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
-      if (!initial && (error < 1.0) && (y & check_mod))
+      gint error = RINT (floor ((y + 1) / info->scaley)
+                         - floor (y / info->scaley));
+
+      if (!initial && (error == 0) && (y & check_mod))
 	{
 	  memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
 	}
@@ -819,15 +780,12 @@ render_image_rgb_a (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1.0)
+      if (error >= 1)
 	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
+	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
 	  initial = TRUE;
 	}
-
-      error += step;
     }
 }
 
@@ -894,22 +852,15 @@ render_image_accelerate_scaling (gint   width,
 {
   static guchar *scale = NULL;
 
-  gfloat error;
-  gfloat step;
-  gint   i;
+  gint  i;
 
   if (! scale)
     scale = g_new (guchar, GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH + 1);
 
-  step = 1.0 / scalex;
-
-  error = start * step;
-  error -= ((gint) error) - step;
-
   for (i = 0; i <= width; i++)
     {
-      scale[i] = ((gint) error);
-      error += step - (gint) error;
+      scale[i] = RINT (floor ((start + 1) / scalex) - floor (start / scalex));
+      start++;
     }
 
   return scale;

@@ -1,5 +1,11 @@
 2003-04-04  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-render.c: applied a patch from
+	Pedro Gimeno that fixes the display render problems at high zoom
+	levels (bug #109933).
+
+2003-04-04  Sven Neumann  <sven@gimp.org>
+
 	Applied a patch from Øyvind Kolås that adds supersampling to the
 	transform operations (bug #109817):
 
