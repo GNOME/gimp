@@ -25,6 +25,7 @@
 #include "config.h"
 
 #include <string.h>
+#include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -62,6 +63,9 @@ typedef struct
 
 /*  local function prototypes  */
 
+static void       browser_dialog_404     (HtmlDocument     *doc,
+                                          const gchar      *url,
+                                          const gchar      *message);
 static void       button_callback        (GtkWidget        *widget,
                                           gpointer          data);
 static void       update_toolbar         (void);
@@ -83,10 +87,10 @@ static void       title_changed          (HtmlDocument     *doc,
 static void       link_clicked           (HtmlDocument     *doc,
                                           const gchar      *url,
                                           gpointer          data);
-static void       request_url            (HtmlDocument     *doc,
+static gboolean   request_url            (HtmlDocument     *doc,
                                           const gchar      *url,
                                           HtmlStream       *stream,
-                                          gpointer          data);
+                                          GError          **error);
 static gboolean   io_handler             (GIOChannel       *io,
                                           GIOCondition      condition,
                                           gpointer          data);
@@ -322,19 +326,26 @@ browser_dialog_load (const gchar *ref,
   tmp = uri_to_abs (current_ref, current_ref);
   if (!tmp || strcmp (tmp, abs))
     {
+      GError *error = NULL;
+
       html_document_clear (doc);
       html_document_open_stream (doc, "text/html");
       gtk_adjustment_set_value (gtk_layout_get_vadjustment (GTK_LAYOUT (html)),
                                 0);
 
-      request_url (doc, abs, doc->current_stream, NULL);
+      if (! request_url (doc, abs, doc->current_stream, &error))
+        {
+          browser_dialog_404 (doc, abs, error->message);
+          g_error_free (error);
+        }
     }
+
   g_free (tmp);
 
   if (anchor)
     html_view_jump_to_anchor (HTML_VIEW (html), anchor);
   else
-    gtk_adjustment_set_value (GTK_LAYOUT (html)->vadjustment, 0.0);
+    gtk_adjustment_set_value (gtk_layout_get_vadjustment (GTK_LAYOUT (html)), 0);
 
   g_free (current_ref);
   current_ref = new_ref;
@@ -349,6 +360,35 @@ browser_dialog_load (const gchar *ref,
 
 
 /*  private functions  */
+
+static void
+browser_dialog_404 (HtmlDocument *doc,
+                    const gchar  *url,
+                    const gchar  *message)
+{
+  gchar *msg = g_strdup_printf
+    ("<html>"
+     "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
+     "<head><title>%s</title></head>"
+     "<body bgcolor=\"white\">"
+     "<div align=\"center\">"
+     "<div>%s</div>"
+     "<h3>%s</h3>"
+     "<tt>%s</tt>"
+     "<h3>%s</h3>"
+     "</div>"
+     "</body>"
+     "</html>",
+     _("Document Not Found"),
+     eek_png_tag,
+     _("Could not locate help document"),
+     url,
+     message);
+
+  html_document_write_stream (doc, msg, strlen (msg));
+
+  g_free (msg);
+}
 
 static void
 button_callback (GtkWidget *widget,
@@ -487,23 +527,24 @@ link_clicked (HtmlDocument *doc,
   browser_dialog_load (url, TRUE);
 }
 
-static void
+static gboolean
 request_url (HtmlDocument *doc,
              const gchar  *url,
              HtmlStream   *stream,
-             gpointer      data)
+             GError      **error)
 {
   gchar *abs;
   gchar *filename;
 
-  g_return_if_fail (url != NULL);
-  g_return_if_fail (stream != NULL);
+  g_return_val_if_fail (url != NULL, TRUE);
+  g_return_val_if_fail (stream != NULL, TRUE);
 
   abs = uri_to_abs (url, current_ref);
   if (! abs)
-    return;
+    return TRUE;
 
   filename = g_filename_from_uri (abs, NULL, NULL);
+  g_free (abs);
 
   if (filename)
     {
@@ -511,43 +552,7 @@ request_url (HtmlDocument *doc,
 
       fd = open (filename, O_RDONLY);
 
-      if (fd == -1)
-        {
-          gchar *name;
-          gchar *msg;
-
-          name = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
-
-          msg = g_strdup_printf
-            ("<html>"
-             "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
-             "<head><title>%s</title></head>"
-             "<body bgcolor=\"white\">"
-             "<div align=\"center\">"
-             "<div>%s</div>"
-             "<h3>%s</h3>"
-             "<tt>%s</tt>"
-             "</div>"
-             "<br /><br />"
-             "<div align=\"justify\">%s</div>"
-             "</body>"
-             "</html>",
-             _("Document Not Found"),
-             eek_png_tag,
-             _("Could not locate help document"),
-             name,
-             _("The requested document could not be found in your GIMP help "
-               "path as shown above. This means that the topic has not yet "
-               "been written or your installation is not complete. Ensure "
-               "that your installation is complete before reporting this "
-               "error as a bug."));
-
-          html_document_write_stream (doc, msg, strlen (msg));
-
-          g_free (msg);
-          g_free (name);
-        }
-      else
+      if (fd != -1)
         {
           GIOChannel *io = g_io_channel_unix_new (fd);
 
@@ -559,9 +564,17 @@ request_url (HtmlDocument *doc,
         }
 
       g_free (filename);
+
+      if (fd == -1)
+        {
+          g_set_error (error,
+                       G_FILE_ERROR, g_file_error_from_errno (errno),
+                       g_strerror (errno));
+          return FALSE;
+        }
     }
 
-  g_free (abs);
+  return TRUE;
 }
 
 static gboolean
