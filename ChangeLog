@@ -1,3 +1,9 @@
+2001-10-23  Sven Neumann  <sven@gimp.org>
+
+	* app/tools_cmds.c
+	* tools/pdbgen/pdb/tools.pdb: forgot to check for layer masks in
+	gimp_perspective() PDB calls.
+
 2001-10-22  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/tools.pdb

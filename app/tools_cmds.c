@@ -2137,6 +2137,17 @@ perspective_invoker (Argument *args)
 
   if (success)
     {
+      if (GIMP_IS_LAYER (drawable) &&
+	  layer_get_mask (GIMP_LAYER (drawable)))
+	{
+	  g_message (_("Transformations do not work on\n"
+		       "layers that contain layer masks."));
+	  success = FALSE;
+	}
+    }
+    
+    if (success)
+    {
       gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
     
       /* Start a transform undo group */
