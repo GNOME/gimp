@@ -541,39 +541,51 @@ crop_cursor_update (Tool           *tool,
 		    gpointer        gdisp_ptr)
 {
   GDisplay *gdisp;
-  GdkCursorType ctype;
-  Crop * crop;
+  Crop     *crop;
+
+  GdkCursorType ctype      = GIMP_CROSSHAIR_SMALL_CURSOR;
+  CursorModifier cmodifier = CURSOR_MODIFIER_NONE;
 
   gdisp = (GDisplay *) gdisp_ptr;
   crop = (Crop *) tool->private;
 
   if (tool->state == INACTIVE ||
       (tool->state == ACTIVE && tool->gdisp_ptr != gdisp_ptr))
-    ctype = GDK_CROSS;
+    {
+      ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
+    }
   else if (mevent->x == CLAMP (mevent->x, crop->x1, crop->x1 + crop->srw) &&
 	   mevent->y == CLAMP (mevent->y, crop->y1, crop->y1 + crop->srh))
-    ctype = GDK_TOP_LEFT_CORNER;
+    {
+      ctype     = GIMP_MOUSE_CURSOR;
+      cmodifier = CURSOR_MODIFIER_RESIZE;
+    }
   else if (mevent->x == CLAMP (mevent->x, crop->x2 - crop->srw, crop->x2) &&
 	   mevent->y == CLAMP (mevent->y, crop->y2 - crop->srh, crop->y2))
-    ctype = GDK_BOTTOM_RIGHT_CORNER;
+    {
+      ctype     = GIMP_MOUSE_CURSOR;
+      cmodifier = CURSOR_MODIFIER_RESIZE;
+    }
   else if  (mevent->x == CLAMP (mevent->x, crop->x1, crop->x1 + crop->srw) &&
 	    mevent->y == CLAMP (mevent->y, crop->y2 - crop->srh, crop->y2))
-    ctype = GDK_FLEUR;
+    {
+      cmodifier = CURSOR_MODIFIER_MOVE;
+    }
   else if  (mevent->x == CLAMP (mevent->x, crop->x2 - crop->srw, crop->x2) &&
 	    mevent->y == CLAMP (mevent->y, crop->y1, crop->y1 + crop->srh))
-    ctype = GDK_FLEUR;
+    {
+      cmodifier = CURSOR_MODIFIER_MOVE;
+    }
   else if (mevent->x > crop->x1 && mevent->x < crop->x2 &&
 	   mevent->y > crop->y1 && mevent->y < crop->y2)
     {
-      if ( crop_options->type == CROP_CROP )
-	ctype = GDK_ICON;
-      else 
-	ctype = GDK_SIZING;
+      ctype = GIMP_MOUSE_CURSOR;
     }
-  else
-    ctype = GDK_CROSS;
 
-  gdisplay_install_tool_cursor (gdisp, ctype);
+  gdisplay_install_tool_cursor (gdisp, ctype,
+				CROP,
+				cmodifier,
+				crop_options->type != CROP_CROP);
 }
 
 static void
@@ -581,11 +593,12 @@ crop_arrow_keys_func (Tool        *tool,
 		      GdkEventKey *kevent,
 		      gpointer     gdisp_ptr)
 {
-  int inc_x, inc_y;
-  GDisplay * gdisp;
-  Layer * layer;
-  Crop * crop;
-  int min_x, min_y, max_x, max_y;
+  GDisplay *gdisp;
+  Layer    *layer;
+  Crop     *crop;
+  gint inc_x, inc_y;
+  gint min_x, min_y;
+  gint max_x, max_y;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
@@ -614,9 +627,9 @@ crop_arrow_keys_func (Tool        *tool,
       if (crop_options->layer_only)
 	{
 	  layer = (gdisp->gimage)->active_layer;
-	  drawable_offsets (GIMP_DRAWABLE(layer), &min_x, &min_y);
-	  max_x  = drawable_width (GIMP_DRAWABLE(layer)) + min_x;
-	  max_y = drawable_height (GIMP_DRAWABLE(layer)) + min_y;
+	  drawable_offsets (GIMP_DRAWABLE (layer), &min_x, &min_y);
+	  max_x  = drawable_width (GIMP_DRAWABLE (layer)) + min_x;
+	  max_y = drawable_height (GIMP_DRAWABLE (layer)) + min_y;
 	}
       else
 	{
@@ -665,15 +678,19 @@ crop_modifier_key_func (Tool        *tool,
   switch (kevent->keyval)
     {
     case GDK_Alt_L: case GDK_Alt_R:
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_options->allow_enlarge_w), !crop_options->allow_enlarge);
+      gtk_toggle_button_set_active
+	(GTK_TOGGLE_BUTTON (crop_options->allow_enlarge_w),
+	 !crop_options->allow_enlarge);
       break;
     case GDK_Shift_L: case GDK_Shift_R:
       break;
     case GDK_Control_L: case GDK_Control_R:
       if (crop_options->type == CROP_CROP)
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_options->type_w[RESIZE_CROP]), TRUE);
+	gtk_toggle_button_set_active
+	  (GTK_TOGGLE_BUTTON (crop_options->type_w[RESIZE_CROP]), TRUE);
       else
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_options->type_w[CROP_CROP]), TRUE);
+	gtk_toggle_button_set_active
+	  (GTK_TOGGLE_BUTTON (crop_options->type_w[CROP_CROP]), TRUE);
       break;
     }
 }
@@ -683,7 +700,7 @@ crop_control (Tool       *tool,
 	      ToolAction  action,
 	      gpointer    gdisp_ptr)
 {
-  Crop * crop;
+  Crop *crop;
 
   crop = (Crop *) tool->private;
 
@@ -710,8 +727,8 @@ crop_control (Tool       *tool,
 void
 crop_draw (Tool *tool)
 {
-  Crop * crop;
-  GDisplay * gdisp;
+  Crop     *crop;
+  GDisplay *gdisp;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   crop = (Crop *) tool->private;
@@ -747,10 +764,10 @@ crop_draw (Tool *tool)
 }
 
 Tool *
-tools_new_crop ()
+tools_new_crop (void)
 {
-  Tool * tool;
-  Crop * private;
+  Tool *tool;
+  Crop *private;
 
   /*  The tool options  */
   if (! crop_options)
@@ -784,7 +801,7 @@ tools_new_crop ()
 void
 tools_free_crop (Tool *tool)
 {
-  Crop * crop;
+  Crop *crop;
 
   crop = (Crop *) tool->private;
 
@@ -799,156 +816,155 @@ tools_free_crop (Tool *tool)
 }
 
 void
-crop_image (GImage *gimage,
-	    int     x1,
-	    int     y1,
-	    int     x2,
-	    int     y2,
-	    int     layer_only,
-	    int     crop_layers)
+crop_image (GImage   *gimage,
+	    gint      x1,
+	    gint      y1,
+	    gint      x2,
+	    gint      y2,
+	    gboolean  layer_only,
+	    gboolean  crop_layers)
 {
-  Layer *layer;
-  Layer *floating_layer;
+  Layer   *layer;
+  Layer   *floating_layer;
   Channel *channel;
-  GList *guide_list_ptr;
-  GSList *list;
-  int width, height;
-  int lx1, ly1, lx2, ly2;
-  int off_x, off_y;
-  int doff_x, doff_y;
-
+  GList   *guide_list_ptr;
+  GSList  *list;
+  gint width, height;
+  gint lx1, ly1, lx2, ly2;
+  gint off_x, off_y;
+  gint doff_x, doff_y;
 
   width = x2 - x1;
   height = y2 - y1;
 
   /*  Make sure new width and height are non-zero  */
   if (width && height)
-  {
-    gimp_add_busy_cursors();
-
-    if (layer_only)
     {
-      undo_push_group_start (gimage, LAYER_RESIZE_UNDO);
+      gimp_add_busy_cursors ();
 
-      layer = gimage->active_layer;
+      if (layer_only)
+	{
+	  undo_push_group_start (gimage, LAYER_RESIZE_UNDO);
 
-      if (layer_is_floating_sel (layer))
-        floating_sel_relax (layer, TRUE);
+	  layer = gimage->active_layer;
 
-      drawable_offsets (GIMP_DRAWABLE(layer), &doff_x, &doff_y);
+	  if (layer_is_floating_sel (layer))
+	    floating_sel_relax (layer, TRUE);
 
-      off_x = (doff_x - x1);
-      off_y = (doff_y - y1);
+	  drawable_offsets (GIMP_DRAWABLE (layer), &doff_x, &doff_y);
 
-      layer_resize (layer, width, height, off_x, off_y);
+	  off_x = (doff_x - x1);
+	  off_y = (doff_y - y1);
 
-      if (layer_is_floating_sel (layer))
-        floating_sel_rigor (layer, TRUE);
+	  layer_resize (layer, width, height, off_x, off_y);
 
-      undo_push_group_end (gimage);
-    }
-    else
-    {
-      floating_layer = gimage_floating_sel (gimage);
+	  if (layer_is_floating_sel (layer))
+	    floating_sel_rigor (layer, TRUE);
 
-      undo_push_group_start (gimage, CROP_UNDO);
+	  undo_push_group_end (gimage);
+	}
+      else
+	{
+	  floating_layer = gimage_floating_sel (gimage);
 
-      /*  relax the floating layer  */
-      if (floating_layer)
-        floating_sel_relax (floating_layer, TRUE);
+	  undo_push_group_start (gimage, CROP_UNDO);
 
-      /*  Push the image size to the stack  */
-      undo_push_gimage_mod (gimage);
+	  /*  relax the floating layer  */
+	  if (floating_layer)
+	    floating_sel_relax (floating_layer, TRUE);
 
-      /*  Set the new width and height  */
-      gimage->width = width;
-      gimage->height = height;
+	  /*  Push the image size to the stack  */
+	  undo_push_gimage_mod (gimage);
 
-      /*  Resize all channels  */
-      list = gimage->channels;
-      while (list)
-      {
-	channel = (Channel *) list->data;
-	channel_resize (channel, width, height, -x1, -y1);
-	list = g_slist_next (list);
-      }
+	  /*  Set the new width and height  */
+	  gimage->width = width;
+	  gimage->height = height;
 
-      /*  Don't forget the selection mask!  */
-      channel_resize (gimage->selection_mask, width, height, -x1, -y1);
-      gimage_mask_invalidate (gimage);
+	  /*  Resize all channels  */
+	  list = gimage->channels;
+	  while (list)
+	    {
+	      channel = (Channel *) list->data;
+	      channel_resize (channel, width, height, -x1, -y1);
+	      list = g_slist_next (list);
+	    }
 
-      /*  crop all layers  */
-      list = gimage->layers;
-      while (list)
-      {
-	GSList * next;
+	  /*  Don't forget the selection mask!  */
+	  channel_resize (gimage->selection_mask, width, height, -x1, -y1);
+	  gimage_mask_invalidate (gimage);
 
-	layer = (Layer *) list->data;
-	next = g_slist_next (list);
+	  /*  crop all layers  */
+	  list = gimage->layers;
+	  while (list)
+	    {
+	      GSList *next;
 
-	layer_translate (layer, -x1, -y1);
+	      layer = (Layer *) list->data;
+	      next = g_slist_next (list);
 
-	drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+	      layer_translate (layer, -x1, -y1);
 
-	if (crop_layers)
-	  {
-	    drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+	      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
-	    lx1 = CLAMP (off_x, 0, gimage->width);
-	    ly1 = CLAMP (off_y, 0, gimage->height);
-	    lx2 = CLAMP ((drawable_width (GIMP_DRAWABLE (layer)) + off_x),
-			 0, gimage->width);
-	    ly2 = CLAMP ((drawable_height (GIMP_DRAWABLE (layer)) + off_y),
-			 0, gimage->height);
-	    width = lx2 - lx1;
-	    height = ly2 - ly1;
-	    
-	    if (width && height)
-	      layer_resize (layer, width, height,
-			    -(lx1 - off_x),
-			    -(ly1 - off_y));
-	    else
-	      gimage_remove_layer (gimage, layer);
-	  }
+	      if (crop_layers)
+		{
+		  drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
-	list = next;
-      }
+		  lx1 = CLAMP (off_x, 0, gimage->width);
+		  ly1 = CLAMP (off_y, 0, gimage->height);
+		  lx2 = CLAMP ((drawable_width (GIMP_DRAWABLE (layer)) + off_x),
+			       0, gimage->width);
+		  ly2 = CLAMP ((drawable_height (GIMP_DRAWABLE (layer)) + off_y),
+			       0, gimage->height);
+		  width = lx2 - lx1;
+		  height = ly2 - ly1;
 
-      /*  Make sure the projection matches the gimage size  */
-      gimage_projection_realloc (gimage);
+		  if (width && height)
+		    layer_resize (layer, width, height,
+				  -(lx1 - off_x),
+				  -(ly1 - off_y));
+		  else
+		    gimage_remove_layer (gimage, layer);
+		}
 
-      /*  rigor the floating layer  */
-      if (floating_layer)
-	floating_sel_rigor (floating_layer, TRUE);
+	      list = next;
+	    }
 
-      guide_list_ptr = gimage->guides;
-      while ( guide_list_ptr != NULL)
-      {
-        undo_push_guide (gimage, (Guide *)guide_list_ptr->data);
-        guide_list_ptr = guide_list_ptr->next;
-      }
-      undo_push_group_end (gimage);
+	  /*  Make sure the projection matches the gimage size  */
+	  gimage_projection_realloc (gimage);
+
+	  /*  rigor the floating layer  */
+	  if (floating_layer)
+	    floating_sel_rigor (floating_layer, TRUE);
+
+	  guide_list_ptr = gimage->guides;
+	  while ( guide_list_ptr != NULL)
+	    {
+	      undo_push_guide (gimage, (Guide *)guide_list_ptr->data);
+	      guide_list_ptr = guide_list_ptr->next;
+	    }
+	  undo_push_group_end (gimage);
   
-      /* Adjust any guides we might have laying about */
-      crop_adjust_guides (gimage, x1, y1, x2, y2); 
+	  /* Adjust any guides we might have laying about */
+	  crop_adjust_guides (gimage, x1, y1, x2, y2); 
 
-      /*  shrink wrap and update all views  */
-      channel_invalidate_previews (gimage);
-      layer_invalidate_previews (gimage);
-      gimage_invalidate_preview (gimage);
-      gdisplays_update_full (gimage);
-      gdisplays_shrink_wrap (gimage);
+	  /*  shrink wrap and update all views  */
+	  channel_invalidate_previews (gimage);
+	  layer_invalidate_previews (gimage);
+	  gimage_invalidate_preview (gimage);
+	  gdisplays_update_full (gimage);
+	  gdisplays_shrink_wrap (gimage);
+	}
+      gimp_remove_busy_cursors (NULL);
+      gdisplays_flush ();
     }
-    gimp_remove_busy_cursors(NULL);
-    gdisplays_flush ();
-  }
 }
 
 static void
 crop_recalc (Tool *tool,
 	     Crop *crop)
 {
-  GDisplay * gdisp;
+  GDisplay *gdisp;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
 
@@ -962,8 +978,8 @@ static void
 crop_start (Tool *tool,
 	    Crop *crop)
 {
-  static GDisplay * old_gdisp = NULL;
-  GDisplay        * gdisp;
+  static GDisplay *old_gdisp = NULL;
+  GDisplay        *gdisp;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
 
@@ -1117,8 +1133,8 @@ crop_info_create (Tool *tool)
 static void
 crop_info_update (Tool *tool)
 {
-  Crop * crop;
-  GDisplay * gdisp;
+  Crop     *crop;
+  GDisplay *gdisp;
 
   crop = (Crop *) tool->private;
   gdisp = (GDisplay *) tool->gdisp_ptr;
@@ -1133,47 +1149,55 @@ crop_info_update (Tool *tool)
 }
 
 static void
-crop_crop_callback (GtkWidget *w,
-		    gpointer   client_data)
+crop_crop_callback (GtkWidget *widget,
+		    gpointer   data)
 {
-  Tool * tool;
-  Crop * crop;
-  GDisplay * gdisp;
+  Tool     *tool;
+  Crop     *crop;
+  GDisplay *gdisp;
 
-  tool = active_tool;
-  crop = (Crop *) tool->private;
+  tool  = active_tool;
+  crop  = (Crop *) tool->private;
   gdisp = (GDisplay *) tool->gdisp_ptr;
-  crop_image (gdisp->gimage, crop->tx1, crop->ty1, crop->tx2, crop->ty2,
-	      crop_options->layer_only, TRUE);
+
+  crop_image (gdisp->gimage,
+	      crop->tx1, crop->ty1,
+	      crop->tx2, crop->ty2,
+	      crop_options->layer_only,
+	      TRUE);
 
   /*  Finish the tool  */
   crop_close_callback (NULL, NULL);
 }
 
 static void
-crop_resize_callback (GtkWidget *w,
-		      gpointer   client_data)
+crop_resize_callback (GtkWidget *widget,
+		      gpointer   data)
 {
-  Tool * tool;
-  Crop * crop;
-  GDisplay * gdisp;
+  Tool     *tool;
+  Crop     *crop;
+  GDisplay *gdisp;
 
-  tool = active_tool;
-  crop = (Crop *) tool->private;
+  tool  = active_tool;
+  crop  = (Crop *) tool->private;
   gdisp = (GDisplay *) tool->gdisp_ptr;
-  crop_image (gdisp->gimage, crop->tx1, crop->ty1, crop->tx2, crop->ty2, 
-	      crop_options->layer_only, FALSE);
+
+  crop_image (gdisp->gimage,
+	      crop->tx1, crop->ty1,
+	      crop->tx2, crop->ty2, 
+	      crop_options->layer_only,
+	      FALSE);
 
   /*  Finish the tool  */
   crop_close_callback (NULL, NULL);
 }
 
 static void
-crop_close_callback (GtkWidget *w,
-		     gpointer   client_data)
+crop_close_callback (GtkWidget *widget,
+		     gpointer   data)
 {
-  Tool * tool;
-  Crop * crop;
+  Tool *tool;
+  Crop *crop;
 
   tool = active_tool;
   crop = (Crop *) tool->private;
@@ -1189,27 +1213,28 @@ crop_close_callback (GtkWidget *w,
 }
 
 static void
-crop_selection_callback (GtkWidget *w,
-			 gpointer   client_data)
+crop_selection_callback (GtkWidget *widget,
+			 gpointer   data)
 {
-  Tool * tool;
-  Crop * crop;
-  Layer * layer;
-  GDisplay * gdisp;
+  Tool     *tool;
+  Crop     *crop;
+  Layer    *layer;
+  GDisplay *gdisp;
 
   tool = active_tool;
   crop = (Crop *) tool->private;
   gdisp = (GDisplay *) tool->gdisp_ptr;
 
   draw_core_pause (crop->core, tool);
-  if (! gimage_mask_bounds (gdisp->gimage, &crop->tx1, &crop->ty1, &crop->tx2, &crop->ty2))
+  if (! gimage_mask_bounds (gdisp->gimage,
+			    &crop->tx1, &crop->ty1, &crop->tx2, &crop->ty2))
     {
       if (crop_options->layer_only)
 	{
 	  layer = (gdisp->gimage)->active_layer;
-	  drawable_offsets (GIMP_DRAWABLE(layer), &crop->tx1, &crop->ty1);
-	  crop->tx2 = drawable_width  (GIMP_DRAWABLE(layer)) + crop->tx1;
-	  crop->ty2 = drawable_height (GIMP_DRAWABLE(layer)) + crop->ty1;
+	  drawable_offsets (GIMP_DRAWABLE (layer), &crop->tx1, &crop->ty1);
+	  crop->tx2 = drawable_width  (GIMP_DRAWABLE (layer)) + crop->tx1;
+	  crop->ty2 = drawable_height (GIMP_DRAWABLE (layer)) + crop->ty1;
 	}
       else
 	{
@@ -1224,26 +1249,26 @@ crop_selection_callback (GtkWidget *w,
 
 
 static void
-crop_automatic_callback (GtkWidget *w,
-			 gpointer   client_data)
+crop_automatic_callback (GtkWidget *widget,
+			 gpointer   data)
 {
-  Tool * tool;
-  Crop * crop;
-  GDisplay * gdisp;
-  GimpDrawable * active_drawable = NULL;  
-  GetColorFunc get_color_func;
+  Tool     *tool;
+  Crop     *crop;
+  GDisplay *gdisp;
+  GimpDrawable  *active_drawable = NULL;  
+  GetColorFunc    get_color_func;
   ColorsEqualFunc colors_equal_func;
   GtkObject *get_color_obj;
   guchar bgcolor[4] = {0, 0, 0, 0};
-  gint has_alpha = FALSE;
+  gboolean has_alpha = FALSE;
   PixelRegion PR;
   guchar *buffer = NULL;
   gint offset_x, offset_y, width, height, bytes;
   gint x, y, abort;
   gint x1, y1, x2, y2;
   
-  tool = active_tool;
-  crop = (Crop *) tool->private;
+  tool  = active_tool;
+  crop  = (Crop *) tool->private;
   gdisp = (GDisplay *) tool->gdisp_ptr;
 
   draw_core_pause (crop->core, tool);
@@ -1347,7 +1372,7 @@ crop_automatic_callback (GtkWidget *w,
     }
   x1 = x - 1;
  
- /* Check how many of the right lines are uniform/transparent. */
+  /* Check how many of the right lines are uniform/transparent. */
   abort = FALSE;
   for (x = x2; x > x1 && !abort; x--)
     {
@@ -1375,13 +1400,13 @@ crop_automatic_callback (GtkWidget *w,
 static AutoCropType
 crop_guess_bgcolor (GtkObject    *get_color_obj,
 		    GetColorFunc  get_color_func,
-		    int           bytes,
-		    int           has_alpha,
+		    gint          bytes,
+		    gboolean      has_alpha,
 		    guchar       *color,
-		    int           x1, 
-		    int           x2, 
-		    int           y1, 
-		    int           y2) 
+		    gint          x1, 
+		    gint          x2, 
+		    gint          y1, 
+		    gint          y2) 
 {
   guchar *tl = NULL;
   guchar *tr = NULL;
@@ -1413,9 +1438,9 @@ crop_guess_bgcolor (GtkObject    *get_color_obj,
 	  (tr[alpha] == 0 && br[alpha] == 0) ||
 	  (bl[alpha] == 0 && br[alpha] == 0))
 	{
-	  g_free (tl); 
-	  g_free (tr); 
-	  g_free (bl); 
+	  g_free (tl);
+	  g_free (tr);
+	  g_free (bl);
 	  g_free (br);
 	  return AUTO_CROP_ALPHA;
 	}
@@ -1445,25 +1470,27 @@ crop_guess_bgcolor (GtkObject    *get_color_obj,
 static int 
 crop_colors_equal (guchar *col1, 
 		   guchar *col2, 
-		   int     bytes) 
+		   gint    bytes) 
 {
-  int equal = TRUE;
-  int b;
+  gboolean equal = TRUE;
+  gint b;
   
-  for (b = 0; b < bytes; b++) {
-    if (col1[b] != col2[b]) {
-      equal = FALSE;
-      break;
+  for (b = 0; b < bytes; b++)
+    {
+      if (col1[b] != col2[b])
+	{
+	  equal = FALSE;
+	  break;
+	}
     }
-  }
-  
+
   return equal;
 }
 
-static int 
+static gboolean
 crop_colors_alpha (guchar *dummy, 
 		   guchar *col, 
-		   int     bytes) 
+		   gint    bytes) 
 {
   if (col[bytes-1] == 0)
     return TRUE;
@@ -1472,14 +1499,14 @@ crop_colors_alpha (guchar *dummy,
 }
 
 static void
-crop_orig_changed (GtkWidget *w,
+crop_orig_changed (GtkWidget *widget,
 		   gpointer   data)
 {
   Tool     *tool;
   Crop     *crop;
   GDisplay *gdisp;
-  int       ox;
-  int       oy;
+  gint      ox;
+  gint      oy;
 
   tool = active_tool;
 
@@ -1487,8 +1514,8 @@ crop_orig_changed (GtkWidget *w,
     {
       gdisp = (GDisplay *) tool->gdisp_ptr;
       crop = (Crop *) tool->private;
-      ox = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 0);
-      oy = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 1);
+      ox = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
+      oy = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
 
       if ((ox != crop->tx1) ||
 	  (oy != crop->ty1))
@@ -1505,14 +1532,14 @@ crop_orig_changed (GtkWidget *w,
 }
 
 static void
-crop_size_changed (GtkWidget *w,
+crop_size_changed (GtkWidget *widget,
 		   gpointer   data)
 {
   Tool     *tool;
   Crop     *crop;
   GDisplay *gdisp;
-  int       sx;
-  int       sy;
+  gint      sx;
+  gint      sy;
 
   tool = active_tool;
 
@@ -1520,8 +1547,8 @@ crop_size_changed (GtkWidget *w,
     {
       gdisp = (GDisplay *) tool->gdisp_ptr;
       crop = (Crop *) tool->private;
-      sx = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 0);
-      sy = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 1);
+      sx = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
+      sy = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
 
       if ((sx != (crop->tx2 - crop->tx1)) ||
 	  (sy != (crop->ty2 - crop->ty1)))
