@@ -1,3 +1,8 @@
+2001-10-01  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-server.c (script_fu_server_run): 
+	fixed wrong error message.
+
 2001-09-05  Abel Cheung  <maddog@linux.org.hk>
 
 	* configure.in: Rename zh_TW.Big5 to zh_TW in ALL_LINGUAS.

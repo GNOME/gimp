@@ -197,7 +197,8 @@ script_fu_server_run (char     *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       status = GIMP_PDB_CALLING_ERROR;
-      g_warning ("Script-Fu server does handle \"GIMP_RUN_WITH_LAST_VALS\"");
+      g_warning ("Script-Fu server does not handle \"GIMP_RUN_WITH_LAST_VALS\"");
+      break;
 
     default:
       break;
