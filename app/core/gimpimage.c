@@ -544,9 +544,9 @@ gimp_image_init (GimpImage *gimage)
 
   gimage->guides                = NULL;
 
-  gimage->grid                  = NULL;
-
   gimage->sample_points         = NULL;
+
+  gimage->grid                  = NULL;
 
   gimage->layers                = gimp_list_new (GIMP_TYPE_LAYER,   TRUE);
   gimage->channels              = gimp_list_new (GIMP_TYPE_CHANNEL, TRUE);
@@ -867,17 +867,17 @@ gimp_image_finalize (GObject *object)
       gimage->guides = NULL;
     }
 
-  if (gimage->grid)
-    {
-      g_object_unref (gimage->grid);
-      gimage->grid = NULL;
-    }
-
   if (gimage->sample_points)
     {
       g_list_foreach (gimage->sample_points, (GFunc) gimp_image_sample_point_unref, NULL);
       g_list_free (gimage->sample_points);
       gimage->sample_points = NULL;
+    }
+
+  if (gimage->grid)
+    {
+      g_object_unref (gimage->grid);
+      gimage->grid = NULL;
     }
 
   if (gimage->undo_stack)

@@ -178,12 +178,12 @@ gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
                                     "show-layer-boundary", SHOW_LAYER_BOUNDARY_BLURB,
                                     TRUE,
                                     0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SAMPLE_POINTS,
-                                    "show-sample-points", SHOW_SAMPLE_POINTS_BLURB,
-                                    TRUE,
-                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_GUIDES,
                                     "show-guides", SHOW_GUIDES_BLURB,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SAMPLE_POINTS,
+                                    "show-sample-points", SHOW_SAMPLE_POINTS_BLURB,
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_GRID,
