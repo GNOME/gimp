@@ -67,7 +67,7 @@ static void      gimp_preview_area_queue_draw       (GimpPreviewArea *area,
                                                      gint             y,
                                                      gint             width,
                                                      gint             height);
-static gint      gimp_preview_area_image_type_bytes (GimpImageType type);
+static gint      gimp_preview_area_image_type_bytes (GimpImageType    type);
 
 
 static GtkDrawingAreaClass *parent_class = NULL;
@@ -290,17 +290,19 @@ gimp_preview_area_expose (GtkWidget      *widget,
   return FALSE;
 }
 
-static void      gimp_preview_area_queue_draw    (GimpPreviewArea *area,
-                                                  gint             x,
-                                                  gint             y,
-                                                  gint             width,
-                                                  gint             height)
+static void
+gimp_preview_area_queue_draw (GimpPreviewArea *area,
+                              gint             x,
+                              gint             y,
+                              gint             width,
+                              gint             height)
 {
-  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+  GtkWidget *widget = GTK_WIDGET (area);
 
-  x += (GTK_WIDGET(area)->allocation.width  - area->width)  / 2;
-  y += (GTK_WIDGET(area)->allocation.height - area->height) / 2;
-  gtk_widget_queue_draw_area (GTK_WIDGET (area), x, y, width, height);
+  x += (widget->allocation.width  - area->width)  / 2;
+  y += (widget->allocation.height - area->height) / 2;
+
+  gtk_widget_queue_draw_area (widget, x, y, width, height);
 }
 
 static gint
