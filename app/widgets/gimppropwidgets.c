@@ -34,9 +34,13 @@
 #include "config/gimpconfig-params.h"
 #include "config/gimpconfig-path.h"
 
+#include "core/gimpviewable.h"
+
 #include "gimpcolorpanel.h"
+#include "gimpdnd.h"
 #include "gimpenummenu.h"
 #include "gimpfontselection.h"
+#include "gimppreview.h"
 #include "gimppropwidgets.h"
 #include "gimpwidgets-constructors.h"
 
@@ -594,8 +598,8 @@ gimp_prop_spin_button_new (GObject     *config,
     }
   else
     {
-      g_warning (G_STRLOC ": property '%s' of %s is not numeric",
-                 property_name,
+      g_warning ("%s: property '%s' of %s is not numeric",
+                 G_STRLOC, property_name,
                  g_type_name (G_TYPE_FROM_INSTANCE (config)));
       return NULL;
     }
@@ -677,8 +681,8 @@ gimp_prop_scale_entry_new (GObject     *config,
     }
   else
     {
-      g_warning (G_STRLOC ": property '%s' of %s is not numeric",
-                 property_name,
+      g_warning ("%s: property '%s' of %s is not numeric",
+                 G_STRLOC, property_name,
                  g_type_name (G_TYPE_FROM_INSTANCE (config)));
       return NULL;
     }
@@ -1536,10 +1540,9 @@ gimp_prop_coordinates_new (GObject                   *config,
     }
   else
     {
-      g_warning (G_STRLOC ": properties '%s' and '%s' of %s are not either "
+      g_warning ("%s: properties '%s' and '%s' of %s are not either "
                  " both int or both double",
-                 x_property_name,
-                 y_property_name,
+                 G_STRLOC, x_property_name, y_property_name,
                  g_type_name (G_TYPE_FROM_INSTANCE (config)));
       return NULL;
     }
@@ -2050,6 +2053,107 @@ gimp_prop_unit_menu_notify (GObject    *config,
                                      config);
 }
 
+
+/*************/
+/*  preview  */
+/*************/
+
+static void   gimp_prop_preview_drop   (GtkWidget    *menu,
+                                        GimpViewable *viewable,
+                                        gpointer      data);
+static void   gimp_prop_preview_notify (GObject      *config,
+                                        GParamSpec   *param_spec,
+                                        GtkWidget    *preview);
+
+GtkWidget *
+gimp_prop_preview_new (GObject     *config,
+                       const gchar *property_name,
+                       gint         size)
+{
+  GParamSpec   *param_spec;
+  GtkWidget    *preview;
+  GimpViewable *viewable;
+
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_OBJECT, G_STRLOC);
+  if (! param_spec)
+    return NULL;
+
+  if (! g_type_is_a (param_spec->value_type, GIMP_TYPE_VIEWABLE))
+    {
+      g_warning ("%s: property '%s' of %s is not a GimpViewable",
+                 G_STRLOC, property_name,
+                 g_type_name (G_TYPE_FROM_INSTANCE (config)));
+      return NULL;
+    }
+
+  preview = gimp_preview_new_by_type (param_spec->value_type, size, 0, FALSE);
+
+  if (! preview)
+    {
+      g_warning ("%s: cannot create preview for type '%s'",
+                 G_STRLOC, g_type_name (param_spec->value_type));
+      return NULL;
+    }
+
+  g_object_get (config,
+                property_name, &viewable,
+                NULL);
+
+  if (viewable)
+    {
+      gimp_preview_set_viewable (GIMP_PREVIEW (preview), viewable);
+      g_object_unref (viewable);
+    }
+
+  set_param_spec (G_OBJECT (preview), preview, param_spec);
+
+  gimp_dnd_viewable_dest_add (preview, param_spec->value_type,
+                              gimp_prop_preview_drop,
+                              config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_preview_notify),
+                  preview);
+
+  return preview;
+}
+
+static void
+gimp_prop_preview_drop (GtkWidget    *preview,
+                        GimpViewable *viewable,
+                        gpointer      data)
+{
+  GObject    *config;
+  GParamSpec *param_spec;
+
+  param_spec = get_param_spec (G_OBJECT (preview));
+  if (! param_spec)
+    return;
+
+  config = G_OBJECT (data);
+
+  g_object_set (config,
+                param_spec->name, viewable,
+                NULL);
+}
+
+static void
+gimp_prop_preview_notify (GObject      *config,
+                          GParamSpec   *param_spec,
+                          GtkWidget    *preview)
+{
+  GimpViewable *viewable;
+
+  g_object_get (config,
+                param_spec->name, &viewable,
+                NULL);
+
+  gimp_preview_set_viewable (GIMP_PREVIEW (preview), viewable);
+
+  if (viewable)
+    g_object_unref (viewable);
+}
 
 
 /*******************************/

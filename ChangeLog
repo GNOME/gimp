@@ -1,3 +1,10 @@
+2003-02-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppropwidgets.[ch]: added gimp_prop_preview_new().
+
+	* app/tools/gimpblendoptions.c
+	* app/tools/paint_options.c: use it.
+
 2003-02-18  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/procedural_db.pdb

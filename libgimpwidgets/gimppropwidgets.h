@@ -142,5 +142,11 @@ GtkWidget     * gimp_prop_unit_menu_new           (GObject     *config,
                                                    const gchar *property_name,
                                                    const gchar *unit_format);
 
+/*  GParamObject (GimpViewable)  */
+
+GtkWidget     * gimp_prop_preview_new             (GObject     *config,
+                                                   const gchar *property_name,
+                                                   gint         size);
+
 
 #endif /* __GIMP_PROP_WIDGETS_H__ */

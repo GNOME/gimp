@@ -34,10 +34,7 @@
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
-#include "widgets/gimpenummenu.h"
-#include "widgets/gimppreview.h"
 #include "widgets/gimppropwidgets.h"
-#include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gtkhwrapbox.h"
 
 #include "gimpairbrushtool.h"
@@ -125,16 +122,11 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       tool_options->tool_info->tool_type != GIMP_TYPE_BLEND_TOOL       &&
       tool_options->tool_info->tool_type != GIMP_TYPE_INK_TOOL)
     {
-      GimpBrush *brush;
       GtkWidget *button;
       GtkWidget *preview;
 
-      brush = gimp_context_get_brush (context);
-
       button = gtk_button_new ();
-      preview = gimp_preview_new_full (GIMP_VIEWABLE (brush),
-                                       24, 24, 0,
-                                       FALSE, TRUE, TRUE);
+      preview = gimp_prop_preview_new (config, "brush", 24);
       gtk_container_add (GTK_CONTAINER (button), preview);
       gtk_widget_show (preview);
 
@@ -142,10 +134,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                  _("Brush:"), 1.0, 0.5,
                                  button, 2, TRUE);
 
-      g_signal_connect_object (options, "brush_changed",
-                               G_CALLBACK (gimp_preview_set_viewable),
-                               preview,
-                               G_CONNECT_SWAPPED);
       g_signal_connect (button, "clicked",
                         G_CALLBACK (paint_options_brush_clicked),
                         NULL);
