@@ -292,6 +292,7 @@ app/widgets/gimpstrokeeditor.c
 app/widgets/gimptemplateeditor.c
 app/widgets/gimptemplateview.c
 app/widgets/gimptexteditor.c
+app/widgets/gimpthumbbox.c
 app/widgets/gimptoolbox-color-area.c
 app/widgets/gimptoolbox-indicator-area.c
 app/widgets/gimptoolbox.c
