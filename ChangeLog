@@ -1,6 +1,25 @@
 2001-01-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
+	* app/selection_options.h: removed.
+
+	* app/tools/Makefile.am
+	* app/tools/selection_options.h: added.
+
+	* app/tools/selection_options.c
+	* app/tools/paint_options.c: new files cut out of tool_options.c
+
+	* app/tools/tool_options.c: removed the paint & selection
+	options code.
+
+	* app/tools/tool_options.h
+	* app/tools/paint_options.h: cleanup.
+
+	* po/POTFILES.in: added selection_options.c and paint_options.c
+
+2001-01-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
 	* app/toolbox.[ch]: new files containing most of the code
 	from app/interface.[ch]
 

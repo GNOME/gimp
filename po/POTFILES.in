@@ -101,12 +101,14 @@ app/tools/magnify.c
 app/tools/measure.c
 app/tools/move.c
 app/tools/paint_core.c
+app/tools/paint_options.c
 app/tools/paintbrush.c
 app/tools/perspective_tool.c
 app/tools/posterize.c
 app/tools/rect_select.c
 app/tools/rotate_tool.c
 app/tools/scale_tool.c
+app/tools/selection_options.c
 app/tools/shear_tool.c
 app/tools/smudge.c
 app/tools/text_tool.c

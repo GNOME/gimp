@@ -15,14 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __PAINT_OPTIONS_H__
 #define __PAINT_OPTIONS_H__
 
-#include "tools.h"
+
 #include "tool_options.h"
 
-/*  the paint options structures  */
+
 typedef struct _PaintPressureOptions PaintPressureOptions;
+
 struct _PaintPressureOptions
 {
   GtkWidget   *frame;
@@ -48,8 +50,9 @@ struct _PaintPressureOptions
   GtkWidget   *color_w;
 };
 
-/*  the paint options structures  */
+
 typedef struct _PaintOptions PaintOptions;
+
 struct _PaintOptions
 {
   ToolOptions  tool_options;
@@ -83,15 +86,15 @@ extern PaintPressureOptions non_gui_pressure_options;
 
 /*  paint tool options functions  */
 
-PaintOptions *paint_options_new    (ToolType              tool_type,
-				    ToolOptionsResetFunc  reset_func);
+PaintOptions * paint_options_new    (ToolType              tool_type,
+				     ToolOptionsResetFunc  reset_func);
 
-void          paint_options_reset  (PaintOptions         *options);
+void           paint_options_reset  (PaintOptions         *options);
 
 /*  to be used by "derived" paint options only  */
-void          paint_options_init   (PaintOptions         *options,
-				    ToolType              tool_type,
-				    ToolOptionsResetFunc  reset_func);
+void           paint_options_init   (PaintOptions         *options,
+				     ToolType              tool_type,
+				     ToolOptionsResetFunc  reset_func);
 
 
 /*  functions for the global paint options  */
@@ -104,5 +107,6 @@ void        paint_options_set_global       (gboolean          global);
 GtkWidget * paint_mode_menu_new            (GtkSignalFunc     callback,
 					    gpointer          data,
 					    LayerModeEffects  initial);
+
 
 #endif  /*  __PAINT_OPTIONS_H__  */

@@ -83,7 +83,7 @@ SelectionOptions * selection_options_new   (ToolType              tool_type,
 
 void               selection_options_reset (SelectionOptions     *options);
 
-/*  to be used by "derived selection options only
+/*  to be used by "derived" selection options only
  */
 void               selection_options_init  (SelectionOptions     *options,
 					    ToolType              tool_type,

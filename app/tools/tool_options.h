@@ -25,7 +25,7 @@
 struct _ToolOptions
 {
   GtkWidget            *main_vbox;
-  gchar                *title;
+  const gchar          *title;
 
   ToolOptionsResetFunc  reset_func;
 };
@@ -34,13 +34,13 @@ struct _ToolOptions
 /*  create a dummy tool options structure
  *  (to be used by tools without options)
  */
-ToolOptions * tool_options_new  (gchar *title);
+ToolOptions * tool_options_new  (const gchar          *title);
 
 /*  initialize an already allocated ToolOptions structure
  *  (to be used by derived tool options only)
  */
 void          tool_options_init (ToolOptions          *options,
-				 gchar                *title,
+				 const gchar          *title,
 				 ToolOptionsResetFunc  reset_func);
 
 
