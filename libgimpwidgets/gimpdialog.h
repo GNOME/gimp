@@ -23,8 +23,6 @@
 #ifndef __GIMP_DIALOG_H__
 #define __GIMP_DIALOG_H__
 
-#include <libgimp/gimphelpui.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */

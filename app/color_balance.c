@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
@@ -27,12 +27,17 @@
 #include "color_transfer.h"
 #include "drawable.h"
 #include "gdisplay.h"
+#include "gimpimage.h"
 #include "gimpui.h"
 #include "image_map.h"
+#include "pixel_region.h"
+#include "tools.h"
+#include "tool_options.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
 #include "libgimp/gimpcolorspace.h"
+
 
 #define CYAN_RED       0x1
 #define MAGENTA_GREEN  0x2
@@ -212,7 +217,7 @@ color_balance_initialize (GDisplay *gdisp)
 {
   gint i;
 
-  if (! drawable_color (gimage_active_drawable (gdisp->gimage)))
+  if (! drawable_color (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Color balance operates only on RGB color drawables."));
       return;
@@ -232,7 +237,7 @@ color_balance_initialize (GDisplay *gdisp)
       color_balance_dialog->yellow_blue[i]   = 0.0;
     }
 
-  color_balance_dialog->drawable = gimage_active_drawable (gdisp->gimage);
+  color_balance_dialog->drawable = gimp_image_active_drawable (gdisp->gimage);
   color_balance_dialog->image_map =
     image_map_create (gdisp, color_balance_dialog->drawable);
 

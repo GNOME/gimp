@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -33,9 +34,10 @@
 #include "gimprc.h"
 #include "gimpui.h"
 #include "session.h"
-#include "color_area.h" /* for color_area_draw_rect */
+#include "color_area.h"
 
 #include "libgimp/gimpcolorselector.h"
+#include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -27,7 +27,7 @@
 #include <unistd.h>
 #endif
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
@@ -36,8 +36,10 @@
 #include "paint_core.h"
 #include "gimprc.h"
 #include "gimpbrush.h"
+#include "temp_buf.h"
 
 #include "libgimp/gimpmath.h"
+
 
 #define OVERSAMPLING 5
 

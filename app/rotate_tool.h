@@ -15,24 +15,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __ROTATE_TOOL_H__
 #define __ROTATE_TOOL_H__
 
-#include "tools.h"
-#include "transform_core.h"
 
-TileManager * rotate_tool_transform (Tool           *tool,
-				     gpointer        gdisp_ptr,
-				     TransformState  state);
-TileManager * rotate_tool_rotate    (GimpImage      *gimage,
-				     GimpDrawable   *drawable,
-				     GDisplay       *gdisp,
-				     gdouble         angle,
-				     TileManager    *float_tiles,
-				     gboolean        interpolation,
-				     GimpMatrix3     matrix);
+TileManager * rotate_tool_transform  (Tool           *tool,
+				      gpointer        gdisp_ptr,
+				      TransformState  state);
+TileManager * rotate_tool_rotate     (GimpImage      *gimage,
+				      GimpDrawable   *drawable,
+				      GDisplay       *gdisp,
+				      gdouble         angle,
+				      TileManager    *float_tiles,
+				      gboolean        interpolation,
+				      GimpMatrix3     matrix);
 
-Tool * tools_new_rotate_tool  (void);
-void   tools_free_rotate_tool (Tool *tool);
+Tool        * tools_new_rotate_tool  (void);
+void          tools_free_rotate_tool (Tool           *tool);
+
 
 #endif  /*  __ROTATE_TOOL_H__  */

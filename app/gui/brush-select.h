@@ -20,29 +20,25 @@
 #define  __BRUSH_SELECT_H__
 
 
-#include "gimpbrush.h"
-#include "gimpcontext.h"
-
-
 typedef struct _BrushSelect BrushSelect;
 
 struct _BrushSelect
 {
-  GtkWidget *shell;
+  GtkWidget     *shell;
 
   /*  Place holders which enable global<->per-tool paint options switching  */
-  GtkWidget *left_box;
-  GtkWidget *right_box;
-  GtkWidget *brush_selection_box;
-  GtkWidget *paint_options_box;
+  GtkWidget     *left_box;
+  GtkWidget     *right_box;
+  GtkWidget     *brush_selection_box;
+  GtkWidget     *paint_options_box;
 
   /*  The preview and it's vscale data  */
   GtkWidget     *preview;
   GtkAdjustment *sbar_data;
 
-  GtkWidget *options_box;
-  GtkWidget *brush_name;
-  GtkWidget *brush_size;
+  GtkWidget     *options_box;
+  GtkWidget     *brush_name;
+  GtkWidget     *brush_size;
 
   GtkAdjustment *opacity_data;
   GtkAdjustment *spacing_data;
@@ -51,32 +47,32 @@ struct _BrushSelect
   GtkWidget     *option_menu;
 
   /*  Brush popup  */
-  GtkWidget *brush_popup;
-  GtkWidget *brush_preview;
-  guint      popup_timeout_tag;
-  guint      popup_anim_timeout_tag;
-  guint      popup_pipe_index;
+  GtkWidget     *brush_popup;
+  GtkWidget     *brush_preview;
+  guint          popup_timeout_tag;
+  guint          popup_anim_timeout_tag;
+  guint          popup_pipe_index;
 
   /*  Callback function name  */
-  gchar       *callback_name;
+  gchar         *callback_name;
 
   /*  Context to store the current brush & paint options  */
-  GimpContext *context;
-  gint         spacing_value;
+  GimpContext   *context;
+  gint           spacing_value;
 
-  GimpBrush   *dnd_brush;
+  GimpBrush     *dnd_brush;
 
   /*  Some variables to keep the GUI consistent  */
-  gint      cell_width;
-  gint      cell_height;
-  gint      scroll_offset;
-  gint      old_row;
-  gint      old_col;
-  gint      NUM_BRUSH_COLUMNS;
-  gint      NUM_BRUSH_ROWS;
+  gint           cell_width;
+  gint           cell_height;
+  gint           scroll_offset;
+  gint           old_row;
+  gint           old_col;
+  gint           NUM_BRUSH_COLUMNS;
+  gint           NUM_BRUSH_ROWS;
 
-  gboolean  redraw;
-  gboolean  freeze; /*  so we don't waste so much time during refresh  */
+  gboolean       redraw;
+  gboolean       freeze; /*  so we don't waste so much time during refresh  */
 };
 
 /*  list of active dialogs  */

@@ -15,16 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GDISPLAY_H__
 #define __GDISPLAY_H__
 
-
-#include "cursorutil.h"
-#include "gimage.h"
-#include "info_dialog.h"
-#include "selection.h"
-
-#include "gdisplayF.h"
+typedef enum
+{
+  SelectionOff,
+  SelectionLayerOff,
+  SelectionOn,
+  SelectionPause,
+  SelectionResume
+} SelectionControl;
 
 /*
  *  Global variables

@@ -15,8 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __OPS_BUTTONS_H__
 #define __OPS_BUTTONS_H__
+
 
 typedef enum
 {
@@ -52,5 +54,6 @@ struct _OpsButton
 
 GtkWidget * ops_button_box_new (OpsButton     *ops_button,
 				OpsButtonType  ops_type);
+
 
 #endif /* __OPS_BUTTONS_H__ */

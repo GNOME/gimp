@@ -21,8 +21,6 @@
 
 
 #include "procedural_db.h"
-#include "gimpprogress.h"
-#include "drawable.h"
 
 
 #define WRITE_BUFFER_SIZE  512
@@ -188,7 +186,9 @@ void            plug_in_progress_init        (PlugIn        *plug_in,
 void            plug_in_progress_update      (PlugIn        *plug_in,
 					      gdouble        percentage);
 
+
 extern PlugIn *current_plug_in;
 extern GSList *proc_defs;
+
 
 #endif /* __PLUG_IN_H__ */

@@ -23,10 +23,13 @@
 
 #include "config.h"
 
-#include "libgimp/gimpui.h"
-#include "libgimp/stdplugins-intl.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "imap_default_dialog.h"
+
+#include "libgimp/stdplugins-intl.h"
+
 
 static void
 dialog_cancel(GtkWidget *widget, gpointer data)

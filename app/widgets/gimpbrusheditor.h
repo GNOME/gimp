@@ -21,7 +21,6 @@
 #ifndef  __BRUSH_EDIT_H__
 #define  __BRUSH_EDIT_H__
 
-#include "gimpbrushgenerated.h"
 
 typedef struct _BrushEditGeneratedWindow BrushEditGeneratedWindow;
 
@@ -46,7 +45,7 @@ struct _BrushEditGeneratedWindow
 
 BrushEditGeneratedWindow * brush_edit_generated_new (void);
 
-void brush_edit_generated_set_brush (BrushEditGeneratedWindow *begw,
-				     GimpBrush                *brush);
+void   brush_edit_generated_set_brush (BrushEditGeneratedWindow *begw,
+				       GimpBrush                *brush);
 
 #endif  /*  __BRUSH_EDIT_H__  */

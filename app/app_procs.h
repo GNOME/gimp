@@ -15,15 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __APP_PROCS_H__
 #define __APP_PROCS_H__
 
-/* Function declarations */
-void gimp_init (int, char **);
-void app_init (void);
-void app_exit (gboolean);
-void app_exit_finish (void);
-int app_exit_finish_done (void);
-void app_init_update_status(char *label1val, char *label2val, float pct_progress);
+
+void   gimp_init              (gint,
+			       gchar    **);
+void   app_init               (void);
+void   app_exit               (gboolean   );
+void   app_exit_finish        (void);
+gint   app_exit_finish_done   (void);
+void   app_init_update_status (gchar     *label1val,
+			       gchar     *label2val,
+			       gfloat     pct_progress);
+
 
 #endif /* APP_PROCS_H */

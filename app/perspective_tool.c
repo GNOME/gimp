@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
@@ -26,15 +26,19 @@
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpimage.h"
+#include "gimpprogress.h"
+#include "gimpui.h"
 #include "info_dialog.h"
 #include "perspective_tool.h"
 #include "selection.h"
+#include "tile_manager_pvt.h"
+#include "tools.h"
+#include "transform_core.h"
 #include "transform_tool.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
-
-#include "tile_manager_pvt.h"
 
 
 /*  storage for information dialog fields  */
@@ -58,7 +62,7 @@ perspective_tool_transform (Tool           *tool,
 
   switch (state)
     {
-    case INIT:
+    case TRANSFORM_INIT:
       if (!transform_info)
 	{
 	  transform_info =
@@ -84,21 +88,21 @@ perspective_tool_transform (Tool           *tool,
       return NULL;
       break;
 
-    case MOTION:
+    case TRANSFORM_MOTION:
       perspective_tool_motion (tool, gdisp_ptr);
       perspective_tool_recalc (tool, gdisp_ptr);
       break;
 
-    case RECALC:
+    case TRANSFORM_RECALC:
       perspective_tool_recalc (tool, gdisp_ptr);
       break;
 
-    case FINISH:
+    case TRANSFORM_FINISH:
       /*  Let the transform core handle the inverse mapping  */
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
       return
 	perspective_tool_perspective (gdisp->gimage,
-				      gimage_active_drawable (gdisp->gimage),
+				      gimp_image_active_drawable (gdisp->gimage),
 				      gdisp,
 				      transform_core->original,
 				      transform_tool_smoothing (),
@@ -184,19 +188,19 @@ perspective_tool_motion (Tool *tool,
 
   switch (transform_core->function)
     {
-    case HANDLE_1:
+    case TRANSFORM_HANDLE_1:
       transform_core->trans_info [X0] += diff_x;
       transform_core->trans_info [Y0] += diff_y;
       break;
-    case HANDLE_2:
+    case TRANSFORM_HANDLE_2:
       transform_core->trans_info [X1] += diff_x;
       transform_core->trans_info [Y1] += diff_y;
       break;
-    case HANDLE_3:
+    case TRANSFORM_HANDLE_3:
       transform_core->trans_info [X2] += diff_x;
       transform_core->trans_info [Y2] += diff_y;
       break;
-    case HANDLE_4:
+    case TRANSFORM_HANDLE_4:
       transform_core->trans_info [X3] += diff_x;
       transform_core->trans_info [Y3] += diff_y;
       break;

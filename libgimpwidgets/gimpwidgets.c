@@ -24,9 +24,13 @@
 
 #include <gtk/gtk.h>
 
+#include "gimptypes.h"
+#include "gimpuitypes.h"
+
 #include "gimpchainbutton.h"
 #include "gimphelpui.h"
 #include "gimppixmap.h"
+#include "gimpsizeentry.h"
 #include "gimpunitmenu.h"
 #include "gimpwidgets.h"
 #include "gimpmath.h"

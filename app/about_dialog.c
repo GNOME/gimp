@@ -37,8 +37,10 @@
 #include "libgimp/gimpfeatures.h"
 
 #include "libgimp/gimpenv.h"
-#include "libgimp/gimpintl.h"
+#include "libgimp/gimphelpui.h"
 #include "libgimp/gimpmath.h"
+
+#include "libgimp/gimpintl.h"
 
 #include "pixmaps/wilber2.xpm"
 

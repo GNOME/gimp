@@ -15,13 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __PAINT_CORE_H__
 #define __PAINT_CORE_H__
 
-#include "apptypes.h"
-#include "draw_core.h"
-#include "temp_buf.h"
-#include "gimpbrush.h"
 
 /* the different states that the painting function can be called with  */
 
@@ -48,7 +45,8 @@ typedef enum /*< skip >*/
 } ToolFlags;
 
 typedef void * (* PaintFunc)   (PaintCore *, GimpDrawable *, int);
-struct _paint_core
+
+struct _PaintCore
 {
   DrawCore *      core;          /*  Core select object         */
 

@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
@@ -28,9 +28,11 @@
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimage_mask.h"
+#include "gimpimage.h"
 #include "gimprc.h"
 #include "selection.h"
 #include "marching_ants.h"
+
 
 #define USE_XDRAWPOINTS
 #undef VERBOSE
@@ -342,33 +344,44 @@ selection_generate_segs (Selection *select)
 			&select->num_segs_in, &select->num_segs_out);
   if (select->num_segs_in)
     {
-      select->segs_in = (GdkSegment *) g_malloc (sizeof (GdkSegment) * select->num_segs_in);
-      selection_transform_segs (select, segs_in, select->segs_in, select->num_segs_in);
+      select->segs_in = g_new (GdkSegment, select->num_segs_in);
+      selection_transform_segs (select, segs_in, select->segs_in,
+				select->num_segs_in);
 #ifdef USE_XDRAWPOINTS
       selection_render_points (select);
 #endif
     }
   else
-    select->segs_in = NULL;
+    {
+      select->segs_in = NULL;
+    }
 
   /*  Possible secondary boundary representation  */
   if (select->num_segs_out)
     {
-      select->segs_out = (GdkSegment *) g_malloc (sizeof (GdkSegment) * select->num_segs_out);
-      selection_transform_segs (select, segs_out, select->segs_out, select->num_segs_out);
+      select->segs_out = g_new (GdkSegment, select->num_segs_out);
+      selection_transform_segs (select, segs_out, select->segs_out,
+				select->num_segs_out);
     }
   else
-    select->segs_out = NULL;
+    {
+      select->segs_out = NULL;
+    }
 
   /*  The active layer's boundary  */
-  gimage_layer_boundary (gdisp->gimage, &segs_layer, &select->num_segs_layer);
+  gimp_image_layer_boundary (gdisp->gimage, &segs_layer,
+			     &select->num_segs_layer);
+
   if (select->num_segs_layer)
     {
-      select->segs_layer = (GdkSegment *) g_malloc (sizeof (GdkSegment) * select->num_segs_layer);
-      selection_transform_segs (select, segs_layer, select->segs_layer, select->num_segs_layer);
+      select->segs_layer = g_new (GdkSegment, select->num_segs_layer);
+      selection_transform_segs (select, segs_layer, select->segs_layer,
+				select->num_segs_layer);
     }
   else
-    select->segs_layer = NULL;
+    {
+      select->segs_layer = NULL;
+    }
 
   g_free (segs_layer);
 }
@@ -500,7 +513,7 @@ selection_create (GdkWindow *win,
   gdisp = (GDisplay *) gdisp_ptr;
 
   new = (Selection *) g_malloc (sizeof (Selection));
-  base_type = gimage_base_type (gdisp->gimage);
+  base_type = gimp_image_base_type (gdisp->gimage);
 
   if (cycled_marching_ants)
     {

@@ -15,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __CLONE_H__
 #define __CLONE_H__
 
-#include "paint_core.h"
-#include "tools.h"
 
 typedef enum
 {
@@ -27,11 +26,21 @@ typedef enum
   PATTERN_CLONE
 } CloneType;
 
-void *        clone_paint_func  (PaintCore *, GimpDrawable *, int);
-gboolean      clone_non_gui     (GimpDrawable *, GimpDrawable *, CloneType,
-    				 double, double, int, double *);
-gboolean      clone_non_gui_default (GimpDrawable *, int, double *);
-Tool *        tools_new_clone   (void);
-void          tools_free_clone  (Tool *);
+void     * clone_paint_func      (PaintCore *,
+				  GimpDrawable *,
+				  gint);
+gboolean   clone_non_gui         (GimpDrawable *,
+				  GimpDrawable *,
+				  CloneType,
+				  gdouble,
+				  gdouble,
+				  gint,
+				  gdouble *);
+gboolean   clone_non_gui_default (GimpDrawable *,
+				  gint,
+				  gdouble *);
+Tool     * tools_new_clone       (void);
+void       tools_free_clone      (Tool *);
+
 
 #endif  /*  __CLONE_H__  */

@@ -57,7 +57,10 @@
 #include "session.h"
 #include "dialog_handler.h"
 
+#include "libgimp/gimphelpui.h"
+
 #include "libgimp/gimpintl.h"
+
 
 #define ERRORS_ALL       0
 #define ERRORS_SELECTION 1

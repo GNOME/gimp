@@ -31,12 +31,20 @@
 #include "flip_tool.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpimage.h"
 #include "gimpui.h"
+#include "paint_funcs.h"
 #include "path_transform.h"
-
-#include "tile_manager_pvt.h"            /* ick. */
+#include "pixel_region.h"
+#include "temp_buf.h"
+#include "tile_manager.h"
+#include "tile_manager_pvt.h"
+#include "tools.h"
+#include "tool_options.h"
+#include "transform_core.h"
 
 #include "libgimp/gimpintl.h"
+
 
 #define FLIP_INFO 0
 
@@ -145,20 +153,20 @@ flip_tool_transform (Tool           *tool,
 
   switch (state)
     {
-    case INIT:
+    case TRANSFORM_INIT:
       transform_info = NULL;
       break;
 
-    case MOTION:
+    case TRANSFORM_MOTION:
       break;
 
-    case RECALC:
+    case TRANSFORM_RECALC:
       break;
 
-    case FINISH:
+    case TRANSFORM_FINISH:
       /*      transform_core->trans_info[FLIP] *= -1.0;*/
       return flip_tool_flip (gdisp->gimage,
-	  		     gimage_active_drawable (gdisp->gimage),
+	  		     gimp_image_active_drawable (gdisp->gimage),
 			     transform_core->original, 
 			     (int) transform_core->trans_info[FLIP_INFO],
 			     flip_options->type);
@@ -179,7 +187,7 @@ flip_cursor_update (Tool           *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
   
-  if ((drawable = gimage_active_drawable (gdisp->gimage)))
+  if ((drawable = gimp_image_active_drawable (gdisp->gimage)))
     {
       gint x, y;
       gint off_x, off_y;
@@ -250,16 +258,25 @@ flip_tool_flip (GimpImage               *gimage,
 {
   TileManager *new;
   PixelRegion  srcPR, destPR;
-  gint i;
+  gint         orig_width;
+  gint         orig_height;
+  gint         orig_bpp;
+  gint         i;
 
-  if (!orig)
+  if (! orig)
     return NULL;
+
+  orig_width  = tile_manager_level_width (orig);
+  orig_height = tile_manager_level_height (orig);
+  orig_bpp    = tile_manager_level_bpp (orig);
 
   if (flip > 0)
     {
-      new = tile_manager_new (orig->width, orig->height, orig->bpp);
-      pixel_region_init (&srcPR, orig, 0, 0, orig->width, orig->height, FALSE);
-      pixel_region_init (&destPR, new, 0, 0, orig->width, orig->height, TRUE);
+      new = tile_manager_new (orig_width, orig_height, orig_bpp);
+      pixel_region_init (&srcPR, orig,
+			 0, 0, orig_width, orig_height, FALSE);
+      pixel_region_init (&destPR, new,
+			 0, 0, orig_width, orig_height, TRUE);
 
       copy_region (&srcPR, &destPR);
       new->x = orig->x;
@@ -267,24 +284,24 @@ flip_tool_flip (GimpImage               *gimage,
     }
   else
     {
-      new = tile_manager_new (orig->width, orig->height, orig->bpp);
+      new = tile_manager_new (orig_width, orig_height, orig_bpp);
       new->x = orig->x;
       new->y = orig->y;
 
       if (type == ORIENTATION_HORIZONTAL)
 	for (i = 0; i < orig->width; i++)
 	  {
-	    pixel_region_init (&srcPR, orig, i, 0, 1, orig->height, FALSE);
+	    pixel_region_init (&srcPR, orig, i, 0, 1, orig_height, FALSE);
 	    pixel_region_init (&destPR, new,
-			       (orig->width - i - 1), 0, 1, orig->height, TRUE);
+			       (orig_width - i - 1), 0, 1, orig_height, TRUE);
 	    copy_region (&srcPR, &destPR); 
 	  }
       else
 	for (i = 0; i < orig->height; i++)
 	  {
-	    pixel_region_init (&srcPR, orig, 0, i, orig->width, 1, FALSE);
+	    pixel_region_init (&srcPR, orig, 0, i, orig_width, 1, FALSE);
 	    pixel_region_init (&destPR, new,
-			       0, (orig->height - i - 1), orig->width, 1, TRUE);
+			       0, (orig_height - i - 1), orig_width, 1, TRUE);
 	    copy_region (&srcPR, &destPR);
 	  }
 

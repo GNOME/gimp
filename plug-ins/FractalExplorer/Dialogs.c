@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "FractalExplorer.h"
@@ -61,8 +62,8 @@ dialog_reset_callback (GtkWidget *widget,
   wvals.ymin = standardvals.ymin;
   wvals.ymax = standardvals.ymax;
   wvals.iter = standardvals.iter;
-  wvals.cx = standardvals.cx;
-  wvals.cy = standardvals.cy;
+  wvals.cx   = standardvals.cx;
+  wvals.cy   = standardvals.cy;
 
   dialog_change_scale ();
   set_cmap_preview ();
@@ -76,8 +77,8 @@ dialog_redraw_callback (GtkWidget *widget,
   gint alwaysprev = wvals.alwayspreview;
 
   wvals.alwayspreview = TRUE;
-  set_cmap_preview();
-  dialog_update_preview();
+  set_cmap_preview ();
+  dialog_update_preview ();
   wvals.alwayspreview = alwaysprev;
 }
 
@@ -123,25 +124,25 @@ dialog_step_in_callback (GtkWidget *widget,
       zoomindex++;
     }
 
-  xdifferenz = wvals.xmax-wvals.xmin;
-  ydifferenz = wvals.ymax-wvals.ymin;
-  wvals.xmin += 1.0/6.0*xdifferenz;
-  wvals.ymin += 1.0/6.0*ydifferenz;
-  wvals.xmax -= 1.0/6.0*xdifferenz;
-  wvals.ymax -= 1.0/6.0*ydifferenz;
+  xdifferenz =  wvals.xmax - wvals.xmin;
+  ydifferenz =  wvals.ymax - wvals.ymin;
+  wvals.xmin += 1.0 / 6.0 * xdifferenz;
+  wvals.ymin += 1.0 / 6.0 * ydifferenz;
+  wvals.xmax -= 1.0 / 6.0 * xdifferenz;
+  wvals.ymax -= 1.0 / 6.0 * ydifferenz;
   zooms[zoomindex] = wvals;
 
   dialog_change_scale ();
   set_cmap_preview ();
   dialog_update_preview ();
-}				/* dialog_step_in_callback */
+}
 
 static void
 dialog_step_out_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  double xdifferenz;
-  double ydifferenz;
+  gdouble xdifferenz;
+  gdouble ydifferenz;
 
   if (zoomindex < zoommax)
     {
@@ -149,12 +150,12 @@ dialog_step_out_callback (GtkWidget *widget,
       zoomindex++;
     }
 
-  xdifferenz = wvals.xmax-wvals.xmin;
-  ydifferenz = wvals.ymax-wvals.ymin;
-  wvals.xmin -= 1.0/4.0*xdifferenz;
-  wvals.ymin -= 1.0/4.0*ydifferenz;
-  wvals.xmax += 1.0/4.0*xdifferenz;
-  wvals.ymax += 1.0/4.0*ydifferenz;
+  xdifferenz =  wvals.xmax - wvals.xmin;
+  ydifferenz =  wvals.ymax - wvals.ymin;
+  wvals.xmin -= 1.0 / 4.0 * xdifferenz;
+  wvals.ymin -= 1.0 / 4.0 * ydifferenz;
+  wvals.xmax += 1.0 / 4.0 * xdifferenz;
+  wvals.ymax += 1.0 / 4.0 * ydifferenz;
   zooms[zoomindex] = wvals;
 
   dialog_change_scale ();
@@ -227,12 +228,12 @@ explorer_gradient_select_callback (gchar    *name,
   gradient_name = g_strdup (name);
 
   gimp_gradients_get_gradient_data (gradient_name, &dummy, wvals.ncolors,
-				   &gradient_samples);
+				    &gradient_samples);
 
   if (wvals.colormode == 1)
     {
-      set_cmap_preview();
-      dialog_update_preview(); 
+      set_cmap_preview ();
+      dialog_update_preview (); 
     }
 }
 
@@ -1356,11 +1357,11 @@ explorer_logo_dialog (void)
   GtkWidget *xvbox;
   GtkWidget *xhbox;
   GtkWidget *vpaned;
-  guchar *temp;
-  guchar *temp2;
-  guchar *datapointer;
-  gint    y;
-  gint    x;
+  guchar    *temp;
+  guchar    *temp2;
+  guchar    *datapointer;
+  gint       y;
+  gint       x;
 
   if (logodlg)
     {
@@ -1416,9 +1417,10 @@ explorer_logo_dialog (void)
 	  HEADER_PIXEL(datapointer, temp2);
 	  temp2 += 3;
 	}
-      gtk_preview_draw_row(GTK_PREVIEW(xpreview),
-			   temp,
-			   0, y, logo_width);
+
+      gtk_preview_draw_row (GTK_PREVIEW (xpreview),
+			    temp,
+			    0, y, logo_width);
     }
 
   g_free (temp);
@@ -1434,7 +1436,7 @@ explorer_logo_dialog (void)
   vpaned = gtk_vpaned_new ();
   gtk_box_pack_start (GTK_BOX (xhbox), vpaned, TRUE, TRUE, 0);
   gtk_widget_show (vpaned);
-    
+
   xframe3 = gtk_frame_new (NULL);
   gtk_paned_add1 (GTK_PANED (vpaned), xframe3);
   gtk_widget_show (xframe3);
@@ -1673,13 +1675,15 @@ create_load_file_selection (void)
 			  "clicked",
 			  GTK_SIGNAL_FUNC (load_file_selection_ok),
 			  (gpointer) window);
-      gimp_help_set_help_data (GTK_FILE_SELECTION(window)->ok_button, _("Click here to load your file"), NULL);
+      gimp_help_set_help_data (GTK_FILE_SELECTION(window)->ok_button,
+			       _("Click here to load your file"), NULL);
 
       gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (window)->cancel_button),
 				 "clicked",
 				 GTK_SIGNAL_FUNC (gtk_widget_destroy),
 				 GTK_OBJECT (window));
-      gimp_help_set_help_data (GTK_FILE_SELECTION(window)->cancel_button, _("Click here to cancel load procedure"), NULL);
+      gimp_help_set_help_data (GTK_FILE_SELECTION(window)->cancel_button,
+			       _("Click here to cancel load procedure"), NULL);
     }
 
   if (!GTK_WIDGET_VISIBLE (window))
@@ -1718,6 +1722,7 @@ create_file_selection (void)
       gimp_help_set_help_data (GTK_FILE_SELECTION (window)->cancel_button,
 			       _("Click here to cancel save procedure"), NULL);
     }
+
   if (tpath)
     {
       gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), tpath);
@@ -1736,7 +1741,9 @@ create_file_selection (void)
       g_free (dir);
     }
   else
-    gtk_file_selection_set_filename (GTK_FILE_SELECTION (window),"/tmp");
+    {
+      gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), "/tmp");
+    }
 
   if (!GTK_WIDGET_VISIBLE (window))
     gtk_widget_show (window);

@@ -15,13 +15,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __INTERFACE_H__
 #define __INTERFACE_H__
 
-#include "toolsF.h"
-#include "gdisplayF.h"
 
-/*  function declarations  */
 GtkWidget * create_pixmap_widget   (GdkWindow    *parent,
 				    gchar       **data,
 				    gint          width,
@@ -38,5 +36,6 @@ void        create_display_shell   (GDisplay     *gdisp,
 				    gint          height,
 				    gchar        *title,
 				    gint          type);
+
 
 #endif /* __INTERFACE_H__ */

@@ -20,8 +20,9 @@
 
 #include <stdarg.h>
 #include <string.h>
+#include <sys/types.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 

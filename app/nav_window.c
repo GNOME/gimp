@@ -32,12 +32,14 @@
 #include "info_window.h"
 #include "gdisplay.h"
 #include "gimpcontext.h"
+#include "gimage.h"
 #include "gimppreviewcache.h"
 #include "gimpset.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "gximage.h"
 #include "nav_window.h"
+#include "procedural_db.h"
 #include "scroll.h"
 #include "scale.h"
 
@@ -1302,7 +1304,7 @@ nav_window_title(GDisplay   *gdisp)
   gchar *title;
   gchar *title_buf;
 
-  title = g_basename (gimage_filename (gdisp->gimage));
+  title = g_basename (gimp_image_filename (gdisp->gimage));
 
   /*  create the info dialog  */
   title_buf = g_strdup_printf (_("Navigation: %s-%d.%d"), 
@@ -1409,7 +1411,7 @@ nav_window_create (void *gdisp_ptr)
 
   gdisp = (GDisplay *) gdisp_ptr;
   
-  type = gimage_base_type (gdisp->gimage);
+  type = gimp_image_base_type (gdisp->gimage);
 
   title_buf = nav_window_title(gdisp);
 

@@ -28,7 +28,8 @@
  * until about 1.1.4) completely changed the algorithm used, until it
  * bore little resemblance to the one described in the paper above.
  * The 0.54 version of the algorithm was then forwards ported to 1.1.4
- * by Austin Donnelly.  */
+ * by Austin Donnelly.
+ */
 
 #include "config.h"
 
@@ -41,21 +42,26 @@
 
 #include "appenv.h"
 #include "draw_core.h"
-#include "channel_pvt.h"
+#include "channel.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpimage.h"
 #include "iscissors.h"
 #include "edit_selection.h"
 #include "paint_funcs.h"
+#include "pixel_region.h"
 #include "selection_options.h"
 #include "temp_buf.h"
 #include "tools.h"
 #include "bezier_selectP.h"
 #include "scan_convert.h"
+#include "tile.h"
+#include "tile_manager.h"
 
 #include "libgimp/gimpmath.h"
+
 
 #ifdef DEBUG
 #define TRC(x) g_print x
@@ -415,7 +421,7 @@ iscissors_button_press (Tool           *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
-  drawable = gimage_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
 			       &iscissors->x, &iscissors->y, FALSE, FALSE);
@@ -493,12 +499,12 @@ iscissors_button_press (Tool           *tool,
 
 	  if (((SelectionOptions *) iscissors_options)->feather)
 	    channel_feather (iscissors->mask,
-			     gimage_get_mask (gdisp->gimage),
+			     gimp_image_get_mask (gdisp->gimage),
 			     ((SelectionOptions *) iscissors_options)->feather_radius,
 			     ((SelectionOptions *) iscissors_options)->feather_radius,
 			     iscissors->op, 0, 0);
 	  else
-	    channel_combine_mask (gimage_get_mask (gdisp->gimage),
+	    channel_combine_mask (gimp_image_get_mask (gdisp->gimage),
 				  iscissors->mask, iscissors->op, 0, 0);
 
 	  iscissors_reset (iscissors);

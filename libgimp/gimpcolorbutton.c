@@ -33,6 +33,9 @@
 #include <gtk/gtk.h>
 
 #include "gimp.h"
+
+#include "gimpuitypes.h"
+
 #include "gimpcolorbutton.h"
 #include "gimplimits.h"
 

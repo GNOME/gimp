@@ -15,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __INFO_WINDOW_H__
 #define __INFO_WINDOW_H__
 
-#include "gdisplayF.h"
-#include "info_dialog.h"
 
 InfoDialog * info_window_create      (GDisplay   *gdisp);
 void         info_window_free        (InfoDialog *info_win);
@@ -29,4 +28,6 @@ void         info_window_update_RGB  (GDisplay   *gdisp,
 				      gdouble     tx,
 				      gdouble     ty);
 void         info_window_follow_auto (void);
+
+
 #endif /*  __INFO_WINDOW_H__  */

@@ -24,13 +24,21 @@
 
 #include <gtk/gtk.h>
 
-#include "gimpdrawableP.h"
+#include "apptypes.h"
+
+#include "channel.h"
+#include "gimpdrawable.h"
+#include "layer.h"
 #include "gimppreviewcache.h"
 #include "gimpsignal.h"
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "gimpparasite.h"
+#include "paint_funcs.h"
 #include "parasitelist.h"
+#include "pixel_region.h"
+#include "tile.h"
+#include "tile_manager.h"
 #include "undo.h"
 
 #include "libgimp/gimpmath.h"

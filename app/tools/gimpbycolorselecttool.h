@@ -15,12 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __BY_COLOR_SELECT_H__
 #define __BY_COLOR_SELECT_H__
 
-#include "tools.h"
-#include "gdisplayF.h"
-#include "gimage.h"
 
 Tool * tools_new_by_color_select           (void);
 void   tools_free_by_color_select          (Tool         *tool);
@@ -37,5 +35,6 @@ void   by_color_select                     (GimpImage    *gimage,
 					    gboolean      feather,
 					    gdouble       feather_radius,
 					    gboolean      sample_merged);
+
 
 #endif  /*  __BY_COLOR_SELECT_H__  */

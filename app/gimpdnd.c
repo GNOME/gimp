@@ -15,15 +15,29 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
+
 #include <string.h>
 
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
+
+#include "channel.h"
+#include "drawable.h"
 #include "fileops.h"
-#include "gimage.h"
+#include "gimpimage.h"
+#include "gimpbrush.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
 #include "gimpbrushlist.h"
 #include "gimprc.h"
+#include "gradient.h"
 #include "gradient_header.h"
+#include "layer.h"
+#include "patterns.h"
+#include "temp_buf.h"
 #include "tools.h"
 
 #include "libgimp/gimplimits.h"

@@ -34,9 +34,11 @@
 #include "info_window.h"
 #include "magnify.h"
 #include "scale.h"
+#include "tools.h"
+#include "tool_options.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
+
 
 /*  the magnify structures  */
 

@@ -20,9 +20,6 @@
 #define __COLOR_BALANCE_H__
 
 
-#include "image_map.h"
-#include "tools.h"
-
 typedef enum
 {
   SHADOWS,

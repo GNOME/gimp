@@ -24,8 +24,6 @@
 #ifndef __GIMP_SIZE_ENTRY_H__
 #define __GIMP_SIZE_ENTRY_H__
 
-#include <libgimp/gimpunit.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -39,15 +37,7 @@ extern "C" {
 #define GIMP_IS_SIZE_ENTRY(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_SIZE_ENTRY))
 #define GIMP_IS_SIZE_ENTRY_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SIZE_ENTRY))
 
-typedef struct _GimpSizeEntry       GimpSizeEntry;
 typedef struct _GimpSizeEntryClass  GimpSizeEntryClass;
-
-typedef enum
-{
-  GIMP_SIZE_ENTRY_UPDATE_NONE       = 0,
-  GIMP_SIZE_ENTRY_UPDATE_SIZE       = 1,
-  GIMP_SIZE_ENTRY_UPDATE_RESOLUTION = 2
-} GimpSizeEntryUpdatePolicy;
 
 typedef struct _GimpSizeEntryField  GimpSizeEntryField;
 

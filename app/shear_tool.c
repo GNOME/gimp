@@ -18,24 +18,33 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "draw_core.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpimage.h"
+#include "gimpui.h"
+#include "gimpprogress.h"
 #include "info_dialog.h"
 #include "shear_tool.h"
 #include "selection.h"
+#include "tools.h"
+#include "tool_options.h"
+#include "transform_core.h"
 #include "transform_tool.h"
 #include "undo.h"
 
 #include "tile_manager_pvt.h"
 
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
+
+#include "libgimp/gimpintl.h"
+
 
 /*  index into trans_info array  */
 #define HORZ_OR_VERT 0
@@ -71,7 +80,7 @@ shear_tool_transform (Tool           *tool,
 
   switch (state)
     {
-    case INIT:
+    case TRANSFORM_INIT:
       if (!transform_info)
 	{
 	  transform_info = info_dialog_new (_("Shear Information"),
@@ -98,19 +107,19 @@ shear_tool_transform (Tool           *tool,
       return NULL;
       break;
 
-    case MOTION:
+    case TRANSFORM_MOTION:
       shear_tool_motion (tool, gdisp_ptr);
       shear_tool_recalc (tool, gdisp_ptr);
       break;
 
-    case RECALC:
+    case TRANSFORM_RECALC:
       shear_tool_recalc (tool, gdisp_ptr);
       break;
 
-    case FINISH:
+    case TRANSFORM_FINISH:
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
       return shear_tool_shear (gdisp->gimage,
-			       gimage_active_drawable (gdisp->gimage),
+			       gimp_image_active_drawable (gdisp->gimage),
 			       gdisp,
 			       transform_core->original,
 			       transform_tool_smoothing (),
@@ -262,25 +271,25 @@ shear_tool_motion (Tool *tool,
       dir = transform_core->trans_info[HORZ_OR_VERT];
       switch (transform_core->function)
 	{
-	case HANDLE_1:
+	case TRANSFORM_HANDLE_1:
 	  if (dir == ORIENTATION_HORIZONTAL)
 	    transform_core->trans_info[XSHEAR] -= diffx;
 	  else
 	    transform_core->trans_info[YSHEAR] -= diffy;
 	  break;
-	case HANDLE_2:
+	case TRANSFORM_HANDLE_2:
 	  if (dir == ORIENTATION_HORIZONTAL)
 	    transform_core->trans_info[XSHEAR] -= diffx;
 	  else
 	    transform_core->trans_info[YSHEAR] += diffy;
 	  break;
-	case HANDLE_3:
+	case TRANSFORM_HANDLE_3:
 	  if (dir == ORIENTATION_HORIZONTAL)
 	    transform_core->trans_info[XSHEAR] += diffx;
 	  else
 	    transform_core->trans_info[YSHEAR] -= diffy;
 	  break;
-	case HANDLE_4:
+	case TRANSFORM_HANDLE_4:
 	  if (dir == ORIENTATION_HORIZONTAL)
 	    transform_core->trans_info[XSHEAR] += diffx;
 	  else

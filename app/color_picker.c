@@ -28,14 +28,17 @@
 #include "draw_core.h"
 #include "drawable.h"
 #include "gdisplay.h"
+#include "gimpimage.h"
 #include "gimpui.h"
+#include "gimprc.h"
 #include "cursorutil.h"
 #include "info_dialog.h"
 #include "palette.h"
 #include "tools.h"
-#include "gimprc.h"
+#include "tool_options.h"
 
 #include "libgimp/gimpintl.h"
+
 
 /*  maximum information buffer size  */
 #define MAX_INFO_BUF 8
@@ -243,7 +246,7 @@ color_picker_button_press (Tool           *tool,
 
   /*  Make the tool active and set it's gdisplay & drawable  */
   tool->gdisp_ptr = gdisp;
-  tool->drawable = gimage_active_drawable (gdisp->gimage);
+  tool->drawable = gimp_image_active_drawable (gdisp->gimage);
   tool->state = ACTIVE;
 
   /*  create the info dialog if it doesn't exist  */
@@ -428,7 +431,7 @@ color_picker_cursor_update (Tool           *tool,
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
 			       FALSE, FALSE);
 
-  if (gimage_pick_correlate_layer (gdisp->gimage, x, y))
+  if (gimp_image_pick_correlate_layer (gdisp->gimage, x, y))
     gdisplay_install_tool_cursor (gdisp, GIMP_COLOR_PICKER_CURSOR,
 				  COLOR_PICKER,
 				  CURSOR_MODIFIER_NONE,

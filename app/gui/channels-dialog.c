@@ -24,6 +24,8 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+
+#include "channel.h"
 #include "channels_dialog.h"
 #include "color_panel.h"
 #include "drawable.h"
@@ -41,10 +43,10 @@
 #include "paint_funcs.h"
 #include "undo.h"
 
-#include "channel_pvt.h"
+#include "libgimp/gimphelpui.h"
+#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
-#include "libgimp/gimpmath.h"
 
 #include "pixmaps/eye.xbm"
 #include "pixmaps/channel.xbm"
@@ -54,6 +56,7 @@
 #include "pixmaps/duplicate.xpm"
 #include "pixmaps/delete.xpm"
 #include "pixmaps/toselection.xpm"
+
 
 #define COMPONENT_BASE_ID 0x10000000
 
@@ -1099,7 +1102,7 @@ channels_dialog_add_channel_to_sel_callback (GtkWidget *widget,
       new_channel = channel_copy (gimp_image_get_mask (gimage));
       channel_combine_mask (new_channel,
 			    active_channel,
-			    ADD, 
+			    CHANNEL_OP_ADD, 
 			    0, 0);  /* off x/y */
       gimage_mask_load (gimage, new_channel);
       channel_delete (new_channel);
@@ -1123,7 +1126,7 @@ channels_dialog_sub_channel_from_sel_callback (GtkWidget *widget,
        new_channel = channel_copy (gimp_image_get_mask (gimage));
        channel_combine_mask (new_channel,
                              active_channel,
-			     SUB, 
+			     CHANNEL_OP_SUB, 
 			     0, 0);  /* off x/y */
       gimage_mask_load (gimage, new_channel);
       channel_delete (new_channel);
@@ -1147,7 +1150,7 @@ channels_dialog_intersect_channel_with_sel_callback (GtkWidget *widget,
       new_channel = channel_copy (gimp_image_get_mask (gimage));
       channel_combine_mask (new_channel,
 			    active_channel,
-			    INTERSECT, 
+			    CHANNEL_OP_INTERSECT, 
 			    0, 0);  /* off x/y */
       gimage_mask_load (gimage, new_channel);
       channel_delete (new_channel);

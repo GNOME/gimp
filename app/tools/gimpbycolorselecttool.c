@@ -26,20 +26,28 @@
 #include "appenv.h"
 #include "boundary.h"
 #include "by_color_select.h"
+#include "channel.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "draw_core.h"
 #include "gimage_mask.h"
 #include "gimpdnd.h"
+#include "gimpimage.h"
 #include "gimprc.h"
 #include "gimpset.h"
 #include "gimpui.h"
 #include "gdisplay.h"
+#include "paint_funcs.h"
+#include "pixel_region.h"
 #include "selection_options.h"
-
-#include "tile.h"			/* ick. */
+#include "temp_buf.h"
+#include "tile.h"
+#include "tile_manager.h"
+#include "tools.h"
+#include "tool_options.h"
 
 #include "libgimp/gimpintl.h"
+
 
 #define PREVIEW_WIDTH       256
 #define PREVIEW_HEIGHT      256
@@ -204,15 +212,15 @@ by_color_select_color (GImage       *gimage,
   /*  Get the image information  */
   if (sample_merged)
     {
-      bytes = gimage_composite_bytes (gimage);
-      d_type = gimage_composite_type (gimage);
+      bytes  = gimp_image_composite_bytes (gimage);
+      d_type = gimp_image_composite_type (gimage);
       has_alpha = (d_type == RGBA_GIMAGE ||
 		   d_type == GRAYA_GIMAGE ||
 		   d_type == INDEXEDA_GIMAGE);
       indexed = d_type == INDEXEDA_GIMAGE || d_type == INDEXED_GIMAGE;
       width = gimage->width;
       height = gimage->height;
-      pixel_region_init (&imagePR, gimage_composite (gimage),
+      pixel_region_init (&imagePR, gimp_image_composite (gimage),
 			 0, 0, width, height, FALSE);
     }
   else
@@ -259,7 +267,7 @@ by_color_select_color (GImage       *gimage,
 	  for (j = 0; j < imagePR.w; j++)
 	    {
 	      /*  Get the rgb values for the color  */
-	      gimage_get_color (gimage, d_type, rgb, idata);
+	      gimp_image_get_color (gimage, d_type, rgb, idata);
 
 	      /*  Plug the alpha channel in there  */
 	      if (has_alpha)
@@ -318,12 +326,12 @@ by_color_select (GImage       *gimage,
     drawable_offsets (drawable, &off_x, &off_y);
 
   if (feather)
-    channel_feather (new_mask, gimage_get_mask (gimage),
+    channel_feather (new_mask, gimp_image_get_mask (gimage),
 		     feather_radius,
 		     feather_radius,
 		     op, off_x, off_y);
   else
-    channel_combine_mask (gimage_get_mask (gimage),
+    channel_combine_mask (gimp_image_get_mask (gimage),
 			  new_mask, op, off_x, off_y);
 
   channel_delete (new_mask);
@@ -342,7 +350,7 @@ by_color_select_button_press (Tool           *tool,
   gdisp = (GDisplay *) gdisp_ptr;
   by_color_sel = (ByColorSelect *) tool->private;
 
-  tool->drawable = gimage_active_drawable (gdisp->gimage);
+  tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
   if (!by_color_dialog)
     return;
@@ -396,7 +404,7 @@ by_color_select_button_release (Tool           *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
   by_color_sel = (ByColorSelect *) tool->private;
-  drawable = gimage_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
   gdk_pointer_ungrab (bevent->time);
 
@@ -462,7 +470,7 @@ by_color_select_cursor_update (Tool           *tool,
 			       &x, &y, FALSE, FALSE);
 
   if (by_color_options->sample_merged ||
-      ((layer = gimage_pick_correlate_layer (gdisp->gimage, x, y)) &&
+      ((layer = gimp_image_pick_correlate_layer (gdisp->gimage, x, y)) &&
        layer == gdisp->gimage->active_layer))
     {
       switch (by_col_sel->operation)
@@ -878,7 +886,7 @@ by_color_select_render (ByColorDialog *bcd,
   gint i;
   gint scale;
 
-  mask = gimage_get_mask (gimage);
+  mask = gimp_image_get_mask (gimage);
   if ((drawable_width (GIMP_DRAWABLE(mask)) > PREVIEW_WIDTH) ||
       (drawable_height (GIMP_DRAWABLE(mask)) > PREVIEW_HEIGHT))
     {
@@ -986,7 +994,7 @@ by_color_select_draw (ByColorDialog *bcd,
 
   /*  Update the gimage label to reflect the displayed gimage name  */
   gtk_label_set_text (GTK_LABEL (bcd->gimage_name),
-		      g_basename (gimage_filename (gimage)));
+		      g_basename (gimp_image_filename (gimage)));
 }
 
 static gint
@@ -1032,7 +1040,7 @@ by_color_select_invert_callback (GtkWidget *widget,
     return;
 
   /*  check if the image associated to the mask still exists  */
-  if (!drawable_gimage (GIMP_DRAWABLE (gimage_get_mask (bcd->gimage))))
+  if (!drawable_gimage (GIMP_DRAWABLE (gimp_image_get_mask (bcd->gimage))))
     return;
 
   /*  invert the mask  */
@@ -1058,7 +1066,7 @@ by_color_select_select_all_callback (GtkWidget *widget,
     return;
 
   /*  check if the image associated to the mask still exists  */
-  if (!drawable_gimage (GIMP_DRAWABLE (gimage_get_mask (bcd->gimage))))
+  if (!drawable_gimage (GIMP_DRAWABLE (gimp_image_get_mask (bcd->gimage))))
     return;
 
   /*  fill the mask  */
@@ -1084,7 +1092,7 @@ by_color_select_select_none_callback (GtkWidget *widget,
     return;
 
   /*  check if the image associated to the mask still exists  */
-  if (!drawable_gimage (GIMP_DRAWABLE (gimage_get_mask (bcd->gimage))))
+  if (!drawable_gimage (GIMP_DRAWABLE (gimp_image_get_mask (bcd->gimage))))
     return;
 
   /*  reset the mask  */
@@ -1129,7 +1137,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
   if (!bcd->gimage)
     return;
 
-  drawable = gimage_active_drawable (bcd->gimage);
+  drawable = gimp_image_active_drawable (bcd->gimage);
 
   /*  check if the gimage associated to the drawable still exists  */
   if (!drawable_gimage (drawable))
@@ -1161,7 +1169,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
       y = bcd->gimage->height * bevent->y / bcd->preview->requisition.height;
       if (x < 0 || y < 0 || x >= bcd->gimage->width || y >= bcd->gimage->height)
 	return;
-      tile = tile_manager_get_tile (gimage_composite (bcd->gimage),
+      tile = tile_manager_get_tile (gimp_image_composite (bcd->gimage),
 				    x, y, TRUE, FALSE);
       col = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
     }
@@ -1205,12 +1213,12 @@ by_color_select_color_drop (GtkWidget *widget,
                             gpointer    data)
 
 {
-  GimpDrawable *drawable;
+  GimpDrawable  *drawable;
   ByColorDialog *bcd;
-  guchar col[3];
+  guchar         col[3];
 
   bcd = (ByColorDialog*) data;
-  drawable = gimage_active_drawable (bcd->gimage);
+  drawable = gimp_image_active_drawable (bcd->gimage);
   
   col[0] = r;
   col[1] = g;

@@ -21,19 +21,24 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "draw_core.h"
+#include "gdisplay.h"
+#include "gimpimage.h"
 #include "gimpui.h"
 #include "info_dialog.h"
 #include "measure.h"
 #include "undo.h"
+#include "tools.h"
+#include "tool_options.h"
+
+#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
-#include "libgimp/gimpmath.h"
 
 
 /*  definitions  */

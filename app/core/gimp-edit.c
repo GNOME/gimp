@@ -20,7 +20,7 @@
 
 #include <stdlib.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
@@ -31,17 +31,20 @@
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimage_mask.h"
+#include "gimpcontext.h"
 #include "gimpui.h"
 #include "global_edit.h"
 #include "layer.h"
 #include "paint_funcs.h"
+#include "pixel_region.h"
+#include "tile_manager.h"
 #include "tools.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
 #include "tile_manager_pvt.h"
-#include "drawable_pvt.h"
+
 
 typedef enum
 {
@@ -62,9 +65,9 @@ struct _PasteNamedDlg
 };
 
 /*  The named buffer structure...  */
-typedef struct _named_buffer NamedBuffer;
+typedef struct _NamedBuffer NamedBuffer;
 
-struct _named_buffer
+struct _NamedBuffer
 {
   TileManager *buf;
   gchar       *name;

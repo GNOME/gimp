@@ -26,21 +26,26 @@
 
 #include "appenv.h"
 #include "cursorutil.h"
+#include "draw_core.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpimage.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "info_dialog.h"
+#include "layer.h"
 #include "path_transform.h"
+#include "paint_funcs.h"
+#include "pixel_region.h"
 #include "transform_core.h"
 #include "transform_tool.h"
 #include "tools.h"
 #include "undo.h"
-#include "drawable_pvt.h"
+#include "tile_manager.h"
 #include "tile_manager_pvt.h"
-#include "tile.h"			/* ick. */
+#include "tile.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
@@ -276,9 +281,9 @@ transform_core_button_press (Tool           *tool,
 
   transform_core->bpressed = TRUE; /* ALT */
 
-  drawable = gimage_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  if (transform_core->function == CREATING && tool->state == ACTIVE)
+  if (transform_core->function == TRANSFORM_CREATING && tool->state == ACTIVE)
     {
       /*  Save the current transformation info  */
       for (i = 0; i < TRAN_INFO_SIZE; i++)
@@ -298,34 +303,34 @@ transform_core_button_press (Tool           *tool,
       y = bevent->y;
 
       closest_dist = SQR (x - transform_core->sx1) + SQR (y - transform_core->sy1);
-      transform_core->function = HANDLE_1;
+      transform_core->function = TRANSFORM_HANDLE_1;
 
       dist = SQR (x - transform_core->sx2) + SQR (y - transform_core->sy2);
       if (dist < closest_dist)
 	{
 	  closest_dist = dist;
-	  transform_core->function = HANDLE_2;
+	  transform_core->function = TRANSFORM_HANDLE_2;
 	}
 
       dist = SQR (x - transform_core->sx3) + SQR (y - transform_core->sy3);
       if (dist < closest_dist)
 	{
 	  closest_dist = dist;
-	  transform_core->function = HANDLE_3;
+	  transform_core->function = TRANSFORM_HANDLE_3;
 	}
 
       dist = SQR (x - transform_core->sx4) + SQR (y - transform_core->sy4);
       if (dist < closest_dist)
 	{
 	  closest_dist = dist;
-	  transform_core->function = HANDLE_4;
+	  transform_core->function = TRANSFORM_HANDLE_4;
 	}
 
       if (tool->type == ROTATE
 	  && (SQR (x - transform_core->scx) +
 	      SQR (y - transform_core->scy)) <= 100)
 	{
-	  transform_core->function = HANDLE_CENTER;
+	  transform_core->function = TRANSFORM_HANDLE_CENTER;
 	}
 
       /*  Save the current pointer position  */
@@ -398,7 +403,7 @@ transform_core_button_press (Tool           *tool,
 	  transform_core_setup_grid (tool);
 
 	/*  Initialize the transform tool  */
-	(* transform_core->trans_func) (tool, gdisp_ptr, INIT);
+	(* transform_core->trans_func) (tool, gdisp_ptr, TRANSFORM_INIT);
 
 	if (transform_info && !transform_info_inited)
 	  {
@@ -440,7 +445,8 @@ transform_core_button_release (Tool           *tool,
   transform_core->bpressed = FALSE; /* ALT */
 
   /*  if we are creating, there is nothing to be done...exit  */
-  if (transform_core->function == CREATING && transform_core->interactive)
+  if (transform_core->function == TRANSFORM_CREATING &&
+      transform_core->interactive)
     return;
 
   /*  release of the pointer grab  */
@@ -523,7 +529,7 @@ transform_core_doit (Tool     *tool,
    *  selection to the transform tool's private selection pointer, so
    *  that the original source can be repeatedly modified.
    */
-  tool->drawable = gimage_active_drawable (gdisp->gimage);
+  tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
   transform_core->original = transform_core_cut (gdisp->gimage,
 						 tool->drawable,
@@ -533,9 +539,10 @@ transform_core_doit (Tool     *tool,
 
   /*  Send the request for the transformation to the tool...
    */
-  new_tiles = (* transform_core->trans_func) (tool, gdisp_ptr, FINISH);
+  new_tiles = (* transform_core->trans_func) (tool, gdisp_ptr,
+					      TRANSFORM_FINISH);
 
-  (* transform_core->trans_func) (tool, gdisp_ptr, INIT);
+  (* transform_core->trans_func) (tool, gdisp_ptr, TRANSFORM_INIT);
 
   transform_core_recalc (tool, gdisp_ptr);
 
@@ -560,7 +567,7 @@ transform_core_doit (Tool     *tool,
       /*  Make a note of the new current drawable (since we may have
        *  a floating selection, etc now.
        */
-      tool->drawable = gimage_active_drawable (gdisp->gimage);
+      tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
       undo_push_transform (gdisp->gimage, (void *) tu);
     }
@@ -626,7 +633,8 @@ transform_core_motion (Tool           *tool,
   /*  if we are creating or this tool is non-interactive, there is
    *  nothing to be done so exit.
    */
-  if (transform_core->function == CREATING || !transform_core->interactive)
+  if (transform_core->function == TRANSFORM_CREATING ||
+      !transform_core->interactive)
     return;
 
   /*  stop the current tool drawing process  */
@@ -638,7 +646,7 @@ transform_core_motion (Tool           *tool,
   transform_core->state = mevent->state;
 
   /*  recalculate the tool's transformation matrix  */
-  (* transform_core->trans_func) (tool, gdisp_ptr, MOTION);
+  (* transform_core->trans_func) (tool, gdisp_ptr, TRANSFORM_MOTION);
 
   transform_core->lastx = transform_core->curx;
   transform_core->lasty = transform_core->cury;
@@ -664,7 +672,7 @@ transform_core_cursor_update (Tool           *tool,
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
 			       FALSE, FALSE);
 
-  if ((drawable = gimage_active_drawable (gdisp->gimage)))
+  if ((drawable = gimp_image_active_drawable (gdisp->gimage)))
     {
       if (GIMP_IS_LAYER (drawable) &&
 	  layer_get_mask (GIMP_LAYER (drawable)))
@@ -849,7 +857,7 @@ transform_core_new (ToolType type,
   else
     private->core = draw_core_new (transform_core_no_draw);
 
-  private->function = CREATING;
+  private->function = TRANSFORM_CREATING;
   private->original = NULL;
 
   private->bpressed = FALSE;
@@ -968,7 +976,7 @@ transform_core_reset (Tool *tool,
   transform_core->original = NULL;
 
   /*  inactivate the tool  */
-  transform_core->function = CREATING;
+  transform_core->function = TRANSFORM_CREATING;
   draw_core_stop (transform_core->core, tool);
   info_dialog_popdown (transform_info);
 
@@ -990,7 +998,7 @@ transform_core_bounds (Tool *tool,
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
   tiles = transform_core->original;
-  drawable = gimage_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
   /*  find the boundaries  */
   if (tiles)
@@ -1025,7 +1033,7 @@ transform_core_grid_density_changed (void)
 
   transform_core = (TransformCore *) active_tool->private;
 
-  if (transform_core->function == CREATING)
+  if (transform_core->function == TRANSFORM_CREATING)
     return;
 
   draw_core_pause (transform_core->core, active_tool);
@@ -1041,7 +1049,7 @@ transform_core_showpath_changed (gint type)
 
   transform_core = (TransformCore *) active_tool->private;
 
-  if (transform_core->function == CREATING)
+  if (transform_core->function == TRANSFORM_CREATING)
     return;
 
   if (type)
@@ -1129,7 +1137,7 @@ transform_core_recalc (Tool *tool,
 
   transform_core_bounds (tool, gdisp_ptr);
 
-  (* transform_core->trans_func) (tool, gdisp_ptr, RECALC);
+  (* transform_core->trans_func) (tool, gdisp_ptr, TRANSFORM_RECALC);
 }
 
 /*  Actually carry out a transformation  */
@@ -1176,7 +1184,7 @@ transform_core_do (GImage          *gimage,
     interpolation = FALSE;
 
   /*  Get the background color  */
-  gimage_get_background (gimage, drawable, bg_col);
+  gimp_image_get_background (gimage, drawable, bg_col);
 
   switch (drawable_type (drawable))
     {
@@ -1640,7 +1648,7 @@ transform_core_paste (GImage       *gimage,
 
       if (layer)
 	layer_add_alpha (layer);
-      floating_layer = gimage_floating_sel (gimage);
+      floating_layer = gimp_image_floating_sel (gimage);
 
       if (floating_layer)
 	floating_sel_relax (floating_layer, TRUE);

@@ -19,8 +19,6 @@
 #ifndef __IMAGE_NEW_H__
 #define __IMAGE_NEW_H__
 
-#include "gimpimage.h"
-#include "gimpdrawable.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -38,7 +36,7 @@ typedef struct
   gchar        *name;
 } GimpFillTypeName;
 
-typedef struct
+struct _GimpImageNewValues
 {
   gint               width;
   gint               height;
@@ -50,7 +48,7 @@ typedef struct
   
   GimpImageBaseType  type;
   GimpFillType       fill_type;
-} GimpImageNewValues;
+};
 
 GList * image_new_get_fill_type_names       (void);
 GList * image_new_get_image_base_type_names (void);

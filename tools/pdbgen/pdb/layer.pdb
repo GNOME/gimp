@@ -47,7 +47,7 @@ sub layer_change_invoke {
 {
   if ((gimage = GIMP_DRAWABLE(layer)->gimage))
     {
-      floating_layer = gimage_floating_sel (gimage);
+      floating_layer = gimp_image_floating_sel (gimage);
 
       undo_push_group_start (gimage, ${undo}_UNDO);
 
@@ -541,7 +541,7 @@ HELP
     $date = '1998';
 CODE
 
-@headers = qw("layer.h" "layer_pvt.h");
+@headers = qw("layer.h" "gimpimage.h");
 
 unshift @procs, qw(layer_new layer_copy layer_create_mask layer_scale
 		   layer_resize layer_delete layer_translate layer_add_alpha

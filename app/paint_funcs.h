@@ -24,9 +24,6 @@
 #ifndef __PAINT_FUNCS_H__
 #define __PAINT_FUNCS_H__
 
-#include "apptypes.h"
-#include "pixel_region.h"
-
 
 /*  Called initially to setup accelerated rendering features  */
 void  paint_funcs_setup     (void);

@@ -19,7 +19,6 @@
 #define __PARASITE_LIST_H__
 
 
-#include "libgimp/gimpparasite.h"
 #include "gimpobject.h"
 
 
@@ -31,6 +30,7 @@
 struct _ParasiteList
 {
   GimpObject  object;
+
   GHashTable *table;
 };
 

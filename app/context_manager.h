@@ -15,15 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __CONTEXT_MANAGER_H__
 #define __CONTEXT_MANAGER_H__
 
-#include "gimpcontext.h"
-#include "toolsF.h"
 
-void   context_manager_init (void);
-void   context_manager_free (void);
+void   context_manager_init                     (void);
+void   context_manager_free                     (void);
 
 void   context_manager_set_global_paint_options (gboolean global);
+
 
 #endif /* __CONTEXT_MANAGER_H__ */

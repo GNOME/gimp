@@ -18,18 +18,20 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "gdisplay.h"
+#include "gimpcontext.h"
 #include "gimpui.h"
-#include "tools.h"
 #include "perspective_tool.h"
 #include "rotate_tool.h"
 #include "scale_tool.h"
 #include "shear_tool.h"
+#include "tools.h"
+#include "tool_options.h"
 #include "transform_core.h"
 #include "transform_tool.h"
 

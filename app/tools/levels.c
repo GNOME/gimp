@@ -23,20 +23,23 @@
 #include <string.h>
 #include <errno.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
-#include "histogramwidget.h"
 #include "gimphistogram.h"
+#include "gimpimage.h"
 #include "gimpui.h"
+#include "histogramwidget.h"
 #include "image_map.h"
 #include "levels.h"
 #include "gimplut.h"
 #include "lut_funcs.h"
+#include "tools.h"
+#include "tool_options.h"
 
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimpmath.h"
@@ -239,7 +242,7 @@ levels_initialize (GDisplay *gdisp)
 {
   gint i;
 
-  if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
+  if (drawable_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Levels for indexed drawables cannot be adjusted."));
       return;
@@ -263,7 +266,7 @@ levels_initialize (GDisplay *gdisp)
       levels_dialog->high_output[i] = 255;
     }
 
-  levels_dialog->drawable  = gimage_active_drawable (gdisp->gimage);
+  levels_dialog->drawable  = gimp_image_active_drawable (gdisp->gimage);
   levels_dialog->color     = drawable_color (levels_dialog->drawable);
   levels_dialog->image_map = image_map_create (gdisp, levels_dialog->drawable);
 

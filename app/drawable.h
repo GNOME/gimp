@@ -19,7 +19,9 @@
 #ifndef __DRAWABLE_H__
 #define __DRAWABLE_H__
 
+
 #include "gimpdrawable.h"
+
 
 gint drawable_ID          (GimpDrawable *);
 void drawable_fill        (GimpDrawable *drawable, GimpFillType fill_type);

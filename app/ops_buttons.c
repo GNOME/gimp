@@ -15,16 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <gtk/gtk.h>
 
+#include "apptypes.h"
+
 #include "gimphelp.h"
+#include "gimpui.h"
 #include "ops_buttons.h"
 
-#include "libgimp/gimppixmap.h"
-
 #include "libgimp/gimpintl.h"
+
 
 static void ops_button_pressed_callback  (GtkWidget      *widget,
 					  GdkEventButton *bevent,

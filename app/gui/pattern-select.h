@@ -19,8 +19,6 @@
 #ifndef  __PATTERN_SELECT_H__
 #define  __PATTERN_SELECT_H__
 
-#include "patterns.h"
-
 
 typedef struct _PatternSelect PatternSelect;
 
@@ -76,5 +74,6 @@ void            patterns_check_dialogs   (void);
 /*  the main pattern selection  */
 void            pattern_dialog_create    (void);
 void            pattern_dialog_free      (void);
+
 
 #endif  /*  __PATTERN_SELECT_H__  */

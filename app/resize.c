@@ -23,7 +23,9 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "layer.h"
 #include "gdisplay.h"
+#include "gimpimage.h"
 #include "resize.h"
 #include "undo.h"
 #include "gimprc.h"
@@ -35,6 +37,7 @@
 #include "libgimp/gimpsizeentry.h"
 
 #include "libgimp/gimpintl.h"
+
 
 #define EVENT_MASK        GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
 #define DRAWING_AREA_SIZE 200
@@ -1253,12 +1256,12 @@ resize_events (GtkWidget *widget,
 void
 resize_scale_implement (ImageResize *image_scale)
 {
-  GImage   *gimage        = NULL;
-  gboolean  rulers_flush  = FALSE;
-  gboolean  display_flush = FALSE;  /* this is a bit ugly: 
-				       we hijack the flush variable 
-				       to check if an undo_group was 
-				       already started */
+  GimpImage *gimage        = NULL;
+  gboolean   rulers_flush  = FALSE;
+  gboolean   display_flush = FALSE;  /* this is a bit ugly: 
+					we hijack the flush variable 
+					to check if an undo_group was 
+					already started */
 
   g_assert (image_scale != NULL);
   gimage = image_scale->gimage;
@@ -1269,9 +1272,9 @@ resize_scale_implement (ImageResize *image_scale)
     {
       undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
 	  
-      gimage_set_resolution (gimage,
-			     image_scale->resize->resolution_x,
-			     image_scale->resize->resolution_y);
+      gimp_image_set_resolution (gimage,
+				 image_scale->resize->resolution_x,
+				 image_scale->resize->resolution_y);
 
       rulers_flush = TRUE;
       display_flush = TRUE;
@@ -1282,7 +1285,7 @@ resize_scale_implement (ImageResize *image_scale)
       if (!display_flush)
 	undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
 
-      gimage_set_unit (gimage, image_scale->resize->unit);
+      gimp_image_set_unit (gimage, image_scale->resize->unit);
       gdisplays_setup_scale (gimage);
       gdisplays_resize_cursor_label (gimage);
 
@@ -1299,9 +1302,9 @@ resize_scale_implement (ImageResize *image_scale)
 	  if (!display_flush)
 	    undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
 
-	  gimage_scale (gimage,
-			image_scale->resize->width,
-			image_scale->resize->height);
+	  gimp_image_scale (gimage,
+			    image_scale->resize->width,
+			    image_scale->resize->height);
 
 	  display_flush = TRUE;
 	}

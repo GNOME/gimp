@@ -19,40 +19,35 @@
 #ifndef __FILEOPS_H__
 #define __FILEOPS_H__
 
-#ifdef G_OS_WIN32
-#include <process.h>		/* For _getpid() */
-#endif
-
-#include "plug_in.h"
-
 
 extern GSList *load_procs;
 extern GSList *save_procs;
 
 
-void file_ops_pre_init               (void);
-void file_ops_post_init              (void);
+void            file_ops_pre_init               (void);
+void            file_ops_post_init              (void);
 
-void file_open_callback              (GtkWidget   *widget,
-				      gpointer     data);
+void            file_open_callback              (GtkWidget   *widget,
+						 gpointer     data);
 
-void file_save_callback              (GtkWidget   *widget,
-				      gpointer     data);
-void file_save_as_callback           (GtkWidget   *widget,
-				      gpointer     data);
+void            file_save_callback              (GtkWidget   *widget,
+						 gpointer     data);
+void            file_save_as_callback           (GtkWidget   *widget,
+						 gpointer     data);
 
-void file_revert_callback            (GtkWidget   *widget,
-				      gpointer     data);
+void            file_revert_callback            (GtkWidget   *widget,
+						 gpointer     data);
 
-void file_open_by_extension_callback (GtkWidget   *widget,
-				      gpointer     data);
-void file_save_by_extension_callback (GtkWidget   *widget,
-				      gpointer     data);
+void            file_open_by_extension_callback (GtkWidget   *widget,
+						 gpointer     data);
+void            file_save_by_extension_callback (GtkWidget   *widget,
+						 gpointer     data);
 
-gint file_open                       (gchar       *filename,
-				      gchar       *raw_filename);
+gint            file_open                       (gchar       *filename,
+						 gchar       *raw_filename);
 
-PlugInProcDef * file_proc_find       (GSList      *procs,
-				      const gchar *filename);
+PlugInProcDef * file_proc_find                  (GSList      *procs,
+						 const gchar *filename);
+
 
 #endif /* __FILEOPS_H__ */

@@ -20,7 +20,7 @@
 
 #include <string.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
@@ -30,9 +30,12 @@
 #include "cursorutil.h"
 #include "gdisplay_ops.h"
 #include "gdisplay.h"
+#include "gimage.h"
+#include "gimphelp.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "image_render.h"
+#include "layer.h"
 #include "lc_dialog.h"
 #include "layer_select.h"
 #include "resolution_calibrate.h"
@@ -43,6 +46,7 @@
 #include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
+
 
 /* gimprc will be parsed with a buffer size of 1024, 
    so don't set this too large */
@@ -896,7 +900,7 @@ prefs_cancel_callback (GtkWidget *widget,
       transparency_size = old_transparency_size;
 
       render_setup (transparency_type, transparency_size);
-      gimage_foreach ((GFunc)layer_invalidate_previews, NULL);
+      gimage_foreach ((GFunc) layer_invalidate_previews, NULL);
       gimage_invalidate_previews ();
       gdisplays_expose_full ();
       gdisplays_flush ();

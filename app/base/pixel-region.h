@@ -15,14 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __PIXEL_REGION_H__
 #define __PIXEL_REGION_H__
-
-#include "tile_manager.h"
-#include "pixel_processor.h" /* this is temporary, */
-
-
-typedef struct _PixelRegion PixelRegion;
 
 struct _PixelRegion
 {
@@ -41,9 +36,6 @@ struct _PixelRegion
   gint         process_count;  /*  used internally               */
 };
 
-
-typedef struct _PixelRegionHolder PixelRegionHolder;
-
 struct _PixelRegionHolder
 {
   PixelRegion *PR;
@@ -52,9 +44,6 @@ struct _PixelRegionHolder
   gint         starty;
   gint         count;
 };
-
-
-typedef struct _PixelRegionIterator PixelRegionIterator;
 
 struct _PixelRegionIterator
 {

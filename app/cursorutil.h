@@ -15,19 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __CURSORUTIL_H__
 #define __CURSORUTIL_H__
-
-
-#include <gtk/gtk.h>
-
-#include <gdk/gdktypes.h>
-#if defined (GDK_WINDOWING_WIN32) || defined (GDK_WINDOWING_X11)
-/* Stopgap measure to detect build with current CVS GTk+ */
-#include <gdk/gdkcursor.h>
-#endif
-
-#include "toolsF.h"
 
 
 typedef struct
@@ -40,29 +30,6 @@ typedef struct
   GdkBitmap *mask;
   GdkCursor *cursor;
 } BitmapCursor;
-
-typedef enum
-{
-  CURSOR_MODE_TOOL_ICON,
-  CURSOR_MODE_TOOL_CROSSHAIR,
-  CURSOR_MODE_CROSSHAIR
-} CursorMode;
-
-typedef enum
-{
-  CURSOR_MODIFIER_NONE,
-  CURSOR_MODIFIER_PLUS,
-  CURSOR_MODIFIER_MINUS,
-  CURSOR_MODIFIER_INTERSECT,
-  CURSOR_MODIFIER_MOVE,
-  CURSOR_MODIFIER_RESIZE,
-  CURSOR_MODIFIER_CONTROL,
-  CURSOR_MODIFIER_ANCHOR,
-  CURSOR_MODIFIER_FOREGROUND,
-  CURSOR_MODIFIER_BACKGROUND,
-  CURSOR_MODIFIER_PATTERN,
-  CURSOR_MODIFIER_HAND
-} CursorModifier;
 
 typedef enum
 {

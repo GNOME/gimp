@@ -89,7 +89,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
@@ -103,23 +103,27 @@
 #include "floating_sel.h"
 #include "fsdither.h"
 #include "gdisplay.h"
+#include "gimpimage.h"
 #include "gimpui.h"
 #include "hue_saturation.h"
+#include "layer.h"
 #include "levels.h"
 #include "undo.h"
 #include "palette.h"
+#include "palette_entries.h"
 #include "palette_select.h"
+#include "pixel_region.h"
 #include "posterize.h"
 #include "threshold.h"
+#include "tile_manager.h"
+#include "tile_manager_pvt.h"		/* ick ick ick. */
 
 #include "libgimp/gimpcolorspace.h"
+#include "libgimp/gimphelpui.h"
 #include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
 
-#include "layer_pvt.h"			/* ick. */
-#include "drawable_pvt.h"		/* ick ick. */
-#include "tile_manager_pvt.h"		/* ick ick ick. */
 
 #define PRECISION_R 6
 #define PRECISION_G 6
@@ -550,7 +554,7 @@ convert_to_indexed (GimpImage *gimage)
 
   if (dialog->num_cols == 256)
     {
-      if ((!gimage_is_empty (gimage))
+      if ((!gimp_image_is_empty (gimage))
 	  &&
 	  (
 	   gimage->layers->next
@@ -754,7 +758,7 @@ convert_to_indexed (GimpImage *gimage)
   /* if the image isn't non-alpha/layered, set the default number of
      colours to one less than max, to leave room for a transparent index
      for transparent/animated GIFs */
-  if ((!gimage_is_empty (gimage))
+  if ((!gimp_image_is_empty (gimage))
       &&
       (
        gimage->layers->next
@@ -1211,7 +1215,7 @@ convert_image (GImage		 *gimage,
   gimp_add_busy_cursors();
 
   /*  Get the floating layer if one exists  */
-  floating_layer = gimage_floating_sel (gimage);
+  floating_layer = gimp_image_floating_sel (gimage);
 
   undo_push_group_start (gimage, GIMAGE_MOD_UNDO);
 
@@ -1442,7 +1446,7 @@ convert_image (GImage		 *gimage,
     quantobj->delete_func (quantobj);
 
   /*  Make sure the projection is up to date  */
-  gimage_projection_realloc (gimage);
+  gimp_image_projection_realloc (gimage);
 
   /*  Rigor the floating selection  */
   if (floating_layer)
@@ -1452,7 +1456,7 @@ convert_image (GImage		 *gimage,
 
   /*  shrink wrap and update all views  */
   layer_invalidate_previews (gimage);
-  gimage_invalidate_preview (gimage);
+  gimp_image_invalidate_preview (gimage);
   gdisplays_update_title (gimage);
   gdisplays_update_full (gimage);
 

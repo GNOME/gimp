@@ -40,7 +40,6 @@ extern "C" {
 #define GIMP_IS_COLOR_BUTTON(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_COLOR_BUTTON))
 #define GIMP_IS_COLOR_BUTTON_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_BUTTON))
 
-typedef struct _GimpColorButton       GimpColorButton;
 typedef struct _GimpColorButtonClass  GimpColorButtonClass;
 
 struct _GimpColorButtonClass

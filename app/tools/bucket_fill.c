@@ -25,24 +25,34 @@
 
 #include "appenv.h"
 #include "bucket_fill.h"
+#include "channel.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "fuzzy_select.h"
 #include "gdisplay.h"
+#include "gimpimage.h"
 #include "gimage_mask.h"
+#include "gimpcontext.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "paint_funcs.h"
 #include "paint_options.h"
+#include "patterns.h"
+#include "pixel_region.h"
+#include "procedural_db.h"
 #include "selection.h"
+#include "temp_buf.h"
+#include "tile_manager.h"
 #include "tools.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
+
 /*  the bucket fill structures  */
 
 typedef struct _BucketTool BucketTool;
+
 struct _BucketTool
 {
   gint  target_x;  /*  starting x coord  */
@@ -50,6 +60,7 @@ struct _BucketTool
 };
 
 typedef struct _BucketOptions BucketOptions;
+
 struct _BucketOptions
 {
   PaintOptions    paint_options;
@@ -232,7 +243,7 @@ bucket_fill_button_release (Tool           *tool,
       return_vals =
 	procedural_db_run_proc ("gimp_bucket_fill",
 				&nreturn_vals,
-				PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gdisp->gimage)),
+				PDB_DRAWABLE, drawable_ID (gimp_image_active_drawable (gdisp->gimage)),
 				PDB_INT32, (gint32) bucket_options->fill_mode,
 				PDB_INT32, (gint32) gimp_context_get_paint_mode (NULL),
 				PDB_FLOAT, (gdouble) gimp_context_get_opacity (NULL) * 100,
@@ -269,7 +280,7 @@ bucket_fill_cursor_update (Tool           *tool,
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
-  if ((layer = gimage_get_active_layer (gdisp->gimage))) 
+  if ((layer = gimp_image_get_active_layer (gdisp->gimage))) 
     {
       drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
@@ -360,9 +371,9 @@ bucket_fill (GimpImage      *gimage,
   pat_buf = NULL;
 
   if (fill_mode == FG_BUCKET_FILL)
-    gimage_get_foreground (gimage, drawable, col);
+    gimp_image_get_foreground (gimage, drawable, col);
   else if (fill_mode == BG_BUCKET_FILL)
-    gimage_get_background (gimage, drawable, col);
+    gimp_image_get_background (gimage, drawable, col);
   else if (fill_mode == PATTERN_BUCKET_FILL)
     {
       pattern = gimp_context_get_pattern (NULL);
@@ -392,8 +403,8 @@ bucket_fill (GimpImage      *gimage,
 	  size = pattern->mask->width * pattern->mask->height;
 	  while (size--)
 	    {
-	      gimage_transform_color (gimage, drawable, d1, d2,
-				      (pattern->mask->bytes == 3) ? RGB : GRAY);
+	      gimp_image_transform_color (gimage, drawable, d1, d2,
+					  (pattern->mask->bytes == 3) ? RGB : GRAY);
 	      d1 += pattern->mask->bytes;
 	      d2 += pat_buf->bytes;
 	    }
@@ -464,8 +475,8 @@ bucket_fill (GimpImage      *gimage,
     bucket_fill_region (fill_mode, &bufPR, NULL, col, pat_buf, x1, y1, has_alpha);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable, &bufPR, TRUE,
-		      (opacity * 255) / 100, paint_mode, NULL, x1, y1);
+  gimp_image_apply_image (gimage, drawable, &bufPR, TRUE,
+			  (opacity * 255) / 100, paint_mode, NULL, x1, y1);
 
   /*  update the image  */
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));

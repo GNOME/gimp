@@ -15,24 +15,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "brush_select.h"
+#include "gimpcontext.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
+#include "gimpui.h"
 #include "gradient_select.h"
 #include "indicator_area.h"
 #include "pattern_select.h"
 
 #include "libgimp/gimpintl.h"
+
 
 #define CELL_SIZE        23  /*  The size of the previews  */
 #define GRAD_CELL_WIDTH  48  /*  The width of the gradient preview  */

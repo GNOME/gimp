@@ -25,11 +25,15 @@
 #include "appenv.h"
 #include "brightness_contrast.h"
 #include "drawable.h"
+#include "gimpcontext.h"
 #include "gimplut.h"
 #include "gimpui.h"
 #include "gdisplay.h"
+#include "gimpimage.h"
 #include "image_map.h"
 #include "lut_funcs.h"
+#include "tool_options.h"
+#include "tools.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -170,7 +174,7 @@ tools_free_brightness_contrast (Tool *tool)
 void
 brightness_contrast_initialize (GDisplay *gdisp)
 {
-  if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
+  if (drawable_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Brightness-Contrast does not operate on indexed drawables."));
       return;
@@ -186,7 +190,8 @@ brightness_contrast_initialize (GDisplay *gdisp)
   brightness_contrast_dialog->brightness = 0.0;
   brightness_contrast_dialog->contrast   = 0.0;
 
-  brightness_contrast_dialog->drawable = gimage_active_drawable (gdisp->gimage);
+  brightness_contrast_dialog->drawable =
+    gimp_image_active_drawable (gdisp->gimage);
   brightness_contrast_dialog->image_map =
     image_map_create (gdisp, brightness_contrast_dialog->drawable);
 

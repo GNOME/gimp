@@ -15,23 +15,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __SHEAR_TOOL_H__
 #define __SHEAR_TOOL_H__
 
-#include "tools.h"
-#include "transform_core.h"
 
-TileManager * shear_tool_transform (Tool           *tool,
-				    gpointer        gdisp_ptr,
-				    TransformState  state);
-TileManager * shear_tool_shear     (GimpImage      *gimage,
-				    GimpDrawable   *drawable,
-				    GDisplay       *gdisp,
-				    TileManager    *float_tiles,
-				    gboolean        interpolation,
-				    GimpMatrix3     matrix);
+TileManager * shear_tool_transform  (Tool           *tool,
+				     gpointer        gdisp_ptr,
+				     TransformState  state);
+TileManager * shear_tool_shear      (GimpImage      *gimage,
+				     GimpDrawable   *drawable,
+				     GDisplay       *gdisp,
+				     TileManager    *float_tiles,
+				     gboolean        interpolation,
+				     GimpMatrix3     matrix);
 
-Tool * tools_new_shear_tool  (void);
-void   tools_free_shear_tool (Tool *matrix);
+Tool        * tools_new_shear_tool  (void);
+void          tools_free_shear_tool (Tool           *matrix);
+
 
 #endif  /*  __SHEAR_TOOL_H__  */

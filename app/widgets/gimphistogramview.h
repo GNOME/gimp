@@ -29,13 +29,7 @@
 #define HISTOGRAM_WIDGET_CLASS(klass) GTK_CHECK_CLASS_CAST (klass, histogram_widget_get_type (), HistogramWidget)
 #define IS_HISTOGRAM_WIDGET(obj)      GTK_CHECK_TYPE (obj, histogram_widget_get_type ())
 
-typedef struct _HistogramWidget      HistogramWidget;
 typedef struct _HistogramWidgetClass HistogramWidgetClass;
-
-
-/* HistogramWidget signals:
-     range_changed
-*/
 
 struct _HistogramWidget
 {

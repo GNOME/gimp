@@ -216,6 +216,7 @@ libgimpui_la_SOURCES = \
 	gimpquerybox.c		\
 	gimpsizeentry.c		\
 	gimpui.c		\
+	gimpuitypes.h		\
 	gimpunitmenu.c		\
 	gimpwidgets.c
 
@@ -258,6 +259,7 @@ gimpinclude_HEADERS = \
 	gimptile.h		\
 	gimptypes.h		\
 	gimpui.h		\
+	gimpuitypes.h		\
 	gimpunit.h		\
 	gimpunitmenu.h		\
 	gimputils.h		\

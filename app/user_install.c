@@ -19,7 +19,7 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,6 +48,7 @@
 #include "pixmaps/folder.xpm"
 #include "pixmaps/new.xpm"
 #include "pixmaps/wilber.xpm"
+
 
 #ifndef G_OS_WIN32
 #  ifndef __EMX__

@@ -21,29 +21,35 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "brush_scale.h"
+#include "cursorutil.h"
 #include "devices.h"
+#include "draw_core.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpbrushpipe.h"
+#include "gimpcontext.h"
+#include "gimpimage.h"
 #include "gimprc.h"
-#include "gradient.h"  /* for grad_get_color_at() */
+#include "gradient.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
+#include "pixel_region.h"
 #include "selection.h"
+#include "temp_buf.h"
+#include "tile.h"
+#include "tile_manager.h"
 #include "tools.h"
 #include "undo.h"
-#include "cursorutil.h"
-
-#include "tile.h"			/* ick. */
 
 #include "libgimp/gimpmath.h"
+
 #include "libgimp/gimpintl.h"
 
 #include "paint_core_kernels.h"
@@ -209,7 +215,7 @@ paint_core_button_press (Tool           *tool,
 
   gdisplay_untransform_coords_f (gdisp, (double) bevent->x, (double) bevent->y,
 				 &x, &y, TRUE);
-  drawable = gimage_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
   if (! paint_core_init (paint_core, drawable, x, y))
     return;
@@ -394,7 +400,7 @@ paint_core_button_release (Tool           *tool,
 
   /*  Let the specific painting function finish up  */
   (* paint_core->paint_func) (paint_core, 
-			      gimage_active_drawable (gdisp->gimage), 
+			      gimp_image_active_drawable (gdisp->gimage), 
 			      FINISH_PAINT);
 
   /*  Set tool state to inactive -- no longer painting */
@@ -403,7 +409,8 @@ paint_core_button_release (Tool           *tool,
 
   paint_core->pick_state = FALSE;
 
-  paint_core_finish (paint_core, gimage_active_drawable (gdisp->gimage), tool->ID);
+  paint_core_finish (paint_core, gimp_image_active_drawable (gdisp->gimage),
+		     tool->ID);
   gdisplays_flush ();
 }
 
@@ -423,7 +430,7 @@ paint_core_motion (Tool           *tool,
 
   if (paint_core->pick_state)
     {
-      paint_core_sample_color (gimage_active_drawable (gdisp->gimage),
+      paint_core_sample_color (gimp_image_active_drawable (gdisp->gimage),
 			       paint_core->curx, paint_core->cury,
 			       mevent->state);
       return;
@@ -437,18 +444,19 @@ paint_core_motion (Tool           *tool,
 #endif /* GTK_HAVE_SIX_VALUATORS */
   paint_core->state       = mevent->state;
 
-  paint_core_interpolate (paint_core, gimage_active_drawable (gdisp->gimage));
+  paint_core_interpolate (paint_core,
+			  gimp_image_active_drawable (gdisp->gimage));
 
   if (paint_core->flags & TOOL_TRACES_ON_WINDOW)
     (* paint_core->paint_func) (paint_core, 
-				gimage_active_drawable (gdisp->gimage), 
+				gimp_image_active_drawable (gdisp->gimage), 
 				PRETRACE_PAINT);
 
   gdisplay_flush_now (gdisp);
 
   if (paint_core->flags & TOOL_TRACES_ON_WINDOW)
     (* paint_core->paint_func) (paint_core, 
-				gimage_active_drawable (gdisp->gimage), 
+				gimp_image_active_drawable (gdisp->gimage), 
 				POSTTRACE_PAINT);
 
   paint_core->lastx        = paint_core->curx;
@@ -493,7 +501,7 @@ paint_core_cursor_update (Tool           *tool,
   if (paint_core->context_id)
     gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), paint_core->context_id);
 
-  if ((layer = gimage_get_active_layer (gdisp->gimage)))
+  if ((layer = gimp_image_get_active_layer (gdisp->gimage)))
     {
       /* If shift is down and this is not the first paint stroke, draw a line */
       if (gdisp_ptr == tool->gdisp_ptr && (mevent->state & GDK_SHIFT_MASK))
@@ -642,7 +650,7 @@ paint_core_control (Tool       *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
   paint_core = (PaintCore *) tool->private;
-  drawable = gimage_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
   switch (action)
     {
@@ -1627,10 +1635,10 @@ paint_core_paste (PaintCore	       *paint_core,
   srcPR.data = temp_buf_data (canvas_buf);
 
   /*  apply the paint area to the gimage  */
-  gimage_apply_image (gimage, drawable, &srcPR,
-		      FALSE, image_opacity, paint_mode,
-		      alt,  /*  specify an alternative src1  */
-		      canvas_buf->x, canvas_buf->y);
+  gimp_image_apply_image (gimage, drawable, &srcPR,
+			  FALSE, image_opacity, paint_mode,
+			  alt,  /*  specify an alternative src1  */
+			  canvas_buf->x, canvas_buf->y);
 
   /*  Update the undo extents  */
   paint_core->x1 = MIN (paint_core->x1, canvas_buf->x);
@@ -1725,10 +1733,10 @@ paint_core_replace (PaintCore		 *paint_core,
   srcPR.data      = temp_buf_data (canvas_buf);
 
   /*  apply the paint area to the gimage  */
-  gimage_replace_image (gimage, drawable, &srcPR,
-			FALSE, image_opacity,
-			&maskPR, 
-			canvas_buf->x, canvas_buf->y);
+  gimp_image_replace_image (gimage, drawable, &srcPR,
+			    FALSE, image_opacity,
+			    &maskPR, 
+			    canvas_buf->x, canvas_buf->y);
 
   /*  Update the undo extents  */
   paint_core->x1 = MIN (paint_core->x1, canvas_buf->x);
@@ -2126,7 +2134,7 @@ paint_line_pixmap_mask (GimpImage            *dest,
 	      d[byte_loop] *= alpha;
 
 	  /* printf("i: %i d->r: %i d->g: %i d->b: %i d->a: %i\n",i,(int)d[0], (int)d[1], (int)d[2], (int)d[3]); */
-	  gimage_transform_color (dest, drawable, p, d, RGB);
+	  gimp_image_transform_color (dest, drawable, p, d, RGB);
 	  d += bytes;
 	}
     }
@@ -2142,7 +2150,7 @@ paint_line_pixmap_mask (GimpImage            *dest,
 	  /* multiply alpha into the pixmap data */
 	  /* maybe we could do this at tool creation or brush switch time? */
 	  /* and compute it for the whole brush at once and cache it?  */
-	  gimage_transform_color (dest, drawable, p, d, RGB);
+	  gimp_image_transform_color (dest, drawable, p, d, RGB);
 	  d += bytes;
 	}
     }

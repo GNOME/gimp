@@ -27,6 +27,7 @@
 
 #include <ctype.h>
 #include <errno.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
@@ -63,24 +64,27 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "channel.h"
 #include "cursorutil.h"
 #include "dialog_handler.h"
+#include "docindex.h"
+#include "drawable.h"
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimpcontext.h"
-#include "gimpdrawableP.h"
+#include "gimpdrawable.h"
 #include "gimpui.h"
+#include "gimprc.h"
 #include "fileops.h"
 #include "fileopsP.h"
-#include "menus.h"
 #include "layer.h"
-#include "channel.h"
+#include "menus.h"
 #include "plug_in.h"
 #include "procedural_db.h"
-#include "gimprc.h"
-#include "docindex.h"
+#include "temp_buf.h"
 #include "undo.h"
 
+#include "libgimp/gimphelpui.h"
 #include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
@@ -562,7 +566,7 @@ file_save_as_callback (GtkWidget *widget,
 			save_options, FALSE, FALSE, 0);
     }
 
-  switch (drawable_type (gimage_active_drawable (gdisplay->gimage)))
+  switch (gimp_drawable_type (gimage_active_drawable (gdisplay->gimage)))
     {
     case RGB_GIMAGE:
       file_update_menus (save_procs, PLUG_IN_RGB_IMAGE);

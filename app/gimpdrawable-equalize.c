@@ -20,15 +20,19 @@
 
 #include <gtk/gtk.h>
 
+#include "apptypes.h"
+
 #include "drawable.h"
 #include "equalize.h"
 #include "gimage.h"
 #include "gimplut.h"
 #include "lut_funcs.h"
 #include "gimphistogram.h"
+#include "pixel_processor.h"
+#include "pixel_region.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
+
 
 void
 image_equalize (GimpImage *gimage)
@@ -52,39 +56,41 @@ equalize (GimpImage    *gimage,
     	  GimpDrawable *drawable,
 	  gboolean      mask_only)
 {
-  PixelRegion srcPR, destPR;
-  unsigned char *mask;
-  int has_alpha;
-  int alpha, bytes;
-  int x1, y1, x2, y2;
+  PixelRegion    srcPR, destPR;
+  guchar        *mask;
+  gint           has_alpha;
+  gint           alpha, bytes;
+  gint           x1, y1, x2, y2;
   GimpHistogram *hist;
-  GimpLut *lut;
+  GimpLut       *lut;
 
   mask = NULL;
 
-  bytes = drawable_bytes (drawable);
-  has_alpha = drawable_has_alpha (drawable);
-  alpha = has_alpha ? (bytes - 1) : bytes;
+  bytes     = gimp_drawable_bytes (drawable);
+  has_alpha = gimp_drawable_has_alpha (drawable);
+  alpha     = has_alpha ? (bytes - 1) : bytes;
 
-  hist = gimp_histogram_new();
-  gimp_histogram_calculate_drawable(hist, drawable);
+  hist = gimp_histogram_new ();
+  gimp_histogram_calculate_drawable (hist, drawable);
 
 
   /* Build equalization LUT */
   lut = eq_histogram_lut_new (hist, bytes);
 
   /*  Apply the histogram  */
-  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-  pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+		     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-  pixel_regions_process_parallel((p_func)gimp_lut_process, lut, 
-				 2, &srcPR, &destPR);
+  pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 
+				  2, &srcPR, &destPR);
 
-  gimp_lut_free(lut);
-  gimp_histogram_free(hist);
+  gimp_lut_free (lut);
+  gimp_histogram_free (hist);
 
-  drawable_merge_shadow (drawable, TRUE);
+  gimp_drawable_merge_shadow (drawable, TRUE);
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 }

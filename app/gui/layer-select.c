@@ -24,10 +24,14 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "drawable.h"
 #include "gdisplay.h"
+#include "gimpimage.h"
 #include "gimprc.h"
+#include "layer.h"
 #include "layer_select.h"
 #include "layers_dialogP.h"
+#include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -210,7 +214,7 @@ layer_select_advance (LayerSelect *layer_select,
     return;
 
   /*  If there is a floating selection, allow no advancement  */
-  if (gimage_floating_sel (layer_select->gimage))
+  if (gimp_image_floating_sel (layer_select->gimage))
     return;
 
   for (list = layer_select->gimage->layer_stack, count = 0; 
@@ -263,8 +267,8 @@ layer_select_end (LayerSelect *layer_select,
   /*  only reset the active layer if a new layer was specified  */
   if (layer_select->current_layer != layer_select->gimage->active_layer)
     {
-      gimage_set_active_layer (layer_select->gimage, 
-			       layer_select->current_layer);
+      gimp_image_set_active_layer (layer_select->gimage, 
+				   layer_select->current_layer);
       gdisplays_flush ();
     }
 }

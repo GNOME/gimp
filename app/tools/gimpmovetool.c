@@ -29,9 +29,14 @@
 #include "edit_selection.h"
 #include "floating_sel.h"
 #include "gimage_mask.h"
-#include "gdisplay.h"
+#include "gimpimage.h"
 #include "gdisplay_ops.h"
+#include "gdisplay.h"
+#include "layer.h"
 #include "move.h"
+#include "selection.h"
+#include "tools.h"
+#include "tool_options.h"
 #include "undo.h"
 
 #include "config.h"
@@ -107,9 +112,9 @@ move_tool_button_press (Tool           *tool,
 	  undo_push_guide (gdisp->gimage, guide);
 
 	  gdisplays_expose_guide (gdisp->gimage, guide);
-	  gimage_remove_guide (gdisp->gimage, guide);
+	  gimp_image_remove_guide (gdisp->gimage, guide);
 	  gdisplay_flush (gdisp);
-	  gimage_add_guide (gdisp->gimage, guide);
+	  gimp_image_add_guide (gdisp->gimage, guide);
 
 	  move->guide = guide;
 	  move->disp  = gdisp;
@@ -119,20 +124,20 @@ move_tool_button_press (Tool           *tool,
 
 	  move_tool_motion (tool, NULL, gdisp);
 	}
-      else if ((layer = gimage_pick_correlate_layer (gdisp->gimage, x, y)))
+      else if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage, x, y)))
 	{
 	  /*  If there is a floating selection, and this aint it,
 	   *  use the move tool
 	   */
-	  if (gimage_floating_sel (gdisp->gimage) &&
+	  if (gimp_image_floating_sel (gdisp->gimage) &&
 	      !layer_is_floating_sel (layer))
 	    {
-	      move->layer = gimage_floating_sel (gdisp->gimage);
+	      move->layer = gimp_image_floating_sel (gdisp->gimage);
 	    }
 	  /*  Otherwise, init the edit selection  */
 	  else
 	    {
-	      gimage_set_active_layer (gdisp->gimage, layer);
+	      gimp_image_set_active_layer (gdisp->gimage, layer);
 	      init_edit_selection (tool, gdisp_ptr, bevent, EDIT_LAYER_TRANSLATE);
 	    }
 	  tool->state = ACTIVE;
@@ -373,10 +378,10 @@ move_tool_cursor_update (Tool           *tool,
 	      move->disp = gdisp;
 	    }
 	}
-      else if ((layer = gimage_pick_correlate_layer (gdisp->gimage, x, y)))
+      else if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage, x, y)))
 	{
 	  /*  if there is a floating selection, and this aint it...  */
-	  if (gimage_floating_sel (gdisp->gimage) &&
+	  if (gimp_image_floating_sel (gdisp->gimage) &&
 	      !layer_is_floating_sel (layer))
 	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
 					  RECT_SELECT,
@@ -461,7 +466,7 @@ move_tool_start_hguide (Tool     *tool,
   if (private->guide && private->disp && private->disp->gimage)
     gdisplay_draw_guide (private->disp, private->guide, FALSE);
 
-  private->guide = gimage_add_hguide (gdisp->gimage);
+  private->guide = gimp_image_add_hguide (gdisp->gimage);
   private->disp  = gdisp;
 
   tool->state = ACTIVE;
@@ -485,7 +490,7 @@ move_tool_start_vguide (Tool     *tool,
   if (private->guide && private->disp && private->disp->gimage)
     gdisplay_draw_guide (private->disp, private->guide, FALSE);
 
-  private->guide = gimage_add_vguide (gdisp->gimage);
+  private->guide = gimp_image_add_vguide (gdisp->gimage);
   private->disp  = gdisp;
 
   tool->state = ACTIVE;

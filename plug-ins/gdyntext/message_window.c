@@ -20,10 +20,16 @@
  * $Id$
  */
 
+#include "config.h"
+
 #include <gtk/gtk.h>
-#include "libgimp/gimpui.h"
-#include "libgimp/stdplugins-intl.h"
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "message_window.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 
 static void message_window_class_init (MessageWindowClass *class);

@@ -15,10 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __BRIGHTNESS_CONTRAST_H__
 #define __BRIGHTNESS_CONTRAST_H__
 
-#include "tools.h"
 
 Tool * tools_new_brightness_contrast  (void);
 void   tools_free_brightness_contrast (Tool     *tool);
@@ -26,5 +26,6 @@ void   tools_free_brightness_contrast (Tool     *tool);
 void   brightness_contrast_dialog_hide (void);
 
 void   brightness_contrast_initialize (GDisplay *gdisp);
+
 
 #endif  /*  __BRIGHTNESS_CONTRAST_H__  */

@@ -18,15 +18,17 @@
 
 #include "config.h"
 
+#include <stdio.h>
 #include <string.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "devices.h"
 #include "dialog_handler.h"
+#include "gimpbrush.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
 #include "gimpbrushlist.h"
@@ -35,12 +37,15 @@
 #include "gimpui.h"
 #include "gradient.h"
 #include "gradient_header.h"
+#include "patterns.h"
 #include "session.h"
 #include "tools.h"
 
 #include "libgimp/gimpenv.h"
+#include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
+
 
 #define CELL_SIZE 20 /* The size of the preview cells */
 

@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include <libgimp/gimpuitypes.h>
+
 #include <libgimp/gimpchainbutton.h>
 #include <libgimp/gimpcolorbutton.h>
 #include <libgimp/gimpdialog.h>

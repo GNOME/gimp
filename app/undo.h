@@ -15,14 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __UNDO_H__
 #define __UNDO_H__
 
-#include "gimage.h"
-#include "undo_types.h"
-
-
-/*  Undo interface functions  */
 
 gboolean      undo_push_group_start       (GImage       *gimage, 
 					   UndoType      type);
@@ -130,5 +126,6 @@ typedef enum
   UNDO_REDO,    /* a redo has been executed and moved to undo stack  */
   UNDO_FREE     /* all undo and redo info has been cleared           */
 } undo_event_t;
+
 
 #endif  /* __UNDO_H__ */

@@ -30,33 +30,31 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include <errno.h>
 
 #include <gtk/gtk.h>
 
 #include "apptypes.h"
+
+#include "channel.h"
 #include "cursorutil.h"
+#include "drawable.h"
 #include "floating_sel.h"
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
+#include "layer.h"
 #include "plug_in.h"
 #include "parasitelist.h"
 #include "path.h"
+#include "pathP.h"
 #include "procedural_db.h"
-/* #include "tile_swap.h"*/
+#include "tile.h"
+#include "tile_manager.h"
+#include "tile_manager_pvt.h"
 #include "xcf.h"
 
-#include "drawable_pvt.h"
-#include "layer_pvt.h"
-#include "channel_pvt.h"
-#include "tile_manager_pvt.h"
-#include "pathP.h"
-#include "tile.h"			/* ick. */
-
-#include <libgimp/gimpunit.h>
-#include <libgimp/gimplimits.h>
-#include <libgimp/gimpparasite.h>
+#include "libgimp/gimplimits.h"
+#include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -473,7 +471,7 @@ xcf_save_image (XcfInfo *info,
   gint t1, t2, t3, t4;
   gchar version_tag[14];
 
-  floating_layer = gimage_floating_sel (gimage);
+  floating_layer = gimp_image_floating_sel (gimage);
   if (floating_layer)
     floating_sel_relax (floating_layer, FALSE);
 
@@ -649,7 +647,7 @@ xcf_save_layer_props (XcfInfo *info,
   if (layer == gimage->active_layer)
     xcf_save_prop (info, PROP_ACTIVE_LAYER);
 
-  if (layer == gimage_floating_sel (gimage))
+  if (layer == gimp_image_floating_sel (gimage))
     {
       info->floating_sel_drawable = layer->fs.drawable;
       xcf_save_prop (info, PROP_FLOATING_SELECTION);
@@ -1724,7 +1722,7 @@ xcf_load_image (XcfInfo *info)
 
       /* add the layer to the image if its not the floating selection */
       if (layer != info->floating_sel)
-	gimage_add_layer (gimage, layer, g_slist_length (gimage->layers));
+	gimp_image_add_layer (gimage, layer, g_slist_length (gimage->layers));
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.
@@ -1760,7 +1758,7 @@ xcf_load_image (XcfInfo *info)
 
       /* add the channel to the image if its not the selection */
       if (channel != gimage->selection_mask)
-	gimage_add_channel (gimage, channel, -1);
+	gimp_image_add_channel (gimage, channel, -1);
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.
@@ -1769,12 +1767,12 @@ xcf_load_image (XcfInfo *info)
     }
 
   if (info->active_layer)
-    gimage_set_active_layer (gimage, info->active_layer);
+    gimp_image_set_active_layer (gimage, info->active_layer);
 
   if (info->active_channel)
-    gimage_set_active_channel (gimage, info->active_channel);
+    gimp_image_set_active_channel (gimage, info->active_channel);
 
-  gimage_set_filename (gimage, info->filename);
+  gimp_image_set_filename (gimage, info->filename);
 
   return gimage;
 

@@ -15,9 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
@@ -25,8 +26,13 @@
 #include "drawable.h"
 #include "gimage_mask.h"
 #include "gdisplay.h"
+#include "gimpimage.h"
 #include "gimpui.h"
 #include "hue_saturation.h"
+#include "image_map.h"
+#include "pixel_region.h"
+#include "tools.h"
+#include "tool_options.h"
 
 #include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimpmath.h"
@@ -287,7 +293,7 @@ hue_saturation_initialize (GDisplay *gdisp)
 {
   gint i;
 
-  if (! drawable_color (gimage_active_drawable (gdisp->gimage)))
+  if (! drawable_color (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Hue-Saturation operates only on RGB color drawables."));
       return;
@@ -307,7 +313,7 @@ hue_saturation_initialize (GDisplay *gdisp)
       hue_saturation_dialog->saturation[i] = 0.0;
     }
 
-  hue_saturation_dialog->drawable = gimage_active_drawable (gdisp->gimage);
+  hue_saturation_dialog->drawable = gimp_image_active_drawable (gdisp->gimage);
   hue_saturation_dialog->image_map =
     image_map_create (gdisp, hue_saturation_dialog->drawable);
 

@@ -19,16 +19,11 @@
 #ifndef __BEZIER_SELECT_H__
 #define __BEZIER_SELECT_H__
 
-#include "toolsF.h"
-
-typedef struct _BezierPoint  BezierPoint;
-typedef struct _BezierSelect BezierSelect;
-
-/*  bezier select functions  */
 
 Tool     * tools_new_bezier_select   (void);
 void       tools_free_bezier_select  (Tool *tool);
 
 gboolean   bezier_tool_selected      (void);
+
 
 #endif /* __BEZIER_SELECT_H__ */

@@ -27,11 +27,7 @@
 extern "C" {
 #endif /* __cplusplus */
 
-
 /* For information look into the C source or the html documentation */
-
-
-typedef void (* GimpHelpFunc) (const gchar *help_data);
 
 
 void  gimp_help_init               (void);

@@ -15,10 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __DRAW_CORE_H__
 #define __DRAW_CORE_H__
 
-#include "tools.h"
 
 /*  drawing states  */
 #define INVISIBLE   0
@@ -26,39 +26,41 @@
 
 /*  Structure definitions  */
 
-typedef struct _draw_core  DrawCore;
 typedef void (* DrawCoreDraw) (Tool *);
 
-struct _draw_core
+struct _DrawCore
 {
-  GdkGC *         gc;           /*  Grahpics context for drawing functions  */
-  GdkWindow *     win;          /*  Window to draw draw operation to      */
+  GdkGC       * gc;           /*  Grahpics context for drawing functions  */
+  GdkWindow   * win;          /*  Window to draw draw operation to      */
 
-  int             draw_state;   /*  Current state in the drawing process    */
+  gint          draw_state;   /*  Current state in the drawing process    */
 
-  int             line_width;   /**/
-  int             line_style;   /**/
-  int             cap_style;    /*  line attributes                         */
-  int             join_style;   /**/
+  gint          line_width;   /**/
+  gint          line_style;   /**/
+  gint          cap_style;    /*  line attributes                         */
+  gint          join_style;   /**/
 
-  int             paused_count; /*  count to keep track of multiple pauses  */
+  gint          paused_count; /*  count to keep track of multiple pauses  */
 
-  gpointer        data;         /*  data to pass to draw_func               */
+  gpointer      data;         /*  data to pass to draw_func               */
 
-  DrawCoreDraw    draw_func;    /*  Member function for actual drawing      */
+  DrawCoreDraw  draw_func;    /*  Member function for actual drawing      */
 };
 
 
 /*  draw core functions  */
 
-DrawCore *    draw_core_new          (DrawCoreDraw);
-void          draw_core_start        (DrawCore *, GdkWindow *, Tool *);
-void          draw_core_stop         (DrawCore *, Tool *);
-void          draw_core_pause        (DrawCore *, Tool *);
-void          draw_core_resume       (DrawCore *, Tool *);
-void          draw_core_free         (DrawCore *);
-
-
+DrawCore * draw_core_new    (DrawCoreDraw );
+void       draw_core_start  (DrawCore     *,
+			     GdkWindow    *,
+			     Tool         *);
+void       draw_core_stop   (DrawCore     *,
+			     Tool         *);
+void       draw_core_pause  (DrawCore     *,
+			     Tool         *);
+void       draw_core_resume (DrawCore     *,
+			     Tool         *);
+void       draw_core_free   (DrawCore     *);
 
 
 #endif  /*  __DRAW_CORE_H__  */

@@ -24,6 +24,9 @@
 
 #include <gtk/gtk.h>
 
+#include "gimptypes.h"
+#include "gimpuitypes.h"
+
 #include "gimpdialog.h"
 #include "gimppixmap.h"
 #include "gimpquerybox.h"

@@ -19,8 +19,6 @@
 #ifndef  __LAYER_SELECT_H__
 #define  __LAYER_SELECT_H__
 
-#include "gimage.h"
-
 
 void   layer_select_init                (GImage  *gimage, 
 					 gint     move, 

@@ -21,31 +21,28 @@
 #include <gtk/gtk.h>
 
 #include "apptypes.h"
- 
-#include "gimpimageP.h"
+
+#include "appenv.h"
+#include "channel.h"
+#include "dialog_handler.h"
+#include "drawable.h"
 #include "gimage.h"
 #include "gimpimage.h"
-#include "lc_dialog.h"
-
-#include "drawable.h"
-#include "gdisplay.h"
-#include "procedural_db.h"
-
-#include "paletteP.h"
-#include "undo.h"
-
-#include "layer.h"
-#include "layer_pvt.h"
-#include "channel.h"
-#include "tools.h"
-#include "appenv.h"
 #include "gimpset.h"
-#include "dialog_handler.h"
+#include "layer.h"
+#include "lc_dialog.h"
+#include "gdisplay.h"
+#include "paint_funcs.h"
+#include "paletteP.h"
+#include "procedural_db.h"
+#include "tools.h"
+#include "undo.h"
 
 
 /* gimage.c: Junk (ugly dependencies) from gimpimage.c on its way
-   to proper places. That is, the handlers should be moved to
-   layers_dialog, gdisplay, tools, etc.. */
+ * to proper places. That is, the handlers should be moved to
+ * layers_dialog, gdisplay, tools, etc..
+ */
 
 static void gimage_dirty_handler        (GimpImage* gimage);
 static void gimage_destroy_handler      (GimpImage* gimage);
@@ -59,34 +56,41 @@ static void gimage_repaint_handler      (GimpImage* gimage,
 					 gint, gint, gint, gint);
 
 
-GImage*
-gimage_new (int               width, 
-	    int               height, 
+GImage *
+gimage_new (gint              width, 
+	    gint              height, 
 	    GimpImageBaseType base_type)
 {
-  GimpImage* gimage = gimp_image_new (width, height, base_type);
+  GimpImage *gimage = gimp_image_new (width, height, base_type);
 
   gtk_signal_connect (GTK_OBJECT (gimage), "dirty",
-		      GTK_SIGNAL_FUNC(gimage_dirty_handler), NULL);
+		      GTK_SIGNAL_FUNC (gimage_dirty_handler),
+		      NULL);
   gtk_signal_connect (GTK_OBJECT (gimage), "destroy",
-		      GTK_SIGNAL_FUNC(gimage_destroy_handler), NULL);
+		      GTK_SIGNAL_FUNC (gimage_destroy_handler),
+		      NULL);
   gtk_signal_connect (GTK_OBJECT (gimage), "rename",
-		      GTK_SIGNAL_FUNC(gimage_rename_handler), NULL);
+		      GTK_SIGNAL_FUNC (gimage_rename_handler),
+		      NULL);
   gtk_signal_connect (GTK_OBJECT (gimage), "resize",
-		      GTK_SIGNAL_FUNC(gimage_resize_handler), NULL);
+		      GTK_SIGNAL_FUNC (gimage_resize_handler),
+		      NULL);
   gtk_signal_connect (GTK_OBJECT (gimage), "restructure",
-		      GTK_SIGNAL_FUNC(gimage_restructure_handler), NULL);
+		      GTK_SIGNAL_FUNC (gimage_restructure_handler),
+		      NULL);
   gtk_signal_connect (GTK_OBJECT (gimage), "repaint",
-		      GTK_SIGNAL_FUNC(gimage_repaint_handler), NULL);
+		      GTK_SIGNAL_FUNC (gimage_repaint_handler),
+		      NULL);
   gtk_signal_connect (GTK_OBJECT (gimage), "colormap_changed",
-		      GTK_SIGNAL_FUNC(gimage_cmap_change_handler), NULL);
+		      GTK_SIGNAL_FUNC (gimage_cmap_change_handler),
+		      NULL);
 
   gimp_set_add (image_context, gimage);
 
   return gimage;
 }
 
-GImage*
+GImage *
 gimage_get_ID (gint ID)
 {
   return pdb_id_to_image (ID);
@@ -113,7 +117,7 @@ static void
 invalidate_cb (gpointer image, 
 	       gpointer user_data)
 {
-  gimp_image_invalidate_preview (GIMP_IMAGE(image));
+  gimp_image_invalidate_preview (GIMP_IMAGE (image));
 }
 
 void

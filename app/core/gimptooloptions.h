@@ -20,14 +20,8 @@
 #define __TOOL_OPTIONS_H__
 
 
-/*  tool options function declarations  */
-
-typedef void  (* ToolOptionsResetFunc) (void);
-
-
 /*  the tool options structures  */
 
-typedef struct _ToolOptions ToolOptions;
 struct _ToolOptions
 {
   GtkWidget            *main_vbox;
@@ -48,5 +42,6 @@ ToolOptions * tool_options_new  (gchar *title);
 void          tool_options_init (ToolOptions          *options,
 				 gchar                *title,
 				 ToolOptionsResetFunc  reset_func);
+
 
 #endif  /*  __TOOL_OPTIONS_H__  */

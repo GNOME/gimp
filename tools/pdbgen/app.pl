@@ -674,17 +674,18 @@ GPL
 
 	foreach (@{$main::grp{$group}->{headers}}) { $out->{headers}->{$_}++ }
 	delete $out->{headers}->{q/"procedural_db.h"/};
+	delete $out->{headers}->{q/"config.h"/};
+	delete $out->{headers}->{q/"apptypes.h"/};
 
 	my @headers = sort {
 	    my ($x, $y) = ($a, $b);
 	    foreach ($x, $y) {
-		$_ = "!$_" if $_ eq '"config.h"';
 		$_ = "~$_" if /libgimp/;
 		s/^</!/;
 	    }
 	    $x cmp $y;
 	} keys %{$out->{headers}};
-	my $headers = ""; my $lib = 0; my $seen = 0;
+        my $headers = ""; my $lib = 0; my $seen = 0; my $eek = 0;
 	foreach (@headers) {
 	    if ($_ eq '<unistd.h>') {
 		$headers .= "\n" if $seen;
@@ -692,7 +693,19 @@ GPL
 	    }
 
 	    $seen++ if /^</;
-	    $headers .= "\n" if $seen && !/^</;
+
+	    if ($eek == 0 && !/^</) {
+		$eek      = 1;
+		$headers .= "\n";
+		$headers .= '#include <gtk/gtk.h>';
+		$headers .= "\n\n";
+		$headers .= '#include "apptypes.h"';
+		$headers .= "\n";
+		$headers .= '#include "procedural_db.h"';
+		$headers .= "\n";
+		$headers .= "\n";
+	    }
+
 	    $seen = 0 if !/^</;
 
 	    $headers .= "\n" if /libgimp/ && !$lib++ && $headers;
@@ -715,7 +728,7 @@ GPL
 	my $cfile = "$destdir/${group}_cmds.c$FILE_EXT";
 	open CFILE, "> $cfile" or die "Can't open $cfile: $!\n";
 	print CFILE $gpl;
-	print CFILE qq/#include "procedural_db.h"\n\n/;
+	print CFILE qq/#include "config.h"\n\n/;
 	print CFILE $headers, "\n";
 	print CFILE $extra->{decls}, "\n" if exists $extra->{decls};
 	print CFILE $out->{procs};

@@ -22,23 +22,26 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "boundary.h"
 #include "gimprc.h"
 #include "paint_funcs.h"
-#include "boundary.h"
+#include "pixel_processor.h"
+#include "pixel_region.h"
 #include "tile_manager.h"
+#include "tile_manager_pvt.h"
+#include "tile_pvt.h"
+#include "tile.h"
 
-#include "tile_manager_pvt.h"  /* For copy-on-write */
-#include "tile_pvt.h"  /* For accessing the tiles directly */
-#include "tile.h"			/* ick. */
-
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
 #include "libgimp/gimpcolorspace.h"
+
+#include "libgimp/gimpintl.h"
+
 
 #define STD_BUF_SIZE       1021
 #define MAXDIFF            195076

@@ -18,7 +18,9 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
 
 #include "gimppreviewcache.h"
 

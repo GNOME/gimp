@@ -157,6 +157,87 @@ package Gimp::CodeGen::enums;
 		       CUBIC_INTERPOLATION => '1',
 		       NEAREST_NEIGHBOR_INTERPOLATION => '2' }
 	},
+    OrientationType =>
+	{ contig => 1,
+	  header => 'apptypes.h',
+	  symbols => [ qw(HORIZONTAL VERTICAL UNKNOWN) ],
+	  mapping => { HORIZONTAL => '0',
+		       VERTICAL => '1',
+		       UNKNOWN => '2' }
+	},
+    PDBArgType =>
+	{ contig => 1,
+	  header => 'apptypes.h',
+	  symbols => [ qw(PDB_INT32 PDB_INT16 PDB_INT8 PDB_FLOAT PDB_STRING
+			  PDB_INT32ARRAY PDB_INT16ARRAY PDB_INT8ARRAY
+			  PDB_FLOATARRAY PDB_STRINGARRAY PDB_COLOR
+			  PDB_REGION PDB_DISPLAY PDB_IMAGE PDB_LAYER
+			  PDB_CHANNEL PDB_DRAWABLE PDB_SELECTION
+			  PDB_BOUNDARY PDB_PATH PDB_PARASITE PDB_STATUS
+			  PDB_END) ],
+	  mapping => { PDB_INT32 => '0',
+		       PDB_INT16 => '1',
+		       PDB_INT8 => '2',
+		       PDB_FLOAT => '3',
+		       PDB_STRING => '4',
+		       PDB_INT32ARRAY => '5',
+		       PDB_INT16ARRAY => '6',
+		       PDB_INT8ARRAY => '7',
+		       PDB_FLOATARRAY => '8',
+		       PDB_STRINGARRAY => '9',
+		       PDB_COLOR => '10',
+		       PDB_REGION => '11',
+		       PDB_DISPLAY => '12',
+		       PDB_IMAGE => '13',
+		       PDB_LAYER => '14',
+		       PDB_CHANNEL => '15',
+		       PDB_DRAWABLE => '16',
+		       PDB_SELECTION => '17',
+		       PDB_BOUNDARY => '18',
+		       PDB_PATH => '19',
+		       PDB_PARASITE => '20',
+		       PDB_STATUS => '21',
+		       PDB_END => '22' }
+	},
+    PDBStatusType =>
+	{ contig => 1,
+	  header => 'apptypes.h',
+	  symbols => [ qw(PDB_EXECUTION_ERROR PDB_CALLING_ERROR
+			  PDB_PASS_THROUGH PDB_SUCCESS PDB_CANCEL) ],
+	  mapping => { PDB_EXECUTION_ERROR => '0',
+		       PDB_CALLING_ERROR => '1',
+		       PDB_PASS_THROUGH => '2',
+		       PDB_SUCCESS => '3',
+		       PDB_CANCEL => '4' }
+	},
+    PDBProcType =>
+	{ contig => 1,
+	  header => 'apptypes.h',
+	  symbols => [ qw(PDB_INTERNAL PDB_PLUGIN PDB_EXTENSION
+			  PDB_TEMPORARY) ],
+	  mapping => { PDB_INTERNAL => '0',
+		       PDB_PLUGIN => '1',
+		       PDB_EXTENSION => '2',
+		       PDB_TEMPORARY => '3' },
+	  nicks   => { PDB_INTERNAL => 'INTERNAL',
+		       PDB_PLUGIN => 'PLUGIN',
+		       PDB_EXTENSION => 'EXTENSION',
+		       PDB_TEMPORARY => 'TEMPORARY' }
+	},
+    ChannelOps =>
+	{ contig => 1,
+	  header => 'apptypes.h',
+	  symbols => [ qw(CHANNEL_OP_ADD CHANNEL_OP_SUB CHANNEL_OP_REPLACE
+			  CHANNEL_OP_INTERSECT) ],
+	  mapping => { CHANNEL_OP_ADD => '0',
+		       CHANNEL_OP_SUB => '1',
+		       CHANNEL_OP_REPLACE => '2',
+		       CHANNEL_OP_INTERSECT => '3' },
+	  nicks   => { CHANNEL_OP_ADD => 'ADD',
+		       CHANNEL_OP_SUB => 'SUB',
+		       CHANNEL_OP_REPLACE => 'REPLACE',
+		       CHANNEL_OP_INTERSECT => 'INTERSECT' }
+	},
     GradientType =>
 	{ contig => 1,
 	  header => 'blend.h',
@@ -205,15 +286,6 @@ package Gimp::CodeGen::enums;
 	  mapping => { FG_BUCKET_FILL => '0',
 		       BG_BUCKET_FILL => '1',
 		       PATTERN_BUCKET_FILL => '2' }
-	},
-    ChannelOps =>
-	{ contig => 1,
-	  header => 'channel.h',
-	  symbols => [ qw(ADD SUB REPLACE INTERSECT) ],
-	  mapping => { ADD => '0',
-		       SUB => '1',
-		       REPLACE => '2',
-		       INTERSECT => '3' }
 	},
     ChannelOffsetType =>
 	{ contig => 1,
@@ -292,14 +364,6 @@ package Gimp::CodeGen::enums;
 		       STACK_TRACE_QUERY => '1',
 		       STACK_TRACE_ALWAYS => '2' }
 	},
-    OrientationType =>
-	{ contig => 1,
-	  header => 'gimpimage.h',
-	  symbols => [ qw(HORIZONTAL VERTICAL UNKNOWN) ],
-	  mapping => { HORIZONTAL => '0',
-		       VERTICAL => '1',
-		       UNKNOWN => '2' }
-	},
     ChannelType =>
 	{ contig => 1,
 	  header => 'gimpimage.h',
@@ -353,65 +417,6 @@ package Gimp::CodeGen::enums;
 	  mapping => { RUN_INTERACTIVE => '0',
 		       RUN_NONINTERACTIVE => '1',
 		       RUN_WITH_LAST_VALS => '2' }
-	},
-    PDBArgType =>
-	{ contig => 1,
-	  header => 'procedural_db.h',
-	  symbols => [ qw(PDB_INT32 PDB_INT16 PDB_INT8 PDB_FLOAT PDB_STRING
-			  PDB_INT32ARRAY PDB_INT16ARRAY PDB_INT8ARRAY
-			  PDB_FLOATARRAY PDB_STRINGARRAY PDB_COLOR
-			  PDB_REGION PDB_DISPLAY PDB_IMAGE PDB_LAYER
-			  PDB_CHANNEL PDB_DRAWABLE PDB_SELECTION
-			  PDB_BOUNDARY PDB_PATH PDB_PARASITE PDB_STATUS
-			  PDB_END) ],
-	  mapping => { PDB_INT32 => '0',
-		       PDB_INT16 => '1',
-		       PDB_INT8 => '2',
-		       PDB_FLOAT => '3',
-		       PDB_STRING => '4',
-		       PDB_INT32ARRAY => '5',
-		       PDB_INT16ARRAY => '6',
-		       PDB_INT8ARRAY => '7',
-		       PDB_FLOATARRAY => '8',
-		       PDB_STRINGARRAY => '9',
-		       PDB_COLOR => '10',
-		       PDB_REGION => '11',
-		       PDB_DISPLAY => '12',
-		       PDB_IMAGE => '13',
-		       PDB_LAYER => '14',
-		       PDB_CHANNEL => '15',
-		       PDB_DRAWABLE => '16',
-		       PDB_SELECTION => '17',
-		       PDB_BOUNDARY => '18',
-		       PDB_PATH => '19',
-		       PDB_PARASITE => '20',
-		       PDB_STATUS => '21',
-		       PDB_END => '22' }
-	},
-    PDBStatusType =>
-	{ contig => 1,
-	  header => 'procedural_db.h',
-	  symbols => [ qw(PDB_EXECUTION_ERROR PDB_CALLING_ERROR
-			  PDB_PASS_THROUGH PDB_SUCCESS PDB_CANCEL) ],
-	  mapping => { PDB_EXECUTION_ERROR => '0',
-		       PDB_CALLING_ERROR => '1',
-		       PDB_PASS_THROUGH => '2',
-		       PDB_SUCCESS => '3',
-		       PDB_CANCEL => '4' }
-	},
-    PDBProcType =>
-	{ contig => 1,
-	  header => 'procedural_db.h',
-	  symbols => [ qw(PDB_INTERNAL PDB_PLUGIN PDB_EXTENSION
-			  PDB_TEMPORARY) ],
-	  mapping => { PDB_INTERNAL => '0',
-		       PDB_PLUGIN => '1',
-		       PDB_EXTENSION => '2',
-		       PDB_TEMPORARY => '3' },
-	  nicks   => { PDB_INTERNAL => 'INTERNAL',
-		       PDB_PLUGIN => 'PLUGIN',
-		       PDB_EXTENSION => 'EXTENSION',
-		       PDB_TEMPORARY => 'TEMPORARY' }
 	},
     SizeType =>
 	{ contig => 1,

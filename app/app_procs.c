@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <signal.h>
@@ -38,9 +39,6 @@
  
 #include <gtk/gtk.h>
 
-#include "libgimp/gimpfeatures.h"
-#include "libgimp/gimpenv.h"
-
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -57,6 +55,7 @@
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimpbrushlist.h"
+#include "gimpcontext.h"
 #include "gimprc.h"
 #include "gimpparasite.h"
 #include "gimpset.h"
@@ -100,7 +99,12 @@
 #include "gimpparasite.h"
 
 #include "libgimp/gimplimits.h"
+#include "libgimp/gimpfeatures.h"
+#include "libgimp/gimpenv.h"
+#include "libgimp/gimphelpui.h"
+
 #include "libgimp/gimpintl.h"
+
 
 #define LOGO_WIDTH_MIN  300
 #define LOGO_HEIGHT_MIN 110

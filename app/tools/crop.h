@@ -19,8 +19,6 @@
 #ifndef  __CROP_H__
 #define  __CROP_H__
 
-#include "tools.h"
-
 
 typedef enum
 {
@@ -29,12 +27,17 @@ typedef enum
 } CropType;
 
 
-/*  select functions  */
-void   crop_draw       (Tool *);
-void   crop_image      (GimpImage *gimage, int, int, int, int, int, int);
+void   crop_draw       (Tool      *tool);
+void   crop_image      (GimpImage *gimage,
+			gint,
+			gint,
+			gint,
+			gint,
+			gint,
+			gint);
 
 Tool * tools_new_crop  (void);
-void   tools_free_crop (Tool *);
+void   tools_free_crop (Tool      *tool);
 
 
 #endif  /*  __CROP_H__  */

@@ -57,42 +57,45 @@ struct _GimpSetClass
 {
   GimpObjectClass parent_class;
 
-  void (* add)            (GimpSet *gimpset, gpointer object);
-  void (* remove)         (GimpSet *gimpset, gpointer object);
-  void (* active_changed) (GimpSet *gimpset, gpointer object);
+  void (* add)            (GimpSet *gimpset,
+			   gpointer object);
+  void (* remove)         (GimpSet *gimpset,
+			   gpointer object);
+  void (* active_changed) (GimpSet *gimpset,
+			   gpointer object);
 };
 
 
 typedef guint GimpSetHandlerId;
 
-GtkType         gimp_set_get_type   (void);
-GimpSet       * gimp_set_new        (GtkType   type,
-				     gboolean  weak);
+GtkType            gimp_set_get_type       (void);
+GimpSet          * gimp_set_new            (GtkType           type,
+					    gboolean          weak);
 
-GtkType		gimp_set_type	    (GimpSet  *set);
+GtkType		   gimp_set_type	   (GimpSet          *set);
 
-gboolean       	gimp_set_add	    (GimpSet  *gimpset,
-				     gpointer  object);
-gboolean       	gimp_set_remove	    (GimpSet  *gimpset,
-				     gpointer  object);
+gboolean       	   gimp_set_add	           (GimpSet          *gimpset,
+					    gpointer          object);
+gboolean       	   gimp_set_remove	   (GimpSet          *gimpset,
+					    gpointer          object);
 
-gboolean	gimp_set_have	    (GimpSet  *gimpset,
-				     gpointer  object);
-void		gimp_set_foreach    (GimpSet  *gimpset,
-				     GFunc     func,
-				     gpointer  user_data);
-gint		gimp_set_size	    (GimpSet  *gimpset);
+gboolean	   gimp_set_have	   (GimpSet          *gimpset,
+					    gpointer          object);
+void		   gimp_set_foreach        (GimpSet          *gimpset,
+					    GFunc             func,
+					    gpointer          user_data);
+gint		   gimp_set_size	   (GimpSet          *gimpset);
 
-void		gimp_set_set_active (GimpSet  *gimpset,
-				     gpointer  object);
-gpointer	gimp_set_get_active (GimpSet  *gimpset);
+void		   gimp_set_set_active     (GimpSet          *gimpset,
+					    gpointer          object);
+gpointer	   gimp_set_get_active     (GimpSet          *gimpset);
 
-GimpSetHandlerId gimp_set_add_handler   (GimpSet          *set,
-					 const gchar      *signame,
-					 GtkSignalFunc     handler,
-					 gpointer          user_data);
-void		gimp_set_remove_handler (GimpSet          *set,
-					 GimpSetHandlerId  id);
+GimpSetHandlerId   gimp_set_add_handler    (GimpSet          *set,
+					    const gchar      *signame,
+					    GtkSignalFunc     handler,
+					    gpointer          user_data);
+void		   gimp_set_remove_handler (GimpSet          *set,
+					    GimpSetHandlerId  id);
 
 
 #endif /* __GIMP_SET_H__ */

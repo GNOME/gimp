@@ -44,9 +44,8 @@
 
 #include "apptypes.h"
 
-#include "libgimp/gimpvector.h"
-
 #include "brush_header.h"
+#include "patterns.h"
 #include "pattern_header.h"
 #include "gimpbrush.h"
 #include "gimpbrushlist.h"

@@ -23,8 +23,6 @@
 #ifndef __GIMP_WIDGETS_H__
 #define __GIMP_WIDGETS_H__
 
-#include <libgimp/gimpsizeentry.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */

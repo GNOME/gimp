@@ -15,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __RESIZE_H__
 #define __RESIZE_H__
 
-#include "libgimp/gimpunit.h"
-#include "gimage.h"
 
 typedef enum
 {
@@ -73,23 +72,24 @@ typedef struct
  *  If cancel_callback is NULL, then the dialog will be destroyed on "Cancel".
  */
 
-Resize * resize_widget_new    (ResizeType    type,
-			       ResizeTarget  target,
-			       GtkObject    *object,
-			       gchar        *signal,
-			       gint          width,
-			       gint          height,
-			       gdouble       resolution_x,
-			       gdouble       resolution_y,
-			       GimpUnit      unit,
-			       gboolean      dot_for_dot,
-			       GtkSignalFunc ok_cb,
-			       GtkSignalFunc cancel_cb,
-			       gpointer      user_data);
+Resize   * resize_widget_new          (ResizeType    type,
+				       ResizeTarget  target,
+				       GtkObject    *object,
+				       gchar        *signal,
+				       gint          width,
+				       gint          height,
+				       gdouble       resolution_x,
+				       gdouble       resolution_y,
+				       GimpUnit      unit,
+				       gboolean      dot_for_dot,
+				       GtkSignalFunc ok_cb,
+				       GtkSignalFunc cancel_cb,
+				       gpointer      user_data);
 
 /* Layer scaling sanity check and warning dialogs */
 
-gboolean resize_check_layer_scaling (ImageResize *image_resize);
-void     resize_scale_implement     (ImageResize *image_resize);
+gboolean   resize_check_layer_scaling (ImageResize  *image_resize);
+void       resize_scale_implement     (ImageResize  *image_resize);
+
 
 #endif  /*  __RESIZE_H__  */

@@ -22,10 +22,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 #include "bezier_selectP.h"
+#include "gdisplay.h"
 #include "gimpimage.h"
 #include "path.h"
 #include "pathP.h"

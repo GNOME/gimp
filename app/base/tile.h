@@ -1,3 +1,21 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
 #ifndef __TILE_H__
 #define __TILE_H__
 
@@ -12,18 +30,12 @@
 /* sanity checking on new tile hinting code */
 /* #define HINTS_SANITY */
 
-#include <sys/types.h>
-#include <glib.h>
-
-#include "config.h"
-
-typedef struct _Tile Tile;
-
 /*  explicit guchar type rather than enum since gcc chooses an int
  *  representation but arrays of TileRowHints are quite space-critical
  *  in GIMP.
  */
 typedef guchar TileRowHint;
+
 #define TILEROWHINT_BROKEN      0
 #define TILEROWHINT_OPAQUE      1
 #define TILEROWHINT_TRANSPARENT 2
@@ -35,8 +47,8 @@ typedef guchar TileRowHint;
 
 /* Initializes the fields of a tile to "good" values.
  */
-void tile_init (Tile *tile,
-		int   bpp);
+void          tile_init              (Tile        *tile,
+				      gint         bpp);
 
 
 /*
@@ -48,31 +60,37 @@ void tile_init (Tile *tile,
  * write access.  (This is a hack, and should be handled better.)
  */
 
-void tile_lock (Tile *);
-void tile_release (Tile *, int);
+void          tile_lock              (Tile        *tile);
+void          tile_release           (Tile        *tile,
+				      gint);
 
 /* Allocate the data for the tile.
  */
-void tile_alloc (Tile *tile);
+void          tile_alloc             (Tile        *tile);
 
 /* Return the size in bytes of the tiles data.
  */
-int tile_size (Tile *tile);
+gint          tile_size              (Tile        *tile);
 
-int tile_ewidth (Tile *tile);
-int tile_eheight (Tile *tile);
-int tile_bpp (Tile *tile);
+gint          tile_ewidth            (Tile        *tile);
+gint          tile_eheight           (Tile        *tile);
+gint          tile_bpp               (Tile        *tile);
 
-int tile_is_valid (Tile *tile);
+gint          tile_is_valid          (Tile        *tile);
 
-void tile_mark_valid (Tile *tile);
+void          tile_mark_valid        (Tile        *tile);
 
 /* DOCUMENT ME -- adm */
-TileRowHint tile_get_rowhint (Tile *tile, int yoff);
-void tile_set_rowhint (Tile *tile, int yoff, TileRowHint rowhint);
-void tile_sanitize_rowhints (Tile *tile);
+TileRowHint   tile_get_rowhint       (Tile        *tile,
+				      gint         yoff);
+void          tile_set_rowhint       (Tile        *tile,
+				      gint         yoff,
+				      TileRowHint  rowhint);
+void          tile_sanitize_rowhints (Tile        *tile);
 
-void *tile_data_pointer (Tile *tile, int xoff, int yoff);
+void        * tile_data_pointer      (Tile        *tile,
+				      gint         xoff,
+				      gint         yoff);
 
 /* tile_attach attaches a tile to a tile manager: this function
  * increments the tile's share count and inserts a tilelink into the
@@ -81,8 +99,12 @@ void *tile_data_pointer (Tile *tile, int xoff, int yoff);
  * discarded.
  */
 
-void tile_attach (Tile *tile, void *tm, int tile_num);
-void tile_detach (Tile *tile, void *tm, int tile_num);
+void          tile_attach            (Tile        *tile,
+				      void        *tm,
+				      gint         tile_num);
+void          tile_detach            (Tile        *tile,
+				      void        *tm,
+				      gint         tile_num);
 
 
 #endif /* __TILE_H__ */

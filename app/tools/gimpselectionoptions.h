@@ -15,17 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __SELECTION_OPTIONS_H__
 #define __SELECTION_OPTIONS_H__
 
-#include "tools.h"
+
 #include "tool_options.h"
 
-#include "libgimp/gimpunit.h"
 
 /*  the selection options structures  */
 
-typedef struct _SelectionOptions SelectionOptions;
 struct _SelectionOptions
 {
   ToolOptions  tool_options;
@@ -86,5 +85,6 @@ void               selection_options_reset (SelectionOptions     *options);
 void               selection_options_init  (SelectionOptions     *options,
 					    ToolType              tool_type,
 					    ToolOptionsResetFunc  reset_func);
+
 
 #endif  /*  __SELCTION_OPTIONS_H__  */

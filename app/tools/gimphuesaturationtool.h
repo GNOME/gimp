@@ -19,9 +19,6 @@
 #ifndef __HUE_SATURATION_H__
 #define __HUE_SATURATION_H__
 
-#include "image_map.h"
-#include "tools.h"
-
 
 typedef enum
 {
@@ -57,16 +54,17 @@ struct _HueSaturationDialog
   gboolean       preview;
 };
 
-Tool * tools_new_hue_saturation          (void);
-void   tools_free_hue_saturation         (Tool                 *tool);
+Tool * tools_new_hue_saturation           (void);
+void   tools_free_hue_saturation          (Tool                 *tool);
 
-void   hue_saturation_initialize         (GDisplay             *gdisp);
-void   hue_saturation_free               (void);
-void   hue_saturation_dialog_hide	 (void);
-void   hue_saturation                    (PixelRegion          *srcPR,
-					  PixelRegion          *destPR,
-					  void                 *data);
+void   hue_saturation_initialize          (GDisplay             *gdisp);
+void   hue_saturation_free                (void);
+void   hue_saturation_dialog_hide	  (void);
+void   hue_saturation                     (PixelRegion          *srcPR,
+					   PixelRegion          *destPR,
+					   void                 *data);
 
-void   hue_saturation_calculate_transfers (HueSaturationDialog *hsd);
+void   hue_saturation_calculate_transfers (HueSaturationDialog  *hsd);
+
 
 #endif  /*  __HUE_SATURATION_H__  */

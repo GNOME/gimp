@@ -35,7 +35,9 @@
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimage.h"
+#include "gimpcontext.h"
 #include "gimpdnd.h"
+#include "gimpdrawable.h"
 #include "gimphelp.h"
 #include "gimprc.h"
 #include "gimpui.h"
@@ -43,10 +45,15 @@
 #include "gtkvwrapbox.h"
 #include "indicator_area.h"
 #include "interface.h"
+#include "layer.h"
 #include "menus.h"
 #include "nav_window.h"
+#include "paint_funcs.h"
+#include "pixel_region.h"
 #include "qmask.h"
 #include "session.h"
+#include "pixel_region.h"
+#include "tile_manager.h"
 #include "tools.h"
 
 #include "pixmaps.h"
@@ -1211,7 +1218,7 @@ toolbox_drag_drop (GtkWidget      *widget,
 	    }
 
 	  new_gimage = gimage_new (width, height, type);
-	  gimage_disable_undo (new_gimage);
+	  gimp_image_undo_disable (new_gimage);
 
 	  if (type == INDEXED) /* copy the colormap */
 	    {
@@ -1219,8 +1226,9 @@ toolbox_drag_drop (GtkWidget      *widget,
 	      memcpy (new_gimage->cmap, gimage->cmap, COLORMAP_SIZE);
 	    }
 
-	  gimage_set_resolution (new_gimage, gimage->xresolution, gimage->yresolution);
-	  gimage_set_unit (new_gimage, gimage->unit);
+	  gimp_image_set_resolution (new_gimage,
+				     gimage->xresolution, gimage->yresolution);
+	  gimp_image_set_unit (new_gimage, gimage->unit);
 
 	  if (layer)
 	    {
@@ -1274,12 +1282,12 @@ toolbox_drag_drop (GtkWidget      *widget,
 	  gimp_drawable_offsets (GIMP_DRAWABLE (new_layer), &off_x, &off_y);
 	  layer_translate (new_layer, -off_x, -off_y);
 
-	  gimage_add_layer (new_gimage, new_layer, 0);
+	  gimp_image_add_layer (new_gimage, new_layer, 0);
 
 	  gimp_context_set_display (gimp_context_get_user (),
 				    gdisplay_new (new_gimage, 0x0101));
 
-	  gimage_enable_undo (new_gimage);
+	  gimp_image_undo_enable (new_gimage);
 
 	  return_val = TRUE;
 	}

@@ -15,16 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __LEVELS_H__
 #define __LEVELS_H__
 
-#include "tools.h"
 
-Tool * tools_new_levels  (void);
-void   tools_free_levels (Tool     *tool);
+Tool * tools_new_levels   (void);
+void   tools_free_levels  (Tool     *tool);
 
 void   levels_dialog_hide (void);
-void   levels_initialize (GDisplay *gdisp);
-void   levels_free       (void);
+void   levels_initialize  (GDisplay *gdisp);
+void   levels_free        (void);
+
 
 #endif  /*  __LEVELS_H__  */

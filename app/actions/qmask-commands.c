@@ -29,11 +29,12 @@
 #include "appenv.h" 
 #include "channel.h"
 #include "color_panel.h"
+#include "drawable.h"
 #include "floating_sel.h"
-#include "gdisplayF.h"
-#include "gimpcontext.h"
+#include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
+#include "gimpcontext.h"
 #include "gimpui.h"
 #include "global_edit.h"
 #include "qmask.h"
@@ -163,7 +164,7 @@ qmask_deactivate (GtkWidget *widget,
 	      the qmask_state to FALSE  */
 	  undo_push_qmask (gimg);
 	  gimage_mask_load (gimg, gmask);
-	  gimage_remove_channel (gimg, gmask);
+	  gimp_image_remove_channel (gimg, gmask);
 	  undo_push_group_end (gimg);
 	}
 
@@ -207,9 +208,9 @@ qmask_activate (GtkWidget *widget,
 
       undo_push_group_start (gimg, QMASK_UNDO);
 
-      if (gimage_mask_is_empty(gimg))
+      if (gimage_mask_is_empty (gimg))
 	{ 
-	  if ((layer = gimage_floating_sel (gimg)))
+	  if ((layer = gimp_image_floating_sel (gimg)))
 	    {
 	      floating_sel_to_layer (layer);
 	    }
@@ -217,7 +218,7 @@ qmask_activate (GtkWidget *widget,
 	  gmask = channel_new (gimg, 
 			       gimg->width, 
 			       gimg->height,
-			       "Qmask", 
+			       "Qmask",
 			       (gint)(255*opacity)/100,
 			       color);
 	  gimp_image_add_channel (gimg, gmask, 0);
@@ -225,7 +226,7 @@ qmask_activate (GtkWidget *widget,
 	}
       else 
 	{ /* if selection */
-	  gmask = channel_copy (gimage_get_mask (gimg));
+	  gmask = channel_copy (gimp_image_get_mask (gimg));
 	  gimp_image_add_channel (gimg, gmask, 0);
 	  channel_set_color (gmask, color);
 	  drawable_set_name (GIMP_DRAWABLE (gmask), "Qmask");
@@ -331,12 +332,12 @@ edit_qmask_query_ok_callback (GtkWidget *widget,
 			      gpointer   client_data) 
 {
   EditQmaskOptions *options;
-  Channel  *channel;
-  guchar   *tmpcolp;
-  guchar    tmpcol[3];
-  gboolean  update = FALSE;
-  gint      opacity;
-  gint      i;
+  Channel      *channel;
+  const guchar *tmpcolp;
+  guchar        tmpcol[3];
+  gboolean      update = FALSE;
+  gint          opacity;
+  gint          i;
   
   options = (EditQmaskOptions *) client_data;
   channel = gimp_image_get_channel_by_name (options->gimage, "Qmask");
@@ -348,7 +349,7 @@ edit_qmask_query_ok_callback (GtkWidget *widget,
         {
           update = TRUE;
         }
-      tmpcolp = channel_get_color(channel);
+      tmpcolp = channel_get_color (channel);
       for (i = 0; i < 3; i++)
 	{  /* don't update if color hasn't changed */
 	  tmpcol[i] = tmpcolp[i]; /* initialize to same values */

@@ -18,13 +18,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef __ERRORCONSOLE_H__
-#define __ERRORCONSOLE_H__
 
-void  error_console_add  (gchar *errormsg);
+#ifndef __ERROR_CONSOLE_H__
+#define __ERROR_CONSOLE_H__
+
+
+void   error_console_add  (gchar *errormsg);
 
 /* Free error_console (only for session-managment) */
-void  error_console_free (void);
+void   error_console_free (void);
 
 
-#endif /* __ERRORCONSOLE_H__ */
+#endif /* __ERROR_CONSOLE_H__ */

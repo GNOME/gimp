@@ -34,7 +34,10 @@
 #include "scale.h"
 #include "gimprc.h"
 
+#include "libgimp/gimphelpui.h"
+
 #include "libgimp/gimpintl.h"
+
 
 static void gdisplay_close_warning_callback  (GtkWidget *widget,
 					      gboolean   close,

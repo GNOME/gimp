@@ -19,7 +19,8 @@
 #ifndef  __COLOR_PICKER_H__
 #define  __COLOR_PICKER_H__
 
-#include "tools.h"
+
+extern gint col_value[5];
 
 
 gboolean   pick_color              (GimpImage    *gimage,
@@ -33,8 +34,6 @@ gboolean   pick_color              (GimpImage    *gimage,
 
 Tool     * tools_new_color_picker  (void);
 void       tools_free_color_picker (Tool *tool);
-
-extern gint col_value[5];
 
 
 #endif  /*  __COLOR_PICKER_H__  */

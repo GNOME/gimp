@@ -23,8 +23,6 @@
 #ifndef __GIMP_UNIT_MENU_H__
 #define __GIMP_UNIT_MENU_H__
 
-#include <libgimp/gimpunit.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -38,7 +36,6 @@ extern "C" {
 #define GIMP_IS_UNIT_MENU(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_UNIT_MENU))
 #define GIMP_IS_UNIT_MENU_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_UNIT_MENU))
 
-typedef struct _GimpUnitMenu       GimpUnitMenu;
 typedef struct _GimpUnitMenuClass  GimpUnitMenuClass;
 
 struct _GimpUnitMenu

@@ -19,8 +19,6 @@
 #ifndef __TEXT_TOOL_H__
 #define __TEXT_TOOL_H__
 
-#include "tools.h"
-
 
 typedef enum 
 {
@@ -30,9 +28,9 @@ typedef enum
 
 #define SUPERSAMPLE  3
 
-/*  text functions  */
+
 Tool      * tools_new_text   (void);
-void        tools_free_text  (Tool *);
+void        tools_free_text  (Tool         *tool);
 
 gboolean    text_get_extents (gchar        *fontname,
 			      gchar        *text,

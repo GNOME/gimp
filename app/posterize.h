@@ -15,15 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __POSTERIZE_H__
 #define __POSTERIZE_H__
 
-#include "tools.h"
 
 Tool * tools_new_posterize  (void);
 void   tools_free_posterize (Tool     *tool);
 
 void   posterize_dialog_hide (void);
 void   posterize_initialize (GDisplay *gdisp);
+
 
 #endif  /*  __POSTERIZE_H__  */

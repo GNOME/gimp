@@ -26,13 +26,16 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "gdisplay.h"
+#include "gimpimage.h"
 #include "gimprc.h"
 #include "gximage.h"
 #include "image_render.h"
 #include "pixel_region.h"
 #include "scale.h"
+#include "tile.h"
+#include "tile_manager.h"
 
-#include "tile.h"			/* ick. */
 
 typedef struct _RenderInfo  RenderInfo;
 typedef void (*RenderFunc) (RenderInfo *info);
@@ -230,11 +233,11 @@ render_image (GDisplay *gdisp,
 
   render_image_init_info (&info, gdisp, x, y, w, h);
 
-  image_type = gimage_projection_type (gdisp->gimage);
+  image_type = gimp_image_projection_type (gdisp->gimage);
   if ((image_type < 0) || (image_type > 5))
     {
       g_message ("unknown gimage projection type: %d",
-		 gimage_projection_type (gdisp->gimage));
+		 gimp_image_projection_type (gdisp->gimage));
       return;
     }
 
@@ -272,7 +275,7 @@ render_image_indexed (RenderInfo *info)
   float error;
   float step;
 
-  cmap = gimage_cmap (info->gdisp->gimage);
+  cmap = gimp_image_cmap (info->gdisp->gimage);
 
   y = info->y;
   ye = info->y + info->h;
@@ -344,7 +347,7 @@ render_image_indexed_a (RenderInfo *info)
   float error;
   float step;
 
-  cmap = gimage_cmap (info->gdisp->gimage);
+  cmap = gimp_image_cmap (info->gdisp->gimage);
   alpha = info->alpha;
 
   y = info->y;
@@ -725,7 +728,7 @@ render_image_init_info (RenderInfo *info,
 			int         h)
 {
   info->gdisp = gdisp;
-  info->src_tiles = gimage_projection (gdisp->gimage);
+  info->src_tiles = gimp_image_projection (gdisp->gimage);
   info->x = x + gdisp->offset_x;
   info->y = y + gdisp->offset_y;
   info->w = w;
@@ -734,7 +737,7 @@ render_image_init_info (RenderInfo *info,
   info->scaley = SCALEFACTOR_Y (gdisp);
   info->src_x = UNSCALEX (gdisp, info->x);
   info->src_y = UNSCALEY (gdisp, info->y);
-  info->src_bpp = gimage_projection_bytes (gdisp->gimage);
+  info->src_bpp = gimp_image_projection_bytes (gdisp->gimage);
   info->dest = gximage_get_data ();
   info->dest_bpp = gximage_get_bpp ();
   info->dest_bpl = gximage_get_bpl ();
@@ -743,12 +746,12 @@ render_image_init_info (RenderInfo *info,
   info->scale = render_image_accelerate_scaling (w, info->x, info->scalex);
   info->alpha = NULL;
 
-  switch (gimage_projection_type (gdisp->gimage))
+  switch (gimp_image_projection_type (gdisp->gimage))
     {
     case RGBA_GIMAGE:
     case GRAYA_GIMAGE:
     case INDEXEDA_GIMAGE:
-      info->alpha = render_image_init_alpha (gimage_projection_opacity (gdisp->gimage));
+      info->alpha = render_image_init_alpha (gimp_image_projection_opacity (gdisp->gimage));
       break;
     default:
       /* nothing special needs doing */

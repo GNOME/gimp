@@ -21,6 +21,8 @@
 #include <glib.h>
 
 #include "gimpenums.h"
+#include "gimptypes.h"
+
 #include "gimpparasite.h"
 #include "gimpprotocol.h"
 #include "gimpwire.h"

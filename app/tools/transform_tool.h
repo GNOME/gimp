@@ -15,8 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __TRANSFORM_TOOL_H__
 #define __TRANSFORM_TOOL_H__
+
 
 /*  transform directions  */
 #define TRANSFORM_TRADITIONAL 0
@@ -32,5 +34,6 @@ gboolean   transform_tool_clip	     (void);
 gint	   transform_tool_direction  (void);
 gint	   transform_tool_grid_size  (void);
 gboolean   transform_tool_show_grid  (void);
+
 
 #endif  /*  __TRANSFORM_TOOL_H__  */

@@ -15,33 +15,47 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __RECT_SELECT_H__
 #define __RECT_SELECT_H__
 
-#include "apptypes.h"
-#include "tools.h"
 
 /*  rect select action functions  */
-void   rect_select_button_press    (Tool *, GdkEventButton *, gpointer);
-void   rect_select_button_release  (Tool *, GdkEventButton *, gpointer);
-void   rect_select_motion          (Tool *, GdkEventMotion *, gpointer);
-void   rect_select_modifier_update (Tool *, GdkEventKey *   , gpointer);
-void   rect_select_cursor_update   (Tool *, GdkEventMotion *, gpointer);
-void   rect_select_oper_update     (Tool *, GdkEventMotion *, gpointer);
-void   rect_select_control         (Tool *, ToolAction,       gpointer);
+void   rect_select_button_press    (Tool           *tool,
+				    GdkEventButton *bevent,
+				    gpointer        gdisp_ptr);
+void   rect_select_button_release  (Tool           *tool,
+				    GdkEventButton *bevent,
+				    gpointer        gdisp_ptr);
+void   rect_select_motion          (Tool           *tool,
+				    GdkEventMotion *mevent,
+				    gpointer        gdisp_ptr);
+void   rect_select_modifier_update (Tool           *tool,
+				    GdkEventKey    *kevent,
+				    gpointer        gdisp_ptr);
+void   rect_select_cursor_update   (Tool           *tool,
+				    GdkEventMotion *mevent,
+				    gpointer        gdisp_ptr);
+void   rect_select_oper_update     (Tool           *tool,
+				    GdkEventMotion *mevent,
+				    gpointer        gdisp_ptr);
+void   rect_select_control         (Tool           *tool,
+				    ToolAction      tool_action,
+				    gpointer        gdisp_ptr);
 
 /*  rect select functions  */
-void   rect_select_draw            (Tool      *tool);
-void   rect_select                 (GimpImage *gimage,
-				    gint       x,
-				    gint       y,
-				    gint       w,
-				    gint       g,
-				    SelectOps  op,
-				    gboolean   feather,
-				    gdouble    feather_radius);
+void   rect_select_draw            (Tool           *tool);
+void   rect_select                 (GimpImage      *gimage,
+				    gint            x,
+				    gint            y,
+				    gint            w,
+				    gint            g,
+				    SelectOps       op,
+				    gboolean        feather,
+				    gdouble         feather_radius);
 
 Tool * tools_new_rect_select       (void);
-void   tools_free_rect_select      (Tool      *tool);
+void   tools_free_rect_select      (Tool           *tool);
+
 
 #endif  /*  __RECT_SELECT_H__  */

@@ -20,8 +20,9 @@
 
 #include <gtk/gtk.h>
 
+#include "apptypes.h"
+
 #include "drawable.h"
-#include "drawable_pvt.h"
 #include "gimpcontext.h"
 #include "gdisplay.h"
 #include "undo.h"

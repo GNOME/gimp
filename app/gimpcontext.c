@@ -25,13 +25,17 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "gdisplay.h"
 #include "gimpbrush.h"
 #include "gimpbrushlist.h"
 #include "gimpcontext.h"
 #include "gimprc.h"
 #include "gimpsignal.h"
 #include "gradient_header.h"
+#include "gradient.h"
 #include "patterns.h"
+#include "temp_buf.h"
+
 
 #define context_return_if_fail(context) \
         g_return_if_fail ((context) != NULL); \
@@ -381,7 +385,7 @@ gimp_context_destroy (GtkObject *object)
     }
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 
   context_list = g_slist_remove (context_list, context);
 }

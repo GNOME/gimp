@@ -20,16 +20,20 @@
 
 #include <gtk/gtk.h>
 
-#include "image_new.h"
+#include "apptypes.h"
 
 #include "appenv.h"
 #include "apptypes.h"
+#include "drawable.h"
 #include "gimprc.h"
 #include "file_new_dialog.h"
 #include "tile_manager_pvt.h"
 #include "gdisplay.h"
 #include "gimpcontext.h"
 #include "gimage.h"
+#include "image_new.h"
+#include "layer.h"
+#include "paint_funcs.h"
 
 #include "libgimp/gimpparasite.h"
 

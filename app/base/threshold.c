@@ -18,15 +18,23 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
+#include "gimphistogram.h"
+#include "gimpimage.h"
 #include "gimpui.h"
+#include "histogramwidget.h"
+#include "image_map.h"
+#include "paint_funcs.h"
+#include "pixel_region.h"
 #include "threshold.h"
+#include "tools.h"
+#include "tool_options.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -212,7 +220,7 @@ tools_free_threshold (Tool *tool)
 void
 threshold_initialize (GDisplay *gdisp)
 {
-  if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
+  if (drawable_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Threshold does not operate on indexed drawables."));
       return;
@@ -228,7 +236,7 @@ threshold_initialize (GDisplay *gdisp)
   threshold_dialog->low_threshold  = 127;
   threshold_dialog->high_threshold = 255;
 
-  threshold_dialog->drawable = gimage_active_drawable (gdisp->gimage);
+  threshold_dialog->drawable = gimp_image_active_drawable (gdisp->gimage);
   threshold_dialog->color = drawable_color (threshold_dialog->drawable);
   threshold_dialog->image_map =
     image_map_create (gdisp, threshold_dialog->drawable);

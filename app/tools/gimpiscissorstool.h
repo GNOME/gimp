@@ -15,10 +15,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __ISCISSORS_H__
 #define __ISCISSORS_H__
 
-Tool *        tools_new_iscissors    (void);
-void          tools_free_iscissors   (Tool *);
+
+Tool * tools_new_iscissors  (void);
+void   tools_free_iscissors (Tool *tool);
+
 
 #endif  /*  __ISCISSORS_H__  */

@@ -15,14 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __PATTERNS_H__
 #define __PATTERNS_H__
 
-#include <stdio.h>
-
-#include "temp_buf.h"
-
-typedef struct _GPattern GPattern;
 
 struct _GPattern
 {

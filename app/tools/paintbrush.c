@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
@@ -26,6 +26,9 @@
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimpbrushlist.h"
+#include "gimpbrush.h"
+#include "gimpcontext.h"
+#include "gimpimage.h"
 #include "gimpui.h"
 #include "gradient.h"
 #include "paint_funcs.h"
@@ -33,7 +36,9 @@
 #include "paint_options.h"
 #include "paintbrush.h"
 #include "selection.h"
+#include "temp_buf.h"
 #include "tools.h"
+#include "tool_options.h"
 
 #include "libgimp/gimpmath.h"
 #include "libgimp/gimpunitmenu.h"
@@ -103,10 +108,14 @@ static GimpUnit  non_gui_gradient_unit;
 
 
 /*  forward function declarations  */
-static void paintbrush_motion (PaintCore *, GimpDrawable *,
+static void paintbrush_motion (PaintCore *,
+			       GimpDrawable *,
 			       PaintPressureOptions *,
-			       double, double, PaintApplicationMode,
+			       gdouble,
+			       gdouble,
+			       PaintApplicationMode,
 			       GradientPaintMode);
+
 
 /*  functions  */
 
@@ -366,14 +375,14 @@ paintbrush_paint_func (PaintCore    *paint_core,
 #endif
   switch (state)
     {
-    case INIT_PAINT :
+    case INIT_PAINT:
 #if TIMED_BRUSH
       timer = g_timer_new();
       g_timer_start(timer);
 #endif /* TIMED_BRUSH */
       break;
 
-    case MOTION_PAINT :
+    case MOTION_PAINT:
       switch (paintbrush_options->fade_unit)
 	{
 	case GIMP_UNIT_PIXEL:
@@ -555,7 +564,7 @@ paintbrush_motion (PaintCore            *paint_core,
 	}
       else 
 	{
-	  gimage_get_foreground (gimage, drawable, col);
+	  gimp_image_get_foreground (gimage, drawable, col);
 	  col[area->bytes - 1] = OPAQUE_OPACITY;
 	  color_pixels (temp_buf_data (area), col,
 			area->width * area->height, area->bytes);

@@ -21,17 +21,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "by_color_select.h"
 #include "channel.h"
+#include "draw_core.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
+#include "gimage.h"
 #include "gimage_mask.h"
 #include "gimpparasite.h"
 #include "gimprc.h"
@@ -40,19 +42,18 @@
 #include "paint_funcs.h"
 #include "parasitelist.h"
 #include "path_transform.h"
+#include "pixel_region.h"
+#include "tile_manager.h"
+#include "tile_manager_pvt.h"
+#include "tile.h"
 #include "tools.h"
 #include "transform_core.h"
 #include "undo.h"
 
-#include "drawable_pvt.h"
-#include "layer_pvt.h"
-#include "channel_pvt.h"
-#include "tile_manager_pvt.h"
-#include "tile.h"			/* ick. */
-
 #include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
+
 
 
 /*#define DEBUG*/
@@ -1031,7 +1032,7 @@ undo_pop_mask (GImage     *gimage,
   mask_undo = (MaskUndo *) mask_ptr;
 
   /*  save current selection mask  */
-  sel_mask = gimage_get_mask (gimage);
+  sel_mask = gimp_image_get_mask (gimage);
   selection = channel_bounds (sel_mask, &x1, &y1, &x2, &y2);
   pixel_region_init (&srcPR, GIMP_DRAWABLE (sel_mask)->tiles,
 		     x1, y1, (x2 - x1), (y2 - y1), FALSE);
@@ -1452,9 +1453,9 @@ undo_pop_layer (GImage    *gimage,
       (state == REDO && type == LAYER_REMOVE_UNDO))
     {
       /*  record the current position  */
-      lu->prev_position = gimage_get_layer_index (gimage, lu->layer);
+      lu->prev_position = gimp_image_get_layer_index (gimage, lu->layer);
       /*  set the previous layer  */
-      gimage_set_active_layer (gimage, lu->prev_layer);
+      gimp_image_set_active_layer (gimage, lu->prev_layer);
 
       /*  remove the layer  */
       gimage->layers = g_slist_remove (gimage->layers, lu->layer);
@@ -1805,13 +1806,13 @@ undo_pop_channel (GImage    *gimage,
       (state == REDO && type == CHANNEL_REMOVE_UNDO))
     {
       /*  record the current position  */
-      cu->prev_position = gimage_get_channel_index (gimage, cu->channel);
+      cu->prev_position = gimp_image_get_channel_index (gimage, cu->channel);
 
       /*  remove the channel  */
       gimage->channels = g_slist_remove (gimage->channels, cu->channel);
 
       /*  set the previous channel  */
-      gimage_set_active_channel (gimage, cu->prev_channel);
+      gimp_image_set_active_channel (gimage, cu->prev_channel);
 
       /*  update the area  */
       drawable_update (GIMP_DRAWABLE (cu->channel), 0, 0, 
@@ -1829,7 +1830,7 @@ undo_pop_channel (GImage    *gimage,
 					 cu->prev_position);
 
       /*  set the new channel  */
-      gimage_set_active_channel (gimage, cu->channel);
+      gimp_image_set_active_channel (gimage, cu->channel);
 
       /*  update the area  */
       drawable_update (GIMP_DRAWABLE (cu->channel), 0, 0, 
@@ -2268,12 +2269,12 @@ undo_pop_gimage_mod (GImage    *gimage,
   data[2] = gimage->base_type;
   gimage->base_type = tmp;
 
-  gimage_projection_realloc (gimage);
+  gimp_image_projection_realloc (gimage);
 
   gimage_mask_invalidate (gimage);
   channel_invalidate_previews (gimage);
   layer_invalidate_previews (gimage);
-  gimage_invalidate_preview (gimage);
+  gimp_image_invalidate_preview (gimage);
   gdisplays_update_full (gimage);
   gdisplays_update_title (gimage);
 

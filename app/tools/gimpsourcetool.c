@@ -26,19 +26,26 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "draw_core.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpcontext.h"
+#include "gimpimage.h"
 #include "gimpui.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"
+#include "patterns.h"
+#include "pixel_region.h"
 #include "clone.h"
 #include "selection.h"
+#include "temp_buf.h"
 #include "tools.h"
 #include "cursorutil.h"
 
 #include "libgimp/gimpintl.h"
+
 
 #define TARGET_HEIGHT  15
 #define TARGET_WIDTH   15
@@ -325,7 +332,7 @@ clone_cursor_update (Tool           *tool,
   gdisplay_untransform_coords (gdisp, (double) mevent->x, (double) mevent->y,
 			       &x, &y, TRUE, FALSE);
  
-  if ((layer = gimage_get_active_layer (gdisp->gimage))) 
+  if ((layer = gimp_image_get_active_layer (gdisp->gimage))) 
     {
       int off_x, off_y;
       drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
@@ -602,8 +609,8 @@ clone_line_image (GImage        *dest,
 
   while (width--)
     {
-      gimage_get_color (src, drawable_type (s_drawable), rgb, s);
-      gimage_transform_color (dest, d_drawable, rgb, d, RGB);
+      gimp_image_get_color (src, drawable_type (s_drawable), rgb, s);
+      gimp_image_transform_color (dest, d_drawable, rgb, d, RGB);
 
       if (has_alpha)
 	d[dest_alpha] = s[src_alpha];
@@ -625,9 +632,9 @@ clone_line_pattern (GImage        *dest,
 		    int            bytes,
 		    int            width)
 {
-  unsigned char *pat, *p;
-  int color, alpha;
-  int i;
+  guchar *pat, *p;
+  gint    color, alpha;
+  gint    i;
 
   /*  Make sure x, y are positive  */
   while (x < 0)
@@ -646,7 +653,7 @@ clone_line_pattern (GImage        *dest,
     {
       p = pat + ((i + x) % pattern->mask->width) * pattern->mask->bytes;
 
-      gimage_transform_color (dest, drawable, p, d, color);
+      gimp_image_transform_color (dest, drawable, p, d, color);
 
       d[alpha] = OPAQUE_OPACITY;
 
@@ -659,7 +666,8 @@ clone_non_gui_paint_func (PaintCore *paint_core,
 			  GimpDrawable *drawable,
 			  int        state)
 {
-  clone_motion (paint_core, drawable, non_gui_src_drawable, &non_gui_pressure_options,
+  clone_motion (paint_core, drawable, non_gui_src_drawable,
+		&non_gui_pressure_options,
 		non_gui_type, non_gui_offset_x, non_gui_offset_y);
 
   return NULL;

@@ -19,9 +19,9 @@
 #ifndef __INVERT_H__
 #define __INVERT_H__
 
-/*  invert functions  */
-void  image_invert (GimpImage    *);
-void  invert       (GimpDrawable *);
+
+void  image_invert (GimpImage    *gimage);
+void  invert       (GimpDrawable *drawable);
 
 
 #endif  /*  __INVERT_H__  */

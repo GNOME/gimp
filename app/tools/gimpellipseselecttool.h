@@ -19,9 +19,6 @@
 #ifndef __ELLIPSE_SELECT_H__
 #define __ELLIPSE_SELECT_H__
 
-#include "tools.h"
-
-/*  ellipse select functions  */
 
 void   ellipse_select            (GimpImage *gimage,
 				  gint       x,
@@ -36,5 +33,6 @@ void   ellipse_select_draw       (Tool      *tool);
 
 Tool * tools_new_ellipse_select  (void);
 void   tools_free_ellipse_select (Tool      *tool);
+
 
 #endif  /*  __ELLIPSE_SELECT_H__  */

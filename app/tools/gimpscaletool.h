@@ -15,24 +15,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __SCALE_TOOL_H__
 #define __SCALE_TOOL_H__
 
-#include "tools.h"
-#include "transform_core.h"
 
-TileManager * scale_tool_transform (Tool           *tool,
-				    gpointer        gdisp_ptr,
-				    TransformState  state);
-TileManager * scale_tool_scale     (GimpImage      *gimage,
-				    GimpDrawable   *drawable,
-				    GDisplay       *gdisp,
-				    gdouble        *trans_info,
-				    TileManager    *float_tiles,
-				    gboolean        interpolation,
-				    GimpMatrix3     matrix);
+TileManager * scale_tool_transform  (Tool           *tool,
+				     gpointer        gdisp_ptr,
+				     TransformState  state);
+TileManager * scale_tool_scale      (GimpImage      *gimage,
+				     GimpDrawable   *drawable,
+				     GDisplay       *gdisp,
+				     gdouble        *trans_info,
+				     TileManager    *float_tiles,
+				     gboolean        interpolation,
+				     GimpMatrix3     matrix);
 
-Tool * tools_new_scale_tool  (void);
-void   tools_free_scale_tool (Tool *tool);
+Tool        * tools_new_scale_tool  (void);
+void          tools_free_scale_tool (Tool           *tool);
+
 
 #endif  /*  __SCALE_TOOL_H__  */

@@ -18,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #ifdef HAVE_UNISTD_H
@@ -26,8 +27,11 @@
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
+#include "sys/types.h"
 
 #include <gtk/gtk.h>
+
+#include "apptypes.h"
 
 #include "gimphelp.h"
 #include "gimprc.h"
@@ -36,6 +40,7 @@
 #include "procedural_db.h"
 
 #include "libgimp/gimpenv.h"
+#include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
 

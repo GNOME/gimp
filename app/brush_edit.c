@@ -30,7 +30,9 @@
 #include "gimpbrushgenerated.h"
 #include "brush_edit.h"
 #include "gimpui.h"
+#include "temp_buf.h"
 
+#include "libgimp/gimphelpui.h"
 #include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"

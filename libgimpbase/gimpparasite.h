@@ -42,8 +42,6 @@ extern "C" {
 #define GIMP_PARASITE_GRANDPARENT_UNDOABLE   (GIMP_PARASITE_UNDOABLE << 16)
 
 
-typedef struct _GimpParasite GimpParasite;
-
 struct _GimpParasite
 {
   gchar    *name;   /* The name of the parasite. USE A UNIQUE PREFIX! */

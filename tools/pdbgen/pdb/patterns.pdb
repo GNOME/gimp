@@ -211,7 +211,7 @@ CODE
     );
 }
 
-@headers = qw("gimpcontext.h" "patterns.h");
+@headers = qw("gimpcontext.h" "patterns.h" "temp_buf.h");
 
 @procs = qw(patterns_get_pattern patterns_set_pattern patterns_list
 	    patterns_get_pattern_data);

@@ -16,7 +16,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #define __DIALOG_HANDLER_C__ 1
+
+#include "config.h"
 
 #include <gtk/gtk.h>
 
@@ -26,13 +29,14 @@
 #include "cursorutil.h"
 #include "dialog_handler.h"
 
+
 /*  State of individual dialogs  */
 
 typedef enum
 {
-  INVISIBLE,
-  VISIBLE,
-  UNKNOWN
+  VISIBILITY_INVISIBLE,
+  VISIBILITY_VISIBLE,
+  VISIBILITY_UNKNOWN
 } VisibilityState;
 
 typedef struct _DialogState DialogState;
@@ -90,12 +94,12 @@ dialog_hide_all (void)
   
       if (GTK_WIDGET_VISIBLE (dstate->dialog))
 	{
-	  dstate->saved_state = VISIBLE;
+	  dstate->saved_state = VISIBILITY_VISIBLE;
 	  gtk_widget_hide (dstate->dialog);
 	}
       else
 	{
-	  dstate->saved_state = INVISIBLE;
+	  dstate->saved_state = VISIBILITY_INVISIBLE;
 	}
     }
 }
@@ -112,7 +116,8 @@ dialog_show_all (void)
     {
       dstate = (DialogState *) list->data;
 
-      if (dstate->saved_state == VISIBLE && !GTK_WIDGET_VISIBLE (dstate->dialog))
+      if (dstate->saved_state == VISIBILITY_VISIBLE &&
+	  !GTK_WIDGET_VISIBLE (dstate->dialog))
 	gtk_widget_show(dstate->dialog);
     }
 }
@@ -125,7 +130,7 @@ dialog_hide_toolbox (void)
   if (toolbox_shell && GTK_WIDGET_VISIBLE (toolbox_shell->dialog))
     {
       gtk_widget_hide (toolbox_shell->dialog);
-      toolbox_shell->saved_state = VISIBLE;
+      toolbox_shell->saved_state = VISIBILITY_VISIBLE;
     }
 }
 
@@ -135,7 +140,7 @@ void
 dialog_show_toolbox (void)
 {
   if (toolbox_shell && 
-      toolbox_shell->saved_state == VISIBLE && 
+      toolbox_shell->saved_state == VISIBILITY_VISIBLE && 
       !GTK_WIDGET_VISIBLE (toolbox_shell->dialog))
     {
       gtk_widget_show (toolbox_shell->dialog);
@@ -154,8 +159,8 @@ dialog_idle_all (void)
     {
       dstate = (DialogState *) list->data;
 
-      if(!GTK_IS_WIDGET(dstate->dialog) || 
-	 (GTK_WIDGET_VISIBLE(dstate->dialog) && !dstate->dialog->window))
+      if(!GTK_IS_WIDGET (dstate->dialog) || 
+	 (GTK_WIDGET_VISIBLE (dstate->dialog) && !dstate->dialog->window))
 	{
 	  g_warning("%s discovered non-widget thing %p in list of "
 		    "active_dialogs.  Calling dialog_unregister on it.\n",
@@ -163,7 +168,7 @@ dialog_idle_all (void)
 
 	  error_tmp_list.next=list->next;
 	  list=&error_tmp_list;
-	  dialog_unregister(dstate->dialog);
+	  dialog_unregister (dstate->dialog);
 	}
       else if(GTK_WIDGET_VISIBLE (dstate->dialog))
 	{
@@ -198,7 +203,7 @@ dialog_unidle_all (void)
       dstate = (DialogState *) list->data;
 
       if(!GTK_IS_WIDGET(dstate->dialog) || 
-	 (GTK_WIDGET_VISIBLE(dstate->dialog) && !dstate->dialog->window))
+	 (GTK_WIDGET_VISIBLE (dstate->dialog) && !dstate->dialog->window))
 	{
 	  g_warning("%s discovered non-widget thing %p in list of "
 		    "active_dialogs.  Calling dialog_unregister on it.\n",
@@ -236,7 +241,7 @@ dialog_register (GtkWidget *dialog)
   dstate = g_new (DialogState, 1);
 
   dstate->dialog      = dialog;
-  dstate->saved_state = UNKNOWN;
+  dstate->saved_state = VISIBILITY_UNKNOWN;
 
   active_dialogs = g_slist_append (active_dialogs, dstate);
 }
@@ -247,7 +252,7 @@ dialog_register_toolbox (GtkWidget *dialog)
   toolbox_shell = g_new (DialogState, 1);
 
   toolbox_shell->dialog      = dialog;
-  toolbox_shell->saved_state = UNKNOWN;
+  toolbox_shell->saved_state = VISIBILITY_UNKNOWN;
 }
 
 void
@@ -256,7 +261,7 @@ dialog_register_fileload (GtkWidget *dialog)
   fileload_shell = g_new (DialogState, 1);
 
   fileload_shell->dialog      = dialog;
-  fileload_shell->saved_state = UNKNOWN;
+  fileload_shell->saved_state = VISIBILITY_UNKNOWN;
 }
 
 /*  unregister dialog  */

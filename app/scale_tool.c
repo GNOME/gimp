@@ -18,17 +18,24 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "draw_core.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpimage.h"
+#include "gimpprogress.h"
+#include "gimpui.h"
 #include "info_dialog.h"
 #include "scale_tool.h"
 #include "selection.h"
+#include "tools.h"
+#include "tool_options.h"
+#include "transform_core.h"
 #include "transform_tool.h"
 #include "undo.h"
 
@@ -72,7 +79,7 @@ scale_tool_transform (Tool           *tool,
 
   switch (state)
     {
-    case INIT:
+    case TRANSFORM_INIT:
       size_vals[0] = transform_core->x2 - transform_core->x1;
       size_vals[1] = transform_core->y2 - transform_core->y1;
 
@@ -155,19 +162,19 @@ scale_tool_transform (Tool           *tool,
       return NULL;
       break;
 
-    case MOTION:
+    case TRANSFORM_MOTION:
       scale_tool_motion (tool, gdisp_ptr);
       scale_tool_recalc (tool, gdisp_ptr);
       break;
 
-    case RECALC:
+    case TRANSFORM_RECALC:
       scale_tool_recalc (tool, gdisp_ptr);
       break;
 
-    case FINISH:
+    case TRANSFORM_FINISH:
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
       return scale_tool_scale (gdisp->gimage,
-			       gimage_active_drawable (gdisp->gimage),
+			       gimp_image_active_drawable (gdisp->gimage),
 			       gdisp,
 			       transform_core->trans_info,
 			       transform_core->original,
@@ -341,14 +348,14 @@ scale_tool_motion (Tool *tool,
 
   switch (transform_core->function)
     {
-    case HANDLE_1:
+    case TRANSFORM_HANDLE_1:
       x1 = &transform_core->trans_info [X0];
       y1 = &transform_core->trans_info [Y0];
       x2 = &transform_core->trans_info [X1];
       y2 = &transform_core->trans_info [Y1];
       dir_x = dir_y = 1;
       break;
-    case HANDLE_2:
+    case TRANSFORM_HANDLE_2:
       x1 = &transform_core->trans_info [X1];
       y1 = &transform_core->trans_info [Y0];
       x2 = &transform_core->trans_info [X0];
@@ -356,7 +363,7 @@ scale_tool_motion (Tool *tool,
       dir_x = -1;
       dir_y = 1;
       break;
-    case HANDLE_3:
+    case TRANSFORM_HANDLE_3:
       x1 = &transform_core->trans_info [X0];
       y1 = &transform_core->trans_info [Y1];
       x2 = &transform_core->trans_info [X1];
@@ -364,7 +371,7 @@ scale_tool_motion (Tool *tool,
       dir_x = 1;
       dir_y = -1;
       break;
-    case HANDLE_4:
+    case TRANSFORM_HANDLE_4:
       x1 = &transform_core->trans_info [X1];
       y1 = &transform_core->trans_info [Y1];
       x2 = &transform_core->trans_info [X0];
@@ -454,22 +461,22 @@ scale_tool_recalc (Tool *tool,
 
   switch (transform_core->function)
     {
-    case HANDLE_1:
+    case TRANSFORM_HANDLE_1:
       cx = x2;  cy = y2;
       diffx = x2 - transform_core->x2;
       diffy = y2 - transform_core->y2;
       break;
-    case HANDLE_2:
+    case TRANSFORM_HANDLE_2:
       cx = x1;  cy = y2;
       diffx = x1 - transform_core->x1;
       diffy = y2 - transform_core->y2;
       break;
-    case HANDLE_3:
+    case TRANSFORM_HANDLE_3:
       cx = x2;  cy = y1;
       diffx = x2 - transform_core->x2;
       diffy = y1 - transform_core->y1;
       break;
-    case HANDLE_4:
+    case TRANSFORM_HANDLE_4:
       cx = x1;  cy = y1;
       diffx = x1 - transform_core->x1;
       diffy = y1 - transform_core->y1;

@@ -26,17 +26,23 @@
 
 #include "appenv.h"
 #include "cursorutil.h"
+#include "curves.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimphistogram.h"
+#include "gimpimage.h"
 #include "gimpui.h"
-#include "curves.h"
 #include "gimplut.h"
+#include "image_map.h"
+#include "tools.h"
+#include "tool_options.h"
 
 #include "libgimp/gimpenv.h"
+#include "libgimp/gimphelpui.h"
 #include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
+
 
 #define GRAPH          0x1
 #define XRANGE_TOP     0x2
@@ -284,7 +290,7 @@ curves_button_press (Tool           *tool,
   GimpDrawable *drawable;
 
   gdisp = gdisp_ptr;
-  drawable = gimage_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
   tool->gdisp_ptr = gdisp;
 
@@ -322,7 +328,7 @@ curves_button_release (Tool           *tool,
 
   if(!curves_dialog || 
      !gdisp || 
-     !(drawable = gimage_active_drawable (gdisp->gimage)))
+     !(drawable = gimp_image_active_drawable (gdisp->gimage)))
      return;
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
@@ -357,9 +363,9 @@ curves_motion (Tool           *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
 
-  if(!curves_dialog || 
-     !gdisp || 
-     !(drawable = gimage_active_drawable (gdisp->gimage)))
+  if (! curves_dialog ||
+      ! gdisp || 
+      ! (drawable = gimp_image_active_drawable (gdisp->gimage)))
      return;
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
@@ -443,7 +449,7 @@ curves_initialize (GDisplay *gdisp)
 {
   gint i, j;
 
-  if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
+  if (drawable_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Curves for indexed drawables cannot be adjusted."));
       return;
@@ -466,7 +472,7 @@ curves_initialize (GDisplay *gdisp)
       curves_channel_reset (i);
     }
 
-  curves_dialog->drawable  = gimage_active_drawable (gdisp->gimage);
+  curves_dialog->drawable  = gimp_image_active_drawable (gdisp->gimage);
   curves_dialog->color     = drawable_color (curves_dialog->drawable);
   curves_dialog->image_map = image_map_create (gdisp, curves_dialog->drawable);
 

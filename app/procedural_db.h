@@ -15,64 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __PROCEDURAL_DB_H__
 #define __PROCEDURAL_DB_H__
 
-#include <glib.h>
-
-#include "apptypes.h"
-
-/*  Procedural database types  */
-typedef enum
-{
-  PDB_INT32,
-  PDB_INT16,
-  PDB_INT8,
-  PDB_FLOAT,
-  PDB_STRING,
-  PDB_INT32ARRAY,
-  PDB_INT16ARRAY,
-  PDB_INT8ARRAY,
-  PDB_FLOATARRAY,
-  PDB_STRINGARRAY,
-  PDB_COLOR,
-  PDB_REGION,
-  PDB_DISPLAY,
-  PDB_IMAGE,
-  PDB_LAYER,
-  PDB_CHANNEL,
-  PDB_DRAWABLE,
-  PDB_SELECTION,
-  PDB_BOUNDARY,
-  PDB_PATH,
-  PDB_PARASITE,
-  PDB_STATUS,
-  PDB_END
-} PDBArgType;
-
-/*  Error types  */
-typedef enum
-{
-  PDB_EXECUTION_ERROR,
-  PDB_CALLING_ERROR,
-  PDB_PASS_THROUGH,
-  PDB_SUCCESS,
-  PDB_CANCEL
-} PDBStatusType;
-
-
-/*  Procedure types  */
-typedef enum /*< chop=PDB_ >*/
-{
-  PDB_INTERNAL,
-  PDB_PLUGIN,
-  PDB_EXTENSION,
-  PDB_TEMPORARY
-} PDBProcType;
-
-
-/*  Argument type  */
-typedef struct _Argument Argument;
 
 struct _Argument
 {
@@ -126,7 +72,6 @@ struct _NetExec
 
 
 /*  Structure for a procedure argument  */
-typedef struct _ProcArg ProcArg;
 
 struct _ProcArg
 {
@@ -137,8 +82,6 @@ struct _ProcArg
 
 
 /*  Structure for a procedure  */
-
-typedef struct _ProcRecord ProcRecord;
 
 struct _ProcRecord
 {

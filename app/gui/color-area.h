@@ -15,11 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __COLOR_AREA_H__
 #define __COLOR_AREA_H__
-
-
-#include "gdisplayF.h"
 
 
 #define FOREGROUND 0
@@ -54,5 +52,6 @@ void        color_area_draw_rect (GdkDrawable *drawable,
 				  guchar       r,
 				  guchar       g,
 				  guchar       b);
+
 
 #endif  /*  __COLOR_AREA_H__  */

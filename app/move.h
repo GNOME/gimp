@@ -15,12 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __MOVE_H__
 #define __MOVE_H__
 
-#include "tools.h"
-
-/*  move functions  */
 
 void   move_tool_start_hguide (Tool     *tool,
 			       GDisplay *gdisp);

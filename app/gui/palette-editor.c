@@ -39,10 +39,13 @@
 #include "color_area.h"
 #include "color_notebook.h"
 #include "datafiles.h"
+#include "dialog_handler.h"
+#include "gimage.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 #include "gimprc.h"
 #include "gimpui.h"
+#include "gradient.h"
 #include "gradient_header.h"
 #include "gradient_select.h"
 #include "palette.h"
@@ -50,7 +53,9 @@
 #include "palette_entries.h"
 #include "session.h"
 #include "palette_select.h"
-#include "dialog_handler.h"
+#include "pixel_region.h"
+#include "procedural_db.h"
+#include "temp_buf.h"
 
 #include "libgimp/gimpenv.h"
 
@@ -58,6 +63,7 @@
 
 #include "pixmaps/zoom_in.xpm"
 #include "pixmaps/zoom_out.xpm"
+
 
 #define ENTRY_WIDTH  12
 #define ENTRY_HEIGHT 10
@@ -2356,7 +2362,7 @@ palette_import_gimlist_indexed_cb (gpointer im,
   GimpImage *gimage = GIMP_IMAGE (im);
   GSList** l;
 
-  if (gimage_base_type (gimage) == INDEXED)
+  if (gimp_image_base_type (gimage) == INDEXED)
     {
       l = (GSList**) data;
       *l = g_slist_prepend (*l, im);
@@ -2440,7 +2446,7 @@ palette_import_image_sel_callback (GtkWidget *widget,
   palette_import_update_image_preview (gimage);
 
   lab = g_strdup_printf ("%s-%d",
-			 g_basename (gimage_filename (import_dialog->gimage)),
+			 g_basename (gimp_image_filename (import_dialog->gimage)),
 			 pdb_image_to_id (import_dialog->gimage));
 
   gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), lab);
@@ -2451,7 +2457,7 @@ palette_import_image_menu_add (GimpImage *gimage)
 {
   GtkWidget *menuitem;
   gchar *lab = g_strdup_printf ("%s-%d",
-				g_basename (gimage_filename (gimage)),
+				g_basename (gimp_image_filename (gimage)),
 				pdb_image_to_id (gimage));
   menuitem = gtk_menu_item_new_with_label (lab);
   gtk_widget_show (menuitem);
@@ -2546,7 +2552,7 @@ palette_import_image_menu_activate (gint        redo,
       if (redo && act_num >= 0)
         {
            gchar *lab = g_strdup_printf ("%s-%d",
-			 g_basename (gimage_filename (import_dialog->gimage)),
+			 g_basename (gimp_image_filename (import_dialog->gimage)),
 			 pdb_image_to_id (import_dialog->gimage));
 
            gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu1), act_num);
@@ -2556,7 +2562,7 @@ palette_import_image_menu_activate (gint        redo,
   g_slist_free (list);
 
   lab = g_strdup_printf ("%s-%d",
-			 g_basename (gimage_filename (import_dialog->gimage)),
+			 g_basename (gimp_image_filename (import_dialog->gimage)),
 			 pdb_image_to_id (import_dialog->gimage));
 
   gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), lab);
@@ -2647,7 +2653,7 @@ palette_import_image_new (GimpSet   *set,
     }
 
   if (!GTK_WIDGET_IS_SENSITIVE (import_dialog->image_menu_item_indexed) &&
-      gimage_base_type(gimage) == INDEXED)
+      gimp_image_base_type(gimage) == INDEXED)
     {
       gtk_widget_set_sensitive (import_dialog->image_menu_item_indexed, TRUE);
       return;
@@ -2937,15 +2943,15 @@ palette_import_create_from_image (GImage *gimage,
     return;
 
   /*  Get the image information  */
-  bytes = gimage_composite_bytes (gimage);
-  d_type = gimage_composite_type (gimage);
+  bytes = gimp_image_composite_bytes (gimage);
+  d_type = gimp_image_composite_type (gimage);
   has_alpha = (d_type == RGBA_GIMAGE ||
 	       d_type == GRAYA_GIMAGE ||
 	       d_type == INDEXEDA_GIMAGE);
   indexed = d_type == INDEXEDA_GIMAGE || d_type == INDEXED_GIMAGE;
   width = gimage->width;
   height = gimage->height;
-  pixel_region_init (&imagePR, gimage_composite (gimage), 0, 0,
+  pixel_region_init (&imagePR, gimp_image_composite (gimage), 0, 0,
 		     width, height, FALSE);
 
   alpha = bytes - 1;
@@ -2969,7 +2975,7 @@ palette_import_create_from_image (GImage *gimage,
 	  for (j = 0; j < imagePR.w; j++)
 	    {
 	      /*  Get the rgb values for the color  */
-	      gimage_get_color (gimage, d_type, rgb, idata);
+	      gimp_image_get_color (gimage, d_type, rgb, idata);
 	      memcpy (rgb_real, rgb, MAX_CHANNELS); /* Structure copy */
 
 	      rgb[0] = (rgb[0] / threshold) * threshold;
@@ -3005,7 +3011,7 @@ palette_import_create_from_indexed (GImage *gimage,
   if (gimage == NULL)
     return;
 
-  if (gimage_base_type (gimage) != INDEXED)
+  if (gimp_image_base_type (gimage) != INDEXED)
     return;
 
   entries = palette_entries_new (pname);

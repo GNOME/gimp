@@ -15,17 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef  __PATH_H__
 #define  __PATH_H__
 
-#include "bezier_select.h"
 
-typedef struct _Path      Path;
-typedef struct _PathPoint PathPoint;
-
-typedef GSList PathUndo;
-
-typedef struct 
+struct _PathList
 {
   GimpImage *gimage;
   GDisplay  *gdisp; /* This is a hack.. Needed so we can get back to 
@@ -40,7 +35,7 @@ typedef struct
   GSList    *bz_paths;  /* list of BZPATHP */
   guint      sig_id;
   gint32     last_selected_row;
-} PathList;
+};
 
 typedef enum 
 {

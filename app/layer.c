@@ -23,24 +23,26 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
+#include "apptypes.h"
+
+#include "boundary.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
-#include "gimage.h"
 #include "gimage_mask.h"
+#include "gimpimage.h"
 #include "layer.h"
 #include "paint_funcs.h"
+#include "pixel_region.h"
 #include "temp_buf.h"
 #include "parasitelist.h"
 #include "undo.h"
 #include "gimpsignal.h"
 #include "gimppreviewcache.h"
-
-#include "layer_pvt.h"
-#include "tile_manager_pvt.h"
-#include "tile.h"			/* ick. */
+#include "tile_manager.h"
+#include "tile.h"
 
 #include "libgimp/gimpmath.h"
 #include "libgimp/gimpparasite.h"
@@ -242,9 +244,9 @@ transform_color (GImage            *gimage,
 	{
 	  for (i = 0; i < layerPR->w; i++)
 	    {
-	      gimage_transform_color (gimage, drawable,
-				      s + (i * bufPR->bytes),
-				      d + (i * layerPR->bytes), type);
+	      gimp_image_transform_color (gimage, drawable,
+					  s + (i * bufPR->bytes),
+					  d + (i * layerPR->bytes), type);
 	      /*  copy alpha channel  */
 	      d[(i + 1) * layerPR->bytes - 1] = s[(i + 1) * bufPR->bytes - 1];
 	    }
@@ -449,7 +451,9 @@ layer_new_from_tiles (GimpImage        *gimage,
   g_return_val_if_fail (GIMP_IMAGE_TYPE_HAS_ALPHA (layer_type), NULL);
 
    /*  Create the new layer  */
-  new_layer = layer_new (0, tiles->width, tiles->height,
+  new_layer = layer_new (0,
+			 tile_manager_level_width (tiles),
+			 tile_manager_level_height (tiles),
 			 layer_type, name, opacity, mode);
 
   if (!new_layer)
@@ -467,17 +471,19 @@ layer_new_from_tiles (GimpImage        *gimage,
   pixel_region_init (&bufPR, tiles, 
 		     0, 0, 
 		     GIMP_DRAWABLE (new_layer)->width, 
-		     GIMP_DRAWABLE (new_layer)->height, 
+		     GIMP_DRAWABLE (new_layer)->height,
 		     FALSE);
 
-  if ((tiles->bpp == 4 && GIMP_DRAWABLE (new_layer)->type == RGBA_GIMAGE) ||
-      (tiles->bpp == 2 && GIMP_DRAWABLE (new_layer)->type == GRAYA_GIMAGE))
+  if ((tile_manager_level_bpp (tiles) == 4 &&
+       GIMP_DRAWABLE (new_layer)->type == RGBA_GIMAGE) ||
+      (tile_manager_level_bpp (tiles) == 2 &&
+       GIMP_DRAWABLE (new_layer)->type == GRAYA_GIMAGE))
     /*  If we want a layer the same type as the buffer  */
     copy_region (&bufPR, &layerPR);
   else
     /*  Transform the contents of the buf to the new_layer  */
     transform_color (gimage, &layerPR, &bufPR, GIMP_DRAWABLE (new_layer),
-		     (tiles->bpp == 4) ? RGB : GRAY);
+		     (tile_manager_level_bpp (tiles) == 4) ? RGB : GRAY);
   
   return new_layer;
 }
@@ -1069,8 +1075,8 @@ layer_resize (Layer *layer,
   else
     {
       unsigned char bg[3];
-      gimage_get_background (GIMP_DRAWABLE(layer)->gimage, 
-			     GIMP_DRAWABLE(layer), bg);
+      gimp_image_get_background (GIMP_DRAWABLE (layer)->gimage, 
+				 GIMP_DRAWABLE (layer), bg);
       color_region (&destPR, bg);
     }
   pixel_region_init (&destPR, new_tiles, 
@@ -1160,28 +1166,28 @@ layer_boundary (Layer *layer,
 	layer = GIMP_LAYER (layer->fs.drawable);
     }
 
-  new_segs[0].x1 = GIMP_DRAWABLE(layer)->offset_x;
-  new_segs[0].y1 = GIMP_DRAWABLE(layer)->offset_y;
-  new_segs[0].x2 = GIMP_DRAWABLE(layer)->offset_x;
-  new_segs[0].y2 = GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height;
+  new_segs[0].x1 = GIMP_DRAWABLE (layer)->offset_x;
+  new_segs[0].y1 = GIMP_DRAWABLE (layer)->offset_y;
+  new_segs[0].x2 = GIMP_DRAWABLE (layer)->offset_x;
+  new_segs[0].y2 = GIMP_DRAWABLE (layer)->offset_y + GIMP_DRAWABLE (layer)->height;
   new_segs[0].open = 1;
 
-  new_segs[1].x1 = GIMP_DRAWABLE(layer)->offset_x;
-  new_segs[1].y1 = GIMP_DRAWABLE(layer)->offset_y;
-  new_segs[1].x2 = GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width;
-  new_segs[1].y2 = GIMP_DRAWABLE(layer)->offset_y;
+  new_segs[1].x1 = GIMP_DRAWABLE (layer)->offset_x;
+  new_segs[1].y1 = GIMP_DRAWABLE (layer)->offset_y;
+  new_segs[1].x2 = GIMP_DRAWABLE (layer)->offset_x + GIMP_DRAWABLE (layer)->width;
+  new_segs[1].y2 = GIMP_DRAWABLE (layer)->offset_y;
   new_segs[1].open = 1;
 
-  new_segs[2].x1 = GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width;
-  new_segs[2].y1 = GIMP_DRAWABLE(layer)->offset_y;
-  new_segs[2].x2 = GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width;
-  new_segs[2].y2 = GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height;
+  new_segs[2].x1 = GIMP_DRAWABLE (layer)->offset_x + GIMP_DRAWABLE (layer)->width;
+  new_segs[2].y1 = GIMP_DRAWABLE (layer)->offset_y;
+  new_segs[2].x2 = GIMP_DRAWABLE (layer)->offset_x + GIMP_DRAWABLE (layer)->width;
+  new_segs[2].y2 = GIMP_DRAWABLE (layer)->offset_y + GIMP_DRAWABLE (layer)->height;
   new_segs[2].open = 0;
 
-  new_segs[3].x1 = GIMP_DRAWABLE(layer)->offset_x;
-  new_segs[3].y1 = GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height;
-  new_segs[3].x2 = GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width;
-  new_segs[3].y2 = GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height;
+  new_segs[3].x1 = GIMP_DRAWABLE (layer)->offset_x;
+  new_segs[3].y1 = GIMP_DRAWABLE (layer)->offset_y + GIMP_DRAWABLE (layer)->height;
+  new_segs[3].x2 = GIMP_DRAWABLE (layer)->offset_x + GIMP_DRAWABLE (layer)->width;
+  new_segs[3].y2 = GIMP_DRAWABLE (layer)->offset_y + GIMP_DRAWABLE (layer)->height;
   new_segs[3].open = 0;
 
   return new_segs;
@@ -1190,7 +1196,7 @@ layer_boundary (Layer *layer,
 void
 layer_invalidate_boundary (Layer *layer)
 {
-  GImage *gimage;
+  GImage  *gimage;
   Channel *mask;
 
   /*  first get the selection mask channel  */
@@ -1203,7 +1209,7 @@ layer_invalidate_boundary (Layer *layer)
   /*  clear the affected region surrounding the layer  */
   gdisplays_selection_visibility (gimage, SelectionLayerOff); 
 
-  mask = gimage_get_mask (gimage);
+  mask = gimp_image_get_mask (gimage);
 
   /*  Only bother with the bounds if there is a selection  */
   if (! channel_is_empty (mask))

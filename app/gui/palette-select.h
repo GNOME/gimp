@@ -15,8 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __PALETTE_SELECT_H__
 #define __PALETTE_SELECT_H__
+
 
 #define SM_PREVIEW_WIDTH  (96 + 2)
 #define SM_PREVIEW_HEIGHT (33 + 2)
@@ -31,11 +33,12 @@ struct _PaletteSelect
   gchar     *callback_name;
 };
 
-PaletteSelect * palette_select_new (gchar *title,
-				    gchar *initial_palette);
+PaletteSelect * palette_select_new              (gchar *title,
+						 gchar *initial_palette);
 
-void   palette_select_clist_insert_all (PaletteEntries *p_entries);
-void   palette_select_set_text_all     (PaletteEntries *entries);
-void   palette_select_refresh_all      (void);
+void            palette_select_clist_insert_all (PaletteEntries *p_entries);
+void            palette_select_set_text_all     (PaletteEntries *entries);
+void            palette_select_refresh_all      (void);
+
 
 #endif  /* __PALETTE_SELECT_H__ */

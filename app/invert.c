@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
@@ -28,6 +28,9 @@
 #include "gimage.h"
 #include "gimplut.h"
 #include "lut_funcs.h"
+#include "pixel_processor.h"
+#include "pixel_region.h"
+#include "procedural_db.h"
 
 #include "libgimp/gimpintl.h"
 

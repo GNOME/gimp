@@ -18,13 +18,16 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
+#include "gimpbrush.h"
+#include "gimpcontext.h"
+#include "gimpimage.h"
 #include "gradient.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
@@ -32,7 +35,9 @@
 #include "paintbrush.h"
 #include "pencil.h"
 #include "selection.h"
+#include "temp_buf.h"
 #include "tools.h"
+#include "tool_options.h"
 
 
 /*  the pencil tool options  */
@@ -180,7 +185,7 @@ pencil_motion (PaintCore            *paint_core,
     }
   else
     {
-      gimage_get_foreground (gimage, drawable, col);
+      gimp_image_get_foreground (gimage, drawable, col);
       col[area->bytes - 1] = OPAQUE_OPACITY;
       color_pixels (temp_buf_data (area), col,
 		    area->width * area->height, area->bytes);

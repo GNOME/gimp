@@ -412,7 +412,7 @@ CODE
     );
 }
 
-@headers = qw("fileops.h" "plug_in.h" "config.h" <unistd.h>);
+@headers = qw("fileops.h" "plug_in.h" <sys/types.h> <unistd.h>);
 
 @procs = qw(file_load file_save file_load_thumbnail file_save_thumbnail
 	    temp_name register_magic_load_handler register_load_handler

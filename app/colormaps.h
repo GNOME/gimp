@@ -15,10 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __COLORMAPS_H__
 #define __COLORMAPS_H__
 
-#include <gdk/gdk.h>
 
 extern GdkVisual   *g_visual;
 extern GdkColormap *g_cmap;
@@ -36,9 +36,10 @@ extern gulong g_active_guide_pixel;
 /*  Colormap entries reserved for color cycled marching ants--optional  */
 extern gulong marching_ants_pixels[8];
 
-gulong get_color              (int red,
-			       int green,
-			       int blue);
+gulong get_color              (gint red,
+			       gint green,
+			       gint blue);
 void   get_standard_colormaps (void);
+
 
 #endif  /*  __COLORMAPS_H__  */

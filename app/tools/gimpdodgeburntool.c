@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <gtk/gtk.h>
@@ -27,11 +28,14 @@
 #include "dodgeburn.h"
 #include "gdisplay.h"
 #include "gimplut.h"
+#include "gimpcontext.h"
 #include "gimpui.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"
+#include "pixel_region.h"
 #include "selection.h"
+#include "temp_buf.h"
 #include "tools.h"
 #include "gimage.h"
 

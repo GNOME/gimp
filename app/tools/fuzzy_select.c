@@ -26,26 +26,34 @@
 
 #include "appenv.h"
 #include "boundary.h"
+#include "channel.h"
 #include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "edit_selection.h"
 #include "fuzzy_select.h"
 #include "gimage_mask.h"
+#include "gimpimage.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "gdisplay.h"
+#include "pixel_region.h"
 #include "rect_select.h"
 #include "selection_options.h"
-
-#include "tile.h"			/* ick. */
+#include "tile_manager.h"
+#include "tile.h"
+#include "tools.h"
+#include "tool_options.h"
 
 #include "libgimp/gimpmath.h"
+
 #include "libgimp/gimpintl.h"
+
 
 /*  the fuzzy selection structures  */
 
 typedef struct _FuzzySelect FuzzySelect;
+
 struct _FuzzySelect
 {
   DrawCore *core;       /*  Core select object                      */
@@ -302,9 +310,9 @@ find_contiguous_region (GImage       *gimage,
 
   if (sample_merged)
     {
-      pixel_region_init (&srcPR, gimage_composite (gimage), 0, 0,
+      pixel_region_init (&srcPR, gimp_image_composite (gimage), 0, 0,
 			 gimage->width, gimage->height, FALSE);
-      type = gimage_composite_type (gimage);
+      type = gimp_image_composite_type (gimage);
       has_alpha = (type == RGBA_GIMAGE ||
 		   type == GRAYA_GIMAGE ||
 		   type == INDEXEDA_GIMAGE);
@@ -353,7 +361,7 @@ fuzzy_select (GImage       *gimage,
   gint off_x, off_y;
 
   /*  if applicable, replace the current selection  */
-  if (op == REPLACE)
+  if (op == CHANNEL_OP_REPLACE)
     gimage_mask_clear (gimage);
   else
     gimage_mask_undo (gimage);
@@ -364,12 +372,12 @@ fuzzy_select (GImage       *gimage,
     off_x = off_y = 0;
   
   if (feather)
-    channel_feather (fuzzy_mask, gimage_get_mask (gimage),
+    channel_feather (fuzzy_mask, gimp_image_get_mask (gimage),
 		     feather_radius,
 		     feather_radius,
 		     op, off_x, off_y);
   else
-    channel_combine_mask (gimage_get_mask (gimage),
+    channel_combine_mask (gimp_image_get_mask (gimage),
 			  fuzzy_mask, op, off_x, off_y);
 
   /*  free the fuzzy region struct  */
@@ -446,7 +454,7 @@ fuzzy_select_button_release (Tool           *tool,
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
       drawable = (fuzzy_options->sample_merged ?
-		  NULL : gimage_active_drawable (gdisp->gimage));
+		  NULL : gimp_image_active_drawable (gdisp->gimage));
 
       fuzzy_select (gdisp->gimage, drawable, fuzzy_sel->op,
 		    fuzzy_options->feather, 
@@ -531,7 +539,7 @@ fuzzy_select_calculate (Tool *tool,
 
   fuzzy_sel = (FuzzySelect *) tool->private;
   gdisp = (GDisplay *) gdisp_ptr;
-  drawable = gimage_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
   gimp_add_busy_cursors ();
 

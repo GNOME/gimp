@@ -21,16 +21,19 @@
 
 #include "config.h"
 
-#include <gmodule.h>
-#include <gtk/gtk.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include <gmodule.h>
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
+
 #include "color_notebook.h"
 #include "gimpui.h"
 
+#include "libgimp/gimphelpui.h"
 #include "libgimp/gimpcolorselector.h"
 
 #include "libgimp/gimpintl.h"

@@ -15,14 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __HISTOGRAM_TOOL_H__
 #define __HISTOGRAM_TOOL_H__
 
-#include "histogramwidget.h"
-#include "image_map.h"
-#include "tools.h"
 
-#define HISTOGRAM_WIDTH 256
+#define HISTOGRAM_WIDTH  256
 #define HISTOGRAM_HEIGHT 150
 
 typedef struct _HistogramToolDialog HistogramToolDialog;
@@ -60,5 +58,6 @@ void   histogram_tool_histogram_range (HistogramWidget *hw,
 				       gint             start,
 				       gint             end,
 				       gpointer         data);
+
 
 #endif /* __HISTOGRAM_TOOL_H__ */

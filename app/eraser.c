@@ -28,12 +28,15 @@
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpcontext.h"
+#include "gimpimage.h"
 #include "gimpui.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"
 #include "eraser.h"
 #include "selection.h"
+#include "temp_buf.h"
 #include "tools.h"
 
 #include "libgimp/gimpintl.h"
@@ -229,16 +232,16 @@ eraser_motion (PaintCore            *paint_core,
 	       gboolean              incremental,
 	       gboolean	             anti_erase)
 {
-  GImage *gimage;
-  gint opacity;
-  TempBuf * area;
-  unsigned char col[MAX_CHANNELS];
-  gdouble scale;
+  GImage  *gimage;
+  gint     opacity;
+  TempBuf *area;
+  guchar   col[MAX_CHANNELS];
+  gdouble  scale;
 
   if (! (gimage = drawable_gimage (drawable)))
     return;
 
-  gimage_get_background (gimage, drawable, col);
+  gimp_image_get_background (gimage, drawable, col);
 
   if (pressure_options->size)
     scale = paint_core->curpressure;

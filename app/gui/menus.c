@@ -31,6 +31,7 @@
 #include "commands.h"
 #include "dialog_handler.h"
 #include "fileops.h"
+#include "gimphelp.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "interface.h"

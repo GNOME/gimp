@@ -15,15 +15,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __MEASURE_H__
 #define __MEASURE_H__
 
-#include "tools.h"
 
-/*  measure functions  */
-
-Tool *        tools_new_measure_tool    (void);
-void          tools_free_measure_tool   (Tool *);
+Tool * tools_new_measure_tool  (void);
+void   tools_free_measure_tool (Tool *tool);
 
 
 #endif  /*  __MEASURE_H__  */

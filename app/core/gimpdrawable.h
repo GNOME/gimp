@@ -19,17 +19,49 @@
 #ifndef __GIMP_DRAWABLE_H__
 #define __GIMP_DRAWABLE_H__
 
-#include "apptypes.h"
+
 #include "gimpobject.h"
-#include "tile_manager.h"
-#include "temp_buf.h"
-
-#include "libgimp/gimpparasite.h"
 
 
-#define GIMP_TYPE_DRAWABLE     (gimp_drawable_get_type ())
-#define GIMP_DRAWABLE(obj)     (GTK_CHECK_CAST ((obj), GIMP_TYPE_DRAWABLE, GimpDrawable))
-#define GIMP_IS_DRAWABLE(obj)  (GTK_CHECK_TYPE ((obj), GIMP_TYPE_DRAWABLE))
+#define GIMP_TYPE_DRAWABLE            (gimp_drawable_get_type ())
+#define GIMP_DRAWABLE(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_DRAWABLE, GimpDrawable))
+#define GIMP_IS_DRAWABLE(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_DRAWABLE))
+#define GIMP_DRAWABLE_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE, GimpDrawableClass))
+#define GIMP_IS_DRAWABLE_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE))
+
+
+typedef struct _GimpDrawableClass GimpDrawableClass;
+
+struct _GimpDrawable
+{
+  GimpObject data;
+
+  gchar         *name;                  /* name of drawable               */
+  TileManager   *tiles;                 /* tiles for drawable data        */
+  gboolean       visible;               /* controls visibility            */
+  gint           width, height;		/* size of drawable               */
+  gint           offset_x, offset_y;	/* offset of layer in image       */
+
+  gint           bytes;			/* bytes per pixel                */
+  gint           ID;			/* provides a unique ID           */
+  guint32        tattoo;		/* provides a perminant ID        */
+  GimpImage     *gimage;		/* gimage owner                   */
+  GimpImageType  type;			/* type of drawable               */
+  gboolean       has_alpha;		/* drawable has alpha             */
+
+  ParasiteList  *parasites;             /* Plug-in parasite data          */
+
+  /*  Preview variables  */
+  GSList        *preview_cache;	       	/* preview caches of the channel  */
+  gboolean       preview_valid;		/* is the preview valid?          */
+};
+
+struct _GimpDrawableClass
+{
+  GimpObjectClass parent_class;
+
+  void (* invalidate_preview) (GimpDrawable *drawable);
+};
 
 
 /*  drawable access functions  */
@@ -93,5 +125,12 @@ void		gimp_drawable_deallocate         (GimpDrawable *);
 GimpImage *     gimp_drawable_gimage             (const GimpDrawable *drawable);
 void            gimp_drawable_set_gimage         (GimpDrawable       *drawable,
 						  GimpImage          *gimage);
+
+void            gimp_drawable_configure          (GimpDrawable       *drawable,
+						  GimpImage          *gimage,
+						  gint                width,
+						  gint                height,
+						  GimpImageType       type,
+						  const gchar        *name);
 
 #endif /* __GIMP_DRAWABLE_H__ */

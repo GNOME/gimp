@@ -36,4 +36,5 @@ void   palette_set_active_color (gint     r,
 				 gint     b,
 				 gint     state);
 
+
 #endif /* __PALETTE_H__ */

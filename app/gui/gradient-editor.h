@@ -18,10 +18,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GRADIENT_H__
 #define __GRADIENT_H__
 
-typedef struct _gradient_t gradient_t;
 
 /*  global variables  */
 extern GSList * gradients_list;
@@ -43,5 +43,6 @@ void         gradient_get_color_at            (gradient_t *gradient,
 					       gdouble    *g,
 					       gdouble    *b,
 					       gdouble    *a);
+
 
 #endif  /* __GRADIENT_H__ */

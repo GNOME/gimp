@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
@@ -28,8 +28,10 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "image_map.h"
+#include "paint_funcs.h"
+#include "pixel_region.h"
+#include "tile.h"
 #include "tile_manager.h"
-
 #include "tile_manager_pvt.h"
 
 

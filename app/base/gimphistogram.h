@@ -21,8 +21,6 @@
 #ifndef __GIMP_HISTOGRAM_H__
 #define __GIMP_HISTOGRAM_H__
 
-#include "pixel_region.h"
-#include "gimpdrawable.h"
 
 typedef enum
 {

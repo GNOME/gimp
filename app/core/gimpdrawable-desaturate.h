@@ -20,9 +20,8 @@
 #define __DESATURATE_H__
 
 
-/*  desaturate functions  */
-void  image_desaturate (GimpImage    *gimage);
-void  desaturate       (GimpDrawable *drawable);
+void   image_desaturate (GimpImage    *gimage);
+void   desaturate       (GimpDrawable *drawable);
 
 
 #endif  /*  __DESATURATE_H__  */

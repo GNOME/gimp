@@ -15,16 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __PENCIL_H__
 #define __PENCIL_H__
 
-#include "tools.h"
-#include "paint_core.h"
 
-void *        pencil_paint_func (PaintCore *, GimpDrawable *, int);
-gboolean      pencil_non_gui    (GimpDrawable *, int, double *);
+void     * pencil_paint_func (PaintCore    *,
+			      GimpDrawable *,
+			      gint          );
+gboolean   pencil_non_gui    (GimpDrawable *,
+			      gint          ,
+			      gdouble      *);
 
-Tool *        tools_new_pencil  (void);
-void          tools_free_pencil (Tool *);
+Tool     * tools_new_pencil  (void);
+void       tools_free_pencil (Tool         *tool);
+
 
 #endif  /*  __PENCIL_H__  */

@@ -28,11 +28,14 @@
 #include "gdisplay.h"
 #include "gradient.h"
 #include "gimage.h"
+#include "gimpbrush.h"
+#include "gimpcontext.h"
 #include "gimpui.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"
 #include "selection.h"
+#include "temp_buf.h"
 #include "tools.h"
 
 #include "libgimp/gimpintl.h"
@@ -295,10 +298,10 @@ airbrush_motion (PaintCore	      *paint_core,
 		 double		       pressure,
 		 PaintApplicationMode  mode)
 {
-  GImage *gimage;
-  TempBuf * area;
-  unsigned char col[MAX_CHANNELS];
-  gdouble scale;
+  GImage  *gimage;
+  TempBuf *area;
+  guchar   col[MAX_CHANNELS];
+  gdouble  scale;
 
   if (!drawable) 
     return;

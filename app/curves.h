@@ -19,9 +19,6 @@
 #ifndef __CURVES_H__
 #define __CURVES_H__
 
-#include "image_map.h"
-#include "lut_funcs.h"
-#include "tools.h"
 
 #define SMOOTH 0
 #define GFREE  1
@@ -63,16 +60,17 @@ struct _CurvesDialog
   GimpLut      *lut;
 };
 
-Tool * tools_new_curves       (void);
-void   tools_free_curves      (Tool         *tool);
+Tool  * tools_new_curves       (void);
+void    tools_free_curves      (Tool         *tool);
 
-void   curves_dialog_hide     (void);
-void   curves_initialize      (GDisplay     *gdisp);
-void   curves_free            (void);
-float  curves_lut_func        (CurvesDialog *cd,
-			       gint          nchannels,
-			       gint          channel,
-			       gfloat        value);
-void   curves_calculate_curve (CurvesDialog *cd);
+void    curves_dialog_hide     (void);
+void    curves_initialize      (GDisplay     *gdisp);
+void    curves_free            (void);
+gfloat  curves_lut_func        (CurvesDialog *cd,
+				gint          nchannels,
+				gint          channel,
+				gfloat        value);
+void    curves_calculate_curve (CurvesDialog *cd);
+
 
 #endif  /*  __CURVES_H__  */

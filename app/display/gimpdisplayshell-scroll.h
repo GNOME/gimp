@@ -15,28 +15,37 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __SCROLL_H__
 #define __SCROLL_H__
 
-#include "gdisplay.h"
 
 /*  app init and exit routines  */
-void init_scrolling (void);
-void free_scrolling (void);
+void   init_scrolling             (void);
+void   free_scrolling             (void);
 
 /*  routines for scrolling the image via the scrollbars  */
-void scrollbar_disconnect (GtkAdjustment *, gpointer);
-gint scrollbar_vert_update (GtkAdjustment *, gpointer);
-gint scrollbar_horz_update (GtkAdjustment *, gpointer);
+void   scrollbar_disconnect       (GtkAdjustment  *adjuatment,
+				   gpointer        data);
+gint   scrollbar_vert_update      (GtkAdjustment  *adjuatment,
+				   gpointer        data);
+gint   scrollbar_horz_update      (GtkAdjustment  *adjuatment,
+				   gpointer        data);
 
 /*  routines for grabbing the image and scrolling via the pointer  */
-void start_grab_and_scroll (GDisplay *, GdkEventButton *);
-void end_grab_and_scroll (GDisplay *, GdkEventButton *);
-void grab_and_scroll (GDisplay *, GdkEventMotion *);
-void scroll_to_pointer_position (GDisplay *, GdkEventMotion *);
+void   start_grab_and_scroll      (GDisplay       *gdisp,
+				   GdkEventButton *bevent);
+void   end_grab_and_scroll        (GDisplay       *gdisp,
+				   GdkEventButton *bevent);
+void   grab_and_scroll            (GDisplay       *gdisp,
+				   GdkEventMotion *mevent);
+void   scroll_to_pointer_position (GDisplay       *gdisp,
+				   GdkEventMotion *mevent);
 
 /* generic scroll-by-offset function */
-gint  scroll_display (GDisplay *, gint, gint);
+gint   scroll_display             (GDisplay       *,
+				   gint            ,
+				   gint            );
 
 
 #endif  /*  __SCROLL_H__  */

@@ -164,7 +164,7 @@ CODE
     );
 }
 
-@headers = qw("gimage.h" "convert.h");
+@headers = qw("gimage.h" "palette_entries.h" "convert.h");
 
 @procs = qw(convert_rgb convert_grayscale convert_indexed);
 %exports = (app => [@procs], lib => [@procs]);

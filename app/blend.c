@@ -33,16 +33,22 @@
 #include "errors.h"
 #include "fuzzy_select.h"
 #include "gdisplay.h"
+#include "gimpimage.h"
 #include "gimage_mask.h"
+#include "gimpcontext.h"
 #include "gimpdnd.h"
+#include "gimpprogress.h"
 #include "gimpui.h"
 #include "gradient.h"
+#include "paint_funcs.h"
 #include "paint_options.h"
+#include "pixel_region.h"
 #include "selection.h"
 #include "tools.h"
 #include "undo.h"
 
 #include "tile.h"
+#include "tile_manager.h"
 
 #include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimpmath.h"
@@ -434,7 +440,7 @@ blend_button_press (Tool           *tool,
   gdisp = (GDisplay *) gdisp_ptr;
   blend_tool = (BlendTool *) tool->private;
 
-  switch (drawable_type (gimage_active_drawable (gdisp->gimage)))
+  switch (drawable_type (gimp_image_active_drawable (gdisp->gimage)))
     {
     case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
       g_message (_("Blend: Invalid for indexed images."));
@@ -506,7 +512,7 @@ blend_button_release (Tool           *tool,
       return_vals = 
 	procedural_db_run_proc ("gimp_blend",
 				&nreturn_vals,
-				PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gimage)),
+				PDB_DRAWABLE, drawable_ID (gimp_image_active_drawable (gimage)),
 				PDB_INT32, (gint32) blend_options->blend_mode,
 				PDB_INT32, (gint32) PAINT_OPTIONS_GET_PAINT_MODE (blend_options),
 				PDB_INT32, (gint32) blend_options->gradient_type,
@@ -534,7 +540,7 @@ blend_button_release (Tool           *tool,
       progress = progress_start (gdisp, _("Blending..."), FALSE, NULL, NULL);
 
       blend (gimage,
-	     gimage_active_drawable (gimage),
+	     gimp_image_active_drawable (gimage),
 	     blend_options->blend_mode,
 	     gimp_context_get_paint_mode (NULL),
 	     blend_options->gradient_type,
@@ -642,7 +648,7 @@ blend_cursor_update (Tool           *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
 
-  switch (drawable_type (gimage_active_drawable (gdisp->gimage)))
+  switch (drawable_type (gimp_image_active_drawable (gdisp->gimage)))
     {
     case INDEXED_GIMAGE:
     case INDEXEDA_GIMAGE:
@@ -800,8 +806,8 @@ blend (GImage          *gimage,
 			progress_callback, progress_data);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable, &bufPR, TRUE,
-		      (opacity * 255) / 100, paint_mode, NULL, x1, y1);
+  gimp_image_apply_image (gimage, drawable, &bufPR, TRUE,
+			  (opacity * 255) / 100, paint_mode, NULL, x1, y1);
 
   /*  update the image  */
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
@@ -1186,14 +1192,14 @@ gradient_precalc_shapeburst (GImage       *gimage,
   if (! gimage_mask_is_empty (gimage))
     {
       PixelRegion maskR;
-      int x1, y1, x2, y2;
-      int offx, offy;
+      gint        x1, y1, x2, y2;
+      gint        offx, offy;
 
       drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
       drawable_offsets (drawable, &offx, &offy);
 
       /*  the selection mask  */
-      mask = gimage_get_mask (gimage);
+      mask = gimp_image_get_mask (gimage);
       pixel_region_init (&maskR, drawable_data (GIMP_DRAWABLE(mask)), 
 			 x1 + offx, y1 + offy, (x2 - x1), (y2 - y1), FALSE);
 

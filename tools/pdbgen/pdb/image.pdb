@@ -1014,7 +1014,6 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("layer_pvt.h") ],
 	vars => [ 'Layer *floating_sel' ],
 	code => <<'CODE'
 {
@@ -1433,7 +1432,7 @@ CODE
 }
 
 
-@headers = qw("config.h" <string.h> "gimage.h" 
+@headers = qw("config.h" <string.h> "gimage.h" "temp_buf.h"
 	      "libgimp/gimpmath.h" "libgimp/gimpintl.h" "libgimp/gimplimits.h");
 
 $extra{app}->{code} = <<'CODE';

@@ -22,11 +22,7 @@
 #define __GIMP_CONTEXT_H__
 
 
-#include "apptypes.h"
-#include "gdisplay.h"
-#include "gradient.h"
-#include "patterns.h"
-#include "toolsF.h"
+#include "gimpobject.h"
 
 
 #define GIMP_TYPE_CONTEXT            (gimp_context_get_type ())
@@ -77,7 +73,6 @@ typedef enum
                                  GIMP_CONTEXT_PAINT_ARGS_MASK
 } GimpContextArgMask;
 
-typedef struct _GimpContext GimpContext;
 typedef struct _GimpContextClass GimpContextClass;
 
 struct _GimpContext

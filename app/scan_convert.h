@@ -20,39 +20,41 @@
 #define SCAN_CONVERT_H
 
 
-typedef struct 
+struct _ScanConvertPoint
 {
   gdouble	x;
   gdouble	y;
-} ScanConvertPoint;
+};
 
 
 typedef struct ScanConverterPrivate ScanConverter;
 
 
 /* Create a new scan conversion context.  Set "antialias" to 1 for no
- * supersampling, or the amount to supersample by otherwise.  */
-ScanConverter * scan_converter_new (guint width, guint height,
-				    guint antialias);
+ * supersampling, or the amount to supersample by otherwise.
+ */
+ScanConverter * scan_converter_new        (guint             width,
+					   guint             height,
+					   guint             antialias);
 
+void            scan_converter_free       (ScanConverter    *scan_converter);
 
 /* Add "npoints" from "pointlist" to the polygon currently being
- * described by "scan_converter".  */
-void scan_converter_add_points (ScanConverter *scan_converter,
-				guint npoints,
-				ScanConvertPoint *pointlist);
+ * described by "scan_converter".
+ */
+void            scan_converter_add_points (ScanConverter    *scan_converter,
+					   guint             npoints,
+					   ScanConvertPoint *pointlist);
 
 
 /* Scan convert the polygon described by the list of points passed to
  * scan_convert_add_points, and return a channel with a bits set if
  * they fall within the polygon defined.  The polygon is filled
  * according to the even-odd rule.  The polygon is closed by
- * joining the final point to the initial point. */
-Channel * scan_converter_to_channel (ScanConverter *scan_converter,
-				     GimpImage *gimage);
-
-
-void scan_converter_free (ScanConverter *scan_converter);
+ * joining the final point to the initial point.
+ */
+Channel       * scan_converter_to_channel (ScanConverter    *scan_converter,
+					   GimpImage        *gimage);
 
 
 #endif /* SCAN_CONVERT_H */

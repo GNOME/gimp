@@ -15,19 +15,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __PAINTBRUSH_H__
 #define __PAINTBRUSH_H__
 
-#include "tools.h"
-#include "paint_core.h"
 
-void *        paintbrush_paint_func (PaintCore *, GimpDrawable *, int);
-gboolean      paintbrush_non_gui    (GimpDrawable *, int, double *, double,
-   				     int, double);
-gboolean      paintbrush_non_gui_default    (GimpDrawable *, int, 
-					     double *);
+void     * paintbrush_paint_func      (PaintCore    *,
+				       GimpDrawable *,
+				       gint          );
+gboolean   paintbrush_non_gui         (GimpDrawable *,
+				       gint          ,
+				       gdouble      *,
+				       gdouble       ,
+				       gint          ,
+				       gdouble       );
+gboolean   paintbrush_non_gui_default (GimpDrawable *,
+				       gint          , 
+				       gdouble      *);
 
-Tool *        tools_new_paintbrush   (void);
-void          tools_free_paintbrush  (Tool *);
+Tool     * tools_new_paintbrush       (void);
+void       tools_free_paintbrush      (Tool         *tool);
+
 
 #endif  /*  __PAINTBRUSH_H__  */

@@ -15,13 +15,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMAGE_MASK_H__
 #define __GIMAGE_MASK_H__
 
-#include "boundary.h"
-#include "gimage.h"
 
-/*  mask functions  */
 gboolean        gimage_mask_boundary      (GImage       *gimage,
 					   BoundSeg    **segs_in,
 					   BoundSeg    **segs_out,
@@ -94,5 +92,6 @@ Channel *       gimage_mask_save          (GImage       *gimage);
 
 gboolean        gimage_mask_stroke        (GImage       *gimage,
 					   GimpDrawable *drawable);
+
 
 #endif  /*  __GIMAGE_MASK_H__  */

@@ -27,11 +27,15 @@
 #include "drawable.h"
 #include "convolve.h"
 #include "gdisplay.h"
+#include "gimpbrush.h"
+#include "gimpcontext.h"
 #include "gimpui.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"
+#include "pixel_region.h"
 #include "selection.h"
+#include "temp_buf.h"
 #include "tools.h"
 #include "gimage.h"
 
@@ -344,7 +348,8 @@ convolve_motion (PaintCore            *paint_core,
 
   /* If the brush is smaller than the convolution matrix, don't convolve */
 
-  if((paint_core->brush->mask->width < matrix_size) || (paint_core->brush->mask->height < matrix_size))
+  if ((paint_core->brush->mask->width < matrix_size) ||
+      (paint_core->brush->mask->height < matrix_size))
     return;
 
   if (pressure_options->size)

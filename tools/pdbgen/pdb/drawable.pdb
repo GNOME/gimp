@@ -498,7 +498,7 @@ CODE
     );
 }
 
-@headers = qw("drawable.h");
+@headers = qw("drawable.h" "tile.h" "tile_manager.h" "temp_buf.h");
 
 @procs = qw(drawable_merge_shadow drawable_fill drawable_update
 	    drawable_mask_bounds drawable_image drawable_type

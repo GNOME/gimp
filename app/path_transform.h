@@ -15,16 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef  __PATH_TRANSFORM_H__
 #define  __PATH_TRANSFORM_H__
 
-#include "draw_core.h" 
-#include "gdisplayF.h" 
-#include "path.h"
 
-#include "libgimp/gimpmatrix.h"
-
-PathUndo*  path_transform_start_undo    (GimpImage   *gimage);
+PathUndo * path_transform_start_undo    (GimpImage   *gimage);
 void       path_transform_free_undo     (PathUndo    *pundo);
 void       path_transform_do_undo       (GimpImage   *gimage, 
 					 PathUndo    *pundo);
@@ -38,10 +34,9 @@ void       path_transform_draw_current  (GDisplay    *gimage,
 
 void       path_transform_flip_horz     (GimpImage   *gimage);
 void       path_transform_flip_vert     (GimpImage   *gimage);
-void       path_transform_xy            (GimpImage   *gimage, gint x, gint y);
+void       path_transform_xy            (GimpImage   *gimage,
+					 gint         x,
+					 gint         y);
+
 
 #endif  /*  __PATH_TRANSFORM_H__  */
-
-
-
-

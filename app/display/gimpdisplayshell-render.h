@@ -15,10 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __IMAGE_RENDER_H__
 #define __IMAGE_RENDER_H__
 
-#include "gdisplay.h"
 
 /*  Transparency representation  */
 
@@ -34,14 +34,14 @@
 #define LARGE_CHECKS    2
 
 /*  Functions  */
-void render_setup (int check_type,
-		   int check_size);
+void render_setup (gint      check_type,
+		   gint      check_size);
 void render_free  (void);
 void render_image (GDisplay *gdisp,
-		   int       x,
-		   int       y,
-		   int       w,
-		   int       h);
+		   gint      x,
+		   gint      y,
+		   gint      w,
+		   gint      h);
 
 /*
  *  Extern variables

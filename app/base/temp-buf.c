@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include <errno.h>
 #include <stdlib.h>
@@ -39,16 +39,20 @@
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
+#include "gimpimage.h"
 #include "gimprc.h"
 #include "paint_funcs.h"
+#include "pixel_region.h"
 #include "temp_buf.h"
 
 #include "libgimp/gimpcolorspace.h"
 
 
 static guchar * temp_buf_allocate (guint);
-static void     temp_buf_to_color (TempBuf *, TempBuf *);
-static void     temp_buf_to_gray  (TempBuf *, TempBuf *);
+static void     temp_buf_to_color (TempBuf *,
+				   TempBuf *);
+static void     temp_buf_to_gray  (TempBuf *,
+				   TempBuf *);
 
 
 /*  Memory management  */

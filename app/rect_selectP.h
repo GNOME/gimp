@@ -15,10 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __RECT_SELECTP_H__
 #define __RECT_SELECTP_H__
 
-#include "draw_core.h"
 
 typedef struct _RectSelect RectSelect, EllipseSelect;
 
@@ -42,5 +42,6 @@ struct _RectSelect
   gdouble     fixed_height;
   guint       context_id;   /*  for the statusbar  */
 };
+
 
 #endif  /*  __RECT_SELECTP_H__  */

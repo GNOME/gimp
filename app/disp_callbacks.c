@@ -15,11 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <stdlib.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
 #include "apptypes.h"
@@ -28,22 +29,30 @@
 #include "bucket_fill.h"
 #include "cursorutil.h"
 #include "devices.h"
+#include "dialog_handler.h"
 #include "disp_callbacks.h"
 #include "gdisplay.h"
+#include "gimage.h"
 #include "gimpcontext.h"
+#include "drawable.h"
 #include "gimprc.h"
 #include "info_window.h"
+#include "layer.h"
 #include "layer_select.h"
 #include "move.h"
+#include "paint_funcs.h"
 #include "patterns.h"
+#include "pixel_region.h"
 #include "scale.h"
 #include "scroll.h"
+#include "selection.h"
+#include "temp_buf.h"
+#include "tile_manager.h"
 #include "tools.h"
 #include "undo.h"
-#include "gimage.h"
-#include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
+
 
 /* Function declarations */
 
@@ -795,7 +804,7 @@ gdisplay_drag_drop (GtkWidget      *widget,
           src_height = gimp_drawable_height (drawable);
 
 	  /*  How many bytes in the temp buffer?  */
-	  switch (drawable_type (drawable))
+	  switch (gimp_drawable_type (drawable))
 	    {
 	    case RGB_GIMAGE: case RGBA_GIMAGE:
 	      bytes = 4; type = RGB;
@@ -815,7 +824,7 @@ gdisplay_drag_drop (GtkWidget      *widget,
 
 	  tiles = tile_manager_new (src_width, src_height, bytes);
 
-	  pixel_region_init (&srcPR, drawable_data (drawable),
+	  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
 			     0, 0, src_width, src_height, FALSE);
 	  pixel_region_init (&destPR, tiles,
 			     0, 0, src_width, src_height, TRUE);
@@ -823,8 +832,8 @@ gdisplay_drag_drop (GtkWidget      *widget,
 	  if (type == INDEXED)
 	    /*  If the layer is indexed...we need to extract pixels  */
 	    extract_from_region (&srcPR, &destPR, NULL,
-				 drawable_cmap (drawable), bg, type,
-				 drawable_has_alpha (drawable), FALSE);
+				 gimp_drawable_cmap (drawable), bg, type,
+				 gimp_drawable_has_alpha (drawable), FALSE);
 	  else if (bytes > srcPR.bytes)
 	    /*  If the layer doesn't have an alpha channel, add one  */
 	    add_alpha_region (&srcPR, &destPR);
@@ -918,13 +927,13 @@ gdisplay_bucket_fill (GtkWidget      *widget,
     }
   else
     {
-      if (((orig_pat_buf->bytes == 3) && !drawable_color (drawable)) ||
-	  ((orig_pat_buf->bytes == 1) && !drawable_gray (drawable)))
+      if (((orig_pat_buf->bytes == 3) && ! gimp_drawable_is_rgb (drawable)) ||
+	  ((orig_pat_buf->bytes == 1) && ! gimp_drawable_is_gray (drawable)))
 	{
 	  guchar *d1, *d2;
 	  gint size;
 
-	  if ((orig_pat_buf->bytes == 1) && drawable_color (drawable))
+	  if ((orig_pat_buf->bytes == 1) && gimp_drawable_is_rgb (drawable))
 	    pat_buf = temp_buf_new (orig_pat_buf->width, orig_pat_buf->height,
 				    3, 0, 0, NULL);
 	  else
@@ -951,9 +960,9 @@ gdisplay_bucket_fill (GtkWidget      *widget,
 	}
     }
 
-  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-  bytes = drawable_bytes (drawable);
-  has_alpha = drawable_has_alpha (drawable);
+  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+  bytes     = gimp_drawable_bytes (drawable);
+  has_alpha = gimp_drawable_has_alpha (drawable);
 
   /*  Fill the region  */
   buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), bytes);

@@ -19,7 +19,6 @@
 #include "config.h"
 
 #include <stdio.h>
-#include <glib.h>
 
 #include <glib.h>
 
@@ -30,6 +29,7 @@
 #include "gimphistogram.h"
 
 #include "libgimp/gimpmath.h"
+
 
 /* ---------- Brightness/Contrast -----------*/
 

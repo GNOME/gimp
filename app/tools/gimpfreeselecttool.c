@@ -21,21 +21,25 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "channel.h"
 #include "draw_core.h"
 #include "edit_selection.h"
 #include "errors.h"
 #include "floating_sel.h"
 #include "free_select.h"
 #include "gimage_mask.h"
+#include "gimpimage.h"
 #include "gdisplay.h"
 #include "rect_select.h"
 #include "selection_options.h"
 #include "scan_convert.h"
+#include "tools.h"
+#include "tool_options.h"
 
 #include "libgimp/gimpmath.h"
 
@@ -142,12 +146,12 @@ free_select (GImage           *gimage,
   if (mask)
     {
       if (feather)
-	channel_feather (mask, gimage_get_mask (gimage),
+	channel_feather (mask, gimp_image_get_mask (gimage),
 			 feather_radius,
 			 feather_radius,
 			 op, 0, 0);
       else
-	channel_combine_mask (gimage_get_mask (gimage),
+	channel_combine_mask (gimp_image_get_mask (gimage),
 			      mask, op, 0, 0);
       channel_delete (mask);
     }
@@ -219,8 +223,8 @@ free_select_button_release (Tool           *tool,
       if (free_sel->op == SELECTION_ANCHOR)
 	{
 	  /*  If there is a floating selection, anchor it  */
-	  if (gimage_floating_sel (gdisp->gimage))
-	    floating_sel_anchor (gimage_floating_sel (gdisp->gimage));
+	  if (gimp_image_floating_sel (gdisp->gimage))
+	    floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
 	  /*  Otherwise, clear the selection mask  */
 	  else
 	    gimage_mask_clear (gdisp->gimage);

@@ -27,20 +27,25 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "boundary.h"
 #include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "tools.h"
 #include "edit_selection.h"
 #include "floating_sel.h"
+#include "gimpimage.h"
 #include "gimage_mask.h"
-#include "gdisplay.h"
-#include "undo.h"
 #include "gimprc.h"
+#include "gdisplay.h"
+#include "layer.h"
 #include "path_transform.h"
+#include "selection.h"
+#include "undo.h"
+
+#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
-#include "libgimp/gimpmath.h"
 
 
 #define EDIT_SELECT_SCROLL_LOCK FALSE
@@ -49,6 +54,7 @@
 
 
 typedef struct _EditSelection EditSelection;
+
 struct _EditSelection
 {
   gint                origx, origy;      /*  last x and y coords             */
@@ -149,12 +155,13 @@ init_edit_selection (Tool           *tool,
 			&edit_select.num_segs_out);
 
   /*  Make a check to see if it should be a floating selection translation  */
-  if (edit_type == EDIT_MASK_TO_LAYER_TRANSLATE && gimage_floating_sel (gdisp->gimage))
+  if (edit_type == EDIT_MASK_TO_LAYER_TRANSLATE &&
+      gimp_image_floating_sel (gdisp->gimage))
     edit_type = EDIT_FLOATING_SEL_TRANSLATE;
 
   if (edit_type == EDIT_LAYER_TRANSLATE)
     {
-      layer = gimage_get_active_layer (gdisp->gimage);
+      layer = gimp_image_get_active_layer (gdisp->gimage);
       if (layer_is_floating_sel (layer))
 	edit_type = EDIT_FLOATING_SEL_TRANSLATE;
     }
@@ -175,7 +182,7 @@ init_edit_selection (Tool           *tool,
    *  where the translation will result in floating the selection
    *  mask and translating the resulting layer
    */
-  drawable_mask_bounds (gimage_active_drawable (gdisp->gimage),
+  drawable_mask_bounds (gimp_image_active_drawable (gdisp->gimage),
 			&edit_select.x1, &edit_select.y1,
 			&edit_select.x2, &edit_select.y2);
 
@@ -277,7 +284,7 @@ edit_selection_button_release (Tool           *tool,
 	  check if the layer is a floating selection.  If so, anchor. */
       if (edit_select.edit_type == EDIT_FLOATING_SEL_TRANSLATE)
 	{
-	  layer = gimage_get_active_layer (gdisp->gimage);
+	  layer = gimp_image_get_active_layer (gdisp->gimage);
 	  if (layer_is_floating_sel (layer))
 	    floating_sel_anchor (layer);
 	}
@@ -286,7 +293,7 @@ edit_selection_button_release (Tool           *tool,
     {
       path_transform_xy (gdisp->gimage, edit_select.cumlx, edit_select.cumly);
 
-      layer = gimage_get_active_layer (gdisp->gimage);
+      layer = gimp_image_get_active_layer (gdisp->gimage);
       gimp_drawable_invalidate_preview (GIMP_DRAWABLE (layer), TRUE);
     }
     
@@ -307,9 +314,9 @@ edit_selection_motion (Tool           *tool,
 		       GdkEventMotion *mevent,
 		       gpointer        gdisp_ptr)
 {
-  GDisplay * gdisp;
-  gchar offset[STATUSBAR_SIZE];
-  gdouble lastmotion_x, lastmotion_y;
+  GDisplay *gdisp;
+  gchar     offset[STATUSBAR_SIZE];
+  gdouble   lastmotion_x, lastmotion_y;
 
   if (tool->state != ACTIVE)
     {
@@ -368,7 +375,7 @@ edit_selection_motion (Tool           *tool,
 	    break;
 	
 	  case EDIT_LAYER_TRANSLATE:
-	    if ((floating_layer = gimage_floating_sel (gdisp->gimage)))
+	    if ((floating_layer = gimp_image_floating_sel (gdisp->gimage)))
 	      floating_sel_relax (floating_layer, TRUE);
       
 	    /*  translate the layer--and any "linked" layers as well  */
@@ -396,7 +403,7 @@ edit_selection_motion (Tool           *tool,
 	
 	  case EDIT_MASK_TO_LAYER_TRANSLATE:
 	    if (!gimage_mask_float (gdisp->gimage, 
-				    gimage_active_drawable (gdisp->gimage),
+				    gimp_image_active_drawable (gdisp->gimage),
 				    0, 0))
 	      {
 		/* no region to float, abort safely */
@@ -420,7 +427,7 @@ edit_selection_motion (Tool           *tool,
 	    break;
       
 	  case EDIT_FLOATING_SEL_TRANSLATE:
-	    layer = gimage_get_active_layer (gdisp->gimage);
+	    layer = gimp_image_get_active_layer (gdisp->gimage);
       
 	    floating_sel_relax (layer, TRUE);
 	    layer_translate (layer, xoffset, yoffset);
@@ -504,14 +511,14 @@ selection_transform_segs (GDisplay   *gdisp,
 void
 edit_selection_draw (Tool *tool)
 {
-  GDisplay * gdisp;
-  Selection * select;
-  Layer *layer;
-  GSList *layer_list;
-  gint floating_sel;
-  gint x1, y1, x2, y2;
-  gint x3, y3, x4, y4;
-  gint off_x, off_y;
+  GDisplay   *gdisp;
+  Selection  *select;
+  Layer      *layer;
+  GSList     *layer_list;
+  gint        floating_sel;
+  gint        x1, y1, x2, y2;
+  gint        x3, y3, x4, y4;
+  gint        off_x, off_y;
   GdkSegment *segs_copy;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
@@ -520,7 +527,7 @@ edit_selection_draw (Tool *tool)
   switch (edit_select.edit_type)
     {
     case EDIT_MASK_TRANSLATE:
-      layer = gimage_get_active_layer (gdisp->gimage);
+      layer = gimp_image_get_active_layer (gdisp->gimage);
       floating_sel = layer_is_floating_sel (layer);
 
       if (!floating_sel)
@@ -675,17 +682,17 @@ process_event_queue_keys (GdkEventKey *kevent,
  * by other tools? */
 {
 #define FILTER_MAX_KEYS 50
-  va_list argp;
-  GdkEvent *event;
-  GList *event_list = NULL;
-  GList *list;
-  guint keys[FILTER_MAX_KEYS];
-  GdkModifierType modifiers[FILTER_MAX_KEYS];
-  gint values[FILTER_MAX_KEYS];
-  gint i = 0, nkeys = 0, value = 0;
-  gboolean done = FALSE;
-  gboolean discard_event;
-  GtkWidget *orig_widget;
+  va_list          argp;
+  GdkEvent        *event;
+  GList           *event_list = NULL;
+  GList           *list;
+  guint            keys[FILTER_MAX_KEYS];
+  GdkModifierType  modifiers[FILTER_MAX_KEYS];
+  gint             values[FILTER_MAX_KEYS];
+  gint             i = 0, nkeys = 0, value = 0;
+  gboolean         done = FALSE;
+  gboolean         discard_event;
+  GtkWidget        *orig_widget;
 
   va_start (argp, kevent);
   while (nkeys <FILTER_MAX_KEYS && (keys[nkeys] = va_arg (argp, guint)) != 0)
@@ -765,12 +772,12 @@ edit_sel_arrow_keys_func (Tool        *tool,
 			  GdkEventKey *kevent,
 			  gpointer     gdisp_ptr)
 {
-  gint inc_x, inc_y, mask_inc_x, mask_inc_y;
+  gint      inc_x, inc_y, mask_inc_x, mask_inc_y;
   GDisplay *gdisp;
-  Layer *layer;
-  Layer *floating_layer;
-  GSList *layer_list;
-  EditType edit_type;
+  Layer    *layer;
+  Layer    *floating_layer;
+  GSList   *layer_list;
+  EditType  edit_type;
 
   layer = NULL;
 
@@ -816,7 +823,7 @@ edit_sel_arrow_keys_func (Tool        *tool,
 
   if (inc_x != 0 || inc_y != 0)
     {
-      layer = gimage_get_active_layer (gdisp->gimage);
+      layer = gimp_image_get_active_layer (gdisp->gimage);
  
       if (layer_is_floating_sel (layer))
 	edit_type = EDIT_FLOATING_SEL_TRANSLATE;
@@ -832,7 +839,7 @@ edit_sel_arrow_keys_func (Tool        *tool,
 
 	case EDIT_LAYER_TRANSLATE:
 	  
-	  if ((floating_layer = gimage_floating_sel (gdisp->gimage)))
+	  if ((floating_layer = gimp_image_floating_sel (gdisp->gimage)))
 	    floating_sel_relax (floating_layer, TRUE);
 	  
 	  /*  translate the layer -- and any "linked" layers as well  */

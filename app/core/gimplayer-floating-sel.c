@@ -18,11 +18,12 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "boundary.h"
 #include "drawable.h"
 #include "layer.h"
 #include "floating_sel.h"
@@ -30,9 +31,10 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "paint_funcs.h"
+#include "pixel_region.h"
+#include "tile_manager.h"
 #include "undo.h"
 
-#include "layer_pvt.h"
 #include "tile_manager_pvt.h"		/* ick. */
 
 #include "libgimp/gimpmath.h"

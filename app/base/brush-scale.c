@@ -16,25 +16,31 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <glib.h>
+
+#include "apptypes.h"
+
 #include "brush_scale.h"
+#include "temp_buf.h"
 
 
 MaskBuf *
 brush_scale_mask (MaskBuf *brush_mask,
-		  int      dest_width, 
-		  int      dest_height)
+		  gint     dest_width, 
+		  gint     dest_height)
 {
   MaskBuf *scale_brush;
-  int src_width;
-  int src_height;
-  int value;
-  int area;
-  int i, j;
-  int x, x0, y, y0;
-  int dx, dx0, dy, dy0;
-  int fx, fx0, fy, fy0;
-  unsigned char *src, *dest;
+  gint     src_width;
+  gint     src_height;
+  gint     value;
+  gint     area;
+  gint     i, j;
+  gint     x, x0, y, y0;
+  gint     dx, dx0, dy, dy0;
+  gint     fx, fx0, fy, fy0;
+  guchar  *src, *dest;
 
   g_return_val_if_fail (brush_mask != NULL &&
 			dest_width != 0 && dest_height != 0, NULL);
@@ -174,20 +180,20 @@ brush_scale_mask (MaskBuf *brush_mask,
 
 MaskBuf *
 brush_scale_pixmap (MaskBuf *pixmap,
-		    int      dest_width, 
-		    int      dest_height)
+		    gint     dest_width, 
+		    gint     dest_height)
 {
   MaskBuf *scale_brush;
-  int src_width;
-  int src_height;
-  int value[3];
-  int factor;
-  int area;
-  int i, j;
-  int x, x0, y, y0;
-  int dx, dx0, dy, dy0;
-  int fx, fx0, fy, fy0;
-  unsigned char *src, *src_ptr, *dest;
+  gint     src_width;
+  gint     src_height;
+  gint     value[3];
+  gint     factor;
+  gint     area;
+  gint     i, j;
+  gint     x, x0, y, y0;
+  gint     dx, dx0, dy, dy0;
+  gint     fx, fx0, fy, fy0;
+  guchar  *src, *src_ptr, *dest;
 
   g_return_val_if_fail (pixmap != NULL && pixmap->bytes == 3 &&
 			dest_width != 0 && dest_height != 0, NULL);

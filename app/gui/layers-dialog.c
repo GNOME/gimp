@@ -34,12 +34,15 @@
 #include "gimprc.h"
 #include "gimpui.h"
 #include "image_render.h"
+#include "layer.h"
 #include "layers_dialog.h"
 #include "layers_dialogP.h"
 #include "lc_dialogP.h"
 #include "menus.h"
 #include "ops_buttons.h"
+#include "paint_funcs.h"
 #include "resize.h"
+#include "temp_buf.h"
 #include "undo.h"
 
 #include "libgimp/gimplimits.h"
@@ -59,8 +62,6 @@
 #include "pixmaps/duplicate.xpm"
 #include "pixmaps/delete.xpm"
 #include "pixmaps/anchor.xpm"
-
-#include "layer_pvt.h"
 
 
 #define LAYER_PREVIEW 0

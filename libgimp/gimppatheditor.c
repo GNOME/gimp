@@ -20,14 +20,19 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <string.h>
 
 #include <gtk/gtk.h>
 
-#include "gimppatheditor.h"
+#include "gimptypes.h"
+#include "gimpuitypes.h"
 
-#include "libgimp/gimpfileselection.h"
-#include "libgimp/gimpwidgets.h"
+#include "gimppatheditor.h"
+#include "gimpfileselection.h"
+#include "gimpsizeentry.h"
+#include "gimpwidgets.h"
 
 #include "pixmaps/new.xpm"
 #include "pixmaps/delete.xpm"

@@ -36,7 +36,6 @@ extern "C" {
 #define GIMP_IS_PATH_EDITOR(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_PATH_EDITOR))
 #define GIMP_IS_PATH_EDITOR_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATH_EDITOR))
 
-typedef struct _GimpPathEditor       GimpPathEditor;
 typedef struct _GimpPathEditorClass  GimpPathEditorClass;
 
 struct _GimpPathEditor

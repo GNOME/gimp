@@ -30,9 +30,8 @@
 #ifdef HAVE_DIRENT_H
 #include <dirent.h>
 #endif
-#include <math.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
@@ -42,6 +41,7 @@
 #include "brush_header.h"
 #include "brush_select.h"
 #include "datafiles.h"
+#include "gimpcontext.h"
 #include "gimprc.h"
 #include "gimpsignal.h"
 #include "gimplist.h"
@@ -49,6 +49,7 @@
 #include "gimpbrushlist.h"
 
 #include "libgimp/gimpenv.h"
+#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
 

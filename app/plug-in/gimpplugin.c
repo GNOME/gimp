@@ -22,7 +22,7 @@
 #include <sys/param.h>
 #endif
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include <errno.h>
 #include <signal.h>
@@ -88,13 +88,14 @@
 #include "gdisplay.h"
 #include "general.h"
 #include "gimage.h"
+#include "gimpprogress.h"
 #include "gimprc.h"
 #include "gradient_select.h"
 #include "menus.h"
 #include "pattern_select.h"   /* Needed for closing pattern dialogs */
 #include "plug_in.h"
-
-#include "tile.h"			/* ick. */
+#include "tile.h"
+#include "tile_manager.h"
 
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimpprotocol.h"

@@ -15,9 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __INDICATOR_AREA_H__
 #define __INDICATOR_AREA_H__
 
+
 GtkWidget * indicator_area_create (void);
+
 
 #endif  /*  __INDICATOR_AREA_H__  */

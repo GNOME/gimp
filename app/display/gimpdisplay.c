@@ -26,6 +26,7 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "channel.h"
 #include "colormaps.h"
 #include "cursorutil.h"
 #include "disp_callbacks.h"
@@ -33,6 +34,7 @@
 #include "draw_core.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
+#include "gimage.h"
 #include "gimage_mask.h"
 #include "gimpcontext.h"
 #include "gimprc.h"
@@ -40,6 +42,7 @@
 #include "image_render.h"
 #include "info_window.h"
 #include "interface.h"
+#include "layer.h"
 #include "lc_dialog.h"
 #include "menus.h"
 #include "nav_window.h"
@@ -47,15 +50,16 @@
 #include "qmask.h"
 #include "scale.h"
 #include "scroll.h"
+#include "selection.h"
 #include "tools.h"
 #include "undo.h"
+
 
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color.h"
 #endif /* DISPLAY_FILTERS */
 
 #include "bezier_selectP.h"
-#include "layer_pvt.h"			/* ick. (not alone either) */
 
 #include "libgimp/gimpmath.h"
 
@@ -77,22 +81,42 @@ struct _GimpArea
 
 
 /* variable declarations */
-GSList *               display_list = NULL;
-static gint            display_num  = 1;
+GSList               * display_list            = NULL;
+static gint            display_num             = 1;
 static GdkCursorType   default_gdisplay_cursor = GDK_TOP_LEFT_ARROW;
 
 /*  Local functions  */
-static void       gdisplay_format_title       (GDisplay *, char *, int);
-static void       gdisplay_delete             (GDisplay *);
-static GSList *   gdisplay_free_area_list     (GSList *);
-static GSList *   gdisplay_process_area_list  (GSList *, GimpArea *);
-static void       gdisplay_add_update_area    (GDisplay *, int, int, int, int);
-static void       gdisplay_add_display_area   (GDisplay *, int, int, int, int);
-static void       gdisplay_paint_area         (GDisplay *, int, int, int, int);
-static void	  gdisplay_draw_cursor	      (GDisplay *);
-static void       gdisplay_display_area       (GDisplay *, int, int, int, int);
-static guint      gdisplay_hash               (GDisplay *);
-static void       gdisplay_cleandirty_handler (GimpImage *, void *);
+static void     gdisplay_format_title       (GDisplay  *,
+					     gchar     *,
+					     gint       );
+static void     gdisplay_delete             (GDisplay  *);
+static GSList * gdisplay_free_area_list     (GSList    *);
+static GSList * gdisplay_process_area_list  (GSList    *,
+					     GimpArea  *);
+static void     gdisplay_add_update_area    (GDisplay  *,
+					     gint       ,
+					     gint       ,
+					     gint       ,
+					     gint       );
+static void     gdisplay_add_display_area   (GDisplay  *,
+					     gint       ,
+					     gint       ,
+					     gint       ,
+					     gint       );
+static void     gdisplay_paint_area         (GDisplay  *,
+					     gint       ,
+					     gint       ,
+					     gint       ,
+					     gint       );
+static void	gdisplay_draw_cursor	    (GDisplay  *);
+static void     gdisplay_display_area       (GDisplay  *,
+					     gint       ,
+					     gint       ,
+					     gint       ,
+					     gint       );
+static guint    gdisplay_hash               (GDisplay  *);
+static void     gdisplay_cleandirty_handler (GimpImage *,
+					     gpointer   );
 
 
 static GHashTable *display_ht = NULL;
@@ -165,13 +189,13 @@ gdisplay_new (GimpImage *gimage,
 
   /*  create the shell for the image  */
   create_display_shell (gdisp, gimage->width, gimage->height,
-			title, gimage_base_type (gimage));
+			title, gimp_image_base_type (gimage));
 
   /* update the title to correct the initially displayed scale */
   gdisplay_update_title (gdisp);
 
   /*  set the gdisplay colormap type and install the appropriate colormap  */
-  gdisp->color_type = (gimage_base_type (gimage) == GRAY) ? GRAY : RGB;
+  gdisp->color_type = (gimp_image_base_type (gimage) == GRAY) ? GRAY : RGB;
 
   /* set the qmask buttons */
   qmask_buttons_update(gdisp);
@@ -237,9 +261,9 @@ gdisplay_format_title (GDisplay *gdisp,
 
   gimage = gdisp->gimage;
 
-  empty = gimage_is_empty (gimage);
+  empty = gimp_image_is_empty (gimage);
 
-  switch (gimage_base_type (gimage))
+  switch (gimp_image_base_type (gimage))
     {
     case RGB:
       image_type_str = (empty) ? _("RGB-empty") : _("RGB");
@@ -273,11 +297,11 @@ gdisplay_format_title (GDisplay *gdisp,
 
       case 'f': /* pruned filename */
 	  i += print (title, title_len, i,
-		      "%s", g_basename (gimage_filename (gimage)));
+		      "%s", g_basename (gimp_image_filename (gimage)));
 	  break;
 
       case 'F': /* full filename */
-	  i += print (title, title_len, i, "%s", gimage_filename (gimage));
+	  i += print (title, title_len, i, "%s", gimp_image_filename (gimage));
 	  break;
 
       case 'p': /* PDB id */
@@ -1271,7 +1295,7 @@ gdisplay_paint_area (GDisplay *gdisp,
   gdisplay_untransform_coords (gdisp, gdisp->disp_width, gdisp->disp_height,
 			       &x2, &y2, FALSE, FALSE);
 
-  gimage_invalidate (gdisp->gimage, x, y, w, h, x1, y1, x2, y2);
+  gimp_image_invalidate (gdisp->gimage, x, y, w, h, x1, y1, x2, y2);
 
     /*  display the area  */
   gdisplay_transform_coords (gdisp, x, y, &x1, &y1, FALSE);
@@ -1373,11 +1397,11 @@ gdisplay_display_area (GDisplay *gdisp,
 		      dx, dy);
 #if 0
 	    /* Invalidate the projection just after we render it! */
-	    gimage_invalidate_without_render (gdisp->gimage,
-					      j - gdisp->disp_xoffset,
-					      i - gdisp->disp_yoffset,
-					      dx, dy,
-					      0, 0, 0, 0);
+	    gimp_image_invalidate_without_render (gdisp->gimage,
+						  j - gdisp->disp_xoffset,
+						  i - gdisp->disp_yoffset,
+						  dx, dy,
+						  0, 0, 0, 0);
 #endif
 
 #ifdef DISPLAY_FILTERS
@@ -1422,10 +1446,10 @@ gdisplay_mask_bounds (GDisplay *gdisp,
   gint off_y;
 
   /*  If there is a floating selection, handle things differently  */
-  if ((layer = gimage_floating_sel (gdisp->gimage)))
+  if ((layer = gimp_image_floating_sel (gdisp->gimage)))
     {
       drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-      if (! channel_bounds (gimage_get_mask (gdisp->gimage), x1, y1, x2, y2))
+      if (! channel_bounds (gimp_image_get_mask (gdisp->gimage), x1, y1, x2, y2))
 	{
 	  *x1 = off_x;
 	  *y1 = off_y;
@@ -1440,7 +1464,7 @@ gdisplay_mask_bounds (GDisplay *gdisp,
 	  *y2 = MAX (off_y + drawable_height (GIMP_DRAWABLE (layer)), *y2);
 	}
     }
-  else if (! channel_bounds (gimage_get_mask (gdisp->gimage), x1, y1, x2, y2))
+  else if (! channel_bounds (gimp_image_get_mask (gdisp->gimage), x1, y1, x2, y2))
     return FALSE;
 
   gdisplay_transform_coords (gdisp, *x1, *y1, x1, y1, 0);
@@ -1474,7 +1498,8 @@ gdisplay_transform_coords (GDisplay *gdisp,
   scaley = SCALEFACTOR_Y (gdisp);
 
   if (use_offsets)
-    drawable_offsets (gimage_active_drawable (gdisp->gimage), &offset_x, &offset_y);
+    drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+		      &offset_x, &offset_y);
   else
     {
       offset_x = offset_y = 0;
@@ -1510,7 +1535,8 @@ gdisplay_untransform_coords (GDisplay *gdisp,
   scaley = SCALEFACTOR_Y (gdisp);
 
   if (use_offsets)
-    drawable_offsets (gimage_active_drawable (gdisp->gimage), &offset_x, &offset_y);
+    drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+		      &offset_x, &offset_y);
   else
     {
       offset_x = offset_y = 0;
@@ -1547,7 +1573,8 @@ gdisplay_transform_coords_f (GDisplay *gdisp,
   scaley = SCALEFACTOR_Y (gdisp);
 
   if (use_offsets)
-    drawable_offsets (gimage_active_drawable (gdisp->gimage), &offset_x, &offset_y);
+    drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+		      &offset_x, &offset_y);
   else
     {
       offset_x = offset_y = 0;
@@ -1582,7 +1609,8 @@ gdisplay_untransform_coords_f (GDisplay *gdisp,
   scaley = SCALEFACTOR_Y (gdisp);
 
   if (use_offsets)
-    drawable_offsets (gimage_active_drawable (gdisp->gimage), &offset_x, &offset_y);
+    drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+		      &offset_x, &offset_y);
   else
     {
       offset_x = offset_y = 0;
@@ -1718,27 +1746,27 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
 
   if (gdisp)
     {
-      base_type = gimage_base_type (gdisp->gimage);
+      base_type = gimp_image_base_type (gdisp->gimage);
 
-      fs  = (gimage_floating_sel (gdisp->gimage) != NULL);
-      aux = (gimage_get_active_channel (gdisp->gimage) != NULL);
+      fs  = (gimp_image_floating_sel (gdisp->gimage) != NULL);
+      aux = (gimp_image_get_active_channel (gdisp->gimage) != NULL);
       lp  = (gdisp->gimage->layers != NULL);
 
-      drawable = gimage_active_drawable (gdisp->gimage);
+      drawable = gimp_image_active_drawable (gdisp->gimage);
       if (drawable)
 	type = drawable_type (drawable);
 
       if (lp)
 	{
-	  layer = gimage_get_active_layer (gdisp->gimage);
+	  layer = gimp_image_get_active_layer (gdisp->gimage);
 	  if (layer)
 	    {
 	      lm    = layer_get_mask (layer) ? TRUE : FALSE;
 	      alpha = layer_has_alpha (layer);
 	    }
 
-	  lind = gimage_get_layer_index (gdisp->gimage,
-					 gdisp->gimage->active_layer);
+	  lind = gimp_image_get_layer_index (gdisp->gimage,
+					     gdisp->gimage->active_layer);
 	  lnum = g_slist_length (gdisp->gimage->layers);
 	}
     }

@@ -19,15 +19,17 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
+
 #include "gimpui.h"
 #include "palette_entries.h"
 #include "palette_select.h"
 #include "paletteP.h"
 
 #include "libgimp/gimpintl.h"
+
 
 /*  List of active dialogs  */
 static GSList *active_dialogs = NULL;

@@ -15,17 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __FUZZY_SELECT_H__
 #define __FUZZY_SELECT_H__
 
-#include "gimage.h"
-#include "tools.h"
 
 extern Channel *fuzzy_mask;
 
+
 /*  fuzzy select functions  */
 Tool    * tools_new_fuzzy_select  (void);
-void      tools_free_fuzzy_select (Tool *tool);
+void      tools_free_fuzzy_select (Tool         *tool);
 
 /*  functions  */
 Channel * find_contiguous_region  (GimpImage    *gimage,
@@ -40,5 +40,6 @@ void      fuzzy_select            (GimpImage    *gimage,
 				   gint          op,
 				   gboolean      feather,
 				   gdouble       feather_radius);
+
 
 #endif  /* __FUZZY_SELECT_H__ */

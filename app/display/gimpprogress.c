@@ -30,7 +30,8 @@
 #include "libgimp/gimpintl.h"
 
 
-struct gimp_progress_pvt {
+struct gimp_progress_pvt
+{
   GDisplay      *gdisp;             /* gdisp in use, or NULL*/
 
   /* next four fields are only valid if gdisp is NULL */

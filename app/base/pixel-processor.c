@@ -20,45 +20,53 @@
 
 #include "config.h"
 
-#include "pixel_processor.h"
-#include "pixel_region.h"
-#include "gimprc.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 
 #ifdef ENABLE_MP
-
 #include <pthread.h>
-
 #define IF_THREAD(statement) statement
-
 #else /* !ENABLE_MP */
-
 #define IF_THREAD(statement)
-
 #endif /* ENABLE_MP */
 
+#include <gtk/gtk.h>
+
+#include <apptypes.h>
+
+#include "pixel_processor.h"
+#include "pixel_region.h"
+#include "gimprc.h"
 
 
-typedef void (*p1_func)(void *, PixelRegion *);
-typedef void (*p2_func)(void *, PixelRegion * ,PixelRegion *);
-typedef void (*p3_func)(void *, PixelRegion * ,PixelRegion *, PixelRegion *);
-typedef void (*p4_func)(void *, PixelRegion * ,PixelRegion *, PixelRegion *,
-			PixelRegion *);
+typedef void (* p1_func) (gpointer     ,
+			  PixelRegion *);
+typedef void (* p2_func) (gpointer     ,
+			  PixelRegion * ,
+			  PixelRegion *);
+typedef void (* p3_func) (gpointer     ,
+			  PixelRegion *,
+			  PixelRegion *,
+			  PixelRegion *);
+typedef void (* p4_func) (gpointer     ,
+			  PixelRegion *,
+			  PixelRegion *,
+			  PixelRegion *,
+			  PixelRegion *);
 
 struct _PixelProcessor
 {
-  void *data;
-  p_func f;
+  gpointer             data;
+  p_func               f;
   PixelRegionIterator *PRI;
   IF_THREAD(pthread_mutex_t mutex;)
-  int nthreads;
-  int n_regions;
-  PixelRegion *r[4];
+  gint                 nthreads;
+  gint                 n_regions;
+  PixelRegion         *r[4];
 
-  void *progress_report_data;
-  ProgressReportFunc progress_report_func;
+  void                *progress_report_data;
+  ProgressReportFunc   progress_report_func;
 };
 
 IF_THREAD(

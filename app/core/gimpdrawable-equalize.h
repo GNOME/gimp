@@ -20,11 +20,10 @@
 #define __EQUALIZE_H__
 
 
-/*  equalize functions  */
-void  image_equalize (GimpImage    *gimage);
-void  equalize       (GimpImage    *gimage,
-		      GimpDrawable *drawable,
-		      gboolean      mask_only);
+void   image_equalize (GimpImage    *gimage);
+void   equalize       (GimpImage    *gimage,
+		       GimpDrawable *drawable,
+		       gboolean      mask_only);
 
 
 #endif  /*  __INVERT_H__  */

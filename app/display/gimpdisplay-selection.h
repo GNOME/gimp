@@ -15,12 +15,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __SELECTION_H__
 #define __SELECTION_H__
 
-typedef struct _selection Selection;
-
-struct _selection
+struct _Selection
 {
   /*  This information is for maintaining the selection's appearance  */
   GdkWindow *   win;             /*  Window to draw to                 */
@@ -33,37 +32,44 @@ struct _selection
   GdkSegment *  segs_in;         /*  gdk segments of area boundary     */
   GdkSegment *  segs_out;        /*  gdk segments of area boundary     */
   GdkSegment *  segs_layer;      /*  gdk segments of area boundary     */
-  int           num_segs_in;     /*  number of segments in segs1       */
-  int           num_segs_out;    /*  number of segments in segs2       */
-  int           num_segs_layer;  /*  number of segments in segs3       */
-  int           index_in;        /*  index of current stipple pattern  */
-  int           index_out;       /*  index of current stipple pattern  */
-  int           index_layer;     /*  index of current stipple pattern  */
-  int           state;           /*  internal drawing state            */
-  int           paused;          /*  count of pause requests           */
-  int           recalc;          /*  flag to recalculate the selection */
-  int           speed;           /*  speed of marching ants            */
-  int           hidden;          /*  is the selection hidden?          */
+  gint          num_segs_in;     /*  number of segments in segs1       */
+  gint          num_segs_out;    /*  number of segments in segs2       */
+  gint          num_segs_layer;  /*  number of segments in segs3       */
+  gint          index_in;        /*  index of current stipple pattern  */
+  gint          index_out;       /*  index of current stipple pattern  */
+  gint          index_layer;     /*  index of current stipple pattern  */
+  gint          state;           /*  internal drawing state            */
+  gint          paused;          /*  count of pause requests           */
+  gint          recalc;          /*  flag to recalculate the selection */
+  gint          speed;           /*  speed of marching ants            */
+  gint          hidden;          /*  is the selection hidden?          */
   gint          timer;           /*  timer for successive draws        */
-  int           cycle;           /*  color cycling turned on           */
+  gint          cycle;           /*  color cycling turned on           */
   GdkPixmap *   cycle_pix;       /*  cycling pixmap                    */
 
   /* These are used only if USE_XDRAWPOINTS is defined. */
   GdkPoint *    points_in[8];    /*  points of segs_in for fast ants   */
-  int           num_points_in[8]; /* number of points in points_in     */
+  gint          num_points_in[8]; /* number of points in points_in     */
   GdkGC *       gc_white;        /*  gc for drawing white points       */
   GdkGC *       gc_black;        /*  gc for drawing black points       */
 };
 
 /*  Function declarations  */
 
-Selection *  selection_create          (GdkWindow *, gpointer, int, int, int);
+Selection *  selection_create          (GdkWindow *,
+					gpointer   ,
+					gint       ,
+					gint       ,
+					gint       );
 void         selection_pause           (Selection *);
 void         selection_resume          (Selection *);
-void         selection_start           (Selection *, int);
+void         selection_start           (Selection *,
+					gint       );
 void         selection_invis           (Selection *);
 void         selection_layer_invis     (Selection *);
-void         selection_hide            (Selection *, void *);
+void         selection_hide            (Selection *,
+					gpointer   );
 void         selection_free            (Selection *);
+
 
 #endif  /*  __SELECTION_H__  */

@@ -19,8 +19,6 @@
 #ifndef __GRADIENT_SELECT_H__
 #define __GRADIENT_SELECT_H__
 
-#include "gimpcontext.h"
-
 
 #define GRADIENT_SAMPLE_SIZE 40
 
@@ -67,5 +65,6 @@ void             gradients_check_dialogs   (void);
 /*  the main gradient selection  */
 void             gradient_dialog_create    (void);
 void             gradient_dialog_free      (void);
+
 
 #endif  /*  __GRADIENT_SELECT_H__  */

@@ -41,17 +41,26 @@
  *
  */
 
+#include "config.h"
+
 #include <gtk/gtk.h>
+
+#include "apptypes.h"
+
+#include "dialog_handler.h"
+#include "drawable.h"
 #include "gimprc.h"
 #include "gimpui.h"
+#include "gimage_mask.h"
+#include "gimpimage.h"
+#include "paint_funcs.h"
+#include "pixel_region.h"
 #include "temp_buf.h"
 #include "undo.h"
-#include "gimage_mask.h"
-#include "dialog_handler.h"
 
-#include "config.h"
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimplimits.h"
+
+#include "libgimp/gimpintl.h"
 
 #include "pixmaps/raise.xpm"
 #include "pixmaps/lower.xpm"
@@ -152,7 +161,7 @@ mask_render_preview (GImage        *gimage,
   gint width, height;
   gint scale;
 
-  mask = gimage_get_mask (gimage);
+  mask = gimp_image_get_mask (gimage);
   if ((drawable_width (GIMP_DRAWABLE(mask)) > *pwidth) ||
       (drawable_height (GIMP_DRAWABLE(mask)) > *pheight))
     {
@@ -425,7 +434,7 @@ undo_history_gimage_rename_callback (GimpImage *gimage,
   gchar *title;
 
   title = g_strdup_printf (_("Undo History: %s"),
-			   g_basename (gimage_filename (gimage)));
+			   g_basename (gimp_image_filename (gimage)));
   gtk_window_set_title (GTK_WINDOW (st->shell), title);
   g_free (title);
 }
@@ -749,7 +758,7 @@ undo_history_new (GImage *gimage)
   /*  The shell and main vbox  */
   {
     gchar *title = g_strdup_printf (_("Undo History: %s"),
-				    g_basename (gimage_filename (gimage)));
+				    g_basename (gimp_image_filename (gimage)));
     st->shell = gimp_dialog_new (title, "undo_history",
 				 gimp_standard_help_func,
 				 "dialogs/undo_history.html",

@@ -45,13 +45,15 @@
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 #include "gimpui.h"
+#include "gradient.h"
 #include "gradient_header.h"
 #include "gradientP.h"
 #include "gradient_select.h"
+#include "procedural_db.h"
 #include "session.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
+
 
 static void gradient_change_callbacks            (GradientSelect *gsp,
 						  gboolean        closing);

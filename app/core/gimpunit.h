@@ -19,7 +19,9 @@
 #ifndef __UNITRC_H__
 #define __UNITRC_H__
 
-void parse_unitrc (void);
-void save_unitrc (void);
+
+void   parse_unitrc (void);
+void   save_unitrc  (void);
+
 
 #endif  /*  __UNITRC_H__  */

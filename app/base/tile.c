@@ -1,4 +1,28 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
 #include <stdio.h>
+
+#include <gtk/gtk.h>
+
+#include <apptypes.h>
 
 #include "tile.h"
 #include "tile_pvt.h"
@@ -14,7 +38,7 @@ int tile_count = 0;
 void
 tile_sanitize_rowhints (Tile *tile)
 {
-  int height, y;
+  gint height, y;
 
   /*  If tile has rowhints array already, do nothing.  */
   if (tile->rowhint)
@@ -31,7 +55,8 @@ tile_sanitize_rowhints (Tile *tile)
 }
 
 TileRowHint
-tile_get_rowhint (Tile *tile, int yoff)
+tile_get_rowhint (Tile *tile,
+		  gint  yoff)
 {
 #ifdef HINTS_SANITY
   if (yoff < tile_eheight(tile) && yoff>=0)
@@ -47,7 +72,9 @@ tile_get_rowhint (Tile *tile, int yoff)
 }
 
 void
-tile_set_rowhint (Tile *tile, int yoff, TileRowHint rowhint)
+tile_set_rowhint (Tile        *tile,
+		  gint         yoff,
+		  TileRowHint  rowhint)
 {
 #ifdef HINTS_SANITY
   if (yoff < tile_eheight(tile) && yoff>=0)
@@ -63,23 +90,24 @@ tile_set_rowhint (Tile *tile, int yoff, TileRowHint rowhint)
 
 void
 tile_init (Tile *tile,
-	   int   bpp)
+	   gint  bpp)
 {
-  tile->ref_count = 0;
+  tile->ref_count   = 0;
   tile->write_count = 0;
   tile->share_count = 0;
-  tile->dirty = FALSE;
-  tile->valid = FALSE;
-  tile->data = NULL;
-  tile->ewidth = TILE_WIDTH;
-  tile->eheight = TILE_HEIGHT;
-  tile->bpp = bpp;
-  tile->swap_num = 1;
+  tile->dirty       = FALSE;
+  tile->valid       = FALSE;
+  tile->data        = NULL;
+  tile->ewidth      = TILE_WIDTH;
+  tile->eheight     = TILE_HEIGHT;
+  tile->bpp         = bpp;
+  tile->swap_num    = 1;
   tile->swap_offset = -1;
-  tile->tlink = NULL;
-  tile->next = tile->prev = NULL;
-  tile->listhead = NULL;
-  tile->rowhint = NULL;
+  tile->tlink       = NULL;
+  tile->next        = NULL;
+  tile->prev        = NULL;
+  tile->listhead    = NULL;
+  tile->rowhint     = NULL;
 
 #ifdef USE_PTHREADS
   {

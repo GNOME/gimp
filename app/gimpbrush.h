@@ -21,9 +21,6 @@
 
 
 #include "gimpobject.h"
-#include "temp_buf.h"
-
-#include "libgimp/gimpvector.h"
 
 
 typedef struct _GimpBrushClass	   GimpBrushClass;

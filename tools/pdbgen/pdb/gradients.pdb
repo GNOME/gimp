@@ -229,7 +229,7 @@ CODE
     );
 }
 
-@headers = qw("gimpcontext.h" "gradient_header.h");
+@headers = qw("gimpcontext.h" "gradient.h" "gradient_header.h");
 
 @procs = qw(gradients_get_list gradients_get_active gradients_set_active
 	    gradients_sample_uniform gradients_sample_custom);

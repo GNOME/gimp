@@ -19,10 +19,6 @@
 #ifndef __THRESHOLD_H__
 #define __THRESHOLD_H__
 
-#include "image_map.h"
-#include "histogramwidget.h"
-#include "tools.h"
-
 
 typedef struct _ThresholdDialog ThresholdDialog;
 
@@ -46,14 +42,15 @@ struct _ThresholdDialog
   gboolean         preview;
 };
 
-Tool * tools_new_threshold  (void);
-void   tools_free_threshold (Tool        *tool);
+
+Tool * tools_new_threshold   (void);
+void   tools_free_threshold  (Tool        *tool);
 
 void   threshold_dialog_hide (void);
-void   threshold_initialize (GDisplay    *gdisp);
-void   threshold_2          (void        *data,
-			     PixelRegion *srcPR,
-			     PixelRegion *destPR);
+void   threshold_initialize  (GDisplay    *gdisp);
+void   threshold_2           (gpointer     data,
+			      PixelRegion *srcPR,
+			      PixelRegion *destPR);
 
 
 #endif  /*  __THRESHOLD_H__  */

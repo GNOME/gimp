@@ -15,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __SMUDGE_H__
 #define __SMUDGE_H__
 
-#include "paint_core.h"
-#include "tools.h"
 
 typedef enum
 {
@@ -34,10 +33,19 @@ typedef enum
   SMUDGE_MODE_SHADOWS 
 } SmudgeMode;
 
-void *        smudge_paint_func  (PaintCore *, GimpDrawable *, int);
-gboolean      smudge_non_gui     (GimpDrawable *, double, int, double *);
-gboolean      smudge_non_gui_default  (GimpDrawable *, int, double *);
-Tool *        tools_new_smudge   (void);
-void          tools_free_smudge  (Tool *);
+void     * smudge_paint_func       (PaintCore    *,
+				    GimpDrawable *,
+				    gint          );
+gboolean   smudge_non_gui          (GimpDrawable *,
+				    gdouble       ,
+				    gint          ,
+				    gdouble      *);
+gboolean   smudge_non_gui_default  (GimpDrawable *,
+				    gint          ,
+				    gdouble      *);
+
+Tool     * tools_new_smudge        (void);
+void       tools_free_smudge       (Tool         *tool);
+
 
 #endif  /*  __SMUDGE_H__  */

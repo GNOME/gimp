@@ -15,34 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __TRANSFORM_CORE_H__
 #define __TRANSFORM_CORE_H__
 
-#include "draw_core.h"
-#include "gimpprogress.h"
-#include "info_dialog.h"
-
-#include "libgimp/gimpmatrix.h"
-
-/* possible transform functions */
-typedef enum
-{
-  CREATING,
-  HANDLE_1,
-  HANDLE_2,
-  HANDLE_3,
-  HANDLE_4,
-  HANDLE_CENTER
-} TransformAction;
-
-/* the different states that the transformation function can be called with */
-typedef enum
-{
-  INIT,
-  MOTION,
-  RECALC,
-  FINISH
-} TransformState;
 
 /* buffer sizes for scaling information strings (for the info dialog) */
 #define MAX_INFO_BUF   40
@@ -57,8 +33,6 @@ typedef gdouble TranInfo[TRAN_INFO_SIZE];
 
 typedef TileManager * (* TransformFunc) (Tool *, void *, TransformState);
 
-
-typedef struct _TransformCore TransformCore;
 
 struct _TransformCore
 {
@@ -166,5 +140,6 @@ gboolean      transform_core_paste (GImage          *gimage,
 				    GimpDrawable    *drawable,
 				    TileManager     *tiles,
 				    gboolean         new_layer);
+
 
 #endif  /*  __TRANSFORM_CORE_H__  */

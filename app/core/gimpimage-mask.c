@@ -18,23 +18,27 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "boundary.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
+#include "gimpimage.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
 #include "layer.h"
 #include "paint_core.h"
+#include "paint_funcs.h"
 #include "paint_options.h"
-#include "undo.h"
-
-#include "channel_pvt.h"
+#include "pixel_region.h"
+#include "procedural_db.h"
+#include "tile_manager.h"
 #include "tile_manager_pvt.h"
+#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -51,11 +55,11 @@ gimage_mask_boundary (GImage    *gimage,
 		      gint      *num_segs_out)
 {
   GimpDrawable *d;
-  Layer *layer;
-  gint x1, y1;
-  gint x2, y2;
+  Layer        *layer;
+  gint          x1, y1;
+  gint          x2, y2;
 
-  if ((layer = gimage_floating_sel (gimage)))
+  if ((layer = gimp_image_floating_sel (gimage)))
     {
       /*  If there is a floating selection, then
        *  we need to do some slightly different boundaries.
@@ -67,7 +71,7 @@ gimage_mask_boundary (GImage    *gimage,
        */
 
       /*  Find the selection mask boundary  */
-      channel_boundary (gimage_get_mask (gimage),
+      channel_boundary (gimp_image_get_mask (gimage),
 			segs_in, segs_out,
 			num_segs_in, num_segs_out,
 			0, 0, 0, 0);
@@ -78,16 +82,16 @@ gimage_mask_boundary (GImage    *gimage,
       return TRUE;
     }
   /*  Otherwise, return the boundary...if a channel is active  */
-  else if ((d = gimage_active_drawable (gimage)) &&
+  else if ((d = gimp_image_active_drawable (gimage)) &&
 	   GIMP_IS_CHANNEL (d))
     {
-      return channel_boundary (gimage_get_mask (gimage),
+      return channel_boundary (gimp_image_get_mask (gimage),
 			       segs_in, segs_out,
 			       num_segs_in, num_segs_out,
 			       0, 0, gimage->width, gimage->height);
     }
   /* if a layer is active, we return multiple boundaries based on the extents */
-  else if ((layer = gimage_get_active_layer (gimage)))
+  else if ((layer = gimp_image_get_active_layer (gimage)))
     {
       gint off_x, off_y;
 
@@ -99,7 +103,7 @@ gimage_mask_boundary (GImage    *gimage,
       y2 = CLAMP (off_y + drawable_height (GIMP_DRAWABLE(layer)), 0,
 		  gimage->height);
 
-      return channel_boundary (gimage_get_mask (gimage),
+      return channel_boundary (gimp_image_get_mask (gimage),
 			       segs_in, segs_out,
 			       num_segs_in, num_segs_out,
 			       x1, y1, x2, y2);
@@ -122,7 +126,7 @@ gimage_mask_bounds (GImage *gimage,
 		    gint   *x2,
 		    gint   *y2)
 {
-  return channel_bounds (gimage_get_mask (gimage), x1, y1, x2, y2);
+  return channel_bounds (gimp_image_get_mask (gimage), x1, y1, x2, y2);
 }
 
 
@@ -135,14 +139,14 @@ gimage_mask_invalidate (GImage *gimage)
   /*  Turn the current selection off  */
   gdisplays_selection_visibility (gimage, SelectionOff);
 
-  mask = gimage_get_mask (gimage);
+  mask = gimp_image_get_mask (gimage);
   mask->boundary_known = FALSE;
 
   /*  If there is a floating selection, update it's area...
    *  we need to do this since this selection mask can act as an additional
    *  mask in the composition of the floating selection
    */
-  layer = gimage_get_active_layer (gimage);
+  layer = gimp_image_get_active_layer (gimage);
   if (layer && layer_is_floating_sel (layer))
     drawable_update (GIMP_DRAWABLE(layer), 0, 0,
 		     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
@@ -154,7 +158,7 @@ gimage_mask_value (GImage *gimage,
 		   int     x,
 		   int     y)
 {
-  return channel_value (gimage_get_mask (gimage), x, y);
+  return channel_value (gimp_image_get_mask (gimage), x, y);
 }
 
 
@@ -168,7 +172,7 @@ gimage_mask_is_empty (GImage *gimage)
   if (gimage_mask_stroking)
     return TRUE;
   else
-    return channel_is_empty (gimage_get_mask (gimage));
+    return channel_is_empty (gimp_image_get_mask (gimage));
 }
 
 
@@ -177,7 +181,7 @@ gimage_mask_translate (GImage *gimage,
 		       gint    off_x,
 		       gint    off_y)
 {
-  channel_translate (gimage_get_mask (gimage), off_x, off_y);
+  channel_translate (gimp_image_get_mask (gimage), off_x, off_y);
 }
 
 
@@ -246,11 +250,11 @@ gimage_mask_extract (GImage       *gimage,
 
   /*  get the selection mask */
   if (non_empty)
-    sel_mask = gimage_get_mask (gimage);
+    sel_mask = gimp_image_get_mask (gimage);
   else
     sel_mask = NULL;
 
-  gimage_get_background (gimage, drawable, bg);
+  gimp_image_get_background (gimage, drawable, bg);
 
   /*  If a cut was specified, and the selection mask is not empty,
    *  push an undo
@@ -283,7 +287,7 @@ gimage_mask_extract (GImage       *gimage,
       if (cut_gimage)
 	{
 	  /*  Clear the region  */
-	  channel_clear (gimage_get_mask (gimage));
+	  channel_clear (gimp_image_get_mask (gimage));
 
 	  /*  Update the region  */
 	  gdisplays_update_area (gimage, tiles->x, tiles->y,
@@ -315,16 +319,16 @@ gimage_mask_extract (GImage       *gimage,
 	  if (layer_is_floating_sel (GIMP_LAYER (drawable)))
 	    floating_sel_remove (GIMP_LAYER (drawable));
 	  else
-	    gimage_remove_layer (gimage, GIMP_LAYER (drawable));
+	    gimp_image_remove_layer (gimage, GIMP_LAYER (drawable));
 	}
       else if (cut_gimage && GIMP_IS_LAYER_MASK (drawable))
 	{
-	  gimage_remove_layer_mask (gimage, 
-				    layer_mask_get_layer (GIMP_LAYER_MASK (drawable)),
-				    DISCARD);
+	  gimp_image_remove_layer_mask (gimage, 
+					layer_mask_get_layer (GIMP_LAYER_MASK (drawable)),
+					DISCARD);
 	}
       else if (cut_gimage && GIMP_IS_CHANNEL (drawable))
-	gimage_remove_channel (gimage, GIMP_CHANNEL (drawable));
+	gimp_image_remove_channel (gimage, GIMP_CHANNEL (drawable));
     }
 
   return tiles;
@@ -337,12 +341,12 @@ gimage_mask_float (GImage       *gimage,
 		   gint          off_x,    /* optional offset */
 		   gint          off_y)
 {
-  Layer *layer;
-  Channel *mask = gimage_get_mask (gimage);
-  TileManager* tiles;
-  gboolean non_empty;
-  gint x1, y1;
-  gint x2, y2;
+  Layer       *layer;
+  Channel     *mask = gimp_image_get_mask (gimage);
+  TileManager *tiles;
+  gboolean     non_empty;
+  gint         x1, y1;
+  gint         x2, y2;
 
   /*  Make sure there is a region to float...  */
   non_empty = drawable_mask_bounds ( (drawable), &x1, &y1, &x2, &y2);
@@ -363,8 +367,8 @@ gimage_mask_float (GImage       *gimage,
 				_("Floated Layer"), OPAQUE_OPACITY, NORMAL_MODE);
 
   /*  Set the offsets  */
-  GIMP_DRAWABLE(layer)->offset_x = tiles->x + off_x;
-  GIMP_DRAWABLE(layer)->offset_y = tiles->y + off_y;
+  GIMP_DRAWABLE (layer)->offset_x = tiles->x + off_x;
+  GIMP_DRAWABLE (layer)->offset_y = tiles->y + off_y;
 
   /*  Free the temp buffer  */
   tile_manager_destroy (tiles);
@@ -385,21 +389,21 @@ gimage_mask_float (GImage       *gimage,
 void
 gimage_mask_clear (GImage *gimage)
 {
-  channel_clear (gimage_get_mask (gimage));
+  channel_clear (gimp_image_get_mask (gimage));
 }
 
 
 void
 gimage_mask_undo (GImage *gimage)
 {
-  channel_push_undo (gimage_get_mask (gimage));
+  channel_push_undo (gimp_image_get_mask (gimage));
 }
 
 
 void
 gimage_mask_invert (GImage *gimage)
 {
-  channel_invert (gimage_get_mask (gimage));
+  channel_invert (gimp_image_get_mask (gimage));
 }
 
 
@@ -409,21 +413,21 @@ gimage_mask_sharpen (GImage *gimage)
   /*  No need to play with the selection visibility
    *  because sharpen will not change the outline
    */
-  channel_sharpen (gimage_get_mask (gimage));
+  channel_sharpen (gimp_image_get_mask (gimage));
 }
 
 
 void
 gimage_mask_all (GImage *gimage)
 {
-  channel_all (gimage_get_mask (gimage));
+  channel_all (gimp_image_get_mask (gimage));
 }
 
 
 void
 gimage_mask_none (GImage *gimage)
 {
-  channel_clear (gimage_get_mask (gimage));
+  channel_clear (gimp_image_get_mask (gimage));
 }
 
 
@@ -435,14 +439,14 @@ gimage_mask_feather (GImage  *gimage,
   /*  push the current mask onto the undo stack--need to do this here because
    *  channel_feather doesn't do it
    */
-  channel_push_undo (gimage_get_mask (gimage));
+  channel_push_undo (gimp_image_get_mask (gimage));
 
   /*  feather the region  */
-  channel_feather (gimage_get_mask (gimage),
-		   gimage_get_mask (gimage),
+  channel_feather (gimp_image_get_mask (gimage),
+		   gimp_image_get_mask (gimage),
 		   feather_radius_x,
 		   feather_radius_y,
-		   REPLACE, 0, 0);
+		   CHANNEL_OP_REPLACE, 0, 0);
 }
 
 
@@ -452,7 +456,7 @@ gimage_mask_border (GImage *gimage,
 		    gint    border_radius_y)
 {
   /*  feather the region  */
-  channel_border (gimage_get_mask (gimage),
+  channel_border (gimp_image_get_mask (gimage),
 		  border_radius_x,
 		  border_radius_y);
 }
@@ -464,7 +468,7 @@ gimage_mask_grow (GImage *gimage,
 		  int     grow_pixels_y)
 {
   /*  feather the region  */
-  channel_grow (gimage_get_mask (gimage),
+  channel_grow (gimp_image_get_mask (gimage),
 		grow_pixels_x,
 		grow_pixels_y);
 }
@@ -477,7 +481,7 @@ gimage_mask_shrink (GImage   *gimage,
 		    gboolean  edge_lock)
 {
   /*  feather the region  */
-  channel_shrink (gimage_get_mask (gimage),
+  channel_shrink (gimp_image_get_mask (gimage),
 		  shrink_pixels_x,
 		  shrink_pixels_y,
 		  edge_lock);
@@ -492,7 +496,7 @@ gimage_mask_layer_alpha (GImage *gimage,
   if (drawable_has_alpha (GIMP_DRAWABLE (layer)))
     {
       /*  load the mask with the given layer's alpha channel  */
-      channel_layer_alpha (gimage_get_mask (gimage), layer);
+      channel_layer_alpha (gimp_image_get_mask (gimage), layer);
     }
   else
     {
@@ -511,7 +515,7 @@ gimage_mask_layer_mask (GImage *gimage,
   if (layer_get_mask (layer))
     {
       /*  load the mask with the given layer's alpha channel  */
-      channel_layer_mask (gimage_get_mask (gimage), layer);
+      channel_layer_mask (gimp_image_get_mask (gimage), layer);
     }
   else
     {
@@ -527,7 +531,7 @@ gimage_mask_load (GImage  *gimage,
 		  Channel *channel)
 {
   /*  Load the specified channel to the gimage mask  */
-  channel_load (gimage_get_mask (gimage), (channel));
+  channel_load (gimp_image_get_mask (gimage), (channel));
 }
 
 
@@ -536,11 +540,11 @@ gimage_mask_save (GImage *gimage)
 {
   Channel *new_channel;
 
-  new_channel = channel_copy (gimage_get_mask (gimage));
+  new_channel = channel_copy (gimp_image_get_mask (gimage));
 
   /*  saved selections are not visible by default  */
   GIMP_DRAWABLE(new_channel)->visible = FALSE;
-  gimage_add_channel (gimage, new_channel, -1);
+  gimp_image_add_channel (gimage, new_channel, -1);
 
   return new_channel;
 }
@@ -642,9 +646,3 @@ gimage_mask_stroke (GImage       *gimage,
 
   return TRUE;
 }
-
-
-
-
-
-

@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
@@ -29,6 +29,8 @@
 #include "drawable.h"
 #include "draw_core.h"
 #include "gimage_mask.h"
+#include "gimpcontext.h"
+#include "gimpimage.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "ink.h"
@@ -37,11 +39,16 @@
 #include "undo.h"
 #include "blob.h"
 #include "gdisplay.h"
+#include "paint_funcs.h"
+#include "pixel_region.h"
+#include "temp_buf.h"
+#include "tile.h"
+#include "tile_manager.h"
 
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
 
-#include "tile.h"			/* ick. */
+#include "libgimp/gimpintl.h"
+
 
 #define SUBSAMPLE 8
 
@@ -805,7 +812,7 @@ ink_button_press (Tool           *tool,
   /*  Keep the coordinates of the target  */
   gdisplay_untransform_coords_f (gdisp, bevent->x, bevent->y,
 				 &x, &y, TRUE);
-  drawable = gimage_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
   ink_init (ink_tool, drawable, x, y);
 
@@ -872,7 +879,7 @@ ink_button_release (Tool           *tool,
   g_free (ink_tool->last_blob);
   ink_tool->last_blob = NULL;
 
-  ink_finish (ink_tool, gimage_active_drawable (gdisp->gimage), tool->ID);
+  ink_finish (ink_tool, gimp_image_active_drawable (gdisp->gimage), tool->ID);
   gdisplays_flush ();
 }
 
@@ -976,7 +983,7 @@ ink_motion (Tool           *tool,
   ink_tool = (InkTool *) tool->private;
 
   gdisplay_untransform_coords_f (gdisp, mevent->x, mevent->y, &x, &y, TRUE);
-  drawable = gimage_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
   lasttime = ink_tool->last_time;
 
@@ -1038,7 +1045,7 @@ ink_cursor_update (Tool           *tool,
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
-  if ((layer = gimage_get_active_layer (gdisp->gimage))) 
+  if ((layer = gimp_image_get_active_layer (gdisp->gimage))) 
     {
       int off_x, off_y;
 
@@ -1385,7 +1392,7 @@ ink_paste (InkTool      *ink_tool,
   if (!canvas_buf)
     return;
 
-  gimage_get_foreground (gimage, drawable, col);
+  gimp_image_get_foreground (gimage, drawable, col);
 
   /*  set the alpha channel  */
   col[canvas_buf->bytes - 1] = OPAQUE_OPACITY;
@@ -1414,12 +1421,12 @@ ink_paste (InkTool      *ink_tool,
   srcPR.data = temp_buf_data (canvas_buf);
 
   /*  apply the paint area to the gimage  */
-  gimage_apply_image (gimage, drawable, &srcPR,
-		      FALSE, 
-		      (int) (gimp_context_get_opacity (NULL) * 255),
-		      gimp_context_get_paint_mode (NULL),
-		      undo_tiles,  /*  specify an alternative src1  */
-		      canvas_buf->x, canvas_buf->y);
+  gimp_image_apply_image (gimage, drawable, &srcPR,
+			  FALSE, 
+			  (int) (gimp_context_get_opacity (NULL) * 255),
+			  gimp_context_get_paint_mode (NULL),
+			  undo_tiles,  /*  specify an alternative src1  */
+			  canvas_buf->x, canvas_buf->y);
 
   /*  Update the undo extents  */
   ink_tool->x1 = MIN (ink_tool->x1, canvas_buf->x);

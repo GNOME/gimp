@@ -15,16 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __MAGNIFY_H__
 #define __MAGNIFY_H__
 
-#include "tools.h"
 
-/*  magnify functions  */
+Tool * tools_new_magnify  (void);
+void   tools_free_magnify (Tool *tool);
 
-Tool * tools_new_magnify    (void);
-void   tools_free_magnify   (Tool *tool);
+void   magnify_draw       (Tool *tool);
 
-void   magnify_draw         (Tool *tool);
 
 #endif  /*  __MAGNIFY_H__  */

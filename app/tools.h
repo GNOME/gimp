@@ -19,41 +19,29 @@
 #ifndef __TOOLS_H__
 #define __TOOLS_H__
 
-#include "gimpcontext.h"
-#include "tool_options.h"
-#include "channel.h"
+
 #include "cursorutil.h"
 
-#include "toolsF.h"
-
-
-/*  The possible states for tools  */
-typedef enum
-{
-  INACTIVE,
-  ACTIVE,
-  PAUSED
-} ToolState;
-
-/* Selection Boolean operations that rect, */
-/* ellipse, freehand, and fuzzy tools may  */
-/* perform.                                */
-
-typedef enum
-{
-  SELECTION_ADD       = ADD,
-  SELECTION_SUB       = SUB,
-  SELECTION_REPLACE   = REPLACE,
-  SELECTION_INTERSECT = INTERSECT,
-  SELECTION_MOVE_MASK,
-  SELECTION_MOVE,
-  SELECTION_ANCHOR
-} SelectOps;
 
 /*  The possibilities for where the cursor lies  */
 #define  ACTIVE_LAYER      (1 << 0)
 #define  SELECTION         (1 << 1)
 #define  NON_ACTIVE_LAYER  (1 << 2)
+
+/*  Tool action function declarations  */
+typedef void   (* ButtonPressFunc)    (Tool *, GdkEventButton *, gpointer);
+typedef void   (* ButtonReleaseFunc)  (Tool *, GdkEventButton *, gpointer);
+typedef void   (* MotionFunc)         (Tool *, GdkEventMotion *, gpointer);
+typedef void   (* ArrowKeysFunc)      (Tool *, GdkEventKey *,    gpointer);
+typedef void   (* ModifierKeyFunc)    (Tool *, GdkEventKey *,    gpointer);
+typedef void   (* CursorUpdateFunc)   (Tool *, GdkEventMotion *, gpointer);
+typedef void   (* OperUpdateFunc)     (Tool *, GdkEventMotion *, gpointer);
+typedef void   (* ToolCtlFunc)        (Tool *, ToolAction,       gpointer);
+
+/*  ToolInfo function declarations  */
+typedef Tool * (* ToolInfoNewFunc)    (void);
+typedef void   (* ToolInfoFreeFunc)   (Tool *);
+typedef void   (* ToolInfoInitFunc)   (GDisplay *);
 
 /*  The types of tools...  */
 struct _Tool

@@ -15,13 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __QMASK_H__
 #define __QMASK_H__
 
-void qmask_click_handler(GtkWidget *widget, GdkEventButton *event, gpointer data);
-void qmask_activate(GtkWidget *w, GDisplay *gdisp);
-void qmask_deactivate(GtkWidget *w, GDisplay *gdisp);
-void qmask_buttons_update (GDisplay *gdisp);
+
+void   qmask_click_handler  (GtkWidget      *widget,
+			     GdkEventButton *event,
+			     gpointer        data);
+void   qmask_activate       (GtkWidget      *widget,
+			     GDisplay       *gdisp);
+void   qmask_deactivate     (GtkWidget      *widget,
+			     GDisplay       *gdisp);
+void   qmask_buttons_update (GDisplay       *gdisp);
+
 
 #endif  /*  __QMASK_H__ */
 

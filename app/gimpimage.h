@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattisbvf
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,29 +16,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMPIMAGE_H__
-#define __GIMPIMAGE_H__
-
-#include "apptypes.h"
-#include "procedural_db.h"
-#include "boundary.h"
-#include "drawable.h"
-#include "channel.h"
-#include "layer.h"
-#include "plug_in.h"
-#include "temp_buf.h"
-#include "tile_manager.h"
-#include "path.h"
-
-#include "libgimp/gimpparasite.h"
-#include "libgimp/gimpunit.h"
+#ifndef __GIMP_IMAGE_H__
+#define __GIMP_IMAGE_H__
 
 
-#define GIMP_TYPE_IMAGE    gimp_image_get_type()
-#define GIMP_IMAGE(obj)    GTK_CHECK_CAST (obj, GIMP_TYPE_IMAGE, GimpImage)
-#define GIMP_IS_IMAGE(obj) GTK_CHECK_TYPE (obj, GIMP_TYPE_IMAGE)
-     
-#define GIMP_IMAGE_TYPE_HAS_ALPHA(t)  ((t)==RGBA_GIMAGE || (t)==GRAYA_GIMAGE || (t)==INDEXEDA_GIMAGE)
+#include "gimpobject.h"
+
+
+#define MAX_CHANNELS     4
 
 #define GRAY_PIX         0
 #define ALPHA_G_PIX      1
@@ -51,19 +36,104 @@
 
 #define COLORMAP_SIZE    768
 
-typedef enum /*< skip >*/
-{ 
-  ORIENTATION_UNKNOWN,
-  ORIENTATION_HORIZONTAL,
-  ORIENTATION_VERTICAL
-} InternalOrientationType;
 
-typedef enum
+#define GIMP_TYPE_IMAGE         (gimp_image_get_type ())
+#define GIMP_IMAGE(obj)         (GTK_CHECK_CAST (obj, GIMP_TYPE_IMAGE, GimpImage))
+#define GIMP_IS_IMAGE(obj)      (GTK_CHECK_TYPE (obj, GIMP_TYPE_IMAGE))
+#define GIMP_IMAGE_CLASS(klass) (GTK_CHECK_CLASS_CAST (klass, GIMP_TYPE_IMAGE, GimpImageClass))
+
+typedef struct _GimpImageClass GimpImageClass;
+
+struct _GimpImage
 {
-  HORIZONTAL,
-  VERTICAL,
-  UNKNOWN
-} OrientationType;
+  GimpObject gobject;
+
+  gchar             *filename;              /*  original filename            */
+  gboolean           has_filename;          /*  has a valid filename         */
+  PlugInProcDef     *save_proc;             /*  last PDB save proc used      */
+
+  gint               width, height;         /*  width and height attributes  */
+  gdouble            xresolution;           /*  image x-res, in dpi          */
+  gdouble            yresolution;           /*  image y-res, in dpi          */
+  GimpUnit           unit;                  /*  image unit                   */
+  GimpImageBaseType  base_type;             /*  base gimp_image type         */
+
+  guchar            *cmap;                  /*  colormap--for indexed        */
+  gint               num_cols;              /*  number of cols--for indexed  */
+
+  gint               dirty;                 /*  dirty flag -- # of ops       */
+  gboolean           undo_on;               /*  Is undo enabled?             */
+
+  gint               instance_count;        /*  number of instances          */
+  gint               disp_count;            /*  number of displays           */
+
+  Tattoo             tattoo_state;          /*  the next unique tattoo to use*/
+
+  TileManager       *shadow;                /*  shadow buffer tiles          */
+
+                                            /*  Projection attributes  */
+  gint               construct_flag;        /*  flag for construction        */
+  GimpImageType      proj_type;             /*  type of the projection image */
+  gint               proj_bytes;            /*  bpp in projection image      */
+  gint               proj_level;            /*  projection level             */
+  TileManager       *projection;            /*  The projection--layers &     */
+                                            /*  channels                     */
+
+  GList             *guides;                /*  guides                       */
+
+                                            /*  Layer/Channel attributes  */
+  GSList            *layers;                /*  the list of layers           */
+  GSList            *channels;              /*  the list of masks            */
+  GSList            *layer_stack;           /*  the layers in MRU order      */
+
+  Layer             *active_layer;          /*  ID of active layer           */
+  Channel           *active_channel;        /*  ID of active channel         */
+  Layer             *floating_sel;          /*  ID of fs layer               */
+  Channel           *selection_mask;        /*  selection mask channel       */
+
+  ParasiteList      *parasites;             /*  Plug-in parasite data        */
+
+  PathList          *paths;                 /*  Paths data for this image    */
+
+  gboolean           visible[MAX_CHANNELS]; /*  visible channels             */
+  gboolean           active[MAX_CHANNELS];  /*  active channels              */
+
+  gboolean           by_color_select;       /*  TRUE if there's an active    */
+                                            /*  "by color" selection dialog  */
+
+  gboolean           qmask_state;           /*  TRUE if qmask is on          */
+  gdouble            qmask_opacity;         /*  opacity of the qmask channel */
+  guchar             qmask_color[3];        /*  rgb triplet of the color     */
+
+                                            /*  Undo apparatus  */
+  GSList            *undo_stack;            /*  stack for undo operations    */
+  GSList            *redo_stack;            /*  stack for redo operations    */
+  gint               undo_bytes;            /*  bytes in undo stack          */
+  gint               undo_levels;           /*  levels in undo stack         */
+  gint               group_count;           /*  nested undo groups           */
+  UndoType           pushing_undo_group;    /*  undo group status flag       */
+  GtkWidget         *undo_history;	    /*  history viewer, or NULL      */
+
+                                            /*  Composite preview  */
+  TempBuf           *comp_preview;          /*  the composite preview        */
+  gboolean           comp_preview_valid[3]; /*  preview valid-1/channel      */
+};
+
+struct _GimpImageClass
+{
+  GimpObjectClass parent_class;
+
+  void (* clean)            (GimpImage *gimage);
+  void (* dirty)            (GimpImage *gimage);
+  void (* repaint)          (GimpImage *gimage);
+  void (* rename)           (GimpImage *gimage);
+  void (* resize)           (GimpImage *gimage);
+  void (* restructure)      (GimpImage *gimage);
+  void (* colormap_changed) (GimpImage *gimage);
+  void (* undo_event)       (GimpImage *gimage);
+};
+
+#define GIMP_IMAGE_TYPE_HAS_ALPHA(t)  ((t)==RGBA_GIMAGE || (t)==GRAYA_GIMAGE || (t)==INDEXEDA_GIMAGE)
 
 typedef enum
 {
@@ -374,4 +444,4 @@ TempBuf       * gimp_image_construct_composite_preview (GimpImage *gimage,
 							gint       width,
 							gint       height);
 
-#endif /* __GIMPIMAGE_H__ */
+#endif /* __GIMP_IMAGE_H__ */

@@ -20,17 +20,19 @@
 
 #include <stdlib.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
+#include "gimpimage.h"
 #include "gimprc.h"
 #include "nav_window.h"
 #include "scale.h"
 #include "tools.h"
+
 
 void
 bounds_checking (GDisplay *gdisp)

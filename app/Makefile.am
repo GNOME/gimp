@@ -8,10 +8,8 @@ noinst_LIBRARIES = libgimpim.a
 libgimpim_a_SOURCES = \
 	gimpdrawable.c		\
 	gimpdrawable.h		\
-	gimpdrawableP.h		\
 	gimpimage.c		\
 	gimpimage.h		\
-	gimpimageP.h		\
 	gimpobject.c		\
 	gimpobject.h		\
 	gimppreviewcache.h	\
@@ -61,7 +59,6 @@ gimp_SOURCES = \
 	by_color_select.h	\
 	channel.c		\
 	channel.h		\
-	channel_pvt.h		\
 	channel_cmds.c		\
 	channels_dialog.c	\
 	channels_dialog.h	\
@@ -157,7 +154,6 @@ gimp_SOURCES = \
 	fuzzy_select.h		\
 	gdisplay.c		\
 	gdisplay.h		\
-	gdisplayF.h		\
 	gdisplay_ops.c		\
 	gdisplay_ops.h		\
 	general.c		\
@@ -249,7 +245,6 @@ gimp_SOURCES = \
 	iscissors.h		\
 	layer.c			\
 	layer.h			\
-	layer_pvt.h		\
 	layer_cmds.c		\
 	layer_select.c		\
 	layer_select.h		\
@@ -388,7 +383,6 @@ gimp_SOURCES = \
 	tool_options.h		\
 	tools.c			\
 	tools.h			\
-	toolsF.h		\
 	tools_cmds.c		\
 	transform_core.c	\
 	transform_core.h	\

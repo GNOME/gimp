@@ -26,10 +26,12 @@
 
 #include <glib.h>
 
-#include "unitrc.h"
+#include "apptypes.h"
 
 #include "app_procs.h"
 #include "gimprc.h"
+#include "unitrc.h"
+
 
 /* NOTE:
  *

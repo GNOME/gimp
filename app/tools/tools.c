@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
@@ -39,7 +39,9 @@
 #include "dodgeburn.h"
 #include "eraser.h"
 #include "gdisplay.h"
+#include "gimpcontext.h"
 #include "gimpdnd.h"
+#include "gimpimage.h"
 #include "gimpui.h"
 #include "hue_saturation.h"
 #include "ellipse_select.h"
@@ -64,6 +66,7 @@
 #include "text_tool.h"
 #include "threshold.h"
 #include "tools.h"
+#include "tool_options.h"
 #include "transform_tool.h"
 #include "dialog_handler.h"
 
@@ -1318,7 +1321,7 @@ tools_initialize (ToolType  tool_type,
     {
       (* tool_info[(gint) tool_type].init_func) (gdisp);
 
-      active_tool->drawable = gimage_active_drawable (gdisp->gimage);
+      active_tool->drawable = gimp_image_active_drawable (gdisp->gimage);
     }
 
   /*  don't set gdisp_ptr here! (see commands.c)  */
@@ -1392,7 +1395,7 @@ standard_button_press_func (Tool           *tool,
   gdisp = gdisp_ptr;
 
   tool->gdisp_ptr = gdisp;
-  tool->drawable = gimage_active_drawable (gdisp->gimage);
+  tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 }
 
 static void

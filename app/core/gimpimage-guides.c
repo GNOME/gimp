@@ -24,24 +24,26 @@
 
 #include "apptypes.h"
 
+#include "channel.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpcontext.h"
-#include "paint_funcs.h"
-#include "parasitelist.h"
-#include "undo.h"
+#include "gimpimage.h"
+#include "gimprc.h"
 #include "gimpsignal.h"
 #include "gimpparasite.h"
+#include "layer.h"
+#include "paint_funcs.h"
+#include "parasitelist.h"
 #include "path.h"
-#include "gimprc.h"
-
+#include "pixel_region.h"
+#include "temp_buf.h"
 #include "tile_manager.h"
 #include "tile.h"
-#include "layer_pvt.h"
-#include "drawable_pvt.h"		/* ick ick. */
+#include "undo.h"
 
 #include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimplimits.h"
@@ -656,7 +658,7 @@ gimp_image_scale (GimpImage *gimage,
   for (list = remove; list; list = g_slist_next (list))
     {
       layer = list->data;
-      gimage_remove_layer (gimage, layer);
+      gimp_image_remove_layer (gimage, layer);
     }
   g_slist_free (remove);
 
@@ -3117,7 +3119,7 @@ gimp_image_remove_layer (GimpImage *gimage,
       if (gimage->active_layer == layer)
 	{
 	  if (gimage->layers)
-	    gimage_set_active_layer (gimage, gimage->layer_stack->data);
+	    gimp_image_set_active_layer (gimage, gimage->layer_stack->data);
 	  else
 	    gimage->active_layer = NULL;
 	}

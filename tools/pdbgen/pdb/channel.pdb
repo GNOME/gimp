@@ -225,7 +225,7 @@ HELP
     $date = '1998';
 CODE
 
-@headers = qw("channel.h" "channel_pvt.h");
+@headers = qw("channel.h");
 
 unshift @procs, qw(channel_new channel_copy channel_delete);
 %exports = (app => [@procs], lib => [@procs]);

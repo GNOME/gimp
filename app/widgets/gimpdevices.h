@@ -15,10 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+
 #ifndef __DEVICES_H__
 #define __DEVICES_H__
 
-#include "tools.h"
 
 typedef enum
 {
@@ -71,7 +71,9 @@ void   devices_rc_update    (gchar        *name,
 /*  Free device status (only for session-managment)  */
 void   device_status_free   (void);
 
+
 /*  Current device id  */
 extern gint current_device;
+
 
 #endif /* __DEVICES_H__ */

@@ -19,9 +19,6 @@
 #ifndef __CONVERT_H__
 #define __CONVERT_H__
 
-#include "procedural_db.h"
-#include "palette_entries.h"
-
 
 /* adam's extra palette stuff */
 typedef enum
@@ -47,17 +44,18 @@ typedef enum
 #define MAXNUMCOLORS 256
 
 /*  convert functions  */
-void convert_to_rgb        (GimpImage *);
-void convert_to_grayscale  (GimpImage *);
-void convert_to_indexed    (GimpImage *);
+void   convert_to_rgb        (GimpImage         *gimage);
+void   convert_to_grayscale  (GimpImage         *gimage);
+void   convert_to_indexed    (GimpImage         *gimage);
 
-void convert_image        (GimpImage *,
-			   GimpImageBaseType,
-			   gint num_cols,
-			   ConvertDitherType,
-			   gint alpha_dither,
-			   gint remdups,
-			   ConvertPaletteType);
+void   convert_image        (GimpImage          *gimage,
+			     GimpImageBaseType   ,
+			     gint                num_cols,
+			     ConvertDitherType   ,
+			     gint                alpha_dither,
+			     gint                remdups,
+			     ConvertPaletteType  );
+
 
 extern PaletteEntries *theCustomPalette;
 

@@ -22,9 +22,6 @@
 #define __GIMP_LUT_H__
 
 
-#include "pixel_region.h"
-
-
 struct _GimpLut
 {
   guchar **luts;

@@ -20,9 +20,6 @@
 #define __EDIT_SELECTION_H__
 
 
-#include "tools.h"
-
-
 typedef enum
 {
   EDIT_MASK_TRANSLATE,

@@ -21,7 +21,12 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <gtk/gtk.h>
+
+#include "gimptypes.h"
+#include "gimpuitypes.h"
 
 #include "gimplimits.h"
 #include "gimpsizeentry.h"

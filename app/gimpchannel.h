@@ -19,35 +19,49 @@
 #ifndef __CHANNEL_H__
 #define __CHANNEL_H__
 
-#include "apptypes.h"
-#include "drawable.h"
-#include "boundary.h"
-#include "temp_buf.h"
-#include "tile_manager.h"
+
+#include "gimpdrawable.h"
 
 
 /* OPERATIONS */
-
-typedef enum
-{
-  ADD,
-  SUB,
-  REPLACE,
-  INTERSECT
-} ChannelOps;
 
 /*  Half way point where a region is no longer visible in a selection  */
 #define HALF_WAY 127
 
 /*  structure declarations  */
 
-#define GIMP_TYPE_CHANNEL             (gimp_channel_get_type ())
-#define GIMP_CHANNEL(obj)             (GTK_CHECK_CAST ((obj), GIMP_TYPE_CHANNEL, GimpChannel))
-#define GIMP_CHANNEL_CLASS(klass)     (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHANNEL, GimpChannelClass))
-#define GIMP_IS_CHANNEL(obj)          (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CHANNEL))
-#define GIMP_IS_CHANNEL_CLASS(klass)  (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHANNEL))
+#define GIMP_TYPE_CHANNEL            (gimp_channel_get_type ())
+#define GIMP_CHANNEL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CHANNEL, GimpChannel))
+#define GIMP_CHANNEL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHANNEL, GimpChannelClass))
+#define GIMP_IS_CHANNEL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CHANNEL))
+#define GIMP_IS_CHANNEL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHANNEL))
 
-GtkType gimp_channel_get_type (void);
+struct _GimpChannel
+{
+  GimpDrawable drawable;
+
+  guchar     col[3];            /*  RGB triplet for channel color  */
+  gint       opacity;           /*  Channel opacity                */
+  gboolean   show_masked;       /*  Show masked areas--as          */
+                                /*  opposed to selected areas      */
+
+  /*  Selection mask variables  */
+  gboolean   boundary_known;    /*  is the current boundary valid  */
+  BoundSeg  *segs_in;           /*  outline of selected region     */
+  BoundSeg  *segs_out;          /*  outline of selected region     */
+  gint       num_segs_in;       /*  number of lines in boundary    */
+  gint       num_segs_out;      /*  number of lines in boundary    */
+  gboolean   empty;             /*  is the region empty?           */
+  gboolean   bounds_known;      /*  recalculate the bounds?        */
+  gint       x1, y1;            /*  coordinates for bounding box   */
+  gint       x2, y2;            /*  lower right hand coordinate    */
+};
+
+struct _GimpChannelClass
+{
+  GimpDrawableClass parent_class;
+};
+
 
 
 /*  Special undo type  */
@@ -71,6 +85,8 @@ struct _MaskUndo
 
 
 /*  function declarations  */
+
+GtkType         gimp_channel_get_type       (void);
 
 Channel       * channel_new                 (GimpImage     *gimage,
 					     gint           width,

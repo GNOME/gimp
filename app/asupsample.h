@@ -20,28 +20,37 @@
  *
  */
 
-
 #ifndef __ASUPSAMPLE_H__
 #define __ASUPSAMPLE_H__
 
-#include "gimpprogress.h"
 
-/***** Types *****/
-
-typedef struct {
-	double r, g, b, a; /* Range is [0, 1] */
+typedef struct
+{
+  gdouble r, g, b, a; /* Range is [0, 1] */
 } color_t;
 
-typedef void (*render_func_t) (double x, double y, color_t *color, void *render_data);
-typedef void (*put_pixel_func_t) (int x, int y, color_t color, void *put_pixel_data);
+typedef void (* render_func_t)    (gdouble   x,
+				   gdouble   y,
+				   color_t  *color,
+				   gpointer  render_data);
+typedef void (* put_pixel_func_t) (gint      x,
+				   gint      y,
+				   color_t   color,
+				   gpointer  put_pixel_data);
 
 
-/***** Functions *****/
+gulong   adaptive_supersample_area (gint              x1,
+				    gint              y1,
+				    gint              x2,
+				    gint              y2,
+				    gint              max_depth,
+				    gdouble           threshold,
+				    render_func_t     render_func,
+				    gpointer          render_data,
+				    put_pixel_func_t  put_pixel_func,
+				    gpointer          put_pixel_data,
+				    progress_func_t   progress_func,
+				    gpointer          progress_data);
 
-unsigned long adaptive_supersample_area(int x1, int y1, int x2, int y2, int max_depth, double threshold,
-					render_func_t render_func, void *render_data,
-					put_pixel_func_t put_pixel_func, void *put_pixel_data,
-					progress_func_t progress_func, void *progress_data);
 
-
-#endif
+#endif /* __ASUPSAMPLE_H__ */

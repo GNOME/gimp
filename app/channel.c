@@ -26,23 +26,25 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "boundary.h"
 #include "channel.h"
 #include "drawable.h"
 #include "gdisplay.h"
+#include "gimpimage.h"
 #include "gimage_mask.h"
+#include "gimpsignal.h"
+#include "gimppreviewcache.h"
+#include "gimplut.h"
 #include "layer.h"
 #include "paint_funcs.h"
 #include "parasitelist.h"
-#include "temp_buf.h"
-#include "undo.h"
-#include "gimpsignal.h"
-#include "gimppreviewcache.h"
-
-#include "channel_pvt.h"
-#include "tile.h"
-
-#include "gimplut.h"
+#include "pixel_processor.h"
+#include "pixel_region.h"
 #include "lut_funcs.h"
+#include "temp_buf.h"
+#include "tile.h"
+#include "tile_manager.h"
+#include "undo.h"
 
 #include "libgimp/gimpmath.h"
 
@@ -1004,14 +1006,14 @@ channel_combine_rect (Channel    *mask,
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
 		     x, y, x2 - x, y2 - y, TRUE);
-  if (op == ADD  || op == REPLACE)
+  if (op == CHANNEL_OP_ADD  || op == CHANNEL_OP_REPLACE)
     color = 255;
   else
     color = 0;
   color_region (&maskPR, &color);
 
   /*  Determine new boundary  */
-  if (mask->bounds_known && (op == ADD) && !mask->empty)
+  if (mask->bounds_known && (op == CHANNEL_OP_ADD) && !mask->empty)
     {
       if (x < mask->x1)
 	mask->x1 = x;
@@ -1022,7 +1024,7 @@ channel_combine_rect (Channel    *mask,
       if ((y + h) > mask->y2)
 	mask->y2 = (y + h);
     }
-  else if (op == REPLACE || mask->empty)
+  else if (op == CHANNEL_OP_REPLACE || mask->empty)
     {
       mask->empty = FALSE;
       mask->x1 = x;
@@ -1084,10 +1086,11 @@ channel_combine_ellipse (Channel    *mask,
 
 	      switch (op)
 		{
-		case ADD: case REPLACE:
+		case CHANNEL_OP_ADD:
+		case CHANNEL_OP_REPLACE:
 		  channel_add_segment (mask, x1, i, (x2 - x1), 255);
 		  break;
-		case SUB :
+		case CHANNEL_OP_SUB:
 		  channel_sub_segment (mask, x1, i, (x2 - x1), 255);
 		  break;
 		default:
@@ -1127,10 +1130,11 @@ channel_combine_ellipse (Channel    *mask,
 		    {
 		      switch (op)
 			{
-			case ADD: case REPLACE:
+			case CHANNEL_OP_ADD:
+			case CHANNEL_OP_REPLACE:
 			  channel_add_segment (mask, x0, i, j - x0, last);
 			  break;
-			case SUB:
+			case CHANNEL_OP_SUB:
 			  channel_sub_segment (mask, x0, i, j - x0, last);
 			  break;
 			default:
@@ -1152,9 +1156,9 @@ channel_combine_ellipse (Channel    *mask,
 
 	      if (last)
 		{
-		  if (op == ADD || op == REPLACE)
+		  if (op == CHANNEL_OP_ADD || op == CHANNEL_OP_REPLACE)
 		    channel_add_segment (mask, x0, i, j - x0, last);
-		  else if (op == SUB)
+		  else if (op == CHANNEL_OP_SUB)
 		    channel_sub_segment (mask, x0, i, j - x0, last);
 		  else
 		    g_warning ("Only ADD, REPLACE and SUB are valid for channel_combine!");
@@ -1165,7 +1169,7 @@ channel_combine_ellipse (Channel    *mask,
     }
 
   /*  Determine new boundary  */
-  if (mask->bounds_known && (op == ADD) && !mask->empty)
+  if (mask->bounds_known && (op == CHANNEL_OP_ADD) && !mask->empty)
     {
       if (x < mask->x1)
 	mask->x1 = x;
@@ -1176,7 +1180,7 @@ channel_combine_ellipse (Channel    *mask,
       if ((y + h) > mask->y2)
 	mask->y2 = (y + h);
     }
-  else if (op == REPLACE || mask->empty)
+  else if (op == CHANNEL_OP_REPLACE || mask->empty)
     {
       mask->empty = FALSE;
       mask->x1 = x;
@@ -1293,15 +1297,16 @@ channel_combine_mask (Channel    *mask,
 
   switch (op)
     {
-    case ADD: case REPLACE:
+    case CHANNEL_OP_ADD:
+    case CHANNEL_OP_REPLACE:
       pixel_regions_process_parallel ((p_func) channel_combine_sub_region_add,
 				      NULL, 2, &srcPR, &destPR);
       break;
-    case SUB:
+    case CHANNEL_OP_SUB:
       pixel_regions_process_parallel ((p_func) channel_combine_sub_region_sub,
 				      NULL, 2, &srcPR, &destPR);
       break;
-    case INTERSECT:
+    case CHANNEL_OP_INTERSECT:
       pixel_regions_process_parallel ((p_func)
 				      channel_combine_sub_region_intersect,
 				      NULL, 2, &srcPR, &destPR);

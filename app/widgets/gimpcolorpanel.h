@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __COLOR_PANEL_H__
 #define __COLOR_PANEL_H__
 
@@ -38,5 +39,6 @@ ColorPanel * color_panel_new       (guchar     *initial,
 
 void         color_panel_set_color (ColorPanel *color_panel,
 				    guchar     *col);
+
 
 #endif  /*  __COLOR_PANEL_H__  */

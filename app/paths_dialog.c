@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+#include <sys/types.h>
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -33,6 +34,7 @@
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gimage.h"
+#include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpdrawable.h"
 #include "gimage_mask.h"
@@ -51,9 +53,9 @@
 #include "path_transform.h"
 #include "paths_dialog.h"
 #include "paths_dialogP.h"
+#include "plug_in.h"
+#include "procedural_db.h"
 #include "undo.h"
-
-#include "drawable_pvt.h"
 
 #include "libgimp/gimpmath.h"
 
@@ -71,6 +73,7 @@
 #include "pixmaps/topath.xpm"
 #include "pixmaps/path.xbm"
 #include "pixmaps/locked.xbm"
+
 
 typedef struct _PathsDialog PathsDialog;
 

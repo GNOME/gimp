@@ -14,10 +14,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __APP_GIMP_PARASITE_H__
 #define __APP_GIMP_PARASITE_H__
 
-#include "libgimp/gimpparasite.h"
 
 void            gimp_init_parasites  (void);
 
@@ -29,5 +29,6 @@ gchar        ** gimp_parasite_list   (gint         *count);
 
 void            gimp_parasiterc_save (void);
 void            gimp_parasiterc_load (void);
+
 
 #endif  /*  __APP_GIMP_PARASITE_H__  */

@@ -20,9 +20,10 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
 
+#include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-#include <gdk/gdk.h>
 
 #ifndef GDK_WINDOWING_WIN32
 #include <gdk/gdkx.h>
@@ -37,21 +38,29 @@
 #include "edit_selection.h"
 #include "errors.h"
 #include "floating_sel.h"
+#include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpimage.h"
 #include "gimpui.h"
 #include "global_edit.h"
+#include "layer.h"
+#include "paint_funcs.h"
+#include "pixel_region.h"
+#include "plug_in.h"
 #include "procedural_db.h"
 #include "selection.h"
 #include "text_tool.h"
+#include "tile.h"
 #include "tools.h"
+#include "tool_options.h"
+#include "tile_manager.h"
+#include "tile_manager_pvt.h"
 #include "undo.h"
 
-#include "tile_manager_pvt.h"
-#include "drawable_pvt.h"
-
-#include "config.h"
 #include "libgimp/gimplimits.h"
+
 #include "libgimp/gimpintl.h"
+
 
 #define FOUNDRY      0
 #define FAMILY       1
@@ -285,7 +294,7 @@ text_call_gdyntext (GDisplay *gdisp)
   args[1].arg_type = PDB_IMAGE;
   args[1].value.pdb_int = (gint32) pdb_image_to_id (gdisp->gimage);
   args[2].arg_type = PDB_DRAWABLE;
-  args[2].value.pdb_int = (gint32) gimage_active_drawable (gdisp->gimage)->ID;
+  args[2].value.pdb_int = (gint32) gimp_image_active_drawable (gdisp->gimage)->ID;
 
   plug_in_run (proc_rec, args, 3, FALSE, TRUE, gdisp->ID);
 
@@ -313,9 +322,9 @@ text_button_press (Tool           *tool,
 			       &text_tool->click_x, &text_tool->click_y,
 			       TRUE, 0);
 
-  if ((layer = gimage_pick_correlate_layer (gdisp->gimage,
-					    text_tool->click_x,
-					    text_tool->click_y)))
+  if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage,
+						text_tool->click_x,
+						text_tool->click_y)))
     /*  If there is a floating selection, and this aint it, use the move tool  */
     if (layer_is_floating_sel (layer))
       {
@@ -358,7 +367,7 @@ text_cursor_update (Tool           *tool,
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
 
-  if ((layer = gimage_pick_correlate_layer (gdisp->gimage, x, y)))
+  if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage, x, y)))
     /*  if there is a floating selection, and this aint it...  */
     if (layer_is_floating_sel (layer))
       {
@@ -470,7 +479,7 @@ text_init_render (TextTool *text_tool)
   gdisp = (GDisplay *) text_tool->gdisp_ptr;
 
   /* override the user's antialias setting if this is an indexed image */
-  if (gimage_base_type (gdisp->gimage) == INDEXED)
+  if (gimp_image_base_type (gdisp->gimage) == INDEXED)
     antialias = FALSE;
 
   /* If we're anti-aliasing, request a larger font than user specified.
@@ -496,7 +505,7 @@ text_init_render (TextTool *text_tool)
   /* strdup it since the render function strtok()s the text */
   text = g_strdup (text);
 
-  text_render (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
+  text_render (gdisp->gimage, gimp_image_active_drawable (gdisp->gimage),
 	       text_tool->click_x, text_tool->click_y,
 	       fontname, text, text_options->border, antialias);
 
@@ -590,7 +599,7 @@ text_render (GimpImage    *gimage,
   if (drawable)
     layer_type = drawable_type_with_alpha (drawable);
   else
-    layer_type = gimage_base_type_with_alpha (gimage);
+    layer_type = gimp_image_base_type_with_alpha (gimage);
 
   /* scale the text based on the antialiasing amount */
   if (antialias)
@@ -751,7 +760,7 @@ text_render (GimpImage    *gimage,
 			 _("Text Layer"), OPAQUE_OPACITY, NORMAL_MODE)))
     {
       /*  color the layer buffer  */
-      gimage_get_foreground (gimage, drawable, color);
+      gimp_image_get_foreground (gimage, drawable, color);
       color[GIMP_DRAWABLE (layer)->bytes - 1] = OPAQUE_OPACITY;
       pixel_region_init (&textPR, GIMP_DRAWABLE (layer)->tiles,
 			 0, 0,
@@ -782,11 +791,11 @@ text_render (GimpImage    *gimage,
        *  it seems like the correct behavior.
        */
       if (! gimage_mask_is_empty (gimage))
-	channel_clear (gimage_get_mask (gimage));
+	channel_clear (gimp_image_get_mask (gimage));
 
       /*  If the drawable id is invalid, create a new layer  */
       if (drawable == NULL)
-	gimage_add_layer (gimage, layer, -1);
+	gimp_image_add_layer (gimage, layer, -1);
       /*  Otherwise, instantiate the text as the new floating selection */
       else
 	floating_sel_attach (layer, drawable);

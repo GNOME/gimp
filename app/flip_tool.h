@@ -15,13 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __FLIP_TOOL_H__
 #define __FLIP_TOOL_H__
 
-#include "tools.h"
-#include "transform_core.h"
-
-/*  Flip tool functions  */
 
 TileManager * flip_tool_transform  (Tool                    *tool,
 				    gpointer                 gdisp_ptr,
@@ -35,5 +32,6 @@ TileManager * flip_tool_flip       (GimpImage               *gimage,
 
 Tool        * tools_new_flip       (void);
 void          tools_free_flip_tool (Tool                    *tool);
+
 
 #endif  /*  __FLIP_TOOL_H__  */

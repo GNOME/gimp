@@ -15,15 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __IMAGE_MAP_H__
 #define __IMAGE_MAP_H__
 
-#include "apptypes.h"
-#include "pixel_region.h"
-
-/*  Image map apply function  */
-typedef void * ImageMap;
-typedef void (* ImageMapApplyFunc)  (PixelRegion *, PixelRegion *, void *);
 
 /*  Image Map functions  */
 
@@ -31,11 +26,17 @@ typedef void (* ImageMapApplyFunc)  (PixelRegion *, PixelRegion *, void *);
  *   MUST be followed with an image_map_commit or an image_map_abort call
  *   The image map is no longer valid after a call to commit or abort.
  */
-ImageMap  image_map_create  (void *, GimpDrawable *);
-void      image_map_apply   (ImageMap, ImageMapApplyFunc, void *);
-void      image_map_commit  (ImageMap);
-void      image_map_clear   (ImageMap);
-void      image_map_abort   (ImageMap);
-unsigned char *image_map_get_color_at (ImageMap, int, int);
+ImageMap image_map_create       (void *,
+			         GimpDrawable *);
+void     image_map_apply        (ImageMap,
+			         ImageMapApplyFunc,
+			         void *);
+void     image_map_commit       (ImageMap);
+void     image_map_clear        (ImageMap);
+void     image_map_abort        (ImageMap);
+guchar * image_map_get_color_at (ImageMap,
+				 gint,
+				 gint);
+
 
 #endif /* __IMAGE_MAP_H__ */

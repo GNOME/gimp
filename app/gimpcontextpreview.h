@@ -22,11 +22,6 @@
 #ifndef __GIMP_CONTEXT_PREVIEW_H__
 #define __GIMP_CONTEXT_PREVIEW_H_
 
-#include "gimpbrush.h"
-#include "gradient.h"
-#include "patterns.h"
-
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -37,7 +32,6 @@ extern "C" {
 #define GIMP_IS_CONTEXT_PREVIEW(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_CONTEXT_PREVIEW))
 #define GIMP_IS_CONTEXT_PREVIEW_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTEXT_PREVIEW))
 
-typedef struct _GimpContextPreview       GimpContextPreview;
 typedef struct _GimpContextPreviewClass  GimpContextPreviewClass;
 
 typedef enum

@@ -15,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef  __BLEND_H__
 #define  __BLEND_H__
 
-#include "gimpprogress.h"
-#include "tools.h"
 
 typedef enum
 {
@@ -54,11 +53,26 @@ typedef enum
   REPEAT_LAST /*< skip >*/
 } RepeatMode;
 
-void        blend (GimpImage *, GimpDrawable *, BlendMode, int, GradientType,
-    		   double, double, RepeatMode, int, int, double, double,
-		   double, double, double, progress_func_t, void *);
+void   blend            (GimpImage *,
+			 GimpDrawable *,
+			 BlendMode,
+			 gint,
+			 GradientType,
+			 gdouble,
+			 gdouble,
+			 RepeatMode,
+			 gint,
+			 gint,
+			 gdouble,
+			 gdouble,
+			 gdouble,
+			 gdouble,
+			 gdouble,
+			 progress_func_t,
+			 gpointer);
 
-Tool *      tools_new_blend   (void);
-void        tools_free_blend  (Tool *);
+Tool * tools_new_blend  (void);
+void   tools_free_blend (Tool *tool);
+
 
 #endif  /*  __BLEND_H__  */

@@ -24,7 +24,11 @@
 
 #include <gtk/gtk.h>
 
+#include "gimptypes.h"
+#include "gimpuitypes.h"
+
 #include "gimpdialog.h"
+#include "gimphelpui.h"
 #include "gimpunitmenu.h"
 
 #include "libgimp-intl.h"

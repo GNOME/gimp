@@ -24,17 +24,25 @@
 
 #include "apptypes.h"
 
+#include "channel.h"
 #include "cursorutil.h"
 #include "draw_core.h"
+#include "drawable.h"
 #include "edit_selection.h"
 #include "errors.h"
 #include "gdisplay.h"
+#include "gimpimage.h"
 #include "gimage_mask.h"
+#include "gimpcontext.h"
 #include "rect_select.h"
 #include "bezier_select.h"
 #include "bezier_selectP.h"
 #include "paths_dialogP.h"
+#include "pixel_region.h"
+#include "procedural_db.h"
 #include "selection_options.h"
+#include "tools.h"
+#include "tool_options.h"
 #include "undo.h"
 
 #include "libgimp/gimpmath.h"
@@ -972,7 +980,7 @@ bezier_select_button_press (Tool           *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
 
-  tool->drawable = gimage_active_drawable (gdisp->gimage);
+  tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
   bezier_sel = tool->private;
   grab_pointer = FALSE;
@@ -1020,7 +1028,7 @@ bezier_select_button_press (Tool           *tool,
 /* 	  break; */
 /* 	} */
 /*       else if (!(bevent->state & GDK_SHIFT_MASK) && !(bevent->state & GDK_CONTROL_MASK)) */
-/* 	if (! (layer_is_floating_sel (gimage_get_active_layer (gdisp->gimage))) && */
+/* 	if (! (layer_is_floating_sel (gimp_image_get_active_layer (gdisp->gimage))) && */
 /* 	    gdisplay_mask_value (gdisp, bevent->x, bevent->y) > HALF_WAY) */
 /* 	  { */
 /* 	    init_edit_selection (tool, gdisp_ptr, bevent, EDIT_MASK_TO_LAYER_TRANSLATE); */
@@ -1249,16 +1257,16 @@ bezier_select_button_press (Tool           *tool,
 
 	  if ((bevent->state & GDK_SHIFT_MASK) &&
 	      !(bevent->state & GDK_CONTROL_MASK))
-	    op = ADD;
+	    op = CHANNEL_OP_ADD;
 	  else if ((bevent->state & GDK_CONTROL_MASK) &&
 		   !(bevent->state & GDK_SHIFT_MASK))
-	    op = SUB;
+	    op = CHANNEL_OP_SUB;
 	  else if ((bevent->state & GDK_CONTROL_MASK) &&
 		   (bevent->state & GDK_SHIFT_MASK))
-	    op = INTERSECT;
+	    op = CHANNEL_OP_INTERSECT;
 	  else
 	    {
-	      op = ADD;
+	      op = CHANNEL_OP_ADD;
 	      replace = TRUE;
 	    }
 
@@ -2514,10 +2522,13 @@ bezier_convert (BezierSelect *bezier_sel,
     points = next_curve;
   } while (next_curve);
 
-  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(bezier_sel->mask)), 
+  pixel_region_init (&maskPR,
+		     gimp_drawable_data (GIMP_DRAWABLE (bezier_sel->mask)), 
 		     0, 0,
-		     drawable_width (GIMP_DRAWABLE(bezier_sel->mask)),
-		     drawable_height (GIMP_DRAWABLE(bezier_sel->mask)), TRUE);
+		     gimp_drawable_width (GIMP_DRAWABLE (bezier_sel->mask)),
+		     gimp_drawable_height (GIMP_DRAWABLE (bezier_sel->mask)),
+		     TRUE);
+
   for (i = 0; i < height; i++)
     {
       list = bezier_sel->scanlines[i];
@@ -2567,7 +2578,7 @@ bezier_convert (BezierSelect *bezier_sel,
 	    }
 
 	  pixel_region_set_row (&maskPR, 0, (i / SUPERSAMPLE), 
-				drawable_width (GIMP_DRAWABLE(bezier_sel->mask)), buf);
+				gimp_drawable_width (GIMP_DRAWABLE (bezier_sel->mask)), buf);
 	}
 
       g_slist_free (bezier_sel->scanlines[i]);
@@ -2794,7 +2805,7 @@ bezier_paste_bezierselect_to_current(GDisplay *gdisp,BezierSelect *bsel)
   gimp_context_set_tool (gimp_context_get_user (), BEZIER_SELECT);
   active_tool->paused_count = 0;
   active_tool->gdisp_ptr = gdisp;
-  active_tool->drawable = gimage_active_drawable (gdisp->gimage);  
+  active_tool->drawable = gimp_image_active_drawable (gdisp->gimage);  
 
   tool = active_tool;
 
@@ -2894,12 +2905,12 @@ bezier_to_sel_internal(BezierSelect  *bezier_sel,
   
   if (bezier_options->feather)
     channel_feather (bezier_sel->mask,
-		     gimage_get_mask (gdisp->gimage),
+		     gimp_image_get_mask (gdisp->gimage),
 		     bezier_options->feather_radius, 
 		     bezier_options->feather_radius, 
 		     op, 0, 0);
   else
-    channel_combine_mask (gimage_get_mask (gdisp->gimage),
+    channel_combine_mask (gimp_image_get_mask (gdisp->gimage),
 			  bezier_sel->mask, op, 0, 0);
   
   /*  show selection on all views  */
@@ -3167,7 +3178,7 @@ bezier_to_selection (BezierSelect *bezier_sel,
    * This loads it into curSel for this image
    */
   bezier_paste_bezierselect_to_current (gdisp, bezier_sel);
-  bezier_to_sel_internal (curSel, curTool, gdisp, ADD, TRUE);
+  bezier_to_sel_internal (curSel, curTool, gdisp, CHANNEL_OP_ADD, TRUE);
 }
 
 /* unused
@@ -3456,7 +3467,7 @@ bezier_stroke (BezierSelect *bezier_sel,
 	  gint          offset_x, offset_y;
 	  gdouble      *ptr;
 
-	  drawable = gimage_active_drawable (gdisp->gimage);
+	  drawable = gimp_image_active_drawable (gdisp->gimage);
 	  gimp_drawable_offsets (drawable, &offset_x, &offset_y);
 
 	  ptr = rpnts->stroke_points;

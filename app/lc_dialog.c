@@ -24,6 +24,7 @@
 
 #include "appenv.h"
 #include "dialog_handler.h"
+#include "gdisplay.h"
 #include "gimage.h"
 #include "gimpcontext.h"
 #include "gimppreviewcache.h"
@@ -34,6 +35,7 @@
 #include "lc_dialog.h"
 #include "lc_dialogP.h"
 #include "layers_dialogP.h"
+#include "procedural_db.h"
 #include "session.h"
 
 #include "libgimp/gimpintl.h"

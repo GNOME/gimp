@@ -15,8 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __ERRORS_H__
 #define __ERRORS_H__
+
 
 typedef enum
 {
@@ -25,7 +27,6 @@ typedef enum
   STACK_TRACE_ALWAYS
 } StackTraceMode;
 
-extern StackTraceMode stack_trace_mode;
 
 void  gimp_message_func (const gchar    *log_domain,
 			 GLogLevelFlags  log_level,
@@ -34,5 +35,9 @@ void  gimp_message_func (const gchar    *log_domain,
 
 void  gimp_fatal_error  (gchar *, ...);
 void  gimp_terminate    (gchar *, ...);
+
+
+extern StackTraceMode stack_trace_mode;
+
 
 #endif /* __ERRORS_H__ */

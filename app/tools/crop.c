@@ -26,21 +26,28 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "channel.h"
 #include "crop.h"
 #include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
+#include "gimpimage.h"
 #include "gimage_mask.h"
 #include "gimphelp.h"
 #include "gimpui.h"
 #include "info_dialog.h"
+#include "layer.h"
+#include "pixel_region.h"
+#include "tools.h"
+#include "tool_options.h"
 #include "undo.h"
 
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpmath.h"
 #include "libgimp/gimpintl.h"
+
 
 #define STATUSBAR_SIZE 128
 
@@ -285,7 +292,7 @@ crop_button_press (Tool           *tool,
 	draw_core_stop (crop->core, tool);
 
       tool->gdisp_ptr = gdisp_ptr;
-      tool->drawable = gimage_active_drawable (gdisp->gimage);
+      tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
       gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
 				   &crop->tx1, &crop->ty1, TRUE, FALSE);
@@ -402,14 +409,15 @@ crop_motion (Tool           *tool,
 	     GdkEventMotion *mevent,
 	     gpointer        gdisp_ptr)
 {
-  Crop * crop;
-  GDisplay * gdisp;
-  Layer * layer;
-  int x1, y1, x2, y2;
-  int curx, cury;
-  int inc_x, inc_y;
-  gchar size[STATUSBAR_SIZE];
-  int min_x, min_y, max_x, max_y; 
+  Crop     *crop;
+  GDisplay *gdisp;
+  Layer    *layer;
+  gint      x1, y1, x2, y2;
+  gint      curx, cury;
+  gint      inc_x, inc_y;
+  gchar     size[STATUSBAR_SIZE];
+  gint      min_x, min_y, max_x, max_y; 
+
   crop = (Crop *) tool->private;
   gdisp = (GDisplay *) gdisp_ptr;
 
@@ -871,7 +879,7 @@ crop_image (GImage   *gimage,
 	}
       else
 	{
-	  floating_layer = gimage_floating_sel (gimage);
+	  floating_layer = gimp_image_floating_sel (gimage);
 
 	  undo_push_group_start (gimage, CROP_UNDO);
 
@@ -930,14 +938,14 @@ crop_image (GImage   *gimage,
 				  -(lx1 - off_x),
 				  -(ly1 - off_y));
 		  else
-		    gimage_remove_layer (gimage, layer);
+		    gimp_image_remove_layer (gimage, layer);
 		}
 
 	      list = next;
 	    }
 
 	  /*  Make sure the projection matches the gimage size  */
-	  gimage_projection_realloc (gimage);
+	  gimp_image_projection_realloc (gimage);
 
 	  /*  rigor the floating layer  */
 	  if (floating_layer)
@@ -957,7 +965,7 @@ crop_image (GImage   *gimage,
 	  /*  shrink wrap and update all views  */
 	  channel_invalidate_previews (gimage);
 	  layer_invalidate_previews (gimage);
-	  gimage_invalidate_preview (gimage);
+	  gimp_image_invalidate_preview (gimage);
 	  gdisplays_update_full (gimage);
 	  gdisplays_shrink_wrap (gimage);
 	}
@@ -1287,7 +1295,7 @@ crop_automatic_callback (GtkWidget *widget,
 
   if (crop_options->layer_only)
     {
-      if (!(active_drawable =  gimage_active_drawable (gdisp->gimage)))
+      if (!(active_drawable =  gimp_image_active_drawable (gdisp->gimage)))
 	return;
       width  = drawable_width  (GIMP_DRAWABLE (active_drawable)); 
       height = drawable_height (GIMP_DRAWABLE (active_drawable));

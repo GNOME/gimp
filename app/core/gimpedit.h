@@ -15,10 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GLOBAL_EDIT_H__
 #define __GLOBAL_EDIT_H__
 
-#include "gimage.h"
 
 TileManager * crop_buffer              (TileManager  *tiles,
 					gint          border);
@@ -50,5 +50,6 @@ gboolean      named_edit_cut           (GDisplay    *gdisp);
 gboolean      named_edit_copy          (GDisplay    *gdisp);
 gboolean      named_edit_paste         (GDisplay    *gdisp);
 void          named_buffers_free       (void);
+
 
 #endif  /*  __GLOBAL_EDIT_H__  */

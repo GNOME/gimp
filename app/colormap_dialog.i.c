@@ -11,9 +11,13 @@
 #include "dialog_handler.h"
 #include "colormaps.h"
 #include "color_area.h"
+#include "gdisplay.h"
 #include "gimpdnd.h"
+#include "gimpimage.h"
 #include "gimpui.h"
+#include "procedural_db.h"
 
+#include "libgimp/gimphelpui.h"
 #include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
@@ -715,7 +719,7 @@ ipal_set_image (GimpColormapDialog *ipal,
 	gtk_signal_handler_unblock (GTK_OBJECT (ipal->palette),
 				    ipal->event_handler);
       g_return_if_fail (gimp_set_have (ipal->context, gimage));
-      g_return_if_fail (gimage_base_type (gimage) == INDEXED);
+      g_return_if_fail (gimp_image_base_type (gimage) == INDEXED);
       ipal->image = gimage;
       ipal_draw (ipal);
       gtk_container_queue_resize (GTK_CONTAINER (ipal));
@@ -916,13 +920,13 @@ static void
 create_image_menu_cb (gpointer im,
 		      gpointer d)
 {
-  GimpImage* gimage = GIMP_IMAGE (im);
-  IMCBData* data = (IMCBData *) d;
-  gchar* image_name;
-  gchar* menu_item_label;
+  GimpImage *gimage = GIMP_IMAGE (im);
+  IMCBData  *data = (IMCBData *) d;
+  gchar     *image_name;
+  gchar     *menu_item_label;
   GtkWidget *menu_item;
 
-  if (gimage_base_type (gimage) != INDEXED)
+  if (gimp_image_base_type (gimage) != INDEXED)
     return;
 
   /*  make sure the default index gets set to _something_, if possible  */
@@ -938,13 +942,13 @@ create_image_menu_cb (gpointer im,
       *data->default_index = data->num_items;
     }
 
-  image_name = g_basename (gimage_filename (gimage));
+  image_name = g_basename (gimp_image_filename (gimage));
   menu_item_label = g_strdup_printf ("%s-%d", image_name, 
                                      pdb_image_to_id (gimage));
   menu_item = gtk_menu_item_new_with_label (menu_item_label);
   gtk_object_set_data (GTK_OBJECT (menu_item), "colormap_dialog", data->ipal);
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
-		      (GtkSignalFunc) data->callback,
+		      data->callback,
 		      gimage);
   gtk_container_add (GTK_CONTAINER (data->menu), menu_item);
   gtk_widget_show (menu_item);

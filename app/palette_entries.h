@@ -19,10 +19,6 @@
 #ifndef __PALETTE_ENTRIES_H__
 #define __PALETTE_ENTRIES_H__
 
-#include "gtk/gtk.h"  /*  eeek  */
-
-
-typedef struct _PaletteEntries PaletteEntries;
 
 struct _PaletteEntries
 {
@@ -34,8 +30,6 @@ struct _PaletteEntries
   GdkPixmap *pixmap;
 };
 
-typedef struct _PaletteEntry PaletteEntry;
-
 struct _PaletteEntry
 {
   guchar  color[3];
@@ -44,5 +38,6 @@ struct _PaletteEntry
 };
 
 extern GSList * palette_entries_list;
+
 
 #endif /* __PALETTE_ENTRIES_H__ */

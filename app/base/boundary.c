@@ -27,7 +27,10 @@
 #include "appenv.h"
 #include "errors.h"
 #include "boundary.h"
+#include "pixel_region.h"
 #include "tile.h"
+#include "tile_manager.h"
+
 
 /* half intensity for mask */
 #define HALF_WAY 127

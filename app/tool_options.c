@@ -18,11 +18,12 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "brush_select.h"
+#include "gimpcontext.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "paint_funcs.h"

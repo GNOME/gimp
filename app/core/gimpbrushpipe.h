@@ -21,13 +21,7 @@
 #define __GIMP_BRUSH_PIPE_H__
 
 
-#include "tools.h"
-#include "paint_core.h"
 #include "gimpbrush.h"
-#include "temp_buf.h"
-
-
-typedef struct _GimpBrushPipe GimpBrushPipe;
 
 
 #define GIMP_TYPE_BRUSH_PIPE    (gimp_brush_pipe_get_type ())
@@ -48,6 +42,8 @@ typedef enum
 } PipeSelectModes;
 
 
+typedef struct _GimpBrushPipeClass GimpBrushPipeClass;
+
 struct _GimpBrushPipe
 {
   GimpBrush         gbrush;     /* Also itself a brush */
@@ -64,8 +60,6 @@ struct _GimpBrushPipe
   GimpBrush       **brushes;
   GimpBrush        *current;    /* Currently selected brush */
 };
-
-typedef struct _GimpBrushPipeClass GimpBrushPipeClass;
 
 struct _GimpBrushPipeClass
 {

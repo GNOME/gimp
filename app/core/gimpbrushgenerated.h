@@ -21,6 +21,7 @@
 #ifndef __GIMP_BRUSH_GENERATED_H__
 #define __GIMP_BRUSH_GENERATED_H__
 
+
 #include "gimpbrush.h"
 
 
@@ -28,7 +29,6 @@
 #define GIMP_BRUSH_GENERATED(obj)    (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_GENERATED, GimpBrushGenerated))
 #define GIMP_IS_BRUSH_GENERATED(obj) (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH_GENERATED))
 
-typedef struct _GimpBrushGenerated      GimpBrushGenerated;
 typedef struct _GimpBrushGeneratedClass GimpBrushGeneratedClass;
 
 struct _GimpBrushGenerated

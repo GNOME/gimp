@@ -32,12 +32,16 @@
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimpcontext.h"
+#include "gimage.h"
 #include "gimpui.h"
+#include "layer.h"
+#include "paint_funcs.h"
 #include "parasitelist.h"
+#include "path.h"
+#include "pixel_region.h"
+#include "tile_manager.h"
 
-#include "channel_pvt.h"
-#include "layer_pvt.h"
-
+#include "libgimp/gimphelpui.h"
 #include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
@@ -69,23 +73,23 @@ void
 channel_ops_offset (GimpImage* gimage)
 {
   OffsetDialog *off_d;
-  GtkWidget *label;
-  GtkWidget *check;
-  GtkWidget *push;
-  GtkWidget *vbox;
-  GtkWidget *table;
-  GtkObject *adjustment;
-  GtkWidget *spinbutton;
-  GtkWidget *frame;
-  GtkWidget *radio_button;
+  GtkWidget    *label;
+  GtkWidget    *check;
+  GtkWidget    *push;
+  GtkWidget    *vbox;
+  GtkWidget    *table;
+  GtkObject    *adjustment;
+  GtkWidget    *spinbutton;
+  GtkWidget    *frame;
+  GtkWidget    *radio_button;
 
   GimpDrawable *drawable;
 
-  drawable = gimage_active_drawable (gimage);
+  drawable = gimp_image_active_drawable (gimage);
 
   off_d = g_new (OffsetDialog, 1);
   off_d->wrap_around = TRUE;
-  off_d->fill_type   = drawable_has_alpha (drawable);
+  off_d->fill_type   = gimp_drawable_has_alpha (drawable);
   off_d->gimage      = gimage;
 
   off_d->dlg = gimp_dialog_new (_("Offset"), "offset",
@@ -186,7 +190,7 @@ channel_ops_offset (GimpImage* gimage)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  if (!drawable_has_alpha (drawable))
+  if (! gimp_drawable_has_alpha (drawable))
     gtk_widget_set_sensitive (radio_button, FALSE);
 
   /*  The by half height and half width option */
@@ -229,8 +233,8 @@ offset (GimpImage         *gimage,
   if (!drawable) 
     return;
 
-  width = drawable_width (drawable);
-  height = drawable_height (drawable);
+  width  = gimp_drawable_width (drawable);
+  height = gimp_drawable_height (drawable);
 
   if (wrap_around)
     {
@@ -252,7 +256,7 @@ offset (GimpImage         *gimage,
   if (offset_x == 0 && offset_y == 0)
     return;
 
-  new_tiles = tile_manager_new (width, height, drawable_bytes (drawable));
+  new_tiles = tile_manager_new (width, height, gimp_drawable_bytes (drawable));
   if (offset_x >= 0)
     {
       src_x = 0;
@@ -282,8 +286,10 @@ offset (GimpImage         *gimage,
   /*  Copy the center region  */
   if (width && height)
     {
-      pixel_region_init (&srcPR, drawable_data (drawable), src_x, src_y, width, height, FALSE);
-      pixel_region_init (&destPR, new_tiles, dest_x, dest_y, width, height, TRUE);
+      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+			 src_x, src_y, width, height, FALSE);
+      pixel_region_init (&destPR, new_tiles,
+			 dest_x, dest_y, width, height, TRUE);
 
       copy_region (&srcPR, &destPR);
     }
@@ -293,18 +299,18 @@ offset (GimpImage         *gimage,
     {
       if (offset_x >= 0 && offset_y >= 0)
 	{
-	  src_x = drawable_width (drawable) - offset_x;
-	  src_y = drawable_height (drawable) - offset_y;
+	  src_x = gimp_drawable_width (drawable) - offset_x;
+	  src_y = gimp_drawable_height (drawable) - offset_y;
 	}
       else if (offset_x >= 0 && offset_y < 0)
 	{
-	  src_x = drawable_width (drawable) - offset_x;
+	  src_x = gimp_drawable_width (drawable) - offset_x;
 	  src_y = 0;
 	}
       else if (offset_x < 0 && offset_y >= 0)
 	{
 	  src_x = 0;
-	  src_y = drawable_height (drawable) - offset_y;
+	  src_y = gimp_drawable_height (drawable) - offset_y;
 	}
       else if (offset_x < 0 && offset_y < 0)
 	{
@@ -312,19 +318,22 @@ offset (GimpImage         *gimage,
 	  src_y = 0;
 	}
 
-      dest_x = (src_x + offset_x) % drawable_width (drawable);
+      dest_x = (src_x + offset_x) % gimp_drawable_width (drawable);
       if (dest_x < 0)
-	dest_x = drawable_width (drawable) + dest_x;
-      dest_y = (src_y + offset_y) % drawable_height (drawable);
+	dest_x = gimp_drawable_width (drawable) + dest_x;
+      dest_y = (src_y + offset_y) % gimp_drawable_height (drawable);
       if (dest_y < 0)
-	dest_y = drawable_height (drawable) + dest_y;
+	dest_y = gimp_drawable_height (drawable) + dest_y;
 
       /*  intersecting region  */
       if (offset_x != 0 && offset_y != 0)
 	{
-	  pixel_region_init (&srcPR, drawable_data (drawable), src_x, src_y,
-			     ABS (offset_x), ABS (offset_y), FALSE);
-	  pixel_region_init (&destPR, new_tiles, dest_x, dest_y, ABS (offset_x), ABS (offset_y), TRUE);
+	  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+			     src_x, src_y, ABS (offset_x), ABS (offset_y)
+			     , FALSE);
+	  pixel_region_init (&destPR, new_tiles,
+			     dest_x, dest_y, ABS (offset_x), ABS (offset_y),
+			     TRUE);
 	  copy_region (&srcPR, &destPR);
 	}
 
@@ -333,17 +342,28 @@ offset (GimpImage         *gimage,
 	{
 	  if (offset_y >= 0)
 	    {
-	      pixel_region_init (&srcPR, drawable_data (drawable), src_x, 0,
-				 ABS (offset_x), drawable_height (drawable) - ABS (offset_y), FALSE);
-	      pixel_region_init (&destPR, new_tiles, dest_x, dest_y + offset_y,
-				 ABS (offset_x), drawable_height (drawable) - ABS (offset_y), TRUE);
+	      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+				 src_x, 0, ABS (offset_x),
+				 gimp_drawable_height (drawable) - ABS (offset_y),
+				 FALSE);
+	      pixel_region_init (&destPR, new_tiles,
+				 dest_x, dest_y + offset_y,
+				 ABS (offset_x),
+				 gimp_drawable_height (drawable) - ABS (offset_y),
+				 TRUE);
 	    }
 	  else if (offset_y < 0)
 	    {
-	      pixel_region_init (&srcPR, drawable_data (drawable), src_x, src_y - offset_y,
-				 ABS (offset_x), drawable_height (drawable) - ABS (offset_y), FALSE);
-	      pixel_region_init (&destPR, new_tiles, dest_x, 0,
-				 ABS (offset_x), drawable_height (drawable) - ABS (offset_y), TRUE);
+	      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+				 src_x, src_y - offset_y,
+				 ABS (offset_x),
+				 gimp_drawable_height (drawable) - ABS (offset_y),
+				 FALSE);
+	      pixel_region_init (&destPR, new_tiles,
+				 dest_x, 0,
+				 ABS (offset_x),
+				 gimp_drawable_height (drawable) - ABS (offset_y),
+				 TRUE);
 	    }
 
 	  copy_region (&srcPR, &destPR);
@@ -354,21 +374,22 @@ offset (GimpImage         *gimage,
 	{
 	  if (offset_x >= 0)
 	    {
-	      pixel_region_init (&srcPR, drawable_data (drawable), 0, src_y,
-				 drawable_width (drawable) - ABS (offset_x),
+	      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+				 0, src_y,
+				 gimp_drawable_width (drawable) - ABS (offset_x),
 				 ABS (offset_y), FALSE);
 	      pixel_region_init (&destPR, new_tiles, dest_x + offset_x, dest_y,
-				 drawable_width (drawable) - ABS (offset_x),
+				 gimp_drawable_width (drawable) - ABS (offset_x),
 				 ABS (offset_y), TRUE);
 	    }
 	  else if (offset_x < 0)
 	    {
-	      pixel_region_init (&srcPR, drawable_data (drawable),
+	      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
 				 src_x - offset_x, src_y,
-				 drawable_width (drawable) - ABS (offset_x),
+				 gimp_drawable_width (drawable) - ABS (offset_x),
 				 ABS (offset_y), FALSE);
 	      pixel_region_init (&destPR, new_tiles, 0, dest_y,
-				 drawable_width (drawable) - ABS (offset_x),
+				 gimp_drawable_width (drawable) - ABS (offset_x),
 				 ABS (offset_y), TRUE);
 	    }
 
@@ -381,8 +402,8 @@ offset (GimpImage         *gimage,
       if (fill_type == OFFSET_BACKGROUND)
 	{
 	  gimp_context_get_background (NULL, &fill[0], &fill[1], &fill[2]);
-	  if (drawable_has_alpha (drawable))
-	    fill[drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
+	  if (gimp_drawable_has_alpha (drawable))
+	    fill[gimp_drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
 	}
 
       if (offset_x >= 0 && offset_y >= 0)
@@ -393,17 +414,17 @@ offset (GimpImage         *gimage,
       else if (offset_x >= 0 && offset_y < 0)
 	{
 	  dest_x = 0;
-	  dest_y = drawable_height (drawable) + offset_y;
+	  dest_y = gimp_drawable_height (drawable) + offset_y;
 	}
       else if (offset_x < 0 && offset_y >= 0)
 	{
-	  dest_x = drawable_width (drawable) + offset_x;
+	  dest_x = gimp_drawable_width (drawable) + offset_x;
 	  dest_y = 0;
 	}
       else if (offset_x < 0 && offset_y < 0)
 	{
-	  dest_x = drawable_width (drawable) + offset_x;
-	  dest_y = drawable_height (drawable) + offset_y;
+	  dest_x = gimp_drawable_width (drawable) + offset_x;
+	  dest_y = gimp_drawable_height (drawable) + offset_y;
 	}
 
       /*  intersecting region  */
@@ -418,11 +439,17 @@ offset (GimpImage         *gimage,
       if (offset_x != 0)
 	{
 	  if (offset_y >= 0)
-	    pixel_region_init (&destPR, new_tiles, dest_x, dest_y + offset_y,
-			       ABS (offset_x), drawable_height (drawable) - ABS (offset_y), TRUE);
+	    pixel_region_init (&destPR, new_tiles,
+			       dest_x, dest_y + offset_y,
+			       ABS (offset_x),
+			       gimp_drawable_height (drawable) - ABS (offset_y),
+			       TRUE);
 	  else if (offset_y < 0)
-	    pixel_region_init (&destPR, new_tiles, dest_x, 0,
-			       ABS (offset_x), drawable_height (drawable) - ABS (offset_y), TRUE);
+	    pixel_region_init (&destPR, new_tiles,
+			       dest_x, 0,
+			       ABS (offset_x),
+			       gimp_drawable_height (drawable) - ABS (offset_y),
+			       TRUE);
 
 	  color_region (&destPR, fill);
 	}
@@ -431,11 +458,18 @@ offset (GimpImage         *gimage,
       if (offset_y != 0)
 	{
 	  if (offset_x >= 0)
-	    pixel_region_init (&destPR, new_tiles, dest_x + offset_x, dest_y,
-			       drawable_width (drawable) - ABS (offset_x), ABS (offset_y), TRUE);
+	    pixel_region_init (&destPR, new_tiles,
+			       dest_x + offset_x,
+			       dest_y,
+			       gimp_drawable_width (drawable) - ABS (offset_x),
+			       ABS (offset_y),
+			       TRUE);
 	  else if (offset_x < 0)
-	    pixel_region_init (&destPR, new_tiles, 0, dest_y,
-			       drawable_width (drawable) - ABS (offset_x), ABS (offset_y), TRUE);
+	    pixel_region_init (&destPR, new_tiles,
+			       0, dest_y,
+			       gimp_drawable_width (drawable) - ABS (offset_x),
+			       ABS (offset_y),
+			       TRUE);
 
 	  color_region (&destPR, fill);
 	}
@@ -443,8 +477,9 @@ offset (GimpImage         *gimage,
 
   /*  push an undo  */
   drawable_apply_image (drawable, 0, 0,
-			drawable_width (drawable), drawable_height (drawable),
-			drawable_data (drawable), FALSE);
+			gimp_drawable_width (drawable),
+			gimp_drawable_height (drawable),
+			gimp_drawable_data (drawable), FALSE);
 
   /*  swap the tiles  */
   drawable->tiles = new_tiles;
@@ -452,7 +487,8 @@ offset (GimpImage         *gimage,
 
   /*  update the drawable  */
   drawable_update (drawable, 0, 0,
-		   drawable_width (drawable), drawable_height (drawable));
+		   gimp_drawable_width (drawable),
+		   gimp_drawable_height (drawable));
 }
 
 /*
@@ -473,7 +509,7 @@ offset_ok_callback (GtkWidget *widget,
 
   if ((gimage = off_d->gimage) != NULL)
     {
-      drawable = gimage_active_drawable (gimage);
+      drawable = gimp_image_active_drawable (gimage);
 
       offset_x = (gint)
 	RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (off_d->off_se), 0));
@@ -505,7 +541,7 @@ offset_halfheight_callback (GtkWidget *widget,
 			    gpointer   data)
 {
   OffsetDialog *off_d;
-  GImage *gimage;
+  GImage       *gimage;
 
   off_d = (OffsetDialog *) data;
   gimage = off_d->gimage;
@@ -519,27 +555,27 @@ offset_halfheight_callback (GtkWidget *widget,
 GimpImage *
 duplicate (GimpImage *gimage)
 {
-  PixelRegion srcPR, destPR;
-  GimpImage *new_gimage;
-  Layer *layer, *new_layer;
-  Layer *floating_layer;
-  Channel *channel, *new_channel;
-  GSList *list;
-  GList *glist;
-  Guide *guide = NULL;
-  Layer *active_layer = NULL;
-  Channel *active_channel = NULL;
+  PixelRegion   srcPR, destPR;
+  GimpImage    *new_gimage;
+  Layer        *layer, *new_layer;
+  Layer        *floating_layer;
+  Channel      *channel, *new_channel;
+  GSList       *list;
+  GList        *glist;
+  Guide        *guide = NULL;
+  Layer        *active_layer = NULL;
+  Channel      *active_channel = NULL;
   GimpDrawable *new_floating_sel_drawable = NULL;
   GimpDrawable *floating_sel_drawable = NULL;
   ParasiteList *parasites;
-  PathList *paths;
-  gint count;
+  PathList     *paths;
+  gint          count;
 
   gimp_add_busy_cursors_until_idle ();
 
   /*  Create a new image  */
   new_gimage = gimage_new (gimage->width, gimage->height, gimage->base_type);
-  gimage_disable_undo (new_gimage);
+  gimp_image_undo_disable (new_gimage);
 
   /*  Copy resolution and unit information  */
   new_gimage->xresolution = gimage->xresolution;
@@ -547,7 +583,7 @@ duplicate (GimpImage *gimage)
   new_gimage->unit = gimage->unit;
 
   /*  Copy floating layer  */
-  floating_layer = gimage_floating_sel (gimage);
+  floating_layer = gimp_image_floating_sel (gimage);
   if (floating_layer)
     {
       floating_sel_relax (floating_layer, FALSE);
@@ -591,7 +627,7 @@ duplicate (GimpImage *gimage)
 
       /*  Add the layer  */
       if (floating_layer != new_layer)
-	gimage_add_layer (new_gimage, new_layer, count++);
+	gimp_image_add_layer (new_gimage, new_layer, count++);
     }
 
   /*  Copy the channels  */
@@ -617,13 +653,13 @@ duplicate (GimpImage *gimage)
 	new_floating_sel_drawable = GIMP_DRAWABLE(new_channel);
 
       /*  Add the channel  */
-      gimage_add_channel (new_gimage, new_channel, count++);
+      gimp_image_add_channel (new_gimage, new_channel, count++);
     }
 
   /*  Copy the selection mask  */
-  pixel_region_init (&srcPR, drawable_data (GIMP_DRAWABLE(gimage->selection_mask)), 
+  pixel_region_init (&srcPR, gimp_drawable_data (GIMP_DRAWABLE (gimage->selection_mask)), 
 		     0, 0, gimage->width, gimage->height, FALSE);
-  pixel_region_init (&destPR, drawable_data (GIMP_DRAWABLE(new_gimage->selection_mask)), 
+  pixel_region_init (&destPR, gimp_drawable_data (GIMP_DRAWABLE (new_gimage->selection_mask)), 
 		     0, 0, gimage->width, gimage->height, TRUE);
   copy_region (&srcPR, &destPR);
   new_gimage->selection_mask->bounds_known = FALSE;
@@ -700,7 +736,7 @@ duplicate (GimpImage *gimage)
       gimp_image_set_paths (new_gimage, new_paths);
     }
 
-  gimage_enable_undo (new_gimage);
+  gimp_image_undo_enable (new_gimage);
 
   return new_gimage;
 }
@@ -708,8 +744,9 @@ duplicate (GimpImage *gimage)
 
 #ifdef I_LIKE_BOGUS_CRAP
 static void
-duplicate_projection (GimpImage *oldgimage, GimpImage *newgimage,
-		      GDisplay *newgdisplay)
+duplicate_projection (GimpImage *oldgimage,
+		      GimpImage *newgimage,
+		      GDisplay  *newgdisplay)
 {
   PixelRegion srcPR, destPR;
 

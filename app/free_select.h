@@ -19,14 +19,18 @@
 #ifndef __FREE_SELECT_H__
 #define __FREE_SELECT_H__
 
-#include "scan_convert.h"
-
 
 /*  free select action functions  */
 
-void   free_select_button_press   (Tool *, GdkEventButton *, gpointer);
-void   free_select_button_release (Tool *, GdkEventButton *, gpointer);
-void   free_select_motion         (Tool *, GdkEventMotion *, gpointer);
+void   free_select_button_press   (Tool           *tool,
+				   GdkEventButton *bevent,
+				   gpointer        gdisp_ptr);
+void   free_select_button_release (Tool           *tool,
+				   GdkEventButton *bevent,
+				   gpointer        gdisp_ptr);
+void   free_select_motion         (Tool           *tool,
+				   GdkEventMotion *mevent,
+				   gpointer        gdisp_ptr);
 
 
 /*  free select functions  */

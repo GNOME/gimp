@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
@@ -27,17 +27,20 @@
 #include "colormaps.h"
 #include "gdisplay.h"
 #include "gimpcontext.h"
+#include "gimpimage.h"
 #include "gimpset.h"
 #include "gimpui.h"
 #include "gximage.h"
 #include "info_dialog.h"
 #include "info_window.h"
+#include "procedural_db.h"
 #include "scroll.h"
 #include "tools.h"
 
 #include "libgimp/gimpunit.h"
 
 #include "libgimp/gimpintl.h"
+
 
 #define MAX_BUF 256
 
@@ -245,8 +248,8 @@ info_window_create (GDisplay *gdisp)
   gchar *title, *title_buf;
   gint type;
 
-  title = g_basename (gimage_filename (gdisp->gimage));
-  type = gimage_base_type (gdisp->gimage);
+  title = g_basename (gimp_image_filename (gdisp->gimage));
+  type = gimp_image_base_type (gdisp->gimage);
 
   /*  create the info dialog  */
   title_buf = info_window_title (gdisp);
@@ -314,7 +317,7 @@ info_window_title (GDisplay *gdisp)
   gchar *title;
   gchar *title_buf;
   
-  title = g_basename (gimage_filename (gdisp->gimage));
+  title = g_basename (gimp_image_filename (gdisp->gimage));
   
   /*  create the info dialog  */
   title_buf = g_strdup_printf (_("Info: %s-%d.%d"), 
@@ -421,7 +424,7 @@ info_window_update_RGB (GDisplay *gdisp,
   if (!iwd || iwd->showingPreview == FALSE)
     return;
 
-  /* gimage_active_drawable (gdisp->gimage) */
+  /* gimp_image_active_drawable (gdisp->gimage) */
   if (!(color = gimp_image_get_color_at (gdisp->gimage, tx, ty))
       || (tx <  0.0 && ty < 0.0))
     {
@@ -531,7 +534,7 @@ info_window_update (GDisplay *gdisp)
   g_snprintf (iwd->scale_str, MAX_BUF, "%d:%d",
 	   SCALEDEST (gdisp), SCALESRC (gdisp));
 
-  type = gimage_base_type (gdisp->gimage);
+  type = gimp_image_base_type (gdisp->gimage);
 
   /*  color type  */
   if (type == RGB)

@@ -12,6 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+
 #include "config.h"
 
 #include <ctype.h>
@@ -21,17 +22,20 @@
 
 #include <gtk/gtk.h>
 
+#include "apptypes.h"
+
 #include "dialog_handler.h"
 #include "docindex.h"
 #include "fileops.h"
 #include "gdisplay.h"
-#include "gimpimageP.h"
+#include "gimpimage.h"
 #include "gimpui.h"
 #include "gimpdnd.h"
 #include "ops_buttons.h"
 #include "session.h"
 
 #include "libgimp/gimpenv.h"
+#include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -62,7 +66,7 @@ static void      idea_add_in_position              (gchar       *label,
 						    gint         position);
 static void      open_idea_window                  (void);
 static void      open_or_raise                     (gchar       *file_name,
-						    gboolean    try_raise);
+						    gboolean     try_raise);
 
 static void      idea_open_callback                (GtkWidget   *widget,
 						    gpointer     data);

@@ -23,11 +23,6 @@
 #define __DATAFILES_H__
 
 
-#include <time.h>
-
-
-/***** Types *****/
-
 typedef enum
 {
   INCLUDE_TEMP_DIR = 1 << 0,

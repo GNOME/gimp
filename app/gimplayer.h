@@ -19,15 +19,10 @@
 #ifndef __LAYER_H__
 #define __LAYER_H__
 
-#include "apptypes.h"
-#include "drawable.h"
-#include "boundary.h"
+
 #include "channel.h"
-#include "temp_buf.h"
-#include "tile_manager.h"
+#include "gimpdrawable.h"
 
-
-/*  structure declarations  */
 
 #define GIMP_TYPE_LAYER             (gimp_layer_get_type ())
 #define GIMP_LAYER(obj)             (GTK_CHECK_CAST ((obj), GIMP_TYPE_LAYER, GimpLayer))
@@ -41,8 +36,53 @@
 #define GIMP_IS_LAYER_MASK(obj)          (GTK_CHECK_TYPE ((obj), GIMP_TYPE_LAYER_MASK))
 #define GIMP_IS_LAYER_MASK_CLASS(klass)  (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER_MASK))
 
-GtkType gimp_layer_get_type      (void);
-GtkType gimp_layer_mask_get_type (void);
+
+struct _GimpLayer
+{
+  GimpDrawable drawable;
+
+  gboolean   linked;		  /*  control linkage                */
+  gboolean   preserve_trans;	  /*  preserve transparency          */
+
+  LayerMask *mask;                /*  possible layer mask            */
+  gint       apply_mask;          /*  controls mask application      */
+  gboolean   edit_mask;           /*  edit mask or layer?            */
+  gboolean   show_mask;           /*  show mask or layer?            */
+
+  gint              opacity;      /*  layer opacity                  */
+  LayerModeEffects  mode;         /*  layer combination mode         */
+
+  /*  Floating selections  */
+  struct
+  {
+    TileManager  *backing_store;  /*  for obscured regions           */
+    GimpDrawable *drawable;       /*  floating sel is attached to    */
+    gboolean      initial;        /*  is fs composited yet?          */
+
+    gboolean      boundary_known; /*  is the current boundary valid  */
+    BoundSeg     *segs;           /*  boundary of floating sel       */
+    gint          num_segs;       /*  number of segs in boundary     */
+  } fs;
+};
+
+struct _GimpLayerClass
+{
+  GimpDrawableClass parent_class;
+
+  void (* removed) (GimpLayer *layer);
+};
+
+struct _GimpLayerMask
+{
+  GimpChannel drawable;
+
+  Layer *layer;
+};
+
+struct _GimpLayerMaskClass
+{
+  GimpChannelClass parent_class;
+};
 
 /*  Special undo types  */
 
@@ -70,6 +110,8 @@ struct _fs_to_layer_undo
 };
 
 /*  function declarations  */
+
+GtkType         gimp_layer_get_type         (void);
 
 Layer         * layer_new                   (GimpImage        *gimage,
 					     gint              width,
@@ -123,6 +165,9 @@ void            layer_invalidate_boundary   (Layer           *layer);
 gint            layer_pick_correlate        (Layer           *layer, 
 					     gint             x, 
 					     gint             y);
+
+
+GtkType         gimp_layer_mask_get_type    (void);
 
 LayerMask     * layer_mask_new	            (GimpImage       *gimage,
 					     gint             width,

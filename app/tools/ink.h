@@ -15,16 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef  __INK_H__
 #define  __INK_H__
 
-#include "tools.h"
-#include "procedural_db.h"
 
-Tool *      tools_new_ink   (void);
-void        tools_free_ink  (Tool *);
+Tool * tools_new_ink   (void);
+void   tools_free_ink  (Tool *tool);
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord ink_proc;
+
 
 #endif  /*  __INK_H__  */

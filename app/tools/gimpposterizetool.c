@@ -18,18 +18,21 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
  
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
-#include "image_map.h"
-#include "posterize.h"
+#include "gimpimage.h"
 #include "gimplut.h"
 #include "gimpui.h"
+#include "image_map.h"
 #include "lut_funcs.h"
+#include "posterize.h"
+#include "tools.h"
+#include "tool_options.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -153,7 +156,7 @@ tools_free_posterize (Tool *tool)
 void
 posterize_initialize (GDisplay *gdisp)
 {
-  if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
+  if (drawable_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Posterize does not operate on indexed drawables."));
       return;
@@ -168,7 +171,7 @@ posterize_initialize (GDisplay *gdisp)
 
   posterize_dialog->levels = 3;
 
-  posterize_dialog->drawable = gimage_active_drawable (gdisp->gimage);
+  posterize_dialog->drawable = gimp_image_active_drawable (gdisp->gimage);
   posterize_dialog->image_map =
     image_map_create (gdisp, posterize_dialog->drawable);
 

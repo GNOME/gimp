@@ -19,11 +19,6 @@
 #ifndef __INFO_DIALOG_H__
 #define __INFO_DIALOG_H__
 
-#include "gimphelp.h"
-
-#include "libgimp/gimpsizeentry.h"
-#include "libgimp/gimpunit.h"
-
 
 typedef enum
 { 
@@ -35,7 +30,6 @@ typedef enum
 } InfoFieldType;
 
 typedef struct _InfoField  InfoField;
-typedef struct _InfoDialog InfoDialog;
 
 struct _InfoField
 {

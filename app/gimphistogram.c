@@ -24,16 +24,21 @@
 #include <pthread.h>
 #endif /* ENABLE_MP */
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
-#include <libgimp/gimpmath.h>
+#include "apptypes.h"
 
+#include "drawable.h"
 #include "gimphistogram.h"
 #include "pixel_region.h"
 #include "gimpdrawable.h"
 #include "channel.h"
 #include "gimpimage.h"
 #include "gimprc.h"
+#include "pixel_processor.h"
+
+#include <libgimp/gimphelpui.h>
+#include <libgimp/gimpmath.h>
 
 
 struct _GimpHistogram

@@ -63,4 +63,5 @@ void menus_set_state           (gchar                 *path,
 
 void menus_last_opened_add     (gchar                 *filename);
 
+
 #endif /* __MENUS_H__ */

@@ -1529,6 +1529,8 @@ sub ink {
     );
 }
 
+@headers = qw("gimpimage.h" "tile_manager.h");
+
 @procs = qw(airbrush airbrush_default blend bucket_fill by_color_select 
 	    clone clone_default color_picker
 	    convolve convolve_default crop dodgeburn dodgeburn_default

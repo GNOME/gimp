@@ -21,15 +21,17 @@
 #include <stdarg.h>
 #include <string.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "gimpprogress.h"
 #include "gimprc.h"
 #include "pixel_region.h"
+#include "tile_manager.h"
 #include "tile_manager_pvt.h"
-#include "tile.h"			/* ick. */
+#include "tile.h"
 
 
 /*********************/

@@ -15,20 +15,29 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
+#include "gimpimage.h"
+#include "gimphistogram.h"
 #include "gimpui.h"
 #include "histogram_tool.h"
+#include "histogramwidget.h"
+#include "pixel_region.h"
+#include "tool_options.h"
+#include "tools.h"
+
+#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
-#include "libgimp/gimpmath.h"
+
 
 #define TEXT_WIDTH       45
 #define GRADIENT_HEIGHT  15
@@ -204,7 +213,7 @@ histogram_tool_initialize (GDisplay *gdisp)
 {
   PixelRegion PR;
 
-  if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
+  if (drawable_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Histogram does not operate on indexed drawables."));
       return;
@@ -216,7 +225,7 @@ histogram_tool_initialize (GDisplay *gdisp)
   else if (!GTK_WIDGET_VISIBLE (histogram_tool_dialog->shell))
     gtk_widget_show (histogram_tool_dialog->shell);
 
-  histogram_tool_dialog->drawable = gimage_active_drawable (gdisp->gimage);
+  histogram_tool_dialog->drawable = gimp_image_active_drawable (gdisp->gimage);
   histogram_tool_dialog->color = drawable_color (histogram_tool_dialog->drawable);
 
   /*  hide or show the channel menu based on image type  */

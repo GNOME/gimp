@@ -15,15 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __BRUSH_SCALE_H__
 #define __BRUSH_SCALE_H__
 
-#include "temp_buf.h"
 
-/*  functions   */
+MaskBuf * brush_scale_mask   (MaskBuf *brush_mask,
+			      gint     dest_width,
+			      gint     dest_height);
+MaskBuf * brush_scale_pixmap (MaskBuf *pixmap,
+			      gint     dest_width,
+			      gint     dest_height);
 
-MaskBuf * brush_scale_mask   (MaskBuf *, int, int);
-MaskBuf * brush_scale_pixmap (MaskBuf *, int, int);
 
 #endif  /*  __BRUSH_SCALE_H__  */
 

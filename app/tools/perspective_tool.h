@@ -15,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __PERSPECTIVE_TOOL_H__
 #define __PERSPECTIVE_TOOL_H__
 
-#include "tools.h"
-#include "transform_core.h"
 
 TileManager * perspective_tool_transform   (Tool           *tool,
 					    gpointer        gdisp_ptr,
@@ -33,7 +32,8 @@ TileManager * perspective_tool_perspective (GimpImage      *gimage,
 void          perspective_find_transform   (gdouble        *coords,
 					    GimpMatrix3     matrix);
 
-Tool * tools_new_perspective_tool  (void);
-void   tools_free_perspective_tool (Tool *tool);
+Tool        * tools_new_perspective_tool   (void);
+void          tools_free_perspective_tool  (Tool           *tool);
+
 
 #endif  /*  __PERSPECTIVE_TOOL_H__  */

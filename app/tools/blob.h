@@ -25,32 +25,58 @@
 #ifndef __BLOB_H__
 #define __BLOB_H__
 
+
 typedef struct _BlobPoint BlobPoint;
-typedef struct _BlobSpan BlobSpan;
-typedef struct _Blob Blob;
+typedef struct _BlobSpan  BlobSpan;
+typedef struct _Blob      Blob;
 
-struct _BlobPoint {
-  int x;
-  int y;
+struct _BlobPoint
+{
+  gint x;
+  gint y;
 };
 
-struct _BlobSpan {
-  int left;
-  int right;
+struct _BlobSpan
+{
+  gint left;
+  gint right;
 };
 
-struct _Blob {
-  int y;
-  int height;
+struct _Blob
+{
+  gint     y;
+  gint     height;
   BlobSpan data[1];
 };
 
 
-Blob *blob_convex_union (Blob *b1, Blob *b2);
-Blob *blob_polygon (BlobPoint *points, int npoints);
-Blob *blob_square (double xc, double yc, double xp, double yp, double xq, double yq);
-Blob *blob_diamond (double xc, double yc, double xp, double yp, double xq, double yq);
-Blob *blob_ellipse (double xc, double yc, double xp, double yp, double xq, double yq);
-void blob_bounds(Blob *b, int *x, int *y, int *width, int *height);
+Blob * blob_convex_union (Blob      *b1,
+			  Blob      *b2);
+Blob * blob_polygon      (BlobPoint *points,
+			  gint       npoints);
+Blob * blob_square       (gdouble    xc,
+			  gdouble    yc,
+			  gdouble    xp,
+			  gdouble    yp,
+			  gdouble    xq,
+			  gdouble    yq);
+Blob * blob_diamond      (gdouble    xc,
+			  gdouble    yc,
+			  gdouble    xp,
+			  gdouble    yp,
+			  gdouble    xq,
+			  gdouble    yq);
+Blob * blob_ellipse      (gdouble    xc,
+			  gdouble    yc,
+			  gdouble    xp,
+			  gdouble    yp,
+			  gdouble    xq,
+			  gdouble    yq);
+void   blob_bounds       (Blob      *b,
+			  gint      *x,
+			  gint      *y,
+			  gint      *width,
+			  gint      *height);
+
 
 #endif /* __BLOB_H__ */

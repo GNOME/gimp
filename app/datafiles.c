@@ -18,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <glib.h>
@@ -44,10 +45,13 @@
 #endif
 #endif /* G_OS_WIN32 */
 
+#include "apptypes.h"
+
 #include "datafiles.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpenv.h"
+
 
 /***** Functions *****/
 

@@ -20,13 +20,6 @@
 #define __GIMP_DND_H__
 
 
-#include "gimpbrush.h"
-#include "gimpdrawable.h"
-#include "palette_entries.h"
-#include "patterns.h"
-#include "gradient.h"
-#include "toolsF.h"
-
 enum
 {
   GIMP_DND_TYPE_URI_LIST,

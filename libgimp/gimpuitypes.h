@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimptypes.h
+ * gimpuitypes.h
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,12 +19,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_TYPES_H__
-#define __GIMP_TYPES_H__
-
-
-#include "gimpunit.h"
-
+#ifndef __GIMP_UI_TYPES_H__
+#define __GIMP_UI_TYPES_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -33,16 +29,19 @@ extern "C" {
 /* For information look into the html documentation */
 
 
-typedef struct _GimpPlugInInfo  GimpPlugInInfo;
-typedef struct _GimpTile        GimpTile;
-typedef struct _GimpDrawable    GimpDrawable;
-typedef struct _GimpPixelRgn    GimpPixelRgn;
-typedef struct _GimpParamDef    GimpParamDef;
-typedef struct _GimpParamColor  GimpParamColor;
-typedef struct _GimpParamRegion GimpParamRegion;
-typedef union  _GimpParamData   GimpParamData;
-typedef struct _GimpParam       GimpParam;
-typedef struct _GimpParasite    GimpParasite;
+typedef enum
+{
+  GIMP_SIZE_ENTRY_UPDATE_NONE       = 0,
+  GIMP_SIZE_ENTRY_UPDATE_SIZE       = 1,
+  GIMP_SIZE_ENTRY_UPDATE_RESOLUTION = 2
+} GimpSizeEntryUpdatePolicy;
+
+typedef struct _GimpColorButton     GimpColorButton;
+typedef struct _GimpPathEditor      GimpPathEditor;
+typedef struct _GimpSizeEntry       GimpSizeEntry;
+typedef struct _GimpUnitMenu        GimpUnitMenu;
+
+typedef void (* GimpHelpFunc) (const gchar *help_data);
 
 
 #ifdef __cplusplus

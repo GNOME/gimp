@@ -19,6 +19,7 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <stdio.h>
@@ -31,6 +32,8 @@
 #ifdef G_OS_WIN32
 #include <process.h>		/* For _getpid() */
 #endif
+
+#include "gimptypes.h"
 
 #include "gimpparasite.h"
 #include "gimpparasite_pdb.h"

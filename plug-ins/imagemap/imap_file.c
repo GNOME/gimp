@@ -26,13 +26,16 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include "libgimp/stdplugins-intl.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "imap_default_dialog.h"
 #include "imap_file.h"
 #include "imap_main.h"
 #include "imap_table.h"
+
+#include "libgimp/stdplugins-intl.h"
+
 
 static void
 open_cb(GtkWidget *widget, gpointer data)

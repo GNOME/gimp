@@ -15,27 +15,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __TILE_MANAGER_PVT_H__
 #define __TILE_MANAGER_PVT_H__
 
-#include "tile.h"
 
 struct _TileManager
 {
-  int x, y;                        /* tile manager offsets  */
+  gint              x, y;           /*  tile manager offsets                 */
 
-  int width;                       /* the width of the tiled area */
-  int height;                      /* the height of the tiled area */
-  int bpp;                         /* the bpp of each tile */
+  gint               width;         /*  the width of the tiled area          */
+  gint               height;        /*  the height of the tiled area         */
+  gint               bpp;           /*  the bpp of each tile                 */
 
-  int ntile_rows;                  /* the number of tiles in each row */
-  int ntile_cols;                  /* the number of tiles in each columns */
+  gint               ntile_rows;    /*  the number of tiles in each row      */
+  gint               ntile_cols;    /*  the number of tiles in each columns  */
 
-  Tile **tiles;                    /* the tiles for this level */
-  TileValidateProc validate_proc;  /* this proc is called when an attempt to get an
-				    *  invalid tile is made.
-				    */
-  void *user_data;                 /* hook for hanging data off of */
+  Tile             **tiles;         /*  the tiles for this level             */
+  TileValidateProc   validate_proc; /*  this proc is called when an attempt
+				     *  to get an invalid tile is made.
+				     */
+
+  gpointer           user_data;     /*  hook for hanging data off of         */
 };
 
 

@@ -15,17 +15,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __ERASER_H__
 #define __ERASER_H__
 
-#include "paint_core.h"
-#include "tools.h"
 
-void *        eraser_paint_func (PaintCore *, GimpDrawable *, int);
-gboolean      eraser_non_gui    (GimpDrawable *, int, double *, int, int, int);
-gboolean      eraser_non_gui_default    (GimpDrawable *, int, double *);
+void     * eraser_paint_func      (PaintCore    *,
+				   GimpDrawable *,
+				   gint          );
+gboolean   eraser_non_gui         (GimpDrawable *,
+				   gint          ,
+				   gdouble      *,
+				   gint          ,
+				   gint          ,
+				   gint          );
+gboolean   eraser_non_gui_default (GimpDrawable *,
+				   gint          ,
+				   gdouble      *);
 
-Tool *        tools_new_eraser   (void);
-void          tools_free_eraser  (Tool *);
+Tool     * tools_new_eraser       (void          );
+void       tools_free_eraser      (Tool         *);
+
 
 #endif  /*  __ERASER_H__  */

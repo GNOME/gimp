@@ -18,25 +18,33 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "draw_core.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpimage.h"
+#include "gimpprogress.h"
+#include "gimpui.h"
 #include "info_dialog.h"
 #include "rotate_tool.h"
 #include "selection.h"
+#include "tile_manager_pvt.h"
+#include "tools.h"
+#include "tool_options.h"
+#include "transform_core.h"
 #include "transform_tool.h"
 #include "undo.h"
 
-#include "tile_manager_pvt.h"
-
 #include "libgimp/gimpsizeentry.h"
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
+
+#include "libgimp/gimpintl.h"
+
 
 /*  index into trans_info array  */
 #define ANGLE        0
@@ -78,7 +86,7 @@ rotate_tool_transform (Tool           *tool,
 
   switch (state)
     {
-    case INIT:
+    case TRANSFORM_INIT:
       angle_val = 0.0;
       center_vals[0] = transform_core->cx;
       center_vals[1] = transform_core->cy;
@@ -165,19 +173,19 @@ rotate_tool_transform (Tool           *tool,
       return NULL;
       break;
 
-    case MOTION:
+    case TRANSFORM_MOTION:
       rotate_tool_motion (tool, gdisp_ptr);
       rotate_tool_recalc (tool, gdisp_ptr);
       break;
 
-    case RECALC:
+    case TRANSFORM_RECALC:
       rotate_tool_recalc (tool, gdisp_ptr);
       break;
 
-    case FINISH:
+    case TRANSFORM_FINISH:
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
       return rotate_tool_rotate (gdisp->gimage,
-				 gimage_active_drawable (gdisp->gimage),
+				 gimp_image_active_drawable (gdisp->gimage),
 				 gdisp,
 				 transform_core->trans_info[ANGLE],
 				 transform_core->original,
@@ -304,7 +312,7 @@ rotate_tool_motion (Tool *tool,
 
   transform_core = (TransformCore *) tool->private;
 
-  if (transform_core->function == HANDLE_CENTER)
+  if (transform_core->function == TRANSFORM_HANDLE_CENTER)
     {
       transform_core->cx = transform_core->curx;
       transform_core->cy = transform_core->cury;

@@ -26,14 +26,19 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "channel.h"
+#include "cursorutil.h"
+#include "draw_core.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpimage.h"
 #include "edit_selection.h"
 #include "floating_sel.h"
 #include "rect_select.h"
 #include "rect_selectP.h"
 #include "selection_options.h"
-#include "cursorutil.h"
+#include "tools.h"
+#include "tool_options.h"
 
 #include "libgimp/gimpunitmenu.h"
 
@@ -91,8 +96,8 @@ rect_select (GimpImage *gimage,
   if (feather)
     {
       new_mask = channel_new_mask (gimage, gimage->width, gimage->height);
-      channel_combine_rect (new_mask, ADD, x, y, w, h);
-      channel_feather (new_mask, gimage_get_mask (gimage),
+      channel_combine_rect (new_mask, CHANNEL_OP_ADD, x, y, w, h);
+      channel_feather (new_mask, gimp_image_get_mask (gimage),
 		       feather_radius,
 		       feather_radius,
 		       op, 0, 0);
@@ -101,12 +106,12 @@ rect_select (GimpImage *gimage,
   else if (op == SELECTION_INTERSECT)
     {
       new_mask = channel_new_mask (gimage, gimage->width, gimage->height);
-      channel_combine_rect (new_mask, ADD, x, y, w, h);
-      channel_combine_mask (gimage_get_mask (gimage), new_mask, op, 0, 0);
+      channel_combine_rect (new_mask, CHANNEL_OP_ADD, x, y, w, h);
+      channel_combine_mask (gimp_image_get_mask (gimage), new_mask, op, 0, 0);
       channel_delete (new_mask);
     }
   else
-    channel_combine_rect (gimage_get_mask (gimage), op, x, y, w, h);
+    channel_combine_rect (gimp_image_get_mask (gimage), op, x, y, w, h);
 }
 
 void
@@ -253,8 +258,8 @@ rect_select_button_release (Tool           *tool,
      if ((!w || !h) && !rect_sel->fixed_size)
 	{
 	  /*  If there is a floating selection, anchor it  */
-	  if (gimage_floating_sel (gdisp->gimage))
-	    floating_sel_anchor (gimage_floating_sel (gdisp->gimage));
+	  if (gimp_image_floating_sel (gdisp->gimage))
+	    floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
 	  /*  Otherwise, clear the selection mask  */
 	  else
 	    gimage_mask_clear (gdisp->gimage);
@@ -504,8 +509,8 @@ selection_tool_update_op_state (RectSelect *rect_sel,
 
   gdisplay_untransform_coords (gdisp, x, y, &tx, &ty, FALSE, FALSE);
 
-  layer = gimage_pick_correlate_layer (gdisp->gimage, tx, ty);
-  floating_sel = gimage_floating_sel (gdisp->gimage);
+  layer = gimp_image_pick_correlate_layer (gdisp->gimage, tx, ty);
+  floating_sel = gimp_image_floating_sel (gdisp->gimage);
 
   if (state & GDK_MOD1_MASK &&
       !gimage_mask_is_empty (gdisp->gimage))

@@ -25,7 +25,11 @@
 
 #include <gtk/gtk.h>
 
+#include "apptypes.h"
+
 #include "gimpui.h"
+
+#include "libgimp/gimphelpui.h"
 
 #include "libgimp/gimpintl.h"
 

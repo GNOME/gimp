@@ -15,10 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __SCALE_H__
 #define __SCALE_H__
 
-#include "gdisplay.h"
 
 typedef enum
 {
@@ -26,7 +26,6 @@ typedef enum
   ZOOMOUT
 } ZoomType;
 
-/*  Functions  */
 
 void   change_scale        (GDisplay *gdisp,
 			    ZoomType  zoom_type);
@@ -36,5 +35,6 @@ void   resize_display      (GDisplay *gdisp,
 void   shrink_wrap_display (GDisplay *gdisp);
 void   setup_scale         (GDisplay *gdisp);
 void   bounds_checking     (GDisplay *gdisp);
+
 
 #endif  /*  __SCALE_H__  */

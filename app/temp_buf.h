@@ -15,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __TEMP_BUF_H__
 #define __TEMP_BUF_H__
 
-typedef struct _TempBuf TempBuf;
-typedef struct _TempBuf MaskBuf;
 
 struct _TempBuf
 {
@@ -37,17 +36,34 @@ struct _TempBuf
 
 /*  The temp buffer functions  */
 
-TempBuf * temp_buf_new        (gint, gint, gint, gint, gint, guchar *);
-TempBuf * temp_buf_copy       (TempBuf *, TempBuf *);
-TempBuf * temp_buf_resize     (TempBuf *, gint, gint, gint, gint, gint);
-TempBuf * temp_buf_copy_area  (TempBuf *, TempBuf *,
-			       gint, gint, gint, gint, gint);
+TempBuf * temp_buf_new        (gint     ,
+			       gint     ,
+			       gint     ,
+			       gint     ,
+			       gint     ,
+			       guchar  *);
+TempBuf * temp_buf_copy       (TempBuf *,
+			       TempBuf *);
+TempBuf * temp_buf_resize     (TempBuf *,
+			       gint     ,
+			       gint     ,
+			       gint     ,
+			       gint     ,
+			       gint     );
+TempBuf * temp_buf_copy_area  (TempBuf *,
+			       TempBuf *,
+			       gint     ,
+			       gint     ,
+			       gint     ,
+			       gint     ,
+			       gint     );
 void      temp_buf_free       (TempBuf *);
 guchar  * temp_buf_data       (TempBuf *);
 
 /* The mask buffer functions  */
 
-MaskBuf * mask_buf_new        (gint, gint);
+MaskBuf * mask_buf_new        (gint     ,
+			       gint     );
 void      mask_buf_free       (MaskBuf *);
 guchar  * mask_buf_data       (MaskBuf *);
 
@@ -61,5 +77,6 @@ void      temp_buf_swap_free  (TempBuf *);
 /*  Called by app_procs:exit() to free up the cached undo buffer  */
 
 void      swapping_free       (void);
+
 
 #endif  /*  __TEMP_BUF_H__  */

@@ -20,17 +20,17 @@
 
 #include <stdlib.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
-#include "apptypes.h"
+#include "cursorutil.h"
+#include "gdisplay.h"
 #include "scale.h"
 #include "scroll.h"
-#include "cursorutil.h"
-#include "tools.h"
 #include "nav_window.h"
+#include "tools.h"
 
 
 /*  This is the delay before dithering begins

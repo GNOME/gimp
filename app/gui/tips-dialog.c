@@ -25,6 +25,8 @@
 
 #include <gtk/gtk.h>
 
+#include "apptypes.h"
+
 #include "tips_dialog.h"
 #include "gimprc.h"
 #include "gimpui.h"

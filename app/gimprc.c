@@ -42,6 +42,7 @@
 #include "errors.h"
 #include "fileops.h"
 #include "general.h"
+#include "gimphelp.h"
 #include "gimpparasite.h"
 #include "gimprc.h"
 #include "menus.h"

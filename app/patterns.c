@@ -41,13 +41,16 @@
 #include <dirent.h>
 #endif
 
-#include <glib.h>
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
 
 #include "datafiles.h"
-#include "patterns.h"
-#include "pattern_header.h"
 #include "gimpcontext.h"
 #include "gimprc.h"
+#include "patterns.h"
+#include "pattern_header.h"
+#include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"
 

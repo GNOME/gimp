@@ -16,11 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMPPROGRESS_H__
-#define __GIMPPROGRESS_H__
-
-#include <gtk/gtk.h>  /*  eeek  */
-
+#ifndef __GIMPP_ROGRESS_H__
+#define __GIMPP_ROGRESS_H__
 
 /* Progress bars for use internally by the main GIMP application. */
 
@@ -28,27 +25,26 @@
 /* structures */
 struct gimp_progress_pvt;
 
-/* typedefs */
-typedef struct gimp_progress_pvt gimp_progress;
-typedef void (*progress_func_t) (gint ymin, gint ymax, gint curr_y,
-				 gpointer progress_data);
 
 /* functions */
-gimp_progress * progress_start   (GDisplay      *, 
-				  const gchar   *,
-				  gboolean,
-				  GtkSignalFunc, 
-				  gpointer);
-gimp_progress * progress_restart (gimp_progress *, 
-				  const gchar   *,
-				  GtkSignalFunc, 
-				  gpointer);
-void            progress_update  (gimp_progress *, 
-				  float);
-void            progress_step    (gimp_progress *);
-void            progress_end     (gimp_progress *);
+gimp_progress * progress_start            (GDisplay      *, 
+				           const gchar   *,
+				           gboolean       ,
+				           GtkSignalFunc  , 
+				           gpointer       );
+gimp_progress * progress_restart          (gimp_progress *, 
+				           const gchar   *,
+				           GtkSignalFunc  ,
+				           gpointer       );
+void            progress_update           (gimp_progress *, 
+				           gfloat         );
+void            progress_step             (gimp_progress *);
+void            progress_end              (gimp_progress *);
 
-void            progress_update_and_flush (gint, gint, gint, gpointer);
+void            progress_update_and_flush (gint           ,
+					   gint           ,
+					   gint           ,
+					   gpointer       );
 
 
-#endif /* __GIMPPROGRESS_H__ */
+#endif /* __GIMP_PROGRESS_H__ */

@@ -19,10 +19,6 @@
 #ifndef __GIMPRC_H__
 #define __GIMPRC_H__
 
-#include "apptypes.h"
-
-#include "libgimp/gimpunit.h"
-
 
 /*  global gimprc variables  */
 extern gchar             *plug_in_path;
@@ -103,5 +99,6 @@ gchar     * gimprc_find_token   (gchar  *token);
 gchar     * gimprc_value_to_str (gchar  *name);
 void        save_gimprc_strings (gchar  *token,
 				 gchar  *value);
+
 
 #endif  /*  __GIMPRC_H__  */

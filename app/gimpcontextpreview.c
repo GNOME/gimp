@@ -33,11 +33,14 @@
 #include "gimpbrushpipe.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
+#include "gradient.h"
 #include "gradient_header.h"
 #include "patterns.h"
 #include "temp_buf.h"
 
+#include "libgimp/gimphelpui.h"
 #include "libgimp/gimplimits.h"
+
 
 /*  the pixmaps for the [scale|pipe]_indicators  */
 #define indicator_width 7

@@ -38,10 +38,14 @@
 #include "gimprc.h"
 #include "gimpui.h"
 #include "paint_options.h"
+#include "procedural_db.h"
 #include "session.h"
+#include "temp_buf.h"
 
-#include "config.h"
+#include "libgimp/gimphelpui.h"
+
 #include "libgimp/gimpintl.h"
+
 
 #define MIN_CELL_SIZE     25
 #define MAX_CELL_SIZE     25  /*  disable variable brush preview size  */ 

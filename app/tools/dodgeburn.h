@@ -15,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __DODGEBURN_H__
 #define __DODGEBURN_H__
 
-#include "paint_core.h"
-#include "tools.h"
 
 typedef enum
 {
@@ -34,10 +33,22 @@ typedef enum
   DODGEBURN_SHADOWS 
 } DodgeBurnMode;
 
-void *        dodgeburn_paint_func  (PaintCore *, GimpDrawable *, int);
-gboolean      dodgeburn_non_gui     (GimpDrawable *, double, DodgeBurnType, DodgeBurnMode, int, double *);
-gboolean      dodgeburn_non_gui_default (GimpDrawable *, int, double *);
-Tool *        tools_new_dodgeburn   (void);
-void          tools_free_dodgeburn  (Tool *);
+
+void     * dodgeburn_paint_func      (PaintCore *,
+				      GimpDrawable *,
+				      gint);
+gboolean   dodgeburn_non_gui         (GimpDrawable *,
+				      gdouble,
+				      DodgeBurnType,
+				      DodgeBurnMode,
+				      gint,
+				      gdouble *);
+gboolean   dodgeburn_non_gui_default (GimpDrawable *,
+				      gint,
+				      gdouble *);
+
+Tool     * tools_new_dodgeburn       (void);
+void       tools_free_dodgeburn      (Tool *);
+
 
 #endif  /*  __DODGEBURN_H__  */

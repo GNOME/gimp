@@ -22,11 +22,11 @@
 #ifndef __GIMP_UI_H__
 #define __GIMP_UI_H__
 
-#include "gimphelp.h"
 
 #include "libgimp/gimpchainbutton.h"
 #include "libgimp/gimpdialog.h"
 #include "libgimp/gimpfileselection.h"
+#include "libgimp/gimphelpui.h"
 #include "libgimp/gimppixmap.h"
 #include "libgimp/gimppatheditor.h"
 #include "libgimp/gimpquerybox.h"
@@ -41,5 +41,6 @@ void gimp_message_box   (gchar        *message,
 			 gpointer      data);
 
 void gimp_dialog_hide   (GtkWidget    *dialog);
+
 
 #endif /* __GIMP_UI_H__ */

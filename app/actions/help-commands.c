@@ -18,7 +18,10 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <stdio.h>
+#include <sys/types.h>
+
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
@@ -41,13 +44,17 @@
 #include "floating_sel.h"
 #include "gdisplay_ops.h"
 #include "gimage_mask.h"
+#include "gimpcontext.h"
 #include "gimphelp.h"
+#include "gimpimage.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "global_edit.h"
 #include "gradient_select.h"
 #include "image_render.h"
+#include "info_dialog.h"
 #include "info_window.h"
+#include "layer.h"
 #include "nav_window.h"
 #include "invert.h"
 #include "lc_dialog.h"
@@ -58,6 +65,7 @@
 #include "plug_in.h"
 #include "resize.h"
 #include "scale.h"
+#include "selection.h"
 #include "tips_dialog.h"
 #include "tools.h"
 #include "undo.h"
@@ -66,8 +74,11 @@
 #include "gdisplay_color_ui.h"
 #endif /* DISPLAY_FILTERS */
 
+#include "libgimp/gimphelpui.h"
 #include "libgimp/gimpmath.h"
+
 #include "libgimp/gimpintl.h"
+
 
 #define return_if_no_display(gdisp) \
         gdisp = gdisplay_active (); \
@@ -252,7 +263,7 @@ edit_clear_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  edit_clear (gdisp->gimage, gimage_active_drawable (gdisp->gimage));
+  edit_clear (gdisp->gimage, gimp_image_active_drawable (gdisp->gimage));
   gdisplays_flush ();
 }
 
@@ -266,7 +277,8 @@ edit_fill_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp);
 
   fill_type = (GimpFillType) callback_action;
-  edit_fill (gdisp->gimage, gimage_active_drawable (gdisp->gimage), fill_type);
+  edit_fill (gdisp->gimage, gimp_image_active_drawable (gdisp->gimage),
+	     fill_type);
   gdisplays_flush ();
 }
 
@@ -277,7 +289,7 @@ edit_stroke_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  gimage_mask_stroke (gdisp->gimage, gimage_active_drawable (gdisp->gimage));
+  gimage_mask_stroke (gdisp->gimage, gimp_image_active_drawable (gdisp->gimage));
   gdisplays_flush ();
 }
 
@@ -323,7 +335,7 @@ select_float_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  gimage_mask_float (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
+  gimage_mask_float (gdisp->gimage, gimp_image_active_drawable (gdisp->gimage),
 		     0, 0);
   gdisplays_flush ();
 }
@@ -892,13 +904,13 @@ layers_previous_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp);
 
   current_layer =
-    gimage_get_layer_index (gdisp->gimage, gdisp->gimage->active_layer);
+    gimp_image_get_layer_index (gdisp->gimage, gdisp->gimage->active_layer);
 
-  new_layer = gimage_get_layer_by_index (gdisp->gimage, current_layer - 1);
+  new_layer = gimp_image_get_layer_by_index (gdisp->gimage, current_layer - 1);
 
   if (new_layer)
     {
-      gimage_set_active_layer (gdisp->gimage, new_layer);
+      gimp_image_set_active_layer (gdisp->gimage, new_layer);
       gdisplays_flush ();
       layer_select_init (gdisp->gimage, 0, GDK_CURRENT_TIME);
     }
@@ -915,13 +927,13 @@ layers_next_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp);
 
   current_layer =
-    gimage_get_layer_index (gdisp->gimage, gdisp->gimage->active_layer);
+    gimp_image_get_layer_index (gdisp->gimage, gdisp->gimage->active_layer);
 
-  new_layer = gimage_get_layer_by_index (gdisp->gimage, current_layer + 1);
+  new_layer = gimp_image_get_layer_by_index (gdisp->gimage, current_layer + 1);
 
   if (new_layer)
     {
-      gimage_set_active_layer (gdisp->gimage, new_layer);
+      gimp_image_set_active_layer (gdisp->gimage, new_layer);
       gdisplays_flush ();
       layer_select_init (gdisp->gimage, 0, GDK_CURRENT_TIME);
     }
@@ -934,7 +946,7 @@ layers_raise_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  gimage_raise_layer (gdisp->gimage, gdisp->gimage->active_layer);
+  gimp_image_raise_layer (gdisp->gimage, gdisp->gimage->active_layer);
   gdisplays_flush ();
 }
 
@@ -945,7 +957,7 @@ layers_lower_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  gimage_lower_layer (gdisp->gimage, gdisp->gimage->active_layer);
+  gimp_image_lower_layer (gdisp->gimage, gdisp->gimage->active_layer);
   gdisplays_flush ();
 }
 
@@ -956,7 +968,7 @@ layers_raise_to_top_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  gimage_raise_layer_to_top (gdisp->gimage, gdisp->gimage->active_layer);
+  gimp_image_raise_layer_to_top (gdisp->gimage, gdisp->gimage->active_layer);
   gdisplays_flush ();
 }
 
@@ -967,7 +979,7 @@ layers_lower_to_bottom_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  gimage_lower_layer_to_bottom (gdisp->gimage, gdisp->gimage->active_layer);
+  gimp_image_lower_layer_to_bottom (gdisp->gimage, gdisp->gimage->active_layer);
   gdisplays_flush ();
 }
 
@@ -978,7 +990,7 @@ layers_anchor_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  floating_sel_anchor (gimage_get_active_layer (gdisp->gimage));
+  floating_sel_anchor (gimp_image_get_active_layer (gdisp->gimage));
   gdisplays_flush ();
 }
 
@@ -999,7 +1011,7 @@ layers_flatten_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  gimage_flatten (gdisp->gimage);
+  gimp_image_flatten (gdisp->gimage);
   gdisplays_flush ();
 }
 
@@ -1086,7 +1098,7 @@ tools_select_cmd_callback (GtkWidget *widget,
     {
       (* tool_info[tool_type].init_func) (gdisp);
 
-      active_tool->drawable = gimage_active_drawable (gdisp->gimage);
+      active_tool->drawable = gimp_image_active_drawable (gdisp->gimage);
     }
 
   /*  setting the gdisp_ptr here is a HACK to allow the tools'
@@ -1316,11 +1328,11 @@ image_resize_callback (GtkWidget *widget,
       if (image_resize->resize->width > 0 &&
 	  image_resize->resize->height > 0) 
 	{
-	  gimage_resize (gimage,
-			 image_resize->resize->width,
-			 image_resize->resize->height,
-			 image_resize->resize->offset_x,
-			 image_resize->resize->offset_y);
+	  gimp_image_resize (gimage,
+			     image_resize->resize->width,
+			     image_resize->resize->height,
+			     image_resize->resize->offset_x,
+			     image_resize->resize->offset_y);
 	  gdisplays_flush ();
 	  lc_dialog_update_image_list ();
 	}

@@ -19,23 +19,41 @@
 #ifndef __FLOATING_SEL_H__
 #define __FLOATING_SEL_H__
 
-#include "apptypes.h"
 
+void       floating_sel_attach       (Layer        *,
+				      GimpDrawable *);
+void       floating_sel_remove       (Layer        *);
+void       floating_sel_anchor       (Layer        *);
+void       floating_sel_reset        (Layer        *);
+void       floating_sel_to_layer     (Layer        *);
+void       floating_sel_store        (Layer        *,
+				      gint          ,
+				      gint          ,
+				      gint          ,
+				      gint          );
+void       floating_sel_restore      (Layer        *,
+				      gint          ,
+				      gint          ,
+				      gint          ,
+				      gint          );
+void       floating_sel_rigor        (Layer        *,
+				      gint          );
+void       floating_sel_relax        (Layer        *,
+				      gint          );
+void       floating_sel_composite    (Layer        *,
+				      gint          ,
+				      gint          ,
+				      gint          ,
+				      gint          ,
+				      gint          );
+BoundSeg * floating_sel_boundary     (Layer        *,
+				      gint         *);
+void       floating_sel_bounds       (Layer        *,
+				      gint         *,
+				      gint         *,
+				      gint         *,
+				      gint         *);
+void       floating_sel_invalidate   (Layer        *);
 
-/*  Functions  */
-
-void       floating_sel_attach       (Layer *, GimpDrawable *);
-void       floating_sel_remove       (Layer *);
-void       floating_sel_anchor       (Layer *);
-void       floating_sel_reset        (Layer *);
-void       floating_sel_to_layer     (Layer *);
-void       floating_sel_store        (Layer *, int, int, int, int);
-void       floating_sel_restore      (Layer *, int, int, int, int);
-void       floating_sel_rigor        (Layer *, int);
-void       floating_sel_relax        (Layer *, int);
-void       floating_sel_composite    (Layer *, int, int, int, int, int);
-BoundSeg * floating_sel_boundary     (Layer *, int *);
-void       floating_sel_bounds       (Layer *, int *, int *, int *, int *);
-void       floating_sel_invalidate   (Layer *);
 
 #endif /* __FLOATING_SEL_H__ */

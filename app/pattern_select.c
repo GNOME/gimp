@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <string.h>
@@ -30,10 +31,12 @@
 #include "gimpui.h"
 #include "patterns.h"
 #include "pattern_select.h"
+#include "procedural_db.h"
 #include "session.h"
+#include "temp_buf.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
+
 
 #define MIN_CELL_SIZE       32
 #define MAX_CELL_SIZE       45

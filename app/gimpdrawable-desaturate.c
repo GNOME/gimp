@@ -18,18 +18,19 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "drawable.h"
 #include "desaturate.h"
-#include "paint_funcs.h"
 #include "gimage.h"
+#include "paint_funcs.h"
+#include "pixel_region.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
+
 
 void
 image_desaturate (GimpImage *gimage)
@@ -52,24 +53,29 @@ image_desaturate (GimpImage *gimage)
 void
 desaturate (GimpDrawable *drawable)
 {
-  PixelRegion srcPR, destPR;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  int h, j;
-  int lightness, min, max;
-  int has_alpha;
-  void *pr;
-  int x1, y1, x2, y2;
+  PixelRegion  srcPR, destPR;
+  guchar      *src, *s;
+  guchar      *dest, *d;
+  gint         h, j;
+  gint         lightness, min, max;
+  gint         has_alpha;
+  gpointer     pr;
+  gint         x1, y1, x2, y2;
 
   if (!drawable) 
     return;
 
-  has_alpha = drawable_has_alpha (drawable);
-  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-  pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+  has_alpha = gimp_drawable_has_alpha (drawable);
+  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
+  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+		     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+
+  for (pr = pixel_regions_register (2, &srcPR, &destPR);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       src = srcPR.data;
       dest = destPR.data;

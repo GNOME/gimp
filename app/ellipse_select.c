@@ -20,19 +20,23 @@
 
 #include <stdlib.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "channel.h"
+#include "draw_core.h"
 #include "edit_selection.h"
 #include "ellipse_select.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpimage.h"
 #include "rect_select.h"
-/*  private header file for rect_select data structure  */
 #include "rect_selectP.h"
 #include "selection_options.h"
+#include "tools.h"
+#include "tool_options.h"
 
 
 /*  the ellipse selection tool options  */
@@ -67,8 +71,8 @@ ellipse_select (GimpImage *gimage,
   if (feather)
     {
       new_mask = channel_new_mask (gimage, gimage->width, gimage->height);
-      channel_combine_ellipse (new_mask, ADD, x, y, w, h, antialias);
-      channel_feather (new_mask, gimage_get_mask (gimage),
+      channel_combine_ellipse (new_mask, CHANNEL_OP_ADD, x, y, w, h, antialias);
+      channel_feather (new_mask, gimp_image_get_mask (gimage),
 		       feather_radius,
 		       feather_radius,
 		       op, 0, 0);
@@ -77,12 +81,12 @@ ellipse_select (GimpImage *gimage,
   else if (op == SELECTION_INTERSECT)
     {
       new_mask = channel_new_mask (gimage, gimage->width, gimage->height);
-      channel_combine_ellipse (new_mask, ADD, x, y, w, h, antialias);
-      channel_combine_mask (gimage_get_mask (gimage), new_mask, op, 0, 0);
+      channel_combine_ellipse (new_mask, CHANNEL_OP_ADD, x, y, w, h, antialias);
+      channel_combine_mask (gimp_image_get_mask (gimage), new_mask, op, 0, 0);
       channel_delete (new_mask);
     }
   else
-    channel_combine_ellipse (gimage_get_mask (gimage), op,
+    channel_combine_ellipse (gimp_image_get_mask (gimage), op,
 			     x, y, w, h, antialias);
 }
 
@@ -91,8 +95,8 @@ ellipse_select_draw (Tool *tool)
 {
   GDisplay      *gdisp;
   EllipseSelect *ellipse_sel;
-  gint x1, y1;
-  gint x2, y2;
+  gint           x1, y1;
+  gint           x2, y2;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   ellipse_sel = (EllipseSelect *) tool->private;

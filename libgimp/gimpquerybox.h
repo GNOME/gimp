@@ -23,7 +23,6 @@
 #ifndef __GIMP_QUERY_BOX_H__
 #define __GIMP_QUERY_BOX_H__
 
-#include <libgimp/gimpunit.h>
 
 #ifdef __cplusplus
 extern "C" {
