@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-05 00:12+0100\n"
-"PO-Revision-Date: 2004-02-06 17:46+0100\n"
+"POT-Creation-Date: 2004-03-04 13:37+0100\n"
+"PO-Revision-Date: 2004-03-05 19:22+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -45,7 +45,6 @@ msgstr ""
 "místo barvy popředí."
 
 #: tips/gimp-tips.xml.in.h:5
-#, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -74,7 +73,6 @@ msgstr ""
 "to proveďte pomocí menu."
 
 #: tips/gimp-tips.xml.in.h:8
-#, fuzzy
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
@@ -109,7 +107,6 @@ msgstr ""
 "nástrojem Křivky (Obrázek-&gt;Barvy-&gt;Křivky)."
 
 #: tips/gimp-tips.xml.in.h:11
-#, fuzzy
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
 "with their current settings. You can use the Paintbrush in gradient mode or "
@@ -128,7 +125,6 @@ msgstr ""
 "stisknutím <tt>Tab</tt> skrýt nebo zobrazit panel nástrojů a jiné dialogy."
 
 #: tips/gimp-tips.xml.in.h:13
-#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
@@ -147,7 +143,6 @@ msgstr ""
 "tlačítkem. A nebojte se, většinu chyb můžete vrátit zpět..."
 
 #: tips/gimp-tips.xml.in.h:15
-#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
@@ -268,7 +263,6 @@ msgstr ""
 "a doprava."
 
 #: tips/gimp-tips.xml.in.h:26
-#, fuzzy
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -296,7 +290,6 @@ msgstr ""
 "obrázek nebo výběr s touto barvou."
 
 #: tips/gimp-tips.xml.in.h:29
-#, fuzzy
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
