@@ -112,8 +112,8 @@ query ()
   };
   static GParamDef return_vals[] =
   {
-    { PARAM_IMAGE, "new_image", "Output image (N/A if new_image == TRUE)" },
-    { PARAM_IMAGE, "new_layer", "Output layer (N/A if new_image == TRUE)" },
+    { PARAM_IMAGE, "new_image", "Output image (N/A if new_image == FALSE)" },
+    { PARAM_LAYER, "new_layer", "Output layer (N/A if new_image == FALSE)" },
   };
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
@@ -152,7 +152,7 @@ run (char    *name,
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
   values[1].type = PARAM_IMAGE;
-  values[1].type = PARAM_LAYER;
+  values[2].type = PARAM_LAYER;
 
   width = gimp_drawable_width (param[2].data.d_drawable);
   height = gimp_drawable_height (param[2].data.d_drawable);

@@ -1,3 +1,8 @@
+Mon Oct  6 21:51:00 CST 1998 Seth Burgess <sjburges@gimp.org>
+
+	* plug-ins/tile/tile.c: Fixed typo in description, changed data
+	type to sensible ones, gave second paramter a .type
+
 Mon Oct  5 01:08:11 CST 1998 Seth Burgess <sjburges@gimp.org>
 	
 	*  app/layer_cmds.c: Changed "is_floating_sel" from PDB_CHANNEL
