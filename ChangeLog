@@ -1,5 +1,11 @@
 2003-07-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/config/gimpconfig.c (gimp_config_reset): don't return stuff
+	from a void function (spotted by Jimmer on #gimp). Removed
+	trailing whitespace.
+
+2003-07-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/user-install-dialog.c: lots of purely cosmetic stuff
 	(spacing, separator removal, bold labels, icons in the
 	installation log, ...).
