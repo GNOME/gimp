@@ -663,7 +663,7 @@ msgid "TYPE"
 msgstr "TYP"
 
 msgid "<Image>/Guides/To Selection"
-msgstr "<Image>/Guides/Als Auswahl"
+msgstr "<Image>/Hilfslinien/Als Auswahl"
 
 msgid "<Image>/Filters/Noise/Feedback"
 msgstr "<Image>/Filter/Noise/Feedback"
@@ -758,7 +758,7 @@ msgid "only blessed scalars accepted here"
 msgstr "Objekt (nicht Referenz oder Skalar) benötigt"
 
 msgid "<Image>/Guides/Center Guide"
-msgstr ""
+msgstr "<Image>/Hilfslinien/Zentriert"
 
 msgid "illegal parasite specification, arrayref expected"
 msgstr "Illegaler Typ für 'parasite', erwarte Referenz auf Array"

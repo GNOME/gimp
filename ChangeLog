@@ -1,5 +1,26 @@
+Sat Feb 26 19:56:35 CET 2000  Sven Neumann <sven@gimp.org>
+			      Daniel Egger <Daniel.Egger@suse.de>
+
+	* app/menus.c: Branches are now translated on the fly by using
+	the translation of the menu_entry that causes the menu to be
+	created. This has the drawback that this menu needs to have a 
+	proper translation or the branch won't be translated, but we 
+	don't need the dummy_entries any more and plugins can provide 
+	deeply nested menus that are translated from one string. 
+
+	* plug-ins/gap/gap_frontends_main.c
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/webbrowser/webbrowser.c: removed the dummy entries
+
+	The translation of Script-Fu is the remaining problem. IMHO we
+	should solve this properly by writing a xgettext-like script
+	that parses the Script-Fus and add a gimp-script-fu domain.
+	With trivial changes to script-fu-scripts.c we will get a 
+	completely internationalized Script-Fu UI.
+
 2000-02-26 Garry R. Osgood <gosgood@idt.net>
-        * app/commands.c
+
+	* app/commands.c
         * app/gimpimage.c
 	* app/layer.c
 	* app/layer.h

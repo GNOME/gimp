@@ -75,14 +75,6 @@ static char *gap_main_version =  "1.1.11b; 1999/11/20";
 
 int gap_debug = 0;
 
-/* for i18n */
-
-static gchar G_GNUC_UNUSED *dummy_entries[] =
-{
-  N_("<Image>/Video"),
-  N_("<Image>/Video/Encode")
-};
-
 static void query(void);
 static void run(char *name, int nparam, GParam *param,
                 int *nretvals, GParam **retvals);

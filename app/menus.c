@@ -71,29 +71,6 @@ static void   help_debug_cmd_callback (GtkWidget *widget,
 				       gpointer   callback_data,
 				       guint      callback_action);
 
-#ifdef ENABLE_NLS
-
-/*  from main.c  */
-extern gchar *plugin_domains[];
-extern gint   n_plugin_domains;
-
-/*  for i18n  */
-static gchar G_GNUC_UNUSED *dummy_entries[] =
-{
-  /*  <Image>  */
-  N_("/Filters/Colors/Map"),
-  N_("/Filters/Render/Clouds"),
-  N_("/Filters/Render/Nature"),
-  N_("/Filters/Render/Pattern"),
-  N_("/Filters/Misc"),
-
-  /* Perl-Fu */
-  N_("/Xtns/Animation"),
-  N_("/Guides"),
-};
-
-#endif  /*  ENABLE_NLS  */
-
 static GSList *last_opened_raw_filenames = NULL;
 
 /*****  <Toolbox>  *****/
@@ -942,10 +919,8 @@ menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
 
       while (p)
 	{
-	  g_string_assign (tearoff_path, entry->entry.path + factory_length);
-	  g_string_truncate (tearoff_path,
-			     p - entry->entry.path + 1 - factory_length);
-	  g_string_append (tearoff_path, "tearoff1");
+	  g_string_assign (tearoff_path, path + factory_length);
+	  g_string_truncate (tearoff_path, p - path - factory_length);
 
 	  if (! gtk_item_factory_get_widget (item_factory,
 					     tearoff_path->str))
@@ -956,7 +931,19 @@ menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
 		NULL, 
 		NULL 
 	      };
-	      
+	      GimpItemFactoryEntry branch_entry =
+	      { 
+		{ NULL, NULL, NULL, 0, "<Branch>" },
+		NULL, 
+		NULL 
+	      };
+
+	      branch_entry.entry.path = tearoff_path->str;
+	      gtk_object_set_data (GTK_OBJECT (item_factory), "complete", path);
+	      menus_create_item (item_factory, &branch_entry, NULL, 2);
+	      gtk_object_remove_data (GTK_OBJECT (item_factory), "complete");
+
+	      g_string_append (tearoff_path, "/tearoff1");
 	      tearoff_entry.entry.path = tearoff_path->str;
 	      menus_create_item (item_factory, &tearoff_entry, NULL, 2);
 	    }
@@ -1761,6 +1748,8 @@ menu_translate (const gchar *path,
   gchar *factory;
   gchar *translation;
   gchar *domain = NULL;
+  gchar *complete = NULL;
+  gchar *p, *t;
 
   factory = (gchar *) data;
 
@@ -1779,20 +1768,59 @@ menu_translate (const gchar *path,
   if (item_factory)
     domain = gtk_object_get_data (GTK_OBJECT (item_factory), "textdomain");
 
-  if (domain)   /* use the plugins textdomain */
+  if (domain)   /* use the plugin textdomain */
     {
       g_free (menupath);
 
       menupath = g_strconcat (factory, path, NULL);
-      
-      translation = dgettext (domain, menupath);
+
+      complete = gtk_object_get_data (GTK_OBJECT (item_factory), "complete");
+      if (complete)
+	{
+	  /*  
+           *  This is a branch, use the complete path for translation, 
+	   *  then strip off entries from the end until it matches. 
+	   */
+	  translation = g_strdup (dgettext (domain, complete));
+	  complete = g_strdup (complete);
+
+	  while (*complete && *translation && strcmp (complete, menupath))
+	    {
+	      p = strrchr (complete, '/');
+	      t = strrchr (translation, '/');
+	      if (p && t)
+		{
+		  *p = '\0';
+		  *t = '\0';
+		}
+	      else
+		break;
+	    }
+	  g_free (complete);
+	}
+      else
+	{
+	  translation = dgettext (domain, menupath);
+	}
       /* 
        * Work around a bug in GTK+ prior to 1.2.7 (similar workaround below)
        */
-     if (strncmp (factory, translation, strlen (factory)) == 0)
-	retval = translation + strlen (factory);
+      if (strncmp (factory, translation, strlen (factory)) == 0)
+	{
+	  retval = translation + strlen (factory);
+	  if (complete)
+	    {
+	      /* assign the result to menu_path, so it gets freed on next call */
+	      g_free (menupath);
+	      menupath = translation;
+	    }
+	}
       else
-	g_warning ("bad translation for menupath: %s", menupath);
+	{
+	  g_warning ("bad translation for menupath: %s", menupath);
+	  if (complete)
+	    g_free (translation);
+	}
     }
   else
     {
