@@ -348,7 +348,6 @@ gimp_image_map_tool_response (GtkWidget        *widget,
   GimpTool         *tool;
 
   tool  = GIMP_TOOL (image_map_tool);
-  shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
 
   switch (response_id)
     {
@@ -358,6 +357,9 @@ gimp_image_map_tool_response (GtkWidget        *widget,
       break;
 
     case GTK_RESPONSE_OK:
+      /* Fix for bug #126524 - only set shell in the case 
+       * where we need it */
+      shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
       gtk_widget_hide (image_map_tool->shell);
 
       gimp_tool_control_set_preserve (tool->control, TRUE);
@@ -401,6 +403,10 @@ gimp_image_map_tool_response (GtkWidget        *widget,
       tool->drawable = NULL;
       break;
     }
+
+  if (gimp_tool_control_is_active (tool->control))
+    gimp_tool_control_halt (tool->control);
+
 }
 
 static void
