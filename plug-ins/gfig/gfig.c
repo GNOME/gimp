@@ -2790,8 +2790,6 @@ select_brush_callback (GtkWidget *widget,
 {
   BrushDesc *bdesc = (BrushDesc *) data;
 
-  g_print ("select_brush_callback: %s %s\n", bdesc->popup, bdesc->name);
-
   if (bdesc->popup)
     /*  calling gimp_brushes_set_popup() raises the dialog  */
     gimp_brushes_set_popup (bdesc->popup,

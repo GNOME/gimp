@@ -33,23 +33,25 @@
 
 #include "libgimp-intl.h"
 
+
 #define MENU_THUMBNAIL_WIDTH   24
 #define MENU_THUMBNAIL_HEIGHT  24
+
 
 /* Copy data from temp_PDB call */
 struct _GimpBrushData 
 {
-  gboolean  busy;
-  gchar    *bname;
-  gdouble   opacity;
-  gint      spacing;
-  gint      paint_mode;
-  gint      width;
-  gint      height;
-  guchar   *brush_mask_data;
-  GimpRunBrushCallback callback;
-  gboolean  closing;
-  gpointer  data;
+  guint                 idle_id;
+  gchar                *name;
+  gdouble               opacity;
+  gint                  spacing;
+  gint                  paint_mode;
+  gint                  width;
+  gint                  height;
+  guchar               *brush_mask_data;
+  GimpRunBrushCallback  callback;
+  gboolean              closing;
+  gpointer              data;
 };
 
 typedef struct _GimpBrushData GimpBrushData;
@@ -58,11 +60,11 @@ typedef struct _GimpBrushData GimpBrushData;
 /* Copy data from temp_PDB call */
 struct _GimpFontData 
 {
-  gboolean  busy;
-  gchar    *fname;
+  guint                idle_id;
+  gchar               *name;
   GimpRunFontCallback  callback;
-  gboolean  closing;
-  gpointer  data;
+  gboolean             closing;
+  gpointer             data;
 };
 
 typedef struct _GimpFontData GimpFontData;
@@ -71,13 +73,13 @@ typedef struct _GimpFontData GimpFontData;
 /* Copy data from temp_PDB call */
 struct _GimpGradientData 
 {
-  gboolean  busy;
-  gchar    *gname;
-  gint      width;
-  gdouble  *gradient_data;
+  guint                    idle_id;
+  gchar                   *name;
+  gint                     width;
+  gdouble                 *gradient_data;
   GimpRunGradientCallback  callback;
-  gboolean  closing;
-  gpointer  data;
+  gboolean                 closing;
+  gpointer                 data;
 };
 
 typedef struct _GimpGradientData GimpGradientData;
@@ -86,52 +88,52 @@ typedef struct _GimpGradientData GimpGradientData;
 /* Copy data from temp_PDB call */
 struct _GimpPatternData 
 {
-  gboolean  busy;
-  gchar    *pname;
-  gint      width;
-  gint      height;
-  gint      bytes;
-  guchar   *pattern_mask_data;
-  GimpRunPatternCallback  callback;
-  gboolean  closing;
-  gpointer  data;
+  guint                    idle_id;
+  gchar                   *name;
+  gint                     width;
+  gint                     height;
+  gint                     bytes;
+  guchar                  *pattern_mask_data;
+  GimpRunPatternCallback   callback;
+  gboolean                 closing;
+  gpointer                 data;
 };
 
 typedef struct _GimpPatternData GimpPatternData;
 
 
-static void     gimp_menu_callback      (GtkWidget         *widget,
-					 gint32            *id);
-static void     do_brush_callback       (GimpBrushData     *bdata);
-static gint     idle_test_brush         (gpointer           bdata);
-static gint     idle_test_pattern       (gpointer           pdata);
-static gint     idle_test_gradient      (gpointer           gdata);
-static void     temp_brush_invoker      (gchar             *name,
-					 gint               nparams,
-					 GimpParam         *param,
-					 gint              *nreturn_vals,
-					 GimpParam        **return_vals);
-static gboolean input_callback	        (GIOChannel        *channel,
-					 GIOCondition       condition,
-					 gpointer           data);
-static void     gimp_setup_callbacks    (void);
-static gchar  * gen_temp_plugin_name    (void);
-static void     fill_preview_with_thumb (GtkWidget         *widget,
-					 gint32             drawable_ID,
-					 gint               width,
-					 gint               height);
+static void      gimp_menu_callback      (GtkWidget         *widget,
+                                          gint32            *id);
+
+static gboolean  idle_brush_callback     (GimpBrushData     *bdata);
+static gboolean  idle_font_callback      (GimpFontData      *fdata);
+static gboolean  idle_gradient_callback  (GimpGradientData  *gdata);
+static gboolean  idle_pattern_callback   (GimpPatternData   *pdata);
+
+static void      temp_brush_invoker      (gchar             *name,
+                                          gint               nparams,
+                                          GimpParam         *param,
+                                          gint              *nreturn_vals,
+                                          GimpParam        **return_vals);
+static gboolean  input_callback	         (GIOChannel        *channel,
+                                          GIOCondition       condition,
+                                          gpointer           data);
+static void      gimp_setup_callbacks    (void);
+static gchar   * gen_temp_plugin_name    (void);
+static void      fill_preview_with_thumb (GtkWidget         *widget,
+                                          gint32             drawable_ID,
+                                          gint               width,
+                                          gint               height);
+
 
 /* From gimp.c */
 void gimp_run_temp (void);
 
-static GHashTable       *gbrush_ht           = NULL;
-static GHashTable       *gfont_ht            = NULL;
-static GHashTable       *ggradient_ht        = NULL;
-static GHashTable       *gpattern_ht         = NULL;
-static GimpBrushData    *active_brush_pdb    = NULL;
-static GimpFontData     *active_font_pdb     = NULL;
-static GimpGradientData *active_gradient_pdb = NULL;
-static GimpPatternData  *active_pattern_pdb  = NULL;
+static GHashTable  *gbrush_ht    = NULL;
+static GHashTable  *gfont_ht     = NULL;
+static GHashTable  *ggradient_ht = NULL;
+static GHashTable  *gpattern_ht  = NULL;
+
 
 GtkWidget *
 gimp_image_menu_new (GimpConstraintFunc constraint,
@@ -700,9 +702,9 @@ fill_preview_with_thumb (GtkWidget *widget,
 	}
       
       if ((y / GIMP_CHECK_SIZE_SM) & 1)
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)odd,  0, y, width);
+	gtk_preview_draw_row (GTK_PREVIEW (widget), odd,  0, y, width);
       else
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)even, 0, y, width);
+	gtk_preview_draw_row (GTK_PREVIEW (widget), even, 0, y, width);
 
       src += width * bpp;
     }
@@ -711,24 +713,11 @@ fill_preview_with_thumb (GtkWidget *widget,
   g_free (odd);
 }
 
-
-/* These functions allow the callback PDB work with gtk
- * ALT.
- * Note that currently PDB calls in libgimp are completely deterministic.
- * There is always one call followed by a reply.
- * If we are in the main gdk wait routine we can cannot get a reply
- * to a wire message, only the request for a new PDB proc to be run.
- * we will restrict this to a temp PDB function we have registered.
- */
-
-static void 
-do_brush_callback (GimpBrushData *bdata)
+static gboolean
+idle_brush_callback (GimpBrushData *bdata)
 {
-  if (!bdata->busy)
-    return;
-
   if (bdata->callback)
-    bdata->callback (bdata->bname,
+    bdata->callback (bdata->name,
 		     bdata->opacity,
 		     bdata->spacing,
 		     bdata->paint_mode,
@@ -738,67 +727,57 @@ do_brush_callback (GimpBrushData *bdata)
 		     bdata->closing,
 		     bdata->data);
 
-  if (bdata->bname)
-    g_free (bdata->bname);  
-  
-  if (bdata->brush_mask_data)
-    g_free (bdata->brush_mask_data); 
+  g_free (bdata->name);  
+  g_free (bdata->brush_mask_data); 
 
-  bdata->busy = FALSE;
-  bdata->bname = NULL;
+  bdata->idle_id         = 0;
+  bdata->name            = NULL;
   bdata->brush_mask_data = NULL;
+
+  return FALSE;
 }
 
-static void 
-do_font_callback (GimpFontData *fdata)
+static gboolean
+idle_font_callback (GimpFontData *fdata)
 {
-  if (!fdata->busy)
-    return;
-
   if (fdata->callback)
-    fdata->callback (fdata->fname,
+    fdata->callback (fdata->name,
 		     fdata->closing,
 		     fdata->data);
   
-  if (fdata->fname)
-    g_free (fdata->fname);  
+  g_free (fdata->name);  
 
-  fdata->busy = FALSE;
-  fdata->fname = NULL;
+  fdata->idle_id = 0;
+  fdata->name    = NULL;
+
+  return FALSE;
 }
 
-static void 
-do_gradient_callback (GimpGradientData *gdata)
+static gboolean
+idle_gradient_callback (GimpGradientData *gdata)
 {
-  if (!gdata->busy)
-    return;
-
   if (gdata->callback)
-    gdata->callback (gdata->gname,
+    gdata->callback (gdata->name,
 		     gdata->width,
 		     gdata->gradient_data,
 		     gdata->closing,
 		     gdata->data);
 
-  if (gdata->gname)
-    g_free (gdata->gname);  
-  
-  if (gdata->gradient_data)
-    g_free (gdata->gradient_data); 
+  g_free (gdata->name);  
+  g_free (gdata->gradient_data); 
 
-  gdata->busy = FALSE;
-  gdata->gname = NULL;
+  gdata->idle_id       = 0;
+  gdata->name          = NULL;
   gdata->gradient_data = NULL;
+
+  return FALSE;
 }
 
-static void 
-do_pattern_callback (GimpPatternData *pdata)
+static gboolean
+idle_pattern_callback (GimpPatternData *pdata)
 {
-  if (!pdata->busy)
-    return;
-
   if (pdata->callback)
-    pdata->callback (pdata->pname,
+    pdata->callback (pdata->name,
 		     pdata->width,
 		     pdata->height,
 		     pdata->bytes,
@@ -806,46 +785,12 @@ do_pattern_callback (GimpPatternData *pdata)
 		     pdata->closing,
 		     pdata->data);
   
-  if (pdata->pname)
-    g_free (pdata->pname);  
-  
-  if (pdata->pattern_mask_data)
-    g_free (pdata->pattern_mask_data); 
+  g_free (pdata->name);  
+  g_free (pdata->pattern_mask_data); 
 
-  pdata->busy = FALSE;
-  pdata->pname = NULL;
+  pdata->idle_id           = 0;
+  pdata->name              = NULL;
   pdata->pattern_mask_data = NULL;
-}
-
-
-static gint
-idle_test_brush (gpointer bdata)
-{
-  do_brush_callback (bdata);
-
-  return FALSE;
-}
-
-static gint
-idle_test_font (gpointer gdata)
-{
-  do_font_callback (gdata);
-
-  return FALSE;
-}
-
-static gint
-idle_test_gradient (gpointer gdata)
-{
-  do_gradient_callback (gdata);
-
-  return FALSE;
-}
-
-static gint
-idle_test_pattern (gpointer pdata)
-{
-  do_pattern_callback (pdata);
 
   return FALSE;
 }
@@ -857,32 +802,34 @@ temp_brush_invoker (gchar      *name,
 		    gint       *nreturn_vals,
 		    GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpBrushData *bdata;
+  static GimpParam   values[1];
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpBrushData     *bdata;
 
   bdata = (GimpBrushData *) g_hash_table_lookup (gbrush_ht, name);
 
-  if (!bdata)
-    g_warning("Can't find internal brush data");
+  if (! bdata)
+    {
+      g_warning("Can't find internal brush data");
+    }
   else
-    if(!bdata->busy)
-      {
-	bdata->bname           = g_strdup (param[0].data.d_string);
-	bdata->opacity         = (gdouble)param[1].data.d_float;
-	bdata->spacing         = param[2].data.d_int32;
-	bdata->paint_mode      = param[3].data.d_int32;
-	bdata->width           = param[4].data.d_int32;
-	bdata->height          = param[5].data.d_int32;
-	bdata->brush_mask_data = g_malloc(param[6].data.d_int32);
-	g_memmove (bdata->brush_mask_data, 
-		   param[7].data.d_int8array, param[6].data.d_int32); 
-	bdata->closing         = param[8].data.d_int32;
-	active_brush_pdb       = bdata;
-	bdata->busy            = TRUE;
-	
-	g_idle_add (idle_test_brush, active_brush_pdb);
-      }
+    {
+      g_free (bdata->name);
+      g_free (bdata->brush_mask_data);
+
+      bdata->name            = g_strdup (param[0].data.d_string);
+      bdata->opacity         = (gdouble) param[1].data.d_float;
+      bdata->spacing         = param[2].data.d_int32;
+      bdata->paint_mode      = param[3].data.d_int32;
+      bdata->width           = param[4].data.d_int32;
+      bdata->height          = param[5].data.d_int32;
+      bdata->brush_mask_data = g_memdup (param[7].data.d_int8array,
+                                         param[6].data.d_int32);
+      bdata->closing         = param[8].data.d_int32;
+
+      if (! bdata->idle_id)
+        bdata->idle_id = g_idle_add ((GSourceFunc) idle_brush_callback, bdata);
+    }
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -898,24 +845,26 @@ temp_font_invoker (gchar      *name,
                    gint       *nreturn_vals,
                    GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpFontData *fdata;
+  static GimpParam   values[1];
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpFontData      *fdata;
 
-  fdata = (GimpFontData *)g_hash_table_lookup (gfont_ht, name);
+  fdata = (GimpFontData *) g_hash_table_lookup (gfont_ht, name);
 
-  if (!fdata)
-    g_warning ("Can't find internal font data");
+  if (! fdata)
+    {
+      g_warning ("Can't find internal font data");
+    }
   else
-    if (!fdata->busy)
-      {
-	fdata->fname    = g_strdup (param[0].data.d_string);
-	fdata->closing  = param[1].data.d_int32;
-	active_font_pdb = fdata;
-	fdata->busy     = TRUE;
+    {
+      g_free (fdata->name);
 
-	g_idle_add (idle_test_font, active_font_pdb);
-      }
+      fdata->name     = g_strdup (param[0].data.d_string);
+      fdata->closing  = param[1].data.d_int32;
+
+      if (! fdata->idle_id)
+        fdata->idle_id = g_idle_add ((GSourceFunc) idle_font_callback, fdata);
+    }
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -931,37 +880,30 @@ temp_gradient_invoker (gchar      *name,
 		       gint       *nreturn_vals,
 		       GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpGradientData *gdata;
+  static GimpParam   values[1];
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpGradientData  *gdata;
 
   gdata = (GimpGradientData *) g_hash_table_lookup (ggradient_ht, name);
 
-  if (!gdata)
+  if (! gdata)
+    {
       g_warning("Can't find internal gradient data");
+    }
   else
     {
-      if (!gdata->busy)
-	{
-	  gint i;
-	  gdouble *pv;
-	  gdouble *values;
-	  
-	  gdata->gname         = g_strdup (param[0].data.d_string);
-	  gdata->width         = param[1].data.d_int32;
-	  gdata->gradient_data = g_new (gdouble, param[1].data.d_int32);
+      g_free (gdata->name);
+      g_free (gdata->gradient_data);
 
-	  values = param[2].data.d_floatarray;
-	  pv = gdata->gradient_data;
+      gdata->name          = g_strdup (param[0].data.d_string);
+      gdata->width         = param[1].data.d_int32;
+      gdata->gradient_data = g_memdup (param[2].data.d_floatarray,
+                                       param[1].data.d_int32 * sizeof (gdouble));
+      gdata->closing      = param[3].data.d_int32;
 
-	  for (i = 0; i < gdata->width; i++)
-	    gdata->gradient_data[i] = param[2].data.d_floatarray[i];
-
-	  gdata->closing      = param[3].data.d_int32;
-	  active_gradient_pdb = gdata;
-	  gdata->busy         = TRUE;
-	  g_idle_add (idle_test_gradient, active_gradient_pdb);
-	}
+      if (! gdata->idle_id)
+        gdata->idle_id = g_idle_add ((GSourceFunc) idle_gradient_callback,
+                                     gdata);
     }
 
   *nreturn_vals = 1;
@@ -978,30 +920,33 @@ temp_pattern_invoker (gchar      *name,
 		      gint       *nreturn_vals,
 		      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpPatternData *pdata;
+  static GimpParam   values[1];
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpPatternData   *pdata;
 
-  pdata = (GimpPatternData *)g_hash_table_lookup (gpattern_ht, name);
+  pdata = (GimpPatternData *) g_hash_table_lookup (gpattern_ht, name);
 
-  if (!pdata)
-    g_warning ("Can't find internal pattern data");
+  if (! pdata)
+    {
+      g_warning ("Can't find internal pattern data");
+    }
   else
-    if (!pdata->busy)
-      {
-	pdata->pname             = g_strdup(param[0].data.d_string);
-	pdata->width             = param[1].data.d_int32;
-	pdata->height            = param[2].data.d_int32;
-	pdata->bytes             = param[3].data.d_int32;
-	pdata->pattern_mask_data = g_malloc(param[4].data.d_int32);
-	g_memmove (pdata->pattern_mask_data,
-		   param[5].data.d_int8array, param[4].data.d_int32);
-	pdata->closing           = param[6].data.d_int32;
-	active_pattern_pdb       = pdata;
-	pdata->busy              = TRUE;
+    {
+      g_free (pdata->name);
+      g_free (pdata->pattern_mask_data);
 
-	g_idle_add (idle_test_pattern, active_pattern_pdb);
-      }
+      pdata->name              = g_strdup(param[0].data.d_string);
+      pdata->width             = param[1].data.d_int32;
+      pdata->height            = param[2].data.d_int32;
+      pdata->bytes             = param[3].data.d_int32;
+      pdata->pattern_mask_data = g_memdup (param[5].data.d_int8array,
+                                           param[4].data.d_int32);
+      pdata->closing           = param[6].data.d_int32;
+
+      if (! pdata->idle_id)
+        pdata->idle_id = g_idle_add ((GSourceFunc) idle_pattern_callback,
+                                     pdata);
+    }
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -1113,21 +1058,12 @@ gimp_interactive_selection_brush (const gchar          *title,
 			GIMP_PDB_INT32,  paint_mode,
 			GIMP_PDB_END);
 
-/*   if (pdbreturn_vals[0].data.d_status != GIMP_PDB_SUCCESS) */
-/*     { */
-/*       printf("ret failed = 0x%x\n",bnreturn_vals); */
-/*     } */
-/*   else */
-/*       printf("worked = 0x%x\n",bnreturn_vals); */
-
   gimp_setup_callbacks (); /* New function to allow callbacks to be watched */
 
   gimp_destroy_params (pdbreturn_vals,bnreturn_vals);
 
-  /*   g_free(pdbname); */
-
   /* Now add to hash table so we can find it again */
-  if (gbrush_ht == NULL)
+  if (! gbrush_ht)
     gbrush_ht = g_hash_table_new (g_str_hash, g_str_equal);
   
   bdata->callback = callback;
@@ -1185,7 +1121,7 @@ gimp_interactive_selection_font (const gchar         *title,
   gimp_destroy_params (pdbreturn_vals, fnreturn_vals);
 
   /* Now add to hash table so we can find it again */
-  if (gfont_ht == NULL)
+  if (! gfont_ht)
     gfont_ht = g_hash_table_new (g_str_hash, g_str_equal);
 
   fdata->callback = callback;
@@ -1247,7 +1183,7 @@ gimp_interactive_selection_gradient (const gchar             *title,
   gimp_destroy_params (pdbreturn_vals,bnreturn_vals);
 
   /* Now add to hash table so we can find it again */
-  if (ggradient_ht == NULL)
+  if (! ggradient_ht)
     ggradient_ht = g_hash_table_new (g_str_hash, g_str_equal);
 
   gdata->callback = callback;
@@ -1310,7 +1246,7 @@ gimp_interactive_selection_pattern (const gchar            *title,
   gimp_destroy_params (pdbreturn_vals, bnreturn_vals);
 
   /* Now add to hash table so we can find it again */
-  if (gpattern_ht == NULL)
+  if (! gpattern_ht)
     gpattern_ht = g_hash_table_new (g_str_hash, g_str_equal);
 
   pdata->callback = callback;

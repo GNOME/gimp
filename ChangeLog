@@ -1,5 +1,15 @@
 2003-06-19  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpmenu.c: when idle dispatching calls to plug-ins, use
+	the data from the last call, not the first one. This fixes some
+	weird behaviour that the brush/font/gradient/pattern selection
+	widgets showed under certain circumstances.
+
+	* plug-ins/gfig/gfig.c (select_brush_callback): removed debugging
+	output that I forgot to remove before my last commit.
+
+2003-06-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/FractalExplorer/Dialogs.c
 	* plug-ins/common/film.c
 	* plug-ins/script-fu/script-fu-scripts.c: adapt to libgimp API
