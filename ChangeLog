@@ -1,3 +1,8 @@
+Sun Jan 25 16:51:56 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	* added the gtk_window_set_wmclass to most of the gimp 
+	dialogs so they set the XA_WM_CLASS properties.
+
 Sun Jan 25 13:28:28 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* libgimp/gimppixelrgn.c
