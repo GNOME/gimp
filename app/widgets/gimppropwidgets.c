@@ -180,6 +180,7 @@ static void   gimp_prop_color_button_notify   (GObject    *config,
  * gimp_prop_color_button_new:
  * @config:             #GimpConfig object to which property is attached.
  * @property_name:      Name of RGB property.
+ * @title:              title of the #GimpColorPanel that is to be created
  * @width:              Width of color button.
  * @height:             Height of color button.
  * @type:               How transparency is represented.
