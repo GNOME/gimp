@@ -279,7 +279,7 @@ ReadImage (FILE   *fd,
   guchar gimp_cmap[768];
   gushort rgb;
   long rowstride, channels;
-  gint i, j, cur_progress, max_progress, egal;
+  gint i, j, cur_progress, max_progress, unused;
   
   /* Make a new image in the gimp */
   
@@ -397,7 +397,7 @@ ReadImage (FILE   *fd,
 		  }
 		if (xpos == width)
 		  {
-		    egal = ReadOK (fd, buffer, rowbytes - 1 -
+		    unused = ReadOK (fd, buffer, rowbytes - 1 -
                                                 (width * bpp - 1) / 8);
 		    ypos--;
 		    xpos = 0;
@@ -417,7 +417,7 @@ ReadImage (FILE   *fd,
 	  {
 	    while (ypos >= 0 && xpos <= width)
 	      {
-		egal = ReadOK (fd, buffer, 2);
+		unused = ReadOK (fd, buffer, 2);
 		if ((guchar) buffer[0] != 0) 
 		  /* Count + Color - record */
 		  {
@@ -445,7 +445,7 @@ ReadImage (FILE   *fd,
 		    wieviel = buffer[1];
 		    for (j = 0; j < wieviel; j += (8 / bpp))
 		      {
-			egal = ReadOK (fd, &v, 1);
+			unused = ReadOK (fd, &v, 1);
 			i = 1;
 			while ((i <= (8 / bpp)) && (xpos < width))
 			  {
@@ -462,11 +462,11 @@ ReadImage (FILE   *fd,
 		      wieviel++;
 
 		    if ((wieviel / (8 / bpp)) % 2)
-		      egal = ReadOK (fd, &v, 1);
+		      unused = ReadOK (fd, &v, 1);
 		    /*if odd(x div (8 div bpp )) then blockread(f,z^,1);*/
 		  }
 		if (((guchar) buffer[0] == 0) && ((guchar) buffer[1]==0))
-		  /* Zeilenende */
+		  /* Line end */
 		  {
 		    ypos--;
 		    xpos = 0;
@@ -478,14 +478,14 @@ ReadImage (FILE   *fd,
 					    (gdouble)  max_progress);
 		  }
 		if (((guchar) buffer[0]==0) && ((guchar) buffer[1]==1))
-		  /* Bitmapende */
+		  /* Bitmap end */
 		  {
 		    break;
 		  }
 		if (((guchar) buffer[0]==0) && ((guchar) buffer[1]==2))
 		  /* Deltarecord */
 		  {
-		    egal = ReadOK (fd, buffer, 2);
+		    unused = ReadOK (fd, buffer, 2);
 		    xpos += (guchar) buffer[0];
 		    ypos -= (guchar) buffer[1];
 		  }
@@ -496,6 +496,7 @@ ReadImage (FILE   *fd,
     break;
   default:
     /* This is very bad, we should not be here */
+    ;
   }
 
   fclose (fd);
