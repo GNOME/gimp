@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-01 21:25+0200\n"
-"PO-Revision-Date: 2004-07-01 21:28+0200\n"
+"POT-Creation-Date: 2004-07-08 17:38+0200\n"
+"PO-Revision-Date: 2004-07-08 17:42+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -60,7 +60,7 @@ msgstr "Info"
 #. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1112
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
-#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1276
+#: plug-ins/common/channel_mixer.c:548 plug-ins/common/curve_bend.c:1276
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
 #: plug-ins/common/fractaltrace.c:760 plug-ins/common/grid.c:654
 #: plug-ins/common/iwarp.c:1225 plug-ins/common/mapcolor.c:551
@@ -307,7 +307,7 @@ msgstr "Farbfunktion"
 #. Redmode radio frame
 #. Redmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:990 plug-ins/common/AlienMap.c:1218
-#: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:130
+#: plug-ins/common/channel_mixer.c:597 plug-ins/common/decompose.c:130
 msgid "Red"
 msgstr "Rot"
 
@@ -374,14 +374,14 @@ msgstr ""
 #. Greenmode radio frame
 #. Greenmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1031 plug-ins/common/AlienMap.c:1241
-#: plug-ins/common/channel_mixer.c:600 plug-ins/common/decompose.c:131
+#: plug-ins/common/channel_mixer.c:598 plug-ins/common/decompose.c:131
 msgid "Green"
 msgstr "Grün"
 
 #. Bluemode radio frame
 #. Bluemode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1072 plug-ins/common/AlienMap.c:1264
-#: plug-ins/common/channel_mixer.c:601 plug-ins/common/decompose.c:136
+#: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:136
 msgid "Blue"
 msgstr "Blau"
 
@@ -423,7 +423,7 @@ msgstr "_Fraktale"
 #: plug-ins/FractalExplorer/Dialogs.c:1827 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:577 plug-ins/common/CML_explorer.c:2137
 #: plug-ins/common/bz2.c:250 plug-ins/common/bz2.c:323
-#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:867
+#: plug-ins/common/channel_mixer.c:1216 plug-ins/common/curve_bend.c:867
 #: plug-ins/common/dicom.c:646 plug-ins/common/gbr.c:581
 #: plug-ins/common/gif.c:995 plug-ins/common/gih.c:1218
 #: plug-ins/common/gtm.c:226 plug-ins/common/gz.c:307 plug-ins/common/gz.c:416
@@ -469,7 +469,7 @@ msgstr "Fraktalparameter speichern"
 #. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
-#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:919
+#: plug-ins/common/channel_mixer.c:1131 plug-ins/common/curve_bend.c:919
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
 #: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:768
@@ -922,23 +922,20 @@ msgid "Preview Options"
 msgstr "Vorschau-Einstellungen"
 
 #: plug-ins/MapObject/mapobject_apply.c:273
-#, fuzzy
 msgid "Map to Plane..."
-msgstr "Laplace..."
+msgstr "Auf Ebene abbilden..."
 
 #: plug-ins/MapObject/mapobject_apply.c:276
 msgid "Map to Sphere..."
-msgstr ""
+msgstr "Auf Kugel abbilden..."
 
 #: plug-ins/MapObject/mapobject_apply.c:279
-#, fuzzy
 msgid "Map to Box..."
-msgstr "Max RGB..."
+msgstr "Auf Würfel abbilden..."
 
 #: plug-ins/MapObject/mapobject_apply.c:282
-#, fuzzy
 msgid "Map to Cylinder..."
-msgstr "Zylinder"
+msgstr "Auf Zylinder abbilden..."
 
 #: plug-ins/MapObject/mapobject_main.c:200
 msgid "<Image>/Filters/Map/Map _Object..."
@@ -1309,7 +1306,7 @@ msgstr "AlienMap: Transformiere..."
 msgid "AlienMap"
 msgstr "AlienMap"
 
-#: plug-ins/common/AlienMap.c:1190 plug-ins/common/channel_mixer.c:624
+#: plug-ins/common/AlienMap.c:1190 plug-ins/common/channel_mixer.c:622
 #: plug-ins/common/diffraction.c:505 plug-ins/common/diffraction.c:543
 #: plug-ins/common/diffraction.c:581 plug-ins/common/exchange.c:409
 #: plug-ins/common/noisify.c:366 plug-ins/common/noisify.c:373
@@ -1320,7 +1317,7 @@ msgstr "_Rot:"
 msgid "Change intensity of the red channel"
 msgstr "Ändert Intensität des roten Kanals"
 
-#: plug-ins/common/AlienMap.c:1200 plug-ins/common/channel_mixer.c:636
+#: plug-ins/common/AlienMap.c:1200 plug-ins/common/channel_mixer.c:634
 #: plug-ins/common/diffraction.c:514 plug-ins/common/diffraction.c:552
 #: plug-ins/common/diffraction.c:590 plug-ins/common/exchange.c:453
 #: plug-ins/common/noisify.c:367 plug-ins/common/noisify.c:374
@@ -1331,7 +1328,7 @@ msgstr "_Grün:"
 msgid "Change intensity of the green channel"
 msgstr "Ändert Intensität des grünen Kanals"
 
-#: plug-ins/common/AlienMap.c:1209 plug-ins/common/channel_mixer.c:649
+#: plug-ins/common/AlienMap.c:1209 plug-ins/common/channel_mixer.c:647
 #: plug-ins/common/diffraction.c:523 plug-ins/common/diffraction.c:561
 #: plug-ins/common/diffraction.c:599 plug-ins/common/exchange.c:497
 #: plug-ins/common/noisify.c:368 plug-ins/common/noisify.c:375
@@ -1921,7 +1918,7 @@ msgstr "Warnung: Quell- und Zielkanal sind identisch"
 msgid "Save Parameters to"
 msgstr "Parameter speichern in"
 
-#: plug-ins/common/CML_explorer.c:2191 plug-ins/common/channel_mixer.c:1245
+#: plug-ins/common/CML_explorer.c:2191
 #, c-format
 msgid "Parameters were Saved to '%s'"
 msgstr "Parameter wurden in '%s' gespeichert"
@@ -1930,7 +1927,7 @@ msgstr "Parameter wurden in '%s' gespeichert"
 msgid "CML File Operation Warning"
 msgstr "Warnung bei einer CML-Dateioperation"
 
-#: plug-ins/common/CML_explorer.c:2223 plug-ins/common/channel_mixer.c:1278
+#: plug-ins/common/CML_explorer.c:2223 plug-ins/common/channel_mixer.c:1256
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -2372,7 +2369,6 @@ msgid "_Spherical Map"
 msgstr "_Sphärische Abb."
 
 #: plug-ins/common/bumpmap.c:966
-#, fuzzy
 msgid "S_inusoidal Map"
 msgstr "S_inusförmige Abb."
 
@@ -2493,41 +2489,46 @@ msgstr "Komprimierte Größe: %s"
 msgid "Compression ratio (approx.): %d to 1"
 msgstr "Kompressionsfakrot (ungef.): %d zu 1"
 
-#: plug-ins/common/channel_mixer.c:226
+#: plug-ins/common/channel_mixer.c:224
 msgid "<Image>/Filters/Colors/Channel Mi_xer.."
 msgstr "<Image>/Filter/Farben/Kanalmi_xer..."
 
-#: plug-ins/common/channel_mixer.c:530
+#: plug-ins/common/channel_mixer.c:528
 msgid "Channel Mixer"
 msgstr "Kanalmixer"
 
 #. The preview toggle
-#: plug-ins/common/channel_mixer.c:566 plug-ins/imagemap/imap_grid.c:295
+#: plug-ins/common/channel_mixer.c:564 plug-ins/imagemap/imap_grid.c:295
 msgid "_Preview"
 msgstr "_Vorschau"
 
-#: plug-ins/common/channel_mixer.c:591
+#: plug-ins/common/channel_mixer.c:589
 msgid "O_utput Channel:"
 msgstr "_Ausgabekanal:"
 
 #. The monochrome toggle
-#: plug-ins/common/channel_mixer.c:660
+#: plug-ins/common/channel_mixer.c:658
 msgid "_Monochrome"
 msgstr "_Monochrom"
 
-#: plug-ins/common/channel_mixer.c:672
+#: plug-ins/common/channel_mixer.c:670
 msgid "Preserve _Luminosity"
 msgstr "Helligkeit _erhalten"
 
-#: plug-ins/common/channel_mixer.c:1035
+#: plug-ins/common/channel_mixer.c:1014
 msgid "Load Channel Mixer Settings"
 msgstr "Kanalmixer Einstellungen laden"
 
-#: plug-ins/common/channel_mixer.c:1171
+#: plug-ins/common/channel_mixer.c:1152
 msgid "Save Channel Mixer Settings"
 msgstr "Kanalmixer Einstellungen speichern"
 
-#: plug-ins/common/channel_mixer.c:1264
+#: plug-ins/common/channel_mixer.c:1223
+#, c-format
+msgid "Parameters were saved to '%s'"
+msgstr "Parameter wurden in '%s' gespeichert"
+
+#: plug-ins/common/channel_mixer.c:1242
 msgid "Channel Mixer File Operation Warning"
 msgstr "Warnung bei einer CML-Dateioperation"
 
@@ -6509,7 +6510,8 @@ msgstr "Stra_hlwinkel (-1: Zufällig)"
 
 #: plug-ins/common/sparkle.c:411
 msgid "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
-msgstr "Einstellen des Strahlwinkels (-1 bedeutet einen zufällig gewählten Winkel)"
+msgstr ""
+"Einstellen des Strahlwinkels (-1 bedeutet einen zufällig gewählten Winkel)"
 
 #: plug-ins/common/sparkle.c:419
 msgid "Spik_e Density:"
@@ -9409,18 +9411,16 @@ msgid "Start angle:"
 msgstr "Startwinkel:"
 
 #: plug-ins/gimpressionist/orientation.c:78
-#, fuzzy
 msgid "The starting angle of the first brush to create"
-msgstr "Der Winkel des 1. Pinsels"
+msgstr "Der Startwinkel des 1. Pinsels"
 
 #: plug-ins/gimpressionist/orientation.c:86
 msgid "Angle span:"
-msgstr "Winkelgrösse"
+msgstr "Öffnungswinkel:"
 
 #: plug-ins/gimpressionist/orientation.c:90
-#, fuzzy
 msgid "The angle span of the first brush to create"
-msgstr "Der Winkel des 1. Pinsels"
+msgstr "Der Öffnungswinkel des 1. Pinsels"
 
 #: plug-ins/gimpressionist/orientation.c:114
 msgid ""
@@ -11798,9 +11798,8 @@ msgid "Save as XJT"
 msgstr "Als XJT speichern"
 
 #: plug-ins/xjt/xjt.c:876
-#, fuzzy
 msgid "Clear Transparent"
-msgstr "Transparenz"
+msgstr "Transparenz säubern"
 
 #: plug-ins/xjt/xjt.c:1702 plug-ins/xjt/xjt.c:3332
 #, c-format

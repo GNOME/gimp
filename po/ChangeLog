@@ -1,3 +1,7 @@
+2004-07-08  Sven Neumann  <sven@gimp.org>
+
+	* de.po: some minor updates to the german translation.
+
 2004-07-08  Jan Morén  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
@@ -28,10 +32,10 @@
 	* hu.po: Updated Hungarian translation.
 
 2004-06-15  Pablo G. del Campo <pablodc@bigfoot.com>
-                                                                                                                   
-        * es.po: Updated Spanish translation by
-        Francisco Vila <francisco.vila@hispalinux.es>.
-                                                                                                                   
+
+	* es.po: Updated Spanish translation by Francisco Vila
+	<francisco.vila@hispalinux.es>.
+
 2004-06-08  Jordi Mallach  <jordi@sindominio.net>
 
 	* ca.po: Updated Catalan translation by

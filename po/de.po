@@ -8,11 +8,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.0.1\n"
+"Project-Id-Version: GIMP 2.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:57+0200\n"
-"PO-Revision-Date: 2004-05-11 21:42+0200\n"
-"Last-Translator: Karl Eichwalder <ke@gnu.franken.de>\n"
+"POT-Creation-Date: 2004-07-08 17:37+0200\n"
+"PO-Revision-Date: 2004-07-08 17:32+0200\n"
+"Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -502,18 +502,18 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:118
 msgid "When enabled, the selected brush will be used for all tools."
 msgstr ""
-"Falls dies aktiviert ist, wird der gewählte Pinzel für alle Werkzeuge "
-"verwendet."
+"Falls dies aktiviert ist, wird derselbe Pinsel für alle Werkzeuge verwendet."
 
 #: app/config/gimprc-blurbs.h:124
-#, fuzzy
 msgid "When enabled, the selected gradient will be used for all tools."
-msgstr "Falls dies aktiviert ist, "
+msgstr ""
+"Falls dies aktiviert ist, wird derselbe Farbverlauf für alle Werkzeuge "
+"verwendet."
 
 #: app/config/gimprc-blurbs.h:127
-#, fuzzy
 msgid "When enabled, the selected pattern will be used for all tools."
-msgstr "Falls dies aktiviert ist, "
+msgstr ""
+"Falls dies aktiviert ist, wird dasselbe Muster für alle Werkzeuge verwendet."
 
 #: app/config/gimprc-blurbs.h:143
 msgid "Sets the browser used by the help system."
@@ -1602,7 +1602,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ungültiger UTF-8 Text in Pinseldatei »%s«."
 
-#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1302
+#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1306
 #: app/core/gimpitem.c:466 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
@@ -1986,7 +1986,7 @@ msgstr "QuickMask aktivieren"
 msgid "Disable QuickMask"
 msgstr "QuickMask deaktivieren"
 
-#: app/core/gimpimage-undo-push.c:2939
+#: app/core/gimpimage-undo-push.c:2937
 #, c-format
 msgid "Can't undo %s"
 msgstr "%s konnte nicht rückgängig gemacht werden"
@@ -2417,7 +2417,6 @@ msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
 
 #: app/core/gimptemplate.c:150
-#, fuzzy
 msgid "The horizontal image resolution."
 msgstr "Horizontale Auflösung des Bildes"
 
@@ -3610,9 +3609,8 @@ msgid "/blendingfunction/_Curved"
 msgstr "/blendingfunction/_Kurvig"
 
 #: app/gui/gradient-editor-menu.c:178
-#, fuzzy
 msgid "/blendingfunction/_Sinusoidal"
-msgstr "/blendingfunction/_Sinusoid"
+msgstr "/blendingfunction/_Sinusförmig"
 
 #: app/gui/gradient-editor-menu.c:183
 msgid "/blendingfunction/Spherical (i_ncreasing)"
@@ -5721,7 +5719,6 @@ msgid "Fit to Window"
 msgstr "Ans Fenster anpassen"
 
 #: app/gui/preferences-dialog.c:1512
-#, fuzzy
 msgid "Initial Zoom Ratio:"
 msgstr "An_fänglicher Skalierungsfaktor:"
 
@@ -7954,17 +7951,17 @@ msgstr "Kurven speichern"
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Kurven können bei indizierten Ebenen nicht angepaßt werden."
 
-#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:411
+#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:412
 #: app/widgets/gimphistogrameditor.c:148
 msgid "Channel:"
 msgstr "Kanal:"
 
-#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:425
+#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:426
 msgid "R_eset Channel"
 msgstr "Kanal _zurücksetzen"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:637
+#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:638
 msgid "All Channels"
 msgstr "Alle Kanäle"
 
@@ -8232,45 +8229,45 @@ msgstr "Werte speichern"
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Werte für indizierte Ebenen können nicht geändert werden. "
 
-#: app/tools/gimplevelstool.c:351
+#: app/tools/gimplevelstool.c:352
 msgid "Pick Black Point"
 msgstr "Schwarz-Punkt wählen"
 
-#: app/tools/gimplevelstool.c:355
+#: app/tools/gimplevelstool.c:356
 msgid "Pick Gray Point"
 msgstr "Grau-Punkt wählen"
 
-#: app/tools/gimplevelstool.c:359
+#: app/tools/gimplevelstool.c:360
 msgid "Pick White Point"
 msgstr "Weiß-Punkt wählen"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:440
+#: app/tools/gimplevelstool.c:441
 msgid "Input Levels"
 msgstr "Quellwerte"
 
-#: app/tools/gimplevelstool.c:535
+#: app/tools/gimplevelstool.c:536
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:565
+#: app/tools/gimplevelstool.c:566
 msgid "Output Levels"
 msgstr "Zielwerte"
 
-#: app/tools/gimplevelstool.c:656
+#: app/tools/gimplevelstool.c:657
 msgid "Read levels settings from file"
 msgstr "Einstellungen aus Datei lesen"
 
-#: app/tools/gimplevelstool.c:662
+#: app/tools/gimplevelstool.c:663
 msgid "Save levels settings to file"
 msgstr "Aktuelle Einstellungen in Datei speichern"
 
-#: app/tools/gimplevelstool.c:670
+#: app/tools/gimplevelstool.c:671
 msgid "_Auto"
 msgstr "_Auto"
 
-#: app/tools/gimplevelstool.c:672
+#: app/tools/gimplevelstool.c:673
 msgid "Adjust levels automatically"
 msgstr "Werte automatisch anpassen"
 
@@ -10104,52 +10101,3 @@ msgstr "XCF-Fehler: nicht unterstützte XCF-Dateiversion %d aufgetreten"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Bilder und Photos erstellen und bearbeiten"
-
-#~ msgid "_Master"
-#~ msgstr "A_lle"
-
-#~ msgid ""
-#~ "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-#~ msgstr "  -S, --no-splash-image    Kein Bild im Startfenster anzeigen.\n"
-
-#~ msgid "Image Mod"
-#~ msgstr "Bildänderung"
-
-#~ msgid "Layer Mod"
-#~ msgstr "Ebenenänderung"
-
-#~ msgid "Channel Mod"
-#~ msgstr "Kanaländerung"
-
-#~ msgid "Paste Transform"
-#~ msgstr "Transformation einfügen"
-
-#~ msgid "Empty Layer Copy"
-#~ msgstr "Leere Ebenen-Kopie"
-
-#~ msgid "Empty Vectors Copy"
-#~ msgstr "Leere Vektor-Kopie"
-
-#~ msgid "Modify letter spacing"
-#~ msgstr "Buchstabenabstand verändern"
-
-#~ msgid "Could not open"
-#~ msgstr "Datei konnte nicht geöffnet werden"
-
-#~ msgid "Modify Curves for Channel:"
-#~ msgstr "Kurven für Kanal ändern:"
-
-#~ msgid "Modify Levels for Channel:"
-#~ msgstr "Verändere Werte für Kanal:"
-
-#~ msgid "/View/Zoom/1:4"
-#~ msgstr "/Ansicht/Zoom/1:4"
-
-#~ msgid "/View/Zoom/1:8"
-#~ msgstr "/Ansicht/Zoom/1:8"
-
-#~ msgid "Cannot create folder: %s"
-#~ msgstr "Ordner konnte nicht angelegt werden: %s"
-
-#~ msgid "The GIMP (unstable)"
-#~ msgstr "GIMP (instabil)"
