@@ -1,3 +1,8 @@
+2005-02-14  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: allow to enable the threaded tile-swapper code
+	(use at your own risk).
+
 2005-02-13  Sven Neumann  <sven@gimp.org>
 
 	* configure.in
