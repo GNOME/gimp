@@ -227,8 +227,12 @@ plug_in_menus_add_proc (GimpUIManager *manager,
 
   if (! proc_def->menu_label)
     {
-      gchar *p = strrchr (path, '/');
+      gchar *p;
 
+      if (! path)
+        return;
+
+      p = strrchr (path, '/');
       if (! p)
         {
           g_free (path);
@@ -340,15 +344,17 @@ plug_in_menus_build_path (GimpUIManager *manager,
 
   if (! gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager), action_path))
     {
-      gchar *parent_menu_path = g_strdup (menu_path);
+      gchar *parent_menu_path   = g_strdup (menu_path);
+      gchar *parent_action_path = NULL;
       gchar *menu_item_name;
-      gchar *parent_action_path;
 
       menu_item_name = strrchr (parent_menu_path, '/');
       *menu_item_name++ = '\0';
 
-      parent_action_path = plug_in_menus_build_path (manager, ui_path, merge_id,
-                                                     parent_menu_path, TRUE);
+      if (menu_item_name)
+        parent_action_path = plug_in_menus_build_path (manager,
+                                                       ui_path, merge_id,
+                                                       parent_menu_path, TRUE);
 
       if (parent_action_path)
         {
@@ -395,8 +401,7 @@ plug_in_menus_build_path (GimpUIManager *manager,
 
   if (action_path && for_menu)
     {
-      gchar *placeholder_path = g_strdup_printf ("%s/%s",
-                                                 action_path, "Menus");
+      gchar *placeholder_path = g_strdup_printf ("%s/%s", action_path, "Menus");
 
       if (gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager),
                                      placeholder_path))
