@@ -1,3 +1,41 @@
+2003-08-17  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-dispatch.[ch]: retired and removed.
+
+	* app/composite/Makefile.am: The 'test' target now builds and runs
+	  all the tests in TESTS
+
+	  Fixed typos of mismatched parenthesis in 'regenerate' target
+
+	* app/composite/Makefile.am: TESTS now include ss2 and 3dnow
+	  instruction sets.
+
+	* app/composite/make-gimp-composite-dispatch.py: retired and removed.
+
+	* app/composite/gimp-composite.c: call the installers of all the
+	  various instruction sets supplied by x86 type processors.
+
+	* app/base/base.c (base_init): Call gimp_composite_init() *before*
+	  paint_funcs_setup() (preparation for retiring
+	  app/paint-funcs/paint-funcs.c)
+
+	* app/composite/gimp-composite-sse2.[ch]
+	* app/composite/gimp-composite-3dnow.[ch]
+	* app/composite/gimp-composite-sse2-installer.c
+	* app/composite/gimp-composite-3dnow-installer.c:
+	  Added
+
+	* app/composite/make-installer.py: generate regression test
+	  programmes that take the command line arguments --iterations and
+	  --n-pixels for the number of iterations of a set of tests, and the
+	  number of pixels to use in each test, respectively.
+
+	  Conditionally compile tests in order to build and run tests on
+	  machines that can actually perform the tests.
+
+	  Failing a regression test now causes remaining tests to be
+	  skipped and a non-zero exit code by the programme.
+
 2003-08-18  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.c: Minor fix.

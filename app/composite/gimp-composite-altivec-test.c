@@ -11,7 +11,6 @@
 #include "base/base-types.h"
 
 #include "gimp-composite.h"
-#include "gimp-composite-dispatch.h"
 #include "gimp-composite-regression.h"
 #include "gimp-composite-util.h"
 #include "gimp-composite-generic.h"
@@ -20,6 +19,7 @@
 int
 gimp_composite_altivec_test(int iterations, int n_pixels)
 {
+#if (__GNUC__ >= 3) && defined(USE_ALTIVEC) && defined(ARCH_PPC)
   GimpCompositeContext generic_ctx;
   GimpCompositeContext special_ctx;
   double ft0;
@@ -56,6 +56,7 @@ gimp_composite_altivec_test(int iterations, int n_pixels)
     va8M[i].a = i;
   }
 
+#endif
   return (0);
 }
 
@@ -71,6 +72,19 @@ main(int argc, char *argv[])
 
   iterations = 1;
   n_pixels = 262145;
+
+  argv++, argc--;
+  while (argc >= 2) {
+    if ((strcmp(argv[0], "--iterations") == 0 || strcmp(argv[0], "-i") == 0) && argc > 1) {
+      iterations = atoi(argv[1]);
+      argc -= 2, argv++; argv++;
+    } else if ((strcmp(argv[0], "--n-pixels") == 0 || strcmp(argv[0], "-n") == 0) && argc > 1) {
+      n_pixels = atoi(argv[1]);
+      argc -= 2, argv++; argv++;
+    } else {
+      argc--, argv++;
+    }
+  }
 
   gimp_composite_generic_install();
 

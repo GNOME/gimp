@@ -11,7 +11,6 @@
 #include "base/base-types.h"
 
 #include "gimp-composite.h"
-#include "gimp-composite-dispatch.h"
 #include "gimp-composite-regression.h"
 #include "gimp-composite-util.h"
 #include "gimp-composite-generic.h"

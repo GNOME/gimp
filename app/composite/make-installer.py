@@ -263,7 +263,7 @@ def gimp_composite_regression(fpout, function_tables, options):
   print >>fpout, '#include "base/base-types.h"'
   print >>fpout, ''
   print >>fpout, '#include "gimp-composite.h"'
-  print >>fpout, '#include "gimp-composite-dispatch.h"'
+
   print >>fpout, '#include "gimp-composite-regression.h"'
   print >>fpout, '#include "gimp-composite-util.h"'
   print >>fpout, '#include "gimp-composite-generic.h"'
@@ -272,6 +272,11 @@ def gimp_composite_regression(fpout, function_tables, options):
   print >>fpout, 'int'
   print >>fpout, '%s_test(int iterations, int n_pixels)' % (functionnameify(options.file))
   print >>fpout, '{'
+
+  for r in options.requires:
+    print >>fpout, '#if %s' % (r)
+    pass
+
   print >>fpout, '  GimpCompositeContext generic_ctx;'
   print >>fpout, '  GimpCompositeContext special_ctx;'
   print >>fpout, '  double ft0;'
@@ -355,12 +360,18 @@ def gimp_composite_regression(fpout, function_tables, options):
             
             print >>fpout, '  ft0 = gimp_composite_regression_time_function(iterations, %s, &generic_ctx);' % ("gimp_composite_dispatch")
             print >>fpout, '  ft1 = gimp_composite_regression_time_function(iterations, %s, &special_ctx);' % (generic_table[key][0])
-            print >>fpout, '  gimp_composite_regression_compare_contexts("%s", &generic_ctx, &special_ctx);' % (mode_name(mode))
+            print >>fpout, '  if (gimp_composite_regression_compare_contexts("%s", &generic_ctx, &special_ctx)) {' % (mode_name(mode))
+            print >>fpout, '    return (1);'
+            print >>fpout, '  }'
             print >>fpout, '  gimp_composite_regression_timer_report("%s", ft0, ft1);' % (mode_name(mode))
             pass
           pass
         pass
       pass
+    pass
+  
+  for r in options.requires:
+    print >>fpout, '#endif'
     pass
   
   print >>fpout, '  return (0);'
@@ -379,6 +390,19 @@ def gimp_composite_regression(fpout, function_tables, options):
   print >>fpout, ''
   print >>fpout, '  iterations = %d;' % options.iterations
   print >>fpout, '  n_pixels = %d;' % options.n_pixels
+  print >>fpout, ''
+  print >>fpout, '  argv++, argc--;'
+  print >>fpout, '  while (argc >= 2) {'
+  print >>fpout, '    if ((strcmp(argv[0], "--iterations") == 0 || strcmp(argv[0], "-i") == 0) && argc > 1) {'
+  print >>fpout, '      iterations = atoi(argv[1]);'
+  print >>fpout, '      argc -= 2, argv++; argv++;'
+  print >>fpout, '    } else if ((strcmp(argv[0], "--n-pixels") == 0 || strcmp(argv[0], "-n") == 0) && argc > 1) {'
+  print >>fpout, '      n_pixels = atoi(argv[1]);'
+  print >>fpout, '      argc -= 2, argv++; argv++;'
+  print >>fpout, '    } else {'
+  print >>fpout, '      argc--, argv++;'
+  print >>fpout, '    }'
+  print >>fpout, '  }'
   print >>fpout, ''
   print >>fpout, '  gimp_composite_generic_install();'
   print >>fpout, ''

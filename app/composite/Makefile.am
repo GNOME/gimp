@@ -28,6 +28,10 @@ libappcomposite_a_sources = \
 	gimp-composite-mmx.h     		\
 	gimp-composite-sse.c	     	\
 	gimp-composite-sse.h     		\
+	gimp-composite-sse2.c	    	\
+	gimp-composite-sse2.h    		\
+	gimp-composite-3dnow.c	   	\
+	gimp-composite-3dnow.h   		\
 	gimp-composite-altivec.c	 	\
 	gimp-composite-altivec.h 		\
 	gimp-composite-vis.c	     	\
@@ -41,6 +45,10 @@ libappcomposite_a_built_sources =   \
 	gimp-composite-mmx-installer.h     \
 	gimp-composite-sse-installer.c		   \
 	gimp-composite-sse-installer.h     \
+	gimp-composite-sse2-installer.c		  \
+	gimp-composite-sse2-installer.h    \
+	gimp-composite-3dnow-installer.c		 \
+	gimp-composite-3dnow-installer.h   \
 	gimp-composite-altivec-installer.c \
 	gimp-composite-altivec-installer.h \
 	gimp-composite-vis-installer.c		   \
@@ -50,22 +58,38 @@ libappcomposite_a_SOURCES = $(libappcomposite_a_built_sources) $(libappcomposite
 
 regenerate: gimp-composite-generic.o gimp-composite-mmx.o gimp-composite-sse.o gimp-composite-altivec.o gimp-composite-vis.o
 	$(srcdir)/make-installer.py -t -f gimp-composite-generic.o
-	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_MMX)     && defined(ARCH_X86)'    -f gimp-composite-mmx.o
-	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_MMX)     && defined(ARCH_X86)'    -f gimp-composite-sse.o
-	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_ALTIVEC) && defined(ARCH_PPC)'    -f gimp-composite-altivec.o
-	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_VIS)     && defined(ARCH_SPARC))' -f gimp-composite-vis.o
+	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_MMX)     && defined(ARCH_X86)'   -f gimp-composite-mmx.o
+	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_SSE)     && defined(ARCH_X86)'   -f gimp-composite-sse.o
+	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_SSE)     && defined(ARCH_X86)'   -f gimp-composite-sse2.o
+	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_3DNOW)   && defined(ARCH_X86)'   -f gimp-composite-3dnow.o
+	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_ALTIVEC) && defined(ARCH_PPC)'   -f gimp-composite-altivec.o
+	$(srcdir)/make-installer.py -t -r '(__GNUC__ >= 3) && defined(USE_VIS)     && defined(ARCH_SPARC)' -f gimp-composite-vis.o
 
 EXTRA_DIST = \
 	make-installer.py	\
 	ns.py
 
-EXTRA_PROGRAMS = test-composite gimp-composite-test gimp-composite-mmx-test gimp-composite-sse-test gimp-composite-altivec-test gimp-composite-vis-test
 
 #
 # unit tests and meta tools for GimpComposite
 #
 
-TESTS = test-composite gimp-composite-test gimp-composite-mmx-test gimp-composite-sse-test gimp-composite-altivec-test gimp-composite-vis-test
+TESTS = test-composite gimp-composite-test \
+	gimp-composite-mmx-test     \
+	gimp-composite-sse-test     \
+	gimp-composite-sse2-test    \
+	gimp-composite-3dnow-test   \
+	gimp-composite-altivec-test \
+ gimp-composite-vis-test
+
+
+tests: $(TESTS)
+	for test in $(TESTS); do \
+		echo $${test};      \
+		if ! $${test}; then \
+			exit 1;            \
+		fi;                 \
+	done
 
 test_composite_SOURCES = \
 	gimp-composite-regression.c	\
@@ -120,6 +144,34 @@ gimp_composite_sse_test_LDADD = \
 	$(top_builddir)/app/base/libappbase.a	\
 	$(GLIB_LIBS)
 
+gimp_composite_sse2_test_SOURCES = \
+	gimp-composite-regression.c	\
+	gimp-composite-regression.h	\
+	gimp-composite-sse2-test.c
+
+gimp_composite_sse2_test_DEPENDENCIES = $(gimpcomposite_dependencies)
+
+gimp_composite_sse2_test_LDADD = \
+	libappcomposite.a					\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/app/base/libappbase.a	\
+	$(GLIB_LIBS)
+
+
+gimp_composite_3dnow_test_SOURCES = \
+	gimp-composite-regression.c	\
+	gimp-composite-regression.h	\
+	gimp-composite-3dnow-test.c
+
+gimp_composite_3dnow_test_DEPENDENCIES = $(gimpcomposite_dependencies)
+
+gimp_composite_3dnow_test_LDADD = \
+	libappcomposite.a					\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/app/base/libappbase.a	\
+	$(GLIB_LIBS)
+
+
 gimp_composite_altivec_test_SOURCES = \
 	gimp-composite-regression.c	\
 	gimp-composite-regression.h	\
@@ -145,5 +197,7 @@ gimp_composite_vis_test_LDADD = \
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/app/base/libappbase.a	\
 	$(GLIB_LIBS)
+
+EXTRA_PROGRAMS = test-composite gimp-composite-test $(TESTS)
 
 CLEANFILES = $(EXTRA_PROGRAMS)

@@ -128,8 +128,9 @@ base_init (GimpBaseConfig *config,
 
   g_free (path);
 
-  paint_funcs_setup (use_mmx);
   gimp_composite_init ();
+
+  paint_funcs_setup (use_mmx);
 }
 
 void
