@@ -34,6 +34,7 @@
 #include "gimage.h"
 #include "gimpchannel.h"
 #include "gimpcontainer.h"
+#include "gimpimage-duplicate.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
@@ -84,6 +85,7 @@ static ProcRecord image_floating_sel_attached_to_proc;
 static ProcRecord image_thumbnail_proc;
 static ProcRecord image_set_tattoo_state_proc;
 static ProcRecord image_get_tattoo_state_proc;
+static ProcRecord image_duplicate_proc;
 static ProcRecord image_width_proc;
 static ProcRecord image_height_proc;
 static ProcRecord image_get_active_layer_proc;
@@ -147,6 +149,7 @@ register_image_procs (void)
   procedural_db_register (&image_thumbnail_proc);
   procedural_db_register (&image_set_tattoo_state_proc);
   procedural_db_register (&image_get_tattoo_state_proc);
+  procedural_db_register (&image_duplicate_proc);
   procedural_db_register (&image_width_proc);
   procedural_db_register (&image_height_proc);
   procedural_db_register (&image_get_active_layer_proc);
@@ -2613,6 +2616,63 @@ static ProcRecord image_get_tattoo_state_proc =
   1,
   image_get_tattoo_state_outargs,
   { { image_get_tattoo_state_invoker } }
+};
+
+static Argument *
+image_duplicate_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  GimpImage *new_gimage = NULL;
+
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  if (success)
+    success = (new_gimage = gimp_image_duplicate (gimage)) != NULL;
+
+  return_args = procedural_db_return_args (&image_duplicate_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_image_get_ID (new_gimage);
+
+  return return_args;
+}
+
+static ProcArg image_duplicate_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_duplicate_outargs[] =
+{
+  {
+    PDB_IMAGE,
+    "new_image",
+    "The new, duplicated image"
+  }
+};
+
+static ProcRecord image_duplicate_proc =
+{
+  "gimp_image_duplicate",
+  "Duplicate the specified image",
+  "This procedure duplicates the specified image, copying all layers, channels, and image information.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1997",
+  PDB_INTERNAL,
+  1,
+  image_duplicate_inargs,
+  1,
+  image_duplicate_outargs,
+  { { image_duplicate_invoker } }
 };
 
 static Argument *

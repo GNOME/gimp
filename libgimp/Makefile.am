@@ -31,7 +31,6 @@ PDB_WRAPPERS_C = \
 	gimpbrushes_pdb.c		\
 	gimpbrushselect_pdb.c		\
 	gimpchannel_pdb.c		\
-	gimpchannelops_pdb.c		\
 	gimpcolor_pdb.c			\
 	gimpconvert_pdb.c		\
 	gimpdisplay_pdb.c		\
@@ -66,7 +65,6 @@ PDB_WRAPPERS_H = \
 	gimpbrushes_pdb.h		\
 	gimpbrushselect_pdb.h		\
 	gimpchannel_pdb.h		\
-	gimpchannelops_pdb.h		\
 	gimpcolor_pdb.h			\
 	gimpconvert_pdb.h		\
 	gimpdisplay_pdb.h		\

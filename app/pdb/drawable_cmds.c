@@ -28,6 +28,7 @@
 #include "procedural_db.h"
 
 #include "drawable.h"
+#include "gimpdrawable-offset.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
@@ -58,6 +59,7 @@ static ProcRecord drawable_get_pixel_proc;
 static ProcRecord drawable_set_pixel_proc;
 static ProcRecord drawable_set_image_proc;
 static ProcRecord drawable_thumbnail_proc;
+static ProcRecord drawable_offset_proc;
 
 void
 register_drawable_procs (void)
@@ -84,6 +86,7 @@ register_drawable_procs (void)
   procedural_db_register (&drawable_set_pixel_proc);
   procedural_db_register (&drawable_set_image_proc);
   procedural_db_register (&drawable_thumbnail_proc);
+  procedural_db_register (&drawable_offset_proc);
 }
 
 static Argument *
@@ -1494,4 +1497,81 @@ static ProcRecord drawable_thumbnail_proc =
   5,
   drawable_thumbnail_outargs,
   { { drawable_thumbnail_invoker } }
+};
+
+static Argument *
+drawable_offset_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gboolean wrap_around;
+  gint32 fill_type;
+  gint32 offset_x;
+  gint32 offset_y;
+
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
+
+  wrap_around = args[1].value.pdb_int ? TRUE : FALSE;
+
+  fill_type = args[2].value.pdb_int;
+  if (fill_type < OFFSET_BACKGROUND || fill_type > OFFSET_TRANSPARENT)
+    success = FALSE;
+
+  offset_x = args[3].value.pdb_int;
+
+  offset_y = args[4].value.pdb_int;
+
+  if (success)
+    {
+      gimp_drawable_offset (drawable, wrap_around, fill_type, offset_x, offset_y);
+    }
+
+  return procedural_db_return_args (&drawable_offset_proc, success);
+}
+
+static ProcArg drawable_offset_inargs[] =
+{
+  {
+    PDB_DRAWABLE,
+    "drawable",
+    "The drawable to offset"
+  },
+  {
+    PDB_INT32,
+    "wrap_around",
+    "wrap image around or fill vacated regions"
+  },
+  {
+    PDB_INT32,
+    "fill_type",
+    "fill vacated regions of drawable with background or transparent: OFFSET_BACKGROUND (0) or OFFSET_TRANSPARENT (1)"
+  },
+  {
+    PDB_INT32,
+    "offset_x",
+    "offset by this amount in X direction"
+  },
+  {
+    PDB_INT32,
+    "offset_y",
+    "offset by this amount in Y direction"
+  }
+};
+
+static ProcRecord drawable_offset_proc =
+{
+  "gimp_drawable_offset",
+  "Offset the drawable by the specified amounts in the X and Y directions",
+  "This procedure offsets the specified drawable by the amounts specified by 'offset_x' and 'offset_y'. If 'wrap_around' is set to TRUE, then portions of the drawable which are offset out of bounds are wrapped around. Alternatively, the undefined regions of the drawable can be filled with transparency or the background color, as specified by the 'fill_type' parameter.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1997",
+  PDB_INTERNAL,
+  5,
+  drawable_offset_inargs,
+  0,
+  NULL,
+  { { drawable_offset_invoker } }
 };

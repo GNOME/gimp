@@ -48,9 +48,6 @@ init_generated_constants (void)
   setvar (cintern ("BLUE-LUT"), flocons (3), NIL);
   setvar (cintern ("ALPHA-LUT"), flocons (4), NIL);
 
-  setvar (cintern ("OFFSET-BACKGROUND"), flocons (0), NIL);
-  setvar (cintern ("OFFSET-TRANSPARENT"), flocons (1), NIL);
-
   setvar (cintern ("ADD"), flocons (0), NIL);
   setvar (cintern ("SUB"), flocons (1), NIL);
   setvar (cintern ("REPLACE"), flocons (2), NIL);
@@ -110,6 +107,9 @@ init_generated_constants (void)
   setvar (cintern ("GRAYA-IMAGE"), flocons (3), NIL);
   setvar (cintern ("INDEXED-IMAGE"), flocons (4), NIL);
   setvar (cintern ("INDEXEDA-IMAGE"), flocons (5), NIL);
+
+  setvar (cintern ("OFFSET-BACKGROUND"), flocons (0), NIL);
+  setvar (cintern ("OFFSET-TRANSPARENT"), flocons (1), NIL);
 
   setvar (cintern ("ONCE-FORWARD"), flocons (0), NIL);
   setvar (cintern ("ONCE-BACKWARDS"), flocons (1), NIL);

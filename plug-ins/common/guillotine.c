@@ -223,7 +223,7 @@ guillotine (gint32 image_ID)
 	{
 	  gint32 new_image;
 
-	  new_image = gimp_channel_ops_duplicate (image_ID);
+	  new_image = gimp_image_duplicate (image_ID);
 
 	  if (new_image == -1)
 	    {

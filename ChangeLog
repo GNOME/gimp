@@ -1,5 +1,37 @@
 2001-04-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpdrawable-offset.[ch]: renamed ChannelOffsetType to
+	GimpOffsetType.
+
+	* app/pdb/channel_ops_cmds.c
+	* libgimp/gimpchannelops_pdb.[ch]
+	* tools/pdbgen/pdb/channel_ops.pdb: removed.
+
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/image.pdb: put the "offset" and "duplicate"
+	functions where they belong.
+
+	* app/gui/offset-dialog.c
+	* app/pdb/Makefile.am
+	* app/pdb/drawable_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/Makefile.am
+	* libgimp/gimp_pdb.h
+	* libgimp/gimpdrawable_pdb.[ch]
+	* libgimp/gimpenums.h
+	* libgimp/gimpimage.h
+	* libgimp/gimpimage_pdb.[ch]
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/enumcode.pl
+	* tools/pdbgen/enums.pl
+	* tools/pdbgen/groups.pl
+	* plug-ins/common/guillotine.c
+	* plug-ins/print/print.c
+	* plug-ins/script-fu/script-fu-constants.c: changed accordingly.
+
+2001-04-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/channel_ops.[ch]: removed
 

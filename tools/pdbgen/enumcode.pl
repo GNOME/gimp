@@ -141,53 +141,7 @@ foreach (sort keys %enums) {
     print ENUMFILE $body
 }
 
-# Sigh - this is full of backwards compat hacks. We'll clean this up for 1.3
-
-print ENUMFILE <<'CRUFT';
-/* This is for backwards compatibility. Don't use these for new plug-ins. */
-
-#ifdef GIMP_ENABLE_COMPAT_CRUFT
-
-typedef GimpFillType GFillType;
-typedef GimpImageBaseType GImageType;
-typedef GimpImageType GDrawableType;
-typedef GimpLayerModeEffects GLayerMode;
-typedef GimpRunModeType GRunModeType;
-typedef GimpOrientationType GOrientation;
-typedef GimpPDBArgType GParamType;
-typedef GimpPDBProcType GProcedureType;
-typedef GimpPDBStatusType GStatusType;
-
-CRUFT
-
-@xforms = (
-    { enum => 'PDBArgType', xform => [ qw(s/PDB/PARAM/) ] },
-    { enum => 'PDBStatusType', xform => [ qw(s/PDB/STATUS/) ] },
-    { enum => 'PDBProcType', xform => [ qw(s/^/PROC_/ s/PLUGIN/PLUG_IN/) ] },
-    { enum => 'OrientationType', xform => [ qw(s/^/ORIENTATION_/) ] },
-    { enum => 'GimpFillType', xform => [] },
-    { enum => 'GimpImageBaseType', xform => [] },
-    { enum => 'GimpImageType', xform => [] },
-    { enum => 'LayerModeEffects', xform => [] },
-    { enum => 'RunModeType', xform => [] },
-);
-
-foreach $xform (@xforms) {
-    my $enum = $enums{$xform->{enum}};
-    foreach (@{$enum->{symbols}}) {
-        my $symbol = $_;
-	$symbol = $enum->{nicks}->{$symbol} if exists $enum->{nicks}->{$symbol};
-	my $sym = $symbol;
-	foreach $xform (@{$xform->{xform}}) { eval "\$sym =~ $xform" }
-	$symbol = "GIMP_$symbol";
-	print ENUMFILE "#define $sym $symbol\n";
-    }
-    print ENUMFILE "\n";
-} 
-
 print ENUMFILE <<HEADER;
-#endif /* GIMP_ENABLE_COMPAT_CRUFT */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

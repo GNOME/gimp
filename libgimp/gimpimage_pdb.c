@@ -1514,6 +1514,37 @@ gimp_image_get_tattoo_state (gint32 image_ID)
 }
 
 /**
+ * gimp_image_duplicate:
+ * @image_ID: The image.
+ *
+ * Duplicate the specified image
+ *
+ * This procedure duplicates the specified image, copying all layers,
+ * channels, and image information.
+ *
+ * Returns: The new, duplicated image.
+ */
+gint32
+gimp_image_duplicate (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 new_image_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp_image_duplicate",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    new_image_ID = return_vals[1].data.d_image;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return new_image_ID;
+}
+
+/**
  * gimp_image_width:
  * @image_ID: The image.
  *

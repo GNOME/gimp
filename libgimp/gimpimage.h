@@ -31,7 +31,6 @@ extern "C" {
 #define gimp_image_convert_rgb        gimp_convert_rgb
 #define gimp_image_convert_grayscale  gimp_convert_grayscale
 #define gimp_image_convert_indexed    gimp_convert_indexed
-#define gimp_image_duplicate          gimp_channel_ops_duplicate
 
 
 guchar   * gimp_image_get_cmap           (gint32  image_ID,

@@ -256,7 +256,7 @@ package Gimp::CodeGen::enums;
 		       STACK_TRACE_QUERY => '1',
 		       STACK_TRACE_ALWAYS => '2' }
 	},
-    ChannelOffsetType =>
+    GimpOffsetType =>
 	{ contig => 1,
 	  header => 'gimpdrawable-offset.h',
 	  symbols => [ qw(OFFSET_BACKGROUND OFFSET_TRANSPARENT) ],

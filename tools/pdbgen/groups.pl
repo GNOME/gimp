@@ -3,7 +3,6 @@
     brush_select
     brushes
     channel
-    channel_ops
     color
     convert
     display

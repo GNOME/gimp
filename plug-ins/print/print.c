@@ -216,42 +216,14 @@ query (void)
   static gchar *copy  = "Copyright 1997-2000 by Michael Sweet and Robert Krawitz";
   static gchar *types = "RGB*,GRAY*,INDEXED*";
 
-#ifdef NEW_UI_ONLY
   gimp_install_procedure ("file_print_gimp",
 			  blurb, help, auth, copy,
 			  PLUG_IN_VERSION,
 			  N_("<Image>/File/Print..."),
 			  types,
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
-#elif defined(GIMP_1_0)
-  gimp_install_procedure ("file_print",
-			  blurb, help, auth, copy,
-			  PLUG_IN_VERSION,
-			  N_("<Image>/File/Print..."),
-			  types,
-			  PROC_PLUG_IN,
-			  nargs, 0,
-			  args, NULL);
-#else
-  gimp_install_procedure ("file_print_gtk",
-			  blurb, help, auth, copy,
-			  PLUG_IN_VERSION,
-			  N_("<Image>/File/Print (Gtk)..."),
-			  types,
-			  PROC_PLUG_IN,
-			  nargs, 0,
-			  args, NULL);
-  gimp_install_procedure ("file_print_gimp",
-			  blurb, help, auth, copy,
-			  PLUG_IN_VERSION,
-			  N_("<Image>/File/Print (Gimp)..."),
-			  types,
-			  PROC_PLUG_IN,
-			  nargs, 0,
-			  args, NULL);
-#endif
 }
 
 
@@ -338,7 +310,7 @@ run (char   *name,		/* I - Name of print program. */
    */
 
   current_printer = get_printer_by_index (0);
-  run_mode = (GRunModeType)param[0].data.d_int32;
+  run_mode = (GimpRunModeType)param[0].data.d_int32;
 
   values = g_new (GimpParam, 1);
 
@@ -359,8 +331,8 @@ run (char   *name,		/* I - Name of print program. */
   /*  eventually export the image */
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_INTERACTIVE:
+    case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init ("print", TRUE);
       export = gimp_export_image (&image_ID, &drawable_ID, "Print",
 				  (GIMP_EXPORT_CAN_HANDLE_RGB |
@@ -394,7 +366,7 @@ run (char   *name,		/* I - Name of print program. */
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       /*
        * Get information from the dialog...
        */
@@ -403,12 +375,12 @@ run (char   *name,		/* I - Name of print program. */
 	goto cleanup;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       /*
        * Make sure all the arguments are present...
        */
       if (nparams < 11)
-	values[0].data.d_status = STATUS_CALLING_ERROR;
+	values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
       else
 	{
 	  strcpy (vars.output_to, param[3].data.d_string);
@@ -509,7 +481,7 @@ run (char   *name,		/* I - Name of print program. */
       current_printer = get_printer_by_driver (vars.driver);
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /*
        * Possibly retrieve data...
        */
@@ -521,14 +493,14 @@ run (char   *name,		/* I - Name of print program. */
       break;
 
     default:
-      values[0].data.d_status = STATUS_CALLING_ERROR;
+      values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
       break;;
     }
 
   /*
    * Print the image...
    */
-  if (values[0].data.d_status == STATUS_SUCCESS)
+  if (values[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       /*
        * Set the tile cache size...
@@ -633,7 +605,7 @@ run (char   *name,		/* I - Name of print program. */
 	   * Is the image an Indexed type?  If so we need the colormap...
 	   */
 
-	  if (gimp_image_base_type (image_ID) == INDEXED)
+	  if (gimp_image_base_type (image_ID) == GIMP_INDEXED)
 	    vars.cmap = gimp_image_get_cmap (image_ID, &ncolors);
 	  else
 	    vars.cmap    = NULL;
@@ -646,7 +618,7 @@ run (char   *name,		/* I - Name of print program. */
 	  if (verify_printer_params(current_printer, &vars))
 	    (*current_printer->print) (current_printer, 1, prn, image, &vars);
 	  else
-	    values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	    values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
 	  if (plist_current > 0)
 #ifndef __EMX__
@@ -661,7 +633,7 @@ run (char   *name,		/* I - Name of print program. */
 	    fclose (prn);
 	    s = g_strconcat (vars.output_to, tmpfile, NULL);
 	    if (system(s) != 0)
-	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	    g_free (s);
 	    remove (tmpfile);
 	    g_free( tmpfile);
@@ -672,13 +644,13 @@ run (char   *name,		/* I - Name of print program. */
 	  print_finished = 1;
 	}
       else
-	values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
       /*
        * Store data...
        */
 
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data (PLUG_IN_NAME, &vars, sizeof (vars));
     }
 

@@ -113,6 +113,7 @@ gboolean          _gimp_image_thumbnail               (gint32              image
 gboolean          gimp_image_set_tattoo_state         (gint32              image_ID,
 						       gint                tattoo);
 gint              gimp_image_get_tattoo_state         (gint32              image_ID);
+gint32            gimp_image_duplicate                (gint32              image_ID);
 gint              gimp_image_width                    (gint32              image_ID);
 gint              gimp_image_height                   (gint32              image_ID);
 gint32            gimp_image_get_active_layer         (gint32              image_ID);

@@ -1432,6 +1432,33 @@ CODE
     );
 }
 
+sub image_duplicate {
+    $blurb = 'Duplicate the specified image';
+
+    $help = <<'HELP';
+This procedure duplicates the specified image, copying all layers, channels,
+and image information.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    @inargs = ( &std_image_arg );
+
+    @outargs = ( 
+	{ name => 'new_image', type => 'image',
+	  desc => 'The new, duplicated image',
+	  alias => 'new_gimage', init => 1 }
+    );
+
+    %invoke = (
+	headers => [ qw("gimpimage-duplicate.h") ],
+        code => <<'CODE'
+success = (new_gimage = gimp_image_duplicate (gimage)) != NULL;
+CODE
+    );
+}
+
 
 @headers = qw(<string.h> "gimage.h" "context_manager.h" "gimpcontainer.h"
 	      "gimplist.h" "temp_buf.h" 
@@ -1464,7 +1491,8 @@ unshift @procs, qw(image_list image_new image_resize image_scale image_delete
 		   image_undo_disable image_undo_freeze image_undo_thaw
 		   image_clean_all image_floating_selection
 		   image_floating_sel_attached_to image_thumbnail
-		   image_set_tattoo_state image_get_tattoo_state);
+		   image_set_tattoo_state image_get_tattoo_state
+		   image_duplicate);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image';

@@ -24,14 +24,14 @@ typedef enum
 {
   OFFSET_BACKGROUND,
   OFFSET_TRANSPARENT
-} ChannelOffsetType;
+} GimpOffsetType;
 
 
-void   gimp_drawable_offset (GimpDrawable      *drawable,
-			     gboolean           wrap_around,
-			     ChannelOffsetType  fill_type,
-			     gint               offset_x,
-			     gint               offset_y);
+void   gimp_drawable_offset (GimpDrawable   *drawable,
+			     gboolean        wrap_around,
+			     GimpOffsetType  fill_type,
+			     gint            offset_x,
+			     gint            offset_y);
 
 
 #endif  /*  __GIMP_DRAWABLE_OFFSET_H__  */

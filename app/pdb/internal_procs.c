@@ -30,7 +30,6 @@
 void register_brush_select_procs    (void);
 void register_brushes_procs         (void);
 void register_channel_procs         (void);
-void register_channel_ops_procs     (void);
 void register_color_procs           (void);
 void register_convert_procs         (void);
 void register_display_procs         (void);
@@ -74,46 +73,43 @@ internal_procs_init (void)
   app_init_update_status (NULL, _("Channel"), 0.044);
   register_channel_procs ();
 
-  app_init_update_status (NULL, _("Channel Ops"), 0.094);
-  register_channel_ops_procs ();
-
-  app_init_update_status (NULL, _("Color"), 0.1);
+  app_init_update_status (NULL, _("Color"), 0.094);
   register_color_procs ();
 
-  app_init_update_status (NULL, _("Convert"), 0.138);
+  app_init_update_status (NULL, _("Convert"), 0.132);
   register_convert_procs ();
 
-  app_init_update_status (NULL, _("GDisplay procedures"), 0.147);
+  app_init_update_status (NULL, _("GDisplay procedures"), 0.141);
   register_display_procs ();
 
-  app_init_update_status (NULL, _("Drawable procedures"), 0.157);
+  app_init_update_status (NULL, _("Drawable procedures"), 0.15);
   register_drawable_procs ();
 
-  app_init_update_status (NULL, _("Edit procedures"), 0.226);
+  app_init_update_status (NULL, _("Edit procedures"), 0.223);
   register_edit_procs ();
 
-  app_init_update_status (NULL, _("File Operations"), 0.245);
+  app_init_update_status (NULL, _("File Operations"), 0.241);
   register_fileops_procs ();
 
-  app_init_update_status (NULL, _("Floating selections"), 0.27);
+  app_init_update_status (NULL, _("Floating selections"), 0.266);
   register_floating_sel_procs ();
 
-  app_init_update_status (NULL, _("Gimprc procedures"), 0.288);
+  app_init_update_status (NULL, _("Gimprc procedures"), 0.285);
   register_gimprc_procs ();
 
-  app_init_update_status (NULL, _("Gradients"), 0.298);
+  app_init_update_status (NULL, _("Gradients"), 0.295);
   register_gradients_procs ();
 
-  app_init_update_status (NULL, _("Gradient UI"), 0.313);
+  app_init_update_status (NULL, _("Gradient UI"), 0.31);
   register_gradient_select_procs ();
 
-  app_init_update_status (NULL, _("Guide procedures"), 0.326);
+  app_init_update_status (NULL, _("Guide procedures"), 0.323);
   register_guides_procs ();
 
-  app_init_update_status (NULL, _("Help procedures"), 0.345);
+  app_init_update_status (NULL, _("Help procedures"), 0.342);
   register_help_procs ();
 
-  app_init_update_status (NULL, _("Image"), 0.348);
+  app_init_update_status (NULL, _("Image"), 0.345);
   register_image_procs ();
 
   app_init_update_status (NULL, _("Layer"), 0.533);

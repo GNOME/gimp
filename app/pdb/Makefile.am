@@ -11,7 +11,6 @@ libapppdb_la_SOURCES = \
 	brush_select_cmds.c	\
 	brushes_cmds.c		\
 	channel_cmds.c		\
-	channel_ops_cmds.c	\
 	color_cmds.c		\
 	convert_cmds.c		\
 	display_cmds.c		\

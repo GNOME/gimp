@@ -42,13 +42,13 @@ typedef struct _OffsetDialog OffsetDialog;
 
 struct _OffsetDialog
 {
-  GtkWidget         *dlg;
-  GtkWidget         *off_se;
+  GtkWidget      *dlg;
+  GtkWidget      *off_se;
 
-  gboolean           wrap_around;
-  ChannelOffsetType  fill_type;
+  gboolean        wrap_around;
+  GimpOffsetType  fill_type;
 
-  GimpImage         *gimage;
+  GimpImage      *gimage;
 };
 
 

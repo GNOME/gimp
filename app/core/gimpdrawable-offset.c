@@ -40,11 +40,11 @@
 
 
 void
-gimp_drawable_offset (GimpDrawable      *drawable,
-		      gboolean           wrap_around,
-		      ChannelOffsetType  fill_type,
-		      gint               offset_x,
-		      gint               offset_y)
+gimp_drawable_offset (GimpDrawable   *drawable,
+		      gboolean        wrap_around,
+		      GimpOffsetType  fill_type,
+		      gint            offset_x,
+		      gint            offset_y)
 {
   PixelRegion  srcPR, destPR;
   TileManager *new_tiles;

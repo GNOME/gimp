@@ -703,3 +703,50 @@ _gimp_drawable_thumbnail (gint32   drawable_ID,
 
   return success;
 }
+
+/**
+ * gimp_drawable_offset:
+ * @drawable_ID: The drawable to offset.
+ * @wrap_around: wrap image around or fill vacated regions.
+ * @fill_type: fill vacated regions of drawable with background or transparent.
+ * @offset_x: offset by this amount in X direction.
+ * @offset_y: offset by this amount in Y direction.
+ *
+ * Offset the drawable by the specified amounts in the X and Y
+ * directions
+ *
+ * This procedure offsets the specified drawable by the amounts
+ * specified by 'offset_x' and 'offset_y'. If 'wrap_around' is set to
+ * TRUE, then portions of the drawable which are offset out of bounds
+ * are wrapped around. Alternatively, the undefined regions of the
+ * drawable can be filled with transparency or the background color, as
+ * specified by the 'fill_type' parameter.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_drawable_offset (gint32         drawable_ID,
+		      gboolean       wrap_around,
+		      GimpOffsetType fill_type,
+		      gint           offset_x,
+		      gint           offset_y)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_offset",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, wrap_around,
+				    GIMP_PDB_INT32, fill_type,
+				    GIMP_PDB_INT32, offset_x,
+				    GIMP_PDB_INT32, offset_y,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
