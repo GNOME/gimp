@@ -733,7 +733,7 @@ color_mapping (GimpDrawable *drawable)
 
 {
   gint processed, total;
-  guint x, y, xmin, xmax, ymin, ymax;
+  gint x, y, xmin, xmax, ymin, ymax;
   guint bpp = drawable->bpp;
   guchar *src;
   guchar *dest;

@@ -1,3 +1,36 @@
+2003-07-03  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/blur.c
+	* plug-ins/common/gifload.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/gqbist.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/pcx.c
+	* plug-ins/common/png.c
+	* plug-ins/common/ps.c
+	* plug-ins/common/psd.c
+	* plug-ins/common/psp.c
+	* plug-ins/common/randomize.c
+	* plug-ins/common/sinus.c
+	* plug-ins/common/snoise.c
+	* plug-ins/common/tga.c
+	* plug-ins/common/wmf.c
+	* plug-ins/common/xbm.c
+	* plug-ins/fp/fp.h
+	* plug-ins/fp/fp_gdk.c
+	* plug-ins/fp/fp_gtk.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gimpressionist/brush.c
+	* plug-ins/gimpressionist/paper.c
+	* plug-ins/gimpressionist/ppmtool.c
+	* plug-ins/gimpressionist/preview.c
+	* plug-ins/ifscompose/ifscompose_utils.c
+	* plug-ins/script-fu/script-fu-server.c		
+	* plug-ins/xjt/xjt.c: fixed some minor code issues found compiling
+	with -pedantic.
+
 2003-07-03  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: remove gimp.spec stuff (leave gimp.spec.in in CVS

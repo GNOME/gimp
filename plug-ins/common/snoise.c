@@ -88,7 +88,7 @@ typedef struct
 {
   gint    tilable;
   gint    turbulent;
-  gint    seed;
+  guint   seed;
   gint    detail;
   gdouble xsize;
   gdouble ysize;

@@ -87,7 +87,7 @@
 static struct
 {
   guint  spacing;
-  guchar description[MAXDESCLEN+1];
+  gchar  description[MAXDESCLEN+1];
 } info =
 /* Initialize to this, change if non-interactive later */
 {  
@@ -595,8 +595,8 @@ gih_load_one_brush (gint   fd,
 			   0, 0, drawable->width, drawable->height, 
 			   TRUE, FALSE);
       
-      gimp_pixel_rgn_set_rect (&pixel_rgn, (guchar *) brush_buf, 
-			       0, 0, bh.width, bh.height);
+      gimp_pixel_rgn_set_rect (&pixel_rgn,
+                               brush_buf, 0, 0, bh.width, bh.height);
 
       if (image_type == GIMP_GRAY_IMAGE)
 	gimp_invert (layer_ID);

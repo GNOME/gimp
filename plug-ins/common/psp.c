@@ -1052,7 +1052,7 @@ read_layer_block (FILE     *f,
   long block_start, sub_block_start, channel_start;
   gint sub_id;
   guint32 sub_init_len, sub_total_len;
-  guchar *name;
+  gchar *name;
   guint16 namelen;
   guchar type, opacity, blend_mode, visibility, transparency_protected;
   guchar link_group_id, mask_linked, mask_disabled;

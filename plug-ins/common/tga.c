@@ -1012,7 +1012,7 @@ save_image (const gchar *filename,
   guchar *pixels;
   guchar *data;
 
-  guint   num_colors;
+  gint    num_colors;
   guchar *gimp_cmap = NULL;
 
   drawable = gimp_drawable_get (drawable_ID);

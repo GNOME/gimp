@@ -244,8 +244,8 @@ static void padbrush(ppm_t *p, int width, int height)
 
 void updatebrushprev(char *fn)
 {
-  int i, j;
-  char buf[100];
+  gint   i, j;
+  guchar buf[100];
 
   if(fn)
     brushfile = 1;

@@ -251,7 +251,7 @@ optimize (ExpInfo *info)
 
 static void
 qbist (ExpInfo *info,
-       gchar   *buffer,
+       guchar  *buffer,
        gint     xp,
        gint     yp,
        gint     num,
@@ -394,7 +394,7 @@ qbist (ExpInfo *info,
 	{
 	  if (i < 3)
 	    {
-	      buffer[i] = (guint8) (((gfloat) accum[i] / 
+	      buffer[i] = (guchar) (((gfloat) accum[i] / 
 				     (gfloat) (oversampling * oversampling)) + 0.5);
 	    }
 	  else
@@ -610,7 +610,7 @@ dialog_update_previews (GtkWidget *widget,
       optimize (&info[(j + 5) % 9]);
       for (i = 0; i < PREVIEW_SIZE; i++)
 	{
-	  qbist (&info[(j + 5) % 9], (gchar *) buf,
+	  qbist (&info[(j + 5) % 9], buf,
 		 0, i, PREVIEW_SIZE, PREVIEW_SIZE, PREVIEW_SIZE, 3, 1);
 	  gtk_preview_draw_row (GTK_PREVIEW (preview[j]), buf,
 				0, i, PREVIEW_SIZE);

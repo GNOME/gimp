@@ -217,7 +217,7 @@ typedef enum
   XJT_SOFTLIGHT_MODE = 19,
   XJT_GRAIN_EXTRACT_MODE = 20,
   XJT_GRAIN_MERGE_MODE = 21,
-  XJT_COLOR_ERASE_MODE = 22,
+  XJT_COLOR_ERASE_MODE = 22
 } XJTLayerModeEffects;
 
 typedef struct

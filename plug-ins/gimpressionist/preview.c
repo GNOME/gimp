@@ -50,8 +50,8 @@ static void drawalpha(ppm_t *p, ppm_t *a)
 
 void updatepreviewprev(GtkWidget *wg, gpointer d)
 {
-  int i;
-  char buf[PREVIEWSIZE*3];
+  gint   i;
+  guchar buf[PREVIEWSIZE*3];
   static ppm_t p = {0,0,NULL};
   static ppm_t a = {0,0,NULL};
   static ppm_t backup = {0,0,NULL};

@@ -188,11 +188,11 @@ void msb2lsb(unsigned int *i)
   c = p[0]; p[0] = p[3]; p[3] = c;
 }
 
-void loadgbr(char *fn, ppm_t *p)
+void loadgbr(const gchar *fn, ppm_t *p)
 {
   FILE *f;
   struct _BrushHeader hdr;
-  guchar *ptr;
+  gchar *ptr;
   int x, y;
 
   f = fopen(fn, "rb");

@@ -501,8 +501,8 @@ fp_create_frame_select (void)
 
 void Create_A_Preview (GtkWidget **preview,
 		       GtkWidget **frame,
-		       int         previewWidth,
-		       int         previewHeight)
+		       gint        previewWidth,
+		       gint        previewHeight)
 {
   *frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (*frame), GTK_SHADOW_IN);
@@ -518,7 +518,7 @@ void Create_A_Preview (GtkWidget **preview,
 GSList *
 Button_In_A_Box (GtkWidget     *vbox,
 		 GSList        *group,
-		 guchar        *label,
+		 const gchar   *label,
 		 GtkSignalFunc  function,
 		 gpointer       data,
 		 gboolean       clicked)
@@ -541,7 +541,7 @@ Button_In_A_Box (GtkWidget     *vbox,
 
 void
 Check_Button_In_A_Box (GtkWidget     *vbox,
-		       guchar        *label,
+		       const gchar   *label,
 		       GtkSignalFunc  function,
 		       gpointer       data,
 		       gboolean       clicked)
@@ -561,7 +561,7 @@ Check_Button_In_A_Box (GtkWidget     *vbox,
 
 void
 Frames_Check_Button_In_A_Box (GtkWidget     *vbox,
-			      guchar        *label,
+			      const gchar   *label,
 			      GtkSignalFunc  function,
 			      GtkWidget     *frame,
 			      gboolean       clicked)
@@ -1035,7 +1035,9 @@ preview_size_scale_update (GtkAdjustment *adjustment,
 gint
 fp_advanced_dialog (void)
 {
-  guchar *rangeNames[] = { N_("Shadows:"), N_("Midtones:"), N_("Highlights:")};
+  gchar     *rangeNames[] = { N_("Shadows:"),
+                              N_("Midtones:"),
+                              N_("Highlights:") };
   GtkWidget *frame, *mainvbox;
   GtkObject *smoothnessData;
   GtkWidget *graphFrame, *table, *scale;

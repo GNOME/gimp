@@ -96,7 +96,7 @@ typedef struct
 {
   gdouble blur_pct;     /* likelihood of randomization (as %age) */
   gdouble blur_rcount;  /* repeat count */
-  gint    blur_seed;    /* seed value for g_random_set_seed() function */
+  guint   blur_seed;    /* seed value for g_random_set_seed() function */
 } BlurVals;
 
 static BlurVals pivals =

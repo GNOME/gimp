@@ -2214,7 +2214,7 @@ save_bw (FILE   *ofp,
   GimpDrawable *drawable;
   GimpImageType drawable_type;
   static char *hex = "0123456789abcdef";
-  int level2 = (psvals.level > 1);
+  gint level2 = (psvals.level > 1);
 
   cmap = gimp_image_get_cmap (image_ID, &ncols);
 
@@ -2223,13 +2223,14 @@ save_bw (FILE   *ofp,
   width = drawable->width;
   height = drawable->height;
   tile_height = gimp_tile_height ();
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&pixel_rgn,
+                       drawable, 0, 0, width, height, FALSE, FALSE);
 
   /* allocate a buffer for retrieving information from the pixel region  */
-  src = data = (guchar *)g_malloc (tile_height * width * drawable->bpp);
+  src = data = g_new (guchar, tile_height * width * drawable->bpp);
   nbsl = (width+7)/8;
-  scanline = (char *)g_malloc (nbsl + 1);
-  hex_scanline = (char *)g_malloc ((nbsl + 1)*2);
+  scanline = g_new (guchar, nbsl + 1);
+  hex_scanline = g_new (guchar, (nbsl + 1) * 2);
 
   /* Set up transformation in PostScript */
   save_ps_setup (ofp, drawable_ID, width, height, 1);
@@ -2244,7 +2245,7 @@ save_bw (FILE   *ofp,
     fprintf (ofp,"currentfile /ASCII85Decode filter /RunLengthDecode filter\n");
     ascii85_init ();
     /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
-    packb = (guchar *)g_malloc (((nbsl+1) * 105)/100+2);
+    packb = g_new (guchar, ((nbsl+1) * 105) / 100 + 2);
   }
   ps_begin_data (ofp);
   fprintf (ofp, "image\n");

@@ -166,26 +166,26 @@ void      Create_A_Preview        (GtkWidget  **,
 
 void      Create_A_Table_Entry    (GtkWidget  **,
 				   GtkWidget  *,
-				   const char *);
+				   const gchar *);
 
-GSList*   Button_In_A_Box        (GtkWidget  *,
-				  GSList     *,
-				  guchar     *,
+GSList*   Button_In_A_Box        (GtkWidget   *,
+				  GSList      *,
+				  const gchar *,
 				  GtkSignalFunc,
 				  gpointer,
 				  int           );
 
 void Check_Button_In_A_Box       (GtkWidget     *,
-				  guchar        *label,
-				  GtkSignalFunc func,
-				  gpointer      data,
-				  int           clicked);
+				  const gchar   *label,
+				  GtkSignalFunc  func,
+				  gpointer       data,
+				  int            clicked);
 
 void Frames_Check_Button_In_A_Box (GtkWidget     *,
-				   guchar        *label,
-				   GtkSignalFunc func,
+				   const gchar   *label,
+				   GtkSignalFunc  func,
 				   GtkWidget     *frame,
-				   int           clicked);
+				   int            clicked);
 
 void      Adjust_Preview_Sizes     (int width, 
 				    int height   );

@@ -33,10 +33,10 @@ static GtkListStore *paperstore;
 
 static void updatepaperprev(char *fn)
 {
-  int i, j;
-  char buf[100];
-  double sc;
-  ppm_t p = {0,0,NULL};
+  gint    i, j;
+  guchar  buf[100];
+  gdouble sc;
+  ppm_t   p = {0,0,NULL};
 
   loadppm(fn, &p);
   sc = p.width > p.height ? p.width : p.height;

@@ -485,8 +485,8 @@ static gint
 getval (gint c, 
 	gint base)
 {
-  static guchar *digits = "0123456789abcdefABCDEF";
-  gint val;
+  const gchar *digits = "0123456789abcdefABCDEF";
+  gint         val;
 
   /* Include uppercase hex digits. */
   if (base == 16)
@@ -952,7 +952,8 @@ save_image (const gchar *filename,
   gboolean has_alpha;
   gint     bpp;
 
-  guchar *data, *cmap, *name_buf, *intfmt;
+  guchar *data, *cmap;
+  gchar  *name_buf, *intfmt;
 
   drawable = gimp_drawable_get (drawable_ID);
   width  = drawable->width;

@@ -50,7 +50,7 @@
   pixel[2] = header_data_cmap[(unsigned char)data[0]][2]; \
   data ++; }
 
-static char header_data_cmap[256][3] = {
+static const guchar header_data_cmap[256][3] = {
 	{210,214,212},
 	{187,178,183},
 	{184,185,180},
@@ -308,7 +308,7 @@ static char header_data_cmap[256][3] = {
 	{255,255,255},
 	{255,255,255}
 	};
-static char logo_data[] = {
+static const guchar logo_data[] = {
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

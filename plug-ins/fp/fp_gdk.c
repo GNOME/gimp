@@ -155,7 +155,7 @@ FP_Range_Change_Events  (GtkWidget *widget,
 void
 update_range_labels (void)
 {
-  guchar buffer[3];
+  gchar buffer[3];
   
   gtk_label_set_text (GTK_LABEL(Current.rangeLabels[1]),"0");
 

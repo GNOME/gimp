@@ -130,7 +130,7 @@ typedef struct
 {
   gdouble rndm_pct;     /* likelihood of randomization (as %age) */
   gdouble rndm_rcount;  /* repeat count */
-  gint    rndm_seed;    /* seed value for g_rand_set_seed() function */
+  guint   rndm_seed;    /* seed value for g_rand_set_seed() function */
 } RandomizeVals;
 
 static RandomizeVals pivals =

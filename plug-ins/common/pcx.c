@@ -127,22 +127,22 @@ static gint32 load_image (const gchar *filename);
 static void   load_1     (FILE   *fp,
 			  gint    width,
 			  gint    height,
-			  gchar  *buffer,
+			  guchar *buffer,
 			  gint    bytes);
 static void   load_4     (FILE   *fp,
 			  gint    width,
 			  gint    height,
-			  gchar  *buffer,
+			  guchar *buffer,
 			  gint    bytes);
 static void   load_8     (FILE   *fp,
 			  gint    width,
 			  gint    height,
-			  gchar  *buffer,
+			  guchar *buffer,
 			  gint    bytes);
 static void   load_24    (FILE   *fp,
 			  gint    width,
 			  gint    height,
-			  gchar  *buffer,
+			  guchar *buffer,
 			  gint    bytes);
 static void   readline   (FILE   *fp,
 			  guchar *buffer,
@@ -383,15 +383,14 @@ load_image (const gchar *filename)
 }
 
 static void
-load_8 (FILE  *fp, 
-	gint   width, 
-	gint   height, 
-	gchar *buffer, 
-	gint   bytes) 
+load_8 (FILE   *fp, 
+	gint    width, 
+	gint    height, 
+	guchar *buffer, 
+	gint    bytes) 
 {
-  int row;
-  guchar *line;
-  line = (guchar *) g_malloc (bytes);
+  gint    row;
+  guchar *line= g_new (guchar, bytes);
 
   for (row = 0; row < height; buffer += width, ++row) 
     {
@@ -404,15 +403,14 @@ load_8 (FILE  *fp,
 }
 
 static void
-load_24 (FILE  *fp, 
-	 gint   width, 
-	 gint   height, 
-	 gchar *buffer, 
-	 gint   bytes) 
+load_24 (FILE   *fp, 
+	 gint    width, 
+	 gint    height, 
+	 guchar *buffer, 
+	 gint    bytes) 
 {
-  int x, y, c;
-  guchar *line;
-  line = (guchar *) g_malloc (bytes * 3);
+  gint    x, y, c;
+  guchar *line= g_new (guchar, bytes);
 
   for (y = 0; y < height; buffer += width * 3, ++y) 
     {
@@ -431,15 +429,14 @@ load_24 (FILE  *fp,
 }
 
 static void
-load_1 (FILE  *fp, 
-	gint   width, 
-	gint   height, 
-	gchar *buffer, 
-	gint   bytes) 
+load_1 (FILE   *fp, 
+	gint    width, 
+	gint    height, 
+	guchar *buffer, 
+	gint    bytes) 
 {
-  int x, y;
-  guchar *line;
-  line = (guchar *) g_malloc (bytes);
+  gint    x, y;
+  guchar *line = g_new (guchar, bytes);
 
   for (y = 0; y < height; buffer += width, ++y) 
     {
@@ -458,15 +455,14 @@ load_1 (FILE  *fp,
 }
 
 static void
-load_4 (FILE  *fp, 
-	gint   width, 
-	gint   height, 
-	gchar *buffer, 
-	gint   bytes) 
+load_4 (FILE   *fp, 
+	gint    width, 
+	gint    height, 
+	guchar *buffer, 
+	gint    bytes) 
 {
-  int x, y, c;
-  guchar *line;
-  line= (guchar *) g_malloc (bytes);
+  gint    x, y, c;
+  guchar *line= g_new (guchar, bytes);
 
   for (y = 0; y < height; buffer += width, ++y) 
     {

@@ -147,7 +147,7 @@ static int find_unused_ia_colour (guchar * pixels,
                                   int *colors)
 {
   int i;
-  gboolean ix_used[256]; // max of 256 palette entries
+  gboolean ix_used[256];
   gboolean trans_used = FALSE;
 
   for (i = 0; i < *colors; i++)
@@ -165,7 +165,7 @@ static int find_unused_ia_colour (guchar * pixels,
         trans_used = TRUE;
     }
 
-  // If there is no transparency, ignore alpha.
+  /* If there is no transparency, ignore alpha. */
   if (trans_used == FALSE)
     return -1;
 

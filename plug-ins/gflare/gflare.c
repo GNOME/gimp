@@ -801,7 +801,7 @@ static void gradient_cache_zorch            (void);
 /**									**/
 /*************************************************************************/
 
-MAIN ();
+MAIN ()
 
 void
 plugin_query (void)
@@ -1306,7 +1306,7 @@ gflare_load (const gchar *filename,
   gflare_read_double   (&gflare->sflare_rotation, gf);
   gflare_read_shape    (&gflare->sflare_shape, gf);
   gflare_read_int      (&gflare->sflare_nverts, gf);
-  gflare_read_int      (&gflare->sflare_seed, gf);
+  gflare_read_int      ((gint *) &gflare->sflare_seed, gf);
 
   if (gflare->sflare_seed == 0)
     gflare->sflare_seed = g_random_int();
@@ -4668,8 +4668,8 @@ static void
 gradient_name_decode (gchar       *dest,
 		      const gchar *src)
 {
-  gint cnt = GRADIENT_NAME_MAX - 1;
-  gint tmp;
+  gint  cnt = GRADIENT_NAME_MAX - 1;
+  guint tmp;
 
   while (*src && cnt--)
     {

@@ -230,8 +230,8 @@ script_fu_server_listen (gint timeout)
   struct sockaddr_in  clientname;
   struct timeval      tv;
   struct timeval     *tvp;
-  gint i;
-  gint size;
+  gint  i;
+  guint size;
 
   /*  Set time struct  */
   if (timeout)
@@ -252,7 +252,7 @@ script_fu_server_listen (gint timeout)
       return;
     }
 
-  /* Service all the sockets with input pending. */
+ /* Service all the sockets with input pending. */
   for (i = 0; i < FD_SETSIZE; ++i)
     if (FD_ISSET (i, &server_read))
       {

@@ -880,8 +880,8 @@ ifs_render (AffElement     **elements,
     subdivide = vals->subdivide;
   
   /* compute the probabilities and transforms */
-  fprob = g_new(gdouble, num_elements);
-  prob = g_new(gint, num_elements);
+  fprob = g_new (gdouble, num_elements);
+  prob = g_new (guint32, num_elements);
   pt = 0.0;
   for (i=0;i<num_elements;i++)
     {

@@ -349,9 +349,9 @@ static const gchar *prog_name = "PSD";
 
 static void unpack_pb_channel(FILE *fd, guchar *dst, gint32 unpackedlen,
 				  guint32 *offset);
-static void decode(long clen, long uclen, gchar *src, gchar *dst, int step);
+static void decode(long clen, long uclen, guchar *src, guchar *dst, int step);
 static void packbitsdecode(long *clenp, long uclen,
-			   gchar *src, gchar *dst, int step);
+			   guchar *src, guchar *dst, int step);
 static void cmyk2rgb(guchar *src, guchar *destp,
 		     long width, long height, int alpha);
 static void cmykp2rgb(guchar *src, guchar *destp,
@@ -366,7 +366,7 @@ static void xfread_interlaced(FILE *fd, guchar *buf, long len, gchar *why,
 			      gint step);
 static void read_whole_file(FILE *fd);
 static void reshuffle_cmap(guchar *map256);
-static guchar* getpascalstring(FILE *fd, gchar *why);
+static gchar* getpascalstring(FILE *fd, gchar *why);
 static gchar* getstring(size_t n, FILE * fd, gchar *why);
 static void throwchunk(size_t n, FILE * fd, gchar *why);
 static void dumpchunk(size_t n, FILE * fd, gchar *why);
@@ -2186,7 +2186,7 @@ load_image (const gchar *name)
 }
 
 static void
-decode(long clen, long uclen, char * src, char * dst, int step)
+decode(long clen, long uclen, guchar *src, guchar* dst, int step)
 {
     gint i, j;
     gint32 l;
@@ -2222,7 +2222,7 @@ decode(long clen, long uclen, char * src, char * dst, int step)
  * Decode a PackBits data stream.
  */
 static void
-packbitsdecode(long * clenp, long uclen, char * src, char * dst, int step)
+packbitsdecode(long * clenp, long uclen, guchar *src, guchar *dst, int step)
 {
     gint n, b;
     gint32 clen = *clenp;
@@ -2356,7 +2356,7 @@ cmykp2rgb(unsigned char * src, unsigned char * dst,
     int r, g, b, k;
     int i, j;
     long n;
-    char *rp, *gp, *bp, *kp, *ap;
+    guchar *rp, *gp, *bp, *kp, *ap;
 
     n = width * height;
     rp = src;
@@ -2489,7 +2489,7 @@ getstring(size_t n, FILE * fd, gchar *why)
   return tmpchunk;  /* caller should free memory */
 }
 
-static guchar *
+static gchar *
 getpascalstring(FILE *fd, gchar *why)
 {
   guchar *tmpchunk;
@@ -2507,7 +2507,7 @@ getpascalstring(FILE *fd, gchar *why)
   xfread(fd, tmpchunk, len, why);
   tmpchunk[len]=0;
   
-  return tmpchunk; /* caller should free memory */
+  return (gchar *) tmpchunk; /* caller should free memory */
 }
 
 static guchar

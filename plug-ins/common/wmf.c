@@ -1062,7 +1062,7 @@ load_image (const gchar *filename)
 
   guint i, j, jj, k;
   gint ix;
-  guchar *string;
+  gchar *string;
   guint record_counter = 0;
   GdkRectangle bbox;
   gboolean have_bbox = FALSE;

@@ -802,11 +802,11 @@ gfig_name_encode (gchar *dest,
   Translate "\\040" to SPACE, etc.
  */
 static void
-gfig_name_decode (gchar *dest,
-		  gchar *src)
+gfig_name_decode (gchar       *dest,
+		  const gchar *src)
 {
-  gint cnt = MAX_LOAD_LINE - 1;
-  gint tmp;
+  gint  cnt = MAX_LOAD_LINE - 1;
+  guint tmp;
 
   while (*src && cnt--)
     {

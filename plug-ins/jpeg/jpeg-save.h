@@ -758,9 +758,7 @@ load_image (const gchar *filename,
 
 #ifdef HAVE_EXIF
   GimpParasite *exif_parasite = NULL;
-  ExifData     *exif_data = NULL;
-  guchar       *exif_buf = NULL;
-  guint         exif_buf_len = 0;
+  ExifData     *exif_data     = NULL;
 #endif
 
   /* We set up the normal JPEG error routines. */
@@ -1104,14 +1102,17 @@ load_image (const gchar *filename,
       exif_data = exif_data_new_from_file (filename);
       if (exif_data)
         {
+          guchar *exif_buf;
+          guint   exif_buf_len;
+
           exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
           exif_data_unref (exif_data);
           exif_parasite = gimp_parasite_new ("jpeg-exif-data", 
                                              GIMP_PARASITE_PERSISTENT,
                                              exif_buf_len, exif_buf);
-          g_free (exif_buf);
           gimp_image_parasite_attach (image_ID, exif_parasite);
           gimp_parasite_free (exif_parasite);
+          free (exif_buf);
         }
 #endif
 
@@ -1243,11 +1244,6 @@ save_image (const gchar *filename,
   gboolean  has_alpha;
   gint      rowstride, yend;
   gint      i, j;
-
-#ifdef HAVE_EXIF
-  guchar   *exif_buf;
-  guint     exif_buf_len;
-#endif
 
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
@@ -1455,19 +1451,21 @@ save_image (const gchar *filename,
 #ifdef HAVE_EXIF
   if (exif_data)
     {
+      guchar *exif_buf;
+      guint   exif_buf_len;
+
       exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
-      jpeg_write_marker (&cinfo, 0xe1, exif_buf, exif_buf_len);
-      g_free (exif_buf);
+      jpeg_write_marker (&cinfo, 0xe1,
+                         exif_buf, exif_buf_len);
+      free (exif_buf);
     }
 #endif
 
   /* Step 4.1: Write the comment out - pw */
   if (image_comment && *image_comment)
     {
-      jpeg_write_marker (&cinfo,
-			 JPEG_COM,
-			 image_comment,
-			 strlen (image_comment));
+      jpeg_write_marker (&cinfo, JPEG_COM,
+			 (guchar *) image_comment, strlen (image_comment));
     }
     
   /* Step 5: while (scan lines remain to be written) */
