@@ -906,9 +906,17 @@ script_fu_interface (SFScript *script)
 	default:
 	  break;
 	}
+      hbox = gtk_hbox_new (FALSE, 0);
+      gtk_box_pack_start (GTK_BOX(hbox), script->args_widgets[i],
+                          (script->arg_types[i] == SF_VALUE),
+                          (script->arg_types[i] == SF_VALUE), 0);
+      gtk_widget_show (hbox);
 
-      gtk_table_attach (GTK_TABLE (table), script->args_widgets[i],
-			1, 2, i, i + 1, 0, 0, 4, 2);
+      gtk_table_attach (GTK_TABLE (table), hbox, /* script->args_widgets[i], */
+			1, 2, i, i + 1,
+                        GTK_FILL | ((script->arg_types[i] == SF_VALUE) ?
+                                                     GTK_EXPAND : 0),
+                        GTK_FILL, 4, 2);
       gtk_widget_show (script->args_widgets[i]);
     }
   gtk_widget_show (table);

@@ -1017,9 +1017,16 @@ dialogs_input_devices_cmd_callback (GtkWidget *widget,
 
 void
 dialogs_device_status_cmd_callback (GtkWidget *widget,
-				  gpointer   client_data)
+				    gpointer   client_data)
 {
   create_device_status ();
+}
+
+void
+dialogs_error_console_cmd_callback (GtkWidget *widget,
+				    gpointer   client_data) 
+{
+  error_console_add (NULL);
 }
 
 void

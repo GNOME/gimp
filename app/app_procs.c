@@ -35,6 +35,7 @@
 #include "devices.h"
 #include "gdisplay.h"
 #include "colormaps.h"
+#include "errorconsole.h"
 #include "fileops.h"
 #include "gimprc.h"
 #include "gimpset.h"
@@ -583,6 +584,7 @@ app_exit_finish (void)
   plug_in_kill ();
   procedural_db_free ();
   device_status_free ();
+  error_console_free ();
   menus_quit ();
   tile_swap_exit ();
 

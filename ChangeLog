@@ -1,3 +1,15 @@
+Sun Aug  2 21:00:04 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c: Applied a patch from 
+	Simon.Budig@unix-ag.org (gimp-simon-220598-0).
+	Cosmetic changes to the script-fu dialog.
+
+	* app/app_procs.c
+	* app/commands.[ch]
+	* app/errorconsole.[ch]
+	* app/gimprc.c
+	* app/session.[ch]: Added session-managment to the error-console.
+
 Sun Aug  2 06:02:01 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/tile_manager.c (tile_manager_map): I am an idiot.

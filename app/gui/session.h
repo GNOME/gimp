@@ -45,6 +45,7 @@ extern SessionInfo brush_select_session_info;
 extern SessionInfo pattern_select_session_info;
 extern SessionInfo gradient_editor_session_info;
 extern SessionInfo device_status_session_info;
+extern SessionInfo error_console_session_info;
 
 extern GList *session_info_updates;  /* This list holds all session_infos
 					that should be written to the

@@ -29,24 +29,31 @@
 #include <sys/stat.h>
 #include "gtk/gtk.h"
 
+#include "commands.h"
+#include "session.h"
+
 #define ERRORS_ALL 0
 #define ERRORS_SELECTION 1
 
 void error_console_add				(gchar *errormsg);
-void error_console_show_callback		(GtkWidget *widget,
-						 gpointer data);
 
-static GtkWidget	*dialog;
+static GtkWidget	*error_console = NULL;
 static GtkWidget	*text;
 
-static gint
+
+static void
 error_console_close_callback (GtkWidget	*widget,
-			      GdkEvent	*event,
+			      GdkEvent *event,
 			      gpointer	data)
 {
-  gdk_window_hide (dialog->window);
-  
-  return TRUE;
+  gtk_widget_hide (error_console);
+}
+
+void
+error_console_free (void)
+{                                     
+  if (error_console)
+    session_get_window_info (error_console, &error_console_session_info);
 }
 
 gint
@@ -125,7 +132,7 @@ error_console_file_ok_callback (GtkWidget *widget, gpointer data)
     {
       GString	*string;
 
-      g_string_new ("");
+      string = g_string_new ("");
       g_string_sprintf (string, "Error opening file %s: %s", filename, g_strerror (errno));
       g_message (string->str);
       g_string_free (string, TRUE);
@@ -177,7 +184,7 @@ text_clicked_callback (GtkWidget	*widget,
     {
       gtk_signal_emit_stop_by_name (GTK_OBJECT (text), "button_press_event");
 
-      gtk_menu_popup(menu, NULL, NULL, NULL, NULL, event->button, time(NULL));
+      gtk_menu_popup(menu, NULL, NULL, NULL, NULL, event->button, event->time);
     }
 
   return TRUE; 
@@ -192,20 +199,22 @@ error_console_create_window (void)
   GtkWidget	*menu;
   GtkWidget	*menuitem;
 
-  dialog = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dialog), "GIMP Error console");
-  gtk_widget_set_usize (dialog, 250, 300);
-  gtk_window_set_policy (GTK_WINDOW(dialog), TRUE, TRUE, FALSE);
-  gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
+  error_console = gtk_dialog_new ();
+  gtk_window_set_title (GTK_WINDOW (error_console), "GIMP Error console");
+  session_set_window_geometry (error_console, &error_console_session_info, TRUE); 
+  /* The next line should disappear when setting the size works in SM */
+  gtk_widget_set_usize (error_console, 250, 300);
+  gtk_window_set_policy (GTK_WINDOW(error_console), TRUE, TRUE, FALSE);
+  gtk_signal_connect (GTK_OBJECT (error_console), "delete_event",
 		      (GtkSignalFunc) error_console_close_callback, NULL);
-  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), 2);
-  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
+  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (error_console)->vbox), 2);
+  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (error_console)->action_area), 2);
 
   /*  Action area  */
   button = gtk_button_new_with_label ("Close");
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) error_console_close_callback, NULL);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (error_console)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   menu = gtk_menu_new ();
@@ -228,7 +237,7 @@ error_console_create_window (void)
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
   gtk_container_border_width (GTK_CONTAINER (table), 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (error_console)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   /*  The output text widget  */
@@ -250,18 +259,24 @@ error_console_create_window (void)
                     GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (vscrollbar);
 
-  gtk_widget_show (dialog);
+  gtk_widget_show (error_console);
 }
 
 void
 error_console_add (gchar *errormsg)
 {
   
-  if (!dialog)
-    error_console_create_window ();
-
-  gdk_window_show (dialog->window);
-  gdk_window_raise (dialog->window);
+  if (!error_console)
+    {
+      error_console_create_window ();
+    } 
+  else 
+    {
+      if (!GTK_WIDGET_VISIBLE (error_console))
+	gtk_widget_show (error_console);
+      else 
+	gdk_window_raise (error_console->window);
+    }
     
   if (errormsg)
     {
@@ -270,7 +285,3 @@ error_console_add (gchar *errormsg)
     }
 }
 
-void error_console_show_callback (GtkWidget *widget, gpointer data)
-{
-  error_console_add (NULL);
-}

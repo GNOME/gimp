@@ -21,7 +21,6 @@
 #include "appenv.h"
 #include "colormaps.h"
 #include "commands.h"
-#include "errorconsole.h"
 #include "fileops.h"
 #include "general.h"
 #include "gimprc.h"
@@ -58,7 +57,7 @@ static GtkItemFactoryEntry toolbox_entries[] =
   { "/File/Dialogs/Input Devices...", NULL, dialogs_input_devices_cmd_callback, 0 },
   { "/File/Dialogs/Device Status...", NULL, dialogs_device_status_cmd_callback, 0 },
   { "/File/Dialogs/Document Index...", NULL, raise_idea_callback, 0 },
-  { "/File/Dialogs/Error Console...", NULL, error_console_show_callback, 0 },
+  { "/File/Dialogs/Error Console...", NULL, dialogs_error_console_cmd_callback, 0 },
   { "/File/---", NULL, NULL, 0, "<Separator>" },
 };
 static guint n_toolbox_entries = sizeof (toolbox_entries) / sizeof (toolbox_entries[0]);

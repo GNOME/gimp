@@ -79,6 +79,8 @@ SessionInfo gradient_editor_session_info =
   { "gradient-editor", (GtkItemFactoryCallback)dialogs_gradient_editor_cmd_callback, 170, 180, 0, 0, FALSE };
 SessionInfo device_status_session_info = 
   { "device-status", (GtkItemFactoryCallback)dialogs_device_status_cmd_callback, 0, 600, 0, 0, FALSE };
+SessionInfo error_console_session_info = 
+  { "error-console", (GtkItemFactoryCallback)dialogs_error_console_cmd_callback, 400, 0, 250, 300, FALSE };
 
 /* public functions */
 void 
