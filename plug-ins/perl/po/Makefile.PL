@@ -2,7 +2,7 @@ use ExtUtils::MakeMaker;
 
 do '../config.pl';
 
-print "Portable message object...";
+print "Portable message objects...";
 if ($MSGFMT =~ /./) {
    for (<*.po>) {
       my ($po) = /(.*)\.po$/;
