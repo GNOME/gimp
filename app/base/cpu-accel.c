@@ -40,11 +40,6 @@
 
 #ifdef ARCH_X86
 
-#if GLIB_SIZEOF_LONG == 8
-#define ARCH_X86_64 1
-#endif
-
-
 typedef enum
 {
   ARCH_X86_VENDOR_NONE,

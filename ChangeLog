@@ -1,3 +1,9 @@
+2004-01-31  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: define ARCH_X86_64 globally.
+
+	* app/base/cpu-accel.c: remove local definition.
+
 2004-01-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptooloptionseditor.[ch]: added the scrolled
