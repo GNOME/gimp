@@ -19,14 +19,14 @@
 #include "cursorutil.h"
 #include "dialog_handler.h"
 #include "gdisplay.h" /* for gdisplay_*_override_cursor() */
-#include "../pixmaps/mouse1"
-#include "../pixmaps/mouse1msk"
-#include "../pixmaps/mouse1_p"
-#include "../pixmaps/mouse1_pmsk"
-#include "../pixmaps/mouse1_m"
-#include "../pixmaps/mouse1_mmsk"
-#include "../pixmaps/bigcirc"
-#include "../pixmaps/bigcircmsk"
+#include "../cursors/mouse1"
+#include "../cursors/mouse1msk"
+#include "../cursors/mouse1_p"
+#include "../cursors/mouse1_pmsk"
+#include "../cursors/mouse1_m"
+#include "../cursors/mouse1_mmsk"
+#include "../cursors/bigcirc"
+#include "../cursors/bigcircmsk"
 
 typedef struct
 {
@@ -76,10 +76,10 @@ create_cursor(BM_Cursor *bmcursor)
 					   bmcursor->height);
   g_return_if_fail(pixmapmsk != NULL);
   
-  bmcursor->cursor = gdk_cursor_new_from_pixmap(pixmap, pixmapmsk, &fg, &bg,
-						bmcursor->x_hot,
-						bmcursor->y_hot);
-  g_return_if_fail(bmcursor->cursor != NULL);
+  bmcursor->cursor = gdk_cursor_new_from_pixmap (pixmap, pixmapmsk, &fg, &bg,
+						 bmcursor->x_hot,
+						 bmcursor->y_hot);
+  g_return_if_fail (bmcursor->cursor != NULL);
 }
 
 void
@@ -89,7 +89,7 @@ gimp_change_win_cursor(GdkWindow *win, GimpCursorType curtype)
 
   g_return_if_fail (curtype < GIMP_LAST_CURSOR_ENTRY);
   if (!gimp_cursors[(int)curtype].cursor)
-    create_cursor(&gimp_cursors[(int)curtype]);
+    create_cursor (&gimp_cursors[(int)curtype]);
   cursor = gimp_cursors[(int)curtype].cursor;
   gdk_window_set_cursor (win, cursor);
 }
@@ -136,7 +136,7 @@ gimp_add_busy_cursors (void)
   while (list)
     {
       gdisp = (GDisplay *) list->data;
-      gdisplay_install_override_cursor(gdisp, GDK_WATCH);
+      gdisplay_install_override_cursor (gdisp, GDK_WATCH);
 
       list = g_slist_next (list);
     }
@@ -157,7 +157,7 @@ gimp_remove_busy_cursors (gpointer data)
   while (list)
     {
       gdisp = (GDisplay *) list->data;
-      gdisplay_remove_override_cursor(gdisp);
+      gdisplay_remove_override_cursor (gdisp);
 
       list = g_slist_next (list);
     }
@@ -169,3 +169,7 @@ gimp_remove_busy_cursors (gpointer data)
 
   return 0;
 }
+
+
+
+

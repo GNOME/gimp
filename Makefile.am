@@ -5,6 +5,14 @@ SUBDIRS = tools po intl libgimp app plug-ins modules data @GIMPDOCS@
 bin_SCRIPTS = gimptool
 
 EXTRA_DIST = \
+	cursors/bigcirc		\
+	cursors/bigcircmsk	\
+	cursors/mouse1		\
+	cursors/mouse1msk	\
+	cursors/mouse1_m	\
+	cursors/mouse1_mmsk	\
+	cursors/mouse1_p	\
+        cursors/mouse1_pmsk     \
 	pixmaps/anchor.xpm	 \
 	pixmaps/chain.xpm	 \
 	pixmaps/channel.xbm	 \

@@ -1,3 +1,10 @@
+Wed May  5 12:40:54 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* Makefile.am
+	* app/cursorutil.c: Moved the cursors out of 'pixmaps' into a new
+	directory 'cursors'. Added the files to the Makefile.
+	Now its up to TigerT to provide a set of rocking cursors for us ;-)
+
 1999-05-05  Jay Cox  <jaycox@earthlink.net>
 
 	* pixmaps/mouse1*: new bitmap files containing the new mouse cursors.
