@@ -1,5 +1,13 @@
 1999-10-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpdnd.c: forgot to set "connected" flag after connecting
+	to the dnd signals of a specific widget, so the dnd stuff
+	connected to these signals for every dnd data type (resulting ie
+	in multiple bucket fills when dropping a color/pattern to the
+	canvas).
+
+1999-10-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/lc_dialog.c: removed the GimpImage "destroy" callback
 	because we already get notified of this event by connecting to the
 	image context's "remove" signal.
@@ -17,7 +25,7 @@
 
 1999-10-30  Michael Natterer  <mitch@gimp.org>
 
-	* app_procs.c
+	* app/app_procs.c
 	* app/commands.[ch]
 	* app/interface.c
 	* app/menus.c

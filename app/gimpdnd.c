@@ -606,6 +606,9 @@ gimp_dnd_data_source_set (GimpDndDataType  data_type,
       gtk_signal_connect (GTK_OBJECT (widget), "drag_data_get",
 			  GTK_SIGNAL_FUNC (gimp_dnd_data_drag_handle),
 			  NULL);
+
+      gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_drag_connected",
+			   (gpointer) TRUE);
     }
 
   gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_get_data_type",
@@ -633,6 +636,9 @@ gimp_dnd_data_dest_set (GimpDndDataType  data_type,
       gtk_signal_connect (GTK_OBJECT (widget), "drag_data_received",
 			  GTK_SIGNAL_FUNC (gimp_dnd_data_drop_handle),
 			  NULL);
+
+      gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_drop_connected",
+			   (gpointer) TRUE);
     }
 
   gtk_object_set_data (GTK_OBJECT (widget),
