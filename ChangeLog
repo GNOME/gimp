@@ -1,5 +1,10 @@
 2004-05-28  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimppropwidgets.c: same workaround for tooltips on
+	combo boxes.
+
+2004-05-28  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/Lighting/lighting_ui.c
 	* plug-ins/MapObject/mapobject_ui.c
 	* plug-ins/common/warp.c

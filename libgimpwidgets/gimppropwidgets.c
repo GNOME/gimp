@@ -304,6 +304,7 @@ gimp_prop_enum_combo_box_new (GObject     *config,
 {
   GParamSpec *param_spec;
   GtkWidget  *combo_box;
+  GtkWidget  *widget;
   gint        value;
 
   param_spec = check_param_spec (config, property_name,
@@ -339,13 +340,25 @@ gimp_prop_enum_combo_box_new (GObject     *config,
                     G_CALLBACK (gimp_prop_enum_combo_box_callback),
                     config);
 
-  set_param_spec (G_OBJECT (combo_box), combo_box, param_spec);
+  /*  can't set a tooltip on a combo_box  */
+  if (g_param_spec_get_blurb (param_spec))
+    {
+      widget = gtk_event_box_new ();
+      gtk_container_add (GTK_CONTAINER (widget), combo_box);
+      gtk_widget_show (combo_box);
+    }
+  else
+    {
+      widget = combo_box;
+    }
+
+  set_param_spec (G_OBJECT (combo_box), widget, param_spec);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_enum_combo_box_notify),
                   combo_box);
 
-  return combo_box;
+  return widget;
 }
 
 static void
@@ -401,6 +414,7 @@ gimp_prop_boolean_combo_box_new (GObject     *config,
 {
   GParamSpec *param_spec;
   GtkWidget  *combo_box;
+  GtkWidget  *widget;
   gboolean    value;
 
   param_spec = check_param_spec (config, property_name,
@@ -423,13 +437,25 @@ gimp_prop_boolean_combo_box_new (GObject     *config,
                     G_CALLBACK (gimp_prop_boolean_combo_box_callback),
                     config);
 
-  set_param_spec (G_OBJECT (combo_box), combo_box, param_spec);
+  /*  can't set a tooltip on a combo_box  */
+  if (g_param_spec_get_blurb (param_spec))
+    {
+      widget = gtk_event_box_new ();
+      gtk_container_add (GTK_CONTAINER (widget), combo_box);
+      gtk_widget_show (combo_box);
+    }
+  else
+    {
+      widget = combo_box;
+    }
+
+  set_param_spec (G_OBJECT (combo_box), widget, param_spec);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_boolean_combo_box_notify),
                   combo_box);
 
-  return combo_box;
+  return widget;
 }
 
 static void
