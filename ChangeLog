@@ -1,3 +1,16 @@
+2003-07-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpwidgets-utils.[ch] (gimp_menu_path_strip_uline):
+	new function which takes menu_paths with mnemonics and removes
+	them so they can be used as identifiers.
+
+	* app/gui/plug-in-menus.c: use the new function. Enables mnemonics
+	for plug-in menu entries. Removed plug_in_escape_uline() which
+	implemented disabling them.
+
+	* app/widgets/gimptoolbox.c (toolbox_create_tools): use it here
+	too, made the function more robust.
+
 2003-07-02  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/lib.pl: constify input strings, colors, and arrays

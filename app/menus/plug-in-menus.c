@@ -34,6 +34,7 @@
 #include "plug-in/plug-in-run.h"
 
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "plug-in-commands.h"
 #include "plug-in-menus.h"
@@ -57,7 +58,6 @@ struct _PlugInMenuEntry
 static gboolean plug_in_menu_tree_traverse_func (gpointer         foo,
                                                  PlugInMenuEntry *menu_entry,
                                                  GimpItemFactory *item_factory);
-static gchar  * plug_in_escape_uline            (const gchar     *menu_path);
 
 
 /*  public functions  */
@@ -172,7 +172,6 @@ plug_in_menus_create_entry (GimpItemFactory *item_factory,
                             const gchar     *help_path)
 {
   GimpItemFactoryEntry  entry;
-  gchar                *menu_path;
   gchar                *help_page;
   gchar                *basename;
   gchar                *lowercase_page;
@@ -204,9 +203,7 @@ plug_in_menus_create_entry (GimpItemFactory *item_factory,
 
   g_free (help_page);
 
-  menu_path = plug_in_escape_uline (strstr (proc_def->menu_path, "/"));
-
-  entry.entry.path            = menu_path;
+  entry.entry.path            = strstr (proc_def->menu_path, "/");
   entry.entry.accelerator     = proc_def->accelerator;
   entry.entry.callback        = plug_in_run_cmd_callback;
   entry.entry.callback_action = 0;
@@ -249,7 +246,6 @@ plug_in_menus_create_entry (GimpItemFactory *item_factory,
         }
     }
 
-  g_free (menu_path);
   g_free (lowercase_page);
 }
 
@@ -257,8 +253,11 @@ void
 plug_in_menus_delete_entry (const gchar *menu_path)
 {
   GList *list;
+  gchar *path;
 
   g_return_if_fail (menu_path != NULL);
+
+  path = gimp_menu_path_strip_uline (menu_path);
 
   for (list = gimp_item_factories_from_path (menu_path);
        list;
@@ -266,33 +265,36 @@ plug_in_menus_delete_entry (const gchar *menu_path)
     {
       GtkItemFactory *item_factory = list->data;
 
-      gtk_item_factory_delete_item (GTK_ITEM_FACTORY (item_factory), menu_path);
+      gtk_item_factory_delete_item (GTK_ITEM_FACTORY (item_factory), path);
     }
+
+  g_free (path);
 }
 
 void
 plug_in_menus_update (GimpItemFactory *item_factory,
                       GimpImageType    type)
 {
-  PlugInProcDef *proc_def;
-  GSList        *tmp;
-  gchar         *factory_path;
-  gboolean       is_image_factory = FALSE;
+  GSList   *list;
+  gchar    *factory_path;
+  gint      factory_path_len;
+  gboolean  is_image_factory = FALSE;
 
   g_return_if_fail (GIMP_IS_ITEM_FACTORY (item_factory));
 
-  factory_path = GTK_ITEM_FACTORY (item_factory)->path;
+  factory_path     = GTK_ITEM_FACTORY (item_factory)->path;
+  factory_path_len = strlen (factory_path);
 
   if (! strcmp (factory_path, "<Image>"))
     is_image_factory = TRUE;
 
-  for (tmp = item_factory->gimp->plug_in_proc_defs;
-       tmp;
-       tmp = g_slist_next (tmp))
+  for (list = item_factory->gimp->plug_in_proc_defs;
+       list;
+       list = g_slist_next (list))
     {
-      proc_def = tmp->data;
+      PlugInProcDef *proc_def = list->data;
 
-      if (proc_def->image_types_val && proc_def->menu_path)
+      if (proc_def->menu_path && proc_def->image_types_val)
         {
           gboolean sensitive;
 
@@ -321,12 +323,17 @@ plug_in_menus_update (GimpItemFactory *item_factory,
               break;
             }
 
-          if (! strncmp (proc_def->menu_path, factory_path,
-                         strlen (factory_path)))
+          if (! strncmp (proc_def->menu_path, factory_path, factory_path_len))
             {
+              gchar *menu_path;
+
+              menu_path = gimp_menu_path_strip_uline (proc_def->menu_path);
+
               gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (item_factory),
-                                               proc_def->menu_path,
+                                               menu_path,
                                                sensitive);
+
+              g_free (menu_path);
             }
 
           if (is_image_factory                 &&
@@ -406,34 +413,4 @@ plug_in_menu_tree_traverse_func (gpointer         foo,
                               menu_entry->help_path);
 
   return FALSE;
-}
-
-static gchar *
-plug_in_escape_uline (const gchar *menu_path)
-{
-  gchar *uline;
-  gchar *escaped;
-  gchar *tmp;
-
-  escaped = g_strdup (menu_path);
-
-  uline = strchr (escaped, '_');
-
-  while (uline)
-    {
-      tmp = escaped;
-      escaped = g_new (gchar, strlen (tmp) + 2);
-
-      if (uline > tmp)
-        strncpy (escaped, tmp, (uline - tmp));
-
-      escaped[uline - tmp] = '_';
-      strcpy (&escaped[uline - tmp + 1], uline);
-
-      uline = strchr (escaped + (uline - tmp) + 2, '_');
-
-      g_free (tmp);
-    }
-
-  return escaped;
 }

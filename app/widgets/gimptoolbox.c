@@ -38,6 +38,7 @@
 #include "gimptoolbox-color-area.h"
 #include "gimptoolbox-dnd.h"
 #include "gimptoolbox-indicator-area.h"
+#include "gimpwidgets-utils.h"
 #include "gtkhwrapbox.h"
 
 #include "gimp-intl.h"
@@ -622,8 +623,6 @@ toolbox_create_tools (GimpToolbox *toolbox,
       GimpToolInfo *tool_info;
       GtkWidget    *button;
       GtkWidget    *image;
-      GtkWidget    *menu_item;
-      GList        *accel_closures;
       const gchar  *stock_id;
 
       tool_info = (GimpToolInfo *) list->data;
@@ -662,41 +661,54 @@ toolbox_create_tools (GimpToolbox *toolbox,
 			G_CALLBACK (toolbox_tool_button_press),
                         toolbox);
 
-      if (! item_factory)
-        continue;
-
-      menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (item_factory),
-                                               tool_info->menu_path);
-      accel_closures = gtk_widget_list_accel_closures (menu_item);
-
-      if (g_list_length (accel_closures) != 1)
+      if (item_factory)
         {
-          g_warning (G_STRLOC ": FIXME: g_list_length (accel_closures) != 1");
+          GtkWidget *menu_item;
+          gchar     *menu_path;
+
+          menu_path = gimp_menu_path_strip_uline (tool_info->menu_path);
+
+          menu_item =
+            gtk_item_factory_get_widget (GTK_ITEM_FACTORY (item_factory),
+                                         menu_path);
+
+          g_free (menu_path);
+
+          if (menu_item)
+            {
+              GList *accel_closures;
+
+              accel_closures = gtk_widget_list_accel_closures (menu_item);
+
+              if (g_list_length (accel_closures) != 1)
+                {
+                  g_warning (G_STRLOC ": FIXME: g_list_length (accel_closures) != 1");
+                }
+              else
+                {
+                  GClosure      *accel_closure;
+                  GtkAccelGroup *accel_group;
+
+                  accel_closure = (GClosure *) accel_closures->data;
+
+                  g_object_set_data (G_OBJECT (button), "toolbox-accel-closure",
+                                     accel_closure);
+
+                  accel_group = gtk_accel_group_from_accel_closure (accel_closure);
+
+                  g_signal_connect (accel_group, "accel_changed",
+                                    G_CALLBACK (gimp_toolbox_button_accel_changed),
+                                    button);
+
+                  gimp_toolbox_button_accel_changed (accel_group,
+                                                     0, 0,
+                                                     accel_closure,
+                                                     button);
+                }
+
+              g_list_free (accel_closures);
+            }
         }
-      else
-        {
-          GClosure      *accel_closure;
-          GtkAccelGroup *accel_group;
-
-          accel_closure = (GClosure *) accel_closures->data;
-
-          g_object_set_data (G_OBJECT (button), "toolbox-accel-closure",
-                             accel_closure);
-
-          accel_group = gtk_accel_group_from_accel_closure (accel_closure);
-
-          g_signal_connect (accel_group, "accel_changed",
-                            G_CALLBACK (gimp_toolbox_button_accel_changed),
-                            button);
-
-          gimp_toolbox_button_accel_changed (accel_group,
-                                             0, 0,
-                                             accel_closure,
-                                             button);
-
-        }
-
-      g_list_free (accel_closures);
     }
 }
 
