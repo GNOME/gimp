@@ -673,7 +673,8 @@ xcf_load_layer_props (XcfInfo   *info,
             gboolean linked;
 
             info->cp += xcf_read_int32 (info->fp, (guint32 *) &linked, 1);
-            gimp_item_set_linked (GIMP_ITEM (layer), linked, FALSE);
+            gimp_item_set_linked (GIMP_ITEM (layer),
+                                  linked ? TRUE : FALSE, FALSE);
           }
 	  break;
 	case PROP_PRESERVE_TRANSPARENCY:
@@ -784,6 +785,15 @@ xcf_load_channel_props (XcfInfo     *info,
 	    gimp_drawable_set_visible (GIMP_DRAWABLE (channel),
 				       visible ? TRUE : FALSE, FALSE);
 	  }
+	  break;
+	case PROP_LINKED:
+          {
+            gboolean linked;
+
+            info->cp += xcf_read_int32 (info->fp, (guint32 *) &linked, 1);
+            gimp_item_set_linked (GIMP_ITEM (channel),
+                                  linked ? TRUE : FALSE, FALSE);
+          }
 	  break;
 	case PROP_SHOW_MASKED:
 	  info->cp += 

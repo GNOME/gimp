@@ -439,8 +439,8 @@ xcf_save_layer_props (XcfInfo   *info,
                                   layer->opacity));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_VISIBLE, error,
 		                  gimp_drawable_get_visible (GIMP_DRAWABLE (layer))));
-  xcf_check_error (xcf_save_prop (info, gimage, PROP_LINKED, 
-                                  error, GIMP_ITEM (layer)->linked));
+  xcf_check_error (xcf_save_prop (info, gimage, PROP_LINKED, error,
+                                  gimp_item_get_linked (GIMP_ITEM (layer))));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_PRESERVE_TRANSPARENCY, 
                                   error, layer->preserve_trans));
 
@@ -498,6 +498,8 @@ xcf_save_channel_props (XcfInfo     *info,
                                   channel->color.a));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_VISIBLE, error,
 		                  gimp_drawable_get_visible (GIMP_DRAWABLE (channel))));
+  xcf_check_error (xcf_save_prop (info, gimage, PROP_LINKED, error,
+                                  gimp_item_get_linked (GIMP_ITEM (channel))));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_SHOW_MASKED, error, 
                                   channel->show_masked));
 

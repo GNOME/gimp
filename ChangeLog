@@ -1,3 +1,10 @@
+2003-05-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/xcf/xcf-load.c (xcf_load_channel_props)
+	* app/xcf/xcf-save.c (xcf_save_channel_props): store the channel's
+	"linked" state in the XCF. Older GIMPs will complain, but still
+	load the file as if the new property was not there.
+
 2003-05-13  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/gif.c
