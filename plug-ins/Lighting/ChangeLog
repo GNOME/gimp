@@ -1,0 +1,21 @@
+
+Changes:
+========
+
+0.2.2: Fixed a bug in the preview code sometimes causing a SIGSEGV.
+       Thanks to Prabhanjan <prabham@india.s3.com> for reporting it.
+
+0.2.1: Fixed a bug in the calculation of the normals. Thanks to 
+       Simon Budig <Simon.Budig@unix-ag.org> for pointing this out.
+
+0.2.0: Fixed crashes when rerunning after closing mapping images. Removed
+       GckNotebook and fixed gtk refcounting problems. Added non-interactive
+       (scripting) interface. First non-beta release.
+
+0.1.1: Transparent background and RGBA support, various bug fixes and
+       minor speed ups. First beta version.
+
+0.0.x: Many bug fixes. Moved it to "..filters/Light Effects/Lighting Effects"
+
+0.0.1: First version for 0.99.x
+
