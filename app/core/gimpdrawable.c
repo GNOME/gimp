@@ -223,7 +223,6 @@ gimp_drawable_configure (GimpDrawable  *drawable,
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (name != NULL);
 
   GIMP_ITEM (drawable)->ID = gimage->gimp->next_item_ID++;
 
@@ -249,7 +248,7 @@ gimp_drawable_configure (GimpDrawable  *drawable,
 
   gimp_item_set_image (GIMP_ITEM (drawable), gimage);
 
-  gimp_object_set_name (GIMP_OBJECT (drawable), name);
+  gimp_object_set_name (GIMP_OBJECT (drawable), name ? name : _("Unnamed"));
 
   /*  preview variables  */
   drawable->preview_cache = NULL;
@@ -278,6 +277,8 @@ gimp_drawable_copy (GimpDrawable *drawable,
     gint         len;
 
     name = gimp_object_get_name (GIMP_OBJECT (drawable));
+
+    g_return_val_if_fail (name != NULL, NULL);
 
     ext = strrchr (name, '#');
     len = strlen (_("copy"));

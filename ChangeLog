@@ -1,3 +1,11 @@
+2003-01-09  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable.c (gimp_drawable_configure): use _("Unnamed")
+	if no name was given. Fixes bug #89328 in a more general way.
+
+	* plug-ins/common/psd.c: simply pass NULL as layer and channel
+	name if the PSD file provides none.
+
 2003-01-08  Manish Singh  <yosh@gimp.org>
 
 	* app/gui.[ch]: make gui_libs_init() use gtk_init_check() and return
@@ -11,7 +19,7 @@
 2003-01-08  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/psd.c (do_layer_record): setting the layer name to
-	"unnamed" when it's NULL. Fixes 89328.
+	"unnamed" when it's NULL. Fixes #89328.
 
 2003-01-08  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 

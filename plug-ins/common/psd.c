@@ -1051,7 +1051,6 @@ do_layer_record(FILE *fd, guint32 *offset, gint layernum)
     }
   else
     {
-      layer->name = "unnamed";
       IFDBG printf("\t\t\t\t\t\tNULL LAYER NAME\n");
     }
   
@@ -1507,7 +1506,6 @@ void extract_data_and_channels(guchar* src, gint gimpstep, gint psstep,
   }
   g_free(primary_data);
 
-
   aux_data = g_malloc(width * height);
   {
     int pix, chan;
@@ -1524,10 +1522,10 @@ void extract_data_and_channels(guchar* src, gint gimpstep, gint psstep,
 	    aux_data [pix] = src [pix * psstep + chan];
 	  }
 	
-	channel_ID = gimp_channel_new(image_ID,
-				      psd_image.aux_channel[chan-gimpstep].name ? psd_image.aux_channel[chan-gimpstep].name : _("Unnamed channel"),
-				      width, height,
-				      100.0, &colour);
+	channel_ID = gimp_channel_new (image_ID,
+                                       psd_image.aux_channel[chan-gimpstep].name,
+                                       width, height,
+                                       100.0, &colour);
 	gimp_image_add_channel(image_ID, channel_ID, 0);
 	gimp_channel_set_visible(channel_ID, FALSE);
 
@@ -1573,11 +1571,11 @@ extract_channels(guchar* src, gint num_wanted, gint psstep,
 	  {
 	    aux_data [pix] = src [pix * psstep + chan];
 	  }
-	
-	channel_ID = gimp_channel_new(image_ID,
-				      psd_image.aux_channel[chan-(psstep-num_wanted)].name ? psd_image.aux_channel[chan-(psstep-num_wanted)].name : "Unnamed channel",
-				      width, height,
-				      100.0, &colour);
+
+	channel_ID = gimp_channel_new (image_ID,
+                                       psd_image.aux_channel[chan-(psstep-num_wanted)].name,
+                                       width, height,
+                                       100.0, &colour);
 	gimp_image_add_channel(image_ID, channel_ID, 0);
 	gimp_channel_set_visible(channel_ID, FALSE);
 
