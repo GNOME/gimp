@@ -36,6 +36,58 @@
  * these enums that are registered with the type system
  */
 
+#define GIMP_TYPE_CHECK_SIZE (gimp_check_size_get_type ())
+
+GType gimp_check_size_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_SMALL_CHECKS  = 0,  /*< desc="Small"  >*/ 
+  GIMP_MEDIUM_CHECKS = 1,  /*< desc="Medium" >*/
+  GIMP_LARGE_CHECKS  = 2   /*< desc="Large"  >*/
+} GimpCheckSize;
+
+
+#define GIMP_TYPE_CHECK_TYPE (gimp_check_type_get_type ())
+
+GType gimp_check_type_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_LIGHT_CHECKS = 0,  /*< desc="Light Checks"    >*/
+  GIMP_GRAY_CHECKS  = 1,  /*< desc="Mid-Tone Checks" >*/
+  GIMP_DARK_CHECKS  = 2,  /*< desc="Dark Checks"     >*/
+  GIMP_WHITE_ONLY   = 3,  /*< desc="White Only"      >*/
+  GIMP_GRAY_ONLY    = 4,  /*< desc="Gray Only"       >*/
+  GIMP_BLACK_ONLY   = 5   /*< desc="Black Only"      >*/
+} GimpCheckType;
+
+
+#define GIMP_TYPE_CURVE_TYPE (gimp_curve_type_get_type ())
+
+GType gimp_curve_type_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_CURVE_SMOOTH,   /*< desc="Smooth"   >*/
+  GIMP_CURVE_FREE      /*< desc="Freehand" >*/
+} GimpCurveType;
+
+
+#define GIMP_TYPE_HISTOGRAM_CHANNEL (gimp_histogram_channel_get_type ())
+
+GType gimp_histogram_channel_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_HISTOGRAM_VALUE = 0,  /*< desc="Value" >*/
+  GIMP_HISTOGRAM_RED   = 1,  /*< desc="Red"   >*/
+  GIMP_HISTOGRAM_GREEN = 2,  /*< desc="Green" >*/
+  GIMP_HISTOGRAM_BLUE  = 3,  /*< desc="Blue"  >*/
+  GIMP_HISTOGRAM_ALPHA = 4   /*< desc="Alpha" >*/
+} GimpHistogramChannel;
+
+
 #define GIMP_TYPE_INTERPOLATION_TYPE (gimp_interpolation_type_get_type ())
 
 GType gimp_interpolation_type_get_type (void) G_GNUC_CONST;
@@ -81,47 +133,6 @@ typedef enum
   GIMP_REPLACE_MODE,         /*< skip >*/
   GIMP_ANTI_ERASE_MODE       /*< skip >*/
 } GimpLayerModeEffects;
-
-
-#define GIMP_TYPE_CHECK_SIZE (gimp_check_size_get_type ())
-
-GType gimp_check_size_get_type (void) G_GNUC_CONST;
-
-typedef enum  /*< pdb-skip >*/
-{
-  GIMP_SMALL_CHECKS  = 0,  /*< desc="Small"  >*/ 
-  GIMP_MEDIUM_CHECKS = 1,  /*< desc="Medium" >*/
-  GIMP_LARGE_CHECKS  = 2   /*< desc="Large"  >*/
-} GimpCheckSize;
-
-
-#define GIMP_TYPE_CHECK_TYPE (gimp_check_type_get_type ())
-
-GType gimp_check_type_get_type (void) G_GNUC_CONST;
-
-typedef enum  /*< pdb-skip >*/
-{
-  GIMP_LIGHT_CHECKS = 0,  /*< desc="Light Checks"    >*/
-  GIMP_GRAY_CHECKS  = 1,  /*< desc="Mid-Tone Checks" >*/
-  GIMP_DARK_CHECKS  = 2,  /*< desc="Dark Checks"     >*/
-  GIMP_WHITE_ONLY   = 3,  /*< desc="White Only"      >*/
-  GIMP_GRAY_ONLY    = 4,  /*< desc="Gray Only"       >*/
-  GIMP_BLACK_ONLY   = 5   /*< desc="Black Only"      >*/
-} GimpCheckType;
-
-
-#define GIMP_TYPE_HISTOGRAM_CHANNEL (gimp_histogram_channel_get_type ())
-
-GType gimp_histogram_channel_get_type (void) G_GNUC_CONST;
-
-typedef enum  /*< pdb-skip >*/
-{
-  GIMP_HISTOGRAM_VALUE = 0,  /*< desc="Value" >*/
-  GIMP_HISTOGRAM_RED   = 1,  /*< desc="Red"   >*/
-  GIMP_HISTOGRAM_GREEN = 2,  /*< desc="Green" >*/
-  GIMP_HISTOGRAM_BLUE  = 3,  /*< desc="Blue"  >*/
-  GIMP_HISTOGRAM_ALPHA = 4   /*< desc="Alpha" >*/
-} GimpHistogramChannel;
 
 
 #define GIMP_TYPE_TRANSFER_MODE (gimp_transfer_mode_get_type ())

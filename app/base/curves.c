@@ -69,7 +69,7 @@ curves_init (Curves *curves)
        channel <= GIMP_HISTOGRAM_ALPHA;
        channel++)
     {
-      curves->curve_type[channel] = CURVES_SMOOTH;
+      curves->curve_type[channel] = GIMP_CURVE_SMOOTH;
 
       curves_channel_reset (curves, channel);
     }
@@ -111,10 +111,10 @@ curves_calculate_curve (Curves               *curves,
 
   switch (curves->curve_type[channel])
     {
-    case CURVES_FREE:
+    case GIMP_CURVE_FREE:
       break;
 
-    case CURVES_SMOOTH:
+    case GIMP_CURVE_SMOOTH:
       /*  cycle through the curves  */
       num_pts = 0;
       for (i = 0; i < 17; i++)

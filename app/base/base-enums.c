@@ -8,6 +8,90 @@
 
 /* enumerations from "./base-enums.h" */
 
+static const GEnumValue gimp_check_size_enum_values[] =
+{
+  { GIMP_SMALL_CHECKS, N_("Small"), "small-checks" },
+  { GIMP_MEDIUM_CHECKS, N_("Medium"), "medium-checks" },
+  { GIMP_LARGE_CHECKS, N_("Large"), "large-checks" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_check_size_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpCheckSize", gimp_check_size_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue gimp_check_type_enum_values[] =
+{
+  { GIMP_LIGHT_CHECKS, N_("Light Checks"), "light-checks" },
+  { GIMP_GRAY_CHECKS, N_("Mid-Tone Checks"), "gray-checks" },
+  { GIMP_DARK_CHECKS, N_("Dark Checks"), "dark-checks" },
+  { GIMP_WHITE_ONLY, N_("White Only"), "white-only" },
+  { GIMP_GRAY_ONLY, N_("Gray Only"), "gray-only" },
+  { GIMP_BLACK_ONLY, N_("Black Only"), "black-only" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_check_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpCheckType", gimp_check_type_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue gimp_curve_type_enum_values[] =
+{
+  { GIMP_CURVE_SMOOTH, N_("Smooth"), "smooth" },
+  { GIMP_CURVE_FREE, N_("Freehand"), "free" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_curve_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpCurveType", gimp_curve_type_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue gimp_histogram_channel_enum_values[] =
+{
+  { GIMP_HISTOGRAM_VALUE, N_("Value"), "value" },
+  { GIMP_HISTOGRAM_RED, N_("Red"), "red" },
+  { GIMP_HISTOGRAM_GREEN, N_("Green"), "green" },
+  { GIMP_HISTOGRAM_BLUE, N_("Blue"), "blue" },
+  { GIMP_HISTOGRAM_ALPHA, N_("Alpha"), "alpha" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_histogram_channel_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpHistogramChannel", gimp_histogram_channel_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_interpolation_type_enum_values[] =
 {
   { GIMP_INTERPOLATION_NONE, N_("None (Fastest)"), "none" },
@@ -63,71 +147,6 @@ gimp_layer_mode_effects_get_type (void)
 
   if (!enum_type)
     enum_type = g_enum_register_static ("GimpLayerModeEffects", gimp_layer_mode_effects_enum_values);
-
-  return enum_type;
-}
-
-
-static const GEnumValue gimp_check_size_enum_values[] =
-{
-  { GIMP_SMALL_CHECKS, N_("Small"), "small-checks" },
-  { GIMP_MEDIUM_CHECKS, N_("Medium"), "medium-checks" },
-  { GIMP_LARGE_CHECKS, N_("Large"), "large-checks" },
-  { 0, NULL, NULL }
-};
-
-GType
-gimp_check_size_get_type (void)
-{
-  static GType enum_type = 0;
-
-  if (!enum_type)
-    enum_type = g_enum_register_static ("GimpCheckSize", gimp_check_size_enum_values);
-
-  return enum_type;
-}
-
-
-static const GEnumValue gimp_check_type_enum_values[] =
-{
-  { GIMP_LIGHT_CHECKS, N_("Light Checks"), "light-checks" },
-  { GIMP_GRAY_CHECKS, N_("Mid-Tone Checks"), "gray-checks" },
-  { GIMP_DARK_CHECKS, N_("Dark Checks"), "dark-checks" },
-  { GIMP_WHITE_ONLY, N_("White Only"), "white-only" },
-  { GIMP_GRAY_ONLY, N_("Gray Only"), "gray-only" },
-  { GIMP_BLACK_ONLY, N_("Black Only"), "black-only" },
-  { 0, NULL, NULL }
-};
-
-GType
-gimp_check_type_get_type (void)
-{
-  static GType enum_type = 0;
-
-  if (!enum_type)
-    enum_type = g_enum_register_static ("GimpCheckType", gimp_check_type_enum_values);
-
-  return enum_type;
-}
-
-
-static const GEnumValue gimp_histogram_channel_enum_values[] =
-{
-  { GIMP_HISTOGRAM_VALUE, N_("Value"), "value" },
-  { GIMP_HISTOGRAM_RED, N_("Red"), "red" },
-  { GIMP_HISTOGRAM_GREEN, N_("Green"), "green" },
-  { GIMP_HISTOGRAM_BLUE, N_("Blue"), "blue" },
-  { GIMP_HISTOGRAM_ALPHA, N_("Alpha"), "alpha" },
-  { 0, NULL, NULL }
-};
-
-GType
-gimp_histogram_channel_get_type (void)
-{
-  static GType enum_type = 0;
-
-  if (!enum_type)
-    enum_type = g_enum_register_static ("GimpHistogramChannel", gimp_histogram_channel_enum_values);
 
   return enum_type;
 }

@@ -20,18 +20,11 @@
 #define __CURVES_H__
 
 
-typedef enum
-{
-  CURVES_SMOOTH,
-  CURVES_FREE,
-} CurvesType;
-
-
 struct _Curves
 {
-  CurvesType curve_type[5];
-  gint       points[5][17][2];
-  guchar     curve[5][256];
+  GimpCurveType curve_type[5];
+  gint          points[5][17][2];
+  guchar        curve[5][256];
 };
 
 
@@ -40,10 +33,10 @@ void    curves_channel_reset   (Curves               *curves,
                                 GimpHistogramChannel  channel);
 void    curves_calculate_curve (Curves               *curves,
                                 GimpHistogramChannel  channel);
-gfloat  curves_lut_func        (Curves *curves,
-				gint    nchannels,
-				gint    channel,
-				gfloat  value);
+gfloat  curves_lut_func        (Curves               *curves,
+				gint                  nchannels,
+				gint                  channel,
+				gfloat                value);
 
 
 #endif  /*  __CURVES_H__  */
