@@ -1,5 +1,30 @@
 2004-06-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpbrushcore.[ch]: added signal "set-brush" which is
+	G_SIGNAL_RUN_LAST so we can connect before and after the default
+	implementation. Moved the brush setting and outline invalidation
+	stuff to its default implementation. Also remember the outline's
+	width and height. Call gimp_brush_core_set_brush() from
+	gimp_brush_core_invalidate_cache() so "set-brush" is emitted
+	whenever a generated brush becomes dirty.
+
+	* app/tools/gimppainttool.c (gimp_paint_tool_button_press): don't
+	pause/resume but rather stop/start the draw_tool. Fixes straight
+	line preview aretefacts.
+
+	(gimp_paint_tool_oper_update): set the brush_core's brush before
+	starting the draw_tool.
+
+	(gimp_paint_tool_draw): never free the brush_core's cached brush
+	outline because the brush_core does that by itself now.
+
+	(gimp_paint_tool_set_brush)
+	(gimp_paint_tool_set_brush_after): new callbacks which pause and
+	resume the draw_tool. Fixes brush outline artefacts when modifying
+	the current brush e.g. by using the mouse wheel.
+
+2004-06-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/context-commands.h: removed enum GimpContextSelectType.
 
 	* app/actions/actions-types.h: added enum GimpActionSelectType.

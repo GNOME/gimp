@@ -31,6 +31,7 @@
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpmarshal.h"
 
 #include "gimpbrushcore.h"
 #include "gimpbrushcore-kernels.h"
@@ -40,6 +41,13 @@
 
 
 #define EPSILON  0.00001
+
+
+enum
+{
+  SET_BRUSH,
+  LAST_SIGNAL
+};
 
 
 /*  local function prototypes  */
@@ -71,6 +79,9 @@ static void     gimp_brush_core_interpolate       (GimpPaintCore      *core,
 static TempBuf *gimp_brush_core_get_paint_area    (GimpPaintCore      *paint_core,
                                                    GimpDrawable       *drawable,
                                                    GimpPaintOptions   *paint_options);
+
+static void     gimp_brush_core_real_set_brush    (GimpBrushCore      *core,
+                                                   GimpBrush          *brush);
 
 static void   gimp_brush_core_calc_brush_size     (GimpBrushCore    *core,
                                                    MaskBuf          *mask,
@@ -121,6 +132,8 @@ static void      paint_line_pixmap_mask           (GimpImage        *dest,
 
 static GimpPaintCoreClass *parent_class = NULL;
 
+static guint core_signals[LAST_SIGNAL] = { 0, };
+
 
 GType
 gimp_brush_core_get_type (void)
@@ -158,6 +171,16 @@ gimp_brush_core_class_init (GimpBrushCoreClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  core_signals[SET_BRUSH] =
+    g_signal_new ("set-brush",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (GimpBrushCoreClass, set_brush),
+		  NULL, NULL,
+		  gimp_marshal_VOID__OBJECT,
+		  G_TYPE_NONE, 1,
+		  GIMP_TYPE_BRUSH);
+
   object_class->finalize  = gimp_brush_core_finalize;
 
   paint_core_class->start          = gimp_brush_core_start;
@@ -168,6 +191,7 @@ gimp_brush_core_class_init (GimpBrushCoreClass *klass)
 
   klass->handles_changing_brush    = FALSE;
   klass->use_scale                 = TRUE;
+  klass->set_brush                 = gimp_brush_core_real_set_brush;
 }
 
 static void
@@ -210,6 +234,8 @@ gimp_brush_core_init (GimpBrushCore *core)
 
   core->brush_bound_segs         = NULL;
   core->n_brush_bound_segs       = 0;
+  core->brush_bound_width        = 0;
+  core->brush_bound_height       = 0;
 }
 
 static void
@@ -266,6 +292,8 @@ gimp_brush_core_finalize (GObject *object)
       g_free (core->brush_bound_segs);
       core->brush_bound_segs   = NULL;
       core->n_brush_bound_segs = 0;
+      core->brush_bound_width  = 0;
+      core->brush_bound_height = 0;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -329,44 +357,17 @@ gimp_brush_core_start (GimpPaintCore    *paint_core,
                        GimpCoords       *coords)
 {
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
+  GimpBrush     *brush;
 
-  /*  Each buffer is the same size as
-   *  the maximum bounds of the active brush...
-   */
+  brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
 
-  if (core->main_brush != gimp_context_get_brush (GIMP_CONTEXT (paint_options)))
-    {
-      if (core->main_brush)
-        {
-          g_signal_handlers_disconnect_by_func (core->main_brush,
-                                                gimp_brush_core_invalidate_cache,
-                                                core);
-          g_object_unref (core->main_brush);
-          core->main_brush = NULL;
-        }
-
-      if (core->brush_bound_segs)
-        {
-          g_free (core->brush_bound_segs);
-          core->brush_bound_segs   = NULL;
-          core->n_brush_bound_segs = 0;
-        }
-    }
+  if (core->main_brush != brush)
+    gimp_brush_core_set_brush (core, brush);
 
   if (! core->main_brush)
     {
-      core->main_brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
-
-      if (! core->main_brush)
-        {
-          g_message (_("No brushes available for use with this tool."));
-          return FALSE;
-        }
-
-      g_object_ref (core->main_brush);
-      g_signal_connect (core->main_brush, "invalidate_preview",
-                        G_CALLBACK (gimp_brush_core_invalidate_cache),
-                        core);
+      g_message (_("No brushes available for use with this tool."));
+      return FALSE;
     }
 
   core->spacing = (gdouble) gimp_brush_get_spacing (core->main_brush) / 100.0;
@@ -693,6 +694,46 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
   return paint_core->canvas_buf;
 }
 
+static void
+gimp_brush_core_real_set_brush (GimpBrushCore *core,
+                                GimpBrush     *brush)
+{
+  if (core->main_brush)
+    {
+      g_signal_handlers_disconnect_by_func (core->main_brush,
+                                            gimp_brush_core_invalidate_cache,
+                                            core);
+      g_object_unref (core->main_brush);
+      core->main_brush = NULL;
+    }
+
+  if (core->brush_bound_segs)
+    {
+      g_free (core->brush_bound_segs);
+      core->brush_bound_segs   = NULL;
+      core->n_brush_bound_segs = 0;
+      core->brush_bound_width  = 0;
+      core->brush_bound_height = 0;
+    }
+
+  core->main_brush = brush;
+
+  if (core->main_brush)
+    {
+      g_object_ref (core->main_brush);
+      g_signal_connect (core->main_brush, "invalidate_preview",
+                        G_CALLBACK (gimp_brush_core_invalidate_cache),
+                        core);
+    }
+}
+
+void
+gimp_brush_core_set_brush (GimpBrushCore *core,
+                           GimpBrush     *brush)
+{
+  g_signal_emit (core, core_signals[SET_BRUSH], 0, brush);
+}
+
 void
 gimp_brush_core_paste_canvas (GimpBrushCore            *core,
                               GimpDrawable	       *drawable,
@@ -796,12 +837,9 @@ gimp_brush_core_invalidate_cache (GimpBrush     *brush,
   core->cache_invalid       = TRUE;
   core->solid_cache_invalid = TRUE;
 
-  if (core->brush_bound_segs)
-    {
-      g_free (core->brush_bound_segs);
-      core->brush_bound_segs   = NULL;
-      core->n_brush_bound_segs = 0;
-    }
+  /* Set the same brush again so the "set-brush" signal is emitted */
+
+  gimp_brush_core_set_brush (core, brush);
 }
 
 /************************************************************

@@ -110,6 +110,12 @@ static void   gimp_paint_tool_color_picked   (GimpColorTool       *color_tool,
                                               GimpRGB             *color,
                                               gint                 color_index);
 
+static void   gimp_paint_tool_set_brush      (GimpBrushCore       *brush_core,
+                                              GimpBrush           *brush,
+                                              GimpPaintTool       *paint_tool);
+static void   gimp_paint_tool_set_brush_after(GimpBrushCore       *brush_core,
+                                              GimpBrush           *brush,
+                                              GimpPaintTool       *paint_tool);
 static void   gimp_paint_tool_notify_brush   (GimpDisplayConfig   *config,
                                               GParamSpec          *pspec,
                                               GimpPaintTool       *paint_tool);
@@ -223,6 +229,16 @@ gimp_paint_tool_constructor (GType                  type,
 
   paint_tool->core = g_object_new (tool->tool_info->paint_info->paint_type,
                                    NULL);
+
+  if (GIMP_IS_BRUSH_CORE (paint_tool->core))
+    {
+      g_signal_connect       (paint_tool->core, "set-brush",
+                              G_CALLBACK (gimp_paint_tool_set_brush),
+                              paint_tool);
+      g_signal_connect_after (paint_tool->core, "set-brush",
+                              G_CALLBACK (gimp_paint_tool_set_brush_after),
+                              paint_tool);
+   }
 
   return object;
 }
@@ -377,6 +393,9 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   curr_coords.x -= off_x;
   curr_coords.y -= off_y;
 
+  if (gimp_draw_tool_is_active (draw_tool))
+    gimp_draw_tool_stop (draw_tool);
+
   if (tool->gdisp          &&
       tool->gdisp != gdisp &&
       tool->gdisp->gimage == gdisp->gimage)
@@ -432,8 +451,6 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   /*  pause the current selection  */
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_PAUSE);
 
-  gimp_draw_tool_pause (draw_tool);
-
   /*  Let the specific painting function initialize itself  */
   gimp_paint_core_paint (core, drawable, paint_options, INIT_PAINT, time);
 
@@ -449,7 +466,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 
   gimp_display_flush_now (gdisp);
 
-  gimp_draw_tool_resume (draw_tool);
+  gimp_draw_tool_start (draw_tool, gdisp);
 }
 
 static void
@@ -719,6 +736,17 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
       paint_tool->brush_x = coords->x;
       paint_tool->brush_y = coords->y;
 
+      if (GIMP_IS_BRUSH_CORE (core))
+        {
+          GimpBrushCore *brush_core = GIMP_BRUSH_CORE (core);
+          GimpBrush     *brush;
+
+          brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+
+          if (brush_core->main_brush != brush)
+            gimp_brush_core_set_brush (brush_core, brush);
+        }
+
       gimp_draw_tool_start (draw_tool, gdisp);
     }
 
@@ -768,26 +796,13 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
       if (paint_tool->draw_brush && GIMP_IS_BRUSH_CORE (core))
         {
           GimpBrushCore *brush_core = GIMP_BRUSH_CORE (core);
-          GimpContext   *context;
-          GimpBrush     *brush;
-          TempBuf       *mask;
-
-          context =
-            GIMP_CONTEXT (GIMP_TOOL (draw_tool)->tool_info->tool_options);
-
-          brush = gimp_context_get_brush (context);
-          mask  = gimp_brush_get_mask (brush);
-
-          if (brush != brush_core->main_brush && brush_core->brush_bound_segs)
-            {
-              g_free (brush_core->brush_bound_segs);
-              brush_core->brush_bound_segs   = NULL;
-              brush_core->n_brush_bound_segs = 0;
-            }
 
           if (! brush_core->brush_bound_segs)
             {
-              PixelRegion PR = { 0, };
+              TempBuf     *mask;
+              PixelRegion  PR = { 0, };
+
+              mask = gimp_brush_get_mask (brush_core->main_brush);
 
               PR.data      = temp_buf_data (mask);
               PR.x         = 0;
@@ -803,17 +818,23 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                     0, 0,
                                     PR.w, PR.h,
                                     0);
+
+              brush_core->brush_bound_width  = mask->width;
+              brush_core->brush_bound_height = mask->height;
             }
 
           if (brush_core->brush_bound_segs)
             {
+              GimpTool         *tool = GIMP_TOOL (draw_tool);
               GimpPaintOptions *paint_options;
               gdouble           brush_x, brush_y;
 
-              paint_options = GIMP_PAINT_OPTIONS (context);
+              paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
 
-              brush_x = paint_tool->brush_x - ((gdouble) mask->width  / 2.0);
-              brush_y = paint_tool->brush_y - ((gdouble) mask->height / 2.0);
+              brush_x = (paint_tool->brush_x -
+                         ((gdouble) brush_core->brush_bound_width  / 2.0));
+              brush_y = (paint_tool->brush_y -
+                         ((gdouble) brush_core->brush_bound_height / 2.0));
 
               if (gimp_paint_options_get_brush_mode (paint_options) == GIMP_BRUSH_HARD)
                 {
@@ -890,6 +911,22 @@ gimp_paint_tool_color_picked (GimpColorTool *color_tool,
           break;
         }
     }
+}
+
+static void
+gimp_paint_tool_set_brush (GimpBrushCore *brush_core,
+                           GimpBrush     *brush,
+                           GimpPaintTool *paint_tool)
+{
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (paint_tool));
+}
+
+static void
+gimp_paint_tool_set_brush_after (GimpBrushCore *brush_core,
+                                 GimpBrush     *brush,
+                                 GimpPaintTool *paint_tool)
+{
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (paint_tool));
 }
 
 static void

@@ -73,6 +73,8 @@ struct _GimpBrushCore
   /*  don't use these...  */
   BoundSeg      *brush_bound_segs;
   gint           n_brush_bound_segs;
+  gint           brush_bound_width;
+  gint           brush_bound_height;
 };
 
 struct _GimpBrushCoreClass
@@ -84,11 +86,16 @@ struct _GimpBrushCoreClass
 
   /*  Scale the brush mask depending on pressure  */
   gboolean            use_scale;
+
+  void (* set_brush) (GimpBrushCore *core,
+                      GimpBrush     *brush);
 };
 
 
 GType   gimp_brush_core_get_type       (void) G_GNUC_CONST;
 
+void    gimp_brush_core_set_brush      (GimpBrushCore            *core,
+                                        GimpBrush                *brush);
 void    gimp_brush_core_paste_canvas   (GimpBrushCore            *core,
                                         GimpDrawable             *drawable,
                                         gdouble                   brush_opacity,
