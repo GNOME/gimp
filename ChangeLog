@@ -1,8 +1,8 @@
 2004-11-08  Øyvind Kolås  <pippin@gimp.org>
 
 	* plug-ins/common/gqbist.c: fixed typo in construction of file
-	chooser, use gtk_dialog_run instead of seperate callbacks for
-	file chooser dialogs.
+	chooser, use gtk_dialog_run instead of separate callbacks for
+	the responses of the file chooser dialog.
 
 2004-11-08  Sven Neumann  <sven@gimp.org>
 
