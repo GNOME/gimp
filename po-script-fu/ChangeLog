@@ -1,6 +1,10 @@
+2002-03-08  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.in.in: fixed typo.
+
 2002-03-07  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Added Portuguese translation by Filipe Maia <fmaia@gmx.net>.
+	* pt.po: Added Portuguese translation by Filipe Maia <fmaia@gmx.net>.
 
 2002-03-02  Ole Laursen  <olau@hardworking.dk>
 

@@ -1,6 +1,12 @@
+2002-03-08  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am: fixes for srcdir != builddir.
+
+	* gimp_tips.pt.txt: removed.
+
 2002-03-08  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Added Portuguese translation.
+	* pt.po: Added Portuguese translation.
 
 2002-03-07  Ole Laursen  <olau@hardworking.dk>
 
@@ -8,7 +14,7 @@
 
 2002-03-07  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * gimp_tips.pt.txt: Added Portuguese translation.
+	* gimp_tips.pt.txt: Added Portuguese translation.
 
 2002-03-05  Christian Rose  <menthos@menthos.com>
 

@@ -9,8 +9,8 @@ tipsdata_DATA = $(tips_in_files:.xml.in=.xml)
 %.xml: %.xml.in $(GETTEXT_PACKAGE)-tips.pot $(wildcard $(srcdir)/*.po)
 	$(INTLTOOL_MERGE) $(srcdir) $< $(@) -x -u -c .intltool-merge-cache
 
-$(GETTEXT_PACKAGE)-tips.pot: gimp-tips.xml.in
-	$(INTLTOOL_EXTRACT) --type=gettext/xml gimp-tips.xml.in
+$(GETTEXT_PACKAGE)-tips.pot: $(srcdir)/gimp-tips.xml.in
+	$(INTLTOOL_EXTRACT) --type=gettext/xml $<
 	$(INTLTOOL_UPDATE) --gettext-package $(GETTEXT_PACKAGE)-tips --pot
 
 oldtips = \

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.4\n"
 "POT-Creation-Date: 2002-03-07 02:11+0000\n"
-"PO-Revision-Date: 2002-03-07 23:15+0000\n"
+"PO-Revision-Date: 2002-03-08 09:04+0100\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 
 #: tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to The GIMP !</big>"
-msgstr "<bi>Bem Vindo Ao GIMP !</big>"
+msgstr "<big>Bem Vindo Ao GIMP !</big>"
 
 #: tips/gimp-tips.xml.in.h:2
 msgid ""
