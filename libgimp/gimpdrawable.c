@@ -32,16 +32,24 @@ GimpDrawable *
 gimp_drawable_get (gint32 drawable_ID)
 {
   GimpDrawable *drawable;
+  gint          width;
+  gint          height;
+  gint          bpp;
 
-  drawable = g_new (GimpDrawable, 1);
+  width  = gimp_drawable_width  (drawable_ID);
+  height = gimp_drawable_height (drawable_ID);
+  bpp    = gimp_drawable_bpp    (drawable_ID);
+
+  g_return_val_if_fail (width > 0 && height > 0 && bpp > 0, NULL);
+
+  drawable = g_new0 (GimpDrawable, 1);
+
   drawable->drawable_id  = drawable_ID;
-  drawable->width        = gimp_drawable_width  (drawable_ID);
-  drawable->height       = gimp_drawable_height (drawable_ID);
-  drawable->bpp          = gimp_drawable_bpp    (drawable_ID);
-  drawable->ntile_rows   = (drawable->height + TILE_HEIGHT - 1) / TILE_HEIGHT;
-  drawable->ntile_cols   = (drawable->width  + TILE_WIDTH  - 1) / TILE_WIDTH;
-  drawable->tiles        = NULL;
-  drawable->shadow_tiles = NULL;
+  drawable->width        = width;
+  drawable->height       = height;
+  drawable->bpp          = bpp;
+  drawable->ntile_rows   = (height + TILE_HEIGHT - 1) / TILE_HEIGHT;
+  drawable->ntile_cols   = (width  + TILE_WIDTH  - 1) / TILE_WIDTH;
 
   return drawable;
 }
@@ -49,17 +57,16 @@ gimp_drawable_get (gint32 drawable_ID)
 void
 gimp_drawable_detach (GimpDrawable *drawable)
 {
-  if (drawable)
-    {
-      gimp_drawable_flush (drawable);
+  g_return_if_fail (drawable != NULL);
 
-      if (drawable->tiles)
-	g_free (drawable->tiles);
-      if (drawable->shadow_tiles)
-	g_free (drawable->shadow_tiles);
+  gimp_drawable_flush (drawable);
 
-      g_free (drawable);
-    }
+  if (drawable->tiles)
+    g_free (drawable->tiles);
+  if (drawable->shadow_tiles)
+    g_free (drawable->shadow_tiles);
+
+  g_free (drawable);
 }
 
 void
@@ -69,27 +76,26 @@ gimp_drawable_flush (GimpDrawable *drawable)
   gint      n_tiles;
   gint      i;
 
-  if (drawable)
+  g_return_if_fail (drawable != NULL);
+
+  if (drawable->tiles)
     {
-      if (drawable->tiles)
-	{
-	  tiles   = drawable->tiles;
-	  n_tiles = drawable->ntile_rows * drawable->ntile_cols;
+      tiles   = drawable->tiles;
+      n_tiles = drawable->ntile_rows * drawable->ntile_cols;
 
-	  for (i = 0; i < n_tiles; i++)
-	    if ((tiles[i].ref_count > 0) && tiles[i].dirty)
-	      gimp_tile_flush (&tiles[i]);
-	}
+      for (i = 0; i < n_tiles; i++)
+        if ((tiles[i].ref_count > 0) && tiles[i].dirty)
+          gimp_tile_flush (&tiles[i]);
+    }
 
-      if (drawable->shadow_tiles)
-	{
-	  tiles   = drawable->shadow_tiles;
-	  n_tiles = drawable->ntile_rows * drawable->ntile_cols;
+  if (drawable->shadow_tiles)
+    {
+      tiles   = drawable->shadow_tiles;
+      n_tiles = drawable->ntile_rows * drawable->ntile_cols;
 
-	  for (i = 0; i < n_tiles; i++)
-	    if ((tiles[i].ref_count > 0) && tiles[i].dirty)
-	      gimp_tile_flush (&tiles[i]);
-	}
+      for (i = 0; i < n_tiles; i++)
+        if ((tiles[i].ref_count > 0) && tiles[i].dirty)
+          gimp_tile_flush (&tiles[i]);
     }
 }
 
@@ -106,57 +112,54 @@ gimp_drawable_get_tile (GimpDrawable *drawable,
   gint      tile_num;
   gint      i, j, k;
 
-  if (drawable)
+  g_return_val_if_fail (drawable != NULL, NULL);
+
+  if (shadow)
+    tiles = drawable->shadow_tiles;
+  else
+    tiles = drawable->tiles;
+
+  if (! tiles)
     {
+      n_tiles = drawable->ntile_rows * drawable->ntile_cols;
+      tiles = g_new (GimpTile, n_tiles);
+
+      right_tile  = drawable->width  - ((drawable->ntile_cols - 1) * TILE_WIDTH);
+      bottom_tile = drawable->height - ((drawable->ntile_rows - 1) * TILE_HEIGHT);
+
+      for (i = 0, k = 0; i < drawable->ntile_rows; i++)
+        {
+          for (j = 0; j < drawable->ntile_cols; j++, k++)
+            {
+              tiles[k].bpp       = drawable->bpp;
+              tiles[k].tile_num  = k;
+              tiles[k].ref_count = 0;
+              tiles[k].dirty     = FALSE;
+              tiles[k].shadow    = shadow;
+              tiles[k].data      = NULL;
+              tiles[k].drawable  = drawable;
+
+              if (j == (drawable->ntile_cols - 1))
+                tiles[k].ewidth  = right_tile;
+              else
+                tiles[k].ewidth  = TILE_WIDTH;
+
+              if (i == (drawable->ntile_rows - 1))
+                tiles[k].eheight = bottom_tile;
+              else
+                tiles[k].eheight = TILE_HEIGHT;
+            }
+        }
+
       if (shadow)
-	tiles = drawable->shadow_tiles;
+        drawable->shadow_tiles = tiles;
       else
-	tiles = drawable->tiles;
-
-      if (!tiles)
-	{
-	  n_tiles = drawable->ntile_rows * drawable->ntile_cols;
-	  tiles = g_new (GimpTile, n_tiles);
-
-	  right_tile = drawable->width - ((drawable->ntile_cols - 1) * TILE_WIDTH);
-	  bottom_tile = drawable->height - ((drawable->ntile_rows - 1) * TILE_HEIGHT);
-
-	  for (i = 0, k = 0; i < drawable->ntile_rows; i++)
-	    {
-	      for (j = 0; j < drawable->ntile_cols; j++, k++)
-		{
-		  tiles[k].bpp       = drawable->bpp;
-		  tiles[k].tile_num  = k;
-		  tiles[k].ref_count = 0;
-		  tiles[k].dirty     = FALSE;
-		  tiles[k].shadow    = shadow;
-		  tiles[k].data      = NULL;
-		  tiles[k].drawable  = drawable;
-
-		  if (j == (drawable->ntile_cols - 1))
-		    tiles[k].ewidth  = right_tile;
-		  else
-		    tiles[k].ewidth  = TILE_WIDTH;
-
-		  if (i == (drawable->ntile_rows - 1))
-		    tiles[k].eheight = bottom_tile;
-		  else
-		    tiles[k].eheight = TILE_HEIGHT;
-		}
-	    }
-
-	  if (shadow)
-	    drawable->shadow_tiles = tiles;
-	  else
-	    drawable->tiles = tiles;
-	}
-
-      tile_num = row * drawable->ntile_cols + col;
-
-      return &tiles[tile_num];
+        drawable->tiles = tiles;
     }
 
-  return NULL;
+  tile_num = row * drawable->ntile_cols + col;
+
+  return &tiles[tile_num];
 }
 
 GimpTile *
@@ -167,6 +170,8 @@ gimp_drawable_get_tile2 (GimpDrawable *drawable,
 {
   gint row;
   gint col;
+
+  g_return_val_if_fail (drawable != NULL, NULL);
 
   col = x / TILE_WIDTH;
   row = y / TILE_HEIGHT;

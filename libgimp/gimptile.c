@@ -38,6 +38,7 @@
  */
 #define FREE_QUANTUM 0.1
 
+
 void         gimp_read_expect_msg   (WireMessage *msg,
 				     gint         type);
 
@@ -47,6 +48,8 @@ static void  gimp_tile_cache_insert (GimpTile    *tile);
 static void  gimp_tile_cache_flush  (GimpTile    *tile);
 
 
+/*  private variables  */
+
 static GHashTable * tile_hash_table = NULL;
 static GList      * tile_list_head  = NULL;
 static GList      * tile_list_tail  = NULL;
@@ -55,21 +58,22 @@ static gulong       cur_cache_size  = 0;
 static gulong       max_cache_size  = 0;
 
 
+/*  public functions  */
+
 void
 gimp_tile_ref (GimpTile *tile)
 {
-  if (tile)
+  g_return_if_fail (tile != NULL);
+
+  tile->ref_count++;
+
+  if (tile->ref_count == 1)
     {
-      tile->ref_count++;
-
-      if (tile->ref_count == 1)
-	{
-	  gimp_tile_get (tile);
-	  tile->dirty = FALSE;
-	}
-
-      gimp_tile_cache_insert (tile);
+      gimp_tile_get (tile);
+      tile->dirty = FALSE;
     }
+
+  gimp_tile_cache_insert (tile);
 }
 
 void
@@ -90,6 +94,7 @@ gimp_tile_unref (GimpTile *tile,
 		 gboolean  dirty)
 {
   g_return_if_fail (tile != NULL);
+  g_return_if_fail (tile->ref_count > 0);
 
   tile->ref_count--;
   tile->dirty |= dirty;
@@ -149,6 +154,9 @@ gimp_tile_cache_ntiles (gulong ntiles)
                          gimp_tile_width () *
                          gimp_tile_height () * 4 + 1023) / 1024);
 }
+
+
+/*  private functions  */
 
 static void
 gimp_tile_get (GimpTile *tile)
