@@ -92,9 +92,12 @@ plug_ins_init (Gimp               *gimp,
   gchar         *path;
   GSList        *tmp;
   GSList        *tmp2;
+  GList         *extensions = NULL;
+  GList         *list;
   PlugInDef     *plug_in_def;
   PlugInProcDef *proc_def;
   gdouble        n_plugins;
+  gdouble        n_extensions;
   gdouble        nth;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
@@ -161,6 +164,8 @@ plug_ins_init (Gimp               *gimp,
       (* status_callback) (NULL, basename, nth / n_plugins);
       g_free (basename);
     }
+
+  (* status_callback) (NULL, NULL, 1.0);
 
   /* insert the proc defs */
   for (tmp = gimp->plug_in_defs; tmp; tmp = g_slist_next (tmp))
@@ -287,10 +292,9 @@ plug_ins_init (Gimp               *gimp,
       g_free (basename);
     }
 
-  /* run the available extensions */
-  (* status_callback) (_("Starting Extensions"), "", 0);
-  n_plugins = g_slist_length (gimp->plug_in_proc_defs);
+  (* status_callback) (NULL, NULL, 1.0);
 
+  /* build list of automatically started extensions */
   for (tmp = gimp->plug_in_proc_defs, nth = 0;
        tmp;
        tmp = g_slist_next (tmp), nth++)
@@ -301,6 +305,24 @@ plug_ins_init (Gimp               *gimp,
 	  (proc_def->db_info.num_args == 0) &&
 	  (proc_def->db_info.proc_type == GIMP_EXTENSION))
 	{
+          extensions = g_list_prepend (extensions, proc_def);
+        }
+    }
+
+  extensions   = g_list_reverse (extensions);
+  n_extensions = g_list_length (extensions);
+
+  /* run the available extensions */
+  if (extensions)
+    {
+      (* status_callback) (_("Starting Extensions"), "", 0);
+
+      for (list = extensions, nth = 0;
+           list;
+           list = g_list_next (list), nth++)
+        {
+          proc_def = list->data;
+
 	  if (gimp->be_verbose)
 	    g_print (_("Starting extension: \"%s\"\n"), proc_def->db_info.name);
 
@@ -308,6 +330,10 @@ plug_ins_init (Gimp               *gimp,
 
 	  plug_in_run (gimp, &proc_def->db_info, NULL, 0, FALSE, TRUE, -1);
 	}
+
+      (* status_callback) (NULL, NULL, 1.0);
+
+      g_list_free (extensions);
     }
 
   /* free up stuff */
