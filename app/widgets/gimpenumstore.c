@@ -214,17 +214,14 @@ gimp_enum_store_new_with_values_valist (GType     enum_type,
 }
 
 gboolean
-gimp_enum_store_lookup_by_value (GimpEnumStore *store,
-                                 gint           value,
-                                 GtkTreeIter   *iter)
+gimp_enum_store_lookup_by_value (GtkTreeModel *model,
+                                 gint          value,
+                                 GtkTreeIter  *iter)
 {
-  GtkTreeModel *model;
-  gboolean      iter_valid;
+  gboolean  iter_valid;
 
-  g_return_val_if_fail (GIMP_IS_ENUM_STORE (store), FALSE);
+  g_return_val_if_fail (GTK_IS_TREE_MODEL (model), FALSE);
   g_return_val_if_fail (iter != NULL, FALSE);
-
-  model = GTK_TREE_MODEL (store);
 
   for (iter_valid = gtk_tree_model_get_iter_first (model, iter);
        iter_valid;

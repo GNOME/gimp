@@ -45,6 +45,7 @@
 
 #include "widgets/gimpcolorbar.h"
 #include "widgets/gimpenumcombobox.h"
+#include "widgets/gimpenumstore.h"
 #include "widgets/gimpenumwidgets.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogramview.h"
@@ -108,8 +109,9 @@ static void     levels_channel_callback              (GtkWidget      *widget,
                                                       GimpLevelsTool *tool);
 static void     levels_channel_reset_callback        (GtkWidget      *widget,
                                                       GimpLevelsTool *tool);
-static gboolean levels_set_sensitive_callback        (GimpHistogramChannel channel,
-                                                      GimpLevelsTool *tool);
+static gboolean levels_menu_visible_func             (GtkTreeModel   *model,
+                                                      GtkTreeIter    *iter,
+                                                      gpointer        data);
 static void     levels_auto_callback                 (GtkWidget      *widget,
                                                       GimpLevelsTool *tool);
 static void     levels_low_input_adjustment_update   (GtkAdjustment  *adjustment,
@@ -300,15 +302,9 @@ gimp_levels_tool_initialize (GimpTool    *tool,
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
 
-  /*  FIXME: regression!  */
-#if 0
-  /* set the sensitivity of the channel menu based on the drawable type */
-  gimp_int_option_menu_set_sensitive (GTK_OPTION_MENU (l_tool->channel_menu),
-                                      (GimpIntOptionMenuSensitivityCallback) levels_set_sensitive_callback,
-                                      l_tool);
-#endif
+  gimp_enum_combo_box_set_visible (GIMP_ENUM_COMBO_BOX (l_tool->channel_menu),
+                                   levels_menu_visible_func, l_tool);
 
-  /* set the current selection */
   gimp_enum_combo_box_set_active (GIMP_ENUM_COMBO_BOX (l_tool->channel_menu),
                                   l_tool->channel);
 
@@ -934,9 +930,17 @@ levels_channel_reset_callback (GtkWidget      *widget,
 }
 
 static gboolean
-levels_set_sensitive_callback (GimpHistogramChannel  channel,
-                               GimpLevelsTool       *tool)
+levels_menu_visible_func (GtkTreeModel *model,
+                          GtkTreeIter  *iter,
+                          gpointer      data)
 {
+  GimpLevelsTool       *tool = GIMP_LEVELS_TOOL (data);
+  GimpHistogramChannel  channel;
+
+  gtk_tree_model_get (model, iter,
+                      GIMP_ENUM_STORE_VALUE, &channel,
+                      -1);
+
   switch (channel)
     {
     case GIMP_HISTOGRAM_VALUE:
@@ -948,7 +952,7 @@ levels_set_sensitive_callback (GimpHistogramChannel  channel,
       return tool->color;
 
     case GIMP_HISTOGRAM_ALPHA:
-      return gimp_drawable_has_alpha (GIMP_IMAGE_MAP_TOOL (tool)->drawable);
+      return tool->alpha;
     }
 
   return FALSE;

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpenumcombobox.c
- * Copyright (C) 2002  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -126,7 +126,7 @@ gimp_enum_combo_box_set_active (GimpEnumComboBox *combo_box,
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
-  if (gimp_enum_store_lookup_by_value (GIMP_ENUM_STORE (model), value, &iter))
+  if (gimp_enum_store_lookup_by_value (model, value, &iter))
     {
       gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
       return TRUE;
@@ -168,4 +168,35 @@ gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
   gimp_enum_store_set_icons (GIMP_ENUM_STORE (model),
                              GTK_WIDGET (combo_box),
                              stock_prefix, GTK_ICON_SIZE_MENU);
+}
+
+/*  This is a kludge to allow to work around bug #135875  */
+void
+gimp_enum_combo_box_set_visible (GimpEnumComboBox *combo_box,
+                                 GtkTreeModelFilterVisibleFunc func,
+                                 gpointer          data)
+{
+  GtkTreeModel       *model;
+  GtkTreeModelFilter *filter;
+
+  g_return_if_fail (GIMP_IS_ENUM_COMBO_BOX (combo_box));
+
+  model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
+
+  if (GTK_IS_TREE_MODEL_FILTER (model))
+    {
+      filter = GTK_TREE_MODEL_FILTER (model);
+    }
+  else
+    {
+      filter = GTK_TREE_MODEL_FILTER (gtk_tree_model_filter_new (model, NULL));
+
+      gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box),
+                               GTK_TREE_MODEL (filter));
+
+      g_object_unref (filter);
+    }
+
+  gtk_tree_model_filter_set_visible_func (filter, func, data, NULL);
+  gtk_tree_model_filter_refilter (filter);
 }

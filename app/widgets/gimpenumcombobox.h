@@ -50,13 +50,16 @@ GType       gimp_enum_combo_box_get_type         (void) G_GNUC_CONST;
 
 GtkWidget * gimp_enum_combo_box_new              (GType             enum_type);
 GtkWidget * gimp_enum_combo_box_new_with_model   (GimpEnumStore    *enum_store);
-
 gboolean    gimp_enum_combo_box_set_active       (GimpEnumComboBox *combo_box,
                                                   gint              value);
 gboolean    gimp_enum_combo_box_get_active       (GimpEnumComboBox *combo_box,
                                                   gint             *value);
+
 void        gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
                                                   const gchar      *stock_prefix);
+void        gimp_enum_combo_box_set_visible      (GimpEnumComboBox *combo_box,
+                                                  GtkTreeModelFilterVisibleFunc func,
+                                                  gpointer          data);
 
 
 #endif  /* __GIMP_ENUM_COMBO_BOX_H__ */

@@ -45,6 +45,7 @@
 #include "widgets/gimpcolorbar.h"
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpenumcombobox.h"
+#include "widgets/gimpenumstore.h"
 #include "widgets/gimpenumwidgets.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogramview.h"
@@ -110,8 +111,9 @@ static void     curves_channel_callback         (GtkWidget        *widget,
 static void     curves_channel_reset_callback   (GtkWidget        *widget,
                                                  GimpCurvesTool   *tool);
 
-static gboolean curves_set_sensitive_callback   (GimpHistogramChannel channel,
-                                                 GimpCurvesTool   *tool);
+static gboolean curves_menu_visible_func        (GtkTreeModel     *model,
+                                                 GtkTreeIter      *iter,
+                                                 gpointer          data);
 static void     curves_curve_type_callback      (GtkWidget        *widget,
                                                  GimpCurvesTool   *tool);
 static gboolean curves_graph_events             (GtkWidget        *widget,
@@ -302,15 +304,9 @@ gimp_curves_tool_initialize (GimpTool    *tool,
   gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
                           GIMP_COLOR_OPTIONS (tool->tool_info->tool_options));
 
-  /*  FIXME: regression!  */
-#if 0
-  /* set the sensitivity of the channel menu based on the drawable type */
-  gimp_int_option_menu_set_sensitive (GTK_OPTION_MENU (c_tool->channel_menu),
-                                      (GimpIntOptionMenuSensitivityCallback) curves_set_sensitive_callback,
-                                      c_tool);
-#endif
+  gimp_enum_combo_box_set_visible (GIMP_ENUM_COMBO_BOX (c_tool->channel_menu),
+                                   curves_menu_visible_func, c_tool);
 
-  /* set the current selection */
   gimp_enum_combo_box_set_active (GIMP_ENUM_COMBO_BOX (c_tool->channel_menu),
                                   c_tool->channel);
 
@@ -832,9 +828,17 @@ curves_channel_reset_callback (GtkWidget      *widget,
 }
 
 static gboolean
-curves_set_sensitive_callback (GimpHistogramChannel  channel,
-                               GimpCurvesTool       *tool)
+curves_menu_visible_func (GtkTreeModel *model,
+                          GtkTreeIter  *iter,
+                          gpointer      data)
 {
+  GimpCurvesTool       *tool = GIMP_CURVES_TOOL (data);
+  GimpHistogramChannel  channel;
+
+  gtk_tree_model_get (model, iter,
+                      GIMP_ENUM_STORE_VALUE, &channel,
+                      -1);
+
   switch (channel)
     {
     case GIMP_HISTOGRAM_VALUE:
@@ -846,7 +850,7 @@ curves_set_sensitive_callback (GimpHistogramChannel  channel,
       return tool->color;
 
     case GIMP_HISTOGRAM_ALPHA:
-      return gimp_drawable_has_alpha (GIMP_IMAGE_MAP_TOOL (tool)->drawable);
+      return tool->alpha;
     }
 
   return FALSE;
