@@ -1,3 +1,11 @@
+2000-04-20  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpfileselection.[ch]: using the GimpPixmap here was a
+	bad idea because showing/hiding the pixmap widgets is no solution
+	(somebody may call gtk_widget_show_all() and we suddenly see both
+	pixmaps, eek).
+	Reverted it to use GtkPixmap and gtk_pixmap_set().
+
 2000-04-20  Jens Lautenbacher  <jtl@schlund.de>
 
 	* plug-ins/common/bumpmap.c (bumpmap_dialog): restrict scale for
