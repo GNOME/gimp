@@ -286,6 +286,18 @@ package Gimp::CodeGen::enums;
 		       GIMP_FSLOWBLEED_DITHER => '2',
 		       GIMP_FIXED_DITHER => '3' }
 	},
+    GimpConvertPaletteType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_MAKE_PALETTE GIMP_REUSE_PALETTE
+			  GIMP_WEB_PALETTE GIMP_MONO_PALETTE
+			  GIMP_CUSTOM_PALETTE) ],
+	  mapping => { GIMP_MAKE_PALETTE => '0',
+		       GIMP_REUSE_PALETTE => '1',
+		       GIMP_WEB_PALETTE => '2',
+		       GIMP_MONO_PALETTE => '3',
+		       GIMP_CUSTOM_PALETTE => '4' }
+	},
     GimpFillType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
@@ -357,18 +369,6 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_REPEAT_NONE => '0',
 		       GIMP_REPEAT_SAWTOOTH => '1',
 		       GIMP_REPEAT_TRIANGULAR => '2' }
-	},
-    GimpConvertPaletteType =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_MAKE_PALETTE GIMP_REUSE_PALETTE
-			  GIMP_WEB_PALETTE GIMP_MONO_PALETTE
-			  GIMP_CUSTOM_PALETTE) ],
-	  mapping => { GIMP_MAKE_PALETTE => '0',
-		       GIMP_REUSE_PALETTE => '1',
-		       GIMP_WEB_PALETTE => '2',
-		       GIMP_MONO_PALETTE => '3',
-		       GIMP_CUSTOM_PALETTE => '4' }
 	},
     GimpGradientSegmentType =>
 	{ contig => 1,

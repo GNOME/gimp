@@ -7,6 +7,8 @@
 	* app/core/core-enums.[ch]: register GimpConvertPaletteType with
 	the type system.
 
+	* tools/pdbgen/enums.pl: regenerated.
+
 	* app/widgets/gimpwidgets-utils.c (gimp_enum_radio_frame_add):
 	fixed to insert the widget at the right place in the radio box.
 
