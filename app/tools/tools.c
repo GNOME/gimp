@@ -39,6 +39,7 @@
 #include "free_select.h"
 #include "fuzzy_select.h"
 #include "gimpimage.h"
+#include "measure.h"
 #include "paintbrush.h"
 #include "pencil.h"
 #include "perspective_tool.h"
@@ -53,10 +54,10 @@ void
 register_tools (void)
 {
   GimpToolClass *color_picker = GIMP_TOOL_CLASS(gtk_type_class(GIMP_TYPE_COLOR_PICKER));
-  
+  GimpToolClass *measure_tool = GIMP_TOOL_CLASS(gtk_type_class(GIMP_TYPE_MEASURE)); 
 
   tool_manager_register (color_picker);
-  tool_manager_register (color_picker);
+  tool_manager_register (measure_tool);
 /*
   procedural_db_register (&airbrush_proc);
   procedural_db_register (&airbrush_default_proc);

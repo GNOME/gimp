@@ -1,3 +1,16 @@
+2001-02-17  Seth Burgess <sjburges@gimp.org>
+	
+	* app/tools/Makefile.am 
+        * app/tools/measure.[ch]: added back in, changing as needed for basic 
+	operation.  Probably pretty buggy still.
+
+	* app/tools/tools.c: changed one of the tool initializations to be
+	the measure tool.  Now only measure tools are availble (though it
+	would appear both are visually).  I don't think the toolbox selection 
+	stuff is operational yet.
+
+	* app/tools/color_picker.[ch]: minor cleanup
+
 2001-02-16  Stanislav Brabec  <utx@penguin.cz>
 
         On request of Martin Weber <martweb@gmx.net>.

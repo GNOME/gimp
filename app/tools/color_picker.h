@@ -49,9 +49,8 @@ struct _GimpColorPickerClass
   GimpToolClass parent_class;
 };
 
-
-extern gint col_value[5];
-
+/* FIXME: Whats this doing here? */
+extern gint col_value[5];    
 
 GtkType    gimp_color_picker_get_type (void);
 GimpTool * gimp_color_picker_new      (void);

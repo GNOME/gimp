@@ -73,8 +73,6 @@ struct _ColorPickerOptions
   GtkWidget   *update_active_w;
 };
 
-typedef struct _ColorPickerTool ColorPickerTool;
-
 /*  the color picker tool options  */
 static ColorPickerOptions * color_picker_options = NULL;
 
@@ -817,7 +815,8 @@ color_picker_initialize (GimpTool *tool)
   if (! color_picker_options)
     {
       color_picker_options = color_picker_options_new ();
-      tools_register (COLOR_PICKER, (ToolOptions *) color_picker_options);
+      /* OBSOLETE? */
+      /* tools_register (COLOR_PICKER, (ToolOptions *) color_picker_options); */
     }
 
   cp_tool = GIMP_COLOR_PICKER (tool);

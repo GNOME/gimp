@@ -30,6 +30,7 @@
 
 #include "apptypes.h"
 
+#include "cursorutil.h"
 #include "draw_core.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
@@ -38,7 +39,11 @@
 
 #include "measure.h"
 #include "tool_options.h"
-#include "tools.h"
+#include "tool.h"
+
+#include "pixmaps2.h"
+#include "cursors/measure_small.xbm"
+#include "cursors/measure_small_mask.xbm"
 
 #include "libgimp/gimpintl.h"
 
@@ -51,35 +56,6 @@
 
 /*  maximum information buffer size  */
 #define  MAX_INFO_BUF   16
-
-/*  possible measure functions  */
-typedef enum 
-{
-  CREATING,
-  ADDING,
-  MOVING,
-  MOVING_ALL,
-  GUIDING,
-  FINISHED
-} MeasureFunction;
-
-/*  the measure structure  */
-typedef struct _MeasureTool MeasureTool;
-
-struct _MeasureTool
-{
-  DrawCore        *core;        /*  draw core                  */
-  MeasureFunction  function;    /*  what are we doing?         */
-  gint             last_x;      /*  last x coordinate          */
-  gint             last_y;      /*  last y coordinate          */
-  gint             point;       /*  what are we manipulating?  */
-  gint             num_points;  /*  how many points?           */
-  gint             x[3];        /*  three x coordinates        */
-  gint             y[3];        /*  three y coordinates        */
-  gdouble          angle1;      /*  first angle                */
-  gdouble          angle2;      /*  second angle               */
-  guint            context_id;  /*  for the statusbar          */
-};
 
 /*  the measure tool options  */
 typedef struct _MeasureOptions MeasureOptions;
@@ -94,20 +70,28 @@ struct _MeasureOptions
 };
 
 
+/*The cursor */
+
+BitmapCursor measure_tool_cursor = {
+           measure_small_bits, measure_small_mask_bits,
+	   measure_small_width, measure_small_height,
+	   0, 0, NULL, NULL, NULL};
+			 
+
 /*  local function prototypes  */
-static void   measure_tool_button_press               (Tool           *tool,
+static void   measure_tool_button_press               (GimpTool       *tool,
 						       GdkEventButton *bevent,
 						       GDisplay       *gdisp);
-static void   measure_tool_button_release             (Tool           *tool,
+static void   measure_tool_button_release             (GimpTool       *tool,
 						       GdkEventButton *bevent,
 						       GDisplay       *gdisp);
-static void   measure_tool_motion                     (Tool           *tool,
+static void   measure_tool_motion                     (GimpTool       *tool,
 						       GdkEventMotion *mevent,
 						       GDisplay       *gdisp);
-static void   measure_tool_cursor_update              (Tool           *tool,
+static void   measure_tool_cursor_update              (GimpTool       *tool,
 						       GdkEventMotion *mevent,
 						       GDisplay       *gdisp);
-static void   measure_tool_control	              (Tool           *tool,
+static void   measure_tool_control	              (GimpTool       *tool,
 						       ToolAction      action,
 						       GDisplay       *gdisp);
 
@@ -115,6 +99,10 @@ static void   measure_tool_info_window_close_callback (GtkWidget      *widget,
 						       gpointer        data);
 static void   measure_tool_info_update                (void);
 
+GtkType       gimp_measure_tool_get_type (void);
+
+void measure_tool_initialize (GimpTool *tool);
+void measure_tool_class_init (GimpToolClass *klass);
 
 static MeasureOptions *measure_tool_options = NULL;
 
@@ -195,16 +183,16 @@ measure_get_angle (gint    dx,
 }
 
 static void
-measure_tool_button_press (Tool           *tool,
+measure_tool_button_press (GimpTool       *tool,
 			   GdkEventButton *bevent,
 			   GDisplay       *gdisp)
 {
-  MeasureTool *measure_tool;
+  GimpMeasureTool *measure_tool;
   gint         x[3];
   gint         y[3];
   gint         i;
 
-  measure_tool = (MeasureTool *) tool->private;
+  measure_tool = GIMP_MEASURE(tool);
 
   /*  if we are changing displays, pop the statusbar of the old one  */ 
   if (tool->state == ACTIVE && gdisp != tool->gdisp)
@@ -346,7 +334,7 @@ measure_tool_button_press (Tool           *tool,
        ! GTK_WIDGET_VISIBLE (gdisp->statusarea)))
     {
       measure_tool_info = info_dialog_new (_("Measure Tool"),
-					   tools_help_func, NULL);
+					   gimp_tool_help_func, NULL);
       info_dialog_add_label (measure_tool_info, _("Distance:"), distance_buf);
       info_dialog_add_label (measure_tool_info, _("Angle:"), angle_buf);
 
@@ -376,13 +364,13 @@ measure_tool_button_press (Tool           *tool,
 }
 
 static void
-measure_tool_button_release (Tool           *tool,
+measure_tool_button_release (GimpTool       *tool,
 			     GdkEventButton *bevent,
 			     GDisplay       *gdisp)
 {
-  MeasureTool *measure_tool;
+  GimpMeasureTool *measure_tool;
 
-  measure_tool = (MeasureTool *) tool->private;
+  measure_tool = GIMP_MEASURE(tool);
   
   measure_tool->function = FINISHED;
 
@@ -391,11 +379,11 @@ measure_tool_button_release (Tool           *tool,
 }
 
 static void
-measure_tool_motion (Tool           *tool,
+measure_tool_motion (GimpTool       *tool,
 		     GdkEventMotion *mevent,
 		     GDisplay       *gdisp)
 {
-  MeasureTool *measure_tool;
+  GimpMeasureTool *measure_tool;
   gint         x, y;
   gint         ax, ay;
   gint         bx, by;
@@ -406,7 +394,7 @@ measure_tool_motion (Tool           *tool,
   gdouble      distance;
   gchar        status_str[STATUSBAR_SIZE];
 
-  measure_tool = (MeasureTool *) tool->private;
+  measure_tool = GIMP_MEASURE(tool);
 
   /*  undraw the current tool  */
   draw_core_pause (measure_tool->core, tool);
@@ -601,11 +589,11 @@ measure_tool_motion (Tool           *tool,
 }
 
 static void
-measure_tool_cursor_update (Tool           *tool,
+measure_tool_cursor_update (GimpTool       *tool,
 			    GdkEventMotion *mevent,
 			    GDisplay       *gdisp)
 {
-  MeasureTool *measure_tool;
+  GimpMeasureTool *measure_tool;
   gint         x[3];
   gint         y[3];
   gint         i;
@@ -614,7 +602,7 @@ measure_tool_cursor_update (Tool           *tool,
   GdkCursorType  ctype     = GIMP_CROSSHAIR_SMALL_CURSOR;
   CursorModifier cmodifier = CURSOR_MODIFIER_NONE;
 
-  measure_tool = (MeasureTool *) tool->private;
+  measure_tool = GIMP_MEASURE(tool);
 
   if (tool->state == ACTIVE && tool->gdisp == gdisp)
     {
@@ -666,16 +654,16 @@ measure_tool_cursor_update (Tool           *tool,
 }
 
 static void
-measure_tool_draw (Tool *tool)
+measure_tool_draw (GimpTool *tool)
 {
-  MeasureTool *measure_tool;
+  GimpMeasureTool *measure_tool;
   gint         x[3];
   gint         y[3];
   gint         i;
   gint         angle1, angle2;
   gint         draw_arc = 0;
 
-  measure_tool = (MeasureTool *) tool->private;
+  measure_tool = GIMP_MEASURE(tool);
 
   for (i = 0; i < measure_tool->num_points; i++)
     {
@@ -736,13 +724,13 @@ measure_tool_draw (Tool *tool)
 }
 
 static void
-measure_tool_control (Tool       *tool,
+measure_tool_control (GimpTool   *tool,
 		      ToolAction  action,
 		      GDisplay   *gdisp)
 {
-  MeasureTool *measure_tool;
+  GimpMeasureTool *measure_tool;
 
-  measure_tool = (MeasureTool *) tool->private;
+  measure_tool = GIMP_MEASURE(tool);
 
   switch (action)
     {
@@ -781,60 +769,65 @@ measure_tool_info_window_close_callback (GtkWidget *widget,
   measure_tool_info = NULL;
 }
 
-Tool *
-tools_new_measure_tool (void)
+/* OO Stuff */
+
+GtkType
+gimp_measure_tool_get_type (void)
 {
-  Tool        *tool;
-  MeasureTool *private;
+   static GtkType tool_type = 0;
+
+   if (! tool_type)
+     {
+       GtkTypeInfo tool_info =
+        {
+          "GimpMeasure",
+          sizeof (GimpMeasureTool),
+          sizeof (GimpMeasureToolClass),
+          (GtkClassInitFunc) measure_tool_class_init,
+          (GtkObjectInitFunc) measure_tool_initialize,
+          /* reserved_1 */ NULL,
+          /* reserved_2 */ NULL,
+          (GtkClassInitFunc) NULL,
+        };
+
+      tool_type = gtk_type_unique (GIMP_TYPE_TOOL, &tool_info);
+    }
+  return tool_type;
+}
+
+void measure_tool_class_init (GimpToolClass *klass)
+{
+klass->tool_name = N_("Measure");
+klass->menu_path = N_("/Tools/Measure");
+klass->menu_accel = "O";
+klass->icon_data = (char **) measure_bits;
+klass->tool_desc = N_("Measure angles and legnths"),
+klass->help_data = "tools/measure.html";
+klass->tool_id = MEASURE;
+klass->tool_cursor = &measure_tool_cursor;
+
+klass->button_press_func   = measure_tool_button_press;
+klass->button_release_func = measure_tool_button_release;
+klass->motion_func         = measure_tool_motion;
+klass->cursor_update_func  = measure_tool_cursor_update;
+klass->control_func        = measure_tool_control;
+}
+
+void measure_tool_initialize (GimpTool *tool)
+{
+  GimpMeasureTool * measure_tool;
 
   /*  The tool options  */
   if (! measure_tool_options)
-    {
-      measure_tool_options = measure_tool_options_new ();
-      tools_register (MEASURE, (ToolOptions *) measure_tool_options);
-    }
+   {
+     measure_tool_options = measure_tool_options_new ();
+     /* OBSOLETE */
+     /* tools_register (MEASURE, (ToolOptions *) measure_tool_options); */
 
-  tool = tools_new_tool (MEASURE);
-  private = g_new0 (MeasureTool, 1);
+     measure_tool = GIMP_MEASURE (tool);
+     measure_tool->core = draw_core_new (measure_tool_draw);
 
-  private->core       = draw_core_new (measure_tool_draw);
-  private->num_points = 0;
-  private->function   = CREATING;
-
-  tool->private = (void *) private;
- 
-  tool->preserve = TRUE;  /*  Preserve tool across drawable changes  */
-
-  tool->button_press_func   = measure_tool_button_press;
-  tool->button_release_func = measure_tool_button_release;
-  tool->motion_func         = measure_tool_motion;
-  tool->cursor_update_func  = measure_tool_cursor_update;
-  tool->control_func        = measure_tool_control;
-
-  return tool;
+     tool->preserve = TRUE;  /*  Preserve on drawable change  */
+   }
 }
 
-void
-tools_free_measure_tool (Tool *tool)
-{
-  MeasureTool *measure_tool;
-
-  measure_tool = (MeasureTool *) tool->private;
-
-  if (tool->state == ACTIVE)
-    {
-      gtk_statusbar_pop (GTK_STATUSBAR (tool->gdisp->statusbar),
-			 measure_tool->context_id);
-      draw_core_stop (measure_tool->core, tool);
-    }
-
-  draw_core_free (measure_tool->core);
-
-  if (measure_tool_info)
-    {
-      info_dialog_free (measure_tool_info);
-      measure_tool_info = NULL;
-    }
-
-  g_free (measure_tool);
-}
