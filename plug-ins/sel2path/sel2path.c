@@ -82,7 +82,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 static gint    sel_x1, sel_y1, sel_x2, sel_y2;
 static gint    has_sel, sel_width, sel_height;
 static SELVALS selVals;
-GimpPixelRgn      selection_rgn;
+GimpPixelRgn   selection_rgn;
 gboolean       retVal = TRUE;  /* Toggle if cancle button clicked */
 
 MAIN ()
@@ -162,19 +162,19 @@ query (void)
 }
 
 static void
-run (gchar    *name,
-     gint      nparams,
-     GimpParam   *param,
-     gint     *nreturn_vals,
-     GimpParam  **return_vals)
+run (gchar      *name,
+     gint        nparams,
+     GimpParam  *param,
+     gint       *nreturn_vals,
+     GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *   drawable;
-  gint32        drawable_ID;
-  gint32        image_ID;
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gboolean      no_dialog = FALSE;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  gint32             drawable_ID;
+  gint32             image_ID;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status    = GIMP_PDB_SUCCESS;
+  gboolean           no_dialog = FALSE;
 
   run_mode = param[0].data.d_int32;
 
@@ -195,18 +195,18 @@ run (gchar    *name,
   drawable_ID = param[2].data.d_drawable;
   drawable = gimp_drawable_get (drawable_ID);
 
-  image_ID = gimp_drawable_image_id(drawable_ID);
+  image_ID = gimp_drawable_image_id (drawable_ID);
 
-  if(gimp_selection_is_empty(image_ID))
+  if (gimp_selection_is_empty (image_ID))
     {
-      g_message(_("No selection to convert"));
+      g_message (_("No selection to convert"));
       gimp_drawable_detach (drawable);
       return;
     }
 
   fit_set_default_params(&selVals);
   
-  if(!no_dialog)
+  if (!no_dialog)
     {
       switch (run_mode)
 	{
@@ -324,7 +324,7 @@ sel2path_dialog (SELVALS *sels)
   gimp_ui_init ("sel2path", FALSE);
   gimp_help_init ();
 
-  dlg = gimp_dialog_new (_("Sel2Path Advanced Settings"), "sel2path",
+  dlg = gimp_dialog_new (_("Selection To Path Advanced Settings"), "sel2path",
 			 gimp_standard_help_func, "filters/sel2path.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
@@ -369,8 +369,8 @@ static void
 sel2path_reset_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  reset_adv_dialog();
-  fit_set_params(&selVals);
+  reset_adv_dialog ();
+  fit_set_params (&selVals);
 }
 
 guchar
@@ -379,8 +379,7 @@ sel_pixel_value (gint row,
 {
   guchar ret;
 
-  if(col > sel_width ||
-     row > sel_height)
+  if (col > sel_width || row > sel_height)
     {
       g_warning ("sel_pixel_value [%d,%d] out of bounds", col, row);
       return 0;
@@ -534,8 +533,7 @@ do_points (spline_list_array_type in_splines,
 	      last_y = END_POINT (s).y;
 	    }
 	  else
-	    g_message ( _("print_spline: strange degree (%d)"), 
-			SPLINE_DEGREE (s));
+	    g_warning ("print_spline: strange degree (%d)", SPLINE_DEGREE (s));
 	  
 	  point_count++;
 	}
@@ -543,10 +541,10 @@ do_points (spline_list_array_type in_splines,
     }
 
    gimp_path_set_points (image_ID,
- 			_("selection_to_path"), 
- 			1, 
- 			path_point_count,
- 			parray);
+ 			"selection_to_path", 
+                         1, 
+                         path_point_count,
+                         parray);
 }
 
 
@@ -569,17 +567,17 @@ do_sel2path (gint32 drawable_ID,
 
   selection_ID = gimp_image_get_selection(image_ID);
 
-  if(selection_ID < 0)
+  if (selection_ID < 0)
     {
-      g_message( _("gimp_image_get_selection failed"));
+      g_warning ("gimp_image_get_selection failed");
       return FALSE;
     }
 
   sel_drawable = gimp_drawable_get (selection_ID);
 
-  if(gimp_drawable_bpp(selection_ID) != 1)
+  if (gimp_drawable_bpp (selection_ID) != 1)
     {
-      g_message( _("Internal error. Selection bpp > 1"));
+      g_warning ("Internal error. Selection bpp > 1");
       return FALSE;
     }
 
@@ -605,12 +603,8 @@ do_sel2path (gint32 drawable_ID,
 void
 safe_free (address *item)
 {
-  if (item == NULL || *item == NULL)
-    {
-      g_warning ("safe_free: Attempt to free a null item.");
-    }
+  g_return_if_fail (item != NULL);
   
   g_free (*item);
-  
   *item = NULL;
 }

@@ -1,3 +1,8 @@
+2002-08-26  Sven Neumann  <sven@gimp.org>
+
+        * plug-ins/sel2path/sel2path.c: changed dialog name as suggested
+        in bug-report #88905 and did some code cleanup while I was at it.
+
 2002-08-26  Michael Natterer  <mitch@gimp.org>
 
 	Color correction tool chopping:
