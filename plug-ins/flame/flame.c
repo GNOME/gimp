@@ -30,7 +30,6 @@
 #include "libgimp/gimp.h"
 #include "libgimp/gimpmenu.h"
 #include "libgimp/gimpwire.h"
-#include "app/drawable.h"
 
 #include "config.h"
 

@@ -1,3 +1,7 @@
+Tue Jun 30 12:13:36 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/flame/flame.c: don't use app private includes
+
 Tue Jun 30 18:08:01 EEST 1998  Lauri Alanko  <nether@gimp.org>
 	    
 	* app/Makefile.am: start collecting some core stuff to libgimpim.a
