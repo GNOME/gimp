@@ -300,10 +300,10 @@ matter how you set this.
 .I dont-auto-save BOOLEAN
 Negated version of auto-save.
 .TP
-.I cubic-interpolation BOOLEAN
-Set the level of interpolation.  If set, this option enables cubic
-interpolation when scaling or transforming.  By default, GIMP uses
-linear interpolation, which is faster, but has poorer quality.
+.I interpolation-type [nearest-neighbor|linear|cubic]
+Sets the level of interpolation used when scaling or transforming.
+By default, GIMP uses linear interpolation, which is faster, but has
+poorer quality than cubic interpolation.
 .TP
 .I confirm-on-close BOOLEAN
 Ask for confirmation before closing an image without saving. This is

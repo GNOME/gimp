@@ -1,3 +1,8 @@
+2003-05-07  Sven Neumann  <sven@gimp.org>
+
+	* gimprc-1.2.5.in: fixed the documentation of the
+	"interpolation-type" gimprc entry (bug #112426).
+
 2003-05-05  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/edit_selection.c (edit_selection_snap): Use floor instead
