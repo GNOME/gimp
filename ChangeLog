@@ -1,3 +1,8 @@
+2004-07-29  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpmodule/gimpmoduledb.c: converted tabs to spaces, removed
+	unused #if 0'ed prototype and unused #includes, minor cleanups.
+
 2004-07-29  Shlomi Fish <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/*.[ch]: normalized the names of the fields
