@@ -417,7 +417,7 @@ msgid ""
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
-msgstr ""
+msgstr "Такие инструменты, как \"Заливка\" или \"Свободное выделение\" при работе используют алгоритм зернового заполнения. Зерновое заполнение начинается с изначально выбранного пиксела и продолжается до тех пор, пока разница между изначально выбранным и заполняемым пикселом не превысит определенного порога. Число, указываемое здесь, определяет этот порого по умолчанию."
 
 #: app/config/gimprc-blurbs.h:136
 msgid "Sets the browser used by the help system."
@@ -510,7 +510,7 @@ msgstr "Установить размер просмотра для слоев �
 msgid ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
-msgstr "Размер окна автоматически изменяться  при масштабировании изображения."
+msgstr "Размер окна автоматически изменяется  при масштабировании изображения."
 
 #: app/config/gimprc-blurbs.h:233
 msgid ""
@@ -846,14 +846,12 @@ msgid "Spiral (anticlockwise)"
 msgstr "Спиральный (против часовой)"
 
 #: app/core/core-enums.c:237
-#, fuzzy
 msgid "Intersections (dots)"
-msgstr "Только пересечение"
+msgstr "Пересечения (точки)"
 
 #: app/core/core-enums.c:238
-#, fuzzy
 msgid "Intersections (crosshairs)"
-msgstr "Только пересечение"
+msgstr "Пересечения (крестики)"
 
 #: app/core/core-enums.c:239
 msgid "Dashed"
@@ -1493,7 +1491,7 @@ msgstr ""
 
 #: app/core/gimpdrawable-blend.c:242 app/tools/gimpblendtool.c:98
 msgid "Blend"
-msgstr "Бленда"
+msgstr "Градиентная заливка"
 
 #: app/core/gimpdrawable-bucket-fill.c:113 app/paint/gimpclone.c:211
 msgid "No patterns available for this operation."
@@ -1652,12 +1650,11 @@ msgstr "Выделение эллипса"
 
 #. no undo
 #: app/core/gimpimage-mask-select.c:339
-#, fuzzy
 msgid "Alpha to Selection"
 msgstr "Альфа-канал -> Выделенная область"
 
 #: app/core/gimpimage-mask-select.c:376
-#, fuzzy, c-format
+#, c-format
 msgid "%s Channel to Selection"
 msgstr "%s Канал -> Выделенная область"
 
@@ -2463,42 +2460,34 @@ msgid "/_New Brush"
 msgstr "/Новая кисть"
 
 #: app/gui/brushes-menu.c:50
-#, fuzzy
 msgid "/D_uplicate Brush"
 msgstr "/Создать копию кисти"
 
 #: app/gui/brushes-menu.c:55
-#, fuzzy
 msgid "/_Edit Brush..."
 msgstr "/Правка кисти..."
 
 #: app/gui/brushes-menu.c:60
-#, fuzzy
 msgid "/_Delete Brush..."
 msgstr "/Удалить кисть..."
 
 #: app/gui/brushes-menu.c:68
-#, fuzzy
 msgid "/_Refresh Brushes"
 msgstr "/Обновить кисти"
 
 #: app/gui/buffers-menu.c:42
-#, fuzzy
 msgid "/_Paste Buffer"
 msgstr "/Вставить буфер"
 
 #: app/gui/buffers-menu.c:47
-#, fuzzy
 msgid "/Paste Buffer _Into"
 msgstr "/Вставить буфер в"
 
 #: app/gui/buffers-menu.c:52
-#, fuzzy
 msgid "/Paste Buffer as _New"
 msgstr "/Вставить буфер как новое"
 
 #: app/gui/buffers-menu.c:57
-#, fuzzy
 msgid "/_Delete Buffer"
 msgstr "/Удалить буфер"
 
@@ -2544,52 +2533,42 @@ msgid "Edit Channel Attributes"
 msgstr "Редактирование атрибутов канала"
 
 #: app/gui/channels-menu.c:44
-#, fuzzy
 msgid "/_New Channel..."
 msgstr "/Новый канал..."
 
 #: app/gui/channels-menu.c:49
-#, fuzzy
 msgid "/_Raise Channel"
 msgstr "/Поднять канал"
 
 #: app/gui/channels-menu.c:54
-#, fuzzy
 msgid "/_Lower Channel"
 msgstr "/Опустить канал"
 
 #: app/gui/channels-menu.c:59
-#, fuzzy
 msgid "/D_uplicate Channel"
 msgstr "/Создать копию канала"
 
 #: app/gui/channels-menu.c:64
-#, fuzzy
 msgid "/_Delete Channel"
 msgstr "/Удалить канал"
 
 #: app/gui/channels-menu.c:72
-#, fuzzy
 msgid "/Channel to Sele_ction"
 msgstr "/Канал -> Выделение"
 
 #: app/gui/channels-menu.c:77 app/gui/vectors-menu.c:77
-#, fuzzy
 msgid "/_Add to Selection"
 msgstr "/Добавить к выделению"
 
 #: app/gui/channels-menu.c:82 app/gui/vectors-menu.c:82
-#, fuzzy
 msgid "/_Subtract from Selection"
 msgstr "/Вычесть из выделения"
 
 #: app/gui/channels-menu.c:87 app/gui/vectors-menu.c:87
-#, fuzzy
 msgid "/_Intersect with Selection"
 msgstr "/Пересечь с выделением"
 
 #: app/gui/channels-menu.c:95
-#, fuzzy
 msgid "/_Edit Channel Attributes..."
 msgstr "/Правка атрибутов канала..."
 
@@ -2620,12 +2599,10 @@ msgstr ""
 "индексированного изображения"
 
 #: app/gui/colormap-editor-menu.c:40
-#, fuzzy
 msgid "/_Add Color"
 msgstr "/Добавить цвет"
 
 #: app/gui/colormap-editor-menu.c:45 app/gui/palette-editor-menu.c:44
-#, fuzzy
 msgid "/_Edit Color..."
 msgstr "/Правка цвета..."
 
@@ -2851,11 +2828,11 @@ msgstr "Правка выделенной области"
 #: app/gui/dialogs-constructors.c:916 app/pdb/internal_procs.c:185
 #: app/widgets/gimpundoeditor.c:122
 msgid "Undo"
-msgstr "Откат"
+msgstr "Отменить"
 
 #: app/gui/dialogs-constructors.c:916
 msgid "Undo History"
-msgstr "История отката"
+msgstr "История отмен"
 
 #: app/gui/dialogs-constructors.c:948
 msgid "Navigation"
@@ -2886,97 +2863,78 @@ msgid "Palette Editor"
 msgstr "Редактор палитры"
 
 #: app/gui/dialogs-menu.c:61
-#, fuzzy
 msgid "/_Select Tab"
 msgstr "/Выбрать закладку"
 
 #: app/gui/dialogs-menu.c:66
-#, fuzzy
 msgid "/Add Tab/Tool _Options..."
 msgstr "/Добавить закладку/Параметры инструментов..."
 
 #: app/gui/dialogs-menu.c:68
-#, fuzzy
 msgid "/Add Tab/_Device Status..."
 msgstr "/Добавить закладку/Состояние устройства..."
 
 #: app/gui/dialogs-menu.c:73
-#, fuzzy
 msgid "/Add Tab/_Layers..."
 msgstr "/Добавить закладку/Слои..."
 
 #: app/gui/dialogs-menu.c:75
-#, fuzzy
 msgid "/Add Tab/_Channels..."
 msgstr "/Добавить закладку/Каналы..."
 
 #: app/gui/dialogs-menu.c:77
-#, fuzzy
 msgid "/Add Tab/_Paths..."
 msgstr "/Добавить закладку/Контуры..."
 
 #: app/gui/dialogs-menu.c:79
-#, fuzzy
 msgid "/Add Tab/_Indexed Palette..."
 msgstr "/Добавить закладку/Индексированная палитра..."
 
 #: app/gui/dialogs-menu.c:81
-#, fuzzy
 msgid "/Add Tab/_Selection Editor..."
 msgstr "/Добавить закладку/Редактировать выделение"
 
 #: app/gui/dialogs-menu.c:83
-#, fuzzy
 msgid "/Add Tab/Na_vigation..."
 msgstr "/Добавить закладку/Навигация..."
 
 #: app/gui/dialogs-menu.c:85
-#, fuzzy
 msgid "/Add Tab/_Undo History..."
 msgstr "/Добавить закладку/История ..."
 
 #: app/gui/dialogs-menu.c:90
-#, fuzzy
 msgid "/Add Tab/Colo_rs..."
 msgstr "/Добавить закладку/Цвета..."
 
 #: app/gui/dialogs-menu.c:92
-#, fuzzy
 msgid "/Add Tab/Brus_hes..."
 msgstr "/Добавить закладку/Кисти..."
 
 #: app/gui/dialogs-menu.c:94
-#, fuzzy
 msgid "/Add Tab/P_atterns..."
-msgstr "/Добавить закладку/Образцы..."
+msgstr "/Добавить закладку/Шаблоны..."
 
 #: app/gui/dialogs-menu.c:96
-#, fuzzy
 msgid "/Add Tab/_Gradients..."
 msgstr "/Добавить закладку/Градиенты..."
 
 #: app/gui/dialogs-menu.c:98
-#, fuzzy
 msgid "/Add Tab/Pal_ettes..."
 msgstr "/Добавить закладку/Палитры...."
 
 #: app/gui/dialogs-menu.c:100
-#, fuzzy
 msgid "/Add Tab/_Fonts..."
 msgstr "/Добавить закладку/Шрифты..."
 
 #: app/gui/dialogs-menu.c:102
-#, fuzzy
 msgid "/Add Tab/_Buffers..."
 msgstr "/Добавить закладку/Буферы..."
 
 #: app/gui/dialogs-menu.c:107
-#, fuzzy
 msgid "/Add Tab/I_mages..."
 msgstr "/Добавить закладку/Изображения..."
 
 #: app/gui/dialogs-menu.c:109
-#, fuzzy
 msgid "/Add Tab/Document Histor_y..."
 msgstr "/Добавить закладку/Недавние изображения..."
 
@@ -2985,7 +2943,6 @@ msgid "/Add Tab/_Templates..."
 msgstr "/Добавить закладку/Образцы..."
 
 #: app/gui/dialogs-menu.c:113
-#, fuzzy
 msgid "/Add Tab/Error Co_nsole..."
 msgstr "/Добавить закладку/Консоль ошибок..."
 
@@ -2994,134 +2951,108 @@ msgid "/Add Tab/Tools..."
 msgstr "/Добавить закладку/Инструменты..."
 
 #: app/gui/dialogs-menu.c:121
-#, fuzzy
 msgid "/_Remove Tab"
 msgstr "/Удалить закладку"
 
 #: app/gui/dialogs-menu.c:131
-#, fuzzy
 msgid "/Preview Size/_Tiny"
 msgstr "/Размер пред.просмотра/Крошечный"
 
 #: app/gui/dialogs-menu.c:137
-#, fuzzy
 msgid "/Preview Size/E_xtra Small"
 msgstr "/Размер пред.просмотра/Очень маленький"
 
 #: app/gui/dialogs-menu.c:138
-#, fuzzy
 msgid "/Preview Size/_Small"
 msgstr "/Размер пред.просмотра/Небольшой"
 
 #: app/gui/dialogs-menu.c:139
-#, fuzzy
 msgid "/Preview Size/_Medium"
 msgstr "/Размер пред.просмотра/Средний"
 
 #: app/gui/dialogs-menu.c:140
-#, fuzzy
 msgid "/Preview Size/_Large"
 msgstr "/Размер пред.просмотра/Большой"
 
 #: app/gui/dialogs-menu.c:141
-#, fuzzy
 msgid "/Preview Size/Ex_tra Large"
 msgstr "/Размер пред.просмотра/Очень большой"
 
 #: app/gui/dialogs-menu.c:142
-#, fuzzy
 msgid "/Preview Size/_Huge"
 msgstr "/Размер пред.просмотра/Огромный"
 
 #: app/gui/dialogs-menu.c:143
-#, fuzzy
 msgid "/Preview Size/_Enormous"
 msgstr "/Размер пред.просмотра/Ненормальный"
 
 #: app/gui/dialogs-menu.c:144
-#, fuzzy
 msgid "/Preview Size/_Gigantic"
 msgstr "/Размер пред.просмотра/Гигантский"
 
 #: app/gui/dialogs-menu.c:148
-#, fuzzy
 msgid "/Tab Style/_Icon"
 msgstr "/Стиль закладок/Пиктограмма"
 
 #: app/gui/dialogs-menu.c:154
-#, fuzzy
 msgid "/Tab Style/Current _Status"
-msgstr "/Стиль закладок/Текст"
+msgstr "/Стиль закладок/Состояние"
 
 #: app/gui/dialogs-menu.c:155
-#, fuzzy
 msgid "/Tab Style/_Text"
 msgstr "/Стиль закладок/Текст"
 
 #: app/gui/dialogs-menu.c:156
-#, fuzzy
 msgid "/Tab Style/I_con & Text"
 msgstr "/Стиль закладок/Пиктограмма и текст"
 
 #: app/gui/dialogs-menu.c:157
-#, fuzzy
 msgid "/Tab Style/St_atus & Text"
 msgstr "/Стиль закладок/Состояние и текст"
 
 #: app/gui/dialogs-menu.c:159
-#, fuzzy
 msgid "/View as _List"
 msgstr "/Просмотр в виде списка"
 
 #: app/gui/dialogs-menu.c:163
-#, fuzzy
 msgid "/View as _Grid"
 msgstr "/Просмотр в виде cетки"
 
 #: app/gui/dialogs-menu.c:170
-#, fuzzy
 msgid "/Show Image _Menu"
 msgstr "/Показать меню изображения"
 
 #: app/gui/dialogs-menu.c:174
-#, fuzzy
 msgid "/Auto Follow Active _Image"
 msgstr "/Следовать за активным изображением"
 
 #: app/gui/documents-menu.c:43
-#, fuzzy
 msgid "/_Open Image"
 msgstr "/Открыть изображение"
 
 #: app/gui/documents-menu.c:48
-#, fuzzy
 msgid "/_Raise or Open Image"
 msgstr "/Поднять или открыть изображение"
 
 #: app/gui/documents-menu.c:53
-#, fuzzy
 msgid "/File Open _Dialog..."
 msgstr "/Диалог открытия файла..."
 
 #: app/gui/documents-menu.c:58
-#, fuzzy
 msgid "/Remove _Entry"
 msgstr "/Удалить запись"
 
 #: app/gui/documents-menu.c:66
-#, fuzzy
 msgid "/Recreate _Preview"
 msgstr "/Создать просмотр"
 
 #: app/gui/documents-menu.c:71
-#, fuzzy
 msgid "/Reload _all Previews"
 msgstr "/Перечитать все просмотры"
 
 #: app/gui/documents-menu.c:76
-#, fuzzy
 msgid "/Remove Dangling E_ntries"
-msgstr "/Удалить висящие записи"
+msgstr "/Удалить устаревшие записи"
 
 #: app/gui/drawable-commands.c:81
 msgid "Desaturate operates only on RGB color drawables."
@@ -3152,19 +3083,16 @@ msgid "(Unnamed Buffer)"
 msgstr "(Безымянный буфер)"
 
 #: app/gui/error-console-menu.c:39
-#, fuzzy
 msgid "/_Clear Errors"
 msgstr "/Очистить"
 
 #: app/gui/error-console-menu.c:47
-#, fuzzy
 msgid "/Save _All Errors to File..."
-msgstr "/Сохранить Ошибки."
+msgstr "/Сохранить сообщения об ошибках."
 
 #: app/gui/error-console-menu.c:52
-#, fuzzy
 msgid "/Save _Selection to File..."
-msgstr "/Сохранить Выделение."
+msgstr "/Сохранить выделенное."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:704
 #: app/widgets/gimpdocumentview.c:454 app/widgets/gimpdnd.c:1005
@@ -3238,7 +3166,6 @@ msgstr ""
 "%s"
 
 #: app/gui/file-dialog-utils.c:122
-#, fuzzy
 msgid "Determine File _Type:"
 msgstr "Определить тип файла:"
 
@@ -4464,7 +4391,7 @@ msgstr "/Диалоги/Создать новую панель/Слои, кан�
 
 #: app/gui/image-menu.c:918
 msgid "/Dialogs/Create New Dock/_Brushes, Patterns & Gradients..."
-msgstr "/Диалоги/Создать новую панель/Кисти, шаблоныи градиенты..."
+msgstr "/Диалоги/Создать новую панель/Кисти, шаблоны и градиенты..."
 
 #: app/gui/image-menu.c:922
 msgid "/Dialogs/Create New Dock/_Misc. Stuff..."
@@ -4616,7 +4543,7 @@ msgstr "/Фильтры/Визуализация"
 
 #: app/gui/image-menu.c:1072
 msgid "/Filters/Render/_Clouds"
-msgstr "/Фильтры/Визуализация/Облака"
+msgstr "/Фильтры/Визуализация/Пятна"
 
 #: app/gui/image-menu.c:1073
 msgid "/Filters/Render/_Nature"
@@ -4645,20 +4572,20 @@ msgstr "/Фильтры/Развлечения"
 #: app/gui/image-menu.c:1409
 #, c-format
 msgid "_Undo %s"
-msgstr "Откат %s"
+msgstr "Отменить %s"
 
 #: app/gui/image-menu.c:1414
 #, c-format
 msgid "_Redo %s"
-msgstr "Возврат %s"
+msgstr "Повторить %s"
 
 #: app/gui/image-menu.c:1418
 msgid "_Undo"
-msgstr "Откат"
+msgstr "Отмена"
 
 #: app/gui/image-menu.c:1419
 msgid "_Redo"
-msgstr "Возврат"
+msgstr "Повтор"
 
 #: app/gui/image-menu.c:1670
 #, c-format
@@ -5362,7 +5289,7 @@ msgstr "Динамические быстрые клавиши"
 
 #: app/gui/preferences-dialog.c:1199
 msgid "Save Keyboard Shortcuts on Exit"
-msgstr "Сохранить быстрые клавиши и выйти"
+msgstr "Сохранять быстрые клавиши при выходе"
 
 #: app/gui/preferences-dialog.c:1202
 msgid "Restore Saved Keyboard Shortcuts on Start-up"
@@ -5667,7 +5594,7 @@ msgstr "Консервативное использование памяти"
 
 #: app/gui/preferences-dialog.c:1830
 msgid "Minimal Number of Undo Levels:"
-msgstr "Минимальное число уровней отката:"
+msgstr "Минимальное число уровней отмен:"
 
 #: app/gui/preferences-dialog.c:1833
 msgid "Maximum Undo Memory:"
@@ -6104,7 +6031,7 @@ msgstr "/Файл/Диалоги/Навигация..."
 
 #: app/gui/toolbox-menu.c:151
 msgid "/File/Dialogs/_Undo History..."
-msgstr "/Файл/Диалоги/Откат..."
+msgstr "/Файл/Диалоги/История..."
 
 #: app/gui/toolbox-menu.c:159
 msgid "/File/Dialogs/Colo_rs..."
@@ -6758,7 +6685,7 @@ msgstr "Аэрограф"
 
 #: app/paint/gimpclone.c:89 app/tools/gimpclonetool.c:99
 msgid "Clone"
-msgstr "Клонировать"
+msgstr "Штамп"
 
 #: app/paint/gimpconvolve.c:122 app/tools/gimpconvolvetool.c:91
 msgid "Convolve"
@@ -8063,7 +7990,7 @@ msgstr "Открыть диалог выбора градиента"
 
 #: app/tools/gimppaintoptions-gui.c:196
 msgid "Reverse"
-msgstr "Восстановить"
+msgstr "Перевернуть"
 
 #: app/tools/gimppaintoptions-gui.c:201
 msgid "Gradient:"
@@ -9090,7 +9017,7 @@ msgstr ""
 
 #: app/widgets/gimpundoeditor.c:130
 msgid "Redo"
-msgstr "Возврат"
+msgstr "Повторить"
 
 #: app/widgets/gimpundoeditor.c:173
 msgid "[ Base Image ]"
