@@ -30,10 +30,10 @@
 
 #include "appenums.h"
 #include "core/gimpchannel.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
-#include "drawable.h"
 
 static ProcRecord selection_bounds_proc;
 static ProcRecord selection_value_proc;

@@ -41,16 +41,15 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
-#include "drawable.h"
-#include "gimprc.h"
-#include "undo.h"
-#include "gdisplay.h"
-
 #include "gimpinktool.h"
 #include "gimpinktool-blob.h"
 #include "gimptool.h"
 #include "paint_options.h"
 #include "tool_manager.h"
+
+#include "gimprc.h"
+#include "undo.h"
+#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -1233,8 +1232,8 @@ ink_finish (GimpInkTool  *ink_tool,
 	    GimpDrawable *drawable)
 {
   /*  push an undo  */
-  drawable_apply_image (drawable, ink_tool->x1, ink_tool->y1,
-			ink_tool->x2, ink_tool->y2, undo_tiles, TRUE);
+  gimp_drawable_apply_image (drawable, ink_tool->x1, ink_tool->y1,
+			     ink_tool->x2, ink_tool->y2, undo_tiles, TRUE);
   undo_tiles = NULL;
 
   /*  invalidate the drawable--have to do it here, because

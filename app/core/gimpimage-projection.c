@@ -53,7 +53,6 @@
 #include "gimpundostack.h"
 
 #include "app_procs.h"
-#include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "parasitelist.h"
@@ -172,7 +171,7 @@ enum
 
   CLEAN,
   DIRTY,
-  REPAINT,
+  UPDATE,
   COLORMAP_CHANGED,
   UNDO_EVENT,
   LAST_SIGNAL
@@ -318,12 +317,12 @@ gimp_image_class_init (GimpImageClass *klass)
                     gtk_signal_default_marshaller,
                     GTK_TYPE_NONE, 0);
 
-  gimp_image_signals[REPAINT] =
-    gtk_signal_new ("repaint",
+  gimp_image_signals[UPDATE] =
+    gtk_signal_new ("update",
                     GTK_RUN_FIRST,
                     object_class->type,
                     GTK_SIGNAL_OFFSET (GimpImageClass,
-				       repaint),
+				       update),
                     gimp_marshal_NONE__INT_INT_INT_INT,
                     GTK_TYPE_NONE, 4,
 		    GTK_TYPE_INT,
@@ -373,7 +372,7 @@ gimp_image_class_init (GimpImageClass *klass)
 
   klass->clean                        = NULL;
   klass->dirty                        = NULL;
-  klass->repaint                      = NULL;
+  klass->update                       = NULL;
   klass->colormap_changed             = gimp_image_real_colormap_changed;
   klass->undo_event                   = NULL;
   klass->undo                         = gimp_image_undo;
@@ -1216,7 +1215,7 @@ gimp_image_replace_image (GimpImage    *gimage,
 
   /*  If the calling procedure specified an undo step...  */
   if (undo)
-    drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
+    gimp_drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
 
   /* configure the pixel regions
    *  If an alternative to using the drawable's data as src1 was provided...
@@ -1745,6 +1744,20 @@ gimp_image_floating_selection_changed (GimpImage *gimage)
   gtk_signal_emit (GTK_OBJECT (gimage),
 		   gimp_image_signals[FLOATING_SELECTION_CHANGED]);
 }
+
+void
+gimp_image_update (GimpImage *gimage,
+		   gint       x,
+		   gint       y,
+		   gint       width,
+		   gint       height)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[UPDATE],
+		   x, y, width, height);
+}
+
 
 /************************************************************/
 /*  Projection functions                                    */
@@ -2918,7 +2931,6 @@ gimp_image_position_layer (GimpImage *gimage,
 			   gint       new_index,
 			   gboolean   push_undo)
 {
-  gint x_min, y_min, x_max, y_max;
   gint off_x, off_y;
   gint index;
   gint num_layers;
@@ -2967,13 +2979,11 @@ gimp_image_position_layer (GimpImage *gimage,
   gimp_container_reorder (gimage->layers, GIMP_OBJECT (layer), new_index);
 
   gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
-  x_min = off_x;
-  y_min = off_y;
-  x_max = off_x + gimp_drawable_width (GIMP_DRAWABLE (layer));
-  y_max = off_y + gimp_drawable_height (GIMP_DRAWABLE (layer));
-  gtk_signal_emit (GTK_OBJECT (gimage),
-		   gimp_image_signals[REPAINT],
-		   x_min, y_min, x_max, y_max);
+
+  gimp_image_update (gimage,
+		     off_x, off_y,
+		     gimp_drawable_width (GIMP_DRAWABLE (layer)),
+		     gimp_drawable_height (GIMP_DRAWABLE (layer)));
 
   /*  invalidate the composite preview  */
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
@@ -3420,10 +3430,10 @@ gimp_image_merge_layers (GimpImage *gimage,
 
   gimp_drawable_set_visible (GIMP_DRAWABLE (merge_layer), TRUE);
 
-  drawable_update (GIMP_DRAWABLE (merge_layer), 
-		   0, 0, 
-		   gimp_drawable_width (GIMP_DRAWABLE (merge_layer)), 
-		   gimp_drawable_height (GIMP_DRAWABLE (merge_layer)));
+  gimp_drawable_update (GIMP_DRAWABLE (merge_layer), 
+			0, 0, 
+			gimp_drawable_width (GIMP_DRAWABLE (merge_layer)), 
+			gimp_drawable_height (GIMP_DRAWABLE (merge_layer)));
 
   /*reinit_layer_idlerender (gimage, merge_layer);*/
 
@@ -3510,13 +3520,10 @@ gimp_image_add_layer (GimpImage *gimage,
   gimp_image_set_active_layer (gimage, layer);
 
   /*  update the new layer's area  */
-  drawable_update (GIMP_DRAWABLE (layer),
-		   0, 0,
-		   gimp_drawable_width  (GIMP_DRAWABLE (layer)),
-		   gimp_drawable_height (GIMP_DRAWABLE (layer)));
-
-  /*  invalidate the composite preview  */
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
+  gimp_drawable_update (GIMP_DRAWABLE (layer),
+			0, 0,
+			gimp_drawable_width  (GIMP_DRAWABLE (layer)),
+			gimp_drawable_height (GIMP_DRAWABLE (layer)));
 
   return TRUE;
 }
@@ -3659,10 +3666,10 @@ gimp_image_position_channel (GimpImage   *gimage,
   gimp_container_reorder (gimage->channels, 
 			  GIMP_OBJECT (channel), new_index);
 
-  drawable_update (GIMP_DRAWABLE (channel),
-		   0, 0,
-		   gimp_drawable_width  (GIMP_DRAWABLE (channel)),
-		   gimp_drawable_height (GIMP_DRAWABLE (channel)));
+  gimp_drawable_update (GIMP_DRAWABLE (channel),
+			0, 0,
+			gimp_drawable_width  (GIMP_DRAWABLE (channel)),
+			gimp_drawable_height (GIMP_DRAWABLE (channel)));
 
   return TRUE;
 }
@@ -3710,10 +3717,10 @@ gimp_image_add_channel (GimpImage   *gimage,
 
   /*  if channel is visible, update the image  */
   if (gimp_drawable_get_visible (GIMP_DRAWABLE (channel)))
-    drawable_update (GIMP_DRAWABLE (channel), 
-		     0, 0, 
-		     gimp_drawable_width (GIMP_DRAWABLE (channel)), 
-		     gimp_drawable_height (GIMP_DRAWABLE (channel)));
+    gimp_drawable_update (GIMP_DRAWABLE (channel), 
+			  0, 0, 
+			  gimp_drawable_width (GIMP_DRAWABLE (channel)), 
+			  gimp_drawable_height (GIMP_DRAWABLE (channel)));
 
   return TRUE;
 }

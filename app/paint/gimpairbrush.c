@@ -36,13 +36,12 @@
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 
-#include "drawable.h"
-#include "gdisplay.h"
-
 #include "gimpairbrushtool.h"
 #include "paint_options.h"
 #include "gimptool.h"
 #include "tool_manager.h"
+
+#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

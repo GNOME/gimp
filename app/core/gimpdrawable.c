@@ -37,6 +37,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimpchannel.h"
+#include "gimpcontext.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-preview.h"
 #include "gimpimage.h"
@@ -136,14 +137,15 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   gtk_object_class_add_signals (object_class, gimp_drawable_signals,
 				LAST_SIGNAL);
 
-  object_class->destroy = gimp_drawable_destroy;
+  object_class->destroy              = gimp_drawable_destroy;
 
-  gimp_object_class->name_changed = gimp_drawable_name_changed;
+  gimp_object_class->name_changed    = gimp_drawable_name_changed;
 
   viewable_class->invalidate_preview = gimp_drawable_invalidate_preview;
   viewable_class->get_preview        = gimp_drawable_get_preview;
 
-  klass->removed = NULL;
+  klass->visibility_changed          = NULL;
+  klass->removed                     = NULL;
 }
 
 static void
@@ -407,6 +409,7 @@ gimp_drawable_set_gimage (GimpDrawable *drawable,
 			  GimpImage    *gimage)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (! gimage || GIMP_IS_IMAGE (gimage));;
 
   if (gimage == NULL)
     drawable->tattoo = 0;
@@ -417,8 +420,55 @@ gimp_drawable_set_gimage (GimpDrawable *drawable,
 }
 
 void
+gimp_drawable_update (GimpDrawable *drawable,
+		      gint          x,
+		      gint          y,
+		      gint          w,
+		      gint          h)
+{
+  GimpImage *gimage;
+  gint       offset_x;
+  gint       offset_y;
+
+  g_return_if_fail (drawable != NULL);
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  gimage = gimp_drawable_gimage (drawable);
+
+  g_return_if_fail (gimage != NULL);
+
+  gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+  x += offset_x;
+  y += offset_y;
+
+  gimp_image_update (gimage, x, y, w, h);
+
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
+}
+
+void
+gimp_drawable_apply_image (GimpDrawable *drawable, 
+			   gint          x1,
+			   gint          y1,
+			   gint          x2,
+			   gint          y2, 
+			   TileManager  *tiles,
+			   gint          sparse)
+{
+  g_return_if_fail (drawable != NULL);
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  if (! tiles)
+    undo_push_image (drawable->gimage, drawable, 
+		     x1, y1, x2, y2);
+  else
+    undo_push_image_mod (drawable->gimage, drawable, 
+			 x1, y1, x2, y2, tiles, sparse);
+}
+
+void
 gimp_drawable_merge_shadow (GimpDrawable *drawable,
-			    gint          undo)
+			    gboolean      undo)
 {
   GimpImage   *gimage;
   PixelRegion  shadowPR;
@@ -508,6 +558,52 @@ gimp_drawable_fill (GimpDrawable  *drawable,
 		     gimp_drawable_height (drawable),
 		     TRUE);
   color_region (&destPR, c);
+
+  gimp_drawable_update (drawable,
+			0, 0,
+			gimp_drawable_width  (drawable),
+			gimp_drawable_height (drawable));
+}
+
+void
+gimp_drawable_fill_by_type (GimpDrawable *drawable,
+			    GimpContext  *context,
+			    GimpFillType  fill_type)
+{
+  GimpRGB color;
+
+  g_return_if_fail (drawable != NULL);
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  color.a = 1.0;
+
+  switch (fill_type)
+    {
+    case FOREGROUND_FILL:
+      gimp_context_get_foreground (context, &color);
+      break;
+
+    case BACKGROUND_FILL:
+      gimp_context_get_background (context, &color);
+      break;
+
+    case WHITE_FILL:
+      gimp_rgb_set (&color, 1.0, 1.0, 1.0);
+      break;
+
+    case TRANSPARENT_FILL:
+      gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
+      break;
+
+    case NO_FILL:
+      return;
+
+    default:
+      g_warning ("gimp_drawable_fill_by_type(): unknown fill type");
+      return;
+    }
+
+  gimp_drawable_fill (drawable, &color);
 }
 
 gboolean
@@ -579,14 +675,12 @@ GimpImageType
 gimp_drawable_type_with_alpha (const GimpDrawable *drawable)
 {
   GimpImageType type;
-  gboolean      has_alpha;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
   type = gimp_drawable_type (drawable);
-  has_alpha = gimp_drawable_has_alpha (drawable);
 
-  if (has_alpha)
+  if (gimp_drawable_has_alpha (drawable))
     {
       return type;
     }
@@ -595,11 +689,14 @@ gimp_drawable_type_with_alpha (const GimpDrawable *drawable)
       switch (type)
 	{
 	case RGB_GIMAGE:
-	  return RGBA_GIMAGE; break;
+	  return RGBA_GIMAGE;
+	  break;
 	case GRAY_GIMAGE:
-	  return GRAYA_GIMAGE; break;
+	  return GRAYA_GIMAGE;
+	  break;
 	case INDEXED_GIMAGE:
-	  return INDEXEDA_GIMAGE; break;
+	  return INDEXEDA_GIMAGE;
+	  break;
 	default:
 	  g_assert_not_reached ();
 	  break;
@@ -633,6 +730,11 @@ gimp_drawable_set_visible (GimpDrawable *drawable,
 
       gtk_signal_emit (GTK_OBJECT (drawable),
                        gimp_drawable_signals[VISIBILITY_CHANGED]);
+
+      gimp_drawable_update (drawable,
+			    0, 0,
+			    drawable->width,
+			    drawable->height);
     }
 }
 

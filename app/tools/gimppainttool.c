@@ -53,7 +53,6 @@
 
 #include "app_procs.h"
 #include "devices.h"
-#include "drawable.h"
 #include "gdisplay.h"
 #include "gimprc.h"
 #include "undo.h"
@@ -1068,8 +1067,8 @@ gimp_paint_tool_finish (GimpPaintTool *paint_tool,
   undo_push_paint (gimage, pu);
 
   /*  push an undo  */
-  drawable_apply_image (drawable, paint_tool->x1, paint_tool->y1,
-			paint_tool->x2, paint_tool->y2, undo_tiles, TRUE);
+  gimp_drawable_apply_image (drawable, paint_tool->x1, paint_tool->y1,
+			     paint_tool->x2, paint_tool->y2, undo_tiles, TRUE);
   undo_tiles = NULL;
 
   /*  push the group end  */

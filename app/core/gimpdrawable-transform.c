@@ -59,7 +59,6 @@
 #include "gimpfliptool.h"
 
 #include "app_procs.h"
-#include "drawable.h"
 #include "floating_sel.h"
 #include "undo.h"
 #include "path_transform.h"
@@ -1665,10 +1664,10 @@ gimp_transform_tool_paste (GimpImage    *gimage,
       if (floating_layer)
 	floating_sel_rigor (floating_layer, TRUE);
 
-      drawable_update (drawable,
-		       0, 0,
-		       gimp_drawable_width (drawable),
-		       gimp_drawable_height (drawable));
+      gimp_drawable_update (drawable,
+			    0, 0,
+			    gimp_drawable_width (drawable),
+			    gimp_drawable_height (drawable));
 
       /*  if we were operating on the floating selection, then it's boundary 
        *  and previews need invalidating

@@ -38,7 +38,6 @@
 #include "gimplistitem.h"
 #include "gimpwidgets-constructors.h"
 
-#include "drawable.h"
 #include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
@@ -422,10 +421,6 @@ gimp_layer_list_view_paint_mode_menu_callback (GtkWidget         *widget,
 	  gimp_layer_set_mode (layer, mode);
 	  UNBLOCK();
 
-	  drawable_update (GIMP_DRAWABLE (layer), 0, 0,
-			   GIMP_DRAWABLE (layer)->width,
-			   GIMP_DRAWABLE (layer)->height);
-
 	  gdisplays_flush ();
 	}
     }
@@ -479,10 +474,6 @@ gimp_layer_list_view_opacity_scale_changed (GtkAdjustment     *adjustment,
 	  BLOCK();
 	  gimp_layer_set_opacity (layer, opacity);
 	  UNBLOCK();
-
-	  drawable_update (GIMP_DRAWABLE (layer), 0, 0,
-			   GIMP_DRAWABLE (layer)->width,
-			   GIMP_DRAWABLE (layer)->height);
 
 	  gdisplays_flush ();
 	}

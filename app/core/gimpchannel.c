@@ -39,11 +39,11 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "drawable.h"
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
 #include "gimpchannel.h"
 #include "gimplayer.h"
+
 #include "parasitelist.h"
 #include "undo.h"
 
@@ -244,7 +244,15 @@ gimp_channel_set_color (GimpChannel   *channel,
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (color != NULL);
 
-  channel->color = *color;
+  if (gimp_rgba_distance (&channel->color, color) > 0.0001)
+    {
+      channel->color = *color;
+
+      gimp_drawable_update (GIMP_DRAWABLE (channel),
+			    0, 0,
+			    GIMP_DRAWABLE (channel)->width,
+			    GIMP_DRAWABLE (channel)->height);
+    }
 }
 
 const GimpRGB *
@@ -289,10 +297,10 @@ gimp_channel_scale (GimpChannel *channel,
     return;
 
   /*  Update the old channel position  */
-  drawable_update (GIMP_DRAWABLE (channel),
-		   0, 0,
-		   GIMP_DRAWABLE (channel)->width,
-		   GIMP_DRAWABLE (channel)->height);
+  gimp_drawable_update (GIMP_DRAWABLE (channel),
+			0, 0,
+			GIMP_DRAWABLE (channel)->width,
+			GIMP_DRAWABLE (channel)->height);
 
   /*  Configure the pixel regions  */
   pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
@@ -319,10 +327,10 @@ gimp_channel_scale (GimpChannel *channel,
   channel->bounds_known = FALSE;
 
   /*  Update the new channel position  */
-  drawable_update (GIMP_DRAWABLE (channel),
-		   0, 0,
-		   GIMP_DRAWABLE (channel)->width,
-		   GIMP_DRAWABLE (channel)->height);
+  gimp_drawable_update (GIMP_DRAWABLE (channel),
+			0, 0,
+			GIMP_DRAWABLE (channel)->width,
+			GIMP_DRAWABLE (channel)->height);
 }
 
 void
@@ -372,10 +380,10 @@ gimp_channel_resize (GimpChannel *channel,
     }
 
   /*  Update the old channel position  */
-  drawable_update (GIMP_DRAWABLE (channel),
-		   0, 0,
-		   GIMP_DRAWABLE (channel)->width,
-		   GIMP_DRAWABLE (channel)->height);
+  gimp_drawable_update (GIMP_DRAWABLE (channel),
+			0, 0,
+			GIMP_DRAWABLE (channel)->width,
+			GIMP_DRAWABLE (channel)->height);
 
   /*  Configure the pixel regions  */
   pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
@@ -416,10 +424,10 @@ gimp_channel_resize (GimpChannel *channel,
   channel->bounds_known = FALSE;
 
   /*  update the new channel area  */
-  drawable_update (GIMP_DRAWABLE (channel),
-		   0, 0,
-		   GIMP_DRAWABLE (channel)->width,
-		   GIMP_DRAWABLE (channel)->height);
+  gimp_drawable_update (GIMP_DRAWABLE (channel),
+			0, 0,
+			GIMP_DRAWABLE (channel)->width,
+			GIMP_DRAWABLE (channel)->height);
 }
 
 

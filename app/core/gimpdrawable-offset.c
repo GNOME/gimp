@@ -38,8 +38,6 @@
 #include "gimpdrawable-offset.h"
 #include "gimpimage.h"
 
-#include "drawable.h"
-
 
 void
 gimp_drawable_offset (GimpDrawable   *drawable,
@@ -309,20 +307,20 @@ gimp_drawable_offset (GimpDrawable   *drawable,
     }
 
   /*  push an undo  */
-  drawable_apply_image (drawable,
-			0, 0,
-			gimp_drawable_width (drawable),
-			gimp_drawable_height (drawable),
-			gimp_drawable_data (drawable),
-			FALSE);
+  gimp_drawable_apply_image (drawable,
+			     0, 0,
+			     gimp_drawable_width (drawable),
+			     gimp_drawable_height (drawable),
+			     gimp_drawable_data (drawable),
+			     FALSE);
 
   /*  swap the tiles  */
   drawable->tiles = new_tiles;
 
 
   /*  update the drawable  */
-  drawable_update (drawable,
-		   0, 0,
-		   gimp_drawable_width (drawable),
-		   gimp_drawable_height (drawable));
+  gimp_drawable_update (drawable,
+			0, 0,
+			gimp_drawable_width (drawable),
+			gimp_drawable_height (drawable));
 }

@@ -41,7 +41,6 @@
 #include "tool_options.h"
 
 #include "app_procs.h"
-#include "drawable.h"
 #include "gdisplay.h"
 #include "image_map.h"
 

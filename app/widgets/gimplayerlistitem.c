@@ -37,7 +37,6 @@
 #include "gimplayerlistitem.h"
 #include "gimppreview.h"
 
-#include "drawable.h"
 #include "gdisplay.h"
 
 #include "pixmaps/linked.xpm"

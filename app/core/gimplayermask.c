@@ -33,7 +33,6 @@
 
 #include "gimplayermask.h"
 
-#include "drawable.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -260,10 +259,10 @@ gimp_layer_mask_set_apply (GimpLayerMask *layer_mask,
 
           drawable = GIMP_DRAWABLE (layer_mask->layer);
 
-          drawable_update (drawable,
-                           0, 0,
-                           gimp_drawable_width  (drawable),
-                           gimp_drawable_height (drawable));
+          gimp_drawable_update (drawable,
+				0, 0,
+				gimp_drawable_width  (drawable),
+				gimp_drawable_height (drawable));
         }
 
       gtk_signal_emit (GTK_OBJECT (layer_mask),
@@ -322,10 +321,10 @@ gimp_layer_mask_set_show (GimpLayerMask *layer_mask,
 
           drawable = GIMP_DRAWABLE (layer_mask->layer);
 
-          drawable_update (drawable,
-                           0, 0,
-                           gimp_drawable_width  (drawable),
-                           gimp_drawable_height (drawable));
+          gimp_drawable_update (drawable,
+				0, 0,
+				gimp_drawable_width  (drawable),
+				gimp_drawable_height (drawable));
         }
 
       gtk_signal_emit (GTK_OBJECT (layer_mask),

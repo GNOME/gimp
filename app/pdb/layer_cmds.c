@@ -35,7 +35,6 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
-#include "drawable.h"
 #include "floating_sel.h"
 #include "pdb_glue.h"
 #include "undo.h"

@@ -82,10 +82,28 @@ GimpImage     * gimp_drawable_gimage             (const GimpDrawable *drawable);
 void            gimp_drawable_set_gimage         (GimpDrawable       *drawable,
 						  GimpImage          *gimage);
 
+void            gimp_drawable_update             (GimpDrawable       *drawable,
+						  gint                x,
+						  gint                y,
+						  gint                w,
+						  gint                h);
+
+void            gimp_drawable_apply_image        (GimpDrawable       *drawable, 
+						  gint                x1,
+						  gint                y1,
+						  gint                x2,
+						  gint                y2, 
+						  TileManager        *tiles,
+						  gint                sparse);
+
 void            gimp_drawable_merge_shadow       (GimpDrawable       *drawable,
-						  gint                undo);
+						  gboolean            undo);
+
 void            gimp_drawable_fill               (GimpDrawable       *drawable,
 						  const GimpRGB      *color);
+void            gimp_drawable_fill_by_type       (GimpDrawable       *drawable,
+						  GimpContext        *context,
+						  GimpFillType        fill_type);
 
 gboolean        gimp_drawable_mask_bounds        (GimpDrawable       *drawable,
 						  gint               *x1,
@@ -106,9 +124,11 @@ TileManager   * gimp_drawable_shadow             (GimpDrawable       *drawable);
 gint            gimp_drawable_bytes              (const GimpDrawable *drawable);
 gint            gimp_drawable_width              (const GimpDrawable *drawable);
 gint            gimp_drawable_height             (const GimpDrawable *drawable);
+
 gboolean	gimp_drawable_get_visible        (const GimpDrawable *drawable);
 void            gimp_drawable_set_visible        (GimpDrawable       *drawable,
                                                   gboolean            visible);
+
 void            gimp_drawable_offsets            (const GimpDrawable *drawable, 
 						  gint               *offset_x,
 						  gint               *offset_y);

@@ -150,11 +150,11 @@ struct _GimpImageClass
 
   void (* clean)                        (GimpImage   *gimage);
   void (* dirty)                        (GimpImage   *gimage);
-  void (* repaint)                      (GimpImage   *gimage,
-					 gint         x1,
-					 gint         y1,
-					 gint         x2,
-					 gint         y2);
+  void (* update)                       (GimpImage   *gimage,
+					 gint         x,
+					 gint         y,
+					 gint         width,
+					 gint         height);
   void (* colormap_changed)             (GimpImage   *gimage,
 					 gint         color_index);
   void (* undo_event)                   (GimpImage   *gimage,
@@ -282,8 +282,13 @@ void		gimp_image_colormap_changed  (GimpImage          *gimage,
 
 void            gimp_image_mode_changed      (GimpImage          *gimage);
 void            gimp_image_alpha_changed     (GimpImage          *gimage);
-void            gimp_image_floating_selection_changed (GimpImage *gimage);
-void            gimp_image_mask_changed          (GimpImage      *gimage);
+void   gimp_image_floating_selection_changed (GimpImage          *gimage);
+void            gimp_image_mask_changed      (GimpImage          *gimage);
+void            gimp_image_update            (GimpImage          *gimage,
+					      gint                x,
+					      gint                y,
+					      gint                width,
+					      gint                height);
 
 
 /*  layer/channel functions  */

@@ -50,7 +50,6 @@
 #include "tools/tool_manager.h"
 
 #include "app_procs.h"
-#include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
@@ -976,7 +975,7 @@ undo_pop_image (GimpImage *gimage,
 	}
     }
 
-  drawable_update (image_undo->drawable, x, y, w, h);
+  gimp_drawable_update (image_undo->drawable, x, y, w, h);
 
   return TRUE;
 }
@@ -1186,23 +1185,26 @@ undo_pop_layer_displace (GimpImage *gimage,
     {
       old_offsets[0] = GIMP_DRAWABLE (layer)->offset_x;
       old_offsets[1] = GIMP_DRAWABLE (layer)->offset_y;
-      drawable_update (GIMP_DRAWABLE (layer), 0, 0,
-		       GIMP_DRAWABLE (layer)->width,
-		       GIMP_DRAWABLE (layer)->height);
+      gimp_drawable_update (GIMP_DRAWABLE (layer),
+			    0, 0,
+			    GIMP_DRAWABLE (layer)->width,
+			    GIMP_DRAWABLE (layer)->height);
 
       GIMP_DRAWABLE (layer)->offset_x = ldu->info[1];
       GIMP_DRAWABLE (layer)->offset_y = ldu->info[2];
-      drawable_update (GIMP_DRAWABLE (layer), 0, 0,
-		       GIMP_DRAWABLE (layer)->width,
-		       GIMP_DRAWABLE (layer)->height);
+      gimp_drawable_update (GIMP_DRAWABLE (layer),
+			    0, 0,
+			    GIMP_DRAWABLE (layer)->width,
+			    GIMP_DRAWABLE (layer)->height);
       
       if (layer->mask) 
 	{
 	  GIMP_DRAWABLE (layer->mask)->offset_x = ldu->info[1];
 	  GIMP_DRAWABLE (layer->mask)->offset_y = ldu->info[2];
-	  drawable_update (GIMP_DRAWABLE (layer->mask), 0, 0,
-			   GIMP_DRAWABLE (layer->mask)->width,
-			   GIMP_DRAWABLE (layer->mask)->height);
+	  gimp_drawable_update (GIMP_DRAWABLE (layer->mask),
+				0, 0,
+				GIMP_DRAWABLE (layer->mask)->width,
+				GIMP_DRAWABLE (layer->mask)->height);
 	}
 
 
@@ -1492,9 +1494,10 @@ undo_pop_layer (GimpImage *gimage,
 	  gimp_image_floating_selection_changed (gimage);
 	}
 
-      drawable_update (GIMP_DRAWABLE (lu->layer), 0, 0,
-		       GIMP_DRAWABLE (lu->layer)->width,
-		       GIMP_DRAWABLE (lu->layer)->height);
+      gimp_drawable_update (GIMP_DRAWABLE (lu->layer),
+			    0, 0,
+			    GIMP_DRAWABLE (lu->layer)->width,
+			    GIMP_DRAWABLE (lu->layer)->height);
     }
   /*  restore layer  */
   else
@@ -1518,9 +1521,10 @@ undo_pop_layer (GimpImage *gimage,
       if (gimp_layer_is_floating_sel (lu->layer))
 	gimp_image_floating_selection_changed (gimage);
 
-      drawable_update (GIMP_DRAWABLE (lu->layer), 0, 0,
-		       GIMP_DRAWABLE (lu->layer)->width,
-		       GIMP_DRAWABLE (lu->layer)->height);
+      gimp_drawable_update (GIMP_DRAWABLE (lu->layer),
+			    0, 0,
+			    GIMP_DRAWABLE (lu->layer)->width,
+			    GIMP_DRAWABLE (lu->layer)->height);
     }
 
   return TRUE;
@@ -1643,9 +1647,10 @@ undo_pop_layer_mod (GimpImage *gimage,
   data[1] = temp;
 
   /*  Issue the second update  */
-  drawable_update (GIMP_DRAWABLE (layer), 0, 0, 
-		   GIMP_DRAWABLE (layer)->width,
-		   GIMP_DRAWABLE(layer)->height);
+  gimp_drawable_update (GIMP_DRAWABLE (layer),
+			0, 0, 
+			GIMP_DRAWABLE (layer)->width,
+			GIMP_DRAWABLE(layer)->height);
 
   return TRUE;
 }
@@ -1813,9 +1818,10 @@ undo_pop_channel (GimpImage *gimage,
       gimp_image_set_active_channel (gimage, cu->prev_channel);
 
       /*  update the area  */
-      drawable_update (GIMP_DRAWABLE (cu->channel), 0, 0, 
-		       GIMP_DRAWABLE (cu->channel)->width,
-		       GIMP_DRAWABLE (cu->channel)->height);
+      gimp_drawable_update (GIMP_DRAWABLE (cu->channel),
+			    0, 0, 
+			    GIMP_DRAWABLE (cu->channel)->width,
+			    GIMP_DRAWABLE (cu->channel)->height);
     }
   /*  restore channel  */
   else
@@ -1831,9 +1837,10 @@ undo_pop_channel (GimpImage *gimage,
       gimp_image_set_active_channel (gimage, cu->channel);
 
       /*  update the area  */
-      drawable_update (GIMP_DRAWABLE (cu->channel), 0, 0, 
-		       GIMP_DRAWABLE (cu->channel)->width,
-		       GIMP_DRAWABLE (cu->channel)->height);
+      gimp_drawable_update (GIMP_DRAWABLE (cu->channel),
+			    0, 0, 
+			    GIMP_DRAWABLE (cu->channel)->width,
+			    GIMP_DRAWABLE (cu->channel)->height);
     }
 
   return TRUE;
@@ -1912,9 +1919,10 @@ undo_pop_channel_mod (GimpImage *gimage,
   tiles = (TileManager *) data[1];
 
   /*  Issue the first update  */
-  drawable_update (GIMP_DRAWABLE (channel), 0, 0, 
-		   GIMP_DRAWABLE (channel)->width,
-		   GIMP_DRAWABLE (channel)->height);
+  gimp_drawable_update (GIMP_DRAWABLE (channel),
+			0, 0, 
+			GIMP_DRAWABLE (channel)->width,
+			GIMP_DRAWABLE (channel)->height);
 
   temp = GIMP_DRAWABLE (channel)->tiles;
   GIMP_DRAWABLE (channel)->tiles = tiles;
@@ -1928,9 +1936,10 @@ undo_pop_channel_mod (GimpImage *gimage,
   data[1] = temp;
 
   /*  Issue the second update  */
-  drawable_update (GIMP_DRAWABLE (channel), 0, 0, 
-		   GIMP_DRAWABLE (channel)->width,
-		   GIMP_DRAWABLE (channel)->height);
+  gimp_drawable_update (GIMP_DRAWABLE (channel),
+			0, 0, 
+			GIMP_DRAWABLE (channel)->width,
+			GIMP_DRAWABLE (channel)->height);
 
   return TRUE;
 }

@@ -36,7 +36,6 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimpdrawable-invert.h"
@@ -528,10 +527,10 @@ gimp_layer_add_mask (GimpLayer     *layer,
 
   gimp_layer_mask_set_layer (mask, layer);
 
-  drawable_update (GIMP_DRAWABLE (layer),
-		   0, 0,
-		   GIMP_DRAWABLE (layer)->width, 
-		   GIMP_DRAWABLE (layer)->height);
+  gimp_drawable_update (GIMP_DRAWABLE (layer),
+			0, 0,
+			GIMP_DRAWABLE (layer)->width, 
+			GIMP_DRAWABLE (layer)->height);
 
   if (push_undo)
     {
@@ -707,11 +706,11 @@ gimp_layer_apply_mask (GimpLayer     *layer,
       if (push_undo)
         {
           /*  Put this apply mask operation on the undo stack  */
-          drawable_apply_image (GIMP_DRAWABLE (layer),
-                                0, 0,
-                                GIMP_DRAWABLE (layer)->width,
-                                GIMP_DRAWABLE (layer)->height,
-                                NULL, FALSE);
+          gimp_drawable_apply_image (GIMP_DRAWABLE (layer),
+				     0, 0,
+				     GIMP_DRAWABLE (layer)->width,
+				     GIMP_DRAWABLE (layer)->height,
+				     NULL, FALSE);
         }
 
       /*  Combine the current layer's alpha channel and the mask  */
@@ -751,10 +750,10 @@ gimp_layer_apply_mask (GimpLayer     *layer,
 
       gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
-      drawable_update (GIMP_DRAWABLE (layer),
-                       0, 0,
-		       gimp_drawable_width  (GIMP_DRAWABLE (layer)),
-		       gimp_drawable_height (GIMP_DRAWABLE (layer)));
+      gimp_drawable_update (GIMP_DRAWABLE (layer),
+			    0, 0,
+			    gimp_drawable_width  (GIMP_DRAWABLE (layer)),
+			    gimp_drawable_height (GIMP_DRAWABLE (layer)));
     }
 
   gtk_signal_emit (GTK_OBJECT (layer), layer_signals[MASK_CHANGED]);
@@ -769,10 +768,10 @@ gimp_layer_translate (GimpLayer *layer,
   undo_push_layer_displace (GIMP_DRAWABLE (layer)->gimage, layer);
 
   /*  update the affected region  */
-  drawable_update (GIMP_DRAWABLE (layer),
-		   0, 0, 
-		   GIMP_DRAWABLE (layer)->width, 
-		   GIMP_DRAWABLE (layer)->height);
+  gimp_drawable_update (GIMP_DRAWABLE (layer),
+			0, 0, 
+			GIMP_DRAWABLE (layer)->width, 
+			GIMP_DRAWABLE (layer)->height);
 
   /*  invalidate the selection boundary because of a layer modification  */
   gimp_layer_invalidate_boundary (layer);
@@ -782,10 +781,10 @@ gimp_layer_translate (GimpLayer *layer,
   GIMP_DRAWABLE (layer)->offset_y += off_y;
 
   /*  update the affected region  */
-  drawable_update (GIMP_DRAWABLE (layer), 
-		   0, 0, 
-		   GIMP_DRAWABLE (layer)->width, 
-		   GIMP_DRAWABLE (layer)->height);
+  gimp_drawable_update (GIMP_DRAWABLE (layer), 
+			0, 0, 
+			GIMP_DRAWABLE (layer)->width, 
+			GIMP_DRAWABLE (layer)->height);
 
   if (layer->mask) 
     {
@@ -868,10 +867,10 @@ gimp_layer_scale_lowlevel (GimpLayer *layer,
   TileManager *new_tiles;
 
   /*  Update the old layer position  */
-  drawable_update (GIMP_DRAWABLE (layer),
-		   0, 0,
-		   GIMP_DRAWABLE (layer)->width, 
-		   GIMP_DRAWABLE (layer)->height);
+  gimp_drawable_update (GIMP_DRAWABLE (layer),
+			0, 0,
+			GIMP_DRAWABLE (layer)->width, 
+			GIMP_DRAWABLE (layer)->height);
 
   /*  Configure the pixel regions  */
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 
@@ -922,11 +921,10 @@ gimp_layer_scale_lowlevel (GimpLayer *layer,
   gimp_layer_invalidate_boundary (layer);
 
   /*  Update the new layer position  */
-
-  drawable_update (GIMP_DRAWABLE (layer),
-		   0, 0,
-		   GIMP_DRAWABLE (layer)->width, 
-		   GIMP_DRAWABLE (layer)->height);
+  gimp_drawable_update (GIMP_DRAWABLE (layer),
+			0, 0,
+			GIMP_DRAWABLE (layer)->width, 
+			GIMP_DRAWABLE (layer)->height);
 }
 
 /**
@@ -1130,10 +1128,10 @@ gimp_layer_resize (GimpLayer *layer,
     }
 
   /*  Update the old layer position  */
-  drawable_update (GIMP_DRAWABLE( layer),
-		   0, 0,
-		   GIMP_DRAWABLE (layer)->width,
-		   GIMP_DRAWABLE (layer)->height);
+  gimp_drawable_update (GIMP_DRAWABLE( layer),
+			0, 0,
+			GIMP_DRAWABLE (layer)->width,
+			GIMP_DRAWABLE (layer)->height);
 
   /*  Configure the pixel regions  */
   pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles, 
@@ -1198,10 +1196,10 @@ gimp_layer_resize (GimpLayer *layer,
   gimp_layer_invalidate_boundary (layer);
 
   /*  update the new layer area  */
-  drawable_update (GIMP_DRAWABLE (layer),
-		   0, 0,
-		   GIMP_DRAWABLE (layer)->width,
-		   GIMP_DRAWABLE (layer)->height);
+  gimp_drawable_update (GIMP_DRAWABLE (layer),
+			0, 0,
+			GIMP_DRAWABLE (layer)->width,
+			GIMP_DRAWABLE (layer)->height);
 }
 
 void
@@ -1415,6 +1413,11 @@ gimp_layer_set_opacity (GimpLayer *layer,
       layer->opacity = layer_opacity;
 
       gtk_signal_emit (GTK_OBJECT (layer), layer_signals[OPACITY_CHANGED]);
+
+      gimp_drawable_update (GIMP_DRAWABLE (layer),
+			    0, 0,
+			    GIMP_DRAWABLE (layer)->width,
+			    GIMP_DRAWABLE (layer)->height);
     }
 }
 
@@ -1439,6 +1442,11 @@ gimp_layer_set_mode (GimpLayer        *layer,
       layer->mode = mode;
 
       gtk_signal_emit (GTK_OBJECT (layer), layer_signals[MODE_CHANGED]);
+
+      gimp_drawable_update (GIMP_DRAWABLE (layer),
+			    0, 0,
+			    GIMP_DRAWABLE (layer)->width,
+			    GIMP_DRAWABLE (layer)->height);
     }
 }
 

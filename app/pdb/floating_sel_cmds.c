@@ -28,8 +28,8 @@
 #include "core/core-types.h"
 #include "procedural_db.h"
 
+#include "core/gimpdrawable.h"
 #include "core/gimplayer.h"
-#include "drawable.h"
 #include "floating_sel.h"
 
 static ProcRecord floating_sel_remove_proc;

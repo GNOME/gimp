@@ -34,6 +34,7 @@
 #include "gui/brush-select.h"
 
 #include "gimptool.h"
+#include "gimprectselecttool.h"
 #include "paint_options.h"
 #include "tool_manager.h"
 #include "tool_options.h"
@@ -285,45 +286,34 @@ tool_manager_initialize_tool (Gimp     *gimp,
 {
   GimpToolManager *tool_manager;
   GimpToolInfo    *tool_info;
+  GtkType          tool_type;
 
   tool_manager = tool_manager_get (gimp);
+
+  tool_type = GTK_OBJECT (tool)->klass->type;
 
   /*  Tools which have an init function have dialogs and
    *  cannot be initialized without a display
    */
   if (GIMP_TOOL_CLASS (GTK_OBJECT (tool)->klass)->initialize && ! gdisp)
     {
-#ifdef __GNUC__
-#warning FIXME   tool_type = RECT_SELECT;
-#endif
+      tool_info = tool_manager_get_info_by_type (gimp,
+						 GIMP_TYPE_RECT_SELECT_TOOL);
+    }
+  else
+    {
+      tool_info = gimp_context_get_tool (gimp_get_user_context (gimp));
     }
 
-  /*  Force the emission of the "tool_changed" signal
-   */
-  tool_info = gimp_context_get_tool (gimp_get_user_context (gimp));
-
-  if (GTK_OBJECT (tool)->klass->type == tool_info->tool_type)
+  if (tool_type == tool_info->tool_type)
     {
       gimp_context_tool_changed (gimp_get_user_context (gimp));
     }
   else
     {
-      GList *list;
+      tool_info = tool_manager_get_info_by_type (gimp, tool_type);
 
-      for (list = GIMP_LIST (gimp->tool_info_list)->list;
-	   list;
-	   list = g_list_next (list))
-	{
-	  tool_info = GIMP_TOOL_INFO (list->data);
-
-	  if (tool_info->tool_type == GTK_OBJECT (tool)->klass->type)
-	    {
-	      gimp_context_set_tool (gimp_get_user_context (gimp),
-				     tool_info);
-
-	      break;
-	    }
-	}
+      gimp_context_set_tool (gimp_get_user_context (gimp), tool_info);
     }
 
   gimp_tool_initialize (tool_manager->active_tool, gdisp);

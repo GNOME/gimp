@@ -44,7 +44,6 @@
 #include "resize-dialog.h"
 
 #include "app_procs.h"
-#include "drawable.h"
 #include "gdisplay.h"
 #include "floating_sel.h"
 #include "undo.h"
@@ -246,7 +245,7 @@ layers_delete_cmd_callback (GtkWidget *widget,
   else
     gimp_image_remove_layer (gimage, layer);
 
-  gdisplays_flush_now ();
+  gdisplays_flush ();
 }
 
 void
@@ -544,9 +543,9 @@ new_layer_query_ok_callback (GtkWidget *widget,
 			      layer_name, OPAQUE_OPACITY, NORMAL_MODE);
       if (layer) 
 	{
-	  drawable_fill (GIMP_DRAWABLE (layer),
-			 gimp_get_user_context (the_gimp),
-			 fill_type);
+	  gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
+				      gimp_get_user_context (gimage->gimp),
+				      fill_type);
 	  gimp_image_add_layer (gimage, layer, -1);
 	  
 	  /*  End the group undo  */

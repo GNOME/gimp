@@ -35,7 +35,6 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 
-#include "drawable.h"
 #include "floating_sel.h"
 #include "undo.h"
 
@@ -237,10 +236,10 @@ floating_sel_to_layer (GimpLayer *layer)
       msw@gimp.org
   */
 
-  drawable_update (GIMP_DRAWABLE (layer),
-		   0, 0,
-		   GIMP_DRAWABLE (layer)->width,
-		   GIMP_DRAWABLE (layer)->height);
+  gimp_drawable_update (GIMP_DRAWABLE (layer),
+			0, 0,
+			GIMP_DRAWABLE (layer)->width,
+			GIMP_DRAWABLE (layer)->height);
   
   /* This may be undesirable when invoked non-interactively... we'll see. */
   /*reinit_layer_idlerender (gimage, layer);*/

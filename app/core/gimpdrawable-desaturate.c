@@ -26,7 +26,6 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "drawable.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-desaturate.h"
 #include "gimpimage.h"
@@ -95,5 +94,5 @@ gimp_drawable_desaturate (GimpDrawable *drawable)
 
   gimp_drawable_merge_shadow (drawable, TRUE);
 
-  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 }

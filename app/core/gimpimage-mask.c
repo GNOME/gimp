@@ -38,7 +38,6 @@
 #include "gimplayer.h"
 #include "gimplayermask.h"
 
-#include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "undo.h"
@@ -154,13 +153,13 @@ gimage_mask_invalidate (GimpImage *gimage)
   layer = gimp_image_get_active_layer (gimage);
 
   if (layer && gimp_layer_is_floating_sel (layer))
-    drawable_update (GIMP_DRAWABLE (layer),
-		     0, 0,
-		     GIMP_DRAWABLE (layer)->width,
-		     GIMP_DRAWABLE (layer)->height);
+    gimp_drawable_update (GIMP_DRAWABLE (layer),
+			  0, 0,
+			  GIMP_DRAWABLE (layer)->width,
+			  GIMP_DRAWABLE (layer)->height);
 
   /* Issue the MASK_CHANGED signal here */
-  gimp_image_mask_changed(gimage);
+  gimp_image_mask_changed (gimage);
 }
 
 
@@ -271,7 +270,7 @@ gimage_mask_extract (GimpImage    *gimage,
    *  push an undo
    */
   if (cut_gimage && non_empty)
-    drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
+    gimp_drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
 
   gimp_drawable_offsets (drawable, &off_x, &off_y);
 

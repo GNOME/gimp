@@ -32,9 +32,9 @@
 #include "procedural_db.h"
 
 #include "appenv.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
-#include "drawable.h"
 #include "tools/gimptexttool.h"
 
 #include "libgimpbase/gimpbase.h"

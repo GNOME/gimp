@@ -44,7 +44,6 @@
 #include "gimplist.h"
 
 #include "app_procs.h"
-#include "drawable.h"
 #include "floating_sel.h"
 #include "undo.h"
 
@@ -315,9 +314,9 @@ gimp_edit_clear (GimpImage    *gimage,
 			  ERASE_MODE, NULL, x1, y1);
 
   /*  update the image  */
-  drawable_update (drawable,
-		   x1, y1,
-		   (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable,
+			x1, y1,
+			(x2 - x1), (y2 - y1));
 
   /*  free the temporary tiles  */
   tile_manager_destroy (buf_tiles);
@@ -391,9 +390,9 @@ gimp_edit_fill (GimpImage    *gimage,
 			  NORMAL_MODE, NULL, x1, y1);
 
   /*  update the image  */
-  drawable_update (drawable,
-		   x1, y1,
-		   (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable,
+			x1, y1,
+			(x2 - x1), (y2 - y1));
 
   /*  free the temporary tiles  */
   tile_manager_destroy (buf_tiles);

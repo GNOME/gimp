@@ -40,7 +40,6 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
-#include "drawable.h"
 #include "pdb_glue.h"
 
 static ProcRecord drawable_merge_shadow_proc;
@@ -162,7 +161,7 @@ drawable_fill_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    drawable_fill (drawable, gimp_get_current_context (gimp), (GimpFillType) fill_type);
+    gimp_drawable_fill_by_type (drawable, gimp_get_current_context (gimp), (GimpFillType) fill_type);
 
   return procedural_db_return_args (&drawable_fill_proc, success);
 }
@@ -221,7 +220,7 @@ drawable_update_invoker (Gimp     *gimp,
   height = args[4].value.pdb_int;
 
   if (success)
-    drawable_update (drawable, x, y, width, height);
+    gimp_drawable_update (drawable, x, y, width, height);
 
   return procedural_db_return_args (&drawable_update_proc, success);
 }

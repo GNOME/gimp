@@ -31,7 +31,6 @@
 #include "appenums.h"
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
-#include "drawable.h"
 #include "pdb_glue.h"
 
 #include "libgimpcolor/gimpcolor.h"

@@ -44,7 +44,6 @@
 #include "gimplist.h"
 
 #include "app_procs.h"
-#include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "parasitelist.h"

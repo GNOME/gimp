@@ -40,7 +40,6 @@
 #include "gimpimagepreview.h"
 #include "gimplistitem.h"
 
-#include "drawable.h"
 #include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"

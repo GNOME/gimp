@@ -63,7 +63,6 @@
 #include "selection_options.h"
 #include "tool_manager.h"
 
-#include "drawable.h"
 #include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"

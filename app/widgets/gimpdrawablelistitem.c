@@ -36,8 +36,6 @@
 
 #include "gdisplay.h"
 
-#include "drawable.h"
-
 #include "pixmaps/eye.xpm"
 
 
@@ -305,10 +303,6 @@ gimp_drawable_list_item_eye_toggled (GtkWidget *widget,
       gtk_signal_handler_unblock_by_func (GTK_OBJECT (drawable),
                                           gimp_drawable_list_item_visibility_changed,
                                           list_item);
-
-      drawable_update (drawable, 0, 0,
-                       drawable->width,
-                       drawable->height);
 
       gdisplays_flush ();
     }

@@ -92,7 +92,7 @@ static void   gui_image_size_changed              (GimpImage   *gimage,
 						   gpointer     data);
 static void   gui_image_alpha_changed             (GimpImage   *gimage,
 						   gpointer     data);
-static void   gui_image_repaint                   (GimpImage   *gimage,
+static void   gui_image_update                    (GimpImage   *gimage,
 						   gint         x,
 						   gint         y,
 						   gint         w,
@@ -112,7 +112,7 @@ static GQuark image_colormap_changed_handler_id = 0;
 static GQuark image_name_changed_handler_id     = 0;
 static GQuark image_size_changed_handler_id     = 0;
 static GQuark image_alpha_changed_handler_id    = 0;
-static GQuark image_repaint_handler_id          = 0;
+static GQuark image_update_handler_id           = 0;
 
 
 /*  public functions  */
@@ -147,9 +147,9 @@ gui_init (Gimp *gimp)
 				GTK_SIGNAL_FUNC (gui_image_alpha_changed),
 				gimp);
 
-  image_repaint_handler_id =
-    gimp_container_add_handler (gimp->images, "repaint",
-				GTK_SIGNAL_FUNC (gui_image_repaint),
+  image_update_handler_id =
+    gimp_container_add_handler (gimp->images, "update",
+				GTK_SIGNAL_FUNC (gui_image_update),
 				gimp);
 
   gtk_signal_connect (GTK_OBJECT (gimp_get_user_context (gimp)),
@@ -267,14 +267,14 @@ gui_exit (Gimp *gimp)
   gimp_container_remove_handler (gimp->images, image_name_changed_handler_id);
   gimp_container_remove_handler (gimp->images, image_size_changed_handler_id);
   gimp_container_remove_handler (gimp->images, image_alpha_changed_handler_id);
-  gimp_container_remove_handler (gimp->images, image_repaint_handler_id);
+  gimp_container_remove_handler (gimp->images, image_update_handler_id);
 
   image_destroy_handler_id          = 0;
   image_colormap_changed_handler_id = 0;
   image_name_changed_handler_id     = 0;
   image_size_changed_handler_id     = 0;
   image_alpha_changed_handler_id    = 0;
-  image_repaint_handler_id          = 0;
+  image_update_handler_id           = 0;
 }
 
 void
@@ -498,12 +498,12 @@ gui_image_alpha_changed (GimpImage *gimage,
 }
 
 static void
-gui_image_repaint (GimpImage *gimage,
-		   gint       x,
-		   gint       y,
-		   gint       w,
-		   gint       h,
-		   gpointer   data)
+gui_image_update (GimpImage *gimage,
+		  gint       x,
+		  gint       y,
+		  gint       w,
+		  gint       h,
+		  gpointer   data)
 {
   Gimp *gimp;
 

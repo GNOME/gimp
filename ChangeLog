@@ -1,3 +1,73 @@
+2001-07-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/drawable.[ch]: removed.
+
+	* app/core/gimpdrawable.[ch]: added the functions here. Made an
+	end to the myth that FG/BG and the undo system (!!!) are not
+	really part of the core.
+
+	* app/disp_callbacks.c
+	* app/floating_sel.c
+	* app/image_map.c
+	* app/qmask.c
+	* app/undo.c
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-desaturate.c
+	* app/core/gimpdrawable-equalize.c
+	* app/core/gimpdrawable-invert.c
+	* app/core/gimpdrawable-offset.c
+	* app/core/gimpedit.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-new.c
+	* app/core/gimpimage.[ch]
+	* app/core/gimplayer.c
+	* app/core/gimplayermask.c
+	* app/gui/channels-commands.c
+	* app/gui/gui.c
+	* app/gui/layers-commands.c
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/tool_manager.c
+	* app/widgets/gimpchannellistitem.c
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpdrawablelistitem.c
+	* app/widgets/gimplayerlistitem.c
+	* app/widgets/gimplayerlistview.c
+	* app/pdb/channel_cmds.c
+	* app/pdb/color_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/edit_cmds.c
+	* app/pdb/floating_sel_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/parasite_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/pdb/text_tool_cmds.c
+	* app/pdb/tools_cmds.c
+	* tools/pdbgen/pdb.pl
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/drawable.pdb: changed accordingly. Misc small
+	fixes and cleanups.
+
 2001-07-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

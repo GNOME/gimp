@@ -128,7 +128,7 @@ HELP
 	  desc => 'The type of fill: %%desc%%' }
     );
 
-    %invoke = ( code => 'drawable_fill (drawable, gimp_get_current_context (gimp), (GimpFillType) fill_type);' );
+    %invoke = ( code => 'gimp_drawable_fill_by_type (drawable, gimp_get_current_context (gimp), (GimpFillType) fill_type);' );
 }
 
 sub drawable_update {
@@ -155,7 +155,7 @@ HELP
 	  desc => 'Height of update region' }
     );
 
-    %invoke = ( code => 'drawable_update (drawable, x, y, width, height);' );
+    %invoke = ( code => 'gimp_drawable_update (drawable, x, y, width, height);' );
 }
 
 sub drawable_mask_bounds {
@@ -537,7 +537,7 @@ CODE
 }
 
 @headers = qw("core/gimp.h" "core/gimplayermask.h" "core/gimpchannel.h"
-              "core/gimpdrawable.h" "drawable.h"
+              "core/gimpdrawable.h"
 	      "pdb_glue.h" "base/tile.h" "base/tile-manager.h"
               "base/temp-buf.h");
 

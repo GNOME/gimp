@@ -29,16 +29,15 @@
 #include "core/gimpimage.h"
 
 #include "gui/info-dialog.h"
-#include "gdisplay.h"
-
-#include "drawable.h"
-#include "gimpprogress.h"
-#include "undo.h"
 
 #include "gimpscaletool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 #include "transform_options.h"
+
+#include "gdisplay.h"
+#include "gimpprogress.h"
+#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 

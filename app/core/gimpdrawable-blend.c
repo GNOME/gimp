@@ -47,7 +47,6 @@
 
 #include "appenv.h"
 #include "app_procs.h"
-#include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
 #include "gimpprogress.h"
@@ -954,7 +953,7 @@ blend (GimpImage        *gimage,
 			  (opacity * 255) / 100, paint_mode, NULL, x1, y1);
 
   /*  update the image  */
-  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 
   /*  free the temporary buffer  */
   tile_manager_destroy (buf_tiles);

@@ -31,7 +31,6 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "drawable.h"
 #include "gdisplay.h"
 #include "image_map.h"
 
@@ -93,7 +92,9 @@ image_map_do (gpointer data)
   /*  display the results  */
   if (image_map->gdisp)
     {
-      drawable_update ( (image_map->drawable), x, y, w, h);
+      gimp_drawable_update (image_map->drawable,
+			    x, y,
+			    w, h);
       gdisplay_flush_now (image_map->gdisp);
     }
 
@@ -270,8 +271,9 @@ image_map_commit (ImageMap *image_map)
       tile_manager_get_offsets (image_map->undo_tiles, &x1, &y1);
       x2 = x1 + tile_manager_width (image_map->undo_tiles);
       y2 = y1 + tile_manager_height (image_map->undo_tiles);
-      drawable_apply_image (image_map->drawable,
-			    x1, y1, x2, y2, image_map->undo_tiles, FALSE);
+
+      gimp_drawable_apply_image (image_map->drawable,
+				 x1, y1, x2, y2, image_map->undo_tiles, FALSE);
     }
 
   gdisplay_set_menu_sensitivity (image_map->gdisp);
@@ -331,7 +333,9 @@ image_map_clear (ImageMap *image_map)
       copy_region (&srcPR, &destPR);
 
       /*  Update the area  */
-      drawable_update (image_map->drawable, offset_x, offset_y, width, height);
+      gimp_drawable_update (image_map->drawable,
+			    offset_x, offset_y,
+			    width, height);
 
       /*  Free the undo_tiles tile manager  */
       tile_manager_destroy (image_map->undo_tiles);

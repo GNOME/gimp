@@ -58,7 +58,6 @@
 #include "devices.h"
 #include "dialog_handler.h"
 #include "disp_callbacks.h"
-#include "drawable.h"
 #include "gdisplay.h"
 #include "gimprc.h"
 #include "scale.h"
@@ -1017,9 +1016,9 @@ gdisplay_bucket_fill (GtkWidget      *widget,
   tile_manager_destroy (buf_tiles);
 
   /*  Update the displays  */
-  drawable_update (drawable,
-		   x1, y1,
-		   (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable,
+			x1, y1,
+			(x2 - x1), (y2 - y1));
   gdisplays_flush ();
 
   if (new_buf)

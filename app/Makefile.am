@@ -81,8 +81,6 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 ##
 	datafiles.c		\
 	datafiles.h		\
-	drawable.c		\
-	drawable.h		\
 	floating_sel.c		\
 	floating_sel.h		\
 	gimpparasite.c		\

@@ -33,7 +33,6 @@
 #include "gimpchannellistitem.h"
 #include "gimppreview.h"
 
-#include "drawable.h"
 #include "gdisplay.h"
 
 

@@ -48,7 +48,6 @@
 #include "tool_manager.h"
 
 #include "app_procs.h"
-#include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
 #include "undo.h"

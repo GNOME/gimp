@@ -35,8 +35,6 @@
 #include "gimpimage-new.h"
 #include "gimplayer.h"
 
-#include "drawable.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -271,9 +269,9 @@ gimp_image_new_create_image (Gimp               *gimp,
       gimp_image_add_layer (gimage, layer, 0);
       gimp_image_undo_enable (gimage);
 
-      drawable_fill (GIMP_DRAWABLE (layer),
-		     gimp_get_current_context (gimp),
-		     values->fill_type);
+      gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
+				  gimp_get_current_context (gimp),
+				  values->fill_type);
 
       gimp_image_clean_all (gimage);
 

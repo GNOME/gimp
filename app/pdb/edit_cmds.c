@@ -30,10 +30,10 @@
 
 #include "core/core-types.h"
 #include "core/gimp.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpedit.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
-#include "drawable.h"
 
 static ProcRecord edit_cut_proc;
 static ProcRecord edit_copy_proc;
