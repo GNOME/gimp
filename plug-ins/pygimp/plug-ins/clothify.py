@@ -33,7 +33,7 @@ def python_clothify(timg, tdrawable, bx=9, by=9,
 			       100, NORMAL_MODE)
 	img.disable_undo()
 	if have_gimp11:
-		pdb.gimp_edit_fill(layer_one)
+		pdb.gimp_edit_fill(layer_one, BG_IMAGE_FILL)
 	else:
 		pdb.gimp_edit_fill(img, layer_one)
 	img.add_layer(layer_one, 0)

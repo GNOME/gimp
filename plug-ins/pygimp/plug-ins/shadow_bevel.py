@@ -7,7 +7,7 @@ have_gimp11 = gimp.major_version > 1 or gimp.major_version == 1 and \
 
 def shadow_bevel(img, drawable, blur, bevel, do_shadow, drop_x, drop_y):
 	# disable undo for the image
-	img.disable_undo()
+	pdb.gimp_undo_push_group_start(img)
 
 	# copy the layer
 	shadow = drawable.copy(TRUE)
@@ -43,7 +43,7 @@ def shadow_bevel(img, drawable, blur, bevel, do_shadow, drop_x, drop_y):
 		gimp.delete(shadow)
 
 	# enable undo again
-	img.enable_undo()
+	pdb.gimp_undo_push_group_end(img)
 
 register(
 	"shadow_bevel",

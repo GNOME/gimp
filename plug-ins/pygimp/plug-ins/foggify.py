@@ -7,14 +7,14 @@ have_gimp11 = gimp.major_version > 1 or \
 	      gimp.major_version == 1 and gimp.minor_version >= 1
 
 def python_foggify(img, layer, name, colour, turbulence, opacity):
-	img.disable_undo()
+	pdb.gimp_undo_push_group_start(img)
 
 	fog = gimp.layer(img, name, layer.width, layer.height, RGBA_IMAGE,
 			 opacity, NORMAL_MODE)
 	oldbg = gimp.get_background()
 	gimp.set_background(colour)
 	if have_gimp11:
-		pdb.gimp_edit_fill(fog)
+		pdb.gimp_edit_fill(fog, BG_IMAGE_FILL)
 	else:
 		pdb.gimp_edit_fill(img, fog)
 	gimp.set_background(oldbg)
@@ -31,7 +31,7 @@ def python_foggify(img, layer, name, colour, turbulence, opacity):
 	# apply the clouds to the layer
 	img.remove_layer_mask(fog, APPLY)
 
-	img.enable_undo()
+	pdb.gimp_undo_push_group_end(img)
 
 register(
        	"python_fu_foggify",

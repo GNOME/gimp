@@ -44,7 +44,7 @@ def python_sphere(radius, light, shadow, bg_colour, sphere_colour):
 	gimp.set_foreground(sphere_colour)
 	gimp.set_background(bg_colour)
 	if have_gimp11:
-		pdb.gimp_edit_fill(drawable)
+		pdb.gimp_edit_fill(drawable, BG_IMAGE_FILL)
 	else:
 		pdb.gimp_edit_fill(img, drawable)
 	gimp.set_background(20, 20, 20)
