@@ -177,13 +177,14 @@ gimp_data_save (GimpData  *data,
 
   g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-  g_return_val_if_fail (data->filename != NULL, FALSE);
 
   if (data->internal)
     {
       data->dirty = FALSE;
       return TRUE;
     }
+
+  g_return_val_if_fail (data->filename != NULL, FALSE);
 
   if (GIMP_DATA_GET_CLASS (data)->save)
     success = GIMP_DATA_GET_CLASS (data)->save (data, error);

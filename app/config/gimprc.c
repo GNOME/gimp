@@ -50,6 +50,7 @@
 
 enum {
   PROP_0,
+  PROP_VERBOSE,
   PROP_SYSTEM_GIMPRC,
   PROP_USER_GIMPRC
 };
@@ -139,14 +140,22 @@ gimp_rc_class_init (GimpRcClass *klass)
   object_class->set_property = gimp_rc_set_property;
   object_class->get_property = gimp_rc_get_property;
 
+  g_object_class_install_property (object_class, PROP_VERBOSE,
+				   g_param_spec_boolean ("verbose",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READWRITE |
+							 G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_SYSTEM_GIMPRC,
 				   g_param_spec_string ("system-gimprc",
-                                                        NULL, NULL, NULL,
+                                                        NULL, NULL,
+							NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_USER_GIMPRC,
 				   g_param_spec_string ("user-gimprc",
-                                                        NULL, NULL, NULL,
+                                                        NULL, NULL,
+							NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
@@ -154,11 +163,8 @@ gimp_rc_class_init (GimpRcClass *klass)
 static void
 gimp_rc_init (GimpRc *rc)
 {
-  rc->system_gimprc = NULL;
-  rc->user_gimprc   = NULL;
-  rc->verbose       = FALSE;
-  rc->autosave      = FALSE;
-  rc->save_idle_id  = 0;
+  rc->autosave     = FALSE;
+  rc->save_idle_id = 0;
 }
 
 static void
@@ -204,10 +210,16 @@ gimp_rc_set_property (GObject      *object,
     case PROP_USER_GIMPRC:
       filename = g_value_get_string (value);
       break;
+   default:
+      break;
     }
 
   switch (property_id)
     {
+    case PROP_VERBOSE:
+      rc->verbose = g_value_get_boolean (value);
+      break;
+
     case PROP_SYSTEM_GIMPRC:
       g_free (rc->system_gimprc);
       
@@ -242,6 +254,9 @@ gimp_rc_get_property (GObject    *object,
   
   switch (property_id)
     {
+    case PROP_VERBOSE:
+      g_value_set_boolean (value, rc->verbose);
+      break;
     case PROP_SYSTEM_GIMPRC:
       g_value_set_string (value, rc->system_gimprc);
       break;

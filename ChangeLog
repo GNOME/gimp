@@ -1,5 +1,13 @@
 2002-12-02  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdata.c (gimp_data_save): don't check filename for
+	internal GimpData objects because they are never saved.
+
+	* app/config/gimprc.c: made verbose an object property so that its
+	value is copied by gimp_config_duplicate().
+
+2002-12-02  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-blurbs.h
 	* app/config/gimpconfig-dump.c: minor changes.
 
