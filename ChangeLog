@@ -1,3 +1,8 @@
+2003-05-27  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/vectors-commands.c (vectors_selection_to_vectors): don't
+	mark a string for translation which should never be used.
+
 2003-05-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpfreeselecttool.[ch]

@@ -353,7 +353,7 @@ vectors_selection_to_vectors (GimpImage *gimage,
 
   if (! proc_rec)
     {
-      g_message (_("Selection to path procedure lookup failed."));
+      g_message ("Selection to path procedure lookup failed.");
       return;
     }
 
