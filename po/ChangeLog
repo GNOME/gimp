@@ -1,3 +1,8 @@
+2002-04-13  Zbigniew Chyla  <cyba@gnome.pl>
+
+	* pl.po: Updated Polish translation by
+	GNOME PL Team <translators@gnome.pl>.
+
 2002-04-12  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: removed app/gradient.c again. This file has been

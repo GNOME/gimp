@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-04-12 13:40+0200\n"
-"PO-Revision-Date: 2002-04-12 13:45+0200\n"
+"POT-Creation-Date: 2002-04-13 00:18+0200\n"
+"PO-Revision-Date: 2002-04-13 12:04+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -96,375 +96,6 @@ msgstr "Nie można otworzyć ponownie %s\n"
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "Nie można zapisać do %s: %s"
-
-#: app/base/base-enums.c:1 app/core/core-enums.c:1 app/gradient.c:1
-msgid "Linear"
-msgstr "Liniowa"
-
-#: app/gradient.c:1
-msgid "Curved"
-msgstr "Wykrzywiony"
-
-#: app/gradient.c:1
-msgid "Sinusoidal"
-msgstr "Sinusoidalny"
-
-#: app/gradient.c:1
-msgid "Spherical (increasing)"
-msgstr "Sferyczny (wzrastający)"
-
-#: app/gradient.c:1
-msgid "Spherical (decreasing)"
-msgstr "Sferyczny (opadający)"
-
-#: app/gradient.c:1
-msgid "Plain RGB"
-msgstr "Zwykły RGB"
-
-#: app/gradient.c:1
-msgid "HSV (counter-clockwise hue)"
-msgstr "HSV (odcień zgodnie ze wskazówkami zegara)"
-
-#: app/gradient.c:1
-msgid "HSV (clockwise hue)"
-msgstr "HSV (odcień przeciwnie do wskazówek zegara)"
-
-#: app/gradient.c:1 app/gui/dialogs-constructors.c:1
-msgid "Gradient Editor"
-msgstr "Edytor gradientów"
-
-# 1. app/gui/module-browser.c - "Odśwież"
-# 2. app/widgets/gimpdatafactoryview.c - "Odświeża"
-#: app/gradient.c:1 app/gui/module-browser.c:1
-#: app/widgets/gimpdatafactoryview.c:1
-msgid "Refresh"
-msgstr "Odśwież"
-
-#: app/gradient.c:1
-msgid "Close"
-msgstr "Zamknij"
-
-#: app/gradient.c:1 app/gui/palette-import-dialog.c:1
-msgid "Gradient"
-msgstr "Gradient"
-
-#: app/gradient.c:1
-msgid "Name"
-msgstr "Nazwa"
-
-#. Frame & vbox for gradient functions
-#: app/gradient.c:1
-msgid "Gradient Ops"
-msgstr "Operacje na gradiencie"
-
-#. Buttons for gradient functions
-#: app/gradient.c:1
-msgid "New Gradient"
-msgstr "Nowy gradient"
-
-#: app/gradient.c:1
-msgid "Copy Gradient"
-msgstr "Skopiuj gradient"
-
-#: app/gradient.c:1 app/gradient.c:1
-msgid "Delete Gradient"
-msgstr "Usuń gradient"
-
-#: app/gradient.c:1
-msgid "Rename Gradient"
-msgstr "Zmień nazwę gradientu"
-
-#: app/gradient.c:1 app/gradient.c:1
-msgid "Save as POV-Ray"
-msgstr "Zapisz w formacie POV-Ray"
-
-#. Zoom all button
-#: app/gradient.c:1
-msgid "Zoom all"
-msgstr "Całość"
-
-#: app/gradient.c:1 app/widgets/gimpgradienteditor.c:1
-msgid "Instant update"
-msgstr "Stałe odświeżanie"
-
-#: app/gradient.c:1 app/gradient.c:1
-msgid "Default"
-msgstr "Domyślny"
-
-#: app/gradient.c:1
-msgid "New gradient"
-msgstr "Nowy gradient"
-
-#: app/gradient.c:1
-msgid "Enter a name for the new gradient"
-msgstr "Wprowadź nazwę nowego gradientu"
-
-#: app/gradient.c:1
-msgid "untitled"
-msgstr "bez_nazwy"
-
-#: app/core/gimpdrawable.c:1 app/gradient.c:1
-#: app/widgets/gimpdatafactoryview.c:1
-#, c-format
-msgid "%s copy"
-msgstr "kopia %s"
-
-#: app/gradient.c:1
-msgid "Copy gradient"
-msgstr "Kopiowanie gradientu"
-
-#: app/gradient.c:1
-msgid "Enter a name for the copied gradient"
-msgstr "Wprowadź nazwę kopiowanego gradientu"
-
-#: app/gradient.c:1
-msgid "Rename gradient"
-msgstr "Zmiana nazwy gradientu"
-
-#: app/gradient.c:1
-msgid "Enter a new name for the gradient"
-msgstr "Wprowadź nową nazwę gradientu"
-
-#: app/gradient.c:1 app/widgets/gimpdatafactoryview.c:1
-#, c-format
-msgid ""
-"Are you sure you want to delete\n"
-"\"%s\" from the list and from disk?"
-msgstr ""
-"Czy na pewno chcesz usunąć\n"
-"\"%s\" z listy i z dysku?"
-
-#: app/gradient.c:1 app/widgets/gimpbufferview.c:1
-#: app/widgets/gimpdatafactoryview.c:1 app/widgets/gimpitemlistview.c:1
-msgid "Delete"
-msgstr "Usuń"
-
-#: app/display/gimpstatusbar.c:1 app/gradient.c:1 app/gradient.c:1
-#: app/gradient.c:1
-msgid "Cancel"
-msgstr "Anuluj"
-
-#: app/gradient.c:1
-#, c-format
-msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
-msgstr "Powiększenie: %d:1  Wyświetlanie [%0.6f, %0.6f]"
-
-#: app/gradient.c:1
-#, c-format
-msgid ""
-"Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
-"Opacity: %0.3f"
-msgstr ""
-"Położenie: %0.6f   RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
-"Nieprzepuszczalność: %0.3f"
-
-#: app/gradient.c:1
-#, c-format
-msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-msgstr "Kolor ustawiony na RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-
-#: app/gradient.c:1
-#, c-format
-msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-msgstr "Kolor tła ustawiony na RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-
-#: app/gradient.c:1
-msgid "Drag: move    Shift+drag: move & compress"
-msgstr "Ciągnięcie: przenosi  Shift+ciągnięcie: przenosi ze ścieśnieniem"
-
-#: app/gradient.c:1 app/gradient.c:1
-msgid "Click: select    Shift+click: extend selection"
-msgstr "Kliknięcie: zaznacza  Shift+kliknięcie: poszerza zaznaczenie"
-
-#: app/gradient.c:1
-msgid "Click: select    Shift+click: extend selection    Drag: move"
-msgstr ""
-"Kliknięcie: zaznacza  Shift+kliknięcie: poszerza zaznaczenie  Ciągnięcie: "
-"przenosi"
-
-#: app/gradient.c:1
-msgid ""
-"Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
-"move & compress"
-msgstr ""
-"Kliknięcie: zaznacza  Shift+kliknięcie: poszerza zaznaczenie  Ciągnięcie: "
-"przenosi Shift+ciągnięcie: przenosi ze ścieśnieniem"
-
-#: app/gradient.c:1 app/gradient.c:1
-#: app/widgets/gimpgradienteditor.c:1 app/widgets/gimpgradienteditor.c:1
-#, c-format
-msgid "Handle position: %0.6f"
-msgstr "Pozycja uchwytu: %0.6f"
-
-#: app/gradient.c:1 app/widgets/gimpgradienteditor.c:1
-#, c-format
-msgid "Distance: %0.6f"
-msgstr "Odległość: %0.6f"
-
-#: app/gradient.c:1 app/gradient.c:1
-msgid "Left endpoint's color"
-msgstr "Kolor lewego punktu końcowego"
-
-#: app/gradient.c:1 app/gradient.c:1
-msgid "Load from"
-msgstr "Wczytaj z"
-
-#: app/gradient.c:1
-msgid "Left neighbor's right endpoint"
-msgstr "Kolor prawego punktu końcowego lewego sąsiada"
-
-#: app/gradient.c:1
-msgid "Right endpoint"
-msgstr "Prawy punkt końcowy"
-
-#: app/gradient.c:1 app/gradient.c:1
-msgid "Save to"
-msgstr "Zapisz do"
-
-#: app/gradient.c:1 app/gradient.c:1
-msgid "Right endpoint's color"
-msgstr "Kolor prawego punktu końcowego"
-
-#: app/gradient.c:1
-msgid "Right neighbor's left endpoint"
-msgstr "Kolor lewego punktu końcowego prawego sąsiada"
-
-#: app/gradient.c:1
-msgid "Left endpoint"
-msgstr "Lewy punkt końcowy"
-
-#: app/gradient.c:1
-msgid "Selection operations"
-msgstr "Operacje na zaznaczeniu"
-
-#: app/gradient.c:1
-msgid "Blending function for segment"
-msgstr "Typ funkcji gradientu dla segmentu"
-
-#: app/gradient.c:1
-msgid "Coloring type for segment"
-msgstr "Typ kolorowania segmentu"
-
-#: app/gradient.c:1
-msgid "Split segment at midpoint"
-msgstr "Podziel segment w punkcie podziału"
-
-#: app/gradient.c:1 app/gradient.c:1
-msgid "Split segment uniformly"
-msgstr "Podziel segment równomiernie"
-
-#: app/gradient.c:1
-msgid "Delete segment"
-msgstr "Usuń segment"
-
-#: app/gradient.c:1
-msgid "Re-center segment's midpoint"
-msgstr "Wycentruj punkt podziału segmentu"
-
-#: app/gradient.c:1
-msgid "Re-distribute handles in segment"
-msgstr "Rozłóż uchwyty w segmencie"
-
-#: app/gradient.c:1
-msgid "Flip segment"
-msgstr "Odbij segment"
-
-#: app/gradient.c:1 app/gradient.c:1
-#: app/gui/gradient-editor-commands.c:1
-msgid "Replicate segment"
-msgstr "Replikacja segmentu"
-
-#: app/gradient.c:1
-msgid "Blending function for selection"
-msgstr "Typ funkcji gradientu dla zaznaczenia"
-
-#: app/gradient.c:1
-msgid "Coloring type for selection"
-msgstr "Typ kolorowania zaznaczenia"
-
-#: app/gradient.c:1
-msgid "Split segments at midpoints"
-msgstr "Podziel segmenty w punktach podziału"
-
-#: app/gradient.c:1 app/gradient.c:1
-msgid "Split segments uniformly"
-msgstr "Podziel segmenty równomiernie"
-
-#: app/gradient.c:1
-msgid "Delete selection"
-msgstr "Usuń zaznaczenie"
-
-#: app/gradient.c:1
-msgid "Re-center midpoints in selection"
-msgstr "Wycentruj punkty podziału w zaznaczeniu"
-
-#: app/gradient.c:1
-msgid "Re-distribute handles in selection"
-msgstr "Rozłóż uchwyty w zaznaczeniu"
-
-#: app/gradient.c:1
-msgid "Flip selection"
-msgstr "Odbij zaznaczenie"
-
-#: app/gradient.c:1 app/gradient.c:1
-#: app/gui/gradient-editor-commands.c:1
-msgid "Replicate selection"
-msgstr "Replikacja zaznaczenia"
-
-#: app/gradient.c:1
-msgid "FG color"
-msgstr "Aktualny kolor"
-
-#: app/gradient.c:1 app/widgets/gimpitemfactory.c:1
-#, c-format
-msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
-msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
-
-#: app/gradient.c:1 app/gradient.c:1
-msgid "(Varies)"
-msgstr "(Zmienny)"
-
-#: app/gradient.c:1 app/gui/gradient-editor-commands.c:1
-msgid "Split"
-msgstr "Podziel"
-
-#. Instructions
-#: app/gradient.c:1 app/gui/gradient-editor-commands.c:1
-msgid "Please select the number of uniform parts"
-msgstr "Określ liczbę jednakowych części"
-
-#: app/gradient.c:1
-msgid "in which you want to split the selected segment"
-msgstr "na jaką ma zostać podzielony zaznaczony segment"
-
-#: app/gradient.c:1
-msgid "in which you want to split the segments in the selection"
-msgstr "na jaką mają zostać podzielone segmenty w zaznaczeniu"
-
-#: app/gradient.c:1
-msgid "Blend endpoints' colors"
-msgstr "Kolory punktów końcowych"
-
-#: app/gradient.c:1
-msgid "Blend endpoints' opacity"
-msgstr "Nieprzepuszczalność punktów końcowych"
-
-#: app/gradient.c:1 app/gui/gradient-editor-commands.c:1
-msgid "Replicate"
-msgstr "Zreplikuj"
-
-#. Instructions
-#: app/gradient.c:1
-msgid "Please select the number of times"
-msgstr "Określ, jak wiele razy"
-
-#: app/gradient.c:1
-msgid "you want to replicate the selected segment"
-msgstr "ma zostać zreplikowany zaznaczony segment"
-
-#: app/gradient.c:1
-msgid "you want to replicate the selection"
-msgstr "ma zostać zreplikowane zaznaczenie"
 
 #.
 #. *  anything else starting with a '-' is an error.
@@ -671,8 +302,8 @@ msgid "Anchor Floating Selection"
 msgstr "Zakotwiczenie oderwanego zaznaczenia"
 
 # FIXME
-# app/undo.c: "Wklejenie"
-# app/widgets/gimpbufferview.c: "Wkleja" (?)
+# 1. app/undo.c: "Wklejenie"
+# 2. app/widgets/gimpbufferview.c: "Wkleja" (?)
 #: app/undo.c:1 app/widgets/gimpbufferview.c:1
 msgid "Paste"
 msgstr "Wklej"
@@ -762,7 +393,7 @@ msgstr "Przeszeregowanie warstw"
 
 #: app/undo.c:1
 msgid "Layer Move"
-msgstr "Przeniesienie warstwy"
+msgstr "Przesunięcie warstwy"
 
 #: app/gui/channels-commands.c:1 app/undo.c:1
 msgid "New Channel"
@@ -833,6 +464,10 @@ msgstr "Ponów"
 #: app/base/base-enums.c:1
 msgid "None (Fastest)"
 msgstr "Brak (najszybsza)"
+
+#: app/base/base-enums.c:1 app/core/core-enums.c:1
+msgid "Linear"
+msgstr "Liniowa"
 
 #: app/base/base-enums.c:1
 msgid "Cubic (Best)"
@@ -1174,6 +809,8 @@ msgid ""
 "Fatal parsing error:\n"
 "Brush pipe file '%s' is corrupt."
 msgstr ""
+"Poważny błąd przy analizie składniowej:\n"
+"Plik \"%s\" z potokiem pędzli jest uszkodzony."
 
 #: app/core/gimpdatafactory.c:1
 #, c-format
@@ -1182,6 +819,9 @@ msgid ""
 "file '%s'\n"
 "with unknown extension."
 msgstr ""
+"Próba użycia starej ładowarki\n"
+"na pliku \"%s\"\n"
+"z nieznanym rozszerzeniem."
 
 #: app/core/gimpdatafactory.c:1
 #, c-format
@@ -1196,6 +836,11 @@ msgstr ""
 #: app/widgets/gimpdatafactoryview.c:1 app/widgets/gimpdatafactoryview.c:1
 msgid "copy"
 msgstr "kopia"
+
+#: app/core/gimpdrawable.c:1 app/widgets/gimpdatafactoryview.c:1
+#, c-format
+msgid "%s copy"
+msgstr "kopia %s"
 
 #: app/core/gimpdrawable-bucket-fill.c:1 app/paint/gimpclone.c:1
 msgid "No patterns available for this operation."
@@ -1217,7 +862,7 @@ msgstr "Niepoprawny napis UTF-8 w pliku z gradientami \"%s\"."
 #: app/core/gimpgradient.c:1
 #, c-format
 msgid "Corrupt segment %d in gradient file '%s'."
-msgstr ""
+msgstr "Uszkodzony segment %d w pliku z gradientami \"%s\""
 
 #: app/core/gimpgradient.c:1
 #, c-format
@@ -1605,6 +1250,10 @@ msgid ""
 "in file '%s'.\n"
 "GIMP Patterns must be GRAY or RGB.\n"
 msgstr ""
+"Nieobsługiwana głębia desenia (%d)\n"
+"w pliku \"%s\".\n"
+"Desenie GIMP-a muszą być albo w\n"
+"odcieniach szarości albo jako RGB.\n"
 
 #: app/core/gimppattern.c:1
 #, c-format
@@ -1686,11 +1335,11 @@ msgstr "Tylko krzyżyk"
 #. create the contents of the right_vbox  ********************************
 #: app/display/gimpdisplayshell.c:1
 msgid "Set Canvas Padding Color"
-msgstr ""
+msgstr "Ustawienie koloru wyściółki płótna"
 
 #: app/display/gimpdisplayshell.c:1
 msgid "Set canvas padding color"
-msgstr ""
+msgstr "Ustawia kolor wyściółki płótna"
 
 #: app/display/gimpdisplayshell.c:1
 msgid "/Default Color"
@@ -1698,7 +1347,7 @@ msgstr "/Domyślny kolor"
 
 #: app/display/gimpdisplayshell.c:1
 msgid "Toggle QuickMask"
-msgstr ""
+msgstr "Przełącza szybką maskę"
 
 #: app/display/gimpdisplayshell.c:1
 #, c-format
@@ -1788,6 +1437,10 @@ msgstr "Postęp"
 msgid "Please wait..."
 msgstr "Poczekaj chwilę..."
 
+#: app/display/gimpstatusbar.c:1
+msgid "Cancel"
+msgstr "Anuluj"
+
 #: app/file/file-open.c:1
 #, c-format
 msgid ""
@@ -1871,6 +1524,8 @@ msgid ""
 "Unable to run brush callback.\n"
 "The corresponding plug-in may have crashed."
 msgstr ""
+"Nie można wywołać funkcji powiązanej z pędzlem.\n"
+"Być może padła odpowiadająca jej wtyczka."
 
 #: app/gui/channels-commands.c:1
 msgid "Empty Channel Copy"
@@ -2178,6 +1833,10 @@ msgid "Brush Editor"
 msgstr "Edytor pędzli"
 
 #: app/gui/dialogs-constructors.c:1
+msgid "Gradient Editor"
+msgstr "Edytor gradientów"
+
+#: app/gui/dialogs-constructors.c:1
 msgid "Palette Editor"
 msgstr "Edytor palet"
 
@@ -2285,8 +1944,8 @@ msgid "Revert Image"
 msgstr "Przywrócenie obrazu"
 
 # FIXME
-# app/gui/file-commands.c: "Przywróć"
-# app/widgets/gimpdataeditor.c: "Przywraca"
+# 1. app/gui/file-commands.c: "Przywróć"
+# 2. app/widgets/gimpdataeditor.c: "Przywraca"
 #: app/gui/file-commands.c:1 app/widgets/gimpdataeditor.c:1
 msgid "Revert"
 msgstr "Przywróć"
@@ -2441,7 +2100,7 @@ msgstr "Zapis obrazu"
 
 #: app/gui/file-save-dialog.c:1
 msgid "Save a Copy of the Image"
-msgstr ""
+msgstr "Zapis kopii obrazu"
 
 #: app/gui/file-save-dialog.c:1
 msgid "Save Options"
@@ -2478,6 +2137,18 @@ msgstr "Kolor lewego punktu końcowego"
 msgid "Right Endpoint Color"
 msgstr "Kolor prawego punktu końcowego"
 
+#: app/gui/gradient-editor-commands.c:1
+msgid "Replicate segment"
+msgstr "Replikacja segmentu"
+
+#: app/gui/gradient-editor-commands.c:1
+msgid "Replicate selection"
+msgstr "Replikacja zaznaczenia"
+
+#: app/gui/gradient-editor-commands.c:1
+msgid "Replicate"
+msgstr "Zreplikuj"
+
 #. Instructions
 #: app/gui/gradient-editor-commands.c:1
 msgid "Select the number of times"
@@ -2504,6 +2175,15 @@ msgstr "Równomierny podział segmentu"
 #: app/gui/gradient-editor-commands.c:1
 msgid "Split Segments Uniformly"
 msgstr "Równomierny podział segmentów"
+
+#: app/gui/gradient-editor-commands.c:1
+msgid "Split"
+msgstr "Podziel"
+
+#. Instructions
+#: app/gui/gradient-editor-commands.c:1
+msgid "Please select the number of uniform parts"
+msgstr "Określ liczbę jednakowych części"
 
 #: app/gui/gradient-editor-commands.c:1
 msgid "in which to split the selected segment"
@@ -2587,6 +2267,8 @@ msgid ""
 "Unable to run gradient callback.\n"
 "The corresponding plug-in may have crashed."
 msgstr ""
+"Nie można wywołać funkcji powiązanej z gradientem.\n"
+"Być może padła odpowiadająca jej wtyczka."
 
 #: app/gui/gradients-commands.c:1
 #, c-format
@@ -2617,7 +2299,7 @@ msgstr ""
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Dodawanie motywu \"%s\" (%s)\n"
 
-#: app/gui/image-commands.c:1
+#: app/gui/image-commands.c:1 app/gui/layers-commands.c:1
 msgid "Cannot crop because the current selection is empty."
 msgstr ""
 "Nie można przeprowadzić kadrowania, gdyż bieżące zaznaczenie jest puste."
@@ -2881,7 +2563,7 @@ msgstr "/Plik/Otwórz..."
 #. <Toolbox>/File/Open Recent
 #: app/gui/menus.c:1 app/gui/menus.c:1
 msgid "/File/Open Recent/(None)"
-msgstr ""
+msgstr "/Plik/Otwórz poprzedni/(Brak)"
 
 #. <Toolbox>/File/Acquire
 #: app/gui/menus.c:1
@@ -3076,7 +2758,7 @@ msgstr "/Zaznaczenie/Oderwij"
 
 #: app/gui/menus.c:1
 msgid "/Select/Feather..."
-msgstr "/Zaznaczenie/Wygładź..."
+msgstr "/Zaznaczenie/Zmiękcz..."
 
 #: app/gui/menus.c:1
 msgid "/Select/Sharpen"
@@ -3299,6 +2981,10 @@ msgstr "/Warstwa/Dopasuj rozmiar warstwy do obrazu"
 #: app/gui/menus.c:1
 msgid "/Layer/Scale Layer..."
 msgstr "/Warstwa/Przeskaluj warstwę"
+
+#: app/gui/menus.c:1
+msgid "/Layer/Crop Layer"
+msgstr "/Warstwa/Wykadruj warstwę"
 
 #: app/gui/menus.c:1
 msgid "/Layer/Transform/Offset..."
@@ -3893,61 +3579,52 @@ msgid "/Save Right Color To"
 msgstr "/Zapis prawego koloru"
 
 #: app/gui/menus.c:1
-#, fuzzy
 msgid "/blendingfunction/Linear"
-msgstr "Typ funkcji gradientu dla zaznaczenia"
+msgstr "/funkcja_gradientu/Liniowa"
 
 #: app/gui/menus.c:1
-#, fuzzy
 msgid "/blendingfunction/Curved"
-msgstr "Typ funkcji gradientu dla segmentu"
+msgstr "/funkcja_gradientu/Zakrzywiona"
 
 #: app/gui/menus.c:1
 msgid "/blendingfunction/Sinusodial"
-msgstr ""
+msgstr "/funkcja_gradientu/Sinusoidalna"
 
 #: app/gui/menus.c:1
-#, fuzzy
 msgid "/blendingfunction/Spherical (increasing)"
-msgstr "Sferyczny (wzrastający)"
+msgstr "/funkcja_gradientu/Sferyczna (wzrastająca)"
 
 #: app/gui/menus.c:1
-#, fuzzy
 msgid "/blendingfunction/Spherical (decreasing)"
-msgstr "Sferyczny (opadający)"
+msgstr "/funkcja_gradientu/Sferyczna (opadająca)"
 
 #: app/gui/menus.c:1
-#, fuzzy
 msgid "/blendingfunction/(Varies)"
-msgstr "Typ funkcji gradientu dla segmentu"
+msgstr "/funkcja_gradientu/(Zmienna)"
 
 #: app/gui/menus.c:1
 msgid "/coloringtype/RGB"
-msgstr ""
+msgstr "/typ_kolorowania/RGB"
 
 #: app/gui/menus.c:1
-#, fuzzy
 msgid "/coloringtype/HSV (counter-clockwise hue)"
-msgstr "HSV (odcień zgodnie ze wskazówkami zegara)"
+msgstr "/typ_kolorowania/HSV (odcień zgodnie ze wskazówkami zegara)"
 
 #: app/gui/menus.c:1
-#, fuzzy
 msgid "/coloringtype/HSV (clockwise hue)"
-msgstr "HSV (odcień przeciwnie do wskazówek zegara)"
+msgstr "/typ_kolorowania/HSV (odcień przeciwnie do wskazówek zegara)"
 
 #: app/gui/menus.c:1
 msgid "/coloringtype/(Varies)"
-msgstr ""
+msgstr "/typ_kolorowania/(Zmienny)"
 
 #: app/gui/menus.c:1
-#, fuzzy
 msgid "/Blend Endpoints' Colors"
-msgstr "Kolory punktów końcowych"
+msgstr "/Kolory punktów końcowych"
 
 #: app/gui/menus.c:1
-#, fuzzy
 msgid "/Blend Endpoints' Opacity"
-msgstr "Nieprzepuszczalność punktów końcowych"
+msgstr "/Nieprzepuszczalność punktów końcowych"
 
 #: app/gui/menus.c:1
 msgid "/New Gradient"
@@ -4014,28 +3691,24 @@ msgid "/Merge Palettes..."
 msgstr "/Połącz palety..."
 
 #: app/gui/menus.c:1
-#, fuzzy
 msgid "/Paste Buffer"
-msgstr "Wklej nazwany bufor"
+msgstr "/Wklej bufor"
 
 #: app/gui/menus.c:1
-#, fuzzy
 msgid "/Paste Buffer Into"
-msgstr "/Edycja/Wklej do"
+msgstr "/Wklej bufor do"
 
 #: app/gui/menus.c:1
-#, fuzzy
 msgid "/Paste Buffer as New"
-msgstr "Wklej jako nowy"
+msgstr "/Wklej bufor jako nowy"
 
 #: app/gui/menus.c:1
 msgid "/Delete Buffer"
 msgstr "/Usuń bufor"
 
 #: app/gui/menus.c:1
-#, fuzzy
 msgid "/Add Color"
-msgstr "Kolor wyściółki"
+msgstr "/Dodaj kolor"
 
 #: app/gui/menus.c:1
 msgid "/Open Image"
@@ -4043,16 +3716,15 @@ msgstr "/Otwórz obraz"
 
 #: app/gui/menus.c:1
 msgid "/Raise or Open Image"
-msgstr ""
+msgstr "/Wysuń lub otwórz obraz"
 
 #: app/gui/menus.c:1
-#, fuzzy
 msgid "/File Open Dialog..."
-msgstr "/Plik/Otwórz..."
+msgstr "/Otwórz okno wyboru pliku..."
 
 #: app/gui/menus.c:1
 msgid "/Remove Entry"
-msgstr ""
+msgstr "/Usuń pozycję"
 
 #: app/gui/menus.c:1
 msgid "/Refresh History"
@@ -4060,24 +3732,30 @@ msgstr "/Odśwież historię"
 
 #: app/gui/menus.c:1
 msgid "/QMask Active"
-msgstr ""
+msgstr "/Aktywna szybka maska"
 
 #: app/gui/menus.c:1
-#, fuzzy
 msgid "/Mask Selected Areas"
-msgstr "/Zaznaczenie z maski"
+msgstr "/Zamaskuj zaznaczone obszary"
 
 #: app/gui/menus.c:1
 msgid "/Mask Unselected Areas"
-msgstr ""
+msgstr "/Zamaskuj niezaznaczone obszary"
 
 #: app/gui/menus.c:1
 msgid "/Configure Color and Opacity..."
-msgstr ""
+msgstr "/Skonfiguruj kolor i nieprzepuszczalność..."
 
 #: app/gui/module-browser.c:1
 msgid "Module DB"
 msgstr "Baza modułów"
+
+# FIXME
+# 1. app/gui/module-browser.c - "Odśwież"
+# 2. app/widgets/gimpdatafactoryview.c - "Odświeża"
+#: app/gui/module-browser.c:1 app/widgets/gimpdatafactoryview.c:1
+msgid "Refresh"
+msgstr "Odśwież"
 
 #: app/gui/module-browser.c:1
 msgid "Module error"
@@ -4153,24 +3831,20 @@ msgid "State:"
 msgstr "Stan:"
 
 #: app/gui/module-browser.c:1
-#, fuzzy
 msgid "Autoload during start-up"
-msgstr "Wczytywanie przy uruchamianiu"
+msgstr "Automatyczne ładowanie przy uruchamianiu"
 
 #: app/gui/offset-dialog.c:1
-#, fuzzy
 msgid "Offset Layer"
-msgstr "Warstwa tekstowa"
+msgstr "Warstwa przesunięcia"
 
 #: app/gui/offset-dialog.c:1
-#, fuzzy
 msgid "Offset Layer Mask"
-msgstr "/Usuń maskę warstwy"
+msgstr "Maska warstwy przesunięcia"
 
 #: app/gui/offset-dialog.c:1
-#, fuzzy
 msgid "Offset Channel"
-msgstr "Podnosi kanał"
+msgstr "Kanał przesunięcia"
 
 #. The offset labels
 #: app/gui/offset-dialog.c:1
@@ -4185,17 +3859,15 @@ msgstr "Przesunięcie o (x/2),(y/2)"
 #. The wrap around option
 #: app/gui/offset-dialog.c:1
 msgid "Wrap"
-msgstr ""
+msgstr "Zawijanie"
 
 #: app/gui/palette-editor-commands.c:1
-#, fuzzy
 msgid "Edit Palette Color"
-msgstr "Bezpośredni kolor"
+msgstr "Modyfikacja koloru palety"
 
 #: app/gui/palette-import-dialog.c:1
-#, fuzzy
 msgid "Select a Gradient to Create a Palette from"
-msgstr "Wybór katalogu gradientów"
+msgstr "Wybierz gradient, z którego chcesz stworzyć paletę"
 
 #: app/gui/palette-import-dialog.c:1
 msgid "Import Palette"
@@ -4220,6 +3892,10 @@ msgstr "nowy_import"
 msgid "Source:"
 msgstr "Źródło:"
 
+#: app/gui/palette-import-dialog.c:1
+msgid "Gradient"
+msgstr "Gradient"
+
 #. The sample size
 #: app/gui/palette-import-dialog.c:1
 msgid "Sample Size:"
@@ -4239,6 +3915,8 @@ msgid ""
 "Unable to run palette callback.\n"
 "The corresponding plug-in may have crashed."
 msgstr ""
+"Nie można wywołać funkcji powiązanej z paletą.\n"
+"Być może padła odpowiadająca jej wtyczka."
 
 #: app/gui/palettes-commands.c:1
 msgid "Merge Palette"
@@ -4250,7 +3928,7 @@ msgstr "Wprowadź nazwę połączonej palety"
 
 #: app/gui/paths-dialog.c:1 app/gui/vectors-commands.c:1
 msgid "New Path"
-msgstr "Tworzy nową ścieżkę"
+msgstr "Nowa ścieżka"
 
 #: app/gui/paths-dialog.c:1
 msgid "Duplicate Path"
@@ -4341,24 +4019,24 @@ msgstr ""
 "%s"
 
 #: app/gui/paths-dialog.c:1
-#, fuzzy
 msgid "Load and Save Bezier Curves"
-msgstr "Odczyt/Zapis krzywych Beziera"
+msgstr "Odczyt i zapis krzywych Beziera"
 
 #: app/gui/paths-dialog.c:1
 msgid "Load Path"
 msgstr "Odczyt ścieżki"
 
 #: app/gui/paths-dialog.c:1
-#, fuzzy
 msgid "Save Path"
-msgstr "Zapisz do"
+msgstr "Zapis ścieżki"
 
 #: app/gui/pattern-select.c:1
 msgid ""
 "Unable to run pattern callback.\n"
 "The corresponding plug-in may have crashed."
 msgstr ""
+"Nie można wywołać funkcji powiązanej z deseniem.\n"
+"Być może padła odpowiadająca jej wtyczka."
 
 #: app/gui/preferences-dialog.c:1
 msgid "Save Preferences ?"
@@ -4488,12 +4166,11 @@ msgstr "Położenia okien"
 
 #: app/gui/preferences-dialog.c:1
 msgid "Save Window Positions on Exit"
-msgstr "Zapis położenia okien przed zakończeniem"
+msgstr "Zapis pozycji okien przed zakończeniem"
 
 #: app/gui/preferences-dialog.c:1
-#, fuzzy
 msgid "Restore Saved Window Positions on Start-up"
-msgstr "Zapis położenia okien przed zakończeniem"
+msgstr "Przywracanie zapisanych pozycji okien przy uruchamianiu"
 
 #: app/gui/preferences-dialog.c:1
 msgid "Clear Saved Window Positions Now"
@@ -4740,9 +4417,8 @@ msgid "Always"
 msgstr "Zawsze"
 
 #: app/gui/preferences-dialog.c:1
-#, fuzzy
 msgid "\"File -> Save\" Saves the Image:"
-msgstr "Zapis obrazu po poleceniu zapisu:"
+msgstr "Zapis obrazu po użyciu \"Plik -> Zapisz\":"
 
 #: app/gui/preferences-dialog.c:1
 msgid "Never"
@@ -4818,15 +4494,15 @@ msgstr "Wybór folderów z wtyczkami"
 
 #: app/gui/preferences-dialog.c:1
 msgid "Tool Plug-Ins"
-msgstr ""
+msgstr "Wtyczki narzędzi"
 
 #: app/gui/preferences-dialog.c:1
 msgid "Tool Plug-In Folders"
-msgstr ""
+msgstr "Foldery wtyczek narzędzi"
 
 #: app/gui/preferences-dialog.c:1
 msgid "Select Tool Plug-In Folders"
-msgstr ""
+msgstr "Wybór folderów wtyczek narzędzi"
 
 #: app/gui/preferences-dialog.c:1
 msgid "Modules"
@@ -4853,9 +4529,8 @@ msgid "Select Theme Folders"
 msgstr "Wybór folderów z motywami"
 
 #: app/gui/qmask-commands.c:1
-#, fuzzy
 msgid "Edit Qmask Color"
-msgstr "Modyfikacja atrybutów maski"
+msgstr "Modyfikacja koloru szybkiej maski"
 
 #: app/gui/qmask-commands.c:1
 msgid "Edit Qmask Attributes"
@@ -4931,11 +4606,11 @@ msgstr "Pionowo:"
 
 #: app/gui/select-commands.c:1
 msgid "Feather Selection"
-msgstr "Wygładzenie zaznaczenia"
+msgstr "Zmiękczenie zaznaczenia"
 
 #: app/gui/select-commands.c:1
 msgid "Feather Selection by:"
-msgstr "Wygładzenie zaznaczenia o:"
+msgstr "Zmiękczenie zaznaczenia o:"
 
 #: app/gui/select-commands.c:1
 msgid "Shrink Selection"
@@ -4994,15 +4669,13 @@ msgid "_Next Tip"
 msgstr "_Następna porada"
 
 #: app/gui/tips-parser.c:1
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your GIMP tips file appears to be missing! There should be a file called "
 "'%s'. Please check your installation."
 msgstr ""
-"Nie można odnaleźć pliku porad GIMP-a!\n"
-"W podkatalogu tips katalogu danych GIMP-a\n"
-"powinien znajdować się plik gimp_tips.txt.\n"
-"Sprawdź instalację GIMP-a."
+"Nie można odnaleźć pliku z poradami GIMP-a! Powinien istnieć plik o nazwie "
+"\"%s\". Sprawdź instalację GIMP-a."
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
@@ -5014,14 +4687,12 @@ msgid "tips-locale:C"
 msgstr "tips-locale:pl"
 
 #: app/gui/tool-options-dialog.c:1
-#, fuzzy
 msgid "Save current settings to disk"
-msgstr "Zapisuje bieżące ustawienia do podanego pliku"
+msgstr "Zapisuje bieżące ustawienia w pliku"
 
 #: app/gui/tool-options-dialog.c:1
-#, fuzzy
 msgid "Restore saved settings"
-msgstr "Ustawienia obszaru"
+msgstr "Przywraca zapisane ustawienia"
 
 #: app/gui/tool-options-dialog.c:1
 msgid "Reset"
@@ -5106,78 +4777,71 @@ msgstr ""
 "Plik ten jest nadpisywany przy każdym zakończeniu GIMP-a."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "This folder is used to store user defined brushes.\n"
 "The GIMP checks this folder in addition to the system-\n"
 "wide GIMP brushes installation when searching for\n"
 "brushes."
 msgstr ""
-"Katalog ten jest wykorzystywany do przechowywania osobistego\n"
+"Folder ten jest wykorzystywany do przechowywania osobistego\n"
 "zbioru pędzli. Domyślny plik gimprc oprócz systemowego przegląda\n"
-"również ten katalog w poszukiwaniu pędzli."
+"również ten folder w poszukiwaniu pędzli."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "This folder is used to store brushes that are created\n"
 "with the brush editor."
 msgstr ""
-"Katalog ten jest wykorzystywany do przechowywania plików z parametrami "
-"narzędzia krzywych."
+"Folder ten jest wykorzystywany do przechowywania pędzli\n"
+"stworzonych przy użyciu edytora pędzli."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "This folder is used to store user defined gradients\n"
 "The GIMP checks this folder in addition to the system-\n"
 "wide GIMP gradients installation when searching for\n"
 "gradients."
 msgstr ""
-"Katalog ten jest wykorzystywany do przechowywania osobistego\n"
+"Folder ten jest wykorzystywany do przechowywania osobistego\n"
 "zbioru gradientów. Domyślny plik gimprc oprócz systemowego przegląda\n"
-"również ten katalog w poszukiwaniu gradientów."
+"również ten Folder w poszukiwaniu gradientów."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "This folder is used to store user defined palettes.\n"
 "The GIMP checks this folder in addition to the system-\n"
 "wide GIMP palettes installation when searching for\n"
 "palettes."
 msgstr ""
-"Katalog ten jest wykorzystywany do przechowywania osobistego\n"
-"zbioru deseni. Domyślny plik gimprc oprócz systemowego przegląda\n"
-"również ten katalog w poszukiwaniu deseni."
+"Folder ten jest wykorzystywany do przechowywania osobistego\n"
+"zbioru palet. Domyślny plik gimprc oprócz systemowego przegląda\n"
+"również ten folder w poszukiwaniu palet."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "This folder is used to store user defined patterns.\n"
 "The GIMP checks this folder in addition to the system-\n"
 "wide GIMP patterns installation when searching for\n"
 "patterns."
 msgstr ""
-"Katalog ten jest wykorzystywany do przechowywania osobistego\n"
+"Folder ten jest wykorzystywany do przechowywania osobistego\n"
 "zbioru deseni. Domyślny plik gimprc oprócz systemowego przegląda\n"
-"również ten katalog w poszukiwaniu deseni."
+"również ten Folder w poszukiwaniu deseni."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "This folder is used to store user created, temporary,\n"
 "or otherwise non-system-supported plug-ins.  The GIMP\n"
 "checks this folder in addition to the system-wide\n"
 "GIMP plug-in folder when searching for plug-ins."
 msgstr ""
-"Katalog ten jest wykorzystywany do przechowywania wtyczek\n"
+"Folder ten jest wykorzystywany do przechowywania wtyczek\n"
 "stworzonych przez użytkownika, tymczasowych lub nie\n"
 "zainstalowanych jako systemowe z innego powodu. Domyślny\n"
 "plik gimprc oprócz systemowego przegląda również ten\n"
-"katalog w poszukiwaniu wtyczek."
+"folder w poszukiwaniu wtyczek."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "This folder is used to store user created, temporary,\n"
 "or otherwise non-system-supported DLL modules.  The\n"
@@ -5185,27 +4849,25 @@ msgid ""
 "GIMP module folder when searching for modules to load\n"
 "during initialization."
 msgstr ""
-"Katalog ten jest wykorzystywany do przechowywania modułów\n"
+"Folder ten jest wykorzystywany do przechowywania modułów\n"
 "DLL stworzonych przez użytkownika, tymczasowych lub nie\n"
 "zainstalowanych jako systemowe z innego powodu. Domyślny\n"
 "plik gimprc oprócz systemowego przegląda również ten\n"
-"katalog w poszukiwaniu wczytywanych modułów."
+"folder w poszukiwaniu wczytywanych modułów."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "This folder is used to store user created and installed\n"
 "scripts.  The GIMP checks this folder in addition to\n"
 "the systemwide GIMP scripts folder when searching for\n"
 "scripts."
 msgstr ""
-"Katalog ten jest wykorzystywany do przechowywania\n"
+"Folder ten jest wykorzystywany do przechowywania\n"
 "skryptów stworzonych i zainstalowanych przez użytkownika.\n"
 "Domyślny plik gimprc oprócz systemowego przegląda również\n"
-"ten katalog w poszukiwaniu skryptów."
+"ten folder w poszukiwaniu skryptów."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "This folder is used to temporarily store undo buffers\n"
 "to reduce memory usage.  If The GIMP is unceremoniously\n"
@@ -5213,93 +4875,86 @@ msgid ""
 "this folder.  These files are useless across GIMP\n"
 "sessions and can be destroyed with impunity."
 msgstr ""
-"Katalog ten jest wykorzystywany do tymczasowego\n"
+"Folder ten jest wykorzystywany do tymczasowego\n"
 "przechowywania buforów cofnięć operacji. Jeśli GIMP zostanie\n"
 "bezceremonialnie zakończony, mogą w tym katalogu pozostać\n"
 "pliki o nazwach postaci: gimp<#>.<#>. Są one bezużyteczne w\n"
 "kolejnych sesjach, mogą więc zostać usunięte."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "This folder is used to store parameter files for the\n"
 "Curves tool."
 msgstr ""
-"Katalog ten jest wykorzystywany do przechowywania plików z parametrami "
+"Folder ten jest wykorzystywany do przechowywania plików z parametrami "
 "narzędzia krzywych."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "This folder is used to store parameter files for the\n"
 "Levels tool."
 msgstr ""
-"Katalog ten jest wykorzystywany do przechowywania plików z parametrami "
+"Folder ten jest wykorzystywany do przechowywania plików z parametrami "
 "narzędzia poziomów."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "This is folder used to store user defined fractals to\n"
 "be used by the FractalExplorer plug-in.  The GIMP\n"
 "checks this folder in addition to the systemwide\n"
 "FractalExplorer installation when searching for fractals."
 msgstr ""
-"Katalog ten jest wykorzystywany do przechowywania fraktali\n"
+"Folder ten jest wykorzystywany do przechowywania fraktali\n"
 "zdefiniowanych przez użytkownika i odczytywanych przez\n"
 "wtyczkę przeglądarki fraktali. Domyślny plik gimprc oprócz\n"
-"systemowego przegląda również ten katalog w poszukiwaniu\n"
+"systemowego przegląda również ten folder w poszukiwaniu\n"
 "fraktali."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "This folder is used to store user defined figures to\n"
 "be used by the GFig plug-in.  The GIMP checks this\n"
 "folder in addition to the systemwide GFig installation\n"
 "when searching for gfig figures."
 msgstr ""
-"Katalog ten jest wykorzystywany do przechowywania figur\n"
+"Folder ten jest wykorzystywany do przechowywania figur\n"
 "zdefiniowanych przez użytkownika i wykorzystywanych\n"
 "przez wtyczkę GFig. Domyślny plik gimprc oprócz\n"
-"systemowego przegląda również ten katalog w poszukiwaniu\n"
+"systemowego przegląda również ten folder w poszukiwaniu\n"
 "figur GFiga."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "This folder is used to store user defined gflares to\n"
 "be used by the GFlare plug-in.  The GIMP checks this\n"
 "folder in addition to the systemwide GFlares\n"
 "installation when searching for gflares."
 msgstr ""
-"Katalog ten jest wykorzystywany do przechowywania osobistego\n"
+"Folder ten jest wykorzystywany do przechowywania osobistego\n"
 "zbioru danych wykorzystywanych przez wtyczkę GFlare.\n"
 "zbioru pędzli. Domyślny plik gimprc oprócz systemowego przegląda\n"
-"również ten katalog w poszukiwaniu danych dla GFlare."
+"również ten folder w poszukiwaniu danych dla GFlare."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "This folder is used to store user defined data to be\n"
 "used by the Gimpressionist plug-in.  The GIMP checks\n"
 "this folder in addition to the systemwide Gimpressionist\n"
 "installation when searching for data."
 msgstr ""
-"Katalog ten jest wykorzystywany do przechowywania danych\n"
+"Folder ten jest wykorzystywany do przechowywania danych\n"
 "zdefiniowanych przez użytkownika i wykorzystywanych\n"
 "przez wtyczkę Gimpresjonista. Domyślny plik gimprc oprócz\n"
-"systemowego przegląda również ten katalog w poszukiwaniu\n"
+"systemowego przegląda również ten folder w poszukiwaniu\n"
 "danych Gimpresjonisty."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "Please wait while your personal\n"
 "GIMP folder is being created..."
 msgstr ""
 "Poczekaj chwilę na stworzenie twojego\n"
-"osobistego katalogu GIMP-a..."
+"osobistego folderu GIMP-a..."
 
 #: app/gui/user-install-dialog.c:1
 msgid "GIMP User Installation"
@@ -5322,14 +4977,13 @@ msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr "Kliknij \"Kontynuuj\" aby rozpocząć osobistą instalację GIMP-a."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
 "Copyright (C) 1995-2002\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
-"GIMP - uniwersalny program do obróbki obrazów\n"
-"Copyright (C) 1995-2000\n"
+"GIMP - program GNU do obróbki obrazów\n"
+"Copyright (C) 1995-2002\n"
 "Spencer Kimball, Peter Mattis oraz grupa twórców GIMP-a."
 
 #: app/gui/user-install-dialog.c:1
@@ -5367,33 +5021,30 @@ msgstr ""
 "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid "Personal GIMP Folder"
-msgstr "Osobisty katalog GIMP-a"
+msgstr "Osobisty folder GIMP-a"
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid "Click \"Continue\" to create your personal GIMP folder."
-msgstr "Kliknij \"Kontynuuj\" aby stworzyć swój osobisty katalog GIMP-a."
+msgstr "Kliknij \"Kontynuuj\" aby stworzyć swój osobisty folder GIMP-a."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "For a proper GIMP installation, a folder named\n"
 "%s needs to be created."
 msgstr ""
-"Aby instalacja GIMP-a przebiegła poprawnie, musi zostać stworzony\n"
-"katalog %s."
+"Aby instalacja GIMP-a przebiegła poprawnie, musi\n"
+"zostać stworzony folder %s."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "This folder will contain a number of important files.\n"
 "Click on one of the files or folders in the tree\n"
 "to get more information about the selected item."
 msgstr ""
-"Katalog ten będzie zawierał spory zbiór ważnych plików.\n"
-"Kliknij jeden z plików lub podkatalogów w drzewie, aby\n"
+"Folder ten będzie zawierał spory zbiór ważnych plików.\n"
+"Kliknij jeden z plików lub folderów w drzewie, aby\n"
 "otrzymać o nim więcej informacji."
 
 #: app/gui/user-install-dialog.c:1
@@ -5435,21 +5086,14 @@ msgid "Aborting Installation..."
 msgstr "Rezygnacja z instalacji..."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid "does not exist.  Cannot install."
-msgstr ""
-"%s nie istnieje.\n"
-"Nie można przeprowadzić instalacji."
+msgstr "nie istnieje. Nie można przeprowadzić instalacji."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid "has invalid permissions.  Cannot install."
-msgstr ""
-"Do %s są przypisane niewłaściwe uprawnienia.\n"
-"Nie można przeprowadzić instalacji."
+msgstr "ma niewłaściwe uprawnienia. Nie można przeprowadzić instalacji."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid ""
 "Did you notice any error messages in the console window?\n"
 "If not, installation was successful!\n"
@@ -5502,9 +5146,8 @@ msgstr ""
 "jest systemowy katalog tymczasowy (\"/tmp\" lub \"/var/tmp\")."
 
 #: app/gui/user-install-dialog.c:1
-#, fuzzy
 msgid "Swap Folder:"
-msgstr "Katalog wymiany:"
+msgstr "Folder wymiany:"
 
 #: app/gui/user-install-dialog.c:1
 msgid ""
@@ -5637,9 +5280,8 @@ msgid "Convert"
 msgstr "Kontrast"
 
 #: app/pdb/internal_procs.c:1
-#, fuzzy
 msgid "GimpDisplay procedures"
-msgstr "Procedury GDisplay"
+msgstr "Procedury GimpDisplay"
 
 #: app/pdb/internal_procs.c:1
 msgid "Drawable procedures"
@@ -5682,23 +5324,20 @@ msgid "Miscellaneous"
 msgstr "Różne"
 
 #: app/pdb/internal_procs.c:1
-#, fuzzy
 msgid "Misc Tool procedures"
-msgstr "Procedury narzędzi"
+msgstr "Procedury różnych narzędzi"
 
 #: app/pdb/internal_procs.c:1
-#, fuzzy
 msgid "Paint Tool procedures"
-msgstr "Procedury narzędzi"
+msgstr "Procedury narzędzi rysowania"
 
 #: app/pdb/internal_procs.c:1
 msgid "Palette"
 msgstr "Paleta"
 
 #: app/pdb/internal_procs.c:1
-#, fuzzy
 msgid "Palette UI"
-msgstr "Paleta"
+msgstr "UI palety"
 
 #: app/pdb/internal_procs.c:1
 msgid "Parasite procedures"
@@ -5721,9 +5360,8 @@ msgid "Image mask"
 msgstr "Maska obrazu"
 
 #: app/pdb/internal_procs.c:1
-#, fuzzy
 msgid "Selection Tool procedures"
-msgstr "Procedury narzędzi"
+msgstr "Procedury narzędzi zaznaczania"
 
 #: app/pdb/internal_procs.c:1
 msgid "Text procedures"
@@ -5837,9 +5475,8 @@ msgid "Select regions using Bezier curves"
 msgstr "Zaznaczanie obszarów przy użyciu krzywych Beziera"
 
 #: app/tools/gimpbezierselecttool.c:1
-#, fuzzy
 msgid "/Tools/Selection Tools/Bezier Select"
-msgstr "/Narzędzia/Zaznaczanie/Zaznaczenie krzywą Beziera"
+msgstr "/Narzędzia/Narzędzia zaznaczania/Zaznaczenie krzywą Beziera"
 
 #: app/tools/gimpbezierselecttool.c:1
 msgid "Bezier path already closed."
@@ -5925,9 +5562,8 @@ msgid "Adjust brightness and contrast"
 msgstr "Modyfikacja jasności i kontrastu"
 
 #: app/tools/gimpbrightnesscontrasttool.c:1
-#, fuzzy
 msgid "/Layer/Colors/Brightness-Contrast..."
-msgstr "/Obraz/Kolory/Jasność i kontrast..."
+msgstr "/Warstwa/Kolory/Jasność i kontrast..."
 
 #: app/tools/gimpbrightnesscontrasttool.c:1
 msgid "Brightness-Contrast does not operate on indexed drawables."
@@ -5956,22 +5592,20 @@ msgid "/Tools/Paint Tools/Bucket Fill"
 msgstr "/Narzędzia/Rysowanie/Wypełnienie kubełkiem"
 
 #: app/tools/gimpbucketfilltool.c:1
-#, fuzzy
 msgid "Fill Type (<Ctrl>)"
-msgstr "Typ wypełnienia"
+msgstr "Typ wypełnienia (<Ctrl>)"
 
 #: app/tools/gimpbucketfilltool.c:1 app/tools/selection_options.c:1
 msgid "Finding Similar Colors"
 msgstr "Wyszukiwanie podobnych kolorów"
 
 #: app/tools/gimpbucketfilltool.c:1
-#, fuzzy
 msgid "Fill Transparent Areas"
-msgstr "Przezroczyste"
+msgstr "Wypełnianie przezroczystych obszarów"
 
 #: app/tools/gimpbucketfilltool.c:1
 msgid "Allow completely transparent regions to be filled"
-msgstr ""
+msgstr "Pozwala na wypełnianie całkowicie przezroczystych obszarów"
 
 #: app/tools/gimpbucketfilltool.c:1 app/tools/gimpcolorpickertool.c:1
 #: app/tools/selection_options.c:1 app/tools/selection_options.c:1
@@ -5980,25 +5614,23 @@ msgstr "Próbkowanie z kanałem alfa"
 
 #: app/tools/gimpbucketfilltool.c:1
 msgid "Base filled area on all visible layers"
-msgstr ""
+msgstr "Opiera wypełniany obszar na wszystkich widocznych warstwach"
 
 #: app/tools/gimpbucketfilltool.c:1 app/tools/selection_options.c:1
 msgid "Maximum color difference"
 msgstr "Maksymalna różnica kolorów"
 
 #: app/tools/gimpbycolorselecttool.c:1
-#, fuzzy
 msgid "Select By Color"
-msgstr "/Zaznaczenie/Według koloru..."
+msgstr "Zaznaczenie według koloru"
 
 #: app/tools/gimpbycolorselecttool.c:1
 msgid "Select regions by color"
 msgstr "Zaznaczanie obszarów według koloru"
 
 #: app/tools/gimpbycolorselecttool.c:1
-#, fuzzy
 msgid "/Tools/Selection Tools/By Color Select"
-msgstr "/Narzędzia/Zaznaczanie/Zaznaczenie krzywą Beziera"
+msgstr "/Narzędzia/Narzędzia zaznaczania/Zaznaczenie według koloru"
 
 #. The shell and main vbox
 #: app/tools/gimpbycolorselecttool.c:1
@@ -6023,9 +5655,8 @@ msgid "Clone"
 msgstr "Klonowanie"
 
 #: app/tools/gimpclonetool.c:1
-#, fuzzy
 msgid "Paint using Patterns or Image Regions"
-msgstr "Malowanie z wykorzystaniem deseni lub fragmentów obrazu"
+msgstr "Malowanie z użyciem deseni lub fragmentów obrazu"
 
 #: app/tools/gimpclonetool.c:1
 msgid "/Tools/Paint Tools/Clone"
@@ -6049,18 +5680,16 @@ msgid "Adjust color balance"
 msgstr "Balans kolorów"
 
 #: app/tools/gimpcolorbalancetool.c:1
-#, fuzzy
 msgid "/Layer/Colors/Color Balance..."
-msgstr "/Obraz/Kolory/Balans kolorów..."
+msgstr "/Warstwa/Kolory/Balans kolorów..."
 
 #: app/tools/gimpcolorbalancetool.c:1
 msgid "Color balance operates only on RGB color drawables."
 msgstr "Balans koloru może być wykorzystywany tylko w trybie RGB."
 
 #: app/tools/gimpcolorbalancetool.c:1
-#, fuzzy
 msgid "Color Levels"
-msgstr "Poziomy kolorów:"
+msgstr "Poziomy kolorów"
 
 #: app/tools/gimpcolorbalancetool.c:1
 msgid "Cyan"
@@ -6141,7 +5770,6 @@ msgid "Convolve"
 msgstr "Rozmywanie lub wyostrzanie"
 
 #: app/tools/gimpconvolvetool.c:1
-#, fuzzy
 msgid "Blur or Sharpen"
 msgstr "Rozmywanie lub wyostrzanie"
 
@@ -6150,14 +5778,12 @@ msgid "/Tools/Paint Tools/Convolve"
 msgstr "/Narzędzia/Rysowanie/Rozmywanie lub wyostrzanie"
 
 #: app/tools/gimpconvolvetool.c:1
-#, fuzzy
 msgid "Convolve Type (<Ctrl>)"
-msgstr "Typ operacji"
+msgstr "Typ operacji (<Ctrl>)"
 
 #: app/tools/gimpcroptool.c:1
-#, fuzzy
 msgid "Crop Tool"
-msgstr "Klonowanie"
+msgstr "Kadrowanie"
 
 #: app/tools/gimpcroptool.c:1
 msgid "Crop or Resize an image"
@@ -6197,18 +5823,16 @@ msgstr "Automatyczne zmniejszanie"
 #. tool toggle
 #: app/tools/gimpcroptool.c:1 app/tools/gimpfliptool.c:1
 #: app/tools/gimpmagnifytool.c:1 app/tools/gimpmovetool.c:1
-#, fuzzy
 msgid "Tool Toggle (<Ctrl>)"
-msgstr "Przełącznik narzędzia"
+msgstr "Przełącznik narzędzia (<Ctrl>)"
 
 #: app/tools/gimpcroptool.c:1
 msgid "Current Layer only"
 msgstr "Tylko bieżąca warstwa"
 
 #: app/tools/gimpcroptool.c:1
-#, fuzzy
 msgid "Allow Enlarging (<Alt>)"
-msgstr "Dopuszczalne powiększanie"
+msgstr "Dopuszczalne powiększanie (<Alt>)"
 
 #. The shell and main vbox
 #: app/tools/gimpcurvestool.c:1 app/tools/gimpcurvestool.c:1
@@ -6220,9 +5844,8 @@ msgid "Adjust color curves"
 msgstr "Modyfikacja krzywych kolorów"
 
 #: app/tools/gimpcurvestool.c:1
-#, fuzzy
 msgid "/Layer/Colors/Curves..."
-msgstr "/Obraz/Kolory/Krzywe..."
+msgstr "/Warstwa/Kolory/Krzywe..."
 
 #: app/tools/gimpcurvestool.c:1
 msgid "Curves for indexed drawables cannot be adjusted."
@@ -6246,8 +5869,8 @@ msgid "Free"
 msgstr "Swobodnie"
 
 # FIXME
-# app/widgets/gimpdataeditor.c: "Zapisuje"
-# app/tools/gimpcurvestool.c, app/tools/gimplevelstool.c: "Zapisz"
+# 1. app/widgets/gimpdataeditor.c: "Zapisuje"
+# 2. app/tools/gimpcurvestool.c, app/tools/gimplevelstool.c: "Zapisz"
 #: app/tools/gimpcurvestool.c:1 app/tools/gimplevelstool.c:1
 #: app/widgets/gimpdataeditor.c:1
 msgid "Save"
@@ -6272,14 +5895,12 @@ msgid "Unable to open file %s"
 msgstr "Nie można otworzyć pliku %s"
 
 #: app/tools/gimpdodgeburntool.c:1
-#, fuzzy
 msgid "Dodge/Burn"
-msgstr "Rozjaśnianie lub wypalanie"
+msgstr "Rozjaśnianie/Wypalanie"
 
 #: app/tools/gimpdodgeburntool.c:1
-#, fuzzy
 msgid "Dodge or Burn strokes"
-msgstr "Rozjaśnianie lub wypalanie"
+msgstr "Rozjaśnianie lub wypalanie pociągnięć"
 
 #: app/tools/gimpdodgeburntool.c:1
 msgid "/Tools/Paint Tools/DodgeBurn"
@@ -6311,9 +5932,8 @@ msgid "Select elliptical regions"
 msgstr "Zaznaczanie eliptycznych obszarów"
 
 #: app/tools/gimpellipseselecttool.c:1
-#, fuzzy
 msgid "/Tools/Selection Tools/Ellipse Select"
-msgstr "/Narzędzia/Zaznaczanie/Zaznaczenie eliptyczne"
+msgstr "/Narzędzia/Narzędzia zaznaczania/Zaznaczenie eliptyczne"
 
 #: app/tools/gimperasertool.c:1
 msgid "Eraser"
@@ -6328,9 +5948,8 @@ msgid "/Tools/Paint Tools/Eraser"
 msgstr "/Narzędzia/Rysowanie/Gumka"
 
 #: app/tools/gimperasertool.c:1
-#, fuzzy
 msgid "Anti Erase (<Ctrl>)"
-msgstr "Wycofywanie gumowania"
+msgstr "Wycofywanie gumowania (<Ctrl>)"
 
 #. the hard toggle
 #: app/tools/gimperasertool.c:1
@@ -6358,9 +5977,8 @@ msgid "Select hand-drawn regions"
 msgstr "Odręczne zaznaczanie obszarów"
 
 #: app/tools/gimpfreeselecttool.c:1
-#, fuzzy
 msgid "/Tools/Selection Tools/Free Select"
-msgstr "/Narzędzia/Zaznaczanie/Zaznaczenie odręczne"
+msgstr "/Narzędzia/Narzędzia zaznaczania/Zaznaczenie odręczne"
 
 #: app/tools/gimpfuzzyselecttool.c:1
 msgid "Fuzzy Select"
@@ -6371,9 +5989,8 @@ msgid "Select contiguous regions"
 msgstr "Zaznaczanie sąsiadujących obszarów"
 
 #: app/tools/gimpfuzzyselecttool.c:1
-#, fuzzy
 msgid "/Tools/Selection Tools/Fuzzy Select"
-msgstr "/Narzędzia/Zaznaczanie/Zaznaczenie rozmyte"
+msgstr "/Narzędzia/Narzędzia zaznaczania/Zaznaczenie rozmyte"
 
 #. The shell and main vbox
 #: app/tools/gimphistogramtool.c:1 app/tools/gimphistogramtool.c:1
@@ -6385,9 +6002,8 @@ msgid "View image histogram"
 msgstr "Histogram obrazu"
 
 #: app/tools/gimphistogramtool.c:1
-#, fuzzy
 msgid "/Layer/Colors/Histogram..."
-msgstr "/Obraz/Histogram..."
+msgstr "/Warstwa/Kolory/Histogram..."
 
 #: app/tools/gimphistogramtool.c:1
 msgid "Histogram does not operate on indexed drawables."
@@ -6431,9 +6047,8 @@ msgid "Adjust hue and saturation"
 msgstr "Modyfikacja odcienia i nasycenia"
 
 #: app/tools/gimphuesaturationtool.c:1
-#, fuzzy
 msgid "/Layer/Colors/Hue-Saturation..."
-msgstr "/Obraz/Kolory/Odcień i nasycenie..."
+msgstr "/Warstwa/Kolory/Odcień i nasycenie..."
 
 #: app/tools/gimphuesaturationtool.c:1
 msgid "Hue-Saturation operates only on RGB color drawables."
@@ -6533,9 +6148,8 @@ msgid "Select shapes from image"
 msgstr "Zaznaczanie kształtów w obrazie"
 
 #: app/tools/gimpiscissorstool.c:1
-#, fuzzy
 msgid "/Tools/Selection Tools/Intelligent Scissors"
-msgstr "/Narzędzia/Zaznaczanie/Inteligentne nożyce"
+msgstr "/Narzędzia/Narzędzia zaznaczania/Inteligentne nożyce"
 
 #. The shell and main vbox
 #: app/tools/gimplevelstool.c:1 app/tools/gimplevelstool.c:1
@@ -6547,9 +6161,8 @@ msgid "Adjust color levels"
 msgstr "Modyfikacja poziomów kolorów"
 
 #: app/tools/gimplevelstool.c:1
-#, fuzzy
 msgid "/Layer/Colors/Levels..."
-msgstr "/Obraz/Kolory/Poziomy..."
+msgstr "/Warstwa/Kolory/Poziomy..."
 
 #: app/tools/gimplevelstool.c:1
 msgid "Levels for indexed drawables cannot be adjusted."
@@ -6592,9 +6205,8 @@ msgid "Zoom in & out"
 msgstr "Powiększanie i pomniejszanie"
 
 #: app/tools/gimpmagnifytool.c:1
-#, fuzzy
 msgid "/Tools/Magnify"
-msgstr "Powiększanie"
+msgstr "/Narzędzia/Powiększanie"
 
 #: app/tools/gimpmagnifytool.c:1
 msgid "Allow Window Resizing"
@@ -6638,29 +6250,25 @@ msgid "/Tools/Transform Tools/Move"
 msgstr "/Narzędzia/Narzędzia przekształceń/Przesuń"
 
 #: app/tools/gimpmovetool.c:1
-#, fuzzy
 msgid "Pick a Layer to Move"
-msgstr "/Stos/Warstwa na wierzchołek"
+msgstr "Przesunięcie wskazanej warstwy"
 
 #: app/tools/gimpmovetool.c:1
-#, fuzzy
 msgid "Move Current Layer"
-msgstr "Tylko bieżąca warstwa"
+msgstr "Przesunięcie bieżącej warstwy"
 
 #. move mask
 #: app/tools/gimpmovetool.c:1
 msgid "Move Mode (<Alt>)"
-msgstr "Tryb przeniesienia (<Alt>)"
+msgstr "Tryb przesunięcia (<Alt>)"
 
 #: app/tools/gimpmovetool.c:1
-#, fuzzy
 msgid "Move Pixels"
-msgstr "Piksele"
+msgstr "Przesunięcie pikseli"
 
 #: app/tools/gimpmovetool.c:1
-#, fuzzy
 msgid "Move Selection Outline"
-msgstr "Obramuj zaznaczenie"
+msgstr "Przesunięcie obwódki zaznaczenia"
 
 #: app/tools/gimppaintbrushtool.c:1
 msgid "Paintbrush"
@@ -6675,18 +6283,16 @@ msgid "/Tools/Paint Tools/Paintbrush"
 msgstr "/Narzędzia/Rysowanie/Pędzel"
 
 #: app/tools/gimppathtool.c:1
-#, fuzzy
 msgid "Path Tool"
-msgstr "Narzędzie tekstowe"
+msgstr "Narzędzie ścieżki"
 
 #: app/tools/gimppathtool.c:1
 msgid "Path tool prototype"
-msgstr ""
+msgstr "Prototyp narzędzia ścieżki"
 
 #: app/tools/gimppathtool.c:1
-#, fuzzy
 msgid "/Tools/Path"
-msgstr "/Narzędzia/Tekst"
+msgstr "/Narzędzia/Ścieżka"
 
 #: app/tools/gimppenciltool.c:1
 msgid "Pencil"
@@ -6694,16 +6300,15 @@ msgstr "Ołówek"
 
 #: app/tools/gimppenciltool.c:1
 msgid "Paint hard edged pixels"
-msgstr ""
+msgstr "Rysowanie pikselami o ostrych krawędziach"
 
 #: app/tools/gimppenciltool.c:1
 msgid "/Tools/Paint Tools/Pencil"
 msgstr "/Narzędzia/Rysowanie/Ołówek"
 
 #: app/tools/gimpperspectivetool.c:1
-#, fuzzy
 msgid "Perspective Tool"
-msgstr "Perspektywa"
+msgstr "Narzędzie perspektywy"
 
 #: app/tools/gimpperspectivetool.c:1
 msgid "Change perspective of the layer or selection"
@@ -6734,9 +6339,8 @@ msgid "Reduce image to a fixed numer of colors"
 msgstr "Zmniejszenie liczby kolorów w obrazie do ustalonej wartości"
 
 #: app/tools/gimpposterizetool.c:1
-#, fuzzy
 msgid "/Layer/Colors/Posterize..."
-msgstr "/Obraz/Kolory/Redukcja kolorów..."
+msgstr "/Warstwa/Kolory/Redukcja kolorów..."
 
 #: app/tools/gimpposterizetool.c:1
 msgid "Posterize does not operate on indexed drawables."
@@ -6755,9 +6359,8 @@ msgid "Select rectangular regions"
 msgstr "Zaznaczanie prostokątnych obszarów"
 
 #: app/tools/gimprectselecttool.c:1
-#, fuzzy
 msgid "/Tools/Selection Tools/Rect Select"
-msgstr "/Narzędzia/Zaznaczanie/Zaznaczenie prostokątne"
+msgstr "/Narzędzia/Narzędzia zaznaczania/Zaznaczenie prostokątne"
 
 #: app/tools/gimprectselecttool.c:1
 msgid "Selection: ADD"
@@ -6780,9 +6383,8 @@ msgid "Selection: "
 msgstr "Zaznaczenie: "
 
 #: app/tools/gimprotatetool.c:1
-#, fuzzy
 msgid "Rotate Tool"
-msgstr "Obróć"
+msgstr "Narzędzie obracania"
 
 #: app/tools/gimprotatetool.c:1
 msgid "Rotate the layer or selection"
@@ -6805,9 +6407,8 @@ msgid "Rotating..."
 msgstr "Obracanie..."
 
 #: app/tools/gimpscaletool.c:1
-#, fuzzy
 msgid "Scale Tool"
-msgstr "Klonowanie"
+msgstr "Narzędzie skalowania"
 
 #: app/tools/gimpscaletool.c:1
 msgid "Scale the layer or selection"
@@ -6830,9 +6431,8 @@ msgid "Scale Ratio X:"
 msgstr "Poziomy współczynnik skalowania"
 
 #: app/tools/gimpsheartool.c:1
-#, fuzzy
 msgid "Shear Tool"
-msgstr "Miarka"
+msgstr "Narzędzie ścinania"
 
 #: app/tools/gimpsheartool.c:1
 msgid "Shear the layer or selection"
@@ -6927,18 +6527,16 @@ msgstr ""
 "warstwach zawierających maski."
 
 #: app/tools/gimpvectortool.c:1
-#, fuzzy
 msgid "Vector Tool"
-msgstr "Narzędzie tekstowe"
+msgstr "Narzędzie wektorowe"
 
 #: app/tools/gimpvectortool.c:1
 msgid "Vector angles and lengths"
-msgstr ""
+msgstr "Długości i kąty wektorów"
 
 #: app/tools/gimpvectortool.c:1
-#, fuzzy
 msgid "/Tools/Vector"
-msgstr "/Narzędzia/Tekst"
+msgstr "/Narzędzia/Wektor"
 
 #: app/tools/paint_options.c:1
 msgid "Incremental"
@@ -6969,9 +6567,8 @@ msgid "Length:"
 msgstr "Długość:"
 
 #: app/tools/paint_options.c:1
-#, fuzzy
 msgid "Use Color from Gradient"
-msgstr "Wykorzystanie aktywnego gradientu"
+msgstr "Wykorzystanie koloru z gradientu"
 
 #: app/tools/paint_options.c:1
 msgid "Type:"
@@ -6999,40 +6596,36 @@ msgid "Antialiasing"
 msgstr "Wygładzanie"
 
 #: app/tools/selection_options.c:1
-#, fuzzy
 msgid "Smooth edges"
-msgstr "Wygładzanie"
+msgstr "Wygładza brzegi"
 
 #: app/tools/selection_options.c:1
-#, fuzzy
 msgid "Feather Edges"
-msgstr "Wygładzanie"
+msgstr "Zmiękczenie brzegów"
 
 #: app/tools/selection_options.c:1
 msgid "Show Interactive Boundary"
-msgstr ""
+msgstr "Wyświetlanie interaktywnej granicy"
 
 #: app/tools/selection_options.c:1
-#, fuzzy
 msgid "Select Transparent Areas"
-msgstr "Zaznaczanie prostokątnych obszarów"
+msgstr "Zaznaczanie przezroczystych obszarów"
 
 #: app/tools/selection_options.c:1
 msgid "Allow completely transparent regions to be selected"
-msgstr ""
+msgstr "Pozwala na zaznaczanie całkowicie przezroczystych obszarów"
 
 #: app/tools/selection_options.c:1
 msgid "Base selection on all visible layers"
-msgstr ""
+msgstr "Opiera zaznaczenie na wszystkich widocznych warstwach"
 
 #: app/tools/selection_options.c:1
-#, fuzzy
 msgid "Auto Shrink Selection"
-msgstr "Zmniejsz zaznaczenie"
+msgstr "Automatyczne zmniejszenie zaznaczenia"
 
 #: app/tools/selection_options.c:1
 msgid "Use all visible layers when shrinking the selection"
-msgstr ""
+msgstr "Używa przy zmniejszaniu zaznaczenia wszystkich widocznych warstw"
 
 #: app/tools/selection_options.c:1
 msgid "Fixed Size / Aspect Ratio"
@@ -7084,6 +6677,8 @@ msgid ""
 "\"Keep Width\" toggles to constrain\n"
 "the aspect ratio"
 msgstr ""
+"Aby zachować współczynnik proporcji\n"
+"uaktywnij obie opcje: \"Zachowanie wysokości\"i \"Zachowanie szerokości\""
 
 #: app/tools/transform_options.c:1
 msgid "Keep Width (<Alt>)"
@@ -7091,11 +6686,11 @@ msgstr "Zachowanie szerokości (<Alt>)"
 
 #: app/widgets/widgets-enums.c:1
 msgid "Zoom in"
-msgstr "Powiększ"
+msgstr "Powiększenie"
 
 #: app/widgets/widgets-enums.c:1
 msgid "Zoom out"
-msgstr "Pomniejsz"
+msgstr "Pomniejszenie"
 
 #: app/widgets/gimpbrusheditor.c:1
 msgid "Hardness:"
@@ -7117,8 +6712,12 @@ msgstr "/Edycja/Wklej do"
 msgid "Paste as New"
 msgstr "Wklej jako nowy"
 
+#: app/widgets/gimpbufferview.c:1 app/widgets/gimpdatafactoryview.c:1
+#: app/widgets/gimpitemlistview.c:1
+msgid "Delete"
+msgstr "Usuń"
+
 #: app/widgets/gimpchannellistview.c:1
-#, fuzzy
 msgid ""
 "Channel to Selection\n"
 "<Shift> Add\n"
@@ -7126,7 +6725,9 @@ msgid ""
 "<Shift><Ctrl> Intersect"
 msgstr ""
 "Tworzy zaznaczenie z kanału\n"
-"<Shift> Dodaje       <Ctrl> Odejmuje      <Shift><Ctrl> Przecina"
+"<Shift> Dodaje\n"
+"<Ctrl> Odejmuje\n"
+"<Shift><Ctrl> Przecina"
 
 #: app/widgets/gimpcolormapeditor.c:1
 msgid "Color Index:"
@@ -7142,7 +6743,7 @@ msgstr "Indeksowany"
 
 #: app/widgets/gimpcomponentlistitem.c:1
 msgid "EEEEK"
-msgstr ""
+msgstr "EEEEK"
 
 #: app/widgets/gimpcontainergridview.c:1
 #: app/widgets/gimpcontainergridview.c:1
@@ -7162,29 +6763,35 @@ msgid "Edit"
 msgstr "Edycja"
 
 #: app/widgets/gimpdatafactoryview.c:1
-#, fuzzy
+#, c-format
+msgid ""
+"Are you sure you want to delete\n"
+"\"%s\" from the list and from disk?"
+msgstr ""
+"Czy na pewno chcesz usunąć\n"
+"\"%s\" z listy i z dysku?"
+
+#: app/widgets/gimpdatafactoryview.c:1
 msgid "Delete Data Object"
-msgstr "Usunięcie palety"
+msgstr "Usunięcie obiektu danych"
 
 #: app/widgets/gimpdocumentview.c:1
-#, fuzzy
 msgid ""
 "Open the selected entry\n"
 "<Shift> Raise window if already open\n"
 "<Ctrl> Open image dialog"
 msgstr ""
 "Otwiera zaznaczoną pozycję\n"
-"<Shift> Wysuwa okno, jeśli zostało już otwarte\n"
+"<Shift> Wysuwa okno, jeśli jest już otwarte\n"
 "<Ctrl> Okno odczytu obrazu"
 
 #: app/widgets/gimpdocumentview.c:1
-#, fuzzy
 msgid "Remove selected entry"
-msgstr "Usuwa wybraną pozycję z indeksu"
+msgstr "Usuwa wybraną pozycję"
 
 #: app/widgets/gimpdocumentview.c:1
 msgid "Refresh (check files for existence)"
-msgstr ""
+msgstr "Odświeża (sprawdza istnienie plików)"
 
 #: app/widgets/gimpfontselection-dialog.c:1
 msgid "GIMP Font Selection"
@@ -7209,6 +6816,10 @@ msgstr "Bliżej"
 #: app/widgets/gimpgradienteditor.c:1 app/widgets/gimppaletteeditor.c:1
 msgid "Zoom Out"
 msgstr "Dalej"
+
+#: app/widgets/gimpgradienteditor.c:1
+msgid "Instant update"
+msgstr "Stałe odświeżanie"
 
 #: app/widgets/gimpgradienteditor.c:1
 #, c-format
@@ -7246,65 +6857,69 @@ msgid "(%0.3f, %0.3f, %0.3f)"
 msgstr "(%0.3f, %0.3f, %0.3f)"
 
 #: app/widgets/gimpgradienteditor.c:1
-#, fuzzy
 msgid "Foreground color set to:"
-msgstr "Aktywny kolor"
+msgstr "Kolor pierwszoplanowy ustawiony na:"
 
 #: app/widgets/gimpgradienteditor.c:1
-#, fuzzy
 msgid "Background color set to:"
-msgstr "Kolor tła"
+msgstr "Kolor tła ustawiony na:"
 
 #: app/widgets/gimpgradienteditor.c:1
-#, fuzzy
 msgid "Drag: move"
-msgstr "Nazwa rysunku:"
+msgstr "Ciągnięcie: przesuwa"
 
 #: app/widgets/gimpgradienteditor.c:1 app/widgets/gimpgradienteditor.c:1
-#, fuzzy
 msgid "<Shift>+Drag: move & compress"
-msgstr "Ciągnięcie: przenosi  Shift+ciągnięcie: przenosi ze ścieśnieniem"
+msgstr "<Shift>+Ciągnięcie: przesuwa ze ścieśnieniem"
 
 #: app/widgets/gimpgradienteditor.c:1 app/widgets/gimpgradienteditor.c:1
-#, fuzzy
 msgid "Click: select"
-msgstr "Odbij zaznaczenie"
+msgstr "Kliknięcie: zaznacza"
 
 #: app/widgets/gimpgradienteditor.c:1 app/widgets/gimpgradienteditor.c:1
 #: app/widgets/gimpgradienteditor.c:1 app/widgets/gimpgradienteditor.c:1
-#, fuzzy
 msgid "<Shift>+Click: extend selection"
-msgstr "Kliknięcie: zaznacza  Shift+kliknięcie: poszerza zaznaczenie"
+msgstr "<Shift>+Kliknięcie: poszerza zaznaczenie"
 
 #: app/widgets/gimpgradienteditor.c:1 app/widgets/gimpgradienteditor.c:1
-#, fuzzy
 msgid "Click: select    Drag: move"
-msgstr ""
-"Kliknięcie: zaznacza  Shift+kliknięcie: poszerza zaznaczenie  Ciągnięcie: "
-"przenosi"
+msgstr "Kliknięcie: zaznacza   Ciągnięcie: przesuwa"
+
+#: app/widgets/gimpgradienteditor.c:1 app/widgets/gimpgradienteditor.c:1
+#, c-format
+msgid "Handle position: %0.6f"
+msgstr "Pozycja uchwytu: %0.6f"
+
+#: app/widgets/gimpgradienteditor.c:1
+#, c-format
+msgid "Distance: %0.6f"
+msgstr "Odległość: %0.6f"
 
 #: app/widgets/gimpimagedock.c:1
 #, c-format
 msgid "Gimp Dock #%d"
 msgstr "Dok GIMP-a nr %d"
 
+#: app/widgets/gimpitemfactory.c:1
+#, c-format
+msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+
 #: app/widgets/gimpitemlistview.c:1
-#, fuzzy
 msgid ""
 "Raise\n"
 "<Shift> To Top"
 msgstr ""
-"Podnosi warstwę    \n"
-"<Shift> Na wierzchołek"
+"Podnosi warstwę\n"
+"<Shift> na wierzchołek"
 
 #: app/widgets/gimpitemlistview.c:1
-#, fuzzy
 msgid ""
 "Lower\n"
 "<Shift> To Bottom"
 msgstr ""
-"Obniża warstwę    \n"
-"<Shift> Na dno"
+"Obniża warstwę\n"
+"<Shift> na dno"
 
 #: app/widgets/gimplayerlistview.c:1
 msgid "Keep Trans."
@@ -7315,9 +6930,8 @@ msgid "Keep Transparency"
 msgstr "Zachowanie przezroczystości"
 
 #: app/widgets/gimplayerlistview.c:1
-#, fuzzy
 msgid "Anchor"
-msgstr "Zakotwiczenie oderwanego zaznaczenia"
+msgstr "Kotwica"
 
 #: app/widgets/gimppaletteeditor.c:1 app/widgets/gimppaletteeditor.c:1
 msgid "Undefined"
@@ -7365,7 +6979,6 @@ msgstr ""
 "koloru."
 
 #: app/widgets/gimpvectorslistview.c:1
-#, fuzzy
 msgid ""
 "Path to Selection\n"
 "<Shift> Add\n"
@@ -7373,7 +6986,9 @@ msgid ""
 "<Shift><Ctrl> Intersect"
 msgstr ""
 "Tworzy zaznaczenie z kanału\n"
-"<Shift> Dodaje       <Ctrl> Odejmuje      <Shift><Ctrl> Przecina"
+"<Shift> Dodaje\n"
+"<Ctrl> Odejmuje\n"
+"<Shift><Ctrl> Przecina"
 
 #: app/widgets/gimpwidgets-constructors.c:1
 #: app/widgets/gimpwidgets-constructors.c:1
@@ -7390,21 +7005,18 @@ msgid "Behind"
 msgstr "Z tyłu"
 
 #: app/widgets/gimpwidgets-constructors.c:1
-#, fuzzy
 msgid "Color Erase"
-msgstr "Paleta kolorów"
+msgstr "Czyszczenie koloru"
 
 #: app/widgets/gimpwidgets-constructors.c:1
 #: app/widgets/gimpwidgets-constructors.c:1
-#, fuzzy
 msgid "Multiply"
-msgstr "Iloczyn (Wypalanie)"
+msgstr "Mnożenie"
 
 #: app/widgets/gimpwidgets-constructors.c:1
 #: app/widgets/gimpwidgets-constructors.c:1
-#, fuzzy
 msgid "Divide"
-msgstr "Urządzenia"
+msgstr "Dzielenie"
 
 #: app/widgets/gimpwidgets-constructors.c:1
 #: app/widgets/gimpwidgets-constructors.c:1
@@ -7418,9 +7030,8 @@ msgstr "Pokrywanie"
 
 #: app/widgets/gimpwidgets-constructors.c:1
 #: app/widgets/gimpwidgets-constructors.c:1
-#, fuzzy
 msgid "Hard Light"
-msgstr "Twarda krawędź"
+msgstr "Twarde światło"
 
 #: app/widgets/gimpwidgets-constructors.c:1
 #: app/widgets/gimpwidgets-constructors.c:1
@@ -7495,9 +7106,8 @@ msgid "Gamma"
 msgstr "Gamma"
 
 #: modules/cdisplay_gamma.c:1
-#, fuzzy
 msgid "Gamma color display filter"
-msgstr "/Okna dialogowe/Filtry wyświetlania..."
+msgstr "Filtr wyświetlania kolorów"
 
 #: modules/cdisplay_gamma.c:1
 msgid "Gamma:"
@@ -7512,9 +7122,8 @@ msgid "High Contrast color display filter"
 msgstr "Filtry wyświetlania z wysokim kontrastem"
 
 #: modules/cdisplay_highcontrast.c:1
-#, fuzzy
 msgid "Contrast Cycles:"
-msgstr "Kontrast:"
+msgstr "Cykle kontrastu:"
 
 #: modules/colorsel_triangle.c:1
 msgid "Painter-style color selector as a pluggable color selector"
