@@ -1,5 +1,10 @@
+1999-11-16  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpchainbutton.c: the chainbutton's parent_class is a
+	GtkTable, not a GtkWidget. Code formating paranoia.
+
 Tue Nov 16 11:16:41 MET 1999  Sven Neumann <sven@gimp.org>
-	
+
 	* plug-ins/gap/README
 	* plug-ins/gap/gap_filter_iterators.c
 	* plug-ins/gap/gap_main.c
