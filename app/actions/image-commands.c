@@ -129,8 +129,7 @@ image_new_from_image_cmd_callback (GtkAction *action,
     {
       GimpImage *gimage = action_data_get_image (data);
 
-      if (gimage)
-        image_new_dialog_set (dialog, gimage, NULL);
+      image_new_dialog_set (dialog, gimage, NULL);
 
       gtk_window_present (GTK_WINDOW (dialog));
     }

@@ -1,3 +1,8 @@
+2004-11-02  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/image-commands.c (image_new_from_image_cmd_callback):
+	call image_new_dialog_set() unconditionally. Fixes bug #157096.
+
 2004-11-02  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/drawable_transform.pdb: factored out the
