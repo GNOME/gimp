@@ -711,7 +711,7 @@ gimp_enum_stock_box_set_child_padding (GtkWidget *stock_box,
        list = g_list_next (list))
     {
       GtkBin  *bin  = list->data;
-      GtkMisc *misc = bin->child;
+      GtkMisc *misc = GTK_MISC (bin->child);
 
       gtk_misc_set_padding (misc,
                             xpad < 0 ? misc->xpad : xpad,
