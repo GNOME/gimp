@@ -1,3 +1,19 @@
+2002-02-12  Nathan Summers  <rock@gimp.org>
+
+        * plug-ins/tools/.cvsignore
+        * plug-ins/tools/Makefile.am: new directory for tool plug-ins
+
+        * plug-ins/tools/common/.cvsignore
+        * plug-ins/tools/common/Makefile.am: unified directory for single-file
+        tool plug-ins, just like the "common" subdirectory for plug-ins
+
+        * plug-ins/tools/common/gimpbrushselecttool.[ch]: start of a
+        tool plug-in that uses the current brush to select from the image.
+
+        * configure.in
+        * plug-ins/Makefile.am: changed accordingly
+
+
 2002-02-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/edit-commands.c: merged partial fix for #62592 from
