@@ -219,10 +219,6 @@ scale_dialog_response (GtkWidget   *dialog,
 
   switch (response_id)
     {
-    case GTK_RESPONSE_CANCEL:
-      gtk_widget_destroy (dialog);
-      break;
-
     case RESPONSE_RESET:
       scale_dialog_reset (private);
       break;
@@ -245,6 +241,10 @@ scale_dialog_response (GtkWidget   *dialog,
                          width, height, unit, interpolation,
                          xres, yres, resolution_unit,
                          private->user_data);
+      break;
+
+    default:
+      gtk_widget_destroy (dialog);
       break;
     }
 }

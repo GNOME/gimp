@@ -280,10 +280,6 @@ resize_dialog_response (GtkWidget    *dialog,
 
   switch (response_id)
     {
-    case GTK_RESPONSE_CANCEL:
-      gtk_widget_destroy (dialog);
-      break;
-
     case RESPONSE_RESET:
       resize_dialog_reset (private);
       break;
@@ -301,6 +297,10 @@ resize_dialog_response (GtkWidget    *dialog,
                          gimp_size_entry_get_refval (entry, 0),
                          gimp_size_entry_get_refval (entry, 1),
                          private->user_data);
+      break;
+
+    default:
+      gtk_widget_destroy (dialog);
       break;
     }
 }

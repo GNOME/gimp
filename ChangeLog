@@ -1,3 +1,10 @@
+2004-11-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/resize-dialog.c (resize_dialog_response)
+	* app/dialogs/scale-dialog.c (scale_dialog_response): replaced
+	"case GTK_RESPONSE_CANCEL:" by "default:" so it also catches
+	hitting the escape key or clicking the WM close button.
+
 2004-11-08  Øyvind Kolås  <pippin@gimp.org>
 
 	* plug-ins/common/gqbist.c: fixed typo in construction of file
