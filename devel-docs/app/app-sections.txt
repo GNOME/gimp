@@ -160,6 +160,7 @@ gimp_set_user_context
 gimp_get_user_context
 gimp_set_current_context
 gimp_get_current_context
+GimpPlugInDebug 
 <SUBSECTION Standard>
 GimpClass
 GIMP
@@ -1898,6 +1899,7 @@ GimpTextLayer
 gimp_text_layer_new
 gimp_text_layer_from_layer
 gimp_text_layer_get_text
+gimp_text_layer_render
 <SUBSECTION Standard>
 GimpTextLayerClass
 GIMP_TEXT_LAYER
@@ -1907,6 +1909,14 @@ gimp_text_layer_get_type
 GIMP_TEXT_LAYER_CLASS
 GIMP_IS_TEXT_LAYER_CLASS
 GIMP_TEXT_LAYER_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimptextlayer-transform</FILE>
+gimp_text_layer_scale
+gimp_text_layer_flip
+gimp_text_layer_rotate
+gimp_text_layer_transform
 </SECTION>
 
 <SECTION>
@@ -4670,6 +4680,7 @@ GimpCompositeFunctionTable[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMA
 <SECTION>
 <FILE>gimp-composite-generic</FILE>
 gimp_composite_generic_init
+gimp_composite_generic_install
 gimp_composite_addition_any_any_any_generic
 gimp_composite_anti_erase_any_any_any_generic
 gimp_composite_blend_any_any_any_generic
@@ -4683,6 +4694,7 @@ gimp_composite_difference_any_any_any_generic
 gimp_composite_dissolve_any_any_any_generic
 gimp_composite_divide_any_any_any_generic
 gimp_composite_dodge_any_any_any_generic
+gimp_composite_erase_any_any_any_generic
 gimp_composite_grain_extract_any_any_any_generic
 gimp_composite_grain_merge_any_any_any_generic
 gimp_composite_hardlight_any_any_any_generic
@@ -4714,6 +4726,11 @@ GimpCompositeOperation
 gimp_composite_dispatch
 gimp_composite_init
 gimp_composite_context_print
+gimp_composite_pixelformat_astext
+gimp_composite_mode_astext
+GIMP_COMPOSITE_OPTION_VERBOSE
+GIMP_COMPOSITE_OPTION_INITIALISED
+GIMP_COMPOSITE_OPTION_USE
 </SECTION>
 
 <SECTION>

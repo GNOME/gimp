@@ -371,6 +371,7 @@
     <xi:include href="xml/gimptext-vectors.xml"/>
     <xi:include href="xml/gimptext-xlfd.xml"/>
     <xi:include href="xml/gimptextlayer.xml"/>
+    <xi:include href="xml/gimptextlayer-transform.xml"/>
     <xi:include href="xml/gimptextlayout.xml"/>
     <xi:include href="xml/gimptextlayout-render.xml"/>
   </part>

@@ -1,3 +1,8 @@
+2003-09-08  Sven Neumann  <sven@gimp.org>
+
+	* app-docs.sgml
+	* app-sections.txt: added some missing declarations.
+
 2003-09-07  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-docs.sgml
