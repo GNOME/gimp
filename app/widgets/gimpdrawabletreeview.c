@@ -217,7 +217,8 @@ gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
   gimp_image_undo_group_start (view->gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
                                _("New Layer"));
 
-  view->new_item_func (view->gimage, NULL, FALSE, GTK_WIDGET (view));
+  view->new_item_func (view->gimage, view->context,
+                       NULL, FALSE, GTK_WIDGET (view));
 
   drawable = gimp_image_active_drawable (view->gimage);
 

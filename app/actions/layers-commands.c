@@ -62,25 +62,64 @@
 
 #include "actions.h"
 #include "layers-commands.h"
-#include "image-commands.h"
 
 #include "gimp-intl.h"
 
 
 /*  local function prototypes  */
 
-static void   layers_add_mask_query       (GimpLayer   *layer,
-                                           GtkWidget   *parent);
-static void   layers_scale_layer_query    (GimpDisplay *gdisp,
-                                           GimpImage   *gimage,
-					   GimpLayer   *layer,
-                                           GtkWidget   *parent);
-static void   layers_resize_layer_query   (GimpImage   *gimage,
-					   GimpLayer   *layer,
-                                           GtkWidget   *parent);
+static void   layers_add_mask_query     (GimpLayer   *layer,
+                                         GtkWidget   *parent);
+static void   layers_scale_layer_query  (GimpDisplay *gdisp,
+                                         GimpImage   *gimage,
+                                         GimpLayer   *layer,
+                                         GtkWidget   *parent);
+static void   layers_resize_layer_query (GimpImage   *gimage,
+                                         GimpLayer   *layer,
+                                         GimpContext *context,
+                                         GtkWidget   *parent);
 
 
 /*  public functions  */
+
+void
+layers_text_tool_cmd_callback (GtkAction *action,
+                               gpointer   data)
+{
+  GimpImage *gimage;
+  GimpLayer *layer;
+  GtkWidget *widget;
+  return_if_no_layer (gimage, layer, data);
+  return_if_no_widget (widget, data);
+
+  layers_text_tool (layer, action_data_get_context (data), widget);
+}
+
+void
+layers_edit_attributes_cmd_callback (GtkAction *action,
+				     gpointer   data)
+{
+  GimpImage *gimage;
+  GimpLayer *layer;
+  GtkWidget *widget;
+  return_if_no_layer (gimage, layer, data);
+  return_if_no_widget (widget, data);
+
+  layers_edit_layer_query (layer, action_data_get_context (data), widget);
+}
+
+void
+layers_new_cmd_callback (GtkAction *action,
+			 gpointer   data)
+{
+  GimpImage *gimage;
+  GtkWidget *widget;
+  return_if_no_image (gimage, data);
+  return_if_no_widget (widget, data);
+
+  layers_new_layer_query (gimage, action_data_get_context (data),
+                          NULL, TRUE, widget);
+}
 
 void
 layers_select_previous_cmd_callback (GtkAction *action,
@@ -221,18 +260,6 @@ layers_lower_to_bottom_cmd_callback (GtkAction *action,
 }
 
 void
-layers_new_cmd_callback (GtkAction *action,
-			 gpointer   data)
-{
-  GimpImage *gimage;
-  GtkWidget *widget;
-  return_if_no_image (gimage, data);
-  return_if_no_widget (widget, data);
-
-  layers_new_layer_query (gimage, NULL, TRUE, widget);
-}
-
-void
 layers_duplicate_cmd_callback (GtkAction *action,
 			       gpointer   data)
 {
@@ -316,7 +343,8 @@ layers_resize_cmd_callback (GtkAction *action,
   return_if_no_layer (gimage, layer, data);
   return_if_no_widget (widget, data);
 
-  layers_resize_layer_query (gimage, layer, widget);
+  layers_resize_layer_query (gimage, layer, action_data_get_context (data),
+                             widget);
 }
 
 void
@@ -485,66 +513,19 @@ layers_alpha_to_selection_cmd_callback (GtkAction *action,
 }
 
 void
-layers_merge_layers_cmd_callback (GtkAction *action,
-                                  gpointer   data)
-{
-  GimpImage *gimage;
-  GtkWidget *widget;
-  return_if_no_image (gimage, data);
-  return_if_no_widget (widget, data);
-
-  image_layers_merge_query (gimage, TRUE, widget);
-}
-
-void
-layers_flatten_image_cmd_callback (GtkAction *action,
-                                   gpointer   data)
-{
-  GimpImage *gimage;
-  return_if_no_image (gimage, data);
-
-  gimp_image_flatten (gimage, action_data_get_context (data));
-  gimp_image_flush (gimage);
-}
-
-void
-layers_text_tool_cmd_callback (GtkAction *action,
-                               gpointer   data)
-{
-  GimpImage *gimage;
-  GimpLayer *layer;
-  GtkWidget *widget;
-  return_if_no_layer (gimage, layer, data);
-  return_if_no_widget (widget, data);
-
-  layers_text_tool (layer, widget);
-}
-
-void
-layers_edit_attributes_cmd_callback (GtkAction *action,
-				     gpointer   data)
-{
-  GimpImage *gimage;
-  GimpLayer *layer;
-  GtkWidget *widget;
-  return_if_no_layer (gimage, layer, data);
-  return_if_no_widget (widget, data);
-
-  layers_edit_layer_query (layer, widget);
-}
-
-void
-layers_text_tool (GimpLayer *layer,
-                  GtkWidget *parent)
+layers_text_tool (GimpLayer   *layer,
+                  GimpContext *context,
+                  GtkWidget   *parent)
 {
   GimpImage *gimage;
   GimpTool  *active_tool;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   if (! gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer)))
     {
-      layers_edit_layer_query (layer, parent);
+      layers_edit_layer_query (layer, context, parent);
       return;
     }
 
@@ -563,9 +544,7 @@ layers_text_tool (GimpLayer *layer,
 
       if (GIMP_IS_TOOL_INFO (tool_info))
         {
-          gimp_context_set_tool (gimp_get_user_context (gimage->gimp),
-                                 tool_info);
-
+          gimp_context_set_tool (context, tool_info);
           active_tool = tool_manager_get_active (gimage->gimp);
         }
     }
@@ -591,6 +570,7 @@ struct _NewLayerOptions
   gint          xsize;
   gint          ysize;
 
+  GimpContext  *context;
   GimpImage    *gimage;
 };
 
@@ -605,7 +585,6 @@ new_layer_query_response (GtkWidget       *widget,
   if (response_id == GTK_RESPONSE_OK)
     {
       GimpLayer *layer;
-      GimpImage *gimage;
 
       if (layer_name)
         g_free (layer_name);
@@ -621,28 +600,26 @@ new_layer_query_response (GtkWidget       *widget,
 
       fill_type = options->fill_type;
 
-      if ((gimage = options->gimage))
-        {
-          layer = gimp_layer_new (gimage,
-                                  options->xsize,
-                                  options->ysize,
-                                  gimp_image_base_type_with_alpha (gimage),
-                                  layer_name,
-                                  GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
-          if (layer)
-            {
-              gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
-                                          gimp_get_user_context (gimage->gimp),
-                                          fill_type);
-              gimp_image_add_layer (gimage, layer, -1);
+      layer = gimp_layer_new (options->gimage,
+                              options->xsize,
+                              options->ysize,
+                              gimp_image_base_type_with_alpha (options->gimage),
+                              layer_name,
+                              GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
-              gimp_image_flush (gimage);
-            }
-          else
-            {
-              g_message ("new_layer_query_response: "
-                         "could not allocate new layer");
-            }
+      if (layer)
+        {
+          gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
+                                      options->context,
+                                      fill_type);
+          gimp_image_add_layer (options->gimage, layer, -1);
+
+          gimp_image_flush (options->gimage);
+        }
+      else
+        {
+          g_message ("new_layer_query_response: "
+                     "could not allocate new layer");
         }
     }
 
@@ -650,10 +627,11 @@ new_layer_query_response (GtkWidget       *widget,
 }
 
 void
-layers_new_layer_query (GimpImage *gimage,
-                        GimpLayer *template,
-                        gboolean   interactive,
-                        GtkWidget *parent)
+layers_new_layer_query (GimpImage   *gimage,
+                        GimpContext *context,
+                        GimpLayer   *template,
+                        gboolean     interactive,
+                        GtkWidget   *parent)
 {
   NewLayerOptions *options;
   GimpLayer       *floating_sel;
@@ -666,6 +644,7 @@ layers_new_layer_query (GimpImage *gimage,
   GtkWidget       *button;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (template == NULL || GIMP_IS_LAYER (template));
 
   /*  If there is a floating selection, the new command transforms
@@ -707,16 +686,11 @@ layers_new_layer_query (GimpImage *gimage,
       gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("New Layer"));
 
-      new_layer = gimp_layer_new (gimage,
-                                  width,
-                                  height,
+      new_layer = gimp_layer_new (gimage, width, height,
                                   gimp_image_base_type_with_alpha (gimage),
-                                  _("Empty Layer"),
-                                  opacity,
-                                  mode);
+                                  _("Empty Layer"), opacity, mode);
 
-      gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_layer),
-                                  gimp_get_user_context (gimage->gimp),
+      gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_layer), context,
                                   GIMP_TRANSPARENT_FILL);
       gimp_item_translate (GIMP_ITEM (new_layer), off_x, off_y, FALSE);
 
@@ -730,6 +704,7 @@ layers_new_layer_query (GimpImage *gimage,
 
   options->fill_type = fill_type;
   options->gimage    = gimage;
+  options->context   = context;
 
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
@@ -753,16 +728,17 @@ layers_new_layer_query (GimpImage *gimage,
 		     (GWeakNotify) g_free,
 		     options);
 
-  /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     vbox);
+  gtk_widget_show (vbox);
 
   table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   /*  The name label and entry  */
   options->name_entry = gtk_entry_new ();
@@ -832,8 +808,6 @@ layers_new_layer_query (GimpImage *gimage,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (options->size_se), 1,
 			      gimage->height);
 
-  gtk_widget_show (table);
-
   /*  The radio frame  */
   frame = gimp_enum_radio_frame_new_with_range (GIMP_TYPE_FILL_TYPE,
                                                 GIMP_FOREGROUND_FILL,
@@ -845,13 +819,12 @@ layers_new_layer_query (GimpImage *gimage,
                                                 &button);
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
                                    options->fill_type);
-
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);
 }
+
 
 /**************************************/
 /*  The edit layer attributes dialog  */
@@ -864,6 +837,7 @@ struct _EditLayerOptions
   GtkWidget *query_box;
   GtkWidget *name_entry;
   GtkWidget *toggle;
+
   GimpLayer *layer;
   GimpImage *gimage;
 };
@@ -875,28 +849,24 @@ edit_layer_query_response (GtkWidget        *widget,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpLayer *layer = options->layer;
+      GimpLayer   *layer = options->layer;
+      const gchar *new_name;
 
-      if (options->gimage)
+      new_name = gtk_entry_get_text (GTK_ENTRY (options->name_entry));
+
+      if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (layer))))
         {
-          const gchar *new_name;
+          gimp_item_rename (GIMP_ITEM (layer), new_name);
+          gimp_image_flush (options->gimage);
+        }
 
-          new_name = gtk_entry_get_text (GTK_ENTRY (options->name_entry));
-
-          if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (layer))))
-            {
-              gimp_item_rename (GIMP_ITEM (layer), new_name);
-              gimp_image_flush (options->gimage);
-            }
-
-          if (options->toggle &&
-              gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer)))
-            {
-              g_object_set (layer,
-                            "auto-rename",
-                            GTK_TOGGLE_BUTTON (options->toggle)->active,
-                            NULL);
-            }
+      if (options->toggle &&
+          gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer)))
+        {
+          g_object_set (layer,
+                        "auto-rename",
+                        GTK_TOGGLE_BUTTON (options->toggle)->active,
+                        NULL);
         }
     }
 
@@ -909,7 +879,6 @@ edit_layer_query_activate (GtkWidget        *widget,
 {
   gtk_dialog_response (GTK_DIALOG (options->query_box), GTK_RESPONSE_OK);
 }
-
 
 static void
 edit_layer_toggle_rename (GtkWidget        *widget,
@@ -933,12 +902,16 @@ edit_layer_toggle_rename (GtkWidget        *widget,
 }
 
 void
-layers_edit_layer_query (GimpLayer *layer,
-                         GtkWidget *parent)
+layers_edit_layer_query (GimpLayer   *layer,
+                         GimpContext *context,
+                         GtkWidget   *parent)
 {
   EditLayerOptions *options;
   GtkWidget        *vbox;
   GtkWidget        *table;
+
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   options = g_new0 (EditLayerOptions, 1);
 
@@ -967,13 +940,12 @@ layers_edit_layer_query (GimpLayer *layer,
 		     (GWeakNotify) g_free,
 		     options);
 
-  /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     vbox);
+  gtk_widget_show (vbox);
 
-  /*  The name label and entry  */
   table = gtk_table_new (1, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
@@ -1011,9 +983,9 @@ layers_edit_layer_query (GimpLayer *layer,
                         options);
     }
 
-  gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);
 }
+
 
 /*******************************/
 /*  The add mask query dialog  */
@@ -1216,6 +1188,7 @@ layers_scale_layer_query (GimpDisplay *gdisp,
   gtk_widget_show (options->dialog->shell);
 }
 
+
 /*****************************/
 /*  The resize layer dialog  */
 /*****************************/
@@ -1225,6 +1198,7 @@ typedef struct _ResizeLayerOptions ResizeLayerOptions;
 struct _ResizeLayerOptions
 {
   GimpLayer    *layer;
+  GimpContext  *context;
   ResizeDialog *dialog;
 };
 
@@ -1243,7 +1217,7 @@ resize_layer_query_ok_callback (GtkWidget *widget,
       gtk_widget_set_sensitive (options->dialog->shell, FALSE);
 
       gimp_item_resize (GIMP_ITEM (layer),
-                        gimp_get_user_context (gimage->gimp),
+                        options->context,
                         options->dialog->width,
                         options->dialog->height,
                         options->dialog->offset_x,
@@ -1260,15 +1234,17 @@ resize_layer_query_ok_callback (GtkWidget *widget,
 }
 
 static void
-layers_resize_layer_query (GimpImage *gimage,
-                           GimpLayer *layer,
-                           GtkWidget *parent)
+layers_resize_layer_query (GimpImage   *gimage,
+                           GimpLayer   *layer,
+                           GimpContext *context,
+                           GtkWidget   *parent)
 {
   ResizeLayerOptions *options;
 
   options = g_new0 (ResizeLayerOptions, 1);
 
-  options->layer = layer;
+  options->context = context;
+  options->layer   = layer;
 
   options->dialog =
     resize_dialog_new (GIMP_VIEWABLE (layer), parent,

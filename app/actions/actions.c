@@ -255,6 +255,8 @@ action_data_get_context (gpointer data)
     return gimp_container_view_get_context (((GimpContainerEditor *) data)->view);
   else if (GIMP_IS_IMAGE_EDITOR (data))
     return ((GimpImageEditor *) data)->context;
+  else if (GIMP_IS_GIMP (data))
+    return gimp_get_user_context (data);
   else if (GIMP_IS_DOCK (data))
     return ((GimpDock *) data)->context;
 

@@ -149,7 +149,7 @@ static GimpEnumActionEntry edit_fill_actions[] =
 void
 edit_actions_setup (GimpActionGroup *group)
 {
-  GimpContext *user_context;
+  GimpContext *context = gimp_get_user_context (group->gimp);
   GimpRGB      color;
   GimpPattern *pattern;
 
@@ -167,26 +167,24 @@ edit_actions_setup (GimpActionGroup *group)
                            group, 0);
   edit_actions_buffer_changed (group->gimp, group);
 
-  user_context = gimp_get_user_context (group->gimp);
-
-  g_signal_connect_object (user_context, "foreground_changed",
+  g_signal_connect_object (context, "foreground_changed",
                            G_CALLBACK (edit_actions_foreground_changed),
                            group, 0);
-  g_signal_connect_object (user_context, "background_changed",
+  g_signal_connect_object (context, "background_changed",
                            G_CALLBACK (edit_actions_background_changed),
                            group, 0);
-  g_signal_connect_object (user_context, "pattern_changed",
+  g_signal_connect_object (context, "pattern_changed",
                            G_CALLBACK (edit_actions_pattern_changed),
                            group, 0);
 
-  gimp_context_get_foreground (user_context, &color);
-  edit_actions_foreground_changed (user_context, &color, group);
+  gimp_context_get_foreground (context, &color);
+  edit_actions_foreground_changed (context, &color, group);
 
-  gimp_context_get_background (user_context, &color);
-  edit_actions_background_changed (user_context, &color, group);
+  gimp_context_get_background (context, &color);
+  edit_actions_background_changed (context, &color, group);
 
-  pattern = gimp_context_get_pattern (user_context);
-  edit_actions_pattern_changed (user_context, pattern, group);
+  pattern = gimp_context_get_pattern (context);
+  edit_actions_pattern_changed (context, pattern, group);
 }
 
 void

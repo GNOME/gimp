@@ -73,6 +73,32 @@ static void  vectors_export_query (GimpImage   *gimage,
 /*  public functions  */
 
 void
+vectors_vectors_tool_cmd_callback (GtkAction *action,
+                                   gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *vectors;
+  GtkWidget   *widget;
+  return_if_no_vectors (gimage, vectors, data);
+  return_if_no_widget (widget, data);
+
+  vectors_vectors_tool (vectors, action_data_get_context (data), widget);
+}
+
+void
+vectors_edit_attributes_cmd_callback (GtkAction *action,
+                                      gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *vectors;
+  GtkWidget   *widget;
+  return_if_no_vectors (gimage, vectors, data);
+  return_if_no_widget (widget, data);
+
+  vectors_edit_vectors_query (vectors, action_data_get_context (data), widget);
+}
+
+void
 vectors_new_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
@@ -81,7 +107,8 @@ vectors_new_cmd_callback (GtkAction *action,
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
 
-  vectors_new_vectors_query (gimage, NULL, TRUE, widget);
+  vectors_new_vectors_query (gimage, action_data_get_context (data),
+                             NULL, TRUE, widget);
 }
 
 void
@@ -89,10 +116,10 @@ vectors_raise_to_top_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   GimpImage   *gimage;
-  GimpVectors *active_vectors;
-  return_if_no_vectors (gimage, active_vectors, data);
+  GimpVectors *vectors;
+  return_if_no_vectors (gimage, vectors, data);
 
-  gimp_image_raise_vectors_to_top (gimage, active_vectors);
+  gimp_image_raise_vectors_to_top (gimage, vectors);
   gimp_image_flush (gimage);
 }
 
@@ -101,10 +128,10 @@ vectors_raise_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
   GimpImage   *gimage;
-  GimpVectors *active_vectors;
-  return_if_no_vectors (gimage, active_vectors, data);
+  GimpVectors *vectors;
+  return_if_no_vectors (gimage, vectors, data);
 
-  gimp_image_raise_vectors (gimage, active_vectors);
+  gimp_image_raise_vectors (gimage, vectors);
   gimp_image_flush (gimage);
 }
 
@@ -113,10 +140,10 @@ vectors_lower_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
   GimpImage   *gimage;
-  GimpVectors *active_vectors;
-  return_if_no_vectors (gimage, active_vectors, data);
+  GimpVectors *vectors;
+  return_if_no_vectors (gimage, vectors, data);
 
-  gimp_image_lower_vectors (gimage, active_vectors);
+  gimp_image_lower_vectors (gimage, vectors);
   gimp_image_flush (gimage);
 }
 
@@ -125,10 +152,10 @@ vectors_lower_to_bottom_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
   GimpImage   *gimage;
-  GimpVectors *active_vectors;
-  return_if_no_vectors (gimage, active_vectors, data);
+  GimpVectors *vectors;
+  return_if_no_vectors (gimage, vectors, data);
 
-  gimp_image_lower_vectors_to_bottom (gimage, active_vectors);
+  gimp_image_lower_vectors_to_bottom (gimage, vectors);
   gimp_image_flush (gimage);
 }
 
@@ -137,14 +164,13 @@ vectors_duplicate_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
   GimpImage   *gimage;
-  GimpVectors *active_vectors;
+  GimpVectors *vectors;
   GimpVectors *new_vectors;
-  return_if_no_vectors (gimage, active_vectors, data);
+  return_if_no_vectors (gimage, vectors, data);
 
-  new_vectors =
-    GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (active_vectors),
-                                       G_TYPE_FROM_INSTANCE (active_vectors),
-                                       TRUE));
+  new_vectors =GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
+                                                  G_TYPE_FROM_INSTANCE (vectors),
+                                                  TRUE));
   gimp_image_add_vectors (gimage, new_vectors, -1);
   gimp_image_flush (gimage);
 }
@@ -154,10 +180,10 @@ vectors_delete_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
   GimpImage   *gimage;
-  GimpVectors *active_vectors;
-  return_if_no_vectors (gimage, active_vectors, data);
+  GimpVectors *vectors;
+  return_if_no_vectors (gimage, vectors, data);
 
-  gimp_image_remove_vectors (gimage, active_vectors);
+  gimp_image_remove_vectors (gimage, vectors);
   gimp_image_flush (gimage);
 }
 
@@ -166,8 +192,8 @@ vectors_merge_visible_cmd_callback (GtkAction *action,
                                     gpointer   data)
 {
   GimpImage   *gimage;
-  GimpVectors *active_vectors;
-  return_if_no_vectors (gimage, active_vectors, data);
+  GimpVectors *vectors;
+  return_if_no_vectors (gimage, vectors, data);
 
   gimp_image_merge_visible_vectors (gimage);
   gimp_image_flush (gimage);
@@ -180,14 +206,14 @@ vectors_to_selection_cmd_callback (GtkAction *action,
 {
   GimpChannelOps  op;
   GimpImage      *gimage;
-  GimpVectors    *active_vectors;
-  return_if_no_vectors (gimage, active_vectors, data);
+  GimpVectors    *vectors;
+  return_if_no_vectors (gimage, vectors, data);
 
   op = (GimpChannelOps) value;
 
   gimp_channel_select_vectors (gimp_image_get_mask (gimage),
                                _("Path to Selection"),
-                               active_vectors,
+                               vectors,
                                op, TRUE, FALSE, 0, 0);
   gimp_image_flush (gimage);
 }
@@ -216,7 +242,7 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
       return;
     }
 
-  gdisp = gimp_context_get_display (gimp_get_user_context (gimage->gimp));
+  gdisp = gimp_context_get_display (action_data_get_context (data));
 
   /*  plug-in arguments as if called by <Image>/Filters/...  */
   args = g_new (Argument, 3);
@@ -228,7 +254,7 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   args[2].arg_type      = GIMP_PDB_DRAWABLE;
   args[2].value.pdb_int = -1;  /*  unused  */
 
-  plug_in_run (gimage->gimp, gimp_get_user_context (gimage->gimp),
+  plug_in_run (gimage->gimp, action_data_get_context (data),
                proc_rec, args, 3, FALSE, TRUE,
 	       gdisp ? gdisp->ID : 0);
 
@@ -267,8 +293,8 @@ vectors_copy_cmd_callback (GtkAction *action,
                            gpointer   data)
 {
   GimpImage   *gimage;
-  GimpVectors *active_vectors;
-  return_if_no_vectors (gimage, active_vectors, data);
+  GimpVectors *vectors;
+  return_if_no_vectors (gimage, vectors, data);
 
 #ifdef __GNUC__
 #warning FIXME: need vectors clipboard
@@ -304,45 +330,24 @@ vectors_export_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
   GimpImage   *gimage;
-  GimpVectors *active_vectors;
+  GimpVectors *vectors;
   GtkWidget   *widget;
-  return_if_no_vectors (gimage, active_vectors, data);
+  return_if_no_vectors (gimage, vectors, data);
   return_if_no_widget (widget, data);
 
-  vectors_export_query (gimage, active_vectors, widget);
+  vectors_export_query (gimage, vectors, widget);
 }
 
 void
-vectors_vectors_tool_cmd_callback (GtkAction *action,
-                                   gpointer   data)
-{
-  GimpImage   *gimage;
-  GimpVectors *active_vectors;
-  return_if_no_vectors (gimage, active_vectors, data);
-
-  vectors_vectors_tool (active_vectors);
-}
-
-void
-vectors_edit_attributes_cmd_callback (GtkAction *action,
-                                      gpointer   data)
-{
-  GimpImage   *gimage;
-  GimpVectors *active_vectors;
-  GtkWidget   *widget;
-  return_if_no_vectors (gimage, active_vectors, data);
-  return_if_no_widget (widget, data);
-
-  vectors_edit_vectors_query (active_vectors, widget);
-}
-
-void
-vectors_vectors_tool (GimpVectors *vectors)
+vectors_vectors_tool (GimpVectors *vectors,
+                      GimpContext *context,
+                      GtkWidget   *parent)
 {
   GimpImage *gimage;
   GimpTool  *active_tool;
 
   g_return_if_fail (GIMP_IS_VECTORS (vectors));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   gimage = gimp_item_get_image (GIMP_ITEM (vectors));
 
@@ -361,9 +366,7 @@ vectors_vectors_tool (GimpVectors *vectors)
 
       if (GIMP_IS_TOOL_INFO (tool_info))
         {
-          gimp_context_set_tool (gimp_get_user_context (gimage->gimp),
-                                 tool_info);
-
+          gimp_context_set_tool (context, tool_info);
           active_tool = tool_manager_get_active (gimage->gimp);
         }
     }
@@ -380,10 +383,10 @@ typedef struct _NewVectorsOptions NewVectorsOptions;
 
 struct _NewVectorsOptions
 {
-  GtkWidget  *query_box;
-  GtkWidget  *name_entry;
+  GtkWidget *query_box;
+  GtkWidget *name_entry;
 
-  GimpImage  *gimage;
+  GimpImage *gimage;
 };
 
 static gchar *vectors_name = NULL;
@@ -397,21 +400,17 @@ new_vectors_query_response (GtkWidget         *widget,
   if (response_id == GTK_RESPONSE_OK)
     {
       GimpVectors *new_vectors;
-      GimpImage   *gimage;
 
       if (vectors_name)
         g_free (vectors_name);
       vectors_name =
         g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
 
-      if ((gimage = options->gimage))
-        {
-          new_vectors = gimp_vectors_new (gimage, vectors_name);
+      new_vectors = gimp_vectors_new (options->gimage, vectors_name);
 
-          gimp_image_add_vectors (gimage, new_vectors, -1);
+      gimp_image_add_vectors (options->gimage, new_vectors, -1);
 
-          gimp_image_flush (gimage);
-        }
+      gimp_image_flush (options->gimage);
     }
 
   gtk_widget_destroy (options->query_box);
@@ -419,6 +418,7 @@ new_vectors_query_response (GtkWidget         *widget,
 
 void
 vectors_new_vectors_query (GimpImage   *gimage,
+                           GimpContext *context,
                            GimpVectors *template,
                            gboolean     interactive,
                            GtkWidget   *parent)
@@ -430,6 +430,7 @@ vectors_new_vectors_query (GimpImage   *gimage,
   GtkWidget         *label;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (! template || GIMP_IS_VECTORS (template));
 
   if (template || ! interactive)
@@ -470,21 +471,21 @@ vectors_new_vectors_query (GimpImage   *gimage,
 		     (GWeakNotify) g_free,
 		     options);
 
-  /*  The main hbox  */
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     hbox);
+  gtk_widget_show (hbox);
 
-  /*  The vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
-  /*  The table  */
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   /*  The name entry hbox, label and entry  */
   label = gtk_label_new (_("Path name:"));
@@ -501,9 +502,6 @@ vectors_new_vectors_query (GimpImage   *gimage,
 		      (vectors_name ? vectors_name : _("New Path")));
   gtk_widget_show (options->name_entry);
 
-  gtk_widget_show (table);
-  gtk_widget_show (vbox);
-  gtk_widget_show (hbox);
   gtk_widget_show (options->query_box);
 }
 
@@ -530,18 +528,14 @@ edit_vectors_query_response (GtkWidget          *widget,
   if (response_id == GTK_RESPONSE_OK)
     {
       GimpVectors *vectors = options->vectors;
+      const gchar *new_name;
 
-      if (options->gimage)
+      new_name = gtk_entry_get_text (GTK_ENTRY (options->name_entry));
+
+      if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (vectors))))
         {
-          const gchar *new_name;
-
-          new_name = gtk_entry_get_text (GTK_ENTRY (options->name_entry));
-
-          if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (vectors))))
-            {
-              gimp_item_rename (GIMP_ITEM (vectors), new_name);
-              gimp_image_flush (options->gimage);
-            }
+          gimp_item_rename (GIMP_ITEM (vectors), new_name);
+          gimp_image_flush (options->gimage);
         }
     }
 
@@ -550,6 +544,7 @@ edit_vectors_query_response (GtkWidget          *widget,
 
 void
 vectors_edit_vectors_query (GimpVectors *vectors,
+                            GimpContext *context,
                             GtkWidget   *parent)
 {
   EditVectorsOptions *options;
@@ -559,6 +554,7 @@ vectors_edit_vectors_query (GimpVectors *vectors,
   GtkWidget          *label;
 
   g_return_if_fail (GIMP_IS_VECTORS (vectors));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   options = g_new0 (EditVectorsOptions, 1);
 
@@ -588,21 +584,21 @@ vectors_edit_vectors_query (GimpVectors *vectors,
 		     (GWeakNotify) g_free,
 		     options);
 
-  /*  The main hbox  */
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     hbox);
+  gtk_widget_show (hbox);
 
-  /*  The vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
-  /*  The table  */
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   /*  The name entry  */
   label = gtk_label_new (_("Path name:"));
@@ -619,9 +615,6 @@ vectors_edit_vectors_query (GimpVectors *vectors,
 		      gimp_object_get_name (GIMP_OBJECT (vectors)));
   gtk_widget_show (options->name_entry);
 
-  gtk_widget_show (table);
-  gtk_widget_show (vbox);
-  gtk_widget_show (hbox);
   gtk_widget_show (options->query_box);
 }
 

@@ -20,8 +20,13 @@
 #define __VECTORS_COMMANDS_H__
 
 
+void   vectors_vectors_tool_cmd_callback         (GtkAction   *action,
+                                                  gpointer     data);
+void   vectors_edit_attributes_cmd_callback      (GtkAction   *action,
+                                                  gpointer     data);
 void   vectors_new_cmd_callback                  (GtkAction   *action,
                                                   gpointer     data);
+
 void   vectors_raise_cmd_callback                (GtkAction   *action,
                                                   gpointer     data);
 void   vectors_raise_to_top_cmd_callback         (GtkAction   *action,
@@ -30,6 +35,7 @@ void   vectors_lower_cmd_callback                (GtkAction   *action,
                                                   gpointer     data);
 void   vectors_lower_to_bottom_cmd_callback      (GtkAction   *action,
                                                   gpointer     data);
+
 void   vectors_duplicate_cmd_callback            (GtkAction   *action,
                                                   gpointer     data);
 void   vectors_delete_cmd_callback               (GtkAction   *action,
@@ -44,6 +50,7 @@ void   vectors_selection_to_vectors_cmd_callback (GtkAction   *action,
                                                   gpointer     data);
 void   vectors_stroke_cmd_callback               (GtkAction   *action,
                                                   gpointer     data);
+
 void   vectors_copy_cmd_callback                 (GtkAction   *action,
                                                   gpointer     data);
 void   vectors_paste_cmd_callback                (GtkAction   *action,
@@ -52,17 +59,17 @@ void   vectors_import_cmd_callback               (GtkAction   *action,
                                                   gpointer     data);
 void   vectors_export_cmd_callback               (GtkAction   *action,
                                                   gpointer     data);
-void   vectors_vectors_tool_cmd_callback         (GtkAction   *action,
-                                                  gpointer     data);
-void   vectors_edit_attributes_cmd_callback      (GtkAction   *action,
-                                                  gpointer     data);
 
-void   vectors_vectors_tool                      (GimpVectors *vectors);
+void   vectors_vectors_tool                      (GimpVectors *vectors,
+                                                  GimpContext *context,
+                                                  GtkWidget   *parent);
 void   vectors_new_vectors_query                 (GimpImage   *gimage,
+                                                  GimpContext *context,
                                                   GimpVectors *template,
                                                   gboolean     interactive,
                                                   GtkWidget   *parent);
 void   vectors_edit_vectors_query                (GimpVectors *vectors,
+                                                  GimpContext *context,
                                                   GtkWidget   *parent);
 
 

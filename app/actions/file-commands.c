@@ -118,7 +118,7 @@ file_last_opened_cmd_callback (GtkAction *action,
       GimpPDBStatusType  status;
       GError            *error = NULL;
 
-      gimage = file_open_with_display (gimp, gimp_get_user_context (gimp),
+      gimage = file_open_with_display (gimp, action_data_get_context (data),
                                        GIMP_OBJECT (imagefile)->name,
                                        &status, &error);
 
@@ -164,8 +164,7 @@ file_save_cmd_callback (GtkAction *action,
 	  GimpPDBStatusType  status;
           GError            *error = NULL;
 
-	  status = file_save (gdisp->gimage,
-                              gimp_get_user_context (gdisp->gimage->gimp),
+	  status = file_save (gdisp->gimage, action_data_get_context (data),
                               GIMP_RUN_WITH_LAST_VALS, &error);
 
 	  if (status != GIMP_PDB_SUCCESS &&

@@ -129,7 +129,7 @@ edit_cut_cmd_callback (GtkAction *action,
   GimpDrawable *drawable;
   return_if_no_drawable (gimage, drawable, data);
 
-  if (gimp_edit_cut (gimage, drawable, gimp_get_user_context (gimage->gimp)))
+  if (gimp_edit_cut (gimage, drawable, action_data_get_context (data)))
     gimp_image_flush (gimage);
 }
 
@@ -141,7 +141,7 @@ edit_copy_cmd_callback (GtkAction *action,
   GimpDrawable *drawable;
   return_if_no_drawable (gimage, drawable, data);
 
-  if (gimp_edit_copy (gimage, drawable, gimp_get_user_context (gimage->gimp)))
+  if (gimp_edit_copy (gimage, drawable, action_data_get_context (data)))
     gimp_image_flush (gimage);
 }
 
@@ -260,7 +260,7 @@ edit_clear_cmd_callback (GtkAction *action,
   GimpDrawable *drawable;
   return_if_no_drawable (gimage, drawable, data);
 
-  gimp_edit_clear (gimage, drawable, gimp_get_user_context (gimage->gimp));
+  gimp_edit_clear (gimage, drawable, action_data_get_context (data));
   gimp_image_flush (gimage);
 }
 
@@ -276,7 +276,7 @@ edit_fill_cmd_callback (GtkAction *action,
 
   fill_type = (GimpFillType) value;
 
-  gimp_edit_fill (gimage, drawable, gimp_get_user_context (gimage->gimp),
+  gimp_edit_fill (gimage, drawable, action_data_get_context (data),
                   fill_type);
   gimp_image_flush (gimage);
 }
@@ -291,17 +291,17 @@ cut_named_buffer_callback (GtkWidget   *widget,
 {
   GimpImage        *gimage = GIMP_IMAGE (data);
   const GimpBuffer *cut_buffer;
-  GimpDrawable     *active_drawable;
+  GimpDrawable     *drawable;
 
-  active_drawable = gimp_image_active_drawable (gimage);
+  drawable = gimp_image_active_drawable (gimage);
 
-  if (! active_drawable)
+  if (! drawable)
     {
       g_message (_("There is no active layer or channel to cut from."));
       return;
     }
 
-  cut_buffer = gimp_edit_cut (gimage, active_drawable,
+  cut_buffer = gimp_edit_cut (gimage, drawable,
                               gimp_get_user_context (gimage->gimp));
 
   if (cut_buffer)
@@ -328,17 +328,17 @@ copy_named_buffer_callback (GtkWidget   *widget,
 {
   GimpImage        *gimage = GIMP_IMAGE (data);
   const GimpBuffer *copy_buffer;
-  GimpDrawable     *active_drawable;
+  GimpDrawable     *drawable;
 
-  active_drawable = gimp_image_active_drawable (gimage);
+  drawable = gimp_image_active_drawable (gimage);
 
-  if (! active_drawable)
+  if (! drawable)
     {
       g_message (_("There is no active layer or channel to copy from."));
       return;
     }
 
-  copy_buffer = gimp_edit_copy (gimage, active_drawable,
+  copy_buffer = gimp_edit_copy (gimage, drawable,
                                 gimp_get_user_context (gimage->gimp));
 
   if (copy_buffer)

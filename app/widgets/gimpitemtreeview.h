@@ -42,12 +42,15 @@ typedef void            (* GimpRemoveItemFunc)   (GimpImage       *gimage,
                                                   GimpItem        *item);
 
 typedef void            (* GimpEditItemFunc)     (GimpItem        *item,
+                                                  GimpContext     *context,
                                                   GtkWidget       *parent);
 typedef void            (* GimpNewItemFunc)      (GimpImage       *gimage,
+                                                  GimpContext     *context,
                                                   GimpItem        *template,
                                                   gboolean         interactive,
                                                   GtkWidget       *parent);
 typedef void            (* GimpActivateItemFunc) (GimpItem        *item,
+                                                  GimpContext     *context,
                                                   GtkWidget       *parent);
 
 

@@ -34,6 +34,7 @@
 #include "widgets/gimpactiongroup.h"
 
 #include "actions.h"
+#include "image-commands.h"
 #include "layers-actions.h"
 #include "layers-commands.h"
 
@@ -131,12 +132,12 @@ static GimpActionEntry layers_actions[] =
 
   { "layers-merge-layers", NULL,
     N_("Merge _Visible Layers..."), NULL, NULL,
-    G_CALLBACK (layers_merge_layers_cmd_callback),
+    G_CALLBACK (image_merge_layers_cmd_callback),
     GIMP_HELP_IMAGE_MERGE_LAYERS },
 
   { "layers-flatten-image", NULL,
     N_("_Flatten Image"), NULL, NULL,
-    G_CALLBACK (layers_flatten_image_cmd_callback),
+    G_CALLBACK (image_flatten_image_cmd_callback),
     GIMP_HELP_IMAGE_FLATTEN },
 
   { "layers-text-discard", GIMP_STOCK_TOOL_TEXT,

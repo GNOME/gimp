@@ -1,3 +1,37 @@
+2004-05-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpitemtreeview.h: added GimpContext parameters
+	to GimpActivateItemFunc, GimpNewItemFunc and GimpEditItemFunc.
+
+	* app/widgets/gimpdrawabletreeview.c
+	* app/widgets/gimpitemtreeview.c: pass the view's context to
+	the functions.
+
+	* app/actions/actions.c (action_data_get_context): return
+	gimp_get_user_context() if "data" is a Gimp.
+
+	* app/actions/channels-commands.[ch]
+	* app/actions/layers-commands.[ch]
+	* app/actions/vectors-commands.[ch]: added GimpContext parameters
+	to the resp. activate, new and edit functions and use the passed
+	context instead of gimp_get_user_context().
+
+	* app/actions/layers-commands.[ch]: removed the merge and flatten
+	callbacks.
+
+	* app/actions/image-commands.[ch]: made public layer merge utility
+	function private and cleaned the whole file up a lot.
+
+	* app/actions/layers-actions.c: use the callbacks from
+	image-commands.c for merge and flatten.
+
+	* app/actions/edit-commands.c
+	* app/actions/file-commands.c
+	* app/actions/select-commands.c: use action_data_get_context()
+	instead of gimp_get_user_context().
+
+	* app/actions/edit-actions.c: some cleanup.
+
 2004-05-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/plugindetails.c

@@ -25,7 +25,6 @@
 
 #include "actions-types.h"
 
-#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
@@ -77,7 +76,7 @@ static gboolean  selection_shrink_edge_lock  = FALSE;
 
 void
 select_invert_cmd_callback (GtkAction *action,
-			    gpointer   data)
+                            gpointer   data)
 {
   GimpImage *gimage;
   return_if_no_image (gimage, data);
@@ -88,7 +87,7 @@ select_invert_cmd_callback (GtkAction *action,
 
 void
 select_all_cmd_callback (GtkAction *action,
-			 gpointer   data)
+                         gpointer   data)
 {
   GimpImage *gimage;
   return_if_no_image (gimage, data);
@@ -99,7 +98,7 @@ select_all_cmd_callback (GtkAction *action,
 
 void
 select_none_cmd_callback (GtkAction *action,
-			  gpointer   data)
+                          gpointer   data)
 {
   GimpImage *gimage;
   return_if_no_image (gimage, data);
@@ -130,21 +129,21 @@ select_from_vectors_cmd_callback (GtkAction *action,
 
 void
 select_float_cmd_callback (GtkAction *action,
-			   gpointer   data)
+                           gpointer   data)
 {
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
   gimp_selection_float (gimp_image_get_mask (gimage),
                         gimp_image_active_drawable (gimage),
-                        gimp_get_user_context (gimage->gimp),
+                        action_data_get_context (data),
                         TRUE, 0, 0);
   gimp_image_flush (gimage);
 }
 
 void
 select_feather_cmd_callback (GtkAction *action,
-			     gpointer   data)
+                             gpointer   data)
 {
   GimpDisplay *gdisp;
   GtkWidget   *qbox;
@@ -152,22 +151,22 @@ select_feather_cmd_callback (GtkAction *action,
 
   qbox = gimp_query_size_box (_("Feather Selection"),
                               gdisp->shell,
-			      gimp_standard_help_func,
-			      GIMP_HELP_SELECTION_FEATHER,
-			      _("Feather selection by"),
-			      selection_feather_radius, 0, 32767, 3,
-			      gdisp->gimage->unit,
-			      MIN (gdisp->gimage->xresolution,
-				   gdisp->gimage->yresolution),
-			      GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot,
-			      G_OBJECT (gdisp->gimage), "disconnect",
-			      gimp_image_mask_feather_callback, gdisp->gimage);
+                              gimp_standard_help_func,
+                              GIMP_HELP_SELECTION_FEATHER,
+                              _("Feather selection by"),
+                              selection_feather_radius, 0, 32767, 3,
+                              gdisp->gimage->unit,
+                              MIN (gdisp->gimage->xresolution,
+                                   gdisp->gimage->yresolution),
+                              GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot,
+                              G_OBJECT (gdisp->gimage), "disconnect",
+                              gimp_image_mask_feather_callback, gdisp->gimage);
   gtk_widget_show (qbox);
 }
 
 void
 select_sharpen_cmd_callback (GtkAction *action,
-			     gpointer   data)
+                             gpointer   data)
 {
   GimpImage *gimage;
   return_if_no_image (gimage, data);
@@ -178,7 +177,7 @@ select_sharpen_cmd_callback (GtkAction *action,
 
 void
 select_shrink_cmd_callback (GtkAction *action,
-			    gpointer   data)
+                            gpointer   data)
 {
   GimpDisplay *gdisp;
   GtkWidget   *shrink_dialog;
@@ -206,7 +205,7 @@ select_shrink_cmd_callback (GtkAction *action,
 
   g_object_set_data (G_OBJECT (shrink_dialog), "edge_lock_toggle", edge_lock);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (edge_lock),
-				! selection_shrink_edge_lock);
+                                ! selection_shrink_edge_lock);
   gtk_widget_show (edge_lock);
 
   gtk_widget_show (shrink_dialog);
@@ -214,7 +213,7 @@ select_shrink_cmd_callback (GtkAction *action,
 
 void
 select_grow_cmd_callback (GtkAction *action,
-			  gpointer   data)
+                          gpointer   data)
 {
   GimpDisplay *gdisp;
   GtkWidget   *qbox;
@@ -237,7 +236,7 @@ select_grow_cmd_callback (GtkAction *action,
 
 void
 select_border_cmd_callback (GtkAction *action,
-			    gpointer   data)
+                            gpointer   data)
 {
   GimpDisplay *gdisp;
   GtkWidget   *qbox;
@@ -260,7 +259,7 @@ select_border_cmd_callback (GtkAction *action,
 
 void
 select_save_cmd_callback (GtkAction *action,
-			  gpointer   data)
+                          gpointer   data)
 {
   GimpImage *gimage;
   GtkWidget *widget;
@@ -310,11 +309,9 @@ gimp_image_mask_feather_callback (GtkWidget *widget,
                                   GimpUnit   unit,
                                   gpointer   data)
 {
-  GimpImage *gimage;
+  GimpImage *gimage = GIMP_IMAGE (data);
   gdouble    radius_x;
   gdouble    radius_y;
-
-  gimage = GIMP_IMAGE (data);
 
   selection_feather_radius = size;
 
@@ -325,12 +322,12 @@ gimp_image_mask_feather_callback (GtkWidget *widget,
       gdouble factor;
 
       factor = (MAX (gimage->xresolution, gimage->yresolution) /
-		MIN (gimage->xresolution, gimage->yresolution));
+                MIN (gimage->xresolution, gimage->yresolution));
 
       if (gimage->xresolution == MIN (gimage->xresolution, gimage->yresolution))
-	radius_y *= factor;
+        radius_y *= factor;
       else
-	radius_x *= factor;
+        radius_x *= factor;
     }
 
   gimp_channel_feather (gimp_image_get_mask (gimage), radius_x, radius_y, TRUE);
@@ -343,11 +340,9 @@ gimp_image_mask_border_callback (GtkWidget *widget,
                                  GimpUnit   unit,
                                  gpointer   data)
 {
-  GimpImage *gimage;
+  GimpImage *gimage = GIMP_IMAGE (data);
   gdouble    radius_x;
   gdouble    radius_y;
-
-  gimage = GIMP_IMAGE (data);
 
   selection_border_radius = ROUND (size);
 
@@ -358,12 +353,12 @@ gimp_image_mask_border_callback (GtkWidget *widget,
       gdouble factor;
 
       factor = (MAX (gimage->xresolution, gimage->yresolution) /
-		MIN (gimage->xresolution, gimage->yresolution));
+                MIN (gimage->xresolution, gimage->yresolution));
 
       if (gimage->xresolution == MIN (gimage->xresolution, gimage->yresolution))
-	radius_y *= factor;
+        radius_y *= factor;
       else
-	radius_x *= factor;
+        radius_x *= factor;
     }
 
   gimp_channel_border (gimp_image_get_mask (gimage), radius_x, radius_y, TRUE);
@@ -376,11 +371,9 @@ gimp_image_mask_grow_callback (GtkWidget *widget,
                                GimpUnit   unit,
                                gpointer   data)
 {
-  GimpImage *gimage;
+  GimpImage *gimage = GIMP_IMAGE (data);
   gdouble    radius_x;
   gdouble    radius_y;
-
-  gimage = GIMP_IMAGE (data);
 
   selection_grow_pixels = ROUND (size);
 
@@ -391,12 +384,12 @@ gimp_image_mask_grow_callback (GtkWidget *widget,
       gdouble factor;
 
       factor = (MAX (gimage->xresolution, gimage->yresolution) /
-		MIN (gimage->xresolution, gimage->yresolution));
+                MIN (gimage->xresolution, gimage->yresolution));
 
       if (gimage->xresolution == MIN (gimage->xresolution, gimage->yresolution))
-	radius_y *= factor;
+        radius_y *= factor;
       else
-	radius_x *= factor;
+        radius_x *= factor;
     }
 
   gimp_channel_grow (gimp_image_get_mask (gimage), radius_x, radius_y, TRUE);
@@ -409,11 +402,9 @@ gimp_image_mask_shrink_callback (GtkWidget *widget,
                                  GimpUnit   unit,
                                  gpointer   data)
 {
-  GimpImage *gimage;
+  GimpImage *gimage = GIMP_IMAGE (data);
   gint       radius_x;
   gint       radius_y;
-
-  gimage = GIMP_IMAGE (data);
 
   selection_shrink_pixels = ROUND (size);
 
@@ -421,19 +412,19 @@ gimp_image_mask_shrink_callback (GtkWidget *widget,
 
   selection_shrink_edge_lock =
     ! GTK_TOGGLE_BUTTON (g_object_get_data (G_OBJECT (widget),
-					    "edge_lock_toggle"))->active;
+                                            "edge_lock_toggle"))->active;
 
   if (unit != GIMP_UNIT_PIXEL)
     {
       gdouble factor;
 
       factor = (MAX (gimage->xresolution, gimage->yresolution) /
-		MIN (gimage->xresolution, gimage->yresolution));
+                MIN (gimage->xresolution, gimage->yresolution));
 
       if (gimage->xresolution == MIN (gimage->xresolution, gimage->yresolution))
-	radius_y *= factor;
+        radius_y *= factor;
       else
-	radius_x *= factor;
+        radius_x *= factor;
     }
 
   gimp_channel_shrink (gimp_image_get_mask (gimage), radius_x, radius_y,
