@@ -1,3 +1,10 @@
+2004-03-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_events): work around bug #136636 (Win32 only)
+	and ask the current device for its modifier state in order to fill
+	in the missing GDK_BUTTON*_MASK bits in GdkEventKey::state.
+
 2004-03-10  Ville Pätsi  <drc@gimp.org>
 
 	* Makefile.am
