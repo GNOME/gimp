@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-03-23 16:10+0100\n"
-"PO-Revision-Date: 2004-03-24 08:48+0900\n"
+"PO-Revision-Date: 2004-03-28 05:20+0900\n"
 "Last-Translator: SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -4878,7 +4878,7 @@ msgstr "幅または高さが不正です. 両方とも正の値でなければ�
 
 #: app/gui/layers-menu.c:46
 msgid "/Te_xt Tool"
-msgstr "文字ツール(_X)"
+msgstr "/文字ツール(_X)"
 
 #: app/gui/layers-menu.c:51
 msgid "/_Edit Layer Attributes..."
@@ -6395,7 +6395,7 @@ msgstr "/ファイル/ダイアログ/ナビゲーション(_V)"
 
 #: app/gui/toolbox-menu.c:156
 msgid "/File/Dialogs/_Undo History"
-msgstr "/ファイル/ダイアログ/undo 履歴(_U)"
+msgstr "/ファイル/ダイアログ/アンドゥ履歴(_U)"
 
 #: app/gui/toolbox-menu.c:164
 msgid "/File/Dialogs/Colo_rs"
@@ -6931,7 +6931,7 @@ msgstr "/パスを前面へ(_R)"
 
 #: app/gui/vectors-menu.c:67
 msgid "/_Lower Path"
-msgstr "パスを背面へ(_L)"
+msgstr "/パスを背面へ(_L)"
 
 #: app/gui/vectors-menu.c:72
 msgid "/D_uplicate Path"
