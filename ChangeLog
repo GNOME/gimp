@@ -1,3 +1,7 @@
+2002-04-29  Nathan Summers  <rock@gimp.org>
+
+	* plug-ins/tools/tool-safe-mode.c: fix a segfault
+
 2002-03-30  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimpbase/Makefile.am
