@@ -745,7 +745,7 @@ preview_update (GimpPreview *preview)
 
   unsharp_region (&srcPR, &destPR, drawable->bpp,
                   unsharp_params.radius, unsharp_params.amount,
-                  x, x + width, y, y + width,
+                  x, x + width, y, y + height,
                   FALSE);
 
   gimp_pixel_rgn_init (&destPR, drawable, x, y, width, height, FALSE, TRUE);
