@@ -198,14 +198,22 @@ gimp_main (int   argc,
    * about the program error, and offer debugging if the plug-in
    * has been built with MSVC, and the user has MSVC installed.
    */
-  signal (SIGHUP,  gimp_plugin_signalhandler);
-  signal (SIGINT,  gimp_plugin_signalhandler);
-  signal (SIGQUIT, gimp_plugin_signalhandler);
-  signal (SIGBUS,  gimp_plugin_signalhandler);
-  signal (SIGSEGV, gimp_plugin_signalhandler);
-  signal (SIGPIPE, gimp_plugin_signalhandler);
-  signal (SIGTERM, gimp_plugin_signalhandler);
-  signal (SIGFPE,  gimp_plugin_signalhandler);
+  gimp_signal_private (SIGHUP,  gimp_plugin_signalhandler,
+		       SA_RESETHAND | SA_NOMASK);
+  gimp_signal_private (SIGINT,  gimp_plugin_signalhandler,
+		       SA_RESETHAND | SA_NOMASK);
+  gimp_signal_private (SIGQUIT, gimp_plugin_signalhandler,
+		       SA_RESETHAND | SA_NOMASK);
+  gimp_signal_private (SIGBUS,  gimp_plugin_signalhandler,
+		       SA_RESETHAND | SA_NOMASK);
+  gimp_signal_private (SIGSEGV, gimp_plugin_signalhandler,
+		       SA_RESETHAND | SA_NOMASK);
+  gimp_signal_private (SIGPIPE, gimp_plugin_signalhandler,
+		       SA_RESETHAND | SA_NOMASK);
+  gimp_signal_private (SIGTERM, gimp_plugin_signalhandler,
+		       SA_RESETHAND | SA_NOMASK);
+  gimp_signal_private (SIGFPE,  gimp_plugin_signalhandler,
+		       SA_RESETHAND | SA_NOMASK);
 #endif
 
 #ifndef G_OS_WIN32

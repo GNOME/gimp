@@ -26,9 +26,9 @@
 
 /** 
  * gimp_signal_private: 
- * @signum: selects signal to be handled see man 5 signal
- * @gimp_sighandler:  handler that maps to signum. Invoked by O/S. 
- *                    handler gets signal that caused invocation. 
+ * @signum: Selects signal to be handled see man 5 signal
+ * @gimp_sighandler:  Handler that maps to signum. Invoked by O/S. 
+ *                    Handler gets signal that caused invocation. 
  * @sa_flags: preferences. OR'ed SA_<xxx>. See signal.h 
  *
  * This function furnishes a workalike for signal(2) but
@@ -44,35 +44,42 @@
  * implementations differ in their sematics, so we need to nail down
  * exactly what we want. [austin 06.04.2000]
  *
- * Returns: a reference to a signal handling function
+ * Returns: A reference to a signal handling function
  */
 GimpRetSigType
-gimp_signal_private (gint signum, void (*gimp_sighandler)(int), gint sa_flags)
+gimp_signal_private (gint    signum,
+		     void (* gimp_sighandler) (gint),
+		     gint    sa_flags)
 {
-  int ret;
+  gint ret;
   struct sigaction sa;
   struct sigaction osa;
 
-  /* The sa_handler (mandated by POSIX.1) and sa_sigaction (a      */
-  /* common extension) are often implemented by the OS as members  */
-  /* of a union.  This means you CAN NOT set both, you set one or  */
-  /* the other.  Caveat programmer!                                */
+  /*  The sa_handler (mandated by POSIX.1) and sa_sigaction (a
+   *  common extension) are often implemented by the OS as members
+   *  of a union.  This means you CAN NOT set both, you set one or
+   *  the other.  Caveat programmer!
+   */
 
-  /* Passing gimp_signal_private a gimp_sighandler of NULL is not  */
-  /* an error, and generally results in the action for that signal */
-  /* being set to SIG_DFL (default behavior).  Many OSes define    */
-  /* SIG_DFL as (void (*)()0, so setting sa_handler to NULL is     */
-  /* the same thing as passing SIG_DFL to it.                      */
-  sa.sa_handler   = gimp_sighandler;
+  /*  Passing gimp_signal_private a gimp_sighandler of NULL is not
+   *  an error, and generally results in the action for that signal
+   *  being set to SIG_DFL (default behavior).  Many OSes define
+   *  SIG_DFL as (void (*)()0, so setting sa_handler to NULL is
+   *  the same thing as passing SIG_DFL to it.
+   */
+  sa.sa_handler = gimp_sighandler;
 
-  /* Mask all signals while handler runs to avoid re-entrancy
-   * problems. */
+  /*  Mask all signals while handler runs to avoid re-entrancy
+   *  problems.
+   */
   sigfillset (&sa.sa_mask);
 
   sa.sa_flags = sa_flags;
 
   ret = sigaction (signum, &sa, &osa);
+
   if (ret < 0)
     g_error ("unable to set handler for signal %d\n", signum);
+
   return osa.sa_handler;
 }

@@ -1,3 +1,17 @@
+2000-05-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/main.c
+	* libgimp/gimp.c: again... _do_ use gimp_signal_private() but
+	force it to behave like signal(). While on Linux it seems to
+	be ok to use both signal() and sigaction() (because signal() is
+	built on top of sigaction()), doing the same on other systems
+	is totally broken code. Thanks to Garry for pointing out this
+	portability issue.
+
+	* app/errors.c: s/vprintf/g_strdup_vprintf/
+
+	* libgimp/gimpsignal.[ch]: code formating paranoia.
+
 Sun Apr 30 14:45:16 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* configure.in

@@ -18,21 +18,23 @@
  *
  *  $Revision$
  */        
-
 #ifndef __GIMP_SIGNAL_H__
 #define __GIMP_SIGNAL_H__
 
-/* A gimp-level interface to a Posix.1-compliant signal package lives here */
-/* For 1.2, this gimp-level interface mostly passes through to posix calls */
-/* without modification. Certain calls manipulate struct sigaction in      */
-/* ways useful to Gimp.                                                    */
+/* A gimp-level interface to a Posix.1-compliant signal package lives here
+ * For 1.2, this gimp-level interface mostly passes through to posix calls
+ * without modification. Certain calls manipulate struct sigaction in
+ * ways useful to Gimp.
+ */
 
 #include <signal.h>
 #include <glib.h>
+
 #ifdef __EMX__
 /* hope this is right for OS/2 */
 #define SA_RESTART SA_SYSV
 #endif
+
 /* GimpRetSigType is a reference 
  * to a (signal handler) function 
  * that takes a signal ID and 
@@ -40,21 +42,18 @@
  * signal(2) returns such references; 
  * so does gimp_signal_private.
  */
+typedef void (* GimpRetSigType) (gint);
 
-typedef void (*GimpRetSigType)(gint);
+/* Internal implementation that can be DEFINEd into various flavors of
+ * signal(2) lookalikes.
+ */
+GimpRetSigType gimp_signal_private (gint    signum,
+				    void (* gimp_sighandler) (gint),
+				    gint    sa_flags);
 
-/* Internal implementation that can be */
-/* DEFINEd into various flavors of     */
-/* signal(2) lookalikes.               */
-
-GimpRetSigType gimp_signal_private (gint signum, void (*gimp_sighandler)(int), gint sa_flags);
-
-/* the gimp_signal_syscallrestart()    */
-/* lookalike looks like signal(2) but  */
-/* quietly requests the restarting of  */
-/* system calls. Addresses #2742       */
-
-# define gimp_signal_syscallrestart(x, y) gimp_signal_private ((x), (y), SA_RESTART)
+/* the gimp_signal_syscallrestart() lookalike looks like signal(2) but
+ * quietly requests the restarting of system calls. Addresses #2742
+ */
+#define gimp_signal_syscallrestart(x, y) gimp_signal_private ((x), (y), SA_RESTART)
 
 #endif /* __GIMP_SIGNAL_H__ */
-
