@@ -1,5 +1,10 @@
 2004-04-16  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcroptool.c: some code cleanup that I forgot to do
+	when applying the patch.
+
+2004-04-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/helpbrowser/dialog.c (browser_dialog_load): present the
 	help browser window.
 
