@@ -1526,10 +1526,6 @@ devel-docs/libgimpthumb/version
 devel-docs/libgimpwidgets/Makefile
 devel-docs/libgimpwidgets/version
 docs/Makefile
-docs/gimp-1.3.1
-docs/gimprc-1.3.5
-docs/gimptool-2.0.1
-docs/gimp-remote-1.3.1
 tips/Makefile
 cursors/Makefile
 themes/Makefile
@@ -1554,14 +1550,22 @@ po/Makefile.in
 po-libgimp/Makefile.in
 po-plug-ins/Makefile.in
 po-script-fu/Makefile.in
-gimptool-2.0
-gimp-2.0.pc
-gimpthumb-2.0.pc
-gimpui-2.0.pc
 gimp.spec
 gimp-zip
 Makefile
 ])
+
+dnl Files with versions in their names
+AC_CONFIG_FILES(
+docs/gimp-gimp_app_version.1:docs/gimp.1.in
+docs/gimprc-gimp_app_version.5:docs/gimprc.5.in
+docs/gimptool-gimp_tool_version.1:docs/gimptool.1.in
+docs/gimp-remote-gimp_app_version.1:docs/gimp-remote.1.in
+gimptool-gimp_tool_version:gimptool-2.0.in
+gimp-gimp_pkgconfig_version.pc:gimp.pc.in
+gimpthumb-gimp_pkgconfig_version.pc:gimpthumb.pc.in
+gimpui-gimp_pkgconfig_version.pc:gimpui.pc.in
+)
 
 AC_CONFIG_COMMANDS([chmod-scripts],
 [chmod +x gimptool-gimp_tool_version])
