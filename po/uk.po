@@ -475,13 +475,13 @@ msgstr "Все"
 
 #: app/channel.c:187 app/channel.c:189 app/layer.c:310 app/layer.c:312
 msgid "copy"
-msgstr "скоп╕ювати"
+msgstr "коп╕я"
 
 #. formulate the new layer_mask name
 #: app/channel.c:195 app/gradient.c:1600 app/layer.c:318 app/layer.c:1672
 #, c-format
 msgid "%s copy"
-msgstr "скоп╕ювати %s"
+msgstr "коп╕я %s"
 
 #: app/channel.c:613
 msgid "Selection Mask"
