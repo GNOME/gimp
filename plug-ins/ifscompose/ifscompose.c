@@ -25,12 +25,13 @@
  * 1. Run in non-interactive mode (need to figure out useful
  *    way for a script to give the 19N paramters for an image).
  *    Perhaps just support saving parameters to a file, script
- *    passes file name.
+ *    passes file name.  (The save-to-file part is already done [Yeti])
  * 2. Save settings on a per-layer basis (long term, needs GIMP
  *    support to do properly). Load/save from affine parameters?
  * 3. Figure out if we need multiple phases for supersampled
  *    brushes.
  * 4. (minor) Make undo work correctly when focus is in entry widget.
+ *    (This seems fixed now (by mere change to spinbuttons) [Yeti])
  */
 
 #include "config.h"
@@ -88,7 +89,7 @@ typedef struct
 {
   GtkObject *adjustment;
   GtkWidget *scale;
-  GtkWidget *entry;
+  GtkWidget *spin;
 
   ValuePairType type;
 
@@ -97,8 +98,6 @@ typedef struct
     gdouble *d;
     gint    *i;
   } data;
-
-  gint entry_handler_id;
 } ValuePair;
 
 typedef struct
@@ -271,8 +270,6 @@ static ValuePair *value_pair_create       (gpointer   data,
 					   gboolean   create_scale,
 					   ValuePairType type);
 static void value_pair_update             (ValuePair *value_pair);
-static void value_pair_entry_callback     (GtkWidget *w,
-					   ValuePair *value_pair);
 static void value_pair_destroy_callback   (GtkWidget *widget,
 					   ValuePair *value_pair);
 static void value_pair_scale_callback     (GtkAdjustment *adjustment,
@@ -561,9 +558,9 @@ ifs_compose_trans_page (void)
 
   ifsD->x_pair = value_pair_create (&ifsD->current_vals.x, 0.0, 1.0, FALSE,
 				    VALUE_PAIR_DOUBLE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->x_pair->entry, 1, 2, 0, 1,
+  gtk_table_attach (GTK_TABLE (table), ifsD->x_pair->spin, 1, 2, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->x_pair->entry);
+  gtk_widget_show (ifsD->x_pair->spin);
 
   /* Y */
 
@@ -575,9 +572,9 @@ ifs_compose_trans_page (void)
 
   ifsD->y_pair = value_pair_create (&ifsD->current_vals.y, 0.0, 1.0, FALSE,
 				    VALUE_PAIR_DOUBLE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->y_pair->entry, 1, 2, 1, 2,
+  gtk_table_attach (GTK_TABLE (table), ifsD->y_pair->spin, 1, 2, 1, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->y_pair->entry);
+  gtk_widget_show (ifsD->y_pair->spin);
 
   /* Scale */
 
@@ -589,9 +586,9 @@ ifs_compose_trans_page (void)
 
   ifsD->scale_pair = value_pair_create (&ifsD->current_vals.scale, 0.0, 1.0,
 				        FALSE, VALUE_PAIR_DOUBLE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->scale_pair->entry, 3, 4, 0, 1,
+  gtk_table_attach (GTK_TABLE (table), ifsD->scale_pair->spin, 3, 4, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->scale_pair->entry);
+  gtk_widget_show (ifsD->scale_pair->spin);
 
   /* Angle */
 
@@ -603,9 +600,9 @@ ifs_compose_trans_page (void)
 
   ifsD->angle_pair = value_pair_create (&ifsD->current_vals.theta, -180, 180,
 					FALSE, VALUE_PAIR_DOUBLE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->angle_pair->entry, 3, 4, 1, 2,
+  gtk_table_attach (GTK_TABLE (table), ifsD->angle_pair->spin, 3, 4, 1, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->angle_pair->entry);
+  gtk_widget_show (ifsD->angle_pair->spin);
 
   /* Asym */
 
@@ -617,9 +614,9 @@ ifs_compose_trans_page (void)
 
   ifsD->asym_pair = value_pair_create (&ifsD->current_vals.asym, 0.10, 10.0,
 				       FALSE, VALUE_PAIR_DOUBLE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->asym_pair->entry, 5, 6, 0, 1,
+  gtk_table_attach (GTK_TABLE (table), ifsD->asym_pair->spin, 5, 6, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->asym_pair->entry);
+  gtk_widget_show (ifsD->asym_pair->spin);
 
   /* Shear */
 
@@ -631,9 +628,9 @@ ifs_compose_trans_page (void)
 
   ifsD->shear_pair = value_pair_create (&ifsD->current_vals.shear, -10.0, 10.0,
 					FALSE, VALUE_PAIR_DOUBLE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->shear_pair->entry, 5, 6, 1, 2,
+  gtk_table_attach (GTK_TABLE (table), ifsD->shear_pair->spin, 5, 6, 1, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->shear_pair->entry);
+  gtk_widget_show (ifsD->shear_pair->spin);
 
   /* Flip */
 
@@ -694,9 +691,9 @@ ifs_compose_color_page (void)
   gtk_table_attach (GTK_TABLE (table), ifsD->hue_scale_pair->scale, 3, 4, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->hue_scale_pair->scale);
-  gtk_table_attach (GTK_TABLE (table), ifsD->hue_scale_pair->entry, 4, 5, 0, 1,
+  gtk_table_attach (GTK_TABLE (table), ifsD->hue_scale_pair->spin, 4, 5, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->hue_scale_pair->entry);
+  gtk_widget_show (ifsD->hue_scale_pair->spin);
 
   label = gtk_label_new (_("Scale Value by:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
@@ -709,9 +706,9 @@ ifs_compose_color_page (void)
   gtk_table_attach (GTK_TABLE (table), ifsD->value_scale_pair->scale,
 		    3, 4, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->value_scale_pair->scale);
-  gtk_table_attach (GTK_TABLE (table), ifsD->value_scale_pair->entry,
+  gtk_table_attach (GTK_TABLE (table), ifsD->value_scale_pair->spin,
 		    4, 5, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (ifsD->value_scale_pair->entry);
+  gtk_widget_show (ifsD->value_scale_pair->spin);
 
   /* Full color control section */
 
@@ -1043,8 +1040,8 @@ ifs_compose_dialog (GimpDrawable *drawable)
 				       VALUE_PAIR_DOUBLE);
   gtk_box_pack_start (GTK_BOX (hbox), ifsD->prob_pair->scale, TRUE, TRUE, 0);
   gtk_widget_show (ifsD->prob_pair->scale);
-  gtk_box_pack_start (GTK_BOX (hbox), ifsD->prob_pair->entry, FALSE, TRUE, 0);
-  gtk_widget_show (ifsD->prob_pair->entry);
+  gtk_box_pack_start (GTK_BOX (hbox), ifsD->prob_pair->spin, FALSE, TRUE, 0);
+  gtk_widget_show (ifsD->prob_pair->spin);
 
   gtk_widget_show (hbox);
   gtk_widget_show (vbox);
@@ -1288,9 +1285,9 @@ ifs_options_dialog (void)
       ifsOptD->memory_pair = value_pair_create (&ifsvals.max_memory,
 						1, 1000000, FALSE,
 						VALUE_PAIR_INT);
-      gtk_table_attach (GTK_TABLE (table), ifsOptD->memory_pair->entry,
+      gtk_table_attach (GTK_TABLE (table), ifsOptD->memory_pair->spin,
 			1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (ifsOptD->memory_pair->entry);
+      gtk_widget_show (ifsOptD->memory_pair->spin);
 
       label = gtk_label_new (_("Iterations:"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
@@ -1301,9 +1298,9 @@ ifs_options_dialog (void)
       ifsOptD->iterations_pair = value_pair_create (&ifsvals.iterations,
 						    1, 10000000, FALSE,
 						    VALUE_PAIR_INT);
-      gtk_table_attach (GTK_TABLE (table), ifsOptD->iterations_pair->entry,
+      gtk_table_attach (GTK_TABLE (table), ifsOptD->iterations_pair->spin,
 			1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (ifsOptD->iterations_pair->entry);
+      gtk_widget_show (ifsOptD->iterations_pair->spin);
       gtk_widget_show (label);
 
       label = gtk_label_new (_("Subdivide:"));
@@ -1315,9 +1312,9 @@ ifs_options_dialog (void)
       ifsOptD->subdivide_pair = value_pair_create (&ifsvals.subdivide,
 						   1, 10, FALSE,
 						   VALUE_PAIR_INT);
-      gtk_table_attach (GTK_TABLE (table), ifsOptD->subdivide_pair->entry,
+      gtk_table_attach (GTK_TABLE (table), ifsOptD->subdivide_pair->spin,
 			1, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (ifsOptD->subdivide_pair->entry);
+      gtk_widget_show (ifsOptD->subdivide_pair->spin);
 
       label = gtk_label_new (_("Spot Radius:"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
@@ -1331,9 +1328,9 @@ ifs_options_dialog (void)
       gtk_table_attach (GTK_TABLE (table), ifsOptD->radius_pair->scale,
 			1, 2, 3, 4, GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (ifsOptD->radius_pair->scale);
-      gtk_table_attach (GTK_TABLE (table), ifsOptD->radius_pair->entry,
+      gtk_table_attach (GTK_TABLE (table), ifsOptD->radius_pair->spin,
 			2, 3, 3, 4, GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (ifsOptD->radius_pair->entry);
+      gtk_widget_show (ifsOptD->radius_pair->spin);
 
       value_pair_update (ifsOptD->iterations_pair);
       value_pair_update (ifsOptD->subdivide_pair);
@@ -2020,12 +2017,16 @@ design_area_select_all_callback (GtkWidget *w,
 static void
 val_changed_update (void)
 {
-  gdouble width = ifsDesign->area->allocation.width;
-  gdouble height = ifsDesign->area->allocation.height;
-  AffElement *cur = elements[ifsD->current_element];
+  gdouble width;
+  gdouble height;
+  AffElement *cur;
 
   if (ifsD->in_update)
     return;
+
+  width = ifsDesign->area->allocation.width;
+  height = ifsDesign->area->allocation.height;
+  cur = elements[ifsD->current_element];
 
   undo_begin ();
   undo_update (ifsD->current_element);
@@ -2138,9 +2139,9 @@ simple_color_set_sensitive (void)
 
   gtk_widget_set_sensitive (ifsD->target_cmap->hbox,       sc);
   gtk_widget_set_sensitive (ifsD->hue_scale_pair->scale,   sc);
-  gtk_widget_set_sensitive (ifsD->hue_scale_pair->entry,   sc);
+  gtk_widget_set_sensitive (ifsD->hue_scale_pair->spin,   sc);
   gtk_widget_set_sensitive (ifsD->value_scale_pair->scale, sc);
-  gtk_widget_set_sensitive (ifsD->value_scale_pair->entry, sc);
+  gtk_widget_set_sensitive (ifsD->value_scale_pair->spin, sc);
 
   gtk_widget_set_sensitive (ifsD->red_cmap->hbox,   !sc);
   gtk_widget_set_sensitive (ifsD->green_cmap->hbox, !sc);
@@ -2153,6 +2154,7 @@ simple_color_toggled (GtkWidget *widget,
 		      gpointer   data)
 {
   AffElement *cur = elements[ifsD->current_element];
+
   cur->v.simple_color = GTK_TOGGLE_BUTTON (widget)->active;
   ifsD->current_vals.simple_color = cur->v.simple_color;
   if (cur->v.simple_color)
@@ -2187,10 +2189,6 @@ value_pair_create (gpointer      data,
   g_object_ref (value_pair->adjustment);
   gtk_object_sink (value_pair->adjustment);
 
-  g_signal_connect (value_pair->adjustment, "value_changed",
-		    G_CALLBACK (value_pair_scale_callback),
-		    value_pair);
-
   if (create_scale)
     {
       value_pair->scale =
@@ -2200,7 +2198,7 @@ value_pair_create (gpointer      data,
       if (type == VALUE_PAIR_INT)
 	  gtk_scale_set_digits (GTK_SCALE (value_pair->scale), 0);
       else
-	  gtk_scale_set_digits (GTK_SCALE (value_pair->scale), 2);
+	  gtk_scale_set_digits (GTK_SCALE (value_pair->scale), 3);
 
       gtk_scale_set_draw_value (GTK_SCALE (value_pair->scale), FALSE);
       gtk_range_set_update_policy (GTK_RANGE (value_pair->scale),
@@ -2209,18 +2207,19 @@ value_pair_create (gpointer      data,
   else
     value_pair->scale = NULL;
 
-  /* We destroy the value pair when the entry is destroyed, so
+  /* We destroy the value pair when the spinbutton is destroyed, so
    * we don't need to hold a refcount on the entry
    */
 
-  value_pair->entry = gtk_entry_new ();
-  gtk_widget_set_size_request (value_pair->entry, ENTRY_WIDTH, -1);
-  value_pair->entry_handler_id =
-    g_signal_connect (value_pair->entry, "changed",
-		      G_CALLBACK (value_pair_entry_callback),
-		      value_pair);
-  g_signal_connect (value_pair->entry, "destroy",
+  value_pair->spin
+    = gtk_spin_button_new (GTK_ADJUSTMENT (value_pair->adjustment),
+                           1.0, 3);
+  gtk_widget_set_size_request (value_pair->spin, 72, -1);
+  g_signal_connect (value_pair->spin, "destroy",
 		    G_CALLBACK (value_pair_destroy_callback),
+		    value_pair);
+  g_signal_connect (value_pair->adjustment, "value_changed",
+		    G_CALLBACK (value_pair_scale_callback),
 		    value_pair);
 
   return value_pair;
@@ -2229,33 +2228,19 @@ value_pair_create (gpointer      data,
 static void
 value_pair_update (ValuePair *value_pair)
 {
-  gchar buffer[32];
-
   if (value_pair->type == VALUE_PAIR_INT)
-    {
       gtk_adjustment_set_value (GTK_ADJUSTMENT (value_pair->adjustment),
 				*value_pair->data.i);
-      sprintf (buffer, "%d", *value_pair->data.i);
-    }
   else
-    {
       gtk_adjustment_set_value (GTK_ADJUSTMENT (value_pair->adjustment),
 				*value_pair->data.d);
-      sprintf (buffer, "%0.2f", *value_pair->data.d);
-    }
 
-  g_signal_handler_block (value_pair->entry,
-			  value_pair->entry_handler_id);
-  gtk_entry_set_text (GTK_ENTRY (value_pair->entry), buffer);
-  g_signal_handler_unblock (value_pair->entry,
-			    value_pair->entry_handler_id);
 }
 
 static void
 value_pair_scale_callback (GtkAdjustment *adjustment,
 			   ValuePair     *value_pair)
 {
-  gchar buffer[32];
   gint changed = FALSE;
 
   if (value_pair->type == VALUE_PAIR_DOUBLE)
@@ -2264,7 +2249,6 @@ value_pair_scale_callback (GtkAdjustment *adjustment,
 	{
 	  changed = TRUE;
 	  *value_pair->data.d = adjustment->value;
-	  sprintf (buffer, "%0.2f", adjustment->value);
 	}
     }
   else
@@ -2273,54 +2257,11 @@ value_pair_scale_callback (GtkAdjustment *adjustment,
 	{
 	  changed = TRUE;
 	  *value_pair->data.i = adjustment->value;
-	  sprintf (buffer, "%d", (gint) adjustment->value);
 	}
     }
 
   if (changed)
-    {
-      g_signal_handler_block (value_pair->entry,
-			      value_pair->entry_handler_id);
-      gtk_entry_set_text (GTK_ENTRY (value_pair->entry), buffer);
-      g_signal_handler_unblock (value_pair->entry,
-				value_pair->entry_handler_id);
-
       val_changed_update ();
-    }
-}
-
-static void
-value_pair_entry_callback (GtkWidget *widget,
-			   ValuePair *value_pair)
-{
-  GtkAdjustment *adjustment = GTK_ADJUSTMENT (value_pair->adjustment);
-  gdouble new_value;
-  gdouble old_value;
-
-  if (value_pair->type == VALUE_PAIR_INT)
-    {
-      old_value = *value_pair->data.i;
-      new_value = atoi(gtk_entry_get_text (GTK_ENTRY (widget)));
-    }
-  else
-    {
-      old_value = *value_pair->data.d;
-      new_value = atof(gtk_entry_get_text (GTK_ENTRY (widget)));
-    }
-
-  if (floor(0.5+old_value*10000) != floor(0.5+new_value*10000))
-    {
-      if ((new_value >= adjustment->lower) &&
-	  (new_value <= adjustment->upper))
-	{
-	  if (value_pair->type == VALUE_PAIR_INT)
-	    *value_pair->data.i = new_value;
-	  else
-	    *value_pair->data.d = new_value;
-
-	  gtk_adjustment_set_value (adjustment, new_value);
-	}
-    }
 }
 
 static void

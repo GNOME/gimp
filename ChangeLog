@@ -1,5 +1,10 @@
 2004-04-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/ifscompose/ifscompose.c: applied patch from Yeti that
+	adds spinbuttons instead of simple text entries (bug #138132).
+
+2004-04-15  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/Makefile.am
 	* plug-ins/common/plugin-defs.pl
 	* plug-ins/common/gicon.c: removed the GIcon plug-in (addresses
