@@ -1,3 +1,23 @@
+Mon Aug 23 23:25:05 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/menus.c
+	* app/nav_window.c
+	
+	Nav window code now handles boundary conditions correctly (ie
+	you can scroll to the edges of the image now).
+	It also has some key bindings:-
+	
+	1) Arrow keys work as expected
+	2) =/- keys perform zoomin/zoomout. Note these keys are hardcoded
+	at present until (if) I find away of finding out how to get the
+	current accel. keys for these functions.
+	3) Space will raise the display window to the top of the window stack.
+	It also updates the preview. This will be changed to happen 	
+	automatically RSN.
+
+	Tearoff menus are now popped up and down (like other dialogs) when
+	the tab key is pressed in the image window.
+
 Mon Aug 23 19:55:48 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/measure.c: fixed display of distance in the info window

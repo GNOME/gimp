@@ -21,6 +21,7 @@
 #include "channels_dialog.h"
 #include "colormaps.h"
 #include "commands.h"
+#include "dialog_handler.h"
 #include "fileops.h"
 #include "general.h"
 #include "gimprc.h"
@@ -47,12 +48,15 @@ static char* G_GNUC_UNUSED dummyMRU = N_("/File/MRU00 ");
 static void   menus_init        (void);
 static gchar* menu_translate    (const gchar *path,
 				 gpointer     data);
+static void   tearoff_cmd_callback (GtkWidget *widget,
+				    gpointer   callback_data,
+				    guint      callback_action);
 
 static GSList *last_opened_raw_filenames = NULL;
 
 static GtkItemFactoryEntry toolbox_entries[] =
 {
-  { N_("/File/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
+  { N_("/File/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/File/New"), "<control>N", file_new_cmd_callback, 0 },
   { N_("/File/Open"), "<control>O", file_open_cmd_callback, 0 },
   { N_("/File/About..."), NULL, about_dialog_cmd_callback, 0 },
@@ -70,7 +74,7 @@ static GtkItemFactoryEntry toolbox_entries[] =
   { N_("/File/Dialogs/Document Index..."), NULL, raise_idea_callback, 0 },
   { N_("/File/Dialogs/Error Console..."), NULL, dialogs_error_console_cmd_callback, 0 },
 
-  { N_("/Xtns/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
+  { N_("/Xtns/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/Xtns/Module Browser"), NULL, dialogs_module_browser_cmd_callback, 0 },
   { N_("/File/---"), NULL, NULL, 0, "<Separator>" },
   { N_("/File/---"), NULL, NULL, 0, "<Separator>" }
@@ -83,8 +87,8 @@ static GtkItemFactoryEntry toolbox_end = { N_("/File/Quit"), "<control>Q", file_
 
 static GtkItemFactoryEntry image_entries[] =
 {
-  { N_("/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
-  { N_("/File/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
+  { N_("/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
+  { N_("/File/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/File/New"), "<control>N", file_new_cmd_callback, 1 },
   { N_("/File/Open"), "<control>O", file_open_cmd_callback, 0 },
   { N_("/File/Save"), "<control>S", file_save_cmd_callback, 0 },
@@ -97,7 +101,7 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/File/Quit"), "<control>Q", file_quit_cmd_callback, 0 },
   { N_("/File/---moved"), NULL, NULL, 0, "<Separator>" },
 
-  { N_("/Edit/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
+  { N_("/Edit/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/Edit/Cut"), "<control>X", edit_cut_cmd_callback, 0 },
   { N_("/Edit/Copy"), "<control>C", edit_copy_cmd_callback, 0 },
   { N_("/Edit/Paste"), "<control>V", edit_paste_cmd_callback, 0 },
@@ -115,7 +119,7 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/Edit/Paste Named"), "<control><shift>V", edit_named_paste_cmd_callback, 0 },
   { N_("/Edit/---"), NULL, NULL, 0, "<Separator>" },
   
-  { N_("/Select/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
+  { N_("/Select/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/Select/Invert"), "<control>I", select_invert_cmd_callback, 0 },
   { N_("/Select/All"), "<control>A", select_all_cmd_callback, 0 },
   { N_("/Select/None"), "<control><shift>A", select_none_cmd_callback, 0 },
@@ -129,7 +133,7 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/Select/---"), NULL, NULL, 0, "<Separator>" },
   { N_("/Select/Save To Channel"), NULL, select_save_cmd_callback, 0 },
 
-  { N_("/View/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
+  { N_("/View/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/View/Zoom In"), "equal", view_zoomin_cmd_callback, 0 },
   { N_("/View/Zoom Out"), "minus", view_zoomout_cmd_callback, 0 },
   { N_("/View/Zoom/16:1"), NULL, view_zoom_16_1_callback, 0 },
@@ -156,16 +160,16 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/View/New View"), NULL, view_new_view_cmd_callback, 0 },
   { N_("/View/Shrink Wrap"), "<control>E", view_shrink_wrap_cmd_callback, 0 },
   
-  { N_("/Image/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
-  { N_("/Image/Colors/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
+  { N_("/Image/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
+  { N_("/Image/Colors/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/Image/Colors/Equalize"), NULL, image_equalize_cmd_callback, 0 },
   { N_("/Image/Colors/Invert"), NULL, image_invert_cmd_callback, 0 },
   { N_("/Image/Colors/---"), NULL, NULL, 0, "<Separator>" },
   { N_("/Image/Colors/Desaturate"), NULL, image_desaturate_cmd_callback, 0 },
-  { N_("/Image/Channel Ops/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
+  { N_("/Image/Channel Ops/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/Image/Channel Ops/Duplicate"), "<control>D", channel_ops_duplicate_cmd_callback, 0 },
   { N_("/Image/Channel Ops/Offset"), "<control><shift>O", channel_ops_offset_cmd_callback, 0 },
-  { N_("/Image/Alpha/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
+  { N_("/Image/Alpha/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/Image/Alpha/Add Alpha Channel"), NULL, layers_add_alpha_channel_cmd_callback, 0 },
   
   { N_("/Image/---"), NULL, NULL, 0, "<Separator>" },
@@ -177,9 +181,9 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/Image/Scale"), NULL, image_scale_cmd_callback, 0 },
   { N_("/Image/---"), NULL, NULL, 0, "<Separator>" },
 
-  { N_("/Layers/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
+  { N_("/Layers/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/Layers/Layers & Channels..."), "<control>L", dialogs_lc_cmd_callback, 0 },
-  { N_("/Layers/Stack/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
+  { N_("/Layers/Stack/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/Layers/Stack/Previous Layer"), "Prior", layers_previous_cmd_callback, 0 },
   { N_("/Layers/Stack/Next Layer"), "Next", layers_next_cmd_callback, 0 },
   { N_("/Layers/Stack/Raise Layer"), "<shift>Prior", layers_raise_cmd_callback, 0 },
@@ -195,7 +199,7 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/Layers/Add Alpha Channel"), NULL, layers_add_alpha_channel_cmd_callback, 0 },
   { N_("/Layers/---"), NULL, NULL, 0, "<Separator>" },
   
-  { N_("/Tools/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
+  { N_("/Tools/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/Tools/Toolbox"), NULL, toolbox_raise_callback, 0 },
   { N_("/Tools/Default Colors"), "D", tools_default_colors_cmd_callback, 0 },
   { N_("/Tools/Swap Colors"), "X", tools_swap_colors_cmd_callback, 0 },
@@ -203,15 +207,15 @@ static GtkItemFactoryEntry image_entries[] =
 
   /*  the tool entries themselves are built on the fly  */
 
-  { N_("/Filters/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
+  { N_("/Filters/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/Filters/Repeat last"), "<alt>F", filters_repeat_cmd_callback, 0x0 },
   { N_("/Filters/Re-show last"), "<alt><shift>F", filters_repeat_cmd_callback, 0x1 },
   { N_("/Filters/---"), NULL, NULL, 0, "<Separator>" },
   
-  { N_("/Script-Fu/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
+  { N_("/Script-Fu/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/Script-Fu/"), NULL, NULL, 0 },
   
-  { N_("/Dialogs/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
+  { N_("/Dialogs/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/Dialogs/Brushes..."), "<control><shift>B", dialogs_brushes_cmd_callback, 0 },
   { N_("/Dialogs/Patterns..."), "<control><shift>P", dialogs_patterns_cmd_callback, 0 },
   { N_("/Dialogs/Palette..."), "<control>P", dialogs_palette_cmd_callback, 0 },
@@ -426,7 +430,8 @@ menus_create (GtkMenuEntry *entries,
 	      {
 	        GtkItemFactoryEntry entry = { NULL, NULL, NULL, 0, "<Tearoff>" };
 		entry.path = tearoff_path->str;
-		gtk_item_factory_create_items (image_factory, 1, &entry, NULL);
+		entry.callback = tearoff_cmd_callback;
+		gtk_item_factory_create_items_ac (image_factory, 1, &entry, NULL,2);
 	      }
 
 	    p = strchr (p + 1, '/');
@@ -821,4 +826,58 @@ menu_translate (const gchar *path,
     		gpointer     data)
 {
   return gettext (path);
+}
+
+static gint
+tearoff_delete_cb (GtkWidget *widget, 
+		   GdkEvent  *event,
+		   gpointer   data)
+{
+  /* Unregister if dialog is deleted as well */
+  dialog_unregister((GtkWidget *)data);
+  return TRUE; 
+}
+
+static void   
+tearoff_cmd_callback (GtkWidget *widget,
+		      gpointer   callback_data,
+		      guint      callback_action)
+{
+  if(GTK_IS_TEAROFF_MENU_ITEM(widget))
+    {
+      GtkTearoffMenuItem *tomi = (GtkTearoffMenuItem *)widget;
+      
+      if(tomi->torn_off)
+	{
+	  GtkWidget *top = gtk_widget_get_toplevel(widget);
+
+	  /* This should be a window */
+	  if(!GTK_IS_WINDOW(top))
+	    {
+	      g_message(_("tearoff menu not in top level window"));
+	    }
+	  else
+	    {
+	      dialog_register(top);
+	      gtk_signal_connect_object (GTK_OBJECT (top),  
+					 "delete_event",
+					 GTK_SIGNAL_FUNC (tearoff_delete_cb),
+					 GTK_OBJECT (top));
+	      
+	      gtk_object_set_data (GTK_OBJECT (widget),"tearoff_menu_top",top);
+	    }
+	}
+      else
+	{
+	  GtkWidget *top = (GtkWidget *)gtk_object_get_data (GTK_OBJECT (widget),"tearoff_menu_top");
+	  if(!top)
+	    {
+	      g_message(_("can't unregister tearoff menu top level window"));
+	    }
+	  else
+	    {
+	      dialog_unregister(top);
+	    }
+	}
+    }
 }
