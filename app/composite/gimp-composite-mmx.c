@@ -40,6 +40,8 @@
 #include "gimp-composite-mmx.h"
 
 
+#ifdef USE_MMX
+
 #undef USE_SSE
 
 #ifdef USE_SSE
@@ -2441,8 +2443,11 @@ xxxgimp_composite_valueonly_va8_va8_va8_mmx(GimpCompositeContext *_op)
 }
 #endif
 
+#endif  /* USE_MMX */
+
 void
 gimp_composite_mmx_init()
 {
 
 }
+
