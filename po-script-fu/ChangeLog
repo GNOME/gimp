@@ -1,3 +1,7 @@
+Fri Jun 23 16:18:18 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* Makefile.in.in: Fix of building in separate directory.
+
 2000-06-22  Sven Neumann  <sven@gimp.org>
 	
 	* en_GB.po: applied gimp-cornwell-000620-0, updates

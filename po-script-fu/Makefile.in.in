@@ -33,7 +33,7 @@ GENCAT = @GENCAT@
 GMSGFMT = PATH=../src:$$PATH @GMSGFMT@
 MSGFMT = @MSGFMT@
 XGETTEXT = PATH=../src:$$PATH @XGETTEXT@
-SXGETTEXT = ./script-fu-xgettext
+SXGETTEXT = $(srcdir)/script-fu-xgettext
 MSGMERGE = PATH=../src:$$PATH msgmerge
 
 DEFS = @DEFS@
