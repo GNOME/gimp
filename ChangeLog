@@ -1,5 +1,10 @@
 2001-11-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/resize-dialog.c: added a "Center" button to the "Offset"
+	frame (#51599).
+
+2001-11-09  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpbase/gimpprotocol.[ch]: removed the "palette" PDB type
 	again. Incremented protocol version.
 

@@ -84,12 +84,14 @@ static void  size_update                 (Resize    *widget,
 					  gdouble    height,
 					  gdouble    ratio_x,
 					  gdouble    ratio_y);
-static void offset_area_offsets_changed  (GtkWidget *offset_area,
+static void  offset_area_offsets_changed (GtkWidget *offset_area,
                                           gint       offset_x,
                                           gint       offset_y,
                                           gpointer   data);
 static void  offset_update               (GtkWidget *widget,
 					  gpointer   data);
+static void  offset_center_clicked       (GtkWidget *widget,
+                                          gpointer   data);
 static void  printsize_update            (GtkWidget *widget,
 					  gpointer   data);
 static void  resolution_callback         (GtkWidget *widget,
@@ -414,6 +416,8 @@ resize_widget_new (GimpImage    *gimage,
   /*  the offset frame  */
   if (type == ResizeWidget)
     {
+      GtkWidget *button;
+
       frame = gtk_frame_new (_("Offset"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
@@ -466,6 +470,17 @@ resize_widget_new (GimpImage    *gimage,
 
       g_signal_connect (G_OBJECT (private->offset_se), "value_changed",
 			G_CALLBACK (offset_update),
+			resize);
+
+      button = gtk_button_new_with_label (_("Center"));
+      gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 4, 0);
+      gtk_table_attach_defaults (GTK_TABLE (private->offset_se), button,
+                                 4, 5, 1, 2);
+      gtk_table_set_col_spacing (GTK_TABLE (private->offset_se), 3, 8);
+      gtk_widget_show (button);
+
+      g_signal_connect (G_OBJECT (button), "clicked",
+			G_CALLBACK (offset_center_clicked),
 			resize);
 
       gtk_widget_show (abox);
@@ -744,6 +759,29 @@ offset_update (GtkWidget *widget,
 
   gimp_offset_area_set_offsets (GIMP_OFFSET_AREA (private->offset_area),
                                 resize->offset_x, resize->offset_y); 
+}
+
+static void
+offset_center_clicked (GtkWidget *widget,
+                       gpointer   data)
+{
+  Resize        *resize;
+  ResizePrivate *private;
+  gint           off_x, off_y;
+
+  resize  = (Resize *) data;
+  private = (ResizePrivate *) resize;
+
+  off_x = resize_bound_off_x (resize,
+                              (resize->width - private->old_width)  / 2);
+
+  off_y = resize_bound_off_y (resize,
+                              (resize->height - private->old_height) / 2);
+
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 0, off_x);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 1, off_y);
+
+  g_signal_emit_by_name (G_OBJECT (private->offset_se), "value_changed", 0);
 }
 
 static void
