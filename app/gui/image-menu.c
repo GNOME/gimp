@@ -96,6 +96,14 @@ GimpItemFactoryEntry image_menu_entries[] =
   { { N_("/File/Open Recent/(None)"), NULL, NULL, 0 },
     NULL, NULL, NULL },
 
+  MENU_SEPARATOR ("/File/Open Recent/---"),
+
+  { { N_("/File/Open Recent/Document History..."), "foo",
+      dialogs_create_dockable_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_OPEN },
+    "gimp-document-list",
+    "dialogs/document_index.html", NULL },
+
   MENU_SEPARATOR ("/File/---"),
 
   { { N_("/File/Save"), "<control>S",
@@ -1186,11 +1194,12 @@ image_menu_update (GtkItemFactory *item_factory,
 
   /*  File  */
 
-  SET_SENSITIVE ("/File/Save",           gdisp && drawable);
-  SET_SENSITIVE ("/File/Save as...",     gdisp && drawable);
-  SET_SENSITIVE ("/File/Save a Copy...", gdisp && drawable);
-  SET_SENSITIVE ("/File/Revert...",      gdisp && GIMP_OBJECT (gimage)->name);
-  SET_SENSITIVE ("/File/Close",          gdisp);
+  SET_SENSITIVE ("/File/Save",                gdisp && drawable);
+  SET_SENSITIVE ("/File/Save as...",          gdisp && drawable);
+  SET_SENSITIVE ("/File/Save a Copy...",      gdisp && drawable);
+  SET_SENSITIVE ("/File/Save as Template...", gdisp);
+  SET_SENSITIVE ("/File/Revert...",           gdisp && GIMP_OBJECT (gimage)->name);
+  SET_SENSITIVE ("/File/Close",               gdisp);
 
   /*  Edit  */
 

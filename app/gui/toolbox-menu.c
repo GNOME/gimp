@@ -63,6 +63,14 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
   { { N_("/File/Open Recent/(None)"), NULL, NULL, 0 },
     NULL, NULL, NULL },
 
+  MENU_SEPARATOR ("/File/Open Recent/---"),
+
+  { { N_("/File/Open Recent/Document History..."), "foo",
+      dialogs_create_dockable_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_OPEN },
+    "gimp-document-list",
+    "file/dialogs/document_index.html", NULL },
+
   /*  <Toolbox>/File/Acquire  */
 
   MENU_BRANCH (N_("/File/Acquire")),

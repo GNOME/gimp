@@ -39,15 +39,15 @@
 
 GimpItemFactoryEntry documents_menu_entries[] =
 {
-  { { N_("/Open Image"), NULL,
+  { { N_("/Open Image"), "",
       documents_open_document_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_OPEN },
     NULL, NULL, NULL },
-  { { N_("/Raise or Open Image"), NULL,
+  { { N_("/Raise or Open Image"), "",
       documents_raise_or_open_document_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_OPEN },
     NULL, NULL, NULL },
-  { { N_("/File Open Dialog..."), NULL,
+  { { N_("/File Open Dialog..."), "",
       documents_file_open_dialog_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_OPEN },
     NULL, NULL, NULL },

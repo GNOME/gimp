@@ -286,19 +286,23 @@ menus_last_opened_add (GimpItemFactory *item_factory,
                                   n, last_opened_entries,
                                   gimp, 2, TRUE, FALSE);
 
-  for (i = 0; i < n; i++)
-    gimp_item_factory_set_visible (GTK_ITEM_FACTORY (item_factory),
-                                   last_opened_entries[i].entry.path,
-                                   FALSE);
-
   gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (item_factory),
                                    "/File/Open Recent/(None)",
                                    FALSE);
 
   for (i = 0; i < n; i++)
     {
-      g_free (last_opened_entries[i].entry.path);
+      GtkWidget *widget;
 
+      widget = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (item_factory),
+                                            last_opened_entries[i].entry.path);
+      gtk_menu_reorder_child (GTK_MENU (widget->parent), widget, i + 1);
+
+      gimp_item_factory_set_visible (GTK_ITEM_FACTORY (item_factory),
+                                     last_opened_entries[i].entry.path,
+                                     FALSE);
+
+      g_free (last_opened_entries[i].entry.path);
       if (i < 9)
         g_free (last_opened_entries[i].entry.accelerator);
     }
