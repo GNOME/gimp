@@ -5,6 +5,7 @@ SUBDIRS = \
 	base 		\
 	core		\
 	config		\
+	paint		\
 	xcf		\
 	file		\
 	pdb		\
@@ -133,6 +134,7 @@ gimp_1_3_LDADD = @STRIP_BEGIN@ \
 	tools/libapptools.a						\
 	display/libappdisplay.a						\
 	widgets/libappwidgets.a						\
+	paint/libapppaint.a						\
 	core/libappcore.a						\
 	xcf/libappxcf.a							\
 	file/libappfile.a						\

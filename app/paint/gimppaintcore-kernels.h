@@ -1,8 +1,11 @@
-/* paint_core_kernels.h
+/* gimppaintcore-kernels.h
  *
  *   This file was generated using kernelgen as found in the tools dir.
  *   (threshold = 0.25)
  */
+
+#ifndef __GIMP_PAINT_CORE_KERNELS_H__
+#define __GIMP_PAINT_CORE_KERNELS_H__
 
 #define KERNEL_WIDTH     3
 #define KERNEL_HEIGHT    3
@@ -10,7 +13,8 @@
 
 
 /*  Brush pixel subsampling kernels  */
-static const int subsample[5][5][9] = {
+static const int subsample[5][5][9] =
+{
   {
     {  64,  64,   0,  64,  64,   0,   0,   0,   0, },
     {  25, 102,   0,  25, 102,   0,   0,   0,   0, },
@@ -47,3 +51,5 @@ static const int subsample[5][5][9] = {
     {   0,   0,   0,   0,  64,  64,   0,  64,  64, } 
   } 
 };
+
+#endif /* __GIMP_PAINT_CORE_KERNELS_H__ */

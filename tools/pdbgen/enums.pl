@@ -354,6 +354,55 @@ package Gimp::CodeGen::enums;
 		       GIMP_MIDTONES => '1',
 		       GIMP_HIGHLIGHTS => '2' }
 	},
+    BrushApplicationMode =>
+	{ contig => 1,
+	  header => 'paint/paint-types.h',
+	  symbols => [ qw(HARD SOFT PRESSURE) ],
+	  mapping => { HARD => '0',
+		       SOFT => '1',
+		       PRESSURE => '2' }
+	},
+    PaintApplicationMode =>
+	{ contig => 1,
+	  header => 'paint/paint-types.h',
+	  symbols => [ qw(CONSTANT INCREMENTAL) ],
+	  mapping => { CONSTANT => '0',
+		       INCREMENTAL => '1' },
+	  nicks   => { CONSTANT => 'CONTINUOUS' }
+	},
+    GradientPaintMode =>
+	{ contig => 1,
+	  header => 'paint/paint-types.h',
+	  symbols => [ qw(ONCE_FORWARD ONCE_BACKWARDS LOOP_SAWTOOTH
+			  LOOP_TRIANGLE ONCE_END_COLOR) ],
+	  mapping => { ONCE_FORWARD => '0',
+		       ONCE_BACKWARDS => '1',
+		       LOOP_SAWTOOTH => '2',
+		       LOOP_TRIANGLE => '3',
+		       ONCE_END_COLOR => '4' }
+	},
+    DodgeBurnType =>
+	{ contig => 1,
+	  header => 'paint/paint-types.h',
+	  symbols => [ qw(DODGE BURN) ],
+	  mapping => { DODGE => '0',
+		       BURN => '1' }
+	},
+    ConvolveType =>
+	{ contig => 1,
+	  header => 'paint/paint-types.h',
+	  symbols => [ qw(BLUR_CONVOLVE SHARPEN_CONVOLVE CUSTOM_CONVOLVE) ],
+	  mapping => { BLUR_CONVOLVE => '0',
+		       SHARPEN_CONVOLVE => '1',
+		       CUSTOM_CONVOLVE => '2' }
+	},
+    CloneType =>
+	{ contig => 1,
+	  header => 'paint/paint-types.h',
+	  symbols => [ qw(IMAGE_CLONE PATTERN_CLONE) ],
+	  mapping => { IMAGE_CLONE => '0',
+		       PATTERN_CLONE => '1' }
+	},
     GimpRunMode =>
 	{ contig => 1,
 	  header => 'plug-in/plug-in-types.h',
@@ -375,55 +424,6 @@ package Gimp::CodeGen::enums;
 		       PLUG_IN_RGBA_IMAGE => '1 << 3',
 		       PLUG_IN_GRAYA_IMAGE => '1 << 4',
 		       PLUG_IN_INDEXEDA_IMAGE => '1 << 5' }
-	},
-    BrushApplicationMode =>
-	{ contig => 1,
-	  header => 'tools/tools-types.h',
-	  symbols => [ qw(HARD SOFT PRESSURE) ],
-	  mapping => { HARD => '0',
-		       SOFT => '1',
-		       PRESSURE => '2' }
-	},
-    PaintApplicationMode =>
-	{ contig => 1,
-	  header => 'tools/tools-types.h',
-	  symbols => [ qw(CONSTANT INCREMENTAL) ],
-	  mapping => { CONSTANT => '0',
-		       INCREMENTAL => '1' },
-	  nicks   => { CONSTANT => 'CONTINUOUS' }
-	},
-    GradientPaintMode =>
-	{ contig => 1,
-	  header => 'tools/tools-types.h',
-	  symbols => [ qw(ONCE_FORWARD ONCE_BACKWARDS LOOP_SAWTOOTH
-			  LOOP_TRIANGLE ONCE_END_COLOR) ],
-	  mapping => { ONCE_FORWARD => '0',
-		       ONCE_BACKWARDS => '1',
-		       LOOP_SAWTOOTH => '2',
-		       LOOP_TRIANGLE => '3',
-		       ONCE_END_COLOR => '4' }
-	},
-    CloneType =>
-	{ contig => 1,
-	  header => 'tools/gimpclonetool.h',
-	  symbols => [ qw(IMAGE_CLONE PATTERN_CLONE) ],
-	  mapping => { IMAGE_CLONE => '0',
-		       PATTERN_CLONE => '1' }
-	},
-    ConvolveType =>
-	{ contig => 1,
-	  header => 'tools/gimpconvolvetool.h',
-	  symbols => [ qw(BLUR_CONVOLVE SHARPEN_CONVOLVE CUSTOM_CONVOLVE) ],
-	  mapping => { BLUR_CONVOLVE => '0',
-		       SHARPEN_CONVOLVE => '1',
-		       CUSTOM_CONVOLVE => '2' }
-	},
-    DodgeBurnType =>
-	{ contig => 1,
-	  header => 'tools/gimpdodgeburntool.h',
-	  symbols => [ qw(DODGE BURN) ],
-	  mapping => { DODGE => '0',
-		       BURN => '1' }
 	},
     HueRange =>
 	{ contig => 1,

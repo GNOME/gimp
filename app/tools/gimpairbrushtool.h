@@ -51,13 +51,4 @@ void       gimp_airbrush_tool_register (Gimp                     *gimp,
 GType      gimp_airbrush_tool_get_type (void) G_GNUC_CONST;
 
 
-gboolean   airbrush_non_gui            (GimpDrawable *drawable,
-					gdouble       pressure,
-					gint          num_strokes,
-					gdouble      *stroke_array);
-gboolean   airbrush_non_gui_default    (GimpDrawable *drawable,
-					gint          num_strokes,
-					gdouble      *stroke_array);
-
-
 #endif  /*  __GIMP_AIRBRUSH_TOOL_H__  */

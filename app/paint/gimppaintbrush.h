@@ -16,50 +16,36 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_PAINTBRUSH_TOOL_H__
-#define __GIMP_PAINTBRUSH_TOOL_H__
+#ifndef __GIMP_PAINTBRUSH_H__
+#define __GIMP_PAINTBRUSH_H__
 
 
-#include "gimppainttool.h"
+#include "gimppaintcore.h"
 
 
-#define GIMP_TYPE_PAINTBRUSH_TOOL            (gimp_paintbrush_tool_get_type ())
-#define GIMP_PAINTBRUSH_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PAINTBRUSH_TOOL, GimpPaintbrushTool))
-#define GIMP_PAINTBRUSH_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PAINTBRUSH_TOOL, GimpPaintbrushToolClass))
-#define GIMP_IS_PAINTBRUSH_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PAINTBRUSH_TOOL))
-#define GIMP_IS_PAINTBRUSH_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PAINTBRUSH_TOOL))
-#define GIMP_PAINTBRUSH_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PAINTBRUSH_TOOL, GimpPaintbrushToolClass))
+#define GIMP_TYPE_PAINTBRUSH            (gimp_paintbrush_get_type ())
+#define GIMP_PAINTBRUSH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PAINTBRUSH, GimpPaintbrush))
+#define GIMP_PAINTBRUSH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PAINTBRUSH, GimpPaintbrushClass))
+#define GIMP_IS_PAINTBRUSH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PAINTBRUSH))
+#define GIMP_IS_PAINTBRUSH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PAINTBRUSH))
+#define GIMP_PAINTBRUSH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PAINTBRUSH, GimpPaintbrushClass))
 
 
-typedef struct _GimpPaintbrushTool      GimpPaintbrushTool;
-typedef struct _GimpPaintbrushToolClass GimpPaintbrushToolClass;
+typedef struct _GimpPaintbrush      GimpPaintbrush;
+typedef struct _GimpPaintbrushClass GimpPaintbrushClass;
 
-struct _GimpPaintbrushTool
+struct _GimpPaintbrush
 {
-  GimpPaintTool parent_instance;
+  GimpPaintCore parent_instance;
 };
 
-struct _GimpPaintbrushToolClass
+struct _GimpPaintbrushClass
 {
-  GimpPaintToolClass parent_class;
+  GimpPaintCoreClass parent_class;
 };
 
 
-void    gimp_paintbrush_tool_register (Gimp                     *gimp,
-                                       GimpToolRegisterCallback  callback);
-
-GType   gimp_paintbrush_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_paintbrush_get_type (void) G_GNUC_CONST;
 
 
-gboolean   gimp_paintbrush_tool_non_gui         (GimpDrawable *drawable,
-						 gint          num_srokes,
-						 gdouble      *stroke_array,
-						 gdouble       fade_out,
-						 gint          incremental,
-						 gdouble       gradient_length);
-gboolean   gimp_paintbrush_tool_non_gui_default (GimpDrawable *drawable,
-						 gint          num_strokes,
-						 gdouble      *stroke_array);
-
-
-#endif  /*  __GIMP_PAINTBRUSH_TOOL_H__  */
+#endif  /*  __GIMP_PAINTBRUSH_H__  */

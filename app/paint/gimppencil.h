@@ -16,51 +16,39 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_PENCIL_TOOL_H__
-#define __GIMP_PENCIL_TOOL_H__
+#ifndef __GIMP_PENCIL_H__
+#define __GIMP_PENCIL_H__
 
-/* FIXME: This whole tool should probably just be a paintbrush tool that
- *        has an option of hard edge.  It'll give the "pencil tool" all the
- *        flashy stuff the paintbrush tool has, and not duplicate code.
+/* FIXME: This whole core should probably just be a paintbrush core that
+ *        has an option of hard edge.  It'll give the "pencil core" all the
+ *        flashy stuff the paintbrush core has, and not duplicate code.
  */
 
-#include "gimppainttool.h"
+#include "gimppaintcore.h"
 
 
-#define GIMP_TYPE_PENCIL_TOOL            (gimp_pencil_tool_get_type ())
-#define GIMP_PENCIL_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PENCIL_TOOL, GimpPencilTool))
-#define GIMP_PENCIL_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PENCIL_TOOL, GimpPencilToolClass))
-#define GIMP_IS_PENCIL_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PENCIL_TOOL))
-#define GIMP_IS_PENCIL_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PENCIL_TOOL))
-#define GIMP_PENCIL_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PENCIL_TOOL, GimpPencilToolClass))
+#define GIMP_TYPE_PENCIL            (gimp_pencil_get_type ())
+#define GIMP_PENCIL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PENCIL, GimpPencil))
+#define GIMP_PENCIL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PENCIL, GimpPencilClass))
+#define GIMP_IS_PENCIL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PENCIL))
+#define GIMP_IS_PENCIL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PENCIL))
+#define GIMP_PENCIL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PENCIL, GimpPencilClass))
 
-typedef struct _GimpPencilTool      GimpPencilTool;
-typedef struct _GimpPencilToolClass GimpPencilToolClass;
+typedef struct _GimpPencil      GimpPencil;
+typedef struct _GimpPencilClass GimpPencilClass;
 
-struct _GimpPencilTool
+struct _GimpPencil
 {
-  GimpPaintTool parent_instance;
+  GimpPaintCore parent_instance;
 };
 
-struct _GimpPencilToolClass
+struct _GimpPencilClass
 {
-  GimpPaintToolClass parent_class;
+  GimpPaintCoreClass parent_class;
 };
 
 
-void    gimp_pencil_tool_register (Gimp                     *gimp,
-                                   GimpToolRegisterCallback  callback);
-
-GType   gimp_pencil_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_pencil_get_type (void) G_GNUC_CONST;
 
 
-/* FIXME: Get rid of this non_gui stuff someday.  Preferably make
- *        everything use it interally for ease of macro recording.
- */
-gboolean   pencil_non_gui    (GimpDrawable *drawable,
-			      gint          num_strokes,
-			      gdouble      *stroke_array);
-
-
-
-#endif  /*  __GIMP_PENCIL_TOOL_H__  */
+#endif  /*  __GIMP_PENCIL_H__  */

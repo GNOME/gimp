@@ -840,6 +840,7 @@ app/core/Makefile
 app/display/Makefile
 app/file/Makefile
 app/gui/Makefile
+app/paint/Makefile
 app/paint-funcs/Makefile
 app/pdb/Makefile
 app/plug-in/Makefile

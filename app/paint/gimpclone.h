@@ -16,63 +16,77 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_CLONE_TOOL_H__
-#define __GIMP_CLONE_TOOL_H__
+#ifndef __GIMP_CLONE_H__
+#define __GIMP_CLONE_H__
 
 
-#include "gimppainttool.h"
+#include "gimppaintcore.h"
 
 
-typedef enum
+typedef enum /*< skip >*/ /*< pdb-skip >*/
 {
-  IMAGE_CLONE,
-  PATTERN_CLONE
-} CloneType;
+  ALIGN_NO,
+  ALIGN_YES,
+  ALIGN_REGISTERED
+} AlignType;
 
 
-#define GIMP_TYPE_CLONE_TOOL            (gimp_clone_tool_get_type ())
-#define GIMP_CLONE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CLONE_TOOL, GimpCloneTool))
-#define GIMP_CLONE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CLONE_TOOL, GimpCloneToolClass))
-#define GIMP_IS_CLONE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CLONE_TOOL))
-#define GIMP_IS_CLONE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CLONE_TOOL))
-#define GIMP_CLONE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CLONE_TOOL, GimpCloneToolClass))
+#define GIMP_TYPE_CLONE            (gimp_clone_get_type ())
+#define GIMP_CLONE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CLONE, GimpClone))
+#define GIMP_CLONE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CLONE, GimpCloneClass))
+#define GIMP_IS_CLONE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CLONE))
+#define GIMP_IS_CLONE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CLONE))
+#define GIMP_CLONE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CLONE, GimpCloneClass))
 
 
-typedef struct _GimpCloneTool      GimpCloneTool;
-typedef struct _GimpCloneToolClass GimpCloneToolClass;
+typedef struct _GimpClone      GimpClone;
+typedef struct _GimpCloneClass GimpCloneClass;
 
-struct _GimpCloneTool
+struct _GimpClone
 {
-  GimpPaintTool parent_instance;
+  GimpPaintCore parent_instance;
+
+  gboolean      set_source;
+
+  GimpDrawable *src_drawable;
+  gint          src_x;
+  gint          src_y;
+
+  void (* init_callback)      (GimpClone *clone,
+                               gpointer   data);
+  void (* finish_callback)    (GimpClone *clone,
+                               gpointer   data);
+  void (* pretrace_callback)  (GimpClone *clone,
+                               gpointer   data);
+  void (* posttrace_callback) (GimpClone *clone,
+                               gpointer   data);
+
+  gpointer callback_data;
 };
 
-struct _GimpCloneToolClass
+struct _GimpCloneClass
 {
-  GimpPaintToolClass parent_class;
+  GimpPaintCoreClass parent_class;
 };
 
 
-void    gimp_clone_tool_register (Gimp                     *gimp,
-                                  GimpToolRegisterCallback  callback);
+typedef struct _CloneOptions CloneOptions;
 
-GType   gimp_clone_tool_get_type (void) G_GNUC_CONST;
+struct _CloneOptions
+{
+  PaintOptions  paint_options;
 
+  CloneType     type;
+  CloneType     type_d;
+  GtkWidget    *type_w[2];  /* 2 radio buttons */
 
-/* FIXME: Old style functions in need of a replacement. The only 
- * time these are used is to stroke paths or fill selections
- * They should be somewhere else.
- */
-
-gboolean   clone_non_gui         (GimpDrawable *drawable,
-				  GimpDrawable *src_drawable,
-				  CloneType     clone_type,
-				  gdouble       src_x,
-				  gdouble       src_y,
-				  gint          num_strokes,
-				  gdouble      *stroke_array);
-gboolean   clone_non_gui_default (GimpDrawable *drawable,
-				  gint          num_strokes,
-				  gdouble      *stroke_array);
+  AlignType     aligned;
+  AlignType     aligned_d;
+  GtkWidget    *aligned_w[3];  /* 3 radio buttons */
+};
 
 
-#endif  /*  __GIMP_CLONE_TOOL_H__  */
+GType   gimp_clone_get_type (void) G_GNUC_CONST;
+
+
+#endif  /*  __GIMP_CLONE_H__  */

@@ -51,15 +51,4 @@ void    gimp_eraser_tool_register (Gimp                     *gimp,
 GType   gimp_eraser_tool_get_type (void) G_GNUC_CONST;
 
 
-gboolean   eraser_non_gui            (GimpDrawable *drawable,
-                                      gint          num_strokes,
-                                      gdouble      *stroke_array,
-                                      gint          hardness,
-                                      gint          method,
-                                      gboolean      anti_erase);
-gboolean   eraser_non_gui_default    (GimpDrawable *paint_core,
-                                      gint          num_strokes,
-                                      gdouble      *stroke_array);
-
-
 #endif  /*  __GIMP_ERASER_TOOL_H__  */

@@ -16,58 +16,52 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_CONVOLVE_TOOL_H__
-#define __GIMP_CONVOLVE_TOOL_H__
+#ifndef __GIMP_CONVOLVE_H__
+#define __GIMP_CONVOLVE_H__
 
 
-#include "gimppainttool.h"
+#include "gimppaintcore.h"
 
 
-typedef enum
+#define GIMP_TYPE_CONVOLVE            (gimp_convolve_get_type ())
+#define GIMP_CONVOLVE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONVOLVE, GimpConvolve))
+#define GIMP_CONVOLVE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONVOLVE, GimpConvolveClass))
+#define GIMP_IS_CONVOLVE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONVOLVE))
+#define GIMP_IS_CONVOLVE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONVOLVE))
+#define GIMP_CONVOLVE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONVOLVE, GimpConvolveClass))
+
+
+typedef struct _GimpConvolve      GimpConvolve;
+typedef struct _GimpConvolveClass GimpConvolveClass;
+
+struct _GimpConvolve
 {
-  BLUR_CONVOLVE,
-  SHARPEN_CONVOLVE,
-  CUSTOM_CONVOLVE
-} ConvolveType;
-
-
-#define GIMP_TYPE_CONVOLVE_TOOL            (gimp_convolve_tool_get_type ())
-#define GIMP_CONVOLVE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONVOLVE_TOOL, GimpConvolveTool))
-#define GIMP_CONVOLVE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONVOLVE_TOOL, GimpConvolveToolClass))
-#define GIMP_IS_CONVOLVE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONVOLVE_TOOL))
-#define GIMP_IS_CONVOLVE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONVOLVE_TOOL))
-#define GIMP_CONVOLVE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONVOLVE_TOOL, GimpConvolveToolClass))
-
-
-typedef struct _GimpConvolveTool      GimpConvolveTool;
-typedef struct _GimpConvolveToolClass GimpConvolveToolClass;
-
-struct _GimpConvolveTool
-{
-  GimpPaintTool parent_instance;
+  GimpPaintCore parent_instance;
 };
 
-struct _GimpConvolveToolClass
+struct _GimpConvolveClass
 {
-  GimpPaintToolClass parent_class;
+  GimpPaintCoreClass parent_class;
 };
 
 
-void    gimp_convolve_tool_register (Gimp                     *gimp,
-                                     GimpToolRegisterCallback  callback);
+typedef struct _ConvolveOptions ConvolveOptions;
 
-GType   gimp_convolve_tool_get_type (void) G_GNUC_CONST;
+struct _ConvolveOptions
+{
+  PaintOptions  paint_options;
+
+  ConvolveType  type;
+  ConvolveType  type_d;
+  GtkWidget    *type_w[2];
+
+  gdouble       rate;
+  gdouble       rate_d;
+  GtkObject    *rate_w;
+};
 
 
-/* FIXME: These need to disappear */
-gboolean   convolve_non_gui         (GimpDrawable *drawable,
-				     gdouble       rate,
-				     ConvolveType  type,
-				     gint          num_strokes,
-				     gdouble      *stroke_array);
-gboolean   convolve_non_gui_default (GimpDrawable *drawable,
-				     gint          num_strokes,
-				     gdouble      *stroke_array);
+GType   gimp_convolve_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_CONVOLVE_TOOL_H__  */
+#endif  /*  __GIMP_CONVOLVE_H__  */

@@ -84,17 +84,19 @@ main (int    argc,
   int    i, j;
   double x, y;
 
-  printf ("/* paint_core_kernels.h\n"
+  printf ("/* gimppaintcore-kernels.h\n"
 	  " *\n"
 	  " *   This file was generated using kernelgen as found in the tools dir.\n");
   printf (" *   (threshold = %g)\n", THRESHOLD);
   printf (" */\n\n");
+  printf ("#ifndef __GIMP_PAINT_CORE_KERNELS_H__\n");
+  printf ("#define __GIMP_PAINT_CORE_KERNELS_H__\n\n");
   printf ("#define KERNEL_WIDTH     %d\n", KERNEL_WIDTH);
   printf ("#define KERNEL_HEIGHT    %d\n", KERNEL_HEIGHT);
   printf ("#define KERNEL_SUBSAMPLE %d\n", SUBSAMPLE);
   printf ("\n\n");
   printf ("/*  Brush pixel subsampling kernels  */\n");
-  printf ("static const int subsample[%d][%d][%d] = {\n",
+  printf ("static const int subsample[%d][%d][%d] =\n{\n",
 	  SUBSAMPLE + 1, SUBSAMPLE + 1, KERNEL_WIDTH * KERNEL_HEIGHT);
   
   for (j = 0; j <= SUBSAMPLE; j++)
@@ -115,7 +117,9 @@ main (int    argc,
       printf ("  }%c\n", j < SUBSAMPLE ? ',' : ' ');
     }
 
-  printf ("};\n");
+  printf ("};\n\n");
+
+  printf ("#endif /* __GIMP_PAINT_CORE_KERNELS_H__\n");
 
   exit (0);
 }

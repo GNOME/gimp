@@ -16,50 +16,52 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_ERASER_TOOL_H__
-#define __GIMP_ERASER_TOOL_H__
+#ifndef __GIMP_ERASER_H__
+#define __GIMP_ERASER_H__
 
 
-#include "gimppainttool.h"
+#include "gimppaintcore.h"
 
 
-#define GIMP_TYPE_ERASER_TOOL            (gimp_eraser_tool_get_type ())
-#define GIMP_ERASER_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ERASER_TOOL, GimpEraserTool))
-#define GIMP_ERASER_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ERASER_TOOL, GimpEraserToolClass))
-#define GIMP_IS_ERASER_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ERASER_TOOL))
-#define GIMP_IS_ERASER_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ERASER_TOOL))
-#define GIMP_ERASER_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ERASER_TOOL, GimpEraserToolClass))
+#define GIMP_TYPE_ERASER            (gimp_eraser_get_type ())
+#define GIMP_ERASER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ERASER, GimpEraser))
+#define GIMP_ERASER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ERASER, GimpEraserClass))
+#define GIMP_IS_ERASER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ERASER))
+#define GIMP_IS_ERASER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ERASER))
+#define GIMP_ERASER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ERASER, GimpEraserClass))
 
 
-typedef struct _GimpEraserTool      GimpEraserTool;
-typedef struct _GimpEraserToolClass GimpEraserToolClass;
+typedef struct _GimpEraser      GimpEraser;
+typedef struct _GimpEraserClass GimpEraserClass;
 
-struct _GimpEraserTool
+struct _GimpEraser
 {
-  GimpPaintTool parent_instance;
+  GimpPaintCore parent_instance;
 };
 
-struct _GimpEraserToolClass
+struct _GimpEraserClass
 {
-  GimpPaintToolClass parent_class;
+  GimpPaintCoreClass parent_class;
 };
 
 
-void    gimp_eraser_tool_register (Gimp                     *gimp,
-                                   GimpToolRegisterCallback  callback);
+typedef struct _EraserOptions EraserOptions;
 
-GType   gimp_eraser_tool_get_type (void) G_GNUC_CONST;
+struct _EraserOptions
+{
+  PaintOptions  paint_options;
+
+  gboolean      hard;
+  gboolean      hard_d;
+  GtkWidget    *hard_w;
+
+  gboolean	anti_erase;
+  gboolean	anti_erase_d;
+  GtkWidget    *anti_erase_w;
+};
 
 
-gboolean   eraser_non_gui            (GimpDrawable *drawable,
-                                      gint          num_strokes,
-                                      gdouble      *stroke_array,
-                                      gint          hardness,
-                                      gint          method,
-                                      gboolean      anti_erase);
-gboolean   eraser_non_gui_default    (GimpDrawable *paint_core,
-                                      gint          num_strokes,
-                                      gdouble      *stroke_array);
+GType   gimp_eraser_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_ERASER_TOOL_H__  */
+#endif  /*  __GIMP_ERASER_H__  */

@@ -23,13 +23,6 @@
 #include "gimppainttool.h"
 
 
-typedef enum
-{
-  SMUDGE_TYPE_SMUDGE,
-  SMUDGE_TYPE_STREAK 
-} SmudgeType;
-
-
 #define GIMP_TYPE_SMUDGE_TOOL            (gimp_smudge_tool_get_type ())
 #define GIMP_SMUDGE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SMUDGE_TOOL, GimpSmudgeTool))
 #define GIMP_SMUDGE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SMUDGE_TOOL, GimpSmudgeToolClass))
@@ -56,16 +49,6 @@ void    gimp_smudge_tool_register (Gimp                     *gimp,
                                    GimpToolRegisterCallback  callback);
 
 GType   gimp_smudge_tool_get_type (void) G_GNUC_CONST;
-
-
-/* FIXME: this antique code doesn't follow the coding style */
-gboolean   gimp_smudge_tool_non_gui          (GimpDrawable *drawable,
-					      gdouble       rate,
-					      gint          num_strokes,
-					      gdouble      *stroke_array);
-gboolean   gimp_smudge_tool_non_gui_default  (GimpDrawable *drawable,
-					      gint          num_strokes,
-					      gdouble      *stroke_array);
 
 
 #endif  /*  __GIMP_SMUDGE_TOOL_H__  */

@@ -70,7 +70,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimpairbrushtool.h") ],
 	code => <<'CODE'
-success = airbrush_non_gui (drawable, pressure, num_strokes, strokes);
+success = FALSE; /*airbrush_non_gui (drawable, pressure, num_strokes, strokes);*/
 CODE
     );
 }
@@ -98,7 +98,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimpairbrushtool.h") ],
 	code => <<'CODE'
-success = airbrush_non_gui_default (drawable, num_strokes, strokes);
+success = FALSE; /*airbrush_non_gui_default (drawable, num_strokes, strokes);*/
 CODE
     );
 }
@@ -140,8 +140,8 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimpclonetool.h") ],
 	code => <<'CODE'
-success = clone_non_gui (drawable, src_drawable, clone_type, src_x, src_y,
-			 num_strokes, strokes);
+success = FALSE; /*clone_non_gui (drawable, src_drawable, clone_type, src_x, src_y,
+			 num_strokes, strokes);*/
 CODE
     );
 }
@@ -170,7 +170,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimpclonetool.h") ],
 	code => <<'CODE'
-success = clone_non_gui_default (drawable, num_strokes, strokes);
+success = FALSE; /*clone_non_gui_default (drawable, num_strokes, strokes);*/
 CODE
     );
 }
@@ -198,7 +198,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimpconvolvetool.h") ],
 	code => <<'CODE'
-success = convolve_non_gui_default (drawable, num_strokes, strokes);
+success = FALSE; /*convolve_non_gui_default (drawable, num_strokes, strokes);*/
 CODE
     );
 }
@@ -228,7 +228,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimpconvolvetool.h") ],
 	code => <<'CODE'
-success = convolve_non_gui (drawable, pressure, convolve_type, num_strokes, strokes);
+success = FALSE; /*convolve_non_gui (drawable, pressure, convolve_type, num_strokes, strokes);*/
 CODE
     );
 }
@@ -254,7 +254,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimperasertool.h") ],
 	code => <<'CODE'
-success = eraser_non_gui_default (drawable, num_strokes, strokes);
+success = FALSE; /*eraser_non_gui_default (drawable, num_strokes, strokes);*/
 CODE
     );
 }
@@ -284,7 +284,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimperasertool.h") ],
 	code => <<'CODE'
-success = eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE);
+success = FALSE; /*eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE);*/
 CODE
     );
 }
@@ -314,7 +314,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimperasertool.h") ],
 	code => <<'CODE'
-success = eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE);
+success = FALSE; /*eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE);*/
 CODE
     );
 }
@@ -352,8 +352,8 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimppaintbrushtool.h") ],
 	code => <<'CODE'
-success = gimp_paintbrush_tool_non_gui (drawable, num_strokes, strokes, 
-	                                fade_out, method, gradient_length);
+success = FALSE; /*gimp_paintbrush_tool_non_gui (drawable, num_strokes, strokes, 
+	                                fade_out, method, gradient_length);*/
 CODE
     );
 }
@@ -389,7 +389,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimppaintbrushtool.h") ],
 	code => <<'CODE'
-success = gimp_paintbrush_tool_non_gui_default (drawable, num_strokes, strokes);
+success = FALSE; /*gimp_paintbrush_tool_non_gui_default (drawable, num_strokes, strokes);*/
 CODE
     );
 }
@@ -414,7 +414,9 @@ HELP
 
     %invoke = (
 	headers => [ qw("tools/gimppenciltool.h") ],
-	code => 'success = pencil_non_gui (drawable, num_strokes, strokes);'
+	code => <<'CODE'
+success = FALSE; /*pencil_non_gui (drawable, num_strokes, strokes);'*/
+CODE
     );
 }
 
@@ -440,7 +442,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimpsmudgetool.h") ],
 	code => <<'CODE'
-success = gimp_smudge_tool_non_gui (drawable, pressure, num_strokes, strokes);
+success = FALSE; /*gimp_smudge_tool_non_gui (drawable, pressure, num_strokes, strokes);*/
 CODE
     );
 }
@@ -468,7 +470,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimpsmudgetool.h") ],
 	code => <<'CODE'
-success = gimp_smudge_tool_non_gui_default (drawable, num_strokes, strokes);
+success = FALSE; /*gimp_smudge_tool_non_gui_default (drawable, num_strokes, strokes);*/
 CODE
     );
 }
@@ -498,9 +500,9 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimpdodgeburntool.h") ],
+	headers => [ qw("paint/gimpdodgeburn.h") ],
 	code => <<'CODE'
-success = gimp_dodgeburn_tool_non_gui (drawable, exposure, dodgeburn_type, dodgeburn_mode, num_strokes, strokes);
+success = FALSE; /*gimp_dodgeburn_tool_non_gui (drawable, exposure, dodgeburn_type, dodgeburn_mode, num_strokes, strokes);*/
 CODE
     );
 }
@@ -527,7 +529,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimpdodgeburntool.h") ],
 	code => <<'CODE'
-success = gimp_dodgeburn_tool_non_gui_default (drawable, num_strokes, strokes);
+success = FALSE; /*gimp_dodgeburn_tool_non_gui_default (drawable, num_strokes, strokes);*/
 CODE
     );
 }

@@ -16,48 +16,52 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_AIRBRUSH_TOOL_H__
-#define __GIMP_AIRBRUSH_TOOL_H__
+#ifndef __GIMP_AIRBRUSH_H__
+#define __GIMP_AIRBRUSH_H__
 
 
-#include "gimppainttool.h"
+#include "gimppaintcore.h"
 
 
-#define GIMP_TYPE_AIRBRUSH_TOOL            (gimp_airbrush_tool_get_type ())
-#define GIMP_AIRBRUSH_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_AIRBRUSH_TOOL, GimpAirbrushTool))
-#define GIMP_AIRBRUSH_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_AIRBRUSH_TOOL, GimpAirbrushToolClass))
-#define GIMP_IS_AIRBRUSH_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_AIRBRUSH_TOOL))
-#define GIMP_IS_AIRBRUSH_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_AIRBRUSH_TOOL))
-#define GIMP_AIRBRUSH_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_AIRBRUSH_TOOL, GimpAirbrushToolClass))
+#define GIMP_TYPE_AIRBRUSH            (gimp_airbrush_get_type ())
+#define GIMP_AIRBRUSH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_AIRBRUSH, GimpAirbrush))
+#define GIMP_AIRBRUSH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_AIRBRUSH, GimpAirbrushClass))
+#define GIMP_IS_AIRBRUSH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_AIRBRUSH))
+#define GIMP_IS_AIRBRUSH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_AIRBRUSH))
+#define GIMP_AIRBRUSH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_AIRBRUSH, GimpAirbrushClass))
 
 
-typedef struct _GimpAirbrushTool      GimpAirbrushTool;
-typedef struct _GimpAirbrushToolClass GimpAirbrushToolClass;
+typedef struct _GimpAirbrush      GimpAirbrush;
+typedef struct _GimpAirbrushClass GimpAirbrushClass;
 
-struct _GimpAirbrushTool
+struct _GimpAirbrush
 {
-  GimpPaintTool parent_instance;
+  GimpPaintCore parent_instance;
 };
 
-struct _GimpAirbrushToolClass
+struct _GimpAirbrushClass
 {
-  GimpPaintToolClass parent_class;
+  GimpPaintCoreClass parent_class;
 };
 
 
-void       gimp_airbrush_tool_register (Gimp                     *gimp,
-                                        GimpToolRegisterCallback  callback);
+typedef struct _AirbrushOptions AirbrushOptions;
 
-GType      gimp_airbrush_tool_get_type (void) G_GNUC_CONST;
+struct _AirbrushOptions
+{
+  PaintOptions paint_options;
+
+  gdouble      rate;
+  gdouble      rate_d;
+  GtkObject   *rate_w;
+
+  gdouble      pressure;
+  gdouble      pressure_d;
+  GtkObject   *pressure_w;
+};
 
 
-gboolean   airbrush_non_gui            (GimpDrawable *drawable,
-					gdouble       pressure,
-					gint          num_strokes,
-					gdouble      *stroke_array);
-gboolean   airbrush_non_gui_default    (GimpDrawable *drawable,
-					gint          num_strokes,
-					gdouble      *stroke_array);
+GType   gimp_airbrush_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_AIRBRUSH_TOOL_H__  */
+#endif  /*  __GIMP_AIRBRUSH_H__  */

@@ -19,26 +19,17 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
 
-#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
-#include "base/temp-buf.h"
-
-#include "paint-funcs/paint-funcs.h"
-
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
+
+#include "paint/gimperaser.h"
 
 #include "gimperasertool.h"
 #include "paint_options.h"
-#include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -46,22 +37,6 @@
 #define ERASER_DEFAULT_HARD        FALSE
 #define ERASER_DEFAULT_INCREMENTAL FALSE
 #define ERASER_DEFAULT_ANTI_ERASE  FALSE
-
-
-typedef struct _EraserOptions EraserOptions;
-
-struct _EraserOptions
-{
-  PaintOptions  paint_options;
-
-  gboolean      hard;
-  gboolean      hard_d;
-  GtkWidget    *hard_w;
-
-  gboolean	anti_erase;
-  gboolean	anti_erase_d;
-  GtkWidget    *anti_erase_w;
-};
 
 
 static void   gimp_eraser_tool_class_init    (GimpEraserToolClass  *klass);
@@ -77,30 +52,12 @@ static void   gimp_eraser_tool_cursor_update (GimpTool             *tool,
                                               GdkModifierType       state,
                                               GimpDisplay          *gdisp);
 
-static void   gimp_eraser_tool_paint         (GimpPaintTool        *paint_tool,
-                                              GimpDrawable         *drawable,
-                                              PaintState            state);
-
-static void   gimp_eraser_tool_motion        (GimpPaintTool        *paint_tool,
-                                              GimpDrawable         *drawable,
-                                              PaintPressureOptions *pressure_options,
-                                              gboolean              hard,
-                                              gboolean              incremental,
-                                              gboolean              anti_erase);
-
 static GimpToolOptions * gimp_eraser_tool_options_new   (GimpToolInfo    *tool_info);
 static void              gimp_eraser_tool_options_reset (GimpToolOptions *tool_options);
 
 
-/*  local variables  */
-static gboolean   non_gui_hard        = ERASER_DEFAULT_HARD;
-static gboolean   non_gui_incremental = ERASER_DEFAULT_INCREMENTAL;
-static gboolean	  non_gui_anti_erase  = ERASER_DEFAULT_ANTI_ERASE;
-
 static GimpPaintToolClass *parent_class = NULL;
 
-
-/*  functions  */
 
 void
 gimp_eraser_tool_register (Gimp                     *gimp,
@@ -149,18 +106,14 @@ gimp_eraser_tool_get_type (void)
 static void
 gimp_eraser_tool_class_init (GimpEraserToolClass *klass)
 {
-  GimpToolClass      *tool_class;
-  GimpPaintToolClass *paint_tool_class;
+  GimpToolClass *tool_class;
 
-  tool_class       = GIMP_TOOL_CLASS (klass);
-  paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
+  tool_class = GIMP_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   tool_class->modifier_key  = gimp_eraser_tool_modifier_key;
   tool_class->cursor_update = gimp_eraser_tool_cursor_update;
-
-  paint_tool_class->paint   = gimp_eraser_tool_paint;
 }
 
 static void
@@ -177,7 +130,7 @@ gimp_eraser_tool_init (GimpEraserTool *eraser)
   tool->toggle_tool_cursor     = GIMP_ERASER_TOOL_CURSOR;
   tool->toggle_cursor_modifier = GIMP_CURSOR_MODIFIER_MINUS;
 
-  paint_tool->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
+  paint_tool->core = g_object_new (GIMP_TYPE_ERASER, NULL);
 }
 
 static void
@@ -214,112 +167,8 @@ gimp_eraser_tool_cursor_update (GimpTool        *tool,
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
-static void
-gimp_eraser_tool_paint (GimpPaintTool *paint_tool,
-                        GimpDrawable  *drawable,
-                        PaintState     state)
-{
-  EraserOptions        *options;
-  PaintPressureOptions *pressure_options;
-  gboolean              hard;
-  gboolean              incremental;
-  gboolean              anti_erase;
 
-  options = (EraserOptions *) GIMP_TOOL (paint_tool)->tool_info->tool_options;
-
-  if (options)
-    {
-      pressure_options = options->paint_options.pressure_options;
-      hard             = options->hard;
-      incremental      = options->paint_options.incremental;
-      anti_erase       = options->anti_erase;
-    }
-  else
-    {
-      pressure_options = &non_gui_pressure_options;
-      hard             = non_gui_hard;
-      incremental      = non_gui_incremental;
-      anti_erase       = non_gui_anti_erase;
-    }
-
-  switch (state)
-    {
-    case INIT_PAINT:
-      break;
-
-    case MOTION_PAINT:
-      gimp_eraser_tool_motion (paint_tool,
-                               drawable,
-                               pressure_options,
-                               hard,
-                               incremental,
-                               anti_erase);
-      break;
-
-    case FINISH_PAINT:
-      break;
-
-    default:
-      break;
-    }
-}
-
-static void
-gimp_eraser_tool_motion (GimpPaintTool        *paint_tool,
-                         GimpDrawable         *drawable,
-                         PaintPressureOptions *pressure_options,
-                         gboolean              hard,
-                         gboolean              incremental,
-                         gboolean              anti_erase)
-{
-  GimpImage   *gimage;
-  GimpContext *context;
-  gint         opacity;
-  TempBuf     *area;
-  guchar       col[MAX_CHANNELS];
-  gdouble      scale;
-
-  if (! (gimage = gimp_drawable_gimage (drawable)))
-    return;
-
-  gimp_image_get_background (gimage, drawable, col);
-
-  context = gimp_get_current_context (gimage->gimp);
-
-  if (pressure_options->size)
-    scale = paint_tool->cur_coords.pressure;
-  else
-    scale = 1.0;
-
-  /*  Get a region which can be used to paint to  */
-  if (! (area = gimp_paint_tool_get_paint_area (paint_tool, drawable, scale)))
-    return;
-
-  /*  set the alpha channel  */
-  col[area->bytes - 1] = OPAQUE_OPACITY;
-
-  /*  color the pixels  */
-  color_pixels (temp_buf_data (area), col,
-		area->width * area->height, area->bytes);
-
-  opacity = 255 * gimp_context_get_opacity (context);
-
-  if (pressure_options->opacity)
-    opacity = opacity * 2.0 * paint_tool->cur_coords.pressure;
-
-  /* paste the newly painted canvas to the gimage which is being
-   * worked on  */
-  gimp_paint_tool_paste_canvas (paint_tool, drawable, 
-				MIN (opacity, 255),
-				gimp_context_get_opacity (context) * 255,
-				anti_erase ? GIMP_ANTI_ERASE_MODE : GIMP_ERASE_MODE,
-				hard ? HARD : (pressure_options->pressure ? PRESSURE : SOFT),
-				scale,
-				incremental ? INCREMENTAL : CONSTANT);
-}
-
-
-/*  non-gui stuff  */
+#if 0
 
 gboolean
 eraser_non_gui_default (GimpDrawable *drawable,
@@ -399,6 +248,8 @@ eraser_non_gui (GimpDrawable *drawable,
 
   return FALSE;
 }
+
+#endif
 
 
 /*  tool options stuff  */

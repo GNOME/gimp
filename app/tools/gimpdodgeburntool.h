@@ -23,13 +23,6 @@
 #include "gimppainttool.h"
 
 
-typedef enum
-{
-  DODGE,
-  BURN
-} DodgeBurnType;
-
-
 #define GIMP_TYPE_DODGEBURN_TOOL            (gimp_dodgeburn_tool_get_type ())
 #define GIMP_DODGEBURN_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DODGEBURN_TOOL, GimpDodgeBurnTool))
 #define GIMP_IS_DODGEBURN_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DODGEBURN_TOOL))
@@ -55,18 +48,6 @@ void    gimp_dodgeburn_tool_register (Gimp                     *gimp,
                                       GimpToolRegisterCallback  callback);
 
 GType   gimp_dodgeburn_tool_get_type (void) G_GNUC_CONST;
-
-
-gboolean   gimp_dodgeburn_tool_non_gui      (GimpDrawable     *drawable,
-                                             gdouble           exposure,
-                                             DodgeBurnType     type, 
-                                             GimpTransferMode  mode, 
-                                             gint              num_strokes, 
-                                             gdouble          *stroke_array);
-
-gboolean   gimp_dodgeburn_tool_non_gui_default (GimpDrawable  *drawable,
-						gint           num_strokes,
-						gdouble       *stroke_array);
 
 
 #endif  /*  __GIMP_DODGEBURN_TOOL_H__  */

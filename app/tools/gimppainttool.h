@@ -23,37 +23,6 @@
 #include "gimpdrawtool.h"
 
 
-#define PAINT_TOOL_SUBSAMPLE 4
-
-
-/* the different states that the painting function can be called with  */
-
-typedef enum /*< pdb-skip >*/
-{
-  INIT_PAINT,       /* Setup PaintFunc internals */
-  MOTION_PAINT,     /* PaintFunc performs motion-related rendering */
-  PAUSE_PAINT,      /* Unused. Reserved */
-  RESUME_PAINT,     /* Unused. Reserved */
-  FINISH_PAINT,     /* Cleanup and/or reset PaintFunc operation */
-  PRETRACE_PAINT,   /* PaintFunc performs window tracing activity prior to rendering */
-  POSTTRACE_PAINT   /* PaintFunc performs window tracing activity following rendering */
-} PaintState;
-
-typedef enum /*< pdb-skip >*/
-{
-  TOOL_CAN_HANDLE_CHANGING_BRUSH = 0x0001, /* Set for tools that don't mind
-					    * if the brush changes while
-					    * painting.
-					    */
-
-  TOOL_TRACES_ON_WINDOW                    /* Set for tools that perform temporary
-                                            * rendering directly to the window. These
-                                            * require sequencing with gdisplay_flush()
-                                            * routines. See clone.c for example.
-                                            */
-} ToolFlags;
-
-
 #define GIMP_TYPE_PAINT_TOOL            (gimp_paint_tool_get_type ())
 #define GIMP_PAINT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PAINT_TOOL, GimpPaintTool))
 #define GIMP_PAINT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PAINT_TOOL, GimpPaintToolClass))
@@ -66,126 +35,22 @@ typedef struct _GimpPaintToolClass GimpPaintToolClass;
 
 struct _GimpPaintTool
 {
-  GimpDrawTool  parent_instance;
+  GimpDrawTool     parent_instance;
 
-  GimpCoords    start_coords;  /*  starting coords            */
-  GimpCoords    cur_coords;    /*  current coords             */
-  GimpCoords    last_coords;   /*  last coords                */
+  GdkModifierType  state;        /*  state of buttons and keys              */
+  gboolean         pick_colors;  /*  pick color if ctrl or alt is pressed   */
+  gboolean         pick_state;   /*  was ctrl or alt pressed when clicked?  */
 
-  gint          state;         /*  state of buttons and keys  */
-
-  gdouble       distance;      /*  distance traveled by brush */
-  gdouble       pixel_dist;    /*  distance in pixels         */
-  gdouble       spacing;       /*  spacing                    */
-
-  gint          x1, y1;        /*  image space coordinate     */
-  gint          x2, y2;        /*  image space coords         */
-
-  GimpBrush    *brush;         /*  current brush	      */
-
-  gboolean      pick_colors;   /*  pick color if ctrl or alt is pressed  */
-  gboolean      pick_state;    /*  was ctrl or alt pressed when clicked? */
-  ToolFlags     flags;         /*  tool flags, see ToolFlags above       */
-
-  /*  undo blocks variables  */
-  TileManager  *undo_tiles;
-  TileManager  *canvas_tiles;
-
-  /*  paint buffers variables  */
-  TempBuf      *orig_buf;
-  TempBuf      *canvas_buf;
-
-  /*  brush buffers  */
-  MaskBuf      *pressure_brush;
-  MaskBuf      *solid_brush;
-  MaskBuf      *scale_brush;
-  MaskBuf      *scale_pixmap;
-  MaskBuf      *kernel_brushes[PAINT_TOOL_SUBSAMPLE + 1][PAINT_TOOL_SUBSAMPLE + 1];
-
-  MaskBuf      *last_brush_mask;
-  gboolean      cache_invalid;
-
-  /*  don't use this one...  */
-  GimpBrush    *grr_brush;
+  GimpPaintCore   *core;
 };
 
 struct _GimpPaintToolClass
 {
   GimpDrawToolClass parent_class;
-
-  /*  virtual function  */
-
-  void (* paint) (GimpPaintTool *tool,
-		  GimpDrawable 	*drawable,
-		  PaintState     paint_state);
 };
 
 
-/*  Special undo type  */
-typedef struct _PaintUndo PaintUndo;
-
-struct _PaintUndo
-{
-  gint        tool_ID;
-  GType       tool_type;
-
-  GimpCoords  last_coords;
-};
-
-
-GType   gimp_paint_tool_get_type        (void) G_GNUC_CONST;
-
-void    gimp_paint_tool_paint           (GimpPaintTool       *paint_tool,
-					 GimpDrawable        *drawable,
-					 PaintState	      state);
-
-int     gimp_paint_tool_start           (GimpPaintTool       *paint_tool,
-					 GimpDrawable        *drawable,
-					 gdouble              x,
-					 gdouble              y);
-void    gimp_paint_tool_interpolate     (GimpPaintTool       *paint_tool,
-					 GimpDrawable        *drawable);
-void    gimp_paint_tool_finish          (GimpPaintTool       *paint_tool,
-					 GimpDrawable        *drawable);
-void    gimp_paint_tool_cleanup         (GimpPaintTool       *paint_tool);
-
-void    gimp_paint_tool_get_color_from_gradient (GimpPaintTool     *paint_tool,
-                                                 GimpGradient      *gradient,
-						 gdouble            gradient_length,
-						 GimpRGB           *color,
-						 GradientPaintMode  mode);
-
-/*  paint tool painting functions  */
-TempBuf * gimp_paint_tool_get_paint_area        (GimpPaintTool        *paint_tool,
-                                                 GimpDrawable         *drawable,
-                                                 gdouble               scale);
-TempBuf * gimp_paint_tool_get_orig_image        (GimpPaintTool        *paint_tool,
-                                                 GimpDrawable         *drawable,
-                                                 gint                  x1,
-                                                 gint                  y1,
-                                                 gint                  x2,
-                                                 gint                  y2);
-void      gimp_paint_tool_paste_canvas          (GimpPaintTool        *paint_tool,
-                                                 GimpDrawable         *drawable,
-                                                 gint                  brush_opacity,
-                                                 gint                  image_opacity,
-                                                 GimpLayerModeEffects  paint_mode,
-                                                 BrushApplicationMode  brush_hardness,
-                                                 gdouble               brush_scale,
-                                                 PaintApplicationMode  mode);
-void      gimp_paint_tool_replace_canvas        (GimpPaintTool        *paint_tool,
-                                                 GimpDrawable         *drawable,
-                                                 gint                  brush_opacity,
-                                                 gint                  image_opacity,
-                                                 BrushApplicationMode  brush_hardness,
-                                                 gdouble               brush_scale,
-                                                 PaintApplicationMode  mode);
-void     gimp_paint_tool_color_area_with_pixmap (GimpPaintTool        *paint_tool,
-                                                 GimpImage            *dest, 
-                                                 GimpDrawable         *drawable,
-                                                 TempBuf              *area, 
-                                                 gdouble               scale, 
-                                                 BrushApplicationMode  mode);
+GType   gimp_paint_tool_get_type (void) G_GNUC_CONST;
 
 
 #endif  /*  __GIMP_PAINT_TOOL_H__  */

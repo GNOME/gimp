@@ -16,57 +16,57 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DODGE_BURN_TOOL_H__
-#define __GIMP_DODGE_BURN_TOOL_H__
+#ifndef __GIMP_DODGE_BURN_H__
+#define __GIMP_DODGE_BURN_H__
 
 
-#include "gimppainttool.h"
+#include "gimppaintcore.h"
 
 
-typedef enum
+#define GIMP_TYPE_DODGEBURN            (gimp_dodgeburn_get_type ())
+#define GIMP_DODGEBURN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DODGEBURN, GimpDodgeBurn))
+#define GIMP_IS_DODGEBURN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DODGEBURN))
+#define GIMP_DODGEBURN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DODGEBURN, GimpDodgeBurnClass))
+#define GIMP_IS_DODGEBURN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DODGEBURN))
+
+
+typedef struct _GimpDodgeBurn      GimpDodgeBurn;
+typedef struct _GimpDodgeBurnClass GimpDodgeBurnClass;
+
+struct _GimpDodgeBurn
 {
-  DODGE,
-  BURN
-} DodgeBurnType;
-
-
-#define GIMP_TYPE_DODGEBURN_TOOL            (gimp_dodgeburn_tool_get_type ())
-#define GIMP_DODGEBURN_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DODGEBURN_TOOL, GimpDodgeBurnTool))
-#define GIMP_IS_DODGEBURN_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DODGEBURN_TOOL))
-#define GIMP_DODGEBURN_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DODGEBURN_TOOL, GimpDodgeBurnToolClass))
-#define GIMP_IS_DODGEBURN_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DODGEBURN_TOOL))
-
-
-typedef struct _GimpDodgeBurnTool      GimpDodgeBurnTool;
-typedef struct _GimpDodgeBurnToolClass GimpDodgeBurnToolClass;
-
-struct _GimpDodgeBurnTool
-{
-  GimpPaintTool parent_instance;
+  GimpPaintCore parent_instance;
 };
 
-struct _GimpDodgeBurnToolClass
+struct _GimpDodgeBurnClass
 {
-  GimpPaintToolClass parent_class;
+  GimpPaintCoreClass parent_class;
 };
 
 
-void    gimp_dodgeburn_tool_register (Gimp                     *gimp,
-                                      GimpToolRegisterCallback  callback);
+typedef struct _DodgeBurnOptions DodgeBurnOptions;
 
-GType   gimp_dodgeburn_tool_get_type (void) G_GNUC_CONST;
+struct _DodgeBurnOptions
+{
+  PaintOptions       paint_options;
+
+  DodgeBurnType      type;
+  DodgeBurnType      type_d;
+  GtkWidget         *type_w[2];
+
+  GimpTransferMode  mode;     /*highlights, midtones, shadows*/
+  GimpTransferMode  mode_d;
+  GtkWidget        *mode_w[3];
+
+  gdouble           exposure;
+  gdouble           exposure_d;
+  GtkObject        *exposure_w;
+
+  GimpLut          *lut;
+};
 
 
-gboolean   gimp_dodgeburn_tool_non_gui      (GimpDrawable     *drawable,
-                                             gdouble           exposure,
-                                             DodgeBurnType     type, 
-                                             GimpTransferMode  mode, 
-                                             gint              num_strokes, 
-                                             gdouble          *stroke_array);
-
-gboolean   gimp_dodgeburn_tool_non_gui_default (GimpDrawable  *drawable,
-						gint           num_strokes,
-						gdouble       *stroke_array);
+GType   gimp_dodgeburn_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_DODGEBURN_TOOL_H__  */
+#endif  /*  __GIMP_DODGEBURN_H__  */

@@ -47,6 +47,8 @@
 #include "core/gimpparasite.h"
 #include "core/gimpparasitelist.h"
 
+#include "paint/gimppaintcore.h"
+
 #include "tools/gimpbycolorselecttool.h"
 #include "tools/gimptool.h"
 #include "tools/gimpdrawtool.h"
@@ -1265,48 +1267,50 @@ undo_pop_transform (GimpImage *gimage,
 		    UndoType   type,
 		    gpointer   tu_ptr)
 {
-  GimpTool          *active_tool;
-  GimpTransformTool *tt;
-  TransformUndo     *tu;
-  TileManager       *temp;
-  gdouble            d;
-  gint               i;
+  GimpTool *active_tool;
 
   active_tool = tool_manager_get_active (gimage->gimp);
 
   /* Can't have ANY tool selected - maybe a plugin running */
-  if (active_tool == NULL)
-    return TRUE;
-
-  tt = (GimpTransformTool *) active_tool;
-  tu = (TransformUndo *) tu_ptr;
-
-  path_transform_do_undo (gimage, tu->path_undo);
-
-  /*  only pop if the active tool is the tool that pushed this undo  */
-  if (tu->tool_ID != active_tool->ID)
-    return TRUE;
-
-  /*  swap the transformation information arrays  */
-  for (i = 0; i < TRAN_INFO_SIZE; i++)
+  if (active_tool)
     {
-      d = tu->trans_info[i];
-      tu->trans_info[i] = tt->trans_info[i];
-      tt->trans_info[i] = d;
-    }
+      GimpTransformTool *tt;
+      TransformUndo     *tu;
 
-  /*  swap the original buffer--the source buffer for repeated transforms
-   */
-  temp = tu->original;
-  tu->original = tt->original;
-  tt->original = temp;
+      tt = (GimpTransformTool *) active_tool;
+      tu = (TransformUndo *) tu_ptr;
 
-  /*  If we're re-implementing the first transform, reactivate tool  */
-  if (state == REDO && tt->original)
-    {
-      active_tool->state = ACTIVE;
+      path_transform_do_undo (gimage, tu->path_undo);
 
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tt));
+      /*  only pop if the active tool is the tool that pushed this undo  */
+      if (tu->tool_ID == active_tool->ID)
+        {
+          TileManager *temp;
+          gdouble      d;
+          gint         i;
+
+          /*  swap the transformation information arrays  */
+          for (i = 0; i < TRAN_INFO_SIZE; i++)
+            {
+              d                 = tu->trans_info[i];
+              tu->trans_info[i] = tt->trans_info[i];
+              tt->trans_info[i] = d;
+            }
+
+          /*  swap the original buffer--the source buffer for repeated transforms
+           */
+          temp         = tu->original;
+          tu->original = tt->original;
+          tt->original = temp;
+
+          /*  If we're re-implementing the first transform, reactivate tool  */
+          if (state == REDO && tt->original)
+            {
+              active_tool->state = ACTIVE;
+
+              gimp_draw_tool_resume (GIMP_DRAW_TOOL (tt));
+            }
+        }
     }
 
   return TRUE;
@@ -1338,7 +1342,7 @@ undo_push_paint (GimpImage *gimage,
   Undo *new;
 
   if ((new = undo_push (gimage, 
-			sizeof (PaintUndo), PAINT_UNDO, FALSE)))
+			sizeof (GimpPaintCoreUndo), PAINT_UNDO, FALSE)))
     {
       new->data      = pu_ptr;
       new->pop_func  = undo_pop_paint;
@@ -1359,28 +1363,30 @@ undo_pop_paint (GimpImage *gimage,
 		UndoType   type,
 		gpointer   pu_ptr)
 {
-  GimpTool      *active_tool;
-  GimpPaintTool *pt;
-  PaintUndo     *pu;
-  GimpCoords     tmp_coords;
+  GimpTool *active_tool;
 
   active_tool = tool_manager_get_active (gimage->gimp);
 
   /* Can't have ANY tool selected - maybe a plugin running */
-  if (active_tool == NULL)
-    return TRUE;
+  if (active_tool)
+    {
+      GimpPaintTool     *pt;
+      GimpPaintCoreUndo *pu;
 
-  pt = (GimpPaintTool *) active_tool;
-  pu = (PaintUndo *) pu_ptr;
+      pt = (GimpPaintTool *) active_tool;
+      pu = (GimpPaintCoreUndo *) pu_ptr;
 
-  /*  only pop if the active tool is the tool that pushed this undo  */
-  if (pu->tool_ID != active_tool->ID)
-    return TRUE;
+      /*  only pop if the active paint core is the one that pushed this undo  */
+      if (pu->core_ID == pt->core->ID)
+        {
+          GimpCoords tmp_coords;
 
-  /*  swap the paint core information  */
-  tmp_coords = pt->last_coords;
-  pt->last_coords = pu->last_coords;
-  pu->last_coords = tmp_coords;
+          /*  swap the paint core information  */
+          tmp_coords            = pt->core->last_coords;
+          pt->core->last_coords = pu->last_coords;
+          pu->last_coords       = tmp_coords;
+        }
+    }
 
   return TRUE;
 }
@@ -1390,9 +1396,9 @@ undo_free_paint (UndoState  state,
 		 UndoType   type,
 		 gpointer   pu_ptr)
 {
-  PaintUndo *pu;
+  GimpPaintCoreUndo *pu;
 
-  pu = (PaintUndo *) pu_ptr;
+  pu = (GimpPaintCoreUndo *) pu_ptr;
   g_free (pu);
 }
 

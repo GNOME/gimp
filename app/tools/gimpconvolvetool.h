@@ -23,14 +23,6 @@
 #include "gimppainttool.h"
 
 
-typedef enum
-{
-  BLUR_CONVOLVE,
-  SHARPEN_CONVOLVE,
-  CUSTOM_CONVOLVE
-} ConvolveType;
-
-
 #define GIMP_TYPE_CONVOLVE_TOOL            (gimp_convolve_tool_get_type ())
 #define GIMP_CONVOLVE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONVOLVE_TOOL, GimpConvolveTool))
 #define GIMP_CONVOLVE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONVOLVE_TOOL, GimpConvolveToolClass))
@@ -57,17 +49,6 @@ void    gimp_convolve_tool_register (Gimp                     *gimp,
                                      GimpToolRegisterCallback  callback);
 
 GType   gimp_convolve_tool_get_type (void) G_GNUC_CONST;
-
-
-/* FIXME: These need to disappear */
-gboolean   convolve_non_gui         (GimpDrawable *drawable,
-				     gdouble       rate,
-				     ConvolveType  type,
-				     gint          num_strokes,
-				     gdouble      *stroke_array);
-gboolean   convolve_non_gui_default (GimpDrawable *drawable,
-				     gint          num_strokes,
-				     gdouble      *stroke_array);
 
 
 #endif  /*  __GIMP_CONVOLVE_TOOL_H__  */

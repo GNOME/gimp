@@ -1,3 +1,60 @@
+2002-02-14  Michael Natterer  <mitch@gimp.org>
+
+	Core/UI separation for the paint tools:
+
+	* configure.in
+	* app/Makefile.am
+	* app/paint/.cvsignore
+	* app/paint/Makefile.am: added new directory for the paint methods
+	without GUI and tools around them.
+
+	* app/paint/paint-types.h: typedefs for this module.
+
+	* app/paint/gimppaintcore-kernels.h
+	* app/paint/gimppaintcore.[ch]: the general paint logic taken
+	from GimpPaintTool.
+
+	* app/paint/gimpairbrush.[ch]
+	* app/paint/gimpclone.[ch]
+	* app/paint/gimpconvolve.[ch]
+	* app/paint/gimpdodgeburn.[ch]
+	* app/paint/gimperaser.[ch]
+	* app/paint/gimppaintbrush.[ch]
+	* app/paint/gimppencil.[ch]
+	* app/paint/gimpsmudge.[ch]: subclasses of GimpPaintCore,
+	implementing their own paint() methods.  Needs more hacking
+	to get the GtkWidget pointers out of the options structs.
+
+	* app/tools/gimppainttool_kernels.h: removed.
+
+	* app/tools/tools-types.h: removed the paint tool enums.
+
+	* app/tools/gimpairbrushtool.[ch]
+	* app/tools/gimpclonetool.[ch]
+	* app/tools/gimpconvolvetool.[ch]
+	* app/tools/gimpdodgeburntool.[ch]
+	* app/tools/gimperasertool.[ch]
+	* app/tools/gimppaintbrushtool.[ch]
+	* app/tools/gimppainttool.[ch]
+	* app/tools/gimppenciltool.[ch]
+	* app/tools/gimpsmudgetool.[ch]: all paint tools are pure GUI
+	things now.  PaintOptions and friends still need to be chopped up
+	though...
+
+	* app/undo.c: changed PaintUndo to GimpPaintCoreUndo, some minor
+	cleanup.
+
+	* tools/kernelgen.c: changed accordingly.
+
+	* tools/pdbgen/Makefile.am: scan paint/paint-types.h for enums.
+
+	* tools/pdbgen/pdb/paint_tools.pdb: hardcode "success = FALSE" for
+	all paint PDB wrappers.  The non-gui stuff is completely broken.
+	More commits to come...
+
+	* app/pdb/paint_tools_cmds.c
+	* tools/pdbgen/enums.pl: regenerated.
+
 2002-02-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimppainttool.[ch]: moved all global variables into

@@ -20,6 +20,7 @@
 #define __TOOLS_TYPES_H__
 
 
+#include "paint/paint-types.h"
 #include "display/display-types.h"
 
 
@@ -65,31 +66,6 @@ typedef void (* GimpToolRegisterFunc)     (Gimp                     *gimp,
 
 
 /*  enums  */
-
-/* Brush application types  */
-typedef enum
-{
-  HARD,     /* pencil */
-  SOFT,     /* paintbrush */
-  PRESSURE  /* paintbrush with variable pressure */
-} BrushApplicationMode;
-
-/* Paint application modes  */
-typedef enum
-{
-  CONSTANT,    /*< nick=CONTINUOUS >*/ /* pencil, paintbrush, airbrush, clone */
-  INCREMENTAL  /* convolve, smudge */
-} PaintApplicationMode;
-
-/* gradient paint modes */
-typedef enum
-{
-  ONCE_FORWARD,    /* paint through once, then stop */
-  ONCE_BACKWARDS,  /* paint once, then stop, but run the gradient the other way */
-  LOOP_SAWTOOTH,   /* keep painting, looping through the grad start->end,start->end /|/|/| */
-  LOOP_TRIANGLE,   /* keep paiting, looping though the grad start->end,end->start /\/\/\/  */
-  ONCE_END_COLOR   /* paint once, but keep painting with the end color */
-} GradientPaintMode;
 
 typedef enum /*< pdb-skip >*/
 {

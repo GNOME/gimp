@@ -23,13 +23,6 @@
 #include "gimppainttool.h"
 
 
-typedef enum
-{
-  IMAGE_CLONE,
-  PATTERN_CLONE
-} CloneType;
-
-
 #define GIMP_TYPE_CLONE_TOOL            (gimp_clone_tool_get_type ())
 #define GIMP_CLONE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CLONE_TOOL, GimpCloneTool))
 #define GIMP_CLONE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CLONE_TOOL, GimpCloneToolClass))
@@ -56,23 +49,6 @@ void    gimp_clone_tool_register (Gimp                     *gimp,
                                   GimpToolRegisterCallback  callback);
 
 GType   gimp_clone_tool_get_type (void) G_GNUC_CONST;
-
-
-/* FIXME: Old style functions in need of a replacement. The only 
- * time these are used is to stroke paths or fill selections
- * They should be somewhere else.
- */
-
-gboolean   clone_non_gui         (GimpDrawable *drawable,
-				  GimpDrawable *src_drawable,
-				  CloneType     clone_type,
-				  gdouble       src_x,
-				  gdouble       src_y,
-				  gint          num_strokes,
-				  gdouble      *stroke_array);
-gboolean   clone_non_gui_default (GimpDrawable *drawable,
-				  gint          num_strokes,
-				  gdouble      *stroke_array);
 
 
 #endif  /*  __GIMP_CLONE_TOOL_H__  */

@@ -19,12 +19,10 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
 
 #include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools-types.h"
+#include "paint-types.h"
 
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
@@ -36,171 +34,122 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimptoolinfo.h"
 
-#include "gimpsmudgetool.h"
-#include "paint_options.h"
-#include "tool_manager.h"
-
-#include "libgimp/gimpintl.h"
+#include "gimpsmudge.h"
 
 
-/* default defines */
+static void       gimp_smudge_class_init (GimpSmudgeClass      *klass);
+static void       gimp_smudge_init       (GimpSmudge           *smudge);
 
-#define SMUDGE_DEFAULT_RATE   50.0
+static void       gimp_smudge_paint      (GimpPaintCore        *paint_core,
+                                          GimpDrawable         *drawable,
+                                          PaintOptions         *paint_options,
+                                          GimpPaintCoreState    paint_state);
 
-/*  the smudge structures  */
+static gboolean   gimp_smudge_start      (GimpPaintCore        *paint_core,
+                                          GimpDrawable         *drawable);
+static void       gimp_smudge_motion     (GimpPaintCore        *paint_core,
+                                          GimpDrawable         *drawable,
+                                          PaintPressureOptions *pressure_options,
+                                          gdouble               smudge_rate);
+static void       gimp_smudge_finish     (GimpPaintCore        *paint_core,
+                                          GimpDrawable         *drawable);
 
-typedef struct _SmudgeOptions SmudgeOptions;
-
-struct _SmudgeOptions
-{
-  PaintOptions  paint_options;
-
-  gdouble       rate;
-  gdouble       rate_d;
-  GtkObject    *rate_w;
-};
-
-
-/*  function prototypes */
-static void   gimp_smudge_tool_class_init (GimpSmudgeToolClass *klass);
-static void   gimp_smudge_tool_init       (GimpSmudgeTool      *tool);
-
-static void   gimp_smudge_tool_paint      (GimpPaintTool *paint_tool,
-					   GimpDrawable  *drawable,
-					   PaintState     state);
-static void   gimp_smudge_tool_motion        (GimpPaintTool *paint_tool,
-					      PaintPressureOptions *pressure_options,
-					      gdouble       smudge_rate,
-                                              GimpDrawable *drawable);
-static gboolean   gimp_smudge_tool_start          (GimpPaintTool *paint_tool,
-						   GimpDrawable  *drawable);
-static void       gimp_smudge_tool_finish        (GimpPaintTool *paint_tool,
-						  GimpDrawable *drawable);
-
-static void       gimp_smudge_tool_nonclipped_painthit_coords (GimpPaintTool *paint_tool,
-							       gint      *x,
-							       gint      *y, 
-							       gint      *w,
-							       gint      *h);
-static void       gimp_smudge_tool_allocate_accum_buffer (gint       w,
-							  gint       h, 
-							  gint       bytes,
-							  guchar    *do_fill);
-
-static GimpToolOptions * smudge_options_new   (GimpToolInfo    *tool_info);
-static void              smudge_options_reset (GimpToolOptions *tool_options);
+static void  gimp_smudge_nonclipped_painthit_coords (GimpPaintCore *paint_core,
+                                                     gint          *x,
+                                                     gint          *y, 
+                                                     gint          *w,
+                                                     gint          *h);
+static void       gimp_smudge_allocate_accum_buffer (gint           w,
+                                                     gint           h, 
+                                                     gint           bytes,
+                                                     guchar        *do_fill);
 
 
-/*  local variables */
 static PixelRegion  accumPR;
 static guchar      *accum_data = NULL;
 
-static gdouble  non_gui_rate;
+static GimpPaintCoreClass *parent_class = NULL;
 
-static GimpPaintToolClass *parent_class = NULL;
-
-
-/* global functions  */
-
-void
-gimp_smudge_tool_register (Gimp                     *gimp,
-                           GimpToolRegisterCallback  callback)
-{
-  (* callback) (gimp,
-                GIMP_TYPE_SMUDGE_TOOL,
-                smudge_options_new,
-                TRUE,
-                "gimp:smudge_tool",
-                _("Smudge"),
-                _("Smudge image"),
-                N_("/Tools/Paint Tools/Smudge"), "S",
-                NULL, "tools/smudge.html",
-                GIMP_STOCK_TOOL_SMUDGE);
-}
 
 GType
-gimp_smudge_tool_get_type (void)
+gimp_smudge_get_type (void)
 {
-  static GType tool_type = 0;
+  static GType type = 0;
 
-  if (! tool_type)
+  if (! type)
     {
-      static const GTypeInfo tool_info =
+      static const GTypeInfo info =
       {
-        sizeof (GimpSmudgeToolClass),
+        sizeof (GimpSmudgeClass),
 	(GBaseInitFunc) NULL,
 	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_smudge_tool_class_init,
+	(GClassInitFunc) gimp_smudge_class_init,
 	NULL,           /* class_finalize */
 	NULL,           /* class_data     */
-	sizeof (GimpSmudgeTool),
+	sizeof (GimpSmudge),
 	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_smudge_tool_init,
+	(GInstanceInitFunc) gimp_smudge_init,
       };
 
-      tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
-					  "GimpSmudgeTool",
-                                          &tool_info, 0);
+      type = g_type_register_static (GIMP_TYPE_PAINT_CORE,
+                                     "GimpSmudge",
+                                     &info, 0);
     }
 
-  return tool_type;
+  return type;
 }
 
 static void
-gimp_smudge_tool_class_init (GimpSmudgeToolClass *klass)
+gimp_smudge_class_init (GimpSmudgeClass *klass)
 {
-  GimpPaintToolClass *paint_tool_class;
+  GimpPaintCoreClass *paint_core_class;
 
-  paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
+  paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  paint_tool_class->paint = gimp_smudge_tool_paint;
+  paint_core_class->paint = gimp_smudge_paint;
 }
 
 static void
-gimp_smudge_tool_init (GimpSmudgeTool *smudge)
+gimp_smudge_init (GimpSmudge *smudge)
 {
-  GimpTool      *tool;
-  GimpPaintTool *paint_tool;
+  GimpPaintCore *paint_core;
 
-  tool       = GIMP_TOOL (smudge);
-  paint_tool = GIMP_PAINT_TOOL (smudge);
+  paint_core = GIMP_PAINT_CORE (smudge);
 
-  tool->tool_cursor = GIMP_SMUDGE_TOOL_CURSOR;
-
-  paint_tool->pick_colors  = TRUE;
-  paint_tool->flags       |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
+  paint_core->flags |= CORE_CAN_HANDLE_CHANGING_BRUSH;
 }
 
 static void
-gimp_smudge_tool_paint (GimpPaintTool *paint_tool,
-			GimpDrawable  *drawable,
-			PaintState     state)
+gimp_smudge_paint (GimpPaintCore      *paint_core,
+                   GimpDrawable       *drawable,
+                   PaintOptions       *paint_options,
+                   GimpPaintCoreState  paint_state)
 {
   SmudgeOptions *options;
 
   /* initialization fails if the user starts outside the drawable */
   static gboolean initialized = FALSE;
 
-  options = (SmudgeOptions *) GIMP_TOOL (paint_tool)->tool_info->tool_options;
+  options = (SmudgeOptions *) paint_options;
 
-  switch (state)
+  switch (paint_state)
     {
     case MOTION_PAINT:
       if (! initialized)
-	initialized = gimp_smudge_tool_start (paint_tool, drawable);
+	initialized = gimp_smudge_start (paint_core, drawable);
+
       if (initialized)
-	gimp_smudge_tool_motion (paint_tool,
-				 options->paint_options.pressure_options,
-				 options->rate,
-                                 drawable);
+	gimp_smudge_motion (paint_core,
+                            drawable,
+                            paint_options->pressure_options,
+                            options->rate);
       break;
 
     case FINISH_PAINT:
-      gimp_smudge_tool_finish (paint_tool, drawable);
+      gimp_smudge_finish (paint_core, drawable);
       initialized = FALSE;
       break;
 
@@ -211,33 +160,8 @@ gimp_smudge_tool_paint (GimpPaintTool *paint_tool,
   return;
 }
 
-static void
-gimp_smudge_tool_finish (GimpPaintTool *paint_tool,
-			 GimpDrawable  *drawable)
-{
-  if (accum_data)
-    {
-      g_free (accum_data);
-      accum_data = NULL;
-    }
-}
-
-static void 
-gimp_smudge_tool_nonclipped_painthit_coords (GimpPaintTool *paint_tool,
-					     gint          *x, 
-					     gint          *y, 
-					     gint          *w, 
-					     gint          *h)
-{
-  /* Note: these are the brush mask size plus a border of 1 pixel */
-  *x = (gint) paint_tool->cur_coords.x - paint_tool->brush->mask->width/2 - 1;
-  *y = (gint) paint_tool->cur_coords.y - paint_tool->brush->mask->height/2 - 1;
-  *w = paint_tool->brush->mask->width + 2;
-  *h = paint_tool->brush->mask->height + 2;
-}
-
 static gboolean
-gimp_smudge_tool_start (GimpPaintTool *paint_tool,
+gimp_smudge_start (GimpPaintCore *paint_core,
 			GimpDrawable  *drawable)
 {
   GimpImage   *gimage;
@@ -254,13 +178,13 @@ gimp_smudge_tool_start (GimpPaintTool *paint_tool,
   if (gimp_drawable_is_indexed (drawable))
     return FALSE;
 
-  area = gimp_paint_tool_get_paint_area (paint_tool, drawable, 1.0);
+  area = gimp_paint_core_get_paint_area (paint_core, drawable, 1.0);
 
   if (!area) 
     return FALSE;
   
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
-  gimp_smudge_tool_nonclipped_painthit_coords (paint_tool, &x, &y, &w, &h);
+  gimp_smudge_nonclipped_painthit_coords (paint_core, &x, &y, &w, &h);
   
   if (x != area->x || y != area->y || w != area->width || h != area->height)
     was_clipped = TRUE;
@@ -278,12 +202,12 @@ gimp_smudge_tool_start (GimpPaintTool *paint_tool,
 
   if (was_clipped)
     do_fill = gimp_drawable_get_color_at (drawable,
-                 CLAMP ((gint) paint_tool->cur_coords.x,
+                 CLAMP ((gint) paint_core->cur_coords.x,
                         0, gimp_drawable_width (drawable) - 1),
-                 CLAMP ((gint) paint_tool->cur_coords.y,
+                 CLAMP ((gint) paint_core->cur_coords.y,
                         0, gimp_drawable_height (drawable) - 1));
 
-  gimp_smudge_tool_allocate_accum_buffer (w, h, 
+  gimp_smudge_allocate_accum_buffer (w, h, 
 					  gimp_drawable_bytes (drawable), 
 					  do_fill);
 
@@ -318,33 +242,10 @@ gimp_smudge_tool_start (GimpPaintTool *paint_tool,
 }
 
 static void
-gimp_smudge_tool_allocate_accum_buffer (gint    w,
-					gint    h,
-					gint    bytes,
-					guchar *do_fill)
-{
-  /*  Allocate the accumulation buffer */
-  accumPR.bytes = bytes;
-  accum_data = g_malloc (w * h * bytes);
- 
-  if (do_fill != NULL)
-    {
-      /* guchar color[3] = {0,0,0}; */
-      accumPR.x = 0; 
-      accumPR.y = 0;
-      accumPR.w = w;
-      accumPR.h = h;
-      accumPR.rowstride = accumPR.bytes * w;
-      accumPR.data = accum_data;
-      color_region (&accumPR, (const guchar*)do_fill);
-    }
-}
-
-static void
-gimp_smudge_tool_motion (GimpPaintTool        *paint_tool,
-			 PaintPressureOptions *pressure_options,
-			 gdouble               smudge_rate,
-			 GimpDrawable         *drawable)
+gimp_smudge_motion (GimpPaintCore        *paint_core,
+                    GimpDrawable         *drawable,
+                    PaintPressureOptions *pressure_options,
+                    gdouble               smudge_rate)
 {
   GimpImage   *gimage;
   GimpContext *context;
@@ -363,11 +264,11 @@ gimp_smudge_tool_motion (GimpPaintTool        *paint_tool,
   if (gimp_drawable_is_indexed (drawable))
     return;
 
-  gimp_smudge_tool_nonclipped_painthit_coords (paint_tool, &x, &y, &w, &h);
+  gimp_smudge_nonclipped_painthit_coords (paint_core, &x, &y, &w, &h);
 
   /*  Get the paint area */
   /*  Smudge won't scale!  */
-  if (! (area = gimp_paint_tool_get_paint_area (paint_tool, drawable, 1.0)))
+  if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, 1.0)))
     return;
 
   /* srcPR will be the pixels under the current painthit from 
@@ -378,7 +279,7 @@ gimp_smudge_tool_motion (GimpPaintTool        *paint_tool,
 
   /* Enable pressure sensitive rate */
   if (pressure_options->rate)
-    rate = MIN (smudge_rate / 100.0 * paint_tool->cur_coords.pressure * 2.0, 1.0);
+    rate = MIN (smudge_rate / 100.0 * paint_core->cur_coords.pressure * 2.0, 1.0);
   else
     rate = smudge_rate / 100.0;
 
@@ -431,144 +332,60 @@ gimp_smudge_tool_motion (GimpPaintTool        *paint_tool,
 
   opacity = 255 * gimp_context_get_opacity (context);
   if (pressure_options->opacity)
-    opacity = opacity * 2.0 * paint_tool->cur_coords.pressure;
+    opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
 
   /*Replace the newly made paint area to the gimage*/ 
-  gimp_paint_tool_replace_canvas (paint_tool, drawable, 
+  gimp_paint_core_replace_canvas (paint_core, drawable, 
 				  MIN (opacity, 255),
 				  OPAQUE_OPACITY, 
 				  pressure_options->pressure ? PRESSURE : SOFT,
 				  1.0, INCREMENTAL);
 }
 
-
-static GimpSmudgeTool *non_gui_smudge = NULL;
-
-gboolean
-gimp_smudge_tool_non_gui_default (GimpDrawable *drawable,
-				  gint          num_strokes,
-				  gdouble      *stroke_array)
+static void
+gimp_smudge_finish (GimpPaintCore *paint_core,
+                    GimpDrawable  *drawable)
 {
-  GimpToolInfo  *tool_info;
-  SmudgeOptions *options;
-  gdouble        rate = SMUDGE_DEFAULT_RATE;
-
-  tool_info = tool_manager_get_info_by_type (drawable->gimage->gimp,
-                                             GIMP_TYPE_SMUDGE_TOOL);
-
-  options = (SmudgeOptions *) tool_info->tool_options;
-
-  if (options)
-    rate = options->rate;
-
-  return gimp_smudge_tool_non_gui (drawable, rate, num_strokes, stroke_array);
+  if (accum_data)
+    {
+      g_free (accum_data);
+      accum_data = NULL;
+    }
 }
 
-gboolean
-gimp_smudge_tool_non_gui (GimpDrawable *drawable,
-			  gdouble       rate,
-			  gint          num_strokes,
-			  gdouble      *stroke_array)
+static void 
+gimp_smudge_nonclipped_painthit_coords (GimpPaintCore *paint_core,
+                                        gint          *x, 
+                                        gint          *y, 
+                                        gint          *w, 
+                                        gint          *h)
 {
-  GimpPaintTool *paint_tool;
-  gint           i;
-
-  if (! non_gui_smudge)
-    {
-      non_gui_smudge = g_object_new (GIMP_TYPE_SMUDGE_TOOL, NULL);
-    }
-
-  paint_tool = GIMP_PAINT_TOOL (non_gui_smudge);
-
-  if (gimp_paint_tool_start (paint_tool, drawable,
-			    stroke_array[0], stroke_array[1]))
-    {
-      gimp_smudge_tool_start (paint_tool, drawable);
-
-      non_gui_rate = rate;
-
-      paint_tool->cur_coords.x = paint_tool->start_coords.x = 
-	paint_tool->last_coords.x = stroke_array[0];
-      paint_tool->cur_coords.y = paint_tool->start_coords.y = 
-	paint_tool->last_coords.y = stroke_array[1];
-
-      gimp_smudge_tool_paint (paint_tool, drawable, 0); 
-
-      for (i = 1; i < num_strokes; i++)
-	{
-	  paint_tool->cur_coords.x = stroke_array[i * 2 + 0];
-	  paint_tool->cur_coords.y = stroke_array[i * 2 + 1];
-
-	  gimp_paint_tool_interpolate (paint_tool, drawable);
-
-	  paint_tool->last_coords.x = paint_tool->cur_coords.x;
-	  paint_tool->last_coords.y = paint_tool->cur_coords.y;
-	}
-
-      gimp_paint_tool_finish (paint_tool, drawable);
-
-      gimp_paint_tool_cleanup (paint_tool);
-
-      gimp_smudge_tool_finish (paint_tool, drawable);
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static GimpToolOptions *
-smudge_options_new (GimpToolInfo *tool_info)
-{
-  SmudgeOptions *options;
-  GtkWidget     *vbox;
-  GtkWidget     *hbox;
-  GtkWidget     *label;
-  GtkWidget     *scale;
-
-  options = g_new0 (SmudgeOptions, 1);
-
-  paint_options_init ((PaintOptions *) options, tool_info);
-
-  ((GimpToolOptions *) options)->reset_func = smudge_options_reset;
-
-  options->rate = options->rate_d = SMUDGE_DEFAULT_RATE;
-
-  /*  the main vbox  */
-  vbox = ((GimpToolOptions *) options)->main_vbox;
-
-  /*  the rate scale  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-  label = gtk_label_new (_("Rate:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  options->rate_w =
-    gtk_adjustment_new (options->rate_d, 0.0, 100.0, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->rate_w));
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  g_signal_connect (G_OBJECT (options->rate_w), "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->rate);
-  gtk_widget_show (scale);
-  gtk_widget_show (hbox);
-
-  return (GimpToolOptions *) options;
+  /* Note: these are the brush mask size plus a border of 1 pixel */
+  *x = (gint) paint_core->cur_coords.x - paint_core->brush->mask->width/2 - 1;
+  *y = (gint) paint_core->cur_coords.y - paint_core->brush->mask->height/2 - 1;
+  *w = paint_core->brush->mask->width + 2;
+  *h = paint_core->brush->mask->height + 2;
 }
 
 static void
-smudge_options_reset (GimpToolOptions *tool_options)
+gimp_smudge_allocate_accum_buffer (gint    w,
+                                   gint    h,
+                                   gint    bytes,
+                                   guchar *do_fill)
 {
-  SmudgeOptions *options;
-
-  options = (SmudgeOptions *) tool_options;
-
-  paint_options_reset (tool_options);
-
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->rate_w), options->rate_d);
+  /*  Allocate the accumulation buffer */
+  accumPR.bytes = bytes;
+  accum_data = g_malloc (w * h * bytes);
+ 
+  if (do_fill != NULL)
+    {
+      /* guchar color[3] = {0,0,0}; */
+      accumPR.x = 0; 
+      accumPR.y = 0;
+      accumPR.w = w;
+      accumPR.h = h;
+      accumPR.rowstride = accumPR.bytes * w;
+      accumPR.data = accum_data;
+      color_region (&accumPR, (const guchar*)do_fill);
+    }
 }

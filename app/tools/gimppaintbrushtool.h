@@ -51,15 +51,4 @@ void    gimp_paintbrush_tool_register (Gimp                     *gimp,
 GType   gimp_paintbrush_tool_get_type (void) G_GNUC_CONST;
 
 
-gboolean   gimp_paintbrush_tool_non_gui         (GimpDrawable *drawable,
-						 gint          num_srokes,
-						 gdouble      *stroke_array,
-						 gdouble       fade_out,
-						 gint          incremental,
-						 gdouble       gradient_length);
-gboolean   gimp_paintbrush_tool_non_gui_default (GimpDrawable *drawable,
-						 gint          num_strokes,
-						 gdouble      *stroke_array);
-
-
 #endif  /*  __GIMP_PAINTBRUSH_TOOL_H__  */
