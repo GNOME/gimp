@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "POT-Creation-Date: 2002-04-13 12:05+0200\n"
-"PO-Revision-Date: 2002-04-13 12:48+0200\n"
+"PO-Revision-Date: 2002-04-26 15:58+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2234,19 +2234,19 @@ msgstr "<Toolbox>/Dodatki/Przeglądarka WWW/FAQ dla programistów"
 
 #: plug-ins/webbrowser/web-browser.scm.h:1
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Toolbox>/Dodatki/Przeglądarka WWW/Błędy GIMP-a"
+msgstr "<Toolbox>/Dodatki/Przeglądarka WWW/Błędy programu GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm.h:1
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr "<Toolbox>/Dodatki/Przeglądarka WWW/Podręcznik GIMP-a"
+msgstr "<Toolbox>/Dodatki/Przeglądarka WWW/Podręcznik programu GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm.h:1
 msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr "<Toolbox>/Dodatki/Przeglądarka WWW/Nowinki dotyczące GIMP-a"
+msgstr "<Toolbox>/Dodatki/Przeglądarka WWW/Nowinki na temat programu GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm.h:1
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/Dodatki/Przeglądarka WWW/Przewodniki GIMP-a"
+msgstr "<Toolbox>/Dodatki/Przeglądarka WWW/Przewodniki po programie GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm.h:1
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
@@ -2258,7 +2258,7 @@ msgstr "<Toolbox>/Dodatki/Przeglądarka WWW/GIMP.ORG/Pobieranie"
 
 #: plug-ins/webbrowser/web-browser.scm.h:1
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr "<Toolbox>/Dodatki/Przeglądarka WWW/GIMP.ORG/Sztuka GIMP-a"
+msgstr "<Toolbox>/Dodatki/Przeglądarka WWW/GIMP.ORG/Sztuka programu GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm.h:1
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
@@ -2286,7 +2286,7 @@ msgstr "<Toolbox>/Dodatki/Przeglądarka WWW/Gimp-Savvy.com"
 
 #: plug-ins/webbrowser/web-browser.scm.h:1
 msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr "<Toolbox>/Dodatki/Przeglądarka WWW/Rozumienie GIMP-a"
+msgstr "<Toolbox>/Dodatki/Przeglądarka WWW/Rozumienie programu GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm.h:1
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"

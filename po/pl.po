@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "POT-Creation-Date: 2002-05-23 20:39+0200\n"
-"PO-Revision-Date: 2002-05-24 20:43+0200\n"
+"PO-Revision-Date: 2002-05-26 15:56+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr ""
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
 msgstr ""
-"Aby dokonać osobistej instalacji, należy uruchomić GIMP-a bez opcji\n"
+"Aby dokonać osobistej instalacji, należy uruchomić program GIMP bez opcji\n"
 "'--nointerface' w wierszu poleceń\n"
 
 #: app/gimprc.c:1
@@ -93,7 +93,7 @@ msgstr ""
 
 #: app/main.c:1
 msgid "GIMP version"
-msgstr "Wersja GIMP-a"
+msgstr "Wersja programu GIMP"
 
 #: app/main.c:1
 #, c-format
@@ -169,7 +169,7 @@ msgid ""
 "plugins.\n"
 msgstr ""
 "  --no-shm                 Nie wykorzystuje pamięci dzielonej pomiędzy "
-"GIMP-em a wtyczkami.\n"
+"programem GIMP a wtyczkami.\n"
 
 #: app/main.c:1
 msgid "  --no-mmx                 Do not use MMX routines.\n"
@@ -1321,13 +1321,13 @@ msgid ""
 msgstr ""
 "Nieobsługiwana głębia desenia (%d)\n"
 "w pliku \"%s\".\n"
-"Desenie GIMP-a muszą być albo w\n"
+"Desenie programu GIMP muszą być albo w\n"
 "odcieniach szarości albo jako RGB.\n"
 
 #: app/core/gimppattern.c:1
 #, c-format
 msgid "Error in GIMP pattern file '%s'."
-msgstr "Błąd w pliku \"%s\" z deseniami GIMP-a."
+msgstr "Błąd w pliku \"%s\" z deseniami programu GIMP."
 
 #: app/core/gimppattern.c:1
 #, c-format
@@ -1587,7 +1587,7 @@ msgstr "Niepoprawna sekwencja znaków w URI"
 
 #: app/gui/about-dialog.c:1
 msgid "About The GIMP"
-msgstr "Informacje o GIMP-ie"
+msgstr "Informacje o programie GIMP"
 
 #: app/gui/about-dialog.c:1
 #, c-format
@@ -2322,7 +2322,7 @@ msgstr "Analiza \"%s\"\n"
 
 #: app/gui/gui.c:1
 msgid "Quit The GIMP?"
-msgstr "Czy zakończyć GIMP-a?"
+msgstr "Czy zakończyć program GIMP?"
 
 #: app/gui/gui.c:1
 msgid ""
@@ -2332,7 +2332,7 @@ msgid ""
 msgstr ""
 "Część plików nie została zapisana.\n"
 "\n"
-"Czy na pewno zakończyć GIMP-a?"
+"Czy na pewno zakończyć program GIMP?"
 
 #: app/gui/gui.c:1
 #, c-format
@@ -4151,16 +4151,16 @@ msgid ""
 "be applied."
 msgstr ""
 "Co najmniej jedna z dokonanych zmian odniesie\n"
-"skutek dopiero po ponownym uruchomieniu GIMP-a.\n"
+"skutek dopiero po ponownym uruchomieniu programu GIMP.\n"
 "\n"
 "Możesz wybrać teraz \"Zapisz\", aby utrwalić\n"
-"zmiany i mieć możliwość ponownego uruchomienia GIMP-a\n"
+"zmiany i mieć możliwość ponownego uruchomienia programu GIMP\n"
 "lub wybrać \"Zamknij\" i wówczas krytyczna część zmian\n"
 "nie zostanie zastosowana."
 
 #: app/gui/preferences-dialog.c:1
 msgid "You will need to restart GIMP for these changes to take effect."
-msgstr "Zmiany odniosą efekt po ponownym uruchomieniu GIMP-a."
+msgstr "Zmiany odniosą efekt po ponownym uruchomieniu programu GIMP."
 
 #: app/gui/preferences-dialog.c:1
 #, c-format
@@ -4724,7 +4724,7 @@ msgstr "Obramowanie zaznaczenia o:"
 
 #: app/gui/splash.c:1
 msgid "GIMP Startup"
-msgstr "Uruchamianie GIMP-a"
+msgstr "Uruchamianie programu GIMP"
 
 #: app/gui/splash.c:1 app/widgets/gimptoolbox.c:1
 msgid "The GIMP"
@@ -4732,11 +4732,11 @@ msgstr "GIMP"
 
 #: app/gui/tips-dialog.c:1
 msgid "<b>The GIMP tips file could not be parsed correctly!</b>"
-msgstr "<b>Nie można przeanalizować zawartości pliku z poradami GIMP-a!</b>"
+msgstr "<b>Nie można przeanalizować zawartości pliku z poradami programu GIMP!</b>"
 
 #: app/gui/tips-dialog.c:1
 msgid "GIMP Tip of the Day"
-msgstr "Porada dnia GIMP-a"
+msgstr "Porada dnia programu GIMP"
 
 #: app/gui/tips-dialog.c:1
 msgid "Show tip next time GIMP starts"
@@ -4756,8 +4756,8 @@ msgid ""
 "Your GIMP tips file appears to be missing! There should be a file called "
 "'%s'. Please check your installation."
 msgstr ""
-"Nie można odnaleźć pliku z poradami GIMP-a! Powinien istnieć plik o nazwie "
-"\"%s\". Sprawdź instalację GIMP-a."
+"Nie można odnaleźć pliku z poradami programu GIMP! Powinien istnieć plik o nazwie "
+"\"%s\". Sprawdź instalację programu."
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
@@ -4789,7 +4789,7 @@ msgid ""
 "here."
 msgstr ""
 "Plik gimprc jest wykorzystywany do zapisu osobistych preferencji\n"
-"wpływających na domyślne zachowanie się GIMP-a.\n"
+"wpływających na domyślne zachowanie się programu GIMP.\n"
 "Są tutaj również zapisywane skonfigurowane ścieżki wyszukiwania\n"
 "pędzli, palet, gradientów, deseni, wtyczek i modułów."
 
@@ -4811,11 +4811,11 @@ msgid ""
 "be GIMP-readable only, and should not be edited."
 msgstr ""
 "Wtyczki i rozszerzenia są zewnętrznymi programami uruchamianymi\n"
-"przez GIMP-a, które poszerzają jego możliwości.\n"
-"Programy te są wyszukiwane w czasie uruchamiania GIMP-a, zaś\n"
+"przez program GIMP, które poszerzają jego możliwości.\n"
+"Programy te są wyszukiwane w czasie uruchamiania programu, zaś\n"
 "informacje o ich funkcjach oraz czasach modyfikacji są\n"
 "przechowywane w tym pliku. Jest on przeznaczony do odczytu\n"
-"wyłącznie przez GIMP-a i nie powinien być ręcznie modyfikowany."
+"wyłącznie przez program i nie powinien być ręcznie modyfikowany."
 
 #: app/gui/user-install-dialog.c:1
 msgid ""
@@ -4826,11 +4826,11 @@ msgid ""
 "keys from within The GIMP.  Deleting this file will\n"
 "restore the default shortcuts."
 msgstr ""
-"W GIMP-ie możliwa jest dynamiczna konfiguracja skrótów klawiszowych.\n"
+"W programie GIMP możliwa jest dynamiczna konfiguracja skrótów klawiszowych.\n"
 "Plik menurc zawiera stan tej konfiguracji, co pozwala na jej użycie w\n"
 "następnej sesji. Dopuszczalna jest samodzielna modyfikacja tego\n"
 "pliku, jednak definiowanie skrótów klawiszowych jest dużo łatwiejsze\n"
-"w samym GIMP-ie. Usunięcie tego pliku spowoduje przywrócenie domyślnych\n"
+"w samym programie. Usunięcie tego pliku spowoduje przywrócenie domyślnych\n"
 "skrótów klawiszowych."
 
 #: app/gui/user-install-dialog.c:1
@@ -4841,7 +4841,7 @@ msgid ""
 msgstr ""
 "Plik sessionrc jest wykorzystywany do zapisu informacji o oknach\n"
 "dialogowych, które były otwarte przy ostatnim zakończeniu pracy\n"
-"z GIMP-em. Możliwe jest skonfigurowanie GIMP-a w taki sposób, aby przy\n"
+"z programem GIMP. Możliwe jest skonfigurowanie programu w taki sposób, aby przy\n"
 "kolejnym uruchomieniu automatycznie otwierał on te okna na poprzednich\n"
 "pozycjach."
 
@@ -4856,7 +4856,7 @@ msgstr ""
 "Plik unitrc jest wykorzystywany do zapisu osobistej bazy danych jednostek.\n"
 "Możliwe jest zdefiniowanie dodatkowych jednostek i używanie ich\n"
 "na równi z wbudowanymi: calami, milimetrami, punktami i cycero.\n"
-"Plik ten jest nadpisywany przy każdym zakończeniu GIMP-a."
+"Plik ten jest nadpisywany przy każdym zakończeniu programu GIMP."
 
 #: app/gui/user-install-dialog.c:1
 msgid ""
@@ -5036,11 +5036,11 @@ msgid ""
 "GIMP folder is being created..."
 msgstr ""
 "Poczekaj chwilę na stworzenie twojego\n"
-"osobistego folderu GIMP-a..."
+"osobistego folderu programu GIMP..."
 
 #: app/gui/user-install-dialog.c:1
 msgid "GIMP User Installation"
-msgstr "Osobista instalacja GIMP-a"
+msgstr "Osobista instalacja programu GIMP"
 
 #: app/gui/user-install-dialog.c:1
 msgid "Continue"
@@ -5052,11 +5052,11 @@ msgid ""
 "The GIMP User Installation"
 msgstr ""
 "Witaj w\n"
-"osobistej instalacji GIMP-a"
+"osobistej instalacji programu GIMP"
 
 #: app/gui/user-install-dialog.c:1
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr "Kliknij \"Kontynuuj\" aby rozpocząć osobistą instalację GIMP-a."
+msgstr "Kliknij \"Kontynuuj\" aby rozpocząć osobistą instalację programu GIMP."
 
 #: app/gui/user-install-dialog.c:1
 msgid ""
@@ -5066,7 +5066,7 @@ msgid ""
 msgstr ""
 "GIMP - program GNU do obróbki obrazów\n"
 "Copyright (C) 1995-2002\n"
-"Spencer Kimball, Peter Mattis oraz grupa twórców GIMP-a."
+"Spencer Kimball, Peter Mattis oraz grupa twórców programu GIMP."
 
 #: app/gui/user-install-dialog.c:1
 msgid ""
@@ -5104,11 +5104,11 @@ msgstr ""
 
 #: app/gui/user-install-dialog.c:1
 msgid "Personal GIMP Folder"
-msgstr "Osobisty folder GIMP-a"
+msgstr "Osobisty folder programu GIMP"
 
 #: app/gui/user-install-dialog.c:1
 msgid "Click \"Continue\" to create your personal GIMP folder."
-msgstr "Kliknij \"Kontynuuj\" aby stworzyć swój osobisty folder GIMP-a."
+msgstr "Kliknij \"Kontynuuj\" aby stworzyć swój osobisty folder programu GIMP."
 
 #: app/gui/user-install-dialog.c:1
 #, c-format
@@ -5116,7 +5116,7 @@ msgid ""
 "For a proper GIMP installation, a folder named\n"
 "%s needs to be created."
 msgstr ""
-"Aby instalacja GIMP-a przebiegła poprawnie, musi\n"
+"Aby instalacja programu GIMP przebiegła poprawnie, musi\n"
 "zostać stworzony folder %s."
 
 #: app/gui/user-install-dialog.c:1
@@ -5135,7 +5135,7 @@ msgstr "Dziennik osobistej instalacji"
 
 #: app/gui/user-install-dialog.c:1
 msgid "GIMP Performance Tuning"
-msgstr "Zwiększanie wydajności GIMP-a"
+msgstr "Zwiększanie wydajności programu GIMP"
 
 #: app/gui/user-install-dialog.c:1
 msgid "Click \"Continue\" to accept the settings above."
@@ -5144,7 +5144,7 @@ msgstr "Kliknij \"Kontynuuj\", aby zaakceptować powyższe ustawienia."
 #: app/gui/user-install-dialog.c:1
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr ""
-"Aby osiągnąć optymalną wydajność GIMP-a, może być konieczne dopasowanie "
+"Aby osiągnąć optymalną wydajność programu GIMP, może być konieczne dopasowanie "
 "niektórych ustawień."
 
 #: app/gui/user-install-dialog.c:1
@@ -5153,7 +5153,7 @@ msgstr "Rozdzielczość monitora"
 
 #: app/gui/user-install-dialog.c:1
 msgid "Click \"Continue\" to start The GIMP."
-msgstr "Kliknij \"Kontynuuj\", aby rozpocząć pracę z GIMP-em."
+msgstr "Kliknij \"Kontynuuj\", aby rozpocząć pracę z programem GIMP."
 
 #: app/gui/user-install-dialog.c:1
 msgid ""
@@ -5197,7 +5197,7 @@ msgstr ""
 
 #: app/gui/user-install-dialog.c:1
 msgid "Click \"Continue\" to complete GIMP installation."
-msgstr "Kliknij \"Kontynuuj\", aby zakończyć instalację GIMP-a."
+msgstr "Kliknij \"Kontynuuj\", aby zakończyć instalację programu GIMP."
 
 #: app/gui/user-install-dialog.c:1
 msgid "Installation failed.  Contact system administrator."
@@ -5478,15 +5478,15 @@ msgstr ""
 
 #: app/pdb/procedural_db_cmds.c:1
 msgid "Internal GIMP procedure"
-msgstr "Wewnętrzna procedura GIMP-a"
+msgstr "Wewnętrzna procedura programu GIMP"
 
 #: app/pdb/procedural_db_cmds.c:1
 msgid "GIMP Plug-In"
-msgstr "Wtyczka GIMP-a"
+msgstr "Wtyczka programu GIMP"
 
 #: app/pdb/procedural_db_cmds.c:1
 msgid "GIMP Extension"
-msgstr "Rozszerzenie GIMP-a"
+msgstr "Rozszerzenie programu GIMP"
 
 #: app/pdb/procedural_db_cmds.c:1
 msgid "Temporary Procedure"
@@ -5511,9 +5511,9 @@ msgstr ""
 "(%s)\n"
 "\n"
 "Przerywając swe działanie w wyniku błędu wtyczka mogła\n"
-"uszkodzić wewnętrzny stan GIMP-a.\n"
+"uszkodzić wewnętrzny stan programu GIMP.\n"
 "Dla bezpieczeństwa zalecane jest zapisanie obrazów\n"
-"i ponowne uruchomienie GIMP-a."
+"i ponowne uruchomienie programu."
 
 #: app/plug-in/plug-ins.c:1
 msgid "Resource configuration"
@@ -6918,7 +6918,7 @@ msgstr ""
 
 #: app/widgets/gimpfontselection-dialog.c:1
 msgid "GIMP Font Selection"
-msgstr "Wybór czcionki GIMP-a"
+msgstr "Wybór czcionki programu GIMP"
 
 #: app/widgets/gimpfontselection-dialog.c:1
 msgid "_Family:"
@@ -7020,7 +7020,7 @@ msgstr "Odległość: %0.6f"
 
 #: app/widgets/gimphelp.c:1
 msgid "Could not find GIMP Help Browser"
-msgstr "Nie można odnaleźć przeglądarki pomocy GIMP-a"
+msgstr "Nie można odnaleźć przeglądarki pomocy programu GIMP"
 
 #: app/widgets/gimphelp.c:1
 msgid ""
@@ -7028,7 +7028,7 @@ msgid ""
 "It probably was not compiled because\n"
 "you don't have GtkXmHTML installed."
 msgstr ""
-"Nie można odnaleźć procedury przeglądarki plików GIMP-a.\n"
+"Nie można odnaleźć procedury przeglądarki plików programu GIMP.\n"
 "Prawdopodobnie nie została ona skompilowana z powodu braku\n"
 "zainstalowanej biblioteki GtkXmHTML."
 
@@ -7232,7 +7232,7 @@ msgstr ""
 
 #: app/widgets/gimpwidgets-utils.c:1
 msgid "GIMP Message"
-msgstr "Komunikat GIMP-a"
+msgstr "Komunikat programu GIMP"
 
 #: app/xcf/xcf-load.c:1
 msgid ""
