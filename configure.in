@@ -388,8 +388,6 @@ AM_PATH_GLIB_2_0(glib_required_version, :,
   gobject)
 
 PKG_CHECK_MODULES(GMODULE, gmodule-2.0 gobject-2.0)
-AC_SUBST(GMODULE_CFLAGS)
-AC_SUBST(GMODULE_LIBS)
 
 AC_MSG_CHECKING([if GLib is version 2.7.0 or newer])
 if $PKG_CONFIG --atleast-version=2.7.0 glib-2.0; then
@@ -420,8 +418,6 @@ fi
 AC_MSG_RESULT($have_gtk_2_7)
 
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= gdk_pixbuf_required_version)
-AC_SUBST(GDK_PIXBUF_CFLAGS)
-AC_SUBST(GDK_PIXBUF_LIBS)
 
 AC_PATH_PROG(GDK_PIXBUF_CSOURCE, gdk-pixbuf-csource, no)
 if test x$GDK_PIXBUF_CSOURCE = xno; then
@@ -429,8 +425,6 @@ if test x$GDK_PIXBUF_CSOURCE = xno; then
 fi
 
 PKG_CHECK_MODULES(LIBART, libart-2.0)
-AC_SUBST(LIBART_CFLAGS)
-AC_SUBST(LIBART_LIBS)
 
 PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version)
 
@@ -438,8 +432,6 @@ PKG_CHECK_MODULES(PANGOFT2, pangoft2 >= pangoft2_required_version, :,
   AC_MSG_ERROR([Test for PangoFT2 failed.
 *** We require Pango with the optional support for FreeType2 compiled in.
 *** See the file 'INSTALL' for more help.]))
-AC_SUBST(PANGOFT2_CFLAGS)
-AC_SUBST(PANGOFT2_LIBS)
 
 AC_MSG_CHECKING([if Pango is version 1.9.0 or newer])
 if $PKG_CONFIG --atleast-version=1.9.0 pango; then
@@ -1109,8 +1101,7 @@ AC_SUBST(LIBXPM)
 PKG_CHECK_MODULES(GTKHTML2, libgtkhtml-2.0 >= gtkhtml2_required_version,
   have_gtkhtml2=yes,
   AC_MSG_WARN([*** Help browser plug-in will not be built (GtkHtml2 not found) ***]))
-AC_SUBST(GTKHTML2_CFLAGS)
-AC_SUBST(GTKHTML2_LIBS)
+
 AM_CONDITIONAL(BUILD_HELPBROWSER, test x$have_gtkhtml2 = xyes)
 
 
@@ -1122,8 +1113,8 @@ PKG_CHECK_MODULES(SVG, librsvg-2.0 >= rsvg_required_version,
   SVG='svg$(EXEEXT)'
   LIBSVG=$SVG_LIBS,
   AC_MSG_WARN([*** SVG import plug-in will not be built (librsvg not found) ***]))
+
 AC_SUBST(SVG)
-AC_SUBST(SVG_CFLAGS)
 AC_SUBST(LIBSVG)
 
 
@@ -1134,6 +1125,7 @@ AC_SUBST(LIBSVG)
 PKG_CHECK_MODULES(GNOMEVFS, gnome-vfs-2.0,
   have_gnomevfs=yes,
   AC_MSG_WARN([*** URI plug-in will be built without gnome-vfs support (gnome-vfs-2.0 not found) ***]))
+
 AM_CONDITIONAL(HAVE_GNOMEVFS, test x$have_gnomevfs = xyes)
 
 
@@ -1320,7 +1312,6 @@ if test "x$enable_python" != xno; then
 
   dnl check for PyGTK
   PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= pygtk_required_version)
-  AC_SUBST(PYGTK_CFLAGS)
 
   dnl enable -fno-strict-aliasing if compiler supports it
   PYGIMP_EXTRA_CFLAGS=

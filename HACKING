@@ -5,7 +5,7 @@ to have the following packages (or newer versions) installed:
 
     * GNU autoconf 2.54
         - ftp://ftp.gnu.org/gnu/autoconf/
-    * GNU automake 1.7  (1.9, 1.8 and 1.6 will also work)
+    * GNU automake 1.7  (1.8 and 1.8 should work as well)
         - ftp://ftp.gnu.org/gnu/automake/
     * GNU libtool 1.4  (1.5 if you are compiling on Win32)
         - ftp://ftp.gnu.org/gnu/libtool/

@@ -1,3 +1,11 @@
+2005-02-07  Sven Neumann  <sven@gimp.org>
+
+	* HACKING
+	* autogen.sh: dropped support for automake 1.6, automake >= 1.7 is
+	now required.
+
+	* configure.in: removed cruft that was there only for automake 1.6.
+
 2005-02-07  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: check for gnome-vfs-2.0
