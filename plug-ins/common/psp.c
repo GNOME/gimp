@@ -970,57 +970,86 @@ static void
 read_channel_data (FILE *f,
 		   PSPCompression compression,
 		   guchar **pixels,
-		   guint bpp,
+		   guint bytespp,
+		   guint offset,
 		   GDrawable *drawable,
-		   GPixelRgn *pixel_rgn,
-		   PSPDIBType bitmap_type,
-		   PSPChannelType channel_type,
 		   guint32 compressed_len)
 {
-  gint i, k, y, width = drawable->width, height = drawable->height;
-  guchar *scanline, *p, *q;
+  gint i, n, x, y, width = drawable->width, height = drawable->height;
+  guchar *scanline, *p, *q, *endq;
+  guchar runcount, byte;
 
   switch (compression)
     {
     case PSP_COMP_NONE:
-      if (bpp == 1)
+      if (bytespp == 1)
 	{
-	  gimp_tile_cache_size (tile_height * width);
-	  y = 0;
-	  while (y < height)
+	  if ((width % 4) == 0)
+	    fread (pixels[0], height * width, 1, f);
+	  else
 	    {
-	      fread (pixels[y], width, 1, f);
-	      if (width % 4)
-		fseek (f, 4 - (width % 4), SEEK_CUR);
-	      y++;
+	      for (y = 0; y < height; y++)
+		{
+		  fread (pixels[y], width, 1, f);
+		  fseek (f, 4 - (width % 4), SEEK_CUR);
+		}
 	    }
 	}
       else
 	{
-	  gimp_tile_cache_size (height * width * bpp);
 	  scanline = g_malloc (width);
-	  if (channel_type == PSP_CHANNEL_COMPOSITE)
-	    k = 3;
-	  else
-	    k = channel_type - PSP_CHANNEL_RED;
-	  y = 0;
-	  while (y < height)
+	  for (y = 0; y < height; y++)
 	    {
 	      fread (scanline, width, 1, f);
 	      if (width % 4)
 		fseek (f, 4 - (width % 4), SEEK_CUR);
 	      p = scanline;
-	      q = pixels[y] + k;
+	      q = pixels[y] + offset;
 	      for (i = 0; i < width; i++)
 		{
-		  *q = *p;
-		  q += bpp;
-		  p++;
+		  *q = *p++;
+		  q += bytespp;
 		}
-	      y++;
 	    }
 	  g_free (scanline);
 	}
+      break;
+
+    case PSP_COMP_RLE:
+      q = pixels[0] + offset;
+      endq = q + height * width * bytespp;
+      scanline = g_malloc (127);
+      while (q < endq)
+	{
+	  p = scanline;
+	  fread (&runcount, 1, 1, f);
+	  if (runcount > 128)
+	    {
+	      runcount -= 128;
+	      fread (&byte, 1, 1, f);
+	      memset (scanline, byte, runcount);
+	    }
+	  else
+	    fread (scanline, runcount, 1, f);
+	  if (bytespp == 1)
+	    {
+	      memmove (q, scanline, runcount);
+	      q += runcount;
+	    }
+	  else
+	    {
+	      for (i = 0; i < runcount; i++)
+		{
+		  *q = scanline[i];
+		  q += bytespp;
+		}
+	    }
+	}
+      g_free (scanline);
+      break;
+
+    case PSP_COMP_LZ77:
+      
     }
 }
 
@@ -1047,7 +1076,7 @@ read_layer_block (FILE *f,
   guint32 channel_init_len, channel_total_len;
   guint32 compressed_len, uncompressed_len;
   guint16 bitmap_type, channel_type;
-  gint width, height, bpp;
+  gint width, height, bytespp, offset;
   guchar **pixels, *pixel;
   GDrawable *drawable;
   GPixelRgn pixel_rgn;
@@ -1181,19 +1210,19 @@ read_layer_block (FILE *f,
 
       if (ia->greyscale)
 	if (!null_layer && bitmap_count == 1)
-	  drawable_type = GRAY_IMAGE, bpp = 1;
+	  drawable_type = GRAY_IMAGE, bytespp = 1;
 	else
-	  drawable_type = GRAYA_IMAGE, bpp = 1;
+	  drawable_type = GRAYA_IMAGE, bytespp = 1;
       else
 	if (!null_layer && bitmap_count == 1)
-	  drawable_type = RGB_IMAGE, bpp = 3;
+	  drawable_type = RGB_IMAGE, bytespp = 3;
 	else
-	  drawable_type = RGBA_IMAGE, bpp = 4;
+	  drawable_type = RGBA_IMAGE, bytespp = 4;
 
       layer_ID = gimp_layer_new (image_ID, name,
 				 width, height,
 				 drawable_type,
-				 opacity / 255.0,
+				 100.0 * opacity / 255.0,
 				 layer_mode);
       if (layer_ID == -1)
 	{
@@ -1222,18 +1251,21 @@ read_layer_block (FILE *f,
 	    return -1;
 	  }
 
+      pixel = g_malloc0 (height * width * bytespp);
       if (null_layer)
-	pixel = g_malloc0 (height * width * bpp);
+	pixels = NULL;
       else
-	pixel = g_malloc0 (height * width * bpp);
-
-      pixels = g_new(guchar *, height);
-      for (i = 0; i < height; i++)
-	pixels[i] = pixel + width * bpp * i;
+	{
+	  pixels = g_new(guchar *, height);
+	  for (i = 0; i < height; i++)
+	    pixels[i] = pixel + width * bytespp * i;
+	}
 
       drawable = gimp_drawable_get (layer_ID);
       gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
 			   width, height, TRUE, FALSE);
+
+      gimp_tile_cache_size (tile_height * width * bytespp);
 
       /* Read the layer channel sub-blocks */
       while (ftell (f) < sub_block_start + sub_total_len)
@@ -1297,10 +1329,17 @@ read_layer_block (FILE *f,
 	      return -1;
 	    }
 
-	  IFDBG(2) gimp_message_printf (("PSP: channel: %s %s %d (%d) bytes",
+	  IFDBG(2) gimp_message_printf (("PSP: channel: %s %s %d (%d) bytes "
+					 "%d bytespp",
 					 bitmap_type_name (bitmap_type),
 					 channel_type_name (channel_type),
-					 uncompressed_len, compressed_len));
+					 uncompressed_len, compressed_len,
+					 bytespp));
+
+	  if (bitmap_type == PSP_DIB_TRANS_MASK)
+	    offset = 4;
+	  else
+	    offset = channel_type - PSP_CHANNEL_RED;
 
 	  if (major < 4)
 	    if (try_fseek (f, channel_start + channel_init_len, SEEK_SET) < 0)
@@ -1311,9 +1350,7 @@ read_layer_block (FILE *f,
 	  
 	  if (!null_layer)
 	    read_channel_data (f, ia->compression, pixels,
-			       bpp, drawable, &pixel_rgn,
-			       bitmap_type, channel_type,
-			       compressed_len);
+			       bytespp, offset, drawable, compressed_len);
 
 	  if (try_fseek (f, channel_start + channel_total_len, SEEK_SET) < 0)
 	    {
@@ -1323,6 +1360,9 @@ read_layer_block (FILE *f,
 	}
 
       gimp_pixel_rgn_set_rect (&pixel_rgn, pixel, 0, 0, width, height);
+
+      gimp_drawable_flush (drawable);
+      gimp_drawable_detach (drawable);
 
       g_free (pixels);
       g_free (pixel);
