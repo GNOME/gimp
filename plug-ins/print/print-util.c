@@ -23,32 +23,37 @@
  *
  *   dither_black()    - Dither grayscale pixels to black.
  *   dither_cmyk()     - Dither RGB pixels to cyan, magenta, yellow, and black.
- *   gray_to_gray()    - Convert grayscale image data to grayscale (brightness
- *                       adjusted).
+ *   gray_to_gray()    - Convert grayscale image data to grayscale.
  *   indexed_to_gray() - Convert indexed image data to grayscale.
  *   indexed_to_rgb()  - Convert indexed image data to RGB.
  *   media_width()     - Get the addressable width of the page.
  *   media_height()    - Get the addressable height of the page.
  *   rgb_to_gray()     - Convert RGB image data to grayscale.
- *   rgb_to_rgb()      - Convert RGB image data to RGB (brightness adjusted).
+ *   rgb_to_rgb()      - Convert RGB image data to RGB.
  *
  * Revision History:
  *
  *   $Log$
- *   Revision 1.3  1998/03/26 02:08:26  yosh
- *   * applied gimp-quinet-980122-0 and tweaked the tests a bit, this makes the
- *   optional library tests in configure.
+ *   Revision 1.4  1998/04/01 22:14:47  neo
+ *   Added checks for print spoolers to configure.in as suggested by Michael
+ *   Sweet. The print plug-in still needs some changes to Makefile.am to make
+ *   make use of this.
  *
- *   * applied gimp-jbuhler-980321-0, fixes more warnings in plug-ins
+ *   Updated print and sgi plug-ins to version on the registry.
  *
- *   -Yosh
  *
- *   Revision 1.2  1998/01/25 09:29:27  yosh
- *   Plugin updates
- *   Properly generated aa Makefile (still not built by default)
- *   Sven's no args script patch
+ *   --Sven
  *
- *   -Yosh
+ *   Revision 1.11  1998/03/01  18:03:27  mike
+ *   Whoops - need to add 255 - alpha to the output values (transparent to white
+ *   and not transparent to black...)
+ *
+ *   Revision 1.10  1998/03/01  17:20:48  mike
+ *   Updated alpha code to do alpha computation before gamma/brightness lut.
+ *
+ *   Revision 1.9  1998/03/01  17:13:46  mike
+ *   Updated CMY/CMYK conversion code for dynamic BG and hue adjustment.
+ *   Added alpha channel support to color conversion functions.
  *
  *   Revision 1.8  1998/01/21  21:33:47  mike
  *   Replaced Burkes dither with stochastic (random) dither.
@@ -107,7 +112,7 @@
  * (currently 720) to avoid problems...
  */
 
-int	error[2][4][11*720+4] = { { { 0 } } };
+int	error[2][4][11*720+4] = { 0 };
 
 
 /*
@@ -208,7 +213,9 @@ dither_cmyk(guchar        *rgb,		/* I - RGB pixels */
 		xstep,		/* X step */
 		xmod,		/* X error modulus */
 		length;		/* Length of output bitmap in bytes */
-  int		c, m, y, k, ik;	/* CMYK values */
+  int		c, m, y, k,	/* CMYK values */
+		divk,		/* Inverse of K */
+		diff;		/* Average color difference */
   unsigned char	bit,		/* Current bit */
 		*cptr,		/* Current cyan pixel */
 		*mptr,		/* Current magenta pixel */
@@ -266,21 +273,38 @@ dither_cmyk(guchar        *rgb,		/* I - RGB pixels */
        x ++, cerror0 ++, cerror1 ++, merror0 ++, merror1 ++, yerror0 ++,
            yerror1 ++, kerror0 ++, kerror1 ++)
   {
+   /*
+    * First compute the standard CMYK separation color values...
+    */
+
     c = 255 - rgb[0];
     m = 255 - rgb[1];
     y = 255 - rgb[2];
+    k = MIN(c, MIN(m, y));
 
     if (black != NULL)
     {
-      k = MIN(c, MIN(m, y));
-      if (k >= 255)
-        c = m = y = 0;
-      else if (k > 0)
+     /*
+      * Since we're printing black, adjust the black level based upon
+      * the amount of color in the pixel (colorful pixels get less black)...
+      */
+
+      diff = 255 - (abs(c - m) + abs(c - y) + abs(m - y)) / 3;
+      k    = diff * k / 255;
+      divk = 255 - k;
+      
+      if (divk == 0)
+        c = m = y = 0;	/* Grayscale */
+      else
       {
-        ik = 255 - k;
-        c  = 255 * (c - k) / ik;
-        m  = 255 * (m - k) / ik;
-        y  = 255 * (y - k) / ik;
+       /*
+        * Full color; update the CMY values for the black value and reduce
+        * CMY as necessary to give better blues, greens, and reds... :)
+        */
+
+        c  = (255 - (rgb[1] + rgb[2]) / 8) * (c - k) / divk;
+        m  = (255 - (rgb[0] + rgb[2]) / 8) * (m - k) / divk;
+        y  = (255 - (rgb[0] + rgb[1]) / 8) * (y - k) / divk;
       };
 
       k += ditherk / 4;
@@ -303,6 +327,17 @@ dither_cmyk(guchar        *rgb,		/* I - RGB pixels */
 
       if (bit == 1)
         kptr ++;
+    }
+    else
+    {
+     /*
+      * We're not printing black, but let's adjust the CMY levels to produce
+      * better reds, greens, and blues...
+      */
+
+      c  = (255 - (rgb[1] + rgb[2]) / 8) * (c - k) / 255 + k;
+      m  = (255 - (rgb[0] + rgb[2]) / 8) * (m - k) / 255 + k;
+      y  = (255 - (rgb[0] + rgb[1]) / 8) * (y - k) / 255 + k;
     };
 
     c += ditherc / 4;
@@ -394,13 +429,35 @@ gray_to_gray(guchar *grayin,	/* I - RGB pixels */
              guchar *lut,	/* I - Brightness lookup table */
              guchar *cmap)	/* I - Colormap (unused) */
 {
-  while (width > 0)
+  if (bpp == 1)
   {
-    *grayout = lut[*grayin];
+   /*
+    * No alpha in image...
+    */
 
-    grayout ++;
-    grayin  += bpp;
-    width --;
+    while (width > 0)
+    {
+      *grayout = lut[*grayin];
+
+      grayin ++;
+      grayout ++;
+      width --;
+    };
+  }
+  else
+  {
+   /*
+    * Handle alpha in image...
+    */
+
+    while (width > 0)
+    {
+      *grayout = lut[grayin[0] * grayin[1] / 255] + 255 - grayin[1];
+
+      grayin += bpp;
+      grayout ++;
+      width --;
+    };
   };
 }
 
@@ -422,14 +479,35 @@ indexed_to_gray(guchar *indexed,	/* I - Indexed pixels */
 
 
   for (i = 0; i < 256; i ++, cmap += 3)
-    gray_cmap[i] = lut[(cmap[0] * LUM_RED + cmap[1] * LUM_GREEN + cmap[2] * LUM_BLUE) / 100];
+    gray_cmap[i] = (cmap[0] * LUM_RED + cmap[1] * LUM_GREEN + cmap[2] * LUM_BLUE) / 100;
 
-  while (width > 0)
+  if (bpp == 1)
   {
-    *gray = gray_cmap[*indexed];
-    gray ++;
-    indexed += bpp;
-    width --;
+   /*
+    * No alpha in image...
+    */
+
+    while (width > 0)
+    {
+      *gray = lut[gray_cmap[*indexed]];
+      indexed ++;
+      gray ++;
+      width --;
+    };
+  }
+  else
+  {
+   /*
+    * Handle alpha in image...
+    */
+
+    while (width > 0)
+    {
+      *gray = lut[gray_cmap[indexed[0] * indexed[1] / 255] + 255 - indexed[1]];
+      indexed += bpp;
+      gray ++;
+      width --;
+    };
   };
 }
 
@@ -446,14 +524,37 @@ indexed_to_rgb(guchar *indexed,		/* I - Indexed pixels */
                guchar *lut,		/* I - Brightness lookup table */
                guchar *cmap)		/* I - Colormap */
 {
-  while (width > 0)
+  if (bpp == 1)
   {
-    rgb[0] = lut[cmap[*indexed * 3 + 0]];
-    rgb[1] = lut[cmap[*indexed * 3 + 1]];
-    rgb[2] = lut[cmap[*indexed * 3 + 2]];
-    rgb += 3;
-    indexed += bpp;
-    width --;
+   /*
+    * No alpha in image...
+    */
+
+    while (width > 0)
+    {
+      rgb[0] = lut[cmap[*indexed * 3 + 0]];
+      rgb[1] = lut[cmap[*indexed * 3 + 1]];
+      rgb[2] = lut[cmap[*indexed * 3 + 2]];
+      rgb += 3;
+      indexed ++;
+      width --;
+    };
+  }
+  else
+  {
+   /*
+    * RGBA image...
+    */
+
+    while (width > 0)
+    {
+      rgb[0] = lut[cmap[indexed[0] * 3 + 0] * indexed[1] / 255 + 255 - indexed[1]];
+      rgb[1] = lut[cmap[indexed[0] * 3 + 1] * indexed[1] / 255 + 255 - indexed[1]];
+      rgb[2] = lut[cmap[indexed[0] * 3 + 2] * indexed[1] / 255 + 255 - indexed[1]];
+      rgb += 3;
+      indexed += bpp;
+      width --;
+    };
   };
 }
 
@@ -534,37 +635,81 @@ rgb_to_gray(guchar *rgb,		/* I - RGB pixels */
             guchar *lut,		/* I - Brightness lookup table */
             guchar *cmap)		/* I - Colormap (unused) */
 {
-  while (width > 0)
+  if (bpp == 3)
   {
-    *gray = lut[(rgb[0] * LUM_RED + rgb[1] * LUM_GREEN + rgb[2] * LUM_BLUE) / 100];
-    gray ++;
-    rgb += bpp;
-    width --;
+   /*
+    * No alpha in image...
+    */
+
+    while (width > 0)
+    {
+      *gray = lut[(rgb[0] * LUM_RED + rgb[1] * LUM_GREEN + rgb[2] * LUM_BLUE) / 100];
+      gray ++;
+      rgb += 3;
+      width --;
+    };
+  }
+  else
+  {
+   /*
+    * Image has alpha channel...
+    */
+
+    while (width > 0)
+    {
+      *gray = lut[(rgb[0] * LUM_RED + rgb[1] * LUM_GREEN + rgb[2] * LUM_BLUE) *
+                  rgb[3] / 25500 + 255 - rgb[3]];
+      gray ++;
+      rgb += bpp;
+      width --;
+    };
   };
 }
 
 
 /*
- * 'rgb_to_rgb()' - Convert RGB image data to RGB (brightness adjusted).
+ * 'rgb_to_rgb()' - Convert rgb image data to RGB.
  */
 
 void
-rgb_to_rgb(guchar *rgbin,	/* I - RGB pixels */
-           guchar *rgbout,	/* O - RGB pixels */
-           int    width,	/* I - Width of row */
-           int    bpp,		/* I - Bytes-per-pixel in RGB */
-           guchar *lut,		/* I - Brightness lookup table */
-           guchar *cmap)	/* I - Colormap (unused) */
+rgb_to_rgb(guchar *rgbin,		/* I - RGB pixels */
+           guchar *rgbout,		/* O - RGB pixels */
+           int    width,		/* I - Width of row */
+           int    bpp,			/* I - Bytes-per-pixel in indexed */
+           guchar *lut,			/* I - Brightness lookup table */
+           guchar *cmap)		/* I - Colormap */
 {
-  while (width > 0)
+  if (bpp == 3)
   {
-    rgbout[0] = lut[rgbin[0]];
-    rgbout[1] = lut[rgbin[1]];
-    rgbout[2] = lut[rgbin[2]];
+   /*
+    * No alpha in image...
+    */
 
-    rgbout += 3;
-    rgbin  += bpp;
-    width --;
+    while (width > 0)
+    {
+      rgbout[0] = lut[rgbin[0]];
+      rgbout[1] = lut[rgbin[1]];
+      rgbout[2] = lut[rgbin[2]];
+      rgbin += 3;
+      rgbout += 3;
+      width --;
+    };
+  }
+  else
+  {
+   /*
+    * RGBA image...
+    */
+
+    while (width > 0)
+    {
+      rgbout[0] = lut[rgbin[0] * rgbin[3] / 255 + 255 - rgbin[3]];
+      rgbout[1] = lut[rgbin[1] * rgbin[3] / 255 + 255 - rgbin[3]];
+      rgbout[2] = lut[rgbin[2] * rgbin[3] / 255 + 255 - rgbin[3]];
+      rgbin += bpp;
+      rgbout += 3;
+      width --;
+    };
   };
 }
 

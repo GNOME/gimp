@@ -28,20 +28,15 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.3  1998/03/26 02:08:25  yosh
- *   * applied gimp-quinet-980122-0 and tweaked the tests a bit, this makes the
- *   optional library tests in configure.
+ *   Revision 1.4  1998/04/01 22:14:46  neo
+ *   Added checks for print spoolers to configure.in as suggested by Michael
+ *   Sweet. The print plug-in still needs some changes to Makefile.am to make
+ *   make use of this.
  *
- *   * applied gimp-jbuhler-980321-0, fixes more warnings in plug-ins
+ *   Updated print and sgi plug-ins to version on the registry.
  *
- *   -Yosh
  *
- *   Revision 1.2  1998/01/25 09:29:27  yosh
- *   Plugin updates
- *   Properly generated aa Makefile (still not built by default)
- *   Sven's no args script patch
- *
- *   -Yosh
+ *   --Sven
  *
  *   Revision 1.10  1998/01/22  15:38:46  mike
  *   Updated copyright notice.
@@ -119,7 +114,8 @@ ps_print(FILE      *prn,	/* I - File to print to */
   int		x, y;		/* Looping vars */
   GPixelRgn	rgn;		/* Image region */
   guchar	*in,		/* Input pixels from image */
-		*out;		/* Output pixels for printer */
+		*out,		/* Output pixels for printer */
+		*outptr;	/* Current output pixel */
   int		page_width,	/* Width of page */
 		page_height,	/* Height of page */
 		out_width,	/* Width of image on page */

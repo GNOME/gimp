@@ -22,12 +22,18 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.2  1998/01/25 09:29:28  yosh
- *   Plugin updates
- *   Properly generated aa Makefile (still not built by default)
- *   Sven's no args script patch
+ *   Revision 1.3  1998/04/01 22:14:49  neo
+ *   Added checks for print spoolers to configure.in as suggested by Michael
+ *   Sweet. The print plug-in still needs some changes to Makefile.am to make
+ *   make use of this.
  *
- *   -Yosh
+ *   Updated print and sgi plug-ins to version on the registry.
+ *
+ *
+ *   --Sven
+ *
+ *   Revision 1.10  1998/03/01  17:20:48  mike
+ *   Updated version number & date.
  *
  *   Revision 1.9  1998/01/21  21:33:47  mike
  *   Added Level 2 PostScript driver.
@@ -85,7 +91,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION		"1.3 - 22 January 1998"
+#define PLUG_IN_VERSION		"1.4 - 1 March 1998"
 #define PLUG_IN_NAME		"Print"
 
 #define MEDIA_LETTER		0	/* 8.5x11" a.k.a. "A" size */

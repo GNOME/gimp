@@ -290,6 +290,35 @@ patterndata=`echo $patterndata`
 dnl This is for generating PDB docuemntation.
 AC_PATH_PROG(EMACS, emacs, :)
 
+dnl This is for the print plug-in
+lp_path=""
+AC_ARG_ENABLE(lp_path, [  --with-lp=DIR    set lp command location],
+if eval "test x$with_lp != x"; then
+    lp_path=$with_lp
+fi)
+AC_PATH_PROG(LP_COMMAND, "lp", $lp_path)
+
+lpstat_path=""
+AC_ARG_ENABLE(lpstat_path, [  --with-lpstat=DIR    set lpstat command location],
+if eval "test x$with_lpstat != x"; then
+    lpstat_path=$with_lpstat
+fi)
+AC_PATH_PROG(LPSTAT_COMMAND, "lpstat", $lpstat_path)
+
+lpr_path=""
+AC_ARG_ENABLE(lpr_path, [  --with-lpr=DIR    set lpr command location],
+if eval "test x$with_lpr != x"; then
+    lpr_path=$with_lpr
+fi)
+AC_PATH_PROG(LPR_COMMAND, "lpr", $lpr_path)
+
+lpc_path=""
+AC_ARG_ENABLE(lpc_path, [  --with-lpc=DIR    set lpc command location],
+if eval "test x$with_lpc != x"; then
+    lpc_path=$with_lpc
+fi)
+AC_PATH_PROG(LPC_COMMAND, "lpc", $lpc_path)
+
 AC_SUBST(gimpdir)
 AC_SUBST(gimpdatadir)
 AC_SUBST(gimpplugindir)

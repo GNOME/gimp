@@ -37,29 +37,15 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.2  1998/03/26 02:08:31  yosh
- *   * applied gimp-quinet-980122-0 and tweaked the tests a bit, this makes the
- *   optional library tests in configure.
+ *   Revision 1.3  1998/04/01 22:14:53  neo
+ *   Added checks for print spoolers to configure.in as suggested by Michael
+ *   Sweet. The print plug-in still needs some changes to Makefile.am to make
+ *   make use of this.
  *
- *   * applied gimp-jbuhler-980321-0, fixes more warnings in plug-ins
+ *   Updated print and sgi plug-ins to version on the registry.
  *
- *   -Yosh
  *
- *   Revision 1.1.1.1  1997/11/24 22:04:37  sopwith
- *   Let's try this import one last time.
- *
- *   Revision 1.3  1997/11/18 03:04:29  nobody
- *   fixed ugly comment-bugs introduced by evil darkwing
- *   keep out configuration empty dirs
- *   	--darkwing
- *
- *   Revision 1.2  1997/11/17 05:44:04  nobody
- *   updated ChangeLog
- *   dropped non-working doc/Makefile entries
- *   applied many fixes from the registry as well as the devel ML
- *   applied missing patches by Art Haas
- *
- *   	--darkwing
+ *   --Sven
  *
  *   Revision 1.3  1997/07/02  16:40:16  mike
  *   sgiOpen() wasn't opening files with "rb" or "wb+".  This caused problems
@@ -74,10 +60,6 @@
  *   Revision 1.1  1997/06/15  03:37:19  mike
  *   Initial revision
  */
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include "sgi.h"
 

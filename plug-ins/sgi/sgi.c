@@ -34,35 +34,15 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.3  1998/03/26 02:08:28  yosh
- *   * applied gimp-quinet-980122-0 and tweaked the tests a bit, this makes the
- *   optional library tests in configure.
+ *   Revision 1.4  1998/04/01 22:14:50  neo
+ *   Added checks for print spoolers to configure.in as suggested by Michael
+ *   Sweet. The print plug-in still needs some changes to Makefile.am to make
+ *   make use of this.
  *
- *   * applied gimp-jbuhler-980321-0, fixes more warnings in plug-ins
+ *   Updated print and sgi plug-ins to version on the registry.
  *
- *   -Yosh
  *
- *   Revision 1.2  1998/03/16 06:33:56  yosh
- *   configure saves CFLAGS properly
- *   all plugins should parse gtkrc now
- *
- *   -Yosh
- *
- *   Revision 1.1.1.1  1997/11/24 22:04:37  sopwith
- *   Let's try this import one last time.
- *
- *   Revision 1.3  1997/11/18 03:04:28  nobody
- *   fixed ugly comment-bugs introduced by evil darkwing
- *   keep out configuration empty dirs
- *   	--darkwing
- *
- *   Revision 1.2  1997/11/17 05:44:02  nobody
- *   updated ChangeLog
- *   dropped non-working doc/Makefile entries
- *   applied many fixes from the registry as well as the devel ML
- *   applied missing patches by Art Haas
- *
- *   	--darkwing
+ *   --Sven
  *
  *   Revision 1.3  1997/11/14  17:17:59  mike
  *   Updated to dynamically allocate return params in the run() function.
@@ -78,7 +58,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <signal.h>
 
 #include "sgi.h"		/* SGI image library definitions */
@@ -482,7 +461,7 @@ load_image(char *filename)	/* I - File to load */
 
 
 /*
- * 'save_image()' - Save the specified image to an SGI file.
+ * 'save_image()' - Save the specified image to a PNG file.
  */
 
 static gint
@@ -493,6 +472,8 @@ save_image(char   *filename,	/* I - File to save to */
   int		i, j,		/* Looping var */
 		x,		/* Current X coordinate */
 		y,		/* Current Y coordinate */
+		image_type,	/* Type of image */
+		layer_type,	/* Type of drawable/layer */
 		tile_height,	/* Height of tile in GIMP */
 		count,		/* Count of rows to put in image */
 		zsize;		/* Number of channels in file */
@@ -529,12 +510,6 @@ save_image(char   *filename,	/* I - File to save to */
     case RGBA_IMAGE :
         zsize = 4;
         break;
-	
-    case INDEXED_IMAGE :
-    case INDEXEDA_IMAGE:
-        /* we should never be asked to save images of this type */
-        g_print("internal error: cannot save indexed image\n");
-	gimp_quit();
   };
 
  /*
@@ -693,7 +668,6 @@ save_dialog(void)
   argv[0] = g_strdup("sgi");
 
   gtk_init(&argc, &argv);
-  gtk_rc_parse(gimp_gtkrc());
 
   signal(SIGBUS, SIG_DFL);
   signal(SIGSEGV, SIG_DFL);

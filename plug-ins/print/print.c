@@ -39,39 +39,18 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.4  1998/03/26 02:08:27  yosh
- *   * applied gimp-quinet-980122-0 and tweaked the tests a bit, this makes the
- *   optional library tests in configure.
+ *   Revision 1.5  1998/04/01 22:14:48  neo
+ *   Added checks for print spoolers to configure.in as suggested by Michael
+ *   Sweet. The print plug-in still needs some changes to Makefile.am to make
+ *   make use of this.
  *
- *   * applied gimp-jbuhler-980321-0, fixes more warnings in plug-ins
+ *   Updated print and sgi plug-ins to version on the registry.
  *
- *   -Yosh
  *
- *   Revision 1.3  1998/03/19 02:11:42  adrian
- *    *AlienMap/AlienMap.c CEL/CEL.c CML_explorer/CML_explorer.c
- *           align_layers/align_layers.c animationplay/animationplay.c
- *           bmp/bmpwrite.c dbbrowser/dbbrowser.c emboss/emboss.c
- *           exchange/exchange.c faxg3/faxg3.c faxg3/g3.c gbr/gbr.c
- *           gif/gif.c gqbist/gqbist.c hot/hot.c ifscompose/ifscompose.c
- *           iwarp/iwarp.c max_rgb/max_rgb.c maze/maze_face.c
- *           megawidget/megawidget.c mpeg/mpeg.c nlfilt/nlfilt.c pcx/pcx.c
- *           plasma/plasma.c pnm/pnm.c print/print-escp2.c
- *           print/print-pcl.c print/print.c scatter_hsv/scatter_hsv.c
- *           script-fu/script-fu-scripts.c script-fu/script-fu.c
- *           sinus/sinus.c tga/tga.c tileit/tileit.c
- *           vpropagate/vpropagate.c xpm/xpm.c:  More picky picky ansi type
- *           stuff from gimp-hpux-980316.patch.
+ *   --Sven
  *
- *   	isnt big patches fun?
- *
- *   -adrian
- *
- *   Revision 1.2  1998/01/25 09:29:27  yosh
- *   Plugin updates
- *   Properly generated aa Makefile (still not built by default)
- *   Sven's no args script patch
- *
- *   -Yosh
+ *   Revision 1.14  1998/03/01  17:29:42  mike
+ *   Added LPC/LPR/LP/LPSTAT_COMMAND definitions for portability.
  *
  *   Revision 1.13  1998/01/22  15:06:31  mike
  *   Added "file" printer for printing to file.
@@ -313,10 +292,10 @@ query(void)
       "This plug-in prints images from The GIMP.",
       "Prints images to PostScript, PCL, or ESC/P2 printers.",
       "Michael Sweet <mike@easysw.com>",
-      "Copyright 1997 by Michael Sweet",
+      "Copyright 1997-1998 by Michael Sweet",
       PLUG_IN_VERSION,
       "<Image>/File/Print...",
-      "RGB*,GRAY*INDEXED*",
+      "RGB*,GRAY*,INDEXED*",
       PROC_PLUG_IN,
       nargs,
       0,
@@ -548,7 +527,7 @@ run(char   *name,		/* I - Name of print program. */
  * 'print_dialog()' - Pop up the print dialog...
  */
 
-static int
+int
 print_dialog(void)
 {
   int		i;		/* Looping var */
@@ -1375,7 +1354,8 @@ get_printers(void)
 {
   int	i;
   FILE	*pfile;
-  char	line[129],
+  char	command[255],
+	line[129],
 	name[17],
 	defname[17];
 
@@ -1385,12 +1365,12 @@ get_printers(void)
   memset(plist, 0, sizeof(plist));
   plist_count = 1;
   strcpy(plist[0].name, "File");
-  strcpy(plist[0].command, "file.ps");
+  sprintf(plist[0].command, "file.ps", line);
   strcpy(plist[0].driver, "ps2");
   plist[0].output_type = OUTPUT_COLOR;
 
-#ifndef sun	/* Sun Solaris merges LPR and LP queues */
-  if ((pfile = popen("lpc status", "r")) != NULL)
+#ifdef LPC_COMMAND
+  if ((pfile = popen(LPC_COMMAND " status", "r")) != NULL)
   {
     while (fgets(line, sizeof(line), pfile) != NULL &&
            plist_count < MAX_PLIST)
@@ -1398,7 +1378,7 @@ get_printers(void)
       {
         *strchr(line, ':') = '\0';
         strcpy(plist[plist_count].name, line);
-        sprintf(plist[plist_count].command, "lpr -P%s -l", line);
+        sprintf(plist[plist_count].command, LPR_COMMAND " -P%s -l", line);
         strcpy(plist[plist_count].driver, "ps2");
         plist[plist_count].output_type = OUTPUT_COLOR;
         plist_count ++;
@@ -1406,9 +1386,10 @@ get_printers(void)
 
     pclose(pfile);
   };
-#endif /* !sun */
+#endif /* LPC_COMMAND */
 
-  if ((pfile = popen("lpstat -d -p", "r")) != NULL)
+#ifdef LPSTAT_COMMAND
+  if ((pfile = popen(LPSTAT_COMMAND " -d -p", "r")) != NULL)
   {
     while (fgets(line, sizeof(line), pfile) != NULL &&
            plist_count < MAX_PLIST)
@@ -1416,11 +1397,7 @@ get_printers(void)
       if (sscanf(line, "printer %s", name) == 1)
       {
 	strcpy(plist[plist_count].name, name);
-#ifdef __sgi /* SGI still uses the SVR3 spooler */
-	sprintf(plist[plist_count].command, "lp -s -d%s", name);
-#else
-	sprintf(plist[plist_count].command, "lp -s -d %s", name);
-#endif /* __sgi */
+	sprintf(plist[plist_count].command, LP_COMMAND " -s -d%s", name);
         strcpy(plist[plist_count].driver, "ps2");
         plist[plist_count].output_type = OUTPUT_COLOR;
         plist_count ++;
@@ -1431,6 +1408,7 @@ get_printers(void)
 
     pclose(pfile);
   };
+#endif /* LPSTAT_COMMAND */
 
   if (plist_count > 2)
     qsort(plist + 1, plist_count - 1, sizeof(plist_t),

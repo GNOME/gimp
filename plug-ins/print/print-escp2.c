@@ -27,31 +27,15 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.3  1998/03/19 02:11:40  adrian
- *    *AlienMap/AlienMap.c CEL/CEL.c CML_explorer/CML_explorer.c
- *           align_layers/align_layers.c animationplay/animationplay.c
- *           bmp/bmpwrite.c dbbrowser/dbbrowser.c emboss/emboss.c
- *           exchange/exchange.c faxg3/faxg3.c faxg3/g3.c gbr/gbr.c
- *           gif/gif.c gqbist/gqbist.c hot/hot.c ifscompose/ifscompose.c
- *           iwarp/iwarp.c max_rgb/max_rgb.c maze/maze_face.c
- *           megawidget/megawidget.c mpeg/mpeg.c nlfilt/nlfilt.c pcx/pcx.c
- *           plasma/plasma.c pnm/pnm.c print/print-escp2.c
- *           print/print-pcl.c print/print.c scatter_hsv/scatter_hsv.c
- *           script-fu/script-fu-scripts.c script-fu/script-fu.c
- *           sinus/sinus.c tga/tga.c tileit/tileit.c
- *           vpropagate/vpropagate.c xpm/xpm.c:  More picky picky ansi type
- *           stuff from gimp-hpux-980316.patch.
+ *   Revision 1.4  1998/04/01 22:14:44  neo
+ *   Added checks for print spoolers to configure.in as suggested by Michael
+ *   Sweet. The print plug-in still needs some changes to Makefile.am to make
+ *   make use of this.
  *
- *   	isnt big patches fun?
+ *   Updated print and sgi plug-ins to version on the registry.
  *
- *   -adrian
  *
- *   Revision 1.2  1998/01/25 09:29:25  yosh
- *   Plugin updates
- *   Properly generated aa Makefile (still not built by default)
- *   Sven's no args script patch
- *
- *   -Yosh
+ *   --Sven
  *
  *   Revision 1.8  1998/01/21  21:33:47  mike
  *   Updated copyright.
@@ -485,7 +469,7 @@ escp2_print(FILE      *prn,		/* I - Print file or command */
  * 'escp2_write()' - Send ESC/P2 graphics using TIFF packbits compression.
  */
 
-static void
+void
 escp2_write(FILE          *prn,		/* I - Print file or command */
             unsigned char *line,	/* I - Output bitmap data */
             int           length,	/* I - Length of bitmap data */
