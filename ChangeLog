@@ -1,3 +1,12 @@
+2002-02-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in.c: small hack that strips the ellipses
+	from the "Repeat" and "Re-Show" menu entries.
+
+	* plug-ins/mosaic/mosaic.c: register under "Filters/Distorts", not
+	"Filters/Render" because this plug-in changes the image and
+	doesn't render something from scratch.
+
 2002-02-11  Sven Neumann  <sven@gimp.org>
 
 	* TODO.xml: updated.

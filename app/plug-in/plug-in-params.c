@@ -1406,10 +1406,16 @@ plug_in_set_menu_sensitivity (GimpImageType type)
           if (last_plug_in && (last_plug_in == &(proc_def->db_info)))
 	    {
               gchar *basename;
+              gchar *ellipses;
               gchar *repeat;
               gchar *reshow;
 
               basename = g_path_get_basename (proc_def->menu_path);
+
+              ellipses = strstr (basename, "...");
+
+              if (ellipses && ellipses == (basename + strlen (basename) - 3))
+                *ellipses = '\0';
 
               repeat = g_strdup_printf (_("Repeat \"%s\""), basename);
               reshow = g_strdup_printf (_("Re-show \"%s\""), basename);
