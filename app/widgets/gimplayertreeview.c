@@ -36,6 +36,7 @@
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplist.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimpitemundo.h"
 #include "core/gimppattern.h"
 

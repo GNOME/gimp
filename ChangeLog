@@ -1,3 +1,7 @@
+2004-08-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimplayertreeview.c: #include "core/gimpimage-undo.h"
+
 2004-08-04  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: Really really really really fix WINDRES logic.
