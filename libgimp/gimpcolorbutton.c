@@ -112,7 +112,7 @@ enum {
   LAST_SIGNAL
 };
 
-static gint gimp_color_button_signals[LAST_SIGNAL] = { 0 };
+static guint gimp_color_button_signals[LAST_SIGNAL] = { 0 };
 
 
 static GtkWidgetClass *parent_class = NULL;

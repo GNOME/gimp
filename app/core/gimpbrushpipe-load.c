@@ -275,8 +275,8 @@ gimp_brush_pipe_load (char *filename)
   GPattern *pattern;
   PixPipeParams params;
   FILE *fp;
-  guchar buf[1024];
-  guchar *name;
+  gchar buf[1024];
+  gchar *name;
   int i;
   int num_of_brushes;
   int totalcells;

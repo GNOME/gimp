@@ -2914,7 +2914,7 @@ palette_import_image_make_palette (GHashTable *h_array,
 
 static void
 palette_import_create_from_image (GImage *gimage,
-				  guchar *pname)
+				  gchar  *pname)
 {
   PixelRegion imagePR;
   guchar *image_data;
@@ -2995,7 +2995,7 @@ palette_import_create_from_image (GImage *gimage,
 
 static void
 palette_import_create_from_indexed (GImage *gimage,
-				    guchar *pname)
+				    gchar  *pname)
 {
   PaletteEntries *entries;
   gint samples, count;
@@ -3042,7 +3042,7 @@ palette_import_import_callback (GtkWidget *widget,
 
   if (import_dialog)
     {
-      guchar *pname;
+      gchar *pname;
 
       pname = gtk_entry_get_text (GTK_ENTRY (import_dialog->entry));
       if (!pname || !strlen (pname))

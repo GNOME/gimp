@@ -52,7 +52,7 @@ enum
   LAST_SIGNAL
 };
 
-static gint gimp_path_editor_signals[LAST_SIGNAL] = { 0 };
+static guint gimp_path_editor_signals[LAST_SIGNAL] = { 0 };
 
 static GtkVBoxClass *parent_class = NULL;
 

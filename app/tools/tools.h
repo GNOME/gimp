@@ -119,6 +119,6 @@ void     tool_options_dialog_new   (void);
 void     tool_options_dialog_show  (void);
 void     tool_options_dialog_free  (void);
 
-guchar * tool_active_PDB_string     (void);
+gchar  * tool_active_PDB_string    (void);
 
 #endif  /*  __TOOLS_H__  */

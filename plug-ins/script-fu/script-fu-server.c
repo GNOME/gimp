@@ -218,7 +218,7 @@ script_fu_server_listen (gint timeout)
   struct timeval tv;
   struct timeval *tvp;
   gint i;
-  size_t size;
+  gint size;
 
   /*  Set time struct  */
   if (timeout)

@@ -664,7 +664,7 @@ gimp_drawable_get_thumbnail_data (gint32 drawable_ID,
 {
   GParam *return_vals;
   int     nreturn_vals;
-  gchar  *drawable_data = NULL;
+  guchar  *drawable_data = NULL;
 
   return_vals = gimp_run_procedure ("gimp_drawable_thumbnail",
 				    &nreturn_vals,
@@ -678,14 +678,13 @@ gimp_drawable_get_thumbnail_data (gint32 drawable_ID,
       *width = return_vals[1].data.d_int32;
       *height = return_vals[2].data.d_int32;
       *bytes = return_vals[3].data.d_int32;
-      drawable_data = g_new (gchar,return_vals[4].data.d_int32);
-      g_memmove (drawable_data, return_vals[5].data.d_int32array,return_vals[4].data.d_int32);
+      drawable_data = g_new (guchar, return_vals[4].data.d_int32);
+      g_memmove (drawable_data, return_vals[5].data.d_int32array, return_vals[4].data.d_int32);
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return drawable_data;
-
 }
 
 

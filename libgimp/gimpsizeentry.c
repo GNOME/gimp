@@ -67,7 +67,7 @@ struct _GimpSizeEntryField
   gint           stop_recursion;
 };
 
-static gint gimp_size_entry_signals[LAST_SIGNAL] = { 0 };
+static guint gimp_size_entry_signals[LAST_SIGNAL] = { 0 };
 
 static GtkTableClass *parent_class = NULL;
 

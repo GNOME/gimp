@@ -3983,8 +3983,8 @@ scale_region (PixelRegion *srcPR,
 	      PixelRegion *destPR)
 {
   double  *src[4];
-  unsigned char * src_tmp;
-  unsigned char * dest;
+  guchar * src_tmp;
+  guchar * dest;
   double * row, *accum;
   int bytes, b;
   int width, height;
@@ -4015,10 +4015,10 @@ scale_region (PixelRegion *srcPR,
 
   /*  the data pointers...  */
   for (i = 0; i < 4; i++)
-    src[i]    = g_new(double, (width) * bytes);
-  dest   = g_new(guchar, width * bytes);
+    src[i]    = g_new (double, (width) * bytes);
+  dest   = g_new (guchar, width * bytes);
 
-  src_tmp = g_new(char, orig_width * bytes);
+  src_tmp = g_new (guchar, orig_width * bytes);
 
  /* offset the row pointer by 2*bytes so the range of the array 
     is [-2*bytes] to [(orig_width + 2)*bytes] */

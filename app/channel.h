@@ -83,8 +83,8 @@ void            channel_set_name    (Channel *, gchar *);
 gint	        channel_get_opacity (Channel *);
 void		channel_set_opacity (Channel *, gint);
 
-gchar *		channel_get_color   (Channel *);
-void 		channel_set_color   (Channel *, gchar *);
+guchar *        channel_get_color   (Channel *);
+void 		channel_set_color   (Channel *, guchar *);
 
 Channel *       channel_get_ID      (gint);
 void            channel_delete      (Channel *);

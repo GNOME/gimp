@@ -237,7 +237,7 @@ channel_get_name (Channel *channel)
 
 void 
 channel_set_color (Channel *channel,
-		   gchar   *color)
+		   guchar   *color)
 {
   gint i;
 
@@ -248,7 +248,7 @@ channel_set_color (Channel *channel,
     }
 }
 
-gchar *
+guchar *
 channel_get_color (Channel *channel)
 {
   return (GIMP_CHANNEL (channel)->col); 

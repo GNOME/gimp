@@ -121,7 +121,7 @@ wire_read (GIOChannel *channel,
   else
     {
       GIOError error;
-      int bytes;
+      guint bytes;
 
       while (count > 0)
 	{
@@ -169,7 +169,7 @@ wire_write (GIOChannel *channel,
   else
     {
       GIOError error;
-      int bytes;
+      guint bytes;
 
       while (count > 0)
 	{

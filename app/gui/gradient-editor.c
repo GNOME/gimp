@@ -1456,7 +1456,7 @@ gradient_clist_draw_small_preview (GdkGC      *gc,
 				   gradient_t *gradient,
 				   gint        pos)
 {
-  gchar rgb_buf[48 * 16 * 3];
+  guchar rgb_buf[48 * 16 * 3];
 
   gradient_clist_fill_preview (gradient, rgb_buf, 48, 16, 0.0, 1.0);
 

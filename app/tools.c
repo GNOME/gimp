@@ -1151,10 +1151,10 @@ tool_options_reset_callback (GtkWidget *widget,
     (* tool_info[(gint) active_tool->type].tool_options->reset_func) ();
 }
 
-guchar *
+gchar *
 tool_active_PDB_string (void)
 {
-  guchar *toolStr = "gimp_paintbrush_default";
+  gchar *toolStr = "gimp_paintbrush_default";
 
   /*  Return the correct PDB function for the active tool
    *  The default is paintbrush if the tool is not recognised
@@ -1195,3 +1195,7 @@ tool_active_PDB_string (void)
 
   return toolStr;
 }
+
+
+
+

@@ -62,7 +62,7 @@ enum
   LAST_SIGNAL
 };
 
-static gint gimp_file_selection_signals[LAST_SIGNAL] = { 0 };
+static guint gimp_file_selection_signals[LAST_SIGNAL] = { 0 };
 
 static GtkHBoxClass *parent_class = NULL;
 

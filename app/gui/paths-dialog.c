@@ -738,14 +738,14 @@ paths_set_dash_line (GdkGC    *gc,
 static void 
 clear_pixmap_preview (PathWidget *pwidget)
 {
-  gchar *rgb_buf;
+  guchar *rgb_buf;
 
-  rgb_buf = g_new0(gchar,
-		   (paths_dialog->image_width + 4)
-		   *(paths_dialog->image_height + 4)*3);
+  rgb_buf = g_new0 (guchar,
+		    (paths_dialog->image_width + 4)
+		    *(paths_dialog->image_height + 4) * 3);
 
-  memset(rgb_buf,0xFF,(paths_dialog->image_width + 4)
-		   *(paths_dialog->image_height + 4)*3);
+  memset (rgb_buf,0xFF,(paths_dialog->image_width + 4)
+	  *(paths_dialog->image_height + 4) * 3);
 
   gdk_draw_rgb_image (pwidget->paths_pixmap,
 		      paths_dialog->gc,

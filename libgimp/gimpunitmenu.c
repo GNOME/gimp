@@ -37,7 +37,7 @@ enum
   LAST_SIGNAL
 };
 
-static gint gimp_unit_menu_signals[LAST_SIGNAL] = { 0 };
+static guint gimp_unit_menu_signals[LAST_SIGNAL] = { 0 };
 
 static GtkOptionMenuClass *parent_class = NULL;
 

@@ -1211,8 +1211,8 @@ static int
 gimp_flush (GIOChannel *channel)
 {
   GIOError error;
-  int count;
-  int bytes;
+  guint count;
+  guint bytes;
 
   if (write_buffer_index > 0)
     {

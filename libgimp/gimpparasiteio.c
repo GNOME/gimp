@@ -56,7 +56,7 @@ void
 pixpipeparams_parse (gchar	   *string,
 		     PixPipeParams *params)
 {
-  guchar *p, *q, *r;		/* Don't you love single-char identifiers?  */
+  gchar *p, *q, *r;		/* Don't you love single-char identifiers?  */
   gint i;                       /*          No, we don't!!   <Sven>         */ 
 
   q = string;

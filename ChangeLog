@@ -1,3 +1,29 @@
+Mon Dec  6 23:39:34 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/channel.c
+	* app/channel.h
+	* app/gimpbrushpipe.c
+	* app/gradient.c
+	* app/nav_window.c
+	* app/paint_funcs.c
+	* app/palette.c
+	* app/paths_dialog.c
+	* app/patterns.c
+	* app/tools.c
+	* app/tools.h
+	* libgimp/gimp.c
+	* libgimp/gimpcolorbutton.c
+	* libgimp/gimpdrawable.c
+	* libgimp/gimpfileselection.c
+	* libgimp/gimpimage.c
+	* libgimp/gimppatheditor.c
+	* libgimp/gimpsizeentry.c
+	* libgimp/gimpunitmenu.c
+	* libgimp/gimpwire.c
+	* libgimp/parasiteio.c
+	* plug-ins/script-fu/script-fu-server.c: fixed lots of wrongly typed
+	variables that made picky compilers complain (still some left...)
+
 1999-12-06  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* pixmaps/anchor.xpm: The Smaller Anchor Icon. Still a bit unpolished,

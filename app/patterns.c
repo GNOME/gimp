@@ -108,7 +108,8 @@ patterns_get_standard_pattern (void)
       for (row = 0; row < standard_pattern->mask->height; row++)
 	for (col = 0; col < standard_pattern->mask->width; col++)
 	  {
-	    *data++ = *data++ = *data++ = (col % 2) && (row % 2) ? 255 : 0;
+	    memset (data, (col % 2) && (row % 2) ? 255 : 0, 3);
+	    data += 3;
 	  }
     }
 
