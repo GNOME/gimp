@@ -535,7 +535,7 @@ guchar *   gimp_image_get_thumbnail_data    (gint32 image_ID,
 gint32       gimp_image_add_hguide              (gint32     image_ID,
 						 gint32     yposition);
 gint32       gimp_image_add_vguide              (gint32     image_ID,
-						 gint32     yposition);
+						 gint32     xposition);
 void         gimp_image_delete_guide            (gint32     image_ID,
 						 gint32     guide_ID);
 gint32       gimp_image_find_next_guide         (gint32     image_ID,

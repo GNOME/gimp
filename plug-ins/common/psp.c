@@ -50,6 +50,7 @@
 #include <zlib.h>
 
 #include <libgimp/gimp.h>
+#include <libgimp/parasiteio.h>
 #include <libgimp/stdplugins-intl.h>
 
 /* Note that the upcoming PSP version 6 writes PSP file format version
@@ -1462,8 +1463,11 @@ read_tube_block (FILE *f,
   guint32 step_size, column_count, row_count, cell_count;
   guint32 placement_mode, selection_mode;
   gint i;
+  PixPipeParams params;
   Parasite *pipe_parasite;
   gchar *parasite_text;
+
+  pixpipeparams_init (&params);
 
   if (fread (&version, 2, 1, f) < 1
       || fread (name, 513, 1, f) < 1
@@ -1481,10 +1485,10 @@ read_tube_block (FILE *f,
     }
   name[513] = 0;
   version = GUINT16_FROM_LE (version);
-  step_size = GUINT32_FROM_LE (step_size);
-  column_count = GUINT32_FROM_LE (column_count);
-  row_count = GUINT32_FROM_LE (row_count);
-  cell_count = GUINT32_FROM_LE (cell_count);
+  params.step = GUINT32_FROM_LE (step_size);
+  params.cols = GUINT32_FROM_LE (column_count);
+  params.rows = GUINT32_FROM_LE (row_count);
+  params.ncells = GUINT32_FROM_LE (cell_count);
   placement_mode = GUINT32_FROM_LE (placement_mode);
   selection_mode = GUINT32_FROM_LE (selection_mode);
 
@@ -1497,21 +1501,23 @@ read_tube_block (FILE *f,
    * case we will have any use of those, for instance in the gpb
    * plug-in that saves a GIMP image pipe.
    */
-  parasite_text =
-    g_strdup_printf ("ncells:%d step:%d dim:%d cols:%d rows:%d "
-		     "rank0:%d "
-		     "placement:%s sel0:%s",
-		     cell_count, step_size, 1, column_count, row_count,
-		     cell_count,
-		     (placement_mode == tpmRandom ? "random" :
+  params.dim = 1;
+  params.cellwidth = ia->width / params.cols;
+  params.cellheight = ia->height / params.rows;
+  params.placement = (placement_mode == tpmRandom ? "random" :
 		      (placement_mode == tpmConstant ? "constant" :
-		       "default")),
-		     (selection_mode == tsmRandom ? "random" :
-		      (selection_mode == tsmIncremental ? "incremental" :
-		       (selection_mode == tsmAngular ? "angular" :
-			(selection_mode == tsmPressure ? "pressure" :
-			 (selection_mode == tsmVelocity ? "velocity" :
-			  "default"))))));
+		       "default"));
+  params.rank[0] = params.ncells;
+  params.selection[0] = (selection_mode == tsmRandom ? "random" :
+			 (selection_mode == tsmIncremental ? "incremental" :
+			  (selection_mode == tsmAngular ? "angular" :
+			   (selection_mode == tsmPressure ? "pressure" :
+			    (selection_mode == tsmVelocity ? "velocity" :
+			     "default")))));
+  parasite_text = pixpipeparams_build (&params);
+
+  IFDBG(2) g_message ("parasite: %s", parasite_text);
+
   pipe_parasite = parasite_new ("gimp-brush-pipe-parameters",
 				PARASITE_PERSISTENT,
 				strlen (parasite_text) + 1, parasite_text);

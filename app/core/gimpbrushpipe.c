@@ -37,26 +37,7 @@
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
-
-/* Code duplicated from plug-ins/common/gpb.c...
- * The struct, and code to parse/build it probably should be in libgimp.
- */
-
-/* Parameters related to one single gih file, collected in a struct
- * just for clarity.
- */
-#define MAXDIM 4
-static struct {
-  gint step;
-  gint ncells;
-  gint dim;
-  gint cols;
-  gint rows;
-  gchar *placement;
-  gint rank[MAXDIM];
-  gchar *selection[MAXDIM];
-} gihparms;
-
+#include "libgimp/parasiteio.h"
 
 static GimpBrushClass* gimp_brush_class;
 static GtkObjectClass* gimp_object_class;
@@ -279,103 +260,19 @@ gimp_brush_pipe_get_type (void)
   return type;
 }
 
-static void
-init_pipe_parameters ()
-{
-  int i;
-
-  gihparms.step = 100;
-  gihparms.ncells = 1;
-  gihparms.dim = 1;
-  gihparms.cols = 1;
-  gihparms.rows = 1;
-  gihparms.placement = "constant";
-  for (i = 0; i < MAXDIM; i++)
-    gihparms.selection[i] = "random";
-  gihparms.rank[0] = 1;
-  for (i = 1; i < MAXDIM; i++)
-    gihparms.rank[i] = 0;
-}
-
-static void
-parse_brush_pipe_parameters (gchar *parameters)
-{
-  guchar *p, *q, *r, *s;	/* Don't you love single-char identifiers?  */
-  gint i;
-
-  q = parameters;
-  while ((p = strtok (q, " \r\n")) != NULL)
-    {
-      q = NULL;
-      r = strchr (p, ':');
-      if (r)
-	*r = 0;
-
-      if (strcmp (p, "ncells") == 0)
-	{
-	  if (r)
-	    gihparms.ncells = atoi (r + 1);
-	}
-      else if (strcmp (p, "step") == 0)
-	{
-	  if (r)
-	    gihparms.step = atoi (r + 1);
-	}
-      else if (strcmp (p, "dim") == 0)
-	{
-	  if (r)
-	    gihparms.dim = atoi (r + 1);
-	}
-      else if (strcmp (p, "cols") == 0)
-	{
-	  if (r)
-	    gihparms.cols = atoi (r + 1);
-	}
-      else if (strcmp (p, "rows") == 0)
-	{
-	  if (r)
-	    gihparms.rows = atoi (r + 1);
-	}
-      else if (strcmp (p, "placement") == 0)
-	{
-	  if (r)
-	    gihparms.placement = g_strdup (r + 1);
-	}
-      else if (strncmp (p, "rank", strlen ("rank")) == 0)
-	{
-	  if (r)
-	    {
-	      i = atoi (p + strlen ("rank"));
-	      if (i >= 0 && i < gihparms.dim)
-		gihparms.rank[i] = atoi (r + 1);
-	    }
-	}
-      else if (strncmp (p, "sel", strlen ("sel")) == 0)
-	{
-	  if (r)
-	    {
-	      i = atoi (p + strlen ("sel"));
-	      if (i >= 0 && i < gihparms.dim)
-		gihparms.selection[i] = g_strdup (r + 1);
-	    }
-	}
-      if (r)
-	*r = ':';
-    }
-}
-
 GimpBrushPipe *
 gimp_brush_pipe_load (char *filename)
 {
   GimpBrushPipe *pipe;
   GPatternP pattern;
+  PixPipeParams params;
   FILE *fp;
   guchar buf[1024];
   guchar *name;
   int i;
   int num_of_brushes;
   int totalcells;
-  gchar *params;
+  gchar *paramstring;
 
   if ((fp = fopen (filename, "rb")) == NULL)
     return NULL;
@@ -400,7 +297,7 @@ gimp_brush_pipe_load (char *filename)
       gimp_object_destroy (pipe);
       return NULL;
     }
-  num_of_brushes = strtol(buf, &params, 10);
+  num_of_brushes = strtol(buf, &paramstring, 10);
   if (num_of_brushes < 1)
     {
       g_message (_("pixmap brush pipe should have at least one brush"));
@@ -409,33 +306,33 @@ gimp_brush_pipe_load (char *filename)
       return NULL;
     }
 
-  while (*params && isspace(*params))
-    params++;
+  while (*paramstring && isspace(*paramstring))
+    paramstring++;
 
-  if (*params)
+  if (*paramstring)
     {
-      init_pipe_parameters ();
-      parse_brush_pipe_parameters (params);
-      pipe->dimension = gihparms.dim;
+      pixpipeparams_init (&params);
+      pixpipeparams_parse (paramstring, &params);
+      pipe->dimension = params.dim;
       pipe->rank = g_new (int, pipe->dimension);
       pipe->select = g_new (PipeSelectModes, pipe->dimension);
       pipe->index = g_new (int, pipe->dimension);
       for (i = 0; i < pipe->dimension; i++)
 	{
-	  pipe->rank[i] = gihparms.rank[i];
-	  if (strcmp (gihparms.selection[i], "incremental") == 0)
+	  pipe->rank[i] = params.rank[i];
+	  if (strcmp (params.selection[i], "incremental") == 0)
 	    pipe->select[i] = PIPE_SELECT_INCREMENTAL;
-	  else if (strcmp (gihparms.selection[i], "angular") == 0)
+	  else if (strcmp (params.selection[i], "angular") == 0)
 	    pipe->select[i] = PIPE_SELECT_ANGULAR;
-	  else if (strcmp (gihparms.selection[i], "velocity") == 0)
+	  else if (strcmp (params.selection[i], "velocity") == 0)
 	    pipe->select[i] = PIPE_SELECT_VELOCITY;
-	  else if (strcmp (gihparms.selection[i], "random") == 0)
+	  else if (strcmp (params.selection[i], "random") == 0)
 	    pipe->select[i] = PIPE_SELECT_RANDOM;
-	  else if (strcmp (gihparms.selection[i], "pressure") == 0)
+	  else if (strcmp (params.selection[i], "pressure") == 0)
 	    pipe->select[i] = PIPE_SELECT_PRESSURE;
-	  else if (strcmp (gihparms.selection[i], "xtilt") == 0)
+	  else if (strcmp (params.selection[i], "xtilt") == 0)
 	    pipe->select[i] = PIPE_SELECT_TILT_X;
-	  else if (strcmp (gihparms.selection[i], "ytilt") == 0)
+	  else if (strcmp (params.selection[i], "ytilt") == 0)
 	    pipe->select[i] = PIPE_SELECT_TILT_Y;
 	  else
 	    pipe->select[i] = PIPE_SELECT_CONSTANT;

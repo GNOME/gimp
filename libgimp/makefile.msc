@@ -65,7 +65,8 @@ gimpi_OBJECTS = \
 	gimpunitmenu.obj\
 	gimpwire.obj	\
 	gserialize.obj	\
-	parasite.obj
+	parasite.obj	\
+	parasiteio.obj
 
 gimpi.lib : $(gimpi_OBJECTS)
 	lib /out:gimpi.lib $(gimpi_OBJECTS)
@@ -88,7 +89,8 @@ gimp_OBJECTS = \
 	gimpunit.obj	\
 	gimpwire.obj	\
 	gserialize.obj	\
-	parasite.obj
+	parasite.obj	\
+	parasiteio.obj
 
 gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
 	$(CC) $(CFLAGS) -LD -Fegimp-$(GIMP_VER).dll $(gimp_OBJECTS) $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) user32.lib /def:gimp.def

@@ -269,6 +269,9 @@ EXPORTS
 	parasite_is_undoable
 	parasite_name
 	parasite_new
+	pixpipeparams_build
+	pixpipeparams_init
+	pixpipeparams_parse
 	set_gimp_PLUG_IN_INFO_PTR
 	wire_clear_error
 	wire_destroy

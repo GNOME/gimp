@@ -48,7 +48,9 @@ libgimpi_a_SOURCES = \
 	parasite.c		\
 	parasite.h		\
 	parasiteF.h		\
-	parasiteP.h
+	parasiteP.h		\
+	parasiteio.c		\
+	parasiteio.h
 
 if STATICLIBS
 ## Evil hack to insure all deps are satisfied on first-run make
@@ -86,7 +88,9 @@ libgimp_la_SOURCES = \
 	parasite.c	\
 	parasite.h	\
 	parasiteF.h	\
-	parasiteP.h
+	parasiteP.h	\
+	parasiteio.c	\
+	parasiteio.h
 
 libgimpui_la_SOURCES = \
 	gimpmenu.c		\

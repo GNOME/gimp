@@ -1,0 +1,154 @@
+/* Functions for bulding and parsing string representations of
+ * various standard parasite types.
+ *
+ * Copyright (C) 1999 Tor Lillqvist <tml@iki.fi>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <stdio.h>
+#include <string.h>
+#include <glib.h>
+
+#include "libgimp/parasiteio.h"
+
+void
+pixpipeparams_init (PixPipeParams *params)
+{
+  int i;
+
+  params->step = 100;
+  params->ncells = 1;
+  params->cellwidth = 1;
+  params->cellheight = 1;
+  params->dim = 1;
+  params->cols = 1;
+  params->rows = 1;
+  params->placement = "constant";
+  for (i = 0; i < PIXPIPE_MAXDIM; i++)
+    params->selection[i] = "random";
+  params->rank[0] = 1;
+  for (i = 1; i < PIXPIPE_MAXDIM; i++)
+    params->rank[i] = 0;
+}
+
+void
+pixpipeparams_parse (gchar	   *string,
+		     PixPipeParams *params)
+{
+  guchar *p, *q, *r;		/* Don't you love single-char identifiers?  */
+  gint i;
+
+  q = string;
+  while ((p = strtok (q, " \r\n")) != NULL)
+    {
+      q = NULL;
+      r = strchr (p, ':');
+      if (r)
+	*r = 0;
+
+      if (strcmp (p, "ncells") == 0)
+	{
+	  if (r)
+	    params->ncells = atoi (r + 1);
+	}
+      else if (strcmp (p, "step") == 0)
+	{
+	  if (r)
+	    params->step = atoi (r + 1);
+	}
+      else if (strcmp (p, "dim") == 0)
+	{
+	  if (r)
+	    params->dim = atoi (r + 1);
+	}
+      else if (strcmp (p, "cols") == 0)
+	{
+	  if (r)
+	    params->cols = atoi (r + 1);
+	}
+      else if (strcmp (p, "rows") == 0)
+	{
+	  if (r)
+	    params->rows = atoi (r + 1);
+	}
+      else if (strcmp (p, "cellwidth") == 0)
+	{
+	  if (r)
+	    params->cellwidth = atoi (r + 1);
+	}
+      else if (strcmp (p, "cellheight") == 0)
+	{
+	  if (r)
+	    params->cellheight = atoi (r + 1);
+	}
+      else if (strcmp (p, "placement") == 0)
+	{
+	  if (r)
+	    params->placement = g_strdup (r + 1);
+	}
+      else if (strncmp (p, "rank", strlen ("rank")) == 0 && r)
+	{
+	  if (r)
+	    {
+	      i = atoi (p + strlen ("rank"));
+	      if (i >= 0 && i < params->dim)
+		params->rank[i] = atoi (r + 1);
+	    }
+	}
+      else if (strncmp (p, "sel", strlen ("sel")) == 0 && r)
+	{
+	  if (r)
+	    {
+	      i = atoi (p + strlen ("sel"));
+	      if (i >= 0 && i < params->dim)
+		params->selection[i] = g_strdup (r + 1);
+	    }
+	}
+      if (r)
+	*r = ':';
+    }
+}
+
+gchar *
+pixpipeparams_build (PixPipeParams *params)
+{
+  GString *s = g_string_new (NULL);
+  gchar *str;
+  
+  int i;
+
+  g_string_sprintf (s, "ncells:%d cellwidth:%d cellheight:%d "
+		    "step:%d dim:%d cols:%d rows:%d placement:%s",
+		    params->ncells, params->cellwidth, params->cellheight,
+		    params->step, params->dim,
+		    params->cols, params->rows,
+		    params->placement);
+
+  for (i = 0; i < params->dim; i++)
+    {
+      g_string_sprintfa (s, " rank%d:%d", i, params->rank[i]);
+      g_string_sprintfa (s, " sel%d:%s", i, params->selection[i]);
+    }
+
+  str = s->str;
+  g_string_free (s, FALSE);
+
+  return str;
+}
+
