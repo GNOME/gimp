@@ -1,3 +1,7 @@
+2004-08-20  Sven Neumann  <sven@gimp.org>
+
+	* modules/controller_linux_input.c: declare local function as static.
+
 2004-08-19  Michael Schumacher <schumaml@cvs.gnome.org>
 
 	* plug-ins/common/guillotine.c: modified the coordinate insertion

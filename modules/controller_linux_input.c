@@ -395,7 +395,7 @@ linux_input_set_device (ControllerLinuxInput *controller,
   return FALSE;
 }
 
-gboolean
+static gboolean
 linux_input_read_event (GIOChannel   *io,
                         GIOCondition  cond,
                         gpointer      data)
