@@ -6,6 +6,25 @@ here. New features are being added in the HEAD branch that will lead
 to GIMP version 2.4.
 
 
+Bugs fixed in GIMP 2.2.3
+========================
+- fixed build problem in MIDI input controller (bug #163593)
+- remember last used directory in file open and save dialogs (bug #162385)
+- fixed crashed in DND of indexed drawables (bug #163879)
+- removed bumpmap artifacts in Lighting Effects plug-in (bug #163877)
+- fixed non-interactive mode of Retinex plug-in
+- fixed undo of ink strokes (bug #163670)
+- fixed expose event handling in Curve Bend plug-in (bug #164207)
+- added a missing pressure sensitivity toggle to Airbrush tool (bug #164237)
+- fixed loading of XJT images files from read-only folders (bug #164116)
+- fixed bug in the Info dialog that crashed the Crop tool (bug #163617)
+- fixed yet another entry problem in the Scale Image dialog (bug #163951)
+- fixed serialization of binary parasites (bug #163131)
+- correctly initialize the preview in the Bumpmap plug-in (bug #162285)
+- give visual feedback if a dialog is already opened (bug #164156)
+- fixed saving of JPEG images with large quality settings (bug #164087)
+
+
 Bugs fixed in GIMP 2.2.2
 ========================
 - let Decompose plug-in create layers with alpha channel
