@@ -27,7 +27,7 @@ ORIGDIR=`pwd`
 cd $srcdir
 
 
-function check_version ()
+check_version ()
 {
     if expr $1 \>= $2 > /dev/null; then
 	echo "yes (version $1)"
