@@ -322,12 +322,12 @@ image_map_get_color_at (ImageMap image_map,
 			gint     x, 
 			gint     y)
 {
-  Tile *tile;
+  Tile          *tile;
   unsigned char *src;
   unsigned char *dest;
-  _ImageMap *_image_map;
+  _ImageMap     *_image_map;
 
-  if(!image_map)
+  if (!image_map)
     return NULL;
 
   _image_map = (_ImageMap *) image_map;
@@ -359,11 +359,11 @@ image_map_get_color_at (ImageMap image_map,
       gimp_image_get_color (gimp_drawable_gimage(_image_map->drawable),
 			    gimp_drawable_type (_image_map->drawable), dest, src);
 
-      if(TYPE_HAS_ALPHA(gimp_drawable_type (_image_map->drawable)))
+      if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_drawable_type (_image_map->drawable)))
 	dest[3] = src[gimp_drawable_bytes (_image_map->drawable) - 1];
       else
 	dest[3] = 255;
-      if (gimp_drawable_is_indexed(_image_map->drawable))
+      if (gimp_drawable_is_indexed (_image_map->drawable))
 	dest[4] = src[0];
       else
 	dest[4] = 0;

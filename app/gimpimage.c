@@ -960,16 +960,15 @@ gimp_image_get_color_at (GimpImage *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   if (x < 0 || y < 0 || x >= gimage->width || y >= gimage->height)
-    {
-      return NULL;
-    }
+    return NULL;
+  
   dest = g_new (unsigned char, 5);
   tile = tile_manager_get_tile (gimp_image_composite (gimage), x, y,
 				TRUE, FALSE);
   src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
   gimp_image_get_color (gimage, gimp_image_composite_type (gimage), dest, src);
 
-  if (TYPE_HAS_ALPHA (gimp_image_composite_type (gimage)))
+  if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_image_composite_type (gimage)))
     dest[3] = src[gimp_image_composite_bytes (gimage) - 1];
   else
     dest[3] = 255;
@@ -3696,7 +3695,6 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  list = gimage->layers;
   ratio = (gdouble) width / (gdouble) gimage->width;
 
   switch (gimp_image_base_type (gimage))
@@ -3718,7 +3716,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
   memset (temp_buf_data (comp), 0, comp->width * comp->height * comp->bytes);
 
   floating_sel = NULL;
-  while (list)
+  for (list = gimage->layers; list; list = g_slist_next (list))
     {
       layer = (Layer *) list->data;
 
@@ -3738,8 +3736,6 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
 	      reverse_list = g_slist_prepend (reverse_list, layer);
 	    }
 	}
-
-      list = g_slist_next (list);
     }
 
   construct_flag = 0;

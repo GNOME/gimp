@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include "appenv.h"
@@ -438,7 +439,7 @@ info_window_update_RGB (GDisplay *gdisp,
 
   sample_type = gimp_image_composite_type (gdisp->gimage);
 
-  if (TYPE_HAS_ALPHA (sample_type))
+  if (GIMP_IMAGE_TYPE_HAS_ALPHA (sample_type))
     {
       g_snprintf (buff, sizeof (buff), "%d", (gint) color[ALPHA_PIX]);
       gtk_label_set_text (GTK_LABEL (iwd->labelAvalue), buff);

@@ -443,7 +443,7 @@ layer_new_from_tiles (GimpImage        *gimage,
     return NULL;
   
   /*  the layer_type needs to have alpha */
-  g_return_val_if_fail (TYPE_HAS_ALPHA (layer_type), NULL);
+  g_return_val_if_fail (GIMP_IMAGE_TYPE_HAS_ALPHA (layer_type), NULL);
 
    /*  Create the new layer  */
   new_layer = layer_new (0, tiles->width, tiles->height,
@@ -754,7 +754,7 @@ layer_add_alpha (Layer *layer)
   GIMP_DRAWABLE(layer)->tiles = new_tiles;
   GIMP_DRAWABLE(layer)->type = type;
   GIMP_DRAWABLE(layer)->bytes = GIMP_DRAWABLE(layer)->bytes + 1;
-  GIMP_DRAWABLE(layer)->has_alpha = TYPE_HAS_ALPHA (type);
+  GIMP_DRAWABLE(layer)->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
   GIMP_DRAWABLE(layer)->preview_valid = FALSE;
 
   gtk_signal_emit_by_name (GTK_OBJECT (gimp_drawable_gimage (GIMP_DRAWABLE (layer))),
@@ -1277,12 +1277,10 @@ layer_get_mask (Layer *layer)
 gboolean
 layer_has_alpha (Layer *layer)
 {
-  if (GIMP_DRAWABLE(layer)->type == RGBA_GIMAGE ||
-      GIMP_DRAWABLE(layer)->type == GRAYA_GIMAGE ||
-      GIMP_DRAWABLE(layer)->type == INDEXEDA_GIMAGE)
-    return TRUE;
-  else
-    return FALSE;
+  g_return_if_fail (layer != NULL);
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  return GIMP_IMAGE_TYPE_HAS_ALPHA (GIMP_DRAWABLE (layer)->type);
 }
 
 gboolean

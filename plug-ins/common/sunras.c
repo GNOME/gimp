@@ -881,7 +881,7 @@ set_color_table (gint32           image_ID,
 
   for (j = 0; j < ncols; j++)
     {
-      ColorMap[j*3] = suncolmap[j];
+      ColorMap[j*3]   = suncolmap[j];
       ColorMap[j*3+1] = suncolmap[j+ncols];
       ColorMap[j*3+2] = suncolmap[j+2*ncols];
     }
@@ -898,13 +898,13 @@ set_color_table (gint32           image_ID,
 
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image_ID */
 static gint32
-create_new_image (gchar      *filename,
-                  guint       width,
-                  guint       height,
-                  GimpImageBaseType  type,
-                  gint32     *layer_ID,
-                  GimpDrawable **drawable,
-                  GimpPixelRgn  *pixel_rgn)
+create_new_image (gchar              *filename,
+                  guint               width,
+                  guint               height,
+                  GimpImageBaseType   type,
+                  gint32             *layer_ID,
+                  GimpDrawable      **drawable,
+                  GimpPixelRgn       *pixel_rgn)
 {
   gint32 image_ID;
   GimpImageType gdtype;

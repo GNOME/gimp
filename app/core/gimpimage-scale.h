@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMPIMAGE_H__
 #define __GIMPIMAGE_H__
 
@@ -38,7 +39,7 @@
 #define GIMP_IMAGE(obj)    GTK_CHECK_CAST (obj, GIMP_TYPE_IMAGE, GimpImage)
 #define GIMP_IS_IMAGE(obj) GTK_CHECK_TYPE (obj, GIMP_TYPE_IMAGE)
      
-#define TYPE_HAS_ALPHA(t)  ((t)==RGBA_GIMAGE || (t)==GRAYA_GIMAGE || (t)==INDEXEDA_GIMAGE)
+#define GIMP_IMAGE_TYPE_HAS_ALPHA(t)  ((t)==RGBA_GIMAGE || (t)==GRAYA_GIMAGE || (t)==INDEXEDA_GIMAGE)
 
 #define GRAY_PIX         0
 #define ALPHA_G_PIX      1
@@ -237,27 +238,30 @@ Channel *       gimp_image_remove_channel         (GimpImage *, Channel *);
 void            gimp_image_construct              (GimpImage *,
 						   gint, gint, gint, gint,
 						   gboolean);
+
 void            gimp_image_invalidate_without_render (GimpImage *, gint, gint,
 						      gint, gint, gint,
 						      gint, gint, gint);
-void            gimp_image_invalidate             (GimpImage *, gint, gint,
-						   gint, gint, gint,
-						   gint, gint, gint);
-void            gimp_image_validate               (TileManager *, Tile *);
+void            gimp_image_invalidate                (GimpImage *, gint, gint,
+						      gint, gint, gint,
+						      gint, gint, gint);
+void            gimp_image_validate                  (TileManager *, Tile *);
 
 /*  Access functions  */
 
 gboolean           gimp_image_is_empty             (GimpImage *);
 GimpDrawable *     gimp_image_active_drawable      (GimpImage *);
-GimpImageBaseType  gimp_image_base_type            (GimpImage *);
-GimpImageType	   gimp_image_base_type_with_alpha (GimpImage *);
+
+GimpImageBaseType  gimp_image_base_type            (GimpImage *gimage);
+GimpImageType	   gimp_image_base_type_with_alpha (GimpImage *gimage);
+
 gchar *            gimp_image_filename             (GimpImage *);
 gboolean           gimp_image_undo_is_enabled      (GimpImage *);
 gboolean           gimp_image_undo_enable          (GimpImage *);
 gboolean           gimp_image_undo_disable         (GimpImage *);
 gboolean           gimp_image_undo_freeze          (GimpImage *);
 gboolean           gimp_image_undo_thaw            (GimpImage *);
-void		   gimp_image_undo_event	   (GimpImage *, int);
+void		   gimp_image_undo_event	   (GimpImage *, gint);
 gint               gimp_image_dirty                (GimpImage *);
 gint               gimp_image_clean                (GimpImage *);
 void               gimp_image_clean_all            (GimpImage *);
@@ -280,10 +284,12 @@ GimpImageType	gimp_image_composite_type         (GimpImage *);
 gint            gimp_image_composite_bytes        (GimpImage *);
 TempBuf *       gimp_image_composite_preview      (GimpImage *, ChannelType,
 						   gint, gint);
+
 gint            gimp_image_preview_valid          (GimpImage *, ChannelType);
 void            gimp_image_invalidate_preview     (GimpImage *);
 
 void            gimp_image_invalidate_previews    (void);
+
 TempBuf *       gimp_image_construct_composite_preview (GimpImage *,
 							gint , gint);
 

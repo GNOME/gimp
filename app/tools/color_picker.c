@@ -508,7 +508,7 @@ pick_color_do (GimpImage    *gimage,
       get_color_obj = GTK_OBJECT (gimage);
     }
 
-  has_alpha = TYPE_HAS_ALPHA (sample_type);
+  has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (sample_type);
 
   if (!(color = (*get_color_func) (get_color_obj, x, y)))
     return FALSE;

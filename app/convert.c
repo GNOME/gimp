@@ -1362,10 +1362,10 @@ convert_image (GImage		 *gimage,
       /*  Push the layer on the undo stack  */
       undo_push_layer_mod (gimage, layer);
 
-      GIMP_DRAWABLE(layer)->tiles = new_tiles;
-      GIMP_DRAWABLE(layer)->bytes = new_layer_bytes;
-      GIMP_DRAWABLE(layer)->type = new_layer_type;
-      GIMP_DRAWABLE(layer)->has_alpha = TYPE_HAS_ALPHA(new_layer_type);
+      GIMP_DRAWABLE (layer)->tiles     = new_tiles;
+      GIMP_DRAWABLE (layer)->bytes     = new_layer_bytes;
+      GIMP_DRAWABLE (layer)->type      = new_layer_type;
+      GIMP_DRAWABLE (layer)->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (new_layer_type);
     }
 
   /* colourmap stuff */

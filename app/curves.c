@@ -135,22 +135,24 @@ static void      curves_write_to_file     (FILE *f);
 
 /*  curves machinery  */
 
-float
+gfloat
 curves_lut_func (CurvesDialog *cd,
 		 gint          nchannels,
 		 gint          channel,
 		 gfloat        value)
 {
-  float f;
-  int index;
-  double inten;
-  int j;
+  gfloat f;
+  gint index;
+  gdouble inten;
+  gint j;
 
   if (nchannels == 1)
     j = 0;
   else
     j = channel + 1;
+
   inten = value;
+
   /* For color images this runs through the loop with j = channel +1
      the first time and j = 0 the second time */
   /* For bw images this runs through the loop with j = 0 the first and
@@ -184,12 +186,13 @@ curves_colour_update (Tool           *tool,
 		      gint            x,
 		      gint            y)
 {
-  unsigned char *color;
-  int offx, offy;
-  int has_alpha;
-  int is_indexed;
-  int sample_type;
-  int maxval;
+  guchar *color;
+  gint    offx;
+  gint    offy;
+  gint    maxval;
+  gboolean       has_alpha;
+  gboolean       is_indexed;
+  GimpImageType  sample_type;
 
   if(!tool || tool->state != ACTIVE)
     return;
@@ -203,8 +206,8 @@ curves_colour_update (Tool           *tool,
     return;
 
   sample_type = gimp_drawable_type (drawable);
-  is_indexed = gimp_drawable_is_indexed (drawable);
-  has_alpha = TYPE_HAS_ALPHA (sample_type);
+  is_indexed  = gimp_drawable_is_indexed (drawable);
+  has_alpha   = GIMP_IMAGE_TYPE_HAS_ALPHA (sample_type);
 
   curves_dialog->col_value[HISTOGRAM_RED] = color[RED_PIX];
   curves_dialog->col_value[HISTOGRAM_GREEN] = color[GREEN_PIX];
@@ -231,10 +234,10 @@ curves_add_point (GimpDrawable *drawable,
 		  gint          cchan)
 {
   /* Add point onto the curve */
-  int closest_point = 0;
-  int distance;
-  int curvex;
-  int i;
+  gint closest_point = 0;
+  gint distance;
+  gint curvex;
+  gint i;
 
   switch (curves_dialog->curve_type[cchan])
     {
@@ -271,9 +274,9 @@ curves_button_press (Tool           *tool,
 		     GdkEventButton *bevent,
 		     gpointer        gdisp_ptr)
 {
-  GDisplay *gdisp;
   gint x, y;
-  GimpDrawable * drawable;
+  GDisplay     *gdisp;
+  GimpDrawable *drawable;
 
   gdisp = gdisp_ptr;
   drawable = gimage_active_drawable (gdisp->gimage);
@@ -307,8 +310,8 @@ curves_button_release (Tool           *tool,
 		       gpointer        gdisp_ptr)
 {
   gint x, y;
-  GimpDrawable * drawable;
-  GDisplay *gdisp;
+  GimpDrawable *drawable;
+  GDisplay     *gdisp;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
@@ -343,9 +346,9 @@ curves_motion (Tool           *tool,
 	       GdkEventMotion *mevent,
 	       gpointer        gdisp_ptr)
 {
-  GDisplay *gdisp;
   gint x, y;
-  GimpDrawable * drawable;
+  GDisplay     *gdisp;
+  GimpDrawable *drawable;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
@@ -384,8 +387,8 @@ curves_control (Tool       *tool,
 Tool *
 tools_new_curves (void)
 {
-  Tool * tool;
-  Curves * private;
+  Tool   *tool;
+  Curves *private;
 
   /*  The tool options  */
   if (!curves_options)
@@ -420,7 +423,7 @@ curves_dialog_hide (void)
 void
 tools_free_curves (Tool *tool)
 {
-  Curves * private;
+  Curves *private;
 
   private = (Curves *) tool->private;
 
@@ -722,10 +725,10 @@ curve_print_loc (CurvesDialog *cd,
 		 gint          xpos,
 		 gint          ypos)
 {
-  char buf[32];
-  gint width;
-  gint ascent;
-  gint descent;
+  gchar buf[32];
+  gint  width;
+  gint  ascent;
+  gint  descent;
 
   if (cd->cursor_ind_width < 0)
     {
@@ -771,12 +774,12 @@ curve_print_loc (CurvesDialog *cd,
 /* TODO: preview alpha channel stuff correctly.  -- austin, 20/May/99 */
 static void
 curves_update (CurvesDialog *cd,
-	       int           update)
+	       gint          update)
 {
   GdkRectangle area;
-  gint i, j;
-  gchar buf[32];
-  gint offset;
+  gint   i, j;
+  gchar  buf[32];
+  gint   offset;
   gint   sel_channel;
   
   if(cd->color) {
@@ -1155,7 +1158,7 @@ curves_smooth_callback (GtkWidget *widget,
 			gpointer   data)
 {
   CurvesDialog *cd;
-  int i;
+  gint   i;
   gint32 index;
 
   cd = (CurvesDialog *) data;
@@ -1202,7 +1205,7 @@ curves_free_callback (GtkWidget *widget,
 static void
 curves_channel_reset (int i)
 {
-  int j;
+  gint j;
 
   curves_dialog->grab_point = -1;
 
@@ -1223,7 +1226,7 @@ curves_reset_callback (GtkWidget *widget,
 		       gpointer   data)
 {
   CurvesDialog *cd;
-  int i;
+  gint i;
 
   cd = (CurvesDialog *) data;
 
@@ -1356,12 +1359,12 @@ curves_graph_events (GtkWidget    *widget,
   GdkCursorType new_type;
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
-  int i;
-  int tx, ty;
-  int x, y;
-  int closest_point;
-  int distance;
-  int x1, x2, y1, y2;
+  gint i;
+  gint tx, ty;
+  gint x, y;
+  gint closest_point;
+  gint distance;
+  gint x1, x2, y1, y2;
 
   new_type      = GDK_X_CURSOR;
   closest_point = 0;
@@ -1693,11 +1696,12 @@ file_dialog_cancel_callback (GtkWidget *widget,
 static gboolean
 curves_read_from_file (FILE *f)
 {
-  gint i, j, fields;
+  gint  i, j;
+  gint  fields;
   gchar buf[50];
-  gint index[5][17];
-  gint value[5][17];
-  gint current_channel;
+  gint  index[5][17];
+  gint  value[5][17];
+  gint  current_channel;
   
   if (!fgets (buf, 50, f))
     return FALSE;
@@ -1750,7 +1754,7 @@ curves_read_from_file (FILE *f)
 static void
 curves_write_to_file (FILE *f)
 {
-  int i, j;
+  gint   i, j;
   gint32 index;
 
   for (i = 0; i < 5; i++)

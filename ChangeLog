@@ -1,3 +1,20 @@
+2000-12-13  Sven Neumann  <sven@gimp.org>
+
+	* app/color_picker.c
+	* app/convert.c
+	* app/curves.c
+	* app/gimpdrawable.c
+	* app/gimpimage.c
+	* app/gimpimage.h
+	* app/image_map.c
+	* app/info_window.c
+	* app/layer.c
+	* app/undo.c: couldn't resist: renamed TYPE_HAS_ALPHA() to
+	GIMP_IMAGE_TYPE_HAS_ALPHA()
+
+        * plug-ins/common/sunras.c
+	* plug-ins/common/xwd.c: small cleanups
+	
 2000-12-13  Vidar Madsen  <vidar@gimp.org>
 
 	* plug-ins/common/spheredesigner.c: Small algo improvements.

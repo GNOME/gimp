@@ -995,16 +995,15 @@ set_color_table (gint32           image_ID,
 
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image_ID */
 static gint32
-create_new_image (char         *filename, 
-                  guint         width,
-                  guint         height,
+create_new_image (char                *filename, 
+                  guint                width,
+                  guint                height,
                   GimpImageBaseType    type,
-                  gint32       *layer_ID,
-                  GimpDrawable   **drawable,
-                  GimpPixelRgn    *pixel_rgn)
-
+                  gint32              *layer_ID,
+                  GimpDrawable       **drawable,
+                  GimpPixelRgn        *pixel_rgn)
 {
-  gint32 image_ID;
+  gint32        image_ID;
   GimpImageType gdtype;
   
   switch (type)
