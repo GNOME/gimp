@@ -89,7 +89,7 @@ set_default_settings (void)
   mapvals.tooltips_enabled       = TRUE;
 
   mapvals.lightsource.intensity = 1.0;
-  gimp_rgb_set (&mapvals.lightsource.color, 1.0, 1.0, 1.0);
+  gimp_rgba_set (&mapvals.lightsource.color, 1.0, 1.0, 1.0, 1.0);
 
   mapvals.material.ambient_int  = 0.3;
   mapvals.material.diffuse_int  = 1.0;
@@ -297,9 +297,10 @@ run (gchar      *name,
             mapvals.beta                    = param[17].data.d_float;
             mapvals.gamma                   = param[18].data.d_float;
             mapvals.lightsource.type        = (LightType) param[19].data.d_int32;
-            mapvals.lightsource.color.r     = param[20].data.d_color.red;
-            mapvals.lightsource.color.g     = param[20].data.d_color.green;
-            mapvals.lightsource.color.b     = param[20].data.d_color.blue;
+	    gimp_rgb_set_uchar (&mapvals.lightsource.color,
+				param[20].data.d_color.red,
+				param[20].data.d_color.green,
+				param[20].data.d_color.blue);
             mapvals.lightsource.position.x  = param[21].data.d_float;
             mapvals.lightsource.position.y  = param[22].data.d_float;
             mapvals.lightsource.position.z  = param[23].data.d_float;

@@ -347,7 +347,6 @@ image_setup (GimpDrawable *drawable,
 	     gint       interactive)
 {
   glong  numbytes;
-  guchar r, g, b;
 
   /* Set the tile cache size */
   /* ======================= */
@@ -378,11 +377,8 @@ image_setup (GimpDrawable *drawable,
     }
   else
     {
-      gimp_palette_get_background (&r,&g,&b);
-      background.r = (gdouble) r / 255.0;
-      background.g = (gdouble) g / 255.0;
-      background.b = (gdouble) b / 255.0;
-      background.a = 1.0;
+      gimp_palette_get_background_rgb (&background);
+      gimp_rgb_set_alpha (&background, 1.0);
     }
 
   /* Assume at least RGB */

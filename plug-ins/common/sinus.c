@@ -1033,8 +1033,8 @@ typedef struct
   glong     perturbation;
   glong     colorization;
   glong     colors;
-  guchar    col1[4];
-  guchar    col2[4];
+  GimpRGB   col1;
+  GimpRGB   col2;
 } SinusVals;
 
 static SinusVals svals = 
@@ -1048,17 +1048,17 @@ static SinusVals svals =
   PERTURBED,
   LINEAR, 
   USE_COLORS,
-  { 255, 255, 0, 255 },
-  { 0, 0, 255, 255 }
+  { 1.0, 1.0, 0.0, 1.0 },
+  { 0.0, 0.0, 1.0, 1.0 }
 };
 
 typedef struct
 {
-  gint   height, width;
-  double c11, c12, c13, c21, c22, c23, c31, c32, c33;
-  double (*blend) (double );
-  guchar r, g, b, a;
-  int    dr, dg, db, da;
+  gint    height, width;
+  gdouble c11, c12, c13, c21, c22, c23, c31, c32, c33;
+  gdouble (*blend) (double );
+  guchar  r, g, b, a;
+  gint    dr, dg, db, da;
 } params;
 
 
@@ -1216,14 +1216,16 @@ run (gchar      *name,
 	  svals.tiling       = param[7].data.d_int32;
 	  svals.perturbation = param[8].data.d_int32;
 	  svals.colors       = param[9].data.d_int32;
-	  svals.col1[0]      = param[10].data.d_color.red;
-	  svals.col1[1]      = param[10].data.d_color.green;
-	  svals.col1[2]      = param[10].data.d_color.blue;
-	  svals.col2[0]      = param[11].data.d_color.red;
-	  svals.col2[1]      = param[11].data.d_color.green;
-	  svals.col2[2]      = param[11].data.d_color.blue;
-	  svals.col1[3]      = param[12].data.d_float * 255.0;
-	  svals.col2[3]      = param[13].data.d_float * 255.0;
+	  gimp_rgb_set_uchar (&svals.col1,
+			      param[10].data.d_color.red,
+			      param[10].data.d_color.green,
+			      param[10].data.d_color.blue);
+	  gimp_rgb_set_uchar (&svals.col2,
+			      param[11].data.d_color.red,
+			      param[11].data.d_color.green,
+			      param[11].data.d_color.blue);
+	  gimp_rgb_set_alpha (&svals.col1, param[12].data.d_float);
+	  gimp_rgb_set_alpha (&svals.col2, param[13].data.d_float);
 	  svals.colorization = param[14].data.d_int32;
 	  svals.blend_power  = param[15].data.d_float;
 	}
@@ -1274,10 +1276,10 @@ run (gchar      *name,
 static void 
 prepare_coef (params *p)
 {
-  typedef struct { guchar r, g, b, a; } type_color;
-  type_color col1,col2;
-  double scalex = svals.scalex;
-  double scaley = svals.scaley;
+  GimpRGB color1;
+  GimpRGB color2;
+  gdouble scalex = svals.scalex;
+  gdouble scaley = svals.scaley;
 
   srand(svals.seed);
   switch (svals.colorization)
@@ -1328,44 +1330,38 @@ prepare_coef (params *p)
       p->c32= ROUND (p->c32/(2*G_PI))*2*G_PI;
     }
 
-  col2.a=svals.col2[3];
-  col1.a=svals.col1[3];
+  color1 = svals.col1;
+  color2 = svals.col2;
 
   if (drawable_is_grayscale)
     {
-      col1.r=col1.g=col1.b=255;
-      col2.r=col2.g=col2.b=0;
+      gimp_rgb_set (&color1, 1.0, 1.0, 1.0);
+      gimp_rgb_set (&color2, 0.0, 0.0, 0.0);
     }
   else
     {
       switch (svals.colors)
 	{
 	case USE_COLORS:
-	  col1.r=svals.col1[0];
-	  col1.g=svals.col1[1];
-	  col1.b=svals.col1[2];
-	  col2.r=svals.col2[0];
-	  col2.g=svals.col2[1];
-	  col2.b=svals.col2[2];
 	  break;
 	case B_W:
-	  col1.r=col1.g=col1.b=255;
-	  col2.r=col2.g=col2.b=0;
+	  gimp_rgb_set (&color1, 1.0, 1.0, 1.0);
+	  gimp_rgb_set (&color2, 0.0, 0.0, 0.0);
 	  break;
 	case USE_FG_BG:
-	  gimp_palette_get_foreground(&col2.r, &col2.g, &col2.b);
-	  gimp_palette_get_background(&col1.r, &col1.g, &col1.b);
+	  gimp_palette_get_background_rgb (&color1);
+	  gimp_palette_get_foreground_rgb (&color2);
 	  break;
 	}
     }
-  p->r = col1.r;
-  p->g = col1.g;
-  p->b = col1.b;
-  p->a = col1.a;
-  p->dr=(int)col2.r-col1.r;
-  p->dg=(int)col2.g-col1.g;
-  p->db=(int)col2.b-col1.b;
-  p->da=(int)col2.a-col1.a;
+
+  gimp_rgba_get_uchar (&color1, &p->r, &p->g, &p->b, &p->a); 
+
+  gimp_rgba_subtract (&color2, &color1);
+  p->dr = color2.r * 255.0;
+  p->dg = color2.g * 255.0;
+  p->db = color2.b * 255.0;
+  p->da = color2.a * 255.0;
 }
 
 static void
@@ -1386,7 +1382,8 @@ sinus (void)
   p.height = drawable->height;
   bytes = drawable->bpp;
   
-  gimp_pixel_rgn_init(&dest_rgn, drawable, ix1, iy1, ix2-ix1, iy2-iy1, TRUE,TRUE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable, 
+		       ix1, iy1, ix2-ix1, iy2-iy1, TRUE,TRUE);
   progress = 0;
   max_progress = (ix2-ix1)*(iy2-iy1);
   
@@ -1454,26 +1451,26 @@ compute_block_4 (guchar *dest_row,
 		 gint    h, 
 		 params *p)
 {
-  gint i,j;
-  double x,y, grey;
-  guchar *dest;
+  gint     i, j;
+  gdouble  x, y, grey;
+  guchar  *dest;
 
   for (j = y0; j < (y0 + h); j++)
     {
-      y=((double)j)/p->height;
+      y=((gdouble)j)/p->height;
       dest = dest_row;
       for (i= x0; i<(x0+w); i++)
 	{
-	  x=((double)i)/p->width;
+	  x=((gdouble)i)/p->width;
 
 	  grey = sin(p->c11*x + p->c12*y + p->c13) * (0.5+0.5*sin(p->c31*x + p->c32*y +p->c33)) \
 	    + sin(p->c21*x + p->c22*y + p->c23) * (0.5-0.5*sin(p->c31*x + p->c32*y +p->c33));
 	  grey=pow(p->blend(svals.cmplx*(0.5+0.5*grey)),exp(svals.blend_power));
 
-	  *dest++= p->r+(int)(grey*p->dr);
-	  *dest++= p->g+(int)(grey*p->dg);
-	  *dest++= p->b+(int)(grey*p->db);
-	  *dest++= p->a+(int)(grey*p->da);
+	  *dest++= p->r+(gint)(grey*p->dr);
+	  *dest++= p->g+(gint)(grey*p->dg);
+	  *dest++= p->b+(gint)(grey*p->db);
+	  *dest++= p->a+(gint)(grey*p->da);
 	}
       dest_row += rowstride;
     }
@@ -1488,25 +1485,25 @@ compute_block_3 (guchar *dest_row,
 		 gint    h, 
 		 params *p)
 {
-  gint i,j;
-  double x,y, grey;
-  guchar *dest;
+  gint     i, j;
+  gdouble  x, y, grey;
+  guchar  *dest;
 
   for (j=y0; j<(y0+h); j++)
     {
-      y=((double)j)/p->height;
+      y=((gdouble)j)/p->height;
       dest = dest_row;
       for (i= x0; i<(x0+w); i++)
 	{
-	  x=((double)i)/p->width;
+	  x=((gdouble)i)/p->width;
 
 	  grey = sin(p->c11*x + p->c12*y + p->c13) * (0.5+0.5*sin(p->c31*x + p->c32*y +p->c33)) \
 	    + sin(p->c21*x + p->c22*y + p->c23) * (0.5-0.5*sin(p->c31*x + p->c32*y +p->c33));
 	  grey=pow(p->blend(svals.cmplx*(0.5+0.5*grey)),exp(svals.blend_power));
 
-	  *dest++= p->r+(int)(grey*p->dr);
-	  *dest++= p->g+(int)(grey*p->dg);
-	  *dest++= p->b+(int)(grey*p->db);
+	  *dest++= p->r+(gint)(grey*p->dr);
+	  *dest++= p->g+(gint)(grey*p->dg);
+	  *dest++= p->b+(gint)(grey*p->db);
 	}
       dest_row += rowstride;
     }
@@ -1521,24 +1518,24 @@ compute_block_2 (guchar *dest_row,
 		 gint    h, 
 		 params *p)
 {
-  gint i,j;
-  double x,y, grey;
-  guchar *dest;
+  gint     i, j;
+  gdouble  x, y, grey;
+  guchar  *dest;
 
   for (j=y0; j<(y0+h); j++)
     {
-      y=((double)j)/p->height;
+      y=((gdouble)j)/p->height;
       dest = dest_row;
       for (i= x0; i<(x0+w); i++)
 	{
-	  x=((double)i)/p->width;
+	  x=((gdouble)i)/p->width;
 
 	  grey = sin(p->c11*x + p->c12*y + p->c13) * (0.5+0.5*sin(p->c31*x + p->c32*y +p->c33)) \
 	    + sin(p->c21*x + p->c22*y + p->c23) * (0.5-0.5*sin(p->c31*x + p->c32*y +p->c33));
 	  grey=pow(p->blend(svals.cmplx*(0.5+0.5*grey)),exp(svals.blend_power));
 
 	  *dest++= (guchar)(grey*255.0);
-	  *dest++= p->a+(int)(grey*p->da);
+	  *dest++= p->a+(gint)(grey*p->da);
 	}
       dest_row += rowstride;
     }
@@ -1583,18 +1580,16 @@ static void
 alpha_scale_cb (GtkAdjustment *adj,
 		gpointer       data)
 {
-  guchar    *val;
-  GtkWidget *color_button;
-  GimpRGB    color;
+  GimpColorButton *color_button;
+  GimpRGB          color;
 
-  val = (guchar*) data;
+  if (!data)
+    return;
 
-  *val = (guchar)(adj->value * 255.0);
-
-  color_button = gtk_object_get_user_data (GTK_OBJECT (adj));
+  color_button = GIMP_COLOR_BUTTON (data);
 
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (color_button), &color);
-  color.a = adj->value;
+  gimp_rgb_set_alpha (&color, adj->value); 
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (color_button), &color);
 }
 
@@ -1602,15 +1597,13 @@ static void
 alpha_scale_update (GtkWidget *color_button,
 		    gpointer   data)
 {
-  guchar *val;
-  GtkWidget *adj;
+  GtkObject *adj;
+  GimpRGB    color;
 
-  val = (guchar*)data;
+  adj = GTK_OBJECT (data);
 
-  adj = gtk_object_get_user_data (GTK_OBJECT (color_button));
-  gtk_signal_handler_block_by_data (GTK_OBJECT (adj), data);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (adj), (gfloat)(*val) / 255.0);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (adj), data);
+  gimp_color_button_get_color (GIMP_COLOR_BUTTON (color_button), &color);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (adj), color.a);
 
   if (do_preview)
     sinus_do_preview (NULL);
@@ -1691,10 +1684,9 @@ sinus_dialog (void)
   GtkWidget *spinbutton;
   GtkObject *adj;
   GtkWidget *logo;
-  GimpRGB    color;
-  gint       x, y;
-  gchar      buf[3*100];
+  gchar      buf[3 * 100];
   guchar    *data;
+  gint       x, y;
 
   gimp_ui_init ("sinus", TRUE);
 
@@ -1900,29 +1892,19 @@ sinus_dialog (void)
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-      gimp_rgba_set (&color,
-		     (gdouble) svals.col1[0] / 255.0,
-		     (gdouble) svals.col1[1] / 255.0,
-		     (gdouble) svals.col1[2] / 255.0,
-		     (gdouble) svals.col1[3] / 255.0);
-      push_col1 = gimp_color_button_new (_("First Color"),
-					 32, 32, &color, TRUE);
+      push_col1 = gimp_color_button_new (_("First Color"), 32, 32, 
+					 &svals.col1, TRUE);
       gtk_signal_connect (GTK_OBJECT (push_col1), "color_changed", 
-			  (GtkSignalFunc) gimp_color_update_uchar, 
-			  svals.col1);
+			  GTK_SIGNAL_FUNC (gimp_color_button_get_color),
+			  &svals.col1);
       gtk_box_pack_start (GTK_BOX (hbox), push_col1, FALSE, FALSE, 0);
       gtk_widget_show (push_col1);
 
-      gimp_rgba_set (&color,
-		     (gdouble) svals.col2[0] / 255.0,
-		     (gdouble) svals.col2[1] / 255.0,
-		     (gdouble) svals.col2[2] / 255.0,
-		     (gdouble) svals.col2[3] / 255.0);
-      push_col2 = gimp_color_button_new (_("Second Color"),
-					 32, 32, &color, TRUE);
+      push_col2 = gimp_color_button_new (_("Second Color"), 32, 32, 
+					 &svals.col2, TRUE);
       gtk_signal_connect (GTK_OBJECT (push_col2), "color_changed", 
-			  (GtkSignalFunc) gimp_color_update_uchar, 
-			  svals.col2);
+			  GTK_SIGNAL_FUNC (gimp_color_button_get_color),
+			  &svals.col2);
       gtk_box_pack_start (GTK_BOX (hbox), push_col2, FALSE, FALSE, 0);
       gtk_widget_show (push_col2);
 
@@ -1942,41 +1924,33 @@ sinus_dialog (void)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("First Color:"), 0, 0,
-			      svals.col1[3] / 255.0, 0.0, 1.0, 0.01, 0.1, 2,
+			      svals.col1.a, 0.0, 1.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
 
-  gtk_object_set_user_data (GTK_OBJECT (adj), push_col1);      
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
                       GTK_SIGNAL_FUNC (alpha_scale_cb),
-                      &svals.col1[3]);
+                      push_col1);
 
   if (push_col1)
-    {
-      gtk_object_set_user_data (GTK_OBJECT (push_col1), adj);
-      gtk_signal_connect (GTK_OBJECT (push_col1), "color_changed",
-			  GTK_SIGNAL_FUNC (alpha_scale_update),
-			  &svals.col1[3]);
-    }
+    gtk_signal_connect (GTK_OBJECT (push_col1), "color_changed",
+			GTK_SIGNAL_FUNC (alpha_scale_update),
+			adj);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Second Color:"), 0, 0,
-			      svals.col2[3] / 255.0, 0.0, 1.0, 0.01, 0.1, 2,
+			      svals.col2.a, 0.0, 1.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
 
-  gtk_object_set_user_data (GTK_OBJECT (adj), push_col2);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
                       GTK_SIGNAL_FUNC (alpha_scale_cb),
-                      &svals.col2[3]);
+                      push_col2);
 
   if (push_col2)
-    {
-      gtk_object_set_user_data (GTK_OBJECT (push_col2), adj);
-      gtk_signal_connect (GTK_OBJECT (push_col2), "color_changed",
-			  GTK_SIGNAL_FUNC (alpha_scale_update),
-			  &svals.col2[3]);
-    }
+    gtk_signal_connect (GTK_OBJECT (push_col2), "color_changed",
+			GTK_SIGNAL_FUNC (alpha_scale_update),
+			adj);
 
   gtk_widget_show (table);
 

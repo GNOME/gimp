@@ -27,8 +27,6 @@
 #include "gimptypes.h"
 #include "gimpuitypes.h"
 
-#include "gimpcolorarea.h"
-#include "gimpcolorbutton.h"
 #include "gimpchainbutton.h"
 #include "gimphelpui.h"
 #include "gimppixmap.h"
@@ -1337,50 +1335,6 @@ gimp_unit_menu_update (GtkWidget *widget,
       gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
       spinbutton = gtk_object_get_data (GTK_OBJECT (spinbutton), "set_digits");
     }
-}
-
-/**
- * gimp_color_update:
- * @widget: A pointer to a #GimpColorArea or #GimpColorButton.
- * @data:   A pointer to an array of #guchar that will be set to the new color.
- *
- * This function will go away.
- **/
-void
-gimp_color_update_uchar (GtkWidget *widget,
-			 gpointer   data)
-{
-  GimpRGB   color;
-  gboolean  alpha;
-  guchar   *dest;
-
-  g_return_if_fail (widget != NULL);
-  g_return_if_fail (data != NULL);
-
-  g_return_if_fail (GIMP_IS_COLOR_AREA (widget) || 
-		    GIMP_IS_COLOR_BUTTON (widget));
-
-  if (GIMP_IS_COLOR_AREA (widget))
-    {
-      gimp_color_area_get_color (GIMP_COLOR_AREA (widget), &color);
-      alpha = gimp_color_area_has_alpha (GIMP_COLOR_AREA (widget));
-    }
-  else if (GIMP_IS_COLOR_BUTTON (widget))
-    {
-      gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget), &color);
-      alpha = gimp_color_button_has_alpha (GIMP_COLOR_BUTTON (widget));
-    }
-  else
-    return;
-      
-  dest = (guchar *) data;
-
-  *dest++ = color.r * 255.999;
-  *dest++ = color.g * 255.999;
-  *dest++ = color.b * 255.999;
-
-  if (alpha)
-    *dest++ = color.a * 255.999;
 }
 
 

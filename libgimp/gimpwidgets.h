@@ -227,8 +227,6 @@ void gimp_double_adjustment_update       (GtkAdjustment   *adjustment,
 void gimp_unit_menu_update               (GtkWidget       *widget,
 					  gpointer         data);
 
-void gimp_color_update_uchar             (GtkWidget       *widget,
-					  gpointer         data);
 
 /*
  *  Helper Functions

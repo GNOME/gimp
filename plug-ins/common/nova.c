@@ -22,7 +22,6 @@
 
 /*
  * version 1.200
- * This plug-in requires GIMP v0.99.10 or above.
  *
  * This plug-in produces an effect like a supernova burst.
  *
@@ -110,8 +109,9 @@ static  gboolean   show_cursor = FALSE;
 
 typedef struct
 {
-  gint    xcenter, ycenter;
-  guchar  color[3];
+  gint    xcenter;
+  gint    ycenter;
+  GimpRGB color;
   gint    radius;
   gint    nspoke;
   gint    randomhue;
@@ -125,39 +125,39 @@ typedef struct
 typedef struct
 {
   GimpDrawable *drawable;
-  gint       dwidth;
-  gint       dheight;
-  gint       bpp;
-  GtkObject *xadj;
-  GtkObject *yadj;
-  gint       cursor;
-  gint       curx, cury;              /* x,y of cursor in preview */
-  gint       oldx, oldy;
-  gint       in_call;
+  gint          dwidth;
+  gint          dheight;
+  gint          bpp;
+  GtkObject    *xadj;
+  GtkObject    *yadj;
+  gint          cursor;
+  gint          curx, cury;              /* x,y of cursor in preview */
+  gint          oldx, oldy;
+  gboolean      in_call;
 } NovaCenter;
 
 
 /* Declare a local function.
  */
 static void        query (void);
-static void        run   (gchar    *name,
-			  gint      nparams,
-			  GimpParam   *param,
-			  gint     *nreturn_vals,
-			  GimpParam  **return_vals);
+static void        run   (gchar      *name,
+			  gint        nparams,
+			  GimpParam  *param,
+			  gint       *nreturn_vals,
+			  GimpParam **return_vals);
 
-static void        fill_preview_with_thumb (GtkWidget *preview_widget, 
-					    gint32     drawable_ID);
+static void        fill_preview_with_thumb (GtkWidget    *preview_widget, 
+					    gint32        drawable_ID);
 static GtkWidget  *preview_widget          (GimpDrawable *drawable);
 
 static void        nova                    (GimpDrawable *drawable, 
-					    gboolean   preview_mode);
+					    gboolean      preview_mode);
 
 static gint        nova_dialog             (GimpDrawable *drawable);
-static void        nova_ok_callback        (GtkWidget *widget,
-				            gpointer   data);
+static void        nova_ok_callback        (GtkWidget    *widget,
+				            gpointer      data);
 
-static GtkWidget * nova_center_create            (GimpDrawable     *drawable);
+static GtkWidget * nova_center_create            (GimpDrawable  *drawable);
 static void        nova_center_destroy           (GtkWidget     *widget,
 						  gpointer       data);
 static void        nova_center_draw              (NovaCenter    *center,
@@ -182,11 +182,11 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static NovaValues pvals =
 {
-  128, 128,             /* xcenter, ycenter */
-  { 90, 100, 255 },     /* color */
-  20,                   /* radius */
-  100,                  /* nspoke */
-  0                     /* random hue */
+  128, 128,                 /* xcenter, ycenter */
+  { 0.35, 0.39, 1.0, 1.0 }, /* color */
+  20,                       /* radius */
+  100,                      /* nspoke */
+  0                         /* random hue */
 };
 
 static NovaInterface pint =
@@ -232,16 +232,16 @@ query (void)
 }
 
 static void
-run (gchar    *name,
-     gint      nparams,
+run (gchar       *name,
+     gint         nparams,
      GimpParam   *param,
-     gint     *nreturn_vals,
+     gint        *nreturn_vals,
      GimpParam  **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunModeType run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunModeType    run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   INIT_I18N_UI();
 
@@ -278,13 +278,15 @@ run (gchar    *name,
         {
           pvals.xcenter   = param[3].data.d_int32;
           pvals.ycenter   = param[4].data.d_int32;
-          pvals.color[0]  = param[5].data.d_color.red;
-          pvals.color[1]  = param[5].data.d_color.green;
-          pvals.color[2]  = param[5].data.d_color.blue;
+	  gimp_rgb_set_uchar (&pvals.color,
+			      param[5].data.d_color.red,
+			      param[5].data.d_color.green,
+			      param[5].data.d_color.blue);
           pvals.radius    = param[6].data.d_int32;
           pvals.nspoke    = param[7].data.d_int32;
 	  pvals.randomhue = param[8].data.d_int32;
         }
+
       if ((status == GIMP_PDB_SUCCESS) &&
 	  pvals.radius <= 0)
         status = GIMP_PDB_CALLING_ERROR;
@@ -338,7 +340,10 @@ preview_widget (GimpDrawable *drawable)
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   fill_preview_with_thumb (preview, drawable->id);
-  size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
+
+  size = GTK_PREVIEW (preview)->rowstride * 
+    GTK_PREVIEW (preview)->buffer_height;
+
   preview_bits = g_malloc (size);
   memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
 
@@ -355,7 +360,7 @@ fill_preview_with_thumb (GtkWidget *widget,
   gint     width  = PREVIEW_SIZE;
   gint     height = PREVIEW_SIZE;
   guchar  *src;
-  gdouble  r, g, b, a;
+  GimpRGB  color;
   gdouble  c0, c1;
   guchar  *p0, *p1;
   guchar  *even, *odd;
@@ -369,12 +374,16 @@ fill_preview_with_thumb (GtkWidget *widget,
     return;
 
   gtk_preview_size (GTK_PREVIEW (widget), width, height);
-  preview_scale_x = (gdouble)width  / (gdouble)gimp_drawable_width  (drawable_ID);
-  preview_scale_y = (gdouble)height / (gdouble)gimp_drawable_height (drawable_ID);
+  preview_scale_x = 
+    (gdouble) width  / (gdouble) gimp_drawable_width  (drawable_ID);
+  preview_scale_y = 
+    (gdouble) height / (gdouble) gimp_drawable_height (drawable_ID);
 
   even = g_malloc (width * 3);
   odd  = g_malloc (width * 3);
   src = drawable_data;
+
+  gimp_rgba_set (&color, 1.0, 1.0, 1.0, 1.0);
 
   for (y = 0; y < height; y++)
     {
@@ -383,28 +392,36 @@ fill_preview_with_thumb (GtkWidget *widget,
       
       for (x = 0; x < width; x++) 
 	{
-	  if(bpp == 4)
+	  switch (bpp)
 	    {
-	      r =  ((gdouble)src[x*4+0])/255.0;
-	      g = ((gdouble)src[x*4+1])/255.0;
-	      b = ((gdouble)src[x*4+2])/255.0;
-	      a = ((gdouble)src[x*4+3])/255.0;
-	    }
-	  else if(bpp == 3)
-	    {
-	      r =  ((gdouble)src[x*3+0])/255.0;
-	      g = ((gdouble)src[x*3+1])/255.0;
-	      b = ((gdouble)src[x*3+2])/255.0;
-	      a = 1.0;
-	    }
-	  else
-	    {
-	      r = ((gdouble)src[x*bpp+0])/255.0;
-	      g = b = r;
-	      if(bpp == 2)
-		a = ((gdouble)src[x*bpp+1])/255.0;
-	      else
-		a = 1.0;
+	    case 4:
+	      gimp_rgba_set_uchar (&color,
+				   src[x*4+0],
+				   src[x*4+1],
+				   src[x*4+2],
+				   src[x*4+3]);
+	      break;
+
+	    case 3:
+	      gimp_rgb_set_uchar (&color,
+				  src[x*3+0],
+				  src[x*3+1],
+				  src[x*3+2]);
+	      break;
+	      
+	    case 2:
+	      gimp_rgba_set_uchar (&color,
+				   src[x*2+0],
+				   src[x*2+0],
+				   src[x*2+0],
+				   src[x*2+1]);
+	      break;
+
+	    case 1:
+	      gimp_rgb_set_uchar (&color,
+				  src[x*2+0],
+				  src[x*2+0],
+				  src[x*2+0]);
 	    }
 	  
 	  if ((x / GIMP_CHECK_SIZE_SM) & 1) 
@@ -418,20 +435,22 @@ fill_preview_with_thumb (GtkWidget *widget,
 	      c1 = GIMP_CHECK_LIGHT;
 	    }
 	  
-	*p0++ = (c0 + (r - c0) * a) * 255.0;
-	*p0++ = (c0 + (g - c0) * a) * 255.0;
-	*p0++ = (c0 + (b - c0) * a) * 255.0;
+	*p0++ = (c0 + (color.r - c0) * color.a) * 255.0;
+	*p0++ = (c0 + (color.g - c0) * color.a) * 255.0;
+	*p0++ = (c0 + (color.b - c0) * color.a) * 255.0;
 	
-	*p1++ = (c1 + (r - c1) * a) * 255.0;
-	*p1++ = (c1 + (g - c1) * a) * 255.0;
-	*p1++ = (c1 + (b - c1) * a) * 255.0;
+	*p1++ = (c1 + (color.r - c1) * color.a) * 255.0;
+	*p1++ = (c1 + (color.g - c1) * color.a) * 255.0;
+	*p1++ = (c1 + (color.b - c1) * color.a) * 255.0;
 	
       } /* for */
       
       if ((y / GIMP_CHECK_SIZE_SM) & 1)
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)odd,  0, y, width);
+	gtk_preview_draw_row (GTK_PREVIEW (widget), 
+			      (guchar *)odd,  0, y, width);
       else
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)even, 0, y, width);
+	gtk_preview_draw_row (GTK_PREVIEW (widget), 
+			      (guchar *)even, 0, y, width);
 
       src += width * bpp;
     }
@@ -455,7 +474,6 @@ nova_dialog (GimpDrawable *drawable)
   GtkWidget *button;
   GtkWidget *center_frame;
   GtkObject *adj;
-  GimpRGB    color;
 
   gimp_ui_init ("nova", TRUE);
 
@@ -491,16 +509,12 @@ nova_dialog (GimpDrawable *drawable)
   gtk_table_attach (GTK_TABLE (table), center_frame, 0, 3, 0, 1,
                     0, 0, 0, 0);
 
-  gimp_rgb_set (&color,
-		(gdouble) pvals.color[0] / 255.0,
-		(gdouble) pvals.color[1] / 255.0,
-		(gdouble) pvals.color[2] / 255.0);
   button = gimp_color_button_new (_("SuperNova Color Picker"), 
 				  SCALE_WIDTH - 8, 16, 
-				  &color, FALSE);
+				  &pvals.color, FALSE);
   gtk_signal_connect (GTK_OBJECT (button), "color_changed", 
-		      (GtkSignalFunc) gimp_color_update_uchar, 
-		      pvals.color);
+		      GTK_SIGNAL_FUNC (gimp_color_button_get_color),
+		      &pvals.color);
   gtk_signal_connect_object (GTK_OBJECT (button), "color_changed",
 			     GTK_SIGNAL_FUNC (nova),
 			     (gpointer)drawable);
@@ -740,7 +754,7 @@ nova_center_draw (NovaCenter *center,
 	      gdk_draw_line (preview->window,
 			     preview->style->black_gc,
 			     1, center->oldy, 
-			     (GTK_PREVIEW (preview)->buffer_width)-1, center->oldy);
+			     (GTK_PREVIEW (preview)->buffer_width) - 1, center->oldy);
 	    }
 
 	  gdk_draw_line (preview->window,
@@ -750,8 +764,9 @@ nova_center_draw (NovaCenter *center,
 	  gdk_draw_line (preview->window,
 			 preview->style->black_gc,
 			 1, center->cury, 
-			 (GTK_PREVIEW (preview)->buffer_width)-1, center->cury);
+			 (GTK_PREVIEW (preview)->buffer_width) - 1, center->cury);
 	}
+
       /* current position of cursor is updated */
       center->oldx = center->curx;
       center->oldy = center->cury;
@@ -790,8 +805,10 @@ nova_center_adjustment_update (GtkAdjustment *adjustment,
 static void
 nova_center_cursor_update (NovaCenter *center)
 {
-  center->curx = pvals.xcenter * GTK_PREVIEW (preview)->buffer_width / center->dwidth;
-  center->cury = pvals.ycenter * GTK_PREVIEW (preview)->buffer_height / center->dheight;
+  center->curx = pvals.xcenter * 
+    GTK_PREVIEW (preview)->buffer_width / center->dwidth;
+  center->cury = pvals.ycenter * 
+    GTK_PREVIEW (preview)->buffer_height / center->dheight;
 
   if (center->curx < 0)
     center->curx = 0;
@@ -894,67 +911,64 @@ gauss (void)
 
 static void
 nova (GimpDrawable *drawable, 
-      gboolean   preview_mode)
+      gboolean      preview_mode)
 {
-   GimpPixelRgn src_rgn, dest_rgn;
-   gpointer pr;
-   guchar *src_row, *dest_row;
-   guchar *src, *dest, *save_dest;
-   gint x1, y1, x2, y2;
-   gint row, col;
-   gint x, y;
-   gint alpha, has_alpha, bpp;
-   gint progress, max_progress;
-   /****************/
-   gint xc, yc; /* center of image */
-   gdouble u, v;
-   gdouble l, l0;
-   gdouble w, w1, c;
-   gdouble *spoke;
-   gdouble nova_alpha;
-   gdouble src_alpha;
-   gdouble new_alpha;
-   gdouble compl_ratio;
-   gdouble ratio;
-   gdouble h, s;
-   gdouble spokecol;
-   gint    i, j;
-   gint    color[4];
-   guchar  *spokecolor;
- 
+   GimpPixelRgn  src_rgn;
+   GimpPixelRgn  dest_rgn;
+   guchar   *src_row, *dest_row;
+   guchar   *src, *dest;
+   gint      x1, y1, x2, y2;
+   gint      row, col;
+   gint      x, y;
+   gint      alpha, bpp;
+   gint      progress, max_progress;
+   gboolean  has_alpha;
+   gint      xc, yc; /* center of nova */
+   gdouble   u, v;
+   gdouble   l;
+   gdouble   w, w1, c;
+   gdouble  *spoke;
+   gdouble   nova_alpha;
+   GimpRGB   color;
+   GimpRGB   src_color;
+   GimpRGB  *spokecolor;
+   GimpHSV   hsv;
+   gint      i;
+  
    /* initialize */
- 
-   new_alpha = 0.0;
+   has_alpha = gimp_drawable_has_alpha (drawable->id);
  
    srand (time (NULL));
    spoke = g_new (gdouble, pvals.nspoke);
-   spokecolor = g_new (guchar, 3 * pvals.nspoke);
+   spokecolor = g_new (GimpRGB, pvals.nspoke);
 
-   gimp_rgb_to_hsv4 (pvals.color, &h, &s, &v);
+   gimp_rgb_set_alpha (&pvals.color, 1.0);
+   gimp_rgb_to_hsv (&pvals.color, &hsv);
 
    for (i = 0; i < pvals.nspoke; i++)
      {
        spoke[i] = gauss();
-       h += ((gdouble) pvals.randomhue / 360.0 *
-	     ((gdouble) rand() / (gdouble) G_MAXRAND - 0.5));
-       if (h < 0)
-	 h += 1.0;
-       else if (h >= 1.0)
-	 h -= 1.0;
-       gimp_hsv_to_rgb4 (&spokecolor[3*i], h, s, v);       
+
+       hsv.h += ((gdouble) pvals.randomhue / 360.0) *
+	 ((gdouble) rand() / (gdouble) G_MAXRAND - 0.5);
+       if (hsv.h < 0)
+	 hsv.h += 1.0;
+       else if (hsv.h >= 1.0)
+	 hsv.h -= 1.0;
+
+       gimp_hsv_to_rgb (&hsv, spokecolor + i);
      }
 
-   has_alpha = gimp_drawable_has_alpha (drawable->id);
    if (preview_mode) 
      {
-       xc = (gdouble)pvals.xcenter * preview_scale_x;
-       yc = (gdouble)pvals.ycenter * preview_scale_y;
+       xc = (gdouble) pvals.xcenter * preview_scale_x;
+       yc = (gdouble) pvals.ycenter * preview_scale_y;
 
        x1 = y1 = 0;
        x2 = GTK_PREVIEW (preview)->buffer_width;
        y2 = GTK_PREVIEW (preview)->buffer_height;
        bpp = GTK_PREVIEW (preview)->bpp;
-       has_alpha = 0;
+       has_alpha = FALSE;
        alpha = bpp;
      } 
    else 
@@ -965,95 +979,89 @@ nova (GimpDrawable *drawable,
        xc = pvals.xcenter;
        yc = pvals.ycenter;
 
-       gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, x2-x1, y2-y1, FALSE, FALSE);
-       gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, x2-x1, y2-y1, TRUE, TRUE);
+       gimp_pixel_rgn_init (&src_rgn, drawable, 
+			    x1, y1, x2-x1, y2-y1, FALSE, FALSE);
+       gimp_pixel_rgn_init (&dest_rgn, drawable, 
+			    x1, y1, x2-x1, y2-y1, TRUE, TRUE);
      }
  
-   l0 = (x2-xc)/4+1;   /* standard length */
- 
    /* Initialize progress */
-   progress = 0;
+   progress     = 0;
    max_progress = (x2 - x1) * (y2 - y1);
 
    if (preview_mode) 
      {
-       /* thanks to this pixel rgn register
-	  stuff, i have to duplicate the
-	  entire loop.  why not just use
-	  get_row??? */
-       src_row   = g_malloc (y2 * GTK_PREVIEW (preview)->rowstride);
+       src_row  = g_malloc (y2 * GTK_PREVIEW (preview)->rowstride);
        memcpy (src_row, preview_bits, y2 * GTK_PREVIEW (preview)->rowstride);
-       dest_row  = g_malloc (y2 * GTK_PREVIEW (preview)->rowstride);
-       save_dest = dest_row;
- 
+
+       dest_row = g_malloc (GTK_PREVIEW (preview)->rowstride);
+
        for (row = 0, y = 0; row < y2; row++, y++)
          {
-           src = src_row;
+           src  = src_row;
            dest = dest_row;
  
            for (col = 0, x = 0; col < x2; col++, x++)
              {
-               u = (gdouble) (x-xc) / (pvals.radius * preview_scale_x);
-               v = (gdouble) (y-yc) / (pvals.radius * preview_scale_y);
-               l = sqrt(u*u + v*v);
+               u = (gdouble) (x - xc) / (pvals.radius * preview_scale_x);
+               v = (gdouble) (y - yc) / (pvals.radius * preview_scale_y);
+               l = sqrt (u*u + v*v);
  
                /* This algorithm is still under construction. */
                c = (atan2 (u, v) / (2 * G_PI) + .51) * pvals.nspoke;
-               i = (int) floor (c);
+               i = (gint) floor (c);
                c -= i;
                i %= pvals.nspoke;
                w1 = spoke[i] * (1 - c) + spoke[(i + 1) % pvals.nspoke] * c;
                w1 = w1 * w1;
  
-               w = 1/(l+0.001)*0.9;
+               w = 1.0 / (l + 0.001) * 0.9;
  
                nova_alpha = CLAMP (w, 0.0, 1.0);
+
+	       /*  blend two neighbored spokecolors  */
+	       color = spokecolor[i];
+	       gimp_rgb_set_alpha (&color, 1.0);
+  	       gimp_rgb_set_alpha (spokecolor + ((i + 1) % pvals.nspoke), c);
+	       gimp_rgb_composite (&color, 
+				   spokecolor + (i + 1) % pvals.nspoke, 
+				   GIMP_RGB_COMPOSITE_NORMAL);
  
-               if (has_alpha)
-                 {
-                   src_alpha = (gdouble) src[alpha] / 255.0;
-                   new_alpha = src_alpha + (1.0 - src_alpha) * nova_alpha;
- 
-                   if (new_alpha != 0.0)
-                     ratio = nova_alpha / new_alpha;
-                   else
-                     ratio = 0.0;
-                 }
-               else
-                 ratio = nova_alpha;
- 
-               compl_ratio = 1.0 - ratio;
- 
-               for (j = 0; j < alpha; j++)
-                 {
-		   spokecol = (gdouble)spokecolor[3*i+j]*(1.0-c) + 
-		              (gdouble)spokecolor[3*((i + 1) % pvals.nspoke)+j]*c;
-                   if (w > 1.0)
-                     color[j] = CLAMP (spokecol * w, 0, 255);
-                   else
-                     color[j] = src[j] * compl_ratio + spokecol * ratio;
- 
-                   c = CLAMP (w1 * w, 0, 1);
-                   color[j] = color[j] + 255 * c;
- 
-                   dest[j]= CLAMP (color[j], 0, 255);
-                 }
- 
-               if (has_alpha)
-                 dest[alpha] = new_alpha * 255.0;
- 
-               src += bpp;
+	       if (w > 1.0)
+		 {
+		   gimp_rgb_multiply (&color, w);
+		   gimp_rgb_clamp (&color);
+		 }
+	       else
+		 {
+		   gimp_rgba_set_uchar (&src_color,
+					src[0], src[1], src[2], 1.0);
+		   gimp_rgb_set_alpha (&color, nova_alpha);
+		   gimp_rgb_composite (&color, &src_color, 
+				       GIMP_RGB_COMPOSITE_BEHIND);
+		 }
+
+/*  	       c = CLAMP (w1 * w, 0.0, 1.0); */
+/*  	       gimp_rgb_add (&color, c); */
+
+	       gimp_rgb_get_uchar (&color,
+				   dest, dest + 1, dest + 2);
+	       
+	       src  += bpp;
                dest += bpp;
              }
+
            src_row  += GTK_PREVIEW (preview)->rowstride;
-           dest_row += GTK_PREVIEW (preview)->rowstride;
+
+	   gtk_preview_draw_row (GTK_PREVIEW (preview), dest_row, 0, row, y2);
          }
 
-       memcpy (GTK_PREVIEW(preview)->buffer, save_dest, y2 * GTK_PREVIEW (preview)->rowstride);
        gtk_widget_queue_draw (preview);
      } 
    else 
      { /* normal mode */
+
+#ifdef EEEEK
        for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
 	    pr != NULL; pr = gimp_pixel_rgns_process (pr))
 	 {
@@ -1073,7 +1081,7 @@ nova (GimpDrawable *drawable,
 		   
 		   /* This algorithm is still under construction. */
 		   c = (atan2 (u, v) / (2 * G_PI) + .51) * pvals.nspoke;
-		   i = (int) floor (c);
+		   i = (gint) floor (c);
 		   c -= i;
 		   i %= pvals.nspoke;
 		   w1 = spoke[i] * (1 - c) + spoke[(i + 1) % pvals.nspoke] * c;
@@ -1083,6 +1091,26 @@ nova (GimpDrawable *drawable,
 		   
 		   nova_alpha = CLAMP (w, 0.0, 1.0);
 		   
+		   switch (bpp)
+		     {
+		     case 1:
+		       gimp_rgba_set_uchar (&src_color,
+					    src[0], src[0], src[0], 1.0);
+		       break;
+		     case 2:
+		       gimp_rgba_set_uchar (&src_color,
+					    src[0], src[0], src[0], src[1]);
+		       break;
+		     case 3:
+		       gimp_rgba_set_uchar (&src_color,
+					    src[0], src[1], src[2], 1.0);
+		       break;
+		     case 4:
+		       gimp_rgba_set_uchar (&src_color,
+					    src[0], src[1], src[2], src[3]);
+		       break;
+		     }
+
 		   if (has_alpha)
 		     {
 		       src_alpha = (gdouble) src[alpha] / 255.0;
@@ -1125,12 +1153,17 @@ nova (GimpDrawable *drawable,
 
 	   /* Update progress */
 	   progress += src_rgn.w * src_rgn.h;
-	   gimp_progress_update ((double) progress / (double) max_progress);
+	   gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
 	 }
 
        gimp_drawable_flush (drawable);
        gimp_drawable_merge_shadow (drawable->id, TRUE);
        gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+#else
+       gimp_message ("Sorry, the SuperNova effect\n"
+		     "is broken at the moment and\n"
+		     "has been temporarily disabled.");
+#endif       
      }
  
    g_free (spoke);

@@ -383,7 +383,7 @@ script_fu_add_script (LISP a)
   SFScript     *script;
   gchar        *val;
   gint          i;
-  guchar        color[3];
+  guchar        r, g, b;
   LISP          color_list;
   LISP          adj_list;
   LISP          brush_list;
@@ -532,19 +532,14 @@ script_fu_add_script (LISP a)
 		  if (!TYPEP (car (a), tc_cons))
 		    return my_err ("script-fu-register: color defaults must be a list of 3 integers", NIL);
 		  color_list = car (a);
-		  color[0] = 
-		    (guchar)(CLAMP (get_c_long (car (color_list)), 0, 255));
+		  r = CLAMP (get_c_long (car (color_list)), 0, 255);
 		  color_list = cdr (color_list);
-		  color[1] = 
-		    (guchar)(CLAMP (get_c_long (car (color_list)), 0, 255));
+		  g = CLAMP (get_c_long (car (color_list)), 0, 255);
 		  color_list = cdr (color_list);
-		  color[2] = 
-		    (guchar)(CLAMP (get_c_long (car (color_list)), 0, 255));
+		  b = CLAMP (get_c_long (car (color_list)), 0, 255);
 		  
-		  gimp_rgb_set (&script->arg_defaults[i].sfa_color,
-				color[0] / 255.0, 
-				color[1] / 255.0,
-				color[2] / 255.0);
+		  gimp_rgb_set_uchar (&script->arg_defaults[i].sfa_color, 
+				      r, g, b);
 
 		  script->arg_values[i].sfa_color = 
 		    script->arg_defaults[i].sfa_color;
@@ -1703,6 +1698,7 @@ script_fu_ok_callback (GtkWidget *widget,
   gchar     *text = NULL;
   gchar     *command;
   gchar     *c;
+  guchar     r, g, b;
   gchar      buffer[MAX_STRING_LENGTH];
   gint       length;
   gint       i;
@@ -1807,10 +1803,8 @@ script_fu_ok_callback (GtkWidget *widget,
 	  break;
 
  	case SF_COLOR:
-	  g_snprintf (buffer, sizeof (buffer), "'(%d %d %d)",
-		      (gint) (script->arg_values[i].sfa_color.r * 255.999),
-		      (gint) (script->arg_values[i].sfa_color.g * 255.999),
-		      (gint) (script->arg_values[i].sfa_color.b * 255.999));
+	  gimp_rgb_get_uchar (&script->arg_values[i].sfa_color, &r, &g, &b); 
+	  g_snprintf (buffer, sizeof (buffer), "'(%d %d %d)", (gint) r, (gint) g, (gint) b);
 	  text = buffer;
 	  break;
 
@@ -2078,8 +2072,7 @@ script_fu_reset_callback (GtkWidget *widget,
 	break;
 
       case SF_COLOR:
-	script->arg_values[i].sfa_color = 
-	  script->arg_defaults[i].sfa_color;
+	script->arg_values[i].sfa_color = script->arg_defaults[i].sfa_color;
 	gimp_color_button_set_color (GIMP_COLOR_BUTTON (sf_interface->args_widgets[i]), 
 				     &script->arg_values[i].sfa_color);
 	break;

@@ -53,17 +53,17 @@ static char ident[] = "@(#) GIMP mapcolor plug-in v1.03  22-May-00";
 
 typedef struct
 {
-  guchar colors[4][3];
-  gint32 map_mode;
+  GimpRGB colors[4];
+  gint32  map_mode;
 } PluginValues;
 
 PluginValues plvals =
 {
   {
-    { 0, 0, 0},
-    { 255, 255, 255 },
-    { 0, 0, 0 },
-    { 255, 255, 255 }
+    { 0.0, 0.0, 0.0, 1.0 },
+    { 1.0, 1.0, 1.0, 1.0 },
+    { 0.0, 0.0, 0.0, 1.0 },
+    { 1.0, 1.0, 1.0, 1.0 },
   },
   0
 };
@@ -115,14 +115,17 @@ static IMG_PREVIEW   *img_preview_create_from_drawable (guint maxsize,
 
 static void            update_img_preview (void);
 
-static gboolean        dialog         (gint32 drawable_ID);
+static gboolean        dialog         (gint32     drawable_ID);
 static void   mapcolor_ok_callback    (GtkWidget *widget,
 				       gpointer   data);
-static void   get_mapping (guchar *src_col1, guchar *src_col2,
-			   guchar *dst_col1, guchar *dst_col2, gint32  map_mode,
-			   guchar *redmap, guchar *greenmap, guchar *bluemap);
-static void   color_button_color_changed_callback (GtkWidget *widget,
-						   gpointer   data);
+static void   get_mapping             (GimpRGB   *src_col1,
+				       GimpRGB   *src_col2,
+				       GimpRGB   *dst_col1, 
+				       GimpRGB   *dst_col2, 
+				       gint32     map_mode,
+				       guchar    *redmap, 
+				       guchar    *greenmap, 
+				       guchar    *bluemap);
 static void   add_color_button        (gint       csel_index,
 				       gint       left,
 				       gint       top,
@@ -147,21 +150,23 @@ static PLInterface plinterface;
 
 /* Allocate image preview structure and preview memory */
 static IMG_PREVIEW *
-img_preview_alloc (guint width, guint height)
+img_preview_alloc (guint width, 
+		   guint height)
 
-{IMG_PREVIEW *ip;
+{
+  IMG_PREVIEW *ip;
 
- ip = (IMG_PREVIEW *)g_malloc (sizeof (IMG_PREVIEW));
- ip->img = (guchar *)g_malloc (width*height*3);
- if (ip->img == NULL)
- {
-   g_free (ip);
-   return NULL;
- }
- ip->width = width;
- ip->height = height;
-
- return ip;
+  ip = (IMG_PREVIEW *)g_malloc (sizeof (IMG_PREVIEW));
+  ip->img = (guchar *)g_malloc (width*height*3);
+  if (ip->img == NULL)
+    {
+      g_free (ip);
+      return NULL;
+    }
+  ip->width = width;
+  ip->height = height;
+  
+  return ip;
 }
 
 
@@ -183,12 +188,14 @@ img_preview_free (IMG_PREVIEW *ip)
 }
 
 
-/* Copy image preview. Create/modify destinataion preview */
+/* Copy image preview. Create/modify destination preview */
 static void
-img_preview_copy (IMG_PREVIEW *src, IMG_PREVIEW **dst)
+img_preview_copy (IMG_PREVIEW  *src, 
+		  IMG_PREVIEW **dst)
 
-{int numbytes;
- IMG_PREVIEW *dst_p;
+{
+  gint numbytes;
+  IMG_PREVIEW *dst_p;
 
  if ((src == NULL) || (src->img == NULL) || (dst == NULL)) return;
 
@@ -234,7 +241,7 @@ img_preview_create_from_drawable (guint  maxsize,
  guint prv_width, prv_height;
  gint  src_x, src_y, x, y;
  guchar *prv_data, *img_data, *cu_row;
- double xfactor, yfactor;
+ gdouble xfactor, yfactor;
  gint tile_height, row_start, row_end;
  gint bpp;
  IMG_PREVIEW *ip;
@@ -416,17 +423,11 @@ run (gchar   *name,
 	      break;
 	    }
 
-	  c = &(plvals.colors[0][0]);      /* First source color */
-	  gimp_palette_get_foreground (c, c+1, c+2);
+	  gimp_palette_get_foreground_rgb (plvals.colors);
+	  gimp_palette_get_background_rgb (plvals.colors + 1);
 
-	  c = &(plvals.colors[1][0]);      /* Second source color */
-	  gimp_palette_get_background (c, c+1, c+2);
-
-	  c = &(plvals.colors[2][0]);      /* First destination color */
-	  c[0] = c[1] = c[2] = 0;          /* Foreground mapped to black */
-
-	  c = &(plvals.colors[3][0]);      /* Second destination color */
-	  c[0] = c[1] = c[2] = 255;        /* Background mapped to white */
+	  gimp_rgb_set (plvals.colors + 2, 0.0, 0.0, 0.0);
+	  gimp_rgb_set (plvals.colors + 3, 1.0, 1.0, 1.0);
 
 	  plvals.map_mode = 0;
 
@@ -449,9 +450,10 @@ run (gchar   *name,
 
 	      for (j = 0; j < 4; j++)
 		{
-		  plvals.colors[j][0] = param[3+j].data.d_color.red;
-		  plvals.colors[j][1] = param[3+j].data.d_color.green;
-		  plvals.colors[j][2] = param[3+j].data.d_color.blue;
+		  gimp_rgb_set_uchar (plvals.colors + j,
+				      param[3+j].data.d_color.red,
+				      param[3+j].data.d_color.green,
+				      param[3+j].data.d_color.blue);
 		}
 	      plvals.map_mode = param[7].data.d_int32;
 	    }
@@ -459,11 +461,8 @@ run (gchar   *name,
 	    {
 	      gimp_get_data (name, &plvals);
 
-	      c = &(plvals.colors[0][0]);      /* First source color */
-	      gimp_palette_get_foreground (c, c+1, c+2);
-
-	      c = &(plvals.colors[1][0]);      /* Second source color */
-	      gimp_palette_get_background (c, c+1, c+2);
+	      gimp_palette_get_foreground_rgb (plvals.colors);
+	      gimp_palette_get_background_rgb (plvals.colors + 1);
 
 	      if (!dialog (param[2].data.d_drawable))
 		break;
@@ -502,38 +501,41 @@ run (gchar   *name,
 static void
 update_img_preview (void)
 
-{IMG_PREVIEW *dst_ip = plinterface.map_preview;
- IMG_PREVIEW *src_ip = plinterface.img_preview;
- guchar *src, *dst;
- GtkWidget *preview = plinterface.preview;
- int j;
- unsigned char redmap[256], greenmap[256], bluemap[256];
- unsigned char *src_col1 = plvals.colors[0];
- unsigned char *src_col2 = plvals.colors[1];
- unsigned char *dst_col1 = plvals.colors[2];
- unsigned char *dst_col2 = plvals.colors[3];
+{
+  IMG_PREVIEW *dst_ip = plinterface.map_preview;
+  IMG_PREVIEW *src_ip = plinterface.img_preview;
+  GtkWidget *preview = plinterface.preview;
+  guchar redmap[256], greenmap[256], bluemap[256];
+  guchar *src, *dst;
+  gint j;
+  
+  if ((dst_ip == NULL) || (src_ip == NULL)) return;
+  
+  get_mapping (plvals.colors, 
+	       plvals.colors + 1, 
+	       plvals.colors + 2, 
+	       plvals.colors + 3, 
+	       plvals.map_mode,
+               redmap, greenmap, bluemap);
+  
+  j = dst_ip->width*dst_ip->height;
+  src = src_ip->img;
+  dst = dst_ip->img;
 
- if ((dst_ip == NULL) || (src_ip == NULL)) return;
+  while (j-- > 0)
+    {
+      *(dst++) = redmap[*(src++)];
+      *(dst++) = greenmap[*(src++)];
+      *(dst++) = bluemap[*(src++)];
+    }
 
- get_mapping (src_col1, src_col2, dst_col1, dst_col2, plvals.map_mode,
-              redmap, greenmap, bluemap);
+  for (j = 0; j < dst_ip->height; j++)
+    gtk_preview_draw_row (GTK_PREVIEW (preview), 
+			  dst_ip->img + dst_ip->width*3*j,
+			  0, j, dst_ip->width);
 
- j = dst_ip->width*dst_ip->height;
- src = src_ip->img;
- dst = dst_ip->img;
- while (j-- > 0)
- {
-   *(dst++) = redmap[*(src++)];
-   *(dst++) = greenmap[*(src++)];
-   *(dst++) = bluemap[*(src++)];
- }
- for (j = 0; j < dst_ip->height; j++)
-   gtk_preview_draw_row (GTK_PREVIEW (preview), dst_ip->img + dst_ip->width*3*j,
-                         0, j, dst_ip->width);
- gtk_widget_draw (preview, NULL);
- gdk_flush ();
+  gtk_widget_queue_draw (preview);
 }
-
 
 static gboolean
 dialog (gint32 drawable_ID)
@@ -632,14 +634,6 @@ dialog (gint32 drawable_ID)
 }
 
 static void
-color_button_color_changed_callback (GtkWidget *widget,
-                                     gpointer   data)
-{
- update_img_preview ();
-}
-
-
-static void
 add_color_button (gint       csel_index,
                   gint       left,
                   gint       top,
@@ -648,7 +642,6 @@ add_color_button (gint       csel_index,
 {
   GtkWidget *label;
   GtkWidget *button;
-  GimpRGB    color;
 
   label = gtk_label_new ((left == 0) ? _("From:") : _("To:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
@@ -656,19 +649,14 @@ add_color_button (gint       csel_index,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  gimp_rgb_set (&color,
-		(gdouble) plvals.colors[csel_index][0] / 255.0,
-		(gdouble) plvals.colors[csel_index][1] / 255.0,
-		(gdouble) plvals.colors[csel_index][2] / 255.0);
-
   button = gimp_color_button_new (gettext (csel_title[csel_index]),
 				  PRV_WIDTH, PRV_HEIGHT,
-				  &color, FALSE);
+				  &plvals.colors[csel_index], FALSE);
   gtk_signal_connect (GTK_OBJECT (button), "color_changed", 
-		      (GtkSignalFunc) gimp_color_update_uchar, 
-		      plvals.colors[csel_index]);
+		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
+		      &plvals.colors[csel_index]);
   gtk_signal_connect (GTK_OBJECT (button), "color_changed",
-                      GTK_SIGNAL_FUNC (color_button_color_changed_callback),
+                      GTK_SIGNAL_FUNC (update_img_preview),
                       NULL);
   gtk_table_attach (GTK_TABLE (table), button, left+1, left+2, top, top+1,
 		    GTK_FILL, GTK_FILL, 0, 0);
@@ -691,17 +679,21 @@ mapcolor_ok_callback (GtkWidget *widget,
 }
 
 static void
-get_mapping (guchar *src_col1,
-             guchar *src_col2,
-             guchar *dst_col1,
-             guchar *dst_col2,
-             gint32  map_mode,
-             guchar *redmap,
-             guchar *greenmap,
-             guchar *bluemap)
+get_mapping (GimpRGB *src_col1,
+             GimpRGB *src_col2,
+             GimpRGB *dst_col1,
+             GimpRGB *dst_col2,
+             gint32   map_mode,
+             guchar  *redmap,
+             guchar  *greenmap,
+             guchar  *bluemap)
 
 {
-  int rgb, i, j, a, as, b, bs;
+  guchar  src1[3];
+  guchar  src2[3];
+  guchar  dst1[3];
+  guchar  dst2[3];
+  gint    rgb, i, j, a, as, b, bs;
   guchar *colormap[3];
 
   /* Currently we always do a linear mapping */
@@ -710,21 +702,24 @@ get_mapping (guchar *src_col1,
   colormap[1] = greenmap;
   colormap[2] = bluemap;
 
+  gimp_rgb_get_uchar (src_col1, src1, src1 + 1, src1 + 2); 
+  gimp_rgb_get_uchar (src_col2, src2, src2 + 1, src2 + 2); 
+  gimp_rgb_get_uchar (dst_col1, dst1, dst1 + 1, dst1 + 2); 
+  gimp_rgb_get_uchar (dst_col2, dst2, dst2 + 1, dst2 + 2); 
+
   switch (map_mode)
     {
     case 0:
     default:
       for (rgb = 0; rgb < 3; rgb++)
 	{
-	  a = src_col1[rgb];  as = dst_col1[rgb];
-	  b = src_col2[rgb];  bs = dst_col2[rgb];
-          if (b == a) b = a+1;
+	  a = src1[rgb];  as = dst1[rgb];
+	  b = src2[rgb];  bs = dst2[rgb];
+
+          if (b == a) 
+	    b = a + 1;
 	  for (i = 0; i < 256; i++)
-	    {
-	      j = ((i - a) * (bs - as)) / (b - a) + as;
-	      if (j > 255) j = 255; else if (j < 0) j = 0;
-	      colormap[rgb][i] = j;
-	    }
+	    j = CLAMP (((i - a) * (bs - as)) / (b - a) + as, 0, 255);
 	}
       break;
     }
@@ -734,21 +729,19 @@ static void
 color_mapping (GimpDrawable *drawable)
 
 {
-  int processed, total;
-  gint x, y, xmin, xmax, ymin, ymax, bpp = (gint)drawable->bpp;
-  unsigned char *src, *dest;
-  GimpPixelRgn src_rgn, dest_rgn;
+  gint processed, total;
+  guint x, y, xmin, xmax, ymin, ymax;
+  guint bpp = drawable->bpp;
+  guchar *src;
+  guchar *dest;
+  GimpPixelRgn src_rgn;
+  GimpPixelRgn dest_rgn;
   gpointer pr;
-  double progress;
-  unsigned char redmap[256], greenmap[256], bluemap[256];
-  unsigned char *src_col1 = plvals.colors[0];
-  unsigned char *src_col2 = plvals.colors[1];
-  unsigned char *dst_col1 = plvals.colors[2];
-  unsigned char *dst_col2 = plvals.colors[3];
+  gdouble  progress;
+  guchar   redmap[256], greenmap[256], bluemap[256];
 
-  if (   (src_col1[0] == src_col2[0])
-      || (src_col1[1] == src_col2[1])
-      || (src_col1[2] == src_col2[2])) return;
+  if (gimp_rgb_distance (&plvals.colors[0], &plvals.colors[1]) < 0.0001)
+    return;
 
   if (!gimp_drawable_is_rgb (drawable->id))
     {
@@ -768,11 +761,16 @@ color_mapping (GimpDrawable *drawable)
 
   pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
 
-  get_mapping (src_col1, src_col2, dst_col1, dst_col2, plvals.map_mode,
+  get_mapping (plvals.colors, 
+	       plvals.colors + 1, 
+	       plvals.colors + 2, 
+	       plvals.colors + 3, 
+	       plvals.map_mode,
                redmap, greenmap, bluemap);
 
   processed = 0;
-  progress = 0.0;
+  progress  = 0.0;
+
   for (; pr != NULL; pr = gimp_pixel_rgns_process (pr))
     {
       for (y = 0; y < src_rgn.h; y++)
@@ -792,9 +790,9 @@ color_mapping (GimpDrawable *drawable)
 	}
       if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
 	{
-	  if ((double)processed/(double)total - progress > 0.1)
+	  if ((gdouble) processed / (gdouble) total - progress > 0.1)
 	    {
-	      progress = (double)processed/(double)total;
+	      progress = (gdouble) processed / (gdouble) total;
 	      gimp_progress_update (progress);
 	    }
 	}
@@ -804,5 +802,6 @@ color_mapping (GimpDrawable *drawable)
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, xmin, ymin, (xmax - xmin), (ymax - ymin));
+  gimp_drawable_update (drawable->id, 
+			xmin, ymin, (xmax - xmin), (ymax - ymin));
 }

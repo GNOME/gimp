@@ -96,6 +96,5 @@ typedef struct
 /* ============================ */
 
 extern LightingValues mapvals;
-extern GimpRGB         background;
 
 #endif  /* __LIGHTING_MAIN_H__ */

@@ -69,7 +69,7 @@ struct _PluginParams
   gboolean        centering;
   gboolean        wrap_around;
   BackgroundType  background_type;
-  guchar          background_color[4];
+  GimpRGB         background_color;
 };
 
 /*============================================================================*/
@@ -81,7 +81,7 @@ static struct
   PluginParams  params;
 
   gint32        image;
-  GimpDrawable    *drawable;
+  GimpDrawable *drawable;
   gboolean      drawable_has_alpha;
   
   struct
@@ -95,7 +95,7 @@ static struct
   } selection;
   
   GimpRunModeType  run_mode;
-  gboolean      run;
+  gboolean         run;
 } p =
 {
   {
@@ -107,7 +107,7 @@ static struct
     TRUE,                       /* centering             */
     FALSE,                      /* wrap_around           */
     BACKGROUND_TYPE_INVERTED,   /* background_type       */
-    { 0, 0, 255, 255 }          /* background_color[4]   */
+    { 0.0, 0.0, 1.0, 1.0 }      /* background_color      */
   },
 
   0,                            /* image                 */
@@ -116,7 +116,7 @@ static struct
 
   { 0, 0, 0, 0, 0, 0 },         /* selection             */
   
-  GIMP_RUN_INTERACTIVE,              /* run_mode              */
+  GIMP_RUN_INTERACTIVE,         /* run_mode              */
   FALSE                         /* run                   */
 };
 
@@ -155,7 +155,7 @@ params_load_from_gimp (void)
 	{
 	  p.params.background_type = BACKGROUND_TYPE_INVERTED;
 	}
-      p.params.background_color[3] = 255;
+      gimp_rgb_set_alpha (&p.params.background_color, 1.0);
     }
 }
 
@@ -239,8 +239,7 @@ open_dialog (void)
   GtkWidget *box;
   GtkWidget *color_button;
   GtkWidget *sep;
-  GimpRGB    color;
-
+ 
   gimp_ui_init ("papertile", TRUE);
 
   dialog = gimp_dialog_new (_("Paper Tile"), "papertile",
@@ -395,17 +394,12 @@ open_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  gimp_rgba_set (&color,
-		 (gdouble) p.params.background_color[0] / 255.0,
-		 (gdouble) p.params.background_color[1] / 255.0,
-		 (gdouble) p.params.background_color[2] / 255.0,
-		 (gdouble) p.params.background_color[3] / 255.0);
-
   color_button = gimp_color_button_new (_("Background Color"), 100, 16,
-					&color, p.drawable_has_alpha);
+					&p.params.background_color, 
+					p.drawable_has_alpha);
   gtk_signal_connect (GTK_OBJECT (color_button), "color_changed", 
-		      GTK_SIGNAL_FUNC (gimp_color_update_uchar), 
-		      p.params.background_color);
+		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
+		      &p.params.background_color);
   gtk_container_add (GTK_CONTAINER (button), color_button);
   gtk_widget_show (color_button);
 
@@ -742,10 +736,8 @@ filter (void)
       break;
 
     case BACKGROUND_TYPE_COLOR:
-      pixel[0] = p.params.background_color[0];
-      pixel[1] = p.params.background_color[1];
-      pixel[2] = p.params.background_color[2];
-      pixel[3] = p.params.background_color[3];
+      gimp_rgba_get_uchar (&p.params.background_color, 
+			   pixel, pixel + 1, pixel + 2, pixel + 3);
       for (y = clear_y0; y < clear_y1; y++)
 	{
 	  for (x = clear_x0; x < clear_x1; x++)
@@ -888,18 +880,19 @@ plugin_run (gchar   *name,
 	case GIMP_RUN_NONINTERACTIVE:
 	  if (numof_params == 11)
 	    {
-	      p.params.tile_size  = params[3].data.d_int32;
-	      p.params.division_x = p.drawable->width  / p.params.tile_size;
-	      p.params.division_y = p.drawable->height / p.params.tile_size;
-	      p.params.move_max_rate = params[4].data.d_float;
+	      p.params.tile_size       = params[3].data.d_int32;
+	      p.params.division_x      = p.drawable->width  / p.params.tile_size;
+	      p.params.division_y      = p.drawable->height / p.params.tile_size;
+	      p.params.move_max_rate   = params[4].data.d_float;
 	      p.params.fractional_type = (FractionalType)params[5].data.d_int32;
-	      p.params.wrap_around = params[6].data.d_int32;
-	      p.params.centering = params[7].data.d_int32;
+	      p.params.wrap_around     = params[6].data.d_int32;
+	      p.params.centering       = params[7].data.d_int32;
 	      p.params.background_type = (BackgroundType)params[8].data.d_int32;
-	      p.params.background_color[0] = params[9].data.d_color.red;
-	      p.params.background_color[1] = params[9].data.d_color.green;
-	      p.params.background_color[2] = params[9].data.d_color.blue;
-	      p.params.background_color[3] = params[10].data.d_int32;
+	      gimp_rgba_set_uchar (&p.params.background_color,
+				   params[9].data.d_color.red,
+				   params[9].data.d_color.green,
+				   params[9].data.d_color.blue,
+				   params[10].data.d_int32);
 	      p.run = TRUE;
 	    }
 	  else

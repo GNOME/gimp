@@ -212,11 +212,8 @@ blah (void)
     gck_rgba_set(&background,0.0,0.0,0.0,0.0);
   else
     {
-      gimp_palette_get_background(&r,&g,&b);
-      background.r=(gdouble)r/255.0;
-      background.g=(gdouble)g/255.0;
-      background.b=(gdouble)b/255.0;
-      background.a=1.0;
+      gimp_palette_get_background_rgb (&background);
+      gimp_rgb_set_alpha (&background, 1.0);
     }
 
   gck_rgb_set(&lightcheck,0.75,0.75,0.75);

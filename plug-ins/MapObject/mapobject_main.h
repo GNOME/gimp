@@ -82,6 +82,5 @@ typedef struct
 /* ============================ */
 
 extern MapObjectValues mapvals;
-extern GimpRGB background;
 
 #endif  /* __MAPOBJECT_MAIN_H__ */

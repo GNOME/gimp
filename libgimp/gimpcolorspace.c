@@ -33,125 +33,118 @@
 
 void
 gimp_rgb_to_hsv (GimpRGB *rgb,
-		 gdouble *hue,
-		 gdouble *saturation,
-		 gdouble *value)
+		 GimpHSV *hsv)
 {
   gdouble max, min, delta;
 
   g_return_if_fail (rgb != NULL);
-  g_return_if_fail (hue != NULL);
-  g_return_if_fail (saturation != NULL);
-  g_return_if_fail (value != NULL);
+  g_return_if_fail (hsv != NULL);
 
   max = gimp_rgb_max (rgb);
   min = gimp_rgb_min (rgb);
 
-  *value = max;
-  if (max != 0.0)
-    {
-      *saturation = (max - min) / max;
-    }
-  else
-    {
-      *saturation = 0.0;
-    }
+  hsv->v = max;
 
-  if (*saturation == 0.0)
-    {
-      *hue = GIMP_HSV_UNDEFINED;
-    }
-  else
+  if (max != 0.0)
     {
       delta = max - min;
 
+      hsv->s = delta / max;
+
       if (rgb->r == max)
         {
-          *hue = (rgb->g - rgb->b) / delta;
+          hsv->h = (rgb->g - rgb->b) / delta;
         }
       else if (rgb->g == max)
         {
-          *hue = 2.0 + (rgb->b - rgb->r) / delta;
+          hsv->h = 2.0 + (rgb->b - rgb->r) / delta;
         }
       else if (rgb->b == max)
         {
-          *hue = 4.0 + (rgb->r - rgb->g) / delta;
+          hsv->h = 4.0 + (rgb->r - rgb->g) / delta;
         }
 
-      *hue = *hue * 60.0;
+      hsv->h /= 6.0;
 
-      if (*hue < 0.0)
-        *hue = *hue + 360;
+      if (hsv->h < 0.0)
+        hsv->h += 1.0;
+      else if (hsv->h > 1.0)
+	hsv->h -= 1.0;
     }
+  else
+    {
+      hsv->s = 0.0;
+      hsv->h = GIMP_HSV_UNDEFINED;
+    }
+
+  hsv->a = rgb->a;
 }
 
 void
-gimp_hsv_to_rgb (gdouble  hue,
-		 gdouble  saturation,
-		 gdouble  value,
+gimp_hsv_to_rgb (GimpHSV *hsv,
 		 GimpRGB *rgb)
 {
   gint    i;
   gdouble f, w, q, t;
 
   g_return_if_fail (rgb != NULL);
+  g_return_if_fail (hsv != NULL);
 
-  if (saturation == 0.0)
+  if (hsv->s == 0.0 || hsv->h == GIMP_HSV_UNDEFINED)
     {
-      if (hue == GIMP_HSV_UNDEFINED)
-        {
-          rgb->r = value;
-          rgb->g = value;
-          rgb->b = value;
-        }
+      rgb->r = hsv->v;
+      rgb->g = hsv->v;
+      rgb->b = hsv->v;
     }
   else
     {
-      if (hue == 360.0)
-        hue = 0.0;
+      if (hsv->h == 1.0)
+        hsv->h = 0.0;
 
-      hue = hue / 60.0;
+      hsv->h *= 6.0;
 
-      i = (gint) hue;
-      f = hue - i;
-      w = value * (1.0 - saturation);
-      q = value * (1.0 - (saturation * f));
-      t = value * (1.0 - (saturation * (1.0 - f)));
+      i = (gint) hsv->h;
+      f = hsv->h - i;
+      w = hsv->v * (1.0 - hsv->s);
+      q = hsv->v * (1.0 - (hsv->s * f));
+      t = hsv->v * (1.0 - (hsv->s * (1.0 - f)));
 
       switch (i)
         {
         case 0:
-          rgb->r = value;
+          rgb->r = hsv->v;
           rgb->g = t;
           rgb->b = w;
           break;
         case 1:
           rgb->r = q;
-          rgb->g = value;
+          rgb->g = hsv->v;
           rgb->b = w;
           break;
         case 2:
           rgb->r = w;
-          rgb->g = value;
+          rgb->g = hsv->v;
           rgb->b = t;
           break;
         case 3:
           rgb->r = w;
           rgb->g = q;
-          rgb->b = value;
+          rgb->b = hsv->v;
           break;
         case 4:
           rgb->r = t;
           rgb->g = w;
-          rgb->b = value;
+          rgb->b = hsv->v;
           break;
         case 5:
-          rgb->r = value;
+          rgb->r = hsv->v;
           rgb->g = w;
           rgb->b = q;
           break;
         }
     }
+
+  rgb->a = hsv->a;
 }
 
 void

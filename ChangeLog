@@ -1,3 +1,28 @@
+2001-01-14  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpcolor.[ch]: added GimpHSV type and functions and
+	gimp_rgb_composite functions
+
+	* libgimp/gimpcolorbutton.c: indentation
+
+	* libgimp/gimpcolorspace.[ch]: added GimpRGB <-> GimpHSV conversion 
+	routines
+
+	* libgimp/gimpwidgets.[ch]: removed gimp_color_update_uchar function
+
+	* plug-ins/Lighting/lighting_main.[ch]
+	* plug-ins/Lighting/lighting_preview.c
+	* plug-ins/Lighting/lighting_shade.c
+	* plug-ins/MapObject/mapobject_image.c
+	* plug-ins/MapObject/mapobject_main.[ch]
+	* plug-ins/MapObject/mapobject_shade.c
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/papertile.c
+	* plug-ins/common/sinus.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/script-fu/script-fu-scripts.c: use GimpRGB and GimpHSV 
+
 2001-01-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/channel.[ch]

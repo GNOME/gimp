@@ -2430,14 +2430,8 @@ ifs_compose_set_defaults (void)
 {
   gint     i;
   GimpRGB  color;
-  guchar   r, g, b;
 
-  gimp_palette_get_foreground (&r, &g, &b);
-
-  gimp_rgb_set (&color, 
-		(gdouble) r / 255.0,
-		(gdouble) g / 255.0,
-		(gdouble) b / 255.0);
+  gimp_palette_get_foreground_rgb (&color);
 
   ifsvals.aspect_ratio = (gdouble)ifsD->drawable_height/ifsD->drawable_width;
 
@@ -2446,33 +2440,32 @@ ifs_compose_set_defaults (void)
   count_for_naming = 0;
 
   ifsvals.num_elements = 3;
-  elements = g_realloc(elements, ifsvals.num_elements*sizeof(AffElement *));
-  element_selected = g_realloc(element_selected,
-			       ifsvals.num_elements*sizeof(gint));
+  elements = g_realloc (elements, ifsvals.num_elements * sizeof(AffElement *));
+  element_selected = g_realloc (element_selected,
+				ifsvals.num_elements * sizeof(gint));
 
-  elements[0] = aff_element_new(0.3,0.37*ifsvals.aspect_ratio, &color,
-				++count_for_naming);
+  elements[0] = aff_element_new (0.3, 0.37 * ifsvals.aspect_ratio, &color,
+				 ++count_for_naming);
   element_selected[0] = FALSE;
-  elements[1] = aff_element_new(0.7,0.37*ifsvals.aspect_ratio, &color,
-				++count_for_naming);
+  elements[1] = aff_element_new (0.7, 0.37 * ifsvals.aspect_ratio, &color,
+				 ++count_for_naming);
   element_selected[1] = FALSE;
-  elements[2] = aff_element_new(0.5,0.7*ifsvals.aspect_ratio, &color,
-				++count_for_naming);
+  elements[2] = aff_element_new (0.5, 0.7 * ifsvals.aspect_ratio, &color,
+				 ++count_for_naming);
   element_selected[2] = FALSE;
 
-  ifsvals.center_x = 0.5;
-  ifsvals.center_y = 0.5*ifsvals.aspect_ratio;
-  ifsvals.iterations = ifsD->drawable_height*ifsD->drawable_width;
-
-  ifsvals.subdivide = 3;
+  ifsvals.center_x   = 0.5;
+  ifsvals.center_y   = 0.5 * ifsvals.aspect_ratio;
+  ifsvals.iterations = ifsD->drawable_height * ifsD->drawable_width;
+  ifsvals.subdivide  = 3;
   ifsvals.max_memory = 4096;
 
   if (ifsOptD)
     {
-      value_pair_update(ifsOptD->iterations_pair);
-      value_pair_update(ifsOptD->subdivide_pair);
-      value_pair_update(ifsOptD->radius_pair);
-      value_pair_update(ifsOptD->memory_pair);
+      value_pair_update (ifsOptD->iterations_pair);
+      value_pair_update (ifsOptD->subdivide_pair);
+      value_pair_update (ifsOptD->radius_pair);
+      value_pair_update (ifsOptD->memory_pair);
     }
 
   ifsvals.radius = 0.7;
@@ -2484,7 +2477,7 @@ ifs_compose_set_defaults (void)
   if (ifsD->selected_orig)
     g_free(ifsD->selected_orig);
 
-  ifsD->selected_orig = g_new(AffElement,ifsvals.num_elements);
+  ifsD->selected_orig = g_new (AffElement, ifsvals.num_elements);
 }
 
 static void
@@ -2492,51 +2485,46 @@ ifs_compose_defaults_callback (GtkWidget *widget,
 			       gpointer   data)
 {
   gint i;
-  gdouble width = ifsDesign->area->allocation.width;
+  gdouble width  = ifsDesign->area->allocation.width;
   gdouble height = ifsDesign->area->allocation.height;
 
-  undo_begin();
-  for (i=0;i<ifsvals.num_elements;i++)
+  undo_begin ();
+  for (i = 0; i < ifsvals.num_elements; i++)
     undo_update(i);
 
   ifs_compose_set_defaults();
 
   if (ifsD->auto_preview)
-    ifs_compose_preview_callback(NULL, ifsD->preview);
+    ifs_compose_preview_callback (NULL, ifsD->preview);
 
-  for (i=0;i<ifsvals.num_elements;i++)
-    aff_element_compute_trans(elements[i],width,height,
-			      ifsvals.center_x, ifsvals.center_y);
+  for (i = 0; i < ifsvals.num_elements; i++)
+    aff_element_compute_trans (elements[i], width, height,
+			       ifsvals.center_x, ifsvals.center_y);
 
-  design_area_redraw();
+  design_area_redraw ();
 }
 
 static void
 ifs_compose_new_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  GimpRGB color;
-  guchar  r, g, b;
-  gint i;
-  gdouble width = ifsDesign->area->allocation.width;
-  gdouble height = ifsDesign->area->allocation.height;
+  GimpRGB     color;
+  gdouble     width  = ifsDesign->area->allocation.width;
+  gdouble     height = ifsDesign->area->allocation.height;
+  gint        i;
   AffElement *elem;
 
   undo_begin();
 
-  gimp_palette_get_foreground (&r, &g, &b);
-  gimp_rgb_set (&color, 
-		(gdouble) r / 255.0,
-		(gdouble) g / 255.0,
-		(gdouble) b / 255.0);
+  gimp_palette_get_foreground_rgb (&color);
 
-  elem = aff_element_new(0.5, 0.5*height/width, &color,
-			 ++count_for_naming);
+  elem = aff_element_new (0.5, 0.5 * height / width, &color,
+			  ++count_for_naming);
 
   ifsvals.num_elements++;
-  elements = g_realloc(elements, ifsvals.num_elements*sizeof(AffElement *));
-  element_selected = g_realloc(element_selected,
-			       ifsvals.num_elements*sizeof(gint));
+  elements = g_realloc (elements, ifsvals.num_elements * sizeof (AffElement *));
+  element_selected = g_realloc (element_selected,
+				ifsvals.num_elements * sizeof (gint));
 
   for (i=0;i<ifsvals.num_elements-1;i++)
     element_selected[i] = FALSE;

@@ -458,7 +458,7 @@ get_ray_color (GimpVector3 *position)
 
   if (mapvals.transparent_background && heights[1][x] == 0)
     {
-      color.a = 0.0;
+      gimp_rgb_set_alpha (&color, 0.0);
     }
   else
     {
@@ -510,7 +510,7 @@ get_ray_color_ref (GimpVector3 *position)
 
   if (mapvals.transparent_background && heights[1][x] == 0)
     {
-      color.a = 0.0;
+      gimp_rgb_set_alpha (&color, 0.0);
     }
   else
     {
@@ -574,7 +574,7 @@ get_ray_color_no_bilinear (GimpVector3 *position)
 
   if (mapvals.transparent_background && heights[1][x] == 0)
     {
-      color.a = 0.0;
+      gimp_rgb_set_alpha (&color, 0.0);
     }
   else
     {
@@ -626,7 +626,7 @@ get_ray_color_no_bilinear_ref (GimpVector3 *position)
 
   if (mapvals.transparent_background && heights[1][x] == 0)
     {
-      color.a = 0.0;
+      gimp_rgb_set_alpha (&color, 0.0);
     }
   else
     {

@@ -47,6 +47,15 @@ gimp_rgb_set (GimpRGB *rgb,
 }
 
 void
+gimp_rgb_set_alpha (GimpRGB *rgb,
+		    gdouble  a)
+{
+  g_return_if_fail (rgb != NULL);
+
+  rgb->a = a;
+}
+
+void
 gimp_rgb_set_uchar (GimpRGB *rgb,
 		    guchar   r,
 		    guchar   g,
@@ -143,6 +152,7 @@ gimp_rgb_clamp (GimpRGB *rgb)
   rgb->r = CLAMP (rgb->r, 0.0, 1.0);
   rgb->g = CLAMP (rgb->g, 0.0, 1.0);
   rgb->b = CLAMP (rgb->b, 0.0, 1.0);
+  rgb->a = CLAMP (rgb->a, 0.0, 1.0);
 }
 
 void
@@ -171,6 +181,41 @@ gimp_rgb_intensity (const GimpRGB *rgb)
   return (INTENSITY_RED   * rgb->r + 
 	  INTENSITY_GREEN * rgb->g + 
 	  INTENSITY_BLUE  * rgb->b);
+}
+
+void
+gimp_rgb_composite (GimpRGB              *color1,
+		    const GimpRGB        *color2,
+		    GimpRGBCompositeMode  mode)
+{
+  gdouble factor;
+
+  g_return_if_fail (color1 != NULL);
+  g_return_if_fail (color2 != NULL);
+  
+  switch (mode)
+    {
+    case GIMP_RGB_COMPOSITE_NONE:
+      break;
+
+    case GIMP_RGB_COMPOSITE_NORMAL:
+      /*  put color2 on top of color1  */
+      factor = color1->a * (1.0 - color2->a);
+      color1->r = color1->r * factor + color2->r * color2->a;
+      color1->g = color1->g * factor + color2->g * color2->a;
+      color1->b = color1->b * factor + color2->b * color2->a;
+      color1->a = factor + color2->a;
+      break;
+      
+    case GIMP_RGB_COMPOSITE_BEHIND:
+      /*  put color2 below color1  */
+      factor = color2->a * (1.0 - color1->a);
+      color1->r = color2->r * factor + color1->r * color1->a;
+      color1->g = color2->g * factor + color1->g * color1->a;
+      color1->b = color2->b * factor + color1->b * color1->a;
+      color1->a = factor + color1->a;
+      break;
+    }
 }
 
 /*  RGBA functions  */
@@ -269,54 +314,51 @@ gimp_rgba_distance (const GimpRGB *rgba1,
           fabs (rgba1->b - rgba2->b) + fabs (rgba1->a - rgba2->a));
 }
 
-/* These two are probably not needed */
 
-gdouble
-gimp_rgba_max (const GimpRGB *rgba)
+/*  HSV functions  */
+
+void
+gimp_hsv_set (GimpHSV *hsv,
+	      gdouble  h,
+	      gdouble  s,
+	      gdouble  v)
 {
-  g_return_val_if_fail (rgba != NULL, 0.0);
+  g_return_if_fail (hsv != NULL);
 
-  return MAX (rgba->r, MAX (rgba->g, MAX (rgba->b, rgba->a)));
-}
-
-gdouble
-gimp_rgba_min (const GimpRGB *rgba)
-{
-  g_return_val_if_fail (rgba != NULL, 0.0);
-
-  return MIN (rgba->r, MIN (rgba->g, MIN (rgba->b, rgba->a)));
+  hsv->h = h;
+  hsv->s = s;
+  hsv->v = v;
 }
 
 void
-gimp_rgba_clamp (GimpRGB *rgba)
+gimp_hsv_clamp (GimpHSV *hsv)
 {
-  g_return_if_fail (rgba != NULL);
+  g_return_if_fail (hsv != NULL);
 
-  rgba->r = CLAMP (rgba->r, 0.0, 1.0);
-  rgba->g = CLAMP (rgba->g, 0.0, 1.0);
-  rgba->b = CLAMP (rgba->b, 0.0, 1.0);
-  rgba->a = CLAMP (rgba->a, 0.0, 1.0);
+  if (hsv->h < 0.0)
+    hsv->h = GIMP_HSV_UNDEFINED;
+
+  hsv->h -= (gint) hsv->h;
+ 
+  hsv->s = CLAMP (hsv->s, 0.0, 1.0);
+  hsv->v = CLAMP (hsv->v, 0.0, 1.0);
+  hsv->a = CLAMP (hsv->a, 0.0, 1.0);
 }
 
 void
-gimp_rgba_gamma (GimpRGB *rgba,
-		 gdouble  gamma)
+gimp_hsva_set (GimpHSV *hsva,
+	       gdouble  h,
+	       gdouble  s,
+	       gdouble  v,
+	       gdouble  a)
 {
-  gdouble ig;
+  g_return_if_fail (hsva != NULL);
 
-  g_return_if_fail (rgba != NULL);
-
-  if (gamma != 0.0)
-    ig = 1.0 / gamma;
-  else
-    (ig = 0.0);
-
-  rgba->r = pow (rgba->r, ig);
-  rgba->g = pow (rgba->g, ig);
-  rgba->b = pow (rgba->b, ig);
-  rgba->a = pow (rgba->a, ig);
+  hsva->h = h;
+  hsva->s = s;
+  hsva->v = v;
+  hsva->a = a;
 }
-
 
 /*  These functions will become the default one day  */
 
@@ -348,3 +390,30 @@ gimp_palette_get_foreground_rgb (GimpRGB *rgb)
   return FALSE;
 }
 
+gboolean
+gimp_palette_set_background_rgb (const GimpRGB *rgb)
+{
+  guchar r, g, b;
+
+  g_return_val_if_fail (rgb != NULL, FALSE);
+
+  gimp_rgb_get_uchar (rgb, &r, &g, &b);
+
+  return gimp_palette_set_background (r, g, b);
+}
+
+gboolean
+gimp_palette_get_background_rgb (GimpRGB *rgb)
+{
+  guchar r, g, b;
+  
+  g_return_val_if_fail (rgb != NULL, FALSE);
+
+  if (gimp_palette_get_background (&r, &g, &b))
+    {
+      gimp_rgb_set_uchar (rgb, r, g, b);
+      return TRUE;
+    }
+
+  return FALSE;
+}

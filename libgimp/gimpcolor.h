@@ -36,11 +36,27 @@ struct _GimpRGB
   gdouble r, g, b, a;
 };
 
+typedef struct _GimpHSV GimpHSV;
+
+struct _GimpHSV
+{
+  gdouble h, s, v, a;
+};
+
+typedef enum
+{
+  GIMP_RGB_COMPOSITE_NONE = 0,
+  GIMP_RGB_COMPOSITE_NORMAL,
+  GIMP_RGB_COMPOSITE_BEHIND
+} GimpRGBCompositeMode;
+
 
 void      gimp_rgb_set        (GimpRGB       *rgb,
 			       gdouble        r,
 			       gdouble        g,
 			       gdouble        b);
+void      gimp_rgb_set_alpha  (GimpRGB       *rgb,
+			       gdouble        a);
 void      gimp_rgb_set_uchar  (GimpRGB       *rgb,
 			       guchar         r,
 			       guchar         g,
@@ -65,6 +81,9 @@ void      gimp_rgb_gamma      (GimpRGB       *rgb,
  			       gdouble        gamma);
 gdouble   gimp_rgb_intensity  (const GimpRGB *rgb);
 
+void      gimp_rgb_composite  (GimpRGB              *color1,
+			       const GimpRGB        *color2,
+			       GimpRGBCompositeMode  mode);
 
 void      gimp_rgba_set       (GimpRGB       *rgba,
 			       gdouble        r,
@@ -90,17 +109,25 @@ void      gimp_rgba_multiply  (GimpRGB       *rgba,
 			       gdouble        factor);
 gdouble   gimp_rgba_distance  (const GimpRGB *rgba1, 
 			       const GimpRGB *rgba2);
-gdouble   gimp_rgba_max       (const GimpRGB *rgba);
-gdouble   gimp_rgba_min       (const GimpRGB *rgba);
-void      gimp_rgba_clamp     (GimpRGB       *rgba);
-void      gimp_rgba_gamma     (GimpRGB       *rgba,
-			       gdouble        gamma);
 
+void      gimp_hsv_set        (GimpHSV       *hsv,
+			       gdouble        h,
+			       gdouble        s,
+			       gdouble        v);
+void      gimp_hsv_clamp      (GimpHSV       *hsv);
 
-  /*  These will become the default one day  */
+void      gimp_hsva_set       (GimpHSV       *hsva,
+			       gdouble        h,
+			       gdouble        s,
+			       gdouble        v,
+			       gdouble        a);
+
+/*  These will become the default one day  */
 
 gboolean  gimp_palette_set_foreground_rgb (const GimpRGB *rgb);
 gboolean  gimp_palette_get_foreground_rgb (GimpRGB       *rgb);
+gboolean  gimp_palette_set_background_rgb (const GimpRGB *rgb);
+gboolean  gimp_palette_get_background_rgb (GimpRGB       *rgb);
 
 
 #ifdef __cplusplus

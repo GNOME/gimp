@@ -36,18 +36,16 @@ extern "C" {
 #define GIMP_HSL_UNDEFINED -1.0
 
 void   gimp_rgb_to_hsv          (GimpRGB *rgb,
-				 gdouble *hue,
-				 gdouble *saturation,
-				 gdouble *value);
+				 GimpHSV *hsv);
+
 void   gimp_rgb_to_hsl          (GimpRGB *rgb,
 				 gdouble *hue,
 				 gdouble *saturation,
 				 gdouble *lightness);
 
-void   gimp_hsv_to_rgb          (gdouble  hue,
-				 gdouble  saturation,
-				 gdouble  value,
+void   gimp_hsv_to_rgb          (GimpHSV *hsv,
 				 GimpRGB *rgb);
+
 void   gimp_hsl_to_rgb          (gdouble  hue,
 				 gdouble  saturation,
 				 gdouble  lightness,

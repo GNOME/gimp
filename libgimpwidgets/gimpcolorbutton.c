@@ -46,31 +46,31 @@ struct _GimpColorButton
 };
 
 
-static void  gimp_color_button_destroy         (GtkObject       *object);
-static void  gimp_color_button_clicked         (GtkButton       *button);
-static void  gimp_color_button_state_changed   (GtkWidget       *widget,
-						GtkStateType     previous_state);
+static void    gimp_color_button_destroy        (GtkObject    *object);
+static void    gimp_color_button_clicked        (GtkButton    *button);
+static void    gimp_color_button_state_changed  (GtkWidget    *widget,
+						 GtkStateType  previous_state);
 
-static void    gimp_color_button_dialog_ok      (GtkWidget   *widget,
-						 gpointer     data);
-static void    gimp_color_button_dialog_cancel  (GtkWidget   *widget,
-						 gpointer     data);
+static void    gimp_color_button_dialog_ok      (GtkWidget    *widget,
+						 gpointer      data);
+static void    gimp_color_button_dialog_cancel  (GtkWidget    *widget,
+						 gpointer      data);
 
-static void    gimp_color_button_use_fg         (gpointer     callback_data,
-						 guint        callback_action, 
-						 GtkWidget   *widget);
-static void    gimp_color_button_use_bg         (gpointer     callback_data,
-						 guint        callback_action, 
-						 GtkWidget   *widget);
+static void    gimp_color_button_use_fg         (gpointer      callback_data,
+						 guint         callback_action, 
+						 GtkWidget    *widget);
+static void    gimp_color_button_use_bg         (gpointer      callback_data,
+						 guint         callback_action, 
+						 GtkWidget    *widget);
 
-static gint    gimp_color_button_menu_popup     (GtkWidget   *widget,
-						 GdkEvent    *event,
-						 gpointer     data);
-static gchar * gimp_color_button_menu_translate (const gchar *path,
-						 gpointer     func_data);
+static gint    gimp_color_button_menu_popup     (GtkWidget    *widget,
+						 GdkEvent     *event,
+						 gpointer      data);
+static gchar * gimp_color_button_menu_translate (const gchar  *path,
+						 gpointer      func_data);
 
-static void    gimp_color_button_color_changed  (GtkObject   *object,
-						 gpointer     data);
+static void    gimp_color_button_color_changed  (GtkObject    *object,
+						 gpointer      data);
 
 
 static GtkItemFactoryEntry menu_items[] =

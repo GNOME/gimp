@@ -201,7 +201,7 @@ get_ray_color_plane (GimpVector3 *pos)
     {
       color = get_image_color (vx, vy, &inside);
 
-      if (color.a!=0.0 && inside == TRUE &&
+      if (color.a != 0.0 && inside == TRUE &&
 	  mapvals.lightsource.type != NO_LIGHT)
         {
           /* Compute shading at this point */
@@ -320,9 +320,9 @@ sphere_intersect (GimpVector3 *dir,
 GimpRGB
 get_ray_color_sphere (GimpVector3 *pos)
 {
-  GimpRGB color=background;
+  GimpRGB color = background;
 
-  static GimpRGB       color2;
+  static GimpRGB      color2;
   static gint         inside = FALSE;
   static GimpVector3  normal, ray, spos1, spos2;
   static gdouble      vx, vy;
@@ -369,7 +369,7 @@ get_ray_color_sphere (GimpVector3 *pos)
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);
 
-          gimp_rgba_clamp (&color);
+          gimp_rgb_clamp (&color);
 
           gimp_vector3_sub (&normal, &spos2, &mapvals.position);
           gimp_vector3_normalize (&normal);
@@ -389,28 +389,21 @@ get_ray_color_sphere (GimpVector3 *pos)
 				&mapvals.lightsource.color,
 				mapvals.lightsource.type);
 
-          gimp_rgba_clamp (&color2);
+          gimp_rgb_clamp (&color2);
 
           if (mapvals.transparent_background == FALSE && color2.a < 1.0)
-            {
-              color2.r = (color2.r*color2.a)+(background.r*(1.0-color2.a));
-              color2.g = (color2.g*color2.a)+(background.g*(1.0-color2.a));
-              color2.b = (color2.b*color2.a)+(background.b*(1.0-color2.a));
-              color2.a = 1.0;
-            }
+	    {
+	      gimp_rgb_composite (&color2, &background, GIMP_RGB_COMPOSITE_BEHIND);
+	    }
 
           /* Compute a mix of the first and second colors */
           /* ============================================ */
 
-          color.r = color.r*color.a+(1.0-color.a)*color2.r;
-          color.g = color.g*color.a+(1.0-color.a)*color2.g;
-          color.b = color.b*color.a+(1.0-color.a)*color2.b; 
-          color.a = color.a+color2.a;
-
-          gimp_rgba_clamp (&color);
+	  gimp_rgb_composite (&color, &color2, GIMP_RGB_COMPOSITE_NORMAL);
+          gimp_rgb_clamp (&color);
         }
-      else if (color.a!=0.0 &&
-	       inside==TRUE &&
+      else if (color.a != 0.0 &&
+	       inside == TRUE &&
 	       mapvals.lightsource.type!=NO_LIGHT)
         {
           /* Compute shading at this point */
@@ -424,7 +417,7 @@ get_ray_color_sphere (GimpVector3 *pos)
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);
 
-          gimp_rgba_clamp (&color);
+          gimp_rgb_clamp (&color);
         }
     }
   
@@ -931,7 +924,7 @@ get_ray_color_box (GimpVector3 *pos)
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);      
 
-          gimp_rgba_clamp (&color);
+          gimp_rgb_clamp (&color);
 
           color2 = get_box_image_color (face_intersect[1].face,
 					face_intersect[1].u,
@@ -950,25 +943,19 @@ get_ray_color_box (GimpVector3 *pos)
 				&mapvals.lightsource.color,
 				mapvals.lightsource.type);      
 
-          gimp_rgba_clamp (&color2);
+          gimp_rgb_clamp (&color2);
 
           if (mapvals.transparent_background == FALSE && color2.a < 1.0)
             {
-              color2.r = (color2.r * color2.a) + (background.r * (1.0-color2.a));
-              color2.g = (color2.g * color2.a) + (background.g * (1.0-color2.a));
-              color2.b = (color2.b * color2.a) + (background.b * (1.0-color2.a));
-              color2.a = 1.0;
-            }
+	      gimp_rgb_composite (&color2, &background, 
+				  GIMP_RGB_COMPOSITE_BEHIND);
+	    }
 
           /* Compute a mix of the first and second colors */
           /* ============================================ */
 
-          color.r = color.r * color.a + (1.0 - color.a) * color2.r;
-          color.g = color.g * color.a + (1.0 - color.a) * color2.g;
-          color.b = color.b * color.a + (1.0 - color.a) * color2.b; 
-          color.a = color.a + color2.a;
-
-          gimp_rgba_clamp (&color);
+	  gimp_rgb_composite (&color, &color2, GIMP_RGB_COMPOSITE_NORMAL);
+          gimp_rgb_clamp (&color);
         }
       else if (color.a != 0.0 && mapvals.lightsource.type != NO_LIGHT)
         {
@@ -980,13 +967,13 @@ get_ray_color_box (GimpVector3 *pos)
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);      
 
-	  gimp_rgba_clamp (&color);
+	  gimp_rgb_clamp (&color);
         }
     }
   else
     {
       if (mapvals.transparent_background == TRUE)
-        color.a = 0.0;
+	gimp_rgb_set_alpha (&color, 0.0);
     }
 
   return color;
@@ -1216,7 +1203,7 @@ get_ray_color_cylinder (GimpVector3 *pos)
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);      
     
-          gimp_rgba_clamp (&color);
+          gimp_rgb_clamp (&color);
 
           color2 = get_cylinder_color (face_intersect[1].face,
 				       face_intersect[1].u,
@@ -1235,25 +1222,19 @@ get_ray_color_cylinder (GimpVector3 *pos)
 				&mapvals.lightsource.color,
 				mapvals.lightsource.type);
 
-          gimp_rgba_clamp (&color2);
+          gimp_rgb_clamp (&color2);
 
           if (mapvals.transparent_background == FALSE && color2.a < 1.0)
             {
-              color2.r = (color2.r*color2.a) + (background.r*(1.0-color2.a));
-              color2.g = (color2.g*color2.a) + (background.g*(1.0-color2.a));
-              color2.b = (color2.b*color2.a) + (background.b*(1.0-color2.a));
-              color2.a = 1.0;
+	      gimp_rgb_composite (&color2, &background, 
+				  GIMP_RGB_COMPOSITE_BEHIND);
             }
 
           /* Compute a mix of the first and second colors */
           /* ============================================ */
 
-          color.r = color.r*color.a + (1.0-color.a)*color2.r;
-          color.g = color.g*color.a + (1.0-color.a)*color2.g;
-          color.b = color.b*color.a + (1.0-color.a)*color2.b; 
-          color.a = color.a+color2.a;
-
-          gimp_rgba_clamp (&color);
+	  gimp_rgb_composite (&color, &color2, GIMP_RGB_COMPOSITE_NORMAL);
+          gimp_rgb_clamp (&color);
         }
       else if (color.a != 0.0 && mapvals.lightsource.type != NO_LIGHT)
         {
@@ -1265,13 +1246,13 @@ get_ray_color_cylinder (GimpVector3 *pos)
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);
 
-	  gimp_rgba_clamp (&color);
+	  gimp_rgb_clamp (&color);
         }
     }
   else
     {
       if (mapvals.transparent_background == TRUE)
-        color.a = 0.0;
+	gimp_rgb_set_alpha (&color, 0.0);
     }
   
   return color;

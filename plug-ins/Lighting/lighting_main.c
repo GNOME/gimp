@@ -54,7 +54,7 @@ set_default_settings (void)
   gimp_vector3_set (&mapvals.lightsource.position,   1.0,  0.0, 1.0);
   gimp_vector3_set (&mapvals.lightsource.direction, -1.0, -1.0, 1.0);
 
-  gimp_rgb_set (&mapvals.lightsource.color, 1.0, 1.0, 1.0);
+  gimp_rgba_set (&mapvals.lightsource.color, 1.0, 1.0, 1.0, 1.0);
   mapvals.lightsource.intensity = 1.0;
   mapvals.lightsource.type      = POINT_LIGHT;
 
@@ -260,9 +260,10 @@ run (gchar      *name,
                     mapvals.env_mapped              = (gint) param[6].data.d_int32;
                     mapvals.bumpmaptype             = (gint) param[7].data.d_int32;
                     mapvals.lightsource.type        = (LightType) param[8].data.d_int32;
-                    mapvals.lightsource.color.r     = param[9].data.d_color.red;
-                    mapvals.lightsource.color.g     = param[9].data.d_color.green;
-                    mapvals.lightsource.color.b     = param[9].data.d_color.blue;
+		    gimp_rgb_set (&mapvals.lightsource.color,
+				  param[9].data.d_color.red,
+				  param[9].data.d_color.green,
+				  param[9].data.d_color.blue);
                     mapvals.lightsource.position.x  = param[10].data.d_float;
                     mapvals.lightsource.position.y  = param[11].data.d_float;
                     mapvals.lightsource.position.z  = param[12].data.d_float;
