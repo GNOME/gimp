@@ -551,12 +551,12 @@ gimp_display_shell_real_scaled (GimpDisplayShell *shell)
   gimp_display_shell_title_update (shell);
 
   /* update the <Image>/View/Zoom menu */
-  gimp_ui_manager_update (shell->menubar_manager, shell);
+  gimp_ui_manager_update (shell->menubar_manager, shell->gdisp);
 
   user_context = gimp_get_user_context (shell->gdisp->gimage->gimp);
 
   if (shell->gdisp == gimp_context_get_display (user_context))
-    gimp_ui_manager_update (shell->popup_manager, shell);
+    gimp_ui_manager_update (shell->popup_manager, shell->gdisp);
 }
 
 GtkWidget *
@@ -1239,12 +1239,12 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
     {
       GimpContext *user_context;
 
-      gimp_ui_manager_update (shell->menubar_manager, shell);
+      gimp_ui_manager_update (shell->menubar_manager, shell->gdisp);
 
       user_context = gimp_get_user_context (shell->gdisp->gimage->gimp);
 
       if (shell->gdisp == gimp_context_get_display (user_context))
-        gimp_ui_manager_update (shell->popup_manager, shell);
+        gimp_ui_manager_update (shell->popup_manager, shell->gdisp);
     }
 }
 

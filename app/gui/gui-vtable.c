@@ -327,9 +327,8 @@ gui_display_create (GimpImage *gimage,
                     GimpUnit   unit,
                     gdouble    scale)
 {
-  GimpDisplayShell *shell;
-  GimpDisplay      *gdisp;
-  GList            *image_managers;
+  GimpDisplay *gdisp;
+  GList       *image_managers;
 
   image_managers = gimp_ui_managers_from_name ("<Image>");
 
@@ -338,11 +337,10 @@ gui_display_create (GimpImage *gimage,
 
                             image_managers->data);
 
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
   gimp_context_set_display (gimp_get_user_context (gimage->gimp), gdisp);
 
-  gimp_ui_manager_update (shell->menubar_manager, shell);
+  gimp_ui_manager_update (GIMP_DISPLAY_SHELL (gdisp->shell)->menubar_manager,
+                          gdisp);
 
   return GIMP_OBJECT (gdisp);
 }

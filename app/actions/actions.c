@@ -227,10 +227,13 @@ action_data_get_gimp (gpointer data)
   if (! data)
     return NULL;
 
+#ifdef __GNUC__
+#warning FIXME: remove g_assert() before 2.2
+#endif
+  g_assert (! GIMP_IS_DISPLAY_SHELL (data));
+
   if (GIMP_IS_DISPLAY (data))
     return ((GimpDisplay *) data)->gimage->gimp;
-  else if (GIMP_IS_DISPLAY_SHELL (data))
-    return ((GimpDisplayShell *) data)->gdisp->gimage->gimp;
   else if (GIMP_IS_ITEM_TREE_VIEW (data))
     return ((GimpItemTreeView *) data)->context->gimp;
   else if (GIMP_IS_IMAGE_EDITOR (data))
@@ -251,10 +254,13 @@ action_data_get_context (gpointer data)
   if (! data)
     return NULL;
 
+#ifdef __GNUC__
+#warning FIXME: remove g_assert() before 2.2
+#endif
+  g_assert (! GIMP_IS_DISPLAY_SHELL (data));
+
   if (GIMP_IS_DISPLAY (data))
     return gimp_get_user_context (((GimpDisplay *) data)->gimage->gimp);
-  else if (GIMP_IS_DISPLAY_SHELL (data))
-    return gimp_get_user_context (((GimpDisplayShell *) data)->gdisp->gimage->gimp);
   else if (GIMP_IS_ITEM_TREE_VIEW (data))
     return ((GimpItemTreeView *) data)->context;
   else if (GIMP_IS_CONTAINER_VIEW (data))
@@ -279,10 +285,13 @@ action_data_get_image (gpointer data)
   if (! data)
     return NULL;
 
+#ifdef __GNUC__
+#warning FIXME: remove g_assert() before 2.2
+#endif
+  g_assert (! GIMP_IS_DISPLAY_SHELL (data));
+
   if (GIMP_IS_DISPLAY (data))
     return ((GimpDisplay *) data)->gimage;
-  else if (GIMP_IS_DISPLAY_SHELL (data))
-    return ((GimpDisplayShell *) data)->gdisp->gimage;
   else if (GIMP_IS_ITEM_TREE_VIEW (data))
     return ((GimpItemTreeView *) data)->gimage;
   else if (GIMP_IS_IMAGE_EDITOR (data))
@@ -303,10 +312,13 @@ action_data_get_display (gpointer data)
   if (! data)
     return NULL;
 
+#ifdef __GNUC__
+#warning FIXME: remove g_assert() before 2.2
+#endif
+  g_assert (! GIMP_IS_DISPLAY_SHELL (data));
+
   if (GIMP_IS_DISPLAY (data))
     return data;
-  else if (GIMP_IS_DISPLAY_SHELL (data))
-    return ((GimpDisplayShell *) data)->gdisp;
   else if (GIMP_IS_NAVIGATION_EDITOR (data))
     return gimp_context_get_display (((GimpNavigationEditor *) data)->context);
   else if (GIMP_IS_GIMP (data))
@@ -322,6 +334,11 @@ action_data_get_widget (gpointer data)
 {
   if (! data)
     return NULL;
+
+#ifdef __GNUC__
+#warning FIXME: remove g_assert() before 2.2
+#endif
+  g_assert (! GIMP_IS_DISPLAY_SHELL (data));
 
   if (GIMP_IS_DISPLAY (data))
     return ((GimpDisplay *) data)->shell;
