@@ -4,6 +4,10 @@ even better. Insight into possible ways to implement are even better
 than that.
 ===================================================================
 
+Add Unsharp Mask to the distribution.  The filter is just way too basic
+to leave out.
+
+
 A few GUI things suggestions...
 
    1) Zoom-indicator to titlebar [   Foo.xcf.gz-1.0 (50%, RGB) ]
@@ -29,29 +33,6 @@ gui/functionality separation
 
 	May be a good idea to actually put the core and the gui in
 	separate subdirectories.  --sg
-
-fix the palette dialogs
-
-	(it would be nice to be able to actually edit
-	palettes and the like), also replace that menubox with a clist or
-	something. Right now, the palette dialog is unresizeable, and
-	mostly useless for anything other than picking colors.
-	Import/Export options for palettes here would be good to.
-
-	Palettes should become a first-class core data structure (like
-	layers) with their own PDB interface.  (Goes with below.)  --sg
-
-	* User opinion: The menubox has one big advantage: it is 
-	_small_ in size. The problem with _lots_ of palette files is
-	known. But is it possible to make the menubox make
-	submenus if it gets longer than the screen? Isnt this more 
-	like a gtk-issue? * --tigert
-
-integrate palette saving into core
-
-	An option to save a current images pallete to a file is
-	handy. Theres currently a plugin to do this, but for
-	integration it might be better in the core.
 
 more configurabilty (eek)
 
@@ -93,44 +74,11 @@ fix stuff so that the tile size could actually be changed eventually
 	tiles.  XCF load/save will have to be written to retile
 	images, or the XCF file format redesigned.  --sg
 
-file new dialog stuff   (i'm working on this...Adrian)
-
-	1. default to size of cut buffer
-	2. add units and resolution options
-	3. make x,y values have dropdowns for last 5 or so used sizes
-	4. maybe an estimate of how much ram the image will take?
-	5. maybe some "preset" common image sizes? 
-	     -> 
-		* 468x60 banner ad
-		* 88x31 banner ad (Netscape NOW! -button for example)
-		* A4, A5, A6, US Letter etc.. sizes so that they take 
-                  the chosen resolution into account ("Hm. I need to make
-		  an A4 sized pic in 300DPI...") --tigert
-	6. resolution/units need to be exported to the whole app
-	(probabaly in gimage.c) so size/scale, text tool, etc can
-	use them.
-
-export filters:
-
-	This is one that would make some alot of sense intuitively,
-	and could be very convenient for scripting. Currently, theres no
-	"one step" way to save images easily. This feaure would be
-	useful for example in the Mail plugin, where it could flatten,
-	convert, etc the image in one step.
-
 previews in file save (for jpeg compression, etc):
 
 	Currently there is no easy way to see the effects of
 	compression or other image saving effects before actually
 	saving and reloading an image.
-
-save/restore state of major dialogs:
-
-	Gimp currently has no way to save the state of the gimp
-	desktop. Perhaps some of the gnome session management stuff
-	could be useful here. It should be exported to the PDB too.
-
-	Saving of window geometry is now there. --Sven
 
 keybindings for simple "binary" tools:
 
@@ -156,18 +104,6 @@ some degree of drawing tools, straight line, etc:
 	basically (just make a wrapper to select and stroke). need a
 	better straigh line drawing ui though.
 
-paths, and better beziers would be a nice touch:
-
-	Being able to load, save bezier paths, and convert from bezier
-	to selection, and selection to bezier would be very
-	benificial. This combined with a working iscissors would make
-	for extremely flexible selection mechanisms.
-
-	Probably integrate the paths into the Layers&Channels dialog?
-
-	Code for this is there, but the interface is considered by many
-	to be poor -- Yosh
-
 Macro recording and better scripting support:
 
 	This pretty much is going to require the aforementioned
@@ -178,16 +114,6 @@ More Xinput stuff ( gradient brushes, pen "strokes" ?):
 
 	This is very important for "artist" types. The more
 	value-added utility we can make for Xinput stuff the better.
-
-natural media tools (raph?)
-
-A "Revert To" menu options:
-
-	Open a image, munge it around a whole bunch, decide you dont
-	like the results, and you dont have enough undo
-	steps. File->revert would easily reload the file from disk.
-
-	Implemented now, needs testing -- Yosh
 
 Redesign of the Blend Tool dialog? (it's rather large...)
 
@@ -205,13 +131,16 @@ Redesign of the Blend Tool dialog? (it's rather large...)
 	(Text should be redone entirely, with a native T1/TTF
 	interpreter.  Using X to render text is cheap but nasty. --sg)
 
+	Done via a perl script hack -sjb
+
 a complete groundup rewrite of iscissors: 
 
 	Isciissors in theory are very useful. 1.0 iscissors basically
 	dont work though. It has also been mentioned that the gui from
 	.54 was much better.
 
-Interactive resizing/scaling of layers (maybe with handles on the edges)
+	(austin has some of 0.54 ported.  If intrested, mail sjburges@gimp.org
+	or yosh@gimp.org for sources, as austin is on an extended leave)
 
 progress bars on long proccesses:
 
@@ -233,6 +162,7 @@ status bars on image window:
 
 	- optionally show that information in the toolbar ?
 	- probably dragable to the toolbar and vice versa
+	(still being debated what belongs in there -SJB)
 
 "open into layer" and new image from cut buffer stuff should perhaps
 be in core?:
@@ -248,21 +178,7 @@ drag & drop for layers:
 	raise by one, and lower by one. It would be much nicer to be
 	able to click & drag a layer to its new spot in the stack.
 
-more indicators of current status:
-
-	(X,Y position, selection size and placement etc ), maybe in
-	another dialog, maybe a status bar?  Lots of request for
-	this.
-
-	This is mostly done. --Sven
-
-Clean up swapfiles: 
-
-        Gimp is prone to leaving large swapfiles lying around. Perhaps
-	on startup or exit it could clean up unclaimed
-	swapfiles. Problem: how to tell a unclaimed swap file (one
-	could be in use by another gimp). Maybe add a unique id to the
-	swap file?
+Handle Out of Space Better!
 
 	Also should handle out-of-space on swap device better.
 	(Couldn't be much worse.) --sg
@@ -271,11 +187,6 @@ Automagically guess whats a good tilecache size:
 
 	Not sure how to do this. maybe offer suggestions in the
 	preference dialog or install.
-
-an artist palette type of color selector:
-
-	(maybe based on raphs watercolor deal?)  notebooked with the
-	regular color selector? (believe seth is working on this).
 
 BETTER FONT SUPPORT! 
 
@@ -350,8 +261,6 @@ make color picker able to choose from any color on the screen.
 
 	This sounds really simple. Any ideas?
 
-	Also, set a radius for color picker to pick an "average" from
-
 dodge/burn/sponge/smudge tools:
 
 	several people have commented on the need for this. Anyone
@@ -360,25 +269,6 @@ dodge/burn/sponge/smudge tools:
 	Maybe integrate iwarp stuff into 'convolve' tool (or into a separate
 	one)? Iwarp gui could be put into the tool options dialog 
 	-tigert
-
-session management
-
-	Well, what we have right now is the following:
-	Dialog geometries are always saved and restored. Dialogs that were
-	opened on last save (or last exit if "Save window positions on exit" 
-	is choosen in the Preferences) are reopened on startup if you
-	call the gimp with command-line option -r or if you have 
-	"Always try to resore session" checked in Preferences.
-	This allows to create a preferred gimp desktop, exit to have it 
-	saved. If you toggle "Save window positions on exit" off now, the 
-	settings will stay forever.
-
-	The device status is saved and restored too, with a similar scheme.
-
-Text Tool
-	More complete font selection
-	Multiple lines and alignment
-	Kerning, hints, etc.
 
 big cad style cross-hairs cursor:
 	guides come close, but we probabaly dont wont somethign like
@@ -397,17 +287,6 @@ Suggestion from Ville Hautamaki (CW):
 	very conveint to say "load all the wood patterns",
 	or even just "set 1" etc.
 
-Overwork the transform tools UI:
-	It would be nice if the transformation wouldn't automatically
-	start when releasing the mouse. Instead have a window that
-	shows the currently choosen transformation numerically
-	(e.g. Scale X: 0.75 | Scale Y: 1.00). The transformation
-	should be editable there and with handles on the
-	outline. Perform the transformation when "OK" is clicked in
-	the dialog or when you doubleclick(?) into the image.
-
-	The new transform tool UI is almost there, and it rocks!! --Sven
-
 Probably have a "Preview" button too that performs the transformation 
 without interpolation:
 	As it stands, transforms can be very slow and feedback to the
@@ -415,6 +294,10 @@ without interpolation:
 	more accururate.
 
 Selections should always be bezierifyable.
+	Um, not sure about this one.  Selections can be a mask, in which case 
+	the bezeirifying of it makes little sense to me..
+	
+	I'll admit it'd be nice for "normal" selections. -sjb
 
 Selections should be transformable:
 	(e.g. rotate an elliptical selection; the selection, not it's
@@ -432,12 +315,6 @@ option to create New Indexed image (with the choice of pattern foo) ?
 Integrate gimp-16 stuff?
 	Eventually will happen.
 	see http://film.gimp.org/
-
-A way to define a default comment
-
-	larry is working on named data attachments for images. More
-	or less a generic way to define image comments and other
-	embedded info. 
 
 Better use of wm hints.
 
@@ -481,27 +358,19 @@ generic preview code in libgimp for use by plugins
 	too. Or possibly make a new plugin helper lib combining
 	gck, megawidget, preview code, etc.
 
-abiltiy to specify which gimprc to parse on commandline
-
-	Some people need to be able to use different gimprc on
-	different machines (for ex, 8-bit vs 24 bit display).
+	"All" plugins might be too extreme.  Some plugins (autostretch 
+	contrast) have little need for an interface, and exist IMHO 
+	better w/o one..
 
 Undo groups
 
 	basically for snapshots for the UNDO stack instead of realying on
 	everything to be recorded. Particualr useful in scripts.
 
-gradient map layer/paint mode
+gradient map layer
 
 	map values from current gradient to value/intensity
-
-script-fu
-
-	proper font selector instead of typing the silly thing in
-	maybe a color history too...
-
-	Well, the script-fu interface has seen a few extensions and Adrian
-	is working on adapting the scripts to the new interface.
+	(good for a plugin I think)
 
 tools
 
