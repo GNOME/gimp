@@ -1,25 +1,30 @@
+# translation of fr.po to 
+# translation of fr.po to
+# translation of gimp-plug-ins.HEAD.po to
+# translation of gimp-plug-ins.HEAD.po to
 # French translation of gimp-plug-ins.
-# Copyright (C) 1998-2004 Free Software Foundation, Inc.
+# Copyright (C) 1998-2004, 2005 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
-#
 # Vincent Renardias <vincent@ldsol.com>, 1998-1999.
 # David Monniaux <monniaux@ens.fr>, 1999-2000.
 # Joaquim Fellmann <joaquim@hrnet.fr>, 2000.
 # Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2004.
 # maintainer: Raymond Ostertag <r.ostertag@caramail.com>, 2003-2004.
-# Jean-Louis Berliet <jl.berliet@free.fr>, 2004.
+# Jean-Louis Berliet <jl.berliet@free.fr>, 2004, 2005.
+#
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins 2.2.0pre1\n"
+"Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-22 17:33+0100\n"
-"PO-Revision-Date: 2004-11-13 17:52+0100\n"
-"Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
-"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
+"POT-Creation-Date: 2005-01-25 20:09+0100\n"
+"PO-Revision-Date: 2005-01-25 20:11+0100\n"
+"Last-Translator: \n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3.1\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:523 plug-ins/gfig/gfig-dialog.c:283
 #: plug-ins/gflare/gflare.c:891
@@ -222,8 +227,7 @@ msgstr "Utiliser l'adoucissement loglog"
 
 #: plug-ins/FractalExplorer/Dialogs.c:912
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr ""
-"Utilise un adoucissement en log log pour éviter les bandes dans le résultat."
+msgstr "Utilise un adoucissement en log log pour éviter les bandes dans le résultat."
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:916
@@ -1676,8 +1680,7 @@ msgstr "Décalage de départ :"
 
 #: plug-ins/common/CML_explorer.c:1362
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr ""
-"Graine (valeur initiale) du générateur aléatoire (pour les modes avec graine)"
+msgstr "Graine (valeur initiale) du générateur aléatoire (pour les modes avec graine)"
 
 #: plug-ins/common/CML_explorer.c:1373 plug-ins/maze/maze_face.c:277
 msgid "Seed:"
@@ -2229,9 +2232,8 @@ msgid "c_astretch: cmap was NULL!  Quitting...\n"
 msgstr "c_astretch: cmap était NULL!  Quitter...\n"
 
 #: plug-ins/common/cartoon.c:147
-#, fuzzy
 msgid "Ca_rtoon..."
-msgstr "Bande dessinée"
+msgstr "Bande _dessinée..."
 
 #: plug-ins/common/cartoon.c:229 plug-ins/common/dog.c:247
 #: plug-ins/common/gauss.c:431 plug-ins/common/neon.c:221
@@ -2305,7 +2307,6 @@ msgid "Compression ratio (approx.): %d to 1"
 msgstr "Ratio de compression (approx.) : %d sur 1"
 
 #: plug-ins/common/channel_mixer.c:197
-#, fuzzy
 msgid "Channel Mi_xer..."
 msgstr "Canal mi_xer..."
 
@@ -2606,8 +2607,7 @@ msgstr "Pas d'extension raisonnable, sauvegarde en tant que XCF"
 
 #: plug-ins/common/compressor.c:508
 msgid "No sensible extension, attempting to load with file magic."
-msgstr ""
-"Pas d'extension raisonnable, essai de chargement avec détection magique"
+msgstr "Pas d'extension raisonnable, essai de chargement avec détection magique"
 
 #: plug-ins/common/convmatrix.c:87
 msgid "Gr_ey"
@@ -3141,9 +3141,8 @@ msgstr "Type"
 
 #. parameter settings
 #: plug-ins/common/despeckle.c:454
-#, fuzzy
 msgid "Median"
-msgstr "Radians"
+msgstr "Médiane"
 
 #: plug-ins/common/despeckle.c:460
 msgid "_Adaptive"
@@ -3834,8 +3833,7 @@ msgstr "Erreur dans le fichier de brosse GIMP « %s »"
 #: plug-ins/common/gbr.c:400
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr ""
-"Chaîne de caractères UTF-8 non valide dans le fichier de brosse « %s »."
+msgstr "Chaîne de caractères UTF-8 non valide dans le fichier de brosse « %s »."
 
 #: plug-ins/common/gbr.c:406 plug-ins/common/gih.c:497
 #: plug-ins/common/gih.c:1154 plug-ins/gflare/gflare.c:2991
@@ -3915,8 +3913,7 @@ msgstr ""
 "bits. Aucun commentaire n'est enregistré."
 
 #: plug-ins/common/gif.c:970
-msgid ""
-"Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Impossible d'enregistrer des images RVB. Convertissez d'abord en couleurs "
 "indexées ou en niveaux de gris."
@@ -4661,9 +4658,8 @@ msgid "Save EXIF data"
 msgstr "Enregistrer les données EXIF"
 
 #: plug-ins/common/jpeg.c:2119
-#, fuzzy
 msgid "Save thumbnail"
-msgstr "Échec d'enregistrement"
+msgstr "Enregistrer la vignette"
 
 #. Subsampling
 #: plug-ins/common/jpeg.c:2136
@@ -4692,9 +4688,9 @@ msgid "Comment"
 msgstr "Commentaire"
 
 #: plug-ins/common/jpeg.c:2338
-#, fuzzy, c-format
+#, c-format
 msgid "Opening thumbnail for '%s'..."
-msgstr "Ouverture de « %s »..."
+msgstr "Ouverture de la vignette pour « %s »..."
 
 #: plug-ins/common/laplace.c:95
 msgid "_Laplace"
@@ -4781,7 +4777,6 @@ msgid "_Mail Image..."
 msgstr "Envo_yer par courrier..."
 
 #: plug-ins/common/mail.c:474
-#, fuzzy
 msgid "Send as Mail"
 msgstr "Envoyer par courrier"
 
@@ -5023,8 +5018,7 @@ msgstr "Niveau de compression PNG :"
 
 #: plug-ins/common/mng.c:1445 plug-ins/common/png.c:1703
 msgid "Choose a high compression level for small file size"
-msgstr ""
-"Choisir un haut degré de compression pour des fichiers de petite taille"
+msgstr "Choisir un haut degré de compression pour des fichiers de petite taille"
 
 #: plug-ins/common/mng.c:1459
 msgid "JPEG compression quality:"
@@ -5311,9 +5305,8 @@ msgid "Scatter RGB"
 msgstr "Dispersion RVB"
 
 #: plug-ins/common/noisify.c:477
-#, fuzzy
 msgid "Co_rrelated noise"
-msgstr "Créer une ellipse"
+msgstr "Bruit en _corrélation"
 
 #: plug-ins/common/noisify.c:492
 msgid "_Independent RGB"
@@ -5654,14 +5647,12 @@ msgid "PNM image"
 msgstr "Image PNM"
 
 #: plug-ins/common/pnm.c:260
-#, fuzzy
 msgid "PGM image"
-msgstr "Image PNM"
+msgstr "Image PGM"
 
 #: plug-ins/common/pnm.c:272
-#, fuzzy
 msgid "PPM image"
-msgstr "Image PNM"
+msgstr "Image PPM"
 
 #: plug-ins/common/pnm.c:465 plug-ins/common/pnm.c:486
 #: plug-ins/common/pnm.c:493 plug-ins/common/pnm.c:502
@@ -5831,7 +5822,7 @@ msgstr "Pages :"
 
 #: plug-ins/common/postscript.c:2983
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
-msgstr ""
+msgstr "Pages à charger (ex. : 1-4 ou 1,3,5-7)"
 
 #: plug-ins/common/postscript.c:2985
 msgid "Try Bounding Box"
@@ -5945,6 +5936,8 @@ msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
 "more than 30000 pixels wide or tall."
 msgstr ""
+"Impossible d'enregistrer « %s ». Le format de fichier PSD ne supporte pas "
+"les images de plus de 30000 pixels de largeur ou de hauteur."
 
 #: plug-ins/common/psd_save.c:1576
 #, c-format
@@ -5952,6 +5945,8 @@ msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
 "layers that are more than 30000 pixels wide or tall."
 msgstr ""
+"Impossible d'enregistrer « %s ». Le format de fichier PSD ne supporte pas "
+"les images avec des calques de plus de 30000 pixels de largeur ou de hauteur."
 
 #: plug-ins/common/psp.c:362
 msgid "Paint Shop Pro image"
@@ -6032,7 +6027,7 @@ msgstr "Image"
 
 #: plug-ins/common/raw.c:955
 msgid "Planar RGB"
-msgstr ""
+msgstr "Planar RVB"
 
 #: plug-ins/common/raw.c:956
 msgid "Indexed"
@@ -6048,11 +6043,11 @@ msgstr "Palette"
 
 #: plug-ins/common/raw.c:1021 plug-ins/common/raw.c:1109
 msgid "R, G, B (normal)"
-msgstr ""
+msgstr "R, V, B (normal)"
 
 #: plug-ins/common/raw.c:1022 plug-ins/common/raw.c:1111
 msgid "B, G, R, X (bmp style)"
-msgstr ""
+msgstr "B, V, R, X (style bmp)"
 
 #: plug-ins/common/raw.c:1027
 msgid "_Palette Type:"
@@ -6063,70 +6058,60 @@ msgid "Off_set:"
 msgstr "_Décalage :"
 
 #: plug-ins/common/raw.c:1050
-#, fuzzy
 msgid "Select Palette File to Load"
-msgstr "Sélectionner l'image"
+msgstr "Sélectionner le fichier de palette à charger"
 
 #: plug-ins/common/raw.c:1053
 msgid "Pal_ette File:"
 msgstr "Fichier de _palettes :"
 
 #: plug-ins/common/raw.c:1081
-#, fuzzy
 msgid "Raw Image Save"
-msgstr "Taille de l'image"
+msgstr "Enregistrement Image Raw"
 
 #: plug-ins/common/raw.c:1095
-#, fuzzy
 msgid "RGB Save Type"
-msgstr "Type de motif RVB"
+msgstr "Type d'enregistrement RVB"
 
 #: plug-ins/common/raw.c:1099
-#, fuzzy
 msgid "Standard (R,G,B)"
-msgstr "Standard"
+msgstr "Standard (R,V,B)"
 
 #: plug-ins/common/raw.c:1100
 msgid "Planar (RRR,GGG,BBB)"
-msgstr ""
+msgstr "Planar (RRR,VVV,BBB)"
 
 #: plug-ins/common/raw.c:1105
-#, fuzzy
 msgid "Indexed Palette Type"
-msgstr "Type de motif RVB"
+msgstr "Type de palette indexée"
 
 #: plug-ins/common/retinex.c:168
-#, fuzzy
 msgid "_Retinex..."
-msgstr "Ond_uler..."
+msgstr "Normalisation _Retinex..."
 
 #: plug-ins/common/retinex.c:251
-#, fuzzy
 msgid "Retinex..."
-msgstr "Rotation en cours..."
+msgstr "Retinex..."
 
 #: plug-ins/common/retinex.c:253
 msgid "Retinex (4/4): updated..."
-msgstr ""
+msgstr "Retinex (4/4): mise à jour..."
 
 #: plug-ins/common/retinex.c:290
-#, fuzzy
 msgid "Retinex Image Enhancement"
-msgstr "Amélioration des bords"
+msgstr "Normalisation Retinex"
 
 #: plug-ins/common/retinex.c:311
 msgid "Level"
-msgstr ""
+msgstr "Répartition"
 
 #: plug-ins/common/retinex.c:315
-#, fuzzy
 msgid "_Uniform"
-msgstr "Éditeur d'_unité"
+msgstr "_Uniforme"
 
 #: plug-ins/common/retinex.c:317
-#, fuzzy
 msgid "_Low"
-msgstr "In_férieure"
+msgstr "_Faible"
 
 #: plug-ins/common/retinex.c:319
 msgid "_High"
@@ -6134,21 +6119,19 @@ msgstr "_Hauteur"
 
 #: plug-ins/common/retinex.c:344
 msgid "_Scale:"
-msgstr "_Échelle :"
+msgstr "_Échelle du filtre :"
 
 #: plug-ins/common/retinex.c:359
-#, fuzzy
 msgid "_Scale division:"
-msgstr "_Divisions :"
+msgstr "_Nombre de coeff. :"
 
 #: plug-ins/common/retinex.c:374
 msgid "_Dynamic:"
-msgstr ""
+msgstr "_Dynamique :"
 
 #: plug-ins/common/retinex.c:648
-#, fuzzy
 msgid "Retinex: Filtering..."
-msgstr "Flou cinétique en cours..."
+msgstr "Retinex: filtrage..."
 
 #: plug-ins/common/ripple.c:138
 msgid "_Ripple..."
@@ -6698,8 +6681,7 @@ msgstr "An_gle des pointes (-1 : aléatoire) :"
 
 #: plug-ins/common/sparkle.c:409
 msgid "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
-msgstr ""
-"Réglage de l'angle des pointes (-1 signifie qu'un angle aléatoire est choisi)"
+msgstr "Réglage de l'angle des pointes (-1 signifie qu'un angle aléatoire est choisi)"
 
 #: plug-ins/common/sparkle.c:417
 msgid "Spik_e density:"
@@ -6719,8 +6701,7 @@ msgstr "Teinte al_éatoire :"
 
 #: plug-ins/common/sparkle.c:440
 msgid "Adjust the Value how much the Hue should be changed randomly"
-msgstr ""
-"Ajuster la valeur d'autant que la teinte doit être modifiée aléatoirement"
+msgstr "Ajuster la valeur d'autant que la teinte doit être modifiée aléatoirement"
 
 #: plug-ins/common/sparkle.c:448
 msgid "Rando_m saturation:"
@@ -7095,8 +7076,7 @@ msgid "Import _paths"
 msgstr "Importer les _chemins"
 
 #: plug-ins/common/svg.c:914
-msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importer les éléments du chemin du SVG afin qu'ils puissent être utilisés "
 "avec l'outil de chemins GIMP"
@@ -7318,8 +7298,7 @@ msgid "ID"
 msgstr "Identificateur"
 
 #: plug-ins/common/uniteditor.c:96
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Cette chaîne sera utilisée pour identifier l'unité dans les fichiers de "
 "configuration de GIMP."
@@ -7911,8 +7890,7 @@ msgstr "Les Deu_x"
 
 #: plug-ins/common/wind.c:997
 msgid "Higher values restrict the effect to fewer areas of the image"
-msgstr ""
-"De grandes valeurs restreignent l'effet à des zones plus petites de l'image."
+msgstr "De grandes valeurs restreignent l'effet à des zones plus petites de l'image."
 
 #: plug-ins/common/wind.c:1012 plug-ins/gimpressionist/orientmap.c:669
 msgid "_Strength:"
@@ -7979,18 +7957,16 @@ msgid "Microsoft WMF file"
 msgstr "Fichier Microsoft WMF"
 
 #: plug-ins/common/wmf.c:336
-#, fuzzy
 msgid ""
 "WMF file does not\n"
 "specify a size!"
 msgstr ""
-"Le fichier SVG ne\n"
+"Le fichier WMF ne\n"
 "spécifie pas de taille !"
 
 #: plug-ins/common/wmf.c:484
-#, fuzzy
 msgid "Render Windows Metafile"
-msgstr "Charge un fichier au format Windows Metafile (WMF)"
+msgstr "Rendre Windows Metafile"
 
 #: plug-ins/common/wmf.c:947 plug-ins/sgi/sgi.c:318
 #, c-format
@@ -8319,7 +8295,6 @@ msgid "Menu Path/Name"
 msgstr "Emplacement dans les menus/Nom"
 
 #: plug-ins/dbbrowser/plugin-browser.c:704
-#, fuzzy
 msgid "Tree View"
 msgstr "Vue en arbre"
 
@@ -8517,29 +8492,25 @@ msgstr "Figures géométriques"
 
 #. Tool options notebook
 #: plug-ins/gfig/gfig-dialog.c:341
-#, fuzzy
 msgid "Tool options"
-msgstr "Options de zoom"
+msgstr "Options d'outil"
 
 #: plug-ins/gfig/gfig-dialog.c:358
-#, fuzzy
 msgid "_Stroke"
-msgstr "Ra_yonnement :"
+msgstr "_Tracé"
 
 #. Fill frame on right side
 #: plug-ins/gfig/gfig-dialog.c:405
-#, fuzzy
 msgid "Fill"
-msgstr "Film"
+msgstr "Remplissage"
 
 #: plug-ins/gfig/gfig-dialog.c:419
 msgid "No fill"
 msgstr "Ne pas remplir"
 
 #: plug-ins/gfig/gfig-dialog.c:420
-#, fuzzy
 msgid "Color fill"
-msgstr "Ne pas remplir"
+msgstr "Remplir avec une couleur"
 
 #: plug-ins/gfig/gfig-dialog.c:421
 msgid "Pattern fill"
@@ -8572,19 +8543,16 @@ msgid "First Gfig"
 msgstr "Première Gfig"
 
 #: plug-ins/gfig/gfig-dialog.c:859
-#, fuzzy
 msgid "_Undo"
-msgstr "Annuler"
+msgstr "_Annuler"
 
 #: plug-ins/gfig/gfig-dialog.c:863
-#, fuzzy
 msgid "_Clear"
-msgstr "Effacer"
+msgstr "_Effacer"
 
 #: plug-ins/gfig/gfig-dialog.c:867
-#, fuzzy
 msgid "_Grid"
-msgstr "Grille"
+msgstr "_Grille"
 
 #: plug-ins/gfig/gfig-dialog.c:875
 msgid "Raise selected object"
@@ -8604,72 +8572,71 @@ msgstr "Descendre l'objet sélectionné tout en bas"
 
 #: plug-ins/gfig/gfig-dialog.c:891
 msgid "Show previous object"
-msgstr "Montre l'objet précédent"
+msgstr "Montrer et sélectionner l'objet précédent"
 
 #: plug-ins/gfig/gfig-dialog.c:895
 msgid "Show next object"
-msgstr "Montre l'objet suivant"
+msgstr "Montrer et sélectionner l'objet suivant"
 
-#: plug-ins/gfig/gfig-dialog.c:899
+#: plug-ins/gfig/gfig-dialog.c:899 plug-ins/gfig/gfig-stock.c:52
 msgid "Show all objects"
 msgstr "Montrer tous les objets"
 
-#: plug-ins/gfig/gfig-dialog.c:905
+#: plug-ins/gfig/gfig-dialog.c:905 plug-ins/gfig/gfig-stock.c:47
 msgid "Create line"
 msgstr "Créer une ligne"
 
-#: plug-ins/gfig/gfig-dialog.c:908
+#: plug-ins/gfig/gfig-dialog.c:908 plug-ins/gfig/gfig-stock.c:42
 msgid "Create circle"
 msgstr "Créer un cercle"
 
-#: plug-ins/gfig/gfig-dialog.c:911
+#: plug-ins/gfig/gfig-dialog.c:911 plug-ins/gfig/gfig-stock.c:46
 msgid "Create ellipse"
 msgstr "Créer une ellipse"
 
-#: plug-ins/gfig/gfig-dialog.c:914
+#: plug-ins/gfig/gfig-dialog.c:914 plug-ins/gfig/gfig-stock.c:44
 msgid "Create arc"
 msgstr "Créer un arc"
 
-#: plug-ins/gfig/gfig-dialog.c:917
+#: plug-ins/gfig/gfig-dialog.c:917 plug-ins/gfig/gfig-stock.c:50
 msgid "Create reg polygon"
 msgstr "Créer un polygone régulier"
 
-#: plug-ins/gfig/gfig-dialog.c:920
+#: plug-ins/gfig/gfig-dialog.c:920 plug-ins/gfig/gfig-stock.c:54
 msgid "Create star"
 msgstr "Créer une étoile"
 
-#: plug-ins/gfig/gfig-dialog.c:923
+#: plug-ins/gfig/gfig-dialog.c:923 plug-ins/gfig/gfig-stock.c:53
 msgid "Create spiral"
 msgstr "Créer une spirale"
 
 #: plug-ins/gfig/gfig-dialog.c:926
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr ""
-"Créer une courbe de Bézier. <Maj> + bouton termine la création de l'objet."
+msgstr "Créer une courbe de Bézier. <Maj> + bouton termine la création de l'objet."
 
-#: plug-ins/gfig/gfig-dialog.c:930
+#: plug-ins/gfig/gfig-dialog.c:930 plug-ins/gfig/gfig-stock.c:48
 msgid "Move an object"
 msgstr "Déplacer un objet"
 
-#: plug-ins/gfig/gfig-dialog.c:933
+#: plug-ins/gfig/gfig-dialog.c:933 plug-ins/gfig/gfig-stock.c:49
 msgid "Move a single point"
 msgstr "Déplacer un point seul"
 
-#: plug-ins/gfig/gfig-dialog.c:936
+#: plug-ins/gfig/gfig-dialog.c:936 plug-ins/gfig/gfig-stock.c:43
 msgid "Copy an object"
 msgstr "Copier un objet"
 
-#: plug-ins/gfig/gfig-dialog.c:939
+#: plug-ins/gfig/gfig-dialog.c:939 plug-ins/gfig/gfig-stock.c:45
 msgid "Delete an object"
 msgstr "Effacer un objet"
 
-#: plug-ins/gfig/gfig-dialog.c:942
+#: plug-ins/gfig/gfig-dialog.c:942 plug-ins/gfig/gfig-stock.c:51
 msgid "Select an object"
 msgstr "Sélectionner un objet"
 
 #: plug-ins/gfig/gfig-dialog.c:1023
 msgid "This tool has no options"
-msgstr ""
+msgstr "Cet outil n'a pas d'options"
 
 #. Put buttons in
 #: plug-ins/gfig/gfig-dialog.c:1230
@@ -8677,9 +8644,8 @@ msgid "Show position"
 msgstr "Afficher la position"
 
 #: plug-ins/gfig/gfig-dialog.c:1242
-#, fuzzy
 msgid "Show control points"
-msgstr "Cacher les points de contrôle"
+msgstr "Afficher les points de contrôle"
 
 #: plug-ins/gfig/gfig-dialog.c:1276
 msgid "Max undo:"
@@ -8762,19 +8728,16 @@ msgid "Grid color:"
 msgstr "Couleur de la grille :"
 
 #: plug-ins/gfig/gfig-dialog.c:1638
-#, fuzzy
 msgid "Sides:"
-msgstr "Tailles :"
+msgstr "Cotés :"
 
 #: plug-ins/gfig/gfig-dialog.c:1648
-#, fuzzy
 msgid "Right"
-msgstr "Droite :"
+msgstr "Droite"
 
 #: plug-ins/gfig/gfig-dialog.c:1649
-#, fuzzy
 msgid "Left"
-msgstr "Gauche :"
+msgstr "Gauche"
 
 #: plug-ins/gfig/gfig-dialog.c:1659 plug-ins/gimpressionist/orientation.c:130
 #: plug-ins/print/gimp_main_window.c:500
@@ -8791,8 +8754,7 @@ msgstr "Erreur lors de la lecture du fichier"
 
 #: plug-ins/gfig/gfig-dobject.c:1030
 msgid "Editing read-only object - you will not be able to save it"
-msgstr ""
-"Édition d'un objet en lecture seule - vous ne pourrez pas l'enregistrer"
+msgstr "Édition d'un objet en lecture seule - vous ne pourrez pas l'enregistrer"
 
 #: plug-ins/gfig/gfig-poly.c:56
 msgid "Regular Polygon Number of Sides"
@@ -8814,6 +8776,10 @@ msgstr "Nombre de tours de la spirale"
 #: plug-ins/gfig/gfig-star.c:57
 msgid "Star Number of Points"
 msgstr "Étoile : nombre de points"
+
+#: plug-ins/gfig/gfig-stock.c:41
+msgid "Create bezier curve"
+msgstr "Créer une courbe de bézier"
 
 #: plug-ins/gfig/gfig.c:132
 msgid "_Gfig..."
@@ -8962,8 +8928,7 @@ msgstr "Le nom `%s' est déjà utilisé !"
 
 #: plug-ins/gflare/gflare.c:3122
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr ""
-"Impossible d'effacer !! Il doit y avoir au moins un éblouissement graduel."
+msgstr "Impossible d'effacer !! Il doit y avoir au moins un éblouissement graduel."
 
 #: plug-ins/gflare/gflare.c:3132
 msgid "Delete GFlare"
@@ -9213,8 +9178,7 @@ msgstr "Arrière-plan de couleur uniforme"
 
 #: plug-ins/gimpressionist/general.c:167
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr ""
-"Utilise un arrière-plan transparent ; seuls les tracés peints seront visibles"
+msgstr "Utilise un arrière-plan transparent ; seuls les tracés peints seront visibles"
 
 #: plug-ins/gimpressionist/general.c:184
 msgid "Paint edges"
@@ -9266,8 +9230,7 @@ msgid "Shadow depth:"
 msgstr "Portée de l'ombre :"
 
 #: plug-ins/gimpressionist/general.c:243
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Jusqu'à quelle distance doit porter l'ombre"
 
 #: plug-ins/gimpressionist/general.c:248
@@ -9657,15 +9620,12 @@ msgid "Size:"
 msgstr "Taille :"
 
 #: plug-ins/gimpressionist/size.c:142
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "La valeur (luminosité) de la région détermine la longueur de la brosse"
 
 #: plug-ins/gimpressionist/size.c:146
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
-msgstr ""
-"La distance au centre de l'image détermine la taille du tracé de la brosse"
+msgid "The distance from the center of the image determines the size of the stroke"
+msgstr "La distance au centre de l'image détermine la taille du tracé de la brosse"
 
 #: plug-ins/gimpressionist/size.c:150
 msgid "Selects a random size for each stroke"
@@ -9792,18 +9752,16 @@ msgid "GIMP Help browser"
 msgstr "Navigateur d'aide GIMP"
 
 #: plug-ins/helpbrowser/dialog.c:409
-#, fuzzy
 msgid "Document not found"
 msgstr "Document non trouvé"
 
 #: plug-ins/helpbrowser/dialog.c:411
 msgid "The requested URL could not be loaded:"
-msgstr ""
+msgstr "L'URL requise n'a pu être chargée :"
 
 #: plug-ins/ifscompose/ifscompose.c:357
-#, fuzzy
 msgid "_IFS Fractal..."
-msgstr "_Fractaliser..."
+msgstr "_Composition fractale..."
 
 #. Asym
 #: plug-ins/ifscompose/ifscompose.c:600
@@ -9821,9 +9779,8 @@ msgid "Simple"
 msgstr "Simple"
 
 #: plug-ins/ifscompose/ifscompose.c:668
-#, fuzzy
 msgid "IFS Fractal: Target"
-msgstr "Fractaliser"
+msgstr "Composition fractale : cible"
 
 #: plug-ins/ifscompose/ifscompose.c:674
 msgid "Scale Hue by:"
@@ -9839,29 +9796,24 @@ msgid "Full"
 msgstr "Complète"
 
 #: plug-ins/ifscompose/ifscompose.c:713
-#, fuzzy
 msgid "IFS Fractal: Red"
-msgstr "Type de fractale"
+msgstr "Composition fractale : Rouge"
 
 #: plug-ins/ifscompose/ifscompose.c:720
-#, fuzzy
 msgid "IFS Fractal: Green"
-msgstr "Fractaliser"
+msgstr "Composition fractale : Vert"
 
 #: plug-ins/ifscompose/ifscompose.c:727
-#, fuzzy
 msgid "IFS Fractal: Blue"
-msgstr "Type de fractale"
+msgstr "Composition fractale : Bleu"
 
 #: plug-ins/ifscompose/ifscompose.c:734
-#, fuzzy
 msgid "IFS Fractal: Black"
-msgstr "Fractaliser"
+msgstr "Composition fractale : Noir"
 
 #: plug-ins/ifscompose/ifscompose.c:784
-#, fuzzy
 msgid "IFS Fractal"
-msgstr "Nouvelle fractale"
+msgstr "Composition fractale"
 
 #: plug-ins/ifscompose/ifscompose.c:872
 msgid "Spatial Transformation"
@@ -9880,14 +9832,12 @@ msgid "Select _All"
 msgstr "_Tout sélectionner"
 
 #: plug-ins/ifscompose/ifscompose.c:1067
-#, fuzzy
 msgid "Re_center"
-msgstr "Recalculer le _centre"
+msgstr "Re_centrer"
 
 #: plug-ins/ifscompose/ifscompose.c:1067
-#, fuzzy
 msgid "Recompute Center"
-msgstr "/Recalculer le centre"
+msgstr "Recalculer le centre"
 
 #: plug-ins/ifscompose/ifscompose.c:1071
 msgid "Render options"
@@ -9899,21 +9849,18 @@ msgid "Move"
 msgstr "Déplacer"
 
 #: plug-ins/ifscompose/ifscompose.c:1080
-#, fuzzy
 msgid "Rotate"
-msgstr "Tourné"
+msgstr "Pivoter"
 
 #: plug-ins/ifscompose/ifscompose.c:1080
-#, fuzzy
 msgid "Rotate / Scale"
-msgstr "/Pivoter/Étirer"
+msgstr "Pivoter / Échelle"
 
 #: plug-ins/ifscompose/ifscompose.c:1083
 msgid "Stretch"
 msgstr "Étendre"
 
 #: plug-ins/ifscompose/ifscompose.c:1180
-#, fuzzy
 msgid "IFS Fractal Render Options"
 msgstr "Options de rendu"
 
@@ -9954,19 +9901,17 @@ msgid "Open failed"
 msgstr "L'ouverture a échoué"
 
 #: plug-ins/ifscompose/ifscompose.c:2489
-#, fuzzy, c-format
+#, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
-msgstr "Le fichier « %s » ne semble pas être un fichier IFS Compose."
+msgstr "Le fichier « %s » ne semble pas être un fichier Composition fractale."
 
 #: plug-ins/ifscompose/ifscompose.c:2529
-#, fuzzy
 msgid "Save as IFS Fraktal file"
-msgstr "Enregistrer en IFS"
+msgstr "Enregistrer en tant que fichier Composition fractale"
 
 #: plug-ins/ifscompose/ifscompose.c:2559
-#, fuzzy
 msgid "Open IFS Fraktal file"
-msgstr "Ouvrir le fichier IFS"
+msgstr "Ouvrir le fichier Composition fractale"
 
 #: plug-ins/imagemap/imap_about.c:43
 msgid "Imagemap plug-in 2.2"
@@ -10082,17 +10027,17 @@ msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
 msgstr "Limites du Guide Résultant: %d,%d à %d,%d (%d zones)"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:142
-#, fuzzy
 msgid ""
 "Guides are pre-defined rectangles covering the image. You define them by "
 "their width, height, and spacing from each other. This allows you to rapidly "
 "create the most common image map type - image collection of \"thumbnails\", "
 "suitable for navigation bars."
 msgstr ""
-"Les guides sont des rectangles prédéfinis couvrant l'image. Vous les\n"
-"définissez par leur longueur, leur hauteur et l'espacement entre chacun\n"
-"d'eux. Cela vous permet de créer rapidement le type de plan de l'image -\n"
-"une collection de petites images, adaptée aux barres de navigation."
+"Les guides sont des rectangles prédéfinis recouvrant l'image. Vous "
+"lesdéfinissez par leur longueur, leur hauteur et l'espacement entre "
+"chacund'entre eux. Cela vous permet de créer rapidement le type le plus "
+"courant d'image cliquable adaptée aux barres de navigation :un tableau de "
+"petites images."
 
 #: plug-ins/imagemap/imap_cmd_guides.c:172
 msgid "_Left Start at:"
@@ -10288,7 +10233,7 @@ msgstr "Erreur lors de l'ouverture du fichier"
 
 #: plug-ins/imagemap/imap_file.c:69
 msgid "Load Imagemap"
-msgstr "Chargement du plan de l'image"
+msgstr "Chargement de l'image cliquable"
 
 #: plug-ins/imagemap/imap_file.c:117
 msgid "File already exists"
@@ -10298,9 +10243,9 @@ msgstr "Le fichier existe déjà"
 msgid "Do you really want to overwrite?"
 msgstr "Voulez-vous vraiment l'écraser ?"
 
-#: plug-ins/imagemap/imap_file.c:165
+#: plug-ins/imagemap/imap_file.c:166
 msgid "Save Imagemap"
-msgstr "Enregistrer le plan de l'image"
+msgstr "Enregistrer l'image cliquable"
 
 #: plug-ins/imagemap/imap_grid.c:201
 msgid "Grid Settings"
@@ -10356,7 +10301,7 @@ msgstr "A_perçu"
 
 #: plug-ins/imagemap/imap_main.c:128
 msgid "_ImageMap..."
-msgstr "_Image cliquable web..."
+msgstr "_Image cliquable (Imagemap)..."
 
 #: plug-ins/imagemap/imap_main.c:594 plug-ins/imagemap/imap_settings.c:171
 msgid "<Untitled>"
@@ -10488,7 +10433,7 @@ msgstr "_Sommaire"
 
 #: plug-ins/imagemap/imap_menu.c:405
 msgid "_About ImageMap"
-msgstr "À _propos d'ImageMap"
+msgstr "À _propos d'Imagemap"
 
 #: plug-ins/imagemap/imap_object_popup.c:103
 msgid "Edit Area Info..."
@@ -11038,8 +10983,7 @@ msgstr "Distance depuis le haut du papier jusqu'à l'image"
 
 #: plug-ins/print/gimp_main_window.c:540
 msgid "Distance from the left of the paper to the right of the image"
-msgstr ""
-"Distance depuis le bord gauche du papier jusqu'au bord droit de l'image"
+msgstr "Distance depuis le bord gauche du papier jusqu'au bord droit de l'image"
 
 #: plug-ins/print/gimp_main_window.c:550
 msgid "Right Border:"
@@ -11458,8 +11402,7 @@ msgid "Adjust output..."
 msgstr "Ajuster la sortie..."
 
 #: plug-ins/print/gimp_main_window.c:1449
-msgid ""
-"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
 "Ajuste la balance des couleurs, la clarté, le contraste, la saturation et "
 "l'algorithme de tramage"
@@ -11781,1224 +11724,3 @@ msgstr "Erreur : Impossible de lire le fichier de propriétés XJT « %s »."
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Erreur : le fichier de propriétés XJT « %s » est vide."
 
-#~ msgid "Before and After"
-#~ msgstr "Avant et après"
-
-#~ msgid "Gfig layer %d"
-#~ msgstr "Calque Gfig %d"
-
-#~ msgid "FG fill"
-#~ msgstr "Remplir avec le PP"
-
-#~ msgid "BG fill"
-#~ msgstr "Remplir avec l'AP"
-
-#~ msgid "Opening %s"
-#~ msgstr "Ouverture de %s"
-
-#~ msgid "See %s"
-#~ msgstr "Voir %s"
-
-#~ msgid "Color_Enhance: cmap was NULL!  Quitting...\n"
-#~ msgstr "Color_Enhance: cmap était NULL!  Quitter...\n"
-
-#~ msgid "Despeckling..."
-#~ msgstr "Antiparasitage..."
-
-#~ msgid "TIFF images"
-#~ msgstr "Images TIFF"
-
-#~ msgid "Rendering %s"
-#~ msgstr "Interprétation de %s"
-
-#~ msgid "Scale (log 2):"
-#~ msgstr "Échelle (log 2) :"
-
-#~ msgid "Bezier Settings"
-#~ msgstr "Paramètres des courbes de Bézier"
-
-#~ msgid "Paint"
-#~ msgstr "Dessiner"
-
-#~ msgid "All"
-#~ msgstr "Tous"
-
-#~ msgid "Number of Sides/Points/Turns:"
-#~ msgstr "Nombre de faces/points/angles :"
-
-#~ msgid "Clockwise"
-#~ msgstr "Sens des aiguilles"
-
-#~ msgid "Anti-Clockwise"
-#~ msgstr "Sens inverse des aiguilles"
-
-#~ msgid "Could not locate help document"
-#~ msgstr "Impossible de localiser la documentation d'aide"
-
-#~ msgid ""
-#~ "The requested document could not be found in your GIMP help path as shown "
-#~ "above. This means that the topic has not yet been written or your "
-#~ "installation is not complete. Ensure that your installation is complete "
-#~ "before reporting this error as a bug."
-#~ msgstr ""
-#~ "Le document demandé ne peut pas être trouvé dans votre répertoire d'aide "
-#~ "GIMP tel que montré ci-dessus. Cela signifie que l'aide de ce sujet n'a "
-#~ "pas encore été écrite ou que votre installation est mal faite. Veuillez "
-#~ "vérifier que votre installation est complète avant de rapporter ceci "
-#~ "comme un bogue."
-
-#~ msgid "Ifs_Compose..."
-#~ msgstr "_Composition fractale"
-
-#~ msgid "IfsCompose: Target"
-#~ msgstr "Formes fractales : cible"
-
-#~ msgid "IfsCompose: Red"
-#~ msgstr "IfsCompose: Rouge"
-
-#~ msgid "IfsCompose: Green"
-#~ msgstr "IfsCompose: Vert"
-
-#~ msgid "IfsCompose: Blue"
-#~ msgstr "IfsCompose: Bleu"
-
-#~ msgid "IfsCompose: Black"
-#~ msgstr "IfsCompose: Noir"
-
-#~ msgid "IfsCompose"
-#~ msgstr "Formes fractales itératives"
-
-#~ msgid "Rotate/scale"
-#~ msgstr "Pivoter/Échelle"
-
-#~ msgid "/Move"
-#~ msgstr "/Déplacer"
-
-#~ msgid "/Stretch"
-#~ msgstr "/Étendre"
-
-#~ msgid "/New"
-#~ msgstr "/Nouveau"
-
-#~ msgid "/Delete"
-#~ msgstr "/Supprimer"
-
-#~ msgid "/Undo"
-#~ msgstr "/Annuler"
-
-#~ msgid "/Redo"
-#~ msgstr "/Refaire"
-
-#~ msgid "/Select All"
-#~ msgstr "/Tout sélectionner"
-
-#~ msgid "IfsCompose Options"
-#~ msgstr "Options IfsCompose"
-
-#~ msgid "Loading %s:"
-#~ msgstr "Chargement %s :"
-
-#~ msgid "Saving %s:"
-#~ msgstr "Enregistrement de %s :"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Render"
-#~ msgstr "<Image>/Filtres/Rendu/_Gfig..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Light Effects"
-#~ msgstr "<Image>/Filtres/Effets de lumière/Éb_louissement GIMP..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Map"
-#~ msgstr "<Image>/Filtres/Carte/Déca_ler..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Colors/Map"
-#~ msgstr "<Image>/Filtres/Couleurs/Max _RVB..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Render/Pattern"
-#~ msgstr "<Image>/Filtres/Rendu/Motif/_Labyrinthe..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Animation"
-#~ msgstr "<Image>/Filtres/Animation/_Désoptimiser l'animation"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Glass Effects"
-#~ msgstr "<Image>/Filtres/Effets de verre/_Carreau de verre..."
-
-#, fuzzy
-#~ msgid "<Image>/Image/Crop"
-#~ msgstr "<Image>/Image/Transformations/_Découpage automatique"
-
-#, fuzzy
-#~ msgid "<Image>/Layer/Crop"
-#~ msgstr "<Image>/Calque/Transformation/Découpage _zélé"
-
-#, fuzzy
-#~ msgid "<Image>/Layer/Colors/Auto"
-#~ msgstr "<Image>/Calque/Couleurs/Auto/_Normaliser"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Distorts"
-#~ msgstr "<Image>/Filtres/Distorsions/V_ent..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Blur"
-#~ msgstr "<Image>/Filtres/Flou/_Flou..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Colors"
-#~ msgstr "<Image>/Filtres/Couleurs/Ô_ter les « pixels chauds »..."
-
-#, fuzzy
-#~ msgid "<Image>/Layer/Colors/Info"
-#~ msgstr "<Image>/Calque/Couleurs/Auto/_Normaliser"
-
-#, fuzzy
-#~ msgid "<Image>/Layer/Transparency/Modify"
-#~ msgstr "<Image>/Calque/Alpha/S_euil Alpha..."
-
-#, fuzzy
-#~ msgid "<Image>/Image/Mode"
-#~ msgstr "<Image>/Image/Transformations/_Guillotine"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Generic"
-#~ msgstr "<Image>/Filtres/Générique/É_rosion"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Artistic"
-#~ msgstr "<Image>/Filtres/Artistique/_Cubisme..."
-
-# affiler ?
-#, fuzzy
-#~ msgid "<Image>/Filters/Enhance"
-#~ msgstr "<Image>/Filtres/Amélioration/Augmenter les _contrastes..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Combine"
-#~ msgstr "<Image>/Filtres/Combiner/_Film..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Edge-Detect"
-#~ msgstr "<Image>/Filtres/Détection de bord/_Laplace"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Toys"
-#~ msgstr "<Image>/Filtres/Jouets/Gee-_Zoom"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Transform"
-#~ msgstr "<Image>/Image/Transformations/_Découpage automatique"
-
-#, fuzzy
-#~ msgid "<Image>/File/Send"
-#~ msgstr "<Image>/Fichier/_Imprimer"
-
-#, fuzzy
-#~ msgid "_Do preview"
-#~ msgstr "_Effectuer l'aperçu"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Noise"
-#~ msgstr "<Image>/Filtres/Bruit/_Mélanger..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Render/Clouds"
-#~ msgstr "<Image>/Filtres/Rendu/Nuages/_Plasma..."
-
-#, fuzzy
-#~ msgid "<Toolbox>/File/Acquire"
-#~ msgstr "<Toolbox>/Fichier/Acquisition/_TWAIN..."
-
-#~ msgid "Pos X:"
-#~ msgstr "Pos X :"
-
-#~ msgid "Pos Y:"
-#~ msgstr "Pos Y :"
-
-#~ msgid "Pos Z:"
-#~ msgstr "Pos Z :"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Extensions"
-#~ msgstr "<Toolbox>/Exts/Éditeur d'_unités"
-
-#, fuzzy
-#~ msgid "<Image>/Edit"
-#~ msgstr "<Image>/Fichier/_Imprimer"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Render/Nature"
-#~ msgstr "<Image>/Filtres/Rendu/Nature/_Flammes..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Web"
-#~ msgstr "<Image>/Filtres/Web/_Image cliquable Web..."
-
-#, fuzzy
-#~ msgid "Source"
-#~ msgstr "Source 1 :"
-
-#, fuzzy
-#~ msgid "Do pre_view"
-#~ msgstr "Effectuer l'a_perçu"
-
-#, fuzzy
-#~ msgid "_Plugin Details"
-#~ msgstr "Descriptions des greffons"
-
-#~ msgid "Details <<"
-#~ msgstr "Détails <<"
-
-#~ msgid "Details >>"
-#~ msgstr "Détails >>"
-
-#~ msgid "Name:"
-#~ msgstr "Nom :"
-
-#~ msgid "Blurb:"
-#~ msgstr "Description :"
-
-#~ msgid "Help:"
-#~ msgstr "Aide :"
-
-#~ msgid "Plugin Descriptions"
-#~ msgstr "Descriptions des greffons"
-
-#~ msgid "Search by Name"
-#~ msgstr "Rechercher par nom"
-
-#, fuzzy
-#~ msgid "Ins date"
-#~ msgstr "Date d'ins."
-
-#, fuzzy
-#~ msgid "Menu path"
-#~ msgstr "Chemin dans le menu"
-
-#~ msgid "Search:"
-#~ msgstr "Chercher :"
-
-#~ msgid "In:"
-#~ msgstr "Entrée :"
-
-#~ msgid "Out:"
-#~ msgstr "Sortie :"
-
-#, fuzzy
-#~ msgid "_Spherical"
-#~ msgstr "Sphérique"
-
-#, fuzzy
-#~ msgid "S_inusoidal"
-#~ msgstr "Sinusoïdal"
-
-#~ msgid "EOF encountered on "
-#~ msgstr "Fin de fichier lors de "
-
-#~ msgid "No memory for mapping colors"
-#~ msgstr "Pas de mémoire pour associer les couleurs"
-
-#~ msgid "Selection:"
-#~ msgstr "Sélection :"
-
-#, fuzzy
-#~ msgid "E_nable antialiasing"
-#~ msgstr "Activer l'anticrénela_ge"
-
-#~ msgid "T_hreshold:"
-#~ msgstr "_Seuil :"
-
-#, fuzzy
-#~ msgid "L_ight yype:"
-#~ msgstr "Ty_pe de lumière :"
-
-#, fuzzy
-#~ msgid "Lig_ht color:"
-#~ msgstr "_Couleur de la lumière :"
-
-#~ msgid "_Ambient:"
-#~ msgstr "_Ambiant :"
-
-#~ msgid "_Diffuse:"
-#~ msgstr "_Diffusion :"
-
-#~ msgid "D_iffuse:"
-#~ msgstr "Di_ffusion :"
-
-#~ msgid "_Specular:"
-#~ msgstr "_Spéculaire :"
-
-#~ msgid "_Highlight:"
-#~ msgstr "Sur_brillance :"
-
-#~ msgid "Parameters were Saved to '%s'"
-#~ msgstr "Les paramètres ont été enregistrés dans « %s »"
-
-#~ msgid "'%s' is not a HRZ file"
-#~ msgstr "« %s » n'est pas un fichier HRZ"
-
-#~ msgid "Image must be 256x240"
-#~ msgstr "L'image doit être en 256x240"
-
-#~ msgid "Image must be RGB or GRAY"
-#~ msgstr "L'image doit être RVB ou Tons de gris"
-
-#~ msgid "Brush"
-#~ msgstr "Brosse"
-
-#~ msgid "Airbrush"
-#~ msgstr "Aérographe"
-
-#~ msgid "Pencil"
-#~ msgstr "Crayon"
-
-#, fuzzy
-#~ msgid ""
-#~ "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
-#~ "paints with currently selected brush with a pattern. Only applies to "
-#~ "circles/ellipses if the \"Approx. Circles/Ellipses\" toggle is set."
-#~ msgstr ""
-#~ "Utilise la brosse, le crayon ou l'aérographe pour dessiner sur l'image. "
-#~ "« Motif » peint avec la brosse sélectionnée et un motif. Ne s'applique "
-#~ "aux cercles et ellipses que si « Cercles/ellipses approx. » est coché."
-
-#~ msgid "New"
-#~ msgstr "Nouveau"
-
-#~ msgid "Multiple"
-#~ msgstr "Multiple"
-
-#, fuzzy
-#~ msgid ""
-#~ "Draw all objects on one layer (original or new) or one object per layer."
-#~ msgstr ""
-#~ "Trace tous les objets sur un calque (préexistant ou nouveau) ou bien un "
-#~ "seul objet par calque"
-
-#~ msgid "Draw on:"
-#~ msgstr "Tracer sur :"
-
-#~ msgid "Selection+Fill"
-#~ msgstr "Sélection+Remplissage"
-
-#, fuzzy
-#~ msgid ""
-#~ "Draw type. Either a brush or a selection. See brush page or selection "
-#~ "page for more options."
-#~ msgstr ""
-#~ "Type de dessin : soit une brosse soit une sélection. Voyez la page sur "
-#~ "les brosses ou la page sur les sélections pour plus d'options."
-
-#~ msgid "Using:"
-#~ msgstr "Utilisant :"
-
-#, fuzzy
-#~ msgid "Reverse line"
-#~ msgstr "Inverser les lignes"
-
-#~ msgid "Draw lines in reverse order"
-#~ msgstr "Trace les lignes en ordre inverse"
-
-#, fuzzy
-#~ msgid "Scale to image"
-#~ msgstr "Taille = celle de l'image"
-
-#~ msgid "Scale drawings to images size"
-#~ msgstr "Met les dessins à la taille de l'image"
-
-#, fuzzy
-#~ msgid "Approx. circles/ellipses"
-#~ msgstr "Cercles/ellipses approx."
-
-#~ msgid ""
-#~ "Approx. circles & ellipses using lines. Allows the use of brush fading "
-#~ "with these types of objects."
-#~ msgstr ""
-#~ "Approxime les cercles et ellipses avec des lignes. Permet l'utilisation "
-#~ "de l'estompement de brosse avec ce type d'objets."
-
-#~ msgid "Gfig Brush Selection"
-#~ msgstr "Sélection des brosses Gfig"
-
-#~ msgid "Fade out:"
-#~ msgstr "Estompage :"
-
-#~ msgid "Gradient:"
-#~ msgstr "Dégradé :"
-
-#~ msgid "Pressure:"
-#~ msgstr "Pression :"
-
-#, fuzzy
-#~ msgid "No options..."
-#~ msgstr "Pas d'options..."
-
-#, fuzzy
-#~ msgid "Set brush..."
-#~ msgstr "Définir la brosse..."
-
-#~ msgid "Add"
-#~ msgstr "Ajouter"
-
-#~ msgid "Subtract"
-#~ msgstr "Soustraction"
-
-#~ msgid "Intersect"
-#~ msgstr "Intersection"
-
-#, fuzzy
-#~ msgid "Fill type:"
-#~ msgstr "Type de remplissage :"
-
-#~ msgid "Fill Opacity:"
-#~ msgstr "Opacité de remplissage :"
-
-#, fuzzy
-#~ msgid "Each selection"
-#~ msgstr "Chaque sélection"
-
-#, fuzzy
-#~ msgid "All selections"
-#~ msgstr "Toutes les sélections"
-
-#~ msgid "Fill after:"
-#~ msgstr "Remplir après"
-
-#~ msgid "Segment"
-#~ msgstr "Segment"
-
-#~ msgid "Sector"
-#~ msgstr "Secteur"
-
-#~ msgid "Arc as:"
-#~ msgstr "Arc comme :"
-
-#, fuzzy
-#~ msgid "Reload image"
-#~ msgstr "Recharger image"
-
-#, fuzzy
-#~ msgid "Lock on grid"
-#~ msgstr "Aligner sur la grille"
-
-#~ msgid "Object"
-#~ msgstr "Objet"
-
-#~ msgid "Create a new Gfig object collection for editing"
-#~ msgstr "Créer une nouvelle collection d'objets Gfig à éditer"
-
-#~ msgid "Load a single Gfig object collection"
-#~ msgstr "Charger une collection d'objets Gfig"
-
-#~ msgid "Edit Gfig object collection"
-#~ msgstr "Éditer la collection d'objets Gfig"
-
-#~ msgid "_Merge"
-#~ msgstr "_Fusionner"
-
-#, fuzzy
-#~ msgid "Merge Gfig Ooject collection into the current edit session"
-#~ msgstr ""
-#~ "Fusionner une collection d'objets Gfig dans la collection actuellement "
-#~ "éditée"
-
-#~ msgid "Delete currently selected Gfig Object collection"
-#~ msgstr "Effacer la collection d'objets Gfig actuellement sélectionnée"
-
-#~ msgid "Select folder and rescan Gfig object collections"
-#~ msgstr "Sélectionner un dossier et actualiser la collection d'objets Gfig"
-
-#~ msgid "%d unsaved Gfig objects. Continue with exiting?"
-#~ msgstr "%d objet Gfig non enregistrés. Voulez-vous vraiment quitter ?"
-
-#, fuzzy
-#~ msgid "Enter Gfig object name"
-#~ msgstr "Entrer le nom de l'objet Gfig"
-
-#, fuzzy
-#~ msgid "Gfig object name:"
-#~ msgstr "Nom de l'objet Gfig :"
-
-#, fuzzy
-#~ msgid "Rescan for Gfig objects"
-#~ msgstr "Actualiser la liste d'objets Gfig"
-
-#, fuzzy
-#~ msgid "Add Gfig path"
-#~ msgstr "Ajouter un Chemin Gfig"
-
-#~ msgid "Error in copy layer for onlayers"
-#~ msgstr "Erreur en copiant le calque pour onlayers"
-
-#~ msgid "About Gfig"
-#~ msgstr "À propos de GFig"
-
-#~ msgid "Gfig - GIMP plug-in"
-#~ msgstr "Gfig - Greffon GIMP"
-
-#~ msgid "Release 2.0"
-#~ msgstr "Version 2.0"
-
-#~ msgid "New Gfig Object"
-#~ msgstr "Nouvel objet Gfig"
-
-#, fuzzy
-#~ msgid "Delete Gfig drawing"
-#~ msgstr "Effacer le dessin gfig"
-
-#~ msgid "%s copy"
-#~ msgstr "Copie de %s"
-
-#~ msgid "Collection Details"
-#~ msgstr "Détails collection"
-
-#, fuzzy
-#~ msgid "Draw name:"
-#~ msgstr "Nom du dessin :"
-
-#~ msgid "(none)"
-#~ msgstr "(aucun)"
-
-#~ msgid "<NONE>"
-#~ msgstr "<AUCUN>"
-
-#~ msgid "Curl Opacity"
-#~ msgstr "Opacité du coin"
-
-#, fuzzy
-#~ msgid ""
-#~ "Use current gradient\n"
-#~ "instead of FG/BG-color"
-#~ msgstr ""
-#~ "Utiliser le dégradé courant\n"
-#~ "au lieu de la couleur d'Av/Arr Plan"
-
-#~ msgid "Random Seed"
-#~ msgstr "Graine aléatoire"
-
-#, fuzzy
-#~ msgid "_Blur..."
-#~ msgstr "Flou en cours..."
-
-#~ msgid "R_andomization %:"
-#~ msgstr "_Aléa % :"
-
-#~ msgid "You must specify either horizontal or vertical (or both)"
-#~ msgstr "Vous devez spécifier soit horizontal soit vertical (ou les deux)."
-
-#~ msgid "Blur Horizontally"
-#~ msgstr "Rendre flou horizontalement"
-
-#~ msgid "Blur Vertically"
-#~ msgstr "Rendre flou verticalement"
-
-#~ msgid "Blur Radius:"
-#~ msgstr "Rayon du flou :"
-
-#, fuzzy
-#~ msgid "Gaussian Blur (_RLE)..."
-#~ msgstr "<Image>/Filtres/Flou/Flou gaussien (_RLE)..."
-
-#~ msgid "RLE Gaussian Blur"
-#~ msgstr "Flou gaussien RLE"
-
-#~ msgid "Image Preview"
-#~ msgstr "Aperçu de l'image"
-
-#~ msgid "Force baseline JPEG (Readable by all decoders)"
-#~ msgstr ""
-#~ "Forcer la production d'un JPEG de base (lisible par tous les décodeurs)"
-
-#~ msgid "DCT method (Speed/quality tradeoff):"
-#~ msgstr "Méthode DCT (compromis vitesse/qualité) :"
-
-#~ msgid "Tile _Height:"
-#~ msgstr "_Hauteur des carreaux :"
-
-#~ msgid "C_ell Size:"
-#~ msgstr "Taille des _cases :"
-
-#, fuzzy
-#~ msgid "_Noisify..."
-#~ msgstr "Brouiller"
-
-#~ msgid "Noisify"
-#~ msgstr "Brouiller"
-
-#~ msgid "Random _Seed:"
-#~ msgstr "_Graine aléatoire :"
-
-#~ msgid "Save Color _Values From Transparent Pixels"
-#~ msgstr "Enregistrer les valeurs de couleur pour les _pixels transparents"
-
-#~ msgid "_X Offset:"
-#~ msgstr "Décalage _X :"
-
-#~ msgid "_Y Offset:"
-#~ msgstr "Décalage _Y :"
-
-#~ msgid "_Random Seed:"
-#~ msgstr "_Graine aléatoire :"
-
-#~ msgid "R_andom Seed:"
-#~ msgstr "_Graine aléatoire :"
-
-#~ msgid "Snap to Grid"
-#~ msgstr "Coller à la grille"
-
-#~ msgid "Select Contiguous Region"
-#~ msgstr "Sélectionner une région contiguë"
-
-#~ msgid "RLE Compression"
-#~ msgstr "Compression RLE"
-
-#~ msgid "<Image>/Filters/Render/_Fractal Explorer..."
-#~ msgstr "<Image>/Filtres/Rendu/Explorateur de _fractales..."
-
-#~ msgid "<Image>/Filters/Light Effects/_Lighting Effects..."
-#~ msgstr "<Image>/Filtres/Effets de lumière/_Effets d'éclairage..."
-
-#~ msgid "Preview Options"
-#~ msgstr "Options d'aperçu"
-
-#~ msgid "<Image>/Filters/Map/Map _Object..."
-#~ msgstr "<Image>/Filtres/Carte/_Plaquer sur un objet..."
-
-#~ msgid "Save Options"
-#~ msgstr "Options d'enregistrement"
-
-#~ msgid "<Image>/Filters/Colors/Map/Alien Map _2..."
-#~ msgstr "<Image>/Filtres/Couleurs/Carte/Ps_ychédélique 2..."
-
-#~ msgid "<Image>/Filters/Render/Pattern/CML _Explorer..."
-#~ msgstr "<Image>/Filtres/Rendu/Motif/Explorateur _CML..."
-
-#~ msgid "The Graph"
-#~ msgstr "Graphe"
-
-#~ msgid "CML File Operation Warning"
-#~ msgstr "Échec de l'opération de fichier CML."
-
-#~ msgid "<Image>/Layer/Align _Visible Layers..."
-#~ msgstr "<Image>/Calque/Aligner les calques _visibles..."
-
-#~ msgid "Parameter Settings"
-#~ msgstr "Réglage des paramètres"
-
-#~ msgid "<Image>/Filters/Animation/_Playback..."
-#~ msgstr "<Image>/Filtres/Animation/_Rejouer l'animation..."
-
-#~ msgid "<Image>/Filters/Animation/Optimize (for _GIF)"
-#~ msgstr "<Image>/Filtres/Animation/Optimiser (pour _GIF)"
-
-#~ msgid "<Image>/Filters/Animation/_Remove Backdrop"
-#~ msgstr "<Image>/Filtres/Animation/_Enlever le fond"
-
-#~ msgid "<Image>/Filters/Animation/_Find Backdrop"
-#~ msgstr "<Image>/Filtres/Animation/_Trouver le fond"
-
-#~ msgid "<Image>/Filters/Glass Effects/Apply _Lens..."
-#~ msgstr "<Image>/Filtres/Effets de verre/_Lentille optique..."
-
-#~ msgid "<Image>/Layer/Colors/Auto/Stretch _HSV"
-#~ msgstr "<Image>/Calque/Couleurs/Auto/Élargir _TSV"
-
-#~ msgid "<Image>/Filters/Distorts/_Blinds..."
-#~ msgstr "<Image>/Filtres/Distorsions/_Fenêtre avec store..."
-
-#~ msgid "<Image>/Filters/Colors/_Border Average..."
-#~ msgstr "<Image>/Filtres/Couleurs/Moyenne du _bord..."
-
-#~ msgid "<Image>/Filters/Map/_Bump Map..."
-#~ msgstr "<Image>/Filtres/Carte/Repou_ssage d'après une carte..."
-
-#~ msgid "_Linear Map"
-#~ msgstr "Carte _linéaire"
-
-#~ msgid "_Spherical Map"
-#~ msgstr "Carte _sphérique"
-
-#~ msgid "S_inuosidal Map"
-#~ msgstr "Carte s_inusoïdale"
-
-#~ msgid "<Image>/Layer/Colors/Auto/_Stretch Contrast"
-#~ msgstr "<Image>/Calque/Couleurs/Auto/Étendre le _contraste"
-
-#~ msgid "<Image>/Filters/Colors/Colorcube A_nalysis..."
-#~ msgstr "<Image>/Filtres/Couleurs/A_nalyse colorimétrique ..."
-
-#~ msgid "Results"
-#~ msgstr "Résultats"
-
-#~ msgid "<Image>/Filters/Colors/Channel Mi_xer.."
-#~ msgstr "<Image>/Filtres/Couleurs/Canal mi_xer..."
-
-#~ msgid "<Image>/Filters/Render/Pattern/_Checkerboard..."
-#~ msgstr "<Image>/Filtres/Rendu/Motif/_Damier..."
-
-#~ msgid "<Image>/Layer/Colors/Auto/_Color Enhance"
-#~ msgstr "<Image>/Calque/Couleurs/Auto/Extension de cou_leurs"
-
-#~ msgid "<Image>/Filters/Colors/_Colorify..."
-#~ msgstr "<Image>/Filtres/Couleurs/Color_iser..."
-
-#~ msgid "<Image>/Filters/Colors/Color to _Alpha..."
-#~ msgstr "<Image>/Filtres/Couleurs/Couleur vers _alpha..."
-
-#~ msgid "<Image>/Filters/Colors/C_ompose..."
-#~ msgstr "<Image>/Filtres/Couleurs/C_omposer..."
-
-#~ msgid "<Image>/Filters/Generic/_Convolution Matrix..."
-#~ msgstr "<Image>/Filtres/Générique/Matrice de _convolution..."
-
-#~ msgid "<Image>/Filters/Distorts/_Curve Bend..."
-#~ msgstr "<Image>/Filtres/Distorsions/_Courber..."
-
-#~ msgid "<Image>/Filters/Colors/_Decompose..."
-#~ msgstr "<Image>/Filtres/Couleurs/_Décomposer..."
-
-#~ msgid "<Image>/Filters/Enhance/_Deinterlace..."
-#~ msgstr "<Image>/Filtres/Améliorer/_Désentrelacer..."
-
-#~ msgid "<Image>/Filters/Combine/_Depth Merge..."
-#~ msgstr "<Image>/Filtres/Combiner/_Superposition selon profondeur..."
-
-#~ msgid "<Image>/Filters/Enhance/Des_peckle..."
-#~ msgstr "<Image>/Filtres/Amélioration/Anti-_parasites..."
-
-#~ msgid "<Image>/Filters/Enhance/Des_tripe..."
-#~ msgstr "<Image>/Filtres/Améliorer/Anti-_traînées..."
-
-#~ msgid "<Image>/Filters/Render/Pattern/_Diffraction Patterns..."
-#~ msgstr "<Image>/Filtres/Rendu/Motif/_Motifs de diffraction..."
-
-#~ msgid "<Image>/Filters/Map/_Displace..."
-#~ msgstr "<Image>/Filtres/Carte/_Déplacer..."
-
-#~ msgid "Displace Options"
-#~ msgstr "Options de déplacement"
-
-#~ msgid "<Image>/Filters/Edge-Detect/_Edge..."
-#~ msgstr "<Image>/Filtres/Détection de bord/_Contour..."
-
-#~ msgid "<Image>/Filters/Distorts/_Emboss..."
-#~ msgstr "<Image>/Filtres/Distorsions/_Repoussage..."
-
-#~ msgid "<Image>/Filters/Distorts/En_grave..."
-#~ msgstr "<Image>/Filtres/Distorsions/_Gravure..."
-
-#~ msgid "<Image>/Filters/Colors/Map/_Color Exchange..."
-#~ msgstr "<Image>/Filtres/Couleurs/Carte/Échan_ger deux couleurs..."
-
-#~ msgid "_Selection"
-#~ msgstr "_Sélection"
-
-#~ msgid "<Image>/Filters/Light Effects/_FlareFX..."
-#~ msgstr "<Image>/Filtres/Effets de lumière/É_blouissement..."
-
-#~ msgid "<Image>/Filters/Map/_Fractal Trace..."
-#~ msgstr "<Image>/Filtres/Carte/_Fractaliser..."
-
-#~ msgid "<Image>/Filters/Toys/Gee-_Slime"
-#~ msgstr "<Image>/Filtres/Jouets/Gee-_Slime"
-
-#~ msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
-#~ msgstr "GEE-ZOOM : Le greffon connu comme « The GIMP E'er Egg »"
-
-#~ msgid "Milliseconds"
-#~ msgstr "Millisecondes"
-
-#~ msgid "<Image>/Filters/Render/Pattern/_Qbist..."
-#~ msgstr "<Image>/Filtres/Rendu/Motif/_Qbiste..."
-
-#~ msgid "<Image>/Filters/Colors/Map/_Gradient Map"
-#~ msgstr "<Image>/Filtres/Couleurs/Carte/Application de _dégradé"
-
-#~ msgid "<Image>/Filters/Render/Pattern/_Grid..."
-#~ msgstr "<Image>/Filtres/Rendu/Motif/_Grille..."
-
-#~ msgid "<Image>/Filters/Map/_Illusion..."
-#~ msgstr "<Image>/Filtres/Carte/_Illusion..."
-
-#~ msgid "<Image>/Filters/Distorts/_IWarp..."
-#~ msgstr "<Image>/Filtres/Distorsions/_Déformation interactive..."
-
-#~ msgid "<Image>/Filters/Render/Pattern/_Jigsaw..."
-#~ msgstr "<Image>/Filtres/Rendu/Motif/_Puzzle..."
-
-#~ msgid "Image comments"
-#~ msgstr "Commentaires de l'image"
-
-#~ msgid "<Image>/Filters/Map/_Van Gogh (LIC)..."
-#~ msgstr "<Image>/Filtres/Carte/_Van Gogh (LIC)..."
-
-#~ msgid "<Image>/Filters/Colors/Map/Adjust _FG-BG"
-#~ msgstr "<Image>/Filtres/Couleurs/Carte/A_juster PP-AP"
-
-#~ msgid "<Image>/Filters/Colors/Map/Color Range _Mapping..."
-#~ msgstr ""
-#~ "<Image>/Filtres/Couleurs/Carte/Éc_hanger un intervalle de couleurs..."
-
-#~ msgid "<Image>/Filters/Blur/_Motion Blur..."
-#~ msgstr "<Image>/Filtres/Flou/Flou _cinétique..."
-
-#~ msgid "<Image>/Filters/Distorts/_Mosaic..."
-#~ msgstr "<Image>/Filtres/Distorsions/_Mosaïque..."
-
-#~ msgid "<Image>/Filters/Distorts/Newsprin_t..."
-#~ msgstr "<Image>/Filtres/Distorsions/_Trame d'imprimerie..."
-
-#~ msgid "<Image>/Filters/Enhance/_NL Filter..."
-#~ msgstr "<Image>/Filtres/Amélioration/_Filtre NL..."
-
-#~ msgid "<Image>/Filters/Noise/_Noisify..."
-#~ msgstr "<Image>/Filtres/Bruit/_Brouiller..."
-
-#~ msgid "<Image>/Filters/Light Effects/Su_perNova..."
-#~ msgstr "<Image>/Filtres/Effets de lumière/Super_Nova..."
-
-#~ msgid "<Image>/Filters/Artistic/Oili_fy..."
-#~ msgstr "<Image>/Filtres/Artistique/Peinture à l'_huile..."
-
-#~ msgid "<Image>/Filters/Map/_Paper Tile..."
-#~ msgstr "<Image>/Filtres/Carte/_Morceaux de papiers..."
-
-#~ msgid "<Image>/Filters/Blur/_Pixelize..."
-#~ msgstr "<Image>/Filtres/Flou/_Pixeliser..."
-
-#~ msgid "<Toolbox>/Xtns/_Plugin Details"
-#~ msgstr "<Toolbox>/Exts/Détails des _greffons"
-
-#~ msgid "<Image>/Filters/Distorts/P_olar Coords..."
-#~ msgstr "<Image>/Filtres/Distorsions/Coordo_nnées polaires..."
-
-#~ msgid "write error occured"
-#~ msgstr "une erreur d'écriture est survenue"
-
-#~ msgid "_X-Offset:"
-#~ msgstr "Décalage en _X :"
-
-#~ msgid "_Y-Offset:"
-#~ msgstr "Décalage en _Y :"
-
-#~ msgid "<Image>/Filters/Noise/_Hurl..."
-#~ msgstr "<Image>/Filtres/Bruit/_Jeter..."
-
-#~ msgid "<Image>/Filters/Noise/_Pick..."
-#~ msgstr "<Image>/Filtres/Bruit/_Piquer..."
-
-#~ msgid "<Image>/Filters/Distorts/_Ripple..."
-#~ msgstr "<Image>/Filtres/Distorsions/Ond_uler..."
-
-#~ msgid "<Image>/Filters/Colors/Map/_Sample Colorize..."
-#~ msgstr ""
-#~ "<Image>/Filtres/Couleurs/Carte/Color_ier à partir d'un échantillon..."
-
-#~ msgid "<Image>/Filters/Noise/S_catter HSV..."
-#~ msgstr "<Image>/Filtres/Bruit/_Dispersion TSV..."
-
-#~ msgid "Preview (1:4) - Right Click to Jump"
-#~ msgstr "Aperçu (1:4) - Cliquer du bouton droit pour sortir"
-
-#~ msgid "<Toolbox>/File/Acquire/_Screen Shot..."
-#~ msgstr "<Toolbox>/Fichier/Acquisition/_Capture d'écran..."
-
-#~ msgid "<Image>/Filters/Blur/_Selective Gaussian Blur..."
-#~ msgstr "<Image>/Filtres/Flou/Flou gaussien _sélectif..."
-
-#~ msgid "<Image>/Filters/Colors/_Semi-Flatten"
-#~ msgstr "<Image>/Filtres/Couleurs/A_platir à moitié"
-
-#~ msgid "<Image>/Filters/Distorts/_Shift..."
-#~ msgstr "<Image>/Filtres/Distorsions/Dép_lacer..."
-
-#~ msgid "<Image>/Filters/Render/Pattern/_Sinus..."
-#~ msgstr "<Image>/Filtres/Rendu/Motif/_Sinus..."
-
-#~ msgid "<Image>/Filters/Colors/Smoo_th Palette..."
-#~ msgstr "<Image>/Filtres/Couleurs/Palette de _lissage.."
-
-#~ msgid "<Image>/Filters/Render/Clouds/_Solid Noise..."
-#~ msgstr "<Image>/Filtres/Rendu/Nuages/_Brouillage uni..."
-
-#~ msgid "<Image>/Filters/Edge-Detect/_Sobel..."
-#~ msgstr "<Image>/Filtres/Détection de bord/_Sobel..."
-
-#~ msgid "<Image>/Filters/Light Effects/_Sparkle..."
-#~ msgstr "<Image>/Filtres/Effets de lumière/É_tinceller..."
-
-#~ msgid "<Image>/Filters/Render/Sphere _Designer..."
-#~ msgstr "<Image>/Filtres/Rendu/_Créateur de Sphère..."
-
-#~ msgid "<Image>/Filters/Noise/Sp_read..."
-#~ msgstr "<Image>/Filtres/Bruit/É_tendre..."
-
-#~ msgid "<Image>/Filters/Artistic/_Apply Canvas..."
-#~ msgstr "<Image>/Filtres/Artistique/Effet de _toile..."
-
-#~ msgid "Open SVG"
-#~ msgstr "Ouvrir un SVG"
-
-#~ msgid "Ratio _X:"
-#~ msgstr "Ratio en _X :"
-
-#~ msgid "Targa Options"
-#~ msgstr "Options du format Targa"
-
-#~ msgid "<Image>/Filters/Map/_Tile..."
-#~ msgstr "<Image>/Filtres/Carte/_Raccorder..."
-
-#~ msgid "<Image>/Filters/Map/_Small Tiles..."
-#~ msgstr "<Image>/Filtres/Carte/Petit ra_ccords..."
-
-#~ msgid "Flipping"
-#~ msgstr "Retournement en cours"
-
-#~ msgid "Applied to Tile"
-#~ msgstr "Appliqué au carreau"
-
-#~ msgid "Segment Setting"
-#~ msgstr "Paramètres de la segmentation"
-
-#~ msgid "<Image>/Filters/Map/_Make Seamless"
-#~ msgstr "<Image>/Filtres/Carte/_Homogénéiser"
-
-#~ msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
-#~ msgstr "<Image>/Filtres/Amélioration/Renforcer la _netteté..."
-
-#~ msgid "<Image>/Filters/Distorts/Vi_deo..."
-#~ msgstr "<Image>/Filtres/Distorsions/V_idéo..."
-
-#~ msgid "<Image>/Filters/Colors/_Value Invert"
-#~ msgstr "<Image>/Filtres/Couleurs/Inversion de _valeur..."
-
-#~ msgid "<Image>/Filters/Distorts/_Value Propagate..."
-#~ msgstr "<Image>/Filtres/Distorsions/_Propagation de valeur..."
-
-#~ msgid "<Image>/Filters/Generic/_Dilate"
-#~ msgstr "<Image>/Filtres/Générique/_Dilater"
-
-#~ msgid "Secondary Options"
-#~ msgstr "Options secondaires"
-
-#~ msgid "Use Mag Map"
-#~ msgstr "Utiliser la carte de force"
-
-#~ msgid "Other Options"
-#~ msgstr "Autres options"
-
-#~ msgid "<Image>/Filters/Distorts/_Waves..."
-#~ msgstr "<Image>/Filtres/Distorsions/_Vagues..."
-
-#~ msgid "<Image>/Filters/Distorts/W_hirl and Pinch..."
-#~ msgstr "<Image>/Filtres/Distorsions/T_ourner et Aspirer..."
-
-#~ msgid "<Toolbox>/File/Acquire/From Clipboard"
-#~ msgstr "<Toolbox>/Fichier/Acquérir/À partir du presse-papiers"
-
-#~ msgid "<Toolbox>/Xtns/_DB Browser"
-#~ msgstr "<Toolbox>/Exts/Explorer la base de _procédures"
-
-#~ msgid "<Image>/Filters/Colors/_Filter Pack..."
-#~ msgstr "<Image>/Filtres/Couleurs/Paquet de _filtres..."
-
-#~ msgid "Display"
-#~ msgstr "Déplacement"
-
-#~ msgid "Lighter And Darker"
-#~ msgstr "Plus ou moins sombre"
-
-#~ msgid "Miscellaneous Options"
-#~ msgstr "Options diverses"
-
-#~ msgid "With BG of:"
-#~ msgstr "Avec l'arrière-plan de :"
-
-#~ msgid "Selection Type:"
-#~ msgstr "Type de sélection :"
-
-#~ msgid "Brush Preview:"
-#~ msgstr "Aperçu de la brosse :"
-
-#~ msgid "<Image>/Filters/Artistic/_GIMPressionist..."
-#~ msgstr "<Image>/Filtres/Artistique/_GIMPressionnist..."
-
-#~ msgid "Paper Preview:"
-#~ msgstr "Aperçu de la texture :"
-
-#  ?
-#~ msgid "(Desc)"
-#~ msgstr "(Desc)"
-
-#~ msgid ""
-#~ "\n"
-#~ "If you come up with some nice Presets,\n"
-#~ "(or Brushes and Papers for that matter)\n"
-#~ "feel free to send them to me <vidar@prosalg.no>\n"
-#~ "for inclusion into the next release!\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Si vous trouvez des réglages qui rendent\n"
-#~ "particulièrement bien (ou bien des brosses\n"
-#~ "ou des papiers peints), n'hésitez pas à\n"
-#~ "les envoyer à l'auteur de GImpressioniste\n"
-#~ "<vidar@prosalg.no> pour qu'ils soient inclus\n"
-#~ "dans la prochaine version !\n"
-
-#~ msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
-#~ msgstr "<Image>/Filtres/Rendu/Nature/_Composition IFS..."
-
-#~ msgid "lpeek.mrijk@consunet.nl"
-#~ msgstr "lpeek.mrijk@consunet.nl"
-
-#~ msgid ""
-#~ "Generates a maze using either the depth-first search method or Prim's "
-#~ "algorithm.  Can make tileable mazes too.  See %s for more help."
-#~ msgstr ""
-#~ "Génère un labyrinthe en utilisant soit la méthode Profondeur d'abord "
-#~ "soitl'Algorithme de Prim. Peut également créer des labyrinthes jointifs. "
-#~ "Voyer %s pour plus d'informations."
-
-#~ msgid "Draws a maze."
-#~ msgstr "Dessine un labyrinthe."
-
-#~ msgid "Selection is %dx%d"
-#~ msgstr "La sélection est %dx%d"
-
-#~ msgid "<Image>/Filters/Distorts/_Pagecurl..."
-#~ msgstr "<Image>/Filtres/Distorsions/Coin de p_age..."
-
-#~ msgid "<Image>/File/_Print..."
-#~ msgstr "<Image>/Ficher/_Imprimer..."
-
-#~ msgid "<Image>/Filters/Colors/Map/Colormap _Rotation..."
-#~ msgstr ""
-#~ "<Image>/Filtres/Couleurs/Carte/Rotation de la carte des coule_urs..."
-
-#~ msgid "What is Gray?"
-#~ msgstr "C'est quoi Gris ?"
-
-#~ msgid "Main"
-#~ msgstr "Principale"
-
-#~ msgid "Misc"
-#~ msgstr "Diverses"
-
-#~ msgid "Save: No filename given"
-#~ msgstr "Enregistrer : vous n'avez pas donné de nom de fichier."
-
-#~ msgid "Cannot save to a folder."
-#~ msgstr "Impossible d'enregistrer dans un dossier."
-
-#~ msgid "<Image>/Filters/Colors/Map/_Alien Map..."
-#~ msgstr "<Image>/Filtres/Couleurs/Carte/_Psychédélique..."
-
-#~ msgid "AlienMap: Transforming..."
-#~ msgstr "Psychédélique : transformation..."
-
-#~ msgid "AlienMap"
-#~ msgstr "Psychédélique"
-
-#~ msgid "Change intensity of the red channel"
-#~ msgstr "Change l'intensité du canal rouge"
-
-#~ msgid "Change intensity of the green channel"
-#~ msgstr "Change l'intensité du canal vert"
-
-#~ msgid "Change intensity of the blue channel"
-#~ msgstr "Change l'intensité du canal bleu"
-
-#~ msgid "Cos_ine"
-#~ msgstr "Cos_inus"
-
-#~ msgid "Use sine-function for red component."
-#~ msgstr "Utilise la fonction sinus pour la composante rouge."
-
-#~ msgid "Use cosine-function for red component."
-#~ msgstr "Utilise la fonction cosinus pour la composante rouge."
-
-#~ msgid ""
-#~ "Red channel: use linear mapping instead of any trigonometrical function"
-#~ msgstr ""
-#~ "Canal rouge : utilise une fonction linéaire (et non pas trigonométrique)"
-
-#~ msgid "Use sine-function for green component."
-#~ msgstr "Utilise la fonction sinus pour la composante verte."
-
-#~ msgid "Use cosine-function for green component."
-#~ msgstr "Utilise la fonction cosinus pour la composante verte."
-
-#~ msgid ""
-#~ "Green channel: use linear mapping instead of any trigonometrical function"
-#~ msgstr ""
-#~ "Canal vert : utilise une fonction linéaire (et non pas trigonométrique)"
-
-#~ msgid "Use sine-function for blue component."
-#~ msgstr "Utilise la fonction sinus pour la composante bleue."
-
-#~ msgid "Use cosine-function for blue component."
-#~ msgstr "Utilise la fonction cosinus pour la composante bleue."
-
-#~ msgid ""
-#~ "Blue channel: use linear mapping instead of any trigonometrical function"
-#~ msgstr ""
-#~ "Canal bleu : utilise une fonction linéaire (et non pas trigonométrique)"
-
-#~ msgid "About AlienMap"
-#~ msgstr "À propos de Psychédélique"
-
-#~ msgid "Change frequency of the red/hue channel"
-#~ msgstr "Change la fréquence du canal Rouge/Teinte"
-
-#~ msgid "Change angle of the red/hue channel"
-#~ msgstr "Change l'angle de déphasage du canal Rouge/Teinte"
-
-#~ msgid "Change frequency of the green/saturation channel"
-#~ msgstr "Change la fréquence du canal Vert/Saturation"
-
-#~ msgid "Change angle of the green/saturation channel"
-#~ msgstr "Change l'angle de déphasage du canal Vert/Saturation"
-
-#~ msgid "Change frequency of the blue/luminance channel"
-#~ msgstr "Change la fréquence du canal Bleu/Luminance"
-
-#~ msgid "Change angle of the blue/luminance channel"
-#~ msgstr "Change l'angle de déphasage du canal Bleu/Luminance"
-
-#~ msgid "Use function for red/hue component"
-#~ msgstr "Applique une fonction au canal rouge ou teinte"
-
-#~ msgid "Use function for green/saturation component"
-#~ msgstr "Applique une fonction au canal vert ou saturation"
-
-#~ msgid "Use function for blue/luminance component"
-#~ msgstr "Applique une fonction au canal bleu ou luminance"
-
-#~ msgid "About AlienMap2"
-#~ msgstr "À propos de Psychédélique 2"
-
-#~ msgid "NULL"
-#~ msgstr "NUL"
-
-#~ msgid "1 (nonsense?)"
-#~ msgstr "1 (non sens ?)"
-
-#~ msgid "256 (nonsense?)"
-#~ msgstr "256 (non sens ?)"
-
-#~ msgid "Save as GIcon"
-#~ msgstr "Enregistrer au format GIcon"
-
-#~ msgid "Icon Name:"
-#~ msgstr "Nom de l'icône :"
-
-#~ msgid "none"
-#~ msgstr "aucun"
-
-#~ msgid "Not found \"%s\": used \"%s\" instead"
-#~ msgstr "« %s » non trouvé : utilisation de « %s » à la place"

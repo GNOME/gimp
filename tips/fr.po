@@ -1,21 +1,23 @@
+# translation of fr.po to 
 # French translation of gimp-tips
-# Copyright (C) 2002,2004 Free Software Foundation, Inc.
+# Copyright (C) 2002,2004, 2005 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
-#
 # maintainer: Raymond Ostertag <r.ostertag@caramail.com>, 2003-2004.
-# Jean-Louis Berliet <jl.berliet@free.fr>, 2004.
+# Jean-Louis Berliet <jl.berliet@free.fr>, 2004, 2005.
+#
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tips 2.2.0pre1\n"
+"Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 00:46+0100\n"
-"PO-Revision-Date: 2004-11-13 18:06+0100\n"
-"Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
-"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
+"POT-Creation-Date: 2005-01-25 20:15+0100\n"
+"PO-Revision-Date: 2005-01-20 19:56+0100\n"
+"Last-Translator: \n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3.1\n"
 
 #: tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GIMP!</big>"
@@ -63,7 +65,6 @@ msgstr ""
 "afficher tous les calques."
 
 #: tips/gimp-tips.xml.in.h:7
-#, fuzzy
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -77,7 +78,6 @@ msgstr ""
 "même."
 
 #: tips/gimp-tips.xml.in.h:8
-#, fuzzy
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
@@ -102,7 +102,6 @@ msgstr ""
 "enlever les guides en les glissant hors de l'image avec l'outil déplacer."
 
 #: tips/gimp-tips.xml.in.h:10
-#, fuzzy
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -197,7 +196,6 @@ msgstr ""
 "eux vous verriez une image composée de leurs contenus."
 
 #: tips/gimp-tips.xml.in.h:19
-#, fuzzy
 msgid ""
 "The layer named &quot;Background&quot; is special because it lacks "
 "transparency. This prevents you from moving the layer up in the stack. You "
@@ -364,7 +362,6 @@ msgstr ""
 "l'image si elle est plus large que sa fenêtre d'affichage."
 
 #: tips/gimp-tips.xml.in.h:35
-#, fuzzy
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
@@ -375,25 +372,3 @@ msgstr ""
 "sur le bouton « Masquage rapide » dans le coin bas gauche de la fenêtre "
 "d'image. Changez votre sélection en dessinant dans l'image et cliquez à "
 "nouveau sur le bouton pour la reconvertir comme une sélection normale."
-
-#~ msgid ""
-#~ "The file selection dialog box has command-line completion with <tt>Tab</"
-#~ "tt>, just like the shell. Type part of a filename, hit <tt>Tab</tt>, and "
-#~ "voila, it's completed."
-#~ msgstr ""
-#~ "La boite de dialogue de sélection de fichier à une complétion de type "
-#~ "commande en ligne <tt>Tab</tt> tout comme la console. Tapez le début d'un "
-#~ "nom de fichier, appuyer sur <tt>Tab</tt> et voilà c'est complété."
-
-#~ msgid ""
-#~ "Nearly all image operations are performed by right-clicking on the image. "
-#~ "And don't worry, you can undo most mistakes..."
-#~ msgstr ""
-#~ "À peu près toutes les opérations sur les images sont réalisables par un "
-#~ "clic-droit sur l'image. Et ne vous en faites pas, vous pouvez annuler "
-#~ "toutes les mauvaises manipulations..."
-
-#~ msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
-#~ msgstr ""
-#~ "Vous pouvez ajuster et replacer une sélection en utilisant <tt>Alt</tt>-"
-#~ "glissé."

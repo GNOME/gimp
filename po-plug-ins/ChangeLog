@@ -1,3 +1,7 @@
+2005-01-25 Raymond Ostertag <r.ostertag@caramail.com>
+
+	* fr.po: Updated French translation
+
 2005-01-25  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: removed plug-ins/MapObject/arcball.c, added

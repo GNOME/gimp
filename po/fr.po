@@ -1,26 +1,29 @@
+# translation of fr.po to 
+# translation of gimp.HEAD.po to
 # French translation for The Gimp.
-# Copyright (C) 1998-2004 Free Software Foundation, Inc.
+# Copyright (C) 1998-2004, 2005 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
-#
 # Vincent Renardias <vincent@ldsol.com>, 1998-2000.
 # David Monniaux <monniaux@brick.ens.fr>, 1999-2000.
 # Daniel Egger <Daniel.Egger@rz.fh-muenchen.de>, 1999.
 # Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2004.
 # maintainer: Raymond Ostertag <r.ostertag@caramail.com>, 2002-2004.
 # Thomas Morin <t0m@free.fr>, 2002-2003.
-# Jean-Louis Berliet <jl.berliet@free.fr>, 2004.
+# Jean-Louis Berliet <jl.berliet@free.fr>, 2004, 2005.
+#
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.2.0pre1\n"
+"Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-22 17:32+0100\n"
-"PO-Revision-Date: 2004-11-13 17:19+0100\n"
-"Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
-"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
+"POT-Creation-Date: 2005-01-25 19:55+0100\n"
+"PO-Revision-Date: 2005-01-09 15:26+0100\n"
+"Last-Translator: \n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3.1\n"
 
 #: app/app_procs.c:144
 msgid "(This console window will close in ten seconds)\n"
@@ -263,7 +266,7 @@ msgstr "Canaux"
 
 #: app/actions/actions.c:102
 msgid "Colormap Editor"
-msgstr "Éditeur de palette"
+msgstr "Éditeur de palette de couleurs"
 
 #: app/actions/actions.c:105 app/pdb/internal_procs.c:101
 msgid "Context"
@@ -370,9 +373,8 @@ msgid "Templates"
 msgstr "Modèles"
 
 #: app/actions/actions.c:174
-#, fuzzy
 msgid "Text Editor"
-msgstr "Éditeur de texte GIMP"
+msgstr "Éditeur de texte"
 
 #: app/actions/actions.c:177 app/dialogs/dialogs.c:123
 #: app/dialogs/preferences-dialog.c:1585 app/dialogs/preferences-dialog.c:1588
@@ -482,7 +484,6 @@ msgid "_Edit Channel Attributes..."
 msgstr "_Éditer les attributs du canal..."
 
 #: app/actions/channels-actions.c:49
-#, fuzzy
 msgid "Edit channel attributes"
 msgstr "Édition des attributs du canal"
 
@@ -500,7 +501,7 @@ msgstr "_Nouveau canal"
 
 #: app/actions/channels-actions.c:61
 msgid "New channel with last values"
-msgstr ""
+msgstr "Nouveau canal avec les dernières valeurs"
 
 #: app/actions/channels-actions.c:66
 msgid "D_uplicate Channel"
@@ -523,7 +524,6 @@ msgid "_Raise Channel"
 msgstr "_Remonter le canal"
 
 #: app/actions/channels-actions.c:79
-#, fuzzy
 msgid "Raise channel"
 msgstr "Remonter le canal"
 
@@ -532,16 +532,14 @@ msgid "Raise Channel to _Top"
 msgstr "Remonter le canal tout en _haut"
 
 #: app/actions/channels-actions.c:85
-#, fuzzy
 msgid "Raise channel to top"
-msgstr "Envoyer le canal au sommet de la pile"
+msgstr "Envoyer le canal tout en haut"
 
 #: app/actions/channels-actions.c:90
 msgid "_Lower Channel"
 msgstr "_Descendre le canal"
 
 #: app/actions/channels-actions.c:91
-#, fuzzy
 msgid "Lower channel"
 msgstr "Descendre le canal"
 
@@ -550,18 +548,16 @@ msgid "Lower Channel to _Bottom"
 msgstr "Descendre le canal au tout en _bas"
 
 #: app/actions/channels-actions.c:97
-#, fuzzy
 msgid "Lower channel to bottom"
-msgstr "Envoyer le canal au bas de la pile"
+msgstr "Envoyer le canal tout en bas"
 
 #: app/actions/channels-actions.c:105
 msgid "Channel to Sele_ction"
 msgstr "Canal vers _Sélection"
 
 #: app/actions/channels-actions.c:106
-#, fuzzy
 msgid "Channel to selection"
-msgstr "Canal vers Sélection"
+msgstr "Canal vers sélection"
 
 #: app/actions/channels-actions.c:111 app/actions/layers-actions.c:226
 #: app/actions/vectors-actions.c:173
@@ -570,7 +566,7 @@ msgstr "A_jouter à la sélection"
 
 #: app/actions/channels-actions.c:112 app/actions/vectors-actions.c:174
 msgid "Add"
-msgstr ""
+msgstr "Ajouter"
 
 #: app/actions/channels-actions.c:117 app/actions/layers-actions.c:231
 #: app/actions/layers-actions.c:254 app/actions/vectors-actions.c:179
@@ -589,9 +585,8 @@ msgid "_Intersect with Selection"
 msgstr "_Intersection avec la sélection"
 
 #: app/actions/channels-actions.c:124 app/actions/vectors-actions.c:186
-#, fuzzy
 msgid "Intersect"
-msgstr "Inverser"
+msgstr "Intersecter"
 
 #: app/actions/channels-commands.c:86 app/actions/channels-commands.c:383
 msgid "Channel Attributes"
@@ -634,9 +629,8 @@ msgid "Channel to Selection"
 msgstr "Canal vers Sélection"
 
 #: app/actions/colormap-editor-actions.c:43
-#, fuzzy
 msgid "Colormap Menu"
-msgstr "Palette"
+msgstr "Menu de palette de couleurs"
 
 #: app/actions/colormap-editor-actions.c:47
 #: app/actions/palette-editor-actions.c:47
@@ -670,7 +664,6 @@ msgid "Edit colormap entry #%d"
 msgstr "Éditer l'entrée de la palette de couleurs #%d"
 
 #: app/actions/colormap-editor-commands.c:76
-#, fuzzy
 msgid "Edit Colormap Entry"
 msgstr "Éditer l'entrée de la palette de couleurs"
 
@@ -692,9 +685,8 @@ msgid "Paint _Mode"
 msgstr "Mode de _peinture"
 
 #: app/actions/context-actions.c:50
-#, fuzzy
 msgid "_Tool"
-msgstr "_Outils"
+msgstr "_Outil"
 
 #: app/actions/context-actions.c:51 app/dialogs/preferences-dialog.c:1627
 msgid "_Brush"
@@ -812,7 +804,7 @@ msgstr "C_hemins"
 
 #: app/actions/dialogs-actions.c:90
 msgid "Color_map"
-msgstr "_Palette"
+msgstr "_Palette de couleurs"
 
 #: app/actions/dialogs-actions.c:95
 msgid "Histogra_m"
@@ -903,7 +895,6 @@ msgid "_Add Tab"
 msgstr "A_jouter un onglet"
 
 #: app/actions/dockable-actions.c:54
-#, fuzzy
 msgid "_Preview Size"
 msgstr "Taille de l'aperç_u"
 
@@ -924,12 +915,10 @@ msgid "M_ove to Screen..."
 msgstr "_Aller à l'écran..."
 
 #: app/actions/dockable-actions.c:76
-#, fuzzy
 msgid "_Show Image Selection"
-msgstr "Afficher la _sélection"
+msgstr "Afficher l'image  _sélectionnée"
 
 #: app/actions/dockable-actions.c:82
-#, fuzzy
 msgid "Auto _Follow Active Image"
 msgstr "Suivre automatiquement l'_image active"
 
@@ -1015,16 +1004,15 @@ msgstr "_Remonter ou ouvrir une image"
 
 #: app/actions/documents-actions.c:53
 msgid "Raise window if already open"
-msgstr ""
+msgstr "Remonter l'image si elle est déjà ouverte"
 
 #: app/actions/documents-actions.c:58
 msgid "File Open _Dialog"
 msgstr "_Dialogue d'ouverture de fichiers"
 
 #: app/actions/documents-actions.c:59
-#, fuzzy
 msgid "Open image dialog"
-msgstr "Ouvrir une image"
+msgstr "Ouvrir le dialogue des images"
 
 #: app/actions/documents-actions.c:64
 msgid "Remove _Entry"
@@ -1087,7 +1075,7 @@ msgstr "In_verser"
 
 #: app/actions/drawable-actions.c:60
 msgid "_White Balance"
-msgstr ""
+msgstr "Balance des _blancs"
 
 #: app/actions/drawable-actions.c:65
 msgid "_Offset..."
@@ -1135,7 +1123,6 @@ msgid "Invert does not operate on indexed layers."
 msgstr "L'inversion ne fonctionne pas sur des calques en couleurs indexées."
 
 #: app/actions/drawable-commands.c:114
-#, fuzzy
 msgid "White Balance operates only on RGB color layers."
 msgstr "La balance des couleurs fonctionne seulement sur des calques RVB."
 
@@ -1144,9 +1131,8 @@ msgid "_Edit"
 msgstr "_Édition"
 
 #: app/actions/edit-actions.c:62
-#, fuzzy
 msgid "_Buffer"
-msgstr "_Tampons"
+msgstr "_Tampon"
 
 #: app/actions/edit-actions.c:65 app/actions/edit-actions.c:230
 msgid "_Undo"
@@ -1183,9 +1169,8 @@ msgstr "_Copier"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: app/actions/edit-actions.c:93
-#, fuzzy
 msgid "Copy _Visible"
-msgstr "_Visible"
+msgstr "Copier _visible"
 
 #: app/actions/edit-actions.c:98
 msgid "_Paste"
@@ -1286,18 +1271,16 @@ msgid "Save _All Errors to File..."
 msgstr "Enregistrer toutes les erreurs d_ans un fichier..."
 
 #: app/actions/error-console-actions.c:54
-#, fuzzy
 msgid "Save all errors"
-msgstr "Effacer les erreurs"
+msgstr "Enregistrer toutes les erreurs"
 
 #: app/actions/error-console-actions.c:59
 msgid "Save _Selection to File..."
 msgstr "Enregistrer la _sélection dans un fichier..."
 
 #: app/actions/error-console-actions.c:60
-#, fuzzy
 msgid "Save selection"
-msgstr "Déplacer la sélection"
+msgstr "Enregistrer la sélection"
 
 #: app/actions/error-console-commands.c:69
 msgid "Cannot save. Nothing is selected."
@@ -1841,9 +1824,8 @@ msgid "F_it Canvas to Layers"
 msgstr "A_juster le canevas aux calques"
 
 #: app/actions/image-actions.c:85
-#, fuzzy
 msgid "_Print Size..."
-msgstr "Taille de l'impression :"
+msgstr "Taille de l'im_pression..."
 
 #: app/actions/image-actions.c:90
 msgid "_Scale Image..."
@@ -1886,9 +1868,8 @@ msgid "Resizing..."
 msgstr "Redimensionnement en cours..."
 
 #: app/actions/image-commands.c:242
-#, fuzzy
 msgid "Set Image Print Resolution"
-msgstr "Modifier la résolution de l'image"
+msgstr "Définir la résolution d'impression de l'image"
 
 #: app/actions/image-commands.c:289
 msgid "Flipping..."
@@ -1905,9 +1886,8 @@ msgid "Cannot crop because the current selection is empty."
 msgstr "Impossible de découper car la sélection courante est vide."
 
 #: app/actions/image-commands.c:484
-#, fuzzy
 msgid "Change Print Size"
-msgstr "Taille de l'impression :"
+msgstr "Changer la taille d'impression"
 
 #: app/actions/image-commands.c:508 app/core/gimpimage-scale.c:71
 #: app/dialogs/image-scale-dialog.c:91
@@ -2007,7 +1987,7 @@ msgstr "_Nouveau calque"
 
 #: app/actions/layers-actions.c:81
 msgid "New layer with last values"
-msgstr ""
+msgstr "Nouveau calque avec les dernières valeurs"
 
 #: app/actions/layers-actions.c:86
 msgid "D_uplicate Layer"
@@ -2038,16 +2018,14 @@ msgid "Layer to _Top"
 msgstr "Calque tout en hau_t"
 
 #: app/actions/layers-actions.c:105
-#, fuzzy
 msgid "Raise layer to top"
-msgstr "Envoyer le calque tout en haut"
+msgstr "Monter le calque tout en haut"
 
 #: app/actions/layers-actions.c:110
 msgid "_Lower Layer"
 msgstr "_Descendre le calque"
 
 #: app/actions/layers-actions.c:111
-#, fuzzy
 msgid "Lower layer"
 msgstr "Descendre le calque"
 
@@ -2056,9 +2034,8 @@ msgid "Layer to _Bottom"
 msgstr "Calque tout en _bas"
 
 #: app/actions/layers-actions.c:117
-#, fuzzy
 msgid "Lower layer to bottom"
-msgstr "Envoyer le Calque tout en bas"
+msgstr "Descendre le calque tout en bas"
 
 #: app/actions/layers-actions.c:122
 msgid "_Anchor Layer"
@@ -2588,9 +2565,8 @@ msgid "_Stroke Selection"
 msgstr "_Tracer la sélection"
 
 #: app/actions/select-actions.c:111
-#, fuzzy
 msgid "Stroke selection with last values"
-msgstr "Tracer la sélection"
+msgstr "Tracer la sélection avec les dernières valeurs"
 
 #: app/actions/select-commands.c:136 app/core/gimpselection.c:201
 msgid "Feather Selection"
@@ -2724,7 +2700,7 @@ msgstr "Effacer tout le texte"
 
 #: app/actions/text-editor-actions.c:59
 msgid "LTR"
-msgstr ""
+msgstr "GàD"
 
 #: app/actions/text-editor-actions.c:60 app/text/text-enums.c:51
 msgid "From left to right"
@@ -2732,7 +2708,7 @@ msgstr "De gauche à droite"
 
 #: app/actions/text-editor-actions.c:65
 msgid "RTL"
-msgstr ""
+msgstr "DàG"
 
 #: app/actions/text-editor-actions.c:66 app/text/text-enums.c:52
 msgid "From right to left"
@@ -2781,9 +2757,8 @@ msgid "R_eset Tool Options"
 msgstr "Ré_initialiser les options des outils"
 
 #: app/actions/tool-options-actions.c:82
-#, fuzzy
 msgid "Reset to default values"
-msgstr "Remettre le filtre sélectionné aux valeurs par défaut"
+msgstr "Remettre aux valeurs par défaut"
 
 #: app/actions/tool-options-actions.c:87
 msgid "Reset _all Tool Options..."
@@ -2966,9 +2941,8 @@ msgid "Stro_ke Path"
 msgstr "_Tracer le chemin"
 
 #: app/actions/vectors-actions.c:119
-#, fuzzy
 msgid "Stroke path with last values"
-msgstr "Tracer en utilisant un outil de peinture"
+msgstr "Tracer le chemin avec les dernières valeurs"
 
 #: app/actions/vectors-actions.c:124
 msgid "Co_py Path"
@@ -3625,6 +3599,9 @@ msgid ""
 "path is being picked. This used to be the default behaviour in older "
 "versions."
 msgstr ""
+"Si cette option est activée, l'outil Déplacer changera le calque actif ou le "
+"chemin quand un calque ou un chemin est cliqué. C'était le comportement par "
+"défaut dans les versions ultérieures."
 
 #: app/config/gimprc-blurbs.h:214
 msgid ""
@@ -4669,25 +4646,24 @@ msgid "Could not read %d bytes from '%s': %s"
 msgstr "Impossible de lire %d octets depuis « %s » : %s"
 
 #: app/core/gimpbrush.c:554
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
 msgstr ""
 "Erreur fatale d'interprétation dans le fichier de brosse « %s » : profondeur "
-"inconnue %d."
+"= 0."
 
 #: app/core/gimpbrush.c:563
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
 msgstr ""
-"Erreur fatale d'interprétation dans le fichier de brosse « %s » : le fichier "
-"est corrompu."
+"Erreur fatale d'interprétation dans le fichier de brosse « %s » : Hauteur = "
+"0."
 
 #: app/core/gimpbrush.c:572
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
 msgstr ""
-"Erreur fatale d'interprétation dans le fichier de brosse « %s » : le fichier "
-"est corrompu."
+"Erreur fatale d'interprétation dans le fichier de brosse « %s » : Octets = 0"
 
 #: app/core/gimpbrush.c:596
 #, c-format
@@ -5010,6 +4986,8 @@ msgstr "Segment corrompu %d dans le fichier de dégradé « %s »."
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
 msgstr ""
+"Le fichier de dégragé « %s » est corrompu : les segments ne suivent pas "
+"l'intervalle 0-1."
 
 #: app/core/gimpgradient-load.c:281
 #, c-format
@@ -5058,14 +5036,12 @@ msgstr ""
 "négatif"
 
 #: app/core/gimpimage-colormap.c:63
-#, fuzzy
 msgid "Set Colormap"
-msgstr "Palette"
+msgstr "Définir la palette de couleurs"
 
 #: app/core/gimpimage-colormap.c:115
-#, fuzzy
 msgid "Change Colormap entry"
-msgstr "Modifier l'unité de l'image"
+msgstr "Changer l'entrée de la palette de couleurs"
 
 #: app/core/gimpimage-colormap.c:135
 msgid "Add Color to Colormap"
@@ -5319,9 +5295,8 @@ msgid "Special File"
 msgstr "Fichier spécial"
 
 #: app/core/gimpimagefile.c:605
-#, fuzzy
 msgid "Click to create preview"
-msgstr "Impossible de créer l'aperçu."
+msgstr "Cliquez pour créer l'aperçu"
 
 #: app/core/gimpimagefile.c:609
 msgid "Loading preview ..."
@@ -5482,12 +5457,12 @@ msgid "Move Layer Mask"
 msgstr "Déplacer le masque de calque"
 
 #: app/core/gimppalette-import.c:490
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unknown type of palette file:\n"
 "%s"
 msgstr ""
-"N'est pas un fichier de palette RIFF:\n"
+"Type de fichier de palette inconnu:\n"
 "%s"
 
 #: app/core/gimppalette.c:375
@@ -5745,7 +5720,7 @@ msgstr "Convertir l'image en couleurs indexées"
 
 #: app/dialogs/convert-dialog.c:165 app/dialogs/dialogs.c:171
 msgid "Colormap"
-msgstr "Palette"
+msgstr "Palette de couleurs"
 
 #: app/dialogs/convert-dialog.c:179
 msgid "_Maximum number of colors:"
@@ -6318,11 +6293,12 @@ msgid "Configure Keyboard Shortcuts"
 msgstr "Configurer les raccourcis clavier"
 
 #: app/dialogs/preferences-dialog.c:551
-#, fuzzy
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
-msgstr "Tapez un nouvel accélérateur ou appuyer sur Retour pour effacer"
+msgstr ""
+"Pour éditer un nouvel accélérateur, cliquez sur la rangée correspondante et "
+"tapez un nouvel accélérateur ou appuyez sur la barre espace pour l'effacer."
 
 #: app/dialogs/preferences-dialog.c:595
 msgid ""
@@ -6333,7 +6309,6 @@ msgstr ""
 "prochaine fois que vous démarrerez Gimp."
 
 #: app/dialogs/preferences-dialog.c:629
-#, fuzzy
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
@@ -6546,14 +6521,12 @@ msgid "Paint Options Shared Between Tools"
 msgstr "Options de peinture partagées entre les outils"
 
 #: app/dialogs/preferences-dialog.c:1636
-#, fuzzy
 msgid "Move Tool"
-msgstr "Déplacement : "
+msgstr "Outil Déplacer"
 
 #: app/dialogs/preferences-dialog.c:1640
-#, fuzzy
 msgid "Change current layer or path"
-msgstr "Calque courant seulement"
+msgstr "Change le calque ou chemin actif"
 
 #: app/dialogs/preferences-dialog.c:1653 app/dialogs/preferences-dialog.c:1656
 msgid "Toolbox"
@@ -6945,9 +6918,8 @@ msgid "Select Theme Folders"
 msgstr "Sélectionnez un dossier de thèmes"
 
 #: app/dialogs/print-size-dialog.c:128
-#, fuzzy
 msgid "Print Size"
-msgstr "Taille de l'impression :"
+msgstr "Taille de l'impression"
 
 #. the image size labels
 #: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:223
@@ -6997,9 +6969,8 @@ msgid "There are %d images with unsaved changes:"
 msgstr "Il y a %d images avec des modifications non enregistrées :"
 
 #: app/dialogs/quit-dialog.c:183
-#, fuzzy
 msgid "_Discard Changes"
-msgstr "_Remonter le canal"
+msgstr "_Abandonner les modifications"
 
 #: app/dialogs/resize-dialog.c:115
 msgid "Canvas Size"
@@ -7039,7 +7010,6 @@ msgid "I_nterpolation:"
 msgstr "_Interpolation :"
 
 #: app/dialogs/scale-dialog.c:192
-#, fuzzy
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect channels and masks only."
@@ -7389,20 +7359,19 @@ msgstr ""
 
 #: app/dialogs/user-install-dialog.c:810
 msgid "Migrate User Settings"
-msgstr ""
+msgstr "Migration des réglages de l'utilisateur"
 
 #: app/dialogs/user-install-dialog.c:811
-#, fuzzy
 msgid "Click \"Continue\" to proceed with the user installation."
-msgstr "Cliquez sur « Continuer » pour entrer dans l'installation de GIMP."
+msgstr "Cliquez sur « Continuer » pour procéder à l'installation utilisateur."
 
 #: app/dialogs/user-install-dialog.c:816
 msgid "It seems you have used GIMP 2.0 before."
-msgstr ""
+msgstr "Il semble que vous ayez utilisé Gimp 2.0 auparavant."
 
 #: app/dialogs/user-install-dialog.c:820
 msgid "_Migrate GIMP 2.0 user settings"
-msgstr ""
+msgstr "_Migration des réglages utilisateurs Gimp 2.0"
 
 #: app/dialogs/user-install-dialog.c:823
 msgid "Do a _fresh user installation"
@@ -7513,14 +7482,12 @@ msgid "Export Path to SVG"
 msgstr "Exporter des Chemins en SVG"
 
 #: app/dialogs/vectors-export-dialog.c:78
-#, fuzzy
 msgid "Export the active path"
-msgstr "Déplacer le chemin actif"
+msgstr "Exporter le chemin actif"
 
 #: app/dialogs/vectors-export-dialog.c:79
-#, fuzzy
 msgid "Export all paths from this image"
-msgstr "Créer une nouvelle vue pour cette image"
+msgstr "Exporter tous les chemins pour cette image"
 
 #: app/dialogs/vectors-import-dialog.c:57
 msgid "Import Paths from SVG"
@@ -7540,7 +7507,7 @@ msgstr "_Fusionne les chemins importés"
 
 #: app/dialogs/vectors-import-dialog.c:109
 msgid "_Scale imported paths to fit image"
-msgstr ""
+msgstr "_Changer la taille des chemins importés pour les ajuster à l'image"
 
 #: app/dialogs/vectors-options-dialog.c:113
 msgid "Path Name:"
@@ -7868,9 +7835,8 @@ msgid "Threshold"
 msgstr "Seuil"
 
 #: app/pdb/drawable_transform_cmds.c:249 app/pdb/drawable_transform_cmds.c:404
-#, fuzzy
 msgid "Flip..."
-msgstr "Retournement en cours..."
+msgstr "Retourner..."
 
 #: app/pdb/drawable_transform_cmds.c:563 app/pdb/drawable_transform_cmds.c:746
 #: app/pdb/transform_tools_cmds.c:197 app/tools/gimpperspectivetool.c:141
@@ -7936,9 +7902,8 @@ msgid "Drawable procedures"
 msgstr "Procédures des tracés"
 
 #: app/pdb/internal_procs.c:113
-#, fuzzy
 msgid "Transformation procedures"
-msgstr "Procédures d'outils de transformation"
+msgstr "Procédures de transformation"
 
 #: app/pdb/internal_procs.c:116
 msgid "Edit procedures"
@@ -8071,9 +8036,9 @@ msgid "Free Select"
 msgstr "Sélection à main levée"
 
 #: app/plug-in/plug-in.c:544 app/plug-in/plug-in.c:574
-#, fuzzy, c-format
+#, c-format
 msgid "Terminating plug-in: '%s'\n"
-msgstr "Interrogation du greffon : « %s »\n"
+msgstr "Interruption du greffon : « %s »\n"
 
 #: app/plug-in/plug-in.c:730
 #, c-format
@@ -8678,9 +8643,8 @@ msgid "Load Curves"
 msgstr "Charger des courbes"
 
 #: app/tools/gimpcurvestool.c:205
-#, fuzzy
 msgid "Load curves settings from file"
-msgstr "Lire les courbes depuis le fichier"
+msgstr "Charger les réglages de courbes depuis le fichier"
 
 #: app/tools/gimpcurvestool.c:206
 msgid "Save Curves"
@@ -8870,14 +8834,12 @@ msgid "_Preview"
 msgstr "A_perçu"
 
 #: app/tools/gimpimagemaptool.c:292
-#, fuzzy
 msgid "Quick Load"
-msgstr "Masque rapide"
+msgstr "Chargement rapide"
 
 #: app/tools/gimpimagemaptool.c:322
-#, fuzzy
 msgid "Quick Save"
-msgstr "Masque rapide"
+msgstr "Enregistrement rapide"
 
 #. adjust sliders
 #: app/tools/gimpinkoptions-gui.c:59
@@ -8933,7 +8895,6 @@ msgid "Select shapes from image"
 msgstr "Sélectionne des formes dans l'image"
 
 #: app/tools/gimpiscissorstool.c:279
-#, fuzzy
 msgid "Intelligent _Scissors"
 msgstr "Ciseaux _intelligents"
 
@@ -8954,9 +8915,8 @@ msgid "Load Levels"
 msgstr "Charger les niveaux"
 
 #: app/tools/gimplevelstool.c:223
-#, fuzzy
 msgid "Load levels settings from file"
-msgstr "Lire les réglages de niveaux depuis le fichier"
+msgstr "Charger les réglages de niveaux depuis le fichier"
 
 #: app/tools/gimplevelstool.c:224
 msgid "Save Levels"
@@ -9047,9 +9007,8 @@ msgid "Distance:"
 msgstr "Distance :"
 
 #: app/tools/gimpmoveoptions.c:171
-#, fuzzy
 msgid "Pick a layer or guide"
-msgstr "Sélectionner un calque ou guide à déplacer"
+msgstr "Sélectionner un calque ou guide"
 
 #: app/tools/gimpmoveoptions.c:172
 msgid "Move the current layer"
@@ -9060,9 +9019,8 @@ msgid "Move selection"
 msgstr "Déplacer la sélection"
 
 #: app/tools/gimpmoveoptions.c:180
-#, fuzzy
 msgid "Pick a path"
-msgstr "Sélectionner un chemin à déplacer"
+msgstr "Sélectionner un chemin"
 
 #: app/tools/gimpmoveoptions.c:181
 msgid "Move the current path"
@@ -9077,19 +9035,16 @@ msgid "_Move"
 msgstr "_Déplacer"
 
 #: app/tools/gimpmovetool.c:298 app/tools/gimpmovetool.c:576
-#, fuzzy
 msgid "Move Guide: "
-msgstr "Déplacer le guide"
+msgstr "Déplacer un guide :"
 
 #: app/tools/gimpmovetool.c:570
-#, fuzzy
 msgid "Cancel Guide"
-msgstr "Annuler"
+msgstr "Annuler un guide"
 
 #: app/tools/gimpmovetool.c:576
-#, fuzzy
 msgid "Add Guide: "
-msgstr "Ajouter des guides"
+msgstr "Ajouter un guide :"
 
 #: app/tools/gimppaintbrushtool.c:52
 msgid "Paint fuzzy brush strokes"
@@ -9246,9 +9201,8 @@ msgid "Center X:"
 msgstr "Centre X :"
 
 #: app/tools/gimprotatetool.c:190
-#, fuzzy
 msgid "Center Y:"
-msgstr "Centre X :"
+msgstr "Centre Y :"
 
 #: app/tools/gimpscaletool.c:91
 msgid "Scale"
@@ -9930,9 +9884,8 @@ msgid "Color index:"
 msgstr "Index couleur :"
 
 #: app/widgets/gimpcolormapeditor.c:258
-#, fuzzy
 msgid "HTML notation:"
-msgstr "Emplacement :"
+msgstr "Notation HTML :"
 
 #: app/widgets/gimpcontainerpopup.c:502
 msgid "Smaller Previews"
@@ -9960,7 +9913,7 @@ msgstr "Événement"
 
 #: app/widgets/gimpcontrollereditor.c:550
 msgid "Select Controller Event Action"
-msgstr ""
+msgstr "Sélectionner l'action du contrôleur d'événement"
 
 #: app/widgets/gimpcontrollerkeyboard.c:69
 msgid "Key Up (Shift + Control + Alt)"
@@ -10095,15 +10048,13 @@ msgid "Keyboard"
 msgstr "Clavier"
 
 #: app/widgets/gimpcontrollerkeyboard.c:230
-#, fuzzy
 msgid "Keyboard Events"
-msgstr "Clavier"
+msgstr "Evénements claviers"
 
 #: app/widgets/gimpcontrollerkeyboard.c:231
 #: app/widgets/gimpcontrollerwheel.c:230
-#, fuzzy
 msgid "Ready"
-msgstr "Rouge"
+msgstr "Prêt"
 
 #: app/widgets/gimpcontrollerwheel.c:68
 msgid "Scroll Up (Shift + Control + Alt)"
@@ -10238,9 +10189,8 @@ msgid "Mouse Wheel"
 msgstr "Roulette de la souris"
 
 #: app/widgets/gimpcontrollerwheel.c:229
-#, fuzzy
 msgid "Mouse Wheel Events"
-msgstr "Roulette de la souris"
+msgstr "Evénements de la roulette de la souris"
 
 #: app/widgets/gimpdataeditor.c:205
 msgid "Save"
@@ -10265,14 +10215,12 @@ msgid "Background: %d, %d, %d"
 msgstr "Arrière-plan : %d, %d, %d"
 
 #: app/widgets/gimpdock.c:348 app/widgets/gimpdock.c:359
-#, fuzzy
 msgid "Close all tabs?"
-msgstr "_Fermer l'onglet"
+msgstr "Fermer tous les onglets ?"
 
 #: app/widgets/gimpdock.c:354
-#, fuzzy
 msgid "Close all Tabs"
-msgstr "_Fermer l'onglet"
+msgstr "Fermer tous les onglets"
 
 #: app/widgets/gimpdock.c:361
 #, c-format
@@ -10280,6 +10228,8 @@ msgid ""
 "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
 msgstr ""
+"Cette fenêtre a %d onglets d'ouverts. Fermer cette fenêtre causera la "
+"fermeture de tous les onglets."
 
 #: app/widgets/gimpdock.c:474
 msgid "You can drop dockable dialogs here."
@@ -10577,7 +10527,6 @@ msgid "Line Width:"
 msgstr "Épaisseur de ligne :"
 
 #: app/widgets/gimpstrokeeditor.c:209
-#, fuzzy
 msgid "_Line Style"
 msgstr "_Style de ligne"
 
@@ -10730,11 +10679,13 @@ msgstr "Supprimer les options enregistrées..."
 
 #: app/widgets/gimpuimanager.c:495
 msgid "Your GIMP installation is incomplete:"
-msgstr ""
+msgstr "Votre installation GIMP est incomplète."
 
 #: app/widgets/gimpuimanager.c:497
 msgid "Plase make sure the menu XML files are correctly installed."
 msgstr ""
+"S'il vous plaît, soyez sûr que les fichiers de menu XML sont correctement "
+"installés."
 
 #: app/widgets/gimpundoeditor.c:255
 msgid "[ Base Image ]"
@@ -10973,7 +10924,7 @@ msgid ""
 msgstr ""
 "Avertissement XCF : la version 0 du format de\n"
 "fichier XCF n'enregistrait pas correctement\n"
-"les palettes indexées. Une palette en niveaux\n"
+"les palettes de couleurs. Une palette en niveaux\n"
 "de gris a été utilisée en remplacement."
 
 #: app/xcf/xcf-read.c:107

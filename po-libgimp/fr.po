@@ -1,7 +1,7 @@
+# translation of gimp-libgimp.HEAD.po to 
 # French translation of gimp-libgimp.
 # Copyright (C) 1998-2004 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
-#
 # Vincent Renardias <vincent@ldsol.com>, 1998-1999.
 # David Monniaux <monniaux@ens.fr>, 1999.
 # Joaquim Fellmann <joaquim@hrnet.fr>, 2000.
@@ -9,17 +9,19 @@
 # maintainer: Raymond Ostertag <r.ostertag@caramail.com>, 2003-2004.
 # Jean-Louis Berliet <jl.berliet@free.fr>, 2004.
 #
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 2.2.0pre1\n"
+"Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-22 17:33+0100\n"
-"PO-Revision-Date: 2004-11-13 17:46+0100\n"
+"POT-Creation-Date: 2005-01-25 20:08+0100\n"
+"PO-Revision-Date: 2004-11-23 22:12+0100\n"
 "Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
-"Language-Team: GNOME french Team <gnomefr@traduc.org>\n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.0.2\n"
 
 #: libgimp/gimpbrushmenu.c:129
 msgid "Brush Selection"
@@ -530,7 +532,7 @@ msgstr "Ancre"
 
 #: libgimpwidgets/gimpstock.c:114
 msgid "C_enter"
-msgstr ""
+msgstr "C_entrer"
 
 #: libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
