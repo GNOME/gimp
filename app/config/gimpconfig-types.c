@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 #include <glib-object.h>
 
@@ -166,7 +167,8 @@ string_to_memsize (const GValue *src_value,
     goto error;
 
   size = strtoul (str, &end, 0);
-  if (size == ULONG_MAX)
+
+  if (size == ULONG_MAX && errno == ERANGE)
     goto error;
 
   if (end && *end)
@@ -190,8 +192,17 @@ string_to_memsize (const GValue *src_value,
         default:
           goto error;
         }
+
+      /* protect against overflow */
+      if (shift)
+        {
+          gulong limit = G_MAXULONG >> (shift);
       
-      size <<= shift;
+          if (size != (size & limit))
+            goto error;
+
+          size <<= shift;
+        }
     }
   
   g_value_set_ulong (dest_value, size);
@@ -199,6 +210,7 @@ string_to_memsize (const GValue *src_value,
   return;
   
  error:
+  g_value_set_ulong (dest_value, 0);
   g_warning ("Can't convert string to GimpMemsize.");
 };
 

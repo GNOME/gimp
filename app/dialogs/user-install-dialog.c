@@ -1128,7 +1128,7 @@ user_install_tuning (void)
   gtk_widget_show (hbox);
   
   tile_cache_adj = gtk_adjustment_new (base_config->tile_cache_size, 
-				       0, (4069.0 * 1024 * 1024), 1.0, 1.0, 0.0);
+				       0, G_MAXULONG, 1.0, 1.0, 0.0);
   memsize = gimp_mem_size_entry_new (GTK_ADJUSTMENT (tile_cache_adj));
   gtk_box_pack_end (GTK_BOX (hbox), memsize, FALSE, FALSE, 0);
   gtk_widget_show (memsize);
@@ -1310,7 +1310,7 @@ user_install_resolution_done (void)
   GList *update = NULL;
   GList *remove = NULL;
 
-  gint      new_tile_cache_size;
+  gulong    new_tile_cache_size;
   gchar    *new_swap_path;
   gboolean  new_using_xserver_resolution;
   gdouble   new_monitor_xres;

@@ -60,18 +60,18 @@ typedef struct _TileList
   Tile *last;
 } TileList;
 
-static gulong   max_tile_size = TILE_WIDTH * TILE_HEIGHT * 4;
-static gulong   cur_cache_size = 0;
-static gulong   max_cache_size = 0;
+static gulong   max_tile_size   = TILE_WIDTH * TILE_HEIGHT * 4;
+static gulong   cur_cache_size  = 0;
+static gulong   max_cache_size  = 0;
 static gulong   cur_cache_dirty = 0;
-static TileList clean_list = { NULL, NULL };
-static TileList dirty_list = { NULL, NULL };
+static TileList clean_list      = { NULL, NULL };
+static TileList dirty_list      = { NULL, NULL };
 
 #ifdef USE_PTHREADS
 static pthread_t       preswap_thread;
-static pthread_mutex_t dirty_mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t dirty_mutex  = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t  dirty_signal = PTHREAD_COND_INITIALIZER;
-static pthread_mutex_t tile_mutex  = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t tile_mutex   = PTHREAD_MUTEX_INITIALIZER;
 #define CACHE_LOCK   pthread_mutex_lock(&tile_mutex)
 #define CACHE_UNLOCK pthread_mutex_unlock(&tile_mutex)
 #else
@@ -99,8 +99,10 @@ tile_cache_insert (Tile *tile)
    *  it was the most recently accessed tile.
    */
 
-  list = (TileList*)(tile->listhead);
-  newlist = (tile->dirty || tile->swap_offset == -1) ? &dirty_list : &clean_list;
+  list = (TileList *) tile->listhead;
+
+  newlist = ((tile->dirty || tile->swap_offset == -1) ? 
+             &dirty_list : &clean_list);
 
   /* if list is NULL, the tile is not in the cache */
 
@@ -120,7 +122,9 @@ tile_cache_insert (Tile *tile)
 	list->first = tile->next;
 
       tile->listhead = NULL;
-      if (list == &dirty_list) cur_cache_dirty -= tile_size (tile);
+
+      if (list == &dirty_list)
+        cur_cache_dirty -= tile_size (tile);
     }
   else
     {
@@ -154,8 +158,11 @@ tile_cache_insert (Tile *tile)
   tile->prev = newlist->last;
   tile->listhead = newlist;
 
-  if (newlist->last) newlist->last->next = tile;
-  else               newlist->first = tile;
+  if (newlist->last)
+    newlist->last->next = tile;
+  else
+    newlist->first = tile;
+
   newlist->last = tile;
 
   /* gosgood@idt.net 1999-12-04                                  */
@@ -163,9 +170,10 @@ tile_cache_insert (Tile *tile)
   /* Invariant: test for selecting dirty list should be the same */
   /* as counting files dirty.                                    */
 
-  if ((tile->dirty) || ( tile->swap_offset == -1)) 
+  if (tile->dirty || (tile->swap_offset == -1))
     {
       cur_cache_dirty += tile_size (tile);
+
       if (1)
 	{
 #ifdef USE_PTHREADS
@@ -199,7 +207,7 @@ tile_cache_flush_internal (Tile *tile)
   /* Find where the tile is in the cache.
    */
   
-  list = (TileList*)(tile->listhead);
+  list = (TileList *) tile->listhead;
 
   if (list) 
     {
@@ -207,7 +215,9 @@ tile_cache_flush_internal (Tile *tile)
        *  is referencing.
        */
       cur_cache_size -= tile_size (tile);
-      if (list == &dirty_list) cur_cache_dirty -= tile_size (tile);
+
+      if (list == &dirty_list)
+        cur_cache_dirty -= tile_size (tile);
 
       if (tile->next) 
 	tile->next->prev = tile->prev;
@@ -334,7 +344,8 @@ tile_idle_thread (gpointer data)
 	    {
 	      list = tile->listhead;
 
-	      if (list == &dirty_list) cur_cache_dirty -= tile_size (tile);
+	      if (list == &dirty_list)
+                cur_cache_dirty -= tile_size (tile);
 
 	      if (tile->next) 
 		tile->next->prev = tile->prev;
@@ -350,9 +361,12 @@ tile_idle_thread (gpointer data)
 	      tile->prev = clean_list.last;
 	      tile->listhead = &clean_list;
 
-	      if (clean_list.last) clean_list.last->next = tile;
-	      else                 clean_list.first = tile;
-	      clean_list.last = tile;
+	      if (clean_list.last)
+                clean_list.last->next = tile;
+	      else
+                clean_list.first = tile;
+	      
+              clean_list.last = tile;
 
 	      CACHE_UNLOCK;
 
@@ -373,15 +387,19 @@ tile_idle_thread (gpointer data)
     }
 }
 
-#else
+#else /* !USE_PTHREADS */
+
 static gboolean
 tile_idle_preswap (gpointer data)
 {
   Tile *tile;
-  if (cur_cache_dirty*2 < max_cache_size) return TRUE;
-  if ((tile = dirty_list.first)) 
+
+  if (cur_cache_dirty*2 < max_cache_size)
+    return TRUE;
+
+  if ((tile = dirty_list.first))
     {
-      tile_swap_out(tile);
+      tile_swap_out (tile);
 
       dirty_list.first = tile->next;
       if (tile->next) 
@@ -392,8 +410,12 @@ tile_idle_preswap (gpointer data)
       tile->next = NULL;
       tile->prev = clean_list.last;
       tile->listhead = &clean_list;
-      if (clean_list.last) clean_list.last->next = tile;
-      else                 clean_list.first = tile;
+
+      if (clean_list.last)
+        clean_list.last->next = tile;
+      else
+        clean_list.first = tile;
+
       clean_list.last = tile;
       cur_cache_dirty -= tile_size (tile);
     }

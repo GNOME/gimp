@@ -26,7 +26,7 @@ struct _GimpBaseConfig
 {
   gchar    *temp_path;
   gchar    *swap_path;
-  guint     tile_cache_size;
+  gulong    tile_cache_size;
   gboolean  stingy_memory_use;
   gint      num_processors;
 };
