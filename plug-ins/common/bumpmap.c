@@ -121,7 +121,6 @@
 
 #define PLUG_IN_VERSION "April 2000, 3.0-pre1-ac2"
 
-#define PREVIEW_SIZE    128
 #define SCALE_WIDTH       0
 
 /***** Types *****/
@@ -136,24 +135,23 @@ enum
 enum
 {
   DRAG_NONE = 0,
-  DRAG_SCROLL,
   DRAG_BUMPMAP
 };
 
 typedef struct
 {
-  gint32  bumpmap_id;
-  gdouble azimuth;
-  gdouble elevation;
-  gint    depth;
-  gint    xofs;
-  gint    yofs;
-  gint    waterlevel;
-  gint    ambient;
-  gint    compensate;
-  gint    invert;
-  gint    type;
-  gint    tiled;
+  gint32   bumpmap_id;
+  gdouble  azimuth;
+  gdouble  elevation;
+  gint     depth;
+  gint     xofs;
+  gint     yofs;
+  gint     waterlevel;
+  gint     ambient;
+  gboolean compensate;
+  gboolean invert;
+  gint     type;
+  gboolean tiled;
 } bumpmap_vals_t;
 
 typedef struct
@@ -167,36 +165,26 @@ typedef struct
 
 typedef struct
 {
-  GtkWidget   *preview;
-  GtkObject   *preview_adj_x;
-  GtkObject   *preview_adj_y;
-  gint         preview_width;
-  gint         preview_height;
-  gint         mouse_x;
-  gint         mouse_y;
-  gint         preview_xofs;
-  gint         preview_yofs;
-  gint         drag_mode;
+  gint               mouse_x;
+  gint               mouse_y;
+  gint               drag_mode;
 
-  GtkObject   *offset_adj_x;
-  GtkObject   *offset_adj_y;
+  GtkObject         *offset_adj_x;
+  GtkObject         *offset_adj_y;
 
-  guchar     **src_rows;
-  guchar     **bm_rows;
+  guchar           **src_rows;
+  guchar           **bm_rows;
 
-  gint         src_yofs;
-  gint         bm_yofs;
+  GimpDrawable      *bm_drawable;
+  gint               bm_width;
+  gint               bm_height;
+  gint               bm_bpp;
+  gboolean           bm_has_alpha;
 
-  GimpDrawable   *bm_drawable;
-  gint         bm_width;
-  gint         bm_height;
-  gint         bm_bpp;
-  gint         bm_has_alpha;
+  GimpPixelRgn       src_rgn;
+  GimpPixelRgn       bm_rgn;
 
-  GimpPixelRgn src_rgn;
-  GimpPixelRgn bm_rgn;
-
-  bumpmap_params_t params;
+  bumpmap_params_t   params;
 } bumpmap_interface_t;
 
 
@@ -215,7 +203,7 @@ static void bumpmap_row         (guchar           *src_row,
                                  guchar           *dest_row,
                                  gint              width,
                                  gint              bpp,
-                                 gint              has_alpha,
+                                 gboolean          has_alpha,
                                  guchar           *bm_row1,
                                  guchar           *bm_row2,
                                  guchar           *bm_row3,
@@ -227,33 +215,39 @@ static void bumpmap_row         (guchar           *src_row,
 static void bumpmap_convert_row (guchar           *row,
                                  gint              width,
                                  gint              bpp,
-                                 gint              has_alpha,
+                                 gboolean          has_alpha,
                                  guchar           *lut);
 
-static gboolean   bumpmap_dialog        (void);
-static void dialog_init_preview         (void);
-static void dialog_new_bumpmap          (gboolean init_offsets);
-static void dialog_update_preview       (void);
-static gint dialog_preview_events       (GtkWidget *widget, GdkEvent *event);
-static void dialog_scroll_src           (void);
-static void dialog_scroll_bumpmap       (void);
-static void dialog_get_rows             (GimpPixelRgn *pr, guchar **rows,
-                                         gint x, gint y,
-                                         gint width, gint height);
-static void dialog_fill_src_rows        (gint start, gint how_many, gint yofs);
-static void dialog_fill_bumpmap_rows    (gint start, gint how_many, gint yofs);
+static gboolean bumpmap_dialog             (void);
+static void     dialog_new_bumpmap         (gboolean              init_offsets);
+static void     dialog_update_preview      (GimpDrawablePreview  *preview);
+static gint     dialog_preview_events      (GtkWidget            *area,
+                                            GdkEvent             *event,
+                                            GimpPreview          *preview);
+static void     dialog_get_rows            (GimpPixelRgn         *pr,
+                                            guchar              **rows,
+                                            gint                  x,
+                                            gint                  y,
+                                            gint                  width,
+                                            gint                  height);
+static void     dialog_fill_src_rows       (gint                  start,
+                                            gint                  how_many,
+                                            gint                  yofs);
+static void     dialog_fill_bumpmap_rows   (gint                  start,
+                                            gint                  how_many,
+                                            gint                  yofs);
 
-static void dialog_compensate_callback  (GtkWidget *widget, gpointer data);
-static void dialog_invert_callback      (GtkWidget *widget, gpointer data);
-static void dialog_tiled_callback       (GtkWidget *widget, gpointer data);
-static void dialog_map_type_callback    (GtkWidget *widget, gpointer data);
-static gint dialog_constrain            (gint32 image_id, gint32 drawable_id,
-                                         gpointer data);
-static void dialog_bumpmap_callback     (GtkWidget *widget, gpointer data);
-static void dialog_dscale_update        (GtkAdjustment *adjustment,
-                                         gdouble *value);
-static void dialog_iscale_update_normal (GtkAdjustment *adjustment, gint *value);
-static void dialog_iscale_update_full   (GtkAdjustment *adjustment, gint *value);
+static void     dialog_compensate_callback (GtkWidget            *widget,
+                                            gpointer              data);
+static void     dialog_invert_callback     (GtkWidget            *widget,
+                                            gpointer              data);
+static void     dialog_tiled_callback      (GtkWidget            *widget,
+                                            gpointer              data);
+static gint     dialog_constrain           (gint32                image_id,
+                                            gint32                drawable_id,
+                                            gpointer              data);
+static void     dialog_bumpmap_callback    (GtkWidget            *widget,
+                                            gpointer              data);
 
 /***** Variables *****/
 
@@ -283,27 +277,18 @@ static bumpmap_vals_t bmvals =
 
 static bumpmap_interface_t bmint =
 {
-  NULL,      /* preview */
-  NULL,      /* preview_adj_x */
-  NULL,      /* preview_adj_y */
-  0,         /* preview_width */
-  0,         /* preview_height */
   0,         /* mouse_x */
   0,         /* mouse_y */
-  0,         /* preview_xofs */
-  0,         /* preview_yofs */
   DRAG_NONE, /* drag_mode */
   NULL,      /* offset_adj_x */
   NULL,      /* offset_adj_y */
   NULL,      /* src_rows */
   NULL,      /* bm_rows */
-  0,         /* src_yofs */
-  -1,        /* bm_yofs */
   NULL,      /* bm_drawable */
   0,         /* bm_width */
   0,         /* bm_height */
   0,         /* bm_bpp */
-  0,         /* bm_has_alpha */
+  FALSE,     /* bm_has_alpha */
   { 0 },     /* src_rgn */
   { 0 },     /* bm_rgn */
   { 0 }      /* params */
@@ -509,11 +494,6 @@ bumpmap (void)
   gint              progress;
   gint              drawable_tiles_per_row, bm_tiles_per_row;
 
-#if 0
-  g_print ("bumpmap: waiting... (pid %d)\n", getpid ());
-  kill (getpid (), SIGSTOP);
-#endif
-
   gimp_progress_init (_("Bump-mapping..."));
 
   /* Get the bumpmap drawable */
@@ -702,7 +682,7 @@ bumpmap_row (guchar           *src,
              guchar           *dest,
              gint              width,
              gint              bpp,
-             gint              has_alpha,
+             gboolean          has_alpha,
              guchar           *bm_row1,
              guchar           *bm_row2,
              guchar           *bm_row3,
@@ -798,11 +778,11 @@ bumpmap_row (guchar           *src,
 }
 
 static void
-bumpmap_convert_row (guchar *row,
-                     gint    width,
-                     gint    bpp,
-                     gint    has_alpha,
-                     guchar *lut)
+bumpmap_convert_row (guchar   *row,
+                     gint      width,
+                     gint      bpp,
+                     gboolean  has_alpha,
+                     guchar   *lut)
 {
   guchar *p;
 
@@ -848,15 +828,13 @@ bumpmap_dialog (void)
   GtkWidget *frame;
   GtkWidget *preview;
   GtkWidget *vbox;
-  GtkWidget *abox;
-  GtkWidget *pframe;
-  GtkWidget *ptable;
-  GtkWidget *scrollbar;
   GtkWidget *table;
   GtkWidget *combo;
   GtkWidget *button;
+  GtkWidget *radio_linear;
+  GtkWidget *radio_spherical;
+  GtkWidget *radio_sinusoidal;
   GtkObject *adj;
-  gint       i;
   gint       row;
   gboolean   run;
 
@@ -873,77 +851,21 @@ bumpmap_dialog (void)
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
-                      FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
+
+  preview = gimp_drawable_preview_new (drawable, NULL);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_widget_show (preview);
+  g_signal_connect (preview, "invalidated",
+                    G_CALLBACK (dialog_update_preview),
+                    NULL);
+  g_signal_connect (GIMP_PREVIEW (preview)->area, "event",
+                    G_CALLBACK (dialog_preview_events), preview);
 
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-
-  /* Preview */
-  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
-  ptable = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (ptable), 4);
-  gtk_container_add (GTK_CONTAINER (abox), ptable);
-  gtk_widget_show (ptable);
-
-  pframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (pframe), 0);
-  gtk_table_attach (GTK_TABLE (ptable), pframe, 0, 1, 0, 1,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
-  gtk_widget_show (pframe);
-
-  bmint.preview_width  = MIN (sel_width, PREVIEW_SIZE);
-  bmint.preview_height = MIN (sel_height, PREVIEW_SIZE);
-
-  bmint.preview = preview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (bmint.preview,
-                               bmint.preview_width, bmint.preview_height);
-  gtk_container_add (GTK_CONTAINER (pframe), bmint.preview);
-  gtk_widget_show (bmint.preview);
-
-  bmint.preview_adj_x =
-    gtk_adjustment_new (0, 0, sel_width, 1, 10, bmint.preview_width);
-  if (sel_width > PREVIEW_SIZE)
-    {
-      scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (bmint.preview_adj_x));
-      gtk_table_attach (GTK_TABLE (ptable), scrollbar, 0, 1, 1, 2,
-                        GTK_FILL | GTK_EXPAND, 0, 0, 0);
-      gtk_widget_show (scrollbar);
-    }
-
-  bmint.preview_adj_y =
-    gtk_adjustment_new (0, 0, sel_height, 1, 10, bmint.preview_height);
-  if (sel_height > PREVIEW_SIZE)
-    {
-      scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (bmint.preview_adj_y));
-      gtk_table_attach (GTK_TABLE (ptable), scrollbar, 1, 2, 0,1,
-                        0, GTK_FILL | GTK_EXPAND, 0, 0);
-      gtk_widget_show (scrollbar);
-    }
-
-  gtk_widget_set_events (bmint.preview,
-                         GDK_BUTTON_PRESS_MASK |
-                         GDK_BUTTON_RELEASE_MASK |
-                         GDK_BUTTON_MOTION_MASK |
-                         GDK_POINTER_MOTION_HINT_MASK);
-
-  g_signal_connect (bmint.preview, "event",
-                    G_CALLBACK (dialog_preview_events),
-                    NULL);
-  g_signal_connect (bmint.preview_adj_x, "value_changed",
-                    G_CALLBACK (dialog_iscale_update_normal),
-                    &bmint.preview_xofs);
-  g_signal_connect (bmint.preview_adj_y, "value_changed",
-                    G_CALLBACK (dialog_iscale_update_normal),
-                    &bmint.preview_yofs);
-
-  dialog_init_preview ();
 
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
@@ -952,16 +874,26 @@ bumpmap_dialog (void)
   /* Type of map */
   frame =
     gimp_int_radio_group_new (TRUE, _("Map Type"),
-                              G_CALLBACK (dialog_map_type_callback),
+                              G_CALLBACK (gimp_radio_button_update),
                               &bmvals.type, bmvals.type,
 
-                              _("_Linear"),     LINEAR,     NULL,
-                              _("_Spherical"),  SPHERICAL,  NULL,
-                              _("S_inusoidal"), SINUSOIDAL, NULL,
+                              _("_Linear"),     LINEAR,     &radio_linear,
+                              _("_Spherical"),  SPHERICAL,  &radio_spherical,
+                              _("S_inusoidal"), SINUSOIDAL, &radio_sinusoidal,
 
                               NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
+
+  g_signal_connect_swapped (radio_linear, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (radio_spherical, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (radio_sinusoidal, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /* Compensate darkening */
   button = gtk_check_button_new_with_mnemonic (_("Co_mpensate for darkening"));
@@ -972,7 +904,7 @@ bumpmap_dialog (void)
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (dialog_compensate_callback),
-                    NULL);
+                    preview);
 
   /* Invert bumpmap */
   button = gtk_check_button_new_with_mnemonic (_("I_nvert bumpmap"));
@@ -983,7 +915,7 @@ bumpmap_dialog (void)
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (dialog_invert_callback),
-                    NULL);
+                    preview);
 
   /* Tile bumpmap */
   button = gtk_check_button_new_with_mnemonic (_("_Tile bumpmap"));
@@ -994,7 +926,7 @@ bumpmap_dialog (void)
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (dialog_tiled_callback),
-                    NULL);
+                    preview);
 
   /* Bump map menu */
   table = gtk_table_new (8, 3, FALSE);
@@ -1006,7 +938,7 @@ bumpmap_dialog (void)
   combo = gimp_drawable_combo_box_new (dialog_constrain, NULL);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), bmvals.bumpmap_id,
                               G_CALLBACK (dialog_bumpmap_callback),
-                              NULL);
+                              preview);
 
   row = 0;
   gimp_table_attach_aligned (GTK_TABLE (table), row++, 0,
@@ -1018,8 +950,11 @@ bumpmap_dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (dialog_dscale_update),
+                    G_CALLBACK (gimp_double_adjustment_update),
                     &bmvals.azimuth);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
                               _("_Elevation:"), SCALE_WIDTH, 6,
@@ -1027,8 +962,11 @@ bumpmap_dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (dialog_dscale_update),
+                    G_CALLBACK (gimp_double_adjustment_update),
                     &bmvals.elevation);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row,
                               _("_Depth:"), SCALE_WIDTH, 6,
@@ -1036,8 +974,11 @@ bumpmap_dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (dialog_iscale_update_normal),
+                    G_CALLBACK (gimp_int_adjustment_update),
                     &bmvals.depth);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
   gtk_table_set_row_spacing (GTK_TABLE (table), row++, 8);
 
   bmint.offset_adj_x = adj =
@@ -1047,8 +988,11 @@ bumpmap_dialog (void)
                           TRUE, 0, 0,
                           NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (dialog_iscale_update_normal),
+                    G_CALLBACK (gimp_int_adjustment_update),
                     &bmvals.xofs);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   bmint.offset_adj_y = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row,
@@ -1057,8 +1001,11 @@ bumpmap_dialog (void)
                           TRUE, 0, 0,
                           NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (dialog_iscale_update_normal),
+                    G_CALLBACK (gimp_int_adjustment_update),
                     &bmvals.yofs);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
   gtk_table_set_row_spacing (GTK_TABLE (table), row++, 8);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
@@ -1067,8 +1014,11 @@ bumpmap_dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (dialog_iscale_update_full),
+                    G_CALLBACK (gimp_int_adjustment_update),
                     &bmvals.waterlevel);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
                               _("A_mbient:"), SCALE_WIDTH, 6,
@@ -1076,28 +1026,19 @@ bumpmap_dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (dialog_iscale_update_normal),
+                    G_CALLBACK (gimp_int_adjustment_update),
                     &bmvals.ambient);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /* Done */
 
   gtk_widget_show (dialog);
 
-  dialog_update_preview ();
-
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
-
-  for (i = 0; i < bmint.preview_height; i++)
-    g_free (bmint.src_rows[i]);
-
-  g_free (bmint.src_rows);
-
-  for (i = 0; i < (bmint.preview_height + 2); i++)
-    g_free (bmint.bm_rows[i]);
-
-  g_free (bmint.bm_rows);
 
   if (bmint.bm_drawable != drawable)
     gimp_drawable_detach (bmint.bm_drawable);
@@ -1105,42 +1046,16 @@ bumpmap_dialog (void)
   return run;
 }
 
-static void
-dialog_init_preview (void)
-{
-  gint x;
-
-  /* Initialize source rows */
-
-  gimp_pixel_rgn_init (&bmint.src_rgn, drawable,
-                       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
-
-  bmint.src_rows = g_new (guchar *, bmint.preview_height);
-
-  for (x = 0; x < bmint.preview_height; x++)
-    bmint.src_rows[x]  = g_new (guchar, sel_width * 4);
-
-  dialog_fill_src_rows (0,
-                        bmint.preview_height,
-                        sel_y1 + bmint.preview_yofs);
-
-  /* Initialize bumpmap rows */
-
-  bmint.bm_rows = g_new (guchar *, bmint.preview_height + 2);
-
-  for (x = 0; x < (bmint.preview_height + 2); x++)
-    bmint.bm_rows[x] = NULL;
-}
-
 static gint
-dialog_preview_events (GtkWidget *widget,
-                       GdkEvent  *event)
+dialog_preview_events (GtkWidget   *area,
+                       GdkEvent    *event,
+                       GimpPreview *preview)
 {
   gint            x, y;
   gint            dx, dy;
   GdkEventButton *bevent;
 
-  gtk_widget_get_pointer (widget, &x, &y);
+  gtk_widget_get_pointer (area, &x, &y);
 
   bevent = (GdkEventButton *) event;
 
@@ -1149,15 +1064,7 @@ dialog_preview_events (GtkWidget *widget,
     case GDK_BUTTON_PRESS:
       switch (bevent->button)
         {
-        case 1:
         case 2:
-          if (bevent->state & GDK_SHIFT_MASK)
-            bmint.drag_mode = DRAG_BUMPMAP;
-          else
-            bmint.drag_mode = DRAG_SCROLL;
-          break;
-
-        case 3:
           bmint.drag_mode = DRAG_BUMPMAP;
           break;
 
@@ -1168,16 +1075,16 @@ dialog_preview_events (GtkWidget *widget,
       bmint.mouse_x = x;
       bmint.mouse_y = y;
 
-      gtk_grab_add (widget);
+      gtk_grab_add (area);
 
       break;
 
     case GDK_BUTTON_RELEASE:
       if (bmint.drag_mode != DRAG_NONE)
         {
-          gtk_grab_remove (widget);
+          gtk_grab_remove (area);
           bmint.drag_mode = DRAG_NONE;
-          dialog_update_preview ();
+          gimp_preview_invalidate (preview);
         }
 
       break;
@@ -1194,60 +1101,33 @@ dialog_preview_events (GtkWidget *widget,
 
       switch (bmint.drag_mode)
         {
-        case DRAG_SCROLL:
-          bmint.preview_xofs = CLAMP (bmint.preview_xofs - dx,
-                                      0,
-                                      sel_width - bmint.preview_width);
-          g_signal_handlers_block_by_func (bmint.preview_adj_x,
-                                           dialog_iscale_update_normal,
-                                           &bmint.preview_xofs);
-          gtk_adjustment_set_value (GTK_ADJUSTMENT (bmint.preview_adj_x),
-                                    bmint.preview_xofs);
-          g_signal_handlers_unblock_by_func (bmint.preview_adj_x,
-                                             dialog_iscale_update_normal,
-                                             &bmint.preview_xofs);
-          bmint.preview_yofs = CLAMP (bmint.preview_yofs - dy,
-                                      0,
-                                      sel_height - bmint.preview_height);
-          g_signal_handlers_block_by_func (bmint.preview_adj_y,
-                                           dialog_iscale_update_normal,
-                                           &bmint.preview_yofs);
-          gtk_adjustment_set_value (GTK_ADJUSTMENT (bmint.preview_adj_y),
-                                    bmint.preview_yofs);
-          g_signal_handlers_unblock_by_func (bmint.preview_adj_y,
-                                             dialog_iscale_update_normal,
-                                             &bmint.preview_yofs);
-
-          break;
-
         case DRAG_BUMPMAP:
           bmvals.xofs = CLAMP (bmvals.xofs - dx, -1000, 1000);
           g_signal_handlers_block_by_func (bmint.offset_adj_x,
-                                           dialog_iscale_update_normal,
+                                           gimp_int_adjustment_update,
                                            &bmvals.xofs);
           gtk_adjustment_set_value (GTK_ADJUSTMENT (bmint.offset_adj_x),
                                     bmvals.xofs);
           g_signal_handlers_unblock_by_func (bmint.offset_adj_x,
-                                             dialog_iscale_update_normal,
+                                             gimp_int_adjustment_update,
                                              &bmvals.xofs);
 
           bmvals.yofs = CLAMP (bmvals.yofs - dy, -1000, 1000);
           g_signal_handlers_block_by_func (bmint.offset_adj_y,
-                                           dialog_iscale_update_normal,
+                                           gimp_int_adjustment_update,
                                            &bmvals.yofs);
           gtk_adjustment_set_value (GTK_ADJUSTMENT (bmint.offset_adj_y),
                                     bmvals.yofs);
           g_signal_handlers_unblock_by_func (bmint.offset_adj_y,
-                                             dialog_iscale_update_normal,
+                                             gimp_int_adjustment_update,
                                              &bmvals.yofs);
-
           break;
 
         default:
           return FALSE;
         }
 
-      dialog_update_preview ();
+      gimp_preview_invalidate (preview);
 
       break;
 
@@ -1262,8 +1142,6 @@ static void
 dialog_new_bumpmap (gboolean init_offsets)
 {
   GtkAdjustment   *adj;
-  gint             i;
-  gint             yofs;
   gint             bump_offset_x;
   gint             bump_offset_y;
   gint             draw_offset_y;
@@ -1303,11 +1181,11 @@ dialog_new_bumpmap (gboolean init_offsets)
     {
       adj->value = bmvals.xofs;
       g_signal_handlers_block_by_func (adj,
-                                       dialog_iscale_update_normal,
+                                       gimp_int_adjustment_update,
                                        &bmvals.xofs);
       gtk_adjustment_value_changed (adj);
       g_signal_handlers_unblock_by_func (adj,
-                                         dialog_iscale_update_normal,
+                                         gimp_int_adjustment_update,
                                          &bmvals.xofs);
     }
 
@@ -1316,11 +1194,11 @@ dialog_new_bumpmap (gboolean init_offsets)
     {
       adj->value = bmvals.yofs;
       g_signal_handlers_block_by_func (adj,
-                                       dialog_iscale_update_normal,
+                                       gimp_int_adjustment_update,
                                        &bmvals.yofs);
       gtk_adjustment_value_changed (adj);
       g_signal_handlers_unblock_by_func (adj,
-                                         dialog_iscale_update_normal,
+                                         gimp_int_adjustment_update,
                                          &bmvals.yofs);
     }
 
@@ -1328,171 +1206,81 @@ dialog_new_bumpmap (gboolean init_offsets)
 
   gimp_pixel_rgn_init (&bmint.bm_rgn, bmint.bm_drawable,
                        0, 0, bmint.bm_width, bmint.bm_height, FALSE, FALSE);
-
-  /* Initialize row buffers */
-
-  yofs = bmvals.yofs + bmint.preview_yofs - 1; /* Minus 1 for conv. matrix */
-  yofs = MOD (yofs, bmint.bm_height);
-
-  bmint.bm_yofs = yofs;
-
-  for (i = 0; i < (bmint.preview_height + 2); i++)
-    {
-      g_free (bmint.bm_rows[i]);
-      bmint.bm_rows[i] = g_new (guchar, bmint.bm_width * bmint.bm_bpp);
-    }
-
-  bumpmap_init_params (&bmint.params);
-  dialog_fill_bumpmap_rows (0, bmint.preview_height + 2, yofs);
 }
 
 static void
-dialog_update_preview (void)
+dialog_update_preview (GimpDrawablePreview *preview)
 {
-  static guchar dest_row[PREVIEW_SIZE * PREVIEW_SIZE * 4];
+  guchar *dest_row;
 
-  gint    xofs;
   gint    y;
+  gint    x1, y1;
+  gint    width, height;
+  gint    bytes;
+
+  gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+  gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+  bytes = preview->drawable->bpp;
+
+  /* Initialize source rows */
+  gimp_pixel_rgn_init (&bmint.src_rgn, drawable,
+                       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
+
+  bmint.src_rows = g_new (guchar *, height);
+
+  for (y = 0; y < height; y++)
+    bmint.src_rows[y]  = g_new (guchar, sel_width * 4);
+
+  dialog_fill_src_rows (0, height, y1);
+
+  /* Initialize bumpmap rows */
+  bmint.bm_rows = g_new (guchar *, height + 2);
+
+  for (y = 0; y < height + 2; y++)
+    bmint.bm_rows[y] = g_new (guchar, bmint.bm_width * bmint.bm_bpp);
+
+  dialog_fill_bumpmap_rows (0, height, bmvals.yofs + y1);
+
+  dest_row = g_new (guchar, width * height * 4);
 
   bumpmap_init_params (&bmint.params);
-
-  /* Scroll the row buffers */
-
-  dialog_scroll_src ();
-  dialog_scroll_bumpmap ();
 
   /* Bumpmap */
 
-  xofs = bmint.preview_xofs;
-
-  for (y = 0; y < bmint.preview_height; y++)
+  for (y = 0; y < height; y++)
     {
-      gint isfirst = ((y == - bmvals.yofs - bmint.preview_yofs - sel_y1)
+      gint isfirst = ((y == - bmvals.yofs - y1)
                       && ! bmvals.tiled) ? 1 : 0;
-      gint islast = (y == (- bmvals.yofs - bmint.preview_yofs - sel_y1
+      gint islast = (y == (- bmvals.yofs - y1
                            + bmint.bm_height - 1) && ! bmvals.tiled) ? 1 : 0;
-      bumpmap_row (bmint.src_rows[y] + 4 * xofs, dest_row+4*PREVIEW_SIZE*y,
-                   bmint.preview_width, 4, TRUE,
+      bumpmap_row (bmint.src_rows[y] + 4 * x1,
+                   dest_row + 4 * width * y,
+                   width, 4, TRUE,
                    bmint.bm_rows[y + isfirst],
                    bmint.bm_rows[y + 1],
                    bmint.bm_rows[y + 2 - islast],
-                   bmint.bm_width, xofs + bmvals.xofs,
+                   bmint.bm_width, bmvals.xofs + x1,
                    bmvals.tiled,
-                   y >= - bmvals.yofs - bmint.preview_yofs - sel_y1 &&
-                   y < (- bmvals.yofs - bmint.preview_yofs - sel_y1
-                        + bmint.bm_height),
+                   y >= - bmvals.yofs - y1 &&
+                   y < (- bmvals.yofs - y1 + bmint.bm_height),
                    &bmint.params);
 
     }
-
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (bmint.preview),
-                          0, 0,
-                          bmint.preview_width, bmint.preview_height,
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (GIMP_PREVIEW (preview)->area),
+                          0, 0, width, height,
                           GIMP_RGBA_IMAGE,
                           dest_row,
-                          bmint.preview_width * 4);
-}
+                          4 * width);
 
-#define SWAP_ROWS(a, b, t) { t = a; a = b; b = t; }
+  g_free (dest_row);
 
-static void
-dialog_scroll_src (void)
-{
-  gint    yofs;
-  gint    y, ofs;
-  guchar *tmp;
+  for (y = 0; y < height + 2; y++)
+    g_free (bmint.bm_rows[y]);
+  g_free (bmint.bm_rows);
 
-  yofs = bmint.preview_yofs;
-
-  if (yofs == bmint.src_yofs)
-    return;
-
-  if (yofs < bmint.src_yofs)
-    {
-      ofs = bmint.src_yofs - yofs;
-
-      /* Scroll useful rows... */
-
-      if (ofs < bmint.preview_height)
-        for (y = (bmint.preview_height - 1); y >= ofs; y--)
-          SWAP_ROWS (bmint.src_rows[y], bmint.src_rows[y - ofs], tmp);
-
-      /* ... and get the new ones */
-
-      dialog_fill_src_rows (0, MIN (ofs, bmint.preview_height), sel_y1 + yofs);
-    }
-  else
-    {
-      ofs = yofs - bmint.src_yofs;
-
-      /* Scroll useful rows... */
-
-      if (ofs < bmint.preview_height)
-        for (y = 0; y < (bmint.preview_height - ofs); y++)
-          SWAP_ROWS (bmint.src_rows[y], bmint.src_rows[y + ofs], tmp);
-
-      /* ... and get the new ones */
-
-      dialog_fill_src_rows ((bmint.preview_height -
-                             MIN (ofs, bmint.preview_height)),
-                            MIN (ofs, bmint.preview_height),
-                            (sel_y1 + yofs + bmint.preview_height -
-                             MIN (ofs, bmint.preview_height)));
-    }
-
-  bmint.src_yofs = yofs;
-}
-
-static void
-dialog_scroll_bumpmap (void)
-{
-  gint    yofs;
-  gint    y, ofs;
-  guchar *tmp;
-
-  yofs = bmvals.yofs + bmint.preview_yofs - 1; /* Minus 1 for conv. matrix */
-  yofs = MOD (yofs, bmint.bm_height);
-
-  if (yofs == bmint.bm_yofs)
-    return;
-
-  if (yofs < bmint.bm_yofs)
-    {
-      ofs = bmint.bm_yofs - yofs;
-
-      /* Scroll useful rows... */
-
-      if (ofs < (bmint.preview_height + 2))
-        for (y = (bmint.preview_height + 1); y >= ofs; y--)
-          SWAP_ROWS (bmint.bm_rows[y], bmint.bm_rows[y - ofs], tmp);
-
-      /* ... and get the new ones */
-
-      dialog_fill_bumpmap_rows (0,
-                                MIN (ofs, bmint.preview_height + 2),
-                                yofs);
-    }
-  else
-    {
-      ofs = yofs - bmint.bm_yofs;
-
-      /* Scroll useful rows... */
-
-      if (ofs < (bmint.preview_height + 2))
-        for (y = 0; y < (bmint.preview_height + 2 - ofs); y++)
-          SWAP_ROWS (bmint.bm_rows[y], bmint.bm_rows[y + ofs], tmp);
-
-      /* ... and get the new ones */
-
-      dialog_fill_bumpmap_rows ((bmint.preview_height + 2 -
-                                 MIN (ofs, bmint.preview_height + 2)),
-                                MIN (ofs, bmint.preview_height + 2),
-                                (yofs + bmint.preview_height + 2 -
-                                 MIN (ofs, bmint.preview_height + 2)) %
-                                bmint.bm_height);
-    }
-
-  bmint.bm_yofs = yofs;
+  for (y = 0; y < height; y++)
+    g_free (bmint.src_rows[y]);
+  g_free (bmint.src_rows);
 }
 
 static void
@@ -1579,7 +1367,7 @@ dialog_fill_src_rows (gint start,
 
   dialog_get_rows (&bmint.src_rgn,
                    bmint.src_rows + start,
-                   sel_x1,
+                   0/*sel_x1*/,
                    yofs,
                    sel_width,
                    how_many);
@@ -1663,45 +1451,30 @@ static void
 dialog_compensate_callback (GtkWidget *widget,
                             gpointer   data)
 {
-  bmvals.compensate = GTK_TOGGLE_BUTTON (widget)->active;
+  GimpPreview *preview = GIMP_PREVIEW (data);
 
-  dialog_update_preview ();
+  bmvals.compensate = GTK_TOGGLE_BUTTON (widget)->active;
+  gimp_preview_invalidate (preview);
 }
 
 static void
 dialog_invert_callback (GtkWidget *widget,
                         gpointer   data)
 {
-  bmvals.invert = GTK_TOGGLE_BUTTON (widget)->active;
+  GimpPreview *preview = GIMP_PREVIEW (data);
 
-  bumpmap_init_params (&bmint.params);
-  dialog_fill_bumpmap_rows (0, bmint.preview_height + 2, bmint.bm_yofs);
-  dialog_update_preview ();
+  bmvals.invert = GTK_TOGGLE_BUTTON (widget)->active;
+  gimp_preview_invalidate (preview);
 }
 
 static void
 dialog_tiled_callback (GtkWidget *widget,
                         gpointer   data)
 {
+  GimpPreview *preview = GIMP_PREVIEW (data);
+
   bmvals.tiled = GTK_TOGGLE_BUTTON (widget)->active;
-
-  bumpmap_init_params (&bmint.params);
-  dialog_fill_bumpmap_rows (0, bmint.preview_height + 2, bmint.bm_yofs);
-  dialog_update_preview ();
-}
-
-static void
-dialog_map_type_callback (GtkWidget *widget,
-                          gpointer   data)
-{
-  gimp_radio_button_update (widget, data);
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    {
-      bumpmap_init_params (&bmint.params);
-      dialog_fill_bumpmap_rows (0, bmint.preview_height + 2, bmint.bm_yofs);
-      dialog_update_preview ();
-    }
+  gimp_preview_invalidate (preview);
 }
 
 static gboolean
@@ -1717,7 +1490,8 @@ static void
 dialog_bumpmap_callback (GtkWidget *widget,
                          gpointer   data)
 {
-  gint  value;
+  gint         value;
+  GimpPreview *preview = GIMP_PREVIEW (data);
 
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value);
 
@@ -1730,35 +1504,5 @@ dialog_bumpmap_callback (GtkWidget *widget,
       bmvals.bumpmap_id = value;
       dialog_new_bumpmap (TRUE);
     }
-
-  dialog_update_preview ();
-}
-
-static void
-dialog_dscale_update (GtkAdjustment *adjustment,
-                      gdouble       *value)
-{
-  gimp_double_adjustment_update (adjustment, value);
-
-  dialog_update_preview ();
-}
-
-static void
-dialog_iscale_update_normal (GtkAdjustment *adjustment,
-                             gint          *value)
-{
-  gimp_int_adjustment_update (adjustment, value);
-
-  dialog_update_preview ();
-}
-
-static void
-dialog_iscale_update_full (GtkAdjustment *adjustment,
-                           gint          *value)
-{
-  gimp_int_adjustment_update (adjustment, value);
-
-  bumpmap_init_params (&bmint.params);
-  dialog_fill_bumpmap_rows (0, bmint.preview_height + 2, bmint.bm_yofs);
-  dialog_update_preview ();
+  gimp_preview_invalidate (preview);
 }

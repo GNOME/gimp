@@ -1,3 +1,9 @@
+2004-09-19  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/bumpmap.c: use a GimpDrawablePreview instead of a
+	very complicated homemade preview.  Many small changes in the code
+	too, and some cleanups. I hope I didn't break anything.
+
 2004-09-19  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimppaintoptions-gui.c: clean up ugliness introduced
