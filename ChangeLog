@@ -1,3 +1,7 @@
+1999-12-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/about_dialog.c: connect the "F1" help accelerator.
+
 1999-12-19  Asbjorn Pettersen  <asbjornP@dualog.no>
 
 	* plug-ins/print/print-ps.c: use g_strcasecmp().
