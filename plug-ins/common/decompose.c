@@ -249,7 +249,7 @@ run (char    *name,
   gint32 image_ID_extract[MAX_EXTRACT_IMAGES];
   gint j;
 
-  INIT_I18N ();
+  INIT_I18N_UI();
 
   run_mode = param[0].data.d_int32;
 

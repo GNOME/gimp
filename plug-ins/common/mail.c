@@ -236,7 +236,7 @@ run (char *name,
   GStatusType status = STATUS_SUCCESS;
   gint32 image_ID;
 
-  INIT_I18N();
+  INIT_I18N_UI();
 
   run_mode = param[0].data.d_int32;
   drawable_ID = param[2].data.d_drawable;

@@ -445,7 +445,7 @@ run (char    *name,
       argv = g_new (gchar *, 1);
       argv[0] = g_strdup ("gif");
      
-      INIT_I18N();
+      INIT_I18N_UI();
  
       gtk_init (&argc, &argv);
       gtk_rc_parse (gimp_gtkrc ());

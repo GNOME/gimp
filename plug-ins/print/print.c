@@ -391,7 +391,7 @@ run(char   *name,		/* I - Name of print program. */
   char		*tmpfile;	/* temp filename */
 #endif
 
-  INIT_I18N();
+  INIT_I18N_UI();
 
  /*
   * Initialize parameter data...

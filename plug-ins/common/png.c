@@ -215,7 +215,7 @@ run(char   *name,		/* I - Name of filter program. */
   }
   else if (strcmp (name, "file_png_save") == 0)
   {
-    INIT_I18N();
+    INIT_I18N_UI();
 
     *nreturn_vals = 1;
 

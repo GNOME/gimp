@@ -375,7 +375,7 @@ run(char    *name,
 	GRunModeType run_mode;
 	GStatusType  status;
 
-	INIT_I18N();
+	INIT_I18N_UI();
 
 	status   = STATUS_SUCCESS;
 	run_mode = param[0].data.d_int32;

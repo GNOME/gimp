@@ -226,7 +226,7 @@ run (char    *name,
   GRunModeType run_mode;
   gint32 image_ID;
 
-  INIT_I18N();
+  INIT_I18N_UI();
   strncpy(xsvals.comment, _("Made with Gimp"), MAX_COMMENT);
 
   run_mode = param[0].data.d_int32;

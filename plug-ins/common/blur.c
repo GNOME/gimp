@@ -245,7 +245,7 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals,
     char prog_label[32];
     static GParam values[1];
 
-    INIT_I18N();
+    INIT_I18N_UI();
 
 /*
  *  Get the specified drawable, do standard initialization.

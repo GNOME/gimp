@@ -374,7 +374,7 @@ run (char    *name,
     }
   else if (strcmp (name, "file_jpeg_save") == 0)
     {
-      INIT_I18N();
+      INIT_I18N_UI();
 
       image_ID = param[1].data.d_int32;
       if(image_comment) {

@@ -174,7 +174,7 @@ run(char   *name,		/* I - Name of filter program. */
   static GParam	values[1];	/* Return values */
 
 
-  INIT_I18N();
+  INIT_I18N_UI();
 
  /*
   * Initialize parameter data...

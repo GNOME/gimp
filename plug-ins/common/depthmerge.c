@@ -217,7 +217,7 @@ static void run(char *name,
   GStatusType      status;
   DepthMerge       dm;
 
-  INIT_I18N();
+  INIT_I18N_UI();
 
   runMode = (GRunModeType)param[0].data.d_int32;
   status = STATUS_SUCCESS;

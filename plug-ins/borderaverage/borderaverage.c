@@ -115,7 +115,7 @@ run (char    *name,
 	GStatusType status = STATUS_SUCCESS;
 	gint8		*result_color;
 
-	INIT_I18N();
+	INIT_I18N_UI();
 
 	run_mode = param[0].data.d_int32;
 	

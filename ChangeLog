@@ -1,3 +1,30 @@
+Sat Aug 28 12:15:15 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/borderaverage/borderaverage.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/apply_lens.c
+	* plug-ins/common/blur.c
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/checkerboard.c
+	* plug-ins/common/colorify.c
+	* plug-ins/common/compose.cplug-ins/common/compose.c
+	* plug-ins/common/convmatrix.c
+	* plug-ins/common/cubism.c
+	* plug-ins/common/decompose.c
+	* plug-ins/common/depthmerge.c
+	* plug-ins/common/destripe.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/gifload.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/oilify.c
+	* plug-ins/common/png.c
+	* plug-ins/common/ps.c
+	* plug-ins/common/psp.c
+	* plug-ins/common/xbm.c
+	* plug-ins/print/print.c: use INIT_I18N_UI (from SHIRASAKI Yasuhiro
+	<yasuhiro@awa.tohoku.ac.jp>)
+
 Sat Aug 28 10:53:17 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/layer.pdb

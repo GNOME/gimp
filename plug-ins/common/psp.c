@@ -1770,6 +1770,7 @@ run (char    *name,
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
+      INIT_I18N_UI();
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_pnm_save", &psvals);
 

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * CML_explorer.c -- This is a plug-in for The GIMP 1.0
- * Time-stamp: <1997/11/22 23:54:47 narazaki@InetQ.or.jp>
+ * Time-stamp: <1999-08-28 20:37:08 yasuhiro>
  * Copyright (C) 1997 Shuji Narazaki <narazaki@InetQ.or.jp>
  * Version: 1.0.11
  * URL: http://www.inetq.or.jp/~narazaki/TheGIMP/
@@ -528,6 +528,7 @@ run (char	*name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &VALS);
       if (! DIALOG ())
 	return;

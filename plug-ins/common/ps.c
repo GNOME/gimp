@@ -383,7 +383,7 @@ run (char    *name,
 
   if (strcmp (name, "file_ps_load") == 0)
     {
-      INIT_I18N();
+      INIT_I18N_UI();
 
       *nreturn_vals = 2;
       values[1].type = PARAM_IMAGE;
@@ -430,7 +430,7 @@ run (char    *name,
     }
   else if (strcmp (name, "file_ps_save") == 0)
     {
-      INIT_I18N();
+      INIT_I18N_UI();
 
       switch (run_mode)
         {

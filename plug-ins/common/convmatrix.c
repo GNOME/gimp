@@ -189,7 +189,7 @@ static void run(char *name, int n_params, GParam * param,
 	GStatusType status = STATUS_SUCCESS;
 	int x,y;
 
-	INIT_I18N();
+	INIT_I18N_UI();
 
 	(void)name; /* Shut up warnings about unused parameters. */
 	*nreturn_vals = 1;
