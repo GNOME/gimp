@@ -616,13 +616,13 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 
   if (paint_tool->pick_state)
     {
-      GimpToolInfo           *info;
-      GimpColorPickerOptions *options;
+      GimpToolInfo     *info;
+      GimpColorOptions *options;
 
       info = tool_manager_get_info_by_type (GIMP_TOOL (draw_tool)->tool_info->gimp,
                                             GIMP_TYPE_COLOR_PICKER_TOOL);
 
-      options = GIMP_COLOR_PICKER_OPTIONS (info->tool_options);
+      options = GIMP_COLOR_OPTIONS (info->tool_options);
 
       if (options->sample_average)
         {
@@ -675,24 +675,24 @@ gimp_paint_tool_sample_color (GimpDrawable *drawable,
 			      gint          y,
 			      gint          state)
 {
-  GimpToolInfo           *picker_info;
-  GimpColorPickerOptions *picker_options;
-  GimpImage              *gimage;
-  GimpRGB                 color;
+  GimpToolInfo     *picker_info;
+  GimpColorOptions *options;
+  GimpImage        *gimage;
+  GimpRGB           color;
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   picker_info = tool_manager_get_info_by_type (gimage->gimp,
                                                GIMP_TYPE_COLOR_PICKER_TOOL);
 
-  picker_options = GIMP_COLOR_PICKER_OPTIONS (picker_info->tool_options);
+  options = GIMP_COLOR_OPTIONS (picker_info->tool_options);
 
   if (gimp_image_pick_color (gimage,
                              drawable,
-                             picker_options->sample_merged,
+                             options->sample_merged,
                              x, y,
-                             picker_options->sample_average,
-                             picker_options->average_radius,
+                             options->sample_average,
+                             options->average_radius,
                              &color,
                              NULL,
                              NULL))

@@ -31,7 +31,6 @@
 #define GIMP_IMAGE_MAP_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE_MAP_TOOL, GimpImageMapToolClass))
 
 
-typedef struct _GimpImageMapTool      GimpImageMapTool;
 typedef struct _GimpImageMapToolClass GimpImageMapToolClass;
 
 struct _GimpImageMapTool

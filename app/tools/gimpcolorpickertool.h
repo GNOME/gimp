@@ -20,7 +20,7 @@
 #define  __GIMP_COLOR_PICKER_TOOL_H__
 
 
-#include "gimpdrawtool.h"
+#include "gimpcolortool.h"
 
 
 #define GIMP_TYPE_COLOR_PICKER_TOOL            (gimp_color_picker_tool_get_type ())
@@ -36,15 +36,15 @@ typedef struct _GimpColorPickerToolClass GimpColorPickerToolClass;
 
 struct _GimpColorPickerTool
 {
-  GimpDrawTool  parent_instance;
+  GimpColorTool  parent_instance;
 
-  gint          centerx;    /*  starting x coord    */
-  gint          centery;    /*  starting y coord    */
+  gint           centerx;    /*  starting x coord    */
+  gint           centery;    /*  starting y coord    */
 };
 
 struct _GimpColorPickerToolClass
 {
-  GimpDrawToolClass parent_class;
+  GimpColorToolClass  parent_class;
 };
 
 

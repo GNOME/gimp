@@ -20,7 +20,7 @@
 #define  __GIMP_COLOR_PICKER_OPTIONS_H__
 
 
-#include "tool_options.h"
+#include "gimpcoloroptions.h"
 
 
 #define GIMP_TYPE_COLOR_PICKER_OPTIONS            (gimp_color_picker_options_get_type ())
@@ -36,12 +36,9 @@ typedef struct _GimpToolOptionsClass   GimpColorPickerOptionsClass;
 
 struct _GimpColorPickerOptions
 {
-  GimpToolOptions  parent_instance;
+  GimpColorOptions  parent_instance;
 
-  gboolean         sample_merged;
-  gboolean         sample_average;
-  gdouble          average_radius;
-  gboolean         update_active;
+  gboolean          update_active;
 };
 
 

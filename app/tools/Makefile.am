@@ -23,6 +23,10 @@ libapptools_a_sources = \
 	gimpbycolorselecttool.h		\
 	gimpclonetool.c			\
 	gimpclonetool.h			\
+	gimpcoloroptions.c		\
+	gimpcoloroptions.h		\
+	gimpcolortool.c			\
+	gimpcolortool.h			\
 	gimpcolorbalancetool.c		\
 	gimpcolorbalancetool.h		\
 	gimpcolorizetool.c		\

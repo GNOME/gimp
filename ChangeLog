@@ -1,3 +1,17 @@
+2003-06-04  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/Makefile.am
+	* app/tools/gimpcoloroptions.[ch]
+	* app/tools/gimpcolortool.[ch]: new files that implement base
+	classes moved out of GimpColorPickerOptions and GimpColorPickerTool.
+
+	* app/tools/gimpcolorpickeroptions.[ch]
+	* app/tools/gimpcolorpickertool.[ch]: derive from the new obejcts.
+
+	* app/tools/gimpimagemaptool.h
+	* app/tools/gimppainttool.c
+	* app/tools/tools-types.h: moved typedefs into the types file.
+
 2003-06-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_reconnect):
