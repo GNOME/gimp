@@ -1,3 +1,7 @@
+2000-12-12  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/common/tiff.c: Continue after errors (#28799)
+
 Mon Dec 11 22:52:43 GMT 2000 Andy Thomas <alt@gimp.org>
 
 	* app/gimpimage.c

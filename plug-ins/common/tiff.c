@@ -412,7 +412,6 @@ static void
 tiff_error(const char* module, const char* fmt, va_list ap)
 {
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
-  gimp_quit ();
 }
   
 static gint32
