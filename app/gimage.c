@@ -1871,6 +1871,7 @@ gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
   while (merge_list)
     {
       layer = (Layer *) merge_list->data;
+      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
 
       switch (merge_type)
 	{
@@ -1905,7 +1906,6 @@ gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
 	case ClipToBottomLayer:
 	  if (merge_list->next == NULL)
 	    {
-	      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
 	      x1 = off_x;
 	      y1 = off_y;
 	      x2 = off_x + drawable_width (GIMP_DRAWABLE(layer));

@@ -1,5 +1,8 @@
 Sun Jan 25 16:56:49 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
+	* app/gimage.c (gimage_merge_layers): Added a missing call to
+	drawable_offsets, fixing the "merge bug".
+
 	* app/gimage_cmds.c (duplicate): Fixed a bug in duplicate that was
 	entirely my fault. :)
 
