@@ -36,73 +36,6 @@
  * these enums that are registered with the type system
  */
 
-#define GIMP_TYPE_ADD_MASK_TYPE (gimp_add_mask_type_get_type ())
-
-GType gimp_add_mask_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_ADD_WHITE_MASK,          /*< desc="_White (full opacity)"           >*/
-  GIMP_ADD_BLACK_MASK,          /*< desc="_Black (full transparency)"      >*/
-  GIMP_ADD_ALPHA_MASK,          /*< desc="Layer's _alpha channel"          >*/
-  GIMP_ADD_ALPHA_TRANSFER_MASK, /*< desc="_Transfer layer's alpha channel" >*/
-  GIMP_ADD_SELECTION_MASK,      /*< desc="_Selection"                      >*/
-  GIMP_ADD_COPY_MASK            /*< desc="_Grayscale copy of layer"        >*/
-} GimpAddMaskType;
-
-
-#define GIMP_TYPE_BLEND_MODE (gimp_blend_mode_get_type ())
-
-GType gimp_blend_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_FG_BG_RGB_MODE,         /*< desc="FG to BG (RGB)"    >*/
-  GIMP_FG_BG_HSV_MODE,         /*< desc="FG to BG (HSV)"    >*/
-  GIMP_FG_TRANSPARENT_MODE,    /*< desc="FG to transparent" >*/
-  GIMP_CUSTOM_MODE             /*< desc="Custom gradient"   >*/
-} GimpBlendMode;
-
-
-#define GIMP_TYPE_BUCKET_FILL_MODE (gimp_bucket_fill_mode_get_type ())
-
-GType gimp_bucket_fill_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_FG_BUCKET_FILL,      /*< desc="FG color fill" >*/
-  GIMP_BG_BUCKET_FILL,      /*< desc="BG color fill" >*/
-  GIMP_PATTERN_BUCKET_FILL  /*< desc="Pattern fill"  >*/
-} GimpBucketFillMode;
-
-
-#define GIMP_TYPE_CHANNEL_OPS (gimp_channel_ops_get_type ())
-
-GType gimp_channel_ops_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_CHANNEL_OP_ADD,       /*< desc="Add to the current selection"         >*/
-  GIMP_CHANNEL_OP_SUBTRACT,  /*< desc="Subtract from the current selection"  >*/
-  GIMP_CHANNEL_OP_REPLACE,   /*< desc="Replace the current selection"        >*/
-  GIMP_CHANNEL_OP_INTERSECT  /*< desc="Intersect with the current selection" >*/
-} GimpChannelOps;
-
-
-#define GIMP_TYPE_CHANNEL_TYPE (gimp_channel_type_get_type ())
-
-GType gimp_channel_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_RED_CHANNEL,      /*< desc="Red"     >*/
-  GIMP_GREEN_CHANNEL,    /*< desc="Green"   >*/
-  GIMP_BLUE_CHANNEL,     /*< desc="Blue"    >*/
-  GIMP_GRAY_CHANNEL,     /*< desc="Gray"    >*/
-  GIMP_INDEXED_CHANNEL,  /*< desc="Indexed" >*/
-  GIMP_ALPHA_CHANNEL     /*< desc="Alpha"   >*/
-} GimpChannelType;
-
 
 #define GIMP_TYPE_CONTAINER_POLICY (gimp_container_policy_get_type ())
 
@@ -175,26 +108,6 @@ typedef enum
   GIMP_PATTERN_FILL,      /*< desc="Pattern"          >*/
   GIMP_NO_FILL            /*< desc="None",   pdb-skip >*/
 } GimpFillType;
-
-
-#define GIMP_TYPE_GRADIENT_TYPE (gimp_gradient_type_get_type ())
-
-GType gimp_gradient_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_GRADIENT_LINEAR,                /*< desc="Linear"            >*/
-  GIMP_GRADIENT_BILINEAR,              /*< desc="Bi-linear"         >*/
-  GIMP_GRADIENT_RADIAL,                /*< desc="Radial"            >*/
-  GIMP_GRADIENT_SQUARE,                /*< desc="Square"            >*/
-  GIMP_GRADIENT_CONICAL_SYMMETRIC,     /*< desc="Conical (sym)"     >*/
-  GIMP_GRADIENT_CONICAL_ASYMMETRIC,    /*< desc="Conical (asym)"    >*/
-  GIMP_GRADIENT_SHAPEBURST_ANGULAR,    /*< desc="Shaped (angular)"  >*/
-  GIMP_GRADIENT_SHAPEBURST_SPHERICAL,  /*< desc="Shaped (spherical)">*/
-  GIMP_GRADIENT_SHAPEBURST_DIMPLED,    /*< desc="Shaped (dimpled)"  >*/
-  GIMP_GRADIENT_SPIRAL_CLOCKWISE,      /*< desc="Spiral (cw)"       >*/
-  GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE   /*< desc="Spiral (ccw)"      >*/
-} GimpGradientType;
 
 
 #define GIMP_TYPE_GRID_STYLE (gimp_grid_style_get_type ())
@@ -277,18 +190,6 @@ typedef enum  /*< pdb-skip >*/
 } GimpDashPreset;
 
 
-#define GIMP_TYPE_ICON_TYPE (gimp_icon_type_get_type ())
-
-GType gimp_icon_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_ICON_TYPE_STOCK_ID,      /*< desc="Stock ID"      >*/
-  GIMP_ICON_TYPE_INLINE_PIXBUF, /*< desc="Inline pixbuf" >*/
-  GIMP_ICON_TYPE_IMAGE_FILE     /*< desc="Image file"    >*/
-} GimpIconType;
-
-
 #define GIMP_TYPE_BRUSH_GENERATED_SHAPE (gimp_brush_generated_shape_get_type ())
 
 GType gimp_brush_generated_shape_get_type (void) G_GNUC_CONST;
@@ -343,18 +244,6 @@ typedef enum  /*< pdb-skip >*/
 } GimpViewSize;
 
 
-#define GIMP_TYPE_REPEAT_MODE (gimp_repeat_mode_get_type ())
-
-GType gimp_repeat_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_REPEAT_NONE,       /*< desc="None"            >*/
-  GIMP_REPEAT_SAWTOOTH,   /*< desc="Sawtooth wave"   >*/
-  GIMP_REPEAT_TRIANGULAR  /*< desc="Triangular wave" >*/
-} GimpRepeatMode;
-
-
 #define GIMP_TYPE_SELECTION_CONTROL (gimp_selection_control_get_type ())
 
 GType gimp_selection_control_get_type (void) G_GNUC_CONST;
@@ -379,17 +268,6 @@ typedef enum  /*< pdb-skip >*/
   GIMP_THUMBNAIL_SIZE_NORMAL  = 128,  /*< desc="Normal (128x128)" >*/
   GIMP_THUMBNAIL_SIZE_LARGE   = 256   /*< desc="Large (256x256)"  >*/
 } GimpThumbnailSize;
-
-
-#define GIMP_TYPE_TRANSFORM_DIRECTION (gimp_transform_direction_get_type ())
-
-GType gimp_transform_direction_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_TRANSFORM_FORWARD,   /*< desc="Forward (traditional)" >*/
-  GIMP_TRANSFORM_BACKWARD   /*< desc="Backward (corrective)" >*/
-} GimpTransformDirection;
 
 
 #define GIMP_TYPE_UNDO_MODE (gimp_undo_mode_get_type ())

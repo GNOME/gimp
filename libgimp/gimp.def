@@ -1,9 +1,7 @@
 EXPORTS
-	gimp_add_mask_type_get_type
 	gimp_airbrush
 	gimp_airbrush_default
 	gimp_attach_new_parasite
-	gimp_blend_mode_get_type
 	gimp_brightness_contrast
 	gimp_brush_application_mode_get_type
 	gimp_brush_delete
@@ -44,7 +42,6 @@ EXPORTS
 	gimp_brushes_set_paint_mode
 	gimp_brushes_set_popup
 	gimp_brushes_set_spacing
-	gimp_bucket_fill_mode_get_type
 	gimp_by_color_select
 	gimp_channel_combine_masks
 	gimp_channel_copy
@@ -52,11 +49,9 @@ EXPORTS
 	gimp_channel_get_opacity
 	gimp_channel_get_show_masked
 	gimp_channel_new
-	gimp_channel_ops_get_type
 	gimp_channel_set_color
 	gimp_channel_set_opacity
 	gimp_channel_set_show_masked
-	gimp_channel_type_get_type
 	gimp_check_size
 	gimp_check_type
 	gimp_clone
@@ -246,7 +241,6 @@ EXPORTS
 	gimp_gradient_segment_type_get_type
 	gimp_gradient_select_destroy
 	gimp_gradient_select_new
-	gimp_gradient_type_get_type
 	gimp_gradients_close_popup
 	gimp_gradients_get_gradient
 	gimp_gradients_get_gradient_data
@@ -262,7 +256,6 @@ EXPORTS
 	gimp_histogram_channel_get_type
 	gimp_hue_range_get_type
 	gimp_hue_saturation
-	gimp_icon_type_get_type
 	gimp_image_add_channel
 	gimp_image_add_hguide
 	gimp_image_add_layer
@@ -500,7 +493,6 @@ EXPORTS
 	gimp_register_magic_load_handler
 	gimp_register_save_handler
 	gimp_register_thumbnail_loader
-	gimp_repeat_mode_get_type
 	gimp_rgn_iterate1
 	gimp_rgn_iterate2
 	gimp_rgn_iterator_dest
@@ -555,7 +547,6 @@ EXPORTS
 	gimp_tile_unref
 	gimp_tile_width
 	gimp_transform_2d
-	gimp_transform_direction_get_type
 	gimp_uninstall_temp_proc
 	gimp_version
 	gimp_wm_class

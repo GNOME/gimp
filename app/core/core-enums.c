@@ -9,172 +9,6 @@
 
 /* enumerations from "./core-enums.h" */
 GType
-gimp_add_mask_type_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_ADD_WHITE_MASK, "GIMP_ADD_WHITE_MASK", "white-mask" },
-    { GIMP_ADD_BLACK_MASK, "GIMP_ADD_BLACK_MASK", "black-mask" },
-    { GIMP_ADD_ALPHA_MASK, "GIMP_ADD_ALPHA_MASK", "alpha-mask" },
-    { GIMP_ADD_ALPHA_TRANSFER_MASK, "GIMP_ADD_ALPHA_TRANSFER_MASK", "alpha-transfer-mask" },
-    { GIMP_ADD_SELECTION_MASK, "GIMP_ADD_SELECTION_MASK", "selection-mask" },
-    { GIMP_ADD_COPY_MASK, "GIMP_ADD_COPY_MASK", "copy-mask" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_ADD_WHITE_MASK, N_("_White (full opacity)"), NULL },
-    { GIMP_ADD_BLACK_MASK, N_("_Black (full transparency)"), NULL },
-    { GIMP_ADD_ALPHA_MASK, N_("Layer's _alpha channel"), NULL },
-    { GIMP_ADD_ALPHA_TRANSFER_MASK, N_("_Transfer layer's alpha channel"), NULL },
-    { GIMP_ADD_SELECTION_MASK, N_("_Selection"), NULL },
-    { GIMP_ADD_COPY_MASK, N_("_Grayscale copy of layer"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpAddMaskType", values);
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_blend_mode_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_FG_BG_RGB_MODE, "GIMP_FG_BG_RGB_MODE", "fg-bg-rgb-mode" },
-    { GIMP_FG_BG_HSV_MODE, "GIMP_FG_BG_HSV_MODE", "fg-bg-hsv-mode" },
-    { GIMP_FG_TRANSPARENT_MODE, "GIMP_FG_TRANSPARENT_MODE", "fg-transparent-mode" },
-    { GIMP_CUSTOM_MODE, "GIMP_CUSTOM_MODE", "custom-mode" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_FG_BG_RGB_MODE, N_("FG to BG (RGB)"), NULL },
-    { GIMP_FG_BG_HSV_MODE, N_("FG to BG (HSV)"), NULL },
-    { GIMP_FG_TRANSPARENT_MODE, N_("FG to transparent"), NULL },
-    { GIMP_CUSTOM_MODE, N_("Custom gradient"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpBlendMode", values);
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_bucket_fill_mode_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_FG_BUCKET_FILL, "GIMP_FG_BUCKET_FILL", "fg-bucket-fill" },
-    { GIMP_BG_BUCKET_FILL, "GIMP_BG_BUCKET_FILL", "bg-bucket-fill" },
-    { GIMP_PATTERN_BUCKET_FILL, "GIMP_PATTERN_BUCKET_FILL", "pattern-bucket-fill" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_FG_BUCKET_FILL, N_("FG color fill"), NULL },
-    { GIMP_BG_BUCKET_FILL, N_("BG color fill"), NULL },
-    { GIMP_PATTERN_BUCKET_FILL, N_("Pattern fill"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpBucketFillMode", values);
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_channel_ops_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_CHANNEL_OP_ADD, "GIMP_CHANNEL_OP_ADD", "add" },
-    { GIMP_CHANNEL_OP_SUBTRACT, "GIMP_CHANNEL_OP_SUBTRACT", "subtract" },
-    { GIMP_CHANNEL_OP_REPLACE, "GIMP_CHANNEL_OP_REPLACE", "replace" },
-    { GIMP_CHANNEL_OP_INTERSECT, "GIMP_CHANNEL_OP_INTERSECT", "intersect" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_CHANNEL_OP_ADD, N_("Add to the current selection"), NULL },
-    { GIMP_CHANNEL_OP_SUBTRACT, N_("Subtract from the current selection"), NULL },
-    { GIMP_CHANNEL_OP_REPLACE, N_("Replace the current selection"), NULL },
-    { GIMP_CHANNEL_OP_INTERSECT, N_("Intersect with the current selection"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpChannelOps", values);
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_channel_type_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_RED_CHANNEL, "GIMP_RED_CHANNEL", "red-channel" },
-    { GIMP_GREEN_CHANNEL, "GIMP_GREEN_CHANNEL", "green-channel" },
-    { GIMP_BLUE_CHANNEL, "GIMP_BLUE_CHANNEL", "blue-channel" },
-    { GIMP_GRAY_CHANNEL, "GIMP_GRAY_CHANNEL", "gray-channel" },
-    { GIMP_INDEXED_CHANNEL, "GIMP_INDEXED_CHANNEL", "indexed-channel" },
-    { GIMP_ALPHA_CHANNEL, "GIMP_ALPHA_CHANNEL", "alpha-channel" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_RED_CHANNEL, N_("Red"), NULL },
-    { GIMP_GREEN_CHANNEL, N_("Green"), NULL },
-    { GIMP_BLUE_CHANNEL, N_("Blue"), NULL },
-    { GIMP_GRAY_CHANNEL, N_("Gray"), NULL },
-    { GIMP_INDEXED_CHANNEL, N_("Indexed"), NULL },
-    { GIMP_ALPHA_CHANNEL, N_("Alpha"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpChannelType", values);
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_container_policy_get_type (void)
 {
   static const GEnumValue values[] =
@@ -340,52 +174,6 @@ gimp_fill_type_get_type (void)
   if (! type)
     {
       type = g_enum_register_static ("GimpFillType", values);
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_gradient_type_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_GRADIENT_LINEAR, "GIMP_GRADIENT_LINEAR", "linear" },
-    { GIMP_GRADIENT_BILINEAR, "GIMP_GRADIENT_BILINEAR", "bilinear" },
-    { GIMP_GRADIENT_RADIAL, "GIMP_GRADIENT_RADIAL", "radial" },
-    { GIMP_GRADIENT_SQUARE, "GIMP_GRADIENT_SQUARE", "square" },
-    { GIMP_GRADIENT_CONICAL_SYMMETRIC, "GIMP_GRADIENT_CONICAL_SYMMETRIC", "conical-symmetric" },
-    { GIMP_GRADIENT_CONICAL_ASYMMETRIC, "GIMP_GRADIENT_CONICAL_ASYMMETRIC", "conical-asymmetric" },
-    { GIMP_GRADIENT_SHAPEBURST_ANGULAR, "GIMP_GRADIENT_SHAPEBURST_ANGULAR", "shapeburst-angular" },
-    { GIMP_GRADIENT_SHAPEBURST_SPHERICAL, "GIMP_GRADIENT_SHAPEBURST_SPHERICAL", "shapeburst-spherical" },
-    { GIMP_GRADIENT_SHAPEBURST_DIMPLED, "GIMP_GRADIENT_SHAPEBURST_DIMPLED", "shapeburst-dimpled" },
-    { GIMP_GRADIENT_SPIRAL_CLOCKWISE, "GIMP_GRADIENT_SPIRAL_CLOCKWISE", "spiral-clockwise" },
-    { GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE, "GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE", "spiral-anticlockwise" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_GRADIENT_LINEAR, N_("Linear"), NULL },
-    { GIMP_GRADIENT_BILINEAR, N_("Bi-linear"), NULL },
-    { GIMP_GRADIENT_RADIAL, N_("Radial"), NULL },
-    { GIMP_GRADIENT_SQUARE, N_("Square"), NULL },
-    { GIMP_GRADIENT_CONICAL_SYMMETRIC, N_("Conical (sym)"), NULL },
-    { GIMP_GRADIENT_CONICAL_ASYMMETRIC, N_("Conical (asym)"), NULL },
-    { GIMP_GRADIENT_SHAPEBURST_ANGULAR, N_("Shaped (angular)"), NULL },
-    { GIMP_GRADIENT_SHAPEBURST_SPHERICAL, N_("Shaped (spherical)"), NULL },
-    { GIMP_GRADIENT_SHAPEBURST_DIMPLED, N_("Shaped (dimpled)"), NULL },
-    { GIMP_GRADIENT_SPIRAL_CLOCKWISE, N_("Spiral (cw)"), NULL },
-    { GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE, N_("Spiral (ccw)"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpGradientType", values);
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -589,36 +377,6 @@ gimp_dash_preset_get_type (void)
 }
 
 GType
-gimp_icon_type_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_ICON_TYPE_STOCK_ID, "GIMP_ICON_TYPE_STOCK_ID", "stock-id" },
-    { GIMP_ICON_TYPE_INLINE_PIXBUF, "GIMP_ICON_TYPE_INLINE_PIXBUF", "inline-pixbuf" },
-    { GIMP_ICON_TYPE_IMAGE_FILE, "GIMP_ICON_TYPE_IMAGE_FILE", "image-file" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_ICON_TYPE_STOCK_ID, N_("Stock ID"), NULL },
-    { GIMP_ICON_TYPE_INLINE_PIXBUF, N_("Inline pixbuf"), NULL },
-    { GIMP_ICON_TYPE_IMAGE_FILE, N_("Image file"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpIconType", values);
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_brush_generated_shape_get_type (void)
 {
   static const GEnumValue values[] =
@@ -751,36 +509,6 @@ gimp_view_size_get_type (void)
 }
 
 GType
-gimp_repeat_mode_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_REPEAT_NONE, "GIMP_REPEAT_NONE", "none" },
-    { GIMP_REPEAT_SAWTOOTH, "GIMP_REPEAT_SAWTOOTH", "sawtooth" },
-    { GIMP_REPEAT_TRIANGULAR, "GIMP_REPEAT_TRIANGULAR", "triangular" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_REPEAT_NONE, N_("None"), NULL },
-    { GIMP_REPEAT_SAWTOOTH, N_("Sawtooth wave"), NULL },
-    { GIMP_REPEAT_TRIANGULAR, N_("Triangular wave"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpRepeatMode", values);
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_selection_control_get_type (void)
 {
   static const GEnumValue values[] =
@@ -838,34 +566,6 @@ gimp_thumbnail_size_get_type (void)
   if (! type)
     {
       type = g_enum_register_static ("GimpThumbnailSize", values);
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_transform_direction_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_TRANSFORM_FORWARD, "GIMP_TRANSFORM_FORWARD", "forward" },
-    { GIMP_TRANSFORM_BACKWARD, "GIMP_TRANSFORM_BACKWARD", "backward" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_TRANSFORM_FORWARD, N_("Forward (traditional)"), NULL },
-    { GIMP_TRANSFORM_BACKWARD, N_("Backward (corrective)"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpTransformDirection", values);
       gimp_enum_set_value_descriptions (type, descs);
     }
 

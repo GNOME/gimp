@@ -1,13 +1,28 @@
 2005-01-23  Sven Neumann  <sven@gimp.org>
 
+	* app/core/core-enums.h
+	* libgimpbase/gimpbaseenums.h: moved enums to libgimpbase (from
+	app/core and libgimp). The remaining enums in app/core/core-enums.h
+	need special treatment.
+
+	* app/core/core-enums.c:
+	* libgimp/gimpenums.h
+	* libgimpbase/gimpbaseenums.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* libgimpbase/gimpbase.def
+	* libgimp/gimp.def: updated.
+
+2005-01-23  Sven Neumann  <sven@gimp.org>
+
 	* app/base/base-enums.h
 	* libgimpbase/gimpbaseenums.h: moved GimpInterpolationType and
-	GimpTransferMode to libgimpbase (from core and libgimp). The
+	GimpTransferMode to libgimpbase (from app/base and libgimp). The
 	remaining enums in app/base/base-enums.h need special treatment.
 
 	* app/base/base-enums.c
 	* libgimp/gimpenums.h
-	* libgimpbase/gimpbaseenums.[ch]
+	* libgimpbase/gimpbaseenums.c
 	* tools/pdbgen/enums.pl: regenerated.
 
 	* libgimpbase/gimpbase.def
