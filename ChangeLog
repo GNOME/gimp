@@ -1,3 +1,8 @@
+2004-07-15  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimpviewable.c: added gtk-doc comments for public
+	functions.
+
 2004-07-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/file-commands.h: reordered to match the .c file.
