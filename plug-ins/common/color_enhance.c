@@ -34,6 +34,9 @@
 #include <stdio.h>
 #include "libgimp/gimp.h"
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
+
 /* Declare local functions.
  */
 static void      query  (void);
@@ -75,13 +78,15 @@ query (void)
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_Color_Enhance",
-			  "Automatically stretch the saturation of the specified drawable to cover all possible ranges.", 	 	   	 
-			  "This simple plug-in does an automatic saturation stretch.  For each channel in the image, it finds the minimum and maximum values... it uses those values to stretch the individual histograms to the full range.  For some images it may do just what you want; for others it may be total crap :).  This version differs from Contrast Autostretch in that it works in HSV space, and preserves hue.",
+			  _("Automatically stretch the saturation of the specified drawable to cover all possible ranges."),
+			  _("This simple plug-in does an automatic saturation stretch.  For each channel in the image, it finds the minimum and maximum values... it uses those values to stretch the individual histograms to the full range.  For some images it may do just what you want; for others it may be total crap :).  This version differs from Contrast Autostretch in that it works in HSV space, and preserves hue."),
 			  "Martin Weber",
 		 	  "Martin Weber", 
 		  	  "1997", 	 	 
-			  "<Image>/Image/Colors/Color Enhance", 	
+			  N_("<Image>/Image/Colors/Color Enhance"),
 	   	  	  "RGB*, INDEXED*",
  			  PROC_PLUG_IN,
 	 	  	  nargs, nreturn_vals,
@@ -102,6 +107,8 @@ run (char    *name,
 
   gint32 image_ID;
 
+  INIT_I18N();
+
   run_mode = param[0].data.d_int32;
 
   /*  Get the specified drawable  */
@@ -111,7 +118,7 @@ run (char    *name,
   /*  Make sure that the drawable is gray or RGB color  */
   if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id))
     {
-      gimp_progress_init ("Color Enhance...");
+      gimp_progress_init (_("Color Enhance..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
       Color_Enhance (drawable);
 
@@ -153,7 +160,7 @@ indexed_Color_Enhance(gint32 image_ID)  /* a.d.m. */
 
   if (cmap==NULL)
     {
-      printf("Color_Enhance: cmap was NULL!  Quitting...\n");
+      printf(_("Color_Enhance: cmap was NULL!  Quitting...\n"));
       gimp_quit();
     }
 

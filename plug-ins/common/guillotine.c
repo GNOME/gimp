@@ -30,8 +30,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "config.h"
 #include "libgimp/gimp.h"
-
+#include "libgimp/stdplugins-intl.h"
 
 /* Declare local functions.
  */
@@ -69,13 +70,15 @@ query (void)
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_guillotine",
-			  "Slice up the image into subimages, cutting along the image's Guides.  Fooey to you and your broccoli, Pokey.",
-			  "This function takes an image and blah blah.  Hooray!",
+			  _("Slice up the image into subimages, cutting along the image's Guides.  Fooey to you and your broccoli, Pokey."),
+			  _("This function takes an image and blah blah.  Hooray!"),
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "1998",
-			  "<Image>/Image/Transforms/Guillotine",
+			 N_("<Image>/Image/Transforms/Guillotine"),
 			  "RGB*, INDEXED*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -101,13 +104,14 @@ run (char    *name,
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
 
+  INIT_I18N();
 
   /*  Get the specified drawable  */
   image_ID = param[1].data.d_image;
 
   if (status == STATUS_SUCCESS)
     {
-      gimp_progress_init ("Guillotine...");
+      gimp_progress_init (_("Guillotine..."));
       guillotine (image_ID);
       gimp_displays_flush ();
     }
@@ -154,7 +158,7 @@ guillotine(gint32 image_ID)
 	    case ORIENTATION_HORIZONTAL:
 	      num_hguides++; break;
 	    default:
-	      printf("Aie!  Aie!  Aie!\n");
+	      printf(_("Aie!  Aie!  Aie!\n"));
 	      gimp_quit();
 	    }
 	  guide_num = gimp_image_find_next_guide(image_ID, guide_num);
@@ -164,12 +168,12 @@ guillotine(gint32 image_ID)
 
   if (num_vguides+num_hguides)
     {
-      printf("Yay... found %d horizontal guides and %d vertical guides.\n",
+      printf(_("Yay... found %d horizontal guides and %d vertical guides.\n"),
 	     num_hguides, num_vguides);
     }
   else
     {
-      printf("Poopy, no guides.\n");
+      printf(_("Poopy, no guides.\n"));
       return;
     }
 
@@ -272,6 +276,3 @@ guillotine(gint32 image_ID)
 	}
     }
 }
-
-
-

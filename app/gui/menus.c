@@ -46,10 +46,12 @@
 static char* G_GNUC_UNUSED dummyMenus[] = { N_("/File/MRU00 "),
                                             N_("/File"),
                                             N_("/File/Dialogs"),
+                                            N_("/Image/Transforms"),
                                             N_("/Layers"),
                                             N_("/Tools"),
                                             N_("/Dialogs"),
-                                            N_("/View/Zoom") };
+                                            N_("/View/Zoom"),
+                                            N_("/Stack")};
 
 static void   menus_init        (void);
 static gchar* menu_translate    (const gchar *path,

@@ -13,7 +13,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include "config.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -56,13 +58,15 @@ static void query()
   static int nargs = sizeof(args) / sizeof(args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure("plug_in_zealouscrop",
-			 "Automagically crops unused space from the edges and middle of a picture.",
+			 _("Automagically crops unused space from the edges and middle of a picture."),
 			 "",
 			 "Adam D. Moss",
 			 "Adam D. Moss",
 			 "1997",
-			 "<Image>/Image/Transforms/Zealous Crop",
+			 N_("<Image>/Image/Transforms/Zealous Crop"),
 			 "RGB*, GRAY*, INDEXED*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,
@@ -77,6 +81,8 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
   gint32 image_id;
+
+  INIT_I18N();
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -96,7 +102,7 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
 
     /*  Make sure that the drawable is gray or RGB or indexed  */
     if (gimp_drawable_color(drawable->id) || gimp_drawable_gray(drawable->id) || gimp_drawable_indexed(drawable->id)) {
-      gimp_progress_init("ZealousCropping(tm)...");
+      gimp_progress_init(_("ZealousCropping(tm)..."));
 
       gimp_tile_cache_ntiles(1 + 2*(
 				    drawable->width > drawable->height ?
@@ -200,7 +206,7 @@ static void do_zcrop(GDrawable *drawable, gint32 image_id)
   if (((livingcols==0) || (livingrows==0)) ||
       ((livingcols==width) && (livingrows==height)))
     {
-      printf("ZealousCrop(tm): Nothing to be done.\n");
+      printf(_("ZealousCrop(tm): Nothing to be done.\n"));
       return;
     }
 

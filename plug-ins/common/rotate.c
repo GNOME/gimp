@@ -52,18 +52,16 @@
 
 #include <stdlib.h>
 #include <gtk/gtk.h>
-#include <libgimp/gimp.h>
+#include "config.h"
+#include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Defines */
 #define PLUG_IN_NAME        "plug_in_rotate"
-#define PLUG_IN_PRINT_NAME  "Rotate"
 #define PLUG_IN_VERSION     "v0.6 (01/15/98)"
-#define PLUG_IN_MENU_PATH   "<Image>/Image/Transforms/Rotate"
 #define PLUG_IN_IMAGE_TYPES "RGB*, INDEXED*, GRAY*"
 #define PLUG_IN_AUTHOR      "Sven Neumann (neumanns@uni-duesseldorf.de)"
 #define PLUG_IN_COPYRIGHT   "Sven Neumann"
-#define PLUG_IN_DESCRIBTION "Rotates a layer or the whole image by 90, 180 or 270 degrees"
-#define PLUG_IN_HELP        "This plug-in does rotate the active layer or the whole image clockwise by multiples of 90 degrees. When the whole image is choosen, the image is resized if necessary."
 
 #define NUMBER_IN_ARGS 5
 #define IN_ARGS { PARAM_INT32,    "run_mode", "Interactive, non-interactive"},\
@@ -147,14 +145,16 @@ static gint nargs = NUMBER_IN_ARGS;
 static GParamDef *return_vals = OUT_ARGS;
 static gint nreturn_vals = NUMBER_OUT_ARGS;
 
+ INIT_I18N(); 
+
 /* the actual installation of the plugin */
 gimp_install_procedure (PLUG_IN_NAME,
-			PLUG_IN_DESCRIBTION,
-			PLUG_IN_HELP,
+                        _("Rotates a layer or the whole image by 90, 180 or 270 degrees"),
+                        _("This plug-in does rotate the active layer or the whole image clockwise by multiples of 90 degrees. When the whole image is choosen, the image is resized if necessary."),
 			PLUG_IN_AUTHOR,
 			PLUG_IN_COPYRIGHT,
 			PLUG_IN_VERSION,
-			PLUG_IN_MENU_PATH,
+            _("<Image>/Image/Transforms/Rotate"),
 			PLUG_IN_IMAGE_TYPES,
 			PROC_PLUG_IN,		
 			nargs,
@@ -186,6 +186,12 @@ run (gchar *name,		/* name of plugin */
   values[0].data.d_status = status;
   *nreturn_vals = 1;
   *return_vals = values;
+
+  if (run_mode != RUN_INTERACTIVE) {
+    INIT_I18N();
+  } else {
+    INIT_I18N_UI();
+  }
 
   /* get image and drawable */
   image_ID = param[1].data.d_int32;
@@ -497,19 +503,19 @@ rotate (void)
     {
       if ( !my_gimp_selection_is_empty (image_ID) ) 
 	{
-	  gimp_message("You can not rotate the whole image if there's a selection.");
+	  gimp_message(_("You can not rotate the whole image if there's a selection."));
 	  gimp_drawable_detach (active_drawable);
 	  return;
 	}
       if ( gimp_layer_is_floating_selection (active_drawable->id) ) 
 	{
-	  gimp_message("You can not rotate the whole image if there's a floating selection.");
+	  gimp_message(_("You can not rotate the whole image if there's a floating selection."));
 	  gimp_drawable_detach (active_drawable);
 	  return;
 	}
     }
   
-  gimp_progress_init ("Rotating...");
+  gimp_progress_init (_("Rotating..."));
 
   gimp_run_procedure ("gimp_undo_push_group_start", &nreturn_vals,
 		      PARAM_IMAGE, image_ID, PARAM_END);
@@ -590,13 +596,13 @@ rotate_dialog (void)
 
   /* Main Dialog */
   dialog = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dialog), PLUG_IN_PRINT_NAME);
+  gtk_window_set_title (GTK_WINDOW (dialog), _("Rotate"));
   gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
 		      (GtkSignalFunc) rotate_close_callback,
 		      NULL);
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) rotate_ok_callback,
@@ -606,7 +612,7 @@ rotate_dialog (void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -616,7 +622,7 @@ rotate_dialog (void)
   gtk_widget_show (button);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Rotate clockwise by");
+  frame = gtk_frame_new (_("Rotate clockwise by"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), 
@@ -689,7 +695,7 @@ rotate_dialog (void)
 
   /* label: degrees */
 
-  unit_label = gtk_label_new ( "degrees" );
+  unit_label = gtk_label_new ( _("degrees") );
   gtk_table_attach ( GTK_TABLE (table), unit_label, 5, 6, 5, 6, 0, 0, 0, 0);
   gtk_widget_show (unit_label);
 
@@ -703,7 +709,7 @@ rotate_dialog (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), 
 		      hbox, TRUE, TRUE, 0);
   /* check button */
-  check_button = gtk_check_button_new_with_label ("Rotate the whole image");
+  check_button = gtk_check_button_new_with_label ( _("Rotate the whole image"));
   gtk_box_pack_end (GTK_BOX (hbox), check_button, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
 		      (GtkSignalFunc) rotate_toggle_update,
@@ -763,9 +769,4 @@ rotate_toggle_update (GtkWidget *widget,
   else
     *toggle_val = FALSE;
 }
-
-
-
-
-
 

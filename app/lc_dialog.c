@@ -320,7 +320,7 @@ lc_dialog_image_menu_preview_update_cb (GtkWidget *widget,
    */
 
   menu_preview = (GtkWidget *)gtk_object_get_data(GTK_OBJECT(widget),"menu_preview");
-  gimage = GIMP_IMAGE((GimpImage *)gtk_object_get_data(GTK_OBJECT(widget),"menu_preview_gimage"));
+  gimage = (GimpImage *)gtk_object_get_data(GTK_OBJECT(widget),"menu_preview_gimage");
 
   if(menu_preview && gimage && gimage_to_update == gimage)
     {

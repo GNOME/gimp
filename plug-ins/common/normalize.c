@@ -32,6 +32,9 @@
 #include <stdio.h>
 #include "libgimp/gimp.h"
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
+
 /* Declare local functions.
  */
 static void      query  (void);
@@ -69,13 +72,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_normalize",
-			  "Normalize the contrast of the specified drawable to cover all possible ranges.",
-			  "This plugin performs almost the same operation as the 'contrast autostretch' plugin, except that it won't allow the colour channels to normalize independently.  This is actually what most people probably want instead of contrast-autostretch; use c-a only if you wish to remove an undesirable colour-tint from a source image which is supposed to contain pure-white and pure-black.",
+			  _("Normalize the contrast of the specified drawable to cover all possible ranges."),
+			  _("This plugin performs almost the same operation as the 'contrast autostretch' plugin, except that it won't allow the colour channels to normalize independently.  This is actually what most people probably want instead of contrast-autostretch; use c-a only if you wish to remove an undesirable colour-tint from a source image which is supposed to contain pure-white and pure-black."),
 			  "Adam D. Moss, Federico Mena Quintero",
 			  "Adam D. Moss, Federico Mena Quintero",
 			  "1997",
-			  "<Image>/Image/Colors/Normalize",
+			  N_("<Image>/Image/Colors/Normalize"),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -96,6 +101,8 @@ run (char    *name,
 
   gint32 image_ID;
 
+  INIT_I18N();
+
   run_mode = param[0].data.d_int32;
 
   /*  Get the specified drawable  */
@@ -105,7 +112,7 @@ run (char    *name,
   /*  Make sure that the drawable is gray or RGB color  */
   if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id))
     {
-      gimp_progress_init ("Normalizing...");
+      gimp_progress_init (_("Normalizing..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
       norma (drawable);
 
@@ -145,7 +152,7 @@ indexed_norma(gint32 image_ID)  /* a.d.m. */
 
   if (cmap==NULL)
     {
-      printf("normalize: cmap was NULL!  Quitting...\n");
+      printf(_("normalize: cmap was NULL!  Quitting...\n"));
       gimp_quit();
     }
 

@@ -23,7 +23,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "config.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Declare local functions. */
 static void query(void);
@@ -44,6 +46,10 @@ GPlugInInfo PLUG_IN_INFO =
 };
 
 
+static gchar * G_GNUC_UNUSED dummy[]
+ = { N_("<Image>/Image/Transforms/Image"),
+     N_("<Image>/Image/Transforms/Layer")};
+
 MAIN()
 
 static void query()
@@ -58,49 +64,51 @@ static void query()
   static int nargs = sizeof(args) / sizeof(args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure("plug_in_layer_rot90",
-			 "Rotates the given layer 90 degrees clockwise.",
+			 _("Rotates the given layer 90 degrees clockwise."),
 			 "",
 			 "Adam D. Moss (adam@gimp.org)",
 			 "Adam D. Moss (adam@gimp.org)",
 			 "1997",
-			 "<Image>/Image/Transforms/Layer/Rotate 90",
+			 N_("<Image>/Image/Transforms/Layer/Rotate 90"),
 			 "RGB*, GRAY*, INDEXED*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,
 			 args, return_vals);
 
   gimp_install_procedure("plug_in_layer_rot270",
-			 "Rotates the given layer 90 degrees anticlockwise.",
+			 _("Rotates the given layer 90 degrees anticlockwise."),
 			 "",
 			 "Adam D. Moss (adam@gimp.org)",
 			 "Adam D. Moss (adam@gimp.org)",
 			 "1997",
-			 "<Image>/Image/Transforms/Layer/Rotate 270",
+			 N_("<Image>/Image/Transforms/Layer/Rotate 270"),
 			 "RGB*, GRAY*, INDEXED*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,
 			 args, return_vals);
 
   gimp_install_procedure("plug_in_image_rot90",
-			 "Rotates the given image 90 degrees clockwise.",
+			 _("Rotates the given image 90 degrees clockwise."),
 			 "",
 			 "Adam D. Moss (adam@gimp.org)",
 			 "Adam D. Moss (adam@gimp.org)",
 			 "1997",
-			 "<Image>/Image/Transforms/Image/Rotate 90",
+			 N_("<Image>/Image/Transforms/Image/Rotate 90"),
 			 "RGB*, GRAY*, INDEXED*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,
 			 args, return_vals);
 
   gimp_install_procedure("plug_in_image_rot270",
-			 "Rotates the current image 90 degrees anticlockwise.",
+			 _("Rotates the current image 90 degrees anticlockwise."),
 			 "",
 			 "Adam D. Moss (adam@gimp.org)",
 			 "Adam D. Moss (adam@gimp.org)",
 			 "1997",
-			 "<Image>/Image/Transforms/Image/Rotate 270",
+			 N_("<Image>/Image/Transforms/Image/Rotate 270"),
 			 "RGB*, GRAY*, INDEXED*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,

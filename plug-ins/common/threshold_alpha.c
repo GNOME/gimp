@@ -1,6 +1,6 @@
 /* threshold_alpha.c -- This is a plug-in for the GIMP (1.0's API)
  * Author: Shuji Narazaki <narazaki@InetQ.or.jp>
- * Time-stamp: <1997/06/08 22:34:26 narazaki@InetQ.or.jp>
+ * Time-stamp: <1999-09-05 04:24:02 yasuhiro>
  * Version: 0.13A (the 'A' is for Adam who hacked in greyscale
  *                 support - don't know if there's a more recent official
  *                 version)
@@ -22,18 +22,19 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "gtk/gtk.h"
+#include "config.h"
+#include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
+
 /* Replace them with the right ones */
 #define	PLUG_IN_NAME	"plug_in_threshold_alpha"
 #define SHORT_NAME	"threshold_alpha"
-#define PROGRESS_NAME	"threshold_alpha (0.13):coloring transparency..."
-#define MENU_POSITION	"<Image>/Image/Alpha/Threshold Alpha"
 #define	MAIN_FUNCTION	threshold_alpha
 /* you need not change the following names */
 #define INTERFACE	threshold_alpha_interface
@@ -185,14 +186,14 @@ query ()
   static GParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
-  
+
   gimp_install_procedure (PLUG_IN_NAME,
 			  "",
 			  "",
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1997",
-			  MENU_POSITION,
+              N_("<Image>/Image/Alpha/Threshold Alpha"),
 			  "RGBA,GRAYA",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -213,6 +214,12 @@ run (char	*name,
   
   run_mode = param[0].data.d_int32;
   drawable_id = param[2].data.d_int32;
+
+  if (run_mode != RUN_INTERACTIVE) {
+    INIT_I18N();
+  } else {
+    INIT_I18N_UI();
+  }
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -290,7 +297,7 @@ MAIN_FUNCTION (gint32 drawable_id)
   gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
   pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-  gimp_progress_init (PROGRESS_NAME);
+  gimp_progress_init (_("threshold_alpha (0.13):coloring transparency..."));
   for (; pr != NULL; pr = gimp_pixel_rgns_process (pr))
     {
       int	offset, index;
@@ -342,9 +349,9 @@ DIALOG ()
 			 (GtkSignalFunc) gtkW_close_callback);
   
   hbox = gtkW_hbox_new ((GTK_DIALOG (dlg)->vbox));
-  frame = gtkW_frame_new (hbox, "Parameter Settings");
+  frame = gtkW_frame_new (hbox, _("Parameter Settings"));
   table = gtkW_table_new (frame, 2, 2);
-  gtkW_table_add_iscale_entry (table, "Threshold", 0, 0,
+  gtkW_table_add_iscale_entry (table, _("Threshold"), 0, 0,
 			       (GtkSignalFunc) gtkW_iscale_update,
 			       (GtkSignalFunc) gtkW_ientry_update,
 			       &VALS.threshold,
@@ -457,7 +464,7 @@ gtkW_dialog_new (char * name,
 		      (GtkSignalFunc) close_callback, NULL);
 
   /* Action Area */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) ok_callback, dlg);
@@ -466,7 +473,7 @@ gtkW_dialog_new (char * name,
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -490,7 +497,7 @@ gtkW_error_dialog_new (char * name)
 		      (GtkSignalFunc) gtkW_close_callback, NULL);
 
   /* Action Area */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) gtkW_close_callback, dlg);

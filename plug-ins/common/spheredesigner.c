@@ -1796,7 +1796,7 @@ void drawit(gpointer data)
   if(!drawarea) return;
   gdk_draw_rgb_image(drawarea->window,
                      drawarea->style->white_gc,
-                     0, 0, PREVIEWSIZE, PREVIEWSIZE, GDK_RGB_DITHER_NORMAL,
+                     0, 0, PREVIEWSIZE, PREVIEWSIZE, GDK_RGB_DITHER_MAX,
                      data, PREVIEWSIZE*3);
 }
 

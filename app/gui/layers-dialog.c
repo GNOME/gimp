@@ -2502,6 +2502,8 @@ layer_widget_preview_events (GtkWidget *widget,
   valid  = FALSE;
 
   layer_widget = (LayerWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
+  if (!GIMP_IS_DRAWABLE (layer_widget->layer))
+    return FALSE;
 
   if (widget == layer_widget->layer_preview)
     preview_type = LAYER_PREVIEW;

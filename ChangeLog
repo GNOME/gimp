@@ -1,3 +1,27 @@
+Wed Sep  8 23:58:14 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	(from gimp-narazaki-990909-0)
+
+	* app/layers_dialog.c: check for layer validity in
+	layer_widget_preview_events
+
+	* app/lc_dialog.c: remove GIMP_IMAGE() cast from the
+	menu_preview_update callback like the comment says to
+	
+	(from gimp-yasuhiro-990907-0)
+
+	* app/menus.c
+	* plug-ins/common/autocrop.c
+	* plug-ins/common/c_astretch.c
+	* plug-ins/common/color_enhance.c
+	* plug-ins/common/guillotine.c
+	* plug-ins/common/normalize.c
+	* plug-ins/common/rotate.c
+	* plug-ins/common/rotators.c
+	* plug-ins/common/spheredesigner.c
+	* plug-ins/common/threshold_alpha.c
+	* plug-ins/common/zealouscrop.c: i18n markings
+
 1999-09-08  Kelly Lynn Martin  <kelly@gimp.org>
 
 	* plug-ins/FractalExplorer/FractalExplorer.[ch]

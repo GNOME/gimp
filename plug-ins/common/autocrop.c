@@ -13,7 +13,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include "config.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Declare local functions. */
 static void query(void);
@@ -54,13 +56,15 @@ static void query()
   static int nargs = sizeof(args) / sizeof(args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure("plug_in_autocrop",
-			 "Automagically crops a picture.",
+			 _("Automagically crops a picture."),
 			 "",
 			 "Tim Newsome",
 			 "Tim Newsome",
 			 "1997",
-			 "<Image>/Image/Transforms/Autocrop",
+			 N_("<Image>/Image/Transforms/Autocrop"),
 			 "RGB*, GRAY*, INDEXED*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,
@@ -80,6 +84,8 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
   *return_vals = values;
   
   run_mode = param[0].data.d_int32;
+
+  INIT_I18N();
   
   if (run_mode == RUN_NONINTERACTIVE) {
     if (n_params != 3)
@@ -96,7 +102,7 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
 	gimp_drawable_gray(drawable->id)  ||
 	gimp_drawable_indexed(drawable->id)) 
       {
-	gimp_progress_init("Cropping...");
+	gimp_progress_init(_("Cropping..."));
 	gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
 	doit(drawable, image_id);
 	

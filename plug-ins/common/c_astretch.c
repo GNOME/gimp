@@ -32,6 +32,9 @@
 #include <stdio.h>
 #include "libgimp/gimp.h"
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
+
 /* Declare local functions.
  */
 static void      query  (void);
@@ -69,13 +72,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_c_astretch",
-			  "Automatically stretch the contrast of the specified drawable to cover all possible ranges.",
-			  "This simple plug-in does an automatic contrast stretch.  For each channel in the image, it finds the minimum and maximum values... it uses those values to stretch the individual histograms to the full contrast range.  For some images it may do just what you want; for others it may be total crap :)",
+			  _("Automatically stretch the contrast of the specified drawable to cover all possible ranges."),
+			  _("This simple plug-in does an automatic contrast stretch.  For each channel in the image, it finds the minimum and maximum values... it uses those values to stretch the individual histograms to the full contrast range.  For some images it may do just what you want; for others it may be total crap :)"),
 			  "Federico Mena Quintero",
 			  "Federico Mena Quintero",
 			  "1996",
-			  "<Image>/Image/Colors/Auto-Stretch Contrast",
+			  N_("<Image>/Image/Colors/Auto-Stretch Contrast"),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -96,6 +101,8 @@ run (char    *name,
 
   gint32 image_ID;
 
+  INIT_I18N();
+
   run_mode = param[0].data.d_int32;
 
   /*  Get the specified drawable  */
@@ -105,7 +112,7 @@ run (char    *name,
   /*  Make sure that the drawable is gray or RGB color  */
   if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id))
     {
-      gimp_progress_init ("Auto-Stretching Contrast...");
+      gimp_progress_init (_("Auto-Stretching Contrast..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
       c_astretch (drawable);
 
@@ -146,7 +153,7 @@ indexed_c_astretch(gint32 image_ID)  /* a.d.m. */
 
   if (cmap==NULL)
     {
-      printf("c_astretch: cmap was NULL!  Quitting...\n");
+      printf(_("c_astretch: cmap was NULL!  Quitting...\n"));
       gimp_quit();
     }
 
