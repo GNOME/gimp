@@ -65,7 +65,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
-#include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
 /* Author 1: Josh MacDonald (url.c) */

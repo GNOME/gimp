@@ -1,3 +1,8 @@
+Wed Nov 25 18:37:44 1998  Owen Taylor  <otaylor@redhat.com>
+
+	* plug-ins/gz/gz.c: We don't need GTK+, and we
+	don't use GTK_CFLAGS, so don't include <gtk/gtk.h>.
+
 Wed Nov 25 22:26:11 1998  Raph Levien  <raph@gimp.org>
 
 	* app/ink.c (ink_pen_ellipse): Added yet another slider, this time
