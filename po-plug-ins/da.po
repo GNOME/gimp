@@ -28,7 +28,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
-"POT-Creation-Date: 2001-10-06 13:55+0200\n"
+"POT-Creation-Date: 2001-10-10 22:04+0200\n"
 "PO-Revision-Date: 2001-10-06 14:40+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
@@ -10008,7 +10008,9 @@ msgstr "Billeder får navnet grundnavn_nr.endelse"
 
 #: plug-ins/gap/gap_split.c:236
 msgid "extension of resulting frames (is also used to define Fileformat)"
-msgstr "Endelse for resulterende billede (bliver også brugt til at bestemme filformatet)"
+msgstr ""
+"Endelse for resulterende billede (bliver også brugt til at bestemme "
+"filformatet)"
 
 #: plug-ins/gap/gap_split.c:241
 msgid "Inverse Order:"
@@ -10022,7 +10024,9 @@ msgstr "Start billede 0001 ved det øverste lag"
 msgid ""
 "Remove Alpha Channel in resulting Frames. Transparent parts are filled with "
 "BG color."
-msgstr "Fjern alfakanal fra resulterende billeder. Gennemsigtige dele bliver udfyldt med baggrundsfarve."
+msgstr ""
+"Fjern alfakanal fra resulterende billeder. Gennemsigtige dele bliver udfyldt "
+"med baggrundsfarve."
 
 #: plug-ins/gap/gap_split.c:250
 msgid "Split Image into Frames"
@@ -10113,7 +10117,9 @@ msgstr "<Image>/Filtre/Generér/Dynamisk tekst..."
 msgid ""
 " Current layer isn't a GDynText layer or it has no alpha channel. Forcing "
 "new layer creation."
-msgstr "Det aktuelle lag er ikke et dynamisk tekstlag, eller det har ikke nogen alfakanal. Gennemtvinger oprettelse af nyt lag."
+msgstr ""
+"Det aktuelle lag er ikke et dynamisk tekstlag, eller det har ikke nogen "
+"alfakanal. Gennemtvinger oprettelse af nyt lag."
 
 #: plug-ins/gdyntext/gdyntext.c:313 plug-ins/gdyntext/gdyntext.c:436
 msgid "GDynText Layer"
@@ -10252,7 +10258,9 @@ msgstr "Vis standardteksteksempel"
 msgid ""
 "Holding the Shift key while pressing this button will force GDynText in "
 "changing the layer name as done in GIMP 1.0."
-msgstr "Hold skifte-tasten nede og tryk på denne knap for at tvinge den dynamiske tekst til at ændre lagnavnet som i Gimp 1.0."
+msgstr ""
+"Hold skifte-tasten nede og tryk på denne knap for at tvinge den dynamiske "
+"tekst til at ændre lagnavnet som i Gimp 1.0."
 
 #: plug-ins/gdyntext/gdyntext_ui.c:863
 msgid "GDynText: CharMap"
@@ -10266,7 +10274,8 @@ msgstr "Dynamisk tekst: indlæs tekst"
 #, c-format
 msgid ""
 "Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
-msgstr "Advarsel: filen \"%s\" er større end den maksimalt tilladte længde (%d).\n"
+msgstr ""
+"Advarsel: filen \"%s\" er større end den maksimalt tilladte længde (%d).\n"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:986
 #, c-format
@@ -10278,7 +10287,9 @@ msgstr "Fejl ved åbning af \"%s\"!\n"
 msgid ""
 " WARNING: GDynText is too old! A newer version is required to handle this "
 "layer. Get it from %s"
-msgstr "ADVARSEL: Udvidelsesmodulet til dynamisk tekst er for gammelt! En nyere version er påkrævet for at håndtere dette lag. Få den fra %s"
+msgstr ""
+"ADVARSEL: Udvidelsesmodulet til dynamisk tekst er for gammelt! En nyere "
+"version er påkrævet for at håndtere dette lag. Få den fra %s"
 
 #: plug-ins/gdyntext/gdyntextcompat.c:172
 #, c-format
@@ -10487,7 +10498,8 @@ msgstr "Flere"
 
 #: plug-ins/gfig/gfig.c:2777
 msgid "Draw all objects on one layer (original or new) or one object per layer"
-msgstr "Tegn alle figurer på ét lag (oprindeligt eller nyt) eller én figur pr. lag"
+msgstr ""
+"Tegn alle figurer på ét lag (oprindeligt eller nyt) eller én figur pr. lag"
 
 #: plug-ins/gfig/gfig.c:2782
 msgid "Draw on:"
@@ -10507,7 +10519,9 @@ msgstr "Markering + fyld"
 msgid ""
 "Draw type. Either a brush or a selection. See brush page or selection page "
 "for more options"
-msgstr "Tegningstype. Enten en pensel eller en markering. Se pensel- eller markeringssiden for flere indstillinger."
+msgstr ""
+"Tegningstype. Enten en pensel eller en markering. Se pensel- eller "
+"markeringssiden for flere indstillinger."
 
 #: plug-ins/gfig/gfig.c:2824
 msgid "Using:"
@@ -10521,7 +10535,9 @@ msgstr "Forgrund"
 msgid ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
-msgstr "Lagbaggrundstype. \"Kopiér\" gør at det forrige lag kopieres før tegningen udføres."
+msgstr ""
+"Lagbaggrundstype. \"Kopiér\" gør at det forrige lag kopieres før tegningen "
+"udføres."
 
 #: plug-ins/gfig/gfig.c:2844
 msgid "With BG of:"
@@ -10551,7 +10567,9 @@ msgstr "Tilnærm cirkler og ellipser"
 msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
-msgstr "Tilnærm cirkler og ellipser ved brug af rette linjer. Tillader brugen af penselfalmen med disse figurer."
+msgstr ""
+"Tilnærm cirkler og ellipser ved brug af rette linjer. Tillader brugen af "
+"penselfalmen med disse figurer."
 
 #: plug-ins/gfig/gfig.c:2934
 msgid "Gfig brush selection"
@@ -11191,9 +11209,8 @@ msgid "Specifies the aspect ratio of the brush"
 msgstr "Angiver formatforholdet for penslen"
 
 #: plug-ins/gimpressionist/brush.c:490
-#, fuzzy
 msgid "Specifies the amount of embossing to apply to each brush stroke"
-msgstr "Angiver hvor meget penselstrøg skal laves i relief/forhøjet (i %)"
+msgstr "Angiver hvor meget penselstrøg skal \"forhøjes\""
 
 #: plug-ins/gimpressionist/color.c:86
 msgid "Average under brush"
@@ -11201,7 +11218,7 @@ msgstr "Gennemsnit under pensel"
 
 #: plug-ins/gimpressionist/color.c:92
 msgid "Color is computed from the average of all pixels under the brush"
-msgstr "Farve bliver beregnet ved gennemsnittet af alle piksler under penslen"
+msgstr "Farve bliver beregnet som gennemsnittet af alle punkter under penslen"
 
 #: plug-ins/gimpressionist/color.c:96
 msgid "Center of brush"
@@ -11209,19 +11226,20 @@ msgstr "Midten af pensel"
 
 #: plug-ins/gimpressionist/color.c:102
 msgid "Samples the color from the pixel in the center of the brush"
-msgstr "Vælger farven fra pikslen i penslens centrum"
+msgstr "Vælger farven fra punktet i penslens centrum"
 
 #: plug-ins/gimpressionist/color.c:111
 msgid "Color noise:"
-msgstr "Farve-Støj (noise)"
+msgstr "Farvestøj:"
 
 #: plug-ins/gimpressionist/color.c:122
 msgid "Adds random noise to the color"
 msgstr "Tilføjer tilfældig støj til farven"
 
+# "dialog" overflødigt og ikke tråd med alm. standard
 #: plug-ins/gimpressionist/general.c:99
 msgid "Color Selection Dialog"
-msgstr "Farvevælgerdialog"
+msgstr "Farvevælger"
 
 #: plug-ins/gimpressionist/general.c:156
 msgid "Edge darken:"
@@ -11229,7 +11247,7 @@ msgstr "Formørk kant:"
 
 #: plug-ins/gimpressionist/general.c:173
 msgid "How much to \"darken\" the edges of each brush stroke"
-msgstr "Hvor meget skal kanterne formørkes for hvert penselstrøg"
+msgstr "Hvor meget kanterne skal formørkes for hvert penselstrøg"
 
 #: plug-ins/gimpressionist/general.c:180
 msgid "Background:"
@@ -11261,46 +11279,47 @@ msgstr "Ensfarvet baggrund"
 
 #: plug-ins/gimpressionist/general.c:246
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr "Benyt en gennemsigtig baggrund; Kun penselsstrøgene er synlige."
+msgstr "Benyt en gennemsigtig baggrund; kun penselsstrøgene er synlige"
 
 #: plug-ins/gimpressionist/general.c:261
 msgid "Paint edges"
 msgstr "Tegn kanter"
 
 #: plug-ins/gimpressionist/general.c:265
-#, fuzzy
 msgid "Selects if to place strokes all the way out to the edges of the image"
-msgstr "Fokusér penselstrøgene omkring billedets midtpunkt"
+msgstr "Angiver om penselstrøgene skal males helt ud til billedkanterne"
 
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:269 plug-ins/maze/maze_face.c:282
 msgid "Tileable"
-msgstr "Flisérbar"
+msgstr "Fliselægbar"
 
 #: plug-ins/gimpressionist/general.c:273
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr "Vælg om det resulterende billede skal være sømløst flisérbar"
+msgstr ""
+"Angiver om det resulterende billede skal være fliselægbart uden en synlig "
+"overgang"
 
 #: plug-ins/gimpressionist/general.c:281
 msgid "Drop Shadow"
-msgstr "Dråbe-skygge"
+msgstr "Baggrundsskygge"
 
 #: plug-ins/gimpressionist/general.c:285
 msgid "Adds a shadow effect to each brush stroke"
-msgstr "tilføjer en skyggeeffekt til alle penselsstrøg"
+msgstr "Tilføjer en skyggeeffekt til hvert penselsstrøg"
 
 #: plug-ins/gimpressionist/general.c:296
 msgid "How much to \"darken\" the drop shadow"
-msgstr "Hvor meget dråbe-skyggen skal formørkes"
+msgstr "Hvor meget baggrundsskyggen formørker"
 
 #: plug-ins/gimpressionist/general.c:302
 msgid "Shadow depth:"
-msgstr "Dybde på skygge:"
+msgstr "Skyggedybde:"
 
 #: plug-ins/gimpressionist/general.c:313
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr "Dråbe-skyggens dybde, dvs. hvor langt fra objektet den skal være"
+msgstr "Baggrundsskyggens dybde, dvs. hvor langt fra objektet den skal være"
 
 #: plug-ins/gimpressionist/general.c:319
 msgid "Shadow blur:"
@@ -11308,19 +11327,19 @@ msgstr "Sløring på skygge:"
 
 #: plug-ins/gimpressionist/general.c:330
 msgid "How much to blur the drop shadow"
-msgstr "Hvor meget dråbe-skyggen skal sløres"
+msgstr "Hvor meget baggrundsskyggen skal sløres"
 
 #: plug-ins/gimpressionist/general.c:336
 msgid "Deviation threshold:"
-msgstr "Afvigelses-tærskel:"
+msgstr "Afvigelsestærskel:"
 
 #: plug-ins/gimpressionist/general.c:347
 msgid "A bailout-value for adaptive selections"
-msgstr "Udstigningsværdi for tilpassende selektioner"
+msgstr "Termineringsværdien for adaptive udvælgelser"
 
 #: plug-ins/gimpressionist/gimp.c:105
 msgid "<Image>/Filters/Artistic/GIMPressionist..."
-msgstr "<Image>/Filtre/Kunstnerisk/GIMPressionist..."
+msgstr "<Image>/Filtre/Kunstnerisk/Gimpressionist..."
 
 #: plug-ins/gimpressionist/gimp.c:294
 msgid "Painting..."
@@ -11335,14 +11354,14 @@ msgid ""
 "(or similar) to your gimprc file.\n"
 msgstr ""
 "*** Advarsel ***\n"
-"Det anbefales indtrængende at tilføje\n"
+"Det anbefales kraftigt at tilføje\n"
 " (gimpressionist-path \"%s\")\n"
-"(eller lign. .) til din gimprc-fil\n"
+"(eller lign.) til din gimprc-fil\n"
 
 #: plug-ins/gimpressionist/gimpressionist.c:346
 #: plug-ins/gimpressionist/gimpressionist.c:442
 msgid "The GIMPressionist!"
-msgstr "GIMPressionisten!"
+msgstr "Gimpressionisten!"
 
 #: plug-ins/gimpressionist/gimpressionist.c:484
 msgid "Run with the selected settings"
@@ -11350,7 +11369,7 @@ msgstr "Kør med de valgte indstillinger"
 
 #: plug-ins/gimpressionist/gimpressionist.c:491
 msgid "Quit the program"
-msgstr "Afslut program"
+msgstr "Afslut programmet"
 
 #: plug-ins/gimpressionist/gimpressionist.c:493
 msgid "About..."
@@ -11358,7 +11377,7 @@ msgstr "Om..."
 
 #: plug-ins/gimpressionist/gimpressionist.c:498
 msgid "Show some information about program"
-msgstr "Vis nogen informationen om dette program"
+msgstr "Vis lidt information om dette program"
 
 #: plug-ins/gimpressionist/orientation.c:73
 msgid "Directions:"
@@ -11378,17 +11397,17 @@ msgstr "Antal af brugte retninger (dvs. pensler)"
 
 #: plug-ins/gimpressionist/orientation.c:105
 msgid "The angle of the first brush to create"
-msgstr "Vinkel på den første pensel, der skal laves"
+msgstr "Vinkel på den første pensel der skal laves"
 
 #: plug-ins/gimpressionist/orientation.c:114
 msgid "How large an angle-span to use (360 = full circle)"
-msgstr "Hvor stor vinklen skal være (360=hel cirkel)"
+msgstr "Hvor stor vinklen skal være (360 = hel cirkel)"
 
 #: plug-ins/gimpressionist/orientation.c:137
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
-msgstr "Lysstyrken i området bestemmer penselstrøgenes retning"
+msgstr "Værdien (lysstyrken) i området bestemmer penselstrøgenes retning"
 
 #: plug-ins/gimpressionist/orientation.c:141
 #: plug-ins/gimpressionist/size.c:140
@@ -11426,7 +11445,7 @@ msgstr "Farvetonen i området bestemmer penselstrøgenes retning"
 #: plug-ins/gimpressionist/orientation.c:204
 msgid "The direction that matches the original image the closest is selected"
 msgstr ""
-"Retningen der bedst passer til det oprindelige billede bestemmer hvert "
+"Retningen der bedst passer til det oprindelige billede, bestemmer hvert "
 "penselstrøgs retning"
 
 #: plug-ins/gimpressionist/orientation.c:213
@@ -11436,7 +11455,7 @@ msgstr "Manuel"
 
 #: plug-ins/gimpressionist/orientation.c:219
 msgid "Manually specify the stroke orientation"
-msgstr "Manuelt angiv retningen på strøg"
+msgstr "Angiv manuelt retningen på hvert penselstrøg"
 
 #: plug-ins/gimpressionist/orientation.c:223
 #: plug-ins/gimpressionist/size.c:220
@@ -11445,11 +11464,11 @@ msgstr "Redigér.."
 
 #: plug-ins/gimpressionist/orientation.c:228
 msgid "Opens up the Orientation Map Editor"
-msgstr "Åbner for orienterings-map redigering"
+msgstr "Åbner orienteringskortredigeringen"
 
 #: plug-ins/gimpressionist/orientmap.c:461
 msgid "Orientation Map Editor"
-msgstr "Orienterings-map redigering"
+msgstr "Orienteringskortredigering"
 
 #: plug-ins/gimpressionist/orientmap.c:469
 msgid "Vectors"
@@ -11460,14 +11479,14 @@ msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
-"Vektor-feltet. Venstre-klik for at flytte valgte vektor,\n"
-"Højre-klik for at få vektoren til at pege mod musen,\n"
-"Midter-klik for at tilføje en ny vektor."
+"Vektorfeltet. Venstre-klik for at flytte den valgte vektor, højre-klik for "
+"at få vektoren til at pege mod musen, midter-klik for at tilføje en ny "
+"vektor."
 
 #: plug-ins/gimpressionist/orientmap.c:500
 #: plug-ins/gimpressionist/sizemap.c:400
 msgid "Adjust the preview's brightness"
-msgstr "Indstil lysstyrke for forhåndsvisning"
+msgstr "Justér lysstyrken for eksemplet"
 
 #: plug-ins/gimpressionist/orientmap.c:522
 msgid "Select previous vector"
@@ -11488,7 +11507,7 @@ msgstr "Fjern"
 
 #: plug-ins/gimpressionist/orientmap.c:543
 msgid "Delete selected vector"
-msgstr "Slet valgte vektor"
+msgstr "Slet den valgte vektor"
 
 #: plug-ins/gimpressionist/orientmap.c:563
 msgid "Change the angle of the selected vector"
@@ -11500,15 +11519,15 @@ msgstr "Ændr styrken på den valgte vektor"
 
 #: plug-ins/gimpressionist/orientmap.c:596
 msgid "Vortex"
-msgstr "Vortex"
+msgstr "Malstrøm"
 
 #: plug-ins/gimpressionist/orientmap.c:608
 msgid "Vortex2"
-msgstr "Vortex2"
+msgstr "Malstrøm 2"
 
 #: plug-ins/gimpressionist/orientmap.c:614
 msgid "Vortex3"
-msgstr "Vortex3"
+msgstr "Malstrøm 3"
 
 #: plug-ins/gimpressionist/orientmap.c:631
 #: plug-ins/gimpressionist/sizemap.c:490
@@ -11523,12 +11542,12 @@ msgstr "Anvend, men fortsæt redigering"
 #: plug-ins/gimpressionist/orientmap.c:645
 #: plug-ins/gimpressionist/sizemap.c:504
 msgid "Cancel all changes and exit"
-msgstr "Fortrys alle ændringer og afslut"
+msgstr "Fortryd alle ændringer og afslut"
 
 #: plug-ins/gimpressionist/orientmap.c:653
 #: plug-ins/gimpressionist/sizemap.c:512
 msgid "Strength exp.:"
-msgstr "Styrke eksp.:"
+msgstr "Styrkeeksponent:"
 
 #: plug-ins/gimpressionist/orientmap.c:665
 #: plug-ins/gimpressionist/sizemap.c:524
@@ -11537,11 +11556,11 @@ msgstr "Ændr eksponenten på styrken"
 
 #: plug-ins/gimpressionist/orientmap.c:667
 msgid "Angle offset:"
-msgstr "Vinkel-afsæt:"
+msgstr "Vinkelafsæt:"
 
 #: plug-ins/gimpressionist/orientmap.c:679
 msgid "Offset all vectors with a given angle"
-msgstr "Tillæg denne vinkel til alle vektorer"
+msgstr "Læg denne vinkel til alle vektorer"
 
 #: plug-ins/gimpressionist/orientmap.c:681
 #: plug-ins/gimpressionist/sizemap.c:527
@@ -11553,7 +11572,8 @@ msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr ""
-"Voronoi-modus: Kun den vektor nærmest til det givne punkt har indflydelse"
+"Voronoi-tilstand bevirker at kun vektoren nærmest et givent punkt har nogen "
+"indflydelse"
 
 #: plug-ins/gimpressionist/paper.c:89 plug-ins/gimpressionist/paper.c:94
 msgid "Paper"
@@ -11561,7 +11581,7 @@ msgstr "Papir"
 
 #: plug-ins/gimpressionist/paper.c:130
 msgid "Paper Preview:"
-msgstr "Papir-forhåndsvisning:"
+msgstr "Papirsmugkig:"
 
 #. updatepaperprev(NULL);
 #: plug-ins/gimpressionist/paper.c:141
@@ -11570,11 +11590,11 @@ msgstr "Invertér"
 
 #: plug-ins/gimpressionist/paper.c:148
 msgid "Inverts the Papers texture"
-msgstr "Invertér papertekstur"
+msgstr "Invertér papirtekstur"
 
 #: plug-ins/gimpressionist/paper.c:156
 msgid "Applies the paper as it is (without embossing it)"
-msgstr "Bruger papir som det er (uden først at \"udstanse\" det (emboss))"
+msgstr "Bruger papir som det er (uden først at \"udstanse\" det)"
 
 #. Scale
 #: plug-ins/gimpressionist/paper.c:169 plug-ins/ifscompose/ifscompose.c:563
@@ -11583,20 +11603,20 @@ msgstr "Skalér:"
 
 #: plug-ins/gimpressionist/paper.c:188
 msgid "Specifies the scale of the texture (in percent of original file)"
-msgstr "Angiver størrelse på tekstur (i % af den oprindelige fil)"
+msgstr "Angiver teksturskaleringen (i % af den oprindelige fil)"
 
 #: plug-ins/gimpressionist/paper.c:197
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
-msgstr "Angiver intensiteten for reliefeffekter ('embossing') i %"
+msgstr "Angiver styrken af reliefeffekter (i %)"
 
 #: plug-ins/gimpressionist/placement.c:52
 #: plug-ins/gimpressionist/placement.c:57
 msgid "Placement"
-msgstr "Pladsering"
+msgstr "Placering"
 
 #: plug-ins/gimpressionist/placement.c:77
 msgid "Placement:"
-msgstr "Pladsering:"
+msgstr "Placering:"
 
 #: plug-ins/gimpressionist/placement.c:87
 msgid "Randomly"
@@ -11616,11 +11636,11 @@ msgstr "Penselstrøg bliver ligeligt fordelt i billedet"
 
 #: plug-ins/gimpressionist/placement.c:112
 msgid "Stroke density:"
-msgstr "Strøgtykkelse:"
+msgstr "Strøgtæthed:"
 
 #: plug-ins/gimpressionist/placement.c:123
 msgid "The relative density of the brush strokes"
-msgstr "Den relative tykkelse for penselsstrøgene"
+msgstr "Den relative tæthed af penselsstrøgene"
 
 #: plug-ins/gimpressionist/placement.c:125
 msgid "Centerize"
@@ -11630,33 +11650,34 @@ msgstr "Centrér"
 msgid "Focus the brush strokes around the center of the image"
 msgstr "Fokusér penselstrøgene omkring billedets midtpunkt"
 
+# det drejer sig om forvalgte, gemte indstillinger
 #: plug-ins/gimpressionist/presets.c:572 plug-ins/gimpressionist/presets.c:577
 msgid "Presets"
-msgstr "Forindstillinger"
+msgstr "Forvalg"
 
 #: plug-ins/gimpressionist/presets.c:596
 msgid "Save current"
-msgstr "Gem indstillinger"
+msgstr "Gem nuværende"
 
 #: plug-ins/gimpressionist/presets.c:602
 msgid "Save the current settings to the specified file"
-msgstr "Gem de øjeblikkelige indstillinger i den angivne fil"
+msgstr "Gem de nuværende indstillinger i den angivne fil"
 
 #: plug-ins/gimpressionist/presets.c:646
 msgid "Reads the selected Preset into memory"
-msgstr "Læser indstillingerne fra den angivne fil"
+msgstr "Læser indstillingerne fra det valgte forvalg"
 
 #: plug-ins/gimpressionist/presets.c:654
 msgid "Deletes the selected Preset"
-msgstr "Sletter den valgte fil med indstillinger"
+msgstr "Sletter det det valgte forvalg"
 
 #: plug-ins/gimpressionist/presets.c:662
 msgid "Reread the directory of Presets"
-msgstr "Genindlæser kataloget med indstillinger"
+msgstr "Genindlæser mappen med forvalg"
 
 #: plug-ins/gimpressionist/presets.c:664
 msgid "(Desc)"
-msgstr "(Beskr.)"
+msgstr "(beskr.)"
 
 #: plug-ins/gimpressionist/presets.c:669
 msgid ""
@@ -11667,19 +11688,20 @@ msgid ""
 "for inclusion into the next release!\n"
 msgstr ""
 "\n"
-"Hvis du komme frem til nogle gode forindstillinger,n(også for pensel eller "
-"paper)\n"
-"så send dem gerne til mig (vidar@prosalg.no),\n"
-"for inkludering i den næste udgave!\n"
+"Hvis du kommer frem til nogle gode forvalg\n"
+"(også for pensel eller papir), så send dem\n"
+"gerne til mig (vidar@prosalg.no) til\n"
+"inkludering i den næste udgave!\n"
 
 #: plug-ins/gimpressionist/preview.c:117 plug-ins/gimpressionist/repaint.c:877
 #: plug-ins/gimpressionist/repaint.c:879 plug-ins/imagemap/imap_polygon.c:446
 msgid "Update"
 msgstr "Opdatér"
 
+# der står miniature oven over det
 #: plug-ins/gimpressionist/preview.c:122
 msgid "Refresh the Preview window"
-msgstr "Genopfrisk forhåndsvisningsvinduet"
+msgstr "Genopfrisk miniaturevinduet"
 
 #: plug-ins/gimpressionist/preview.c:129
 msgid "Revert to the original image"
@@ -11699,16 +11721,17 @@ msgstr "Max. størrelse:"
 
 #: plug-ins/gimpressionist/size.c:104
 msgid "The smallest brush to create"
-msgstr "Den mindste pensel, der skal oprettes"
+msgstr "Den mindste pensel der skal oprettes"
 
 #: plug-ins/gimpressionist/size.c:113
 msgid "The largest brush to create"
-msgstr "Den største pensel, der skal oprettes"
+msgstr "Den største pensel der skal oprettes"
 
 #: plug-ins/gimpressionist/size.c:136
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
-msgstr "Lysstyrken på omgivelserne bestemmer størrelsen på penselsstrøget"
+msgstr ""
+"Værdien (lysstyrken) af omgivelserne bestemmer størrelsen på penselsstrøget"
 
 #: plug-ins/gimpressionist/size.c:146
 msgid ""
@@ -11726,11 +11749,11 @@ msgstr "Retningen fra midtpunktet bestemmer størrelsen på penselsstrøget"
 
 #: plug-ins/gimpressionist/size.c:192
 msgid "The hue of the region determines the size of the stroke"
-msgstr "Farvetonen på omgivelserne bestemmer størrelsen på penselsstrøget"
+msgstr "Farvetonen af omgivelserne bestemmer størrelsen på penselsstrøget"
 
 #: plug-ins/gimpressionist/size.c:202
 msgid "The brush-size that matches the original image the closest is selected"
-msgstr "Penselsstørrelsen som kommer nærmest det oprindelige billede vælges"
+msgstr "Penselsstørrelsen som kommer nærmest det oprindelige billede, vælges"
 
 #: plug-ins/gimpressionist/size.c:216
 msgid "Manually specify the stroke size"
@@ -11738,55 +11761,56 @@ msgstr "Angiv penselsstørrelse manuelt"
 
 #: plug-ins/gimpressionist/size.c:225
 msgid "Opens up the Size Map Editor"
-msgstr "Åbner Størrelse-Map redigering"
+msgstr "Åbner størrelseskortredigering"
 
 #: plug-ins/gimpressionist/sizemap.c:361
 msgid "Size Map Editor"
-msgstr "Størrelse-Map redigering"
+msgstr "Størrelseskortredigering"
 
 #: plug-ins/gimpressionist/sizemap.c:369
 msgid "Smvectors"
-msgstr "Sm-vektorer"
+msgstr "Størrelseskortvektorer"
 
 #: plug-ins/gimpressionist/sizemap.c:379
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
-"SM-Vektor-feltet. Venstre-klik for at flytte valgte smvektor,\n"
-"Højre-klik for at få vektoren til at pege mod musen,\n"
-"Midter-klik for at tilføje en ny smvektor."
+"Størrelseskortvektorfeltet. Venstre-klik for at flytte den valgte vektor, "
+"højre-klik for at få vektoren til at pege mod musen, midter-klik for at "
+"tilføje en ny vektor."
 
 #: plug-ins/gimpressionist/sizemap.c:422
 msgid "Select previous smvector"
-msgstr "Vælg forrige smvektor"
+msgstr "Vælg forrige størrelseskortvektor"
 
 #: plug-ins/gimpressionist/sizemap.c:429
 msgid "Select next smvector"
-msgstr "Vælg næste smvektor"
+msgstr "Vælg næste størrelseskortvektor"
 
 #: plug-ins/gimpressionist/sizemap.c:436
 msgid "Add new smvector"
-msgstr "Tilføj ny smvektor"
+msgstr "Tilføj ny størrelseskortvektor"
 
 #: plug-ins/gimpressionist/sizemap.c:443
 msgid "Delete selected smvector"
-msgstr "Slet valgte smvektor"
+msgstr "Slet valgt størrelseskortvektor"
 
 #: plug-ins/gimpressionist/sizemap.c:463
 msgid "Change the angle of the selected smvector"
-msgstr "Ændr vinklen på den valgte smvektor"
+msgstr "Ændr vinklen på den valgte størrelseskortvektor"
 
 #: plug-ins/gimpressionist/sizemap.c:477
 msgid "Change the strength of the selected smvector"
-msgstr "Ændr styrken på den valgte smvektor"
+msgstr "Ændr styrken på den valgte størrelseskortvektor"
 
 #: plug-ins/gimpressionist/sizemap.c:535
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 msgstr ""
-"Voronoi-modus: Kun den smvektor nærmest til det givne punkt har indflydelse"
+"Voronoi-tilstand bevirker at kun vektoren nærmest et givent punkt har nogen "
+"indflydelse"
 
 #: plug-ins/helpbrowser/helpbrowser.c:95
 #, c-format
@@ -11800,8 +11824,8 @@ msgstr ""
 "<html><head><title>Dokument ikke fundet</title></head><body bgcolor=\"#ffffff"
 "\"><center><p>%s<h3>Kunne ikke finde dokument</h3><tt>%s</tt></"
 "center><p><small>Enten betyder det at hjælpen for dette emne ikke er skrevet "
-"endnu eller at noget er galt med din installation. Venligst tjek omhyggeligt "
-"før du rapporteret dette som en fejl.</small></body></html>"
+"endnu eller at noget er galt med din installation. Kontrollér venligst dette "
+"omhyggeligt før du rapporteret det som en fejl.</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:111
 #, c-format
@@ -11813,12 +11837,12 @@ msgid ""
 "with your installation. Please check carefully before you report this as a "
 "bug.</small></body></html>"
 msgstr ""
-"<html><head><title>Katalog ikke fundet</title></head><body bgcolor=\"#ffffff"
-"\"><center><p>%s<h3>Kunne ikke ændre til katalog </h3><tt>%s</tt><h3>ved "
-"forsøg på at få adgang til</h3><tt>%s</tt></center><p><small>Enten betyder "
+"<html><head><title>Mappe ikke fundet</title></head><body bgcolor=\"#ffffff"
+"\"><center><p>%s<h3>Kunne ikke skifte til mappen </h3><tt>%s</tt><h3> ved "
+"forsøg på at få adgang til </h3><tt>%s</tt></center><p><small>Enten betyder "
 "det at hjælpen for dette emne ikke er skrevet endnu eller at noget er galt "
-"med din installation. Venligst tjek omhyggeligt før du rapporteret dette som "
-"en fejl.</small></body></html>"
+"med din installation. Kontrollér venligst dette omhyggeligt før du "
+"rapporterer det som en fejl.</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:137
 msgid "Contents"
@@ -11842,14 +11866,14 @@ msgid ""
 "Couldn't find my root html directory.\n"
 "(%s)"
 msgstr ""
-"GIMP hjælpe-læser-fejl.\n"
+"Gimp hjælpelæser-fejl.\n"
 "\n"
-"Kunne ikke finde mit rod-HTML-katalog.\n"
+"Kunne ikke finde html-rodmappen.\n"
 "(%s)"
 
 #: plug-ins/helpbrowser/helpbrowser.c:795
 msgid "GIMP Help Browser"
-msgstr "GIMP hjælpe browser"
+msgstr "Gimp hjælpelæser"
 
 #: plug-ins/helpbrowser/helpbrowser.c:810
 msgid "Back"
@@ -11867,14 +11891,17 @@ msgid ""
 "Couldn't find GIMP_HELP_ROOT html directory.\n"
 "(%s)"
 msgstr ""
-"GIMP hjælpe-læser-fejl.\n"
+"Gimp hjælpelæser-fejl.\n"
 "\n"
-"Kunne ikke finde GIMP_HELP_ROOT html-katalog.\n"
+"Kunne ikke finde GIMP_HELP_ROOT-html-mappen.\n"
 "(%s)"
 
+# mere dækkende - IFS står for Iterative Function System; der bliver
+# genereret en fraktal ved at sammensætte mindre og mindre geometriske
+# figurer i det uendelige
 #: plug-ins/ifscompose/ifscompose.c:365
 msgid "<Image>/Filters/Render/Nature/IfsCompose..."
-msgstr "<Image>/Filtre/Generér/Natur/IfsCompose..."
+msgstr "<Image>/Filtre/Generér/Natur/Geometrisk fraktal..."
 
 #. Asym
 #: plug-ins/ifscompose/ifscompose.c:591
@@ -11884,12 +11911,12 @@ msgstr "Asymmetri:"
 #. Shear
 #: plug-ins/ifscompose/ifscompose.c:605
 msgid "Shear:"
-msgstr "Skærer:"
+msgstr "Trapezering:"
 
 #. Flip
 #: plug-ins/ifscompose/ifscompose.c:619
 msgid "Flip"
-msgstr "Spejl"
+msgstr "Spejling"
 
 #. Simple color control section
 #: plug-ins/ifscompose/ifscompose.c:650
@@ -11898,7 +11925,7 @@ msgstr "Simpel"
 
 #: plug-ins/ifscompose/ifscompose.c:662
 msgid "IfsCompose: Target"
-msgstr "IfsCompose: Mål"
+msgstr "Geometrisk fraktal: mål"
 
 #: plug-ins/ifscompose/ifscompose.c:668
 msgid "Scale Hue by:"
@@ -11911,31 +11938,31 @@ msgstr "Skalér værdi med:"
 #. Full color control section
 #: plug-ins/ifscompose/ifscompose.c:700
 msgid "Full"
-msgstr "Hel"
+msgstr "Fuld"
 
 #: plug-ins/ifscompose/ifscompose.c:709
 msgid "IfsCompose: Red"
-msgstr "IfsCompose: Rød"
+msgstr "Geometrisk fraktal: rød"
 
 #: plug-ins/ifscompose/ifscompose.c:718
 msgid "IfsCompose: Green"
-msgstr "IfsCompose: Grøn"
+msgstr "Geometrisk fraktal: grøn"
 
 #: plug-ins/ifscompose/ifscompose.c:727
 msgid "IfsCompose: Blue"
-msgstr "IfsCompose: Blå"
+msgstr "Geometrisk fraktal: blå"
 
 #: plug-ins/ifscompose/ifscompose.c:736
 msgid "IfsCompose: Black"
-msgstr "IfsCompose: Sort"
+msgstr "Geometrisk fraktal: sort"
 
 #: plug-ins/ifscompose/ifscompose.c:798
 msgid "IfsCompose"
-msgstr "IfsCompose"
+msgstr "Geometrisk fraktal"
 
 #: plug-ins/ifscompose/ifscompose.c:882 plug-ins/ifscompose/ifscompose.c:1152
 msgid "Rotate/Scale"
-msgstr "Drej/Skalér"
+msgstr "Rotér/skalér"
 
 #: plug-ins/ifscompose/ifscompose.c:891 plug-ins/ifscompose/ifscompose.c:1164
 msgid "Stretch"
@@ -11943,15 +11970,15 @@ msgstr "Stræk"
 
 #: plug-ins/ifscompose/ifscompose.c:911
 msgid "Render Options"
-msgstr "Fremvis indstillinger"
+msgstr "Genereringsindstillinger"
 
 #: plug-ins/ifscompose/ifscompose.c:925 plug-ins/print/gimp_main_window.c:452
 msgid "Auto"
-msgstr "Auto"
+msgstr "Automatisk"
 
 #: plug-ins/ifscompose/ifscompose.c:958
 msgid "Spatial Transformation"
-msgstr "Rumtransformation"
+msgstr "Rumlig transformation"
 
 #: plug-ins/ifscompose/ifscompose.c:964
 msgid "Color Transformation"
@@ -11977,30 +12004,30 @@ msgstr "Gentag"
 
 #: plug-ins/ifscompose/ifscompose.c:1250
 msgid "IfsCompose Options"
-msgstr "IfsCompose indstillinger"
+msgstr "Indstillinger for geometrisk fraktal"
 
 #: plug-ins/ifscompose/ifscompose.c:1270
 msgid "Max. Memory:"
-msgstr "Max. hovedlager:"
+msgstr "Maks. hukommelse:"
 
 #: plug-ins/ifscompose/ifscompose.c:1297
 msgid "Subdivide:"
-msgstr "Underinddel:"
+msgstr "Underinddelinger:"
 
 #: plug-ins/ifscompose/ifscompose.c:1310
 msgid "Spot Radius:"
-msgstr "Punkt Radius:"
+msgstr "Punktradius:"
 
 #: plug-ins/ifscompose/ifscompose.c:1381
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
-msgstr "Gengiv IFS (%d/%d)..."
+msgstr "Genererer geometrisk fraktal (%d/%d)..."
 
 #. transfer the image to the drawable
 #: plug-ins/ifscompose/ifscompose.c:1400
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
-msgstr "Kopiér IFS til billede (%d/%d)..."
+msgstr "Kopierer geometrisk fraktal til billede (%d/%d)..."
 
 #: plug-ins/imagemap/imap_about.c:39
 msgid ""
@@ -12011,20 +12038,20 @@ msgid ""
 "\n"
 "  Released under the GNU General Public License  "
 msgstr ""
-"Imagemap Plug-In 1.3\n"
+"Billedkortudvidelsesmodulet 1.3\n"
 "\n"
-"Ophavsret (c) 1999 Maurits Rijk\n"
+"Ophavsret © 1999 Maurits Rijk\n"
 "lpeek.mrijk@consunet.nl \n"
 "\n"
 "Udgivet under GNU General Public License"
 
 #: plug-ins/imagemap/imap_circle.c:261
 msgid "Center x:"
-msgstr "Center x:"
+msgstr "Centrum-x:"
 
 #: plug-ins/imagemap/imap_circle.c:267
 msgid "Center y:"
-msgstr "Center y:"
+msgstr "Centrum-y:"
 
 #: plug-ins/imagemap/imap_cmd_create.c:52
 msgid "Create"
@@ -12034,15 +12061,17 @@ msgstr "Opret"
 msgid "Edit Object"
 msgstr "Redigér objekt"
 
+# her oversættes "guide" med "rektangel" fordi det i dette modul
+# drejer sig om rektangler, se nedenstående tekst
 #: plug-ins/imagemap/imap_cmd_guides.c:71
 #: plug-ins/imagemap/imap_cmd_guides.c:132
 msgid "Create Guides"
-msgstr "Opret hjælpelinier"
+msgstr "Opret rektangler"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:111
 #, c-format
 msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
-msgstr "Resulterende hjælpelinie-grænser: %d,%d til %d,%d (%d flader)"
+msgstr "Resulterende rektangelgrænser: (%d,%d) til (%d,%d) (%d områder)"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:136
 msgid ""
@@ -12051,11 +12080,10 @@ msgid ""
 "allows you to rapidly create the most common image map type -\n"
 "image collection of \"thumbnails\", suitable for navigation bars."
 msgstr ""
-"Hjælpelinier er foruddefinerede rektangler der dækker billedet.\n"
-"Du kan definere dem ved deres bredde, højde og afstand fra hinanden.\n"
-"Dette tillader dig at hurtigt oprette den mest almindelige\n"
-"billedtabelstype - billedsamling af 'tommelnegle', beregnet til\n"
-"navigations-bjælker."
+"Her kan du få oprettet foruddefinerede rektangler på billedet. De kan\n"
+"defineres ved deres bredde, højde og afstand fra hinanden. Dette\n"
+"hjælper dig med hurtigt at oprette den mest almindelige billedkorttype\n"
+"- en samling af miniaturer til en navigationslinje. "
 
 #: plug-ins/imagemap/imap_cmd_guides.c:164 plug-ins/imagemap/imap_grid.c:198
 msgid "Width"
@@ -12075,7 +12103,7 @@ msgstr "Begynd foroven ved"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:184
 msgid "Horz. Spacing"
-msgstr "Vandret afstand"
+msgstr "Vandret mellemrum"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:189
 msgid "No. Across"
@@ -12083,7 +12111,7 @@ msgstr "Antal vandret"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:194
 msgid "Vert. Spacing"
-msgstr "Lodret afstand"
+msgstr "Lodret mellemrum"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:199
 msgid "No. Down"
@@ -12100,11 +12128,11 @@ msgstr "Billedstørrelse: %d x %d"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:229
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
-msgstr "Resulterende hjælpelinie-grænser: 0,0 til 0,0 (0 flader)"
+msgstr "Resulterende rektangelgrænser: (0,0) til (0,0) (0 områder)"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:264
 msgid "Guides"
-msgstr "Hjælpelinier"
+msgstr "Rektangler"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:52
 #: plug-ins/imagemap/imap_cmd_object_down.c:51
@@ -12118,7 +12146,7 @@ msgstr "Flyt billeder"
 
 #: plug-ins/imagemap/imap_cmd_move_selected.c:52
 msgid "Move Selected Objects"
-msgstr "Flyt udvalgte objekter"
+msgstr "Flyt markerede objekter"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:52
 #: plug-ins/imagemap/imap_cmd_object_up.c:51
@@ -12137,12 +12165,12 @@ msgstr "Vælg næste"
 
 #: plug-ins/imagemap/imap_cmd_select_region.c:63
 msgid "Select Region"
-msgstr "Vælg region"
+msgstr "Vælg område"
 
 #: plug-ins/imagemap/imap_cmd_send_to_back.c:51
 #: plug-ins/imagemap/imap_toolbar.c:158
 msgid "Send To Back"
-msgstr "Send baglæns"
+msgstr "Send til bagerst"
 
 #: plug-ins/imagemap/imap_cmd_unselect.c:49
 msgid "Unselect"
@@ -12158,11 +12186,11 @@ msgstr "Hjælp..."
 
 #: plug-ins/imagemap/imap_edit_area_info.c:168
 msgid "Link Type"
-msgstr "Lænketype"
+msgstr "Henvisningstype"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:177
 msgid "Web Site"
-msgstr "Websted"
+msgstr "Netsted"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:183
 msgid "Ftp Site"
@@ -12170,7 +12198,7 @@ msgstr "Ftp-sted"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:189
 msgid "Gopher"
-msgstr "Goffer"
+msgstr "Gopher"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:195
 msgid "Other"
@@ -12199,11 +12227,11 @@ msgstr "Telnet"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:219
 msgid "e-mail"
-msgstr "e-post"
+msgstr "E-post"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:225
 msgid "URL to activate when this area is clicked: (required)"
-msgstr "URL som bliver aktiveret, når denne flade bliver klikket på: (krævet)"
+msgstr "URL som aktiveres når der klikkes på dette område: (påkrævet)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:227
 msgid "Select HTML file"
@@ -12211,19 +12239,19 @@ msgstr "Vælg HTML-fil"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:235
 msgid "Relative link"
-msgstr "Relativ Lænke"
+msgstr "Relativ henvisning"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:241
 msgid "Target frame name/ID: (optional - used for FRAMES only)"
-msgstr "Mål-billede navn/ID: (valgfrit - kun brugt til FRAMES)"
+msgstr "Målrammes navn/id: (valgfrit - kun til sider med rammer)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:245
 msgid "Comment about this area: (optional)"
-msgstr "Kommentar om denne flade: (valgfri)"
+msgstr "Kommentar til dette område: (valgfri)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:248
 msgid "Link"
-msgstr "Lænke"
+msgstr "Henvisning"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:283
 msgid "Dimensions"
@@ -12231,24 +12259,24 @@ msgstr "Dimensioner"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:325
 msgid "JavaScript"
-msgstr "JavaSkript"
+msgstr "Javascript"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:425
 msgid "Area Settings"
-msgstr "Areal indstillinger"
+msgstr "Områdeindstillinger"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:469
 #, c-format
 msgid "Area #%d Settings"
-msgstr "Areal #%d indstillinger"
+msgstr "Indstillinger for område nr. %d"
 
 #: plug-ins/imagemap/imap_file.c:50 plug-ins/imagemap/imap_menu.c:66
 msgid "Error opening file"
-msgstr "fejl ved åbning af fil"
+msgstr "Fejl ved åbning af fil"
 
 #: plug-ins/imagemap/imap_file.c:59
 msgid "Load Imagemap"
-msgstr "Indlæs Imagemap"
+msgstr "Indlæs billedkort"
 
 #: plug-ins/imagemap/imap_file.c:83
 msgid "File exists!"
@@ -12264,7 +12292,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_file.c:120
 msgid "Save Imagemap"
-msgstr "Gem Imagemap"
+msgstr "Gem billedkort"
 
 #: plug-ins/imagemap/imap_file.c:144
 msgid "Error"
@@ -12276,11 +12304,11 @@ msgstr "Gitterindstillinger"
 
 #: plug-ins/imagemap/imap_grid.c:154
 msgid "Snap-To Grid Enabled"
-msgstr "Fastgøringsgitter tilsluttet"
+msgstr "Ret ind til gitter"
 
 #: plug-ins/imagemap/imap_grid.c:160
 msgid "Grid Visibility and Type"
-msgstr "Gitters sigtbarhed og type"
+msgstr "Gittersynlighed og -type"
 
 #: plug-ins/imagemap/imap_grid.c:167
 msgid "Hidden"
@@ -12288,15 +12316,15 @@ msgstr "Skjult"
 
 #: plug-ins/imagemap/imap_grid.c:174
 msgid "Lines"
-msgstr "Linier"
+msgstr "Linjer"
 
 #: plug-ins/imagemap/imap_grid.c:183
 msgid "Crosses"
-msgstr "Kors"
+msgstr "Krydser"
 
 #: plug-ins/imagemap/imap_grid.c:190
 msgid "Grid Granularity"
-msgstr "Gitterets finhed"
+msgstr "Gitterkornethed"
 
 #: plug-ins/imagemap/imap_grid.c:213
 msgid "Grid Offset"
@@ -12304,15 +12332,15 @@ msgstr "Gitterafsæt"
 
 #: plug-ins/imagemap/imap_grid.c:224
 msgid "pixels from left"
-msgstr "Piksler fra venstre"
+msgstr "punkter fra venstre"
 
 #: plug-ins/imagemap/imap_grid.c:229
 msgid "pixels from top"
-msgstr "Piksler fra oven"
+msgstr "punkter fra top"
 
 #: plug-ins/imagemap/imap_main.c:145
 msgid "<Image>/Filters/Web/ImageMap..."
-msgstr "<Image>/Filtre/Web/ImageMap..."
+msgstr "<Image>/Filtre/Internet/Billedkort..."
 
 #: plug-ins/imagemap/imap_main.c:660
 msgid "Data changed"
@@ -12323,13 +12351,13 @@ msgid ""
 "Some data has been changed.\n"
 "Do you really want to continue?"
 msgstr ""
-"Nogen data er blevet ændret.\n"
+"Nogle data er blevet ændret.\n"
 "Ønsker du virkelig at fortsætte?"
 
 #: plug-ins/imagemap/imap_main.c:873
 #, c-format
 msgid "File \"%s\" saved."
-msgstr "Fil \"%s\" gemt."
+msgstr "Filen \"%s\" gemt."
 
 #: plug-ins/imagemap/imap_main.c:877
 msgid "Couldn't save file:"
@@ -12345,7 +12373,7 @@ msgid ""
 "Resize Area's?"
 msgstr ""
 "Billedstørrelsen er ændret.\n"
-"Tilpas areal?"
+"Tilpas områder?"
 
 #: plug-ins/imagemap/imap_main.c:937
 msgid "Couldn't read file:"
@@ -12366,7 +12394,7 @@ msgstr "Gem som..."
 
 #: plug-ins/imagemap/imap_menu.c:224
 msgid "Preferences..."
-msgstr "indstillinger..."
+msgstr "Indstillinger..."
 
 #: plug-ins/imagemap/imap_menu.c:230
 msgid "Quit"
@@ -12375,16 +12403,16 @@ msgstr "Afslut"
 #: plug-ins/imagemap/imap_menu.c:243
 #, c-format
 msgid "Undo %s"
-msgstr "Fortryd %s"
+msgstr "Fortryd '%s'"
 
 #: plug-ins/imagemap/imap_menu.c:254
 #, c-format
 msgid "Redo %s"
-msgstr "Gentag %s"
+msgstr "Gentag '%s'"
 
 #: plug-ins/imagemap/imap_menu.c:301
 msgid "Edit Area Info..."
-msgstr "Redigér areal info..."
+msgstr "Redigér områdeinfo..."
 
 #: plug-ins/imagemap/imap_menu.c:313
 msgid "View"
@@ -12392,7 +12420,7 @@ msgstr "Vis"
 
 #: plug-ins/imagemap/imap_menu.c:317
 msgid "Area List"
-msgstr "Arealliste"
+msgstr "Områdeliste"
 
 #: plug-ins/imagemap/imap_menu.c:321
 msgid "Source..."
@@ -12400,7 +12428,7 @@ msgstr "Kilde..."
 
 #: plug-ins/imagemap/imap_menu.c:329
 msgid "Grayscale"
-msgstr "Gråskala"
+msgstr "Gråtone"
 
 #: plug-ins/imagemap/imap_menu.c:341
 msgid "Zoom In"
@@ -12424,19 +12452,20 @@ msgstr "Pil"
 
 #: plug-ins/imagemap/imap_menu.c:392
 msgid "Edit Map Info..."
-msgstr "Redigér Map info..."
+msgstr "Redigér kortinfo..."
 
+# dækker så nogenlunde - menuen indeholder gitterindstillinger og "opret rektangler"
 #: plug-ins/imagemap/imap_menu.c:399
 msgid "Goodies"
 msgstr "Hjælpemidler"
 
 #: plug-ins/imagemap/imap_menu.c:401 plug-ins/imagemap/imap_popup.c:149
 msgid "Grid Settings..."
-msgstr "Indstillinger for gitter"
+msgstr "Gitterindstillinger..."
 
 #: plug-ins/imagemap/imap_menu.c:403
 msgid "Create Guides..."
-msgstr "Opret hjælpelinier..."
+msgstr "Opret rektangler..."
 
 #: plug-ins/imagemap/imap_menu.c:410 plug-ins/maze/maze_face.c:193
 msgid "Help"
@@ -12444,15 +12473,15 @@ msgstr "Hjælp"
 
 #: plug-ins/imagemap/imap_menu.c:413
 msgid "About ImageMap..."
-msgstr "Om ImageMap..."
+msgstr "Om billedkort..."
 
 #: plug-ins/imagemap/imap_polygon.c:391
 msgid "x (pixels)"
-msgstr "x (piksler)"
+msgstr "x (punkter)"
 
 #: plug-ins/imagemap/imap_polygon.c:391
 msgid "y (pixels)"
-msgstr "y (piksler)"
+msgstr "y (punkter)"
 
 #: plug-ins/imagemap/imap_polygon.c:458
 msgid "Append"
@@ -12460,11 +12489,11 @@ msgstr "Tilføj"
 
 #: plug-ins/imagemap/imap_popup.c:125
 msgid "Map Info..."
-msgstr "Map-Info..."
+msgstr "Kortinfo..."
 
 #: plug-ins/imagemap/imap_popup.c:128
 msgid "Tools"
-msgstr "Værktøj"
+msgstr "Værktøjer"
 
 #: plug-ins/imagemap/imap_popup.c:142
 msgid "In"
@@ -12476,11 +12505,11 @@ msgstr "Ud"
 
 #: plug-ins/imagemap/imap_popup.c:151
 msgid "Guides..."
-msgstr "Hjælpelinier..."
+msgstr "Rektangler..."
 
 #: plug-ins/imagemap/imap_preferences.c:204
 msgid "Couldn't save resource file:"
-msgstr "Kunne ikke gemme resurse fil:"
+msgstr "Kunne ikke gemme resursefil:"
 
 #: plug-ins/imagemap/imap_preferences.c:356
 msgid "Select Color"
@@ -12488,11 +12517,11 @@ msgstr "Vælg farve"
 
 #: plug-ins/imagemap/imap_preferences.c:434
 msgid "Default Map Type"
-msgstr "Standard Map-Type"
+msgstr "Standardkorttype"
 
 #: plug-ins/imagemap/imap_preferences.c:453
 msgid "Prompt for area info"
-msgstr "Spørg efter areal info"
+msgstr "Spørg efter områdeinfo"
 
 #: plug-ins/imagemap/imap_preferences.c:455
 msgid "Require default URL"
@@ -12508,19 +12537,20 @@ msgstr "Behold NCSA-cirkler"
 
 #: plug-ins/imagemap/imap_preferences.c:461
 msgid "Show area URL tip"
-msgstr "Vis URL-tip over areal"
+msgstr "Vis URL-tip over områder"
 
 #: plug-ins/imagemap/imap_preferences.c:464
 msgid "Use double-sized grab handles"
-msgstr "Brug greb med dobbelt størrelse"
+msgstr "Brug ankre med dobbelt størrelse"
 
 #: plug-ins/imagemap/imap_preferences.c:488
 msgid "Number of Undo levels (1 - 99):"
-msgstr "Antal fortrydelses-niveauer (1 - 99):"
+msgstr "Antal fortrydelsesniveauer (1 - 99):"
 
+# MRU = most recently used
 #: plug-ins/imagemap/imap_preferences.c:491
 msgid "Number of MRU entries (1 - 16):"
-msgstr "Antal MRU-indgange (1 - 16):"
+msgstr "Antal huskede oftest brugte elementer (1 - 16):"
 
 #: plug-ins/imagemap/imap_preferences.c:494
 msgid "Menu"
@@ -12532,7 +12562,7 @@ msgstr "Normal:"
 
 #: plug-ins/imagemap/imap_preferences.c:536
 msgid "Selected:"
-msgstr "Udvalgt:"
+msgstr "Markeret:"
 
 #: plug-ins/imagemap/imap_preferences.c:564
 msgid "General Preferences"
@@ -12548,11 +12578,11 @@ msgstr "Øverste venstre y:"
 
 #: plug-ins/imagemap/imap_selection.c:336
 msgid "URL"
-msgstr "Url"
+msgstr "URL"
 
 #: plug-ins/imagemap/imap_selection.c:336
 msgid "Target"
-msgstr "Mål"
+msgstr "Destination"
 
 #: plug-ins/imagemap/imap_selection.c:336
 msgid "Comment"
@@ -12560,7 +12590,7 @@ msgstr "Kommentar"
 
 #: plug-ins/imagemap/imap_settings.c:68
 msgid "Settings for this Mapfile"
-msgstr "indstillinger for denne Map-fil"
+msgstr "Indstillinger for denne kortfil"
 
 #: plug-ins/imagemap/imap_settings.c:82
 msgid "Image name:"
@@ -12580,7 +12610,7 @@ msgstr "Standard-URL:"
 
 #: plug-ins/imagemap/imap_settings.c:108
 msgid "Map file format"
-msgstr "Map-fil Format"
+msgstr "Kortfilformat"
 
 #: plug-ins/imagemap/imap_source.c:54
 msgid "View Source"
@@ -12588,7 +12618,7 @@ msgstr "Vis kilde"
 
 #: plug-ins/imagemap/imap_toolbar.c:115
 msgid "Preferences"
-msgstr "Præferencer"
+msgstr "Indstillinger"
 
 #: plug-ins/imagemap/imap_toolbar.c:142
 msgid "Zoom in"
@@ -12600,43 +12630,43 @@ msgstr "Zoom ud"
 
 #: plug-ins/imagemap/imap_toolbar.c:150
 msgid "Edit Map Info"
-msgstr "Redigér Map-info"
+msgstr "Redigér kortinfo"
 
 #: plug-ins/imagemap/imap_toolbar.c:154
 msgid "Move To Front"
-msgstr "Flyt helt frem"
+msgstr "Flyt til forrest"
 
 #: plug-ins/imagemap/imap_tools.c:128
 msgid "Select existing area"
-msgstr "Vælg eksisterende areal"
+msgstr "Vælg eksisterende område"
 
 #: plug-ins/imagemap/imap_tools.c:132
 msgid "Define Rectangle area"
-msgstr "Definér areal for firkant"
+msgstr "Definér rektangulært område"
 
 #: plug-ins/imagemap/imap_tools.c:136
 msgid "Define Circle/Oval area"
-msgstr "Definér areal for cirkel eller oval"
+msgstr "Definér cirkulært/ovalt område"
 
 #: plug-ins/imagemap/imap_tools.c:140
 msgid "Define Polygon area"
-msgstr "Definér areal for polygon"
+msgstr "Definér polygonområde"
 
 #: plug-ins/imagemap/imap_tools.c:144
 msgid "Edit selected area info"
-msgstr "Redigér valgte areal-information"
+msgstr "Redigér info for markeret område"
 
 #: plug-ins/imagemap/imap_tools.c:148
 msgid "Delete selected area"
-msgstr "Slet valgte areal"
+msgstr "Slet markeret område"
 
 #: plug-ins/maze/algorithms.c:285
 msgid "Constructing maze using Prim's Algorithm..."
-msgstr "Fremstiler labyrint med Prim's algoritme..."
+msgstr "Konstruerer labyrint med Prims algoritme..."
 
 #: plug-ins/maze/algorithms.c:458
 msgid "Constructing tileable maze using Prim's Algorithm..."
-msgstr "Fremstiler flise labyrint med Prim's algoritme..."
+msgstr "Konstruerer fliselægbar labyrint med Prims algoritme..."
 
 #: plug-ins/maze/maze.c:161
 msgid "<Image>/Filters/Render/Pattern/Maze..."
@@ -12644,12 +12674,12 @@ msgstr "<Image>/Filtre/Generér/Mønstre/Labyrint..."
 
 #: plug-ins/maze/maze.c:403
 msgid "Drawing Maze..."
-msgstr "Tegn labyrint..."
+msgstr "Tegner labyrint..."
 
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:220
 msgid "Width (Pixels):"
-msgstr "Bredde piksler):"
+msgstr "Bredde (punkter):"
 
 #: plug-ins/maze/maze_face.c:232 plug-ins/maze/maze_face.c:248
 msgid "Pieces:"
@@ -12657,11 +12687,12 @@ msgstr "Stykker:"
 
 #: plug-ins/maze/maze_face.c:237
 msgid "Height (Pixels):"
-msgstr "Højde (piksler):"
+msgstr "Højde (punkter):"
 
+# RETMIG: rigtig?
 #: plug-ins/maze/maze_face.c:260
 msgid "Multiple (57):"
-msgstr "Multiplikator (57)"
+msgstr "Produkt (57):"
 
 #: plug-ins/maze/maze_face.c:273
 msgid "Offset (1):"
@@ -12678,15 +12709,15 @@ msgstr "Prims algoritme"
 #: plug-ins/maze/maze_face.c:330
 #, c-format
 msgid "Selection is %dx%d"
-msgstr "Udvalg er %dx%d"
+msgstr "Markering er %dx%d"
 
 #: plug-ins/maze/maze_face.c:436
 msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
 msgstr ""
-"Størrelse på udvalg er ikke lige.\n"
-"Flisérbar labyrint vil ikke virke korrekt."
+"Størrelse på markering er ikke lige.\n"
+"Fliselægbar labyrint vil ikke være perfekt."
 
 #. open URL for help
 #: plug-ins/maze/maze_face.c:600
@@ -12711,7 +12742,7 @@ msgstr "Finder kanter..."
 #. Progress bar for rendering tiles
 #: plug-ins/mosaic/mosaic.c:497
 msgid "Rendering Tiles..."
-msgstr "Fremviser kakler..."
+msgstr "Genererer fliser..."
 
 #: plug-ins/mosaic/mosaic.c:526
 msgid "Mosaic"
@@ -12719,24 +12750,24 @@ msgstr "Mosaik"
 
 #: plug-ins/mosaic/mosaic.c:593
 msgid "Color Averaging"
-msgstr "Beregn farvegennemsnit"
+msgstr "Farvegennemsnitsberegning"
 
 #: plug-ins/mosaic/mosaic.c:602
 msgid "Pitted Surfaces"
-msgstr "Fordybninger i overfladen"
+msgstr "Fordybninger i overflader"
 
 #: plug-ins/mosaic/mosaic.c:611
 msgid "FG/BG Lighting"
-msgstr "FG/BG Belysning"
+msgstr "Forgrunds-/baggrundsbelysning"
 
 #. tiling primitive
 #: plug-ins/mosaic/mosaic.c:625
 msgid "Tiling Primitives"
-msgstr "Primitiver for fliser"
+msgstr "Fliseprimitiver"
 
 #: plug-ins/mosaic/mosaic.c:629
 msgid "Squares"
-msgstr "Firkanter"
+msgstr "Kvadrater"
 
 #: plug-ins/mosaic/mosaic.c:631
 msgid "Hexagons"
@@ -12744,7 +12775,7 @@ msgstr "Sekskanter"
 
 #: plug-ins/mosaic/mosaic.c:633
 msgid "Octagons & Squares"
-msgstr "Ottekanter og firkanter"
+msgstr "Ottekanter og kvadrater"
 
 #: plug-ins/mosaic/mosaic.c:672
 msgid "Tile Spacing:"
@@ -12752,7 +12783,7 @@ msgstr "Flisemellemrum:"
 
 #: plug-ins/mosaic/mosaic.c:681
 msgid "Tile Neatness:"
-msgstr "Renhed for fliser:"
+msgstr "Fliserenhed:"
 
 #: plug-ins/mosaic/mosaic.c:691
 msgid "Light Direction:"
@@ -12768,15 +12799,16 @@ msgstr "Kunne ikke tilføje endnu et punkt.\n"
 
 #: plug-ins/pagecurl/pagecurl.c:216
 msgid "<Image>/Filters/Distorts/Pagecurl..."
-msgstr "<Image>/Filtre/Forvrængning/Krøl papir..."
+msgstr "<Image>/Filtre/Forvrængning/Papirkrølning..."
 
+# "effect" er overflødigt
 #: plug-ins/pagecurl/pagecurl.c:513
 msgid "Pagecurl Effect"
-msgstr "Krøllet papir-effekt"
+msgstr "Papirkrølning"
 
 #: plug-ins/pagecurl/pagecurl.c:534
 msgid "Curl Location"
-msgstr "Krølle-sted"
+msgstr "Placering af krølle"
 
 #: plug-ins/pagecurl/pagecurl.c:601
 msgid "Upper Left"
@@ -12796,39 +12828,39 @@ msgstr "Nederst højre"
 
 #: plug-ins/pagecurl/pagecurl.c:635
 msgid "Curl Orientation"
-msgstr "Orientering for krøller"
+msgstr "Krølleorientering"
 
 #: plug-ins/pagecurl/pagecurl.c:674
 msgid "Shade under Curl"
-msgstr "Skygge under krølning"
+msgstr "Skygge under krølle"
 
 #: plug-ins/pagecurl/pagecurl.c:684
 msgid ""
 "Use Current Gradient\n"
 "instead of FG/BG-Color"
 msgstr ""
-"Brug aktuel farveforløb\n"
-"istedet for FG/BG-farve"
+"Benyt aktiv farveovergang\n"
+"i stedet for fg./bg.-farve"
 
 #: plug-ins/pagecurl/pagecurl.c:696
 msgid "Curl Opacity"
-msgstr "Krølle dækningskraft"
+msgstr "Krølleuigennemsigtighed"
 
 #: plug-ins/pagecurl/pagecurl.c:823
 msgid "Curl Layer"
-msgstr "Krølle lag"
+msgstr "Krøllelag"
 
 #: plug-ins/pagecurl/pagecurl.c:1073
 msgid "Page Curl..."
-msgstr "Krøl side..."
+msgstr "Krøller papir..."
 
 #: plug-ins/print/gimp_color_window.c:135
 msgid "Print Color Adjust"
-msgstr "Indstil printerfarve"
+msgstr "Justering af udskriftsfarve"
 
 #: plug-ins/print/gimp_color_window.c:140
 msgid "Set Defaults"
-msgstr "Sæt standarder"
+msgstr "Brug standardværdier"
 
 #: plug-ins/print/gimp_color_window.c:269
 msgid "Density:"
@@ -12836,7 +12868,7 @@ msgstr "Tæthed:"
 
 #: plug-ins/print/gimp_color_window.c:300
 msgid "Dither Algorithm:"
-msgstr "Dither algoritme:"
+msgstr "Farvereduceringsalgoritme:"
 
 #.
 #. * Create the main dialog
@@ -12844,7 +12876,7 @@ msgstr "Dither algoritme:"
 #: plug-ins/print/gimp_main_window.c:255
 #, c-format
 msgid "%s -- Print v%s"
-msgstr "%s -- Udskriv v%s"
+msgstr "%s - udskrift v%s"
 
 #: plug-ins/print/gimp_main_window.c:264
 msgid ""
@@ -12884,7 +12916,7 @@ msgstr "Højre kant:"
 
 #: plug-ins/print/gimp_main_window.c:443
 msgid "Bottom Border:"
-msgstr "Nedre kant:"
+msgstr "Nederste kant:"
 
 #: plug-ins/print/gimp_main_window.c:455
 msgid "Portrait"
@@ -12896,7 +12928,7 @@ msgstr "Landskab"
 
 #: plug-ins/print/gimp_main_window.c:461
 msgid "Upside down"
-msgstr "Ovenfra ned"
+msgstr "På hovedet"
 
 #: plug-ins/print/gimp_main_window.c:464
 msgid "Seascape"
@@ -12907,7 +12939,7 @@ msgstr "Havskab"
 #.
 #: plug-ins/print/gimp_main_window.c:476
 msgid "Printer Settings"
-msgstr "Printer indstillinger"
+msgstr "Printerindstillinger"
 
 #: plug-ins/print/gimp_main_window.c:498
 msgid "Media Size:"
@@ -12953,15 +12985,15 @@ msgstr "Sæt billedskala"
 #.
 #: plug-ins/print/gimp_main_window.c:669
 msgid "Image Settings"
-msgstr "Indstillinger for billed"
+msgstr "Billedindstillinger"
 
 #: plug-ins/print/gimp_main_window.c:689
 msgid "Line Art"
-msgstr "Linjekunst"
+msgstr "Stregtegning"
 
 #: plug-ins/print/gimp_main_window.c:700
 msgid "Solid Colors"
-msgstr "Simple farver"
+msgstr "Ensfarvet"
 
 #: plug-ins/print/gimp_main_window.c:711
 msgid "Photograph"
@@ -12973,7 +13005,7 @@ msgstr "Sort/hvid"
 
 #: plug-ins/print/gimp_main_window.c:737
 msgid "Adjust Color"
-msgstr "Indstil farve"
+msgstr "Justér farve"
 
 #.
 #. * Output type toggles...
@@ -13006,7 +13038,7 @@ msgstr "Printermodel:"
 #.
 #: plug-ins/print/gimp_main_window.c:889
 msgid "PPD File:"
-msgstr "PPD fil:"
+msgstr "PPD-fil:"
 
 #: plug-ins/print/gimp_main_window.c:904
 msgid "Browse"
@@ -13051,23 +13083,23 @@ msgstr "<Image>/Billede/Farver/Farverotation..."
 
 #: plug-ins/rcm/rcm.c:281
 msgid "Rotating the colormap..."
-msgstr "Rotér farver..."
+msgstr "Roterer farver..."
 
 #: plug-ins/rcm/rcm_callback.c:154 plug-ins/rcm/rcm_dialog.c:265
 msgid "Switch to clockwise"
-msgstr "Skift til med uret"
+msgstr "Skift med uret"
 
 #: plug-ins/rcm/rcm_callback.c:154 plug-ins/rcm/rcm_dialog.c:265
 msgid "Switch to c/clockwise"
-msgstr "Skift til mod uret"
+msgstr "Skift mod uret"
 
 #: plug-ins/rcm/rcm_dialog.c:273
 msgid "Change order of arrows"
-msgstr "Ændr rækkefølge på pile"
+msgstr "Ændr rækkefølge af pile"
 
 #: plug-ins/rcm/rcm_dialog.c:279
 msgid "Select all"
-msgstr "Vælg alt"
+msgstr "Vælg alle"
 
 #. spinbutton 1
 #: plug-ins/rcm/rcm_dialog.c:289 plug-ins/rcm/rcm_dialog.c:360
@@ -13105,7 +13137,7 @@ msgstr "Radianer"
 
 #: plug-ins/rcm/rcm_dialog.c:611
 msgid "Radians/Pi"
-msgstr "Radianer/Pi"
+msgstr "Radianer/pi"
 
 #: plug-ins/rcm/rcm_dialog.c:620
 msgid "Degrees"
@@ -13113,7 +13145,7 @@ msgstr "Grader"
 
 #: plug-ins/rcm/rcm_dialog.c:639
 msgid "Continuous update"
-msgstr "Kontinuerlig opdatering"
+msgstr "Fortløbende opdatering"
 
 #: plug-ins/rcm/rcm_dialog.c:654
 msgid "Area:"
@@ -13134,7 +13166,7 @@ msgstr "Hovedindstillinger"
 
 #: plug-ins/rcm/rcm_dialog.c:780
 msgid "Misc"
-msgstr "Forskelligt"
+msgstr "Diverse"
 
 #. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
 #: plug-ins/sel2path/pxl-outline.c:83
@@ -13161,7 +13193,7 @@ msgstr "print_spline: mærkelig grad (%d)"
 
 #: plug-ins/sel2path/sel2path.c:549
 msgid "selection_to_path"
-msgstr "Udvalg_til_sti"
+msgstr "markering_til_bane"
 
 #: plug-ins/sel2path/sel2path.c:577
 msgid "gimp_image_get_selection failed"
@@ -13169,7 +13201,7 @@ msgstr "gimp_image_get_selection fejlede"
 
 #: plug-ins/sel2path/sel2path.c:585
 msgid "Internal error. Selection bpp > 1"
-msgstr "Intern fejl. Udvalgs bpp > 1"
+msgstr "Intern fejl. Markeringens bpp > 1"
 
 #: plug-ins/sgi/sgi.c:635
 msgid "Save as SGI"
@@ -13185,7 +13217,7 @@ msgstr "Ingen kompression"
 
 #: plug-ins/sgi/sgi.c:657
 msgid "RLE Compression"
-msgstr "RLE kompression"
+msgstr "RLE-kompression"
 
 #: plug-ins/sgi/sgi.c:659
 msgid ""
@@ -13193,20 +13225,20 @@ msgid ""
 "(Not Supported by SGI)"
 msgstr ""
 "Agressiv RLE\n"
-"(Ikke understøttet af SGI)"
+"(ikke understøttet af SGI)"
 
 #: plug-ins/twain/twain.c:513
 msgid "<Toolbox>/File/Acquire/TWAIN..."
-msgstr "<Toolbox>/Fil/Hent/TWAIN..."
+msgstr "<Toolbox>/Fil/Indhent/TWAIN..."
 
 #. Initialize our progress dialog
 #: plug-ins/twain/twain.c:645
 msgid "Transferring TWAIN data"
-msgstr "Ovefører TWAIN data"
+msgstr "Ovefører TWAIN-data"
 
 #: plug-ins/webbrowser/webbrowser.c:141
 msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
-msgstr "<Toolbox>/Xtns/Web-Browser/Åbn URL..."
+msgstr "<Toolbox>/Udvidelser/Internet/Åbn URL..."
 
 #: plug-ins/webbrowser/webbrowser.c:274
 msgid "Open URL"
@@ -13222,11 +13254,11 @@ msgstr "Vindue:"
 
 #: plug-ins/webbrowser/webbrowser.c:329
 msgid "Current"
-msgstr "Aktuel"
+msgstr "Aktuelt"
 
 #: plug-ins/winsnap/winsnap.c:946
 msgid "Grab a single window"
-msgstr "Grib et enkelt vindue"
+msgstr "Opsnap et enkelt vindue"
 
 #: plug-ins/winsnap/winsnap.c:957
 msgid "Include decorations"
@@ -13234,7 +13266,7 @@ msgstr "Med udsmykninger"
 
 #: plug-ins/winsnap/winsnap.c:993
 msgid "Grab the whole screen"
-msgstr "Grib hele billedskærmen"
+msgstr "Opsnap hele skærmbilledet"
 
 #: plug-ins/winsnap/winsnap.c:1222
 msgid "No data captured"
@@ -13243,32 +13275,32 @@ msgstr "Ingen data indfanget"
 #: plug-ins/xjt/xjt.c:664
 #, c-format
 msgid "XJT file contains unknown layermode %d"
-msgstr "XJT fil indeholder ukendt lag-modus %d"
+msgstr "XJT-fil indeholder ukendt lagtilstand %d"
 
 #: plug-ins/xjt/xjt.c:694
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
-msgstr "Advarsel: u-understøttet lag-modus %d gemt i XJT"
+msgstr "Advarsel: ikke-understøttet lagtilstand %d gemt i XJT"
 
 #: plug-ins/xjt/xjt.c:710
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
-msgstr "XJT fil indeholder ukendt stitype %d"
+msgstr "XJT-fil indeholder ukendt banetype %d"
 
 #: plug-ins/xjt/xjt.c:726
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
-msgstr "Advarsel: u-understøttet stitype %d gemt i XJT"
+msgstr "Advarsel: ikke-understøttet banetype %d gemt i XJT"
 
 #: plug-ins/xjt/xjt.c:746
 #, c-format
 msgid "XJT file contains unknown unittype %d"
-msgstr "XJT fil indeholder ukendt enhed %d"
+msgstr "XJT-fil indeholder ukendt enhedstype %d"
 
 #: plug-ins/xjt/xjt.c:767
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
-msgstr "Advarsel: u-understøttet enhedstype %d gemt i XJT"
+msgstr "Advarsel: ikke-understøttet enhedstype %d gemt i XJT"
 
 #: plug-ins/xjt/xjt.c:788
 msgid "Save as XJT"
@@ -13276,20 +13308,20 @@ msgstr "Gem som XJT"
 
 #: plug-ins/xjt/xjt.c:825
 msgid "Clear Transparent"
-msgstr "Ryd transparent"
+msgstr "Ryd gennemsigtigt"
 
 #: plug-ins/xjt/xjt.c:1220
 #, c-format
 msgid "Can't open (write): %s"
-msgstr "Kan %s ikke åbne (skrivning)"
+msgstr "Kan ikke åbne (skrive): %s"
 
 #: plug-ins/xjt/xjt.c:1619
 msgid "xjt: cannot operate on indexed color images"
-msgstr "xjt: kan ikke operere på indekserede farvebilleder"
+msgstr "xjt: kan ikke arbejde med indekserede farvebilleder"
 
 #: plug-ins/xjt/xjt.c:1623
 msgid "xjt: cannot operate on unknown image types"
-msgstr "xjt: kan ikke operere på ukendt billedtype"
+msgstr "xjt: kan ikke arbejde med ukendte billedtyper"
 
 #: plug-ins/xjt/xjt.c:1638 plug-ins/xjt/xjt.c:3256
 #, c-format
@@ -13299,23 +13331,23 @@ msgstr "Kan ikke oprette arbejdskatalog: %s"
 #: plug-ins/xjt/xjt.c:1647
 #, c-format
 msgid "Can't open: %s"
-msgstr "Kan ikke åbne %s"
+msgstr "Kan ikke åbne: %s"
 
 #. stat error (file does not exist)
 #: plug-ins/xjt/xjt.c:2468 plug-ins/xjt/xjt.c:2475
 #, c-format
 msgid "Can't open (read): %s"
-msgstr "Kan %s ikke åbne (læsning)"
+msgstr "Kan ikke åbne (læse): %s"
 
 #: plug-ins/xjt/xjt.c:3119
 #, c-format
 msgid "Error: Can't read XJT propertyfile %s"
-msgstr "Fejl: Kan ikke læse fil %s med egenskaper for XJT"
+msgstr "Fejl: Kan ikke læse XJT-egenskabsfil %s"
 
 #: plug-ins/xjt/xjt.c:3124
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
-msgstr "Fejl: fil %s med egenskaber for XJT er tom"
+msgstr "Fejl: XJT-egenskabsfilen %s er tom"
 
 #~ msgid "Treshold:"
 #~ msgstr "Tærskel:"
