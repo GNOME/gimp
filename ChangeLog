@@ -1,3 +1,8 @@
+2003-12-19  Nathan Summers  <rock@gimp.org>
+
+	* app/xcf.c: actually check to make sure writes are successful, instead
+	of unconditionally assuming that they are.  Fixes bug #101340.
+	
 2002-12-19  Garry R. Osgood <grosgood@rcn.com>
 
 	* MAINTAINERS: Updated my CV
