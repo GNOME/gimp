@@ -1,5 +1,19 @@
 1999-11-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/preferences_dialog.c: new prefs. page "Help System" because
+	there will soon be more widgets there (browser selection etc.)
+	Cleaned up the "Display" and "Interface" pages a bit.
+
+	* app/menus.c
+	* plug-ins/common/plugindetails.c: add "...".
+
+	* libgimp/gimpfileselection.c
+	* libgimp/gimppatheditor.c: a widget shouldn't connect to it's own
+	"realize" signal. Set widget_class->realize = <widget>_realize
+	instead.
+
+1999-11-20  Michael Natterer  <mitch@gimp.org>
+
 	Reorganized the core menu items (everything except
 	<Image>/Filters). Everything is of course trivial to change again,
 	so please comment on the new "menu feeling" ;-)

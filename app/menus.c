@@ -913,7 +913,7 @@ menus_reorder_plugins (void)
 {
   static gchar *xtns_plugins[] = { "/Xtns/DB Browser...",
 				   "/Xtns/PDB Explorer",
-				   "/Xtns/Plugin Details",
+				   "/Xtns/Plugin Details...",
 				   "/Xtns/Parasite Editor" };
   static gint n_xtns_plugins = (sizeof (xtns_plugins) /
 				sizeof (xtns_plugins[0]));

@@ -1423,10 +1423,15 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox2 = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+      
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   optionmenu =
     gimp_option_menu_new (file_prefs_toggle_callback,
@@ -1438,10 +1443,9 @@ file_pref_cmd_callback (GtkWidget *widget,
 			  _("Cubic"), &interpolation_type,
 			  (gpointer) CUBIC_INTERPOLATION,
 			  NULL);
-
-  gtk_box_pack_start (GTK_BOX (vbox2), optionmenu, FALSE, FALSE, 0);
-  
-  gtk_widget_show (optionmenu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Interpolation Type:"), 1.0, 0.5,
+			     optionmenu, TRUE);
 
   /* Interface */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
@@ -1515,15 +1519,6 @@ file_pref_cmd_callback (GtkWidget *widget,
   gimp_table_attach_aligned (GTK_TABLE (table), 2,
 			     _("Levels of Undo:"), 1.0, 0.5, spinbutton, TRUE);
 
-  button = gtk_check_button_new_with_label (_("Nav window per display"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				edit_nav_window_per_display);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      (GtkSignalFunc) file_prefs_toggle_callback,
-		      &edit_nav_window_per_display);
-  gtk_widget_show (button);
-
   spinbutton =
     gimp_spin_button_new (&adjustment, edit_last_opened_size,
 			  0.0, 16.0, 1.0, 5.0, 0.0, 1.0, 0.0);
@@ -1534,7 +1529,36 @@ file_pref_cmd_callback (GtkWidget *widget,
 			     _("Recent Documents List Size:"), 1.0, 0.5,
 			     spinbutton, TRUE);
 
-  frame = gtk_frame_new (_("Help System")); 
+  frame = gtk_frame_new (_("Dialog Behaviour")); 
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
+ 
+  button = gtk_check_button_new_with_label (_("Navigation Window per Display"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				edit_nav_window_per_display);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+		      &edit_nav_window_per_display);
+  gtk_widget_show (button);
+
+  /* Interface / Help System */
+  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+					  _("Help System Settings"),
+					  GTK_CTREE (ctree),
+					  _("Help System"),
+					  top_insert,
+					  &child_insert,
+					  page_index);
+  gtk_widget_show (vbox);
+  page_index++;
+
+  frame = gtk_frame_new (_("General"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

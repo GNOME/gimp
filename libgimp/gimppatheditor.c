@@ -19,12 +19,12 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+#include <string.h>
+
 #include "gimppatheditor.h"
 
 #include "libgimp/gimpfileselection.h"
 #include "libgimp/gimpintl.h"
-
-#include <string.h>
 
 #include "pixmaps/new.xpm"
 #include "pixmaps/delete.xpm"
@@ -32,7 +32,7 @@
 #include "pixmaps/lower.xpm"
 
 /*  forward declaration  */
-static void gimp_path_editor_realize          (GtkWidget *widget, gpointer data);
+static void gimp_path_editor_realize          (GtkWidget *widget);
 static void gimp_path_editor_select_callback  (GtkWidget *widget, gpointer data);
 static void gimp_path_editor_deselect_callback (GtkWidget *widget,
 						gpointer data);
@@ -41,14 +41,13 @@ static void gimp_path_editor_move_callback    (GtkWidget *widget, gpointer data)
 static void gimp_path_editor_filesel_callback (GtkWidget *widget, gpointer data);
 static void gimp_path_editor_delete_callback  (GtkWidget *widget, gpointer data);
 
-static void gimp_path_editor_data_destroy_callback (gpointer *data);
-
 /*
 static void gimp_path_editor_check_path (GimpPathEditor *gpe,
 					 GtkWidget      *list_item);
 */
 
-enum {
+enum
+{
   PATH_CHANGED,
   LAST_SIGNAL
 };
@@ -61,23 +60,27 @@ static void
 gimp_path_editor_class_init (GimpPathEditorClass *class)
 {
   GtkObjectClass *object_class;
+  GtkWidgetClass *widget_class;
 
-  object_class = (GtkObjectClass*) class;
+  object_class = (GtkObjectClass *) class;
+  widget_class = (GtkWidgetClass *) class;
 
   parent_class = gtk_type_class (gtk_vbox_get_type ());
 
   gimp_path_editor_signals[PATH_CHANGED] = 
-              gtk_signal_new ("path_changed",
-			      GTK_RUN_FIRST,
-			      object_class->type,
-			      GTK_SIGNAL_OFFSET (GimpPathEditorClass,
-						 path_changed),
-			      gtk_signal_default_marshaller, GTK_TYPE_NONE, 0);
+    gtk_signal_new ("path_changed",
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpPathEditorClass,
+				       path_changed),
+		    gtk_signal_default_marshaller, GTK_TYPE_NONE, 0);
 
   gtk_object_class_add_signals (object_class, gimp_path_editor_signals, 
 				LAST_SIGNAL);
 
   class->path_changed = NULL;
+
+  widget_class->realize = gimp_path_editor_realize;
 }
 
 static void
@@ -85,8 +88,6 @@ gimp_path_editor_init (GimpPathEditor *gpe)
 {
   GtkWidget *button_box;
   GtkWidget *scrolled_window;
-  GtkObject *hadjustment;
-  GtkObject *vadjustment;
 
   gpe->file_selection = NULL;
   gpe->selected_item = NULL;
@@ -102,32 +103,35 @@ gimp_path_editor_init (GimpPathEditor *gpe)
 
   gpe->new_button = gtk_button_new ();
   gtk_box_pack_start (GTK_BOX (button_box), gpe->new_button, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT(gpe->new_button), "clicked",
-		      GTK_SIGNAL_FUNC(gimp_path_editor_new_callback), gpe);
+  gtk_signal_connect (GTK_OBJECT (gpe->new_button), "clicked",
+		      GTK_SIGNAL_FUNC (gimp_path_editor_new_callback),
+		      gpe);
 
   gpe->up_button = gtk_button_new ();
   gtk_widget_set_sensitive (gpe->up_button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), gpe->up_button, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT(gpe->up_button), "clicked",
-		      GTK_SIGNAL_FUNC(gimp_path_editor_move_callback), gpe);
+  gtk_signal_connect (GTK_OBJECT (gpe->up_button), "clicked",
+		      GTK_SIGNAL_FUNC (gimp_path_editor_move_callback),
+		      gpe);
 
   gpe->down_button = gtk_button_new ();
   gtk_widget_set_sensitive (gpe->down_button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), gpe->down_button, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT(gpe->down_button), "clicked",
-		      GTK_SIGNAL_FUNC(gimp_path_editor_move_callback), gpe);
+  gtk_signal_connect (GTK_OBJECT (gpe->down_button), "clicked",
+		      GTK_SIGNAL_FUNC (gimp_path_editor_move_callback),
+		      gpe);
 
   gpe->delete_button = gtk_button_new ();
   gtk_widget_set_sensitive (gpe->delete_button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), gpe->delete_button, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT(gpe->delete_button), "clicked",
-		      GTK_SIGNAL_FUNC(gimp_path_editor_delete_callback), gpe);
+  gtk_signal_connect (GTK_OBJECT (gpe->delete_button), "clicked",
+		      GTK_SIGNAL_FUNC (gimp_path_editor_delete_callback),
+		      gpe);
 
-  hadjustment = gtk_adjustment_new (0.0, 0.0, 1.0, 0.1, 0.2, 1.0);
-  vadjustment = gtk_adjustment_new (0.0, 0.0, 1.0, 0.1, 0.2, 1.0);
-  scrolled_window =
-    gtk_scrolled_window_new (GTK_ADJUSTMENT (hadjustment),
-			     GTK_ADJUSTMENT (vadjustment));
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_ALWAYS);
   gtk_box_pack_start (GTK_BOX (gpe), scrolled_window, TRUE, TRUE, 2);
   gtk_widget_show (scrolled_window);
 
@@ -136,14 +140,10 @@ gimp_path_editor_init (GimpPathEditor *gpe)
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_window),
 					 gpe->dir_list);
   gtk_widget_show (gpe->dir_list);
-
-  /*  this callback does the rest (pixmap creation etc.)  */
-  gtk_signal_connect (GTK_OBJECT(gpe), "realize",
-		      GTK_SIGNAL_FUNC(gimp_path_editor_realize), gpe);
 }
 
 GtkType
-gimp_path_editor_get_type ()
+gimp_path_editor_get_type (void)
 {
   static GtkType gpe_type = 0;
 
@@ -168,7 +168,7 @@ gimp_path_editor_get_type ()
 }
 
 
-GtkWidget*
+GtkWidget *
 gimp_path_editor_new (gchar *filesel_title,
 		      gchar *path)
 {
@@ -187,7 +187,8 @@ gimp_path_editor_new (gchar *filesel_title,
   gtk_box_pack_start (GTK_BOX (gpe->upper_hbox), gpe->file_selection,
 		      TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (gpe->file_selection), "filename_changed",
-		      (GtkSignalFunc) gimp_path_editor_filesel_callback, gpe);
+		      GTK_SIGNAL_FUNC (gimp_path_editor_filesel_callback),
+		      gpe);
   gtk_widget_show (gpe->file_selection);
 
   directory_list = NULL;
@@ -208,13 +209,13 @@ gimp_path_editor_new (gchar *filesel_title,
       list_item = gtk_list_item_new_with_label (current_dir);
       gtk_object_set_data_full (GTK_OBJECT (list_item), "gimp_path_editor",
 				current_dir,
-				(GtkDestroyNotify)gimp_path_editor_data_destroy_callback);
+				(GtkDestroyNotify) g_free);
       directory_list = g_list_append (directory_list, list_item);
       gtk_signal_connect (GTK_OBJECT (list_item), "select",
-			  (GtkSignalFunc)gimp_path_editor_select_callback,
+			  GTK_SIGNAL_FUNC (gimp_path_editor_select_callback),
 			  gpe);
       gtk_signal_connect (GTK_OBJECT (list_item), "deselect",
-			  (GtkSignalFunc)gimp_path_editor_deselect_callback,
+			  GTK_SIGNAL_FUNC (gimp_path_editor_deselect_callback),
 			  gpe);
       gtk_widget_show (list_item);
       gpe->number_of_items++;
@@ -234,26 +235,23 @@ gimp_path_editor_new (gchar *filesel_title,
 }
 
 static void
-gimp_path_editor_realize (GtkWidget *widget,
-			  gpointer   data)
+gimp_path_editor_realize (GtkWidget *widget)
 {
   GimpPathEditor *gpe;
   GtkStyle       *style;
-  GtkWidget      *parent;
   GdkPixmap      *pixmap;
   GdkBitmap      *mask;
   GtkWidget      *gtk_pixmap;
   /* GList          *list = NULL; */
 
-  gpe = GIMP_PATH_EDITOR (data);
+  gpe = GIMP_PATH_EDITOR (widget);
 
-  parent = GTK_WIDGET (gpe)->parent;
-  if (! GTK_WIDGET_REALIZED (parent))
-    return;
+  if (GTK_WIDGET_CLASS (parent_class)->realize)
+    (* GTK_WIDGET_CLASS (parent_class)->realize) (widget);
 
-  style = gtk_widget_get_style (parent);
+  style = gtk_widget_get_style (widget);
 
-  pixmap = gdk_pixmap_create_from_xpm_d (parent->window,
+  pixmap = gdk_pixmap_create_from_xpm_d (widget->window,
 					 &mask,
 					 &style->bg[GTK_STATE_NORMAL],
 					 new_xpm);
@@ -262,7 +260,7 @@ gimp_path_editor_realize (GtkWidget *widget,
   gtk_widget_show (gtk_pixmap);
   gtk_widget_show (gpe->new_button);
 
-  pixmap = gdk_pixmap_create_from_xpm_d (parent->window,
+  pixmap = gdk_pixmap_create_from_xpm_d (widget->window,
 					 &mask,
 					 &style->bg[GTK_STATE_NORMAL],
 					 raise_xpm);
@@ -271,7 +269,7 @@ gimp_path_editor_realize (GtkWidget *widget,
   gtk_widget_show (gtk_pixmap);
   gtk_widget_show (gpe->up_button);
 
-  pixmap = gdk_pixmap_create_from_xpm_d (parent->window,
+  pixmap = gdk_pixmap_create_from_xpm_d (widget->window,
 					 &mask,
 					 &style->bg[GTK_STATE_NORMAL],
 					 lower_xpm);
@@ -280,7 +278,7 @@ gimp_path_editor_realize (GtkWidget *widget,
   gtk_widget_show (gtk_pixmap);
   gtk_widget_show (gpe->down_button);
 
-  pixmap = gdk_pixmap_create_from_xpm_d (parent->window,
+  pixmap = gdk_pixmap_create_from_xpm_d (widget->window,
 					 &mask,
 					 &style->bg[GTK_STATE_NORMAL],
 					 delete_xpm);
@@ -297,7 +295,7 @@ gimp_path_editor_realize (GtkWidget *widget,
   */
 }
 
-gchar*
+gchar *
 gimp_path_editor_get_path (GimpPathEditor *gpe)
 {
   GList *list;
@@ -310,8 +308,9 @@ gimp_path_editor_get_path (GimpPathEditor *gpe)
     {
       if (path == NULL)
 	{
-	  path = g_strdup ((gchar*)gtk_object_get_data (GTK_OBJECT (list->data),
-							"gimp_path_editor"));
+	  path =
+	    g_strdup ((gchar *) gtk_object_get_data (GTK_OBJECT (list->data),
+						     "gimp_path_editor"));
 	}
       else
 	{
@@ -320,8 +319,8 @@ gimp_path_editor_get_path (GimpPathEditor *gpe)
 	  newpath =
 	    g_strconcat (path,
 			 G_SEARCHPATH_SEPARATOR_S,
-			 (gchar*)gtk_object_get_data (GTK_OBJECT (list->data),
-						      "gimp_path_editor"),
+			 (gchar *) gtk_object_get_data (GTK_OBJECT (list->data),
+							"gimp_path_editor"),
 			 NULL);
 
 	  g_free (path);
@@ -341,8 +340,8 @@ gimp_path_editor_select_callback (GtkWidget *widget,
   gchar          *directory;
 
   gpe = GIMP_PATH_EDITOR (data);
-  directory = (gchar*)gtk_object_get_data (GTK_OBJECT (widget),
-					   "gimp_path_editor");
+  directory = (gchar *) gtk_object_get_data (GTK_OBJECT (widget),
+					     "gimp_path_editor");
 
   gtk_signal_handler_block_by_data (GTK_OBJECT (gpe->file_selection), gpe);
   gimp_file_selection_set_filename (GIMP_FILE_SELECTION (gpe->file_selection),
@@ -426,8 +425,7 @@ gimp_path_editor_move_callback (GtkWidget *widget,
   gtk_list_insert_items (GTK_LIST (gpe->dir_list), move_list, pos + distance);
   gtk_list_select_item (GTK_LIST (gpe->dir_list), pos + distance);
 
-  gtk_signal_emit (GTK_OBJECT (gpe),
-		   gimp_path_editor_signals[PATH_CHANGED]);
+  gtk_signal_emit (GTK_OBJECT (gpe), gimp_path_editor_signals[PATH_CHANGED]);
 }
 
 static void
@@ -463,8 +461,7 @@ gimp_path_editor_delete_callback (GtkWidget *widget,
     pos--;
   gtk_list_select_item (GTK_LIST (gpe->dir_list), pos);
 
-  gtk_signal_emit (GTK_OBJECT (gpe),
-		   gimp_path_editor_signals[PATH_CHANGED]);
+  gtk_signal_emit (GTK_OBJECT (gpe), gimp_path_editor_signals[PATH_CHANGED]);
 }
 
 static void
@@ -485,13 +482,13 @@ gimp_path_editor_filesel_callback (GtkWidget *widget,
       list_item = gtk_list_item_new_with_label (directory);
       gtk_object_set_data_full (GTK_OBJECT (list_item), "gimp_path_editor",
 				directory,
-				(GtkDestroyNotify)gimp_path_editor_data_destroy_callback);
+				(GtkDestroyNotify) g_free);
       append_list = g_list_append (append_list, list_item);
       gtk_signal_connect (GTK_OBJECT (list_item), "select",
-			  (GtkSignalFunc)gimp_path_editor_select_callback,
+			  GTK_SIGNAL_FUNC (gimp_path_editor_select_callback),
 			  gpe);
       gtk_signal_connect (GTK_OBJECT (list_item), "deselect",
-			  (GtkSignalFunc)gimp_path_editor_deselect_callback,
+			  GTK_SIGNAL_FUNC (gimp_path_editor_deselect_callback),
 			  gpe);
       gtk_widget_show (list_item);
       gpe->number_of_items++;
@@ -505,19 +502,12 @@ gimp_path_editor_filesel_callback (GtkWidget *widget,
       gtk_object_set_data_full (GTK_OBJECT (gpe->selected_item),
 				"gimp_path_editor",
 				directory,
-				(GtkDestroyNotify)gimp_path_editor_data_destroy_callback);
+				(GtkDestroyNotify) g_free);
     }
 
   /* gimp_path_editor_check_path (gpe, gpe->selected_item); */
 
-  gtk_signal_emit (GTK_OBJECT (gpe),
-		   gimp_path_editor_signals[PATH_CHANGED]);
-}
-
-static void
-gimp_path_editor_data_destroy_callback (gpointer *data)
-{
-  g_free (data);
+  gtk_signal_emit (GTK_OBJECT (gpe), gimp_path_editor_signals[PATH_CHANGED]);
 }
 
 /*

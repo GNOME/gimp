@@ -88,7 +88,7 @@ query ()
                           "Andy Thomas",
                           "Andy Thomas",
                           "1999",
-			  "<Toolbox>/Xtns/Plugin Details",
+			  "<Toolbox>/Xtns/Plugin Details...",
 			  "",
                           PROC_EXTENSION,
 			  nargs, 0,
