@@ -741,7 +741,7 @@ create_light_page (void)
   gtk_widget_show (table);
 
   spinbutton = gimp_spin_button_new (&xadj, mapvals.lightsource.position.x,
-				     -G_MAXDOUBLE, G_MAXDOUBLE,
+				     -G_MAXFLOAT, G_MAXFLOAT,
 				     0.1, 1.0, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("X:"), 1.0, 0.5,
@@ -754,7 +754,7 @@ create_light_page (void)
 			   _("Light source X position in XYZ space"), NULL);
 
   spinbutton = gimp_spin_button_new (&yadj, mapvals.lightsource.position.y,
-				     -G_MAXDOUBLE, G_MAXDOUBLE,
+				     -G_MAXFLOAT, G_MAXFLOAT,
 				     0.1, 1.0, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Y:"), 1.0, 0.5,
@@ -767,7 +767,7 @@ create_light_page (void)
 			   _("Light source Y position in XYZ space"), NULL);
 
   spinbutton = gimp_spin_button_new (&zadj, mapvals.lightsource.position.z,
-				     -G_MAXDOUBLE, G_MAXDOUBLE,
+				     -G_MAXFLOAT, G_MAXFLOAT,
 				     0.1, 1.0, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Z:"), 1.0, 0.5,
@@ -874,7 +874,7 @@ create_material_page (void)
 			     pixmap, 1, FALSE);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.ambient_int,
-				     0, G_MAXDOUBLE, 0.1, 1.0, 1.0, 0.0, 2);
+				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
@@ -899,7 +899,7 @@ create_material_page (void)
 			     pixmap, 1, FALSE);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.diffuse_int,
-				     0, G_MAXDOUBLE, 0.1, 1.0, 1.0, 0.0, 2);
+				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
@@ -938,7 +938,7 @@ create_material_page (void)
 			     pixmap, 1, FALSE);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.diffuse_ref,
-				     0, G_MAXDOUBLE, 0.1, 1.0, 1.0, 0.0, 2);
+				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
@@ -963,7 +963,7 @@ create_material_page (void)
 			     pixmap, 1, FALSE);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.specular_ref,
-				     0, G_MAXDOUBLE, 0.1, 1.0, 1.0, 0.0, 2);
+				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
@@ -988,7 +988,7 @@ create_material_page (void)
 			     pixmap, 1, FALSE);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.highlight,
-				     0, G_MAXDOUBLE, 0.1, 1.0, 1.0, 0.0, 2);
+				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",

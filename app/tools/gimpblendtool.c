@@ -521,7 +521,8 @@ blend_button_release (Tool           *tool,
 	     blend_tool->starty,
 	     blend_tool->endx,
 	     blend_tool->endy,
-	     progress? progress_update_and_flush : NULL, progress);
+	     progress ? progress_update_and_flush : (progress_func_t)NULL, 
+	     progress);
 
       if (progress)
 	progress_end (progress);

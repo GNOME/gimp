@@ -1,3 +1,10 @@
+Mon Feb 21 13:04:47 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/blend.c
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_ui.c: more places that had the same
+	Solaris compilation problems
+
 2000-02-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/perspective_tool.c
