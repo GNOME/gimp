@@ -1,3 +1,7 @@
+2002-05-30  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: added app/xcf/xcf-read.c
+
 2002-05-29  Ole Laursen  <olau@hardworking.dk>
 
 	* da.po: Changed translation of redo.

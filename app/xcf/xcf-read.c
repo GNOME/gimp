@@ -24,6 +24,8 @@
 
 #include "xcf-read.h"
 
+#include "libgimp/gimpintl.h"
+
 
 guint
 xcf_read_int32 (FILE     *fp,
@@ -91,8 +93,29 @@ xcf_read_string (FILE     *fp,
       total += xcf_read_int32 (fp, &tmp, 1);
       if (tmp > 0)
         {
-          data[i] = g_new (gchar, tmp);
-          total += xcf_read_int8 (fp, (guint8*) data[i], tmp);
+          gchar *str;
+
+          str = g_new (gchar, tmp);
+          total += xcf_read_int8 (fp, (guint8*) str, tmp);
+
+          if (str[tmp - 1] != '\0')
+            str[tmp - 1] = '\0';
+
+          if (! g_utf8_validate (str, -1, NULL))
+            {
+              gchar *utf8_str;
+
+              utf8_str = g_locale_to_utf8 (str, -1, NULL, NULL, NULL);
+
+              g_free (str);
+
+              if (utf8_str)
+                str = utf8_str;
+              else
+                str = g_strdup (_("(invalid UTF-8 string)"));
+            }
+
+          data[i] = str;
         }
       else
         {

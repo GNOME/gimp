@@ -197,6 +197,7 @@ app/widgets/gimpwidgets-constructors.c
 app/widgets/gimpwidgets-utils.c
 
 app/xcf/xcf-load.c
+app/xcf/xcf-read.c
 app/xcf/xcf.c
 
 modules/cdisplay_gamma.c

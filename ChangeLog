@@ -1,3 +1,8 @@
+2002-05-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/xcf/xcf-read.c (xcf_read_string): UTF-8 validate all strings
+	and try g_locale_to_utf8() as fallback if it fails.
+
 2002-05-30  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: check for extra libraries needed for inet_ntoa() and
