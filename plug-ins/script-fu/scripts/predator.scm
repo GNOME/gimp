@@ -90,9 +90,9 @@
     (if (= keep-selection FALSE)
 	(gimp-selection-none image))
     
-    (gimp-undo-push-group-end image)
     (gimp-image-set-active-layer image drawable)
     (gimp-image-remove-channel image active-selection)
+    (gimp-undo-push-group-end image)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-predator"
@@ -102,10 +102,10 @@
 		    "Adrian Likins"
 		    "10/12/97"
 		    "RGB*"
-		    SF-IMAGE "Image" 0
-		    SF-DRAWABLE "Drawable" 0
-		    SF-ADJUSTMENT _"Edge Amount" '(2 0 24 1 1 0 0)
-		    SF-TOGGLE     _"Pixelize" TRUE
-		    SF-ADJUSTMENT _"Pixel Amount" '(3 1 16 1 1 0 0)
+		    SF-IMAGE       "Image"          0
+		    SF-DRAWABLE    "Drawable"       0
+		    SF-ADJUSTMENT _"Edge Amount"    '(2 0 24 1 1 0 0)
+		    SF-TOGGLE     _"Pixelize"       TRUE
+		    SF-ADJUSTMENT _"Pixel Amount"   '(3 1 16 1 1 0 0)
 		    SF-TOGGLE     _"Keep Selection" TRUE
 		    SF-TOGGLE     _"Separate Layer" TRUE)
