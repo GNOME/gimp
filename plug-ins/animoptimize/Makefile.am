@@ -15,8 +15,7 @@ INCLUDES = \
 LDADD = \
 	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
 	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
-	$(GTK_LIBS)						\
-	-lc
+	$(GTK_LIBS)
 
 DEPS = \
 	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\

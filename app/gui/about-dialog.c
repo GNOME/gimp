@@ -75,6 +75,7 @@ static char *scroll_text[] =
   "Andreas Dilger",
   "Misha Dynin",
   "Larry Ewing",
+  "Nick Fetchak",
   "David Forsyth",
   "Jim Geuther",
   "Scott Goehring",

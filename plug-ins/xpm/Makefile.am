@@ -16,8 +16,7 @@ LDADD = \
 	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
 	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
 	$(GTK_LIBS)						\
-	@LIBXPM_LIB@						\
-	-lc
+	@LIBXPM_LIB@
 
 DEPS = \
 	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\

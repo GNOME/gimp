@@ -1,13 +1,12 @@
-# Messages file for Gimp's main ditribution
-# Micha³ Gomuliñski <M.Gomulinski@writeme.com>, 1998.
-#
-# DO NOT TRANSLATE YET! * NOT ALL MESSAGES INCLUDED! *  NOT TESTED! 
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.0\n"
-"POT-Creation-Date: 1998-07-25 17:25+0200\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 1998-08-29 15:37-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,659 +14,721 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: ENCODING\n"
 
-#: main.c:242
+#: app/about_dialog.c:151
+msgid "About the GIMP"
+msgstr ""
+
+#: app/about_dialog.c:194
+msgid "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+msgstr ""
+
+#: app/about_dialog.c:197
+msgid "Version "
+msgstr ""
+
+#: app/about_dialog.c:198
+msgid " brought to you by"
+msgstr ""
+
+#: app/about_dialog.c:204
+msgid "Spencer Kimball and Peter Mattis"
+msgstr ""
+
+#: app/about_dialog.c:237
+msgid "Please visit http://www.gimp.org/ for more info"
+msgstr ""
+
+#: app/main.c:245
+msgid "GIMP version"
+msgstr ""
+
+#: app/main.c:249
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
 msgstr ""
 
-#: main.c:256
-msgid ""
-"  --console-messages       Display warnings to console instead of a dialog "
-"box.\n"
+#: app/main.c:250
+msgid "Valid options are:\n"
 msgstr ""
 
-#: main.c:257
-msgid "  --debug-handlers         Enable debugging signal handlers.\n"
+#: app/main.c:251
+msgid "  -h --help                Output this help.\n"
 msgstr ""
 
-#: main.c:258
-msgid ""
-"  --display <display>      Use the designated X display.\n"
-"\n"
+#: app/main.c:252
+msgid "  -v --version             Output version info.\n"
 msgstr ""
 
-#: main.c:250
+#: app/main.c:253
+msgid "  -b --batch <commands>    Run in batch mode.\n"
+msgstr ""
+
+#: app/main.c:254
+msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
+msgstr ""
+
+#: app/main.c:255
+msgid "  -n --no-interface        Run without a user interface.\n"
+msgstr ""
+
+#: app/main.c:256
+msgid "  -r --restore-session     Try to restore saved session.\n"
+msgstr ""
+
+#: app/main.c:257
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
 msgstr ""
 
-#: main.c:254
+#: app/main.c:258
+msgid "  --verbose                Show startup messages.\n"
+msgstr ""
+
+#: app/main.c:259
+msgid "  --no-splash              Do not show the startup window.\n"
+msgstr ""
+
+#: app/main.c:260
+msgid "  --no-splash-image        Do not add an image to the startup window.\n"
+msgstr ""
+
+#: app/main.c:261
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
 msgstr ""
 
-#: main.c:252
-msgid "  --no-splash              Do not show the startup window.\n"
-msgstr ""
-
-#: main.c:253
-msgid "  --no-splash-image        Do not add an image to the startup window.\n"
-msgstr ""
-
-#: main.c:255
+#: app/main.c:262
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr ""
 
-#: main.c:259
+#: app/main.c:263
+msgid ""
+"  --console-messages       Display warnings to console instead of a dialog "
+"box.\n"
+msgstr ""
+
+#: app/main.c:264
+msgid "  --debug-handlers         Enable debugging signal handlers.\n"
+msgstr ""
+
+#: app/main.c:265
+msgid ""
+"  --display <display>      Use the designated X display.\n"
+"\n"
+msgstr ""
+
+#: app/main.c:266
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
 
-#: main.c:251
-msgid "  --verbose                Show startup messages.\n"
+#: app/main.c:322
+msgid "sighup caught"
 msgstr ""
 
-#: main.c:246
-msgid "  -b --batch <commands>    Run in batch mode.\n"
+#: app/main.c:325
+msgid "sigint caught"
 msgstr ""
 
-#: main.c:247
-msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
+#: app/main.c:328
+msgid "sigquit caught"
 msgstr ""
 
-#: main.c:244
-msgid "  -h --help                Output this help.\n"
+#: app/main.c:331
+msgid "sigabrt caught"
 msgstr ""
 
-#: main.c:248
-msgid "  -n --no-interface        Run without a user interface.\n"
+#: app/main.c:334
+msgid "sigbus caught"
 msgstr ""
 
-#: main.c:249
-msgid "  -r --restore-session     Try to restore saved session.\n"
+#: app/main.c:337
+msgid "sigsegv caught"
 msgstr ""
 
-#: main.c:245
-msgid "  -v --version             Output version info.\n"
+#: app/main.c:340
+msgid "sigpipe caught"
 msgstr ""
 
-#: about_dialog.c:197 about_dialog.c:198
-msgid " brought to you by"
+#: app/main.c:343
+msgid "sigterm caught"
 msgstr ""
 
-#: about_dialog.c:193
-msgid "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+#: app/main.c:346
+msgid "sigfpe caught"
 msgstr ""
 
-#: menus.c:221
-msgid "/Automatic"
+#: app/main.c:349
+msgid "unknown signal"
 msgstr ""
 
-#: menus.c:229
-msgid "/By extension"
-msgstr ""
-
-#: menus.c:206
-msgid "/Dialogs/Brushes..."
-msgstr ""
-
-#: menus.c:214
-msgid "/Dialogs/Device Status..."
-msgstr ""
-
-#: menus.c:209
-msgid "/Dialogs/Gradient Editor..."
-msgstr ""
-
-#: menus.c:211
-msgid "/Dialogs/Indexed Palette..."
-msgstr ""
-
-#: menus.c:213
-msgid "/Dialogs/Input Devices..."
-msgstr ""
-
-#: menus.c:210
-msgid "/Dialogs/Layers & Channels..."
-msgstr ""
-
-#: menus.c:208
-msgid "/Dialogs/Palette..."
-msgstr ""
-
-#: menus.c:207
-msgid "/Dialogs/Patterns..."
-msgstr ""
-
-#: menus.c:212
-msgid "/Dialogs/Tool Options..."
-msgstr ""
-
-#: menus.c:93 menus.c:97
-msgid "/Edit/---"
-msgstr ""
-
-#: menus.c:88
-msgid "/Edit/Clear"
-msgstr ""
-
-#: menus.c:85
-msgid "/Edit/Copy"
-msgstr ""
-
-#: menus.c:95
-msgid "/Edit/Copy Named"
-msgstr ""
-
-#: menus.c:84
-msgid "/Edit/Cut"
-msgstr ""
-
-#: menus.c:94
-msgid "/Edit/Cut Named"
-msgstr ""
-
-#: menus.c:89
-msgid "/Edit/Fill"
-msgstr ""
-
-#: menus.c:86
-msgid "/Edit/Paste"
-msgstr ""
-
-#: menus.c:87
-msgid "/Edit/Paste Into"
-msgstr ""
-
-#: menus.c:96
-msgid "/Edit/Paste Named"
-msgstr ""
-
-#: menus.c:92
-msgid "/Edit/Redo"
-msgstr ""
-
-#: menus.c:90
-msgid "/Edit/Stroke"
-msgstr ""
-
-#: menus.c:91
-msgid "/Edit/Undo"
-msgstr ""
-
-#: menus.c:52 menus.c:62 menus.c:67 menus.c:77 menus.c:82
-msgid "/File/---"
-msgstr ""
-
-#: menus.c:49
-msgid "/File/About..."
-msgstr ""
-
-#: menus.c:80
-msgid "/File/Close"
-msgstr ""
-
-#: menus.c:53
-msgid "/File/Dialogs/Brushes..."
-msgstr ""
-
-#: menus.c:60
-msgid "/File/Dialogs/Device Status..."
-msgstr ""
-
-#: menus.c:61
-msgid "/File/Dialogs/Document Index..."
-msgstr ""
-
-#: menus.c:newthing
-msgid "/File/Dialogs/Error Console..."
-msgstr ""
-
-#: menus.c:56
-msgid "/File/Dialogs/Gradient Editor..."
-msgstr ""
-
-#: menus.c:59
-msgid "/File/Dialogs/Input Devices..."
-msgstr ""
-
-#: menus.c:57
-msgid "/File/Dialogs/Layers & Channels..."
-msgstr ""
-
-#: menus.c:55
-msgid "/File/Dialogs/Palette..."
-msgstr ""
-
-#: menus.c:54
-msgid "/File/Dialogs/Patterns..."
-msgstr ""
-
-#: menus.c:58
-msgid "/File/Dialogs/Tool Options..."
-msgstr ""
-
-#: menus.c:431 menus.c:501
-#, c-format
-msgid "/File/MRU%02d"
-msgstr ""
-
-#: menus.c:47 menus.c:72
+#: app/menus.c:49 app/menus.c:75
 msgid "/File/New"
 msgstr ""
 
-#: menus.c:48 menus.c:73
+#: app/menus.c:50 app/menus.c:76
 msgid "/File/Open"
 msgstr ""
 
-#: menus.c:50 menus.c:76
+#: app/menus.c:51
+msgid "/File/About..."
+msgstr ""
+
+#: app/menus.c:52 app/menus.c:79
 msgid "/File/Preferences..."
 msgstr ""
 
-#: menus.c:68 menus.c:81
-msgid "/File/Quit"
-msgstr ""
-
-#: menus.c:74
-msgid "/File/Save"
-msgstr ""
-
-#: menus.c:75
-msgid "/File/Save as"
-msgstr ""
-
-#: menus.c:51
+#: app/menus.c:53
 msgid "/File/Tip of the day"
 msgstr ""
 
-#: menus.c:199
-msgid "/Filters/"
+#: app/menus.c:54 app/menus.c:65 app/menus.c:70 app/menus.c:80 app/menus.c:85
+msgid "/File/---"
 msgstr ""
 
-#: menus.c:202
-msgid "/Filters/---"
+#: app/menus.c:55
+msgid "/File/Dialogs/Brushes..."
 msgstr ""
 
-#: menus.c:201
-msgid "/Filters/Re-show last"
+#: app/menus.c:56
+msgid "/File/Dialogs/Patterns..."
 msgstr ""
 
-#: menus.c:200
-msgid "/Filters/Repeat last"
+#: app/menus.c:57
+msgid "/File/Dialogs/Palette..."
 msgstr ""
 
-#: menus.c:150 menus.c:154 menus.c:157 menus.c:159
-msgid "/Image/---"
+#: app/menus.c:58
+msgid "/File/Dialogs/Gradient Editor..."
 msgstr ""
 
-#: menus.c:148
-msgid "/Image/Alpha/Add Alpha Channel"
+#: app/menus.c:59
+msgid "/File/Dialogs/Layers & Channels..."
 msgstr ""
 
-#: menus.c:146
-msgid "/Image/Channel Ops/Duplicate"
+#: app/menus.c:60
+msgid "/File/Dialogs/Tool Options..."
 msgstr ""
 
-#: menus.c:147
-msgid "/Image/Channel Ops/Offset"
+#: app/menus.c:61
+msgid "/File/Dialogs/Input Devices..."
 msgstr ""
 
-#: menus.c:144
-msgid "/Image/Colors/---"
+#: app/menus.c:62
+msgid "/File/Dialogs/Device Status..."
 msgstr ""
 
-#: menus.c:145
-msgid "/Image/Colors/Desaturate"
+#: app/menus.c:63
+msgid "/File/Dialogs/Document Index..."
 msgstr ""
 
-#: menus.c:132
-msgid "/Image/Colors/Equalize"
+#: app/menus.c:64
+msgid "/File/Dialogs/Error Console..."
 msgstr ""
 
-#: menus.c:152
-msgid "/Image/Grayscale"
+#: app/menus.c:71 app/menus.c:84
+msgid "/File/Quit"
 msgstr ""
 
-#: menus.c:153
-msgid "/Image/Indexed"
+#: app/menus.c:77
+msgid "/File/Save"
 msgstr ""
 
-#: menus.c:151
-msgid "/Image/RGB"
+#: app/menus.c:78
+msgid "/File/Save as"
 msgstr ""
 
-#: menus.c:155
-msgid "/Image/Resize"
+#: app/menus.c:83
+msgid "/File/Close"
 msgstr ""
 
-#: menus.c:156
-msgid "/Image/Scale"
+#: app/menus.c:87
+msgid "/Edit/Cut"
 msgstr ""
 
-#: menus.c:169
-msgid "/Layers/Add Alpha Channel"
+#: app/menus.c:88
+msgid "/Edit/Copy"
 msgstr ""
 
-#: menus.c:167
-msgid "/Layers/Alpha To Selection"
+#: app/menus.c:89
+msgid "/Edit/Paste"
 msgstr ""
 
-#: menus.c:164
-msgid "/Layers/Anchor Layer"
+#: app/menus.c:90
+msgid "/Edit/Paste Into"
 msgstr ""
 
-#: menus.c:166
-msgid "/Layers/Flatten Image"
+#: app/menus.c:91
+msgid "/Edit/Clear"
 msgstr ""
 
-#: menus.c:161
-msgid "/Layers/Layers & Channels..."
+#: app/menus.c:92
+msgid "/Edit/Fill"
 msgstr ""
 
-#: menus.c:163
-msgid "/Layers/Lower Layer"
+#: app/menus.c:93
+msgid "/Edit/Stroke"
 msgstr ""
 
-#: menus.c:168
-msgid "/Layers/Mask To Selection"
+#: app/menus.c:94
+msgid "/Edit/Undo"
 msgstr ""
 
-#: menus.c:165
-msgid "/Layers/Merge Visible Layers"
+#: app/menus.c:95
+msgid "/Edit/Redo"
 msgstr ""
 
-#: menus.c:162
-msgid "/Layers/Raise Layer"
+#: app/menus.c:96 app/menus.c:100
+msgid "/Edit/---"
 msgstr ""
 
-#: menus.c:204
-msgid "/Script-Fu/"
+#: app/menus.c:97
+msgid "/Edit/Cut Named"
 msgstr ""
 
-#: menus.c:101
-msgid "/Select/All"
+#: app/menus.c:98
+msgid "/Edit/Copy Named"
 msgstr ""
 
-#: menus.c:105
-msgid "/Select/Border"
+#: app/menus.c:99
+msgid "/Edit/Paste Named"
 msgstr ""
 
-#: menus.c:106
-msgid "/Select/Feather"
-msgstr ""
-
-#: menus.c:103
-msgid "/Select/Float"
-msgstr ""
-
-#: menus.c:107
-msgid "/Select/Grow"
-msgstr ""
-
-#: menus.c:100
-msgid "/Select/Invert"
-msgstr ""
-
-#: menus.c:102
-msgid "/Select/None"
-msgstr ""
-
-#: menus.c:109
-msgid "/Select/Save To Channel"
-msgstr ""
-
-#: menus.c:104
-msgid "/Select/Sharpen"
-msgstr ""
-
-#: menus.c:108
-msgid "/Select/Shrink"
-msgstr ""
-
-#: menus.c:99
+#: app/menus.c:102
 msgid "/Select/Toggle"
 msgstr ""
 
-#: menus.c:196
-msgid "/Tools/---"
+#: app/menus.c:103
+msgid "/Select/Invert"
 msgstr ""
 
-#: menus.c:197
-msgid "/Tools/Default Colors"
+#: app/menus.c:104
+msgid "/Select/All"
 msgstr ""
 
-#: menus.c:198
-msgid "/Tools/Swap Colors"
+#: app/menus.c:105
+msgid "/Select/None"
 msgstr ""
 
-#: menus.c:195
-msgid "/Tools/Toolbox"
+#: app/menus.c:106
+msgid "/Select/Float"
 msgstr ""
 
-#: menus.c:128
-msgid "/View/---"
+#: app/menus.c:107
+msgid "/Select/Sharpen"
 msgstr ""
 
-#: menus.c:129
-msgid "/View/New View"
+#: app/menus.c:108
+msgid "/Select/Border"
 msgstr ""
 
-#: menus.c:130
-msgid "/View/Shrink Wrap"
+#: app/menus.c:109
+msgid "/Select/Feather"
 msgstr ""
 
-#: menus.c:127
-msgid "/View/Snap To Guides"
+#: app/menus.c:110
+msgid "/Select/Grow"
 msgstr ""
 
-#: menus.c:126
-msgid "/View/Toggle Guides"
+#: app/menus.c:111
+msgid "/Select/Shrink"
 msgstr ""
 
-#: menus.c:125
-msgid "/View/Toggle Rulers"
+#: app/menus.c:112
+msgid "/Select/Save To Channel"
 msgstr ""
 
-#: menus.c:124
-msgid "/View/Window Info..."
-msgstr ""
-
-#: menus.c:113
+#.
+#. { "/Select/By Color...", NULL, tools_select_cmd_callback, BY_COLOR_SELECT },
+#.
+#: app/menus.c:117
 msgid "/View/Zoom In"
 msgstr ""
 
-#: menus.c:114
+#: app/menus.c:118
 msgid "/View/Zoom Out"
 msgstr ""
 
-#: menus.c:115
+#: app/menus.c:119
 msgid "/View/Zoom/16:1"
 msgstr ""
 
-#: menus.c:119
-msgid "/View/Zoom/1:1"
-msgstr ""
-
-#: menus.c:123
-msgid "/View/Zoom/1:16"
-msgstr ""
-
-#: menus.c:120
-msgid "/View/Zoom/1:2"
-msgstr ""
-
-#: menus.c:121
-msgid "/View/Zoom/1:4"
-msgstr ""
-
-#: menus.c:122
-msgid "/View/Zoom/1:8"
-msgstr ""
-
-#: menus.c:118
-msgid "/View/Zoom/2:1"
-msgstr ""
-
-#: menus.c:117
-msgid "/View/Zoom/4:1"
-msgstr ""
-
-#: menus.c:116
+#: app/menus.c:120
 msgid "/View/Zoom/8:1"
 msgstr ""
 
-#: about_dialog.c:150
-msgid "About the GIMP"
+#: app/menus.c:121
+msgid "/View/Zoom/4:1"
 msgstr ""
 
-#: menus.c:409
-#, c-format
-msgid "Error opening file: %s\n"
+#: app/menus.c:122
+msgid "/View/Zoom/2:1"
 msgstr ""
 
-#: main.c:238
-msgid "GIMP version"
+#: app/menus.c:123
+msgid "/View/Zoom/1:1"
 msgstr ""
 
-#: regex.c:982
-msgid "Invalid back reference"
+#: app/menus.c:124
+msgid "/View/Zoom/1:2"
 msgstr ""
 
-#: regex.c:980
-msgid "Invalid character class name"
+#: app/menus.c:125
+msgid "/View/Zoom/1:4"
 msgstr ""
 
-#: regex.c:979
-msgid "Invalid collation character"
+#: app/menus.c:126
+msgid "/View/Zoom/1:8"
 msgstr ""
 
-#: regex.c:986
-msgid "Invalid content of \\{\\}"
+#: app/menus.c:127
+msgid "/View/Zoom/1:16"
 msgstr ""
 
-#: regex.c:989
-msgid "Invalid preceding regular expression"
+#: app/menus.c:128
+msgid "/View/Window Info..."
 msgstr ""
 
-#: regex.c:987
-msgid "Invalid range end"
+#: app/menus.c:129
+msgid "/View/Toggle Rulers"
 msgstr ""
 
-#: regex.c:978
-msgid "Invalid regular expression"
+#: app/menus.c:130
+msgid "/View/Toggle Statusbar"
 msgstr ""
 
-#: regex.c:988
-msgid "Memory exhausted"
+#: app/menus.c:131
+msgid "/View/Toggle Guides"
 msgstr ""
 
-#: regex.c:977
-msgid "No match"
+#: app/menus.c:132
+msgid "/View/Snap To Guides"
 msgstr ""
 
-#: regex.c:5442
-msgid "No previous regular expression"
+#: app/menus.c:133
+msgid "/View/---"
 msgstr ""
 
-#: about_dialog.c:237
-msgid "Please visit http://www.gimp.org/ for more info"
+#: app/menus.c:134
+msgid "/View/New View"
 msgstr ""
 
-#: regex.c:990
-msgid "Premature end of regular expression"
+#: app/menus.c:135
+msgid "/View/Shrink Wrap"
 msgstr ""
 
-#: regex.c:991
-msgid "Regular expression too big"
+#: app/menus.c:137
+msgid "/Image/Colors/Equalize"
 msgstr ""
 
-#: about_dialog.c:204
-msgid "Spencer Kimball and Peter Mattis"
+#: app/menus.c:138
+msgid "/Image/Colors/Invert"
 msgstr ""
 
-#: regex.c:976
-msgid "Success"
+#.
+#. { N_("/Image/Colors/Posterize"), NULL, tools_select_cmd_callback, POSTERIZE },
+#. { N_("/Image/Colors/Threshold"), NULL, tools_select_cmd_callback, THRESHOLD },
+#. { N_("/Image/Colors/---"), NULL, NULL, 0, "<Separator>" },
+#. { N_("/Image/Colors/Color Balance"), NULL, tools_select_cmd_callback, COLOR_BALANCE },
+#. { N_("/Image/Colors/Brightness-Contrast"), NULL, tools_select_cmd_callback, BRIGHTNESS_CONTRAST },
+#. { N_("/Image/Colors/Hue-Saturation"), NULL, tools_select_cmd_callback, 0 },
+#. { N_("/Image/Colors/Curves"), NULL, tools_select_cmd_callback, CURVES },
+#. { N_("/Image/Colors/Levels"), NULL, tools_select_cmd_callback, LEVELS },
+#.
+#: app/menus.c:149
+msgid "/Image/Colors/---"
 msgstr ""
 
-#: regex.c:981
-msgid "Trailing backslash"
+#: app/menus.c:150
+msgid "/Image/Colors/Desaturate"
 msgstr ""
 
-#: menus.c:342
+#: app/menus.c:151
+msgid "/Image/Channel Ops/Duplicate"
+msgstr ""
+
+#: app/menus.c:152
+msgid "/Image/Channel Ops/Offset"
+msgstr ""
+
+#: app/menus.c:153
+msgid "/Image/Alpha/Add Alpha Channel"
+msgstr ""
+
+#. { N_("/Image/Histogram"), NULL, tools_select_cmd_callback, HISTOGRAM},
+#: app/menus.c:155 app/menus.c:159 app/menus.c:162 app/menus.c:164
+msgid "/Image/---"
+msgstr ""
+
+#: app/menus.c:156
+msgid "/Image/RGB"
+msgstr ""
+
+#: app/menus.c:157
+msgid "/Image/Grayscale"
+msgstr ""
+
+#: app/menus.c:158
+msgid "/Image/Indexed"
+msgstr ""
+
+#: app/menus.c:160
+msgid "/Image/Resize"
+msgstr ""
+
+#: app/menus.c:161
+msgid "/Image/Scale"
+msgstr ""
+
+#: app/menus.c:166
+msgid "/Layers/Layers & Channels..."
+msgstr ""
+
+#: app/menus.c:167
+msgid "/Layers/Raise Layer"
+msgstr ""
+
+#: app/menus.c:168
+msgid "/Layers/Lower Layer"
+msgstr ""
+
+#: app/menus.c:169
+msgid "/Layers/Anchor Layer"
+msgstr ""
+
+#: app/menus.c:170
+msgid "/Layers/Merge Visible Layers"
+msgstr ""
+
+#: app/menus.c:171
+msgid "/Layers/Flatten Image"
+msgstr ""
+
+#: app/menus.c:172
+msgid "/Layers/Alpha To Selection"
+msgstr ""
+
+#: app/menus.c:173
+msgid "/Layers/Mask To Selection"
+msgstr ""
+
+#: app/menus.c:174
+msgid "/Layers/Add Alpha Channel"
+msgstr ""
+
+#. { N_("/Tools/Rect Select"), "R", tools_select_cmd_callback, RECT_SELECT },
+#. { N_("/Tools/Ellipse Select"), "E", tools_select_cmd_callback, ELLIPSE_SELECT },
+#. { N_("/Tools/Free Select"), "F", tools_select_cmd_callback, FREE_SELECT },
+#. { N_("/Tools/Fuzzy Select"), "Z", tools_select_cmd_callback, FUZZY_SELECT },
+#. { N_("/Tools/Bezier Select"), "B", tools_select_cmd_callback, BEZIER_SELECT },
+#. { N_("/Tools/Intelligent Scissors"), "I", tools_select_cmd_callback, ISCISSORS },
+#. { N_("/Tools/Move"), "M", tools_select_cmd_callback, MOVE },
+#. { N_("/Tools/Magnify"), "<shift>M", tools_select_cmd_callback, MAGNIFY },
+#. { N_("/Tools/Crop"), "<shift>C", tools_select_cmd_callback, CROP },
+#. { N_("/Tools/Transform"), "<shift>T", tools_select_cmd_callback, ROTATE },
+#. { N_("/Tools/Flip"), "<shift>F", tools_select_cmd_callback, FLIP_HORZ },
+#. { N_("/Tools/Text"), "T", tools_select_cmd_callback, TEXT },
+#. { N_("/Tools/Color Picker"), "O", tools_select_cmd_callback, COLOR_PICKER },
+#. { N_("/Tools/Bucket Fill"), "<shift>B", tools_select_cmd_callback, BUCKET_FILL },
+#. { N_("/Tools/Blend"), "L", tools_select_cmd_callback, BLEND },
+#. { N_("/Tools/Paintbrush"), "P", tools_select_cmd_callback, PAINTBRUSH },
+#. { N_("/Tools/Pencil"), "<shift>P", tools_select_cmd_callback, PENCIL },
+#. { N_("/Tools/Eraser"), "<shift>E", tools_select_cmd_callback, ERASER },
+#. { N_("/Tools/Airbrush"), "A", tools_select_cmd_callback, AIRBRUSH },
+#. { N_("/Tools/Clone"), "C", tools_select_cmd_callback, CLONE },
+#. { N_("/Tools/Convolve"), "V", tools_select_cmd_callback, CONVOLVE },
+#. { N_("/Tools/Ink"), "K", tools_select_cmd_callback, INK },
+#. { N_("/Tools/Default Colors"), "D", tools_default_colors_cmd_callback, 0 },
+#. { N_("/Tools/Swap Colors"), "X", tools_swap_colors_cmd_callback, 0 },
+#: app/menus.c:200
+msgid "/Tools/Toolbox"
+msgstr ""
+
+#: app/menus.c:201
+msgid "/Tools/---"
+msgstr ""
+
+#: app/menus.c:202
+msgid "/Tools/Default Colors"
+msgstr ""
+
+#: app/menus.c:203
+msgid "/Tools/Swap Colors"
+msgstr ""
+
+#: app/menus.c:204
+msgid "/Filters/"
+msgstr ""
+
+#: app/menus.c:205
+msgid "/Filters/Repeat last"
+msgstr ""
+
+#: app/menus.c:206
+msgid "/Filters/Re-show last"
+msgstr ""
+
+#: app/menus.c:207
+msgid "/Filters/---"
+msgstr ""
+
+#: app/menus.c:209
+msgid "/Script-Fu/"
+msgstr ""
+
+#: app/menus.c:211
+msgid "/Dialogs/Brushes..."
+msgstr ""
+
+#: app/menus.c:212
+msgid "/Dialogs/Patterns..."
+msgstr ""
+
+#: app/menus.c:213
+msgid "/Dialogs/Palette..."
+msgstr ""
+
+#: app/menus.c:214
+msgid "/Dialogs/Gradient Editor..."
+msgstr ""
+
+#: app/menus.c:215
+msgid "/Dialogs/Layers & Channels..."
+msgstr ""
+
+#: app/menus.c:216
+msgid "/Dialogs/Indexed Palette..."
+msgstr ""
+
+#: app/menus.c:217
+msgid "/Dialogs/Tool Options..."
+msgstr ""
+
+#: app/menus.c:218
+msgid "/Dialogs/Input Devices..."
+msgstr ""
+
+#: app/menus.c:219
+msgid "/Dialogs/Device Status..."
+msgstr ""
+
+#: app/menus.c:226
+msgid "/Automatic"
+msgstr ""
+
+#: app/menus.c:234
+msgid "/By extension"
+msgstr ""
+
+#: app/menus.c:347
 #, c-format
 msgid ""
 "Unable to set sensitivity for menu which doesn't exist:\n"
 "%s"
 msgstr ""
 
-#: menus.c:367
+#: app/menus.c:372
 #, c-format
 msgid ""
 "Unable to set state for menu which doesn't exist:\n"
 "%s"
 msgstr ""
 
-#: regex.c:984
-msgid "Unmatched ( or \\("
+#: app/menus.c:414
+#, c-format
+msgid "Error opening file: %s\n"
 msgstr ""
 
-#: regex.c:992
-msgid "Unmatched ) or \\)"
+#: app/menus.c:436 app/menus.c:506
+#, c-format
+msgid "/File/MRU%02d"
 msgstr ""
 
-#: regex.c:983
+#: app/regex.c:976
+msgid "Success"
+msgstr ""
+
+#. REG_NOERROR
+#: app/regex.c:977
+msgid "No match"
+msgstr ""
+
+#. REG_NOMATCH
+#: app/regex.c:978
+msgid "Invalid regular expression"
+msgstr ""
+
+#. REG_BADPAT
+#: app/regex.c:979
+msgid "Invalid collation character"
+msgstr ""
+
+#. REG_ECOLLATE
+#: app/regex.c:980
+msgid "Invalid character class name"
+msgstr ""
+
+#. REG_ECTYPE
+#: app/regex.c:981
+msgid "Trailing backslash"
+msgstr ""
+
+#. REG_EESCAPE
+#: app/regex.c:982
+msgid "Invalid back reference"
+msgstr ""
+
+#. REG_ESUBREG
+#: app/regex.c:983
 msgid "Unmatched [ or [^"
 msgstr ""
 
-#: regex.c:985
+#. REG_EBRACK
+#: app/regex.c:984
+msgid "Unmatched ( or \\("
+msgstr ""
+
+#. REG_EPAREN
+#: app/regex.c:985
 msgid "Unmatched \\{"
 msgstr ""
 
-#: main.c:243
-msgid "Valid options are:\n"
+#. REG_EBRACE
+#: app/regex.c:986
+msgid "Invalid content of \\{\\}"
 msgstr ""
 
-#: about_dialog.c:196 about_dialog.c:198
-msgid "Version "
+#. REG_BADBR
+#: app/regex.c:987
+msgid "Invalid range end"
 msgstr ""
 
-#: main.c:324
-msgid "sigabrt caught"
+#. REG_ERANGE
+#: app/regex.c:988
+msgid "Memory exhausted"
 msgstr ""
 
-#: main.c:327
-msgid "sigbus caught"
+#. REG_ESPACE
+#: app/regex.c:989
+msgid "Invalid preceding regular expression"
 msgstr ""
 
-#: main.c:339
-msgid "sigfpe caught"
+#. REG_BADRPT
+#: app/regex.c:990
+msgid "Premature end of regular expression"
 msgstr ""
 
-#: main.c:315
-msgid "sighup caught"
+#. REG_EEND
+#: app/regex.c:991
+msgid "Regular expression too big"
 msgstr ""
 
-#: main.c:318
-msgid "sigint caught"
+#. REG_ESIZE
+#: app/regex.c:992
+msgid "Unmatched ) or \\)"
 msgstr ""
 
-#: main.c:333
-msgid "sigpipe caught"
-msgstr ""
-
-#: main.c:321
-msgid "sigquit caught"
-msgstr ""
-
-#: main.c:330
-msgid "sigsegv caught"
-msgstr ""
-
-#: main.c:336
-msgid "sigterm caught"
-msgstr ""
-
-#: main.c:342
-msgid "unknown signal"
+#: app/regex.c:5442
+msgid "No previous regular expression"
 msgstr ""

@@ -1,3 +1,9 @@
+Sun Aug 30 19:02:56 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/Makefile.am
+	* plug-ins/*/Makefile.am: removed -lc from all Makefiles, since it
+	causes weird problems on DU4
+
 Sun Aug 30 16:45:05 1998  Owen Taylor  <otaylor@gtk.org>
 
 	* app/app_procs.c (app_init_update_status): Instead
