@@ -1,3 +1,9 @@
+2003-11-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpcolordisplaystack.sgml: added docs for
+	GimpColorDisplayStack.
+
 2003-11-21  Sven Neumann  <sven@gimp.org>
 
 	* app/app-sections.txt: updated.

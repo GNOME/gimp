@@ -545,6 +545,29 @@ GIMP_COLOR_DISPLAY_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpcolordisplaystack</FILE>
+<TITLE>GimpColorDisplayStack</TITLE>
+GimpColorDisplayStack
+gimp_color_display_stack_new
+gimp_color_display_stack_clone
+gimp_color_display_stack_changed
+gimp_color_display_stack_add
+gimp_color_display_stack_remove
+gimp_color_display_stack_reorder_up
+gimp_color_display_stack_reorder_down
+gimp_color_display_stack_convert
+<SUBSECTION Standard>
+GimpColorDisplayStackClass
+GIMP_COLOR_DISPLAY_STACK
+GIMP_IS_COLOR_DISPLAY_STACK
+GIMP_TYPE_COLOR_DISPLAY_STACK
+gimp_color_display_stack_get_type
+GIMP_COLOR_DISPLAY_STACK_CLASS
+GIMP_IS_COLOR_DISPLAY_STACK_CLASS
+GIMP_COLOR_DISPLAY_STACK_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpcolorselector</FILE>
 <TITLE>GimpColorSelector</TITLE>
 GimpColorSelector
