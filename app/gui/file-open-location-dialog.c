@@ -34,10 +34,12 @@
 #include "file/file-utils.h"
 
 #include "widgets/gimpcontainerentry.h"
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpprogressbox.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "dialogs.h"
 #include "file-open-location-dialog.h"
 
 #include "gimp-intl.h"
@@ -80,6 +82,9 @@ file_open_location_dialog_show (Gimp      *gimp,
                             GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
 
                             NULL);
+
+  gimp_dialog_factory_add_foreign (global_dialog_factory,
+                                   "gimp-file-open-location-dialog", dialog);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (file_open_location_response),
