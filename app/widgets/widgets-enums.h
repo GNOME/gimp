@@ -106,7 +106,7 @@ GType gimp_window_hint_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_WINDOW_HINT_NORMAL,   /*< desc="Normal Window"  >*/
-  GIMP_WINDOW_HINT_UTILITY,  /*< desc="Utility Window" >*/
+  GIMP_WINDOW_HINT_UTILITY   /*< desc="Utility Window" >*/
 } GimpWindowHint;
 
 
@@ -137,7 +137,7 @@ typedef enum  /*< skip >*/
   GIMP_PREVIEW_BORDER_BLACK,
   GIMP_PREVIEW_BORDER_WHITE,
   GIMP_PREVIEW_BORDER_RED,
-  GIMP_PREVIEW_BORDER_GREEN,
+  GIMP_PREVIEW_BORDER_GREEN
 } GimpPreviewBorderType;
 
 typedef enum  /*< skip >*/

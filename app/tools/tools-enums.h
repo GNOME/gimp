@@ -78,7 +78,7 @@ typedef enum
 {
   GIMP_VECTOR_MODE_DESIGN,      /*< desc="Design" >*/
   GIMP_VECTOR_MODE_EDIT,        /*< desc="Edit"   >*/
-  GIMP_VECTOR_MODE_MOVE,        /*< desc="Move"   >*/
+  GIMP_VECTOR_MODE_MOVE         /*< desc="Move"   >*/
 } GimpVectorMode;
 
 

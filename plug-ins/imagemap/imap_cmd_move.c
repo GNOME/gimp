@@ -152,7 +152,7 @@ button_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
       command_list_add(object_move_command_new(command->obj, command->obj_x, 
 					       command->obj_y));
 
-   //   preview_thaw();
+   /*   preview_thaw(); */
 }
 
 static CmdExecuteValue_t
@@ -161,7 +161,7 @@ move_command_execute(Command_t *parent)
    MoveCommand_t *command = (MoveCommand_t*) parent;
    GtkWidget *widget = command->preview->preview;
 
-   //   preview_freeze();
+   /*   preview_freeze(); */
    g_signal_connect(widget, "button_release_event", 
                     G_CALLBACK (button_release), command);   
    g_signal_connect(widget, "motion_notify_event", 

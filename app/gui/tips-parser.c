@@ -47,7 +47,7 @@ typedef enum
 {
   TIPS_LOCALE_NONE,
   TIPS_LOCALE_MATCH,
-  TIPS_LOCALE_MISMATCH,
+  TIPS_LOCALE_MISMATCH
 } TipsParserLocaleState;
 
 typedef struct _TipsParser TipsParser;
