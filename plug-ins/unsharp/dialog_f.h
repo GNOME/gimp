@@ -1,3 +1,7 @@
+/* $Id$
+ *
+ */
+
 #ifndef __DIALOG_F_H__
 #define __DIALOG_F_H__
 

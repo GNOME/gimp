@@ -1,5 +1,6 @@
-/*
- * unsharp.c 0.5 -- This is a plug-in for the GIMP 1.0
+/* $Id$
+ *
+ * unsharp.c 0.8 -- This is a plug-in for the GIMP 1.0
  *  http://www.steppe.com/~winston/gimp/unsharp.html
  *
  * Copyright (C) 1999 Winston Chang
@@ -31,31 +32,32 @@
 #include "gtk/gtk.h"
 
 #include "dialog_f.h"
+#include "dialog_i.h"
 
-#define PLUG_IN_VERSION "0.5 - 1999/6/2"
+#define PLUG_IN_VERSION "0.8"
 
 
 /* to show both pretty unoptimized code and ugly optimized code blocks
    There's really no reason to define this, unless you want to see how
    much pointer aritmetic can speed things up.  I find that it is about
    45% faster with the optimized code. */
-/* #define READABLE_CODE */
+//#define READABLE_CODE
 
 /* uncomment this line to get a rough feel of how long the
    plug-in takes to run */
-/* #define TIMER */
+//#define TIMER
 #ifdef TIMER
-#  include <sys/time.h>
-#  include <unistd.h>
-   static void timerstart();
-   static void timerstop();
-   static struct timeval time_start,time_stop;
+	#include <sys/time.h>
+	#include <unistd.h>
+	static void timerstart();
+	static void timerstop();
+	static struct timeval time_start,time_stop;
 #endif
 
 typedef struct {
 	gdouble radius;
 	gdouble amount;
-	gdouble threshold;
+	gint threshold;
 } UnsharpMaskParams;
 
 typedef struct {
@@ -127,10 +129,10 @@ static UnsharpMaskParams unsharp_params =
 {
 	5.0, /* default radius = 5 */
 	0.5, /* default amount = .5 */
-	0.0  /* default threshold = 0.0 */
+	0    /* default threshold = 0 */
 };
 
-/* static UnsharpMaskInterface umint = { FALSE }; */
+//static UnsharpMaskInterface umint = { FALSE };
 
 /* Setting PLUG_IN_INFO */
 GPlugInInfo PLUG_IN_INFO = {
@@ -227,7 +229,7 @@ static void run(char *name, int nparams, GParam *param, int *nreturn_vals,
 		/* here we go */
 		unsharp_mask(drawable, unsharp_params.radius, unsharp_params.amount);
 	
-		/*	values[0].data.d_status = status; */
+		//	values[0].data.d_status = status;
 		gimp_displays_flush ();
 		
 		/* set data for next use of filter */
@@ -280,77 +282,6 @@ static void unsharp_mask(GDrawable *drawable, gint radius, gdouble amount) {
 	                x1, x2, y1, y2);
 
 
-
-#ifdef PIMPDADDY
-	/*  allocate row, col buffers  */
-	cur_row = (guchar *) g_malloc ((x2 - x1) * bytes);
-	dest_row = (guchar *) g_malloc ((x2 - x1) * bytes);
-	cur_col = (guchar *) g_malloc ((y2 - y1) * bytes);
-	dest_col = (guchar *) g_malloc ((y2 - y1) * bytes);
-	
-	
-	/* set height and width */
-	x = x2-x1;
-	y = y2-y1;
-	
-	/* blank out a region of the destination memory area, I think */
-	for (row = 0; row < y; row++) {
-		gimp_pixel_rgn_get_row(&destPR, dest_row, x1, y1+row, (x2-x1));
-		memset(dest_row, 0, x*bytes);
-		gimp_pixel_rgn_set_row(&destPR, dest_row, x1, y1+row, (x2-x1));
-	}
-
-
-	/* blur the rows */
-	for (row = 0; row < y; row++) {
-		gimp_pixel_rgn_get_row(&srcPR, cur_row, x1, y1+row, x);
-		gimp_pixel_rgn_get_row(&destPR, dest_row, x1, y1+row, x);
-		blur_line(ctable, cmatrix, cmatrix_length, cur_row, dest_row, x, bytes);
-		gimp_pixel_rgn_set_row(&destPR, dest_row, x1, y1+row, x);
-
-		if (row%5 == 0) gimp_progress_update((gdouble)row/(3*y));
-	}
-
-
-	/* blur the cols */
-	for (col = 0; col < x; col++) {
-		gimp_pixel_rgn_get_col(&destPR, cur_col, x1+col, y1, y);
-		gimp_pixel_rgn_get_col(&destPR, dest_col, x1+col, y1, y);
-		blur_line(ctable, cmatrix, cmatrix_length, cur_col, dest_col, y, bytes);
-		gimp_pixel_rgn_set_col(&destPR, dest_col, x1+col, y1, y);
-
-		if (col%5 == 0) gimp_progress_update((gdouble)col/(3*x) + 0.33);
-	}
-
-	gimp_progress_init("Merging...");
-	for (row = 0; row < y; row++) {
-		int value = 0;
-		int u,v;
-		/* get source row */
-		gimp_pixel_rgn_get_row(&srcPR, cur_row, x1, y1+row, x);
-		/* get dest row */
-		gimp_pixel_rgn_get_row(&destPR, dest_row, x1, y1+row, x);
-		/* combine the two */
-		for (u=0;u<x;u++) {
-			for (v=0; v<bytes; v++) {
-				value = cur_row[u*bytes+v] +
-				        amount * (cur_row[u*bytes+v] - dest_row[u*bytes+v]);
-				if (value < 0) dest_row[u*bytes+v] =0;
-				else if (value > 255) dest_row[u*bytes+v] = 255;
-				else  dest_row[u*bytes+v] = value;
-			}
-		}
-		if (row%5 == 0) gimp_progress_update((gdouble)row/(3*y) + 0.67);
-		gimp_pixel_rgn_set_row(&destPR, dest_row, x1, y1+row, x);
-	}
-
-	/* free the memory we took */
-	g_free(cur_row);
-	g_free(dest_row);
-	g_free(cur_col);
-	g_fre(dest_col);
-#endif
-
 	gimp_drawable_flush(drawable);
 	gimp_drawable_merge_shadow(drawable->id, TRUE);
 	gimp_drawable_update(drawable->id, x1, y1, (x2-x1), (y2-y1));
@@ -376,7 +307,7 @@ static void unsharp_region (GPixelRgn srcPR, GPixelRgn destPR,
 	gint cmatrix_length;
 	gdouble* ctable;
 
-	gint row, col;  /* these are counters for loops */
+	gint row, col;  //these are counters for loops
 
 	/* these are used for the merging step */
 	gint threshold;
@@ -384,16 +315,21 @@ static void unsharp_region (GPixelRgn srcPR, GPixelRgn destPR,
 	gint value;
 	gint u,v;
 
-	/* generate convolution matrix */
+	/* find height and width of subregion to act on */
+	x = x2-x1;
+	y = y2-y1;
+
+
+	/* generate convolution matrix and make sure it's smaller than each dimension */
 	cmatrix_length = gen_convolve_matrix(radius, &cmatrix);
 	/* generate lookup table */
 	ctable = gen_lookup_table(cmatrix, cmatrix_length);
 
 
 
-	/*  allocate row, col buffers  */
-	cur_row = (guchar *) g_malloc ((x2 - x1) * bytes);
-	dest_row = (guchar *) g_malloc ((x2 - x1) * bytes);
+	/*  allocate row buffers  */
+	cur_row = (guchar *) g_malloc (x * bytes);
+	dest_row = (guchar *) g_malloc (x * bytes);
 
 	/* find height and width of subregion to act on */
 	x = x2-x1;
@@ -405,6 +341,7 @@ static void unsharp_region (GPixelRgn srcPR, GPixelRgn destPR,
 		memset(dest_row, 0, x*bytes);
 		gimp_pixel_rgn_set_row(&destPR, dest_row, x1, y1+row, (x2-x1));
 	}
+
 
 	/* blur the rows */
 	for (row = 0; row < y; row++) {
@@ -418,8 +355,8 @@ static void unsharp_region (GPixelRgn srcPR, GPixelRgn destPR,
 
 
 	/* allocate column buffers */
-	cur_col = (guchar *) g_malloc ((y2 - y1) * bytes);
-	dest_col = (guchar *) g_malloc ((y2 - y1) * bytes);
+	cur_col = (guchar *) g_malloc (y * bytes);
+	dest_col = (guchar *) g_malloc (y * bytes);
 
 	/* blur the cols */
 	for (col = 0; col < x; col++) {
@@ -434,9 +371,10 @@ static void unsharp_region (GPixelRgn srcPR, GPixelRgn destPR,
 	gimp_progress_init("Merging...");
 
 	/* find integer value of threshold */
-	threshold = round2int( unsharp_params.threshold * 255.0 );
+	threshold = unsharp_params.threshold;
 	
-	/* merge the source and destination images */
+	/* merge the source and destination (which currently contains
+	   the blurred version) images */
 	for (row = 0; row < y; row++) {
 		value = 0;
 		/* get source row */
@@ -444,14 +382,13 @@ static void unsharp_region (GPixelRgn srcPR, GPixelRgn destPR,
 		/* get dest row */
 		gimp_pixel_rgn_get_row(&destPR, dest_row, x1, y1+row, x);
 		/* combine the two */
-		for (u=0;u<x;u++) {
+		for (u=0; u<x; u++) {
 			for (v=0; v<bytes; v++) {
 				diff = (cur_row[u*bytes+v] - dest_row[u*bytes+v]);
 				/* do tresholding */
-				if      (diff > threshold)  diff = diff - threshold;
-				else if (diff < -threshold) diff = diff + threshold;
-				else                    diff = 0;
-				
+				if ( abs(2*diff) < threshold )
+					diff = 0;
+
 				value = cur_row[u*bytes+v] + amount * diff;
 				
 				if (value < 0) dest_row[u*bytes+v] =0;
@@ -472,7 +409,6 @@ static void unsharp_region (GPixelRgn srcPR, GPixelRgn destPR,
 
 }
 
-
 /* this function is written as if it is blurring a column at a time,
    even though it can operate on rows, too.  There is no difference
    in the processing of the lines, at least to the blur_line function. */
@@ -481,6 +417,7 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix,
                              guchar* cur_col, guchar* dest_col,
                              gint y, glong bytes) {
 
+ 
 #ifdef READABLE_CODE
 /* ------------- semi-readable code ------------------- */
 	gdouble scale;
@@ -488,42 +425,73 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix,
 	gint i,j;
 	gint row;
 
-	/* for the edge condition, we only use available info, and scale to one */
-	for (row = 0; row < cmatrix_length/2; row++) {
-		/* find scale factor */
-		scale=0;
-		for (j = cmatrix_length/2 - row; j<cmatrix_length; j++)
-			scale += cmatrix[j];
-		for (i = 0; i<bytes; i++) {
-			sum = 0;
-			for (j = cmatrix_length/2 - row; j<cmatrix_length; j++) {
-				sum += cur_col[(row + j-cmatrix_length/2)*bytes + i] * cmatrix[j];
+
+	// this is to take care cases in which the matrix can go over
+	// both edges at once.  It's not efficient, but this can only
+	// happen in small pictures anyway.
+	if (cmatrix_length > y) {
+	
+		for (row = 0; row < y ; row++) {
+			scale=0;
+			// find the scale factor
+			for (j = 0; j < y ; j++) {
+				// if the index is in bounds, add it to the scale counter
+				if ((j + cmatrix_length/2 - row >= 0) &&
+				    (j + cmatrix_length/2 - row < cmatrix_length))
+					scale += cmatrix[j + cmatrix_length/2 - row];
 			}
-			dest_col[row*bytes + i] = (guchar)round2int(sum / scale);
+			for (i = 0; i<bytes; i++) {
+				sum = 0;
+				for (j = 0; j < y; j++) {
+					if ( (j >= row - cmatrix_length/2) && (j <= row + cmatrix_length/2) )
+						sum += cur_col[j*bytes + i] * cmatrix[j];
+				}
+ 				dest_col[row*bytes + i] = (guchar)round2int(sum / scale);
+			}
 		}
 	}
-	/* go through each pixel in each col */
-	for ( ; row < y-cmatrix_length/2; row++) {
-		for (i = 0; i<bytes; i++) {
-			sum = 0;
-			for (j = 0; j<cmatrix_length; j++) {
-				sum += cur_col[(row + j-cmatrix_length/2)*bytes + i] * cmatrix[j];
+	
+	else {  // when the cmatrix is smaller than row length
+
+		// for the edge condition, we only use available info, and scale to one
+		for (row = 0; row < cmatrix_length/2; row++) {
+			// find scale factor
+			scale=0;
+			for (j = cmatrix_length/2 - row; j<cmatrix_length; j++)
+				scale += cmatrix[j];
+
+			for (i = 0; i<bytes; i++) {
+				sum = 0;
+				for (j = cmatrix_length/2 - row; j<cmatrix_length; j++) {
+					sum += cur_col[(row + j-cmatrix_length/2)*bytes + i] * cmatrix[j];
+				}
+				dest_col[row*bytes + i] = (guchar)round2int(sum / scale);
 			}
-			dest_col[row*bytes + i] = (guchar)round2int(sum);
 		}
-	}
-	/* for the edge condition , we only use available info, and scale to one */
-	for ( ; row < y; row++) {
-		/* find scale factor */
-		scale=0;
-		for (j = 0; j< y-row + cmatrix_length/2; j++)
-			scale += cmatrix[j];
-		for (i = 0; i<bytes; i++) {
-			sum = 0;
-			for (j = 0; j<y-row + cmatrix_length/2; j++) {
-				sum += cur_col[(row + j-cmatrix_length/2)*bytes + i] * cmatrix[j];
+		// go through each pixel in each col
+		for ( ; row < y-cmatrix_length/2; row++) {
+			for (i = 0; i<bytes; i++) {
+				sum = 0;
+				for (j = 0; j<cmatrix_length; j++) {
+					sum += cur_col[(row + j-cmatrix_length/2)*bytes + i] * cmatrix[j];
+				}
+				dest_col[row*bytes + i] = (guchar)round2int(sum);
 			}
-			dest_col[row*bytes + i] = (guchar)round2int(sum / scale);
+		}
+		// for the edge condition , we only use available info, and scale to one
+		for ( ; row < y; row++) {
+			// find scale factor
+			scale=0;
+			for (j = 0; j< y-row + cmatrix_length/2; j++)
+				scale += cmatrix[j];
+				
+			for (i = 0; i<bytes; i++) {
+				sum = 0;
+				for (j = 0; j<y-row + cmatrix_length/2; j++) {
+					sum += cur_col[(row + j-cmatrix_length/2)*bytes + i] * cmatrix[j];
+				}
+				dest_col[row*bytes + i] = (guchar)round2int(sum / scale);
+			}
 		}
 	}
 #endif
@@ -542,51 +510,79 @@ static inline void blur_line(gdouble* ctable, gdouble* cmatrix,
 	guchar  *dest_col_p;
 	gdouble *ctable_p;
 
-	/* for the edge condition, we only use available info and scale to one */
-	for (row = 0; row < cmatrix_middle; row++) {
-		/* find scale factor */
-		scale=0;
-		for (j = cmatrix_middle - row; j<cmatrix_length; j++)
-			scale += cmatrix[j];
-		for (i = 0; i<bytes; i++) {
-			sum = 0;
-			for (j = cmatrix_middle - row; j<cmatrix_length; j++) {
-				sum += cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
+
+	// this first block is the same as the non-optimized version --
+	// it is only used for very small pictures, so speed isn't a
+	// big concern.
+	if (cmatrix_length > y) {
+	
+		for (row = 0; row < y ; row++) {
+			scale=0;
+			// find the scale factor
+			for (j = 0; j < y ; j++) {
+				// if the index is in bounds, add it to the scale counter
+				if ((j + cmatrix_length/2 - row >= 0) &&
+				    (j + cmatrix_length/2 - row < cmatrix_length))
+					scale += cmatrix[j + cmatrix_length/2 - row];
 			}
-			dest_col[row*bytes + i] = (guchar)round2int(sum / scale);
-		}
-	}
-	/* go through each pixel in each col */
-	dest_col_p = dest_col + row*bytes;
-	for ( ; row < y-cmatrix_middle; row++) {
-		cur_col_p = (row - cmatrix_middle) * bytes + cur_col;
-		for (i = 0; i<bytes; i++) {
-			sum = 0;
-			cmatrix_p = cmatrix;
-			cur_col_p1 = cur_col_p;
-			ctable_p = ctable;
-			for (j = cmatrix_length; j>0; j--) {
-				sum += *(ctable_p + *cur_col_p1);
-				cur_col_p1 += bytes;
-				ctable_p += 256; /* * sizeof(gdouble); */
+			for (i = 0; i<bytes; i++) {
+				sum = 0;
+				for (j = 0; j < y; j++) {
+					if ( (j >= row - cmatrix_length/2) && (j <= row + cmatrix_length/2) )
+						sum += cur_col[j*bytes + i] * cmatrix[j];
+				}
+ 				dest_col[row*bytes + i] = (guchar)round2int(sum / scale);
 			}
-			cur_col_p++;
-			*(dest_col_p++) = round2int(sum);
 		}
 	}
 
-	/* for the edge condition , we only use available info, and scale to one */
-	for ( ; row < y; row++) {
-		/* find scale factor */
-		scale=0;
-		for (j = 0; j< y-row + cmatrix_middle; j++)
-			scale += cmatrix[j];
-		for (i = 0; i<bytes; i++) {
-			sum = 0;
-			for (j = 0; j<y-row + cmatrix_middle; j++) {
-				sum += cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
+	else {
+		// for the edge condition, we only use available info and scale to one
+		for (row = 0; row < cmatrix_middle; row++) {
+			// find scale factor
+			scale=0;
+			for (j = cmatrix_middle - row; j<cmatrix_length; j++)
+				scale += cmatrix[j];
+			for (i = 0; i<bytes; i++) {
+				sum = 0;
+				for (j = cmatrix_middle - row; j<cmatrix_length; j++) {
+					sum += cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
+				}
+				dest_col[row*bytes + i] = (guchar)round2int(sum / scale);
 			}
-			dest_col[row*bytes + i] = (guchar)round2int(sum / scale);
+		}
+		// go through each pixel in each col
+		dest_col_p = dest_col + row*bytes;
+		for ( ; row < y-cmatrix_middle; row++) {
+			cur_col_p = (row - cmatrix_middle) * bytes + cur_col;
+			for (i = 0; i<bytes; i++) {
+				sum = 0;
+				cmatrix_p = cmatrix;
+				cur_col_p1 = cur_col_p;
+				ctable_p = ctable;
+				for (j = cmatrix_length; j>0; j--) {
+					sum += *(ctable_p + *cur_col_p1);
+					cur_col_p1 += bytes;
+					ctable_p += 256;
+				}
+				cur_col_p++;
+				*(dest_col_p++) = round2int(sum);
+			}
+		}
+	
+		// for the edge condition , we only use available info, and scale to one
+		for ( ; row < y; row++) {
+			// find scale factor
+			scale=0;
+			for (j = 0; j< y-row + cmatrix_middle; j++)
+				scale += cmatrix[j];
+			for (i = 0; i<bytes; i++) {
+				sum = 0;
+				for (j = 0; j<y-row + cmatrix_middle; j++) {
+					sum += cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
+				}
+				dest_col[row*bytes + i] = (guchar)round2int(sum / scale);
+			}
 		}
 	}
 #endif
@@ -615,11 +611,14 @@ static gint gen_convolve_matrix(gdouble radius, gdouble** cmatrix_p) {
 	 * so we have to go the same amount in the other direction, but not count
 	 * the center pixel again.  So we double the previous result and subtract
 	 * one.
-	 * I lifted the formula for getting std_dev from radius from the gauss_rle
-	 * plug-in.  No, I don't understand why it is what it is.
+   * The radius parameter that is passed to this function is used as
+	 * the standard deviation, and the radius of effect is the
+	 * standard deviation * 2.  It's a little confusing.
 	 */
 	radius = fabs(radius) + 1.0;
-	std_dev = sqrt (-(radius * radius) / (2 * log (1.0 / 255.0)));
+	
+	std_dev = radius;
+	radius = std_dev * 2;
 
 	/* go out 'radius' in each direction */
 	matrix_length = 2 * ceil(radius-0.5) + 1;
@@ -634,6 +633,8 @@ static gint gen_convolve_matrix(gdouble radius, gdouble** cmatrix_p) {
 	 * center point.  Otherwise asymmetric quantization errors will occur.
 	 *  The formula to integrate is e^-(x^2/2s^2).
 	 */
+
+	/* first we do the top (right) half of matrix */
 	for (i=matrix_length/2 + 1; i<matrix_length; i++) {
 		double base_x = i - floor(matrix_length/2) - 0.5;
 		sum = 0;
@@ -674,7 +675,10 @@ static gint gen_convolve_matrix(gdouble radius, gdouble** cmatrix_p) {
 
 /* ----------------------- gen_lookup_table ----------------------- */
 /* generates a lookup table for every possible product of 0-255 and
-   each value in the convolution matrix */
+   each value in the convolution matrix.  The returned array is
+   indexed first by matrix position, then by input multiplicand (?)
+   value.
+*/
 static gdouble* gen_lookup_table(gdouble* cmatrix, gint cmatrix_length) {
 	int i, j;
 	gdouble* lookup_table = malloc(cmatrix_length * 256 * sizeof(gdouble));
@@ -708,15 +712,9 @@ static gdouble* gen_lookup_table(gdouble* cmatrix, gint cmatrix_length) {
 static gint unsharp_mask_dialog() {
 
 	GtkWidget *window;
-	GtkWidget *mainbox;
 	GtkWidget *table;
-	/* GtkWidget *label; */
-	/* GtkWidget *textentry; */
 	GtkWidget *button;
 
-	/* radius    = 0; */
-	/* amount    = 0; */
-	/* threshold = 0; */
 
 	gint    argc = 1;
 	gchar** argv = g_new(gchar*, 1);
@@ -731,8 +729,13 @@ static gint unsharp_mask_dialog() {
 	gtk_preview_set_install_cmap(gimp_install_cmap());
 	
 	/* create a new window */
-	window = gtk_window_new(GTK_WINDOW_DIALOG);
-	gtk_window_set_title(GTK_WINDOW(window), "Unsharp Mask");
+	window = gtk_dialog_new();
+	gtk_window_set_title(GTK_WINDOW(window), "Unsharp Mask " PLUG_IN_VERSION);
+	/* I have no idea what the following two lines do. 
+	   I took them from sharpen.c */
+	gtk_window_set_wmclass(GTK_WINDOW(window), "unsharp mask", "Gimp");
+	gtk_window_position(GTK_WINDOW(window), GTK_WIN_POS_MOUSE);
+	 
 
 	gtk_signal_connect (GTK_OBJECT (window), "delete_event",
 	                    GTK_SIGNAL_FUNC (unsharp_cancel_callback), NULL);
@@ -740,53 +743,53 @@ static gint unsharp_mask_dialog() {
 	gtk_signal_connect (GTK_OBJECT (window), "destroy",
 	                    GTK_SIGNAL_FUNC (unsharp_cancel_callback), NULL);
 
-
-
-	mainbox = gtk_vbox_new(FALSE, 4); /* create main container box */
-	gtk_container_add(GTK_CONTAINER(window), mainbox);
-
 	
-	table = gtk_table_new(3, 3, FALSE);  /* Make a 3x3 table in mainbox */
-	gtk_box_pack_start(GTK_BOX(mainbox), table, FALSE, FALSE, 0);
+
+	table = gtk_table_new(3, 3, FALSE);  //Make a 3x3 table in mainbox
+	gtk_box_pack_start(GTK_BOX( GTK_DIALOG(window)->vbox), table,
+	                   FALSE, FALSE, 0);
 	
 	
 
 	/* create each of the inputs */
-	dialog_create_value_f("Radius", GTK_TABLE(table), 1, &unsharp_params.radius,
-	                      0.1, 1, 1.0, 20.0);
-	dialog_create_value_f("Amount", GTK_TABLE(table), 2, &unsharp_params.amount,
-	                      0.01, 2, 0.01, 1.0);
-	dialog_create_value_f("Threshold", GTK_TABLE(table), 3, &unsharp_params.threshold,
-	                      0.01, 2, 0.01, 1.0);	
+	dialog_create_value_f("Radius:", GTK_TABLE(table), 1, &unsharp_params.radius,
+	                      0.1, 1, 1.0, 25.0);
+	dialog_create_value_f("Amount:", GTK_TABLE(table), 2, &unsharp_params.amount,
+	                      0.01, 2, 0.01, 5.0);
+	dialog_create_value_i("Threshold:", GTK_TABLE(table), 3, &unsharp_params.threshold,
+	                      1, 0, 255);
 
 	
 	/* show table */
 	gtk_widget_show(table);
 
 
-	table = gtk_table_new(1, 2, TRUE); /* Make a 2x1 table in mainbox for OK, Cancel */
-	gtk_box_pack_start(GTK_BOX(mainbox), table, FALSE, FALSE, 0);
+	/* OK and Cancel buttons */
+	gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(window)->action_area),2);
 
-		/* Make OK button */
+		// Make OK button
 		button = gtk_button_new_with_label("OK");
-		gtk_table_attach_defaults( GTK_TABLE(table), button, 0, 1, 0, 1);
+		GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
+		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->action_area), button,
+		                    TRUE, TRUE, 0);
 		gtk_signal_connect( GTK_OBJECT(button), "clicked",
 		                    GTK_SIGNAL_FUNC(unsharp_ok_callback), window);
+		gtk_widget_grab_default(button);
 		gtk_widget_show(button);
 
-		/* Make Cancel button */
+		// Make Cancel button
 		button = gtk_button_new_with_label("Cancel");
-		gtk_table_attach_defaults( GTK_TABLE(table), button, 1, 2, 0, 1);
+		GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
+		
+		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->action_area), button,
+		                    TRUE, TRUE, 0);
 		gtk_signal_connect ( GTK_OBJECT(button), "clicked",
 		                    GTK_SIGNAL_FUNC(unsharp_cancel_callback), NULL);
 		gtk_widget_show(button);
 
-	gtk_widget_show(table);
 	
 	
-	/* show the main container */
-	gtk_widget_show(mainbox);
-	/* and the window */
+	/* show the window */
 	gtk_widget_show (window);
 
 

@@ -7,6 +7,8 @@ libexec_PROGRAMS = unsharp
 unsharp_SOURCES = \
 	dialog_f.h	\
 	dialog_f.c	\
+	dialog_i.h	\
+	dialog_i.c	\
 	unsharp.c
 
 INCLUDES = \
