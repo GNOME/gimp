@@ -148,9 +148,7 @@ static GList    * gimp_stroke_real_get_draw_anchors  (const GimpStroke *stroke);
 static GList    * gimp_stroke_real_get_draw_controls (const GimpStroke *stroke);
 static GArray   * gimp_stroke_real_get_draw_lines    (const GimpStroke *stroke);
 
-static void       gimp_stroke_real_to_art_point      (const GimpStroke *vectors,
-                                                      ArtVpath         *vec);
-
+static void gimp_stroke_art_stroke  (const GimpStroke *stroke);
 
 /*  private variables  */
 
@@ -243,7 +241,7 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   klass->get_draw_controls       = gimp_stroke_real_get_draw_controls;
   klass->get_draw_lines          = gimp_stroke_real_get_draw_lines;
 
-  klass->to_art_point            = gimp_stroke_real_to_art_point;
+  klass->art_stroke              = gimp_stroke_art_stroke;
 }
 
 static void
@@ -1214,21 +1212,12 @@ gimp_stroke_real_get_draw_lines (const GimpStroke  *stroke)
 }
 
 
-
-void
-gimp_stroke_to_art_point (const GimpStroke *stroke,
-                          ArtVpath         *vec)
+static void
+gimp_stroke_art_stroke (const GimpStroke *stroke)
 {
   g_return_if_fail (GIMP_IS_STROKE (stroke));
 
-  GIMP_STROKE_GET_CLASS (stroke)->to_art_point (stroke, vec);
-}
-
-static void
-gimp_stroke_real_to_art_point (const GimpStroke *stroke,
-                               ArtVpath         *vec)
-{
-  g_printerr ("gimp_stroke_to_art_point: default implementation\n");
+  GIMP_STROKE_GET_CLASS (stroke)->art_stroke (stroke);
 
   return;
 }

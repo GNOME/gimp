@@ -950,37 +950,29 @@ gimp_vectors_real_make_bezier (const GimpVectors *vectors)
 }
 
 /*
- * gimp_vectors_to_art_vpath: Create an ArtVpath from a GimpVectors object.
+ * gimp_vectors_art_stroke: Stroke a GimpVectors object using libart.
  * @vectors: The source path
  *
- * Traverses the stroke list of a GimpVector object, adding nodes to an
- * ArtVpath as it goes.
- * The destination path is allocated inside this function, and must be
- * freed after use.
- *
- * Return value: Newly allocated ArtVpath.
+ * Traverses the stroke list of a GimpVector object, calling art_stroke 
+ * on each stroke as we go. Will eventually take cap type, join type 
+ * and width as arguments.
  */
-ArtVpath *
-gimp_vectors_to_art_vpath (const GimpVectors *vectors)
+void
+gimp_vectors_art_stroke (const GimpVectors *vectors)
 {
-  ArtVpath   *vec;          /* Libart path we're creating */
-  GimpStroke *cur_stroke;
-  guint       num_points;
+  GimpStroke *cur_stroke; 
 
-  num_points = g_list_length (vectors->strokes);
-
-  vec = art_new (ArtVpath, num_points);
-
-  /* Get the list of Strokes in the vector, and create the equivalent
-   * ArtVpath node */
+  /* For each Stroke in the vector, stroke it */
 
   for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
        cur_stroke;
        cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
     {
       /* Add this stroke to the art_vpath */
-      gimp_stroke_to_art_point (cur_stroke, vec);
+      GIMP_STROKE_GET_CLASS(cur_stroke)->art_stroke (cur_stroke);
     }
 
-  return vec;
+  /* That's it - nothing else to see here */
+  return;
+
 }

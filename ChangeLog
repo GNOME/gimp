@@ -1,3 +1,11 @@
+2003-09-07  Dave Neary  <bolsh@gimp.org>
+
+	* app/vectors/gimpvectors.[ch]
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpbezierstroke.c: Cleanup - removed libart 
+	from the included headers in the .h files, don't pass around 
+	libart objects any more. Still stub code. 
+
 2003-09-07  Sven Neumann  <sven@gimp.org>
 
 	* tools/gimp-remote.c: accept URLs with https protocol.
