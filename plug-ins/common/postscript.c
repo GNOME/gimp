@@ -62,10 +62,11 @@
  * V 1.12  PK, 19-Jun-2001: Fix problem with command line switch --
  *                          (reported by Ferenc Wagner)
  * V 1.13  PK, 07-Apr-2002: Fix problem with DOS binary EPS files
+ * V 1.14  PK, 14-May-2002: Workaround EPS files of Adb. Ill. 8.0
  */
-#define VERSIO 1.13
-static char dversio[] = "v1.13  07-Apr-2002";
-static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.13  07-Apr-2002";
+#define VERSIO 1.14
+static char dversio[] = "v1.14  14-May-2002";
+static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.14  14-May-2002";
 
 #include "config.h"
 
@@ -1272,7 +1273,7 @@ ps_open (gchar            *filename,
   int width, height, resolution;
   int x0, y0, x1, y1;
   int offx = 0, offy = 0;
-  int is_pdf;
+  int is_pdf, maybe_epsf = 0;
   int blank, anf, apo;
   char TextAlphaBits[64], GraphicsAlphaBits[64], geometry[32];
   char offset[32];
@@ -1297,27 +1298,23 @@ ps_open (gchar            *filename,
       is_pdf = (strncmp (hdr, "%PDF", 4) == 0);
 
       if (!is_pdf)  /* Check for EPSF */
-      {
-        char *adobe, *epsf;
-        int ds = 0;
-        static unsigned char doseps[5] = { 0xc5, 0xd0, 0xd3, 0xc6, 0 };
+      {char *adobe, *epsf;
+       int ds = 0;
+       static unsigned char doseps[5] = { 0xc5, 0xd0, 0xd3, 0xc6, 0 };
 
         hdr[sizeof(hdr)-1] = '\0';
         adobe = strstr (hdr, "PS-Adobe-");
         epsf = strstr (hdr, "EPSF-");
-
         if ((adobe != NULL) && (epsf != NULL))
           ds = epsf - adobe;
-
         *is_epsf = ((ds >= 11) && (ds <= 15));
+        /* Illustrator uses negative values in BoundingBox without marking */
+        /* files as EPSF. Try to handle that. */
+        maybe_epsf = (strstr (hdr, "%%Creator: Adobe Illustrator(R) 8.0") != 0);
 
-        /* Check DOS EPS binary file (bug #75667) */
+        /* Check DOS EPS binary file */
         if ((!*is_epsf) && (strncmp (hdr, (char *)doseps, 4) == 0))
-          *is_epsf = TRUE;
-
- 	/* special case for Illustrator brain damage (bug #81606) */
-        if ((!*is_epsf) && strstr (hdr, "%%Creator: Adobe Illustrator(R) 8.0"))
-          *is_epsf = TRUE;
+          *is_epsf = 1;
       }
       fclose (fd_popen);
     }
@@ -1326,6 +1323,9 @@ ps_open (gchar            *filename,
     {
       if (get_bbox (filename, &x0, &y0, &x1, &y1) == 0)
         {
+          if (maybe_epsf && ((x0 < 0) || (y0 < 0)))
+            *is_epsf = 1;
+
           if (*is_epsf)  /* Handle negative BoundingBox for EPSF */
             {
               offx = -x0; x1 += offx; x0 += offx;

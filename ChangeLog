@@ -1,5 +1,10 @@
 2002-05-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/ps.c: reverted the last change and applied a patch
+	from Peter Kirchgessner instead (closes reopened bug #81606).
+
+2002-05-14  Sven Neumann  <sven@gimp.org>
+
 	* app/core/core-types.h
 	* app/core/gimpdocuments.[ch]: made the list of recently used
 	images an object derived from GimpList that implements the
