@@ -1282,7 +1282,7 @@ gimp_channel_clear (GimpChannel *mask,
                     gboolean     push_undo)
 {
   PixelRegion maskPR;
-  guchar      bg = 0;
+  guchar      bg = TRANSPARENT_OPACITY;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
@@ -1320,7 +1320,7 @@ gimp_channel_all (GimpChannel *mask,
                   gboolean     push_undo)
 {
   PixelRegion maskPR;
-  guchar      bg = 255;
+  guchar      bg = OPAQUE_OPACITY;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
 

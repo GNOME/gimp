@@ -633,6 +633,20 @@ gimp_layer_create_mask (const GimpLayer *layer,
   GIMP_DRAWABLE (mask)->offset_x = GIMP_DRAWABLE (layer)->offset_x;
   GIMP_DRAWABLE (mask)->offset_y = GIMP_DRAWABLE (layer)->offset_y;
 
+  switch (add_mask_type)
+    {
+    case GIMP_ADD_WHITE_MASK:
+      gimp_channel_all (GIMP_CHANNEL (mask), FALSE);
+      return mask;
+
+    case GIMP_ADD_BLACK_MASK:
+      gimp_channel_clear (GIMP_CHANNEL (mask), FALSE);
+      return mask;
+
+    default:
+      break;
+    }
+
   pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles, 
 		     0, 0, 
 		     GIMP_DRAWABLE (mask)->width,
@@ -642,19 +656,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
   switch (add_mask_type)
     {
     case GIMP_ADD_WHITE_MASK:
-      {
-        guchar white_mask = OPAQUE_OPACITY;
-
-        color_region (&destPR, &white_mask);
-      }
-      break;
-
     case GIMP_ADD_BLACK_MASK:
-      {
-        guchar black_mask = TRANSPARENT_OPACITY;
-
-        color_region (&destPR, &black_mask);
-      }
       break;
 
     case GIMP_ADD_ALPHA_MASK:
@@ -672,9 +674,9 @@ gimp_layer_create_mask (const GimpLayer *layer,
     case GIMP_ADD_SELECTION_MASK:
     case GIMP_ADD_INVERSE_SELECTION_MASK:
       {
-        GimpDrawable *selection;
+        GimpChannel *selection;
 
-        selection = GIMP_DRAWABLE (gimage->selection_mask);
+        selection = gimp_image_get_mask (gimage);
 
         pixel_region_init (&srcPR, GIMP_DRAWABLE (selection)->tiles, 
                            GIMP_DRAWABLE (layer)->offset_x,
@@ -683,6 +685,9 @@ gimp_layer_create_mask (const GimpLayer *layer,
                            GIMP_DRAWABLE (layer)->height, 
                            FALSE);
         copy_region (&srcPR, &destPR);
+
+        if (! (selection->bounds_known && selection->empty))
+          GIMP_CHANNEL (mask)->bounds_known = FALSE;
       }
       break;
 
@@ -724,6 +729,8 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
         tile_manager_destroy (copy_tiles);
       }
+
+      GIMP_CHANNEL (mask)->bounds_known = FALSE;
     }
 
   switch (add_mask_type)

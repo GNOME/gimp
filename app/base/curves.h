@@ -20,15 +20,18 @@
 #define __CURVES_H__
 
 
-#define CURVES_SMOOTH 0
-#define CURVES_FREE   1
+typedef enum
+{
+  CURVES_SMOOTH,
+  CURVES_FREE,
+} CurvesType;
 
 
 struct _Curves
 {
-  gint   curve_type[5];
-  gint   points[5][17][2];
-  guchar curve[5][256];
+  CurvesType curve_type[5];
+  gint       points[5][17][2];
+  guchar     curve[5][256];
 };
 
 

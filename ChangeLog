@@ -1,3 +1,17 @@
+2002-08-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/curves.h: removed #defines and added enum CurvesType
+	instead.
+
+	* app/core/gimpchannel.c: use TRANSPARENT_OPACITY and
+	OPAQUE_OPACITY instead of 0 and 255.
+
+	* app/core/gimplayer.c (gimp_layer_create_mask): fixed inverse
+	layer mask creation by setting GIMP_CHANNEL(mask)->bounds_known to
+	FALSE correctly (fixes #90982). Also optimized mask creation
+	by calling gimp_channel_all() and gimp_channel_clear() for
+	white and black masks.
+
 2002-08-27  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/menus.c
@@ -46,7 +60,7 @@
 	to base/color-balance.c).
 
 	* app/tools/gimpimagemaptool.[ch]: added most code which was
-	diplicated in subclasses. Create the dialog here with a nice title
+	duplicated in subclasses. Create the dialog here with a nice title
 	bar including image preview and name (fixes #66033). Added virtual
 	functions map(), dialog() and reset() which need to be implemented
 	by subclasses.
