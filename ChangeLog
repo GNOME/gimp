@@ -1,5 +1,12 @@
 2003-02-21  Manish Singh  <yosh@gimp.org>
 
+	* configure.in: remove perl stuff
+
+	The actual code has been removed from CVS as well, and moved to the
+	gimp-perl module.
+
+2003-02-21  Manish Singh  <yosh@gimp.org>
+
 	* app/gui/about-dialog.c
 	* app/widgets/gimpimagefilepreview.c
 	* app/widgets/gimptoolbox-color-area.c: use gdk_draw_pixbuf with

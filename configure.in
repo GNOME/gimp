@@ -857,73 +857,6 @@ AC_SUBST(PRINT_LIBS)
 AC_SUBST(PRINT_CFLAGS)
 
 
-################
-# Check for perl
-################
-
-dnl This is for the gimp-perl plug-in
-AC_ARG_ENABLE(perl, [  --enable-perl           build perl extension [by default disabled]
-  --enable-perl[=prefix]  use specified prefix for perl (see INSTALL)], , enable_perl=no)
-
-AC_ARG_WITH(pdbgen, [  --with-pdbgen           use 'pdbgen' code generation tool],
-,
-with_pdbgen=$enable_maintainer_mode)
-
-if test "x$enable_perl" != xno || test "x$with_pdbgen" = xyes ; then
-   AC_PATH_PROGS(PERL,perl5 perl perl5.005 perl5.004,perl)
-fi
-
-AM_CONDITIONAL(WITH_PDBGEN, test x$with_pdbgen = xyes)
-AM_CONDITIONAL(WITH_AUTHORSGEN, test x$enable_maintainer_mode = xyes)
-
-
-rm -f plug-ins/perl/config.status
-
-if test "x$enable_perl" != xno; then
-   AC_MSG_CHECKING(for perl version >= 5.004_04)
-   if test "`$PERL -e 'print $]>=5.004_04'`" = "1"; then
-      AC_MSG_RESULT(yes)
-      
-      dnl perl does not allow VPATH builds (yet)
-      if test ! -f plug-ins/perl/Makefile.PL; then
-         mkdir plug-ins || true
-         cp -r $srcdir/plug-ins/perl plug-ins/perl
-      fi
-      
-      dnl these are gross hacks
-      GIMP_CFLAGS_NOUI="-I\$topdir/../.. $GLIB_CFLAGS $GTK_CFLAGS"
-      GIMP_CFLAGS="$GIMP_CFLAGS_NOUI"
-      GIMP_LIBS_NOUI="-L\$topdir/../../libgimp/.libs -L\$topdir/../../libgimp -lgimp-$LT_RELEASE -L\$topdir/../../libgimpcolor/.libs -L\$topdir/../../libgimpcolor -lgimpcolor-$LT_RELEASE -L\$topdir/../../libgimpbase/.libs -L\$topdir/../../libgimpbase -lgimpbase-$LT_RELEASE $GLIB_LIBS $LIBS"
-      GIMP_LIBS="$GIMP_LIBS_NOUI -lgimpui-$LT_RELEASE"
-      GIMPTOOL="../../gimptool-1.3"
-      IN_GIMP=1
-      EXTENSIVE_TESTS=0
-
-      dnl include the autoconf fragment from there
-      sinclude(plug-ins/perl/configure.frag)
-
-      dnl we ignore prefix
-      if test -n "$enable_perl" && test "x$enable_perl" != xyes; then
-         perl_prefix="PREFIX=$enable_perl"
-      fi
-      cat >plug-ins/perl/config.status <<EOF
-      echo invoking perl for configuration...
-      $PERL Makefile.PL --writemakefile $perl_prefix
-EOF
-      GIMP_PERL=perl
-      GIMP_PERL_PO=plug-ins/perl/po
-   else
-      GIMP_PERL=
-      GIMP_PERL_PO=
-      AC_MSG_RESULT(no)
-      AC_MSG_WARN(*** gimp-perl plug-in won't be build (perl5.004_04 or higher required) ***)
-   fi
-fi
-
-AC_SUBST(GIMP_PERL)
-AC_SUBST(GIMP_PERL_PO)
-
-
 ##################
 # Check for python
 ##################
@@ -1048,7 +981,7 @@ AC_ARG_ENABLE(debug, [  --enable-default-binary install this as the default gimp
 AM_CONDITIONAL(DEFAULT_BINARY, test x$enable_default_binary = xyes)
 
 
-dnl Possibly change default gimpdir from .gimp
+dnl Possibly change default gimpdir from .gimp-major.minor
 gimpdir=.$PACKAGE-$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
 AC_ARG_ENABLE(gimpdir, [  --enable-gimpdir=DIR    change default gimpdir from .gimp-1.3 to DIR],
 if eval "test x$enable_gimpdir != x"; then
@@ -1116,10 +1049,7 @@ AC_SUBST(GIMP_PLUGINS)
 AC_SUBST(GIMP_MODULES)
 
 dnl These are not built nor included in the tarball for the time being.
-dnl plug-ins/perl/config.pl
 dnl plug-ins/gap/Makefile
-dnl plug-ins/gdyntext/Makefile
-dnl plug-ins/perl/po/Makefile.in
 dnl plug-ins/plugin-helper/Makefile
 dnl plug-ins/tools/common/Makefile
 
@@ -1247,14 +1177,4 @@ Makefile
    sed -e "/POTFILES =/r po-libgimp/POTFILES" po-libgimp/Makefile.in > po-libgimp/Makefile
    sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile
    sed -e "/POTFILES =/r po-script-fu/POTFILES" po-script-fu/Makefile.in > po-script-fu/Makefile
-
-#   sed -e "/POTFILES =/r plug-ins/perl/po/POTFILES" plug-ins/perl/po/Makefile.in > plug-ins/perl/po/Makefile
-
-   case "$CONFIG_FILES" in
-   *plug-ins/perl*)
-      if test -f plug-ins/perl/config.status; then
-         ( cd plug-ins/perl; ${CONFIG_SHELL-/bin/sh} config.status )
-      fi
-      ;;
-   esac
 ])
