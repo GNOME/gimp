@@ -5,7 +5,7 @@
  *
  * Copyright (C) 1999 Winston Chang
  *                    <wchang3@students.wisc.edu>
- *                    <winston@steppe.com>
+ *                    <winston@stdout.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -174,7 +174,10 @@ query (void)
   /* Install a procedure in the procedure database. */
   gimp_install_procedure ("plug_in_unsharp_mask",
 			  "An unsharp mask filter",
-			  "",
+			  "The unsharp mask is a sharpening filter that \
+works by comparing using the difference of the image and a blurred version \
+of the image.  It is commonly used on photographic images, and is provides \
+a much more pleasing result than the standard sharpen filter.",
 			  "Winston Chang <wchang3@students.wisc.edu>",
 			  "Winston Chang",
 			  "1999",
@@ -286,11 +289,6 @@ unsharp_mask (GDrawable *drawable,
   /* Get the input */
   gimp_drawable_mask_bounds(drawable->id, &x1, &y1, &x2, &y2);
   gimp_progress_init(_("Blurring..."));
-
-  /* generate convolution matrix */
-  cmatrix_length = gen_convolve_matrix(radius, &cmatrix);
-  /* generate lookup table */
-  ctable = gen_lookup_table(cmatrix, cmatrix_length);
 
   width = drawable->width;
   height = drawable->height;
@@ -437,6 +435,9 @@ unsharp_region (GPixelRgn srcPR,
   g_free(dest_row);
   g_free(cur_col);
   g_free(dest_col);
+  g_free(cmatrix);
+  g_free(ctable);
+
 }
 
 /* this function is written as if it is blurring a column at a time,
@@ -681,7 +682,7 @@ gen_convolve_matrix (gdouble   radius,
   matrix_length = 2 * ceil(radius-0.5) + 1;
   if (matrix_length <= 0) matrix_length = 1;
   matrix_midpoint = matrix_length/2 + 1;
-  *cmatrix_p = (gdouble*)(malloc(matrix_length * sizeof(gdouble)));
+  *cmatrix_p = (gdouble*)(g_malloc(matrix_length * sizeof(gdouble)));
   cmatrix = *cmatrix_p;
 
   /*  Now we fill the matrix by doing a numeric integration approximation
@@ -739,7 +740,7 @@ gen_lookup_table (gdouble *cmatrix,
 		  gint     cmatrix_length)
 {
   int i, j;
-  gdouble* lookup_table = malloc(cmatrix_length * 256 * sizeof(gdouble));
+  gdouble* lookup_table = g_malloc(cmatrix_length * 256 * sizeof(gdouble));
 
 #ifdef READABLE_CODE
   for (i=0; i<cmatrix_length; i++)
