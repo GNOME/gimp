@@ -1,3 +1,15 @@
+2003-07-19  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpcolornotebook.c: added style properties
+	"tab_border" and "tab_icon_size" just as they exist for
+	GimpDockbook. Factored page creation out to the new
+	gimp_color_notebook_add_page() utility function.  Added fancy menu
+	items for the popup menu and translate them.
+
+	* etc/gtkrc_user
+	* themes/Default/gtkrc: use the same tab style for GimpDockbooks
+	and GimpColorNotebooks.
+
 2003-07-19  Dave Neary  <bolsh@gimp.org>
 
 	* app/paint/gimpclone.c: Fixed a mistake in the code which does

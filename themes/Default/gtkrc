@@ -43,7 +43,9 @@ style "gimp-default-style"
   GimpToolbox::tool_icon_size      = button
   GimpToolbox::button_relief       = none
   GimpDockbook::tab_border         = 0
-  GimpDockbook::tab_size           = button
+  GimpDockbook::tab_icon_size      = button
+  GimpColorNotebook::tab_border    = 0
+  GimpColorNotebook::tab_icon_size = button
   GimpDockable::content_border     = 2
   GimpEditor::content_spacing      = 2
   GimpEditor::button_spacing       = 2
