@@ -306,7 +306,7 @@ layer complete transparency, the layer's already existing alpha channel
 (which will leave the layer fully visible, but which may be more useful than
 a white mask), the current selection or a grayscale copy of the layer. The
 layer mask still needs to be added to the layer. This can be done with a call
-to 'gimp_image_add_layer_mask'.
+to 'gimp_layer_add_mask'.
 HELP
 
     &std_pdb_misc;

@@ -890,7 +890,7 @@ static ProcRecord layer_create_mask_proc =
 {
   "gimp_layer_create_mask",
   "Create a layer mask for the specified specified layer.",
-  "This procedure creates a layer mask for the specified layer. Layer masks serve as an additional alpha channel for a layer. A number of ifferent types of masks are allowed for initialisation: completely white masks (which will leave the layer fully visible), completely black masks (which will give the layer complete transparency, the layer's already existing alpha channel (which will leave the layer fully visible, but which may be more useful than a white mask), the current selection or a grayscale copy of the layer. The layer mask still needs to be added to the layer. This can be done with a call to 'gimp_image_add_layer_mask'.",
+  "This procedure creates a layer mask for the specified layer. Layer masks serve as an additional alpha channel for a layer. A number of ifferent types of masks are allowed for initialisation: completely white masks (which will leave the layer fully visible), completely black masks (which will give the layer complete transparency, the layer's already existing alpha channel (which will leave the layer fully visible, but which may be more useful than a white mask), the current selection or a grayscale copy of the layer. The layer mask still needs to be added to the layer. This can be done with a call to 'gimp_layer_add_mask'.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

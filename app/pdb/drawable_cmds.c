@@ -124,8 +124,8 @@ drawable_delete_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if (! gimp_item_get_image (GIMP_ITEM (drawable)))
-	g_object_unref (drawable);
+      if (gimp_item_is_floating (GIMP_ITEM (drawable)))
+	gimp_item_sink (GIMP_ITEM (drawable));
       else
 	success = FALSE;
     }

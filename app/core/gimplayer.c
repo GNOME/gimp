@@ -962,6 +962,8 @@ gimp_layer_add_mask (GimpLayer     *layer,
     }
 
   layer->mask = g_object_ref (mask);
+  gimp_item_sink (GIMP_ITEM (layer->mask));
+
   gimp_layer_mask_set_layer (mask, layer);
 
   if (mask->apply_mask || mask->show_mask)

@@ -1,5 +1,36 @@
 2003-12-09  Michael Natterer  <mitch@gimp.org>
 
+	Fixed memory management of layers and channels which were created
+	using the PDB:
+
+	* app/core/gimpitem.[ch]: added "gboolean floating" flag to
+	GimpItem. Items are created with floating == TRUE. Added
+	gimp_item_sink() which resets the floating flag and unrefs the
+	item if it was TRUE.  Added gimp_item_is_floating() accessor.
+
+	* app/core/gimpimage.c (gimp_image_add_layer,channel,vectors):
+	g_object_ref()/gimp_item_sink() added items to take ownership of
+	them.
+
+	* app/core/gimplayer.c (gimp_layer_add_mask):
+	g_object_ref()/gimp_item_sink() the mask.
+
+	* app/gui/layers-commands.c
+	* app/xcf/xcf-load.c: don't unref layer masks after adding them to
+	the layer.
+
+	* tools/pdbgen/pdb/drawable.pdb (drawable_delete):
+	gimp_item_sink() the drawable if it's floating and fail if it's
+	not. Fixes bug #128881.
+
+	* tools/pdbgen/pdb/layer.pdb (layer_create_mask): fixed docs.
+
+	* app/pdb/drawable_cmds.c
+	* app/pdb/layer_cmds.c
+	* libgimp/gimplayer_pdb.c: regenerated.
+
+2003-12-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-enums.[ch]: removed enum value
 	GIMP_UNDO_GROUP_EDIT_COPY (I have no idea why we used to push an
 	undo group around "Copy"...).

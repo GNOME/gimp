@@ -396,7 +396,7 @@ gimp_layer_set_offsets (gint32 layer_ID,
  * fully visible, but which may be more useful than a white mask), the
  * current selection or a grayscale copy of the layer. The layer mask
  * still needs to be added to the layer. This can be done with a call
- * to 'gimp_image_add_layer_mask'.
+ * to 'gimp_layer_add_mask'.
  *
  * Returns: The newly created mask.
  */

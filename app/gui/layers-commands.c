@@ -936,7 +936,6 @@ add_mask_query_response (GtkWidget      *widget,
             gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
 
           gimp_layer_add_mask (layer, mask, TRUE);
-          g_object_unref (mask);
 
           gimp_image_undo_group_end (gimage);
 

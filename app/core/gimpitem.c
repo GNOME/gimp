@@ -207,6 +207,7 @@ gimp_item_init (GimpItem *item)
   item->offset_y  = 0;
   item->visible   = TRUE;
   item->linked    = FALSE;
+  item->floating  = TRUE;
 }
 
 static void
@@ -381,6 +382,27 @@ gimp_item_real_resize (GimpItem *item,
   item->offset_y = item->offset_y - offset_y;
   item->width    = new_width;
   item->height   = new_height;
+}
+
+gboolean
+gimp_item_is_floating (const GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return item->floating;
+}
+
+void
+gimp_item_sink (GimpItem *item)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  if (item->floating)
+    {
+      item->floating = FALSE;
+
+      g_object_unref (item);
+    }
 }
 
 void

@@ -969,6 +969,9 @@ gimp_image_new (Gimp              *gimp,
   gimage->selection_mask = gimp_selection_new (gimage,
                                                gimage->width,
                                                gimage->height);
+  g_object_ref (gimage->selection_mask);
+  gimp_item_sink (GIMP_ITEM (gimage->selection_mask));
+
   g_signal_connect (gimage->selection_mask, "update",
                     G_CALLBACK (gimp_image_mask_update),
                     gimage);
@@ -2498,7 +2501,7 @@ gimp_image_add_layer (GimpImage *gimage,
     position = gimp_container_num_children (gimage->layers);
 
   gimp_container_insert (gimage->layers, GIMP_OBJECT (layer), position);
-  g_object_unref (layer);
+  gimp_item_sink (GIMP_ITEM (layer));
 
   /*  notify the layers dialog of the currently active layer  */
   gimp_image_set_active_layer (gimage, layer);
@@ -2756,6 +2759,9 @@ gimp_image_add_channel (GimpImage   *gimage,
       return FALSE;
     }
 
+  /*  let the channel know about the gimage  */
+  gimp_item_set_image (GIMP_ITEM (channel), gimage);
+
   gimp_image_undo_push_channel_add (gimage, _("Add Channel"),
                                     channel, 0,
                                     gimp_image_get_active_channel (gimage));
@@ -2783,7 +2789,7 @@ gimp_image_add_channel (GimpImage   *gimage,
     position = gimp_container_num_children (gimage->channels);
 
   gimp_container_insert (gimage->channels, GIMP_OBJECT (channel), position);
-  g_object_unref (channel);
+  gimp_item_sink (GIMP_ITEM (channel));
 
   /*  notify this gimage of the currently active channel  */
   gimp_image_set_active_channel (gimage, channel);
@@ -2973,7 +2979,7 @@ gimp_image_add_vectors (GimpImage   *gimage,
     position = gimp_container_num_children (gimage->vectors);
 
   gimp_container_insert (gimage->vectors, GIMP_OBJECT (vectors), position);
-  g_object_unref (vectors);
+  gimp_item_sink (GIMP_ITEM (vectors));
 
   /*  notify this gimage of the currently active vectors  */
   gimp_image_set_active_vectors (gimage, vectors);

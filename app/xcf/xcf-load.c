@@ -683,6 +683,9 @@ xcf_load_channel_props (XcfInfo      *info,
             gimp_selection_new (gimage,
                                 gimp_item_width (GIMP_ITEM (*channel)),
                                 gimp_item_height (GIMP_ITEM (*channel)));
+          g_object_ref (gimage->selection_mask);
+          gimp_item_sink (GIMP_ITEM (gimage->selection_mask));
+
           tile_manager_unref (GIMP_DRAWABLE (gimage->selection_mask)->tiles);
           GIMP_DRAWABLE (gimage->selection_mask)->tiles =
             GIMP_DRAWABLE (*channel)->tiles;
@@ -867,7 +870,6 @@ xcf_load_layer (XcfInfo   *info,
       GIMP_ITEM (layer_mask)->offset_y = GIMP_ITEM (layer)->offset_y;
 
       gimp_layer_add_mask (layer, layer_mask, FALSE);
-      g_object_unref (layer_mask);
 
       layer->mask->apply_mask = apply_mask;
       layer->mask->edit_mask  = edit_mask;
