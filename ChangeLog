@@ -1,3 +1,9 @@
+Thu Jun 11 00:34:51 1998  Owen Taylor  <otaylor@gtk.org>
+
+        * app/color_area.c (color_area_events): Create/resize
+        the pixmap on every expose CONFIGURE event, not just
+        on the first expose event.
+
 Tue Jun  9 11:22:32 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* updated pagecurl plug-in
