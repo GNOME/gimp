@@ -1,3 +1,8 @@
+Sun Mar 15 14:50:21 CST 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/fileops.c (file_save_as_callback): fixed file Save As
+	cancel callback to use gtk_signal_connect_object. 
+
 Sun Mar 15 13:37:22 MET 1998 Sven Neumann <sven@gimp.org>
 	
 	* libgimp/gimpwire.c: applied Raphael Quinet's patch that
