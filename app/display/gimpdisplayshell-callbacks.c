@@ -470,8 +470,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   GimpCoords       image_coords;
   GdkModifierType  state;
   guint32          time;
-  gboolean         return_val    = FALSE;
-  gboolean         update_cursor = FALSE;
+  gboolean         return_val            = FALSE;
+  gboolean         update_cursor         = FALSE;
+  gboolean         force_cursor_updating = FALSE;
 
   static GimpToolInfo *space_shaded_tool  = NULL;
 
@@ -639,6 +640,11 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             tool_manager_oper_update_active (gimp,
                                              &image_coords, state,
                                              gdisp);
+
+            /*  call the tool's update_cursor() method even though
+             *  GDK_BUTTON1_MASK is set
+             */
+            force_cursor_updating = TRUE;
 
             shell->button_press_before_focus = TRUE;
 
@@ -1245,9 +1251,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         {
           if ((! gimp_image_is_empty (gimage) ||
                gimp_tool_control_handles_empty_image (active_tool->control)) &&
-              ! (state & (GDK_BUTTON1_MASK |
-                          GDK_BUTTON2_MASK |
-                          GDK_BUTTON3_MASK)))
+              (force_cursor_updating ||
+               ! (state & (GDK_BUTTON1_MASK |
+                           GDK_BUTTON2_MASK |
+                           GDK_BUTTON3_MASK))))
             {
               tool_manager_cursor_update_active (gimp,
                                                  &image_coords, state,
