@@ -5,8 +5,17 @@ PKG_VER = 1.3
 !INCLUDE $(TOP)\glib\build\win32\make.msc
 
 # in required build order
-SUBDIRS = libgimpbase libgimpcolor libgimpmath libgimpwidgets libgimp \
-		regexrepl app plug-ins modules
+# ./themes gets extra handling below
+SUBDIRS = \
+	libgimpbase \
+	libgimpcolor \
+	libgimpmath \
+	libgimpwidgets \
+	libgimp \
+	regexrepl \
+	app \
+	plug-ins \
+	modules
 
 sub-all: 
 	for %d in ($(SUBDIRS)) do nmake -nologo -f makefile.msc sub-one THIS=%d

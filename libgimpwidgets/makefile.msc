@@ -37,23 +37,24 @@ install : all
 	$(INSTALL) gimpmath-$(GIMP_VER).dll $(BIN)
 
 OBJECTS = \
-	gimpwidgetsmarshal.obj \
 	gimpbutton.obj \
 	gimpchainbutton.obj \
 	gimpcolorarea.obj \
+	gimpcolorbutton.obj \
 	gimpdialog.obj \
 	gimpfileselection.obj \
+	gimphelpui.obj \
+	gimpoffsetarea.obj \
 	gimppatheditor.obj \
 	gimppixmap.obj \
 	gimpquerybox.obj \
-	gimpwidgets.obj \
-	gimpcolorbutton.obj \
-	gimphelpui.obj \
 	gimpsizeentry.obj \
 	gimpstock.obj \
 	gimpunitmenu.obj \
-	gimpoffsetarea.obj \
+	gimpwidgets.obj \
+	gimpwidgetsmarshal.obj \
 	libgimp-glue.obj
+
 
 gimpwidgetsmarshal.h : gimpwidgetsmarshal.list
 	$(GLIB)\gobject\glib-genmarshal --prefix=_gimp_widgets_marshal gimpwidgetsmarshal.list --header >gimpwidgetsmarshal.h

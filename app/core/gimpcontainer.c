@@ -28,6 +28,10 @@
 
 #include <glib-object.h>
 
+#ifdef G_OS_WIN32
+#include <io.h>
+#endif
+
 #include "core-types.h"
 
 #include "gimp.h"
@@ -42,9 +46,9 @@
 /* #define DEBUG_CONTAINER */
 
 #ifdef DEBUG_CONTAINER
-#define DEBUG(...) g_print(...)
+#define D(stmnt) stmnt
 #else
-#define DEBUG(...)
+#define D(stmnt)
 #endif
 
 
@@ -922,7 +926,7 @@ gimp_container_add_handler (GimpContainer *container,
   handler->callback_data = callback_data;
   handler->quark         = g_quark_from_string (key);
 
-  DEBUG ("%s: key = %s, id = %d\n", G_GNUC_FUNCTION, key, handler->quark);
+  D (g_print ("%s: key = %s, id = %d\n", G_GNUC_FUNCTION, key, handler->quark));
 
   g_free (key);
 
@@ -978,7 +982,7 @@ gimp_container_remove_handler (GimpContainer *container,
       return;
     }
 
-  DEBUG ("%s: id = %d\n", G_GNUC_FUNCTION, handler->quark);
+  D (g_print ("%s: id = %d\n", G_GNUC_FUNCTION, handler->quark));
 
   gimp_container_foreach (container,
 			  (GFunc) gimp_container_remove_handler_foreach_func,

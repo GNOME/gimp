@@ -1860,7 +1860,10 @@ void initworld(void)
   s.a.x = s.a.y = s.a.z = 0.0;
   s.r = 4.0;
 
-  world.obj[0] = s;
+  /* not: world.obj[0] = s; 
+   * s is a sphere so error C2115: '=' : incompatible types
+   */
+  memcpy(&world.obj[0], &s, sizeof(s));
   world.numobj = 1;
 
   world.obj[0].com.numtexture = 0;
@@ -1888,7 +1891,7 @@ void initworld(void)
       vcopy(&l.a, &t->translate);
       vcopy(&l.color, &t->color1);
       vmul(&l.color, t->amount);
-      world.light[world.numlight = l;
+      world.light[world.numlight] = l;
       world.numlight++;
     }
   }

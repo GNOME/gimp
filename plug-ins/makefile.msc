@@ -320,6 +320,7 @@ OBJECTS = \
 	imap_cmd_delete.obj \
 	imap_cmd_delete_point.obj \
 	imap_cmd_edit_object.obj \
+	imap_cmd_gimp_guides.obj \
 	imap_cmd_guides.obj \
 	imap_cmd_insert_point.obj \
 	imap_cmd_move.obj \
@@ -365,6 +366,7 @@ OBJECTS = \
 	imap_settings.obj \
 	imap_source.obj \
 	imap_statusbar.obj \
+	imap_stock.obj \
 	imap_string.obj \
 	imap_table.obj \
 	imap_toolbar.obj \
@@ -661,6 +663,8 @@ OBJECTS = $(MODULE).obj
 $(MODULE).$(MODULE_EXT) : $(OBJECTS) $(MODULE).def
 	$(CC) $(CFLAGS) -LD -Fe$@ $(OBJECTS) $(LDFLAGS) $(EXTRALIBS) \
 	..\..\libgimp\gimp-$(GIMP_VER).lib ..\..\libgimp\gimpui-$(GIMP_VER).lib \
+	..\..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
+	..\..\libgimpbase\gimpbase-$(GIMP_VER).lib \
 	$(GLIB_LIBS) $(GTK2_LIBS) /def:$(MODULE).def
 !ENDIF
 

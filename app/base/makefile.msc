@@ -18,13 +18,18 @@ OBJECTS = \
 	base-enums.obj \
 	boundary.obj \
 	brush-scale.obj \
+	color-balance.obj \
+	curves.obj \
 	gimphistogram.obj \
 	gimplut.obj \
+	hue-saturation.obj \
+	levels.obj \
 	lut-funcs.obj \
 	pixel-processor.obj \
 	pixel-region.obj \
 	pixel-surround.obj \
 	temp-buf.obj \
+	threshold.obj \
 	tile.obj \
 	tile-cache.obj \
 	tile-manager.obj \

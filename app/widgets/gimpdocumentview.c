@@ -29,7 +29,9 @@
 
 #include "widgets-types.h"
 
+#ifdef __GNUC__
 #warning FIXME #include "display/display-types.h"
+#endif
 #include "display/display-types.h"
 
 #include "core/gimp.h"

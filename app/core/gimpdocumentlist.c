@@ -25,6 +25,10 @@
 
 #include <glib-object.h>
 
+#ifdef G_OS_WIN32
+#include <io.h>
+#endif
+
 #include "core-types.h"
 
 #include "config/gimpconfig.h"

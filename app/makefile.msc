@@ -74,7 +74,6 @@ mmx_sources = \
 OBJECTS = \
 	ops_buttons.obj \
 	undo_history.obj \
-	image_map.obj \
 	general.obj \
 	gimprc.obj \
 	path.obj \

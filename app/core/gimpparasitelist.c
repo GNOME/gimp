@@ -24,6 +24,10 @@
 
 #include <glib-object.h>
 
+#ifdef G_OS_WIN32
+#include <io.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"

@@ -12,10 +12,16 @@ LT_RELEASE = $(PKG_VER)
 
 PKG_LINK = \
 	$(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS) \
+	$(top_builddir)/libgimpbase/gimpbase-$(LT_RELEASE).lib \
+	$(top_builddir)/libgimpcolor/gimpcolor-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpwidgets/gimpwidgets-$(LT_RELEASE).lib \
 	..\base\appbase-$(PKG_VER).lib \
 	..\core\appcore-$(PKG_VER).lib \
+	..\file\appfile-$(PKG_VER).lib \
+	..\pdb\apppdb-$(PKG_VER).lib \
+	..\vectors\appvectors-$(PKG_VER).lib \
 	..\paint-funcs\apppaint-funcs-$(PKG_VER).lib \
+	..\display\appdisplay-$(PKG_VER).lib \
 	..\widgets\appwidgets-$(PKG_VER).lib \
 
 OBJECTS = \

@@ -332,7 +332,7 @@ load_image (gchar *filename)
   PIX_DEBUG_PRINT ("Opening file: %s\n", filename);
 
   /* Open the file */
-  file = fopen (filename, "r");
+  file = fopen (filename, "rb");
   if (NULL == file)
     {
       return -1;

@@ -23,6 +23,7 @@ PKG_LINK = \
 	..\widgets\appwidgets-$(PKG_VER).lib \
 
 OBJECTS = \
+#	tools-enums.obj \
 	tools.obj \
 	gimpairbrushtool.obj \
 	gimpbezierselecttool.obj \
@@ -32,7 +33,6 @@ OBJECTS = \
 	gimpbycolorselecttool.obj \
 	gimpclonetool.obj \
 	gimpcolorbalancetool.obj \
-	gimpcolorbalancetool-transfer.obj \
 	gimpcolorpickertool.obj \
 	gimpconvolvetool.obj \
 	gimpcroptool.obj \

@@ -1,3 +1,48 @@
+2002-09-06  Hans Breuer  <hans@breuer.org>
+
+	* */*/makefile.msc : updated
+
+	* libgimptool/makefile.msc : new file, libgimptool
+	is currently build as static lib due to references
+	into app/core
+
+	* themes/Default/makefile.msc : removed
+	* themes/Default/images/makefile.msc : new file
+
+	* libgimpwidgets/makefile.msc libgimpwidgets/gimpwidgets.c
+	updated (externals)
+
+	* app/paint-funcs.c : replaced gccism varibale size array on
+	stack with portable alloca, removed sizeof(buf) check which 
+	must fail now.
+	
+	* app/config/gimpconfig.c : get write/close protos
+	on win32 from io.h
+	* app/config/gimprc.c : dito and <string.h>
+	* app/config/gimpscanner.c : <string.h> only
+
+	* app/core/gimpcontainer.c : workaround for clumsy 
+	compilers not supporting vararg macros
+
+	* app/core/gimpdocumentlist.c app/core/gimpparasitelist.c
+	include <io.h> on win32
+
+	* app/widgets/gimpdocumentview.c 
+	  app/widgets/gimpimagedock.c
+	  app/widgets/gimppreview.c : add #ifdef __GNUC__
+	to avoid breaking on non standard pragma #warning.
+
+	* app/gui/session.c : include <string.h>
+
+	* regexrepl/makefile.msc : build as dll
+
+	* plug-ins/makefile.msc : updated
+
+	* plug-ins/common/pix.c : open file binary
+
+	* plug-ins/common/spheredesigner.c : avoid error
+	'incompatible types' while assigning, use memcpy()
+
 2002-09-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/convert-dialog.c: changed "Number of Colors" to

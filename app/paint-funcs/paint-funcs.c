@@ -4190,22 +4190,20 @@ initial_sub_region (struct initial_regions_struct *st,
 {
   gint                  h;
   guchar               *s, *d, *m;
-  guchar                buf[MAX (src->w * (src->bytes + 1),
-                                 dest->w * dest->bytes)];
+  guchar               *buf;
   guchar               *data;
   guint                 opacity;
   GimpLayerModeEffects  mode;
   gboolean             *affect;
   InitialMode           type;
 
+  buf = alloca (MAX (src->w * (src->bytes + 1),
+                     dest->w * dest->bytes));
   data    = st->data;
   opacity = st->opacity;
   mode    = st->mode;
   affect  = st->affect;
   type    = st->type;
-
-  if (src->w * (src->bytes + 1) > sizeof (buf))
-    g_error ("initial_sub_region:: error :: src->w * (src->bytes + 1) > sizeof (buf)");
 
   s = src->data;
   d = dest->data;
@@ -4350,13 +4348,14 @@ combine_sub_region (struct combine_regions_struct *st,
   guint                 mode_affect = 0;
   guchar               *s, *s1, *s2;
   guchar               *d, *m;
-  guchar                buf[MAX (MAX (src1->w * src1->bytes,
-                                      src2->w * src2->bytes),
-                                 dest->w * dest->bytes)];
+  guchar               *buf;
   gboolean              opacity_quickskip_possible;
   gboolean              transparency_quickskip_possible;
   TileRowHint           hint;
 
+  buf = alloca (MAX (MAX (src1->w * src1->bytes,
+                          src2->w * src2->bytes),
+                     dest->w * dest->bytes));
   opacity    = st->opacity;
   mode       = st->mode;
   affect     = st->affect;
@@ -4372,9 +4371,6 @@ combine_sub_region (struct combine_regions_struct *st,
   s2 = src2->data;
   d = dest->data;
   m = (mask) ? mask->data : NULL;
-
-  if (src1->w * src1->bytes > sizeof (buf))
-    g_error ("combine_sub_region::src1->w * src1->bytes > sizeof (buf)");
 
   if (transparency_quickskip_possible || opacity_quickskip_possible)
     {

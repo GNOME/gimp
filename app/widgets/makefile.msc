@@ -12,10 +12,14 @@ LT_RELEASE = $(PKG_VER)
 
 PKG_LINK = \
 	$(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS) \
+	$(top_builddir)/libgimpbase/gimpbase-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpcolor/gimpcolor-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpwidgets/gimpwidgets-$(LT_RELEASE).lib \
 	..\base\appbase-$(PKG_VER).lib \
 	..\core\appcore-$(PKG_VER).lib \
+	..\config\appconfig-$(PKG_VER).lib \
+	..\file\appfile-$(PKG_VER).lib \
+	..\pdb\apppdb-$(PKG_VER).lib \
 #	..\gui\appgui-$(PKG_VER).lib
 
 OBJECTS = \
@@ -75,11 +79,13 @@ OBJECTS = \
 	gimppatternpreview.obj \
 	gimppreview.obj \
 	gimppreview-utils.obj \
+	gimpselectioneditor.obj \
 	gimptoolbox.obj \
 	gimptoolbox-color-area.obj \
 	gimptoolbox-indicator-area.obj \
 	gimptoolinfopreview.obj \
 	gimpvectorslistview.obj \
+	gimpviewabledialog.obj \
 	gimpwidgets-constructors.obj \
 	gimpwidgets-utils.obj \
 	gtkwrapbox.obj \

@@ -32,6 +32,7 @@ EXPORTS
 	gimp_brushes_set_popup
 	gimp_bucket_fill
 	gimp_by_color_select
+	gimp_channel_combine_masks
 	gimp_channel_copy
 	gimp_channel_delete
 	gimp_channel_get_color
@@ -41,15 +42,14 @@ EXPORTS
 	gimp_channel_get_tattoo
 	gimp_channel_get_visible
 	gimp_channel_new
-;	gimp_channel_ops_duplicate
 	gimp_channel_set_color
 	gimp_channel_set_name
 	gimp_channel_set_opacity
 	gimp_channel_set_show_masked
+	gimp_channel_set_tattoo
 	gimp_channel_set_visible
 	gimp_clone
 	gimp_clone_default
-;	gimp_color_cube
 	gimp_color_picker
 	gimp_convert_grayscale
 	gimp_convert_indexed
@@ -86,13 +86,16 @@ EXPORTS
 	gimp_drawable_mask_bounds
 	gimp_drawable_merge_shadow
 	gimp_drawable_name
+	gimp_drawable_offset
 	gimp_drawable_offsets
 	gimp_drawable_parasite_attach
 	gimp_drawable_parasite_detach
 	gimp_drawable_parasite_find
+	gimp_drawable_parasite_list
 	gimp_drawable_set_name
 	gimp_drawable_set_visible
 	gimp_drawable_type
+	gimp_drawable_type_with_alpha
 	gimp_drawable_update
 	gimp_drawable_visible
 	gimp_drawable_width
@@ -134,6 +137,7 @@ EXPORTS
 	gimp_gradients_set_gradient
 	gimp_gradients_set_popup
 	gimp_help
+	gimp_image_active_drawable
 	gimp_image_add_channel
 	gimp_image_add_hguide
 	gimp_image_add_layer
@@ -148,7 +152,9 @@ EXPORTS
 	gimp_image_duplicate
 	gimp_image_find_next_guide
 	gimp_image_flatten
+	gimp_image_floating_sel_attached_to
 	gimp_image_floating_selection
+	gimp_image_free_shadow
 	gimp_image_get_active_channel
 	gimp_image_get_active_layer
 	gimp_image_get_channel_by_tattoo
@@ -164,24 +170,30 @@ EXPORTS
 	gimp_image_get_name
 	gimp_image_get_resolution
 	gimp_image_get_selection
+	gimp_image_get_tattoo_state
 	gimp_image_get_thumbnail_data
 	gimp_image_get_unit
 	gimp_image_height
 	gimp_image_list
 	gimp_image_lower_channel
 	gimp_image_lower_layer
+	gimp_image_lower_layer_to_bottom
+	gimp_image_merge_down
 	gimp_image_merge_visible_layers
 	gimp_image_new
 	gimp_image_parasite_attach
 	gimp_image_parasite_detach
 	gimp_image_parasite_find
+	gimp_image_parasite_list
 	gimp_image_pick_correlate_layer
 	gimp_image_raise_channel
 	gimp_image_raise_layer
+	gimp_image_raise_layer_to_top
 	gimp_image_remove_channel
 	gimp_image_remove_layer
 	gimp_image_remove_layer_mask
 	gimp_image_resize
+	gimp_image_scale
 	gimp_image_set_active_channel
 	gimp_image_set_active_layer
 	gimp_image_set_cmap
@@ -189,11 +201,14 @@ EXPORTS
 	gimp_image_set_component_visible
 	gimp_image_set_filename
 	gimp_image_set_resolution
+	gimp_image_set_tattoo_state
 	gimp_image_set_unit
 	gimp_image_undo_disable
 	gimp_image_undo_enable
 	gimp_image_undo_freeze
+	gimp_image_undo_is_enabled
 	gimp_image_undo_thaw
+	gimp_image_unset_active_channel
 	gimp_image_width
 	gimp_install_cmap
 	gimp_install_procedure
@@ -205,6 +220,7 @@ EXPORTS
 	gimp_layer_delete
 	gimp_layer_get_apply_mask
 	gimp_layer_get_edit_mask
+	gimp_layer_get_linked
 	gimp_layer_get_mode
 	gimp_layer_get_name
 	gimp_layer_get_opacity
@@ -219,12 +235,14 @@ EXPORTS
 	gimp_layer_scale
 	gimp_layer_set_apply_mask
 	gimp_layer_set_edit_mask
+	gimp_layer_set_linked
 	gimp_layer_set_mode
 	gimp_layer_set_name
 	gimp_layer_set_offsets
 	gimp_layer_set_opacity
 	gimp_layer_set_preserve_trans
 	gimp_layer_set_show_mask
+	gimp_layer_set_tattoo
 	gimp_layer_set_visible
 	gimp_layer_translate
 	gimp_main
@@ -242,6 +260,7 @@ EXPORTS
 	gimp_parasite_attach
 	gimp_parasite_detach
 	gimp_parasite_find
+	gimp_parasite_list
 	gimp_path_delete
 	gimp_path_get_current
 	gimp_path_get_locked
@@ -322,3 +341,4 @@ EXPORTS
 	gimp_unit_get_factor
 	gimp_version
 	set_gimp_PLUG_IN_INFO_PTR
+
