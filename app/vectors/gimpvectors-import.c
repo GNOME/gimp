@@ -46,6 +46,11 @@ typedef enum
   PARSER_IN_UNKNOWN
 } ParserState;
 
+typedef struct
+{
+  gint x, y;
+  gint w, h;
+} Rectangle;
 
 typedef struct
 {
@@ -53,6 +58,7 @@ typedef struct
   ParserState   last_known_state;
   gint          unknown_depth;
   GimpVectors  *vectors;
+  Rectangle     viewbox;
 } VectorsParser;
 
 
@@ -70,6 +76,8 @@ static void  parser_end_element   (GMarkupParseContext  *context,
 static void  parser_start_unknown (VectorsParser        *parser);
 static void  parser_end_unknown   (VectorsParser        *parser);
 
+static void  parse_svg_viewbox    (VectorsParser        *parser,
+                                   const gchar          *value);
 static void  parse_path_data      (VectorsParser        *parser,
                                    const gchar          *data);
 
@@ -108,6 +116,8 @@ gimp_vectors_import (GimpImage    *image,
       return NULL;
     }
 
+  memset (&parser, 0, sizeof (VectorsParser));
+
   parser.state   = PARSER_START;
   parser.vectors = gimp_vectors_new (image, _("Imported Path"));
 
@@ -122,6 +132,24 @@ gimp_vectors_import (GimpImage    *image,
 
   fclose (file);
   g_markup_parse_context_free (context);
+
+  if (parser.viewbox.w && parser.viewbox.h)
+    {
+      GList   *list;
+      gdouble  scale_x, scale_y;
+
+      scale_x = (gdouble) image->width  / (gdouble) parser.viewbox.w;
+      scale_y = (gdouble) image->height / (gdouble) parser.viewbox.h;
+
+      for (list = parser.vectors->strokes; list; list = list->next)
+        {
+          GimpStroke *stroke = (GimpStroke *) list->data;
+
+          gimp_stroke_scale (stroke,
+                             scale_x, scale_y,
+                             - parser.viewbox.x, - parser.viewbox.y);
+        }
+    }
 
   return parser.vectors;
 }
@@ -158,8 +186,20 @@ parser_start_element (GMarkupParseContext *context,
       break;
     }
 
-  if (parser->state == PARSER_IN_PATH)
+  switch (parser->state)
     {
+    case PARSER_IN_SVG:
+      while (*attribute_names)
+        {
+          if (strcmp (*attribute_names, "viewBox") == 0)
+            parse_svg_viewbox (parser, *attribute_values);
+
+          attribute_names++;
+          attribute_values++;
+        }
+      break;
+
+    case PARSER_IN_PATH:
       while (*attribute_names)
         {
           if (strcmp (*attribute_names, "d") == 0)
@@ -168,6 +208,10 @@ parser_start_element (GMarkupParseContext *context,
           attribute_names++;
           attribute_values++;
         }
+      break;
+
+    default:
+      break;
     }
 }
 
@@ -248,6 +292,50 @@ static void  parse_path_default_xy (ParsePathContext *ctx,
 static void  parse_path_do_cmd     (ParsePathContext *ctx,
                                     gboolean          final);
 
+
+static void
+parse_svg_viewbox (VectorsParser *parser,
+                   const gchar   *value)
+{
+  gint      x, y, w, h;
+  gchar    *tok;
+  gchar    *str     = g_strdup (value);
+  gboolean  success = FALSE;
+
+  x = y = w = h = 0;
+
+  tok = strtok (str, ", \t");
+  if (tok)
+    {
+      x = g_ascii_strtod (tok, NULL);
+      tok = strtok (NULL, ", \t");
+      if (tok)
+        {
+          y = g_ascii_strtod (tok, NULL);
+          tok = strtok (NULL, ", \t");
+          if (tok != NULL)
+            {
+              w = g_ascii_strtod (tok, NULL);
+              tok = strtok (NULL, ", \t");
+              if (tok)
+                {
+                  h = g_ascii_strtod (tok, NULL);
+                  success = TRUE;
+                }
+            }
+        }
+    }
+
+  g_free (str);
+
+  if (success)
+    {
+      parser->viewbox.x = x;
+      parser->viewbox.y = y;
+      parser->viewbox.w = w;
+      parser->viewbox.h = h;
+    }
+}
 
 static void
 parse_path_data (VectorsParser *parser,
