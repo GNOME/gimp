@@ -1,3 +1,9 @@
+2003-07-28  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpcompat.h: removed the name from the
+	GimpOrientationType[Compat] enum. The enums in this header are
+	just an anonymous mappings and not types by themselves.
+
 2003-07-27  Tor Lillqvist  <tml@iki.fi>
 
 	* gimptool-win32.c.in (get_prefix): Use g_find_program_in_path().
