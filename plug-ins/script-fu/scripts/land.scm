@@ -35,7 +35,7 @@
 	 (img (car (gimp-image-new width height RGB)))
 	 (layer-one (car (gimp-layer-new img width height RGB "bottom" 100 NORMAL)))
 	)
-  (gimp-gradients-set-active gradient)
+  (gimp-gradients-set-gradient gradient)
   (gimp-image-undo-disable img)
   (gimp-image-add-layer img layer-one 0)
 

@@ -43,7 +43,7 @@
          (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
          (grow-me (car (gimp-layer-copy logo-layer TRUE)))
 
-         (old-gradient (car (gimp-gradients-get-active)))
+         (old-gradient (car (gimp-gradients-get-gradient)))
          (old-patterns (car (gimp-patterns-get-pattern)))
          (old-fg (car (gimp-palette-get-foreground)))
          (old-bg (car (gimp-palette-get-background))))
@@ -73,7 +73,7 @@
 
     (if (= use-pattern-text FALSE)
       (begin
-        (gimp-gradients-set-active blend-gradient-text)
+        (gimp-gradients-set-gradient blend-gradient-text)
         (gimp-blend logo-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 0 (+ height 5))))
 
     (gimp-selection-none img)
@@ -94,7 +94,7 @@
 
     (if (= use-pattern-outline FALSE)
       (begin
-        (gimp-gradients-set-active blend-gradient-outline)
+        (gimp-gradients-set-gradient blend-gradient-outline)
         (gimp-blend grow-me CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 0 (+ height 5))))
 
     (gimp-selection-none img)
@@ -118,7 +118,7 @@
         (set! height (car (gimp-image-height img)))
         (gimp-selection-none img)))
 
-  (gimp-gradients-set-active old-gradient)
+  (gimp-gradients-set-gradient old-gradient)
   (gimp-palette-set-background old-bg)
   (gimp-palette-set-foreground old-fg)))
 

@@ -137,7 +137,7 @@
 	 (x-position (- cx (/ (car text-extents) 2)))
 	 (y-position (- cy (/ (cadr text-extents) 2)))
 	 (old-pattern (car (gimp-patterns-get-pattern)))
-	 (old-gradient (car (gimp-gradients-get-active)))
+	 (old-gradient (car (gimp-gradients-get-gradient)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
     (gimp-image-undo-disable img)
@@ -164,7 +164,7 @@
 		FALSE 0 0 light-x light-y light-end-x light-end-y)
     (gimp-selection-none img)
 
-    (gimp-gradients-set-active gradient)
+    (gimp-gradients-set-gradient gradient)
     (gimp-ellipse-select img 10 10 50 50 REPLACE TRUE FALSE 0)
     (gimp-blend drawable CUSTOM NORMAL LINEAR 100 offset REPEAT-NONE
 		FALSE 0 0 10 10 30 60)
@@ -178,7 +178,7 @@
 						       size PIXELS
 						       font)))
 
-    (gimp-gradients-set-active old-gradient)
+    (gimp-gradients-set-gradient old-gradient)
     (gimp-patterns-set-pattern old-pattern)
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)
@@ -200,7 +200,7 @@
 	            SF-BRUSH "Brush" '("Circle (03)" 1.0 44 0)
 		    SF-STRING "Text" "Script-Fu rocks!"
 		    SF-PATTERN "Pattern" "Maple Leaves"
-		    SF-GRADIENT "Gradient" "Deep_Sea"
+		    SF-GRADIENT "Gradient" "Deep Sea"
 		    SF-FONT "Font" "-freefont-agate-normal-r-normal-*-24-*-*-*-p-*-*-*"
                     SF-ADJUSTMENT "Font Size (pixels)" '(50 1 1000 1 10 0 1)
 		    SF-FILENAME "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")

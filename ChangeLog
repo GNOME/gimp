@@ -1,5 +1,22 @@
 2002-09-08  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.c: removed explicit
+	spinbutton pixel size.
+
+	* plug-ins/script-fu/scripts/blended-logo.scm
+	* plug-ins/script-fu/scripts/coffee.scm
+	* plug-ins/script-fu/scripts/comic-logo.scm
+	* plug-ins/script-fu/scripts/coolmetal-logo.scm
+	* plug-ins/script-fu/scripts/glossy.scm
+	* plug-ins/script-fu/scripts/land.scm
+	* plug-ins/script-fu/scripts/lava.scm
+	* plug-ins/script-fu/scripts/rendermap.scm
+	* plug-ins/script-fu/scripts/test-sphere.scm: follow PDB change:
+	gimp-gradients-[set|get]-active have been renamed to *-gradient
+	to match the brush, pattern and palette APIs.
+
+2002-09-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage.c (gimp_image_get_colormap): return
 	gimage->cmap directly instead of calling
 	gimp_drawable_cmap(active_drawable) without checking if there

@@ -25,7 +25,7 @@
 	 (channel 0)
 	 (fs 0)
 	 (layer-mask 0)
-	 (old-gradient (car (gimp-gradients-get-active)))
+	 (old-gradient (car (gimp-gradients-get-gradient)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
     (gimp-image-resize img img-width img-height 0 0)
@@ -40,7 +40,7 @@
     (gimp-palette-set-background '(0 0 0))
     (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
 
-    (gimp-gradients-set-active gradient)
+    (gimp-gradients-set-gradient gradient)
     (gimp-blend logo-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 0 (+ height 5))
     (gimp-rect-select img 0 (- (/ height 2) feather) img-width (* 2 feather) REPLACE 0 0)
     (plug-in-gauss-iir 1 img logo-layer smear TRUE TRUE)
@@ -90,7 +90,7 @@
 
     (gimp-image-remove-channel img channel)
 
-    (gimp-gradients-set-active old-gradient)
+    (gimp-gradients-set-gradient old-gradient)
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)))
 

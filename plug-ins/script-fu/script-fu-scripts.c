@@ -42,11 +42,9 @@
 
 
 #define TEXT_WIDTH           100
-#define TEXT_HEIGHT           25
 #define COLOR_SAMPLE_WIDTH   100
 #define COLOR_SAMPLE_HEIGHT   15
 #define SLIDER_WIDTH         100
-#define SPINNER_WIDTH         75
 #define FONT_PREVIEW_WIDTH   100
 
 #define DEFAULT_FONT_SIZE    240
@@ -1373,14 +1371,12 @@ script_fu_interface (SFScript *script)
 	      break;
 
 	    case SF_SPINNER:
-	      sf_interface->args_widgets[i] =
-		gtk_spin_button_new (script->arg_values[i].sfa_adjustment.adj, 0, 0);
-	      gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]), TRUE);
-	      gtk_widget_set_size_request (sf_interface->args_widgets[i],
-                                           SPINNER_WIDTH, -1);
-	      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]),
-					  script->arg_defaults[i].sfa_adjustment.digits);
-	      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]), TRUE);
+              sf_interface->args_widgets[i] =
+                gtk_spin_button_new (script->arg_values[i].sfa_adjustment.adj,
+                                     0,
+                                     script->arg_defaults[i].sfa_adjustment.digits);
+              gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]), TRUE);
+              gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]), TRUE);
 	      break;
 
 	    default: /* this shouldn't happen */

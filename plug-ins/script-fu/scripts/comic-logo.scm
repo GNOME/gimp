@@ -30,7 +30,7 @@
 	 (bg-layer (car (gimp-layer-new img width height RGBA_IMAGE "Background" 100 NORMAL)))
 	 (white-layer (car (gimp-layer-copy logo-layer 1)))
 	 (black-layer (car (gimp-layer-copy logo-layer 1)))
-	 (old-gradient (car (gimp-gradients-get-active)))
+	 (old-gradient (car (gimp-gradients-get-gradient)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
     (gimp-image-resize img width height 0 0)
@@ -64,7 +64,7 @@
     (plug-in-gauss-rle 1 img black-layer ol-width 1 1)
     (plug-in-threshold-alpha 1 img black-layer 0)
 
-    (gimp-gradients-set-active gradient)
+    (gimp-gradients-set-gradient gradient)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
     (gimp-selection-all img)
     (gimp-blend logo-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 (* height 0.33333) 0 (* height 0.83333))
@@ -74,7 +74,7 @@
     (gimp-brightness-contrast logo-layer 0 30)
     (plug-in-threshold-alpha 1 img logo-layer 60)
     (gimp-image-set-active-layer img logo-layer)
-    (gimp-gradients-set-active old-gradient)
+    (gimp-gradients-set-gradient old-gradient)
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)))
 

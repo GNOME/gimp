@@ -29,7 +29,7 @@
 	 (dsl-layer-mask (car (gimp-layer-create-mask drop-shadow-layer BLACK-MASK)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background)))
-	 (old-grad (car (gimp-gradients-get-active))))
+	 (old-grad (car (gimp-gradients-get-gradient))))
     (gimp-image-resize img width height 0 0)
     (gimp-image-add-layer img shadow-layer 1)
     (gimp-image-add-layer img blend-layer 1)
@@ -58,7 +58,7 @@
     (gimp-selection-none img)
     (gimp-palette-set-foreground blend-fg)
     (gimp-palette-set-background blend-bg)
-    (gimp-gradients-set-active blend-gradient)
+    (gimp-gradients-set-gradient blend-gradient)
     (gimp-blend blend-layer blend-mode NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 width 0)
     (gimp-layer-translate logo-layer (- b-size-2) (- b-size-2))
     (gimp-layer-translate blend-layer (- b-size) (- b-size))
@@ -72,7 +72,7 @@
     (gimp-selection-none img)
     (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)
-    (gimp-gradients-set-active old-grad)))
+    (gimp-gradients-set-gradient old-grad)))
 
 (define (script-fu-blended-logo-alpha img
 				      logo-layer

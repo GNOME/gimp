@@ -36,7 +36,7 @@
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image-width (car (gimp-image-width image)))
 	 (image-height (car (gimp-image-height image)))
-	 (old-gradient (car (gimp-gradients-get-active)))
+	 (old-gradient (car (gimp-gradients-get-gradient)))
 	 (old-bg (car (gimp-palette-get-background))))
     
     (gimp-image-undo-disable image)
@@ -78,7 +78,7 @@
     (set! active-layer (car (gimp-image-get-active-layer image)))
     
     (if (= current-grad FALSE)
-	(gimp-gradients-set-active gradient))
+	(gimp-gradients-set-gradient gradient))
     
     (plug-in-solid-noise 1 image active-layer FALSE TRUE seed 2 2 2)
     (plug-in-cubism 1 image active-layer tile_size 2.5 0)
@@ -87,7 +87,7 @@
     (plug-in-gauss-rle 1 image active-layer 2 TRUE TRUE)
     (plug-in-gradmap 1 image active-layer)
 
-    (gimp-gradients-set-active old-gradient)
+    (gimp-gradients-set-gradient old-gradient)
     (gimp-palette-set-background old-bg)
 
     (if (= keep-selection FALSE)
