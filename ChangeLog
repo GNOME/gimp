@@ -1,5 +1,10 @@
 2002-12-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/perl/Gimp.pm: changed the documentation as suggested in
+	bug #84884.
+
+2002-12-17  Sven Neumann  <sven@gimp.org>
+
 	* app/main.c: don't install signal handlers for fatal signals if
 	stack_trace_mode is STACK_TRACE_NEVER (fixes bug #71409).
 
