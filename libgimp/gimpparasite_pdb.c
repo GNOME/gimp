@@ -61,7 +61,7 @@ gimp_detach_parasite (const char *name)
   GParam *return_vals;
   int nreturn_vals;
 
-  return_vals = gimp_run_procedure ("gimp_image_detach_parasite",
+  return_vals = gimp_run_procedure ("gimp_detach_parasite",
 				    &nreturn_vals,
 				    PARAM_STRING, name,
 				    PARAM_END);

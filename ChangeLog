@@ -1,3 +1,7 @@
+Tue Jul  6 22:26:24 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+	* libgimp/gimpparasite.c: fixed gimp_detach_parasite.
+
 Tue Jul  6 22:16:07 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* ./app/layer.c.orig
@@ -142,6 +146,7 @@ Sat Jul  3 16:04:16 PDT 1999 Manish Singh <yosh@gimp.org>
 	* plug-ins/gfig/gfig.c
 	* plug-ins/script-fu/script-fu-scripts.c: Include <glib.h> early.
 
+>>>>>>> 1.1251
 1999-07-02  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/dodgeburn.c: changed the tool toggle key to <Ctrl>.
