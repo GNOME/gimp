@@ -124,7 +124,7 @@ wire_read (int     fd,
 
 	  if (bytes == 0) 
 	    {
-	      g_print ("wire_read: unexpected EOF\n");
+	      g_print ("wire_read: unexpected EOF (plug-in crashed?)\n");
 	      wire_error_val = TRUE;
 	      return FALSE;
 	    }

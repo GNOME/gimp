@@ -1,3 +1,9 @@
+Sun Mar 15 13:37:22 MET 1998 Sven Neumann <sven@gimp.org>
+	
+	* libgimp/gimpwire.c: applied Raphael Quinet's patch that
+	  changes the wire_read error message to something slightly more 
+	  useful. 
+
 Sun Mar 15 01:12:06 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* made 0.99.21 release
