@@ -205,7 +205,7 @@ mask_render_preview (GimpImage *gimage,
     }
 
   /*  if the mask is empty, no need to scale and update again  */
-  if (gimage_mask_is_empty (gimage))
+  if (gimp_image_mask_is_empty (gimage))
     return NULL;
 
   if (scale)

@@ -303,8 +303,8 @@ gimp_transform_tool_button_press (GimpTool        *tool,
           coords->x < (off_x + gimp_drawable_width (drawable)) &&
           coords->y < (off_y + gimp_drawable_height (drawable)))
         {
-          if (gimage_mask_is_empty (gdisp->gimage) ||
-              gimage_mask_value (gdisp->gimage, coords->x, coords->y))
+          if (gimp_image_mask_is_empty (gdisp->gimage) ||
+              gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
             {
               if (GIMP_IS_LAYER (drawable) &&
                   gimp_layer_get_mask (GIMP_LAYER (drawable)))
@@ -556,8 +556,8 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
 	       coords->x < (off_x + drawable->width) &&
 	       coords->y < (off_y + drawable->height))
 	{
-	  if (gimage_mask_is_empty (gdisp->gimage) ||
-	      gimage_mask_value (gdisp->gimage, coords->x, coords->y))
+	  if (gimp_image_mask_is_empty (gdisp->gimage) ||
+	      gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
 	    {
 	      ctype = GIMP_MOUSE_CURSOR;
 	    }

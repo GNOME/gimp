@@ -160,7 +160,7 @@ HELP
 
     &std_pdb_misc;
     &inargs('stroke to');
-    &invoke('gimage_mask_stroke (gimage, drawable, gimp_get_current_context (gimage->gimp))');
+    &invoke('gimp_image_mask_stroke (gimage, drawable, gimp_get_current_context (gimage->gimp))');
     push @{$invoke{headers}}, qw("core/gimpimage-mask.h");
 }
 

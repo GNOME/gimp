@@ -252,11 +252,11 @@ init_edit_selection (GimpTool    *tool,
   edit_select->x = edit_select->origx = coords->x - off_x;
   edit_select->y = edit_select->origy = coords->y - off_y;
 
-  gimage_mask_boundary (gdisp->gimage,
-			&edit_select->segs_in,
-			&edit_select->segs_out,
-			&edit_select->num_segs_in,
-			&edit_select->num_segs_out);
+  gimp_image_mask_boundary (gdisp->gimage,
+                            &edit_select->segs_in,
+                            &edit_select->segs_out,
+                            &edit_select->num_segs_in,
+                            &edit_select->num_segs_out);
 
   /*  Make a check to see if it should be a floating selection translation  */
   if (edit_type == EDIT_MASK_TO_LAYER_TRANSLATE &&
@@ -354,9 +354,9 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
       /* move the selection -- whether there has been net movement or not!
        * (to ensure that there's something on the undo stack)
        */
-      gimage_mask_translate (gdisp->gimage,
-			     edit_select->cumlx,
-			     edit_select->cumly);
+      gimp_image_mask_translate (gdisp->gimage,
+                                 edit_select->cumlx,
+                                 edit_select->cumly);
 
       if (edit_select->first_move)
 	{
@@ -521,9 +521,9 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 	    break;
 
 	  case EDIT_MASK_TO_LAYER_TRANSLATE:
-	    if (! gimage_mask_float (gdisp->gimage, 
-				     gimp_image_active_drawable (gdisp->gimage),
-				     0, 0))
+	    if (! gimp_image_mask_float (gdisp->gimage, 
+                                         gimp_image_active_drawable (gdisp->gimage),
+                                         0, 0))
 	      {
 		/* no region to float, abort safely */
 		gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
@@ -928,7 +928,7 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
   undo_push_group_start (gdisp->gimage, LAYER_DISPLACE_UNDO);
 
   if (mask_inc_x != 0 || mask_inc_y != 0)
-    gimage_mask_translate (gdisp->gimage, mask_inc_x, mask_inc_y);
+    gimp_image_mask_translate (gdisp->gimage, mask_inc_x, mask_inc_y);
 
   if (inc_x != 0 || inc_y != 0)
     {

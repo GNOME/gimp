@@ -44,7 +44,7 @@ sub selection_simple_proc {
 
     @inargs = ( &std_image_arg );
 
-    %invoke = ( code => "gimage_mask_$op (gimage);" );
+    %invoke = ( code => "gimp_image_mask_$op (gimage);" );
 }
 
 sub selection_change_proc {
@@ -62,7 +62,7 @@ sub selection_change_proc {
 	  desc => "\u$arg of $op (in pixels)" }
     );
 
-    %invoke = ( code => "gimage_mask_$op (gimage, $arg, $arg$edge_lock);" );
+    %invoke = ( code => "gimp_image_mask_$op (gimage, $arg, $arg$edge_lock);" );
 }
 
 # The defs
@@ -94,7 +94,7 @@ HELP
     }
 
     %invoke = (
-	code => 'non_empty = gimage_mask_bounds (gimage, &x1, &y1, &x2, &y2);'
+	code => 'non_empty = gimp_image_mask_bounds (gimage, &x1, &y1, &x2, &y2);'
     );
 }
 
@@ -114,7 +114,7 @@ HELP
     @outargs = (
 	{ name => 'value', type => '0 <= int32 <= 255',
 	  desc => 'Value of the selection: (%%desc%%)',
-	  alias => 'gimage_mask_value (gimage, x, y)', no_declare => 1 }
+	  alias => 'gimp_image_mask_value (gimage, x, y)', no_declare => 1 }
     );
 }
 
@@ -133,7 +133,7 @@ HELP
     @outargs = (
 	{ name => 'is_empty', type => 'boolean',
 	  desc => 'Is the selection empty?',
-	  alias => 'gimage_mask_is_empty (gimage)', no_declare => 1 }
+	  alias => 'gimp_image_mask_is_empty (gimage)', no_declare => 1 }
     );
 }
 
@@ -152,7 +152,7 @@ HELP
     @inargs = ( &std_image_arg );
     &coord_args('off$_', '$_ offset for translation', \@inargs);
 
-    %invoke = ( code => 'gimage_mask_translate (gimage, offx, offy);' );
+    %invoke = ( code => 'gimp_image_mask_translate (gimage, offx, offy);' );
 }
 
 sub selection_float {
@@ -186,7 +186,7 @@ HELP
 	code => <<'CODE'
 {
   gimage = gimp_drawable_gimage (drawable);
-  layer = gimage_mask_float (gimage, drawable, offx, offy);
+  layer = gimp_image_mask_float (gimage, drawable, offx, offy);
   success = layer != NULL;
 }
 CODE
@@ -307,7 +307,7 @@ HELP
 	code => <<'CODE'
 {
   gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer));
-  gimage_mask_layer_alpha (gimage, layer);
+  gimp_image_mask_layer_alpha (gimage, layer);
 }
 CODE
     );
@@ -335,7 +335,7 @@ HELP
    
   if (gimp_drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
       gimp_drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)
-    gimage_mask_load (gimage, channel);
+    gimp_image_mask_load (gimage, channel);
   else
     success = FALSE;
 }
@@ -371,7 +371,7 @@ HELP
 				 channel,
 				 operation, 
 				 0, 0);  /* off x/y */
-      gimage_mask_load (gimage, new_channel);
+      gimp_image_mask_load (gimage, new_channel);
       g_object_unref (G_OBJECT (new_channel));
     }
   else
@@ -400,7 +400,7 @@ HELP
     );
 
     %invoke = (
-	code => 'success = (channel = gimage_mask_save (gimage)) != NULL;'
+	code => 'success = (channel = gimp_image_mask_save (gimage)) != NULL;'
     );
 }
 

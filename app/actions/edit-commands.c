@@ -262,9 +262,9 @@ edit_stroke_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimage_mask_stroke (gimage,
-		      gimp_image_active_drawable (gimage),
-		      gimp_get_current_context (gimage->gimp));
+  gimp_image_mask_stroke (gimage,
+                          gimp_image_active_drawable (gimage),
+                          gimp_get_current_context (gimage->gimp));
 
   gdisplays_flush ();
 }

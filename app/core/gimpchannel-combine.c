@@ -1225,7 +1225,7 @@ gimp_channel_push_undo (GimpChannel *mask)
   /* push the undo buffer onto the undo stack */
   gimage = GIMP_DRAWABLE (mask)->gimage;
   undo_push_mask (gimage, mask_undo);
-  gimage_mask_invalidate (gimage);
+  gimp_image_mask_invalidate (gimage);
 
   /*  invalidate the preview  */
   GIMP_DRAWABLE (mask)->preview_valid = FALSE;

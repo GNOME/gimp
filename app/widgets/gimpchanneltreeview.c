@@ -310,7 +310,7 @@ gimp_channel_list_view_to_selection (GimpChannelListView *view,
 				     0, 0);
 	}
 
-      gimage_mask_load (gimage, new_channel);
+      gimp_image_mask_load (gimage, new_channel);
 
       g_object_unref (G_OBJECT (new_channel));
 

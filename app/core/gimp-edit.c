@@ -62,10 +62,10 @@ gimp_edit_cut (GimpImage    *gimage,
   undo_push_group_start (gimage, EDIT_CUT_UNDO);
 
   /*  See if the gimage mask is empty  */
-  empty = gimage_mask_is_empty (gimage);
+  empty = gimp_image_mask_is_empty (gimage);
 
   /*  Next, cut the mask portion from the gimage  */
-  cut = gimage_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
+  cut = gimp_image_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
 
   if (cut)
     gimp_image_new_set_have_current_cut_buffer (gimage->gimp);
@@ -114,10 +114,10 @@ gimp_edit_copy (GimpImage    *gimage,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   /*  See if the gimage mask is empty  */
-  empty = gimage_mask_is_empty (gimage);
+  empty = gimp_image_mask_is_empty (gimage);
 
   /*  First, copy the masked portion of the gimage  */
-  copy = gimage_mask_extract (gimage, drawable, FALSE, FALSE, TRUE);
+  copy = gimp_image_mask_extract (gimage, drawable, FALSE, FALSE, TRUE);
 
   if (copy)
     gimp_image_new_set_have_current_cut_buffer (gimage->gimp);
@@ -208,7 +208,7 @@ gimp_edit_paste (GimpImage    *gimage,
    *  this might not always be desired, but in general,
    *  it seems like the correct behavior.
    */
-  if (! gimage_mask_is_empty (gimage) && ! paste_into)
+  if (! gimp_image_mask_is_empty (gimage) && ! paste_into)
     gimp_channel_clear (gimp_image_get_mask (gimage));
 
   /*  if there's a drawable, add a new floating selection  */

@@ -95,7 +95,7 @@ selection_bounds_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    non_empty = gimage_mask_bounds (gimage, &x1, &y1, &x2, &y2);
+    non_empty = gimp_image_mask_bounds (gimage, &x1, &y1, &x2, &y2);
 
   return_args = procedural_db_return_args (&selection_bounds_proc, success);
 
@@ -186,7 +186,7 @@ selection_value_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&selection_value_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimage_mask_value (gimage, x, y);
+    return_args[1].value.pdb_int = gimp_image_mask_value (gimage, x, y);
 
   return return_args;
 }
@@ -250,7 +250,7 @@ selection_is_empty_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&selection_is_empty_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimage_mask_is_empty (gimage);
+    return_args[1].value.pdb_int = gimp_image_mask_is_empty (gimage);
 
   return return_args;
 }
@@ -307,7 +307,7 @@ selection_translate_invoker (Gimp     *gimp,
   offy = args[2].value.pdb_int;
 
   if (success)
-    gimage_mask_translate (gimage, offx, offy);
+    gimp_image_mask_translate (gimage, offx, offy);
 
   return procedural_db_return_args (&selection_translate_proc, success);
 }
@@ -370,7 +370,7 @@ selection_float_invoker (Gimp     *gimp,
   if (success)
     {
       gimage = gimp_drawable_gimage (drawable);
-      layer = gimage_mask_float (gimage, drawable, offx, offy);
+      layer = gimp_image_mask_float (gimage, drawable, offx, offy);
       success = layer != NULL;
     }
 
@@ -438,7 +438,7 @@ selection_clear_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimage_mask_clear (gimage);
+    gimp_image_mask_clear (gimage);
 
   return procedural_db_return_args (&selection_clear_proc, success);
 }
@@ -480,7 +480,7 @@ selection_invert_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimage_mask_invert (gimage);
+    gimp_image_mask_invert (gimage);
 
   return procedural_db_return_args (&selection_invert_proc, success);
 }
@@ -522,7 +522,7 @@ selection_sharpen_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimage_mask_sharpen (gimage);
+    gimp_image_mask_sharpen (gimage);
 
   return procedural_db_return_args (&selection_sharpen_proc, success);
 }
@@ -564,7 +564,7 @@ selection_all_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimage_mask_all (gimage);
+    gimp_image_mask_all (gimage);
 
   return procedural_db_return_args (&selection_all_proc, success);
 }
@@ -606,7 +606,7 @@ selection_none_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimage_mask_none (gimage);
+    gimp_image_mask_none (gimage);
 
   return procedural_db_return_args (&selection_none_proc, success);
 }
@@ -653,7 +653,7 @@ selection_feather_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimage_mask_feather (gimage, radius, radius);
+    gimp_image_mask_feather (gimage, radius, radius);
 
   return procedural_db_return_args (&selection_feather_proc, success);
 }
@@ -705,7 +705,7 @@ selection_border_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimage_mask_border (gimage, radius, radius);
+    gimp_image_mask_border (gimage, radius, radius);
 
   return procedural_db_return_args (&selection_border_proc, success);
 }
@@ -757,7 +757,7 @@ selection_grow_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimage_mask_grow (gimage, steps, steps);
+    gimp_image_mask_grow (gimage, steps, steps);
 
   return procedural_db_return_args (&selection_grow_proc, success);
 }
@@ -809,7 +809,7 @@ selection_shrink_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimage_mask_shrink (gimage, radius, radius, FALSE);
+    gimp_image_mask_shrink (gimage, radius, radius, FALSE);
 
   return procedural_db_return_args (&selection_shrink_proc, success);
 }
@@ -859,7 +859,7 @@ selection_layer_alpha_invoker (Gimp     *gimp,
   if (success)
     {
       gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer));
-      gimage_mask_layer_alpha (gimage, layer);
+      gimp_image_mask_layer_alpha (gimage, layer);
     }
 
   return procedural_db_return_args (&selection_layer_alpha_proc, success);
@@ -908,7 +908,7 @@ selection_load_invoker (Gimp     *gimp,
        
       if (gimp_drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
 	  gimp_drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)
-	gimage_mask_load (gimage, channel);
+	gimp_image_mask_load (gimage, channel);
       else
 	success = FALSE;
     }
@@ -955,7 +955,7 @@ selection_save_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    success = (channel = gimage_mask_save (gimage)) != NULL;
+    success = (channel = gimp_image_mask_save (gimage)) != NULL;
 
   return_args = procedural_db_return_args (&selection_save_proc, success);
 
@@ -1029,7 +1029,7 @@ selection_combine_invoker (Gimp     *gimp,
 				     channel,
 				     operation, 
 				     0, 0);  /* off x/y */
-	  gimage_mask_load (gimage, new_channel);
+	  gimp_image_mask_load (gimage, new_channel);
 	  g_object_unref (G_OBJECT (new_channel));
 	}
       else

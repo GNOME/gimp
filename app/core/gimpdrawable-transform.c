@@ -693,13 +693,13 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   /*  extract the selected mask if there is a selection  */
-  if (! gimage_mask_is_empty (gimage))
+  if (! gimp_image_mask_is_empty (gimage))
     {
       /* set the keep_indexed flag to FALSE here, since we use
        * gimp_layer_new_from_tiles() later which assumes that the tiles
        * are either RGB or GRAY.  Eeek!!!              (Sven)
        */
-      tiles = gimage_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
+      tiles = gimp_image_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
 
       *new_layer = TRUE;
     }
@@ -707,9 +707,9 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
   else
     {
       if (GIMP_IS_LAYER (drawable))
-	tiles = gimage_mask_extract (gimage, drawable, FALSE, TRUE, TRUE);
+	tiles = gimp_image_mask_extract (gimage, drawable, FALSE, TRUE, TRUE);
       else
-	tiles = gimage_mask_extract (gimage, drawable, FALSE, TRUE, FALSE);
+	tiles = gimp_image_mask_extract (gimage, drawable, FALSE, TRUE, FALSE);
 
       *new_layer = FALSE;
     }

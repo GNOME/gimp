@@ -49,22 +49,22 @@
 
 /*  local functions  */
 
-static void     gimage_mask_feather_callback (GtkWidget   *widget,
-					      gdouble      size,
-					      GimpUnit     unit,
-					      gpointer     data);
-static void     gimage_mask_border_callback  (GtkWidget   *widget,
-					      gdouble      size,
-					      GimpUnit     unit,
-		  			      gpointer     data);
-static void     gimage_mask_grow_callback    (GtkWidget   *widget,
-					      gdouble      size,
-					      GimpUnit     unit,
-					      gpointer     data);
-static void     gimage_mask_shrink_callback  (GtkWidget   *widget,
-					      gdouble      size,
-					      GimpUnit     unit,
-					      gpointer     data);
+static void   gimp_image_mask_feather_callback (GtkWidget   *widget,
+                                                gdouble      size,
+                                                GimpUnit     unit,
+                                                gpointer     data);
+static void   gimp_image_mask_border_callback  (GtkWidget   *widget,
+                                                gdouble      size,
+                                                GimpUnit     unit,
+                                                gpointer     data);
+static void   gimp_image_mask_grow_callback    (GtkWidget   *widget,
+                                                gdouble      size,
+                                                GimpUnit     unit,
+                                                gpointer     data);
+static void   gimp_image_mask_shrink_callback  (GtkWidget   *widget,
+                                                gdouble      size,
+                                                GimpUnit     unit,
+                                                gpointer     data);
 
 
 /*  local variables  */
@@ -83,7 +83,7 @@ select_invert_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimage_mask_invert (gimage);
+  gimp_image_mask_invert (gimage);
   gdisplays_flush ();
 }
 
@@ -94,7 +94,7 @@ select_all_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimage_mask_all (gimage);
+  gimp_image_mask_all (gimage);
   gdisplays_flush ();
 }
 
@@ -105,7 +105,7 @@ select_none_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimage_mask_none (gimage);
+  gimp_image_mask_none (gimage);
   gdisplays_flush ();
 }
 
@@ -116,7 +116,7 @@ select_float_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimage_mask_float (gimage, gimp_image_active_drawable (gimage), 0, 0);
+  gimp_image_mask_float (gimage, gimp_image_active_drawable (gimage), 0, 0);
   gdisplays_flush ();
 }
 
@@ -138,7 +138,7 @@ select_feather_cmd_callback (GtkWidget *widget,
 				   gdisp->gimage->yresolution),
 			      gdisp->dot_for_dot,
 			      G_OBJECT (gdisp->gimage), "disconnect",
-			      gimage_mask_feather_callback, gdisp->gimage);
+			      gimp_image_mask_feather_callback, gdisp->gimage);
   gtk_widget_show (qbox);
 }
 
@@ -149,7 +149,7 @@ select_sharpen_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimage_mask_sharpen (gimage);
+  gimp_image_mask_sharpen (gimage);
   gdisplays_flush ();
 }
 
@@ -174,7 +174,7 @@ select_shrink_cmd_callback (GtkWidget *widget,
 			      gdisp->gimage->yresolution),
 			 gdisp->dot_for_dot,
 			 G_OBJECT (gdisp->gimage), "disconnect",
-			 gimage_mask_shrink_callback, gdisp->gimage);
+			 gimp_image_mask_shrink_callback, gdisp->gimage);
 
   edge_lock = gtk_check_button_new_with_label (_("Shrink from image border"));
 
@@ -211,7 +211,7 @@ select_grow_cmd_callback (GtkWidget *widget,
 				   gdisp->gimage->yresolution),
 			      gdisp->dot_for_dot,
 			      G_OBJECT (gdisp->gimage), "disconnect",
-			      gimage_mask_grow_callback, gdisp->gimage);
+			      gimp_image_mask_grow_callback, gdisp->gimage);
   gtk_widget_show (qbox);
 }
 
@@ -233,7 +233,7 @@ select_border_cmd_callback (GtkWidget *widget,
 				   gdisp->gimage->yresolution),
 			      gdisp->dot_for_dot,
 			      G_OBJECT (gdisp->gimage), "disconnect",
-			      gimage_mask_border_callback, gdisp->gimage);
+			      gimp_image_mask_border_callback, gdisp->gimage);
   gtk_widget_show (qbox);
 }
 
@@ -244,7 +244,7 @@ select_save_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimage_mask_save (gimage);
+  gimp_image_mask_save (gimage);
   gdisplays_flush ();
 }
 
@@ -252,10 +252,10 @@ select_save_cmd_callback (GtkWidget *widget,
 /*  private functions  */
 
 static void
-gimage_mask_feather_callback (GtkWidget *widget,
-			      gdouble    size,
-			      GimpUnit   unit,
-			      gpointer   data)
+gimp_image_mask_feather_callback (GtkWidget *widget,
+                                  gdouble    size,
+                                  GimpUnit   unit,
+                                  gpointer   data)
 {
   GimpImage *gimage;
   gdouble    radius_x;
@@ -280,15 +280,15 @@ gimage_mask_feather_callback (GtkWidget *widget,
 	radius_x *= factor;
     }
 
-  gimage_mask_feather (gimage, radius_x, radius_y);
+  gimp_image_mask_feather (gimage, radius_x, radius_y);
   gdisplays_flush ();
 }
 
 static void
-gimage_mask_border_callback (GtkWidget *widget,
-			     gdouble    size,
-			     GimpUnit   unit,
-			     gpointer   data)
+gimp_image_mask_border_callback (GtkWidget *widget,
+                                 gdouble    size,
+                                 GimpUnit   unit,
+                                 gpointer   data)
 {
   GimpImage *gimage;
   gdouble    radius_x;
@@ -313,15 +313,15 @@ gimage_mask_border_callback (GtkWidget *widget,
 	radius_x *= factor;
     }
 
-  gimage_mask_border (gimage, radius_x, radius_y);
+  gimp_image_mask_border (gimage, radius_x, radius_y);
   gdisplays_flush ();
 }
 
 static void
-gimage_mask_grow_callback (GtkWidget *widget,
-			   gdouble    size,
-			   GimpUnit   unit,
-			   gpointer   data)
+gimp_image_mask_grow_callback (GtkWidget *widget,
+                               gdouble    size,
+                               GimpUnit   unit,
+                               gpointer   data)
 {
   GimpImage *gimage;
   gdouble    radius_x;
@@ -346,15 +346,15 @@ gimage_mask_grow_callback (GtkWidget *widget,
 	radius_x *= factor;
     }
 
-  gimage_mask_grow (gimage, radius_x, radius_y);
+  gimp_image_mask_grow (gimage, radius_x, radius_y);
   gdisplays_flush ();
 }
 
 static void
-gimage_mask_shrink_callback (GtkWidget *widget,
-			     gdouble    size,
-			     GimpUnit   unit,
-			     gpointer   data)
+gimp_image_mask_shrink_callback (GtkWidget *widget,
+                                 gdouble    size,
+                                 GimpUnit   unit,
+                                 gpointer   data)
 {
   GimpImage *gimage;
   gint       radius_x;
@@ -383,6 +383,7 @@ gimage_mask_shrink_callback (GtkWidget *widget,
 	radius_x *= factor;
     }
 
-  gimage_mask_shrink (gimage, radius_x, radius_y, selection_shrink_edge_lock);
+  gimp_image_mask_shrink (gimage, radius_x, radius_y,
+                          selection_shrink_edge_lock);
   gdisplays_flush ();
 }

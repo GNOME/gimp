@@ -614,7 +614,7 @@ gradient_precalc_shapeburst (GimpImage    *gimage,
   pixel_region_init (&tempR, tempR.tiles, 0, 0, PR->w, PR->h, TRUE);
 
   /*  If the gimage mask is not empty, use it as the shape burst source  */
-  if (! gimage_mask_is_empty (gimage))
+  if (! gimp_image_mask_is_empty (gimage))
     {
       PixelRegion maskR;
       gint        x1, y1, x2, y2;

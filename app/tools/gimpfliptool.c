@@ -222,8 +222,8 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
 	  coords->y < (off_y + gimp_drawable_height (drawable)))
 	{
 	  /*  Is there a selected region? If so, is cursor inside? */
-	  if (gimage_mask_is_empty (gdisp->gimage) ||
-	      gimage_mask_value (gdisp->gimage, coords->x, coords->y))
+	  if (gimp_image_mask_is_empty (gdisp->gimage) ||
+	      gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
 	    {
 	      if (options->type == ORIENTATION_HORIZONTAL)
 		ctype = GDK_SB_H_DOUBLE_ARROW;

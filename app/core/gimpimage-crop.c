@@ -163,7 +163,7 @@ gimp_image_crop (GimpImage *gimage,
 
 	  /*  Don't forget the selection mask!  */
 	  gimp_channel_resize (gimage->selection_mask, width, height, -x1, -y1);
-	  gimage_mask_invalidate (gimage);
+	  gimp_image_mask_invalidate (gimage);
 
 	  /*  crop all layers  */
 	  list = GIMP_LIST (gimage->layers)->list;

@@ -153,7 +153,7 @@ channels_channel_to_sel_cmd_callback (GtkWidget *widget,
 
   if ((active_channel = gimp_image_get_active_channel (gimage)))
     {
-      gimage_mask_load (gimage, active_channel);
+      gimp_image_mask_load (gimage, active_channel);
       gdisplays_flush ();
     }
 }
@@ -178,7 +178,7 @@ channels_add_channel_to_sel_cmd_callback (GtkWidget *widget,
 				 active_channel,
 				 CHANNEL_OP_ADD, 
 				 0, 0);  /* off x/y */
-      gimage_mask_load (gimage, new_channel);
+      gimp_image_mask_load (gimage, new_channel);
       g_object_unref (G_OBJECT (new_channel));
       gdisplays_flush ();
     }
@@ -204,7 +204,7 @@ channels_sub_channel_from_sel_cmd_callback (GtkWidget *widget,
 				  active_channel,
 				  CHANNEL_OP_SUB, 
 				  0, 0);  /* off x/y */
-      gimage_mask_load (gimage, new_channel);
+      gimp_image_mask_load (gimage, new_channel);
       g_object_unref (G_OBJECT (new_channel));
       gdisplays_flush ();
     }
@@ -230,7 +230,7 @@ channels_intersect_channel_with_sel_cmd_callback (GtkWidget *widget,
 				 active_channel,
 				 CHANNEL_OP_INTERSECT, 
 				 0, 0);  /* off x/y */
-      gimage_mask_load (gimage, new_channel);
+      gimp_image_mask_load (gimage, new_channel);
       g_object_unref (G_OBJECT (new_channel));
       gdisplays_flush ();
     }

@@ -120,7 +120,7 @@ gimp_display_shell_qmask_off_toggled (GtkWidget        *widget,
 	   *  the qmask_state to FALSE
            */
 	  undo_push_qmask (gimage);
-	  gimage_mask_load (gimage, mask);
+	  gimp_image_mask_load (gimage, mask);
 	  gimp_image_remove_channel (gimage, mask);
 	  undo_push_group_end (gimage);
 	}
@@ -167,7 +167,7 @@ gimp_display_shell_qmask_on_toggled (GtkWidget        *widget,
 
       undo_push_group_start (gimage, QMASK_UNDO);
 
-      if (gimage_mask_is_empty (gimage))
+      if (gimp_image_mask_is_empty (gimage))
 	{ 
 	  /* if no selection */
 
@@ -193,7 +193,7 @@ gimp_display_shell_qmask_on_toggled (GtkWidget        *widget,
 	  gimp_image_add_channel (gimage, mask, 0);
 	  gimp_channel_set_color (mask, &color);
 	  gimp_object_set_name (GIMP_OBJECT (mask), "Qmask");
-	  gimage_mask_none (gimage);           /* Clear the selection */
+	  gimp_image_mask_none (gimage);           /* Clear the selection */
 	}
 
       undo_push_qmask (gimage);

@@ -110,7 +110,7 @@ gimp_image_scale (GimpImage        *gimage,
   */
 
   gimp_channel_scale (gimage->selection_mask, new_width, new_height);
-  gimage_mask_invalidate (gimage);
+  gimp_image_mask_invalidate (gimage);
 
   /*  Scale all layers  */
   for (list = GIMP_LIST (gimage->layers)->list; 

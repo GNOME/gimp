@@ -737,9 +737,10 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 	      /*  One more test--is there a selected region?
 	       *  if so, is cursor inside?
 	       */
-	      if (gimage_mask_is_empty (gdisp->gimage))
+	      if (gimp_image_mask_is_empty (gdisp->gimage))
 		ctype = GIMP_MOUSE_CURSOR;
-	      else if (gimage_mask_value (gdisp->gimage, coords->x, coords->y))
+	      else if (gimp_image_mask_value (gdisp->gimage,
+                                              coords->x, coords->y))
 		ctype = GIMP_MOUSE_CURSOR;
 	    }
 	}

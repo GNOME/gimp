@@ -135,7 +135,7 @@ xcf_save_image (XcfInfo   *info,
   nchannels = (guint) gimp_container_num_children (gimage->channels);
 
   /* check and see if we have to save out the selection */
-  have_selection = gimage_mask_bounds (gimage, &t1, &t2, &t3, &t4);
+  have_selection = gimp_image_mask_bounds (gimage, &t1, &t2, &t3, &t4);
   if (have_selection)
     nchannels += 1;
 

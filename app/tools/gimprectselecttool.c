@@ -315,7 +315,7 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
             floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
           /*  Otherwise, clear the selection mask  */
           else
-            gimage_mask_clear (gdisp->gimage);
+            gimp_image_mask_clear (gdisp->gimage);
 
           gdisplays_flush ();
           return;

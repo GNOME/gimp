@@ -1197,7 +1197,7 @@ gimp_display_shell_mask_value (GimpDisplayShell *shell,
   /*  move the coordinates from screen space to image space  */
   gdisplay_untransform_coords (shell->gdisp, x, y, &x, &y, FALSE, FALSE);
 
-  return gimage_mask_value (shell->gdisp->gimage, x, y);
+  return gimp_image_mask_value (shell->gdisp->gimage, x, y);
 }
 
 gboolean

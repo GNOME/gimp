@@ -45,9 +45,9 @@ gimp_image_mask_select_rectangle (GimpImage  *gimage,
 
   /*  if applicable, replace the current selection  */
   if (op == CHANNEL_OP_REPLACE)
-    gimage_mask_clear (gimage);
+    gimp_image_mask_clear (gimage);
   else
-    gimage_mask_undo (gimage);
+    gimp_image_mask_undo (gimage);
 
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
@@ -90,9 +90,9 @@ gimp_image_mask_select_ellipse (GimpImage  *gimage,
 
   /*  if applicable, replace the current selection  */
   if (op == CHANNEL_OP_REPLACE)
-    gimage_mask_clear (gimage);
+    gimp_image_mask_clear (gimage);
   else
-    gimage_mask_undo (gimage);
+    gimp_image_mask_undo (gimage);
 
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
@@ -139,9 +139,9 @@ gimp_image_mask_select_polygon (GimpImage   *gimage,
    *  or insure that a floating selection is anchored down...
    */
   if (op == CHANNEL_OP_REPLACE)
-    gimage_mask_clear (gimage);
+    gimp_image_mask_clear (gimage);
   else
-    gimage_mask_undo (gimage);
+    gimp_image_mask_undo (gimage);
 
 #define SUPERSAMPLE 3
 
@@ -187,9 +187,9 @@ gimp_image_mask_select_channel (GimpImage    *gimage,
 
   /*  if applicable, replace the current selection  */
   if (op == CHANNEL_OP_REPLACE)
-    gimage_mask_clear (gimage);
+    gimp_image_mask_clear (gimage);
   else
-    gimage_mask_undo (gimage);
+    gimp_image_mask_undo (gimage);
 
   if (sample_merged)
     {

@@ -417,7 +417,7 @@ layers_alpha_select_cmd_callback (GtkWidget *widget,
   if (! gimage)
     return;
 
-  gimage_mask_layer_alpha (gimage, gimp_image_get_active_layer (gimage));
+  gimp_image_mask_layer_alpha (gimage, gimp_image_get_active_layer (gimage));
   gdisplays_flush ();
 }
 
@@ -432,7 +432,7 @@ layers_mask_select_cmd_callback (GtkWidget *widget,
   if (! gimage)
     return;
 
-  gimage_mask_layer_mask (gimage, gimp_image_get_active_layer (gimage));
+  gimp_image_mask_layer_mask (gimage, gimp_image_get_active_layer (gimage));
   gdisplays_flush ();
 }
 

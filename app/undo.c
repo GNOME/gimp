@@ -1129,7 +1129,7 @@ undo_pop_mask (GimpImage *gimage,
     }
 
   /* invalidate the current bounds and boundary of the mask */
-  gimage_mask_invalidate (gimage);
+  gimp_image_mask_invalidate (gimage);
 
   if (mask_undo->tiles)
     {
@@ -2328,7 +2328,7 @@ undo_pop_gimage_mod (GimpImage *gimage,
 
   gimp_image_projection_allocate (gimage);
 
-  gimage_mask_invalidate (gimage);
+  gimp_image_mask_invalidate (gimage);
 
   gimp_image_colormap_changed (gimage, -1);
 

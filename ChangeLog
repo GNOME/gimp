@@ -1,5 +1,51 @@
 2001-11-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-mask.[ch]: s/gimage_mask/gimp_image_mask/g
+
+	* app/floating_sel.c
+	* app/undo.c
+	* app/undo_history.c
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpedit.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-mask-select.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage.c
+	* app/display/gimpdisplayshell-qmask.c
+	* app/display/gimpdisplayshell-selection.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/channels-commands.c
+	* app/gui/edit-commands.c
+	* app/gui/layers-commands.c
+	* app/gui/select-commands.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformtool.c
+	* app/widgets/gimpchannellistview.c
+	* app/xcf/xcf-save.c
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/selection.pdb: changed accordingly.
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/selection_cmds.c: regenerated.
+
+2001-11-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/base/base-types.h: include the new
 	"paint-funcs/paint-funcs-types.h".
 

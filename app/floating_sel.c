@@ -151,7 +151,7 @@ floating_sel_anchor (GimpLayer *layer)
   undo_push_group_end (gimage);
 
   /*  invalidate the boundaries  */
-  gimage_mask_invalidate (gimage);
+  gimp_image_mask_invalidate (gimage);
 
   gimp_image_floating_selection_changed (gimage);
 }

@@ -662,7 +662,7 @@ by_color_select_render (ByColorDialog *bcd,
   g_free (buf);
 
   /*  if the mask is empty, no need to scale and update again  */
-  if (gimage_mask_is_empty (gimage))
+  if (gimp_image_mask_is_empty (gimage))
     return;
 
   if (scale)
@@ -772,7 +772,7 @@ by_color_select_invert_callback (GtkWidget *widget,
     return;
 
   /*  invert the mask  */
-  gimage_mask_invert (bcd->gimage);
+  gimp_image_mask_invert (bcd->gimage);
 
   /*  show selection on all views  */
   gdisplays_flush ();
@@ -798,7 +798,7 @@ by_color_select_select_all_callback (GtkWidget *widget,
     return;
 
   /*  fill the mask  */
-  gimage_mask_all (bcd->gimage);
+  gimp_image_mask_all (bcd->gimage);
 
   /*  show selection on all views  */
   gdisplays_flush ();
@@ -824,7 +824,7 @@ by_color_select_select_none_callback (GtkWidget *widget,
     return;
 
   /*  reset the mask  */
-  gimage_mask_clear (bcd->gimage);
+  gimp_image_mask_clear (bcd->gimage);
 
   /*  show selection on all views  */
   gdisplays_flush ();

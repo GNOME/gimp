@@ -632,7 +632,7 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
 
   g_return_val_if_fail (gimage != NULL, FALSE);
 
-  if (gimage_mask_bounds (gimage, x1, y1, x2, y2))
+  if (gimp_image_mask_bounds (gimage, x1, y1, x2, y2))
     {
       gimp_drawable_offsets (drawable, &off_x, &off_y);
       *x1 = CLAMP (*x1 - off_x, 0, gimp_drawable_width  (drawable));

@@ -244,7 +244,7 @@ gimp_move_tool_button_press (GimpTool        *tool,
   move->guide = NULL;
   move->disp  = NULL;
 
-  if (options->move_mask && ! gimage_mask_is_empty (gdisp->gimage))
+  if (options->move_mask && ! gimp_image_mask_is_empty (gdisp->gimage))
     {
       init_edit_selection (tool, gdisp, coords, EDIT_MASK_TRANSLATE);
       tool->state = ACTIVE;
@@ -483,7 +483,7 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  if (options->move_mask && ! gimage_mask_is_empty (gdisp->gimage))
+  if (options->move_mask && ! gimp_image_mask_is_empty (gdisp->gimage))
     {
       gimp_display_shell_install_tool_cursor (shell,
                                               GIMP_MOUSE_CURSOR,

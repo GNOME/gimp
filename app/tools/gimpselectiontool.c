@@ -187,14 +187,14 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
   layer = gimp_image_pick_correlate_layer (gdisp->gimage, coords->x, coords->y);
   floating_sel = gimp_image_floating_sel (gdisp->gimage);
 
-  if ((state & GDK_MOD1_MASK) && ! gimage_mask_is_empty (gdisp->gimage))
+  if ((state & GDK_MOD1_MASK) && ! gimp_image_mask_is_empty (gdisp->gimage))
     {
       selection_tool->op = SELECTION_MOVE_MASK; /* move the selection mask */
     }
   else if (! (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)) &&
            layer &&
 	   (layer == floating_sel ||
-	    (gimage_mask_value (gdisp->gimage, coords->x, coords->y) &&
+	    (gimp_image_mask_value (gdisp->gimage, coords->x, coords->y) &&
 	     floating_sel == NULL)))
     {
       selection_tool->op = SELECTION_MOVE;      /* move the selection */

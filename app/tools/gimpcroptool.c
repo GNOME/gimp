@@ -1196,8 +1196,9 @@ crop_selection_callback (GtkWidget *widget,
 
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-      if (! gimage_mask_bounds (gdisp->gimage,
-                                &crop->x1, &crop->y1, &crop->x2, &crop->y2))
+      if (! gimp_image_mask_bounds (gdisp->gimage,
+                                    &crop->x1, &crop->y1,
+                                    &crop->x2, &crop->y2))
         {
           if (options->layer_only)
             {
