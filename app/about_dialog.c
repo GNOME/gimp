@@ -25,8 +25,9 @@
 #include "libgimp/gimpfeatures.h"
 
 #include "config.h"
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpenv.h"
+#include "libgimp/gimpintl.h"
+#include "libgimp/gimpmath.h"
 
 #include "about_dialog.h"
 
@@ -91,16 +92,21 @@ static gchar *scroll_text[] =
   "Tim Janik",
   "Tuomas Kuosmanen",
   "Peter Kirchgessner", 
+  "Karin Kylander"
+  "Olof S Kylander",
   "Nick Lamb",
   "Karl LaRocca",
   "Jens Lautenbacher",
   "Laramie Leavitt",
   "Elliot Lee",
+  "Marc Lehmann",
   "Raph Levien",
   "Adrian Likins",
+  "Tor Lillqvist",
   "Ingo Luetkebohle",
   "Josh MacDonald",
   "Ed Mackey",
+  "Vidar Madsen",
   "Marcelo Malheiros",
   "Ian Main",
   "Torsten Martinsen",
@@ -111,8 +117,10 @@ static gchar *scroll_text[] =
   "Sven Neumann",
   "Stephen Robert Norris",
   "Erik Nygren",
+  "Tomas Ogren",
   "Miles O'Neal",
   "Jay Painter",
+  "Asbjorn Pettersen",
   "Mike Phillips",
   "Raphael Quinet",
   "James Robinson",
@@ -133,7 +141,7 @@ static gchar *scroll_text[] =
 static gint nscroll_texts = sizeof (scroll_text) / sizeof (scroll_text[0]);
 static gint scroll_text_widths[100] = { 0 };
 static gint cur_scroll_text = 0;
-static gint cur_scroll_index = 0;
+static gint cur_scroll_index; 
 
 static gint shuffle_array[ sizeof(scroll_text) / sizeof(scroll_text[0]) ];
 
@@ -262,17 +270,17 @@ about_dialog_create (gint timeout)
 
       for (i = 0; i < nscroll_texts; i++) 
 	{
-	  int j, k;
+	  int j;
 	  j = rand() % nscroll_texts;
-	  k = rand() % nscroll_texts;
-	  if (j != k) 
+	  if (i != j) 
 	    {
 	      int t;
 	      t = shuffle_array[j];
-	      shuffle_array[j] = shuffle_array[k];
-	      shuffle_array[k] = t;
+	      shuffle_array[j] = shuffle_array[i];
+	      shuffle_array[i] = t;
 	    }
 	}
+      cur_scroll_text = rand() % nscroll_texts;
     }
   else 
     {

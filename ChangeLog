@@ -1,3 +1,9 @@
+Mon Sep  6 21:00:57 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/about_dialog.c: added a few more contributors and changed
+	the algorithm slightly. Sorry, Lauri, this isn't against you, but 
+	other people should have a chance to appear first too ;-)
+
 1999-09-06  James Henstridge  <james@daa.com.au>
 
 	* plug-ins/Makefile.am: conditionally compile pygimp.
