@@ -1,5 +1,10 @@
 2003-06-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpdrawtool.[ch] (gimp_draw_tool_is_active): new
+	function which returns (draw_tool->gdisp != NULL).
+
+2003-06-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/dialogs.c (toplevel_entries): added an entry for the
 	text tool editor.
 

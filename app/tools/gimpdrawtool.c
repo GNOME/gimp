@@ -237,6 +237,14 @@ gimp_draw_tool_stop (GimpDrawTool *draw_tool)
     }
 }
 
+gboolean
+gimp_draw_tool_is_active (GimpDrawTool *draw_tool)
+{
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), FALSE);
+
+  return draw_tool->gdisp != NULL;
+}
+
 void
 gimp_draw_tool_pause (GimpDrawTool *draw_tool)
 {

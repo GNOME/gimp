@@ -83,6 +83,9 @@ GType      gimp_draw_tool_get_type                 (void) G_GNUC_CONST;
 void       gimp_draw_tool_start                    (GimpDrawTool   *draw_tool,
                                                     GimpDisplay    *gdisp);
 void       gimp_draw_tool_stop                     (GimpDrawTool   *draw_tool);
+
+gboolean   gimp_draw_tool_is_active                (GimpDrawTool   *draw_tool);
+
 void       gimp_draw_tool_pause                    (GimpDrawTool   *draw_tool);
 void       gimp_draw_tool_resume                   (GimpDrawTool   *draw_tool);
 
