@@ -1,3 +1,8 @@
+2004-08-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/unsharp.c: don't show progress on the image
+	window while updating the preview.
+
 2004-08-09  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/unsharp.c (unsharp_region): reset the progress

@@ -95,7 +95,8 @@ static void      unsharp_region          (GimpPixelRgn   srcPTR,
                                           gint           x1,
                                           gint           x2,
                                           gint           y1,
-                                          gint           y2);
+                                          gint           y2,
+                                          gboolean       show_progress);
 
 static void      unsharp_mask            (GimpDrawable  *drawable,
                                           gdouble        radius,
@@ -274,8 +275,7 @@ unsharp_mask (GimpDrawable *drawable,
 
   /* Get the input */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  if ((run_mode != GIMP_RUN_NONINTERACTIVE))
-    gimp_progress_init (_("Blurring..."));
+  gimp_progress_init (_("Blurring..."));
 
   width = drawable->width;
   height = drawable->height;
@@ -286,7 +286,7 @@ unsharp_mask (GimpDrawable *drawable,
   gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
   unsharp_region (srcPR, destPR, width, height, bytes, radius, amount,
-                  x1, x2, y1, y2);
+                  x1, x2, y1, y2, TRUE);
 
   gimp_drawable_flush(drawable);
   gimp_drawable_merge_shadow(drawable->drawable_id, TRUE);
@@ -308,7 +308,8 @@ unsharp_region (GimpPixelRgn srcPR,
                 gint         x1,
                 gint         x2,
                 gint         y1,
-                gint         y2)
+                gint         y2,
+                gboolean     show_progress)
 {
   guchar  *cur_col;
   guchar  *dest_col;
@@ -363,7 +364,7 @@ unsharp_region (GimpPixelRgn srcPR,
       blur_line (ctable, cmatrix, cmatrix_length, cur_row, dest_row, x, bytes);
       gimp_pixel_rgn_set_row (&destPR, dest_row, x1, y1+row, x);
 
-      if (row % 5 == 0)
+      if (show_progress && row % 5 == 0)
         gimp_progress_update ((gdouble) row / (3*y));
     }
 
@@ -379,11 +380,11 @@ unsharp_region (GimpPixelRgn srcPR,
       blur_line (ctable, cmatrix, cmatrix_length, cur_col, dest_col, y, bytes);
       gimp_pixel_rgn_set_col (&destPR, dest_col, x1+col, y1, y);
 
-      if (col % 5 == 0)
+      if (show_progress && col % 5 == 0)
         gimp_progress_update ((gdouble) col / (3 * x) + 0.33);
     }
 
-  if ((run_mode != GIMP_RUN_NONINTERACTIVE))
+  if (show_progress)
     gimp_progress_init (_("Merging..."));
 
   /* find integer value of threshold */
@@ -418,13 +419,14 @@ unsharp_region (GimpPixelRgn srcPR,
             }
         }
       /* update progress bar every five rows */
-      if (row%5 == 0)
+      if (show_progress && row%5 == 0)
         gimp_progress_update ((gdouble) row / (3*y) + 0.67);
 
       gimp_pixel_rgn_set_row(&destPR, dest_row, x1, y1+row, x);
     }
 
-  gimp_progress_update (0.0);
+  if (show_progress)
+    gimp_progress_update (0.0);
 
   /* free the memory we took */
   g_free(cmatrix);
@@ -914,15 +916,13 @@ preview_update_real (gboolean apply_effect)
   preview_buf_width  = preview_buf_x2 - preview_buf_x1;
   preview_buf_height = preview_buf_y2 - preview_buf_y1;
 
-  /* If radius/amount/treshold changed render*/
-  if ((run_mode != GIMP_RUN_NONINTERACTIVE))
-    gimp_progress_init (_("Blurring..."));
   /* initialize pixel regions */
   gimp_pixel_rgn_init (&srcPR, drawable,
                        preview_buf_x1,preview_buf_y1,
                        preview_buf_width, preview_buf_height, FALSE, FALSE);
-  render_buffer = g_new (guchar, preview_buf_width * preview_buf_height * bytes);
-  
+  render_buffer = g_new (guchar,
+                         preview_buf_width * preview_buf_height * bytes);
+
   if (apply_effect)
     {
       /* render image */
@@ -930,9 +930,12 @@ preview_update_real (gboolean apply_effect)
                            preview_buf_x1,preview_buf_y1,
                            preview_buf_width, preview_buf_height,  TRUE, TRUE);
 
-      unsharp_region (srcPR, destPR, preview_buf_width, preview_buf_height, bytes,
+      unsharp_region (srcPR, destPR,
+                      preview_buf_width, preview_buf_height, bytes,
                       unsharp_params.radius, unsharp_params.amount,
-                      preview_buf_x1, preview_buf_x2, preview_buf_y1, preview_buf_y2);
+                      preview_buf_x1, preview_buf_x2,
+                      preview_buf_y1, preview_buf_y2,
+                      FALSE);
 
       gimp_pixel_rgn_get_rect(&destPR, render_buffer,
                               preview_buf_x1, preview_buf_y1,
@@ -940,9 +943,9 @@ preview_update_real (gboolean apply_effect)
     }
   else
     {
-      gimp_pixel_rgn_get_rect(&srcPR, render_buffer,
-                              preview_buf_x1, preview_buf_y1,
-                              preview_buf_width, preview_buf_height);
+      gimp_pixel_rgn_get_rect (&srcPR, render_buffer,
+                               preview_buf_x1, preview_buf_y1,
+                               preview_buf_width, preview_buf_height);
     }
 
   /*
