@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp CVS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-02 16:18-0400\n"
-"PO-Revision-Date: 2004-05-02 16:19-0400\n"
+"POT-Creation-Date: 2004-05-25 19:59-0400\n"
+"PO-Revision-Date: 2004-05-25 20:01-0400\n"
 "Last-Translator: Gareth Owen <gowen72@yahoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -401,7 +401,7 @@ msgstr "_Fractals"
 #: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1305
 #: plug-ins/common/mng.c:506 plug-ins/common/mng.c:838
 #: plug-ins/common/pat.c:428 plug-ins/common/pcx.c:584
-#: plug-ins/common/pix.c:516 plug-ins/common/png.c:1168
+#: plug-ins/common/pix.c:516 plug-ins/common/png.c:1171
 #: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:995
 #: plug-ins/common/psd_save.c:1555 plug-ins/common/spheredesigner.c:2082
 #: plug-ins/common/sunras.c:512 plug-ins/common/tga.c:1028
@@ -886,6 +886,22 @@ msgstr "Enable/disable real time preview of changes"
 msgid "Preview Options"
 msgstr "Preview Options"
 
+#: plug-ins/MapObject/mapobject_apply.c:273
+msgid "Map to Plane..."
+msgstr "Map to Plane..."
+
+#: plug-ins/MapObject/mapobject_apply.c:276
+msgid "Map to Sphere..."
+msgstr "Map to Sphere..."
+
+#: plug-ins/MapObject/mapobject_apply.c:279
+msgid "Map to Box..."
+msgstr "Map to Box..."
+
+#: plug-ins/MapObject/mapobject_apply.c:282
+msgid "Map to Cylinder..."
+msgstr "Map to Cylinder..."
+
 #: plug-ins/MapObject/mapobject_main.c:200
 msgid "<Image>/Filters/Map/Map _Object..."
 msgstr "<Image>/Filters/Map/Map _Object..."
@@ -1096,7 +1112,7 @@ msgstr "R_adius:"
 msgid "Cylinder radius"
 msgstr "Cylinder radius"
 
-#: plug-ins/MapObject/mapobject_ui.c:1299 plug-ins/common/mblur.c:782
+#: plug-ins/MapObject/mapobject_ui.c:1299 plug-ins/common/mblur.c:785
 msgid "L_ength:"
 msgstr "L_ength:"
 
@@ -1188,7 +1204,7 @@ msgstr "Error reading BMP file header from '%s'"
 #: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:253
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
 #: plug-ins/common/tiff.c:829 plug-ins/common/tile.c:264
-#: plug-ins/common/winclipboard.c:556 plug-ins/common/xbm.c:866
+#: plug-ins/common/winclipboard.c:573 plug-ins/common/xbm.c:866
 #: plug-ins/faxg3/faxg3.c:464 plug-ins/fits/fits.c:508
 #: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2443 plug-ins/sgi/sgi.c:368
 #: plug-ins/twain/twain.c:743 plug-ins/winsnap/winsnap.c:1234
@@ -1212,7 +1228,7 @@ msgstr "Cannot operate on unknown image types."
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
 #: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1260
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:544
-#: plug-ins/common/pix.c:522 plug-ins/common/png.c:1175
+#: plug-ins/common/pix.c:522 plug-ins/common/png.c:1178
 #: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
 #: plug-ins/common/psd_save.c:1560 plug-ins/common/sunras.c:517
 #: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1798
@@ -2281,7 +2297,7 @@ msgid "_Spherical Map"
 msgstr "_Spherical Map"
 
 #: plug-ins/common/bumpmap.c:966
-msgid "S_inuosidal Map"
+msgid "S_inusoidal Map"
 msgstr "S_inusoidal Map"
 
 #. Compensate darkening
@@ -3305,7 +3321,7 @@ msgid "Sc_attering:"
 msgstr "Sc_attering:"
 
 #: plug-ins/common/diffraction.c:637
-msgid "Po_latization:"
+msgid "Po_larization:"
 msgstr "Po_larisation:"
 
 #: plug-ins/common/diffraction.c:645
@@ -4779,39 +4795,39 @@ msgstr "_Hold the Maximal Channels"
 msgid "Ho_ld the Minimal Channels"
 msgstr "Ho_ld the Minimal Channels"
 
-#: plug-ins/common/mblur.c:150
+#: plug-ins/common/mblur.c:153
 msgid "<Image>/Filters/Blur/_Motion Blur..."
 msgstr "<Image>/Filters/Blur/_Motion Blur..."
 
-#: plug-ins/common/mblur.c:673
+#: plug-ins/common/mblur.c:676
 msgid "Motion Blurring..."
 msgstr "Motion Blurring..."
 
-#: plug-ins/common/mblur.c:743
+#: plug-ins/common/mblur.c:746
 msgid "Motion Blur"
 msgstr "Motion Blur"
 
-#: plug-ins/common/mblur.c:757
+#: plug-ins/common/mblur.c:760
 msgid "Blur Type"
 msgstr "Blur Type"
 
-#: plug-ins/common/mblur.c:761
+#: plug-ins/common/mblur.c:764
 msgid "_Linear"
 msgstr "_Linear"
 
-#: plug-ins/common/mblur.c:762
+#: plug-ins/common/mblur.c:765
 msgid "_Radial"
 msgstr "_Radial"
 
-#: plug-ins/common/mblur.c:763
+#: plug-ins/common/mblur.c:766
 msgid "_Zoom"
 msgstr "_Zoom"
 
-#: plug-ins/common/mblur.c:770
+#: plug-ins/common/mblur.c:773
 msgid "Blur Parameters"
 msgstr "Blur Parameters"
 
-#: plug-ins/common/mblur.c:791 plug-ins/common/newsprint.c:1009
+#: plug-ins/common/mblur.c:794 plug-ins/common/newsprint.c:1009
 msgid "_Angle:"
 msgstr "_Angle:"
 
@@ -4883,7 +4899,7 @@ msgstr "Default Frame Disposal:"
 msgid "PNG Compression Level:"
 msgstr "PNG Compression Level:"
 
-#: plug-ins/common/mng.c:1329 plug-ins/common/png.c:1670
+#: plug-ins/common/mng.c:1329 plug-ins/common/png.c:1673
 msgid "Choose a high compression level for small file size"
 msgstr "Choose a high compression level for small file size"
 
@@ -5491,71 +5507,71 @@ msgstr ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 
-#: plug-ins/common/png.c:1153
+#: plug-ins/common/png.c:1156
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Error while saving '%s'. Could not save image."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: plug-ins/common/png.c:1527
+#: plug-ins/common/png.c:1530
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Couldn't losslessly save transparency, saving opacity instead."
 
-#: plug-ins/common/png.c:1553
+#: plug-ins/common/png.c:1556
 msgid "Save as PNG"
 msgstr "Save as PNG"
 
-#: plug-ins/common/png.c:1557
+#: plug-ins/common/png.c:1560
 msgid "_Load Defaults"
 msgstr "_Load Defaults"
 
-#: plug-ins/common/png.c:1558
+#: plug-ins/common/png.c:1561
 msgid "_Save Defaults"
 msgstr "_Save Defaults"
 
 #. parameter settings
-#: plug-ins/common/png.c:1571 plug-ins/common/sample_colorize.c:1377
+#: plug-ins/common/png.c:1574 plug-ins/common/sample_colorize.c:1377
 msgid "Settings"
 msgstr "Settings"
 
-#: plug-ins/common/png.c:1584
+#: plug-ins/common/png.c:1587
 msgid "_Interlacing (Adam7)"
 msgstr "_Interlacing (Adam7)"
 
-#: plug-ins/common/png.c:1595
+#: plug-ins/common/png.c:1598
 msgid "Save _Background Color"
 msgstr "Save _Background Colour"
 
-#: plug-ins/common/png.c:1603
+#: plug-ins/common/png.c:1606
 msgid "Save _Gamma"
 msgstr "Save _Gamma"
 
-#: plug-ins/common/png.c:1612
+#: plug-ins/common/png.c:1615
 msgid "Save Layer O_ffset"
 msgstr "Save Layer O_ffset"
 
-#: plug-ins/common/png.c:1621
+#: plug-ins/common/png.c:1624
 msgid "Save _Resolution"
 msgstr "Save _Resolution"
 
-#: plug-ins/common/png.c:1630
+#: plug-ins/common/png.c:1633
 msgid "Save Creation _Time"
 msgstr "Save Creation _Time"
 
-#: plug-ins/common/png.c:1638
+#: plug-ins/common/png.c:1641
 msgid "Save Comme_nt"
 msgstr "Save Comme_nt"
 
-#: plug-ins/common/png.c:1653
+#: plug-ins/common/png.c:1656
 msgid "Save Color _Values From Transparent Pixels"
 msgstr "Save Colour _Values From Transparent Pixels"
 
-#: plug-ins/common/png.c:1666
+#: plug-ins/common/png.c:1669
 msgid "Co_mpression Level:"
 msgstr "Co_mpression Level:"
 
-#: plug-ins/common/png.c:1786
+#: plug-ins/common/png.c:1789
 msgid "Could not load PNG defaults"
 msgstr "Could not load PNG defaults"
 
@@ -5677,8 +5693,10 @@ msgstr "Error starting ghostscript (%s)"
 
 #: plug-ins/common/postscript.c:2297 plug-ins/common/postscript.c:2429
 #: plug-ins/common/postscript.c:2579 plug-ins/common/postscript.c:2707
-msgid "write error occured"
-msgstr "write error occured"
+#: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
+#: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
+msgid "Write error occurred"
+msgstr "Write error occurred"
 
 #: plug-ins/common/postscript.c:2733
 msgid "Load PostScript"
@@ -6387,8 +6405,8 @@ msgid "Spi_ke Angle (-1: Random):"
 msgstr "Spi_ke Angle (-1: Random):"
 
 #: plug-ins/common/sparkle.c:411
-msgid "Adjust the Spike Angle (-1 means a Random Angle is choosen)"
-msgstr "Adjust the Spike Angle (-1 means a Random Angle is choosen)"
+msgid "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
+msgstr "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
 
 #: plug-ins/common/sparkle.c:419
 msgid "Spik_e Density:"
@@ -6701,11 +6719,6 @@ msgstr "Can't operate on unknown image types"
 #: plug-ins/fits/fits.c:675
 msgid "EOF encountered on reading"
 msgstr "EOF encountered on reading"
-
-#: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
-#: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
-msgid "Write error occured"
-msgstr "Write error occured"
 
 #: plug-ins/common/sunras.c:1578
 msgid "Save as SUNRAS"
@@ -7102,8 +7115,8 @@ msgid "Create a new unit from scratch."
 msgstr "Create a new unit from scratch."
 
 #: plug-ins/common/uniteditor.c:563
-msgid "Create a new unit with the currently seleted unit as template."
-msgstr "Create a new unit with the currently seleted unit as template."
+msgid "Create a new unit with the currently selected unit as template."
+msgstr "Create a new unit with the currently selected unit as template."
 
 #: plug-ins/common/unsharp.c:149
 msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
@@ -7485,25 +7498,25 @@ msgstr "<Image>/Edit/Paste from Clipboard"
 msgid "<Toolbox>/File/Acquire/From Clipboard"
 msgstr "<Toolbox>/File/Acquire/From Clipboard"
 
-#: plug-ins/common/winclipboard.c:308
+#: plug-ins/common/winclipboard.c:325
 msgid "Copying..."
 msgstr "Copying..."
 
-#: plug-ins/common/winclipboard.c:471
+#: plug-ins/common/winclipboard.c:488
 msgid "Unsupported format or Clipboard empty!"
 msgstr "Unsupported format or Clipboard empty!"
 
-#: plug-ins/common/winclipboard.c:482
+#: plug-ins/common/winclipboard.c:499
 msgid "Can't get Clipboard data."
 msgstr "Can't get Clipboard data."
 
 #. ??? gimp_image_convert_rgb (image_ID);
 #.
-#: plug-ins/common/winclipboard.c:564
+#: plug-ins/common/winclipboard.c:581
 msgid "Pasted"
 msgstr "Pasted"
 
-#: plug-ins/common/winclipboard.c:577
+#: plug-ins/common/winclipboard.c:594
 msgid "Pasting..."
 msgstr "Pasting..."
 
@@ -7577,40 +7590,40 @@ msgstr "_Strength:"
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Higher values increase the magnitude of the effect"
 
-#: plug-ins/common/winprint.c:186
+#: plug-ins/common/winprint.c:224
 msgid "<Image>/File/_Print"
 msgstr "<Image>/File/_Print"
 
-#: plug-ins/common/winprint.c:198
+#: plug-ins/common/winprint.c:236
 msgid "<Image>/File/Page Setup"
 msgstr "<Image>/File/Page Setup"
 
-#: plug-ins/common/winprint.c:300
+#: plug-ins/common/winprint.c:338
 #, c-format
 msgid "PrintDlg failed: %d"
 msgstr "PrintDlg failed: %d"
 
-#: plug-ins/common/winprint.c:336
+#: plug-ins/common/winprint.c:374
 msgid "Printer doesn't support bitmaps"
 msgstr "Printer doesn't support bitmaps"
 
-#: plug-ins/common/winprint.c:378
+#: plug-ins/common/winprint.c:415
 msgid "StartPage failed"
 msgstr "StartPage failed"
 
-#: plug-ins/common/winprint.c:387 plug-ins/print/print-image-gimp.c:320
+#: plug-ins/common/winprint.c:424 plug-ins/print/print-image-gimp.c:320
 msgid "Printing..."
 msgstr "Printing..."
 
-#: plug-ins/common/winprint.c:419
+#: plug-ins/common/winprint.c:456
 msgid "CreateDIBSection failed"
 msgstr "CreateDIBSection failed"
 
-#: plug-ins/common/winprint.c:453
+#: plug-ins/common/winprint.c:492
 msgid "SetStretchBltMode failed (warning only)"
 msgstr "SetStretchBltMode failed (warning only)"
 
-#: plug-ins/common/winprint.c:516
+#: plug-ins/common/winprint.c:555
 #, c-format
 msgid ""
 "StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, "
@@ -7619,11 +7632,11 @@ msgstr ""
 "StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, "
 "error = %d, y = %d"
 
-#: plug-ins/common/winprint.c:545
+#: plug-ins/common/winprint.c:584
 msgid "EndPage failed"
 msgstr "EndPage failed"
 
-#: plug-ins/common/winprint.c:592
+#: plug-ins/common/winprint.c:631
 #, c-format
 msgid "PageSetupDlg failed: %d"
 msgstr "PageSetupDlg failed: %d"
@@ -8750,8 +8763,8 @@ msgid "XY Position:"
 msgstr "XY Position:"
 
 #: plug-ins/gfig/gfig-spiral.c:57
-msgid "Spiral Number of Points"
-msgstr "Spiral Number of Points"
+msgid "Spiral Number of Turns"
+msgstr "Spiral Number of Turns"
 
 #: plug-ins/gfig/gfig-star.c:56
 msgid "Star Number of Points"
@@ -9271,13 +9284,16 @@ msgid "Start angle:"
 msgstr "Start angle:"
 
 #: plug-ins/gimpressionist/orientation.c:78
-#: plug-ins/gimpressionist/orientation.c:90
-msgid "The angle of the first brush to create"
-msgstr "The angle of the first brush to create"
+msgid "The starting angle of the first brush to create"
+msgstr "The starting angle of the first brush to create"
 
 #: plug-ins/gimpressionist/orientation.c:86
 msgid "Angle span:"
 msgstr "Angle span:"
+
+#: plug-ins/gimpressionist/orientation.c:90
+msgid "The angle span of the first brush to create"
+msgstr "The angle span of the first brush to create"
 
 #: plug-ins/gimpressionist/orientation.c:114
 msgid ""
@@ -10720,6 +10736,11 @@ msgstr "<Image>/Filters/Render/Pattern/_Maze..."
 msgid "Drawing Maze..."
 msgstr "Drawing Maze..."
 
+#. $Id$
+#: plug-ins/maze/maze.h:2
+msgid "Maze"
+msgstr "Maze"
+
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:217
 msgid "Width (Pixels):"
@@ -11276,6 +11297,10 @@ msgstr "Scaling:"
 msgid "Set the scale (size) of the image"
 msgstr "Set the scale (size) of the image"
 
+#: plug-ins/print/gimp_main_window.c:1170
+msgid "Scale by:"
+msgstr "Scale by:"
+
 #: plug-ins/print/gimp_main_window.c:1175
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
@@ -11655,6 +11680,9 @@ msgstr "Error: Could not read XJT property file '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Error: XJT property file '%s' is empty."
+
+#~ msgid "write error occured"
+#~ msgstr "write error occured"
 
 #~ msgid "Preview (in image window, will modify image's undo history!)"
 #~ msgstr "Preview (in image window, will modify image's undo history!)"
