@@ -44,12 +44,12 @@
 #define TAN_1o6PI_RAD 1 / SQRT3        /* Tangent 1/6 Pi Radians == SIN / COS */
 #define RECIP_TAN_1o6PI_RAD SQRT3      /* Reciprocal of Tangent 1/6 Pi Radians */
 
-static GdkGC  *grid_hightlight_drawgc;
-gint    grid_gc_type = GTK_STATE_NORMAL;
+static GdkGC *grid_hightlight_drawgc;
+gint          grid_gc_type = GTK_STATE_NORMAL;
 
-static GdkGC    *gfig_get_grid_gc       (GtkWidget *widget,
-                                         gint       gctype);
-static gint      get_num_radials        (void);
+static GdkGC *gfig_get_grid_gc       (GtkWidget *widget,
+                                      gint       gctype);
+static gint   get_num_radials        (void);
 
 /* find_grid_pos - Given an x, y point return the grid position of it */
 /* return the new position in the passed point */
@@ -99,11 +99,11 @@ find_grid_pos (GdkPoint *p,
                GdkPoint *gp,
                guint     is_butt3)
 {
-  gint16 x = p->x;
-  gint16 y = p->y;
+  gint16          x = p->x;
+  gint16          y = p->y;
   static GdkPoint cons_pnt;
-  static gdouble cons_radius;
-  static gdouble cons_ang;
+  static gdouble  cons_radius;
+  static gdouble  cons_ang;
   static gboolean cons_center;
 
   if (selvals.opts.gridtype == RECT_GRID)
@@ -137,9 +137,9 @@ find_grid_pos (GdkPoint *p,
       gdouble real_radius;
       gdouble real_angle;
       gdouble rounded_angle;
-      gint rounded_radius;
-      gint16 shift_x = x - preview_width/2;
-      gint16 shift_y = -y + preview_height/2;
+      gint    rounded_radius;
+      gint16  shift_x = x - preview_width/2;
+      gint16  shift_y = -y + preview_height/2;
 
       real_radius = ang_radius = sqrt ((shift_y*shift_y) + (shift_x*shift_x));
 
@@ -312,10 +312,10 @@ find_grid_pos (GdkPoint *p,
 static void
 draw_grid_polar (GdkGC *drawgc)
 {
-  gint step;
-  gint loop;
-  gint radius;
-  gint max_rad;
+  gint    step;
+  gint    loop;
+  gint    radius;
+  gint    max_rad;
   gdouble ang_grid;
   gdouble ang_loop;
   gdouble ang_radius;
@@ -402,7 +402,7 @@ static void
 draw_grid_iso (GdkGC *drawgc)
 {
   /* vstep is an int since it's defined from grid size */
-  gint vstep;
+  gint    vstep;
   gdouble loop;
   gdouble hstep;
 

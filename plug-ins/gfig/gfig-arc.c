@@ -40,7 +40,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-/* Distance between two lines */
+/* Distance between two points. */
 static gdouble
 dist (gdouble x1,
       gdouble y1,
@@ -117,7 +117,7 @@ line_definition (gdouble  x1,
 
   /* Invert grad for perpen gradient */
 
-  *lgrad = -1.0/grad1;
+  *lgrad = -1.0 / grad1;
 
   *lconst = line_cons (midx, midy,*lgrad);
 }
@@ -145,8 +145,8 @@ arc_details (GdkPoint *vert_a,
   double circumcircle_R;
   double line1_grad, line1_const;
   double line2_grad, line2_const;
-  double inter_x=0.0, inter_y=0.0;
-  int got_x=0, got_y=0;
+  double inter_x = 0.0, inter_y = 0.0;
+  int    got_x = 0, got_y = 0;
 
   ax = (double) (vert_a->x);
   ay = (double) (vert_a->y);
@@ -297,16 +297,16 @@ arc_angle (GdkPoint *pnt,
            GdkPoint *center)
 {
   /* Get angle (in degress) of point given origin of center */
-  gint16 shift_x;
-  gint16 shift_y;
+  gint16  shift_x;
+  gint16  shift_y;
   gdouble offset_angle;
 
-  shift_x = pnt->x - center->x;
+  shift_x =  pnt->x - center->x;
   shift_y = -pnt->y + center->y;
   offset_angle = atan2 (shift_y, shift_x);
 
   if (offset_angle < 0)
-    offset_angle += 2*G_PI;
+    offset_angle += 2.0 * G_PI;
 
   return offset_angle * 360 / (2*G_PI);
 }
@@ -320,12 +320,12 @@ arc_drawing_details (Dobject  *obj,
                      gint      draw_cnts,
                      gint      do_scale)
 {
-  DobjPoints * pnt1 = NULL;
-  DobjPoints * pnt2 = NULL;
-  DobjPoints * pnt3 = NULL;
-  DobjPoints dpnts[3];
-  gdouble ang1, ang2, ang3;
-  gdouble maxang;
+  DobjPoints *pnt1 = NULL;
+  DobjPoints *pnt2 = NULL;
+  DobjPoints *pnt3 = NULL;
+  DobjPoints  dpnts[3];
+  gdouble     ang1, ang2, ang3;
+  gdouble     maxang;
 
   pnt1 = obj->points;
 
@@ -406,15 +406,15 @@ static void
 d_draw_arc (Dobject * obj)
 {
   GdkPoint center_pnt;
-  gdouble radius, minang, arcang;
+  gdouble  radius, minang, arcang;
 
   g_assert (obj != NULL);
 
   if (!obj)
     return;
 
-  arc_drawing_details (obj, &minang, &center_pnt, &arcang, &radius, TRUE,
-                       FALSE);
+  arc_drawing_details (obj, &minang, &center_pnt, &arcang, &radius,
+                       TRUE, FALSE);
   gfig_draw_arc (center_pnt.x, center_pnt.y, radius, radius, minang, arcang);
 }
 
@@ -424,16 +424,16 @@ d_paint_arc (Dobject *obj)
   /* first point center */
   /* Next point is radius */
   gdouble *line_pnts;
-  gint seg_count = 0;
-  gint i = 0;
-  gdouble ang_grid;
-  gdouble ang_loop;
-  gdouble radius;
-  gint loop;
+  gint     seg_count = 0;
+  gint     i = 0;
+  gdouble  ang_grid;
+  gdouble  ang_loop;
+  gdouble  radius;
+  gint     loop;
   GdkPoint first_pnt, last_pnt;
   gboolean first = TRUE;
   GdkPoint center_pnt;
-  gdouble minang, arcang;
+  gdouble  minang, arcang;
 
   g_assert (obj != NULL);
 
@@ -449,7 +449,7 @@ d_paint_arc (Dobject *obj)
   line_pnts = g_new0 (gdouble, 2 * seg_count + 3);
 
   /* Lines */
-  ang_grid = 2*G_PI/(gdouble)360;
+  ang_grid = 2.0 * G_PI / 360.0;
 
   if (arcang < 0.0)
     {
@@ -458,16 +458,16 @@ d_paint_arc (Dobject *obj)
       arcang = -arcang;
     }
 
-  minang = minang * (2*G_PI/360); /* min ang is in degrees - need in rads*/
+  minang = minang * (2.0 * G_PI / 360.0); /* min ang is in degrees - need in rads*/
 
   for (loop = 0 ; loop < abs ((gint)arcang) ; loop++)
     {
-      gdouble lx, ly;
+      gdouble  lx, ly;
       GdkPoint calc_pnt;
 
       ang_loop = (gdouble)loop * ang_grid + minang;
 
-      lx = radius * cos (ang_loop);
+      lx =  radius * cos (ang_loop);
       ly = -radius * sin (ang_loop); /* y grows down screen and angs measured from x clockwise */
 
       calc_pnt.x = RINT (lx + center_pnt.x);
@@ -525,7 +525,7 @@ d_paint_arc (Dobject *obj)
 }
 
 static Dobject *
-d_copy_arc (Dobject * obj)
+d_copy_arc (Dobject *obj)
 {
   Dobject *nc;
 
@@ -552,9 +552,9 @@ d_arc_object_class_init ()
 void
 d_update_arc (GdkPoint *pnt)
 {
-  DobjPoints * pnt1 = NULL;
-  DobjPoints * pnt2 = NULL;
-  DobjPoints * pnt3 = NULL;
+  DobjPoints *pnt1 = NULL;
+  DobjPoints *pnt2 = NULL;
+  DobjPoints *pnt3 = NULL;
 
   /* First two points as line only become arch when third
    * point is placed on canvas.
@@ -562,9 +562,9 @@ d_update_arc (GdkPoint *pnt)
 
   pnt1 = obj_creating->points;
 
-  if (!pnt1 ||
-     !(pnt2 = pnt1->next) ||
-     !(pnt3 = pnt2->next))
+  if (!pnt1                ||
+      !(pnt2 = pnt1->next) ||
+      !(pnt3 = pnt2->next))
     {
       d_update_line (pnt);
       return; /* Not fully drawn */
@@ -588,13 +588,12 @@ void
 d_arc_end (GdkPoint *pnt,
            gint      shift_down)
 {
-  /* Under contrl point */
-  if (!tmp_line ||
-     !tmp_line->points ||
-     !tmp_line->points->next)
+  /* Under control point */
+  if (!tmp_line               ||
+      !tmp_line->points       ||
+      !tmp_line->points->next)
     {
       /* No arc created  - yet. Must have three points */
-
       d_line_end (pnt, TRUE);
     }
   else

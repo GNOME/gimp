@@ -54,16 +54,16 @@
 static Dobject  *operation_obj;
 static GdkPoint *move_all_pnt; /* Point moving all from */
 
-static void     draw_one_obj    (Dobject *obj);
-static void     do_move_obj     (Dobject  *obj,
-                                 GdkPoint *to_pnt);
-static void     do_move_all_obj (GdkPoint *to_pnt);
-static void     do_move_obj_pnt (Dobject  *obj,
-                                 GdkPoint *to_pnt);
-static void     remove_obj_from_list (GFigObj *obj,
-                                      Dobject *del_obj);
-static gint     scan_obj_points (DobjPoints *opnt,
-                                 GdkPoint   *pnt);
+static void     draw_one_obj         (Dobject    *obj);
+static void     do_move_obj          (Dobject    *obj,
+                                      GdkPoint   *to_pnt);
+static void     do_move_all_obj      (GdkPoint   *to_pnt);
+static void     do_move_obj_pnt      (Dobject    *obj,
+                                      GdkPoint   *to_pnt);
+static void     remove_obj_from_list (GFigObj    *obj,
+                                      Dobject    *del_obj);
+static gint     scan_obj_points      (DobjPoints *opnt,
+                                      GdkPoint   *pnt);
 
 void
 d_save_object (Dobject *obj,
@@ -90,7 +90,8 @@ gfig_read_object_type (gchar *desc)
 {
   gchar    *ptr = desc;
   DobjType  type;
-  if (* ptr != '<')
+
+  if (*ptr != '<')
     return OBJ_TYPE_NONE;
 
   ptr++;
@@ -108,11 +109,11 @@ Dobject *
 d_load_object (gchar *desc,
                FILE  *fp)
 {
-  Dobject *new_obj = NULL;
-  gint     xpnt;
-  gint     ypnt;
-  gchar    buf[MAX_LOAD_LINE];
-  DobjType type;
+  Dobject  *new_obj = NULL;
+  gint      xpnt;
+  gint      ypnt;
+  gchar     buf[MAX_LOAD_LINE];
+  DobjType  type;
 
   type = gfig_read_object_type (desc);
   if (type == OBJ_TYPE_NONE)
@@ -289,8 +290,8 @@ inside_sqr (GdkPoint *cpnt,
             GdkPoint *testpnt)
 {
   /* Return TRUE if testpnt is near cpnt */
-  gint x = cpnt->x;
-  gint y = cpnt->y;
+  gint x  = cpnt->x;
+  gint y  = cpnt->y;
   gint tx = testpnt->x;
   gint ty = testpnt->y;
 

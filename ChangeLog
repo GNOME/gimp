@@ -1,3 +1,17 @@
+2004-10-28  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-arc.c
+	* plug-ins/gfig/gfig-bezier.c
+	* plug-ins/gfig/gfig-bezier.h
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-dialog.h
+	* plug-ins/gfig/gfig-dobject.c
+	* plug-ins/gfig/gfig-dobject.h
+	* plug-ins/gfig/gfig-ellipse.c
+	* plug-ins/gfig/gfig-grid.c
+	* plug-ins/gfig/gfig-grid.h
+	* plug-ins/gfig/gfig.c: small cleanups
+
 2004-10-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpdrawablecombobox.c

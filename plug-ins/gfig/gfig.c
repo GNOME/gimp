@@ -56,13 +56,9 @@
 #include "gfig-star.h"
 #include "gfig-stock.h"
 
-#include "pix-data.h"
-
-
 /***** Magic numbers *****/
 
 #define GFIG_HEADER      "GFIG Version 0.2\n"
-
 
 static void      query  (void);
 static void      run    (const gchar      *name,
@@ -70,7 +66,6 @@ static void      run    (const gchar      *name,
                          const GimpParam  *param,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
-
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -83,7 +78,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 
 
-gint   line_no;
+gint line_no;
 
 gint obj_show_single   = -1; /* -1 all >= 0 object number */
 
@@ -95,7 +90,7 @@ Dobject *obj_creating; /* Object we are creating */
 Dobject *tmp_line;     /* Needed when drawing lines */
 
 
-gint      need_to_scale;
+gint need_to_scale;
 
 
 static gint       load_options            (GFigObj *gfig,
@@ -105,11 +100,11 @@ static gint       load_options            (GFigObj *gfig,
 GdkGC  *gfig_gc;
 
 /* Stuff for the preview bit */
-static gint    sel_x1, sel_y1, sel_x2, sel_y2;
-static gint    sel_width, sel_height;
-gint    preview_width, preview_height;
-gdouble scale_x_factor, scale_y_factor;
-GdkPixbuf *back_pixbuf = NULL;
+static gint  sel_x1, sel_y1, sel_x2, sel_y2;
+static gint  sel_width, sel_height;
+gint         preview_width, preview_height;
+gdouble      scale_x_factor, scale_y_factor;
+GdkPixbuf   *back_pixbuf = NULL;
 
 MAIN ()
 
@@ -153,7 +148,7 @@ run (const gchar      *name,
   gint               pwidth, pheight;
   INIT_I18N ();
 
-  gfig_context = (GFigContext*)g_malloc (sizeof (GFigContext));
+  gfig_context = g_new (GFigContex, 1);
   gfig_context->show_background = TRUE;
   gfig_context->selected_obj = NULL;
   run_mode = param[0].data.d_int32;
@@ -167,7 +162,6 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 
   gimp_image_undo_group_start (gfig_context->image_id);
-
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
@@ -314,8 +308,8 @@ gint
 gfig_list_pos (GFigObj *gfig)
 {
   GFigObj *g;
-  gint n;
-  GList *tmp;
+  gint     n;
+  GList   *tmp;
 
   n = 0;
 
@@ -373,10 +367,10 @@ gfig_load_objs (GFigObj *gfig,
                 FILE    *fp)
 {
   Dobject *obj;
-  gchar load_buf[MAX_LOAD_LINE];
-  glong offset;
-  glong offset2;
-  Style style;
+  gchar    load_buf[MAX_LOAD_LINE];
+  glong    offset;
+  glong    offset2;
+  Style    style;
 
   while (load_count-- > 0)
     {
@@ -417,6 +411,7 @@ gfig_load (const gchar *filename,
   gdouble  version;
   guchar   magic1[20];
   guchar   magic2[20];
+
   g_assert (filename != NULL);
 
 #ifdef DEBUG
@@ -510,7 +505,8 @@ save_options (GString *string)
 {
   /* Save options */
   g_string_append_printf (string, "<OPTIONS>\n");
-  g_string_append_printf (string, "GridSpacing: %d\n", selvals.opts.gridspacing);
+  g_string_append_printf (string, "GridSpacing: %d\n",
+                          selvals.opts.gridspacing);
   if (selvals.opts.gridtype == RECT_GRID)
     {
       g_string_append_printf (string, "GridType: RECT_GRID\n");
@@ -525,13 +521,18 @@ save_options (GString *string)
     }
   else
     {
-      g_string_append_printf (string, "GridType: RECT_GRID\n"); /* default to RECT_GRID */
+      /* default to RECT_GRID */
+      g_string_append_printf (string, "GridType: RECT_GRID\n");
     }
 
-  g_string_append_printf (string, "DrawGrid: %s\n", (selvals.opts.drawgrid)?"TRUE":"FALSE");
-  g_string_append_printf (string, "Snap2Grid: %s\n", (selvals.opts.snap2grid)?"TRUE":"FALSE");
-  g_string_append_printf (string, "LockOnGrid: %s\n", (selvals.opts.lockongrid)?"TRUE":"FALSE");
-  g_string_append_printf (string, "ShowControl: %s\n", (selvals.opts.showcontrol)?"TRUE":"FALSE");
+  g_string_append_printf (string, "DrawGrid: %s\n",
+                          (selvals.opts.drawgrid) ? "TRUE" : "FALSE");
+  g_string_append_printf (string, "Snap2Grid: %s\n",
+                          (selvals.opts.snap2grid) ? "TRUE" : "FALSE");
+  g_string_append_printf (string, "LockOnGrid: %s\n",
+                          (selvals.opts.lockongrid) ? "TRUE" : "FALSE");
+  g_string_append_printf (string, "ShowControl: %s\n",
+                          (selvals.opts.showcontrol) ? "TRUE" : "FALSE");
   g_string_append_printf (string, "</OPTIONS>\n");
 }
 
@@ -551,7 +552,7 @@ gfig_save_obj_end (Dobject *obj,
   g_string_append_printf (string, "</%s>\n",obj->class->name);
 }
 
-static gint
+static gboolean
 load_bool (gchar *opt_buf,
            gint  *toset)
 {
@@ -560,9 +561,9 @@ load_bool (gchar *opt_buf,
   else if (!strcmp (opt_buf, "FALSE"))
     *toset = 0;
   else
-    return (-1);
+    return TRUE;
 
-  return (0);
+  return FALSE;
 }
 
 static gint
@@ -657,11 +658,11 @@ load_options (GFigObj *gfig,
 GString *
 gfig_save_as_string ()
 {
-  DAllObjs     *objs;
-  gint          count = 0;
-  gchar         buf[G_ASCII_DTOSTR_BUF_SIZE];
-  gchar         conv_buf[MAX_LOAD_LINE*3 +1];
-  GString       *string;
+  DAllObjs *objs;
+  gint      count = 0;
+  gchar     buf[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar     conv_buf[MAX_LOAD_LINE * 3 + 1];
+  GString  *string;
 
   string = g_string_new (GFIG_HEADER);
 

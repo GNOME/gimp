@@ -46,10 +46,10 @@ d_draw_ellipse (Dobject * obj)
 {
   DobjPoints *center_pnt;
   DobjPoints *edge_pnt;
-  gint bound_wx;
-  gint bound_wy;
-  gint top_x;
-  gint top_y;
+  gint        bound_wx;
+  gint        bound_wy;
+  gint        top_x;
+  gint        top_y;
 
   center_pnt = obj->points;
 
@@ -87,19 +87,19 @@ d_paint_approx_ellipse (Dobject *obj)
 {
   /* first point center */
   /* Next point is radius */
-  gdouble *line_pnts;
-  gint seg_count = 0;
-  gint i = 0;
-  DobjPoints * center_pnt;
-  DobjPoints * radius_pnt;
-  gdouble a_axis;
-  gdouble b_axis;
-  gdouble ang_grid;
-  gdouble ang_loop;
-  gdouble radius;
-  gint loop;
-  GdkPoint first_pnt, last_pnt;
-  gboolean first = TRUE;
+  gdouble    *line_pnts;
+  gint        seg_count = 0;
+  gint        i = 0;
+  DobjPoints *center_pnt;
+  DobjPoints *radius_pnt;
+  gdouble     a_axis;
+  gdouble     b_axis;
+  gdouble     ang_grid;
+  gdouble     ang_loop;
+  gdouble     radius;
+  gint        loop;
+  GdkPoint    first_pnt, last_pnt;
+  gboolean    first = TRUE;
 
   g_assert (obj != NULL);
 
@@ -199,13 +199,13 @@ d_paint_approx_ellipse (Dobject *obj)
 static void
 d_paint_ellipse (Dobject *obj)
 {
-  DobjPoints * center_pnt;
-  DobjPoints * edge_pnt;
-  gint bound_wx;
-  gint bound_wy;
-  gint top_x;
-  gint top_y;
-  gdouble dpnts[4];
+  DobjPoints *center_pnt;
+  DobjPoints *edge_pnt;
+  gint        bound_wx;
+  gint        bound_wy;
+  gint        top_x;
+  gint        top_y;
+  gdouble     dpnts[4];
 
   /* Drawing ellipse is hard .
    * 1) select circle
@@ -298,10 +298,10 @@ void
 d_update_ellipse (GdkPoint *pnt)
 {
   DobjPoints *center_pnt, *edge_pnt;
-  gint bound_wx;
-  gint bound_wy;
-  gint top_x;
-  gint top_y;
+  gint        bound_wx;
+  gint        bound_wy;
+  gint        top_x;
+  gint        top_y;
 
   /* Undraw last one then draw new one */
   center_pnt = obj_creating->points;
@@ -312,16 +312,16 @@ d_update_ellipse (GdkPoint *pnt)
   if ((edge_pnt = center_pnt->next))
     {
       /* Undraw current */
-      bound_wx = abs (center_pnt->pnt.x - edge_pnt->pnt.x)*2;
-      bound_wy = abs (center_pnt->pnt.y - edge_pnt->pnt.y)*2;
+      bound_wx = abs (center_pnt->pnt.x - edge_pnt->pnt.x) * 2;
+      bound_wy = abs (center_pnt->pnt.y - edge_pnt->pnt.y) * 2;
 
       if (edge_pnt->pnt.x > center_pnt->pnt.x)
-        top_x = 2*center_pnt->pnt.x - edge_pnt->pnt.x;
+        top_x = 2 * center_pnt->pnt.x - edge_pnt->pnt.x;
       else
         top_x = edge_pnt->pnt.x;
 
       if (edge_pnt->pnt.y > center_pnt->pnt.y)
-        top_y = 2*center_pnt->pnt.y - edge_pnt->pnt.y;
+        top_y = 2 * center_pnt->pnt.y - edge_pnt->pnt.y;
       else
         top_y = edge_pnt->pnt.y;
 
@@ -335,23 +335,23 @@ d_update_ellipse (GdkPoint *pnt)
                     bound_wx,
                     bound_wy,
                     0,
-                    360*64);
+                    360 * 64);
     }
 
   draw_circle (pnt);
 
   edge_pnt = new_dobjpoint (pnt->x, pnt->y);
 
-  bound_wx = abs (center_pnt->pnt.x - edge_pnt->pnt.x)*2;
-  bound_wy = abs (center_pnt->pnt.y - edge_pnt->pnt.y)*2;
+  bound_wx = abs (center_pnt->pnt.x - edge_pnt->pnt.x) * 2;
+  bound_wy = abs (center_pnt->pnt.y - edge_pnt->pnt.y) * 2;
 
   if (edge_pnt->pnt.x > center_pnt->pnt.x)
-    top_x = 2*center_pnt->pnt.x - edge_pnt->pnt.x;
+    top_x = 2 * center_pnt->pnt.x - edge_pnt->pnt.x;
   else
     top_x = edge_pnt->pnt.x;
 
   if (edge_pnt->pnt.y > center_pnt->pnt.y)
-    top_y = 2* center_pnt->pnt.y - edge_pnt->pnt.y;
+    top_y = 2 * center_pnt->pnt.y - edge_pnt->pnt.y;
   else
     top_y = edge_pnt->pnt.y;
 
@@ -363,7 +363,7 @@ d_update_ellipse (GdkPoint *pnt)
                 bound_wx,
                 bound_wy,
                 0,
-                360*64);
+                360 * 64);
 
   center_pnt->next = edge_pnt;
 }

@@ -50,8 +50,8 @@ static Dobject  * d_copy_bezier           (Dobject * obj);
 
 #define FP_PNT_MAX  10
 
-static int fp_pnt_cnt = 0;
-static int fp_pnt_chunk = 0;
+static int      fp_pnt_cnt = 0;
+static int      fp_pnt_chunk = 0;
 static gdouble *fp_pnt_pnts = NULL;
 
 static void
@@ -177,10 +177,10 @@ DrawBezier (gdouble (*points)[2],
 void
 d_draw_bezier (Dobject *obj)
 {
-  DobjPoints * spnt;
-  gint seg_count = 0;
-  gint i = 0;
-  gdouble (*line_pnts)[2];
+  DobjPoints *spnt;
+  gint        seg_count = 0;
+  gint        i = 0;
+  gdouble   (*line_pnts)[2];
 
   spnt = obj->points;
 
@@ -198,7 +198,8 @@ d_draw_bezier (Dobject *obj)
     {
       draw_sqr (&spnt->pnt);
       line_pnts[i][0] = spnt->pnt.x;
-      line_pnts[i++][1] = spnt->pnt.y;
+      line_pnts[i][1] = spnt->pnt.y;
+      i++;
     }
 
   /* Generate an array of doubles which are the control points */
@@ -221,11 +222,11 @@ d_draw_bezier (Dobject *obj)
 static void
 d_paint_bezier (Dobject *obj)
 {
-  gdouble *line_pnts;
-  gdouble (*bz_line_pnts)[2];
+  gdouble    *line_pnts;
+  gdouble   (*bz_line_pnts)[2];
   DobjPoints *spnt;
-  gint seg_count = 0;
-  gint i = 0;
+  gint        seg_count = 0;
+  gint        i = 0;
 
   /* First count the number of points */
   for (spnt = obj->points; spnt; spnt = spnt->next)
@@ -240,7 +241,8 @@ d_paint_bezier (Dobject *obj)
   for (spnt = obj->points; spnt; spnt = spnt->next)
     {
       bz_line_pnts[i][0] = spnt->pnt.x;
-      bz_line_pnts[i++][1] = spnt->pnt.y;
+      bz_line_pnts[i][1] = spnt->pnt.y;
+      i++;
     }
 
   fp_pnt_start ();
@@ -308,7 +310,7 @@ void
 d_update_bezier (GdkPoint *pnt)
 {
   DobjPoints *s_pnt, *l_pnt;
-  gint saved_cnt_pnt = selvals.opts.showcontrol;
+  gint        saved_cnt_pnt = selvals.opts.showcontrol;
 
   g_assert (tmp_bezier != NULL);
 
@@ -464,8 +466,8 @@ tool_options_bezier (GtkWidget *notebook,
                     G_CALLBACK (gimp_toggle_button_update),
                     &bezier_line_frame);
   gimp_help_set_help_data (toggle,
-                        _("Draws lines between the control points. "
-                          "Only during curve creation"), NULL);
+                           _("Draws lines between the control points. "
+                           "Only during curve creation"), NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bezier_line_frame);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);

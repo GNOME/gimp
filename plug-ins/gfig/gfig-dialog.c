@@ -860,6 +860,7 @@ static GtkWidget *
 draw_buttons (GtkWidget *ww)
 {
   GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *button;
   GtkWidget *frame;
   GtkWidget *image;
@@ -872,9 +873,13 @@ draw_buttons (GtkWidget *ww)
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_widget_show (vbox);
 
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
   /* Create group */
   frame = gimp_frame_new ("Toolbox");
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (9, 4, FALSE);
@@ -1632,7 +1637,7 @@ but_with_pix (const gchar  *stock_id,
                     G_CALLBACK (toggle_obj_type),
                     GINT_TO_POINTER (baction));
   gtk_widget_show (button);
- 
+
   *group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
 
   return button;
@@ -1760,9 +1765,11 @@ gridtype_combo_callback (GtkWidget *widget,
     case GRID_TYPE_MENU:
       selvals.opts.gridtype = value;
       break;
+
     case GRID_RENDER_MENU:
       grid_gc_type = value;
       break;
+
     default:
       g_return_if_reached ();
       break;
@@ -1770,8 +1777,6 @@ gridtype_combo_callback (GtkWidget *widget,
 
   draw_grid_clear ();
 }
-
-
 
 /*
  *  The edit gfig name attributes dialog
@@ -1837,15 +1842,19 @@ paint_layer_fill (void)
     {
     case FILL_NONE:
       return;
+
     case FILL_FOREGROUND:
       fill_mode = GIMP_FG_BUCKET_FILL;
       break;
+
     case FILL_BACKGROUND:
       fill_mode = GIMP_BG_BUCKET_FILL;
       break;
+
     case FILL_PATTERN:
       fill_mode = GIMP_PATTERN_BUCKET_FILL;
       break;
+
     default:
       return;
     }
@@ -1868,7 +1877,7 @@ gfig_paint_callback (void)
   gchar      buf[128];
   gint       count;
   gint       ccount = 0;
-  Style    *style0;
+  Style     *style0;
 
   if (!gfig_context->enable_repaint || !gfig_context->current_obj)
     return;
@@ -1925,8 +1934,8 @@ draw_sqr (GdkPoint *p)
   gdk_draw_rectangle (gfig_context->preview->window,
                       gfig_gc,
                       0,
-                      gfig_scale_x (p->x) - SQ_SIZE/2,
-                      gfig_scale_y (p->y) - SQ_SIZE/2,
+                      gfig_scale_x (p->x) - SQ_SIZE / 2,
+                      gfig_scale_y (p->y) - SQ_SIZE / 2,
                       SQ_SIZE,
                       SQ_SIZE);
 }
