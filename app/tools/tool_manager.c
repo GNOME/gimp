@@ -495,8 +495,8 @@ tool_manager_tool_changed (GimpContext  *user_context,
     }
   else
     {
-      g_warning ("%s(): tool_info->tool_type is no GimpTool subclass",
-		 G_GNUC_FUNCTION);
+      g_warning ("%s: tool_info->tool_type is no GimpTool subclass",
+		 G_STRFUNC);
       return;
     }
 

@@ -2097,8 +2097,7 @@ gimp_image_get_new_tattoo (GimpImage *gimage)
   gimage->tattoo_state++;
 
   if (gimage->tattoo_state <= 0)
-    g_warning ("%s: Tattoo state corrupted (integer overflow).",
-               G_GNUC_PRETTY_FUNCTION);
+    g_warning ("%s: Tattoo state corrupted (integer overflow).", G_STRFUNC);
 
   return gimage->tattoo_state;
 }
@@ -2526,15 +2525,13 @@ gimp_image_add_layer (GimpImage *gimage,
   if (GIMP_ITEM (layer)->gimage != NULL &&
       GIMP_ITEM (layer)->gimage != gimage)
     {
-      g_warning ("%s: attempting to add layer to wrong image.",
-		 G_GNUC_PRETTY_FUNCTION);
+      g_warning ("%s: attempting to add layer to wrong image.", G_STRFUNC);
       return FALSE;
     }
 
   if (gimp_container_have (gimage->layers, GIMP_OBJECT (layer)))
     {
-      g_warning ("%s: trying to add layer to image twice.",
-		 G_GNUC_PRETTY_FUNCTION);
+      g_warning ("%s: trying to add layer to image twice.", G_STRFUNC);
       return FALSE;
     }
 
@@ -2543,8 +2540,7 @@ gimp_image_add_layer (GimpImage *gimage,
   if (floating_sel && gimp_layer_is_floating_sel (layer))
     {
       g_warning ("%s: trying to add floating layer to image which alyready "
-                 "has a floating selection.",
-                 G_GNUC_PRETTY_FUNCTION);
+                 "has a floating selection.", G_STRFUNC);
       return FALSE;
     }
 
@@ -2855,15 +2851,13 @@ gimp_image_add_channel (GimpImage   *gimage,
   if (GIMP_ITEM (channel)->gimage != NULL &&
       GIMP_ITEM (channel)->gimage != gimage)
     {
-      g_warning ("%s: attempting to add channel to wrong image.",
-		 G_GNUC_PRETTY_FUNCTION);
+      g_warning ("%s: attempting to add channel to wrong image.", G_STRFUNC);
       return FALSE;
     }
 
   if (gimp_container_have (gimage->channels, GIMP_OBJECT (channel)))
     {
-      g_warning ("%s: trying to add channel to image twice.",
-		 G_GNUC_PRETTY_FUNCTION);
+      g_warning ("%s: trying to add channel to image twice.", G_STRFUNC);
       return FALSE;
     }
 
@@ -3095,15 +3089,13 @@ gimp_image_add_vectors (GimpImage   *gimage,
   if (GIMP_ITEM (vectors)->gimage != NULL &&
       GIMP_ITEM (vectors)->gimage != gimage)
     {
-      g_warning ("%s: attempting to add vectors to wrong image.",
-		 G_GNUC_PRETTY_FUNCTION);
+      g_warning ("%s: attempting to add vectors to wrong image.", G_STRFUNC);
       return FALSE;
     }
 
   if (gimp_container_have (gimage->vectors, GIMP_OBJECT (vectors)))
     {
-      g_warning ("%s: trying to add vectors to image twice.",
-		 G_GNUC_PRETTY_FUNCTION);
+      g_warning ("%s: trying to add vectors to image twice.", G_STRFUNC);
       return FALSE;
     }
 

@@ -89,7 +89,7 @@ gimp_drawable_bucket_fill (GimpDrawable       *drawable,
     }
   else
     {
-      g_warning ("%s: invalid fill_mode passed", G_GNUC_PRETTY_FUNCTION);
+      g_warning ("%s: invalid fill_mode passed", G_STRFUNC);
       return;
     }
 
@@ -158,7 +158,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
     }
   else
     {
-      g_warning ("%s: invalid fill_mode passed", G_GNUC_PRETTY_FUNCTION);
+      g_warning ("%s: invalid fill_mode passed", G_STRFUNC);
       return;
     }
 

@@ -97,7 +97,7 @@ gimp_prop_check_button_new (GObject     *config,
   gboolean     value;
 
   param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_BOOLEAN, G_STRLOC);
+                                 G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -183,7 +183,7 @@ gimp_prop_enum_check_button_new (GObject     *config,
   gint        value;
 
   param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_ENUM, G_STRLOC);
+                                 G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -307,7 +307,7 @@ gimp_prop_enum_combo_box_new (GObject     *config,
   gint        value;
 
   param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_ENUM, G_STRLOC);
+                                 G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -404,7 +404,7 @@ gimp_prop_boolean_combo_box_new (GObject     *config,
   gboolean    value;
 
   param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_BOOLEAN, G_STRLOC);
+                                 G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -485,7 +485,7 @@ gimp_prop_paint_mode_menu_new (GObject     *config,
   gint        value;
 
   param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_ENUM, G_STRLOC);
+                                 G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -575,7 +575,7 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
   gint        value;
 
   param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_ENUM, G_STRLOC);
+                                 G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -628,7 +628,7 @@ gimp_prop_enum_radio_box_new (GObject     *config,
   gint        value;
 
   param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_ENUM, G_STRLOC);
+                                 G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -678,7 +678,7 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
   gboolean    value;
 
   param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_BOOLEAN, G_STRLOC);
+                                 G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -720,7 +720,7 @@ gimp_prop_enum_stock_box_new (GObject     *config,
   gint        value;
 
   param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_ENUM, G_STRLOC);
+                                 G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -820,12 +820,12 @@ gimp_prop_spin_button_new (GObject     *config,
   gdouble     lower;
   gdouble     upper;
 
-  param_spec = find_param_spec (config, property_name, G_STRLOC);
+  param_spec = find_param_spec (config, property_name, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
   if (! get_numeric_values (config,
-                            param_spec, &value, &lower, &upper, G_STRLOC))
+                            param_spec, &value, &lower, &upper, G_STRFUNC))
     return NULL;
 
   if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
@@ -870,12 +870,12 @@ gimp_prop_scale_entry_new (GObject     *config,
   gdouble      lower;
   gdouble      upper;
 
-  param_spec = find_param_spec (config, property_name, G_STRLOC);
+  param_spec = find_param_spec (config, property_name, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
   if (! get_numeric_values (config,
-                            param_spec, &value, &lower, &upper, G_STRLOC))
+                            param_spec, &value, &lower, &upper, G_STRFUNC))
     return NULL;
 
   tooltip = gettext (g_param_spec_get_blurb (param_spec));
@@ -932,7 +932,7 @@ gimp_prop_opacity_entry_new (GObject     *config,
   gdouble      upper;
 
   param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_DOUBLE, G_STRLOC);
+                                 G_TYPE_PARAM_DOUBLE, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -1098,7 +1098,7 @@ gimp_prop_adjustment_notify (GObject       *config,
   else
     {
       g_warning ("%s: unhandled param spec of type %s",
-                 G_STRLOC, G_PARAM_SPEC_TYPE_NAME (param_spec));
+                 G_STRFUNC, G_PARAM_SPEC_TYPE_NAME (param_spec));
       return;
     }
 
@@ -1137,7 +1137,7 @@ gimp_prop_memsize_entry_new (GObject     *config,
   guint64           value;
 
   param_spec = check_param_spec (config, property_name,
-                                 GIMP_TYPE_PARAM_MEMSIZE, G_STRLOC);
+                                 GIMP_TYPE_PARAM_MEMSIZE, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -1235,7 +1235,7 @@ gimp_prop_entry_new (GObject     *config,
   gchar      *value;
 
   param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_STRING, G_STRLOC);
+                                 G_TYPE_PARAM_STRING, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -1335,7 +1335,7 @@ gimp_prop_text_buffer_new (GObject     *config,
   gchar         *value;
 
   param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_STRING, G_STRLOC);
+                                 G_TYPE_PARAM_STRING, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -1464,7 +1464,7 @@ gimp_prop_file_entry_new (GObject     *config,
   gchar      *value;
 
   param_spec = check_param_spec (config, property_name,
-                                 GIMP_TYPE_PARAM_PATH, G_STRLOC);
+                                 GIMP_TYPE_PARAM_PATH, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -1581,14 +1581,14 @@ gimp_prop_path_editor_new (GObject     *config,
   gchar      *filename;
 
   path_param_spec = check_param_spec (config, path_property_name,
-                                      GIMP_TYPE_PARAM_PATH, G_STRLOC);
+                                      GIMP_TYPE_PARAM_PATH, G_STRFUNC);
   if (! path_param_spec)
     return NULL;
 
   if (writable_property_name)
     {
       writable_param_spec = check_param_spec (config, writable_property_name,
-                                              GIMP_TYPE_PARAM_PATH, G_STRLOC);
+                                              GIMP_TYPE_PARAM_PATH, G_STRFUNC);
       if (! writable_param_spec)
         return NULL;
     }
@@ -1820,12 +1820,12 @@ gimp_prop_size_entry_new (GObject                   *config,
   gdouble     upper;
   GimpUnit    unit_value;
 
-  param_spec = find_param_spec (config, property_name, G_STRLOC);
+  param_spec = find_param_spec (config, property_name, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
   if (! get_numeric_values (config,
-                            param_spec, &value, &lower, &upper, G_STRLOC))
+                            param_spec, &value, &lower, &upper, G_STRFUNC))
     return NULL;
 
   if (unit_property_name)
@@ -1833,7 +1833,7 @@ gimp_prop_size_entry_new (GObject                   *config,
       GValue value = { 0 };
 
       unit_param_spec = check_param_spec (config, unit_property_name,
-                                          GIMP_TYPE_PARAM_UNIT, G_STRLOC);
+                                          GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
       if (! unit_param_spec)
         return NULL;
 
@@ -2111,24 +2111,24 @@ gimp_prop_coordinates_connect (GObject     *config,
   g_return_val_if_fail (chainbutton == NULL ||
                         GIMP_IS_CHAIN_BUTTON (chainbutton), FALSE);
 
-  x_param_spec = find_param_spec (config, x_property_name, G_STRLOC);
+  x_param_spec = find_param_spec (config, x_property_name, G_STRFUNC);
   if (! x_param_spec)
     return FALSE;
 
-  y_param_spec = find_param_spec (config, y_property_name, G_STRLOC);
+  y_param_spec = find_param_spec (config, y_property_name, G_STRFUNC);
   if (! y_param_spec)
     return FALSE;
 
   if (! get_numeric_values (config, x_param_spec,
-                            &x_value, &x_lower, &x_upper, G_STRLOC) ||
+                            &x_value, &x_lower, &x_upper, G_STRFUNC) ||
       ! get_numeric_values (config, y_param_spec,
-                            &y_value, &y_lower, &y_upper, G_STRLOC))
+                            &y_value, &y_lower, &y_upper, G_STRFUNC))
     return FALSE;
 
   if (unit_property_name)
     {
       unit_param_spec = check_param_spec (config, unit_property_name,
-                                          GIMP_TYPE_PARAM_UNIT, G_STRLOC);
+                                          GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
       if (! unit_param_spec)
         return FALSE;
 
@@ -2456,7 +2456,7 @@ gimp_prop_color_area_new (GObject           *config,
   GimpRGB    *value;
 
   param_spec = check_param_spec (config, property_name,
-                                 GIMP_TYPE_PARAM_COLOR, G_STRLOC);
+                                 GIMP_TYPE_PARAM_COLOR, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -2557,7 +2557,7 @@ gimp_prop_color_button_new (GObject           *config,
   GimpRGB    *value;
 
   param_spec = check_param_spec (config, property_name,
-                                 GIMP_TYPE_PARAM_COLOR, G_STRLOC);
+                                 GIMP_TYPE_PARAM_COLOR, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -2656,7 +2656,7 @@ gimp_prop_unit_menu_new (GObject     *config,
   gboolean    show_percent;
 
   param_spec = check_param_spec (config, property_name,
-                                 GIMP_TYPE_PARAM_UNIT, G_STRLOC);
+                                 GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -2760,14 +2760,14 @@ gimp_prop_preview_new (GObject     *config,
   GimpViewable *viewable;
 
   param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_OBJECT, G_STRLOC);
+                                 G_TYPE_PARAM_OBJECT, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
   if (! g_type_is_a (param_spec->value_type, GIMP_TYPE_VIEWABLE))
     {
       g_warning ("%s: property '%s' of %s is not a GimpViewable",
-                 G_STRLOC, property_name,
+                 G_STRFUNC, property_name,
                  g_type_name (G_TYPE_FROM_INSTANCE (config)));
       return NULL;
     }
@@ -2779,7 +2779,7 @@ gimp_prop_preview_new (GObject     *config,
   if (! preview)
     {
       g_warning ("%s: cannot create preview for type '%s'",
-                 G_STRLOC, g_type_name (param_spec->value_type));
+                 G_STRFUNC, g_type_name (param_spec->value_type));
       return NULL;
     }
 
@@ -2861,7 +2861,7 @@ gimp_prop_stock_image_new (GObject     *config,
   gchar      *stock_id;
 
   param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_STRING, G_STRLOC);
+                                 G_TYPE_PARAM_STRING, G_STRFUNC);
   if (! param_spec)
     return NULL;
 

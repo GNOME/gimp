@@ -101,7 +101,7 @@ offset_dialog_new (GimpDrawable *drawable,
   else if (GIMP_IS_CHANNEL (drawable))
     title = _("Offset Channel");
   else
-    g_warning ("%s: unexpected drawable type", G_STRLOC);
+    g_warning ("%s: unexpected drawable type", G_STRFUNC);
 
   off_d->dlg = gimp_viewable_dialog_new (GIMP_VIEWABLE (drawable),
                                          _("Offset"), "gimp-drawable-offset",

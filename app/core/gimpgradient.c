@@ -709,7 +709,7 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
 
     default:
       g_warning ("%s: Unknown gradient type %d.",
-		 G_GNUC_PRETTY_FUNCTION, seg->type);
+		 G_STRFUNC, seg->type);
       break;
     }
 
@@ -768,8 +768,8 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
 	  break;
 
 	default:
-	  g_warning ("%s(): Unknown coloring mode %d",
-		     G_GNUC_PRETTY_FUNCTION, (gint) seg->color);
+	  g_warning ("%s: Unknown coloring mode %d",
+		     G_STRFUNC, (gint) seg->color);
 	  break;
 	}
 
@@ -821,8 +821,8 @@ gimp_gradient_get_segment_at (GimpGradient *gradient,
     }
 
   /* Oops: we should have found a segment, but we didn't */
-  g_warning ("%s(): no matching segment for position %0.15f",
-	     G_GNUC_PRETTY_FUNCTION, pos);
+  g_warning ("%s: no matching segment for position %0.15f",
+	     G_STRFUNC, pos);
 
   return NULL;
 }

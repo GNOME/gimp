@@ -181,7 +181,7 @@ gimp_dialog_factory_dispose (GObject *object)
       if (! list)
         {
           g_warning ("%s: stale non-toplevel entries in factory->open_dialogs",
-                     G_GNUC_FUNCTION);
+                     G_STRFUNC);
           break;
         }
     }
@@ -241,7 +241,7 @@ gimp_dialog_factory_new (const gchar       *name,
   if (gimp_dialog_factory_from_name (name))
     {
       g_warning ("%s: dialog factory \"%s\" already exists",
-		 G_GNUC_FUNCTION, name);
+		 G_STRFUNC, name);
       return NULL;
     }
 
@@ -384,14 +384,14 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
   if (! entry)
     {
       g_warning ("%s: no entry registered for \"%s\"",
-		 G_GNUC_FUNCTION, identifier);
+		 G_STRFUNC, identifier);
       return NULL;
     }
 
   if (! entry->new_func)
     {
       g_warning ("%s: entry for \"%s\" has no constructor",
-		 G_GNUC_FUNCTION, identifier);
+		 G_STRFUNC, identifier);
       return NULL;
     }
 
@@ -472,7 +472,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 		  g_warning ("%s: GimpDialogFactory is a dockable factory "
 			     "but constructor for \"%s\" did not return a "
 			     "GimpDockable",
-			     G_GNUC_FUNCTION, identifier);
+			     G_STRFUNC, identifier);
 
 		  gtk_widget_destroy (dialog);
                   gtk_widget_destroy (dock);
@@ -485,7 +485,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
       else if (dock)
 	{
 	  g_warning ("%s: constructor for \"%s\" returned NULL",
-		     G_GNUC_FUNCTION, identifier);
+		     G_STRFUNC, identifier);
 
 	  gtk_widget_destroy (dock);
 
@@ -724,7 +724,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
   if (g_list_find (factory->open_dialogs, dialog))
     {
-      g_warning ("%s: dialog already registered", G_GNUC_FUNCTION);
+      g_warning ("%s: dialog already registered", G_STRFUNC);
       return;
     }
 
@@ -733,14 +733,14 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
   if (! (dialog_factory && (entry || GIMP_IS_DOCK (dialog))))
     {
       g_warning ("%s: dialog was not created by a GimpDialogFactory",
-		 G_GNUC_FUNCTION);
+		 G_STRFUNC);
       return;
     }
 
   if (dialog_factory != factory)
     {
       g_warning ("%s: dialog was created by a different GimpDialogFactory",
-		 G_GNUC_FUNCTION);
+		 G_STRFUNC);
       return;
     }
 
@@ -749,7 +749,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
   if (entry) /* dialog is a toplevel (but not a GimpDock) or a GimpDockable */
     {
       D (g_print ("%s: adding %s \"%s\"\n",
-                  G_GNUC_FUNCTION,
+                  G_STRFUNC,
                   toplevel ? "toplevel" : "dockable",
                   entry->identifier));
 
@@ -765,10 +765,10 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 		  if (entry->singleton)
 		    {
 		      g_warning ("%s: singleton dialog \"%s\" created twice",
-				 G_GNUC_FUNCTION, entry->identifier);
+				 G_STRFUNC, entry->identifier);
 
                       D (g_print ("%s: corrupt session info: %p (widget %p)\n",
-                                  G_GNUC_FUNCTION,
+                                  G_STRFUNC,
                                   info, info->widget));
 
 		      return;
@@ -780,7 +780,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
               info->widget = dialog;
 
               D (g_print ("%s: updating session info %p (widget %p) for %s \"%s\"\n",
-                          G_GNUC_FUNCTION,
+                          G_STRFUNC,
                           info, info->widget,
                           toplevel ? "toplevel" : "dockable",
                           entry->identifier));
@@ -799,7 +799,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 	  info->widget = dialog;
 
           D (g_print  ("%s: creating session info %p (widget %p) for %s \"%s\"\n",
-                       G_GNUC_FUNCTION,
+                       G_STRFUNC,
                        info, info->widget,
                        toplevel ? "toplevel" : "dockable",
                        entry->identifier));
@@ -828,7 +828,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
     }
   else /*  dialog is a GimpDock  */
     {
-      D (g_print ("%s: adding dock\n", G_GNUC_FUNCTION));
+      D (g_print ("%s: adding dock\n", G_STRFUNC));
 
       for (list = factory->session_infos; list; list = g_list_next (list))
 	{
@@ -842,7 +842,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 	      info->widget = dialog;
 
               D (g_print ("%s: updating session info %p (widget %p) for dock\n",
-                          G_GNUC_FUNCTION,
+                          G_STRFUNC,
                           info, info->widget));
 
 	      gimp_session_info_set_geometry (info);
@@ -858,7 +858,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 	  info->widget = dialog;
 
           D (g_print ("%s: creating session info %p (widget %p) for dock\n",
-                      G_GNUC_FUNCTION,
+                      G_STRFUNC,
                       info, info->widget));
 
           /*  if we create a new session info, we never call
@@ -906,7 +906,7 @@ gimp_dialog_factory_add_foreign (GimpDialogFactory *factory,
   if (dialog_factory || entry)
     {
       g_warning ("%s: dialog was created by a GimpDialogFactory",
-		 G_GNUC_FUNCTION);
+		 G_STRFUNC);
       return;
     }
 
@@ -915,14 +915,14 @@ gimp_dialog_factory_add_foreign (GimpDialogFactory *factory,
   if (! entry)
     {
       g_warning ("%s: no entry registered for \"%s\"",
-		 G_GNUC_FUNCTION, identifier);
+		 G_STRFUNC, identifier);
       return;
     }
 
   if (entry->new_func)
     {
       g_warning ("%s: entry for \"%s\" has a constructor (is not foreign)",
-		 G_GNUC_FUNCTION, identifier);
+		 G_STRFUNC, identifier);
       return;
     }
 
@@ -945,7 +945,7 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
 
   if (! g_list_find (factory->open_dialogs, dialog))
     {
-      g_warning ("%s: dialog not registered", G_GNUC_FUNCTION);
+      g_warning ("%s: dialog not registered", G_STRFUNC);
       return;
     }
 
@@ -956,19 +956,19 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
   if (! (dialog_factory && (entry || GIMP_IS_DOCK (dialog))))
     {
       g_warning ("%s: dialog was not created by a GimpDialogFactory",
-		 G_GNUC_FUNCTION);
+		 G_STRFUNC);
       return;
     }
 
   if (dialog_factory != factory)
     {
       g_warning ("%s: dialog was created by a different GimpDialogFactory",
-		 G_GNUC_FUNCTION);
+		 G_STRFUNC);
       return;
     }
 
   D (g_print ("%s: removing \"%s\"\n",
-              G_GNUC_FUNCTION,
+              G_STRFUNC,
               entry ? entry->identifier : "dock"));
 
   for (list = factory->session_infos; list; list = g_list_next (list))
@@ -978,7 +978,7 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
       if (session_info->widget == dialog)
 	{
           D (g_print ("%s: clearing session info %p (widget %p) for \"%s\"\n",
-                      G_GNUC_FUNCTION,
+                      G_STRFUNC,
                       session_info, session_info->widget,
                       entry ? entry->identifier : "dock"));
 
@@ -1171,7 +1171,7 @@ gimp_dialog_factory_set_user_pos (GtkWidget         *dialog,
 
   if (entry)
     g_print ("%s: setting GDK_HINT_USER_POS for \"%s\"\n",
-             G_GNUC_FUNCTION, entry->identifier);
+             G_STRFUNC, entry->identifier);
 #endif /* DEBUG_FACTORY */
 
   g_signal_handlers_disconnect_by_func (dialog,
@@ -1195,7 +1195,7 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
 
   if (! g_list_find (factory->open_dialogs, dialog))
     {
-      g_warning ("%s: dialog not registered", G_GNUC_FUNCTION);
+      g_warning ("%s: dialog not registered", G_STRFUNC);
       return FALSE;
     }
 
@@ -1204,14 +1204,14 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
   if (! dialog_factory || ! entry)
     {
       g_warning ("%s: dialog was not created by a GimpDialogFactory",
-		 G_GNUC_FUNCTION);
+		 G_STRFUNC);
       return FALSE;
     }
 
   if (dialog_factory != factory)
     {
       g_warning ("%s: dialog was created by a different GimpDialogFactory",
-		 G_GNUC_FUNCTION);
+		 G_STRFUNC);
       return FALSE;
     }
 
@@ -1222,7 +1222,7 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
       if (session_info->widget == dialog)
         {
           D (g_print ("%s: updating session info for \"%s\" from window geometry\n",
-                      G_GNUC_FUNCTION, entry->identifier));
+                      G_STRFUNC, entry->identifier));
 
           gimp_session_info_get_geometry (session_info);
 

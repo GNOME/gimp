@@ -1107,7 +1107,7 @@ control_do_hint (GimpGradientEditor *editor,
 
 	default:
           g_warning ("%s: in_handle is true, but received handle type %d.",
-                     G_STRLOC, in_handle);
+                     G_STRFUNC, in_handle);
 	  break;
 	}
     }
@@ -1242,7 +1242,7 @@ control_button_press (GimpGradientEditor *editor,
 
 	default:
           g_warning ("%s: in_handle is true, but received handle type %d.",
-                     G_STRLOC, in_handle);
+                     G_STRFUNC, in_handle);
 	  return;
 	}
     }
@@ -1293,7 +1293,7 @@ control_point_in_handle (GimpGradientEditor     *editor,
       break;
 
     default:
-      g_warning ("%s: Cannot handle drag mode %d.", G_STRLOC, handle);
+      g_warning ("%s: Cannot handle drag mode %d.", G_STRFUNC, handle);
       return FALSE;
     }
 
@@ -1392,7 +1392,7 @@ control_motion (GimpGradientEditor *editor,
 
     default:
       g_warning ("%s: Attempting to move bogus handle %d.",
-                 G_STRLOC, editor->control_drag_mode);
+                 G_STRFUNC, editor->control_drag_mode);
       break;
     }
 

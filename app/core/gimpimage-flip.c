@@ -62,7 +62,7 @@ gimp_image_flip (GimpImage           *gimage,
       break;
 
     default:
-      g_warning ("gimp_image_flip(): unknown flip_type");
+      g_warning ("%s: unknown flip_type", G_STRFUNC);
       return;
     }
 

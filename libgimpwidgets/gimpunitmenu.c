@@ -506,7 +506,8 @@ gimp_unit_menu_build_string (const gchar *format,
 	  switch (*format)
 	    {
 	    case 0:
-	      g_warning ("unit-menu-format string ended within %%-sequence");
+	      g_warning ("%s: unit-menu-format string ended within %%-sequence",
+                         G_STRFUNC);
 	      break;
 
 	    case '%':
@@ -539,9 +540,8 @@ gimp_unit_menu_build_string (const gchar *format,
 	      break;
 
 	    default:
-	      g_warning ("gimp_unit_menu_build_string(): "
-			 "unit-menu-format contains unknown format sequence "
-			 "'%%%c'", *format);
+	      g_warning ("%s: unit-menu-format contains unknown format "
+                         "sequence '%%%c'", G_STRFUNC, *format);
 	      break;
 	    }
 	  break;

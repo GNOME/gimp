@@ -300,7 +300,7 @@ gimp_edit_fill (GimpImage    *gimage,
       return TRUE;  /*  nothing to do, but the fill succeded  */
 
     default:
-      g_warning ("%s: unknown fill type", G_GNUC_PRETTY_FUNCTION);
+      g_warning ("%s: unknown fill type", G_STRFUNC);
       fill_type = GIMP_BACKGROUND_FILL;
       undo_desc = _("Fill with BG Color");
       break;

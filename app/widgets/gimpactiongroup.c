@@ -574,7 +574,7 @@ gimp_action_group_set_action_visible (GimpActionGroup *group,
     {
       g_warning ("%s: Unable to set visibility of action "
                  "which doesn't exist: %s",
-                 G_STRLOC, action_name);
+                 G_STRFUNC, action_name);
       return;
     }
 
@@ -597,7 +597,7 @@ gimp_action_group_set_action_sensitive (GimpActionGroup *group,
     {
       g_warning ("%s: Unable to set sensitivity of action "
                  "which doesn't exist: %s",
-                 G_STRLOC, action_name);
+                 G_STRFUNC, action_name);
       return;
     }
 
@@ -620,7 +620,7 @@ gimp_action_group_set_action_active (GimpActionGroup *group,
     {
       g_warning ("%s: Unable to set \"active\" of action "
                  "which doesn't exist: %s",
-                 G_STRLOC, action_name);
+                 G_STRFUNC, action_name);
       return;
     }
 
@@ -628,7 +628,7 @@ gimp_action_group_set_action_active (GimpActionGroup *group,
     {
       g_warning ("%s: Unable to set \"active\" of action "
                  "which is not a GtkToggleAction: %s",
-                 G_STRLOC, action_name);
+                 G_STRFUNC, action_name);
       return;
     }
 
@@ -652,7 +652,7 @@ gimp_action_group_set_action_label (GimpActionGroup *group,
     {
       g_warning ("%s: Unable to set label of action "
                  "which doesn't exist: %s",
-                 G_STRLOC, action_name);
+                 G_STRFUNC, action_name);
       return;
     }
 
@@ -678,7 +678,7 @@ gimp_action_group_set_action_color (GimpActionGroup *group,
     {
       g_warning ("%s: Unable to set color of action "
                  "which doesn't exist: %s",
-                 G_STRLOC, action_name);
+                 G_STRFUNC, action_name);
       return;
     }
 
@@ -763,7 +763,7 @@ gimp_action_group_set_action_viewable (GimpActionGroup *group,
     {
       g_warning ("%s: Unable to set viewable of action "
                  "which doesn't exist: %s",
-                 G_STRLOC, action_name);
+                 G_STRFUNC, action_name);
       return;
     }
 
@@ -836,7 +836,7 @@ gimp_action_group_set_action_important (GimpActionGroup *group,
     {
       g_warning ("%s: Unable to set \"is-important\" of action "
                  "which doesn't exist: %s",
-                 G_STRLOC, action_name);
+                 G_STRFUNC, action_name);
       return;
     }
 

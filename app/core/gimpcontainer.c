@@ -564,8 +564,8 @@ gimp_container_add (GimpContainer *container,
 
   if (gimp_container_have (container, object))
     {
-      g_warning ("%s(): container %p already contains object %p",
-		 G_GNUC_FUNCTION, container, object);
+      g_warning ("%s: container %p already contains object %p",
+		 G_STRFUNC, container, object);
       return FALSE;
     }
 
@@ -618,8 +618,8 @@ gimp_container_remove (GimpContainer *container,
 
   if (! gimp_container_have (container, object))
     {
-      g_warning ("%s(): container %p does not contain object %p",
-		 G_GNUC_FUNCTION, container, object);
+      g_warning ("%s: container %p does not contain object %p",
+		 G_STRFUNC, container, object);
       return FALSE;
     }
 
@@ -675,8 +675,8 @@ gimp_container_insert (GimpContainer *container,
 
   if (gimp_container_have (container, object))
     {
-      g_warning ("%s(): container %p already contains object %p",
-		 G_GNUC_FUNCTION, container, object);
+      g_warning ("%s: container %p already contains object %p",
+		 G_STRFUNC, container, object);
       return FALSE;
     }
 
@@ -704,8 +704,8 @@ gimp_container_reorder (GimpContainer *container,
 
   if (! gimp_container_have (container, object))
     {
-      g_warning ("%s(): container %p does not contain object %p",
-		 G_GNUC_FUNCTION, container, object);
+      g_warning ("%s: container %p does not contain object %p",
+		 G_STRFUNC, container, object);
       return FALSE;
     }
 
@@ -900,7 +900,7 @@ gimp_container_add_handler (GimpContainer *container,
   handler->callback_data = callback_data;
   handler->quark         = g_quark_from_string (key);
 
-  D (g_print ("%s: key = %s, id = %d\n", G_GNUC_FUNCTION, key, handler->quark));
+  D (g_print ("%s: key = %s, id = %d\n", G_STRFUNC, key, handler->quark));
 
   g_free (key);
 
@@ -951,11 +951,11 @@ gimp_container_remove_handler (GimpContainer *container,
   if (! list)
     {
       g_warning ("%s: tried to remove handler which unknown id %d",
-                 G_STRLOC, id);
+                 G_STRFUNC, id);
       return;
     }
 
-  D (g_print ("%s: id = %d\n", G_GNUC_FUNCTION, handler->quark));
+  D (g_print ("%s: id = %d\n", G_STRFUNC, handler->quark));
 
   gimp_container_foreach (container,
 			  (GFunc) gimp_container_remove_handler_foreach_func,

@@ -982,7 +982,7 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
                                   gimp_item_height (item),
                                   &x, &y, &width, &height))
     {
-      g_warning ("gimp_drawable_push_undo: tried to push empty region");
+      g_warning ("%s: tried to push empty region", G_STRFUNC);
       return;
     }
 
@@ -1138,7 +1138,7 @@ gimp_drawable_fill_by_type (GimpDrawable *drawable,
       return;
 
     default:
-      g_warning ("%s: unknown fill type %d", G_GNUC_PRETTY_FUNCTION, fill_type);
+      g_warning ("%s: unknown fill type %d", G_STRFUNC, fill_type);
       return;
     }
 

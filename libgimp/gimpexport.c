@@ -674,7 +674,7 @@ gimp_export_image (gint32                 *image_ID,
       else
         {
           /* this should not happen */
-          g_warning ("gimp_export_image: unknown drawable type!");
+          g_warning ("%s: unknown drawable type!", G_STRFUNC);
         }
 
       /* cancel - the user can then select an appropriate layer to save */

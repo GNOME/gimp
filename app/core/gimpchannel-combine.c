@@ -489,7 +489,7 @@ gimp_channel_combine_mask (GimpChannel    *mask,
       break;
 
     default:
-      g_warning ("%s: unknown operation type\n", G_GNUC_PRETTY_FUNCTION);
+      g_warning ("%s: unknown operation type", G_STRFUNC);
       break;
     }
 

@@ -325,8 +325,7 @@ gimp_image_merge_layers (GimpImage     *gimage,
 				    GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
       if (!merge_layer)
 	{
-	  g_warning ("%s: could not allocate merge layer.",
-		     G_GNUC_PRETTY_FUNCTION);
+	  g_warning ("%s: could not allocate merge layer.", G_STRFUNC);
 	  return NULL;
 	}
 
@@ -365,8 +364,7 @@ gimp_image_merge_layers (GimpImage     *gimage,
 
       if (!merge_layer)
 	{
-	  g_warning ("%s: could not allocate merge layer",
-		     G_GNUC_PRETTY_FUNCTION);
+	  g_warning ("%s: could not allocate merge layer", G_STRFUNC);
 	  return NULL;
 	}
 
@@ -417,8 +415,7 @@ gimp_image_merge_layers (GimpImage     *gimage,
 
       if (operation == -1)
 	{
-	  g_warning ("%s: attempting to merge incompatible layers.",
-		     G_GNUC_PRETTY_FUNCTION);
+	  g_warning ("%s: attempting to merge incompatible layers.", G_STRFUNC);
 	  return NULL;
 	}
 

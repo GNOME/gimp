@@ -874,7 +874,7 @@ plug_in_main_loop_quit (PlugIn *plug_in)
 
   if (! plug_in->temp_main_loops)
     {
-      g_warning ("plug_in_main_loop_quit: called without a temp main loop running");
+      g_warning ("%s: called without a temp main loop running", G_STRFUNC);
       return;
     }
 

@@ -296,7 +296,7 @@ browser_autoload_toggled (GtkCellRendererToggle *celltoggle,
   path = gtk_tree_path_new_from_string (path_string);
   if (! gtk_tree_model_get_iter (GTK_TREE_MODEL (browser->list), &iter, path))
     {
-      g_warning ("%s: bad tree path?", G_STRLOC);
+      g_warning ("%s: bad tree path?", G_STRFUNC);
       return;
     }
   gtk_tree_path_free (path);
@@ -393,7 +393,7 @@ browser_info_remove (GimpModuleDB  *db,
   while (gtk_tree_model_iter_next (GTK_TREE_MODEL (browser->list), &iter));
 
   g_warning ("%s: Tried to remove a module not in the browser's list.",
-	     G_STRLOC);
+	     G_STRFUNC);
 }
 
 static void

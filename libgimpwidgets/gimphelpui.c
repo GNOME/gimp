@@ -123,8 +123,8 @@ gimp_standard_help_func (const gchar *help_id,
 {
   if (! _gimp_standard_help_func)
     {
-      g_warning ("gimp_standard_help_func(): you must call gimp_widgets_init() "
-                 "before using the help system");
+      g_warning ("%s: you must call gimp_widgets_init() before using "
+                 "the help system", G_STRFUNC);
       return;
     }
 

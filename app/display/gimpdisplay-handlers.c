@@ -63,7 +63,7 @@ gimp_display_connect (GimpDisplay *gdisp,
 
 #if 0
   g_print ("%s: gimage->ref_count before refing: %d\n",
-           G_GNUC_FUNCTION, G_OBJECT (gdisp->gimage)->ref_count);
+           G_STRFUNC, G_OBJECT (gdisp->gimage)->ref_count);
 #endif
 
   g_object_ref (gimage);
@@ -101,7 +101,7 @@ gimp_display_disconnect (GimpDisplay *gdisp)
 
 #if 0
   g_print ("%s: gimage->ref_count before unrefing: %d\n",
-           G_GNUC_FUNCTION, G_OBJECT (gdisp->gimage)->ref_count);
+           G_STRFUNC, G_OBJECT (gdisp->gimage)->ref_count);
 #endif
 
   /*  set gdisp->gimage to NULL before unrefing because there may be code

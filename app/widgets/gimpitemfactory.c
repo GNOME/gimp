@@ -488,7 +488,7 @@ gimp_item_factory_set_active (GtkItemFactory *factory,
         {
           g_warning ("%s: Unable to set \"active\" for menu item "
                      "of type \"%s\": %s",
-                     G_STRLOC,
+                     G_STRFUNC,
                      g_type_name (G_TYPE_FROM_INSTANCE (widget)),
                      path);
         }
@@ -497,7 +497,7 @@ gimp_item_factory_set_active (GtkItemFactory *factory,
     {
       g_warning ("%s: Unable to set \"active\" for menu item "
                  "which doesn't exist: %s",
-                 G_STRLOC, path);
+                 G_STRFUNC, path);
     }
 }
 
@@ -541,7 +541,7 @@ gimp_item_factory_set_color (GtkItemFactory *factory,
     {
       g_warning ("%s: Unable to set color of menu item "
                  "which doesn't exist: %s",
-                 G_STRLOC, path);
+                 G_STRFUNC, path);
       return;
     }
 
@@ -650,7 +650,7 @@ gimp_item_factory_set_label (GtkItemFactory *factory,
     {
       g_warning ("%s: Unable to set label of menu item "
                  "which doesn't exist: %s",
-                 G_STRLOC, path);
+                 G_STRFUNC, path);
     }
 }
 
@@ -694,7 +694,7 @@ gimp_item_factory_set_sensitive (GtkItemFactory *factory,
     {
       g_warning ("%s: Unable to set sensitivity of menu item "
                  "which doesn't exist: %s",
-                 G_STRLOC, path);
+                 G_STRFUNC, path);
     }
 }
 
@@ -743,7 +743,7 @@ gimp_item_factory_set_visible (GtkItemFactory *factory,
     {
       g_warning ("%s: Unable to set visibility of menu item "
                  "which doesn't exist: %s",
-                 G_STRLOC, path);
+                 G_STRFUNC, path);
     }
 }
 
@@ -784,7 +784,7 @@ gimp_item_factory_tearoff_callback (GtkWidget *widget,
 	  if (! GTK_IS_WINDOW (toplevel))
 	    {
 	      g_warning ("%s: tearoff menu not in top level window",
-                         G_STRLOC);
+                         G_STRFUNC);
 	    }
 	  else
 	    {
@@ -805,7 +805,7 @@ gimp_item_factory_tearoff_callback (GtkWidget *widget,
 	  if (! toplevel)
 	    {
 	      g_warning ("%s: can't unregister tearoff menu top level window",
-                         G_STRLOC);
+                         G_STRFUNC);
 	    }
 	  else
 	    {
@@ -1117,7 +1117,7 @@ gimp_item_factory_translate (const gchar *path,
       else
 	{
 	  g_warning ("%s: bad translation for menupath: %s",
-                     G_STRLOC, full_path);
+                     G_STRFUNC, full_path);
 
 	  retval = path;
 	}
@@ -1165,7 +1165,7 @@ gimp_item_factory_translate (const gchar *path,
       else
 	{
 	  g_warning ("%s: bad translation for menupath: %s",
-                     G_STRLOC, path);
+                     G_STRFUNC, path);
 
           retval = path;
 	}

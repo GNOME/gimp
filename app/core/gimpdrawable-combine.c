@@ -71,7 +71,7 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
                                                src2PR->bytes);
   if (operation == -1)
     {
-      g_warning ("%s: illegal parameters.", G_GNUC_PRETTY_FUNCTION);
+      g_warning ("%s: illegal parameters.", G_STRFUNC);
       return;
     }
 
@@ -193,7 +193,7 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
                                                src2PR->bytes);
   if (operation == -1)
     {
-      g_warning ("%s: illegal parameters.", G_GNUC_PRETTY_FUNCTION);
+      g_warning ("%s: illegal parameters.", G_STRFUNC);
       return;
     }
 

@@ -726,7 +726,7 @@ project_indexed (GimpImage   *gimage,
                     gimage->visible,
                     INITIAL_INDEXED);
   else
-    g_warning ("%s: unable to project indexed image.", G_GNUC_PRETTY_FUNCTION);
+    g_warning ("%s: unable to project indexed image.", G_STRFUNC);
 }
 
 static void

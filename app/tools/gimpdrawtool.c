@@ -296,8 +296,7 @@ gimp_draw_tool_resume (GimpDrawTool *draw_tool)
     }
   else
     {
-      g_warning ("gimp_draw_tool_resume(): "
-                 "called with draw_tool->paused_count == 0");
+      g_warning ("%s: called with draw_tool->paused_count == 0", G_STRFUNC);
     }
 }
 
@@ -742,7 +741,7 @@ gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool,
       break;
 
     default:
-      g_warning ("%s: invalid handle type %d", G_GNUC_PRETTY_FUNCTION, type);
+      g_warning ("%s: invalid handle type %d", G_STRFUNC, type);
       break;
     }
 }
@@ -807,7 +806,7 @@ gimp_draw_tool_on_handle (GimpDrawTool   *draw_tool,
       return ((SQR (handle_tx - tx) + SQR (handle_ty - ty)) < SQR (width));
 
     default:
-      g_warning ("%s: invalid handle type %d", G_GNUC_PRETTY_FUNCTION, type);
+      g_warning ("%s: invalid handle type %d", G_STRFUNC, type);
       break;
     }
 

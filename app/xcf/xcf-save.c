@@ -859,7 +859,8 @@ xcf_save_prop (XcfInfo   *info,
                 break;
 
               default:
-                g_warning ("xcf_save_prop: skipping guide with bad orientation");
+                g_warning ("%s: skipping guide with bad orientation",
+                           G_STRFUNC);
                 continue;
               }
 

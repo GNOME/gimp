@@ -453,7 +453,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
   if (! canvas->window)
     {
-      g_warning ("%s: called unrealized", G_STRLOC);
+      g_warning ("%s: called unrealized", G_STRFUNC);
       return FALSE;
     }
 
@@ -791,7 +791,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             if (shell->space_release_pending)
               {
 #ifdef DEBUG_MOVE_PUSH
-                g_printerr ("%s: popping move tool\n", G_GNUC_FUNCTION);
+                g_printerr ("%s: popping move tool\n", G_STRFUNC);
 #endif
 
                 gimp_context_set_tool (gimp_get_user_context (gimp),
@@ -1103,7 +1103,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   if (GIMP_IS_TOOL_INFO (move_tool_info))
                     {
 #ifdef DEBUG_MOVE_PUSH
-                      g_printerr ("%s: pushing move tool\n", G_GNUC_FUNCTION);
+                      g_printerr ("%s: pushing move tool\n", G_STRFUNC);
 #endif
 
                       space_shaded_tool = active_tool->tool_info;
@@ -1190,7 +1190,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             if (shell->space_pressed)
               {
 #ifdef DEBUG_MOVE_PUSH
-                g_printerr ("%s: popping move tool\n", G_GNUC_FUNCTION);
+                g_printerr ("%s: popping move tool\n", G_STRFUNC);
 #endif
 
                 gimp_context_set_tool (gimp_get_user_context (gimp),

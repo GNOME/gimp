@@ -167,7 +167,7 @@ gimp_scanner_destroy (GScanner *scanner)
     {
       if (close (data->fd))
         g_warning ("%s: could not close file descriptor: %s",
-                   G_GNUC_PRETTY_FUNCTION, g_strerror (errno));
+                   G_STRFUNC, g_strerror (errno));
     }
 
   g_free (data->name);

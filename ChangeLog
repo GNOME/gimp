@@ -1,5 +1,43 @@
 2004-05-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpscanner.c
+	* app/core/gimp-edit.c
+	* app/core/gimpchannel-combine.c
+	* app/core/gimpcontainer.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpdrawable-combine.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpgradient.c
+	* app/core/gimpimage-flip.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-projection.c
+	* app/core/gimpimage.c
+	* app/display/gimpdisplay-handlers.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpprogress.c
+	* app/gui/info-dialog.c
+	* app/gui/module-browser.c
+	* app/gui/offset-dialog.c
+	* app/plug-in/plug-in.c
+	* app/tools/gimpdrawtool.c
+	* app/tools/tool_manager.c
+	* app/widgets/gimpactiongroup.c
+	* app/widgets/gimpdialogfactory.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimpitemfactory.c
+	* app/widgets/gimppropwidgets.c
+	* app/widgets/gimpwidgets-utils.c
+	* app/xcf/xcf-save.c
+	* libgimp/gimpexport.c
+	* libgimpwidgets/gimphelpui.c
+	* libgimpwidgets/gimppixmap.c
+	* libgimpwidgets/gimpunitmenu.c: replaced G_GNUC_FUNCTION,
+	G_GNUC_PRETTY_FUNCTION, G_STRLOC and hardcoded function names in
+	g_warning()s by G_STRFUNC.
+
+2004-05-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/gradients-actions.c
 	* app/actions/palettes-actions.c
 	* app/actions/patterns-actions.c: added/fixed tooltips.

@@ -417,8 +417,7 @@ gimp_button_menu_position (GtkWidget       *button,
       break;
 
     default:
-      g_warning ("gimp_button_menu_position: "
-                 "unhandled position (%d)", position);
+      g_warning ("%s: unhandled position (%d)", G_STRFUNC, position);
       break;
     }
 

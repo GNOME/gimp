@@ -119,9 +119,8 @@ gimp_progress_start (GimpDisplay *gdisp,
        */
       if (GIMP_STATUSBAR (shell->statusbar)->progressid)
         {
-          g_warning ("gimp_progress_start(): "
-                     "%d progress bars already active for display %p",
-                     GIMP_STATUSBAR (shell->statusbar)->progressid,
+          g_warning ("%s: %d progress bars already active for display %p",
+                     G_STRFUNC, GIMP_STATUSBAR (shell->statusbar)->progressid,
                      gdisp);
         }
 

@@ -314,7 +314,8 @@ gimp_config_deserialize_property (GimpConfig *config,
 #ifdef CONFIG_DEBUG
   else
     {
-      g_warning ("couldn't deserialize property %s::%s of type %s",
+      g_warning ("%s: couldn't deserialize property %s::%s of type %s",
+                 G_STRFUNC,
                  g_type_name (G_TYPE_FROM_INSTANCE (config)),
                  prop_spec->name,
                  g_type_name (prop_spec->value_type));
@@ -731,7 +732,7 @@ gimp_config_deserialize_any (GValue     *value,
   if (!g_value_type_transformable (G_TYPE_STRING, prop_spec->value_type))
     {
       g_warning ("%s: %s can not be transformed from a string",
-                 G_STRLOC, g_type_name (prop_spec->value_type));
+                 G_STRFUNC, g_type_name (prop_spec->value_type));
       return G_TOKEN_NONE;
     }
 
