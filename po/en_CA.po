@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-26 02:08-0500\n"
-"PO-Revision-Date: 2005-03-26 14:29-0400\n"
+"POT-Creation-Date: 2005-03-28 03:26-0500\n"
+"PO-Revision-Date: 2005-03-28 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -267,7 +267,7 @@ msgid "Images"
 msgstr "Images"
 
 #: ../app/actions/actions.c:155 ../app/dialogs/dialogs.c:159
-#: ../app/dialogs/resize-dialog.c:280
+#: ../app/dialogs/resize-dialog.c:281
 msgid "Layers"
 msgstr "Layers"
 
@@ -6887,7 +6887,7 @@ msgstr "Canvas Size"
 msgid "Layer Size"
 msgstr "Layer Size"
 
-#: ../app/dialogs/resize-dialog.c:288
+#: ../app/dialogs/resize-dialog.c:289
 msgid "Resize _Layers:"
 msgstr "Resize _Layers:"
 
@@ -7447,41 +7447,41 @@ msgstr "Zoom image when window size changes"
 msgid "Toggle Quick Mask"
 msgstr "Toggle Quick Mask"
 
-#: ../app/display/gimpdisplayshell-close.c:122
-#: ../app/display/gimpdisplayshell-close.c:191
+#: ../app/display/gimpdisplayshell-close.c:123
+#: ../app/display/gimpdisplayshell-close.c:198
 #, c-format
 msgid "Close %s"
 msgstr "Close %s"
 
-#: ../app/display/gimpdisplayshell-close.c:131
+#: ../app/display/gimpdisplayshell-close.c:135
 msgid "Do_n't save"
 msgstr "Do_n't save"
 
-#: ../app/display/gimpdisplayshell-close.c:198
+#: ../app/display/gimpdisplayshell-close.c:205
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
 msgstr "Save the changes to image '%s' before closing?"
 
-#: ../app/display/gimpdisplayshell-close.c:215
+#: ../app/display/gimpdisplayshell-close.c:222
 #, c-format
 msgid "If you don't save the image, changes from the last %s will be lost."
 msgstr "If you don't save the image, changes from the last %s will be lost."
 
 #. one second, the time period
-#: ../app/display/gimpdisplayshell-close.c:272
+#: ../app/display/gimpdisplayshell-close.c:279
 msgid "second"
 msgstr "second"
 
-#: ../app/display/gimpdisplayshell-close.c:275
+#: ../app/display/gimpdisplayshell-close.c:282
 #, c-format
 msgid "%d seconds"
 msgstr "%d seconds"
 
-#: ../app/display/gimpdisplayshell-close.c:281
+#: ../app/display/gimpdisplayshell-close.c:288
 msgid "minute"
 msgstr "minute"
 
-#: ../app/display/gimpdisplayshell-close.c:283
+#: ../app/display/gimpdisplayshell-close.c:290
 #, c-format
 msgid "%d minutes"
 msgstr "%d minutes"
@@ -10638,13 +10638,18 @@ msgstr "Change Foreground Colour"
 msgid "Change Background Color"
 msgstr "Change Background Colour"
 
-#: ../app/widgets/gimptoolbox-image-area.c:113
+#: ../app/widgets/gimptoolbox-image-area.c:115
+#: ../app/widgets/gimptoolbox-image-area.c:120
 msgid ""
 "The active image.\n"
 "Click to open the Image Dialog."
 msgstr ""
 "The active image.\n"
 "Click to open the Image Dialogue."
+
+#: ../app/widgets/gimptoolbox-image-area.c:117
+msgid "Drag to an XDS enabled file-manager to save the image."
+msgstr "Drag to an XDS-enabled filemanager to save the image."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:149
 msgid ""
