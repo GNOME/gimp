@@ -29,6 +29,9 @@
 #define COLOR_UPDATE_NEW  1
 #define COLOR_UPDATE      2
 
+struct _Paint;
+int gimp16_palette_get_foreground (struct _Paint * );
+int gimp16_palette_get_background (struct _Paint * );
 void palettes_init (void);
 void palettes_free (void);
 void palette_create (void);

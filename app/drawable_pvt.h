@@ -21,6 +21,7 @@
 #include <gtk/gtkdata.h>
 #include "tile_manager.h"
 #include "temp_buf.h"
+#include "canvas.h"
 
 struct _GimpDrawable
 {
@@ -28,6 +29,7 @@ struct _GimpDrawable
 
   char *name;				/* name of drawable */
   TileManager *tiles;			/* tiles for drawable data */
+  Canvas * canvas;
   int visible;				/* controls visibility */
   int width, height;			/* size of drawable */
   int offset_x, offset_y;		/* offset of layer in image */
