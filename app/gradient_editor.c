@@ -2029,7 +2029,7 @@ ed_do_save_pov_callback (GtkWidget *widget,
   file = fopen (filename, "wb");
 
   if (!file)
-    g_message (_("Could not open \"%s\""), filename);
+    g_message ("Could not open \"%s\"", filename);
   else
     {
       fprintf (file, "/* color_map file created by the GIMP */\n");
@@ -5900,8 +5900,8 @@ grad_load_gradient (char *filename)
 
   if (num_segments < 1)
     {
-      g_message (_("grad_load_gradient(): "
-		   "invalid number of segments in \"%s\""), filename);
+      g_message ("grad_load_gradient(): "
+                 "invalid number of segments in \"%s\"", filename);
       g_free (grad);
       return;
     }
@@ -5926,9 +5926,9 @@ grad_load_gradient (char *filename)
 		  &(seg->r1), &(seg->g1), &(seg->b1), &(seg->a1),
 		  &type, &color) != 13)
 	{
-	  g_message (_("grad_load_gradient(): badly formatted "
-		       "gradient segment %d in \"%s\" --- bad things may "
-		       "happen soon"), i, filename);
+	  g_message ("grad_load_gradient(): badly formatted "
+                     "gradient segment %d in \"%s\" --- bad things may "
+                     "happen soon", i, filename);
 	}
       else
 	{
@@ -5958,15 +5958,15 @@ grad_save_gradient (gradient_t *grad,
 
   if (!filename)
     {
-      g_message (_("grad_save_gradient(): "
-		   "can not save gradient with NULL filename"));
+      g_message ("grad_save_gradient(): "
+                 "can not save gradient with NULL filename");
       return;
     }
 
   file = fopen (filename, "wb");
   if (!file)
     {
-      g_message (_("grad_save_gradient(): can't open \"%s\""), filename);
+      g_message ("grad_save_gradient(): can't open \"%s\"", filename);
       return;
     }
 
@@ -6176,8 +6176,8 @@ seg_get_segment_at (gradient_t *grad,
 
   /* Oops: we should have found a segment, but we didn't */
   grad_dump_gradient (curr_gradient, stderr);
-  gimp_fatal_error (_("seg_get_segment_at(): "
-		      "No matching segment for position %0.15f"), pos);
+  gimp_fatal_error ("seg_get_segment_at(): "
+                    "No matching segment for position %0.15f", pos);
 
   return NULL; /* To shut up -Wall */
 }

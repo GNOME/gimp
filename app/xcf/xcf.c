@@ -1474,10 +1474,10 @@ xcf_save_level (XcfInfo     *info,
 	      xcf_save_tile_rle (info, level->tiles[i], rlebuf);
 	      break;
 	    case COMPRESS_ZLIB:
-	      g_error (_("xcf: zlib compression unimplemented"));
+	      g_error ("xcf: zlib compression unimplemented");
 	      break;
 	    case COMPRESS_FRACTAL:
-	      g_error (_("xcf: fractal compression unimplemented"));
+	      g_error ("xcf: fractal compression unimplemented");
 	      break;
 	    }
 
@@ -1623,7 +1623,7 @@ xcf_save_tile_rle (XcfInfo *info,
 	}
 
       if (count != (tile_ewidth (tile) * tile_eheight (tile)))
-	g_message (_("xcf: uh oh! xcf rle tile saving error: %d"), count);
+	g_message ("xcf: uh oh! xcf rle tile saving error: %d", count);
     }
   info->cp += xcf_write_int8(info->fp, rlebuf, len);
   tile_release (tile, FALSE);
@@ -1804,7 +1804,7 @@ xcf_load_image_props (XcfInfo *info,
 		(compression != COMPRESS_ZLIB) &&
 		(compression != COMPRESS_FRACTAL))
 	      {
-		g_message (_("unknown compression type: %d"), (int) compression);
+		g_message ("unknown compression type: %d", (int) compression);
 		return FALSE;
 	      }
 
@@ -1845,7 +1845,7 @@ xcf_load_image_props (XcfInfo *info,
 	   if (xres < GIMP_MIN_RESOLUTION || xres > GIMP_MAX_RESOLUTION ||
 	       yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
 	     {
-	       g_message(_("Warning, resolution out of range in XCF file"));
+	       g_message ("Warning, resolution out of range in XCF file");
 	       xres = yres = 72.0;
 	     }
 	   gimage->xresolution = xres;
@@ -1868,7 +1868,7 @@ xcf_load_image_props (XcfInfo *info,
 	     parasite_free(p);
 	   }
 	   if (info->cp - base != prop_size)
-	     g_message(_("Error detected while loading an image's parasites"));
+	     g_message ("Error detected while loading an image's parasites");
 	 }
 	 break;
 	 case PROP_UNIT:
@@ -1879,7 +1879,7 @@ xcf_load_image_props (XcfInfo *info,
 	   
 	   if ((unit >= gimp_unit_get_number_of_units()) )
 	     {
-	       g_message(_("Warning, unit out of range in XCF file, falling back to inches"));
+	       g_message ("Warning, unit out of range in XCF file, falling back to inches");
 	       unit = UNIT_INCH;
 	     }
 
@@ -1943,7 +1943,7 @@ xcf_load_image_props (XcfInfo *info,
 	  }
 	 break;
 	default:
-	  g_message (_("unexpected/unknown image property: %d (skipping)"), prop_type);
+	  g_message ("unexpected/unknown image property: %d (skipping)", prop_type);
 
 	  {
 	    guint8 buf[16];
@@ -2031,11 +2031,11 @@ xcf_load_layer_props (XcfInfo *info,
 	     parasite_free(p);
 	   }
 	   if (info->cp - base != prop_size)
-	     g_message("Error detected while loading a layer's parasites");
+	     g_message ("Error detected while loading a layer's parasites");
 	 }
 	 break;
 	default:
-	  g_message (_("unexpected/unknown layer property: %d (skipping)"), prop_type);
+	  g_message ("unexpected/unknown layer property: %d (skipping)", prop_type);
 
 	  {
 	    guint8 buf[16];
@@ -2112,7 +2112,7 @@ xcf_load_channel_props (XcfInfo *info,
 	 }
 	 break;
 	default:
-	  g_message (_("unexpected/unknown channel property: %d (skipping)"), prop_type);
+	  g_message ("unexpected/unknown channel property: %d (skipping)", prop_type);
 
 	  {
 	    guint8 buf[16];
@@ -2443,7 +2443,7 @@ xcf_load_level (XcfInfo     *info,
 
       if (offset == 0)
 	{
-	  g_message (_("not enough tiles found in level"));
+	  g_message ("not enough tiles found in level");
 	  return FALSE;
 	}
 
@@ -2480,11 +2480,11 @@ xcf_load_level (XcfInfo     *info,
 	    fail = TRUE;
 	  break;
 	case COMPRESS_ZLIB:
-	  g_error (_("xcf: zlib compression unimplemented"));
+	  g_error ("xcf: zlib compression unimplemented");
 	  fail = TRUE;
 	  break;
 	case COMPRESS_FRACTAL:
-	  g_error (_("xcf: fractal compression unimplemented"));
+	  g_error ("xcf: fractal compression unimplemented");
 	  fail = TRUE;
 	  break;
 	}
@@ -2713,7 +2713,7 @@ xcf_swap_func (int       fd,
 
 	  if (err <= 0)
 	    {
-	      g_message (_("unable to read tile data from xcf file: %d ( %d ) bytes read"), err, nleft);
+	      g_message ("unable to read tile data from xcf file: %d ( %d ) bytes read", err, nleft);
 	      return FALSE;
 	    }
 

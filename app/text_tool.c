@@ -763,7 +763,7 @@ text_render (GimpImage    *gimage,
     {
       if (newmask) 
 	{
-	  g_message (_("text_render: could not allocate image"));
+	  g_message ("text_render: could not allocate image");
           tile_manager_destroy (newmask);
 	}
       layer = NULL;

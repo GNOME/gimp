@@ -296,12 +296,12 @@ void save_unitrc (void)
   if (!fp)
     return;
 
-  fprintf (fp, _("# GIMP unitrc\n"
-		"# This file contains your user unit database. You can\n"
-		"# modify this list with the unit editor. You are not\n"
-		"# supposed to edit it manually, but of course you can do.\n"
-		"# This file will be entirely rewritten every time you\n"
-		"# quit the gimp.\n\n"));
+  fprintf (fp, "# GIMP unitrc\n" 
+               "# This file contains your user unit database. You can\n"
+	       "# modify this list with the unit editor. You are not\n"
+	       "# supposed to edit it manually, but of course you can do.\n"
+	       "# This file will be entirely rewritten every time you\n"
+	       "# quit the gimp.\n\n");
   
   /*  save user defined units  */
   for (i = gimp_unit_get_number_of_built_in_units();
@@ -320,3 +320,9 @@ void save_unitrc (void)
   
   fclose (fp);
 }
+
+
+
+
+
+

@@ -1,3 +1,15 @@
+Tue Dec 28 11:25:46 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/gimpunit.c
+	* app/gradient.c
+	* app/temp_buf.c
+	* app/text_tool.c
+	* app/tile_swap.c
+	* app/xcf.c: unmarked a few strings for translation. These strings
+	were console output and will only be used if something goes wrong. 
+	It will help translators and developers (think about bugreports!) if 
+	we don't mark everything for translation.
+
 Mon Dec 27 19:40:19 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/align_layers.c
