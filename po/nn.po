@@ -5,12 +5,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: KDE PIM/abbrowser\n"
-"POT-Creation-Date: 2001-01-30 10:20+0100\n"
+"POT-Creation-Date: 2001-05-22 12:56+0200\n"
 "PO-Revision-Date: 2000-09-07 20:17+02:00\n"
-"Last-Translator: Gaute Hvoslef Kvalnes <ai98ghk@stud.hib.no>\n"
+"Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian (Nynorsk)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf8\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: app/about_dialog.c:137
@@ -346,7 +346,7 @@ msgstr "&Penselverktøy"
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
 #: app/crop.c:1074 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
 #: app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161
-#: app/histogram_tool.c:281 app/info_window.c:261 app/lc_dialog.c:217
+#: app/histogram_tool.c:288 app/info_window.c:261 app/lc_dialog.c:217
 #: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2058
 #: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:70
 #: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
@@ -603,17 +603,17 @@ msgid "Empty Channel Copy"
 msgstr "Inn-kanalar"
 
 #: app/channels_dialog.c:1440 app/color_balance.c:354 app/color_select.c:254
-#: app/curves.c:592 app/histogram_tool.c:309 app/levels.c:379
+#: app/curves.c:592 app/histogram_tool.c:316 app/levels.c:379
 msgid "Red"
 msgstr "Raud"
 
 #: app/channels_dialog.c:1444 app/color_balance.c:379 app/color_select.c:255
-#: app/curves.c:593 app/histogram_tool.c:310 app/levels.c:380
+#: app/curves.c:593 app/histogram_tool.c:317 app/levels.c:380
 msgid "Green"
 msgstr "Grøn"
 
 #: app/channels_dialog.c:1448 app/color_balance.c:404 app/color_select.c:256
-#: app/curves.c:594 app/histogram_tool.c:311 app/levels.c:381
+#: app/curves.c:594 app/histogram_tool.c:318 app/levels.c:381
 msgid "Blue"
 msgstr "Blå"
 
@@ -801,7 +801,7 @@ msgstr "&Indeks"
 msgid "Hex Triplet"
 msgstr "Neste tips"
 
-#: app/color_picker.c:278 app/histogram_tool.c:265
+#: app/color_picker.c:278 app/histogram_tool.c:272
 msgid "Intensity:"
 msgstr "Intensitet:"
 
@@ -853,7 +853,7 @@ msgstr "Nyanse"
 msgid "Saturation"
 msgstr "Metting"
 
-#: app/color_select.c:253 app/curves.c:591 app/histogram_tool.c:308
+#: app/color_select.c:253 app/curves.c:591 app/histogram_tool.c:315
 #: app/layers_dialog.c:392 app/levels.c:378 app/paint_funcs.c:102
 #: app/tool_options.c:937
 msgid "Value"
@@ -1515,7 +1515,7 @@ msgstr "Fil-liste"
 msgid "Revert"
 msgstr "Gå tilbake"
 
-#: app/fileops.c:1967
+#: app/fileops.c:1970
 #, fuzzy, c-format
 msgid ""
 "Revert failed.\n"
@@ -1617,26 +1617,26 @@ msgstr ""
 msgid "No selection to stroke!"
 msgstr "[Ingen valt]"
 
-#: app/gimpbrush.c:294
+#: app/gimpbrush.c:298
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
 msgstr ""
 
-#: app/gimpbrush.c:314
+#: app/gimpbrush.c:318
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
 msgstr ""
 
-#: app/gimpbrush.c:321 app/patterns.c:235
+#: app/gimpbrush.c:325 app/patterns.c:236
 msgid "Unnamed"
 msgstr "Utan namn"
 
-#: app/gimpbrush.c:334 app/gimpbrush.c:379
+#: app/gimpbrush.c:338 app/gimpbrush.c:383
 #, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
 msgstr ""
 
-#: app/gimpbrush.c:359
+#: app/gimpbrush.c:363
 #, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
 msgstr ""
@@ -1655,14 +1655,14 @@ msgid ""
 "\"%s\""
 msgstr "Kunne ikkje lasta biletet '%1'\n"
 
-#: app/gimpbrushpipe.c:292
+#: app/gimpbrushpipe.c:296
 #, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
 "\"%s\""
 msgstr ""
 
-#: app/gimpbrushpipe.c:383
+#: app/gimpbrushpipe.c:387
 #, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
@@ -2326,7 +2326,7 @@ msgid "Gradient Selection"
 msgstr "Områdeval"
 
 #. The shell and main vbox
-#: app/histogram_tool.c:171 app/histogram_tool.c:275 app/tools.c:1222
+#: app/histogram_tool.c:171 app/histogram_tool.c:282 app/tools.c:1222
 #, fuzzy
 msgid "Histogram"
 msgstr "&Historie"
@@ -2335,36 +2335,36 @@ msgstr "&Historie"
 msgid "Histogram does not operate on indexed drawables."
 msgstr ""
 
-#: app/histogram_tool.c:261
+#: app/histogram_tool.c:268
 #, fuzzy
 msgid "Mean:"
 msgstr "Medium:"
 
-#: app/histogram_tool.c:262
+#: app/histogram_tool.c:269
 #, fuzzy
 msgid "Std Dev:"
 msgstr "Start-dato:"
 
-#: app/histogram_tool.c:263
+#: app/histogram_tool.c:270
 #, fuzzy
 msgid "Median:"
 msgstr "Medium:"
 
-#: app/histogram_tool.c:264
+#: app/histogram_tool.c:271
 #, fuzzy
 msgid "Pixels:"
 msgstr "Pikslar"
 
-#: app/histogram_tool.c:266
+#: app/histogram_tool.c:273
 msgid "Count:"
 msgstr "Tal:"
 
-#: app/histogram_tool.c:267
+#: app/histogram_tool.c:274
 #, fuzzy
 msgid "Percentile:"
 msgstr "Prosent"
 
-#: app/histogram_tool.c:300
+#: app/histogram_tool.c:307
 #, fuzzy
 msgid "Information on Channel:"
 msgstr "Informasjon"
@@ -4495,17 +4495,17 @@ msgstr "&Fast merking"
 msgid "No Patterns available"
 msgstr "Ingen data tilgjengeleg"
 
-#: app/patterns.c:209
+#: app/patterns.c:210
 #, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
 msgstr ""
 
-#: app/patterns.c:228
+#: app/patterns.c:229
 #, fuzzy, c-format
 msgid "Error in GIMP pattern file \"%s\"."
 msgstr "Feil ved opning av fila '%1': %2"
 
-#: app/patterns.c:244
+#: app/patterns.c:245
 #, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
 msgstr ""
@@ -4571,14 +4571,14 @@ msgid ""
 "to be on the safe side."
 msgstr ""
 
-#: app/posterize.c:158
-msgid "Posterize does not operate on indexed drawables."
-msgstr ""
-
-#: app/posterize.c:203 app/tools.c:1110
+#: app/posterize.c:116 app/posterize.c:203 app/tools.c:1110
 #, fuzzy
 msgid "Posterize"
 msgstr "Positiv"
+
+#: app/posterize.c:158
+msgid "Posterize does not operate on indexed drawables."
+msgstr ""
 
 #: app/posterize.c:225
 #, fuzzy
@@ -6810,4 +6810,3 @@ msgstr "Vatn"
 #, fuzzy
 msgid "Color History"
 msgstr "Tøm historie"
-
