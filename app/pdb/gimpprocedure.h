@@ -133,10 +133,6 @@ Argument    * procedural_db_return_args  (ProcRecord *procedure,
 					  gboolean    success);
 void          procedural_db_destroy_args (Argument   *args,
 					  gint        nargs);
-void          pdb_add_image              (GimpImage  *gimage);
-gint          pdb_image_to_id            (GimpImage  *gimage);
-GimpImage   * pdb_id_to_image            (gint        id);
-void          pdb_remove_image           (GimpImage  *image);
 
 /* "type" should really be a PDBArgType, but we can cope with
  *  out-of-range values.

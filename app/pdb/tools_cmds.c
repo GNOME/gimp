@@ -814,7 +814,7 @@ color_picker_invoker (Argument *args)
   gboolean save_color;
   GimpRGB color;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -1083,7 +1083,7 @@ crop_invoker (Argument *args)
   gint32 offx;
   gint32 offy;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -1328,7 +1328,7 @@ ellipse_select_invoker (Argument *args)
   gboolean feather;
   gdouble feather_radius;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -1684,7 +1684,7 @@ free_select_invoker (Argument *args)
   gboolean feather;
   gdouble feather_radius;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -2293,7 +2293,7 @@ rect_select_invoker (Argument *args)
   gboolean feather;
   gdouble feather_radius;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 

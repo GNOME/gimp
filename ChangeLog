@@ -1,5 +1,50 @@
 2001-04-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/procedural_db.[ch]: removed the ID system from the pdb/
+	subdir...
+
+	* app/gimpimage.[ch]: ...and temporarily added it back to GimpImage.
+
+	The ID stuff is not only used by the PDB but is a more general
+	type of service which is needed for the PDB, DND and some parts of
+	the GUI. Finally, a GimpFactory class with subclasses for data
+	objects, images etc. will maintain the ID spaces.
+
+	* app/colormap_dialog.c
+	* app/file-open.c
+	* app/file-save.c
+	* app/gdisplay.c
+	* app/gimpdnd.c
+	* app/gimpdrawable.c
+	* app/info_window.c
+	* app/lc_dialog.c
+	* app/nav_window.c
+	* app/palette_import.c
+	* app/paths_dialog.c
+	* app/plug_in.c
+	* app/xcf.c
+	* app/tools/gimptexttool.c
+	* tools/pdbgen/pdb.pl
+	* tools/pdbgen/pdb/image.pdb: use GimpImage's ID functions.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/channel_ops_cmds.c
+	* app/pdb/convert_cmds.c
+	* app/pdb/display_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/fileops_cmds.c
+	* app/pdb/guides_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/parasite_cmds.c
+	* app/pdb/paths_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/pdb/text_tool_cmds.c
+	* app/pdb/tools_cmds.c
+	* app/pdb/undo_cmds.c: regenerated.
+
+2001-04-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimpdnd.c: added a DND type for GimpImage.
 
 	* app/tools/tools.c: don't register bezier select twice.

@@ -230,7 +230,7 @@ HELP
     for ($invoke{code}) {
 	s/list = .*$/gimp_container_foreach (image_context, gimlist_cb, &list);/m;
 	s/DRAWABLE/IMAGE/;
-	s/gimp_drawable_get_ID/pdb_image_to_id/;
+	s/gimp_drawable_get_ID/gimp_image_get_ID/;
     }
 }
 

@@ -70,6 +70,8 @@ struct _GimpImage
 {
   GimpViewable       parent_instance;
 
+  gint               ID;                    /*  provides a unique ID         */
+
   PlugInProcDef     *save_proc;             /*  last PDB save proc used      */
 
   gint               width, height;         /*  width and height attributes  */
@@ -195,6 +197,10 @@ GtkType         gimp_image_get_type          (void);
 GimpImage     * gimp_image_new               (gint                width,
 					      gint                height,
 					      GimpImageBaseType   base_type);
+
+gint            gimp_image_get_ID            (GimpImage          *gimage);
+GimpImage     * gimp_image_get_by_ID         (gint                id);
+
 void            gimp_image_set_filename      (GimpImage          *gimage,
 					      const gchar        *filename);
 void            gimp_image_set_resolution    (GimpImage          *gimage,

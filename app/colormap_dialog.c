@@ -42,8 +42,6 @@
 #include "gimpdnd.h"
 #include "gimpimage.h"
 
-#include "pdb/procedural_db.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -1112,7 +1110,7 @@ create_image_menu_cb (gpointer im,
 
   image_name = g_basename (gimp_image_filename (gimage));
   menu_item_label = g_strdup_printf ("%s-%d", image_name, 
-                                     pdb_image_to_id (gimage));
+                                     gimp_image_get_ID (gimage));
   menu_item = gtk_menu_item_new_with_label (menu_item_label);
   gtk_object_set_data (GTK_OBJECT (menu_item), "colormap_dialog", data->ipal);
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate",

@@ -499,7 +499,7 @@ image_parasite_find_invoker (Argument *args)
   gchar *name;
   GimpParasite *parasite = NULL;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -567,7 +567,7 @@ image_parasite_attach_invoker (Argument *args)
   GimpImage *gimage;
   GimpParasite *parasite;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -618,7 +618,7 @@ image_parasite_detach_invoker (Argument *args)
   GimpImage *gimage;
   gchar *name;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -671,7 +671,7 @@ image_parasite_list_invoker (Argument *args)
   gint32 num_parasites;
   gchar **parasites = NULL;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 

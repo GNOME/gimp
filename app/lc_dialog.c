@@ -39,8 +39,6 @@
 #include "session.h"
 #include "temp_buf.h"
 
-#include "pdb/procedural_db.h"
-
 #include "libgimp/gimplimits.h"
 
 #include "libgimp/gimpintl.h"
@@ -578,7 +576,7 @@ lc_dialog_create_image_menu_callback (gpointer im,
 
   image_name = g_basename (gimp_image_filename (gimage));
   menu_item_label =
-    g_strdup_printf ("%s-%d", image_name, pdb_image_to_id (gimage));
+    g_strdup_printf ("%s-%d", image_name, gimp_image_get_ID (gimage));
   menu_item = gtk_menu_item_new();
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
 		      data->callback,

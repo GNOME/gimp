@@ -26,6 +26,7 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
+#include "gimpimage.h"
 #include "undo.h"
 
 static ProcRecord undo_push_group_start_proc;
@@ -44,7 +45,7 @@ undo_push_group_start_invoker (Argument *args)
   gboolean success = TRUE;
   GimpImage *gimage;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -85,7 +86,7 @@ undo_push_group_end_invoker (Argument *args)
   gboolean success = TRUE;
   GimpImage *gimage;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 

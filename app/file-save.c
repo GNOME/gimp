@@ -498,7 +498,7 @@ file_save (GimpImage   *gimage,
     args[i].arg_type = proc->args[i].arg_type;
 
   args[0].value.pdb_int     = run_mode;
-  args[1].value.pdb_int     = pdb_image_to_id (gimage);
+  args[1].value.pdb_int     = gimp_image_get_ID (gimage);
   args[2].value.pdb_int     = gimp_drawable_get_ID (gimp_image_active_drawable (gimage));
   args[3].value.pdb_pointer = filename;
   args[4].value.pdb_pointer = raw_filename;
@@ -630,9 +630,9 @@ file_save_ok_callback (GtkWidget *widget,
 	  args[0].arg_type      = PDB_INT32;
 	  args[0].value.pdb_int = RUN_INTERACTIVE;
 	  args[1].arg_type      = PDB_IMAGE;
-	  args[1].value.pdb_int = pdb_image_to_id (the_gimage);
+	  args[1].value.pdb_int = gimp_image_get_ID (the_gimage);
 	  args[2].arg_type      = PDB_DRAWABLE;
-	  args[2].value.pdb_int = the_drawable->ID;
+	  args[2].value.pdb_int = gimp_drawable_get_ID (the_drawable);
 
 	  plug_in_run (proc_rec, args, 3, FALSE, TRUE, 0);
 

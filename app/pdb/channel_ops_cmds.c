@@ -29,6 +29,7 @@
 #include "channel_ops.h"
 #include "drawable.h"
 #include "gimage.h"
+#include "gimpimage.h"
 
 static ProcRecord channel_ops_offset_proc;
 static ProcRecord channel_ops_duplicate_proc;
@@ -127,7 +128,7 @@ channel_ops_duplicate_invoker (Argument *args)
   GimpImage *gimage;
   GimpImage *new_gimage = NULL;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -137,7 +138,7 @@ channel_ops_duplicate_invoker (Argument *args)
   return_args = procedural_db_return_args (&channel_ops_duplicate_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = pdb_image_to_id (new_gimage);
+    return_args[1].value.pdb_int = gimp_image_get_ID (new_gimage);
 
   return return_args;
 }

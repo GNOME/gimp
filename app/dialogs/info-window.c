@@ -39,8 +39,6 @@
 #include "info_dialog.h"
 #include "info_window.h"
 
-#include "pdb/procedural_db.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -323,7 +321,7 @@ info_window_title (GDisplay *gdisp)
   /*  create the info dialog  */
   title_buf = g_strdup_printf (_("Info: %s-%d.%d"), 
 			       title,
-			       pdb_image_to_id (gdisp->gimage),
+			       gimp_image_get_ID (gdisp->gimage),
 			       gdisp->instance);
 
   return title_buf;

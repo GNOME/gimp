@@ -106,7 +106,7 @@ layer_new_invoker (Argument *args)
   GimpLayer *layer = NULL;
   int opacity;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 

@@ -183,7 +183,7 @@ gimp_drawable_destroy (GtkObject *object)
 
   drawable = GIMP_DRAWABLE (object);
 
-  g_hash_table_remove (gimp_drawable_table, (gpointer) drawable->ID);
+  g_hash_table_remove (gimp_drawable_table, GINT_TO_POINTER (drawable->ID));
 
   if (drawable->tiles)
     tile_manager_destroy (drawable->tiles);
@@ -387,7 +387,7 @@ gimp_drawable_get_by_ID (gint drawable_id)
     return NULL;
 
   return (GimpDrawable *) g_hash_table_lookup (gimp_drawable_table, 
-					       (gpointer) drawable_id);
+					       GINT_TO_POINTER (drawable_id));
 }
 
 GimpImage *

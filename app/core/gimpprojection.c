@@ -310,7 +310,7 @@ gdisplay_format_title (GDisplay *gdisp,
 	      break;
 
 	    case 'p': /* PDB id */
-	      i += print (title, title_len, i, "%d", pdb_image_to_id (gimage));
+	      i += print (title, title_len, i, "%d", gimp_image_get_ID (gimage));
 	      break;
 
 	    case 'i': /* instance */

@@ -86,7 +86,7 @@ selection_bounds_invoker (Argument *args)
   gint32 x2;
   gint32 y2;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -170,7 +170,7 @@ selection_value_invoker (Argument *args)
   gint32 x;
   gint32 y;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -237,7 +237,7 @@ selection_is_empty_invoker (Argument *args)
   Argument *return_args;
   GimpImage *gimage;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -291,7 +291,7 @@ selection_translate_invoker (Argument *args)
   gint32 offx;
   gint32 offy;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -424,7 +424,7 @@ selection_clear_invoker (Argument *args)
   gboolean success = TRUE;
   GimpImage *gimage;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -465,7 +465,7 @@ selection_invert_invoker (Argument *args)
   gboolean success = TRUE;
   GimpImage *gimage;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -506,7 +506,7 @@ selection_sharpen_invoker (Argument *args)
   gboolean success = TRUE;
   GimpImage *gimage;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -547,7 +547,7 @@ selection_all_invoker (Argument *args)
   gboolean success = TRUE;
   GimpImage *gimage;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -588,7 +588,7 @@ selection_none_invoker (Argument *args)
   gboolean success = TRUE;
   GimpImage *gimage;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -630,7 +630,7 @@ selection_feather_invoker (Argument *args)
   GimpImage *gimage;
   gdouble radius;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -681,7 +681,7 @@ selection_border_invoker (Argument *args)
   GimpImage *gimage;
   gint32 radius;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -732,7 +732,7 @@ selection_grow_invoker (Argument *args)
   GimpImage *gimage;
   gint32 steps;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -783,7 +783,7 @@ selection_shrink_invoker (Argument *args)
   GimpImage *gimage;
   gint32 radius;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -930,7 +930,7 @@ selection_save_invoker (Argument *args)
   GimpImage *gimage;
   GimpChannel *channel = NULL;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 

@@ -28,6 +28,7 @@
 #include "procedural_db.h"
 
 #include "gimage.h"
+#include "gimpimage.h"
 #include "path.h"
 #include "pathP.h"
 
@@ -73,7 +74,7 @@ path_list_invoker (Argument *args)
   gchar **path_list = NULL;
   PathList *plist;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -160,7 +161,7 @@ path_get_points_invoker (Argument *args)
   PathList *plist;
   Path *pptr = NULL;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -295,7 +296,7 @@ path_get_current_invoker (Argument *args)
   PathList *plist;
   Path *pptr = NULL;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -359,7 +360,7 @@ path_set_current_invoker (Argument *args)
   GimpImage *gimage;
   gchar *pname;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -414,7 +415,7 @@ path_set_points_invoker (Argument *args)
   gdouble *pnts;
   gboolean pclosed = FALSE;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -498,7 +499,7 @@ path_stroke_current_invoker (Argument *args)
   PathList *plist;
   Path *pptr = NULL;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -561,7 +562,7 @@ path_get_point_at_dist_invoker (Argument *args)
   PathList *plist;
   Path *pptr = NULL;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -655,7 +656,7 @@ path_get_tattoo_invoker (Argument *args)
   PathList *plist;
   Path *pptr = NULL;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -749,7 +750,7 @@ get_path_by_tattoo_invoker (Argument *args)
   PathList *plist;
   Path *pptr = NULL;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -823,7 +824,7 @@ path_delete_invoker (Argument *args)
   GimpImage *gimage;
   gchar *pname;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -878,7 +879,7 @@ path_get_locked_invoker (Argument *args)
   PathList *plist;
   Path *pptr = NULL;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -972,7 +973,7 @@ path_set_locked_invoker (Argument *args)
   PathList *plist;
   Path *pptr = NULL;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -1059,7 +1060,7 @@ path_set_tattoo_invoker (Argument *args)
   PathList *plist;
   Path *pptr = NULL;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 

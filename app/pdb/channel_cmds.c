@@ -84,7 +84,7 @@ channel_new_invoker (Argument *args)
   GimpRGB color;
   GimpChannel *channel = NULL;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 

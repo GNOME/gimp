@@ -516,7 +516,9 @@ file_open_image (const gchar *filename,
 
   if (*status == PDB_SUCCESS && gimage_id != -1)
     {
-      GimpImage *gimage = pdb_id_to_image (gimage_id);
+      GimpImage *gimage;
+
+      gimage = gimp_image_get_by_ID (gimage_id);
 
       if (gimage)
 	{
@@ -524,7 +526,7 @@ file_open_image (const gchar *filename,
 	  gimp_image_invalidate_channel_previews (gimage);
 	}
 
-      return pdb_id_to_image (gimage_id);
+      return gimage;
     }
 
   return NULL;

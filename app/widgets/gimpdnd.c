@@ -28,8 +28,6 @@
 
 #include "apptypes.h"
 
-#include "pdb/procedural_db.h"
-
 #include "tools/gimptool.h"
 #include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
@@ -937,7 +935,7 @@ gimp_dnd_get_image_data (GtkWidget     *widget,
   if (! gimage)
     return NULL;
 
-  id = g_strdup_printf ("%d", pdb_image_to_id (gimage));
+  id = g_strdup_printf ("%d", gimp_image_get_ID (gimage));
 
   *format = 8;
   *length = strlen (id) + 1;
@@ -970,7 +968,7 @@ gimp_dnd_set_image_data (GtkWidget     *widget,
   if (! ID)
     return;
 
-  gimage = pdb_id_to_image (ID);
+  gimage = gimp_image_get_by_ID (ID);
 
   if (gimage)
     (* (GimpDndDropViewableFunc) set_image_func) (widget,

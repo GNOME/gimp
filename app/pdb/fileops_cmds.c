@@ -42,6 +42,7 @@
 #include "file-open.h"
 #include "file-save.h"
 #include "file-utils.h"
+#include "gimpimage.h"
 #include "gimprc.h"
 #include "plug_in.h"
 
@@ -323,7 +324,7 @@ file_save_thumbnail_invoker (Argument *args)
   gchar *filename;
   TempBuf *thumb;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 

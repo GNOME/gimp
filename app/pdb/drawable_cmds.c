@@ -28,6 +28,7 @@
 #include "procedural_db.h"
 
 #include "drawable.h"
+#include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
 #include "pdb_glue.h"
@@ -363,7 +364,7 @@ drawable_image_invoker (Argument *args)
   return_args = procedural_db_return_args (&drawable_image_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = pdb_image_to_id (gimage);
+    return_args[1].value.pdb_int = gimp_image_get_ID (gimage);
 
   return return_args;
 }
@@ -1323,7 +1324,7 @@ drawable_set_image_invoker (Argument *args)
   if (drawable == NULL)
     success = FALSE;
 
-  gimage = pdb_id_to_image (args[1].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[1].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 

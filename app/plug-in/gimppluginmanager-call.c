@@ -1371,7 +1371,7 @@ plug_in_repeat (gboolean with_interface)
 
       /* initialize the first three plug-in arguments  */
       args[0].value.pdb_int = (with_interface ? RUN_INTERACTIVE : RUN_WITH_LAST_VALS);
-      args[1].value.pdb_int = pdb_image_to_id (gdisplay->gimage);
+      args[1].value.pdb_int = gimp_image_get_ID (gdisplay->gimage);
       args[2].value.pdb_int = gimp_drawable_get_ID (gimp_image_active_drawable (gdisplay->gimage));
 
       /* run the plug-in procedure */
@@ -2639,7 +2639,7 @@ plug_in_callback (GtkWidget *widget,
 
 	  /* initialize the first 3 plug-in arguments  */
 	  args[0].value.pdb_int = RUN_INTERACTIVE;
-	  args[1].value.pdb_int = pdb_image_to_id (gdisplay->gimage);
+	  args[1].value.pdb_int = gimp_image_get_ID (gdisplay->gimage);
 	  args[2].value.pdb_int = gimp_drawable_get_ID (gimp_image_active_drawable (gdisplay->gimage));
 	  argc = 3;
 	}
@@ -2662,7 +2662,7 @@ plug_in_callback (GtkWidget *widget,
 	    {
 	      gdisp_ID = gdisplay->ID;
 
-	      args[1].value.pdb_int = pdb_image_to_id (gdisplay->gimage);
+	      args[1].value.pdb_int = gimp_image_get_ID (gdisplay->gimage);
 	      args[2].value.pdb_int = gimp_drawable_get_ID (gimp_image_active_drawable (gdisplay->gimage));
 	      argc = 3;
 	    }

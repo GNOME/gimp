@@ -171,6 +171,9 @@ static guint gimp_image_signals[LAST_SIGNAL] = { 0 };
 
 static GimpViewableClass *parent_class = NULL;
 
+static gint        global_image_ID  = 1;
+static GHashTable *gimp_image_table = NULL;
+
 
 GtkType 
 gimp_image_get_type (void) 
@@ -324,6 +327,8 @@ gimp_image_class_init (GimpImageClass *klass)
 static void 
 gimp_image_init (GimpImage *gimage)
 {
+  gimage->ID                    = global_image_ID++;
+
   gimage->save_proc             = NULL;
 
   gimage->width                 = 0;
@@ -388,12 +393,23 @@ gimp_image_init (GimpImage *gimage)
 
   gimage->comp_preview          = NULL;
   gimage->comp_preview_valid    = FALSE;
+
+  if (gimp_image_table == NULL)
+    gimp_image_table = g_hash_table_new (g_direct_hash, NULL);
+
+  g_hash_table_insert (gimp_image_table,
+		       GINT_TO_POINTER (gimage->ID),
+		       (gpointer) gimage);
 }
 
 static void
 gimp_image_destroy (GtkObject *object)
 {
-  GimpImage *gimage = GIMP_IMAGE (object);
+  GimpImage *gimage;
+
+  gimage = GIMP_IMAGE (object);
+
+  g_hash_table_remove (gimp_image_table, GINT_TO_POINTER (gimage->ID));
 
   gimp_image_free_projection (gimage);
   gimp_image_free_shadow (gimage);
@@ -545,6 +561,25 @@ gimp_image_new (gint               width,
 
 
   return gimage;
+}
+
+gint
+gimp_image_get_ID (GimpImage *gimage)
+{
+  g_return_val_if_fail (gimage != NULL, -1);
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
+
+  return gimage->ID;
+}
+
+GimpImage *
+gimp_image_get_by_ID (gint image_id)
+{
+  if (gimp_image_table == NULL)
+    return NULL;
+
+  return (GimpImage *) g_hash_table_lookup (gimp_image_table, 
+					    GINT_TO_POINTER (image_id));
 }
 
 void

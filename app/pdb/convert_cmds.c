@@ -53,7 +53,7 @@ convert_rgb_invoker (Argument *args)
   gboolean success = TRUE;
   GimpImage *gimage;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -95,7 +95,7 @@ convert_grayscale_invoker (Argument *args)
   gboolean success = TRUE;
   GimpImage *gimage;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -143,7 +143,7 @@ convert_indexed_invoker (Argument *args)
   gboolean remove_unused;
   gchar *palette_name;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 

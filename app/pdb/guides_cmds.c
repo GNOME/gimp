@@ -27,6 +27,7 @@
 #include "procedural_db.h"
 
 #include "gimage.h"
+#include "gimpimage.h"
 #include "undo.h"
 
 static ProcRecord image_add_hguide_proc;
@@ -57,7 +58,7 @@ image_add_hguide_invoker (Argument *args)
   gint32 guide_ID = 0;
   Guide *guide;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -135,7 +136,7 @@ image_add_vguide_invoker (Argument *args)
   gint32 guide_ID = 0;
   Guide *guide;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -211,7 +212,7 @@ image_delete_guide_invoker (Argument *args)
   gint32 guide;
   GList *guides;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -286,7 +287,7 @@ image_find_next_guide_invoker (Argument *args)
   gint32 next_guide = 0;
   GList *guides;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -396,7 +397,7 @@ image_get_guide_orientation_invoker (Argument *args)
   gint32 orientation = 0;
   GList *guides;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
@@ -479,7 +480,7 @@ image_get_guide_position_invoker (Argument *args)
   gint32 position = 0;
   GList *guides;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 

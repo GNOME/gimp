@@ -41,8 +41,6 @@
 #include "palette_import.h"
 #include "temp_buf.h"
 
-#include "pdb/procedural_db.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -254,7 +252,7 @@ palette_import_image_sel_callback (GtkWidget *widget,
 
   lab = g_strdup_printf ("%s-%d",
 			 g_basename (gimp_image_filename (import_dialog->gimage)),
-			 pdb_image_to_id (import_dialog->gimage));
+			 gimp_image_get_ID (import_dialog->gimage));
 
   gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), lab);
 
@@ -269,7 +267,7 @@ palette_import_image_menu_add (GimpImage *gimage)
 
   lab = g_strdup_printf ("%s-%d",
 			 g_basename (gimp_image_filename (gimage)),
-			 pdb_image_to_id (gimage));
+			 gimp_image_get_ID (gimage));
 
   menuitem = gtk_menu_item_new_with_label (lab);
 
@@ -374,7 +372,7 @@ palette_import_image_menu_activate (gint        redo,
 
 	   lab = g_strdup_printf ("%s-%d",
 				  g_basename (gimp_image_filename (import_dialog->gimage)),
-				  pdb_image_to_id (import_dialog->gimage));
+				  gimp_image_get_ID (import_dialog->gimage));
 
            gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu1), act_num);
            gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), lab);
@@ -386,7 +384,7 @@ palette_import_image_menu_activate (gint        redo,
 
   lab = g_strdup_printf ("%s-%d",
 			 g_basename (gimp_image_filename (import_dialog->gimage)),
-			 pdb_image_to_id (import_dialog->gimage));
+			 gimp_image_get_ID (import_dialog->gimage));
 
   gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), lab);
 

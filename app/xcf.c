@@ -396,9 +396,9 @@ xcf_load_invoker (Argument *args)
   return_args = procedural_db_return_args (&xcf_plug_in_load_proc.db_info, success);
 
   if (success)
-    return_args[1].value.pdb_int = pdb_image_to_id(gimage);
+    return_args[1].value.pdb_int = gimp_image_get_ID (gimage);
 
-  gimp_remove_busy_cursors(NULL);
+  gimp_remove_busy_cursors (NULL);
 
   return return_args;
 }
@@ -416,7 +416,7 @@ xcf_save_invoker (Argument *args)
 
   success = FALSE;
 
-  gimage = pdb_id_to_image (args[1].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[1].value.pdb_int);
   filename = args[3].value.pdb_pointer;
 
   info.fp = fopen (filename, "wb");

@@ -41,7 +41,6 @@ GHashTable *procedural_ht = NULL;
 
 /*  Local functions  */
 static guint   procedural_db_hash_func (gconstpointer key);
-static void    pdb_id_init             (void);
 
 
 void
@@ -51,7 +50,6 @@ procedural_db_init (void)
 
   if (!procedural_ht)
     procedural_ht = g_hash_table_new (procedural_db_hash_func, g_str_equal);
-  pdb_id_init ();
 }
 
 static void
@@ -443,91 +441,4 @@ procedural_db_hash_func (gconstpointer key)
     }
 
   return result;
-}
-
-
-/* The id system's remnants ... */
-
-
-static gint next_image_id;
-/*
-static gint next_drawable_id;
-static gint next_display_id;
-*/
-
-static GHashTable *image_hash;
-static GHashTable *drawable_hash;
-static GHashTable *display_hash;
-
-static guint
-id_hash_func (gconstpointer id)
-{
-  return *((guint*) id);
-}
-
-static gboolean
-id_cmp_func (gconstpointer id1,
-    	     gconstpointer id2)
-{
-  return (*((guint*) id1) == *((guint*) id2));
-}
-
-static void
-add_cb (GimpContainer *container,
-    	GimpImage     *gimage,
-	gpointer       data)
-{
-  guint *id;
-
-  id = g_new (guint, 1);
-  *id = next_image_id++;
-
-  gtk_object_set_data (GTK_OBJECT (gimage), "pdb_id", id);
-  g_hash_table_insert (image_hash, id, gimage);
-}
-
-static void
-remove_cb (GimpContainer *container,
-    	   GimpImage     *image,
-	   gpointer       data)
-{
-  guint *id;
-
-  id = (guint *) gtk_object_get_data (GTK_OBJECT (image), "pdb_id");
-
-  gtk_object_remove_data (GTK_OBJECT (image), "pdb_id");
-  g_hash_table_remove (image_hash, id);
-  g_free (id);
-}
-
-static void
-pdb_id_init (void)
-{
-  image_hash    = g_hash_table_new (id_hash_func, id_cmp_func);
-  drawable_hash = g_hash_table_new (id_hash_func, id_cmp_func);
-  display_hash  = g_hash_table_new (id_hash_func, id_cmp_func);
-
-  gtk_signal_connect (GTK_OBJECT (image_context), "add",
-		      GTK_SIGNAL_FUNC (add_cb),
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (image_context), "remove",
-		      GTK_SIGNAL_FUNC (remove_cb),
-		      NULL);
-}
-
-
-gint
-pdb_image_to_id (GimpImage *gimage)
-{
-  guint *id;
-
-  id = (guint *) gtk_object_get_data (GTK_OBJECT (gimage), "pdb_id");
-
-  return id ? (gint) *id : -1;
-}
-	
-GimpImage *
-pdb_id_to_image (gint id)
-{
-  return g_hash_table_lookup (image_hash, &id);
 }

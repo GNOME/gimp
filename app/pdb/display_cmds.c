@@ -50,7 +50,7 @@ display_new_invoker (Argument *args)
   GDisplay *gdisp = NULL;
   guint scale = 0x101;
 
-  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
