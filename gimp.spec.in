@@ -7,6 +7,7 @@
 
 Summary: The GNU Image Manipulation Program
 Name: 		gimp
+Epoch:		1
 Version: 	%{ver}
 Release: 	1
 Copyright: 	GPL, LGPL
