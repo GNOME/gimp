@@ -1161,9 +1161,8 @@ msgid "FS Relax"
 msgstr "м'яке плаваюче виділення"
 
 #: app/core/core-enums.c:518
-#, fuzzy
 msgid "EEK: can't undo"
-msgstr "Неможливо відмінити %s"
+msgstr "Неможливо скасувати"
 
 #: app/core/gimp-gradients.c:75
 #, fuzzy
@@ -1225,9 +1224,8 @@ msgstr "Градієнти"
 #. initialize the list of gimp fonts
 #: app/core/gimp.c:777 app/gui/dialogs-constructors.c:418
 #: app/gui/dialogs-constructors.c:582
-#, fuzzy
 msgid "Fonts"
-msgstr "пункти"
+msgstr "Шрифти"
 
 #. initialize the document history
 #: app/core/gimp.c:783
@@ -1459,18 +1457,16 @@ msgid "Bucket Fill"
 msgstr "Заповнення"
 
 #: app/core/gimpdrawable-desaturate.c:95
-#, fuzzy
 msgid "Desaturate"
-msgstr "Насиченість"
+msgstr "Знебарвити"
 
 #: app/core/gimpdrawable-equalize.c:85
 msgid "Equalize"
 msgstr ""
 
 #: app/core/gimpdrawable-invert.c:56
-#, fuzzy
 msgid "Invert"
-msgstr "Перетворення"
+msgstr "Інвертувати"
 
 #. push an undo
 #: app/core/gimpdrawable-offset.c:317
@@ -1520,7 +1516,7 @@ msgstr "Заповнити кольором тла"
 
 #: app/core/gimpedit.c:364
 msgid "Fill with White"
-msgstr ""
+msgstr "Заповнити білим"
 
 #: app/core/gimpedit.c:373
 msgid "Fill with Transparency"
@@ -1529,12 +1525,12 @@ msgstr "Заповнити прозорістю"
 #: app/core/gimpenvirontable.c:283
 #, c-format
 msgid "Empty variable name in environment file %s"
-msgstr ""
+msgstr "Поржня назва змінної у файлі середовища %s"
 
 #: app/core/gimpenvirontable.c:301
 #, c-format
 msgid "Illegal variable name in environment file %s: %s"
-msgstr ""
+msgstr "Неправильна назва змінної у файлі середовища %s: %s"
 
 #: app/core/gimpgradient.c:363
 #, c-format
@@ -3758,17 +3754,16 @@ msgstr "/Файл/Вийти"
 
 #. <Image>/Edit
 #: app/gui/image-menu.c:154
-#, fuzzy
 msgid "/_Edit"
-msgstr "Редагувати"
+msgstr "/_Редагування"
 
 #: app/gui/image-menu.c:156
 msgid "/Edit/Undo"
-msgstr "/Редагування/Відмінити"
+msgstr "/Редагування/Скасувати"
 
 #: app/gui/image-menu.c:161
 msgid "/Edit/Redo"
-msgstr "/Редагування/Повернути"
+msgstr "/Редагування/Повторити"
 
 #: app/gui/image-menu.c:169
 msgid "/Edit/Cut"
@@ -3788,13 +3783,12 @@ msgstr "/Редагування/Вставити в"
 
 #: app/gui/image-menu.c:189
 msgid "/Edit/Paste as New"
-msgstr "/Редагування/Вставити як новий"
+msgstr "/Редагування/Вставити новим"
 
 #. <Image>/Edit/Buffer
 #: app/gui/image-menu.c:197
-#, fuzzy
 msgid "/Edit/_Buffer"
-msgstr "/Редагування/Очистити"
+msgstr "/Редагування/_Буфер"
 
 #: app/gui/image-menu.c:199
 msgid "/Edit/Buffer/Cut Named..."
@@ -3826,9 +3820,8 @@ msgstr "/Редагування/Обвести"
 
 #. <Image>/Select
 #: app/gui/image-menu.c:242
-#, fuzzy
 msgid "/_Select"
-msgstr "/Виділення/Все"
+msgstr "/_Виділення"
 
 #: app/gui/image-menu.c:244
 msgid "/Select/All"
@@ -3876,9 +3869,8 @@ msgstr "/Виділення/Зберегти в каналі"
 
 #. <Image>/View
 #: app/gui/image-menu.c:304
-#, fuzzy
 msgid "/_View"
-msgstr "/Файл"
+msgstr "/_Вигляд"
 
 #: app/gui/image-menu.c:306
 msgid "/View/New View"
@@ -3890,24 +3882,20 @@ msgstr "/Вигляд/Точка за точкою"
 
 #. <Image>/View/Zoom
 #: app/gui/image-menu.c:318
-#, fuzzy
 msgid "/View/_Zoom"
-msgstr "/Вигляд/Масштаб/8:1"
+msgstr "/Вигляд/Масштаб"
 
 #: app/gui/image-menu.c:320
-#, fuzzy
 msgid "/View/Zoom/Zoom Out"
-msgstr "/Вигляд/Зменшити"
+msgstr "/Вигляд/Масштаб/Зменшити"
 
 #: app/gui/image-menu.c:325
-#, fuzzy
 msgid "/View/Zoom/Zoom In"
-msgstr "/Вигляд/Збільшити"
+msgstr "/Вигляд/Масштаб/Збільшити"
 
 #: app/gui/image-menu.c:330
-#, fuzzy
 msgid "/View/Zoom/Zoom to Fit Window"
-msgstr "/Вигляд/Збільшити до розміру вікна "
+msgstr "/Вигляд/Масштаб/Підігнати до розмірів вікна "
 
 #: app/gui/image-menu.c:338
 msgid "/View/Zoom/16:1"
@@ -3982,9 +3970,8 @@ msgid "/View/Show Rulers"
 msgstr "/Вигляд/Показати лінійки"
 
 #: app/gui/image-menu.c:428
-#, fuzzy
 msgid "/View/Show Scrollbars"
-msgstr "/Вигляд/Показати лінійки"
+msgstr "/Вигляд/Показати смуги прокручування"
 
 #: app/gui/image-menu.c:432
 msgid "/View/Show Statusbar"
@@ -3995,21 +3982,18 @@ msgid "/View/Shrink Wrap"
 msgstr "/Вигляд/Нормалізувати розміри вигляду"
 
 #: app/gui/image-menu.c:444
-#, fuzzy
 msgid "/View/Fullscreen"
-msgstr "/Вигляд/Приєднання до напрямних"
+msgstr "/Вигляд/На весь екран"
 
 #. <Image>/Image
 #: app/gui/image-menu.c:451
-#, fuzzy
 msgid "/_Image"
-msgstr "Зображення"
+msgstr "/_Зображення"
 
 #. <Image>/Image/Mode
 #: app/gui/image-menu.c:455
-#, fuzzy
 msgid "/Image/_Mode"
-msgstr "/Зображення/Режим/RGB"
+msgstr "/Зображення/_Режим"
 
 #: app/gui/image-menu.c:457
 msgid "/Image/Mode/RGB"
@@ -4080,9 +4064,8 @@ msgstr "/Зображення/Звести зображення"
 
 #. <Image>/Layer
 #: app/gui/image-menu.c:545
-#, fuzzy
 msgid "/_Layer"
-msgstr "Шар"
+msgstr "/_Шар"
 
 #: app/gui/image-menu.c:547
 msgid "/Layer/New Layer..."
@@ -4172,9 +4155,8 @@ msgstr "/Шар/Кольори/Авто/Вирівнювання"
 
 #. <Image>/Layer/Mask
 #: app/gui/image-menu.c:649
-#, fuzzy
 msgid "/Layer/_Mask"
-msgstr "Додати маску шару"
+msgstr "/Шар/_Маска"
 
 #: app/gui/image-menu.c:651
 msgid "/Layer/Mask/Add Layer Mask..."
@@ -4194,9 +4176,8 @@ msgstr "/Шар/Маска/Маска у виділення"
 
 #. <Image>/Layer/Transparency
 #: app/gui/image-menu.c:672
-#, fuzzy
 msgid "/Layer/Tr_ansparency"
-msgstr "Прозорість"
+msgstr "/Шар/Про_зорість"
 
 #: app/gui/image-menu.c:674
 msgid "/Layer/Transparency/Add Alpha Channel"
@@ -4208,9 +4189,8 @@ msgstr "/Шар/Прозорість/Альфа у виділення"
 
 #. <Image>/Layer/Transform
 #: app/gui/image-menu.c:688
-#, fuzzy
 msgid "/Layer/_Transform"
-msgstr "/Зображення/Перетворення"
+msgstr "/Шар/Пере_творення"
 
 #: app/gui/image-menu.c:690
 #, fuzzy
@@ -4289,9 +4269,8 @@ msgstr "/Інструменти/Перетворення"
 
 #. <Image>/Dialogs
 #: app/gui/image-menu.c:778
-#, fuzzy
 msgid "/_Dialogs"
-msgstr "/Діалоги/Контури..."
+msgstr "/_Діалоги"
 
 #: app/gui/image-menu.c:780
 msgid "/Dialogs/_Create New Dock"
@@ -4369,9 +4348,8 @@ msgid "/Dialogs/Palettes..."
 msgstr "/Діалоги/Палітри..."
 
 #: app/gui/image-menu.c:871
-#, fuzzy
 msgid "/Dialogs/Fonts..."
-msgstr "/Діалоги/Контури..."
+msgstr "/Діалоги/Шрифти..."
 
 #: app/gui/image-menu.c:876
 msgid "/Dialogs/Buffers..."
@@ -4395,9 +4373,8 @@ msgid "/Dialogs/Error Console..."
 msgstr "/Діалоги/Консоль помилок..."
 
 #: app/gui/image-menu.c:909
-#, fuzzy
 msgid "/Filte_rs"
-msgstr "/Фільтри/WWW"
+msgstr "/_Фільтри"
 
 #: app/gui/image-menu.c:911
 msgid "/Filters/Repeat Last"
@@ -4408,19 +4385,16 @@ msgid "/Filters/Re-Show Last"
 msgstr "/Фільтри/Показати останній"
 
 #: app/gui/image-menu.c:924
-#, fuzzy
 msgid "/Filters/_Blur"
-msgstr "/Фільтри/Розмивання"
+msgstr "/Фільтри/_Розмивання"
 
 #: app/gui/image-menu.c:925
-#, fuzzy
 msgid "/Filters/_Colors"
-msgstr "/Фільтри/Кольори"
+msgstr "/Фільтри/_Кольори"
 
 #: app/gui/image-menu.c:926
-#, fuzzy
 msgid "/Filters/_Noise"
-msgstr "/Фільтри/Шум"
+msgstr "/Фільтри/_Шум"
 
 #: app/gui/image-menu.c:927
 #, fuzzy
@@ -4945,19 +4919,16 @@ msgid "/Delete Color"
 msgstr "/Видалити кольор"
 
 #: app/gui/palette-editor-menu.c:53
-#, fuzzy
 msgid "/Zoom Out"
-msgstr "Зменшити"
+msgstr "/Зменшити"
 
 #: app/gui/palette-editor-menu.c:57
-#, fuzzy
 msgid "/Zoom In"
-msgstr "Збільшити"
+msgstr "/Збільшити"
 
 #: app/gui/palette-editor-menu.c:61
-#, fuzzy
 msgid "/Zoom All"
-msgstr "Масштабувати все"
+msgstr ""
 
 #: app/gui/palette-import-dialog.c:166
 msgid "Import Palette"
@@ -5899,7 +5870,7 @@ msgstr ""
 
 #: app/gui/tips-dialog.c:111
 msgid "GIMP Tip of the Day"
-msgstr "Підказка дня GIMP"
+msgstr "Порада дня"
 
 #: app/gui/tips-dialog.c:175
 msgid "Show tip next time GIMP starts"
@@ -5907,11 +5878,11 @@ msgstr "Показувати підказку наступного разу"
 
 #: app/gui/tips-dialog.c:199
 msgid "_Previous Tip"
-msgstr "Попередня підказка"
+msgstr "Попередня порада"
 
 #: app/gui/tips-dialog.c:209
 msgid "_Next Tip"
-msgstr "Наступна підказка"
+msgstr "Наступна порада"
 
 #: app/gui/tips-parser.c:166
 #, c-format
@@ -5919,7 +5890,7 @@ msgid ""
 "Your GIMP tips file appears to be missing! There should be a file called '%"
 "s'. Please check your installation."
 msgstr ""
-"Схоже ваш файл порад GIMP відсутній!\n"
+"Схоже, ваш файл порад GIMP відсутній!\n"
 "Це має бути файл '%s'.\n"
 "Будь ласка, перевірте вашу інсталяцію."
 
@@ -5934,7 +5905,7 @@ msgstr ""
 #.
 #: app/gui/tips-parser.c:181
 msgid "tips-locale:C"
-msgstr ""
+msgstr "tips-locale:uk"
 
 #: app/gui/tool-options-dialog.c:100
 msgid "Save current settings as default values"
@@ -5950,9 +5921,8 @@ msgstr "Встановити початкові значення"
 
 #. <Toolbox>/File/Acquire
 #: app/gui/toolbox-menu.c:78
-#, fuzzy
 msgid "/File/_Acquire"
-msgstr "/Файл/Захопити"
+msgstr "/Файл/_Захопити"
 
 #: app/gui/toolbox-menu.c:82
 msgid "/File/Preferences..."
@@ -5960,9 +5930,8 @@ msgstr "/Файл/Установки..."
 
 #. <Toolbox>/File/Dialogs
 #: app/gui/toolbox-menu.c:90
-#, fuzzy
 msgid "/File/_Dialogs"
-msgstr "/Діалоги/Контури..."
+msgstr "/Файл/_Діалоги"
 
 #: app/gui/toolbox-menu.c:92
 #, fuzzy
@@ -6041,9 +6010,8 @@ msgid "/File/Dialogs/Palettes..."
 msgstr "/Файл/Діалоги/Палітри..."
 
 #: app/gui/toolbox-menu.c:183
-#, fuzzy
 msgid "/File/Dialogs/Fonts..."
-msgstr "/Файл/Діалоги/Контури..."
+msgstr "/Файл/Діалоги/Шрифти..."
 
 #: app/gui/toolbox-menu.c:188
 msgid "/File/Dialogs/Buffers..."
@@ -6090,7 +6058,7 @@ msgstr "/Довідка/Контекстна допомога..."
 
 #: app/gui/toolbox-menu.c:259
 msgid "/Help/Tip of the Day..."
-msgstr "/Довідка/Підказка дня..."
+msgstr "/Довідка/Порада дня..."
 
 #: app/gui/toolbox-menu.c:264
 msgid "/Help/About..."
@@ -9259,17 +9227,17 @@ msgstr "Помилка запису файла у форматі XCF: %s"
 #: app/xcf/xcf-seek.c:44 app/xcf/xcf-seek.c:61 app/xcf/xcf-seek.c:72
 #, c-format
 msgid "Could not seek in XCF file: %s"
-msgstr ""
+msgstr "Не вдалось спозиціонуватись у XCF-файлі: %s"
 
 #: app/xcf/xcf.c:261
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "Помилка XCF: версія %d XCF-файлу, що не підтримується"
+msgstr "Помилка XCF: версія XCF-файла %d не підтримується"
 
 #: app/xcf/xcf.c:325
 #, c-format
 msgid "open failed on %s: %s\n"
-msgstr "не вдалося відкрити %s: %s\n"
+msgstr "не вдалось відкрити %s: %s\n"
 
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
@@ -9277,268 +9245,4 @@ msgstr ""
 
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
-msgstr ""
-
-#, fuzzy
-#~ msgid "Translate Channel"
-#~ msgstr "Видалити канал"
-
-#~ msgid "Selection from Path"
-#~ msgstr "Виділення з контуру"
-
-#, fuzzy
-#~ msgid "Translate Selection"
-#~ msgstr "Плаваюче виділення"
-
-#~ msgid "/Add Tab/Old Paths..."
-#~ msgstr "/Додати вкладку/Старі контури..."
-
-#~ msgid "/New Path"
-#~ msgstr "/Новий контур"
-
-#~ msgid "Path to Selection"
-#~ msgstr "Контур у виділення"
-
-#~ msgid "New Point"
-#~ msgstr "Нова точка"
-
-#~ msgid "Add Point"
-#~ msgstr "Додати точку"
-
-#~ msgid "Delete Point"
-#~ msgstr "Видалити точку"
-
-#~ msgid "Edit Point"
-#~ msgstr "Редагувати точку"
-
-#~ msgid "Path %d"
-#~ msgstr "Контур %d"
-
-#~ msgid "Enter a new name for the path"
-#~ msgstr "Введіть нову назву контуру"
-
-#~ msgid "Failed to read from '%s'."
-#~ msgstr "Не вдалось зчитати з \"%s\"."
-
-#~ msgid "Failed to read path from '%s'."
-#~ msgstr "Не вдалося зчитати контур з \"%s\"."
-
-#~ msgid "No points specified in path file '%s'."
-#~ msgstr "Немає вказаних точок у файлі контуру \"%s\"."
-
-#~ msgid "Failed to read path points from '%s'."
-#~ msgstr "Не вдалось зчитати точки контуру з \"%s\"."
-
-#~ msgid "Load and Save Bezier Curves"
-#~ msgstr "Завантаження та збереження кривих Безьє"
-
-#~ msgid "Load Path"
-#~ msgstr "Завантажити контур"
-
-#~ msgid "Bezier Select"
-#~ msgstr "Виділення Безьє"
-
-#~ msgid "Select regions using Bezier curves"
-#~ msgstr "Виділення кривими Безьє"
-
-#~ msgid "/Tools/Selection Tools/Bezier Select"
-#~ msgstr "/Інструменти/Виділення/Виділення Безьє"
-
-#~ msgid "Bezier path already closed."
-#~ msgstr "Криву Безьє вже закрито"
-
-#~ msgid "Corrupt curve"
-#~ msgstr "Зіпсована крива"
-
-#~ msgid "Curve not closed!"
-#~ msgstr "Криву не закрито!"
-
-#~ msgid "Paintbrush operation failed."
-#~ msgstr "Операція пензлем не вдалась."
-
-#~ msgid "Show Path"
-#~ msgstr "Показати контур"
-
-#~ msgid "Input Device Settings"
-#~ msgstr "Параметри пристроїв вводу"
-
-#~ msgid "%d Bytes"
-#~ msgstr "%d Байтів"
-
-#~ msgid "%.2f KB"
-#~ msgstr "%.2f КБ"
-
-#~ msgid "%.1f KB"
-#~ msgstr "%.1f КБ"
-
-#~ msgid "%d KB"
-#~ msgstr "%d КБ"
-
-#~ msgid "%.2f MB"
-#~ msgstr "%.2f МБ"
-
-#~ msgid "%.1f MB"
-#~ msgstr "%.1f МБ"
-
-#~ msgid ""
-#~ "Unable to add a layer mask to a\n"
-#~ "layer in an indexed image."
-#~ msgstr ""
-#~ "Не вдалось додати маску шару\n"
-#~ "до шару в індексованому зображені."
-
-#~ msgid "Old Path List"
-#~ msgstr "Список старих контурів"
-
-#, fuzzy
-#~ msgid "Other"
-#~ msgstr "Вимірювач"
-
-#, fuzzy
-#~ msgid "Move Selection Mask"
-#~ msgstr "Маска виділення"
-
-#~ msgid "Add Guide"
-#~ msgstr "Додати напрямну лінію"
-
-#, fuzzy
-#~ msgid "Layer Reposition"
-#~ msgstr "зміна позиції шару"
-
-#, fuzzy
-#~ msgid "Layer Move"
-#~ msgstr "переміщення шару"
-
-#, fuzzy
-#~ msgid "Channel Reposition"
-#~ msgstr "зміна позиції шару"
-
-#, fuzzy
-#~ msgid "Vectors Reposition"
-#~ msgstr "зміна позиції шару"
-
-#~ msgid "Add Layer to Image"
-#~ msgstr "Додати шар до зображення"
-
-#~ msgid "Remove Layer from Image"
-#~ msgstr "Видалити шар із зображення"
-
-#~ msgid "Add Channel to Image"
-#~ msgstr "Додати канал до зображення"
-
-#~ msgid "Add Path to Image"
-#~ msgstr "Додати контур до зображення"
-
-#~ msgid "Remove Path from Image"
-#~ msgstr "Видалити контур із зображення"
-
-#, fuzzy
-#~ msgid "Image Tree"
-#~ msgstr "Тип зображення"
-
-#, fuzzy
-#~ msgid "Brush Tree"
-#~ msgstr "Пензлі"
-
-#, fuzzy
-#~ msgid "Pattern Tree"
-#~ msgstr "Джерело візерунку"
-
-#, fuzzy
-#~ msgid "Gradient Tree"
-#~ msgstr "Градієнт"
-
-#, fuzzy
-#~ msgid "Palette Tree"
-#~ msgstr "Палітра"
-
-#, fuzzy
-#~ msgid "Buffer Tree"
-#~ msgstr "Вставити з названого буферу"
-
-#, fuzzy
-#~ msgid "Document History Tree"
-#~ msgstr "Історія документів"
-
-#, fuzzy
-#~ msgid "/View as Tree"
-#~ msgstr "/Вигляд/Приєднання до напрямних"
-
-#~ msgid ""
-#~ "Save failed.\n"
-#~ "%s: Unknown file type."
-#~ msgstr ""
-#~ "Запис не вдався.\n"
-#~ "%s: невідомий тип файлу."
-
-#~ msgid ""
-#~ "Save failed.\n"
-#~ "%s is not a regular file."
-#~ msgstr ""
-#~ "Запис не вдався.\n"
-#~ "%s - незвичайний файл."
-
-#, fuzzy
-#~ msgid ""
-#~ "Save failed.\n"
-#~ "%s: %s."
-#~ msgstr ""
-#~ "Збереження не вдалось.\n"
-#~ "%s"
-
-#~ msgid "/Tools/Swap Contexts"
-#~ msgstr "/Інструменти/Обміняти контексти"
-
-#~ msgid "Inverse Selection"
-#~ msgstr "Інвертувати виділення"
-
-#~ msgid "_Preview Size:"
-#~ msgstr "Розмір _перегляду:"
-
-#~ msgid "Levels of Undo:"
-#~ msgstr "Рівнів відмін:"
-
-#~ msgid ""
-#~ "This is folder used to store user defined fractals to\n"
-#~ "be used by the FractalExplorer plug-in.  The GIMP\n"
-#~ "checks this folder in addition to the systemwide\n"
-#~ "FractalExplorer installation when searching for fractals."
-#~ msgstr ""
-#~ "Ця тека використовується для зберігання фракталів\n"
-#~ "доповнення FractalExplorer створених користувачем. Під\n"
-#~ "час пошуку факталів, GIMP перевіряє цей каталог разом\n"
-#~ "із системним каталогом фракталів FractalExplorer."
-
-#~ msgid ""
-#~ "This folder is used to store user defined figures to\n"
-#~ "be used by the GFig plug-in.  The GIMP checks this\n"
-#~ "folder in addition to the systemwide GFig installation\n"
-#~ "when searching for gfig figures."
-#~ msgstr ""
-#~ "Ця тека використовується для зберігання фігур\n"
-#~ "доповнення GFig створених користувачем. Під\n"
-#~ "час пошуку фігур, GIMP перевіряє цей каталог разом\n"
-#~ "із системним каталогом фігур доповнення GFig."
-
-#~ msgid ""
-#~ "This folder is used to store user defined gflares to\n"
-#~ "be used by the GFlare plug-in.  The GIMP checks this\n"
-#~ "folder in addition to the systemwide GFlares\n"
-#~ "installation when searching for gflares."
-#~ msgstr ""
-#~ "Ця тека використовується для зберігання градієнтних\n"
-#~ "спалахів доповнення GFlare створених користувачем.\n"
-#~ "Під час пошуку градієнтних спалахів, GIMP перевіряє\n"
-#~ "цей каталог разом із системним каталогом градієнтних\n"
-#~ "спалахів доповнення GFlare."
-
-#~ msgid ""
-#~ "This folder is used to store user defined data to be\n"
-#~ "used by the Gimpressionist plug-in.  The GIMP checks\n"
-#~ "this folder in addition to the systemwide Gimpressionist\n"
-#~ "installation when searching for data."
-#~ msgstr ""
-#~ "Ця тека використовується для зберігання даних\n"
-#~ "доповнення Gimpressionist створених користувачем. Під\n"
-#~ "час пошуку даних, GIMP перевіряє цей каталог разом\n"
-#~ "із системним каталогом даних доповнення Gimpressionist."
+msgstr "GIMP (нестабільна версія)"
