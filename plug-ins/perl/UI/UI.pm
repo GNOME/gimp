@@ -141,6 +141,8 @@ sub GTK_OBJECT_INIT {
    my $w = new Gtk::Dialog;
    $w->set_title($self->get_title);
    $w->set_usize(400,300);
+   $w->action_area->set_border_width(2);
+   $w->action_area->set_homogeneous(0);
    
    (my $h=new Gtk::HBox 0,0)->show;
    $w->vbox->pack_start($h,1,1,0);
@@ -168,7 +170,12 @@ sub GTK_OBJECT_INIT {
          $self->set_preview($l->selection->children->get);
    });
    $s->add_with_viewport ($l);
-   
+
+   my $hbbox = new Gtk::HButtonBox;
+   $hbbox->set_spacing(4);
+   $w->action_area->pack_end($hbbox,0,0,0);
+   show $hbbox;
+
    my $button = new Gtk::Button __"OK";
    signal_connect $button "clicked", sub {
       hide $w;
@@ -177,14 +184,14 @@ sub GTK_OBJECT_INIT {
          $label->set($p);
       }
    };
-   $w->action_area->pack_start($button,1,1,0);
+   $hbbox->pack_start($button,0,0,0);
    can_default $button 1;
    grab_default $button;
    show $button;
    
    $button = new Gtk::Button __"Cancel";
    signal_connect $button "clicked", sub {hide $w};
-   $w->action_area->pack_start($button,1,1,0);
+   $hbbox->pack_start($button,0,0,0);
    can_default $button 1;
    show $button;
    
@@ -496,6 +503,7 @@ sub help_window(\$$$) {
    unless ($$helpwin) {
       $$helpwin = new Gtk::Dialog;
       $$helpwin->set_title(__("Help for ").$Gimp::function);
+      $$helpwin->action_area->set_border_width(2);
       my($font,$b);
 
       $b = new Gtk::Text;
@@ -555,7 +563,9 @@ sub interact($$$$@) {
      $accel->attach($w);
 
      set_title $w $Gimp::function;
-     
+     $w->action_area->set_border_width(2);
+     $w->action_area->set_homogeneous(0);
+
      my $h = new Gtk::HBox 0,2;
      $h->add(new Gtk::Label Gimp::wrap_text($blurb,40));
      $w->vbox->pack_start($h,1,1,0);
@@ -876,12 +886,12 @@ sub interact($$$$@) {
         $res++;
      }
      
-     $button = new Gtk::Button __"Help";
-     $g->attach($button,0,1,$res,$res+1,{},{},4,2);
-     signal_connect $button "clicked", sub { help_window($helpwin,$blurb,$help) };
-     
-     my $v=new Gtk::HBox 0,5;
-     $g->attach($v,1,2,$res,$res+1,{},{},4,2);
+     my $v = new Gtk::HBox 0,4;
+     $w->vbox->pack_start($v,0,0,4);
+
+     my $hbbox=new Gtk::HButtonBox;
+     $hbbox->set_spacing(4);
+     $v->pack_end($hbbox,0,0,2);
      
      $button = new Gtk::Button __"Defaults";
      signal_connect $button "clicked", sub {
@@ -889,8 +899,8 @@ sub interact($$$$@) {
          $setvals[$i]->($defaults[$i]);
        }
      };
+     $hbbox->pack_start($button,0,0,0);
      set_tip $t $button,__"Reset all values to their default";
-     $v->add($button);
      
      $button = new Gtk::Button __"Previous";
      signal_connect $button "clicked", sub {
@@ -898,21 +908,36 @@ sub interact($$$$@) {
          $setvals[$i]->($lastvals[$i]);
        }
      };
-     $v->add($button);
+     $hbbox->pack_start($button,0,0,0);
      set_tip $t $button,__"Restore values to the previous ones";
      
      signal_connect $w "destroy", sub { main_quit Gtk };
 
+     my $hbbox = new Gtk::HButtonBox;
+     $hbbox->set_spacing(4);
+     $w->action_area->pack_start($hbbox,0,0,0);
+     show $hbbox;
+
+     $button = new Gtk::Button __"Help";
+     $hbbox->pack_start($button,0,0,0);
+     signal_connect $button "clicked", sub { help_window($helpwin,$blurb,$help) };
+     can_default $button 1;
+     
+     my $hbbox = new Gtk::HButtonBox;
+     $hbbox->set_spacing(4);
+     $w->action_area->pack_end($hbbox,0,0,0);
+     show $hbbox;
+
      $button = new Gtk::Button __"OK";
      signal_connect $button "clicked", sub {$res = 1; hide $w; main_quit Gtk};
-     $w->action_area->pack_start($button,1,1,0);
+     $hbbox->pack_start($button,0,0,0);
      can_default $button 1;
      grab_default $button;
      add $accel 0xFF0D, [], [], $button, "clicked";
      
      $button = new Gtk::Button __"Cancel";
      signal_connect $button "clicked", sub {hide $w; main_quit Gtk};
-     $w->action_area->pack_start($button,1,1,0);
+     $hbbox->pack_start($button,0,0,0);
      can_default $button 1;
      add $accel 0xFF1B, [], [], $button, "clicked";
      
