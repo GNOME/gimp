@@ -44,15 +44,21 @@
 #define MRU_MENU_ENTRY_SIZE (strlen (_("/File/MRU00 ")) + 1)
 #define MRU_MENU_ACCEL_SIZE sizeof ("<control>0")
 
-typedef struct _GimpItemFactoryEntry GimpItemFactoryEntry;
-
-struct _GimpItemFactoryEntry
-{
-  GtkItemFactoryEntry  entry;
-
-  gchar *help_page;
-  gchar *description;
-};
+static void   menus_create_item    (GtkItemFactory       *item_factory,
+				    GimpItemFactoryEntry *entry,
+				    gpointer              callback_data,
+				    guint                 callback_type);
+static void   menus_create_items   (GtkItemFactory       *item_factory,
+				    guint                 n_entries,
+				    GimpItemFactoryEntry *entries,
+				    gpointer              callback_data,
+				    guint                 callback_type);
+static void   menus_init           (void);
+static gchar *menu_translate       (const gchar          *path,
+				    gpointer              data);
+static void   tearoff_cmd_callback (GtkWidget            *widget,
+				    gpointer              callback_data,
+				    guint                 callback_action);
 
 static char* G_GNUC_UNUSED dummyMenus[] = { N_("/File/MRU00 "),
                                             N_("/File"),
@@ -64,17 +70,6 @@ static char* G_GNUC_UNUSED dummyMenus[] = { N_("/File/MRU00 "),
                                             N_("/View/Zoom"),
                                             N_("/Stack")};
 
-static void   menus_create_item (GtkItemFactory       *item_factory,
-				 GimpItemFactoryEntry *entry,
-				 gpointer              callback_data,
-				 guint                 callback_type);
-static void   menus_init        (void);
-static gchar *menu_translate    (const gchar *path,
-				 gpointer     data);
-static void   tearoff_cmd_callback (GtkWidget *widget,
-				    gpointer   callback_data,
-				    guint      callback_action);
-
 static GSList *last_opened_raw_filenames = NULL;
 
 static GimpItemFactoryEntry toolbox_entries[] =
@@ -84,7 +79,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
   { { N_("/File/New"), "<control>N", file_new_cmd_callback, 0 },
     "file/dialogs/file_new.html", NULL },
   { { N_("/File/Open"), "<control>O", file_open_cmd_callback, 0 },
-    "file/dialogs/file_open.html", NULL },
+    "open/index.html", NULL },
   { { N_("/File/Acquire/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
     NULL, NULL },
   { { N_("/File/About..."), NULL, about_dialog_cmd_callback, 0 },
@@ -149,11 +144,11 @@ static GimpItemFactoryEntry image_entries[] =
   { { N_("/File/New"), "<control>N", file_new_cmd_callback, 1 },
     "file/dialogs/file_new.html", NULL },
   { { N_("/File/Open"), "<control>O", file_open_cmd_callback, 0 },
-    "file/dialogs/file_open.html", NULL },
+    "open/index.html", NULL },
   { { N_("/File/Save"), "<control>S", file_save_cmd_callback, 0 },
-    "file/dialogs/file_save.html", NULL },
+    "save/index.html", NULL },
   { { N_("/File/Save as"), NULL, file_save_as_cmd_callback, 0 },
-    "file/dialogs/save_as.html", NULL },
+    "save/index.html", NULL },
   { { N_("/File/Revert"), NULL, file_revert_cmd_callback, 0 },
     "file/revert.html", NULL },
   { { N_("/File/Preferences..."), NULL, file_pref_cmd_callback, 0 },
@@ -414,21 +409,27 @@ static GimpItemFactoryEntry image_entries[] =
 static guint n_image_entries = (sizeof (image_entries) /
 				sizeof (image_entries[0]));
 static GtkItemFactory *image_factory = NULL;
-  
-static GtkItemFactoryEntry load_entries[] =
+
+static GimpItemFactoryEntry load_entries[] =
 {
-  { N_("/Automatic"), NULL, file_load_by_extension_callback, 0 },
-  { "/---", NULL, NULL, 0, "<Separator>" },
+  { { N_("/Automatic"), NULL, file_load_by_extension_callback, 0 },
+    NULL, NULL },
+  { { "/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL }
 };
-static guint n_load_entries = sizeof (load_entries) / sizeof (load_entries[0]);
+static guint n_load_entries = (sizeof (load_entries) /
+			       sizeof (load_entries[0]));
 static GtkItemFactory *load_factory = NULL;
   
-static GtkItemFactoryEntry save_entries[] =
+static GimpItemFactoryEntry save_entries[] =
 {
-  { N_("/By extension"), NULL, file_save_by_extension_callback, 0 },
-  { "/---", NULL, NULL, 0, "<Separator>" },
+  { { N_("/By extension"), NULL, file_save_by_extension_callback, 0 },
+    NULL, NULL },
+  { { "/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
 };
-static guint n_save_entries = sizeof (save_entries) / sizeof (save_entries[0]);
+static guint n_save_entries = (sizeof (save_entries) /
+			       sizeof (save_entries[0]));
 static GtkItemFactory *save_factory = NULL;
 
 static GimpItemFactoryEntry layers_entries[] =
@@ -540,7 +541,7 @@ static guint n_paths_entries = (sizeof (paths_entries) /
 				sizeof (paths_entries[0]));
 static GtkItemFactory *paths_factory = NULL;
 
-static int initialize = TRUE;
+static gboolean initialize = TRUE;
 
 void
 menus_get_toolbox_menubar (GtkWidget     **menubar,
@@ -634,48 +635,69 @@ menus_get_paths_menu (GtkWidget     **menu,
 }
 
 void
-menus_create (GtkMenuEntry *entries,
-	      int           n_menu_entries)
+menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
+				  gpointer              callback_data)
 {
+  GtkItemFactory *ifactory;
   GtkWidget *menu_item;
-  int i;
-  int redo_image_menu = FALSE;
+  gboolean redo_image_menu = FALSE;
   GString *tearoff_path;
+  gchar *path;
 
   if (initialize)
     menus_init ();
 
   tearoff_path = g_string_new ("");
 
-  for (i = 0; i < n_menu_entries; i++)
-    if (! strncmp (entries[i].path, "<Image>", 7))
-      {
-	char *p;
+  if (! strncmp (entry->entry.path, "<Image>", 7))
+    {
+      gchar *p;
 	
-	p = strchr (entries[i].path + 8, '/');
-	while (p)
-	  {
-	    g_string_assign (tearoff_path, entries[i].path + 7);
-	    g_string_truncate (tearoff_path, p - entries[i].path + 1 - 7);
-	    g_string_append (tearoff_path, "tearoff1");
+      p = strchr (entry->entry.path + 8, '/');
+      while (p)
+	{
+	  g_string_assign (tearoff_path, entry->entry.path + 7);
+	  g_string_truncate (tearoff_path,
+			     p - entry->entry.path + 1 - 7);
+	  g_string_append (tearoff_path, "tearoff1");
 	    
-	    if (! gtk_item_factory_get_widget (image_factory, tearoff_path->str))
-	      {
-	        GtkItemFactoryEntry entry = { NULL, NULL, NULL, 0, "<Tearoff>" };
-		entry.path = tearoff_path->str;
-		entry.callback = tearoff_cmd_callback;
-		gtk_item_factory_create_items_ac (image_factory, 1, &entry, NULL,2);
-	      }
+	  if (! gtk_item_factory_get_widget (image_factory,
+					     tearoff_path->str))
+	    {
+	      GimpItemFactoryEntry tearoff_entry =
+	      { { NULL, NULL, NULL, 0, "<Tearoff>" },
+		NULL, NULL };
 
-	    p = strchr (p + 1, '/');
-	  }
+	      tearoff_entry.entry.path = tearoff_path->str;
+	      tearoff_entry.entry.callback = tearoff_cmd_callback;
+	      menus_create_item (image_factory, &tearoff_entry, NULL, 2);
+	    }
 
-	redo_image_menu = TRUE;
-      }
+	  p = strchr (p + 1, '/');
+	} 
+
+      redo_image_menu = TRUE;
+    }
 
   g_string_free (tearoff_path, TRUE);
 
-  gtk_item_factory_create_menu_entries (n_menu_entries, entries);
+  path = entry->entry.path;
+  ifactory = gtk_item_factory_from_path (path);
+  if (!ifactory)
+    {
+      g_warning ("menus_create_item_from_full_path(): "
+		 "entry refers to unknown item factory: \"%s\"", path);
+      return;
+    }
+
+  while (*path != '>')
+    path++;
+  path++;
+
+  entry->entry.path = path;
+
+  menus_create_item (ifactory, entry,
+		     callback_data, 2);
 
   if (redo_image_menu)
     {
@@ -719,8 +741,8 @@ menus_tools_create (ToolInfo *tool_info)
 }
 
 void
-menus_set_sensitive (gchar *path,
-		     gint   sensitive)
+menus_set_sensitive (gchar    *path,
+		     gboolean  sensitive)
 {
   GtkItemFactory *ifactory;
   GtkWidget *widget = NULL;
@@ -737,16 +759,17 @@ menus_set_sensitive (gchar *path,
       gtk_widget_set_sensitive (widget, sensitive);
     }
   if (!ifactory || !widget)
-    g_warning ("Unable to set sensitivity for menu which doesn't exist:\n%s", path);
+    g_warning ("Unable to set sensitivity for menu which doesn't exist:\n%s",
+	       path);
 }
 
 /* The following function will enhance our localesystem because
    we don't need to have our menuentries twice in our catalog */ 
 
 void
-menus_set_sensitive_glue (gchar *prepath,
-			  gchar *path,
-			  gint   sensitive)
+menus_set_sensitive_glue (gchar    *prepath,
+			  gchar    *path,
+			  gboolean  sensitive)
 {
   gchar *menupath;
 
@@ -756,8 +779,8 @@ menus_set_sensitive_glue (gchar *prepath,
 }
 
 void
-menus_set_state (gchar *path,
-		 gint   state)
+menus_set_state (gchar    *path,
+		 gboolean  state)
 {
   GtkItemFactory *ifactory;
   GtkWidget *widget = NULL;
@@ -777,13 +800,14 @@ menus_set_state (gchar *path,
 	widget = NULL;
     }
   if (!ifactory || !widget)
-    g_warning ("Unable to set state for menu which doesn't exist:\n%s\n", path);
+    g_warning ("Unable to set state for menu which doesn't exist:\n%s\n",
+	       path);
 }
 
 void
-menus_set_state_glue (gchar *prepath,
-		      gchar *path,
-		      gint   state)
+menus_set_state_glue (gchar    *prepath,
+		      gchar    *path,
+		      gboolean  state)
 {
   gchar *menupath;
 
@@ -793,7 +817,7 @@ menus_set_state_glue (gchar *prepath,
 }
 
 void
-menus_destroy (char *path)
+menus_destroy (gchar *path)
 {
   if (initialize)
     menus_init ();
@@ -920,12 +944,12 @@ menus_last_opened_add (gchar *filename)
 void
 menus_init_mru (void)
 {
-  gchar			*paths, *accelerators;
-  gint			i;
-  GtkItemFactoryEntry	*last_opened_entries;
-  GtkWidget		*widget;
+  gchar		        *paths, *accelerators;
+  gint		         i;
+  GimpItemFactoryEntry  *last_opened_entries;
+  GtkWidget	        *widget;
   
-  last_opened_entries = g_new (GtkItemFactoryEntry, last_opened_size);
+  last_opened_entries = g_new (GimpItemFactoryEntry, last_opened_size);
 
   paths = g_new (gchar, last_opened_size * MRU_MENU_ENTRY_SIZE);
   accelerators = g_new (gchar, 9 * MRU_MENU_ACCEL_SIZE);
@@ -933,40 +957,41 @@ menus_init_mru (void)
   for (i = 0; i < last_opened_size; i++)
     {
       gchar *path, *accelerator;
-      
+
       path = &paths[i * MRU_MENU_ENTRY_SIZE];
       if (i < 9)
         accelerator = &accelerators[i * MRU_MENU_ACCEL_SIZE];
       else
         accelerator = NULL;
     
-      last_opened_entries[i].path = path;
-      last_opened_entries[i].accelerator = accelerator;
-      last_opened_entries[i].callback = (GtkItemFactoryCallback) menus_last_opened_cmd_callback;
-      last_opened_entries[i].callback_action = i;
-      last_opened_entries[i].item_type = NULL;
+      last_opened_entries[i].entry.path = path;
+      last_opened_entries[i].entry.accelerator = accelerator;
+      last_opened_entries[i].entry.callback =
+	(GtkItemFactoryCallback) menus_last_opened_cmd_callback;
+      last_opened_entries[i].entry.callback_action = i;
+      last_opened_entries[i].entry.item_type = NULL;
+      last_opened_entries[i].help_page = "file/last_opened.html";
+      last_opened_entries[i].description = NULL;
 
       g_snprintf (path, MRU_MENU_ENTRY_SIZE, N_("/File/MRU%02d"), i + 1);
       if (accelerator != NULL)
 	g_snprintf (accelerator, MRU_MENU_ACCEL_SIZE, "<control>%d", i + 1);
     }
 
-  gtk_item_factory_create_items_ac (toolbox_factory, last_opened_size,
-  				    last_opened_entries, NULL, 2);
+  menus_create_items (toolbox_factory, last_opened_size,
+		      last_opened_entries, NULL, 2);
   
   for (i=0; i < last_opened_size; i++)
     {
       widget = gtk_item_factory_get_widget (toolbox_factory,
-        					    last_opened_entries[i].path);
-      gtk_object_set_data (GTK_OBJECT (widget), "help_page",
-			   (gpointer) "file/last_opened.html");
+					    last_opened_entries[i].entry.path);
       gtk_widget_hide (widget);
     }
 
   widget = gtk_item_factory_get_widget (toolbox_factory,
 					file_menu_separator.entry.path);
   gtk_widget_hide (widget);
-  
+
   g_free (paths);
   g_free (accelerators);
   g_free (last_opened_entries);
@@ -1106,7 +1131,7 @@ menus_init_toolbox (void)
 static void
 menus_init (void)
 {
-  int i;
+  gint i;
 
   if (initialize)
     {
@@ -1128,22 +1153,26 @@ menus_init (void)
 			  NULL, 2);
 
       load_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Load>", NULL);
+      gtk_object_set_data (GTK_OBJECT (load_factory), "help_path",
+			   (gpointer) "open");
       gtk_item_factory_set_translate_func (load_factory,
 	  				   menu_translate,
 	  				   NULL, NULL);
-      gtk_item_factory_create_items_ac (load_factory,
-					n_load_entries,
-					load_entries,
-					NULL, 2);
+      menus_create_items (load_factory,
+			  n_load_entries,
+			  load_entries,
+			  NULL, 2);
 
       save_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Save>", NULL);
+      gtk_object_set_data (GTK_OBJECT (save_factory), "help_path",
+			   (gpointer) "save");
       gtk_item_factory_set_translate_func (save_factory,
 	  				   menu_translate,
 	  				   NULL, NULL);
-      gtk_item_factory_create_items_ac (save_factory,
-					n_save_entries,
-					save_entries,
-					NULL, 2);
+      menus_create_items (save_factory,
+			  n_save_entries,
+			  save_entries,
+			  NULL, 2);
 
       layers_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Layers>", NULL);
       gtk_object_set_data (GTK_OBJECT (layers_factory), "help_path",
@@ -1246,25 +1275,30 @@ tearoff_cmd_callback (GtkWidget *widget,
 	    }
 	  else
 	    {
-	      dialog_register(top);
+	      dialog_register (top);
 	      gtk_signal_connect_object (GTK_OBJECT (top),  
 					 "delete_event",
 					 GTK_SIGNAL_FUNC (tearoff_delete_cb),
 					 GTK_OBJECT (top));
 	      
-	      gtk_object_set_data (GTK_OBJECT (widget),"tearoff_menu_top",top);
+	      gtk_object_set_data (GTK_OBJECT (widget), "tearoff_menu_top",
+				   top);
 	    }
 	}
       else
 	{
-	  GtkWidget *top = (GtkWidget *)gtk_object_get_data (GTK_OBJECT (widget),"tearoff_menu_top");
-	  if(!top)
+	  GtkWidget *top;
+
+	  top = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (widget),
+						   "tearoff_menu_top");
+
+	  if (!top)
 	    {
 	      g_message (_("can't unregister tearoff menu top level window"));
 	    }
 	  else
 	    {
-	      dialog_unregister(top);
+	      dialog_unregister (top);
 	    }
 	}
     }

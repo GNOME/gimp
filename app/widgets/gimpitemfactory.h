@@ -20,38 +20,50 @@
 
 #include "gtk/gtk.h"
 
-void menus_get_toolbox_menubar (GtkWidget     **menubar,
-				GtkAccelGroup **accel_group);
-void menus_get_image_menu      (GtkWidget     **menu,
-				GtkAccelGroup **accel_group);
-void menus_get_load_menu       (GtkWidget     **menu,
-				GtkAccelGroup **accel_group);
-void menus_get_save_menu       (GtkWidget     **menu,
-				GtkAccelGroup **accel_group);
-void menus_get_layers_menu     (GtkWidget     **menu,
-				GtkAccelGroup **accel_group);
-void menus_get_channels_menu   (GtkWidget     **menu,
-				GtkAccelGroup **accel_group);
-void menus_get_paths_menu      (GtkWidget     **menu,
-				GtkAccelGroup **accel_group);
+typedef struct _GimpItemFactoryEntry GimpItemFactoryEntry;
 
-void menus_create              (GtkMenuEntry *entries,
-				gint          n_menu_entries);
-void menus_destroy             (gchar        *path);
+struct _GimpItemFactoryEntry
+{
+  GtkItemFactoryEntry  entry;
+
+  gchar *help_page;
+  gchar *description;
+};
+
+void menus_get_toolbox_menubar (GtkWidget            **menubar,
+				GtkAccelGroup        **accel_group);
+void menus_get_image_menu      (GtkWidget            **menu,
+				GtkAccelGroup        **accel_group);
+void menus_get_load_menu       (GtkWidget            **menu,
+				GtkAccelGroup        **accel_group);
+void menus_get_save_menu       (GtkWidget            **menu,
+				GtkAccelGroup        **accel_group);
+void menus_get_layers_menu     (GtkWidget            **menu,
+				GtkAccelGroup        **accel_group);
+void menus_get_channels_menu   (GtkWidget            **menu,
+				GtkAccelGroup        **accel_group);
+void menus_get_paths_menu      (GtkWidget            **menu,
+				GtkAccelGroup        **accel_group);
+
+void menus_create_item_from_full_path (GimpItemFactoryEntry  *entry,
+				       gpointer               callback_data);
+
+void menus_destroy             (gchar                 *path);
 
 void menus_quit                (void);
 
-void menus_set_sensitive       (gchar *path,
-				gint   sensitive);
-void menus_set_sensitive_glue  (gchar *prepath,
-				gchar *path,
-				gint   sensitive);
-void menus_set_state           (gchar *path,
-				gint   state);
-void menus_set_state_glue      (gchar *prepath,
-				gchar *path,
-				gint   state);
+void menus_set_sensitive       (gchar                 *path,
+				gboolean               sensitive);
+void menus_set_sensitive_glue  (gchar                 *prepath,
+				gchar                 *path,
+				gboolean               sensitive);
 
-void menus_last_opened_add     (gchar *filename);
+void menus_set_state           (gchar                 *path,
+				gboolean               state);
+void menus_set_state_glue      (gchar                 *prepath,
+				gchar                 *path,
+				gboolean               state);
+
+void menus_last_opened_add     (gchar                 *filename);
 
 #endif /* __MENUS_H__ */

@@ -1628,7 +1628,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
   PlugInProcDef *proc_def;
   ProcRecord *proc = NULL;
   GSList *tmp = NULL;
-  GtkMenuEntry entry;
+  GimpItemFactoryEntry entry;
   char *prog = NULL;
   int add_proc_def;
   int i;
@@ -1833,12 +1833,23 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
       /*  If there is a menu path specified, create a menu entry  */
       if (proc_install->menu_path)
 	{
-	  entry.path = proc_install->menu_path;
-	  entry.accelerator = NULL;
-	  entry.callback = plug_in_callback;
-	  entry.callback_data = proc;
+	  gchar *help_page;
 
-	  menus_create (&entry, 1);
+	  help_page = g_strconcat ("filters/",
+				   g_basename (proc_def->prog),
+				   ".html",
+				   NULL);
+	  g_strdown (help_page);
+
+	  entry.entry.path = proc_install->menu_path;
+	  entry.entry.accelerator = NULL;
+	  entry.entry.callback = plug_in_callback;
+	  entry.entry.callback_action = 0;
+	  entry.entry.item_type = NULL;
+	  entry.help_page = help_page;
+	  entry.description = NULL;
+
+	  menus_create_item_from_full_path (&entry, proc);
 	}
       break;
     }
@@ -2254,7 +2265,7 @@ plug_in_add_to_db (void)
 static void
 plug_in_make_menu (void)
 {
-  GtkMenuEntry entry;
+  GimpItemFactoryEntry entry;
   PlugInProcDef *proc_def;
   GSList *tmp;
 
@@ -2268,12 +2279,23 @@ plug_in_make_menu (void)
 						    !proc_def->prefixes &&
 						    !proc_def->magics))
 	{
-	  entry.path = proc_def->menu_path;
-	  entry.accelerator = proc_def->accelerator;
-	  entry.callback = plug_in_callback;
-	  entry.callback_data = &proc_def->db_info;
+	  gchar *help_page;
 
-	  menus_create (&entry, 1);
+	  help_page = g_strconcat ("filters/",
+				   g_basename (proc_def->prog),
+				   ".html",
+				   NULL);
+	  g_strdown (help_page);
+
+	  entry.entry.path = proc_def->menu_path;
+	  entry.entry.accelerator = proc_def->accelerator;
+	  entry.entry.callback = plug_in_callback;
+	  entry.entry.callback_action = 0;
+	  entry.entry.item_type = NULL;
+	  entry.help_page = help_page;
+	  entry.description = NULL;
+
+	  menus_create_item_from_full_path (&entry, &proc_def->db_info);
 	}
     }
 }
@@ -2317,7 +2339,7 @@ plug_in_callback (GtkWidget *widget,
 
 	  /* initialize the first 3 plug-in arguments  */
 	  args[0].value.pdb_int = RUN_INTERACTIVE;
-	  args[1].value.pdb_int = pdb_image_to_id(gdisplay->gimage);
+	  args[1].value.pdb_int = pdb_image_to_id (gdisplay->gimage);
 	  args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gdisplay->gimage));
 	  argc = 3;
 	}
@@ -2340,7 +2362,7 @@ plug_in_callback (GtkWidget *widget,
 	    {
 	      gdisp_ID = gdisplay->ID;
 
-	      args[1].value.pdb_int = pdb_image_to_id(gdisplay->gimage);
+	      args[1].value.pdb_int = pdb_image_to_id (gdisplay->gimage);
 	      args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gdisplay->gimage));
 	      argc = 3;
 	    }

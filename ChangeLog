@@ -1,5 +1,16 @@
 1999-10-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/fileops.c
+	* app/menus.[ch]
+	* app/menus.h
+	* app/plug_in.c: show a help page for all menu entries registered
+	by plugins.
+	Changed menus_create() to menus_create_item_from_full_path() which
+	takes a single GimpItemFactoryEntry instead of an array as
+	parameter.
+
+1999-10-03  Michael Natterer  <mitch@gimp.org>
+
 	The GIMP Help System part II: press "F1" while browsing a menu
 	to show the help page for the menu entry you're currently over
 	with the mouse.
@@ -32,6 +43,8 @@
 	GimpItemFactoryEntry to allow a help path to be stored.
 	Will be partially exported and moved to gimphelp.[ch] later to
 	catch key_press for plug-in menu items (don't try this now ;-)
+	Renamed "Channel Ops" under <Image>/Image to "Channels" and moved
+	some entries to more useful places.
 
 	* app/app_procs.c
 	* app/brush_edit.c
@@ -70,6 +83,9 @@
 	* modules/colorsel_gtk.c
 	* modules/colorsel_triangle.c
 	* modules/colorsel_water.c: register a help page.
+
+	* plug-ins/common/compose.c
+	* plug-ins/common/decompose.c: changed the menu path.
 
 	* plug-ins/helpbrowser/helpbrowser.c: load the help files
 	according to the new help file structure.

@@ -161,7 +161,7 @@ file_ops_pre_init (void)
 void
 file_ops_post_init (void)
 {
-  GtkMenuEntry entry;
+  GimpItemFactoryEntry entry;
   PlugInProcDef *file_proc;
   GSList *tmp;
 
@@ -171,29 +171,49 @@ file_ops_post_init (void)
   tmp = load_procs;
   while (tmp)
     {
+      gchar *help_page;
+
       file_proc = tmp->data;
       tmp = tmp->next;
 
-      entry.path = file_proc->menu_path;
-      entry.accelerator = NULL;
-      entry.callback = file_load_type_callback;
-      entry.callback_data = file_proc;
+      help_page = g_strconcat (g_basename (file_proc->prog),
+			       ".html",
+			       NULL);
+      g_strdown (help_page);
 
-      menus_create (&entry, 1);
+      entry.entry.path = file_proc->menu_path;
+      entry.entry.accelerator = NULL;
+      entry.entry.callback = file_load_type_callback;
+      entry.entry.callback_action = 0;
+      entry.entry.item_type = NULL;
+      entry.help_page = help_page;
+      entry.description = NULL;
+
+      menus_create_item_from_full_path (&entry, file_proc);
     }
 
   tmp = save_procs;
   while (tmp)
     {
+      gchar *help_page;
+
       file_proc = tmp->data;
       tmp = tmp->next;
 
-      entry.path = file_proc->menu_path;
-      entry.accelerator = NULL;
-      entry.callback = file_save_type_callback;
-      entry.callback_data = file_proc;
+      help_page = g_strconcat (g_basename (file_proc->prog),
+			       ".html",
+			       NULL);
+      g_strdown (help_page);
 
-      menus_create (&entry, 1);
+      entry.entry.path = file_proc->menu_path;
+      entry.entry.accelerator = NULL;
+      entry.entry.callback = file_save_type_callback;
+      entry.entry.callback_action = 0;
+      entry.entry.item_type = NULL;
+      entry.help_page = help_page;
+      entry.description = NULL;
+
+      menus_create_item_from_full_path (&entry, file_proc);
     }
 }
 
@@ -234,7 +254,7 @@ file_open_callback (GtkWidget *widget,
       /*  Connect the "F1" help key  */
       gimp_help_connect_help_accel (fileload,
 				    gimp_standard_help_func,
-				    "dialogs/file_open.html");
+				    "open/index.html");
     }
   else
     {
@@ -445,8 +465,16 @@ file_save_as_callback (GtkWidget *widget,
 			  "delete_event",
 			  GTK_SIGNAL_FUNC (file_dialog_hide),
 			  NULL);
-      gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->ok_button), "clicked", (GtkSignalFunc) file_save_ok_callback, filesave);
+      gtk_signal_connect
+	(GTK_OBJECT (GTK_FILE_SELECTION (filesave)->ok_button), "clicked",
+	 (GtkSignalFunc) file_save_ok_callback,
+	 filesave);
       gtk_quit_add_destroy (1, GTK_OBJECT (filesave));
+
+      /*  Connect the "F1" help key  */
+      gimp_help_connect_help_accel (filesave,
+				    gimp_standard_help_func,
+				    "save/index.html");
     }
   else
     {
@@ -457,11 +485,6 @@ file_save_as_callback (GtkWidget *widget,
       gtk_file_selection_set_filename (GTK_FILE_SELECTION(filesave),
 				       "." G_DIR_SEPARATOR_S);
       gtk_window_set_title (GTK_WINDOW (filesave), _("Save Image"));
-
-      /*  Connect the "F1" help key  */
-      gimp_help_connect_help_accel (filesave,
-				    gimp_standard_help_func,
-				    "dialogs/file_save.html");
     }
 
   gdisplay = gdisplay_active ();
@@ -471,7 +494,8 @@ file_save_as_callback (GtkWidget *widget,
   if (!save_options)
     {
       save_options = gtk_frame_new (_("Save Options"));
-      gtk_frame_set_shadow_type (GTK_FRAME (save_options), GTK_SHADOW_ETCHED_IN);
+      gtk_frame_set_shadow_type (GTK_FRAME (save_options),
+				 GTK_SHADOW_ETCHED_IN);
 
       hbox = gtk_hbox_new (FALSE, 1);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
@@ -1592,7 +1616,7 @@ file_overwrite (char *filename,
   overwrite_box->obox =
     gimp_dialog_new (_("File Exists!"), "file_exists",
 		     gimp_standard_help_func,
-		     "dialogs/file_exists.html",
+		     "save/file_exists.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
