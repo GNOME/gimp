@@ -1,3 +1,8 @@
+2004-08-07  Simon Budig  <simon@gimp.org>
+
+	* libgimpwidgets/gimpcolorscales.c: emit the COLOR_CHANGED signal
+	when the hex entry is changed.
+
 2004-08-07  Sven Neumann  <sven@gimp.org>
 
 	* app/sanity.c: abort if the configured filename encoding can't be

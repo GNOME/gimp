@@ -468,4 +468,6 @@ gimp_color_scales_entry_changed (GimpColorHexEntry *entry,
 
   gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
   gimp_color_scales_update_scales (scales, -1);
+
+  gimp_color_selector_color_changed (selector);
 }
