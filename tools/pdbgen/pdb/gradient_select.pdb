@@ -223,7 +223,7 @@ HELP
 
   if (success)
     {
-      gdouble *values, *pv;
+      gdouble *pv;
       gdouble pos, delta;
       gdouble r, g, b, a;
       int i = sample_size;

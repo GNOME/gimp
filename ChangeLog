@@ -1,3 +1,12 @@
+1999-05-06  Tor Lillqvist  <tml@iki.fi>
+
+	* tools/pdbgen/pdb/gradient_select.pdb: Fix nasty bug, inner block
+ 	variable "values" shadowed outer one, the inner one was assigned
+ 	to, the outer one returned.
+
+	* app/gradient_select_cmds.c
+ 	(gradients_get_gradient_data_invoker): Autogenned from above.
+
 Wed May  5 18:18:16 CEST 1999 Marc Lehmann <pcg@goof.com>
 
         * configure.in: enabled _NOUI versions of GIMP_CFLAGS and

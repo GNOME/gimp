@@ -335,7 +335,7 @@ gradients_get_gradient_data_invoker (Argument *args)
     
       if (success)
 	{
-	  gdouble *values, *pv;
+	  gdouble *pv;
 	  gdouble pos, delta;
 	  gdouble r, g, b, a;
 	  int i = sample_size;
