@@ -1,3 +1,12 @@
+2004-06-13  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/paint-funcs.[ch] (shapeburst_region): added
+	progress callback.
+
+	* app/core/gimpdrawable-blend.c: show a progress while calculating
+	the Shapeburst. Not perfect but better than not showing any
+	progress at all.
+
 2004-06-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/widgets-enums.[ch]: added enum GimpCursorFormat

@@ -3502,36 +3502,37 @@ subsample_region (PixelRegion *srcPR,
 
 
 gfloat
-shapeburst_region (PixelRegion *srcPR,
-                   PixelRegion *distPR)
+shapeburst_region (PixelRegion      *srcPR,
+                   PixelRegion      *distPR,
+                   GimpProgressFunc  progress_callback,
+                   gpointer          progress_data)
 {
-  Tile *tile;
+  Tile   *tile;
   guchar *tile_data;
-  gfloat max_iterations;
+  gfloat  max_iterations = 0.0;
   gfloat *distp_cur;
   gfloat *distp_prev;
   gfloat *memory;
   gfloat *tmp;
-  gfloat min_prev;
-  gfloat float_tmp;
-  gint min;
-  gint min_left;
-  gint length;
-  gint i, j, k;
-  gint src;
-  gint fraction;
-  gint prev_frac;
-  gint x, y;
-  gint end;
-  gint boundary;
-  gint inc;
-
-  src = 0;
-
-  max_iterations = 0.0;
+  gfloat  min_prev;
+  gfloat  float_tmp;
+  gint    min;
+  gint    min_left;
+  gint    length;
+  gint    i, j, k;
+  gint    fraction;
+  gint    prev_frac;
+  gint    x, y;
+  gint    end;
+  gint    boundary;
+  gint    inc;
+  gint    src          = 0;
+  gint    max_progress = srcPR->w * srcPR->h;
+  gint    progress     = 0;
 
   length = distPR->w + 1;
   memory = g_new (gfloat, length * 2);
+
   distp_prev = memory;
   for (i = 0; i < length; i++)
     distp_prev[i] = 0.0;
@@ -3542,13 +3543,13 @@ shapeburst_region (PixelRegion *srcPR,
   for (i = 0; i < srcPR->h; i++)
     {
       /*  set the current dist row to 0's  */
-      memset(distp_cur - 1, 0, sizeof (gfloat) * (length - 1));
+      memset (distp_cur - 1, 0, sizeof (gfloat) * (length - 1));
 
       for (j = 0; j < srcPR->w; j++)
         {
           min_prev = MIN (distp_cur[j-1], distp_prev[j]);
           min_left = MIN ((srcPR->w - j - 1), (srcPR->h - i - 1));
-          min = (int) MIN (min_left, min_prev);
+          min = (gint) MIN (min_left, min_prev);
           fraction = 255;
 
           /*  This might need to be changed to 0 instead of k = (min) ? (min - 1) : 0  */
@@ -3619,9 +3620,16 @@ shapeburst_region (PixelRegion *srcPR,
       tmp = distp_prev;
       distp_prev = distp_cur;
       distp_cur = tmp;
+
+      if (progress_callback)
+        {
+          progress += srcPR->h;
+          (* progress_callback) (0, max_progress, progress, progress_data);
+        }
     }
 
   g_free (memory);
+
   return max_iterations;
 }
 

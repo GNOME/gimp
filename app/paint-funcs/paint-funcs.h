@@ -377,8 +377,10 @@ void  subsample_region                    (PixelRegion *srcPR,
                                            PixelRegion *destPR,
                                            gint         subsample);
 
-gfloat shapeburst_region                  (PixelRegion *srcPR,
-                                           PixelRegion *distPR);
+gfloat shapeburst_region                  (PixelRegion           *srcPR,
+                                           PixelRegion           *distPR,
+                                           GimpProgressFunc       progress_callback,
+                                           gpointer               progress_data);
 
 void  thin_region                         (PixelRegion *src,
                                            gint16       xradius,

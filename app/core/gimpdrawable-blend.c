@@ -113,10 +113,12 @@ static gdouble  gradient_calc_shapeburst_spherical_factor (gdouble x,
 static gdouble  gradient_calc_shapeburst_dimpled_factor   (gdouble x,
                                                            gdouble y);
 
-static void     gradient_precalc_shapeburst (GimpImage    *gimage,
-					     GimpDrawable *drawable,
-                                             PixelRegion  *PR,
-                                             gdouble       dist);
+static void     gradient_precalc_shapeburst (GimpImage        *gimage,
+					     GimpDrawable     *drawable,
+                                             PixelRegion      *PR,
+                                             gdouble           dist,
+                                             GimpProgressFunc  progress_callback,
+                                             gpointer          progress_data);
 
 static void     gradient_render_pixel       (gdouble       x,
                                              gdouble       y,
@@ -570,10 +572,12 @@ gradient_calc_shapeburst_dimpled_factor (gdouble x,
 }
 
 static void
-gradient_precalc_shapeburst (GimpImage    *gimage,
-			     GimpDrawable *drawable,
-			     PixelRegion  *PR,
-			     gdouble       dist)
+gradient_precalc_shapeburst (GimpImage        *gimage,
+			     GimpDrawable     *drawable,
+			     PixelRegion      *PR,
+			     gdouble           dist,
+                             GimpProgressFunc  progress_callback,
+                             gpointer          progress_data)
 {
   GimpChannel *mask;
   PixelRegion  tempR;
@@ -630,7 +634,7 @@ gradient_precalc_shapeburst (GimpImage    *gimage,
 
   pixel_region_init (&tempR, tempR.tiles, 0, 0, PR->w, PR->h, TRUE);
   pixel_region_init (&distR, distR.tiles, 0, 0, PR->w, PR->h, TRUE);
-  max_iteration = shapeburst_region (&tempR, &distR);
+  max_iteration = shapeburst_region (&tempR, &distR, progress_callback, progress_data);
 
   /*  normalize the shapeburst with the max iteration  */
   if (max_iteration > 0)
@@ -982,7 +986,8 @@ gradient_fill_region (GimpImage        *gimage,
     case GIMP_GRADIENT_SHAPEBURST_SPHERICAL:
     case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
-      gradient_precalc_shapeburst (gimage, drawable, PR, rbd.dist);
+      gradient_precalc_shapeburst (gimage, drawable, PR, rbd.dist,
+                                   progress_callback, progress_data);
       break;
 
     default:
