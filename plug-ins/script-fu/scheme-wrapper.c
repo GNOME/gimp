@@ -93,7 +93,7 @@ static void  init_procedures          (void);
 static gboolean register_scripts = FALSE;
 
 void 
-siod_init (gint local_register_scripts)
+siod_init (gboolean local_register_scripts)
 {
   char *siod_argv[] =
   {

@@ -32,6 +32,8 @@
 #include <windows.h>
 #endif
 
+#include <libgimpbase/gimpbase.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -139,6 +141,7 @@ extern long  nlength (LISP obj);
  *  Local Functions
  */
 
+static void       script_fu_load_script      (GimpDatafileData *file_data);
 static gboolean   script_fu_install_script   (gpointer    foo,
 					      SFScript   *script,
 					      gpointer    bar);
@@ -212,16 +215,7 @@ extern gchar        siod_err_msg[];
 void
 script_fu_find_scripts (void)
 {
-  const gchar *home;
-  const gchar *entry;
-  gchar       *path_str;
-  gchar       *local_path;
-  gchar       *path;
-  gchar       *filename;
-  gchar       *token;
-  gchar       *next_token;
-  gchar       *command;
-  GDir        *dir;
+  gchar *path_str;
 
   /*  Make sure to clear any existing scripts  */
   if (script_list != NULL)
@@ -239,87 +233,10 @@ script_fu_find_scripts (void)
   if (path_str == NULL)
     return;
 
-  /* Set local path to contain temp_path, where (supposedly)
-   * there may be working files.
-   */
-  home = g_get_home_dir ();
-  local_path = g_strdup (path_str);
-  
-  /* Search through all directories in the local path */
-  
-  next_token = local_path;
-  
-  token = strtok (next_token, G_SEARCHPATH_SEPARATOR_S);
+  gimp_datafiles_read_directories (path_str, G_FILE_TEST_IS_REGULAR,
+                                   script_fu_load_script,
+                                   NULL);
 
-  while (token)
-    {
-      if (*token == '~')
-	{
-	  path = g_malloc (strlen (home) + strlen (token) + 2);
-	  sprintf (path, "%s%s", home, token + 1);
-	}
-      else 
-	{
-	  path = g_malloc (strlen (token) + 2);
-	  strcpy (path, token);
-	}
-	      
-      /* Check if directory exists and if it has any items in it */
-      if (g_file_test (path, G_FILE_TEST_IS_DIR))
-        {
-          GError *error;
-
-	  dir = g_dir_open (path, 0, &error);
-	  
-	  if (!dir)
-            {
-              g_message ("Error reading script folder '%s'\n%s", 
-                         path, error->message);
-              g_clear_error (&error);
-            }
-	  else
-	    {
-	      while ((entry = g_dir_read_name (dir)))
-		{
-		  filename = g_build_filename (path, entry, NULL);
-		  
-		  if (g_ascii_strcasecmp (filename + strlen (filename) - 4, ".scm") == 0)
-		    {
-		      /* Check the file and see that it is not a sub-directory */
-		      if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
-			{
-			  gchar *qf = g_strescape (filename, NULL);
-#ifdef __EMX__
-			  _fnslashify(qf);
-#endif
-			  command = g_strdup_printf ("(load \"%s\")", qf);
-			  g_free (qf);
-
-			  if (repl_c_string (command, 0, 0, 1) != 0)
-			    script_fu_error_msg (command);
-#ifdef G_OS_WIN32
-			  /* No, I don't know why, but this is 
-			   * necessary on NT 4.0.
-			   */
-			  Sleep(0);
-#endif
-			  g_free (command);
-			}
-		    }
-		  
-		  g_free (filename);
-		} /* while */
-	      
-	      g_dir_close (dir);
-	    } /* else */
-	} /* if */
-
-      g_free (path);
-      
-      token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
-    } /* while */
-  
-  g_free (local_path);
   g_free (path_str);
 
   /*  now that all scripts are read in and sorted, tell gimp about them  */
@@ -739,6 +656,37 @@ script_fu_report_cc (gchar *command)
   while (gtk_main_iteration ());
 }
 
+
+/*  private functions  */
+
+static void
+script_fu_load_script (GimpDatafileData *file_data)
+{
+  if (gimp_datafiles_check_extension (file_data->filename, ".scm"))
+    {
+      gchar *command;
+      gchar *qf = g_strescape (file_data->filename, NULL);
+
+#ifdef __EMX__
+      _fnslashify (qf);
+#endif
+
+      command = g_strdup_printf ("(load \"%s\")", qf);
+      g_free (qf);
+
+      if (repl_c_string (command, 0, 0, 1) != 0)
+        script_fu_error_msg (command);
+
+#ifdef G_OS_WIN32
+      /* No, I don't know why, but this is 
+       * necessary on NT 4.0.
+       */
+      Sleep(0);
+#endif
+
+      g_free (command);
+    }
+}
 
 /* 
  *  The following function is a GTraverseFunction.  Please 
