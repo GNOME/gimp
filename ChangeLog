@@ -1,3 +1,8 @@
+2003-10-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimp-tools.c (gimp_tools_init): made Dodge/Burn the
+	last paint tool, so Convolve and Smudge are together.
+
 2003-10-30  Sven Neumann  <sven@gimp.org>
 
 	* app/base/gimphistogram.[ch] (gimp_histogram_get_count): added a
