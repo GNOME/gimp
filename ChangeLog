@@ -3,6 +3,11 @@
 	* plug-ins/ifscompose/README.ifscompose: updated link to the
 	tutorial (pointed out by Alan Horkan) and added another link.
 
+	* plug-ins/ifscompose/ifscompose.c: changed plug-in name from
+	"IfsCompose" to "IFS Fractal". Sorry for the late string changes
+	but the old name definitely was akward and probably hard to
+	translate anyway. Fixes bug #157135.
+
 	* plug-ins/ifscompose/ifscompose_storage.c: removed trailing
 	whitespace.
 

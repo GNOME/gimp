@@ -342,18 +342,19 @@ query (void)
   static int nreturn_vals = 0;
 
   gimp_install_procedure ("plug_in_ifs_compose",
-                          "Create an Iterated Function System Fractal",
-                          "Interactively create an Iterated Function System fractal. "
-                          "Use the window on the upper left to adjust the component "
-                          "transformations of the fractal. The operation that is performed "
-                          "is selected by the buttons underneath the window, or from a "
-                          "menu popped up by the right mouse button. The fractal will be "
-                          "rendered with a transparent background if the current image has "
-                          "a transparent background.",
+                          "Create an Iterated Function System (IFS) Fractal",
+                          "Interactively create an Iterated Function System "
+                          "fractal. Use the window on the upper left to adjust "
+                          "the component transformations of the fractal. The "
+                          "operation that is performed is selected by the "
+                          "buttons underneath the window, or from a menu "
+                          "popped up by the right mouse button. The fractal "
+                          "will be rendered with a transparent background if "
+                          "the current image has an alpha channel.",
                           "Owen Taylor",
                           "Owen Taylor",
                           "1997",
-                          N_("Ifs_Compose..."),
+                          N_("_IFS Fractal..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), nreturn_vals,
@@ -664,7 +665,7 @@ ifs_compose_color_page (void)
                     NULL);
   gtk_widget_show (ifsD->simple_button);
 
-  ifsD->target_cmap = color_map_create (_("IfsCompose: Target"), NULL,
+  ifsD->target_cmap = color_map_create (_("IFS Fractal: Target"), NULL,
                                         &ifsD->current_vals.target_color, TRUE);
   gtk_table_attach (GTK_TABLE (table), ifsD->target_cmap->hbox, 1, 2, 0, 2,
                     GTK_FILL, 0, 0, 0);
@@ -709,28 +710,28 @@ ifs_compose_color_page (void)
   gtk_widget_show (ifsD->full_button);
 
   gimp_rgb_set (&color, 1.0, 0.0, 0.0);
-  ifsD->red_cmap = color_map_create (_("IfsCompose: Red"), &color,
+  ifsD->red_cmap = color_map_create (_("IFS Fractal: Red"), &color,
                                      &ifsD->current_vals.red_color, FALSE);
   gtk_table_attach (GTK_TABLE (table), ifsD->red_cmap->hbox, 1, 2, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->red_cmap->hbox);
 
   gimp_rgb_set (&color, 0.0, 1.0, 0.0);
-  ifsD->green_cmap = color_map_create ( _("IfsCompose: Green"), &color,
+  ifsD->green_cmap = color_map_create (_("IFS Fractal: Green"), &color,
                                        &ifsD->current_vals.green_color, FALSE);
   gtk_table_attach (GTK_TABLE (table), ifsD->green_cmap->hbox, 2, 3, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->green_cmap->hbox);
 
   gimp_rgb_set (&color, 0.0, 0.0, 1.0);
-  ifsD->blue_cmap = color_map_create (_("IfsCompose: Blue"), &color,
+  ifsD->blue_cmap = color_map_create (_("IFS Fractal: Blue"), &color,
                                       &ifsD->current_vals.blue_color, FALSE);
   gtk_table_attach (GTK_TABLE (table), ifsD->blue_cmap->hbox, 3, 4, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->blue_cmap->hbox);
 
   gimp_rgb_set (&color, 0.0, 0.0, 0.0);
-  ifsD->black_cmap = color_map_create (_("IfsCompose: Black"), &color,
+  ifsD->black_cmap = color_map_create (_("IFS Fractal: Black"), &color,
                                        &ifsD->current_vals.black_color, FALSE);
   gtk_table_attach (GTK_TABLE (table), ifsD->black_cmap->hbox, 4, 5, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);
@@ -780,7 +781,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   gimp_ui_init ("ifscompose", TRUE);
 
-  dialog = gimp_dialog_new (_("IfsCompose"), "ifscompose",
+  dialog = gimp_dialog_new (_("IFS Fractal"), "ifscompose",
                             NULL, 0,
                             gimp_standard_help_func, HELP_ID,
 
@@ -1040,7 +1041,7 @@ design_op_menu_create (GtkWidget *window)
 {
   static GtkActionEntry actions[] =
   {
-    { "ifs-compose-menu", NULL, "Ifs Compose Menu" },
+    { "ifs-compose-menu", NULL, "IFS Fractal Menu" },
 
     { "new", GTK_STOCK_NEW,
       NULL, "<control>N", NULL,
@@ -1176,7 +1177,7 @@ ifs_options_dialog (GtkWidget *parent)
       ifsOptD = g_new0 (IfsOptionsDialog, 1);
 
       ifsOptD->dialog =
-        gimp_dialog_new (_("IfsCompose Options"), "ifscompose",
+        gimp_dialog_new (_("IFS Fractal Render Options"), "ifscompose",
                          parent, 0, NULL, NULL,
 
                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
@@ -1410,7 +1411,7 @@ ifs_compose (GimpDrawable *drawable)
                       break;
                     case GIMP_INDEXED_IMAGE:
                     case GIMP_INDEXEDA_IMAGE:
-                      g_error ("Indexed images not supported by IfsCompose");
+                      g_error ("Indexed images not supported by IFS Fractal");
                       break;
                     }
                 }
@@ -2486,7 +2487,7 @@ ifsfile_load_response (GtkWidget *dialog,
       if (! ifsvals_parse_string (buffer, &new_ifsvals, &new_elements))
         {
           gchar *message = g_strdup_printf (_("File '%s' doesn't seem to be "
-                                              "an IFS Compose file."),
+                                              "an IFS Fractal file."),
                                             gimp_filename_to_utf8 (filename));
 
           ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dialog),
@@ -2525,7 +2526,7 @@ ifs_compose_save (GtkWidget *parent)
   if (! dialog)
     {
       dialog =
-        gtk_file_chooser_dialog_new (_("Save as IFS file"),
+        gtk_file_chooser_dialog_new (_("Save as IFS Fraktal file"),
                                      GTK_WINDOW (parent),
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
 
@@ -2555,7 +2556,7 @@ ifs_compose_load (GtkWidget *parent)
   if (! dialog)
     {
       dialog =
-        gtk_file_chooser_dialog_new (_("Open IFS file"),
+        gtk_file_chooser_dialog_new (_("Open IFS Fraktal file"),
                                      GTK_WINDOW (parent),
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
 
