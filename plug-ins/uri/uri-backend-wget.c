@@ -22,11 +22,14 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include <errno.h>
 #include <sys/param.h>
 #include <sys/wait.h>
-#include <string.h>
+
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
-#include <errno.h>
+#endif
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -144,10 +147,10 @@ load_image (const gchar       *filename,
   gint      p[2];
   gboolean  name_image = FALSE;
 
-  fprintf (stderr, "Loading URL: %s\n", filename);
-
   if (!ext || ext[1] == 0 || strchr (ext, '/'))
-    tmpname = gimp_temp_name ("xxx");
+    {
+      tmpname = gimp_temp_name ("xxx");
+    }
   else
     {
       tmpname = gimp_temp_name (ext + 1);
@@ -205,7 +208,7 @@ load_image (const gchar       *filename,
 
       gboolean  debug = FALSE;
 
-#define DEBUG(x) if (debug) fprintf (stderr, (x))
+#define DEBUG(x) if (debug) g_printerr (x)
 
       close (p[1]);
 
