@@ -200,9 +200,7 @@ gimp_progress_restart (GimpProgress *progress,
   /*  change the message  */
   if (progress->gdisp)
     {
-      GimpDisplayShell *shell;
-
-      shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
+      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
 
       gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar), "progress");
 
@@ -245,9 +243,7 @@ gimp_progress_update (GimpProgress *progress,
   /*  do we have a dialog box, or are we using the statusbar?  */
   if (progress->gdisp)
     {
-      GimpDisplayShell *shell;
-
-      shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
+      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
 
       bar = GIMP_STATUSBAR (shell->statusbar)->progressbar;
     }
@@ -280,9 +276,7 @@ gimp_progress_step (GimpProgress *progress)
 
   if (progress->gdisp)
     {
-      GimpDisplayShell *shell;
-
-      shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
+      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
 
       bar = GIMP_STATUSBAR (shell->statusbar)->progressbar;
     }
@@ -310,6 +304,12 @@ gimp_progress_end (GimpProgress *progress)
 {
   g_return_if_fail (progress != NULL);
 
+  /*  We might get called from gimp_exit() and at that time
+   *  the display shell has been destroyed already.
+   */
+  if (progress->gdisp && !progress->gdisp->shell)
+    return;
+
   /* remove all callbacks so they don't get called while we're
    * destroying widgets
    */
@@ -317,10 +317,8 @@ gimp_progress_end (GimpProgress *progress)
 
   if (progress->gdisp)
     {
-      GimpDisplayShell *shell;
+      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
       GtkProgressBar   *bar;
-
-      shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
 
       gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar), "progress");
 
@@ -386,9 +384,7 @@ gimp_progress_signal_setup (GimpProgress *progress,
   /* are we using the statusbar or a freestanding dialog? */
   if (progress->gdisp)
     {
-      GimpDisplayShell *shell;
-
-      shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
+      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
 
       dialog = NULL;
       button = GIMP_STATUSBAR (shell->statusbar)->cancelbutton;
@@ -447,9 +443,7 @@ gimp_progress_response (GtkWidget    *dialog,
 
   if (progress->gdisp)
     {
-      GimpDisplayShell *shell;
-
-      shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
+      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
 
       button = GIMP_STATUSBAR (shell->statusbar)->cancelbutton;
     }
