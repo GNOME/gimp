@@ -64,6 +64,8 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
+#include "file/file-utils.h"
+
 #include "display/gimpdisplay-foreach.h"
 
 #include "gimprc.h"
@@ -822,7 +824,7 @@ undo_history_new (GimpImage *gimage)
     gchar *basename;
     gchar *title;
 
-    basename = g_path_get_basename (gimp_image_get_uri (gimage));
+    basename = file_utils_uri_to_utf8_basename (gimp_image_get_uri (gimage));
 
     title = g_strdup_printf (_("Undo History: %s"), basename);
 

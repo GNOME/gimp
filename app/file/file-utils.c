@@ -204,19 +204,75 @@ file_utils_find_proc (GSList       *procs,
   return file_proc_find_by_name (all_procs, uri, FALSE);
 }
 
+gchar *
+file_utils_uri_to_utf8_basename (const gchar *uri)
+{
+  gchar *filename;
+  gchar *basename;
+
+  g_assert (uri != NULL);
+
+  g_return_val_if_fail (uri != NULL, NULL);
+
+  filename = file_utils_uri_to_utf8_filename (uri);
+
+  if (strstr (filename, G_DIR_SEPARATOR_S))
+    {
+      basename = g_path_get_basename (filename);
+
+      g_free (filename);
+
+      return basename;
+    }
+  else if (strstr (filename, "://"))
+    {
+      basename = strrchr (uri, '/');
+
+      basename = g_strdup (basename + 1);
+
+      g_free (filename);
+
+      return basename;
+    }
+
+  return filename;
+}
+
+gchar *
+file_utils_uri_to_utf8_filename (const gchar *uri)
+{
+  g_return_val_if_fail (uri != NULL, NULL);
+
+  if (! strncmp (uri, "file:", strlen ("file:")))
+    {
+      gchar *filename;
+
+      filename = g_filename_from_uri (uri, NULL, NULL);
+
+      if (filename)
+        {
+          gchar *utf8;
+
+          utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+
+          g_free (filename);
+
+          return utf8;
+        }
+    }
+
+  return g_strdup (uri);
+}
+
 
 /*  private functions  */
 
 static PlugInProcDef *
-file_proc_find_by_name (GSList      *procs,
-		        const gchar *uri,
-		        gboolean     skip_magic)
+file_proc_find_by_prefix (GSList      *procs,
+                          const gchar *uri,
+                          gboolean     skip_magic)
 {
   GSList *p;
-  gchar  *ext = strrchr (uri, '.');
-
-  if (ext)
-    ext++;
 
   for (p = procs; p; p = g_slist_next (p))
     {
@@ -234,6 +290,26 @@ file_proc_find_by_name (GSList      *procs,
 	    return proc;
 	}
      }
+
+  return NULL;
+}
+
+static PlugInProcDef *
+file_proc_find_by_name (GSList      *procs,
+		        const gchar *uri,
+		        gboolean     skip_magic)
+{
+  PlugInProcDef *proc;
+  GSList        *p;
+  gchar         *ext = strrchr (uri, '.');
+
+  if (ext)
+    ext++;
+
+  proc = file_proc_find_by_prefix (procs, uri, skip_magic);
+
+  if (proc)
+    return proc;
 
   for (p = procs; p; p = g_slist_next (p))
     {

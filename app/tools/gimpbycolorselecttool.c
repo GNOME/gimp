@@ -50,6 +50,8 @@
 #include "core/gimpimage-projection.h"
 #include "core/gimptoolinfo.h"
 
+#include "file/file-utils.h"
+
 #include "widgets/gimpdnd.h"
 
 #include "display/gimpdisplay.h"
@@ -732,7 +734,7 @@ by_color_select_draw (ByColorDialog *bcd,
 
   gtk_widget_queue_draw (bcd->preview);
 
-  basename = g_path_get_basename (gimp_image_get_uri (gimage));
+  basename = file_utils_uri_to_utf8_basename (gimp_image_get_uri (gimage));
 
   gtk_label_set_text (GTK_LABEL (bcd->gimage_name), basename);
 

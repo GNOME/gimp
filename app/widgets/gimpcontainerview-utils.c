@@ -32,6 +32,8 @@
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
 
+#include "file/file-utils.h"
+
 #include "gimpcontainereditor.h"
 #include "gimpcontainerview.h"
 #include "gimpcontainerview-utils.h"
@@ -210,19 +212,28 @@ gimp_container_view_image_name_func (GtkWidget  *widget,
 
       if (gimage)
 	{
-	  gchar *basename;
-	  gchar *retval;
+          const gchar *uri;
+	  gchar       *basename;
+	  gchar       *retval;
 
-	  basename = g_path_get_basename (gimp_image_get_uri (gimage));
+          uri = gimp_image_get_uri (GIMP_IMAGE (gimage));
+
+	  basename = file_utils_uri_to_utf8_basename (uri);
+
+          if (tooltip)
+            {
+              gchar *filename;
+
+              filename = file_utils_uri_to_utf8_filename (uri);
+
+              *tooltip = filename;
+            }
 
 	  retval = g_strdup_printf ("%s-%d",
 				    basename,
 				    gimp_image_get_ID (gimage));
 
 	  g_free (basename);
-
-	  if (tooltip)
-	    *tooltip = g_strdup (gimp_image_get_uri (gimage));
 
 	  return retval;
 	}
@@ -362,25 +373,34 @@ gimp_container_view_imagefile_name_func (GtkWidget  *widget,
 
       if (imagefile)
 	{
-	  gchar *name;
+          const gchar *uri;
+	  gchar       *basename;
 
-	  name = g_path_get_basename (GIMP_OBJECT (imagefile)->name);
+          uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
 
-	  if (tooltip)
-	    *tooltip = g_strdup (GIMP_OBJECT (imagefile)->name);
+	  basename = file_utils_uri_to_utf8_basename (uri);
+
+          if (tooltip)
+            {
+              gchar *filename;
+
+              filename = file_utils_uri_to_utf8_filename (uri);
+
+              *tooltip = filename;
+            }
 
 	  if (imagefile->width > 0 && imagefile->height > 0)
 	    {
-              gchar *tmp = name;
+              gchar *tmp = basename;
 
-              name = g_strdup_printf ("%s (%d x %d)",
-                                      tmp,
-                                      imagefile->width,
-                                      imagefile->height);
+              basename = g_strdup_printf ("%s (%d x %d)",
+                                          tmp,
+                                          imagefile->width,
+                                          imagefile->height);
               g_free (tmp);
 	    }
-          
-          return name;
+
+          return basename;
 	}
     }
 

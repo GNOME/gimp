@@ -23,11 +23,13 @@
 #include <stdio.h>
 
 
-gchar         * file_utils_filename_to_uri (Gimp          *gimp,
-                                            const gchar   *filename,
-                                            GError       **error);
-PlugInProcDef * file_utils_find_proc       (GSList        *procs,
-                                            const gchar   *filename);
+gchar         * file_utils_filename_to_uri      (Gimp          *gimp,
+                                                 const gchar   *filename,
+                                                 GError       **error);
+PlugInProcDef * file_utils_find_proc            (GSList        *procs,
+                                                 const gchar   *filename);
+gchar         * file_utils_uri_to_utf8_basename (const gchar   *uri);
+gchar         * file_utils_uri_to_utf8_filename (const gchar   *uri);
 
 
 /* .xvpics thumbnail stuff  */

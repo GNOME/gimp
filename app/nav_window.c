@@ -41,6 +41,8 @@
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 
+#include "file/file-utils.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
@@ -664,7 +666,7 @@ nav_dialog_title (GimpDisplay *gdisp)
   gchar *basename;
   gchar *title;
 
-  basename = g_path_get_basename (gimp_image_get_uri (gdisp->gimage));
+  basename = file_utils_uri_to_utf8_basename (gimp_image_get_uri (gdisp->gimage));
 
   title = g_strdup_printf (_("Navigation: %s-%d.%d"), 
 			   basename,

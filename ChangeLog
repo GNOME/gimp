@@ -1,5 +1,20 @@
 2002-04-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/file/file-utils.[ch]: added utility functions
+	file_utils_uri_to_utf8_basename() and
+	file_utils_uri_to_utf8_filename().
+
+	* app/nav_window.c
+	* app/undo_history.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/info-window.c
+	* app/gui/menus.c
+	* app/gui/palette-import-dialog.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/widgets/gimpcontainerview-utils.c: use the new functions.
+
+2002-04-14  Michael Natterer  <mitch@gimp.org>
+
 	Use UTF-8 encoded escaped URIs for GimpImage and GimpImageFile.
 
 	* app/file/file-open.[ch]

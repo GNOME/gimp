@@ -34,6 +34,8 @@
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
+#include "file/file-utils.h"
+
 #include "widgets/gimpitemfactory.h"
 
 #include "brushes-commands.h"
@@ -2523,41 +2525,20 @@ menus_last_opened_update (GimpContainer   *container,
           if (g_object_get_data (G_OBJECT (widget), "gimp-imagefile") !=
               (gpointer) imagefile)
             {
-              gchar *basename;
-              gchar *utf8;
+              const gchar *uri;
+              gchar       *filename;
+              gchar       *basename;
 
-              basename = g_path_get_basename (GIMP_OBJECT (imagefile)->name);
+              uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
 
-              utf8 = g_filename_to_utf8 (basename, -1, NULL, NULL, NULL);
+              filename = file_utils_uri_to_utf8_filename (uri);
+              basename = file_utils_uri_to_utf8_basename (uri);
 
-              if (utf8)
-                {
-                  gtk_label_set_text (GTK_LABEL (GTK_BIN (widget)->child), utf8);
-                  g_free (utf8);
-                }
-              else
-                {
-                  gtk_label_set_text (GTK_LABEL (GTK_BIN (widget)->child),
-                                      "(broken filename)");
-                }
+              gtk_label_set_text (GTK_LABEL (GTK_BIN (widget)->child), basename);
+              gimp_help_set_help_data (widget, filename, NULL);
 
+              g_free (filename);
               g_free (basename);
-
-              utf8 = g_filename_to_utf8 (GIMP_OBJECT (imagefile)->name, -1,
-                                         NULL, NULL, NULL);
-
-              if (utf8)
-                {
-                  gimp_help_set_help_data (widget, utf8, NULL);
-                  g_free (utf8);
-                }
-              else
-                {
-                  gimp_help_set_help_data (widget,
-                                           "filename contains characters which "
-                                           "can't be converted to UFT-8",
-                                           NULL);                  
-                }
 
               g_object_set_data (G_OBJECT (widget), "gimp-imagefile", imagefile);
               gtk_widget_show (widget);

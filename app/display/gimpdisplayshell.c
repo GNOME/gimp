@@ -40,6 +40,8 @@
 #include "core/gimplayermask.h"
 #include "core/gimppattern.h"
 
+#include "file/file-utils.h"
+
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpdnd.h"
@@ -756,7 +758,7 @@ gimp_display_shell_close (GimpDisplayShell *shell,
     {
       gchar *basename;
 
-      basename = g_path_get_basename (gimp_image_get_uri (gimage));
+      basename = file_utils_uri_to_utf8_basename (gimp_image_get_uri (gimage));
 
       gimp_display_shell_close_warning_dialog (shell, basename);
 
@@ -2144,7 +2146,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	      {
 		gchar *basename;
 
-		basename = g_path_get_basename (gimp_image_get_uri (gimage));
+		basename = file_utils_uri_to_utf8_basename (gimp_image_get_uri (gimage));
 
 		i += print (title, title_len, i, "%s", basename);
 
@@ -2153,7 +2155,15 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	      break;
 
 	    case 'F': /* full filename */
-	      i += print (title, title_len, i, "%s", gimp_image_get_uri (gimage));
+	      {
+		gchar *filename;
+
+		filename = file_utils_uri_to_utf8_filename (gimp_image_get_uri (gimage));
+
+                i += print (title, title_len, i, "%s", filename);
+
+                g_free (filename);
+              }
 	      break;
 
 	    case 'p': /* PDB id */
