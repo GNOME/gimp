@@ -64,10 +64,12 @@
  * V 1.13  PK, 07-Apr-2002: Fix problem with DOS binary EPS files
  * V 1.14  PK, 14-May-2002: Workaround EPS files of Adb. Ill. 8.0
  * V 1.15  PK, 04-Oct-2002: Be more accurate with using BoundingBox
+ * V 1.16  PK, 22-Jan-2004: Don't use popen(), use g_spawn_async_with_pipes()
+ *                          or g_spawn_sync().
  */
-#define VERSIO 1.15
-static char dversio[] = "v1.15  04-Oct-2002";
-static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.15  04-Oct-2002";
+#define VERSIO 1.16
+static char dversio[] = "v1.16  22-Jan-2004";
+static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.16  22-Jan-2004";
 
 #include "config.h"
 
@@ -77,17 +79,33 @@ static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.15  04-Oct-2002";
 #include <string.h>
 #include <time.h>
 
+#include <sys/types.h>
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
-
 #ifdef G_OS_WIN32
-#include <process.h>		/* For _getpid() */
-
+/* On Win32 we don't use pipes. Use a real output file for ghostscript */
 #define USE_REAL_OUTPUTFILE
 #endif
+
+#ifdef USE_REAL_OUTPUTFILE
+
+#ifdef G_OS_WIN32
+#include <process.h>            /* For _getpid() */
+#endif
+#else
+#ifdef HAVE_SYS_WAIT_H
+#include <sys/wait.h>
+#endif
+#endif
+
 
 #define STR_LENGTH 64
 
@@ -205,9 +223,11 @@ static FILE * ps_open          (const gchar       *filename,
                                 gint              *lly,
                                 gint              *urx,
                                 gint              *ury,
-                                gint              *is_epsf);
+                                gint              *is_epsf,
+                                gint              *ChildPid);
 
-static void   ps_close         (FILE              *ifp);
+static void   ps_close         (FILE              *ifp,
+                                gint              ChildPid);
 
 static gint32 skip_ps          (FILE              *ifp);
 
@@ -234,10 +254,6 @@ static void   dither_grey      (guchar            *grey,
                                 gint               npix,
                                 gint               linecount);
 
-
-#ifdef G_OS_WIN32
-static gchar *my_shell_quote (const gchar *unquoted_string);
-#endif
 
 /* Dialog-handling */
 
@@ -833,6 +849,7 @@ load_image (const gchar *filename)
 {
   gint32 image_ID, *image_list, *nl;
   guint page_count;
+  gint  ChildPid;
   FILE *ifp;
   char *temp;
   int  llx, lly, urx, ury;
@@ -863,7 +880,8 @@ load_image (const gchar *filename)
   gimp_progress_init (temp);
   g_free (temp);
 
-  ifp = ps_open (filename, &plvals, &llx, &lly, &urx, &ury, &is_epsf);
+  ifp = ps_open (filename, &plvals, &llx, &lly, &urx, &ury, &is_epsf,
+                 &ChildPid);
   if (!ifp)
     {
       g_message (_("Could not interpret '%s'"),
@@ -919,7 +937,7 @@ load_image (const gchar *filename)
 	  if (image_ID == -1) break;
 	}
     }
-  ps_close (ifp);
+  ps_close (ifp, ChildPid);
 
   /* Display images in reverse order. The last will be displayed by GIMP itself*/
   if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -1239,9 +1257,6 @@ get_bbox (const gchar *filename,
 }
 
 static gchar *pnmfile;
-#ifdef G_OS_WIN32
-static gchar *indirfile = NULL;
-#endif
 
 /* Open the PostScript file. On failure, NULL is returned. */
 /* The filepointer returned will give a PNM-file generated */
@@ -1253,56 +1268,73 @@ ps_open (const gchar      *filename,
          gint             *lly,
          gint             *urx,
          gint             *ury,
-         gint             *is_epsf)
+         gint             *is_epsf,
+         gint             *ChildPidPtr)
 {
-  char *cmd, *gs, *gs_opts, *driver, *quoted_fn, *fnbuf = NULL;
-  FILE *fd_popen;
+  char *gs, *driver;
+  GPtrArray *cmdA;
+  gchar **pcmdA;
+  FILE *fd_popen = NULL;
+  FILE *eps_file;
   int width, height, resolution;
   int x0, y0, x1, y1;
   int offx = 0, offy = 0;
   int is_pdf, maybe_epsf = 0;
-  char TextAlphaBits[64], GraphicsAlphaBits[64], geometry[32];
-  char offset[32];
+  GError *Gerr = NULL;
+  GSpawnFlags Gflags;
+#ifndef USE_REAL_OUTPUTFILE
+  gint ChildStdout;
+#endif
 
+  *ChildPidPtr = 0;
   resolution = loadopt->resolution;
   *llx = *lly = 0;
   width = loadopt->width;
   height = loadopt->height;
-  *urx = width-1;
-  *ury = height-1;
+  *urx = width - 1;
+  *ury = height - 1;
 
   /* Check if the file is a PDF. For PDF, we cant set geometry */
   is_pdf = 0;
+
   /* Check if it is a EPS-file */
   *is_epsf = 0;
-  fd_popen = fopen (filename, "rb");
-  if (fd_popen != NULL)
+
+  eps_file = fopen (filename, "rb");
+
+  if (eps_file != NULL)
     {
       char hdr[512];
 
-      fread (hdr, 1, sizeof(hdr), fd_popen);
+      fread (hdr, 1, sizeof(hdr), eps_file);
       is_pdf = (strncmp (hdr, "%PDF", 4) == 0);
 
       if (!is_pdf)  /* Check for EPSF */
-      {char *adobe, *epsf;
-       int ds = 0;
-       static unsigned char doseps[5] = { 0xc5, 0xd0, 0xd3, 0xc6, 0 };
+        {
+          char *adobe, *epsf;
+          int ds = 0;
+          static unsigned char doseps[5] = { 0xc5, 0xd0, 0xd3, 0xc6, 0 };
 
-        hdr[sizeof(hdr)-1] = '\0';
-        adobe = strstr (hdr, "PS-Adobe-");
-        epsf = strstr (hdr, "EPSF-");
-        if ((adobe != NULL) && (epsf != NULL))
-          ds = epsf - adobe;
-        *is_epsf = ((ds >= 11) && (ds <= 15));
-        /* Illustrator uses negative values in BoundingBox without marking */
-        /* files as EPSF. Try to handle that. */
-        maybe_epsf = (strstr (hdr, "%%Creator: Adobe Illustrator(R) 8.0") != 0);
+          hdr[sizeof(hdr)-1] = '\0';
+          adobe = strstr (hdr, "PS-Adobe-");
+          epsf = strstr (hdr, "EPSF-");
 
-        /* Check DOS EPS binary file */
-        if ((!*is_epsf) && (strncmp (hdr, (char *)doseps, 4) == 0))
-          *is_epsf = 1;
-      }
-      fclose (fd_popen);
+          if ((adobe != NULL) && (epsf != NULL))
+            ds = epsf - adobe;
+
+          *is_epsf = ((ds >= 11) && (ds <= 15));
+
+          /* Illustrator uses negative values in BoundingBox without marking */
+          /* files as EPSF. Try to handle that. */
+          maybe_epsf =
+            (strstr (hdr, "%%Creator: Adobe Illustrator(R) 8.0") != 0);
+
+          /* Check DOS EPS binary file */
+          if ((!*is_epsf) && (strncmp (hdr, (char *)doseps, 4) == 0))
+            *is_epsf = 1;
+        }
+
+      fclose (eps_file);
     }
 
   if ((!is_pdf) && (loadopt->use_bbox))    /* Try the BoundingBox ? */
@@ -1328,10 +1360,15 @@ ps_open (const gchar      *filename,
             }
         }
     }
-  if (loadopt->pnm_type == 4) driver = "pbmraw";
-  else if (loadopt->pnm_type == 5) driver = "pgmraw";
-  else if (loadopt->pnm_type == 7) driver = "pnmraw";
-  else driver = "ppmraw";
+
+  if (loadopt->pnm_type == 4)
+    driver = "pbmraw";
+  else if (loadopt->pnm_type == 5)
+    driver = "pgmraw";
+  else if (loadopt->pnm_type == 7)
+    driver = "pnmraw";
+  else
+    driver = "ppmraw";
 
 #ifdef USE_REAL_OUTPUTFILE
   /* For instance, the Win32 port of ghostscript doesn't work correctly when
@@ -1339,7 +1376,7 @@ ps_open (const gchar      *filename,
    * Thus, use a real output file.
    */
   pnmfile = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "p%lx",
-			     g_get_tmp_dir (), getpid ());
+                             g_get_tmp_dir (), (gulong) getpid ());
 #else
   pnmfile = "-";
 #endif
@@ -1348,108 +1385,181 @@ ps_open (const gchar      *filename,
   if (gs == NULL)
     gs = DEFAULT_GS_PROG;
 
-#ifndef G_OS_WIN32
-  /* g_shell_quote is specified to use single quotes, which don't mean
-   * anything on Windows
-   */
-  quoted_fn = g_shell_quote (filename);
-#else
-  quoted_fn = my_shell_quote (filename);
-#endif
+  /* Build command array */
+  cmdA = g_ptr_array_new ();
 
-  gs_opts = getenv ("GS_OPTIONS");
-  if (gs_opts == NULL)
-    gs_opts = "-dSAFER";
-  else
-    gs_opts = "";  /* Ghostscript will add these options */
+  g_ptr_array_add (cmdA, g_strdup (gs));
+  g_ptr_array_add (cmdA, g_strdup_printf ("-sDEVICE=%s", driver));
+  g_ptr_array_add (cmdA, g_strdup_printf ("-r%d", resolution));
 
-  TextAlphaBits[0] = GraphicsAlphaBits[0] = geometry[0] = '\0';
-  offset[0] = '\0';
-
-  /* Offset command for gs to get image part with negative x/y-coord. */
-  if ((offx != 0) || (offy != 0))
-    sprintf (offset, "-c %d %d translate ", offx, offy);
+  /* For PDF, we can't set geometry */
+  if (!is_pdf)
+    g_ptr_array_add (cmdA, g_strdup_printf ("-g%dx%d", width, height));
 
   /* Antialiasing not available for PBM-device */
   if ((loadopt->pnm_type != 4) && (loadopt->textalpha != 1))
-    sprintf (TextAlphaBits, "-dTextAlphaBits=%d ", (int)loadopt->textalpha);
-
+    g_ptr_array_add (cmdA, g_strdup_printf ("-dTextAlphaBits=%d",
+                                            loadopt->textalpha));
   if ((loadopt->pnm_type != 4) && (loadopt->graphicsalpha != 1))
-    sprintf (GraphicsAlphaBits, "-dGraphicsAlphaBits=%d ",
-	     (int)loadopt->graphicsalpha);
+    g_ptr_array_add (cmdA, g_strdup_printf ("-dGraphicsAlphaBits=%d",
+                                            loadopt->graphicsalpha));
+  g_ptr_array_add (cmdA, g_strdup ("-q"));
+  g_ptr_array_add (cmdA, g_strdup ("-dBATCH"));
+  g_ptr_array_add (cmdA, g_strdup ("-dNOPAUSE"));
 
-  if (!is_pdf)    /* For PDF, we cant set geometry */
-    sprintf (geometry,"-g%dx%d ", width, height);
+  /* If no additional options specified, use at least -dSAFER */
+  if (getenv ("GS_OPTIONS") == NULL)
+    g_ptr_array_add (cmdA, g_strdup ("-dSAFER"));
 
-  cmd = g_strdup_printf ("%s -sDEVICE=%s -r%d %s%s%s-q -dNOPAUSE %s "
-                         "-sOutputFile=%s %s-f %s %s-c quit",
-			 gs, driver, resolution, geometry,
-			 TextAlphaBits, GraphicsAlphaBits,
-			 gs_opts, pnmfile, offset, quoted_fn,
-                         *is_epsf ? "-c showpage " : "");
-#ifdef PS_DEBUG
-  g_print ("Going to start ghostscript with:\n%s\n", cmd);
-#endif
+  /* Output file name */
+  g_ptr_array_add (cmdA, g_strdup_printf ("-sOutputFile=%s", pnmfile));
 
-#ifndef USE_REAL_OUTPUTFILE
-  /* Start the command and use a pipe for reading the PNM-file. */
-  fd_popen = popen (cmd, "r");
-#else
-  /* If someone does not like the pipe (or it does not work), just start */
-  /* ghostscript with a real outputfile. When ghostscript has finished,  */
-  /* open the outputfile and return its filepointer. But be sure         */
-  /* to close and remove the file within ps_close().                     */
-#ifdef G_OS_WIN32
-  /* Work around braindead command line length limit.
-   * Hmm, I wonder if this is necessary, but it doesn't harm...
-   */
-  if (strlen (cmd) >= 100)
+  /* Offset command for gs to get image part with negative x/y-coord. */
+  if ((offx != 0) || (offy != 0))
     {
-      FILE *indf;
-      indirfile = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "i%lx",
-				   g_get_tmp_dir (), getpid ());
-      indf = fopen (indirfile, "w");
-      fprintf (indf, "-sDEVICE=%s -r%d %s%s%s-q -dNOPAUSE %s "
-	             "-sOutputFile=%s %s-f %s %s-c quit\n",
-	       driver, resolution, geometry,
-	       TextAlphaBits, GraphicsAlphaBits,
-	       gs_opts, pnmfile, offset, quoted_fn,
-	       *is_epsf ? "-c showpage " : "");
-      sprintf (cmd, "%s @%s", gs, indirfile);
-      fclose (indf);
+      g_ptr_array_add (cmdA, g_strdup ("-c"));
+      g_ptr_array_add (cmdA, g_strdup_printf ("%d", offx));
+      g_ptr_array_add (cmdA, g_strdup_printf ("%d", offy));
+      g_ptr_array_add (cmdA, g_strdup ("translate"));
     }
-#endif
-  system (cmd);
-  fd_popen = fopen (pnmfile, "rb");
-#endif
-  g_free (cmd);
-  g_free (fnbuf);
-  g_free (quoted_fn);
 
-  return (fd_popen);
+  /* input file name */
+  g_ptr_array_add (cmdA, g_strdup ("-f"));
+  g_ptr_array_add (cmdA, g_strdup (filename));
+
+  if (*is_epsf)
+    {
+      g_ptr_array_add (cmdA, g_strdup ("-c"));
+      g_ptr_array_add (cmdA, g_strdup ("showpage"));
+    }
+
+  g_ptr_array_add (cmdA, g_strdup ("-c"));
+  g_ptr_array_add (cmdA, g_strdup ("quit"));
+  g_ptr_array_add (cmdA, NULL);
+
+  pcmdA = (gchar **) cmdA->pdata;
+
+#ifdef PS_DEBUG
+  {
+    gchar **p = pcmdA;
+    g_print ("Starting command:\n");
+
+    while (*p)
+      {
+        g_print ("%s\n", *p);
+        p++;
+      }
+  }
+#endif
+
+  /* Start the command */
+#ifndef USE_REAL_OUTPUTFILE
+  Gflags = G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD;
+
+  if ( !g_spawn_async_with_pipes (NULL,         /* working dir */
+                                  pcmdA,        /* command array */
+                                  NULL,         /* environment */
+                                  Gflags,       /* Flags */
+                                  NULL, NULL,   /* Child setup and userdata */
+                                  ChildPidPtr,
+                                  NULL,         /* stdin */
+                                  &ChildStdout,
+                                  NULL,         /* stderr */
+                                  &Gerr) )
+    {
+      g_message (_("Error starting ghostscript (%s)"), Gerr->message);
+      g_error_free (Gerr);
+
+      *ChildPidPtr = 0;
+
+      goto out;
+    }
+  
+#ifdef PS_DEBUG
+  g_print ("Ghostscript started with pid=%d\n", *ChildPidPtr);
+#endif
+
+  /* Get a file pointer from the descriptor */
+  fd_popen = fdopen (ChildStdout, "rb");
+
+#else
+
+  /* Use a real outputfile. Wait until ghostscript has finished */
+  Gflags = G_SPAWN_SEARCH_PATH;
+
+  if ( !g_spawn_sync (NULL,       /* working dir */
+                      pcmdA,      /* command array */
+                      NULL,       /* environment */
+                      Gflags,     /* Flags */
+                      NULL, NULL, /* Child setup and userdata */
+                      NULL,       /* stdout */
+                      NULL,       /* stderr */
+                      NULL,       /* exit code */
+                      &Gerr) )
+    {
+      g_message (_("Error starting ghostscript (%s)"), Gerr->message);
+      g_error_free (Gerr);
+
+      unlink (pnmfile);
+
+      goto out;
+    }
+
+  /* Don't care about exit status of ghostscript. */
+  /* Just try to read what it wrote. */
+ 
+  fd_popen = fopen (pnmfile, "rb");
+
+#endif
+
+out:
+  g_ptr_array_free (cmdA, FALSE);
+  g_strfreev (pcmdA);
+
+  return fd_popen;
 }
 
 
 /* Close the PNM-File of the PostScript interpreter */
 static void
-ps_close (FILE *ifp)
+ps_close (FILE *ifp, gint ChildPid)
 {
 #ifndef USE_REAL_OUTPUTFILE
+  int status;
+  pid_t RetVal;
 
   /* Even if we dont want all images, we have to read the pipe until EOF. */
-  /* Otherwise the subprocess and therefore pclose() may not finish. */
+  /* Otherwise the subprocess may not finish. */
+#ifdef PS_DEBUG
+  g_print ("Reading rest from pipe\n");
+#endif
+
   while (getc (ifp) != EOF) ;
 
   /* Finish reading from pipe. */
-  pclose (ifp);
+  fclose (ifp);
+
+  /* Wait for the child to exit */
+  if (ChildPid)
+    {
+#ifdef PS_DEBUG
+    g_print ("Waiting for %d to finish\n", (int)ChildPid);
+#endif
+
+    RetVal = waitpid (ChildPid, &status, 0);
+
+#ifdef PS_DEBUG
+    if (RetVal == -1)
+      g_print ("waitpid() failed\n");
+    else
+      g_print ("child has finished\n");
+#endif
+    }
+
 #else
  /* If a real outputfile was used, close the file and remove it. */
   fclose (ifp);
   unlink (pnmfile);
-#ifdef G_OS_WIN32
-  if (indirfile != NULL)
-    unlink (indirfile);
-#endif
 #endif
 }
 
@@ -3009,26 +3119,3 @@ save_unit_toggle_update (GtkWidget *widget,
 	}
     }
 }
-
-#ifdef G_OS_WIN32
-
-static gchar *
-my_shell_quote (const gchar *unquoted_string)
-{
-  /* On Windows, we always enclose the file name with double
-   * quotes. No more is needed, as file names can't contain double
-   * quotes.
-   */
-  GString *dest;
-  gchar *ret;
-
-  dest = g_string_new ("\"");
-  g_string_append (dest, unquoted_string);
-  g_string_append_c (dest, '"');
-
-  ret = dest->str;
-  g_string_free (dest, FALSE);
-  return ret;
-}
-
-#endif /* G_OS_WIN32 */

@@ -1,3 +1,9 @@
+2004-01-25  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/postscript.c: use GSpawn instead of popen, -dBATCH,
+	fixes #108659 for this plugin. Thanks to Peter Kirchgessner for the
+	patch.
+
 2004-01-25  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptextlayout.c (gimp_text_layout_position): fixed
