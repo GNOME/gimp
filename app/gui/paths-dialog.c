@@ -154,12 +154,12 @@ static MenuItem paths_ops[] =
 
 static OpsButton paths_ops_buttons[] =
 {
-  { new_xpm, paths_dialog_new_path_callback, N_("New Path"), NULL },
-  { duplicate_xpm, paths_dialog_dup_path_callback, N_("Duplicate Path"), NULL },
-  { toselection_xpm, paths_dialog_path_to_sel_callback, N_("Path to Selection"), NULL },
-  { penstroke_xpm, paths_dialog_stroke_path_callback, N_("Stroke Path"), NULL },
-  { delete_xpm, paths_dialog_delete_path_callback, N_("Delete Path"), NULL },
-  { NULL, NULL, NULL, NULL }
+  { new_xpm, paths_dialog_new_path_callback, NULL, N_("New Path"), NULL, 0 },
+  { duplicate_xpm, paths_dialog_dup_path_callback, NULL, N_("Duplicate Path"), NULL, 0 },
+  { toselection_xpm, paths_dialog_path_to_sel_callback, NULL, N_("Path to Selection"), NULL, 0 },
+  { penstroke_xpm, paths_dialog_stroke_path_callback, NULL, N_("Stroke Path"), NULL, 0 },
+  { delete_xpm, paths_dialog_delete_path_callback, NULL, N_("Delete Path"), NULL, 0 },
+  { NULL, NULL, NULL, NULL, NULL, 0 }
 };
 
 #define POINT_NEW_BUTTON 1
@@ -169,11 +169,11 @@ static OpsButton paths_ops_buttons[] =
 
 static OpsButton point_ops_buttons[] =
 {
-  { pennorm_xpm, paths_dialog_new_point_callback, N_("New Point"), NULL },
-  { penadd_xpm, paths_dialog_add_point_callback, N_("Add Point"), NULL },
-  { pendel_xpm, paths_dialog_delete_point_callback, N_("Delete Point"), NULL },
-  { penedit_xpm, paths_dialog_edit_point_callback, N_("Edit Point"), NULL },
-  { NULL, NULL, NULL, NULL }
+  { pennorm_xpm, paths_dialog_new_point_callback, NULL, N_("New Point"), NULL, 0 },
+  { penadd_xpm, paths_dialog_add_point_callback, NULL, N_("Add Point"), NULL, 0 },
+  { pendel_xpm, paths_dialog_delete_point_callback, NULL, N_("Delete Point"), NULL, 0 },
+  { penedit_xpm, paths_dialog_edit_point_callback, NULL, N_("Edit Point"), NULL, 0 },
+  { NULL, NULL, NULL, NULL, NULL, 0 }
 };
 
 static void

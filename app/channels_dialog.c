@@ -174,16 +174,22 @@ static MenuItem channels_ops[] =
   { NULL, 0, 0, NULL, NULL, NULL, NULL },
 };
 
+
 /* the ops buttons */
+
+static OpsButtonCallback to_selection_ext_callbacks[] = 
+{ channels_dialog_add_channel_to_sel_callback, 
+  channels_dialog_sub_channel_from_sel_callback, NULL };
+
 static OpsButton channels_ops_buttons[] =
 {
-  { new_xpm, channels_dialog_new_channel_callback, N_("New Channel"), NULL },
-  { raise_xpm, channels_dialog_raise_channel_callback, N_("Raise Channel"), NULL },
-  { lower_xpm, channels_dialog_lower_channel_callback, N_("Lower Channel"), NULL },
-  { duplicate_xpm, channels_dialog_duplicate_channel_callback, N_("Duplicate Channel"), NULL },
-  { delete_xpm, channels_dialog_delete_channel_callback, N_("Delete Channel"), NULL },
-  { toselection_xpm, channels_dialog_channel_to_sel_callback, N_("Channel To Selection"), NULL },
-  { NULL, NULL, NULL, NULL }
+  { new_xpm, channels_dialog_new_channel_callback, NULL, N_("New Channel"), NULL, 0 },
+  { raise_xpm, channels_dialog_raise_channel_callback, NULL, N_("Raise Channel"), NULL, 0 },
+  { lower_xpm, channels_dialog_lower_channel_callback, NULL, N_("Lower Channel"), NULL, 0 },
+  { duplicate_xpm, channels_dialog_duplicate_channel_callback, NULL, N_("Duplicate Channel"), NULL, 0 },
+  { delete_xpm, channels_dialog_delete_channel_callback, NULL, N_("Delete Channel"), NULL, 0 },
+  { toselection_xpm, channels_dialog_channel_to_sel_callback, to_selection_ext_callbacks, N_("Channel To Selection"), NULL, 0 },
+  { NULL, NULL, NULL, NULL, NULL, 0 }
 };
 
 /**************************************/

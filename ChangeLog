@@ -1,3 +1,15 @@
+Mon Mar 15 01:34:08 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* app/ops_buttons.[c|h]: implemented a way to catch the 
+	modifier key that was pressed when the button was clicked
+
+	* app/[layers|channels|paths]_dialog.c: changed the ops_button
+	arrays to reflect the changes described above and implemented
+	a few power-user features in the dialogs:
+	( Shift->Layer Up / Layer Down  moves to top/bottom
+	  Shift->Channel To Selection   adds the channel to the sel
+	  Ctrl->Channel To Selectio     subtracts from the selection ) 
+
 1999-03-14  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* gimprc.in: removed two unused directories from plug-in-path.

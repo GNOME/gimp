@@ -21,11 +21,13 @@
 #include "gimprc.h"
 #include "ops_buttons.h"
 
-#include "libgimp/gimpintl.h"
+void ops_button_pressed_callback (GtkWidget*, GdkEventButton*, gpointer);
+void ops_button_extended_callback (GtkWidget*, gpointer);
+
 
 GtkWidget *ops_button_box_new (GtkWidget   *parent,
 			       GtkTooltips *tool_tips,
-			       OpsButton   *ops_buttons,
+			       OpsButton   *ops_button,
 			       OpsButtonType ops_type)   
 {
   GtkWidget *button;
@@ -42,7 +44,7 @@ GtkWidget *ops_button_box_new (GtkWidget   *parent,
 
   button_box = gtk_hbox_new (FALSE, 1);
 
-  while (ops_buttons->xpm_data)
+  while (ops_button->xpm_data)
     {
       box = gtk_hbox_new (FALSE, 0);
       gtk_container_border_width (GTK_CONTAINER (box), 0);
@@ -50,7 +52,7 @@ GtkWidget *ops_button_box_new (GtkWidget   *parent,
       pixmap = gdk_pixmap_create_from_xpm_d (parent->window,
 					     &mask,
 					     &style->bg[GTK_STATE_NORMAL],
-					     ops_buttons->xpm_data);
+					     ops_button->xpm_data);
       
       pixmapwid = gtk_pixmap_new (pixmap, mask);
       gtk_box_pack_start (GTK_BOX (box), pixmapwid, TRUE, TRUE, 3);
@@ -75,34 +77,91 @@ GtkWidget *ops_button_box_new (GtkWidget   *parent,
 	}
 
       gtk_container_add (GTK_CONTAINER (button), box);
-      gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-				 (GtkSignalFunc) ops_buttons->callback,
-				 GTK_OBJECT (parent));
+      
+      if (ops_button->ext_callbacks == NULL)
+	{
+	  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
+				     (GtkSignalFunc) ops_button->callback,
+				     NULL);
+	} else {
+	  gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
+			      (GtkSignalFunc) ops_button_pressed_callback,
+			      ops_button);	  
+	  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			      (GtkSignalFunc) ops_button_extended_callback,
+			      ops_button);
+	}
 
       if (tool_tips != NULL)
-	gtk_tooltips_set_tip (tool_tips, button, gettext(ops_buttons->tooltip), NULL);
+	gtk_tooltips_set_tip (tool_tips, button, ops_button->tooltip, NULL);
 
       gtk_box_pack_start (GTK_BOX(button_box), button, TRUE, TRUE, 0); 
 
       gtk_widget_show (button);
 
-      ops_buttons->widget = button;
+      ops_button->widget = button;
+      ops_button->modifier = OPS_BUTTON_MODIFIER_NONE;
 
-      ops_buttons++;
+      ops_button++;
     }
   return (button_box);
 }
 
 
 void
-ops_button_box_set_insensitive (OpsButton *ops_buttons)
+ops_button_box_set_insensitive (OpsButton *ops_button)
 {
-  while (ops_buttons->widget)
+  g_return_if_fail (ops_button != NULL);
+
+  while (ops_button->widget)
     {
-      gtk_widget_set_sensitive (ops_buttons->widget, FALSE); 
-      ops_buttons++;
+      gtk_widget_set_sensitive (ops_button->widget, FALSE); 
+      ops_button++;
     }
 }
+
+void
+ops_button_pressed_callback (GtkWidget *widget, 
+			     GdkEventButton *bevent,
+			     gpointer   client_data)
+{
+  OpsButton *ops_button;
+
+  g_return_if_fail (client_data != NULL);
+  ops_button = (OpsButton*)client_data;
+
+  if (bevent->state & GDK_SHIFT_MASK) 
+    ops_button->modifier = OPS_BUTTON_MODIFIER_SHIFT;
+  else if (bevent->state & GDK_CONTROL_MASK)
+    ops_button->modifier = OPS_BUTTON_MODIFIER_CTRL;
+  else if (bevent->state & GDK_MOD1_MASK)
+    ops_button->modifier = OPS_BUTTON_MODIFIER_ALT;
+  else 
+    ops_button->modifier = OPS_BUTTON_MODIFIER_NONE;
+}
+
+void
+ops_button_extended_callback (GtkWidget *widget, 
+			      gpointer   client_data)
+{
+  OpsButton *ops_button;
+
+  g_return_if_fail (client_data != NULL);
+  ops_button = (OpsButton*)client_data;
+
+  if (ops_button->modifier < 1 || ops_button->modifier > 3)
+    (ops_button->callback) (widget, NULL);
+  else {
+    if (ops_button->ext_callbacks[ops_button->modifier - 1] != NULL)
+      (ops_button->ext_callbacks[ops_button->modifier - 1]) (widget, NULL);
+    else
+      (ops_button->callback) (widget, NULL);
+  } 
+
+  ops_button->modifier = OPS_BUTTON_MODIFIER_NONE;
+}
+			    
+
 
 
 

@@ -19,27 +19,34 @@
 #ifndef __OPS_BUTTONS_H__
 #define __OPS_BUTTONS_H__
 
-
-/* Structures */
-
 typedef struct _OpsButton OpsButton;
 
 typedef void (*OpsButtonCallback) (GtkWidget *widget,
 				   gpointer   user_data);
 
-struct _OpsButton 
-{
-  gchar **xpm_data;          /* xpm data for the button */
-  OpsButtonCallback callback;   
-  char *tooltip;               
-  GtkWidget *widget;         /* the button widget */
-};
+// typedef OpsButtonCallback OpsButtonExtCallbacks;
+
+typedef enum {
+  OPS_BUTTON_MODIFIER_NONE,
+  OPS_BUTTON_MODIFIER_SHIFT,
+  OPS_BUTTON_MODIFIER_CTRL,
+  OPS_BUTTON_MODIFIER_ALT,
+} OpsButtonModifier;
 
 typedef enum {
   OPS_BUTTON_NORMAL,
   OPS_BUTTON_RADIO,
 } OpsButtonType;
-    
+
+struct _OpsButton 
+{
+  gchar **xpm_data;          /* xpm data for the button */
+  OpsButtonCallback callback;
+  OpsButtonCallback *ext_callbacks;
+  char *tooltip;               
+  GtkWidget *widget;         /* the button widget */
+  gint modifier;
+};
 
 /* Function declarations */
 
@@ -50,5 +57,4 @@ GtkWidget * ops_button_box_new        (GtkWidget *,      /* parent widget */
 void ops_button_box_set_insensitive   (OpsButton *);
 
 #endif /* __OPS_BUTTONS_H__ */
-
 
