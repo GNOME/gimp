@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2003-01-08 16:16+0100\n"
-"PO-Revision-Date: 2003-01-08 16:15+0100\n"
+"POT-Creation-Date: 2003-01-15 12:08+0100\n"
+"PO-Revision-Date: 2003-01-15 12:08+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -331,12 +331,12 @@ msgid "Anchor"
 msgstr "Anker"
 
 #: libgimpwidgets/gimpstock.c:89
-msgid "Duplicate"
-msgstr "Kopiér"
+msgid "_Duplicate"
+msgstr "_Kopiér"
 
 #: libgimpwidgets/gimpstock.c:90
-msgid "Edit"
-msgstr "Redigér"
+msgid "_Edit"
+msgstr "_Redigér"
 
 #: libgimpwidgets/gimpstock.c:91
 msgid "Linked"
@@ -358,35 +358,35 @@ msgstr "_Nulstil"
 msgid "Visible"
 msgstr "Synlig"
 
-#: libgimpwidgets/gimpstock.c:127
+#: libgimpwidgets/gimpstock.c:128
 msgid "_Resize"
 msgstr "Æn_dr størrelse"
 
-#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:180
+#: libgimpwidgets/gimpstock.c:129 libgimpwidgets/gimpstock.c:181
 msgid "_Scale"
 msgstr "_Skalér"
 
-#: libgimpwidgets/gimpstock.c:136
+#: libgimpwidgets/gimpstock.c:137
 msgid "L_etter Spacing"
 msgstr "_Bogstavsmellemrum"
 
-#: libgimpwidgets/gimpstock.c:137
+#: libgimpwidgets/gimpstock.c:138
 msgid "L_ine Spacing"
 msgstr "_Linjemellemrum"
 
-#: libgimpwidgets/gimpstock.c:158
+#: libgimpwidgets/gimpstock.c:159
 msgid "Crop"
 msgstr "Beskær"
 
-#: libgimpwidgets/gimpstock.c:176
+#: libgimpwidgets/gimpstock.c:177
 msgid "_Transform"
 msgstr "_Transformér"
 
-#: libgimpwidgets/gimpstock.c:179
+#: libgimpwidgets/gimpstock.c:180
 msgid "_Rotate"
 msgstr "_Rotér"
 
-#: libgimpwidgets/gimpstock.c:181
+#: libgimpwidgets/gimpstock.c:182
 msgid "_Shear"
 msgstr "T_rapezér"
 
