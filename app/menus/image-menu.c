@@ -436,8 +436,6 @@ GimpItemFactoryEntry image_menu_entries[] =
     NULL,
     "image/mode/dialogs/convert_to_indexed.html", NULL },
 
-  MENU_SEPARATOR ("/Image/Mode/---"),
-
   /*  <Image>/Image/Transform  */
 
   MENU_BRANCH (N_("/Image/Transform")),
