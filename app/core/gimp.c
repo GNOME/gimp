@@ -1137,6 +1137,33 @@ gimp_pdb_dialogs_check (Gimp *gimp)
     gimp->gui_pdb_dialogs_check_func (gimp);
 }
 
+const gchar *
+gimp_get_program_class (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  if (gimp->gui_get_program_class_func)
+    return gimp->gui_get_program_class_func (gimp);
+
+  return NULL;
+}
+
+gchar *
+gimp_get_display_name (Gimp *gimp,
+                       gint  gdisp_ID,
+                       gint *monitor_number)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (monitor_number != NULL, NULL);
+
+  if (gimp->gui_get_display_name_func)
+    return gimp->gui_get_display_name_func (gimp, gdisp_ID, monitor_number);
+
+  *monitor_number = 0;
+
+  return NULL;
+}
+
 GimpImage *
 gimp_create_image (Gimp              *gimp,
 		   gint               width,

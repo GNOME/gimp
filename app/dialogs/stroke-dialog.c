@@ -95,7 +95,7 @@ stroke_dialog_new (GimpItem    *item,
   /* the dialog */
   dialog =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (item),
-                              _("Stroke Options"), "stroke_options",
+                              _("Stroke Options"), "gimp-stroke-options",
                               stock_id,
                               _("Choose Stroke Style"),
                               gimp_standard_help_func,

@@ -26,7 +26,7 @@ GtkWidget * file_dialog_new         (Gimp              *gimp,
                                      GimpMenuFactory   *menu_factory,
                                      const gchar       *menu_identifier,
                                      const gchar       *title,
-                                     const gchar       *wmclass_name,
+                                     const gchar       *role,
                                      const gchar       *help_id,
                                      GCallback          ok_callback);
 

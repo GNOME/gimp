@@ -162,6 +162,10 @@ static gboolean     _install_cmap      = FALSE;
 static gboolean     _show_tool_tips    = TRUE;
 static gint         _min_colors        = 144;
 static gint         _gdisp_ID          = -1;
+static gchar       *_wm_name           = NULL;
+static gchar       *_wm_class          = NULL;
+static gchar       *_display_name      = NULL;
+static gint         _monitor_number    = 0;
 static const gchar *progname           = NULL;
 
 static guint8       write_buffer[WRITE_BUFFER_SIZE];
@@ -194,11 +198,11 @@ static GimpPlugInInfo PLUG_IN_INFO;
  * @info: the PLUG_IN_INFO structure
  * @argc: the number of arguments
  * @argv: the arguments
- * 
+ *
  * The main procedure that must be called with the PLUG_IN_INFO structure
  * and the 'argc' and 'argv' that are passed to "main".
- * 
- * Return value: 
+ *
+ * Return value:
  **/
 gint
 gimp_main (const GimpPlugInInfo *info,
@@ -382,7 +386,7 @@ gimp_main (const GimpPlugInInfo *info,
 
       if (PLUG_IN_INFO.query_proc)
 	(* PLUG_IN_INFO.query_proc) ();
-	
+
       gimp_close ();
       return 0;
     }
@@ -394,7 +398,7 @@ gimp_main (const GimpPlugInInfo *info,
 
       if (PLUG_IN_INFO.init_proc)
 	(* PLUG_IN_INFO.init_proc) ();
-	
+
       gimp_close ();
       return 0;
     }
@@ -417,7 +421,7 @@ gimp_main (const GimpPlugInInfo *info,
 
 /**
  * gimp_quit:
- * 
+ *
  * Forcefully causes the gimp library to exit and close down its
  * connection to main gimp application. This function never returns.
  **/
@@ -445,7 +449,7 @@ gimp_quit (void)
  * @n_return_vals: the number of return values the procedure returns.
  * @params:        the procedure's parameters.
  * @return_vals:   the procedure's return values.
- * 
+ *
  * Installs a new procedure with the PDB (procedural database).
  *
  * Call this function from within your Plug-In's query() function for
@@ -544,7 +548,7 @@ gimp_install_procedure (const gchar        *name,
  * @params:        the procedure's parameters.
  * @return_vals:   the procedure's return values.
  * @run_proc:      the function to call for executing the procedure.
- * 
+ *
  * Installs a new temporary procedure with the PDB (procedural database).
  *
  * A temporary procedure is a procedure which is only available while
@@ -605,7 +609,7 @@ gimp_install_temp_proc (const gchar        *name,
 /**
  * gimp_uninstall_temp_proc:
  * @name: the procedure's name
- * 
+ *
  * Uninstalls a temporary procedure which has previously been
  * installed using gimp_install_temp_proc().
  **/
@@ -622,7 +626,7 @@ gimp_uninstall_temp_proc (const gchar *name)
 
   if (! gp_proc_uninstall_write (_writechannel, &proc_uninstall, NULL))
     gimp_quit ();
-  
+
   found = g_hash_table_lookup_extended (temp_proc_ht, name, &hash_name, NULL);
   if (found)
     {
@@ -635,7 +639,7 @@ gimp_uninstall_temp_proc (const gchar *name)
  * gimp_run_procedure:
  * @name:          the name of the procedure to run
  * @n_return_vals: return location for the number of return values
- * @Varargs:       list of procedure parameters  
+ * @Varargs:       list of procedure parameters
  *
  * This function calls a GIMP procedure and returns its return values.
  *
@@ -833,14 +837,14 @@ gimp_run_procedure (const gchar *name,
 }
 
 void
-gimp_read_expect_msg (WireMessage *msg, 
+gimp_read_expect_msg (WireMessage *msg,
 		      gint         type)
 {
   while (TRUE)
     {
       if (! wire_read_msg (_readchannel, msg, NULL))
 	gimp_quit ();
-      
+
       if (msg->type != type)
 	{
 	  if (msg->type == GP_TEMP_PROC_RUN || msg->type == GP_QUIT)
@@ -863,7 +867,7 @@ gimp_read_expect_msg (WireMessage *msg,
  * @n_return_vals: return location for the number of return values
  * @n_params:      the number of parameters the procedure takes.
  * @params:        the procedure's parameters array.
- * 
+ *
  * This function calls a GIMP procedure and returns its return values.
  *
  * Return value: the procedure's return values.
@@ -917,7 +921,7 @@ gimp_run_procedure2 (const gchar     *name,
  * gimp_destroy_params:
  * @params:   the #GimpParam array to destroy
  * @n_params: the number of elements in the array
- * 
+ *
  * Destroys a #GimpParam array as returned by gimp_run_procedure()
  **/
 void
@@ -933,7 +937,7 @@ gimp_destroy_params (GimpParam *params,
  * gimp_destroy_paramdefs:
  * @paramdefs: the #GimpParamDef array to destroy
  * @n_params:  the number of elements in the array
- * 
+ *
  * Destroys a #GimpParamDef array as returned by gimp_query_procedure()
  **/
 void
@@ -951,10 +955,10 @@ gimp_destroy_paramdefs (GimpParamDef *paramdefs,
 
 /**
  * gimp_tile_width:
- * 
+ *
  * Returns the tile_width the GIMP is using. This is a constant value
  * given at Plug-In config time.
- * 
+ *
  * Return value: the tile_width
  **/
 guint
@@ -965,10 +969,10 @@ gimp_tile_width (void)
 
 /**
  * gimp_tile_height:
- * 
+ *
  * Returns the tile_height the GIMP is using. This is a constant value
  * given at Plug-In config time.
- * 
+ *
  * Return value: the tile_height
  **/
 guint
@@ -979,11 +983,11 @@ gimp_tile_height (void)
 
 /**
  * gimp_shm_ID:
- * 
+ *
  * Returns the shared memory ID used for passing tile data between the GIMP
  * core and the Plug-In. This is a constant value
  * given at Plug-In config time.
- * 
+ *
  * Return value: the shared memory ID
  **/
 gint
@@ -994,11 +998,11 @@ gimp_shm_ID (void)
 
 /**
  * gimp_shm_addr:
- * 
+ *
  * Returns the address of the shared memory segment used for passing
  * tile data between the GIMP core and the Plug-In. This is a constant
  * value given at Plug-In config time.
- * 
+ *
  * Return value: the shared memory address
  **/
 guchar *
@@ -1009,12 +1013,12 @@ gimp_shm_addr (void)
 
 /**
  * gimp_gamma:
- * 
+ *
  * Returns the global gamma value the GIMP and all its Plug-Ins should
  * use. This is a constant value given at Plug-In config time.
  *
  * NOTE: this feature is unimplemented.
- * 
+ *
  * Return value: the gamma value
  **/
 gdouble
@@ -1025,13 +1029,13 @@ gimp_gamma (void)
 
 /**
  * gimp_install_cmap:
- * 
+ *
  * Returns whether or not the Plug-In should allocate an own colormap
  * when running on an 8 bit display. This is a constant value given at
  * Plug-In config time.
- * 
+ *
  * See also: gimp_min_colors()
- * 
+ *
  * Return value: the install_cmap boolean
  **/
 gboolean
@@ -1042,13 +1046,13 @@ gimp_install_cmap (void)
 
 /**
  * gimp_min_colors:
- * 
+ *
  * Returns the minimum number of colors to use when allocating an own
  * colormap on 8 bit displays. This is a constant value given at
  * Plug-In config time.
  *
  * See also: gimp_install_cmap()
- * 
+ *
  * Return value: the minimum number of colors to allocate
  **/
 gint
@@ -1059,10 +1063,10 @@ gimp_min_colors (void)
 
 /**
  * gimp_show_tool_tips:
- * 
+ *
  * Returns whether or not the Plug-In should show tooltips. This is a
  * constant value given at Plug-In config time.
- * 
+ *
  * Return value: the show_tool_tips boolean
  **/
 gboolean
@@ -1073,11 +1077,11 @@ gimp_show_tool_tips (void)
 
 /**
  * gimp_default_display:
- * 
+ *
  * Returns the default display ID. This corresponds to the display the
  * running procedure's menu entry was invoked from. This is a
  * constant value given at Plug-In config time.
- * 
+ *
  * Return value: the default display ID
  **/
 gint32
@@ -1087,10 +1091,66 @@ gimp_default_display (void)
 }
 
 /**
+ * gimp_wm_name:
+ *
+ * Returns the window manager name to be used for plug-in windows.
+ * This is a constant value given at Plug-In config time.
+ *
+ * Return value: the window manager name
+ **/
+const gchar *
+gimp_wm_name (void)
+{
+  return (const gchar *) _wm_name;
+}
+
+/**
+ * gimp_wm_class:
+ *
+ * Returns the window manager class to be used for plug-in windows.
+ * This is a constant value given at Plug-In config time.
+ *
+ * Return value: the window manager class
+ **/
+const gchar *
+gimp_wm_class (void)
+{
+  return (const gchar *) _wm_class;
+}
+
+/**
+ * gimp_display_name:
+ *
+ * Returns the display to be used for plug-in windows.
+ * This is a constant value given at Plug-In config time.
+ *
+ * Return value: the display name
+ **/
+const gchar *
+gimp_display_name (void)
+{
+  return (const gchar *) _display_name;
+}
+
+/**
+ * gimp_monitor_number:
+ *
+ * Returns the monitor number to be used for plug-in windows.
+ * This is a constant value given at Plug-In config time.
+ *
+ * Return value: the monitor number
+ **/
+gint
+gimp_monitor_number (void)
+{
+  return _monitor_number;
+}
+
+/**
  * gimp_get_progname:
- * 
+ *
  * Returns the Plug-In's executable name.
- * 
+ *
  * Return value: the executable name
  **/
 const gchar *
@@ -1101,7 +1161,7 @@ gimp_get_progname (void)
 
 /**
  * gimp_extension_ack:
- * 
+ *
  * Notify the main GIMP application that the extension has been properly
  * initialized and is ready to run.
  *
@@ -1123,7 +1183,7 @@ gimp_extension_ack (void)
 
 /**
  * gimp_extension_enable:
- * 
+ *
  * Enables asnychronous processing of messages from the main GIMP
  * application.
  *
@@ -1237,7 +1297,7 @@ gimp_extension_process (guint timeout)
 void
 gimp_attach_new_parasite (const gchar   *name,
 			  gint           flags,
-			  gint           size, 
+			  gint           size,
 			  gconstpointer  data)
 {
   GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
@@ -1356,8 +1416,8 @@ gimp_plugin_io_error_handler (GIOChannel   *channel,
 }
 
 static gboolean
-gimp_write (GIOChannel *channel, 
-	    guint8     *buf, 
+gimp_write (GIOChannel *channel,
+	    guint8     *buf,
 	    gulong      count,
             gpointer    user_data)
 {
@@ -1502,7 +1562,7 @@ gimp_config (GPConfig *config)
   else if (config->version > GP_VERSION)
     {
       g_message ("Could not execute plug-in \"%s\"\n(%s)\n"
-		 "because it uses an obsolete version of the " 
+		 "because it uses an obsolete version of the "
 		 "plug-in protocol.",
 		 g_get_prgname (), progname);
       gimp_quit ();
@@ -1516,6 +1576,10 @@ gimp_config (GPConfig *config)
   _show_tool_tips = config->show_tool_tips;
   _min_colors     = config->min_colors;
   _gdisp_ID       = config->gdisp_ID;
+  _wm_name        = g_strdup (config->wm_name);
+  _wm_class       = g_strdup (config->wm_class);
+  _display_name   = g_strdup (config->display_name);
+  _monitor_number = config->monitor_number;
 
   if (_shm_ID != -1)
     {
@@ -1592,7 +1656,7 @@ gimp_temp_proc_run (GPProcRun *proc_run)
 {
   GimpRunProc run_proc;
 
-  run_proc = (GimpRunProc) g_hash_table_lookup (temp_proc_ht, 
+  run_proc = (GimpRunProc) g_hash_table_lookup (temp_proc_ht,
 						(gpointer) proc_run->name);
 
   if (run_proc)
@@ -1667,7 +1731,7 @@ gimp_single_message (void)
     gimp_quit ();
 
   gimp_process_message (&msg);
-  
+
   wire_destroy (&msg);
 }
 

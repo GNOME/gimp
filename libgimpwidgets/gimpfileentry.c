@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library 
+/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpfileselection.c
@@ -8,10 +8,10 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -114,7 +114,7 @@ gimp_file_selection_class_init (GimpFileSelectionClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  gimp_file_selection_signals[FILENAME_CHANGED] = 
+  gimp_file_selection_signals[FILENAME_CHANGED] =
     g_signal_new ("filename_changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -283,11 +283,11 @@ gimp_file_selection_entry_callback (GtkWidget *widget,
 	 (filename[len - 1] == G_DIR_SEPARATOR))
     filename[len - 1] = '\0';
 
-  g_signal_handlers_block_by_func (selection->entry, 
+  g_signal_handlers_block_by_func (selection->entry,
                                    gimp_file_selection_entry_callback,
                                    selection);
   gtk_entry_set_text (GTK_ENTRY (selection->entry), filename);
-  g_signal_handlers_unblock_by_func (selection->entry, 
+  g_signal_handlers_unblock_by_func (selection->entry,
                                      gimp_file_selection_entry_callback,
                                      selection);
 
@@ -342,13 +342,13 @@ gimp_file_selection_browse_callback (GtkWidget *widget,
 
   selection = GIMP_FILE_SELECTION (data);
   filename = gtk_editable_get_chars (GTK_EDITABLE (selection->entry), 0, -1);
-  
+
   if (selection->file_selection == NULL)
     {
       if (selection->dir_only)
 	{
-          selection->file_selection = 
-            gtk_file_selection_new (selection->title ? 
+          selection->file_selection =
+            gtk_file_selection_new (selection->title ?
                                     selection->title : _("Select Folder"));
 
 	  /*  hiding these widgets uses internal gtk+ knowledge, but it's
@@ -361,15 +361,15 @@ gimp_file_selection_browse_callback (GtkWidget *widget,
 	}
       else
         {
-          selection->file_selection = 
-            gtk_file_selection_new (selection->title ? 
+          selection->file_selection =
+            gtk_file_selection_new (selection->title ?
                                     selection->title : _("Select File"));
         }
 
       gtk_window_set_position (GTK_WINDOW (selection->file_selection),
 			       GTK_WIN_POS_MOUSE);
-      gtk_window_set_wmclass (GTK_WINDOW (selection->file_selection),
-			      "file_select", "Gimp");
+      gtk_window_set_role (GTK_WINDOW (selection->file_selection),
+                           "gimp-file-entry-file-selection");
 
       /* slightly compress the dialog */
       gtk_container_set_border_width (GTK_CONTAINER (selection->file_selection),
@@ -429,6 +429,6 @@ gimp_file_selection_check_filename (GimpFileSelection *selection)
   g_free (filename);
 
   gtk_image_set_from_stock (GTK_IMAGE (selection->file_exists),
-                            exists ? GTK_STOCK_YES : GTK_STOCK_NO, 
+                            exists ? GTK_STOCK_YES : GTK_STOCK_NO,
                             GTK_ICON_SIZE_BUTTON);
 }

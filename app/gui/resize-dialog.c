@@ -185,7 +185,7 @@ resize_widget_new (GimpViewable *viewable,
 
   /*  dialog box  */
   {
-    const gchar *wmclass      = NULL;
+    const gchar *role         = NULL;
     const gchar *window_title = NULL;
     const gchar *stock_id     = NULL;
     const gchar *window_desc  = NULL;
@@ -199,7 +199,7 @@ resize_widget_new (GimpViewable *viewable,
 	switch (resize->target)
 	  {
 	  case ResizeLayer:
-	    wmclass      = "scale_layer";
+	    role         = "gimp-layer-scale";
 	    window_title = _("Scale Layer");
             window_desc  = _("Scale Layer Options");
 	    help_page    = GIMP_HELP_LAYER_SCALE;
@@ -207,7 +207,7 @@ resize_widget_new (GimpViewable *viewable,
 	    break;
 
 	  case ResizeImage:
-	    wmclass      = "scale_image";
+	    role         = "gimp-image-scale";
 	    window_title = _("Scale Image");
             window_desc  = _("Scale Image Options");
 	    help_page    = GIMP_HELP_IMAGE_SCALE;
@@ -222,14 +222,14 @@ resize_widget_new (GimpViewable *viewable,
 	switch (resize->target)
 	  {
 	  case ResizeLayer:
-	    wmclass      = "resize_layer";
+	    role         = "gimp-layer-resize";
 	    window_title = _("Layer Boundary Size");
             window_desc  = _("Set Layer Boundary Size");
 	    help_page    = GIMP_HELP_LAYER_RESIZE;
 	    break;
 
 	  case ResizeImage:
-	    wmclass      = "resize_image";
+	    role         = "gimp-image-resize";
 	    window_title = _("Canvas Size");
             window_desc  = _("Set Image Canvas Size");
 	    help_page    = GIMP_HELP_IMAGE_RESIZE;
@@ -241,7 +241,7 @@ resize_widget_new (GimpViewable *viewable,
 
     resize->resize_shell =
       gimp_viewable_dialog_new (viewable,
-                                window_title, wmclass,
+                                window_title, role,
                                 stock_id, window_desc,
                                 gimp_standard_help_func, help_page,
 

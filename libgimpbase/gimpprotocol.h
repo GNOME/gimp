@@ -1,5 +1,5 @@
 /* LIBGIMP - The GIMP Library
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -27,7 +27,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GP_VERSION 0x000E
+#define GP_VERSION 0x000F
 
 
 enum
@@ -62,15 +62,19 @@ typedef struct _GPProcUninstall GPProcUninstall;
 
 struct _GPConfig
 {
-  guint32 version;
-  guint32 tile_width;
-  guint32 tile_height;
-  gint32  shm_ID;
-  gdouble gamma;
-  gint8   install_cmap;
-  gint8   show_tool_tips;
-  gint32  min_colors;
-  gint32  gdisp_ID;
+  guint32  version;
+  guint32  tile_width;
+  guint32  tile_height;
+  gint32   shm_ID;
+  gdouble  gamma;
+  gint8    install_cmap;
+  gint8    show_tool_tips;
+  gint32   min_colors;
+  gint32   gdisp_ID;
+  gchar   *wm_name;
+  gchar   *wm_class;
+  gchar   *display_name;
+  gint32   monitor_number;
 };
 
 struct _GPTileReq

@@ -47,7 +47,7 @@ file_dialog_new (Gimp              *gimp,
                  GimpMenuFactory   *menu_factory,
                  const gchar       *menu_identifier,
                  const gchar       *title,
-                 const gchar       *wmclass_name,
+                 const gchar       *role,
                  const gchar       *help_id,
                  GCallback          ok_callback)
 {
@@ -60,7 +60,7 @@ file_dialog_new (Gimp              *gimp,
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (menu_identifier != NULL, NULL);
   g_return_val_if_fail (title != NULL, NULL);
-  g_return_val_if_fail (wmclass_name != NULL, NULL);
+  g_return_val_if_fail (role != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (ok_callback != NULL, NULL);
 
@@ -71,7 +71,7 @@ file_dialog_new (Gimp              *gimp,
   g_object_set_data (G_OBJECT (filesel), "gimp", gimp);
 
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
-  gtk_window_set_wmclass (GTK_WINDOW (filesel), wmclass_name, "Gimp");
+  gtk_window_set_role (GTK_WINDOW (filesel), role);
 
   gimp_help_connect (filesel, gimp_standard_help_func, help_id, NULL);
 

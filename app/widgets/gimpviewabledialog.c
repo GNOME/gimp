@@ -154,7 +154,7 @@ gimp_viewable_dialog_destroy (GtkObject *object)
 GtkWidget *
 gimp_viewable_dialog_new (GimpViewable       *viewable,
                           const gchar        *title,
-                          const gchar        *wmclass_name,
+                          const gchar        *role,
                           const gchar        *stock_id,
                           const gchar        *desc,
                           GimpHelpFunc        help_func,
@@ -168,13 +168,13 @@ gimp_viewable_dialog_new (GimpViewable       *viewable,
 
   g_return_val_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (title != NULL, NULL);
-  g_return_val_if_fail (wmclass_name != NULL, NULL);
+  g_return_val_if_fail (role != NULL, NULL);
 
   dialog = g_object_new (GIMP_TYPE_VIEWABLE_DIALOG,
                          "title", title,
                          NULL);
 
-  gtk_window_set_wmclass (GTK_WINDOW (dialog), wmclass_name, "Gimp");
+  gtk_window_set_role (GTK_WINDOW (dialog), role);
 
   if (help_func)
     gimp_help_connect (GTK_WIDGET (dialog), help_func, help_id, dialog);

@@ -128,7 +128,7 @@ convert_to_indexed (GimpImage *gimage)
   dialog->shell =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
                               _("Indexed Color Conversion"),
-                              "indexed_color_conversion",
+                              "gimp-image-convert-indexed",
                               GIMP_STOCK_CONVERT_INDEXED,
                               _("Convert Image to Indexed Colors"),
                               gimp_standard_help_func,

@@ -7,8 +7,8 @@
  * version 2 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -44,8 +44,8 @@ static void  gimp_ui_help_func (const gchar *help_id,
  *           used GIMP Library widgets contains a preview (like the image
  *           menu returned by gimp_image_menu_new()).
  *
- * This function initializes GTK+ with gtk_init() and initializes GDK's 
- * image rendering subsystem (GdkRGB) to follow the GIMP main program's 
+ * This function initializes GTK+ with gtk_init() and initializes GDK's
+ * image rendering subsystem (GdkRGB) to follow the GIMP main program's
  * colormap allocation/installation policy.
  *
  * The GIMP's colormap policy can be determinded by the user with the
@@ -59,20 +59,38 @@ gimp_ui_init (const gchar *prog_name,
 
   GimpWidgetsVTable vtable;
 
-  gint    argc;
-  gchar **argv;
-  gchar  *user_gtkrc;
-
-  GdkScreen *screen;
+  const gchar  *display_name;
+  gint          argc;
+  gchar       **argv;
+  gchar        *user_gtkrc;
+  GdkScreen    *screen;
 
   g_return_if_fail (prog_name != NULL);
 
   if (initialized)
     return;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
+  display_name = gimp_display_name ();
+
+  if (display_name)
+    {
+      const gchar *var_name;
+
+#if defined (GDK_WINDOWING_X11)
+      var_name = "DISPLAY";
+#elif defined (GDK_WINDOWING_DIRECTFB) || defined (GDK_WINDOWING_FB)
+      var_name = "GDK_DISPLAY";
+#endif
+
+      if (var_name)
+        putenv (g_strdup_printf ("%s=%s", var_name, display_name));
+    }
+
+  argc    = 3;
+  argv    = g_new (gchar *, 3);
   argv[0] = g_strdup (prog_name);
+  argv[1] = g_strdup_printf ("--name=%s",  gimp_wm_name ());
+  argv[2] = g_strdup_printf ("--class=%s", gimp_wm_class ());
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());

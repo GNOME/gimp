@@ -32,6 +32,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-merge.h"
 #include "core/gimptoolinfo.h"
 
 #include "pdb/procedural_db.h"
@@ -448,7 +449,7 @@ vectors_new_vectors_query (GimpImage   *gimage,
   /*  The dialog  */
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
-                              _("New Path"), "new_path_options",
+                              _("New Path"), "gimp-vectors-new",
                               GIMP_STOCK_TOOL_PATH,
                               _("New Path Options"),
                               gimp_standard_help_func,
@@ -564,7 +565,7 @@ vectors_edit_vectors_query (GimpVectors *vectors)
   /*  The dialog  */
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (vectors),
-                              _("Path Attributes"), "edit_path_attributes",
+                              _("Path Attributes"), "gimp-vectors-edit",
                               GIMP_STOCK_EDIT,
                               _("Edit Path Attributes"),
                               gimp_standard_help_func,
@@ -666,7 +667,7 @@ vectors_import_query (GimpImage *gimage)
   g_object_weak_ref (G_OBJECT (gimage),
                      (GWeakNotify) gtk_widget_destroy, filesel);
 
-  gtk_window_set_wmclass (GTK_WINDOW (filesel), "gimp-vectors-import", "Gimp");
+  gtk_window_set_role (GTK_WINDOW (filesel), "gimp-vectors-import");
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
   gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
@@ -728,7 +729,7 @@ vectors_export_query (GimpImage   *gimage,
   g_object_weak_ref (G_OBJECT (gimage),
                      (GWeakNotify) gtk_widget_destroy, filesel);
 
-  gtk_window_set_wmclass (GTK_WINDOW (filesel), "gimp-vectors-export", "Gimp");
+  gtk_window_set_role (GTK_WINDOW (filesel), "gimp-vectors-export");
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
   gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);

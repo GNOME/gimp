@@ -123,7 +123,7 @@ templates_new_template_dialog (Gimp         *gimp,
   GtkWidget    *editor;
 
   dialog = gimp_viewable_dialog_new (NULL,
-                                     _("New Template"), "new_template",
+                                     _("New Template"), "gimp-template-new",
                                      GIMP_STOCK_TEMPLATE,
                                      _("Create a New Template"),
                                      gimp_standard_help_func,
@@ -194,7 +194,7 @@ templates_edit_template_dialog (Gimp         *gimp,
   GtkWidget *editor;
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (template),
-                                     _("Edit Template"), "edit_template",
+                                     _("Edit Template"), "gimp-template-edit",
                                      GIMP_STOCK_EDIT,
                                      _("Edit Template"),
                                      gimp_standard_help_func,

@@ -77,7 +77,7 @@ grid_dialog_new (GimpImage *gimage)
   grid_backup = gimp_config_duplicate (GIMP_CONFIG (grid));
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
-                                     _("Configure Grid"), "configure_grid",
+                                     _("Configure Grid"), "gimp-grid-configure",
                                      GIMP_STOCK_GRID, _("Configure Image Grid"),
                                      gimp_standard_help_func,
                                      GIMP_HELP_IMAGE_GRID,

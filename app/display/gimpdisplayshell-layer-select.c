@@ -111,8 +111,7 @@ layer_select_new (GimpImage *gimage,
   layer_select->orig_layer = layer;
 
   layer_select->shell = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_window_set_wmclass (GTK_WINDOW (layer_select->shell),
-                          "layer_select", "Gimp");
+  gtk_window_set_role (GTK_WINDOW (layer_select->shell), "gimp-layer-select");
   gtk_window_set_title (GTK_WINDOW (layer_select->shell),
                         _("Layer Select"));
   gtk_window_set_position (GTK_WINDOW (layer_select->shell),

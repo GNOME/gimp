@@ -146,7 +146,7 @@ qmask_channel_query (GimpDisplayShell *shell)
   /*  The dialog  */
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (shell->gdisp->gimage),
-                              _("Qmask Attributes"), "edit_qmask_attributes",
+                              _("Qmask Attributes"), "gimp-qmask-edit",
                               GIMP_STOCK_QMASK_ON,
                               _("Edit QuickMask Attributes"),
                               gimp_standard_help_func,

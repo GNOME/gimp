@@ -204,7 +204,7 @@ file_save_dialog_create (Gimp            *gimp,
                           global_dialog_factory,
                           "gimp-file-save-dialog",
                           menu_factory, "<Save>",
-                          _("Save Image"), "save_image",
+                          _("Save Image"), "gimp-file-save",
                           GIMP_HELP_FILE_SAVE,
                           G_CALLBACK (file_save_ok_callback));
 }

@@ -1,5 +1,70 @@
 2003-11-07  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpbase/gimpprotocol.[ch]: added "wm_name", "wm_class",
+	"display_name" and "monitor_number" to the GPConfig message.
+	Increased protocol version number.
+
+	* libgimp/gimp.[ch] (gimp_config): read them from the GPConfig
+	message and remember them.
+	Added public accessors for the new config values.
+
+	* libgimp/gimpui.c (gimp_ui_init): pass wm_name and wm_class to
+	gtk_init() and export the display/screen to use to the
+	environment.
+
+	* app/core/gimp.[ch]: added vtable entries to get the values
+	from the GUI.
+
+	* app/gui/gui-vtable.c: implement the vtable entries.
+
+	* app/plug-in/plug-in-run.c: fill in the GPConfig values using
+	the new Gimp vtable functions.
+
+	* app/display/gimpdisplayshell-layer-select.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/about-dialog.c
+	* app/gui/channels-commands.c
+	* app/gui/color-notebook.c
+	* app/gui/convert-dialog.c
+	* app/gui/file-dialog-utils.[ch]
+	* app/gui/file-new-dialog.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/gradient-editor-commands.c
+	* app/gui/gradients-commands.c
+	* app/gui/grid-dialog.c
+	* app/gui/image-commands.c
+	* app/gui/info-dialog.[ch]
+	* app/gui/info-window.c
+	* app/gui/layers-commands.c
+	* app/gui/module-browser.c
+	* app/gui/offset-dialog.c
+	* app/gui/palette-import-dialog.c
+	* app/gui/qmask-commands.c
+	* app/gui/resize-dialog.c
+	* app/gui/splash.c
+	* app/gui/stroke-dialog.c
+	* app/gui/templates-commands.c
+	* app/gui/tips-dialog.c
+	* app/gui/vectors-commands.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* app/widgets/gimpdock.c
+	* app/widgets/gimperrorconsole.c
+	* app/widgets/gimptexteditor.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gimpviewabledialog.[ch]
+	* libgimpwidgets/gimpfileselection.c
+	* libgimpwidgets/gimpquerybox.c
+	* libgimpwidgets/gimpunitmenu.c
+	* plug-ins/helpbrowser/dialog.c
+	* plug-ins/ifscompose/ifscompose.c: replaced all calls to
+	gtk_window_set_wmclass() by gtk_window_set_role() and all
+	"const gchar *wmclass_name" parameters by "const gchar *role".
+	Cleaned up the window role strings.
+
+2003-11-07  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpexport.c: beautified and cleaned up the export
 	dialogs.
 

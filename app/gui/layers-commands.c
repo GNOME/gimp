@@ -665,7 +665,7 @@ layers_new_layer_query (GimpImage *gimage,
 
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
-                              _("New Layer"), "new_layer_options",
+                              _("New Layer"), "gimp-layer-new",
                               GIMP_STOCK_LAYER,
                               _("Create a New Layer"),
                               gimp_standard_help_func,
@@ -845,8 +845,7 @@ layers_edit_layer_query (GimpLayer *layer)
 
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (layer),
-                              _("Layer Attributes"),
-                              "edit_layer_attributes",
+                              _("Layer Attributes"), "gimp-layer-edit",
                               GIMP_STOCK_EDIT,
                               _("Edit Layer Attributes"),
                               gimp_standard_help_func,
@@ -956,7 +955,7 @@ layers_add_mask_query (GimpLayer *layer)
   /*  The dialog  */
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (layer),
-                              _("Add Layer Mask"), "add_mask_options",
+                              _("Add Layer Mask"), "gimp-layer-add-mask",
                               GTK_STOCK_ADD,
                               _("Add a Mask to the Layer"),
                               gimp_standard_help_func,

@@ -163,7 +163,7 @@ palette_import_dialog_new (Gimp *gimp)
                                                  gimp_get_user_context (gimp));
 
   import_dialog->dialog =
-    gimp_viewable_dialog_new (NULL, _("Import Palette"), "import_palette",
+    gimp_viewable_dialog_new (NULL, _("Import Palette"), "gimp-palette-import",
                               GTK_STOCK_CONVERT,
                               _("Import a New Palette"),
                               gimp_standard_help_func,

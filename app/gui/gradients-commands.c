@@ -78,7 +78,7 @@ gradients_save_as_pov_query (GimpContainerEditor *editor)
 
   g_free (title);
 
-  gtk_window_set_wmclass (GTK_WINDOW (filesel), "save_gradient", "Gimp");
+  gtk_window_set_role (GTK_WINDOW (filesel), "gimp-gradient-save-pov");
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
   gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
@@ -100,7 +100,7 @@ gradients_save_as_pov_query (GimpContainerEditor *editor)
 
   g_signal_connect_object (filesel, "destroy",
                            G_CALLBACK (g_object_unref),
-                           gradient, 
+                           gradient,
                            G_CONNECT_SWAPPED);
 
   gimp_help_connect (GTK_WIDGET (filesel), gimp_standard_help_func,

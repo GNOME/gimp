@@ -524,7 +524,7 @@ gradient_editor_replicate_cmd_callback (GtkWidget *widget,
 
   dialog =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (GIMP_DATA_EDITOR (editor)->data),
-                              title, "gradient_segment_replicate",
+                              title, "gimp-gradient-segment-replicate",
                               GIMP_STOCK_TOOL_BLEND, desc,
                               gimp_standard_help_func,
                               GIMP_HELP_GRADIENT_EDITOR_REPLICATE,
@@ -629,7 +629,7 @@ gradient_editor_split_uniformly_cmd_callback (GtkWidget *widget,
 
   dialog =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (GIMP_DATA_EDITOR (editor)->data),
-                              title, "gradient_segment_split_uniformly",
+                              title, "gimp-gradient-segment_split-uniformly",
                               GIMP_STOCK_TOOL_BLEND, desc,
                               gimp_standard_help_func,
                               GIMP_HELP_GRADIENT_EDITOR_SPLIT_UNIFORM,

@@ -1242,7 +1242,7 @@ file_dialog_create (GimpCurvesTool *c_tool)
 
   file_dlg = GTK_FILE_SELECTION (c_tool->file_dialog);
 
-  gtk_window_set_wmclass (GTK_WINDOW (file_dlg), "load_save_curves", "Gimp");
+  gtk_window_set_role (GTK_WINDOW (file_dlg), "gimp-load-save-curves");
   gtk_window_set_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
 
   gtk_container_set_border_width (GTK_CONTAINER (file_dlg), 2);

@@ -361,7 +361,7 @@ gimp_error_console_save_ext_clicked (GtkWidget        *button,
   filesel = GTK_FILE_SELECTION (console->filesel);
 
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
-  gtk_window_set_wmclass (GTK_WINDOW (filesel), "save_errors", "Gimp");
+  gtk_window_set_role (GTK_WINDOW (filesel), "gimp-save-errors");
 
   gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
   gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 2);

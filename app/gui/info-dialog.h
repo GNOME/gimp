@@ -21,7 +21,7 @@
 
 
 typedef enum
-{ 
+{
   INFO_LABEL,
   INFO_ENTRY,
   INFO_SCALE,
@@ -59,14 +59,14 @@ struct _InfoDialog
 
 InfoDialog *info_dialog_new            (GimpViewable    *viewable,
                                         const gchar     *title,
-                                        const gchar     *wmclass_name,
+                                        const gchar     *role,
                                         const gchar     *stock_id,
                                         const gchar     *desc,
 					GimpHelpFunc     help_func,
 					gpointer         help_data);
 InfoDialog *info_dialog_notebook_new   (GimpViewable    *viewable,
                                         const gchar     *title,
-                                        const gchar     *wmclass_name,
+                                        const gchar     *role,
                                         const gchar     *stock_id,
                                         const gchar     *desc,
 					GimpHelpFunc     help_func,

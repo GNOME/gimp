@@ -57,7 +57,7 @@ GType       gimp_viewable_dialog_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_viewable_dialog_new      (GimpViewable       *viewable,
                                            const gchar        *title,
-                                           const gchar        *wmclass_name,
+                                           const gchar        *role,
                                            const gchar        *stock_id,
                                            const gchar        *desc,
                                            GimpHelpFunc        help_func,

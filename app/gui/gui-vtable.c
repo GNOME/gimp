@@ -84,6 +84,10 @@ static void           gui_update_progress      (Gimp          *gimp,
 static void           gui_end_progress         (Gimp          *gimp,
                                                 GimpProgress  *progress);
 static void           gui_pdb_dialogs_check    (Gimp          *gimp);
+static const gchar  * gui_get_program_class    (Gimp          *gimp);
+static gchar        * gui_get_display_name     (Gimp          *gimp,
+                                                gint           gdisp_ID,
+                                                gint          *monitor_number);
 
 
 /*  public functions  */
@@ -107,6 +111,8 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui_progress_update_func   = gui_update_progress;
   gimp->gui_progress_end_func      = gui_end_progress;
   gimp->gui_pdb_dialogs_check_func = gui_pdb_dialogs_check;
+  gimp->gui_get_program_class_func = gui_get_program_class;
+  gimp->gui_get_display_name_func  = gui_get_display_name;
 }
 
 
@@ -263,4 +269,43 @@ gui_pdb_dialogs_check (Gimp *gimp)
   gradient_select_dialogs_check ();
   palette_select_dialogs_check ();
   pattern_select_dialogs_check ();
+}
+
+static const gchar *
+gui_get_program_class (Gimp *gimp)
+{
+  return gdk_get_program_class ();
+}
+
+static gchar *
+gui_get_display_name (Gimp *gimp,
+                      gint  gdisp_ID,
+                      gint *monitor_number)
+{
+  GimpDisplay *gdisp;
+  GdkScreen   *screen;
+  gint         monitor;
+
+  gdisp = gimp_display_get_by_ID (gimp, gdisp_ID);
+
+  if (gdisp)
+    {
+      screen  = gtk_widget_get_screen (gdisp->shell);
+      monitor = gdk_screen_get_monitor_at_window (screen, gdisp->shell->window);
+    }
+  else
+    {
+      gint x, y;
+
+      gdk_display_get_pointer (gdk_display_get_default (),
+                               &screen, &x, &y, NULL);
+      monitor = gdk_screen_get_monitor_at_point (screen, x, y);
+    }
+
+  *monitor_number = monitor;
+
+  if (screen)
+    return gdk_screen_make_display_name (screen);
+
+  return NULL;
 }

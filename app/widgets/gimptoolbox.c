@@ -164,7 +164,7 @@ gimp_toolbox_init (GimpToolbox *toolbox)
   GtkWidget       *main_vbox;
   GtkWidget       *vbox;
 
-  gtk_window_set_wmclass (GTK_WINDOW (toolbox), "toolbox", "Gimp");
+  gtk_window_set_role (GTK_WINDOW (toolbox), "gimp-toolbox");
   gtk_window_set_title (GTK_WINDOW (toolbox), _("The GIMP"));
 
   /*  Docks are utility windows by default, but the toolbox doesn't fit

@@ -40,7 +40,7 @@
 
 static InfoDialog * info_dialog_new_extended    (GimpViewable  *viewable,
                                                  const gchar   *title,
-                                                 const gchar   *wmclass_name,
+                                                 const gchar   *role,
                                                  const gchar   *stock_id,
                                                  const gchar   *desc,
                                                  GimpHelpFunc   help_func,
@@ -62,13 +62,13 @@ static void         info_dialog_update_field    (InfoField     *info_field);
 InfoDialog *
 info_dialog_new (GimpViewable *viewable,
                  const gchar  *title,
-                 const gchar  *wmclass_name,
+                 const gchar  *role,
                  const gchar  *stock_id,
                  const gchar  *desc,
 		 GimpHelpFunc  help_func,
 		 gpointer      help_data)
 {
-  return info_dialog_new_extended (viewable, title, wmclass_name,
+  return info_dialog_new_extended (viewable, title, role,
                                    stock_id, desc,
                                    help_func, help_data, FALSE);
 }
@@ -76,13 +76,13 @@ info_dialog_new (GimpViewable *viewable,
 InfoDialog *
 info_dialog_notebook_new (GimpViewable *viewable,
                           const gchar  *title,
-                          const gchar  *wmclass_name,
+                          const gchar  *role,
                           const gchar  *stock_id,
                           const gchar  *desc,
                           GimpHelpFunc  help_func,
 			  gpointer      help_data)
 {
-  return info_dialog_new_extended (viewable, title, wmclass_name,
+  return info_dialog_new_extended (viewable, title, role,
                                    stock_id, desc,
                                    help_func, help_data, TRUE);
 }
@@ -312,7 +312,7 @@ info_dialog_add_sizeentry (InfoDialog                *idialog,
 static InfoDialog *
 info_dialog_new_extended (GimpViewable *viewable,
                           const gchar  *title,
-                          const gchar  *wmclass_name,
+                          const gchar  *role,
                           const gchar  *stock_id,
                           const gchar  *desc,
 			  GimpHelpFunc  help_func,
@@ -330,7 +330,7 @@ info_dialog_new_extended (GimpViewable *viewable,
   idialog->nfields    = 0;
 
   shell = gimp_viewable_dialog_new (viewable,
-                                    title, wmclass_name,
+                                    title, role,
                                     stock_id, desc,
                                     help_func, help_data,
                                     NULL);

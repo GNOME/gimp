@@ -342,7 +342,7 @@ channels_new_channel_query (GimpImage   *gimage,
   /*  The dialog  */
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
-                              _("New Channel"), "new_channel_options",
+                              _("New Channel"), "gimp-channel-new",
                               GIMP_STOCK_CHANNEL,
                               _("New Channel Options"),
                               gimp_standard_help_func,
@@ -503,7 +503,7 @@ channels_edit_channel_query (GimpChannel *channel)
   /*  The dialog  */
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (channel),
-                              _("Channel Attributes"), "edit_channel_attributes",
+                              _("Channel Attributes"), "gimp-channel-edit",
                               GIMP_STOCK_EDIT,
                               _("Edit Channel Attributes"),
                               gimp_standard_help_func,

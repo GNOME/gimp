@@ -2564,7 +2564,7 @@ ifscompose_message_dialog (GtkMessageType  type,
   if (title)
     gtk_window_set_title (GTK_WINDOW (dlg), title);
 
-  gtk_window_set_wmclass (GTK_WINDOW (dlg), "message", "Gimp");
+  gtk_window_set_role (GTK_WINDOW (dlg), "ifscompose-message");
   gtk_dialog_run (GTK_DIALOG (dlg));
   gtk_widget_destroy (dlg);
 }

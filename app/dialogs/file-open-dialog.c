@@ -181,7 +181,7 @@ file_open_dialog_create (Gimp            *gimp,
                                  global_dialog_factory,
                                  "gimp-file-open-dialog",
                                  menu_factory, "<Load>",
-                                 _("Open Image"), "open_image",
+                                 _("Open Image"), "gimp-file-open",
                                  GIMP_HELP_FILE_OPEN,
                                  G_CALLBACK (file_open_ok_callback));
 
@@ -202,7 +202,7 @@ file_open_dialog_create (Gimp            *gimp,
       GtkWidget *progress;
       GtkStyle  *style;
       gchar     *str;
-      
+
       /* Catch file-list clicks so we can update the preview thumbnail */
       g_signal_connect (tree_sel, "changed",
                         G_CALLBACK (file_open_selchanged_callback),
@@ -220,7 +220,7 @@ file_open_dialog_create (Gimp            *gimp,
                             &style->base[GTK_STATE_NORMAL]);
       gtk_widget_modify_bg (ebox, GTK_STATE_INSENSITIVE,
                             &style->base[GTK_STATE_NORMAL]);
-      
+
       gtk_container_add (GTK_CONTAINER (open_options_frame), ebox);
       gtk_widget_show (ebox);
 
@@ -240,16 +240,16 @@ file_open_dialog_create (Gimp            *gimp,
       vbox = gtk_vbox_new (FALSE, 0);
       gtk_container_add (GTK_CONTAINER (ebox), vbox);
       gtk_widget_show (vbox);
-      
+
       button = gtk_button_new ();
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
-      
+
       label = gtk_label_new_with_mnemonic (_("_Preview"));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_container_add (GTK_CONTAINER (button), label);
       gtk_widget_show (label);
-      
+
       g_signal_connect (button, "button_press_event",
                         G_CALLBACK (gtk_true),
                         NULL);
@@ -262,22 +262,22 @@ file_open_dialog_create (Gimp            *gimp,
       g_signal_connect (button, "leave_notify_event",
                         G_CALLBACK (gtk_true),
                         NULL);
-      
+
       vbox2 = gtk_vbox_new (FALSE, 2);
       gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
       gtk_container_add (GTK_CONTAINER (vbox), vbox2);
       gtk_widget_show (vbox2);
-      
+
       hbox = gtk_hbox_new (TRUE, 0);
       gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
-      
+
       open_options_imagefile = gimp_imagefile_new (gimp, NULL);
-      
+
       open_options_preview =
         gimp_preview_new (GIMP_VIEWABLE (open_options_imagefile),
                           gimp->config->thumbnail_size, 0, FALSE);
-      
+
       gtk_widget_ensure_style (open_options_preview);
       style = gtk_widget_get_style (open_options_preview);
       gtk_widget_modify_bg (open_options_preview, GTK_STATE_NORMAL,
@@ -309,11 +309,11 @@ file_open_dialog_create (Gimp            *gimp,
       /* eek */
       {
         GtkRequisition requisition;
-        
+
         gtk_widget_size_request (label, &requisition);
         gtk_widget_set_size_request (label, -1, requisition.height);
       }
-      
+
       g_signal_connect (open_options_imagefile, "info_changed",
                         G_CALLBACK (file_open_imagefile_info_changed),
                         label);
@@ -329,17 +329,17 @@ file_open_dialog_create (Gimp            *gimp,
       gtk_widget_set_sensitive (GTK_WIDGET (open_options_frame), FALSE);
 
       /*  The progress bar  */
-      
+
       progress = gtk_progress_bar_new ();
       gtk_box_pack_end (GTK_BOX (vbox2), progress, FALSE, FALSE, 0);
       /* don't gtk_widget_show (progress); */
-      
+
       open_options_progress = GTK_PROGRESS_BAR (progress);
-      
+
       /* eek */
       {
         GtkRequisition requisition;
-        
+
         gtk_progress_bar_set_text (open_options_progress, "foo");
         gtk_widget_size_request (progress, &requisition);
         gtk_widget_set_size_request (open_options_title, requisition.width, -1);
@@ -643,7 +643,7 @@ file_open_ok_callback (GtkWidget *widget,
   file_open_dialog_open_image (open_dialog,
                                gimp,
                                uri,
-                               entered_filename, 
+                               entered_filename,
                                load_file_proc);
 
   g_free (uri);
@@ -669,7 +669,7 @@ file_open_ok_callback (GtkWidget *widget,
     }
 
   g_strfreev (selections);
-    
+
   gtk_widget_set_sensitive (open_dialog, TRUE);
 }
 
@@ -686,7 +686,7 @@ file_open_dialog_open_image (GtkWidget     *open_dialog,
 
   gimage = file_open_with_proc_and_display (gimp,
                                             uri,
-                                            entered_filename, 
+                                            entered_filename,
                                             load_proc,
                                             &status,
                                             &error);

@@ -148,8 +148,8 @@ browser_dialog_open (void)
 
   /*  the dialog window  */
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_wmclass (GTK_WINDOW (window), "helpbrowser", "Gimp");
   gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help Browser"));
+  gtk_window_set_role (GTK_WINDOW (window), "helpbrowser");
 
   g_signal_connect (window, "destroy",
                     G_CALLBACK (close_callback),

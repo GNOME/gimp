@@ -287,7 +287,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->scroll_start_y        = 0;
   shell->button_press_before_focus = FALSE;
 
-  gtk_window_set_wmclass (GTK_WINDOW (shell), "image_window", "Gimp");
+  gtk_window_set_role (GTK_WINDOW (shell), "gimp-image-window");
   gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
 
   gtk_widget_set_events (GTK_WIDGET (shell), (GDK_POINTER_MOTION_MASK      |

@@ -575,7 +575,7 @@ gimp_unit_menu_create_selection (GimpUnitMenu *menu)
   GimpUnit          unit;
   gint              num_units;
 
-  menu->selection = gimp_dialog_new (_("Unit Selection"), "unit_selection",
+  menu->selection = gimp_dialog_new (_("Unit Selection"), "gimp-unit-selection",
                                      GTK_WIDGET (menu),
                                      GTK_DIALOG_DESTROY_WITH_PARENT,
                                      gimp_standard_help_func,

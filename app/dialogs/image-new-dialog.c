@@ -98,7 +98,7 @@ file_new_dialog_new (Gimp *gimp)
 
   dialog->dialog =
     gimp_viewable_dialog_new (NULL,
-                              _("New Image"), "new_image",
+                              _("New Image"), "gimp-image-new",
                               GIMP_STOCK_IMAGE,
                               _("Create a New Image"),
                               gimp_standard_help_func,

@@ -228,7 +228,7 @@ info_window_create (GimpDisplay *gdisp)
   type = gimp_image_base_type (gdisp->gimage);
 
   info_win = info_dialog_notebook_new (GIMP_VIEWABLE (gdisp->gimage),
-                                       _("Info Window"), "info_window",
+                                       _("Info Window"), "gimp-info-window",
                                        GIMP_STOCK_INFO,
                                        _("Image Information"),
 				       gimp_standard_help_func,

@@ -380,7 +380,7 @@ image_layers_merge_query (GimpImage   *gimage,
   /* The dialog  */
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
-                              _("Merge Layers"), "layers_merge_options",
+                              _("Merge Layers"), "gimp-image-merge-layers",
                               GIMP_STOCK_MERGE_DOWN,
                               _("Layers Merge Options"),
                               gimp_standard_help_func,

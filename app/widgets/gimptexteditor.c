@@ -172,7 +172,7 @@ gimp_text_editor_new (const gchar   *title,
                          "title", title,
                          NULL);
 
-  gtk_window_set_role (GTK_WINDOW (editor), "text_editor");
+  gtk_window_set_role (GTK_WINDOW (editor), "gimp-text-editor");
   gimp_help_connect (GTK_WIDGET (editor), gimp_standard_help_func,
                      GIMP_HELP_TEXT_EDITOR_DIALOG, NULL);
 
@@ -318,7 +318,7 @@ gimp_text_editor_load (GtkWidget      *widget,
   filesel =
     GTK_FILE_SELECTION (gtk_file_selection_new (_("Open Text File (UTF-8)")));
 
-  gtk_window_set_wmclass (GTK_WINDOW (filesel), "gimp-text-load-file", "Gimp");
+  gtk_window_set_role (GTK_WINDOW (filesel), "gimp-text-load-file");
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
   gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);

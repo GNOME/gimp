@@ -57,6 +57,10 @@ typedef void           (* GimpProgressUpdateFunc)  (Gimp          *gimp,
 typedef void           (* GimpProgressEndFunc)     (Gimp          *gimp,
                                                     GimpProgress  *progress);
 typedef void           (* GimpPDBDialogsCheckFunc) (Gimp          *gimp);
+typedef const gchar  * (* GimpGetProgramClassFunc) (Gimp          *gimp);
+typedef gchar        * (* GimpGetDisplayNameFunc)  (Gimp          *gimp,
+                                                    gint           gdisp_ID,
+                                                    gint          *monitor_number);
 
 
 #define GIMP_TYPE_GIMP            (gimp_get_type ())
@@ -100,6 +104,8 @@ struct _Gimp
   GimpProgressUpdateFunc  gui_progress_update_func;
   GimpProgressEndFunc     gui_progress_end_func;
   GimpPDBDialogsCheckFunc gui_pdb_dialogs_check_func;
+  GimpGetProgramClassFunc gui_get_program_class_func;
+  GimpGetDisplayNameFunc  gui_get_display_name_func;
 
   gint                    busy;
   guint                   busy_idle_id;
@@ -257,6 +263,10 @@ void          gimp_update_progress      (Gimp               *gimp,
 void          gimp_end_progress         (Gimp               *gimp,
                                          GimpProgress       *progress);
 void          gimp_pdb_dialogs_check    (Gimp               *gimp);
+const gchar * gimp_get_program_class    (Gimp               *gimp);
+gchar       * gimp_get_display_name     (Gimp               *gimp,
+                                         gint                gdisp_ID,
+                                         gint               *monitor_number);
 
 GimpImage   * gimp_create_image         (Gimp               *gimp,
 					 gint                width,

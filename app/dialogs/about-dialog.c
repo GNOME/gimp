@@ -202,8 +202,8 @@ static gint         cur_scroll_text  = 0;
 static gint         cur_scroll_index = 0;
 static gint         shuffle_array[G_N_ELEMENTS (authors)];
 
-static gchar *drop_text[] = 
-{ 
+static gchar *drop_text[] =
+{
   "We are The GIMP." ,
   "Prepare to be manipulated.",
   "Resistance is futile."
@@ -235,8 +235,7 @@ about_dialog_create (void)
       about_dialog = gtk_window_new (GTK_WINDOW_TOPLEVEL);
       gtk_window_set_type_hint (GTK_WINDOW (about_dialog),
 				GDK_WINDOW_TYPE_HINT_DIALOG);
-      gtk_window_set_wmclass (GTK_WINDOW (about_dialog),
-			      "about_dialog", "Gimp");
+      gtk_window_set_role (GTK_WINDOW (about_dialog), "gimp-about");
       gtk_window_set_title (GTK_WINDOW (about_dialog), _("About The GIMP"));
       gtk_window_set_position (GTK_WINDOW (about_dialog), GTK_WIN_POS_CENTER);
       gtk_window_set_resizable (GTK_WINDOW (about_dialog), FALSE);
@@ -256,13 +255,13 @@ about_dialog_create (void)
       g_signal_connect (about_dialog, "key_press_event",
 			G_CALLBACK (about_dialog_key),
 			NULL);
-      
+
       /*  dnd stuff  */
       gtk_drag_dest_set (about_dialog,
                          GTK_DEST_DEFAULT_MOTION |
                          GTK_DEST_DEFAULT_DROP,
                          NULL, 0,
-                         GDK_ACTION_COPY); 
+                         GDK_ACTION_COPY);
       gimp_dnd_viewable_dest_add (about_dialog,
 				  GIMP_TYPE_TOOL_INFO,
 				  about_dialog_tool_drop, NULL);
@@ -323,7 +322,7 @@ about_dialog_create (void)
       gtk_widget_show (aboutframe);
 
       scroll_layout = gtk_widget_create_pango_layout (aboutframe, NULL);
-      g_object_weak_ref (G_OBJECT (aboutframe), 
+      g_object_weak_ref (G_OBJECT (aboutframe),
                          (GWeakNotify) g_object_unref, scroll_layout);
 
       max_width = 0;
@@ -375,17 +374,17 @@ about_dialog_create (void)
 	{
 	  GRand *gr = g_rand_new ();
 
-	  for (i = 0; i < nscroll_texts; i++) 
+	  for (i = 0; i < nscroll_texts; i++)
 	    {
 	      shuffle_array[i] = i;
 	    }
 
-	  for (i = 0; i < nscroll_texts; i++) 
+	  for (i = 0; i < nscroll_texts; i++)
 	    {
 	      gint j;
 
 	      j = g_rand_int_range (gr, 0, nscroll_texts);
-	      if (i != j) 
+	      if (i != j)
 		{
 		  gint t;
 
@@ -395,8 +394,8 @@ about_dialog_create (void)
 		}
 	    }
 
-	  cur_scroll_text = g_rand_int_range (gr, 0, nscroll_texts);          
-          pango_layout_set_text (scroll_layout, 
+	  cur_scroll_text = g_rand_int_range (gr, 0, nscroll_texts);
+          pango_layout_set_text (scroll_layout,
                                  scroll_text[cur_scroll_text], -1);
 
 	  g_rand_free (gr);
@@ -512,7 +511,7 @@ about_dialog_logo_expose (GtkWidget      *widget,
 
       gdk_draw_drawable (widget->window,
 			 widget->style->black_gc,
-			 logo_pixmap, 
+			 logo_pixmap,
 			 event->area.x, event->area.y,
 			 event->area.x, event->area.y,
 			 event->area.width, event->area.height);
@@ -545,10 +544,10 @@ about_dialog_key (GtkWidget      *widget,
 		  gpointer        data)
 {
   gint i;
-  
+
   if (hadja_state == 7)
     return FALSE;
-    
+
   switch (event->keyval)
     {
     case GDK_h:
@@ -587,22 +586,22 @@ about_dialog_key (GtkWidget      *widget,
     {
       scroll_text = hadja_text;
       nscroll_texts = G_N_ELEMENTS (hadja_text);
-      
+
       for (i = 0; i < nscroll_texts; i++)
 	{
 	  shuffle_array[i] = i;
           pango_layout_set_text (scroll_layout, scroll_text[i], -1);
-          pango_layout_get_pixel_size (scroll_layout, 
+          pango_layout_get_pixel_size (scroll_layout,
                                        &scroll_text_widths[i], NULL);
 	}
-      
+
       scroll_state     = 0;
       cur_scroll_index = 0;
       cur_scroll_text  = 0;
       offset           = 0;
       pango_layout_set_text (scroll_layout, scroll_text[cur_scroll_text], -1);
     }
-  
+
   return FALSE;
 }
 
@@ -674,7 +673,7 @@ about_dialog_tool_drop (GtkWidget    *widget,
     {
       shuffle_array[i] = i;
       pango_layout_set_text (scroll_layout, scroll_text[i], -1);
-      pango_layout_get_pixel_size (scroll_layout, 
+      pango_layout_get_pixel_size (scroll_layout,
                                    &scroll_text_widths[i], NULL);
     }
 
@@ -757,7 +756,7 @@ about_dialog_timer (gpointer data)
 	    cur_scroll_index = 0;
 
 	  cur_scroll_text = shuffle_array[cur_scroll_index];
-          pango_layout_set_text (scroll_layout, 
+          pango_layout_set_text (scroll_layout,
                                  scroll_text[cur_scroll_text], -1);
 	  offset = 0;
 	}

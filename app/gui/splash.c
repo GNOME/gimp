@@ -21,7 +21,7 @@
 #include <stdlib.h>
 
 #include <gtk/gtk.h>
- 
+
 #include "libgimpbase/gimpbase.h"
 
 #include "gui-types.h"
@@ -56,7 +56,7 @@ splash_create (gboolean show_image)
                             GDK_WINDOW_TYPE_HINT_SPLASHSCREEN);
 
   gtk_window_set_title (GTK_WINDOW (win_initstatus), _("GIMP Startup"));
-  gtk_window_set_wmclass (GTK_WINDOW (win_initstatus), "gimp_startup", "Gimp");
+  gtk_window_set_role (GTK_WINDOW (win_initstatus), "gimp-startup");
   gtk_window_set_position (GTK_WINDOW (win_initstatus), GTK_WIN_POS_CENTER);
   gtk_window_set_resizable (GTK_WINDOW (win_initstatus), FALSE);
 
@@ -82,11 +82,11 @@ splash_create (gboolean show_image)
     {
       gchar *filename;
 
-      filename = g_build_filename (gimp_data_directory (), 
+      filename = g_build_filename (gimp_data_directory (),
                                    "images", "gimp_splash.png", NULL);
       pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
       g_free (filename);
-      
+
       if (pixbuf)
         {
           GtkWidget *align;
@@ -98,7 +98,7 @@ splash_create (gboolean show_image)
           align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
           gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, TRUE, 0);
           gtk_widget_show (align);
- 
+
           gtk_container_add (GTK_CONTAINER (align), image);
           gtk_widget_show (image);
         }
@@ -111,14 +111,14 @@ splash_create (gboolean show_image)
       label1 = gtk_label_new (_("The GIMP"));
       gtk_box_pack_start_defaults (GTK_BOX (vbox), label1);
       gtk_widget_show (label1);
-      
+
       label2 = gtk_label_new (GIMP_VERSION);
       gtk_box_pack_start_defaults (GTK_BOX (vbox), label2);
       gtk_widget_show (label2);
 
       line = gtk_hseparator_new ();
       gtk_box_pack_start_defaults (GTK_BOX (vbox), line);
-      gtk_widget_show (line);      
+      gtk_widget_show (line);
 
       gtk_widget_set_size_request (win_initstatus, DEFAULT_WIDTH, -1);
     }
@@ -161,10 +161,10 @@ splash_update (const gchar *text1,
 
   if (text2)
     gtk_label_set_text (GTK_LABEL (label2), text2);
-  
-  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (progress), 
+
+  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (progress),
                                  CLAMP (percentage, 0.0, 1.0));
-  
+
   while (gtk_events_pending ())
     gtk_main_iteration ();
 }
@@ -176,7 +176,7 @@ static void
 splash_map (void)
 {
   /*  Reenable startup notification after the splash has been shown
-   *  so that the next window that is mapped sends the notification.  
+   *  so that the next window that is mapped sends the notification.
    */
    gtk_window_set_auto_startup_notification (TRUE);
 }

@@ -100,7 +100,7 @@ offset_dialog_create (GimpDrawable *drawable)
     g_warning ("%s: unexpected drawable type", G_STRLOC);
 
   off_d->dlg = gimp_viewable_dialog_new (GIMP_VIEWABLE (drawable),
-                                         _("Offset"), "offset",
+                                         _("Offset"), "gimp-drawable-offset",
                                          GIMP_STOCK_TOOL_MOVE,
                                          title,
                                          gimp_standard_help_func,

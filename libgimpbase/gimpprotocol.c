@@ -451,7 +451,7 @@ _gp_config_read (GIOChannel  *channel,
 {
   GPConfig *config;
 
-  config = g_new (GPConfig, 1);
+  config = g_new0 (GPConfig, 1);
 
   if (! wire_read_int32 (channel, &config->version, 1, user_data))
     goto cleanup;
@@ -472,10 +472,22 @@ _gp_config_read (GIOChannel  *channel,
   if (! wire_read_int32 (channel, (guint32*) &config->gdisp_ID, 1, user_data))
     goto cleanup;
 
+  if (! wire_read_string (channel, &config->wm_name, 1, user_data))
+    goto cleanup;
+  if (! wire_read_string (channel, &config->wm_class, 1, user_data))
+    goto cleanup;
+  if (! wire_read_string (channel, &config->display_name, 1, user_data))
+    goto cleanup;
+  if (! wire_read_int32 (channel, (guint32*) &config->monitor_number, 1, user_data))
+    goto cleanup;
+
   msg->data = config;
   return;
 
  cleanup:
+  g_free (config->wm_name);
+  g_free (config->wm_class);
+  g_free (config->display_name);
   g_free (config);
 }
 
@@ -505,12 +517,27 @@ _gp_config_write (GIOChannel  *channel,
     return;
   if (! wire_write_int32 (channel, (guint32*) &config->gdisp_ID, 1, user_data))
     return;
+  if (! wire_write_string (channel, &config->wm_name, 1, user_data))
+    return;
+  if (! wire_write_string (channel, &config->wm_class, 1, user_data))
+    return;
+  if (! wire_write_string (channel, &config->display_name, 1, user_data))
+    return;
+  if (! wire_write_int32 (channel, (guint32*) &config->monitor_number, 1, user_data))
+    return;
 }
 
 static void
 _gp_config_destroy (WireMessage *msg)
 {
-  g_free (msg->data);
+  GPConfig *config;
+
+  config = msg->data;
+
+  g_free (config->wm_name);
+  g_free (config->wm_class);
+  g_free (config->display_name);
+  g_free (config);
 }
 
 /*  tile_req  */
@@ -522,7 +549,7 @@ _gp_tile_req_read (GIOChannel  *channel,
 {
   GPTileReq *tile_req;
 
-  tile_req = g_new (GPTileReq, 1);
+  tile_req = g_new0 (GPTileReq, 1);
 
   if (! wire_read_int32 (channel, (guint32*) &tile_req->drawable_ID, 1,
                          user_data))
@@ -683,7 +710,7 @@ _gp_proc_run_read (GIOChannel  *channel,
 {
   GPProcRun *proc_run;
 
-  proc_run = g_new (GPProcRun, 1);
+  proc_run = g_new0 (GPProcRun, 1);
 
   if (! wire_read_string (channel, &proc_run->name, 1, user_data))
     goto cleanup;
@@ -735,7 +762,7 @@ _gp_proc_return_read (GIOChannel  *channel,
 {
   GPProcReturn *proc_return;
 
-  proc_return = g_new (GPProcReturn, 1);
+  proc_return = g_new0 (GPProcReturn, 1);
 
   if (! wire_read_string (channel, &proc_return->name, 1, user_data))
     goto cleanup;
@@ -1053,7 +1080,7 @@ _gp_proc_uninstall_read (GIOChannel  *channel,
 {
   GPProcUninstall *proc_uninstall;
 
-  proc_uninstall = g_new (GPProcUninstall, 1);
+  proc_uninstall = g_new0 (GPProcUninstall, 1);
 
   if (! wire_read_string (channel, &proc_uninstall->name, 1, user_data))
     goto cleanup;
@@ -1129,7 +1156,7 @@ _gp_params_read (GIOChannel  *channel,
       return;
     }
 
-  *params = g_new (GPParam, *nparams);
+  *params = g_new0 (GPParam, *nparams);
 
   for (i = 0; i < *nparams; i++)
     {

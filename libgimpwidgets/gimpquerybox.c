@@ -116,7 +116,7 @@ create_query_box (const gchar   *title,
 
   query_box = g_new0 (QueryBox, 1);
 
-  query_box->qbox = gimp_dialog_new (title, "query_box",
+  query_box->qbox = gimp_dialog_new (title, "gimp-query-box",
                                      NULL, 0,
 				     help_func, help_data,
 
