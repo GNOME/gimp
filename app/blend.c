@@ -17,6 +17,8 @@
  */
 #include "config.h"
 
+#include <stdlib.h>
+
 #include "appenv.h"
 #include "asupsample.h"
 #include "blend.h"

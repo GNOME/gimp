@@ -35,6 +35,7 @@
 #include "gimage.h"
 #include "gimpdnd.h"
 #include "gimprc.h"
+#include "gtkhwrapbox.h"
 #include "indicator_area.h"
 #include "interface.h"
 #include "menus.h"
@@ -340,7 +341,7 @@ create_tool_pixmap (GtkWidget *parent,
 static void
 create_tools (GtkWidget *parent)
 {
-  GtkWidget *table;
+  GtkWidget *wbox;
   GtkWidget *button;
   GtkWidget *alignment;
   GtkWidget *pixmap;
@@ -348,9 +349,11 @@ create_tools (GtkWidget *parent)
   gint i, j;
 
   /*create_logo (parent);*/
-  table = gtk_table_new (ROWS, COLUMNS, TRUE);
-  gtk_box_pack_start (GTK_BOX (parent), table, TRUE, TRUE, 0);
-  gtk_widget_realize (table);
+  wbox = GTK_WIDGET (gtk_type_new (gtk_hwrap_box_get_type ()));
+  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (wbox), .36);
+  gtk_box_pack_start (GTK_BOX (parent), wbox, TRUE, TRUE, 0);
+
+  gtk_widget_realize (gtk_widget_get_toplevel (wbox));
 
   group = NULL;
 
@@ -365,18 +368,14 @@ create_tools (GtkWidget *parent)
 
 	  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
 
-	  gtk_table_attach (GTK_TABLE (table), button,
-			    (i % 3), (i % 3) + 1,
-			    (i / 3), (i / 3) + 1,
-			    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-			    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-			    0, 0);
+	  gtk_wrap_box_pack (GTK_WRAP_BOX (wbox), button,
+			     FALSE, TRUE, FALSE, TRUE);
 
 	  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 	  gtk_container_set_border_width (GTK_CONTAINER (alignment), 0);
 	  gtk_container_add (GTK_CONTAINER (button), alignment);
 
-	  pixmap = create_pixmap_widget (table->window, tool_info[j].icon_data, 22, 22);
+	  pixmap = create_pixmap_widget (wbox->window, tool_info[j].icon_data, 22, 22);
 	  gtk_container_add (GTK_CONTAINER (alignment), pixmap);
 
 	  gtk_signal_connect (GTK_OBJECT (button), "toggled",
@@ -406,7 +405,7 @@ create_tools (GtkWidget *parent)
 			      (gpointer) tool_info[j].tool_id);
 	}
     }
-  gtk_widget_show (table);
+  gtk_widget_show (wbox);
 }
 
 static GdkPixmap *

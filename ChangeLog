@@ -1,3 +1,19 @@
+Wed Sep  1 14:50:29 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* libgimp/Makefile.am: add gimpmath.h
+
+	* app/gtkwrapbox.[ch]
+	* app/gtkhwrapbox.[ch]: wrapbox widget from gle
+
+	* app/Makefile.am: added those files
+
+	* app/interface.c: use an hwrapbox for the toolbar
+
+	* app/gimpdrawable.c
+	* app/about_dialog.c
+	* app/airbrush.c
+	* app/blend.c: some minor code cleanup
+
 1999-09-02  Tor Lillqvist  <tml@iki.fi>
 
 	* app/paintbrush.c (paintbrush_non_gui_default,
@@ -44,6 +60,7 @@ Wed Sep  1 23:18:21 BST 1999 Andy Thomas <alt@gimp.org>
 	the area shown is smaller than the overall image size. Thanks to tml
 	for the idea. 
 
+>>>>>>> 1.1481
 Wed Sep  1 22:28:09 BST 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/gradient.c

@@ -227,6 +227,10 @@ gimp_SOURCES = \
 	gradient_select_cmds.c	\
 	gradient.h		\
 	gradient_cmds.c		\
+	gtkwrapbox.c		\
+	gtkwrapbox.h		\
+	gtkhwrapbox.c		\
+	gtkhwrapbox.h		\
 	guides_cmds.c		\
 	gximage.c		\
 	gximage.h		\

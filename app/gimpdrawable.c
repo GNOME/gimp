@@ -44,7 +44,7 @@ static GimpDrawableClass *parent_class = NULL;
 
 
 GtkType
-gimp_drawable_get_type ()
+gimp_drawable_get_type (void)
 {
   static GtkType type;
   GIMP_TYPE_INIT(type,

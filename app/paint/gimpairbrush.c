@@ -167,7 +167,7 @@ airbrush_options_new (void)
 }
 
 Tool *
-tools_new_airbrush ()
+tools_new_airbrush (void)
 {
   Tool * tool;
   PaintCore * private;

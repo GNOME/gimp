@@ -368,14 +368,14 @@ about_dialog_load_logo (GtkWidget *window)
 }
 
 static void
-about_dialog_destroy ()
+about_dialog_destroy (void)
 {
   about_dialog = NULL;
   about_dialog_unmap ();
 }
 
 static void
-about_dialog_unmap ()
+about_dialog_unmap (void)
 {
   if (timer)
     {
