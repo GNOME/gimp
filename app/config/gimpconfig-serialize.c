@@ -121,7 +121,6 @@ gimp_config_serialize_changed_properties (GObject *new,
   GList        *diff;
   GList        *list;
   GString      *str;
-  gboolean      property_written = FALSE;
 
   g_return_val_if_fail (G_IS_OBJECT (new), FALSE);
   g_return_val_if_fail (G_IS_OBJECT (old), FALSE);
@@ -139,46 +138,20 @@ gimp_config_serialize_changed_properties (GObject *new,
 
   for (list = diff; list; list = g_list_next (list))
     {
-      GParamSpec  *prop_spec;
-      GValue       new_value = { 0, };
-
-      prop_spec = (GParamSpec *) list->data;
+      GParamSpec *prop_spec = (GParamSpec *) list->data;
 
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      g_value_init (&new_value, prop_spec->value_type);
-
-      g_object_get_property (new, prop_spec->name, &new_value);
-
-      if (property_written)
-        g_string_assign (str, "\n");
-      else
-        g_string_truncate (str, 0);
-
       gimp_config_string_indent (str, indent_level);
 
-      g_string_append_printf (str, "(%s ", prop_spec->name);
-
-      if (gimp_config_serialize_value (&new_value, str, TRUE))
-        {
-          g_string_append (str, ")\n");
-          property_written = TRUE;
-
+      if (gimp_config_serialize_property (new, prop_spec, str, TRUE))
+	{
           if (write (fd, str->str, str->len) == -1)
             return FALSE;
         }
-      else 
-        {
-          /* don't warn for empty string properties */
-          if (prop_spec->value_type != G_TYPE_STRING)
-            g_warning ("couldn't serialize property %s::%s of type %s",
-                       g_type_name (G_TYPE_FROM_INSTANCE (new)),
-                       prop_spec->name, 
-                       g_type_name (prop_spec->value_type));
-        }
 
-      g_value_unset (&new_value);
+      g_string_truncate (str, 0);
     }
 
   g_string_free (str, TRUE);
@@ -416,6 +389,7 @@ gimp_config_serialize_value (const GValue *value,
   
   return FALSE;
 }
+
 
 /**
  * gimp_config_serialize_unknown_tokens:

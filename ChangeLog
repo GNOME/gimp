@@ -1,3 +1,9 @@
+2003-02-28  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-serialize.c
+	(gimp_config_serialize_changed_properties): simplified by using
+	gimp_config_serialize_property() instead of doing it all by hand.
+
 2003-02-27  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/doc/Makefile.am: make clean shouldn't clean disted
