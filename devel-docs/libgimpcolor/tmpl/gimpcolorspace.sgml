@@ -124,7 +124,7 @@ different color spaces.
 @value: 
 
 
-<!-- ##### FUNCTION gimp_rgb_to_hls_int ##### -->
+<!-- ##### FUNCTION gimp_rgb_to_hsl_int ##### -->
 <para>
 
 </para>
@@ -167,14 +167,14 @@ different color spaces.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_hls_to_rgb_int ##### -->
+<!-- ##### FUNCTION gimp_hsl_to_rgb_int ##### -->
 <para>
 
 </para>
 
 @hue: 
-@lightness: 
 @saturation: 
+@lightness: 
 
 
 <!-- ##### FUNCTION gimp_rgb_to_hsv4 ##### -->

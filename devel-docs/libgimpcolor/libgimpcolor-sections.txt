@@ -12,11 +12,11 @@ gimp_rgb_to_hwb
 gimp_hwb_to_rgb
 gimp_rgb_to_hsv_int
 gimp_hsv_to_rgb_int
-gimp_rgb_to_hls_int
+gimp_rgb_to_hsl_int
 gimp_rgb_to_cmyk_int
 gimp_cmyk_to_rgb_int
 gimp_rgb_to_l_int
-gimp_hls_to_rgb_int
+gimp_hsl_to_rgb_int
 gimp_rgb_to_hsv4
 gimp_hsv_to_rgb4
 </SECTION>
