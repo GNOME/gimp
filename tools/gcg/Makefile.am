@@ -1,0 +1,38 @@
+noinst_PROGRAMS = gcg
+
+
+CFLAGS=-I/usr/local/lib/glib/include -DYYDEBUG=1 -g -Wall -W -DCPP="$(CPP)"
+INCLUDES		= -DYYDEBUG=1 @GLIB_CFLAGS@
+YFLAGS			= -d -v 2>/dev/null
+LIBS			= @GLIB_LIBS@
+
+lexer.c: $(srcdir)/lexer.l
+	@rm -f $@
+	$(LEX) $(LFLAGS) -t $< >$@
+
+parser.c parser.h: $(srcdir)/parser.y
+	$(YACC) $(YFLAGS) $<
+	test -f y.tab.c && mv -f y.tab.c parser.c
+	test -f y.tab.h && mv -f y.tab.h parser.h
+
+MOSTLYCLEANFILES	= parser.output y.output
+DISTCLEANFILES		= parser.c parser.h lexer.c
+EXTRA_DIST		= parser.y lexer.l
+
+BUILT_SOURCES		= lexer.c parser.c parser.h
+
+gcg_SOURCES = \
+	gcg.c \
+	parser.c \
+	lexer.c \
+	output.c \
+	output_basic.c \
+	db.c \
+	output_type.c \
+	output_enum.c \
+	output_flags.c \
+	output_object.c \
+	parser.h
+
+gcg_DEPENDS = parser.h
+

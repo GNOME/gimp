@@ -1,0 +1,8 @@
+AC_INIT(gcg.c)
+AM_INIT_AUTOMAKE(gcg, 0.1)
+AC_PROG_CC
+AC_PROG_CPP
+AC_PROG_YACC
+AM_PROG_LEX
+AM_PATH_GLIB(1.0.0,,AC_ERROR(need at least Glib version 1.0))
+AC_OUTPUT(Makefile)

@@ -1,0 +1,33 @@
+
+module g {
+	header <glib.h> {
+		type int;
+	};
+	
+};
+
+module Gtk {
+	header <gtk/gtktypeutils.h> {
+		type Type;
+	};
+};
+
+module Gimp{
+	header <gimp/gimpobject.h> {
+		class Object;
+	};
+	header <gimp/gimpimage.h> {
+		class Image;
+		type ImageType;
+		type Thingy;
+	};
+	enum ImageType{
+          rgb, gray, indexed, rgb-alpha };
+	flags Thingy{
+	  foo, bar, baz, quux
+	};
+	class Image : Gimp.Object{
+		g.int x;
+		read-only g.int y;
+	};
+};

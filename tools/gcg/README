@@ -1,0 +1,6 @@
+GCG - docs forthcoming (hopefully)
+
+GCG is under development, it doesn't do much of anything sensible yet. What
+little it does, you can test with:
+
+gcg -t gimpimageT.h -f gimpimage.h -p gimpimageP.h -s gimpimage.c gimpimage.def
