@@ -1,5 +1,9 @@
 2005-01-02  Sven Neumann  <sven@gimp.org>
 
+	* etc/ps-menurc: updated PS keybindings contributed by Eric Pierce.
+
+2005-01-02  Sven Neumann  <sven@gimp.org>
+
 	Merged from HEAD branch:
 
 	* app/widgets/gimpsizebox.c (gimp_size_box_constructor): fixed
