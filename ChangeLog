@@ -1,5 +1,14 @@
 2004-11-14  Sven Neumann  <sven@gimp.org>
 
+	* Makefile.am (EXTRA_DIST)
+	* MAINTAINERS
+	* PLUGIN_MAINTAINERS
+	* TODO.xml: removed these files from the tarball and from CVS.
+	Doesn't make sense to keep unmaintained files around that provide
+	outdated and in large parts wrong information.
+
+2004-11-14  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gfig/gfig-dialog.c (load_button_callback): use the
 	proper parent widget.
 
