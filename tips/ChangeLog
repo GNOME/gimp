@@ -1,3 +1,9 @@
+2003-06-25  Sven Neumann  <sven@gimp.org>
+
+	* gimp-tips.xml.in: some minor fixes.
+
+	* de.po: updated German translation.
+
 2003-06-08  Abel Cheung  <maddog@linux.org.hk>
 
 	* uk.po: Removed, it contains only one completely broken string.
