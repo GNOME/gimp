@@ -30,6 +30,7 @@
 #include "base/tile-manager.h"
 
 #include "paint-funcs/paint-funcs.h"
+#include "paint-funcs/scale-funcs.h"
 
 #include "gimp.h"
 #include "gimp-utils.h"

@@ -1,3 +1,15 @@
+2005-01-11  Sven Neumann  <neumann@jpk.com>
+
+	* app/base/base-enums.[ch]
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpdrawable.c
+	* app/paint-funcs/Makefile.am
+	* app/paint-funcs/paint-funcs.[ch]
+	* app/paint-funcs/scale-funcs.[ch]: applied patch by Geert Jordaens
+	(after a good deal of reformatting for coding style compliance).
+	This factors the scale routines into their own file and adds a
+	sinc-based (Lanczos) interpolation routine (bug #162250).
+
 2005-01-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/siod/slib.c (help): removed wrong URL from

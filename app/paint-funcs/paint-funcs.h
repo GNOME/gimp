@@ -369,12 +369,6 @@ void  border_region                       (PixelRegion *src,
                                            gint16       xradius,
                                            gint16       yradius);
 
-void  scale_region                        (PixelRegion           *srcPR,
-                                           PixelRegion           *destPR,
-                                           GimpInterpolationType  interpolation,
-                                           GimpProgressFunc       progress_callback,
-                                           gpointer               progress_data);
-
 void  subsample_region                    (PixelRegion *srcPR,
                                            PixelRegion *destPR,
                                            gint         subsample);
