@@ -30,8 +30,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
-"POT-Creation-Date: 2002-08-26 16:17+0200\n"
-"PO-Revision-Date: 2002-08-26 16:18+0200\n"
+"POT-Creation-Date: 2002-08-30 00:20+0200\n"
+"PO-Revision-Date: 2002-08-30 00:20+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -5650,15 +5650,15 @@ msgstr "<Image>/Billede/Transformering/Rotér 270 grader"
 msgid "You can not rotate the whole image if there's a selection."
 msgstr "Du kan ikke rotere hele billedet hvis noget er markeret."
 
-#: plug-ins/common/rotate.c:530
+#: plug-ins/common/rotate.c:531
 msgid "You can not rotate the whole image if there's a floating selection."
 msgstr "Du kan ikke rotere hele billedet hvis der er en flydende markering."
 
-#: plug-ins/common/rotate.c:540
+#: plug-ins/common/rotate.c:541
 msgid "Sorry, channels and masks can not be rotated."
 msgstr "Desværre, kanaler og masker kan ikke roteres."
 
-#: plug-ins/common/rotate.c:546
+#: plug-ins/common/rotate.c:547
 msgid "Rotating..."
 msgstr "Roterer..."
 
@@ -11172,25 +11172,8 @@ msgstr "Ingen markering at omdanne"
 
 # vi stryger bare sel2path da det er uoversætteligt og sagtens kan undværes
 #: plug-ins/sel2path/sel2path.c:327
-msgid "Sel2Path Advanced Settings"
+msgid "Selection To Path Advanced Settings"
 msgstr "Avancerede indstillinger"
-
-#: plug-ins/sel2path/sel2path.c:537
-#, c-format
-msgid "print_spline: strange degree (%d)"
-msgstr "print_spline: mærkelig grad (%d)"
-
-#: plug-ins/sel2path/sel2path.c:546
-msgid "selection_to_path"
-msgstr "markering_til_bane"
-
-#: plug-ins/sel2path/sel2path.c:574
-msgid "gimp_image_get_selection failed"
-msgstr "gimp_image_get_selection fejlede"
-
-#: plug-ins/sel2path/sel2path.c:582
-msgid "Internal error. Selection bpp > 1"
-msgstr "Intern fejl. Markeringens bpp > 1"
 
 #: plug-ins/sgi/sgi.c:630
 msgid "Save as SGI"
@@ -11337,6 +11320,18 @@ msgstr "Fejl: Kan ikke læse XJT-egenskabsfil %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fejl: XJT-egenskabsfilen %s er tom"
+
+#~ msgid "print_spline: strange degree (%d)"
+#~ msgstr "print_spline: mærkelig grad (%d)"
+
+#~ msgid "selection_to_path"
+#~ msgstr "markering_til_bane"
+
+#~ msgid "gimp_image_get_selection failed"
+#~ msgstr "gimp_image_get_selection fejlede"
+
+#~ msgid "Internal error. Selection bpp > 1"
+#~ msgstr "Intern fejl. Markeringens bpp > 1"
 
 #~ msgid "Brightness"
 #~ msgstr "Lysstyrke"
