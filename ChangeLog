@@ -1,5 +1,9 @@
 2004-08-06  DindinX  <david@dindinx.org>
 
+	* plug-ins/common/glasstile.c: ported to GimpPreviewArea.
+
+2004-08-06  DindinX  <david@dindinx.org>
+
 	* plug-ins/common/nlfilt.c: ported to GimpPreviewArea.
 
 2004-08-06  Michael Natterer  <mitch@gimp.org>
