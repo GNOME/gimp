@@ -300,13 +300,8 @@ Mon Oct 18 21:24:47 BST 1999 Andy Thomas <alt@gimp.org>
 	not on the curve the "new point" option will become selected and the
 	new point will be added.
 
-<<<<<<< ChangeLog
-	2) The "new point" option is defaulted to on when a new image is created
-        or a new image is selected from the image menu.
-=======
 	2) The "new point" option is defaulted to on when a new image is
 	created	or a new image is selected from the image menu.
->>>>>>> 1.1725
 
 	3) Move and flip tool now effect the path if it is locked.
 
