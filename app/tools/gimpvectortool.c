@@ -35,6 +35,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplist.h"
@@ -55,6 +56,8 @@
 #include "gimptoolcontrol.h"
 #include "gimpvectoroptions.h"
 #include "gimpvectortool.h"
+
+#include "gui/stroke-dialog.h"
 
 #include "gimp-intl.h"
 
@@ -131,6 +134,10 @@ static void   gimp_vector_tool_move_selected_anchors
 static void   gimp_vector_tool_verify_state    (GimpVectorTool  *vector_tool);
 static void   gimp_vector_tool_undo_push       (GimpVectorTool  *vector_tool,
                                                 const gchar     *desc);
+
+static void   gimp_vector_tool_to_selection    (GimpVectorTool  *vector_tool);
+static void   gimp_vector_tool_stroke_vectors  (GimpVectorTool  *vector_tool,
+                                                GtkWidget       *button);
 
 
 static GimpDrawToolClass *parent_class = NULL;
@@ -1434,15 +1441,19 @@ void
 gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                               GimpVectors    *vectors)
 {
-  GimpDrawTool *draw_tool;
-  GimpTool     *tool;
-  GimpItem     *item = NULL;
+  GimpDrawTool      *draw_tool;
+  GimpTool          *tool;
+  GimpItem          *item = NULL;
+  GtkWidget         *stroke_button;
+  GtkWidget         *sel_button;
+  GimpVectorOptions *options;
 
   g_return_if_fail (GIMP_IS_VECTOR_TOOL (vector_tool));
   g_return_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors));
 
   draw_tool = GIMP_DRAW_TOOL (vector_tool);
   tool      = GIMP_TOOL (vector_tool);
+  options   = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
   if (vectors)
     item = GIMP_ITEM (vectors);
@@ -1457,6 +1468,11 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
     {
       gimp_draw_tool_stop (draw_tool);
     }
+
+  stroke_button = g_object_get_data (G_OBJECT (options),
+                                     "gimp-stroke-vectors");
+  sel_button = g_object_get_data (G_OBJECT (options),
+                                  "gimp-vectors-to-selection");
 
   if (vector_tool->vectors)
     {
@@ -1480,6 +1496,22 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                                             gimp_vector_tool_vectors_thaw,
                                             vector_tool);
       g_object_unref (vector_tool->vectors);
+
+      if (sel_button)
+        {
+          gtk_widget_set_sensitive (sel_button, FALSE);
+          g_signal_handlers_disconnect_by_func (sel_button,
+                                                gimp_vector_tool_to_selection,
+                                                tool);
+        }
+
+      if (stroke_button)
+        {
+          gtk_widget_set_sensitive (stroke_button, FALSE);
+          g_signal_handlers_disconnect_by_func (stroke_button,
+                                                gimp_vector_tool_stroke_vectors,
+                                                tool);
+        }
     }
 
   vector_tool->vectors    = vectors;
@@ -1515,6 +1547,22 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
   g_signal_connect_object (vectors, "thaw",
                            G_CALLBACK (gimp_vector_tool_vectors_thaw),
                            vector_tool, 0);
+
+  if (sel_button)
+    {
+      g_signal_connect_swapped (sel_button, "clicked",
+                                G_CALLBACK (gimp_vector_tool_to_selection),
+                                tool);
+      gtk_widget_set_sensitive (sel_button, TRUE);
+    }
+
+  if (stroke_button)
+    {
+      g_signal_connect_swapped (stroke_button, "clicked",
+                                G_CALLBACK (gimp_vector_tool_stroke_vectors),
+                                tool);
+      gtk_widget_set_sensitive (stroke_button, TRUE);
+    }
 
   if (! gimp_draw_tool_is_active (draw_tool))
     {
@@ -1688,3 +1736,51 @@ gimp_vector_tool_undo_push (GimpVectorTool *vector_tool, const gchar *desc)
                                     desc, vector_tool->vectors);
   vector_tool->have_undo = TRUE;
 }
+
+
+static void
+gimp_vector_tool_to_selection (GimpVectorTool *vector_tool)
+{
+  GimpImage    *gimage;
+
+  if (! vector_tool->vectors)
+    return;
+
+  gimage = gimp_item_get_image (GIMP_ITEM (vector_tool->vectors));
+
+  gimp_channel_select_vectors (gimp_image_get_mask (gimage),
+                               _("Path to Selection"),
+                               vector_tool->vectors,
+                               GIMP_CHANNEL_OP_REPLACE,
+                               TRUE, FALSE, 0, 0);
+}
+
+
+static void
+gimp_vector_tool_stroke_vectors (GimpVectorTool *vector_tool,
+                                 GtkWidget      *button)
+{
+  GimpImage    *gimage;
+  GimpDrawable *active_drawable;
+  GtkWidget    *dialog;
+
+  if (! vector_tool->vectors)
+    return;
+
+  gimage = gimp_item_get_image (GIMP_ITEM (vector_tool->vectors));
+
+  active_drawable = gimp_image_active_drawable (gimage);
+
+  if (! active_drawable)
+    {
+      g_message (_("There is no active layer or channel to stroke to"));
+      return;
+    }
+
+  dialog = stroke_dialog_new (GIMP_ITEM (vector_tool->vectors),
+                              GIMP_STOCK_PATH_STROKE,
+                              GIMP_HELP_PATH_STROKE,
+                              button);
+  gtk_widget_show (dialog);
+}
+
