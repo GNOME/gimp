@@ -1,5 +1,10 @@
 2003-06-06  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpmemsizeentry.c: added a default spacing of
+	two pixels between the entry end the menu. Random cleanups.
+
+2003-06-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/gimptoolbox-dnd.[ch]: new files containing the
 	toolbox' drop callbacks. Exports gimp_toolbox_dnd_init().

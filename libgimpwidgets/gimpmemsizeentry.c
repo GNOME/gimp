@@ -105,6 +105,8 @@ gimp_memsize_entry_class_init (GimpMemsizeEntryClass *klass)
 static void
 gimp_memsize_entry_init (GimpMemsizeEntry *entry)
 {
+  gtk_box_set_spacing (GTK_BOX (entry), 2);
+
   entry->value      = 0;
   entry->lower      = 0;
   entry->upper      = 0;
@@ -117,13 +119,13 @@ static void
 gimp_memsize_entry_finalize (GObject *object)
 {
   GimpMemsizeEntry *entry = (GimpMemsizeEntry *) object;
-  
+
   if (entry->adjustment)
     {
       g_object_unref (entry->adjustment);
       entry->adjustment = NULL;
     }
-  
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -148,7 +150,7 @@ gimp_memsize_entry_new (gulong  value,
 
   g_return_val_if_fail (value >= lower && value <= upper, NULL);
 
-  entry = GIMP_MEMSIZE_ENTRY (g_object_new (GIMP_TYPE_MEMSIZE_ENTRY, NULL));
+  entry = g_object_new (GIMP_TYPE_MEMSIZE_ENTRY, NULL);
 
   for (shift = 30; shift > 10; shift -= 10)
     {
@@ -160,7 +162,7 @@ gimp_memsize_entry_new (gulong  value,
   entry->lower = lower;
   entry->upper = upper;
   entry->shift = shift;
-  
+
   entry->spinbutton = gimp_spin_button_new ((GtkObject **) &entry->adjustment,
                                             value >> shift,
                                             lower >> shift,
@@ -176,7 +178,7 @@ gimp_memsize_entry_new (gulong  value,
   g_signal_connect (entry->adjustment, "value_changed",
                     G_CALLBACK (gimp_memsize_entry_adj_callback),
                     entry);
-  
+
   entry->menu =
     gimp_option_menu_new2 (FALSE,
 			   G_CALLBACK (gimp_memsize_entry_unit_callback),
