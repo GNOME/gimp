@@ -5130,6 +5130,7 @@ combine_sub_region(struct combine_regions_struct *st,
   unsigned char * d, * m;
   unsigned char buf[512];
   gboolean opacity_quickskip_possible;
+  gboolean transparency_quickskip_possible;
   TileRowHint hint;
 
   opacity = st->opacity;
@@ -5145,13 +5146,11 @@ combine_sub_region(struct combine_regions_struct *st,
   d = dest->data;
   m = (mask) ? mask->data : NULL;
 
-  /* cheap and easy when the row of src2 is completely opaque */
-  opacity_quickskip_possible = ((!m) && (opacity==255));
 
-  /*  if (src2->tiles)
-      s2 = tile_data_pointer(src2->curtile,
-      src2->offx,
-      src2->offy);*/
+  /* cheap and easy when the row of src2 is completely opaque/transparent */
+  opacity_quickskip_possible = ((!m) && (opacity==255));
+  transparency_quickskip_possible = ((src2->tiles) && (mode != REPLACE_MODE));
+
 
   if (src1->w > 128)
     g_error("combine_sub_region::src1->w = %d\n", src1->w);
@@ -5173,7 +5172,7 @@ combine_sub_region(struct combine_regions_struct *st,
     {
       hint = TILEROWHINT_UNDEFINED;
 
-      if (src2->tiles &&
+      if (transparency_quickskip_possible &&
 	  ((hint = tile_get_rowhint (src2->curtile, (src2->offy + h))) ==
 	   TILEROWHINT_TRANSPARENT))
 	{

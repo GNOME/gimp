@@ -1,3 +1,8 @@
+Sun May 16 17:16:59 BST 1999  Adam D. Moss  <adam@gimp.org>
+
+	* app/paint_funcs.c: Fixed a possible bad composite when
+	mode is REPLACE_MODE.
+
 1999-05-15  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/about_dialog.c: Removed unnecessarly #include of
