@@ -202,7 +202,7 @@ void fli_read_header(FILE *f, s_fli_header *fli_header)
 	}
 }
 
-void fli_read_frame(FILE *f, s_fli_header *fli_header, guchar *framebuf, gchar *cmap)
+void fli_read_frame(FILE *f, s_fli_header *fli_header, guchar *framebuf, guchar *cmap)
 {
 	s_fli_frame fli_frame;
 	unsigned long framepos;

@@ -34,6 +34,26 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.6  1998/04/11 05:07:49  yosh
+ *   * app/app_procs.c: fixed up idle handler for file open (look like testgtk
+ *   idle demo)
+ *
+ *   * app/colomaps.c: fixup for visual test and use of gdk_color_alloc for some
+ *   fixed colors (from Owen Taylor)
+ *
+ *   * app/errors.h
+ *   * app/errors.c
+ *   * app/main.c
+ *   * libgimp/gimp.c: redid the signal handlers so we only get a debug prompt on
+ *   SIGSEGV, SIGBUS, and SIGFPE.
+ *
+ *   * applied gimp-jbuhler-980408-0 and gimp-joke-980409-0 (warning fixups)
+ *
+ *   * applied gimp-monnaux-980409-0 for configurable plugin path for multiarch
+ *   setups
+ *
+ *   -Yosh
+ *
  *   Revision 1.5  1998/04/07 03:41:18  yosh
  *   configure.in: fix for $srcdir != $builddir for data. Tightened check for
  *   random() and add -lucb on systems that need it. Fix for xdelta.h check. Find
@@ -265,7 +285,7 @@ run(char   *name,		/* I - Name of filter program. */
 
             if (compression < 0 || compression > 2)
               values[0].data.d_status = STATUS_CALLING_ERROR;
-          };
+          }
           break;
 
       case RUN_WITH_LAST_VALS :
@@ -278,7 +298,7 @@ run(char   *name,		/* I - Name of filter program. */
 
       default :
           break;
-    };
+    }
 
     if (values[0].data.d_status == STATUS_SUCCESS)
     {
@@ -287,7 +307,7 @@ run(char   *name,		/* I - Name of filter program. */
         gimp_set_data("file_sgi_save", &compression, sizeof(compression));
       else
 	values[0].data.d_status = STATUS_EXECUTION_ERROR;
-    };
+    }
   }
   else
     values[0].data.d_status = STATUS_EXECUTION_ERROR;
@@ -329,7 +349,7 @@ load_image(char *filename)	/* I - File to load */
   {
     g_print("can't open image file\n");
     gimp_quit();
-  };
+  }
 
   if (strrchr(filename, '/') != NULL)
     sprintf(progress, "Loading %s:", strrchr(filename, '/') + 1);
@@ -363,14 +383,14 @@ load_image(char *filename)	/* I - File to load */
         image_type = RGB;
         layer_type = RGBA_IMAGE;
         break;
-  };
+  }
 
   image = gimp_image_new(sgip->xsize, sgip->ysize, image_type);
   if (image == -1)
   {
     g_print("can't allocate new image\n");
     gimp_quit();
-  };
+  }
 
   gimp_image_set_filename(image, filename);
 
@@ -422,7 +442,7 @@ load_image(char *filename)	/* I - File to load */
       count = 0;
 
       gimp_progress_update((double)y / (double)sgip->ysize);
-    };
+    }
 
     for (i = 0; i < sgip->zsize; i ++)
       if (sgiGetRow(sgip, rows[i], sgip->ysize - 1 - y, i) < 0)
@@ -448,8 +468,8 @@ load_image(char *filename)	/* I - File to load */
       for (x = 0, pptr = pixels[count]; x < sgip->xsize; x ++)
 	for (i = 0; i < sgip->zsize; i ++, pptr ++)
 	  *pptr = (unsigned)(rows[i][x] + 32768) >> 8;
-    };
-  };
+    }
+  }
 
  /*
   * Do the last n rows (count always > 0)
@@ -527,7 +547,7 @@ save_image(char   *filename,	/* I - File to save to */
     case RGBA_IMAGE :
         zsize = 4;
         break;
-  };
+  }
 
  /*
   * Open the file for writing...
@@ -539,7 +559,7 @@ save_image(char   *filename,	/* I - File to save to */
   {
     g_print("can't create image file\n");
     gimp_quit();
-  };
+  }
 
   if (strrchr(filename, '/') != NULL)
     sprintf(progress, "Saving %s:", strrchr(filename, '/') + 1);
@@ -594,10 +614,10 @@ save_image(char   *filename,	/* I - File to save to */
 
       for (j = 0; j < zsize; j ++)
         sgiPutRow(sgip, rows[j], drawable->height - 1 - y - i, j);
-    };
+    }
 
     gimp_progress_update((double)y / (double)drawable->height);
-  };
+  }
 
  /*
   * Done with the file...
@@ -748,7 +768,7 @@ save_dialog(void)
 		       (gpointer)((long)i));
     gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 0);
     gtk_widget_show(button);
-  };
+  }
 
  /*
   * Show everything and go...

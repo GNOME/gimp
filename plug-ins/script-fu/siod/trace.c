@@ -84,7 +84,7 @@ ltrace_1 (LISP fcn_name, LISP env)
   else if (TYPE (fcn) == tc_closure_traced)
     ;
   else
-    err ("not a closure, cannot trace", fcn);
+    my_err ("not a closure, cannot trace", fcn);
   return (NIL);
 }
 
@@ -105,7 +105,7 @@ luntrace_1 (LISP fcn)
   else if (TYPE (fcn) == tc_closure_traced)
     fcn->type = tc_closure;
   else
-    err ("not a closure, cannot untrace", fcn);
+    my_err ("not a closure, cannot untrace", fcn);
   return (NIL);
 }
 

@@ -91,6 +91,7 @@ gimp_main (int   argc,
   signal (SIGSEGV, gimp_signal);
   signal (SIGPIPE, gimp_signal);
   signal (SIGTERM, gimp_signal);
+  signal (SIGFPE, gimp_signal);
 
   _readfd = atoi (argv[2]);
   _writefd = atoi (argv[3]);
@@ -858,7 +859,17 @@ gimp_signal (int signum)
   caught_fatal_sig = 1;
 
   fprintf (stderr, "\n%s: %s caught\n", progname, g_strsignal (signum));
-  g_debug (progname);
+
+  switch (signum)
+    {
+    case SIGBUS:
+    case SIGSEGV:
+    case SIGFPE:
+      g_debug (progname);
+      break;
+    default:
+      break;
+    }
 
   gimp_quit ();
 }
@@ -1035,7 +1046,7 @@ gimp_temp_proc_run (GPProcRun *proc_run)
   int nreturn_vals;
   GRunProc run_proc;
 
-  run_proc = g_hash_table_lookup (temp_proc_ht, (gpointer) proc_run->name);
+  run_proc = (GRunProc)g_hash_table_lookup (temp_proc_ht, (gpointer) proc_run->name);
 
   if (run_proc)
     {

@@ -232,8 +232,6 @@ static int caught_fatal_sig = 0;
 static RETSIGTYPE
 on_signal (int sig_num)
 {
-  char *sig;
-
   if (caught_fatal_sig)
 /*    raise (sig_num);*/
     kill (getpid (), sig_num);
@@ -242,38 +240,36 @@ on_signal (int sig_num)
   switch (sig_num)
     {
     case SIGHUP:
-      sig = "sighup";
+      terminate ("sighup caught");
       break;
     case SIGINT:
-      sig = "sigint";
+      terminate ("sigint caught");
       break;
     case SIGQUIT:
-      sig = "sigquit";
+      terminate ("sigquit caught");
       break;
     case SIGABRT:
-      sig = "sigabrt";
+      terminate ("sigabrt caught");
       break;
     case SIGBUS:
-      sig = "sigbus";
+      fatal_error ("sigbus caught");
       break;
     case SIGSEGV:
-      sig = "sigsegv";
+      fatal_error ("sigsegv caught");
       break;
     case SIGPIPE:
-      sig = "sigpipe";
+      terminate ("sigpipe caught");
       break;
     case SIGTERM:
-      sig = "sigterm";
+      terminate ("sigterm caught");
       break;
     case SIGFPE:
-      sig = "sigfpe";
+      fatal_error ("sigfpe caught");
       break;
     default:
-      sig = "unknown signal";
+      fatal_error ("unknown signal");
       break;
     }
-
-  fatal_error ("%s caught", sig);
 }
 
 static RETSIGTYPE

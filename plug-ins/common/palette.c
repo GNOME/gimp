@@ -24,7 +24,7 @@ static void run (char *name, int nparams, GParam *param, int *nreturn_vals,
 GPlugInInfo PLUG_IN_INFO = { NULL, NULL, query, run, };
 
 static int running= FALSE;
-static guchar *filename; /* Filename of palette file */
+static gchar *filename; /* Filename of palette file */
 
 MAIN ()
 
@@ -63,10 +63,10 @@ static int palette_dialog();
 
 /* AFAIK This should be part of libgimp (sigh) */
 
-static guchar* gimp_gimprc_query(guchar *key) {
+static gchar* gimp_gimprc_query(gchar *key) {
   GParam *return_vals;
   int nreturn_vals;
-  guchar *value;
+  gchar *value;
 
   return_vals = gimp_run_procedure ("gimp_gimprc_query", &nreturn_vals,
                                     PARAM_STRING, key, PARAM_END);
@@ -179,7 +179,7 @@ static int palette_dialog() {
   gchar **argv;
   gint argc;
   GtkWidget *dialog;
-  guchar *directory, *data;
+  gchar *directory, *data;
 
   argc = 1;
   argv = g_new (gchar *, 1);

@@ -68,3 +68,17 @@ fatal_error (char *fmt, ...)
   g_debug (prog_name);
   app_exit (1);
 }
+
+void
+terminate (char *fmt, ...)
+{
+  va_list args;
+
+  va_start (args, fmt);
+  printf ("%s terminated: ", prog_name);
+  vprintf (fmt, args);
+  printf ("\n");
+  va_end (args);
+
+  gdk_exit (1);
+}

@@ -21,5 +21,6 @@
 void message (char *, ...);
 void warning (char *, ...);
 void fatal_error (char *, ...);
+void terminate (char *, ...);
 
 #endif /* __ERRORS_H__ */

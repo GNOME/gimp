@@ -92,7 +92,7 @@ static void palette_close_callback (GtkWidget *, gpointer);
 static gint palette_dialog_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 static void palette_new_entries_callback (GtkWidget *, gpointer);
 static void palette_add_entries_callback (GtkWidget *, gpointer, gpointer);
-static void palette_merge_entries_callback (GtkWidget *, gpointer);
+/* static void palette_merge_entries_callback (GtkWidget *, gpointer); */
 static void palette_delete_entries_callback (GtkWidget *, gpointer);
 static void palette_select_callback (int, int, int, ColorSelectState, void *);
 

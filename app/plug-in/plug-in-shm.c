@@ -234,7 +234,16 @@ plug_in_init ()
   datafiles_read_directories (plug_in_path, plug_in_init_file, MODE_EXECUTABLE);
 
   /* read the pluginrc file for cached data */
-  sprintf (filename, "%s/pluginrc", gimp_directory ());
+  if (pluginrc_path)
+    {
+      if (*pluginrc_path == '/')
+        strcpy(filename, pluginrc_path);
+      else
+        sprintf(filename, "%s/%s", gimp_directory(), pluginrc_path);
+    }
+  else
+    sprintf (filename, "%s/pluginrc", gimp_directory ());
+
   app_init_update_status("Resource configuration", filename, -1);
   parse_gimprc_file (filename);
 

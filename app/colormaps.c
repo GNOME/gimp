@@ -65,39 +65,40 @@ gulong *g_lookup_blue;
 gulong *color_pixel_vals;
 gulong *gray_pixel_vals;
 
-static int reserved_entries = 10;  /* extra colors aside from color cube */
+static int reserved_entries = 4;  /* extra colors aside from color cube */
 static gulong *reserved_pixels;
 
+static void make_color (gulong *pixel_ptr,
+			int     red,
+			int     green,
+			int     blue,
+			int     readwrite);
 
 static void
 set_app_colors ()
 {
   int i;
 
-  if (g_visual->depth == 8)
+  if ((g_visual->type == GDK_VISUAL_PSEUDO_COLOR) ||
+      (g_visual->type == GDK_VISUAL_GRAYSCALE))
     {
-      g_black_pixel = reserved_pixels[0];
-      g_gray_pixel = reserved_pixels[1];
-      g_white_pixel = reserved_pixels[2];
-      g_color_pixel = reserved_pixels[3];
-      g_normal_guide_pixel = reserved_pixels[4];
-      g_active_guide_pixel = reserved_pixels[5];
-      foreground_pixel = reserved_pixels[6];
-      background_pixel = reserved_pixels[7];
-      old_color_pixel = reserved_pixels[8];
-      new_color_pixel = reserved_pixels[9];
+      foreground_pixel = reserved_pixels[0];
+      background_pixel = reserved_pixels[1];
+      old_color_pixel = reserved_pixels[2];
+      new_color_pixel = reserved_pixels[3];
     }
   else
     {
       cycled_marching_ants = FALSE;
     }
 
-  store_color (&g_black_pixel, 0, 0, 0);
-  store_color (&g_gray_pixel, 127, 127, 127);
-  store_color (&g_white_pixel, 255, 255, 255);
-  store_color (&g_color_pixel, 255, 255, 0);
-  store_color (&g_normal_guide_pixel, 0, 127, 255);
-  store_color (&g_active_guide_pixel, 255, 0, 0);
+  make_color (&g_black_pixel, 0, 0, 0, FALSE);
+  make_color (&g_gray_pixel, 127, 127, 127, FALSE);
+  make_color (&g_white_pixel, 255, 255, 255, FALSE);
+  make_color (&g_color_pixel, 255, 255, 0, FALSE);
+  make_color (&g_normal_guide_pixel, 0, 127, 255, FALSE);
+  make_color (&g_active_guide_pixel, 255, 0, 0, FALSE);
+
   store_color (&foreground_pixel, 0, 0, 0);
   store_color (&background_pixel, 255, 255, 255);
   store_color (&old_color_pixel, 0, 0, 0);
@@ -145,7 +146,8 @@ get_color (int red,
 {
   gulong pixel;
 
-  if (g_visual->depth == 8)
+  if ((g_visual->type == GDK_VISUAL_PSEUDO_COLOR) ||
+      (g_visual->type == GDK_VISUAL_GRAYSCALE))
     pixel = color_pixel_vals [(red_ordered_dither[red].s[1] +
 			       green_ordered_dither[green].s[1] +
 			       blue_ordered_dither[blue].s[1])];
@@ -156,11 +158,12 @@ get_color (int red,
 }
 
 
-void
-store_color (gulong *pixel_ptr,
-	     int     red,
-	     int     green,
-	     int     blue)
+static void
+make_color (gulong *pixel_ptr,
+	    int     red,
+	    int     green,
+	    int     blue,
+	    int     readwrite)
 {
   GdkColor col;
 
@@ -173,12 +176,22 @@ store_color (gulong *pixel_ptr,
   col.blue = blue * (65535 / 255);
   col.pixel = *pixel_ptr;
 
-  if (g_visual->depth == 8)
+  if (readwrite && ((g_visual->type == GDK_VISUAL_PSEUDO_COLOR) ||
+		    (g_visual->type == GDK_VISUAL_GRAYSCALE)))
     gdk_color_change (g_cmap, &col);
   else
     gdk_color_alloc (g_cmap, &col);
 
   *pixel_ptr = col.pixel;
+}
+
+void
+store_color (gulong *pixel_ptr,
+	     int     red,
+	     int     green,
+	     int     blue)
+{
+  make_color (pixel_ptr, red, green, blue, TRUE);
 }
 
 
@@ -205,7 +218,9 @@ get_standard_colormaps ()
   info = gtk_preview_get_info ();
   g_visual = info->visual;
 
-  if (g_visual->depth == 8 && info->reserved_pixels == NULL) {
+  if (((g_visual->type == GDK_VISUAL_PSEUDO_COLOR) ||
+       (g_visual->type == GDK_VISUAL_GRAYSCALE)) &&
+      info->reserved_pixels == NULL) {
     g_print("GIMP cannot get enough colormaps to boot.\n");
     g_print("Try exiting other color intensive applications.\n");
     g_print("Also try enabling the (install-colormap) option in gimprc.\n");

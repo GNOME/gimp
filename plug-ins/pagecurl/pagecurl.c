@@ -177,7 +177,7 @@ guchar back_color[3];
 /***** Functions *****/
 
 /****/
-MAIN ();
+MAIN ()
 /****/
 
 /*************************/
@@ -616,7 +616,7 @@ static int do_dialog (void) {
 
 	 gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			     (GtkSignalFunc) dialog_toggle_update,
-			     (gpointer) i + 5);
+			     (gpointer) (i + 5));
 
 	 gtk_box_pack_start (GTK_BOX (orhbox2), button, TRUE, FALSE, 0);
 	 gtk_widget_show (button);
@@ -745,7 +745,7 @@ static void init_calculation () {
 
 static void do_curl_effect (void) {
    gint x, y, color_image;
-   guint x1, y1, k;
+   gint x1, y1, k;
    guint alpha_pos, progress, max_progress;
    gdouble intensity, alpha;
    vector_t v, dl, dr;

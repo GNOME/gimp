@@ -891,7 +891,7 @@ plug_in_parse_gfig_path()
   Tkane from gflare plugin
  */
 void
-gfig_name_encode (gchar *dest, guchar *src)
+gfig_name_encode (gchar *dest, gchar *src)
 {
   int	cnt = MAX_LOAD_LINE - 1;
 
@@ -912,7 +912,7 @@ gfig_name_encode (gchar *dest, guchar *src)
   Translate "\\040" to SPACE, etc.
  */
 void
-gfig_name_decode (gchar *dest, guchar *src)
+gfig_name_decode (gchar *dest, gchar *src)
 {
   int	cnt = MAX_LOAD_LINE - 1;
   int	tmp;

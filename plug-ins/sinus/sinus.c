@@ -58,16 +58,16 @@ typedef gdouble colRGBA[4];
  * This structure is used for persistent data.
  */
 
-#define B_W 0           /* colors setting */
-#define USE_FG_BG 1
-#define USE_COLORS 2
+#define B_W        0L  /* colors setting */
+#define USE_FG_BG  1L
+#define USE_COLORS 2L
 
-#define LINEAR 0        /* colorization settings */
-#define BILINEAR 1
-#define SINUS 2
+#define LINEAR     0L  /* colorization settings */
+#define BILINEAR   1L
+#define SINUS      2L
 
-#define IDEAL 0         /* Perturbation settings */
-#define PERTURBED 1
+#define IDEAL      0L  /* Perturbation settings */
+#define PERTURBED  1L
 
 typedef struct {
   gdouble   scalex, scaley;
@@ -75,9 +75,9 @@ typedef struct {
   gdouble   blend_power;
   gint     seed;
   gint     tiling;
-  gint     perturbation;
-  gint     colorization;
-  gint     colors;
+  glong    perturbation;
+  glong    colorization;
+  glong    colors;
   colRGBA  col1,col2;
 } SinusVals;
 

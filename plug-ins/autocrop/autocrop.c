@@ -17,7 +17,7 @@ static void run(char *name,
 								GParam * param,
 								int *nreturn_vals,
 								GParam ** return_vals);
-static int colors_equal(guchar *col1, gchar *col2, int bytes);
+static int colors_equal(guchar *col1, guchar *col2, int bytes);
 static int guess_bgcolor(GPixelRgn *pr, int width, int height, int bytes,
 		guchar *color);
 
@@ -256,7 +256,7 @@ static int guess_bgcolor(GPixelRgn *pr, int width, int height, int bytes,
 	}
 }
 
-static int colors_equal(guchar *col1, gchar *col2, int bytes) {
+static int colors_equal(guchar *col1, guchar *col2, int bytes) {
 	int equal = 1;
 	int b;
 

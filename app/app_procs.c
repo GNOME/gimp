@@ -110,7 +110,7 @@ static ProcRecord quit_proc =
     Thanks to Owen for this.
 */
 
-GtkFunction file_open_wrapper (char *name) {
+gint file_open_wrapper (char *name) {
    file_open (name, name);
      return FALSE;
 }
@@ -127,7 +127,7 @@ gimp_init (int    gimp_argc,
     while (gimp_argc--)
       {
 	if (*gimp_argv)
-	  gtk_idle_add ((GtkFunction *) file_open_wrapper, *gimp_argv);
+	  gtk_idle_add ((GtkFunction) file_open_wrapper, *gimp_argv);
 	gimp_argv++;
       }
 

@@ -1,3 +1,23 @@
+Fri Apr 10 21:59:18 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/app_procs.c: fixed up idle handler for file open
+	(look like testgtk idle demo)
+
+	* app/colomaps.c: fixup for visual test and use of gdk_color_alloc
+	for some fixed colors (from Owen Taylor)
+
+	* app/errors.h
+	* app/errors.c
+	* app/main.c
+	* libgimp/gimp.c: redid the signal handlers so we only get a
+	debug prompt on SIGSEGV, SIGBUS, and SIGFPE.
+
+	* applied gimp-jbuhler-980408-0 and gimp-joke-980409-0 (warning
+	fixups)
+
+	* applied gimp-monnaux-980409-0 for configurable plugin path for
+	multiarch setups
+
 Fri Apr 10 00:17:23 EDT 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/commands.c: Fixed (hopefully) the preferences code.  Added

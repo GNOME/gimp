@@ -2161,7 +2161,7 @@ force_overwrite (char *filename)
   GtkWidget	*dlg;
   GtkWidget	*label;
   GtkWidget	*table;
-  guchar	buffer[CML_LINE_SIZE];
+  gchar		buffer[CML_LINE_SIZE];
   gint		tmp;
 
   dlg = gtkW_dialog_new ("CML file operation warning",

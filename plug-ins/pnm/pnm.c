@@ -66,7 +66,7 @@ typedef struct _PNMInfo {
 /* Contains the information needed to write out PNM rows */
 typedef struct _PNMRowInfo {
   int            fd;		/* File descriptor */
-  unsigned char *rowbuf;	/* Buffer for writing out rows */
+  char *rowbuf;			/* Buffer for writing out rows */
   int xres;			/* X resolution */
   int np;			/* Number of planes */
   unsigned char *red;		/* Colormap red */
@@ -632,7 +632,7 @@ pnmsaverow_raw_indexed (PNMRowInfo    *ri,
 			unsigned char *data)
 {
   int i;
-  unsigned char *rbcur = ri->rowbuf;
+  char *rbcur = ri->rowbuf;
 
   for (i = 0; i < ri->xres; i++)
     {
@@ -649,7 +649,7 @@ pnmsaverow_ascii (PNMRowInfo    *ri,
 		  unsigned char *data)
 {
   int i;
-  unsigned char *rbcur = ri->rowbuf;
+  char *rbcur = ri->rowbuf;
 
   for (i = 0; i < ri->xres*ri->np; i++)
     {
@@ -665,7 +665,7 @@ pnmsaverow_ascii_indexed (PNMRowInfo    *ri,
 			  unsigned char *data)
 {
   int i;
-  unsigned char *rbcur = ri->rowbuf;
+  char *rbcur = ri->rowbuf;
 
   for (i = 0; i < ri->xres; i++)
     {
@@ -693,7 +693,7 @@ save_image (char   *filename,
   unsigned char grn[256];
   unsigned char blu[256];
   unsigned char *data, *d;
-  unsigned char *rowbuf;
+  char *rowbuf;
   char buf[BUFLEN];
   char *temp;
   int np;

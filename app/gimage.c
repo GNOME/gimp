@@ -2632,12 +2632,14 @@ gimage_dirty (GImage *gimage)
     gimage->dirty ++;
   if (active_tool && !active_tool->preserve) {
     gdisp = active_tool->gdisp_ptr;
-    if (gdisp)
+    if (gdisp) {
       if (gdisp->gimage->ID == gimage->ID)
 	tools_initialize (active_tool->type, gdisp);
       else
 	tools_initialize (active_tool->type, NULL);
+    }
   }
+  
   return gimage->dirty;
 }
 

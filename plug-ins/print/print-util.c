@@ -34,6 +34,26 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.6  1998/04/11 05:07:46  yosh
+ *   * app/app_procs.c: fixed up idle handler for file open (look like testgtk
+ *   idle demo)
+ *
+ *   * app/colomaps.c: fixup for visual test and use of gdk_color_alloc for some
+ *   fixed colors (from Owen Taylor)
+ *
+ *   * app/errors.h
+ *   * app/errors.c
+ *   * app/main.c
+ *   * libgimp/gimp.c: redid the signal handlers so we only get a debug prompt on
+ *   SIGSEGV, SIGBUS, and SIGFPE.
+ *
+ *   * applied gimp-jbuhler-980408-0 and gimp-joke-980409-0 (warning fixups)
+ *
+ *   * applied gimp-monnaux-980409-0 for configurable plugin path for multiarch
+ *   setups
+ *
+ *   -Yosh
+ *
  *   Revision 1.5  1998/04/07 03:41:15  yosh
  *   configure.in: fix for $srcdir != $builddir for data. Tightened check for
  *   random() and add -lucb on systems that need it. Fix for xdelta.h check. Find
@@ -131,8 +151,11 @@
  * (currently 720) to avoid problems...
  */
 
-int	error[2][4][11*720+4] = { { { 0 } } };
-
+int	error[2][4][11*720+4] =
+	{
+	  { { 0 }, { 0 }, { 0 } , { 0 } },
+	  { { 0 }, { 0 }, { 0 } , { 0 } }
+        };
 
 /*
  * 'dither_black()' - Dither grayscale pixels to black.

@@ -84,6 +84,7 @@ char *    palette_path = NULL;
 char *    default_palette = NULL;
 char *    gradient_path = NULL;
 char *    default_gradient = NULL;
+char *    pluginrc_path = NULL;
 int       tile_cache_size = 4194304;  /* 4 MB */
 int       marching_speed = 150;   /* 150 ms */
 double    gamma_val = 1.0;
@@ -176,6 +177,7 @@ static ParseFunc funcs[] =
   { "plug-in-path",          TT_PATH,       &plug_in_path, NULL },
   { "palette-path",          TT_PATH,       &palette_path, NULL },
   { "gradient-path",         TT_PATH,       &gradient_path, NULL },
+  { "pluginrc-path",         TT_PATH,       &pluginrc_path, NULL },
   { "default-brush",         TT_STRING,     &default_brush, NULL },
   { "default-pattern",       TT_STRING,     &default_pattern, NULL },
   { "default-palette",       TT_STRING,     &default_palette, NULL },
