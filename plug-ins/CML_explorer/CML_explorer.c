@@ -261,7 +261,7 @@ gtkW_menu_item composition_menu [] =
 #define COMP_MAX_LINEAR_M1	3
   { N_("Max (x-d, -)"), NULL },
 #define COMP_MIN_LINEAR		4
-  { N_("Mix (x, -)"), NULL },
+  { N_("Min (x, -)"), NULL },
 #define COMP_MIN_LINEAR_P1	5
   { N_("Min (x+d, -)"), NULL },
 #define COMP_MIN_LINEAR_M1	6
