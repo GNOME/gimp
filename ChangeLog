@@ -1,5 +1,16 @@
 2003-11-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/base/colorize.[ch]: changed the range of the "lightness"
+	parameter to [-100..+100], where -100 results in pure black and
+	+100 in pure white. Default to lightness == 0 so the initial
+	transform changes just the colors while keeping the original
+	lightness.
+
+	* app/tools/gimpcolorizetool.[ch]: changed accordingly. Reordered
+	the scales to be in HSL order.
+
+2003-11-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainerpopup.[ch]
 	* app/widgets/gimpviewablebutton.[ch]: let the button remember
 	the popup's preview_size and view_type.

@@ -46,8 +46,8 @@
 #define DA_HEIGHT      20
 
 #define HUE_SLIDER         (1 << 0)
-#define LIGHTNESS_SLIDER   (1 << 1)
-#define SATURATION_SLIDER  (1 << 2)
+#define SATURATION_SLIDER  (1 << 1)
+#define LIGHTNESS_SLIDER   (1 << 2)
 #define DRAW               (1 << 3)
 #define SLIDERS            (HUE_SLIDER | LIGHTNESS_SLIDER | SATURATION_SLIDER)
 #define ALL                (SLIDERS | DRAW)
@@ -71,9 +71,9 @@ static void   colorize_update                (GimpColorizeTool *col_tool,
                                               gint              update);
 static void   colorize_hue_adj_update        (GtkAdjustment    *adj,
                                               GimpColorizeTool *col_tool);
-static void   colorize_lightness_adj_update  (GtkAdjustment    *adj,
-                                              GimpColorizeTool *col_tool);
 static void   colorize_saturation_adj_update (GtkAdjustment    *adj,
+                                              GimpColorizeTool *col_tool);
+static void   colorize_lightness_adj_update  (GtkAdjustment    *adj,
                                               GimpColorizeTool *col_tool);
 
 
@@ -262,22 +262,8 @@ gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
                     G_CALLBACK (colorize_hue_adj_update),
                     col_tool);
 
-  /*  Create the lightness scale widget  */
-  data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                               _("_Lightness:"), SLIDER_WIDTH, -1,
-                               0.0, 0.0, 100.0, 1.0, 10.0, 0,
-                               TRUE, 0.0, 0.0,
-                               NULL, NULL);
-  col_tool->lightness_data = GTK_ADJUSTMENT (data);
-  slider = GIMP_SCALE_ENTRY_SCALE (data);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-
-  g_signal_connect (data, "value_changed",
-                    G_CALLBACK (colorize_lightness_adj_update),
-                    col_tool);
-
   /*  Create the saturation scale widget  */
-  data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+  data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                                _("_Saturation:"), SLIDER_WIDTH, -1,
                                0.0, 0.0, 100.0, 1.0, 10.0, 0,
                                TRUE, 0.0, 0.0,
@@ -288,6 +274,20 @@ gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
 
   g_signal_connect (col_tool->saturation_data, "value_changed",
                     G_CALLBACK (colorize_saturation_adj_update),
+                    col_tool);
+
+  /*  Create the lightness scale widget  */
+  data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+                               _("_Lightness:"), SLIDER_WIDTH, -1,
+                               0.0, -100.0, 100.0, 1.0, 10.0, 0,
+                               TRUE, 0.0, 0.0,
+                               NULL, NULL);
+  col_tool->lightness_data = GTK_ADJUSTMENT (data);
+  slider = GIMP_SCALE_ENTRY_SCALE (data);
+  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+
+  g_signal_connect (data, "value_changed",
+                    G_CALLBACK (colorize_lightness_adj_update),
                     col_tool);
 }
 
@@ -311,13 +311,13 @@ colorize_update (GimpColorizeTool *col_tool,
     gtk_adjustment_set_value (GTK_ADJUSTMENT (col_tool->hue_data),
                               col_tool->colorize->hue);
 
-  if (update & LIGHTNESS_SLIDER)
-    gtk_adjustment_set_value (GTK_ADJUSTMENT (col_tool->lightness_data),
-                              col_tool->colorize->lightness);
-
   if (update & SATURATION_SLIDER)
     gtk_adjustment_set_value (GTK_ADJUSTMENT (col_tool->saturation_data),
                               col_tool->colorize->saturation);
+
+  if (update & LIGHTNESS_SLIDER)
+    gtk_adjustment_set_value (GTK_ADJUSTMENT (col_tool->lightness_data),
+                              col_tool->colorize->lightness);
 }
 
 static void
@@ -334,12 +334,12 @@ colorize_hue_adj_update (GtkAdjustment    *adjustment,
 }
 
 static void
-colorize_lightness_adj_update (GtkAdjustment    *adjustment,
-                               GimpColorizeTool *col_tool)
+colorize_saturation_adj_update (GtkAdjustment    *adjustment,
+                                GimpColorizeTool *col_tool)
 {
-  if (col_tool->colorize->lightness != adjustment->value)
+  if (col_tool->colorize->saturation != adjustment->value)
     {
-      col_tool->colorize->lightness = adjustment->value;
+      col_tool->colorize->saturation = adjustment->value;
       colorize_update (col_tool, DRAW);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (col_tool));
@@ -347,12 +347,12 @@ colorize_lightness_adj_update (GtkAdjustment    *adjustment,
 }
 
 static void
-colorize_saturation_adj_update (GtkAdjustment    *adjustment,
-                                GimpColorizeTool *col_tool)
+colorize_lightness_adj_update (GtkAdjustment    *adjustment,
+                               GimpColorizeTool *col_tool)
 {
-  if (col_tool->colorize->saturation != adjustment->value)
+  if (col_tool->colorize->lightness != adjustment->value)
     {
-      col_tool->colorize->saturation = adjustment->value;
+      col_tool->colorize->lightness = adjustment->value;
       colorize_update (col_tool, DRAW);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (col_tool));

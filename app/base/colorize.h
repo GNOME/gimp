@@ -23,8 +23,8 @@
 struct _Colorize
 {
   gdouble hue;
-  gdouble lightness;
   gdouble saturation;
+  gdouble lightness;
 
   gint    lum_red_lookup[256];
   gint    lum_green_lookup[256];

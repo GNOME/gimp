@@ -36,9 +36,9 @@ colorize_init (Colorize *colorize)
 
   g_return_if_fail (colorize != NULL);
 
-  colorize->hue        = 360.0 / 2;
-  colorize->lightness  = 100.0 / 2;
-  colorize->saturation = 100.0 / 2;
+  colorize->hue        = 180.0;
+  colorize->saturation =  50.0;
+  colorize->lightness  =   0.0;
 
   for (i = 0; i < 256; i ++)
     {
@@ -59,13 +59,14 @@ colorize_calculate (Colorize *colorize)
 
   hsl.h = colorize->hue        / 360.0;
   hsl.s = colorize->saturation / 100.0;
-  hsl.l = colorize->lightness  / 100.0;
-
-  gimp_hsl_to_rgb (&hsl, &rgb);
 
   /*  Calculate transfers  */
   for (i = 0; i < 256; i ++)
     {
+      hsl.l = (gdouble) i / 255.0;
+
+      gimp_hsl_to_rgb (&hsl, &rgb);
+
       colorize->final_red_lookup[i]   = i * rgb.r;
       colorize->final_green_lookup[i] = i * rgb.g;
       colorize->final_blue_lookup[i]  = i * rgb.b;
@@ -100,6 +101,17 @@ colorize (PixelRegion *srcPR,
           lum = (colorize->lum_red_lookup[s[RED_PIX]] +
                  colorize->lum_green_lookup[s[GREEN_PIX]] +
                  colorize->lum_blue_lookup[s[BLUE_PIX]]); /* luminosity */
+
+          if (colorize->lightness > 0)
+            {
+              lum = (gdouble) lum * (100.0 - colorize->lightness) / 100.0;
+
+              lum += 255 - (100.0 - colorize->lightness) * 255.0 / 100.0;
+            }
+          else if (colorize->lightness < 0)
+            {
+              lum = (gdouble) lum * (colorize->lightness + 100.0) / 100.0;
+            }
 
           d[RED_PIX]   = colorize->final_red_lookup[lum];
           d[GREEN_PIX] = colorize->final_green_lookup[lum];

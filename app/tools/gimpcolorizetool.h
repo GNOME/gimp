@@ -42,8 +42,8 @@ struct _GimpColorizeTool
 
   /*  dialog  */
   GtkAdjustment    *hue_data;
-  GtkAdjustment    *lightness_data;
   GtkAdjustment    *saturation_data;
+  GtkAdjustment    *lightness_data;
 };
 
 struct _GimpColorizeToolClass
