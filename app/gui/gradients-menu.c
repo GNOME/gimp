@@ -51,7 +51,7 @@ GimpItemFactoryEntry gradients_menu_entries[] =
 
   MENU_SEPARATOR ("/---"),
 
-  { { N_("/_New Gradient"), NULL,
+  { { N_("/_New Gradient"), "",
       data_new_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
@@ -61,12 +61,12 @@ GimpItemFactoryEntry gradients_menu_entries[] =
       "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL,
     GIMP_HELP_GRADIENT_DUPLICATE, NULL },
-  { { N_("/Save as _POV-Ray..."), NULL,
+  { { N_("/Save as _POV-Ray..."), "",
       gradients_save_as_pov_ray_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SAVE_AS },
     NULL,
     GIMP_HELP_GRADIENT_SAVE_AS_POV, NULL },
-  { { N_("/_Delete Gradient..."), NULL,
+  { { N_("/_Delete Gradient..."), "",
       data_delete_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
     NULL,
@@ -74,7 +74,7 @@ GimpItemFactoryEntry gradients_menu_entries[] =
 
   MENU_SEPARATOR ("/---"),
 
-  { { N_("/_Refresh Gradients"), NULL,
+  { { N_("/_Refresh Gradients"), "",
       data_refresh_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REFRESH },
     NULL,

@@ -118,7 +118,7 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
   ADD_TAB (N_("/Add Tab/Tools..."),             "gimp-tool-list",
            GTK_STOCK_MISSING_IMAGE,             GIMP_HELP_TOOL_DIALOG),
 
-  { { N_("/_Remove Tab"), NULL,
+  { { N_("/_Remove Tab"), "",
       dialogs_remove_tab_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REMOVE },
     NULL,

@@ -50,7 +50,7 @@ GimpItemFactoryEntry patterns_menu_entries[] =
 
   MENU_SEPARATOR ("/---"),
 
-  { { N_("/New Pattern"), NULL,
+  { { N_("/New Pattern"), "",
       data_new_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
@@ -60,7 +60,7 @@ GimpItemFactoryEntry patterns_menu_entries[] =
       "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL,
     GIMP_HELP_PATTERN_DUPLICATE, NULL },
-  { { N_("/Delete Pattern..."), NULL,
+  { { N_("/Delete Pattern..."), "",
       data_delete_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
     NULL,
@@ -68,7 +68,7 @@ GimpItemFactoryEntry patterns_menu_entries[] =
 
   MENU_SEPARATOR ("/---"),
 
-  { { N_("/Refresh Patterns"), NULL,
+  { { N_("/Refresh Patterns"), "",
       data_refresh_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REFRESH },
     NULL,
