@@ -18,6 +18,7 @@ bugs
   
 important issues
 
+  * change set_usize to something else..
   * Gimp::IO (?)
   * Gimp::Fu import after Gimp? use Gimp::main for Gimp::Fu??
   * generic config query mechanism

@@ -39,7 +39,7 @@
    special defines should be used, ppport.h can be run through Perl to check
    your source code. Simply say:
    
-   	perl -x ppport.h *.c *.h *.xs foo/*.c [etc]
+   	perl -x ppport.h *.c *.h *.xs [etc]
    
    The result will be a list of patches suggesting changes that should at
    least be acceptable, if not necessarily the most efficient solution, or a

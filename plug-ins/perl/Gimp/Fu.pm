@@ -158,17 +158,42 @@ sub _find_digits {
    $digits>0 ? int $digits+0.9 : 0;
 }
 
-sub help_window {
-   my($blurb,$help)=@_;
-   my $helpwin = new Gtk::Dialog;
-   set_title $helpwin $0;
-   $helpwin->vbox->add(new Gtk::Label "Blurb:\n".Gimp::wrap_text($blurb,60)
-                                    ."\n\nHelp:\n".Gimp::wrap_text($help,60));
-   my $button = new Gtk::Button "Close";
-   signal_connect $button "clicked",sub { hide $helpwin };
-   $helpwin->action_area->add($button);
+sub help_window(\$$$) {
+   my($helpwin,$blurb,$help)=@_;
+   unless ($$helpwin) {
+      $$helpwin = new Gtk::Dialog;
+      $$helpwin->set_title("Help for ".$Gimp::function);
+      my($font,$b);
 
-   show_all $helpwin;
+      $b = new Gtk::Text;
+      $b->set_editable (0);
+
+      $font = load Gtk::Gdk::Font "9x15bold";
+      $font = fontset_load Gtk::Gdk::Font "-*-courier-medium-r-normal--*-120-*-*-*-*-*" unless $font;
+      $font = $b->style->font unless $font;
+      $$helpwin->vbox->add($b);
+      $b->realize; # for gtk-1.0
+      $b->insert($font,$b->style->fg(-normal),undef,"BLURB:\n\n$blurb\n\nHELP:\n\n$help");
+      $b->set_usize($font->string_width('M')*80,($font->ascent+$font->descent)*26);
+
+      my $button = new Gtk::Button "OK";
+      signal_connect $button "clicked",sub { hide $$helpwin };
+      $$helpwin->action_area->add($button);
+      
+      $$helpwin->signal_connect("destroy",sub { undef $$helpwin });
+
+      Gtk->idle_add(sub {
+         require Gimp::Pod;
+         my $pod = new Gimp::Pod;
+         my $text = $pod->format;
+         if ($text) {
+            $b->insert($font,$b->style->fg(-normal),undef,"\n\nEMBEDDED POD DOCUMENTATION:\n\n");
+            $b->insert($font,$b->style->fg(-normal),undef,$text);
+         }
+      });
+   }
+
+   $$helpwin->show_all();
 }
 
 sub interact($$$@) {
@@ -179,6 +204,7 @@ sub interact($$$@) {
    my(@types)=@{shift()};
    my(@getvals,@setvals,@lastvals,@defaults);
    my($button,$box,$bot,$g);
+   my($helpwin);
    my $res=0;
 
    # only pull these in if _really_ required
@@ -432,7 +458,7 @@ sub interact($$$@) {
      
      $button = new Gtk::Button "Help";
      $g->attach($button,0,1,$res,$res+1,{},{},4,2);
-     signal_connect $button "clicked", sub { help_window($blurb,$help) };
+     signal_connect $button "clicked", sub { help_window($helpwin,$blurb,$help) };
      
      my $v=new Gtk::HBox 0,5;
      $g->attach($v,1,2,$res,$res+1,{},{},4,2);

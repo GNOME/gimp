@@ -14,6 +14,11 @@ Revision history for Gimp-Perl extension.
         - gimp_progress_init now accepts either one or two arguments.
         - switched to using Devel::PPPort, which hopefulyl solves all my
           problems.
+        - argh! gimptool path was wrong again! the fix version should be much
+          faster as well.
+        - new module Gimp::Pod.
+        - embedded pod documentation will now be shown when the Help button
+          is pressed (see image_tile for an example).
 
 1.061 Fri Mar 12 21:27:26 CET 1999
 	- closed big, BIG security hole on password authenticitation

@@ -38,6 +38,7 @@ Gimp/Pixel.pod
 Gimp/UI.pm
 Gimp/Util.pm
 Gimp/Feature.pm
+Gimp/Pod.pm
 examples/PDB
 examples/alpha2color.pl
 examples/tex-to-float

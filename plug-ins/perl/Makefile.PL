@@ -66,65 +66,65 @@ eval "use Parse::RecDescent;"; $PRD = $@ eq "";
 $] >= 5.005 or print <<EOF;
 
 WARNING: you are using a version of perl older than 5.005. While this
-         extension should run on older versions (and I try to keep source
-         compatibility), some people get spurious errors that go away
-         after upgrading to 5.005 (or to gimp-1.1). Therefore, some
-         features of Gimp DO NOT WORK WITH 5.004 or gimp-1.0. Since 5.005
-         is much better and has many many bugs fixed, an upgrade would
-         come in handy...
+	 extension should run on older versions (and I try to keep source
+	 compatibility), some people get spurious errors that go away
+	 after upgrading to 5.005 (or to gimp-1.1). Therefore, some
+	 features of Gimp DO NOT WORK WITH 5.004 or gimp-1.0. Since 5.005
+	 is much better and has many many bugs fixed, an upgrade would
+	 come in handy...
 
 EOF
 
 $GTK or print <<EOF;
 
 WARNING: unable to use the Perl-Gtk interface. Most features (like
-         Gimp::Fu) rely on this extension. You can try to build without
-         it (and many scripts won't work), but it's better to install
-         it (version 0.3 or higher is required, you can get it from
-         ftp://ftp.gimp.org/pub/gtk/perl/ or any CPAN mirror.
+	 Gimp::Fu) rely on this extension. You can try to build without
+	 it (and many scripts won't work), but it's better to install
+	 it (version 0.3 or higher is required, you can get it from
+	 ftp://ftp.gimp.org/pub/gtk/perl/ or any CPAN mirror.
 
 EOF
 
 $PDL or print <<EOF;
 
 WARNING: unable to use PDL (the perl data language). This means that
-         Gimp::PDL is non-functional. Unless you plan to use Tile/PixelRgn
-         functions together with PDL, this is harmless. Gimp::PDL will
-         be installed, just in case you later install PDL. The plug-ins
-         using PDL, however, will NOT WORK. You can get PDL from any CPAN
-         mirror.
+	 Gimp::PDL is non-functional. Unless you plan to use Tile/PixelRgn
+	 functions together with PDL, this is harmless. Gimp::PDL will
+	 be installed, just in case you later install PDL. The plug-ins
+	 using PDL, however, will NOT WORK. You can get PDL from any CPAN
+	 mirror.
 
 EOF
 
 !$PDL or $PDL::Version::VERSION > 1.99 or print <<EOF;
 
 WARNING: PDL version $PDL::Version::VERSION is installed. Gimp::PDL was only
-         tested with 1.99 and higher.  In case of problems its advisable to
-         upgrade PDL to at least version 2.
+	 tested with 1.99 and higher.  In case of problems its advisable to
+	 upgrade PDL to at least version 2.
 
 EOF
 
 $PRD or print <<EOF;
 
 WARNING: Parse::RecDescent is not installed (correctly) on your system. This
-         means scm2perl (the Scheme->Perl translator) isn't usable. If you
-         don't need this functionality there is nothing to worry about. 
-         Should the need arise you can install Parse::RecDescent later; it
-         is available from any CPAN mirror.
+	 means scm2perl (the Scheme->Perl translator) isn't usable. If you
+	 don't need this functionality there is nothing to worry about. 
+	 Should the need arise you can install Parse::RecDescent later; it
+	 is available from any CPAN mirror.
 
 EOF
 
 ($major,$minor,$patch)=split /[._]/,$Gtk::VERSION;
 
 unless ($major > 0
-        || ($major == 0 && $minor >  3)
-        || ($major == 0 && $minor == 3 && $patch >= -1)) {
+	|| ($major == 0 && $minor >  3)
+	|| ($major == 0 && $minor == 3 && $patch >= -1)) {
    $GTK && print <<EOF;
 
 WARNING: version 0.3 of Gtk is _required_ for this module to
-         build properly.  You can get the newest version from
-         ftp://ftp.gimp.org/pub/gtk/perl/ or any CPAN mirror.  Older
-         versions may work, but I have warned you!
+	 build properly.  You can get the newest version from
+	 ftp://ftp.gimp.org/pub/gtk/perl/ or any CPAN mirror.  Older
+	 versions may work, but I have warned you!
 
 EOF
 }
@@ -136,33 +136,33 @@ unless($@) {
       print <<EOF;
 
 WARNING: I've detected an old version of Gimp-Perl installed
-         already. Since I cannot detect the prefix used to install
-         it I will just overwrite it.  If you happen to use two
-         different and incompatible versions of the Gimp with differing
-         prefixes you should call configure with the --disable-perl
-         switch to disable the perl extension, or consider installing
-         the perl module elsewhere, using the environment variables
-         PERL5LIB=/my/module/dir and PERL_MM_OPTS="PREFIX=\$PERL5LIB" to
-         overwrite the installation directory (PERL_MM_OPTS) and run the
-         Gimp (PERL5LIB). See "perldoc ExtUtils::MakeMaker" for a full
-         discussion of your options.
+	 already. Since I cannot detect the prefix used to install
+	 it I will just overwrite it.  If you happen to use two
+	 different and incompatible versions of the Gimp with differing
+	 prefixes you should call configure with the --disable-perl
+	 switch to disable the perl extension, or consider installing
+	 the perl module elsewhere, using the environment variables
+	 PERL5LIB=/my/module/dir and PERL_MM_OPTS="PREFIX=\$PERL5LIB" to
+	 overwrite the installation directory (PERL_MM_OPTS) and run the
+	 Gimp (PERL5LIB). See "perldoc ExtUtils::MakeMaker" for a full
+	 discussion of your options.
 
 EOF
    } else {
       if ($GIMP_PREFIX ne $old_prefix) {
-         print <<EOF;
+	 print <<EOF;
 
 WARNING: I've detected another installaion of the Gimp-Perl extension.
-            
-         This version uses the prefix '$GIMP_PREFIX'.
-         The already installed version uses the prefix '$old_prefix'.
+	    
+	 This version uses the prefix '$GIMP_PREFIX'.
+	 The already installed version uses the prefix '$old_prefix'.
 
-         They don't match, which indicates that installing Gimp-Perl might
-         overwrite an old but still used installation. Gimp-Perl will
-         therefore be disabled, and not be installed.
+	 They don't match, which indicates that installing Gimp-Perl might
+	 overwrite an old but still used installation. Gimp-Perl will
+	 therefore be disabled, and not be installed.
 
 EOF
-         not_halt("prefix mismatch");
+	 not_halt("prefix mismatch");
       }
    }
 }
@@ -195,19 +195,13 @@ install ::
 	      exit ; \
 	   fi \
 	done ; \
-        $(MAKE) UNINST=1 really-install install-plugins
+	$(MAKE) UNINST=1 really-install install-plugins
 
 '.$install;
 }
 
-sub fixinstall {
-   my($src,$dst)=@_;
-   "	cp '$src' '\$(INST_SCRIPT)/$dst' && \$(FIXIN) '\$(INST_SCRIPT)/$dst' && \\\n".
-   "	cd '\$(INST_SCRIPT)' && $GIMPTOOL --install-admin-bin '$dst' && \\\n".
-   "	rm '$dst'\n";
-}
-
 sub MY::postamble {
+   my $GT = $IN_GIMP ? "../$GIMPTOOL" : $GIMPTOOL;
    my $postamble="
 
 objclean :: clean
@@ -217,18 +211,29 @@ check :: test
 
 clean ::
 	test -f Makefile || mv -f Makefile.old Makefile
+	\$(RM_RF) inst-temp
 
-install-plugins :: \$(INST_SCRIPT)/.exists\n"
-.fixinstall('Perl-Server','Perl-Server')
-.join("",map fixinstall("examples/$_",$_),@examples);
+install-plugins ::
+	\$(RM_RF) inst-temp
+	\$(MKPATH) inst-temp
+	cd inst-temp ; \\
+	\$(UMASK_NULL) ; \\
+	\$(CP) ".join(' ',map("'../examples/$_'",@examples))." ../Perl-Server . ; \\
+	\$(CHMOD) 755 * ; \\
+	\$(FIXIN) * ; \\
+	for plugin in * ; do \\
+	   $GT --install-admin-bin \"\$\$plugin\" ; \\
+	done
+	\$(RM_RF) inst-temp
+";
 }
 
 WriteMakefile(
     'dist'	=> {
-                    'PREOP'     => 'chmod -R u=rwX,go=rX . ;',
-                    'COMPRESS'	=> 'gzip -9v',
-                    'SUFFIX'	=> '.gz',
-                   },
+	            'PREOP'     => 'chmod -R u=rwX,go=rX . ;',
+	            'COMPRESS'	=> 'gzip -9v',
+	            'SUFFIX'	=> '.gz',
+	           },
     'PREREQ_PM'	=> {
     		    "Gtk"		=> 0.3,
     		    "Data::Dumper"	=> 2,
