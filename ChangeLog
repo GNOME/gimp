@@ -48,7 +48,6 @@ Wed Nov 17 00:14:11 MET 1999  Sven Neumann <sven@gimp.org>
 	* po-plug-ins/POTFILES.in: made supernova, papertile and sinus use
 	the gimpcolorbutton, internationalized the plug-ins while I was on it
 
->>>>>>> 1.1821
 1999-11-16  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpchainbutton.c: the chainbutton's parent_class is a
