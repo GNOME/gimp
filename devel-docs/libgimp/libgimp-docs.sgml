@@ -27,24 +27,13 @@
 <!entity libgimp-gimptile SYSTEM "sgml/gimptile.sgml">
 <!entity libgimp-gimptools SYSTEM "sgml/gimptools.sgml">
 <!entity libgimp-gimpundo SYSTEM "sgml/gimpundo.sgml">
-<!entity libgimp-gimpprotocol SYSTEM "sgml/gimpprotocol.sgml">
-<!entity libgimp-gimpsignal SYSTEM "sgml/gimpsignal.sgml">
-<!entity libgimp-gimpcolorspace SYSTEM "sgml/gimpcolorspace.sgml">
 <!entity libgimp-gimpenums SYSTEM "sgml/gimpenums.sgml">
-<!entity libgimp-gimpwire SYSTEM "sgml/gimpwire.sgml">
-<!entity libgimp-gimpparasite SYSTEM "sgml/gimpparasite.sgml">
 <!entity libgimp-gimpcolorselector SYSTEM "sgml/gimpcolorselector.sgml">
 <!entity libgimp-gimpmodule SYSTEM "sgml/gimpmodule.sgml">
 <!entity libgimp-gimpcolordisplay SYSTEM "sgml/gimpcolordisplay.sgml">
-<!entity libgimp-gimpenv SYSTEM "sgml/gimpenv.sgml">
-<!entity libgimp-gimplimits SYSTEM "sgml/gimplimits.sgml">
 <!entity libgimp-gimpexport SYSTEM "sgml/gimpexport.sgml">
-<!entity libgimp-gimpparasiteio SYSTEM "sgml/gimpparasiteio.sgml">
-<!entity libgimp-gimpfeatures SYSTEM "sgml/gimpfeatures.sgml">
 <!entity libgimp-gimpmenu SYSTEM "sgml/gimpmenu.sgml">
 <!entity libgimp-gimpui SYSTEM "sgml/gimpui.sgml">
-<!entity libgimp-gimpunit SYSTEM "sgml/gimpunit.sgml">
-<!entity libgimp-gimputils SYSTEM "sgml/gimputils.sgml">
 ]>
 <book id="index">
   <bookinfo>
@@ -52,16 +41,13 @@
   </bookinfo>
 
   <chapter id="gimpdefinitions">
-    <title>GIMP Constants, Limits and Macros</title>
+    <title>GIMP Constants</title>
     &libgimp-gimpenums;
-    &libgimp-gimpfeatures;
-    &libgimp-gimplimits;
   </chapter>
 
   <chapter id="libgimp">
     <title>GIMP Library</title>
     &libgimp-gimp;
-    &libgimp-gimpenv;
     &libgimp-gimpbrushes;
     &libgimp-gimpchannel;
     &libgimp-gimpcolor;
@@ -81,21 +67,14 @@
     &libgimp-gimpmisc;
     &libgimp-gimppalette;
     &libgimp-gimppatterns;
-    &libgimp-gimpparasite;
-    &libgimp-gimpparasiteio;
     &libgimp-gimppixelrgn;
     &libgimp-gimpplugin;
     &libgimp-gimpproceduraldb;
-    &libgimp-gimpprotocol;
     &libgimp-gimpselection;
-    &libgimp-gimpsignal;
     &libgimp-gimptexttool;
     &libgimp-gimptile;
     &libgimp-gimptools;
     &libgimp-gimpundo;
-    &libgimp-gimpunit;
-    &libgimp-gimputils;
-    &libgimp-gimpwire;
   </chapter>
 
   <chapter id="libgimpui">

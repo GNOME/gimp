@@ -1,4 +1,4 @@
-SUBDIRS = libgimpcolor libgimpmath libgimpwidgets libgimp pdb
+SUBDIRS = libgimpcolor libgimpmath libgimpbase libgimpwidgets libgimp pdb
 
 EXTRA_DIST = \
 	README			\

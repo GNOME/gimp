@@ -326,3 +326,51 @@ all other GIMP Library headers.
 @Param1: 
 
 
+<!-- ##### FUNCTION gimp_parasite_find ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_parasite_list ##### -->
+<para>
+
+</para>
+
+@num_parasites: 
+@parasites: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_parasite_attach ##### -->
+<para>
+
+</para>
+
+@parasite: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_parasite_detach ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_attach_new_parasite ##### -->
+<para>
+
+</para>
+
+@name: 
+@flags: 
+@size: 
+@data: 
+
+

@@ -1,0 +1,46 @@
+<!-- ##### SECTION Title ##### -->
+GimpOffsetArea
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_offset_area_new ##### -->
+<para>
+
+</para>
+
+@orig_width: 
+@orig_height: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_offset_area_set_size ##### -->
+<para>
+
+</para>
+
+@offset_area: 
+@width: 
+@height: 
+
+
+<!-- ##### FUNCTION gimp_offset_area_set_offsets ##### -->
+<para>
+
+</para>
+
+@offset_area: 
+@offset_x: 
+@offset_y: 
+
+

@@ -1,0 +1,773 @@
+<STRUCT>
+<NAME>GimpParasite</NAME>
+</STRUCT>
+<ENUM>
+<NAME>GimpUnit</NAME>
+typedef enum /*< chop=GIMP_ >*/
+{
+  GIMP_UNIT_PIXEL   = 0,
+
+  GIMP_UNIT_INCH    = 1,
+  GIMP_UNIT_MM      = 2,
+  GIMP_UNIT_POINT   = 3,
+  GIMP_UNIT_PICA    = 4,
+
+  GIMP_UNIT_END     = 5,
+
+  GIMP_UNIT_PERCENT = 65536 /*< skip >*/
+} GimpUnit;
+</ENUM>
+<ENUM>
+<NAME>GimpPDBArgType</NAME>
+typedef enum /*< chop=GIMP_ >*/
+{
+  GIMP_PDB_INT32,
+  GIMP_PDB_INT16,
+  GIMP_PDB_INT8,
+  GIMP_PDB_FLOAT,
+  GIMP_PDB_STRING,
+  GIMP_PDB_INT32ARRAY,
+  GIMP_PDB_INT16ARRAY,
+  GIMP_PDB_INT8ARRAY,
+  GIMP_PDB_FLOATARRAY,
+  GIMP_PDB_STRINGARRAY,
+  GIMP_PDB_COLOR,
+  GIMP_PDB_REGION,
+  GIMP_PDB_DISPLAY,
+  GIMP_PDB_IMAGE,
+  GIMP_PDB_LAYER,
+  GIMP_PDB_CHANNEL,
+  GIMP_PDB_DRAWABLE,
+  GIMP_PDB_SELECTION,
+  GIMP_PDB_BOUNDARY,
+  GIMP_PDB_PATH,
+  GIMP_PDB_PARASITE,
+  GIMP_PDB_STATUS,
+  GIMP_PDB_END
+} GimpPDBArgType;
+</ENUM>
+<ENUM>
+<NAME>GimpPDBProcType</NAME>
+typedef enum /*< chop=GIMP_ >*/
+{
+  GIMP_INTERNAL,
+  GIMP_PLUGIN,
+  GIMP_EXTENSION,
+  GIMP_TEMPORARY
+} GimpPDBProcType;
+</ENUM>
+<ENUM>
+<NAME>GimpPDBStatusType</NAME>
+typedef enum /*< chop=GIMP_ >*/
+{
+  GIMP_PDB_EXECUTION_ERROR,
+  GIMP_PDB_CALLING_ERROR,
+  GIMP_PDB_PASS_THROUGH,
+  GIMP_PDB_SUCCESS,
+  GIMP_PDB_CANCEL
+} GimpPDBStatusType;
+</ENUM>
+<FUNCTION>
+<NAME>gimp_directory</NAME>
+<RETURNS>const gchar  *</RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_personal_rc_file</NAME>
+<RETURNS>gchar        *</RETURNS>
+const gchar  *basename
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_data_directory</NAME>
+<RETURNS>const gchar  *</RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_sysconf_directory</NAME>
+<RETURNS>const gchar  *</RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_gtkrc</NAME>
+<RETURNS>const gchar  *</RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_path_parse</NAME>
+<RETURNS>GList        *</RETURNS>
+const gchar  *path,gint          max_paths,gboolean      check,GList       **check_failed
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_path_to_str</NAME>
+<RETURNS>gchar        *</RETURNS>
+GList        *path
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_path_free</NAME>
+<RETURNS>void  </RETURNS>
+GList        *path
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_path_get_user_writable_dir</NAME>
+<RETURNS>gchar        *</RETURNS>
+GList        *path
+</FUNCTION>
+<MACRO>
+<NAME>GIMP_MIN_IMAGE_SIZE</NAME>
+#define GIMP_MIN_IMAGE_SIZE  1
+</MACRO>
+<MACRO>
+<NAME>GIMP_MAX_IMAGE_SIZE</NAME>
+#define GIMP_MAX_IMAGE_SIZE  16777216  /*  2^24  */
+</MACRO>
+<MACRO>
+<NAME>GIMP_MIN_RESOLUTION</NAME>
+#define GIMP_MIN_RESOLUTION  5e-3      /*  shouldn't display as 0.000  */
+</MACRO>
+<MACRO>
+<NAME>GIMP_MAX_RESOLUTION</NAME>
+#define GIMP_MAX_RESOLUTION  65536.0
+</MACRO>
+<MACRO>
+<NAME>GIMP_CHECK_SIZE</NAME>
+#define GIMP_CHECK_SIZE    8
+</MACRO>
+<MACRO>
+<NAME>GIMP_CHECK_SIZE_SM</NAME>
+#define GIMP_CHECK_SIZE_SM 4
+</MACRO>
+<MACRO>
+<NAME>GIMP_CHECK_DARK</NAME>
+#define GIMP_CHECK_DARK   0.4          /*  corresponds to GRAY_CHECKS as  */
+</MACRO>
+<MACRO>
+<NAME>GIMP_CHECK_LIGHT</NAME>
+#define GIMP_CHECK_LIGHT  0.6          /*  defined in app/image_render.c  */
+</MACRO>
+<MACRO>
+<NAME>GIMP_PARASITE_PERSISTENT</NAME>
+#define GIMP_PARASITE_PERSISTENT 1
+</MACRO>
+<MACRO>
+<NAME>GIMP_PARASITE_UNDOABLE</NAME>
+#define GIMP_PARASITE_UNDOABLE   2
+</MACRO>
+<MACRO>
+<NAME>GIMP_PARASITE_ATTACH_PARENT</NAME>
+#define GIMP_PARASITE_ATTACH_PARENT     (0x80 << 8)
+</MACRO>
+<MACRO>
+<NAME>GIMP_PARASITE_PARENT_PERSISTENT</NAME>
+#define GIMP_PARASITE_PARENT_PERSISTENT (GIMP_PARASITE_PERSISTENT << 8)
+</MACRO>
+<MACRO>
+<NAME>GIMP_PARASITE_PARENT_UNDOABLE</NAME>
+#define GIMP_PARASITE_PARENT_UNDOABLE   (GIMP_PARASITE_UNDOABLE << 8)
+</MACRO>
+<MACRO>
+<NAME>GIMP_PARASITE_ATTACH_GRANDPARENT</NAME>
+#define GIMP_PARASITE_ATTACH_GRANDPARENT     (0x80 << 16)
+</MACRO>
+<MACRO>
+<NAME>GIMP_PARASITE_GRANDPARENT_PERSISTENT</NAME>
+#define GIMP_PARASITE_GRANDPARENT_PERSISTENT (GIMP_PARASITE_PERSISTENT << 16)
+</MACRO>
+<MACRO>
+<NAME>GIMP_PARASITE_GRANDPARENT_UNDOABLE</NAME>
+#define GIMP_PARASITE_GRANDPARENT_UNDOABLE   (GIMP_PARASITE_UNDOABLE << 16)
+</MACRO>
+<STRUCT>
+<NAME>GimpParasite</NAME>
+struct GimpParasite
+{
+  gchar    *name;   /* The name of the parasite. USE A UNIQUE PREFIX! */
+  guint32   flags;  /* save Parasite in XCF file, etc.                */
+  guint32   size;   /* amount of data                                 */
+  gpointer  data;   /* a pointer to the data.  plugin is              *
+		     * responsible for tracking byte order            */
+};
+</STRUCT>
+<FUNCTION>
+<NAME>gimp_parasite_new</NAME>
+<RETURNS>GimpParasite  *</RETURNS>
+const gchar        *name,guint32             flags,guint32             size,const gpointer      data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_parasite_free</NAME>
+<RETURNS>void  </RETURNS>
+GimpParasite       *parasite
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_parasite_copy</NAME>
+<RETURNS>GimpParasite  *</RETURNS>
+const GimpParasite *parasite
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_parasite_compare</NAME>
+<RETURNS>gboolean  </RETURNS>
+const GimpParasite *a,const GimpParasite *b
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_parasite_is_type</NAME>
+<RETURNS>gboolean  </RETURNS>
+const GimpParasite *parasite,const gchar        *name
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_parasite_is_persistent</NAME>
+<RETURNS>gboolean  </RETURNS>
+const GimpParasite *parasite
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_parasite_is_undoable</NAME>
+<RETURNS>gboolean  </RETURNS>
+const GimpParasite *parasite
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_parasite_has_flag</NAME>
+<RETURNS>gboolean  </RETURNS>
+const GimpParasite *parasite,gulong              flag
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_parasite_flags</NAME>
+<RETURNS>gulong  </RETURNS>
+const GimpParasite *parasite
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_parasite_name</NAME>
+<RETURNS>const gchar   *</RETURNS>
+const GimpParasite *parasite
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_parasite_data</NAME>
+<RETURNS>gpointer  </RETURNS>
+const GimpParasite *parasite
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_parasite_data_size</NAME>
+<RETURNS>glong  </RETURNS>
+const GimpParasite *parasite
+</FUNCTION>
+<MACRO>
+<NAME>GIMP_PIXPIPE_MAXDIM</NAME>
+#define GIMP_PIXPIPE_MAXDIM 4
+</MACRO>
+<FUNCTION>
+<NAME>gimp_pixpipe_params_init</NAME>
+<RETURNS>void  </RETURNS>
+GimpPixPipeParams *params
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pixpipe_params_parse</NAME>
+<RETURNS>void  </RETURNS>
+gchar             *parameters,GimpPixPipeParams *params
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_pixpipe_params_build</NAME>
+<RETURNS>gchar  *</RETURNS>
+GimpPixPipeParams *params
+</FUNCTION>
+<MACRO>
+<NAME>GP_VERSION</NAME>
+#define GP_VERSION 0x0008
+</MACRO>
+<STRUCT>
+<NAME>GPConfig</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPTileReq</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPTileAck</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPTileData</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPParam</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPParamDef</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPProcRun</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPProcReturn</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPProcInstall</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPProcUninstall</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GPConfig</NAME>
+struct GPConfig
+{
+  guint32 version;
+  guint32 tile_width;
+  guint32 tile_height;
+  gint32  shm_ID;
+  gdouble gamma;
+  gint8   install_cmap;
+  gint8   use_xshm;
+  gint32  min_colors;
+  gint32  gdisp_ID;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GPTileReq</NAME>
+struct GPTileReq
+{
+  gint32  drawable_ID;
+  guint32 tile_num;
+  guint32 shadow;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GPTileData</NAME>
+struct GPTileData
+{
+  gint32   drawable_ID;
+  guint32  tile_num;
+  guint32  shadow;
+  guint32  bpp;
+  guint32  width;
+  guint32  height;
+  guint32  use_shm;
+  guchar  *data;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GPParam</NAME>
+struct GPParam
+{
+  guint32 type;
+
+  union
+  {
+    gint32    d_int32;
+    gint16    d_int16;
+    gint8     d_int8;
+    gdouble   d_float;
+    gchar    *d_string;
+    gint32   *d_int32array;
+    gint16   *d_int16array;
+    gint8    *d_int8array;
+    gdouble  *d_floatarray;
+    gchar   **d_stringarray;
+    GimpRGB   d_color;
+    struct
+    {
+      gint32 x;
+      gint32 y;
+      gint32 width;
+      gint32 height;
+    } d_region;
+    gint32 d_display;
+    gint32 d_image;
+    gint32 d_layer;
+    gint32 d_channel;
+    gint32 d_drawable;
+    gint32 d_selection;
+    gint32 d_boundary;
+    gint32 d_path;
+    struct
+    {
+      gchar    *name;
+      guint32   flags;
+      guint32   size;
+      gpointer  data;
+    } d_parasite;
+    gint32 d_status;
+  } data;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GPParamDef</NAME>
+struct GPParamDef
+{
+  guint32  type;
+  gchar   *name;
+  gchar   *description;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GPProcRun</NAME>
+struct GPProcRun
+{
+  gchar   *name;
+  guint32  nparams;
+  GPParam *params;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GPProcReturn</NAME>
+struct GPProcReturn
+{
+  gchar   *name;
+  guint32  nparams;
+  GPParam *params;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GPProcInstall</NAME>
+struct GPProcInstall
+{
+  gchar      *name;
+  gchar      *blurb;
+  gchar      *help;
+  gchar      *author;
+  gchar      *copyright;
+  gchar      *date;
+  gchar      *menu_path;
+  gchar      *image_types;
+  guint32     type;
+  guint32     nparams;
+  guint32     nreturn_vals;
+  GPParamDef *params;
+  GPParamDef *return_vals;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GPProcUninstall</NAME>
+struct GPProcUninstall
+{
+  gchar *name;
+};
+</STRUCT>
+<FUNCTION>
+<NAME>gp_init</NAME>
+<RETURNS>void  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_quit_write</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_config_write</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPConfig        *config
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_tile_req_write</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPTileReq       *tile_req
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_tile_ack_write</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_tile_data_write</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPTileData      *tile_data
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_proc_run_write</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPProcRun       *proc_run
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_proc_return_write</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPProcReturn    *proc_return
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_temp_proc_run_write</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPProcRun       *proc_run
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_temp_proc_return_write</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPProcReturn    *proc_return
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_proc_install_write</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPProcInstall   *proc_install
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_proc_uninstall_write</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPProcUninstall *proc_uninstall
+</FUNCTION>
+<FUNCTION>
+<NAME>gp_extension_ack_write</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel
+</FUNCTION>
+<MACRO>
+<NAME>SA_RESTART</NAME>
+#define SA_RESTART SA_SYSV
+</MACRO>
+<USER_FUNCTION>
+<NAME>GimpSignalHandlerFunc</NAME>
+<RETURNS>void </RETURNS>
+gint signum
+</USER_FUNCTION>
+<FUNCTION>
+<NAME>gimp_signal_private</NAME>
+<RETURNS>GimpSignalHandlerFunc  </RETURNS>
+gint                   signum,GimpSignalHandlerFunc  handler,gint                   flags
+</FUNCTION>
+<MACRO>
+<NAME>gimp_signal_syscallrestart</NAME>
+#define gimp_signal_syscallrestart(signum,handler) gimp_signal_private ((signum), (handler), SA_RESTART)
+</MACRO>
+<FUNCTION>
+<NAME>gimp_unit_get_number_of_units</NAME>
+<RETURNS>gint  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_number_of_built_in_units</NAME>
+<RETURNS>gint  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_new</NAME>
+<RETURNS>GimpUnit  </RETURNS>
+gchar    *identifier,gdouble   factor,gint      digits,gchar    *symbol,gchar    *abbreviation,gchar    *singular,gchar    *plural
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_deletion_flag</NAME>
+<RETURNS>gboolean  </RETURNS>
+GimpUnit  unit
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_set_deletion_flag</NAME>
+<RETURNS>void  </RETURNS>
+GimpUnit  unit,gboolean  deletion_flag
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_factor</NAME>
+<RETURNS>gdouble  </RETURNS>
+GimpUnit  unit
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_digits</NAME>
+<RETURNS>gint  </RETURNS>
+GimpUnit  unit
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_identifier</NAME>
+<RETURNS>gchar     *</RETURNS>
+GimpUnit  unit
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_symbol</NAME>
+<RETURNS>gchar     *</RETURNS>
+GimpUnit  unit
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_abbreviation</NAME>
+<RETURNS>gchar     *</RETURNS>
+GimpUnit  unit
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_singular</NAME>
+<RETURNS>gchar     *</RETURNS>
+GimpUnit  unit
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_unit_get_plural</NAME>
+<RETURNS>gchar     *</RETURNS>
+GimpUnit  unit
+</FUNCTION>
+<MACRO>
+<NAME>gimp_strescape</NAME>
+#define gimp_strescape(string, exceptions) g_strescape (string, exceptions)
+</MACRO>
+<MACRO>
+<NAME>gimp_strcompress</NAME>
+#define gimp_strcompress(string)           g_strcompress (string)
+</MACRO>
+<FUNCTION>
+<NAME>gimp_strescape</NAME>
+<RETURNS>gchar  *</RETURNS>
+const gchar *source,const gchar *exceptions
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_strcompress</NAME>
+<RETURNS>gchar  *</RETURNS>
+const gchar *source
+</FUNCTION>
+<STRUCT>
+<NAME>WireMessage</NAME>
+</STRUCT>
+<USER_FUNCTION>
+<NAME>WireReadFunc</NAME>
+<RETURNS>void </RETURNS>
+GIOChannel  *channel,
+				      WireMessage *msg
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>WireWriteFunc</NAME>
+<RETURNS>void </RETURNS>
+GIOChannel  *channel,
+				      WireMessage *msg
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>WireDestroyFunc</NAME>
+<RETURNS>void </RETURNS>
+WireMessage *msg
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>WireIOFunc</NAME>
+<RETURNS>gboolean </RETURNS>
+GIOChannel  *channel,
+				      guint8      *buf,
+				      gulong       count
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>WireFlushFunc</NAME>
+<RETURNS>gboolean </RETURNS>
+GIOChannel  *channel
+</USER_FUNCTION>
+<STRUCT>
+<NAME>WireMessage</NAME>
+struct WireMessage
+{
+  guint32  type;
+  gpointer data;
+};
+</STRUCT>
+<FUNCTION>
+<NAME>wire_register</NAME>
+<RETURNS>void  </RETURNS>
+guint32          type,WireReadFunc     read_func,WireWriteFunc    write_func,WireDestroyFunc  destroy_func
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_set_reader</NAME>
+<RETURNS>void  </RETURNS>
+WireIOFunc       read_func
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_set_writer</NAME>
+<RETURNS>void  </RETURNS>
+WireIOFunc       write_func
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_set_flusher</NAME>
+<RETURNS>void  </RETURNS>
+WireFlushFunc    flush_func
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_read</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel	     *channel,guint8          *buf,gulong           count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_write</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,guint8          *buf,gulong           count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_flush</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel	     *channel
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_error</NAME>
+<RETURNS>gboolean  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_clear_error</NAME>
+<RETURNS>void  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_read_msg</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel	     *channel,WireMessage     *msg
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_write_msg</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel	     *channel,WireMessage     *msg
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_destroy</NAME>
+<RETURNS>void  </RETURNS>
+WireMessage     *msg
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_read_int32</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,guint32         *data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_read_int16</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel	     *channel,guint16         *data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_read_int8</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,guint8          *data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_read_double</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,gdouble         *data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_read_string</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,gchar          **data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_write_int32</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,guint32         *data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_write_int16</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,guint16         *data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_write_int8</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,guint8          *data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_write_double</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,gdouble         *data,gint             count
+</FUNCTION>
+<FUNCTION>
+<NAME>wire_write_string</NAME>
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,gchar          **data,gint             count
+</FUNCTION>
+<MACRO>
+<NAME>GIMP_MAJOR_VERSION</NAME>
+#define GIMP_MAJOR_VERSION				(1)
+</MACRO>
+<MACRO>
+<NAME>GIMP_MINOR_VERSION</NAME>
+#define GIMP_MINOR_VERSION				(3)
+</MACRO>
+<MACRO>
+<NAME>GIMP_MICRO_VERSION</NAME>
+#define GIMP_MICRO_VERSION				(0)
+</MACRO>
+<MACRO>
+<NAME>GIMP_VERSION</NAME>
+#define GIMP_VERSION					"1.3.0"
+</MACRO>
+<MACRO>
+<NAME>GIMP_CHECK_VERSION</NAME>
+#define GIMP_CHECK_VERSION(major, minor, micro)	\
+    (GIMP_MAJOR_VERSION > (major) || \
+     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION > (minor)) || \
+     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION == (minor) && \
+      GIMP_MICRO_VERSION >= (micro)))
+</MACRO>

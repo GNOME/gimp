@@ -16,16 +16,6 @@ gimp_image_parasite_attach(), gimp_drawable_parasite_attach(),
 gimp_parasite_attach() and their related functions.
 </para>
 
-<!-- ##### STRUCT GimpParasite ##### -->
-<para>
-
-</para>
-
-@name: 
-@flags: 
-@size: 
-@data: 
-
 <!-- ##### MACRO GIMP_PARASITE_PERSISTENT ##### -->
 <para>
 
@@ -81,6 +71,16 @@ gimp_parasite_attach() and their related functions.
 </para>
 
 
+
+<!-- ##### STRUCT GimpParasite ##### -->
+<para>
+
+</para>
+
+@name: 
+@flags: 
+@size: 
+@data: 
 
 <!-- ##### FUNCTION gimp_parasite_new ##### -->
 <para>
@@ -159,7 +159,7 @@ gimp_parasite_attach() and their related functions.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_parasite_name ##### -->
+<!-- ##### FUNCTION gimp_parasite_flags ##### -->
 <para>
 
 </para>
@@ -168,7 +168,7 @@ gimp_parasite_attach() and their related functions.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_parasite_flags ##### -->
+<!-- ##### FUNCTION gimp_parasite_name ##### -->
 <para>
 
 </para>
@@ -193,172 +193,5 @@ gimp_parasite_attach() and their related functions.
 
 @parasite: 
 @Returns: 
-
-
-<!-- ##### FUNCTION gimp_parasite_find ##### -->
-<para>
-
-</para>
-
-@name: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_parasite_attach ##### -->
-<para>
-
-</para>
-
-@parasite: 
-@Returns: 
-<!-- # Unused Parameters # -->
-@p: 
-
-
-<!-- ##### FUNCTION gimp_parasite_detach ##### -->
-<para>
-
-</para>
-
-@name: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_parasite_list ##### -->
-<para>
-
-</para>
-
-@num_parasites: 
-@parasites: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_parasite_find ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@name: 
-@Returns: 
-<!-- # Unused Parameters # -->
-@drawable: 
-
-
-<!-- ##### FUNCTION gimp_drawable_parasite_attach ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@parasite: 
-@Returns: 
-<!-- # Unused Parameters # -->
-@drawable: 
-@p: 
-
-
-<!-- ##### FUNCTION gimp_drawable_parasite_detach ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@name: 
-@Returns: 
-<!-- # Unused Parameters # -->
-@drawable: 
-
-
-<!-- ##### FUNCTION gimp_drawable_parasite_list ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@num_parasites: 
-@parasites: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_parasite_find ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@name: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_parasite_attach ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@parasite: 
-@Returns: 
-<!-- # Unused Parameters # -->
-@p: 
-
-
-<!-- ##### FUNCTION gimp_image_parasite_detach ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@name: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_parasite_list ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@num_parasites: 
-@parasites: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_attach_new_parasite ##### -->
-<para>
-
-</para>
-
-@name: 
-@flags: 
-@size: 
-@data: 
-
-
-<!-- ##### FUNCTION gimp_drawable_attach_new_parasite ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@name: 
-@flags: 
-@size: 
-@data: 
-<!-- # Unused Parameters # -->
-@drawable: 
-
-
-<!-- ##### FUNCTION gimp_image_attach_new_parasite ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@name: 
-@flags: 
-@size: 
-@data: 
 
 

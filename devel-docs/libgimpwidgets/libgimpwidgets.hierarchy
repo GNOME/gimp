@@ -1,14 +1,28 @@
 GtkObject
   GtkWidget
+    GtkRange
+      GtkScrollbar
+        GtkVScrollbar
+        GtkHScrollbar
+      GtkScale
+        GtkHScale
+        GtkVScale
     GtkContainer
-      GtkTable
-        GimpChainButton
-        GimpSizeEntry
       GtkBin
         GtkButton
+          GtkToggleButton
+            GtkCheckButton
+              GtkRadioButton
           GimpColorButton
           GtkOptionMenu
             GimpUnitMenu
+        GtkScrolledWindow
+      GtkPaned
+        GtkVPaned
+        GtkHPaned
+      GtkTable
+        GimpChainButton
+        GimpSizeEntry
       GtkBox
         GtkHBox
           GimpFileSelection
@@ -17,3 +31,5 @@ GtkObject
     GtkMisc
       GtkPixmap
         GimpPixmap
+  GtkData
+    GtkAdjustment

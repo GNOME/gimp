@@ -136,6 +136,34 @@ GIMP_IS_UNIT_MENU_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpbutton</FILE>
+<TITLE>GimpButton</TITLE>
+gimp_button_new
+<SUBSECTION Standard>
+GIMP_BUTTON
+GIMP_IS_BUTTON
+GIMP_TYPE_BUTTON
+gimp_button_get_type
+GIMP_BUTTON_CLASS
+GIMP_IS_BUTTON_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpoffsetarea</FILE>
+<TITLE>GimpOffsetArea</TITLE>
+gimp_offset_area_new
+gimp_offset_area_set_size
+gimp_offset_area_set_offsets
+<SUBSECTION Standard>
+GIMP_OFFSET_AREA
+GIMP_IS_OFFSET_AREA
+GIMP_TYPE_OFFSET_AREA
+gimp_offset_area_get_type
+GIMP_OFFSET_AREA_CLASS
+GIMP_IS_OFFSET_AREA_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpdialog</FILE>
 gimp_dialog_new
 gimp_dialog_newv
@@ -210,10 +238,12 @@ gimp_table_attach_aligned
 <SECTION>
 <FILE>gimpwidgetstypes</FILE>
 GimpSizeEntryUpdatePolicy
+GimpButton
 GimpChainButton
 GimpColorArea
 GimpColorButton
 GimpFileSelection
+GimpOffsetArea
 GimpPathEditor
 GimpPixmap
 GimpSizeEntry

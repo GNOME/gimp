@@ -19,9 +19,6 @@
 #define GIMP_IS_CHAIN_BUTTON_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHAIN_BUTTON))
 </MACRO>
 <STRUCT>
-<NAME>GimpChainButton</NAME>
-</STRUCT>
-<STRUCT>
 <NAME>GimpChainButtonClass</NAME>
 </STRUCT>
 <ENUM>
@@ -246,9 +243,6 @@ GtkDialog          *dialog,va_list             args
 #define GIMP_IS_FILE_SELECTION_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FILE_SELECTION))
 </MACRO>
 <STRUCT>
-<NAME>GimpFileSelection</NAME>
-</STRUCT>
-<STRUCT>
 <NAME>GimpFileSelectionClass</NAME>
 </STRUCT>
 <STRUCT>
@@ -412,9 +406,6 @@ GimpPathEditor *gpe
 <NAME>GIMP_IS_PIXMAP_CLASS</NAME>
 #define GIMP_IS_PIXMAP_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PIXMAP))
 </MACRO>
-<STRUCT>
-<NAME>GimpPixmap</NAME>
-</STRUCT>
 <STRUCT>
 <NAME>GimpPixmapClass</NAME>
 </STRUCT>
@@ -872,13 +863,28 @@ typedef enum
 } GimpSizeEntryUpdatePolicy;
 </ENUM>
 <STRUCT>
+<NAME>GimpButton</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpChainButton</NAME>
+</STRUCT>
+<STRUCT>
 <NAME>GimpColorArea</NAME>
 </STRUCT>
 <STRUCT>
 <NAME>GimpColorButton</NAME>
 </STRUCT>
 <STRUCT>
+<NAME>GimpFileSelection</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpOffsetArea</NAME>
+</STRUCT>
+<STRUCT>
 <NAME>GimpPathEditor</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpPixmap</NAME>
 </STRUCT>
 <STRUCT>
 <NAME>GimpSizeEntry</NAME>
@@ -891,3 +897,105 @@ typedef enum
 <RETURNS>void </RETURNS>
 const gchar *help_data
 </USER_FUNCTION>
+<MACRO>
+<NAME>GIMP_TYPE_BUTTON</NAME>
+#define GIMP_TYPE_BUTTON            (gimp_button_get_type ())
+</MACRO>
+<MACRO>
+<NAME>GIMP_BUTTON</NAME>
+#define GIMP_BUTTON(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BUTTON, GimpButton))
+</MACRO>
+<MACRO>
+<NAME>GIMP_BUTTON_CLASS</NAME>
+#define GIMP_BUTTON_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUTTON, GimpButtonClass))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_BUTTON</NAME>
+#define GIMP_IS_BUTTON(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BUTTON))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_BUTTON_CLASS</NAME>
+#define GIMP_IS_BUTTON_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUTTON))
+</MACRO>
+<STRUCT>
+<NAME>GimpButtonClass</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpButton</NAME>
+struct GimpButton
+{
+  GtkButton  parent_instance;
+
+  /*< private >*/
+  guint      press_state;
+};
+</STRUCT>
+<FUNCTION>
+<NAME>gimp_button_get_type</NAME>
+<RETURNS>GtkType  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_button_new</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+void
+</FUNCTION>
+<MACRO>
+<NAME>GIMP_TYPE_OFFSET_AREA</NAME>
+#define GIMP_TYPE_OFFSET_AREA            (gimp_offset_area_get_type ())
+</MACRO>
+<MACRO>
+<NAME>GIMP_OFFSET_AREA</NAME>
+#define GIMP_OFFSET_AREA(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_OFFSET_AREA, GimpOffsetArea))
+</MACRO>
+<MACRO>
+<NAME>GIMP_OFFSET_AREA_CLASS</NAME>
+#define GIMP_OFFSET_AREA_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OFFSET_AREA, GimpOffsetAreaClass))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_OFFSET_AREA</NAME>
+#define GIMP_IS_OFFSET_AREA(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_OFFSET_AREA))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_OFFSET_AREA_CLASS</NAME>
+#define GIMP_IS_OFFSET_AREA_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_OFFSET_AREA))
+</MACRO>
+<STRUCT>
+<NAME>GimpOffsetAreaClass</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpOffsetArea</NAME>
+struct GimpOffsetArea
+{
+  GtkDrawingArea  parent_instance;
+
+  gint            orig_width;
+  gint            orig_height;
+  gint            width;
+  gint            height;
+  gint            offset_x;
+  gint            offset_y;
+  gdouble         display_ratio_x;
+  gdouble         display_ratio_y;  
+};
+</STRUCT>
+<FUNCTION>
+<NAME>gimp_offset_area_get_type</NAME>
+<RETURNS>GtkType  </RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_offset_area_new</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+gint            orig_width,gint            orig_height
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_offset_area_set_size</NAME>
+<RETURNS>void  </RETURNS>
+GimpOffsetArea *offset_area,gint            width,gint            height
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_offset_area_set_offsets</NAME>
+<RETURNS>void  </RETURNS>
+GimpOffsetArea *offset_area,gint            offset_x,gint            offset_y
+</FUNCTION>

@@ -1,5 +1,9 @@
 2001-05-25  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: new directory devel-docs/libgimpbase/
+
+2001-05-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/scan_convert.[ch]: removed.
 

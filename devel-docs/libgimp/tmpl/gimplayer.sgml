@@ -197,6 +197,63 @@ gimplayer
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_layer_get_apply_mask ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_set_apply_mask ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@apply_mask: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_get_show_mask ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_set_show_mask ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@show_mask: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_get_edit_mask ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_set_edit_mask ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@edit_mask: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_layer_get_opacity ##### -->
 <para>
 

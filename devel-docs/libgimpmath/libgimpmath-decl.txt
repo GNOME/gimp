@@ -1,184 +1,3 @@
-<MACRO>
-<NAME>G_PI</NAME>
-#define G_PI    3.14159265358979323846
-</MACRO>
-<MACRO>
-<NAME>G_PI_2</NAME>
-#define G_PI_2  1.57079632679489661923
-</MACRO>
-<MACRO>
-<NAME>G_PI_4</NAME>
-#define G_PI_4  0.78539816339744830962
-</MACRO>
-<MACRO>
-<NAME>G_SQRT2</NAME>
-#define G_SQRT2 1.4142135623730951
-</MACRO>
-<MACRO>
-<NAME>G_MAXRAND</NAME>
-#define G_MAXRAND G_MAXINT
-</MACRO>
-<MACRO>
-<NAME>G_MAXRAND</NAME>
-#define G_MAXRAND RAND_MAX
-</MACRO>
-<MACRO>
-<NAME>RINT</NAME>
-#define RINT(x) rint(x)
-</MACRO>
-<MACRO>
-<NAME>RINT</NAME>
-#define RINT(x) floor ((x) + 0.5)
-</MACRO>
-<MACRO>
-<NAME>ROUND</NAME>
-#define ROUND(x) ((int) ((x) + 0.5))
-</MACRO>
-<MACRO>
-<NAME>SQR</NAME>
-#define SQR(x) ((x) * (x))
-</MACRO>
-<MACRO>
-<NAME>MAX255</NAME>
-#define MAX255(a)  ((a) | (((a) & 256) - (((a) & 256) >> 8)))
-</MACRO>
-<MACRO>
-<NAME>CLAMP0255</NAME>
-#define CLAMP0255(a)  CLAMP(a,0,255)
-</MACRO>
-<MACRO>
-<NAME>gimp_deg_to_rad</NAME>
-#define gimp_deg_to_rad(angle) ((angle) * (2.0 * G_PI) / 360.0)
-</MACRO>
-<MACRO>
-<NAME>gimp_rad_to_deg</NAME>
-#define gimp_rad_to_deg(angle) ((angle) * 360.0 / (2.0 * G_PI))
-</MACRO>
-<MACRO>
-<NAME>FINITE</NAME>
-#define FINITE(x) _finite(x)
-</MACRO>
-<MACRO>
-<NAME>FINITE</NAME>
-#define FINITE(x) isfinite(x)
-</MACRO>
-<MACRO>
-<NAME>FINITE</NAME>
-#define FINITE(x) finite(x) 
-</MACRO>
-<TYPEDEF>
-<NAME>GimpMatrix3[3][3]</NAME>
-typedef gdouble GimpMatrix3[3][3];
-</TYPEDEF>
-<TYPEDEF>
-<NAME>GimpMatrix4[4][4]</NAME>
-typedef gdouble GimpMatrix4[4][4];
-</TYPEDEF>
-<STRUCT>
-<NAME>GimpVector2</NAME>
-</STRUCT>
-<STRUCT>
-<NAME>GimpVector3</NAME>
-</STRUCT>
-<STRUCT>
-<NAME>GimpVector4</NAME>
-</STRUCT>
-<STRUCT>
-<NAME>GimpVector2</NAME>
-struct GimpVector2
-{
-  gdouble x, y;
-};
-</STRUCT>
-<STRUCT>
-<NAME>GimpVector3</NAME>
-struct GimpVector3
-{
-  gdouble x, y, z;
-};
-</STRUCT>
-<STRUCT>
-<NAME>GimpVector4</NAME>
-struct GimpVector4
-{
-  gdouble x, y, z, w;
-};
-</STRUCT>
-<FUNCTION>
-<NAME>gimp_matrix3_transform_point</NAME>
-<RETURNS>void  </RETURNS>
-GimpMatrix3  matrix,gdouble      x,gdouble      y,gdouble     *newx,gdouble     *newy
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_matrix3_mult</NAME>
-<RETURNS>void  </RETURNS>
-GimpMatrix3  matrix1,GimpMatrix3  matrix2
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_matrix3_identity</NAME>
-<RETURNS>void  </RETURNS>
-GimpMatrix3  matrix
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_matrix3_translate</NAME>
-<RETURNS>void  </RETURNS>
-GimpMatrix3  matrix,gdouble      x,gdouble      y
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_matrix3_scale</NAME>
-<RETURNS>void  </RETURNS>
-GimpMatrix3  matrix,gdouble      x,gdouble      y
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_matrix3_rotate</NAME>
-<RETURNS>void  </RETURNS>
-GimpMatrix3  matrix,gdouble      theta
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_matrix3_xshear</NAME>
-<RETURNS>void  </RETURNS>
-GimpMatrix3  matrix,gdouble      amount
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_matrix3_yshear</NAME>
-<RETURNS>void  </RETURNS>
-GimpMatrix3  matrix,gdouble      amount
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_matrix3_determinant</NAME>
-<RETURNS>gdouble  </RETURNS>
-GimpMatrix3  matrix
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_matrix3_invert</NAME>
-<RETURNS>void  </RETURNS>
-GimpMatrix3  matrix,GimpMatrix3  matrix_inv
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_matrix3_duplicate</NAME>
-<RETURNS>void  </RETURNS>
-GimpMatrix3  src,GimpMatrix3  target
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_matrix3_is_diagonal</NAME>
-<RETURNS>gboolean  </RETURNS>
-GimpMatrix3  matrix
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_matrix3_is_identity</NAME>
-<RETURNS>gboolean  </RETURNS>
-GimpMatrix3  matrix
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_matrix3_is_simple</NAME>
-<RETURNS>gboolean  </RETURNS>
-GimpMatrix3  matrix
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_matrix4_to_deg</NAME>
-<RETURNS>void  </RETURNS>
-GimpMatrix4  matrix,gdouble     *a,gdouble     *b,gdouble     *c
-</FUNCTION>
 <FUNCTION>
 <NAME>gimp_vector2_inner_product</NAME>
 <RETURNS>gdouble  </RETURNS>
@@ -394,3 +213,184 @@ gint         sx,gint         sy,gint         w,gint         h,gint         x,gin
 <RETURNS>void  </RETURNS>
 gint         sx,gint         sy,gint         w,gint         h,gdouble     *x,gdouble     *y,GimpVector3 *vp,GimpVector3 *p
 </FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix3_transform_point</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix3  matrix,gdouble      x,gdouble      y,gdouble     *newx,gdouble     *newy
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix3_mult</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix3  matrix1,GimpMatrix3  matrix2
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix3_identity</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix3  matrix
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix3_translate</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix3  matrix,gdouble      x,gdouble      y
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix3_scale</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix3  matrix,gdouble      x,gdouble      y
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix3_rotate</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix3  matrix,gdouble      theta
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix3_xshear</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix3  matrix,gdouble      amount
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix3_yshear</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix3  matrix,gdouble      amount
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix3_determinant</NAME>
+<RETURNS>gdouble  </RETURNS>
+GimpMatrix3  matrix
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix3_invert</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix3  matrix,GimpMatrix3  matrix_inv
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix3_duplicate</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix3  src,GimpMatrix3  target
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix3_is_diagonal</NAME>
+<RETURNS>gboolean  </RETURNS>
+GimpMatrix3  matrix
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix3_is_identity</NAME>
+<RETURNS>gboolean  </RETURNS>
+GimpMatrix3  matrix
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix3_is_simple</NAME>
+<RETURNS>gboolean  </RETURNS>
+GimpMatrix3  matrix
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_matrix4_to_deg</NAME>
+<RETURNS>void  </RETURNS>
+GimpMatrix4  matrix,gdouble     *a,gdouble     *b,gdouble     *c
+</FUNCTION>
+<MACRO>
+<NAME>G_PI</NAME>
+#define G_PI    3.14159265358979323846
+</MACRO>
+<MACRO>
+<NAME>G_PI_2</NAME>
+#define G_PI_2  1.57079632679489661923
+</MACRO>
+<MACRO>
+<NAME>G_PI_4</NAME>
+#define G_PI_4  0.78539816339744830962
+</MACRO>
+<MACRO>
+<NAME>G_SQRT2</NAME>
+#define G_SQRT2 1.4142135623730951
+</MACRO>
+<MACRO>
+<NAME>G_MAXRAND</NAME>
+#define G_MAXRAND G_MAXINT
+</MACRO>
+<MACRO>
+<NAME>G_MAXRAND</NAME>
+#define G_MAXRAND RAND_MAX
+</MACRO>
+<MACRO>
+<NAME>RINT</NAME>
+#define RINT(x) rint(x)
+</MACRO>
+<MACRO>
+<NAME>RINT</NAME>
+#define RINT(x) floor ((x) + 0.5)
+</MACRO>
+<MACRO>
+<NAME>ROUND</NAME>
+#define ROUND(x) ((int) ((x) + 0.5))
+</MACRO>
+<MACRO>
+<NAME>SQR</NAME>
+#define SQR(x) ((x) * (x))
+</MACRO>
+<MACRO>
+<NAME>MAX255</NAME>
+#define MAX255(a)  ((a) | (((a) & 256) - (((a) & 256) >> 8)))
+</MACRO>
+<MACRO>
+<NAME>CLAMP0255</NAME>
+#define CLAMP0255(a)  CLAMP(a,0,255)
+</MACRO>
+<MACRO>
+<NAME>gimp_deg_to_rad</NAME>
+#define gimp_deg_to_rad(angle) ((angle) * (2.0 * G_PI) / 360.0)
+</MACRO>
+<MACRO>
+<NAME>gimp_rad_to_deg</NAME>
+#define gimp_rad_to_deg(angle) ((angle) * 360.0 / (2.0 * G_PI))
+</MACRO>
+<MACRO>
+<NAME>FINITE</NAME>
+#define FINITE(x) _finite(x)
+</MACRO>
+<MACRO>
+<NAME>FINITE</NAME>
+#define FINITE(x) isfinite(x)
+</MACRO>
+<MACRO>
+<NAME>FINITE</NAME>
+#define FINITE(x) finite(x) 
+</MACRO>
+<TYPEDEF>
+<NAME>GimpMatrix3[3][3]</NAME>
+typedef gdouble GimpMatrix3[3][3];
+</TYPEDEF>
+<TYPEDEF>
+<NAME>GimpMatrix4[4][4]</NAME>
+typedef gdouble GimpMatrix4[4][4];
+</TYPEDEF>
+<STRUCT>
+<NAME>GimpVector2</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpVector3</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpVector4</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpVector2</NAME>
+struct GimpVector2
+{
+  gdouble x, y;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GimpVector3</NAME>
+struct GimpVector3
+{
+  gdouble x, y, z;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GimpVector4</NAME>
+struct GimpVector4
+{
+  gdouble x, y, z, w;
+};
+</STRUCT>

@@ -344,3 +344,56 @@ gimpdrawable
 @drawable_ID: 
 
 
+<!-- ##### FUNCTION gimp_drawable_parasite_find ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_parasite_list ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@num_parasites: 
+@parasites: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_parasite_attach ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@parasite: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_parasite_detach ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_attach_new_parasite ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@name: 
+@flags: 
+@size: 
+@data: 
+
+

@@ -1,0 +1,31 @@
+<!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
+<!entity libgimpbase-gimpbasetypes SYSTEM "sgml/gimpbasetypes.sgml">
+<!entity libgimpbase-gimpsignal SYSTEM "sgml/gimpsignal.sgml">
+<!entity libgimpbase-gimpwire SYSTEM "sgml/gimpwire.sgml">
+<!entity libgimpbase-gimpparasite SYSTEM "sgml/gimpparasite.sgml">
+<!entity libgimpbase-gimpenv SYSTEM "sgml/gimpenv.sgml">
+<!entity libgimpbase-gimplimits SYSTEM "sgml/gimplimits.sgml">
+<!entity libgimpbase-gimpparasiteio SYSTEM "sgml/gimpparasiteio.sgml">
+<!entity libgimpbase-gimpversion SYSTEM "sgml/gimpversion.sgml">
+<!entity libgimpbase-gimpunit SYSTEM "sgml/gimpunit.sgml">
+<!entity libgimpbase-gimputils SYSTEM "sgml/gimputils.sgml">
+]>
+<book id="index">
+  <bookinfo>
+    <title>GIMP Base Library Reference Manual</title>
+  </bookinfo>
+
+  <chapter id="libgimpbase">
+    <title>GIMP Base Library</title>
+    &libgimpbase-gimpbasetypes;
+    &libgimpbase-gimpversion;
+    &libgimpbase-gimplimits;
+    &libgimpbase-gimpenv;
+    &libgimpbase-gimpparasite;
+    &libgimpbase-gimpparasiteio;
+    &libgimpbase-gimpsignal;
+    &libgimpbase-gimpunit;
+    &libgimpbase-gimputils;
+    &libgimpbase-gimpwire;
+  </chapter>
+</book>

@@ -1,3 +1,19 @@
+2001-05-25  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.am
+	* libgimpbase/*: new gtk-doc module for the new library.
+
+	* libgimp/*: removed the files which belong to libgimpbase, updates.
+
+	* libgimpmath/libgimpmath-decl.txt
+	* libgimpmath/libgimpmath.hierarchy
+	* libgimpwidgets/libgimpwidgets-decl.txt
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.hierarchy
+	* libgimpwidgets/tmpl/gimpbutton.sgml
+	* libgimpwidgets/tmpl/gimpoffsetarea.sgml
+	* libgimpwidgets/tmpl/gimpwidgetstypes.sgml: updated.
+
 2000-12-21  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am
