@@ -1,6 +1,6 @@
 /* align_layers.c -- This is a plug-in for the GIMP (1.0's API)
  * Author: Shuji Narazaki <narazaki@InetQ.or.jp>
- * Time-stamp: <1998/01/17 00:32:23 narazaki@InetQ.or.jp>
+ * Time-stamp: <1999-12-18 05:48:38 yasuhiro>
  * Version:  0.26
  *
  * Copyright (C) 1997-1998 Shuji Narazaki <narazaki@InetQ.or.jp>
@@ -20,8 +20,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
+#include "libgimp/stdplugins-intl.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,7 +32,6 @@
 #define	PLUG_IN_NAME	"plug_in_align_layers"
 #define SHORT_NAME	"align_layers"
 #define PROGRESS_NAME	"align_layers"
-#define MENU_POSITION	"<Image>/Layers/Align Visible Layers..."
 #define	MAIN_FUNCTION	main_function
 #define INTERFACE	align_layers_interface
 #define	DIALOG		align_layers_dialog
@@ -130,49 +131,49 @@ GPlugInInfo PLUG_IN_INFO =
 gtkW_menu_item h_style_menu [] =
 {
 #define	H_NONE		0
-  { "None", NULL },
+  { N_("None"), NULL },
 #define H_COLLECT	1
-  { "Collect", NULL },
+  { N_("Collect"), NULL },
 #define	LEFT2RIGHT	2
-  { "Fill (left to right)", NULL },
+  { N_("Fill (left to right)"), NULL },
 #define	RIGHT2LEFT	3
-  { "Fill (right to left)", NULL },
+  { N_("Fill (right to left)"), NULL },
 #define SNAP2HGRID	4
-  { "Snap to grid", NULL }
+  { N_("Snap to grid"), NULL }
 };
 
 gtkW_menu_item h_base_menu [] =
 {
 #define H_BASE_LEFT	0
-  { "Left edge", NULL },
+  { N_("Left edge"), NULL },
 #define H_BASE_CENTER	1
-  { "Center", NULL },
+  { N_("Center"), NULL },
 #define	H_BASE_RIGHT	2
-  { "Right edge", NULL }
+  { N_("Right edge"), NULL }
 };
 
 gtkW_menu_item v_style_menu [] =
 {
 #define	V_NONE		0
-  { "None", NULL },
+  { N_("None"), NULL },
 #define V_COLLECT	1
-  { "Collect", NULL },
+  { N_("Collect"), NULL },
 #define TOP2BOTTOM	2
-  { "Fill (top to bottom)", NULL },
+  { N_("Fill (top to bottom)"), NULL },
 #define BOTTOM2TOP	3
-  { "Fill (bottom to top)", NULL },
+  { N_("Fill (bottom to top)"), NULL },
 #define SNAP2VGRID	4
-  { "Snap to grid", NULL }
+  { N_("Snap to grid"), NULL }
 };
 
 gtkW_menu_item v_base_menu [] =
 {
 #define V_BASE_TOP	0
-  { "Top edge", NULL },
+  { N_("Top edge"), NULL },
 #define V_BASE_CENTER	1
-  { "Center", NULL },
+  { N_("Center"), NULL },
 #define V_BASE_BOTTOM	2
-  { "Bottom edge", NULL }
+  { N_("Bottom edge"), NULL }
 };
 
 typedef struct
@@ -216,14 +217,16 @@ query ()
   static GParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
+
+  INIT_I18N();
   
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Align visible layers",
-			  "align visible layers",
+			  _("Align visible layers"),
+			  _("align visible layers"),
 			  "Shuji Narazaki <narazaki@InetQ.or.jp>",
 			  "Shuji Narazaki",
 			  "1997",
-			  MENU_POSITION,
+              N_("<Image>/Layers/Align Visible Layers..."),
 			  "RGB*,GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -254,10 +257,11 @@ run (char	*name,
   switch ( run_mode )
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       gimp_image_get_layers (image_id, &layer_num);
       if (layer_num < 2)
 	{
-	  gtkW_message_dialog (0, "Error: there are too few layers.");
+	  gtkW_message_dialog (0, _("Error: there are too few layers."));
 	  return;
 	}
       gimp_get_data (PLUG_IN_NAME, &VALS);
@@ -265,8 +269,10 @@ run (char	*name,
 	return;
       break;
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       break;
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       gimp_get_data (PLUG_IN_NAME, &VALS);
       break;
     }
@@ -573,39 +579,39 @@ DIALOG ()
   gtk_widget_show (frame);
   gtk_widget_show (hbox);
 #else
-  frame = gtkW_frame_new (GTK_DIALOG (dlg)->vbox, "Parameter settings");
+  frame = gtkW_frame_new (GTK_DIALOG (dlg)->vbox, _("Parameter settings"));
   table = gtkW_table_new (frame, 7, 2);
-  gtkW_table_add_menu (table, "Horizontal style", 0, index++,
+  gtkW_table_add_menu (table, _("Horizontal style"), 0, index++,
 		       (GtkSignalFunc) gtkW_menu_update,
 		       &VALS.h_style,
 		       h_style_menu,
 		       sizeof (h_style_menu) / sizeof (h_style_menu[0]));
-  gtkW_table_add_menu (table, "Horizontal base", 0, index++,
+  gtkW_table_add_menu (table, _("Horizontal base"), 0, index++,
 		       (GtkSignalFunc) gtkW_menu_update,
 		       &VALS.h_base,
 		       h_base_menu,
 		       sizeof (h_base_menu) / sizeof (h_base_menu[0]));
-  gtkW_table_add_menu (table, "Vertical style", 0, index++,
+  gtkW_table_add_menu (table, _("Vertical style"), 0, index++,
 		       (GtkSignalFunc) gtkW_menu_update,
 		       &VALS.v_style,
 		       v_style_menu,
 		       sizeof (v_style_menu) / sizeof (v_style_menu[0]));
-  gtkW_table_add_menu (table, "Vertical base", 0, index++,
+  gtkW_table_add_menu (table, _("Vertical base"), 0, index++,
 		       (GtkSignalFunc) gtkW_menu_update,
 		       &VALS.v_base,
 		       v_base_menu,
 		       sizeof (v_base_menu) / sizeof (v_base_menu[0]));
 #endif
 
-  gtkW_table_add_toggle (table, "Ignore the bottom layer even if visible",
+  gtkW_table_add_toggle (table, _("Ignore the bottom layer even if visible"),
 			 0, index++,
 			 (GtkSignalFunc) gtkW_toggle_update,
 			 &VALS.ignore_bottom);
-  gtkW_table_add_toggle (table, "Use the (invisible) bottom layer as the base",
+  gtkW_table_add_toggle (table, _("Use the (invisible) bottom layer as the base"),
 			 0, index++,
 			 (GtkSignalFunc) gtkW_toggle_update,
 			 &VALS.base_is_bottom_layer);
-  gtkW_table_add_iscale_entry (table, "Grid size",
+  gtkW_table_add_iscale_entry (table, _("Grid size"),
 			       0, index++,
 			       (GtkSignalFunc) gtkW_iscale_update,
 			       (GtkSignalFunc) gtkW_ientry_update,
@@ -711,7 +717,7 @@ gtkW_dialog_new (char * name,
 		      (GtkSignalFunc) close_callback, NULL);
 
   /* Action Area */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) ok_callback, dlg);
@@ -720,7 +726,7 @@ gtkW_dialog_new (char * name,
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -779,7 +785,7 @@ gtkW_message_dialog_new (char * name)
 		      (GtkSignalFunc) gtkW_close_callback, NULL);
 
   /* Action Area */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy, 
@@ -1031,7 +1037,7 @@ gtkW_table_add_menu (GtkWidget *table,
 
   for (i = 0; i < item_num; i++)
     {
-      sprintf (buf, item[i].name);
+      sprintf (buf, gettext(item[i].name));
       menuitem = gtk_menu_item_new_with_label (buf);
       gtk_menu_append (GTK_MENU (menu), menuitem);
       gtk_signal_connect (GTK_OBJECT (menuitem), "activate",

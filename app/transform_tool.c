@@ -209,7 +209,7 @@ transform_options_new (void)
   /*  the transform type radio buttons  */
   frame = gimp_radio_group_new (TRUE, _("Transform"),
 
-				_("Roatation"), transform_type_callback,
+				_("Rotation"), transform_type_callback,
 				ROTATE, NULL, &options->type_w[0], TRUE,
 				_("Scaling"), transform_type_callback,
 				SCALE, NULL, &options->type_w[1], FALSE,

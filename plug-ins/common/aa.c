@@ -8,6 +8,8 @@
  * Tim Newsome <nuisance@cmu.edu>
  */
 
+#include "config.h"
+
 #include <aalib.h>
 #include <string.h>
 #include <libgimp/gimp.h>
@@ -15,6 +17,8 @@
 #include <gtk/gtk.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "libgimp/stdplugins-intl.h"
 
 /* 
  * Declare some local functions.
@@ -81,9 +85,11 @@ query()
   };
   static int nsave_args = sizeof(save_args) / sizeof(save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure("file_aa_save",
-			 "Saves files in various text formats",
-			 "Saves files in various text formats",
+			 _("Saves files in various text formats"),
+			 _("Saves files in various text formats"),
 			 "Tim Newsome <nuisance@cmu.edu>",
 			 "Tim Newsome <nuisance@cmu.edu>",
 			 "1997",
@@ -153,6 +159,7 @@ run (char    *name,
     {
     case RUN_INTERACTIVE:
     case RUN_WITH_LAST_VALS:
+      INIT_I18N_UI();
       init_gtk ();
       export = gimp_export_image (&image_ID, &drawable_ID, "AA", 
 				  (CAN_HANDLE_GRAY | CAN_HANDLE_ALPHA));
@@ -163,6 +170,7 @@ run (char    *name,
 	}
       break;
     default:
+      INIT_I18N();
       break;
     }
   
@@ -345,7 +353,7 @@ type_dialog (int selected)
   
   /* Create the actual window. */
   dlg = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dlg), "Save as text");
+  gtk_window_set_title(GTK_WINDOW(dlg), _("Save as text"));
   gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
 		     (GtkSignalFunc) type_dialog_close_callback, NULL);
@@ -358,7 +366,7 @@ type_dialog (int selected)
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) type_dialog_ok_callback,
@@ -367,7 +375,7 @@ type_dialog (int selected)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) type_dialog_cancel_callback,
@@ -376,7 +384,7 @@ type_dialog (int selected)
   gtk_widget_show (button);
 
   /*  file save type  */
-  frame = gtk_frame_new ("Data Formatting");
+  frame = gtk_frame_new ( _("Data Formatting"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width(GTK_CONTAINER(frame), 10);
   gtk_box_pack_start (GTK_BOX(GTK_DIALOG(dlg)->vbox), frame, FALSE, TRUE, 0);

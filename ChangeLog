@@ -1,3 +1,12 @@
+1999-12-18  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* app/transform_tool.c: Fixed typo.
+
+	* plug-ins/common/CEL.c
+	* plug-ins/common/aa.c
+	* plug-ins/common/align_layers.c
+	* po-plug-ins/POTFILES.in: Added gettext support.
+
 Fri Dec 17 20:29:12 GMT 1999  Adam D. Moss <adam@gimp.org>
 
 	* app/edit_selection.c: Fixed a couple of bugs with translating

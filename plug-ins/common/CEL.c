@@ -34,6 +34,7 @@
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
+#include "libgimp/stdplugins-intl.h"
 
 static void query(void);
 static void run(char *name, int nparams, GParam *param,
@@ -89,10 +90,11 @@ static void query(void) {
   };
   static int		nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
 
   gimp_install_procedure("file_cel_load",
-      "Loads files in KISS CEL file format",
-      "This plug-in loads individual KISS cell files.",
+      _("Loads files in KISS CEL file format"),
+      _("This plug-in loads individual KISS cell files."),
       "Nick Lamb", "Nick Lamb <njl195@zepler.org.uk>", "May 1998",
       "<Load>/CEL", NULL, PROC_PLUG_IN, 
       nload_args, nload_return_vals, load_args, load_return_vals);
@@ -101,8 +103,8 @@ static void query(void) {
                                    "", "0,string,KiSS\040");
 
   gimp_install_procedure("file_cel_save",
-      "Saves files in KISS CEL file format",
-      "This plug-in saves individual KISS cell files.",
+      _("Saves files in KISS CEL file format"),
+      _("This plug-in saves individual KISS cell files."),
       "Nick Lamb", "Nick Lamb <njl195@zepler.org.uk>", "May 1998",
       "<Save>/CEL", "INDEXEDA",
       PROC_PLUG_IN, nsave_args, 0, save_args, NULL);
@@ -127,6 +129,12 @@ static void run(char *name, int nparams, GParam *param,
   values[0].data.d_status = STATUS_SUCCESS;
   *return_vals  = values;
 
+  if (run_mode == RUN_INTERACTIVE) {
+    INIT_I18N_UI();
+  } else {
+    INIT_I18N();
+  }
+
   if (strcmp(name, "file_cel_load") == 0) {
     if (run_mode != RUN_NONINTERACTIVE) {
         gimp_get_data ("file_cel_save:length", &data_length);
@@ -145,7 +153,7 @@ static void run(char *name, int nparams, GParam *param,
     } else if (run_mode == RUN_INTERACTIVE) {
 
       /* Let user choose KCF palette (cancel ignores) */
-      palette_dialog("Load KISS Palette");
+      palette_dialog( _("Load KISS Palette"));
       gimp_set_data ("file_cel_save:length", &data_length, sizeof (size_t));
       gimp_set_data ("file_cel_save:data", palette_file, data_length);
     }
@@ -200,12 +208,12 @@ static gint32 load_image(char *file, char *brief) {
   fp = fopen(file, "r");
 
   if (fp == NULL) {
-    g_message("%s\nis not present or is unreadable", file);
+    g_message( _("%s\nis not present or is unreadable"), file);
     gimp_quit();
   }
 
   progress= g_malloc(strlen(brief) + 10);
-  sprintf(progress, "Loading %s:", brief);
+  sprintf(progress, _("Loading %s:"), brief);
   gimp_progress_init(progress);
 
  /* Get the image dimensions and create the image... */
@@ -230,7 +238,7 @@ static gint32 load_image(char *file, char *brief) {
   image = gimp_image_new(width + offx, height + offy, INDEXED);
 
   if (image == -1) {
-    g_message("CEL Can't create a new image");
+    g_message( _("CEL Can't create a new image"));
     gimp_quit();
   }
 
@@ -238,7 +246,7 @@ static gint32 load_image(char *file, char *brief) {
 
  /* Create an indexed-alpha layer to hold the image... */
 
-  layer = gimp_layer_new(image, "Background", width, height,
+  layer = gimp_layer_new(image, _("Background"), width, height,
                          INDEXEDA_IMAGE, 100, NORMAL_MODE);
   gimp_image_add_layer(image, layer, 0);
   gimp_layer_set_offsets(layer, offx, offy);
@@ -290,7 +298,7 @@ static gint32 load_image(char *file, char *brief) {
       }
       break;
     default:
-      g_message("Unsupported number of colours (%d)", colours);
+      g_message( _("Unsupported number of colours (%d)"), colours);
       gimp_quit();
     }
     
@@ -388,7 +396,7 @@ static gint save_image(char *file, char *brief, gint32 image, gint32 layer) {
  /* Check that this is an indexed image, fail otherwise */
   type= gimp_drawable_type(layer);
   if (type != INDEXEDA_IMAGE) {
-    g_message("Only an indexed-alpha image can be saved in CEL format");
+    g_message( _("Only an indexed-alpha image can be saved in CEL format"));
     gimp_quit();
   }
 
@@ -401,12 +409,12 @@ static gint save_image(char *file, char *brief, gint32 image, gint32 layer) {
   fp = fopen(file, "w");
 
   if (fp == NULL) {
-    g_message("CEL Couldn't write image to\n%s", file);
+    g_message( _("CEL Couldn't write image to\n%s"), file);
     gimp_quit();
   }
 
   progress= g_malloc(strlen(brief) + 9);
-  sprintf(progress, "Saving %s:", brief);
+  sprintf(progress, _("Saving %s:"), brief);
   gimp_progress_init(progress);
 
  /* Headers */
