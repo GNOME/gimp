@@ -669,9 +669,11 @@
       <xi:include href="xml/gimpcolorframe.xml" />
       <xi:include href="xml/gimpcolorpanel.xml" />
       <xi:include href="xml/gimpcontainerpopup.xml" />
+      <xi:include href="xml/gimpfiledialog.xml" />
       <xi:include href="xml/gimphistogrambox.xml" />
       <xi:include href="xml/gimphistogramview.xml" />
       <xi:include href="xml/gimptexteditor.xml" />
+      <xi:include href="xml/gimpthumbbox.xml" />
       <xi:include href="xml/gimptooldialog.xml" />
       <xi:include href="xml/gimpviewablebutton.xml" />
       <xi:include href="xml/gimpviewabledialog.xml" />
@@ -692,6 +694,7 @@
       <xi:include href="xml/gimppreviewrendererdrawable.xml" />
       <xi:include href="xml/gimppreviewrenderergradient.xml" />
       <xi:include href="xml/gimppreviewrendererimage.xml" />
+      <xi:include href="xml/gimppreviewrendererimagefile.xml" />
       <xi:include href="xml/gimppreviewrendererlayer.xml" />
       <xi:include href="xml/gimppreviewrenderervectors.xml" />
     </chapter>

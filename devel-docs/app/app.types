@@ -88,6 +88,7 @@ gimp_eraser_get_type
 gimp_eraser_options_get_type
 gimp_eraser_tool_get_type
 gimp_error_console_get_type
+gimp_file_dialog_get_type
 gimp_flip_options_get_type
 gimp_flip_tool_get_type
 gimp_font_get_type
@@ -157,6 +158,7 @@ gimp_preview_renderer_drawable_get_type
 gimp_preview_renderer_get_type
 gimp_preview_renderer_gradient_get_type
 gimp_preview_renderer_image_get_type
+gimp_preview_renderer_imagefile_get_type
 gimp_preview_renderer_layer_get_type
 gimp_preview_renderer_vectors_get_type
 gimp_rc_get_type
@@ -185,6 +187,7 @@ gimp_text_layout_get_type
 gimp_text_options_get_type
 gimp_text_tool_get_type
 gimp_threshold_tool_get_type
+gimp_thumb_box_get_type
 gimp_tool_control_get_type
 gimp_tool_get_type
 gimp_tool_info_get_type

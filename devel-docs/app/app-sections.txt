@@ -530,7 +530,9 @@ gimp_context_get_palette
 gimp_context_set_palette
 gimp_context_palette_changed
 gimp_context_get_font
+gimp_context_get_font_name
 gimp_context_set_font
+gimp_context_set_font_name
 gimp_context_font_changed
 gimp_context_get_buffer
 gimp_context_set_buffer
@@ -648,6 +650,9 @@ gimp_drawable_invalidate_boundary
 gimp_drawable_get_active_components
 gimp_drawable_apply_region
 gimp_drawable_replace_region
+gimp_drawable_set_tiles
+gimp_drawable_set_tiles_full
+gimp_drawable_swap_pixels
 gimp_drawable_push_undo
 gimp_drawable_merge_shadow
 gimp_drawable_fill
@@ -660,6 +665,7 @@ gimp_drawable_type_without_alpha
 gimp_drawable_is_rgb
 gimp_drawable_is_gray
 gimp_drawable_is_indexed
+gimp_drawable_is_text_layer
 gimp_drawable_data
 gimp_drawable_shadow
 gimp_drawable_bytes
@@ -1294,7 +1300,6 @@ GIMP_TOOL_OPTIONS_GET_CLASS
 
 <SECTION>
 <FILE>gimpundo</FILE>
-GIMP_UNDO_PREVIEW_SIZE
 GimpUndoAccumulator
 <TITLE>GimpUndo</TITLE>
 GimpUndo
@@ -2131,7 +2136,6 @@ GimpTextLayer
 gimp_text_layer_new
 gimp_text_layer_set_text
 gimp_text_layer_get_text
-gimp_text_layer_flush
 gimp_text_layer_discard
 <SUBSECTION Standard>
 GimpTextLayerClass
@@ -3036,6 +3040,7 @@ GIMP_SMUDGE_TOOL_GET_CLASS
 <FILE>gimptextoptions</FILE>
 <TITLE>GimpTextOptions</TITLE>
 GimpTextOptions
+gimp_text_options_connect_text
 gimp_text_options_gui
 gimp_text_options_editor_new
 <SUBSECTION Standard>
@@ -4081,6 +4086,25 @@ GIMP_DASH_EDITOR_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpfiledialog</FILE>
+<TITLE>GimpFileDialog</TITLE>
+GimpFileDialog
+gimp_file_dialog_new
+gimp_file_dialog_set_file_proc
+gimp_file_dialog_set_uri
+gimp_file_dialog_set_image
+<SUBSECTION Standard>
+GimpFileDialogClass
+GIMP_FILE_DIALOG
+GIMP_IS_FILE_DIALOG
+GIMP_TYPE_FILE_DIALOG
+gimp_file_dialog_get_type
+GIMP_FILE_DIALOG_CLASS
+GIMP_IS_FILE_DIALOG_CLASS
+GIMP_FILE_DIALOG_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpgrideditor</FILE>
 <TITLE>GimpGridEditor</TITLE>
 GimpGridEditor
@@ -4206,6 +4230,8 @@ GIMP_IMAGE_VIEW_GET_CLASS
 
 <SECTION>
 <FILE>gimpitemfactory</FILE>
+GimpDialogVisibilityState
+GIMP_DIALOG_VISIBILITY_KEY
 GimpItemFactoryEntry
 <TITLE>GimpItemFactory</TITLE>
 GimpItemFactory
@@ -4388,6 +4414,7 @@ gimp_preview_renderer_set_size
 gimp_preview_renderer_set_size_full
 gimp_preview_renderer_set_dot_for_dot
 gimp_preview_renderer_set_border_color
+gimp_preview_renderer_set_border_type
 gimp_preview_renderer_set_background
 gimp_preview_renderer_invalidate
 gimp_preview_renderer_unrealize
@@ -4476,6 +4503,21 @@ gimp_preview_renderer_image_get_type
 GIMP_PREVIEW_RENDERER_IMAGE_CLASS
 GIMP_IS_PREVIEW_RENDERER_IMAGE_CLASS
 GIMP_PREVIEW_RENDERER_IMAGE_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimppreviewrendererimagefile</FILE>
+<TITLE>GimpPreviewRendererImagefile</TITLE>
+GimpPreviewRendererImagefile
+<SUBSECTION Standard>
+GimpPreviewRendererImagefileClass
+GIMP_PREVIEW_RENDERER_IMAGEFILE
+GIMP_IS_PREVIEW_RENDERER_IMAGEFILE
+GIMP_TYPE_PREVIEW_RENDERER_IMAGEFILE
+gimp_preview_renderer_imagefile_get_type
+GIMP_PREVIEW_RENDERER_IMAGEFILE_CLASS
+GIMP_IS_PREVIEW_RENDERER_IMAGEFILE_CLASS
+GIMP_PREVIEW_RENDERER_IMAGEFILE_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -4597,13 +4639,34 @@ GIMP_TEMPLATE_VIEW_GET_CLASS
 <TITLE>GimpTextEditor</TITLE>
 GimpTextEditor
 gimp_text_editor_new
+gimp_text_editor_get_direction
 gimp_text_editor_set_direction
+gimp_text_editor_get_text
+gimp_text_editor_set_text
 <SUBSECTION Standard>
 GimpTextEditorClass
 GIMP_TEXT_EDITOR
 GIMP_IS_TEXT_EDITOR
 GIMP_TYPE_TEXT_EDITOR
 gimp_text_editor_get_type
+</SECTION>
+
+<SECTION>
+<FILE>gimpthumbbox</FILE>
+<TITLE>GimpThumbBox</TITLE>
+GimpThumbBox
+gimp_thumb_box_new
+gimp_thumb_box_set_uri
+gimp_thumb_box_set_uris
+<SUBSECTION Standard>
+GimpThumbBoxClass
+GIMP_THUMB_BOX
+GIMP_IS_THUMB_BOX
+GIMP_TYPE_THUMB_BOX
+gimp_thumb_box_get_type
+GIMP_THUMB_BOX_CLASS
+GIMP_IS_THUMB_BOX_CLASS
+GIMP_THUMB_BOX_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -5125,6 +5188,7 @@ TILE_MUTEX_UNLOCK
 <FILE>tile-swap</FILE>
 SwapCommand
 SwapFunc
+tile_swap_test
 tile_swap_exit
 tile_swap_add
 tile_swap_remove
@@ -5721,14 +5785,14 @@ gimp_image_snap_rectangle
 <SECTION>
 <FILE>gimpimage-undo-push</FILE>
 <TITLE>GimpImage-undo-push</TITLE>
-gimp_image_undo_push_image
-gimp_image_undo_push_image_mod
 gimp_image_undo_push_image_type
 gimp_image_undo_push_image_size
 gimp_image_undo_push_image_resolution
 gimp_image_undo_push_image_grid
 gimp_image_undo_push_image_guide
 gimp_image_undo_push_image_colormap
+gimp_image_undo_push_drawable
+gimp_image_undo_push_drawable_mod
 gimp_image_undo_push_mask
 gimp_image_undo_push_item_rename
 gimp_image_undo_push_item_displace
@@ -5736,7 +5800,6 @@ gimp_image_undo_push_item_linked
 gimp_image_undo_push_item_visibility
 gimp_image_undo_push_layer_add
 gimp_image_undo_push_layer_remove
-gimp_image_undo_push_layer_mod
 gimp_image_undo_push_layer_mask_add
 gimp_image_undo_push_layer_mask_remove
 gimp_image_undo_push_layer_reposition
@@ -5746,7 +5809,6 @@ gimp_image_undo_push_layer_preserve_trans
 gimp_image_undo_push_text_layer
 gimp_image_undo_push_channel_add
 gimp_image_undo_push_channel_remove
-gimp_image_undo_push_channel_mod
 gimp_image_undo_push_channel_reposition
 gimp_image_undo_push_channel_color
 gimp_image_undo_push_vectors_add
@@ -6166,12 +6228,9 @@ error_console_menu_update
 <SECTION>
 <FILE>file-commands</FILE>
 file_new_cmd_callback
-file_open_by_extension_cmd_callback
-file_open_type_cmd_callback
+file_type_cmd_callback
 file_open_cmd_callback
 file_last_opened_cmd_callback
-file_save_by_extension_cmd_callback
-file_save_type_cmd_callback
 file_save_cmd_callback
 file_save_as_cmd_callback
 file_save_a_copy_cmd_callback
@@ -6185,10 +6244,8 @@ file_file_open_dialog
 
 <SECTION>
 <FILE>file-dialog-utils</FILE>
-file_dialog_new
 file_dialog_show
 file_dialog_hide
-file_dialog_update_name
 </SECTION>
 
 <SECTION>
@@ -6199,7 +6256,6 @@ file_new_dialog_set
 
 <SECTION>
 <FILE>file-open-dialog</FILE>
-file_open_dialog_set_type
 file_open_dialog_show
 </SECTION>
 
@@ -6211,7 +6267,6 @@ file_open_menu_setup
 
 <SECTION>
 <FILE>file-save-dialog</FILE>
-file_save_dialog_set_type
 file_save_dialog_show
 file_save_a_copy_dialog_show
 </SECTION>
@@ -7280,6 +7335,7 @@ GimpWindowHint
 GIMP_TYPE_ZOOM_TYPE
 GimpZoomType
 GimpPreviewBG
+GimpPreviewBorderType
 GimpDropType
 GimpCursorType
 GimpToolCursorType
