@@ -28,8 +28,8 @@ libapptools_la_SOURCES = \
 	gimpcolorpickertool.h	\
 ##	convolve.c		\
 ##	convolve.h		\
-##	crop.c			\
-##	crop.h			\
+	crop.c			\
+	crop.h			\
 ##	curves.c		\
 ##	curves.h		\
 ##	dodgeburn.c		\

@@ -29,7 +29,6 @@
 #include "apptypes.h"
 
 #include "cursorutil.h"
-#include "draw_core.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
@@ -42,9 +41,12 @@
 #include "pixel_region.h"
 #include "undo.h"
 
-#include "crop.h"
+#include "tools/crop.h"
+#include "tools/gimpdrawtool.h"
 #include "tool_options.h"
-#include "tools.h"
+#include "tool_manager.h"
+#include "tool.h"
+#include "../pixmaps2.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -62,30 +64,6 @@
 #define ARROW_VELOCITY 25
 
 /*  the crop structures  */
-
-typedef struct _Crop Crop;
-
-struct _Crop
-{
-  DrawCore *core;       /*  Core select object          */
-
-  gint      startx;     /*  starting x coord            */
-  gint      starty;     /*  starting y coord            */
-
-  gint      lastx;      /*  previous x coord            */
-  gint      lasty;      /*  previous y coord            */
-
-  gint      x1, y1;     /*  upper left hand coordinate  */
-  gint      x2, y2;     /*  lower right hand coords     */
-
-  gint      srw, srh;   /*  width and height of corners */
-
-  gint      tx1, ty1;   /*  transformed coords          */
-  gint      tx2, ty2;   /*                              */
-
-  gint      function;   /*  moving or resizing          */
-  guint     context_id; /*  for the statusbar           */
-};
 
 typedef struct _CropOptions CropOptions;
 
@@ -121,33 +99,33 @@ static GtkWidget   *size_sizeentry;
 
 
 /*  Crop type functions  */
-static void   crop_button_press        (Tool           *tool,
+static void   crop_tool_button_press   (GimpTool       *tool,
 					GdkEventButton *bevent,
 					GDisplay       *gdisp);
-static void   crop_button_release      (Tool           *tool,
+static void   crop_tool_button_release (GimpTool       *tool,
 					GdkEventButton *bevent,
 					GDisplay       *gdisp);
-static void   crop_motion              (Tool           *tool,
+static void   crop_tool_motion         (GimpTool       *tool,
 					GdkEventMotion *mevent,
 					GDisplay       *gdisp);
-static void   crop_cursor_update       (Tool           *tool,
+static void   crop_tool_cursor_update  (GimpTool       *tool,
 					GdkEventMotion *mevent,
 					GDisplay       *gdisp);
-static void   crop_control             (Tool           *tool,
+static void   crop_tool_control        (GimpTool       *tool,
 					ToolAction      action,
 					GDisplay       *gdisp);
-static void   crop_arrow_keys_func     (Tool           *tool,
+static void   crop_arrow_keys_func     (GimpTool       *tool,
 					GdkEventKey    *kevent,
 					GDisplay       *gdisp);
-static void   crop_modifier_key_func   (Tool           *tool,
+static void   crop_modifier_key_func   (GimpTool       *tool,
 					GdkEventKey    *kevent,
 					GDisplay       *gdisp);
 
 /*  Crop helper functions  */
-static void   crop_recalc              (Tool           *tool,
-					Crop           *crop);
-static void   crop_start               (Tool           *tool,
-					Crop           *crop);
+static void   crop_recalc              (GimpTool       *tool,
+					GimpCropTool   *crop);
+static void   crop_start               (GimpTool       *tool,
+					GimpCropTool   *crop);
 static void   crop_adjust_guides       (GImage         *gimage,
 					gint            x1,
 					gint            y1,
@@ -155,14 +133,22 @@ static void   crop_adjust_guides       (GImage         *gimage,
 					gint            y2);
 
 /*  Crop dialog functions  */
-static void    crop_info_update        (Tool           *tool);
-static void    crop_info_create        (Tool           *tool);
+static void    crop_info_update        (GimpTool       *tool);
+static void    crop_info_create        (GimpTool       *tool);
 static void    crop_crop_callback      (GtkWidget      *widget,
 					gpointer        data);
 static void    crop_resize_callback    (GtkWidget      *widget,
 					gpointer        data);
 static void    crop_close_callback     (GtkWidget      *widget,
 					gpointer        data);
+
+/* Crop OO functions */
+GtkType        gimp_crop_tool_get_type   (void);
+static void    gimp_crop_tool_class_init (GimpCropToolClass *klass);
+static void    gimp_crop_tool_init       (GimpCropTool *crop_tool);
+static void    gimp_crop_tool_destroy    (GtkObject *object);
+
+static GimpToolClass *parent_class = NULL;
 
 
 /* Crop area-select functions */ 
@@ -233,7 +219,6 @@ crop_options_new (void)
   /*  the new crop tool options structure  */
   options = g_new (CropOptions, 1);
   tool_options_init ((ToolOptions *) options,
-		     _("Crop & Resize"),
 		     crop_options_reset);
   options->layer_only    = options->layer_only_d    = FALSE;
   options->allow_enlarge = options->allow_enlarge_d = FALSE;
@@ -284,14 +269,16 @@ crop_options_new (void)
 }
 
 static void
-crop_button_press (Tool           *tool,
+crop_tool_button_press (GimpTool       *tool,
 		   GdkEventButton *bevent,
 		   GDisplay       *gdisp)
 {
-  Crop *crop;
-
-  crop = (Crop *) tool->private;
-
+  GimpCropTool *crop;
+  GimpDrawTool *draw;
+  
+  crop = GIMP_CROP_TOOL(tool);
+  draw = GIMP_DRAW_TOOL(tool);
+  
   if (tool->state == INACTIVE ||
       gdisp != tool->gdisp)
     {
@@ -332,7 +319,7 @@ crop_button_press (Tool           *tool,
   if (crop->function == CREATING)
     {
       if (tool->state == ACTIVE)
-	draw_core_stop (crop->core, tool);
+	gimp_draw_tool_stop(draw);
 
       tool->gdisp    = gdisp;
       tool->drawable = gimp_image_active_drawable (gdisp->gimage);
@@ -359,14 +346,14 @@ crop_button_press (Tool           *tool,
 }
 
 static void
-crop_button_release (Tool           *tool,
+crop_tool_button_release (GimpTool       *tool,
 		     GdkEventButton *bevent,
 		     GDisplay       *gdisp)
 {
-  Crop *crop;
+  GimpCropTool *crop;
 
-  crop = (Crop *) tool->private;
-
+  crop = GIMP_CROP_TOOL(tool);
+  
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
 
@@ -450,20 +437,23 @@ crop_adjust_guides (GImage *gimage,
 }
 
 static void
-crop_motion (Tool           *tool,
+crop_tool_motion (GimpTool       *tool,
 	     GdkEventMotion *mevent,
 	     GDisplay       *gdisp)
 {
-  Crop      *crop;
-  GimpLayer *layer;
-  gint       x1, y1, x2, y2;
-  gint       curx, cury;
-  gint       inc_x, inc_y;
-  gchar      size[STATUSBAR_SIZE];
-  gint       min_x, min_y, max_x, max_y; 
+  GimpCropTool  *crop;
+  GimpDrawTool *draw;
+  
+  GimpLayer     *layer;
+  gint          x1, y1, x2, y2;
+  gint          curx, cury;
+  gint          inc_x, inc_y;
+  gchar         size[STATUSBAR_SIZE];
+  gint          min_x, min_y, max_x, max_y; 
 
-  crop = (Crop *) tool->private;
-
+  crop = GIMP_CROP_TOOL(tool);
+  draw = GIMP_DRAW_TOOL(tool);
+  
   /*  This is the only case when the motion events should be ignored--
       we're just waiting for the button release event to crop the image  */
   if (crop->function == CROPPING)
@@ -482,11 +472,11 @@ crop_motion (Tool           *tool,
   if (crop->lastx == curx && crop->lasty == cury)
     return;
 
-  draw_core_pause (crop->core, tool);
+  gimp_draw_tool_pause(draw);
   
   if (crop_options->layer_only)
     {
-      layer = (gdisp->gimage)->active_layer;
+      layer = gimp_image_get_active_layer(gdisp->gimage);
       gimp_drawable_offsets (GIMP_DRAWABLE (layer), &min_x, &min_y);
       max_x = gimp_drawable_width (GIMP_DRAWABLE (layer)) + min_x;
       max_y = gimp_drawable_height (GIMP_DRAWABLE (layer)) + min_y;
@@ -590,21 +580,20 @@ crop_motion (Tool           *tool,
       gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), crop->context_id,
 			  size);
     }
-  
-  draw_core_resume (crop->core, tool);
+  gimp_draw_tool_resume(draw); 
 }
 
 static void
-crop_cursor_update (Tool           *tool,
+crop_tool_cursor_update (GimpTool       *tool,
 		    GdkEventMotion *mevent,
 		    GDisplay       *gdisp)
 {
-  Crop *crop;
+  GimpCropTool *crop;
 
   GdkCursorType      ctype     = GIMP_MOUSE_CURSOR;
   GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
 
-  crop = (Crop *) tool->private;
+  crop = GIMP_CROP_TOOL(tool);
 
   if (tool->state == INACTIVE ||
       (tool->state == ACTIVE && tool->gdisp != gdisp))
@@ -645,19 +634,22 @@ crop_cursor_update (Tool           *tool,
 }
 
 static void
-crop_arrow_keys_func (Tool        *tool,
+crop_arrow_keys_func (GimpTool    *tool,
 		      GdkEventKey *kevent,
 		      GDisplay    *gdisp)
 {
-  GimpLayer *layer;
-  Crop      *crop;
-  gint       inc_x, inc_y;
-  gint       min_x, min_y;
-  gint       max_x, max_y;
+  GimpLayer     *layer;
+  GimpDrawTool  *draw;
+  
+  GimpCropTool  *crop;
+  gint          inc_x, inc_y;
+  gint          min_x, min_y;
+  gint          max_x, max_y;
 
   if (tool->state == ACTIVE)
     {
-      crop = (Crop *) tool->private;
+      crop = GIMP_CROP_TOOL(tool);
+      draw = GIMP_DRAW_TOOL(tool);
       inc_x = inc_y = 0;
 
       switch (kevent->keyval)
@@ -675,11 +667,11 @@ crop_arrow_keys_func (Tool        *tool,
 	  inc_x *= ARROW_VELOCITY;
 	}
 
-      draw_core_pause (crop->core, tool);
+      gimp_draw_tool_pause(draw);
 
       if (crop_options->layer_only)
 	{
-	  layer = (gdisp->gimage)->active_layer;
+	  layer = gimp_image_get_active_layer(gdisp->gimage);
 	  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &min_x, &min_y);
 	  max_x = gimp_drawable_width (GIMP_DRAWABLE (layer)) + min_x;
 	  max_y = gimp_drawable_height (GIMP_DRAWABLE (layer)) + min_y;
@@ -719,12 +711,12 @@ crop_arrow_keys_func (Tool        *tool,
 	}
 
       crop_recalc (tool, crop);
-      draw_core_resume (crop->core, tool);
+      gimp_draw_tool_resume(draw);
     }
 }
 
 static void
-crop_modifier_key_func (Tool        *tool,
+crop_modifier_key_func (GimpTool    *tool,
 			GdkEventKey *kevent,
 			GDisplay    *gdisp)
 {
@@ -749,23 +741,25 @@ crop_modifier_key_func (Tool        *tool,
 }
 
 static void
-crop_control (Tool       *tool,
+crop_tool_control (GimpTool    *tool,
 	      ToolAction  action,
 	      GDisplay   *gdisp)
 {
-  Crop *crop;
+  GimpCropTool *crop;
+  GimpDrawTool *draw;
 
-  crop = (Crop *) tool->private;
-
+  crop = GIMP_CROP_TOOL(tool);
+  draw = GIMP_DRAW_TOOL(tool);
+  
   switch (action)
     {
     case PAUSE:
-      draw_core_pause (crop->core, tool);
+      gimp_draw_tool_pause(draw);
       break;
 
     case RESUME:
       crop_recalc (tool, crop);
-      draw_core_resume (crop->core, tool);
+      gimp_draw_tool_resume(draw);
       break;
 
     case HALT:
@@ -778,92 +772,42 @@ crop_control (Tool       *tool,
 }
 
 void
-crop_draw (Tool *tool)
+crop_draw (GimpTool *tool)
 {
-  Crop *crop;
+  GimpCropTool *crop;
+  GimpDrawTool *draw;
 
-  crop  = (Crop *) tool->private;
-
+  crop = GIMP_CROP_TOOL(tool);
+  draw = GIMP_DRAW_TOOL(tool);
+  
 #define SRW 10
 #define SRH 10
 
-  gdk_draw_line (crop->core->win, crop->core->gc,
-		 crop->x1, crop->y1, tool->gdisp->disp_width, crop->y1);
-  gdk_draw_line (crop->core->win, crop->core->gc,
+  gdk_draw_line (draw->win, draw->gc,crop->x1, crop->y1, 
+                 tool->gdisp->disp_width, crop->y1);
+  gdk_draw_line (draw->win, draw->gc,
 		 crop->x1, crop->y1, crop->x1, tool->gdisp->disp_height);
-  gdk_draw_line (crop->core->win, crop->core->gc,
+  gdk_draw_line (draw->win, draw->gc,
 		 crop->x2, crop->y2, 0, crop->y2);
-  gdk_draw_line (crop->core->win, crop->core->gc,
+  gdk_draw_line (draw->win, draw->gc,
 		 crop->x2, crop->y2, crop->x2, 0);
 
   crop->srw = ((crop->x2 - crop->x1) < SRW) ? (crop->x2 - crop->x1) : SRW;
   crop->srh = ((crop->y2 - crop->y1) < SRH) ? (crop->y2 - crop->y1) : SRH;
 
-  gdk_draw_rectangle (crop->core->win, crop->core->gc, 1,
+  gdk_draw_rectangle (draw->win, draw->gc, 1,
 		      crop->x1, crop->y1, crop->srw, crop->srh);
-  gdk_draw_rectangle (crop->core->win, crop->core->gc, 1,
+  gdk_draw_rectangle (draw->win, draw->gc, 1,
 		      crop->x2 - crop->srw, crop->y2-crop->srh, crop->srw, crop->srh);
-  gdk_draw_rectangle (crop->core->win, crop->core->gc, 1,
+  gdk_draw_rectangle (draw->win, draw->gc, 1,
 		      crop->x2 - crop->srw, crop->y1, crop->srw, crop->srh);
-  gdk_draw_rectangle (crop->core->win, crop->core->gc, 1,
+  gdk_draw_rectangle (draw->win, draw->gc, 1,
 		      crop->x1, crop->y2-crop->srh, crop->srw, crop->srh);
 
 #undef SRW
 #undef SRH
 
   crop_info_update (tool);
-}
-
-Tool *
-tools_new_crop (void)
-{
-  Tool *tool;
-  Crop *private;
-
-  /*  The tool options  */
-  if (! crop_options)
-    {
-      crop_options = crop_options_new ();
-      tools_register (CROP, (ToolOptions *) crop_options);
-    }
-
-  tool = tools_new_tool (CROP);
-  private = g_new0 (Crop, 1);
-
-  private->core = draw_core_new (crop_draw);
-  private->startx = private->starty = 0;
-  private->function = CREATING;
-
-  tool->private = (void *) private;
-
-  tool->preserve = FALSE;  /* XXX Check me */
-
-  tool->button_press_func   = crop_button_press;
-  tool->button_release_func = crop_button_release;
-  tool->motion_func         = crop_motion;
-  tool->arrow_keys_func     = crop_arrow_keys_func;
-  tool->modifier_key_func   = crop_modifier_key_func;
-  tool->cursor_update_func  = crop_cursor_update;
-  tool->control_func        = crop_control;
-
-  return tool;
-}
-
-void
-tools_free_crop (Tool *tool)
-{
-  Crop *crop;
-
-  crop = (Crop *) tool->private;
-
-  if (tool->state == ACTIVE)
-    draw_core_stop (crop->core, tool);
-
-  if (crop_info)
-    crop_close_callback (NULL, NULL);
-
-  draw_core_free (crop->core);
-  g_free (crop);
 }
 
 void
@@ -897,7 +841,7 @@ crop_image (GImage   *gimage,
 	{
 	  undo_push_group_start (gimage, LAYER_RESIZE_UNDO);
 
-	  layer = gimage->active_layer;
+	  layer = gimp_image_get_active_layer(gimage);
 
 	  if (gimp_layer_is_floating_sel (layer))
 	    floating_sel_relax (layer, TRUE);
@@ -1016,8 +960,8 @@ crop_image (GImage   *gimage,
 }
 
 static void
-crop_recalc (Tool *tool,
-	     Crop *crop)
+crop_recalc (GimpTool      *tool,
+	     GimpCropTool  *crop)
 {
   gdisplay_transform_coords (tool->gdisp, crop->tx1, crop->ty1,
 			     &crop->x1, &crop->y1, FALSE);
@@ -1026,11 +970,13 @@ crop_recalc (Tool *tool,
 }
 
 static void
-crop_start (Tool *tool,
-	    Crop *crop)
+crop_start (GimpTool     *tool,
+	    GimpCropTool *crop)
 {
   static GDisplay *old_gdisp = NULL;
+  GimpDrawTool *draw;
 
+  draw = GIMP_DRAW_TOOL(tool);
   crop_recalc (tool, crop);
 
   if (! crop_info)
@@ -1087,7 +1033,7 @@ crop_start (Tool *tool,
   gtk_statusbar_push (GTK_STATUSBAR (tool->gdisp->statusbar),
 		      crop->context_id, _("Crop: 0 x 0"));
 
-  draw_core_start (crop->core, tool->gdisp->canvas->window, tool);
+  gimp_draw_tool_start(draw, tool->gdisp->canvas->window);
 }
 
 
@@ -1096,7 +1042,7 @@ crop_start (Tool *tool,
 /***************************/
 
 static void
-crop_info_create (Tool *tool)
+crop_info_create (GimpTool *tool)
 {
   GDisplay  *gdisp;
   GtkWidget *spinbutton;
@@ -1107,7 +1053,7 @@ crop_info_create (Tool *tool)
 
   /*  create the info dialog  */
   crop_info = info_dialog_new (_("Crop & Resize Information"),
-			       tools_help_func, NULL);
+			       tool_manager_help_func, NULL);
 
   /*  create the action area  */
   gimp_dialog_create_action_area (GTK_DIALOG (crop_info->shell),
@@ -1180,11 +1126,11 @@ crop_info_create (Tool *tool)
 }
 
 static void
-crop_info_update (Tool *tool)
+crop_info_update (GimpTool *tool)
 {
-  Crop *crop;
+  GimpCropTool *crop;
 
-  crop = (Crop *) tool->private;
+  crop = GIMP_CROP_TOOL(tool);
 
   orig_vals[0] = crop->tx1;
   orig_vals[1] = crop->ty1;
@@ -1199,12 +1145,13 @@ static void
 crop_crop_callback (GtkWidget *widget,
 		    gpointer   data)
 {
-  Tool *tool;
-  Crop *crop;
+  GimpTool     *tool;
+  GimpCropTool *crop;
 
+  /* XXX active_tool is bad */
   tool  = active_tool;
-  crop  = (Crop *) tool->private;
-
+  crop = GIMP_CROP_TOOL(tool);
+   
   crop_image (tool->gdisp->gimage,
 	      crop->tx1, crop->ty1,
 	      crop->tx2, crop->ty2,
@@ -1219,12 +1166,13 @@ static void
 crop_resize_callback (GtkWidget *widget,
 		      gpointer   data)
 {
-  Tool *tool;
-  Crop *crop;
-
+  GimpTool     *tool;
+  GimpCropTool *crop;
+  
+  /* XXX active_tool is bad */
   tool  = active_tool;
-  crop  = (Crop *) tool->private;
-
+  crop = GIMP_CROP_TOOL(tool);
+  
   crop_image (tool->gdisp->gimage,
 	      crop->tx1, crop->ty1,
 	      crop->tx2, crop->ty2, 
@@ -1239,14 +1187,17 @@ static void
 crop_close_callback (GtkWidget *widget,
 		     gpointer   data)
 {
-  Tool *tool;
-  Crop *crop;
+  GimpTool     *tool;
+  GimpCropTool *crop;
+  GimpDrawTool *draw;
 
+  /* XXX active_tool is bad */
   tool = active_tool;
-  crop = (Crop *) tool->private;
-
+  crop = GIMP_CROP_TOOL(tool);
+  draw = GIMP_DRAW_TOOL(tool);
+  
   if (tool->state == ACTIVE)
-    draw_core_stop (crop->core, tool);
+    gimp_draw_tool_stop (draw);
 
   info_dialog_popdown (crop_info);
 
@@ -1259,22 +1210,26 @@ static void
 crop_selection_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  Tool      *tool;
-  Crop      *crop;
-  GimpLayer *layer;
-  GDisplay  *gdisp;
+  GimpTool     *tool;
+  GimpCropTool *crop;
+  GimpDrawTool *draw;
+  GimpLayer    *layer;
+  GDisplay     *gdisp;
 
+  /* XXX active_tool is bad */
   tool  = active_tool;
-  crop  = (Crop *) tool->private;
+  crop = GIMP_CROP_TOOL(tool);
+  draw = GIMP_DRAW_TOOL(tool);
+  
   gdisp = tool->gdisp;
 
-  draw_core_pause (crop->core, tool);
+  gimp_draw_tool_pause(draw);
   if (! gimage_mask_bounds (gdisp->gimage,
 			    &crop->tx1, &crop->ty1, &crop->tx2, &crop->ty2))
     {
       if (crop_options->layer_only)
 	{
-	  layer = (gdisp->gimage)->active_layer;
+	  layer = gimp_image_get_active_layer(gdisp->gimage);
 	  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &crop->tx1, &crop->ty1);
 	  crop->tx2 = gimp_drawable_width  (GIMP_DRAWABLE (layer)) + crop->tx1;
 	  crop->ty2 = gimp_drawable_height (GIMP_DRAWABLE (layer)) + crop->ty1;
@@ -1287,7 +1242,7 @@ crop_selection_callback (GtkWidget *widget,
 	}
     }
   crop_recalc (tool, crop);
-  draw_core_resume (crop->core, tool);
+  gimp_draw_tool_resume(draw);
 }
 
 
@@ -1295,8 +1250,9 @@ static void
 crop_automatic_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  Tool            *tool;
-  Crop            *crop;
+  GimpTool        *tool;
+  GimpCropTool    *crop;
+  GimpDrawTool    *draw;
   GDisplay        *gdisp;
   GimpDrawable    *active_drawable = NULL;  
   GetColorFunc     get_color_func;
@@ -1310,11 +1266,13 @@ crop_automatic_callback (GtkWidget *widget,
   gint             x, y, abort;
   gint             x1, y1, x2, y2;
   
+  /* XXX active_tool is bad */
   tool  = active_tool;
-  crop  = (Crop *) tool->private;
+  crop = GIMP_CROP_TOOL(tool);
+  draw = GIMP_DRAW_TOOL(tool);
   gdisp = tool->gdisp;
 
-  draw_core_pause (crop->core, tool);
+  gimp_draw_tool_pause (draw);
   gimp_add_busy_cursors ();
  
   /* You should always keep in mind that crop->tx2 and crop->ty2 are the NOT the
@@ -1436,7 +1394,7 @@ crop_automatic_callback (GtkWidget *widget,
  FINISH:
   g_free (buffer);
   gimp_remove_busy_cursors (NULL);
-  draw_core_resume (crop->core, tool);
+  gimp_draw_tool_resume (draw);
 
   return;
 }
@@ -1546,30 +1504,33 @@ static void
 crop_orig_changed (GtkWidget *widget,
 		   gpointer   data)
 {
-  Tool *tool;
-  Crop *crop;
-  gint  ox;
-  gint  oy;
+  GimpTool     *tool;
+  GimpCropTool *crop;
+  GimpDrawTool *draw;
+  gint          ox;
+  gint          oy;
 
+  /* XXX active_tool is bad */
   tool = active_tool;
 
-  if (tool && active_tool->type == CROP)
+  if (tool && GIMP_IS_CROP_TOOL(tool))
     {
-      crop  = (Crop *) tool->private;
-
+      crop = GIMP_CROP_TOOL(tool);
+      draw = GIMP_DRAW_TOOL(tool);
+      
       ox = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
       oy = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1));
 
       if ((ox != crop->tx1) ||
 	  (oy != crop->ty1))
 	{
-	  draw_core_pause (crop->core, tool);
+	  gimp_draw_tool_pause(draw);
 	  crop->tx2 = crop->tx2 + (ox - crop->tx1);
 	  crop->tx1 = ox;
 	  crop->ty2 = crop->ty2 + (oy - crop->ty1);
 	  crop->ty1 = oy;
 	  crop_recalc (tool, crop);
-	  draw_core_resume (crop->core, tool);
+	  gimp_draw_tool_resume(draw);
 	}
     }
 }
@@ -1578,16 +1539,20 @@ static void
 crop_size_changed (GtkWidget *widget,
 		   gpointer   data)
 {
-  Tool *tool;
-  Crop *crop;
-  gint  sx;
-  gint  sy;
+  GimpTool     *tool;
+  GimpCropTool *crop;
+  GimpDrawTool *draw;
 
+  gint          sx;
+  gint          sy;
+
+  /* XXX active_tool is bad */
   tool = active_tool;
 
-  if (tool && active_tool->type == CROP)
+  if (tool && GIMP_IS_CROP_TOOL(tool))
     {
-      crop  = (Crop *) tool->private;
+      crop = GIMP_CROP_TOOL(tool);
+      draw = GIMP_DRAW_TOOL(tool);
 
       sx = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
       sy = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
@@ -1595,11 +1560,109 @@ crop_size_changed (GtkWidget *widget,
       if ((sx != (crop->tx2 - crop->tx1)) ||
 	  (sy != (crop->ty2 - crop->ty1)))
 	{
-	  draw_core_pause (crop->core, tool);
+	  gimp_draw_tool_pause (draw);
 	  crop->tx2 = sx + crop->tx1;
 	  crop->ty2 = sy + crop->ty1;
 	  crop_recalc (tool, crop);
-	  draw_core_resume (crop->core, tool);
+	  gimp_draw_tool_resume (draw);
 	}
     }
+}
+
+GtkType
+gimp_crop_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
+
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+        {
+          "GimpCropTool",
+          sizeof (GimpCropTool),
+          sizeof (GimpCropToolClass),
+          (GtkClassInitFunc) gimp_crop_tool_class_init,
+          (GtkObjectInitFunc) gimp_crop_tool_init,
+          /* reserved_1 */ NULL,
+          /* reserved_2 */ NULL,
+          (GtkClassInitFunc) NULL,
+        };
+
+      tool_type = gtk_type_unique (GIMP_TYPE_TOOL, &tool_info);
+    }
+  return tool_type;
+}
+
+static void
+gimp_crop_tool_class_init (GimpCropToolClass *klass)
+{
+  GtkObjectClass *object_class;
+  GimpToolClass  *tool_class;
+
+  object_class = (GtkObjectClass *) klass;
+  tool_class   = (GimpToolClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_TOOL);
+
+  object_class->destroy = gimp_crop_tool_destroy;
+
+  tool_class->control        = crop_tool_control;
+  tool_class->button_press   = crop_tool_button_press;
+  tool_class->button_release = crop_tool_button_release;
+  tool_class->motion         = crop_tool_motion;
+  tool_class->cursor_update  = crop_tool_cursor_update;
+}
+
+static void
+gimp_crop_tool_init (GimpCropTool *crop_tool)
+{
+  GimpTool *tool;
+
+  tool = GIMP_TOOL (crop_tool);
+
+  if (! crop_options)
+    {
+      crop_options = crop_options_new ();
+      tool_manager_register_tool_options (GIMP_TYPE_CROP_TOOL,
+                                         (ToolOptions *) crop_options);
+    }
+
+  tool->preserve = FALSE;  /*  Don't preserve on drawable change  */
+}
+
+static void
+gimp_crop_tool_destroy (GtkObject *object)
+{
+  GimpTool     *tool;
+  GimpCropTool *crop_tool;
+  GimpDrawTool *draw;
+
+  tool      = GIMP_TOOL (object);
+  crop_tool = GIMP_CROP_TOOL (object);
+  draw = GIMP_DRAW_TOOL(tool);
+
+  if (tool->state == ACTIVE)
+    gimp_draw_tool_stop (draw);
+
+  if (crop_info)
+    {
+      info_dialog_free (crop_info);
+      crop_info = NULL;
+
+    }
+
+ if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+void
+gimp_crop_tool_register (void)
+{
+  tool_manager_register_tool(GIMP_TYPE_CROP_TOOL,
+                             "gimp:crop_tool",
+			     _("Crop Tool"),
+			     _("Crop or Resize an image"),
+			     N_("/Tools/Crop Tool"), "<shift>C",
+			     NULL, "tools/crop_tool.html",
+			     (const gchar **) crop_bits);
 }
