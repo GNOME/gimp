@@ -774,7 +774,7 @@
       <title>Previews</title>
       <xi:include href="xml/gimpview.xml" />
       <xi:include href="xml/gimpview-popup.xml" />
-      <xi:include href="xml/gimpnavigationpreview.xml" />
+      <xi:include href="xml/gimpnavigationview.xml" />
     </chapter>
 
     <chapter id="app-widgets-view-renderers">

@@ -2,6 +2,8 @@
 
 	* app/app-sections.txt: updated.
 
+	* app/app-docs.sgml: fixed include.
+
 2004-12-15  Simon Budig  <simon@gimp.org>
 
 	* libgimp/tmpl/gimppaths.sgml: regenerated.
