@@ -262,7 +262,7 @@ void create_generalpage(GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Selects if to place strokes all the way out to the edges of the image", NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Selects if to place strokes all the way out to the edges of the image"), NULL);
   if(pcvals.generalpaintedges)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), TRUE);
 

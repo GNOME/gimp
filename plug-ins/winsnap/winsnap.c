@@ -1064,8 +1064,6 @@ query(void)
   static GimpParamDef args[] = { IN_ARGS };
   static GimpParamDef return_vals[] = { OUT_ARGS };
 
-  INIT_I18N_UI();
-
   /* the installation of the plugin */
   gimp_install_procedure(PLUG_IN_NAME,
 			 PLUG_IN_DESCRIPTION,
@@ -1111,6 +1109,8 @@ run(gchar *name,		/* name of plugin */
 
   /* Get the runmode from the in-parameters */
   run_mode = param[0].data.d_int32;
+
+  INIT_I18N_UI();
 		
   /* Set up the rest of the return parameters */
   values[1].type = GIMP_PDB_INT32;

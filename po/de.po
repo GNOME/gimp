@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.30\n"
-"POT-Creation-Date: 2001-01-21 19:10-0800\n"
-"PO-Revision-Date: 2000-12-18 22:19+01:00\n"
+"Project-Id-Version: GIMP 1.2.1\n"
+"POT-Creation-Date: 2001-04-10 20:02+0200\n"
+"PO-Revision-Date: 2001-04-10 20:04+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -282,7 +282,7 @@ msgstr "Helligkeit-Kontrast funktioniert nicht bei indizierten Bildern."
 #: app/curves.c:567 app/file_new_dialog.c:212 app/file_new_dialog.c:358
 #: app/gimpui.c:126 app/hue_saturation.c:379 app/layers_dialog.c:3559
 #: app/layers_dialog.c:3743 app/layers_dialog.c:3838 app/layers_dialog.c:4099
-#: app/levels.c:346 app/module_db.c:319 app/posterize.c:208
+#: app/levels.c:346 app/module_db.c:315 app/posterize.c:208
 #: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
 #: app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
 msgid "OK"
@@ -352,7 +352,7 @@ msgstr "Winkel:"
 msgid "Brush Selection"
 msgstr "Pinselauswahl"
 
-#: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:359
+#: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:355
 #: app/palette.c:2056 app/pattern_select.c:176
 msgid "Refresh"
 msgstr "Auffrischen"
@@ -1017,7 +1017,7 @@ msgstr "Weich"
 msgid "Free"
 msgstr "Frei"
 
-#: app/curves.c:708 app/levels.c:607 app/module_db.c:878
+#: app/curves.c:708 app/levels.c:607 app/module_db.c:874
 msgid "Load"
 msgstr "Öffnen"
 
@@ -1406,7 +1406,7 @@ msgstr "Datei Existiert!"
 msgid "Revert"
 msgstr "Zurücksetzen"
 
-#: app/fileops.c:1967
+#: app/fileops.c:1970
 #, c-format
 msgid ""
 "Revert failed.\n"
@@ -1516,26 +1516,26 @@ msgstr ""
 msgid "No selection to stroke!"
 msgstr "Es gibt keine Auswahl, die nachgezogen werden kann!"
 
-#: app/gimpbrush.c:294
+#: app/gimpbrush.c:295
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
 msgstr "Unbekanntes Pinselformat Version #%d in \"%s\"."
 
-#: app/gimpbrush.c:314
+#: app/gimpbrush.c:315
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
 msgstr "Fehler in GIMP Pinseldatei \"%s\"."
 
-#: app/gimpbrush.c:321 app/patterns.c:235
+#: app/gimpbrush.c:322 app/patterns.c:236
 msgid "Unnamed"
 msgstr "Unbenannt"
 
-#: app/gimpbrush.c:334 app/gimpbrush.c:379
+#: app/gimpbrush.c:335 app/gimpbrush.c:380
 #, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
 msgstr "GIMP Pinseldatei scheint nicht vollständig zu sein: \"%s\"."
 
-#: app/gimpbrush.c:359
+#: app/gimpbrush.c:360
 #, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
 msgstr "GIMP Pinseldatei scheint beschädigt zu sein: \"%s\"."
@@ -1558,7 +1558,7 @@ msgstr ""
 "Warnung: Konnte Pinselanimation\n"
 "\"%s\" nicht laden"
 
-#: app/gimpbrushpipe.c:292
+#: app/gimpbrushpipe.c:293
 #, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
@@ -1567,7 +1567,7 @@ msgstr ""
 "Pinselanimationen sollten wenigstens einen Pinsel haben:\n"
 "\"%s\""
 
-#: app/gimpbrushpipe.c:383
+#: app/gimpbrushpipe.c:384
 #, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
@@ -3761,74 +3761,74 @@ msgstr "Soll entladen werden"
 msgid "Unloaded OK"
 msgstr "Erfolgreich entladen"
 
-#: app/module_db.c:313
+#: app/module_db.c:309
 msgid "Module DB"
 msgstr "Modul-DB"
 
-#: app/module_db.c:606
+#: app/module_db.c:602
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr "lade Modul: \"%s\"\n"
 
-#: app/module_db.c:613
+#: app/module_db.c:609
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr "überspringe Modul: \"%s\"\n"
 
-#: app/module_db.c:639
+#: app/module_db.c:635
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "Fehler beim Laden von Modul %s: %s"
 
-#: app/module_db.c:826
+#: app/module_db.c:822
 msgid "<No modules>"
 msgstr "<Keine Module>"
 
-#: app/module_db.c:839 app/module_db.c:848
+#: app/module_db.c:835 app/module_db.c:844
 msgid "on disk"
 msgstr "auf Festplatte"
 
-#: app/module_db.c:839
+#: app/module_db.c:835
 msgid "only in memory"
 msgstr "nur im Speicher"
 
-#: app/module_db.c:848
+#: app/module_db.c:844
 msgid "nowhere (click 'refresh')"
 msgstr "nirgends ('Auffrischen' klicken)"
 
-#: app/module_db.c:887
+#: app/module_db.c:883
 msgid "Unload"
 msgstr "Entladen"
 
-#: app/module_db.c:903
+#: app/module_db.c:899
 msgid "Purpose:"
 msgstr "Zweck:"
 
-#: app/module_db.c:904
+#: app/module_db.c:900
 msgid "Author:"
 msgstr "Autor:"
 
-#: app/module_db.c:905
+#: app/module_db.c:901
 msgid "Version:"
 msgstr "Version:"
 
-#: app/module_db.c:906
+#: app/module_db.c:902
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: app/module_db.c:907
+#: app/module_db.c:903
 msgid "Date:"
 msgstr "Datum:"
 
-#: app/module_db.c:908
+#: app/module_db.c:904
 msgid "Location:"
 msgstr "Ort:"
 
-#: app/module_db.c:909
+#: app/module_db.c:905
 msgid "State:"
 msgstr "Status:"
 
-#: app/module_db.c:928
+#: app/module_db.c:924
 msgid "Autoload during startup"
 msgstr "Automatisch beim Start laden"
 
@@ -4153,17 +4153,17 @@ msgstr "Muster Auswahl"
 msgid "No Patterns available"
 msgstr "Keine Füllmuster vorhanden"
 
-#: app/patterns.c:209
+#: app/patterns.c:210
 #, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
 msgstr "Unbekanntes Musterformat Version #%d in \"%s\"."
 
-#: app/patterns.c:228
+#: app/patterns.c:229
 #, c-format
 msgid "Error in GIMP pattern file \"%s\"."
 msgstr "Fehler in GIMP Musterdatei \"%s\"."
 
-#: app/patterns.c:244
+#: app/patterns.c:245
 #, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
 msgstr "GIMP Musterdatei \"%s\" scheint nicht vollständig zu sein."
@@ -4228,13 +4228,13 @@ msgstr ""
 "durcheinander gebracht. Am besten speichern Sie\n"
 "Ihre Bilder jetzt ab und starten GIMP neu."
 
+#: app/posterize.c:116 app/posterize.c:203 app/tools.c:1110
+msgid "Posterize"
+msgstr "Posterisieren"
+
 #: app/posterize.c:158
 msgid "Posterize does not operate on indexed drawables."
 msgstr "Posterisieren funktioniert nicht mit indizierten Bildern."
-
-#: app/posterize.c:203 app/tools.c:1110
-msgid "Posterize"
-msgstr "Posterisieren"
 
 #: app/posterize.c:225
 msgid "Posterize Levels:"

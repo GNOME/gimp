@@ -113,7 +113,7 @@ tools_new_posterize (void)
   /*  The tool options  */
   if (! posterize_options)
     {
-      posterize_options = tool_options_new (("Posterize"));
+      posterize_options = tool_options_new (_("Posterize"));
       tools_register (POSTERIZE, posterize_options);
     }
 

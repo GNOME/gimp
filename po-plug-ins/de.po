@@ -7,9 +7,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.31\n"
-"POT-Creation-Date: 2001-01-15 14:06-0800\n"
-"PO-Revision-Date: 2000-12-20 14:52+01:00\n"
+"Project-Id-Version: GIMP 1.2.1\n"
+"POT-Creation-Date: 2001-04-10 20:05+0200\n"
+"PO-Revision-Date: 2001-04-10 20:09+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -75,7 +75,7 @@ msgstr "Über"
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spread.c:382
 #: plug-ins/common/struc.c:1281 plug-ins/common/sunras.c:1590
-#: plug-ins/common/tga.c:1183 plug-ins/common/threshold_alpha.c:271
+#: plug-ins/common/tga.c:1173 plug-ins/common/threshold_alpha.c:271
 #: plug-ins/common/tiff.c:1585 plug-ins/common/tile.c:405
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:173
 #: plug-ins/common/unsharp.c:787 plug-ins/common/video.c:2155
@@ -156,7 +156,7 @@ msgstr "OK"
 #: plug-ins/common/smooth_palette.c:405 plug-ins/common/snoise.c:514
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
 #: plug-ins/common/spread.c:384 plug-ins/common/struc.c:1283
-#: plug-ins/common/sunras.c:1592 plug-ins/common/tga.c:1185
+#: plug-ins/common/sunras.c:1592 plug-ins/common/tga.c:1175
 #: plug-ins/common/threshold_alpha.c:273 plug-ins/common/tiff.c:1587
 #: plug-ins/common/tile.c:407 plug-ins/common/tileit.c:388
 #: plug-ins/common/uniteditor.c:175 plug-ins/common/unsharp.c:789
@@ -850,7 +850,7 @@ msgstr "De-/Aktiviere Entfernung von Treppeneffekten (Kantenglättung)"
 
 #: plug-ins/Lighting/lighting_ui.c:501 plug-ins/MapObject/mapobject_ui.c:647
 #: plug-ins/common/bumpmap.c:1042 plug-ins/common/emboss.c:589
-#: plug-ins/common/struc.c:1324
+#: plug-ins/common/fractaltrace.c:831 plug-ins/common/struc.c:1324
 msgid "Depth:"
 msgstr "Tiefe:"
 
@@ -919,9 +919,8 @@ msgstr "Position"
 #: plug-ins/MapObject/mapobject_ui.c:1040
 #: plug-ins/MapObject/mapobject_ui.c:1084 plug-ins/common/flarefx.c:786
 #: plug-ins/common/nova.c:610 plug-ins/common/papertile.c:285
-#: plug-ins/flame/flame.c:1189 plug-ins/flame/flame.c:1202
-#: plug-ins/gap/gap_mov_dialog.c:1837 plug-ins/gflare/gflare.c:2876
-#: plug-ins/ifscompose/ifscompose.c:535
+#: plug-ins/flame/flame.c:1189 plug-ins/gap/gap_mov_dialog.c:1837
+#: plug-ins/gflare/gflare.c:2876 plug-ins/ifscompose/ifscompose.c:535
 msgid "X:"
 msgstr "X:"
 
@@ -937,8 +936,9 @@ msgstr "X-Koordinate der Lichtquelle im XYZ-Raum"
 #: plug-ins/MapObject/mapobject_ui.c:1093
 #: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:804
 #: plug-ins/common/nova.c:628 plug-ins/common/papertile.c:294
-#: plug-ins/common/xbm.c:1243 plug-ins/gap/gap_mov_dialog.c:1855
-#: plug-ins/gflare/gflare.c:2880 plug-ins/ifscompose/ifscompose.c:549
+#: plug-ins/common/xbm.c:1243 plug-ins/flame/flame.c:1202
+#: plug-ins/gap/gap_mov_dialog.c:1855 plug-ins/gflare/gflare.c:2880
+#: plug-ins/ifscompose/ifscompose.c:549
 msgid "Y:"
 msgstr "Y:"
 
@@ -1109,6 +1109,7 @@ msgstr "Umgebungs-Bild:"
 #: plug-ins/Lighting/lighting_ui.c:1072 plug-ins/MapObject/mapobject_ui.c:1314
 #: plug-ins/common/lic.c:1037 plug-ins/common/ripple.c:604
 #: plug-ins/gap/gap_mov_dialog.c:872 plug-ins/gfig/gfig.c:4010
+#: plug-ins/mosaic/mosaic.c:577
 msgid "Options"
 msgstr "Einstellungen"
 
@@ -1403,8 +1404,8 @@ msgstr "%s: fehlerhafte Palette"
 #: plug-ins/common/pix.c:370 plug-ins/common/png.c:547
 #: plug-ins/common/pnm.c:499 plug-ins/common/psd.c:2114
 #: plug-ins/common/smooth_palette.c:241 plug-ins/common/sunras.c:932
-#: plug-ins/common/tga.c:923 plug-ins/common/tiff.c:680
-#: plug-ins/common/tile.c:280 plug-ins/common/winclipboard.c:515
+#: plug-ins/common/tga.c:913 plug-ins/common/tiff.c:680
+#: plug-ins/common/tile.c:280 plug-ins/common/winclipboard.c:557
 #: plug-ins/common/wmf.c:2350 plug-ins/common/xbm.c:872
 #: plug-ins/faxg3/faxg3.c:448 plug-ins/fits/fits.c:521
 #: plug-ins/gfig/gfig.c:2832 plug-ins/gfig/gfig.c:3185 plug-ins/sgi/sgi.c:378
@@ -1430,7 +1431,7 @@ msgstr "Kann %s nicht öffnen"
 #: plug-ins/common/pix.c:532 plug-ins/common/png.c:775
 #: plug-ins/common/png.c:777 plug-ins/common/pnm.c:783
 #: plug-ins/common/ps.c:1001 plug-ins/common/sunras.c:525
-#: plug-ins/common/tga.c:1022 plug-ins/common/tiff.c:1337
+#: plug-ins/common/tga.c:1012 plug-ins/common/tiff.c:1337
 #: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:653
 #: plug-ins/common/xwd.c:534 plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:679
 #: plug-ins/sgi/sgi.c:548 plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
@@ -3629,6 +3630,22 @@ msgstr "Weiss"
 msgid "Mandelbrot Parameters"
 msgstr "Mandelbrot Parameter"
 
+#: plug-ins/common/fractaltrace.c:795
+msgid "X1:"
+msgstr "X1:"
+
+#: plug-ins/common/fractaltrace.c:804
+msgid "X2:"
+msgstr "X2:"
+
+#: plug-ins/common/fractaltrace.c:813
+msgid "Y1:"
+msgstr "Y1:"
+
+#: plug-ins/common/fractaltrace.c:822
+msgid "Y2:"
+msgstr "Y2:"
+
 #: plug-ins/common/gauss_iir.c:184
 msgid "<Image>/Filters/Blur/Gaussian Blur (IIR)..."
 msgstr "<Image>/Filter/Weichzeichnen/Gaußscher Weichzeichner (IIR)..."
@@ -4237,6 +4254,14 @@ msgstr "Illusion"
 #: plug-ins/common/illusion.c:612
 msgid "Division:"
 msgstr "Teilung:"
+
+#: plug-ins/common/illusion.c:621
+msgid "Mode 1"
+msgstr "Modus 1"
+
+#: plug-ins/common/illusion.c:633
+msgid "Mode 2"
+msgstr "Modus 2"
 
 #: plug-ins/common/iwarp.c:255
 msgid "<Image>/Filters/Distorts/IWarp..."
@@ -5695,7 +5720,7 @@ msgstr "Vorschau (1:4) - Rechts klicken um zu springen"
 msgid "Holdness:"
 msgstr "Festhalten:"
 
-#: plug-ins/common/screenshot.c:137 plug-ins/winsnap/winsnap.c:1076
+#: plug-ins/common/screenshot.c:137 plug-ins/winsnap/winsnap.c:1074
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
 msgstr "<Toolbox>/Datei/Holen/Screen Shot..."
 
@@ -6215,17 +6240,17 @@ msgstr "TGA: Kann Footer von \"%s\" nicht lesen\n"
 msgid "TGA: Cannot read extension from \"%s\"\n"
 msgstr "TGA: Kann Erweiterung von \"%s\" nicht lesen\n"
 
-#: plug-ins/common/tga.c:1178
+#: plug-ins/common/tga.c:1168
 msgid "Save as TGA"
 msgstr "Als TGA speichern"
 
 #. regular tga parameter settings
-#: plug-ins/common/tga.c:1195
+#: plug-ins/common/tga.c:1185
 msgid "Targa Options"
 msgstr "Targa Einstellungen"
 
 #. rle
-#: plug-ins/common/tga.c:1205
+#: plug-ins/common/tga.c:1195
 msgid "RLE compression"
 msgstr "RL Kompression"
 
@@ -6829,13 +6854,13 @@ msgstr "<Toolbox>/Datei/Holen/Aus Zwischenablage..."
 msgid "Copying ..."
 msgstr "Kopiere..."
 
-#. ??? gimp_convert_rgb(image_ID);
+#. ??? gimp_convert_rgb (image_ID);
 #.
-#: plug-ins/common/winclipboard.c:523
+#: plug-ins/common/winclipboard.c:565
 msgid "Pasted"
 msgstr "Eingefügt"
 
-#: plug-ins/common/winclipboard.c:536
+#: plug-ins/common/winclipboard.c:578
 msgid "Pasting..."
 msgstr "Füge Ein..."
 
@@ -10347,6 +10372,10 @@ msgstr "Bogen erstellen"
 msgid "Create reg polygon"
 msgstr "Reguläres Polygon erstellen"
 
+#: plug-ins/gfig/gfig.c:2151
+msgid "Create star"
+msgstr "Stern erstellen"
+
 #: plug-ins/gfig/gfig.c:2160
 msgid "Create spiral"
 msgstr "Spirale erstellen"
@@ -10491,6 +10520,10 @@ msgstr ""
 "Nähere Kreise und Ellipsen durch gerade Linien an. Dadurch kann der Pinsel "
 "auch bei diesen Objekten ausgeblendet werden."
 
+#: plug-ins/gfig/gfig.c:2934
+msgid "Gfig brush selection"
+msgstr "GFig Pinsel-Auswahl"
+
 #: plug-ins/gfig/gfig.c:2975
 msgid "Fade out:"
 msgstr "Ausblenden:"
@@ -10506,6 +10539,11 @@ msgstr "Druck:"
 #: plug-ins/gfig/gfig.c:3036
 msgid "No Options..."
 msgstr "Keine Einstellungen..."
+
+#. Start of new brush selection code
+#: plug-ins/gfig/gfig.c:3051
+msgid "Set Brush..."
+msgstr "Pinsel setzen..."
 
 #: plug-ins/gfig/gfig.c:3137 plug-ins/gimpressionist/orientmap.c:531
 #: plug-ins/gimpressionist/sizemap.c:431
@@ -11207,6 +11245,10 @@ msgstr ""
 #: plug-ins/gimpressionist/general.c:261
 msgid "Paint edges"
 msgstr "Kanten zeichnen"
+
+#: plug-ins/gimpressionist/general.c:265
+msgid "Selects if to place strokes all the way out to the edges of the image"
+msgstr "Die Pinselstriche bis zum Rand des Bildes fortsetzen"
 
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:269 plug-ins/maze/maze_face.c:282
@@ -12061,6 +12103,10 @@ msgstr "Vert. Abstand"
 #: plug-ins/imagemap/imap_cmd_guides.c:199
 msgid "No. Down"
 msgstr "Anz. vert."
+
+#: plug-ins/imagemap/imap_cmd_guides.c:207
+msgid "Base URL:"
+msgstr "Basis-URL:"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:224
 #, c-format

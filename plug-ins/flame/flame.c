@@ -1199,7 +1199,7 @@ dialog (void)
 		      NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("X:"), SCALE_WIDTH, 0,
+			      _("Y:"), SCALE_WIDTH, 0,
 			      config.cp.center[1],
 			      -2, 2, 0.5, 1, 2,
 			      TRUE, 0, 0,

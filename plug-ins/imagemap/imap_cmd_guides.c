@@ -204,7 +204,7 @@ make_guides_dialog()
    hbox = gtk_hbox_new(FALSE, 1);
    gtk_container_set_border_width(GTK_CONTAINER(hbox), 10);
    gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog->dialog)->vbox), hbox);
-   label = gtk_label_new("Base URL:");
+   label = gtk_label_new(_("Base URL:"));
    gtk_widget_show(label);
    gtk_container_add(GTK_CONTAINER(hbox), label);
    data->base_url = gtk_entry_new();
