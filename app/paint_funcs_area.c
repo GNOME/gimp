@@ -332,8 +332,9 @@ x_sub_area_funcs (
       return x_sub_row_u16;
     case PRECISION_FLOAT:
       return x_sub_row_float;
-    case PRECISION_NONE:
+    case PRECISION_FLOAT16:
       return x_sub_row_float16;
+    case PRECISION_NONE:
     default:
       g_warning ("x_sub: bad precision");
     }
@@ -379,8 +380,9 @@ x_min_area_funcs (
       return x_min_row_u16;
     case PRECISION_FLOAT:
       return x_min_row_float;
-    case PRECISION_NONE:
+    case PRECISION_FLOAT16:
       return x_min_row_float16;
+    case PRECISION_NONE:
     default:
       g_warning ("x_min: bad precision");
     }
@@ -427,8 +429,9 @@ invert_area_funcs (
       return invert_row_u16;
     case PRECISION_FLOAT:
       return invert_row_float;
-    case PRECISION_NONE:
+    case PRECISION_FLOAT16:
       return invert_row_float16;
+    case PRECISION_NONE:
     default:
       g_warning ("invert: bad precision");
     }

@@ -647,13 +647,13 @@ multiply_row_float16 (
 	  dest[b] = FLT16 (s1 * s2);
 	}
 
-      if (ha1 == ALPHA_YES && ha2 == ALPHA_YES)
+      if (ha1 == TRUE && ha2 == TRUE)
 	{
 	  s1 = FLT (src1[alpha]);
 	  s2 = FLT (src2[alpha]);
 	  dest[alpha] = FLT16 (MIN (s1, s2));
 	}
-      else if (ha2 == ALPHA_YES)
+      else if (ha2 == TRUE)
 	dest[alpha] = src2[alpha];
 
       src1 += num_channels1;

@@ -567,9 +567,9 @@ multiply_row_float (
       for (b = 0; b < alpha; b++)
 	dest[b] = src1[b] * src2[b];
 
-      if (ha1 == ALPHA_YES && ha2 == ALPHA_YES)
+      if (ha1 == TRUE && ha2 == TRUE)
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2 == ALPHA_YES)
+      else if (ha2 == TRUE)
 	dest[alpha] = src2[alpha];
 
       src1 += num_channels1;

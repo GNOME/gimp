@@ -5606,6 +5606,74 @@ render_image_rgb_float16_1 (RenderInfo *info)
 static void
 render_image_rgb_float16_2 (RenderInfo *info)
 {
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(guint16*) info->src;
+	  dest = info->dest;
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (FLOAT_TO_8BIT (FLT (src[RED_PIX])),
+				      FLOAT_TO_8BIT (FLT (src[GREEN_PIX])),
+				      FLOAT_TO_8BIT (FLT (src[BLUE_PIX])));
+		src += 3;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest += 2;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (FLOAT_TO_8BIT( FLT (src[RED_PIX])),
+				     FLOAT_TO_8BIT( FLT (src[GREEN_PIX])),
+				     FLOAT_TO_8BIT( FLT (src[BLUE_PIX])));
+		src += 3;
+
+		dest[0] = val >> 8;
+		dest[1] = val;
+		dest += 2;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
 }
 
 static void
@@ -5766,6 +5834,112 @@ render_image_rgb_a_float16_1 (RenderInfo *info)
 static void
 render_image_rgb_a_float16_2 (RenderInfo *info)
 {
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  guint *alpha;
+  gulong r, g, b;
+  gulong val;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src = (guint16 *)info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[FLOAT_TO_8BIT(FLT(src[ALPHA_PIX]))];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | FLOAT_TO_8BIT (FLT (src[RED_PIX])))];
+		    g = blend_dark_check[(a | FLOAT_TO_8BIT (FLT (src[GREEN_PIX])))];
+		    b = blend_dark_check[(a | FLOAT_TO_8BIT (FLT (src[BLUE_PIX])))];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | FLOAT_TO_8BIT (FLT (src[RED_PIX])))];
+		    g = blend_light_check[(a | FLOAT_TO_8BIT (FLT (src[GREEN_PIX])))];
+		    b = blend_light_check[(a | FLOAT_TO_8BIT (FLT (src[BLUE_PIX])))];
+		  }
+	        a = alpha[FLOAT_TO_8BIT (FLT (src[ALPHA_PIX]))];
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest += 2;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[FLOAT_TO_8BIT (FLT (src[ALPHA_PIX]))];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | FLOAT_TO_8BIT ( FLT (src[RED_PIX])))];
+		    g = blend_dark_check[(a | FLOAT_TO_8BIT ( FLT (src[GREEN_PIX])))];
+		    b = blend_dark_check[(a | FLOAT_TO_8BIT ( FLT (src[BLUE_PIX])))];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | FLOAT_TO_8BIT( FLT (src[RED_PIX])))];
+		    g = blend_light_check[(a | FLOAT_TO_8BIT( FLT (src[GREEN_PIX])))];
+		    b = blend_light_check[(a | FLOAT_TO_8BIT( FLT (src[BLUE_PIX])))];
+		  }
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[0] = val >> 8;
+		dest[1] = val;
+		dest += 2;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
 }
 
 static void
