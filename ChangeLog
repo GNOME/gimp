@@ -1,5 +1,11 @@
 2003-11-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimplayertreeview.c
+	(gimp_layer_tree_view_paint_mode_menu_callback): compress
+	successive layer mode undos just as we compress opacity undos.
+
+2003-11-19  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/FractalExplorer/Dialogs.c
 	* plug-ins/common/CEL.c
 	* plug-ins/common/CML_explorer.c

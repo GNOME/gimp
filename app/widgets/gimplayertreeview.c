@@ -811,8 +811,19 @@ gimp_layer_tree_view_paint_mode_menu_callback (GtkWidget         *widget,
 
       if (gimp_layer_get_mode (layer) != mode)
 	{
+          GimpUndo *undo;
+          gboolean  push_undo = TRUE;
+
+          undo = gimp_undo_stack_peek (gimage->undo_stack);
+
+          /*  compress layer mode undos  */
+          if (GIMP_IS_ITEM_UNDO (undo)                &&
+              undo->undo_type == GIMP_UNDO_LAYER_MODE &&
+              GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
+            push_undo = FALSE;
+
 	  BLOCK();
-	  gimp_layer_set_mode (layer, mode, TRUE);
+	  gimp_layer_set_mode (layer, mode, push_undo);
 	  UNBLOCK();
 
 	  gimp_image_flush (gimage);
