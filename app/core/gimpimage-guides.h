@@ -105,7 +105,7 @@ struct _GimpImage
   GimpLayer         *floating_sel;          /*  the FS layer                 */
   GimpChannel       *selection_mask;        /*  the selection mask channel   */
 
-  ParasiteList      *parasites;             /*  Plug-in parasite data        */
+  GimpParasiteList  *parasites;             /*  Plug-in parasite data        */
 
   PathList          *paths;                 /*  Paths data for this image    */
 

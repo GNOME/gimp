@@ -195,7 +195,8 @@ static gchar        * open_backup_file          (gchar        *filename,
 
 
 /*  global gimprc variables  */
-GimpRc gimprc = {
+GimpRc gimprc =
+{
   .plug_in_path              = NULL,
   .brush_path                = NULL,
   .default_brush             = NULL,
@@ -2752,7 +2753,7 @@ parse_parasite (gpointer val1p,
     goto error;
 
   parasite = gimp_parasite_new (identifier, flags, token_int, token_str);
-  gimp_parasite_attach (parasite);  /* attaches a copy */
+  gimp_parasite_attach (the_gimp, parasite);  /* attaches a copy */
   gimp_parasite_free (parasite);
 
   token = get_next_token ();

@@ -77,6 +77,7 @@ brushes_refresh_invoker (Gimp     *gimp,
    *                         <sjburges@gimp.org>
    */
 
+  gimp_data_factory_data_save (gimp->brush_factory);
   gimp_data_factory_data_init (gimp->brush_factory, FALSE);
 
   return procedural_db_return_args (&brushes_refresh_proc, TRUE);

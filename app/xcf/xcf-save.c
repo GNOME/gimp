@@ -265,7 +265,7 @@ xcf_save_image_props (XcfInfo   *info,
 
   xcf_save_prop (info, PROP_TATTOO, gimage->tattoo_state);
 
-  if (parasite_list_length(gimage->parasites) > 0)
+  if (gimp_parasite_list_length (gimage->parasites) > 0)
     xcf_save_prop (info, PROP_PARASITES, gimage->parasites);
 
   if (gimage->unit < gimp_unit_get_number_of_built_in_units ())
@@ -318,7 +318,7 @@ xcf_save_layer_props (XcfInfo   *info,
   xcf_save_prop (info, PROP_MODE, layer->mode);
   xcf_save_prop (info, PROP_TATTOO, GIMP_DRAWABLE (layer)->tattoo);
 
-  if (parasite_list_length (GIMP_DRAWABLE (layer)->parasites) > 0)
+  if (gimp_parasite_list_length (GIMP_DRAWABLE (layer)->parasites) > 0)
     xcf_save_prop (info, PROP_PARASITES, GIMP_DRAWABLE (layer)->parasites);
 
   xcf_save_prop (info, PROP_END);
@@ -347,7 +347,7 @@ xcf_save_channel_props (XcfInfo     *info,
 
   xcf_save_prop (info, PROP_TATTOO, GIMP_DRAWABLE (channel)->tattoo);
 
-  if (parasite_list_length (GIMP_DRAWABLE (channel)->parasites) > 0)
+  if (gimp_parasite_list_length (GIMP_DRAWABLE (channel)->parasites) > 0)
     xcf_save_prop (info, PROP_PARASITES, GIMP_DRAWABLE (channel)->parasites);
 
   xcf_save_prop (info, PROP_END);
@@ -671,7 +671,7 @@ xcf_save_prop (XcfInfo  *info,
       break;
     case PROP_RESOLUTION:
       {
-	float xresolution, yresolution;
+	gfloat xresolution, yresolution;
 
 	/* we pass in floats, but they are promoted to double by the compiler */
 	xresolution =  va_arg (args, double);
@@ -700,20 +700,22 @@ xcf_save_prop (XcfInfo  *info,
       break;
     case PROP_PARASITES:
       {
-	ParasiteList *list;
-	guint32 base, length;
-	long pos;
-	list =  va_arg (args, ParasiteList*);
-	if (parasite_list_persistent_length (list) > 0)
+	GimpParasiteList *list;
+	guint32           base, length;
+	long              pos;
+
+	list = va_arg (args, GimpParasiteList *);
+
+	if (gimp_parasite_list_persistent_length (list) > 0)
 	  {
-	    info->cp += xcf_write_int32 (info->fp, (guint32*) &prop_type, 1);
+	    info->cp += xcf_write_int32 (info->fp, (guint32 *) &prop_type, 1);
 	    /* because we don't know how much room the parasite list will take
 	     * we save the file position and write the length later
 	     */
 	    pos = ftell (info->fp);
 	    info->cp += xcf_write_int32 (info->fp, &length, 1);
 	    base = info->cp;
-	    parasite_list_foreach (list, (GHFunc) write_a_parasite, info);
+	    gimp_parasite_list_foreach (list, (GHFunc) write_a_parasite, info);
 	    length = info->cp - base;
 	    /* go back to the saved position and write the length */
 	    fseek (info->fp, pos, SEEK_SET);

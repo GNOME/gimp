@@ -15,58 +15,56 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PARASITE_LIST_H__
-#define __PARASITE_LIST_H__
+#ifndef __GIMP_PARASITE_LIST_H__
+#define __GIMP_PARASITE_LIST_H__
 
 
 #include "core/gimpobject.h"
 
 
-#define GIMP_TYPE_PARASITE_LIST    (parasite_list_get_type ())
+#define GIMP_TYPE_PARASITE_LIST    (gimp_parasite_list_get_type ())
 #define GIMP_PARASITE_LIST(obj)    (GTK_CHECK_CAST ((obj), GIMP_TYPE_PARASITE_LIST, GimpParasiteList))
 #define GIMP_IS_PARASITE_LIST(obj) (GTK_CHECK_TYPE ((obj), GIMP_TYPE_PARASITE_LIST))
-#define PARASITE_LIST_CLASS(class) GIMP_CHECK_CLASS_CAST (class, parasite_list_get_type(), ParasiteListClass)
+#define PARASITE_LIST_CLASS(class) GIMP_CHECK_CLASS_CAST (class, GIMP_TYPE_PARASITE_LIST, GimpParasiteListClass)
 
 
-typedef struct _ParasiteListClass ParasiteListClass;
+typedef struct _GimpParasiteListClass GimpParasiteListClass;
 
-struct _ParasiteList
+struct _GimpParasiteList
 {
   GimpObject  object;
 
   GHashTable *table;
 };
 
-struct _ParasiteListClass
+struct _GimpParasiteListClass
 {
   GimpObjectClass parent_class;
 
-  void (* add)    (ParasiteList *list,
-		   GimpParasite *parasite);
-  void (* remove) (ParasiteList *list,
-		   GimpParasite *parasite);
+  void (* add)    (GimpParasiteList *list,
+		   GimpParasite     *parasite);
+  void (* remove) (GimpParasiteList *list,
+		   GimpParasite     *parasite);
 };
 
 
-/* function declarations */
+GtkType            gimp_parasite_list_get_type (void);
 
-GtkType        parasite_list_get_type (void);
+GimpParasiteList * gimp_parasite_list_new      (void);
+GimpParasiteList * gimp_parasite_list_copy     (const GimpParasiteList *list);
+void               gimp_parasite_list_add      (GimpParasiteList       *list,
+						GimpParasite           *parasite);
+void               gimp_parasite_list_remove   (GimpParasiteList       *list,
+						const gchar            *name);
+gint               gimp_parasite_list_length   (GimpParasiteList       *list);
+gint               gimp_parasite_list_persistent_length (GimpParasiteList *list);
+void               gimp_parasite_list_foreach  (GimpParasiteList       *list,
+						GHFunc                  function,
+						gpointer                user_data);
+GimpParasite     * gimp_parasite_list_find     (GimpParasiteList       *list,
+						const gchar            *name);
 
-ParasiteList * parasite_list_new               (void);
-ParasiteList * parasite_list_copy              (const ParasiteList *list);
-void           parasite_list_add               (ParasiteList       *list,
-						GimpParasite       *parasite);
-void           parasite_list_remove            (ParasiteList       *list,
-						const gchar        *name);
-gint           parasite_list_length            (ParasiteList       *list);
-gint           parasite_list_persistent_length (ParasiteList       *list);
-void           parasite_list_foreach           (ParasiteList       *list,
-						GHFunc              function,
-						gpointer            user_data);
-GimpParasite * parasite_list_find              (ParasiteList       *list,
-						const gchar        *name);
-
-void           parasite_shift_parent           (GimpParasite       *parasite);
+void                gimp_parasite_shift_parent (GimpParasite           *parasite);
 
 
-#endif  /*  __PARASITE_LIST_H__  */
+#endif  /*  __GIMP_PARASITE_LIST_H__  */

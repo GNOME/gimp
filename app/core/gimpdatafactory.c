@@ -25,12 +25,13 @@
 
 #include "core-types.h"
 
-#include "datafiles.h"
 #include "gimpdata.h"
 #include "gimpdatalist.h"
 #include "gimpdatafactory.h"
 #include "gimpcontext.h"
 #include "gimpmarshal.h"
+
+#include "datafiles.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -146,7 +147,7 @@ gimp_data_factory_new (GtkType                            data_type,
 
 void
 gimp_data_factory_data_init (GimpDataFactory *factory,
-			     gboolean         no_data)
+			     gboolean         no_data /* FIXME */)
 {
   g_return_if_fail (factory != NULL);
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
@@ -217,8 +218,6 @@ gimp_data_factory_data_free (GimpDataFactory *factory)
   list = GIMP_LIST (factory->container);
 
   gimp_container_freeze (factory->container);
-
-  gimp_data_factory_data_save (factory);
 
   while (list->list)
     {

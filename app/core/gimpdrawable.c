@@ -163,7 +163,7 @@ gimp_drawable_init (GimpDrawable *drawable)
   drawable->has_alpha     = FALSE;
   drawable->preview_cache = NULL;
   drawable->preview_valid = FALSE;
-  drawable->parasites     = parasite_list_new ();
+  drawable->parasites     = gimp_parasite_list_new ();
   drawable->preview_cache = NULL;
   drawable->preview_valid = FALSE;
 
@@ -683,7 +683,7 @@ gimp_drawable_parasite_find (const GimpDrawable *drawable,
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  return parasite_list_find (drawable->parasites, name);
+  return gimp_parasite_list_find (drawable->parasites, name);
 }
 
 static void
@@ -705,12 +705,12 @@ gimp_drawable_parasite_list (const GimpDrawable *drawable,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (count != NULL, NULL);
 
-  *count = parasite_list_length (drawable->parasites);
+  *count = gimp_parasite_list_length (drawable->parasites);
   cur = list = g_new (gchar *, *count);
 
-  parasite_list_foreach (drawable->parasites,
-			 (GHFunc) gimp_drawable_parasite_list_foreach_func,
-			 &cur);
+  gimp_parasite_list_foreach (drawable->parasites,
+			      (GHFunc) gimp_drawable_parasite_list_foreach_func,
+			      &cur);
 
   return list;
 }
@@ -738,18 +738,18 @@ gimp_drawable_parasite_attach (GimpDrawable *drawable,
       undo_push_cantundo (drawable->gimage, _("parasite attach to drawable"));
     }
 
-  parasite_list_add (drawable->parasites, parasite);
+  gimp_parasite_list_add (drawable->parasites, parasite);
 
   if (gimp_parasite_has_flag (parasite, GIMP_PARASITE_ATTACH_PARENT))
     {
-      parasite_shift_parent (parasite);
+      gimp_parasite_shift_parent (parasite);
       gimp_image_parasite_attach (drawable->gimage, parasite);
     }
   else if (gimp_parasite_has_flag (parasite, GIMP_PARASITE_ATTACH_GRANDPARENT))
     {
-      parasite_shift_parent (parasite);
-      parasite_shift_parent (parasite);
-      gimp_parasite_attach (parasite);
+      gimp_parasite_shift_parent (parasite);
+      gimp_parasite_shift_parent (parasite);
+      gimp_parasite_attach (drawable->gimage->gimp, parasite);
     }
 
   if (gimp_parasite_is_undoable (parasite))
@@ -766,7 +766,7 @@ gimp_drawable_parasite_detach (GimpDrawable *drawable,
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  if (! (p = parasite_list_find (drawable->parasites, parasite)))
+  if (! (p = gimp_parasite_list_find (drawable->parasites, parasite)))
     return;
 
   if (gimp_parasite_is_undoable (p))
@@ -775,7 +775,7 @@ gimp_drawable_parasite_detach (GimpDrawable *drawable,
   else if (gimp_parasite_is_persistent (p))
     undo_push_cantundo (drawable->gimage, _("detach parasite from drawable"));
 
-  parasite_list_remove (drawable->parasites, parasite);
+  gimp_parasite_list_remove (drawable->parasites, parasite);
 }
 
 Tattoo

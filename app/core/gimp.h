@@ -34,21 +34,23 @@ typedef struct _GimpClass GimpClass;
 
 struct _Gimp
 {
-  GimpObject       parent_instance;
+  GimpObject        parent_instance;
 
-  GimpContainer   *images;
+  GimpContainer    *images;
 
-  TileManager     *global_buffer;
-  GimpContainer   *named_buffers;
+  TileManager      *global_buffer;
+  GimpContainer    *named_buffers;
 
-  GimpDataFactory *brush_factory;
-  GimpDataFactory *pattern_factory;
-  GimpDataFactory *gradient_factory;
-  GimpDataFactory *palette_factory;
+  GimpParasiteList *parasites;
 
-  GHashTable      *procedural_ht;
+  GimpDataFactory  *brush_factory;
+  GimpDataFactory  *pattern_factory;
+  GimpDataFactory  *gradient_factory;
+  GimpDataFactory  *palette_factory;
 
-  GimpContainer   *tool_info_list;
+  GHashTable       *procedural_ht;
+
+  GimpContainer    *tool_info_list;
 };
 
 struct _GimpClass
@@ -60,7 +62,8 @@ struct _GimpClass
 GtkType   gimp_get_type   (void);
 Gimp    * gimp_new        (void);
 
-void      gimp_initialize (Gimp *gimp);
+void      gimp_restore    (Gimp *gimp);
+void      gimp_shutdown   (Gimp *gimp);
 
 
 #endif  /* __GIMP_H__ */

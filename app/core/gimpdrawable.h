@@ -34,25 +34,25 @@ typedef struct _GimpDrawableClass GimpDrawableClass;
 
 struct _GimpDrawable
 {
-  GimpViewable   parent_instance;
+  GimpViewable      parent_instance;
 
-  TileManager   *tiles;                 /* tiles for drawable data        */
-  gboolean       visible;               /* controls visibility            */
-  gint           width, height;		/* size of drawable               */
-  gint           offset_x, offset_y;	/* offset of layer in image       */
+  TileManager      *tiles;              /* tiles for drawable data        */
+  gboolean          visible;            /* controls visibility            */
+  gint              width, height;      /* size of drawable               */
+  gint              offset_x, offset_y; /* offset of layer in image       */
 
-  gint           bytes;			/* bytes per pixel                */
-  gint           ID;			/* provides a unique ID           */
-  guint32        tattoo;		/* provides a perminant ID        */
-  GimpImage     *gimage;		/* gimage owner                   */
-  GimpImageType  type;			/* type of drawable               */
-  gboolean       has_alpha;		/* drawable has alpha             */
+  gint              bytes;              /* bytes per pixel                */
+  gint              ID;                 /* provides a unique ID           */
+  guint32           tattoo;             /* provides a perminant ID        */
+  GimpImage        *gimage;             /* gimage owner                   */
+  GimpImageType     type;               /* type of drawable               */
+  gboolean          has_alpha;          /* drawable has alpha             */
 
-  ParasiteList  *parasites;             /* Plug-in parasite data          */
+  GimpParasiteList *parasites;          /* Plug-in parasite data          */
 
   /*  Preview variables  */
-  GSList        *preview_cache;	       	/* preview caches of the channel  */
-  gboolean       preview_valid;		/* is the preview valid?          */
+  GSList           *preview_cache;     	/* preview caches of the channel  */
+  gboolean          preview_valid;      /* is the preview valid?          */
 };
 
 struct _GimpDrawableClass

@@ -28,38 +28,54 @@
 
 #include "core/core-types.h"
 
+#include "core/gimp.h"
+
 #include "app_procs.h"
 #include "parasitelist.h"
 #include "gimpparasite.h"
 #include "gimprc.h"
 
 
-static ParasiteList *parasites = NULL;
+void 
+gimp_parasites_init (Gimp *gimp)
+{
+  g_return_if_fail (gimp->parasites == NULL);
+
+  gimp->parasites = gimp_parasite_list_new ();
+
+  gtk_object_ref (GTK_OBJECT (gimp->parasites));
+  gtk_object_sink (GTK_OBJECT (gimp->parasites));
+}
 
 void 
-gimp_init_parasites (void)
+gimp_parasites_exit (Gimp *gimp)
 {
-  g_return_if_fail (parasites == NULL);
-  parasites = parasite_list_new ();
-  gimp_parasiterc_load ();
+  if (gimp->parasites)
+    {
+      gtk_object_unref (GTK_OBJECT (gimp->parasites));
+      gimp->parasites = NULL;
+    }
 }
 
 void
-gimp_parasite_attach (GimpParasite *p)
+gimp_parasite_attach (Gimp         *gimp,
+		      GimpParasite *parasite)
 {
-  parasite_list_add (parasites, p);
+  gimp_parasite_list_add (gimp->parasites, parasite);
 }
 
 void
-gimp_parasite_detach (const gchar *name)
+gimp_parasite_detach (Gimp        *gimp,
+		      const gchar *name)
 {
-  parasite_list_remove (parasites, name);
+  gimp_parasite_list_remove (gimp->parasites, name);
 }
 
 GimpParasite *
-gimp_parasite_find (const gchar *name)
+gimp_parasite_find (Gimp        *gimp,
+		    const gchar *name)
 {
-  return parasite_list_find (parasites, name);
+  return gimp_parasite_list_find (gimp->parasites, name);
 }
 
 static void 
@@ -71,31 +87,33 @@ list_func (gchar          *key,
 }
 
 gchar **
-gimp_parasite_list (gint *count)
+gimp_parasite_list (Gimp *gimp,
+		    gint *count)
 {
   gchar **list;
   gchar **cur;
 
-  *count = parasite_list_length (parasites);
+  *count = gimp_parasite_list_length (gimp->parasites);
   cur = list = g_new (gchar *, *count);
 
-  parasite_list_foreach (parasites, (GHFunc) list_func, &cur);
+  gimp_parasite_list_foreach (gimp->parasites, (GHFunc) list_func, &cur);
   
   return list;
 }
 
 static void 
 save_func (gchar        *key,
-	   GimpParasite *p,
+	   GimpParasite *parasite,
 	   FILE         *fp)
 {
-  if (gimp_parasite_is_persistent (p))
+  if (gimp_parasite_is_persistent (parasite))
     {
       gchar   *s;
       guint32  l;
 
       fprintf (fp, "(parasite \"%s\" %lu \"",
-	       gimp_parasite_name (p), gimp_parasite_flags (p));
+	       gimp_parasite_name (parasite),
+	       gimp_parasite_flags (parasite));
 
       /*
        * the current methodology is: never move the parasiterc from one
@@ -104,7 +122,8 @@ save_func (gchar        *key,
        * characters as \xHH sequences altogether.
        */
 
-      for (s = (gchar *) gimp_parasite_data (p), l = gimp_parasite_data_size (p);
+      for (s = (gchar *) gimp_parasite_data (parasite),
+	     l = gimp_parasite_data_size (parasite);
            l;
            l--, s++)
         {
@@ -120,17 +139,27 @@ save_func (gchar        *key,
               default  : fputc (*s, fp); break;
             }
         }
-      
+
       fputs ("\")\n\n", fp);
     }
 }
 
 void
-gimp_parasiterc_save (void)
+gimp_parasiterc_load (Gimp *gimp)
+{
+  gchar *filename;
+
+  filename = gimp_personal_rc_file ("parasiterc");
+  parse_gimprc_file (filename);
+  g_free (filename);
+}
+
+void
+gimp_parasiterc_save (Gimp *gimp)
 {
   gchar *tmp_filename = NULL;
   gchar *bak_filename = NULL;
-  gchar *rc_filename = NULL;
+  gchar *rc_filename  = NULL;
   FILE  *fp;
 
   tmp_filename = gimp_personal_rc_file ("#parasiterc.tmp~");
@@ -147,7 +176,7 @@ gimp_parasiterc_save (void)
 	   "# This file will be entirely rewritten every time you "
 	   "quit the gimp.\n\n");
 
-  parasite_list_foreach (parasites, (GHFunc)save_func, fp);
+  gimp_parasite_list_foreach (gimp->parasites, (GHFunc) save_func, fp);
 
   fclose (fp);
 
@@ -170,15 +199,4 @@ gimp_parasiterc_save (void)
   g_free (tmp_filename);
   g_free (bak_filename);
   g_free (rc_filename);
-}
-
-void
-gimp_parasiterc_load (void)
-{
-  gchar *filename;
-
-  filename = gimp_personal_rc_file ("parasiterc");
-  app_init_update_status (NULL, filename, -1);
-  parse_gimprc_file (filename);
-  g_free (filename);
 }

@@ -426,6 +426,7 @@ static void
 gimp_data_factory_view_refresh_clicked (GtkWidget           *widget,
 					GimpDataFactoryView *view)
 {
+  gimp_data_factory_data_save (view->factory);
   gimp_data_factory_data_init (view->factory, FALSE);
 }
 

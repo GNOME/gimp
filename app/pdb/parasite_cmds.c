@@ -80,7 +80,7 @@ parasite_find_invoker (Gimp     *gimp,
 
   if (success)
     {
-      parasite = gimp_parasite_copy (gimp_parasite_find (name));
+      parasite = gimp_parasite_copy (gimp_parasite_find (gimp, name));
       success = parasite != NULL;
     }
 
@@ -138,7 +138,7 @@ parasite_attach_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_parasite_attach (parasite);
+    gimp_parasite_attach (gimp, parasite);
 
   return procedural_db_return_args (&parasite_attach_proc, success);
 }
@@ -180,7 +180,7 @@ parasite_detach_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_parasite_detach (name);
+    gimp_parasite_detach (gimp, name);
 
   return procedural_db_return_args (&parasite_detach_proc, success);
 }
@@ -218,7 +218,7 @@ parasite_list_invoker (Gimp     *gimp,
   gint32 num_parasites;
   gchar **parasites;
 
-  parasites = gimp_parasite_list (&num_parasites);
+  parasites = gimp_parasite_list (gimp, &num_parasites);
 
   return_args = procedural_db_return_args (&parasite_list_proc, TRUE);
 
@@ -278,7 +278,7 @@ drawable_parasite_find_invoker (Gimp     *gimp,
 
   if (success)
     {
-      parasite = gimp_parasite_copy (gimp_drawable_parasite_find (drawable, name));
+      parasite = gimp_parasite_copy (gimp_parasite_find (gimp, name));
       success = parasite != NULL;
     }
 
@@ -346,7 +346,7 @@ drawable_parasite_attach_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_drawable_parasite_attach (drawable, parasite);
+    gimp_parasite_attach (gimp, parasite);
 
   return procedural_db_return_args (&drawable_parasite_attach_proc, success);
 }
@@ -398,7 +398,7 @@ drawable_parasite_detach_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_drawable_parasite_detach (drawable, name);
+    gimp_parasite_detach (gimp, name);
 
   return procedural_db_return_args (&drawable_parasite_detach_proc, success);
 }
@@ -448,7 +448,7 @@ drawable_parasite_list_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    parasites = gimp_drawable_parasite_list (drawable, &num_parasites);
+    parasites = gimp_parasite_list (gimp, &num_parasites);
 
   return_args = procedural_db_return_args (&drawable_parasite_list_proc, success);
 
@@ -520,7 +520,7 @@ image_parasite_find_invoker (Gimp     *gimp,
 
   if (success)
     {
-      parasite = gimp_parasite_copy (gimp_image_parasite_find (gimage, name));
+      parasite = gimp_parasite_copy (gimp_parasite_find (gimp, name));
       success = parasite != NULL;
     }
 
@@ -588,7 +588,7 @@ image_parasite_attach_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_image_parasite_attach (gimage, parasite);
+    gimp_parasite_attach (gimp, parasite);
 
   return procedural_db_return_args (&image_parasite_attach_proc, success);
 }
@@ -640,7 +640,7 @@ image_parasite_detach_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_image_parasite_detach (gimage, name);
+    gimp_parasite_detach (gimp, name);
 
   return procedural_db_return_args (&image_parasite_detach_proc, success);
 }
@@ -690,7 +690,7 @@ image_parasite_list_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    parasites = gimp_image_parasite_list (gimage, &num_parasites);
+    parasites = gimp_parasite_list (gimp, &num_parasites);
 
   return_args = procedural_db_return_args (&image_parasite_list_proc, success);
 

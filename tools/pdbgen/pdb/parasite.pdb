@@ -55,8 +55,8 @@ sub convert_proc {
 
     $invoke{code} =~ s/gimp_parasite_copy/GIMP_parasite_copy/e;
 
-    $invoke{code} =~ s/gimp/"gimp_$type"/e;
-    $invoke{code} =~ s/\(((?!gimp).*?(?:parasite|name))/"($var, $1"/e;
+    $invoke{code} =~ s/gimp_/"gimp_$type_"/e;
+    $invoke{code} =~ s/"gimp, "/"$var, "/e;
 
     $invoke{code} =~ s/GIMP_parasite_copy/gimp_parasite_copy/e;
 }
@@ -79,7 +79,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  parasite = gimp_parasite_copy (gimp_parasite_find (name));
+  parasite = gimp_parasite_copy (gimp_parasite_find (gimp, name));
   success = parasite != NULL;
 }
 CODE
@@ -100,7 +100,7 @@ HELP
 	  desc => 'The parasite to attach to the gimp' }
     );
 
-    %invoke = ( code => 'gimp_parasite_attach (parasite);' );
+    %invoke = ( code => 'gimp_parasite_attach (gimp, parasite);' );
 }
 
 sub parasite_detach {
@@ -117,7 +117,7 @@ HELP
 	  desc => 'The name of the parasite to detach from the gimp.' }
     );
 
-    %invoke = ( code => 'gimp_parasite_detach (name);' );
+    %invoke = ( code => 'gimp_parasite_detach (gimp, name);' );
 }
 
 sub parasite_list {
@@ -134,7 +134,7 @@ sub parasite_list {
 	  array => { desc => 'The number of attached parasites' } }
     );
 
-    %invoke = ( code => 'parasites = gimp_parasite_list (&num_parasites);' );
+    %invoke = ( code => 'parasites = gimp_parasite_list (gimp, &num_parasites);' );
 }
 
 @headers = qw("gimpparasite.h" "core/gimpdrawable.h");

@@ -429,7 +429,7 @@ gimp_image_init (GimpImage *gimage)
   gimage->floating_sel          = NULL;
   gimage->selection_mask        = NULL;
 
-  gimage->parasites             = parasite_list_new ();
+  gimage->parasites             = gimp_parasite_list_new ();
 
   gimage->paths                 = NULL;
 
@@ -1513,7 +1513,7 @@ gimp_image_parasite_find (const GimpImage *gimage,
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  return parasite_list_find (gimage->parasites, name);
+  return gimp_parasite_list_find (gimage->parasites, name);
 }
 
 static void
@@ -1533,10 +1533,10 @@ gimp_image_parasite_list (const GimpImage *gimage,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  *count = parasite_list_length (gimage->parasites);
+  *count = gimp_parasite_list_length (gimage->parasites);
   cur = list = g_new (gchar*, *count);
 
-  parasite_list_foreach (gimage->parasites, (GHFunc) list_func, &cur);
+  gimp_parasite_list_foreach (gimage->parasites, (GHFunc) list_func, &cur);
   
   return list;
 }
@@ -1559,12 +1559,12 @@ gimp_image_parasite_attach (GimpImage    *gimage,
       undoable but does not block the undo system.   --Sven
    */
 
-  parasite_list_add (gimage->parasites, parasite);
+  gimp_parasite_list_add (gimage->parasites, parasite);
 
   if (gimp_parasite_has_flag (parasite, GIMP_PARASITE_ATTACH_PARENT))
     {
-      parasite_shift_parent (parasite);
-      gimp_parasite_attach (parasite);
+      gimp_parasite_shift_parent (parasite);
+      gimp_parasite_attach (gimage->gimp, parasite);
     }
 }
 
@@ -1576,13 +1576,13 @@ gimp_image_parasite_detach (GimpImage   *gimage,
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage) && parasite != NULL);
 
-  if (!(p = parasite_list_find (gimage->parasites, parasite)))
+  if (!(p = gimp_parasite_list_find (gimage->parasites, parasite)))
     return;
 
   if (gimp_parasite_is_undoable (p))
     undo_push_image_parasite_remove (gimage, gimp_parasite_name (p));
 
-  parasite_list_remove (gimage->parasites, parasite);
+  gimp_parasite_list_remove (gimage->parasites, parasite);
 }
 
 Tattoo
@@ -3324,7 +3324,7 @@ gimp_image_merge_layers (GimpImage *gimage,
   gimp_drawable_set_tattoo (GIMP_DRAWABLE (merge_layer),
 			    gimp_drawable_get_tattoo (GIMP_DRAWABLE (layer)));
   GIMP_DRAWABLE (merge_layer)->parasites =
-    parasite_list_copy (GIMP_DRAWABLE (layer)->parasites);
+    gimp_parasite_list_copy (GIMP_DRAWABLE (layer)->parasites);
 
   while (reverse_list)
     {

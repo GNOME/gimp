@@ -48,6 +48,7 @@
 #include "tools/gimptransformtool.h"
 #include "tools/tool_manager.h"
 
+#include "app_procs.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
@@ -2652,9 +2653,9 @@ undo_pop_parasite (GimpImage *gimage,
 	gimp_parasite_copy (gimp_image_parasite_find (gimage, data->name));
 
       if (tmp)
-	parasite_list_add (data->gimage->parasites, tmp);
+	gimp_parasite_list_add (data->gimage->parasites, tmp);
       else
-	parasite_list_remove (data->gimage->parasites, data->name);
+	gimp_parasite_list_remove (data->gimage->parasites, data->name);
     }
   else if (data->drawable)
     {
@@ -2662,17 +2663,18 @@ undo_pop_parasite (GimpImage *gimage,
 	gimp_parasite_copy (gimp_drawable_parasite_find (data->drawable,
 							 data->name));
       if (tmp)
-	parasite_list_add (data->drawable->parasites, tmp);
+	gimp_parasite_list_add (data->drawable->parasites, tmp);
       else
-	parasite_list_remove (data->drawable->parasites, data->name);
+	gimp_parasite_list_remove (data->drawable->parasites, data->name);
     }
   else
     {
-      data->parasite = gimp_parasite_copy (gimp_parasite_find (data->name));
+      data->parasite = gimp_parasite_copy (gimp_parasite_find (gimage->gimp,
+							       data->name));
       if (tmp)
-	gimp_parasite_attach (tmp);
+	gimp_parasite_attach (gimage->gimp, tmp);
       else
-	gimp_parasite_detach (data->name);
+	gimp_parasite_detach (gimage->gimp, data->name);
     }
     
   if (tmp)

@@ -19,16 +19,21 @@
 #define __APP_GIMP_PARASITE_H__
 
 
-void            gimp_init_parasites  (void);
+void            gimp_parasites_init  (Gimp         *gimp);
+void            gimp_parasites_exit  (Gimp         *gimp);
 
-void            gimp_parasite_attach (GimpParasite *parasite);
-void            gimp_parasite_detach (const gchar  *name);
+void            gimp_parasite_attach (Gimp         *gimp,
+				      GimpParasite *parasite);
+void            gimp_parasite_detach (Gimp         *gimp,
+				      const gchar  *name);
 
-GimpParasite  * gimp_parasite_find   (const gchar  *name);
-gchar        ** gimp_parasite_list   (gint         *count);
+GimpParasite  * gimp_parasite_find   (Gimp         *gimp,
+				      const gchar  *name);
+gchar        ** gimp_parasite_list   (Gimp         *gimp,
+				      gint         *count);
 
-void            gimp_parasiterc_save (void);
-void            gimp_parasiterc_load (void);
+void            gimp_parasiterc_load (Gimp         *gimp);
+void            gimp_parasiterc_save (Gimp         *gimp);
 
 
 #endif  /*  __APP_GIMP_PARASITE_H__  */

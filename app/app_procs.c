@@ -55,7 +55,6 @@
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimprc.h"
-#include "gimpparasite.h"
 #include "plug_in.h"
 #include "module_db.h"
 
@@ -67,8 +66,6 @@
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color.h"
 #endif /* DISPLAY_FILTERS */
-
-#include "gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -173,8 +170,8 @@ app_init (gint    gimp_argc,
   RESET_BAR();
   xcf_init (the_gimp);       /*  initialize the xcf file format routines */
 
-  /*  initialize the global gimp object  */
-  gimp_initialize (the_gimp);
+  /*  load all data files  */
+  gimp_restore (the_gimp);
 
   plug_in_init ();           /*  initialize the plug in structures  */
   module_db_init ();         /*  load any modules we need           */
@@ -244,7 +241,6 @@ app_exit_finish (void)
   context_manager_free ();
   plug_in_kill ();
   save_unitrc ();
-  gimp_parasiterc_save ();
 
   tools_exit ();
 
@@ -254,6 +250,8 @@ app_exit_finish (void)
     }
 
   xcf_exit ();
+
+  gimp_shutdown (the_gimp);
 
   gtk_object_unref (GTK_OBJECT (the_gimp));
   the_gimp = NULL;

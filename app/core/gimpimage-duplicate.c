@@ -54,20 +54,20 @@
 GimpImage *
 gimp_image_duplicate (GimpImage *gimage)
 {
-  PixelRegion   srcPR, destPR;
-  GimpImage    *new_gimage;
-  GimpLayer    *layer, *new_layer;
-  GimpLayer    *floating_layer;
-  GimpChannel  *channel, *new_channel;
-  GList        *list;
-  GimpGuide    *guide                     = NULL;
-  GimpLayer    *active_layer              = NULL;
-  GimpChannel  *active_channel            = NULL;
-  GimpDrawable *new_floating_sel_drawable = NULL;
-  GimpDrawable *floating_sel_drawable     = NULL;
-  ParasiteList *parasites;
-  PathList     *paths;
-  gint          count;
+  PixelRegion       srcPR, destPR;
+  GimpImage        *new_gimage;
+  GimpLayer        *layer, *new_layer;
+  GimpLayer        *floating_layer;
+  GimpChannel      *channel, *new_channel;
+  GList            *list;
+  GimpGuide        *guide                     = NULL;
+  GimpLayer        *active_layer              = NULL;
+  GimpChannel      *active_channel            = NULL;
+  GimpDrawable     *new_floating_sel_drawable = NULL;
+  GimpDrawable     *floating_sel_drawable     = NULL;
+  GimpParasiteList *parasites;
+  PathList         *paths;
+  gint              count;
 
   g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
@@ -218,7 +218,7 @@ gimp_image_duplicate (GimpImage *gimage)
   /* Copy parasites */
   parasites = gimage->parasites;
   if (parasites)
-    new_gimage->parasites = parasite_list_copy (parasites);
+    new_gimage->parasites = gimp_parasite_list_copy (parasites);
 
   /* Copy paths */
   paths = gimp_image_get_paths (gimage);

@@ -228,7 +228,7 @@ gimp_channel_copy (const GimpChannel *channel,
 
   /* copy the parasites */
   GIMP_DRAWABLE (new_channel)->parasites =
-    parasite_list_copy (GIMP_DRAWABLE (channel)->parasites);
+    gimp_parasite_list_copy (GIMP_DRAWABLE (channel)->parasites);
 
   /*  free up the channel_name memory  */
   g_free (channel_name);

@@ -142,6 +142,8 @@ gimp_init (Gimp *gimp)
   gtk_object_ref (GTK_OBJECT (gimp->named_buffers));
   gtk_object_sink (GTK_OBJECT (gimp->named_buffers));
 
+  gimp_parasites_init (gimp);
+
   gimp->brush_factory =
     gimp_data_factory_new (GIMP_TYPE_BRUSH,
 			   (const gchar **) &gimprc.brush_path,
@@ -238,6 +240,8 @@ gimp_destroy (GtkObject *object)
       gimp->palette_factory = NULL;
     }
 
+  gimp_parasites_exit (gimp);
+
   if (gimp->named_buffers)
     {
       gtk_object_unref (GTK_OBJECT (gimp->named_buffers));
@@ -271,14 +275,14 @@ gimp_new (void)
 }
 
 void
-gimp_initialize (Gimp *gimp)
+gimp_restore (Gimp *gimp)
 {
   g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   /*  initialize  the global parasite table  */
   app_init_update_status (_("Looking for data files"), _("Parasites"), 0.00);
-  gimp_init_parasites ();
+  gimp_parasiterc_load (gimp);
 
   /*  initialize the list of gimp brushes    */
   app_init_update_status (NULL, _("Brushes"), 0.20);
@@ -297,4 +301,14 @@ gimp_initialize (Gimp *gimp)
   gimp_data_factory_data_init (gimp->gradient_factory, no_data); 
 
   app_init_update_status (NULL, NULL, 1.00);
+}
+
+void
+gimp_shutdown (Gimp *gimp)
+{
+  gimp_data_factory_data_save (gimp->brush_factory);
+  gimp_data_factory_data_save (gimp->pattern_factory);
+  gimp_data_factory_data_save (gimp->gradient_factory);
+  gimp_data_factory_data_save (gimp->palette_factory);
+  gimp_parasiterc_save (gimp);
 }

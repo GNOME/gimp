@@ -1,3 +1,36 @@
+2001-07-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp.[ch]: renamed gimp_initialize() to gimp_restore()
+	because it loads all kinds of data. Added gimp_shutdown() to save
+	the data. Added the global parasite list.
+
+	* app/apptypes.h: removed ParasiteList.
+
+	* app/core/core-types.h: added GimpParasiteList.
+
+	* app/gimpparasite.[ch]: removed the global parasite list.
+
+	* app/parasitelist.[ch]: s/ParasiteList/GimpParasiteList/
+	s/parasite_list_*/gimp_patasite_list_*/
+
+	* app/widgets/gimpdatafactoryview.c: don't save the data in
+	gimp_data-factory_data_free().
+
+	* app/app_procs.c
+	* app/gimprc.c
+	* app/undo.c
+	* app/core/gimpchannel.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimpdrawable.[ch]
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage.[ch]
+	* app/core/gimplayer.c
+	* app/pdb/brushes_cmds.c
+	* app/pdb/parasite_cmds.c
+	* app/xcf/xcf-save.c
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/parasite.pdb: changed accordingly.
+
 2001-07-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am
