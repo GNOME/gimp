@@ -203,6 +203,17 @@ package Gimp::CodeGen::enums;
 		       GIMP_FSLOWBLEED_DITHER => '2',
 		       GIMP_FIXED_DITHER => '3' }
 	},
+    GimpFillType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_FOREGROUND_FILL GIMP_BACKGROUND_FILL
+			  GIMP_WHITE_FILL GIMP_TRANSPARENT_FILL GIMP_NO_FILL) ],
+	  mapping => { GIMP_FOREGROUND_FILL => '0',
+		       GIMP_BACKGROUND_FILL => '1',
+		       GIMP_WHITE_FILL => '2',
+		       GIMP_TRANSPARENT_FILL => '3',
+		       GIMP_NO_FILL => '4' }
+	},
     GimpGradientType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
@@ -282,17 +293,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_WEB_PALETTE => '2',
 		       GIMP_MONO_PALETTE => '3',
 		       GIMP_CUSTOM_PALETTE => '4' }
-	},
-    GimpFillType =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_FOREGROUND_FILL GIMP_BACKGROUND_FILL
-			  GIMP_WHITE_FILL GIMP_TRANSPARENT_FILL GIMP_NO_FILL) ],
-	  mapping => { GIMP_FOREGROUND_FILL => '0',
-		       GIMP_BACKGROUND_FILL => '1',
-		       GIMP_WHITE_FILL => '2',
-		       GIMP_TRANSPARENT_FILL => '3',
-		       GIMP_NO_FILL => '4' }
 	},
     GimpAddMaskType =>
 	{ contig => 1,

@@ -104,7 +104,7 @@ typedef enum
   GIMP_BACKGROUND_FILL,   /*< desc="Background"  >*/
   GIMP_WHITE_FILL,        /*< desc="White"       >*/
   GIMP_TRANSPARENT_FILL,  /*< desc="Transparent" >*/
-  GIMP_NO_FILL            /*< skip >*/
+  GIMP_NO_FILL            /*< desc="None"        >*/
 } GimpFillType;
 
 
@@ -136,7 +136,7 @@ typedef enum
 {
   GIMP_RGB,     /*< desc="RGB"       >*/
   GIMP_GRAY,    /*< desc="Grayscale" >*/
-  GIMP_INDEXED  /*< skip >*/
+  GIMP_INDEXED  /*< desc="Indexed"   >*/
 } GimpImageBaseType;
 
 

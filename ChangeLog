@@ -1,5 +1,13 @@
 2002-05-13  Sven Neumann  <sven@gimp.org>
 
+	* app/core/core-enums.[ch]: uhh, skipping values used in the PDB
+	was a bad idea. Removed the skip trigraphs again. This breaks the
+	GUI; will fix it later.
+
+	* tools/pdbgen/enums.pl: regenerated.
+
+2002-05-13  Sven Neumann  <sven@gimp.org>
+
 	* app/core/core-enums.[ch]: registered GimpFillType enum and added
 	translatable names to GimpImageBaseType.
 
