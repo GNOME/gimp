@@ -71,6 +71,7 @@ struct _ToolButton
 {
   char **icon_data;
   char  *tool_desc;
+  char  *private_tip;
   gpointer callback_data;
 };
 
@@ -78,92 +79,122 @@ static ToolButton tool_data[] =
 {
   { (char **) rect_bits,
     "Select rectangular regions",
+    "ContextHelp/rect-select",
     (gpointer) RECT_SELECT },
   { (char **) circ_bits,
     "Select elliptical regions",
+    "ContextHelp/ellipse-select",
     (gpointer) ELLIPSE_SELECT },
   { (char **) free_bits,
     "Select hand-drawn regions",
+    "ContextHelp/free-select",
     (gpointer) FREE_SELECT },
   { (char **) fuzzy_bits,
     "Select contiguous regions",
+    "ContextHelp/fuzzy-select",
     (gpointer) FUZZY_SELECT },
   { (char **) bezier_bits,
     "Select regions using Bezier curves",
+    "ContextHelp/bezier-select",
     (gpointer) BEZIER_SELECT },
   { (char **) iscissors_bits,
     "Select shapes from image",
+    "ContextHelp/iscissors",
     (gpointer) ISCISSORS },
   { (char **) move_bits,
     "Move layers & selections",
+    "ContextHelp/move",
     (gpointer) MOVE },
   { (char **) magnify_bits,
     "Zoom in & out",
+    "ContextHelp/magnify",
     (gpointer) MAGNIFY },
   { (char **) crop_bits,
     "Crop the image",
+    "ContextHelp/crop",
     (gpointer) CROP },
   { (char **) scale_bits,
     "Transform the layer or selection",
+    "ContextHelp/rotate",
     (gpointer) ROTATE },
   { (char **) horizflip_bits,
     "Flip the layer or selection",
+    "ContextHelp/flip",
     (gpointer) FLIP_HORZ },
   { (char **) text_bits,
     "Add text to the image",
+    "ContextHelp/text",
     (gpointer) TEXT },
   { (char **) colorpicker_bits,
     "Pick colors from the image",
+    "ContextHelp/color-picker",
     (gpointer) COLOR_PICKER },
   { (char **) fill_bits,
     "Fill with a color or pattern",
+    "ContextHelp/bucket-fill",
     (gpointer) BUCKET_FILL },
   { (char **) gradient_bits,
     "Fill with a color gradient",
+    "ContextHelp/gradient",
     (gpointer) BLEND },
   { (char **) pencil_bits,
     "Draw sharp pencil strokes",
+    "ContextHelp/pencil",
     (gpointer) PENCIL },
   { (char **) paint_bits,
     "Paint fuzzy brush strokes",
+    "ContextHelp/paintbrush",
     (gpointer) PAINTBRUSH },
   { (char **) erase_bits,
     "Erase to background or transparency",
+    "ContextHelp/eraser",
     (gpointer) ERASER },
   { (char **) airbrush_bits,
     "Airbrush with variable pressure",
+    "ContextHelp/airbrush",
     (gpointer) AIRBRUSH },
   { (char **) clone_bits,
     "Paint using patterns or image regions",
+    "ContextHelp/clone",
     (gpointer) CLONE },
   { (char **) blur_bits,
     "Blur or sharpen",
+    "ContextHelp/convolve",
     (gpointer) CONVOLVE },
   { NULL,
+    NULL,
     NULL,
     (gpointer) BY_COLOR_SELECT },
   { NULL,
     NULL,
+    NULL,
     (gpointer) COLOR_BALANCE },
   { NULL,
+    NULL,
     NULL,
     (gpointer) BRIGHTNESS_CONTRAST },
   { NULL,
     NULL,
+    NULL,
     (gpointer) HUE_SATURATION },
   { NULL,
+    NULL,
     NULL,
     (gpointer) POSTERIZE },
   { NULL,
     NULL,
+    NULL,
     (gpointer) THRESHOLD },
   { NULL,
+    NULL,
     NULL,
     (gpointer) CURVES },
   { NULL,
     NULL,
+    NULL,
     (gpointer) LEVELS },
   { NULL,
+    NULL,
     NULL,
     (gpointer) HISTOGRAM }
 };
@@ -246,7 +277,7 @@ static gint
 toolbox_check_device   (GtkWidget *w, GdkEvent *e, gpointer data)
 {
   devices_check_change (e);
-  
+
   return FALSE;
 }
 
@@ -339,7 +370,7 @@ create_color_area (GtkWidget *parent)
 }
 
 
-GdkPixmap *  
+GdkPixmap *
 create_tool_pixmap (GtkWidget *parent, ToolType type)
 {
   int i;
@@ -355,9 +386,9 @@ create_tool_pixmap (GtkWidget *parent, ToolType type)
 	  return create_pixmap (parent->window, NULL,
 				tool_data[i].icon_data, 22, 22);
     }
-  
+
   g_return_val_if_fail (FALSE, NULL);
-  
+
   return NULL;	/* not reached */
 }
 
@@ -408,7 +439,7 @@ create_tools (GtkWidget *parent)
 			  (GtkSignalFunc) tools_button_press,
 			  tool_data[i].callback_data);
 
-      gtk_tooltips_set_tip (tool_tips, button, tool_data[i].tool_desc, NULL);
+      gtk_tooltips_set_tip (tool_tips, button, tool_data[i].tool_desc, tool_data[i].private_tip);
 
       gtk_widget_show (pixmap);
       gtk_widget_show (alignment);
@@ -560,7 +591,7 @@ create_toolbox ()
     {
       if (!((GdkDeviceInfo *)(device_list->data))->has_cursor)
 	break;
-      
+
       device_list = device_list->next;
     }
 
@@ -568,7 +599,7 @@ create_toolbox ()
     {
       gtk_signal_connect (GTK_OBJECT (window), "motion_notify_event",
 			  GTK_SIGNAL_FUNC (toolbox_check_device), NULL);
-      
+
       gtk_widget_set_events (window, GDK_POINTER_MOTION_MASK);
       gtk_widget_set_extension_events (window, GDK_EXTENSION_EVENTS_CURSOR);
     }
@@ -605,9 +636,10 @@ create_toolbox ()
   create_tools (vbox);
   /*create_tool_label (vbox);*/
   /*create_progress_area (vbox);*/
+  gtk_widget_show (window);
   create_color_area (vbox);
 
-  gtk_widget_show (window);
+
   toolbox_shell = window;
 }
 
@@ -620,7 +652,7 @@ toolbox_free ()
   for (i = 21; i < NUM_TOOLS; i++)
     {
       gtk_object_sink    (GTK_OBJECT (tool_widgets[i]));
-    }			  
+    }
   gtk_object_destroy (GTK_OBJECT (tool_tips));
   gtk_object_unref   (GTK_OBJECT (tool_tips));
 }
