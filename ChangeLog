@@ -1,5 +1,11 @@
 2004-08-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/config/gimprc-blurbs.h (INSTALL_COLORMAP_BLURB):
+	s/pseudocolor visuals/8-bit (256 colors) displays/.
+	Fixes bug #137078.
+
+2004-08-05  Michael Natterer  <mitch@gimp.org>
+
 	Enabled previewing items without selecting them in all list and
 	grid views using mouse button 2. Implicitly enables previewing of
 	items in container popups and thus fixes bug #121011:

@@ -164,7 +164,7 @@ N_("When enabled, this will ensure that the full image is visible after a " \
    "file is opened, otherwise it will be displayed with a scale of 1:1.")
 
 #define INSTALL_COLORMAP_BLURB \
-N_("Install a private colormap; might be useful on pseudocolor visuals.")
+N_("Install a private colormap; might be useful on 8-bit (256 colors) displays.")
 
 #define INTERPOLATION_TYPE_BLURB \
 N_("Sets the level of interpolation used for scaling and other " \
