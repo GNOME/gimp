@@ -1,3 +1,13 @@
+2003-03-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimppalette.[ch]: added GimpData::duplicate()
+	implementation so read-only palettes can be edited again by
+	duplicating them first.
+
+	* app/gui/dialogs-constructors.c: pass the <Palettes>, not the
+	<Gradients> menu identifier to the palette grid and tree view
+	constructors (spotted by Tigert).
+
 2003-03-10  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfigwriter.[ch]: fixed creation of config file,

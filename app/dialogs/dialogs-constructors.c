@@ -541,7 +541,7 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
 				     context,
 				     preview_size,
 				     5, 3,
-                                     factory->menu_factory, "<Gradients>");
+                                     factory->menu_factory, "<Palettes>");
 
   return dialogs_dockable_new (view,
 			       _("Palette Grid"), _("Palettes"), NULL,
@@ -689,7 +689,7 @@ dialogs_palette_tree_view_new (GimpDialogFactory *factory,
 				     context,
 				     preview_size,
 				     5, 3,
-                                     factory->menu_factory, "<Gradients>");
+                                     factory->menu_factory, "<Palettes>");
 
   return dialogs_dockable_new (view,
 			       _("Palette Tree"), _("Palettes"), NULL,

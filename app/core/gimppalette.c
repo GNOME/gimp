@@ -67,6 +67,8 @@ static void       gimp_palette_dirty            (GimpData          *data);
 static gboolean   gimp_palette_save             (GimpData          *data,
                                                  GError           **error);
 static gchar    * gimp_palette_get_extension    (GimpData          *data);
+static GimpData * gimp_palette_duplicate        (GimpData          *data,
+                                                 gboolean           stingy_memory_use);
 
 static void       gimp_palette_entry_free       (GimpPaletteEntry  *entry);
 
@@ -130,6 +132,7 @@ gimp_palette_class_init (GimpPaletteClass *klass)
   data_class->dirty                = gimp_palette_dirty;
   data_class->save                 = gimp_palette_save;
   data_class->get_extension        = gimp_palette_get_extension;
+  data_class->duplicate            = gimp_palette_duplicate;
 }
 
 static void
@@ -310,9 +313,9 @@ gimp_palette_new (const gchar *name,
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (*name != '\0', NULL);
 
-  palette = GIMP_PALETTE (g_object_new (GIMP_TYPE_PALETTE,
-					"name", name,
-					NULL));
+  palette = g_object_new (GIMP_TYPE_PALETTE,
+                          "name", name,
+                          NULL);
 
   gimp_data_dirty (GIMP_DATA (palette));
 
@@ -326,7 +329,7 @@ gimp_palette_get_standard (void)
 
   if (! standard_palette)
     {
-      standard_palette = GIMP_PALETTE (g_object_new (GIMP_TYPE_PALETTE, NULL));
+      standard_palette = g_object_new (GIMP_TYPE_PALETTE, NULL);
 
       gimp_object_set_name (GIMP_OBJECT (standard_palette), "Standard");
     }
@@ -585,6 +588,32 @@ static gchar *
 gimp_palette_get_extension (GimpData *data)
 {
   return GIMP_PALETTE_FILE_EXTENSION;
+}
+
+static GimpData *
+gimp_palette_duplicate (GimpData *data,
+                        gboolean  stingy_memory_use)
+{
+  GimpPalette *palette;
+  GimpPalette *new;
+  GList       *list;
+
+  palette = GIMP_PALETTE (data);
+
+  new = g_object_new (GIMP_TYPE_PALETTE, NULL);
+
+  gimp_data_dirty (GIMP_DATA (new));
+
+  new->n_columns = palette->n_columns;
+
+  for (list = palette->colors; list; list = g_list_next (list))
+    {
+      GimpPaletteEntry *entry = list->data;
+
+      gimp_palette_add_entry (new, entry->name, &entry->color);
+    }
+
+  return GIMP_DATA (new);
 }
 
 GimpPaletteEntry *

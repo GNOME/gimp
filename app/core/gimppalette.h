@@ -50,10 +50,10 @@ struct _GimpPalette
 {
   GimpData  parent_instance;
 
-  GList      *colors;
-  gint        n_colors;
+  GList    *colors;
+  gint      n_colors;
 
-  gint        n_columns;
+  gint      n_columns;
 };
 
 struct _GimpPaletteClass
