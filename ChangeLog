@@ -1,3 +1,12 @@
+2004-03-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/file-save-dialog.c (file_save_dialog_save_image): added
+	boolean return value and don't hide the file dialog on success but
+	return TRUE.
+
+	(file_save_dialog_response)
+	(file_save_overwrite_callback): hide the file dialog here instead.
+
 2004-03-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpmovetool.c (gimp_move_tool_button_press): redid my

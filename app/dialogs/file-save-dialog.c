@@ -59,7 +59,7 @@ static void        file_save_overwrite          (GtkWidget       *save_dialog,
 static void        file_save_overwrite_callback (GtkWidget       *widget,
                                                  gboolean         overwrite,
                                                  gpointer         data);
-static void        file_save_dialog_save_image  (GtkWidget       *save_dialog,
+static gboolean    file_save_dialog_save_image  (GtkWidget       *save_dialog,
                                                  GimpImage       *gimage,
                                                  const gchar     *uri,
                                                  const gchar     *raw_filename,
@@ -214,13 +214,16 @@ file_save_dialog_response (GtkWidget *save_dialog,
 
       gtk_widget_set_sensitive (save_dialog, FALSE);
 
-      file_save_dialog_save_image (save_dialog,
-                                   dialog->gimage,
-                                   uri,
-                                   raw_filename,
-                                   dialog->file_proc,
-                                   dialog->set_uri_and_proc,
-                                   dialog->set_image_clean);
+      if (file_save_dialog_save_image (save_dialog,
+                                       dialog->gimage,
+                                       uri,
+                                       raw_filename,
+                                       dialog->file_proc,
+                                       dialog->set_uri_and_proc,
+                                       dialog->set_image_clean))
+        {
+          file_dialog_hide (save_dialog);
+        }
 
       gtk_widget_set_sensitive (save_dialog, TRUE);
     }
@@ -290,13 +293,16 @@ file_save_overwrite_callback (GtkWidget *widget,
     {
       GimpFileDialog *dialog = GIMP_FILE_DIALOG (overwrite_data->save_dialog);
 
-      file_save_dialog_save_image (overwrite_data->save_dialog,
-                                   dialog->gimage,
-                                   overwrite_data->uri,
-                                   overwrite_data->raw_filename,
-                                   dialog->file_proc,
-                                   dialog->set_uri_and_proc,
-                                   dialog->set_image_clean);
+      if (file_save_dialog_save_image (overwrite_data->save_dialog,
+                                       dialog->gimage,
+                                       overwrite_data->uri,
+                                       overwrite_data->raw_filename,
+                                       dialog->file_proc,
+                                       dialog->set_uri_and_proc,
+                                       dialog->set_image_clean))
+        {
+          file_dialog_hide (overwrite_data->save_dialog);
+        }
     }
 
   gtk_widget_set_sensitive (overwrite_data->save_dialog, TRUE);
@@ -306,7 +312,7 @@ file_save_overwrite_callback (GtkWidget *widget,
   g_free (overwrite_data);
 }
 
-static void
+static gboolean
 file_save_dialog_save_image (GtkWidget     *save_dialog,
                              GimpImage     *gimage,
                              const gchar   *uri,
@@ -337,9 +343,9 @@ file_save_dialog_save_image (GtkWidget     *save_dialog,
       g_clear_error (&error);
 
       g_free (filename);
+
+      return FALSE;
     }
-  else
-    {
-      file_dialog_hide (save_dialog);
-    }
+
+  return TRUE;
 }
