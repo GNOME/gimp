@@ -1,5 +1,15 @@
 2005-04-05  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: renamed localedir to gimplocaledir.
+
+	* libgimpbase/Makefile.am (AM_CPPFLAGS)
+	* tools/Makefile.am (AM_CPPFLAGS): changed accordingly.
+
+	* gimp.pc.in: added gimplocaledir to the pkg-config file to give
+	plug-ins a chance to get gimp_locale_directory() at compile time.
+
+2005-04-05  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: select localedir according to the format of the
 	gettext message catalogs. Closes bug #169274 again.
 

@@ -1484,12 +1484,12 @@ AC_SUBST(gimpsysconfdir)
 # GNU format message catalogs go into $datadir/locale,
 # standard location is $libdir/locale. DATADIRNAME set accordingly.
 
-localedir="$datadir/locale"
+gimplocaledir="$datadir/locale"
 if test "$DATADIRNAME" = "lib"; then
-   localedir="$libdir/locale"
+   gimplocaledir="$libdir/locale"
 fi
 
-AC_SUBST(localedir)
+AC_SUBST(gimplocaledir)
 
 
 ############################

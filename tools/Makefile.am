@@ -24,7 +24,7 @@ kernelgen_SOURCES = kernelgen.c
 
 AM_CPPFLAGS = \
 	-DGIMP_APP_VERSION=\"@GIMP_APP_VERSION@\"	\
-	-DLOCALEDIR=\""$(localedir)"\"
+	-DLOCALEDIR=\""$(gimplocaledir)"\"
 
 INCLUDES = \
 	-I$(top_srcdir)	\
