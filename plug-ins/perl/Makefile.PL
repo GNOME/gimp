@@ -100,10 +100,10 @@ EOF
 $GTK or print <<EOF;
 
 WARNING: unable to use the Perl-Gtk interface. Most features (like
-	 Gimp::Fu) rely on this extension. You can try to build without
-	 it (and many scripts won't work), but it's better to install
-	 it (version 0.3 or higher is required, you can get it from
-	 ftp://ftp.gimp.org/pub/gtk/perl/ or any CPAN mirror.
+         Gimp::Fu) rely on this extension. You can try to build without
+         it (and many scripts won't work), but it's better to install
+         it (version 0.5120 or higher is required, you can get it from
+         ftp://ftp.gimp.org/pub/gtk/perl/ or any CPAN mirror.
 
 EOF
 
