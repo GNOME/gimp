@@ -13228,7 +13228,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_menu.c:254
 #, fuzzy, c-format
 msgid "Redo %s"
-msgstr "說除儀"
+msgstr "說除儀 %s"
 
 #: plug-ins/imagemap/imap_menu.c:301
 msgid "Edit Area Info..."

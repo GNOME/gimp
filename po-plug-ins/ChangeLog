@@ -1,3 +1,13 @@
+2001-11-07  Daniel Egger  <degger@fhm.edu>
+
+	* it.po
+	* ko.po
+	* nn.po: Fixed incorrectly translated c-format messages which 
+	might have caused bug #62993. 
+	Translators: Watch the c-format messages as they trigger nasty
+	problems when being translated incorrectly, rather don't touch 
+	them at all or ask for help!
+
 2001-11-06  Zbigniew Chyla  <cyba@gnome.pl>
 
 	* pl.po: Updated Polish translation by

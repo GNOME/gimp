@@ -13329,12 +13329,12 @@ msgstr "Avslutt"
 #: plug-ins/imagemap/imap_menu.c:243
 #, fuzzy, c-format
 msgid "Undo %s"
-msgstr "Angra: %1"
+msgstr "Angra: %s"
 
 #: plug-ins/imagemap/imap_menu.c:254
 #, fuzzy, c-format
 msgid "Redo %s"
-msgstr "Gjer om: %1"
+msgstr "Gjer om: %s"
 
 #: plug-ins/imagemap/imap_menu.c:301
 #, fuzzy
