@@ -1,5 +1,31 @@
 2004-10-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/procedural_db.h (struct ProcRecord): changed new member
+	"deprecated" from "gboolean" to a "gchar*" which holds the name of
+	the replacement procedure.
+
+	* tools/pdbgen/app.pl: changed accordingly.
+
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_run): show
+	the name of the replacement procedure in the warning message.
+
+	* tools/pdbgen/stddefs.pdb: added utility function
+	std_pdb_deprecated() which takes the name of the replacement
+	procedure and fills the blurb, help, author, copyright, date and
+	deprecated fields of the procedure definition.
+
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/palettes.pdb
+	* tools/pdbgen/pdb/patterns.pdb
+	* tools/pdbgen/pdb/text_tool.pdb: use it instead of duplicating
+	the same code and strings for all deprecated procedures.
+
+	* app/pdb/*_cmds.c: regenerated.
+
+2004-10-06  Michael Natterer  <mitch@gimp.org>
+
 	Fixed the scale constraints radio buttons:
 
 	* app/tools/gimptransformoptions.c (gimp_transform_options_gui):

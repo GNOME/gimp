@@ -98,7 +98,7 @@ struct _ProcRecord
   gchar       *copyright;     /*  Copyright field  */
   gchar       *date;          /*  Date field  */
 
-  gboolean     deprecated;    /*  Is the procedure deprecated?  */
+  gchar       *deprecated;    /*  Replacement if the procedure is deprecated  */
 
   /*  Procedure type  */
   GimpPDBProcType  proc_type; /*  Type of procedure--Internal, Plug-In, Extension  */

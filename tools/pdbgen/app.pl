@@ -664,7 +664,7 @@ static ProcRecord ${name}_proc =
   "$proc->{author}",
   "$proc->{copyright}",
   "$proc->{date}",
-  @{[$proc->{deprecated} ? 'TRUE' : 'FALSE']},
+  @{[$proc->{deprecated} ? "\"$proc->{deprecated}\"" : 'NULL']},
   GIMP_INTERNAL,
   @{[scalar @inargs]},
   @{[scalar @inargs ? "${name}_inargs" : 'NULL']},

@@ -90,7 +90,7 @@ static ProcRecord help_proc =
   "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer <mitch@gimp.org>",
   "2000",
-  FALSE,
+  NULL,
   GIMP_INTERNAL,
   2,
   help_inargs,

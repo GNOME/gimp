@@ -101,10 +101,7 @@ HELP
 }
 
 sub patterns_get_pattern {
-    $blurb = $help = "This procedure is deprecated! Use 'gimp_context_get_pattern' instead.";
-    $author = $copyright = $date = '';
-
-    $deprecated = 1;
+    &std_pdb_deprecated ('gimp_context_get_pattern');
 
     @outargs = (
 	&pattern_arg,
@@ -120,11 +117,7 @@ sub patterns_get_pattern {
 }
 
 sub patterns_get_pattern_data {
-    $blurb = $help = "This procedure is deprecated! Use 'gimp_pattern_get_data' instead.";
-
-    $author = $copyright = $data = '';
-
-    $deprecated = 1;
+    &std_pdb_deprecated ('gimp_pattern_get_pixels');
 
     @inargs = (
         &pattern_arg

@@ -97,11 +97,7 @@ sub sample_outargs {
 }
 
 sub gradients_sample_uniform {
-    $blurb = $help = "This procedure is deprecated! Use 'gimp_gradient_get_uniform_samples' instead.";
-
-    $author = $copyright = $date = '';
-
-    $deprecated = 1;
+    &std_pdb_deprecated ('gimp_gradient_get_uniform_samples');
 
     @inargs = (
 	 &sample_num_arg('2 <= '),
@@ -140,11 +136,7 @@ CODE
 }
 
 sub gradients_sample_custom {
-    $blurb = $help = "This procedure is deprecated! Use 'gimp_gradient_get_custom_samples' instead.";
-
-    $author = $copyright = $date = '';
-
-    $deprecated = 1;
+    &std_pdb_deprecated ('gimp_gradient_get_custom_samples');
 
     @inargs = (
 	{ name  => 'positions',
@@ -193,11 +185,7 @@ sub sample_size_arg {
 }
 
 sub gradients_get_gradient_data {
-    $blurb = $help = "This procedure is deprecated! Use 'gimp_gradient_get_uniform_samples' instead.";
-
-    $author = $copyright = $date = '';
-
-    $deprecated = 1;
+    &std_pdb_deprecated ('gimp_gradient_get_uniform_samples');
 
     @inargs = (
 	{ name => 'name', type => 'string',

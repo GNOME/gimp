@@ -19,13 +19,19 @@
 
 sub std_pdb_misc {
     $author = $copyright = 'Spencer Kimball & Peter Mattis';
-    $date = '1995-1996';
+    $date   = '1995-1996';
+}
+
+sub std_pdb_deprecated {
+    $blurb = $help = "This procedure is deprecated! Use '@_' instead.";
+    $author = $copyright = $date = '';
+    $deprecated = "@_";
 }
 
 sub std_image_arg () {{
-    name => 'image',	
-    type => 'image',
-    desc => 'The image',
+    name  => 'image',	
+    type  => 'image',
+    desc  => 'The image',
     alias => 'gimage'
 }}
 

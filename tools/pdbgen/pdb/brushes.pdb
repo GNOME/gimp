@@ -128,10 +128,7 @@ HELP
 }
 
 sub brushes_get_brush {
-    $blurb = $help = "This procedure is deprecated! Use 'gimp_context_get_brush' instead.";
-    $author = $copyright = $date = '';
-
-    $deprecated = 1;
+    &std_pdb_deprecated ('gimp_context_get_brush');
 
     @outargs = (
 	&brush_arg,
@@ -148,10 +145,7 @@ sub brushes_get_brush {
 }
 
 sub brushes_get_spacing {
-    $blurb = $help = "This procedure is deprecated! Use 'gimp_brush_get_spacing' instead.";
-    $author = $copyright = $date = '';
-
-    $deprecated = 1;
+    &std_pdb_deprecated ('gimp_brush_get_spacing');
 
     @outargs = ( &spacing_arg );
     $outargs[0]->{alias} = 'gimp_brush_get_spacing (gimp_context_get_brush (context))';
@@ -159,10 +153,7 @@ sub brushes_get_spacing {
 }
 
 sub brushes_set_spacing {
-    $blurb = $help = "This procedure is deprecated! Use 'gimp_brush_set_spacing' instead.";
-    $author = $copyright = $date = '';
-
-    $deprecated = 1;
+    &std_pdb_deprecated ('gimp_brush_set_spacing');
 
     @inargs = ( &spacing_arg );
 
@@ -172,11 +163,7 @@ sub brushes_set_spacing {
 }
 
 sub brushes_get_brush_data {
-    $blurb = $help = "This procedure is deprecated! Use 'gimp_brush_get_pixels' instead.";
-
-    $author = $copyright = $date = '';
-
-    $deprecated = 1;
+    &std_pdb_deprecated ('gimp_brush_get_pixels');
 
     @inargs = (
         &brush_arg

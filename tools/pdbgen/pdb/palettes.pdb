@@ -132,10 +132,7 @@ HELP
 }
 
 sub palettes_get_palette {
-    $blurb = $help = "This procedure is deprecated! Use 'gimp_context_get_palette' instead.";
-    $author = $copyright = $date = '';
-
-    $deprecated = 1;
+    &std_pdb_deprecated ('gimp_context_get_palette');
 
     @outargs = (
         &palette_arg,
@@ -151,10 +148,7 @@ sub palettes_get_palette {
 }
 
 sub palettes_get_palette_entry {
-    $blurb = $help = "This procedure is deprecated! Use 'gimp_palette_entry_get_color' instead.";
-    $author = $copyright = $date = '';
-
-    $deprecated = 1;
+    &std_pdb_deprecated ('gimp_palette_entry_get_color');
 
     @inargs = (
         &palette_arg,

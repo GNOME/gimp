@@ -177,17 +177,7 @@ CODE
 }
 
 sub text {
-    $blurb = <<'BLURB';
-Add text at the specified location as a floating selection or a new layer.
-BLURB
-
-    $help = <<'HELP';
-This function is deprecated, use gimp_get_text_fontname() instead.
-HELP
-
-    $deprecated = 1;
-
-    &pdb_misc;
+    &std_pdb_deprecated ('gimp_get_text_fontname');
 
     @inargs = (
 	&render_args,
@@ -220,15 +210,7 @@ CODE
 }
 
 sub text_get_extents {
-    $blurb = 'Get extents of the bounding box for the specified text.';
-
-    $help = <<'HELP';
-This function is deprecated, use gimp_get_text_extents_fontname() instead.
-HELP
-
-    $deprecated = 1;
-
-    &pdb_misc;
+    &std_pdb_deprecated ('gimp_get_text_extents_fontname');
 
     @inargs = (
 	&text_arg,
