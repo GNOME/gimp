@@ -1,5 +1,10 @@
 2004-09-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/app_procs.c (app_run): install the message handler for the
+	"Gimp-Dialogs" domain.
+
+2004-09-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/file-commands.c: resurrected file_open_dialog_show()
 	and file_save_dialog_show() as private utility functions to get
 	rid of code duplication.
