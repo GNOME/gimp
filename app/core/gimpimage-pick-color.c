@@ -20,14 +20,12 @@
 
 #include <glib-object.h>
 
-#include "libgimpcolor/gimpcolor.h"
-
 #include "core-types.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
-#include "core/gimpprojection.h"
+#include "core/gimppickable.h"
 
 
 gboolean
@@ -42,24 +40,17 @@ gimp_image_pick_color (GimpImage     *gimage,
                        GimpRGB       *color,
                        gint          *color_index)
 {
-  GimpImageType           my_sample_type;
-  gboolean                is_indexed;
-  GimpImagePickColorFunc  color_func;
-  GimpObject             *color_obj;
+  GimpPickable *pickable;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (sample_merged || GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (! drawable ||
+  g_return_val_if_fail (drawable == NULL ||
                         gimp_item_get_image (GIMP_ITEM (drawable)) == gimage,
                         FALSE);
 
   if (sample_merged)
     {
-      my_sample_type = gimp_projection_get_image_type (gimage->projection);
-      is_indexed     = FALSE;
-
-      color_func = (GimpImagePickColorFunc) gimp_projection_get_color_at;
-      color_obj  = GIMP_OBJECT (gimage->projection);
+      pickable = GIMP_PICKABLE (gimage->projection);
     }
   else
     {
@@ -69,75 +60,13 @@ gimp_image_pick_color (GimpImage     *gimage,
       x -= off_x;
       y -= off_y;
 
-      my_sample_type = gimp_drawable_type (drawable);
-      is_indexed     = gimp_drawable_is_indexed (drawable);
-
-      color_func = (GimpImagePickColorFunc) gimp_drawable_get_color_at;
-      color_obj  = GIMP_OBJECT (drawable);
+      pickable = GIMP_PICKABLE (drawable);
     }
 
   if (sample_type)
-    *sample_type = my_sample_type;
+    *sample_type = gimp_pickable_get_image_type (pickable);
 
-  return gimp_image_pick_color_by_func (color_obj, x, y, color_func,
-                                        sample_average, average_radius,
-                                        color, color_index);
-}
-
-gboolean
-gimp_image_pick_color_by_func (GimpObject             *object,
-                               gint                    x,
-                               gint                    y,
-                               GimpImagePickColorFunc  pick_color_func,
-                               gboolean                sample_average,
-                               gdouble                 average_radius,
-                               GimpRGB                *color,
-                               gint                   *color_index)
-{
-  guchar *col;
-
-  if (! (col = pick_color_func (object, x, y)))
-    return FALSE;
-
-  if (sample_average)
-    {
-      gint    i, j;
-      gint    count = 0;
-      gint    color_avg[4] = { 0, 0, 0, 0 };
-      guchar *tmp_col;
-      gint    radius = (gint) average_radius;
-
-      for (i = x - radius; i <= x + radius; i++)
-	for (j = y - radius; j <= y + radius; j++)
-	  if ((tmp_col = pick_color_func (object, i, j)))
-	    {
-	      count++;
-	
-	      color_avg[RED_PIX]   += tmp_col[RED_PIX];
-	      color_avg[GREEN_PIX] += tmp_col[GREEN_PIX];
-	      color_avg[BLUE_PIX]  += tmp_col[BLUE_PIX];
-              color_avg[ALPHA_PIX] += tmp_col[ALPHA_PIX];
-
-	      g_free (tmp_col);
-	    }
-
-      col[RED_PIX]   = (guchar) (color_avg[RED_PIX]   / count);
-      col[GREEN_PIX] = (guchar) (color_avg[GREEN_PIX] / count);
-      col[BLUE_PIX]  = (guchar) (color_avg[BLUE_PIX]  / count);
-      col[ALPHA_PIX] = (guchar) (color_avg[ALPHA_PIX] / count);
-    }
-
-  if (color)
-    gimp_rgba_set_uchar (color,
-                         col[RED_PIX],
-                         col[GREEN_PIX],
-                         col[BLUE_PIX],
-                         col[ALPHA_PIX]);
-
-  if (color_index)
-    *color_index = sample_average ? -1 : col[4];
-
-  g_free (col);
-
-  return TRUE;
+  return gimp_pickable_pick_color (pickable, x, y,
+                                   sample_average, average_radius,
+                                   color, color_index);
 }

@@ -28,7 +28,7 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimpprojection.h"
+#include "core/gimppickable.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -97,18 +97,18 @@ gimp_by_color_select_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpByColorSelectToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_by_color_select_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpByColorSelectTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_by_color_select_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_by_color_select_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpByColorSelectTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_by_color_select_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_SELECTION_TOOL,
-					  "GimpByColorSelectTool",
+                                          "GimpByColorSelectTool",
                                           &tool_info, 0);
     }
 
@@ -121,9 +121,7 @@ gimp_by_color_select_tool_get_type (void)
 static void
 gimp_by_color_select_tool_class_init (GimpByColorSelectToolClass *klass)
 {
-  GimpToolClass *tool_class;
-
-  tool_class = GIMP_TOOL_CLASS (klass);
+  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -136,12 +134,9 @@ gimp_by_color_select_tool_class_init (GimpByColorSelectToolClass *klass)
 static void
 gimp_by_color_select_tool_init (GimpByColorSelectTool *by_color_select)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (by_color_select);
+  GimpTool *tool = GIMP_TOOL (by_color_select);
 
   gimp_tool_control_set_preserve (tool->control, FALSE);
-  gimp_tool_control_set_preserve (tool->control, GIMP_TOOL_CURSOR_RECT_SELECT);
 
   by_color_select->x = 0;
   by_color_select->y = 0;
@@ -154,11 +149,10 @@ gimp_by_color_select_tool_button_press (GimpTool        *tool,
                                         GdkModifierType  state,
                                         GimpDisplay     *gdisp)
 {
-  GimpByColorSelectTool *by_color_sel;
+  GimpByColorSelectTool *by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
   GimpSelectionOptions  *options;
 
-  by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
-  options      = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -187,49 +181,45 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
                                           GdkModifierType  state,
                                           GimpDisplay     *gdisp)
 {
-  GimpByColorSelectTool *by_color_sel;
-  GimpSelectionTool     *sel_tool;
+  GimpByColorSelectTool *by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
+  GimpSelectionTool     *sel_tool     = GIMP_SELECTION_TOOL (tool);
   GimpSelectionOptions  *options;
   GimpDrawable          *drawable;
-  guchar                *col;
-  GimpRGB                color;
 
-  by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
-  sel_tool     = GIMP_SELECTION_TOOL (tool);
-  options      = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
-
+  options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
   gimp_tool_control_halt (tool->control);
 
   /*  First take care of the case where the user "cancels" the action  */
-  if (! (state & GDK_BUTTON3_MASK))
+  if (state & GDK_BUTTON3_MASK)
+    return;
+
+  if (by_color_sel->x >= 0 &&
+      by_color_sel->y >= 0 &&
+      by_color_sel->x < gimp_item_width  (GIMP_ITEM (drawable)) &&
+      by_color_sel->y < gimp_item_height (GIMP_ITEM (drawable)))
     {
-      if (by_color_sel->x >= 0 &&
-	  by_color_sel->y >= 0 &&
-          by_color_sel->x < gimp_item_width  (GIMP_ITEM (drawable)) &&
-          by_color_sel->y < gimp_item_height (GIMP_ITEM (drawable)))
-	{
-	  /*  Get the start color  */
-	  if (options->sample_merged)
-	    {
-	      if (!(col = gimp_projection_get_color_at (gdisp->gimage->projection,
-                                                        by_color_sel->x,
-                                                        by_color_sel->y)))
-		return;
-	    }
-	  else
-	    {
-	      if (!(col = gimp_drawable_get_color_at (drawable,
-                                                      by_color_sel->x,
-                                                      by_color_sel->y)))
-		return;
-	    }
+      GimpPickable *pickable;
+      guchar       *col;
+
+      if (options->sample_merged)
+        pickable = GIMP_PICKABLE (gdisp->gimage->projection);
+      else
+        pickable = GIMP_PICKABLE (drawable);
+
+      col = gimp_pickable_get_color_at (pickable,
+                                        by_color_sel->x,
+                                        by_color_sel->y);
+
+      if (col)
+        {
+          GimpRGB color;
 
           gimp_rgba_set_uchar (&color, col[0], col[1], col[2], col[3]);
-	  g_free (col);
+          g_free (col);
 
-	  gimp_channel_select_by_color (gimp_image_get_mask (gdisp->gimage),
+          gimp_channel_select_by_color (gimp_image_get_mask (gdisp->gimage),
                                         drawable,
                                         options->sample_merged,
                                         &color,
@@ -240,9 +230,8 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
                                         options->feather,
                                         options->feather_radius,
                                         options->feather_radius);
-
-	  gimp_image_flush (gdisp->gimage);
-	}
+          gimp_image_flush (gdisp->gimage);
+        }
     }
 }
 
@@ -252,14 +241,13 @@ gimp_by_color_select_tool_oper_update (GimpTool        *tool,
                                        GdkModifierType  state,
                                        GimpDisplay     *gdisp)
 {
-  GimpSelectionTool    *sel_tool;
+  GimpSelectionTool    *sel_tool = GIMP_SELECTION_TOOL (tool);
   GimpSelectionOptions *options;
 
   if (gimp_tool_control_is_active (tool->control))
     return;
 
-  sel_tool = GIMP_SELECTION_TOOL (tool);
-  options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   if ((state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK))
     {
@@ -285,12 +273,10 @@ gimp_by_color_select_tool_cursor_update (GimpTool        *tool,
                                          GdkModifierType  state,
                                          GimpDisplay     *gdisp)
 {
-  GimpByColorSelectTool *by_col_sel;
-  GimpSelectionOptions  *options;
-  GimpLayer             *layer;
+  GimpSelectionOptions *options;
+  GimpLayer            *layer;
 
-  by_col_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
-  options    = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   layer = gimp_image_pick_correlate_layer (gdisp->gimage, coords->x, coords->y);
 

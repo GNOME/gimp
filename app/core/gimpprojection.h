@@ -86,10 +86,6 @@ GimpImageType	 gimp_projection_get_image_type (const GimpProjection *proj);
 gint             gimp_projection_get_bytes      (const GimpProjection *proj);
 gdouble          gimp_projection_get_opacity    (const GimpProjection *proj);
 
-guchar         * gimp_projection_get_color_at   (GimpProjection       *proj,
-                                                 gint                  x,
-                                                 gint                  y);
-
 void             gimp_projection_flush          (GimpProjection       *proj);
 void             gimp_projection_flush_now      (GimpProjection       *proj);
 

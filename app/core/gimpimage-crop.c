@@ -35,7 +35,7 @@
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplist.h"
-#include "gimpprojection.h"
+#include "gimppickable.h"
 
 #include "gimp-intl.h"
 
@@ -48,18 +48,14 @@ typedef enum
 } AutoCropType;
 
 
-typedef guchar       * (* GetColorFunc)    (GObject     *crop_object,
-					    gint         ,
-					    gint         );
-typedef AutoCropType   (* ColorsEqualFunc) (guchar      *,
-					    guchar      *,
-					    gint         );
+typedef AutoCropType (* ColorsEqualFunc) (guchar *col1,
+                                          guchar *col2,
+                                          gint    bytes);
 
 
 /*  local function prototypes  */
 
-static AutoCropType gimp_image_crop_guess_bgcolor (GObject      *get_color_obj,
-                                                   GetColorFunc  get_color_func,
+static AutoCropType gimp_image_crop_guess_bgcolor (GimpPickable *pickable,
                                                    gint          bytes,
                                                    gboolean      has_alpha,
                                                    guchar       *color,
@@ -252,14 +248,14 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
 			     gint      *shrunk_y2)
 {
   GimpDrawable    *active_drawable = NULL;
-  GetColorFunc     get_color_func;
+  GimpPickable    *pickable;
   ColorsEqualFunc  colors_equal_func;
-  GObject         *get_color_obj;
   guchar           bgcolor[MAX_CHANNELS] = { 0, 0, 0, 0 };
   gboolean         has_alpha;
   PixelRegion      PR;
   guchar          *buffer = NULL;
   gint             width, height;
+  GimpImageType    type;
   gint             bytes;
   gint             x, y, abort;
   gboolean         retval = FALSE;
@@ -285,20 +281,18 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
       if (! active_drawable)
 	goto FINISH;
 
-      bytes          = gimp_drawable_bytes (GIMP_DRAWABLE (active_drawable));
-      has_alpha      = gimp_drawable_has_alpha (GIMP_DRAWABLE (active_drawable));
-      get_color_obj  = G_OBJECT (active_drawable);
-      get_color_func = (GetColorFunc) gimp_drawable_get_color_at;
+      pickable = GIMP_PICKABLE (active_drawable);
     }
   else
     {
-      has_alpha      = TRUE;
-      bytes          = gimp_projection_get_bytes (gimage->projection);
-      get_color_obj  = G_OBJECT (gimage->projection);
-      get_color_func = (GetColorFunc) gimp_projection_get_color_at;
+      pickable = GIMP_PICKABLE (gimage->projection);
    }
 
-  switch (gimp_image_crop_guess_bgcolor (get_color_obj, get_color_func,
+  type      = gimp_pickable_get_image_type (pickable);
+  bytes     = GIMP_IMAGE_TYPE_BYTES (type);
+  has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
+
+  switch (gimp_image_crop_guess_bgcolor (pickable,
 					 bytes, has_alpha, bgcolor,
 					 x1, x2-1, y1, y2-1))
     {
@@ -316,12 +310,8 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
   width  = x2 - x1;
   height = y2 - y1;
 
-  if (active_drawable_only)
-    pixel_region_init (&PR, gimp_drawable_data (active_drawable),
-		       x1, y1, width, height, FALSE);
-  else
-    pixel_region_init (&PR, gimp_projection_get_tiles (gimage->projection),
-		       x1, y1, width, height, FALSE);
+  pixel_region_init (&PR, gimp_pickable_get_tiles (pickable),
+                     x1, y1, width, height, FALSE);
 
   /* The following could be optimized further by processing
    * the smaller side first instead of defaulting to width    --Sven
@@ -392,8 +382,7 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
 /*  private functions  */
 
 static AutoCropType
-gimp_image_crop_guess_bgcolor (GObject      *get_color_obj,
-			       GetColorFunc  get_color_func,
+gimp_image_crop_guess_bgcolor (GimpPickable *pickable,
 			       gint          bytes,
 			       gboolean      has_alpha,
 			       guchar       *color,
@@ -415,13 +404,13 @@ gimp_image_crop_guess_bgcolor (GObject      *get_color_obj,
    * background-color to see if at least 2 corners are equal.
    */
 
-  if (!(tl = (*get_color_func) (get_color_obj, x1, y1)))
+  if (!(tl = gimp_pickable_get_color_at (pickable, x1, y1)))
     goto ERROR;
-  if (!(tr = (*get_color_func) (get_color_obj, x1, y2)))
+  if (!(tr = gimp_pickable_get_color_at (pickable, x1, y2)))
     goto ERROR;
-  if (!(bl = (*get_color_func) (get_color_obj, x2, y1)))
+  if (!(bl = gimp_pickable_get_color_at (pickable, x2, y1)))
     goto ERROR;
-  if (!(br = (*get_color_func) (get_color_obj, x2, y2)))
+  if (!(br = gimp_pickable_get_color_at (pickable, x2, y2)))
     goto ERROR;
 
   if (has_alpha)
@@ -474,19 +463,15 @@ gimp_image_crop_colors_equal (guchar *col1,
 			      guchar *col2,
 			      gint    bytes)
 {
-  gboolean equal = TRUE;
-  gint     b;
+  gint b;
 
   for (b = 0; b < bytes; b++)
     {
       if (col1[b] != col2[b])
-	{
-	  equal = FALSE;
-	  break;
-	}
+        return FALSE;
     }
 
-  return equal;
+  return TRUE;
 }
 
 static gboolean
@@ -494,8 +479,5 @@ gimp_image_crop_colors_alpha (guchar *dummy,
 			      guchar *col,
 			      gint    bytes)
 {
-  if (col[bytes-1] == 0)
-    return TRUE;
-  else
-    return FALSE;
+  return (col[bytes - 1] == 0);
 }

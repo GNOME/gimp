@@ -65,9 +65,6 @@ void           gimp_image_map_apply        (GimpImageMap          *image_map,
 void           gimp_image_map_commit       (GimpImageMap          *image_map);
 void           gimp_image_map_clear        (GimpImageMap          *image_map);
 void           gimp_image_map_abort        (GimpImageMap          *image_map);
-guchar       * gimp_image_map_get_color_at (GimpImageMap          *image_map,
-                                            gint                   x,
-                                            gint                   y);
 
 
 #endif /* __GIMP_IMAGE_MAP_H__ */

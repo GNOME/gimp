@@ -36,7 +36,7 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
-#include "core/gimpprojection.h"
+#include "core/gimpimage-pick-color.h"
 #include "core/gimpselection.h"
 #include "core/gimptoolinfo.h"
 
@@ -268,7 +268,6 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
   GimpDrawable         *drawable;
   SelectOps             operation = SELECTION_REPLACE;
   gint                  x, y;
-  guchar               *col;
   GimpRGB               color;
 
   if (! image_editor->gimage)
@@ -309,52 +308,25 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
   x = image_editor->gimage->width  * bevent->x / renderer->width;
   y = image_editor->gimage->height * bevent->y / renderer->height;
 
-  if (options->sample_merged)
+  if (gimp_image_pick_color (image_editor->gimage, drawable, x, y,
+                             options->sample_merged,
+                             FALSE, 0.0,
+                             NULL,
+                             &color, NULL))
     {
-      if (x < 0 || y < 0 ||
-          x >= image_editor->gimage->width ||
-          y >= image_editor->gimage->height)
-	return TRUE;
-
-      col = gimp_projection_get_color_at (image_editor->gimage->projection,
-                                          x, y);
+      gimp_channel_select_by_color (gimp_image_get_mask (image_editor->gimage),
+                                    drawable,
+                                    options->sample_merged,
+                                    &color,
+                                    options->threshold,
+                                    options->select_transparent,
+                                    operation,
+                                    options->antialias,
+                                    options->feather,
+                                    options->feather_radius,
+                                    options->feather_radius);
+      gimp_image_flush (image_editor->gimage);
     }
-  else
-    {
-      GimpItem *item;
-      gint      off_x, off_y;
-
-      item = GIMP_ITEM (drawable);
-
-      gimp_item_offsets (item, &off_x, &off_y);
-
-      x -= off_x;
-      y -= off_y;
-
-      if (x < 0 || y < 0               ||
-	  x >= gimp_item_width  (item) ||
-          y >= gimp_item_height (item))
-	return TRUE;
-
-      col = gimp_drawable_get_color_at (drawable, x, y);
-    }
-
-  gimp_rgba_set_uchar (&color, col[0], col[1], col[2], col[3]);
-
-  g_free (col);
-
-  gimp_channel_select_by_color (gimp_image_get_mask (image_editor->gimage),
-                                drawable,
-                                options->sample_merged,
-                                &color,
-                                options->threshold,
-                                options->select_transparent,
-                                operation,
-                                options->antialias,
-                                options->feather,
-                                options->feather_radius,
-                                options->feather_radius);
-  gimp_image_flush (image_editor->gimage);
 
   return TRUE;
 }

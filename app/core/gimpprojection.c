@@ -29,6 +29,7 @@
 #include "gimparea.h"
 #include "gimpimage.h"
 #include "gimpmarshal.h"
+#include "gimppickable.h"
 #include "gimpprojection.h"
 #include "gimpprojection-construct.h"
 
@@ -42,13 +43,18 @@ enum
 
 /*  local function prototypes  */
 
-static void       gimp_projection_class_init       (GimpProjectionClass *klass);
-static void       gimp_projection_init             (GimpProjection      *proj);
+static void   gimp_projection_class_init          (GimpProjectionClass   *klass);
+static void   gimp_projection_init                (GimpProjection        *proj);
+static void   gimp_projection_pickable_iface_init (GimpPickableInterface *pickable_iface);
 
 static void       gimp_projection_finalize              (GObject        *object);
 
 static gint64     gimp_projection_get_memsize           (GimpObject     *object,
                                                          gint64         *gui_size);
+
+static guchar   * gimp_projection_get_color_at          (GimpPickable   *pickable,
+                                                         gint            x,
+                                                         gint            y);
 
 static void       gimp_projection_alloc_tiles           (GimpProjection *proj);
 static void       gimp_projection_flush_whenever        (GimpProjection *proj,
@@ -109,9 +115,19 @@ gimp_projection_get_type (void)
         (GInstanceInitFunc) gimp_projection_init,
       };
 
+      static const GInterfaceInfo pickable_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_projection_pickable_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
+
       projection_type = g_type_register_static (GIMP_TYPE_OBJECT,
                                                 "GimpProjection",
                                                 &projection_info, 0);
+
+      g_type_add_interface_static (projection_type, GIMP_TYPE_PICKABLE,
+                                   &pickable_iface_info);
     }
 
   return projection_type;
@@ -162,6 +178,14 @@ gimp_projection_init (GimpProjection *proj)
 }
 
 static void
+gimp_projection_pickable_iface_init (GimpPickableInterface *pickable_iface)
+{
+  pickable_iface->get_image_type = gimp_projection_get_image_type;
+  pickable_iface->get_tiles      = gimp_projection_get_tiles;
+  pickable_iface->get_color_at   = gimp_projection_get_color_at;
+}
+
+static void
 gimp_projection_finalize (GObject *object)
 {
   GimpProjection *proj = GIMP_PROJECTION (object);
@@ -196,6 +220,32 @@ gimp_projection_get_memsize (GimpObject *object,
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
+}
+
+static guchar *
+gimp_projection_get_color_at (GimpPickable *pickable,
+                              gint          x,
+                              gint          y)
+{
+  GimpProjection *proj = GIMP_PROJECTION (pickable);
+  Tile           *tile;
+  guchar         *src;
+  guchar         *dest;
+
+  if (x < 0 || y < 0 || x >= proj->gimage->width || y >= proj->gimage->height)
+    return NULL;
+
+  dest = g_new (guchar, 5);
+  tile = tile_manager_get_tile (gimp_projection_get_tiles (proj),
+                                x, y, TRUE, FALSE);
+  src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+  gimp_image_get_color (proj->gimage, gimp_projection_get_image_type (proj),
+                        src, dest);
+
+  dest[4] = 0;
+  tile_release (tile, FALSE);
+
+  return dest;
 }
 
 GimpProjection *
@@ -281,33 +331,6 @@ gimp_projection_get_opacity (const GimpProjection *proj)
   g_return_val_if_fail (GIMP_IS_PROJECTION (proj), GIMP_OPACITY_OPAQUE);
 
   return GIMP_OPACITY_OPAQUE;
-}
-
-guchar *
-gimp_projection_get_color_at (GimpProjection *proj,
-                              gint            x,
-                              gint            y)
-{
-  Tile   *tile;
-  guchar *src;
-  guchar *dest;
-
-  g_return_val_if_fail (GIMP_IS_PROJECTION (proj), NULL);
-
-  if (x < 0 || y < 0 || x >= proj->gimage->width || y >= proj->gimage->height)
-    return NULL;
-
-  dest = g_new (guchar, 5);
-  tile = tile_manager_get_tile (gimp_projection_get_tiles (proj),
-                                x, y, TRUE, FALSE);
-  src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-  gimp_image_get_color (proj->gimage, gimp_projection_get_image_type (proj),
-                        src, dest);
-
-  dest[4] = 0;
-  tile_release (tile, FALSE);
-
-  return dest;
 }
 
 void
@@ -501,9 +524,9 @@ gimp_projection_idlerender_init (GimpProjection *proj)
 static gboolean
 gimp_projection_idlerender_callback (gpointer data)
 {
-  const gint   CHUNK_WIDTH  = 256;
-  const gint   CHUNK_HEIGHT = 128;
-  gint         workx, worky, workw, workh;
+  const gint      CHUNK_WIDTH  = 256;
+  const gint      CHUNK_HEIGHT = 128;
+  gint            workx, worky, workw, workh;
   GimpProjection *proj = data;
 
   workw = CHUNK_WIDTH;

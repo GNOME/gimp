@@ -120,6 +120,11 @@ typedef struct _GimpParasiteList    GimpParasiteList;
 typedef struct _GimpProjection      GimpProjection;
 
 
+/*  interfaces  */
+
+typedef struct _GimpPickable        GimpPickable; /* dummy typedef */
+
+
 /*  non-object types  */
 
 typedef struct _GimpArea            GimpArea;

@@ -33,6 +33,7 @@
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimppickable.h"
 
 #include "gimpsmudge.h"
 #include "gimpsmudgeoptions.h"
@@ -212,7 +213,7 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
     {
       guchar *fill;
 
-      fill = gimp_drawable_get_color_at (drawable,
+      fill = gimp_pickable_get_color_at (GIMP_PICKABLE (drawable),
                                          CLAMP ((gint) paint_core->cur_coords.x,
                                                 0, gimp_item_width (GIMP_ITEM (drawable)) - 1),
                                          CLAMP ((gint) paint_core->cur_coords.y,

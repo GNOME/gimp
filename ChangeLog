@@ -1,3 +1,30 @@
+2004-07-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimppickable.[ch]: new interface which has
+	get_image_type(), get_tiles() and get_color_at() methods.
+
+	* app/core/gimpdrawable.[ch]
+	* app/core/gimpimagemap.[ch]
+	* app/core/gimpprojection.[ch]: implement GimpPickableInterface
+	and removed public get_colot_at() functions.
+
+	* app/core/gimpimage-pick-color.[ch]: removed typedef
+	GimpImagePickColorFunc and gimp_image_pick_color_by_func(). Use
+	gimp_pickable_pick_color() instead.
+
+	* app/core/gimpimage-contiguous-region.c
+	* app/core/gimpimage-crop.c
+	* app/gui/info-window.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpsmudge.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpimagemaptool.c
+	* app/widgets/gimpselectioneditor.c: use GimpPickable functions
+	instead of the various get_color_at() functions. Simplifies code
+	which has a "sample_merged" boolean. Various cleanups.
+
 2004-07-13  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/presets.c: Added underscores between

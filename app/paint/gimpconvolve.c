@@ -31,6 +31,7 @@
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimppickable.h"
 
 #include "gimpconvolve.h"
 #include "gimpconvolveoptions.h"
@@ -345,8 +346,8 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
       guchar      *ovrsz2_data = NULL;
       guchar      *fillcolor;
 
-      fillcolor = gimp_drawable_get_color_at
-        (drawable,
+      fillcolor = gimp_pickable_get_color_at
+        (GIMP_PICKABLE (drawable),
          CLAMP ((gint) paint_core->cur_coords.x,
                 0, gimp_item_width  (GIMP_ITEM (drawable)) - 1),
          CLAMP ((gint) paint_core->cur_coords.y,

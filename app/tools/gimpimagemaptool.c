@@ -34,6 +34,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpimagemap.h"
+#include "core/gimppickable.h"
 #include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
 
@@ -129,13 +130,9 @@ gimp_image_map_tool_get_type (void)
 static void
 gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
 {
-  GObjectClass       *object_class;
-  GimpToolClass      *tool_class;
-  GimpColorToolClass *color_tool_class;
-
-  object_class     = G_OBJECT_CLASS (klass);
-  tool_class       = GIMP_TOOL_CLASS (klass);
-  color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
+  GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
+  GimpToolClass      *tool_class       = GIMP_TOOL_CLASS (klass);
+  GimpColorToolClass *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -336,11 +333,10 @@ gimp_image_map_tool_pick_color (GimpColorTool *color_tool,
 
   *sample_type = gimp_drawable_type (tool->drawable);
 
-  return gimp_image_pick_color_by_func (GIMP_OBJECT (tool->image_map), x, y,
-                                        (GimpImagePickColorFunc) gimp_image_map_get_color_at,
-                                        color_tool->options->sample_average,
-                                        color_tool->options->average_radius,
-                                        color, color_index);
+  return gimp_pickable_pick_color (GIMP_PICKABLE (tool->image_map), x, y,
+                                   color_tool->options->sample_average,
+                                   color_tool->options->average_radius,
+                                   color, color_index);
 }
 
 static void

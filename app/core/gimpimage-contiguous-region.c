@@ -33,7 +33,7 @@
 #include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpimage-contiguous-region.h"
-#include "gimpprojection.h"
+#include "gimppickable.h"
 
 
 /*  local function prototypes  */
@@ -93,6 +93,8 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
                                       gint          y)
 {
   PixelRegion    srcPR, maskPR;
+  GimpPickable  *pickable;
+  TileManager   *tiles;
   GimpChannel   *mask;
   GimpImageType  src_type;
   gboolean       has_alpha;
@@ -103,28 +105,20 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   if (sample_merged)
-    {
-      GimpProjection *projection = gimage->projection;
-
-      pixel_region_init (&srcPR, gimp_projection_get_tiles (projection),
-                         0, 0, gimage->width, gimage->height, FALSE);
-
-      src_type  = gimp_projection_get_image_type (projection);
-      has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (src_type);
-      bytes     = gimp_projection_get_bytes (projection);
-    }
+    pickable = GIMP_PICKABLE (gimage->projection);
   else
-    {
-      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-			 0, 0,
-			 gimp_item_width  (GIMP_ITEM (drawable)),
-			 gimp_item_height (GIMP_ITEM (drawable)),
-			 FALSE);
+    pickable = GIMP_PICKABLE (drawable);
 
-      src_type  = gimp_drawable_type (drawable);
-      has_alpha = gimp_drawable_has_alpha (drawable);
-      bytes     = gimp_drawable_bytes (drawable);
-    }
+  src_type  = gimp_pickable_get_image_type (pickable);
+  has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (src_type);
+  bytes     = GIMP_IMAGE_TYPE_BYTES (src_type);
+
+  tiles = gimp_pickable_get_tiles (pickable);
+  pixel_region_init (&srcPR, tiles,
+                     0, 0,
+                     tile_manager_width (tiles),
+                     tile_manager_height (tiles),
+                     FALSE);
 
   mask = gimp_channel_new_mask (gimage, srcPR.w, srcPR.h);
   pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
@@ -194,6 +188,8 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
    *  use the same antialiasing scheme as in fuzzy_select.  Modify the gimage's
    *  mask to reflect the additional selection
    */
+  GimpPickable  *pickable;
+  TileManager   *tiles;
   GimpChannel   *mask;
   PixelRegion    imagePR, maskPR;
   guchar        *image_data;
@@ -214,32 +210,22 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
 
   gimp_rgba_get_uchar (color, &col[0], &col[1], &col[2], &col[3]);
 
-  /*  Get the image information  */
   if (sample_merged)
-    {
-      bytes     = gimp_projection_get_bytes (gimage->projection);
-      d_type    = gimp_projection_get_image_type (gimage->projection);
-      has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (d_type);
-      indexed   = GIMP_IMAGE_TYPE_IS_INDEXED (d_type);
-      width     = gimage->width;
-      height    = gimage->height;
-
-      pixel_region_init (&imagePR,
-                         gimp_projection_get_tiles (gimage->projection),
-			 0, 0, width, height, FALSE);
-    }
+    pickable = GIMP_PICKABLE (gimage->projection);
   else
-    {
-      bytes     = gimp_drawable_bytes (drawable);
-      d_type    = gimp_drawable_type (drawable);
-      has_alpha = gimp_drawable_has_alpha (drawable);
-      indexed   = gimp_drawable_is_indexed (drawable);
-      width     = gimp_item_width  (GIMP_ITEM (drawable));
-      height    = gimp_item_height (GIMP_ITEM (drawable));
+    pickable = GIMP_PICKABLE (drawable);
 
-      pixel_region_init (&imagePR, gimp_drawable_data (drawable),
-			 0, 0, width, height, FALSE);
-    }
+  d_type    = gimp_pickable_get_image_type (pickable);
+  bytes     = GIMP_IMAGE_TYPE_BYTES (d_type);
+  has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (d_type);
+  indexed   = GIMP_IMAGE_TYPE_IS_INDEXED (d_type);
+
+  tiles  = gimp_pickable_get_tiles (pickable);
+  width  = tile_manager_width (tiles);
+  height = tile_manager_height (tiles);
+
+  pixel_region_init (&imagePR, tiles,
+                     0, 0, width, height, FALSE);
 
   if (has_alpha)
     {

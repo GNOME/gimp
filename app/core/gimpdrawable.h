@@ -211,9 +211,5 @@ TileManager   * gimp_drawable_data               (const GimpDrawable *drawable);
 
 guchar        * gimp_drawable_cmap               (const GimpDrawable *drawable);
 
-guchar        * gimp_drawable_get_color_at       (GimpDrawable       *drawable,
-						  gint                x,
-						  gint                y);
-
 
 #endif /* __GIMP_DRAWABLE_H__ */
