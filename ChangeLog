@@ -1,5 +1,10 @@
 2003-03-26  Sven Neumann  <sven@gimp.org>
 
+	* tools/gimp-remote.c: include X11/Xmu/WinUtil.h after including
+	the GTK+/GDK headers.
+
+2003-03-26  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontainergridview.c: implemented GtkWidget::focus.
 	Makes grid views keyboard-navigatable and fixes bug #95120.
 

@@ -46,10 +46,10 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include <X11/Xmu/WinUtil.h>
-
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
+
+#include <X11/Xmu/WinUtil.h>
 
 #include "libgimpbase/gimpversion.h"
 
