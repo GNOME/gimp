@@ -47,10 +47,29 @@
 
 /*  local function prototypes  */
 
-static void   gimp_paint_core_class_init (GimpPaintCoreClass *klass);
-static void   gimp_paint_core_init       (GimpPaintCore      *core);
+static void      gimp_paint_core_class_init        (GimpPaintCoreClass *klass);
+static void      gimp_paint_core_init              (GimpPaintCore      *core);
 
-static void   gimp_paint_core_finalize   (GObject          *object);
+static void      gimp_paint_core_finalize            (GObject          *object);
+
+static gboolean  gimp_paint_core_real_start          (GimpPaintCore    *core,
+                                                      GimpDrawable     *drawable,
+                                                      GimpPaintOptions *paint_options,
+                                                      GimpCoords       *coords);
+static gboolean  gimp_paint_core_real_pre_paint      (GimpPaintCore    *core,
+                                                      GimpDrawable     *drawable,
+                                                      GimpPaintOptions *options,
+                                                      GimpPaintCoreState paint_state);
+static void      gimp_paint_core_real_paint          (GimpPaintCore    *core,
+                                                      GimpDrawable     *drawable,
+                                                      GimpPaintOptions *options,
+                                                      GimpPaintCoreState paint_state);
+static void      gimp_paint_core_real_interpolate    (GimpPaintCore    *core,
+                                                      GimpDrawable     *drawable,
+                                                      GimpPaintOptions *options);
+static TempBuf * gimp_paint_core_real_get_paint_area (GimpPaintCore    *core,
+                                                      GimpDrawable     *drawable,
+                                                      GimpPaintOptions *options);
 
 static void   paint_mask_to_canvas_tiles (GimpPaintCore    *core,
                                           PixelRegion      *paint_maskPR,
@@ -103,11 +122,11 @@ gimp_paint_core_class_init (GimpPaintCoreClass *klass)
 
   object_class->finalize = gimp_paint_core_finalize;
 
-  klass->start           = NULL;
-  klass->pre_paint       = NULL;
-  klass->paint           = NULL;
-  klass->interpolate     = NULL;
-  klass->get_paint_area  = NULL;
+  klass->start           = gimp_paint_core_real_start;
+  klass->pre_paint       = gimp_paint_core_real_pre_paint;
+  klass->paint           = gimp_paint_core_real_paint;
+  klass->interpolate     = gimp_paint_core_real_interpolate;
+  klass->get_paint_area  = gimp_paint_core_real_get_paint_area;
 }
 
 static void
@@ -141,25 +160,64 @@ gimp_paint_core_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+static gboolean
+gimp_paint_core_real_start (GimpPaintCore    *core,
+                            GimpDrawable     *drawable,
+                            GimpPaintOptions *paint_options,
+                            GimpCoords       *coords)
+{
+  return TRUE;
+}
+
+static gboolean
+gimp_paint_core_real_pre_paint (GimpPaintCore      *core,
+                                GimpDrawable       *drawable,
+                                GimpPaintOptions   *paint_options,
+                                GimpPaintCoreState  paint_state)
+{
+  return TRUE;
+}
+
+static void
+gimp_paint_core_real_paint (GimpPaintCore      *core,
+                            GimpDrawable       *drawable,
+                            GimpPaintOptions   *paint_options,
+                            GimpPaintCoreState  paint_state)
+{
+}
+
+static void
+gimp_paint_core_real_interpolate (GimpPaintCore    *core,
+                                  GimpDrawable     *drawable,
+                                  GimpPaintOptions *paint_options)
+{
+  gimp_paint_core_paint (core, drawable, paint_options, MOTION_PAINT);
+
+  core->last_coords = core->cur_coords;
+}
+
+static TempBuf *
+gimp_paint_core_real_get_paint_area (GimpPaintCore    *core,
+                                     GimpDrawable     *drawable,
+                                     GimpPaintOptions *paint_options)
+{
+  return NULL;
+}
+
 void
 gimp_paint_core_paint (GimpPaintCore      *core,
 		       GimpDrawable       *drawable,
                        GimpPaintOptions   *paint_options,
 		       GimpPaintCoreState  paint_state)
 {
-  GimpPaintCoreClass *core_class;
-
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
 
-  core_class = GIMP_PAINT_CORE_GET_CLASS (core);
-
-  if (! core_class->pre_paint ||
-      core_class->pre_paint (core, drawable,
-                             paint_options,
-                             paint_state))
+  if (GIMP_PAINT_CORE_GET_CLASS (core)->pre_paint (core, drawable,
+                                                   paint_options,
+                                                   paint_state))
     {
       if (paint_state == MOTION_PAINT)
         {
@@ -180,8 +238,7 @@ gimp_paint_core_start (GimpPaintCore    *core,
                        GimpPaintOptions *paint_options,
                        GimpCoords       *coords)
 {
-  GimpPaintCoreClass *core_class;
-  GimpItem           *item;
+  GimpItem *item;
 
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -193,10 +250,9 @@ gimp_paint_core_start (GimpPaintCore    *core,
 
   core->cur_coords = *coords;
 
-  core_class = GIMP_PAINT_CORE_GET_CLASS (core);
-
-  if (core_class->start &&
-      ! core_class->start (core, drawable, paint_options, coords))
+  if (! GIMP_PAINT_CORE_GET_CLASS (core)->start (core, drawable,
+                                                 paint_options,
+                                                 coords))
     {
       return FALSE;
     }
@@ -375,9 +431,9 @@ static gdouble
 gimp_paint_core_constrain_helper (gdouble dx,
                                   gdouble dy)
 {
-  static gdouble slope[4] = { 0, 0.26795, 0.57735, 1 };
+  static gdouble slope[4]   = { 0, 0.26795, 0.57735, 1 };
   static gdouble divider[3] = { 0.13165, 0.41421, 0.76732 };
-  gint i;
+  gint           i;
 
   if (dy < 0)
     return - gimp_paint_core_constrain_helper (dx,-dy);
@@ -416,7 +472,7 @@ gimp_paint_core_constrain (GimpPaintCore *core)
    *       gimp_paint_core_interpolate for the shorter line will always
    *       be a superset of those plotted for the longer line.
    */
-  if (fabs(dx) > fabs(dy))
+  if (fabs (dx) > fabs (dy))
     core->cur_coords.y = core->last_coords.y +
                          gimp_paint_core_constrain_helper (dx,dy);
   else
@@ -429,19 +485,13 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
 			     GimpDrawable     *drawable,
                              GimpPaintOptions *paint_options)
 {
-  GimpPaintCoreClass *core_class;
-
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
 
-  core_class = GIMP_PAINT_CORE_GET_CLASS (core);
-
-  if (core_class->interpolate)
-    core_class->interpolate (core, drawable, paint_options);
-  else
-    core_class->paint (core, drawable, paint_options, MOTION_PAINT);
+  GIMP_PAINT_CORE_GET_CLASS (core)->interpolate (core, drawable,
+                                                 paint_options);
 }
 
 

@@ -399,8 +399,6 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 
       core->distance     = 0.0;
       core->pixel_dist   = 0.0;
-
-
     }
   else if (paint_tool->draw_line)
     {
@@ -408,9 +406,11 @@ gimp_paint_tool_button_press (GimpTool        *tool,
        *  stroke, then draw a line from the last coords to the pointer
        */
       gboolean hard;
+
       core->start_coords = core->last_coords;
 
-      hard = (gimp_paint_options_get_brush_mode (paint_options) == GIMP_BRUSH_HARD);
+      hard = (gimp_paint_options_get_brush_mode (paint_options) ==
+              GIMP_BRUSH_HARD);
       gimp_paint_tool_round_line (core, hard, state);
     }
 

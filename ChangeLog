@@ -1,5 +1,14 @@
 2004-05-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppaintcore.c: don't do special stuff if a virtual
+	function doesn't exist. Instead, added default implementations
+	which do the special stuff and call the virtual functions
+	unconditionally.
+
+	* app/tools/gimppainttool.c: some stylistic cleanup.
+
+2004-05-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppaintcore.[ch] (gimp_paint_core_paste)
 	(gimp_paint_core_replace): replaced the "MaskBuf *paint_mask"
 	parameters by "PixelRegion *mask_bufPR", so subclasses can pass in
