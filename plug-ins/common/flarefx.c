@@ -163,7 +163,7 @@ static gint            numref;
 static RGBfloat        color, glow, inner, outer, halo;
 static Reflect         ref1[19];
 static GimpOldPreview *preview;
-static gboolean        show_cursor = FALSE;
+static gboolean        show_cursor = TRUE;
 
 /* --- Functions --- */
 MAIN ()
@@ -292,7 +292,6 @@ static gint
 flare_dialog (GimpDrawable *drawable)
 {
   GtkWidget   *dlg;
-  GtkWidget   *main_vbox;
   GtkWidget   *frame;
   FlareCenter *center;
   gboolean     run;
@@ -308,19 +307,12 @@ flare_dialog (GimpDrawable *drawable)
 
                          NULL);
 
-  /*  parameter settings  */
-  main_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
-
-
   frame = flare_center_create (drawable);
   center = g_object_get_data (G_OBJECT (frame), "center");
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
-
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
+
   gtk_widget_show (dlg);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
@@ -707,7 +699,6 @@ flare_center_create (GimpDrawable *drawable)
   GtkWidget   *frame;
   GtkWidget   *table;
   GtkWidget   *label;
-  GtkWidget   *pframe;
   GtkWidget   *spinbutton;
   GtkWidget   *check;
 
@@ -725,22 +716,19 @@ flare_center_create (GimpDrawable *drawable)
   center->oldy     = 0;
   center->in_call  = TRUE;  /* to avoid side effects while initialization */
 
-  frame = gtk_frame_new (_("Center of FlareFX"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  frame = gimp_frame_new (_("Center of Flare Effect"));
 
   g_signal_connect (frame, "destroy",
                     G_CALLBACK (flare_center_destroy),
                     center);
 
   table = gtk_table_new (3, 4, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   label = gtk_label_new_with_mnemonic (_("_X:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5 );
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5 );
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -781,16 +769,11 @@ flare_center_create (GimpDrawable *drawable)
                     G_CALLBACK (flare_center_adjustment_update),
                     &fvals.posy);
 
-  /* frame (shadow_in) that contains preview */
-  pframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (table), pframe, 0, 4, 1, 2, 0, 0, 0, 0);
-
   /* PREVIEW */
-  preview = gimp_old_preview_new (drawable, FALSE);
-  gtk_widget_set_events (GTK_WIDGET (preview->widget), PREVIEW_MASK);
-  gtk_container_add (GTK_CONTAINER (pframe), preview->widget);
-  gtk_widget_show (preview->widget);
+  preview = gimp_old_preview_new (drawable);
+  gtk_widget_add_events (GTK_WIDGET (preview->widget), PREVIEW_MASK);
+  gtk_table_attach (GTK_TABLE (table), preview->frame, 0, 4, 1, 2, 0, 0, 0, 0);
+  gtk_widget_show (preview->frame);
 
   g_object_set_data (G_OBJECT (preview->widget), "center", center);
 
@@ -801,7 +784,6 @@ flare_center_create (GimpDrawable *drawable)
                     G_CALLBACK (flare_center_preview_events),
                     center);
 
-  gtk_widget_show (pframe);
   gtk_widget_show (table);
   g_object_set_data (G_OBJECT (frame), "center", center);
   gtk_widget_show (frame);

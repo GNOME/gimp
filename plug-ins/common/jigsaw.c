@@ -2530,15 +2530,16 @@ static gboolean
 dialog_box (void)
 {
   GimpDrawable *drawable = globals.drawable;
-  GtkWidget *dlg;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-  GtkWidget *frame;
-  GtkWidget *rbutton1;
-  GtkWidget *rbutton2;
-  GtkWidget *table;
-  GtkObject *adj;
-  gboolean   run;
+  GtkSizeGroup *group;
+  GtkWidget    *dlg;
+  GtkWidget    *hbox;
+  GtkWidget    *vbox;
+  GtkWidget    *frame;
+  GtkWidget    *rbutton1;
+  GtkWidget    *rbutton2;
+  GtkWidget    *table;
+  GtkObject    *adj;
+  gboolean      run;
 
   gimp_ui_init ("jigsaw", TRUE);
 
@@ -2551,8 +2552,8 @@ dialog_box (void)
 
 			 NULL);
 
-  hbox = gtk_hbox_new (FALSE, 10);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
                       hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
@@ -2561,23 +2562,25 @@ dialog_box (void)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  preview = gimp_old_preview_new (drawable, TRUE);
+  preview = gimp_old_preview_new (drawable);
   gtk_box_pack_start (GTK_BOX (vbox), preview->frame, FALSE, FALSE, 0);
-  jigsaw(TRUE); /* render preview */
-  gtk_widget_show (preview->widget);
+  gtk_widget_show (preview->frame);
 
-  vbox = gtk_vbox_new (FALSE, 4);
+  jigsaw (TRUE); /* render preview */
+
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  frame = gtk_frame_new (_("Number of Tiles"));
+  frame = gimp_frame_new (_("Number of Tiles"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
+
+  group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /* xtiles */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -2585,6 +2588,10 @@ dialog_box (void)
 			      config.x, MIN_XTILES, MAX_XTILES, 1.0, 4.0, 0,
 			      TRUE, 0, 0,
 			      _("Number of pieces going across"), NULL);
+
+  gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
+  g_object_unref (group);
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.x);
@@ -2598,6 +2605,9 @@ dialog_box (void)
 			      config.y, MIN_YTILES, MAX_YTILES, 1.0, 4.0, 0,
 			      TRUE, 0, 0,
 			      _("Number of pieces going down"), NULL);
+
+  gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.y);
@@ -2608,13 +2618,12 @@ dialog_box (void)
   gtk_widget_show (table);
   gtk_widget_show (frame);
 
-  frame = gtk_frame_new (_("Bevel Edges"));
+  frame = gimp_frame_new (_("Bevel Edges"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   /* number of blending lines */
@@ -2624,6 +2633,9 @@ dialog_box (void)
 			      MIN_BLEND_LINES, MAX_BLEND_LINES, 1.0, 2.0, 0,
 			      TRUE, 0, 0,
 			      _("Degree of slope of each piece's edge"), NULL);
+
+  gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.blend_lines);
@@ -2639,6 +2651,9 @@ dialog_box (void)
 			      TRUE, 0, 0,
 			      _("The amount of highlighting on the edges "
 				"of each piece"), NULL);
+
+  gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config.blend_amount);
@@ -2681,9 +2696,10 @@ dialog_box (void)
 
 static void
 jigsaw_radio_button_update (GtkWidget *widget,
-			    gpointer data)
+			    gpointer   data)
 {
   gimp_radio_button_update (widget, data);
+
   if (GTK_TOGGLE_BUTTON (widget)->active)
     jigsaw (TRUE);
 }

@@ -108,7 +108,7 @@ static void      run    (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static gint      blinds_dialog       (void);
+static gboolean  blinds_dialog         (void);
 
 static void      blinds_scale_update   (GtkAdjustment *adjustment,
                                         gint          *size_val);
@@ -254,16 +254,15 @@ run (const gchar      *name,
 }
 
 
-/* Build the dialog up. This was the hard part! */
-static gint
+static gboolean
 blinds_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
   GtkWidget *hbox;
   GtkWidget *vbox;
+  GtkWidget *align;
   GtkWidget *frame;
-  GtkWidget *toggle_vbox;
   GtkWidget *table;
   GtkObject *size_data;
   GtkWidget *toggle;
@@ -282,21 +281,25 @@ blinds_dialog (void)
 
                          NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  preview = gimp_old_preview_new (NULL, TRUE);
-  gimp_old_preview_fill_scaled (preview, blindsdrawable);
-  gtk_box_pack_start (GTK_BOX (hbox), preview->frame, FALSE, FALSE, 0);
-  gtk_widget_show (preview->widget);
+  align = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
+  gtk_widget_show (align);
 
-  vbox = gtk_vbox_new (FALSE, 4);
+  preview = gimp_old_preview_new (NULL);
+  gimp_old_preview_fill_scaled (preview, blindsdrawable);
+  gtk_container_add (GTK_CONTAINER (align), preview->frame);
+  gtk_widget_show (preview->frame);
+
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
@@ -309,20 +312,15 @@ blinds_dialog (void)
                               _("_Vertical"),   VERTICAL,   NULL,
 
                               NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  frame = gtk_frame_new (_("Background"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  frame = gimp_frame_new (_("Background"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-
-  toggle_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 2);
-  gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
-  gtk_widget_show (toggle_vbox);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Transparent"));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), toggle);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -337,15 +335,10 @@ blinds_dialog (void)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
     }
 
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,

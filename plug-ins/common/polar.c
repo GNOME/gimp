@@ -576,14 +576,10 @@ static gint
 polarize_dialog (void)
 {
   GtkWidget *dialog;
-  GtkWidget *main_vbox;
   GtkWidget *vbox;
-  GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *abox;
-  GtkWidget *pframe;
-  GtkWidget *toggle;
   GtkWidget *hbox;
+  GtkWidget *toggle;
   GtkObject *adj;
   gboolean   run;
 
@@ -598,44 +594,26 @@ polarize_dialog (void)
 
 			    NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dialog)->vbox), main_vbox,
-		      FALSE, FALSE, 0);
-  gtk_widget_show (main_vbox);
-
-  /* Preview */
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
-  gtk_widget_show (abox);
-
-  pframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (pframe), 4);
-  gtk_container_add (GTK_CONTAINER (abox), pframe);
-  gtk_widget_show (pframe);
-
-  preview = gimp_old_preview_new (drawable, FALSE);
-  gtk_container_add (GTK_CONTAINER (pframe), preview->widget);
-  gtk_widget_show (preview->widget);
-
-  /* Controls */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
+                      FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
+  /* Preview */
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  preview = gimp_old_preview_new (drawable);
+  gtk_box_pack_start (GTK_BOX (hbox), preview->frame, FALSE, FALSE, 0);
+  gtk_widget_show (preview->frame);
+
+  /* Controls */
+
   table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -658,7 +636,7 @@ polarize_dialog (void)
                     &pcvals.angle);
 
   /* togglebuttons for backwards, top, polar->rectangular */
-  hbox = gtk_hbox_new (TRUE, 4);
+  hbox = gtk_hbox_new (TRUE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Map Backwards"));

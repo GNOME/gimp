@@ -222,8 +222,8 @@ static gint
 glass_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
-  GtkWidget *main_vbox;
-  GtkWidget *frame;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *table;
   GtkObject *adj;
   gboolean   run;
@@ -239,27 +239,26 @@ glass_dialog (GimpDrawable *drawable)
 
                          NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+                      vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
-  preview = gimp_old_preview_new (drawable, TRUE);
-  gtk_box_pack_start (GTK_BOX (main_vbox), preview->frame, FALSE, FALSE, 0);
-  gtk_widget_show (preview->widget);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  preview = gimp_old_preview_new (drawable);
+  gtk_box_pack_start (GTK_BOX (hbox), preview->frame, FALSE, FALSE, 0);
+  gtk_widget_show (preview->frame);
   glasstile (drawable, TRUE); /* filter routine, initial pass */
 
   /*  Parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (2, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /* Horizontal scale - Width */

@@ -79,7 +79,7 @@ gimp_radio_group_new (gboolean            in_frame,
 
   va_list args;
 
-  vbox = gtk_vbox_new (FALSE, 1);
+  vbox = gtk_vbox_new (FALSE, 2);
 
   group = NULL;
 
@@ -187,7 +187,7 @@ gimp_radio_group_new2 (gboolean         in_frame,
 
   va_list args;
 
-  vbox = gtk_vbox_new (FALSE, 1);
+  vbox = gtk_vbox_new (FALSE, 2);
 
   group = NULL;
 
@@ -297,7 +297,7 @@ gimp_int_radio_group_new (gboolean         in_frame,
 
   va_list args;
 
-  vbox = gtk_vbox_new (FALSE, 1);
+  vbox = gtk_vbox_new (FALSE, 2);
 
   group = NULL;
 

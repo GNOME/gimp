@@ -359,7 +359,7 @@ render_blast (GimpDrawable *drawable,
 
       if (preview_mode)
         {
-          gimp_old_preview_do_row(preview, row, width, buffer);
+          gimp_old_preview_do_row (preview, row, width, buffer);
         }
       else
         {
@@ -379,13 +379,16 @@ render_blast (GimpDrawable *drawable,
                 {
                   if (preview_mode)
                     {
-                      memcpy (buffer, preview->cache + (row * row_stride), row_stride);
-                      gimp_old_preview_do_row(preview, row, width, buffer);
+                      memcpy (buffer,
+                              preview->cache + (row * row_stride), row_stride);
+                      gimp_old_preview_do_row (preview, row, width, buffer);
                     }
                   else
                     {
-                      gimp_pixel_rgn_get_row (&src_region, buffer, x1, row, width);
-                      gimp_pixel_rgn_set_row (&dest_region, buffer, x1, row, width);
+                      gimp_pixel_rgn_get_row (&src_region,
+                                              buffer, x1, row, width);
+                      gimp_pixel_rgn_set_row (&dest_region,
+                                              buffer, x1, row, width);
                     }
                 }
             }
@@ -476,7 +479,7 @@ render_wind (GimpDrawable *drawable,
 
       if (preview_mode)
         {
-          gimp_old_preview_do_row(preview, row, width, sb);
+          gimp_old_preview_do_row (preview, row, width, sb);
         }
       else
         {
@@ -855,8 +858,8 @@ radio_callback (GtkWidget *widget,
 static gint
 dialog_box (GimpDrawable *drawable)
 {
-  GtkWidget *main_vbox;
   GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *table;
   GtkObject *adj;
   GtkWidget *frame;
@@ -881,35 +884,30 @@ dialog_box (GimpDrawable *drawable)
 
                          NULL);
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 0);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  preview = gimp_old_preview_new (NULL, TRUE);
-  gimp_old_preview_fill (preview, drawable);
-  gtk_box_pack_start (GTK_BOX (vbox), preview->frame, FALSE, FALSE, 0);
-  render_effect (drawable, TRUE);
-  gtk_widget_show (preview->widget);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
- 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_container_add (GTK_CONTAINER (frame), main_vbox);
-  gtk_widget_show (main_vbox);
+  preview = gimp_old_preview_new (NULL);
+  gimp_old_preview_fill (preview, drawable);
+  gtk_box_pack_start (GTK_BOX (hbox), preview->frame, FALSE, FALSE, 0);
+  gtk_widget_show (preview->frame);
+
+  render_effect (drawable, TRUE);
 
   /*****************************************************
     outer frame and table
   ***************************************************/
 
   table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*********************************************************
     radio buttons for choosing wind rendering algorithm
@@ -979,9 +977,9 @@ dialog_box (GimpDrawable *drawable)
    table for sliders
    ****************************************************/
   table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*****************************************************
     slider and entry for threshold

@@ -3,7 +3,7 @@
  *
  * gimpoldpreview.h
  * This file contains the implementation of the gimpoldpreview widget
- * witch is used a a few plug-ins.  This shouldn't be used by any 
+ * which is used by a few plug-ins.  This shouldn't be used by any
  * foreign plug-in, because it uses some deprecated stuff.  We only
  * used it there since we do not a better preview widget for now.
  *
@@ -63,10 +63,8 @@ typedef void (*GimpOldPreviewFunc)  (const guchar *src,
                                      gint          bpp,
                                      gpointer      data);
 
-GimpOldPreview * gimp_old_preview_new    (GimpDrawable       *drawable,
-                                          gboolean            has_frame);
-GimpOldPreview * gimp_old_preview_new2   (GimpImageType       drawable_type,
-                                          gboolean            has_frame);
+GimpOldPreview * gimp_old_preview_new    (GimpDrawable       *drawable);
+GimpOldPreview * gimp_old_preview_new2   (GimpImageType       drawable_type);
 void             gimp_old_preview_free   (GimpOldPreview     *preview);
 
 void             gimp_old_preview_update (GimpOldPreview     *preview,
@@ -74,26 +72,26 @@ void             gimp_old_preview_update (GimpOldPreview     *preview,
                                           gpointer            data);
 
 
-void gimp_old_preview_fill_with_thumb (GimpOldPreview   *preview,
-                                       gint32            drawable_ID);
-void gimp_old_preview_fill            (GimpOldPreview *preview,
-                                       GimpDrawable     *drawable);
-void gimp_old_preview_fill_scaled     (GimpOldPreview *preview,
-                                       GimpDrawable     *drawable);
+void    gimp_old_preview_fill_with_thumb (GimpOldPreview *preview,
+                                          gint32          drawable_ID);
+void    gimp_old_preview_fill            (GimpOldPreview *preview,
+                                          GimpDrawable   *drawable);
+void    gimp_old_preview_fill_scaled     (GimpOldPreview *preview,
+                                          GimpDrawable   *drawable);
 
-void gimp_old_preview_do_row          (GimpOldPreview *preview,
-                                       gint              row,
-                                       gint              width,
-                                       const guchar     *src);
+void    gimp_old_preview_do_row          (GimpOldPreview *preview,
+                                          gint            row,
+                                          gint            width,
+                                          const guchar   *src);
 
-void gimp_old_preview_put_pixel       (GimpOldPreview *preview,
-                                       gint              x,
-                                       gint              y,
-                                       const guchar     *pixel);
-void gimp_old_preview_get_pixel       (GimpOldPreview *preview,
-                                       gint              x,
-                                       gint              y,
-                                       guchar           *pixel);
+void    gimp_old_preview_put_pixel       (GimpOldPreview *preview,
+                                          gint            x,
+                                          gint            y,
+                                          const guchar   *pixel);
+void    gimp_old_preview_get_pixel       (GimpOldPreview *preview,
+                                          gint            x,
+                                          gint            y,
+                                          guchar         *pixel);
 
 G_END_DECLS
 

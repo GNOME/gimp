@@ -243,7 +243,8 @@ static gint
 dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
-  GtkWidget *main_vbox;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *frame;
   GtkWidget *max;
   GtkWidget *min;
@@ -260,18 +261,22 @@ dialog (GimpDrawable *drawable)
 
                          NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
-  preview = gimp_old_preview_new (drawable, TRUE);
-  gtk_box_pack_start (GTK_BOX (main_vbox), preview->frame, FALSE, FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  preview = gimp_old_preview_new (drawable);
+  gtk_box_pack_start (GTK_BOX (hbox), preview->frame, FALSE, FALSE, 0);
+  gtk_widget_show (preview->frame);
+
   main_function (drawable, TRUE);
-  gtk_widget_show (preview->widget);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Parameter Settings"),
+  frame = gimp_int_radio_group_new (FALSE, NULL,
                                     G_CALLBACK (radio_callback),
                                     &pvals.max_p, pvals.max_p,
 
@@ -286,7 +291,7 @@ dialog (GimpDrawable *drawable)
   g_object_set_data (G_OBJECT (max), "drawable", drawable);
   g_object_set_data (G_OBJECT (min), "drawable", drawable);
 
-  gtk_container_add (GTK_CONTAINER (main_vbox), frame);
+  gtk_container_add (GTK_CONTAINER (vbox), frame);
   gtk_widget_show (frame);
 
   gtk_widget_show (dlg);

@@ -434,15 +434,10 @@ alienmap2_dialog (void)
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (align);
 
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (align), frame);
-  gtk_widget_show (frame);
-
-  preview = gimp_old_preview_new (NULL, FALSE);
+  preview = gimp_old_preview_new (NULL);
   gimp_old_preview_fill_scaled (preview, drawable);
-  gtk_container_add (GTK_CONTAINER (frame), preview->widget);
-  gtk_widget_show (preview->widget);
+  gtk_container_add (GTK_CONTAINER (align), preview->frame);
+  gtk_widget_show (preview->frame);
 
   /* Controls */
   table = gtk_table_new (6, 3, FALSE);

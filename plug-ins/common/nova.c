@@ -90,7 +90,8 @@ static char rcsid[] = "$Id$";
                       GDK_BUTTON1_MOTION_MASK)
 
 static GimpOldPreview *preview;
-static gboolean        show_cursor = FALSE;
+static gboolean        show_cursor = TRUE;
+
 
 typedef struct
 {
@@ -309,7 +310,6 @@ static gboolean
 nova_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *button;
   GtkWidget *center_frame;
@@ -327,22 +327,16 @@ nova_dialog (GimpDrawable *drawable)
 
                          NULL);
 
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (5, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   center_frame = nova_center_create (drawable);
   gtk_table_attach (GTK_TABLE (table), center_frame, 0, 3, 0, 1,
-                    0, 0, 0, 0);
+                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
 
   /* Color */
   if (gimp_drawable_is_rgb (drawable->drawable_id))
@@ -351,7 +345,7 @@ nova_dialog (GimpDrawable *drawable)
                                       SCALE_WIDTH - 8, 16,
                                       &pvals.color, GIMP_COLOR_AREA_FLAT);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                                 _("Co_lor:"), 1.0, 0.5,
+                                 _("Co_lor:"), 0.0, 0.5,
                                  button, 1, TRUE);
 
       g_signal_connect (button, "color_changed",
@@ -429,7 +423,6 @@ nova_center_create (GimpDrawable *drawable)
   GtkWidget  *frame;
   GtkWidget  *table;
   GtkWidget  *label;
-  GtkWidget  *pframe;
   GtkWidget  *spinbutton;
   GtkWidget  *check;
 
@@ -449,24 +442,22 @@ nova_center_create (GimpDrawable *drawable)
   center->oldy     = 0;
   center->in_call  = TRUE;  /* to avoid side effects while initialization */
 
-  frame = gtk_frame_new (_("Center of SuperNova"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
+  frame = gimp_frame_new (_("Center of SuperNova"));
 
   g_signal_connect (frame, "destroy",
                     G_CALLBACK (nova_center_destroy),
                     center);
 
   table = gtk_table_new (3, 4, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
   label = gtk_label_new_with_mnemonic (_("_X:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
-                   GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+                   GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   spinbutton =
@@ -485,9 +476,9 @@ nova_center_create (GimpDrawable *drawable)
                     &pvals.xcenter);
 
   label = gtk_label_new_with_mnemonic (_("_Y:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   spinbutton =
@@ -505,17 +496,12 @@ nova_center_create (GimpDrawable *drawable)
                     G_CALLBACK (nova_center_adjustment_update),
                     &pvals.ycenter);
 
-  /* frame that contains preview */
-  pframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (table), pframe, 0, 4, 1, 2,
-                    0, 0, 0, 0);
-
   /* PREVIEW */
-  preview = gimp_old_preview_new (drawable, FALSE);
-  gtk_widget_set_events (preview->widget, PREVIEW_MASK);
-  gtk_container_add (GTK_CONTAINER (pframe), preview->widget);
-  gtk_widget_show (preview->widget);
+  preview = gimp_old_preview_new (drawable);
+  gtk_widget_add_events (preview->widget, PREVIEW_MASK);
+  gtk_table_attach (GTK_TABLE (table), preview->frame, 0, 4, 1, 2,
+                    0, 0, 0, 0);
+  gtk_widget_show (preview->frame);
 
   g_signal_connect_after (preview->widget, "expose_event",
                           G_CALLBACK (nova_center_preview_expose),
@@ -523,9 +509,6 @@ nova_center_create (GimpDrawable *drawable)
   g_signal_connect (preview->widget, "event",
                     G_CALLBACK (nova_center_preview_events),
                     center);
-
-  gtk_widget_show (pframe);
-  gtk_widget_show (table);
 
   g_object_set_data (G_OBJECT (frame), "center", center);
 

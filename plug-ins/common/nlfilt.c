@@ -30,14 +30,10 @@
  * Algorithm fixes, V2.0 compatibility by David Hodson  hodsond@ozemail.com.au
  */
 
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include <string.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 
 #include <gtk/gtk.h>
 
@@ -64,8 +60,8 @@ typedef enum
   filter_edge_enhance
 } FilterType;
 
-static gint   do_preview = TRUE;
-static GimpOldPreview *preview;
+static gboolean        do_preview = TRUE;
+static GimpOldPreview *preview    = NULL;
 
 static GtkWidget * mw_preview_new   (GtkWidget    *parent,
                                      GimpDrawable *drawable);
@@ -308,15 +304,16 @@ nlfilt_double_adjustment_update (GtkAdjustment *adjustment,
 }
 
 static gint
-pluginCoreIA (piArgs *argp, GimpDrawable *drawable)
+pluginCoreIA (piArgs       *argp,
+              GimpDrawable *drawable)
 {
   gint retval = -1; /* default to error return */
   GtkWidget *dlg;
-  GtkWidget *main_vbox;
-  GtkWidget *frame;
+  GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *preview;
+  GtkWidget *frame;
   GtkObject *adj;
   gboolean   run;
 
@@ -331,14 +328,13 @@ pluginCoreIA (piArgs *argp, GimpDrawable *drawable)
 
                          NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   preview = mw_preview_new (hbox, drawable);
@@ -361,15 +357,10 @@ pluginCoreIA (piArgs *argp, GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -443,30 +434,19 @@ mw_preview_toggle_callback (GtkWidget *widget,
 }
 
 static GtkWidget *
-mw_preview_new (GtkWidget *parent, GimpDrawable *drawable)
+mw_preview_new (GtkWidget    *parent,
+                GimpDrawable *drawable)
 {
-  GtkWidget *frame;
-  GtkWidget *pframe;
   GtkWidget *vbox;
   GtkWidget *button;
 
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (parent), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  pframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME(pframe), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), pframe, FALSE, FALSE, 0);
-  gtk_widget_show (pframe);
-
-  preview = gimp_old_preview_new (drawable, FALSE);
-  gtk_container_add (GTK_CONTAINER (pframe), preview->widget);
-  gtk_widget_show (preview->widget);
+  preview = gimp_old_preview_new (drawable);
+  gtk_box_pack_start (GTK_BOX (vbox), preview->frame, FALSE, FALSE, 0);
+  gtk_widget_show (preview->frame);
 
   button = gtk_check_button_new_with_mnemonic (_("_Do Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
@@ -560,13 +540,15 @@ static gdouble rectang_area(gdouble, gdouble, gdouble, gdouble,
                             gdouble, gdouble, gdouble, gdouble);
 static gdouble hex_area(gdouble, gdouble, gdouble, gdouble, gdouble);
 
-gint atfilt0(gint *p);
-gint atfilt1(gint *p);
-gint atfilt2(gint *p);
-gint atfilt3(gint *p);
-gint atfilt4(gint *p);
-gint atfilt5(gint *p);
-gint (*atfuncs[6])(gint *) = {
+static gint atfilt0 (gint *p);
+static gint atfilt1 (gint *p);
+static gint atfilt2 (gint *p);
+static gint atfilt3 (gint *p);
+static gint atfilt4 (gint *p);
+static gint atfilt5 (gint *p);
+
+gint (*atfuncs[6])(gint *) =
+{
   atfilt0,
   atfilt1,
   atfilt2,
@@ -602,9 +584,9 @@ gint noisevariance;      /* global so that pixel processing code can get at it q
  * Beware if you use this code anywhere else!
  */
 static inline void
-nlfiltRow(guchar *srclast, guchar *srcthis, guchar *srcnext, guchar *dst,
-          gint width, gint bpp, gint filtno) {
-
+nlfiltRow (guchar *srclast, guchar *srcthis, guchar *srcnext, guchar *dst,
+           gint width, gint bpp, gint filtno)
+{
    gint pf[9];
    guchar *ip0, *ip1, *ip2, *or, *orend;
 
@@ -654,7 +636,8 @@ gint SQUARE[2 * NOCSVAL];              /* scaled square lookup table */
 
 /* Table initialisation function - return alpha range */
 static inline gint
-nlfiltInit(gdouble alpha, gdouble radius, FilterType filter) {
+nlfiltInit (gdouble alpha, gdouble radius, FilterType filter)
+{
    gint alpharange;                 /* alpha range value 0 - 3 */
    gdouble meanscale;               /* scale for finding mean */
    gdouble mmeanscale;              /* scale for finding mean - midle hex */
@@ -792,8 +775,9 @@ nlfiltInit(gdouble alpha, gdouble radius, FilterType filter) {
 
 /* Core pixel processing function - hand it 3x3 pixels and return result. */
 /* Mean filter */
-gint
-atfilt0(gint32 *p) {
+static gint
+atfilt0(gint32 *p)
+{
    gint retv;
        /* map to scaled hexagon values */
    retv = M0[p[0]] + M1[p[3]] + M2[p[7]];
@@ -807,8 +791,9 @@ atfilt0(gint32 *p) {
 }
 
 /* Mean of 5 - 7 middle values */
-gint
-atfilt1(gint32 *p) {
+static gint
+atfilt1 (gint32 *p)
+{
    gint h0,h1,h2,h3,h4,h5,h6;       /* hexagon values    2 3   */
                                     /*                  1 0 4  */
                                     /*                   6 5   */
@@ -841,8 +826,9 @@ atfilt1(gint32 *p) {
 }
 
 /* Mean of 3 - 5 middle values */
-gint
-atfilt2(gint32 *p) {
+static gint
+atfilt2 (gint32 *p)
+{
    gint h0,h1,h2,h3,h4,h5,h6;       /* hexagon values    2 3   */
                                     /*                  1 0 4  */
                                     /*                   6 5   */
@@ -896,8 +882,9 @@ atfilt2(gint32 *p) {
  * Mean of 1 - 3 middle values.
  * If only 1 value, then this is a median filter.
  */
-gint32
-atfilt3(gint32 *p) {
+static gint32
+atfilt3(gint32 *p)
+{
    gint h0,h1,h2,h3,h4,h5,h6;       /* hexagon values    2 3   */
                                    /*                  1 0 4  */
                                    /*                   6 5   */
@@ -966,8 +953,9 @@ atfilt3(gint32 *p) {
 }
 
 /* Edge enhancement */
-gint
-atfilt4(gint *p) {
+static gint
+atfilt4 (gint *p)
+{
    gint hav;
        /* map to scaled hexagon values and compute enhance value */
    hav = M0[p[0]] + M1[p[3]] + M2[p[7]];
@@ -1045,7 +1033,8 @@ atfilt5(gint *p) {
 /* compute the area of overlap of a hexagon diameter d, */
 /* centered at hx,hy, with a unit square of center sx,sy. */
 static gdouble
-hex_area(gdouble sx, gdouble sy, gdouble hx, gdouble hy, gdouble d) {
+hex_area (gdouble sx, gdouble sy, gdouble hx, gdouble hy, gdouble d)
+{
    gdouble hx0,hx1,hx2,hy0,hy1,hy2,hy3;
    gdouble sx0,sx1,sy0,sy1;
 
@@ -1072,8 +1061,9 @@ hex_area(gdouble sx, gdouble sy, gdouble hx, gdouble hy, gdouble d) {
 }
 
 static gdouble
-triang_area(gdouble rx0, gdouble ry0, gdouble rx1, gdouble ry1, gdouble tx0,
-            gdouble ty0, gdouble tx1, gdouble ty1, gint tt) {
+triang_area (gdouble rx0, gdouble ry0, gdouble rx1, gdouble ry1, gdouble tx0,
+             gdouble ty0, gdouble tx1, gdouble ty1, gint tt)
+{
    gdouble a,b,c,d;
    gdouble lx0,ly0,lx1,ly1;
        /* Convert everything to a NW triangle */
@@ -1149,9 +1139,10 @@ triang_area(gdouble rx0, gdouble ry0, gdouble rx1, gdouble ry1, gdouble tx0,
 
 /* Compute rectangle area */
 static gdouble
-rectang_area(gdouble rx0, gdouble ry0, gdouble rx1, gdouble ry1, gdouble tx0,
-             gdouble ty0, gdouble tx1, gdouble ty1) {
-       /* Compute overlapping box */
+rectang_area (gdouble rx0, gdouble ry0, gdouble rx1, gdouble ry1, gdouble tx0,
+              gdouble ty0, gdouble tx1, gdouble ty1)
+{
+  /* Compute overlapping box */
    if (tx0 > rx0)
       rx0 = tx0;
    if (ty0 > ry0)

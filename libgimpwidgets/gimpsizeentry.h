@@ -90,7 +90,7 @@ void        gimp_size_entry_add_field  (GimpSizeEntry   *gse,
 					GtkSpinButton   *value_spinbutton,
 					GtkSpinButton   *refval_spinbutton);
 
-void        gimp_size_entry_attach_label          (GimpSizeEntry *gse,
+GtkWidget * gimp_size_entry_attach_label          (GimpSizeEntry *gse,
 						   const gchar   *text,
 						   gint           row,
 						   gint           column,

@@ -3,7 +3,7 @@
  *
  * gimpoldpreview.c
  * This file contains the implementation of the gimpoldpreview widget
- * witch is used a a few plug-ins.  This shouldn't be used by any
+ * which is used by a few plug-ins.  This shouldn't be used by any
  * foreign plug-in, because it uses some deprecated stuff.  We only
  * used it there since we do not a better preview widget for now.
  *
@@ -33,40 +33,28 @@
 #undef GTK_DISABLE_DEPRECATED
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
+#include "libgimp/gimp.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "gimpoldpreview.h"
-
-#include "libgimp/stdplugins-intl.h"
 
 
 #define PREVIEW_SIZE    128
 #define PREVIEW_BPP     3
 
+
 static void
-gimp_old_preview_put_in_frame (GimpOldPreview* preview)
+gimp_old_preview_put_in_frame (GimpOldPreview *preview)
 {
-  GtkWidget *frame, *abox;
+  preview->frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (preview->frame), GTK_SHADOW_IN);
 
-  preview->frame = gtk_frame_new (_("Preview"));
-  gtk_widget_show (preview->frame);
-
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
-  gtk_container_add (GTK_CONTAINER (preview->frame), abox);
-  gtk_widget_show (abox);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
-  gtk_widget_show (frame);
-
-  gtk_container_add (GTK_CONTAINER (frame), preview->widget);
+  gtk_container_add (GTK_CONTAINER (preview->frame), preview->widget);
+  gtk_widget_show (preview->widget);
 }
 
 GimpOldPreview*
-gimp_old_preview_new (GimpDrawable *drawable,
-                      gboolean      has_frame)
+gimp_old_preview_new (GimpDrawable *drawable)
 {
   GimpOldPreview *preview = g_new0 (GimpOldPreview, 1);
 
@@ -76,8 +64,7 @@ gimp_old_preview_new (GimpDrawable *drawable,
   if (drawable)
     gimp_old_preview_fill_with_thumb (preview, drawable->drawable_id);
 
-  if (has_frame)
-    gimp_old_preview_put_in_frame (preview);
+  gimp_old_preview_put_in_frame (preview);
 
   return preview;
 }
@@ -93,8 +80,7 @@ gimp_old_preview_free (GimpOldPreview *preview)
 }
 
 GimpOldPreview*
-gimp_old_preview_new2 (GimpImageType drawable_type,
-                       gboolean      has_frame)
+gimp_old_preview_new2 (GimpImageType drawable_type)
 {
   GimpOldPreview *preview;
   guchar         *buf = NULL;
@@ -131,8 +117,7 @@ gimp_old_preview_new2 (GimpImageType drawable_type,
 
   g_free (buf);
 
-  if (has_frame)
-    gimp_old_preview_put_in_frame (preview);
+  gimp_old_preview_put_in_frame (preview);
 
   preview->buffer = GTK_PREVIEW (preview->widget)->buffer;
   preview->width  = GTK_PREVIEW (preview->widget)->buffer_width;

@@ -59,7 +59,7 @@ typedef struct
 static gint            do_preview = TRUE;
 static GimpOldPreview *preview;
 
-static GtkWidget *mw_preview_new (GtkWidget *parent,
+static GtkWidget *mw_preview_new (GtkWidget    *parent,
                                   GimpDrawable *drawable);
 
 static void query (void);
@@ -285,7 +285,6 @@ pluginCoreIA (piArgs *argp,
   GtkWidget *frame;
   GtkWidget *hbox;
   GtkWidget *vbox;
-  GtkWidget *sep;
   GtkWidget *table;
   GtkWidget *preview;
   GtkWidget *toggle;
@@ -303,19 +302,23 @@ pluginCoreIA (piArgs *argp,
 
                          NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
                       TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   preview = mw_preview_new (hbox, drawable);
   g_object_set_data (G_OBJECT (preview), "piArgs", argp);
   waves_do_preview ();
+
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
   frame = gimp_int_radio_group_new (TRUE, _("Mode"),
                                     G_CALLBACK (waves_radio_button_update),
@@ -325,14 +328,8 @@ pluginCoreIA (piArgs *argp,
                                     _("_Blacken"), MODE_BLACKEN, NULL,
 
                                     NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
-
-  vbox = GTK_BIN (frame)->child;
-
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), sep, FALSE, FALSE, 2);
-  gtk_widget_show (sep);
 
   toggle = gtk_check_button_new_with_mnemonic ( _("_Reflective"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), argp->reflective);
@@ -343,15 +340,11 @@ pluginCoreIA (piArgs *argp,
                     G_CALLBACK (waves_toggle_button_update),
                     &argp->reflective);
 
-  frame = gtk_frame_new ( _("Parameter Settings"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                               _("_Amplitude:"), 140, 6,
@@ -379,8 +372,6 @@ pluginCoreIA (piArgs *argp,
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (waves_double_adjustment_update),
                     &argp->wavelength);
-
-  gtk_widget_show (table);
 
   gtk_widget_show (dlg);
 
@@ -431,32 +422,21 @@ mw_preview_toggle_callback (GtkWidget *widget,
 }
 
 static GtkWidget *
-mw_preview_new (GtkWidget *parent, GimpDrawable *drawable)
+mw_preview_new (GtkWidget    *parent,
+                GimpDrawable *drawable)
 {
-  GtkWidget *frame;
-  GtkWidget *pframe;
   GtkWidget *vbox;
   GtkWidget *button;
 
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (parent), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  pframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME(pframe), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), pframe, FALSE, FALSE, 0);
-  gtk_widget_show (pframe);
-
-  preview = gimp_old_preview_new (drawable, FALSE);
+  preview = gimp_old_preview_new (drawable);
   /* FIXME: this forces gimp_old_preview to set its alpha correctly */
   gimp_old_preview_fill_scaled (preview, drawable);
-  gtk_container_add (GTK_CONTAINER (pframe), preview->widget);
-  gtk_widget_show (preview->widget);
+  gtk_box_pack_start (GTK_BOX (vbox), preview->frame, FALSE, FALSE, 0);
+  gtk_widget_show (preview->frame);
 
   button = gtk_check_button_new_with_mnemonic (_("_Do Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);

@@ -69,11 +69,12 @@
 
 #include "gimpoldpreview.h"
 
+
 /* Some useful macros */
 
-#define ENTRY_WIDTH      75
-#define SCALE_WIDTH     128
+#define SCALE_WIDTH      48
 #define TILE_CACHE_SIZE  32
+
 
 typedef struct
 {
@@ -296,8 +297,8 @@ plasma_dialog (GimpDrawable  *drawable,
 	       GimpImageType  drawable_type)
 {
   GtkWidget *dlg;
-  GtkWidget *main_vbox;
-  GtkWidget *frame;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *table;
   GtkWidget *seed;
@@ -315,35 +316,31 @@ plasma_dialog (GimpDrawable  *drawable,
 
 			 NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
-		      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
-  preview = gimp_old_preview_new2 (drawable_type, TRUE);
-  gtk_box_pack_start (GTK_BOX (main_vbox), preview->frame, FALSE, FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  preview = gimp_old_preview_new2 (drawable_type);
+  gtk_box_pack_start (GTK_BOX (hbox), preview->frame, FALSE, FALSE, 0);
+  gtk_widget_show (preview->frame);
 
   plasma_seed_changed_callback (drawable, NULL); /* preview image */
 
-  gtk_widget_show (preview->widget);
-
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   seed = gimp_random_seed_new (&pvals.seed, &pvals.random_seed);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				     _("Random _Seed:"), 1.0, 0.5,
-				     seed, 1, TRUE);
+				     _("Random _Seed:"), 0.0, 0.5,
+				     seed, 2, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label),
 				 GIMP_RANDOM_SEED_SPINBUTTON (seed));
 

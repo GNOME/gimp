@@ -473,8 +473,10 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
  * @alignment: The horizontal alignment of the label.
  *
  * Attaches a #GtkLabel to the #GimpSizeEntry (which is a #GtkTable).
+ *
+ * Returns: A pointer to the new #GtkLabel widget.
  **/
-void
+GtkWidget *
 gimp_size_entry_attach_label (GimpSizeEntry *gse,
 			      const gchar   *text,
 			      gint           row,
@@ -483,8 +485,8 @@ gimp_size_entry_attach_label (GimpSizeEntry *gse,
 {
   GtkWidget *label;
 
-  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
-  g_return_if_fail (text != NULL);
+  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), NULL);
+  g_return_val_if_fail (text != NULL, NULL);
 
   label = gtk_label_new_with_mnemonic (text);
 
@@ -511,6 +513,8 @@ gimp_size_entry_attach_label (GimpSizeEntry *gse,
   gtk_table_attach (GTK_TABLE (gse), label, column, column+1, row, row+1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
+
+  return label;
 }
 
 
