@@ -604,9 +604,7 @@ effect_image_constrain (gint32    image_id,
 static gboolean
 create_main_dialog (void)
 {
-  GtkWidget *main_vbox;
   GtkWidget *vbox;
-  GtkWidget *sep;
   GtkWidget *hbox;
   GtkWidget *frame;
   GtkWidget *table;
@@ -626,13 +624,13 @@ create_main_dialog (void)
 
                             NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
-  gtk_widget_show (main_vbox);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
+  gtk_widget_show (vbox);
 
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   frame = gimp_int_radio_group_new (TRUE, _("Effect Channel"),
@@ -672,18 +670,9 @@ create_main_dialog (void)
   gtk_container_add (GTK_CONTAINER (hbox), frame);
   gtk_widget_show (frame);
 
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
   /* Effect image menu */
   table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -694,15 +683,11 @@ create_main_dialog (void)
                               &licvals.effect_image_id);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_Effect Image:"), 1.0, 0.5, combo, 2, TRUE);
-
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), sep, FALSE, FALSE, 0);
-  gtk_widget_show (sep);
+                             _("_Effect Image:"), 0.0, 0.5, combo, 2, TRUE);
 
   table = gtk_table_new (5, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 

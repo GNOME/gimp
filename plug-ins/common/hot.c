@@ -577,23 +577,14 @@ pluginCoreIA (piArgs *argp)
 
 			 NULL);
 
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new (FALSE, 5);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
-
-  toggle = gtk_check_button_new_with_mnemonic (_("Create _New Layer"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), argp->new_layerp);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &argp->new_layerp);
 
   frame = gimp_int_radio_group_new (TRUE, _("Mode"),
 				    G_CALLBACK (gimp_radio_button_update),
@@ -606,6 +597,15 @@ pluginCoreIA (piArgs *argp)
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  toggle = gtk_check_button_new_with_mnemonic (_("Create _New Layer"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), argp->new_layerp);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &argp->new_layerp);
 
   frame = gimp_int_radio_group_new (TRUE, _("Action"),
                                     G_CALLBACK (gimp_radio_button_update),

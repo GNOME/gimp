@@ -442,12 +442,12 @@ save_dialog (void)
 
   /* table */
   table = gtk_table_new (7, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
 
   /* to: dialog */
   entry = gtk_entry_new ();
@@ -455,7 +455,7 @@ save_dialog (void)
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.receipt);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Recipient:"), 1.0, 0.5,
+			     _("_Recipient:"), 0.0, 0.5,
 			     entry, 1, FALSE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
@@ -467,7 +467,7 @@ save_dialog (void)
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.from);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Sender:"), 1.0, 0.5,
+			     _("_Sender:"), 0.0, 0.5,
 			     entry, 1, FALSE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
@@ -479,7 +479,7 @@ save_dialog (void)
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.subject);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("S_ubject:"), 1.0, 0.5,
+			     _("S_ubject:"), 0.0, 0.5,
 			     entry, 1, FALSE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
@@ -491,7 +491,7 @@ save_dialog (void)
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.comment);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("Comm_ent:"), 1.0, 0.5,
+			     _("Comm_ent:"), 0.0, 0.5,
 			     entry, 1, FALSE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
@@ -503,7 +503,7 @@ save_dialog (void)
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.filename);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-			     _("_Filename:"), 1.0, 0.5,
+			     _("_Filename:"), 0.0, 0.5,
 			     entry, 1, FALSE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
@@ -538,7 +538,7 @@ save_dialog (void)
 
   /* Encapsulation label */
   label = gtk_label_new (_("Encapsulation:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.2);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);

@@ -982,10 +982,10 @@ iwarp_animate_dialog (GtkWidget *dlg,
   GtkWidget *button;
   GtkObject *scale_data;
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
-  frame = gtk_frame_new (NULL);
+  frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -999,9 +999,8 @@ iwarp_animate_dialog (GtkWidget *dlg,
                     &do_animate);
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -1058,12 +1057,52 @@ iwarp_settings_dialog (GtkWidget *dlg,
   GtkWidget *widget[3];
   gint       i;
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+
+  frame = gimp_frame_new (_("Deform Mode"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  hbox = gtk_hbox_new (TRUE, 6);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
+  vbox2 = gimp_int_radio_group_new (FALSE, NULL,
+				    G_CALLBACK (gimp_radio_button_update),
+				    &iwarp_vals.deform_mode,
+				    iwarp_vals.deform_mode,
+
+				    _("_Move"),      MOVE,      NULL,
+				    _("_Grow"),      GROW,      NULL,
+				    _("S_wirl CCW"), SWIRL_CCW, NULL,
+				    _("Remo_ve"),    REMOVE,    &widget[0],
+				    _("S_hrink"),    SHRINK,    &widget[1],
+				    _("Sw_irl CW"),  SWIRL_CW,  &widget[2],
+
+				    NULL);
+
+  gtk_container_add (GTK_CONTAINER (hbox), vbox2);
+  gtk_widget_show (vbox2);
+
+  vbox3 = gtk_vbox_new (FALSE, 2);
+  gtk_container_add (GTK_CONTAINER (hbox), vbox3);
+  gtk_widget_show (vbox3);
+
+  for (i = 0; i < 3; i++)
+    {
+      g_object_ref (widget[i]);
+      gtk_widget_hide (widget[i]);
+      gtk_container_remove (GTK_CONTAINER (vbox2), widget[i]);
+      gtk_box_pack_start (GTK_BOX (vbox3), widget[i],
+                          FALSE, FALSE, 0);
+      gtk_widget_show (widget[i]);
+      g_object_unref (widget[i]);
+    }
 
   table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -1087,47 +1126,6 @@ iwarp_settings_dialog (GtkWidget *dlg,
                     G_CALLBACK (gimp_double_adjustment_update),
                     &iwarp_vals.deform_amount);
 
-  frame = gtk_frame_new (_("Deform Mode"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  hbox = gtk_hbox_new (TRUE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
-
-  vbox2 = gimp_int_radio_group_new (FALSE, NULL,
-				    G_CALLBACK (gimp_radio_button_update),
-				    &iwarp_vals.deform_mode,
-				    iwarp_vals.deform_mode,
-
-				    _("_Move"),      MOVE,      NULL,
-				    _("_Grow"),      GROW,      NULL,
-				    _("S_wirl CCW"), SWIRL_CCW, NULL,
-				    _("Remo_ve"),    REMOVE,    &widget[0],
-				    _("S_hrink"),    SHRINK,    &widget[1],
-				    _("Sw_irl CW"),  SWIRL_CW,  &widget[2],
-
-				    NULL);
-
-  gtk_container_add (GTK_CONTAINER (hbox), vbox2);
-  gtk_widget_show (vbox2);
-
-  vbox3 = gtk_vbox_new (FALSE, 1);
-  gtk_container_add (GTK_CONTAINER (hbox), vbox3);
-  gtk_widget_show (vbox3);
-
-  for (i = 0; i < 3; i++)
-    {
-      g_object_ref (widget[i]);
-      gtk_widget_hide (widget[i]);
-      gtk_container_remove (GTK_CONTAINER (vbox2), widget[i]);
-      gtk_box_pack_start (GTK_BOX (vbox3), widget[i],
-                          FALSE, FALSE, 0);
-      gtk_widget_show (widget[i]);
-      g_object_unref (widget[i]);
-    }
-
   button = gtk_check_button_new_with_mnemonic (_("_Bilinear"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				iwarp_vals.do_bilinear);
@@ -1138,7 +1136,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
                     G_CALLBACK (gimp_toggle_button_update),
                     &iwarp_vals.do_bilinear);
 
-  frame = gtk_frame_new (NULL);
+  frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -1153,9 +1151,8 @@ iwarp_settings_dialog (GtkWidget *dlg,
                     &iwarp_vals.do_supersample);
 
   table = gtk_table_new (2, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -1196,7 +1193,6 @@ iwarp_dialog (void)
   GtkWidget *main_hbox;
   GtkWidget *frame;
   GtkWidget *abox;
-  GtkWidget *pframe;
   GtkWidget *notebook;
 
   gimp_ui_init ("iwarp", TRUE);
@@ -1220,32 +1216,29 @@ iwarp_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  main_hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
+  main_hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_hbox,
 		      FALSE, FALSE, 0);
+  gtk_widget_show (main_hbox);
 
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (main_hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
+  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (main_hbox), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
-  pframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), pframe);
-  gtk_widget_show (pframe);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_widget_show (frame);
 
   if (preview_bpp == 3)
     preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   else
     preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
+
   gtk_preview_size (GTK_PREVIEW (preview), preview_width, preview_height);
   iwarp_update_preview (0, 0, preview_width, preview_height);
-  gtk_container_add (GTK_CONTAINER (pframe), preview);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
   gtk_widget_set_events (preview,
@@ -1260,13 +1253,11 @@ iwarp_dialog (void)
   notebook = gtk_notebook_new ();
   gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
   gtk_box_pack_start (GTK_BOX (main_hbox), notebook, TRUE, TRUE, 0);
+  gtk_widget_show (notebook);
 
   iwarp_settings_dialog (dlg, notebook);
   iwarp_animate_dialog (dlg, notebook);
 
-  gtk_widget_show (notebook);
-
-  gtk_widget_show (main_hbox);
   gtk_widget_show (dlg);
 
   gtk_main ();

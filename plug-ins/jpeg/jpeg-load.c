@@ -1689,18 +1689,17 @@ save_dialog (void)
 
 			 NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
 		      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
   /* sg - preview */
-  prv_frame = gtk_frame_new (_("Image Preview"));
+  prv_frame = gimp_frame_new (_("Image Preview"));
   gtk_box_pack_start (GTK_BOX (main_vbox), prv_frame, FALSE, FALSE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (prv_frame), vbox);
   gtk_widget_show (vbox);
 
@@ -1727,18 +1726,17 @@ save_dialog (void)
   make_preview ();
 
   /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
+  frame = gimp_frame_new (_("JPEG Parameters"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (9, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   label = gtk_label_new (_("Quality:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -1761,7 +1759,7 @@ save_dialog (void)
                     NULL);
 
   label = gtk_label_new (_("Smoothing:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -1798,7 +1796,7 @@ save_dialog (void)
                     scale_data);
 
   restart_markers_label = gtk_label_new (_("Restart frequency (rows):"));
-  gtk_misc_set_alignment (GTK_MISC (restart_markers_label), 1.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (restart_markers_label), 0.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), restart_markers_label, 0, 1, 3, 4,
 		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
   gtk_widget_show (restart_markers_label);
@@ -1924,14 +1922,13 @@ save_dialog (void)
 			     1.0, 0.5,
 			     combo, 1, FALSE);
 
-  com_frame = gtk_frame_new (_("Image comments"));
+  com_frame = gimp_frame_new (_("Comment"));
   gtk_box_pack_start (GTK_BOX (main_vbox), com_frame, TRUE, TRUE, 0);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 4);
   gtk_container_add (GTK_CONTAINER (com_frame), scrolled_window);
   gtk_widget_show (scrolled_window);
 
