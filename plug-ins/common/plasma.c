@@ -46,6 +46,13 @@
  *
  * Feel free to correct my WRONG English, or to modify Plug-in Path,
  * and so on. ;-)
+ *
+ * Version 1.02 
+ *
+ * May 2000
+ * tim copperfield [timecop@japan.co.jp]
+ * Added dynamic preview mode.
+ *
  */
 
 #include "config.h"
@@ -67,6 +74,7 @@
 #define ENTRY_WIDTH      75
 #define SCALE_WIDTH     128
 #define TILE_CACHE_SIZE  32
+#define PREVIEW_SIZE    128
 
 typedef struct
 {
@@ -92,34 +100,41 @@ static void	run	(gchar   *name,
 			 gint    *nreturn_vals,
 			 GParam  **return_vals);
 
-static gint	plasma_dialog      (void);
-static void     plasma_ok_callback (GtkWidget *widget,
-				    gpointer   data);
+static GtkWidget *preview_widget         (void);
+static gint	plasma_dialog            (GDrawable *drawable);
+static void     plasma_ok_callback       (GtkWidget *widget, 
+					  gpointer   data);
 
-static void	plasma	     (GDrawable *drawable);
+static void	plasma	     (GDrawable *drawable, 
+			      gboolean   preview_mode);
 static void     random_rgb   (guchar    *d);
 static void     add_random   (guchar    *d,
 			      gint       amnt);
-static void     init_plasma  (GDrawable *drawable);
+static void     init_plasma  (GDrawable *drawable, 
+			      gboolean   preview_mode);
 static void     provide_tile (GDrawable *drawable,
 			      gint       col,
 			      gint       row);
-static void     end_plasma   (GDrawable *drawable);
+static void     end_plasma   (GDrawable *drawable,
+			      gboolean   preview_mode);
 static void     get_pixel    (GDrawable *drawable,
 			      gint       x,
 			      gint       y,
-			      guchar    *pixel);
+			      guchar    *pixel,
+			      gboolean   preview_mode);
 static void     put_pixel    (GDrawable *drawable,
 			      gint       x,
 			      gint       y,
-			      guchar    *pixel);
+			      guchar    *pixel,
+			      gboolean   preview_mode);
 static gint     do_plasma    (GDrawable *drawable,
 			      gint       x1,
 			      gint       y1,
 			      gint       x2,
 			      gint       y2,
 			      gint       depth,
-			      gint       scale_depth);
+			      gint       scale_depth,
+			      gboolean   preview_mode);
 
 /***** Local vars *****/
 
@@ -143,6 +158,9 @@ static PlasmaInterface pint =
   FALSE     /* run */
 };
 
+static guchar *work_buffer;
+static GtkWidget *preview;
+
 /***** Functions *****/
 
 MAIN ()
@@ -165,7 +183,7 @@ query (void)
 			  "More help",
 			  "Stephen Norris & (ported to 1.0 by) Eiichi Takamori",
 			  "Stephen Norris",
-			  "1995",
+			  "May 2000",
 			  N_("<Image>/Filters/Render/Clouds/Plasma..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
@@ -204,7 +222,7 @@ run (gchar   *name,
       gimp_get_data ("plug_in_plasma", &pvals);
 
       /*  First acquire information with a dialog  */
-      if (! plasma_dialog ())
+      if (! plasma_dialog (drawable))
 	{
 	  gimp_drawable_detach (drawable);
 	  return;
@@ -246,7 +264,7 @@ run (gchar   *name,
 	  gimp_progress_init (_("Plasma..."));
 	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
-	  plasma (drawable);
+	  plasma (drawable, FALSE);
 
 	  if (run_mode != RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
@@ -264,17 +282,18 @@ run (gchar   *name,
     }
 
   values[0].data.d_status = status;
-
   gimp_drawable_detach (drawable);
 }
 
 static gint
-plasma_dialog (void)
+plasma_dialog (GDrawable *drawable)
 {
   GtkWidget *dlg;
+  GtkWidget *main_vbox;
+  GtkWidget *abox;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *seed_hbox;
+  GtkWidget *seed;
   GtkObject *adj;
 
   gimp_ui_init ("plasma", FALSE);
@@ -297,11 +316,34 @@ plasma_dialog (void)
 
   gimp_help_init ();
 
+  main_vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox, TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
+
+  /* make a nice preview frame */
+  frame = gtk_frame_new (_("Preview"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), abox);
+  gtk_widget_show (abox);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_widget_show (frame);
+  preview = preview_widget (); /* we are here */
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+  plasma (drawable, TRUE); /* preview image */
+  gtk_widget_show (preview);
+  
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -309,12 +351,20 @@ plasma_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  seed_hbox = gimp_random_seed_new (&pvals.seed,
-				    &pvals.timeseed,
-				    TRUE, FALSE);
+  seed = gimp_random_seed_new (&pvals.seed,
+			       &pvals.timeseed,
+			       TRUE, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Random Seed:"), 1.0, 0.5,
-			     seed_hbox, 1, TRUE);
+			     seed, 1, TRUE);
+  gtk_signal_connect_object (GTK_OBJECT (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (seed)),
+			     "value_changed",
+			     GTK_SIGNAL_FUNC (plasma),
+			     (gpointer)drawable);
+  gtk_signal_connect_object (GTK_OBJECT (GIMP_RANDOM_SEED_TOGGLEBUTTON (seed)),
+			     "toggled",
+			     GTK_SIGNAL_FUNC (plasma),
+			     (gpointer)drawable);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Turbulence:"), SCALE_WIDTH, 0,
@@ -325,6 +375,9 @@ plasma_dialog (void)
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &pvals.turbulence);
+  gtk_signal_connect_object (GTK_OBJECT (adj), "value_changed",
+			     GTK_SIGNAL_FUNC (plasma),
+			     (gpointer)drawable);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
@@ -368,11 +421,12 @@ static glong	max_progress, progress;
  */
 
 static void
-plasma (GDrawable *drawable)
+plasma (GDrawable *drawable, 
+	gboolean    preview_mode)
 {
   gint  depth;
 
-  init_plasma (drawable);
+  init_plasma (drawable, preview_mode);
 
   /*
    * This first time only puts in the seed pixels - one in each
@@ -380,21 +434,22 @@ plasma (GDrawable *drawable)
    * center of the image.
    */
 
-  do_plasma (drawable, ix1, iy1, ix2 - 1, iy2 - 1, -1, 0);
+  do_plasma (drawable, ix1, iy1, ix2 - 1, iy2 - 1, -1, 0, preview_mode);
 
   /*
    * Now we recurse through the images, going further each time.
    */
   depth = 1;
-  while (!do_plasma (drawable, ix1, iy1, ix2 - 1, iy2 - 1, depth, 0))
+  while (!do_plasma (drawable, ix1, iy1, ix2 - 1, iy2 - 1, depth, 0, preview_mode))
     {
       depth ++;
     }
-  end_plasma (drawable);
+  end_plasma (drawable, preview_mode);
 }
 
 static void
-init_plasma (GDrawable *drawable)
+init_plasma (GDrawable *drawable,
+	     gboolean   preview_mode)
 {
   if (pvals.timeseed)
     pvals.seed = time(NULL);
@@ -402,23 +457,36 @@ init_plasma (GDrawable *drawable)
   srand (pvals.seed);
   turbulence = pvals.turbulence;
 
-  gimp_drawable_mask_bounds (drawable->id, &ix1, &iy1, &ix2, &iy2);
+  if (preview_mode) 
+    {
+      ix1 = iy1 = 0;
+      ix2 = GTK_PREVIEW (preview)->buffer_width;
+      iy2 = GTK_PREVIEW (preview)->buffer_height;
+      bpp = GTK_PREVIEW (preview)->bpp;
+      alpha = bpp;
+      has_alpha = 0;
+      work_buffer = g_malloc (ix2 * iy2 * bpp);
+      memcpy (work_buffer, GTK_PREVIEW (preview)->buffer, ix2 * iy2 * bpp);
+    } 
+  else 
+    {
+      gimp_drawable_mask_bounds (drawable->id, &ix1, &iy1, &ix2, &iy2);
+      bpp = drawable->bpp;
+      has_alpha = gimp_drawable_has_alpha (drawable->id);
+      if (has_alpha)
+	alpha = bpp-1;
+      else
+	alpha = bpp;
+    }
 
   max_progress = (ix2 - ix1) * (iy2 - iy1);
   progress = 0;
 
-  tile_width = gimp_tile_width ();
+  tile_width  = gimp_tile_width ();
   tile_height = gimp_tile_height ();
 
   tile = NULL;
   tile_row = 0; tile_col = 0;
-
-  bpp = drawable->bpp;
-  has_alpha = gimp_drawable_has_alpha (drawable->id);
-  if (has_alpha)
-    alpha = bpp-1;
-  else
-    alpha = bpp;
 }
 
 static void
@@ -430,6 +498,7 @@ provide_tile (GDrawable *drawable,
     {
       if (tile)
 	gimp_tile_unref (tile, tile_dirty);
+
       tile_col = col;
       tile_row = row;
       tile = gimp_drawable_get_tile (drawable, TRUE, tile_row, tile_col);
@@ -439,22 +508,33 @@ provide_tile (GDrawable *drawable,
 }
 
 static void
-end_plasma (GDrawable *drawable)
+end_plasma (GDrawable *drawable,
+	    gboolean   preview_mode)
 {
-  if (tile)
-    gimp_tile_unref (tile, tile_dirty);
-  tile = NULL;
+  if (preview_mode) 
+    {
+      memcpy (GTK_PREVIEW (preview)->buffer, work_buffer, ix2 * iy2 * bpp);
+      g_free (work_buffer);
+      gtk_widget_queue_draw (preview);
+    } 
+  else 
+    {
+      if (tile)
+	gimp_tile_unref (tile, tile_dirty);
+      tile = NULL;
 
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, ix1, iy1, (ix2 - ix1), (iy2 - iy1));
+      gimp_drawable_flush (drawable);
+      gimp_drawable_merge_shadow (drawable->id, TRUE);
+      gimp_drawable_update (drawable->id, ix1, iy1, (ix2 - ix1), (iy2 - iy1));
+    }
 }
 
 static void
 get_pixel (GDrawable *drawable,
 	   gint       x,
 	   gint       y,
-	   guchar    *pixel)
+	   guchar    *pixel,
+	   gboolean   preview_mode)
 {
   gint   row, col;
   gint   offx, offy, i;
@@ -465,23 +545,31 @@ get_pixel (GDrawable *drawable,
   if (y < iy1)       y = iy1;
   if (y > iy2 - 1)   y = iy2 - 1;
 
-  col = x / tile_width;
-  row = y / tile_height;
-  offx = x % tile_width;
-  offy = y % tile_height;
+  if (preview_mode) 
+    {
+      memcpy (pixel, work_buffer + (y * ix2 * bpp) + (x * bpp), bpp);
+    }
+  else 
+    {
+      col = x / tile_width;
+      row = y / tile_height;
+      offx = x % tile_width;
+      offy = y % tile_height;
+      
+      provide_tile (drawable, col, row);
+      ptr = tile->data + (offy * tile->ewidth + offx) * bpp;
 
-  provide_tile (drawable, col, row);
-
-  ptr = tile->data + (offy * tile->ewidth + offx) * bpp;
-  for(i = 0; i < alpha; i++)
-    pixel[i] = ptr[i];
+      for (i = 0; i < alpha; i++)
+	pixel[i] = ptr[i];
+    }
 }
 
 static void
 put_pixel (GDrawable *drawable,
 	   gint       x,
 	   gint       y,
-	   guchar    *pixel)
+	   guchar    *pixel,
+	   gboolean   preview_mode)
 {
   gint   row, col;
   gint   offx, offy, i;
@@ -492,22 +580,27 @@ put_pixel (GDrawable *drawable,
   if (y < iy1)       y = iy1;
   if (y > iy2 - 1)   y = iy2 - 1;
 
-  col = x / tile_width;
-  row = y / tile_height;
-  offx = x % tile_width;
-  offy = y % tile_height;
+  if (preview_mode)
+    memcpy (work_buffer + (y * ix2 * bpp) + (x * bpp), pixel, bpp);
+  else
+    {
+      col = x / tile_width;
+      row = y / tile_height;
+      offx = x % tile_width;
+      offy = y % tile_height;
 
-  provide_tile (drawable, col, row);
+      provide_tile (drawable, col, row);
+      ptr = tile->data + (offy * tile->ewidth + offx) * bpp;
 
-  ptr = tile->data + (offy * tile->ewidth + offx) * bpp;
-  for(i = 0; i < alpha; i++)
-    ptr[i] = pixel[i];
-  if (has_alpha)
-    ptr[alpha] = 255;
+      for (i = 0; i < alpha; i++)
+	ptr[i] = pixel[i];
 
-  tile_dirty = TRUE;
+      if (has_alpha)
+	ptr[alpha] = 255;
 
-  progress++;
+      tile_dirty = TRUE;
+      progress++;
+    }
 }
 
 static void
@@ -557,7 +650,8 @@ do_plasma (GDrawable *drawable,
 	   gint       x2,
 	   gint       y2,
 	   gint       depth,
-	   gint       scale_depth)
+	   gint       scale_depth,
+	   gboolean   preview_mode)
 {
   guchar  tl[3], ml[3], bl[3], mt[3], mm[3], mb[3], tr[3], mr[3], br[3];
   guchar  tmp[3];
@@ -571,23 +665,23 @@ do_plasma (GDrawable *drawable,
   if (depth == -1)
     {
       random_rgb (tl);
-      put_pixel (drawable, x1, y1, tl);
+      put_pixel (drawable, x1, y1, tl, preview_mode);
       random_rgb (tr);
-      put_pixel (drawable, x2, y1, tr);
+      put_pixel (drawable, x2, y1, tr, preview_mode);
       random_rgb (bl);
-      put_pixel (drawable, x1, y2, bl);
+      put_pixel (drawable, x1, y2, bl, preview_mode);
       random_rgb (br);
-      put_pixel (drawable, x2, y2, br);
+      put_pixel (drawable, x2, y2, br, preview_mode);
       random_rgb (mm);
-      put_pixel (drawable, (x1 + x2) / 2, (y1 + y2) / 2, mm);
+      put_pixel (drawable, (x1 + x2) / 2, (y1 + y2) / 2, mm, preview_mode);
       random_rgb (ml);
-      put_pixel (drawable, x1, (y1 + y2) / 2, ml);
+      put_pixel (drawable, x1, (y1 + y2) / 2, ml, preview_mode);
       random_rgb (mr);
-      put_pixel (drawable, x2, (y1 + y2) / 2, mr);
+      put_pixel (drawable, x2, (y1 + y2) / 2, mr, preview_mode);
       random_rgb (mt);
-      put_pixel (drawable, (x1 + x2) / 2, y1, mt);
+      put_pixel (drawable, (x1 + x2) / 2, y1, mt, preview_mode);
       random_rgb (ml);
-      put_pixel (drawable, (x1 + x2) / 2, y2, ml);
+      put_pixel (drawable, (x1 + x2) / 2, y2, ml, preview_mode);
 
       return 0;
     }
@@ -601,10 +695,10 @@ do_plasma (GDrawable *drawable,
       gdouble	rnd;
       gint	xave, yave;
 
-      get_pixel (drawable, x1, y1, tl);
-      get_pixel (drawable, x1, y2, bl);
-      get_pixel (drawable, x2, y1, tr);
-      get_pixel (drawable, x2, y2, br);
+      get_pixel (drawable, x1, y1, tl, preview_mode);
+      get_pixel (drawable, x1, y2, bl, preview_mode);
+      get_pixel (drawable, x2, y1, tr, preview_mode);
+      get_pixel (drawable, x2, y2, br, preview_mode);
 
       rnd = (256.0 / (2.0 * (gdouble)scale_depth)) * turbulence;
       ran = rnd;
@@ -622,14 +716,14 @@ do_plasma (GDrawable *drawable,
 	  /* Left. */
 	  AVE (ml, tl, bl);
 	  add_random (ml, ran);
-	  put_pixel (drawable, x1, yave, ml);
+	  put_pixel (drawable, x1, yave, ml, preview_mode);
 
 	  if (x1 != x2)
 	    {
 				/* Right. */
 	      AVE (mr, tr, br);
 	      add_random (mr, ran);
-	      put_pixel (drawable, x2, yave, mr);
+	      put_pixel (drawable, x2, yave, mr, preview_mode);
 	    }
 	}
 
@@ -640,7 +734,7 @@ do_plasma (GDrawable *drawable,
 	      /* Bottom. */
 	      AVE (mb, bl, br);
 	      add_random (mb, ran);
-	      put_pixel (drawable, xave, y2, mb);
+	      put_pixel (drawable, xave, y2, mb, preview_mode);
 	    }
 
 	  if (y1 != y2)
@@ -648,7 +742,7 @@ do_plasma (GDrawable *drawable,
 	      /* Top. */
 	      AVE (mt, tl, tr);
 	      add_random (mt, ran);
-	      put_pixel (drawable, xave, y1, mt);
+	      put_pixel (drawable, xave, y1, mt, preview_mode);
 	    }
 	}
 
@@ -660,12 +754,12 @@ do_plasma (GDrawable *drawable,
 	  AVE (mm, mm, tmp);
 
 	  add_random (mm, ran);
-	  put_pixel (drawable, xave, yave, mm);
+	  put_pixel (drawable, xave, yave, mm, preview_mode);
 	}
 
       count ++;
 
-      if (!(count % 2000))
+      if (!(count % 2000) && !preview_mode)
 	{
 	  gimp_progress_update ((double) progress / (double) max_progress);
 	}
@@ -681,11 +775,33 @@ do_plasma (GDrawable *drawable,
   ym = (y1 + y2) >> 1;
 
   /* Top left. */
-  do_plasma (drawable, x1, y1, xm, ym, depth - 1, scale_depth + 1);
+  do_plasma (drawable, x1, y1, xm, ym, depth - 1, scale_depth + 1, preview_mode);
   /* Bottom left. */
-  do_plasma (drawable, x1, ym, xm ,y2, depth - 1, scale_depth + 1);
+  do_plasma (drawable, x1, ym, xm ,y2, depth - 1, scale_depth + 1, preview_mode);
   /* Top right. */
-  do_plasma (drawable, xm, y1, x2 , ym, depth - 1, scale_depth + 1);
+  do_plasma (drawable, xm, y1, x2 , ym, depth - 1, scale_depth + 1, preview_mode);
   /* Bottom right. */
-  return do_plasma (drawable, xm, ym, x2, y2, depth - 1, scale_depth + 1);
+  return do_plasma (drawable, xm, ym, x2, y2, depth - 1, scale_depth + 1, preview_mode);
+}
+
+
+/* preview library */
+
+
+static GtkWidget *
+preview_widget (void)
+{
+  GtkWidget *preview;
+  guchar    *buf;
+  gint       y;
+
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), PREVIEW_SIZE, PREVIEW_SIZE);
+
+  buf = g_malloc0 (PREVIEW_SIZE * 3);
+  for (y = 0; y < PREVIEW_SIZE; y++) 
+    gtk_preview_draw_row (GTK_PREVIEW (preview), buf, 0, y, PREVIEW_SIZE);
+  g_free (buf);
+
+  return preview;
 }

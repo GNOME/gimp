@@ -1,4 +1,14 @@
 2000-05-23  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/plasma.c: applied modified version of 
+	gimp-timecop-200005-12.plasma which adds a preview to the
+	plasma plug-in. 
+
+	* plug-ins/common/wind.c: applied modified version of 
+	gimp-timecop-200005-14.wind which adds a preview to the
+	wind plug-in. 
+
+2000-05-23  Sven Neumann  <sven@gimp.org>
 	
 	* plug-ins/common/flarefx.c
 	* plug-ins/common/glasstile.c: a more elegant way to update 
