@@ -50,11 +50,22 @@ dockable_add_tab_cmd_callback (GtkAction   *action,
   if (value)
     {
       GtkWidget *dockable;
+      gchar     *identifier;
+      gchar     *p;
+
+      identifier = g_strdup (value);
+
+      p = strchr (identifier, '|');
+
+      if (p)
+        *p = '\0';
 
       dockable =
         gimp_dialog_factory_dockable_new (dockbook->dock->dialog_factory,
                                           dockbook->dock,
-                                          value, -1);
+                                          identifier, -1);
+
+      g_free (identifier);
 
       /*  Maybe gimp_dialog_factory_dockable_new() returned an already
        *  existing singleton dockable, so check if it already is
