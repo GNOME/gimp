@@ -3081,7 +3081,7 @@ msgstr "/Tiedosto/Talleta"
 
 #: app/menus.c:204
 msgid "/File/Save As..."
-msgstr "/Tiedosto/Talleta nimellä..."
+msgstr "/Tiedosto/Tallenna nimellä..."
 
 #: app/menus.c:206
 msgid "/File/Revert"
@@ -3188,7 +3188,7 @@ msgstr "/Valitse/Reuna..."
 
 #: app/menus.c:288
 msgid "/Select/Save to Channel"
-msgstr "/Valitse/Talleta kanavalle"
+msgstr "/Valitse/Tallenna kanavalle"
 
 #. <Image>/View
 #: app/menus.c:293
@@ -3481,7 +3481,7 @@ msgstr "/Suotimet/Lisää kohinaa"
 
 #: app/menus.c:528
 msgid "/Filters/Edge-Detect"
-msgstr "/Suotimet/Löydä reunoja"
+msgstr "/Suotimet/Etsi reunoja"
 
 #: app/menus.c:530
 msgid "/Filters/Enhance"
@@ -4114,7 +4114,7 @@ msgstr "Lataa polku"
 
 #: app/paths_dialog.c:2106
 msgid "Store Path"
-msgstr "Tallenna pólku"
+msgstr "Tallenna polku"
 
 #. The shell
 #: app/pattern_select.c:163
