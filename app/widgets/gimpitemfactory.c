@@ -71,9 +71,12 @@ static void   tearoff_cmd_callback  (GtkWidget            *widget,
 				     gpointer              callback_data,
 				     guint                 callback_action);
 
-static void   help_debug_cmd_callback (GtkWidget *widget,
-				       gpointer   callback_data,
-				       guint      callback_action);
+static void   menus_debug_recurse_menu (GtkWidget *menu,
+					gint       depth,
+					gchar     *path);
+static void   menus_debug_cmd_callback (GtkWidget *widget,
+					gpointer   callback_data,
+					guint      callback_action);
 
 static GSList *last_opened_raw_filenames = NULL;
 
@@ -175,7 +178,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
     "help/dialogs/tip_of_the_day.html", NULL },
   { { N_("/Help/About..."), NULL, help_about_cmd_callback, 0 },
     "help/dialogs/about.html", NULL },
-  { { N_("/Help/Dump Items (Debug)"), NULL, help_debug_cmd_callback, 0 },
+  { { N_("/Help/Dump Items (Debug)"), NULL, menus_debug_cmd_callback, 0 },
     NULL, NULL }
 };
 
@@ -1902,30 +1905,69 @@ tearoff_cmd_callback (GtkWidget *widget,
 						   "tearoff_menu_top");
 
 	  if (!top)
-	    {
-	      g_message ("can't unregister tearoff menu top level window");
-	    }
+	    g_message ("can't unregister tearoff menu top level window");
 	  else
-	    {
-	      dialog_unregister (top);
-	    }
+	    dialog_unregister (top);
 	}
     }
 }
 
-static void   
-help_debug_cmd_callback (GtkWidget *widget,
-			 gpointer   callback_data,
-			 guint      callback_action)
+
+static void
+menus_debug_recurse_menu (GtkWidget *menu,
+			  gint       depth,
+			  gchar     *path)
 {
-  /* ugly, but ANSI C compliant */
+  GtkItemFactoryItem  *item;
+  GtkItemFactoryClass *class;
+  GtkWidget           *menu_item;
+  GList   *list;
+  gchar   *label;
+  gchar   *help_page;
+  gchar   *full_path;
+  gchar   *accel;
+  gchar   *format_str;
+
+  for (list = GTK_MENU_SHELL (menu)->children; list; list = g_list_next (list))
+    {
+      menu_item = GTK_WIDGET (list->data);
+      
+      if (GTK_IS_LABEL (GTK_BIN (menu_item)->child))
+	{
+	  gtk_label_get (GTK_LABEL (GTK_BIN (menu_item)->child), &label);
+	  help_page = (gchar *) gtk_object_get_data (GTK_OBJECT (menu_item), "help_page");
+	  
+	  full_path = g_strconcat (path, "/", label, NULL);
+	  class = gtk_type_class (GTK_TYPE_ITEM_FACTORY);
+	  item = g_hash_table_lookup (class->item_ht, full_path);
+	  if (item)
+	    accel = gtk_accelerator_name (item->accelerator_key, item->accelerator_mods);
+	  else
+	    accel = NULL;
+
+	  format_str = g_strdup_printf ("%%%ds%%%ds %%-20s %%s\n", depth * 2, depth * 2 - 40);
+	  g_print (format_str, "", label, accel ? accel : "", help_page ? help_page : "");
+	  g_free (format_str);
+
+	  if (GTK_MENU_ITEM (menu_item)->submenu)
+	    menus_debug_recurse_menu (GTK_MENU_ITEM (menu_item)->submenu, depth + 1, full_path);
+
+	  g_free (full_path);
+	}			      
+    }
+}
+
+static void
+menus_debug_cmd_callback (GtkWidget *widget,
+			  gpointer   callback_data,
+			  guint      callback_action)
+{
   gint n_factories = 7;
   GtkItemFactory *factories[7];
   GimpItemFactoryEntry *entries[7];
-  gint num_entries[7];
-  gchar *help_path;
-  gint i, j;
 
+  GtkWidget *menu_item;
+  gint   i;
 
   factories[0] = toolbox_factory;
   factories[1] = image_factory;
@@ -1942,32 +1984,23 @@ help_debug_cmd_callback (GtkWidget *widget,
   entries[4] = paths_entries;
   entries[5] = load_entries;
   entries[6] = save_entries;
+  
+  /*  toolbox needs special treatment  */
+  g_print ("%s\n", factories[0]->path);
 
-  num_entries[0] = n_toolbox_entries;  
-  num_entries[1] = n_image_entries;
-  num_entries[2] = n_layers_entries;
-  num_entries[3] = n_channels_entries;
-  num_entries[4] = n_paths_entries;
-  num_entries[5] = n_load_entries;
-  num_entries[6] = n_save_entries;
+  menu_item = gtk_item_factory_get_item (factories[0], "/File");
+  if (menu_item && menu_item->parent && GTK_IS_MENU_BAR (menu_item->parent))
+    menus_debug_recurse_menu (menu_item->parent, 1, factories[0]->path);
 
-  for (i = 0;  i < n_factories; i++)
+  g_print ("\n");
+
+  for (i = 1; i < n_factories; i++)
     {
-      help_path = gtk_object_get_data (GTK_OBJECT (factories[i]), "help_path");
+      g_print ("%s\n", factories[i]->path);
 
-      for (j = 0; j < num_entries[i]; j++)
-	{
-	  if (entries[i][j].help_page)
-	    g_print ("%s%s\t\t(%s/%s)\n",
-		     factories[i]->path,
-		     entries[i][j].entry.path,
-		     help_path,
-		     entries[i][j].help_page);
-	  else
-	    g_print ("%s%s\n",
-		     factories[i]->path,
-		     entries[i][j].entry.path);
-	}
+      menu_item = gtk_item_factory_get_item (factories[i], entries[i][0].entry.path);
+      if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
+	menus_debug_recurse_menu (menu_item->parent, 1, factories[i]->path);
 
       g_print ("\n");
     }

@@ -1,3 +1,9 @@
+2000-05-17  Sven Neumann  <sven@gimp.org>
+
+        * app/menus.c: rewrote the "Help/Dump Items" function. Now it
+	outputs the accelerator keys too. Unfortunately this does only
+	work with LANG=C yet.
+
 2000-05-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug_in.c: be a bit more verbose in the "Plug-In crashed"
