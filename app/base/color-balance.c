@@ -251,7 +251,9 @@ color_balance_control (Tool     *tool,
     case HALT :
       if (color_balance_dialog)
 	{
+	  active_tool->preserve = TRUE;
 	  image_map_abort (color_balance_dialog->image_map);
+	  active_tool->preserve = FALSE;
 	  color_balance_dialog->image_map = NULL;
 	  color_balance_cancel_callback (NULL, (gpointer) color_balance_dialog);
 	}
@@ -283,6 +285,7 @@ tools_new_color_balance ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = color_balance_cursor_update;
   tool->control_func = color_balance_control;
+  tool->preserve = FALSE;
 
   return tool;
 }
@@ -613,7 +616,9 @@ color_balance_preview (ColorBalanceDialog *cbd)
 {
   if (!cbd->image_map)
     g_warning ("No image map");
+  active_tool->preserve = TRUE;
   image_map_apply (cbd->image_map, color_balance, (void *) cbd);
+  active_tool->preserve = FALSE;
 }
 
 static void
@@ -626,12 +631,16 @@ color_balance_ok_callback (GtkWidget *widget,
 
   if (GTK_WIDGET_VISIBLE (cbd->shell))
     gtk_widget_hide (cbd->shell);
+  
+  active_tool->preserve = TRUE;
 
   if (!cbd->preview)
     image_map_apply (cbd->image_map, color_balance, (void *) cbd);
 
   if (cbd->image_map)
     image_map_commit (cbd->image_map);
+
+  active_tool->preserve = FALSE;
 
   cbd->image_map = NULL;
 }
@@ -658,7 +667,9 @@ color_balance_cancel_callback (GtkWidget *widget,
 
   if (cbd->image_map)
     {
+      active_tool->preserve = TRUE;
       image_map_abort (cbd->image_map);
+      active_tool->preserve = FALSE;
       gdisplays_flush ();
     }
 

@@ -110,6 +110,8 @@ struct _tool
   void *         gdisp_ptr;            /*  pointer to currently active gdisp  */
   int            ID;                   /*  unique tool ID  */
 
+  int            preserve;             /*  Perserve this tool through the current image changes */
+
   /*  Action functions  */
   ButtonPressFunc    button_press_func;
   ButtonReleaseFunc  button_release_func;

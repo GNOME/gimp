@@ -35,6 +35,7 @@
 #include "paint_funcs.h"
 #include "palette.h"
 #include "plug_in.h"
+#include "tools.h"
 #include "undo.h"
 
 #include "tile_manager_pvt.h"		/* ick. */
@@ -2623,10 +2624,18 @@ gimage_disable_undo (GImage *gimage)
 int
 gimage_dirty (GImage *gimage)
 {
+  GDisplay *gdisp;
+
   if (gimage->dirty < 0)
     gimage->dirty = 2;
   else
     gimage->dirty ++;
+  if (active_tool) {
+    gdisp = active_tool->gdisp_ptr;
+    if (gdisp) 
+      if ((gdisp->gimage == gimage) && (!active_tool->preserve))
+	tools_select (active_tool->type);
+  }
   return gimage->dirty;
 }
 

@@ -139,6 +139,7 @@ tools_new_bezier_select ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = bezier_select_control;
+  tool->preserve = TRUE;
 
   return tool;
 }
@@ -246,9 +247,10 @@ bezier_select_button_press (Tool           *tool,
   grab_pointer = 0;
 
   /*  If the tool was being used in another image...reset it  */
-  if (tool->state == ACTIVE && gdisp_ptr != tool->gdisp_ptr)
+  if (tool->state == ACTIVE && gdisp_ptr != tool->gdisp_ptr) {
+    printf("Reset!\n");
     bezier_select_reset (bezier_sel);
-
+  }
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);
 
   /* get halfwidth in image coord */

@@ -217,7 +217,9 @@ brightness_contrast_control (Tool     *tool,
     case HALT :
       if (brightness_contrast_dialog)
 	{
+	  active_tool->preserve = TRUE;
 	  image_map_abort (brightness_contrast_dialog->image_map);
+	  active_tool->preserve = TRUE;
 	  brightness_contrast_dialog->image_map = NULL;
 	  brightness_contrast_cancel_callback (NULL, (gpointer) brightness_contrast_dialog);
 	}
@@ -250,6 +252,7 @@ tools_new_brightness_contrast ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = brightness_contrast_cursor_update;
   tool->control_func = brightness_contrast_control;
+  tool->preserve = FALSE;
 
   return tool;
 }
@@ -475,7 +478,9 @@ brightness_contrast_preview (BrightnessContrastDialog *bcd)
 {
   if (!bcd->image_map)
     g_warning ("No image map");
+  active_tool->preserve = TRUE;
   image_map_apply (bcd->image_map, brightness_contrast, (void *) bcd);
+  active_tool->preserve = FALSE;
 }
 
 static void
@@ -489,11 +494,15 @@ brightness_contrast_ok_callback (GtkWidget *widget,
   if (GTK_WIDGET_VISIBLE (bcd->shell))
     gtk_widget_hide (bcd->shell);
 
+  active_tool->preserve = TRUE;
+
   if (!bcd->preview)
     image_map_apply (bcd->image_map, brightness_contrast, (void *) bcd);
 
   if (bcd->image_map)
     image_map_commit (bcd->image_map);
+
+  active_tool->preserve = FALSE;
 
   bcd->image_map = NULL;
 }
@@ -520,7 +529,9 @@ brightness_contrast_cancel_callback (GtkWidget *widget,
 
   if (bcd->image_map)
     {
+      active_tool->preserve = TRUE;
       image_map_abort (bcd->image_map);
+      active_tool->preserve = FALSE;
       gdisplays_flush ();
     }
 

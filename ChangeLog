@@ -1,3 +1,38 @@
+Tue Mar 31 02:21:15 EST 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/gimage.c
+	* app/tools.c
+	* app/tools.h: Added a field in the Tools struct, preserve.
+	During gimage_dirty, if this flag is not set the tool will be
+	reset.  This is good for tools that keep a copy of the image
+	in cache for local manipulation like transform_core.
+
+	* app/bezier_select.c
+	* app/blend.c
+	* app/brightness_contrast.c
+	* app/bucket_fill.c
+	* app/color_balance.c
+	* app/color_picker.c
+	* app/crop.c
+	* app/curves.c
+	* app/ellipse_select.c
+	* app/free_select.c
+	* app/histogram_tool.c
+	* app/hue_saturation.c
+	* app/levels.c
+	* app/move.c
+	* app/paint_core.c
+	* app/posterize.c
+	* app/rect_select.c
+	* app/text_tool.c
+	* app/transform_core.c: Set the preserve flag to the correct
+	values in the new functions and wrapped calls to functions that
+	dirty the gimage to prevent tool restarts.
+
+	* app/disp_callbacks.c
+	* app/menus.c: Removed Nether's tool patch.
+
+	
 Mon Mar 30 21:58:34 PST 1998 Manish Singh <yosh@gimp.org>
 
         * app/brush_select.c

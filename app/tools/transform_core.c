@@ -221,6 +221,12 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
   /*  if the 3rd button isn't pressed, transform the selected mask  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
+      /*  We're going to dirty this image, but we want to keep the tool
+	  around
+      */
+
+      tool->preserve = TRUE;
+
       /*  Start a transform undo group  */
       undo_push_group_start (gdisp->gimage, TRANSFORM_CORE_UNDO);
 
@@ -232,7 +238,7 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
        *  the transform tool's private selection pointer, so that the
        *  original source can be repeatedly modified.
        */
-      if (first_transform)
+      if (first_transform) 
 	transform_core->original = transform_core_cut (gdisp->gimage,
 						       gimage_active_drawable (gdisp->gimage),
 						       &new_layer);
@@ -265,6 +271,12 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
 
       /*  push the undo group end  */
       undo_push_group_end (gdisp->gimage);
+
+      /*  We're done dirtying the image, and would like to be restarted
+	  if the image gets dirty while the tool exists
+      */
+      
+      tool->preserve = FALSE;
 
       /*  Flush the gdisplays  */
       if (gdisp->disp_xoffset || gdisp->disp_yoffset)
@@ -507,6 +519,8 @@ transform_core_new (type, interactive)
   tool->auto_snap_to = TRUE;
   tool->gdisp_ptr = NULL;
   tool->private = (void *) private;
+
+  tool->preserve = FALSE;   /*  Destroy when the image is dirtied. */
 
   tool->button_press_func = transform_core_button_press;
   tool->button_release_func = transform_core_button_release;

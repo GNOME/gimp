@@ -406,8 +406,6 @@ tools_options_dialog_show ()
      cases.  if the user tries to bring up the options before
      switching tools, the dialog will be empty.  recreate the active
      tool here if necessary to avoid this behavior */
-  if (!active_tool)
-    active_tool_control (RECREATE, gdisplay_active());
 
   if (!GTK_WIDGET_VISIBLE(options_shell)) 
     {
@@ -505,17 +503,11 @@ active_tool_control (int   action,
 	      active_tool->state = INACTIVE;
 	      (* active_tool->control_func) (active_tool, action, gdisp_ptr);
 	      break;
-	    case DESTROY :
-	      active_tool_free();
-              gtk_widget_hide (options_shell);
-	      break;
 	    }
 	}
       else if (action == HALT)
 	active_tool->state = INACTIVE;
     }
-  if (action == RECREATE && active_tool_type >= 0)
-    tools_select (active_tool_type);
 }
 
 

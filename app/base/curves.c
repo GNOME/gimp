@@ -252,7 +252,9 @@ curves_control (Tool     *tool,
     case HALT :
       if (curves_dialog)
 	{
+	  active_tool->preserve = TRUE;
 	  image_map_abort (curves_dialog->image_map);
+	  active_tool->preserve = FALSE;
 	  curves_dialog->image_map = NULL;
 	  curves_cancel_callback (NULL, (gpointer) curves_dialog);
 	}
@@ -284,6 +286,7 @@ tools_new_curves ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = curves_cursor_update;
   tool->control_func = curves_control;
+  tool->preserve = TRUE;
 
   return tool;
 }
@@ -400,7 +403,9 @@ curves_free ()
     {
       if (curves_dialog->image_map)
 	{
+	  active_tool->preserve = TRUE;
 	  image_map_abort (curves_dialog->image_map);
+	  active_tool->preserve = FALSE;
 	  curves_dialog->image_map = NULL;
 	}
       if (curves_dialog->pixmap)
@@ -804,7 +809,12 @@ curves_preview (CurvesDialog *cd)
 {
   if (!cd->image_map)
     g_warning ("No image map");
+
+  active_tool->preserve = TRUE;  /* Going to dirty the display... */
+
   image_map_apply (cd->image_map, curves, (void *) cd);
+
+  active_tool->preserve = FALSE;  /* All done */
 }
 
 static void
@@ -966,11 +976,15 @@ curves_ok_callback (GtkWidget *widget,
   if (GTK_WIDGET_VISIBLE (cd->shell))
     gtk_widget_hide (cd->shell);
 
+  active_tool->preserve = TRUE;  /* We're about to dirty... */
+
   if (!cd->preview)
     image_map_apply (cd->image_map, curves, (void *) cd);
 
   if (cd->image_map)
     image_map_commit (cd->image_map);
+
+  active_tool->preserve = FALSE;
 
   cd->image_map = NULL;
 }
@@ -987,7 +1001,9 @@ curves_cancel_callback (GtkWidget *widget,
 
   if (cd->image_map)
     {
+      active_tool->preserve = TRUE;
       image_map_abort (cd->image_map);
+      active_tool->preserve = FALSE;
       gdisplays_flush ();
     }
 
@@ -1010,7 +1026,7 @@ curves_preview_update (GtkWidget *w,
   CurvesDialog *cd;
 
   cd = (CurvesDialog *) data;
-
+  
   if (GTK_TOGGLE_BUTTON (w)->active)
     {
       cd->preview = TRUE;

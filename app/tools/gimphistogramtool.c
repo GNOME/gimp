@@ -356,6 +356,7 @@ tools_new_histogram_tool ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = histogram_tool_cursor_update;
   tool->control_func = histogram_tool_control;
+  tool->preserve = FALSE;
 
   return tool;
 }

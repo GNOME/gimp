@@ -1657,6 +1657,7 @@ tools_new_blend ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = blend_cursor_update;
   tool->control_func = blend_control;
+  tool->preserve = TRUE;
 
   return tool;
 }

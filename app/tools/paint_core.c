@@ -336,6 +336,7 @@ paint_core_new (type)
   tool->auto_snap_to = TRUE;
   tool->gdisp_ptr = NULL;
   tool->private = (void *) private;
+  tool->preserve = TRUE;
 
   tool->button_press_func = paint_core_button_press;
   tool->button_release_func = paint_core_button_release;

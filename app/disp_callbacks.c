@@ -138,8 +138,6 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	{
 	case 1:
 	  gtk_grab_add (canvas);
-	  if (!active_tool)
-	    active_tool_control (RECREATE, gdisp);
 	  if (active_tool && ((active_tool->type == MOVE) ||
 			      !gimage_is_empty (gdisp->gimage)))
 	      {
@@ -148,12 +146,6 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		    gdisplay_snap_point (gdisp, bevent->x, bevent->y, &tx, &ty);
 		    bevent->x = tx;
 		    bevent->y = ty;
-		  }
-
-		if (gimage_get_active_layer (gdisp->gimage) != active_tool_layer)
-		  {
-		    active_tool_control (RECREATE, gdisp);
-		    active_tool_layer = gimage_get_active_layer (gdisp->gimage);
 		  }
 		(* active_tool->button_press_func) (active_tool, bevent, gdisp);
 	      }
@@ -344,9 +336,6 @@ gdisplay_hruler_button_press (GtkWidget      *widget,
     {
       gdisp = data;
 
-      if (!active_tool)
-	active_tool_control (RECREATE, gdisp);
-
       gtk_widget_activate (tool_widgets[tool_info[(int) MOVE].toolbar_position]);
       move_tool_start_hguide (active_tool, gdisp);
       gtk_grab_add (gdisp->canvas);
@@ -365,9 +354,6 @@ gdisplay_vruler_button_press (GtkWidget      *widget,
   if (event->button == 1)
     {
       gdisp = data;
-
-      if (!active_tool)
-	active_tool_control (RECREATE, gdisp);
 
       gtk_widget_activate (tool_widgets[tool_info[(int) MOVE].toolbar_position]);
       move_tool_start_vguide (active_tool, gdisp);

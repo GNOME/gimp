@@ -434,6 +434,7 @@ tools_new_move_tool ()
   tool->arrow_keys_func = edit_sel_arrow_keys_func;
   tool->cursor_update_func = move_tool_cursor_update;
   tool->control_func = move_tool_control;
+  tool->preserve = TRUE;
 
   private->layer = NULL;
   private->guide = NULL;

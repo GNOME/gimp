@@ -524,6 +524,7 @@ tools_new_crop ()
   tool->arrow_keys_func = crop_arrow_keys_func;
   tool->cursor_update_func = crop_cursor_update;
   tool->control_func = crop_control;
+  tool->preserve = TRUE;  /* XXX Check me */
 
   return tool;
 }

@@ -295,7 +295,9 @@ hue_saturation_control (Tool     *tool,
     case HALT :
       if (hue_saturation_dialog)
 	{
+	  active_tool->preserve = TRUE;
 	  image_map_abort (hue_saturation_dialog->image_map);
+	  active_tool->preserve = FALSE;
 	  hue_saturation_dialog->image_map = NULL;
 	  hue_saturation_cancel_callback (NULL, (gpointer) hue_saturation_dialog);
 	}
@@ -327,6 +329,7 @@ tools_new_hue_saturation ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = hue_saturation_cursor_update;
   tool->control_func = hue_saturation_control;
+  tool->preserve = FALSE;
 
   return tool;
 }
@@ -385,7 +388,9 @@ hue_saturation_free ()
     {
       if (hue_saturation_dialog->image_map)
 	{
+	  active_tool->preserve = TRUE;
 	  image_map_abort (hue_saturation_dialog->image_map);
+	  active_tool->preserve = FALSE;
 	  hue_saturation_dialog->image_map = NULL;
 	}
       gtk_widget_destroy (hue_saturation_dialog->shell);
@@ -724,7 +729,9 @@ hue_saturation_preview (HueSaturationDialog *hsd)
 {
   if (!hsd->image_map)
     g_warning ("No image map");
+  active_tool->preserve = TRUE;
   image_map_apply (hsd->image_map, hue_saturation, (void *) hsd);
+  active_tool->preserve = FALSE;
 }
 
 static void
@@ -738,11 +745,15 @@ hue_saturation_ok_callback (GtkWidget *widget,
   if (GTK_WIDGET_VISIBLE (hsd->shell))
     gtk_widget_hide (hsd->shell);
 
+  active_tool->preserve = TRUE;
+
   if (!hsd->preview)
     image_map_apply (hsd->image_map, hue_saturation, (void *) hsd);
 
   if (hsd->image_map)
     image_map_commit (hsd->image_map);
+
+  active_tool->preserve = FALSE;
 
   hsd->image_map = NULL;
 }
@@ -769,7 +780,9 @@ hue_saturation_cancel_callback (GtkWidget *widget,
 
   if (hsd->image_map)
     {
+      active_tool->preserve = TRUE;
       image_map_abort (hsd->image_map);
+      active_tool->preserve = FALSE;
       gdisplays_flush ();
     }
 

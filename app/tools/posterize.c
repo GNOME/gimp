@@ -176,7 +176,9 @@ posterize_control (Tool     *tool,
     case HALT :
       if (posterize_dialog)
 	{
+	  active_tool->preserve = TRUE;
 	  image_map_abort (posterize_dialog->image_map);
+	  active_tool->preserve = FALSE;
 	  posterize_dialog->image_map = NULL;
 	  posterize_cancel_callback (NULL, (gpointer) posterize_dialog);
 	}
@@ -215,6 +217,7 @@ tools_new_posterize ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = posterize_cursor_update;
   tool->control_func = posterize_control;
+  tool->preserve = FALSE;
 
   return tool;
 }
@@ -348,7 +351,9 @@ posterize_preview (PosterizeDialog *pd)
 {
   if (!pd->image_map)
     g_warning ("No image map");
+  active_tool->preserve = TRUE;
   image_map_apply (pd->image_map, posterize, (void *) pd);
+  active_tool->preserve = FALSE;
 }
 
 static void
@@ -362,11 +367,15 @@ posterize_ok_callback (GtkWidget *widget,
   if (GTK_WIDGET_VISIBLE (pd->shell))
     gtk_widget_hide (pd->shell);
 
+  active_tool->preserve = TRUE;
+
   if (!pd->preview)
     image_map_apply (pd->image_map, posterize, (void *) pd);
 
   if (pd->image_map)
     image_map_commit (pd->image_map);
+
+  active_tool->preserve = FALSE;
 
   pd->image_map = NULL;
 }
@@ -391,7 +400,9 @@ posterize_cancel_callback (GtkWidget *widget,
 
   if (pd->image_map)
     {
+      active_tool->preserve = TRUE;
       image_map_abort (pd->image_map);
+      active_tool->preserve = FALSE;
       gdisplays_flush ();
     }
 

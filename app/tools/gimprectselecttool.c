@@ -531,6 +531,7 @@ tools_new_rect_select ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = rect_select_control;
+  tool->preserve = TRUE;
 
   return tool;
 }

@@ -346,7 +346,9 @@ levels_control (Tool     *tool,
     case HALT :
       if (levels_dialog)
 	{
+	  active_tool->preserve = TRUE;
 	  image_map_abort (levels_dialog->image_map);
+	  active_tool->preserve = FALSE;
 	  levels_dialog->image_map = NULL;
 	  levels_cancel_callback (NULL, (gpointer) levels_dialog);
 	}
@@ -378,6 +380,7 @@ tools_new_levels ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = levels_cursor_update;
   tool->control_func = levels_control;
+  tool->preserve = FALSE;
 
   return tool;
 }
@@ -477,7 +480,9 @@ levels_free ()
     {
       if (levels_dialog->image_map)
 	{
+	  active_tool->preserve = TRUE;
 	  image_map_abort (levels_dialog->image_map);
+	  active_tool->preserve = FALSE;
 	  levels_dialog->image_map = NULL;
 	}
       gtk_widget_destroy (levels_dialog->shell);
@@ -895,7 +900,9 @@ levels_preview (LevelsDialog *ld)
 {
   if (!ld->image_map)
     g_warning ("No image map");
+  active_tool->preserve = TRUE;
   image_map_apply (ld->image_map, levels, (void *) ld);
+  active_tool->preserve = FALSE;
 }
 
 static void
@@ -1074,11 +1081,15 @@ levels_ok_callback (GtkWidget *widget,
   if (GTK_WIDGET_VISIBLE (ld->shell))
     gtk_widget_hide (ld->shell);
 
+  active_tool->preserve = TRUE;
+
   if (!ld->preview)
     image_map_apply (ld->image_map, levels, (void *) ld);
 
   if (ld->image_map)
     image_map_commit (ld->image_map);
+
+  active_tool->preserve = FALSE;
 
   ld->image_map = NULL;
 }
@@ -1105,7 +1116,9 @@ levels_cancel_callback (GtkWidget *widget,
 
   if (ld->image_map)
     {
+      active_tool->preserve = TRUE;
       image_map_abort (ld->image_map);
+      active_tool->preserve = TRUE;
       gdisplays_flush ();
     }
 
