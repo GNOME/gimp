@@ -6,7 +6,12 @@
 
 	* devel-docs/ggr.txt: added new file decribing the ggr 
 	(Gimp gradient) file format.
-	
+
+2004-08-25  DindinX  <david@dindinx.org>
+
+	* app/display/gimpnavigationeditor.[ch]: eradicate some more previews
+	in favor of views.
+
 2004-08-25  DindinX  <david@dindinx.org>
 
 	* app/display/gimpnavigationview.c

@@ -46,7 +46,7 @@ struct _GimpNavigationEditor
   GimpContext      *context;
   GimpDisplayShell *shell;
 
-  GtkWidget        *preview;
+  GtkWidget        *view;
   GtkWidget        *zoom_label;
   GtkAdjustment    *zoom_adjustment;
 

@@ -170,19 +170,19 @@ gimp_navigation_editor_init (GimpNavigationEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  editor->preview = gimp_view_new_by_types (GIMP_TYPE_NAVIGATION_PREVIEW,
-                                            GIMP_TYPE_IMAGE,
-                                            GIMP_PREVIEW_SIZE_MEDIUM, 0, TRUE);
-  gtk_container_add (GTK_CONTAINER (frame), editor->preview);
-  gtk_widget_show (editor->preview);
+  editor->view = gimp_view_new_by_types (GIMP_TYPE_NAVIGATION_PREVIEW,
+                                         GIMP_TYPE_IMAGE,
+                                         GIMP_PREVIEW_SIZE_MEDIUM, 0, TRUE);
+  gtk_container_add (GTK_CONTAINER (frame), editor->view);
+  gtk_widget_show (editor->view);
 
-  g_signal_connect (editor->preview, "marker_changed",
+  g_signal_connect (editor->view, "marker_changed",
                     G_CALLBACK (gimp_navigation_editor_marker_changed),
                     editor);
-  g_signal_connect (editor->preview, "zoom",
+  g_signal_connect (editor->view, "zoom",
                     G_CALLBACK (gimp_navigation_editor_zoom),
                     editor);
-  g_signal_connect (editor->preview, "scroll",
+  g_signal_connect (editor->view, "scroll",
                     G_CALLBACK (gimp_navigation_editor_scroll),
                     editor);
 
@@ -292,7 +292,7 @@ gimp_navigation_editor_set_shell (GimpNavigationEditor *editor,
 
   if (editor->shell)
     {
-      gimp_view_set_viewable (GIMP_VIEW (editor->preview),
+      gimp_view_set_viewable (GIMP_VIEW (editor->view),
                               GIMP_VIEWABLE (shell->gdisp->gimage));
 
       g_signal_connect (editor->shell, "scaled",
@@ -309,7 +309,7 @@ gimp_navigation_editor_set_shell (GimpNavigationEditor *editor,
     }
   else
     {
-      gimp_view_set_viewable (GIMP_VIEW (editor->preview), NULL);
+      gimp_view_set_viewable (GIMP_VIEW (editor->view), NULL);
       gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
     }
 }
@@ -350,7 +350,7 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
       gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (editor));
       gtk_widget_show (GTK_WIDGET (editor));
 
-      g_signal_connect (editor->preview, "button_release_event",
+      g_signal_connect (editor->view, "button_release_event",
                         G_CALLBACK (gimp_navigation_editor_button_release),
                         shell);
     }
@@ -363,7 +363,7 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
 
   gtk_window_set_screen (GTK_WINDOW (shell->nav_popup), screen);
 
-  preview = GIMP_NAVIGATION_PREVIEW (editor->preview);
+  preview = GIMP_NAVIGATION_PREVIEW (editor->view);
 
   /* decide where to put the popup */
   gdk_window_get_origin (widget->window, &x_org, &y_org);
@@ -429,20 +429,20 @@ gimp_navigation_editor_new_private (GimpDisplayShell  *shell,
 
   if (popup)
     {
-      GimpView *preview = GIMP_VIEW (editor->preview);
+      GimpView *view = GIMP_VIEW (editor->view);
 
-      gimp_preview_renderer_set_size (preview->renderer,
+      gimp_preview_renderer_set_size (view->renderer,
                                       config->nav_preview_size * 3,
-                                      preview->renderer->border_width);
+                                      view->renderer->border_width);
     }
   else
     {
       GtkWidget *hscale;
 
-      gtk_widget_set_size_request (editor->preview,
+      gtk_widget_set_size_request (editor->view,
                                    GIMP_PREVIEW_SIZE_HUGE,
                                    GIMP_PREVIEW_SIZE_HUGE);
-      gimp_view_set_expand (GIMP_VIEW (editor->preview), TRUE);
+      gimp_view_set_expand (GIMP_VIEW (editor->view), TRUE);
 
       /* the editor buttons */
 
@@ -530,7 +530,7 @@ gimp_navigation_editor_new_private (GimpDisplayShell  *shell,
   if (shell)
     gimp_navigation_editor_set_shell (editor, shell);
 
-  gimp_preview_renderer_set_background (GIMP_VIEW (editor->preview)->renderer,
+  gimp_preview_renderer_set_background (GIMP_VIEW (editor->view)->renderer,
                                         GIMP_STOCK_TEXTURE);
 
   return GTK_WIDGET (editor);
@@ -734,7 +734,7 @@ static void
 gimp_navigation_editor_shell_reconnect (GimpDisplayShell     *shell,
                                         GimpNavigationEditor *editor)
 {
-  gimp_view_set_viewable (GIMP_VIEW (editor->preview),
+  gimp_view_set_viewable (GIMP_VIEW (editor->view),
                           GIMP_VIEWABLE (shell->gdisp->gimage));
 }
 
@@ -745,7 +745,7 @@ gimp_navigation_editor_update_marker (GimpNavigationEditor *editor)
   gdouble              xratio;
   gdouble              yratio;
 
-  renderer = GIMP_VIEW (editor->preview)->renderer;
+  renderer = GIMP_VIEW (editor->view)->renderer;
 
   xratio = SCALEFACTOR_X (editor->shell);
   yratio = SCALEFACTOR_Y (editor->shell);
@@ -754,7 +754,7 @@ gimp_navigation_editor_update_marker (GimpNavigationEditor *editor)
     gimp_preview_renderer_set_dot_for_dot (renderer,
                                            editor->shell->dot_for_dot);
 
-  gimp_navigation_preview_set_marker (GIMP_NAVIGATION_PREVIEW (editor->preview),
+  gimp_navigation_preview_set_marker (GIMP_NAVIGATION_PREVIEW (editor->view),
                                       editor->shell->offset_x    / xratio,
                                       editor->shell->offset_y    / yratio,
                                       editor->shell->disp_width  / xratio,
