@@ -1227,8 +1227,8 @@ typedef struct _ResizeLayerOptions ResizeLayerOptions;
 
 struct _ResizeLayerOptions
 {
-  GimpLayer *layer;
-  Resize    *dialog;
+  GimpLayer    *layer;
+  ResizeDialog *dialog;
 };
 
 static void

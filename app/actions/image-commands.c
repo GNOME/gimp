@@ -471,7 +471,7 @@ image_resize_callback (GtkWidget *widget,
 		   "greater than zero."));
     }
 
-  gtk_widget_destroy (image_resize->dialog->dialog_shell);
+  gtk_widget_destroy (image_resize->dialog->shell);
 }
 
 static void
