@@ -140,6 +140,7 @@ COMMON = 			\
 	tga			\
 	threshold_alpha		\
 	tiff			\
+	tiff_nolzw		\
 	tile			\
 	tileit			\
 	tiler			\
@@ -642,7 +643,14 @@ endif
 
 ifdef EXTRA_tiff
 EXTRACFLAGS = $(TIFF_CFLAGS)
-EXTRALIBS = $(TIFF_LIBS)
+EXTRALIBS = $(TIFF_LZW_LIBS)
+endif
+
+ifdef EXTRA_tiff_nolzw
+OBJECTS = \
+	tiff.o
+EXTRACFLAGS = $(TIFF_CFLAGS)
+EXTRALIBS = $(TIFF_NOLZW_LIBS)
 endif
 
 ifdef EXTRA_gimp_ace

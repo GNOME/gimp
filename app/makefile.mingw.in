@@ -248,11 +248,11 @@ gimp.def: gimp.sym
 
 gimp.exe : ../config.h $(gimp_OBJECTS) libgimpim.a gimp.def gimpres.o
 # This is sickening.
-	$(CC) $(CFLAGS) -Wl,--base-file,gimp.base -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L  ../libgimp -lgimpi $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS) gimpres.o -lgdi32 -luser32 -lshell32
+	$(CC) $(CFLAGS) -mwindows -Wl,--base-file,gimp.base -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L  ../libgimp -lgimpi $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS) gimpres.o -lgdi32 -luser32 -lshell32
 	$(DLLTOOL) --base-file gimp.base --input-def gimp.def --output-exp gimp.exp
-	$(CC) $(CFLAGS) -Wl,--base-file,gimp.base,gimp.exp -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L ../libgimp -lgimpi $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS) gimpres.o -lgdi32 -luser32 -lshell32
+	$(CC) $(CFLAGS) -mwindows -Wl,--base-file,gimp.base,gimp.exp -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L ../libgimp -lgimpi $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS) gimpres.o -lgdi32 -luser32 -lshell32
 	$(DLLTOOL) --base-file gimp.base --input-def gimp.def --output-exp gimp.exp
-	$(CC) $(CFLAGS) -Wl,gimp.exp -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L ../libgimp -lgimpi $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS) gimpres.o -lgdi32 -luser32 -lshell32
+	$(CC) $(CFLAGS) -mwindows -Wl,gimp.exp -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L ../libgimp -lgimpi $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS) gimpres.o -lgdi32 -luser32 -lshell32
 	$(DLLTOOL) --dllname gimp.exe gimp.def --output-lib libgimp.a $(gimp_OBJECTS)
 
 # Hack to get an updated makefile.mingw automatically after updating

@@ -1,3 +1,13 @@
+2000-12-29  Tor Lillqvist  <tml@iki.fi>
+
+	* app/makefile.mingw.in: Build as a windowing application (-mwindows).
+
+	* app/gimp.sym: Remove the color display functions that are gone.
+
+	* plug-ins/makefile.mingw.in: Build two versions of the tiff
+	plug-in: tiff (with TIFF_LZW_LIBS), and tiff_nolzw (with
+	TIFF_NOLZW_LIBS).
+
 2000-12-28  Sven Neumann  <sven@gimp.org>
 
 	* app/channel.c
