@@ -432,7 +432,13 @@ CODE
 
 	my $proto = "$hrettype $wrapped$funcname ($arglist);\n";
 	$proto =~ s/ +/ /g;
+	if ($proc->{deprecated}) {
+	    push @{$out->{protos}}, "#ifndef GIMP_DISABLE_DEPRECATED\n";
+	}
         push @{$out->{protos}}, $proto;
+	if ($proc->{deprecated}) {
+	    push @{$out->{protos}}, "#endif /* GIMP_DISABLE_DEPRECATED */\n";
+	}
 
 	my $clist = $arglist;
 	my $padlen = length($wrapped) + length($funcname) + 2;
@@ -535,19 +541,28 @@ LGPL
 
 	my @longest = (0, 0, 0); my @arglist = (); my $seen = 0;
 	foreach (@{$out->{protos}}) {
-	    my $len; my $arglist = [ split(' ', $_, 3) ];
+	    my $arglist;
 
-	    for (0..1) {
-		$len = length($arglist->[$_]);
-		$longest[$_] = $len if $longest[$_] < $len;
+	    if (!/^#/) {
+		my $len;
+
+		$arglist = [ split(' ', $_, 3) ];
+
+		for (0..1) {
+		    $len = length($arglist->[$_]);
+		    $longest[$_] = $len if $longest[$_] < $len;
+		}
+
+		foreach (split(/,/, $arglist->[2])) {
+		    next unless /(const \w+) \S+/ || /(\w+) \S+/;
+		    $len = length($1) + 1;
+		    my $num = scalar @{[ /\*/g ]};
+		    $seen = $num if $seen < $num;
+		    $longest[2] = $len if $longest[2] < $len;
+		}
 	    }
-
-	    foreach (split(/,/, $arglist->[2])) {
-		next unless /(const \w+) \S+/ || /(\w+) \S+/;
-		$len = length($1) + 1;
-		my $num = scalar @{[ /\*/g ]};
-		$seen = $num if $seen < $num;
-		$longest[2] = $len if $longest[2] < $len;
+	    else {
+		$arglist = $_;
 	    }
 
 	    push @arglist, $arglist;
@@ -557,23 +572,38 @@ LGPL
 
 	@{$out->{protos}} = ();
 	foreach (@arglist) {
-	    my ($type, $func, $arglist) = @$_;
+	    my $arg;
 
-	    my @args = split(/,/, $arglist); $arglist = "";
-	    foreach (@args) {
-		$space = rindex($_, ' ');
-		my $len = $longest[2] - $space + 1;
-		$len -= scalar @{[ /\*/g ]};
-		$len++ if /\t/;
-		substr($_, $space, 1) = ' ' x $len if $space != -1 && $len > 1;
-		$arglist .= $_;
-		$arglist .= "," if !/;\n$/;
+	    if (ref) {
+		my ($type, $func, $arglist) = @$_;
+
+		my @args = split(/,/, $arglist); $arglist = "";
+
+		foreach (@args) {
+		    $space = rindex($_, ' ');
+		    my $len = $longest[2] - $space + 1;
+
+		    $len -= scalar @{[ /\*/g ]};
+		    $len++ if /\t/;
+
+		    if ($space != -1 && $len > 1) {
+			substr($_, $space, 1) = ' ' x $len;
+		    }
+
+		    $arglist .= $_;
+		    $arglist .= "," if !/;\n$/;
+		}
+
+		$arg = $type;
+		$arg .= ' ' x ($longest[0] - length($type) + 1) . $func;
+		$arg .= ' ' x ($longest[1] - length($func) + 1) . $arglist;
+		$arg =~ s/\t/' ' x ($longest[0] + $longest[1] + 3)/eg;
+
+		while ($arg =~ /^\t* {8}/m) { $arg =~ s/^(\t*) {8}/$1\t/mg }
 	    }
-	    my $arg = $type;
-	    $arg .= ' ' x ($longest[0] - length($type) + 1) . $func;
-	    $arg .= ' ' x ($longest[1] - length($func) + 1) . $arglist;
-	    $arg =~ s/\t/' ' x ($longest[0] + $longest[1] + 3)/eg;
-	    while ($arg =~ /^\t* {8}/m) { $arg =~ s/^(\t*) {8}/$1\t/mg }
+	    else {
+		$arg = $_;
+	    }
 	    push @{$out->{protos}}, $arg;
 	}
 

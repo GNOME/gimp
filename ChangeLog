@@ -1,3 +1,10 @@
+2004-06-15  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/pdbgen.pl
+	* tools/pdbgen/lib.pl: some simplistic code to add a $deprecated
+	flag to pdb definitions, which translates into GIMP_DISABLE_DEPRECATED
+	guards in lib headers.
+
 2004-06-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/Makefile.am
