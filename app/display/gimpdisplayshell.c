@@ -744,12 +744,14 @@ create_display_shell (GDisplay* gdisp,
   gtk_widget_show (arrow);
   gtk_widget_show (gdisp->hsb);
   gtk_widget_show (gdisp->vsb);
+
   if (show_rulers)
     {
       gtk_widget_show (gdisp->origin);
       gtk_widget_show (gdisp->hrule);
       gtk_widget_show (gdisp->vrule);
     }
+
   gtk_widget_show (gdisp->canvas);
   gtk_widget_show (frame);
   gtk_widget_show (gdisp->cursor_label);
