@@ -1,3 +1,8 @@
+2000-11-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpwidgets.c (gimp_int_adjustment_update): use rint(). 
+	The old behaviour was broken for neagtive values.
+
 2000-11-27  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/print/README

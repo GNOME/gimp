@@ -1007,7 +1007,7 @@ gimp_mem_size_entry_new (GtkAdjustment *adjustment)
 
   for (i = 0; i < 3; i++)
     {
-      if ( (gint)adjustment->value % (mem_size_unit * 1024) != 0 )
+      if ( (gint) adjustment->value % (mem_size_unit * 1024) != 0 )
 	break;
       mem_size_unit *= 1024;
     }
@@ -1221,7 +1221,7 @@ gimp_menu_item_update (GtkWidget *widget,
  *        value.
  *
  * Note that the #GtkAdjustment's value (which is a #gfloat) will be rounded
- * with (#gint) (value + 0.5).
+ * with (#gint) rint (value).
  **/
 void
 gimp_int_adjustment_update (GtkAdjustment *adjustment,
@@ -1230,7 +1230,7 @@ gimp_int_adjustment_update (GtkAdjustment *adjustment,
   gint *val;
 
   val = (gint *) data;
-  *val = (gint) (adjustment->value + 0.5);
+  *val = (gint) rint (adjustment->value);
 }
 
 /**
