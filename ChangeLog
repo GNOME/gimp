@@ -1,5 +1,12 @@
 2002-11-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpcontext.c (gimp_context_set_default_colors,
+	gimp_context_swap_colors): g_return_if_fail() earlier to clarify
+	things (There was a bug in 1.2 which was fixed only accidentially
+	in HEAD).
+
+2002-11-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdnd.h: added GTK_TARGET_SAME_APP flag
 	to GIMP_TARGET_BUFFER.
 
