@@ -5,5 +5,5 @@ Makefile.in
 Makefile.in.in
 POTFILES
 cat-id-tbl.c
-gimp.pot
+gimp-std-plugins.pot
 stamp-cat-id

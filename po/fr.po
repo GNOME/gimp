@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
-"POT-Creation-Date: 1999-06-05 16:36+0200\n"
+"POT-Creation-Date: 1999-06-05 15:50-0700\n"
 "PO-Revision-Date: 1999-03-18 19:00+0100\n"
 "Last-Translator: David Monniaux <David.Monniaux@ens.fr>\n"
 "Language-Team: Vincent Renardias <vincent@ldsol.com>\n"
@@ -161,7 +161,9 @@ msgstr "Courbe endommagée"
 
 #: app/bezier_select.c:1011
 msgid "tried to edit on open bezier curve in edit selection"
-msgstr "tentative d'édition sur une courbe de Bézier ouverte dans la sélection d'édition"
+msgstr ""
+"tentative d'édition sur une courbe de Bézier ouverte dans la sélection "
+"d'édition"
 
 #: app/bezier_select.c:1291
 msgid "Encountered orphaned bezier control point"
@@ -2028,7 +2030,9 @@ msgstr "ed_do_rename_gradient_callback(): houla, NULL reçu dans call_data"
 
 #: app/gradient.c:1328
 msgid "ed_do_rename_gradient_callback(): oops, can't find gradient to rename"
-msgstr "ed_do_rename_gradient_callback(): houla impossible de trouver le dégradé a renommer"
+msgstr ""
+"ed_do_rename_gradient_callback(): houla impossible de trouver le dégradé a "
+"renommer"
 
 #: app/gradient.c:1362
 msgid "Enter a name for the copied gradient"
@@ -2078,7 +2082,9 @@ msgstr "Facteur de Zoom: %d:1    Affichage [%0.6f, %0.6f]"
 msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Opacity: %0.3f"
-msgstr "Position: %0.6f    RVB (%0.3f, %0.3f, %0.3f)    TSV (%0.3f, %0.3f, %0.3f)    Opacité: %0.3f"
+msgstr ""
+"Position: %0.6f    RVB (%0.3f, %0.3f, %0.3f)    TSV (%0.3f, %0.3f, %0.3f)    "
+"Opacité: %0.3f"
 
 #: app/gradient.c:1955
 #, c-format
@@ -2531,12 +2537,16 @@ msgstr "The GIMP n'est pas installé correctement pour l'utilisateur courant\n"
 msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
-msgstr "Installation personnelle non effectuée car le paramètre '--nointerface'a été détecté\n"
+msgstr ""
+"Installation personnelle non effectuée car le paramètre '--nointerface'a été "
+"détecté\n"
 
 #: app/install.c:87
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
-msgstr "Pour effectuer l'installation, lancer GIMP avec le paramètre '--nointerface'\n"
+msgstr ""
+"Pour effectuer l'installation, lancer GIMP avec le paramètre "
+"'--nointerface'\n"
 
 #: app/install.c:106
 msgid "Install"
@@ -2930,7 +2940,9 @@ msgstr ""
 msgid ""
 "\n"
 "Installation failed.  Contact system administrator.\n"
-msgstr "\nÉchec de l'installation. Contactez votre administrateur système.\n"
+msgstr ""
+"\n"
+"Échec de l'installation. Contactez votre administrateur système.\n"
 
 #: app/interface.c:268
 msgid ""
@@ -5073,6 +5085,27 @@ msgstr "Intervalle de seuil: "
 msgid "starting tile preswapper\n"
 msgstr "démarrage du prééchangeur de carreaux d'images\n"
 
+#: app/tile_swap.c:379
+msgid "unable to open swap file...BAD THINGS WILL HAPPEN SOON"
+msgstr ""
+"impossible d'ouvrir le fichier d'échange... DES TRUCS BIZARRES VONT BIENTOT "
+"ARRIVER"
+
+#: app/tile_swap.c:499 app/tile_swap.c:560
+#, c-format
+msgid "unable to seek to tile location on disk: %d"
+msgstr ""
+
+#: app/tile_swap.c:518
+#, fuzzy, c-format
+msgid "unable to read tile data from disk: %d/%d ( %d ) bytes read"
+msgstr "Lecture de données d'un fichier XCF impossible : %d (%d) octets lus."
+
+#: app/tile_swap.c:573
+#, fuzzy, c-format
+msgid "unable to write tile data to disk: %d ( %d ) bytes written"
+msgstr "Lecture de données d'un fichier XCF impossible : %d (%d) octets lus."
+
 #: app/tips_dialog.c:57
 msgid "gimp_tips.txt"
 msgstr "gimp_conseils.fr.txt"
@@ -5504,6 +5537,11 @@ msgstr "échec de l'ouverture de %s: %s\n"
 msgid "xcf: zlib compression unimplemented"
 msgstr "xcf: compression zlib non-implementée"
 
+#: app/xcf.c:1635
+#, fuzzy, c-format
+msgid "xcf: uh oh! xcf rle tile saving error: %d"
+msgstr "xcf: oh oh! erreur de sauvegarde en compr"
+
 #: app/xcf.c:1777
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
@@ -5548,9 +5586,18 @@ msgstr "propriété de calque inattendue/inconnue: %d (ignorée)"
 msgid "unexpected/unknown channel property: %d (skipping)"
 msgstr "propriété de canal inatendue/inconnue: %d (ignorée)"
 
+#: app/xcf.c:2455
+msgid "not enough tiles found in level"
+msgstr ""
+
 #: app/xcf.c:2496
 msgid "xcf: fractal compression unimplemented"
 msgstr "xcf: compression fractale non implémentée"
+
+#: app/xcf.c:2636
+#, c-format
+msgid "xcf: uh oh! xcf rle tile loading error: %d"
+msgstr "XCF: erreur de lecture de données com"
 
 #: app/xcf.c:2683
 #, c-format
@@ -5645,12 +5692,6 @@ msgstr ") ou \\) sans correspondance"
 msgid "No previous regular expression"
 msgstr "Aucune expression régulière antérieure"
 
-#~ msgid "xcf: uh oh! xcf rle tile loading error: %d"
-#~ msgstr "XCF: erreur de lecture de données com"
-
-#~ msgid "xcf: uh oh! xcf rle tile saving error: %d\n"
-#~ msgstr "xcf: oh oh! erreur de sauvegarde en compr"
-
 #~ msgid "Add Channel To Selection"
 #~ msgstr "Ajouter Canal à Sélection"
 
@@ -5665,11 +5706,6 @@ msgstr "Aucune expression régulière antérieure"
 
 #~ msgid "swap file not empty: \"%s\"\n"
 #~ msgstr "fichier d'échange non vide: \"%s\"\n"
-
-#~ msgid "unable to open swap file...BAD THINGS WILL HAPPEN SOON"
-#~ msgstr ""
-#~ "impossible d'ouvrir le fichier d'échange... DES TRUCS BIZARRES VONT BIENTOT "
-#~ "ARRIVER"
 
 #~ msgid "Resolution"
 #~ msgstr "Résolution"

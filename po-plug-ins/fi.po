@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 1999-05-26 14:31-0700\n"
+"POT-Creation-Date: 1999-06-05 14:12-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -215,6 +215,7 @@ msgstr ""
 #: plug-ins/CML_explorer/CML_explorer.c:388
 #: plug-ins/CML_explorer/CML_explorer.c:1431
 #: plug-ins/CML_explorer/CML_explorer.c:1755
+#: plug-ins/decompose/decompose.c:135
 msgid "Hue"
 msgstr ""
 
@@ -222,6 +223,7 @@ msgstr ""
 #: plug-ins/CML_explorer/CML_explorer.c:389
 #: plug-ins/CML_explorer/CML_explorer.c:1435
 #: plug-ins/CML_explorer/CML_explorer.c:1755
+#: plug-ins/decompose/decompose.c:136
 msgid "Saturation"
 msgstr ""
 
@@ -229,6 +231,7 @@ msgstr ""
 #: plug-ins/CML_explorer/CML_explorer.c:390
 #: plug-ins/CML_explorer/CML_explorer.c:1439
 #: plug-ins/CML_explorer/CML_explorer.c:1755
+#: plug-ins/decompose/decompose.c:137
 msgid "Value"
 msgstr ""
 
@@ -445,14 +448,15 @@ msgstr ""
 #: plug-ins/CML_explorer/CML_explorer.c:1820
 #: plug-ins/CML_explorer/CML_explorer.c:2681
 #: plug-ins/CML_explorer/CML_explorer.c:2777
-#: plug-ins/apply_lens/apply_lens.c:420 plug-ins/blur/blur.c:618
-#: plug-ins/bmp/bmpwrite.c:424 plug-ins/bumpmap/bumpmap.c:967
-#: plug-ins/checkerboard/checkerboard.c:381 plug-ins/compose/compose.c:627
-#: plug-ins/convmatrix/convmatrix.c:704 plug-ins/cubism/cubism.c:338
-#: plug-ins/depthmerge/depthmerge.c:746 plug-ins/destripe/destripe.c:693
-#: plug-ins/gif/gif.c:1263 plug-ins/jpeg/jpeg.c:1000 plug-ins/mail/mail.c:491
-#: plug-ins/oilify/oilify.c:460 plug-ins/png/png.c:1103
-#: plug-ins/print/print.c:1202 plug-ins/ps/ps.c:1998 plug-ins/ps/ps.c:2265
+#: plug-ins/apply_lens/apply_lens.c:420 plug-ins/blur/blur.c:619
+#: plug-ins/bmp/bmpwrite.c:428 plug-ins/bumpmap/bumpmap.c:970
+#: plug-ins/checkerboard/checkerboard.c:381 plug-ins/compose/compose.c:816
+#: plug-ins/convmatrix/convmatrix.c:706 plug-ins/cubism/cubism.c:338
+#: plug-ins/decompose/decompose.c:914 plug-ins/depthmerge/depthmerge.c:746
+#: plug-ins/destripe/destripe.c:695 plug-ins/gif/gif.c:1263
+#: plug-ins/jpeg/jpeg.c:1000 plug-ins/mail/mail.c:491
+#: plug-ins/oilify/oilify.c:460 plug-ins/png/png.c:1180
+#: plug-ins/print/print.c:1279 plug-ins/ps/ps.c:1998 plug-ins/ps/ps.c:2265
 #: plug-ins/xbm/xbm.c:959 plug-ins/xpm/xpm.c:763
 msgid "OK"
 msgstr ""
@@ -520,14 +524,15 @@ msgstr ""
 #. cancel button
 #: plug-ins/CML_explorer/CML_explorer.c:2690
 #: plug-ins/Lighting/lighting_ui.c:1062 plug-ins/apply_lens/apply_lens.c:430
-#: plug-ins/blur/blur.c:620 plug-ins/bmp/bmpwrite.c:433
-#: plug-ins/bumpmap/bumpmap.c:976 plug-ins/checkerboard/checkerboard.c:390
-#: plug-ins/colorify/colorify.c:319 plug-ins/compose/compose.c:636
-#: plug-ins/convmatrix/convmatrix.c:721 plug-ins/cubism/cubism.c:347
-#: plug-ins/depthmerge/depthmerge.c:756 plug-ins/destripe/destripe.c:702
-#: plug-ins/gif/gif.c:1172 plug-ins/jpeg/jpeg.c:1009 plug-ins/mail/mail.c:502
-#: plug-ins/oilify/oilify.c:469 plug-ins/png/png.c:1112
-#: plug-ins/print/print.c:1089 plug-ins/print/print.c:1195
+#: plug-ins/blur/blur.c:621 plug-ins/bmp/bmpwrite.c:437
+#: plug-ins/bumpmap/bumpmap.c:979 plug-ins/checkerboard/checkerboard.c:390
+#: plug-ins/colorify/colorify.c:319 plug-ins/compose/compose.c:825
+#: plug-ins/convmatrix/convmatrix.c:723 plug-ins/cubism/cubism.c:347
+#: plug-ins/decompose/decompose.c:924 plug-ins/depthmerge/depthmerge.c:756
+#: plug-ins/destripe/destripe.c:704 plug-ins/gif/gif.c:1172
+#: plug-ins/jpeg/jpeg.c:1009 plug-ins/mail/mail.c:502
+#: plug-ins/oilify/oilify.c:469 plug-ins/png/png.c:1189
+#: plug-ins/print/print.c:1166 plug-ins/print/print.c:1272
 #: plug-ins/ps/ps.c:2008 plug-ins/ps/ps.c:2275 plug-ins/xbm/xbm.c:707
 #: plug-ins/xbm/xbm.c:969 plug-ins/xpm/xpm.c:772
 msgid "Cancel"
@@ -887,10 +892,10 @@ msgstr ""
 #. *
 #. *  First set up the basic containers, label them, etc.
 #.
-#: plug-ins/apply_lens/apply_lens.c:439 plug-ins/blur/blur.c:606
+#: plug-ins/apply_lens/apply_lens.c:439 plug-ins/blur/blur.c:607
 #: plug-ins/checkerboard/checkerboard.c:399 plug-ins/cubism/cubism.c:356
 #: plug-ins/jpeg/jpeg.c:1018 plug-ins/oilify/oilify.c:478
-#: plug-ins/png/png.c:1123 plug-ins/xpm/xpm.c:781
+#: plug-ins/png/png.c:1200 plug-ins/xpm/xpm.c:781
 msgid "Parameter Settings"
 msgstr ""
 
@@ -938,44 +943,44 @@ msgstr ""
 msgid "Auto-Stretching HSV..."
 msgstr ""
 
-#: plug-ins/blur/blur.c:193
+#: plug-ins/blur/blur.c:194
 msgid "Apply a 3x3 blurring convolution kernel to the specified drawable."
 msgstr ""
 
-#: plug-ins/blur/blur.c:194
+#: plug-ins/blur/blur.c:195
 msgid ""
 "This plug-in randomly blurs the specified drawable, using a 3x3 blur.  You "
 "control the percentage of the pixels that are blurred and the number of "
 "times blurring is applied.  Indexed images are not supported."
 msgstr ""
 
-#: plug-ins/blur/blur.c:207
+#: plug-ins/blur/blur.c:208
 msgid "<Image>/Filters/Blur/Blur"
 msgstr ""
 
-#: plug-ins/blur/blur.c:619
+#: plug-ins/blur/blur.c:620
 msgid "Accept settings and apply filter to image"
 msgstr ""
 
-#: plug-ins/blur/blur.c:621
+#: plug-ins/blur/blur.c:622
 msgid "Close plug-in without making any changes"
 msgstr ""
 
 #.
 #. *  Randomization seed initialization controls
 #.
-#: plug-ins/blur/blur.c:625
+#: plug-ins/blur/blur.c:626
 msgid "Randomization Seed:"
 msgstr ""
 
 #.
 #. *  Time button
 #.
-#: plug-ins/blur/blur.c:636
+#: plug-ins/blur/blur.c:637
 msgid "Current Time"
 msgstr ""
 
-#: plug-ins/blur/blur.c:637
+#: plug-ins/blur/blur.c:638
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -984,39 +989,39 @@ msgstr ""
 #.
 #. *  User button
 #.
-#: plug-ins/blur/blur.c:647
+#: plug-ins/blur/blur.c:648
 msgid "Other Value"
 msgstr ""
 
-#: plug-ins/blur/blur.c:648
+#: plug-ins/blur/blur.c:649
 msgid ""
 "Enable user-entered value for random number generator seed - this allows you "
 "to repeat a given \"random\" operation"
 msgstr ""
 
-#: plug-ins/blur/blur.c:660
+#: plug-ins/blur/blur.c:661
 msgid "Value for seeding the random number generator"
 msgstr ""
 
 #.
 #. *  Randomization percentage label & scale (1 to 100)
 #.
-#: plug-ins/blur/blur.c:665
+#: plug-ins/blur/blur.c:666
 msgid "Randomization %:"
 msgstr ""
 
-#: plug-ins/blur/blur.c:668
+#: plug-ins/blur/blur.c:669
 msgid "Percentage of pixels to be filtered"
 msgstr ""
 
 #.
 #. *  Repeat count label & scale (1 to 100)
 #.
-#: plug-ins/blur/blur.c:673
+#: plug-ins/blur/blur.c:674
 msgid "Repeat:"
 msgstr ""
 
-#: plug-ins/blur/blur.c:676
+#: plug-ins/blur/blur.c:677
 msgid "Number of times to apply filter"
 msgstr ""
 
@@ -1029,7 +1034,7 @@ msgid "Saves files in Windows BMP file format"
 msgstr ""
 
 #: plug-ins/bmp/bmpread.c:27 plug-ins/gifload/gifload.c:287
-#: plug-ins/jpeg/jpeg.c:494 plug-ins/png/png.c:623 plug-ins/png/png.c:625
+#: plug-ins/jpeg/jpeg.c:494 plug-ins/png/png.c:700 plug-ins/png/png.c:702
 #: plug-ins/xbm/xbm.c:523 plug-ins/xpm/xpm.c:300
 #, c-format
 msgid "Loading %s:"
@@ -1069,38 +1074,38 @@ msgstr ""
 #. * Create the "background" layer to hold the image...
 #.
 #: plug-ins/bmp/bmpread.c:210 plug-ins/bmp/bmpread.c:218
-#: plug-ins/bmp/bmpread.c:224 plug-ins/compose/compose.c:438
-#: plug-ins/gifload/gifload.c:828 plug-ins/jpeg/jpeg.c:611
-#: plug-ins/png/png.c:733 plug-ins/xbm/xbm.c:612
+#: plug-ins/bmp/bmpread.c:224 plug-ins/compose/compose.c:562
+#: plug-ins/decompose/decompose.c:472 plug-ins/gifload/gifload.c:828
+#: plug-ins/jpeg/jpeg.c:611 plug-ins/png/png.c:810 plug-ins/xbm/xbm.c:612
 msgid "Background"
 msgstr ""
 
-#: plug-ins/bmp/bmpwrite.c:79
+#: plug-ins/bmp/bmpwrite.c:83
 msgid "bmp: cannot operate on unknown image types or alpha images"
 msgstr ""
 
-#: plug-ins/bmp/bmpwrite.c:136
+#: plug-ins/bmp/bmpwrite.c:140
 #, c-format
 msgid "can't open %s\n"
 msgstr ""
 
-#: plug-ins/bmp/bmpwrite.c:150 plug-ins/jpeg/jpeg.c:759 plug-ins/png/png.c:873
-#: plug-ins/png/png.c:875 plug-ins/ps/ps.c:680 plug-ins/xbm/xbm.c:777
+#: plug-ins/bmp/bmpwrite.c:154 plug-ins/jpeg/jpeg.c:759 plug-ins/png/png.c:950
+#: plug-ins/png/png.c:952 plug-ins/ps/ps.c:680 plug-ins/xbm/xbm.c:777
 #: plug-ins/xpm/xpm.c:611 plug-ins/xwd/xwd.c:503
 #, c-format
 msgid "Saving %s:"
 msgstr ""
 
-#: plug-ins/bmp/bmpwrite.c:417
+#: plug-ins/bmp/bmpwrite.c:421
 msgid "Save as BMP"
 msgstr ""
 
 #. parameter settings
-#: plug-ins/bmp/bmpwrite.c:442
+#: plug-ins/bmp/bmpwrite.c:446
 msgid "Save Options"
 msgstr ""
 
-#: plug-ins/bmp/bmpwrite.c:450
+#: plug-ins/bmp/bmpwrite.c:454
 msgid "RLE encoded"
 msgstr ""
 
@@ -1124,71 +1129,71 @@ msgstr ""
 msgid "Bucket Size:"
 msgstr ""
 
-#: plug-ins/bumpmap/bumpmap.c:295
+#: plug-ins/bumpmap/bumpmap.c:298
 msgid "Linear map"
 msgstr ""
 
-#: plug-ins/bumpmap/bumpmap.c:296
+#: plug-ins/bumpmap/bumpmap.c:299
 msgid "Spherical map"
 msgstr ""
 
-#: plug-ins/bumpmap/bumpmap.c:297
+#: plug-ins/bumpmap/bumpmap.c:300
 msgid "Sinusoidal map"
 msgstr ""
 
-#: plug-ins/bumpmap/bumpmap.c:343
+#: plug-ins/bumpmap/bumpmap.c:346
 msgid "Create an embossing effect using an image as a bump map"
 msgstr ""
 
-#: plug-ins/bumpmap/bumpmap.c:351
+#: plug-ins/bumpmap/bumpmap.c:354
 msgid "<Image>/Filters/Map/Bump Map"
 msgstr ""
 
-#: plug-ins/bumpmap/bumpmap.c:497
+#: plug-ins/bumpmap/bumpmap.c:500
 msgid "Bump-mapping..."
 msgstr ""
 
 #. Bump map menu
-#: plug-ins/bumpmap/bumpmap.c:827 plug-ins/bumpmap/bumpmap.c:936
+#: plug-ins/bumpmap/bumpmap.c:830 plug-ins/bumpmap/bumpmap.c:939
 msgid "Bump map"
 msgstr ""
 
 #. Compensate darkening
-#: plug-ins/bumpmap/bumpmap.c:881
+#: plug-ins/bumpmap/bumpmap.c:884
 msgid "Compensate for darkening"
 msgstr ""
 
 #. Invert bumpmap
-#: plug-ins/bumpmap/bumpmap.c:892
+#: plug-ins/bumpmap/bumpmap.c:895
 msgid "Invert bumpmap"
 msgstr ""
 
 #. Controls
-#: plug-ins/bumpmap/bumpmap.c:955
+#: plug-ins/bumpmap/bumpmap.c:958
 msgid "Azimuth"
 msgstr ""
 
-#: plug-ins/bumpmap/bumpmap.c:956
+#: plug-ins/bumpmap/bumpmap.c:959
 msgid "Elevation"
 msgstr ""
 
-#: plug-ins/bumpmap/bumpmap.c:957
+#: plug-ins/bumpmap/bumpmap.c:960
 msgid "Depth"
 msgstr ""
 
-#: plug-ins/bumpmap/bumpmap.c:958
+#: plug-ins/bumpmap/bumpmap.c:961
 msgid "X offset"
 msgstr ""
 
-#: plug-ins/bumpmap/bumpmap.c:959
+#: plug-ins/bumpmap/bumpmap.c:962
 msgid "Y offset"
 msgstr ""
 
-#: plug-ins/bumpmap/bumpmap.c:960
+#: plug-ins/bumpmap/bumpmap.c:963
 msgid "Waterlevel"
 msgstr ""
 
-#: plug-ins/bumpmap/bumpmap.c:961
+#: plug-ins/bumpmap/bumpmap.c:964
 msgid "Ambient"
 msgstr ""
 
@@ -1251,7 +1256,7 @@ msgid "Check Size"
 msgstr ""
 
 #: plug-ins/colorify/colorify.c:122
-msgid "Similar to the \"Color\" mode for layers.)"
+msgid "Similar to the \"Color\" mode for layers."
 msgstr ""
 
 #: plug-ins/colorify/colorify.c:123
@@ -1274,7 +1279,7 @@ msgstr ""
 msgid "Ok"
 msgstr ""
 
-#: plug-ins/colorify/colorify.c:327 plug-ins/print/print.c:946
+#: plug-ins/colorify/colorify.c:327 plug-ins/print/print.c:1023
 #: plug-ins/xpm/xpm.c:406
 msgid "Color"
 msgstr ""
@@ -1287,99 +1292,147 @@ msgstr ""
 msgid "Colorify Custom Color"
 msgstr ""
 
-#: plug-ins/compose/compose.c:107
+#: plug-ins/compose/compose.c:125 plug-ins/decompose/decompose.c:129
 msgid "RGB"
 msgstr ""
 
-#: plug-ins/compose/compose.c:107 plug-ins/compose/compose.c:109
+#: plug-ins/compose/compose.c:125 plug-ins/compose/compose.c:127
 msgid "Red:"
 msgstr ""
 
-#: plug-ins/compose/compose.c:107 plug-ins/compose/compose.c:109
+#: plug-ins/compose/compose.c:125 plug-ins/compose/compose.c:127
 msgid "Green:     "
 msgstr ""
 
-#: plug-ins/compose/compose.c:107 plug-ins/compose/compose.c:109
+#: plug-ins/compose/compose.c:125 plug-ins/compose/compose.c:127
 msgid "Blue:"
 msgstr ""
 
-#: plug-ins/compose/compose.c:107 plug-ins/compose/compose.c:111
-#: plug-ins/compose/compose.c:113
-msgid "N/A"
+#: plug-ins/compose/compose.c:126
+msgid "rgb-compose"
 msgstr ""
 
-#: plug-ins/compose/compose.c:109
+#: plug-ins/compose/compose.c:127
 msgid "RGBA"
 msgstr ""
 
-#: plug-ins/compose/compose.c:109
+#: plug-ins/compose/compose.c:127
 msgid "Alpha:"
 msgstr ""
 
-#: plug-ins/compose/compose.c:111
+#: plug-ins/compose/compose.c:128
+msgid "rgba-compose"
+msgstr ""
+
+#: plug-ins/compose/compose.c:129 plug-ins/decompose/decompose.c:133
 msgid "HSV"
 msgstr ""
 
-#: plug-ins/compose/compose.c:111
+#: plug-ins/compose/compose.c:129
 msgid "Hue:"
 msgstr ""
 
-#: plug-ins/compose/compose.c:111
+#: plug-ins/compose/compose.c:129
 msgid "Saturation:"
 msgstr ""
 
-#: plug-ins/compose/compose.c:111
+#: plug-ins/compose/compose.c:129
 msgid "Value:"
 msgstr ""
 
-#: plug-ins/compose/compose.c:113
+#: plug-ins/compose/compose.c:130
+msgid "hsv-compose"
+msgstr ""
+
+#: plug-ins/compose/compose.c:131 plug-ins/decompose/decompose.c:138
 msgid "CMY"
 msgstr ""
 
-#: plug-ins/compose/compose.c:113 plug-ins/compose/compose.c:115
+#: plug-ins/compose/compose.c:131 plug-ins/compose/compose.c:133
 msgid "Cyan:"
 msgstr ""
 
-#: plug-ins/compose/compose.c:113 plug-ins/compose/compose.c:115
+#: plug-ins/compose/compose.c:131 plug-ins/compose/compose.c:133
 msgid "Magenta:   "
 msgstr ""
 
-#: plug-ins/compose/compose.c:113 plug-ins/compose/compose.c:115
+#: plug-ins/compose/compose.c:131 plug-ins/compose/compose.c:133
 msgid "Yellow:"
 msgstr ""
 
-#: plug-ins/compose/compose.c:115
+#: plug-ins/compose/compose.c:132
+msgid "cmy-compose"
+msgstr ""
+
+#: plug-ins/compose/compose.c:133 plug-ins/decompose/decompose.c:143
 msgid "CMYK"
 msgstr ""
 
-#: plug-ins/compose/compose.c:115
+#: plug-ins/compose/compose.c:133
 msgid "Black:"
 msgstr ""
 
-#: plug-ins/compose/compose.c:187
-msgid "Compose an image from different types of channels"
+#: plug-ins/compose/compose.c:134
+msgid "cmyk-compose"
 msgstr ""
 
-#: plug-ins/compose/compose.c:188
-msgid ""
-"This function creates a new image from different channel informations kept "
-"in gray images"
+#: plug-ins/compose/compose.c:228
+msgid "Compose an image from multiple gray images"
 msgstr ""
 
-#: plug-ins/compose/compose.c:193
+#: plug-ins/compose/compose.c:229
+msgid "This function creates a new image from multiple gray images"
+msgstr ""
+
+#: plug-ins/compose/compose.c:234
 msgid "<Image>/Image/Channel Ops/Compose"
 msgstr ""
 
-#: plug-ins/compose/compose.c:262
+#: plug-ins/compose/compose.c:241
+msgid "Compose an image from multiple drawables of gray images"
+msgstr ""
+
+#: plug-ins/compose/compose.c:242
+msgid ""
+"This function creates a new image from multiple drawables of gray images"
+msgstr ""
+
+#: plug-ins/compose/compose.c:305
+#, c-format
+msgid "compose: Could not get layers for image %d"
+msgstr ""
+
+#: plug-ins/compose/compose.c:354
 msgid "Composing..."
 msgstr ""
 
-#: plug-ins/compose/compose.c:620
+#: plug-ins/compose/compose.c:421
+msgid "compose: drawables have different size"
+msgstr ""
+
+#: plug-ins/compose/compose.c:438
+msgid "compose: images have different size"
+msgstr ""
+
+#: plug-ins/compose/compose.c:451
+msgid "compose: error in getting layer IDs"
+msgstr ""
+
+#: plug-ins/compose/compose.c:468
+#, c-format
+msgid "compose: image is not a gray image (bpp=%d)"
+msgstr ""
+
+#: plug-ins/compose/compose.c:483 plug-ins/compose/compose.c:498
+msgid "compose: not enough memory"
+msgstr ""
+
+#: plug-ins/compose/compose.c:809
 msgid "Compose"
 msgstr ""
 
 #. The left frame keeps the compose type toggles
-#: plug-ins/compose/compose.c:652
+#: plug-ins/compose/compose.c:841
 msgid "Compose channels:"
 msgstr ""
 
@@ -1387,95 +1440,95 @@ msgstr ""
 #. Because the labels within this frame will change when a toggle
 #. in the left frame is changed, fill in the right part first.
 #. Otherwise it can occur, that a non-existing label might be changed.
-#: plug-ins/compose/compose.c:666
+#: plug-ins/compose/compose.c:855
 msgid "Channel representations:"
 msgstr ""
 
-#: plug-ins/convmatrix/convmatrix.c:74
+#: plug-ins/convmatrix/convmatrix.c:76
 msgid "Grey"
 msgstr ""
 
-#: plug-ins/convmatrix/convmatrix.c:74
+#: plug-ins/convmatrix/convmatrix.c:76 plug-ins/decompose/decompose.c:130
 msgid "Red"
 msgstr ""
 
-#: plug-ins/convmatrix/convmatrix.c:74
+#: plug-ins/convmatrix/convmatrix.c:76 plug-ins/decompose/decompose.c:131
 msgid "Green"
 msgstr ""
 
-#: plug-ins/convmatrix/convmatrix.c:74
+#: plug-ins/convmatrix/convmatrix.c:76 plug-ins/decompose/decompose.c:132
 msgid "Blue"
 msgstr ""
 
-#: plug-ins/convmatrix/convmatrix.c:74
+#: plug-ins/convmatrix/convmatrix.c:76 plug-ins/decompose/decompose.c:148
 msgid "Alpha"
 msgstr ""
 
-#: plug-ins/convmatrix/convmatrix.c:78
+#: plug-ins/convmatrix/convmatrix.c:80
 msgid "Extend"
 msgstr ""
 
-#: plug-ins/convmatrix/convmatrix.c:78
+#: plug-ins/convmatrix/convmatrix.c:80
 msgid "Wrap"
 msgstr ""
 
 #. Action area
-#: plug-ins/convmatrix/convmatrix.c:78 plug-ins/gif/gif.c:1163
+#: plug-ins/convmatrix/convmatrix.c:80 plug-ins/gif/gif.c:1163
 msgid "Crop"
 msgstr ""
 
-#: plug-ins/convmatrix/convmatrix.c:171
+#: plug-ins/convmatrix/convmatrix.c:173
 msgid "A generic 5x5 convolution matrix"
 msgstr ""
 
-#: plug-ins/convmatrix/convmatrix.c:176
+#: plug-ins/convmatrix/convmatrix.c:178
 msgid "<Image>/Filters/Generic/Convolution Matrix"
 msgstr ""
 
-#: plug-ins/convmatrix/convmatrix.c:237
+#: plug-ins/convmatrix/convmatrix.c:239
 msgid "Applying convolution"
 msgstr ""
 
-#: plug-ins/convmatrix/convmatrix.c:698
+#: plug-ins/convmatrix/convmatrix.c:700
 msgid "Convolution Matrix"
 msgstr ""
 
-#: plug-ins/convmatrix/convmatrix.c:713
+#: plug-ins/convmatrix/convmatrix.c:715
 msgid "Defaults"
 msgstr ""
 
 #. Outbox:YABox:Frame
-#: plug-ins/convmatrix/convmatrix.c:739
+#: plug-ins/convmatrix/convmatrix.c:741
 msgid "Matrix"
 msgstr ""
 
 #. divisor
-#: plug-ins/convmatrix/convmatrix.c:786
+#: plug-ins/convmatrix/convmatrix.c:788
 msgid "Divisor"
 msgstr ""
 
 #. Offset
-#: plug-ins/convmatrix/convmatrix.c:801 plug-ins/depthmerge/depthmerge.c:728
+#: plug-ins/convmatrix/convmatrix.c:803 plug-ins/depthmerge/depthmerge.c:728
 msgid "Offset"
 msgstr ""
 
-#: plug-ins/convmatrix/convmatrix.c:821
+#: plug-ins/convmatrix/convmatrix.c:823
 msgid "Automatic"
 msgstr ""
 
 #. Alpha-weighting
-#: plug-ins/convmatrix/convmatrix.c:830
+#: plug-ins/convmatrix/convmatrix.c:832
 msgid "Alpha-weighting"
 msgstr ""
 
 #. Wrap-modes
 #. OutBox:Inbox:Frame
-#: plug-ins/convmatrix/convmatrix.c:845
+#: plug-ins/convmatrix/convmatrix.c:847
 msgid "Border"
 msgstr ""
 
 #. OutBox:Inbox:Frame
-#: plug-ins/convmatrix/convmatrix.c:873
+#: plug-ins/convmatrix/convmatrix.c:875
 msgid "Channels"
 msgstr ""
 
@@ -1505,6 +1558,129 @@ msgstr ""
 
 #: plug-ins/cubism/cubism.c:388
 msgid "Tile Saturation"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:129 plug-ins/decompose/decompose.c:130
+msgid "red"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:129 plug-ins/decompose/decompose.c:131
+msgid "green"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:129 plug-ins/decompose/decompose.c:132
+msgid "blue"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:133 plug-ins/decompose/decompose.c:135
+msgid "hue"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:133 plug-ins/decompose/decompose.c:136
+msgid "saturation"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:133 plug-ins/decompose/decompose.c:137
+msgid "value"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:138 plug-ins/decompose/decompose.c:140
+msgid "cyan"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:138 plug-ins/decompose/decompose.c:141
+msgid "magenta"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:138 plug-ins/decompose/decompose.c:142
+msgid "yellow"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:140
+msgid "Cyan"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:141
+msgid "Magenta"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:142
+msgid "Yellow"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:143 plug-ins/decompose/decompose.c:145
+msgid "cyan_k"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:143 plug-ins/decompose/decompose.c:146
+msgid "magenta_k"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:143 plug-ins/decompose/decompose.c:147
+msgid "yellow_k"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:144
+msgid "black"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:145
+msgid "Cyan_K"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:146
+msgid "Magenta_K"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:147
+msgid "Yellow_K"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:148
+msgid "alpha"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:216
+msgid "Decompose an image into different types of channels"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:217
+msgid ""
+"This function creates new gray images with different channel information in "
+"each of them"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:222
+msgid "<Image>/Image/Channel Ops/Decompose"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:303
+msgid "plug_in_decompose: Can only work on RGB*_IMAGE"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:309
+msgid "Decomposing..."
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:374
+msgid "decompose: not an RGB image"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:380
+msgid "decompose: No alpha channel available"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:409
+msgid "decompose: out of memory"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:901 plug-ins/decompose/decompose.c:907
+msgid "Decompose"
+msgstr ""
+
+#. parameter settings
+#: plug-ins/decompose/decompose.c:934
+msgid "Extract channels:"
 msgstr ""
 
 #: plug-ins/depthmerge/depthmerge.c:194
@@ -1577,11 +1753,11 @@ msgstr ""
 msgid "Destriping..."
 msgstr ""
 
-#: plug-ins/destripe/destripe.c:587
+#: plug-ins/destripe/destripe.c:589
 msgid "Destripe"
 msgstr ""
 
-#: plug-ins/destripe/destripe.c:661
+#: plug-ins/destripe/destripe.c:663
 msgid "Histogram"
 msgstr ""
 
@@ -1597,7 +1773,7 @@ msgstr ""
 #.
 #. * Box size (radius) control...
 #.
-#: plug-ins/destripe/destripe.c:685
+#: plug-ins/destripe/destripe.c:687
 msgid "Width"
 msgstr ""
 
@@ -1646,7 +1822,7 @@ msgstr ""
 msgid "GIF Options"
 msgstr ""
 
-#: plug-ins/gif/gif.c:1294 plug-ins/png/png.c:1132
+#: plug-ins/gif/gif.c:1294 plug-ins/png/png.c:1209
 msgid "Interlace"
 msgstr ""
 
@@ -1957,245 +2133,245 @@ msgstr ""
 msgid "Mask Size"
 msgstr ""
 
-#: plug-ins/png/png.c:427
+#: plug-ins/png/png.c:504
 msgid "Loads files in PNG file format"
 msgstr ""
 
-#: plug-ins/png/png.c:428
+#: plug-ins/png/png.c:505
 msgid "This plug-in loads Portable Network Graphics (PNG) files."
 msgstr ""
 
-#: plug-ins/png/png.c:1094
+#: plug-ins/png/png.c:1171
 msgid "PNG Options"
 msgstr ""
 
-#: plug-ins/png/png.c:1139
+#: plug-ins/png/png.c:1216
 msgid "Compression level"
 msgstr ""
 
-#: plug-ins/print/print-escp2.c:132 plug-ins/print/print-pcl.c:155
-#: plug-ins/print/print-ps.c:265
+#: plug-ins/print/print-escp2.c:209 plug-ins/print/print-pcl.c:232
+#: plug-ins/print/print-ps.c:345
 msgid "Letter"
 msgstr ""
 
-#: plug-ins/print/print-escp2.c:133 plug-ins/print/print-pcl.c:156
-#: plug-ins/print/print-ps.c:266
+#: plug-ins/print/print-escp2.c:210 plug-ins/print/print-pcl.c:233
+#: plug-ins/print/print-ps.c:346
 msgid "Legal"
 msgstr ""
 
-#: plug-ins/print/print-escp2.c:134 plug-ins/print/print-pcl.c:157
-#: plug-ins/print/print-ps.c:267
+#: plug-ins/print/print-escp2.c:211 plug-ins/print/print-pcl.c:234
+#: plug-ins/print/print-ps.c:347
 msgid "A4"
 msgstr ""
 
-#: plug-ins/print/print-escp2.c:135 plug-ins/print/print-pcl.c:158
-#: plug-ins/print/print-ps.c:268
+#: plug-ins/print/print-escp2.c:212 plug-ins/print/print-pcl.c:235
+#: plug-ins/print/print-ps.c:348
 msgid "Tabloid"
 msgstr ""
 
-#: plug-ins/print/print-escp2.c:136 plug-ins/print/print-pcl.c:159
-#: plug-ins/print/print-ps.c:269
+#: plug-ins/print/print-escp2.c:213 plug-ins/print/print-pcl.c:236
+#: plug-ins/print/print-ps.c:349
 msgid "A3"
 msgstr ""
 
-#: plug-ins/print/print-escp2.c:137 plug-ins/print/print-pcl.c:160
-#: plug-ins/print/print-ps.c:270
+#: plug-ins/print/print-escp2.c:214 plug-ins/print/print-pcl.c:237
+#: plug-ins/print/print-ps.c:350
 msgid "12x18"
 msgstr ""
 
-#: plug-ins/print/print-escp2.c:141
+#: plug-ins/print/print-escp2.c:218
 msgid "360 DPI"
 msgstr ""
 
-#: plug-ins/print/print-escp2.c:142
+#: plug-ins/print/print-escp2.c:219
 msgid "720 DPI"
 msgstr ""
 
 #.
 #. * Let the user know what we're doing...
 #.
-#: plug-ins/print/print-escp2.c:433 plug-ins/print/print-pcl.c:536
-#: plug-ins/print/print-ps.c:617
+#: plug-ins/print/print-escp2.c:510 plug-ins/print/print-pcl.c:613
+#: plug-ins/print/print-ps.c:697
 msgid "Printing..."
 msgstr ""
 
-#: plug-ins/print/print-pcl.c:164
+#: plug-ins/print/print-pcl.c:241
 msgid "Plain"
 msgstr ""
 
-#: plug-ins/print/print-pcl.c:165
+#: plug-ins/print/print-pcl.c:242
 msgid "Premium"
 msgstr ""
 
-#: plug-ins/print/print-pcl.c:166
+#: plug-ins/print/print-pcl.c:243
 msgid "Glossy"
 msgstr ""
 
-#: plug-ins/print/print-pcl.c:167
+#: plug-ins/print/print-pcl.c:244
 msgid "Transparency"
 msgstr ""
 
-#: plug-ins/print/print-pcl.c:171
+#: plug-ins/print/print-pcl.c:248
 msgid "Manual"
 msgstr ""
 
-#: plug-ins/print/print-pcl.c:172
+#: plug-ins/print/print-pcl.c:249
 msgid "Tray 1"
 msgstr ""
 
-#: plug-ins/print/print-pcl.c:173
+#: plug-ins/print/print-pcl.c:250
 msgid "Tray 2"
 msgstr ""
 
-#: plug-ins/print/print-pcl.c:174
+#: plug-ins/print/print-pcl.c:251
 msgid "Tray 3"
 msgstr ""
 
-#: plug-ins/print/print-pcl.c:175
+#: plug-ins/print/print-pcl.c:252
 msgid "Tray 4"
 msgstr ""
 
-#: plug-ins/print/print-pcl.c:179
+#: plug-ins/print/print-pcl.c:256
 msgid "150 DPI"
 msgstr ""
 
-#: plug-ins/print/print-pcl.c:180
+#: plug-ins/print/print-pcl.c:257
 msgid "300 DPI"
 msgstr ""
 
-#: plug-ins/print/print-pcl.c:181
+#: plug-ins/print/print-pcl.c:258
 msgid "600 DPI"
 msgstr ""
 
-#: plug-ins/print/print.c:329
+#: plug-ins/print/print.c:406
 msgid "PostScript Level 1"
 msgstr ""
 
-#: plug-ins/print/print.c:331
+#: plug-ins/print/print.c:408
 msgid "PostScript Level 2"
 msgstr ""
 
-#: plug-ins/print/print.c:333
+#: plug-ins/print/print.c:410
 msgid "HP DeskJet 500, 520"
 msgstr ""
 
-#: plug-ins/print/print.c:335
+#: plug-ins/print/print.c:412
 msgid "HP DeskJet 500C, 540C"
 msgstr ""
 
-#: plug-ins/print/print.c:337
+#: plug-ins/print/print.c:414
 msgid "HP DeskJet 550C, 560C"
 msgstr ""
 
-#: plug-ins/print/print.c:339
+#: plug-ins/print/print.c:416
 msgid "HP DeskJet 600 series"
 msgstr ""
 
-#: plug-ins/print/print.c:341
+#: plug-ins/print/print.c:418
 msgid "HP DeskJet 800 series"
 msgstr ""
 
-#: plug-ins/print/print.c:343
+#: plug-ins/print/print.c:420
 msgid "HP DeskJet 1100C, 1120C"
 msgstr ""
 
-#: plug-ins/print/print.c:345
+#: plug-ins/print/print.c:422
 msgid "HP DeskJet 1200C, 1600C"
 msgstr ""
 
-#: plug-ins/print/print.c:347
+#: plug-ins/print/print.c:424
 msgid "HP LaserJet II series"
 msgstr ""
 
-#: plug-ins/print/print.c:349
+#: plug-ins/print/print.c:426
 msgid "HP LaserJet III series"
 msgstr ""
 
-#: plug-ins/print/print.c:351
+#: plug-ins/print/print.c:428
 msgid "HP LaserJet 4 series"
 msgstr ""
 
-#: plug-ins/print/print.c:353
+#: plug-ins/print/print.c:430
 msgid "HP LaserJet 4V, 4Si"
 msgstr ""
 
-#: plug-ins/print/print.c:355
+#: plug-ins/print/print.c:432
 msgid "HP LaserJet 5 series"
 msgstr ""
 
-#: plug-ins/print/print.c:357
+#: plug-ins/print/print.c:434
 msgid "HP LaserJet 5Si"
 msgstr ""
 
-#: plug-ins/print/print.c:359
+#: plug-ins/print/print.c:436
 msgid "HP LaserJet 6 series"
 msgstr ""
 
-#: plug-ins/print/print.c:361
+#: plug-ins/print/print.c:438
 msgid "EPSON Stylus Color"
 msgstr ""
 
-#: plug-ins/print/print.c:363
+#: plug-ins/print/print.c:440
 msgid "EPSON Stylus Color Pro"
 msgstr ""
 
-#: plug-ins/print/print.c:365
+#: plug-ins/print/print.c:442
 msgid "EPSON Stylus Color Pro XL"
 msgstr ""
 
-#: plug-ins/print/print.c:367
+#: plug-ins/print/print.c:444
 msgid "EPSON Stylus Color 1500"
 msgstr ""
 
-#: plug-ins/print/print.c:369
+#: plug-ins/print/print.c:446
 msgid "EPSON Stylus Color 400"
 msgstr ""
 
-#: plug-ins/print/print.c:371
+#: plug-ins/print/print.c:448
 msgid "EPSON Stylus Color 500"
 msgstr ""
 
-#: plug-ins/print/print.c:373
+#: plug-ins/print/print.c:450
 msgid "EPSON Stylus Color 600"
 msgstr ""
 
-#: plug-ins/print/print.c:375
+#: plug-ins/print/print.c:452
 msgid "EPSON Stylus Color 800"
 msgstr ""
 
-#: plug-ins/print/print.c:377
+#: plug-ins/print/print.c:454
 msgid "EPSON Stylus Color 1520"
 msgstr ""
 
-#: plug-ins/print/print.c:379
+#: plug-ins/print/print.c:456
 msgid "EPSON Stylus Color 3000"
 msgstr ""
 
-#: plug-ins/print/print.c:432
+#: plug-ins/print/print.c:509
 msgid "This plug-in prints images from The GIMP."
 msgstr ""
 
-#: plug-ins/print/print.c:433
+#: plug-ins/print/print.c:510
 msgid "Prints images to PostScript, PCL, or ESC/P2 printers."
 msgstr ""
 
-#: plug-ins/print/print.c:437
+#: plug-ins/print/print.c:514
 msgid "<Image>/File/Print"
 msgstr ""
 
-#: plug-ins/print/print.c:750
+#: plug-ins/print/print.c:827
 msgid "Auto"
 msgstr ""
 
-#: plug-ins/print/print.c:751
+#: plug-ins/print/print.c:828
 msgid "Portrait"
 msgstr ""
 
-#: plug-ins/print/print.c:752
+#: plug-ins/print/print.c:829
 msgid "Landscape"
 msgstr ""
 
-#: plug-ins/print/print.c:783
+#: plug-ins/print/print.c:860
 #, c-format
 msgid "Print v%s"
 msgstr ""
@@ -2203,126 +2379,126 @@ msgstr ""
 #.
 #. * Media size option menu...
 #.
-#: plug-ins/print/print.c:833
+#: plug-ins/print/print.c:910
 msgid "Media Size:"
 msgstr ""
 
 #.
 #. * Media type option menu...
 #.
-#: plug-ins/print/print.c:849
+#: plug-ins/print/print.c:926
 msgid "Media Type:"
 msgstr ""
 
 #.
 #. * Media source option menu...
 #.
-#: plug-ins/print/print.c:865
+#: plug-ins/print/print.c:942
 msgid "Media Source:"
 msgstr ""
 
 #.
 #. * Orientation option menu...
 #.
-#: plug-ins/print/print.c:881
+#: plug-ins/print/print.c:958
 msgid "Orientation:"
 msgstr ""
 
 #.
 #. * Resolution option menu...
 #.
-#: plug-ins/print/print.c:911 plug-ins/ps/ps.c:1974
+#: plug-ins/print/print.c:988 plug-ins/ps/ps.c:1974
 msgid "Resolution:"
 msgstr ""
 
 #.
 #. * Output type toggles...
 #.
-#: plug-ins/print/print.c:927
+#: plug-ins/print/print.c:1004
 msgid "Output Type:"
 msgstr ""
 
-#: plug-ins/print/print.c:936
+#: plug-ins/print/print.c:1013
 msgid "B&W"
 msgstr ""
 
 #.
 #. * Scaling...
 #.
-#: plug-ins/print/print.c:959
+#: plug-ins/print/print.c:1036
 msgid "Scaling:"
 msgstr ""
 
-#: plug-ins/print/print.c:994
+#: plug-ins/print/print.c:1071
 msgid "Percent"
 msgstr ""
 
-#: plug-ins/print/print.c:1003
+#: plug-ins/print/print.c:1080
 msgid "PPI"
 msgstr ""
 
 #.
 #. * Brightness slider...
 #.
-#: plug-ins/print/print.c:1015
+#: plug-ins/print/print.c:1092
 msgid "Brightness:"
 msgstr ""
 
 #.
 #. * Printer option menu...
 #.
-#: plug-ins/print/print.c:1050
+#: plug-ins/print/print.c:1127
 msgid "Printer:"
 msgstr ""
 
-#: plug-ins/print/print.c:1076 plug-ins/print/print.c:1109
+#: plug-ins/print/print.c:1153 plug-ins/print/print.c:1186
 msgid "Setup"
 msgstr ""
 
-#: plug-ins/print/print.c:1096
+#: plug-ins/print/print.c:1173
 msgid "Print"
 msgstr ""
 
 #.
 #. * Printer driver option menu...
 #.
-#: plug-ins/print/print.c:1131
+#: plug-ins/print/print.c:1208
 msgid "Driver:"
 msgstr ""
 
 #.
 #. * PPD file...
 #.
-#: plug-ins/print/print.c:1156
+#: plug-ins/print/print.c:1233
 msgid "PPD File:"
 msgstr ""
 
-#: plug-ins/print/print.c:1169
+#: plug-ins/print/print.c:1246
 msgid "Browse"
 msgstr ""
 
 #.
 #. * Print command...
 #.
-#: plug-ins/print/print.c:1179
+#: plug-ins/print/print.c:1256
 msgid "Command:"
 msgstr ""
 
 #.
 #. * Output file selection dialog...
 #.
-#: plug-ins/print/print.c:1214
+#: plug-ins/print/print.c:1291
 msgid "Print To File?"
 msgstr ""
 
 #.
 #. * PPD file selection dialog...
 #.
-#: plug-ins/print/print.c:1224
+#: plug-ins/print/print.c:1301
 msgid "PPD File?"
 msgstr ""
 
-#: plug-ins/print/print.c:2210
+#: plug-ins/print/print.c:2287
 msgid "File"
 msgstr ""
 
@@ -2654,23 +2830,23 @@ msgstr ""
 msgid "can't open file for writing"
 msgstr ""
 
-#: plug-ins/xwd/xwd.c:1144
+#: plug-ins/xwd/xwd.c:1148
 msgid "EOF encountered on "
 msgstr ""
 
-#: plug-ins/xwd/xwd.c:1242 plug-ins/xwd/xwd.c:1404 plug-ins/xwd/xwd.c:1601
-#: plug-ins/xwd/xwd.c:1850
+#: plug-ins/xwd/xwd.c:1246 plug-ins/xwd/xwd.c:1408 plug-ins/xwd/xwd.c:1605
+#: plug-ins/xwd/xwd.c:1854
 msgid "EOF encountered on reading"
 msgstr ""
 
-#: plug-ins/xwd/xwd.c:1290
+#: plug-ins/xwd/xwd.c:1294
 msgid "No memory for mapping colors"
 msgstr ""
 
-#: plug-ins/xwd/xwd.c:1974
+#: plug-ins/xwd/xwd.c:1978
 msgid "Error during writing indexed/grey image"
 msgstr ""
 
-#: plug-ins/xwd/xwd.c:2063
+#: plug-ins/xwd/xwd.c:2067
 msgid "Error during writing rgb image"
 msgstr ""

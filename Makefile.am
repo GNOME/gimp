@@ -27,8 +27,6 @@ EXTRA_DIST = \
 	cursors/mouse1_selmmsk	\
 	cursors/mouse1_selp	\
 	cursors/mouse1_selpmsk	\
-	cursors/picker		\
-        cursors/pickermsk	\
 	pixmaps/anchor.xpm	 \
 	pixmaps/chain.xpm	 \
 	pixmaps/channel.xbm	 \

@@ -18,7 +18,6 @@ EXTRA_DIST = \
 	gimpfeatures.h.in	\
 	makefile.msc		\
 	gimp.def		\
-	gimpi.def		\
 	gimpui.def		\
 	gimpfeatures.h.win32
 

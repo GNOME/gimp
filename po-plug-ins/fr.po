@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
-"POT-Creation-Date: 1999-06-05 16:38+0200\n"
+"POT-Creation-Date: 1999-06-05 14:12-0700\n"
 "PO-Revision-Date: 1999-03-18 19:00+0100\n"
 "Last-Translator: David Monniaux <David.Monniaux@ens.fr>\n"
 "Language-Team: Vincent Renardias <vincent@ldsol.com>\n"
@@ -216,6 +216,7 @@ msgstr "Aléatoires d'après graine (partagé)"
 #: plug-ins/CML_explorer/CML_explorer.c:388
 #: plug-ins/CML_explorer/CML_explorer.c:1431
 #: plug-ins/CML_explorer/CML_explorer.c:1755
+#: plug-ins/decompose/decompose.c:135
 msgid "Hue"
 msgstr "Teinte"
 
@@ -223,6 +224,7 @@ msgstr "Teinte"
 #: plug-ins/CML_explorer/CML_explorer.c:389
 #: plug-ins/CML_explorer/CML_explorer.c:1435
 #: plug-ins/CML_explorer/CML_explorer.c:1755
+#: plug-ins/decompose/decompose.c:136
 msgid "Saturation"
 msgstr "Saturation"
 
@@ -230,6 +232,7 @@ msgstr "Saturation"
 #: plug-ins/CML_explorer/CML_explorer.c:390
 #: plug-ins/CML_explorer/CML_explorer.c:1439
 #: plug-ins/CML_explorer/CML_explorer.c:1755
+#: plug-ins/decompose/decompose.c:137
 msgid "Value"
 msgstr "Valeur"
 
@@ -460,10 +463,11 @@ msgstr "Graphe des réglages actuels"
 #: plug-ins/CML_explorer/CML_explorer.c:2777
 #: plug-ins/apply_lens/apply_lens.c:420 plug-ins/blur/blur.c:619
 #: plug-ins/bmp/bmpwrite.c:428 plug-ins/bumpmap/bumpmap.c:970
-#: plug-ins/checkerboard/checkerboard.c:381 plug-ins/compose/compose.c:627
+#: plug-ins/checkerboard/checkerboard.c:381 plug-ins/compose/compose.c:816
 #: plug-ins/convmatrix/convmatrix.c:706 plug-ins/cubism/cubism.c:338
-#: plug-ins/depthmerge/depthmerge.c:746 plug-ins/destripe/destripe.c:695
-#: plug-ins/gif/gif.c:1263 plug-ins/jpeg/jpeg.c:1000 plug-ins/mail/mail.c:491
+#: plug-ins/decompose/decompose.c:914 plug-ins/depthmerge/depthmerge.c:746
+#: plug-ins/destripe/destripe.c:695 plug-ins/gif/gif.c:1263
+#: plug-ins/jpeg/jpeg.c:1000 plug-ins/mail/mail.c:491
 #: plug-ins/oilify/oilify.c:460 plug-ins/png/png.c:1180
 #: plug-ins/print/print.c:1279 plug-ins/ps/ps.c:1998 plug-ins/ps/ps.c:2265
 #: plug-ins/xbm/xbm.c:959 plug-ins/xpm/xpm.c:763
@@ -536,10 +540,11 @@ msgstr ""
 #: plug-ins/Lighting/lighting_ui.c:1062 plug-ins/apply_lens/apply_lens.c:430
 #: plug-ins/blur/blur.c:621 plug-ins/bmp/bmpwrite.c:437
 #: plug-ins/bumpmap/bumpmap.c:979 plug-ins/checkerboard/checkerboard.c:390
-#: plug-ins/colorify/colorify.c:319 plug-ins/compose/compose.c:636
+#: plug-ins/colorify/colorify.c:319 plug-ins/compose/compose.c:825
 #: plug-ins/convmatrix/convmatrix.c:723 plug-ins/cubism/cubism.c:347
-#: plug-ins/depthmerge/depthmerge.c:756 plug-ins/destripe/destripe.c:704
-#: plug-ins/gif/gif.c:1172 plug-ins/jpeg/jpeg.c:1009 plug-ins/mail/mail.c:502
+#: plug-ins/decompose/decompose.c:924 plug-ins/depthmerge/depthmerge.c:756
+#: plug-ins/destripe/destripe.c:704 plug-ins/gif/gif.c:1172
+#: plug-ins/jpeg/jpeg.c:1009 plug-ins/mail/mail.c:502
 #: plug-ins/oilify/oilify.c:469 plug-ins/png/png.c:1189
 #: plug-ins/print/print.c:1166 plug-ins/print/print.c:1272
 #: plug-ins/ps/ps.c:2008 plug-ins/ps/ps.c:2275 plug-ins/xbm/xbm.c:707
@@ -1113,9 +1118,9 @@ msgstr "%s: mauvaise palette de couleurs\n"
 #. * Create the "background" layer to hold the image...
 #.
 #: plug-ins/bmp/bmpread.c:210 plug-ins/bmp/bmpread.c:218
-#: plug-ins/bmp/bmpread.c:224 plug-ins/compose/compose.c:438
-#: plug-ins/gifload/gifload.c:828 plug-ins/jpeg/jpeg.c:611
-#: plug-ins/png/png.c:810 plug-ins/xbm/xbm.c:612
+#: plug-ins/bmp/bmpread.c:224 plug-ins/compose/compose.c:562
+#: plug-ins/decompose/decompose.c:472 plug-ins/gifload/gifload.c:828
+#: plug-ins/jpeg/jpeg.c:611 plug-ins/png/png.c:810 plug-ins/xbm/xbm.c:612
 msgid "Background"
 msgstr "Fond"
 
@@ -1337,99 +1342,160 @@ msgstr "Couleur Personnalisée: "
 msgid "Colorify Custom Color"
 msgstr "Coloriser, couleur personnalisée"
 
-#: plug-ins/compose/compose.c:107
+#: plug-ins/compose/compose.c:125 plug-ins/decompose/decompose.c:129
 msgid "RGB"
 msgstr "RVB"
 
-#: plug-ins/compose/compose.c:107 plug-ins/compose/compose.c:109
+#: plug-ins/compose/compose.c:125 plug-ins/compose/compose.c:127
 msgid "Red:"
 msgstr "Rouge:"
 
-#: plug-ins/compose/compose.c:107 plug-ins/compose/compose.c:109
+#: plug-ins/compose/compose.c:125 plug-ins/compose/compose.c:127
 msgid "Green:     "
 msgstr "Vert:      "
 
-#: plug-ins/compose/compose.c:107 plug-ins/compose/compose.c:109
+#: plug-ins/compose/compose.c:125 plug-ins/compose/compose.c:127
 msgid "Blue:"
 msgstr "Bleu:"
 
-#: plug-ins/compose/compose.c:107 plug-ins/compose/compose.c:111
-#: plug-ins/compose/compose.c:113
-msgid "N/A"
-msgstr "N/C"
+#: plug-ins/compose/compose.c:126
+#, fuzzy
+msgid "rgb-compose"
+msgstr "Composer"
 
-#: plug-ins/compose/compose.c:109
+#: plug-ins/compose/compose.c:127
 msgid "RGBA"
 msgstr "RVBA"
 
-#: plug-ins/compose/compose.c:109
+#: plug-ins/compose/compose.c:127
 msgid "Alpha:"
 msgstr "Alpha:"
 
-#: plug-ins/compose/compose.c:111
+#: plug-ins/compose/compose.c:128
+#, fuzzy
+msgid "rgba-compose"
+msgstr "Composer"
+
+#: plug-ins/compose/compose.c:129 plug-ins/decompose/decompose.c:133
 msgid "HSV"
 msgstr "TSV"
 
-#: plug-ins/compose/compose.c:111
+#: plug-ins/compose/compose.c:129
 msgid "Hue:"
 msgstr "Teinte:"
 
-#: plug-ins/compose/compose.c:111
+#: plug-ins/compose/compose.c:129
 msgid "Saturation:"
 msgstr "Saturation:"
 
-#: plug-ins/compose/compose.c:111
+#: plug-ins/compose/compose.c:129
 msgid "Value:"
 msgstr "Valeur:"
 
-#: plug-ins/compose/compose.c:113
+#: plug-ins/compose/compose.c:130
+#, fuzzy
+msgid "hsv-compose"
+msgstr "Composer"
+
+#: plug-ins/compose/compose.c:131 plug-ins/decompose/decompose.c:138
 msgid "CMY"
 msgstr "Trichromie"
 
-#: plug-ins/compose/compose.c:113 plug-ins/compose/compose.c:115
+#: plug-ins/compose/compose.c:131 plug-ins/compose/compose.c:133
 msgid "Cyan:"
 msgstr "Cyan:"
 
-#: plug-ins/compose/compose.c:113 plug-ins/compose/compose.c:115
+#: plug-ins/compose/compose.c:131 plug-ins/compose/compose.c:133
 msgid "Magenta:   "
 msgstr "Magenta:   "
 
-#: plug-ins/compose/compose.c:113 plug-ins/compose/compose.c:115
+#: plug-ins/compose/compose.c:131 plug-ins/compose/compose.c:133
 msgid "Yellow:"
 msgstr "Jaune:"
 
-#: plug-ins/compose/compose.c:115
+#: plug-ins/compose/compose.c:132
+#, fuzzy
+msgid "cmy-compose"
+msgstr "Composer"
+
+#: plug-ins/compose/compose.c:133 plug-ins/decompose/decompose.c:143
 msgid "CMYK"
 msgstr "Quadrichromie"
 
-#: plug-ins/compose/compose.c:115
+#: plug-ins/compose/compose.c:133
 msgid "Black:"
 msgstr "Noir:"
 
-#: plug-ins/compose/compose.c:187
-msgid "Compose an image from different types of channels"
+#: plug-ins/compose/compose.c:134
+#, fuzzy
+msgid "cmyk-compose"
+msgstr "Composer"
+
+#: plug-ins/compose/compose.c:228
+msgid "Compose an image from multiple gray images"
 msgstr ""
 
-#: plug-ins/compose/compose.c:188
-msgid ""
-"This function creates a new image from different channel informations kept "
-"in gray images"
-msgstr "Cette fonction crée une nouvelle image à partir de données de canaux provenant de plusieurs images en tons de gris."
+#: plug-ins/compose/compose.c:229
+#, fuzzy
+msgid "This function creates a new image from multiple gray images"
+msgstr ""
+"Cette fonction crée une nouvelle image à partir de données de canaux "
+"provenant de plusieurs images en tons de gris."
 
-#: plug-ins/compose/compose.c:193
+#: plug-ins/compose/compose.c:234
 msgid "<Image>/Image/Channel Ops/Compose"
 msgstr "<Image>/Image/Canaux/Composition"
 
-#: plug-ins/compose/compose.c:262
+#: plug-ins/compose/compose.c:241
+msgid "Compose an image from multiple drawables of gray images"
+msgstr ""
+
+#: plug-ins/compose/compose.c:242
+#, fuzzy
+msgid ""
+"This function creates a new image from multiple drawables of gray images"
+msgstr ""
+"Cette fonction crée une nouvelle image à partir de données de canaux "
+"provenant de plusieurs images en tons de gris."
+
+#: plug-ins/compose/compose.c:305
+#, c-format
+msgid "compose: Could not get layers for image %d"
+msgstr ""
+
+#: plug-ins/compose/compose.c:354
 msgid "Composing..."
 msgstr "Composition..."
 
-#: plug-ins/compose/compose.c:620
+#: plug-ins/compose/compose.c:421
+msgid "compose: drawables have different size"
+msgstr ""
+
+#: plug-ins/compose/compose.c:438
+msgid "compose: images have different size"
+msgstr ""
+
+#: plug-ins/compose/compose.c:451
+#, fuzzy
+msgid "compose: error in getting layer IDs"
+msgstr "GIF: erreur lors de l'obtention de la taille d'un bloc de données\n"
+
+#: plug-ins/compose/compose.c:468
+#, c-format
+msgid "compose: image is not a gray image (bpp=%d)"
+msgstr ""
+
+#: plug-ins/compose/compose.c:483 plug-ins/compose/compose.c:498
+#, fuzzy
+msgid "compose: not enough memory"
+msgstr "PS: plus de mémoire"
+
+#: plug-ins/compose/compose.c:809
 msgid "Compose"
 msgstr "Composer"
 
 #. The left frame keeps the compose type toggles
-#: plug-ins/compose/compose.c:652
+#: plug-ins/compose/compose.c:841
 msgid "Compose channels:"
 msgstr "Composer les canaux :"
 
@@ -1437,7 +1503,7 @@ msgstr "Composer les canaux :"
 #. Because the labels within this frame will change when a toggle
 #. in the left frame is changed, fill in the right part first.
 #. Otherwise it can occur, that a non-existing label might be changed.
-#: plug-ins/compose/compose.c:666
+#: plug-ins/compose/compose.c:855
 msgid "Channel representations:"
 msgstr "Représentations de canaux :"
 
@@ -1445,19 +1511,19 @@ msgstr "Représentations de canaux :"
 msgid "Grey"
 msgstr "Gris"
 
-#: plug-ins/convmatrix/convmatrix.c:76
+#: plug-ins/convmatrix/convmatrix.c:76 plug-ins/decompose/decompose.c:130
 msgid "Red"
 msgstr "Rouge"
 
-#: plug-ins/convmatrix/convmatrix.c:76
+#: plug-ins/convmatrix/convmatrix.c:76 plug-ins/decompose/decompose.c:131
 msgid "Green"
 msgstr "Vert"
 
-#: plug-ins/convmatrix/convmatrix.c:76
+#: plug-ins/convmatrix/convmatrix.c:76 plug-ins/decompose/decompose.c:132
 msgid "Blue"
 msgstr "Bleu"
 
-#: plug-ins/convmatrix/convmatrix.c:76
+#: plug-ins/convmatrix/convmatrix.c:76 plug-ins/decompose/decompose.c:148
 msgid "Alpha"
 msgstr "Alpha"
 
@@ -1557,6 +1623,155 @@ msgstr "Taille de carreau"
 msgid "Tile Saturation"
 msgstr "Saturation de carreau"
 
+#: plug-ins/decompose/decompose.c:129 plug-ins/decompose/decompose.c:130
+#, fuzzy
+msgid "red"
+msgstr "Rouge"
+
+#: plug-ins/decompose/decompose.c:129 plug-ins/decompose/decompose.c:131
+#, fuzzy
+msgid "green"
+msgstr "Vert"
+
+#: plug-ins/decompose/decompose.c:129 plug-ins/decompose/decompose.c:132
+#, fuzzy
+msgid "blue"
+msgstr "Bleu"
+
+#: plug-ins/decompose/decompose.c:133 plug-ins/decompose/decompose.c:135
+#, fuzzy
+msgid "hue"
+msgstr "Teinte"
+
+#: plug-ins/decompose/decompose.c:133 plug-ins/decompose/decompose.c:136
+#, fuzzy
+msgid "saturation"
+msgstr "Saturation"
+
+#: plug-ins/decompose/decompose.c:133 plug-ins/decompose/decompose.c:137
+#, fuzzy
+msgid "value"
+msgstr "Valeur"
+
+#: plug-ins/decompose/decompose.c:138 plug-ins/decompose/decompose.c:140
+#, fuzzy
+msgid "cyan"
+msgstr "Cyan:"
+
+#: plug-ins/decompose/decompose.c:138 plug-ins/decompose/decompose.c:141
+#, fuzzy
+msgid "magenta"
+msgstr "Magenta:   "
+
+#: plug-ins/decompose/decompose.c:138 plug-ins/decompose/decompose.c:142
+#, fuzzy
+msgid "yellow"
+msgstr "Jaune:"
+
+#: plug-ins/decompose/decompose.c:140
+#, fuzzy
+msgid "Cyan"
+msgstr "Cyan:"
+
+#: plug-ins/decompose/decompose.c:141
+#, fuzzy
+msgid "Magenta"
+msgstr "Magenta:   "
+
+#: plug-ins/decompose/decompose.c:142
+#, fuzzy
+msgid "Yellow"
+msgstr "Jaune:"
+
+#: plug-ins/decompose/decompose.c:143 plug-ins/decompose/decompose.c:145
+msgid "cyan_k"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:143 plug-ins/decompose/decompose.c:146
+#, fuzzy
+msgid "magenta_k"
+msgstr "Magenta:   "
+
+#: plug-ins/decompose/decompose.c:143 plug-ins/decompose/decompose.c:147
+#, fuzzy
+msgid "yellow_k"
+msgstr "Jaune:"
+
+#: plug-ins/decompose/decompose.c:144
+#, fuzzy
+msgid "black"
+msgstr "Noir:"
+
+#: plug-ins/decompose/decompose.c:145
+#, fuzzy
+msgid "Cyan_K"
+msgstr "Cyan:"
+
+#: plug-ins/decompose/decompose.c:146
+#, fuzzy
+msgid "Magenta_K"
+msgstr "Magenta:   "
+
+#: plug-ins/decompose/decompose.c:147
+#, fuzzy
+msgid "Yellow_K"
+msgstr "Jaune:"
+
+#: plug-ins/decompose/decompose.c:148
+#, fuzzy
+msgid "alpha"
+msgstr "Alpha"
+
+#: plug-ins/decompose/decompose.c:216
+msgid "Decompose an image into different types of channels"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:217
+#, fuzzy
+msgid ""
+"This function creates new gray images with different channel information in "
+"each of them"
+msgstr ""
+"Cette fonction crée une nouvelle image à partir de données de canaux "
+"provenant de plusieurs images en tons de gris."
+
+#: plug-ins/decompose/decompose.c:222
+#, fuzzy
+msgid "<Image>/Image/Channel Ops/Decompose"
+msgstr "<Image>/Image/Canaux/Composition"
+
+#: plug-ins/decompose/decompose.c:303
+msgid "plug_in_decompose: Can only work on RGB*_IMAGE"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:309
+#, fuzzy
+msgid "Decomposing..."
+msgstr "Composition..."
+
+#: plug-ins/decompose/decompose.c:374
+msgid "decompose: not an RGB image"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:380
+msgid "decompose: No alpha channel available"
+msgstr ""
+
+#: plug-ins/decompose/decompose.c:409
+#, fuzzy
+msgid "decompose: out of memory"
+msgstr "PS: plus de mémoire"
+
+#: plug-ins/decompose/decompose.c:901 plug-ins/decompose/decompose.c:907
+#, fuzzy
+msgid "Decompose"
+msgstr "Composer"
+
+#. parameter settings
+#: plug-ins/decompose/decompose.c:934
+msgid "Extract channels:"
+msgstr ""
+
 #: plug-ins/depthmerge/depthmerge.c:194
 msgid "Combine two images using corresponding depth maps (z-buffers)"
 msgstr "Combiner deux images à l'aide de cartes de profondeurs (Z-buffers)"
@@ -1566,7 +1781,10 @@ msgid ""
 "Taking as input two full-colour, full-alpha images and two corresponding "
 "grayscale depth maps, this plug-in combines the images based on which is "
 "closer (has a lower depth map value) at each point."
-msgstr "Prenant en entrée deux images (comprenant couleur et transparence) et deux images en tons de gris figurant les profondeurs, cet appendice combine les images en prenant en chaque point la plus proche (profondeur la plus faible)."
+msgstr ""
+"Prenant en entrée deux images (comprenant couleur et transparence) et deux "
+"images en tons de gris figurant les profondeurs, cet appendice combine les "
+"images en prenant en chaque point la plus proche (profondeur la plus faible)."
 
 #: plug-ins/depthmerge/depthmerge.c:202
 msgid "<Image>/Filters/Combine/Depth Merge"
@@ -1608,12 +1826,16 @@ msgstr "Échelle 2"
 msgid ""
 "Warning: I don't _like_ this color space.  This is a suggestion, not a "
 "threat.\n"
-msgstr "Avertissement: je n'apprécie pas cet espace de couleurs. Ceci est une suggestion, pas une menace.\n"
+msgstr ""
+"Avertissement: je n'apprécie pas cet espace de couleurs. Ceci est une "
+"suggestion, pas une menace.\n"
 
 #: plug-ins/destripe/destripe.c:151
 msgid ""
 "Destripe filter, used to remove vertical stripes caused by cheap scanners."
-msgstr "Filtre d'élimination des traînées, tente d'éliminer les traînées verticales produites par les scanners bon marché."
+msgstr ""
+"Filtre d'élimination des traînées, tente d'éliminer les traînées verticales "
+"produites par les scanners bon marché."
 
 #: plug-ins/destripe/destripe.c:152
 msgid "This plug-in tries to remove vertical stripes from an image."
@@ -1657,7 +1879,9 @@ msgstr "enregistre les fichiers au format Compuserve GIF"
 
 #: plug-ins/gif/gif.c:682
 msgid "GIF: Couldn't simply reduce colours further.  Saving as opaque.\n"
-msgstr "GIF: Je n'ai pu assez réduire les couleurs, je dois donc sauver en image opaque. La transparence ne sera pas respectée.\n"
+msgstr ""
+"GIF: Je n'ai pu assez réduire les couleurs, je dois donc sauver en image "
+"opaque. La transparence ne sera pas respectée.\n"
 
 #: plug-ins/gif/gif.c:938
 msgid ""
@@ -1677,7 +1901,9 @@ msgstr "GIF: impossible d'ouvrir %s\n"
 msgid ""
 "Transparent colour *might* be incorrect on viewers which don't support "
 "transparency."
-msgstr "La couleur de transparence sera éventuellement incorrecte sur les visualisateurs ne gérant pas la transparence."
+msgstr ""
+"La couleur de transparence sera éventuellement incorrecte sur les "
+"visualisateurs ne gérant pas la transparence."
 
 #: plug-ins/gif/gif.c:1196
 msgid ""
@@ -1960,7 +2186,8 @@ msgstr "Commentaires sur l'image"
 
 #: plug-ins/mail/mail.c:212
 msgid "pipe files to uuencode then mail them"
-msgstr "passe les fichier dans uuencode et les envoie par courrier électronique"
+msgstr ""
+"passe les fichier dans uuencode et les envoie par courrier électronique"
 
 #: plug-ins/mail/mail.c:213
 msgid "You need to have uuencode and mail installed"
@@ -1999,13 +2226,16 @@ msgstr "courrier: erreur due à l'extension du fichier ou son absence\n"
 
 #: plug-ins/oilify/oilify.c:122
 msgid "Modify the specified drawable to resemble an oil painting"
-msgstr "Modifier l'image spécifiée pour qu'elle ressemble à une peinture à l'huile"
+msgstr ""
+"Modifier l'image spécifiée pour qu'elle ressemble à une peinture à l'huile"
 
 #: plug-ins/oilify/oilify.c:123
 msgid ""
 "This function performs the well-known oil-paint effect on the specified "
 "drawable.  The size of the input mask is specified by 'mask_size'."
-msgstr "Cette fonction applique l'effet classique de peinture à l'huile sur l'image spécifiée. La taille du masque d'entrée est spécifiée par 'mask_size'."
+msgstr ""
+"Cette fonction applique l'effet classique de peinture à l'huile sur l'image "
+"spécifiée. La taille du masque d'entrée est spécifiée par 'mask_size'."
 
 #: plug-ins/oilify/oilify.c:127
 msgid "<Image>/Filters/Artistic/Oilify"
@@ -2407,7 +2637,9 @@ msgstr "enregistre le fichier au format PostScript"
 #: plug-ins/ps/ps.c:344
 msgid ""
 "PostScript saving handles all image types except those with alpha channels."
-msgstr "La sauvegarde en PostScript gère tous les types d'images sauf ceux avec canaux alpha."
+msgstr ""
+"La sauvegarde en PostScript gère tous les types d'images sauf ceux avec "
+"canaux alpha."
 
 #: plug-ins/ps/ps.c:549
 msgid "PS: can't open file for reading"
@@ -2584,7 +2816,9 @@ msgstr "Charger un fichier au format bitmap X10 ou X11 (XBM)"
 msgid ""
 "Load a file in X10 or X11 bitmap (XBM) file format.  XBM is a lossless "
 "format for flat black-and-white (two color indexed) images."
-msgstr "Charge un fichier au format bitmap X10 ou X11. XBM est un format sans perte pour des images mono-calque, noir & blanc (2 couleurs indexées)."
+msgstr ""
+"Charge un fichier au format bitmap X10 ou X11. XBM est un format sans perte "
+"pour des images mono-calque, noir & blanc (2 couleurs indexées)."
 
 #: plug-ins/xbm/xbm.c:230
 msgid "Made with Gimp"
@@ -2667,7 +2901,9 @@ msgstr "charge les fichiers enregistrés au format xpm"
 
 #: plug-ins/xpm/xpm.c:182
 msgid "saves files in the xpm file format (if you're on a 16 bit display...)"
-msgstr "enregistre le fichier au format xpm (si vous êtes sur un affichage 16 bits...)"
+msgstr ""
+"enregistre le fichier au format xpm (si vous êtes sur un affichage 16 "
+"bits...)"
 
 #: plug-ins/xpm/xpm.c:756
 msgid "Save as Xpm"
@@ -2687,7 +2923,9 @@ msgstr "enregistre le fichier au format XWD"
 
 #: plug-ins/xwd/xwd.c:235
 msgid "XWD saving handles all image types except those with alpha channels."
-msgstr "La sauvegarde au format XWD gère tous les types d'images, sauf ceux avec des canaux alpha."
+msgstr ""
+"La sauvegarde au format XWD gère tous les types d'images, sauf ceux avec des "
+"canaux alpha."
 
 #: plug-ins/xwd/xwd.c:331
 msgid "can't open file for reading"
@@ -2722,7 +2960,8 @@ msgstr ""
 
 #: plug-ins/xwd/xwd.c:476
 msgid "XWD save cannot handle images with alpha channels"
-msgstr "Il est impossible de sauver des images avec canaux alpha au format XWD."
+msgstr ""
+"Il est impossible de sauver des images avec canaux alpha au format XWD."
 
 #: plug-ins/xwd/xwd.c:487
 msgid "cannot operate on unknown image types"
@@ -2752,3 +2991,6 @@ msgstr "Erreur durant l'écriture d'une image indexée ou tons de gris"
 #: plug-ins/xwd/xwd.c:2067
 msgid "Error during writing rgb image"
 msgstr "Erreur durant l'écriture de l'image rgb"
+
+#~ msgid "N/A"
+#~ msgstr "N/C"

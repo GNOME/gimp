@@ -1,3 +1,7 @@
+Sat Jun  5 17:03:15 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* Made 1.1.6 release
+
 1999-06-05  Raja R Harinath  <harinath@cs.umn.edu>
 
 	* plug-ins/xjt/Makefile.am (INCLUDES): Reorder to include
