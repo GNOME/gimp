@@ -142,36 +142,6 @@ gimp_layer_mode_effects_get_type (void)
   return type;
 }
 
-GType
-gimp_transfer_mode_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_SHADOWS, "GIMP_SHADOWS", "shadows" },
-    { GIMP_MIDTONES, "GIMP_MIDTONES", "midtones" },
-    { GIMP_HIGHLIGHTS, "GIMP_HIGHLIGHTS", "highlights" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_SHADOWS, N_("Shadows"), NULL },
-    { GIMP_MIDTONES, N_("Midtones"), NULL },
-    { GIMP_HIGHLIGHTS, N_("Highlights"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpTransferMode", values);
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
 
 /* Generated data ends here */
 
