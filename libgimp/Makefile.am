@@ -24,6 +24,71 @@ EXTRA_DIST = \
 lib_LTLIBRARIES = libgimp.la libgimpui.la
 noinst_LIBRARIES = libgimpi.a
 
+PDB_WRAPPERS_C = \
+	gimpbrushes_pdb.c		\
+	gimpbrushselect_pdb.c		\
+	gimpchannel_pdb.c		\
+	gimpchannelops_pdb.c		\
+	gimpcolor_pdb.c			\
+	gimpconvert_pdb.c		\
+	gimpdisplay_pdb.c		\
+	gimpdrawable_pdb.c		\
+	gimpedit_pdb.c			\
+	gimpfileops_pdb.c		\
+	gimpfloatingsel_pdb.c		\
+	gimpgimprc_pdb.c		\
+	gimpgradient_pdb.c		\
+	gimpgradientselect_pdb.c	\
+	gimpguides_pdb.c		\
+	gimphelp_pdb.c			\
+	gimpimage_pdb.c			\
+	gimplayer_pdb.c			\
+	gimpmessage_pdb.c		\
+	gimppalette_pdb.c		\
+	gimpparasite_pdb.c		\
+	gimppatterns_pdb.c		\
+	gimppatternselect_pdb.c		\
+	gimpplugin_pdb.c		\
+	gimpproceduraldb_pdb.c		\
+	gimpselection_pdb.c		\
+	gimptexttool_pdb.c		\
+	gimptools_pdb.c			\
+	gimpundo_pdb.c			\
+	gimpunit_pdb.c
+
+PDB_WRAPPERS_H = \
+	gimp_pdb.h			\
+	gimpbrushes_pdb.h		\
+	gimpbrushselect_pdb.h		\
+	gimpchannel_pdb.h		\
+	gimpchannelops_pdb.h		\
+	gimpcolor_pdb.h			\
+	gimpconvert_pdb.h		\
+	gimpdisplay_pdb.h		\
+	gimpdrawable_pdb.h		\
+	gimpedit_pdb.h			\
+	gimpfileops_pdb.h		\
+	gimpfloatingsel_pdb.h		\
+	gimpgimprc_pdb.h		\
+	gimpgradient_pdb.h		\
+	gimpgradientselect_pdb.h	\
+	gimpguides_pdb.h		\
+	gimphelp_pdb.h			\
+	gimpimage_pdb.h			\
+	gimplayer_pdb.h			\
+	gimpmessage_pdb.h		\
+	gimppalette_pdb.h		\
+	gimpparasite_pdb.h		\
+	gimppatterns_pdb.h		\
+	gimppatternselect_pdb.h		\
+	gimpplugin_pdb.h		\
+	gimpproceduraldb_pdb.h		\
+	gimpselection_pdb.h		\
+	gimptexttool_pdb.h		\
+	gimptools_pdb.h			\
+	gimpundo_pdb.h			\
+	gimpunit_pdb.h
+
 libgimpi_a_SOURCES = \
 	gimpenv.c		\
 	gimpenv.h		\
@@ -80,71 +145,35 @@ endif
 libgimp_la_SOURCES = \
 	gimp.c			\
 	gimp.h			\
-	gimp_pdb.h		\
-	gimpbrushes_pdb.c	\
-	gimpbrushes_pdb.h	\
-	gimpbrushselect_pdb.c	\
-	gimpbrushselect_pdb.h	\
-	gimpchannel_pdb.c	\
-	gimpchannel_pdb.h	\
+	${PDB_WRAPPERS_C}	\
+	${PDB_WRAPPERS_H}	\
 	gimpcolorspace.c	\
 	gimpcolorspace.h	\
-	gimpconvert_pdb.c	\
-	gimpconvert_pdb.h	\
-	gimpdisplay_pdb.c	\
-	gimpdisplay_pdb.h	\
 	gimpdrawable.c		\
 	gimpdrawable.h		\
-	gimpdrawable_pdb.c	\
-	gimpdrawable_pdb.h	\
 	gimpenv.c		\
 	gimpenv.h		\
-	gimpfileops_pdb.c	\
-	gimpfileops_pdb.h	\
-	gimpgradient_pdb.c	\
-	gimpgradient_pdb.h	\
-	gimpgradientselect_pdb.c	\
-	gimpgradientselect_pdb.h	\
-	gimpguides_pdb.c	\
-	gimpguides_pdb.h	\
+	gimpgradientselect.c	\
+	gimpgradientselect.h	\
 	gimphelp.c		\
-	gimphelp_pdb.c		\
-	gimphelp_pdb.h		\
-	gimpimage_pdb.c		\
-	gimpimage_pdb.h		\
-	gimplayer_pdb.c		\
-	gimplayer_pdb.h		\
+	gimpimage.c		\
+	gimpimage.h		\
 	gimpmatrix.c		\
 	gimpmatrix.h		\
-	gimpmessage_pdb.c	\
-	gimpmessage_pdb.h	\
-	gimppalette_pdb.c	\
 	gimpparasite.c		\
 	gimpparasite.h		\
 	gimpparasiteio.c	\
 	gimpparasiteio.h	\
-	gimpparasite_pdb.c	\
-	gimpparasite_pdb.h	\
-	gimppatterns_pdb.c	\
-	gimppatterns_pdb.h	\
-	gimppatternselect_pdb.c	\
-	gimppatternselect_pdb.h	\
 	gimppixelrgn.c		\
 	gimppixelrgn.h		\
-	gimpplugin_pdb.c	\
-	gimpplugin_pdb.h	\
-	gimpproceduraldb_pdb.c	\
-	gimpproceduraldb_pdb.h	\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
-	gimpselection_pdb.c	\
-	gimpselection_pdb.h	\
+	gimpselection.c		\
+	gimpselection.h		\
 	gimpsignal.c		\
 	gimpsignal.h		\
 	gimptile.c		\
 	gimptile.h		\
-	gimpunit_pdb.c		\
-	gimpunit_pdb.h		\
 	gimpunit.c		\
 	gimpunit.h		\
 	gimputils.c		\
@@ -178,26 +207,7 @@ libgimpui_la_SOURCES = \
 
 gimpinclude_HEADERS = \
 	gimp.h			\
-	gimp_pdb.h		\
-	gimpbrushes_pdb.h	\
-	gimpbrushselect_pdb.h	\
-	gimpchannel_pdb.h	\
-	gimpconvert_pdb.h	\
-	gimpdisplay_pdb.h	\
-	gimpdrawable_pdb.h	\
-	gimpfileops_pdb.h	\
-	gimpgradient_pdb.h	\
-	gimpgradientselect_pdb.h	\
-	gimpguides_pdb.h	\
-	gimphelp_pdb.h		\
-	gimpimage_pdb.h		\
-	gimplayer_pdb.h		\
-	gimpmessage_pdb.h	\
-	gimppalette_pdb.h	\
-	gimpparasite_pdb.h	\
-	gimpplugin_pdb.h	\
-	gimpproceduraldb_pdb.h	\
-	gimpselection_pdb.h	\
+	${PDB_WRAPPERS_H}	\
 	gimpchainbutton.h	\
 	gimpcolorbutton.h	\
 	gimpcolordisplay.h	\
@@ -211,7 +221,9 @@ gimpinclude_HEADERS = \
 	gimpexport.h		\
 	gimpfeatures.h		\
 	gimpfileselection.h	\
+	gimpgradientselect.h	\
 	gimphelpui.h		\
+	gimpimage.h		\
 	gimplimits.h		\
 	gimpmath.h		\
 	gimpmatrix.h		\
@@ -220,11 +232,10 @@ gimpinclude_HEADERS = \
 	gimpparasite.h		\
 	gimpparasiteio.h	\
 	gimppatheditor.h	\
-	gimppatterns_pdb.h	\
-	gimppatternselect_pdb.h	\
 	gimppixelrgn.h		\
 	gimppixmap.h		\
 	gimpquerybox.h		\
+	gimpselection.h		\
 	gimpsignal.h		\
 	gimpsizeentry.h		\
 	gimptile.h		\

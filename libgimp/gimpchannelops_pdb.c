@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimpdisplay_pdb.c
+ * gimpchannelops_pdb.c
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,49 +23,44 @@
 
 #include "gimp.h"
 
-gint32
-gimp_display_new (gint32 image_ID)
+void
+gimp_channel_ops_offset (gint32                drawable_ID,
+			 gboolean              wrap_around,
+			 GimpChannelOffsetType fill_type,
+			 gint                  offset_x,
+			 gint                  offset_y)
 {
   GParam *return_vals;
   gint nreturn_vals;
-  gint32 display_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_display_new",
+  return_vals = gimp_run_procedure ("gimp_channel_ops_offset",
+				    &nreturn_vals,
+				    PARAM_DRAWABLE, drawable_ID,
+				    PARAM_INT32, wrap_around,
+				    PARAM_INT32, fill_type,
+				    PARAM_INT32, offset_x,
+				    PARAM_INT32, offset_y,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+gint32
+gimp_channel_ops_duplicate (gint32 image_ID)
+{
+  GParam *return_vals;
+  gint nreturn_vals;
+  gint32 new_image_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp_channel_ops_duplicate",
 				    &nreturn_vals,
 				    PARAM_IMAGE, image_ID,
 				    PARAM_END);
 
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    display_ID = return_vals[1].data.d_display;
+    new_image_ID = return_vals[1].data.d_image;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return display_ID;
-}
-
-void
-gimp_display_delete (gint32 display_ID)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-
-  return_vals = gimp_run_procedure ("gimp_display_delete",
-				    &nreturn_vals,
-				    PARAM_DISPLAY, display_ID,
-				    PARAM_END);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-}
-
-void
-gimp_displays_flush (void)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-
-  return_vals = gimp_run_procedure ("gimp_displays_flush",
-				    &nreturn_vals,
-				    PARAM_END);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
+  return new_image_ID;
 }

@@ -99,7 +99,7 @@ static ProcRecord image_get_layer_by_tattoo_proc;
 static ProcRecord image_get_channel_by_tattoo_proc;
 
 void
-register_gimage_procs (void)
+register_image_procs (void)
 {
   procedural_db_register (&image_list_proc);
   procedural_db_register (&image_new_proc);

@@ -1537,7 +1537,7 @@ sub ink {
 	    paintbrush paintbrush_default
 	    pencil perspective rect_select rotate scale shear
 	    smudge smudge_default transform_2d);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Tool procedures';
 

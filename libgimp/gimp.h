@@ -30,11 +30,14 @@
 #include <libgimp/gimpcolorspace.h>
 #include <libgimp/gimpdrawable.h>
 #include <libgimp/gimpfeatures.h>
+#include <libgimp/gimpgradientselect.h>
 #include <libgimp/gimpenv.h>
+#include <libgimp/gimpimage.h>
 #include <libgimp/gimplimits.h>
 #include <libgimp/gimpmath.h>
 #include <libgimp/gimpparasite.h>
 #include <libgimp/gimppixelrgn.h>
+#include <libgimp/gimpselection.h>
 #include <libgimp/gimptile.h>
 #include <libgimp/gimpunit.h>
 #include <libgimp/gimputils.h>
@@ -71,6 +74,8 @@ extern "C" {
 #define gimp_image_convert_grayscale  gimp_convert_grayscale
 #define gimp_image_convert_indexed    gimp_convert_indexed
 
+#define gimp_image_duplicate          gimp_channel_ops_duplicate
+#define gimp_drawable_offset          gimp_channel_ops_offset
 
 GIMPVAR guint gimp_major_version;
 GIMPVAR guint gimp_minor_version;
@@ -153,6 +158,7 @@ union _GimpParamData
   gint32            d_selection;
   gint32            d_boundary;
   gint32            d_path;
+  gint32            d_unit;
   GimpParasite      d_parasite;
   gint32            d_tattoo;
   gint32            d_status;

@@ -168,7 +168,7 @@ HELP
 $extra{app}->{decls} = "extern TileManager *global_buf;\n";
 
 @procs = qw(edit_cut edit_copy edit_paste edit_clear edit_fill edit_stroke);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Edit procedures';
 

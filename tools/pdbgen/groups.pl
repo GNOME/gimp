@@ -6,18 +6,17 @@
     channel_ops
     color
     convert
+    display
     drawable
     edit
     fileops
     floating_sel
-    gdisplay
-    gimage
-    gimage_mask
     gimprc
     gradient
     gradient_select
     guides
     help
+    image
     layer
     message
     misc
@@ -28,6 +27,7 @@
     patterns
     plug_in
     procedural_db
+    selection
     text_tool
     tools
     undo

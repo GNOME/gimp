@@ -27,7 +27,7 @@ static ProcRecord display_delete_proc;
 static ProcRecord displays_flush_proc;
 
 void
-register_gdisplay_procs (void)
+register_display_procs (void)
 {
   procedural_db_register (&display_new_proc);
   procedural_db_register (&display_delete_proc);

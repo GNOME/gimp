@@ -42,7 +42,6 @@ app/fuzzy_select.c
 app/gdisplay.c
 app/gdisplay_color_ui.c
 app/gdisplay_ops.c
-app/gimage_cmds.c
 app/gimage_mask.c
 app/gimpbrush.c
 app/gimpbrushlist.c
@@ -59,6 +58,7 @@ app/gradient.c
 app/gradient_select.c
 app/histogram_tool.c
 app/hue_saturation.c
+app/image_cmds.c
 app/image_new.c
 app/indicator_area.c
 app/info_dialog.c

@@ -74,10 +74,10 @@ gimp_gradients_set_popup (gchar *gradients_callback,
 }
 
 gchar *
-gimp_gradients_get_gradient_data (gchar    *name,
-				  gint      sample_size,
-				  gint     *width,
-				  gdouble **grad_data)
+_gimp_gradients_get_gradient_data (gchar    *name,
+				   gint      sample_size,
+				   gint     *width,
+				   gdouble **grad_data)
 {
   GParam *return_vals;
   gint nreturn_vals;

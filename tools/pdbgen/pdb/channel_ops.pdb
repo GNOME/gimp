@@ -87,7 +87,7 @@ CODE
 }
 
 @procs = qw(channel_ops_offset channel_ops_duplicate);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Channel Ops';
 

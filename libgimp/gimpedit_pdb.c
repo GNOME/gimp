@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimpselection_pdb.c
+ * gimpedit_pdb.c
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,92 +23,95 @@
 
 #include "gimp.h"
 
-gboolean
-gimp_selection_bounds (gint32    image_ID,
-		       gboolean *non_empty,
-		       gint     *x1,
-		       gint     *y1,
-		       gint     *x2,
-		       gint     *y2)
+void
+gimp_edit_cut (gint32 drawable_ID)
 {
   GParam *return_vals;
   gint nreturn_vals;
-  gboolean success;
 
-  return_vals = gimp_run_procedure ("gimp_selection_bounds",
-				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_END);
-
-  success = FALSE;
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    {
-      success = TRUE;
-
-      *non_empty = return_vals[1].data.d_int32;
-      *x1 = return_vals[2].data.d_int32;
-      *y1 = return_vals[3].data.d_int32;
-      *x2 = return_vals[4].data.d_int32;
-      *y2 = return_vals[5].data.d_int32;
-    }
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-gboolean
-gimp_selection_is_empty (gint32 image_ID)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-  gboolean is_empty = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_selection_is_empty",
-				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_END);
-
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    is_empty = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return is_empty;
-}
-
-gint32
-_gimp_selection_float (gint32 drawable_ID,
-		       gint   offx,
-		       gint   offy)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-  gint32 layer_ID = -1;
-
-  return_vals = gimp_run_procedure ("gimp_selection_float",
+  return_vals = gimp_run_procedure ("gimp_edit_cut",
 				    &nreturn_vals,
 				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, offx,
-				    PARAM_INT32, offy,
 				    PARAM_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    layer_ID = return_vals[1].data.d_layer;
-
   gimp_destroy_params (return_vals, nreturn_vals);
-
-  return layer_ID;
 }
 
 void
-gimp_selection_none (gint32 image_ID)
+gimp_edit_copy (gint32 drawable_ID)
 {
   GParam *return_vals;
   gint nreturn_vals;
 
-  return_vals = gimp_run_procedure ("gimp_selection_none",
+  return_vals = gimp_run_procedure ("gimp_edit_copy",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
+				    PARAM_DRAWABLE, drawable_ID,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+gint32
+gimp_edit_paste (gint32   drawable_ID,
+		 gboolean paste_into)
+{
+  GParam *return_vals;
+  gint nreturn_vals;
+  gint32 floating_sel_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp_edit_paste",
+				    &nreturn_vals,
+				    PARAM_DRAWABLE, drawable_ID,
+				    PARAM_INT32, paste_into,
+				    PARAM_END);
+
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+    floating_sel_ID = return_vals[1].data.d_layer;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return floating_sel_ID;
+}
+
+void
+gimp_edit_clear (gint32 drawable_ID)
+{
+  GParam *return_vals;
+  gint nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_edit_clear",
+				    &nreturn_vals,
+				    PARAM_DRAWABLE, drawable_ID,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+void
+gimp_edit_fill (gint32       drawable_ID,
+		GimpFillType fill_type)
+{
+  GParam *return_vals;
+  gint nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_edit_fill",
+				    &nreturn_vals,
+				    PARAM_DRAWABLE, drawable_ID,
+				    PARAM_INT32, fill_type,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+void
+gimp_edit_stroke (gint32 drawable_ID)
+{
+  GParam *return_vals;
+  gint nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_edit_stroke",
+				    &nreturn_vals,
+				    PARAM_DRAWABLE, drawable_ID,
 				    PARAM_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);

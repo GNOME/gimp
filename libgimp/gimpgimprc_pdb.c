@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimpdisplay_pdb.c
+ * gimpgimprc_pdb.c
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,49 +23,59 @@
 
 #include "gimp.h"
 
-gint32
-gimp_display_new (gint32 image_ID)
+gchar *
+gimp_gimprc_query (gchar *token)
 {
   GParam *return_vals;
   gint nreturn_vals;
-  gint32 display_ID = -1;
+  gchar *value = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_display_new",
+  return_vals = gimp_run_procedure ("gimp_gimprc_query",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
+				    PARAM_STRING, token,
 				    PARAM_END);
 
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    display_ID = return_vals[1].data.d_display;
+    value = g_strdup (return_vals[1].data.d_string);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return display_ID;
+  return value;
 }
 
 void
-gimp_display_delete (gint32 display_ID)
+gimp_gimprc_set (gchar *token,
+		 gchar *value)
 {
   GParam *return_vals;
   gint nreturn_vals;
 
-  return_vals = gimp_run_procedure ("gimp_display_delete",
+  return_vals = gimp_run_procedure ("gimp_gimprc_set",
 				    &nreturn_vals,
-				    PARAM_DISPLAY, display_ID,
+				    PARAM_STRING, token,
+				    PARAM_STRING, value,
 				    PARAM_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
 void
-gimp_displays_flush (void)
+gimp_get_monitor_resolution (gdouble *xres,
+			     gdouble *yres)
 {
   GParam *return_vals;
   gint nreturn_vals;
 
-  return_vals = gimp_run_procedure ("gimp_displays_flush",
+  return_vals = gimp_run_procedure ("gimp_get_monitor_resolution",
 				    &nreturn_vals,
 				    PARAM_END);
+
+  *xres = *yres = 1.0;
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+    {
+      *xres = return_vals[1].data.d_float;
+      *yres = return_vals[2].data.d_float;
+    }
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }

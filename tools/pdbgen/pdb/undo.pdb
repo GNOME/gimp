@@ -60,7 +60,7 @@ HELP
 @headers = qw("undo.h");
 
 @procs = qw(undo_push_group_start undo_push_group_end);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Undo';
 

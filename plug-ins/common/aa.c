@@ -42,8 +42,6 @@ static void       gimp2aa    (gint32      image,
 			      aa_context *context);
 
 static gint   type_dialog                 (int        selected);
-static void   type_dialog_ok_callback     (GtkWidget *widget,
-					   gpointer   data);
 static void   type_dialog_toggle_update   (GtkWidget *widget, 
 					   gpointer   data);
 static void   type_dialog_cancel_callback (GtkWidget *widget, 

@@ -765,7 +765,7 @@ CODE
 @procs = qw(brightness_contrast levels posterize desaturate equalize invert
 	    curves_spline curves_explicit color_balance histogram
 	    hue_saturation threshold);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Color';
 

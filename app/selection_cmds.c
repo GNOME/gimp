@@ -44,7 +44,7 @@ static ProcRecord selection_load_proc;
 static ProcRecord selection_save_proc;
 
 void
-register_gimage_mask_procs (void)
+register_selection_procs (void)
 {
   procedural_db_register (&selection_bounds_proc);
   procedural_db_register (&selection_value_proc);

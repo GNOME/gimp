@@ -383,7 +383,7 @@ text_xlfd_create (gchar    *foundry,
 CODE
 
 @procs = qw(text_fontname text_get_extents_fontname text text_get_extents);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Text procedures';
 

@@ -8,18 +8,17 @@ pdb_sources = \
 	pdb/channel_ops.pdb	\
 	pdb/color.pdb		\
 	pdb/convert.pdb		\
+	pdb/display.pdb		\
 	pdb/drawable.pdb	\
 	pdb/edit.pdb		\
 	pdb/fileops.pdb		\
 	pdb/floating_sel.pdb	\
-	pdb/gdisplay.pdb	\
-	pdb/gimage.pdb		\
-	pdb/gimage_mask.pdb	\
 	pdb/gimprc.pdb		\
 	pdb/gradient.pdb	\
 	pdb/gradient_select.pdb	\
 	pdb/guides.pdb		\
 	pdb/help.pdb		\
+	pdb/image.pdb		\
 	pdb/layer.pdb		\
 	pdb/message.pdb		\
 	pdb/misc.pdb		\
@@ -30,6 +29,7 @@ pdb_sources = \
 	pdb/patterns.pdb	\
 	pdb/plug_in.pdb		\
 	pdb/procedural_db.pdb	\
+	pdb/selection.pdb	\
 	pdb/text_tool.pdb	\
 	pdb/tools.pdb		\
 	pdb/undo.pdb		\

@@ -127,7 +127,7 @@ CODE
 @headers = qw("gimprc.h");
 
 @procs = qw(gimprc_query gimprc_set get_monitor_resolution);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Gimprc procedures';
 

@@ -1,3 +1,7 @@
+2000-06-01  Sven Neumann <sven@gimp.org>
+
+	* POTFILES.in: s/gimage_cmds/image_cmds/
+
 2000-05-31  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* ja.po: Updated translation.

@@ -121,6 +121,7 @@ gimp_SOURCES = \
 	dialog_handler.h	\
 	disp_callbacks.c	\
 	disp_callbacks.h	\
+	display_cmds.c		\
 	docindex.c		\
 	docindex.h		\
 	dodgeburn.c		\
@@ -168,17 +169,14 @@ gimp_SOURCES = \
 	gdisplay_color.h	\
 	gdisplay_color_ui.c	\
 	gdisplay_color_ui.h	\
-	gdisplay_cmds.c		\
 	gdisplay_ops.c		\
 	gdisplay_ops.h		\
 	general.c		\
 	general.h		\
 	gimage.c		\
 	gimage.h		\
-	gimage_cmds.c		\
 	gimage_mask.c		\
 	gimage_mask.h		\
-	gimage_mask_cmds.c	\
 	gimpbrush.c		\
 	gimpbrush.h		\
 	gimpbrushgenerated.c	\
@@ -246,6 +244,7 @@ gimp_SOURCES = \
 	histogram_tool.h	\
 	hue_saturation.c	\
 	hue_saturation.h	\
+	image_cmds.c		\
 	image_map.c		\
 	image_map.h		\
 	image_new.c		\
@@ -380,6 +379,7 @@ gimp_SOURCES = \
 	scroll.h		\
 	selection.c		\
 	selection.h		\
+	selection_cmds.c	\
 	selection_options.h	\
 	session.h		\
 	session.c		\

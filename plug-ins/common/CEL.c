@@ -517,7 +517,7 @@ save_image (gchar  *file,
   header[4]= 0x20;
 
   /* Work out whether to save as 8bit or 4bit */
-  gimp_image_get_cmap (image, &colours);
+  g_free (gimp_image_get_cmap (image, &colours));
   if (colours > 15)
     {
       header[5] = 8;

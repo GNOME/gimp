@@ -147,7 +147,7 @@ HELP
 
 @procs = qw(floating_sel_remove floating_sel_anchor floating_sel_to_layer
 	    floating_sel_attach floating_sel_rigor floating_sel_relax);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Floating selections';
 
