@@ -122,7 +122,6 @@ GPlugInInfo PLUG_IN_INFO =
 static TiffSaveVals tsvals =
 {
   COMPRESSION_LZW,    /*  compression  */
-  FILLORDER_LSB2MSB,  /*  fillorder    */
 };
 
 static TiffSaveInterface tsint =
@@ -158,7 +157,6 @@ query ()
     { PARAM_STRING, "filename", "The name of the file to save the image in" },
     { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
     { PARAM_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2)" },
-    { PARAM_INT32, "fillorder", "Fill Order: { MSB to LSB (0), LSB to MSB (1)" }
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -260,7 +258,6 @@ run (char    *name,
 	  if (parasite)
 	  {
 	    tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
-	    tsvals.fillorder   = ((TiffSaveVals *)parasite->data)->fillorder;
 	  }
 	  parasite_free(parasite);
 #endif /* GIMP_HAVE_PARASITES */
@@ -272,7 +269,7 @@ run (char    *name,
 
 	case RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
-	  if (nparams != 7)
+	  if (nparams != 6)
 	    status = STATUS_CALLING_ERROR;
 	  if (status == STATUS_SUCCESS)
 	    {
@@ -281,12 +278,6 @@ run (char    *name,
 		case 0: tsvals.compression = COMPRESSION_NONE;     break;
 		case 1: tsvals.compression = COMPRESSION_LZW;      break;
 		case 2: tsvals.compression = COMPRESSION_PACKBITS; break;
-		default: status = STATUS_CALLING_ERROR; break;
-		}
-	      switch (param[6].data.d_int32)
-		{
-		case 0: tsvals.fillorder = FILLORDER_MSB2LSB; break;
-		case 1: tsvals.fillorder = FILLORDER_LSB2MSB; break;
 		default: status = STATUS_CALLING_ERROR; break;
 		}
 	    }
@@ -300,7 +291,6 @@ run (char    *name,
 	  if (parasite)
 	  {
 	    tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
-	    tsvals.fillorder   = ((TiffSaveVals *)parasite->data)->fillorder;
 	  }
 	  parasite_free(parasite);
 #endif /* GIMP_HAVE_PARASITES */
@@ -439,10 +429,6 @@ static gint32 load_image (char *filename) {
     save_vals.compression = COMPRESSION_NONE;
   else
     save_vals.compression = tmp;
-  if (!TIFFGetField (tif, TIFFTAG_FILLORDER, &tmp))
-    save_vals.fillorder = FILLORDER_LSB2MSB;
-  else
-    save_vals.fillorder = tmp;
 #ifdef GIMP_HAVE_PARASITES
   parasite = parasite_new("tiff-save-options", 0,
 			  sizeof(save_vals), &save_vals);
@@ -1095,7 +1081,6 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
   long g3options;
   long rowsperstrip;
   unsigned short compression;
-  unsigned short fillorder;
   unsigned short extra_samples[1];
   int alpha;
   short predictor;
@@ -1115,7 +1100,6 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
   char *name;
 
   compression = tsvals.compression;
-  fillorder = tsvals.fillorder;
 
   g3options = 0;
   predictor = 0;
@@ -1212,7 +1196,6 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
       TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, 1, extra_samples);
     }
   TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, photometric);
-  TIFFSetField (tif, TIFFTAG_FILLORDER, fillorder);
   TIFFSetField (tif, TIFFTAG_DOCUMENTNAME, filename);
   TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, samplesperpixel);
   TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, rowsperstrip);
@@ -1360,8 +1343,6 @@ save_dialog ()
   gint use_none = (tsvals.compression == COMPRESSION_NONE);
   gint use_lzw = (tsvals.compression == COMPRESSION_LZW);
   gint use_packbits = (tsvals.compression == COMPRESSION_PACKBITS);
-  gint use_lsb2msb = (tsvals.fillorder == FILLORDER_LSB2MSB);
-  gint use_msb2lsb = (tsvals.fillorder == FILLORDER_MSB2LSB);
 
   argc = 1;
   argv = g_new (gchar *, 1);
@@ -1438,38 +1419,6 @@ save_dialog ()
   gtk_widget_show (toggle_vbox);
   gtk_widget_show (frame);
 
-  /*  fillorder  */
-  frame = gtk_frame_new ("Fill Order");
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
-  toggle_vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
-  gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
-
-  group = NULL;
-  toggle = gtk_radio_button_new_with_label (group, "LSB to MSB (PC)");
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) save_toggle_update,
-		      &use_lsb2msb);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_lsb2msb);
-  gtk_widget_show (toggle);
-
-  toggle = gtk_radio_button_new_with_label (group, "MSB to LSB (Mac)");
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) save_toggle_update,
-		      &use_msb2lsb);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_msb2lsb);
-  gtk_widget_show (toggle);
-
-  gtk_widget_show (toggle_vbox);
-  gtk_widget_show (frame);
-
-
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, TRUE, 0);
   gtk_widget_show (hbox);
 
@@ -1507,11 +1456,6 @@ save_dialog ()
     tsvals.compression = COMPRESSION_LZW;
   else if (use_packbits)
     tsvals.compression = COMPRESSION_PACKBITS;
-
-  if (use_lsb2msb)
-    tsvals.fillorder = FILLORDER_LSB2MSB;
-  else if (use_msb2lsb)
-    tsvals.fillorder = FILLORDER_MSB2LSB;
 
   return tsint.run;
 }
