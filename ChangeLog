@@ -1,3 +1,8 @@
+2005-02-16  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimpclonetool.[ch]: make sure clone source is
+	shown in correct display, fixes bug #167002.
+
 2005-02-16  Sven Neumann  <sven@gimp.org>
 
 	* app/base/pixel-processor.[ch]: added a variant of

@@ -152,9 +152,23 @@ gimp_clone_tool_button_press (GimpTool        *tool,
                               GimpDisplay     *gdisp)
 {
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpCloneTool *clone_tool = GIMP_CLONE_TOOL (tool);
 
   if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
-    GIMP_CLONE (paint_tool->core)->set_source = TRUE;
+    {
+      GIMP_CLONE (paint_tool->core)->set_source = TRUE;
+
+      if (gdisp != clone_tool->src_gdisp)
+        {
+          if (clone_tool->src_gdisp)
+            g_object_remove_weak_pointer (G_OBJECT (clone_tool->src_gdisp),
+                                          (gpointer *) &clone_tool->src_gdisp);
+
+          clone_tool->src_gdisp = gdisp;
+          g_object_add_weak_pointer (G_OBJECT (gdisp),
+                                     (gpointer *) &clone_tool->src_gdisp);
+        }
+    }
   else
     GIMP_CLONE (paint_tool->core)->set_source = FALSE;
 
@@ -230,18 +244,26 @@ gimp_clone_tool_draw (GimpDrawTool *draw_tool)
 
       if (options->clone_type == GIMP_IMAGE_CLONE && clone->src_drawable)
         {
-          gint off_x;
-          gint off_y;
+          gint           off_x;
+          gint           off_y;
+          GimpDisplay   *tmp_gdisp;
+          GimpCloneTool *clone_tool = GIMP_CLONE_TOOL (draw_tool);
 
           gimp_item_offsets (GIMP_ITEM (clone->src_drawable), &off_x, &off_y);
 
-          gimp_draw_tool_draw_handle (draw_tool,
-                                      GIMP_HANDLE_CROSS,
-                                      clone->src_x + off_x,
-                                      clone->src_y + off_y,
-                                      TARGET_WIDTH, TARGET_WIDTH,
-                                      GTK_ANCHOR_CENTER,
-                                      FALSE);
+          tmp_gdisp = draw_tool->gdisp;
+          draw_tool->gdisp = clone_tool->src_gdisp;
+
+          if (draw_tool->gdisp)
+            gimp_draw_tool_draw_handle (draw_tool,
+                                        GIMP_HANDLE_CROSS,
+                                        clone->src_x + off_x,
+                                        clone->src_y + off_y,
+                                        TARGET_WIDTH, TARGET_WIDTH,
+                                        GTK_ANCHOR_CENTER,
+                                        FALSE);
+
+          draw_tool->gdisp = tmp_gdisp;
         }
     }
 
