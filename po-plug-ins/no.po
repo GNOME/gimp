@@ -5,238 +5,238 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 1999-08-23 23:07+0200\n"
-"PO-Revision-Date: 1999-08-23 23:29+02:00\n"
+"POT-Creation-Date: 1999-09-06 21:35+0200\n"
+"PO-Revision-Date: 1999-09-06 22:41+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: plug-ins/common/CML_explorer.c:226
+#: plug-ins/common/CML_explorer.c:223
 msgid "Keep image's values"
 msgstr "Behold bildets verdier"
 
-#: plug-ins/common/CML_explorer.c:228
+#: plug-ins/common/CML_explorer.c:225
 msgid "Keep the first value"
 msgstr "Behold første verdi"
 
-#: plug-ins/common/CML_explorer.c:230
+#: plug-ins/common/CML_explorer.c:227
 msgid "Fill with parameter k"
 msgstr "Fyll med parameter k"
 
-#: plug-ins/common/CML_explorer.c:232
+#: plug-ins/common/CML_explorer.c:229
 msgid "k{x(1-x)}^p"
 msgstr "k{x(1-x)}^p"
 
-#: plug-ins/common/CML_explorer.c:234
+#: plug-ins/common/CML_explorer.c:231
 msgid "k{x(1-x)}^p stepped"
 msgstr "k{x(1-x)}^p stegvis"
 
-#: plug-ins/common/CML_explorer.c:236
+#: plug-ins/common/CML_explorer.c:233
 msgid "kx^p"
 msgstr "kx^p"
 
-#: plug-ins/common/CML_explorer.c:238
+#: plug-ins/common/CML_explorer.c:235
 msgid "kx^p stepped"
 msgstr "kx^p stegvis"
 
-#: plug-ins/common/CML_explorer.c:240
+#: plug-ins/common/CML_explorer.c:237
 msgid "k(1 - x^p)"
 msgstr "k(1 - x^p)"
 
-#: plug-ins/common/CML_explorer.c:242
+#: plug-ins/common/CML_explorer.c:239
 msgid "k(1 - x^p) stepped"
 msgstr "k(1 - x^p) stegvis"
 
-#: plug-ins/common/CML_explorer.c:244
+#: plug-ins/common/CML_explorer.c:241
 msgid "Delta function"
 msgstr "Deltafunksjon"
 
-#: plug-ins/common/CML_explorer.c:246
+#: plug-ins/common/CML_explorer.c:243
 msgid "Delta function stepped"
 msgstr "Deltafunksjon stegvis"
 
-#: plug-ins/common/CML_explorer.c:248
+#: plug-ins/common/CML_explorer.c:245
 msgid "sin^p-based function"
 msgstr "sin^p-basert funksjon"
 
-#: plug-ins/common/CML_explorer.c:250
+#: plug-ins/common/CML_explorer.c:247
 msgid "sin^p, stepped"
 msgstr "sin^p, stegvis"
 
-#: plug-ins/common/CML_explorer.c:256
+#: plug-ins/common/CML_explorer.c:253
 msgid "None"
 msgstr "Ingen"
 
-#: plug-ins/common/CML_explorer.c:258
+#: plug-ins/common/CML_explorer.c:255
 msgid "Max (x, -)"
 msgstr "Maks (x, -)"
 
-#: plug-ins/common/CML_explorer.c:260
+#: plug-ins/common/CML_explorer.c:257
 msgid "Max (x+d, -)"
 msgstr "Maks (x+d, -)"
 
-#: plug-ins/common/CML_explorer.c:262
+#: plug-ins/common/CML_explorer.c:259
 msgid "Max (x-d, -)"
 msgstr "Maks (x-d, -)"
 
-#: plug-ins/common/CML_explorer.c:264
+#: plug-ins/common/CML_explorer.c:261
 msgid "Min (x, -)"
 msgstr "Min (x, -)"
 
-#: plug-ins/common/CML_explorer.c:266
+#: plug-ins/common/CML_explorer.c:263
 msgid "Min (x+d, -)"
 msgstr "Min (x+d, -)"
 
-#: plug-ins/common/CML_explorer.c:268
+#: plug-ins/common/CML_explorer.c:265
 msgid "Min (x-d, -)"
 msgstr "Min (x-d, -)"
 
-#: plug-ins/common/CML_explorer.c:270
+#: plug-ins/common/CML_explorer.c:267
 msgid "Max (x+d, -), (x < 0.5)"
 msgstr "Maks (x+d, -), (x < 0.5)"
 
-#: plug-ins/common/CML_explorer.c:272
+#: plug-ins/common/CML_explorer.c:269
 msgid "Max (x+d, -), (0.5 < x)"
 msgstr "Maks (x+d, -), (0.5 < x)"
 
-#: plug-ins/common/CML_explorer.c:274
+#: plug-ins/common/CML_explorer.c:271
 msgid "Max (x-d, -), (x < 0.5)"
 msgstr "Maks (x-d, -), (x < 0.5)"
 
-#: plug-ins/common/CML_explorer.c:276
+#: plug-ins/common/CML_explorer.c:273
 msgid "Max (x-d, -), (0.5 < x)"
 msgstr "Maks (x-d, -), (0.5 < x)"
 
-#: plug-ins/common/CML_explorer.c:278
+#: plug-ins/common/CML_explorer.c:275
 msgid "Min (x+d, -), (x < 0.5)"
 msgstr "Min (x+d, -), (x < 0.5)"
 
-#: plug-ins/common/CML_explorer.c:280
+#: plug-ins/common/CML_explorer.c:277
 msgid "Min (x+d, -), (0.5 < x)"
 msgstr "Min (x+d, -), (0.5 < x)"
 
-#: plug-ins/common/CML_explorer.c:282
+#: plug-ins/common/CML_explorer.c:279
 msgid "Min (x-d, -), (x < 0.5)"
 msgstr "Min (x-d, -), (x < 0.5)"
 
-#: plug-ins/common/CML_explorer.c:284
+#: plug-ins/common/CML_explorer.c:281
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0.5 < x)"
 
-#: plug-ins/common/CML_explorer.c:290
+#: plug-ins/common/CML_explorer.c:287
 msgid "Standard"
 msgstr "Standard"
 
-#: plug-ins/common/CML_explorer.c:292
+#: plug-ins/common/CML_explorer.c:289
 msgid "Use average value"
 msgstr "Bruk snittverdi"
 
-#: plug-ins/common/CML_explorer.c:294
+#: plug-ins/common/CML_explorer.c:291
 msgid "Use reverse value"
 msgstr "Bruk reversert verdi"
 
-#: plug-ins/common/CML_explorer.c:296
+#: plug-ins/common/CML_explorer.c:293
 msgid "With random power (0,10)"
 msgstr "Med vilkårlig potens (0,10)"
 
-#: plug-ins/common/CML_explorer.c:298
+#: plug-ins/common/CML_explorer.c:295
 msgid "With random power (0,1)"
 msgstr "Med vilkårlig potens (0,1)"
 
-#: plug-ins/common/CML_explorer.c:300
+#: plug-ins/common/CML_explorer.c:297
 msgid "With gradient power (0,1)"
 msgstr "Med gradient styrke (0,1)"
 
-#: plug-ins/common/CML_explorer.c:302
+#: plug-ins/common/CML_explorer.c:299
 msgid "Multiply rand. value (0,1)"
 msgstr "Multipliser rand. verdi (0,1)"
 
-#: plug-ins/common/CML_explorer.c:304
+#: plug-ins/common/CML_explorer.c:301
 msgid "Multiply rand. value (0,2)"
 msgstr "Multipliser rand. verdi (0,2)"
 
-#: plug-ins/common/CML_explorer.c:306
+#: plug-ins/common/CML_explorer.c:303
 msgid "Multiply gradient (0,1)"
 msgstr "Multipliser gradient (0,1)"
 
-#: plug-ins/common/CML_explorer.c:308
+#: plug-ins/common/CML_explorer.c:305
 msgid "With p and random (0,1)"
 msgstr "Med p og random (0,1)"
 
-#: plug-ins/common/CML_explorer.c:313
+#: plug-ins/common/CML_explorer.c:310
 msgid "All black"
 msgstr "Bare sort"
 
 #. 0
-#: plug-ins/common/CML_explorer.c:314
+#: plug-ins/common/CML_explorer.c:311
 msgid "All gray"
 msgstr "Bare grå"
 
 #. 1
-#: plug-ins/common/CML_explorer.c:315
+#: plug-ins/common/CML_explorer.c:312
 msgid "All white"
 msgstr "Bare hvit"
 
 #. 2
-#: plug-ins/common/CML_explorer.c:316
+#: plug-ins/common/CML_explorer.c:313
 msgid "The first row of the image"
 msgstr "Første raden av bildet"
 
 #. 3
-#: plug-ins/common/CML_explorer.c:317
+#: plug-ins/common/CML_explorer.c:314
 msgid "Continuous gradient"
 msgstr "Kontiuerlig gradient"
 
 #. 4
-#: plug-ins/common/CML_explorer.c:318
+#: plug-ins/common/CML_explorer.c:315
 msgid "Continuous grad. w/o gap"
 msgstr "Kontinuerlig gradient"
 
-#: plug-ins/common/CML_explorer.c:320
+#: plug-ins/common/CML_explorer.c:317
 msgid "Random, ch. independent"
 msgstr "Tilfeldig, ch. uavhengig"
 
-#: plug-ins/common/CML_explorer.c:322
+#: plug-ins/common/CML_explorer.c:319
 msgid "Random shared"
 msgstr "Tilfeldig delt"
 
-#: plug-ins/common/CML_explorer.c:324
+#: plug-ins/common/CML_explorer.c:321
 msgid "Randoms from seed"
 msgstr "Tilfeldige tall fra seed"
 
-#: plug-ins/common/CML_explorer.c:326
+#: plug-ins/common/CML_explorer.c:323
 msgid "Randoms from seed (shared)"
 msgstr "Tilfeldige tall fra seed (delt)"
 
-#: plug-ins/common/CML_explorer.c:380 plug-ins/common/CML_explorer.c:388
-#: plug-ins/common/CML_explorer.c:1431 plug-ins/common/CML_explorer.c:1755
+#: plug-ins/common/CML_explorer.c:377 plug-ins/common/CML_explorer.c:385
+#: plug-ins/common/CML_explorer.c:1429 plug-ins/common/CML_explorer.c:1753
 #: plug-ins/common/decompose.c:135
 msgid "Hue"
 msgstr "Glød"
 
-#: plug-ins/common/CML_explorer.c:381 plug-ins/common/CML_explorer.c:389
-#: plug-ins/common/CML_explorer.c:1435 plug-ins/common/CML_explorer.c:1755
+#: plug-ins/common/CML_explorer.c:378 plug-ins/common/CML_explorer.c:386
+#: plug-ins/common/CML_explorer.c:1433 plug-ins/common/CML_explorer.c:1753
 #: plug-ins/common/decompose.c:136
 msgid "Saturation"
 msgstr "Metning"
 
-#: plug-ins/common/CML_explorer.c:382 plug-ins/common/CML_explorer.c:390
-#: plug-ins/common/CML_explorer.c:1439 plug-ins/common/CML_explorer.c:1755
+#: plug-ins/common/CML_explorer.c:379 plug-ins/common/CML_explorer.c:387
+#: plug-ins/common/CML_explorer.c:1437 plug-ins/common/CML_explorer.c:1753
 #: plug-ins/common/decompose.c:137
 msgid "Value"
 msgstr "Verdi"
 
-#: plug-ins/common/CML_explorer.c:387
+#: plug-ins/common/CML_explorer.c:384
 msgid "NULL"
 msgstr "NULL"
 
-#: plug-ins/common/CML_explorer.c:494
+#: plug-ins/common/CML_explorer.c:491
 msgid "Make an image of Coupled-Map Lattice"
 msgstr "Lag et bilde av Coupled-Map Lattice"
 
-#: plug-ins/common/CML_explorer.c:495
+#: plug-ins/common/CML_explorer.c:492
 msgid ""
 "Make an image of Coupled-Map Lattice (CML). CML is a kind of Cellula "
 "Automata on continuous (value) domain. In RUN_NONINTERACTIVE, the name of a "
@@ -247,87 +247,87 @@ msgstr ""
 "på et kontinuerlig (verdi) domene. I RUN_NONINTERACTIVE, sendes navnet på en "
 "parameter fil som 4de arg. Du kan kontrollere CML_explorer via parameter fil."
 
-#: plug-ins/common/CML_explorer.c:1327
+#: plug-ins/common/CML_explorer.c:1325
 msgid "Coupled-Map-Lattice Explorer"
 msgstr "Coupled-Map-Lattice utforsker"
 
-#: plug-ins/common/CML_explorer.c:1344 plug-ins/common/ps.c:2448
+#: plug-ins/common/CML_explorer.c:1342 plug-ins/common/ps.c:2448
 msgid "Preview"
 msgstr "Forhåndsvisning"
 
-#: plug-ins/common/CML_explorer.c:1385
+#: plug-ins/common/CML_explorer.c:1383
 msgid "New seed"
 msgstr "Nytt seed"
 
-#: plug-ins/common/CML_explorer.c:1391
+#: plug-ins/common/CML_explorer.c:1389
 msgid "Fix seed"
 msgstr "Fast seed"
 
-#: plug-ins/common/CML_explorer.c:1397
+#: plug-ins/common/CML_explorer.c:1395
 msgid "Random seed"
 msgstr "Tilfeldig seed"
 
-#: plug-ins/common/CML_explorer.c:1409
+#: plug-ins/common/CML_explorer.c:1407
 msgid "Load"
 msgstr "Åpne"
 
-#: plug-ins/common/CML_explorer.c:1412
+#: plug-ins/common/CML_explorer.c:1410
 msgid "Save"
 msgstr "Lagre"
 
-#: plug-ins/common/CML_explorer.c:1429
+#: plug-ins/common/CML_explorer.c:1427
 msgid "Hue settings"
 msgstr "Instillinger for glød"
 
-#: plug-ins/common/CML_explorer.c:1433
+#: plug-ins/common/CML_explorer.c:1431
 msgid "Saturation settings"
 msgstr "Instillinger for metning"
 
-#: plug-ins/common/CML_explorer.c:1437
+#: plug-ins/common/CML_explorer.c:1435
 msgid "Value (grayimage) settings"
 msgstr "Verdi (gråtoner) innstillinger"
 
-#: plug-ins/common/CML_explorer.c:1441
+#: plug-ins/common/CML_explorer.c:1439
 msgid "Advanced settings"
 msgstr "Avanserte instillinger"
 
-#: plug-ins/common/CML_explorer.c:1443
+#: plug-ins/common/CML_explorer.c:1441
 msgid "Advanced"
 msgstr "Avansert"
 
-#: plug-ins/common/CML_explorer.c:1455
+#: plug-ins/common/CML_explorer.c:1453
 msgid "Other parameter settings"
 msgstr "Andre parameterinnstillinger"
 
-#: plug-ins/common/CML_explorer.c:1459
+#: plug-ins/common/CML_explorer.c:1457
 msgid "Channel independed parameters"
 msgstr "Kanaluavhengige parametere"
 
-#: plug-ins/common/CML_explorer.c:1463
+#: plug-ins/common/CML_explorer.c:1461
 msgid "Initial value"
 msgstr "Initiell verdi"
 
-#: plug-ins/common/CML_explorer.c:1469
+#: plug-ins/common/CML_explorer.c:1467
 msgid "Zoom scale"
 msgstr "Zoom skala"
 
-#: plug-ins/common/CML_explorer.c:1474
+#: plug-ins/common/CML_explorer.c:1472
 msgid "Start offset"
 msgstr "Start-avstand"
 
-#: plug-ins/common/CML_explorer.c:1494
+#: plug-ins/common/CML_explorer.c:1492
 msgid "Seed of random (only for \"from seed\" modes)"
 msgstr "Seed for vilkårlig (kun for \"fra seed\" modus)"
 
-#: plug-ins/common/CML_explorer.c:1498
+#: plug-ins/common/CML_explorer.c:1496
 msgid "Seed"
 msgstr "Seed"
 
-#: plug-ins/common/CML_explorer.c:1508
+#: plug-ins/common/CML_explorer.c:1506
 msgid "Switch to \"from seed\" with the last seed"
 msgstr "Bytt til \"fra seed\" med siste seed"
 
-#: plug-ins/common/CML_explorer.c:1515
+#: plug-ins/common/CML_explorer.c:1513
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
@@ -339,200 +339,202 @@ msgstr ""
 "bildenen er den samme (dette er grunnen til at bilde på tegnet objekt er "
 "forskjellig fra forhåndsvisning), og (2), alle muteringsrater er lik null."
 
-#: plug-ins/common/CML_explorer.c:1532
+#: plug-ins/common/CML_explorer.c:1530
 msgid "Others"
 msgstr "Andre"
 
-#: plug-ins/common/CML_explorer.c:1539
+#: plug-ins/common/CML_explorer.c:1537
 msgid "Misc operations"
 msgstr "Forskjellige operasjoner"
 
-#: plug-ins/common/CML_explorer.c:1544
+#: plug-ins/common/CML_explorer.c:1542
 msgid "Copy settings"
 msgstr "Innstillinger for kopiering"
 
-#: plug-ins/common/CML_explorer.c:1548
+#: plug-ins/common/CML_explorer.c:1546
 msgid "Source ch."
 msgstr "Kildekanal"
 
-#: plug-ins/common/CML_explorer.c:1554 plug-ins/common/CML_explorer.c:1588
+#: plug-ins/common/CML_explorer.c:1552 plug-ins/common/CML_explorer.c:1586
 msgid "Destination ch."
 msgstr "Målkanal"
 
-#: plug-ins/common/CML_explorer.c:1560
+#: plug-ins/common/CML_explorer.c:1558
 msgid "Do copy parameters"
 msgstr "Kopier parametere"
 
-#: plug-ins/common/CML_explorer.c:1578
+#: plug-ins/common/CML_explorer.c:1576
 msgid "Selective load settings"
 msgstr "Selektive instillinger for lasting"
 
-#: plug-ins/common/CML_explorer.c:1582
+#: plug-ins/common/CML_explorer.c:1580
 msgid "Source ch. in file"
 msgstr "Kildekanal i fil"
 
-#: plug-ins/common/CML_explorer.c:1608
+#: plug-ins/common/CML_explorer.c:1606
 msgid "Misc ops."
 msgstr "Forskjellige operasjoner."
 
-#: plug-ins/common/CML_explorer.c:1644
+#: plug-ins/common/CML_explorer.c:1642
 msgid "Function type"
 msgstr "Funksjonstype"
 
-#: plug-ins/common/CML_explorer.c:1651
+#: plug-ins/common/CML_explorer.c:1649
 msgid "Composition"
 msgstr "Komposisjon"
 
-#: plug-ins/common/CML_explorer.c:1658
+#: plug-ins/common/CML_explorer.c:1656
 msgid "Misc arrange"
 msgstr "Forskjellige arrangeringer"
 
-#: plug-ins/common/CML_explorer.c:1665
+#: plug-ins/common/CML_explorer.c:1663
 msgid "Use cyclic range"
 msgstr "Bruk syklisk område"
 
-#: plug-ins/common/CML_explorer.c:1670
+#: plug-ins/common/CML_explorer.c:1668
 msgid "Mod. rate"
 msgstr "Mod. rate"
 
-#: plug-ins/common/CML_explorer.c:1677
+#: plug-ins/common/CML_explorer.c:1675
 msgid "Env. sensitivity"
 msgstr "Miljø sensitivitet"
 
-#: plug-ins/common/CML_explorer.c:1684
+#: plug-ins/common/CML_explorer.c:1682
 msgid "Diffusion dist."
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:1691
+#: plug-ins/common/CML_explorer.c:1689
 msgid "# of subranges"
 msgstr "antall underområder"
 
-#: plug-ins/common/CML_explorer.c:1698
+#: plug-ins/common/CML_explorer.c:1696
 msgid "P(ower factor)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:1705
+#: plug-ins/common/CML_explorer.c:1703
 msgid "Parameter k"
 msgstr "Parameter k"
 
-#: plug-ins/common/CML_explorer.c:1712
+#: plug-ins/common/CML_explorer.c:1710
 msgid "Range low"
 msgstr "Område lavt"
 
-#: plug-ins/common/CML_explorer.c:1719
+#: plug-ins/common/CML_explorer.c:1717
 msgid "Range high"
 msgstr "Område høyt"
 
-#: plug-ins/common/CML_explorer.c:1738
+#: plug-ins/common/CML_explorer.c:1736
 msgid "Plot the graph of the settings"
 msgstr "Plott grafen av instillingene"
 
-#: plug-ins/common/CML_explorer.c:1772
+#: plug-ins/common/CML_explorer.c:1770
 msgid "Ch. sensitivity"
 msgstr "Sensitivitet for kanal"
 
-#: plug-ins/common/CML_explorer.c:1779
+#: plug-ins/common/CML_explorer.c:1777
 msgid "Mutation rate"
 msgstr "Mutasjonsrate"
 
-#: plug-ins/common/CML_explorer.c:1786
+#: plug-ins/common/CML_explorer.c:1784
 msgid "Mutation dist."
 msgstr "Mutasjons dist."
 
-#: plug-ins/common/CML_explorer.c:1815
+#: plug-ins/common/CML_explorer.c:1813
 msgid "Graph of the current settings"
 msgstr "Graf av aktive instillinger"
 
 #. Action Area
-#: plug-ins/bmp/bmpwrite.c:428 plug-ins/common/CML_explorer.c:1820
-#: plug-ins/common/CML_explorer.c:2681 plug-ins/common/CML_explorer.c:2777
-#: plug-ins/common/apply_lens.c:420 plug-ins/common/blur.c:619
-#: plug-ins/common/bumpmap.c:970 plug-ins/common/checkerboard.c:381
+#: plug-ins/bmp/bmpwrite.c:428 plug-ins/common/CML_explorer.c:1818
+#: plug-ins/common/CML_explorer.c:2679 plug-ins/common/CML_explorer.c:2775
+#: plug-ins/common/apply_lens.c:416 plug-ins/common/blur.c:619
+#: plug-ins/common/bumpmap.c:965 plug-ins/common/checkerboard.c:381
 #: plug-ins/common/compose.c:816 plug-ins/common/convmatrix.c:706
-#: plug-ins/common/cubism.c:338 plug-ins/common/decompose.c:914
+#: plug-ins/common/cubism.c:329 plug-ins/common/decompose.c:914
 #: plug-ins/common/depthmerge.c:746 plug-ins/common/destripe.c:695
-#: plug-ins/common/gif.c:1263 plug-ins/common/jpeg.c:1466
+#: plug-ins/common/gif.c:1263 plug-ins/common/jpeg.c:1468
 #: plug-ins/common/mail.c:485 plug-ins/common/oilify.c:460
 #: plug-ins/common/png.c:827 plug-ins/common/ps.c:2023
 #: plug-ins/common/ps.c:2290 plug-ins/common/xbm.c:959
 #: plug-ins/common/xpm.c:763 plug-ins/print/print.c:1104
+#: plug-ins/sel2path/sel2path.c:350
 msgid "OK"
 msgstr "Ok"
 
-#: plug-ins/common/CML_explorer.c:1830
+#: plug-ins/common/CML_explorer.c:1828
 msgid "The Graph"
 msgstr "Grafen"
 
-#: plug-ins/common/CML_explorer.c:1922
+#: plug-ins/common/CML_explorer.c:1920
 msgid "Warning: the source and the destination are the same channel."
 msgstr "Advarsel: kilde og mål er samme kanal."
 
 #. Action Area
-#: plug-ins/common/CML_explorer.c:2010
+#: plug-ins/common/CML_explorer.c:2008
 msgid "Execute"
 msgstr "Kjør"
 
-#: plug-ins/common/CML_explorer.c:2019
+#: plug-ins/common/CML_explorer.c:2017
 msgid "Execute and Exit"
 msgstr "Kjør og avslutt"
 
-#: plug-ins/common/CML_explorer.c:2027
+#: plug-ins/common/CML_explorer.c:2025
 msgid "Exit"
 msgstr "Avslutt"
 
-#: plug-ins/common/CML_explorer.c:2045
+#: plug-ins/common/CML_explorer.c:2043
 msgid "Save parameters to"
 msgstr "Lagre parametere til"
 
-#: plug-ins/common/CML_explorer.c:2108 plug-ins/common/CML_explorer.c:2301
+#: plug-ins/common/CML_explorer.c:2106 plug-ins/common/CML_explorer.c:2299
 #, c-format
 msgid "Error: could not open \"%s\""
 msgstr "Feil kunne ikke åpne \"%s\""
 
-#: plug-ins/common/CML_explorer.c:2173
+#: plug-ins/common/CML_explorer.c:2171
 msgid "CML file operation warning"
 msgstr "CML filoperasjonsadvarsel"
 
-#: plug-ins/common/CML_explorer.c:2180
+#: plug-ins/common/CML_explorer.c:2178
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s eksisterer, overskriv?"
 
-#: plug-ins/common/CML_explorer.c:2223
+#: plug-ins/common/CML_explorer.c:2221
 msgid "Load parameters from"
 msgstr "Last parametere fra"
 
-#: plug-ins/common/CML_explorer.c:2225
+#: plug-ins/common/CML_explorer.c:2223
 msgid "Selective load from"
 msgstr "Selektiv last fra"
 
-#: plug-ins/common/CML_explorer.c:2324
+#: plug-ins/common/CML_explorer.c:2322
 msgid "Error: it's not CML parameter file."
 msgstr "Feil: dette er ikke en CML-parameter fil."
 
-#: plug-ins/common/CML_explorer.c:2331
+#: plug-ins/common/CML_explorer.c:2329
 msgid "Warning: it's an old format file."
 msgstr "Advarsel: det er en fil i gammelt format."
 
-#: plug-ins/common/CML_explorer.c:2333
+#: plug-ins/common/CML_explorer.c:2331
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
 msgstr ""
 "Advarsel: Hmmm, dette er en parameterfil for en nyere CML_explorer enn meg."
 
 #. cancel button
 #: plug-ins/Lighting/lighting_ui.c:1062 plug-ins/bmp/bmpwrite.c:437
-#: plug-ins/common/CML_explorer.c:2690 plug-ins/common/apply_lens.c:430
-#: plug-ins/common/blur.c:621 plug-ins/common/bumpmap.c:979
+#: plug-ins/common/CML_explorer.c:2688 plug-ins/common/apply_lens.c:426
+#: plug-ins/common/blur.c:621 plug-ins/common/bumpmap.c:974
 #: plug-ins/common/checkerboard.c:390 plug-ins/common/colorify.c:323
 #: plug-ins/common/compose.c:825 plug-ins/common/convmatrix.c:723
-#: plug-ins/common/cubism.c:347 plug-ins/common/decompose.c:924
+#: plug-ins/common/cubism.c:338 plug-ins/common/decompose.c:924
 #: plug-ins/common/depthmerge.c:756 plug-ins/common/destripe.c:704
-#: plug-ins/common/gif.c:1172 plug-ins/common/jpeg.c:1475
+#: plug-ins/common/gif.c:1172 plug-ins/common/jpeg.c:1477
 #: plug-ins/common/mail.c:496 plug-ins/common/oilify.c:469
 #: plug-ins/common/png.c:836 plug-ins/common/ps.c:2033
 #: plug-ins/common/ps.c:2300 plug-ins/common/xbm.c:707
 #: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:772
 #: plug-ins/print/print.c:991 plug-ins/print/print.c:1097
+#: plug-ins/sel2path/sel2path.c:359
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -867,25 +869,25 @@ msgstr "Zoom inn (gjør bildet større)"
 msgid "Zoom out (make image smaller)"
 msgstr "Zoom ut (gjør bildet mindre)"
 
-#: plug-ins/common/apply_lens.c:136
+#: plug-ins/common/apply_lens.c:132
 msgid "Apply a lens effect"
 msgstr "Bruk en linseeffekt"
 
-#: plug-ins/common/apply_lens.c:137
+#: plug-ins/common/apply_lens.c:133
 msgid "This plug-in uses Snell's law to draw an ellipsoid lens over the image"
 msgstr ""
 "Dette tillegget bruker Snells lov til å tegne en elipseformet linse over "
 "bildet"
 
-#: plug-ins/common/apply_lens.c:141
+#: plug-ins/common/apply_lens.c:137
 msgid "<Image>/Filters/Glass Effects/Apply Lens"
 msgstr "<Image>/Filtre/Glass-effekter/Påfør linse"
 
-#: plug-ins/common/apply_lens.c:200
+#: plug-ins/common/apply_lens.c:196
 msgid "Applying lens..."
 msgstr "Legger på linse..."
 
-#: plug-ins/common/apply_lens.c:414
+#: plug-ins/common/apply_lens.c:410
 msgid "Lens effect"
 msgstr "Linseeffekt"
 
@@ -894,30 +896,30 @@ msgstr "Linseeffekt"
 #. *
 #. *  First set up the basic containers, label them, etc.
 #.
-#: plug-ins/common/apply_lens.c:439 plug-ins/common/blur.c:607
-#: plug-ins/common/checkerboard.c:399 plug-ins/common/cubism.c:356
-#: plug-ins/common/jpeg.c:1510 plug-ins/common/oilify.c:478
+#: plug-ins/common/apply_lens.c:435 plug-ins/common/blur.c:607
+#: plug-ins/common/checkerboard.c:399 plug-ins/common/cubism.c:347
+#: plug-ins/common/jpeg.c:1512 plug-ins/common/oilify.c:478
 #: plug-ins/common/png.c:847 plug-ins/common/xpm.c:781
 msgid "Parameter Settings"
 msgstr "Innstillinger for parametere"
 
-#: plug-ins/common/apply_lens.c:448
+#: plug-ins/common/apply_lens.c:444
 msgid "Keep original surroundings"
 msgstr "Behold originalomgivelsene"
 
-#: plug-ins/common/apply_lens.c:461
+#: plug-ins/common/apply_lens.c:457
 msgid "Set surroundings to index 0"
 msgstr "Sett omgivelsene til indeks 0"
 
-#: plug-ins/common/apply_lens.c:462
+#: plug-ins/common/apply_lens.c:458
 msgid "Set surroundings to background color"
 msgstr "Sett omgivelsene til bakgrunnsfargen"
 
-#: plug-ins/common/apply_lens.c:475
+#: plug-ins/common/apply_lens.c:471
 msgid "Make surroundings transparent"
 msgstr "Gjør omgivelsene gjennomsiktige"
 
-#: plug-ins/common/apply_lens.c:490
+#: plug-ins/common/apply_lens.c:486
 msgid "Lens refraction index: "
 msgstr ""
 
@@ -964,11 +966,11 @@ msgstr ""
 
 #: plug-ins/common/blur.c:620
 msgid "Accept settings and apply filter to image"
-msgstr ""
+msgstr "Aksepter innstillingene og påfør filteret på bildet"
 
 #: plug-ins/common/blur.c:622
 msgid "Close plug-in without making any changes"
-msgstr ""
+msgstr "Lukk tillegget uten å gjøre noen endringer"
 
 #.
 #. *  Randomization seed initialization controls
@@ -982,7 +984,7 @@ msgstr ""
 #.
 #: plug-ins/common/blur.c:637
 msgid "Current Time"
-msgstr ""
+msgstr "Tiden nå"
 
 #: plug-ins/common/blur.c:638
 msgid ""
@@ -995,7 +997,7 @@ msgstr ""
 #.
 #: plug-ins/common/blur.c:648
 msgid "Other Value"
-msgstr ""
+msgstr "Annen verdi"
 
 #: plug-ins/common/blur.c:649
 msgid ""
@@ -1016,64 +1018,64 @@ msgstr ""
 
 #: plug-ins/common/blur.c:669
 msgid "Percentage of pixels to be filtered"
-msgstr ""
+msgstr "Prosentandel av punktene som skal filtreres"
 
 #.
 #. *  Repeat count label & scale (1 to 100)
 #.
 #: plug-ins/common/blur.c:674
 msgid "Repeat:"
-msgstr ""
+msgstr "Gjenta:"
 
 #: plug-ins/common/blur.c:677
 msgid "Number of times to apply filter"
-msgstr ""
+msgstr "Antall ganger filteret skal påføres"
 
 #: plug-ins/bmp/bmp.c:105 plug-ins/bmp/bmp.c:106
 msgid "Loads files of Windows BMP file format"
-msgstr ""
+msgstr "Laster filer i Windows BMP filformat"
 
 #: plug-ins/bmp/bmp.c:117 plug-ins/bmp/bmp.c:118
 msgid "Saves files in Windows BMP file format"
-msgstr ""
+msgstr "Lagrer filer i Windows BMP filformat"
 
 #: plug-ins/bmp/bmpread.c:27 plug-ins/common/gifload.c:287
-#: plug-ins/common/jpeg.c:668 plug-ins/common/png.c:345
+#: plug-ins/common/jpeg.c:670 plug-ins/common/png.c:345
 #: plug-ins/common/png.c:347 plug-ins/common/xbm.c:523
 #: plug-ins/common/xpm.c:300
 #, c-format
 msgid "Loading %s:"
-msgstr ""
+msgstr "Laster %s:"
 
 #: plug-ins/bmp/bmpread.c:39
 #, c-format
 msgid "%s: can't open \"%s\"\n"
-msgstr ""
+msgstr "%s: kan ikke åpne \"%s\"\n"
 
 #: plug-ins/bmp/bmpread.c:47
 #, c-format
 msgid "%s: not a valid BMP file %s\n"
-msgstr ""
+msgstr "%s: ikke en gyldig BMP-fil %s\n"
 
 #: plug-ins/bmp/bmpread.c:55 plug-ins/bmp/bmpread.c:73
 #: plug-ins/bmp/bmpread.c:95
 #, c-format
 msgid "%s: error reading BMP file header\n"
-msgstr ""
+msgstr "%s: feil under lesing av BMP-filens header\n"
 
 #: plug-ins/bmp/bmpread.c:70
 msgid "OS/2 unsupported!\n"
-msgstr ""
+msgstr "OS/2 ikke støttet!\n"
 
 #: plug-ins/bmp/bmpread.c:117
 #, c-format
 msgid "%s: too many colors: %u\n"
-msgstr ""
+msgstr "%s: for mange farger: %u\n"
 
 #: plug-ins/bmp/bmpread.c:165
 #, c-format
 msgid "%s: bad colormap\n"
-msgstr ""
+msgstr "%s: ugyldig fargekart\n"
 
 #.
 #. * Create the "background" layer to hold the image...
@@ -1081,40 +1083,40 @@ msgstr ""
 #: plug-ins/bmp/bmpread.c:210 plug-ins/bmp/bmpread.c:218
 #: plug-ins/bmp/bmpread.c:224 plug-ins/common/compose.c:562
 #: plug-ins/common/decompose.c:472 plug-ins/common/gifload.c:828
-#: plug-ins/common/jpeg.c:810 plug-ins/common/png.c:455
+#: plug-ins/common/jpeg.c:812 plug-ins/common/png.c:455
 #: plug-ins/common/xbm.c:612
 msgid "Background"
-msgstr ""
+msgstr "Bakgrunn"
 
 #: plug-ins/bmp/bmpwrite.c:83
 msgid "bmp: cannot operate on unknown image types or alpha images"
-msgstr ""
+msgstr "bmp: kan ikke operere på ukjente bildetyper eller alpha-bilder"
 
 #: plug-ins/bmp/bmpwrite.c:140
 #, c-format
 msgid "can't open %s\n"
-msgstr ""
+msgstr "kan ikke åpne %s\n"
 
-#: plug-ins/bmp/bmpwrite.c:154 plug-ins/common/jpeg.c:1088
+#: plug-ins/bmp/bmpwrite.c:154 plug-ins/common/jpeg.c:1090
 #: plug-ins/common/png.c:595 plug-ins/common/png.c:597
 #: plug-ins/common/ps.c:673 plug-ins/common/xbm.c:777
 #: plug-ins/common/xpm.c:611 plug-ins/common/xwd.c:507
 #, c-format
 msgid "Saving %s:"
-msgstr ""
+msgstr "Lagrer %s:"
 
 #: plug-ins/bmp/bmpwrite.c:421
 msgid "Save as BMP"
-msgstr ""
+msgstr "Lagre som BMP"
 
 #. parameter settings
 #: plug-ins/bmp/bmpwrite.c:446
 msgid "Save Options"
-msgstr ""
+msgstr "Alternativer for lagring"
 
 #: plug-ins/bmp/bmpwrite.c:454
 msgid "RLE encoded"
-msgstr ""
+msgstr "RLE-kodet"
 
 #: plug-ins/borderaverage/borderaverage.c:98
 msgid "<Image>/Filters/Colors/Border Average"
@@ -1126,121 +1128,121 @@ msgstr ""
 
 #: plug-ins/borderaverage/borderaverage.c:339
 msgid "Thickness"
-msgstr ""
+msgstr "Tykkelse"
 
 #: plug-ins/borderaverage/borderaverage.c:342
 msgid "Number of colors"
-msgstr ""
+msgstr "Antall farger"
 
 #: plug-ins/borderaverage/borderaverage.c:345
 msgid "Bucket Size:"
-msgstr ""
+msgstr "Størrelse på bøtte:"
 
-#: plug-ins/common/bumpmap.c:298
+#: plug-ins/common/bumpmap.c:293
 msgid "Linear map"
-msgstr ""
+msgstr "Lineært kart"
 
-#: plug-ins/common/bumpmap.c:299
+#: plug-ins/common/bumpmap.c:294
 msgid "Spherical map"
-msgstr ""
+msgstr "Sfærisk kart"
 
-#: plug-ins/common/bumpmap.c:300
+#: plug-ins/common/bumpmap.c:295
 msgid "Sinusoidal map"
-msgstr ""
+msgstr "Sinuslignende kart"
 
-#: plug-ins/common/bumpmap.c:346
+#: plug-ins/common/bumpmap.c:341
 msgid "Create an embossing effect using an image as a bump map"
 msgstr ""
 
-#: plug-ins/common/bumpmap.c:354
+#: plug-ins/common/bumpmap.c:349
 msgid "<Image>/Filters/Map/Bump Map"
 msgstr ""
 
-#: plug-ins/common/bumpmap.c:500
+#: plug-ins/common/bumpmap.c:495
 msgid "Bump-mapping..."
 msgstr ""
 
 #. Bump map menu
-#: plug-ins/common/bumpmap.c:830 plug-ins/common/bumpmap.c:939
+#: plug-ins/common/bumpmap.c:825 plug-ins/common/bumpmap.c:934
 msgid "Bump map"
 msgstr ""
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:884
+#: plug-ins/common/bumpmap.c:879
 msgid "Compensate for darkening"
-msgstr ""
+msgstr "Kompenser for formørking"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:895
+#: plug-ins/common/bumpmap.c:890
 msgid "Invert bumpmap"
 msgstr ""
 
 #. Controls
-#: plug-ins/common/bumpmap.c:958
+#: plug-ins/common/bumpmap.c:953
 msgid "Azimuth"
 msgstr ""
 
-#: plug-ins/common/bumpmap.c:959
+#: plug-ins/common/bumpmap.c:954
 msgid "Elevation"
-msgstr ""
+msgstr "Forhøyelse"
 
-#: plug-ins/common/bumpmap.c:960
+#: plug-ins/common/bumpmap.c:955
 msgid "Depth"
-msgstr ""
+msgstr "Dybde"
 
-#: plug-ins/common/bumpmap.c:961
+#: plug-ins/common/bumpmap.c:956
 msgid "X offset"
-msgstr ""
+msgstr "X-avstand"
 
-#: plug-ins/common/bumpmap.c:962
+#: plug-ins/common/bumpmap.c:957
 msgid "Y offset"
-msgstr ""
+msgstr "Y-avstand"
 
-#: plug-ins/common/bumpmap.c:963
+#: plug-ins/common/bumpmap.c:958
 msgid "Waterlevel"
-msgstr ""
+msgstr "Vann-nivå"
 
-#: plug-ins/common/bumpmap.c:964
+#: plug-ins/common/bumpmap.c:959
 msgid "Ambient"
 msgstr ""
 
 #: plug-ins/common/bz2.c:293 plug-ins/common/bz2.c:358
 #, c-format
 msgid "bz2: fork failed: %s\n"
-msgstr ""
+msgstr "bz2: fork feilet: %s\n"
 
 #: plug-ins/common/bz2.c:300 plug-ins/common/bz2.c:365
 #, c-format
 msgid "bz2: fopen failed: %s\n"
-msgstr ""
+msgstr "bz2: fopen feilet: %s\n"
 
 #: plug-ins/common/bz2.c:306 plug-ins/common/bz2.c:371
 #, c-format
 msgid "bz2: dup2 failed: %s\n"
-msgstr ""
+msgstr "bz2: dup feilet: %s\n"
 
 #: plug-ins/common/bz2.c:310
 #, c-format
 msgid "bz2: exec failed: bzip2: %s\n"
-msgstr ""
+msgstr "bz2: exec feilet: bzip2: %s\n"
 
 #: plug-ins/common/bz2.c:324 plug-ins/common/bz2.c:389
 #, c-format
 msgid "bz2: bzip2 exited abnormally on file %s\n"
-msgstr ""
+msgstr "bz2: bzip2 avsluttet unormalt på fil %s\n"
 
 #: plug-ins/common/bz2.c:375
 #, c-format
 msgid "bz2: exec failed: bunzip2: %s\n"
-msgstr ""
+msgstr "bz2: exec feilet: bunzip2: %s\n"
 
 #: plug-ins/common/bz2.c:443
 msgid "bz2: can't open bzip2ed file without a sensible extension\n"
-msgstr ""
+msgstr "bz2: kan ikke åpne bzip2-fil uten et fornuftig etternavn\n"
 
 #: plug-ins/common/checkerboard.c:97
 msgid "Adds a checkerboard pattern to an image"
-msgstr ""
+msgstr "Legger til et sjakkbrett-mønster på et bilde"
 
 #: plug-ins/common/checkerboard.c:102
 msgid "<Image>/Filters/Render/Checkerboard"
@@ -1248,27 +1250,27 @@ msgstr ""
 
 #: plug-ins/common/checkerboard.c:164
 msgid "Adding Checkerboard..."
-msgstr ""
+msgstr "Legger til sjakkbrett..."
 
 #: plug-ins/common/checkerboard.c:374
 msgid "Checkerboard"
-msgstr ""
+msgstr "Sjakkbrett"
 
 #: plug-ins/common/checkerboard.c:407
 msgid "Psychobilly"
-msgstr ""
+msgstr "Psychobilly"
 
 #: plug-ins/common/checkerboard.c:415
 msgid "Check Size"
-msgstr ""
+msgstr "Rutestørrelse"
 
 #: plug-ins/common/colorify.c:122
 msgid "Similar to the \"Color\" mode for layers."
-msgstr ""
+msgstr "Lik \"Farge\"-modus for lag."
 
 #: plug-ins/common/colorify.c:123
 msgid "Makes an average of the RGB channels and uses it to set the color"
-msgstr ""
+msgstr "Lager et gjennomsnitt av RGB-kanalene og bruker det til å sette fargen"
 
 #: plug-ins/common/colorify.c:126
 msgid "<Image>/Filters/Colors/Colorify"
@@ -1284,16 +1286,16 @@ msgstr ""
 
 #: plug-ins/common/colorify.c:314
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #: plug-ins/common/colorify.c:331 plug-ins/common/xpm.c:406
 #: plug-ins/print/print.c:848
 msgid "Color"
-msgstr ""
+msgstr "Farge"
 
 #: plug-ins/common/colorify.c:344
 msgid "Custom Color: "
-msgstr ""
+msgstr "Egendefinert farge: "
 
 #: plug-ins/common/colorify.c:434
 msgid "Colorify Custom Color"
@@ -1301,19 +1303,19 @@ msgstr ""
 
 #: plug-ins/common/compose.c:125 plug-ins/common/decompose.c:129
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: plug-ins/common/compose.c:125 plug-ins/common/compose.c:127
 msgid "Red:"
-msgstr ""
+msgstr "Rød:"
 
 #: plug-ins/common/compose.c:125 plug-ins/common/compose.c:127
 msgid "Green:     "
-msgstr ""
+msgstr "Grønn:     "
 
 #: plug-ins/common/compose.c:125 plug-ins/common/compose.c:127
 msgid "Blue:"
-msgstr ""
+msgstr "Blå:"
 
 #: plug-ins/common/compose.c:126
 msgid "rgb-compose"
@@ -1321,11 +1323,11 @@ msgstr ""
 
 #: plug-ins/common/compose.c:127
 msgid "RGBA"
-msgstr ""
+msgstr "RGBA"
 
 #: plug-ins/common/compose.c:127
 msgid "Alpha:"
-msgstr ""
+msgstr "Alpha:"
 
 #: plug-ins/common/compose.c:128
 msgid "rgba-compose"
@@ -1333,7 +1335,7 @@ msgstr ""
 
 #: plug-ins/common/compose.c:129 plug-ins/common/decompose.c:133
 msgid "HSV"
-msgstr ""
+msgstr "HSV"
 
 #: plug-ins/common/compose.c:129
 msgid "Hue:"
@@ -1341,11 +1343,11 @@ msgstr ""
 
 #: plug-ins/common/compose.c:129
 msgid "Saturation:"
-msgstr ""
+msgstr "Metning:"
 
 #: plug-ins/common/compose.c:129
 msgid "Value:"
-msgstr ""
+msgstr "Verdi:"
 
 #: plug-ins/common/compose.c:130
 msgid "hsv-compose"
@@ -1353,7 +1355,7 @@ msgstr ""
 
 #: plug-ins/common/compose.c:131 plug-ins/common/decompose.c:138
 msgid "CMY"
-msgstr ""
+msgstr "CMY"
 
 #: plug-ins/common/compose.c:131 plug-ins/common/compose.c:133
 msgid "Cyan:"
@@ -1365,7 +1367,7 @@ msgstr ""
 
 #: plug-ins/common/compose.c:131 plug-ins/common/compose.c:133
 msgid "Yellow:"
-msgstr ""
+msgstr "Gul:"
 
 #: plug-ins/common/compose.c:132
 msgid "cmy-compose"
@@ -1373,11 +1375,11 @@ msgstr ""
 
 #: plug-ins/common/compose.c:133 plug-ins/common/decompose.c:143
 msgid "CMYK"
-msgstr ""
+msgstr "CMYK"
 
 #: plug-ins/common/compose.c:133
 msgid "Black:"
-msgstr ""
+msgstr "Sort:"
 
 #: plug-ins/common/compose.c:134
 msgid "cmyk-compose"
@@ -1385,11 +1387,11 @@ msgstr ""
 
 #: plug-ins/common/compose.c:228
 msgid "Compose an image from multiple gray images"
-msgstr ""
+msgstr "Komponer et bilde fra flere bilder i gråtoner"
 
 #: plug-ins/common/compose.c:229
 msgid "This function creates a new image from multiple gray images"
-msgstr ""
+msgstr "Denne funksjonen lager et nytt bilde fra flere bilder i gråtoner"
 
 #: plug-ins/common/compose.c:234
 msgid "<Image>/Image/Channel Ops/Compose"
@@ -1411,7 +1413,7 @@ msgstr ""
 
 #: plug-ins/common/compose.c:354
 msgid "Composing..."
-msgstr ""
+msgstr "Konponerer..."
 
 #: plug-ins/common/compose.c:421
 msgid "compose: drawables have different size"
@@ -1539,31 +1541,31 @@ msgstr ""
 msgid "Channels"
 msgstr ""
 
-#: plug-ins/common/cubism.c:181
+#: plug-ins/common/cubism.c:172
 msgid "Convert the input drawable into a collection of rotated squares"
 msgstr ""
 
-#: plug-ins/common/cubism.c:186
+#: plug-ins/common/cubism.c:177
 msgid "<Image>/Filters/Artistic/Cubism"
 msgstr ""
 
-#: plug-ins/common/cubism.c:298
+#: plug-ins/common/cubism.c:289
 msgid "Cubistic Transformation"
 msgstr ""
 
-#: plug-ins/common/cubism.c:331
+#: plug-ins/common/cubism.c:322
 msgid "Cubism"
 msgstr ""
 
-#: plug-ins/common/cubism.c:364
+#: plug-ins/common/cubism.c:355
 msgid "Use Background Color"
 msgstr ""
 
-#: plug-ins/common/cubism.c:372
+#: plug-ins/common/cubism.c:363
 msgid "Tile Size"
 msgstr ""
 
-#: plug-ins/common/cubism.c:388
+#: plug-ins/common/cubism.c:379
 msgid "Tile Saturation"
 msgstr ""
 
@@ -1837,49 +1839,45 @@ msgstr ""
 msgid "GIF Comment: "
 msgstr ""
 
-#: plug-ins/common/gif.c:1339 plug-ins/common/gif.c:1340
-msgid "Made with GIMP"
-msgstr ""
-
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1365
+#: plug-ins/common/gif.c:1367
 msgid "Animated GIF Options"
 msgstr ""
 
-#: plug-ins/common/gif.c:1373
+#: plug-ins/common/gif.c:1375
 msgid "Loop forever"
 msgstr ""
 
-#: plug-ins/common/gif.c:1386
+#: plug-ins/common/gif.c:1388
 msgid "Delay between frames where unspecified: "
 msgstr ""
 
-#: plug-ins/common/gif.c:1400
+#: plug-ins/common/gif.c:1402
 msgid " milliseconds"
 msgstr ""
 
-#: plug-ins/common/gif.c:1411
+#: plug-ins/common/gif.c:1413
 msgid "Frame disposal where unspecified: "
 msgstr ""
 
-#: plug-ins/common/gif.c:1421
+#: plug-ins/common/gif.c:1423
 msgid "I don't care"
 msgstr ""
 
-#: plug-ins/common/gif.c:1427
+#: plug-ins/common/gif.c:1429
 msgid "Cumulative layers (combine)"
 msgstr ""
 
-#: plug-ins/common/gif.c:1433
+#: plug-ins/common/gif.c:1435
 msgid "One frame per layer (replace)"
 msgstr ""
 
-#: plug-ins/common/gif.c:1491
+#: plug-ins/common/gif.c:1493
 #, c-format
 msgid "GIF: colorstobpp - Eep! too many colours: %d\n"
 msgstr ""
 
-#: plug-ins/common/gif.c:1507
+#: plug-ins/common/gif.c:1509
 #, c-format
 msgid "GIF: bpptocolors - Eep! bpp==%d !\n"
 msgstr ""
@@ -2024,24 +2022,24 @@ msgstr ""
 msgid "GIF: too much input data, ignoring extra...\n"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:305 plug-ins/common/jpeg.c:306
+#: plug-ins/common/jpeg.c:307 plug-ins/common/jpeg.c:308
 msgid "loads files in the JPEG file format"
 msgstr "laster filer i JPEG filformat"
 
-#: plug-ins/common/jpeg.c:317
+#: plug-ins/common/jpeg.c:319
 msgid "saves files in the JPEG file format"
 msgstr "lagrer filer i JPEG filformat"
 
-#: plug-ins/common/jpeg.c:318
+#: plug-ins/common/jpeg.c:320
 msgid "saves files in the lossy, widely supported JPEG format"
 msgstr "lagrer bilder i det lite detaljerte, vidt støttede JPEG filformatet"
 
-#: plug-ins/common/jpeg.c:661
+#: plug-ins/common/jpeg.c:663
 #, c-format
 msgid "can't open \"%s\"\n"
 msgstr "kan ikke åpne \"%s\"\n"
 
-#: plug-ins/common/jpeg.c:792
+#: plug-ins/common/jpeg.c:794
 #, c-format
 msgid ""
 "don't know how to load JPEGs\n"
@@ -2050,100 +2048,100 @@ msgstr ""
 "kan ikke laste JPEG bilder\n"
 "med %d fargekanaler"
 
-#: plug-ins/common/jpeg.c:805
+#: plug-ins/common/jpeg.c:807
 msgid "JPEG preview"
 msgstr "JPEG forhåndsvisning"
 
-#: plug-ins/common/jpeg.c:849
+#: plug-ins/common/jpeg.c:851
 #, c-format
 msgid ""
 "unknown density unit %d\n"
 "assuming dots per inch"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1012
+#: plug-ins/common/jpeg.c:1014
 #, c-format
 msgid "Size: %lu bytes (%02.01f kB)"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1380 plug-ins/common/jpeg.c:1499
+#: plug-ins/common/jpeg.c:1382 plug-ins/common/jpeg.c:1501
 msgid "Size: unknown"
 msgstr "Størrelse: ukjent"
 
-#: plug-ins/common/jpeg.c:1459
+#: plug-ins/common/jpeg.c:1461
 msgid "Save as Jpeg"
 msgstr "Lagre som Jpeg"
 
 #. sg - preview
-#: plug-ins/common/jpeg.c:1484
+#: plug-ins/common/jpeg.c:1486
 msgid "Image Preview"
 msgstr "Forhåndsvisning av bilde"
 
-#: plug-ins/common/jpeg.c:1492
+#: plug-ins/common/jpeg.c:1494
 msgid "Preview (in image window)"
 msgstr "Forhåndsvisning (i bildevinduet)"
 
-#: plug-ins/common/jpeg.c:1518
+#: plug-ins/common/jpeg.c:1520
 msgid "Quality"
 msgstr "Kvalitet"
 
-#: plug-ins/common/jpeg.c:1534
+#: plug-ins/common/jpeg.c:1536
 msgid "Smoothing"
 msgstr "Utjevning"
 
-#: plug-ins/common/jpeg.c:1554
+#: plug-ins/common/jpeg.c:1556
 msgid "Restart markers"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1560
+#: plug-ins/common/jpeg.c:1562
 msgid "Restart frequency (rows)"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1580
+#: plug-ins/common/jpeg.c:1582
 msgid "Optimize"
 msgstr "Optimer"
 
-#: plug-ins/common/jpeg.c:1588
+#: plug-ins/common/jpeg.c:1590
 msgid "Progressive"
 msgstr "Progressiv"
 
-#: plug-ins/common/jpeg.c:1601
+#: plug-ins/common/jpeg.c:1603
 msgid "Force baseline JPEG (readable by all decoders)"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1613
+#: plug-ins/common/jpeg.c:1615
 msgid "2x2,1x1,1x1"
 msgstr "2x2,1x1,1x1"
 
-#: plug-ins/common/jpeg.c:1614
+#: plug-ins/common/jpeg.c:1616
 msgid "2x1,1x1,1x1 (4:2:2)"
 msgstr "2x1,1x1,1x1 (4:2:2)"
 
-#: plug-ins/common/jpeg.c:1615
+#: plug-ins/common/jpeg.c:1617
 msgid "1x1,1x1,1x1"
 msgstr "1x1,1x1,1x1"
 
-#: plug-ins/common/jpeg.c:1619
+#: plug-ins/common/jpeg.c:1621
 msgid "Subsampling"
 msgstr "Undersampling"
 
-#: plug-ins/common/jpeg.c:1630
+#: plug-ins/common/jpeg.c:1632
 msgid "Integer"
 msgstr "Heltall"
 
-#: plug-ins/common/jpeg.c:1631
+#: plug-ins/common/jpeg.c:1633
 msgid "Fast integer"
 msgstr "Raskt heltall"
 
-#: plug-ins/common/jpeg.c:1632
+#: plug-ins/common/jpeg.c:1634
 msgid "Floating-point"
 msgstr "Flyttall"
 
-#: plug-ins/common/jpeg.c:1636
+#: plug-ins/common/jpeg.c:1638
 msgid "DCT method (speed/quality tradeoff)"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1649
+#: plug-ins/common/jpeg.c:1651
 msgid "Image Comments"
 msgstr "Bildekommentarer"
 
@@ -2584,6 +2582,43 @@ msgstr "PPD/Fil?"
 #: plug-ins/print/print.c:2111
 msgid "File"
 msgstr "Fil"
+
+#: plug-ins/sel2path/sel2path.c:125 plug-ins/sel2path/sel2path.c:126
+msgid "Converts a selection to a path (with advanced user menu)"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:153 plug-ins/sel2path/sel2path.c:154
+msgid "Converts a selection to a path"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:158
+msgid "<Image>/Select/To Path"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:203
+msgid "No selection to convert"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:367
+msgid "Default Values"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:556
+#, c-format
+msgid "print_spline: strange degree (%d)"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:564
+msgid "selection_to_path"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:590
+msgid "gimp_image_get_selection failed"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:598
+msgid "Internal error. Selection bpp > 1"
+msgstr ""
 
 #: plug-ins/common/ps.c:320 plug-ins/common/ps.c:321
 msgid "load file of PostScript/PDF file format"
