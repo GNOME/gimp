@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.12\n"
-"POT-Creation-Date: 2003-01-20 15:07+0100\n"
+"POT-Creation-Date: 2003-01-20 22:49+0100\n"
 "PO-Revision-Date: 2003-01-20 15:06+0100\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -23,9 +23,9 @@ msgid ""
 "To perform user installation, run the GIMP without the '--no-interface' flag."
 msgstr ""
 "GIMP wurde für den aktuellen Benutzer nicht korrekt installiert.\n"
-"Es wurde keine Benutzerinstallation ausgeführt, da die Option „--"
-"nointerface” übergeben wurde.\n"
-"Starten Sie GIMP ohne die Option „--nointerface”, um die "
+"Es wurde keine Benutzerinstallation ausgeführt, da die Option »--"
+"nointerface« übergeben wurde.\n"
+"Starten Sie GIMP ohne die Option »--nointerface«, um die "
 "Benutzerinstallation durchzuführen."
 
 #: app/main.c:170
@@ -46,7 +46,7 @@ msgid ""
 "Invalid option \"%s\"\n"
 msgstr ""
 "\n"
-"Ungültige Option „%s”\n"
+"Ungültige Option »%s«\n"
 
 #: app/main.c:449
 msgid "GIMP version"
@@ -481,17 +481,17 @@ msgstr "Schwerwiegender Fehler beim Verarbeiten"
 #: app/config/gimpconfig-deserialize.c:400
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "„yes” oder „no” für boolesches Symbol %s erwartet, „%s” erhalten"
+msgstr "»yes« oder »no« für boolesches Symbol %s erwartet, »%s« erhalten"
 
 #: app/config/gimpconfig-deserialize.c:457
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr "ungültiger Wert „%s” für Symbol %s"
+msgstr "ungültiger Wert »%s« für Symbol %s"
 
 #: app/config/gimpconfig-deserialize.c:471
 #, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr "ungültiger Wert „%ld” für Symbol %s"
+msgstr "ungültiger Wert »%ld« für Symbol %s"
 
 #: app/config/gimpconfig-deserialize.c:537
 #, c-format
@@ -511,7 +511,7 @@ msgstr "${%s} konnte nicht nicht expandiert werden"
 #: app/config/gimpconfig.c:221
 #, c-format
 msgid "Failed to create temporary file for '%s': %s"
-msgstr "Temporäre Datei für „%s” konnte nicht angelegt werden: %s"
+msgstr "Temporäre Datei für »%s« konnte nicht angelegt werden: %s"
 
 #: app/config/gimpconfig.c:249
 #, c-format
@@ -519,7 +519,7 @@ msgid ""
 "Error when writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
 msgstr ""
-"Fehler beim Schreiben in temporäre Datei für „%s”: %s\n"
+"Fehler beim Schreiben in temporäre Datei für »%s«: %s\n"
 "Die Originaldatei wurde nicht geändert."
 
 #: app/config/gimpconfig.c:255
@@ -528,31 +528,31 @@ msgid ""
 "Error when writing to temporary file for '%s': %s\n"
 "No file has been created."
 msgstr ""
-"Fehler beim Schreiben in temporäre Datei für „%s”: %s\n"
+"Fehler beim Schreiben in temporäre Datei für »%s«: %s\n"
 "Es wurde keine Datei angelegt."
 
 #: app/config/gimpconfig.c:275
 #, c-format
 msgid "Failed to create file '%s': %s"
-msgstr "Datei „%s” konnte nicht angelegt werden: %s"
+msgstr "Datei »%s« konnte nicht angelegt werden: %s"
 
 #: app/config/gimprc.c:346 app/config/gimprc.c:358 app/gui/gui.c:190
 #: app/gui/gui.c:201
 #, c-format
 msgid "Parsing '%s'\n"
-msgstr "„%s” wird verarbeitet\n"
+msgstr "»%s« wird verarbeitet\n"
 
 #: app/config/gimprc.c:561
 #, c-format
 msgid "Saving '%s'\n"
-msgstr "„%s” wird gespeichert\n"
+msgstr "»%s« wird gespeichert\n"
 
 #: app/config/gimpscanner.c:74 app/gui/paths-dialog.c:1963
 #: app/gui/paths-dialog.c:2088 app/tools/gimpcurvestool.c:1414
 #: app/tools/gimplevelstool.c:1384
 #, c-format
 msgid "Failed to open file: '%s': %s"
-msgstr "Datei „%s” konnte nicht geöffnet werden: %s"
+msgstr "Datei »%s« konnte nicht geöffnet werden: %s"
 
 #: app/config/gimpscanner.c:146
 msgid "invalid UTF-8 string"
@@ -564,7 +564,7 @@ msgid ""
 "Error while parsing '%s' in line %d:\n"
 "%s"
 msgstr ""
-"Fehler beim Verarbeiten von „%s” in Zeile %d:\n"
+"Fehler beim Verarbeiten von »%s« in Zeile %d:\n"
 "%s"
 
 #: app/core/core-enums.c:13 app/core/gimp-gradients.c:70
@@ -815,12 +815,12 @@ msgstr "VG nach HG (HSV Farbton im Uhrzeigersinn)"
 #: app/core/gimppalette.c:299 app/core/gimppattern.c:302
 #, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "„%s” konnte nicht zum Lesen geöffnet werden: %s"
+msgstr "»%s« konnte nicht zum Lesen geöffnet werden: %s"
 
 #: app/core/gimpbrush.c:514 app/core/gimppattern.c:311
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
-msgstr "%d Bytes konnten nicht von „%s” gelesen werden: %s"
+msgstr "%d Bytes konnten nicht von »%s« gelesen werden: %s"
 
 #: app/core/gimpbrush.c:534
 #, c-format
@@ -829,7 +829,7 @@ msgid ""
 "Brush file '%s'"
 msgstr ""
 "Schwerwiegender Fehler beim Verarbeiten (Unbekannte Version %d):\n"
-"Pinseldatei „%s”"
+"Pinseldatei »%s«"
 
 #: app/core/gimpbrush.c:556 app/core/gimpbrush.c:586 app/core/gimpbrush.c:607
 #, c-format
@@ -838,12 +838,12 @@ msgid ""
 "Brush file '%s' appears truncated."
 msgstr ""
 "Schwerwiegender Fehler beim Verarbeiten:\n"
-"Pinseldatei „%s” scheint nicht vollständig zu sein."
+"Pinseldatei »%s« scheint nicht vollständig zu sein."
 
 #: app/core/gimpbrush.c:565 app/core/gimpbrushpipe.c:340
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Ungültiger UTF-8 Text in Pinseldatei „%s”."
+msgstr "Ungültiger UTF-8 Text in Pinseldatei »%s«."
 
 #: app/core/gimpbrush.c:573 app/core/gimpbrushpipe.c:342
 #: app/core/gimpcontext.c:1229 app/core/gimpdrawable.c:251
@@ -860,27 +860,27 @@ msgid ""
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
 "Nicht unterstütze Farbtiefe %d\n"
-"in Pinseldatei „%s”.\n"
+"in Pinseldatei »%s«.\n"
 "GIMP Pinsel müssen in GRAUSTUFE oder RGB vorliegen."
 
 #: app/core/gimpbrushgenerated.c:131 app/core/gimpgradient.c:487
 #: app/core/gimpgradient.c:572 app/core/gimppalette.c:498
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "„%s” konnte nicht zum Schreiben geöffnet werden: %s"
+msgstr "»%s« konnte nicht zum Schreiben geöffnet werden: %s"
 
 #: app/core/gimpbrushgenerated.c:401
 #, c-format
 msgid "Fatal Parse Error: '%s' is not a GIMP Brush file"
 msgstr ""
-"Schwerwiegender Fehler beim Verarbeiten: „%s” ist keine GIMP-Pinseldatei"
+"Schwerwiegender Fehler beim Verarbeiten: »%s« ist keine GIMP-Pinseldatei"
 
 # CHECK
 #: app/core/gimpbrushgenerated.c:411
 #, c-format
 msgid "Fatal Parse Error: '%s': unknown GIMP Brush version"
 msgstr ""
-"Schwerwiegender Fehler beim Verarbeiten: „%s” ist keine bekannte GIMP-Pinsel-"
+"Schwerwiegender Fehler beim Verarbeiten: »%s« ist keine bekannte GIMP-Pinsel-"
 "Version"
 
 # CHECK
@@ -892,12 +892,12 @@ msgid ""
 "Brush file '%s' is corrupt."
 msgstr ""
 "Schwerwiegend Fehler beim Verarbeiten:\n"
-"Pinseldatei „%s” ist fehlerhaft."
+"Pinseldatei »%s« ist fehlerhaft."
 
 #: app/core/gimpdata.c:228
 #, c-format
 msgid "Could not delete '%s': %s"
-msgstr "„%s” konnte nicht gelöscht werden: %s"
+msgstr "»%s« konnte nicht gelöscht werden: %s"
 
 #: app/core/gimpdatafactory.c:265
 #, c-format
@@ -925,7 +925,7 @@ msgid ""
 "file '%s'\n"
 "with unknown extension."
 msgstr ""
-"Es wird versucht, die Datei „%s”\n"
+"Es wird versucht, die Datei »%s«\n"
 "mit unbekannter Dateiendung\n"
 "generisch zu öffnen."
 
@@ -964,13 +964,13 @@ msgstr "Umgebungsdatei %s enthält ungültigen Variablennamen: %s"
 #, c-format
 msgid "Fatal Parse Error: '%s' is not a GIMP Gradient file"
 msgstr ""
-"Schwerwiegender Fehler beim Verarbeiten: „%s” ist keine GIMP-"
+"Schwerwiegender Fehler beim Verarbeiten: »%s« ist keine GIMP-"
 "Farbverlaufsdatei"
 
 #: app/core/gimpgradient.c:367
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
-msgstr "Ungültige UTF-8-Zeichenkette in Farbverlaufsdatei „%s”."
+msgstr "Ungültige UTF-8-Zeichenkette in Farbverlaufsdatei »%s«."
 
 # CHECK
 #: app/core/gimpgradient.c:389
@@ -980,12 +980,12 @@ msgid ""
 "Gradient file '%s' is corrupt."
 msgstr ""
 "Schwerwiegender Fehler beim Verarbeiten:\n"
-"Farbverlaufsdatei „%s” ist fehlerhaft."
+"Farbverlaufsdatei »%s« ist fehlerhaft."
 
 #: app/core/gimpgradient.c:445
 #, c-format
 msgid "Corrupt segment %d in gradient file '%s'."
-msgstr "Fehlerhaftes Segment %d in Farbverlaufsdatei „%s”."
+msgstr "Fehlerhaftes Segment %d in Farbverlaufsdatei »%s«."
 
 #: app/core/gimpimage-mask.c:226
 msgid ""
@@ -1036,15 +1036,15 @@ msgid ""
 "Not enough visible layers for a merge.\n"
 "There must be at least two."
 msgstr ""
-"Es sind nicht genügend Ebenen als „Sichtbar” markiert, um\n"
-"den Vorgang „Sichtbare Ebenen vereinen” auszuführen.\n"
+"Es sind nicht genügend Ebenen als »Sichtbar« markiert, um\n"
+"den Vorgang »Sichtbare Ebenen vereinen« auszuführen.\n"
 "Es müssen mindestens zwei sein."
 
 #: app/core/gimpimage-merge.c:194
 msgid "There are not enough visible layers for a merge down."
 msgstr ""
-"Es sind nicht genügend Ebenen unter dieser Ebene als „Sichtbar”\n"
-"markiert, um den Vorgang „Nach unten vereinen” auszuführen."
+"Es sind nicht genügend Ebenen unter dieser Ebene als »Sichtbar«\n"
+"markiert, um den Vorgang »Nach unten vereinen« auszuführen."
 
 #: app/core/gimpimage-new.c:114
 #, c-format
@@ -1112,7 +1112,7 @@ msgid ""
 "Layer \"%s\" has no alpha.\n"
 "Layer was placed above it."
 msgstr ""
-"Ebene „%s” hat keinen Alphakanal.\n"
+"Ebene »%s« hat keinen Alphakanal.\n"
 "Ebene ist darüber plaziert worden."
 
 #: app/core/gimpimage.c:3098
@@ -1134,13 +1134,13 @@ msgstr "Dieser Pfad kann nicht weiter abgesenkt werden."
 #: app/core/gimpimagefile.c:454 app/core/gimpimagefile.c:964
 #, c-format
 msgid "Failed to write thumbnail for '%s' as '%s': %s"
-msgstr "Vorschau-Datei für „%s” konnte nicht als „%s” geschrieben werden: %s"
+msgstr "Vorschau-Datei für »%s« konnte nicht als »%s« geschrieben werden: %s"
 
 #: app/core/gimpimagefile.c:460 app/core/gimpimagefile.c:970
 #, c-format
 msgid "Failed to set permissions of thumbnail '%s': %s"
 msgstr ""
-"Zugriffsrechte für Vorschau-Datei „%s” konnten nicht gesetzt werden: %s"
+"Zugriffsrechte für Vorschau-Datei »%s« konnten nicht gesetzt werden: %s"
 
 #: app/core/gimpimagefile.c:658
 msgid "Remote image"
@@ -1183,12 +1183,12 @@ msgstr "%d Ebenen"
 #: app/core/gimpimagefile.c:809
 #, c-format
 msgid "Failed to open thumbnail file '%s': %s"
-msgstr "Vorschau-Datei „%s” konnte nicht geöffnet werden: %s"
+msgstr "Vorschau-Datei »%s« konnte nicht geöffnet werden: %s"
 
 #: app/core/gimpimagefile.c:1058
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "Vorschau-Ordner „%s” konnte nicht angelegt werden."
+msgstr "Vorschau-Ordner »%s« konnte nicht angelegt werden."
 
 #: app/core/gimpitem.c:368
 msgid "parasite attached to item"
@@ -1268,8 +1268,8 @@ msgid ""
 "Corrupt palette: missing magic header\n"
 "Does this file need converting from DOS?"
 msgstr ""
-"Palette „%s” wird geladen:\n"
-"Fehlerhafte Palette: „magic”-Kopfzeile fehlt\n"
+"Palette »%s« wird geladen:\n"
+"Fehlerhafte Palette: »magic«-Kopfzeile fehlt\n"
 "Muß diese Datei erst von DOS konvertiert werden?"
 
 #: app/core/gimppalette.c:320
@@ -1278,8 +1278,8 @@ msgid ""
 "Loading palette '%s':\n"
 "Corrupt palette: missing magic header"
 msgstr ""
-"Palette „%s” wird geladen:\n"
-"Palette fehlerhaft: „magic”-Kopfzeile fehlt"
+"Palette »%s« wird geladen:\n"
+"Palette fehlerhaft: »magic«-Kopfzeile fehlt"
 
 #: app/core/gimppalette.c:336 app/core/gimppalette.c:361
 #: app/core/gimppalette.c:389 app/core/gimppalette.c:459
@@ -1288,13 +1288,13 @@ msgid ""
 "Loading palette '%s':\n"
 "Read error in line %d."
 msgstr ""
-"Palette „%s” wird geladen:\n"
+"Palette »%s« wird geladen:\n"
 "Lesefehler in Zeile %d."
 
 #: app/core/gimppalette.c:354
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
-msgstr "Ungültige UTF-8-Zeichenkette in Palettendatei „%s”"
+msgstr "Ungültige UTF-8-Zeichenkette in Palettendatei »%s«"
 
 #: app/core/gimppalette.c:378
 #, c-format
@@ -1302,7 +1302,7 @@ msgid ""
 "Loading palette '%s':\n"
 "Invalid number of columns in line %d."
 msgstr ""
-"Palette „%s” wird geladen:\n"
+"Palette »%s« wird geladen:\n"
 "Falsche Anzahl von Spalten in Zeile %d."
 
 #. maybe we should just abort?
@@ -1312,7 +1312,7 @@ msgid ""
 "Loading palette '%s':\n"
 "Missing RED component in line %d."
 msgstr ""
-"Palette „%s” wird geladen:\n"
+"Palette »%s« wird geladen:\n"
 "Keine Rot-Komponente in Zeile %d."
 
 #: app/core/gimppalette.c:425
@@ -1321,7 +1321,7 @@ msgid ""
 "Loading palette '%s':\n"
 "Missing GREEN component in line %d."
 msgstr ""
-"Palette „%s” wird geladen:\n"
+"Palette »%s« wird geladen:\n"
 "Keine Grün-Komponente in Zeile %d."
 
 #: app/core/gimppalette.c:432
@@ -1330,7 +1330,7 @@ msgid ""
 "Loading palette '%s':\n"
 "Missing BLUE component in line %d."
 msgstr ""
-"Palette „%s” wird geladen:\n"
+"Palette »%s« wird geladen:\n"
 "Keine Blau-Komponente in Zeile %d."
 
 #: app/core/gimppalette.c:441
@@ -1339,7 +1339,7 @@ msgid ""
 "Loading palette '%s':\n"
 "RGB value out of range in line %d."
 msgstr ""
-"Palette „%s” wird geladen:\n"
+"Palette »%s« wird geladen:\n"
 "RGB-Wert in Zeile %d außerhalb des Wertebereiches."
 
 #: app/core/gimppalette.c:589
@@ -2284,14 +2284,14 @@ msgid ""
 "Error opening file '%s':\n"
 "%s"
 msgstr ""
-"Fehler beim Öffnen der Datei „%s”:\n"
+"Fehler beim Öffnen der Datei »%s«:\n"
 "%s"
 
 #. Error message should be added. --bex
 #: app/gui/file-commands.c:221 app/gui/file-save-dialog.c:383
 #, c-format
 msgid "Saving '%s' failed."
-msgstr "„%s” konnte nicht gespeichert werden."
+msgstr "»%s« konnte nicht gespeichert werden."
 
 #: app/gui/file-commands.c:265
 msgid ""
@@ -2405,7 +2405,7 @@ msgstr ""
 "Bild erzeugen möchten.\n"
 "\n"
 "Wenn Sie verhindern wollen, daß dieser Dialog wieder\n"
-"angezeigt wird, erhöhen Sie den Wert „Maximale Bildgröße”\n"
+"angezeigt wird, erhöhen Sie den Wert »Maximale Bildgröße«\n"
 "(zur Zeit %s) in den Einstellungen."
 
 #: app/gui/file-new-dialog.c:561
@@ -2457,7 +2457,7 @@ msgid ""
 "File '%s' exists.\n"
 "Overwrite it?"
 msgstr ""
-"Datei „%s” existiert bereits.\n"
+"Datei »%s« existiert bereits.\n"
 "Soll diese überschrieben werden?"
 
 #: app/gui/file-save-dialog.c:319
@@ -2735,7 +2735,7 @@ msgstr ""
 #: app/gui/gradients-commands.c:73
 #, c-format
 msgid "Save \"%s\" as POV-Ray"
-msgstr "„%s” Als POV-Ray Datei speichern"
+msgstr "»%s« Als POV-Ray Datei speichern"
 
 #: app/gui/gradients-menu.c:45
 msgid "/New Gradient"
@@ -2764,7 +2764,7 @@ msgstr "/Als POV-Ray Datei speichern..."
 #: app/gui/gui.c:477
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
-msgstr "Thema „%s” (%s) wird hinzugefügt\n"
+msgstr "Thema »%s« (%s) wird hinzugefügt\n"
 
 #: app/gui/gui.c:543
 msgid "Quit The GIMP?"
@@ -3448,7 +3448,7 @@ msgid "/Delete Image"
 msgstr "/Bild löschen"
 
 #. General
-#: app/gui/info-dialog.c:349 app/gui/preferences-dialog.c:1121
+#: app/gui/info-dialog.c:350 app/gui/preferences-dialog.c:1121
 #: app/gui/preferences-dialog.c:1188
 msgid "General"
 msgstr "Allgemein"
@@ -4066,22 +4066,22 @@ msgstr "Geben sie diesem Pfad einen neuen Namen"
 #: app/gui/paths-dialog.c:1979
 #, c-format
 msgid "Failed to read from '%s'."
-msgstr "Aus „%s” konnte nicht gelesen werden."
+msgstr "Aus »%s« konnte nicht gelesen werden."
 
 #: app/gui/paths-dialog.c:1994
 #, c-format
 msgid "Failed to read path from '%s'."
-msgstr "Aus „%s” konnte kein Pfad gelesen werden."
+msgstr "Aus »%s« konnte kein Pfad gelesen werden."
 
 #: app/gui/paths-dialog.c:2001
 #, c-format
 msgid "No points specified in path file '%s'."
-msgstr "Pfaddatei „%s” enthält keine Punkte."
+msgstr "Pfaddatei »%s« enthält keine Punkte."
 
 #: app/gui/paths-dialog.c:2012
 #, c-format
 msgid "Failed to read path points from '%s'."
-msgstr "Es konnten keine Pfadpunkte aus „%s” gelesen werden."
+msgstr "Es konnten keine Pfadpunkte aus »%s« gelesen werden."
 
 #: app/gui/paths-dialog.c:2111
 msgid "Load and Save Bezier Curves"
@@ -4126,12 +4126,12 @@ msgstr "/Muster neu laden"
 #: app/gui/plug-in-menus.c:343
 #, c-format
 msgid "Repeat \"%s\""
-msgstr "„%s” wiederholen"
+msgstr "»%s« wiederholen"
 
 #: app/gui/plug-in-menus.c:344
 #, c-format
 msgid "Re-show \"%s\""
-msgstr "„%s” nochmal anzeigen"
+msgstr "»%s« nochmal anzeigen"
 
 #: app/gui/plug-in-menus.c:370
 msgid "Repeat Last"
@@ -4264,7 +4264,7 @@ msgstr "_Minihilfen anzeigen"
 
 #: app/gui/preferences-dialog.c:1194
 msgid "Context Sensitive _Help with \"F1\""
-msgstr "„F1” zeigt kontextabhängige _Hilfe an"
+msgstr "»F1« zeigt kontextabhängige _Hilfe an"
 
 #: app/gui/preferences-dialog.c:1197
 msgid "Show Tips on _Startup"
@@ -4325,7 +4325,7 @@ msgstr "Aussehen"
 
 #: app/gui/preferences-dialog.c:1329
 msgid "Use \"_Dot for Dot\" by default"
-msgstr "„_Punkt für Punkt” als Vorgabe verwenden"
+msgstr "»_Punkt für Punkt« als Vorgabe verwenden"
 
 #: app/gui/preferences-dialog.c:1332
 msgid "Show Menubar"
@@ -4532,7 +4532,7 @@ msgstr "Immer"
 
 #: app/gui/preferences-dialog.c:1727
 msgid "\"File -> Save\" Saves the Image:"
-msgstr "„Datei -> Speichern” speichert das Bild:"
+msgstr "»Datei -> Speichern« speichert das Bild:"
 
 #: app/gui/preferences-dialog.c:1730
 msgid "Size of Thumbnails Files:"
@@ -4829,7 +4829,7 @@ msgid ""
 "s'. Please check your installation."
 msgstr ""
 "Die Datei mit den GIMP-Tipps scheint zu fehlen! Es sollte eine Datei namens "
-"„%s” vorhanden sein. Bitte überprüfen Sie Ihre Installation."
+"»%s« vorhanden sein. Bitte überprüfen Sie Ihre Installation."
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
@@ -5238,7 +5238,7 @@ msgid ""
 "Click \"Continue\" to proceed."
 msgstr ""
 "Installation erfolgreich.\n"
-"Drücken Sie „Weiter” um fortzufahren."
+"Drücken Sie »Weiter« um fortzufahren."
 
 #: app/gui/user-install-dialog.c:382
 msgid ""
@@ -5267,7 +5267,7 @@ msgstr ""
 #: app/gui/user-install-dialog.c:734
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr ""
-"Drücken Sie „Weiter”, um die\n"
+"Drücken Sie »Weiter«, um die\n"
 "GIMP-Benutzerinstallation zu starten."
 
 #: app/gui/user-install-dialog.c:738
@@ -5325,7 +5325,7 @@ msgstr "Persönlicher GIMP-Ordner"
 #: app/gui/user-install-dialog.c:785
 msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr ""
-"Drücken Sie „Weiter” um Ihren\n"
+"Drücken Sie »Weiter« um Ihren\n"
 "persönlichen GIMP-Ordner anzulegen."
 
 #: app/gui/user-install-dialog.c:822
@@ -5335,7 +5335,7 @@ msgid ""
 "'%s' needs to be created."
 msgstr ""
 "Für die GIMP-Benutzerinstallation muss ein Ordner\n"
-"namens „%s” angelegt werden."
+"namens »%s« angelegt werden."
 
 #: app/gui/user-install-dialog.c:828
 msgid ""
@@ -5365,7 +5365,7 @@ msgstr "Leistungsfähigkeit von GIMP"
 
 #: app/gui/user-install-dialog.c:907
 msgid "Click \"Continue\" to accept the settings above."
-msgstr "Drücken Sie „Weiter”, um die Einstellungen zu übernehmen."
+msgstr "Drücken Sie »Weiter«, um die Einstellungen zu übernehmen."
 
 #: app/gui/user-install-dialog.c:910
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
@@ -5379,7 +5379,7 @@ msgstr "Bildschirmauflösung"
 
 #: app/gui/user-install-dialog.c:920
 msgid "Click \"Continue\" to start The GIMP."
-msgstr "Drücken Sie „Weiter”, um GIMP zu starten."
+msgstr "Drücken Sie »Weiter«, um GIMP zu starten."
 
 #: app/gui/user-install-dialog.c:923
 msgid ""
@@ -5396,32 +5396,32 @@ msgstr "Installation wird abgebrochen..."
 #: app/gui/user-install-dialog.c:960
 #, c-format
 msgid "Cannot open '%s' for reading: %s"
-msgstr "„%s” konnte nicht zum Lesen geöffnet werden: %s"
+msgstr "»%s« konnte nicht zum Lesen geöffnet werden: %s"
 
 #: app/gui/user-install-dialog.c:969
 #, c-format
 msgid "Cannot open '%s' for writing: %s"
-msgstr "„%s” konnte nicht zum Schreiben geöffnet werden: %s"
+msgstr "»%s« konnte nicht zum Schreiben geöffnet werden: %s"
 
 #: app/gui/user-install-dialog.c:980 app/gui/user-install-dialog.c:1003
 #, c-format
 msgid "Error while writing '%s': %s"
-msgstr "Fehler beim Schreiben von „%s”: %s"
+msgstr "Fehler beim Schreiben von »%s«: %s"
 
 #: app/gui/user-install-dialog.c:991
 #, c-format
 msgid "Error while reading '%s': %s"
-msgstr "Fehler beim Lesen von „%s”: %s"
+msgstr "Fehler beim Lesen von »%s«: %s"
 
 #: app/gui/user-install-dialog.c:1041 app/gui/user-install-dialog.c:1075
 #, c-format
 msgid "Creating folder '%s'\n"
-msgstr "Ordner „%s” wird angelegt\n"
+msgstr "Ordner »%s« wird angelegt\n"
 
 #: app/gui/user-install-dialog.c:1055
 #, c-format
 msgid "Cannot create folder '%s': %s"
-msgstr "Ordner „%s” konnte nicht angelegt werden: %s"
+msgstr "Ordner »%s« konnte nicht angelegt werden: %s"
 
 #: app/gui/user-install-dialog.c:1059 app/gui/user-install-dialog.c:1127
 msgid "  Success\n"
@@ -5435,7 +5435,7 @@ msgstr "Ordner konnte nicht angelegt werden: %s"
 #: app/gui/user-install-dialog.c:1110
 #, c-format
 msgid "Copying file '%s' from '%s'\n"
-msgstr "Datei „%s” wird von „%s” kopiert\n"
+msgstr "Datei »%s« wird von »%s« kopiert\n"
 
 #: app/gui/user-install-dialog.c:1134
 #, c-format
@@ -5449,7 +5449,7 @@ msgid ""
 "the amount of memory used by other running processes."
 msgstr ""
 "GIMP verwendet für Bilddaten eine begrenzte Menge an Arbeitsspeicher, den\n"
-"sogenannten „Kachel-Cache”. Sie sollten seine Größe so wählen, daß er\n"
+"sogenannten »Kachel-Cache«. Sie sollten seine Größe so wählen, daß er\n"
 "in den Arbeitsspeicher passt. Bedenken Sie dabei die Menge an\n"
 "Arbeitsspeicher, die bereits von anderen Programmen belegt wird."
 
@@ -5464,7 +5464,7 @@ msgstr ""
 "Auslagerungsdatei geschrieben. Diese Datei sollte sich auf einem lokalen\n"
 "Dateisystem mit genügend freiem Speicher (einige hundert MB) befinden.\n"
 "Unter UNIX ist das systemweite temporäre Verzeichnis eine gute Wahl\n"
-"(meist „/tmp” oder „/var/tmp”)."
+"(meist »/tmp« oder »/var/tmp«)."
 
 #: app/gui/user-install-dialog.c:1192
 msgid "Swap Folder:"
@@ -5492,7 +5492,7 @@ msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
 msgstr ""
-"Sie können auch die Schaltfläche „Kalibrieren” drücken, um ein\n"
+"Sie können auch die Schaltfläche »Kalibrieren« drücken, um ein\n"
 "Fenster zu öffnen, in dem Sie Bildschirmauflösung interaktiv\n"
 "bestimmen können."
 
@@ -5738,7 +5738,7 @@ msgid ""
 "Argument %d to '%s' should be a %s, but got passed a %s"
 msgstr ""
 "Falsches Argument an procedural_db_run_proc übergeben:\n"
-"Argument %d von „%s” sollte als %s übergeben werden, es wurde jedoch %s "
+"Argument %d von »%s« sollte als %s übergeben werden, es wurde jedoch %s "
 "übergeben"
 
 #: app/pdb/procedural_db_cmds.c:65
@@ -5767,7 +5767,7 @@ msgid ""
 "You may want to save your images and restart GIMP\n"
 "to be on the safe side."
 msgstr ""
-"Das Plugin „%s” ist abgestürzt\n"
+"Das Plugin »%s« ist abgestürzt\n"
 "(%s)\n"
 "\n"
 "Das abgestürzte Plugin hat GIMP eventuell\n"
@@ -5788,12 +5788,12 @@ msgstr "Neue Plugins werden abgefragt"
 #: app/plug-in/plug-ins.c:159
 #, c-format
 msgid "querying plug-in: \"%s\"\n"
-msgstr "Plugin „%s” wird abgefragt\n"
+msgstr "Plugin »%s« wird abgefragt\n"
 
 #: app/plug-in/plug-ins.c:214
 #, c-format
 msgid "writing \"%s\"\n"
-msgstr "„%s” wird geschrieben\n"
+msgstr "»%s« wird geschrieben\n"
 
 #. initial the plug-ins
 #: app/plug-in/plug-ins.c:264
@@ -5803,7 +5803,7 @@ msgstr "Plugins werden initialisiert"
 #: app/plug-in/plug-ins.c:273
 #, c-format
 msgid "Initializing plug-in: \"%s\"\n"
-msgstr "Plugin „%s” wird initialisiert\n"
+msgstr "Plugin »%s« wird initialisiert\n"
 
 #. run the available extensions
 #: app/plug-in/plug-ins.c:284
@@ -5813,7 +5813,7 @@ msgstr "Erweiterungen werden gestartet"
 #: app/plug-in/plug-ins.c:296
 #, c-format
 msgid "Starting extension: \"%s\""
-msgstr "Erweiterung „%s” wird gestartet"
+msgstr "Erweiterung »%s« wird gestartet"
 
 #: app/tools/gimpairbrushtool.c:63
 msgid "Airbrush"
@@ -6963,12 +6963,12 @@ msgstr "Text-Datei (UTF-8) öffnen"
 #: app/tools/gimptexttool.c:678
 #, c-format
 msgid "Error opening file '%s': %s"
-msgstr "Datei „%s” konnte nicht geöffnet werden: %s"
+msgstr "Datei »%s« konnte nicht geöffnet werden: %s"
 
 #: app/tools/gimptexttool.c:707
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
-msgstr "Ungültige UTF-8-Daten in Datei „%s”."
+msgstr "Ungültige UTF-8-Daten in Datei »%s«."
 
 #: app/tools/gimpthresholdtool.c:89
 msgid "Threshold"
@@ -7172,8 +7172,8 @@ msgid ""
 "\"Keep Width\" toggles to constrain\n"
 "the aspect ratio"
 msgstr ""
-"Aktivieren Sie sowohl „Höhe beibehalten”\n"
-"als auch die „Breite beibehalten”, um das\n"
+"Aktivieren Sie sowohl »Höhe beibehalten«\n"
+"als auch die »Breite beibehalten«, um das\n"
 "Ansichtsverhältnis beizubehalten."
 
 #: app/tools/transform_options.c:242
@@ -7286,7 +7286,7 @@ msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
 msgstr ""
-"„%s” wirklich aus der Liste\n"
+"»%s« wirklich aus der Liste\n"
 "und von der Platte löschen?"
 
 #: app/widgets/gimpdatafactoryview.c:390
@@ -7770,7 +7770,7 @@ msgid "Fixed Aspect Ratio"
 msgstr "Festes Seitenverhältnis"
 
 #~ msgid "Unable to locate Plug-In: \"%s\""
-#~ msgstr "Plugin „%s” konnte nicht gefunden werden"
+#~ msgstr "Plugin »%s« konnte nicht gefunden werden"
 
 #~ msgid "The GIMP is not properly installed for the current user\n"
 #~ msgstr "GIMP ist für den aktuellen Benutzer nicht richtig installiert\n"
@@ -7779,12 +7779,12 @@ msgstr "Festes Seitenverhältnis"
 #~ "User installation was skipped because the '--nointerface' flag was "
 #~ "encountered\n"
 #~ msgstr ""
-#~ "Benutzerinstallation wurde übersprungen, da „--nointerface” übergeben "
+#~ "Benutzerinstallation wurde übersprungen, da »--nointerface« übergeben "
 #~ "wurde\n"
 
 #~ msgid ""
 #~ "To perform user installation, run the GIMP without the '--nointerface' "
 #~ "flag\n"
 #~ msgstr ""
-#~ "Um die Benutzerinstallation auszuführen, müssen Sie GIMP ohne „--"
-#~ "nointerface” starten\n"
+#~ "Um die Benutzerinstallation auszuführen, müssen Sie GIMP ohne »--"
+#~ "nointerface« starten\n"
