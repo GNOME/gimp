@@ -180,12 +180,9 @@ edit_selection_button_release (Tool           *tool,
 			       GdkEventButton *bevent,
 			       gpointer        gdisp_ptr)
 {
-  /* don't remove these unused vars yet --adam */
   int x, y;
   GDisplay * gdisp;
   Layer *layer;
-  Layer *floating_layer;
-  GSList *layer_list;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
@@ -233,89 +230,6 @@ edit_selection_button_release (Tool           *tool,
       }
   }
   
-#if 0
-  /********************************************************************a.d.m.**/
-  /****************************************************************************/
-  /*  This work is all done in the motion handler now - will be removed soon  */
-  /****************************************************************************/
-  /************************************************* & this time I mean it. ***/
-  /*  If the cancel button is down...Do nothing  */
-  if (! (bevent->state & GDK_BUTTON3_MASK))
-    {
-      edit_selection_snap (gdisp, bevent->x, bevent->y);
-      x = edit_select.x;
-      y = edit_select.y;
-
-      /* if there has been movement, move the selection  */
-      if (edit_select.origx != x || edit_select.origy != y)
-	{
-	  switch (edit_select.edit_type)
-	    {
-	    case MaskTranslate:
-	      /*  translate the selection  */
-	      gimage_mask_translate (gdisp->gimage, (x - edit_select.origx),
-				     (y - edit_select.origy));
-	      break;
-
-	    case MaskToLayerTranslate:
-	      gimage_mask_float (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
-				 (x - edit_select.origx),
-				 (y - edit_select.origy));
-	      break;
-
-	    case LayerTranslate:
-	      if ((floating_layer = gimage_floating_sel (gdisp->gimage)))
-		floating_sel_relax (floating_layer, TRUE);
-
-	      /*  translate the layer--and any "linked" layers as well  */
-	      layer_list = gdisp->gimage->layers;
-	      while (layer_list)
-		{
-		  layer = (Layer *) layer_list->data;
-		  if (layer == gdisp->gimage->active_layer || 
-		      layer_linked (layer))
-		    {
-		      layer_translate (layer, (x - edit_select.origx), (y - edit_select.origy));
-		    }
-		  layer_list = g_slist_next (layer_list);
-		}
-
-	      if (floating_layer)
-		floating_sel_rigor (floating_layer, TRUE);
-
-	      break;
-
-	    case FloatingSelTranslate:
-	      layer = gimage_get_active_layer (gdisp->gimage);
-
-	      floating_sel_relax (layer, TRUE);
-	      layer_translate (layer, (x - edit_select.origx), (y - edit_select.origy));
-	      floating_sel_rigor (layer, TRUE);
-
-	      break;
-	    }
-
-	}
-      /*  if no movement has occured, clear the current selection  */
-      else if ((edit_select.edit_type == MaskTranslate) ||
-	       (edit_select.edit_type == MaskToLayerTranslate))
-	gimage_mask_clear (gdisp->gimage);
-
-      /*  if no movement occured and the type is LayerTranslate,
-       *  check if the layer is a floating selection.  If so, anchor.
-       */
-      else if (edit_select.edit_type == FloatingSelTranslate)
-	{
-	  layer = gimage_get_active_layer (gdisp->gimage);
-	  if (layer_is_floating_sel (layer))
-	    floating_sel_anchor (layer);
-	}
-    }
-
-  undo_push_group_end (gdisp->gimage);
-
-#else
-
   /* thaw the undo again */
   gimp_image_undo_thaw (gdisp->gimage);
 
@@ -348,8 +262,6 @@ edit_selection_button_release (Tool           *tool,
       /* Operation cancelled - undo the undo-group! */
       undo_pop (gdisp->gimage);
     }
-
-#endif
 
   gdisplays_flush ();
 }
@@ -403,22 +315,7 @@ edit_selection_motion (Tool           *tool,
 	switch (edit_select.edit_type)
 	  {
 	  case MaskTranslate:
-	    /*  translate the selection  */
-	    /*	    gimage_mask_translate (gdisp->gimage, xoffset, yoffset);
-	    g_warning("%d,%d  %d,%d  %d,%d  %d,%d  %d,%d  %d,%d",
-		      edit_select.origx,edit_select.origy,
-		      edit_select.cumlx,edit_select.cumly,
-		      xoffset,yoffset,
-		      x,y,
-		      edit_select.x1,edit_select.y1,
-		      edit_select.x2,edit_select.y2);*/
-	    /*
-	    if (edit_select.first_move)
-	      {
-		gimp_image_undo_freeze (gdisp->gimage);
-		edit_select.first_move = FALSE;
-	      }
-	    */
+	    /*  we don't do the actual edit selection move here.  */
 	    edit_select.origx = x;
 	    edit_select.origy = y;
 	    break;
