@@ -18,8 +18,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gtk/gtk.h>
 
 #include "display-types.h"
@@ -506,9 +504,7 @@ gimp_display_idlerender_init (GimpDisplay *gdisp)
     {
       area = (GimpArea *) list->data;
 
-      new_area = g_new (GimpArea, 1);
-
-      memcpy (new_area, area, sizeof (GimpArea));
+      new_area = g_memdup (area, sizeof (GimpArea));
 
       gdisp->idle_render.update_areas =
 	gimp_display_area_list_process (gdisp->idle_render.update_areas,

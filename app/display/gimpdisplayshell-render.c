@@ -676,11 +676,9 @@ render_image_gray_a (RenderInfo *info)
 static void
 render_image_rgb (RenderInfo *info)
 {
-  guchar *src;
-  guchar *dest;
   gint    byte_order;
   gint    y, ye;
-  gint    x, xe;
+  gint    xe;
   gint    initial;
   gfloat  error;
   gfloat  step;
@@ -706,21 +704,9 @@ render_image_rgb (RenderInfo *info)
 	}
       else
 	{
-	  src = info->src;
-	  dest = info->dest;
+	  g_return_if_fail (info->src != NULL);
 
-	  g_return_if_fail (src != NULL);
-	  
-	  /* replace this with memcpy, or better yet, avoid it altogether? */
-	  for (x = info->x; x < xe; x++)
-	    {
-	      dest[0] = src[0];
-	      dest[1] = src[1];
-	      dest[2] = src[2];
-
-	      src += 3;
-	      dest += 3;
-	    }
+          memcpy (info->dest, info->src, 3 * info->w);
 	}
 
       info->dest += info->dest_bpl;

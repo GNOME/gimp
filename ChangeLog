@@ -1,3 +1,11 @@
+2003-02-21  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c (render_image_rgb):
+	replaced a for-loop with a call to memcpy().
+
+	* app/display/gimpdisplay.c: use g_memdup() instead of g_new()
+	followed by memcpy().
+
 2003-02-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptransformoptions.c
