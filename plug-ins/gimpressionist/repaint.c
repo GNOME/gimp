@@ -836,7 +836,7 @@ void repaint(struct ppm *p, struct ppm *a)
       double h, v;
       int px = x % tmp.width, py;
       for(y = 0; y < p->height; y++) {
-	int k = y * tmp.width * 3 + x * 3;
+	int k = y * p->width * 3 + x * 3;
 	py = y % tmp.height;
 	if(runningvals.paperoverlay)
 	  h = (tmp.col[py*tmp.width*3+px*3]-128) * relief;

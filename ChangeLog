@@ -1,3 +1,10 @@
+2000-12-11  Vidar Madsen  <vidar@gimp.org>
+
+	* plug-ins/gimpressionist/repaint.c: Fixed a bug when using
+	Paper Relief, closing bug #34667.
+	* plug-ins/gimpressionist/gimpressionist.c: Moved the Presets tab
+	to the far left.
+
 2000-12-11  Sven Neumann  <sven@gimp.org>
 
 	* app/edit_selection.c

@@ -457,6 +457,7 @@ int create_dialog(void)
   gtk_widget_realize (notebook);
   gtk_widget_show(notebook);
 
+  create_presetpage(GTK_NOTEBOOK (notebook));
   create_paperpage(GTK_NOTEBOOK (notebook));
   create_brushpage(GTK_NOTEBOOK (notebook));
   create_orientationpage(GTK_NOTEBOOK (notebook));
@@ -464,7 +465,6 @@ int create_dialog(void)
   create_placementpage(GTK_NOTEBOOK (notebook));
   create_colorpage(GTK_NOTEBOOK (notebook));
   create_generalpage(GTK_NOTEBOOK (notebook));
-  create_presetpage(GTK_NOTEBOOK (notebook));
 
   preview_box = create_preview();
   gtk_box_pack_start (GTK_BOX (box2), preview_box, FALSE, FALSE, 0);
