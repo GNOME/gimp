@@ -1,5 +1,26 @@
 2002-05-11  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpwidgets.c (gimp_radio_group_new2): applied a
+	patch from Maurits Rijk that enables mnemonics (bug #80804).
+	
+	* plug-ins/common/blinds.c
+	* plug-ins/common/deinterlace.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/destripe.c
+	* plug-ins/common/emboss.c
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/mblur.c
+	* plug-ins/common/oilify.c
+	* plug-ins/common/pixelize.c
+	* plug-ins/common/sel_gauss.c
+	* plug-ins/common/struc.c: : applied patches from Maurits Rijk that
+	add mnemonics (bug #80804).
+
+	* plug-ins/common/convmatrix.c: merged fix for bug #81345 from stable
+	branch.
+
+2002-05-11  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/Makefile.am: removed LOCALEDIR definition ...
 
 	* libgimpbase/Makefile.am: ... and added it here.

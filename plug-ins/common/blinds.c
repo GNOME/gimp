@@ -374,8 +374,8 @@ blinds_dialog (void)
 			   G_CALLBACK (blinds_radio_update),
 			   &bvals.orientation, (gpointer) bvals.orientation,
 
-			   _("Horizontal"), (gpointer) HORIZONTAL, NULL,
-			   _("Vertical"),   (gpointer) VERTICAL, NULL,
+			   _("_Horizontal"), (gpointer) HORIZONTAL, NULL,
+			   _("_Vertical"),   (gpointer) VERTICAL, NULL,
 
 			   NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
@@ -390,7 +390,7 @@ blinds_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
   gtk_widget_show (toggle_vbox);
 
-  toggle = gtk_check_button_new_with_label (_("Transparent"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Transparent"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
@@ -419,7 +419,7 @@ blinds_dialog (void)
   gtk_widget_show (table);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				    _("Displacement:"), SCALE_WIDTH, 0,
+				    _("_Displacement:"), SCALE_WIDTH, 0,
 				    bvals.angledsp, 1, 90, 1, 15, 0,
 				    TRUE, 0, 0,
 				    NULL, NULL);
@@ -428,7 +428,7 @@ blinds_dialog (void)
                     &bvals.angledsp);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				    _("Num Segments:"), SCALE_WIDTH, 0,
+				    _("_Num Segments:"), SCALE_WIDTH, 0,
 				    bvals.numsegs, 1, MAX_FANS, 1, 2, 0,
 				    TRUE, 0, 0,
 				    NULL, NULL);
@@ -493,7 +493,7 @@ cache_preview (void)
   int y,x;
   guchar *src_rows;
   guchar *p;
-  int isgrey = 0;
+  gboolean isgrey;
 
   gimp_pixel_rgn_init (&src_rgn, blindsdrawable,
 		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
@@ -510,14 +510,7 @@ cache_preview (void)
       bint.img_bpp = 3 + has_alpha;
     }
 
-  switch (gimp_drawable_type (blindsdrawable->drawable_id))
-    {
-    case GIMP_GRAYA_IMAGE:
-    case GIMP_GRAY_IMAGE:
-      isgrey = 1;
-    default:
-      break;
-    }
+  isgrey = gimp_drawable_is_gray (blindsdrawable->drawable_id);
 
   for (y = 0; y < preview_height; y++)
     {
@@ -527,7 +520,7 @@ cache_preview (void)
 			      sel_y1 + (y * sel_height) / preview_height,
 			      sel_width);
 
-      for (x = 0; x < (preview_width); x++)
+      for (x = 0; x < preview_width; x++)
 	{
 	  /* Get the pixels of each col */
 	  gint i;

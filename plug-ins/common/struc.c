@@ -1304,16 +1304,16 @@ struc_dialog (void)
                                  &svals.direction,
                                  GINT_TO_POINTER (svals.direction),
 
-                                 _("Top-Right"),
+                                 _("_Top-Right"),
                                  GINT_TO_POINTER (TOP_RIGHT), NULL,
 
-                                 _("Top-Left"),
+                                 _("Top-_Left"),
                                  GINT_TO_POINTER (TOP_LEFT), NULL,
 
-                                 _("Bottom-Left"),
+                                 _("_Bottom-Left"),
                                  GINT_TO_POINTER (BOTTOM_LEFT), NULL,
 
-                                 _("Bottom-Right"),
+                                 _("Bottom-_Right"),
                                  GINT_TO_POINTER (BOTTOM_RIGHT), NULL,
 
                                  NULL);
@@ -1327,7 +1327,7 @@ struc_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Depth:"), 100, 0,
+			      _("_Depth:"), 100, 0,
 			      svals.depth, 1, 50, 1, 5, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1433,9 +1433,7 @@ strucpi (GimpDrawable *drawable)
 	  for (col = 0; col < (x2 - x1) * bytes; col+=bytes)
 	    {
 	      varde = cur_row[col] + mult*sdata[rcol*xm+rrow*ym+offs];
-	      if (varde > 255 ) varde = 255;
-	      if (varde < 0) varde = 0;
-	      *d++ = (guchar)varde;
+	      *d++ = (guchar) CLAMP (varde, 0, 255);
 	      if (bytes == 2) 
 		*d++ = cur_row[col+1];
 	      rcol++;
@@ -1447,17 +1445,11 @@ strucpi (GimpDrawable *drawable)
 	  for (col = 0; col < (x2 - x1) * bytes; col+=bytes)
 	    {
 	      varde = cur_row[col] + mult * sdata[rcol*xm+rrow*ym+offs];
-	      if (varde > 255 ) varde = 255;
-	      if (varde < 0) varde = 0;
-	      *d++ = (guchar) varde;
+	      *d++ = (guchar) CLAMP (varde, 0, 255);
 	      varde = cur_row[col+1] + mult * sdata[rcol*xm+rrow*ym+offs];
-	      if (varde > 255 ) varde = 255;
-	      if (varde < 0) varde = 0;
-	      *d++ = (guchar) varde;
+	      *d++ = (guchar) CLAMP (varde, 0, 255);
 	      varde = cur_row[col+2] + mult * sdata[rcol*xm+rrow*ym+offs];
-	      if (varde > 255 ) varde = 255;
-	      if (varde < 0) varde = 0;
-	      *d++ = (guchar) varde;
+	      *d++ = (guchar) CLAMP (varde, 0, 255);
 	      if (bytes == 4)
 		*d++ = cur_row[col+3];
 	      rcol++;
@@ -1480,6 +1472,6 @@ strucpi (GimpDrawable *drawable)
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 
-  free (cur_row);
-  free (dest);
+  g_free (cur_row);
+  g_free (dest);
 }

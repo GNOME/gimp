@@ -52,22 +52,7 @@ enum
   FUNCTION_EMBOSS  = 1
 };
 
-struct Grgb
-{
-  guint8 red;
-  guint8 green;
-  guint8 blue;
-};
-
-struct GRegion
-{
-  gint32 x;
-  gint32 y;
-  gint32 width;
-  gint32 height;
-};
-
-struct piArgs
+typedef struct
 {
   gint32 img;
   gint32 drw;
@@ -75,7 +60,7 @@ struct piArgs
   gdouble elevation;
   gint32 depth;
   gint32 embossp;
-};
+} piArgs;
 
 struct embossFilter
 {
@@ -90,22 +75,22 @@ struct embossFilter
 
 /*  preview stuff -- to be removed as soon as we have a real libgimp preview  */
 
-struct mwPreview
+typedef struct 
 {
   gint     width;
   gint     height;
   gint     bpp;
   gdouble  scale;
   guchar  *bits;
-};
+} mwPreview;
 
 #define PREVIEW_SIZE 100
 
 static gint do_preview = TRUE;
 
-static GtkWidget        * mw_preview_new   (GtkWidget        *parent,
-					    struct mwPreview *mwp);
-static struct mwPreview * mw_preview_build (GimpDrawable        *drw);
+static GtkWidget *mw_preview_new   (GtkWidget        *parent,
+				    mwPreview *mwp);
+static mwPreview *mw_preview_build (GimpDrawable        *drw);
 
 
 
@@ -116,8 +101,8 @@ static void run   (gchar   *name,
 		   gint    *nretvals,
 		   GimpParam **retvals);
 
-static gint pluginCore        (struct piArgs *argp);
-static gint pluginCoreIA      (struct piArgs *argp);
+static gint pluginCore        (piArgs *argp);
+static gint pluginCoreIA      (piArgs *argp);
 
 static void emboss_do_preview (GtkWidget     *preview);
 
@@ -141,7 +126,7 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run   */
 };
 
-static struct mwPreview *thePreview;
+static mwPreview *thePreview;
 
 MAIN ()
 
@@ -181,13 +166,13 @@ run (gchar   *name,
      GimpParam **retvals)
 {
   static GimpParam rvals[1];
-  struct piArgs args;
+  piArgs args;
   GimpDrawable *drw;
 
   *nretvals = 1;
   *retvals = rvals;
 
-  memset(&args, (int) 0, sizeof (struct piArgs));
+  memset(&args, (int) 0, sizeof (piArgs));
 
   rvals[0].type = GIMP_PDB_STATUS;
   rvals[0].data.d_status = GIMP_PDB_SUCCESS;
@@ -217,7 +202,7 @@ run (gchar   *name,
 	}
       else
 	{
-	  gimp_set_data ("plug_in_emboss", &args, sizeof (struct piArgs));
+	  gimp_set_data ("plug_in_emboss", &args, sizeof (piArgs));
 	}
 
       break;
@@ -375,7 +360,7 @@ EmbossRow (guchar *src,
 }
 
 static gint
-pluginCore (struct piArgs *argp)
+pluginCore (piArgs *argp)
 {
   GimpDrawable *drw;
   GimpPixelRgn src, dst;
@@ -406,11 +391,8 @@ pluginCore (struct piArgs *argp)
   gimp_pixel_rgn_init (&src, drw, x1, y1, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dst, drw, x1, y1, width, height, TRUE, TRUE);
 
-  srcbuf = g_new (guchar, rowsize * 3);
-  dstbuf = g_new (guchar, rowsize);
-
-  memset (srcbuf, 0, (size_t) rowsize * 3);
-  memset (dstbuf, 0, (size_t) rowsize);
+  srcbuf = g_new0 (guchar, rowsize * 3);
+  dstbuf = g_new0 (guchar, rowsize);
 
   EmbossInit (DtoR(argp->azimuth), DtoR(argp->elevation), argp->depth);
   gimp_progress_init (_("Emboss"));
@@ -504,7 +486,7 @@ emboss_int_adjustment_callback (GtkAdjustment *adj,
 }
 
 static gint
-pluginCoreIA (struct piArgs *argp)
+pluginCoreIA (piArgs *argp)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
@@ -550,8 +532,8 @@ pluginCoreIA (struct piArgs *argp)
 				 G_CALLBACK (emboss_radio_button_callback),
 				 &argp->embossp, (gpointer) argp->embossp,
 
-				 _("Bumpmap"), (gpointer) FUNCTION_BUMPMAP, NULL,
-				 _("Emboss"), (gpointer) FUNCTION_EMBOSS, NULL,
+				 _("_Bumpmap"), (gpointer) FUNCTION_BUMPMAP, NULL,
+				 _("_Emboss"), (gpointer) FUNCTION_EMBOSS, NULL,
 
 				 NULL);
 
@@ -570,7 +552,7 @@ pluginCoreIA (struct piArgs *argp)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Azimuth:"), 100, 0,
+			      _("_Azimuth:"), 100, 0,
 			      argp->azimuth, 0.0, 360.0, 1.0, 10.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -579,7 +561,7 @@ pluginCoreIA (struct piArgs *argp)
                     &argp->azimuth);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Elevation:"), 100, 0,
+			      _("E_levation:"), 100, 0,
 			      argp->elevation, 0.0, 180.0, 1.0, 10.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -588,7 +570,7 @@ pluginCoreIA (struct piArgs *argp)
                     &argp->elevation);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Depth:"), 100, 0,
+			      _("_Depth:"), 100, 0,
 			      argp->depth, 1.0, 100.0, 1.0, 5.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -613,7 +595,7 @@ static void
 emboss_do_preview (GtkWidget *w)
 {
   static GtkWidget *theWidget = NULL;
-  struct piArgs *ap;
+  piArgs *ap;
   guchar *dst, *c;
   gint y, rowsize;
 
@@ -671,12 +653,12 @@ mw_preview_toggle_callback (GtkWidget *widget,
     emboss_do_preview (NULL);
 }
 
-static struct mwPreview *
+static mwPreview *
 mw_preview_build_virgin (GimpDrawable *drw)
 {
-  struct mwPreview *mwp;
+  mwPreview *mwp;
 
-  mwp = g_new (struct mwPreview, 1);
+  mwp = g_new (mwPreview, 1);
 
   if (drw->width > drw->height)
     {
@@ -697,10 +679,10 @@ mw_preview_build_virgin (GimpDrawable *drw)
   return mwp;
 }
 
-static struct mwPreview *
+static mwPreview *
 mw_preview_build (GimpDrawable *drw)
 {
-  struct mwPreview *mwp;
+  mwPreview *mwp;
   gint x, y, b;
   guchar *bc;
   guchar *drwBits;
@@ -730,7 +712,7 @@ mw_preview_build (GimpDrawable *drw)
 
 static GtkWidget *
 mw_preview_new (GtkWidget        *parent,
-                struct mwPreview *mwp)
+                mwPreview *mwp)
 {
   GtkWidget *preview;
   GtkWidget *frame;
@@ -758,7 +740,7 @@ mw_preview_new (GtkWidget        *parent,
   gtk_container_add (GTK_CONTAINER (pframe), preview);
   gtk_widget_show (preview);
 
-  button = gtk_check_button_new_with_label (_("Do Preview"));
+  button = gtk_check_button_new_with_mnemonic (_("Do _Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);

@@ -522,7 +522,7 @@ gimp_radio_group_new2 (gboolean         in_frame,
       widget_ptr = va_arg (args, GtkWidget **);
 
       if (label != (gpointer) 1)
-	button = gtk_radio_button_new_with_label (group, label);
+	button = gtk_radio_button_new_with_mnemonic (group, label);
       else
 	button = gtk_radio_button_new (group);
 

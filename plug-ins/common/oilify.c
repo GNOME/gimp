@@ -477,7 +477,7 @@ oilify_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  toggle = gtk_check_button_new_with_label (_("Use Intensity Algorithm"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Use Intensity Algorithm"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), ovals.mode);
   gtk_widget_show (toggle);
@@ -487,7 +487,7 @@ oilify_dialog (void)
                     &ovals.mode);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Mask Size:"), SCALE_WIDTH, 0,
+			      _("_Mask Size:"), SCALE_WIDTH, 0,
 			      ovals.mask_size, 3.0, 50.0, 1.0, 5.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);

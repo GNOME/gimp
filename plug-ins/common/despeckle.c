@@ -714,7 +714,7 @@ despeckle_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  button = gtk_check_button_new_with_label (_("Adaptive"));
+  button = gtk_check_button_new_with_mnemonic (_("_Adaptive"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				(filter_type & FILTER_ADAPTIVE) ? TRUE : FALSE);
@@ -724,7 +724,7 @@ despeckle_dialog (void)
                     G_CALLBACK (dialog_adaptive_callback),
                     NULL);
 
-  button = gtk_check_button_new_with_label (_("Recursive"));
+  button = gtk_check_button_new_with_mnemonic (_("R_ecursive"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				(filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
@@ -750,7 +750,7 @@ despeckle_dialog (void)
    */
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Radius:"), 100, 0,
+			      _("_Radius:"), 100, 0,
 			      despeckle_radius, 1, MAX_RADIUS, 1, 5, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -763,7 +763,7 @@ despeckle_dialog (void)
    */
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Black Level:"), 100, 0,
+			      _("_Black Level:"), 100, 0,
 			      black_level, -1, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -776,7 +776,7 @@ despeckle_dialog (void)
    */
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("White Level:"), 100, 0,
+			      _("_White Level:"), 100, 0,
 			      white_level, 0, 256, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);

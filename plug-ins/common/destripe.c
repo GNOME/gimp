@@ -647,7 +647,7 @@ destripe_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  button = gtk_check_button_new_with_label (_("Create Histogram"));
+  button = gtk_check_button_new_with_mnemonic (_("Create _Histogram"));
   gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 3, 0, 1);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				histogram ? TRUE : FALSE);
@@ -671,7 +671,7 @@ destripe_dialog (void)
    */
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Width:"), SCALE_WIDTH, 0,
+			      _("_Width:"), SCALE_WIDTH, 0,
 			      avg_width, 2, MAX_AVG, 1, 10, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);

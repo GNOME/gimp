@@ -196,7 +196,7 @@ static  guchar    *preview_bits;
 static  GtkWidget *preview;
 static  gdouble    preview_scale_x;
 static  gdouble    preview_scale_y;
-static  gboolean   show_cursor = 0;
+static  gboolean   show_cursor = FALSE;
 
 /* --- Functions --- */
 MAIN ()
@@ -791,7 +791,7 @@ flare_center_create (GimpDrawable *drawable)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  label = gtk_label_new (_("X:"));
+  label = gtk_label_new_with_mnemonic (_("_X:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5 );
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
@@ -804,6 +804,7 @@ flare_center_create (GimpDrawable *drawable)
   gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
   g_object_set_data (G_OBJECT (center->xadj), "center", center);
 
@@ -811,7 +812,7 @@ flare_center_create (GimpDrawable *drawable)
                     G_CALLBACK (flare_center_adjustment_update),
                     &fvals.posx);
 
-  label = gtk_label_new (_("Y:"));
+  label = gtk_label_new_with_mnemonic (_("_Y:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5 );
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
@@ -824,6 +825,7 @@ flare_center_create (GimpDrawable *drawable)
   gtk_table_attach (GTK_TABLE (table), spinbutton, 3, 4, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
   g_object_set_data (G_OBJECT (center->yadj), "center", center);
 
@@ -857,7 +859,7 @@ flare_center_create (GimpDrawable *drawable)
   gtk_widget_show (frame);
 
   /* show / hide cursor */
-  check = gtk_check_button_new_with_label (_("Show Cursor"));
+  check = gtk_check_button_new_with_mnemonic (_("_Show Cursor"));
   gtk_table_attach (GTK_TABLE (table), check, 0, 4, 2, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), show_cursor);

@@ -355,12 +355,12 @@ pixelize_dialog (GimpDrawable *drawable)
                                          GIMP_SIZE_ENTRY_UPDATE_SIZE,
                                          TRUE, FALSE,
 
-                                         _("Pixel Width:"),
+                                         _("Pixel _Width:"),
                                          pvals.pixelwidth, xres,
                                          1, drawable->width,
                                          1, drawable->width,
                                          
-                                         _("Pixel Height:"),
+                                         _("Pixel _Height:"),
                                          pvals.pixelheight, yres,
                                          1, drawable->height,
                                          1, drawable->height);

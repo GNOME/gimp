@@ -425,9 +425,9 @@ my_get_row (GimpPixelRgn *PR,
 	      w--;
 	    }
 	}
-      if (w)
+      if (w && width - x > 0)
 	{
-	  i = MIN (w, width);
+	  i = MIN (w, width - x);
 	  gimp_pixel_rgn_get_row (PR, dest, x, y, i);
 	  w -= i;
 	  dest += i * bytes;
@@ -503,6 +503,7 @@ doit (void)
   GimpPixelRgn  srcPR, destPR;
   gint          width, height, row, col;
   gint          w, h, i;
+  gint          x1, x2, y1, y2;
   guchar       *destrow[3];
   guchar       *srcrow[5];
   guchar       *temprow;
@@ -542,8 +543,12 @@ doit (void)
     destrow[i]= g_new (guchar, w * bytes);
 
   /*  initialize the pixel regions  */
+  x1 = MAX (sx1 - 2, 0);
+  y1 = MAX (sy1 - 2, 0);
+  x2 = MIN (sx2 + 2, width);
+  y2 = MIN (sy2 + 2, height);
   gimp_pixel_rgn_init (&srcPR, drawable,
-		       sx1 - 2, sy1 - 2, w + 4, h + 4, FALSE, FALSE);
+                       x1, y1, x2 - x1, y2 - y1, FALSE, FALSE);
   gimp_pixel_rgn_init (&destPR, drawable, sx1, sy1, w, h, TRUE, TRUE);
 
   /* initialize source arrays */

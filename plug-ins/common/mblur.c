@@ -453,9 +453,9 @@ mblur_radial (void)
   n = 4 * angle * sqrt (R) + 2;
   theta = angle / ((float) (n - 1));
 
-  if (((ct = g_new (float, n)) == NULL) ||
-      ((st = g_new (float, n)) == NULL))
-    return;
+  ct = g_new (float, n);
+  st = g_new (float, n);
+
   offset = theta * (n - 1) / 2;
   for (i = 0; i < n; ++i)
     {
@@ -780,13 +780,13 @@ mblur_dialog (void)
                                  &mbvals.mblur_type,
                                  GINT_TO_POINTER (mbvals.mblur_type),
 
-                                 _("Linear"),
+                                 _("_Linear"),
                                  GINT_TO_POINTER (MBLUR_LINEAR), NULL,
 
-                                 _("Radial"),
+                                 _("_Radial"),
                                  GINT_TO_POINTER (MBLUR_RADIAL), NULL,
 
-                                 _("Zoom"),
+                                 _("_Zoom"),
                                  GINT_TO_POINTER (MBLUR_ZOOM), NULL,
 
                                  NULL);
@@ -806,7 +806,7 @@ mblur_dialog (void)
   gtk_widget_show (table);
 
   adjustment = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("Length:"), 150, 0,
+				     _("L_ength:"), 150, 0,
 				     mbvals.length, 0.0, 256.0, 1.0, 8.0, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -815,7 +815,7 @@ mblur_dialog (void)
                     &mbvals.length);
 
   adjustment = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				     _("Angle:"), 150, 0,
+				     _("_Angle:"), 150, 0,
 				     mbvals.angle, 0.0, 360.0, 1.0, 15.0, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);

@@ -288,10 +288,10 @@ deinterlace_dialog (void)
                                  &DeinterlaceValue,
                                  GINT_TO_POINTER (DeinterlaceValue),
 
-                                 _("Keep Odd Fields"),
+                                 _("Keep _Odd Fields"),
                                  GINT_TO_POINTER (ODD_FIELDS), NULL,
 
-                                 _("Keep Even Fields"),
+                                 _("Keep _Even Fields"),
                                  GINT_TO_POINTER (EVEN_FIELDS), NULL,
 
                                  NULL);
