@@ -1,3 +1,9 @@
+2004-06-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.c: GtkUIManager makes the menu bar
+	visible by default, hide it if options->show_menubar is FALSE.
+	Fixes bug #143243.
+
 2004-06-17  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.1.1. Allow to disable the

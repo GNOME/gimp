@@ -729,6 +729,8 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   if (shell->options->show_menubar)
     gtk_widget_show (shell->menubar);
+  else
+    gtk_widget_hide (shell->menubar);
 
   /*  make sure we can activate accels even if the menubar is invisible
    *  (see http://bugzilla.gnome.org/show_bug.cgi?id=137151)
