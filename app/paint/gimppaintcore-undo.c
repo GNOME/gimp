@@ -28,8 +28,6 @@
 
 #include "gimppaintcore.h"
 
-#include "gimp-intl.h"
-
 
 /****************/
 /*  Paint Undo  */

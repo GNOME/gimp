@@ -1,3 +1,7 @@
+2005-01-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintcore-undo.c: doesn't need "gimp-intl.h" either.
+
 2005-01-14  Sven Neumann  <sven@gimp.org>
 
 	* app/paint/gimpink-undo.c: doesn't need to include "gimp-intl.h".
