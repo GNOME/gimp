@@ -213,7 +213,7 @@ query (void)
   const gchar *slur_help =
     "This plug-in slurs (melts like a bunch of icicles) an image.  You may select the percentage of pixels to modify and the number of times to repeat the process.";
 
-  const gchar *author = "Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/";
+  const gchar *author = "Miles O'Neal  <meo@rru.com>";
   const gchar *copyrights = "Miles O'Neal, Spencer Kimball, Peter Mattis, Torsten Martinsen, Brian Degenhardt, Federico Mena Quintero, Stephen Norris, Daniel Cotting";
   const gchar *copyright_date = "1995-1998";
 

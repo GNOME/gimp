@@ -171,7 +171,7 @@ query (void)
 
   const gchar *blurb = "Apply a 3x3 blurring convolution kernel to the specified drawable.";
   const gchar *help = "This plug-in randomly blurs the specified drawable, using a 3x3 blur.  You control the percentage of the pixels that are blurred and the number of times blurring is applied.  Indexed images are not supported.";
-  const gchar *author = "Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/";
+  const gchar *author = "Miles O'Neal  <meo@rru.com>";
   const gchar *copyrights = "Miles O'Neal, Spencer Kimball, Peter Mattis, Torsten Martinsen, Brian Degenhardt, Federico Mena Quintero, Stephen Norris, Daniel Cotting";
   const gchar *copyright_date = "1995-1998";
 

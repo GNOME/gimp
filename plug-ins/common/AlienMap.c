@@ -1000,22 +1000,9 @@ transform (guchar *r,
       break;
     }
 
-  if (red== 256)
-    {
-      red= 255;
-    }
-  if (green== 256)
-    {
-      green= 255;
-    }
-  if (blue== 256)
-    {
-      blue= 255;
-    }
-
-  *r = red;
-  *g = green;
-  *b = blue;
+  *r = CLAMP0255 (red);
+  *g = CLAMP0255 (green);
+  *b = CLAMP0255 (blue);
 }
 
 static void
@@ -1158,7 +1145,7 @@ alienmap_dialog (void)
                             NULL, 0,
                             gimp_standard_help_func, "filters/alienmap.html",
 
-                            _("About..."),    RESPONSE_ABOUT,
+                            _("About"),       RESPONSE_ABOUT,
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
@@ -1166,7 +1153,7 @@ alienmap_dialog (void)
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (dialog_response),
-                    NULL);
+                    dialog);
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
@@ -1433,8 +1420,6 @@ alienmap_logo_dialog (GtkWidget *parent)
   text = ("\nCotting Software Productions\n"
           "Bahnhofstrasse 31\n"
           "CH-3066 Stettlen (Switzerland)\n\n"
-          "cotting@mygale.org\n"
-          "http://www.mygale.org/~cotting\n\n"
           "AlienMap Plug-In for the GIMP\n"
           "Version 1.01\n");
   xlabel = gtk_label_new (text);

@@ -1685,10 +1685,8 @@ explorer_logo_dialog (GtkWidget *parent)
   xlabel = gtk_label_new ("\nCotting Software Productions\n"
 			  "Quellenstrasse 10\n"
 			  "CH-8005 Zuerich (Switzerland)\n\n"
-			  "cotting@multimania.com\n"
-			  "http://www.multimania.com/cotting\n\n"
 			  "Fractal Chaos Explorer\nPlug-In for the GIMP\n"
-			  "Version 2.00 Beta 2 (Multilingual)\n");
+			  "Version 2.00 (Multilingual)\n");
   gtk_container_add (GTK_CONTAINER (xframe3),  xlabel);
   gtk_widget_show (xlabel);
 
@@ -1810,7 +1808,6 @@ save_callback (void)
   fputs (FRACTAL_HEADER, fp);
   fputs ("#**********************************************************************\n", fp);
   fputs ("# This is a data file for the Fractal Explorer plug-in for the GIMP   *\n", fp);
-  fputs ("# Get the plug-in at              http://www.multimania.com/cotting   *\n", fp);
   fputs ("#**********************************************************************\n", fp);
 
   save_options (fp);

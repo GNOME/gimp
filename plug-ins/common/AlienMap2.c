@@ -1148,7 +1148,7 @@ alienmap2_dialog (void)
                             NULL, 0,
                             gimp_standard_help_func, "filters/alienmap2.html",
 
-                            _("About..."),    RESPONSE_ABOUT,
+                            _("About"),       RESPONSE_ABOUT,
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
@@ -1156,7 +1156,7 @@ alienmap2_dialog (void)
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (dialog_response),
-                    NULL);
+                    dialog);
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
