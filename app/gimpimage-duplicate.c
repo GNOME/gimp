@@ -15,6 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
+
 #include <string.h>
 
 #include "appenv.h"
@@ -26,8 +28,8 @@
 #include "gimpcontext.h"
 #include "gimpui.h"
 #include "interface.h"
+#include "parasitelist.h"
 
-#include "config.h"
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpmath.h"
 #include "libgimp/gimpintl.h"
@@ -517,6 +519,7 @@ duplicate (GimpImage *gimage)
   Channel *active_channel = NULL;
   GimpDrawable *new_floating_sel_drawable = NULL;
   GimpDrawable *floating_sel_drawable = NULL;
+  ParasiteList *parasites;
   PathList *paths;
   gint count;
 
@@ -660,6 +663,11 @@ duplicate (GimpImage *gimage)
   for (count=0;count<3;count++)
     new_gimage->qmask_color[count] = gimage->qmask_color[count];
   new_gimage->qmask_opacity = gimage->qmask_opacity;
+
+  /* Copy parasites */
+  parasites = gimage->parasites;
+  if (parasites)
+    new_gimage->parasites = parasite_list_copy (parasites);
 
   /* Copy paths */
   paths = gimp_image_get_paths (gimage);
