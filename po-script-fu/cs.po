@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 23:20+0100\n"
-"PO-Revision-Date: 2004-10-27 15:16+0200\n"
+"POT-Creation-Date: 2004-11-09 11:09+0100\n"
+"PO-Revision-Date: 2004-11-09 15:01+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,86 +42,95 @@ msgstr "_Procházet..."
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Pouze neinteraktivní spuštění umožňuje režim provádění Skript-fu"
 
+#: plug-ins/script-fu/script-fu-interface.c:177
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr "Skript-fu nemůže zároveň zpracovávat dva skripty."
+
+#: plug-ins/script-fu/script-fu-interface.c:179
+#, c-format
+msgid "You are already running the \"%s\" script."
+msgstr "Již spouštíte skript \"%s\"."
+
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-interface.c:191
-#: plug-ins/script-fu/script-fu-interface.c:193
+#: plug-ins/script-fu/script-fu-interface.c:202
+#: plug-ins/script-fu/script-fu-interface.c:204
 msgid "/Script-Fu/"
 msgstr "/Skript-fu/"
 
-#: plug-ins/script-fu/script-fu-interface.c:207
+#: plug-ins/script-fu/script-fu-interface.c:217
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Skript-fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-interface.c:244
+#: plug-ins/script-fu/script-fu-interface.c:254
 msgid "Script Arguments"
 msgstr "Argumenty skriptu"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-interface.c:275
+#: plug-ins/script-fu/script-fu-interface.c:285
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-interface.c:318
+#: plug-ins/script-fu/script-fu-interface.c:328
 msgid "Script-Fu Color Selection"
 msgstr "Skript-fu výběr barvy"
 
-#: plug-ins/script-fu/script-fu-interface.c:424
+#: plug-ins/script-fu/script-fu-interface.c:431
 msgid "Script-Fu File Selection"
 msgstr "Skript-fu výběr souboru"
 
-#: plug-ins/script-fu/script-fu-interface.c:428
+#: plug-ins/script-fu/script-fu-interface.c:435
 msgid "Script-Fu Folder Selection"
 msgstr "Skript-fu výběr adresáře"
 
-#: plug-ins/script-fu/script-fu-interface.c:440
+#: plug-ins/script-fu/script-fu-interface.c:447
 msgid "Script-Fu Font Selection"
 msgstr "Skript-fu výběr písma"
 
-#: plug-ins/script-fu/script-fu-interface.c:447
+#: plug-ins/script-fu/script-fu-interface.c:454
 msgid "Script-Fu Palette Selection"
 msgstr "Skript-fu výběr palety"
 
-#: plug-ins/script-fu/script-fu-interface.c:455
+#: plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-fu Pattern Selection"
 msgstr "Skript-fu výběr vzorku"
 
-#: plug-ins/script-fu/script-fu-interface.c:462
+#: plug-ins/script-fu/script-fu-interface.c:469
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-fu výběr přechodu"
 
-#: plug-ins/script-fu/script-fu-interface.c:470
+#: plug-ins/script-fu/script-fu-interface.c:477
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-fu výběr stopy"
 
 #. the script progress frame
-#: plug-ins/script-fu/script-fu-interface.c:529
+#: plug-ins/script-fu/script-fu-interface.c:533
 msgid "Script Progress"
 msgstr "Průběh skriptu"
 
-#: plug-ins/script-fu/script-fu-interface.c:537
+#: plug-ins/script-fu/script-fu-interface.c:541
 msgid "(none)"
 msgstr "(žádné)"
 
-#: plug-ins/script-fu/script-fu-interface.c:1057
+#: plug-ins/script-fu/script-fu-interface.c:1060
 #: plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1064
+#: plug-ins/script-fu/script-fu-interface.c:1067
 #: plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1071
+#: plug-ins/script-fu/script-fu-interface.c:1074
 #: plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1080
+#: plug-ins/script-fu/script-fu-interface.c:1083
 msgid "Image Types:"
 msgstr "Typy obrázku:"
 
@@ -153,9 +162,8 @@ msgid "Script-Fu _Console"
 msgstr "_Konzola skript-fu"
 
 #: plug-ins/script-fu/script-fu.c:129 plug-ins/script-fu/script-fu.c:158
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu"
-msgstr "<Toolbox>/Rozš./Skript-fu/Loga/_Neon..."
+msgstr "<Toolbox>/Rozš./Skript-fu"
 
 #: plug-ins/script-fu/script-fu.c:151
 msgid "_Start Server..."
@@ -197,9 +205,8 @@ msgid "Searching - please wait"
 msgstr "Vyhledává se - prosím počkejte"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:425
-#, fuzzy
 msgid "1 Procedure"
-msgstr "%d procedur"
+msgstr "1 procedura"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:427
 #, c-format
@@ -1042,9 +1049,8 @@ msgstr "Mapa prostředí"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:8
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
-#, fuzzy
 msgid "Highlight balance"
-msgstr "Vyvážení světel"
+msgstr "Vyvážení zvýraznění"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/C_hrome..."
@@ -1161,9 +1167,8 @@ msgid "Effect size (pixels)"
 msgstr "Velikost efektu (pixely)"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-#, fuzzy
 msgid "<Image>/Edit/Copy/Copy _Visible"
-msgstr "<Image>/Úpravy/Kopírovat viditelné"
+msgstr "<Image>/Úpravy/Kopírovat/Kopírovat _viditelné"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
@@ -1232,7 +1237,7 @@ msgid "Offset Y"
 msgstr "Posun Y"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
 msgid "Opacity"
 msgstr "Krytí"
 
@@ -1433,9 +1438,8 @@ msgstr "Tmavá barva"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:9
-#, fuzzy
 msgid "Highlight color"
-msgstr "Barva světel"
+msgstr "Barva zvýraznění"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
@@ -1608,7 +1612,7 @@ msgstr "Rozdělení Y"
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
 msgid "<Image>/Image/Guides/New Guides from _Selection"
-msgstr ""
+msgstr "<Image>/Obrázek/Vodítka/Nová vodítka z _výběru"
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "Creates four Guides around the bounding box of the current selection."
@@ -1616,7 +1620,7 @@ msgstr "Vytvoří čtyři vodítka okolo obdélníku opsanému aktuálnímu výb
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 msgid "<Image>/Image/Guides/New Guide (by _Percent)..."
-msgstr ""
+msgstr "<Image>/Obrázek/Vodítka/Nové vodítko (podle _procent)..."
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
 #: plug-ins/script-fu/scripts/guides-new.scm.h:2
@@ -1640,11 +1644,11 @@ msgstr "Svislý"
 
 #: plug-ins/script-fu/scripts/guides-new.scm.h:1
 msgid "<Image>/Image/Guides/New _Guide..."
-msgstr ""
+msgstr "<Image>/Obrázek/Vodítka/Nové _vodítko..."
 
 #: plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "<Image>/Image/Guides/_Remove all Guides"
-msgstr ""
+msgstr "<Image>/Obrázek/Vodítka/_Odstranit všechna vodítka"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 msgid "<Image>/Script-Fu/Utils/Draw _HSV Graph..."
@@ -1871,14 +1875,26 @@ msgid "Angle"
 msgstr "Úhel"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
-msgid "Interpolate"
-msgstr "Interpolovat"
+msgid "Cubic"
+msgstr "Kubická"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+msgid "Interpolation"
+msgstr "Interpolace"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+msgid "Linear"
+msgstr "Lineární"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+msgid "None"
+msgstr "Žádná"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:11
 msgid "Relative distance of horizon"
 msgstr "Poměrná vzdálenost obzoru"
 
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:12
 msgid "Relative length of shadow"
 msgstr "Poměrná délka stínu"
 
@@ -2025,9 +2041,8 @@ msgid "Pattern name"
 msgstr "Název vzorku"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
-#, fuzzy
 msgid "<Image>/Select/Rounded R_ectangle..."
-msgstr "<Image>/Skript-fu/Výběr/_Zaoblit..."
+msgstr "<Image>/Vybrat/_Zaoblený obdélník..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:2
 msgid "Concave"
