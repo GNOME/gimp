@@ -1,3 +1,13 @@
+2005-02-02  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/core/gimpimage-convert.c (gimp_image_convert): relax/rigor
+	the floating selection around the convert operations so color
+	analysis for indexed conversion works on the floating selection's
+	drawable original pixels, and not on the composited one.
+	Fixes bug #165342.
+
 2005-01-28  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merged from HEAD branch:

@@ -147,6 +147,7 @@
 #include "gimpimage-undo-push.h"
 #include "gimplist.h"
 #include "gimplayer.h"
+#include "gimplayer-floating-sel.h"
 #include "gimppalette.h"
 #include "gimpprogress.h"
 
@@ -802,6 +803,9 @@ gimp_image_convert (GimpImage              *gimage,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_CONVERT,
                                undo_desc);
 
+  if (gimp_image_floating_sel (gimage))
+    floating_sel_relax (gimp_image_floating_sel (gimage), TRUE);
+
   /*  Push the image type to the stack  */
   gimp_image_undo_push_image_type (gimage, NULL);
 
@@ -1057,6 +1061,9 @@ gimp_image_convert (GimpImage              *gimage,
   /*  Delete the quantizer object, if there is one */
   if (quantobj)
     quantobj->delete_func (quantobj);
+
+  if (gimp_image_floating_sel (gimage))
+    floating_sel_rigor (gimp_image_floating_sel (gimage), TRUE);
 
   gimp_image_undo_group_end (gimage);
 
