@@ -1,3 +1,11 @@
+1999-03-12  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/preferences_dialog.c: correct resolution size_entry
+	initialisation.
+
+	* libgimp/gimpsizeentry.c: fixed the update bug reported by Marc.
+	Works now but still needs discussion...
+
 1999-03-11  Jay Cox  <jaycox@earthlink.net>
 
 	* app/paint_funcs.c: made the INT_MULT3 macro be more accurate.

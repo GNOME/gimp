@@ -1139,8 +1139,8 @@ file_pref_cmd_callback (GtkWidget *widget,
       default_resolution_sizeentry =
 	gimp_size_entry_new (2, default_resolution_units, "%s", FALSE, TRUE, 75,
 			     GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 0, 1e-5, 32767);
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 1, 1e-5, 32767);
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 0, 1, 32767);
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 1, 1, 32767);
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 0, default_xresolution);
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 1, default_yresolution);
       gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_resolution_sizeentry), _("Horizontal"), 0, 1, 0.0);
