@@ -238,11 +238,13 @@
       <menuitem action="view-show-selection" />
       <menuitem action="view-show-layer-boundary" />
       <menuitem action="view-show-guides" />
-      <menuitem action="view-snap-to-guides" />
       <menuitem action="view-show-grid" />
+      <separator />
+      <menuitem action="view-snap-to-guides" />
       <menuitem action="view-snap-to-grid" />
       <menuitem action="view-snap-to-canvas" />
       <menuitem action="view-snap-to-vectors" />
+      <separator />
       <menu action="view-padding-color-menu" name="Padding color">
         <menuitem action="view-padding-color-theme" />
         <menuitem action="view-padding-color-light-check" />
@@ -251,7 +253,6 @@
         <separator />
         <menuitem action="view-padding-color-prefs" />
       </menu>
-      <separator />
       <menuitem action="view-show-menubar" />
       <menuitem action="view-show-rulers" />
       <menuitem action="view-show-scrollbars" />

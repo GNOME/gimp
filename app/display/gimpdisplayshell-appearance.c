@@ -374,31 +374,6 @@ gimp_display_shell_get_show_grid (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_set_snap_to_grid (GimpDisplayShell *shell,
-                                     gboolean          snap)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (snap != shell->snap_to_grid)
-    {
-      shell->snap_to_grid = snap ? TRUE : FALSE;
-
-      SET_ACTIVE (shell->menubar_manager, "view-snap-to-grid", snap);
-
-      if (IS_ACTIVE_DISPLAY (shell))
-        SET_ACTIVE (shell->popup_manager, "view-snap-to-grid", snap);
-    }
-}
-
-gboolean
-gimp_display_shell_get_snap_to_grid (GimpDisplayShell *shell)
-{
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
-
-  return shell->snap_to_grid;
-}
-
-void
 gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
                                     gboolean          show)
 {
@@ -425,6 +400,31 @@ gimp_display_shell_get_show_guides (GimpDisplayShell *shell)
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
   return GET_OPTIONS (shell)->show_guides;
+}
+
+void
+gimp_display_shell_set_snap_to_grid (GimpDisplayShell *shell,
+                                     gboolean          snap)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (snap != shell->snap_to_grid)
+    {
+      shell->snap_to_grid = snap ? TRUE : FALSE;
+
+      SET_ACTIVE (shell->menubar_manager, "view-snap-to-grid", snap);
+
+      if (IS_ACTIVE_DISPLAY (shell))
+        SET_ACTIVE (shell->popup_manager, "view-snap-to-grid", snap);
+    }
+}
+
+gboolean
+gimp_display_shell_get_snap_to_grid (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return shell->snap_to_grid;
 }
 
 void

@@ -478,23 +478,6 @@ view_toggle_guides_cmd_callback (GtkAction *action,
 }
 
 void
-view_snap_to_guides_cmd_callback (GtkAction *action,
-                                  gpointer   data)
-{
-  GimpDisplay      *gdisp;
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_display (gdisp, data);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-
-  gimp_display_shell_set_snap_to_guides (shell, active);
-}
-
-
-void
 view_toggle_grid_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
@@ -508,6 +491,22 @@ view_toggle_grid_cmd_callback (GtkAction *action,
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
   gimp_display_shell_set_show_grid (shell, active);
+}
+
+void
+view_snap_to_guides_cmd_callback (GtkAction *action,
+                                  gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  gboolean          active;
+  return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  gimp_display_shell_set_snap_to_guides (shell, active);
 }
 
 void

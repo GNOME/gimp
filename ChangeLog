@@ -1,5 +1,13 @@
 2005-01-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/view-actions.c
+	* app/actions/view-commands.[ch]
+	* app/display/gimpdisplayshell-appearance.[ch]
+	* menus/image-menu.xml.in: reordered actions, functions and menu
+	items so the "show" and "snap" actions are grouped.
+
+2005-01-03  Michael Natterer  <mitch@gimp.org>
+
 	Implemented "Snap to Canvas Edges" (fixes bug #152971) and
 	"Snap to Active Path" (half way done):
 
