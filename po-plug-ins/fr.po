@@ -970,11 +970,7 @@ msgid ""
 "This version differs from Contrast Autostretch in that it works in HSV "
 "space, and preserves hue."
 msgstr ""
-"Ce simple extension étend automatiquement le contraste. Pour tout canal de "
-"l'image, il calcule les valeurs minimale et maximale et les utilise pour "
-"étendre les histogrammes vers un contraste maximum. Pour certaines images, "
-"il peut faire ce que vous voulez ; pour d'autres, il peut être absolument "
-"nul. :-)\n"
+"Cet appendice simple étend automatiquement le contraste. Pour tout canal de l'image, il calcule les valeurs minimale et maximale et les utilise pour étendre les histogrammes vers un contraste maximum. Pour certaines images, il peut faire ce que vous voulez ; pour d'autres, il peut être absolument nul. :-)\n"
 "Cette version fonctionne en espace HSV et préserve la teinte."
 
 #: plug-ins/common/autostretch_hsv.c:87
@@ -2171,7 +2167,7 @@ msgstr "GIF: fichier trop long, donnés en trop ignorées...\n"
 msgid ""
 "Slice up the image into subimages, cutting along the image's Guides.  Fooey "
 "to you and your broccoli, Pokey."
-msgstr ""
+msgstr "Découpe l'image en sous-images, en coupant le long des guides."
 
 #: plug-ins/common/guillotine.c:77
 msgid "This function takes an image and blah blah.  Hooray!"
@@ -2269,11 +2265,11 @@ msgstr "Adoucissement"
 
 #: plug-ins/common/jpeg.c:1556
 msgid "Restart markers"
-msgstr ""
+msgstr "Marqueurs de redémarrage"
 
 #: plug-ins/common/jpeg.c:1562
 msgid "Restart frequency (rows)"
-msgstr ""
+msgstr "Fréquence de redémarrage"
 
 #: plug-ins/common/jpeg.c:1582
 msgid "Optimize"
@@ -2285,7 +2281,7 @@ msgstr "Progressif"
 
 #: plug-ins/common/jpeg.c:1603
 msgid "Force baseline JPEG (readable by all decoders)"
-msgstr ""
+msgstr "Forcer la production d'un JPEG de base, lisible par tous les décodeurs"
 
 #: plug-ins/common/jpeg.c:1615
 msgid "2x2,1x1,1x1"
@@ -2380,7 +2376,7 @@ msgid ""
 "contrast-autostretch; use c-a only if you wish to remove an undesirable "
 "colour-tint from a source image which is supposed to contain pure-white and "
 "pure-black."
-msgstr ""
+msgstr "Cet appendice réalise presque la même opération que l'appendice « Auto-extension de contraste », sauf qu'il normalise les canaux de couleur indépendemment les uns des autres. C'est en fait ce que la plupart des gens veulent faire au lieu de « Auto-extension de contraste »; n'utilisez cette dernière opération que si vous voulez ôter une couleur indésirable d'une image source qui n'est censée contenir que du blanc et du noir purs."
 
 #: plug-ins/common/normalize.c:83
 msgid "<Image>/Image/Colors/Normalize"
@@ -2981,14 +2977,14 @@ msgstr "Taille de la prévisualisation"
 
 #: plug-ins/common/rotate.c:152
 msgid "Rotates a layer or the whole image by 90, 180 or 270 degrees"
-msgstr ""
+msgstr "Tourne un calque ou tout l'image de 90, 180 ou 270 degrés"
 
 #: plug-ins/common/rotate.c:153
 msgid ""
 "This plug-in does rotate the active layer or the whole image clockwise by "
 "multiples of 90 degrees. When the whole image is choosen, the image is "
 "resized if necessary."
-msgstr ""
+msgstr "Cet appendice fait pivoter le calque actif ou toute l'image par multiples de 90 degrés comptés dans le sens des aiguilles d'une montre. Si c'est toute l'image que l'on choisit de faire pivoter, l'image est redimensionnée si nécessaire."
 
 #: plug-ins/common/rotate.c:157
 msgid "<Image>/Image/Transforms/Rotate"
@@ -3067,11 +3063,11 @@ msgstr "<Image>/Image/Transformations/Image/Rotation 270"
 
 #: plug-ins/sel2path/sel2path.c:125 plug-ins/sel2path/sel2path.c:126
 msgid "Converts a selection to a path (with advanced user menu)"
-msgstr ""
+msgstr "Convertit une sélection en chemin (avec un menu pour utilisateur avancé)"
 
 #: plug-ins/sel2path/sel2path.c:153 plug-ins/sel2path/sel2path.c:154
 msgid "Converts a selection to a path"
-msgstr ""
+msgstr "Convertit une sélection en chemin"
 
 #: plug-ins/sel2path/sel2path.c:158
 msgid "<Image>/Select/To Path"
@@ -3301,7 +3297,7 @@ msgstr "Erreur durant l'écriture de l'image rgb"
 #: plug-ins/common/zealouscrop.c:64
 msgid ""
 "Automagically crops unused space from the edges and middle of a picture."
-msgstr ""
+msgstr "Rogne automagiquement l'espace non utilisé sur les côtés et au milieu d'une image."
 
 #: plug-ins/common/zealouscrop.c:69
 msgid "<Image>/Image/Transforms/Zealous Crop"
