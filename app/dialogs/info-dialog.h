@@ -75,8 +75,9 @@ InfoDialog *info_dialog_notebook_new   (GimpViewable    *viewable,
 					gpointer         help_data);
 void        info_dialog_free           (InfoDialog      *idialog);
 
-void        info_dialog_popup          (InfoDialog      *idialog);
-void        info_dialog_popdown        (InfoDialog      *idialog);
+void        info_dialog_show           (InfoDialog      *idialog);
+void        info_dialog_present        (InfoDialog      *idialog);
+void        info_dialog_hide           (InfoDialog      *idialog);
 
 void        info_dialog_update         (InfoDialog      *idialog);
 

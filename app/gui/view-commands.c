@@ -173,7 +173,7 @@ view_info_window_cmd_callback (GtkWidget *widget,
       if (! shell->info_dialog)
 	shell->info_dialog = info_window_create (gdisp);
 
-      info_dialog_popup (shell->info_dialog);
+      info_dialog_present (shell->info_dialog);
     }
   else
     {

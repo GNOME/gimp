@@ -299,7 +299,7 @@ shear_info_update (GimpTransformTool *tr_tool)
   yshear_val = tr_tool->trans_info[YSHEAR];
 
   info_dialog_update (tr_tool->info_dialog);
-  info_dialog_popup (tr_tool->info_dialog);
+  info_dialog_show (tr_tool->info_dialog);
 }
 
 static void

@@ -1055,7 +1055,7 @@ crop_info_update (GimpCropTool *crop)
   crop->size_vals[1] = crop->y2 - crop->y1;
 
   info_dialog_update (crop->crop_info);
-  info_dialog_popup (crop->crop_info);
+  info_dialog_show (crop->crop_info);
 }
 
 static void
@@ -1070,7 +1070,7 @@ crop_response (GtkWidget    *widget,
   options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   if (crop->crop_info)
-    info_dialog_popdown (crop->crop_info);
+    info_dialog_hide (crop->crop_info);
 
   switch (response_id)
     {

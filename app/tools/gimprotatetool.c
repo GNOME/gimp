@@ -356,7 +356,7 @@ rotate_info_update (GimpTransformTool *tr_tool)
   center_vals[1] = tr_tool->trans_info[CENTER_Y];
 
   info_dialog_update (tr_tool->info_dialog);
-  info_dialog_popup (tr_tool->info_dialog);
+  info_dialog_show (tr_tool->info_dialog);
 }
 
 static void

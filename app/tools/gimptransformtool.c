@@ -1099,7 +1099,7 @@ gimp_transform_tool_halt (GimpTransformTool *tr_tool)
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
 
   if (tr_tool->info_dialog)
-    info_dialog_popdown (tr_tool->info_dialog);
+    info_dialog_hide (tr_tool->info_dialog);
 
   tool->gdisp    = NULL;
   tool->drawable = NULL;

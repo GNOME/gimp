@@ -471,7 +471,7 @@ gimp_scale_tool_info_update (GimpTransformTool *tr_tool)
   g_snprintf (y_ratio_buf, sizeof (y_ratio_buf), "%0.2f", ratio_y);
 
   info_dialog_update (tr_tool->info_dialog);
-  info_dialog_popup (tr_tool->info_dialog);
+  info_dialog_show (tr_tool->info_dialog);
 }
 
 static void

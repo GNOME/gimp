@@ -95,7 +95,7 @@ info_window_response (GtkWidget  *widget,
                       gint        response_id,
                       InfoDialog *info_win)
 {
-  info_dialog_popdown (info_win);
+  info_dialog_hide (info_win);
 }
 
 static void
@@ -331,7 +331,7 @@ info_window_follow_auto (Gimp *gimp)
       info_window_update (gdisp);
     }
 
-  info_dialog_popup (info_window_auto);
+  info_dialog_present (info_window_auto);
 }
 
 

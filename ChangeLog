@@ -1,3 +1,21 @@
+2004-01-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/info-dialog.[ch]: renamed info_dialog_popdown() to
+	info_dialog_hide() and info_dialog_popup() to info_dialog_present().
+	Added info_dialog_show() which just shows the dialog without
+	calling gtk_window_present().
+
+	* app/gui/info-window.c
+	* app/gui/view-commands.c
+	* app/tools/gimptransformtool.c: changed accordingly.
+
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c: use info_dialog_show() so the dialog
+	doesn't grab the focus away from the canvas. Fixes bug #132041.
+
 2004-01-21  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpscanconvert.c: removed the call to

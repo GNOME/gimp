@@ -106,7 +106,18 @@ info_dialog_free (InfoDialog *idialog)
 }
 
 void
-info_dialog_popup (InfoDialog *idialog)
+info_dialog_show (InfoDialog *idialog)
+{
+  g_return_if_fail (idialog != NULL);
+
+  if (GTK_WIDGET_VISIBLE (idialog->shell))
+    gdk_window_show (idialog->shell->window);
+  else
+    gtk_widget_show (idialog->shell);
+}
+
+void
+info_dialog_present (InfoDialog *idialog)
 {
   g_return_if_fail (idialog != NULL);
 
@@ -114,7 +125,7 @@ info_dialog_popup (InfoDialog *idialog)
 }
 
 void
-info_dialog_popdown (InfoDialog *idialog)
+info_dialog_hide (InfoDialog *idialog)
 {
   g_return_if_fail (idialog != NULL);
 
