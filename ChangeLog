@@ -1,5 +1,11 @@
 2001-07-01  Sven Neumann  <sven@gimp.org>
 
+	* gimptool.in: take glib_cflags and glib_libs from glib-config instead
+	of using ugly sed hacks to strip it out of gtk_cflags and gtk_libs.
+	This should fix 'gimptool --cflags-noui'.
+
+2001-07-01  Sven Neumann  <sven@gimp.org>
+
 	* acconfig.h: we forgot to add HAVE_FINITE and HAVE_ISFINITE here
 	(bug #56918).
 
