@@ -32,6 +32,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-convert.h"
 #include "core/gimpimage-crop.h"
 #include "core/gimpimage-duplicate.h"
 #include "core/gimpimage-flip.h"
@@ -115,7 +116,8 @@ image_convert_rgb_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  convert_to_rgb (gimage);
+  gimp_image_convert (gimage, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL);
+  gimp_image_flush (gimage);
 }
 
 void
@@ -125,7 +127,8 @@ image_convert_grayscale_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  convert_to_grayscale (gimage);
+  gimp_image_convert (gimage, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL);
+  gimp_image_flush (gimage);
 }
 
 void
@@ -133,9 +136,11 @@ image_convert_indexed_cmd_callback (GtkWidget *widget,
 				    gpointer   data)
 {
   GimpImage *gimage;
+  GtkWidget *dialog;
   return_if_no_image (gimage, data);
 
-  convert_to_indexed (gimage, widget);
+  dialog = convert_dialog_new (gimage, widget);
+  gtk_widget_show (dialog);
 }
 
 void

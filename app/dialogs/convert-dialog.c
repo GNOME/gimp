@@ -80,26 +80,8 @@ static gint                    saved_num_colors   = 256;
 static GimpConvertPaletteType  saved_palette_type = GIMP_MAKE_PALETTE;
 
 
-void
-convert_to_rgb (GimpImage *gimage)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_image_convert (gimage, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL);
-  gimp_image_flush (gimage);
-}
-
-void
-convert_to_grayscale (GimpImage* gimage)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_image_convert (gimage, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL);
-  gimp_image_flush (gimage);
-}
-
-void
-convert_to_indexed (GimpImage *gimage,
+GtkWidget *
+convert_dialog_new (GimpImage *gimage,
                     GtkWidget *parent)
 {
   IndexedDialog *dialog;
@@ -113,8 +95,8 @@ convert_to_indexed (GimpImage *gimage,
   GtkWidget     *toggle;
   GSList        *group = NULL;
 
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (GTK_IS_WIDGET (parent));
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
 
   dialog = g_new0 (IndexedDialog, 1);
 
@@ -359,7 +341,7 @@ convert_to_indexed (GimpImage *gimage,
       gtk_widget_show (label);
     }
 
-  gtk_widget_show (dialog->shell);
+  return dialog->shell;
 }
 
 

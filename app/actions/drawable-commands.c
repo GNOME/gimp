@@ -219,7 +219,9 @@ drawable_offset_cmd_callback (GtkWidget *widget,
 {
   GimpImage    *gimage;
   GimpDrawable *drawable;
+  GtkWidget    *dialog;
   return_if_no_drawable (gimage, drawable, data);
 
-  offset_dialog_create (drawable, widget);
+  dialog = offset_dialog_new (drawable, widget);
+  gtk_widget_show (dialog);
 }

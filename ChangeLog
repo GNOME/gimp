@@ -1,5 +1,18 @@
 2004-04-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/convert-dialog.[ch]: renamed convert_to_indexed()
+	to convert_dialog_new() and return the dialog. Removed
+	convert_to_rgb() and convert_to_grayscale().
+
+	* app/gui/offset-dialog.[ch]: renamed offset_dialog_create()
+	to offset_dialog_new() and return the dialog.
+
+	* app/Makefile.am
+	* app/actions/drawable-commands.c
+	* app/actions/image-commands.c: changed accordingly.
+
+2004-04-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/*-commands.[ch]: removed...
 
 	* app/actions/*-commands.[ch]: ...and added here.

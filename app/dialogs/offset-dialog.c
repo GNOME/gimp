@@ -69,9 +69,9 @@ static void  offset_halfheight_callback (GtkWidget    *widget,
 
 /*  public functions  */
 
-void
-offset_dialog_create (GimpDrawable *drawable,
-                      GtkWidget    *parent)
+GtkWidget *
+offset_dialog_new (GimpDrawable *drawable,
+                   GtkWidget    *parent)
 {
   OffsetDialog *off_d;
   GtkWidget    *check;
@@ -84,8 +84,8 @@ offset_dialog_create (GimpDrawable *drawable,
   GtkWidget    *radio_button;
   const gchar  *title = NULL;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (GTK_IS_WIDGET (parent));
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
 
   off_d = g_new0 (OffsetDialog, 1);
 
@@ -223,7 +223,8 @@ offset_dialog_create (GimpDrawable *drawable,
   gtk_widget_set_sensitive (frame, ! off_d->wrap_around);
 
   gtk_widget_show (vbox);
-  gtk_widget_show (off_d->dlg);
+
+  return off_d->dlg;
 }
 
 
