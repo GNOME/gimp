@@ -1,5 +1,11 @@
 2001-07-19  Sven Neumann  <sven@gimp.org>
 
+	* ro.po: removed it again. The file was for the HEAD branch and the
+	other po files were missing. We can add it back later when all this
+	is fixed.
+
+2001-07-19  Sven Neumann  <sven@gimp.org>
+
 	* ro.po: fixed header
 
 2001-07-19  Marius Andreiana  <mandreiana@yahoo.com>

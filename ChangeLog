@@ -1,3 +1,8 @@
+2001-07-19  Sven Neumann  <sven@gimp.org>
+
+	*  configure.in: removed ro from ALL_LINGUAS because the translation
+	was for the gimp HEAD branch and po files were missing.
+
 2001-07-17  Marius Andreiana  <mandreiana@yahoo.com>
 
 	* configure.in: Added ro (Romanian) to ALL_LINGUAS
