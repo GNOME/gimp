@@ -1326,11 +1326,11 @@ msgstr "Перегляд!"
 
 #: plug-ins/MapObject/mapobject_ui.c:1451
 msgid "Zoom out (make image smaller)"
-msgstr ""
+msgstr "Зменшити"
 
 #: plug-ins/MapObject/mapobject_ui.c:1460
 msgid "Zoom in (make image bigger)"
-msgstr ""
+msgstr "Зб╕льшити"
 
 #: plug-ins/MapObject/mapobject_ui.c:1462
 msgid "Show Preview Wireframe"
