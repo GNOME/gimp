@@ -9,7 +9,7 @@
 	* plug-ins/common/plugin-defs.pl: added them here.
 
 	* plug-ins/common/mkgen.pl: removed tab insanity now that
-	libgimpoldpreview is gimp.
+	libgimpoldpreview is gone.
 
 	* plug-ins/common/.cvsignore
 	* plug-ins/common/Makefile.am: regenerated.
