@@ -1,6 +1,10 @@
+2004-10-21  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added plug-ins/common/raw.c.
+
 2004-10-19  David Lodge <dave@cirt.net>
-                                                                                
-        * en_GB.po: Updated British English translation.
+
+	* en_GB.po: Updated British English translation.
                                                                                 
 2004-10-19  Adam Weinberger  <adamw@gnome.org>
 
@@ -15,8 +19,8 @@
 	* it.po: updated italian translation.
 
 2004-10-17  David Lodge <dave@cirt.net>
-                                                                                
-        * en_GB.po: Updated British English translation.
+
+	* en_GB.po: Updated British English translation.
                                                                                 
 2004-10-16  Vincent van Adrighem  <adrighem@gnome.org>
 
