@@ -1,3 +1,7 @@
+2002-05-03  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/common/tiff.c: Overbright alpha bug #77283 fixed
+
 2002-05-03  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/borderaverage.c
