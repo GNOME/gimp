@@ -101,7 +101,7 @@ gimp_pattern_get_type (void)
       };
 
       pattern_type = g_type_register_static (GIMP_TYPE_DATA,
-					     "GimpPattern", 
+					     "GimpPattern",
 					     &pattern_info, 0);
   }
 
@@ -364,22 +364,22 @@ gimp_pattern_load (const gchar  *filename,
   header.magic_number = g_ntohl (header.magic_number);
 
   /*  Check for correct file format */
-  if (header.magic_number != GPATTERN_MAGIC || header.version != 1 || 
-      header.header_size <= sizeof (header)) 
+  if (header.magic_number != GPATTERN_MAGIC || header.version != 1 ||
+      header.header_size <= sizeof (header))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Unknown pattern format version %d in '%s'."),
                    header.version, filename);
       goto error;
     }
-  
+
   /*  Check for supported bit depths  */
-  if (header.bytes <1 || header.bytes > 3)
+  if (header.bytes < 1 || header.bytes > 4)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Unsupported pattern depth %d\n"
                      "in file '%s'.\n"
-                     "GIMP Patterns must be GRAY or RGB.\n"),
+                     "GIMP Patterns must be GRAY or RGB."),
                    header.bytes, filename);
       goto error;
     }
@@ -396,10 +396,10 @@ gimp_pattern_load (const gchar  *filename,
                        filename);
 	  goto error;
         }
-        
+
       if (!g_utf8_validate (name, -1, NULL))
         {
-          g_message (_("Invalid UTF-8 string in pattern file '%s'."), 
+          g_message (_("Invalid UTF-8 string in pattern file '%s'."),
                      filename);
           g_free (name);
           name = NULL;
@@ -413,7 +413,7 @@ gimp_pattern_load (const gchar  *filename,
 
   pattern->mask = temp_buf_new (header.width, header.height, header.bytes,
                                 0, 0, NULL);
-  if (read (fd, temp_buf_data (pattern->mask), 
+  if (read (fd, temp_buf_data (pattern->mask),
             header.width * header.height * header.bytes) <
       header.width * header.height * header.bytes)
     {
