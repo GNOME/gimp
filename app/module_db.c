@@ -65,6 +65,8 @@ static const char * const statename[] = {
 #ifdef __EMX__
 extern void gimp_color_selector_register();
 extern void gimp_color_selector_unregister();
+extern void gimp_color_display_register();
+extern void gimp_color_display_unregister();
 
 static struct main_funcs_struc {
   gchar *name;
@@ -74,6 +76,8 @@ static struct main_funcs_struc {
 gimp_main_funcs[] = {
   { "gimp_color_selector_register", gimp_color_selector_register },
   { "gimp_color_selector_unregister", gimp_color_selector_unregister },
+  { "gimp_color_display_register", gimp_color_display_register },
+  { "gimp_color_display_unregister", gimp_color_display_unregister },
   { NULL, NULL }
 };
 #endif
