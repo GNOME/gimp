@@ -236,7 +236,7 @@ sub gimp_init {
 sub gimp_end {
    $initialized = 0;
 
-   undef $server_fh;
+   close $server_fh;
    kill 'KILL',$gimp_pid if $gimp_pid;
    undef $gimp_pid;
 }
@@ -244,10 +244,15 @@ sub gimp_end {
 sub gimp_main {
    gimp_init;
    no strict 'refs';
-   eval { &{caller(1)."::net"} };
-   die $@ if $@ && $@ ne "BE QUIET ABOUT THIS DIE\n";
-   gimp_end;
-   return 0;
+   eval { Gimp::callback("-net") };
+   if($@ && $@ ne "BE QUIET ABOUT THIS DIE\n") {
+      Gimp::logger(message => substr($@,0,-1), fatal => 1, function => 'DIE');
+      gimp_end;
+      -1;
+   } else {
+      gimp_end;
+      0;
+   }
 }
 
 sub get_connection() {

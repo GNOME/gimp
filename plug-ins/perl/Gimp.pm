@@ -5,13 +5,13 @@ use Carp;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $AUTOLOAD %EXPORT_TAGS @EXPORT_FAIL
             @_consts @_procs $interface_pkg $interface_type @_param @_al_consts
             @PREFIXES $_PROT_VERSION
-            @gimp_gui_functions
+            @gimp_gui_functions $function $ignore_die
             $help $verbose $host);
 
 require DynaLoader;
 
 @ISA=qw(DynaLoader);
-$VERSION = 1.061;
+$VERSION = 1.07;
 
 @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
@@ -268,9 +268,18 @@ EOF
 }
 
 my @log;
+my $caller;
+
+sub format_msg {
+   $_=shift;
+   "$_->[0]: $_->[2] ".($_->[1] ? "($_->[1])":"");
+}
 
 sub _initialized_callback {
    if (@log) {
+      for(@log) {
+         Gimp->message(format_msg($_)) if $_->[3] && $interface_type eq "lib";
+      }
       Gimp->_gimp_append_data ('gimp-perl-log', map join("\1",@$_)."\0",@log);
       @log=();
    }
@@ -284,36 +293,74 @@ sub logger {
    my $file=$0;
    $file=~s/^.*[\\\/]//;
    $args{message}  = "unknown message"    unless defined $args{message};
+   $args{function} = $function            unless defined $args{function};
    $args{function} = ""                   unless defined $args{function};
    $args{fatal}    = 1                    unless defined $args{fatal};
-   print STDERR "$file: $args{message} ",($args{function} ? "(for function $args{function})":""),"\n" if $verbose || $interface_type eq 'net';
    push(@log,[$file,@args{'function','message','fatal'}]);
+   print STDERR format_msg($log[-1]),"\n" if $verbose || $interface_type eq 'net';
    _initialized_callback if initialized();
 }
 
-# calm down the gimp module
-sub net {}
-sub query {}
+sub die_msg {
+   logger(message => substr($_[0],0,-1), fatal => 1, function => 'DIE');
+}
 
-sub normal_context {
-   !$^S && defined $^S;
+sub call_callback {
+   my $req = shift;
+   my $cb = shift;
+   if (UNIVERSAL::can($caller,$cb)) {
+      &{"${caller}::$cb"};
+   } else {
+      die_msg "required callback '$cb' not found\n" if $req;
+   }
+}
+
+sub callback {
+   my $type = shift;
+   confess unless initialized();
+   _initialized_callback;
+   return () if $caller eq "Gimp";
+   if ($type eq "-run") {
+      local $function = shift;
+      call_callback 1,$function,@_;
+   } elsif ($type eq "-net") {
+      call_callback 1,"net";
+   } elsif ($type eq "-query") {
+      call_callback 1,"query";
+   } elsif ($type eq "-quit") {
+      local $ignore_die = 0;
+      call_callback 0,"quit";
+   }
+}
+
+sub main {
+   $caller=caller;
+   &{"${interface_pkg}::gimp_main"};
+}
+
+# same as main, but callbacks are ignored
+sub quiet_main {
+   main;
 }
 
 $SIG{__DIE__} = sub {
-   if (normal_context) {
-      logger(message => substr($_[0],0,-1), fatal => 1, function => 'DIE');
+   if (!$^S && $ignore_die) {
+      die_msg $_[0];
       initialized() ? die "BE QUIET ABOUT THIS DIE\n" : exit main();
+   } else {
+     die $_[0];
    }
-   die $_[0];
 };
 
 $SIG{__WARN__} = sub {
-   if (normal_context) {
-      logger(message => substr($_[0],0,-1), fatal => 0, function => 'WARN');
+   if ($ignore_die) {
+     warn $_[0];
    } else {
-      warn $_[0];
+     logger(message => substr($_[0],0,-1), fatal => 0, function => 'WARN');
    }
 };
+
+##############################################################################
 
 if ($interface_type=~/^lib$/i) {
    $interface_pkg="Gimp::Lib";
@@ -331,10 +378,8 @@ for(qw(_gimp_procedure_available gimp_call_procedure set_trace initialized)) {
    *$_ = \&{"${interface_pkg}::$_"};
 }
 
-*main               = \&{"${interface_pkg}::gimp_main"};
-*init               = \&{"${interface_pkg}::gimp_init"};
-*end                = \&{"${interface_pkg}::gimp_end" };
-
+*init  = \&{"${interface_pkg}::gimp_init"};
+*end   = \&{"${interface_pkg}::gimp_end" };
 *lock  = \&{"${interface_pkg}::lock" };
 *unlock= \&{"${interface_pkg}::unlock" };
 

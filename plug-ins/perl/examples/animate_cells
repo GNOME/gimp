@@ -16,34 +16,43 @@ use Gimp qw(:auto);
 use Gimp::Fu;
 use Gimp::Util;
 
-$animate_cells_version = "1.1.1";
+$animate_cells_version = "1.2";
 $animate_cells_released = "3/12/1999";
 
 # use strict;
 
 sub perl_fu_animate_cells {
   my $image = shift;
-  # my $drawable = shift; # Unused
+  my $drawable = shift; # Unused
+  my $makecopy = shift;
+  $image = gimp_channel_ops_duplicate($image) if $makecopy;
   gimp_image_disable_undo($image);
+  gimp_progress_init("Animating cell layers...",MESSAGE_BOX);
 
   my @ids = reverse gimp_image_get_layers($image);
   my $back = shift @ids;
 
   if (@ids < 2) {
     gimp_message("animate_cells: Too few cells (layers) in image.");
+    gimp_image_delete($image) if $makecopy;
     return;
   }
 
   gimp_selection_layer_alpha($ids[0]);
   for($i=1;$i<@ids;$i++) {
+    gimp_progress_update(1/(@ids-1)/2*$i);
     $lnum = $#ids+1-$i;
     fix_cell_layer($image, $ids[$i], $ids[$i-1], $back, $lnum);
   }
 
   for($i=$#ids;$i>=0;$i--) {
+    gimp_progress_update(0.5+1/@ids*(@ids-$i));
     gimp_image_merge_down($image, $ids[$i], EXPAND_AS_NECESSARY);
   }
 
+  gimp_progress_update(1.0);
+
+  gimp_display_new($image) if $makecopy;
   gimp_selection_none($image);
   gimp_image_enable_undo($image);
   gimp_displays_flush();
@@ -68,7 +77,7 @@ sub fix_cell_layer {
 
 # Gimp::Fu registration routine for placing this function into gimp's PDB
 register
-  "animate_cells",
+  "animate-cells",
   "Perform cell animation from a single, layered image",
   "Use this plugin to animate a series of layers in the same way that\
 	a physical animation process would use cells.",
@@ -76,6 +85,7 @@ register
   "<Image>/Filters/Animation/Animate Cells",
   "*",
   [
+   [PF_TOGGLE, "Work on a copy?", "", 1]
   ],
   \&perl_fu_animate_cells;
 
@@ -90,14 +100,27 @@ animate_cells - Animate an image
 =head1 SYNOPSIS
 
 Called from the Gimp. Use Gimp's user interface to call this function.
+By default "C<E<lt>ImageE<gt>/Perl Fu/Animate Cells>".
 
 =head1 DESCRIPTION
 
-TBD
+This Gimp plugin makes animation of images much simpler. The idea is that
+(as was the case with physical "cell" animation) you simply create a
+background and as many cell layers as you like. Each layer represents a
+frame to be animated on top of the background, but unlike normal Gimp
+animation, you don't have to worry about covering up previous frames.
+
+The effect is like taking the bottom layer, and flipping through
+the rest of the layers on top of it, one at a time. This greatly reduces
+the time involved in creating new animations, especially where a single
+object is moving over a static background (more complex animation may
+still require just as much work as before).
 
 =head1 PARAMETERS
 
-None.
+The script only asks if you want to work on a copy of the image. Otherwise,
+you just need an image with a background layer and two or more layers
+on top of it which represent your "cells".
 
 =head1 AUTHOR
 

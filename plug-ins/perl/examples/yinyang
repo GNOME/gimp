@@ -1,0 +1,181 @@
+#!/usr/bin/perl
+#
+# Gimp yin/yang symbol plugin for The Gimp. Extract documentation by running
+# "perldoc" on this plugin, or by using the pod utilities (pod2man, pod2html,
+# etc.)
+#
+# Written by Aaron Sherman, (c) 1998
+
+use Gimp qw(:auto);
+use Gimp::Fu;
+
+# Main function. Takes width, height, do_eyes (toggle), eye_images (toggle),
+# white_eye_image (filename) and black_eye_image (filename).
+# Creates a stand-alone image with a yin-yang symbol in black and white.
+sub yinyang {
+    my $width = shift;
+    my $height = shift;
+    my $do_eyes = shift;
+    my $eye_images = shift;
+    my $white_eye_image = shift;
+    my $black_eye_image = shift;
+    my $aa = shift;
+
+    # Create new image
+    my $img = gimp_image_new($width,$height,0);
+    my $layer = gimp_layer_new($img,$width,$height,1,"Yin/Yang",100,0);
+    gimp_image_add_layer($img,$layer,0);
+    gimp_image_set_active_layer($img,$layer);
+    my $draw = gimp_image_active_drawable($img);
+    my $oldcolor = gimp_palette_get_foreground();
+    gimp_palette_set_foreground([0,0,0]);
+    gimp_selection_all($img);
+    gimp_bucket_fill($draw,0,0,100,0,0,0,0);
+
+    # Create the yin-yang shape
+    #gimp_selection_invert($img);
+    gimp_selection_none($img);
+    gimp_rect_select($img,0,0,$width/2,$height,0,0,0);
+    gimp_ellipse_select($img,$width/2-$width/4,0,$width/2,
+			int($height/2),0,$aa,0,0);
+    gimp_ellipse_select($img,$width/2-$width/4,$height/2,
+			$width/2, $height/2, 1, $aa, 0, 0);
+    gimp_palette_set_foreground([255,255,255]);
+    gimp_bucket_fill($draw,0,0,100,0,0,0,0);
+
+    # Cut away all but the central circle
+    gimp_ellipse_select($img,0,0,$width,$height,2,$aa,0,0);
+    gimp_selection_invert($img);
+    gimp_edit_clear($draw);
+
+    # Create the "eyes"
+    if ($do_eyes) {
+	my $x1 = $width/2-$width/16;
+	my $y1 = $height/2-$height/4-$height/16;
+	my $x2 = $x1;
+	my $y2 = $height/2+$height/4-$height/16;
+	my $eyewidth = $width/8;
+	my $eyeheight = $height/8;
+	insert_eye($img,$eye_images,$white_eye_image,[0,0,0],$x1,$y1,$eyewidth,
+		   $eyeheight,$draw,$aa);
+	insert_eye($img,$eye_images,$black_eye_image,[255,255,255],$x2,$y2,
+		   $eyewidth,$eyeheight,$draw,$aa);
+    }
+
+    # Finish up
+    gimp_palette_set_foreground($oldcolor);
+    gimp_selection_none($img);
+    gimp_display_new($img);
+    gimp_displays_flush();
+}
+
+# This subroutine inserts an "eye" (a dot in the center of the cicular
+# part of each of the halves of the yin-yang). The eye is either
+# a solid dot of the opposite color from that half of the yin-yang or
+# an image, which is loaded and scaled to fit.
+sub insert_eye {
+    my $img = shift;
+    my $do_image = shift;
+    my $file = shift;
+    my $color = shift;
+    my $x = shift;
+    my $y = shift;
+    my $width = shift;
+    my $height = shift;
+    my $draw = shift;
+    my $aa = shift;
+
+    gimp_ellipse_select($img,$x,$y,$width,$height,2,$aa,0,0);
+    gimp_palette_set_foreground($color);
+    if ($do_image) {
+	my $eye = gimp_file_load(NON_INTERACTIVE,$file,$file);
+	gimp_image_scale($eye,$width,$height);
+	gimp_selection_all($eye);
+	my $eyedraw = gimp_image_active_drawable($eye);
+	gimp_edit_copy($eye,$eyedraw);
+	my $float = gimp_edit_paste($img,$draw,1);
+	gimp_floating_sel_anchor($float);
+	gimp_image_delete($eye);
+    } else {
+	gimp_bucket_fill($draw,0,0,100,0,0,0,0);
+    }
+}
+
+# Register with The Gimp
+register("yinyang", "Render a stand-alone Yin/Yang image",
+	"Renders a black-and-white Yin/Yang symbol optionally
+	with \"eyes\" that may optionally be images.",
+	"Aaron Sherman", "(c) 1998, Aaron Sherman",
+	"1999a", "<Toolbox>/Xtns/Render/Yin-Yang", "*",
+	[
+		[PF_INT32, "Width", "Width", 256],
+		[PF_INT32, "Height", "Height", 256],
+		[PF_TOGGLE, "Insert eyes?", "", 1],
+		[PF_TOGGLE, "Eyes are images?", "", 0],
+		[PF_STRING, "Top eye filename", "eye 1", ""],
+		[PF_STRING, "Bottom eye filename", "eye 2", ""],
+		[PF_TOGGLE, "Anti-aliasing?", "", 1]
+	],
+	\&yinyang);
+
+exit main;
+
+__END__
+
+=head1 NAME
+
+yinyang
+
+=head1 SYNOPSIS
+
+yinyang
+
+=head1 DESCRIPTION
+
+B<yinyang> is a B<Gimp> plugin. It generates a Yin/Yang symbol, which
+is a Chinese symbol of duality. It takes as parameters (provided by the
+Gimp user interface) the width and height of the resulting image; 
+a toggle to indicate if "eyes" should be inserted (see I<EYES>);
+a toggle to indicate if the eyes should be images that are
+loaded separately; the two filenames for the eyes and a toggle to
+indicate if anti-aliasing should be used.
+
+=head1 EYES
+
+The "eyes" are normally either black or white dots in the middle of the
+circular regions of the two halves of the Yin and Yang. If you like
+you can load these eyes from another image.
+
+=head1 IDEAS
+
+Here are some thoughts on how the plugin could be used:
+
+=over 5
+
+=item *
+
+Use as a low-opacity layer over an image to indicate duality or harmony.
+
+=item *
+
+Use to replace circular objects in an image (e.g. eyes, street signs,
+the sun, etc.)
+
+=item *
+
+Map two opposed or dualistic images. One into the black region, one
+into the white. For a really cool look, make the eyes show a peice of
+the other image.
+
+=item *
+
+Dip in 1 tbsp chunky peanut butter, 1 tbsp rice vinegar, 1 tbsp
+lime juice, 1 dash black pepper. Eat to taste.
+
+=back
+
+=head1 AUTHOR
+
+Written by Aaron Sherman <ajs@ajs.com>, (c) 1998.
+
+=cut

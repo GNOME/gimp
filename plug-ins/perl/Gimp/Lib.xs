@@ -18,6 +18,9 @@
 #undef MIN
 #undef MAX
 
+/* various functions allocate static buffers, STILL.  */
+#define MAX_STRING 4096
+
 /* dunno where this comes from */
 #undef VOIDUSED
 
@@ -187,7 +190,7 @@ trace_init ()
 void trace_printf (char *frmt, ...)
 {
   va_list args;
-  char buffer[4096]; /* sorry... */
+  char buffer[MAX_STRING]; /* sorry... */
   
   va_start (args, frmt);
 #ifdef HAVE_VSNPRINTF
@@ -200,9 +203,32 @@ void trace_printf (char *frmt, ...)
 }
 
 #else
-#error need ansi compiler, maybe try c89?
 error need_ansi_compiler__maybe_try_c89
 #endif
+
+/* in case g_strdup_printf is missing.  */
+#if (GLIB_MAJOR_VERSION>1) || (GLIB_MAJOR_VERSION==1 && GLIB_MINOR_VERSION>1)
+#define strdup_printf g_strdup_printf
+#elif __STDC__
+#include <stdarg.h>
+static char *
+strdup_printf (char *frmt, ...)
+{
+  va_list args;
+  char buffer[MAX_STRING]; /* sorry... */
+  
+  va_start (args, frmt);
+#ifdef HAVE_VSNPRINTF
+  vsnprintf (buffer, sizeof buffer, frmt, args);
+#else
+  vsprintf (buffer, frmt, args);
+#endif
+  return g_strdup (buffer);
+}
+#else
+error need_ansi_compiler__maybe_try_c89
+#endif
+
 
 static int
 is_array (GParamType typ)
@@ -482,7 +508,7 @@ unbless (SV *sv, char *type, char *croak_str)
 static gint32
 unbless_croak (SV *sv, char *type)
 {
-   char croak_str[320];
+   char croak_str[MAX_STRING];
    gint32 r;
    croak_str[0] = 0;
 
@@ -777,25 +803,30 @@ destroy_paramdefs (GParamDef *arg, int count)
 }
 #endif
 
-/* first check wether the procedure exists at all.  */
-static void try_call (char *name, int req)
+/* calls Gimp::die_msg.  */
+static void gimp_die_msg (char *msg)
 {
-  dSP;
-  CV *cv = perl_get_cv (name, 0);
+   char *argv[2];
+   argv[0] = msg;
+   argv[1] = 0;
 
-  PUSHMARK(sp); perl_call_pv ("Gimp::_initialized_callback", G_DISCARD | G_NOARGS);
-  
-  /* it's not an error if the callback doesn't exist.  */
-  if (cv) {
-    PUSHMARK(sp);
-    perl_call_sv ((SV *)cv, G_DISCARD | G_NOARGS);
-  } else if (req)
-    croak ("required callback '%s' not found", name);
+   perl_call_argv ("Gimp::die_msg", G_DISCARD, argv);
 }
 
-static void pii_init (void) { try_call ("init" ,0); }
-static void pii_query(void) { try_call ("query",1); }
-static void pii_quit (void) { try_call ("quit" ,0); }
+/* first check wether the procedure exists at all.  */
+static void try_call (char *name)
+{
+  char *argv[2];
+
+  argv[0] = name;
+  argv[1] = 0;
+
+  perl_call_argv ("Gimp::callback", G_DISCARD, argv);
+}
+
+static void pii_init (void) { try_call ("-init" ); }
+static void pii_query(void) { try_call ("-query"); }
+static void pii_quit (void) { try_call ("-quit" ); }
 
 static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, GParam **xreturn_vals)
 {
@@ -805,7 +836,6 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
   dSP;
   STRLEN dc;
   int i, count;
-  GParamDef *return_defs;
   char *err_msg = 0;
   
   char *proc_blurb;
@@ -816,15 +846,8 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
   int proc_type;
   int _nparams;
   GParamDef *params;
-  
-  PUSHMARK(sp); perl_call_pv ("Gimp::_initialized_callback", G_DISCARD | G_NOARGS);
+  GParamDef *return_defs;
 
-  if (return_vals) /* the libgimp is soooooooo braindamaged. */
-    {
-      destroy_params (return_vals, nreturn_vals);
-      return_vals = 0;
-    }
-  
   if (gimp_query_procedure (name, &proc_blurb, &proc_help, &proc_author,
                            &proc_copyright, &proc_date, &proc_type, &_nparams, &nreturn_vals,
                            &params, &return_defs) == TRUE)
@@ -840,6 +863,9 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
       SAVETMPS;
       
       PUSHMARK(sp);
+
+      XPUSHs (newSVpv ("-run", 4));
+      XPUSHs (newSVpv (name, 0));
       
       if (nparams)
         {
@@ -856,7 +882,7 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
           SPAGAIN;
         }
       
-      count = perl_call_pv (name, G_EVAL
+      count = perl_call_pv ("Gimp::callback", G_EVAL
                             | (nparams ? 0 : G_NOARGS)
                             | (nreturn_vals == 0 ? G_VOID|G_DISCARD : nreturn_vals == 1 ? G_SCALAR : G_ARRAY));
       
@@ -885,51 +911,54 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
       else
         {
           int i;
-          char err_msg [1024];
-          err_msg [0] = 0;
+          char errmsg [MAX_STRING];
+          errmsg [0] = 0;
           
           return_vals = (GParam *) g_new0 (GParam, nreturn_vals + 1);
           return_vals->type = PARAM_STATUS;
           return_vals->data.d_status = STATUS_SUCCESS;
           *xnreturn_vals = nreturn_vals;
           *xreturn_vals = return_vals++;
-          
+
           for (i = nreturn_vals; i-- && count; )
              {
                return_vals[i].type = return_defs[i].type;
                if ((i >= nreturn_vals-1 || !is_array (return_defs[i+1].type))
-                   && convert_sv2gimp (err_msg, &return_vals[i], TOPs))
+                   && convert_sv2gimp (errmsg, &return_vals[i], TOPs))
                  {
                    --count;
                    POPs;
                  }
                
-               if (err_msg [0])
-                 croak (err_msg);
+               if (errmsg [0])
+                 {
+                   err_msg = g_strdup (errmsg);
+                   break;
+                 }
              }
           
-          if (count)
-            croak ("callback returned %s more values than expected", count);
+          if (count && !err_msg)
+            err_msg = strdup_printf ("plug-in returned %d more values than expected", count);
         }
       
       while (count--)
         POPs;
       
-      g_free (return_defs);
+      destroy_paramdefs (return_defs, nreturn_vals);
       
       FREETMPS;
       LEAVE;
     }
   else
-    croak ("being called as '%s', but '%s' not registered in the pdb", name, name);
+    err_msg = strdup_printf ("being called as '%s', but '%s' not registered in the pdb", name, name);
   
   if (err_msg)
     {
-      gimp_message (err_msg);
+      gimp_die_msg (err_msg);
       g_free (err_msg);
       
       if (return_vals)
-        destroy_params (return_vals, nreturn_vals);
+        destroy_params (*xreturn_vals, nreturn_vals+1);
       
       nreturn_vals = 1;
       return_vals = g_new (GParam, 1);
@@ -938,7 +967,6 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
       *xnreturn_vals = nreturn_vals;
       *xreturn_vals = return_vals;
     }
-  
 }
 
 GPlugInInfo PLUG_IN_INFO = { pii_init, pii_quit, pii_query, pii_run };
@@ -1113,7 +1141,7 @@ gimp_call_procedure (proc_name, ...)
 	char *	proc_name
 	PPCODE:
 	{
-		char croak_str[320] = "";
+		char croak_str[MAX_STRING] = "";
 		char *proc_blurb;	
 		char *proc_help;
 		char *proc_author;
@@ -1333,7 +1361,7 @@ gimp_set_data(id, data)
 		gimp_set_data (SvPV (id, dc), dta, dlen);
 #else
 		{
-		  char str[1024]; /* hack */
+		  char str[MAX_STRING]; /* hack */
 		  SvUPGRADE (id, SVt_PV);
 		  len = SvCUR (id);
 		  Copy (SvPV (id, dc), str, len, char);
@@ -1364,7 +1392,7 @@ gimp_get_data(id)
 		*((char *)SvPV (data, dc) + dlen) = 0;
 #else
 		{
-		  char str[1024]; /* hack */
+		  char str[MAX_STRING]; /* hack */
 		  SvUPGRADE (id, SVt_PV);
 		  len = SvCUR (id);
 		  Copy (SvPV (id, dc), str, len, char);

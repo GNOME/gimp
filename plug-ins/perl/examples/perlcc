@@ -10,6 +10,7 @@ $gtk = Gimp::Feature::present 'gtk';
 if($gtk) {
    # make a relatively extensive check for gtk capabilities
    # this must be done before initializing Gtk in the main program (thus here)
+   # imagine!! it might even FLICKER!!!
    unless(open GTK,"-|") {
       close STDERR;
       require Gtk;
@@ -54,37 +55,44 @@ sub generate_log {
 }
 
 sub gtkview_log {
-   my($title,$log)=@_;
-   my($w,$b,$font,$lines);
-   $w = new Gtk::Dialog;
-   $w->set_title ($title);
+   if ($_[0]) {
+      destroy $_[0];
+      undef $_[0];
+   } else {
+      my($title,$log)=@_[1,2];
+      my($w,$b,$font,$lines);
+      $w = new Gtk::Dialog;
+      $w->set_title ($title);
 
-   $b = new Gtk::Text;
-   $b->set_editable(0);
+      $b = new Gtk::Text;
+      $b->set_editable(0);
 
-   $lines=$log=~y/\n//;
-   $lines=25 if $lines>25;
+      $lines=$log=~y/\n//;
+      $lines=25 if $lines>25;
 
-   $font = load Gtk::Gdk::Font "9x15bold";
-   $font = fontset_load Gtk::Gdk::Font "-*-courier-medium-r-normal--*-120-*-*-*-*-*" unless $font;
-   $font = $b->style->font unless $font;
-   $b->insert($font,$b->style->fg(-normal),undef,$log);
-   $b->set_usize($font->string_width('M')*80,($font->ascent+$font->descent)*($lines+1));
-   $w->vbox->add($b);
+      $font = load Gtk::Gdk::Font "9x15bold";
+      $font = fontset_load Gtk::Gdk::Font "-*-courier-medium-r-normal--*-120-*-*-*-*-*" unless $font;
+      $font = $b->style->font unless $font;
+      $b->insert($font,$b->style->fg(-normal),undef,$log);
+      $b->set_usize($font->string_width('M')*80,($font->ascent+$font->descent)*($lines+1));
+      $w->vbox->add($b);
 
-   $b = new Gtk::Button "OK";
-   $b->can_default(1);
-   $b->grab_default;
-   $b->signal_connect(clicked => sub { destroy $w });
-   $w->action_area->add($b);
+      $b = new Gtk::Button "OK";
+      $b->can_default(1);
+      $b->grab_default;
+      $b->signal_connect(clicked => sub { destroy $w; undef $_[0] });
+      $w->action_area->add($b);
 
-   show_all $w;
+      show_all $w;
+      $_[0]=$w;
+   }
 }
 
 # the extension that's called.
 sub extension_perl_control_center {
    if ($gtk) {
       my($w,$b);
+      my($l,$s);
 
       init Gtk;
       parse Gtk::Rc Gimp->gtkrc;
@@ -93,11 +101,11 @@ sub extension_perl_control_center {
       $w->set_title ('Perl Control Center');
       
       $b = new Gtk::Button "View Perl Feature Status";
-      $b->signal_connect(clicked => sub { gtkview_log 'Perl Feature Status',generate_status});
+      $b->signal_connect(clicked => sub { gtkview_log $s,'Perl Feature Status',generate_status});
       $w->vbox->add($b);
 
       $b = new Gtk::Button "View Perl Error/Warning Log";
-      $b->signal_connect(clicked => sub { gtkview_log 'Perl Error/Warning Log',generate_log });
+      $b->signal_connect(clicked => sub { gtkview_log $l,'Perl Error/Warning Log',generate_log });
       $w->vbox->add($b);
 
       $b = new Gtk::Button "Clear Perl Error/Warning Log";
@@ -135,7 +143,6 @@ sub extension_perl_control_center {
 
 sub net {
    extension_perl_control_center;
-#   print "\n",generate_log,"\n";
 }
 
 sub query {

@@ -1,5 +1,9 @@
-This is distributed under the same license as perl itself, i.e. either the
-Artistic License (COPYING.Artistic) or the GPL (COPYING.GNU).
+This package is distributed under the same license as perl itself, i.e.
+either the Artistic License (COPYING.Artistic) or the GPL (COPYING.GNU).
+
+Please note that this does _NOT_ include the scripts in the examples/
+directory. Most of them have their own distribution license (see their
+source for details, and read the file examples/README).
 
 If you make modifications, please consider sending them to me,
 Marc Lehmann <pcg@goof.com>

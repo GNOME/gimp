@@ -23,14 +23,10 @@ newer gimp API's.
 
 =head1 EXAMPLES
 
-Convert all script-fu scripts in the current directory from the
-1.0 to the current API:
+Convert all script-fu scripts in the current directory from the 1.0 to the
+1.2 API (creating new files with the extension .sc2):
 
- scm2scm *.scm
-
-Convert C<weird.scm> from the 1.0 api to the 1.2 api:
-
- scm2scm -t 1.2 weird.scm
+ scm2scm -t 1.2 *.scm
 
 Generate a diff containing the required changes from the 1.0
 to the 1.1-API:

@@ -388,9 +388,10 @@ sub interact($$$@) {
            }
            
         } elsif($type == PF_CUSTOM) {
-           $a=$extra->[0];
-           push(@setvals,$extra->[1]);
-           push(@getvals,$extra->[2]);
+           my (@widget)=&$extra;
+           $a=$widget[0];
+           push(@setvals,$widget[1]);
+           push(@getvals,$widget[2]);
            
         } else {
            $label="Unsupported argumenttype $type";
@@ -814,10 +815,10 @@ string. The default brush/pattern/gradient-name can be preset.
 
 =item PF_CUSTOM
 
-PF_CUSTOM is for those of you requiring some non-standard-widget. Just supply an array reference
-with three elements as extra argument:
+PF_CUSTOM is for those of you requiring some non-standard-widget. You have
+to supply a code reference returning three values as the extra argument:
 
- [widget, settor, gettor]
+ (widget, settor, gettor)
 
 C<widget> is Gtk widget that should be used.
 
@@ -828,7 +829,7 @@ C<gettor> is a function that should return the current value of the widget.
 
 While the values can be of any type (as long as it fits into a scalar),
 you should be prepared to get a string when the script is started from the
-commandline.
+commandline or via the PDB.
 
 =back
 

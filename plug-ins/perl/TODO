@@ -17,25 +17,27 @@ bugs
   
 important issues
 
+  * Gimp::IO (?)
+  * Gimp->server_eval()
   * install scripts in share/
-  * fix auto-edit shebang for check-ins
-  * gimp-tiles are not accessible in any way..
+[DONE]  * fix auto-edit shebang for check-ins
+[DONE]  * gimp-tiles are not accessible in any way..
   * register dummy function to calm gimp down
-  * paths in module(!)
+  * config options & paths in module(!)
+  * Gimp::Module for modules (!)
   * gimp->object_id, drawable_object_id remove!
-  * PF_CUSTOM
   * gimp_display_image
   * vamp up homepage
   * --ui and --noui for Gimp::Fu
-  * [PF_CUSTOM]
+[DONE]  * [PF_CUSTOM]
   * Gimp::ping
   * clean up PKG_ANY vs. PKG_REAL_DRAWABLE
   * allow plug-ins to register with only a drawable argument(!)
     (fix this in Gimp)
-  * provide propper overwriting in Gimp::Net::pixel-_rgn ;(
+[DONE]  * provide propper overwriting in Gimp::Net::pixel-_rgn ;(
   * gradient button
   * implement Perl-Server RSET and shared lock(!)
-  * substr 4th argument form for Net:: -> require 5.005!!!! DO IT! PLEASE!!!!
+[KILL] * substr 4th argument form for Net:: -> require 5.005!!!! DO IT! PLEASE!!!!
   * use Gimp qw(GIMP_HOST=jfjf)???
   * zero-copy PDL support
   * weighted movement in drawing tools

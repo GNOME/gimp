@@ -1,102 +1,111 @@
 Revision history for Gimp-Perl extension.
 
+	- added examples/yinyang, examples/image_tile.
+        - bangpath is no longer updated inplace. As a result, only plug-ins
+          that are going to get installed are being fixed, the examples are
+          not.
+	- fixed error handling bugs in Gimp::Lib, streamlined and improved 
+	  error handling.
+	- reworked callback handling, should be more flexible in the future.
+        - changed implementation of PF_CUSTOM (still untested).
+
 1.061 Fri Mar 12 21:27:26 CET 1999
-        - closed big, BIG security hole on password authenticitation
-          (basically one could do anything includung killing your
-          system without authorization. argh). This required a
-          protocol change, so old clients are unable to connect using
-          password-authenticitation.
-        - sped up Gimp::Net considerably, by getting rid of the IO::Socket
-          module, which required half a second(!!) to load.
+	- closed big, BIG security hole on password authenticitation
+	  (basically one could do anything includung killing your
+	  system without authorization. argh). This required a
+	  protocol change, so old clients are unable to connect using
+	  password-authenticitation.
+	- sped up Gimp::Net considerably, by getting rid of the IO::Socket
+	  module, which required half a second(!!) to load.
 	- fixed Gimp::Util::gimp_image_layertype.
-	- make install checks for install directory writability
-          and refuses to install if it isn't.
-        - fixed a longstanding bug that caused (some) set_trace calls
-          to be ignored when running under Gimp::Net.
+	- make install checks for install directory writability and refuses to
+	  install if it isn't.
+	- fixed a longstanding bug that caused (some) set_trace calls
+	  to be ignored when running under Gimp::Net.
 	- added new convinience functions to Gimp::Util.
-        - Gimp::Fu checks for the presence of Gtk and dies
-          if it can't be found.
-        - PF_FONT should now display a string widget in gtk+ 1.0.
-        - PixelRgn/Tile data sould now be accessible again.
-        - updated PDB.
-        - extensive tests is now always on.
-        - added examples/gimpmagick, examples/sethspin.pl, animate_cells.
-        - new function Gimp::initialized that returns true whenever its
-          safe to call gimp functins.
-        - added the Gimp::Feature module, allowing for easy feature checks.
-          See examples/gimpmagick or examples/parasite-editor for example
-          usage.
-        - added perlcc, the perl control center. Only displays log messages
-          at the moment.
-        - error and warning logging through the Perl Control Center.
-        - Data::Dumper is now longer required to run the scripts, some
-          buttons and RUN_WITH_LAST_VALS won't work, though.
-        - removed POSIX dependency in examples/gimpmagick.
-        - Uh, ah, debugging code in the repository, again!
+	- Gimp::Fu checks for the presence of Gtk and dies if it can't be
+	  found.
+	- PF_FONT should now display a string widget in gtk+ 1.0.
+	- PixelRgn/Tile data sould now be accessible again.
+	- updated PDB.
+	- extensive tests is now always on.
+	- added examples/gimpmagick, examples/sethspin.pl, animate_cells.
+	- new function Gimp::initialized that returns true whenever its
+	  safe to call gimp functins.
+	- added the Gimp::Feature module, allowing for easy feature checks.
+	  See examples/gimpmagick or examples/parasite-editor for example
+	  usage.
+	- added perlcc, the perl control center. Only displays log messages
+	  at the moment.
+	- error and warning logging through the Perl Control Center.
+	- Data::Dumper is now longer required to run the scripts, some
+	  buttons and RUN_WITH_LAST_VALS won't work, though.
+	- removed POSIX dependency in examples/gimpmagick.
+	- Uh, ah, debugging code in the repository, again!
 
 1.06  Sat Mar  6 19:36:12 CET 1999
 	- Gimp::Fu does no longer display the returned image when it
-          is the same as the one passed in.
-        - append imagenumber to "Untitled"-images in widget.
-        - removed publicly-visible non-PDB pixelfunctions.
-          "uuuuuse peedee-ell or dieieie".
-        - implemented Gimp::Fu::PF_RADIO.
-        - added blowinout.pl, terral_text and xachvision.pl.
-        - the use of Gimp::PDL to access the region/tile functions is
-          now mandatory. The old string interface does not exist anymore.
-        - the path to the server-socket now includes the UID, to avoid
-          collisions. CGI-scripts should use either tcp or specify the path
-          directly using GIMP_HOST (see Gimp::Net for details).
-        - use _much_ saner defaults for the Scale types in Gimp::Fu.
-        - Gimp::Fu's optionmenus didn't work in net()-mode.
-        - implemented PF_CUSTOM (untested).
-        - added Gimp::UI::ColorSelectbutton, I was utterly fed up with
-          GtkColorSelectbutton never working.
-        
+	  is the same as the one passed in.
+	- append imagenumber to "Untitled"-images in widget.
+	- removed publicly-visible non-PDB pixelfunctions.
+	  "uuuuuse peedee-ell or dieieie".
+	- implemented Gimp::Fu::PF_RADIO.
+	- added blowinout.pl, terral_text and xachvision.pl.
+	- the use of Gimp::PDL to access the region/tile functions is
+	  now mandatory. The old string interface does not exist anymore.
+	- the path to the server-socket now includes the UID, to avoid
+	  collisions. CGI-scripts should use either tcp or specify the path
+	  directly using GIMP_HOST (see Gimp::Net for details).
+	- use _much_ saner defaults for the Scale types in Gimp::Fu.
+	- Gimp::Fu's optionmenus didn't work in net()-mode.
+	- implemented PF_CUSTOM (untested).
+	- added Gimp::UI::ColorSelectbutton, I was utterly fed up with
+	  GtkColorSelectbutton never working.
+	
 1.055 Mon Feb 22 22:38:44 CET 1999
 	- applied seth's script changes.
-        - gimp11ified some plug-ins.
-        - removed debugging code in Gimp/Lib.xs.
-        - got rid of a perl5.004 warning.
-        - removed gimp_{main,init,end}.
+	- gimp11ified some plug-ins.
+	- removed debugging code in Gimp/Lib.xs.
+	- got rid of a perl5.004 warning.
+	- removed gimp_{main,init,end}.
 
 1.054 Mon Feb 22 15:23:41 CET 1999
 	- scm2scm and scm2perl will now be installed in INST_SCRIPT
-        - fixed a bug in interact/PF_FONT.
-        - made save_image more 1.1 compatible and automatically index
-          when saving to gif.
-        - many, Many, MANY 5.004 compatibility fixes.
+	- fixed a bug in interact/PF_FONT.
+	- made save_image more 1.1 compatible and automatically index
+	  when saving to gif.
+	- many, Many, MANY 5.004 compatibility fixes.
 
 1.053 Mon Feb 15 01:35:04 CET 1999
 	- more errornous argument types are detected now, without
-          just calling abort().
-        - fixed a MAJOR namespace-leak: for example, if one used
-          gimp_parasite_list once, Gimp::Image->parasite_list would call
-          gimp_parasite_list and NOT gimp_image_parasite_list, as would be
-          correct.
-        - Gimp::Net now works correctly with parasites.
-        - added examples/parasite_editor
-        - added gimp_ prefix to Parasite-class
-        - use $Config{perlpath} for bangpath, not $PERL
+	  just calling abort().
+	- fixed a MAJOR namespace-leak: for example, if one used
+	  gimp_parasite_list once, Gimp::Image->parasite_list would call
+	  gimp_parasite_list and NOT gimp_image_parasite_list, as would be
+	  correct.
+	- Gimp::Net now works correctly with parasites.
+	- added examples/parasite_editor
+	- added gimp_ prefix to Parasite-class
+	- use $Config{perlpath} for bangpath, not $PERL
 
 1.052 Tue Feb  9 18:16:15 CET 1999
 	- moved the xlfd_size function from Gimp::Fu into Gimp
-          (and maybe later into Gimp::Util?)
+	  (and maybe later into Gimp::Util?)
 	- functions in Gimp::Util are now treated in the same way
-          as PDB functions (when the module is loaded)
-        - improved handling of "make clean" to make it less perl-ish
-          and more gnu-ish
-        - enabled full testsuite (keep your fingers crossed)
+	  as PDB functions (when the module is loaded)
+	- improved handling of "make clean" to make it less perl-ish
+	  and more gnu-ish
+	- enabled full testsuite (keep your fingers crossed)
 	- PDL examples no longer cause errors at startup
-        - more compatibility fixes for 5.005_54
-        - bangpaths are now replaced by $PERL at configuration time
-        - fixed a few quirks in scm2scm and added it to the package
+	- more compatibility fixes for 5.005_54
+	- bangpaths are now replaced by $PERL at configuration time
+	- fixed a few quirks in scm2scm and added it to the package
 
 1.051 Tue Jan 19 21:10:20 CET 1999
 	- corrected a minor typoe found by Stefan Traby <stefan@sime.com>
-        - added SPIRAL* constants for gimp_blend
-        - moved constants from Gimp.xs and extradefs.h to Gimp.pm, where
-          they belong (either there or into Gimp.xs)
+	- added SPIRAL* constants for gimp_blend
+	- moved constants from Gimp.xs and extradefs.h to Gimp.pm, where
+	  they belong (either there or into Gimp.xs)
 	- added view3d.pl to examples (untested)
 	- Gimp::Util is reborn (give it a try and contribute!)
 	- more Gtk changes (tested with Gtk-0.5 and gtk-1.1.x, uh-oh)
@@ -104,11 +113,11 @@ Revision history for Gimp-Perl extension.
 
 1.05  Fri Dec 18 22:05:25 CET 1998
 	- some 5.006 compatibility fixes
-        - disabled some functionality for poor gtk-1.0 which
-          is borken to no end
-        - fixed PARASITE_PERSISTENT typoe
-        - new functions: gimp_{major,minor,micro}_version
-        - PF_BRUSH, PATTERN and GRADIENT widgets are "emulated" in gimp-1.0
+	- disabled some functionality for poor gtk-1.0 which
+	  is borken to no end
+	- fixed PARASITE_PERSISTENT typoe
+	- new functions: gimp_{major,minor,micro}_version
+	- PF_BRUSH, PATTERN and GRADIENT widgets are "emulated" in gimp-1.0
 
 1.049 Mon Nov 23 20:54:41 CET 1998
 	- updated configure to require 1.0.2
@@ -493,9 +502,9 @@ Revision history for Gimp-Perl extension.
 0.80  Fri Feb 13 17:15:48 CET 1998
 	- version 1.0 is the first one generally usable.. we're getting
 	  close!
-        - Gimp::Net and Gimp::Lib are only internal modules, there is not
-          much of a distinction between networked modules and modules
-          using libgimp!
+	- Gimp::Net and Gimp::Lib are only internal modules, there is not
+	  much of a distinction between networked modules and modules
+	  using libgimp!
 	- Gimp::OO usable over the network.
 
 0.07  Thu Feb 12 06:51:56 CET 1998

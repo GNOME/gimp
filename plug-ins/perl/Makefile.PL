@@ -1,6 +1,5 @@
 require 5.004;
 
-use ExtUtils::MakeMaker;
 use Config;
 
 $topdir=".";
@@ -10,10 +9,12 @@ $|=1;
    qw(windy.pl prep4gif.pl webify.pl PDB alpha2color.pl tex-to-float ditherize.pl
       border.pl view3d.pl feedback.pl xachlego.pl xachshadow.pl parasite-editor
       scratches.pl blowinout.pl terral_text xachvision.pl gimpmagick perlcc
-      sethspin.pl animate_cells);
+      sethspin.pl animate_cells image_tile yinyang
+   );
 @shebang = (map("examples/$_",@examples),
-   qw(Perl-Server scm2perl scm2scm examples/example-net.pl examples/homepage-logo.pl
-      examples/example-fu.pl examples/example-oo.pl));
+   qw(Perl-Server examples/example-net.pl examples/homepage-logo.pl
+      examples/example-fu.pl examples/example-oo.pl
+   ));
 
 if ($ARGV[0] ne "--writemakefile") {
    for(@ARGV) {
@@ -54,6 +55,9 @@ Do you want me to make these tests [y]? ";
 } else {
    do './config.pl';
 }
+
+require ExtUtils::MakeMaker;
+import ExtUtils::MakeMaker;
 
 eval { require Gimp };
 unless($@) {
@@ -163,9 +167,10 @@ WARNING: version 0.3 of Gtk is _required_ for this module to
 EOF
 }
 
-for(@shebang) {
-   system ($Config{perlpath},"-pi","-e","\$. == 1 and \$_ = '#!$Config{perlpath}\n'",$_);
-}
+# wo do no longer do these dirty things
+#for(@shebang) {
+#   system ($Config{perlpath},"-pi","-e","\$. == 1 and \$_ = '#!$Config{perlpath}\n'",$_);
+#}
 
 sub MY::install {
    package MY;
@@ -190,14 +195,20 @@ install ::
 	      exit ; \
 	   fi \
 	done ; \
-        $(MAKE) really-install
+        $(MAKE) really-install install-plugins
 
 '.$install;
 }
 
+sub fixinstall {
+   my($src,$dst)=@_;
+   "	cp '$src' '\$(INST_SCRIPT)/$dst' && \$(FIXIN) '\$(INST_SCRIPT)/$dst' && \\\n".
+   "	cd '\$(INST_SCRIPT)' && $GIMPTOOL --install-admin-bin '$dst' && \\\n".
+   "	rm '$dst'\n";
+}
+
 sub MY::postamble {
-   (my $GIMPTOOL2 = $GIMPTOOL) =~ s/^\.\./..\/../;
-   my $postamble=<<"EOF";
+   my $postamble="
 
 objclean :: clean
 maintainer-clean :: realclean
@@ -207,13 +218,9 @@ check :: test
 clean ::
 	test -f Makefile || mv -f Makefile.old Makefile
 
-really-install :: install-plugins
-	$GIMPTOOL --install-admin-bin Perl-Server
-
-install-plugins:
-EOF
-
-   $postamble.join("",map "	-cd examples && $GIMPTOOL2 --install-admin-bin $_\n", @examples);
+install-plugins :: \$(INST_SCRIPT)/.exists\n"
+.fixinstall('Perl-Server','Perl-Server')
+.join("",map fixinstall("examples/$_",$_),@examples);
 }
 
 WriteMakefile(

@@ -1,0 +1,595 @@
+#!/usr/bin/perl
+#
+# A photo-tiling pluggin. Take an image, and tile it (much like the
+# mosaic operation, only using other images).
+#
+# Written in 1998 (c) by Aaron Sherman <ajs@ajs.com>.
+# This plugin may be distributed under the same terms as The Gimp itself.
+# See http://www.gimp.org/ for more information on The Gimp.
+#
+# TODO:
+#
+#	o Fix undo
+#	o Handle input drawable correctly (for working on selections)
+#	o Find faster ways to sample sub-images.
+#	o More control over cropping
+#	o Scaling vs cropping of sub-images
+#	o Better color matching algorithms
+#	o Test (fix?) non-interactive use...
+#	o Allow tile aspect selection independant of base image
+
+use Gimp qw(:auto);
+use Gimp::Fu;
+use Fcntl qw(O_RDWR O_CREAT O_TRUNC);
+use Gimp::Feature;
+BEGIN { eval "use DB_File"; 
+           $@ and Gimp::Feature::missing('Berkeley DB interface module') }
+# use strict;
+# use vars qw($DO_HSV $debug);
+
+$DO_HSV = 0;
+$debug = 0;
+
+# This function takes:
+#	Gimp-provided:
+#	Image -- The gimp image to be operated on.
+#	Drawable -- Its drawable
+#	User-provided:
+#	X Tiles -- Number of images to be tiled across.
+#	Y Tiles -- Number of images to be tiled down.
+#	X Cells -- Number of color samples across for each image.
+#	Y Cells -- Number of color samples down for each image.
+#	Duplicates Weight -- Amount of weight to apply against images that
+#		have already been used.
+#	Directories -- Space separated list of directories.
+#
+# It will tile the images from the given directories over the given
+# image to form a mosaic of the original.
+sub perl_fu_image_tile {
+  my $image = shift;
+  my $drawable = shift;
+  my $xtiles = shift;
+  my $ytiles = shift;
+  my $xcells = shift;
+  my $ycells = shift;
+  my $dupweight = shift;
+  my $dirs = shift;
+  my $cleanup = shift;
+  my $subimages = 0;
+  my $TOP = "$ENV{HOME}/.gimp";
+  if (! -d $TOP) {
+    $TOP = "/tmp";
+    if (! -d $TOP) {
+      gimp_message("Don't know where to put temporary files!");
+      exit(1);
+    }
+  }
+
+  # Use C-Shell style file globbing to expand given directories, and
+  # allow them to be space-separated.
+  my @dirs = map {glob $_} split /\s+/, $dirs;
+  print "DEBUG: Dir list is ", join(", ", @dirs), "\n" if $debug;
+  my $dir;
+  my $imgwidth = gimp_drawable_width($drawable);
+  my $imgheight = gimp_drawable_height($drawable);
+  my $xtilewidth = int($imgwidth/$xtiles);
+  my $ytileheight = int($imgheight/$ytiles);
+  my $aspect = $xtilewidth/$ytileheight;
+  my $s_aspect = sprintf("%0.3f",$aspect);
+  my $type = gimp_image_base_type($image);
+  my $ndone=0;
+  gimp_image_disable_undo($image);
+  gimp_progress_init("Image Tiling...",-1);
+
+  my %tile_cache; # Tied to image tile database
+  my %wt_cache;
+  my $stored_keys = 0; # Number of keys stored to date.
+  my $db; # DB_File database reference
+  my $wdb;
+
+  # One cache file holds the image color samples, which may get re-used
+  # between runs.
+  my $cache_file = "$TOP/image_tile.${s_aspect}.${xcells}X${ycells}";
+  if (!defined($db = tie(%tile_cache, 'DB_File',
+	    $cache_file, O_RDWR|O_CREAT,
+	    0644, $DB_HASH))) {
+    gimp_message("Failed to create tile sample database: $!");
+    exit(0);
+  }
+
+  # The other cache file contains image re-use weights, which only get
+  # used once.
+  my $wt_file = "$TOP/image_tile.$$";
+  if (!defined($wdb=tie(%wt_cache,'DB_File',$wt_file,
+			O_RDWR|O_CREAT|O_TRUNC,0644,$DB_HASH))) {
+    gimp_message("Failed to create weight database: $!");
+    exit(0);
+  }
+
+  # Loop over directories, looking for images
+  foreach $dir (@dirs) {
+    print "DEBUG: **** load images from $dir\n" if $debug;
+    gimp_progress_update((40/@dirs)*($ndone++)/100);
+    local *DIR;
+    if (opendir(DIR,$dir)) {
+      my $file;
+      # Only take files with an extension, as Gimp won't be able to
+      # open others.
+      my @files = sort grep {/\.\w+$/} readdir DIR;
+      closedir(DIR);
+      my $filesdone=0;
+      foreach $file (@files) {
+	print "DEBUG: Load file: $file\n" if $debug;
+	gimp_progress_update((40/@dirs)*($ndone-1+($filesdone/@files))/100);
+	$filesdone++;
+	next unless -f "$dir/$file" && -s "$dir/$file";
+	if (defined $tile_cache{"$dir/$file"}) {
+	  $wt_cache{"$dir/$file"} = 0;
+	  $subimages++;
+	} else {
+	  my $short = $file;
+	  my $img;
+	  $file = "$dir/$file";
+	  # Open the sub-image, record info about it and close it.
+	  eval {
+	    # 1 == NON_INTERACTIVE, but symbol does not work.... ?
+	    $img = gimp_file_load(1,$file,$file);
+	  };
+	  next if $@ || !defined($img) || !$img;
+	  my $subtype = gimp_image_base_type($img);
+	  if ($subtype != $type) {
+	    if ($type == RGB_IMAGE) {
+	      gimp_convert_rgb($img);
+            } elsif ($type == GRAY_IMAGE) {
+	      gimp_convert_grayscale($img);
+	    } elsif ($type == INDEXED_IMAGE) {
+	      gimp_convert_indexed($img,1,256);
+	    }
+	  }
+	  my $cells = get_image_cells($img,$xcells,$ycells,
+				      $xtilewidth/$ytileheight);
+	  $wt_cache{$file} = 0;
+	  $tile_cache{$file} = $$cells;
+	  $subimages++;
+	  $db->sync(0) if ++$stored_keys % 16 == 0;
+	  gimp_image_delete($img);
+	}
+      }
+    } else {
+      gimp_message("Cannot open $dir: $!");
+    }
+  }
+
+  if ($subimages == 0) {
+    gimp_message("$0: No subimages loaded.");
+    exit(0);
+  }
+
+  $db->sync(0);
+  $wdb->sync(0);
+
+  # Now store color info for target image
+  my $dup = gimp_image_new($imgwidth,$imgheight,RGB_IMAGE);
+  gimp_edit_copy($drawable); # gimp 1.1 -deleted $image
+  my $back =
+    gimp_layer_new($dup,$imgwidth,$imgheight,RGB_IMAGE,"Target",100,NORMAL);
+  gimp_image_add_layer($dup,$back,0);
+  my $sel = gimp_edit_paste($back,0); # gimp 1.1 -deleted $dup
+  gimp_floating_sel_anchor($sel);
+  my $oimage = get_image_cells($dup,$xtiles*$xcells,$ytiles*$ycells,
+			       $imgwidth/$imgheight,40,60);
+  gimp_image_delete($dup);
+  undef $sel;
+  undef $back;
+  undef $dup;
+  gimp_progress_update(60/100);
+
+  # Now we have the image data, so it's time to start mapping
+  # in the sub-images.
+  $ndone=0;
+  # Randomize the order in which tiles will be mapped (this reduces the
+  # impact from weighting image re-use)
+  my @todo;
+  for(my $x=0;$x<$xtiles;$x++) {
+    for(my $y=0;$y<$ytiles;$y++) {
+      push(@todo, "$x,$y");
+    }
+  }
+  for(my $i=0;$i<@todo;$i++) {
+    # Don't need srand(), because we don't need to do it differently every
+    # time.
+    my $target = int(rand(@todo));
+    my $tmp = $todo[$i];
+    $todo[$i] = $todo[$target];
+    $todo[$target] = $tmp;
+  }
+  my @ocells;
+  # Now, map in the sub-images according to the random order determined, above
+  foreach my $coord (@todo) {
+    my($x,$y) = split /,/,$coord,2;
+    gimp_progress_update((60+40/($xtiles*$ytiles)*($ndone++))/100);
+    my $minmatch = undef;
+    my $matchid;
+    # Create a cache of all of the cell samples from the original image for
+    # this tile only.
+    for(my $xcell=0;$xcell<$xcells;$xcell++) {
+      for(my $ycell=0;$ycell<$ycells;$ycell++) {
+	$ocells[$xcell][$ycell] =
+	  substr($$oimage,
+		 (($x*$xcells + $xcell)*$ytiles*$ycells+
+		  $y*$ycells +
+		  $ycell) * 3, 3);
+      }
+    }
+    my $subimg;
+    my $weight;
+    # Loop through all available sub-images and find best fit for this
+    # tile.
+    while(($subimg,$weight)=each %wt_cache) {
+      my $match = 0;
+      for(my $xcell=0;$xcell<$xcells;$xcell++) {
+	my $subfile = $subimg;
+	for(my $ycell=0;$ycell<$ycells;$ycell++) {
+	  # Cell samples are stored as packed 3-byte values
+	  my($o1,$o2,$o3) = unpack 'CCC', $ocells[$xcell][$ycell];
+	  my($n1,$n2,$n3) = unpack 'CCC',
+	  	substr($tile_cache{$subfile},($xcell*$ycells+$ycell)*3,3);
+	  # 2 methods of comparing: by RGB and by HSV. HSV seems to
+	  # give a more accurate map, as it stresses the matching of light
+	  # and darkness. We do some weighting of the HSV match so that
+	  # we don't care about hue as much if saturation or value is
+	  # low, and we don't care about saturation as much if value is low
+	  # The net effect is that for a black pixel, you don't care
+	  # what color hue tells you it is, because it's always black
+	  my $c3_delta = abs($o3 - $n3);
+	  my $c2_delta;
+	  my $c1_delta;
+	  if ($DO_HSV) {
+	    # c1 == H, c2 == S, c3 == V
+	    $c2_delta = abs($o2 - $n2) * $o3 / 255;
+	    $c1_delta = hue_dist($o1,$n1)* 2 * ($o3*$o2/(255**2));
+	  } else {
+	    # c1 == R, c2 == G, c3 == B
+	    $c2_delta = abs($o2 - $n2);
+	    $c1_delta = abs($o1 - $n1);
+	  }
+	  # Keep a running score of the differences between samples for this
+	  # sub-image vs. this tile from the orginal
+	  $match += $c1_delta + $c2_delta + $c3_delta;
+	}
+      }
+      # Weight for image duplicates.
+      $match += $wt_cache{$subimg};
+
+      if (!defined($minmatch) || $match < $minmatch) {
+	$minmatch = $match;
+	$matchid = $subimg;
+      }
+    }
+    if (!defined($matchid)) {
+      die("image_tile: No subimages selected!");
+    }
+    # Actually insert the selected image.
+    overlay_image($drawable, $matchid,
+		  $xtilewidth*$x, $ytileheight*$y,
+		  $xtilewidth, $ytileheight);
+    $wt_cache{$matchid} += $dupweight;
+  }
+  # Finish up.
+  undef $db;
+  untie %tile_cache;
+  undef $wdb;
+  untie %wt_cache;
+  unlink($wt_file);
+  unlink($cache_file) if $cleanup;
+  gimp_progress_update(1);
+  gimp_image_enable_undo($image);
+  gimp_displays_flush();
+}
+
+# Take IMAGE, XCELLS, YCELLS, TARGET_ASPECT.
+# Works destructively on IMAGE, and returns a list of anon-lists which
+# contain the color samples for the given IMAGE.
+sub get_image_cells {
+  my $img = shift;
+  my $xcells = shift;
+  my $ycells = shift;
+  my $target_aspect = shift;
+  my $start_complete = shift;
+  my $end_complete = shift;
+  # print "Target aspect: $target_aspect\n";
+  my $file = gimp_image_get_filename($img);
+  # print "$file: ";
+  my $width = gimp_image_width($img)+0;
+  # print "width: $width ";
+  my $height = gimp_image_height($img)+0;
+  # print "height: $height\n";
+  my $cells = "\0\0\0" x ($xcells * $ycells);
+  return () if $width < 1 || $height < 1;
+
+  # First crop to fit tiles
+  match_aspect($img,$target_aspect,$width,$height);
+
+  # Now, scale down to xcells by ycells for color sampling
+  # NOTE: We will re-open this image later if it is chosen.
+  #       This scaling is just to get color samples.
+  gimp_image_scale($img,$xcells,$ycells);
+  my $draw = gimp_image_active_drawable($img);
+  for(my $x=0;$x<$xcells;$x++) {
+    if (defined($start_complete)) {
+      gimp_progress_update(($start_complete+
+			    ($end_complete-$start_complete)*$x/$xcells)/100);
+    }
+    for(my $y=0;$y<$ycells;$y++) {
+      # Why is this setting FG? PDB docs seem to indicate that I can shut
+      # that off...
+      my $color = gimp_color_picker($draw,$x,$y,0,1); # Gimp 1.1 -deleted $img
+      my @c;
+      if ($DO_HSV) {
+	@c = rgb2hsv(@$color);
+      } else {
+	@c = @$color;
+      }
+      substr($cells,($x*$ycells+$y)*3,3) = pack('CCC',@c);
+    }
+  }
+  return \$cells;
+}
+
+# Take IMAGE, TARGET_ASPECT, WIDTH (of image), HEIGHT (of image)
+# Crops IMAGE to match aspect ratio of TARGET_ASPECT.
+sub match_aspect {
+  my $img = shift;
+  my $target_aspect = shift;
+  my $width = shift;
+  my $height = shift;
+  my $aspect = $width/$height;
+
+  if ($aspect < $target_aspect) {
+    my $oldheight=$height;
+    $height = int($width/$target_aspect);
+    # print "Image was $width X $oldheight, cropping to $width X $height\n";
+    gimp_crop($img,$width,$height,0,int(($oldheight-$height)/2));
+  } elsif ($aspect > $target_aspect) {
+    my $oldwidth=$width;
+    $width = int($target_aspect*$height);
+    # print "Image was $oldwidth X $height, cropping to $width X $height\n";
+    gimp_crop($img,$width,$height,int(($oldwidth-$width)/2),0);
+  }
+}
+
+# Take DRAWABLE, INFO, X, Y, WIDTH, HEIGHT
+# Opens image referenced by INFO->{name} and scale/crop to fit in rectagnle
+# described by X,Y,WIDTH,HEIGHT
+sub overlay_image {
+    my $draw = shift;
+    my $file = shift;
+    my $x = shift;
+    my $y = shift;
+    my $width = shift;
+    my $height = shift;
+    # 1 == NON_INTERACTIVE, but symbol does not seem to work....  ?
+    my $img = gimp_file_load(1,$file,$file);
+    my $subwidth = gimp_image_width($img);
+    my $subheight = gimp_image_height($img);
+    match_aspect($img,$width/$height,$subwidth,$subheight);
+    gimp_image_scale($img,$width,$height);
+    gimp_edit_copy(gimp_image_active_drawable($img)); #gimp 1.1 -deleted $img
+    my $baseimg = gimp_drawable_image($draw);
+    gimp_rect_select($baseimg,$x,$y,$width,$height,REPLACE,0,0);
+    my $sel = gimp_edit_paste($draw,0); # gimp 1.1 -deleted $baseimg
+    gimp_floating_sel_anchor($sel);
+    gimp_image_delete($img);
+}
+
+# Take a Red, Green, Blue color value and return Hue, Saturation and Value
+# RGB and HSV data should be in the range 0-255 (note Hue is usually
+# represented as 0-360, but here is scaled to be 0-255).
+sub rgb2hsv {
+  my $r = shift;
+  my $g = shift;
+  my $b = shift;
+  my($h,$s,$v);
+  my $min = undef;
+  my $max = 0;
+  foreach my $color ($r, $g, $b) {
+    $min = $color if !defined($min) || $min>$color;
+    $max = $color if $color > $max;
+  }
+  $v = $max;
+  $s = $max?int(($max-$min)/$max*255+0.5):0;
+  if ($s == 0) {
+    $h = 0;
+  } else {
+    my $d = $max - $min;
+    if ($r == $max) {
+      $h = ($g-$b)/$d;
+    } elsif ($g == $max) {
+      $h = 2+($b-$r)/$d;
+    } else {
+      $h = 4+($r-$g)/$d;
+    }
+    # This:
+    # $h *= 60;
+    # $h += 360 if $h < 0;
+    # $h *= (256/360);
+    # , simplified is this:
+    $h= int(($h+($h<0?6:0)) * 128 / 3 + 0.5);
+  }
+  return ($h,$s,$v);
+}
+
+# Caclulate the "distance" between to HSV hue values in the range 0-255.
+sub hue_dist {
+  my $h1 = shift;
+  my $h2 = shift;
+  my $d = abs($h1-$h2);
+  return($d>128?(256-$d):$d);
+}
+  
+# Gimp::Fu registration routine for placing this function into gimp's PDB
+register
+  "image-tile",
+  "Tile images to form a larger Image",
+  "Use Image Tile to take a directory of images and use it to
+	construct a single, existing image, sort of like the
+	Filters/Artistic/Mosaic plugin, but with images as the
+	tiles.",
+  "Aaron Sherman", "Aaron Sherman (c)", "1999-03-13",
+  "<Image>/Filters/Map/Image Tile",
+  "*",
+  [
+   # Image and drawable are given for free...
+   # [PF_IMAGE, "Input image", undef],
+   # [PF_DRAWABLE, "Input drawable", undef],
+   [PF_INT32, "Number of tiles (X)", "X tiles", 10],
+   [PF_INT32, "Number of tiles (Y)", "Y tiles", 10],
+   [PF_INT32, "Number of sample cells per tile (X)", "X cells", 4],
+   [PF_INT32, "Number of sample cells per tile (Y)", "Y cells", 4],
+   [PF_INT32, "Duplicates (0[lots] - 100[none])", "Duplicates", 5],
+   [PF_STRING, "Sub-image directories (space speparated)", "Directories","."],
+   [PF_TOGGLE, "Delete cached image samples?", "", 0]
+  ],
+  \&perl_fu_image_tile;
+
+exit main;
+
+__END__
+
+=head1 NAME
+
+image_tile - An image tiling plug-in for The Gimp
+
+=head1 SYNOPSIS
+
+B<image_tile> is called from The Gimp under the Perl-Fu image menu.
+
+=head1 DESCRIPTION
+
+B<image_tile> is a plug-in for The Gimp that re-creates an image by tiling many
+sub-images which are in turn chosen for their likeness to a part of the original.
+
+In other words, you give image_tile a base image (the one you open in The
+Gimp, and call image_tile on) and a list of directories to find other images
+in. It then tiles small versions of the images over the original image in
+such a way that you can still make out the original if you squint hard
+enough.
+
+=head1 LIMITATIONS
+
+B<image_tile> requires a large number of image to work from. This is because
+it needs to divide up your original image and for each tile, find another
+image which looks like that tile. This can require anywhere from 2000 to tens
+of thousands of component images.
+
+image_tile will use as much disk space as is required to store the sampling
+information that it creates for each of the sub images. However, its use of
+memory is much more conservative. The assumption being that a lot more people
+have a Gig of disk free than a Gig of RAM. So, expect a large file to be
+created in your .gimp directory (you can select automatic cleanup of this
+file if you wish).
+
+Note that this plug-in now works only with version 1.1 of the GIMP. If you
+wish to make it work with previous versions, you will have to search for
+"1.1" in the code, and put back the first argument to a lot of functions
+(each deletion has been noted).
+
+=head1 PARAMETERS
+
+When you bring up the image tiler, you are given several options. Each of these
+is detailed below:
+
+=over 5
+
+=item Number of tiles
+
+The number of tiles in the X and Y directions must be given. This is the
+number of sub-images that will be tiled across and down your original image.
+
+=item Number of cells
+
+In each tile, the image tiler will sample color areas to determine a match.
+The more color areas you sample, the more accurate the match, but this also
+increases memory, disk and time usage. The default of 4 cells in each direction
+is good for most tiling which is meant to be viewed on-line. Print-quality
+tiling will have to use more samples to get even finer details right.
+
+=item Duplicate weight
+
+This is a number from 0 to 100 (actually, there is no real upper bound, but
+100 is a practical upper limit). This is a weight applied to each sub-image
+each time it has been selected. Thus, if you use a hight weight, images
+will tend to be chosen only once. If you use a low weight, images will be
+chosen as many times as they happen to be the best fit. A weight of 0 will lead
+to the most accurate match, but due to the repetition of some images, you
+may find the resulting image to be difficult to make out.
+
+=item Sub-Image directories
+
+This is a space-separated list of the directories in which The Gimp will
+be able to load sub-images. You may use B<csh>-style file "globing" such
+as C</tmp/images/image_dir_*> or C</mnt/cdrom/images_[1234]>.
+
+=item Delete cached image samples
+
+This toggle button will tell the image tiler whether or not to delete the
+cached image samples that it creates while reading the sub-images. If you
+are planning to attempt matching these sub-images against this base image
+again (say, adding a few new files, or brightening the base image first),
+you will probably want to keep them around, as the time savings is
+huge. However, since these samples are based on aspect ratio and number
+of cells, you cannot re-use the samples if you change the number of tiles
+or number of cells. Sorry.
+
+=back
+
+=head1 AUTHOR
+
+Written in 1998 (c) by Aaron Sherman <ajs@ajs.com>
+
+=head1 BUGS
+
+Most of the I<bugs> in the image tiler are actually just design limitations.
+For example:
+
+=over 5
+
+=item *
+
+The images must all be the same aspect ratio, so B<image_tile> will crop them
+to match the target aspect ratio. Because of the large number of images
+involved, it is impractical to specify a crop area for each one, so the
+center of the image is chosen.
+
+=item *
+
+If The Gimp library were multi-threaded the image tiler would read more than
+one sub-image at a time.
+
+=item *
+
+Directory selection is crude. Gimp needs a file/directory selection model for
+plug-ins similar to the color selection model.
+
+=item *
+
+If some of your sub-images are bad, the image tiler will display an error
+message when trying to load them. This can result in a I<lot> of messages
+for a multi-thousand image database.
+
+=item *
+
+URLs should be handled as image directories.
+
+=item *
+
+Some text describing what image directory is being searched would be nice, but
+this would require more code than I want to write right now.
+
+=back
+
+=head1 SEE ALSO
+
+L<gimp>, L<perl>, L<Gimp>: the Gimp module for perl.
+
+=cut
