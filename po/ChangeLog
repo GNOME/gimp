@@ -1,3 +1,7 @@
+2004-10-19  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: added app/dialogs/channel-options-dialog.c
+
 2004-10-18  David Lodge <dave@cirt.net>
                                                                                 
         * en_GB.po: Updated British English translation.
