@@ -1,3 +1,13 @@
+Fri Mar 24 17:13:41 CET 2000  Sven Neumann <sven@gimp.org>
+
+	plug-ins/common/mapcolor.c: applied gimp-kirchgessner-000320-0.
+	Fixes problem with divide by zero when selecting same colors,
+	adds preview and makes the GUI more intuitive.
+
+	Additionally, I've added another check for the drawable being RGB
+	in the function that does the actual work. Remember that the
+	image_type may change while the dialog is open!
+
 Fri Mar 24 15:48:40 CET 2000  Sven Neumann <sven@gimp.org>
 
 	applied gimp-quinet-000310-0 by Raphael Quinet <quinet@gamers.org>
