@@ -1,3 +1,10 @@
+Fri Jan 28 01:16:35 CET 2000  Marc Lehmann <pcg@goof.com>
+
+        * PLUGIN_CVS: updated to give Kevin Turner write access to
+        the maze plug-in (therefore, the maze plug-in is no longer
+        managable within the gnome cvs server. If you have any
+        comments/suggestions...)
+
 2000-01-28  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/Makefile.am
