@@ -1,3 +1,9 @@
+2000-12-28  Simon Budig  <simon@gimp.org>
+
+	* modules/colorsel_triangle.c
+	Cleanup, indentation madness, first steps towards a one-click
+	color-selector.
+	
 2000-12-28  Sven Neumann  <sven@gimp.org>
 
 	* app/channel.c
