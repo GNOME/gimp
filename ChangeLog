@@ -1,5 +1,13 @@
 2004-02-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/config/gimpconfig-path.c (gimp_config_path_expand_only):
+	when calculating the length of the expanded path, add the length
+	of the UTF-8 converted substitution, not its length in filesystem
+	encoding. Finally enables GIMP2_DIRECTORY containing non-ascii
+	chars (at least on linux). Should fix bug #130118.
+
+2004-02-01  Michael Natterer  <mitch@gimp.org>
+
 	Disallow to rename the layer mask. Instead, always name the mask
 	"<layer name> mask". Fixes bug #133112 along with some other
 	unreported ones.

@@ -161,9 +161,10 @@ gimp_config_path_expand_only (const gchar  *path,
 
           substs[2*n_substs]     = token;
           substs[2*n_substs + 1] = (gchar *) gimp_filename_to_utf8 (s);
-          n_substs++;
 
-          length += strlen (s);
+          length += strlen (substs[2*n_substs + 1]);
+
+          n_substs++;
         }
       else
 	{
