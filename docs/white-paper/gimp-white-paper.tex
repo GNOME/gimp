@@ -118,7 +118,7 @@ image must be compatible with the image type.
 A \emph{drawable} is a linear array of pixel data; however, the
 contents of a drawable need not necessarily be used solely for
 rendering as pixel data (for example, selection masks are drawables
-internal to the program, and they are not directly `paintable' by the
+internal to the program, and they are not directly ``paintable'' by the
 user).
 
 Each drawable contains from one to four data channels (not to be
@@ -154,7 +154,19 @@ as the image type with an added alpha channel (for example, a
 grayscale image cannot contain an RGB layer).  Every layer is part of
 exactly one image.
 
+The user may selectively make any layer of an invisible; invisible
+layers do not contribute to the composition process.
+
 \subsubsection{Layer masks}
+
+Optionally, any layer with an alpha channel may have an added
+\emph{layer mask}.  The layer mask is a separate channel which is
+multiplied into that layer's drawable alpha channel whenever that
+layer contributes to a projection.  The user can elect to temporarily
+disable this effect of a layer mask for editing purposes, or cause the
+layer mask to be substituted for the main drawable; these effects are
+mainly for convenience in editing.  The user can also merge the layer
+mask back into the layer's main drawable, or discard it.
 
 \subsection{Channels}
 
@@ -165,18 +177,19 @@ interpretation of these values varies depending on the type of
 channel.
 
 In addition to these channel types, each image also has either one or
-three `virtual' channels (one for grayscale and indexed images, three
-for RGB).  The virtual channels are merely a convenience to the user;
-they are not drawables by themselves.  As with the custom channels,
-the virtual ones can be made active or inactive (visible or
-invisible).  Normally all the virtual channels are active, all
-painting operations modify each of the channels.  When a channel is
-inactive, painting operations will ignore that channel.
-
-This is useful in two situations.  First, when the user wants to see
-only a subset of the color channels (RGB).  Second, when the user
-wants to paint on the image but only modify a subset of the channels
-instead of all of them.
+three ``virtual'' channels (one for grayscale and indexed images,
+three for RGB).  These virtual channels (sometimes called ``color
+channels'') are merely a convenience to the user and are not drawables
+by themselves.  These virtual channels can be made visible or
+invisible, and for images where there is more than one virtual
+channel, each can be made visible or invisible independently of the
+others.  Normally all the virtual channels are active, and all
+painting operations modify all three the channels.  When a virtual
+channel is invisible, both layer composition and layer painting
+operations ignore that channel.  This is useful in two situations:
+first, when the user wants to see only a subset of the color channels
+(RGB); and second, when the user wants to paint on the image but only
+modify a subset of the channels.
 
 \section{Tiles}
 
@@ -240,7 +253,7 @@ replicate) that make creation of custom gradients easy and convenient.
 The color segments support full transparency information, making for
 even more flexible gradients.
 
-To avoid sampling artifacts (the `jaggies'), the gradient rendering
+To avoid sampling artifacts (the ``jaggies''), the gradient rendering
 engine supports adaptive supersampling with customizable threshold and
 recursion depth parameters.  With adaptive supersampling even the most
 complex custom gradients will be rendered smoothly without
