@@ -289,8 +289,11 @@ gimp_error_console_button_press (GtkWidget        *widget,
 {
   if (bevent->button == 3)
     {
-      gimp_item_factory_popup_with_data (GIMP_EDITOR (console)->item_factory,
-                                         console, NULL);
+      GimpEditor *editor = GIMP_EDITOR (console);
+
+      gimp_item_factory_popup_with_data (editor->item_factory,
+                                         editor->item_factory_data,
+                                         NULL, NULL, NULL);
       return TRUE;
     }
 

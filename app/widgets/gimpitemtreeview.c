@@ -666,19 +666,19 @@ gimp_item_tree_view_context_item (GimpContainerView *view,
                                   GimpViewable      *item,
                                   gpointer           insert_data)
 {
-  GimpItemTreeView *item_view;
+  GimpEditor *editor;
 
   if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->context_item)
     GIMP_CONTAINER_VIEW_CLASS (parent_class)->context_item (view,
 							    item,
 							    insert_data);
 
-  item_view = GIMP_ITEM_TREE_VIEW (view);
+  editor = GIMP_EDITOR (view);
 
-  if (GIMP_EDITOR (item_view)->item_factory)
-    gimp_item_factory_popup_with_data (GIMP_EDITOR (item_view)->item_factory,
-                                       item_view,
-                                       NULL);
+  if (editor->item_factory)
+    gimp_item_factory_popup_with_data (editor->item_factory,
+                                       editor->item_factory_data,
+                                       NULL, NULL, NULL);
 }
 
 static gboolean

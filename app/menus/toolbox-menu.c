@@ -295,7 +295,8 @@ toolbox_menu_setup (GimpItemFactory *factory)
     {
       menu = menu_item->parent;
 
-      for (list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos); list;
+      for (list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos);
+           list;
 	   list = g_list_next (list))
 	{
 	  menu_item = GTK_WIDGET (list->data);
@@ -318,7 +319,8 @@ toolbox_menu_setup (GimpItemFactory *factory)
 
       if (menu && GTK_IS_MENU (menu))
 	{
-	  for (list = GTK_MENU_SHELL (menu)->children; list;
+	  for (list = GTK_MENU_SHELL (menu)->children;
+               list;
 	       list = g_list_next (list))
 	    {
 	      GtkMenuItem *menu_item;

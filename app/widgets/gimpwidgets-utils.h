@@ -32,8 +32,7 @@ void          gimp_message_box           (const gchar *stock_id,
 void          gimp_menu_position         (GtkMenu     *menu,
                                           gint        *x,
                                           gint        *y,
-                                          guint       *button,
-                                          guint32     *activate_time);
+                                          gpointer     data);
 
 void          gimp_table_attach_stock    (GtkTable    *table,
 					  gint         row,

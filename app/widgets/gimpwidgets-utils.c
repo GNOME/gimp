@@ -240,24 +240,20 @@ gimp_message_box_close_callback (GtkWidget *widget,
 }
 
 void
-gimp_menu_position (GtkMenu *menu,
-		    gint    *x,
-		    gint    *y,
-		    guint   *button,
-		    guint32 *activate_time)
+gimp_menu_position (GtkMenu  *menu,
+		    gint     *x,
+		    gint     *y,
+                    gpointer  data)
 {
-  GdkEvent       *current_event;
-  GtkRequisition  requisition;
-  gint            pointer_x;
-  gint            pointer_y;
-  gint            screen_width;
-  gint            screen_height;
+  GtkRequisition requisition;
+  gint           pointer_x;
+  gint           pointer_y;
+  gint           screen_width;
+  gint           screen_height;
 
   g_return_if_fail (GTK_IS_MENU (menu));
   g_return_if_fail (x != NULL);
   g_return_if_fail (y != NULL);
-  g_return_if_fail (button != NULL);
-  g_return_if_fail (activate_time != NULL);
 
   gdk_window_get_pointer (NULL, &pointer_x, &pointer_y, NULL);
 
@@ -274,23 +270,6 @@ gimp_menu_position (GtkMenu *menu,
 
   *x = MAX (*x, 0);
   *y = MAX (*y, 0);
-
-  current_event = gtk_get_current_event ();
-
-  if (current_event && current_event->type == GDK_BUTTON_PRESS)
-    {
-      GdkEventButton *bevent;
-
-      bevent = (GdkEventButton *) current_event;
-
-      *button        = bevent->button;
-      *activate_time = bevent->time;
-    }
-  else
-    {
-      *button        = 0;
-      *activate_time = 0;
-    }
 }
 
 void

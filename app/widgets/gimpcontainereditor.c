@@ -231,11 +231,11 @@ gimp_container_editor_real_context_item (GimpContainerEditor *editor,
   if (viewable && gimp_container_have (editor->view->container,
 				       GIMP_OBJECT (viewable)))
     {
-      GimpItemFactory *item_factory;
+      GimpEditor *gimp_editor = GIMP_EDITOR (editor->view);
 
-      item_factory = GIMP_EDITOR (editor->view)->item_factory;
-
-      if (item_factory)
-        gimp_item_factory_popup_with_data (item_factory, editor, NULL);
+      if (gimp_editor->item_factory)
+        gimp_item_factory_popup_with_data (gimp_editor->item_factory,
+                                           gimp_editor->item_factory_data,
+                                           NULL, NULL, NULL);
     }
 }

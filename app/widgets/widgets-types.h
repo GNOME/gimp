@@ -121,6 +121,11 @@ typedef void (* GimpItemFactorySetupFunc)   (GimpItemFactory *factory);
 typedef void (* GimpItemFactoryUpdateFunc)  (GtkItemFactory  *factory,
                                              gpointer         data);
 
+typedef void (* GimpMenuPositionFunc)       (GtkMenu         *menu,
+                                             gint            *x,
+                                             gint            *y,
+                                             gpointer         data);
+
 typedef void (* GimpStrokeItemFunc)         (GimpVectors     *vectors);
 typedef void (* GimpSelectionToVectorsFunc) (GimpImage       *gimage,
                                              gboolean         advanced);

@@ -148,37 +148,41 @@ vectors_menu_update (GtkItemFactory *factory,
                      gpointer        data)
 {
   GimpImage   *gimage;
-  GimpVectors *vectors;
-  gboolean     mask_empty;
-  gboolean     global_buf;
-  GList       *list;
-  GList       *next = NULL;
-  GList       *prev = NULL;
+  GimpVectors *vectors    = NULL;
+  gboolean     mask_empty = TRUE;
+  gboolean     global_buf = FALSE;
+  GList       *next       = NULL;
+  GList       *prev       = NULL;
 
   gimage = GIMP_ITEM_TREE_VIEW (data)->gimage;
 
-  vectors = gimp_image_get_active_vectors (gimage);
-
-  mask_empty = gimp_image_mask_is_empty (gimage);
-
-  global_buf = FALSE;
-
-  for (list = GIMP_LIST (gimage->vectors)->list;
-       list;
-       list = g_list_next (list))
+  if (gimage)
     {
-      if (vectors == (GimpVectors *) list->data)
-	{
-	  prev = g_list_previous (list);
-	  next = g_list_next (list);
-	  break;
-	}
+      GList *list;
+
+      vectors = gimp_image_get_active_vectors (gimage);
+
+      mask_empty = gimp_image_mask_is_empty (gimage);
+
+      global_buf = FALSE;
+
+      for (list = GIMP_LIST (gimage->vectors)->list;
+           list;
+           list = g_list_next (list))
+        {
+          if (vectors == (GimpVectors *) list->data)
+            {
+              prev = g_list_previous (list);
+              next = g_list_next (list);
+              break;
+            }
+        }
     }
 
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/New Path...",              TRUE);
+  SET_SENSITIVE ("/New Path...",              gimage);
   SET_SENSITIVE ("/Raise Path",               vectors && prev);
   SET_SENSITIVE ("/Lower Path",               vectors && next);
   SET_SENSITIVE ("/Duplicate Path",           vectors);
@@ -191,7 +195,7 @@ vectors_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Delete Path",              vectors);
   SET_SENSITIVE ("/Copy Path",                vectors);
   SET_SENSITIVE ("/Paste Path",               global_buf);
-  SET_SENSITIVE ("/Import Path...",           TRUE);
+  SET_SENSITIVE ("/Import Path...",           gimage);
   SET_SENSITIVE ("/Export Path...",           vectors);
   SET_SENSITIVE ("/Path Tool",                vectors);
   SET_SENSITIVE ("/Edit Path Attributes...",  vectors);

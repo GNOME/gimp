@@ -100,9 +100,6 @@ static void  gimp_display_shell_origin_menu_position (GtkMenu          *menu,
                                                       gint             *x,
                                                       gint             *y,
                                                       gpointer          data);
-static void     gimp_display_shell_origin_menu_popup (GimpDisplayShell *shell,
-                                                      guint             button,
-                                                      guint32           time);
 
 GdkEvent *      gimp_display_shell_compress_motion   (GimpDisplayShell *shell);
 
@@ -366,7 +363,18 @@ gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
 gboolean
 gimp_display_shell_popup_menu (GtkWidget *widget)
 {
-  gimp_display_shell_origin_menu_popup (GIMP_DISPLAY_SHELL (widget), 0, 0);
+  GimpDisplayShell *shell;
+
+  shell = GIMP_DISPLAY_SHELL (widget);
+
+  gimp_context_set_display (gimp_get_user_context (shell->gdisp->gimage->gimp),
+                            shell->gdisp);
+
+  gimp_item_factory_popup_with_data (shell->popup_factory,
+                                     shell->gdisp,
+                                     gimp_display_shell_origin_menu_position,
+                                     shell->origin,
+                                     NULL);
 
   return TRUE;
 }
@@ -635,7 +643,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             state |= GDK_BUTTON3_MASK;
             gimp_item_factory_popup_with_data (shell->popup_factory,
                                                gdisp,
-                                               NULL);
+                                               NULL, NULL, NULL);
             return_val = TRUE;
             break;
 
@@ -1264,9 +1272,7 @@ gimp_display_shell_origin_button_press (GtkWidget        *widget,
 {
   if (! shell->gdisp->gimage->gimp->busy && event->button == 1)
     {
-      gimp_display_shell_origin_menu_popup (shell,
-                                            event->button,
-                                            event->time);
+      gimp_display_shell_popup_menu (GTK_WIDGET (shell));
     }
 
   /* Return TRUE to stop signal emission so the button doesn't grab the
@@ -1375,7 +1381,8 @@ gimp_display_shell_qmask_button_press (GtkWidget        *widget,
 {
   if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 3))
     {
-      gimp_item_factory_popup_with_data (shell->qmask_factory, shell, NULL);
+      gimp_item_factory_popup_with_data (shell->qmask_factory, shell,
+                                         NULL, NULL, NULL);
 
       return TRUE;
     }
@@ -1607,30 +1614,6 @@ gimp_display_shell_origin_menu_position (GtkMenu  *menu,
 
   if (*y + GTK_WIDGET (menu)->allocation.height > gdk_screen_height ())
     *y -= (GTK_WIDGET (menu)->allocation.height);
-}
-
-static void
-gimp_display_shell_origin_menu_popup (GimpDisplayShell *shell,
-                                      guint             button,
-                                      guint32           time)
-{
-  GtkItemFactory *factory;
-  gint            x, y;
-
-  gimp_context_set_display (gimp_get_user_context (shell->gdisp->gimage->gimp),
-                            shell->gdisp);
-
-  factory = GTK_ITEM_FACTORY (shell->popup_factory);
-
-  gimp_display_shell_origin_menu_position (GTK_MENU (factory->widget),
-                                           &x, &y,
-                                           shell->origin);
-
-  gtk_item_factory_popup_with_data (factory,
-                                    shell->gdisp,
-                                    NULL,
-                                    x, y,
-                                    button, time);
 }
 
 /* gimp_display_shell_compress_motion:

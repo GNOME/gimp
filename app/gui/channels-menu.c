@@ -108,7 +108,7 @@ void
 channels_menu_update (GtkItemFactory *factory,
                       gpointer        data)
 {
-  GimpImage   *gimage    = NULL;
+  GimpImage   *gimage;
   GimpChannel *channel   = NULL;
   gboolean     fs        = FALSE;
   gboolean     component = FALSE;
@@ -119,36 +119,43 @@ channels_menu_update (GtkItemFactory *factory,
     {
       gimage = GIMP_IMAGE_EDITOR (data)->gimage;
 
-      if (GIMP_COMPONENT_EDITOR (data)->clicked_component != -1)
-        component = TRUE;
+      if (gimage)
+        {
+          if (GIMP_COMPONENT_EDITOR (data)->clicked_component != -1)
+            component = TRUE;
+        }
     }
   else
     {
-      GList *list;
-
       gimage = GIMP_ITEM_TREE_VIEW (data)->gimage;
 
-      channel = gimp_image_get_active_channel (gimage);
-
-      for (list = GIMP_LIST (gimage->channels)->list;
-           list;
-           list = g_list_next (list))
+      if (gimage)
         {
-          if (channel == (GimpChannel *) list->data)
+          GList *list;
+
+          channel = gimp_image_get_active_channel (gimage);
+
+          for (list = GIMP_LIST (gimage->channels)->list;
+               list;
+               list = g_list_next (list))
             {
-              prev = g_list_previous (list);
-              next = g_list_next (list);
-              break;
+              if (channel == (GimpChannel *) list->data)
+                {
+                  prev = g_list_previous (list);
+                  next = g_list_next (list);
+                  break;
+                }
             }
         }
     }
 
-  fs = (gimp_image_floating_sel (gimage) != NULL);
+  if (gimage)
+    fs = (gimp_image_floating_sel (gimage) != NULL);
 
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/New Channel...",             !fs);
+  SET_SENSITIVE ("/New Channel...",             !fs && gimage);
   SET_SENSITIVE ("/Raise Channel",              !fs && channel && prev);
   SET_SENSITIVE ("/Lower Channel",              !fs && channel && next);
   SET_SENSITIVE ("/Duplicate Channel",          !fs && (channel || component));

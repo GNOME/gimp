@@ -376,26 +376,50 @@ gimp_item_factory_update (GimpItemFactory *item_factory,
 }
 
 void
-gimp_item_factory_popup_with_data (GimpItemFactory  *item_factory,
-				   gpointer          data,
-                                   GtkDestroyNotify  popdown_func)
+gimp_item_factory_popup_with_data (GimpItemFactory      *item_factory,
+				   gpointer              popup_data,
+                                   GimpMenuPositionFunc  position_func,
+                                   gpointer              position_data,
+                                   GtkDestroyNotify      popdown_func)
 {
-  gint    x, y;
-  guint   button;
-  guint32 activate_time;
+  GdkEvent *current_event;
+  gint      x, y;
+  guint     button;
+  guint32   activate_time;
 
   g_return_if_fail (GIMP_IS_ITEM_FACTORY (item_factory));
 
   if (item_factory->update_on_popup)
-    gimp_item_factory_update (item_factory, data);
+    gimp_item_factory_update (item_factory, popup_data);
 
-  gimp_menu_position (GTK_MENU (GTK_ITEM_FACTORY (item_factory)->widget),
-		      &x, &y,
-		      &button,
-		      &activate_time);
+  if (! position_func)
+    {
+      position_func = gimp_menu_position;
+      position_data = NULL;
+    }
+
+  (* position_func) (GTK_MENU (GTK_ITEM_FACTORY (item_factory)->widget),
+                     &x, &y, position_data);
+
+  current_event = gtk_get_current_event ();
+
+  if (current_event && current_event->type == GDK_BUTTON_PRESS)
+    {
+      GdkEventButton *bevent;
+
+      bevent = (GdkEventButton *) current_event;
+
+      button        = bevent->button;
+      activate_time = bevent->time;
+    }
+  else
+    {
+      button        = 0;
+      activate_time = 0;
+    }
 
   gtk_item_factory_popup_with_data (GTK_ITEM_FACTORY (item_factory),
-				    data,
+				    popup_data,
 				    popdown_func,
 				    x, y,
 				    button,

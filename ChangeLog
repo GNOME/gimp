@@ -1,3 +1,45 @@
+2003-07-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/widgets-types.h: added GimpMenuPositionFunc typedef.
+
+	* app/widgets/gimpwidgets-utils.[ch]: made gimp_menu_position()
+	a GimpMenuPositionFunc.
+
+	* app/widgets/gimpitemfactory.[ch]
+	(gimp_item_factory_popup_with_data): added position_func and
+	position_data parameters. Use gimp_menu_position() if no
+	position_func is given.
+
+	* app/display/gimpdisplayshell-callbacks.c: removed
+	gimp_display_shell_origin_menu_popup() and call
+	gimp_item_factory_popup_with_data() directly from
+	gimp_display_shell_popup_menu(), using
+	gimp_display_shell_origin_menu_position() as position_func.
+
+	* app/widgets/gimpeditor.[ch]: added a GtkWidget::popup_menu()
+	implementation so all context menus are keyboard accessible.
+	Added "gpointer factory_data" member so the menu can be popped up
+	in the right context.
+
+	* app/gui/channels-menu.c
+	* app/gui/layers-menu.c
+	* app/gui/vectors-menu.c: make them work without an active image
+	since they can be popped up at any time now.
+
+	* app/gui/image-menu.c
+	* app/gui/toolbox-menu.c: cleanup.
+
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpcomponenteditor.c
+	* app/widgets/gimpcontainereditor.c
+	* app/widgets/gimpdockbook.c
+	* app/widgets/gimperrorconsole.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimppaletteeditor.c: pass NULL, NULL as
+	position_func and position_data so the default implementation is
+	used.
+
 2003-07-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins: more plug-ins adapted to libgimp changes.

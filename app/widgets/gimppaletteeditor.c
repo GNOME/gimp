@@ -487,19 +487,24 @@ gimp_palette_editor_update_color (GimpContext          *context,
 
 /*  the color area event callbacks  ******************************************/
 
-static gint
+static gboolean
 palette_editor_eventbox_button_press (GtkWidget         *widget,
 				      GdkEventButton    *bevent,
 				      GimpPaletteEditor *editor)
 {
   if (bevent->button == 3)
-    gimp_item_factory_popup_with_data (GIMP_EDITOR (editor)->item_factory,
-                                       editor, NULL);
+    {
+      GimpEditor *gimp_editor = GIMP_EDITOR (editor);
+
+      gimp_item_factory_popup_with_data (gimp_editor->item_factory,
+                                         gimp_editor->item_factory_data,
+                                         NULL, NULL, NULL);
+    }
 
   return TRUE;
 }
 
-static gint
+static gboolean
 palette_editor_color_area_button_press (GtkWidget         *widget,
                                         GdkEventButton    *bevent,
                                         GimpPaletteEditor *editor)

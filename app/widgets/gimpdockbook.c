@@ -625,6 +625,7 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
 
       gimp_item_factory_popup_with_data (dockbook->item_factory,
                                          dockbook,
+                                         NULL, NULL,
                                          (GtkDestroyNotify) gimp_dockbook_menu_end);
     }
 

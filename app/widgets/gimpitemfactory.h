@@ -94,7 +94,9 @@ void   gimp_item_factory_create_items     (GimpItemFactory       *factory,
 void   gimp_item_factory_update           (GimpItemFactory       *item_factory,
                                            gpointer               popup_data);
 void   gimp_item_factory_popup_with_data  (GimpItemFactory       *factory,
-                                           gpointer               data,
+                                           gpointer               popup_data,
+                                           GimpMenuPositionFunc   position_func,
+                                           gpointer               position_data,
                                            GtkDestroyNotify       popdown_func);
 
 void   gimp_item_factory_set_active       (GtkItemFactory        *factory,

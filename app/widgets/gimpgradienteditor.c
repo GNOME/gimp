@@ -708,8 +708,13 @@ preview_events (GtkWidget          *widget,
 
 	case 3:
           if (GIMP_DATA_EDITOR (editor)->data_editable)
-            gimp_item_factory_popup_with_data (GIMP_EDITOR (editor)->item_factory,
-                                               editor, NULL);
+            {
+              GimpEditor *gimp_editor = GIMP_EDITOR (editor);
+
+              gimp_item_factory_popup_with_data (gimp_editor->item_factory,
+                                                 gimp_editor->item_factory_data,
+                                                 NULL, NULL, NULL);
+            }
 	  break;
 
 	default:
@@ -1143,8 +1148,11 @@ control_button_press (GimpGradientEditor *editor,
 
   if (button == 3)
     {
-      gimp_item_factory_popup_with_data (GIMP_EDITOR (editor)->item_factory,
-                                         editor, NULL);
+      GimpEditor *gimp_editor = GIMP_EDITOR (editor);
+
+      gimp_item_factory_popup_with_data (gimp_editor->item_factory,
+                                         gimp_editor->item_factory_data,
+                                         NULL, NULL, NULL);
       return;
     }
 
