@@ -1,5 +1,10 @@
 1999-11-20  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimpexport.c: changed the packing spacings to match the
+	core dialogs' standards.
+
+1999-11-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/menus.c
 	* plug-ins/gap/gap_filter_main.c: moved "Filter all Layers.." to
 	the main "Filters" menu.

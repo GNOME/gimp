@@ -255,6 +255,7 @@ export_dialog (GSList *actions,
 {
   GtkWidget *frame;
   GtkWidget *button;
+  GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *hbbox;
   GtkWidget *label;
@@ -311,12 +312,15 @@ export_dialog (GSList *actions,
   gtk_widget_show (button);
 
   /* the headline */
-  gtk_container_set_border_width
-    (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_widget_show (vbox);
+
   label = gtk_label_new (_("Your image should be exported before it can be saved for the following reasons:"));
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), label, TRUE, TRUE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   for (list = actions; list; list = list->next)
@@ -325,10 +329,11 @@ export_dialog (GSList *actions,
       text = g_strdup_printf ("%s %s", format, gettext (action->reason));
       frame = gtk_frame_new (text);
       g_free (text);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame, TRUE, TRUE, 4);
-      hbox = gtk_hbox_new (FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      hbox = gtk_hbox_new (FALSE, 4);
       gtk_container_add (GTK_CONTAINER (frame), hbox);
-    
+      gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+
       if (action->possibilities[0] && action->possibilities[1])
 	{
 	  GSList *radio_group = NULL;
@@ -337,7 +342,7 @@ export_dialog (GSList *actions,
 						    gettext (action->possibilities[0]));
 	  gtk_label_set_justify (GTK_LABEL (GTK_BIN (button)->child), GTK_JUSTIFY_LEFT);
 	  radio_group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-	  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 2);
+	  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 	  gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			      (GtkSignalFunc) export_toggle_callback, &action->choice);
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
@@ -347,14 +352,14 @@ export_dialog (GSList *actions,
 						    gettext (action->possibilities[1]));
 	  gtk_label_set_justify (GTK_LABEL (GTK_BIN (button)->child), GTK_JUSTIFY_LEFT);
 	  radio_group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-	  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 4);
+	  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 	  gtk_widget_show (button);
 	} 
       else if (action->possibilities[0])
 	{
 	  label = gtk_label_new (gettext (action->possibilities[0]));
 	  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-	  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
+	  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
 	  gtk_widget_show (label);
 	  action->choice = 0;
 	}
@@ -362,7 +367,7 @@ export_dialog (GSList *actions,
 	{
 	  label = gtk_label_new (gettext (action->possibilities[1]));
 	  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-	  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
+	  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
 	  gtk_widget_show (label);
 	  action->choice = 1;
 	}      
@@ -372,9 +377,9 @@ export_dialog (GSList *actions,
 
   /* the footline */
   label = gtk_label_new (_("The export conversion won't modify your original image."));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), label, TRUE, TRUE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-  
+
   gtk_widget_show (dialog);
   gtk_main ();
 
