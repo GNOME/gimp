@@ -107,9 +107,8 @@
 #define PLUG_IN_NAME    "plug_in_bump_map"
 #define PLUG_IN_VERSION "August 1997, 2.04"
 
-#define PREVIEW_SIZE 128
-#define SCALE_WIDTH  200
-#define ENTRY_WIDTH  60
+#define PREVIEW_SIZE    128
+#define SCALE_WIDTH     200
 
 /***** Types *****/
 
@@ -211,33 +210,29 @@ static void bumpmap_row         (guchar           *src_row,
 static void bumpmap_convert_row (guchar *row, int width, int bpp,
 				 int has_alpha, guchar *lut);
 
-static gint bumpmap_dialog(void);
-static void dialog_init_preview(void);
-static void dialog_new_bumpmap(void);
-static void dialog_update_preview(void);
-static gint dialog_preview_events(GtkWidget *widget, GdkEvent *event);
-static void dialog_scroll_src(void);
-static void dialog_scroll_bumpmap(void);
-static void dialog_get_rows(GPixelRgn *pr, guchar **rows, int x, int y, int width, int height);
-static void dialog_fill_src_rows(int start, int how_many, int yofs);
-static void dialog_fill_bumpmap_rows(int start, int how_many, int yofs);
+static gint bumpmap_dialog              (void);
+static void dialog_init_preview         (void);
+static void dialog_new_bumpmap          (void);
+static void dialog_update_preview       (void);
+static gint dialog_preview_events       (GtkWidget *widget, GdkEvent *event);
+static void dialog_scroll_src           (void);
+static void dialog_scroll_bumpmap       (void);
+static void dialog_get_rows             (GPixelRgn *pr, guchar **rows,
+					 int x, int y, int width, int height);
+static void dialog_fill_src_rows        (int start, int how_many, int yofs);
+static void dialog_fill_bumpmap_rows    (int start, int how_many, int yofs);
 
-static void dialog_compensate_callback(GtkWidget *widget, gpointer data);
-static void dialog_invert_callback(GtkWidget *widget, gpointer data);
-static void dialog_map_type_callback(GtkWidget *widget, gpointer data);
-static gint dialog_constrain(gint32 image_id, gint32 drawable_id, gpointer data);
-static void dialog_bumpmap_callback(gint32 id, gpointer data);
-static void dialog_create_dvalue(char *title, GtkTable *table, int row, gdouble *value,
-				 double left, double right);
-static void dialog_dscale_update(GtkAdjustment *adjustment, gdouble *value);
-static void dialog_dentry_update(GtkWidget *widget, gdouble *value);
-static void dialog_create_ivalue(char *title, GtkTable *table, int row, gint *value,
-				 int left, int right, int full_update);
-static void dialog_iscale_update_normal(GtkAdjustment *adjustment, gint *value);
-static void dialog_iscale_update_full(GtkAdjustment *adjustment, gint *value);
-static void dialog_ientry_update_normal(GtkWidget *widget, gint *value);
-static void dialog_ientry_update_full(GtkWidget *widget, gint *value);
-static void dialog_ok_callback(GtkWidget *widget, gpointer data);
+static void dialog_compensate_callback  (GtkWidget *widget, gpointer data);
+static void dialog_invert_callback      (GtkWidget *widget, gpointer data);
+static void dialog_map_type_callback    (GtkWidget *widget, gpointer data);
+static gint dialog_constrain            (gint32 image_id, gint32 drawable_id,
+					 gpointer data);
+static void dialog_bumpmap_callback     (gint32 id, gpointer data);
+static void dialog_dscale_update        (GtkAdjustment *adjustment,
+					 gdouble *value);
+static void dialog_iscale_update_normal (GtkAdjustment *adjustment, gint *value);
+static void dialog_iscale_update_full   (GtkAdjustment *adjustment, gint *value);
+static void dialog_ok_callback          (GtkWidget *widget, gpointer data);
 
 /***** Variables *****/
 
@@ -291,18 +286,11 @@ static bumpmap_interface_t bmint =
   FALSE      /* run */
 };
 
-static char *map_types[] =
-{
-  N_("Linear map"),
-  N_("Spherical map"),
-  N_("Sinusoidal map")
-};
-
 GDrawable *drawable = NULL;
 
-int sel_x1, sel_y1, sel_x2, sel_y2;
-int sel_width, sel_height;
-int img_bpp, img_has_alpha;
+gint sel_x1, sel_y1, sel_x2, sel_y2;
+gint sel_width, sel_height;
+gint img_bpp, img_has_alpha;
 
 
 /***** Functions *****/
@@ -768,21 +756,20 @@ bumpmap_convert_row (guchar *row,
 static gint
 bumpmap_dialog (void)
 {
-  GtkWidget  *dialog;
-  GtkWidget  *top_table;
-  GtkWidget  *frame;
-  GtkWidget  *table;
-  GtkWidget  *right_vbox;
-  GtkWidget  *vbox;
-  GtkWidget  *label;
-  GtkWidget  *option_menu;
-  GtkWidget  *menu;
-  GtkWidget  *button;
-  GSList     *group;
-  gint        argc;
-  gchar     **argv;
-  guchar     *color_cube;
-  gint        i;
+  GtkWidget *dialog;
+  GtkWidget *top_table;
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkWidget *right_vbox;
+  GtkWidget *label;
+  GtkWidget *option_menu;
+  GtkWidget *menu;
+  GtkWidget *button;
+  GtkObject *adj;
+  gint     argc;
+  gchar  **argv;
+  guchar  *color_cube;
+  gint     i;
 
 #if 0 
   g_print  ("bumpmap: waiting... (pid %d)\n", getpid ());
@@ -887,30 +874,19 @@ bumpmap_dialog (void)
 
   /* Type of map */
 
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
+  frame =
+    gimp_radio_group_new2 (TRUE, NULL,
+			   dialog_map_type_callback,
+			   &bmvals.type, (gpointer) bmvals.type,
+
+			   _("Linear Map"),     (gpointer) LINEAR, NULL,
+			   _("Spherical Map"),  (gpointer) SPHERICAL, NULL,
+			   _("Sinuosidal Map"), (gpointer) SINUOSIDAL, NULL,
+
+			   NULL);
+
   gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  group = NULL;
-
-  for (i = 0; i < (sizeof(map_types) / sizeof(map_types[0])); i++)
-    {
-      button = gtk_radio_button_new_with_label (group, gettext (map_types[i]));
-      group  = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-      if (i == bmvals.type)
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  (GtkSignalFunc) dialog_map_type_callback,
-			  (gpointer) ((long) i));
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-    }
 
   /* Table for bottom controls */
 
@@ -943,20 +919,61 @@ bumpmap_dialog (void)
 
   /* Controls */
 
-  dialog_create_dvalue(_("Azimuth:"), GTK_TABLE (table), 1,
-		       &bmvals.azimuth, 0.0, 360.0);
-  dialog_create_dvalue (_("Elevation:"), GTK_TABLE (table), 2,
-			&bmvals.elevation, 0.5, 90.0);
-  dialog_create_ivalue (_("Depth:"), GTK_TABLE (table), 3,
-			&bmvals.depth, 1, 65, FALSE);
-  dialog_create_ivalue (_("X Offset:"), GTK_TABLE (table), 4,
-			&bmvals.xofs, -1000, 1001, FALSE);
-  dialog_create_ivalue (_("Y Offset:"), GTK_TABLE (table), 5,
-			&bmvals.yofs, -1000, 1001, FALSE);
-  dialog_create_ivalue (_("Waterlevel:"), GTK_TABLE (table), 6,
-			&bmvals.waterlevel, 0, 256, TRUE);
-  dialog_create_ivalue (_("Ambient:"), GTK_TABLE (table), 7,
-			&bmvals.ambient, 0, 256, FALSE);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Azimuth:"), SCALE_WIDTH, 0,
+			      bmvals.azimuth, 0.0, 360.0, 1.0, 15.0, 2,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_dscale_update),
+		      &bmvals.azimuth);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+			      _("Elevation:"), SCALE_WIDTH, 0,
+			      bmvals.elevation, 0.5, 90.0, 1.0, 5.0, 2,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_dscale_update),
+		      &bmvals.elevation);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+			      _("Depth:"), SCALE_WIDTH, 0,
+			      bmvals.depth, 1.0, 65.0, 1.0, 5.0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal),
+		      &bmvals.depth);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
+			      _("X Offset:"), SCALE_WIDTH, 0,
+			      bmvals.xofs, -1000.0, 1001.0, 1.0, 10.0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal),
+		      &bmvals.xofs);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
+			      _("Y Offset:"), SCALE_WIDTH, 0,
+			      bmvals.yofs, -1000.0, 1001.0, 1.0, 10.0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal),
+		      &bmvals.yofs);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
+			      _("Waterlevel:"), SCALE_WIDTH, 0,
+			      bmvals.waterlevel, 0.0, 256.0, 1.0, 8.0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_iscale_update_full),
+		      &bmvals.waterlevel);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 7,
+			      _("Ambient:"), SCALE_WIDTH, 0,
+			      bmvals.ambient, 0.0, 256.0, 1.0, 8.0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal),
+		      &bmvals.ambient);
 
   /* Done */
 
@@ -1520,10 +1537,10 @@ static void
 dialog_map_type_callback (GtkWidget *widget, 
 			  gpointer   data)
 {
+  gimp_radio_button_update (widget, data);
+
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
-      bmvals.type = (long) data;
-
       bumpmap_init_params (&bmint.params);
       dialog_fill_bumpmap_rows (0, bmint.preview_height + 2, bmint.bm_yofs);
       dialog_update_preview ();
@@ -1552,257 +1569,32 @@ dialog_bumpmap_callback (gint32   id,
 }
 
 static void
-dialog_create_dvalue (char     *title, 
-		      GtkTable *table, 
-		      int       row, 
-		      gdouble  *value, 
-		      double    left, 
-		      double    right)
-{
-  GtkWidget *label;
-  GtkWidget *scale;
-  GtkWidget *entry;
-  GtkObject *scale_data;
-  gchar      buf[256];
-
-  label = gtk_label_new (title);
-  gtk_misc_set_alignment (GTK_MISC(label), 1.0, 0.5);
-  gtk_table_attach (table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  scale_data = gtk_adjustment_new (*value, left, right, 1.0, 1.0, 0.0);
-
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) dialog_dscale_update,
-		      value);
-
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (table, scale, 1, 2, row, row + 1,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show (scale);
-
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), scale_data);
-  gtk_object_set_user_data (scale_data, entry);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buf, sizeof (buf), "%0.2f", *value);
-  gtk_entry_set_text (GTK_ENTRY (entry), buf);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) dialog_dentry_update,
-		      value);
-  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, row, row + 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (entry);
-}
-
-static void
 dialog_dscale_update (GtkAdjustment *adjustment, 
 		      gdouble       *value)
 {
-  GtkWidget *entry;
-  gchar      buf[256];
+  gimp_double_adjustment_update (adjustment, value);
 
-  if (*value != adjustment->value)
-    {
-      *value = adjustment->value;
-
-      entry = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-      g_snprintf (buf, sizeof (buf), "%0.2f", *value);
-
-      gtk_signal_handler_block_by_data (GTK_OBJECT (entry), value);
-      gtk_entry_set_text (GTK_ENTRY (entry), buf);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (entry), value);
-
-      dialog_update_preview ();
-    }
-}
-
-static void
-dialog_dentry_update (GtkWidget *widget, 
-		      gdouble   *value)
-{
-  GtkAdjustment *adjustment;
-  gdouble        new_value;
-
-  new_value = atof (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-  if (*value != new_value)
-    {
-      adjustment = gtk_object_get_user_data (GTK_OBJECT (widget));
-
-      if ((new_value >= adjustment->lower) &&
-	  (new_value <= adjustment->upper))
-	{
-	  *value            = new_value;
-	  adjustment->value = new_value;
-
-	  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
-	  dialog_update_preview();
-	}
-    }
-}
-
-static void
-dialog_create_ivalue (char     *title, 
-		      GtkTable *table, 
-		      int       row, 
-		      gint     *value,
-		      int       left, 
-		      int       right, 
-		      int       full_update)
-{
-  GtkWidget *label;
-  GtkWidget *scale;
-  GtkWidget *entry;
-  GtkObject *scale_data;
-  gchar      buf[256];
-
-  label = gtk_label_new (title);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  scale_data = gtk_adjustment_new (*value, left, right, 1.0, 1.0, 1.0);
-
-  if (full_update)
-    gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-			(GtkSignalFunc) dialog_iscale_update_full,
-			value);
-  else
-    gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-			(GtkSignalFunc) dialog_iscale_update_normal,
-			value);
-
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (table, scale, 1, 2, row, row + 1,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show (scale);
-
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), scale_data);
-  gtk_object_set_user_data (scale_data, entry);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf(buf, sizeof (buf), "%d", *value);
-  gtk_entry_set_text (GTK_ENTRY (entry), buf);
-
-  if (full_update)
-    gtk_signal_connect(GTK_OBJECT (entry), "changed",
-		       (GtkSignalFunc) dialog_ientry_update_full,
-		       value);
-  else
-    gtk_signal_connect (GTK_OBJECT (entry), "changed",
-			(GtkSignalFunc) dialog_ientry_update_normal,
-			value);
-
-  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, row, row + 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (entry);
+  dialog_update_preview ();
 }
 
 static void
 dialog_iscale_update_normal (GtkAdjustment *adjustment, 
 			     gint          *value)
 {
-  GtkWidget *entry;
-  gchar      buf[256];
+  gimp_int_adjustment_update (adjustment, value);
 
-  if (*value != adjustment->value)
-    {
-      *value = adjustment->value;
-
-      entry = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-      g_snprintf (buf, sizeof (buf), "%d", *value);
-
-      gtk_signal_handler_block_by_data (GTK_OBJECT (entry), value);
-      gtk_entry_set_text (GTK_ENTRY (entry), buf);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (entry), value);
-
-      dialog_update_preview ();
-    }
+  dialog_update_preview ();
 }
 
 static void
 dialog_iscale_update_full (GtkAdjustment *adjustment, 
 			   gint          *value)
 {
-  GtkWidget *entry;
-  gchar      buf[256];
+  gimp_int_adjustment_update (adjustment, value);
 
-  if (*value != adjustment->value)
-    {
-      *value = adjustment->value;
-
-      entry = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-      g_snprintf (buf, sizeof (buf), "%d", *value);
-
-      gtk_signal_handler_block_by_data (GTK_OBJECT (entry), value);
-      gtk_entry_set_text (GTK_ENTRY (entry), buf);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (entry), value);
-
-      bumpmap_init_params (&bmint.params);
-      dialog_fill_bumpmap_rows (0, bmint.preview_height + 2, bmint.bm_yofs);
-      dialog_update_preview ();
-    }
-}
-
-static void
-dialog_ientry_update_normal (GtkWidget *widget, 
-			     gint      *value)
-{
-  GtkAdjustment *adjustment;
-  gdouble        new_value;
-
-  new_value = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-  if (*value != new_value)
-    {
-      adjustment = gtk_object_get_user_data (GTK_OBJECT (widget));
-
-      if ((new_value >= adjustment->lower) &&
-	  (new_value <= adjustment->upper))
-	{
-	  *value            = new_value;
-	  adjustment->value = new_value;
-
-	  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
-
-	  dialog_update_preview();
-	}
-    }
-}
-
-static void
-dialog_ientry_update_full (GtkWidget *widget, 
-			   gint      *value)
-{
-  GtkAdjustment *adjustment;
-  gdouble        new_value;
-
-  new_value = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-  if (*value != new_value)
-    {
-      adjustment = gtk_object_get_user_data (GTK_OBJECT (widget));
-
-      if ((new_value >= adjustment->lower) &&
-	  (new_value <= adjustment->upper))
-	{
-	  *value            = new_value;
-	  adjustment->value = new_value;
-
-	  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
-
-	  bumpmap_init_params (&bmint.params);
-	  dialog_fill_bumpmap_rows (0, bmint.preview_height + 2, bmint.bm_yofs);
-	  dialog_update_preview();
-	}
-    }
+  bumpmap_init_params (&bmint.params);
+  dialog_fill_bumpmap_rows (0, bmint.preview_height + 2, bmint.bm_yofs);
+  dialog_update_preview ();
 }
 
 static void

@@ -152,9 +152,6 @@ gimp_radio_group_new (gboolean            in_frame,
       button = gtk_radio_button_new_with_label (group, label);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  GTK_SIGNAL_FUNC (callback),
-			  data);
 
       if (user_data)
 	gtk_object_set_user_data (GTK_OBJECT (button), user_data);
@@ -162,9 +159,12 @@ gimp_radio_group_new (gboolean            in_frame,
       if (widget_ptr)
 	*widget_ptr = button;
 
-      /*  press the initially active radio button  */
       if (active)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			  GTK_SIGNAL_FUNC (callback),
+			  data);
 
       gtk_widget_show (button);
 
@@ -228,9 +228,6 @@ gimp_radio_group_new2 (gboolean        in_frame,
       button = gtk_radio_button_new_with_label (group, label);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  GTK_SIGNAL_FUNC (callback),
-			  data);
 
       if (user_data)
 	gtk_object_set_user_data (GTK_OBJECT (button), user_data);
@@ -238,9 +235,12 @@ gimp_radio_group_new2 (gboolean        in_frame,
       if (widget_ptr)
 	*widget_ptr = button;
 
-      /*  press the initially active radio button  */
       if (initial == user_data)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			  GTK_SIGNAL_FUNC (callback),
+			  data);
 
       gtk_widget_show (button);
 
@@ -408,6 +408,16 @@ gimp_int_adjustment_update (GtkAdjustment *adjustment,
 
   val = (gint *) data;
   *val = (gint) (adjustment->value + 0.5);
+}
+
+void
+gimp_float_adjustment_update (GtkAdjustment *adjustment,
+			      gpointer       data)
+{
+  gfloat *val;
+
+  val = (gfloat *) data;
+  *val = adjustment->value;
 }
 
 void

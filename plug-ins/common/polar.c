@@ -68,6 +68,7 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include <libgimp/gimplimits.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -81,12 +82,7 @@
 
 #define PREVIEW_SIZE 128
 #define SCALE_WIDTH  200
-#define ENTRY_WIDTH  60
-
-#define CHECK_SIZE  8
-#define CHECK_DARK  ((int) (1.0 / 3.0 * 255))
-#define CHECK_LIGHT ((int) (2.0 / 3.0 * 255))
-
+#define ENTRY_WIDTH   60
 
 /***** Types *****/
 
@@ -860,15 +856,15 @@ build_preview_source_image (void)
 	{
 	  /* Checks */
 
-	  if ((x / CHECK_SIZE) & 1)
+	  if ((x / GIMP_CHECK_SIZE) & 1)
 	    {
-	      pcint.check_row_0[x] = CHECK_DARK;
-	      pcint.check_row_1[x] = CHECK_LIGHT;
+	      pcint.check_row_0[x] = GIMP_CHECK_DARK * 255;
+	      pcint.check_row_1[x] = GIMP_CHECK_LIGHT * 255;
 	    }
 	  else
 	    {
-	      pcint.check_row_0[x] = CHECK_LIGHT;
-	      pcint.check_row_1[x] = CHECK_DARK;
+	      pcint.check_row_0[x] = GIMP_CHECK_LIGHT * 255;
+	      pcint.check_row_1[x] = GIMP_CHECK_DARK * 255;
 	    }
 
 	  /* Thumbnail image */
@@ -1108,7 +1104,7 @@ dialog_update_preview (void)
     {
       px = left;
 
-      if ((y / CHECK_SIZE) & 1)
+      if ((y / GIMP_CHECK_SIZE) & 1)
 	check_ul = pcint.check_row_0;
       else
 	check_ul = pcint.check_row_1;

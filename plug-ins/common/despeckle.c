@@ -31,9 +31,7 @@
  *   preview_scroll_callback()   - Update the preview when a scrollbar is moved.
  *   preview_update()            - Update the preview window.
  *   preview_exit()              - Free all memory used by the preview window...
- *   dialog_create_ivalue()      - Create an integer value control...
  *   dialog_iscale_update()      - Update the value field using the scale.
- *   dialog_ientry_update()      - Update the value field using the text entry.
  *   dialog_adaptive_callback()  - Update the filter type...
  *   dialog_recursive_callback() - Update the filter type...
  *   dialog_ok_callback()        - Start the filter...
@@ -41,6 +39,26 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.25  2000/01/15 15:32:28  mitch
+ *   2000-01-15  Michael Natterer  <mitch@gimp.org>
+ *
+ *   	* libgimp/gimpwidgets.[ch]: added a float adjustment callback.
+ *
+ *   	* plug-ins/common/bumpmap.c
+ *   	* plug-ins/common/depthmerge.c
+ *   	* plug-ins/common/despeckle.c
+ *   	* plug-ins/common/destripe.c
+ *   	* plug-ins/common/gpb.c
+ *   	* plug-ins/common/iwarp.c
+ *   	* plug-ins/common/polar.c
+ *   	* plug-ins/common/sharpen.c
+ *   	* plug-ins/common/tileit.c
+ *   	* plug-ins/common/whirlpinch.c
+ *   	* plug-ins/common/wind.c:
+ *
+ *   	- Some more hscale+spinbutton instead of hscale+entry widgets.
+ *   	- Get the CHECK_SIZE constants from libgimp in some plugins.
+ *
  *   Revision 1.24  2000/01/14 12:40:59  mitch
  *   2000-01-14  Michael Natterer  <mitch@gimp.org>
  *

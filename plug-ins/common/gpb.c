@@ -48,7 +48,8 @@
 /* Parameters applicable each time we save a gpb or gih, saved
  * in the main gimp application between invocations of this plug-in.
  */
-static struct {
+static struct
+{
   /* Use by both gpb and gih: */
   guint spacing;
   guchar description[MAXDESCLEN+1];
@@ -86,10 +87,10 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query    (void);
-static void   run      (char    *name,
-			int      nparams,
+static void   run      (gchar   *name,
+			gint     nparams,
 			GParam  *param,
-			int     *nreturn_vals,
+			gint    *nreturn_vals,
 			GParam **return_vals);
 
 static void   init_gtk (void);
@@ -97,16 +98,16 @@ static void   init_gtk (void);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef gpb_save_args[] =
   {
@@ -164,7 +165,7 @@ query ()
 }
 
 static void 
-init_gtk ()
+init_gtk (void)
 {
   gchar **argv;
   gint argc;
@@ -176,7 +177,6 @@ init_gtk ()
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 }
-
 
 static void
 adjustment_callback (GtkWidget *widget,
@@ -293,35 +293,32 @@ common_save_dialog (GtkWidget *dlg,
 
 				  NULL);
 
-  gtk_table_set_row_spacings (GTK_TABLE (table), 10);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 10);
-
   /*
    * Spacing: __
    */
   gtk_table_resize (GTK_TABLE (table),
-		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
+		    GTK_TABLE (table)->nrows + 1,
+		    GTK_TABLE (table)->ncols);
 
-  label = gtk_label_new (_("Spacing (percent):"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gtk_label_new (_("Spacing (Percent):"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  adjustment = gtk_adjustment_new (info.spacing, 1, 1000, 1, 10, 10);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-				   GTK_SHADOW_NONE);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
+  spinbutton = gimp_spin_button_new (&adjustment,
+				     info.spacing, 1, 1000, 1, 10, 10,
+				     1, 0);
+
   box = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, TRUE, 0);
   gtk_table_attach (GTK_TABLE (table), box, 1, 2, 
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) adjustment_callback, &info.spacing);
+		      GTK_SIGNAL_FUNC (adjustment_callback),
+		      &info.spacing);
   gtk_widget_show (spinbutton);
   gtk_widget_show (box);
 
@@ -332,7 +329,7 @@ common_save_dialog (GtkWidget *dlg,
 		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
 
   label = gtk_label_new (_("Description:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
 		    GTK_FILL, GTK_FILL, 0, 0);
@@ -345,7 +342,8 @@ common_save_dialog (GtkWidget *dlg,
   gtk_widget_set_usize (entry, 200, 0);
   gtk_entry_set_text (GTK_ENTRY (entry), info.description);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) entry_callback, info.description);
+		      GTK_SIGNAL_FUNC (entry_callback),
+		      info.description);
   gtk_widget_show (entry);
 }
 
@@ -366,12 +364,15 @@ gpb_save_dialog (void)
 		      NULL);
 
   /* The main table */
-  table = gtk_table_new (2, 0, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   common_save_dialog (dlg, table);
+
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
 
   gtk_widget_show (dlg);
 
@@ -421,7 +422,7 @@ gih_save_dialog (gint32 image_ID)
 		      NULL);
 
   /* The main table */
-  table = gtk_table_new (2, 0, FALSE);
+  table = gtk_table_new (2, 2, FALSE);
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
@@ -431,26 +432,23 @@ gih_save_dialog (gint32 image_ID)
   /*
    * Cell size: __ x __ pixels
    */
-  
+
   gtk_table_resize (GTK_TABLE (table),
 		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
 
-  label = gtk_label_new ( _("Cell size:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gtk_label_new ( _("Cell Size:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  box = gtk_hbox_new (FALSE, 0);
-  
-  adjustment = gtk_adjustment_new (gihparms.cellwidth,
-				   2, gimp_image_width (image_ID), 1, 1, 1);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-				    GTK_SHADOW_NONE);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
+  box = gtk_hbox_new (FALSE, 4);
+
+  spinbutton = gimp_spin_button_new (&adjustment,
+				     gihparms.cellwidth,
+				     2, gimp_image_width (image_ID), 1, 1, 1,
+				     1, 0);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
 
   layer_ID = gimp_image_get_layers (image_ID, &nlayers);
@@ -461,21 +459,18 @@ gih_save_dialog (gint32 image_ID)
   cellw_adjust.guides = NULL;
   cellw_adjust.value = &gihparms.cellwidth;
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) size_adjustment_callback,
+		      GTK_SIGNAL_FUNC (size_adjustment_callback),
 		      &cellw_adjust);
   gtk_widget_show (spinbutton);
 
-  label = gtk_label_new (" x ");
+  label = gtk_label_new ("x");
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-  
-  adjustment = gtk_adjustment_new (gihparms.cellheight,
-				   2, gimp_image_height (image_ID), 1, 1, 1);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-				    GTK_SHADOW_NONE);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
+
+  spinbutton = gimp_spin_button_new (&adjustment,
+				     gihparms.cellheight,
+				     gimp_image_height (image_ID), 1, 1, 1, 1,
+				     1, 0);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
   cellh_adjust.orientation = ORIENTATION_HORIZONTAL;
   cellh_adjust.image = image_ID;
@@ -484,11 +479,11 @@ gih_save_dialog (gint32 image_ID)
   cellh_adjust.guides = NULL;
   cellh_adjust.value = &gihparms.cellheight;
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) size_adjustment_callback,
+		      GTK_SIGNAL_FUNC (size_adjustment_callback),
 		      &cellh_adjust);
   gtk_widget_show (spinbutton);
 
-  label = gtk_label_new ( _(" pixels"));
+  label = gtk_label_new ( _("Pixels"));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
   
@@ -506,28 +501,27 @@ gih_save_dialog (gint32 image_ID)
   gtk_table_resize (GTK_TABLE (table),
 		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
 
-  label = gtk_label_new ( _("Number of cells:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gtk_label_new (_("Number of Cells:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  adjustment = gtk_adjustment_new (gihparms.ncells, 1, 1000, 1, 10, 10);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-				   GTK_SHADOW_NONE);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
   box = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, TRUE, 0);
   gtk_table_attach (GTK_TABLE (table), box, 1, 2,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) adjustment_callback, &gihparms.ncells);
-  gtk_widget_show (spinbutton);
   gtk_widget_show (box);
+
+  spinbutton = gimp_spin_button_new (&adjustment,
+				     gihparms.ncells, 1, 1000, 1, 10, 10,
+				     1, 0);
+  gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, TRUE, 0);
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      GTK_SIGNAL_FUNC (adjustment_callback),
+		      &gihparms.ncells);
+  gtk_widget_show (spinbutton);
 
   if (gihparms.dim == 1)
     cellw_adjust.ncells = cellh_adjust.ncells = adjustment;
@@ -540,16 +534,16 @@ gih_save_dialog (gint32 image_ID)
   gtk_table_resize (GTK_TABLE (table),
 		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
 
-  label = gtk_label_new ( _("Display as:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gtk_label_new (_("Display as:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   box = gtk_hbox_new (FALSE, 0);
-  
-  sprintf (buffer, "%2d", gihparms.rows);
+
+  g_snprintf (buffer, sizeof (buffer), "%2d", gihparms.rows);
   label = gtk_label_new (buffer);
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   cellh_adjust.count_label = label;
@@ -557,11 +551,11 @@ gih_save_dialog (gint32 image_ID)
   cellh_adjust.other_count = &gihparms.cols;
   gtk_widget_show (label);
 
-  label = gtk_label_new ( _(" rows of "));
+  label = gtk_label_new (_(" Rows of "));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-  
-  sprintf (buffer, "%2d", gihparms.cols);
+
+  g_snprintf (buffer, sizeof (buffer), "%2d", gihparms.cols);
   label = gtk_label_new (buffer);
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   cellw_adjust.count_label = label;
@@ -569,15 +563,15 @@ gih_save_dialog (gint32 image_ID)
   cellw_adjust.other_count = &gihparms.rows;
   gtk_widget_show (label);
 
-  label = gtk_label_new ( _(" columns on each layer"));
+  label = gtk_label_new (_(" Columns on each Layer"));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-  
-  label = gtk_label_new ( _(" (width mismatch!) "));
+
+  label = gtk_label_new (_(" (Width Mismatch!) "));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   cellw_adjust.warning_label = label;
   
-  label = gtk_label_new ( _(" (height mismatch!) "));
+  label = gtk_label_new (_(" (Height Mismatch!) "));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   cellh_adjust.warning_label = label;
   
@@ -593,8 +587,8 @@ gih_save_dialog (gint32 image_ID)
   gtk_table_resize (GTK_TABLE (table),
 		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
 
-  label = gtk_label_new ( _("Dimension:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gtk_label_new (_("Dimension:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
 		    GTK_FILL, GTK_FILL, 0, 0);
@@ -623,30 +617,30 @@ gih_save_dialog (gint32 image_ID)
   gtk_table_resize (GTK_TABLE (table),
 		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
 
-  label = gtk_label_new ( _("Ranks:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gtk_label_new (_("Ranks:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  dimtable = gtk_table_new (PIXPIPE_MAXDIM, 1, FALSE);
+  dimtable = gtk_table_new (1, PIXPIPE_MAXDIM, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (dimtable), 4);
   for (i = 0; i < PIXPIPE_MAXDIM; i++)
     {
-      adjustment = gtk_adjustment_new (gihparms.rank[i], 0, 100, 1, 1, 1);
-      spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-				       GTK_SHADOW_NONE);
-      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-      gtk_widget_set_usize (spinbutton, 75, 0);
       box = gtk_hbox_new (FALSE, 0);
-      gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, TRUE, 0);
       gtk_table_attach (GTK_TABLE (dimtable), box, i, i + 1, 0, 1,
-			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 3, 0);
-      gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-			  (GtkSignalFunc) adjustment_callback, &gihparms.rank[i]);
-      gtk_widget_show (spinbutton);
+			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
       gtk_widget_show (box);
+
+      spinbutton = gimp_spin_button_new (&adjustment,
+					 gihparms.rank[i], 0, 100, 1, 1, 1,
+					 1, 0);
+      gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, TRUE, 0);
+      gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+			  GTK_SIGNAL_FUNC (adjustment_callback),
+			  &gihparms.rank[i]);
+      gtk_widget_show (spinbutton);
       if (i == 0)
 	{ 
 	  if (gihparms.dim == 1)
@@ -663,12 +657,12 @@ gih_save_dialog (gint32 image_ID)
   /*
    * Selection: ______ ______ ______ ______ ______
    */
-  
+
   gtk_table_resize (GTK_TABLE (table),
 		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
 
-  label = gtk_label_new ( _("Selection:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gtk_label_new (_("Selection:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
 		    GTK_FILL, GTK_FILL, 0, 0);
@@ -682,20 +676,22 @@ gih_save_dialog (gint32 image_ID)
   cbitems = g_list_append (cbitems, "xtilt");
   cbitems = g_list_append (cbitems, "ytilt");
 
-  box = gtk_hbox_new (FALSE, 0);
+  box = gtk_hbox_new (FALSE, 4);
   for (i = 0; i < PIXPIPE_MAXDIM; i++)
     {
       cb = gtk_combo_new ();
       gtk_combo_set_popdown_strings (GTK_COMBO (cb), cbitems);
       if (gihparms.selection[i])
-	gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (cb)->entry), gihparms.selection[i]);
+	gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (cb)->entry)
+			    , gihparms.selection[i]);
       else
 	gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (cb)->entry), "random");
       gtk_entry_set_editable (GTK_ENTRY (GTK_COMBO (cb)->entry), FALSE);
 
-      gtk_box_pack_start (GTK_BOX (box), cb, FALSE, TRUE, 2);
+      gtk_box_pack_start (GTK_BOX (box), cb, FALSE, TRUE, 0);
       gtk_signal_connect (GTK_OBJECT (GTK_COMBO (cb)->entry), "changed",
-			  (GtkSignalFunc) cb_callback, &gihparms.selection[i]);
+			  GTK_SIGNAL_FUNC (cb_callback),
+			  &gihparms.selection[i]);
       gtk_widget_show (cb);
     }
 
@@ -704,6 +700,9 @@ gih_save_dialog (gint32 image_ID)
 		    GTK_SHRINK, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (box);
   
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+
   gtk_widget_show (dlg);
 
   gtk_main ();
@@ -1046,11 +1045,14 @@ run (char    *name,
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = STATUS_CALLING_ERROR;
 
-  if (run_mode == RUN_INTERACTIVE) {
-    INIT_I18N_UI();
-  } else {
-    INIT_I18N();
-  }
+  if (run_mode == RUN_INTERACTIVE)
+    {
+      INIT_I18N_UI();
+    }
+  else
+    {
+      INIT_I18N();
+    }
 
   if (strcmp (name, "file_gpb_save") == 0)
     {
@@ -1083,7 +1085,7 @@ run (char    *name,
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_gpb_save", &info);
 	  if (!gpb_save_dialog ())
-	    return;
+	    goto finish_gpb;
 	  break;
 	  
 	case RUN_NONINTERACTIVE:  /* FIXME - need a real RUN_NONINTERACTIVE */
@@ -1109,6 +1111,8 @@ run (char    *name,
 	}
       else
 	status = STATUS_EXECUTION_ERROR;
+
+    finish_gpb:
 
       if (export == EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
@@ -1165,7 +1169,7 @@ run (char    *name,
 	    pixpipeparams_parse (pipe_parasite->data, &gihparms);
 
 	  if (!gih_save_dialog (image_ID))
-	    return;
+	    goto finish_gih;
 	  break;
 
 	case RUN_NONINTERACTIVE:  /* FIXME - need a real RUN_NONINTERACTIVE */
@@ -1197,8 +1201,11 @@ run (char    *name,
       else
 	status = STATUS_EXECUTION_ERROR;
 
+    finish_gih:
+
         if (export == EXPORT_EXPORT)
 	  gimp_image_delete (image_ID);
     }
+
   values[0].data.d_status = status;
 }

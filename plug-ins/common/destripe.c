@@ -30,9 +30,7 @@
  *   preview_scroll_callback()   - Update the preview when a scrollbar is moved.
  *   preview_update()            - Update the preview window.
  *   preview_exit()              - Free all memory used by the preview window...
- *   dialog_create_ivalue()      - Create an integer value control...
  *   dialog_iscale_update()      - Update the value field using the scale.
- *   dialog_ientry_update()      - Update the value field using the text entry.
  *   dialog_histogram_callback()
  *   dialog_ok_callback()        - Start the filter...
  *
@@ -60,31 +58,29 @@
  * Constants...
  */
 
-#define PLUG_IN_NAME		"plug_in_destripe"
-#define PLUG_IN_VERSION		"0.2"
-#define PREVIEW_SIZE		200
-#define SCALE_WIDTH		140
-#define ENTRY_WIDTH		40
-#define MAX_AVG			100
+#define PLUG_IN_NAME     "plug_in_destripe"
+#define PLUG_IN_VERSION  "0.2"
+#define PREVIEW_SIZE     200
+#define SCALE_WIDTH      140
+#define MAX_AVG          100
 
 /*
  * Local functions...
  */
 
 static void	query (void);
-static void	run   (char *,
-		       int,
-		       GParam *,
-		       int *,
-		       GParam **);
+static void	run   (gchar   *name,
+		       gint     nparams,
+		       GParam  *param,
+		       gint    *nreturn_vals,
+		       GParam **return_vals);
 
 static void	destripe (void);
 
-static gint	destripe_dialog      (void);
-static void	dialog_create_ivalue (char *, GtkTable *, int, gint *, int, int);
-static void	dialog_iscale_update (GtkAdjustment *, gint *);
-static void	dialog_ientry_update (GtkWidget *, gint *);
-static void	dialog_ok_callback   (GtkWidget *, gpointer);
+static gint	destripe_dialog           (void);
+static void     dialog_histogram_callback (GtkWidget *, gpointer);
+static void	dialog_iscale_update      (GtkAdjustment *, gint *);
+static void	dialog_ok_callback        (GtkWidget *, gpointer);
 
 static void	preview_init            (void);
 static void	preview_exit            (void);
@@ -96,48 +92,40 @@ static void	preview_scroll_callback (void);
  * Globals...
  */
 
-GPlugInInfo	PLUG_IN_INFO =
-		{
-		  NULL,		/* init_proc */
-		  NULL,		/* quit_proc */
-		  query,	/* query_proc */
-		  run		/* run_proc */
-		};
+GPlugInInfo PLUG_IN_INFO =
+{
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run    /* run_proc   */
+};
 
-GtkWidget	*preview;		/* Preview widget */
-int		preview_width,		/* Width of preview widget */
+GtkWidget      *preview;		/* Preview widget */
+gint		preview_width,		/* Width of preview widget */
 		preview_height,		/* Height of preview widget */
 		preview_x1,		/* Upper-left X of preview */
 		preview_y1,		/* Upper-left Y of preview */
 		preview_x2,		/* Lower-right X of preview */
 		preview_y2;		/* Lower-right Y of preview */
-GtkObject	*hscroll_data,		/* Horizontal scrollbar data */
-		*vscroll_data;		/* Vertical scrollbar data */
+GtkObject      *hscroll_data,		/* Horizontal scrollbar data */
+	       *vscroll_data;		/* Vertical scrollbar data */
 
-GDrawable	*drawable = NULL;	/* Current image */
-int		sel_x1,			/* Selection bounds */
+GDrawable      *drawable = NULL;	/* Current image */
+gint		sel_x1,			/* Selection bounds */
 		sel_y1,
 		sel_x2,
 		sel_y2;
-int		histogram = FALSE;
-int		img_bpp;		/* Bytes-per-pixel in image */
+gint		histogram = FALSE;
+gint		img_bpp;		/* Bytes-per-pixel in image */
 gint		run_filter = FALSE;	/* True if we should run the filter */
 
-int		avg_width = 36;
+gint		avg_width = 36;
 
 
-/*
- * 'main()' - Main entry - just call gimp_main()...
- */
-
-MAIN()
-
-/*
- * 'query()' - Respond to a plug-in query...
- */
+MAIN ()
 
 static void
-query(void)
+query (void)
 {
   static GParamDef	args[] =
   {
@@ -152,38 +140,34 @@ query(void)
 
   INIT_I18N();
 
-  gimp_install_procedure(PLUG_IN_NAME,
-      _("Destripe filter, used to remove vertical stripes caused by cheap scanners."),
-      _("This plug-in tries to remove vertical stripes from an image."),
-      "Marc Lehmann <pcg@goof.com>", "Marc Lehmann <pcg@goof.com>",
-      PLUG_IN_VERSION,
-      N_("<Image>/Filters/Enhance/Destripe..."),
-      "RGB*, GRAY*",
-      PROC_PLUG_IN, nargs, nreturn_vals, args, return_vals);
+  gimp_install_procedure (PLUG_IN_NAME,
+			  _("Destripe filter, used to remove vertical stripes caused by cheap scanners."),
+			  _("This plug-in tries to remove vertical stripes from an image."),
+			  "Marc Lehmann <pcg@goof.com>", "Marc Lehmann <pcg@goof.com>",
+			  PLUG_IN_VERSION,
+			  N_("<Image>/Filters/Enhance/Destripe..."),
+			  "RGB*, GRAY*",
+			  PROC_PLUG_IN,
+			  nargs, nreturn_vals,
+			  args, return_vals);
 }
 
-
-/*
- * 'run()' - Run the filter...
- */
-
 static void
-run(char   *name,		/* I - Name of filter program. */
-    int    nparams,		/* I - Number of parameters passed in */
-    GParam *param,		/* I - Parameter values */
-    int    *nreturn_vals,	/* O - Number of return values */
-    GParam **return_vals)	/* O - Return values */
+run (gchar  *name,
+     gint   nparams,
+     GParam *param,
+     gint   *nreturn_vals,
+     GParam **return_vals)
 {
   GRunModeType	run_mode;	/* Current run mode */
   GStatusType	status;		/* Return status */
   static GParam	values[1];	/* Return values */
 
-
   INIT_I18N_UI();
 
- /*
-  * Initialize parameter data...
-  */
+  /*
+   * Initialize parameter data...
+   */
 
   status   = STATUS_SUCCESS;
   run_mode = param[0].data.d_int32;
@@ -194,145 +178,140 @@ run(char   *name,		/* I - Name of filter program. */
   *nreturn_vals = 1;
   *return_vals  = values;
 
- /*
-  * Get drawable information...
-  */
+  /*
+   * Get drawable information...
+   */
 
-  drawable = gimp_drawable_get(param[2].data.d_drawable);
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  gimp_drawable_mask_bounds(drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
-  img_bpp       = gimp_drawable_bpp(drawable->id);
+  img_bpp = gimp_drawable_bpp (drawable->id);
 
- /*
-  * See how we will run
-  */
+  /*
+   * See how we will run
+   */
 
   switch (run_mode)
-  {
-    case RUN_INTERACTIVE :
-       /*
-        * Possibly retrieve data...
-        */
+    {
+    case RUN_INTERACTIVE:
+      /*
+       * Possibly retrieve data...
+       */
+      gimp_get_data (PLUG_IN_NAME, &avg_width);
 
-        gimp_get_data(PLUG_IN_NAME, &avg_width);
+      /*
+       * Get information from the dialog...
+       */
+      if (!destripe_dialog ())
+	return;
+      break;
 
-       /*
-        * Get information from the dialog...
-        */
-
-	if (!destripe_dialog())
-          return;
-        break;
-
-    case RUN_NONINTERACTIVE :
-       /*
-        * Make sure all the arguments are present...
-        */
-
-        if (nparams != 4)
-	  status = STATUS_CALLING_ERROR;
-	else
-	  avg_width = param[3].data.d_int32;
-        break;
+    case RUN_NONINTERACTIVE:
+      /*
+       * Make sure all the arguments are present...
+       */
+      if (nparams != 4)
+	status = STATUS_CALLING_ERROR;
+      else
+	avg_width = param[3].data.d_int32;
+      break;
 
     case RUN_WITH_LAST_VALS :
-       /*
-        * Possibly retrieve data...
-        */
-
-	gimp_get_data(PLUG_IN_NAME, &avg_width);
-	break;
+      /*
+       * Possibly retrieve data...
+       */
+      gimp_get_data (PLUG_IN_NAME, &avg_width);
+      break;
 
     default :
-        status = STATUS_CALLING_ERROR;
-        break;
-  };
+      status = STATUS_CALLING_ERROR;
+      break;
+    };
 
- /*
-  * Destripe the image...
-  */
+  /*
+   * Destripe the image...
+   */
 
   if (status == STATUS_SUCCESS)
-  {
-    if ((gimp_drawable_is_rgb(drawable->id) ||
-	 gimp_drawable_is_gray(drawable->id)))
     {
-     /*
-      * Set the tile cache size...
-      */
+      if ((gimp_drawable_is_rgb (drawable->id) ||
+	   gimp_drawable_is_gray (drawable->id)))
+	{
+	  /*
+	   * Set the tile cache size...
+	   */
+	  gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width() - 1) /
+				  gimp_tile_width());
 
-      gimp_tile_cache_ntiles((drawable->width + gimp_tile_width() - 1) /
-                             gimp_tile_width());
+	  /*
+	   * Run!
+	   */
+	  destripe ();
 
-     /*
-      * Run!
-      */
+	  /*
+	   * If run mode is interactive, flush displays...
+	   */
+	  if (run_mode != RUN_NONINTERACTIVE)
+	    gimp_displays_flush();
 
-      destripe();
+	  /*
+	   * Store data...
+	   */
+	  if (run_mode == RUN_INTERACTIVE)
+	    gimp_set_data (PLUG_IN_NAME, &avg_width, sizeof(avg_width));
+	}
+      else
+	status = STATUS_EXECUTION_ERROR;
+    };
 
-     /*
-      * If run mode is interactive, flush displays...
-      */
-
-      if (run_mode != RUN_NONINTERACTIVE)
-        gimp_displays_flush();
-
-     /*
-      * Store data...
-      */
-
-      if (run_mode == RUN_INTERACTIVE)
-        gimp_set_data(PLUG_IN_NAME, &avg_width, sizeof(avg_width));
-    }
-    else
-      status = STATUS_EXECUTION_ERROR;
-  };
-
- /*
-  * Reset the current run status...
-  */
-
+  /*
+   * Reset the current run status...
+   */
   values[0].data.d_status = status;
 
- /*
-  * Detach from the drawable...
-  */
-
-  gimp_drawable_detach(drawable);
+  /*
+   * Detach from the drawable...
+   */
+  gimp_drawable_detach (drawable);
 }
 
 static inline void
-preview_draw_row (int x, int y, int w, guchar *row)
+preview_draw_row (gint    x,
+		  gint    y,
+		  gint    w,
+		  guchar *row)
 {
-  guchar *rgb = g_new(guchar, w * 3);
+  guchar *rgb = g_new (guchar, w * 3);
   guchar *rgb_ptr;
-  int i;
-  
+  gint i;
+
   switch (img_bpp)
-  {
+    {
     case 1:
     case 2:
-        for (i = 0, rgb_ptr = rgb; i < w; i++, row += img_bpp, rgb_ptr += 3)
-          rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] = *row;
+      for (i = 0, rgb_ptr = rgb; i < w; i++, row += img_bpp, rgb_ptr += 3)
+	rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] = *row;
 
-	gtk_preview_draw_row(GTK_PREVIEW(preview), rgb, x, y, w);
-        break;
+      gtk_preview_draw_row (GTK_PREVIEW (preview), rgb, x, y, w);
+      break;
 
     case 3:
-	gtk_preview_draw_row(GTK_PREVIEW(preview), row, x, y, w);
-        break;
+      gtk_preview_draw_row (GTK_PREVIEW (preview), row, x, y, w);
+      break;
 
     case 4:
-        for (i = 0, rgb_ptr = rgb; i < w; i++, row += 4, rgb_ptr += 3)
-          rgb_ptr[0] = row[0],
-          rgb_ptr[1] = row[1],
+      for (i = 0, rgb_ptr = rgb; i < w; i++, row += 4, rgb_ptr += 3)
+	{
+	  rgb_ptr[0] = row[0];
+          rgb_ptr[1] = row[1];
           rgb_ptr[2] = row[2];
+	}
 
-	gtk_preview_draw_row(GTK_PREVIEW(preview), rgb, x, y, w);
-        break;
-  }
-  g_free(rgb);
+      gtk_preview_draw_row (GTK_PREVIEW (preview), rgb, x, y, w);
+      break;
+    }
+  g_free (rgb);
 }
 
 
@@ -549,35 +528,20 @@ destripe (void)
   destripe_rect (sel_x1, sel_y1, sel_x2, sel_y2, FALSE);
 }
 
-static void
-dialog_histogram_callback (GtkWidget *widget,	/* I - Toggle button */
-			   gpointer  data)	/* I - Data */
-{
-  histogram = !histogram;
-  preview_update ();
-}
-
-/*
- * 'destripe_dialog()' - Popup a dialog window for the filter box size...
- */
-
 static gint
 destripe_dialog (void)
 {
-  GtkWidget *dialog;     /* Dialog window */
-  GtkWidget *table;      /* Table "container" for controls */
-  GtkWidget *ptable;     /* Preview table */
-  GtkWidget *ftable;     /* Filter table */
-  GtkWidget *frame;      /* Frame for preview */
-  GtkWidget *scrollbar;  /* Horizontal + vertical scroller */
+  GtkWidget *dialog;
+  GtkWidget *table;
+  GtkWidget *ptable;
+  GtkWidget *ftable;
+  GtkWidget *frame;
+  GtkWidget *scrollbar;
   GtkWidget *button;
-  gint     argc;         /* Fake argc for GUI */
-  gchar  **argv;         /* Fake argv for GUI */
-  guchar  *color_cube;	 /* Preview color cube... */
-
-  /*
-   * Initialize the program's display...
-   */
+  GtkObject *adj;
+  gint     argc;
+  gchar  **argv;
+  guchar  *color_cube;
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -601,10 +565,6 @@ destripe_dialog (void)
   gtk_widget_set_default_visual (gtk_preview_get_visual ());
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
-  /*
-   * Dialog window...
-   */
-
   dialog = gimp_dialog_new (_("Destripe"), "destripe",
 			    gimp_plugin_help_func, "filters/destripe.html",
 			    GTK_WIN_POS_MOUSE,
@@ -626,9 +586,9 @@ destripe_dialog (void)
    */
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), table,
 		      FALSE, FALSE, 0);
   gtk_widget_show (table);
@@ -719,12 +679,13 @@ destripe_dialog (void)
    * Box size (radius) control...
    */
 
-  dialog_create_ivalue (_("Width:"), GTK_TABLE (table), 2,
-			&avg_width, 2, MAX_AVG);
-
-  /*
-   * Show it and wait for the user to do something...
-   */
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+			      _("Width:"), SCALE_WIDTH, 0,
+			      avg_width, 2, MAX_AVG, 1, 10, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_iscale_update),
+		      &avg_width);
 
   gtk_widget_show (dialog);
 
@@ -733,23 +694,12 @@ destripe_dialog (void)
   gtk_main ();
   gdk_flush ();
 
-  /*
-   * Free the preview data...
-   */
-
   preview_exit ();
-
-  /*
-   * Return ok/cancel...
-   */
 
   return run_filter;
 }
 
-
-/*
- * 'preview_init()' - Initialize the preview window...
- */
+/*  preview functions  */
 
 static void
 preview_init (void)
@@ -759,7 +709,6 @@ preview_init (void)
   /*
    * Setup for preview filter...
    */
-
   width = preview_width * img_bpp;
 
   preview_x1 = sel_x1;
@@ -767,11 +716,6 @@ preview_init (void)
   preview_x2 = preview_x1 + MIN (preview_width, sel_x2 - sel_x1);
   preview_y2 = preview_y1 + MIN (preview_height, sel_y2 -sel_y1);
 }
-
-
-/*
- * 'preview_scroll_callback()' - Update the preview when a scrollbar is moved.
- */
 
 static void
 preview_scroll_callback (void)
@@ -784,158 +728,39 @@ preview_scroll_callback (void)
   preview_update ();
 }
 
-
-/*
- * 'preview_update()' - Update the preview window.
- */
-
 static void
 preview_update (void)
 {
   destripe_rect (preview_x1, preview_y1, preview_x2, preview_y2, TRUE);
 }
 
-
-/*
- * 'preview_exit()' - Free all memory used by the preview window...
- */
-
 static void
 preview_exit (void)
 {
 }
 
-
-/*
- * 'dialog_create_ivalue()' - Create an integer value control...
- */
+/*  dialog callbacks  */
 
 static void
-dialog_create_ivalue (char     *title,	/* I - Label for control */
-		      GtkTable *table,	/* I - Table container to use */
-		      int      row,	/* I - Row # for container */
-		      gint     *value,	/* I - Value holder */
-		      int      left,	/* I - Minimum value for slider */
-		      int      right)	/* I - Maximum value for slider */
+dialog_histogram_callback (GtkWidget *widget,
+			   gpointer  data)
 {
-  GtkWidget	*label,		/* Control label */
-		*scale,		/* Scale widget */
-		*entry;		/* Text widget */
-  GtkObject	*scale_data;	/* Scale data */
-  gchar		buf[256];	/* String buffer */
-
-
-  /*
-   * Label...
-   */
-
-  label = gtk_label_new(title);
-  gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
-  gtk_table_attach(table, label, 0, 1, row, row + 1,
-		   GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show(label);
-
-  /*
-   * Scale...
-   */
-
-  scale_data = gtk_adjustment_new(*value, left, right, 1.0, 1.0, 1.0);
-
-  gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-		     (GtkSignalFunc) dialog_iscale_update,
-		     value);
-
-  scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-  gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-  gtk_table_attach(table, scale, 1, 2, row, row + 1,
-		   GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
-  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show(scale);
-
- /*
-  * Text entry...
-  */
-
-  entry = gtk_entry_new();
-  gtk_object_set_user_data(GTK_OBJECT(entry), scale_data);
-  gtk_object_set_user_data(scale_data, entry);
-  gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
-  g_snprintf(buf, sizeof (buf), "%d", *value);
-  gtk_entry_set_text(GTK_ENTRY(entry), buf);
-  gtk_signal_connect(GTK_OBJECT(entry), "changed",
-		     (GtkSignalFunc) dialog_ientry_update,
-		     value);
-  gtk_table_attach(GTK_TABLE(table), entry, 2, 3, row, row + 1,
-		   GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show(entry);
+  histogram = !histogram;
+  preview_update ();
 }
 
-
-/*
- * 'dialog_iscale_update()' - Update the value field using the scale.
- */
-
 static void
-dialog_iscale_update (GtkAdjustment *adjustment, /* I - New value */
-                      gint          *value)      /* I - Current value */
+dialog_iscale_update (GtkAdjustment *adjustment,
+                      gint          *value)
 {
-  GtkWidget *entry;     /* Text entry widget */
-  gchar      buf[256];  /* Text buffer */
+  gimp_int_adjustment_update (adjustment, value);
 
-  if (*value != adjustment->value)
-    {
-      *value = adjustment->value;
-
-      entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-      g_snprintf(buf, sizeof (buf), "%d", *value);
-
-      gtk_signal_handler_block_by_data(GTK_OBJECT(entry), value);
-      gtk_entry_set_text(GTK_ENTRY(entry), buf);
-      gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), value);
-
-      preview_update();
-    };
+  preview_update ();
 }
 
-
-/*
- * 'dialog_ientry_update()' - Update the value field using the text entry.
- */
-
 static void
-dialog_ientry_update(GtkWidget *widget,	/* I - Entry widget */
-                     gint      *value)	/* I - Current value */
-{
-  GtkAdjustment	*adjustment;
-  gint		new_value;
-
-  new_value = atoi(gtk_entry_get_text(GTK_ENTRY(widget)));
-
-  if (*value != new_value)
-    {
-      adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-      if ((new_value >= adjustment->lower) &&
-	  (new_value <= adjustment->upper))
-	{
-	  *value            = new_value;
-	  adjustment->value = new_value;
-
-	  gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
-
-	  preview_update();
-	};
-    };
-}
-
-/*
- * 'dialog_ok_callback()' - Start the filter...
- */
-
-static void
-dialog_ok_callback (GtkWidget *widget,	/* I - OK button widget */
-		    gpointer   data)	/* I - Dialog window */
+dialog_ok_callback (GtkWidget *widget,
+		    gpointer   data)
 {
   run_filter = TRUE;
 

@@ -45,8 +45,9 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimplimits.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -56,9 +57,6 @@
 
 #define SCALE_WIDTH 150
 #define MAX_NUM_FRAMES 100
-#define CHECK_SIZE 32
-#define CHECK_LIGHT 170
-#define CHECK_DARK  85
 
 typedef struct 
 {
@@ -660,48 +658,53 @@ static void iwarp()
  }
 } 
 
-
 static guchar
-iwarp_transparent_color(int x, int y)
+iwarp_transparent_color (gint x,
+			 gint y)
 {
-
- if ((y % CHECK_SIZE) > (CHECK_SIZE / 2)) {
-  if ((x % CHECK_SIZE) > (CHECK_SIZE / 2))  return CHECK_DARK; 
-   else return CHECK_LIGHT; 
- }
- else
-  if ((x % CHECK_SIZE) < (CHECK_SIZE / 2))  return CHECK_DARK; 
-   else return CHECK_LIGHT;
+  if ((y % (GIMP_CHECK_SIZE * 4)) > (GIMP_CHECK_SIZE * 2))
+    {
+      if ((x % (GIMP_CHECK_SIZE * 4)) > (GIMP_CHECK_SIZE * 2))
+	return GIMP_CHECK_DARK * 255;
+      else
+	return GIMP_CHECK_LIGHT * 255;
+    }
+  else
+    if ((x % (GIMP_CHECK_SIZE * 4)) < (GIMP_CHECK_SIZE * 2))
+      return GIMP_CHECK_DARK * 255;
+    else
+      return GIMP_CHECK_LIGHT * 255;
 }
-
-
 
 static void
-iwarp_cpy_images()
+iwarp_cpy_images (void)
 {
- int i,j,k,p;
- gfloat alpha;
- guchar *srccolor, *dstcolor;
+  int i,j,k,p;
+  gfloat alpha;
+  guchar *srccolor, *dstcolor;
  
- if (image_bpp == 1 || image_bpp ==3) 
-  memcpy(dstimage,srcimage,preview_width *preview_height*preview_bpp);
- else {
-  for (i=0; i< preview_width; i++) 
-   for (j=0; j< preview_height; j++) {
-    p = (j*preview_width+i) ;
-    srccolor = srcimage + p*image_bpp;
-    alpha = (gfloat)srccolor[image_bpp-1]/255;
-    dstcolor = dstimage + p*preview_bpp;
-    for (k=0; k <preview_bpp; k++) {
-     *dstcolor++ = (guchar)(alpha *srccolor[k]+(1.0-alpha)*iwarp_transparent_color(i,j));
+  if (image_bpp == 1 || image_bpp ==3) 
+    memcpy(dstimage,srcimage,preview_width *preview_height*preview_bpp);
+  else
+    {
+      for (i=0; i< preview_width; i++) 
+	for (j=0; j< preview_height; j++)
+	  {
+	    p = (j*preview_width+i) ;
+	    srccolor = srcimage + p*image_bpp;
+	    alpha = (gfloat)srccolor[image_bpp-1]/255;
+	    dstcolor = dstimage + p*preview_bpp;
+	    for (k=0; k <preview_bpp; k++)
+	      {
+		*dstcolor++ = (guchar)
+		  (alpha *srccolor[k]+(1.0-alpha)*iwarp_transparent_color(i,j));
+	      }
+	  }  
     }
-   }  
- }
 }
 
-
-static void 
-iwarp_init()
+static void
+iwarp_init (void)
 {
  int y,x,xi,i;
  GPixelRgn srcrgn;

@@ -115,6 +115,9 @@ void gimp_radio_button_update      (GtkWidget          *widget,
 void gimp_int_adjustment_update    (GtkAdjustment      *adjustment,
 				    gpointer            data);
 
+void gimp_float_adjustment_update  (GtkAdjustment      *adjustment,
+				    gpointer            data);
+
 void gimp_double_adjustment_update (GtkAdjustment      *adjustment,
 				    gpointer            data);
 

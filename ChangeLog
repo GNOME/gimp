@@ -1,3 +1,22 @@
+2000-01-15  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpwidgets.[ch]: added a float adjustment callback.
+
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/depthmerge.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/destripe.c
+	* plug-ins/common/gpb.c
+	* plug-ins/common/iwarp.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/sharpen.c
+	* plug-ins/common/tileit.c
+	* plug-ins/common/whirlpinch.c
+	* plug-ins/common/wind.c:
+
+	- Some more hscale+spinbutton instead of hscale+entry widgets.
+	- Get the CHECK_SIZE constants from libgimp in some plugins.
+
 Sat Jan 15 15:40:26 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* plug-ins/webbrowser/webbrowser.c: Small i18n fix.

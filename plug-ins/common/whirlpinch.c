@@ -58,6 +58,7 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include <libgimp/gimplimits.h>
 
 #define PLUG_IN_NAME    "plug_in_whirl_pinch"
 #define PLUG_IN_VERSION "May 1997, 2.09"
@@ -67,11 +68,6 @@
 #define PREVIEW_SIZE 128
 #define SCALE_WIDTH  200
 #define ENTRY_WIDTH  60
-
-#define CHECK_SIZE  8
-#define CHECK_DARK  ((int) (1.0 / 3.0 * 255))
-#define CHECK_LIGHT ((int) (2.0 / 3.0 * 255))
-
 
 /***** Types *****/
 
@@ -747,15 +743,15 @@ build_preview_source_image (void)
 	{
 	  /* Checks */
 
-	  if ((x / CHECK_SIZE) & 1)
+	  if ((x / GIMP_CHECK_SIZE) & 1)
 	    {
-	      wpint.check_row_0[x] = CHECK_DARK;
-	      wpint.check_row_1[x] = CHECK_LIGHT;
+	      wpint.check_row_0[x] = GIMP_CHECK_DARK * 255;
+	      wpint.check_row_1[x] = GIMP_CHECK_LIGHT * 255;
 	    }
 	  else
 	    {
-	      wpint.check_row_0[x] = CHECK_LIGHT;
-	      wpint.check_row_1[x] = CHECK_DARK;
+	      wpint.check_row_0[x] = GIMP_CHECK_LIGHT * 255;
+	      wpint.check_row_1[x] = GIMP_CHECK_DARK * 255;
 	    }
 
 	  /* Thumbnail image */
@@ -959,12 +955,12 @@ dialog_update_preview (void)
     {
       px = left;
 
-      if ((y / CHECK_SIZE) & 1)
+      if ((y / GIMP_CHECK_SIZE) & 1)
 	check_ul = wpint.check_row_0;
       else
 	check_ul = wpint.check_row_1;
 
-      if (((preview_height - y - 1) / CHECK_SIZE) & 1)
+      if (((preview_height - y - 1) / GIMP_CHECK_SIZE) & 1)
 	check_lr = wpint.check_row_0;
       else
 	check_lr = wpint.check_row_1;

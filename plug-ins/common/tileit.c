@@ -36,16 +36,19 @@
  * 0.1 First version released.
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
 
-#include "config.h"
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include <libgimp/gimplimits.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 /***** Magic numbers *****/
@@ -53,11 +56,6 @@
 #define PREVIEW_SIZE 128 
 #define SCALE_WIDTH  80
 #define ENTRY_WIDTH  25
-
-/* Even more stuff from Quartics plugins */
-#define CHECK_SIZE  8
-#define CHECK_DARK  ((int) (1.0 / 3.0 * 255))
-#define CHECK_LIGHT ((int) (2.0 / 3.0 * 255))
 
 #define MAX_SEGS 6
 
@@ -1275,12 +1273,12 @@ dialog_update_preview(void)
 
   for (y = 0; y < preview_height; y++) {
     
-    if ((y / CHECK_SIZE) & 1) {
-      check_0 = CHECK_DARK;
-      check_1 = CHECK_LIGHT;
+    if ((y / GIMP_CHECK_SIZE) & 1) {
+      check_0 = GIMP_CHECK_DARK * 255;
+      check_1 = GIMP_CHECK_LIGHT * 255;
     } else {
-      check_0 = CHECK_LIGHT;
-      check_1 = CHECK_DARK;
+      check_0 = GIMP_CHECK_LIGHT * 255;
+      check_1 = GIMP_CHECK_DARK * 255;
     }
 
     do_tiles_preview(tint.preview_row,
@@ -1296,7 +1294,7 @@ dialog_update_preview(void)
 	for (i = 0, j = 0 ; i < sizeof(tint.preview_row); i += 4, j += 3 )
 	  {
 	    gint alphaval;
-	    if (((i/4) / CHECK_SIZE) & 1)
+	    if (((i/4) / GIMP_CHECK_SIZE) & 1)
 	      check = check_0;
 	    else
 	      check = check_1;
