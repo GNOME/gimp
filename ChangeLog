@@ -1,3 +1,32 @@
+Sat Dec  5 21:31:57 GMT 1998  Austin Donnelly  <austin@greenend.org.uk>
+
+	* app/commands.[ch]
+	* app/edit_selection.c
+	* app/gdisplay.[ch]
+	* app/gdisplay_ops.[ch]
+	* app/image_render.c
+	* app/info_window.c
+	* app/magnify.c
+	* app/menus.c
+	* app/scale.c: image rendering now happens with float scale
+	factors, independent in X and Y axes.  Turning on dot-for-dot in view
+	menu does what gimp always used to do (ie one image pixel becomes
+	one monitor pixel).  Dot-for-dot is on by default so people
+	shouldn't notice any difference unless they load an image that's
+	not at 72 dpi and also turn off dot-for-dot.
+
+	* app/app_procs.c
+	* app/gimprc.[ch]
+	* app/preferences_dialog.c: new gimprc options
+	(monitor-xresolution <float>) and corresponding
+ 	(monitor-yresolution <float>).  Uglyness in preferences dialog to
+	add a "Monitor" page to the notebook, allowing user to set their
+	monitor's resolution or take it from the X server instead.  This
+	badly needs cleaned up :(
+
+	* plug-ins/newsprint/newsprint.c: oops - this hasn't been working
+	for grayscale images since my last checkin.  Now fixed.
+
 Sat Dec  5 02:40:52 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* libgimp/Makefile.am: add line continuator so all files needed
