@@ -39,40 +39,40 @@
 
 static ProcRecord drawable_transform_flip_simple_proc;
 static ProcRecord drawable_transform_flip_proc;
-static ProcRecord drawable_transform_flip_defaults_proc;
+static ProcRecord drawable_transform_flip_default_proc;
 static ProcRecord drawable_transform_perspective_proc;
-static ProcRecord drawable_transform_perspective_defaults_proc;
+static ProcRecord drawable_transform_perspective_default_proc;
 static ProcRecord drawable_transform_rotate_simple_proc;
 static ProcRecord drawable_transform_rotate_proc;
-static ProcRecord drawable_transform_rotate_defaults_proc;
+static ProcRecord drawable_transform_rotate_default_proc;
 static ProcRecord drawable_transform_scale_proc;
-static ProcRecord drawable_transform_scale_defaults_proc;
+static ProcRecord drawable_transform_scale_default_proc;
 static ProcRecord drawable_transform_shear_proc;
-static ProcRecord drawable_transform_shear_defaults_proc;
+static ProcRecord drawable_transform_shear_default_proc;
 static ProcRecord drawable_transform_2d_proc;
-static ProcRecord drawable_transform_2d_defaults_proc;
+static ProcRecord drawable_transform_2d_default_proc;
 static ProcRecord drawable_transform_matrix_proc;
-static ProcRecord drawable_transform_matrix_defaults_proc;
+static ProcRecord drawable_transform_matrix_default_proc;
 
 void
 register_drawable_transform_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &drawable_transform_flip_simple_proc);
   procedural_db_register (gimp, &drawable_transform_flip_proc);
-  procedural_db_register (gimp, &drawable_transform_flip_defaults_proc);
+  procedural_db_register (gimp, &drawable_transform_flip_default_proc);
   procedural_db_register (gimp, &drawable_transform_perspective_proc);
-  procedural_db_register (gimp, &drawable_transform_perspective_defaults_proc);
+  procedural_db_register (gimp, &drawable_transform_perspective_default_proc);
   procedural_db_register (gimp, &drawable_transform_rotate_simple_proc);
   procedural_db_register (gimp, &drawable_transform_rotate_proc);
-  procedural_db_register (gimp, &drawable_transform_rotate_defaults_proc);
+  procedural_db_register (gimp, &drawable_transform_rotate_default_proc);
   procedural_db_register (gimp, &drawable_transform_scale_proc);
-  procedural_db_register (gimp, &drawable_transform_scale_defaults_proc);
+  procedural_db_register (gimp, &drawable_transform_scale_default_proc);
   procedural_db_register (gimp, &drawable_transform_shear_proc);
-  procedural_db_register (gimp, &drawable_transform_shear_defaults_proc);
+  procedural_db_register (gimp, &drawable_transform_shear_default_proc);
   procedural_db_register (gimp, &drawable_transform_2d_proc);
-  procedural_db_register (gimp, &drawable_transform_2d_defaults_proc);
+  procedural_db_register (gimp, &drawable_transform_2d_default_proc);
   procedural_db_register (gimp, &drawable_transform_matrix_proc);
-  procedural_db_register (gimp, &drawable_transform_matrix_defaults_proc);
+  procedural_db_register (gimp, &drawable_transform_matrix_default_proc);
 }
 
 static Argument *
@@ -349,10 +349,10 @@ static ProcRecord drawable_transform_flip_proc =
 };
 
 static Argument *
-drawable_transform_flip_defaults_invoker (Gimp         *gimp,
-                                          GimpContext  *context,
-                                          GimpProgress *progress,
-                                          Argument     *args)
+drawable_transform_flip_default_invoker (Gimp         *gimp,
+                                         GimpContext  *context,
+                                         GimpProgress *progress,
+                                         Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -415,7 +415,7 @@ drawable_transform_flip_defaults_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&drawable_transform_flip_defaults_proc, success);
+  return_args = procedural_db_return_args (&drawable_transform_flip_default_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
@@ -423,7 +423,7 @@ drawable_transform_flip_defaults_invoker (Gimp         *gimp,
   return return_args;
 }
 
-static ProcArg drawable_transform_flip_defaults_inargs[] =
+static ProcArg drawable_transform_flip_default_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -462,7 +462,7 @@ static ProcArg drawable_transform_flip_defaults_inargs[] =
   }
 };
 
-static ProcArg drawable_transform_flip_defaults_outargs[] =
+static ProcArg drawable_transform_flip_default_outargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -471,9 +471,9 @@ static ProcArg drawable_transform_flip_defaults_outargs[] =
   }
 };
 
-static ProcRecord drawable_transform_flip_defaults_proc =
+static ProcRecord drawable_transform_flip_default_proc =
 {
-  "gimp_drawable_transform_flip_defaults",
+  "gimp_drawable_transform_flip_default",
   "Flip the specified drawable around a given line.",
   "This procedure is a variant of gimp_drawable_transform_flip() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
   "João S. O. Bueno Calligaris",
@@ -482,10 +482,10 @@ static ProcRecord drawable_transform_flip_defaults_proc =
   NULL,
   GIMP_INTERNAL,
   7,
-  drawable_transform_flip_defaults_inargs,
+  drawable_transform_flip_default_inargs,
   1,
-  drawable_transform_flip_defaults_outargs,
-  { { drawable_transform_flip_defaults_invoker } }
+  drawable_transform_flip_default_outargs,
+  { { drawable_transform_flip_default_invoker } }
 };
 
 static Argument *
@@ -683,10 +683,10 @@ static ProcRecord drawable_transform_perspective_proc =
 };
 
 static Argument *
-drawable_transform_perspective_defaults_invoker (Gimp         *gimp,
-                                                 GimpContext  *context,
-                                                 GimpProgress *progress,
-                                                 Argument     *args)
+drawable_transform_perspective_default_invoker (Gimp         *gimp,
+                                                GimpContext  *context,
+                                                GimpProgress *progress,
+                                                Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -757,7 +757,7 @@ drawable_transform_perspective_defaults_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&drawable_transform_perspective_defaults_proc, success);
+  return_args = procedural_db_return_args (&drawable_transform_perspective_default_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
@@ -765,7 +765,7 @@ drawable_transform_perspective_defaults_invoker (Gimp         *gimp,
   return return_args;
 }
 
-static ProcArg drawable_transform_perspective_defaults_inargs[] =
+static ProcArg drawable_transform_perspective_default_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -824,7 +824,7 @@ static ProcArg drawable_transform_perspective_defaults_inargs[] =
   }
 };
 
-static ProcArg drawable_transform_perspective_defaults_outargs[] =
+static ProcArg drawable_transform_perspective_default_outargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -833,9 +833,9 @@ static ProcArg drawable_transform_perspective_defaults_outargs[] =
   }
 };
 
-static ProcRecord drawable_transform_perspective_defaults_proc =
+static ProcRecord drawable_transform_perspective_default_proc =
 {
-  "gimp_drawable_transform_perspective_defaults",
+  "gimp_drawable_transform_perspective_default",
   "Perform a possibly non-affine transformation on the specified drawable, with extra parameters.",
   "This procedure is a variant of gimp_drawable_transform_perspective() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
   "João S. O. Bueno Calligaris",
@@ -844,10 +844,10 @@ static ProcRecord drawable_transform_perspective_defaults_proc =
   NULL,
   GIMP_INTERNAL,
   11,
-  drawable_transform_perspective_defaults_inargs,
+  drawable_transform_perspective_default_inargs,
   1,
-  drawable_transform_perspective_defaults_outargs,
-  { { drawable_transform_perspective_defaults_invoker } }
+  drawable_transform_perspective_default_outargs,
+  { { drawable_transform_perspective_default_invoker } }
 };
 
 static Argument *
@@ -1135,10 +1135,10 @@ static ProcRecord drawable_transform_rotate_proc =
 };
 
 static Argument *
-drawable_transform_rotate_defaults_invoker (Gimp         *gimp,
-                                            GimpContext  *context,
-                                            GimpProgress *progress,
-                                            Argument     *args)
+drawable_transform_rotate_default_invoker (Gimp         *gimp,
+                                           GimpContext  *context,
+                                           GimpProgress *progress,
+                                           Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1204,7 +1204,7 @@ drawable_transform_rotate_defaults_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&drawable_transform_rotate_defaults_proc, success);
+  return_args = procedural_db_return_args (&drawable_transform_rotate_default_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
@@ -1212,7 +1212,7 @@ drawable_transform_rotate_defaults_invoker (Gimp         *gimp,
   return return_args;
 }
 
-static ProcArg drawable_transform_rotate_defaults_inargs[] =
+static ProcArg drawable_transform_rotate_default_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -1251,7 +1251,7 @@ static ProcArg drawable_transform_rotate_defaults_inargs[] =
   }
 };
 
-static ProcArg drawable_transform_rotate_defaults_outargs[] =
+static ProcArg drawable_transform_rotate_default_outargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -1260,9 +1260,9 @@ static ProcArg drawable_transform_rotate_defaults_outargs[] =
   }
 };
 
-static ProcRecord drawable_transform_rotate_defaults_proc =
+static ProcRecord drawable_transform_rotate_default_proc =
 {
-  "gimp_drawable_transform_rotate_defaults",
+  "gimp_drawable_transform_rotate_default",
   "Rotate the specified drawable about given coordinates through the specified angle.",
   "This procedure is a variant of gimp_drawable_transform_rotate() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
   "João S. O. Bueno Calligaris",
@@ -1271,10 +1271,10 @@ static ProcRecord drawable_transform_rotate_defaults_proc =
   NULL,
   GIMP_INTERNAL,
   7,
-  drawable_transform_rotate_defaults_inargs,
+  drawable_transform_rotate_default_inargs,
   1,
-  drawable_transform_rotate_defaults_outargs,
-  { { drawable_transform_rotate_defaults_invoker } }
+  drawable_transform_rotate_default_outargs,
+  { { drawable_transform_rotate_default_invoker } }
 };
 
 static Argument *
@@ -1446,10 +1446,10 @@ static ProcRecord drawable_transform_scale_proc =
 };
 
 static Argument *
-drawable_transform_scale_defaults_invoker (Gimp         *gimp,
-                                           GimpContext  *context,
-                                           GimpProgress *progress,
-                                           Argument     *args)
+drawable_transform_scale_default_invoker (Gimp         *gimp,
+                                          GimpContext  *context,
+                                          GimpProgress *progress,
+                                          Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1514,7 +1514,7 @@ drawable_transform_scale_defaults_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&drawable_transform_scale_defaults_proc, success);
+  return_args = procedural_db_return_args (&drawable_transform_scale_default_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
@@ -1522,7 +1522,7 @@ drawable_transform_scale_defaults_invoker (Gimp         *gimp,
   return return_args;
 }
 
-static ProcArg drawable_transform_scale_defaults_inargs[] =
+static ProcArg drawable_transform_scale_default_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -1561,7 +1561,7 @@ static ProcArg drawable_transform_scale_defaults_inargs[] =
   }
 };
 
-static ProcArg drawable_transform_scale_defaults_outargs[] =
+static ProcArg drawable_transform_scale_default_outargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -1570,9 +1570,9 @@ static ProcArg drawable_transform_scale_defaults_outargs[] =
   }
 };
 
-static ProcRecord drawable_transform_scale_defaults_proc =
+static ProcRecord drawable_transform_scale_default_proc =
 {
-  "gimp_drawable_transform_scale_defaults",
+  "gimp_drawable_transform_scale_default",
   "Scale the specified drawable with extra parameters",
   "This procedure is a variant of gimp_drawable_transform_scale() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
   "João S. O. Bueno Calligaris",
@@ -1581,10 +1581,10 @@ static ProcRecord drawable_transform_scale_defaults_proc =
   NULL,
   GIMP_INTERNAL,
   7,
-  drawable_transform_scale_defaults_inargs,
+  drawable_transform_scale_default_inargs,
   1,
-  drawable_transform_scale_defaults_outargs,
-  { { drawable_transform_scale_defaults_invoker } }
+  drawable_transform_scale_default_outargs,
+  { { drawable_transform_scale_default_invoker } }
 };
 
 static Argument *
@@ -1740,10 +1740,10 @@ static ProcRecord drawable_transform_shear_proc =
 };
 
 static Argument *
-drawable_transform_shear_defaults_invoker (Gimp         *gimp,
-                                           GimpContext  *context,
-                                           GimpProgress *progress,
-                                           Argument     *args)
+drawable_transform_shear_default_invoker (Gimp         *gimp,
+                                          GimpContext  *context,
+                                          GimpProgress *progress,
+                                          Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1802,7 +1802,7 @@ drawable_transform_shear_defaults_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&drawable_transform_shear_defaults_proc, success);
+  return_args = procedural_db_return_args (&drawable_transform_shear_default_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
@@ -1810,7 +1810,7 @@ drawable_transform_shear_defaults_invoker (Gimp         *gimp,
   return return_args;
 }
 
-static ProcArg drawable_transform_shear_defaults_inargs[] =
+static ProcArg drawable_transform_shear_default_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -1839,7 +1839,7 @@ static ProcArg drawable_transform_shear_defaults_inargs[] =
   }
 };
 
-static ProcArg drawable_transform_shear_defaults_outargs[] =
+static ProcArg drawable_transform_shear_default_outargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -1848,9 +1848,9 @@ static ProcArg drawable_transform_shear_defaults_outargs[] =
   }
 };
 
-static ProcRecord drawable_transform_shear_defaults_proc =
+static ProcRecord drawable_transform_shear_default_proc =
 {
-  "gimp_drawable_transform_shear_defaults",
+  "gimp_drawable_transform_shear_default",
   "Shear the specified drawable about its center by the specified magnitude, with extra parameters.",
   "This procedure is a variant of gimp_drawable_transform_shear() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
   "João S. O. Bueno Calligaris",
@@ -1859,10 +1859,10 @@ static ProcRecord drawable_transform_shear_defaults_proc =
   NULL,
   GIMP_INTERNAL,
   5,
-  drawable_transform_shear_defaults_inargs,
+  drawable_transform_shear_default_inargs,
   1,
-  drawable_transform_shear_defaults_outargs,
-  { { drawable_transform_shear_defaults_invoker } }
+  drawable_transform_shear_default_outargs,
+  { { drawable_transform_shear_default_invoker } }
 };
 
 static Argument *
@@ -2058,10 +2058,10 @@ static ProcRecord drawable_transform_2d_proc =
 };
 
 static Argument *
-drawable_transform_2d_defaults_invoker (Gimp         *gimp,
-                                        GimpContext  *context,
-                                        GimpProgress *progress,
-                                        Argument     *args)
+drawable_transform_2d_default_invoker (Gimp         *gimp,
+                                       GimpContext  *context,
+                                       GimpProgress *progress,
+                                       Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2135,7 +2135,7 @@ drawable_transform_2d_defaults_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&drawable_transform_2d_defaults_proc, success);
+  return_args = procedural_db_return_args (&drawable_transform_2d_default_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
@@ -2143,7 +2143,7 @@ drawable_transform_2d_defaults_invoker (Gimp         *gimp,
   return return_args;
 }
 
-static ProcArg drawable_transform_2d_defaults_inargs[] =
+static ProcArg drawable_transform_2d_default_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -2197,7 +2197,7 @@ static ProcArg drawable_transform_2d_defaults_inargs[] =
   }
 };
 
-static ProcArg drawable_transform_2d_defaults_outargs[] =
+static ProcArg drawable_transform_2d_default_outargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -2206,9 +2206,9 @@ static ProcArg drawable_transform_2d_defaults_outargs[] =
   }
 };
 
-static ProcRecord drawable_transform_2d_defaults_proc =
+static ProcRecord drawable_transform_2d_default_proc =
 {
-  "gimp_drawable_transform_2d_defaults",
+  "gimp_drawable_transform_2d_default",
   "Transform the specified drawable in 2d, with extra parameters.",
   "This procedure is a variant of gimp_drawable_transform_2d() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
   "João S. O. Bueno Calligaris",
@@ -2217,10 +2217,10 @@ static ProcRecord drawable_transform_2d_defaults_proc =
   NULL,
   GIMP_INTERNAL,
   10,
-  drawable_transform_2d_defaults_inargs,
+  drawable_transform_2d_default_inargs,
   1,
-  drawable_transform_2d_defaults_outargs,
-  { { drawable_transform_2d_defaults_invoker } }
+  drawable_transform_2d_default_outargs,
+  { { drawable_transform_2d_default_invoker } }
 };
 
 static Argument *
@@ -2436,10 +2436,10 @@ static ProcRecord drawable_transform_matrix_proc =
 };
 
 static Argument *
-drawable_transform_matrix_defaults_invoker (Gimp         *gimp,
-                                            GimpContext  *context,
-                                            GimpProgress *progress,
-                                            Argument     *args)
+drawable_transform_matrix_default_invoker (Gimp         *gimp,
+                                           GimpContext  *context,
+                                           GimpProgress *progress,
+                                           Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2523,7 +2523,7 @@ drawable_transform_matrix_defaults_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&drawable_transform_matrix_defaults_proc, success);
+  return_args = procedural_db_return_args (&drawable_transform_matrix_default_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
@@ -2531,7 +2531,7 @@ drawable_transform_matrix_defaults_invoker (Gimp         *gimp,
   return return_args;
 }
 
-static ProcArg drawable_transform_matrix_defaults_inargs[] =
+static ProcArg drawable_transform_matrix_default_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -2595,7 +2595,7 @@ static ProcArg drawable_transform_matrix_defaults_inargs[] =
   }
 };
 
-static ProcArg drawable_transform_matrix_defaults_outargs[] =
+static ProcArg drawable_transform_matrix_default_outargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -2604,9 +2604,9 @@ static ProcArg drawable_transform_matrix_defaults_outargs[] =
   }
 };
 
-static ProcRecord drawable_transform_matrix_defaults_proc =
+static ProcRecord drawable_transform_matrix_default_proc =
 {
-  "gimp_drawable_transform_matrix_defaults",
+  "gimp_drawable_transform_matrix_default",
   "Transform the specified drawable in 2d, with extra parameters.",
   "This procedure is a variant of gimp_drawable_transform_matrix() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
   "João S. O. Bueno Calligaris",
@@ -2615,8 +2615,8 @@ static ProcRecord drawable_transform_matrix_defaults_proc =
   NULL,
   GIMP_INTERNAL,
   12,
-  drawable_transform_matrix_defaults_inargs,
+  drawable_transform_matrix_default_inargs,
   1,
-  drawable_transform_matrix_defaults_outargs,
-  { { drawable_transform_matrix_defaults_invoker } }
+  drawable_transform_matrix_default_outargs,
+  { { drawable_transform_matrix_default_invoker } }
 };

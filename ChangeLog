@@ -1,3 +1,21 @@
+2004-11-16  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/drawable_transform.pdb: renamed the new
+	drawable_foo_defaults() functions to drawable_foo_default() to be
+	consistent with paintbrush_default() and friends.
+
+	* tools/pdbgen/pdb/transform_tools.pdb
+	* libgimp/gimp.def: changed accordingly.
+
+	* app/pdb/drawable_transform_cmds.c
+	* app/pdb/transform_tools_cmds.c
+	* libgimp/gimpdrawabletransform_pdb.[ch]
+	* libgimp/gimptransformtools_pdb.c: regenerated.
+
+	* plug-ins/script-fu/scripts/coolmetal-logo.scm
+	* plug-ins/script-fu/scripts/image-structure.scm
+	* plug-ins/script-fu/scripts/text-circle.scm: follow the API change.
+
 2004-11-16  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpbaseconfig.c: increased default tile-cache-size

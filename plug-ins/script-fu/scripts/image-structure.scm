@@ -92,11 +92,11 @@
 
       (gimp-layer-translate layer
 			    (+ border shear-length) (+ border (* space index)))
-      (gimp-drawable-transform-shear-defaults layer ORIENTATION-HORIZONTAL
-					      (* (/ (car (gimp-drawable-height layer))
-						    old-height)
-						 (* -2 shear-length))
-					      TRUE FALSE)
+      (gimp-drawable-transform-shear-default layer ORIENTATION-HORIZONTAL
+					     (* (/ (car (gimp-drawable-height layer))
+						   old-height)
+						(* -2 shear-length))
+					     TRUE FALSE)
       (set! index (+ index 1)))
     (set! new-bg (- num-of-layers 1))
     (if (= TRUE with-background?)

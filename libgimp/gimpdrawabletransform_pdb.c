@@ -146,7 +146,7 @@ gimp_drawable_transform_flip (gint32                 drawable_ID,
 }
 
 /**
- * gimp_drawable_transform_flip_defaults:
+ * gimp_drawable_transform_flip_default:
  * @drawable_ID: The affected drawable.
  * @x0: horz. coord. of one end of axis.
  * @y0: vert. coord. of one end of axis.
@@ -166,19 +166,19 @@ gimp_drawable_transform_flip (gint32                 drawable_ID,
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_flip_defaults (gint32   drawable_ID,
-				       gdouble  x0,
-				       gdouble  y0,
-				       gdouble  x1,
-				       gdouble  y1,
-				       gboolean interpolate,
-				       gboolean clip_result)
+gimp_drawable_transform_flip_default (gint32   drawable_ID,
+				      gdouble  x0,
+				      gdouble  y0,
+				      gdouble  x1,
+				      gdouble  y1,
+				      gboolean interpolate,
+				      gboolean clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_flip_defaults",
+  return_vals = gimp_run_procedure ("gimp_drawable_transform_flip_default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, x0,
@@ -284,7 +284,7 @@ gimp_drawable_transform_perspective (gint32                 drawable_ID,
 }
 
 /**
- * gimp_drawable_transform_perspective_defaults:
+ * gimp_drawable_transform_perspective_default:
  * @drawable_ID: The affected drawable.
  * @x0: The new x coordinate of upper-left corner of original bounding box.
  * @y0: The new y coordinate of upper-left corner of original bounding box.
@@ -309,23 +309,23 @@ gimp_drawable_transform_perspective (gint32                 drawable_ID,
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_perspective_defaults (gint32   drawable_ID,
-					      gdouble  x0,
-					      gdouble  y0,
-					      gdouble  x1,
-					      gdouble  y1,
-					      gdouble  x2,
-					      gdouble  y2,
-					      gdouble  x3,
-					      gdouble  y3,
-					      gboolean interpolate,
-					      gboolean clip_result)
+gimp_drawable_transform_perspective_default (gint32   drawable_ID,
+					     gdouble  x0,
+					     gdouble  y0,
+					     gdouble  x1,
+					     gdouble  y1,
+					     gdouble  x2,
+					     gdouble  y2,
+					     gdouble  x3,
+					     gdouble  y3,
+					     gboolean interpolate,
+					     gboolean clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_perspective_defaults",
+  return_vals = gimp_run_procedure ("gimp_drawable_transform_perspective_default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, x0,
@@ -469,7 +469,7 @@ gimp_drawable_transform_rotate (gint32                 drawable_ID,
 }
 
 /**
- * gimp_drawable_transform_rotate_defaults:
+ * gimp_drawable_transform_rotate_default:
  * @drawable_ID: The affected drawable.
  * @angle: The angle of rotation (radians).
  * @auto_center: Whether to automatically rotate around the selection center.
@@ -490,19 +490,19 @@ gimp_drawable_transform_rotate (gint32                 drawable_ID,
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_rotate_defaults (gint32   drawable_ID,
-					 gdouble  angle,
-					 gboolean auto_center,
-					 gint     center_x,
-					 gint     center_y,
-					 gboolean interpolate,
-					 gboolean clip_result)
+gimp_drawable_transform_rotate_default (gint32   drawable_ID,
+					gdouble  angle,
+					gboolean auto_center,
+					gint     center_x,
+					gint     center_y,
+					gboolean interpolate,
+					gboolean clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_rotate_defaults",
+  return_vals = gimp_run_procedure ("gimp_drawable_transform_rotate_default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, angle,
@@ -587,7 +587,7 @@ gimp_drawable_transform_scale (gint32                 drawable_ID,
 }
 
 /**
- * gimp_drawable_transform_scale_defaults:
+ * gimp_drawable_transform_scale_default:
  * @drawable_ID: The affected drawable.
  * @x0: The new x coordinate of upper-left corner of newly scaled region.
  * @y0: The new y coordinate of upper-left corner of newly scaled region.
@@ -607,19 +607,19 @@ gimp_drawable_transform_scale (gint32                 drawable_ID,
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_scale_defaults (gint32   drawable_ID,
-					gdouble  x0,
-					gdouble  y0,
-					gdouble  x1,
-					gdouble  y1,
-					gboolean interpolate,
-					gboolean clip_result)
+gimp_drawable_transform_scale_default (gint32   drawable_ID,
+				       gdouble  x0,
+				       gdouble  y0,
+				       gdouble  x1,
+				       gdouble  y1,
+				       gboolean interpolate,
+				       gboolean clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_scale_defaults",
+  return_vals = gimp_run_procedure ("gimp_drawable_transform_scale_default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, x0,
@@ -702,7 +702,7 @@ gimp_drawable_transform_shear (gint32                 drawable_ID,
 }
 
 /**
- * gimp_drawable_transform_shear_defaults:
+ * gimp_drawable_transform_shear_default:
  * @drawable_ID: The affected drawable.
  * @shear_type: Type of shear.
  * @magnitude: The magnitude of the shear.
@@ -721,17 +721,17 @@ gimp_drawable_transform_shear (gint32                 drawable_ID,
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_shear_defaults (gint32              drawable_ID,
-					GimpOrientationType shear_type,
-					gdouble             magnitude,
-					gboolean            interpolate,
-					gboolean            clip_result)
+gimp_drawable_transform_shear_default (gint32              drawable_ID,
+				       GimpOrientationType shear_type,
+				       gdouble             magnitude,
+				       gboolean            interpolate,
+				       gboolean            clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_shear_defaults",
+  return_vals = gimp_run_procedure ("gimp_drawable_transform_shear_default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, shear_type,
@@ -826,7 +826,7 @@ gimp_drawable_transform_2d (gint32                 drawable_ID,
 }
 
 /**
- * gimp_drawable_transform_2d_defaults:
+ * gimp_drawable_transform_2d_default:
  * @drawable_ID: The affected drawable.
  * @source_x: X coordinate of the transformation center.
  * @source_y: Y coordinate of the transformation center.
@@ -849,22 +849,22 @@ gimp_drawable_transform_2d (gint32                 drawable_ID,
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_2d_defaults (gint32   drawable_ID,
-				     gdouble  source_x,
-				     gdouble  source_y,
-				     gdouble  scale_x,
-				     gdouble  scale_y,
-				     gdouble  angle,
-				     gdouble  dest_x,
-				     gdouble  dest_y,
-				     gboolean interpolate,
-				     gboolean clip_result)
+gimp_drawable_transform_2d_default (gint32   drawable_ID,
+				    gdouble  source_x,
+				    gdouble  source_y,
+				    gdouble  scale_x,
+				    gdouble  scale_y,
+				    gdouble  angle,
+				    gdouble  dest_x,
+				    gdouble  dest_y,
+				    gboolean interpolate,
+				    gboolean clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_2d_defaults",
+  return_vals = gimp_run_procedure ("gimp_drawable_transform_2d_default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, source_x,
@@ -968,7 +968,7 @@ gimp_drawable_transform_matrix (gint32                 drawable_ID,
 }
 
 /**
- * gimp_drawable_transform_matrix_defaults:
+ * gimp_drawable_transform_matrix_default:
  * @drawable_ID: The affected drawable.
  * @coeff_0_0: coefficient (0,0) of the transformation matrix.
  * @coeff_0_1: coefficient (0,1) of the transformation matrix.
@@ -993,24 +993,24 @@ gimp_drawable_transform_matrix (gint32                 drawable_ID,
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_matrix_defaults (gint32   drawable_ID,
-					 gdouble  coeff_0_0,
-					 gdouble  coeff_0_1,
-					 gdouble  coeff_0_2,
-					 gdouble  coeff_1_0,
-					 gdouble  coeff_1_1,
-					 gdouble  coeff_1_2,
-					 gdouble  coeff_2_0,
-					 gdouble  coeff_2_1,
-					 gdouble  coeff_2_2,
-					 gboolean interpolate,
-					 gboolean clip_result)
+gimp_drawable_transform_matrix_default (gint32   drawable_ID,
+					gdouble  coeff_0_0,
+					gdouble  coeff_0_1,
+					gdouble  coeff_0_2,
+					gdouble  coeff_1_0,
+					gdouble  coeff_1_1,
+					gdouble  coeff_1_2,
+					gdouble  coeff_2_0,
+					gdouble  coeff_2_1,
+					gdouble  coeff_2_2,
+					gboolean interpolate,
+					gboolean clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_matrix_defaults",
+  return_vals = gimp_run_procedure ("gimp_drawable_transform_matrix_default",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, coeff_0_0,

@@ -71,7 +71,7 @@ gimp_flip (gint32              drawable_ID,
  * @y3: The new y coordinate of lower-right corner of original bounding box.
  *
  * This procedure is deprecated! Use
- * gimp_drawable_transform_perspective_defaults() instead.
+ * gimp_drawable_transform_perspective_default() instead.
  *
  * Returns: The newly mapped drawable.
  */
@@ -120,7 +120,7 @@ gimp_perspective (gint32   drawable_ID,
  * @angle: The angle of rotation (radians).
  *
  * This procedure is deprecated! Use
- * gimp_drawable_transform_rotate_defaults() instead.
+ * gimp_drawable_transform_rotate_default() instead.
  *
  * Returns: The rotated drawable.
  */
@@ -158,7 +158,7 @@ gimp_rotate (gint32   drawable_ID,
  * @y1: The new y coordinate of lower-right corner of newly scaled region.
  *
  * This procedure is deprecated! Use
- * gimp_drawable_transform_scale_defaults() instead.
+ * gimp_drawable_transform_scale_default() instead.
  *
  * Returns: The scaled drawable.
  */
@@ -200,7 +200,7 @@ gimp_scale (gint32   drawable_ID,
  * @magnitude: The magnitude of the shear.
  *
  * This procedure is deprecated! Use
- * gimp_drawable_transform_shear_defaults() instead.
+ * gimp_drawable_transform_shear_default() instead.
  *
  * Returns: The sheared drawable.
  */
@@ -243,7 +243,7 @@ gimp_shear (gint32              drawable_ID,
  * @dest_y: Y coordinate of where the centre goes.
  *
  * This procedure is deprecated! Use
- * gimp_drawable_transform_2d_defaults() instead.
+ * gimp_drawable_transform_2d_default() instead.
  *
  * Returns: The transformed drawable.
  */

@@ -48,7 +48,7 @@ sub transform_options_args () {
       desc => 'Whether to clip results' }
 }
 
-sub transform_options_defaults_args () {
+sub transform_options_default_args () {
     { name => 'interpolate', type => 'boolean',
       desc => 'Whether to use interpolation and supersampling' },
     { name => 'clip_result', type => 'boolean',
@@ -105,7 +105,7 @@ CODE
     )
 }
 
-sub transform_defaults_invoke {
+sub transform_default_invoke {
     my ($progress_text, $assemble_matrix, $variables, $check) = @_;
     my $success_check = 'gimp_item_is_attached (GIMP_ITEM (drawable));';
 
@@ -252,7 +252,7 @@ CODE
 }
 
 
-sub drawable_transform_flip_defaults {
+sub drawable_transform_flip_default {
     $blurb = <<'BLURB';
 Flip the specified drawable around a given line.
 BLURB
@@ -275,12 +275,12 @@ HELP
           desc => 'horz. coord. of other end of axis' },
         { name => 'y1', type => 'float',
           desc => 'vert. coord. of other end of axis' },
-        &transform_options_defaults_args
+        &transform_options_default_args
     );
 
     @outargs = ( &drawable_out_arg('flipped') );
 
-    transform_defaults_invoke ("Flip...", <<CODE);
+    transform_default_invoke ("Flip...", <<CODE);
       gimp_transform_matrix_flip_free (x, y, width, height,
                                        x0, y0, x1, y1,
                                        &matrix);
@@ -345,7 +345,7 @@ CODE
 }
 
 
-sub drawable_transform_perspective_defaults {
+sub drawable_transform_perspective_default {
     $blurb = <<'BLURB';
 Perform a possibly non-affine transformation on the specified drawable, with extra parameters.
 BLURB
@@ -374,12 +374,12 @@ HELP
         $pos++;
     }
     @inargs = (@inargs,
-        &transform_options_defaults_args
+        &transform_options_default_args
     );
 
     @outargs = ( &drawable_out_arg('newly mapped') );
 
-    transform_defaults_invoke ("Perspective...", <<CODE, [ 'gdouble trans_info[8]' ]);
+    transform_default_invoke ("Perspective...", <<CODE, [ 'gdouble trans_info[8]' ]);
       gimp_transform_matrix_perspective (x, y, width, height,
                                          trans_info[X0], trans_info[Y0],
                                          trans_info[X1], trans_info[Y1],
@@ -486,7 +486,7 @@ CODE
 }
 
 
-sub drawable_transform_rotate_defaults {
+sub drawable_transform_rotate_default {
     $blurb = <<'BLURB';
 Rotate the specified drawable about given coordinates through the specified angle.
 BLURB
@@ -509,12 +509,12 @@ HELP
           desc => 'The hor. coordinate of the center of rotation' },
         { name => 'center_y', type => 'int32',
           desc => 'The vert. coordinate of the center of rotation' },
-        &transform_options_defaults_args
+        &transform_options_default_args
     );
 
     @outargs = ( &drawable_out_arg('rotated') );
 
-    transform_defaults_invoke ("Rotating...", <<CODE);
+    transform_default_invoke ("Rotating...", <<CODE);
       if (auto_center)
         gimp_transform_matrix_rotate (x, y, width, height, angle,
                                       &matrix);
@@ -576,7 +576,7 @@ CODE2
 }
 
 
-sub drawable_transform_scale_defaults {
+sub drawable_transform_scale_default {
     $blurb = 'Scale the specified drawable with extra parameters';
 
     $help = <<'HELP';
@@ -604,12 +604,12 @@ HELP
     }
 
     @inargs = (@inargs,
-        &transform_options_defaults_args
+        &transform_options_default_args
     );
 
     @outargs = ( &drawable_out_arg('scaled') );
 
-    transform_defaults_invoke ("Scaling...", <<CODE, [ 'gdouble trans_info[4]' ], <<CODE2);
+    transform_default_invoke ("Scaling...", <<CODE, [ 'gdouble trans_info[4]' ], <<CODE2);
       gimp_transform_matrix_scale (x, y, width, height,
                                    trans_info[X0],
                                    trans_info[Y0],
@@ -662,7 +662,7 @@ CODE
 }
 
 
-sub drawable_transform_shear_defaults {
+sub drawable_transform_shear_default {
     $blurb = <<'BLURB';
 Shear the specified drawable about its center by the specified magnitude, with extra parameters.
 BLURB
@@ -681,12 +681,12 @@ HELP
           desc => 'Type of shear: %%desc%%' },
         { name => 'magnitude', type => 'float',
           desc => 'The magnitude of the shear' },
-        &transform_options_defaults_args
+        &transform_options_default_args
     );
 
     @outargs = ( &drawable_out_arg('sheared') );
 
-    transform_defaults_invoke ("Shearing...", <<CODE);
+    transform_default_invoke ("Shearing...", <<CODE);
       gimp_transform_matrix_shear (x, y, width, height,
                                    shear_type, magnitude,
                                    &matrix);
@@ -746,7 +746,7 @@ CODE
 }
 
 
-sub drawable_transform_2d_defaults {
+sub drawable_transform_2d_default {
     $blurb = <<'BLURB';
 Transform the specified drawable in 2d, with extra parameters.
 BLURB
@@ -775,12 +775,12 @@ HELP
           desc => 'X coordinate of where the center goes' },
         { name => 'dest_y', type => 'float',
           desc => 'Y coordinate of where the center goes' },
-        &transform_options_defaults_args
+        &transform_options_default_args
     );
 
     @outargs = ( &drawable_out_arg('transformed') );
 
-    transform_defaults_invoke ("2D Transform...", <<CODE);
+    transform_default_invoke ("2D Transform...", <<CODE);
       gimp_matrix3_identity  (&matrix);
       gimp_matrix3_translate (&matrix, -source_x, -source_y);
       gimp_matrix3_scale     (&matrix, scale_x, scale_y);
@@ -847,7 +847,7 @@ CODE
 }
 
 
-sub drawable_transform_matrix_defaults {
+sub drawable_transform_matrix_default {
     $blurb = <<'BLURB';
 Transform the specified drawable in 2d, with extra parameters.
 BLURB
@@ -880,12 +880,12 @@ HELP
           desc => 'coefficient (2,1) of the transformation matrix' },
         { name => 'coeff_2_2', type => 'float',
           desc => 'coefficient (2,2) of the transformation matrix' },
-        &transform_options_defaults_args
+        &transform_options_default_args
     );
 
     @outargs = ( &drawable_out_arg('transformed') );
 
-    transform_defaults_invoke ("2D Transform...", <<CODE);
+    transform_default_invoke ("2D Transform...", <<CODE);
       matrix.coeff[0][0] = coeff_0_0;
       matrix.coeff[0][1] = coeff_0_1;
       matrix.coeff[0][2] = coeff_0_2;
@@ -906,15 +906,15 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(drawable_transform_flip_simple
-            drawable_transform_flip drawable_transform_flip_defaults
+            drawable_transform_flip drawable_transform_flip_default
             drawable_transform_perspective
-            drawable_transform_perspective_defaults
+            drawable_transform_perspective_default
             drawable_transform_rotate_simple
-            drawable_transform_rotate drawable_transform_rotate_defaults
-            drawable_transform_scale drawable_transform_scale_defaults
-            drawable_transform_shear drawable_transform_shear_defaults
-            drawable_transform_2d drawable_transform_2d_defaults
-            drawable_transform_matrix drawable_transform_matrix_defaults);
+            drawable_transform_rotate drawable_transform_rotate_default
+            drawable_transform_scale drawable_transform_scale_default
+            drawable_transform_shear drawable_transform_shear_default
+            drawable_transform_2d drawable_transform_2d_default
+            drawable_transform_matrix drawable_transform_matrix_default);
 
 %exports = (app => [@procs], lib => [@procs]);
 
