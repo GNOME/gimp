@@ -1,3 +1,19 @@
+1999-08-27  Tor Lillqvist  <tml@iki.fi>
+
+	* app/menus.c: Add Acquire under the File menu.
+
+	* plug-ins/twain: New (Windows-only) plug-in. Interface to TWAIN
+	image sources. Written by Craig Setera.
+
+	* plug-ins/Makefile.am: Add twain sources to EXTRA_DIST.
+
+	* plug-ins/makefile.{cygwin,msc}: Move gimpressionist and twain
+	around as they are in this directory now.
+
+	* plug-ins/common/screenshot.c
+	* plug-ins/winsnap/winsnap.c
+	* plug-ins/twain/twain.c: Put them under File/Acquire.
+
 1999-08-27  Tomas Ogren  <stric@ing.umu.se>
 
 	* app/convert.c app/paint_funcs.c app/paths_dialog.c:

@@ -3,6 +3,16 @@
 EXTRA_DIST = \
 	makefile.cygwin		\
 	makefile.msc		\
+	twain/README		\
+	twain/tw_dump.c		\
+	twain/tw_dump.h		\
+	twain/tw_func.c		\
+	twain/tw_func.h		\
+	twain/tw_sess.c		\
+	twain/tw_util.c		\
+	twain/tw_util.h		\
+	twain/twain.c		\
+	twain/twain.h		\
 	winsnap/resource.h	\
 	winsnap/select.cur	\
 	winsnap/small.ico	\

@@ -65,6 +65,7 @@ static GtkItemFactoryEntry toolbox_entries[] =
   { N_("/File/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/File/New"), "<control>N", file_new_cmd_callback, 0 },
   { N_("/File/Open"), "<control>O", file_open_cmd_callback, 0 },
+  { N_("/File/Acquire"), NULL, NULL, 0, "<Branch>" },
   { N_("/File/About..."), NULL, about_dialog_cmd_callback, 0 },
   { N_("/File/Preferences..."), NULL, file_pref_cmd_callback, 0 },
   { N_("/File/Tip of the day"), NULL, tips_dialog_cmd_callback, 0 },

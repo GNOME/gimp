@@ -28,14 +28,14 @@ COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify 
 COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spread sunras tga threshold_alpha tiff tile tileit tiler video vinvert vpropagate waves whirlpinch winclipboard wind winprint wmf xbm xwd zealouscrop
 
 # These have own subdirectories each
-SEPARATE = AlienMap FractalExplorer Lighting MapObject bmp borderaverage dbbrowser faxg3 fits flame fp gfig gfli ifscompose maze mosaic pagecurl rcm sel2path sgi sinus struc unsharp winsnap
+SEPARATE = AlienMap FractalExplorer Lighting MapObject bmp borderaverage dbbrowser faxg3 fits flame fp gfig gfli gimpressionist ifscompose maze mosaic pagecurl rcm sel2path sgi sinus struc twain unsharp winsnap
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
 # ..\unofficial-plug-ins directory, go there, and do "nmake -f
 # makefile.msc unofficial".
 
-UNOFFICIAL = Anamorphose RGB_Displace ccanalyze fuse gimp_ace gimpressionist guash user_filter twain
+UNOFFICIAL = Anamorphose RGB_Displace ccanalyze fuse gimp_ace guash user_filter
 
 # The main target
 
@@ -44,14 +44,10 @@ all : ..\config.h libs-all common-plugins-all separate-plugins-all
 ..\config.h : ..\config.h.win32
 	copy ..\config.h.win32 ..\config.h
 
-install : libs-install common-plugins-install separate-plugins-install scripts-install
+install : libs-install common-plugins-install separate-plugins-install data-install
 
 unofficial:
 	for %d in ($(UNOFFICIAL)) do nmake -nologo -f makefile.msc sub-one-separate DIR=%d TARGET=install
-	-md $(GIMP)\gimpressionist $(GIMP)\gimpressionist\Brushes $(GIMP)\gimpressionist\Paper $(GIMP)\gimpressionist\Presets
-	$(INSTALL) gimpressionist\Brushes\* $(GIMP)\gimpressionist\Brushes
-	$(INSTALL) gimpressionist\Paper\* $(GIMP)\gimpressionist\Paper
-	$(INSTALL) gimpressionist\Presets\* $(GIMP)\gimpressionist\Presets
 
 clean : libs-clean common-plugins-clean separate-plugins-clean
 
@@ -124,12 +120,23 @@ sub-one-separate :
 	nmake -nologo -f ..\makefile.msc TOP=..\.. PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
 
 
-scripts-install :
+data-install : gimpressionist-data-install
 	-md $(GIMP)\scripts
 	$(INSTALL) script-fu\scripts\*.scm $(GIMP)\scripts
 	$(INSTALL) script-fu\scripts\*.jpg $(GIMP)\scripts
 	$(INSTALL) FractalExplorer\fractalexplorer-examples\* $(GIMP)\fractalexplorer
 	del $(GIMP)\fractalexplorer\Makefile.am
+
+gimpressionist-data-install :
+	-md $(GIMP)\gimpressionist
+	-md $(GIMP)\gimpressionist\Brushes
+	-md $(GIMP)\gimpressionist\Paper
+	-md $(GIMP)\gimpressionist\Presets
+	$(INSTALL) gimpressionist\Brushes\*.pgm $(GIMP)\gimpressionist\Brushes
+	$(INSTALL) gimpressionist\Brushes\*.ppm $(GIMP)\gimpressionist\Brushes
+	$(INSTALL) gimpressionist\Paper\*.pgm $(GIMP)\gimpressionist\Paper
+	$(INSTALL) gimpressionist\Presets\* $(GIMP)\gimpressionist\Presets
+	del $(GIMP)\gimpressionist\Presets\Makefile.am
 
 !ENDIF
 !ENDIF

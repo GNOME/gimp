@@ -56,7 +56,7 @@
 #define PLUG_IN_AUTHOR      "Craig Setera (setera@infonet.isl.net)"
 #define PLUG_IN_COPYRIGHT   "Craig Setera"
 #define PLUG_IN_VERSION     "v0.70 (07/16/1999)"
-#define PLUG_IN_MENU_PATH   "<Toolbox>/Xtns/WinSnap"
+#define PLUG_IN_MENU_PATH   "<Toolbox>/File/Acquire/Screen Shot..."
 
 /*
  * Application definitions
