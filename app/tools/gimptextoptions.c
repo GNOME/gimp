@@ -411,19 +411,19 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   hbox = gimp_font_box_new (NULL, GIMP_CONTEXT (tool_options), 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("_Font:"), 0.0, 0.5,
+                             _("Font:"), 0.0, 0.5,
                              hbox, 2, FALSE);
 
   entry = gimp_prop_size_entry_new (config,
                                     "font-size", "font-size-unit", "%a",
                                     GIMP_SIZE_ENTRY_UPDATE_SIZE, 72.0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("_Size:"), 0.0, 0.5,
+                             _("Size:"), 0.0, 0.5,
                              entry, 2, FALSE);
 
   options->size_entry = GIMP_SIZE_ENTRY (entry);
 
-  button = gimp_prop_check_button_new (config, "hinting", _("_Hinting"));
+  button = gimp_prop_check_button_new (config, "hinting", _("Hinting"));
   gtk_table_attach (GTK_TABLE (table), button, 0, 3, row, row + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button);
