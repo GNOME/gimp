@@ -828,7 +828,7 @@ dialogs_indexed_palette_new (GimpDialogFactory *factory,
 
   dockable = dialogs_dockable_new (view,
 				   _("Colormap"), _("Indexed Palette"),
-                                   GTK_STOCK_MISSING_IMAGE,
+                                   GIMP_STOCK_INDEXED_PALETTE,
 				   NULL, NULL,
 				   dialogs_set_image_editor_context_func);
 
@@ -885,7 +885,7 @@ dialogs_undo_history_new (GimpDialogFactory *factory,
 
   dockable = dialogs_dockable_new (view,
 				   _("Undo"), _("Undo History"),
-                                   GTK_STOCK_UNDO,
+                                   GIMP_STOCK_UNDO_HISTORY,
                                    NULL, NULL,
 				   dialogs_set_image_editor_context_func);
 

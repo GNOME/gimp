@@ -192,6 +192,8 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_CHANNEL_ALPHA,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_PATH,                     NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TEMPLATE,                 NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_INDEXED_PALETTE,          NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_UNDO_HISTORY,             NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_SELECTION_ALL,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SELECTION_NONE,           NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -330,6 +332,8 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_TEXT_LAYER,               stock_text_layer_24               },
   { GIMP_STOCK_PATH,                     stock_path_22                     },
   { GIMP_STOCK_TEMPLATE,                 stock_template_24                 },
+  { GIMP_STOCK_INDEXED_PALETTE,          stock_indexed_palette_24          },
+  { GIMP_STOCK_UNDO_HISTORY,             stock_undo_history_24             },
 
   { GIMP_STOCK_LINKED,                   stock_linked_20                   },
   { GIMP_STOCK_VISIBLE,                  stock_eye_20                      },
@@ -423,6 +427,8 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_TEXT_LAYER,               stock_text_layer_16               },
   { GIMP_STOCK_PATH,                     stock_path_16                     },
   { GIMP_STOCK_TEMPLATE,                 stock_template_16                 },
+  { GIMP_STOCK_INDEXED_PALETTE,          stock_indexed_palette_16          },
+  { GIMP_STOCK_UNDO_HISTORY,             stock_undo_history_16             },
 
   { GIMP_STOCK_LINKED,                   stock_linked_12                   },
   { GIMP_STOCK_VISIBLE,                  stock_eye_12                      },

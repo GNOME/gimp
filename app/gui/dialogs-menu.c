@@ -73,13 +73,13 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
   ADD_TAB (N_("/Add Tab/_Paths..."),            "gimp-vectors-list",
            "<StockItem>",                      GIMP_STOCK_PATHS),
   ADD_TAB (N_("/Add Tab/_Indexed Palette..."),  "gimp-indexed-palette",
-           "<StockItem>",                      GTK_STOCK_SELECT_COLOR),
+           "<StockItem>",                      GIMP_STOCK_INDEXED_PALETTE),
   ADD_TAB (N_("/Add Tab/_Selection Editor..."), "gimp-selection-editor",
            "<StockItem>",                      GIMP_STOCK_TOOL_RECT_SELECT),
   ADD_TAB (N_("/Add Tab/Na_vigation..."),       "gimp-navigation-view",
            "<StockItem>",                      GIMP_STOCK_NAVIGATION),
   ADD_TAB (N_("/Add Tab/_Undo History..."),     "gimp-undo-history",
-           "<StockItem>",                      GTK_STOCK_UNDO),
+           "<StockItem>",                      GIMP_STOCK_UNDO_HISTORY),
 
   MENU_SEPARATOR ("/Add Tab/---"),
 

@@ -53,6 +53,7 @@ STOCK_MENU_IMAGES = \
 	stock-image-16.png				\
 	stock-images-16.png				\
 	stock-info-16.png				\
+	stock-indexed-palette-16.png			\
 	stock-invert-16.png				\
 	stock-landscape-16.png				\
 	stock-layer-16.png				\
@@ -83,6 +84,7 @@ STOCK_MENU_IMAGES = \
 	stock-text-layer-16.png				\
 	stock-toilet-paper-16.png			\
 	stock-tool-options-16.png			\
+	stock-undo-history-16.png			\
 	stock-video-16.png				\
 	stock-warning-16.png				\
 	stock-wilber-16.png				\
@@ -119,6 +121,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-hchain-broken-24.png		\
 	stock-image-24.png			\
 	stock-images-24.png			\
+	stock-indexed-palette-24.png		\
 	stock-info-24.png			\
 	stock-layer-24.png			\
 	stock-layers-24.png			\
@@ -147,6 +150,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-vchain-24.png			\
 	stock-vchain-broken-24.png		\
 	stock-video-24.png			\
+	stock-undo-history-24.png		\
 	stock-warning-24.png			\
 	stock-web-24.png
 

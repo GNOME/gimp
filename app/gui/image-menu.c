@@ -166,7 +166,7 @@ GimpItemFactoryEntry image_menu_entries[] =
     "edit/redo.html", NULL },
   { { N_("/Edit/Undo _History..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_UNDO },
+      "<StockItem>", GIMP_STOCK_UNDO_HISTORY },
     "gimp-undo-history",
     NULL, NULL },
 
@@ -927,7 +927,7 @@ GimpItemFactoryEntry image_menu_entries[] =
     NULL, NULL },
   { { N_("/Dialogs/_Undo History..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_UNDO },
+      "<StockItem>", GIMP_STOCK_UNDO_HISTORY },
     "gimp-undo-history",
     NULL, NULL },
 
