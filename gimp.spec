@@ -1,24 +1,22 @@
-%define name     gimp
-%define ver      1.1.19
 %define subver   1.1
 %define microver 19
-%define rel      1
+%define ver      %{subver}.%{microver}
 %define prefix	 /usr
 
-Summary: The GNU Image Manipulation Program.
-Name: 		%name
-Version: 	%ver
-Release: 	%rel
+Summary: The GNU Image Manipulation Program
+Name: 		gimp
+Version: 	%{ver}
+Release: 	1
 Copyright: 	GPL, LGPL
-Group: 		Applications/Multimedia
+Group: 		Applications/Graphics
 URL: 		http://www.gimp.org/
-BuildRoot: 	/var/tmp/%{name}-%{version}-root
+BuildRoot: 	%{_tmppath}/%{name}-%{version}-root
 Docdir:		%{prefix}/doc
 Prefix:		%{prefix}
 Obsoletes: 	gimp-data-min
 Obsoletes:	gimp-libgimp
 Requires: 	gtk+ >= 1.2.0
-Source: 	ftp://ftp.gimp.org/pub/gimp/unstable/v%{PACKAGE_VERSION}/%{name}-%{PACKAGE_VERSION}.tar.bz2
+Source: 	ftp://ftp.gimp.org/pub/gimp/unstable/v%{version}/%{name}-%{version}.tar.bz2
 
 %description
 The GIMP (GNU Image Manipulation Program) is a powerful image
@@ -112,12 +110,6 @@ eval perl '-V:archname'
 find $RPM_BUILD_ROOT/%{prefix}/lib/perl5 -type f -print | sed "s@^$RPM_BUILD_ROOT@@g" | grep -v perllocal.pod > gimp-perl
 
 #
-# Help files appear to be in flux.
-#
-echo "%defattr (0444, bin, man, 0555)" > gimp-help-files
-find $RPM_BUILD_ROOT/%{prefix}/share/gimp/%{subver}/help -type f -print | sed "s@^$RPM_BUILD_ROOT@@g"  >>gimp-help-files
-
-#
 # Plugins and modules change often (grab the executeable ones)
 #
 echo "%defattr (0555, bin, bin)" > gimp-plugin-files
@@ -127,16 +119,17 @@ find $RPM_BUILD_ROOT/%{prefix}/lib/gimp/%{subver} -type f -exec file {} \; | gre
 # Now pull the perl ones out.
 #
 echo "%defattr (0555, bin, bin)" > gimp-perl-plugin-files
+echo "%dir %{prefix}/lib/gimp/%{subver}/plug-ins" >> gimp-perl-plugin-files
 find $RPM_BUILD_ROOT/%{prefix}/lib/gimp/%{subver} -type f -exec file {} \; | grep perl | cut -d':' -f 1 | sed "s@^$RPM_BUILD_ROOT@@g" >>gimp-perl-plugin-files
 
 #
 # Auto detect the lang files.
 #
 if [ -f /usr/lib/rpm/find-lang.sh ] ; then
- /usr/lib/rpm/find-lang.sh $RPM_BUILD_ROOT %name
+ /usr/lib/rpm/find-lang.sh $RPM_BUILD_ROOT %{name}
  /usr/lib/rpm/find-lang.sh $RPM_BUILD_ROOT gimp-std-plugins
  /usr/lib/rpm/find-lang.sh $RPM_BUILD_ROOT gimp-script-fu
- cat %name.lang gimp-std-plugins.lang gimp-script-fu.lang \
+ cat %{name}.lang gimp-std-plugins.lang gimp-script-fu.lang \
     | sed "s:(644, root, root, 755):(444, bin, bin, 555):" > gimp-all.lang
 fi
 
@@ -153,7 +146,7 @@ done
 #
 # Build the master filelists generated from the above mess.
 #
-cat gimp-help-files gimp-plugin-files gimp-all.lang gimp-tips-files > gimp.files
+cat gimp-plugin-files gimp-all.lang gimp-tips-files > gimp.files
 cat gimp-perl gimp-perl-plugin-files > gimp-perl-files
 
 %clean
@@ -168,7 +161,6 @@ cat gimp-perl gimp-perl-plugin-files > gimp-perl-files
 %attr (0555, bin, man) %doc docs/*.txt docs/*.eps ABOUT-NLS README.i18n README.perl README.win32 TODO
 %defattr (0444, bin, bin, 0555)
 %dir %{prefix}/share/gimp/%{subver}
-%dir %{prefix}/share/gimp/%{subver}/help
 %dir %{prefix}/share/gimp/%{subver}/tips
 %dir %{prefix}/lib/gimp/%{subver}
 %dir %{prefix}/lib/gimp/%{subver}/modules
@@ -180,6 +172,7 @@ cat gimp-perl gimp-perl-plugin-files > gimp-perl-files
 %{prefix}/share/gimp/%{subver}/gflare/
 %{prefix}/share/gimp/%{subver}/gimpressionist/
 %{prefix}/share/gimp/%{subver}/gradients/
+%{prefix}/share/gimp/%{subver}/help/
 %{prefix}/share/gimp/%{subver}/palettes/
 %{prefix}/share/gimp/%{subver}/patterns/
 %{prefix}/share/gimp/%{subver}/scripts/
@@ -217,6 +210,8 @@ cat gimp-perl gimp-perl-plugin-files > gimp-perl-files
 %{prefix}/bin/gimp-config
 %{prefix}/lib/*.so
 %{prefix}/lib/*.la
+%dir %{prefix}/lib/gimp/%{subver}
+%dir %{prefix}/lib/gimp/%{subver}/modules
 %{prefix}/lib/gimp/%{subver}/modules/*.la
 
 %defattr (0444, root, root, 0555)
@@ -232,6 +227,13 @@ cat gimp-perl gimp-perl-plugin-files > gimp-perl-files
 %files perl -f gimp-perl-files
 
 %changelog
+* Fri Apr 14 2000 Matt Wilson <msw@redhat.com>
+- include subdirs in the help find
+- remove gimp-help-files generation
+- both gimp and gimp-perl own prefix/lib/gimp/1.1/plug-ins
+- both gimp and gimp-devel own prefix/lib/gimp/1.1 and
+  prefix/lib/gimp/1.1/modules
+
 * Thu Apr 13 2000 Matt Wilson <msw@redhat.com>
 - 1.1.19
 - get all .mo files
