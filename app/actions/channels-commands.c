@@ -37,8 +37,8 @@
 
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimpitemlistview.h"
 #include "widgets/gimpviewabledialog.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 
@@ -58,13 +58,15 @@ static void   channels_color_changed  (GimpColorButton *button,
 
 
 #define return_if_no_image(gimage,data) \
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget); \
-  if (! GIMP_IS_IMAGE (gimage)) { \
-    if (GIMP_IS_DISPLAY (data)) \
-      gimage = ((GimpDisplay *) data)->gimage; \
-    else if (GIMP_IS_GIMP (data)) \
-      gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
-  } \
+  if (GIMP_IS_DISPLAY (data)) \
+    gimage = ((GimpDisplay *) data)->gimage; \
+  else if (GIMP_IS_GIMP (data)) \
+    gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
+  else if (GIMP_IS_ITEM_LIST_VIEW (data)) \
+    gimage = ((GimpItemListView *) data)->gimage; \
+  else \
+    gimage = NULL; \
+  \
   if (! gimage) \
     return
 
@@ -548,7 +550,7 @@ channels_menu_update (GtkItemFactory *factory,
   GList       *next = NULL;
   GList       *prev = NULL;
 
-  gimage = GIMP_IMAGE (data);
+  gimage = GIMP_ITEM_LIST_VIEW (data)->gimage;
 
   channel = gimp_image_get_active_channel (gimage);
 

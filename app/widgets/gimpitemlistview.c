@@ -357,7 +357,7 @@ gimp_item_list_view_new (gint                  preview_size,
   list_view->item_factory = gimp_menu_factory_menu_new (menu_factory,
                                                         menu_identifier,
                                                         GTK_TYPE_MENU,
-                                                        menu_factory->gimp,
+                                                        list_view,
                                                         FALSE);
 
   /*  connect "drop to new" manually as it makes a difference whether
@@ -536,7 +536,7 @@ gimp_item_list_view_context_item (GimpContainerView *view,
       gimage = gimp_item_get_image (GIMP_ITEM (item));
 
       gimp_item_factory_popup_with_data (item_view->item_factory,
-                                         gimage,
+                                         item_view,
                                          NULL);
     }
 }

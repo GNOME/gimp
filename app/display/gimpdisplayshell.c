@@ -54,7 +54,6 @@
 #include "widgets/gimpdnd.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "gui/info-window.h"
 #include "gui/plug-in-menus.h"
@@ -100,8 +99,6 @@ static void      gimp_display_shell_init          (GimpDisplayShell      *shell)
 static void      gimp_display_shell_destroy            (GtkObject        *object);
 static gboolean  gimp_display_shell_delete_event       (GtkWidget        *widget,
 							GdkEventAny      *aevent);
-
-static gpointer  gimp_display_shell_get_accel_context  (gpointer          data);
 
 static void      gimp_display_shell_display_area       (GimpDisplayShell *shell,
 							gint              x,
@@ -495,10 +492,8 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
                                                      FALSE);
 
   /*  The accelerator table for images  */
-  gimp_window_add_accel_group (GTK_WINDOW (shell),
-			       GTK_ITEM_FACTORY (shell->menubar_factory),
-			       gimp_display_shell_get_accel_context,
-			       shell);
+  gtk_window_add_accel_group (GTK_WINDOW (shell),
+                              GTK_ITEM_FACTORY (shell->menubar_factory)->accel_group);
 
   /*  GtkTable widgets are not able to shrink a row/column correctly if
    *  widgets are attached with GTK_EXPAND even if those widgets have
@@ -1844,19 +1839,6 @@ gimp_display_shell_selection_visibility (GimpDisplayShell     *shell,
 
 
 /*  private functions  */
-
-static gpointer
-gimp_display_shell_get_accel_context (gpointer data)
-{
-  GimpDisplayShell *shell;
-
-  shell = (GimpDisplayShell *) data;
-
-  if (shell)
-    return shell->gdisp->gimage;
-
-  return NULL;
-}
 
 static void
 gimp_display_shell_display_area (GimpDisplayShell *shell,

@@ -1,3 +1,27 @@
+2003-01-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpitemlistview.c: pass the GimpItemListView as
+	"data" to the item_factory callbacks, not just a "Gimp" pointer.
+
+	* app/display/gimpdisplayshell.c: use
+	gtk_window_add_accel_group(), not gimp_window_add_accel_group()
+	because we now attach the menubar's accel group, which has the
+	GimpDisplay as callback data.
+
+	* app/display/gimpdisplayshell-callbacks.c: pass the GimpDisplay
+	as "popup_data" to *_item_factory_popup_with_data().
+
+	* app/gui/channels-commands.c
+	* app/gui/drawable-commands.c
+	* app/gui/layers-commands.c
+	* app/gui/vectors-commands.c: changed accordingly.
+
+	* app/widgets/gimpwidgets-utils.[ch]: removed
+	gimp_window_[add|remove]_accel_group() and
+	gimp_widget_get_callback_context() because they were evil hacks
+	which are no longer needed now that all item_factories have proper
+	callback data (no just Gimp pointers).
+
 2003-01-12  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/plugin-def.pl
@@ -94,7 +118,6 @@
 	* app/gui/images-commands.c
 	* app/gui/palette-editor-commands.c
 	* app/gui/palettes-commands.c
-
 	* app/gui/patterns-commands.c: simply cast the passed "data"
 	pointer instead of calling gimp_widget_get_callback_context().
 	Don't #include "widgets/gimpwidgets-utils.h".

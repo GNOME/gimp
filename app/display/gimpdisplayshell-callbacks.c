@@ -612,7 +612,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           case 3:
             state |= GDK_BUTTON3_MASK;
             gimp_item_factory_popup_with_data (shell->popup_factory,
-                                               gimage,
+                                               gdisp,
                                                NULL);
             return_val = TRUE;
             break;
@@ -989,6 +989,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             else if (! state)
               {
                 /* Hide or show all dialogs */
+
+                g_print ("toggle dialogs\n");
 
                 gimp_dialog_factories_toggle (global_toolbox_factory);
               }
@@ -1574,7 +1576,7 @@ gimp_display_shell_origin_menu_popup (GimpDisplayShell *shell,
                                            shell->origin);
 
   gtk_item_factory_popup_with_data (factory,
-                                    shell->gdisp->gimage,
+                                    shell->gdisp,
                                     NULL,
                                     x, y,
                                     button, time);
