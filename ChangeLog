@@ -1,3 +1,7 @@
+Sat Dec 19 00:01:49 GMT 1998 Andy Thomas <alt@picnic.demon.co.uk>
+
+	Missed app/Makefile.am. Need to add palette_entries.h
+
 Fri Dec 18 23:46:11 GMT 1998 Andy Thomas <alt@picnic.demon.co.uk>
 
 	Changed the palette dialog. New functionality. Better previews. 
