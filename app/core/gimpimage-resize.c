@@ -3697,7 +3697,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   list = gimage->layers;
-  ratio = MIN (1.0, (gdouble) width / (gdouble) gimage->width);
+  ratio = (gdouble) width / (gdouble) gimage->width;
 
   switch (gimp_image_base_type (gimage))
     {

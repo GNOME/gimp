@@ -988,10 +988,10 @@ layers_dialog_preview_extents (void)
   /*  Get the image width and height variables, based on the gimage  */
   if (gimage->width > gimage->height)
     layersD->ratio = 
-      MIN (1.0, (gdouble) preview_size / (gdouble) gimage->width);
+      (gdouble) preview_size / (gdouble) gimage->width;
   else
     layersD->ratio = 
-      MIN (1.0, (gdouble) preview_size / (gdouble) gimage->height);
+      (gdouble) preview_size / (gdouble) gimage->height;
 
   if (preview_size)
     {
