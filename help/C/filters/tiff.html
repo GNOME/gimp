@@ -11,21 +11,50 @@
   <table width="100%" cellspacing="1" cellpadding="1">
     <tr bgcolor="black">
       <td width="100%" align="center">
-        <font size="+2" color="white">tiff help page</font>
+        <font size="+2" color="white">TIFF Help Page</font>
       </td>
     </tr>  
     <tr bgcolor="white" >
-      <td width="100%" align="left">
-	<p>
-	<a href="index.html">Index</a><p>
-	(/filters/tiff.html)<p>
-        Sorry but the help file for tiff is not yet done.
-	<p>
-	/Karin & Olof
-	<p>
+      <td width="100%" align="left"><P>
+	<P>
+	Allows you to configure settings for saving a TIFF (Tagged Image 
+File Format) image.
+	<H4>
+	Compression
+	</H4>
+	TIFF files can be compressed in a number of ways to reduce the 
+filesize. LZW (Lempel Ziv Welch) compression is the same method used in 
+GIF images, and produces a significant reduction in filesize without 
+losing any image information (it is a lossless method). It should 
+be noted that LZW compression is covered by a restrictive Unisys 
+<A href="http://www.unisys.com/unisys/lzw/">license</A>.
+	<P>
+	PackBits compression is often used on Macintosh systems and is 
+a form of Run Length Encoding (RLE) which, like LZW, is a lossless 
+method.
+	<P>
+	Deflate compression, sometime known as "zip" compression, uses 
+another variant of the LZW compression method and so gives similar 
+results, but is not restricted by any licences. LZW compression should 
+be used on logo type images such as maps and line diagrams.
+	<P>
+	JPEG compression is the same compression methods used when 
+saving JPEG files. JPEG compression should be used on photographs or 
+realistic scenes.
+	<P>
+	Finally, you can leave the TIFF uncompressed for maximum 
+quality, but be warned that filesizes can be very large.
+	<H4>
+	Comment
+	</H4>
+	<P>
+	As with JPEG (and some other formats) a comment can be added 
+to the image up to 32KB. A default comment for new images can be set in 
+Preferences.
+	<P>
+	<A href="index.html">Index</A>
       </td>
     </tr>
   </table>
-
 </body>
 </html>

@@ -11,6 +11,7 @@ helpdata_DATA = \
         apply_lens.html \
         autocrop.html \
         autostretch_hsv.html \
+        avi.html \
         blinds.html \
         blur.html \
         bmp.html \
@@ -28,6 +29,7 @@ helpdata_DATA = \
         csource.html \
         cubism.html \
         curve_bend.html \
+        dataurl.html \
         dbbrowser.html \
         decompose.html \
         deinterlace.html \
@@ -61,8 +63,8 @@ helpdata_DATA = \
         gicon.html \
         gif.html \
         gifload.html \
-	gimp_xcf_load.html \
-	gimp_xcf_save.html \
+        gimp_xcf_load.html \
+        gimp_xcf_save.html \
         gimpressionist.html \
         glasstile.html \
         gpb.html \
@@ -91,7 +93,9 @@ helpdata_DATA = \
         max_rgb.html \
         maze.html \
         mblur.html \
+	miff.html \
         mosaic.html \
+        mpeg.html \
         newsprint.html \
         nlfilt.html \
         noisify.html \
@@ -145,7 +149,7 @@ helpdata_DATA = \
         tile.html \
         tileit.html \
         tiler.html \
-	uniteditor.html \
+        uniteditor.html \
         unsharp.html \
         url.html \
         video.html \

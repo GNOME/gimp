@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <title>Help Page for PNG files</title>
+  <title>Help Page for PNG</title>
 </head>
 
 <body text="#000000" bgcolor="#FFFFFF" link="#0000FF"
@@ -11,78 +11,100 @@
   <table width="100%" cellspacing="1" cellpadding="1">
     <tr bgcolor="black">
       <td width="100%" align="center">
-        <font size="+2" color="white">PNG help page</font>
+        <font size="+2" color="white">PNG</font>
       </td>
     </tr>  
     <tr bgcolor="white" >
       <td width="100%" align="left">
-	<p>
-	<a href="index.html">Index</a><p>
+	<p><p>
 
-<h1>Saving PNG files</h1>
-
-<p>Gimp will automatically choose a type of PNG file appropriate to the
+Gimp can load and save PNG (Portable Network Graphics) files.
+<H3>
+Saving PNG files
+</H3>
+<P>
+Gimp will automatically choose a type of PNG file appropriate to the
 image you are saving. All applications which can handle PNG files should
-be able to read <em>any</em> PNG saved from Gimp.</p>
-
-<h2>Parameter Settings</h3>
-<h3>Interlacing (Adam7)</h3>
-<p>The Adam7 interlacing option stores image data in an order
+be able to read any PNG saved from Gimp.
+<H3>
+Parameter Settings
+</H3>
+<H4>
+Interlacing (Adam7)
+</H4>
+<P>
+The Adam7 interlacing option stores image data in an order
 which allows browsers or viewers to show progressively more detail as
-they load the file, at the cost of increased file size.</p>
-<h3>Save background color</h3>
-<p>This adds a bKGD chunk to your PNG file which advises viewer software
+they load the file, at the cost of increased file size.
+<H4>
+Save background color
+</H4>
+<P>
+This adds a bKGD chunk to your PNG file which advises viewer software
 to choose a background color like your currently selected Gimp background
-color. Adding this chunk increases file size slightly.</p>
-<h3>Save gamma</h3>
-<p>This adds a gAMA chunk to your PNG file which reflects the current
+color. Adding this chunk increases file size slightly.
+<H4>
+Save gamma
+</H4>
+<P>
+This adds a gAMA chunk to your PNG file which reflects the current
 Gamma factor for your display (set globally for Gimp). Viewers with a
 different display can compensate to ensure the image doesn't look too
-dark or too bright. Adding this chunk increases file size slightly.</p>
-<h3>Save layer offset</h3>
-<p>If you are saving a single layer which has been shifted (offset)
+dark or too bright. Adding this chunk increases file size slightly.
+<H4>
+Save layer offset
+</H4>
+<P>
+If you are saving a single layer which has been shifted (offset)
 from the top-left of the image, this will add a oFFs chunk to your
 PNG file to preserve this offset factor in other viewers. Adding
-this chunk if it's needed increases file size slightly.</p>
-<h3>Save resolution</h3>
-<p>This adds a pHYs chunk to your PNG which records the physical
+this chunk if it's needed increases file size slightly.
+<H4>
+Save resolution
+</H4>
+<P>
+This adds a pHYs chunk to your PNG which records the physical
 resolution of the image. This is needed by Gimp and other viewers
 for printing or <q>actual size</q> previews. Adding this chunk increases
-file size slightly.</p>
-<h3>Save creation time</h3>
-<p>This adds a tIME chunk to your PNG which records the exact date
+file size slightly.
+<H4>
+Save creation time
+</H4>
+<P>This adds a tIME chunk to your PNG which records the exact date
 and time when the image was last saved. This will be preserved
 and can be viewed in other applications. Adding this chunk increases
-file size slightly.</p>
-<h3>Compression</h3>
-<p>This controls the amount of compression used to reduce the
+file size slightly.
+<H4>
+Compression
+</H4>
+<P>
+This controls the amount of compression used to reduce the
 file size. Larger numbers will usually reduce file size but will
 make saving slower. The default (6) is often an acceptable
 compromise, but see below.
-
-<h2>PNG for the web</h2>
-<p>On the web, size isn't everything but it is important. I suggest
+<P>
+On the web, size isn't everything but it is important. I suggest
 that finished web graphics should be saved with level 9 compression
-and without bKGD, oFFs, pHYs and tIME chunks.</p>
-<p>For large web graphics, like maps and diagrams, you should consider
+and without bKGD, oFFs, pHYs and tIME chunks.
+<P>
+For large web graphics, like maps and diagrams, you should consider
 using Adam7 interlacing. For simple icons or logos, try converting
 with Image/Mode/Indexed... before saving.</p>
-
-<hr>
-<h1>Loading PNG files</h1>
-<p>This plug-in loads all known PNG files with following restrictions:
-</p>
+<H3>
+Loading PNG files</H3>
+<P>
+This plug-in loads all known PNG files with following restrictions:
+</P>
 <ul>
-<li>16 bit <b>per channel</b> data is reduced to 8 bit precision
+<li>16 bit per channel data is reduced to 8 bit precision.
 <li>Transparency in paletted images is preserved but may not be
 properly displayed. Image/Mode/RGB will display the full transparency.
 </ul>
 <p>These restrictions will be addressed in a future version of Gimp.
-</p>
-
+<P>
+<A href="index.html">Index</A>
       </td>
     </tr>
   </table>
-
 </body>
 </html>

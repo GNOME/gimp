@@ -11,21 +11,103 @@
   <table width="100%" cellspacing="1" cellpadding="1">
     <tr bgcolor="black">
       <td width="100%" align="center">
-        <font size="+2" color="white">jpeg help page</font>
+        <font size="+2" color="white">JPEG Help Page</font>
       </td>
     </tr>  
     <tr bgcolor="white" >
-      <td width="100%" align="left">
-	<p>
-	<a href="index.html">Index</a><p>
-	(/filters/jpeg.html)<p>
-        Sorry but the help file for jpeg is not yet done.
-	<p>
-	/Karin & Olof
-	<p>
+      <td width="100%" align="left"><P>
+	<P>
+	Allows you to configure the settings for saving a JPEG image.
+	<H4>
+	Comments
+	</H4>
+	<P>
+	You can add a comment to the image up to 32,768 characters 
+	(32KB) by 
+	entering text in the Image Comments box. A default comment can be 
+	defined in Preferences.
+	<H4>
+	Quality
+	</H4>
+	<P>
+	The parameter settings allow you to alter the way that the 
+	JPEG file is saved to get the best trade-off between image 
+	quality and filesize. The Quality slider changes the quality of 
+	the image - a high number (1.00 being the maximum) gives a 
+	better image quality but a larger filesize. If you check 
+	"Preview (in Image Window)" the image window will dynamically 
+	update as you move the quality slider (or change any of the other 
+	parameter settings) and you will be able to see what the 
+resultant filesize will be in bytes and kilobytes (KB). Note that 
+depending on the size of the image, it may take a moment to update the 
+preview and filesize information after adjusting the settings.
+	<H4>
+	Smoothing
+	</H4>
+	<P>
+	The smoothing slider adjusts how much the image is blurred to 
+make the image appear a higher quality. A higher value will lose some 
+of the detail in an image, but reduce the filesize.
+	<H4>
+	Restart Markers
+	</H4>
+	<P>
+	Restart markers are useful for transmitting an image over an 
+unreliable network. If a file gets corrupted, it will only be corrupted 
+up to the next restart marker. Restart markers add a small amount to the 
+filesize of an image. Restart markers can be between every 1 row (many 
+markers) and every 64 rows (few markers).
+	<H4>
+	Progressive Mode
+	</H4>
+	<P>
+	Progressive mode means that a supporting viewer (such as 
+Netscape Navigator) can show a low quality version of an image which 
+progressively improves as the image loads until the full image is 
+displayed. This may slightly increases filesize (but not always), and 
+is not supported by all viewers.
+	<H4>
+	Force Baseline JPEG
+	</H4>
+	<P>
+	Enabling "Force Baseline JPEG" makes Gimp write a JPEG which 
+will be readable by all decoders (viewers). This often results in a 
+larger filesize and/or worse image quality, especially at low quality 
+settings.
+	<P>
+	<H4>
+	Subsampling
+	</H4>
+	<P>
+	Subsampling defines how information is discarded as a ratio of 
+color (which can be discarded more with less dicernable effect) against 
+brightness. It is defined for the two chroma (color) channels - 
+red/green (Cr) and blue/yellow (Cb) - as relative to the luma 
+(brightness) channel (Y) of the image by downsampling the image by a 
+factor of two in either the <i>x</i> direction only, or both the 
+<i>x</i> and <i>y</i> directions. This is shown by the format Y,Cr,Cb, 
+so "1x1,1x1,1x1" gives no subsampling, and thus the highest image 
+quality. "2x2,1x1,1x1" downsamples both the Cr and Cb channels by half, 
+giving the highest compression available here. "2x1,1x1,1x1" only 
+downsamples the Cr channel, again by half.
+	<H4>
+	DCT Method
+	</H4>
+	<P>
+	The DCT method only influences quality vs. speed. The fastest 
+method is "Fast integer" which has a slight quality disadvantage 
+against "Integer". "Floating-point" may give a marginal increase in 
+quality but will be slower to load.
+	<H3>
+	Additional Information
+	</H3>
+	<P>
+	<A href="http://www.ijg.org/">Independent JPEG Group</A> - Advanced 
+information.
+	<P>
+	<A href="index.html">Index</A>
       </td>
     </tr>
   </table>
-
 </body>
 </html>

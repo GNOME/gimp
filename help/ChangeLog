@@ -1,3 +1,145 @@
+2000-07-29  Sven Neumannn  <sven@gimp.org>
+
+	* C/welcome.html
+	* C/dialogs/about.html
+	* C/dialogs/border_selection.html
+	* C/dialogs/brush_editor.html
+	* C/dialogs/brush_selection.html
+	* C/dialogs/convert_to_indexed.html
+	* C/dialogs/copy_named.html
+	* C/dialogs/cut_named.html
+	* C/dialogs/device_status.html
+	* C/dialogs/document_index.html
+	* C/dialogs/edit_qmask_attributes.html
+	* C/dialogs/error_console.html
+	* C/dialogs/feather_selection.html
+	* C/dialogs/file_new.html
+	* C/dialogs/file_open.html
+	* C/dialogs/file_save.html
+	* C/dialogs/gradient_selection.html
+	* C/dialogs/grow_selection.html
+	* C/dialogs/help.html
+	* C/dialogs/indexed_palette.html
+	* C/dialogs/info_window.html
+	* C/dialogs/input_devices.html
+	* C/dialogs/layers_and_channels.html
+	* C/dialogs/module_browser.html
+	* C/dialogs/navigation_window.html
+	* C/dialogs/offset.html
+	* C/dialogs/palette_selection.html
+	* C/dialogs/paste_named.html
+	* C/dialogs/pattern_selection.html
+	* C/dialogs/really_close.html
+	* C/dialogs/really_quit.html
+	* C/dialogs/scale_image.html
+	* C/dialogs/set_canvas_size.html
+	* C/dialogs/shrink_selection.html
+	* C/dialogs/tip_of_the_day.html
+	* C/dialogs/tool_options.html
+	* C/dialogs/undo_history.html
+	* C/dialogs/channels/channels.html
+	* C/dialogs/channels/edit_channel_attributes.html
+	* C/dialogs/channels/new_channel.html
+	* C/dialogs/color_selectors/built_in.html
+	* C/dialogs/color_selectors/gtk.html
+	* C/dialogs/color_selectors/triangle.html
+	* C/dialogs/color_selectors/watercolor.html
+	* C/dialogs/display_filters/display_filters.html
+	* C/dialogs/display_filters/gamma.html
+	* C/dialogs/gradient_editor/copy_gradient.html
+	* C/dialogs/gradient_editor/delete_gradient.html
+	* C/dialogs/gradient_editor/gradient_editor.html
+	* C/dialogs/gradient_editor/new_gradient.html
+	* C/dialogs/gradient_editor/rename_gradient.html
+	* C/dialogs/gradient_editor/replicate_segment.html
+	* C/dialogs/gradient_editor/save_as_pov_ray.html
+	* C/dialogs/gradient_editor/split_segments_uniformly.html
+	* C/dialogs/layers/add_mask.html
+	* C/dialogs/layers/edit_layer_attributes.html
+	* C/dialogs/layers/layer_boundary_size.html
+	* C/dialogs/layers/layers.html
+	* C/dialogs/layers/merge_visible_layers.html
+	* C/dialogs/layers/new_layer.html
+	* C/dialogs/layers/scale_layer.html
+	* C/dialogs/palette_editor/delete_palette.html
+	* C/dialogs/palette_editor/import_palette.html
+	* C/dialogs/palette_editor/merge_palette.html
+	* C/dialogs/palette_editor/new_palette.html
+	* C/dialogs/palette_editor/palette_editor.html
+	* C/dialogs/paths/export_path.html
+	* C/dialogs/paths/import_path.html
+	* C/dialogs/paths/paths.html
+	* C/dialogs/paths/rename_path.html
+	* C/dialogs/preferences/directories.html
+	* C/dialogs/preferences/display.html
+	* C/dialogs/preferences/environment.html
+	* C/dialogs/preferences/interface.html
+	* C/dialogs/preferences/monitor.html
+	* C/dialogs/preferences/new_file.html
+	* C/dialogs/preferences/preferences.html
+	* C/dialogs/preferences/session.html
+	* C/file/close.html
+	* C/file/last_opened.html
+	* C/file/quit.html
+	* C/file/revert.html
+	* C/filters/Makefile.am
+	* C/filters/fits.html
+	* C/filters/gtm.html
+	* C/filters/hrz.html
+	* C/filters/index.html
+	* C/filters/jpeg.html
+	* C/filters/png.html
+	* C/filters/pnm.html
+	* C/filters/psd.html
+	* C/filters/sgi.html
+	* C/filters/sunras.html
+	* C/filters/tga.html
+	* C/filters/tiff.html
+	* C/filters/url.html
+	* C/filters/wmf.html
+	* C/image/image_window.html
+	* C/image/edit/clear.html
+	* C/image/edit/copy.html
+	* C/image/edit/cut.html
+	* C/image/edit/paste.html
+	* C/image/edit/paste_as_new.html
+	* C/image/edit/paste_into.html
+	* C/image/edit/redo.html
+	* C/image/edit/stroke.html
+	* C/image/edit/undo.html
+	* C/image/image/duplicate.html
+	* C/image/image/colors/desaturate.html
+	* C/image/image/colors/index.html
+	* C/image/image/colors/invert.html
+	* C/image/image/colors/auto/equalize.html
+	* C/image/image/colors/auto/index.html
+	* C/image/image/mode/convert_to_grayscale.html
+	* C/image/image/mode/convert_to_rgb.html
+	* C/image/image/mode/index.html
+	* C/image/select/all.html
+	* C/image/select/float.html
+	* C/image/select/invert.html
+	* C/image/select/none.html
+	* C/image/select/save_to_channel.html
+	* C/image/select/sharpen.html
+	* C/image/view/new_view.html
+	* C/image/view/shrink_wrap.html
+	* C/image/view/toggle_rulers.html
+	* C/image/view/toggle_selection.html
+	* C/image/view/toggle_statusbar.html
+	* C/image/view/zoom.html
+	* C/open/open_by_extension.html
+	* C/save/save_by_extension.html: commited a fat bunch of
+	changes from the new maintainer of the help system
+	Piers Cornwell <piers.cornwell@bigfoot.com> who has taken
+	the burden to continue this project Karin and Olof started.
+	I am sure he would love to get some help with it...
+
+	* C/filters/avi.html
+	* C/filters/dataurl.html
+	* C/filters/miff.html
+	* C/filters/mpeg.html: new files, also from Piers Cornwell
+
 2000-06-30  Nick Lamb  <njl195@zepler.org.uk>
 
 	* C/filters/png.html: PNG documented to my satisfaction
