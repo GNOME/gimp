@@ -1,5 +1,13 @@
 2004-10-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable-stroke.c
+	(gimp_drawable_stroke_scan_convert): Replacing the call to
+	gimp_channel_is_empty() by a simple gimp_drawable_mask_intersect()
+	was wrong because gimp_channel_is_empty() makes sure that the
+	selection doesn't mask itself while being stroked.
+
+2004-10-20  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/raw.c: ported to GimpPreviewArea.
 
 2004-10-20  Michael Natterer  <mitch@gimp.org>
