@@ -2,6 +2,7 @@
 
 	* plug-ins/common/CEL.c: fixed coding style issues, removed
 	trailing whitespace, use gsize instead of size_t.
+	(need_palette): check the return value of fopen() before using it.
 
 2004-01-05  Dov Grobgeld  <dov@imagic.weizmann.ac.il>
 

@@ -229,13 +229,17 @@ run (const gchar      *name,
 static gboolean
 need_palette (const gchar *file)
 {
-  FILE *fp = fopen (file, "rb");
-  guchar header[32];
+  FILE   *fp
+  guchar  header[32];
+
+  fp = fopen (file, "rb");
+  if (!fp)
+    return FALSE;
 
   fread (header, 32, 1, fp);
   fclose (fp);
 
-  return header[5] < 32;
+  return (header[5] < 32);
 }
 
 /* Load CEL image into The GIMP */
