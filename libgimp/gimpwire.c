@@ -5,8 +5,8 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- *             
- * This library is distributed in the hope that it will be useful,              
+ *
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
@@ -43,24 +43,24 @@ typedef struct _WireHandler  WireHandler;
 
 struct _WireHandler
 {
-  guint32 type;
-  WireReadFunc read_func;
-  WireWriteFunc write_func;
+  guint32         type;
+  WireReadFunc    read_func;
+  WireWriteFunc   write_func;
   WireDestroyFunc destroy_func;
 };
 
 
-static void  wire_init    (void);
-static guint wire_hash    (guint32 *key);
-static gint  wire_compare (guint32 *a,
-			   guint32 *b);
+static void      wire_init    (void);
+static guint     wire_hash    (guint32 *key);
+static gboolean  wire_compare (guint32 *a,
+			       guint32 *b);
 
 
-static GHashTable *wire_ht = NULL;
-static WireIOFunc wire_read_func = NULL;
-static WireIOFunc wire_write_func = NULL;
-static WireFlushFunc wire_flush_func = NULL;
-static int wire_error_val = FALSE;
+static GHashTable    *wire_ht = NULL;
+static WireIOFunc     wire_read_func = NULL;
+static WireIOFunc     wire_write_func = NULL;
+static WireFlushFunc  wire_flush_func = NULL;
+static gboolean       wire_error_val = FALSE;
 
 
 void
@@ -78,9 +78,9 @@ wire_register (guint32         type,
   if (!handler)
     handler = g_new (WireHandler, 1);
 
-  handler->type = type;
-  handler->read_func = read_func;
-  handler->write_func = write_func;
+  handler->type         = type;
+  handler->read_func    = read_func;
+  handler->write_func   = write_func;
   handler->destroy_func = destroy_func;
 
   g_hash_table_insert (wire_ht, &handler->type, handler);
@@ -104,7 +104,7 @@ wire_set_flusher (WireFlushFunc flush_func)
   wire_flush_func = flush_func;
 }
 
-int
+gboolean
 wire_read (GIOChannel *channel,
 	   guint8     *buf,
 	   gulong      count)
@@ -121,14 +121,17 @@ wire_read (GIOChannel *channel,
   else
     {
       GIOError error;
-      guint bytes;
+      guint    bytes;
 
       while (count > 0)
 	{
-	  do {
-	    bytes = 0;
-	    error = g_io_channel_read (channel, (char*) buf, count, &bytes);
-	  } while (error == G_IO_ERROR_AGAIN);
+	  do
+	    {
+	      bytes = 0;
+	      error = g_io_channel_read (channel, (char*) buf, count, &bytes);
+	    }
+	  while ((error == G_IO_ERROR_AGAIN) ||
+		 (error == G_IO_ERROR_UNKNOWN && errno == EINTR));
 
 	  if (error != G_IO_ERROR_NONE)
 	    {
@@ -137,7 +140,7 @@ wire_read (GIOChannel *channel,
 	      return FALSE;
 	    }
 
-	  if (bytes == 0) 
+	  if (bytes == 0)
 	    {
 	      g_warning ("%s: wire_read: unexpected EOF", g_get_prgname ());
 	      wire_error_val = TRUE;
@@ -152,7 +155,7 @@ wire_read (GIOChannel *channel,
   return TRUE;
 }
 
-int
+gboolean
 wire_write (GIOChannel *channel,
 	    guint8     *buf,
 	    gulong      count)
@@ -169,14 +172,17 @@ wire_write (GIOChannel *channel,
   else
     {
       GIOError error;
-      guint bytes;
+      guint    bytes;
 
       while (count > 0)
 	{
-	  do {
-	    bytes = 0;
-	    error = g_io_channel_write (channel, (char*) buf, count, &bytes);
-	  } while (error == G_IO_ERROR_AGAIN);
+	  do
+	    {
+	      bytes = 0;
+	      error = g_io_channel_write (channel, (char*) buf, count, &bytes);
+	    }
+	  while ((error == G_IO_ERROR_AGAIN) ||
+		 (error == G_IO_ERROR_UNKNOWN && errno == EINTR));
 
 	  if (error != G_IO_ERROR_NONE)
 	    {
@@ -193,27 +199,28 @@ wire_write (GIOChannel *channel,
   return TRUE;
 }
 
-int
+gboolean
 wire_flush (GIOChannel *channel)
 {
   if (wire_flush_func)
     return (* wire_flush_func) (channel);
+
   return FALSE;
 }
 
-int
-wire_error ()
+gboolean
+wire_error (void)
 {
   return wire_error_val;
 }
 
 void
-wire_clear_error ()
+wire_clear_error (void)
 {
   wire_error_val = FALSE;
 }
 
-int
+gboolean
 wire_read_msg (GIOChannel  *channel,
 	       WireMessage *msg)
 {
@@ -234,7 +241,7 @@ wire_read_msg (GIOChannel  *channel,
   return !wire_error_val;
 }
 
-int
+gboolean
 wire_write_msg (GIOChannel  *channel,
 		WireMessage *msg)
 {
@@ -267,7 +274,7 @@ wire_destroy (WireMessage *msg)
   (* handler->destroy_func) (msg);
 }
 
-int
+gboolean
 wire_read_int32 (GIOChannel *channel,
 		 guint32    *data,
 		 gint        count)
@@ -287,7 +294,7 @@ wire_read_int32 (GIOChannel *channel,
   return TRUE;
 }
 
-int
+gboolean
 wire_read_int16 (GIOChannel *channel,
 		 guint16    *data,
 		 gint        count)
@@ -307,7 +314,7 @@ wire_read_int16 (GIOChannel *channel,
   return TRUE;
 }
 
-int
+gboolean
 wire_read_int8 (GIOChannel *channel,
 		guint8     *data,
 		gint        count)
@@ -315,13 +322,13 @@ wire_read_int8 (GIOChannel *channel,
   return wire_read (channel, data, count);
 }
 
-int
+gboolean
 wire_read_double (GIOChannel *channel,
 		  gdouble    *data,
 		  gint        count)
 {
-  char *str;
-  int i;
+  gchar *str;
+  gint   i;
 
   for (i = 0; i < count; i++)
     {
@@ -334,13 +341,13 @@ wire_read_double (GIOChannel *channel,
   return TRUE;
 }
 
-int
+gboolean
 wire_read_string (GIOChannel  *channel,
 		  gchar      **data,
 		  gint         count)
 {
   guint32 tmp;
-  int i;
+  gint    i;
 
   for (i = 0; i < count; i++)
     {
@@ -365,13 +372,13 @@ wire_read_string (GIOChannel  *channel,
   return TRUE;
 }
 
-int
+gboolean
 wire_write_int32 (GIOChannel *channel,
 		  guint32    *data,
 		  gint        count)
 {
   guint32 tmp;
-  int i;
+  gint    i;
 
   if (count > 0)
     {
@@ -386,13 +393,13 @@ wire_write_int32 (GIOChannel *channel,
   return TRUE;
 }
 
-int
+gboolean
 wire_write_int16 (GIOChannel *channel,
 		  guint16    *data,
 		  gint        count)
 {
   guint16 tmp;
-  int i;
+  gint    i;
 
   if (count > 0)
     {
@@ -407,7 +414,7 @@ wire_write_int16 (GIOChannel *channel,
   return TRUE;
 }
 
-int
+gboolean
 wire_write_int8 (GIOChannel *channel,
 		 guint8     *data,
 		 gint        count)
@@ -415,18 +422,19 @@ wire_write_int8 (GIOChannel *channel,
   return wire_write (channel, data, count);
 }
 
-int
+gboolean
 wire_write_double (GIOChannel *channel,
 		   gdouble    *data,
 		   gint        count)
 {
-  gchar *t, buf[128];
-  int i;
+  gchar *t;
+  gchar  buf[128];
+  gint   i;
 
   t = buf;
   for (i = 0; i < count; i++)
     {
-      sprintf (buf, "%0.50e", data[i]);
+      g_snprintf (buf, sizeof (buf), "%0.50e", data[i]);
       if (!wire_write_string (channel, &t, 1))
 	return FALSE;
     }
@@ -434,13 +442,13 @@ wire_write_double (GIOChannel *channel,
   return TRUE;
 }
 
-int
+gboolean
 wire_write_string (GIOChannel  *channel,
 		   gchar      **data,
 		   gint         count)
 {
   guint32 tmp;
-  int i;
+  gint    i;
 
   for (i = 0; i < count; i++)
     {
@@ -460,7 +468,7 @@ wire_write_string (GIOChannel  *channel,
 }
 
 static void
-wire_init ()
+wire_init (void)
 {
   if (!wire_ht)
     {
@@ -475,7 +483,7 @@ wire_hash (guint32 *key)
   return *key;
 }
 
-static gint
+static gboolean
 wire_compare (guint32 *a,
 	      guint32 *b)
 {

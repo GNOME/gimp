@@ -1,3 +1,26 @@
+2000-05-14  Michael Natterer  <mitch@gimp.org>
+
+	After a weekend of extensive mail exchange with the signal crew,
+	we finally found that #2742 is not a Gimp bug but a real OSF/1
+	bug. OSF/1 does _not_ reliably restart read() and write() calls
+	on certain slow devices (pipes).
+
+	* libgimp/gimpwire.[ch]: guard all read/write calls on the wire
+	with loops checking for EINTR. This has to be done "manually"
+	as glib's GIOChannels return G_IO_ERROR_UNKNOWN on the occurence
+	of EINTR (which is a bug, too).
+	s/int/gboolean and minor cleanups while I was on it (not changing
+	any logic).
+
+	This fix depends on the current (broken) state of the GIOChannel
+	implementation and is scheduled for removal as soon as glib
+	behaves nicely here.
+
+	Left SA_RESTART there for the moment in app/main.c. See it as
+	defensive programming or just my fear to change two #2742-related
+	places at the same time. We might choose to remove SA_RESTART
+	later. Many thanks again to Austin, Garry and Tim.
+
 2000-05-12  Sven Neumann  <sven@gimp.org>
 
 	* gimpdrawable.c: enabled the (commented out) signal 
