@@ -466,6 +466,13 @@ size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_TEMPLATE ##### -->
+<para>
+<inlinegraphic fileref="stock-template-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_IMAGES ##### -->
 <para>
 <inlinegraphic fileref="stock-images-24.png" format="png"></inlinegraphic>
@@ -901,6 +908,13 @@ size).
 <!-- ##### MACRO GIMP_STOCK_VCHAIN_BROKEN ##### -->
 <para>
 <inlinegraphic fileref="stock-vchain-broken-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TEXTURE ##### -->
+<para>
+<inlinegraphic fileref="stock-texture-64.png" format="png"></inlinegraphic>
 </para>
 
 
