@@ -23,6 +23,7 @@
 #include "gui-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
@@ -71,13 +72,18 @@ tools_select_cmd_callback (GtkWidget *widget,
 			   gpointer   data,
 			   guint      action)
 {
+  Gimp         *gimp;
   GimpToolInfo *tool_info;
   GimpContext  *context;
-  GimpDisplay  *gdisp;
+  const gchar  *identifier;
+  return_if_no_gimp (gimp, data);
 
-  tool_info = GIMP_TOOL_INFO (data);
+  identifier = g_quark_to_string ((GQuark) action);
 
-  context = gimp_get_user_context (tool_info->gimp);
+  tool_info = (GimpToolInfo *)
+    gimp_container_get_child_by_name (gimp->tool_info_list, identifier);
+
+  context = gimp_get_user_context (gimp);
 
   /*  always allocate a new tool when selected from the image menu
    */
@@ -90,7 +96,5 @@ tools_select_cmd_callback (GtkWidget *widget,
       gimp_context_tool_changed (context);
     }
 
-  gdisp = gimp_context_get_display (context);
-
-  tool_manager_initialize_active (tool_info->gimp, gdisp);
+  tool_manager_initialize_active (gimp, gimp_context_get_display (context));
 }

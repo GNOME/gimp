@@ -1,3 +1,28 @@
+2003-06-10  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/tools-commands.c (tools_select_cmd_callback): expects
+	the tool identifier as a GQuark now.
+
+	* app/gui/image-menu.c: changed accordingly. Removed code that
+	used to move the menu entries for the color correction tools to
+	the Layers menu. Added the respective menu entries by hand. Added
+	a menu entry for arbitrary rotations and one for Select by Color.
+
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c: register the color correction
+	tools in the Tools menu.
+
+	* app/tools/gimptransformtool.c: added an initialize method and
+	moved most initalization code from button_press to this place.
+
 2003-06-10  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/film.c: treeviewized and undeprecated. Enabled

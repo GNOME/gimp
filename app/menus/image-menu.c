@@ -260,6 +260,11 @@ GimpItemFactoryEntry image_menu_entries[] =
       select_float_cmd_callback, 0 },
     NULL,
     "select/float.html", NULL },
+  { { N_("/Select/By Color"), "<shift>O",
+      tools_select_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_BY_COLOR_SELECT },
+    "gimp-by-color-select-tool",
+    "tools/by_color_select.html", NULL },
 
   MENU_SEPARATOR ("/Select/---"),
 
@@ -620,6 +625,52 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_BRANCH (N_("/Layer/_Colors")),
 
+  { { N_("/Layer/Colors/Color Balance..."), NULL,
+      tools_select_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_COLOR_BALANCE },
+    "gimp-color-balance-tool",
+    "tools/color_balance.html", NULL },    
+  { { N_("/Layer/Colors/Hue-Saturation..."), NULL,
+      tools_select_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_HUE_SATURATION },
+    "gimp-hue-saturation-tool",
+    "tools/hue_saturation.html", NULL },    
+  { { N_("/Layer/Colors/Colorize..."), NULL,
+      tools_select_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_COLORIZE },
+    "gimp-colorize-tool",
+    "tools/colorize.html", NULL },    
+  { { N_("/Layer/Colors/Brightness-Contrast..."), NULL,
+      tools_select_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST },
+    "gimp-brightness-contrast-tool",
+    "tools/brightness-contrast.html", NULL },    
+  { { N_("/Layer/Colors/Threshold..."), NULL,
+      tools_select_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_THRESHOLD },
+    "gimp-threshold-tool",
+    "tools/threshold.html", NULL },    
+  { { N_("/Layer/Colors/Threshold..."), NULL,
+      tools_select_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_THRESHOLD },
+    "gimp-threshold-tool",
+    "tools/threshold.html", NULL },    
+  { { N_("/Layer/Colors/Levels..."), NULL,
+      tools_select_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_LEVELS },
+    "gimp-levels-tool",
+    "tools/levels.html", NULL },    
+  { { N_("/Layer/Colors/Curves..."), NULL,
+      tools_select_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_CURVES },
+    "gimp-curves-tool",
+    "tools/curves.html", NULL },    
+  { { N_("/Layer/Colors/Posterize..."), NULL,
+      tools_select_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_POSTERIZE },
+    "gimp-posterize-tool",
+    "tools/posterize.html", NULL },    
+
   MENU_SEPARATOR ("/Layer/Colors/---"),
 
   { { N_("/Layer/Colors/Desaturate"), NULL,
@@ -643,6 +694,12 @@ GimpItemFactoryEntry image_menu_entries[] =
     "layers/colors/auto/equalize.html", NULL },
 
   MENU_SEPARATOR ("/Layer/Colors/---"),
+
+  { { N_("/Layer/Colors/Histogram..."), NULL,
+      tools_select_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_HISTOGRAM },
+    "gimp-histogram-tool",
+    "tools/histogram.html", NULL },    
 
   /*  <Image>/Layer/Mask  */
 
@@ -714,7 +771,12 @@ GimpItemFactoryEntry image_menu_entries[] =
       drawable_rotate_cmd_callback, GIMP_ROTATE_180,
       "<StockItem>", GIMP_STOCK_ROTATE_180 },
     NULL,
-    "layers/rotate_layer.html", NULL },
+    "layers/rotate_layer.html", NULL },    
+  { { N_("/Layer/Transform/Arbitrary Rotation..."), NULL,
+      tools_select_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_ROTATE },
+    "gimp-rotate-tool",
+    "layers/rotate_layer.html", NULL },    
 
   MENU_SEPARATOR ("/Layer/Transform/---"),
 
@@ -772,6 +834,7 @@ GimpItemFactoryEntry image_menu_entries[] =
   MENU_BRANCH (N_("/Tools/_Selection Tools")),
   MENU_BRANCH (N_("/Tools/_Paint Tools")),
   MENU_BRANCH (N_("/Tools/_Transform Tools")),
+  MENU_BRANCH (N_("/Tools/_Color Tools")),
 
   /*  <Image>/Dialogs  */
 
@@ -970,18 +1033,8 @@ image_menu_setup (GimpItemFactory *factory)
 
   /*  create tool menu items  */
   {
-    static const gchar *color_tools[] = { "gimp-color-balance-tool",
-                                          "gimp-hue-saturation-tool",
-                                          "gimp-colorize-tool",
-                                          "gimp-brightness-contrast-tool",
-                                          "gimp-threshold-tool",
-                                          "gimp-levels-tool",
-                                          "gimp-curves-tool",
-					  "gimp-posterize-tool" };
-    GtkWidget    *menu_item;
     GimpToolInfo *tool_info;
     GList        *list;
-    gint          i;
 
     for (list = GIMP_LIST (factory->gimp->tool_info_list)->list;
          list;
@@ -993,8 +1046,10 @@ image_menu_setup (GimpItemFactory *factory)
           {
             GimpItemFactoryEntry  entry;
             const gchar          *stock_id;
+            const gchar          *identifier;
 
             stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+            identifier = gimp_object_get_name (GIMP_OBJECT (tool_info));
 
             entry.entry.path            = tool_info->menu_path;
             entry.entry.accelerator     = tool_info->menu_accel;
@@ -1002,31 +1057,15 @@ image_menu_setup (GimpItemFactory *factory)
             entry.entry.callback_action = 0;
             entry.entry.item_type       = "<StockItem>";
             entry.entry.extra_data      = stock_id;
-            entry.quark_string          = NULL;
+            entry.quark_string          = identifier;
             entry.help_page             = tool_info->help_data;
             entry.description           = NULL;
 
             gimp_item_factory_create_item (factory,
                                            &entry,
                                            NULL,
-                                           tool_info, 2,
+                                           factory->gimp, 2,
                                            TRUE, FALSE);
-          }
-      }
-
-    /*  reorder color tools to the top of the Layers/Colors menu  */
-    for (i = 0; i < G_N_ELEMENTS (color_tools); i++)
-      {
-        tool_info = (GimpToolInfo *)
-          gimp_container_get_child_by_name (factory->gimp->tool_info_list,
-                                            color_tools[i]);
-
-        menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (factory),
-                                                 tool_info->menu_path);
-        if (menu_item && menu_item->parent)
-          {
-            gtk_menu_reorder_child (GTK_MENU (menu_item->parent),
-                                    menu_item, i + 1);
           }
       }
   }
@@ -1330,6 +1369,7 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Select/None",             lp && sel);
   SET_SENSITIVE ("/Select/Invert",           lp && sel);
   SET_SENSITIVE ("/Select/Float",            lp && sel);
+  SET_SENSITIVE ("/Select/By Color",         lp);
 
   SET_SENSITIVE ("/Select/Feather...",       lp && sel);
   SET_SENSITIVE ("/Select/Sharpen",          lp && sel);

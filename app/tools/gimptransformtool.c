@@ -72,6 +72,8 @@ static void   gimp_transform_tool_class_init  (GimpTransformToolClass *tool);
 
 static void   gimp_transform_tool_finalize         (GObject           *object);
 
+static void   gimp_transform_tool_initialize       (GimpTool          *tool,
+                                                    GimpDisplay       *gdisp);
 static void   gimp_transform_tool_control          (GimpTool          *tool,
                                                     GimpToolAction     action,
                                                     GimpDisplay       *gdisp);
@@ -184,6 +186,7 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
 
   object_class->finalize     = gimp_transform_tool_finalize;
 
+  tool_class->initialize     = gimp_transform_tool_initialize;
   tool_class->control        = gimp_transform_tool_control;
   tool_class->button_press   = gimp_transform_tool_button_press;
   tool_class->button_release = gimp_transform_tool_button_release;
@@ -273,6 +276,64 @@ gimp_transform_tool_finalize (GObject *object)
 }
 
 static void
+gimp_transform_tool_initialize (GimpTool    *tool,
+				GimpDisplay *gdisp)
+{
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
+
+  if (gdisp != tool->gdisp)
+    {
+      GimpDrawable *drawable = gimp_image_active_drawable (gdisp->gimage);
+
+      if (GIMP_IS_LAYER (drawable) &&
+          gimp_layer_get_mask (GIMP_LAYER (drawable)))
+        {
+          g_message (_("Transformations do not work on\n"
+                       "layers that contain layer masks."));
+          return;
+        }
+
+      /*  Set the pointer to the active display  */
+      tool->gdisp    = gdisp;
+      tool->drawable = drawable;
+
+      if (! gimp_tool_control_is_active (tool->control))
+        gimp_tool_control_activate (tool->control);
+
+      /*  Initialize the transform tool dialog */
+      if (! tr_tool->info_dialog)
+        gimp_transform_tool_dialog (tr_tool);
+
+      /*  Find the transform bounds for some tools (like scale,
+       *  perspective) that actually need the bounds for
+       *  initializing
+       */
+      gimp_transform_tool_bounds (tr_tool, gdisp);
+
+      gimp_transform_tool_prepare (tr_tool, gdisp);
+
+      /*  Recalculate the transform tool  */
+      gimp_transform_tool_recalc (tr_tool, gdisp);
+
+      /*  start drawing the bounding box and handles...  */
+      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
+
+      tr_tool->function = TRANSFORM_CREATING;
+    }
+
+  if (tr_tool->function == TRANSFORM_CREATING &&
+      gimp_tool_control_is_active (tool->control))
+    {
+      gint i;
+
+      /*  Save the current transformation info  */
+      for (i = 0; i < TRAN_INFO_SIZE; i++)
+	tr_tool->old_trans_info[i] = tr_tool->trans_info[i];
+    }
+
+}
+
+static void
 gimp_transform_tool_control (GimpTool       *tool,
 			     GimpToolAction  action,
 			     GimpDisplay    *gdisp)
@@ -310,14 +371,8 @@ gimp_transform_tool_button_press (GimpTool        *tool,
 			          GimpDisplay     *gdisp)
 {
   GimpTransformTool *tr_tool;
-  GimpDrawTool      *draw_tool;
-  GimpDrawable      *drawable;
-  gint               off_x, off_y;
 
-  tr_tool   = GIMP_TRANSFORM_TOOL (tool);
-  draw_tool = GIMP_DRAW_TOOL (tool);
-
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
   if (tr_tool->use_grid && ! tr_tool->notify_connected)
     {
@@ -338,82 +393,6 @@ gimp_transform_tool_button_press (GimpTool        *tool,
                                tr_tool, 0);
 
       tr_tool->notify_connected = TRUE;
-    }
-
-  if (gdisp != tool->gdisp)
-    {
-      /*  Initialisation stuff: if the cursor is clicked inside the current
-       *  selection, show the bounding box and handles...
-       */
-      gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
-
-      if (coords->x >= off_x &&
-          coords->y >= off_y &&
-          coords->x < (off_x + gimp_item_width  (GIMP_ITEM (drawable))) &&
-          coords->y < (off_y + gimp_item_height (GIMP_ITEM (drawable))) &&
-
-          (gimp_image_mask_is_empty (gdisp->gimage) ||
-           gimp_image_mask_value (gdisp->gimage, coords->x, coords->y)))
-        {
-          if (GIMP_IS_LAYER (drawable) &&
-              gimp_layer_get_mask (GIMP_LAYER (drawable)))
-            {
-              g_message (_("Transformations do not work on\n"
-                           "layers that contain layer masks."));
-              gimp_tool_control_halt (tool->control);
-              return;
-            }
-
-          /*  If the tool is already active, clear the current state
-           *  and reset
-           */
-          if (gimp_tool_control_is_active (tool->control))
-            {
-              g_warning ("%s: tool_already ACTIVE", G_GNUC_FUNCTION);
-
-              gimp_transform_tool_reset (tr_tool);
-            }
-
-          /*  Set the pointer to the active display  */
-          tool->gdisp    = gdisp;
-          tool->drawable = drawable;
-
-          if (! gimp_tool_control_is_active (tool->control))
-            gimp_tool_control_activate (tool->control);
-
-          /*  Find the transform bounds for some tools (like scale,
-           *  perspective) that actually need the bounds for
-           *  initializing
-           */
-          gimp_transform_tool_bounds (tr_tool, gdisp);
-
-          /*  Initialize the transform tool */
-          if (! tr_tool->info_dialog)
-            gimp_transform_tool_dialog (tr_tool);
-
-          gimp_transform_tool_prepare (tr_tool, gdisp);
-
-          /*  Recalculate the transform tool  */
-          gimp_transform_tool_recalc (tr_tool, gdisp);
-
-          /*  start drawing the bounding box and handles...  */
-          gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
-
-          /*  find which handle we're dragging  */
-          gimp_transform_tool_oper_update (tool, coords, state, gdisp);
-
-          tr_tool->function = TRANSFORM_CREATING;
-        }
-    }
-
-  if (tr_tool->function == TRANSFORM_CREATING &&
-      gimp_tool_control_is_active (tool->control))
-    {
-      gint i;
-
-      /*  Save the current transformation info  */
-      for (i = 0; i < TRAN_INFO_SIZE; i++)
-	tr_tool->old_trans_info[i] = tr_tool->trans_info[i];
     }
 
   /*  if we have already displayed the bounding box and handles,
@@ -662,6 +641,7 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 {
+  GimpTool             *tool;
   GimpTransformTool    *tr_tool;
   GimpTransformOptions *options;
   gint                  i, k, gci;
@@ -671,7 +651,8 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   if (! tr_tool->use_grid)
     return;
 
-  options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (draw_tool)->tool_info->tool_options);
+  tool = GIMP_TOOL (draw_tool);
+  options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
 
   /*  draw the bounding box  */
   gimp_draw_tool_draw_line (draw_tool,
@@ -761,7 +742,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 	}
 
 #if 0
-      path_transform_draw_current (GIMP_TOOL (draw_tool)->gdisp,
+      path_transform_draw_current (tool->gdisp,
                                    draw_tool, tmp_matrix);
 #endif
     }
@@ -839,7 +820,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
 {
   GimpTool             *tool;
   GimpTransformOptions *options;
-  GimpItem             *active_item;
+  GimpItem             *active_item = NULL;
   TileManager          *new_tiles;
   gboolean              new_layer;
 
