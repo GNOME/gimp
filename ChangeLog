@@ -1,5 +1,9 @@
 2004-08-01  DindinX  <david@dindinx.org>
 
+	* plug-ins/common/tileit.c: ported to GimpPreviewArea.
+
+2004-08-01  DindinX  <david@dindinx.org>
+
 	* plug-ins/common/sinus.c: ported to GimpPreviewArea.
 
 2004-08-01  Manish Singh  <yosh@gimp.org>
