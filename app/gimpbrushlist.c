@@ -453,12 +453,12 @@ gimp_brush_list_get_brush (GimpBrushList *blist,
 			   gchar         *name)
 {
   GimpBrush *brushp;
-  GSList *list;
+  GSList    *list;
 
-  if (blist == NULL)
+  if (blist == NULL || name == NULL)
     return NULL;
 
-  for (list = GIMP_LIST (brush_list)->list; list; list = g_slist_next (list))
+  for (list = GIMP_LIST (blist)->list; list; list = g_slist_next (list))
     {
       brushp = (GimpBrush *) list->data;
 
@@ -468,3 +468,4 @@ gimp_brush_list_get_brush (GimpBrushList *blist,
 
   return NULL;
 }
+

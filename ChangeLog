@@ -1,3 +1,17 @@
+2001-01-09  Sven Neumann  <sven@gimp.org>
+
+	Merged fix from gimp-1-2:
+	
+	* app/gimpbrushlist.c
+	* app/gradient.c
+	* app/palette.c
+	* app/patterns.c: check for NULL pointers before doing strcmp on
+	default names. The default names for brushes, patterns, ... can 
+	be NULL if they were not set in a readable gimprc file.
+
+	* app/gimprc.c: warn the user if the systemwide gimprc couldn't be
+	read.
+
 2001-01-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/color_notebook.c: Show the "Alpha" scale only when needed.

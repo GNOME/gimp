@@ -426,8 +426,9 @@ parse_gimprc (void)
   else
     libfilename = g_strdup (gimp_system_rc_file ());
     
-  parse_gimprc_file (libfilename);
-
+  if (! parse_gimprc_file (libfilename))
+    g_message ("Can't open '%s' for reading.", libfilename);
+  
   if (alternate_gimprc != NULL) 
     filename = g_strdup (alternate_gimprc);
   else 

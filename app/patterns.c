@@ -158,6 +158,9 @@ pattern_list_get_pattern (GSList *list,
 {
   GPattern *pattern;
 
+  if (name == NULL)
+    return NULL;
+
   for (; list; list = g_slist_next (list))
     {
       pattern = (GPattern *) list->data;

@@ -482,7 +482,8 @@ palette_entries_load (gchar *filename)
   palette_entries_list_insert (entries);
 
   /*  Check if the current palette is the default one  */
-  if (strcmp (default_palette, g_basename (filename)) == 0)
+  if (default_palette && 
+      strcmp (default_palette, g_basename (filename)) == 0)
     default_palette_entries = entries;
 }
 
