@@ -10,15 +10,18 @@
 
 2003-02-12  Michael Natterer  <mitch@gimp.org>
 
-	Undo chopping:
+	Moved the undo system to the core: Keep GimpUndoStack objects as
+	undo and redo stack. Use GimpUndo objects as members of the
+	stacks. GimpUndoStack is derived from GimpUndo and keeps undo
+	groups, so undo group handling is much simpler than before
+	(the whole group is just a single GimpUndo object on the
+	stack and not everything between group boundary markers).
 
 	* app/Makefile.am
 	* app/undo_types.h: removed.
 
 	* app/config/gimpcoreconfig.[ch]: added "gulong undo_size".
 	* app/config/gimprc-blurbs.h: and its blurb.
-
-	* app/undo.[ch]
 
 	* app/core/core-enums.[ch]: added GimpUndoMode and GimpUndoType.
 
@@ -31,9 +34,14 @@
 	* app/core/gimpundostack.[ch]: keeps the new undo/redo stacks
 	and also acts as undo group.
 
-	* app/core/gimpimage-undo.[ch]
-	* app/core/gimpimage.[ch]
-	* app/core/gimpmarshal.list
+	* app/core/gimpimage-undo.[ch]: moved the undo apparatus here.
+
+	* app/core/gimpimage.[ch]: removed the old stuff.
+
+	* app/core/gimpmarshal.list: added marshaller needed for GimpUndo.
+
+	* app/undo.[ch]: removed the whole undo mechanism. Only the
+	actual undo pushing functions are left.
 
 	* app/undo_history.c
 	* app/gui/edit-commands.c
