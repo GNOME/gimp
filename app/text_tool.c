@@ -20,7 +20,10 @@
 
 #include <gdk/gdkkeysyms.h>
 #include <gdk/gdk.h>
+
+#ifndef GDK_WINDOWING_WIN32
 #include <gdk/gdkx.h>
+#endif
 
 #include <gdk/gdkprivate.h>
 
@@ -568,7 +571,9 @@ text_render (GimpImage    *gimage,
   gint width, height;
   gint x, y, k;
   void * pr;
+#ifndef GDK_WINDOWING_WIN32
   XFontStruct *xfs;
+#endif
   char *fname;
 
   /*  determine the layer type  */
@@ -590,6 +595,7 @@ text_render (GimpImage    *gimage,
   /* load the font in */
   gdk_error_warnings = 0;
   gdk_error_code = 0;
+#ifndef GDK_WINDOWING_WIN32
   font = gdk_font_load (fontname);
   xfs = GDK_FONT_XFONT(font);
   if (xfs->min_byte1 != 0 || xfs->max_byte1 != 0) {
@@ -598,6 +604,12 @@ text_render (GimpImage    *gimage,
     font = gdk_fontset_load (fname);
     g_free(fname);
   }
+#else
+  /* Just use gdk_fontset_load all the time. IMHO it could be like
+   * this on all platforms?
+   */
+  font = gdk_fontset_load (fontname);
+#endif
   gdk_error_warnings = 1;
   if (!font || (gdk_error_code == -1))
     {

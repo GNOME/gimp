@@ -55,6 +55,9 @@ Tue Jan 18 21:46:25 CET 2000  Sven Neumann <sven@gimp.org>
 	* plug-ins/winsnap/winsnap.c
 	* po-plug-ins/POTFILES.in: i18n.
 
+	* app/text_tool.c: Add Win32 workaround for yasuhiro's "i18n fix"
+	change that introduced an X11 dependency.
+
 2000-01-18  David Monniaux  <monniaux@quatramaran.ens.fr>
 
 	* app/tools.c: clearer tool-tip for transform tool.
