@@ -3,6 +3,7 @@
 themedatadir = $(gimpdatadir)/themes/Default/images/preferences
 
 PREFS_IMAGES = \
+	controllers.png			\
 	default-comment.png		\
 	default-grid.png		\
 	display.png			\
@@ -27,6 +28,7 @@ PREFS_IMAGES = \
 	monitor.png			\
 	new-image.png			\
 	session.png			\
+	theme.png			\
 	toolbox.png			\
 	tool-options.png		\
 	window-management.png

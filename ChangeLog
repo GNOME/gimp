@@ -1,5 +1,41 @@
 2004-06-17  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpcontroller.[ch]: removed "enabled"
+	property. Removed GIMP_CONTROLLER_PARAM_RERIALIZE from the "name"
+	property because it's the hardware-determined name of this
+	controller instance.
+
+	* app/widgets/gimpcontrollerwheel.c
+	* modules/controller_linux_input.c: set the name.
+
+	* libgimpwidgets/gimpwidgets.h: #include gimpcontroller.h.
+
+	* app/widgets/gimpcontrollerinfo.[ch]: added "enabled" here
+	instead.  Don't dispatch events if the controller is
+	disabled. Made everything work (not crash) with info->mapping
+	being NULL.
+
+	* etc/controllerrc: updated again with the changed format.
+
+	* app/widgets/gimpcontrollers.[ch]: added
+	gimp_controllers_get_list() which returns the container of
+	controllers.
+
+	* app/widgets/gimphelp-ids.h
+	* app/gui/preferences-dialog.c: added controller configuration
+	(can't change anything yet, just view the current settings).
+	Resurrected the "Input Devices" page and removed the "Session"
+	page by moving its widgets to other pages. Pack the various
+	"Save now"/"Clear now" buttons vertically, not horizontally.
+	Fixes bug #139069.
+
+	* themes/Default/images/preferences/Makefile.am
+	* themes/Default/images/preferences/controllers.png
+	* themes/Default/images/preferences/theme.png: new icons for new
+	prefs pages. Someone needs to make them nice...
+
+2004-06-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.c: GtkUIManager makes the menu bar
 	visible by default, hide it if options->show_menubar is FALSE.
 	Fixes bug #143243.

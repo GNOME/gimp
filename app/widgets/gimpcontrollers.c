@@ -204,6 +204,20 @@ gimp_controllers_save (Gimp *gimp)
   g_free (filename);
 }
 
+GimpContainer *
+gimp_controllers_get_list (Gimp *gimp)
+{
+  GimpControllerManager *manager;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  manager = gimp_controller_manager_get (gimp);
+
+  g_return_val_if_fail (manager != NULL, NULL);
+
+  return manager->controllers;
+}
+
 GimpController *
 gimp_controllers_get_wheel (Gimp *gimp)
 {

@@ -46,6 +46,7 @@
 enum
 {
   PROP_0,
+  PROP_ENABLED,
   PROP_CONTROLLER,
   PROP_MAPPING
 };
@@ -158,6 +159,10 @@ gimp_controller_info_class_init (GimpControllerInfoClass *klass)
   object_class->set_property = gimp_controller_info_set_property;
   object_class->get_property = gimp_controller_info_get_property;
 
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ENABLED,
+                                    "enabled", NULL,
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_CONTROLLER,
                                    "controller", NULL,
                                    GIMP_TYPE_CONTROLLER,
@@ -217,6 +222,9 @@ gimp_controller_info_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_ENABLED:
+      info->enabled = g_value_get_boolean (value);
+      break;
     case PROP_CONTROLLER:
       if (info->controller)
         {
@@ -258,6 +266,9 @@ gimp_controller_info_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_ENABLED:
+      g_value_set_boolean (value, info->enabled);
+      break;
     case PROP_CONTROLLER:
       g_value_set_object (value, info->controller);
       break;
@@ -300,13 +311,16 @@ gimp_controller_info_serialize_property (GimpConfig       *config,
 
   mapping = g_value_get_pointer (value);
 
-  gimp_config_writer_open (writer, pspec->name);
+  if (mapping)
+    {
+      gimp_config_writer_open (writer, pspec->name);
 
-  g_hash_table_foreach (mapping,
-                        (GHFunc) gimp_controller_info_serialize_mapping,
-                        writer);
+      g_hash_table_foreach (mapping,
+                            (GHFunc) gimp_controller_info_serialize_mapping,
+                            writer);
 
-  gimp_config_writer_close (writer);
+      gimp_config_writer_close (writer);
+    }
 
   return TRUE;
 }
@@ -319,7 +333,7 @@ gimp_controller_info_deserialize_property (GimpConfig *config,
                                            GScanner   *scanner,
                                            GTokenType *expected)
 {
-  GHashTable *mapping = NULL;
+  GHashTable *mapping;
   GTokenType  token;
 
   if (property_id != PROP_MAPPING)
@@ -386,8 +400,7 @@ gimp_controller_info_deserialize_property (GimpConfig *config,
   else
     {
     error:
-      if (mapping)
-        g_hash_table_destroy (mapping);
+      g_hash_table_destroy (mapping);
 
       *expected = token;
     }
@@ -395,27 +408,50 @@ gimp_controller_info_deserialize_property (GimpConfig *config,
   return TRUE;
 }
 
+void
+gimp_controller_info_set_enabled (GimpControllerInfo *info,
+                                  gboolean            enabled)
+{
+  g_return_if_fail (GIMP_IS_CONTROLLER_INFO (info));
+
+  if (enabled != info->enabled)
+    g_object_set (info, "enabled", enabled, NULL);
+}
+
+gboolean
+gimp_controller_info_get_enabled (GimpControllerInfo *info)
+{
+  g_return_val_if_fail (GIMP_IS_CONTROLLER_INFO (info), FALSE);
+
+  return info->enabled;
+}
+
 static gboolean
 gimp_controller_info_event (GimpController            *controller,
                             const GimpControllerEvent *event,
                             GimpControllerInfo        *info)
 {
-  const gchar *class_name;
   const gchar *event_name;
   const gchar *event_blurb;
-  const gchar *action_name;
-
-  class_name = GIMP_CONTROLLER_GET_CLASS (controller)->name;
+  const gchar *action_name = NULL;
 
   event_name = gimp_controller_get_event_name (controller, event->any.event_id);
   event_blurb = gimp_controller_get_event_blurb (controller, event->any.event_id);
 
   g_print ("Received '%s' (class '%s')\n"
            "    controller event '%s (%s)'\n",
-           controller->name, class_name,
+           controller->name, GIMP_CONTROLLER_GET_CLASS (controller)->name,
            event_name, event_blurb);
 
-  action_name = g_hash_table_lookup (info->mapping, event_name);
+  if (! info->enabled)
+    {
+      g_print ("    ignoring because controller is disabled\n");
+
+      return FALSE;
+    }
+
+  if (info->mapping)
+    action_name = g_hash_table_lookup (info->mapping, event_name);
 
   if (action_name)
     {

@@ -30,6 +30,7 @@ void             gimp_controllers_restore   (Gimp          *gimp,
                                              GimpUIManager *ui_manager);
 void             gimp_controllers_save      (Gimp          *gimp);
 
+GimpContainer  * gimp_controllers_get_list  (Gimp          *gimp);
 GimpController * gimp_controllers_get_wheel (Gimp          *gimp);
 
 

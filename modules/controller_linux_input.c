@@ -120,7 +120,7 @@ struct _ControllerLinuxInputClass
 
 GType         linux_input_get_type     (GTypeModule    *module);
 static void   linux_input_class_init   (ControllerLinuxInputClass *klass);
-static void   linux_input_finalize     (GObject        *object);
+static void   linux_input_dispose      (GObject        *object);
 static void   linux_input_set_property (GObject        *object,
                                         guint           property_id,
                                         const GValue   *value,
@@ -208,7 +208,7 @@ linux_input_class_init (ControllerLinuxInputClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize           = linux_input_finalize;
+  object_class->dispose            = linux_input_dispose;
   object_class->get_property       = linux_input_get_property;
   object_class->set_property       = linux_input_set_property;
 
@@ -227,13 +227,13 @@ linux_input_class_init (ControllerLinuxInputClass *klass)
 }
 
 static void
-linux_input_finalize (GObject *object)
+linux_input_dispose (GObject *object)
 {
   ControllerLinuxInput *controller = CONTROLLER_LINUX_INPUT (object);
 
   linux_input_set_device (controller, NULL);
 
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -357,6 +357,12 @@ linux_input_set_device (ControllerLinuxInput *controller,
                             "name", name,
                             NULL);
             }
+          else
+            {
+              g_object_set (controller,
+                            "name", _("Unknown device"),
+                            NULL);
+            }
 
           controller->io = g_io_channel_unix_new (fd);
           g_io_channel_set_close_on_unref (controller->io, TRUE);
@@ -370,9 +376,19 @@ linux_input_set_device (ControllerLinuxInput *controller,
         }
       else
         {
-          g_printerr ("controller_linux_input: Cannot open device '%s': %s\n",
-                      device, g_strerror (errno));
+          gchar *name = g_strdup_printf (_("Device not available: %s"),
+                                         g_strerror (errno));
+          g_object_set (controller,
+                        "name", name,
+                        NULL);
+          g_free (name);
         }
+    }
+  else
+    {
+      g_object_set (controller,
+                    "name", _("No device configured"),
+                    NULL);
     }
 
   return FALSE;

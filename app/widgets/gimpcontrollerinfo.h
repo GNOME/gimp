@@ -41,6 +41,8 @@ struct _GimpControllerInfo
 {
   GimpObject      parent_instance;
 
+  gboolean        enabled;
+
   GimpController *controller;
   GHashTable     *mapping;
 };
@@ -56,7 +58,11 @@ struct _GimpControllerInfoClass
 };
 
 
-GType   gimp_controller_info_get_type (void) G_GNUC_CONST;
+GType    gimp_controller_info_get_type    (void) G_GNUC_CONST;
+
+void     gimp_controller_info_set_enabled (GimpControllerInfo *info,
+                                           gboolean            enabled);
+gboolean gimp_controller_info_get_enabled (GimpControllerInfo *info);
 
 
 #endif /* __GIMP_CONTROLLER_INFO_H__ */

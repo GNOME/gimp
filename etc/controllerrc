@@ -3,9 +3,8 @@
 # This file will be entirely rewritten every time you quit the gimp.
 
 (GimpControllerInfo "Main Mouse Wheel"
-    (controller "GimpControllerWheel"
-        (name "Main Mouse Wheel")
-        (enabled yes))
+    (enabled yes)
+    (controller "GimpControllerWheel")
     (mapping
         (map "scroll-down-alt" "context-opacity-decrease-skip")
         (map "scroll-down-control-alt" "context-gradient-previous")
@@ -18,9 +17,8 @@
         (map "scroll-up-shift-control" "context-brush-next")
         (map "scroll-up-shift-control-alt" "context-font-next")))
 (GimpControllerInfo "ShuttlePRO"
+    (enabled yes)
     (controller "ControllerLinuxInput"
-        (name "ShuttlePRO")
-        (enabled yes)
         (device "/dev/input/event2"))
     (mapping
         (map "button-0" "tools-rect-select")

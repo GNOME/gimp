@@ -35,8 +35,7 @@
 enum
 {
   PROP_0,
-  PROP_NAME,
-  PROP_ENABLED
+  PROP_NAME
 };
 
 enum
@@ -120,14 +119,7 @@ gimp_controller_class_init (GimpControllerClass *klass)
                                    g_param_spec_string ("name", NULL, NULL,
                                                         "Unnamed Controller",
                                                         G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT |
-                                                        GIMP_CONTROLLER_PARAM_SERIALIZE));
-  g_object_class_install_property (object_class, PROP_ENABLED,
-                                   g_param_spec_boolean ("enabled", NULL, NULL,
-                                                         TRUE,
-                                                         G_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT |
-                                                         GIMP_CONTROLLER_PARAM_SERIALIZE));
+                                                        G_PARAM_CONSTRUCT));
 
   controller_signals[EVENT] =
     g_signal_new ("event",
@@ -162,9 +154,6 @@ gimp_controller_set_property (GObject      *object,
         g_free (controller->name);
       controller->name = g_value_dup_string (value);
       break;
-    case PROP_ENABLED:
-      controller->enabled = g_value_get_boolean (value);
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -183,9 +172,6 @@ gimp_controller_get_property (GObject    *object,
     {
     case PROP_NAME:
       g_value_set_string (value, controller->name);
-      break;
-    case PROP_ENABLED:
-      g_value_set_boolean (value, controller->enabled);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -253,28 +239,6 @@ gimp_controller_get_event_blurb (GimpController *controller,
   return blurb;
 }
 
-void
-gimp_controller_set_enabled (GimpController *controller,
-                             gboolean        enabled)
-{
-  g_return_if_fail (GIMP_IS_CONTROLLER (controller));
-
-  if (enabled != controller->enabled)
-    {
-      g_object_set (controller,
-                    "enabled", enabled,
-                    NULL);
-    }
-}
-
-gboolean
-gimp_controller_get_enabled (GimpController *controller)
-{
-  g_return_val_if_fail (GIMP_IS_CONTROLLER (controller), FALSE);
-
-  return controller->enabled;
-}
-
 gboolean
 gimp_controller_event (GimpController            *controller,
                        const GimpControllerEvent *event)
@@ -284,9 +248,8 @@ gimp_controller_event (GimpController            *controller,
   g_return_val_if_fail (GIMP_IS_CONTROLLER (controller), FALSE);
   g_return_val_if_fail (event != NULL, FALSE);
 
-  if (controller->enabled)
-    g_signal_emit (controller, controller_signals[EVENT], 0,
-                   event, &retval);
+  g_signal_emit (controller, controller_signals[EVENT], 0,
+                 event, &retval);
 
   return retval;
 }

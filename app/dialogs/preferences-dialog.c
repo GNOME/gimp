@@ -25,6 +25,7 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpcontroller.h"
 
 #include "gui-types.h"
 
@@ -34,11 +35,14 @@
 #include "config/gimprc.h"
 
 #include "core/gimp.h"
+#include "core/gimplist.h"
 #include "core/gimptemplate.h"
 
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcontainercombobox.h"
 #include "widgets/gimpcontainerview.h"
+#include "widgets/gimpcontrollers.h"
+#include "widgets/gimpcontrollerinfo.h"
 #include "widgets/gimpdeviceinfo.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
@@ -643,6 +647,37 @@ prefs_table_new (gint          rows,
 }
 
 static GtkWidget *
+prefs_button_add (const gchar *stock_id,
+                  const gchar *label,
+                  GtkBox      *box)
+{
+  GtkWidget *button;
+  GtkWidget *hbox;
+  GtkWidget *image;
+  GtkWidget *lab;
+
+  button = gtk_button_new ();
+
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_add (GTK_CONTAINER (button), hbox);
+  gtk_widget_show (hbox);
+
+  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
+  lab = gtk_label_new_with_mnemonic (label);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (lab), button);
+  gtk_box_pack_start (GTK_BOX (hbox), lab, TRUE, TRUE, 0);
+  gtk_widget_show (lab);
+
+  gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  return button;
+}
+
+static GtkWidget *
 prefs_check_button_add (GObject     *config,
                         const gchar *property_name,
                         const gchar *label,
@@ -1147,37 +1182,38 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add (object, "can-change-accels",
                           _("Use Dynamic _Keyboard Shortcuts"),
                           GTK_BOX (vbox2));
+  prefs_check_button_add (object, "save-accels",
+                          _("Save Keyboard Shortcuts on Exit"),
+                          GTK_BOX (vbox2));
 
-  /*  Input Device Settings  */
-  vbox2 = prefs_frame_new (_("Extended Input Devices"),
-                           GTK_CONTAINER (vbox), FALSE);
+  button = prefs_button_add (GTK_STOCK_SAVE,
+                             _("Save Keyboard Shortcuts Now"),
+                             GTK_BOX (vbox2));
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (menus_save),
+                            gimp);
 
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  button = prefs_button_add (GTK_STOCK_CLEAR,
+                             _("Clear Saved Keyboard Shortcuts Now"),
+                             GTK_BOX (vbox2));
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (menus_clear),
+                            gimp);
 
-  button = gtk_button_new_with_label (_("Configure Extended Input Devices"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (prefs_input_devices_dialog),
-                    gimp);
 
   /***********/
   /*  Theme  */
   /***********/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
-				     _("Theme"),
+                                     _("Theme"),
                                      "theme.png",
-				     GTK_TREE_STORE (tree),
-				     _("Theme"),
-				     GIMP_HELP_PREFS_THEME,
-				     NULL,
-				     &top_iter,
-				     page_index++);
+                                     GTK_TREE_STORE (tree),
+                                     _("Theme"),
+                                     GIMP_HELP_PREFS_THEME,
+                                     NULL,
+                                     &top_iter,
+                                     page_index++);
 
   vbox2 = prefs_frame_new (_("Select Theme"), GTK_CONTAINER (vbox), TRUE);
 
@@ -1252,11 +1288,9 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gtk_button_new_with_mnemonic (_("Reload C_urrent Theme"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 4, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
+  button = prefs_button_add (GTK_STOCK_REFRESH,
+                             _("Reload C_urrent Theme"),
+                             GTK_BOX (hbox));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_theme_reload_callback),
                     gimp);
@@ -1748,6 +1782,165 @@ prefs_dialog_new (Gimp       *gimp,
 		    sizeentry);
 
 
+  /*******************/
+  /*  Input Devices  */
+  /*******************/
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
+				     _("Input Devices"),
+                                     "input-devices.png",
+				     GTK_TREE_STORE (tree),
+				     _("Input Devices"),
+				     GIMP_HELP_PREFS_INPUT_DEVICES,
+				     NULL,
+				     &top_iter,
+				     page_index++);
+
+  /*  Extended Input Devices  */
+  vbox2 = prefs_frame_new (_("Extended Input Devices"),
+                           GTK_CONTAINER (vbox), FALSE);
+
+  button = prefs_button_add (GTK_STOCK_PREFERENCES,
+                             _("Configure Extended Input Devices..."),
+                             GTK_BOX (vbox2));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (prefs_input_devices_dialog),
+                    gimp);
+
+  prefs_check_button_add (object, "save-device-status",
+                          _("Save Input Device Settings on Exit"),
+                          GTK_BOX (vbox2));
+
+  button = prefs_button_add (GTK_STOCK_SAVE,
+                             _("Save Input Device Settings Now"),
+                             GTK_BOX (vbox2));
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (gimp_devices_save),
+                            gimp);
+
+  button = prefs_button_add (GTK_STOCK_CLEAR,
+                             _("Clear Saved Input Device Settings Now"),
+                             GTK_BOX (vbox2));
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (gimp_devices_clear),
+                            gimp);
+
+
+  /****************************/
+  /*  Additional Controllers  */
+  /****************************/
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
+				     _("Additional Input Controllers"),
+                                     "controllers.png",
+				     GTK_TREE_STORE (tree),
+				     _("Input Controllers"),
+				     GIMP_HELP_PREFS_INPUT_CONTROLLERS,
+				     &top_iter,
+				     &child_iter,
+				     page_index++);
+
+  /*  Controllers  */
+  vbox2 = prefs_frame_new (_("Additional Controllers"),
+                           GTK_CONTAINER (vbox), TRUE);
+
+  enum
+  {
+    COLUMN_EVENT,
+    COLUMN_ACTION,
+    NUM_COLUMNS
+  };
+
+  {
+    GimpContainer *controllers;
+    GtkWidget     *notebook;
+    GList         *list;
+
+    controllers = gimp_controllers_get_list (gimp);
+
+    notebook = gtk_notebook_new ();
+    gtk_box_pack_start (GTK_BOX (vbox2), notebook, TRUE, TRUE, 0);
+    gtk_widget_show (notebook);
+
+    for (list = GIMP_LIST (controllers)->list;
+         list;
+         list = g_list_next (list))
+      {
+        GimpControllerInfo *info = list->data;
+        GtkListStore       *store;
+        GtkWidget          *vbox3;
+        GtkWidget          *tv;
+        GtkWidget          *sw;
+        gint                n_events;
+        gint                i;
+
+        vbox3 = gtk_vbox_new (FALSE, 4);
+        gtk_container_set_border_width (GTK_CONTAINER (vbox3), 4);
+        gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox3,
+                                  gtk_label_new (GIMP_OBJECT (info)->name));
+        gtk_widget_show (vbox3);
+
+        table = prefs_table_new (2, GTK_CONTAINER (vbox3));
+
+        gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                                   _("Controller Class:"), 0.0, 0.5,
+                                   gtk_label_new (GIMP_CONTROLLER_GET_CLASS (info->controller)->name),
+                                   1, TRUE);
+        gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                                   _("Controller Instance:"), 0.0, 0.5,
+                                   gtk_label_new (info->controller->name),
+                                   1, TRUE);
+
+        store = gtk_list_store_new (NUM_COLUMNS,
+                                    G_TYPE_STRING, G_TYPE_STRING);
+        tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
+        g_object_unref (store);
+
+        sw = gtk_scrolled_window_new (NULL, NULL);
+        gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw),
+                                             GTK_SHADOW_IN);
+        gtk_container_add (GTK_CONTAINER (sw), tv);
+        gtk_widget_show (tv);
+
+        gtk_container_add (GTK_CONTAINER (vbox3), sw);
+        gtk_widget_show (sw);
+
+        n_events = gimp_controller_get_n_events (info->controller);
+
+        for (i = 0; i < n_events; i++)
+          {
+            GtkTreeIter iter;
+            const gchar *event_name;
+            const gchar *event_blurb;
+            const gchar *event_action;
+
+            gtk_list_store_append (store, &iter);
+
+            event_name  = gimp_controller_get_event_name  (info->controller, i);
+            event_blurb = gimp_controller_get_event_blurb (info->controller, i);
+
+            event_action = g_hash_table_lookup (info->mapping, event_name);
+
+            gtk_list_store_set (store, &iter,
+                                COLUMN_EVENT,  event_blurb,
+                                COLUMN_ACTION, event_action,
+                                -1);
+          }
+
+        gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv), 0,
+                                                     _("Event"),
+                                                     gtk_cell_renderer_text_new (),
+                                                     "text", COLUMN_EVENT,
+                                                     NULL);
+        gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv), 2,
+                                                     _("Action"),
+                                                     gtk_cell_renderer_text_new (),
+                                                     "text", COLUMN_ACTION,
+                                                     NULL);
+      }
+  }
+
+
   /***********************/
   /*  Window Management  */
   /***********************/
@@ -1781,6 +1974,27 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add (object, "activate-on-focus",
                           _("Activate the _Focused Image"),
                           GTK_BOX (vbox2));
+
+  /* Window Positions */
+  vbox2 = prefs_frame_new (_("Window Positions"), GTK_CONTAINER (vbox), FALSE);
+
+  prefs_check_button_add (object, "save-session-info",
+                          _("_Save Window Positions on Exit"),
+                          GTK_BOX (vbox2));
+
+  button = prefs_button_add (GTK_STOCK_SAVE,
+                             _("Save Window Positions Now"),
+                             GTK_BOX (vbox2));
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (session_save),
+                            gimp);
+
+  button = prefs_button_add (GTK_STOCK_CLEAR,
+                             _("Clear Saved Window Positions Now"),
+                             GTK_BOX (vbox2));
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (session_clear),
+                            gimp);
 
 
   /*****************/
@@ -1842,108 +2056,6 @@ prefs_dialog_new (Gimp       *gimp,
 
   g_object_unref (size_group);
   size_group = NULL;
-
-
-  /************************/
-  /*  Session Management  */
-  /************************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-				     _("Session Management"),
-                                     "session.png",
-				     GTK_TREE_STORE (tree),
-				     _("Session"),
-				     GIMP_HELP_PREFS_SESSION,
-				     NULL,
-				     &top_iter,
-				     page_index++);
-
-  /* Window Positions */
-  vbox2 = prefs_frame_new (_("Window Positions"), GTK_CONTAINER (vbox), FALSE);
-
-  prefs_check_button_add (object, "save-session-info",
-                          _("_Save Window Positions on Exit"),
-                          GTK_BOX (vbox2));
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  button = gtk_button_new_with_label (_("Save Window Positions Now"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (session_save),
-                            gimp);
-
-  button = gtk_button_new_with_label (_("Clear Saved Window Positions Now"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (session_clear),
-                            gimp);
-
-  /* Keyboard Shortcuts */
-  vbox2 = prefs_frame_new (_("Keyboard Shortcuts"), GTK_CONTAINER (vbox), FALSE);
-
-  prefs_check_button_add (object, "save-accels",
-                          _("Save Keyboard Shortcuts on Exit"),
-                          GTK_BOX (vbox2));
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  button = gtk_button_new_with_label (_("Save Keyboard Shortcuts Now"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (menus_save),
-                            gimp);
-
-  button = gtk_button_new_with_label (_("Clear Saved Keyboard Shortcuts Now"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (menus_clear),
-                            gimp);
-
-  /* Input Devices */
-  vbox2 = prefs_frame_new (_("Input Devices"), GTK_CONTAINER (vbox), FALSE);
-
-  prefs_check_button_add (object, "save-device-status",
-                          _("Save Input Device Settings on Exit"),
-                          GTK_BOX (vbox2));
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  button = gtk_button_new_with_label (_("Save Input Device Settings Now"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_devices_save),
-                            gimp);
-
-  button = gtk_button_new_with_label (_("Clear Saved Input Device Settings Now"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_devices_clear),
-                            gimp);
 
 
   /*************/

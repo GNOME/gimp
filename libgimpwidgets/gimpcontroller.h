@@ -88,7 +88,6 @@ struct _GimpController
   GObject   parent_instance;
 
   gchar    *name;
-  gboolean  enabled;
 };
 
 struct _GimpControllerClass
@@ -125,10 +124,6 @@ const gchar    * gimp_controller_get_event_name  (GimpController *controller,
                                                   gint            event_id);
 const gchar    * gimp_controller_get_event_blurb (GimpController *controller,
                                                   gint            event_id);
-
-void             gimp_controller_set_enabled     (GimpController *controller,
-                                                  gboolean        enabled);
-gboolean         gimp_controller_get_enabled     (GimpController *controller);
 
 
 /*  protected  */
