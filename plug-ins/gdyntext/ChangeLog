@@ -1,3 +1,9 @@
+Apr 25 1999
+  * MADE 1.4.2 RELEASE
+  * Added the "Apply" button.
+Apr 15 1999
+  * MADE 1.4.1 RELEASE
+  * Fixed garbaged layer bug when there is an active selection.
 Apr 14 1999
   * MADE 1.4.0 RELEASE
   * Added customizable line spacing.

@@ -25,7 +25,7 @@
 
 #include "libgimp/gimpintl.h"
 
-#define GDYNTEXT_VERSION				"1.4.1"
+#define GDYNTEXT_VERSION				"1.4.2"
 #define GDYNTEXT_MAGIC					"GDT09"
 #define GDYNTEXT_WEB_PAGE				"http://www.geocities.com/Tokyo/1474/gimp/"
 #define MAX_TEXT_SIZE						(64 * 1024)
@@ -85,6 +85,7 @@ typedef struct {
 void gdt_get_values(GdtVals *data);
 void gdt_set_values(GdtVals *data);
 void gdt_render_text(GdtVals *data);
+void gdt_render_text_p(GdtVals *data, gboolean show_progress);
 GArray *strsplit(const char *text, const char sep);
 
 #endif /* _GDYNTEXT_H_ */

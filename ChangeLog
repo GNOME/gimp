@@ -1,5 +1,9 @@
 1999-04-30  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
+	* plug-ins/gdyntext/*: updated version 1.4.2
+
+1999-04-30  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
 	* app/flip_tool.c: fixed a cut-and-paste bug: vertical flip
 	iterates over rows, not columns.
 

@@ -53,6 +53,7 @@ typedef struct {
 	GtkWidget *font_preview;
 	GtkWidget *hbox_fp;
 	GtkWidget *charmap_window_toggle;
+	GtkWidget *new_layer_toggle;
 	gboolean font_preview_enabled;
 	gboolean ok_pressed;
 } GdtMainWindow;
@@ -62,6 +63,7 @@ GtkWidget *create_about_dialog(void);
 GtkWidget *create_color_selection_dialog(void);
 GdtMainWindow *create_main_window(GdtMainWindow **main_window, GdtVals *data);
 GtkWidget *create_message_window(GtkWidget **mw);
+void set_gdt_vals(GdtVals *data);
 void gtk_text_set_font(GtkText *text, GdkFont *font);
 void load_text(GtkWidget *widget, gpointer data);
 void on_about_dialog_close(GtkWidget *widget, gpointer data);
@@ -79,6 +81,7 @@ void on_main_window_about_clicked(GtkWidget *widget, gpointer data);
 void on_main_window_align_c_clicked(GtkWidget *widget, gpointer data);
 void on_main_window_align_l_clicked(GtkWidget *widget, gpointer data);
 void on_main_window_align_r_clicked(GtkWidget *widget, gpointer data);
+void on_main_window_apply_clicked(GtkWidget *widget, gpointer data);
 void on_main_window_cancel_clicked(GtkWidget *widget, gpointer data);
 void on_main_window_font_color_clicked(GtkWidget *widget, gpointer data);
 void on_main_window_ok_press_event(GtkWidget *widget, GdkEvent *event, gpointer data);
@@ -240,6 +243,7 @@ GdtMainWindow *create_main_window(GdtMainWindow **main_window, GdtVals *data)
   GtkWidget *button_about;
   GtkWidget *button_ok;
   GtkWidget *button_cancel;
+  GtkWidget *button_apply;
 	GtkWidget *font_preview_toggle;
 	GtkWidget *vscrollbar;
 	GtkWidget *rbutt;
@@ -284,7 +288,7 @@ GdtMainWindow *create_main_window(GdtMainWindow **main_window, GdtVals *data)
 	/* NEW LAYER Toggle */
 	icon = gdk_pixmap_create_from_xpm_d(mw->window->window, &mask, transparent, new_layer_xpm);
 	gtk_icon = gtk_pixmap_new(icon, mask);
-	telem = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_CHILD_TOGGLEBUTTON, NULL,
+	mw->new_layer_toggle = telem = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_CHILD_TOGGLEBUTTON, NULL,
 		NULL, _("Toggle creation of a new layer"), NULL, gtk_icon, NULL, NULL);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(telem), data->new_layer);
 	gtk_signal_connect(GTK_OBJECT(telem), "toggled", GTK_SIGNAL_FUNC(on_button_toggled), &data->new_layer);
@@ -509,12 +513,20 @@ GdtMainWindow *create_main_window(GdtMainWindow **main_window, GdtVals *data)
 			"in changing the layer name as done in GIMP 1.0."), NULL);
 #endif
 
-  button_cancel = gtk_button_new_with_label(_("Cancel"));
+  button_cancel = gtk_button_new_with_label(_("Close"));
   GTK_WIDGET_SET_FLAGS(button_cancel, GTK_CAN_DEFAULT);
 	gtk_signal_connect(GTK_OBJECT(button_cancel), "clicked",
 		GTK_SIGNAL_FUNC(on_main_window_cancel_clicked), &mw->ok_pressed);
   gtk_box_pack_start(GTK_BOX(hbbox2), button_cancel, FALSE, FALSE, 0);
   gtk_widget_show(button_cancel);
+
+  button_apply = gtk_button_new_with_label(_("Apply"));
+  GTK_WIDGET_SET_FLAGS(button_apply, GTK_CAN_DEFAULT);
+	gtk_signal_connect(GTK_OBJECT(button_apply), "clicked",
+		GTK_SIGNAL_FUNC(on_main_window_apply_clicked), data);
+  gtk_box_pack_start(GTK_BOX(hbbox2), button_apply, FALSE, FALSE, 0);
+  gtk_widget_show(button_apply);
+
 
   gtk_widget_grab_default(button_ok);
 
@@ -576,23 +588,27 @@ gboolean gdt_create_ui(GdtVals *data)
 
   gtk_main();
 
-	if (main_window->ok_pressed) {
-		data->preview = main_window->font_preview_enabled;
-		strncpy(data->font_family,
-			font_selection_get_font_family(FONT_SELECTION(main_window->font_selection)),
-			sizeof(data->font_family));
-		strncpy(data->font_style,
-			font_selection_get_font_style(FONT_SELECTION(main_window->font_selection)),
-			sizeof(data->font_style));
-		data->font_size = font_selection_get_font_size(FONT_SELECTION(main_window->font_selection));
-		data->rotation = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(main_window->font_rotation));
-		data->spacing = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(main_window->line_spacing));
-		data->font_metric = font_selection_get_font_metric(FONT_SELECTION(main_window->font_selection));
-		strncpy(data->text, gtk_editable_get_chars(GTK_EDITABLE(main_window->textarea), 0, -1),
-			sizeof(data->text));
-		data->font_color = TO_RGB(col);
-	}
+	if (main_window->ok_pressed)
+		set_gdt_vals(data);
 	return main_window->ok_pressed;
+}
+
+
+void set_gdt_vals(GdtVals *data) {
+	data->preview = main_window->font_preview_enabled;
+	strncpy(data->font_family,
+		font_selection_get_font_family(FONT_SELECTION(main_window->font_selection)),
+		sizeof(data->font_family));
+	strncpy(data->font_style,
+		font_selection_get_font_style(FONT_SELECTION(main_window->font_selection)),
+		sizeof(data->font_style));
+	data->font_size = font_selection_get_font_size(FONT_SELECTION(main_window->font_selection));
+	data->rotation = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(main_window->font_rotation));
+	data->spacing = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(main_window->line_spacing));
+	data->font_metric = font_selection_get_font_metric(FONT_SELECTION(main_window->font_selection));
+	strncpy(data->text, gtk_editable_get_chars(GTK_EDITABLE(main_window->textarea), 0, -1),
+		sizeof(data->text));
+	data->font_color = TO_RGB(col);
 }
 
 
@@ -622,6 +638,18 @@ void update_font_color_preview(void)
 }
 
 
+void on_main_window_apply_clicked(GtkWidget *widget, gpointer data0)
+{
+	GdtVals *data = (GdtVals *)data0;
+
+	set_gdt_vals(data);
+	gdt_render_text_p(data, FALSE);
+	gdt_set_values(data);
+	if (data->new_layer)
+		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(main_window->new_layer_toggle), FALSE); 
+}
+
+
 void on_main_window_cancel_clicked(GtkWidget *widget, gpointer data)
 {
 	*(gboolean *)data = FALSE;
@@ -632,7 +660,7 @@ void on_main_window_cancel_clicked(GtkWidget *widget, gpointer data)
 void on_main_window_ok_press_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
 #ifdef GIMP_HAVE_PARASITES
-	/* holding the SHIF while clicking on OK will force layer name change */
+	/* holding the SHIFT while clicking on OK will force layer name change */
 	((GdtVals *)data)->change_layer_name = (event->button.state & GDK_SHIFT_MASK);
 #endif
 }

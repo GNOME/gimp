@@ -340,16 +340,11 @@ static void gdt_run(char *name, int nparams, GParam *param, int *nreturn_vals,
 			gdtvals.new_layer		= !gimp_drawable_has_alpha(gdtvals.drawable_id);
 			break;
 	}
-
-	gimp_undo_push_group_start(gdtvals.image_id);
-
 	gdt_render_text(&gdtvals);
 	gdt_set_values(&gdtvals);
 	if (run_mode == RUN_INTERACTIVE)
 		gimp_set_data("plug_in_gdyntext", &gdtvals, sizeof(GdtVals));
 	values[1].data.d_int32 = gdtvals.layer_id; 
-
-	gimp_undo_push_group_end(gdtvals.image_id);
 }
 
 
@@ -501,8 +496,9 @@ void gdt_set_values(GdtVals *data)
 		data->spacing);
 
 #ifdef GIMP_HAVE_PARASITES
-	parasite = parasite_new(GDYNTEXT_PARASITE, PARASITE_PERSISTENT | PARASITE_UNDOABLE,
-		strlen(lname), lname);
+	parasite = parasite_new(GDYNTEXT_PARASITE,
+				PARASITE_PERSISTENT | PARASITE_UNDOABLE,
+				strlen(lname), lname);
 	gimp_drawable_attach_parasite(data->drawable_id, parasite);
 	parasite_free(parasite);
 
@@ -526,6 +522,12 @@ void gdt_set_values(GdtVals *data)
 
 void gdt_render_text(GdtVals *data)
 {
+	gdt_render_text_p(data, TRUE);
+}
+
+
+void gdt_render_text_p(GdtVals *data, gboolean show_progress)
+{
 	gint layer_ox, layer_oy, i, nret_vals, xoffs;
 	gint32 layer_f, selection_empty, selection_channel;
 	gint32 text_width, text_height;
@@ -536,23 +538,27 @@ void gdt_render_text(GdtVals *data)
 	GParam *ret_vals;
 	GParamColor old_color, text_color;
 
-	gimp_progress_init("GIMP Dynamic Text");
-
-  /* save and remove current selection */
-  ret_vals = gimp_run_procedure("gimp_selection_is_empty", &nret_vals,
+	if (show_progress)
+		gimp_progress_init("GIMP Dynamic Text");
+	ret_vals = gimp_run_procedure("gimp_undo_push_group_start", &nret_vals,
 		PARAM_IMAGE, data->image_id, PARAM_END);
-  selection_empty = ret_vals[1].data.d_int32;
-  gimp_destroy_params(ret_vals, nret_vals);
-  if (selection_empty == FALSE) {
+	gimp_destroy_params(ret_vals, nret_vals);
+
+	/* save and remove current selection */
+	ret_vals = gimp_run_procedure("gimp_selection_is_empty", &nret_vals,
+		PARAM_IMAGE, data->image_id, PARAM_END);
+	selection_empty = ret_vals[1].data.d_int32;
+	gimp_destroy_params(ret_vals, nret_vals);
+	if (selection_empty == FALSE) {
 		/* there is an active selection to save */
-    ret_vals = gimp_run_procedure("gimp_selection_save", &nret_vals,
+		ret_vals = gimp_run_procedure("gimp_selection_save", &nret_vals,
 			PARAM_IMAGE, data->image_id, PARAM_END);
-    selection_channel = ret_vals[1].data.d_int32;
-    gimp_destroy_params(ret_vals, nret_vals);
-    ret_vals = gimp_run_procedure("gimp_selection_none", &nret_vals,
+		selection_channel = ret_vals[1].data.d_int32;
+		gimp_destroy_params(ret_vals, nret_vals);
+		ret_vals = gimp_run_procedure("gimp_selection_none", &nret_vals,
 			PARAM_IMAGE, data->image_id, PARAM_END);
-    gimp_destroy_params(ret_vals, nret_vals);
-  }
+		gimp_destroy_params(ret_vals, nret_vals);
+	}
 
 	text_style = strsplit(data->font_style, '-');
 
@@ -715,8 +721,8 @@ void gdt_render_text(GdtVals *data)
 			PARAM_STRING, g_array_index(text_style, char *, 2),	/* set_width */
 			PARAM_STRING, "*",																	/* spacing */
 #ifdef GIMP_HAVE_FEATURES_1_1_5
-			PARAM_STRING, "*",																	/* registry */
-			PARAM_STRING, "*",																	/* encoding */
+		PARAM_STRING, "*",																	/* registry */
+		PARAM_STRING, "*",																	/* encoding */
 #endif
 			PARAM_END);
 		layer_f = ret_vals[1].data.d_layer;
@@ -731,8 +737,9 @@ void gdt_render_text(GdtVals *data)
 			PARAM_LAYER, layer_f,
 			PARAM_END);
 		gimp_destroy_params(ret_vals, nret_vals);
-		gimp_progress_update((double)(i + 2) * 100.0 * (double)text_height /
-			(double)layer_height);
+		if (show_progress)
+			gimp_progress_update((double)(i + 2) * 100.0 * (double)text_height /
+				(double)layer_height);
 	}
 	g_array_free(text_lines_w, TRUE);
 	g_array_free(text_style, TRUE);
@@ -762,19 +769,24 @@ void gdt_render_text(GdtVals *data)
 
 	gimp_layer_set_preserve_transparency(data->layer_id, 1);
 
-  /* restore old selection if any */
-  if (selection_empty == FALSE) {
-    ret_vals = gimp_run_procedure("gimp_selection_load", &nret_vals,
+	/* restore old selection if any */
+	if (selection_empty == FALSE) {
+		ret_vals = gimp_run_procedure("gimp_selection_load", &nret_vals,
 #ifndef GIMP_HAVE_PARASITES
 			PARAM_IMAGE, data->image_id,
 #endif
-      PARAM_CHANNEL, selection_channel, PARAM_END);
-    gimp_destroy_params(ret_vals, nret_vals);
-    gimp_image_remove_channel(data->image_id, selection_channel);
-  }
+			PARAM_CHANNEL, selection_channel, PARAM_END);
+		gimp_destroy_params(ret_vals, nret_vals);
+		gimp_image_remove_channel(data->image_id, selection_channel);
+	}
+
+	ret_vals = gimp_run_procedure("gimp_undo_push_group_end", &nret_vals,
+		PARAM_IMAGE, data->image_id, PARAM_END);
+	gimp_destroy_params(ret_vals, nret_vals);
 
 	gimp_displays_flush();
-	gimp_progress_update(100.0);
+	if (show_progress)
+		gimp_progress_update(100.0);
 }
 
 /* vim: set ts=2 sw=2 tw=79 ai nowrap: */
