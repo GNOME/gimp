@@ -201,6 +201,7 @@ gimp_size_box_constructor (GType                  type,
 {
   GObject            *object;
   GimpSizeBox        *box;
+  GtkWidget          *vbox;
   GtkWidget          *entry;
   GtkWidget          *hbox;
   GtkWidget          *label;
@@ -249,16 +250,19 @@ gimp_size_box_constructor (GType                  type,
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
+  vbox = gtk_vbox_new (2, FALSE);
+  gtk_table_attach_defaults (GTK_TABLE (entry), vbox, 1, 3, 2, 3);
+  gtk_widget_show (vbox);
+
   label = gtk_label_new (NULL);
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                              -1);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   priv->pixel_label = label;
-
 
   if (box->edit_resolution)
     {
@@ -294,7 +298,7 @@ gimp_size_box_constructor (GType                  type,
                                  PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                                  -1);
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-      gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
       priv->res_label = label;

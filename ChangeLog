@@ -1,5 +1,10 @@
 2005-01-02  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpsizebox.c (gimp_size_box_constructor): fixed
+	position of pixel and resolution labels.
+
+2005-01-02  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c: fixed auto-scrolling
 	for left and bottom display edges. Remove the timeout on
 	button-release event, some minor cleanups.
