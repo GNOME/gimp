@@ -197,7 +197,7 @@ create_selection_options (ToolType tool_type)
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       label = gtk_label_new (" Width: ");
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      adj = (GtkAdjustment *) gtk_adjustment_new (options->fixed_width, 0.0,
+      adj = (GtkAdjustment *) gtk_adjustment_new (options->fixed_width, 1.0,
                                                   32767.0, 1.0, 50.0, 0.0);
       spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
       gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);
@@ -215,7 +215,7 @@ create_selection_options (ToolType tool_type)
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       label = gtk_label_new (" Height: ");
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      adj = (GtkAdjustment *) gtk_adjustment_new (options->fixed_height, 0.0,
+      adj = (GtkAdjustment *) gtk_adjustment_new (options->fixed_height, 1.0,
                                                   32767.0, 1.0, 50.0, 0.0);
       spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
       gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);
