@@ -1,3 +1,12 @@
+Sun Oct  4 22:18:11 BST 1998 Adam D. Moss <adam@gimp.org>
+
+	* app/palette.c: Had a look at making the window resizable,
+	got scared.  Made the palette dialog a bit smaller.
+
+	* app/indexed_palette.c: The window is now resizable without
+	falling foul to previously existing bugs.  It won't win you
+	anything though.
+
 Sun Oct  4 21:07:07 BST 1998 Adam D. Moss <adam@gimp.org>
 
 	* app/ink.c app/paint_core.c: The paint and ink tools

@@ -38,8 +38,8 @@
 
 #define EVENT_MASK     GDK_BUTTON_PRESS_MASK | GDK_ENTER_NOTIFY_MASK
 
-#define CELL_WIDTH     20
-#define CELL_HEIGHT    20
+#define CELL_WIDTH     12
+#define CELL_HEIGHT    12
 #define P_AREA_WIDTH   (CELL_WIDTH * 16)
 #define P_AREA_HEIGHT  (CELL_HEIGHT * 16)
 
@@ -119,6 +119,8 @@ indexed_palette_create (GimpImage* gimage)
   GtkWidget *menu_bar;
   GtkWidget *menu_bar_item;
   GtkWidget *hbox;
+  GtkWidget *hbox2;
+  GtkWidget *vbox2;
   GtkAccelGroup *accel_group;
   int default_index;
 
@@ -132,7 +134,7 @@ indexed_palette_create (GimpImage* gimage)
       /*  The shell and main vbox  */
       indexedP->shell = gtk_dialog_new ();
       gtk_window_set_wmclass (GTK_WINDOW (indexedP->shell), "indexed_color_palette", "Gimp");
-      gtk_window_set_policy (GTK_WINDOW (indexedP->shell), FALSE, FALSE, FALSE); 
+      gtk_window_set_policy (GTK_WINDOW (indexedP->shell), FALSE, TRUE, TRUE); 
       gtk_window_set_title (GTK_WINDOW (indexedP->shell), "Indexed Color Palette");
       gtk_window_add_accel_group (GTK_WINDOW (indexedP->shell), accel_group);
       gtk_signal_connect (GTK_OBJECT (indexedP->shell), "delete_event",
@@ -184,12 +186,17 @@ indexed_palette_create (GimpImage* gimage)
       gtk_widget_show (menu_bar);
       gtk_widget_show (util_box);
 
+      vbox2 = gtk_vbox_new (TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), vbox2, TRUE, FALSE, 4);
+      hbox2 = gtk_hbox_new (TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox2), hbox2, TRUE, FALSE, 4);
       /*  The palette frame  */
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-      gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 2);
+      gtk_box_pack_start (GTK_BOX (hbox2), frame, FALSE, FALSE, 2);
       indexedP->palette = gtk_preview_new (GTK_PREVIEW_COLOR);
-      gtk_preview_size (GTK_PREVIEW (indexedP->palette), P_AREA_WIDTH, P_AREA_HEIGHT);
+      gtk_preview_size (GTK_PREVIEW (indexedP->palette),
+			P_AREA_WIDTH, P_AREA_HEIGHT);
       gtk_widget_set_events (indexedP->palette, EVENT_MASK);
       gtk_signal_connect (GTK_OBJECT (indexedP->palette), "event",
 			  (GtkSignalFunc) indexed_palette_area_events,
@@ -198,6 +205,8 @@ indexed_palette_create (GimpImage* gimage)
 
       gtk_widget_show (indexedP->palette);
       gtk_widget_show (frame);
+      gtk_widget_show (hbox2);
+      gtk_widget_show (vbox2);
 
       /* some helpful hints */
       hbox = gtk_hbox_new(FALSE, 1);

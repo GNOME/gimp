@@ -37,11 +37,11 @@
 #include "palette.h"
 #include "session.h"
 
-#define ENTRY_WIDTH  14
+#define ENTRY_WIDTH  12
 #define ENTRY_HEIGHT 10
 #define SPACING 1
 #define COLUMNS 16
-#define ROWS 16
+#define ROWS 11
 
 #define PREVIEW_WIDTH ((ENTRY_WIDTH * COLUMNS) + (SPACING * (COLUMNS + 1)))
 #define PREVIEW_HEIGHT ((ENTRY_HEIGHT * ROWS) + (SPACING * (ROWS + 1)))
