@@ -152,7 +152,7 @@ do_file_error_dialog(const char *error, const char *filename)
    if (!alert)
       alert = create_alert(GTK_STOCK_DIALOG_ERROR);
 
-   alert_set_text(alert, error, filename);
+   alert_set_text(alert, error, gimp_filename_to_utf8 (filename));
 
    default_dialog_show(alert->dialog);
 }

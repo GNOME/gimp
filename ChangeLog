@@ -1,3 +1,8 @@
+2004-04-13  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/imagemap/imap_file.c (do_file_error_dialog): convert
+	the filename to UTF-8 before displaying it.
+
 2004-04-13  Michael Natterer  <mitch@gimp.org>
 
 	GimpItem undo group cleanup in preparation of fixing bug #138356:
