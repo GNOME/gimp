@@ -1,17 +1,17 @@
-/* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpchainbutton.c
- * Copyright (C) 1999-2000 Sven Neumann <sven@gimp.org> 
+ * Copyright (C) 1999-2000 Sven Neumann <sven@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -69,8 +69,8 @@ gimp_chain_button_get_type (void)
       static const GTypeInfo button_info =
       {
         sizeof (GimpChainButtonClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
+        NULL,           /* base_init      */
+        NULL,           /* base_finalize  */
         (GClassInitFunc) gimp_chain_button_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data     */
@@ -91,7 +91,7 @@ gimp_chain_button_class_init (GimpChainButtonClass *klass)
 {
   parent_class = g_type_class_peek_parent (klass);
 
-  gimp_chain_button_signals[TOGGLED] = 
+  gimp_chain_button_signals[TOGGLED] =
     g_signal_new ("toggled",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -120,7 +120,7 @@ gimp_chain_button_init (GimpChainButton *button)
   gtk_widget_show (button->image);
 
   g_signal_connect (button->button, "clicked",
-                    G_CALLBACK (gimp_chain_button_clicked_callback), 
+                    G_CALLBACK (gimp_chain_button_clicked_callback),
                     button);
   g_signal_connect (button->line1, "expose_event",
                     G_CALLBACK (gimp_chain_button_draw_lines),
@@ -135,18 +135,18 @@ gimp_chain_button_init (GimpChainButton *button)
  * gimp_chain_button_new:
  * @position: The position you are going to use for the button
  *            with respect to the widgets you want to chain.
- * 
+ *
  * Creates a new #GimpChainButton widget.
  *
  * This returns a button showing either a broken or a linked chain and
- * small clamps attached to both sides that visually group the two widgets 
+ * small clamps attached to both sides that visually group the two widgets
  * you want to connect. This widget looks best when attached
  * to a table taking up two columns (or rows respectively) next
  * to the widgets that it is supposed to connect. It may work
  * for more than two widgets, but the look is optimized for two.
  *
  * Returns: Pointer to the new #GimpChainButton, which is inactive
- *          by default. Use gimp_chain_button_set_active() to 
+ *          by default. Use gimp_chain_button_set_active() to
  *          change its state.
  */
 GtkWidget *
@@ -191,15 +191,15 @@ gimp_chain_button_new (GimpChainPosition position)
   return GTK_WIDGET (button);
 }
 
-/** 
+/**
  * gimp_chain_button_set_active:
  * @button: Pointer to a #GimpChainButton.
  * @active: The new state.
- * 
- * Sets the state of the #GimpChainButton to be either locked (%TRUE) or 
+ *
+ * Sets the state of the #GimpChainButton to be either locked (%TRUE) or
  * unlocked (%FALSE) and changes the showed pixmap to reflect the new state.
  */
-void       
+void
 gimp_chain_button_set_active (GimpChainButton  *button,
 			      gboolean          active)
 {
@@ -222,12 +222,12 @@ gimp_chain_button_set_active (GimpChainButton  *button,
 /**
  * gimp_chain_button_get_active
  * @button: Pointer to a #GimpChainButton.
- * 
- * Checks the state of the #GimpChainButton. 
+ *
+ * Checks the state of the #GimpChainButton.
  *
  * Returns: %TRUE if the #GimpChainButton is active (locked).
  */
-gboolean   
+gboolean
 gimp_chain_button_get_active (GimpChainButton *button)
 {
   g_return_val_if_fail (GIMP_IS_CHAIN_BUTTON (button), FALSE);
@@ -251,13 +251,14 @@ gimp_chain_button_draw_lines (GtkWidget       *widget,
 			      GdkEventExpose  *eevent,
 			      GimpChainButton *button)
 {
-  GdkPoint      points[3];
-  GdkPoint      buf;
-  GtkShadowType	shadow;
-  gint          which_line;
+  GdkPoint           points[3];
+  GdkPoint           buf;
+  GtkShadowType	     shadow;
+  GimpChainPosition  position;
+  gint               which_line;
 
 #define SHORT_LINE 4
-  /* don't set this too high, there's no check against drawing outside 
+  /* don't set this too high, there's no check against drawing outside
      the widgets bounds yet (and probably never will be) */
 
   g_return_val_if_fail (GIMP_IS_CHAIN_BUTTON (button), FALSE);
@@ -267,7 +268,22 @@ gimp_chain_button_draw_lines (GtkWidget       *widget,
 
   which_line = (widget == button->line1) ? 1 : -1;
 
-  switch (button->position)
+  position = button->position;
+
+  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+    switch (position)
+      {
+      case GIMP_CHAIN_LEFT:
+        position = GIMP_CHAIN_RIGHT;
+        break;
+      case GIMP_CHAIN_RIGHT:
+        position = GIMP_CHAIN_LEFT;
+        break;
+      default:
+        break;
+      }
+
+  switch (position)
     {
     case GIMP_CHAIN_LEFT:
       points[0].x += SHORT_LINE;
