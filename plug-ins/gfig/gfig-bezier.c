@@ -41,19 +41,31 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static gint bezier_closed     = 0; /* Closed curve 0 = false 1 = true */
-static gint bezier_line_frame = 0; /* Show frame = false 1 = true */
-GfigObject *tmp_bezier;               /* Needed when drawing bezier curves */
-
-static void        d_paint_bezier (GfigObject *obj);
-static GfigObject *d_copy_bezier  (GfigObject *obj);
-
-
 #define FP_PNT_MAX  10
 
-static int      fp_pnt_cnt = 0;
-static int      fp_pnt_chunk = 0;
-static gdouble *fp_pnt_pnts = NULL;
+typedef gdouble (*fp_pnt)[2];
+
+static gboolean  bezier_closed     = FALSE;
+static gboolean  bezier_line_frame = FALSE;
+static int       fp_pnt_cnt = 0;
+static int       fp_pnt_chunk = 0;
+static gdouble  *fp_pnt_pnts = NULL;
+
+GfigObject      *tmp_bezier;       /* Needed when drawing bezier curves */
+
+static void        fp_pnt_start   (void);
+static void        fp_pnt_add     (gdouble     p1,
+                                   gdouble     p2,
+                                   gdouble     p3,
+                                   gdouble     p4);
+static gdouble    *d_bz_get_array (gint       *sz);
+static void        d_bz_line      (void);
+static void        DrawBezier     (fp_pnt      points,
+                                   gint        np,
+                                   gdouble     mid,
+                                   gint        depth);
+static void        d_paint_bezier (GfigObject *obj);
+static GfigObject *d_copy_bezier  (GfigObject *obj);
 
 static void
 fp_pnt_start (void)
@@ -78,9 +90,7 @@ fp_pnt_add (gdouble p1,
     {
       /* more space pls */
       fp_pnt_chunk++;
-      fp_pnt_pnts =
-        (gdouble *) g_realloc (fp_pnt_pnts,
-                               sizeof (gdouble) * fp_pnt_chunk * FP_PNT_MAX);
+      fp_pnt_pnts = g_renew (gdouble, fp_pnt_pnts, fp_pnt_chunk * FP_PNT_MAX);
     }
 
   fp_pnt_pnts[fp_pnt_cnt++] = p1;
@@ -116,13 +126,11 @@ d_bz_line (void)
 
 /*  Return points to plot */
 /* Terminate by point with DBL_MAX, DBL_MAX */
-typedef gdouble (*fp_pnt)[2];
-
 static void
-DrawBezier (gdouble (*points)[2],
-            gint      np,
-            gdouble   mid,
-            gint      depth)
+DrawBezier (fp_pnt  points,
+            gint    np,
+            gdouble mid,
+            gint    depth)
 {
   gint   i, j, x0 = 0, y0 = 0, x1, y1;
   fp_pnt left;
@@ -146,8 +154,8 @@ DrawBezier (gdouble (*points)[2],
       }
     else /* subdivide control points at mid */
       {
-        left = (fp_pnt) g_new (gdouble, np * 2);
-        right = (fp_pnt) g_new (gdouble, np * 2);
+        left = (fp_pnt)g_new (gdouble, np * 2);
+        right = (fp_pnt)g_new (gdouble, np * 2);
         for (i = 0; i < np; i++)
           {
             right[i][0] = points[i][0];
@@ -346,7 +354,8 @@ d_update_bezier (GdkPoint *pnt)
 }
 
 void
-d_bezier_start (GdkPoint *pnt, gint shift_down)
+d_bezier_start (GdkPoint *pnt,
+                gboolean  shift_down)
 {
   if (!tmp_bezier)
     {
@@ -356,7 +365,8 @@ d_bezier_start (GdkPoint *pnt, gint shift_down)
 }
 
 void
-d_bezier_end (GdkPoint *pnt, gint shift_down)
+d_bezier_end (GdkPoint *pnt,
+              gboolean  shift_down)
 {
   DobjPoints *l_pnt;
 
@@ -385,23 +395,24 @@ d_bezier_end (GdkPoint *pnt, gint shift_down)
 
           if (bezier_closed)
             {
-              gint tmp_frame = bezier_line_frame;
+              gboolean tmp_frame = bezier_line_frame;
               /* if closed then add first point */
               d_draw_bezier (tmp_bezier);
               d_pnt_add_line (tmp_bezier,
-                             tmp_bezier->points->pnt.x,
-                             tmp_bezier->points->pnt.y,-1);
+                              tmp_bezier->points->pnt.x,
+                              tmp_bezier->points->pnt.y, -1);
               /* Final has no frame */
-              bezier_line_frame = 0; /* False */
+              bezier_line_frame = FALSE;
               d_draw_bezier (tmp_bezier);
               bezier_line_frame = tmp_frame; /* What is was */
             }
           else if (bezier_line_frame)
             {
+              gboolean tmp_frame = bezier_line_frame;
               d_draw_bezier (tmp_bezier);
-              bezier_line_frame = 0; /* False */
+              bezier_line_frame = FALSE;
               d_draw_bezier (tmp_bezier);
-              bezier_line_frame = 1; /* What is was */
+              bezier_line_frame = tmp_frame; /* What is was */
             }
 
           add_to_all_obj (gfig_context->current_obj, obj_creating);
@@ -457,3 +468,4 @@ tool_options_bezier (GtkWidget *notebook)
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 }
+

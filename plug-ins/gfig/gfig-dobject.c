@@ -227,7 +227,7 @@ d_delete_dobjpoints (DobjPoints * pnts)
     }
 }
 
-DobjPoints*
+DobjPoints *
 new_dobjpoint (gint x, gint y)
 {
   DobjPoints *npnt = g_new0 (DobjPoints, 1);

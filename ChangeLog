@@ -1,3 +1,15 @@
+2004-11-30  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/README: removed some very obsolete stuff.
+
+	* plug-ins/gfig/gfig-arc.c
+	* plug-ins/gfig/gfig-arc.h
+	* plug-ins/gfig/gfig-bezier.c
+	* plug-ins/gfig/gfig-bezier.h
+	* plug-ins/gfig/gfig-circle.c
+	* plug-ins/gfig/gfig-circle.h
+	* plug-ins/gfig/gfig-dobject.c: small cleanups
+
 2004-11-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/themes.c (themes_init): use gtk_rc_parse() instead of

@@ -26,12 +26,14 @@
 #ifndef __GFIG_ARC_H__
 #define __GFIG_ARC_H__
 
-void     d_update_arc (GdkPoint *pnt);
-void     d_arc_start  (GdkPoint *pnt,
-                       gint      shift_down);
-void     d_arc_end    (GdkPoint *pnt,
-                       gint      shift_down);
-
 void     d_arc_object_class_init (void);
+
+void     d_update_arc (GdkPoint *pnt);
+
+void     d_arc_start  (GdkPoint *pnt,
+                       gboolean  shift_down);
+void     d_arc_end    (GdkPoint *pnt,
+                       gboolean  shift_down);
+
 
 #endif /* __GFIG_ARC_H__ */

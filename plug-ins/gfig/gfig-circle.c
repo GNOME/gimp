@@ -40,6 +40,12 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+static gint        calc_radius    (GdkPoint *center,
+                                   GdkPoint *edge);
+static void        d_draw_circle  (GfigObject *obj);
+static void        d_paint_circle (GfigObject *obj);
+static GfigObject *d_copy_circle  (GfigObject *obj);
+
 static gint
 calc_radius (GdkPoint *center, GdkPoint *edge)
 {
@@ -128,7 +134,7 @@ d_paint_circle (GfigObject *obj)
     gimp_edit_stroke (gfig_context->drawable_id);
 }
 
-static GfigObject*
+static GfigObject *
 d_copy_circle (GfigObject * obj)
 {
   GfigObject *nc;
@@ -202,14 +208,14 @@ d_update_circle (GdkPoint *pnt)
 
 void
 d_circle_start (GdkPoint *pnt,
-                gint      shift_down)
+                gboolean  shift_down)
 {
   obj_creating = d_new_object (CIRCLE, pnt->x, pnt->y);
 }
 
 void
 d_circle_end (GdkPoint *pnt,
-              gint      shift_down)
+              gboolean  shift_down)
 {
   /* Under contrl point */
   if (!obj_creating->points->next)

@@ -30,12 +30,14 @@ extern GfigObject *tmp_bezier;
 
 void d_draw_bezier              (GfigObject *obj);
 
+void d_bezier_object_class_init (void);
+
 void d_update_bezier            (GdkPoint   *pnt);
+
 void d_bezier_start             (GdkPoint   *pnt,
                                  gboolean    shift_down);
 void d_bezier_end               (GdkPoint   *pnt,
                                  gboolean    shift_down);
-void d_bezier_object_class_init (void);
 
 void tool_options_bezier        (GtkWidget  *notebook);
 

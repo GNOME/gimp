@@ -40,6 +40,57 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+static gdouble     dist                (gdouble   x1,
+                                        gdouble   y1,
+                                        gdouble   x2,
+                                        gdouble   y2);
+
+static void        mid_point           (gdouble   x1,
+                                        gdouble   y1,
+                                        gdouble   x2,
+                                        gdouble   y2,
+                                        gdouble  *mx,
+                                        gdouble  *my);
+
+static gdouble     line_grad           (gdouble   x1,
+                                        gdouble   y1,
+                                        gdouble   x2,
+                                        gdouble   y2);
+
+static gdouble     line_cons           (gdouble   x,
+                                        gdouble   y,
+                                        gdouble   lgrad);
+
+static void        line_definition     (gdouble   x1,
+                                        gdouble   y1,
+                                        gdouble   x2,
+                                        gdouble   y2,
+                                        gdouble  *lgrad,
+                                        gdouble  *lconst);
+
+static void        arc_details         (GdkPoint *vert_a,
+                                        GdkPoint *vert_b,
+                                        GdkPoint *vert_c,
+                                        GdkPoint *center_pnt,
+                                        gdouble  *radius);
+
+static gdouble     arc_angle           (GdkPoint *pnt,
+                                        GdkPoint *center);
+
+static void        arc_drawing_details (GfigObject *obj,
+                                        gdouble    *minang,
+                                        GdkPoint   *center_pnt,
+                                        gdouble    *arcang,
+                                        gdouble    *radius,
+                                        gboolean    draw_cnts,
+                                        gboolean    do_scale);
+
+static void        d_draw_arc          (GfigObject *obj);
+
+static void        d_paint_arc         (GfigObject *obj);
+
+static GfigObject *d_copy_arc          (GfigObject *obj);
+
 /* Distance between two points. */
 static gdouble
 dist (gdouble x1,
@@ -56,10 +107,10 @@ dist (gdouble x1,
 
 /* Mid point of line returned */
 static void
-mid_point (gdouble x1,
-           gdouble y1,
-           gdouble x2,
-           gdouble y2,
+mid_point (gdouble  x1,
+           gdouble  y1,
+           gdouble  x2,
+           gdouble  y2,
            gdouble *mx,
            gdouble *my)
 {
@@ -91,7 +142,7 @@ line_cons (gdouble x,
   return y - lgrad * x;
 }
 
-/*Get grad & const for perpend. line to given points */
+/* Get grad & const for perpend. line to given points */
 static void
 line_definition (gdouble  x1,
                  gdouble  y1,
@@ -155,38 +206,20 @@ arc_details (GdkPoint *vert_a,
   cx = (double) (vert_c->x);
   cy = (double) (vert_c->y);
 
-#ifdef DEBUG
-  printf ("Vertices (%f,%f), (%f,%f), (%f,%f)\n", ax, ay, bx, by, cx, cy);
-#endif /* DEBUG */
-
   len_a = dist (ax, ay, bx, by);
   len_b = dist (bx, by, cx, cy);
   len_c = dist (cx, cy, ax, ay);
 
-#ifdef DEBUG
-  printf ("len_a = %f, len_b = %f, len_c = %f\n", len_a, len_b, len_c);
-#endif /* DEBUG */
-
   sum_sides2 = (fabs (len_a) + fabs (len_b) + fabs (len_c))/2;
 
-#ifdef DEBUG
-  printf ("Sum sides / 2 = %f\n", sum_sides2);
-#endif /* DEBUG */
-
   /* Area */
-  area = sqrt (sum_sides2*(sum_sides2 - len_a)*(sum_sides2 - len_b)*(sum_sides2 - len_c));
-
-#ifdef DEBUG
-  printf ("Area of triangle = %f\n", area);
-#endif /* DEBUG */
+  area = sqrt (sum_sides2 * (sum_sides2 - len_a) *
+                            (sum_sides2 - len_b) *
+                            (sum_sides2 - len_c));
 
   /* Circumcircle */
-  circumcircle_R = len_a*len_b*len_c/(4*area);
+  circumcircle_R = len_a * len_b * len_c / (4 * area);
   *radius = circumcircle_R;
-
-#ifdef DEBUG
-  printf ("Circumcircle radius = %f\n", circumcircle_R);
-#endif /* DEBUG */
 
   /* Deal with exceptions - I hate exceptions */
 
@@ -211,19 +244,19 @@ arc_details (GdkPoint *vert_a,
           if (cy < miny)
             miny = cy;
 
-          inter_y = (maxy - miny)/2 + miny;
+          inter_y = (maxy - miny) / 2 + miny;
         }
       else if (ax == bx)
         {
-          inter_y = (ay - by)/2 + by;
+          inter_y = (ay - by) / 2 + by;
         }
       else if (bx == cx)
         {
-          inter_y = (by - cy)/2 + cy;
+          inter_y = (by - cy) / 2 + cy;
         }
       else
         {
-          inter_y = (cy - ay)/2 + ay;
+          inter_y = (cy - ay) / 2 + ay;
         }
       got_y = 1;
     }
@@ -249,19 +282,19 @@ arc_details (GdkPoint *vert_a,
           if (cx < minx)
             minx = cx;
 
-          inter_x = (maxx - minx)/2 + minx;
+          inter_x = (maxx - minx) / 2 + minx;
         }
       else if (ay == by)
         {
-          inter_x = (ax - bx)/2 + bx;
+          inter_x = (ax - bx) / 2 + bx;
         }
       else if (by == cy)
         {
-          inter_x = (bx - cx)/2 + cx;
+          inter_x = (bx - cx) / 2 + cx;
         }
       else
         {
-          inter_x = (cx - ax)/2 + ax;
+          inter_x = (cx - ax) / 2 + ax;
         }
       got_x = 1;
     }
@@ -284,9 +317,9 @@ arc_details (GdkPoint *vert_a,
   /* Intersection point */
 
   if (!got_x)
-    inter_x = /*rint*/((line2_const - line1_const)/(line1_grad - line2_grad));
+    inter_x = (line2_const - line1_const) / (line1_grad - line2_grad);
   if (!got_y)
-    inter_y = /*rint*/((line1_grad * inter_x + line1_const));
+    inter_y = line1_grad * inter_x + line1_const;
 
   center_pnt->x = (gint) inter_x;
   center_pnt->y = (gint) inter_y;
@@ -308,7 +341,7 @@ arc_angle (GdkPoint *pnt,
   if (offset_angle < 0)
     offset_angle += 2.0 * G_PI;
 
-  return offset_angle * 360 / (2*G_PI);
+  return offset_angle * 360 / (2.0 * G_PI);
 }
 
 static void
@@ -317,8 +350,8 @@ arc_drawing_details (GfigObject *obj,
                      GdkPoint   *center_pnt,
                      gdouble    *arcang,
                      gdouble    *radius,
-                     gint        draw_cnts,
-                     gint        do_scale)
+                     gboolean    draw_cnts,
+                     gboolean    do_scale)
 {
   DobjPoints *pnt1 = NULL;
   DobjPoints *pnt2 = NULL;
@@ -355,7 +388,7 @@ arc_drawing_details (GfigObject *obj,
       /* Warning struct copies here! and casting to double <-> int */
       /* Too complex fix me - to much hacking */
       gdouble xy[2];
-      int j;
+      int     j;
 
       dpnts[0] = *pnt1;
       dpnts[1] = *pnt2;
@@ -403,7 +436,7 @@ arc_drawing_details (GfigObject *obj,
 }
 
 static void
-d_draw_arc (GfigObject * obj)
+d_draw_arc (GfigObject *obj)
 {
   GdkPoint center_pnt;
   gdouble  radius, minang, arcang;
@@ -441,7 +474,8 @@ d_paint_arc (GfigObject *obj)
     return;
 
   /* No cnt pnts & must scale */
-  arc_drawing_details (obj, &minang, &center_pnt, &arcang, &radius, FALSE, TRUE);
+  arc_drawing_details (obj, &minang, &center_pnt, &arcang, &radius,
+                       FALSE, TRUE);
 
   seg_count = 360; /* Should make a smoth-ish curve */
 
@@ -455,10 +489,10 @@ d_paint_arc (GfigObject *obj)
     {
       /* Swap - since we always draw anti-clock wise */
       minang += arcang;
-      arcang = -arcang;
+      arcang  = -arcang;
     }
 
-  minang = minang * (2.0 * G_PI / 360.0); /* min ang is in degrees - need in rads*/
+  minang = minang * (2.0 * G_PI / 360.0); /* min ang is in degrees - need in rads */
 
   for (loop = 0 ; loop < abs ((gint)arcang) ; loop++)
     {
@@ -495,7 +529,7 @@ d_paint_arc (GfigObject *obj)
 
   /* Reverse line if approp */
   if (selvals.reverselines)
-    reverse_pairs_list (&line_pnts[0], i/2);
+    reverse_pairs_list (&line_pnts[0], i / 2);
 
   /* One go */
   if (obj->style.paint_type == PAINT_BRUSH_TYPE)
@@ -560,7 +594,7 @@ d_update_arc (GdkPoint *pnt)
 
 void
 d_arc_start (GdkPoint *pnt,
-             gint      shift_down)
+             gboolean  shift_down)
 {
   /* Draw lines to start with -- then convert to an arc */
   if (!tmp_line)
@@ -570,7 +604,7 @@ d_arc_start (GdkPoint *pnt,
 
 void
 d_arc_end (GdkPoint *pnt,
-           gint      shift_down)
+           gboolean  shift_down)
 {
   /* Under control point */
   if (!tmp_line               ||
