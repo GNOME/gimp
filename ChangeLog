@@ -1,3 +1,15 @@
+2005-01-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpchannel.c: implement GimpItem::convert(). Handles
+	any drawable, including conversion to GRAY, flattening and
+	resizing.
+
+	* app/widgets/gimpchanneltreeview.c: implement dropping of all
+	kinds of drawables as new channels. Fixes bug #158133.
+
+	Simplified component dropping by removing stuff which is done by
+	gimp_item_convert() now.
+
 2005-01-15  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-transform.c

@@ -43,6 +43,7 @@
 #include "gimp-utils.h"
 #include "gimpcontainer.h"
 #include "gimpimage.h"
+#include "gimpimage-convert.h"
 #include "gimpimage-qmask.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -79,6 +80,8 @@ static gboolean   gimp_channel_is_attached   (GimpItem         *item);
 static GimpItem * gimp_channel_duplicate     (GimpItem         *item,
                                               GType             new_type,
                                               gboolean          add_alpha);
+static void       gimp_channel_convert       (GimpItem         *item,
+                                              GimpImage        *dest_image);
 static void       gimp_channel_translate     (GimpItem         *item,
                                               gint              off_x,
                                               gint              off_y,
@@ -270,6 +273,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
 
   item_class->is_attached    = gimp_channel_is_attached;
   item_class->duplicate      = gimp_channel_duplicate;
+  item_class->convert        = gimp_channel_convert;
   item_class->translate      = gimp_channel_translate;
   item_class->scale          = gimp_channel_scale;
   item_class->resize         = gimp_channel_resize;
@@ -429,6 +433,87 @@ gimp_channel_duplicate (GimpItem *item,
   new_channel->y2           = channel->y2;
 
   return new_item;
+}
+
+static void
+gimp_channel_convert (GimpItem  *item,
+                      GimpImage *dest_image)
+{
+  GimpChannel       *channel  = GIMP_CHANNEL (item);
+  GimpDrawable      *drawable = GIMP_DRAWABLE (item);
+  GimpImageBaseType  old_base_type;
+
+  old_base_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
+
+  if (old_base_type != GIMP_GRAY)
+    {
+      TileManager   *new_tiles;
+      GimpImageType  new_type = GIMP_GRAY_IMAGE;
+
+      if (gimp_drawable_has_alpha (drawable))
+        new_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_type);
+
+      new_tiles = tile_manager_new (gimp_item_width (item),
+                                    gimp_item_height (item),
+                                    GIMP_IMAGE_TYPE_BYTES (new_type));
+
+      gimp_drawable_convert_grayscale (drawable, new_tiles, old_base_type);
+
+      gimp_drawable_set_tiles_full (drawable, FALSE, NULL,
+                                    new_tiles, new_type,
+                                    item->offset_x,
+                                    item->offset_y);
+      tile_manager_unref (new_tiles);
+    }
+
+  if (gimp_drawable_has_alpha (drawable))
+    {
+      TileManager *new_tiles;
+      PixelRegion  srcPR;
+      PixelRegion  destPR;
+      guchar       bg[1] = { 0 };
+
+      new_tiles = tile_manager_new (gimp_item_width (item),
+                                    gimp_item_height (item),
+                                    GIMP_IMAGE_TYPE_BYTES (GIMP_GRAY_IMAGE));
+
+      pixel_region_init (&srcPR, drawable->tiles,
+                         0, 0,
+                         gimp_item_width (item),
+                         gimp_item_height (item),
+                         FALSE);
+      pixel_region_init (&destPR, new_tiles,
+                         0, 0,
+                         gimp_item_width (item),
+                         gimp_item_height (item),
+                         TRUE);
+
+      flatten_region (&srcPR, &destPR, bg);
+
+      gimp_drawable_set_tiles_full (drawable, FALSE, NULL,
+                                    new_tiles, GIMP_GRAY_IMAGE,
+                                    item->offset_x,
+                                    item->offset_y);
+      tile_manager_unref (new_tiles);
+    }
+
+  if (G_TYPE_FROM_INSTANCE (channel) == GIMP_TYPE_CHANNEL)
+    {
+      gint width  = gimp_image_get_width  (dest_image);
+      gint height = gimp_image_get_height (dest_image);
+
+      item->offset_x = 0;
+      item->offset_y = 0;
+
+      if (gimp_item_width  (item) != width ||
+          gimp_item_height (item) != height)
+        {
+          gimp_item_resize (item, gimp_get_user_context (dest_image->gimp),
+                            width, height, 0, 0);
+        }
+    }
+
+  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image);
 }
 
 static void
