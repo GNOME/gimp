@@ -1,5 +1,10 @@
 2004-08-07  Sven Neumann  <sven@gimp.org>
 
+	* app/sanity.c: abort if the configured filename encoding can't be
+	converted to UTF-8. Fixes bug #149464 for the HEAD branch.
+
+2004-08-07  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpgradientmenu.c (gimp_gradient_select_preview_expose):
 	corrected dither offset.
 
