@@ -1,4 +1,4 @@
-1999-12-19  Michael Natterer  <mitschel@cs.tu-berlin.de>
+1999-12-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/menus.c: move <Image>/Dialogs after <Image>/Tools and add a
 	separator after it.
