@@ -5,9 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
-"PO-Revision-Date: 2004-03-12 11:44+0100\n"
+"POT-Creation-Date: 2004-03-20 19:52+0100\n"
+"PO-Revision-Date: 2004-03-21 01:54+0100\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,16 +20,20 @@ msgstr "Penseelselectie"
 # Kan ook 'browsen' zijn
 # of misschien 'Overzicht' (een overzicht van alle beschikbare patronen
 # en borstels)
-#: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
+#: libgimp/gimpbrushmenu.c:161
+#: libgimp/gimppatternmenu.c:144
 msgid "_Browse..."
 msgstr "_Bladeren..."
 
-#: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
+#: libgimp/gimpexport.c:215
+#: libgimp/gimpexport.c:251
 #, c-format
 msgid "%s can't handle layers"
 msgstr "%s ondersteunt geen lagen"
 
-#: libgimp/gimpexport.c:216 libgimp/gimpexport.c:225 libgimp/gimpexport.c:234
+#: libgimp/gimpexport.c:216
+#: libgimp/gimpexport.c:225
+#: libgimp/gimpexport.c:234
 msgid "Merge Visible Layers"
 msgstr "Zichtbare lagen samenvoegen"
 
@@ -39,16 +42,20 @@ msgstr "Zichtbare lagen samenvoegen"
 msgid "%s can't handle layer offsets, size or opacity"
 msgstr "%s ondersteunt geen laagverspringen, -grootte of -ondoorzichtigheid"
 
-#: libgimp/gimpexport.c:233 libgimp/gimpexport.c:242
+#: libgimp/gimpexport.c:233
+#: libgimp/gimpexport.c:242
 #, c-format
 msgid "%s can only handle layers as animation frames"
 msgstr "%s ondersteunt enkel lagen als animatieframes"
 
-#: libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
+#: libgimp/gimpexport.c:234
+#: libgimp/gimpexport.c:243
 msgid "Save as Animation"
 msgstr "Opslaan als animatie"
 
-#: libgimp/gimpexport.c:243 libgimp/gimpexport.c:252 libgimp/gimpexport.c:261
+#: libgimp/gimpexport.c:243
+#: libgimp/gimpexport.c:252
+#: libgimp/gimpexport.c:261
 msgid "Flatten Image"
 msgstr "Afbeelding pletten"
 
@@ -71,7 +78,9 @@ msgstr "Laagmaskers toepassen"
 msgid "%s can only handle RGB images"
 msgstr "%s ondersteunt enkel RGB-afbeeldingen"
 
-#: libgimp/gimpexport.c:279 libgimp/gimpexport.c:317 libgimp/gimpexport.c:326
+#: libgimp/gimpexport.c:279
+#: libgimp/gimpexport.c:317
+#: libgimp/gimpexport.c:326
 msgid "Convert to RGB"
 msgstr "Converteren naar RGB"
 
@@ -80,7 +89,9 @@ msgstr "Converteren naar RGB"
 msgid "%s can only handle grayscale images"
 msgstr "%s ondersteunt enkel grijswaardenafbeeldingen"
 
-#: libgimp/gimpexport.c:288 libgimp/gimpexport.c:317 libgimp/gimpexport.c:338
+#: libgimp/gimpexport.c:288
+#: libgimp/gimpexport.c:317
+#: libgimp/gimpexport.c:338
 msgid "Convert to Grayscale"
 msgstr "Converteren naar grijswaarden"
 
@@ -89,7 +100,9 @@ msgstr "Converteren naar grijswaarden"
 msgid "%s can only handle indexed images"
 msgstr "%s ondersteunt enkel geïndexeerde afbeeldingen"
 
-#: libgimp/gimpexport.c:297 libgimp/gimpexport.c:326 libgimp/gimpexport.c:336
+#: libgimp/gimpexport.c:297
+#: libgimp/gimpexport.c:326
+#: libgimp/gimpexport.c:336
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -100,8 +113,7 @@ msgstr ""
 #: libgimp/gimpexport.c:306
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr ""
-"%s ondersteunt enkel bitmap- (twee kleuren) en geïndexeerde afbeeldingen"
+msgstr "%s ondersteunt enkel bitmap- (twee kleuren) en geïndexeerde afbeeldingen"
 
 #: libgimp/gimpexport.c:307
 msgid ""
@@ -159,12 +171,8 @@ msgstr "_Exporteren"
 #. the headline
 #: libgimp/gimpexport.c:485
 #, c-format
-msgid ""
-"Your image should be exported before it can be saved as %s for the following "
-"reasons:"
-msgstr ""
-"Voordat uw afbeelding als %s opgeslagen kan worden moet zij eerst "
-"geëxporteerd worden, om de volgende redenen:"
+msgid "Your image should be exported before it can be saved as %s for the following reasons:"
+msgstr "Voordat uw afbeelding als %s opgeslagen kan worden moet zij eerst geëxporteerd worden, om de volgende redenen:"
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
@@ -208,7 +216,8 @@ msgstr "Patroonselectie"
 msgid "percent"
 msgstr "procent"
 
-#: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
+#: libgimpbase/gimputils.c:161
+#: libgimpbase/gimputils.c:166
 msgid "(invalid UTF-8 string)"
 msgstr "(ongeldige UTF-8 tekenreeks)"
 
@@ -267,8 +276,10 @@ msgstr "%d GB"
 msgid "Loading module: '%s'\n"
 msgstr "Module '%s' wordt geladen\n"
 
-#: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
-#: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
+#: libgimpmodule/gimpmodule.c:194
+#: libgimpmodule/gimpmodule.c:213
+#: libgimpmodule/gimpmodule.c:328
+#: libgimpmodule/gimpmodule.c:356
 #: libgimpmodule/gimpmodule.c:450
 #, c-format
 msgid "Module '%s' load error: %s"
@@ -324,32 +335,38 @@ msgstr "Schalen"
 
 # Deze letters moeten eigenlijk overeenkomen met de Nederlandse vertaling
 # Hue-kleurtoon
-#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:164
+#: libgimpwidgets/gimpcolorselect.c:353
 msgid "_H"
 msgstr "_K"
 
 # Saturation-verzadiging
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:165
+#: libgimpwidgets/gimpcolorselect.c:353
 msgid "_S"
 msgstr "_V"
 
 # Value-waarde
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:166
+#: libgimpwidgets/gimpcolorselect.c:353
 msgid "_V"
 msgstr "_W"
 
 # Red-rood
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:167
+#: libgimpwidgets/gimpcolorselect.c:353
 msgid "_R"
 msgstr "_R"
 
 # Green-groen
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:168
+#: libgimpwidgets/gimpcolorselect.c:353
 msgid "_G"
 msgstr "_G"
 
 # Blue-blauw
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:169
+#: libgimpwidgets/gimpcolorselect.c:353
 msgid "_B"
 msgstr "_B"
 
@@ -358,32 +375,39 @@ msgstr "_B"
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:174
+#: libgimpwidgets/gimpcolorselect.c:357
 msgid "Hue"
 msgstr "Kleurtoon"
 
-#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:175
+#: libgimpwidgets/gimpcolorselect.c:358
 #: modules/cdisplay_proof.c:323
 msgid "Saturation"
 msgstr "Verzadiging"
 
-#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:176
+#: libgimpwidgets/gimpcolorselect.c:359
 msgid "Value"
 msgstr "Waarde"
 
-#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:177
+#: libgimpwidgets/gimpcolorselect.c:360
 msgid "Red"
 msgstr "Rood"
 
-#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:178
+#: libgimpwidgets/gimpcolorselect.c:361
 msgid "Green"
 msgstr "Groen"
 
-#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:179
+#: libgimpwidgets/gimpcolorselect.c:362
 msgid "Blue"
 msgstr "Blauw"
 
-#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:180
+#: libgimpwidgets/gimpcolorselect.c:363
 msgid "Alpha"
 msgstr "Alpha"
 
@@ -427,22 +451,16 @@ msgid "GigaBytes"
 msgstr "Gigabytes"
 
 #: libgimpwidgets/gimppatheditor.c:243
-#, fuzzy
 msgid "Writable"
-msgstr "Driehoek"
+msgstr "Schrijfbaar"
 
 #: libgimpwidgets/gimppatheditor.c:252
-#, fuzzy
 msgid "Folder"
-msgstr "Selecteer map"
+msgstr "Map"
 
 #: libgimpwidgets/gimppickbutton.c:141
-msgid ""
-"Click the eyedropper, then click a color anywhere on your screen to select "
-"that color."
-msgstr ""
-"Klik op de druppelaar en vervolgens een kleur op het scherm om die kleur te "
-"selecteren."
+msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
+msgstr "Klik op de druppelaar en vervolgens op een kleur op het scherm om die kleur te selecteren."
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -488,7 +506,8 @@ msgstr "_Regelhoogte"
 msgid "_Resize"
 msgstr "_Herschalen"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:185
+#: libgimpwidgets/gimpstock.c:284
 msgid "_Scale"
 msgstr "_Schalen"
 
@@ -525,12 +544,8 @@ msgid "Factor"
 msgstr "Factor"
 
 #: libgimpwidgets/gimpwidgets.c:1291
-msgid ""
-"Use this value for random number generator seed - this allows you to repeat "
-"a given \"random\" operation"
-msgstr ""
-"Gebruik deze waarde als bron voor de generering van willekeurige nummers. "
-"Hiermee kunt u een bepaalde \"willekeurige\" operatie herhalen."
+msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
+msgstr "Gebruik deze waarde als bron voor de generering van willekeurige nummers. Hiermee kunt u een bepaalde \"willekeurige\" operatie herhalen."
 
 #: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
@@ -538,9 +553,7 @@ msgstr "_Nieuw brongetal"
 
 #: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
-msgstr ""
-"Gebruik een gegenereerd willekeurig nummer als bron voor de generering van "
-"een volgend willekeurig nummer."
+msgstr "Gebruik een gegenereerd willekeurig nummer als bron voor de generering van een volgend willekeurig nummer."
 
 # Husselen zou misschien kunnen, maar willekeurig maken is wel goed zo.
 #: libgimpwidgets/gimpwidgets.c:1312
@@ -557,7 +570,6 @@ msgstr "Beperkt kleurzicht"
 
 # Kleur_deficientietype:
 #: modules/cdisplay_colorblind.c:464
-#, fuzzy
 msgid "Color _Deficiency Type:"
 msgstr "Type beperkt kleurzicht:"
 
@@ -623,7 +635,7 @@ msgstr "Absoluut colorimetrisch"
 # Feitelijk
 #: modules/cdisplay_proof.c:331
 msgid "_Intent:"
-msgstr "_Bedoeling:"
+msgstr "_Type:"
 
 # kiezen / uitkiezen 
 #: modules/cdisplay_proof.c:334
@@ -705,3 +717,4 @@ msgstr "Waterverf"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Druk"
+
