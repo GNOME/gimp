@@ -1,3 +1,7 @@
+2004-03-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpcurvestool.c: #include "widgets/gimppropwidgets.h"
+
 2004-03-05  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcurvestool.c
