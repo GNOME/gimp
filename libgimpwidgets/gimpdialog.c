@@ -44,6 +44,7 @@ static void       gimp_dialog_init         (GimpDialog      *dialog);
 static GObject  * gimp_dialog_constructor  (GType            type,
                                             guint            n_params,
                                             GObjectConstructParam *params);
+static void       gimp_dialog_dispose      (GObject         *object);
 static void       gimp_dialog_set_property (GObject         *object,
                                             guint            property_id,
                                             const GValue    *value,
@@ -101,6 +102,7 @@ gimp_dialog_class_init (GimpDialogClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor  = gimp_dialog_constructor;
+  object_class->dispose      = gimp_dialog_dispose;
   object_class->set_property = gimp_dialog_set_property;
   object_class->get_property = gimp_dialog_get_property;
 
@@ -165,6 +167,26 @@ gimp_dialog_constructor (GType                  type,
     }
 
   return object;
+}
+
+static void
+gimp_dialog_dispose (GObject *object)
+{
+  GdkDisplay *display = NULL;
+
+  if (g_main_depth () == 0)
+    {
+      display = gtk_widget_get_display (GTK_WIDGET (object));
+      g_object_ref (display);
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+
+  if (display)
+    {
+      gdk_display_flush (display);
+      g_object_unref (display);
+    }
 }
 
 static void

@@ -1,3 +1,9 @@
+2005-01-06  Manish Singh  <yosh@gimp.org>
+
+	* libgimpwidgets/gimpdialog.c: flush the display in dispose if we're
+	no longer in a main loop, so the dialog doesn't hang around while
+	possibly long running calculations are being done. Fixes bug #163084.
+
 2005-01-06  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
