@@ -1,3 +1,13 @@
+2000-03-24  Asbjorn Pettersen  <asbjornP@dualog.no>
+
+	* plug-ins/bmp/Makefile.am :  add bmpos2.c and bmpos2.h
+
+	* plug-ins/bmp/bmpread.c (ReadBMP): Add support for
+	reading old OS/2 bitmaps.
+
+	* plug-ins/bmp/bmpos2.h (read_os2_head1): 
+	* plug-ins/bmp/bmpos2.c : New file for OS/2 bitmap reading. 
+
 Fri Mar 24 17:13:41 CET 2000  Sven Neumann <sven@gimp.org>
 
 	plug-ins/common/mapcolor.c: applied gimp-kirchgessner-000320-0.

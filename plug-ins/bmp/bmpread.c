@@ -33,6 +33,7 @@
 #include <libgimp/gimp.h>
 
 #include "bmp.h"
+#include "bmpos2.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -91,7 +92,16 @@ ReadBMP (gchar *name)
   
   /* Is it a Windows (R) Bitmap or not */  
   
-  if (Bitmap_File_Head.biSize != 40) 
+  if (Bitmap_File_Head.biSize == 12) /* OS/2 */
+    {
+      if (!read_os2_head1 (fd, Bitmap_File_Head.biSize - 4, &Bitmap_Head))
+        {
+          g_message (_("%s: error reading BMP file header\n"), prog_name);
+          return -1;
+        }
+      Maps = 3;
+    }
+  else if (Bitmap_File_Head.biSize != 40) 
     {
       g_warning ("OS/2 unsupported!\n");
       if (!ReadOK (fd, puffer, Bitmap_File_Head.biSize))
@@ -246,10 +256,10 @@ ReadColorMap (FILE   *fd,
 	}
       else
 	{
-	  /* this one is for old os2 Bitmaps, but it dosn't work well */
-	  buffer[i][0] = rgb[1];
-	  buffer[i][1] = rgb[0];
-	  buffer[i][2] = rgb[2];
+	  /* this one is for old os2 Bitmaps */
+	  buffer[i][0] = rgb[2];
+	  buffer[i][1] = rgb[1];
+	  buffer[i][2] = rgb[0];
 	}
       *grey = ((*grey) && (rgb[0]==rgb[1]) && (rgb[1]==rgb[2]));
     }
