@@ -1,3 +1,22 @@
+2005-01-01  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/jpeg/Makefile.am
+	* plug-ins/jpeg/NEWS
+	* plug-ins/jpeg/jpeg.c
+	* plug-ins/jpeg/jpeg.h
+	* plug-ins/jpeg/jpeg_load.c
+	* plug-ins/jpeg/jpeg_load.h
+	* plug-ins/jpeg/jpeg_save.c
+	* plug-ins/jpeg/jpeg_save.h: moved jpeg code into new
+	dir and split up, already too large and a good bit more 
+	will be needed for proper exif handling.
+	
+	* plug-ins/common/jpeg.c: removed
+
+	* configure.in
+	* plug-ins/Makefile.am
+	* plug-ins/common/Makefile.am: changed accordingly
+
 2005-01-01  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/tiff.c: Revert incorrect optimization from previous

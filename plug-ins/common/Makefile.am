@@ -91,7 +91,6 @@ libexec_PROGRAMS = \
 	illusion \
 	iwarp \
 	jigsaw \
-	$(JPEG) \
 	laplace \
 	lic \
 	$(MAIL) \
@@ -171,7 +170,6 @@ libexec_PROGRAMS = \
 
 EXTRA_PROGRAMS = \
 	aa \
-	jpeg \
 	mail \
 	mng \
 	png \
@@ -1009,21 +1007,6 @@ jigsaw_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
-jpeg_SOURCES = \
-	jpeg.c
-
-jpeg_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimp)		\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(LIBJPEG)		\
-	$(GTK_LIBS)		\
-	$(EXIF_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 

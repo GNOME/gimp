@@ -48,6 +48,7 @@ SUBDIRS = \
 	$(helpbrowser)		\
 	ifscompose		\
 	imagemap		\
+	jpeg                    \
 	maze			\
 	pagecurl		\
 	$(print)		\
