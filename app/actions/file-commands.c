@@ -61,6 +61,16 @@
 
 /*  local function prototypes  */
 
+static void   file_open_dialog_show        (GtkWidget   *parent,
+                                            GimpImage   *gimage,
+                                            const gchar *uri);
+static void   file_save_dialog_show        (GimpImage   *gimage,
+                                            GtkWidget   *parent,
+                                            const gchar *title,
+                                            gboolean     set_uri_and_proc,
+                                            gboolean     set_image_clean);
+static void   file_save_dialog_destroyed   (GtkWidget   *dialog,
+                                            GimpImage   *gimage);
 static void   file_new_template_callback   (GtkWidget   *widget,
                                             const gchar *name,
                                             gpointer     data);
@@ -76,19 +86,9 @@ file_open_cmd_callback (GtkAction *action,
                         gpointer   data)
 {
   GtkWidget *widget;
-  GtkWidget *dialog;
   return_if_no_widget (widget, data);
 
-  dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
-                                           gtk_widget_get_screen (widget),
-                                           "gimp-file-open-dialog", -1, FALSE);
-
-  if (dialog)
-    {
-      gimp_file_dialog_set_uri (GIMP_FILE_DIALOG (dialog), NULL, NULL);
-
-      gtk_window_present (GTK_WINDOW (dialog));
-    }
+  file_open_dialog_show (widget, NULL, NULL);
 }
 
 void
@@ -96,20 +96,9 @@ file_open_from_image_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   GtkWidget *widget;
-  GtkWidget *dialog;
   return_if_no_widget (widget, data);
 
-  dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
-                                           gtk_widget_get_screen (widget),
-                                           "gimp-file-open-dialog", -1, FALSE);
-
-  if (dialog)
-    {
-      gimp_file_dialog_set_uri (GIMP_FILE_DIALOG (dialog),
-                                action_data_get_image (data), NULL);
-
-      gtk_window_present (GTK_WINDOW (dialog));
-    }
+  file_open_dialog_show (widget, action_data_get_image (data), NULL);
 }
 
 void
@@ -214,57 +203,20 @@ file_save_cmd_callback (GtkAction *action,
     }
 }
 
-static void
-file_dialog_destroyed (GimpFileDialog *dialog,
-                       GimpImage      *gimage)
-{
-  if (dialog->gimage == gimage)
-    g_object_set_data (G_OBJECT (gimage), "gimp-file-save-dialog", NULL);
-}
-
 void
 file_save_as_cmd_callback (GtkAction *action,
                            gpointer   data)
 {
   GimpDisplay *gdisp;
   GtkWidget   *widget;
-  GtkWidget   *dialog;
   return_if_no_display (gdisp, data);
   return_if_no_widget (widget, data);
 
   if (! gimp_image_active_drawable (gdisp->gimage))
     return;
 
-  dialog = g_object_get_data (G_OBJECT (gdisp->gimage),
-                              "gimp-file-save-dialog");
-
-  if (! dialog)
-    {
-      dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
-                                               gtk_widget_get_screen (widget),
-                                               "gimp-file-save-dialog",
-                                               -1, FALSE);
-
-      if (dialog)
-        {
-          g_object_set_data_full (G_OBJECT (gdisp->gimage),
-                                  "gimp-file-save-dialog", dialog,
-                                  (GDestroyNotify) gtk_widget_destroy);
-          g_signal_connect (dialog, "destroy",
-                            G_CALLBACK (file_dialog_destroyed),
-                            gdisp->gimage);
-        }
-    }
-
-  if (dialog)
-    {
-      gtk_window_set_title (GTK_WINDOW (dialog), _("Save Image"));
-
-      gimp_file_dialog_set_image (GIMP_FILE_DIALOG (dialog), gdisp->gimage,
-                                  TRUE, TRUE);
-
-      gtk_window_present (GTK_WINDOW (dialog));
-    }
+  file_save_dialog_show (gdisp->gimage, widget, _("Save Image"),
+                         TRUE, TRUE);
 }
 
 void
@@ -273,44 +225,14 @@ file_save_a_copy_cmd_callback (GtkAction *action,
 {
   GimpDisplay *gdisp;
   GtkWidget   *widget;
-  GtkWidget   *dialog;
   return_if_no_display (gdisp, data);
   return_if_no_widget (widget, data);
 
   if (! gimp_image_active_drawable (gdisp->gimage))
     return;
 
-  dialog = g_object_get_data (G_OBJECT (gdisp->gimage),
-                              "gimp-file-save-dialog");
-
-  if (! dialog)
-    {
-      dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
-                                               gtk_widget_get_screen (widget),
-                                               "gimp-file-save-dialog",
-                                               -1, FALSE);
-
-      if (dialog)
-        {
-          g_object_set_data_full (G_OBJECT (gdisp->gimage),
-                                  "gimp-file-save-dialog", dialog,
-                                  (GDestroyNotify) gtk_widget_destroy);
-          g_signal_connect (dialog, "destroy",
-                            G_CALLBACK (file_dialog_destroyed),
-                            gdisp->gimage);
-        }
-    }
-
-
-  if (dialog)
-    {
-      gtk_window_set_title (GTK_WINDOW (dialog), _("Save a Copy of the Image"));
-
-      gimp_file_dialog_set_image (GIMP_FILE_DIALOG (dialog), gdisp->gimage,
-                                  FALSE, FALSE);
-
-      gtk_window_present (GTK_WINDOW (dialog));
-    }
+  file_save_dialog_show (gdisp->gimage, widget, _("Save a Copy of the Image"),
+                         FALSE, FALSE);
 }
 
 void
@@ -406,6 +328,17 @@ file_file_open_dialog (Gimp        *gimp,
                        const gchar *uri,
                        GtkWidget   *parent)
 {
+  file_open_dialog_show (parent, NULL, uri);
+}
+
+
+/*  private functions  */
+
+static void
+file_open_dialog_show (GtkWidget   *parent,
+                       GimpImage   *gimage,
+                       const gchar *uri)
+{
   GtkWidget *dialog;
 
   dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
@@ -414,14 +347,60 @@ file_file_open_dialog (Gimp        *gimp,
 
   if (dialog)
     {
-      gimp_file_dialog_set_uri (GIMP_FILE_DIALOG (dialog), NULL, uri);
+      gimp_file_dialog_set_uri (GIMP_FILE_DIALOG (dialog), gimage, uri);
 
       gtk_window_present (GTK_WINDOW (dialog));
     }
 }
 
+static void
+file_save_dialog_show (GimpImage   *gimage,
+                       GtkWidget   *parent,
+                       const gchar *title,
+                       gboolean     set_uri_and_proc,
+                       gboolean     set_image_clean)
+{
+  GtkWidget *dialog;
 
-/*  private functions  */
+  dialog = g_object_get_data (G_OBJECT (gimage), "gimp-file-save-dialog");
+
+  if (! dialog)
+    {
+      dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                               gtk_widget_get_screen (parent),
+                                               "gimp-file-save-dialog",
+                                               -1, FALSE);
+
+      if (dialog)
+        {
+          g_object_set_data_full (G_OBJECT (gimage),
+                                  "gimp-file-save-dialog", dialog,
+                                  (GDestroyNotify) gtk_widget_destroy);
+          g_signal_connect (dialog, "destroy",
+                            G_CALLBACK (file_save_dialog_destroyed),
+                            gimage);
+        }
+    }
+
+
+  if (dialog)
+    {
+      gtk_window_set_title (GTK_WINDOW (dialog), title);
+
+      gimp_file_dialog_set_image (GIMP_FILE_DIALOG (dialog), gimage,
+                                  set_uri_and_proc, set_image_clean);
+
+      gtk_window_present (GTK_WINDOW (dialog));
+    }
+}
+
+static void
+file_save_dialog_destroyed (GtkWidget *dialog,
+                            GimpImage *gimage)
+{
+  if (GIMP_FILE_DIALOG (dialog)->gimage == gimage)
+    g_object_set_data (G_OBJECT (gimage), "gimp-file-save-dialog", NULL);
+}
 
 static void
 file_new_template_callback (GtkWidget   *widget,
