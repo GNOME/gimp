@@ -65,6 +65,17 @@ gimp_composite_mmx_test (int iterations, int n_pixels)
     }
 
 
+  gimp_composite_context_init (&special_ctx, GIMP_COMPOSITE_ADDITION, GIMP_PIXELFORMAT_VA8, GIMP_PIXELFORMAT_VA8, GIMP_PIXELFORMAT_VA8, GIMP_PIXELFORMAT_VA8, n_pixels, (unsigned char *) va8A, (unsigned char *) va8B, (unsigned char *) va8B, (unsigned char *) va8D2);
+  gimp_composite_context_init (&generic_ctx, GIMP_COMPOSITE_ADDITION, GIMP_PIXELFORMAT_VA8, GIMP_PIXELFORMAT_VA8, GIMP_PIXELFORMAT_VA8, GIMP_PIXELFORMAT_VA8, n_pixels, (unsigned char *) va8A, (unsigned char *) va8B, (unsigned char *) va8B, (unsigned char *) va8D1);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_addition_va8_va8_va8_mmx, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("addition", &generic_ctx, &special_ctx))
+    {
+      printf("addition_va8_va8_va8 failed\n");
+      return (1);
+    }
+  gimp_composite_regression_timer_report ("addition_va8_va8_va8", ft0, ft1);
+
   gimp_composite_context_init (&special_ctx, GIMP_COMPOSITE_ADDITION, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D2);
   gimp_composite_context_init (&generic_ctx, GIMP_COMPOSITE_ADDITION, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D1);
   ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
@@ -211,7 +222,7 @@ main (int argc, char *argv[])
   putenv ("GIMP_COMPOSITE=0x1");
 
   iterations = 10;
-  n_pixels = 1048593;
+  n_pixels = 8388625;
 
   argv++, argc--;
   while (argc >= 2)

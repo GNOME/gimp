@@ -15,7 +15,7 @@ extern gboolean gimp_composite_mmx_install (void);
  * can actually be compiled like we expect it to.  If all is okay,
  * define the manifest constant COMPILE_IS_OKAY.
  */
-#if !defined(__INTEL_COMPILER)
+#if !defined(__INTEL_COMPILER) || defined(USE_INTEL_COMPILER_ANYWAY)
 #if defined(USE_MMX)
 #if defined(ARCH_X86)
 #if __GNUC__ >= 3

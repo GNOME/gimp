@@ -1,3 +1,15 @@
+2004-09-02  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-*test.c: a regression test now
+	iterates over 8388625 pixels per pass.
+
+	* app/composite/gimp-composite-mmx.c
+	* app/composite/gimp-composite-sse.c
+	* app/composite/gimp-composite-sse2.c:
+	Ensured that a clobbered condition code register is reflected in
+	the clobbered register list for each asm() statement.
+	This should FIX bug #147013.
+
 2004-09-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/Makefile.am

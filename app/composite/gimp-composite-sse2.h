@@ -9,7 +9,7 @@ extern gboolean gimp_composite_sse2_init (void);
  */
 extern gboolean gimp_composite_sse2_install (void);
 
-#if !defined(__INTEL_COMPILER)
+#if !defined(__INTEL_COMPILER) || defined(USE_INTEL_COMPILER_ANYWAY)
 #if defined(USE_SSE)
 #if defined(ARCH_X86)
 #if __GNUC__ >= 3

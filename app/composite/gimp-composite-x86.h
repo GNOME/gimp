@@ -109,7 +109,7 @@
                                           "movd   %%eax,%%" #divisor ";"   \
                                           "psllq  $32,%%" #divisor ";"     \
                                           "por    %%" #divisor ",%%" #quotient ";"
-#define pdivwqX_clobber "%eax", "%ecx", "%edx"
+#define pdivwqX_clobber "%eax", "%ecx", "%edx", "%cc"
    
 /*
  * Quadword divide.  Adjusted for subsequent unsigned packing
