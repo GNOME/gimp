@@ -169,13 +169,24 @@ package Gimp::CodeGen::enums;
 		       VERTICAL => '1',
 		       UNKNOWN => '2' }
 	},
-    GimpImageBaseType =>
+    GimpBlendMode =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_RGB GIMP_GRAY GIMP_INDEXED) ],
-	  mapping => { GIMP_RGB => '0',
-		       GIMP_GRAY => '1',
-		       GIMP_INDEXED => '2' }
+	  symbols => [ qw(GIMP_FG_BG_RGB_MODE GIMP_FG_BG_HSV_MODE
+			  GIMP_FG_TRANSPARENT_MODE GIMP_CUSTOM_MODE) ],
+	  mapping => { GIMP_FG_BG_RGB_MODE => '0',
+		       GIMP_FG_BG_HSV_MODE => '1',
+		       GIMP_FG_TRANSPARENT_MODE => '2',
+		       GIMP_CUSTOM_MODE => '3' }
+	},
+    GimpBucketFillMode =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_FG_BUCKET_FILL GIMP_BG_BUCKET_FILL
+			  GIMP_PATTERN_BUCKET_FILL) ],
+	  mapping => { GIMP_FG_BUCKET_FILL => '0',
+		       GIMP_BG_BUCKET_FILL => '1',
+		       GIMP_PATTERN_BUCKET_FILL => '2' }
 	},
     GimpChannelType =>
 	{ contig => 1,
@@ -189,16 +200,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_GRAY_CHANNEL => '3',
 		       GIMP_INDEXED_CHANNEL => '4',
 		       GIMP_ALPHA_CHANNEL => '5' }
-	},
-    GimpBlendMode =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_FG_BG_RGB_MODE GIMP_FG_BG_HSV_MODE
-			  GIMP_FG_TRANSPARENT_MODE GIMP_CUSTOM_MODE) ],
-	  mapping => { GIMP_FG_BG_RGB_MODE => '0',
-		       GIMP_FG_BG_HSV_MODE => '1',
-		       GIMP_FG_TRANSPARENT_MODE => '2',
-		       GIMP_CUSTOM_MODE => '3' }
 	},
     GimpGradientType =>
 	{ contig => 1,
@@ -220,6 +221,14 @@ package Gimp::CodeGen::enums;
 		       GIMP_SPIRAL_CLOCKWISE => '9',
 		       GIMP_SPIRAL_ANTICLOCKWISE => '10' }
 	},
+    GimpImageBaseType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_RGB GIMP_GRAY GIMP_INDEXED) ],
+	  mapping => { GIMP_RGB => '0',
+		       GIMP_GRAY => '1',
+		       GIMP_INDEXED => '2' }
+	},
     GimpRepeatMode =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
@@ -229,14 +238,13 @@ package Gimp::CodeGen::enums;
 		       GIMP_REPEAT_SAWTOOTH => '1',
 		       GIMP_REPEAT_TRIANGULAR => '2' }
 	},
-    GimpBucketFillMode =>
+    GimpTransferMode =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_FG_BUCKET_FILL GIMP_BG_BUCKET_FILL
-			  GIMP_PATTERN_BUCKET_FILL) ],
-	  mapping => { GIMP_FG_BUCKET_FILL => '0',
-		       GIMP_BG_BUCKET_FILL => '1',
-		       GIMP_PATTERN_BUCKET_FILL => '2' }
+	  symbols => [ qw(GIMP_SHADOWS GIMP_MIDTONES GIMP_HIGHLIGHTS) ],
+	  mapping => { GIMP_SHADOWS => '0',
+		       GIMP_MIDTONES => '1',
+		       GIMP_HIGHLIGHTS => '2' }
 	},
     GimpChannelOps =>
 	{ contig => 1,
@@ -334,14 +342,6 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(GIMP_OFFSET_BACKGROUND GIMP_OFFSET_TRANSPARENT) ],
 	  mapping => { GIMP_OFFSET_BACKGROUND => '0',
 		       GIMP_OFFSET_TRANSPARENT => '1' }
-	},
-    GimpTransferMode =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_SHADOWS GIMP_MIDTONES GIMP_HIGHLIGHTS) ],
-	  mapping => { GIMP_SHADOWS => '0',
-		       GIMP_MIDTONES => '1',
-		       GIMP_HIGHLIGHTS => '2' }
 	},
     BrushApplicationMode =>
 	{ contig => 1,
