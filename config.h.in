@@ -72,6 +72,7 @@
 #undef HAVE_GETTEXT
 #undef HAVE_IPC_H
 #undef HAVE_LC_MESSAGES
+#undef HAVE_MMAP
 #undef HAVE_NDIR_H
 #undef HAVE_PROGRESSIVE_JPEG
 #undef HAVE_PUTENV
@@ -87,7 +88,6 @@
 #undef HAVE_UNISTD_H
 #undef HAVE_VPRINTF
 #undef HAVE_VSNPRINTF
-#undef HAVE_XSHM_H
 
 #undef IPC_RMID_DEFERRED_RELEASE
 
@@ -119,6 +119,9 @@
 
 /* Define if you have the getpagesize function.  */
 #undef HAVE_GETPAGESIZE
+
+/* Define if you have the mmap function.  */
+#undef HAVE_MMAP
 
 /* Define if you have the munmap function.  */
 #undef HAVE_MUNMAP

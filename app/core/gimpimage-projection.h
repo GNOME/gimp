@@ -119,6 +119,8 @@ GUnit           gimp_image_get_unit               (GimpImage *);
 void            gimp_image_set_save_proc	  (GimpImage *,
 						   PlugInProcDef *);
 PlugInProcDef * gimp_image_get_save_proc	  (GimpImage *);
+gint		gimp_image_get_width		  (const GimpImage *);
+gint		gimp_image_get_height		  (const GimpImage *);
 void            gimp_image_resize                 (GimpImage *,
 						   gint, gint, gint, gint);
 void            gimp_image_scale                  (GimpImage *, gint, gint);

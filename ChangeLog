@@ -1,3 +1,18 @@
+Wed Aug 25 02:40:39 CDT 1999 Shawn T. Amundson <amundson@gimp.org>
+
+	* app/image_new.[ch]: Added new files, the UI independant part of
+	  new image dialog.  
+
+	* app/file_new_dialog.[ch]: uses image_new stuff now.  Alot
+	  changed.  No UI changed.  Different behavior is a bug, as
+	  this is only for UI separation.
+
+	* app/gimpimage.[ch]: Added gimp_image_get_width () and 
+	  gimp_image_get_height ().
+
+	* app/global_edit.c: Call a function in image_new instead of
+	  file_new_dialog for updating the status of the cut buffe.
+
 Wed Aug 25 17:27:40 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* Makefile.am

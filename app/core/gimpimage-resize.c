@@ -475,6 +475,18 @@ gimp_image_resize (GimpImage *gimage,
   gimp_remove_busy_cursors (NULL);
 }
 
+gint
+gimp_image_get_width (const GimpImage *gimage)
+{
+  return gimage->width;
+}
+
+gint
+gimp_image_get_height (const GimpImage *gimage)
+{
+  return gimage->height;
+}
+
 void
 gimp_image_scale (GimpImage *gimage, 
 		  gint       new_width, 

@@ -234,6 +234,8 @@ gimp_SOURCES = \
 	hue_saturation.h	\
 	image_map.c		\
 	image_map.h		\
+	image_new.c		\
+	image_new.h		\
 	image_render.c		\
 	image_render.h		\
 	indicator_area.c	\

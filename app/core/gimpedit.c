@@ -19,7 +19,7 @@
 #include "appenv.h"
 #include "actionarea.h"
 #include "drawable.h"
-#include "file_new_dialog.h"
+#include "image_new.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage.h"
@@ -205,8 +205,8 @@ edit_cut (GImage *gimage,
   else
     cropped_cut = NULL;
 
-  if(cut)
-    file_new_reset_current_cut_buffer();
+  if (cut)
+    image_new_reset_current_cut_buffer ();
 
 
   /*  end the group undo  */
@@ -257,7 +257,7 @@ edit_copy (GImage *gimage,
     cropped_copy = NULL;
 
   if(copy)
-    file_new_reset_current_cut_buffer();
+    image_new_reset_current_cut_buffer();
 
 
   if (cropped_copy)
