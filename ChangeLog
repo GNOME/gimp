@@ -1,5 +1,24 @@
 2002-11-05  Sven Neumann  <sven@gimp.org>
-	
+
+	* plug-ins/gflare/gflare.c: applied a couple of patches from
+	yeti@physics.muni.cz that fix various issues with the GFlare
+	plug-in. Most of these were introduced when doing the (still
+	unfinished) port to GTK+-2.0 (#97761, #97764, #97765).
+
+	Did some more changes while I was on it...
+
+	* plug-ins/gflare/gflares/Bright_Star
+	* plug-ins/gflare/gflares/Classic
+	* plug-ins/gflare/gflares/Default
+	* plug-ins/gflare/gflares/Distant_Sun
+	* plug-ins/gflare/gflares/GFlare_101
+	* plug-ins/gflare/gflares/GFlare_102
+	* plug-ins/gflare/gflares/Hidden_Planet: applied a patch from
+	yeti@physics.muni.cz that changes the names to use spaces instead
+	of underscores (#97763).
+
+2002-11-05  Sven Neumann  <sven@gimp.org>
+
 	* app/base/base-enums.h
 	* app/paint-funcs/paint-funcs-generic.h
 	* app/paint-funcs/paint-funcs.c

@@ -2,7 +2,7 @@ GIMP GFlare 0.25
 100.000000 NORMAL
 40.000000 SCREEN
 20.000000 SCREEN
-Flare_Glow_Radial_3
+Flare\040Glow\040Radial\0403
 %white
 %white
 85.000000 0.000000 0.000000
@@ -11,7 +11,7 @@ Flare_Glow_Radial_3
 %random
 125.000000 0.000000 0.000000
 85 60.000000
-Flare_Glow_Radial_4
+Flare\040Glow\040Radial\0404
 %random
 %random
 20.000000 0.000000 0.000000

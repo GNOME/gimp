@@ -40,7 +40,7 @@ static char rcsid[] = "$Id$";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
+#include <errno.h>
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -484,12 +484,12 @@ static GradientMenu   * gradient_menu_new     (GradientMenuCallback callback,
 /*
 static void             gradient_menu_destroy (GradientMenu *gm);
 */
-static void             gradient_name_copy    (gchar  *dest,
-					       gchar  *src);
-static void             gradient_name_encode  (guchar *dest,
-					       guchar *src);
-static void             gradient_name_decode  (guchar *dest,
-					       guchar *src);
+static void             gradient_name_copy    (gchar       *dest,
+					       const gchar *src);
+static void             gradient_name_encode  (gchar       *dest,
+					       const gchar *src);
+static void             gradient_name_decode  (gchar       *dest,
+					       const gchar *src);
 static void             gradient_init         (void);
 static void             gradient_free         (void);
 static gchar         ** gradient_get_list     (gint   *num_gradients);
@@ -774,7 +774,8 @@ static void ed_put_gradient_menu  (GtkWidget    *table,
 				   GradientMenu *gm);
 static void ed_mode_menu_callback (GtkWidget    *widget,
 				   gpointer      data);
-static void ed_gradient_menu_callback (gchar *gradient_name, gpointer data);
+static void ed_gradient_menu_callback (const gchar *gradient_name,
+                                       gpointer     data);
 static void ed_shape_radio_callback   (GtkWidget *widget, gpointer data);
 static void ed_ientry_callback        (GtkWidget *widget, gpointer data);
 static void ed_page_map_callback      (GtkWidget *widget, gpointer data);
@@ -1406,14 +1407,15 @@ gflare_load (const gchar *filename, const gchar *name)
   fp = fopen (filename, "r");
   if (!fp)
     {
-      g_warning ("not found: %s", filename);
+      g_message (_("Failed to open GFlare file '%s': %s"),
+                 filename, g_strerror (errno));
       return NULL;
     }
 
   if (fgets (header, sizeof(header), fp) == NULL
       || strcmp (header, GFLARE_FILE_HEADER) != 0)
     {
-      g_warning (_("not valid GFlare file: %s"), filename);
+      g_warning (_("'%s' is not a valid GFlare file."), filename);
       fclose (fp);
       return NULL;
     }
@@ -1513,7 +1515,7 @@ static void
 gflare_read_gradient_name (GradientName  name,
 			   GFlareFile   *gf)
 {
-  gchar		tmp[1024], dec[1024];
+  gchar	tmp[1024], dec[1024];
 
   if (gf->error)
     return;
@@ -1523,8 +1525,8 @@ gflare_read_gradient_name (GradientName  name,
   if (fscanf (gf->fp, "%s", tmp) == 1)
     {
       /* @GRADIENT_NAME */
-      gradient_name_decode ((guchar*) dec, (guchar*) tmp);
-      gradient_name_copy (name, tmp);
+      gradient_name_decode (dec, tmp);
+      gradient_name_copy (name, dec);
       DEBUG_PRINT (("read_gradient_name: \"%s\" => \"%s\"\n", tmp, dec));
     }
   else
@@ -1614,7 +1616,7 @@ gflare_save (GFlare *gflare)
       if (!path)
 	path = g_strdup (gimp_directory ());
 
-      gflare->filename = g_build_filename ("%s%s", path, gflare->name, NULL);
+      gflare->filename = g_build_filename (path, gflare->name, NULL);
 
       g_free (path);
     }
@@ -1622,7 +1624,8 @@ gflare_save (GFlare *gflare)
   fp = fopen (gflare->filename, "w");
   if (!fp)
     {
-      g_warning (_("could not open \"%s\""), gflare->filename);
+      g_message (_("Failed to write GFlare file '%s': %s"),
+                 gflare->filename, g_strerror (errno));
       return;
     }
 
@@ -1668,12 +1671,12 @@ gflare_save (GFlare *gflare)
 static void
 gflare_write_gradient_name (GradientName name, FILE *fp)
 {
-  gchar		enc[1024];
+  gchar	enc[1024];
 
   /* @GRADIENT_NAME */
 
   /* encode white spaces and control characters (if any) */
-  gradient_name_encode ((guchar*) enc, (guchar*) name);
+  gradient_name_encode (enc, name);
 
   fprintf (fp, "%s\n", enc);
   DEBUG_PRINT (("write_gradient_name: \"%s\" => \"%s\"\n", name, enc));
@@ -1823,7 +1826,7 @@ gflares_list_load_all (void)
       dir = g_dir_open (path, 0, NULL);
 
       if (!dir)
-	g_warning(_("error reading GFlare folder \"%s\""), path);
+	g_message (_("Error reading GFlare folder '%s'"), path);
       else
 	{
 	  while ((dir_ent = g_dir_read_name (dir)))
@@ -2536,9 +2539,9 @@ dlg_run (void)
 
 		     NULL);
 
-  gtk_signal_connect (GTK_OBJECT (shell), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (shell), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   gimp_help_init ();
 
@@ -2580,19 +2583,20 @@ dlg_run (void)
 			      dlg_preview_deinit_func, NULL);
   gtk_widget_set_events (GTK_WIDGET (dlg->preview->widget), DLG_PREVIEW_MASK);
   gtk_container_add (GTK_CONTAINER (frame), dlg->preview->widget);
-  gtk_signal_connect (GTK_OBJECT(dlg->preview->widget), "event",
-		      GTK_SIGNAL_FUNC (dlg_preview_handle_event),
-		      NULL);
+  g_signal_connect (G_OBJECT(dlg->preview->widget), "event",
+                    G_CALLBACK (dlg_preview_handle_event),
+                    NULL);
   dlg_preview_calc_window ();
 
   button = gtk_check_button_new_with_mnemonic (_("A_uto Update Preview"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), dlg->update_preview);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                dlg->update_preview);
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (dlg_update_preview_callback),
-		      &dlg->update_preview);
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (dlg_update_preview_callback),
+                    &dlg->update_preview);
 
   /*
    *	Notebook
@@ -2967,12 +2971,12 @@ dlg_make_page_settings (GFlareDialog *dlg,
 
   gtk_container_set_border_width (GTK_CONTAINER (center), 4);
   gtk_container_add (GTK_CONTAINER (frame), center);
-  gtk_signal_connect (GTK_OBJECT (center), "value_changed",
-		      GTK_SIGNAL_FUNC (dlg_position_entry_callback),
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (center), "refval_changed",
-		      GTK_SIGNAL_FUNC (dlg_position_entry_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (center), "value_changed",
+                    G_CALLBACK (dlg_position_entry_callback),
+                    NULL);
+  g_signal_connect (G_OBJECT (center), "refval_changed",
+                    G_CALLBACK (dlg_position_entry_callback),
+                    NULL);
   gtk_widget_hide (chain);
   gtk_widget_show (center);
 
@@ -2995,60 +2999,60 @@ dlg_make_page_settings (GFlareDialog *dlg,
 			      1.0, 10.0, 1,
 			      FALSE, 0.0, GIMP_MAX_IMAGE_SIZE,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &pvals.radius);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dlg_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &pvals.radius);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dlg_preview_update),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Ro_tation:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      pvals.rotation, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &pvals.rotation);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dlg_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &pvals.rotation);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dlg_preview_update),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("_Hue Rotation:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      pvals.hue, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &pvals.hue);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dlg_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &pvals.hue);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dlg_preview_update),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Vector _Angle:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      pvals.vangle, 0.0, 359.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &pvals.vangle);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dlg_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &pvals.vangle);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dlg_preview_update),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Vector _Length:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      pvals.vlength, 1, 1000, 1.0, 10.0, 1,
 			      FALSE, 1, GIMP_MAX_IMAGE_SIZE,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &pvals.vlength);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dlg_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &pvals.vlength);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dlg_preview_update),
+                    NULL);
 
   /**
   ***	Asupsample settings
@@ -3074,10 +3078,10 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_widget_show (asup_table);
 
   gtk_widget_set_sensitive (asup_table, pvals.use_asupsample);
-  gtk_object_set_data (GTK_OBJECT (button), "set_sensitive", asup_table);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &pvals.use_asupsample);
+  g_object_set_data (G_OBJECT (button), "set_sensitive", asup_table);
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &pvals.use_asupsample);
 
   adj = gimp_scale_entry_new (GTK_TABLE (asup_table), 0, 0,
                               _("_Max Depth:"), -1, 4,
@@ -3085,9 +3089,9 @@ dlg_make_page_settings (GFlareDialog *dlg,
                               1.0, 10.0, 1.0, 1.0, 0,
                               TRUE, 0.0, 0.0,
                               NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &pvals.asupsample_max_depth);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &pvals.asupsample_max_depth);
 
   adj = gimp_scale_entry_new (GTK_TABLE (asup_table), 0, 1,
                               _("_Threshold"), -1, 4,
@@ -3095,18 +3099,18 @@ dlg_make_page_settings (GFlareDialog *dlg,
                               0.0, 4.0, 0.01, 0.01, 2,
                               TRUE, 0.0, 0.0,
                               NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &pvals.asupsample_threshold);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &pvals.asupsample_threshold);
 
   /*
    *	Create Page
    */
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), main_vbox,
 			    gtk_label_new_with_mnemonic (_("_Settings")));
-  gtk_signal_connect (GTK_OBJECT (table), "map",
-		      GTK_SIGNAL_FUNC (dlg_page_map_callback),
-		      (gpointer) PAGE_SETTINGS);
+  g_signal_connect (G_OBJECT (table), "map",
+                    G_CALLBACK (dlg_page_map_callback),
+                    (gpointer) PAGE_SETTINGS);
   gtk_widget_show (main_vbox);
 }
 
@@ -3206,9 +3210,9 @@ dlg_make_page_selector (GFlareDialog *dlg,
       gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
       gtk_widget_show (button);
 
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  buttons[i].callback,
-			  button);
+      g_signal_connect (G_OBJECT (button), "clicked",
+                        buttons[i].callback,
+                        button);
     }
 
   gtk_widget_show (vbox);
@@ -3218,9 +3222,9 @@ dlg_make_page_selector (GFlareDialog *dlg,
    */
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
 			    gtk_label_new_with_mnemonic (_("S_elector")));
-  gtk_signal_connect (GTK_OBJECT (vbox), "map",
-		      GTK_SIGNAL_FUNC (dlg_page_map_callback),
-		      (gpointer) PAGE_SELECTOR);
+  g_signal_connect (G_OBJECT (vbox), "map",
+                    G_CALLBACK (dlg_page_map_callback),
+                    (gpointer) PAGE_SELECTOR);
   gtk_widget_show (vbox);
 }
 
@@ -3272,9 +3276,9 @@ dlg_selector_insert (GFlare *gflare,
 
   list_item = gtk_list_item_new_with_label (gflare->name);
   /* gflare->list_item = list_item; */
-  gtk_signal_connect (GTK_OBJECT (list_item), "select",
-		      GTK_SIGNAL_FUNC (dlg_selector_list_item_callback),
-		      (gpointer) gflare);
+  g_signal_connect (G_OBJECT (list_item), "select",
+                    G_CALLBACK (dlg_selector_list_item_callback),
+                    (gpointer) gflare);
   gtk_widget_show (list_item);
 
   list = g_list_append (NULL, list_item);
@@ -3550,9 +3554,9 @@ ed_run (GFlare		     *target_gflare,
 
 		     NULL);
 
-  gtk_signal_connect (GTK_OBJECT (shell), "destroy",
-		      GTK_SIGNAL_FUNC (ed_close_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (shell), "destroy",
+                    G_CALLBACK (ed_close_callback),
+                    NULL);
 
   /*
    *    main hbox
@@ -3588,9 +3592,9 @@ ed_run (GFlare		     *target_gflare,
 			     ed_preview_deinit_func, NULL);
   gtk_widget_set_events (GTK_WIDGET (ed->preview->widget), DLG_PREVIEW_MASK);
   gtk_container_add (GTK_CONTAINER (frame), ed->preview->widget); 
-  gtk_signal_connect (GTK_OBJECT(ed->preview->widget), "event",
-		      GTK_SIGNAL_FUNC (ed_preview_handle_event),
-		      NULL);
+  g_signal_connect (G_OBJECT (ed->preview->widget), "event",
+                    G_CALLBACK (ed_preview_handle_event),
+                    NULL);
   ed_preview_calc_window ();
 
   /*
@@ -3639,7 +3643,7 @@ ed_rescan_callback (GtkWidget *widget,
   gradient_menu_rescan ();
   ed->init = FALSE;
   ed_preview_update ();
-  gtk_widget_draw (ed->notebook, NULL);
+  gtk_widget_queue_draw (ed->notebook);
 }
 
 static void
@@ -3674,12 +3678,12 @@ ed_make_page_general (GFlareEditor *ed,
 			      gflare->glow_opacity, 0.0, 100.0, 1.0, 10.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &gflare->glow_opacity);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (ed_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &gflare->glow_opacity);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (ed_preview_update),
+                    NULL);
 
   option_menu = ed_mode_menu_new (&gflare->glow_mode);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -3704,12 +3708,12 @@ ed_make_page_general (GFlareEditor *ed,
 			      gflare->rays_opacity, 0.0, 100.0, 1.0, 10.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &gflare->rays_opacity);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (ed_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &gflare->rays_opacity);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (ed_preview_update),
+                    NULL);
 
   option_menu = ed_mode_menu_new (&gflare->rays_mode);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -3734,12 +3738,12 @@ ed_make_page_general (GFlareEditor *ed,
 			      gflare->sflare_opacity, 0.0, 100.0, 1.0, 10.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &gflare->sflare_opacity);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (ed_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &gflare->sflare_opacity);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (ed_preview_update),
+                    NULL);
 
   option_menu = ed_mode_menu_new (&gflare->sflare_mode);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -3751,9 +3755,9 @@ ed_make_page_general (GFlareEditor *ed,
    */
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
 			    gtk_label_new (_("General")));
-  gtk_signal_connect (GTK_OBJECT (vbox), "map",
-		      GTK_SIGNAL_FUNC (ed_page_map_callback),
-		      (gpointer) PAGE_GENERAL);
+  g_signal_connect (G_OBJECT (vbox), "map",
+                    G_CALLBACK (ed_page_map_callback),
+                    (gpointer) PAGE_GENERAL);
   gtk_widget_show (vbox);
 }
 
@@ -3821,36 +3825,36 @@ ed_make_page_glow (GFlareEditor *ed,
 			      gflare->glow_size, 0.0, 200.0, 1.0, 10.0, 1,
 			      FALSE, 0, G_MAXINT,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &gflare->glow_size);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (ed_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &gflare->glow_size);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (ed_preview_update),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Rotation:"), SCALE_WIDTH, 0,
 			      gflare->glow_rotation, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &gflare->glow_rotation);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (ed_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &gflare->glow_rotation);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (ed_preview_update),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Hue Rotation:"), SCALE_WIDTH, 0,
 			      gflare->glow_hue, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &gflare->glow_hue);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (ed_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &gflare->glow_hue);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (ed_preview_update),
+                    NULL);
 
   gtk_widget_show (table);
 
@@ -3859,9 +3863,9 @@ ed_make_page_glow (GFlareEditor *ed,
    */
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
 			    gtk_label_new (_("Glow")));
-  gtk_signal_connect (GTK_OBJECT (vbox), "map",
-		      GTK_SIGNAL_FUNC (ed_page_map_callback),
-		      (gpointer) PAGE_GLOW);
+  g_signal_connect (G_OBJECT (vbox), "map",
+                    G_CALLBACK (ed_page_map_callback),
+                    (gpointer) PAGE_GLOW);
   gtk_widget_show (vbox);
 }
 
@@ -3931,12 +3935,12 @@ ed_make_page_rays (GFlareEditor *ed,
 			      gflare->rays_size, 0.0, 200.0, 1.0, 10.0, 1,
 			      FALSE, 0, G_MAXINT,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &gflare->rays_size);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (ed_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &gflare->rays_size);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (ed_preview_update),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Rotation:"), SCALE_WIDTH, 0,
@@ -3944,48 +3948,48 @@ ed_make_page_rays (GFlareEditor *ed,
 			      -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &gflare->rays_rotation);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (ed_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &gflare->rays_rotation);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (ed_preview_update),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Hue Rotation:"), SCALE_WIDTH, 0,
 			      gflare->rays_hue, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &gflare->rays_hue);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (ed_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &gflare->rays_hue);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (ed_preview_update),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("# of Spikes:"), SCALE_WIDTH, 0,
 			      gflare->rays_nspikes, 1, 300, 1.0, 10.0, 0,
 			      FALSE, 0, G_MAXINT,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &gflare->rays_nspikes);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (ed_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &gflare->rays_nspikes);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (ed_preview_update),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Spike Thickness:"), SCALE_WIDTH, 0,
 			      gflare->rays_thickness, 1.0, 100.0, 1.0, 10.0, 1,
 			      FALSE, 0, GIMP_MAX_IMAGE_SIZE,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &gflare->rays_thickness);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (ed_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &gflare->rays_thickness);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (ed_preview_update),
+                    NULL);
 
   gtk_widget_show (table);
 
@@ -3994,9 +3998,9 @@ ed_make_page_rays (GFlareEditor *ed,
    */
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
 			    gtk_label_new (_("Rays")));
-  gtk_signal_connect (GTK_OBJECT (vbox), "map",
-		      GTK_SIGNAL_FUNC (ed_page_map_callback),
-		      (gpointer) PAGE_RAYS);
+  g_signal_connect (G_OBJECT (vbox), "map",
+                    G_CALLBACK (ed_page_map_callback),
+                    (gpointer) PAGE_RAYS);
   gtk_widget_show (vbox);
 }
 
@@ -4073,12 +4077,12 @@ ed_make_page_sflare (GFlareEditor *ed,
 			      gflare->sflare_size, 0.0, 200.0, 1.0, 10.0, 1,
 			      FALSE, 0, G_MAXINT,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &gflare->sflare_size);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (ed_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &gflare->sflare_size);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (ed_preview_update),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Rotation:"), SCALE_WIDTH, 0,
@@ -4086,24 +4090,24 @@ ed_make_page_sflare (GFlareEditor *ed,
 			      -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &gflare->sflare_rotation);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (ed_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &gflare->sflare_rotation);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (ed_preview_update),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Hue Rotation:"), SCALE_WIDTH, 0,
 			      gflare->sflare_hue, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &gflare->sflare_hue);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (ed_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &gflare->sflare_hue);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (ed_preview_update),
+                    NULL);
 
   gtk_widget_show (table);
 
@@ -4122,10 +4126,11 @@ ed_make_page_sflare (GFlareEditor *ed,
 
   toggle = gtk_radio_button_new_with_label (shape_group, _("Circle"));
   shape_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) GF_CIRCLE);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (ed_shape_radio_callback),
-		      &gflare->sflare_shape);
+  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
+                     GINT_TO_POINTER (GF_CIRCLE));
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (ed_shape_radio_callback),
+                    &gflare->sflare_shape);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				gflare->sflare_shape == GF_CIRCLE);
   gtk_box_pack_start (GTK_BOX (shape_vbox), toggle, FALSE, FALSE, 0);
@@ -4138,10 +4143,11 @@ ed_make_page_sflare (GFlareEditor *ed,
   toggle = ed->polygon_toggle =
     gtk_radio_button_new_with_label (shape_group, _("Polygon"));
   shape_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) GF_POLYGON);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (ed_shape_radio_callback),
-		      &gflare->sflare_shape);
+  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
+                     GINT_TO_POINTER (GF_POLYGON));
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (ed_shape_radio_callback),
+                    &gflare->sflare_shape);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				gflare->sflare_shape == GF_POLYGON);
   gtk_box_pack_start (GTK_BOX (polygon_hbox), toggle, FALSE, FALSE, 0);
@@ -4151,14 +4157,14 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
   g_snprintf (buf, sizeof (buf), "%d", gflare->sflare_nverts);
   gtk_entry_set_text (GTK_ENTRY (entry), buf);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
+  g_signal_connect (G_OBJECT (entry), "changed",
 		      (GtkSignalFunc) ed_ientry_callback,
 		      &gflare->sflare_nverts);
   gtk_box_pack_start (GTK_BOX (polygon_hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
   gtk_widget_set_sensitive (entry, gflare->sflare_shape == GF_POLYGON);
-  gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", entry);
+  g_object_set_data (G_OBJECT (toggle), "set_sensitive", entry);
 
   /*
    *	Random Seed Entry
@@ -4183,22 +4189,22 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (seed_hbox), seed, FALSE, TRUE, 0);
   gtk_widget_show (seed);
 
-  gtk_signal_connect (GTK_OBJECT (GTK_SPIN_BUTTON (entry)->adjustment),
-		      "value_changed",
-		      GTK_SIGNAL_FUNC (ed_preview_update),
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (ed_preview_update),
-		      NULL);
+  g_signal_connect (G_OBJECT (GTK_SPIN_BUTTON (entry)->adjustment),
+                    "value_changed",
+                    G_CALLBACK (ed_preview_update),
+                    NULL);
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (ed_preview_update),
+                    NULL);
 
   /*
    *	Create Pages
    */
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
 			    gtk_label_new (_("Second Flares")));
-  gtk_signal_connect (GTK_OBJECT (vbox), "map",
-		      GTK_SIGNAL_FUNC (ed_page_map_callback),
-		      (gpointer) PAGE_SFLARE);
+  g_signal_connect (G_OBJECT (vbox), "map",
+                    G_CALLBACK (ed_page_map_callback),
+                    (gpointer) PAGE_SFLARE);
   gtk_widget_show (vbox);
 }
 
@@ -4220,9 +4226,9 @@ ed_mode_menu_new (GFlareMode *mode_var)
 
       gtk_object_set_user_data (GTK_OBJECT (menuitem),
 				GINT_TO_POINTER (i));
-      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  GTK_SIGNAL_FUNC (ed_mode_menu_callback),
-			  mode_var);
+      g_signal_connect (G_OBJECT (menuitem), "activate",
+                        G_CALLBACK (ed_mode_menu_callback),
+                        mode_var);
       gtk_widget_show (menuitem);
       gtk_menu_append (GTK_MENU (menu), menuitem);
     }
@@ -4277,9 +4283,9 @@ ed_mode_menu_callback (GtkWidget *widget, gpointer data)
 }
 
 static void
-ed_gradient_menu_callback (gchar *gradient_name, gpointer data)
+ed_gradient_menu_callback (const gchar *gradient_name, gpointer data)
 {
-  gchar			*dest_string = data;
+  gchar	*dest_string = data;
 
   /* @GRADIENT_NAME */
   gradient_name_copy (dest_string, gradient_name);
@@ -4756,9 +4762,9 @@ gradient_menu_new (GradientMenuCallback callback,
   gtk_widget_show (gm->option_menu);
 
   gradient_menus = g_list_append (gradient_menus, gm);
-  gtk_signal_connect (GTK_OBJECT (gm->option_menu), "destroy",
-		      GTK_SIGNAL_FUNC (gm_option_menu_destroy_callback),
-		      gm);
+  g_signal_connect (G_OBJECT (gm->option_menu), "destroy",
+                    G_CALLBACK (gm_option_menu_destroy_callback),
+                    gm);
 
   return gm;
 }
@@ -4827,11 +4833,8 @@ gm_menu_new (GradientMenu *gm,
 
       gradient_name_copy (gm->gradient_name, active_name);
       gm_preview_draw (gm->preview, active_name);
-      if (GTK_WIDGET_VISIBLE (gm->preview) && GTK_WIDGET_MAPPED(gm->preview))
-	{
-	  DEBUG_PRINT (("gm_menu_new: preview is visible and mapped\n"));
-	  gtk_widget_draw (gm->preview, NULL);
-	}
+      gtk_widget_queue_draw (gm->preview);
+
       if (gm->callback)
 	(* gm->callback) (active_name, gm->callback_data);
 
@@ -4876,9 +4879,9 @@ gm_menu_create_sub_menus (GradientMenu  *gm,
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_show (menuitem);
 
-      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  GTK_SIGNAL_FUNC (gm_menu_item_callback),
-			  name);
+      g_signal_connect (G_OBJECT (menuitem), "activate",
+                        G_CALLBACK (gm_menu_item_callback),
+                        name);
     }
 
   gtk_menu_set_active (GTK_MENU (menu), active_i);
@@ -4900,11 +4903,7 @@ gm_menu_item_callback (GtkWidget *w,
   gradient_name_copy (gm->gradient_name, gradient_name);
 
   gm_preview_draw (gm->preview, gradient_name);
-  if (GTK_WIDGET_VISIBLE (gm->preview) && GTK_WIDGET_MAPPED(gm->preview))
-    {
-      DEBUG_PRINT(("gm_menu_item_callback: preview is visible and mapped\n"));
-      gtk_widget_draw (gm->preview, NULL);
-    }
+  gtk_widget_queue_draw (gm->preview);
 
   if (gm->callback)
     (* gm->callback) (gradient_name, gm->callback_data);
@@ -4993,8 +4992,8 @@ gm_option_menu_destroy_callback (GtkWidget *w,
 
 
 void
-gradient_name_copy (gchar *dest,
-		    gchar *src)
+gradient_name_copy (gchar       *dest,
+		    const gchar *src)
 {
   strncpy (dest, src, GRADIENT_NAME_MAX);
   dest[GRADIENT_NAME_MAX-1] = '\0';
@@ -5004,14 +5003,14 @@ gradient_name_copy (gchar *dest,
   Translate SPACE to "\\040", etc.
  */
 void
-gradient_name_encode (guchar *dest,
-		      guchar *src)
+gradient_name_encode (gchar       *dest,
+		      const gchar *src)
 {
   gint cnt = GRADIENT_NAME_MAX - 1;
 
   while (*src && cnt--)
     {
-      if (iscntrl (*src) || isspace (*src) || *src == '\\')
+      if (g_ascii_iscntrl (*src) || g_ascii_isspace (*src) || *src == '\\')
 	{
 	  sprintf (dest, "\\%03o", *src++);
 	  dest += 4;
@@ -5026,8 +5025,8 @@ gradient_name_encode (guchar *dest,
   Translate "\\040" to SPACE, etc.
  */
 void
-gradient_name_decode (guchar *dest,
-		      guchar *src)
+gradient_name_decode (gchar       *dest,
+		      const gchar *src)
 {
   gint cnt = GRADIENT_NAME_MAX - 1;
   gint tmp;
