@@ -565,7 +565,7 @@ file_save_callback (GtkWidget *w,
 	}
       else
 	file_save (gdisplay->gimage, gimage_filename (gdisplay->gimage),
-		   prune_filename (gimage_filename(gdisplay->gimage)));
+		   prune_filename (gimage_filename(gdisplay->gimage)), 2);
     }
 }
 
@@ -774,7 +774,8 @@ file_open (char *filename, char* raw_filename)
 int
 file_save (GimpImage* gimage,
 	   char *filename,
-	   char *raw_filename)
+	   char *raw_filename,
+           gint mode)
 {
   PlugInProcDef *file_proc;
   ProcRecord *proc;
@@ -786,7 +787,8 @@ file_save (GimpImage* gimage,
   if (gimage_active_drawable (gimage) == NULL)
     return FALSE;
 
-  file_proc = save_file_proc;
+  file_proc = gimage_get_save_proc(gimage);
+
   if (!file_proc)
     file_proc = file_proc_find (save_procs, raw_filename);
 
@@ -801,7 +803,7 @@ file_save (GimpImage* gimage,
   for (i = 0; i < proc->num_args; i++)
     args[i].arg_type = proc->args[i].arg_type;
 
-  args[0].value.pdb_int = 0;
+  args[0].value.pdb_int = mode;
   args[1].value.pdb_int = pdb_image_to_id(gimage);
   args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gimage));
   args[3].value.pdb_pointer = filename;
@@ -821,6 +823,9 @@ file_save (GimpImage* gimage,
       
       /*  set the image title  */
       gimp_image_set_filename (gimage, filename);
+
+      /*  use the same plug-in for this image next time  */
+      gimage_set_save_proc(gimage, file_proc);
     }
 
   g_free (return_vals);
@@ -1035,7 +1040,9 @@ file_save_ok_callback (GtkWidget *w,
 	}
     } else {
       gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
-      if (file_save (the_gimage, filename, raw_filename))
+
+      gimage_set_save_proc(the_gimage, save_file_proc);
+      if (file_save (the_gimage, filename, raw_filename, 0))
 	{
 	  file_dialog_hide (client_data);
 	  gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
@@ -1136,7 +1143,7 @@ file_overwrite_yes_callback (GtkWidget *w,
   gtk_widget_destroy (overwrite_box->obox);
 
   if ((gimage = the_gimage) != NULL &&
-      file_save (the_gimage, overwrite_box->full_filename, overwrite_box->raw_filename))
+      file_save (the_gimage, overwrite_box->full_filename, overwrite_box->raw_filename, 0))
     {
       the_gimage = NULL;
       file_dialog_hide (filesave);

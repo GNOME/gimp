@@ -18,6 +18,7 @@ struct _GimpImage
   GimpObject gobject;
   char *filename;		      /*  original filename            */
   int has_filename;                   /*  has a valid filename         */
+  PlugInProcDef *save_proc;           /*  last PDB save proc used      */
 
   int width, height;		      /*  width and height attributes  */
   float resolution;                   /*  image res, in dpi            */

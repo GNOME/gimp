@@ -155,6 +155,7 @@ static void gimp_image_init (GimpImage *gimage)
   gimage->parasites = NULL;
   gimp_matrix_identity(gimage->transform);
   gimage->resolution = 72.0;  /* maybe should be rc-supplied default? */
+  gimage->save_proc= NULL;
 }
 
 GtkType gimp_image_get_type(void){
@@ -304,13 +305,23 @@ gimp_image_set_resolution (GimpImage *gimage, float resolution)
   gimage->resolution = resolution;
 }
 
-
 float
 gimp_image_get_resolution (GimpImage *gimage)
 {
   return gimage->resolution;
 }
 
+void
+gimp_image_set_save_proc (GimpImage *gimage, PlugInProcDef *proc)
+{
+  gimage->save_proc = proc;
+}
+
+PlugInProcDef *
+gimp_image_get_save_proc (GimpImage *gimage)
+{
+  return gimage->save_proc;
+}
 
 void
 gimp_image_resize (GimpImage *gimage, int new_width, int new_height,

@@ -40,7 +40,8 @@ int  file_open                       (char      *filename,
 				      char      *raw_filename);
 int  file_save                       (GimpImage*  gimage,
 				      char      *filename,
-				      char      *raw_filename);
+				      char      *raw_filename,
+                                      gint      mode);
 
 
 #endif /* FILE_IO_H */

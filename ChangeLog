@@ -1,3 +1,14 @@
+Tue Oct 27 01:21:17 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* app/indexed_palette.c: applied gimp-ruth-981025-0, cosmetic fix
+	for indexed palette dialog
+
+	* app/fileops.[ch]
+	* app/gimage.h
+	* app/gimpimage.[ch]
+	* app/gimpimageP.h: applied gimp-ruth-981025-1, remember LAST_VALS
+	for image save
+
 Sun Oct 25 18:59:56 CET 1998 Marc Lehmann <pcg@goof.com>
 
 	* configure.in: changed order in library search path
