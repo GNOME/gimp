@@ -136,6 +136,8 @@ static GSList * bezier_insert_in_list      (GSList *, int);
 static void  bezier_named_buffer_proc      (GDisplay *);
 
 static int   add_point_on_segment          (BezierSelect *, BezierPoint *, int, int, int, int, int);
+static void  bezier_stack_points	   (BezierSelect *, GdkPoint *, int);
+static void  bezier_stroke 		   (BezierSelect *, GDisplay *, int, int);
 
 static BezierMatrix basis =
 {
@@ -322,7 +324,7 @@ bezier_select_button_press (Tool           *tool,
   bezier_sel = tool->private;
   grab_pointer = 0;
 
-  if (dialog_open == 2)
+  if ((dialog_open == 2) && bezier_options->extend)
     {
       gtk_widget_show( curPndlg->shell );
       dialog_open = 1;
@@ -383,6 +385,11 @@ bezier_select_button_press (Tool           *tool,
       draw_core_start (bezier_sel->core, gdisp->canvas->window, tool);
       break;
     case BEZIER_ADD:
+      if ((bevent->state & GDK_MOD1_MASK))
+	{
+	  bezier_stroke (bezier_sel, tool->gdisp_ptr, SUBDIVIDE, FALSE);
+	  break;
+	}
       grab_pointer = 1;
 
       if (bezier_sel->cur_anchor &&
@@ -575,6 +582,13 @@ bezier_select_button_press (Tool           *tool,
 
 	  points = points->next;
 	} while (points != start_pt);
+
+      if ((bevent->state & GDK_MOD1_MASK))
+	{
+	  bezier_stroke (bezier_sel, tool->gdisp_ptr, SUBDIVIDE,
+			 (bevent->state & GDK_SHIFT_MASK));
+	  break;
+	}
 
       if (!grab_pointer && channel_value (bezier_sel->mask, x, y))
 	{
@@ -2482,3 +2496,101 @@ void printSel( BezierSelect *sel)
   printf("state: %d\n", sel->state);
 }
 
+static gdouble *stroke_points = NULL;
+static gint num_stroke_points = 0;
+
+static void
+bezier_stack_points (BezierSelect *bezier_sel,
+		     GdkPoint     *points,
+		     int           npoints)
+{
+  int i, j;
+
+  if (stroke_points == NULL)
+    {
+      j = 0;
+      num_stroke_points = npoints / 2;
+      stroke_points = g_new (double, 2 * num_stroke_points );
+    }
+  else
+    {
+      j = num_stroke_points * 2;
+      num_stroke_points += npoints / 2;
+      stroke_points = g_renew (double, stroke_points, 2 * num_stroke_points);
+    }
+
+  /* copy points into stroke_points SPARSELY */
+  for (i = 0; i < npoints / 2 - 1; i++)
+    {
+      stroke_points[j++] = points[i * 2].x;
+      stroke_points[j++] = points[i * 2].y;
+    }
+  /* the last point should be included anyway */
+  stroke_points[num_stroke_points * 2 - 2] = points[npoints - 1].x;
+  stroke_points[num_stroke_points * 2 - 1] = points[npoints - 1].y;
+}
+
+static void
+bezier_stroke (BezierSelect *bezier_sel,
+	       GDisplay     *gdisp,
+	       int          subdivisions,
+	       int	    open_path)
+{
+  BezierPoint * points;
+  int num_points;
+  Argument *return_vals;
+  int nreturn_vals;
+
+  /* stack points */
+  points = bezier_sel->points;
+  num_points = bezier_sel->num_points;
+
+  if (bezier_sel->closed && (! open_path))
+    {
+      BezierPoint * start_pt;
+
+      start_pt = bezier_sel->points;
+
+      do {
+	bezier_draw_segment (bezier_sel, points,
+			     SUBDIVIDE, IMAGE_COORDS,
+			     bezier_stack_points);
+
+	points = points->next;
+	points = points->next;
+	points = points->next;
+      } while (points != start_pt);
+    }
+  else
+    {
+      if (bezier_sel->closed)
+	num_points--;
+      
+      while (num_points >= 4)
+	{
+	  bezier_draw_segment (bezier_sel, points,
+			       SUBDIVIDE, IMAGE_COORDS,
+			       bezier_stack_points);
+
+	  points = points->next;
+	  points = points->next;
+	  points = points->next;
+	  num_points -= 3;
+	}
+    }
+
+  return_vals = procedural_db_run_proc ("gimp_paintbrush",
+					&nreturn_vals,
+					PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gdisp->gimage)),
+					PDB_FLOAT, (gdouble) 0,
+					PDB_INT32, (gint32) num_stroke_points * 2,
+					PDB_FLOATARRAY, stroke_points,
+					PDB_END);
+
+  g_free (stroke_points);
+  stroke_points = NULL;
+  num_stroke_points = 0;
+
+  gdisplays_flush ();
+  return;
+}

@@ -1,3 +1,8 @@
+Mon Feb  8 12:12:18 CST 1999 Shawn T. Amundson <amundson@gimp.org>
+
+	* app/bezier_select.c: applied patch from Shuji Narazaki 
+          <narazaki@gimp.org> which adds bezier stroke.
+
 Sun Feb  7 22:06:04 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/dialog_handler.c
