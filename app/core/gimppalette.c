@@ -229,22 +229,18 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
                               gint          width,
                               gint          height)
 {
-  GimpPalette      *palette  = GIMP_PALETTE (viewable);
-  GimpPaletteEntry *entry;
-  TempBuf          *temp_buf;
-  guchar           *buf;
-  guchar           *b;
-  GList            *list;
-  guchar            white[3] = { 255, 255, 255 };
-  gint              columns;
-  gint              rows;
-  gint              cell_size;
-  gint              x, y, i;
+  GimpPalette *palette  = GIMP_PALETTE (viewable);
+  TempBuf     *temp_buf;
+  guchar      *buf;
+  guchar      *b;
+  GList       *list;
+  guchar       white[3] = { 255, 255, 255 };
+  gint         columns;
+  gint         rows;
+  gint         cell_size;
+  gint         x, y;
 
-  temp_buf = temp_buf_new (width, height,
-                           3,
-                           0, 0,
-                           white);
+  temp_buf = temp_buf_new (width, height, 3, 0, 0, white);
 
   if (palette->n_columns > 1)
     cell_size = MAX (4, width / palette->n_columns);
@@ -261,11 +257,13 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
 
   for (y = 0; y < rows && list; y++)
     {
+      gint i;
+
       memset (b, 255, width * 3);
 
       for (x = 0; x < columns && list; x++)
         {
-          entry = (GimpPaletteEntry *) list->data;
+          GimpPaletteEntry *entry = list->data;
 
           list = g_list_next (list);
 
@@ -283,9 +281,7 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
         }
 
       for (i = 0; i < cell_size; i++)
-        {
-          memcpy (buf + ((y * cell_size + i) * width) * 3, b, width * 3);
-        }
+        memcpy (buf + ((y * cell_size + i) * width) * 3, b, width * 3);
     }
 
   g_free (b);
@@ -673,17 +669,6 @@ gimp_palette_delete_entry (GimpPalette      *palette,
           entry = (GimpPaletteEntry *) list->data;
 
           entry->position = pos++;
-        }
-
-      if (palette->n_colors == 0)
-        {
-          GimpRGB color;
-
-          gimp_rgba_set (&color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-
-          gimp_palette_add_entry (palette,
-                                  _("Black"),
-                                  &color);
         }
 
       /*  will make the palette dirty too  */

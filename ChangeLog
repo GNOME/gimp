@@ -1,3 +1,14 @@
+2004-09-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimppalette.c: code review / cleanup.
+
+	(gimp_palette_delete_entry): don't add "Black" when the last color
+	gets removed, a palette can easily live with zero colors.
+
+	* app/widgets/gimppaletteeditor.c
+	(palette_editor_invalidate_preview): also update the entry which
+	shows the palette_entry's name.
+
 2004-09-28  Sven Neumann  <sven@gimp.org>
 
 	* app/file/gimprecentlist.c (gimp_recent_list_write_raw): handle

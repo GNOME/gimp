@@ -536,10 +536,9 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
 
         case GIMP_COLOR_PICK_STATE_UPDATE:
           editor->color->color = *color;
+          gimp_data_dirty (data);
           break;
         }
-
-      gimp_data_dirty (data);
     }
 }
 
@@ -948,7 +947,6 @@ palette_editor_redraw (GimpPaletteEditor *editor,
                                  editor->color->position % editor->columns);
 }
 
-
 static void
 palette_editor_select_entry (GimpPaletteEditor *editor,
                              GimpPaletteEntry  *entry)
@@ -1232,8 +1230,20 @@ static void
 palette_editor_invalidate_preview (GimpPalette       *palette,
 				   GimpPaletteEditor *editor)
 {
-  if (editor->color && ! g_list_find (palette->colors, editor->color))
-    palette_editor_select_entry (editor, NULL);
+  if (editor->color)
+    {
+      GimpPaletteEntry *entry = editor->color;
+
+      if (g_list_find (palette->colors, entry))
+        {
+          editor->color = NULL;
+          palette_editor_select_entry (editor, entry);
+        }
+      else
+        {
+          palette_editor_select_entry (editor, NULL);
+        }
+    }
 
   if (editor->dnd_color && ! g_list_find (palette->colors, editor->dnd_color))
     editor->dnd_color = NULL;
@@ -1291,5 +1301,6 @@ palette_editor_color_dialog_update (GimpColorDialog      *dialog,
 
     case GIMP_COLOR_DIALOG_CANCEL:
       gtk_widget_hide (editor->color_dialog);
+      break;
     }
 }
