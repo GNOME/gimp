@@ -1,3 +1,9 @@
+Thu Apr  2 23:52:54 EST 1998 Matthew Wilson <msw@gimp.org
+
+	* app/gimage.c
+	* app/tools.c: Made changes to restart tools properly when
+	the current drawable changes.
+
 Thu Apr  2 20:09:06 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/channels_dialog.c: the impossibility of duplicating a

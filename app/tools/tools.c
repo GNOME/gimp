@@ -457,40 +457,85 @@ tools_initialize (ToolType type, GDisplay *gdisp_ptr)
       active_tool = tools_new_convolve ();
       break;
     case BY_COLOR_SELECT:
-      active_tool = tools_new_by_color_select ();
-      by_color_select_initialize (gdisp);
+      if (gdisp) {
+	active_tool = tools_new_by_color_select ();
+	by_color_select_initialize (gdisp);
+      } else {
+	active_tool_free();
+	gtk_widget_hide (options_shell);
+      }
       break;
     case COLOR_BALANCE:
-      active_tool = tools_new_color_balance ();
-      color_balance_initialize (gdisp);
+      if (gdisp) {
+	active_tool = tools_new_color_balance ();
+	color_balance_initialize (gdisp);
+      } else {
+	active_tool_free();
+	gtk_widget_hide (options_shell);
+      }
       break;
     case BRIGHTNESS_CONTRAST:
-      active_tool = tools_new_brightness_contrast ();
-      brightness_contrast_initialize (gdisp);
+      if (gdisp) {
+	active_tool = tools_new_brightness_contrast ();
+	brightness_contrast_initialize (gdisp);
+      } else {
+	active_tool_free();
+	gtk_widget_hide (options_shell);
+      }
       break;
     case HUE_SATURATION:
-      active_tool = tools_new_hue_saturation ();
-      hue_saturation_initialize (gdisp);
+      if (gdisp) {
+	active_tool = tools_new_hue_saturation ();
+	hue_saturation_initialize (gdisp);
+      } else {
+	active_tool_free();
+	gtk_widget_hide (options_shell);
+      }
       break;
     case POSTERIZE:
-      active_tool = tools_new_posterize ();
-      posterize_initialize (gdisp);
+      if (gdisp) {
+	active_tool = tools_new_posterize ();
+	posterize_initialize (gdisp);
+      } else {
+	active_tool_free();
+	gtk_widget_hide (options_shell);
+      }
       break;
     case THRESHOLD:
-      active_tool = tools_new_threshold ();
-      threshold_initialize (gdisp);
+      if (gdisp) {
+	active_tool = tools_new_threshold ();
+	threshold_initialize (gdisp);
+      } else {
+	active_tool_free();
+	gtk_widget_hide (options_shell);
+      }
       break;
     case CURVES:
-      active_tool = tools_new_curves ();
-      curves_initialize (gdisp);
+      if (gdisp) {
+	active_tool = tools_new_curves ();
+	curves_initialize (gdisp);
+      } else {
+	active_tool_free();
+	gtk_widget_hide (options_shell);
+      }
       break;
     case LEVELS:
-      active_tool = tools_new_levels ();
-      levels_initialize (gdisp);
+      if (gdisp) {
+	active_tool = tools_new_levels ();
+	levels_initialize (gdisp);
+      } else {
+	active_tool_free();
+	gtk_widget_hide (options_shell);
+      }
       break;
     case HISTOGRAM:
-      active_tool = tools_new_histogram_tool ();
-      histogram_tool_initialize (gdisp);
+      if (gdisp) {
+	active_tool = tools_new_histogram_tool ();
+	histogram_tool_initialize (gdisp);
+      } else {
+	active_tool_free();
+	gtk_widget_hide (options_shell);
+      }
       break;
     default:
       return;
@@ -505,7 +550,8 @@ tools_initialize (ToolType type, GDisplay *gdisp_ptr)
 
   /*  Set the paused count variable to 0
    */
-  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
+  if (gdisp)
+    active_tool->drawable = gimage_active_drawable (gdisp->gimage);
   active_tool->gdisp_ptr = NULL;
   active_tool->ID = global_tool_ID++;
   active_tool_type = active_tool->type;

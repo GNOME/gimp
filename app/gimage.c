@@ -2636,9 +2636,9 @@ gimage_dirty (GImage *gimage)
       if (gdisp->gimage->ID == gimage->ID)
 	tools_initialize (active_tool->type, gdisp);
       else
-	active_tool_control(DESTROY, gdisp);
+	tools_initialize (active_tool->type, NULL);
     else
-      active_tool_control(DESTROY, gdisp);
+	tools_initialize (active_tool->type, NULL);
   }
   return gimage->dirty;
 }
