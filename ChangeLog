@@ -1,3 +1,8 @@
+1999-12-30  Kjartan Maraas  <kmaraas@online.no>
+
+	* app/file_new_dialog.c: Added comment to stop xgettext
+	from complaining about format specifier.
+	
 Thu Dec 30 21:14:05 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/errorconsole.c

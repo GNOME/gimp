@@ -204,6 +204,8 @@ file_new_confirm_dialog (NewImageInfo *info)
   size = image_new_get_size_string (info->size);
   max_size = image_new_get_size_string (max_new_image_size);
 
+  /* xgettext:no-c-format */
+	    
   text = g_strdup_printf (_("You are trying to create an image which\n"
 			    "has an initial size of %s.\n\n"
 			    "Choose OK to create this image anyway.\n"
