@@ -1,3 +1,12 @@
+2005-03-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/core/core-enums.[ch]
+	* app/core/gimpimage-undo-push.[ch]
+	* app/core/gimplayermask.[ch]: 
+	* app/pdb/pdb_glue.h
+	* app/actions/layers-commands.c: try again from clean tree;
+	hopefully will work this time.  (bug #148852)
+	
 2005-03-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/*.scm: don't mark menu branches for

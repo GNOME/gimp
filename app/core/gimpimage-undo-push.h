@@ -100,6 +100,10 @@ gboolean gimp_image_undo_push_layer_mask_remove     (GimpImage     *gimage,
                                                      const gchar   *undo_desc,
                                                      GimpLayer     *layer,
                                                      GimpLayerMask *mask);
+gboolean gimp_image_undo_push_layer_mask_properties (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpLayer     *layer,
+                                                     GimpLayerMask *mask);
 gboolean gimp_image_undo_push_layer_reposition      (GimpImage     *gimage,
                                                      const gchar   *undo_desc,
                                                      GimpLayer     *layer);
