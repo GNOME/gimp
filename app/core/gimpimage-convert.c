@@ -1353,7 +1353,6 @@ convert_image (GImage		 *gimage,
       if (remdups &&
 	  ((palette_type == WEB_PALETTE) || (palette_type == CUSTOM_PALETTE)))
 	{
-	  int x,y;
 	  int i,j;
 	  unsigned char old_palette [256 * 3];
 	  unsigned char new_palette [256 * 3];

@@ -25,9 +25,9 @@
 
 #include "appenv.h"
 #include "plug_in.h"
+#include "regex.h"
 
 #include "libgimp/gimpintl.h"
-#include "libgimp/gimpregex.h"
 
 static ProcRecord progress_init_proc;
 static ProcRecord progress_update_proc;

@@ -45,17 +45,6 @@ static GtkObjectClass* gimp_object_class;
 static GimpBrush *gimp_brush_pixmap_select_brush (PaintCore *paint_core);
 static gboolean gimp_brush_pixmap_want_null_motion (PaintCore *paint_core);
 
-static void paint_line_pixmap_mask(GImage	   *dest,
-				   GimpDrawable    *drawable,
-				   GimpBrushPixmap *brush,
-				   guchar	   *d,
-				   int		    x,
-				   int              y,
-				   int              bytes,
-				   int              width,
-				   int              mode);
-
-
 static void
 gimp_brush_pixmap_destroy (GtkObject *object)
 {

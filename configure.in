@@ -324,27 +324,6 @@ if test "$ac_cv_header_sys_shm_h" = "yes"; then
     AC_MSG_RESULT(assuming no))
 fi
 
-dnl Check for shared memory
-AC_CHECK_HEADER(regex.h, AC_DEFINE(HAVE_REGEX_H), regex=yes)
-if test "$ac_cv_header_regex_h" = "yes"; then
-  AC_MSG_CHECKING(whether we have native regex support)
-  AC_TRY_RUN([
-	#include <sys/types.h>
-	#include <regex.h>
-	int main()
-	{
-	 regex_t regex;
-	 regcomp (&regex, "Test it\n", REG_ICASE);
-	 regfree (&regex);
-	 exit (0);
-	}
-    ],
-    AC_DEFINE(HAVE_NATIVE_REGEX)
-      AC_MSG_RESULT(yes),
-    AC_MSG_RESULT(no),
-    AC_MSG_RESULT(assuming no))
-fi
-
 AC_HEADER_DIRENT
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT

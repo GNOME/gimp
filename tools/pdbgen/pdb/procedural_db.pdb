@@ -180,7 +180,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw(<stdlib.h> "libgimp/gimpregex.h") ],
+	headers => [ qw(<stdlib.h> "regex.h") ],
 	vars => [ 'PDBQuery pdb_query' ],
 	code => <<CODE
 {

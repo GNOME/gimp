@@ -13,6 +13,8 @@ script_fu_SOURCES = \
 	interp_slib.c		\
 	interp_sliba.c		\
 	interp_trace.c		\
+	regex.c			\
+	regex.h			\
 	script-fu.c		\
 	script-fu-console.c	\
 	script-fu-console.h	\
@@ -38,7 +40,8 @@ LDADD = \
 	$(GTK_LIBS)						\
 	$(INTLLIBS)
 
-AM_CPPFLAGS =
+AM_CPPFLAGS = \
+	-DREGEX_MALLOC
 
 .PHONY: files
 

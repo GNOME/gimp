@@ -54,8 +54,8 @@ modename="$progname"
 # Constants.
 PROGRAM=ltmain.sh
 PACKAGE=libtool
-VERSION=1.3.3
-TIMESTAMP=" (1.385.2.181 1999/07/02 15:49:11)"
+VERSION=1.3.4
+TIMESTAMP=" (1.385.2.196 1999/12/07 21:47:57)"
 
 default_mode=
 help="Try \`$progname --help' for more information."
@@ -435,7 +435,7 @@ compiler."
       fbsd_hideous_sh_bug=$base_compile
 
       # All platforms use -DPIC, to notify preprocessed assembler code.
-      command="$base_compile $pic_flag -DPIC $srcfile"
+      command="$base_compile $srcfile $pic_flag -DPIC"
       if test "$build_old_libs" = yes; then
 	lo_libobj="$libobj"
 	dir=`$echo "X$libobj" | $Xsed -e 's%/[^/]*$%%'`
@@ -521,9 +521,17 @@ compiler."
 	  exit $error
 	fi
 
+	xdir=`$echo "X$obj" | $Xsed -e 's%/[^/]*$%%'`
+	if test "X$xdir" = "X$obj"; then
+	  xdir="."
+	else
+	  xdir="$xdir"
+	fi
+	baseobj=`$echo "X$obj" | $Xsed -e "s%.*/%%"`
+	libobj=`$echo "X$baseobj" | $Xsed -e "$o2lo"`
 	# Now arrange that obj and lo_libobj become the same file
-	$show "$LN_S $obj $lo_libobj"
-	if $run $LN_S $obj $lo_libobj; then
+	$show "(cd $xdir && $LN_S $baseobj $libobj)"
+	if $run eval '(cd $xdir && $LN_S $baseobj $libobj)'; then
 	  exit 0
 	else
 	  error=$?
@@ -613,8 +621,6 @@ compiler."
   # libtool link mode
   link)
     modename="$modename: link"
-    C_compiler="$CC" # save it, to compile generated C sources
-    CC="$nonopt"
     case "$host" in
     *-*-cygwin* | *-*-mingw* | *-*-os2*)
       # It is impossible to link a dll without this setting, and
@@ -802,8 +808,8 @@ compiler."
       allow_undefined=yes
       ;;
     esac
-    compile_command="$CC"
-    finalize_command="$CC"
+    compile_command="$nonopt"
+    finalize_command="$nonopt"
 
     compile_rpath=
     finalize_rpath=
@@ -1851,7 +1857,7 @@ compiler."
 	  int main() { return 0; }
 EOF
 	  $rm conftest
-	  $C_compiler -o conftest conftest.c $deplibs
+	  $CC -o conftest conftest.c $deplibs
 	  if test $? -eq 0 ; then
 	    ldd_output=`ldd conftest`
 	    for i in $deplibs; do
@@ -1884,7 +1890,7 @@ EOF
 	     # If $name is empty we are operating on a -L argument.
 	      if test "$name" != "" ; then
 		$rm conftest
-		$C_compiler -o conftest conftest.c $i
+		$CC -o conftest conftest.c $i
 		# Did it work?
 		if test $? -eq 0 ; then
 		  ldd_output=`ldd conftest`
@@ -2047,12 +2053,19 @@ EOF
 	done
 
 	# Ensure that we have .o objects for linkers which dislike .lo
-	# (e.g. aix) incase we are running --disable-static
+	# (e.g. aix) in case we are running --disable-static
 	for obj in $libobjs; do
-	  oldobj=`$echo "X$obj" | $Xsed -e "$lo2o"`
-	  if test ! -f $oldobj; then
-	    $show "${LN_S} $obj $oldobj"
-	    $run ${LN_S} $obj $oldobj || exit $?
+	  xdir=`$echo "X$obj" | $Xsed -e 's%/[^/]*$%%'`
+	  if test "X$xdir" = "X$obj"; then
+	    xdir="."
+	  else
+	    xdir="$xdir"
+	  fi
+	  baseobj=`$echo "X$obj" | $Xsed -e 's%^.*/%%'`
+	  oldobj=`$echo "X$baseobj" | $Xsed -e "$lo2o"`
+	  if test ! -f $xdir/$oldobj; then
+	    $show "(cd $xdir && ${LN_S} $baseobj $oldobj)"
+	    $run eval '(cd $xdir && ${LN_S} $baseobj $oldobj)' || exit $?
 	  fi
 	done
 
@@ -2311,8 +2324,16 @@ EOF
 	# Just create a symlink.
 	$show $rm $libobj
 	$run $rm $libobj
-	$show "$LN_S $obj $libobj"
-	$run $LN_S $obj $libobj || exit $?
+	xdir=`$echo "X$libobj" | $Xsed -e 's%/[^/]*$%%'`
+	if test "X$xdir" = "X$libobj"; then
+	  xdir="."
+	else
+	  xdir="$xdir"
+	fi
+	baseobj=`$echo "X$libobj" | $Xsed -e 's%^.*/%%'`
+	oldobj=`$echo "X$baseobj" | $Xsed -e "$lo2o"`
+	$show "(cd $xdir && $LN_S $oldobj $baseobj)"
+	$run eval '(cd $xdir && $LN_S $oldobj $baseobj)' || exit $?
       fi
 
       if test -n "$gentop"; then
@@ -2598,16 +2619,21 @@ static const void *lt_preloaded_setup() {
 	  # linked before any other PIC object.  But we must not use
 	  # pic_flag when linking with -static.  The problem exists in
 	  # FreeBSD 2.2.6 and is fixed in FreeBSD 3.1.
-	  *-*-freebsd2*|*-*-freebsd3.0*)
+	  *-*-freebsd2*|*-*-freebsd3.0*|*-*-freebsdelf3.0*)
 	    case "$compile_command " in
 	    *" -static "*) ;;
 	    *) pic_flag_for_symtable=" $pic_flag -DPIC -DFREEBSD_WORKAROUND";;
+	    esac;;
+	  *-*-hpux*)
+	    case "$compile_command " in
+	    *" -static "*) ;;
+	    *) pic_flag_for_symtable=" $pic_flag -DPIC";;
 	    esac
 	  esac
 
 	  # Now compile the dynamic symbol file.
-	  $show "(cd $output_objdir && $C_compiler -c$no_builtin_flag$pic_flag_for_symtable \"$dlsyms\")"
-	  $run eval '(cd $output_objdir && $C_compiler -c$no_builtin_flag$pic_flag_for_symtable "$dlsyms")' || exit $?
+	  $show "(cd $output_objdir && $CC -c$no_builtin_flag$pic_flag_for_symtable \"$dlsyms\")"
+	  $run eval '(cd $output_objdir && $CC -c$no_builtin_flag$pic_flag_for_symtable "$dlsyms")' || exit $?
 
 	  # Clean up the generated files.
 	  $show "$rm $output_objdir/$dlsyms $nlist ${nlist}S ${nlist}T"
@@ -2776,7 +2802,7 @@ sed_quote_subst='$sed_quote_subst'
 
 # The HP-UX ksh and POSIX shell print the target directory to stdout
 # if CDPATH is set.
-if test \"\${CDPATH+set}\" = set; then CDPATH=; export CDPATH; fi
+if test \"\${CDPATH+set}\" = set; then CDPATH=:; export CDPATH; fi
 
 relink_command=\"$relink_command\"
 
@@ -2865,7 +2891,7 @@ else
   fi"
 	else
 	  echo >> $output "\
-  program='$outputname$exeext'
+  program='$outputname'
   progdir=\"\$thisdir/$objdir\"
 "
 	fi
@@ -2995,14 +3021,21 @@ fi\
       if test -n "$old_archive_from_new_cmds" && test "$build_libtool_libs" = yes; then
 	eval cmds=\"$old_archive_from_new_cmds\"
       else
-	# Ensure that we have .o objects in place incase we decided
+	# Ensure that we have .o objects in place in case we decided
 	# not to build a shared library, and have fallen back to building
 	# static libs even though --disable-static was passed!
 	for oldobj in $oldobjs; do
 	  if test ! -f $oldobj; then
-	    obj=`$echo "X$oldobj" | $Xsed -e "$o2lo"`
-	    $show "${LN_S} $obj $oldobj"
-	    $run ${LN_S} $obj $oldobj || exit $?
+	    xdir=`$echo "X$oldobj" | $Xsed -e 's%/[^/]*$%%'`
+	    if test "X$xdir" = "X$oldobj"; then
+	      xdir="."
+	    else
+	      xdir="$xdir"
+	    fi
+	    baseobj=`$echo "X$oldobj" | $Xsed -e 's%^.*/%%'`
+	    obj=`$echo "X$baseobj" | $Xsed -e "$o2lo"`
+	    $show "(cd $xdir && ${LN_S} $obj $baseobj)"
+	    $run eval '(cd $xdir && ${LN_S} $obj $baseobj)' || exit $?
 	  fi
 	done
 
@@ -3672,8 +3705,10 @@ libdir='$install_libdir'\
     done
 
     if test -z "$run"; then
-      # Export the shlibpath_var.
-      eval "export $shlibpath_var"
+      if test -n "$shlibpath_var"; then
+        # Export the shlibpath_var.
+        eval "export $shlibpath_var"
+      fi
 
       # Restore saved enviroment variables
       if test "${save_LC_ALL+set}" = set; then
@@ -3690,8 +3725,10 @@ libdir='$install_libdir'\
       exit 1
     else
       # Display what would be done.
-      eval "\$echo \"\$shlibpath_var=\$$shlibpath_var\""
-      $echo "export $shlibpath_var"
+      if test -n "$shlibpath_var"; then
+        eval "\$echo \"\$shlibpath_var=\$$shlibpath_var\""
+        $echo "export $shlibpath_var"
+      fi
       $echo "$cmd$args"
       exit 0
     fi
