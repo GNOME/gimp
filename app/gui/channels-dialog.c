@@ -670,16 +670,20 @@ channels_dialog_set_channel (ChannelWidget *channel_widget)
 					channel_widget->channel);
       if ((index >= 0) && (state != GTK_STATE_SELECTED))
 	{
-	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item), NULL);
-	  gtk_list_select_item (GTK_LIST (channelsD->channel_list), index + channelsD->num_components);
-	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item), channel_widget);
+	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item),
+				    NULL);
+	  gtk_list_select_item (GTK_LIST (channelsD->channel_list),
+				index + channelsD->num_components);
+	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item),
+				    channel_widget);
 	}
     }
   else
     {
       if (state != GTK_STATE_SELECTED)
 	{
-	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item), NULL);
+	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item),
+				    NULL);
 	  switch (channel_widget->type)
 	    {
 	    case RED_CHANNEL: case GRAY_CHANNEL: case INDEXED_CHANNEL:
@@ -697,7 +701,8 @@ channels_dialog_set_channel (ChannelWidget *channel_widget)
 	      break;
 	    }
 
-	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item), channel_widget);
+	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item),
+				    channel_widget);
 	}
     }
   suspend_gimage_notify--;
@@ -721,19 +726,24 @@ channels_dialog_unset_channel (ChannelWidget *channel_widget)
   if (channel_widget->type == AUXILLARY_CHANNEL)
     {
       /*  turn off the specified auxillary channel  */
-      index = gimage_get_channel_index (channel_widget->gimage, channel_widget->channel);
+      index = gimage_get_channel_index (channel_widget->gimage,
+					channel_widget->channel);
       if ((index >= 0) && (state == GTK_STATE_SELECTED))
 	{
-	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item), NULL);
-	  gtk_list_unselect_item (GTK_LIST (channelsD->channel_list), index + channelsD->num_components);
-	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item), channel_widget);
+	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item),
+				    NULL);
+	  gtk_list_unselect_item (GTK_LIST (channelsD->channel_list),
+				  index + channelsD->num_components);
+	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item),
+				    channel_widget);
 	}
     }
   else
     {
       if (state == GTK_STATE_SELECTED)
 	{
-	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item), NULL);
+	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item),
+				    NULL);
 	  switch (channel_widget->type)
 	    {
 	    case RED_CHANNEL: case GRAY_CHANNEL: case INDEXED_CHANNEL:
@@ -751,7 +761,8 @@ channels_dialog_unset_channel (ChannelWidget *channel_widget)
 	      break;
 	    }
 
-	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item), channel_widget);
+	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item),
+				    channel_widget);
 	}
     }
 
@@ -769,7 +780,8 @@ channels_dialog_position_channel (Channel *channel,
   if (!channelsD || !channel_widget)
     return;
 
-  if (new_index == g_slist_index (channelsD->channel_widgets, channel_widget))
+  if ((new_index + channelsD->num_components) ==
+      g_slist_index (channelsD->channel_widgets, channel_widget))
     return;
 
   /*  Make sure the gimage is not notified of this change  */
@@ -1140,7 +1152,7 @@ channels_dialog_drag_new_channel_callback (GtkWidget      *widget,
           else
             {
               g_message ("channels_dialog_drop_new_channel_callback():\n"
-                           "could not allocate new channel");
+			 "could not allocate new channel");
             }
 
           return_val = TRUE;
@@ -1328,7 +1340,8 @@ channel_widget_create (GImage      *gimage,
   gtk_signal_connect (GTK_OBJECT (channel_widget->eye_widget), "event",
 		      (GtkSignalFunc) channel_widget_button_events,
 		      channel_widget);
-  gtk_object_set_user_data (GTK_OBJECT (channel_widget->eye_widget), channel_widget);
+  gtk_object_set_user_data (GTK_OBJECT (channel_widget->eye_widget),
+			    channel_widget);
   gtk_container_add (GTK_CONTAINER (alignment), channel_widget->eye_widget);
   gtk_widget_show (channel_widget->eye_widget);
   gtk_widget_show (alignment);
@@ -1345,7 +1358,8 @@ channel_widget_create (GImage      *gimage,
   gtk_signal_connect (GTK_OBJECT (channel_widget->channel_preview), "event",
 		      (GtkSignalFunc) channel_widget_preview_events,
 		      channel_widget);
-  gtk_object_set_user_data (GTK_OBJECT (channel_widget->channel_preview), channel_widget);
+  gtk_object_set_user_data (GTK_OBJECT (channel_widget->channel_preview),
+			    channel_widget);
   gtk_container_add (GTK_CONTAINER (alignment), channel_widget->channel_preview);
   gtk_widget_show (channel_widget->channel_preview);
 
@@ -1695,7 +1709,8 @@ channel_widget_delete (ChannelWidget *channel_widget)
     gdk_pixmap_unref (channel_widget->channel_pixmap);
 
   /*  Remove the channel widget from the list  */
-  channelsD->channel_widgets = g_slist_remove (channelsD->channel_widgets, channel_widget);
+  channelsD->channel_widgets = g_slist_remove (channelsD->channel_widgets,
+					       channel_widget);
 
   /*  Release the widget  */
   gtk_widget_unref (channel_widget->list_item);

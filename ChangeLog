@@ -1,3 +1,10 @@
+1999-10-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/channels_dialog.c: applied gimp-gosgood-991011-0.patch, so
+	double-clicking on the channel widget pops up the attributes
+	dialog again. Thanks for the very detailled documentation of the
+	bug (which I tried to fix at totally different places before ;-)
+
 Sat Oct 16 05:48:44 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/compose.c
