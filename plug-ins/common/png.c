@@ -160,10 +160,12 @@ static int find_unused_ia_colour (guchar *pixels,
     {
       /* If there is no alpha, then the index associated with 
        * this pixel is taken */
-      if (pixels[i*2+1]) 
+      if (pixels[i*2 + 1] > 128) 
         ix_used[pixels[i*2]] = TRUE;
       else
-        trans_used = TRUE;
+        {
+          trans_used = TRUE;
+        }
     }
   
   // If there is no transparency, ignore alpha.
@@ -1026,12 +1028,9 @@ save_image (gchar  *filename,           /* I - File to save to */
                 fixed = pixels[i];
                 for (k = 0; k < drawable->width; ++k) 
                   {
-                    if (PNG_INFO_PLTE)
-                      fixed[k] = remap[fixed[2*k]];
-                    else
-                      fixed[k] = (fixed[k*2+1] > 127) ? 
-                                 fixed[k*2] + 1 : 
-                                 0;
+                    fixed[k] = (fixed[k*2+1] > 127) ? 
+                               remap[fixed[k*2]] : 
+                               0;
                      
                   }
               }
@@ -1148,6 +1147,8 @@ static void respin_cmap (png_structp pp,
           palette[i].green = before[3 * remap[i] + 1];
           palette[i].blue = before[3 * remap[i] + 2];
         }
+
+      /* Set index on all transparent pixels to 0 */
       
       png_set_PLTE(pp, info, palette, colors);
     } 

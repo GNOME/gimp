@@ -1,3 +1,10 @@
+2003-04-12  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/png.c (save_image,
+	find_unused_ia_colour): Merged fix for bug #109043 from
+	HEAD - indexed pngs should save transparency reasonably
+	now.
+
 2003-04-11  Raphael Quinet  <quinet@gamers.org>
 
 	* plug-ins/flame/flame.c (dialog): merged fix for bug #110443
