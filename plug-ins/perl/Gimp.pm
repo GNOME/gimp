@@ -13,7 +13,7 @@ use subs qw(init end lock unlock canonicalize_color);
 require DynaLoader;
 
 @ISA=qw(DynaLoader);
-$VERSION = 1.084;
+$VERSION = 1.089;
 
 @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
@@ -467,7 +467,7 @@ sub _pseudoclass {
 
 _pseudoclass qw(Layer		gimp_layer_ gimp_drawable_ gimp_floating_sel_ gimp_image_ gimp_ plug_in_);
 _pseudoclass qw(Image		gimp_image_ gimp_drawable_ gimp_ plug_in_);
-_pseudoclass qw(Drawable	gimp_drawable_ gimp_layer_ gimp_image_ gimp_ plug_in_);
+_pseudoclass qw(Drawable	gimp_drawable_ gimp_layer_ gimp_channel_ gimp_image_ gimp_ plug_in_);
 _pseudoclass qw(Selection 	gimp_selection_);
 _pseudoclass qw(Channel		gimp_channel_ gimp_drawable_ gimp_selection_ gimp_image_ gimp_ plug_in_);
 _pseudoclass qw(Display		gimp_display_ gimp_);
@@ -479,7 +479,7 @@ _pseudoclass qw(Region		);
 _pseudoclass qw(Parasite	parasite_ gimp_);
 
 # "C"-Classes
-_pseudoclass qw(GDrawable	gimp_drawable_);
+_pseudoclass qw(GDrawable	gimp_gdrawable_ gimp_drawable_);
 _pseudoclass qw(PixelRgn	gimp_pixel_rgn_);
 _pseudoclass qw(Tile		gimp_tile_);
 
@@ -493,18 +493,6 @@ _pseudoclass qw(Patterns	gimp_patterns_);
 package Gimp::Tile;
 
 unshift (@Tile::ISA, "Gimp::Tile");
-
-sub data {
-   my $self = shift;
-   $self->set_data(@_) if @_;
-   defined(wantarray) ? $self->get_data : undef;
-}
-
-package Gimp::GDrawable;
-
-sub pixel_rgn($$$$$$) {
-   Gimp::gimp_pixel_rgn_init(@_);
-}
 
 package Gimp::PixelRgn;
 

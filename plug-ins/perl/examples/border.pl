@@ -5,7 +5,6 @@
 use Gimp::Feature qw(pdl);
 use Gimp;
 use Gimp::Fu;
-use Gimp::PDL;
 use PDL::LiteF;
 
 # Gimp::set_trace(TRACE_ALL);

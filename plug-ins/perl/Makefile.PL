@@ -35,6 +35,7 @@ if ($ARGV[0] ne "--writemakefile") {
    $ENV{IN_GIMP}=0;
    exit system("./etc/configure",@ARGV)>>8;
 } else {
+   local $do_config_msg = 1;
    do './config.pl'; die $@ if $@;
 }
 
@@ -82,7 +83,6 @@ EOF
 }
 
 eval "use Gtk;"; $GTK = $@ eq "";
-eval "use PDL;"; $PDL = $@ eq "";
 eval "use Parse::RecDescent;"; $PRD = $@ eq "";
 
 $] >= 5.005 or print <<EOF;
@@ -104,25 +104,6 @@ WARNING: unable to use the Perl-Gtk interface. Most features (like
          it (and many scripts won't work), but it's better to install
          it (version 0.5120 or higher is required, you can get it from
          ftp://ftp.gimp.org/pub/gtk/perl/ or any CPAN mirror.
-
-EOF
-
-$PDL or print <<EOF;
-
-WARNING: unable to use PDL (the perl data language). This means that
-	 Gimp::PDL is non-functional. Unless you plan to use Tile/PixelRgn
-	 functions together with PDL, this is harmless. Gimp::PDL will
-	 be installed, just in case you later install PDL. The plug-ins
-	 using PDL, however, will NOT WORK. You can get PDL from any CPAN
-	 mirror.
-
-EOF
-
-!$PDL or $PDL::Version::VERSION > 1.99 or print <<EOF;
-
-WARNING: PDL version $PDL::Version::VERSION is installed. Gimp::PDL was only
-	 tested with 2.0 and higher.  In case of problems its advisable to
-	 upgrade PDL to at least version 2.
 
 EOF
 

@@ -5,22 +5,21 @@ shortcuts (don't ask)
 
 gimp -b "(extension-perl-server 0 0 0)"
 gimp ~/pix/ka001.jpg -b "(extension-perl-server 0 0 0)"
-file:///usr/app/lib/perl5/site_perl/i686-linux/PDL/HtmlDocs/
+file:///usr/app/lib/perl5/site_perl/i686-linux/PDL/HtmlDocs/PDL/
 make test TEST_VERBOSE=1
 
 bugs
 
+  * fatal errors in config.pl (!)
   * disable module build (EMBEDMYALLOC)
-  * turn -1 into undef and vice versa.
+[DONE]  * turn -1 into undef and vice versa.
+  * perl module install dependency
   * not calling unload -> coredump
   * $Config{cc} might not understand Gimps CFLAGS (-mpentium).
 [DONE]  * do NOT modinstall with older gimp versions (!!!!!!!!!)
   * improve examples/example-*.pl
-[KILL]  * install in /usr/local (???? why? more options??)
-[DONE]  * install even without Gtk? NO!
   * wait for working gimp_file_load (or do it myself?)
   * get rid of xs_exit. please please fuck me plenty.
-[KILL]  * do not install scm2scm and scm2perl on 56.004
   * create gimpstyle.pod
   * get rid of ':auto'
   
@@ -35,25 +34,21 @@ important issues
   * implement CALLBACKS via the Perl-Server
   * PF_COORDS (just as Light Effects/FlareFX)
   * PF_PREVIEW(!)
-[DONE]  * --use-interp=perl|script-fu
   * change set_usize to something else..
   * Gimp::IO (?)
   * Gimp::Fu import after Gimp? use Gimp::main for Gimp::Fu??
-[DONE]  * generic config query mechanism
   * install scripts in share/
   * register dummy function to calm gimp down (really??)
-[DONE]  * config options & paths in module(!)
   * gimp->object_id, drawable_object_id remove!
   * vamp up homepage
   * --ui and --noui for Gimp::Fu
   * Gimp::ping
-[KILL]  * clean up PKG_ANY vs. PKG_REAL_DRAWABLE
   * allow plug-ins to register with only a drawable argument(!)
     (fix this in Gimp)
   * gradient button
   * implement Perl-Server RSET and shared lock(!)
   * use Gimp qw(GIMP_HOST=jfjf)???
-  * zero-copy PDL support
+[DONE]  * zero-copy PDL support
   * weighted movement in drawing tools
   * -DMIN_PERL_DEFINE
   * --function localfunc to select one of the registered scripts
@@ -70,8 +65,8 @@ long term issues and ideas
   * default function parameters (with hash %defaults?)
   * gimp_text(text => "hallo", family => "engraver", size => 20);
   
-  * do not know how to sensibly convert these => perl is NOT C.
-  
-    gimp_pixel_rgns_register(nrgns, ...)
-    gimp_pixel_rgns_process(pri_ptr)
+[DONE]  * do not know how to sensibly convert these => perl is NOT C.
+[DONE]  
+[DONE]    gimp_pixel_rgns_register(nrgns, ...)
+[DONE]    gimp_pixel_rgns_process(pri_ptr)
 

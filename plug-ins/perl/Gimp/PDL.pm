@@ -2,72 +2,8 @@ package Gimp::PDL;
 
 use Carp;
 use Gimp ();
-use PDL;
 
-sub Gimp::Tile::set_data($) {
-   (my $p = byte $_[1])->make_physical;
-   Gimp::Tile::_set_data($_[0],${$p->get_dataref});
-};
-
-sub Gimp::Tile::get_data($) {
-   my($tile)=@_;
-   my($pdl)=new_from_specification PDL (byte,width(),height(),
-                                        $tile->bpp > 1 ? $tile->bpp : ());
-   ${$pdl->get_dataref} = Gimp::Tile::_get_data(@_);
-   $pdl->upd_data;
-   return $pdl;
-};
-
-sub Gimp::PixelRgn::get_pixel {
-   my($rgn)=@_;
-   my($pdl)=new_from_specification PDL (byte,$_[0]->bpp);
-   ${$pdl->get_dataref} = Gimp::PixelRgn::_get_pixel(@_);
-   $pdl->upd_data;
-   return $pdl;
-};
-
-sub Gimp::PixelRgn::get_col {
-   my($rgn)=@_;
-   my($pdl)=new_from_specification PDL (byte,$_[0]->bpp,$_[3]);
-   ${$pdl->get_dataref} = Gimp::PixelRgn::__get_col(@_);
-   $pdl->upd_data;
-   return $pdl;
-};
-
-sub Gimp::PixelRgn::get_row {
-   my($rgn)=@_;
-   my($pdl)=new_from_specification PDL (byte,$_[0]->bpp,$_[3]);
-   ${$pdl->get_dataref} = Gimp::PixelRgn::_get_row(@_);
-   $pdl->upd_data;
-   return $pdl;
-};
-
-sub Gimp::PixelRgn::get_rect {
-   my($pdl)=new_from_specification PDL (byte,$_[0]->bpp,$_[3],$_[4]);
-   ${$pdl->get_dataref} = Gimp::PixelRgn::_get_rect(@_);
-   $pdl->upd_data;
-   return $pdl;
-};
-
-sub Gimp::PixelRgn::set_pixel {
-   (my $p = byte $_[1])->make_physical;
-   Gimp::PixelRgn::_set_pixel($_[0],${$p->get_dataref},$_[2],$_[3]);
-};
-
-sub Gimp::PixelRgn::set_col {
-   (my $p = byte $_[1])->make_physical;
-   Gimp::PixelRgn::_set_col($_[0],${$p->get_dataref},$_[2],$_[3]);
-};
-
-sub Gimp::PixelRgn::set_row {
-   (my $p = byte $_[1])->make_physical;
-   Gimp::PixelRgn::_set_row($_[0],${$p->get_dataref},$_[2],$_[3]);
-};
-
-sub Gimp::PixelRgn::set_rect {
-   (my $p = byte $_[1])->make_physical;
-   Gimp::PixelRgn::_set_rect($_[0],${$p->get_dataref},$_[2],$_[3],($_[1]->dims)[1]);
-};
+warn "use'ing Gimp::PDL is no longer necessary, please remove it\n";
 
 1;
 __END__
@@ -75,6 +11,7 @@ __END__
 =head1 NAME
 
 Gimp::PDL - Overwrite Tile/Region functions to work with piddles.
+This module is obsolete, please remove any references to it.
 
 =head1 SYNOPSIS
 

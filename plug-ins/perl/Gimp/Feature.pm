@@ -28,7 +28,7 @@ my %description = (
    'gimp-1.1'   => 'gimp version 1.1 or higher',
    'gimp-1.2'   => 'gimp version 1.2 or higher',
    'perl-5.005' => 'perl version 5.005 or higher',
-   'pdl'        => 'PDL (the Perl Data Language), version 1.9906 or higher',
+   'pdl'        => 'compiled-in PDL support',
    'gnome'      => 'the gnome perl module',
    'gtkxmhtml'  => 'the Gtk::XmHTML module',
    'dumper'     => 'the Data::Dumper module',
@@ -40,7 +40,7 @@ sub import {
    my $pkg = shift;
    my $feature;
 
-   local $Gimp::in_query=1;
+   local $Gimp::in_query=($ARGV[0] eq "-gimp");
    while(defined (my $feature = shift)) {
       $feature=~s/^://;
       need($feature);
@@ -73,7 +73,7 @@ sub present {
    } elsif ($_ eq "perl-5.005") {
       $] >= 5.005;
    } elsif ($_ eq "pdl") {
-      eval { require PDL }; $@ eq "" && $PDL::VERSION>=1.9906;
+      require Gimp::Config; $Gimp::Config{DEFINE1} =~ /HAVE_PDL/;
    } elsif ($_ eq "gnome") {
       eval { require Gnome }; $@ eq "";
    } elsif ($_ eq "gtkxmhtml") {

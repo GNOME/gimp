@@ -1,16 +1,10 @@
 #!/usr/bin/perl
 
-BEGIN { $^W=1 }
-use strict;
-
 use Gimp::Feature qw(pdl);
+use PDL;
 BEGIN { eval "use PDL::Graphics::TriD"; $@ and Gimp::Feature::missing('PDL TriD (OpenGL) support') }
 use Gimp;
 use Gimp::Fu;
-use PDL::Math;
-use PDL::Core;
-use PDL;
-use Gimp::PDL;
 
 register
     'view3d',
@@ -18,7 +12,7 @@ register
     'This script uses PDL::Graphics:TriD to view a grayscale drawable in 3D. You can choose a Cartesian (default) or Polar projection, toggle the drawing of lines, and toggle normal smoothing.',
     'Tom Rathborne', 'GPLv2', '1999-03-11',
     '<Image>/View/3D Surface',
-    'GRAY', [
+    'RGB*,GRAY*', [
         [ PF_BOOL, 'polar', 'Radial view', 0],
         [ PF_BOOL, 'lines', 'Draw grid lines', 0],
         [ PF_BOOL, 'smooth', 'Smooth surface normals', 1]
@@ -29,10 +23,9 @@ sub {
     my $w = $dwb->width;
     my $h = $dwb->height;
 
-    my $gdwb = $dwb->get;
-    my $regn = $gdwb->pixel_rgn (0, 0, $w, $h, 0, 0);
-    my $rect = $regn->get_rect (0, 0, $w, $h);
-    my $surf = $rect->slice('(0)');
+    my $regn = $dwb->pixel_rgn (0, 0, $w, $h, 0, 0);
+    my $surf = $regn->get_rect (0, 0, $w, $h);
+    $surf=$surf->slice("(0)") if $surf->getndims>2;
 
     imag3d [ $polar ? 'POLAR2D' : 'SURF2D', $surf ],
            { 'Lines' => $lines, 'Smooth' => $smooth };

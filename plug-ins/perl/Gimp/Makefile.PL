@@ -33,7 +33,8 @@ $GIMP_INC_NOUI = "-I../../.. $GIMP_INC_NOUI" if $IN_GIMP;
 WriteMakefile(
     'NAME'	=> 'Gimp::Lib',
     'VERSION_FROM' => '../Gimp.pm',
-    'INC'	=> "$INC1 $GIMP_INC_NOUI $CPPFLAGS $CFLAGS",
+    'INC'	=> "$INC1 $GIMP_INC_NOUI $CPPFLAGS $pdl_inc $CFLAGS",
     'DEFINE'	=> "$DEFINE1 $DEFS",
     'macro'	=> { libdir => $libdir, exec_prefix => $exec_prefix, prefix => $prefix },
+    'TYPEMAPS'	=> ["$topdir/typemap",@pdl_typemaps],
 );

@@ -1,10 +1,19 @@
 Revision history for Gimp-Perl extension.
 
+1.089 Tue May 18 19:55:25 CEST 1999
+	- added colourtoalpha.
+	- made all internal C functions static -> less namespace bloat.
+        - its possible to shorten the call $drawable->get->pixel_rgn
+          to "just" $drawable->pixel_rgn.
+        - made one-arg gimp_progress_init work again.
 	- removed compatibility code from Lib.xs.
         - call the XS version of gimp_progress_init when only
           one argument is given.
         - re-added PARASITE_*-constants (including UNDOABLE variants).
         - temporarily disabled the module for political reasons.
+        - made my first attempt at implementing XS-PDL support.
+        - transform obnjects ids of -1 into undef and vice versa.
+        - Gimp::Fu did not properly supply a default value for PF_COLOUR.
         - :auto is NO LONGER the default for the import method(!).
           (NOT YET).
 

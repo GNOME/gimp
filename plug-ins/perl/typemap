@@ -20,6 +20,8 @@ GPixelRgn *					T_PIXELRGN
 
 GtkWidget *					T_IV
 
+GPixelRgnIterator				T_PTROBJ
+
 IMAGE						T_PREF
 LAYER						T_PREF
 COLOR						T_PREF
@@ -49,4 +51,6 @@ OUTPUT
 
 T_PREF
 	$arg = autobless (newSViv($var), PARAM_$ntype);
+
+T_GDRAWABLE
 

@@ -250,6 +250,19 @@ sub gimp_text_wh {
 
 =pod
 
+=item C<gimp_drawable_mask $drawable>
+
+returns an array (x,y,w,h) containing the upper left corner and the size of the
+current mask, just as needed by pixelrgn and similar functions.
+
+=cut
+sub gimp_drawable_mask {
+   my @b = (shift->mask_bounds)[1..4];
+   (@b[0,1],$b[2]-$b[0],$b[3]-$b[1]);
+}
+
+=pod
+
 =item C<gimp_image_layertype $alpha>
 
 returns the corresponding layer type for an image, alpha controls wether the layer type

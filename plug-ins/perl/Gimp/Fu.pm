@@ -320,8 +320,8 @@ sub interact($$$$@) {
            $a=new Gtk::HBox (0,5);
            my $b=new Gimp::UI::ColorSelectButton -width => 90, -height => 18;
            $a->pack_start ($b,1,1,0);
-           $value = [216, 152, 32] unless defined $value;
-           push(@setvals,sub{$b->set('color', "@{Gimp::canonicalize_color $_[0]}")});
+           $default = [216, 152, 32] unless defined $default;
+           push(@setvals,sub{$b->set('color', "@{defined $_[0] ? Gimp::canonicalize_color $_[0] : [216,152,32]}")});
            push(@getvals,sub{[split ' ',$b->get('color')]});
            set_tip $t $b,$desc;
            
@@ -1106,7 +1106,7 @@ sub print_switches {
 }
 
 sub main {
-   $old_trace = Gimp::set_trace (0);
+   $old_trace = Gimp::set_trace (0);#d#
    if ($Gimp::help) {
       my $this=this_script;
       print <<EOF;
