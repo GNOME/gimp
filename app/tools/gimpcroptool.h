@@ -73,14 +73,4 @@ void      gimp_crop_tool_register (Gimp      *gimp);
 GtkType   gimp_crop_tool_get_type (void);
 
 
-/* Keep around for the PDB, temporarily */
-void      crop_image              (GimpImage *gimage,
-				   gint       x1,
-				   gint       y1,
-				   gint       x2,
-				   gint       y2,
-				   gboolean   layer_only,
-				   gboolean   crop_layers);
-
-
 #endif  /*  __GIMP_CROP_TOOL_H__  */

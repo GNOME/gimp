@@ -311,25 +311,28 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query                    (void);
-static void   run                      (gchar   *name,
-					gint     nparams,
+static void   run                      (gchar      *name,
+					gint        nparams,
 					GimpParam  *param,
-					gint    *nreturn_vals,
+					gint       *nreturn_vals,
 					GimpParam **return_vals);
-static gint   save_image               (gchar   *filename,
-					gint32   image_ID,
-					gint32   drawable_ID,
-					gint32   orig_image_ID);
+static gint   save_image               (gchar      *filename,
+					gint32      image_ID,
+					gint32      drawable_ID,
+					gint32      orig_image_ID);
 
-static gboolean boundscheck            (gint32 image_ID);
+static gboolean boundscheck            (gint32      image_ID);
 static gboolean badbounds_dialog       (void);
 
-static void   cropok_callback          (GtkWidget *widget, gpointer   data);
+static void   cropok_callback          (GtkWidget  *widget,
+					gpointer    data);
 
-static gint   save_dialog              (gint32 image_ID);
+static gint   save_dialog              (gint32      image_ID);
 
-static void   save_ok_callback         (GtkWidget *widget, gpointer   data);
-static void   comment_entry_callback   (GtkWidget *widget, gpointer   data);
+static void   save_ok_callback         (GtkWidget  *widget,
+					gpointer    data);
+static void   comment_entry_callback   (GtkWidget  *widget,
+					gpointer    data);
 
 
 static gboolean comment_was_edited = FALSE;
@@ -410,17 +413,17 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gint32        drawable_ID;
-  gint32        orig_image_ID;
+  static GimpParam     values[2];
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  gint32               image_ID;
+  gint32               drawable_ID;
+  gint32               orig_image_ID;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
@@ -781,10 +784,10 @@ static gboolean
 boundscheck (gint32 image_ID)
 {
   GimpDrawable *drawable;
-  gint32 *layers;   
-  gint nlayers;
-  gint i;
-  gint offset_x, offset_y;
+  gint32       *layers;
+  gint          nlayers;
+  gint          i;
+  gint          offset_x, offset_y;
 
   /* get a list of layers for this image_ID */
   layers = gimp_image_get_layers (image_ID, &nlayers);  
@@ -793,7 +796,7 @@ boundscheck (gint32 image_ID)
   /*** Iterate through the layers to make sure they're all ***/
   /*** within the bounds of the image                      ***/
 
-  for (i=0;i<nlayers;i++)
+  for (i = 0; i < nlayers; i++)
     {
       drawable = gimp_drawable_get (layers[i]);
       gimp_drawable_offsets (layers[i], &offset_x, &offset_y);
@@ -812,9 +815,10 @@ boundscheck (gint32 image_ID)
 	   * the user and they said yes. */
 	  if ((run_mode == GIMP_RUN_NONINTERACTIVE) || badbounds_dialog ())
 	    {
-	      gimp_crop (image_ID,
-			 gimp_image_width (image_ID), gimp_image_height (image_ID), 
-			 0, 0);
+	      gimp_image_crop (image_ID,
+			       gimp_image_width (image_ID),
+			       gimp_image_height (image_ID), 
+			       0, 0);
 	      return TRUE;
 	    }
 	  else
@@ -823,7 +827,9 @@ boundscheck (gint32 image_ID)
 	    }
 	}
       else
-	gimp_drawable_detach(drawable);
+	{
+	  gimp_drawable_detach (drawable);
+	}
     }
 
   g_free (layers);

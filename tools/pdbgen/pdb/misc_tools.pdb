@@ -495,47 +495,6 @@ CODE
     );
 }
 
-sub crop {
-    $blurb = 'Crop the image to the specified extents.';
-
-    $help = <<'HELP';
-This procedure crops the image so that it's new width and height are equal to
-the supplied parameters. Offsets are also provided which describe the position
-of the previous image's content. All channels and layers within the image are 
-cropped to the new image extents; this includes the image selection mask. If
-any parameters are out of range, an error is returned.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-	&std_image_arg,
-	{ name => 'new_width', type => '0 < int32',
-	  desc => 'New image width: (0 < new_width <= width)' },
-	{ name => 'new_height', type => '0 < int32',
-	  desc => 'New image height: (0 < new_height <= height)' },
-	{ name => 'offx', type => '0 <= int32',
-	  desc => 'x offset: (0 <= offx <= (width - new_width))' },
-	{ name => 'offy', type => '0 <= int32',
-	  desc => 'y offset: (0 <= offy <= (height - new_height))' }
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimpcroptool.h") ],
-	code => <<'CODE'
-{
-  if (new_width > gimage->width || new_height > gimage->height ||
-      offx > (gimage->width - new_width) ||
-      offy > (gimage->height - new_height))
-    success = FALSE;
-  else
-    crop_image (gimage, offx, offy, offx + new_width, offy + new_height,
-		FALSE, TRUE);
-}
-CODE
-    );
-}
-
 sub ellipse_select {
     $blurb = 'Create an elliptical selection over the specified image.';
 
@@ -1542,7 +1501,7 @@ sub ink {
 
 @procs = qw(airbrush airbrush_default blend bucket_fill by_color_select 
 	    clone clone_default color_picker
-	    convolve convolve_default crop dodgeburn dodgeburn_default
+	    convolve convolve_default dodgeburn dodgeburn_default
 	    ellipse_select eraser eraser_default
 	    flip free_select fuzzy_select
 	    paintbrush paintbrush_default

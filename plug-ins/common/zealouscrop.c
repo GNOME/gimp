@@ -21,23 +21,20 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 /* Declare local functions. */
-static void query (void);
-static void run   (gchar    *name,
-		   gint     nparams,
-		   GimpParam  *param,
-		   gint    *nreturn_vals,
-		   GimpParam **return_vals);
-static inline gint colours_equal (guchar *col1,
-				  guchar *col2,
-				  gint    bytes);
+static void        query         (void);
+static void        run           (gchar         *name,
+				  gint           nparams,
+				  GimpParam     *param,
+				  gint          *nreturn_vals,
+				  GimpParam    **return_vals);
+static inline gint colours_equal (guchar        *col1,
+				  guchar        *col2,
+				  gint           bytes);
 
-static void do_zcrop (GimpDrawable *drawable,
-		      gint32     image_id);
+static void        do_zcrop      (GimpDrawable  *drawable,
+				  gint32         image_id);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -57,37 +54,38 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  gimp_install_procedure("plug_in_zealouscrop",
-			 "Automagically crops unused space from the edges and middle of a picture.",
-			 "",
-			 "Adam D. Moss",
-			 "Adam D. Moss",
-			 "1997",
-			 N_("<Image>/Image/Transforms/Zealous Crop"),
-			 "RGB*, GRAY*, INDEXED*",
-			 GIMP_PLUGIN,
-			 nargs, 0,
-			 args, NULL);
+  gimp_install_procedure ("plug_in_zealouscrop",
+			  "Automagically crops unused space from the edges "
+			  "and middle of a picture.",
+			  "",
+			  "Adam D. Moss",
+			  "Adam D. Moss",
+			  "1997",
+			  N_("<Image>/Image/Transforms/Zealous Crop"),
+			  "RGB*, GRAY*, INDEXED*",
+			  GIMP_PLUGIN,
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
-run (gchar   *name,
-     gint     n_params,
+run (gchar      *name,
+     gint        n_params,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunModeType run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32 image_id;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunModeType    run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint32             image_id;
 
   INIT_I18N();
 
@@ -125,9 +123,9 @@ run (gchar   *name,
 	  do_zcrop(drawable, image_id);
 
 	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush();
+	    gimp_displays_flush ();
 
-	  gimp_drawable_detach(drawable);
+	  gimp_drawable_detach (drawable);
 	}
       else
 	{
@@ -135,31 +133,31 @@ run (gchar   *name,
 	}
     }
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
 static void
 do_zcrop (GimpDrawable *drawable,
-	  gint32     image_id)
+	  gint32        image_id)
 {
-  GimpPixelRgn srcPR, destPR;
-  gint    width, height, x, y;
-  guchar *buffer;
-  gint8  *killrows;
-  gint8  *killcols;
-  gint32  livingrows, livingcols, destrow, destcol;
-  gint    total_area, area;
+  GimpPixelRgn  srcPR, destPR;
+  gint          width, height, x, y;
+  guchar       *buffer;
+  gint8        *killrows;
+  gint8        *killcols;
+  gint32        livingrows, livingcols, destrow, destcol;
+  gint          total_area, area;
 
-  width = drawable->width;
+  width  = drawable->width;
   height = drawable->height;
-  bytes = drawable->bpp;
+  bytes  = drawable->bpp;
 
   total_area = width * height * 4;
   area = 0;
 
-  killrows = g_malloc (sizeof(gint8)*height);
-  killcols = g_malloc (sizeof(gint8)*width);
+  killrows = g_new (gint8, height);
+  killcols = g_new (gint8, width);
 
   buffer = g_malloc ((width > height ? width : height) * bytes);
 
@@ -226,8 +224,8 @@ do_zcrop (GimpDrawable *drawable,
     {
       if (!killrows[y])
 	{
-	  gimp_pixel_rgn_get_row(&srcPR, buffer, 0, y, width);
-	  gimp_pixel_rgn_set_row(&destPR, buffer, 0, destrow, width);
+	  gimp_pixel_rgn_get_row (&srcPR, buffer, 0, y, width);
+	  gimp_pixel_rgn_set_row (&destPR, buffer, 0, destrow, width);
 	  destrow++;
 	}
 
@@ -244,8 +242,8 @@ do_zcrop (GimpDrawable *drawable,
     {
       if (!killcols[x])
 	{
-	  gimp_pixel_rgn_get_col(&srcPR, buffer, x, 0, height);
-	  gimp_pixel_rgn_set_col(&destPR, buffer, destcol, 0, height);
+	  gimp_pixel_rgn_get_col (&srcPR, buffer, x, 0, height);
+	  gimp_pixel_rgn_set_col (&destPR, buffer, destcol, 0, height);
 	  destcol++;
 	}
 
@@ -256,30 +254,32 @@ do_zcrop (GimpDrawable *drawable,
 
 /*  printf("dc: %d, lc: %d  - - - dr: %d, lr: %d\n",destcol, livingcols, destrow, livingrows);*/
 
-    g_free(buffer);
+    g_free (buffer);
 
-    g_free(killrows);
-    g_free(killcols);
+    g_free (killrows);
+    g_free (killcols);
 
-    gimp_progress_update(1.00);
+    gimp_progress_update (1.00);
     gimp_undo_push_group_start (image_id);
     gimp_drawable_flush (drawable);
     gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-    gimp_crop (image_id, livingcols, livingrows, 0, 0);
+    gimp_image_crop (image_id, livingcols, livingrows, 0, 0);
     gimp_undo_push_group_end (image_id);
 }
 
 
-static inline int colours_equal(guchar *col1, guchar *col2, int bytes)
+static inline gint
+colours_equal (guchar *col1,
+	       guchar *col2,
+	       gint    bytes)
 {
-  int b;
+  gint b;
 
   for (b = 0; b < bytes; b++)
     {
       if (col1[b] != col2[b])
 	{
-	  return (FALSE);
-	  break;
+	  return FALSE;
 	}
     }
 

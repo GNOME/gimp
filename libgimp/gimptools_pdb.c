@@ -548,52 +548,6 @@ gimp_convolve_default (gint32   drawable_ID,
 }
 
 /**
- * gimp_crop:
- * @image_ID: The image.
- * @new_width: New image width: (0 < new_width <= width).
- * @new_height: New image height: (0 < new_height <= height).
- * @offx: x offset: (0 <= offx <= (width - new_width)).
- * @offy: y offset: (0 <= offy <= (height - new_height)).
- *
- * Crop the image to the specified extents.
- *
- * This procedure crops the image so that it's new width and height are
- * equal to the supplied parameters. Offsets are also provided which
- * describe the position of the previous image's content. All channels
- * and layers within the image are cropped to the new image extents;
- * this includes the image selection mask. If any parameters are out of
- * range, an error is returned.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_crop (gint32 image_ID,
-	   gint   new_width,
-	   gint   new_height,
-	   gint   offx,
-	   gint   offy)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_crop",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_INT32, new_width,
-				    GIMP_PDB_INT32, new_height,
-				    GIMP_PDB_INT32, offx,
-				    GIMP_PDB_INT32, offy,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_dodgeburn:
  * @drawable_ID: The affected drawable.
  * @exposure: The exposer of the strokes.

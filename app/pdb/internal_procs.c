@@ -115,43 +115,43 @@ internal_procs_init (Gimp *gimp)
   app_init_update_status (NULL, _("Image"), 0.338);
   register_image_procs (gimp);
 
-  app_init_update_status (NULL, _("Layer"), 0.523);
+  app_init_update_status (NULL, _("Layer"), 0.526);
   register_layer_procs (gimp);
 
-  app_init_update_status (NULL, _("Interface"), 0.618);
+  app_init_update_status (NULL, _("Interface"), 0.622);
   register_message_procs (gimp);
 
-  app_init_update_status (NULL, _("Miscellaneous"), 0.628);
+  app_init_update_status (NULL, _("Miscellaneous"), 0.631);
   register_misc_procs (gimp);
 
-  app_init_update_status (NULL, _("Palette"), 0.634);
+  app_init_update_status (NULL, _("Palette"), 0.637);
   register_palette_procs (gimp);
 
-  app_init_update_status (NULL, _("Parasite procedures"), 0.655);
+  app_init_update_status (NULL, _("Parasite procedures"), 0.658);
   register_parasite_procs (gimp);
 
-  app_init_update_status (NULL, _("Paths"), 0.692);
+  app_init_update_status (NULL, _("Paths"), 0.695);
   register_paths_procs (gimp);
 
-  app_init_update_status (NULL, _("Pattern UI"), 0.732);
+  app_init_update_status (NULL, _("Pattern UI"), 0.735);
   register_pattern_select_procs (gimp);
 
-  app_init_update_status (NULL, _("Patterns"), 0.742);
+  app_init_update_status (NULL, _("Patterns"), 0.745);
   register_patterns_procs (gimp);
 
-  app_init_update_status (NULL, _("Plug-in"), 0.754);
+  app_init_update_status (NULL, _("Plug-in"), 0.757);
   register_plug_in_procs (gimp);
 
-  app_init_update_status (NULL, _("Procedural database"), 0.772);
+  app_init_update_status (NULL, _("Procedural database"), 0.775);
   register_procedural_db_procs (gimp);
 
-  app_init_update_status (NULL, _("Image mask"), 0.797);
+  app_init_update_status (NULL, _("Image mask"), 0.8);
   register_selection_procs (gimp);
 
-  app_init_update_status (NULL, _("Text procedures"), 0.852);
+  app_init_update_status (NULL, _("Text procedures"), 0.855);
   register_text_tool_procs (gimp);
 
-  app_init_update_status (NULL, _("Tool procedures"), 0.865);
+  app_init_update_status (NULL, _("Tool procedures"), 0.868);
   register_tools_procs (gimp);
 
   app_init_update_status (NULL, _("Undo"), 0.957);

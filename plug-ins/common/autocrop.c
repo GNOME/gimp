@@ -22,25 +22,26 @@
 
 
 /* Declare local functions. */
-static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
-		   GimpParam  *param,
-		   gint    *nreturn_vals,
-		   GimpParam **return_vals);
+static void query         (void);
+static void run           (gchar        *name,
+			   gint          nparams,
+			   GimpParam    *param,
+			   gint         *nreturn_vals,
+			   GimpParam   **return_vals);
 
-static gint colors_equal  (guchar    *col1,
-			   guchar    *col2,
-			   gint       bytes);
+static gint colors_equal  (guchar       *col1,
+			   guchar       *col2,
+			   gint          bytes);
 static gint guess_bgcolor (GimpPixelRgn *pr,
-			   gint       width,
-			   gint       height,
-			   gint       bytes,
-			   guchar    *color);
+			   gint          width,
+			   gint          height,
+			   gint          bytes,
+			   guchar       *color);
 
 static void doit          (GimpDrawable *drawable,
-			   gint32     image_id,
-			   gboolean   show_progress);
+			   gint32        image_id,
+			   gboolean      show_progress);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -51,6 +52,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 };
 
 static gint bytes;
+
 
 MAIN ()
 
@@ -79,18 +81,18 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     n_params,
+run (gchar      *name,
+     gint        n_params,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunModeType run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32 image_id;
-  gboolean interactive;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunModeType    run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint32             image_id;
+  gboolean           interactive;
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -140,16 +142,16 @@ doit (GimpDrawable *drawable,
       gint32        image_id,
       gboolean      show_progress)
 {
-  GimpPixelRgn srcPR;
-  gint width, height;
-  gint x, y, abort;
-  gint32 nx, ny, nw, nh;
-  guchar *buffer;
-  guchar color[4] = {0, 0, 0, 0};
+  GimpPixelRgn  srcPR;
+  gint          width, height;
+  gint          x, y, abort;
+  gint32        nx, ny, nw, nh;
+  guchar       *buffer;
+  guchar        color[4] = {0, 0, 0, 0};
   
-  width = drawable->width;
+  width  = drawable->width;
   height = drawable->height;
-  bytes = drawable->bpp;
+  bytes  = drawable->bpp;
   
   nx = 0;
   ny = 0;
@@ -236,7 +238,7 @@ doit (GimpDrawable *drawable,
   gimp_drawable_detach (drawable);
 
   if (nw != width || nh != height)
-    gimp_crop (image_id, nw, nh, nx, ny);
+    gimp_image_crop (image_id, nw, nh, nx, ny);
 
   if (show_progress)
     gimp_progress_update (1.00);
@@ -244,10 +246,10 @@ doit (GimpDrawable *drawable,
 
 static gint
 guess_bgcolor (GimpPixelRgn *pr,
-	       gint       width,
-	       gint       height,
-	       gint       bytes,
-	       guchar    *color)
+	       gint          width,
+	       gint          height,
+	       gint          bytes,
+	       guchar       *color)
 {
   guchar tl[4], tr[4], bl[4], br[4];
   

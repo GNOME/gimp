@@ -98,11 +98,11 @@
   (gimp-layer-add-alpha pic-layer)
 
 ; crop, resize and eventually rotate the image 
-  (gimp-crop image
-	     crop-width
-	     crop-height
-	     (/ (- owidth crop-width) 2)
-	     (/ (- oheight crop-height) 2))
+  (gimp-image-crop image
+		   crop-width
+		   crop-height
+		   (/ (- owidth crop-width) 2)
+		   (/ (- oheight crop-height) 2))
   (gimp-image-resize image
 		     width
 		     height

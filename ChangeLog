@@ -1,5 +1,33 @@
 2001-07-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/gimpimage-crop.[ch]: new files for gimp_image_crop()
+	and gimp_image_crop_auto_shrink() (should share large portions of
+	code with gimp_image_resize()).
+
+	* app/tools/gimpcroptool.[ch]: removed here.
+
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/tools.pdb: gimp_crop --> gimp_image_crop
+
+	* app/pdb/image_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/tools_cmds.c
+	* libgimp/gimpimage_pdb.[ch]
+	* libgimp/gimptools_pdb.[ch]: regenerated.
+
+	* plug-ins/common/autocrop.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/guillotine.c
+	* plug-ins/common/zealouscrop.c
+	* plug-ins/perl/examples/image_tile
+	* plug-ins/script-fu/scripts/add-bevel.scm
+	* plug-ins/script-fu/scripts/ripply-anim.scm
+	* plug-ins/script-fu/scripts/slide.scm: changed accordingly. Some
+	cleanups in the plug-ins.
+
+2001-07-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/context_manager.[ch]: removed.
 

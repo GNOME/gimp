@@ -62,7 +62,7 @@
       (while (> remaining-frames 0)
 	     (set! dup-image (car (gimp-image-duplicate rippletiled-image)))
 	     (gimp-image-undo-disable dup-image)
-	     (gimp-crop dup-image width height xpos ypos)
+	     (gimp-image-crop dup-image width height xpos ypos)
 	     
 	     (set! layer-name (string-append "Frame "
 			(number->string (- num-frames remaining-frames) 10)

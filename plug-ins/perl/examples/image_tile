@@ -352,12 +352,12 @@ sub match_aspect {
     my $oldheight=$height;
     $height = int($width/$target_aspect);
     # print "Image was $width X $oldheight, cropping to $width X $height\n";
-    gimp_crop($img,$width,$height,0,int(($oldheight-$height)/2));
+    gimp_image_crop($img,$width,$height,0,int(($oldheight-$height)/2));
   } elsif ($aspect > $target_aspect) {
     my $oldwidth=$width;
     $width = int($target_aspect*$height);
     # print "Image was $oldwidth X $height, cropping to $width X $height\n";
-    gimp_crop($img,$width,$height,int(($oldwidth-$width)/2),0);
+    gimp_image_crop($img,$width,$height,int(($oldwidth-$width)/2),0);
   }
 }
 

@@ -43,6 +43,11 @@ gboolean          gimp_image_resize                   (gint32              image
 gboolean          gimp_image_scale                    (gint32              image_ID,
 						       gint                new_width,
 						       gint                new_height);
+gboolean          gimp_image_crop                     (gint32              image_ID,
+						       gint                new_width,
+						       gint                new_height,
+						       gint                offx,
+						       gint                offy);
 gboolean          gimp_image_delete                   (gint32              image_ID);
 gboolean          gimp_image_free_shadow              (gint32              image_ID);
 gint*             gimp_image_get_layers               (gint32              image_ID,

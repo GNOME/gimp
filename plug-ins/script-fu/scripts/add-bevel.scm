@@ -165,7 +165,7 @@
     ; Shave one pixel off each edge
     ;
     (if (= bevelling-whole-image TRUE)
-	  (gimp-crop image width height 1 1)
+	  (gimp-image-crop image width height 1 1)
 	  )
 
     (if (= work-on-copy FALSE) (gimp-image-undo-disable image))

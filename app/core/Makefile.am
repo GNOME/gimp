@@ -54,6 +54,8 @@ libappcore_a_SOURCES = @STRIP_BEGIN@ \
 	gimpimage-convert.c		\
 	gimpimage-convert.h		\
 	gimpimage-convert-fsdither.h	\
+	gimpimage-crop.c		\
+	gimpimage-crop.h		\
 	gimpimage-duplicate.c		\
 	gimpimage-duplicate.h		\
 	gimpimage-mask.c		\

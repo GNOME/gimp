@@ -332,6 +332,47 @@ CODE
     );
 }
 
+sub image_crop {
+    $blurb = 'Crop the image to the specified extents.';
+
+    $help = <<'HELP';
+This procedure crops the image so that it's new width and height are equal to
+the supplied parameters. Offsets are also provided which describe the position
+of the previous image's content. All channels and layers within the image are 
+cropped to the new image extents; this includes the image selection mask. If
+any parameters are out of range, an error is returned.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'new_width', type => '0 < int32',
+	  desc => 'New image width: (0 < new_width <= width)' },
+	{ name => 'new_height', type => '0 < int32',
+	  desc => 'New image height: (0 < new_height <= height)' },
+	{ name => 'offx', type => '0 <= int32',
+	  desc => 'x offset: (0 <= offx <= (width - new_width))' },
+	{ name => 'offy', type => '0 <= int32',
+	  desc => 'y offset: (0 <= offy <= (height - new_height))' }
+    );
+
+    %invoke = (
+	headers => [ qw("core/gimpimage-crop.h") ],
+	code => <<'CODE'
+{
+  if (new_width > gimage->width || new_height > gimage->height ||
+      offx > (gimage->width - new_width) ||
+      offy > (gimage->height - new_height))
+    success = FALSE;
+  else
+    gimp_image_crop (gimage, offx, offy, offx + new_width, offy + new_height,
+		     FALSE, TRUE);
+}
+CODE
+    );
+}
+
 sub image_delete {
     $blurb = 'Delete the specified image.';
 
@@ -1473,7 +1514,8 @@ gimlist_cb (gpointer im,
 }
 CODE
 
-unshift @procs, qw(image_list image_new image_resize image_scale image_delete
+unshift @procs, qw(image_list image_new image_resize image_scale image_crop
+                   image_delete
 		   image_free_shadow image_get_layers image_get_channels
 		   image_unset_active_channel image_pick_correlate_layer
 		   image_raise_layer image_lower_layer image_raise_layer_to_top

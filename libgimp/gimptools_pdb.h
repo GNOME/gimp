@@ -95,11 +95,6 @@ gboolean gimp_convolve           (gint32                    drawable_ID,
 gboolean gimp_convolve_default   (gint32                    drawable_ID,
 				  gint                      num_strokes,
 				  gdouble                  *strokes);
-gboolean gimp_crop               (gint32                    image_ID,
-				  gint                      new_width,
-				  gint                      new_height,
-				  gint                      offx,
-				  gint                      offy);
 gboolean gimp_dodgeburn          (gint32                    drawable_ID,
 				  gdouble                   exposure,
 				  GimpDodgeBurnType         dodgeburn_type,

@@ -35,6 +35,7 @@
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpimage-crop.h"
 #include "core/gimpimage-duplicate.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -51,6 +52,7 @@ static ProcRecord image_list_proc;
 static ProcRecord image_new_proc;
 static ProcRecord image_resize_proc;
 static ProcRecord image_scale_proc;
+static ProcRecord image_crop_proc;
 static ProcRecord image_delete_proc;
 static ProcRecord image_free_shadow_proc;
 static ProcRecord image_get_layers_proc;
@@ -115,6 +117,7 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_new_proc);
   procedural_db_register (gimp, &image_resize_proc);
   procedural_db_register (gimp, &image_scale_proc);
+  procedural_db_register (gimp, &image_crop_proc);
   procedural_db_register (gimp, &image_delete_proc);
   procedural_db_register (gimp, &image_free_shadow_proc);
   procedural_db_register (gimp, &image_get_layers_proc);
@@ -463,6 +466,96 @@ static ProcRecord image_scale_proc =
   0,
   NULL,
   { { image_scale_invoker } }
+};
+
+static Argument *
+image_crop_invoker (Gimp     *gimp,
+                    Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  gint32 new_width;
+  gint32 new_height;
+  gint32 offx;
+  gint32 offy;
+
+  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  new_width = args[1].value.pdb_int;
+  if (new_width <= 0)
+    success = FALSE;
+
+  new_height = args[2].value.pdb_int;
+  if (new_height <= 0)
+    success = FALSE;
+
+  offx = args[3].value.pdb_int;
+  if (offx < 0)
+    success = FALSE;
+
+  offy = args[4].value.pdb_int;
+  if (offy < 0)
+    success = FALSE;
+
+  if (success)
+    {
+      if (new_width > gimage->width || new_height > gimage->height ||
+	  offx > (gimage->width - new_width) ||
+	  offy > (gimage->height - new_height))
+	success = FALSE;
+      else
+	gimp_image_crop (gimage, offx, offy, offx + new_width, offy + new_height,
+			 FALSE, TRUE);
+    }
+
+  return procedural_db_return_args (&image_crop_proc, success);
+}
+
+static ProcArg image_crop_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_INT32,
+    "new_width",
+    "New image width: (0 < new_width <= width)"
+  },
+  {
+    GIMP_PDB_INT32,
+    "new_height",
+    "New image height: (0 < new_height <= height)"
+  },
+  {
+    GIMP_PDB_INT32,
+    "offx",
+    "x offset: (0 <= offx <= (width - new_width))"
+  },
+  {
+    GIMP_PDB_INT32,
+    "offy",
+    "y offset: (0 <= offy <= (height - new_height))"
+  }
+};
+
+static ProcRecord image_crop_proc =
+{
+  "gimp_image_crop",
+  "Crop the image to the specified extents.",
+  "This procedure crops the image so that it's new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous image's content. All channels and layers within the image are cropped to the new image extents; this includes the image selection mask. If any parameters are out of range, an error is returned.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  5,
+  image_crop_inargs,
+  0,
+  NULL,
+  { { image_crop_invoker } }
 };
 
 static Argument *

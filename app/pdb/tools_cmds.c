@@ -42,7 +42,6 @@
 #include "tools/gimpclonetool.h"
 #include "tools/gimpcolorpickertool.h"
 #include "tools/gimpconvolvetool.h"
-#include "tools/gimpcroptool.h"
 #include "tools/gimpdodgeburntool.h"
 #include "tools/gimpellipseselecttool.h"
 #include "tools/gimperasertool.h"
@@ -73,7 +72,6 @@ static ProcRecord clone_default_proc;
 static ProcRecord color_picker_proc;
 static ProcRecord convolve_proc;
 static ProcRecord convolve_default_proc;
-static ProcRecord crop_proc;
 static ProcRecord dodgeburn_proc;
 static ProcRecord dodgeburn_default_proc;
 static ProcRecord ellipse_select_proc;
@@ -107,7 +105,6 @@ register_tools_procs (Gimp *gimp)
   procedural_db_register (gimp, &color_picker_proc);
   procedural_db_register (gimp, &convolve_proc);
   procedural_db_register (gimp, &convolve_default_proc);
-  procedural_db_register (gimp, &crop_proc);
   procedural_db_register (gimp, &dodgeburn_proc);
   procedural_db_register (gimp, &dodgeburn_default_proc);
   procedural_db_register (gimp, &ellipse_select_proc);
@@ -1089,96 +1086,6 @@ static ProcRecord convolve_default_proc =
   0,
   NULL,
   { { convolve_default_invoker } }
-};
-
-static Argument *
-crop_invoker (Gimp     *gimp,
-              Argument *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-  gint32 new_width;
-  gint32 new_height;
-  gint32 offx;
-  gint32 offy;
-
-  gimage = gimp_image_get_by_ID (args[0].value.pdb_int);
-  if (gimage == NULL)
-    success = FALSE;
-
-  new_width = args[1].value.pdb_int;
-  if (new_width <= 0)
-    success = FALSE;
-
-  new_height = args[2].value.pdb_int;
-  if (new_height <= 0)
-    success = FALSE;
-
-  offx = args[3].value.pdb_int;
-  if (offx < 0)
-    success = FALSE;
-
-  offy = args[4].value.pdb_int;
-  if (offy < 0)
-    success = FALSE;
-
-  if (success)
-    {
-      if (new_width > gimage->width || new_height > gimage->height ||
-	  offx > (gimage->width - new_width) ||
-	  offy > (gimage->height - new_height))
-	success = FALSE;
-      else
-	crop_image (gimage, offx, offy, offx + new_width, offy + new_height,
-		    FALSE, TRUE);
-    }
-
-  return procedural_db_return_args (&crop_proc, success);
-}
-
-static ProcArg crop_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_INT32,
-    "new_width",
-    "New image width: (0 < new_width <= width)"
-  },
-  {
-    GIMP_PDB_INT32,
-    "new_height",
-    "New image height: (0 < new_height <= height)"
-  },
-  {
-    GIMP_PDB_INT32,
-    "offx",
-    "x offset: (0 <= offx <= (width - new_width))"
-  },
-  {
-    GIMP_PDB_INT32,
-    "offy",
-    "y offset: (0 <= offy <= (height - new_height))"
-  }
-};
-
-static ProcRecord crop_proc =
-{
-  "gimp_crop",
-  "Crop the image to the specified extents.",
-  "This procedure crops the image so that it's new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous image's content. All channels and layers within the image are cropped to the new image extents; this includes the image selection mask. If any parameters are out of range, an error is returned.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  5,
-  crop_inargs,
-  0,
-  NULL,
-  { { crop_invoker } }
 };
 
 static Argument *
