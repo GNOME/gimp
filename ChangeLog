@@ -1,3 +1,7 @@
+2002-02-27  Sven Neumann  <sven@gimp.org>
+
+	* config.guess: removed from CVS, it gets added by automake -a.
+
 2002-02-26  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/tips-dialog.c
