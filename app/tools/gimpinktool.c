@@ -773,13 +773,12 @@ ink_set_paint_area (GimpInkTool  *ink_tool,
 
   blob_bounds (blob, &x, &y, &width, &height);
 
-  bytes = gimp_drawable_has_alpha (drawable) ?
-    gimp_drawable_bytes (drawable) : gimp_drawable_bytes (drawable) + 1;
+  bytes = gimp_drawable_bytes_with_alpha (drawable);
 
-  x1 = CLAMP (x/SUBSAMPLE - 1,            0, gimp_item_width  (item));
-  y1 = CLAMP (y/SUBSAMPLE - 1,            0, gimp_item_height (item));
-  x2 = CLAMP ((x + width)/SUBSAMPLE + 2,  0, gimp_item_width  (item));
-  y2 = CLAMP ((y + height)/SUBSAMPLE + 2, 0, gimp_item_height (item));
+  x1 = CLAMP (x / SUBSAMPLE - 1,            0, gimp_item_width  (item));
+  y1 = CLAMP (y / SUBSAMPLE - 1,            0, gimp_item_height (item));
+  x2 = CLAMP ((x + width)  / SUBSAMPLE + 2, 0, gimp_item_width  (item));
+  y2 = CLAMP ((y + height) / SUBSAMPLE + 2, 0, gimp_item_height (item));
 
   /*  configure the canvas buffer  */
   if ((x2 - x1) && (y2 - y1))
