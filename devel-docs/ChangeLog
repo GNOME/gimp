@@ -1,3 +1,7 @@
+2002-05-03  Sven Neumann  <sven@gimp.org>
+
+	* includes.txt: fixed typo.
+
 2002-03-13  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-sections.txt: reflect the current set of libgimp

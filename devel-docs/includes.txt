@@ -24,7 +24,7 @@ No .h file includes anything, with two exceptions:
 
 The include order of all .c files of a module is as follows:
 
-/* any file from app/core/ */
+/* example of a .c file from app/core */
 
 #include "config.h"             /* alyways and first                         */
 
@@ -36,10 +36,10 @@ The include order of all .c files of a module is as follows:
 
 #include <glib-object.h>
 
-#include "libgimpfoo/gimpfoo.h" /* as needed, e.g. "libgimpbase/gipmbase.h"  */
+#include "libgimpfoo/gimpfoo.h" /* as needed, e.g. "libgimpbase/gimpbase.h"  */
 #include "libgimpbar/gimpbar.h"
 
-#include "core-types.h"         /* and no other foo-types.h file             */
+#include "core-types.h"         /* and _no_ other foo-types.h file           */
 
 #include "base/foo.h"           /* files from modules below this one         */
 #include "base/bar.h"
