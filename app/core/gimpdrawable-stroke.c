@@ -213,7 +213,9 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
   GArray      *dash_array = NULL;
   TileManager *base;
   TileManager *mask;
-  gint         x1, x2, y1, y2, bytes, w, h;
+  gint         x, y, w, h;
+  gint         bytes;
+  gint         off_x, off_y;
   guchar       bg[1] = { 0, };
   PixelRegion  maskPR, basePR;
   GimpContext *context;
@@ -226,19 +228,20 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
   /* what area do we operate on? */
   if (! gimp_channel_is_empty (gimp_image_get_mask (gimage)))
     {
-      gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+      gint x2, y2;
 
-      w = x2 - x1;
-      h = y2 - y1;
+      gimp_drawable_mask_bounds (drawable, &x, &y, &x2, &y2);
+      w = x2 - x;
+      h = y2 - y;
     }
   else
     {
-      x1 = y1 = 0;
+      x = y = 0;
       w = gimp_item_width (GIMP_ITEM (drawable));
       h = gimp_item_height (GIMP_ITEM (drawable));
     }
 
-  gimp_item_offsets (GIMP_ITEM (drawable), &x2, &y2);
+  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
   width = options->width;
 
@@ -267,15 +270,12 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
 
   /* render the stroke into it */
   gimp_scan_convert_render (scan_convert, mask,
-                            x1 + x2, y1 + y2,
+                            x + off_x, y + off_y,
                             options->antialias);
 
-  bytes = drawable->bytes;
-  if (!gimp_drawable_has_alpha (drawable))
-    bytes++;
+  bytes = gimp_drawable_bytes_with_alpha (drawable);
 
   base = tile_manager_new (w, h, bytes);
-  tile_manager_set_offsets (base, x1 + x2, y1 + y2);
   pixel_region_init (&basePR, base, 0, 0, w, h, TRUE);
   pixel_region_init (&maskPR, mask, 0, 0, w, h, FALSE);
 
@@ -283,10 +283,10 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
     {
     case GIMP_STROKE_STYLE_SOLID:
       {
-        guchar  tmp_col[MAX_CHANNELS] = { 0, };
-        guchar  col[MAX_CHANNELS]     = { 0, };
+        guchar tmp_col[MAX_CHANNELS] = { 0, };
+        guchar col[MAX_CHANNELS]     = { 0, };
 
-        gimp_rgb_get_uchar (&(context->foreground),
+        gimp_rgb_get_uchar (&context->foreground,
                             &tmp_col[RED_PIX],
                             &tmp_col[GREEN_PIX],
                             &tmp_col[BLUE_PIX]);
@@ -305,12 +305,11 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
         TempBuf     *pat_buf;
         gboolean     new_buf;
 
-        g_object_get (options, "pattern", &pattern, NULL);
+        pattern = gimp_context_get_pattern (context);
         pat_buf = gimp_image_transform_temp_buf (gimage, drawable,
                                                  pattern->mask, &new_buf);
-        g_object_unref (pattern);
 
-        pattern_region (&basePR, &maskPR, pat_buf, x1, y1);
+        pattern_region (&basePR, &maskPR, pat_buf, x, y);
 
         if (new_buf)
           temp_buf_free (pat_buf);
@@ -324,10 +323,10 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
                               TRUE, _("Render Stroke"),
                               gimp_context_get_opacity (context),
                               gimp_context_get_paint_mode (context),
-                              NULL, x1, y1);
+                              NULL, x, y);
 
   tile_manager_unref (mask);
   tile_manager_unref (base);
 
-  gimp_drawable_update (drawable, x1, y1, w, h);
+  gimp_drawable_update (drawable, x, y, w, h);
 }

@@ -1,5 +1,13 @@
 2003-10-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable-stroke.c
+	(gimp_drawable_stroke_scan_convert): added new local variables to
+	hold the drawable's offsets instead of abusing x2 and y2. Use
+	existing APIs instead of re-implementing stuff. Removed an
+	obsolete call to tile_manager_set_offsets(). Cleanup.
+
+2003-10-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpchannel.c (gimp_channel_new_from_alpha): create
 	a channel which the size of the layer, not of the image...
 
