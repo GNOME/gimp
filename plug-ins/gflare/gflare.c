@@ -725,14 +725,12 @@ plugin_query()
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
   gchar	 *help_string =
-   _(" This plug-in produces a lense flare effect using custom gradients."
+    " This plug-in produces a lense flare effect using custom gradients."
     " In interactive call, the user can edit his/her own favorite lense flare"
     " (GFlare) and render it. Edited gflare is saved automatically to"
     " the directory in gflare-path, if it is defined in gimprc."
     " In non-interactive call, the user can only render one of GFlare"
-    " which has been stored in gflare-path already.");
-
-  INIT_I18N();
+    " which has been stored in gflare-path already.";
 
   gimp_install_procedure ("plug_in_gflare",
 			  "Produce lense flare effect using custom gradients",
@@ -1348,7 +1346,7 @@ gflare_load (char *filename, char *name)
 
   if (gf->error)
     {
-      g_warning (_("invalid formatted GFlare file: %s\n)"), filename);
+      g_warning (_("invalid formatted GFlare file: %s\n"), filename);
       g_free (gflare);
       g_free (gf);
       return NULL;

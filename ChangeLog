@@ -33,6 +33,7 @@
 
 	* plug-ins/gap/gap_decode_mpeg_main.c: fixed typo.
 
+	* plug-ins/gflare/gflare.c
 	* plug-ins/common/whirlpinch.c: unmarked blurb and help.
 
 	* po-plug-ins/POTFILES.in: removed plug-ins/perl/Gimp.c
