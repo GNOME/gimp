@@ -1,3 +1,10 @@
+Tue Sep  7 13:11:20 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* plug-ins/imagemap/imap_csim_parse.c: use g_strcasecmp() instead of
+	strcasecmp().
+
+	* plug-ins/imagemap/imap_file.c: Add <sys/types.h>.
+
 Tue Sep  7 12:59:18 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/commands.c: correct the bug that Garry R. Osgood reported.

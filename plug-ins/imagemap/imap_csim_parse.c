@@ -838,16 +838,16 @@ case 23:
 case 36:
 #line 159 "imap_csim.y"
 {
-		   if (!strcasecmp(yyvsp[0].id, "RECT")) {
+		   if (!g_strcasecmp(yyvsp[0].id, "RECT")) {
 		      current_object = create_rectangle(0, 0, 0, 0);
 		      current_type = RECTANGLE;
-		   } else if (!strcasecmp(yyvsp[0].id, "CIRCLE")) {
+		   } else if (!g_strcasecmp(yyvsp[0].id, "CIRCLE")) {
 		      current_object = create_circle(0, 0, 0);
 		      current_type = CIRCLE;
-		   } else if (!strcasecmp(yyvsp[0].id, "POLY")) {
+		   } else if (!g_strcasecmp(yyvsp[0].id, "POLY")) {
 		      current_object = create_polygon(NULL);
 		      current_type = POLYGON;
-		   } else if (!strcasecmp(yyvsp[0].id, "DEFAULT")) {
+		   } else if (!g_strcasecmp(yyvsp[0].id, "DEFAULT")) {
 		      current_type = UNDEFINED;
 		   }
 		;
