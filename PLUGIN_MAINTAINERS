@@ -532,7 +532,7 @@ COMMENT    :
 -----------
 NAME       : mail
 AUTHOR     : Adrian Likins, Reagan Blundell
-MAINTAINER : 
+MAINTAINER : Adrian Likins <adrian@gimp.org> 
 SIZE       :  30.3 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
