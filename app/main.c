@@ -52,6 +52,7 @@ GimpSet* image_context;
 MessageHandlerType message_handler;
 
 char *prog_name;		/* The path name we are invoked with */
+char *alternate_gimprc;
 char **batch_cmds;
 
 /* LOCAL data */
@@ -117,6 +118,8 @@ main (int argc, char **argv)
 
   batch_cmds = g_new (char*, argc);
   batch_cmds[0] = NULL;
+  
+  alternate_gimprc = NULL;
 
   show_version = FALSE;
   show_help = FALSE;
@@ -140,6 +143,18 @@ main (int argc, char **argv)
 	    }
 	  batch_cmds[j] = NULL;
 	}
+      else if ((strcmp (argv[i], "--gimprc") == 0) || 
+               (strcmp (argv[i], "-g") == 0)) 
+	{
+	  if (argc <= ++i) 
+            {
+	     show_help = TRUE;
+	    }	
+          else 
+            {
+             alternate_gimprc = argv[i];
+            }
+         } 
       else if ((strcmp (argv[i], "--help") == 0) ||
 	       (strcmp (argv[i], "-h") == 0))
 	{
@@ -197,6 +212,7 @@ main (int argc, char **argv)
       g_print ("  -h --help              Output this help.\n");
       g_print ("  -v --version           Output version info.\n");
       g_print ("  -b --batch <commands>  Run in batch mode.\n");
+      g_print ("  -g --gimprc <gimprc>   Use an alternate gimprc file\n");
       g_print ("  -n --no-interface      Run without a user interface.\n");
       g_print ("  --no-data              Do not load patterns, gradients, palettes, brushes.\n");
       g_print ("  --verbose              Show startup messages.\n");

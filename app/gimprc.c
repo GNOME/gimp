@@ -248,6 +248,7 @@ static SessionGeometry *session_geometries[] =
 };
 static int nsession_geometries = sizeof (session_geometries) / sizeof (session_geometries[0]);
 
+extern char* alternate_gimprc;
 
 #define MAX_GIMPDIR_LEN 500
 
@@ -345,6 +346,11 @@ parse_gimprc_file (char *filename)
 	home_dir = g_strdup (getenv ("HOME"));
       sprintf (rfilename, "%s/%s", home_dir, filename);
       filename = rfilename;
+    }
+
+  if (alternate_gimprc != NULL) 
+    {
+       filename = alternate_gimprc;
     }
 
   parse_info.fp = fopen (filename, "rt");

@@ -1,3 +1,9 @@
+1998-07-10  Seth Burgess <sjburges@ou.edu>
+
+	* app/main.c:
+	* app/gimprc.c: 
+	Added commandline support for an alternate gimprc.
+
 1998-07-10  Chris Lahey  <clahey@umich.edu>
 
 	* app/docindexif.c: 
