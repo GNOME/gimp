@@ -1,5 +1,14 @@
 2003-10-22  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpwidgets-utils.[ch]: added new function
+	gimp_rgb_set_gdk_color().
+
+	* app/config/gimprc.c (gimp_rc_load): unlinking the broken gimprc
+	doesn't really help so don't do it. GIMP will continue to complain
+	until the gimprc is fixed.
+
+2003-10-22  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimptemplate.c: no need to reimplement the default
 	GimpConfigInterface implementation.
 

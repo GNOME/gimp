@@ -633,3 +633,27 @@ gimp_rgb_get_gdk_color (const GimpRGB *rgb,
   gdk_color->green = (g << 8) | g;
   gdk_color->blue  = (b << 8) | b;
 }
+
+/**
+ * gimp_rgb_set_gdk_color:
+ * @rgb: a #GimpRGB that is to be set
+ * @gdk_color: pointer to the source #GdkColor
+ *
+ * Initializes @rgb from a #GdkColor. This function does not touch
+ * the alpha value of @rgb.
+ **/
+void
+gimp_rgb_set_gdk_color (GimpRGB        *rgb,
+                        const GdkColor *gdk_color)
+{
+  guchar r, g, b;
+
+  g_return_if_fail (rgb != NULL);
+  g_return_if_fail (gdk_color != NULL);
+
+  r = gdk_color->red   >> 8;
+  g = gdk_color->green >> 8;
+  b = gdk_color->blue  >> 8;
+
+  gimp_rgb_set_uchar (rgb, r, g, b);
+}

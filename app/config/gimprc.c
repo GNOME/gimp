@@ -359,9 +359,7 @@ gimp_rc_load (GimpRc *rc)
         {
           g_message (error->message);
 
-          if (gimp_config_file_backup_on_error (rc->user_gimprc,
-                                                "gimprc", NULL))
-            unlink (rc->user_gimprc);
+          gimp_config_file_backup_on_error (rc->user_gimprc, "gimprc", NULL);
         }
 
       g_clear_error (&error);

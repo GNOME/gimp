@@ -64,6 +64,8 @@ void          gimp_get_screen_resolution (GdkScreen       *screen,
 
 void          gimp_rgb_get_gdk_color     (const GimpRGB   *rgb,
                                           GdkColor        *gdk_color);
+void          gimp_rgb_set_gdk_color     (GimpRGB         *rgb,
+                                          const GdkColor  *gdk_color);
 
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */
