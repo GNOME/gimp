@@ -178,6 +178,17 @@ static PixelRegion distR =
 };
 
 
+#define  gradient_dither(dest, rng, value) G_STMT_START { \
+  gdouble ftmp = (value) * 255.0;        \
+  gint    itmp = ftmp;                   \
+                                         \
+  if (g_rand_double (rng) > ftmp - itmp) \
+    *dest++ = itmp;                      \
+  else                                   \
+    *dest++ = MIN (itmp + 1, 255);       \
+} G_STMT_END
+
+
 /*  public functions  */
 
 void
@@ -802,40 +813,10 @@ gradient_put_pixel (gint      x,
     {
       if (ppd->dither_rand)
         {
-          gdouble ftmp;
-          gint    itmp;
-
-          ftmp = color->r * 255.0;
-          itmp = ftmp;
-
-          if (g_rand_double (ppd->dither_rand) < ftmp - itmp)
-            *dest++ = itmp;
-          else
-            *dest++ = MIN (itmp + 1, 255);
-
-          ftmp = color->g * 255.0;
-          itmp = ftmp;
-
-          if (g_rand_double (ppd->dither_rand) < ftmp - itmp)
-            *dest++ = itmp;
-          else
-            *dest++ = MIN (itmp + 1, 255);
-
-          ftmp = color->b * 255.0;
-          itmp = ftmp;
-
-          if (g_rand_double (ppd->dither_rand) < ftmp - itmp)
-            *dest++ = itmp;
-          else
-            *dest++ = MIN (itmp + 1, 255);
-
-          ftmp = color->a * 255.0;
-          itmp = ftmp;
-
-          if (g_rand_double (ppd->dither_rand) < ftmp - itmp)
-            *dest++ = itmp;
-          else
-            *dest++ = MIN (itmp + 1, 255);
+          gradient_dither (dest, ppd->dither_rand, color->r);
+          gradient_dither (dest, ppd->dither_rand, color->g);
+          gradient_dither (dest, ppd->dither_rand, color->b);
+          gradient_dither (dest, ppd->dither_rand, color->a);
         }
       else
         {
@@ -852,28 +833,12 @@ gradient_put_pixel (gint      x,
 
       if (ppd->dither_rand)
         {
-          gdouble ftmp;
-          gint    itmp;
-
-          ftmp = gray * 255.0;
-          itmp = ftmp;
-
-          if (g_rand_double (ppd->dither_rand) < ftmp - itmp)
-            *dest++ = itmp;
-          else
-            *dest++ = MIN (itmp + 1, 255);
-
-          ftmp = color->a * 255.0;
-          itmp = ftmp;
-
-          if (g_rand_double (ppd->dither_rand) < ftmp - itmp)
-            *dest++ = itmp;
-          else
-            *dest++ = MIN (itmp + 1, 255);
+          gradient_dither (dest, ppd->dither_rand, gray);
+          gradient_dither (dest, ppd->dither_rand, color->a);
         }
       else
         {
-          *dest++ = ROUND (gray * 255.0);
+          *dest++ = ROUND (gray     * 255.0);
           *dest++ = ROUND (color->a * 255.0);
         }
     }
@@ -1091,42 +1056,13 @@ gradient_fill_single_region_rgb_dither (RenderBlendData *rbd,
     for (x = PR->x; x < endx; x++)
       {
         GimpRGB  color;
-        gdouble  ftmp;
-        gint     itmp;
 
         gradient_render_pixel (x, y, &color, rbd);
 
-        ftmp = color.r * 255.0;
-        itmp = ftmp;
-
-        if (g_rand_double (dither_rand) > ftmp - itmp)
-          *dest++ = itmp;
-        else
-          *dest++ = MIN (itmp + 1, 255);
-
-        ftmp = color.g * 255.0;
-        itmp = ftmp;
-
-        if (g_rand_double (dither_rand) > ftmp - itmp)
-          *dest++ = itmp;
-        else
-          *dest++ = MIN (itmp + 1, 255);
-
-        ftmp = color.b * 255.0;
-        itmp = ftmp;
-
-        if (g_rand_double (dither_rand) > ftmp - itmp)
-          *dest++ = itmp;
-        else
-          *dest++ = MIN (itmp + 1, 255);
-
-        ftmp = color.a * 255.0;
-        itmp = ftmp;
-
-        if (g_rand_double (dither_rand) > ftmp - itmp)
-          *dest++ = itmp;
-        else
-          *dest++ = MIN (itmp + 1, 255);
+        gradient_dither (dest, dither_rand, color.r);
+        gradient_dither (dest, dither_rand, color.g);
+        gradient_dither (dest, dither_rand, color.b);
+        gradient_dither (dest, dither_rand, color.a);
       }
 
   g_rand_free (dither_rand);
@@ -1167,29 +1103,11 @@ gradient_fill_single_region_gray_dither (RenderBlendData *rbd,
     for (x = PR->x; x < endx; x++)
       {
         GimpRGB  color;
-        gdouble  gray;
-        gdouble  ftmp;
-        gint     itmp;
 
         gradient_render_pixel (x, y, &color, rbd);
 
-        gray = gimp_rgb_intensity (&color);
-
-        ftmp = gray * 255.0;
-        itmp = ftmp;
-
-        if (g_rand_double (dither_rand) > ftmp - itmp)
-          *dest++ = itmp;
-        else
-          *dest++ = MIN (itmp + 1, 255);
-
-        ftmp = color.a * 255.0;
-        itmp = ftmp;
-
-        if (g_rand_double (dither_rand) > ftmp - itmp)
-          *dest++ = itmp;
-        else
-          *dest++ = MIN (itmp + 1, 255);
+        gradient_dither (dest, dither_rand, gimp_rgb_intensity (&color));
+        gradient_dither (dest, dither_rand, color.a);
       }
 
   g_rand_free (dither_rand);

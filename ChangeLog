@@ -1,5 +1,10 @@
 2005-02-27  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable-blend.c: improved readability by
+	introducing a macro for the dithering code.
+
+2005-02-27  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable-blend.c: fixed rounding errors in the
 	non-dithered case and optimized the dithering code.
 
