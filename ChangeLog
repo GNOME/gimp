@@ -1,3 +1,12 @@
+2001-10-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpchannellistview.c: added a handler for GimpImage's
+	"alpha_changed" signal (does nothing yet).
+
+	* app/widgets/[lots of files]: somehow my last perl torturing
+	removed my email address from the copyright notice. Another perl
+	hack brought it back now :)
+
 2001-10-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpprogress.[ch]
