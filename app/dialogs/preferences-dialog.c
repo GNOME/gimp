@@ -37,22 +37,22 @@
 #include "libgimp/gimpintl.h"
 
 /*  preferences local functions  */
-static void file_prefs_ok_callback (GtkWidget *, GtkWidget *);
-static void file_prefs_save_callback (GtkWidget *, GtkWidget *);
+static void file_prefs_ok_callback     (GtkWidget *, GtkWidget *);
+static void file_prefs_save_callback   (GtkWidget *, GtkWidget *);
 static void file_prefs_cancel_callback (GtkWidget *, GtkWidget *);
 
-static void file_prefs_toggle_callback (GtkWidget *, gpointer);
-static void file_prefs_preview_size_callback (GtkWidget *, gpointer);
-static void file_prefs_mem_size_callback (GtkWidget *, gpointer);
-static void file_prefs_mem_size_unit_callback (GtkWidget *, gpointer);
-static void file_prefs_int_adjustment_callback (GtkAdjustment *, gpointer);
-static void file_prefs_string_callback (GtkWidget *, gpointer);
-static void file_prefs_filename_callback (GtkWidget *, gpointer);
-static void file_prefs_path_callback (GtkWidget *, gpointer);
+static void file_prefs_toggle_callback             (GtkWidget *, gpointer);
+static void file_prefs_preview_size_callback       (GtkWidget *, gpointer);
+static void file_prefs_mem_size_callback           (GtkWidget *, gpointer);
+static void file_prefs_mem_size_unit_callback      (GtkWidget *, gpointer);
+static void file_prefs_int_adjustment_callback     (GtkAdjustment *, gpointer);
+static void file_prefs_string_callback             (GtkWidget *, gpointer);
+static void file_prefs_filename_callback           (GtkWidget *, gpointer);
+static void file_prefs_path_callback               (GtkWidget *, gpointer);
 static void file_prefs_clear_session_info_callback (GtkWidget *, gpointer);
-static void file_prefs_default_size_callback (GtkWidget *, gpointer);
+static void file_prefs_default_size_callback       (GtkWidget *, gpointer);
 static void file_prefs_default_resolution_callback (GtkWidget *, gpointer);
-static void file_prefs_res_source_callback (GtkWidget *, gpointer);
+static void file_prefs_res_source_callback         (GtkWidget *, gpointer);
 static void file_prefs_monitor_resolution_callback (GtkWidget *, gpointer);
 
 /*  static variables  */
@@ -1485,6 +1485,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   titles[0] = _("Categories");
   ctree = gtk_ctree_new_with_titles (1, 0, titles);
   gtk_ctree_set_indent (GTK_CTREE (ctree), 15);
+  gtk_clist_column_titles_passive (GTK_CLIST (ctree));
   gtk_widget_set_usize (ctree, 140, 0);
   gtk_box_pack_start (GTK_BOX (hbox), ctree, FALSE, FALSE, 0);
   gtk_widget_show (ctree);
@@ -2150,7 +2151,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  frame = gtk_frame_new (_("File Previews/Thumbnails")); 
+  frame = gtk_frame_new (_("File Previews / Thumbnails")); 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -2159,16 +2160,26 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+      
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
   optionmenu =
     gimp_option_menu_new (file_prefs_toggle_callback,
 			  (gpointer) thumbnail_mode,
-			  "Always try to write a thumbnail file",
-			  &thumbnail_mode, (gpointer) 1,
-			  "Never try to write a thumbnail file",
-			  &thumbnail_mode, (gpointer) 0,
+			  "Always", &thumbnail_mode, (gpointer) 1,
+			  "Never", &thumbnail_mode, (gpointer) 0,
 			  NULL);
-  gtk_box_pack_start (GTK_BOX (vbox2), optionmenu, FALSE, FALSE, 0);
-  gtk_widget_show (optionmenu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Try to Write a Thumbnail File:"), 1.0, 0.5,
+			     optionmenu, TRUE);
 
   /* Session Management */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),

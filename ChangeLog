@@ -1,3 +1,9 @@
+1999-06-17  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/preferences_dialog.c: the tree title doesn't behave like a
+	button anymore.
+	Made the thumbnail option look like the other option menus.
+
 1999-06-15  Tor Lillqvist  <tml@iki.fi>
 
 	* README.win32: Mention using GNU gettext.
@@ -39,6 +45,7 @@
 	* plug-ins/gz/gz.c: Include <glib.h> early.
 
 	* plug-ins/tga/tga.c: Include config.h, use HAVE_UNISTD_H.
+
 Sun Jun 13 21:05:00 CST 1999 Seth Burgess <sjburges@gimp.org>
 	
 	* app/devices
