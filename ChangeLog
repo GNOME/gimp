@@ -1,5 +1,12 @@
 2003-09-04  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/plug_in.pdb (plugins_query): use regfree()
+	instead of accessing regex_t directly.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+2003-09-04  Sven Neumann  <sven@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/core-types.h
 	* app/core/gimpcontainer-filter.[ch]: added filter functionality

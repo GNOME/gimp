@@ -289,7 +289,7 @@ plugins_query_invoker (Gimp     *gimp,
 	  else
 	    name = proc_def->menu_path;
 
-	  if (search_str && match_strings(&sregex,name))
+	  if (search_str && match_strings (&sregex,name))
 	    continue;
 
 	  menu_strs[i]     = gimp_strip_uline (proc_def->menu_path);
@@ -303,9 +303,8 @@ plugins_query_invoker (Gimp     *gimp,
 	}
     }
 
-  /* This I hope frees up internal stuff */
   if (search_str)
-    free (sregex.buffer);
+    regfree (&sregex);
 
   return_args = procedural_db_return_args (&plugins_query_proc, TRUE);
 

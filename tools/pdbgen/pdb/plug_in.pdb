@@ -226,7 +226,7 @@ sub plugins_query {
 	  else
 	    name = proc_def->menu_path;
 
-	  if (search_str && match_strings(&sregex,name))
+	  if (search_str && match_strings (&sregex,name))
 	    continue;
 
 	  menu_strs[i]     = gimp_strip_uline (proc_def->menu_path);
@@ -240,9 +240,8 @@ sub plugins_query {
 	}
     }
 
-  /* This I hope frees up internal stuff */
   if (search_str)
-    free (sregex.buffer);
+    regfree (&sregex);
 }
 CODE
     );
