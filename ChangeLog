@@ -2,7 +2,7 @@
 
 	* plug-ins/Makefile.am: reenabled build of ifscompose. We should port 
 	the gdk_string functions to Pango, but for the moment it builds again
-	by defining GDK_DISABLE_DEPRECATED.
+	by undefining GDK_DISABLE_DEPRECATED.
 
 2001-09-22  Hans Breuer  <hans@breuer.org>
 
