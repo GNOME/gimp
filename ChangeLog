@@ -1,5 +1,10 @@
 2004-04-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/winicon/icodialog.c: fixed gtk+ includes, added a
+	warning that deprecated widgets are being used.
+
+2004-04-15  Sven Neumann  <sven@gimp.org>
+
 	* configure.in
 	* plug-ins/Makefile.am
 	* plug-ins/winicon/Makefile.am
