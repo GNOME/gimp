@@ -1,3 +1,11 @@
+2003-11-10  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/tmpl/gimpcolorselection.sgml: new template.
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types: updated.
+
 2003-11-09  Sven Neumann  <sven@gimp.org>
 
 	* README.gtkdoc: added some information on how to write proper

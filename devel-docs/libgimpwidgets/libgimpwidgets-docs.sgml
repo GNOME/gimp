@@ -24,6 +24,7 @@
     <xi:include href="xml/gimpcolorarea.xml" />
     <xi:include href="xml/gimpcolorbutton.xml" />
     <xi:include href="xml/gimpcolorscale.xml" />
+    <xi:include href="xml/gimpcolorselection.xml" />
     <xi:include href="xml/gimpdialog.xml" />
     <xi:include href="xml/gimpfileselection.xml" />
     <xi:include href="xml/gimpmemsizeentry.xml" />
