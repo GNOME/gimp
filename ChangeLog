@@ -105,7 +105,7 @@
 
 	* app/plug-in/plug-ins.c: Cleanup.
 
-2003-02-03  Sven Neumann  <neo@wintermute>
+2003-02-03  Sven Neumann  <sven@gimp.org>
 
 	Some code cleanup while trying to fix bug #105062:
 
