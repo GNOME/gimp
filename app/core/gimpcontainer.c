@@ -721,10 +721,9 @@ gimp_container_remove (GimpContainer *container,
       break;
 
     case GIMP_CONTAINER_POLICY_WEAK:
-      g_signal_handlers_disconnect_by_func
-	(G_OBJECT (object),
-	 G_CALLBACK (gimp_container_disconnect_callback),
-	 container);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (object),
+                                            gimp_container_disconnect_callback,
+                                            container);
       break;
     }
 
@@ -909,7 +908,6 @@ gimp_container_add_handler (GimpContainer *container,
   static gint           handler_id = 0;
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), 0);
-
   g_return_val_if_fail (signame != NULL, 0);
   g_return_val_if_fail (g_signal_lookup (signame, container->children_type), 0);
   g_return_val_if_fail (callback != NULL, 0);
@@ -975,7 +973,7 @@ gimp_container_remove_handler (GimpContainer *container,
 
   if (! list)
     {
-      g_warning ("%s: tried to unhandler which id %d",
+      g_warning ("%s: tried to remove handler which unknown id %d",
                  G_STRLOC, id);
       return;
     }

@@ -1,3 +1,7 @@
+2002-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcontainer.c: fixed warning, coding style.
+
 2002-08-06  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpmagnifytool.[ch]: reverted Dave's change
