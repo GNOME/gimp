@@ -1,5 +1,14 @@
 2003-11-04  Michael Natterer  <mitch@gimp.org>
 
+	* cursors/dropper.xbm
+	* cursors/dropper_mask.xbm: moved the dropper cursor some pixels
+	to the bottom left corner so it can be used together with the FG
+	and BG cursor modifiers.
+
+	* cursors/gimp-tool-cursors.xcf: changed accordingly.
+
+2003-11-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdnd.[ch]: added static "the_dnd_gimp" variable
 	and don't use the global "the_gimp" any more.
 	Added gimp_dnd_init() to let the DND system know about the GUI's
