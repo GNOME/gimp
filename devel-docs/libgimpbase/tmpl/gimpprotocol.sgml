@@ -36,6 +36,10 @@ The communication protocol between GIMP and it's plug-ins.
 @show_tool_tips: 
 @min_colors: 
 @gdisp_ID: 
+@wm_name: 
+@wm_class: 
+@display_name: 
+@monitor_number: 
 
 <!-- ##### STRUCT GPTileReq ##### -->
 <para>
