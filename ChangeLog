@@ -1,3 +1,13 @@
+2004-04-16  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/AlienMap.c: removed the AlienMap plug-in since
+	AlienMap2 duplicates its functionality.
+
+	* plug-ins/common/AlienMap2.c: applied patch from William Skaggs
+	with a couple of user interface improvements (bug #140079).
+
 2004-04-15  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimpthumb/Makefile.am: For Win32, install gimpthumb.def, like

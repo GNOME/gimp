@@ -1,5 +1,4 @@
 %plugins = (
-    'AlienMap' => { libdep => 'gtk', ui => 1, libsupp => 'gimpoldpreview' },
     'AlienMap2' => { libdep => 'gtk', ui => 1, libsupp => 'gimpoldpreview' },
     'CEL' => { libdep => 'gtk', ui => 1 },
     'CML_explorer' => { libdep => 'gtk', ui => 1 },

@@ -11,7 +11,6 @@ plug-ins/MapObject/mapobject_main.c
 plug-ins/MapObject/mapobject_ui.c
 plug-ins/bmp/bmpread.c
 plug-ins/bmp/bmpwrite.c
-plug-ins/common/AlienMap.c
 plug-ins/common/AlienMap2.c
 plug-ins/common/CEL.c
 plug-ins/common/CML_explorer.c

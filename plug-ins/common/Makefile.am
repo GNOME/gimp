@@ -28,7 +28,6 @@ INCLUDES = \
 	-I$(includedir)
 
 libexec_PROGRAMS = \
-	AlienMap \
 	AlienMap2 \
 	CEL \
 	CML_explorer \
@@ -190,20 +189,6 @@ install-%: %
 	  echo " $(LIBTOOL)  --mode=install $(INSTALL_PROGRAM) $< $(DESTDIR)$(libexecdir)/`echo $<|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`"; \
 	  $(LIBTOOL)  --mode=install $(INSTALL_PROGRAM) $< $(DESTDIR)$(libexecdir)/`echo $<|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`; \
 	else :; fi
-
-AlienMap_SOURCES = \
-	AlienMap.c
-
-AlienMap_LDADD = \
-	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
-	$(libgimpui)							\
-	$(libgimpwidgets)						\
-	$(libgimp)							\
-	$(libgimpcolor)							\
-	$(libgimpbase)							\
-	$(GTK_LIBS)							\
-	$(RT_LIBS)							\
-	$(INTLLIBS)
 
 AlienMap2_SOURCES = \
 	AlienMap2.c

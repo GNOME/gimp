@@ -2,7 +2,6 @@ Makefile
 Makefile.in
 .deps
 .libs
-AlienMap
 AlienMap2
 CEL
 CML_explorer
