@@ -1,5 +1,10 @@
 2003-12-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdnd.[ch]: changed "svg_data" from guchar* to
+	gchar*, cleaned up debugging output.
+
+2003-12-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdialogfactory.c: some cleanup while hunting
 	window positioning bugs.
 

@@ -643,6 +643,8 @@ gimp_dnd_data_drag_handle (GtkWidget        *widget,
   gpointer     get_data_data = NULL;
   GimpDndType  data_type;
 
+  g_print ("\ngimp_dnd_data_drag_handle(%d)\n", info);
+
   for (data_type = GIMP_DND_TYPE_NONE + 1;
        data_type <= GIMP_DND_TYPE_LAST;
        data_type++)
@@ -702,6 +704,8 @@ gimp_dnd_data_drop_handle (GtkWidget        *widget,
 			   gpointer          data)
 {
   GimpDndType data_type;
+
+  g_print ("\ngimp_dnd_data_drop_handle(%d)\n", info);
 
   if (selection_data->length <= 0)
     {
@@ -1417,8 +1421,8 @@ gimp_dnd_get_svg_data (GtkWidget *widget,
                        gint      *format,
                        gint      *length)
 {
-  guchar *svg_data;
-  gint    svg_data_length;
+  gchar *svg_data;
+  gint   svg_data_length;
 
   svg_data = (* (GimpDndDragSvgFunc) get_svg_func) (widget, &svg_data_length,
                                                     get_svg_data);
@@ -1426,7 +1430,7 @@ gimp_dnd_get_svg_data (GtkWidget *widget,
   *format = 8;
   *length = svg_data_length;
 
-  return svg_data;
+  return (guchar *) svg_data;
 }
 
 static gboolean
@@ -1443,7 +1447,8 @@ gimp_dnd_set_svg_data (GtkWidget *widget,
       return FALSE;
     }
 
-  (* (GimpDndDropSvgFunc) set_svg_func) (widget, vals, length, set_svg_data);
+  (* (GimpDndDropSvgFunc) set_svg_func) (widget, (gchar *) vals, length,
+                                         set_svg_data);
 
   return TRUE;
 }
@@ -1921,8 +1926,6 @@ gimp_dnd_set_brush_data (GtkWidget *widget,
     }
 
   name = (gchar *) vals;
-
-  g_print ("gimp_dnd_set_brush_data() got >>%s<<\n", name);
 
   if (strcmp (name, "Standard") == 0)
     brush = GIMP_BRUSH (gimp_brush_get_standard ());
