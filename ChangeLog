@@ -1,3 +1,8 @@
+2004-02-10  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptexttool.c (gimp_text_tool_register): set
+	GIMP_CONTEXT_FONT_MASK. Fixes bug #133067.
+
 2004-02-09  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/script-fu/scripts/add-bevel.scm: Fixed Undo
