@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.1\n"
 "POT-Creation-Date: 2001-02-17 17:43+0100\n"
-"PO-Revision-Date: 2001-02-17 19:19+01:00\n"
+"PO-Revision-Date: 2001-03-01 22:07+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -7094,11 +7094,11 @@ msgstr "Chyba bìhem zápisu rgb obrázku"
 
 #: plug-ins/common/zealouscrop.c:72
 msgid "<Image>/Image/Transforms/Zealous Crop"
-msgstr "<Image>/Obrázek/Transformace/Zealousùv oøez"
+msgstr "<Image>/Obrázek/Transformace/Horlivý oøez"
 
 #: plug-ins/common/zealouscrop.c:118
 msgid "ZealousCropping(tm)..."
-msgstr "ZealousovoOøezáváaní(tm)..."
+msgstr "HorlivéOøezávání(tm)..."
 
 #: plug-ins/dbbrowser/dbbrowser.c:90
 msgid "<Toolbox>/Xtns/DB Browser..."
