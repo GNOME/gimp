@@ -1,5 +1,12 @@
 2003-11-20  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/info-dialog.c (info_dialog_new_extended)
+	* app/widgets/gimptooldialog.c (gimp_tool_dialog_new): don't set
+	the utility window type hint on info and tool dialogs. These are
+	not persistent utility windows. See bug #115092.
+
+2003-11-20  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/widgets-enums.[ch]: added GimpWindowTypeHint enum.
 
 	* app/widgets/gimpwidgets-utils.{ch]: added a utility function
