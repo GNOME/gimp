@@ -1,3 +1,8 @@
+2005-03-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/screenshot.c: always derive image from root
+	window, fixes bug #144788.
+	
 2005-03-22  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpactiongroup.c

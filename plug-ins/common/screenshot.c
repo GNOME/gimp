@@ -585,11 +585,15 @@ shoot (void)
       return;
     }
 
+
+  gdk_drawable_get_size (GDK_DRAWABLE (window), &rect.width, &rect.height);
   gdk_window_get_origin (window, &x, &y);
 
   rect.x = x;
   rect.y = y;
-  gdk_drawable_get_size (GDK_DRAWABLE (window), &rect.width, &rect.height);
+
+  window = gdk_screen_get_root_window (cur_screen);
+  gdk_window_get_origin (window, &x, &y);
 
   if (! gdk_rectangle_intersect (&rect, &screen_rect, &rect))
     return;
