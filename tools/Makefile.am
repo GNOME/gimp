@@ -36,6 +36,7 @@ INCLUDES = @STRIP_BEGIN@ \
 @STRIP_END@
 
 EXTRA_DIST = \
+	gimp-mkenums	\
 	gimppath2svg.py	\
 	rmshm
 

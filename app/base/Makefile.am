@@ -67,12 +67,12 @@ INCLUDES = @STRIP_BEGIN@ \
 gen_sources = xgen-bec
 CLEANFILES = $(gen_sources)
 
-$(srcdir)/base-enums.c: $(srcdir)/base-enums.h
-	$(GLIB_MKENUMS) \
-		--fhead "#include <glib-object.h>\n#include \"base-enums.h\"" \
+$(srcdir)/base-enums.c: $(srcdir)/base-enums.h $(GIMP_MKENUMS)
+	$(GIMP_MKENUMS) \
+		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"base-enums.h\"\n#include\"libgimp/gimpintl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "\nstatic const GEnumValue @enum_name@_enum_values[] =\n{" \
-		--vprod "  { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
+		--vprod "  { @VALUENAME@, @valuedesc@, \"@valuenick@\" }," \
 		--vtail "  { 0, NULL, NULL }\n};\n\nGType\n@enum_name@_get_type (void)\n{\n  static GType enum_type = 0;\n\n  if (!enum_type)\n    enum_type = g_enum_register_static (\"@EnumName@\", @enum_name@_enum_values);\n\n  return enum_type;\n}\n" \
 		$(srcdir)/base-enums.h > xgen-bec \
 	&& cp xgen-bec $(@F) \

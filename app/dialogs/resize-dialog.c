@@ -31,6 +31,8 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
+#include "widgets/gimpenummenu.h"
+
 #include "resize-dialog.h"
 
 #include "libgimp/gimpintl.h"
@@ -660,6 +662,7 @@ resize_widget_new (GimpImage    *gimage,
   if (type == ScaleWidget)
     {
       GtkWidget *hbox;
+      GtkWidget *option_menu;
 
       hbox = gtk_hbox_new (FALSE, 4);
       gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
@@ -669,29 +672,15 @@ resize_widget_new (GimpImage    *gimage,
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
-      private->interpolation_menu =
-        gimp_option_menu_new2 (FALSE,
-                               G_CALLBACK (gimp_menu_item_update),
-                               &resize->interpolation,
-                               GINT_TO_POINTER (resize->interpolation),
-
-                               _("None (Fastest)"),
-                               GINT_TO_POINTER (GIMP_INTERPOLATION_NONE),
-                               NULL,
-
-                               _("Linear"),
-                               GINT_TO_POINTER (GIMP_INTERPOLATION_LINEAR),
-                               NULL,
-
-                               _("Cubic (Slowest & Best)"),
-                               GINT_TO_POINTER (GIMP_INTERPOLATION_CUBIC),
-                               NULL,
-
-                               NULL);
-
-      gtk_box_pack_start (GTK_BOX (hbox), private->interpolation_menu,
+      private->interpolation_menu = option_menu =
+        gimp_enum_option_menu_new (GIMP_TYPE_INTERPOLATION_TYPE,
+                                   G_CALLBACK (gimp_menu_item_update),
+                                   &resize->interpolation);
+      gimp_option_menu_set_history (GTK_OPTION_MENU (option_menu),
+                                    GINT_TO_POINTER (resize->interpolation));
+      gtk_box_pack_start (GTK_BOX (hbox), option_menu,
                           FALSE, FALSE, 0);
-      gtk_widget_show (private->interpolation_menu);
+      gtk_widget_show (option_menu);
     }
 
   gtk_widget_show (main_vbox);

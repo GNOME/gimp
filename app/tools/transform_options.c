@@ -29,6 +29,8 @@
 #include "core/gimpcoreconfig.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpenummenu.h"
+
 #include "gimprotatetool.h"
 #include "gimpscaletool.h"
 #include "gimptransformtool.h"
@@ -119,27 +121,14 @@ transform_options_init (TransformOptions *options,
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  options->interpolation_w =
-    gimp_option_menu_new2 (FALSE,
-                           G_CALLBACK (gimp_menu_item_update),
-                           &options->interpolation,
-                           GINT_TO_POINTER (options->interpolation),
-
-                           _("None (Fastest)"),
-                           GINT_TO_POINTER (GIMP_INTERPOLATION_NONE),
-                           NULL,
-
-                           _("Linear"),
-                           GINT_TO_POINTER (GIMP_INTERPOLATION_LINEAR),
-                           NULL,
-
-                           _("Cubic (Slowest & Best)"),
-                           GINT_TO_POINTER (GIMP_INTERPOLATION_CUBIC),
-                           NULL,
-
-                           NULL);
-
-  gtk_box_pack_start (GTK_BOX (hbox), options->interpolation_w, FALSE, FALSE, 0);
+  options->interpolation_w = 
+    gimp_enum_option_menu_new (GIMP_TYPE_INTERPOLATION_TYPE,
+                               G_CALLBACK (gimp_menu_item_update),
+                               &options->interpolation);
+  gimp_option_menu_set_history (GTK_OPTION_MENU (options->interpolation_w),
+                                GINT_TO_POINTER (options->interpolation));
+  gtk_box_pack_start (GTK_BOX (hbox), 
+                      options->interpolation_w, FALSE, FALSE, 0);
   gtk_widget_show (options->interpolation_w);
 
   /*  the clip resulting image toggle button  */

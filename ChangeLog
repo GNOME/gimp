@@ -1,3 +1,28 @@
+2002-03-17  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: define GIMP_MKENUMS for use in Makefile.am.
+
+	* tools/Makefile.am
+	* tools/gimp-mkenums: a modified version of glib-mkenums that parses
+	literal descriptions for enum values out of the header file.
+
+	* app/base/Makefile.am
+	* app/base/base-enums.h: added descriptions for the InterpolationType.
+	
+	* app/base/base-enums.c: added to CVS although it is generated since
+	translatable messages are extracted from this file and translators
+	shouldn't need to build stuff.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpenummenu.[ch]: new widget to create a GtkMenu or
+	GtkOptionMenu directly from a registered enum.
+
+	* app/gui/preferences-dialog.c
+	* app/gui/resize-dialog.c
+	* app/tools/transform_options.c: use gimp_enum_option_menu_new() for
+	the Interpolation menus.
+
 2002-03-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcolormapeditor.[ch]: namespaceified and cleaned

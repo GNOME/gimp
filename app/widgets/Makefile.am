@@ -85,6 +85,8 @@ libappwidgets_a_sources = @STRIP_BEGIN@ \
 	gimpdrawablepreview.h		\
 	gimpeditor.c			\
 	gimpeditor.h			\
+	gimpenummenu.c			\
+	gimpenummenu.h			\
 	gimpfontselection.c		\
 	gimpfontselection.h		\
 	gimpfontselection-dialog.c	\

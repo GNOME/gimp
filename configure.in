@@ -858,6 +858,11 @@ GIMP_MODULES=modules
 AC_SUBST(GIMP_PLUGINS)
 AC_SUBST(GIMP_MODULES)
 
+
+dnl a tuned version of glib-mkenums
+GIMP_MKENUMS="\$(top_srcdir)/tools/gimp-mkenums"
+AC_SUBST(GIMP_MKENUMS)
+
 dnl Output the Makefiles
 
 dnl plug-ins/perl/config.pl

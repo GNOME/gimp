@@ -44,6 +44,7 @@
 
 #include "widgets/gimpdeviceinfo.h"
 #include "widgets/gimpdevices.h"
+#include "widgets/gimpenummenu.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -2224,22 +2225,11 @@ preferences_dialog_create (Gimp *gimp)
 
   table = prefs_table_new (1, GTK_CONTAINER (frame), TRUE);
 
-  optionmenu =
-    gimp_option_menu_new2 (FALSE,
-			   G_CALLBACK (prefs_toggle_callback),
-			   &gimp->config->interpolation_type,
-			   GINT_TO_POINTER (gimp->config->interpolation_type),
-
-			   _("None (Fastest)"),
-			   GINT_TO_POINTER (GIMP_INTERPOLATION_NONE), NULL,
-
-			   _("Linear"),
-			   GINT_TO_POINTER (GIMP_INTERPOLATION_LINEAR), NULL,
-
-			   _("Cubic (Slowest & Best)"),
-			   GINT_TO_POINTER (GIMP_INTERPOLATION_CUBIC), NULL,
-
-			   NULL);
+  optionmenu = gimp_enum_option_menu_new (GIMP_TYPE_INTERPOLATION_TYPE,
+                                          G_CALLBACK (prefs_toggle_callback),
+                                          &gimp->config->interpolation_type);
+  gimp_option_menu_set_history (GTK_OPTION_MENU (optionmenu),
+                                GINT_TO_POINTER (gimp->config->interpolation_type));
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Default Interpolation:"), 1.0, 0.5,
