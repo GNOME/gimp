@@ -3,6 +3,8 @@
 # Ville Hautamäki <villeh@cs.joensuu.fi>, 1998, 2000.
 # Tor Lillqvist <tml@íki.fi>, 1999, 2000.
 #
+#	Pahasti kesken. Kuka jaksaisi jatkaa...
+
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
@@ -12443,9 +12445,8 @@ msgid "No selection to convert"
 msgstr ""
 
 #: plug-ins/sel2path/sel2path.c:333
-#, fuzzy
 msgid "Sel2Path Advanced Settings"
-msgstr "Saturaatio asetukset"
+msgstr ""
 
 #: plug-ins/sel2path/sel2path.c:542
 #, c-format
