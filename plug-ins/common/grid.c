@@ -358,7 +358,7 @@ grid (gint32        image_ID,
     case GIMP_GRAY:
       hcolor[0] = gimp_rgb_intensity_uchar (&grid_cfg.hcolor);
       vcolor[0] = gimp_rgb_intensity_uchar (&grid_cfg.vcolor);
-      vcolor[0] = gimp_rgb_intensity_uchar (&grid_cfg.vcolor);
+      icolor[0] = gimp_rgb_intensity_uchar (&grid_cfg.icolor);
       blend = TRUE;
       break;
 
