@@ -1,5 +1,10 @@
 Revision history for Gimp-Perl extension.
 
+	- added italian translations by Daniele Medri (madrid@kjws.com).
+        - POINTS really are decipoints: correct xlfd_size to create
+          larger (& more correct) fonts.
+
+1.14  Mon Oct 11 03:23:13 CEST 1999
 	- set the version of all modules explicitly (for the benefit of CPAN).
 	- added examples/avi (avi load/save plug-in, uncompressed 24 bit).
 	- possible fix for another installation horror problem.

@@ -12,7 +12,7 @@ use subs qw(init end lock unlock canonicalize_color);
 BEGIN {
    require DynaLoader;
    @ISA=qw(DynaLoader);
-   $VERSION = 1.14;
+   $VERSION = 1.15;
    bootstrap Gimp $VERSION;
 }
 
@@ -176,8 +176,8 @@ sub import($;@) {
 sub xlfd_size($) {
   local $^W=0;
   my ($px,$pt)=(split(/-/,$_[0]))[7,8];
-  $px>0 ? ($px    ,&Gimp::PIXELS)
-        : ($pt*0.1,&Gimp::POINTS);
+  $px>0 ? ($px,&Gimp::PIXELS)
+        : ($pt,&Gimp::POINTS);
 }
 
 sub init_gtk {
