@@ -77,7 +77,6 @@ plug-ins/common/hot.c
 plug-ins/common/illusion.c
 plug-ins/common/iwarp.c
 plug-ins/common/jigsaw.c
-plug-ins/common/jpeg.c
 plug-ins/common/laplace.c
 plug-ins/common/lic.c
 plug-ins/common/mail.c
@@ -169,6 +168,7 @@ plug-ins/gfig/gfig-poly.c
 plug-ins/gfig/gfig-preview.c
 plug-ins/gfig/gfig-spiral.c
 plug-ins/gfig/gfig-star.c
+plug-ins/gfig/gfig-stock.c
 plug-ins/gfig/gfig.c
 plug-ins/gflare/gflare.c
 plug-ins/gfli/gfli.c
@@ -240,6 +240,9 @@ plug-ins/imagemap/imap_source.c
 plug-ins/imagemap/imap_stock.c
 plug-ins/imagemap/imap_toolbar.c
 plug-ins/imagemap/imap_tools.c
+plug-ins/jpeg/jpeg.c
+plug-ins/jpeg/jpeg_load.c
+plug-ins/jpeg/jpeg_save.c
 plug-ins/maze/algorithms.c
 plug-ins/maze/maze.c
 plug-ins/maze/maze.h

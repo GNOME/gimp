@@ -1,3 +1,7 @@
+2005-01-02  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/plugin-defs.pl: changed for move of JPEG plug-in.
+
 2005-01-01  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/Lighting/lighting_ui.c: add a control for
@@ -105,7 +109,7 @@
 	* app/paint/gimpbrushcore-kernels.h: regenerated.
 
 	* app/paint/gimpbrushcore.c (gimp_brush_core_subsample_mask): use
-	the constant defined un app/paint/gimpbrushcore-kernels.h. Should
+	the constant defined in app/paint/gimpbrushcore-kernels.h. Should
 	give a tiny speedup.
 
 2004-12-31  Bill Skaggs <weskaggs@primate.ucdavis.edu>
