@@ -1,3 +1,8 @@
+2004-11-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/print-size-dialog.c: reordered prototypes to match
+	order of implementations.
+
 2004-11-30  Sven Neumann  <sven@gimp.org>
 
 	* app/sanity.c: we check for the same version of freetype on all

@@ -59,16 +59,16 @@ static void   print_size_dialog_response (GtkWidget       *dialog,
                                           PrintSizeDialog *private);
 static void   print_size_dialog_reset    (PrintSizeDialog *private);
 
-static void   print_size_dialog_set_resolution     (PrintSizeDialog *private,
-                                                    gdouble          xres,
-                                                    gdouble          yres);
-static void   print_size_dialog_set_size           (PrintSizeDialog *private,
-                                                    gdouble          width,
-                                                    gdouble          height);
 static void   print_size_dialog_size_changed       (GtkWidget       *widget,
                                                     PrintSizeDialog *private);
 static void   print_size_dialog_resolution_changed (GtkWidget       *widget,
                                                     PrintSizeDialog *private);
+static void   print_size_dialog_set_size           (PrintSizeDialog *private,
+                                                    gdouble          width,
+                                                    gdouble          height);
+static void   print_size_dialog_set_resolution     (PrintSizeDialog *private,
+                                                    gdouble          xres,
+                                                    gdouble          yres);
 
 
 GtkWidget *
