@@ -141,14 +141,14 @@ sub get_default_comment {
     %invoke = (
 	code => <<'CODE'
 {
-  comment = the_gimp->config->default_comment;
+  comment = gimp->config->default_comment;
   success = TRUE;
 }
 CODE
     );
 }
 
-@headers = qw("core/gimp.h" "core/gimpcoreconfig.h" "app_procs.h" "gimprc.h");
+@headers = qw("core/gimp.h" "core/gimpcoreconfig.h" "gimprc.h");
 
 @procs = qw(gimprc_query gimprc_set 
 	    get_default_comment get_monitor_resolution);

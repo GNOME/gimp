@@ -292,7 +292,6 @@ HELP
     }
 
     %invoke = (
-	headers => [ qw("app_procs.h") ],
 	code => <<'CODE'
 {
   gimp_set_busy_until_idle (gimp);
