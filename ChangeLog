@@ -1,3 +1,10 @@
+2003-12-22  DindinX  <david@dindinx.org>
+
+	* app/gui/user-install-dialog.c (user_install_dialog_run): added a
+	scrolled window in page 2, since the list of directories is too long
+	to fit in a 1024x768 screen.  The user install dialog should now fit
+	into a 800x600 screen.  This should close #122211
+
 2003-12-21  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/convmatrix.c: indentation & whitespace cleanup.
