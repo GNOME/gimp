@@ -62,20 +62,22 @@ enum
 };
 
 
-static void        gimp_brush_class_init       (GimpBrushClass *klass);
-static void        gimp_brush_init             (GimpBrush      *brush);
+static void        gimp_brush_class_init            (GimpBrushClass *klass);
+static void        gimp_brush_init                  (GimpBrush      *brush);
 
-static void        gimp_brush_finalize         (GObject        *object);
+static void        gimp_brush_finalize              (GObject        *object);
 
-static TempBuf   * gimp_brush_get_new_preview  (GimpViewable   *viewable,
-						gint            width,
-						gint            height);
-static gchar     * gimp_brush_get_extension    (GimpData       *data);
+static TempBuf   * gimp_brush_get_new_preview       (GimpViewable   *viewable,
+                                                     gint            width,
+                                                     gint            height);
+static gchar     * gimp_brush_get_extension         (GimpData       *data);
 
-#if 0
-static GimpBrush * gimp_brush_select_brush     (GimpPaintTool  *paint_tool);
-static gboolean    gimp_brush_want_null_motion (GimpPaintTool  *paint_tool);
-#endif
+static GimpBrush * gimp_brush_real_select_brush     (GimpBrush      *brush,
+                                                     GimpCoords     *last_coords,
+                                                     GimpCoords     *cur_coords);
+static gboolean    gimp_brush_real_want_null_motion (GimpBrush      *brush,
+                                                     GimpCoords     *last_coords,
+                                                     GimpCoords     *cur_coords);
 
 
 static guint brush_signals[LAST_SIGNAL] = { 0 };
@@ -139,10 +141,8 @@ gimp_brush_class_init (GimpBrushClass *klass)
 
   data_class->get_extension       = gimp_brush_get_extension;
 
-#if 0
-  klass->select_brush             = gimp_brush_select_brush;
-  klass->want_null_motion         = gimp_brush_want_null_motion;
-#endif
+  klass->select_brush             = gimp_brush_real_select_brush;
+  klass->want_null_motion         = gimp_brush_real_want_null_motion;
 }
 
 static void
@@ -361,19 +361,49 @@ gimp_brush_load (const gchar *filename)
   return GIMP_DATA (brush);
 }
 
-#if 0
-static GimpBrush *
-gimp_brush_select_brush (GimpPaintTool *paint_core)
+GimpBrush *
+gimp_brush_select_brush (GimpBrush  *brush,
+                         GimpCoords *last_coords,
+                         GimpCoords *cur_coords)
 {
-  return paint_core->brush;
+  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+  g_return_val_if_fail (last_coords != NULL, NULL);
+  g_return_val_if_fail (cur_coords != NULL, NULL);
+
+  return GIMP_BRUSH_GET_CLASS (brush)->select_brush (brush,
+                                                     last_coords,
+                                                     cur_coords);
+}
+
+gboolean
+gimp_brush_want_null_motion (GimpBrush  *brush,
+                             GimpCoords *last_coords,
+                             GimpCoords *cur_coords)
+{
+  g_return_val_if_fail (GIMP_IS_BRUSH (brush), FALSE);
+  g_return_val_if_fail (last_coords != NULL, FALSE);
+  g_return_val_if_fail (cur_coords != NULL, FALSE);
+
+  return GIMP_BRUSH_GET_CLASS (brush)->want_null_motion (brush,
+                                                         last_coords,
+                                                         cur_coords);
+}
+
+static GimpBrush *
+gimp_brush_real_select_brush (GimpBrush  *brush,
+                              GimpCoords *last_coords,
+                              GimpCoords *cur_coords)
+{
+  return brush;
 }
 
 static gboolean
-gimp_brush_want_null_motion (GimpPaintTool *paint_core)
+gimp_brush_real_want_null_motion (GimpBrush  *brush,
+                                  GimpCoords *last_coords,
+                                  GimpCoords *cur_coords)
 {
   return TRUE;
 }
-#endif
 
 TempBuf *
 gimp_brush_get_mask (const GimpBrush *brush)

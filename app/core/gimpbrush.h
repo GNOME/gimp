@@ -55,36 +55,38 @@ struct _GimpBrushClass
 
   void (* spacing_changed) (GimpBrush *brush);
 
-#if 0
-  /* FIXME: these are no virtual function pointers but bad hacks: */
-  GimpBrush * (* select_brush)     (GimpPaintTool *paint_tool);
-  gboolean    (* want_null_motion) (GimpPaintTool *paint_tool);
-
-  maybe:
-
-  GimpBrush * (* select_brush)     (GimpBrush      *brush,
-				    GimpValuators  *current,
-				    GimpValuators  *new);
-#endif
+  GimpBrush * (* select_brush)     (GimpBrush     *brush,
+                                    GimpCoords    *last_coords,
+                                    GimpCoords    *cur_coords);
+  gboolean    (* want_null_motion) (GimpBrush     *brush,
+                                    GimpCoords    *last_coords,
+                                    GimpCoords    *cur_coords);
 };
 
 
-GType       gimp_brush_get_type        (void) G_GNUC_CONST;
+GType       gimp_brush_get_type         (void) G_GNUC_CONST;
 
-GimpData  * gimp_brush_new             (const gchar     *name);
-GimpData  * gimp_brush_get_standard    (void);
-GimpData  * gimp_brush_load            (const gchar     *filename);
+GimpData  * gimp_brush_new              (const gchar     *name);
+GimpData  * gimp_brush_get_standard     (void);
+GimpData  * gimp_brush_load             (const gchar     *filename);
 
-GimpBrush * gimp_brush_load_brush      (gint             fd,
-					const gchar     *filename);
+GimpBrush * gimp_brush_load_brush       (gint             fd,
+                                         const gchar     *filename);
 
-TempBuf   * gimp_brush_get_mask        (const GimpBrush *brush);
-TempBuf   * gimp_brush_get_pixmap      (const GimpBrush *brush);
+GimpBrush * gimp_brush_select_brush     (GimpBrush       *brush,
+                                         GimpCoords      *last_coords,
+                                         GimpCoords      *cur_coords);
+gboolean    gimp_brush_want_null_motion (GimpBrush       *brush,
+                                         GimpCoords      *last_coords,
+                                         GimpCoords      *cur_coords);
 
-gint        gimp_brush_get_spacing     (const GimpBrush *brush);
-void        gimp_brush_set_spacing     (GimpBrush       *brush,
-					gint             spacing);
-void        gimp_brush_spacing_changed (GimpBrush       *brush);
+TempBuf   * gimp_brush_get_mask         (const GimpBrush *brush);
+TempBuf   * gimp_brush_get_pixmap       (const GimpBrush *brush);
+
+gint        gimp_brush_get_spacing      (const GimpBrush *brush);
+void        gimp_brush_set_spacing      (GimpBrush       *brush,
+                                         gint             spacing);
+void        gimp_brush_spacing_changed  (GimpBrush       *brush);
 
 
 #endif /* __GIMP_BRUSH_H__ */

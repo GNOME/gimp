@@ -143,17 +143,17 @@ error_console_create (Gimp *gimp)
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
 
-  g_signal_connect_swapped (G_OBJECT (menuitem), "activate",
-			    G_CALLBACK (error_console_write_all_callback),
-			    text_buffer);
+  g_signal_connect (G_OBJECT (menuitem), "activate",
+                    G_CALLBACK (error_console_write_all_callback),
+                    text_buffer);
   
   menuitem = gtk_menu_item_new_with_label (_("Write selection to file..."));
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
 
-  g_signal_connect_swapped (G_OBJECT (menuitem), "activate",
-			    G_CALLBACK (error_console_write_selection_callback),
-			    text_buffer);
+  g_signal_connect (G_OBJECT (menuitem), "activate",
+                    G_CALLBACK (error_console_write_selection_callback),
+                    text_buffer);
 
   /*  The output text widget  */
   text_view = gtk_text_view_new_with_buffer (text_buffer);

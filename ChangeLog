@@ -1,5 +1,25 @@
 2001-12-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/errors.c: forgot a "return".
+
+	* app/gui/error-console-dialog.c: the menu item signals were
+	connected "swapped", which is wrong.
+
+	* app/tools/gimperasertool.c: added a cursor_update_func(), update
+	the "toggled" state there and chain up. Fixes wrong cursor
+	updating.
+
+	Made brush_pipe slection work again, removed the #warnings:
+
+	* app/core/gimpbrush.[ch]
+	* app/core/gimpbrushpipe.c: changed brush_class->select_brush()
+	and brush_class->want_null_motion() to be proper virtual
+	functions. Pass last_coords and cur_coords to them.
+
+	* app/tools/gimppainttool.c: call the functions again.
+
+2001-12-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/main.c
 	* app/appenv.h: moved "message_handler" from here...
 

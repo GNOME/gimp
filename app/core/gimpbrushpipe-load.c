@@ -57,12 +57,14 @@
 static void        gimp_brush_pipe_class_init       (GimpBrushPipeClass *klass);
 static void        gimp_brush_pipe_init             (GimpBrushPipe      *pipe);
 
-static void        gimp_brush_pipe_finalize         (GObject       *object);
+static void        gimp_brush_pipe_finalize         (GObject    *object);
 
-#if 0
-static GimpBrush * gimp_brush_pipe_select_brush     (GimpPaintTool *paint_tool);
-static gboolean    gimp_brush_pipe_want_null_motion (GimpPaintTool *paint_tool);
-#endif
+static GimpBrush * gimp_brush_pipe_select_brush     (GimpBrush  *brush,
+                                                     GimpCoords *last_coords,
+                                                     GimpCoords *cur_coords);
+static gboolean    gimp_brush_pipe_want_null_motion (GimpBrush  *brush,
+                                                     GimpCoords *last_coords,
+                                                     GimpCoords *cur_coords);
 
 
 static GimpBrushClass *parent_class = NULL;
@@ -109,13 +111,8 @@ gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
 
   object_class->finalize        = gimp_brush_pipe_finalize;
 
-#ifdef __GNUC__
-#warning: FIXME brush_class->select_brush etc.
-#endif
-#if 0
   brush_class->select_brush     = gimp_brush_pipe_select_brush;
   brush_class->want_null_motion = gimp_brush_pipe_want_null_motion;
-#endif
 }
 
 static void
@@ -180,18 +177,16 @@ gimp_brush_pipe_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-#if 0
 static GimpBrush *
-gimp_brush_pipe_select_brush (GimpPaintTool *paint_tool)
+gimp_brush_pipe_select_brush (GimpBrush  *brush,
+                              GimpCoords *last_coords,
+                              GimpCoords *cur_coords)
 {
   GimpBrushPipe *pipe;
   gint           i, brushix, ix;
   gdouble        angle;
 
-  g_return_val_if_fail (paint_tool != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_BRUSH_PIPE (paint_tool->brush), NULL);
-
-  pipe = GIMP_BRUSH_PIPE (paint_tool->brush);
+  pipe = GIMP_BRUSH_PIPE (brush);
 
   if (pipe->nbrushes == 1)
     return GIMP_BRUSH (pipe->current);
@@ -205,8 +200,8 @@ gimp_brush_pipe_select_brush (GimpPaintTool *paint_tool)
 	  ix = (pipe->index[i] + 1) % pipe->rank[i];
 	  break;
 	case PIPE_SELECT_ANGULAR:
-	  angle = atan2 (paint_tool->cury - paint_tool->lasty,
-			 paint_tool->curx - paint_tool->lastx);
+	  angle = atan2 (cur_coords->y - last_coords->y,
+			 cur_coords->x - last_coords->x);
 	  /* Offset angle to be compatible with PSP tubes */
 	  angle += G_PI_2;
 	  /* Map it to the [0..2*G_PI) interval */
@@ -221,13 +216,13 @@ gimp_brush_pipe_select_brush (GimpPaintTool *paint_tool)
 	  ix = rand () % pipe->rank[i];
 	  break;
 	case PIPE_SELECT_PRESSURE:
-	  ix = RINT (paint_tool->curpressure * (pipe->rank[i] - 1));
+	  ix = RINT (cur_coords->pressure * (pipe->rank[i] - 1));
 	  break;
 	case PIPE_SELECT_TILT_X:
-	  ix = RINT (paint_tool->curxtilt / 2.0 * pipe->rank[i]) + pipe->rank[i]/2;
+	  ix = RINT (cur_coords->xtilt / 2.0 * pipe->rank[i]) + pipe->rank[i]/2;
 	  break;
 	case PIPE_SELECT_TILT_Y:
-	  ix = RINT (paint_tool->curytilt / 2.0 * pipe->rank[i]) + pipe->rank[i]/2;
+	  ix = RINT (cur_coords->ytilt / 2.0 * pipe->rank[i]) + pipe->rank[i]/2;
 	  break;
 	case PIPE_SELECT_CONSTANT:
 	default:
@@ -247,15 +242,14 @@ gimp_brush_pipe_select_brush (GimpPaintTool *paint_tool)
 }
 
 static gboolean
-gimp_brush_pipe_want_null_motion (GimpPaintTool *paint_tool)
+gimp_brush_pipe_want_null_motion (GimpBrush  *brush,
+                                  GimpCoords *last_coords,
+                                  GimpCoords *cur_coords)
 {
   GimpBrushPipe *pipe;
   gint           i;
 
-  g_return_val_if_fail (paint_tool != NULL, TRUE);
-  g_return_val_if_fail (GIMP_IS_BRUSH_PIPE (paint_tool->brush), TRUE);
-
-  pipe = GIMP_BRUSH_PIPE (paint_tool->brush);
+  pipe = GIMP_BRUSH_PIPE (brush);
 
   if (pipe->nbrushes == 1)
     return TRUE;
@@ -266,7 +260,6 @@ gimp_brush_pipe_want_null_motion (GimpPaintTool *paint_tool)
 
   return TRUE;
 }
-#endif
 
 GimpData *
 gimp_brush_pipe_load (const gchar *filename)

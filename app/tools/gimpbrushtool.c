@@ -294,8 +294,7 @@ gimp_paint_tool_control (GimpTool    *tool,
       break;
     }
 
-  if (GIMP_TOOL_CLASS (parent_class)->control)
-    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 static void
@@ -367,7 +366,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
     {
       draw_line = TRUE;
 
-      paint_tool->start_coords =paint_tool->last_coords;
+      paint_tool->start_coords = paint_tool->last_coords;
 
       /* Restrict to multiples of 15 degrees if ctrl is pressed */
       if (state & GDK_CONTROL_MASK)
@@ -457,24 +456,17 @@ gimp_paint_tool_button_press (GimpTool        *tool,
        * pixmap to select.)
        */
       if (paint_tool->last_coords.x != paint_tool->cur_coords.x ||
-	  paint_tool->last_coords.y != paint_tool->cur_coords.y
-#ifdef __GNUC__
-#warning FIXME: GIMP_BRUSH_GET_CLASS (paint_tool->brush)->want_null_motion
-#endif
-#if 0
-	  || GIMP_BRUSH_GET_CLASS (paint_tool->brush)->want_null_motion (paint_tool)
-#endif
-	  )
+	  paint_tool->last_coords.y != paint_tool->cur_coords.y ||
+	  gimp_brush_want_null_motion (paint_tool->brush,
+                                       &paint_tool->last_coords,
+                                       &paint_tool->cur_coords))
 	{
 	  if (paint_tool->flags & TOOL_CAN_HANDLE_CHANGING_BRUSH)
 	    {
-#ifdef __GNUC__
-#warning FIXME: GIMP_BRUSH_GET_CLASS (paint_tool->brush)->select_brush
-#endif
-#if 0
 	      paint_tool->brush =
-		GIMP_BRUSH_GET_CLASS (paint_tool->brush)->select_brush (paint_tool);
-#endif
+                gimp_brush_select_brush (paint_tool->brush,
+                                         &paint_tool->last_coords,
+                                         &paint_tool->cur_coords);
 	    }
 
 	  gimp_paint_tool_paint (paint_tool, drawable, MOTION_PAINT);
@@ -500,11 +492,12 @@ gimp_paint_tool_button_release (GimpTool        *tool,
 				GdkModifierType  state,
 				GimpDisplay     *gdisp)
 {
-  GimpImage     *gimage;
   GimpPaintTool *paint_tool;
+  GimpDrawable  *drawable;
 
-  gimage     = gdisp->gimage;
   paint_tool = GIMP_PAINT_TOOL (tool);
+
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
   /*  resume the current selection and ungrab the pointer  */
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_RESUME);
@@ -513,18 +506,16 @@ gimp_paint_tool_button_release (GimpTool        *tool,
   gdk_flush ();
 
   /*  Let the specific painting function finish up  */
-  gimp_paint_tool_paint (paint_tool,
-			 gimp_image_active_drawable (gdisp->gimage),
-			 FINISH_PAINT);
+  gimp_paint_tool_paint (paint_tool, drawable, FINISH_PAINT);
+
+  gimp_draw_tool_stop (GIMP_DRAW_TOOL (paint_tool));
 
   /*  Set tool state to inactive -- no longer painting */
-  gimp_draw_tool_stop (GIMP_DRAW_TOOL (paint_tool));
   tool->state = INACTIVE;
 
   paint_tool->pick_state = FALSE;
 
-  gimp_paint_tool_finish (paint_tool,
-			  gimp_image_active_drawable (gdisp->gimage));
+  gimp_paint_tool_finish (paint_tool, drawable);
 
   gdisplays_flush ();
 }
@@ -537,12 +528,14 @@ gimp_paint_tool_motion (GimpTool        *tool,
 			GimpDisplay     *gdisp)
 {
   GimpPaintTool *paint_tool;
+  GimpDrawable  *drawable;
   gint           off_x, off_y;
 
   paint_tool = GIMP_PAINT_TOOL (tool);
 
-  gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-                         &off_x, &off_y);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  gimp_drawable_offsets (drawable, &off_x, &off_y);
 
   paint_tool->cur_coords = *coords;
   paint_tool->state      = state;
@@ -552,31 +545,22 @@ gimp_paint_tool_motion (GimpTool        *tool,
 
   if (paint_tool->pick_state)
     {
-      gimp_paint_tool_sample_color (gimp_image_active_drawable (gdisp->gimage),
+      gimp_paint_tool_sample_color (drawable,
 				    paint_tool->cur_coords.x,
                                     paint_tool->cur_coords.y,
 				    state);
       return;
     }
 
-  gimp_paint_tool_interpolate (paint_tool,
-                               gimp_image_active_drawable (gdisp->gimage));
+  gimp_paint_tool_interpolate (paint_tool, drawable);
 
   if (paint_tool->flags & TOOL_TRACES_ON_WINDOW)
-    {
-      gimp_paint_tool_paint (paint_tool,
-                             gimp_image_active_drawable (gdisp->gimage),
-                             PRETRACE_PAINT);
-    }
+    gimp_paint_tool_paint (paint_tool, drawable, PRETRACE_PAINT);
 
   gimp_display_flush_now (gdisp);
 
   if (paint_tool->flags & TOOL_TRACES_ON_WINDOW)
-    {
-      gimp_paint_tool_paint (paint_tool,
-                             gimp_image_active_drawable (gdisp->gimage),
-                             POSTTRACE_PAINT);
-    }
+    gimp_paint_tool_paint (paint_tool, drawable, POSTTRACE_PAINT);
 
   paint_tool->last_coords = paint_tool->cur_coords;
 }
@@ -623,19 +607,15 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
   /* Set toggle cursors for various paint tools */
   if (tool->toggled)
     {
-      GType type;
-
-      type = G_TYPE_FROM_INSTANCE (tool);
-
-      if (type == GIMP_TYPE_ERASER_TOOL)
+      if (GIMP_IS_ERASER_TOOL (tool))
 	{
 	  cmodifier = GIMP_CURSOR_MODIFIER_MINUS;
 	}
-      else if (type == GIMP_TYPE_CONVOLVE_TOOL)
+      else if (GIMP_IS_CONVOLVE_TOOL (tool))
 	{
 	  cmodifier = GIMP_CURSOR_MODIFIER_MINUS;
 	}
-      else if (type == GIMP_TYPE_DODGEBURN_TOOL)
+      else if (GIMP_IS_DODGEBURN_TOOL (tool))
 	{
 	  ctoggle = TRUE;
 	}
@@ -1009,15 +989,13 @@ gimp_paint_tool_interpolate (GimpPaintTool *paint_tool,
 
 	  if (paint_tool->flags & TOOL_CAN_HANDLE_CHANGING_BRUSH)
 	    {
-#ifdef __GNUC__
-#warning FIXME: GIMP_BRUSH_GET_CLASS (paint_tool->brush)->select_brush
-#endif
-#if 0
 	      paint_tool->brush =
-		GIMP_BRUSH_GET_CLASS (paint_tool->brush)->select_brush (paint_tool);
-#endif
+                gimp_brush_select_brush (paint_tool->brush,
+                                         &paint_tool->last_coords,
+                                         &paint_tool->cur_coords);
 	    }
-	  gimp_paint_tool_paint(paint_tool, drawable, MOTION_PAINT);
+
+	  gimp_paint_tool_paint (paint_tool, drawable, MOTION_PAINT);
 
 	  /*  restore the current brush pointer  */
 	  paint_tool->brush = current_brush;

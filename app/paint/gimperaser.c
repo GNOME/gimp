@@ -64,25 +64,29 @@ struct _EraserOptions
 };
 
 
-static void   gimp_eraser_tool_class_init   (GimpEraserToolClass  *klass);
-static void   gimp_eraser_tool_init         (GimpEraserTool       *eraser);
+static void   gimp_eraser_tool_class_init    (GimpEraserToolClass  *klass);
+static void   gimp_eraser_tool_init          (GimpEraserTool       *eraser);
 
-static void   gimp_eraser_tool_modifier_key (GimpTool             *tool,
-                                             GdkModifierType       key,
-                                             gboolean              press,
-                                             GdkModifierType       state,
-                                             GimpDisplay          *gdisp);
+static void   gimp_eraser_tool_modifier_key  (GimpTool             *tool,
+                                              GdkModifierType       key,
+                                              gboolean              press,
+                                              GdkModifierType       state,
+                                              GimpDisplay          *gdisp);
+static void   gimp_eraser_tool_cursor_update (GimpTool             *tool,
+                                              GimpCoords           *coords,
+                                              GdkModifierType       state,
+                                              GimpDisplay          *gdisp);
 
-static void   gimp_eraser_tool_paint        (GimpPaintTool        *paint_tool,
-                                             GimpDrawable         *drawable,
-                                             PaintState            state);
+static void   gimp_eraser_tool_paint         (GimpPaintTool        *paint_tool,
+                                              GimpDrawable         *drawable,
+                                              PaintState            state);
 
-static void   gimp_eraser_tool_motion       (GimpPaintTool        *paint_tool,
-                                             GimpDrawable         *drawable,
-                                             PaintPressureOptions *pressure_options,
-                                             gboolean              hard,
-                                             gboolean              incremental,
-                                             gboolean              anti_erase);
+static void   gimp_eraser_tool_motion        (GimpPaintTool        *paint_tool,
+                                              GimpDrawable         *drawable,
+                                              PaintPressureOptions *pressure_options,
+                                              gboolean              hard,
+                                              gboolean              incremental,
+                                              gboolean              anti_erase);
 
 static GimpToolOptions * gimp_eraser_tool_options_new   (GimpToolInfo    *tool_info);
 static void              gimp_eraser_tool_options_reset (GimpToolOptions *tool_options);
@@ -153,9 +157,10 @@ gimp_eraser_tool_class_init (GimpEraserToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  tool_class->modifier_key = gimp_eraser_tool_modifier_key;
+  tool_class->modifier_key  = gimp_eraser_tool_modifier_key;
+  tool_class->cursor_update = gimp_eraser_tool_cursor_update;
 
-  paint_tool_class->paint  = gimp_eraser_tool_paint;
+  paint_tool_class->paint   = gimp_eraser_tool_paint;
 }
 
 static void
@@ -193,6 +198,21 @@ gimp_eraser_tool_modifier_key (GimpTool        *tool,
   tool->toggled = options->anti_erase;
 }
   
+static void
+gimp_eraser_tool_cursor_update (GimpTool        *tool,
+                                GimpCoords      *coords,
+                                GdkModifierType  state,
+                                GimpDisplay     *gdisp)
+{
+  EraserOptions *options;
+
+  options = (EraserOptions *) tool->tool_info->tool_options;
+
+  tool->toggled = options->anti_erase;
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+}
+
 static void
 gimp_eraser_tool_paint (GimpPaintTool *paint_tool,
                         GimpDrawable  *drawable,
