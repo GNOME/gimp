@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-07 23:50+0100\n"
-"PO-Revision-Date: 2003-11-07 23:54+0100\n"
+"POT-Creation-Date: 2003-11-15 13:58+0100\n"
+"PO-Revision-Date: 2003-11-15 13:59+0100\n"
 "Last-Translator: Dejan Matijević <dejan@ns.sympatico.ca>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -138,7 +138,9 @@ msgstr "_Izvezi"
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr "Treba prvo da izvezete vašu sliku pre nego što je sačuvate kao %s iz sledećih razloga:"
+msgstr ""
+"Treba prvo da izvezete vašu sliku pre nego što je sačuvate kao %s iz "
+"sledećih razloga:"
 
 #: libgimp/gimpexport.c:511
 msgid "The export conversion won't modify your original image."
@@ -213,30 +215,50 @@ msgstr "(neispravna UTF-8 niska)"
 msgid "%d Bytes"
 msgstr "%d bajtova"
 
-#: libgimpbase/gimputils.c:193
+#: libgimpbase/gimputils.c:194
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: libgimpbase/gimputils.c:197
+#: libgimpbase/gimputils.c:198
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: libgimpbase/gimputils.c:201
+#: libgimpbase/gimputils.c:202
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: libgimpbase/gimputils.c:206
+#: libgimpbase/gimputils.c:209
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: libgimpbase/gimputils.c:211
+#: libgimpbase/gimputils.c:213
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
+
+#: libgimpbase/gimputils.c:217
+#, c-format
+msgid "%d MB"
+msgstr "%d MB"
+
+#: libgimpbase/gimputils.c:224
+#, c-format
+msgid "%.2f GB"
+msgstr "%.2f GB"
+
+#: libgimpbase/gimputils.c:228
+#, c-format
+msgid "%.1f GB"
+msgstr "%.1f GB"
+
+#: libgimpbase/gimputils.c:232
+#, c-format
+msgid "%d GB"
+msgstr "%d GB"
 
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
@@ -247,17 +269,13 @@ msgstr "Učitavam modul: „%s“\n"
 #: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
 #: libgimpmodule/gimpmodule.c:434
 #, c-format
-msgid ""
-"Module '%s' load error:\n"
-"%s"
-msgstr ""
-"Greška pri učitavanju modula „%s“:\n"
-"%s"
+msgid "Module '%s' load error: %s"
+msgstr "Greška pri učitavanju modula „%s“: %s"
 
 #: libgimpmodule/gimpmodule.c:271
 #, c-format
 msgid "Skipping module: '%s'\n"
-msgstr "Preskakanje modula: '%s'\n"
+msgstr "Preskačem modul: „%s“\n"
 
 #: libgimpmodule/gimpmodule.c:408
 msgid "Module error"
@@ -275,21 +293,21 @@ msgstr "Neuspelo učitavanje"
 msgid "Not loaded"
 msgstr "Nije učitano"
 
-#: libgimpwidgets/gimpcolorbutton.c:84
-msgid "/Foreground Color"
-msgstr "/Boja iscrtavanja"
+#: libgimpwidgets/gimpcolorbutton.c:93
+msgid "/_Foreground Color"
+msgstr "/_Boja iscrtavanja"
 
-#: libgimpwidgets/gimpcolorbutton.c:86
-msgid "/Background Color"
-msgstr "/Boja pozadine"
+#: libgimpwidgets/gimpcolorbutton.c:95
+msgid "/_Background Color"
+msgstr "/Boja _pozadine"
 
-#: libgimpwidgets/gimpcolorbutton.c:89
-msgid "/Black"
-msgstr "/Crna"
+#: libgimpwidgets/gimpcolorbutton.c:98
+msgid "/Blac_k"
+msgstr "/_Crna"
 
-#: libgimpwidgets/gimpcolorbutton.c:91
-msgid "/White"
-msgstr "/Bela"
+#: libgimpwidgets/gimpcolorbutton.c:100
+msgid "/_White"
+msgstr "/B_ela"
 
 #: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
@@ -367,15 +385,15 @@ msgstr "Odaberite direktorijum"
 msgid "Select File"
 msgstr "Odaberi datoteku"
 
-#: libgimpwidgets/gimpmemsizeentry.c:187
+#: libgimpwidgets/gimpmemsizeentry.c:218
 msgid "KiloBytes"
 msgstr "kilobajta"
 
-#: libgimpwidgets/gimpmemsizeentry.c:188
+#: libgimpwidgets/gimpmemsizeentry.c:219
 msgid "MegaBytes"
 msgstr "megabajta"
 
-#: libgimpwidgets/gimpmemsizeentry.c:189
+#: libgimpwidgets/gimpmemsizeentry.c:220
 msgid "GigaBytes"
 msgstr "gigabajta"
 
@@ -467,7 +485,7 @@ msgstr "Jedinica"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:943
+#: libgimpwidgets/gimpwidgets.c:1253
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -475,11 +493,11 @@ msgstr ""
 "Upotrebita ovu vrednost za seme slučajno generisanog broja -- ovo će vam "
 "omogućiti da ponovite datu \"slučajno\" operaciju"
 
-#: libgimpwidgets/gimpwidgets.c:947
+#: libgimpwidgets/gimpwidgets.c:1257
 msgid "_Randomize"
 msgstr "_Slučajno"
 
-#: libgimpwidgets/gimpwidgets.c:958
+#: libgimpwidgets/gimpwidgets.c:1268
 msgid "Seed random number generator with a generated random number"
 msgstr "Seme slučajno generisanog broja sa slučajno generisanim brojem"
 
@@ -495,19 +513,19 @@ msgstr "Pogled oskudnih boja"
 msgid "Color Deficiency Type:"
 msgstr "Vrsta oskudnosti boje:"
 
-#: modules/cdisplay_colorblind.c:483
+#: modules/cdisplay_colorblind.c:482
 msgid "None (normal vision)"
 msgstr "Ništa (normalan pregled)"
 
-#: modules/cdisplay_colorblind.c:487
+#: modules/cdisplay_colorblind.c:485
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (neosetnjivost na crveno)"
 
-#: modules/cdisplay_colorblind.c:491
+#: modules/cdisplay_colorblind.c:488
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (neosetnjivost na zeleno)"
 
-#: modules/cdisplay_colorblind.c:495
+#: modules/cdisplay_colorblind.c:491
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tiranopia (neosetnjivost na plavo)"
 
