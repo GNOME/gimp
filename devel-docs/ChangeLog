@@ -1,3 +1,14 @@
+2005-01-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* libgimpconfig/Makefile.am
+	* libgimpconfig/libgimpconfig-docs.sgml
+	* libgimpconfig/libgimpconfig-overrides.txt
+	* libgimpconfig/libgimpconfig-sections.txt
+	* libgimpconfig/libgimpconfig.types
+	* libgimpconfig/tmpl/gimpconfig-error.sgml: created, setting
+	up migration from app/config to libgimpconfig.
+	
+
 2005-01-23  Sven Neumann  <sven@gimp.org>
 
 	* app/app-docs.sgml
