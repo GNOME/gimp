@@ -1,3 +1,14 @@
+Tue Jul 13 22:48:37 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* plug-ins/sel2path/sel2path.c
+	* app/paths_dialog.c
+	* app/paths_cmds.c
+	* tools/pdbgen/pdb/paths.pdb
+
+	Selection is now cleared when converted to a path.
+	Path is made the current one when created via the PDB.
+	This made more sense than the previous behavior.
+
 Tue Jul 13 15:47:20 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 	* gimptool.in, gimptool.1: implement --uninstall* options.

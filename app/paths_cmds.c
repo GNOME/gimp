@@ -443,7 +443,7 @@ static ProcArg path_set_points_inargs[] =
   {
     PDB_STRING,
     "pathname",
-    "The name of the path to create (if it exists then a unique name will be created - query the list of paths if you want to make sure that the name of the path you create is unique. This will not be set as the current path. You will have to do a gimp_set_current_path after creating the path to make it current."
+    "The name of the path to create (if it exists then a unique name will be created - query the list of paths if you want to make sure that the name of the path you create is unique. This will be set as the current path."
   },
   {
     PDB_INT32,

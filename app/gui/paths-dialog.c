@@ -2726,6 +2726,7 @@ paths_set_path_points(GimpImage * gimage,
   PathsList *plist    = gimp_image_get_paths(gimage);
   GSList    *pts_list = NULL;
   PATHP      bzpath;
+  BezierSelect  *bezier_sel;
   gint       pcount   = 0;
   gint       this_path_count = 0;
   gchar     *suniq;
@@ -2830,10 +2831,10 @@ paths_set_path_points(GimpImage * gimage,
 	}
     }
 
+  bezier_sel = path_to_beziersel(bzpath);
+
   if(paths_dialog)
     { 
-      gint           tmprow;
-      BezierSelect  *bezier_sel;
 
       paths_dialog->current_path_list =  
 	path_add_to_current(paths_dialog->current_path_list, 
@@ -2844,13 +2845,8 @@ paths_set_path_points(GimpImage * gimage,
       paths_add_path(bzpath,0); 
 
       /* Update the preview */
-      bezier_sel = path_to_beziersel(bzpath);
-      tmprow = paths_dialog->current_path_list->last_selected_row;
       paths_dialog->current_path_list->last_selected_row = 0;
       paths_update_preview(bezier_sel);
-      beziersel_free(bezier_sel);
-      paths_dialog->current_path_list->last_selected_row = tmprow;
-      paths_dialog->selected_row_num = tmprow;
 
       gtk_clist_select_row(GTK_CLIST(paths_dialog->paths_list),
 			   paths_dialog->current_path_list->last_selected_row,
@@ -2869,10 +2865,20 @@ paths_set_path_points(GimpImage * gimage,
     }
   else
     {
+      GDisplay *gdisp;
+
+      /* This is a little HACK.. we need to find a display
+       * to put the path image on.
+       */
+
+      gdisp = gdisplays_check_valid(NULL,gimage);
+
       /* Mark this path as selected */
       plist->last_selected_row = 0;
+      bezier_paste_bezierselect_to_current(gdisp,bezier_sel);
     }
 
+  beziersel_free(bezier_sel);
   return TRUE;
 }
 

@@ -63,9 +63,10 @@ static void      sel2path_reset_callback (GtkWidget *,gpointer);
 static void      dialog_print_selVals(SELVALS *);
 
 gboolean         do_sel2path (gint32,gint32);
-gint             gimp_selection_bounds (gint32,gint *,gint *,gint *,gint *,gint *);
-gint             gimp_selection_is_empty (gint32);
-gint             gimp_path_set_points (gint32,gchar *,gint,gint,gdouble *);
+static gint      gimp_selection_bounds (gint32,gint *,gint *,gint *,gint *,gint *);
+static gint      gimp_selection_is_empty (gint32);
+static gint      gimp_selection_none (gint32);
+static gint      gimp_path_set_points (gint32,gchar *,gint,gint,gdouble *);
 
 
 GPlugInInfo PLUG_IN_INFO =
@@ -598,12 +599,16 @@ do_sel2path(gint32 drawable_ID,gint32 image_ID )
 
   splines = fitted_splines (olt);
 
+  gimp_selection_none(image_ID);
+
+  gimp_displays_flush();
+
   do_points(splines,image_ID);
 
   return TRUE;
 }
 
-gint
+static gint
 gimp_selection_bounds (gint32  image_ID,
 		       gint   *has_sel,
 		       gint   *x1,
@@ -636,7 +641,7 @@ gimp_selection_bounds (gint32  image_ID,
   return result;
 }
 
-gint
+static gint
 gimp_path_set_points (gint32  image_ID,
 		      gchar  *name,
 		      gint    ptype,
@@ -676,7 +681,7 @@ gimp_path_set_points (gint32  image_ID,
   return result;
 }
 
-gint
+static gint
 gimp_selection_is_empty (gint32  image_ID)
 {
   GParam *return_vals;
@@ -684,6 +689,29 @@ gimp_selection_is_empty (gint32  image_ID)
   gint result;
 
   return_vals = gimp_run_procedure ("gimp_selection_is_empty",
+                                    &nreturn_vals,
+                                    PARAM_IMAGE, image_ID,
+                                    PARAM_END);
+  result = FALSE;
+
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+    {
+      result = return_vals[1].data.d_int32; 
+    }
+  
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return result;
+}
+
+static gint
+gimp_selection_none (gint32  image_ID)
+{
+  GParam *return_vals;
+  gint nreturn_vals;
+  gint result;
+
+  return_vals = gimp_run_procedure ("gimp_selection_none",
                                     &nreturn_vals,
                                     PARAM_IMAGE, image_ID,
                                     PARAM_END);
