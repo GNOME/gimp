@@ -30,7 +30,7 @@
 	* app/gui/user-install-dialog.c: changed accordingly.
 
 2002-02-28  Michael Natterer  <mitch@gimp.org>
-            Sven Naumann  <sven@gimp.org>
+            Sven Neumann  <sven@gimp.org>
 
 	* configure.in
 	* themes/Default/images/Makefile.am
