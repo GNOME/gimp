@@ -25,7 +25,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#ifndef GDK_WINDOWING_WIN32
+#ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
 #endif
 
@@ -665,7 +665,7 @@ text_render (GimpImage    *gimage,
   gint         width, height;
   gint         x, y, k;
   void        *pr;
-#ifndef GDK_WINDOWING_WIN32
+#ifdef GDK_WINDOWING_X11
   XFontStruct *xfs;
 #endif
 
@@ -689,7 +689,7 @@ text_render (GimpImage    *gimage,
   /* load the font in */
   gdk_error_warnings = 0;
   gdk_error_code = 0;
-#ifndef GDK_WINDOWING_WIN32
+#ifdef GDK_WINDOWING_X11
   font = gdk_font_load (fontname);
   if (!font)
     {
@@ -917,14 +917,14 @@ text_get_extents (gchar *fontname,
   gchar *str;
   gint   nstrs;
   gint   line_width, line_height;
-#ifndef GDK_WINDOWING_WIN32
+#ifdef GDK_WINDOWING_X11
   XFontStruct *xfs;
 #endif
 
   /* load the font in */
   gdk_error_warnings = 0;
   gdk_error_code = 0;
-#ifndef GDK_WINDOWING_WIN32
+#ifdef GDK_WINDOWING_X11
   font = gdk_font_load (fontname);
   if (!font)
     return FALSE;

@@ -1,3 +1,8 @@
+2001-08-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptexttool.c:
+	s/#ifndef GDK_WINDOWING_WIN32/#ifdef GDK_WINDOWING_X11/
+
 2001-08-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/tga.c: merged fix for small TGA2 files by
