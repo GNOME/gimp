@@ -151,7 +151,15 @@ gimp_config_path_expand (const gchar  *path,
 
   expanded = g_new (gchar, length + 1);
 
-  p = filename;
+  if (filename)
+    {
+      p = filename;
+    }
+  else
+    {
+      p = path;
+    }
+
   n = expanded;
 
   while (*p)

@@ -1,3 +1,8 @@
+2003-09-16  Dave Neary  <bolsh@gimp.org>
+
+	* app/config/gimpconfig-path.c: Fixed a seg fault in an earlier
+	commit.
+
 2003-09-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/brushes-menu.c
