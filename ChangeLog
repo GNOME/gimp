@@ -1,3 +1,8 @@
+2001-07-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/batch.c: bahave like the old batch code and call
+	app_exit(FALSE) when reading from STDIN is finished.
+
 2001-07-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-text-console.c: stop reading on EOF

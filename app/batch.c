@@ -52,6 +52,7 @@ static ProcRecord *eval_proc;
 void
 batch_init (Gimp *gimp)
 {
+  gboolean read_from_stdin             = FALSE;
   gboolean perl_server_already_running = FALSE;
   gint     i;
 
@@ -63,6 +64,8 @@ batch_init (Gimp *gimp)
 
       if (batch_cmds[1])
 	batch_cmds[1] = NULL;
+
+      read_from_stdin = TRUE;
     }
 
   for (i = 0; batch_cmds[i]; i++)
@@ -85,14 +88,17 @@ batch_init (Gimp *gimp)
             continue;
           }
       }
-      
-      if (!eval_proc)
+
+      if (! eval_proc)
         {
           g_message ("script-fu not available: batch mode disabled\n");
           return;
         }
 
       batch_run_cmd (gimp, batch_cmds[i]);
+
+      if (read_from_stdin)
+	app_exit (FALSE);
     }
 }
 
