@@ -56,13 +56,13 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
   GimpDndType    src_type;
 
   if (! gimp_container_view_get_reorderable (GIMP_CONTAINER_VIEW (tree_view)))
-    return FALSE;
+    goto drop_impossible;
 
   target_list = gtk_drag_dest_get_target_list (GTK_WIDGET (tree_view->view));
   target_atom = gtk_drag_dest_find_target (GTK_WIDGET (tree_view->view),
                                            context, target_list);
   if (! gtk_target_list_find (target_list, target_atom, &src_type))
-    return FALSE;
+    goto drop_impossible;
 
   switch (src_type)
     {
@@ -81,12 +81,12 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
         src_widget = gtk_drag_get_source_widget (context);
 
         if (! src_widget)
-          return FALSE;
+          goto drop_impossible;
 
         src_viewable = gimp_dnd_get_drag_data (src_widget);
 
         if (! GIMP_IS_VIEWABLE (src_viewable))
-          return FALSE;
+          goto drop_impossible;
       }
       break;
     }
@@ -152,10 +152,12 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
           return TRUE;
         }
 
-      gdk_drag_status (context, 0, time);
-
       gtk_tree_path_free (path);
     }
+
+ drop_impossible:
+
+  gdk_drag_status (context, 0, time);
 
   return FALSE;
 }
@@ -267,13 +269,14 @@ gimp_container_tree_view_drag_motion (GtkWidget             *widget,
     {
       gtk_tree_view_set_drag_dest_row (tree_view->view, path, drop_pos);
       gtk_tree_path_free (path);
-
-      return TRUE;
+    }
+  else
+    {
+      gtk_tree_view_unset_rows_drag_dest (tree_view->view);
     }
 
-  gtk_tree_view_unset_rows_drag_dest (tree_view->view);
-
-  return FALSE;
+  /*  always return TRUE so drag_leave() is called  */
+  return TRUE;
 }
 
 gboolean

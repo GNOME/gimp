@@ -1,3 +1,18 @@
+2004-09-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainertreeview-dnd.c
+	(gimp_container_tree_view_drop_status): always call
+	gdk_drag_status() before returning FALSE.
+
+	(gimp_container_tree_view_drag_motion): never return FALSE, an
+	impossible drop location is now reported by calling
+	gdk_drag_status() above. Always returning TRUE makes sure
+	gimp_container_tree_view_drag_leave() is called unconditionally
+	and can remove the scroll_timeout set in drag_motion().
+
+	Fixes bug #152193 and many other obscure DND crashes caused by the
+	scroll_timeout being invoked after the widget is destroyed.
+
 2004-09-10  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/xpm.c: improved PDB blurb and help. Very loosely
