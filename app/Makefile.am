@@ -191,7 +191,6 @@ gimp_SOURCES = \
 	gimphelp.h		\
 	gimphistogram.c		\
 	gimphistogram.h		\
-	gimphistogramP.h	\
 	gimplist.c		\
 	gimplist.h		\
 	gimplistP.h		\

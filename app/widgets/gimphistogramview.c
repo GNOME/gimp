@@ -48,8 +48,9 @@
 #define ALL       0xF
 
 
-enum {
-  RANGED,
+enum
+{
+  RANGE_CHANGED,
   LAST_SIGNAL
 };
 
@@ -62,111 +63,120 @@ static void   histogram_widget_init       (HistogramWidget      *histogram);
 /**************************/
 /*  Function definitions  */
 
-guint
+GtkType
 histogram_widget_get_type (void)
 {
-  static guint type = 0;
-  if (!type)
-  {
-    static const GtkTypeInfo info =
+  static GtkType histogram_widet_type = 0;
+
+  if (! histogram_widet_type)
     {
-      "HistogramWidget",
-      sizeof (HistogramWidget),
-      sizeof (HistogramWidgetClass),
-      (GtkClassInitFunc) histogram_widget_class_init,
-      (GtkObjectInitFunc) histogram_widget_init,
-      NULL, NULL
-    };
-    type = gtk_type_unique (gtk_drawing_area_get_type (), &info);
-  }
-  return type;
+      static const GtkTypeInfo info =
+      {
+	"HistogramWidget",
+	sizeof (HistogramWidget),
+	sizeof (HistogramWidgetClass),
+	(GtkClassInitFunc) histogram_widget_class_init,
+	(GtkObjectInitFunc) histogram_widget_init,
+	NULL, NULL
+      };
+
+      histogram_widet_type =
+	gtk_type_unique (gtk_drawing_area_get_type (), &info);
+    }
+
+  return histogram_widet_type;
 }
 
 static void
 histogram_widget_class_init (HistogramWidgetClass *klass)
 {
   GtkObjectClass *object_class;
-  GtkType type;
 
-  object_class = GTK_OBJECT_CLASS(klass);
-  type=object_class->type;
+  object_class = GTK_OBJECT_CLASS (klass);
 
-  histogram_widget_signals[RANGED] = gtk_signal_new("rangechanged",
-						    GTK_RUN_FIRST, /* ? */
-						    type,
-						    0,
-						    gtk_marshal_NONE__INT_INT,
-						    GTK_TYPE_NONE,
-						    2,
-						    GTK_TYPE_INT,
-						    GTK_TYPE_INT);
+  histogram_widget_signals[RANGE_CHANGED] =
+    gtk_signal_new ("range_changed",
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (HistogramWidgetClass, range_changed),
+		    gtk_marshal_NONE__INT_INT,
+		    GTK_TYPE_NONE, 2,
+		    GTK_TYPE_INT,
+		    GTK_TYPE_INT);
 
-  gtk_object_class_add_signals (GTK_OBJECT_CLASS(klass),
+  gtk_object_class_add_signals (GTK_OBJECT_CLASS (klass),
 				histogram_widget_signals, LAST_SIGNAL);
+
+  klass->range_changed = NULL;
 }
 
 static void 
 histogram_widget_init (HistogramWidget *histogram)
 {
   histogram->histogram = NULL;
+  histogram->channel   = GIMP_HISTOGRAM_VALUE;
+  histogram->start     = 0;
+  histogram->end       = 255;
 }
 
 static void
 histogram_widget_draw (HistogramWidget *histogram,
-		       int              update)
+		       gint             update)
 {
-  double max;
-  double v;
-  int i, x, y;
-  int x1, x2;
-  int width, height;
+  gdouble max;
+  gdouble v;
+  gint    i, x, y;
+  gint    x1, x2;
+  gint    width, height;
 
-  width = GTK_WIDGET(histogram)->allocation.width - 2;
-  height = GTK_WIDGET(histogram)->allocation.height - 2;
+  width  = GTK_WIDGET (histogram)->allocation.width - 2;
+  height = GTK_WIDGET (histogram)->allocation.height - 2;
 
   if (update & HISTOGRAM)
     {
       /*  find the maximum value  */
-      max = gimp_histogram_get_maximum(histogram->histogram,
-				       histogram->channel);
+      max = gimp_histogram_get_maximum (histogram->histogram,
+					histogram->channel);
+
       if (max > 0.0)
-	max = log(max);
+	max = log (max);
       else
 	max = 1.0;
 
       /*  clear the histogram  */
-      gdk_window_clear (GTK_WIDGET(histogram)->window);
+      gdk_window_clear (GTK_WIDGET (histogram)->window);
 
       /*  Draw the axis  */
-      gdk_draw_line (GTK_WIDGET(histogram)->window,
-		     GTK_WIDGET(histogram)->style->black_gc,
+      gdk_draw_line (GTK_WIDGET (histogram)->window,
+		     GTK_WIDGET (histogram)->style->black_gc,
 		     1, height + 1, width, height + 1);
 
       /*  Draw the spikes  */
       for (i = 0; i < 256; i++)
 	{
 	  x = (width * i) / 256 + 1;
-	  v = gimp_histogram_get_value(histogram->histogram,
-				       histogram->channel, i);
+	  v = gimp_histogram_get_value (histogram->histogram,
+					histogram->channel, i);
 	  if (v > 0.0)
 	    y = (int) ((height * log (v)) / max);
 	  else
 	    y = 0;
-	  gdk_draw_line (GTK_WIDGET(histogram)->window,
-			 GTK_WIDGET(histogram)->style->black_gc,
+	  gdk_draw_line (GTK_WIDGET (histogram)->window,
+			 GTK_WIDGET (histogram)->style->black_gc,
 			 x, height + 1,
 			 x, height + 1 - y);
 	}
     }
+
   if ((update & RANGE) && histogram->start >= 0)
     {
       x1 = (width * MIN (histogram->start, histogram->end)) / 256 + 1;
       x2 = (width * MAX (histogram->start, histogram->end)) / 256 + 1;
-      gdk_gc_set_function (GTK_WIDGET(histogram)->style->black_gc, GDK_INVERT);
-      gdk_draw_rectangle (GTK_WIDGET(histogram)->window,
-			  GTK_WIDGET(histogram)->style->black_gc, TRUE,
+      gdk_gc_set_function (GTK_WIDGET (histogram)->style->black_gc, GDK_INVERT);
+      gdk_draw_rectangle (GTK_WIDGET (histogram)->window,
+			  GTK_WIDGET (histogram)->style->black_gc, TRUE,
 			  x1, 1, (x2 - x1) + 1, height);
-      gdk_gc_set_function (GTK_WIDGET(histogram)->style->black_gc, GDK_COPY);
+      gdk_gc_set_function (GTK_WIDGET (histogram)->style->black_gc, GDK_COPY);
     }
 }
 
@@ -176,7 +186,7 @@ histogram_widget_events (HistogramWidget *histogram,
 {
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
-  int width;
+  gint            width;
 
   switch (event->type)
     {
@@ -189,12 +199,12 @@ histogram_widget_events (HistogramWidget *histogram,
 
       if (bevent->button != 1)
 	break;
-      
+
       gdk_pointer_grab (GTK_WIDGET (histogram)->window, FALSE, 
 			GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK,
 			NULL, NULL, bevent->time);
 
-      width = GTK_WIDGET(histogram)->allocation.width - 2;
+      width = GTK_WIDGET (histogram)->allocation.width - 2;
 
       histogram_widget_draw (histogram, RANGE);
 
@@ -209,14 +219,15 @@ histogram_widget_events (HistogramWidget *histogram,
 
       gdk_pointer_ungrab (bevent->time);
 
-      gtk_signal_emit(GTK_OBJECT(histogram), histogram_widget_signals[RANGED],
-		      MIN (histogram->start, histogram->end),
-		      MAX (histogram->start, histogram->end));
+      gtk_signal_emit (GTK_OBJECT(histogram),
+		       histogram_widget_signals[RANGE_CHANGED],
+		       MIN (histogram->start, histogram->end),
+		       MAX (histogram->start, histogram->end));
       break;
 
     case GDK_MOTION_NOTIFY:
       mevent = (GdkEventMotion *) event;
-      width = GTK_WIDGET(histogram)->allocation.width - 2;
+      width = GTK_WIDGET (histogram)->allocation.width - 2;
 
       histogram_widget_draw (histogram, RANGE);
 
@@ -233,31 +244,21 @@ histogram_widget_events (HistogramWidget *histogram,
 }
 
 HistogramWidget *
-histogram_widget_new (int width,
-		      int height)
+histogram_widget_new (gint width,
+		      gint height)
 {
-  HistogramWidget *histogram 
-    = HISTOGRAM_WIDGET(gtk_type_new(histogram_widget_get_type()));
+  HistogramWidget *histogram;
+
+  histogram = HISTOGRAM_WIDGET (gtk_type_new (HISTOGRAM_WIDGET_TYPE));
 
   gtk_drawing_area_size (GTK_DRAWING_AREA (histogram), width + 2, height + 2);
-  gtk_widget_set_events (GTK_WIDGET(histogram), HISTOGRAM_MASK);
-  gtk_signal_connect (GTK_OBJECT (histogram), "event",
-		      (GtkSignalFunc) histogram_widget_events, histogram);
+  gtk_widget_set_events (GTK_WIDGET (histogram), HISTOGRAM_MASK);
 
-  /*  The private details of the histogram  */
-  histogram->channel = HISTOGRAM_VALUE;
-  histogram->start = 0;
-  histogram->end = 255;
-  histogram->histogram = NULL;
+  gtk_signal_connect (GTK_OBJECT (histogram), "event",
+		      GTK_SIGNAL_FUNC (histogram_widget_events),
+		      histogram);
 
   return histogram;
-}
-
-void
-histogram_widget_destroy (HistogramWidget *histogram)
-{
-  gtk_widget_destroy (GTK_WIDGET(histogram));
-  g_free (histogram);
 }
 
 void
@@ -265,28 +266,33 @@ histogram_widget_update (HistogramWidget *histogram_widget,
 			 GimpHistogram   *hist)
 {
   histogram_widget->histogram = hist;
+
   if (!hist)
     return;
-  if (histogram_widget->channel >= gimp_histogram_nchannels(hist))
-    histogram_widget_channel(histogram_widget, 0);
+
+  if (histogram_widget->channel >= gimp_histogram_nchannels (hist))
+    histogram_widget_channel (histogram_widget, 0);
+
   /*  Make sure the histogram is updated  */
-  gtk_widget_draw (GTK_WIDGET(histogram_widget), NULL);
+  gtk_widget_draw (GTK_WIDGET (histogram_widget), NULL);
 
   /*  Give a range callback  */
-  gtk_signal_emit(GTK_OBJECT(histogram_widget),
-		  histogram_widget_signals[RANGED],
-		  MIN (histogram_widget->start, histogram_widget->end),
-		  MAX (histogram_widget->start, histogram_widget->end));
+  gtk_signal_emit (GTK_OBJECT (histogram_widget),
+		   histogram_widget_signals[RANGE_CHANGED],
+		   MIN (histogram_widget->start, histogram_widget->end),
+		   MAX (histogram_widget->start, histogram_widget->end));
 }
 
 void
 histogram_widget_range (HistogramWidget *histogram,
-			int              start,
-			int              end)
+			gint             start,
+			gint             end)
 {
   histogram_widget_draw (histogram, RANGE);
+
   histogram->start = start;
-  histogram->end = end;
+  histogram->end   = end;
+
   histogram_widget_draw (histogram, RANGE);
 }
 
@@ -298,9 +304,10 @@ histogram_widget_channel (HistogramWidget *histogram,
   histogram_widget_draw (histogram, ALL);
 
   /*  Give a range callback  */
-  gtk_signal_emit(GTK_OBJECT(histogram), histogram_widget_signals[RANGED],
-		  MIN (histogram->start, histogram->end),
-		  MAX (histogram->start, histogram->end));
+  gtk_signal_emit (GTK_OBJECT (histogram),
+		   histogram_widget_signals[RANGE_CHANGED],
+		   MIN (histogram->start, histogram->end),
+		   MAX (histogram->start, histogram->end));
 }
 
 GimpHistogram *

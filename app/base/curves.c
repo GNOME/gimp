@@ -214,20 +214,20 @@ curves_colour_update (Tool           *tool,
   is_indexed  = gimp_drawable_is_indexed (drawable);
   has_alpha   = GIMP_IMAGE_TYPE_HAS_ALPHA (sample_type);
 
-  curves_dialog->col_value[HISTOGRAM_RED] = color[RED_PIX];
-  curves_dialog->col_value[HISTOGRAM_GREEN] = color[GREEN_PIX];
-  curves_dialog->col_value[HISTOGRAM_BLUE] = color[BLUE_PIX];
+  curves_dialog->col_value[GIMP_HISTOGRAM_RED] = color[RED_PIX];
+  curves_dialog->col_value[GIMP_HISTOGRAM_GREEN] = color[GREEN_PIX];
+  curves_dialog->col_value[GIMP_HISTOGRAM_BLUE] = color[BLUE_PIX];
 
   if (has_alpha)
     {
-      curves_dialog->col_value [HISTOGRAM_ALPHA] = color[3];
+      curves_dialog->col_value [GIMP_HISTOGRAM_ALPHA] = color[3];
     }
 
   if (is_indexed)
-    curves_dialog->col_value [HISTOGRAM_ALPHA] = color[4];
+    curves_dialog->col_value [GIMP_HISTOGRAM_ALPHA] = color[4];
 
   maxval = MAX (color[RED_PIX], color[GREEN_PIX]);
-  curves_dialog->col_value[HISTOGRAM_VALUE] = MAX (maxval, color[BLUE_PIX]);
+  curves_dialog->col_value[GIMP_HISTOGRAM_VALUE] = MAX (maxval, color[BLUE_PIX]);
 
   g_free (color);
 }
@@ -335,11 +335,11 @@ curves_button_release (Tool           *tool,
     }
   else if (bevent->state & GDK_CONTROL_MASK)
     {
-      curves_add_point (drawable, x, y, HISTOGRAM_VALUE);
-      curves_add_point (drawable, x, y, HISTOGRAM_RED);
-      curves_add_point (drawable, x, y, HISTOGRAM_GREEN);
-      curves_add_point (drawable, x, y, HISTOGRAM_BLUE);
-      curves_add_point (drawable, x, y, HISTOGRAM_ALPHA);
+      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_VALUE);
+      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_RED);
+      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_GREEN);
+      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_BLUE);
+      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_ALPHA);
       curves_calculate_curve (curves_dialog);
     }
 
@@ -455,7 +455,7 @@ curves_initialize (GDisplay *gdisp)
       curves_dialog = curves_dialog_new ();
 
       /*  Initialize the values  */
-      curves_dialog->channel = HISTOGRAM_VALUE;
+      curves_dialog->channel = GIMP_HISTOGRAM_VALUE;
       for (i = 0; i < 5; i++)
         for (j = 0; j < 256; j++)
           curves_dialog->curve[i][j] = j;
@@ -547,7 +547,7 @@ curves_dialog_new (void)
   cd->cursor_ind_width  = -1;
   cd->preview           = TRUE;
   cd->pixmap            = NULL;
-  cd->channel           = HISTOGRAM_VALUE;
+  cd->channel           = GIMP_HISTOGRAM_VALUE;
 
   for (i = 0; i < 5; i++)
     cd->curve_type[i] = SMOOTH;
@@ -591,11 +591,11 @@ curves_dialog_new (void)
     (FALSE, curves_channel_callback,
      cd, (gpointer) cd->channel,
 
-     _("Value"), (gpointer) HISTOGRAM_VALUE, &channel_items[0],
-     _("Red"),   (gpointer) HISTOGRAM_RED,   &channel_items[1],
-     _("Green"), (gpointer) HISTOGRAM_GREEN, &channel_items[2],
-     _("Blue"),  (gpointer) HISTOGRAM_BLUE,  &channel_items[3],
-     _("Alpha"), (gpointer) HISTOGRAM_ALPHA, &channel_items[4],
+     _("Value"), (gpointer) GIMP_HISTOGRAM_VALUE, &channel_items[0],
+     _("Red"),   (gpointer) GIMP_HISTOGRAM_RED,   &channel_items[1],
+     _("Green"), (gpointer) GIMP_HISTOGRAM_GREEN, &channel_items[2],
+     _("Blue"),  (gpointer) GIMP_HISTOGRAM_BLUE,  &channel_items[3],
+     _("Alpha"), (gpointer) GIMP_HISTOGRAM_ALPHA, &channel_items[4],
 
      NULL);
 
@@ -796,9 +796,9 @@ curves_update (CurvesDialog *cd,
     sel_channel = cd->channel;
   } else {
     if(cd->channel == 2)
-      sel_channel = HISTOGRAM_ALPHA;
+      sel_channel = GIMP_HISTOGRAM_ALPHA;
     else
-      sel_channel = HISTOGRAM_VALUE;
+      sel_channel = GIMP_HISTOGRAM_VALUE;
   }
 
 
@@ -808,8 +808,8 @@ curves_update (CurvesDialog *cd,
 
       switch (sel_channel)
 	{
-	case HISTOGRAM_VALUE:
-	case HISTOGRAM_ALPHA:
+	case GIMP_HISTOGRAM_VALUE:
+	case GIMP_HISTOGRAM_ALPHA:
 	  for (i = 0; i < XRANGE_HEIGHT / 2; i++)
 	    {
 	      for (j = 0; j < XRANGE_WIDTH ; j++)
@@ -823,17 +823,17 @@ curves_update (CurvesDialog *cd,
 	    }
 	  break;
 
-	case HISTOGRAM_RED:
-	case HISTOGRAM_GREEN:
-	case HISTOGRAM_BLUE:
+	case GIMP_HISTOGRAM_RED:
+	case GIMP_HISTOGRAM_GREEN:
+	case GIMP_HISTOGRAM_BLUE:
 	  {
 	    for (i = 0; i < XRANGE_HEIGHT / 2; i++)
 	      {
 		for (j = 0; j < XRANGE_WIDTH; j++)
 		  {
-		    buf[j*3+0] = cd->curve[HISTOGRAM_RED][j];
-		    buf[j*3+1] = cd->curve[HISTOGRAM_GREEN][j];
-		    buf[j*3+2] = cd->curve[HISTOGRAM_BLUE][j];
+		    buf[j*3+0] = cd->curve[GIMP_HISTOGRAM_RED][j];
+		    buf[j*3+1] = cd->curve[GIMP_HISTOGRAM_GREEN][j];
+		    buf[j*3+2] = cd->curve[GIMP_HISTOGRAM_BLUE][j];
 		  }
 		gtk_preview_draw_row (GTK_PREVIEW (cd->xrange),
 				      buf, 0, i, XRANGE_WIDTH);
@@ -888,14 +888,14 @@ curves_update (CurvesDialog *cd,
 	{
 	  switch (sel_channel)
 	    {
-	    case HISTOGRAM_VALUE:
-	    case HISTOGRAM_ALPHA:
+	    case GIMP_HISTOGRAM_VALUE:
+	    case GIMP_HISTOGRAM_ALPHA:
 	      pix[0] = pix[1] = pix[2] = (255 - i);
 	      break;
 
-	    case HISTOGRAM_RED:
-	    case HISTOGRAM_GREEN:
-	    case HISTOGRAM_BLUE:
+	    case GIMP_HISTOGRAM_RED:
+	    case GIMP_HISTOGRAM_GREEN:
+	    case GIMP_HISTOGRAM_BLUE:
 	      pix[0] = pix[1] = pix[2] = 0;
 	      pix[sel_channel - 1] = (255 - i);
 	      break;

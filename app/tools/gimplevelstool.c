@@ -253,7 +253,7 @@ levels_initialize (GDisplay *gdisp)
       gtk_widget_show (levels_dialog->shell);
 
   /*  Initialize the values  */
-  levels_dialog->channel = HISTOGRAM_VALUE;
+  levels_dialog->channel = GIMP_HISTOGRAM_VALUE;
   for (i = 0; i < 5; i++)
     {
       levels_dialog->low_input[i]   = 0;
@@ -263,8 +263,8 @@ levels_initialize (GDisplay *gdisp)
       levels_dialog->high_output[i] = 255;
     }
 
-  levels_dialog->drawable = gimage_active_drawable (gdisp->gimage);
-  levels_dialog->color = drawable_color (levels_dialog->drawable);
+  levels_dialog->drawable  = gimage_active_drawable (gdisp->gimage);
+  levels_dialog->color     = drawable_color (levels_dialog->drawable);
   levels_dialog->image_map = image_map_create (gdisp, levels_dialog->drawable);
 
   /* check for alpha channel */
@@ -331,8 +331,8 @@ levels_dialog_new (void)
   GtkWidget *spinbutton;
   GtkObject *data;
 
-  ld = g_new (LevelsDialog, 1);
-  ld->channel = HISTOGRAM_VALUE;
+  ld = g_new0 (LevelsDialog, 1);
+  ld->channel = GIMP_HISTOGRAM_VALUE;
   ld->preview = TRUE;
   ld->lut     = gimp_lut_new ();
   ld->hist    = gimp_histogram_new ();
@@ -375,11 +375,11 @@ levels_dialog_new (void)
     (FALSE, levels_channel_callback,
      ld, (gpointer) ld->channel,
 
-     _("Value"), (gpointer) HISTOGRAM_VALUE, &color_option_items[0],
-     _("Red"),   (gpointer) HISTOGRAM_RED,   &color_option_items[1],
-     _("Green"), (gpointer) HISTOGRAM_GREEN, &color_option_items[2],
-     _("Blue"),  (gpointer) HISTOGRAM_BLUE,  &color_option_items[3],
-     _("Alpha"), (gpointer) HISTOGRAM_ALPHA, &color_option_items[4],
+     _("Value"), (gpointer) GIMP_HISTOGRAM_VALUE, &color_option_items[0],
+     _("Red"),   (gpointer) GIMP_HISTOGRAM_RED,   &color_option_items[1],
+     _("Green"), (gpointer) GIMP_HISTOGRAM_GREEN, &color_option_items[2],
+     _("Blue"),  (gpointer) GIMP_HISTOGRAM_BLUE,  &color_option_items[3],
+     _("Alpha"), (gpointer) GIMP_HISTOGRAM_ALPHA, &color_option_items[4],
 
      NULL);
   gtk_box_pack_start (GTK_BOX (channel_hbox), ld->channel_menu, FALSE, FALSE, 0);
@@ -699,9 +699,9 @@ levels_update (LevelsDialog *ld,
     sel_channel = ld->channel;
   } else {
     if(ld->channel == 2)
-      sel_channel = HISTOGRAM_ALPHA;
+      sel_channel = GIMP_HISTOGRAM_ALPHA;
     else
-      sel_channel = HISTOGRAM_VALUE;
+      sel_channel = GIMP_HISTOGRAM_VALUE;
   }
 
   /*  Recalculate the transfer arrays  */
@@ -745,8 +745,8 @@ levels_update (LevelsDialog *ld,
 	default:
 	  g_warning ("unknown channel type, can't happen\n");
 	  /* fall through */
-	case HISTOGRAM_VALUE:
-	case HISTOGRAM_ALPHA:
+	case GIMP_HISTOGRAM_VALUE:
+	case GIMP_HISTOGRAM_ALPHA:
 	  for (i = 0; i < DA_WIDTH; i++)
 	    {
 	      buf[3*i+0] = ld->input[sel_channel][i];
@@ -755,14 +755,14 @@ levels_update (LevelsDialog *ld,
 	    }
 	  break;
 
-	case HISTOGRAM_RED:
-	case HISTOGRAM_GREEN:
-	case HISTOGRAM_BLUE:	  
+	case GIMP_HISTOGRAM_RED:
+	case GIMP_HISTOGRAM_GREEN:
+	case GIMP_HISTOGRAM_BLUE:	  
 	  for (i = 0; i < DA_WIDTH; i++)
 	    {
-	      buf[3*i+0] = ld->input[HISTOGRAM_RED][i];
-	      buf[3*i+1] = ld->input[HISTOGRAM_GREEN][i];
-	      buf[3*i+2] = ld->input[HISTOGRAM_BLUE][i];
+	      buf[3*i+0] = ld->input[GIMP_HISTOGRAM_RED][i];
+	      buf[3*i+1] = ld->input[GIMP_HISTOGRAM_GREEN][i];
+	      buf[3*i+2] = ld->input[GIMP_HISTOGRAM_BLUE][i];
 	    }
 	  break;
 	}
@@ -797,11 +797,11 @@ levels_update (LevelsDialog *ld,
 	default:
 	  g_warning ("unknown channel type, can't happen\n");
 	  /* fall through */
-	case HISTOGRAM_VALUE:
-	case HISTOGRAM_ALPHA:  r = g = b = 1; break;
-	case HISTOGRAM_RED:    r = 1;         break;
-	case HISTOGRAM_GREEN:  g = 1;         break;
-	case HISTOGRAM_BLUE:   b = 1;         break;
+	case GIMP_HISTOGRAM_VALUE:
+	case GIMP_HISTOGRAM_ALPHA:  r = g = b = 1; break;
+	case GIMP_HISTOGRAM_RED:    r = 1;         break;
+	case GIMP_HISTOGRAM_GREEN:  g = 1;         break;
+	case GIMP_HISTOGRAM_BLUE:   b = 1;         break;
 	}
 
       for (i = 0; i < DA_WIDTH; i++)
@@ -1065,17 +1065,17 @@ levels_auto_callback (GtkWidget *widget,
   if (ld->color)
     {
       /*  Set the overall value to defaults  */
-      ld->low_input[HISTOGRAM_VALUE]   = 0;
-      ld->gamma[HISTOGRAM_VALUE]       = 1.0;
-      ld->high_input[HISTOGRAM_VALUE]  = 255;
-      ld->low_output[HISTOGRAM_VALUE]  = 0;
-      ld->high_output[HISTOGRAM_VALUE] = 255;
+      ld->low_input[GIMP_HISTOGRAM_VALUE]   = 0;
+      ld->gamma[GIMP_HISTOGRAM_VALUE]       = 1.0;
+      ld->high_input[GIMP_HISTOGRAM_VALUE]  = 255;
+      ld->low_output[GIMP_HISTOGRAM_VALUE]  = 0;
+      ld->high_output[GIMP_HISTOGRAM_VALUE] = 255;
 
       for (channel = 0; channel < 3; channel ++)
 	levels_adjust_channel (ld, ld->hist, channel + 1);
     }
   else
-    levels_adjust_channel (ld, ld->hist, HISTOGRAM_VALUE);
+    levels_adjust_channel (ld, ld->hist, GIMP_HISTOGRAM_VALUE);
 
   levels_update (ld, ALL);
   if (ld->preview)

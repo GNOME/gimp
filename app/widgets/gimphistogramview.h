@@ -15,57 +15,62 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __HISTOGRAM_WIDGET_H__
 #define __HISTOGRAM_WIDGET_H__
 
 #include <gtk/gtkdrawingarea.h>
+
 #include "gimphistogram.h"
 
-#define HISTOGRAM_WIDGET(obj) \
- GTK_CHECK_CAST (obj, histogram_widget_get_type (), HistogramWidget)
-#define HISTOGRAM_WIDGET_CLASS(klass) \
- GTK_CHECK_CLASS_CAST (klass, histogram_widget_get_type (), HistogramWidget)
-#define IS_HISTOGRAM_WIDGET(obj) \
- GTK_CHECK_TYPE (obj, histogram_widget_get_type ())
 
-typedef struct _HistogramWidget HistogramWidget;
+#define HISTOGRAM_WIDGET_TYPE         (histogram_widget_get_type ())
+#define HISTOGRAM_WIDGET(obj)         GTK_CHECK_CAST (obj, histogram_widget_get_type (), HistogramWidget)
+#define HISTOGRAM_WIDGET_CLASS(klass) GTK_CHECK_CLASS_CAST (klass, histogram_widget_get_type (), HistogramWidget)
+#define IS_HISTOGRAM_WIDGET(obj)      GTK_CHECK_TYPE (obj, histogram_widget_get_type ())
+
+typedef struct _HistogramWidget      HistogramWidget;
 typedef struct _HistogramWidgetClass HistogramWidgetClass;
 
-typedef struct _hist Histogram;
 
 /* HistogramWidget signals:
-     rangechanged
+     range_changed
 */
 
 struct _HistogramWidget
 {
   GtkDrawingArea drawingarea;
 
-  int                     channel;
-  GimpHistogram          *histogram;
-  int                     start;
-  int                     end;
+  GimpHistogram        *histogram;
+  GimpHistogramChannel  channel;
+  gint                  start;
+  gint                  end;
 };
 
 struct _HistogramWidgetClass
 {
   GtkDrawingAreaClass parent_class;
+
+  void (* range_changed) (HistogramWidget *hw,
+			  gint             start,
+			  gint             end);
 };
 
 
 /*  Histogram functions  */
 
-guint histogram_widget_get_type ();
+GtkType           histogram_widget_get_type  (void);
 
-HistogramWidget *histogram_widget_new       (int width, int height);
-void             histogram_widget_update    (HistogramWidget *,
-					     GimpHistogram *);
-void             histogram_widget_range     (HistogramWidget *, int, int);
-void             histogram_widget_channel   (HistogramWidget *, int);
-GimpHistogram   *histogram_widget_histogram (HistogramWidget *);
+HistogramWidget * histogram_widget_new       (gint             width,
+					      gint             height);
+void              histogram_widget_update    (HistogramWidget *hw,
+					      GimpHistogram   *histogram);
+void              histogram_widget_range     (HistogramWidget *hw,
+					      gint             start,
+					      gint             end);
+void              histogram_widget_channel   (HistogramWidget *hw,
+					      gint             channel);
+GimpHistogram   * histogram_widget_histogram (HistogramWidget *hw);
+
 
 #endif /* __HISTOGRAM_WIDGET_H__ */
-
-
-
-

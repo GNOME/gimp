@@ -78,15 +78,17 @@ histogram_tool_histogram_range (HistogramWidget *widget,
       gimp_histogram_nchannels(htd->hist) <= 0)
     return;
 
-  pixels = gimp_histogram_get_count(htd->hist, 0, 255);
-  count = gimp_histogram_get_count(htd->hist, start, end);
+  pixels = gimp_histogram_get_count (htd->hist, 0, 255);
+  count  = gimp_histogram_get_count (htd->hist, start, end);
 
-  htd->mean = gimp_histogram_get_mean(htd->hist, htd->channel, start, end);
-  htd->std_dev = gimp_histogram_get_std_dev(htd->hist, htd->channel,
-					    start, end);
-  htd->median = gimp_histogram_get_median(htd->hist, htd->channel, start, end);
-  htd->pixels = pixels;
-  htd->count = count;
+  htd->mean       = gimp_histogram_get_mean (htd->hist, htd->channel,
+					     start, end);
+  htd->std_dev    = gimp_histogram_get_std_dev (htd->hist, htd->channel,
+						start, end);
+  htd->median     = gimp_histogram_get_median (htd->hist, htd->channel,
+					       start, end);
+  htd->pixels     = pixels;
+  htd->count      = count;
   htd->percentile = count / pixels;
 
   if (htd->shell)
@@ -266,7 +268,7 @@ histogram_tool_dialog_new (void)
   };
 
   htd = g_new (HistogramToolDialog, 1);
-  htd->channel = HISTOGRAM_VALUE;
+  htd->channel = GIMP_HISTOGRAM_VALUE;
   htd->hist    = gimp_histogram_new ();
 
   /*  The shell and main vbox  */
@@ -303,10 +305,10 @@ histogram_tool_dialog_new (void)
     (FALSE, histogram_tool_channel_callback,
      htd, (gpointer) htd->channel,
 
-     _("Value"), (gpointer) HISTOGRAM_VALUE, NULL,
-     _("Red"),   (gpointer) HISTOGRAM_RED, NULL,
-     _("Green"), (gpointer) HISTOGRAM_GREEN, NULL,
-     _("Blue"),  (gpointer) HISTOGRAM_BLUE, NULL,
+     _("Value"), (gpointer) GIMP_HISTOGRAM_VALUE, NULL,
+     _("Red"),   (gpointer) GIMP_HISTOGRAM_RED, NULL,
+     _("Green"), (gpointer) GIMP_HISTOGRAM_GREEN, NULL,
+     _("Blue"),  (gpointer) GIMP_HISTOGRAM_BLUE, NULL,
 
      NULL);
   gtk_box_pack_start (GTK_BOX (htd->channel_menu), option_menu, FALSE, FALSE, 0);
@@ -322,7 +324,7 @@ histogram_tool_dialog_new (void)
   htd->histogram = histogram_widget_new (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT);
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET(htd->histogram));
 
-  gtk_signal_connect (GTK_OBJECT (htd->histogram), "rangechanged",
+  gtk_signal_connect (GTK_OBJECT (htd->histogram), "range_changed",
 		      GTK_SIGNAL_FUNC (histogram_tool_histogram_range),
 		      htd);
 
@@ -343,7 +345,7 @@ histogram_tool_dialog_new (void)
   gtk_widget_show (htd->gradient);
   gtk_widget_show (frame);
   gtk_widget_show (grad_hbox);
-  histogram_tool_gradient_draw (htd->gradient, HISTOGRAM_VALUE);
+  histogram_tool_gradient_draw (htd->gradient, GIMP_HISTOGRAM_VALUE);
 
   gtk_widget_show (vbox);
   gtk_widget_show (hbox);
@@ -418,16 +420,16 @@ histogram_tool_gradient_draw (GtkWidget *gradient,
   gint i;
 
   r = g = b = 0;
-  switch (channel) 
+  switch (channel)
     {
-    case HISTOGRAM_VALUE:
-    case HISTOGRAM_ALPHA:  r = g = b = 1; 
+    case GIMP_HISTOGRAM_VALUE:
+    case GIMP_HISTOGRAM_ALPHA:  r = g = b = 1;
       break;
-    case HISTOGRAM_RED:    r = 1;         
+    case GIMP_HISTOGRAM_RED:    r = 1;
       break;
-    case HISTOGRAM_GREEN:  g = 1;         
+    case GIMP_HISTOGRAM_GREEN:  g = 1;
       break;
-    case HISTOGRAM_BLUE:   b = 1;        
+    case GIMP_HISTOGRAM_BLUE:   b = 1;
       break;
     default:
       g_warning ("unknown channel type, can't happen\n");
