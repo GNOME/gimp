@@ -605,24 +605,24 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
 {
   GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
   gchar          *name;
-  gchar          *label;
 
   dialog->file_proc = gimp_file_proc_view_get_proc (view, &name);
-  if (! dialog->file_proc)
-    return;
 
-  label = g_strdup_printf (_("Select File _Type (%s)"), name);
+  if (name)
+    {
+      gchar *label = g_strdup_printf (_("Select File _Type (%s)"), name);
 
-  gtk_expander_set_label (GTK_EXPANDER (dialog->proc_expander), label);
+      gtk_expander_set_label (GTK_EXPANDER (dialog->proc_expander), label);
 
-  g_free (label);
-  g_free (name);
+      g_free (label);
+      g_free (name);
+    }
 
   if (gtk_file_chooser_get_action (chooser) == GTK_FILE_CHOOSER_ACTION_SAVE)
     {
       PlugInProcDef *proc = dialog->file_proc;
 
-      if (proc->extensions_list)
+      if (proc && proc->extensions_list)
         {
           gchar *uri = gtk_file_chooser_get_uri (chooser);
 

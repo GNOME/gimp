@@ -1,6 +1,11 @@
 2004-11-15  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_proc_changed):
+	better fix for bug #158369.
+
+2004-11-15  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_proc_changed):
 	return early if gimp_file_proc_view_get_proc() didn't return a file
 	procedure. Should fix bug #158369.
 
