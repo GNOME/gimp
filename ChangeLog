@@ -1,3 +1,7 @@
+Tue Mar 17 01:38:18 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* updated gif, animationplay, animoptimize, and bmp plugins
+
 Mon Mar 16 21:52:46 CST 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/convert.c (indexed_ok_callback): added gimage_ID to the

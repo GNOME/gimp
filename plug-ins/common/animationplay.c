@@ -1,5 +1,5 @@
 /*
- * Animation Playback plug-in version 0.84.0
+ * Animation Playback plug-in version 0.85.0
  *
  * by Adam D. Moss, 1997-98
  *     adam@gimp.org
@@ -10,6 +10,9 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 98.03.16 : version 0.85.0
+ *            Implemented some more rare opaque/alpha combinations.
  *
  * 98.03.15 : version 0.84.0
  *            Tried to clear up the GTK object/cast warnings.  Only
@@ -619,6 +622,24 @@ render_frame(gint32 whichframe)
 	  else
 	    {
 	      /* noalpha */
+	      
+	      srcptr = rawframe;
+	      
+	      for (j=rawy; j<rawheight+rawy; j++)
+		{
+		  for (i=rawx; i<rawwidth+rawx; i++)
+		    {
+		      if ((i>=0 && i<width) &&
+			  (j>=0 && j<height))
+			{
+			  preview_data[(j*width+i)*3   ] = *(srcptr);
+			  preview_data[(j*width+i)*3 +1] = *(srcptr+1);
+			  preview_data[(j*width+i)*3 +2] = *(srcptr+2);
+			}
+		      
+		      srcptr += 3;
+		    }
+		}
 	    }
 	  
 	  /* Display the preview buffer... finally. */
@@ -736,6 +757,27 @@ render_frame(gint32 whichframe)
 	  else
 	    {
 	      /* noalpha */
+
+	      srcptr = rawframe;
+	      
+	      for (j=rawy; j<rawheight+rawy; j++)
+		{
+		  for (i=rawx; i<rawwidth+rawx; i++)
+		    {
+		      if ((i>=0 && i<width) &&
+			  (j>=0 && j<height))
+			{
+			  preview_data[(j*width+i)*3   ] =
+			    palette[3*(*(srcptr))];
+			  preview_data[(j*width+i)*3 +1] =
+			    palette[1+3*(*(srcptr))];
+			  preview_data[(j*width+i)*3 +2] =
+			    palette[2+3*(*(srcptr))];
+			}
+		      
+		      srcptr ++;
+		    }
+		}
 	    }
 	  
 	  /* Display the preview buffer... finally. */

@@ -1,7 +1,7 @@
 /*
- * Animation Optimizer plug-in version 0.60.0
+ * Animation Optimizer plug-in version 0.61.0
  *
- * by Adam D. Moss, 1997
+ * by Adam D. Moss, 1997-98
  *     adam@gimp.org
  *     adam@foxbox.org
  *
@@ -10,6 +10,9 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 98.03.16 : version 0.61.0
+ *            Support more rare opaque/transparent combinations.
  *
  * 97.12.09 : version 0.60.0
  *            Added support for INDEXED* and GRAY* images.
@@ -594,9 +597,26 @@ do_optimizations(void)
 	      else
 		{
 		  /* RGB no alpha, diff size */
-		  /* SHOULDN'T OCCUR - GIMP doesn't let you have
-		   *  non-alpha layers, except for the bottom one
-		   */
+	      
+		  destptr = this_frame;
+		  srcptr = rawframe;
+	      
+		  for (j=rawy; j<rawheight+rawy; j++)
+		    {
+		      for (i=rawx; i<rawwidth+rawx; i++)
+			{
+			  if ((i>=0 && i<width) &&
+			      (j>=0 && j<height))
+			    {
+			      this_frame[(j*width+i)*4   ] = *(srcptr);
+			      this_frame[(j*width+i)*4 +1] = *(srcptr+1);
+			      this_frame[(j*width+i)*4 +2] = *(srcptr+2);
+			      this_frame[(j*width+i)*4 +3] = 255;
+			    }
+		      
+			  srcptr += 3;
+			}
+		    }
 		}
 	    }
 	  break; /* case RGB */
@@ -682,9 +702,25 @@ do_optimizations(void)
 	      else
 		{
 		  /* I, no alpha, diff size */
-		  /* SHOULDN'T OCCUR - GIMP doesn't let you have
-		   *  non-alpha layers, except for the bottom one
-		   */
+	      
+		  srcptr = rawframe;
+	      
+		  for (j=rawy; j<rawheight+rawy; j++)
+		    {
+		      for (i=rawx; i<rawwidth+rawx; i++)
+			{
+			  if ((i>=0 && i<width) &&
+			      (j>=0 && j<height))
+			    {
+			      this_frame[(j*width+i)*pixelstep]
+				= *srcptr;
+			      this_frame[(j*width+i)*pixelstep
+					+ pixelstep - 1] = 255;
+			    }
+		      
+			  srcptr ++;
+			}
+		    }
 		}
 	    }
 	  break; /* case INDEXED/GRAY */

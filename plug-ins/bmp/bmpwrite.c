@@ -37,16 +37,6 @@ static void   save_ok_callback     (GtkWidget *widget,
 static void   save_toggle_update   (GtkWidget *widget,
                                     gpointer   data);
 
-/*
-static void item_callback (int, void *, void *);
-static void ok_callback (int, void *, void *);
-static void cancel_callback (int, void *, void *);
-
-static int dialog_ID;
-static int group_ID;
-static int encoded_ID;
-*/
-
 gint
 WriteBMP (filename,image,drawable_ID)
      char *filename;
@@ -64,6 +54,7 @@ WriteBMP (filename,image,drawable_ID)
   GPixelRgn pixel_rgn;
   GDrawable *drawable;
   GDrawableType drawable_type;
+  guchar puffer[50];
   int i;
 
   /* first: can we save this image? */
@@ -146,10 +137,13 @@ WriteBMP (filename,image,drawable_ID)
   
   /* And let's begin the progress */
   
-  temp_buf = g_malloc (strlen (filename) + 11);
-  sprintf (temp_buf, "Saving %s:", filename);
-  gimp_progress_init (temp_buf);
-  g_free (temp_buf);
+  if (interactive_bmp)
+    {
+      temp_buf = g_malloc (strlen (filename) + 11);
+      sprintf (temp_buf, "Saving %s:", filename);
+      gimp_progress_init (temp_buf);
+      g_free (temp_buf);
+    }
   cur_progress = 0;
   max_progress = drawable->height;
   
@@ -168,7 +162,8 @@ WriteBMP (filename,image,drawable_ID)
   Bitmap_File_Head.biSize=40;		
   Bitmap_Head.biWidth=cols;
   Bitmap_Head.biHeight=rows;
-  Bitmap_Head.biPlanes_biBitCnt=(BitsPerPixel << 16) + 1;
+  Bitmap_Head.biPlanes=1;
+  Bitmap_Head.biBitCnt=BitsPerPixel;
   if (encoded==0) Bitmap_Head.biCompr=0;
   else if (BitsPerPixel==8) Bitmap_Head.biCompr=1;
   else if (BitsPerPixel==4) Bitmap_Head.biCompr=2;
@@ -182,15 +177,33 @@ WriteBMP (filename,image,drawable_ID)
   
 #ifdef DEBUG
   printf("\nSize: %u, Colors: %u, Bits: %u, Width: %u, Height: %u, Comp: %u, Zeile: %u\n",
-         Bitmap_File_Head.bfSize,Bitmap_Head.biClrUsed,biBitCnt,Bitmap_Head.biWidth,
+         Bitmap_File_Head.bfSize,Bitmap_Head.biClrUsed,Bitmap_Head.biBitCnt,Bitmap_Head.biWidth,
          Bitmap_Head.biHeight, Bitmap_Head.biCompr,SpZeile);
 #endif
   
   /* And now write the header and the colormap (if any) to disk */
   
   WriteOK(outfile,"BM",2);
-  WriteOK(outfile,&Bitmap_File_Head,16);
-  WriteOK(outfile,&Bitmap_Head,36);
+
+  FromL(Bitmap_File_Head.bfSize,&puffer[0x00]);
+  FromL(Bitmap_File_Head.reserverd,&puffer[0x04]);
+  FromL(Bitmap_File_Head.bfOffs,&puffer[0x08]);
+  FromL(Bitmap_File_Head.biSize,&puffer[0x0C]);
+
+  WriteOK(outfile,puffer,16);
+
+  FromL(Bitmap_Head.biWidth,&puffer[0x00]);
+  FromL(Bitmap_Head.biHeight,&puffer[0x04]);
+  FromS(Bitmap_Head.biPlanes,&puffer[0x08]);
+  FromS(Bitmap_Head.biBitCnt,&puffer[0x0A]);
+  FromL(Bitmap_Head.biCompr,&puffer[0x0C]);
+  FromL(Bitmap_Head.biSizeIm,&puffer[0x10]);
+  FromL(Bitmap_Head.biXPels,&puffer[0x14]);
+  FromL(Bitmap_Head.biYPels,&puffer[0x18]);
+  FromL(Bitmap_Head.biClrUsed,&puffer[0x1C]);
+  FromL(Bitmap_Head.biClrImp,&puffer[0x20]);
+
+  WriteOK(outfile,puffer,36);
   WriteColorMap(outfile,Red,Green,Blue,MapSize);
   
   /* After that is done, we write the image ... */
@@ -253,7 +266,7 @@ void WriteImage(f, src, width, height, encoded, channels, bpp, spzeile)
         }
         WriteOK(f,&buf[3],spzeile-(width*3));
         cur_progress++;
-        if ((cur_progress % 5) == 0) gimp_progress_update ((double) cur_progress / (double) max_progress);
+        if ((interactive_bmp) && ((cur_progress % 5) == 0)) gimp_progress_update ((double) cur_progress / (double) max_progress);
         xpos=0;
       }
     } else {
@@ -276,7 +289,7 @@ void WriteImage(f, src, width, height, encoded, channels, bpp, spzeile)
           WriteOK(f,&buf[3],spzeile-(width/(8/bpp)));
           xpos=0;
           cur_progress++;
-          if ((cur_progress % 5) == 0)
+          if ((interactive_bmp) && ((cur_progress % 5) == 0))
           gimp_progress_update ((double) cur_progress / (double) max_progress);
           }
         break;
@@ -348,7 +361,7 @@ void WriteImage(f, src, width, height, encoded, channels, bpp, spzeile)
           WriteOK(f,&buf[14],2);		/* End of row */
           laenge+=2;
           cur_progress++;
-          if ((cur_progress % 5) == 0) gimp_progress_update ((double) cur_progress / (double)  max_progress);
+          if ((interactive_bmp) &&((cur_progress % 5) == 0)) gimp_progress_update ((double) cur_progress / (double)  max_progress);
           }
         fseek(f,-2,SEEK_CUR);			/* Overwrite last End of row */
         WriteOK(f,&buf[12],2);			/* End of file */
@@ -360,7 +373,7 @@ void WriteImage(f, src, width, height, encoded, channels, bpp, spzeile)
         }      
       }
     }
-    gimp_progress_update(1);
+    if (interactive_bmp) gimp_progress_update(1);
 }
 
 

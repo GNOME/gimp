@@ -10,6 +10,10 @@
 #define ReadOK(file,buffer,len) (fread(buffer, len, 1, file) != 0)
 #define WriteOK(file,buffer,len) (fwrite(buffer, len, 1, file) != 0)
 
+extern gint32 ToL(guchar *);
+extern void FromL(gint32, guchar *);
+extern gint16 ToS(guchar *);
+extern void FromS(gint16, guchar *);
 extern gint32 ReadBMP (char *);
 extern gint WriteBMP (char *,gint32,gint32);
 extern gint ReadColorMap(FILE *, unsigned char[256][3], int, int, int *);
@@ -34,7 +38,8 @@ static struct
   {   
     unsigned long biWidth;		/* 12 */
     unsigned long biHeight;		/* 16 */
-    unsigned long biPlanes_biBitCnt;	/* 1A */
+    unsigned short biPlanes;            /* 1A */
+    unsigned short biBitCnt;	        /* 1C */
     unsigned long biCompr;		/* 1E */
     unsigned long biSizeIm;		/* 22 */
     unsigned long biXPels;		/* 26 */
@@ -46,11 +51,8 @@ static struct
   
 static struct
   {   
-    unsigned long bcWidth_bcHeight;	/* 12 */
-    unsigned long bcPlanes_bcBitCnt;	/* 1A */
+    unsigned short bcWidth;             /* 12 */
+    unsigned short bcHeight;	        /* 14 */
+    unsigned short bcPlanes;            /* 16 */
+    unsigned short bcBitCnt;	        /* 18 */
   }Bitmap_OS2_Head;                
-
-#define biBitCnt ((Bitmap_Head.biPlanes_biBitCnt & 0xffff0000) >> 16)
-#define bcBitCnt ((Bitmap_OS2_Head.biPlanes_biBitCnt & 0xffff0000) >> 16)
-#define bcHeight ((Bitmap_OS2_Head.bcWidth_bcHeight & 0xffff0000) >> 16)
-#define bcWidth  (Bitmap_OS2_Head.bcWidth_bcHeight & 0x0000ffff)

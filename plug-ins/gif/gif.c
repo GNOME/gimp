@@ -7,7 +7,7 @@
  *      Based around original GIF code by David Koblas.
  *
  *
- * Version 2.0.0 - 98/03/15
+ * Version 2.0.1 - 98/03/16
  *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  */
 /*
@@ -22,6 +22,10 @@
 
 /*
  * REVISION HISTORY
+ *
+ * 98/03/16
+ * 2.00.01 - Fixed a long-standing bug when loading GIFs which layer
+ *           opaque frames onto transparent ones.
  *
  * 98/03/15
  * 2.00.00 - No longer beta.  Uses the current GIMP brush background
@@ -830,6 +834,8 @@ DoExtension (FILE *fd,
       Gif89.delayTime = LM_to_uint (buf[1], buf[2]);
       if ((buf[0] & 0x1) != 0)
 	Gif89.transparent = buf[3];
+      else
+	Gif89.transparent = -1;
 
       while (GetDataBlock (fd, (unsigned char *) buf) != 0)
 	;
