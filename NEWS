@@ -7,6 +7,8 @@ code hasn't seen a lot of testing yet so there are certainly bugs. If
 you find any, make sure you report them at bugzilla.gnome.org (after
 checking that it isn't reported already).
 
+Please follow the installation instructions in INSTALL.
+
 
 Overview of Changes in GIMP 2.2.0-pre1
 ======================================
@@ -42,7 +44,17 @@ Overview of Changes in GIMP 2.2.0-pre1
 
 - Added Auto Whitebalance menu item.
 
+- Redid Scale and Resize dialogs.
+
+- Added code to migrate user settings from ~/.gimp-2.0.
+
 - lots of bug fixes.
+
+
+Contributors: 
+
+   Michael Natterer, Sven Neumann, David Odin, Manish Singh, Kevin Cozens,
+   Joao S. O. Bueno, Geert Jordaens, Yeti, Karine Proot
 
 
 
