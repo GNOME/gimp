@@ -1,3 +1,10 @@
+2004-09-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainerbox.c (gimp_container_box_get_preview):
+	removed hack which strcmp()s the property name to figure the
+	preview's border_width and use the container view's
+	preview_border_width instead.
+
 2004-09-28  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_settings_dialog):

@@ -231,13 +231,13 @@ gimp_container_box_get_preview (GimpDocked   *docked,
 
   prop_name = gimp_context_type_to_prop_name (container->children_type);
 
-  if (! strcmp (prop_name, "imagefile") ||
-      ! strcmp (prop_name, "tool")      ||
-      ! strcmp (prop_name, "template"))
-    border_width = 0;
-
   preview = gimp_prop_preview_new (G_OBJECT (context), prop_name, height);
   GIMP_VIEW (preview)->renderer->size = -1;
+
+  gimp_container_view_get_preview_size (view, &border_width);
+
+  border_width = MIN (1, border_width);
+
   gimp_view_renderer_set_size_full (GIMP_VIEW (preview)->renderer,
                                     width, height, border_width);
 
