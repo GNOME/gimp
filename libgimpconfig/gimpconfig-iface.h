@@ -46,6 +46,7 @@ struct _GimpConfigInterface
                                        gpointer      data);
   gboolean   (* deserialize)          (GObject      *object,
                                        GScanner     *scanner,
+                                       gint          nest_level,
                                        gpointer      data);
   gboolean   (* serialize_property)   (GObject      *object,
                                        guint         property_id,
@@ -80,6 +81,11 @@ gboolean      gimp_config_deserialize           (GObject      *object,
                                                  const gchar  *filename,
                                                  gpointer      data,
                                                  GError      **error);
+
+gboolean      gimp_config_deserialize_return    (GScanner     *scanner,
+                                                 GTokenType    expected_token,
+                                                 gint          nest_level,
+                                                 const gchar  *symbol_name);
 
 GObject     * gimp_config_duplicate             (GObject      *object);
 gboolean      gimp_config_equal                 (GObject      *a,

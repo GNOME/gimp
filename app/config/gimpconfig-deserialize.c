@@ -90,6 +90,7 @@ static inline gboolean  scanner_string_utf8_valid (GScanner    *scanner,
  * gimp_config_deserialize_properties:
  * @object: a #GObject.
  * @scanner: a #GScanner.
+ * @embedded_scope: %TRUE if a trailing ')' should not trigger a parse error.
  * @store_unknown_tokens: %TRUE if you want to store unknown tokens.
  * 
  * This function uses the @scanner to configure the properties of @object.
@@ -105,6 +106,7 @@ static inline gboolean  scanner_string_utf8_valid (GScanner    *scanner,
 gboolean
 gimp_config_deserialize_properties (GObject   *object,
                                     GScanner  *scanner,
+                                    gint       nest_level,
                                     gboolean   store_unknown_tokens)
 {
   GObjectClass  *klass;
@@ -124,7 +126,7 @@ gimp_config_deserialize_properties (GObject   *object,
   if (!property_specs)
     return TRUE;
 
-  scope_id = g_quark_from_static_string ("gimp_config_deserialize_properties");
+  scope_id = g_type_qname (G_TYPE_FROM_INSTANCE (object));
   old_scope_id = g_scanner_set_scope (scanner, scope_id);
 
   for (i = 0; i < n_property_specs; i++)
@@ -141,8 +143,8 @@ gimp_config_deserialize_properties (GObject   *object,
   g_free (property_specs);
 
   token = G_TOKEN_LEFT_PAREN;
-  
-  do
+
+  while (TRUE)
     {
       next = g_scanner_peek_next_token (scanner);
 
@@ -160,7 +162,7 @@ gimp_config_deserialize_properties (GObject   *object,
         case G_TOKEN_LEFT_PAREN:
           token = G_TOKEN_SYMBOL;
           break;
-          
+
         case G_TOKEN_IDENTIFIER:
           token = gimp_config_deserialize_unknown (object, scanner);
           break;
@@ -177,17 +179,11 @@ gimp_config_deserialize_properties (GObject   *object,
           break;
         }
     }
-  while (token != G_TOKEN_EOF);
-
-  if (next != G_TOKEN_EOF && next != token && token != G_TOKEN_NONE)
-    {
-      g_scanner_get_next_token (scanner);
-      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL, NULL, TRUE);
-    }
 
   g_scanner_set_scope (scanner, old_scope_id);
 
-  return (next == G_TOKEN_EOF || next == token);
+  return gimp_config_deserialize_return (scanner, token,
+                                         nest_level, NULL);
 }
 
 static GTokenType
@@ -219,7 +215,9 @@ static GTokenType
 gimp_config_deserialize_property (GObject    *object,
                                   GScanner   *scanner)
 {
+  GTypeClass          *owner_class;
   GimpConfigInterface *gimp_config_iface;
+  GimpConfigInterface *parent_iface;
   GParamSpec          *prop_spec;
   GTokenType           token = G_TOKEN_RIGHT_PAREN;
   GValue               value = { 0, };
@@ -228,11 +226,33 @@ gimp_config_deserialize_property (GObject    *object,
 
   g_value_init (&value, prop_spec->value_type);
 
-  gimp_config_iface =
-    g_type_interface_peek (g_type_class_peek (prop_spec->owner_type),
-                           GIMP_TYPE_CONFIG_INTERFACE);
+  owner_class = g_type_class_peek (prop_spec->owner_type);
 
-  if (gimp_config_iface &&
+  gimp_config_iface = g_type_interface_peek (owner_class,
+                                             GIMP_TYPE_CONFIG_INTERFACE);
+
+  /*  We must call deserialize_property() *only* if the *exact* class
+   *  which implements it is param_spec->owner_type's class.
+   *
+   *  Therefore, we ask param_spec->owner_type's immediate parent class
+   *  for it's GimpConfigInterface and check if we get a different pointer.
+   *
+   *  (if the pointers are the same, param_spec->owner_type's
+   *   GimpConfigInterface is inherited from one of it's parent classes
+   *   and thus not able to handle param_spec->owner_type's properties).
+   */
+  if (gimp_config_iface)
+    {
+      GTypeClass *owner_parent_class;
+
+      owner_parent_class = g_type_class_peek_parent (owner_class),
+
+      parent_iface = g_type_interface_peek (owner_parent_class,
+                                            GIMP_TYPE_CONFIG_INTERFACE);
+    }
+
+  if (gimp_config_iface                       &&
+      gimp_config_iface != parent_iface       && /* see comment above */
       gimp_config_iface->deserialize_property &&
       gimp_config_iface->deserialize_property (object,
                                                prop_spec->param_id,
@@ -385,14 +405,14 @@ gimp_config_deserialize_fundamental (GValue     *value,
       break;
     case G_TYPE_ULONG:
       g_value_set_uint (value, scanner->value.v_int);
-      break;      
+      break;
     case G_TYPE_FLOAT:
       g_value_set_float (value, scanner->value.v_float);
       break;
     case G_TYPE_DOUBLE:
       g_value_set_double (value, scanner->value.v_float);
       break;
-      
+
     default:
       g_assert_not_reached ();
       break;
@@ -519,11 +539,8 @@ gimp_config_deserialize_color (GValue     *value,
 
   token = G_TOKEN_LEFT_PAREN;
 
-  do
+  while (g_scanner_peek_next_token (scanner) == token)
     {
-      if (g_scanner_peek_next_token (scanner) != token)
-        break;
-
       token = g_scanner_get_next_token (scanner);
 
       switch (token)
@@ -595,7 +612,6 @@ gimp_config_deserialize_color (GValue     *value,
           break;
         }
     }
-  while (token != G_TOKEN_EOF);
 
  finish:
 

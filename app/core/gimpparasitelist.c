@@ -34,8 +34,6 @@
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
 
-#include "libgimp/gimpintl.h"
-
 
 enum
 {
@@ -58,6 +56,7 @@ static gboolean gimp_parasite_list_serialize         (GObject     *list,
                                                       gpointer     data);
 static gboolean gimp_parasite_list_deserialize       (GObject     *list,
                                                       GScanner    *scanner,
+                                                      gint         nest_level,
                                                       gpointer     data);
 
 static void     parasite_serialize           (const gchar      *key,
@@ -245,6 +244,7 @@ gimp_parasite_list_serialize (GObject  *list,
 static gboolean
 gimp_parasite_list_deserialize (GObject  *list,
                                 GScanner *scanner,
+                                gint      nest_level,
                                 gpointer  data)
 {
   GTokenType token;
@@ -254,11 +254,8 @@ gimp_parasite_list_deserialize (GObject  *list,
 
   token = G_TOKEN_LEFT_PAREN;
 
-  do
+  while (g_scanner_peek_next_token (scanner) == token)
     {
-      if (g_scanner_peek_next_token (scanner) != token)
-        break;
-
       token = g_scanner_get_next_token (scanner);
 
       switch (token)
@@ -319,17 +316,9 @@ gimp_parasite_list_deserialize (GObject  *list,
           break;
         }
     }
-  while (token != G_TOKEN_EOF);
 
-  if (token != G_TOKEN_LEFT_PAREN)
-    {
-      g_scanner_get_next_token (scanner);
-      g_scanner_unexp_token (scanner, token, NULL, NULL, parasite_symbol,
-                             _("fatal parse error"), TRUE);
-      return FALSE;
-    }
-
-  return TRUE;
+  return gimp_config_deserialize_return (scanner, token,
+                                         nest_level, parasite_symbol);
 }
 
 GimpParasiteList *

@@ -574,23 +574,20 @@ gimp_context_class_init (GimpContextClass *klass)
   gimp_context_prop_types[GIMP_CONTEXT_PROP_BUFFER]    = GIMP_TYPE_BUFFER;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGEFILE] = GIMP_TYPE_IMAGEFILE;
 
-  g_object_class_install_property (object_class,
-                                   PROP_GIMP,
+  g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp",
                                                         NULL, NULL,
                                                         GIMP_TYPE_GIMP,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
-  g_object_class_install_property (object_class,
-				   PROP_IMAGE,
+  g_object_class_install_property (object_class, PROP_IMAGE,
 				   g_param_spec_object (gimp_context_prop_names[IMAGE_CHANGED],
 							NULL, NULL,
 							GIMP_TYPE_IMAGE,
 							G_PARAM_READWRITE));
 
-  g_object_class_install_property (object_class,
-				   PROP_DISPLAY,
+  g_object_class_install_property (object_class, PROP_DISPLAY,
 				   g_param_spec_object (gimp_context_prop_names[DISPLAY_CHANGED],
                                                         NULL, NULL,
                                                         GIMP_TYPE_OBJECT,
@@ -635,15 +632,13 @@ gimp_context_class_init (GimpContextClass *klass)
                                    gimp_context_prop_names[PALETTE_CHANGED],
                                    GIMP_TYPE_PALETTE);
 
-  g_object_class_install_property (object_class,
-				   PROP_BUFFER,
+  g_object_class_install_property (object_class, PROP_BUFFER,
 				   g_param_spec_object (gimp_context_prop_names[BUFFER_CHANGED],
 							NULL, NULL,
 							GIMP_TYPE_BUFFER,
 							G_PARAM_READWRITE));
 
-  g_object_class_install_property (object_class,
-				   PROP_IMAGEFILE,
+  g_object_class_install_property (object_class, PROP_IMAGEFILE,
 				   g_param_spec_object (gimp_context_prop_names[IMAGEFILE_CHANGED],
 							NULL, NULL,
 							GIMP_TYPE_IMAGEFILE,
@@ -995,7 +990,9 @@ gimp_context_deserialize_property (GObject    *object,
 {
   GimpContext   *context;
   GimpContainer *container;
-  GimpObject    *standard;
+  GimpObject    *current;
+  gchar        **name_loc;
+  gboolean       no_data = FALSE;
   gchar         *object_name;
 
   context = GIMP_CONTEXT (object);
@@ -1004,32 +1001,41 @@ gimp_context_deserialize_property (GObject    *object,
     {
     case PROP_TOOL:
       container = context->gimp->tool_info_list;
-      standard  = GIMP_OBJECT (gimp_tool_info_get_standard (context->gimp));
+      current   = (GimpObject *) context->tool_info;
+      name_loc  = &context->tool_name;
+      no_data   = TRUE;
       break;
 
     case PROP_BRUSH:
       container = context->gimp->brush_factory->container;
-      standard  = GIMP_OBJECT (gimp_brush_get_standard ());
+      current   = (GimpObject *) context->brush;
+      name_loc  = &context->brush_name;
       break;
 
     case PROP_PATTERN:
       container = context->gimp->pattern_factory->container;
-      standard  = GIMP_OBJECT (gimp_pattern_get_standard ());
+      current   = (GimpObject *) context->pattern;
+      name_loc  = &context->pattern_name;
       break;
 
     case PROP_GRADIENT:
       container = context->gimp->gradient_factory->container;
-      standard  = GIMP_OBJECT (gimp_gradient_get_standard ());
+      current   = (GimpObject *) context->gradient;
+      name_loc  = &context->gradient_name;
       break;
 
     case PROP_PALETTE:
       container = context->gimp->palette_factory->container;
-      standard  = GIMP_OBJECT (gimp_palette_get_standard ());
+      current   = (GimpObject *) context->palette;
+      name_loc  = &context->palette_name;
       break;
 
     default:
       return FALSE;
     }
+
+  if (! no_data)
+    no_data = context->gimp->no_data;
 
   if (gimp_scanner_parse_identifier (scanner, "NULL"))
     {
@@ -1044,13 +1050,14 @@ gimp_context_deserialize_property (GObject    *object,
 
       if (! deserialize_obj)
         {
-          if (gimp_container_num_children (container) > 0)
+          if (no_data)
             {
-              deserialize_obj = gimp_container_get_child_by_index (container, 0);
+              g_free (*name_loc);
+              *name_loc = g_strdup (object_name);
             }
           else
             {
-              deserialize_obj = standard;
+              deserialize_obj = current;
             }
         }
 

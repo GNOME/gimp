@@ -53,6 +53,7 @@ static gboolean  gimp_config_iface_serialize    (GObject  *object,
                                                  gpointer  data);
 static gboolean  gimp_config_iface_deserialize  (GObject  *object,
                                                  GScanner *scanner,
+                                                 gint      nest_level,
                                                  gpointer  data);
 static GObject  *gimp_config_iface_duplicate    (GObject  *object);
 static gboolean  gimp_config_iface_equal        (GObject  *a,
@@ -111,9 +112,10 @@ gimp_config_iface_serialize (GObject  *object,
 static gboolean
 gimp_config_iface_deserialize (GObject  *object,
                                GScanner *scanner,
+                               gint      nest_level,
                                gpointer  data)
 {
-  return gimp_config_deserialize_properties (object, scanner, FALSE);
+  return gimp_config_deserialize_properties (object, scanner, nest_level, FALSE);
 }
 
 static GObject *
@@ -227,7 +229,8 @@ gimp_config_serialize (GObject      *object,
 
   if (success && footer)
     success = (write (fd, "\n", 1)                 != -1  &&
-               write (fd, footer, strlen (footer)) != -1);
+               write (fd, footer, strlen (footer)) != -1  &&
+               write (fd, "\n", 1)                 != -1);
 
   if (! success)
     {
@@ -311,10 +314,12 @@ gimp_config_deserialize (GObject      *object,
   scanner->msg_handler = gimp_config_scanner_message;
   scanner->input_name  = filename;
 
-  scanner->config->cset_identifier_first = ( G_CSET_a_2_z );
-  scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z "-_" );
+  scanner->config->cset_identifier_first = ( G_CSET_a_2_z G_CSET_A_2_Z );
+  scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z G_CSET_A_2_Z "-_" );
 
-  success = gimp_config_iface->deserialize (object, scanner, data);
+  scanner->config->scan_identifier_1char = TRUE;
+
+  success = gimp_config_iface->deserialize (object, scanner, 0, data);
 
   g_scanner_destroy (scanner);
   close (fd);
@@ -323,6 +328,45 @@ gimp_config_deserialize (GObject      *object,
     g_assert (error == NULL || *error != NULL);
 
   return success;
+}
+
+gboolean
+gimp_config_deserialize_return (GScanner     *scanner,
+                                GTokenType    expected_token,
+                                gint          nest_level,
+                                const gchar  *symbol_name)
+{
+  GTokenType next_token;
+
+  g_return_val_if_fail (scanner != NULL, FALSE);
+
+  next_token = g_scanner_peek_next_token (scanner);
+
+  if (expected_token != G_TOKEN_LEFT_PAREN)
+    {
+      g_scanner_get_next_token (scanner);
+      g_scanner_unexp_token (scanner, expected_token, NULL, NULL,
+                             symbol_name,
+                             _("fatal parse error"), TRUE);
+      return FALSE;
+    }
+  else
+    {
+      if (nest_level > 0 && next_token == G_TOKEN_RIGHT_PAREN)
+        {
+          return TRUE;
+        }
+      else if (next_token != G_TOKEN_EOF)
+        {
+          g_scanner_get_next_token (scanner);
+          g_scanner_unexp_token (scanner, expected_token, NULL, NULL,
+                                 symbol_name,
+                                 _("fatal parse error"), TRUE);
+          return FALSE;
+        }
+    }
+
+  return TRUE;
 }
 
 GQuark

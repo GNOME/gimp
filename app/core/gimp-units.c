@@ -120,11 +120,8 @@ gimp_unitrc_load (Gimp *gimp)
 
   token = G_TOKEN_LEFT_PAREN;
 
-  do
+  while (g_scanner_peek_next_token (scanner) == token)
     {
-      if (g_scanner_peek_next_token (scanner) != token)
-        break;
-
       token = g_scanner_get_next_token (scanner);
 
       switch (token)
@@ -138,8 +135,8 @@ gimp_unitrc_load (Gimp *gimp)
             {
               g_scanner_set_scope (scanner, UNIT_INFO);
               token = gimp_unitrc_unit_info_deserialize (scanner, gimp);
-              
-              if (token == G_TOKEN_LEFT_PAREN)
+
+              if (token == G_TOKEN_RIGHT_PAREN)
                 g_scanner_set_scope (scanner, 0);
             }
           break;
@@ -152,7 +149,6 @@ gimp_unitrc_load (Gimp *gimp)
           break;
         }
     }
-  while (token != G_TOKEN_EOF);
 
   if (token != G_TOKEN_LEFT_PAREN)
     {
@@ -240,19 +236,13 @@ gimp_unitrc_unit_info_deserialize (GScanner *scanner,
   GTokenType  token;
   GimpUnit    unit;
 
-  if (g_scanner_peek_next_token (scanner) != G_TOKEN_STRING)
-    return G_TOKEN_STRING;
-
   if (! gimp_scanner_parse_string (scanner, &identifier))
     return G_TOKEN_STRING;
 
   token = G_TOKEN_LEFT_PAREN;
 
-  do
+  while (g_scanner_peek_next_token (scanner) == token)
     {
-      if (g_scanner_peek_next_token (scanner) != token)
-        break;
-
       token = g_scanner_get_next_token (scanner);
 
       switch (token)
@@ -262,42 +252,48 @@ gimp_unitrc_unit_info_deserialize (GScanner *scanner,
           break;
 
         case G_TOKEN_SYMBOL:
-          token = G_TOKEN_RIGHT_PAREN;
           switch (GPOINTER_TO_INT (scanner->value.v_symbol))
             {
             case UNIT_FACTOR:
+              token = G_TOKEN_FLOAT;
               if (! gimp_scanner_parse_float (scanner, &factor))
-                return G_TOKEN_FLOAT;
+                goto cleanup;
               break;
 
             case UNIT_DIGITS:
+              token = G_TOKEN_INT;
               if (! gimp_scanner_parse_int (scanner, &digits))
-                return G_TOKEN_INT;
+                goto cleanup;
               break;
 
             case UNIT_SYMBOL:
+              token = G_TOKEN_STRING;
               if (! gimp_scanner_parse_string (scanner, &symbol))
-                return G_TOKEN_STRING;
+                goto cleanup;
               break;
 
             case UNIT_ABBREV:
+              token = G_TOKEN_STRING;
               if (! gimp_scanner_parse_string (scanner, &abbreviation))
-                return G_TOKEN_STRING;
+                goto cleanup;
               break;
 
             case UNIT_SINGULAR:
+              token = G_TOKEN_STRING;
               if (! gimp_scanner_parse_string (scanner, &singular))
-                return G_TOKEN_STRING;
+                goto cleanup;
               break;
 
             case UNIT_PLURAL:
+              token = G_TOKEN_STRING;
               if (! gimp_scanner_parse_string (scanner, &plural))
-                return G_TOKEN_STRING;
+                goto cleanup;
              break;
 
             default:
               break;
             }
+          token = G_TOKEN_RIGHT_PAREN;
           break;
 
         case G_TOKEN_RIGHT_PAREN:
@@ -308,29 +304,22 @@ gimp_unitrc_unit_info_deserialize (GScanner *scanner,
           break;
         }
     }
-  while (token != G_TOKEN_EOF);
 
   if (token == G_TOKEN_LEFT_PAREN)
     {
       token = G_TOKEN_RIGHT_PAREN;
 
-      if (gimp_scanner_parse_token (scanner, token))
+      if (g_scanner_peek_next_token (scanner) == token)
         {
           unit = _gimp_unit_new (gimp, identifier, factor, digits,
                                  symbol, abbreviation, singular, plural);
 
           /*  make the unit definition persistent  */
           gimp_unit_set_deletion_flag (unit, FALSE);
-
-          g_free (identifier);
-          g_free (symbol);
-          g_free (abbreviation);
-          g_free (singular);
-          g_free (plural);
-
-          return G_TOKEN_LEFT_PAREN;
         }
     }
+
+ cleanup:
 
   g_free (identifier);
   g_free (symbol);

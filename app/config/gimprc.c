@@ -48,6 +48,7 @@ static gboolean   gimp_rc_serialize         (GObject  *object,
                                              gpointer  data);
 static gboolean   gimp_rc_deserialize       (GObject  *object,
                                              GScanner *scanner,
+                                             gint      nest_level,
                                              gpointer  data);
 static GObject  * gimp_rc_duplicate         (GObject  *object);
 
@@ -129,9 +130,10 @@ gimp_rc_serialize (GObject *object,
 static gboolean
 gimp_rc_deserialize (GObject  *object,
                      GScanner *scanner,
+                     gint      nest_level,
                      gpointer  data)
 {
-  return gimp_config_deserialize_properties (object, scanner, TRUE);
+  return gimp_config_deserialize_properties (object, scanner, nest_level, TRUE);
 }
 
 static void

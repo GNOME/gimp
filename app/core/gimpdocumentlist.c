@@ -33,8 +33,6 @@
 #include "gimpdocumentlist.h"
 #include "gimpimagefile.h"
 
-#include "libgimp/gimpintl.h"
-
 
 static void     gimp_document_list_config_iface_init (gpointer  iface,
                                                       gpointer  iface_data);
@@ -44,6 +42,7 @@ static gboolean gimp_document_list_serialize         (GObject  *list,
                                                       gpointer  data);
 static gboolean gimp_document_list_deserialize       (GObject  *list,
                                                       GScanner *scanner,
+                                                      gint      nest_level,
                                                       gpointer  data);
 
 
@@ -129,6 +128,7 @@ gimp_document_list_serialize (GObject *document_list,
 static gboolean
 gimp_document_list_deserialize (GObject  *document_list,
                                 GScanner *scanner,
+                                gint      nest_level,
                                 gpointer  data)
 {
   GTokenType  token;
@@ -141,11 +141,8 @@ gimp_document_list_deserialize (GObject  *document_list,
 
   token = G_TOKEN_LEFT_PAREN;
 
-  do
+  while (g_scanner_peek_next_token (scanner) == token)
     {
-      if (g_scanner_peek_next_token (scanner) != token)
-        break;
-
       token = g_scanner_get_next_token (scanner);
 
       switch (token)
@@ -176,6 +173,8 @@ gimp_document_list_deserialize (GObject  *document_list,
 
               gimp_container_add (GIMP_CONTAINER (document_list),
                                   GIMP_OBJECT (imagefile));
+
+              g_object_unref (G_OBJECT (imagefile));
             }
           break;
 
@@ -187,20 +186,9 @@ gimp_document_list_deserialize (GObject  *document_list,
           break;
         }
     }
-  while (token != G_TOKEN_EOF);
 
-  GIMP_LIST (document_list)->list = 
-    g_list_reverse (GIMP_LIST (document_list)->list);
-
-  if (token != G_TOKEN_LEFT_PAREN)
-    {
-      g_scanner_get_next_token (scanner);
-      g_scanner_unexp_token (scanner, token, NULL, NULL, document_symbol,
-                             _("fatal parse error"), TRUE);
-      return FALSE;
-    }
-  
-  return TRUE;
+  return gimp_config_deserialize_return (scanner, token,
+                                         nest_level, document_symbol);
 }
 
 GimpContainer *

@@ -182,6 +182,8 @@ void
 gimp_devices_restore_test (Gimp *gimp)
 {
   GimpDeviceManager *manager;
+  GimpDeviceInfo    *device_info;
+  GimpContext       *user_context;
   gchar             *filename;
   GError            *error = NULL;
 
@@ -193,7 +195,29 @@ gimp_devices_restore_test (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("test-devicerc");
 
+  if (! gimp_config_deserialize (G_OBJECT (manager->device_info_list),
+                                 filename,
+                                 gimp,
+                                 &error))
+    {
+      g_message ("Could not read test-devicerc: %s", error->message);
+      g_clear_error (&error);
+
+      g_free (filename);
+      return;
+    }
+
   g_free (filename);
+
+  device_info = gimp_device_info_get_by_device (manager->current_device);
+
+  g_return_if_fail (GIMP_IS_DEVICE_INFO (device_info));
+
+  user_context = gimp_get_user_context (gimp);
+
+  gimp_context_copy_properties (GIMP_CONTEXT (device_info), user_context,
+				GIMP_DEVICE_INFO_CONTEXT_MASK);
+  gimp_context_set_parent (GIMP_CONTEXT (device_info), user_context);
 }
 
 void
@@ -213,7 +237,7 @@ gimp_devices_save_test (Gimp *gimp)
 
   if (! gimp_config_serialize (G_OBJECT (manager->device_info_list),
                                filename,
-                               "# test-devicerc",
+                               "# test-devicerc\n",
                                "# end test-devicerc",
                                NULL,
                                &error))

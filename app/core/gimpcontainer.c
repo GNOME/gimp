@@ -30,10 +30,15 @@
 
 #include "core-types.h"
 
+#include "gimp.h"
 #include "gimpcontainer.h"
 #include "gimpmarshal.h"
 
 #include "config/gimpconfig.h"
+#include "config/gimpconfig-deserialize.h"
+#include "config/gimpscanner.h"
+
+#include "libgimp/gimpintl.h"
 
 
 /* #define DEBUG_CONTAINER */
@@ -98,6 +103,7 @@ static gboolean   gimp_container_serialize       (GObject            *object,
                                                   gpointer            data);
 static gboolean   gimp_container_deserialize     (GObject            *object,
                                                   GScanner           *scanner,
+                                                  gint                nest_level,
                                                   gpointer            data);
 
 static void   gimp_container_disconnect_callback (GimpObject         *object,
@@ -434,7 +440,10 @@ gimp_container_serialize_foreach (GObject       *object,
   if (! serialize_data->success)
     return;
 
-  g_string_assign (str, ")\n");
+  if (serialize_data->indent_level > 0)
+    g_string_assign (str, ")");
+  else
+    g_string_assign (str, ")\n");
 
   if (write (serialize_data->fd, str->str, str->len) == -1)
     serialize_data->success = FALSE;
@@ -466,13 +475,123 @@ gimp_container_serialize (GObject  *object,
 static gboolean
 gimp_container_deserialize (GObject  *object,
                             GScanner *scanner,
+                            gint      nest_level,
                             gpointer  data)
 {
   GimpContainer *container;
+  GTokenType     token;
 
   container = GIMP_CONTAINER (object);
 
-  return TRUE;
+  token = G_TOKEN_LEFT_PAREN;
+
+  while (g_scanner_peek_next_token (scanner) == token)
+    {
+      token = g_scanner_get_next_token (scanner);
+
+      switch (token)
+        {
+        case G_TOKEN_LEFT_PAREN:
+          token = G_TOKEN_IDENTIFIER;
+          break;
+
+        case G_TOKEN_IDENTIFIER:
+          {
+            GimpObject *child;
+            GType       type;
+            gchar      *name;
+
+            type = g_type_from_name (scanner->value.v_identifier);
+
+            if (! type)
+              {
+                g_scanner_error (scanner,
+                                 _("unable to determine type of '%s'"),
+                                 scanner->value.v_identifier);
+                return FALSE;
+              }
+
+            if (! g_type_is_a (type, container->children_type))
+              {
+                g_scanner_error (scanner,
+                                 _("'%s' is not a subclass of '%s'"),
+                                 scanner->value.v_identifier,
+                                 g_type_name (container->children_type));
+                return FALSE;
+              }
+
+            if (! g_type_is_a (type, GIMP_TYPE_CONFIG_INTERFACE))
+              {
+                g_scanner_error (scanner,
+                                 _("'%s' does not implement GimpConfigInterface"),
+                                 scanner->value.v_identifier);
+                return FALSE;
+              }
+
+            if (! gimp_scanner_parse_string (scanner, &name))
+              {
+                token = G_TOKEN_STRING;
+                break;
+              }
+
+            child = gimp_container_get_child_by_name (container, name);
+
+            if (child)
+              {
+                g_print ("found child \"%s\"\n", name);
+              }
+            else
+              {
+                g_print ("creating child \"%s\"\n", name);
+
+                if (GIMP_IS_GIMP (data))
+                  {
+                    child = g_object_new (type,
+                                          "name", name,
+                                          "gimp", data, NULL);
+                  }
+                else
+                  {
+                     child = g_object_new (type,
+                                           "name", name, NULL);
+                 }
+
+                gimp_container_add (container, child);
+
+                if (container->policy == GIMP_CONTAINER_POLICY_STRONG)
+                  g_object_unref (G_OBJECT (child));
+              }
+
+            {
+#if 0
+              GimpConfigInterface *config_iface;
+
+              config_iface = GIMP_GET_CONFIG_INTERFACE (child);
+#endif
+              if (! gimp_config_deserialize_properties (G_OBJECT (child),
+                                                        scanner,
+                                                        nest_level + 1,
+                                                        FALSE))
+                {
+                  /*  warning should be already set by child  */
+                  return FALSE;
+                }
+            }
+          }
+          token = G_TOKEN_RIGHT_PAREN;
+          break;
+
+        case G_TOKEN_RIGHT_PAREN:
+          token = G_TOKEN_LEFT_PAREN;
+          break;
+
+        default: /* do nothing */
+          break;
+        }
+    }
+
+  return gimp_config_deserialize_return (scanner, token,
+                                         nest_level, NULL);
 }
 
 static void

@@ -1,3 +1,47 @@
+2002-05-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpconfig.[ch]: added "gint nest_level" to the
+	deserialization functions, so nested calls to deserialize()
+	don't error on the trailing ')'. Made the scanner config parse
+	one-character identifiers and allow G_CSET_A_2_Z for all
+	identifiers.
+	Added gimp_config_deserialize_return() because returning the
+	correct return value from a deserialize() function is not
+	trivial any more with nested calls.
+
+	* app/config/gimpconfig-deserialize.[ch]
+	* app/config/gimprc.c
+	* app/core/gimpdocumentlist.c
+	* app/core/gimpparasitelist.c: use the new return value utility
+	function and made the main parsing loops simpler.
+
+	* app/core/gimpunits.c: made the main parsing loops consistent
+	with the stuff that uses GimpConfig.
+
+	* app/config/gimpconfig-deserialize.c 
+	* app/config/gimpconfig-serialize.c: call the
+	(de)serialize_property() functions only if the property's class
+	implements the method itself (does *not* inherit it from one of
+	it's parents).
+
+	* app/core/gimpcontainer.c: implemented deserialization of
+	containers. For each child entry encountered in the input, check
+	if it's already contained in the container and create it if not.
+	If a "gimp" pointer is passed as user_data pass it as construct
+	property to g_object_new() when creating the object.
+
+	* app/core/gimpcontext.c: changed deserialization of brush,
+	pattern etc. to honor "no_data".
+
+	* app/widgets/gimpdeviceinfo.c: added a "gimp" construct_only
+	property which overrides GimpContext's "gimp" property. Moved all
+	initialisation code from gimp_device_info_new() to
+	gimp_device_info_set_property(PROP_GIMP) so it is properly
+	performed if the object is created by GimpContainer's
+	deserialize() implementation.
+
+	* app/widgets/gimpdevices.c: made gimp_devices_restore_test() work.
+
 2002-05-27  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: restructured, added lots of comments. Reenabled

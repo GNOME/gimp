@@ -46,6 +46,7 @@ enum
 enum
 {
   PROP_0,
+  PROP_GIMP,
   PROP_MODE,
   PROP_AXES,
   PROP_KEYS
@@ -124,6 +125,13 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
   object_class->set_property = gimp_device_info_set_property;
   object_class->get_property = gimp_device_info_get_property;
 
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MODE, "mode",
                                  GDK_TYPE_INPUT_MODE,
                                  GDK_MODE_DISABLED);
@@ -192,6 +200,51 @@ gimp_device_info_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      {
+        GimpContext *context;
+        Gimp        *gimp;
+
+        context = GIMP_CONTEXT (device_info);
+        gimp    = g_value_get_object (value);
+
+        /*  we override GimpContext's "gimp" property, so we need to
+         *  register the context just like GimpContext would do it.
+         */
+        context->gimp = gimp;
+        gimp->context_list = g_list_prepend (gimp->context_list, context);
+
+        gimp_context_define_properties (context,
+                                        GIMP_DEVICE_INFO_CONTEXT_MASK,
+                                        FALSE);
+        gimp_context_copy_properties (gimp_get_user_context (gimp),
+                                      context,
+                                      GIMP_DEVICE_INFO_CONTEXT_MASK);
+
+        /*  FIXME: this is ugly and needs to be done via "notify" once
+         *  the contexts' properties are dynamic.
+         */
+        g_signal_connect_swapped (G_OBJECT (context), "foreground_changed",
+                                  G_CALLBACK (gimp_device_info_changed),
+                                  device_info);
+        g_signal_connect_swapped (G_OBJECT (context), "background_changed",
+                                  G_CALLBACK (gimp_device_info_changed),
+                                  device_info);
+        g_signal_connect_swapped (G_OBJECT (context), "tool_changed",
+                                  G_CALLBACK (gimp_device_info_changed),
+                                  device_info);
+        g_signal_connect_swapped (G_OBJECT (context), "brush_changed",
+                                  G_CALLBACK (gimp_device_info_changed),
+                                  device_info);
+        g_signal_connect_swapped (G_OBJECT (context), "pattern_changed",
+                                  G_CALLBACK (gimp_device_info_changed),
+                                  device_info);
+        g_signal_connect_swapped (G_OBJECT (context), "gradient_changed",
+                                  G_CALLBACK (gimp_device_info_changed),
+                                  device_info);
+      }
+      break;
+
     case PROP_MODE:
       if (device_info->device)
         gdk_device_set_mode (device_info->device, g_value_get_enum (value));
@@ -305,6 +358,10 @@ gimp_device_info_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      g_value_set_object (value, GIMP_CONTEXT (device_info)->gimp);
+      break;
+
     case PROP_MODE:
       if (device)
         g_value_set_enum (value, device->mode);
@@ -399,7 +456,6 @@ gimp_device_info_new (Gimp        *gimp,
                       const gchar *name)
 {
   GimpDeviceInfo *device_info;
-  GimpContext    *context;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (name != NULL, NULL);
@@ -408,38 +464,6 @@ gimp_device_info_new (Gimp        *gimp,
                               "name", name,
                               "gimp", gimp,
                               NULL);
-
-  context = GIMP_CONTEXT (device_info);
-
-  gimp_context_define_properties (context,
-                                  GIMP_DEVICE_INFO_CONTEXT_MASK,
-                                  FALSE);
-  gimp_context_copy_properties (gimp_get_user_context (gimp),
-                                context,
-                                GIMP_DEVICE_INFO_CONTEXT_MASK);
-
-  /*
-   * FIXME: this is ugly and needs to be done via "notify" once
-   * the contexts' properties are dynamic.
-   */
-  g_signal_connect_swapped (G_OBJECT (context), "foreground_changed",
-                            G_CALLBACK (gimp_device_info_changed),
-                            device_info);
-  g_signal_connect_swapped (G_OBJECT (context), "background_changed",
-                            G_CALLBACK (gimp_device_info_changed),
-                            device_info);
-  g_signal_connect_swapped (G_OBJECT (context), "tool_changed",
-                            G_CALLBACK (gimp_device_info_changed),
-                            device_info);
-  g_signal_connect_swapped (G_OBJECT (context), "brush_changed",
-                            G_CALLBACK (gimp_device_info_changed),
-                            device_info);
-  g_signal_connect_swapped (G_OBJECT (context), "pattern_changed",
-                            G_CALLBACK (gimp_device_info_changed),
-                            device_info);
-  g_signal_connect_swapped (G_OBJECT (context), "gradient_changed",
-                            G_CALLBACK (gimp_device_info_changed),
-                            device_info);
 
   return device_info;
 }
