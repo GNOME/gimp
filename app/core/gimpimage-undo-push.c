@@ -275,6 +275,8 @@ pop_stack (GImage  *gimage,
   GSList *tmp;
   int status = 0;
   int in_group = 0;
+  int x, y;
+  GDisplay *gdisp;
 
   /*  Keep popping until we pop a valid object
    *  or get to the end of a group if we're in one
@@ -312,6 +314,27 @@ pop_stack (GImage  *gimage,
       if (status && !in_group)
 	{
 	  /*  Flush any image updates and displays  */
+	  gdisp = gdisplay_active();
+	  if (gdisp != NULL) {
+	    if (gdisp->disp_xoffset || gdisp->disp_yoffset)
+	      {
+		gdk_window_get_size (gdisp->canvas->window, &x, &y);
+		if (gdisp->disp_yoffset)
+		  {
+		    gdisplay_expose_area (gdisp, 0, 0, gdisp->disp_width,
+					  gdisp->disp_yoffset);
+		    gdisplay_expose_area (gdisp, 0, gdisp->disp_yoffset + y,
+					  gdisp->disp_width, gdisp->disp_height);
+		  }
+		if (gdisp->disp_xoffset)
+		  {
+		    gdisplay_expose_area (gdisp, 0, 0, gdisp->disp_xoffset,
+					  gdisp->disp_height);
+		    gdisplay_expose_area (gdisp, gdisp->disp_xoffset + x, 0,
+					  gdisp->disp_width, gdisp->disp_height);
+		  }
+	      }
+	  }
 	  gdisplays_flush ();
 
 	  /*  If the shrink_wrap flag was set  */

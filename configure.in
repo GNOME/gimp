@@ -7,10 +7,10 @@ GIMP_MAJOR_VERSION_NUMBER=0
 dnl $Format: "GIMP_MINOR_VERSION_NUMBER=$ReleaseMinorVersion$" $
 GIMP_MINOR_VERSION_NUMBER=99
 dnl $Format: "GIMP_MICRO_VERSION_NUMBER=$ReleaseMicroVersion$" $
-GIMP_MICRO_VERSION_NUMBER=21
+GIMP_MICRO_VERSION_NUMBER=22
 
 dnl $Format: "AM_INIT_AUTOMAKE(gimp, $ReleaseVersion$)" $
-AM_INIT_AUTOMAKE(gimp, 0.99.21)
+AM_INIT_AUTOMAKE(gimp, 0.99.22)
 
 dnl Specify a header configuration file
 AM_CONFIG_HEADER(config.h)
