@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "POT-Creation-Date: 2003-06-26 22:14+0200\n"
-"PO-Revision-Date: 2003-07-12 23:11+0200\n"
+"PO-Revision-Date: 2003-07-14 00:20+0200\n"
 "Last-Translator: Andras Timar <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -2348,29 +2348,27 @@ msgstr "Ennyiszer alkalmazd a szűrőt"
 
 #: plug-ins/common/borderaverage.c:99
 msgid "<Image>/Filters/Colors/Border Average..."
-msgstr "<Image>/Szűrők/Színek/Keretátlag"
+msgstr "<Image>/Szűrők/Színek/Szegélyátlag"
 
 #: plug-ins/common/borderaverage.c:162
 msgid "Border Average..."
-msgstr "Keretátlag"
+msgstr "Szegélyátlag"
 
 #: plug-ins/common/borderaverage.c:369
 msgid "Borderaverage"
-msgstr "Keretátlag"
+msgstr "Szegélyátlag"
 
 #: plug-ins/common/borderaverage.c:391
 msgid "Border Size"
-msgstr "Keret mérete"
+msgstr "Szegély mérete"
 
 #: plug-ins/common/borderaverage.c:400
-#, fuzzy
 msgid "_Thickness:"
-msgstr "Vastagsága:"
+msgstr "_Vastagság:"
 
 #: plug-ins/common/borderaverage.c:423
-#, fuzzy
 msgid "_Bucket Size:"
-msgstr "Vödör mérete:"
+msgstr "_Vödör mérete:"
 
 #: plug-ins/common/borderaverage.c:431
 msgid "1 (nonsense?)"
@@ -2600,12 +2598,12 @@ msgstr "CMY"
 #: plug-ins/common/compose.c:156 plug-ins/common/compose.c:163
 #: plug-ins/fp/fp_gtk.c:28 plug-ins/print/gimp_color_window.c:281
 msgid "Cyan:"
-msgstr "Encián:"
+msgstr "Ciánkék:"
 
 #: plug-ins/common/compose.c:157 plug-ins/common/compose.c:164
 #: plug-ins/fp/fp_gtk.c:30 plug-ins/print/gimp_color_window.c:300
 msgid "Magenta:"
-msgstr "Bíbor:"
+msgstr "Bíborvörös:"
 
 #: plug-ins/common/compose.c:158 plug-ins/common/compose.c:165
 #: plug-ins/fp/fp_gtk.c:29 plug-ins/print/gimp_color_window.c:319
@@ -2804,7 +2802,7 @@ msgstr "Alfa súlyozás"
 
 #: plug-ins/common/convmatrix.c:993
 msgid "Border"
-msgstr "Keret"
+msgstr "Szegély"
 
 #: plug-ins/common/convmatrix.c:1019
 msgid "Channels"
@@ -2901,7 +2899,7 @@ msgstr "Alsó"
 
 #: plug-ins/common/curve_bend.c:364
 msgid "Smooth"
-msgstr "Síma"
+msgstr "Sima"
 
 #: plug-ins/common/curve_bend.c:365
 msgid "Free"
@@ -3084,7 +3082,7 @@ msgstr "Ciánkék"
 
 #: plug-ins/common/decompose.c:138
 msgid "Magenta"
-msgstr "Bíbor"
+msgstr "Bíborvörös"
 
 #: plug-ins/common/decompose.c:139
 msgid "Yellow"
@@ -3112,7 +3110,7 @@ msgstr "Ciánkék_K"
 
 #: plug-ins/common/decompose.c:145
 msgid "Magenta_K"
-msgstr "Bíbor_K"
+msgstr "Bíborvörös_K"
 
 #: plug-ins/common/decompose.c:146
 msgid "Yellow_K"
@@ -3580,7 +3578,7 @@ msgstr "Névtelen"
 #. ** Get a RGB copy of the source region **
 #: plug-ins/common/film.c:717
 msgid "Temporary"
-msgstr "Átmeneti"
+msgstr "Ideiglenes"
 
 #: plug-ins/common/film.c:1112
 msgid "Available Images:"
@@ -4276,9 +4274,8 @@ msgid "Table Options"
 msgstr "Táblázat beállításai"
 
 #: plug-ins/common/gtm.c:591
-#, fuzzy
 msgid "_Border:"
-msgstr "Keret:"
+msgstr "_Szegély:"
 
 #: plug-ins/common/gtm.c:595
 msgid "The number of pixels in the table border."
@@ -4713,9 +4710,8 @@ msgid "_Derivative"
 msgstr "Deriválás"
 
 #: plug-ins/common/lic.c:753
-#, fuzzy
 msgid "_Gradient"
-msgstr "Átmenet"
+msgstr "_Színátmenet"
 
 #: plug-ins/common/lic.c:759
 msgid "Convolve"
@@ -5014,9 +5010,8 @@ msgid "Default Frame Delay:"
 msgstr ""
 
 #: plug-ins/common/mng.c:1336
-#, fuzzy
 msgid "milliseconds"
-msgstr "Ezredmásodperc"
+msgstr "ezredmásodperc"
 
 #: plug-ins/common/newsprint.c:153
 msgid "Round"
@@ -5039,29 +5034,24 @@ msgid "PS Diamond"
 msgstr ""
 
 #: plug-ins/common/newsprint.c:369
-#, fuzzy
 msgid "_Grey"
-msgstr "Szürke"
+msgstr "_Szürke"
 
 #: plug-ins/common/newsprint.c:382
-#, fuzzy
 msgid "R_ed"
-msgstr "Vörös"
+msgstr "_Vörös"
 
 #: plug-ins/common/newsprint.c:411
-#, fuzzy
 msgid "C_yan"
-msgstr "Encián"
+msgstr "_Ciánkék"
 
 #: plug-ins/common/newsprint.c:419
-#, fuzzy
 msgid "Magen_ta"
-msgstr "Bíbor"
+msgstr "_Bíborvörös"
 
 #: plug-ins/common/newsprint.c:427
-#, fuzzy
 msgid "_Yellow"
-msgstr "Sárga"
+msgstr "_Sárga"
 
 #: plug-ins/common/newsprint.c:448
 msgid "Intensity"
@@ -5458,19 +5448,19 @@ msgstr "Turbulencia:"
 
 #: plug-ins/common/plugindetails.c:106
 msgid "Internal GIMP procedure"
-msgstr "Belső Gimp eljárás"
+msgstr "Belső GIMP-eljárás"
 
 #: plug-ins/common/plugindetails.c:107
 msgid "GIMP Plug-In"
-msgstr "GIMP bővítmény"
+msgstr "GIMP-bővítmény"
 
 #: plug-ins/common/plugindetails.c:108
 msgid "GIMP Extension"
-msgstr "GIMP kiterjesztés"
+msgstr "GIMP-kiegészítő"
 
 #: plug-ins/common/plugindetails.c:109
 msgid "Temporary Procedure"
-msgstr "Átmeneti eljárás"
+msgstr "Ideiglenes eljárás"
 
 #: plug-ins/common/plugindetails.c:145
 msgid "<Toolbox>/Xtns/Plugin Details..."
@@ -6342,32 +6332,27 @@ msgstr ""
 
 #: plug-ins/common/sinus.c:1914
 msgid "Gradient"
-msgstr "Átmenet"
+msgstr "Színátmenet"
 
 #: plug-ins/common/sinus.c:1918
-#, fuzzy
 msgid "L_inear"
-msgstr "Lineáris"
+msgstr "L_ineáris"
 
 #: plug-ins/common/sinus.c:1919
-#, fuzzy
 msgid "Bili_near"
-msgstr "Bilineáris"
+msgstr "Bili_neáris"
 
 #: plug-ins/common/sinus.c:1920
-#, fuzzy
 msgid "Sin_usoidal"
-msgstr "Sinusos"
+msgstr "Sin_usos"
 
 #: plug-ins/common/sinus.c:1932
-#, fuzzy
 msgid "_Exponent:"
-msgstr "Kitevő:"
+msgstr "_Kitevő:"
 
 #: plug-ins/common/sinus.c:1942
-#, fuzzy
 msgid "_Blend"
-msgstr "Fekete"
+msgstr "_Keverés"
 
 #: plug-ins/common/smooth_palette.c:89
 msgid "<Image>/Filters/Colors/Smooth Palette..."
@@ -6558,9 +6543,8 @@ msgid "Should an Inverse Effect be done?"
 msgstr ""
 
 #: plug-ins/common/sparkle.c:509
-#, fuzzy
 msgid "A_dd Border"
-msgstr "Keret hozzáadása"
+msgstr "Szegély _hozzáadása"
 
 #: plug-ins/common/sparkle.c:515
 msgid "Draw a Border of Spikes around the Image"
@@ -6646,6 +6630,7 @@ msgid "Bumpmap"
 msgstr "xxxHepehupás leképezés"
 
 #: plug-ins/common/spheredesigner.c:1736 plug-ins/common/spheredesigner.c:2845
+#, fuzzy
 msgid "Light"
 msgstr "Szín"
 
@@ -8580,7 +8565,7 @@ msgstr "Kitöltés típusa:"
 
 #: plug-ins/gfig/gfig.c:3069
 msgid "Fill Opacity:"
-msgstr "Kitöltés átlátszósága:"
+msgstr "Kitöltés átlátszatlansága:"
 
 #: plug-ins/gfig/gfig.c:3077
 msgid "Each Selection"
@@ -10103,29 +10088,24 @@ msgid "Add Additional Guides"
 msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:177
-#, fuzzy
 msgid "L_eft Border"
-msgstr "Keret hozzáadása"
+msgstr "_Bal szegély"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:181
-#, fuzzy
 msgid "_Right Border"
-msgstr "Jobb szél:"
+msgstr "_Jobb szegély"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:185
-#, fuzzy
 msgid "_Upper Border"
-msgstr "Keret hozzáadása"
+msgstr "_Felső szegély"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:189
-#, fuzzy
 msgid "Lo_wer Border"
-msgstr "Keret hozzáadása"
+msgstr "_Alsó szegély"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:198
-#, fuzzy
 msgid "_Base URL:"
-msgstr "URL:"
+msgstr "_Bázis URL:"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:72
 #: plug-ins/imagemap/imap_cmd_guides.c:132

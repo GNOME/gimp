@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3\n"
 "POT-Creation-Date: 2003-07-10 14:25+0200\n"
-"PO-Revision-Date: 2003-07-11 10:58+0200\n"
+"PO-Revision-Date: 2003-07-14 00:11+0200\n"
 "Last-Translator: Andras Timar <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -1257,7 +1257,7 @@ msgstr "Ecsetek"
 #: app/gui/dialogs-constructors.c:575 app/gui/preferences-dialog.c:1874
 #: app/pdb/internal_procs.c:164
 msgid "Patterns"
-msgstr "Minták"
+msgstr "Mintázatok"
 
 #. initialize the list of gimp palettes
 #: app/core/gimp.c:769 app/gui/dialogs-constructors.c:403
@@ -5077,7 +5077,7 @@ msgstr "Y:"
 #: app/gui/info-window.c:555 app/tools/gimpcolorpickertool.c:363
 #: app/tools/gimpcolorpickertool.c:369
 msgid "N/A"
-msgstr "???"
+msgstr "N/A"
 
 #. Red
 #: app/gui/info-window.c:218
@@ -7572,15 +7572,15 @@ msgstr ""
 
 #: app/pdb/procedural_db_cmds.c:63
 msgid "Internal GIMP procedure"
-msgstr "Belső GIMP eljárás"
+msgstr "Belső GIMP-eljárás"
 
 #: app/pdb/procedural_db_cmds.c:64
 msgid "GIMP Plug-In"
-msgstr "GIMP bővítmény"
+msgstr "GIMP-bővítmény"
 
 #: app/pdb/procedural_db_cmds.c:65
 msgid "GIMP Extension"
-msgstr "GIMP kiegészítő"
+msgstr "GIMP-kiegészítő"
 
 #: app/pdb/procedural_db_cmds.c:66
 msgid "Temporary Procedure"
