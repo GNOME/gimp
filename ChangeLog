@@ -1,5 +1,16 @@
 2001-04-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/paletteP.h: removed
+
+	* app/palette.[ch]
+	* app/palette_select.c: changed accordingly.
+
+	* app/Makefile.am
+	* app/gui/Makefile.am: some more preparation for file moving.
+
+2001-04-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am: grouped the files together which will go to gui/.
 
 	* app/widgets/gimpdialogfactory.[ch]: maintain a list of open

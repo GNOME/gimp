@@ -40,20 +40,8 @@ gimp_SOURCES = \
 	colormap_dialog.h	\
 	commands.c		\
 	commands.h		\
-	cursorutil.c		\
-	cursorutil.h		\
-	devices.c		\
-	devices.h		\
-	dialog_handler.c	\
-	dialog_handler.h	\
-	errorconsole.c		\
-	errorconsole.h		\
 	file_new_dialog.c	\
 	file_new_dialog.h	\
-	gimpdnd.c		\
-	gimpdnd.h		\
-	gimpui.c		\
-	gimpui.h		\
 	gradient_editor.c	\
 	gradient_editor.h	\
 	gradient_select.h	\
@@ -64,36 +52,22 @@ gimp_SOURCES = \
 	info_dialog.h		\
 	info_window.c		\
 	info_window.h		\
-	interface.c		\
-	interface.h		\
 	layer_select.c		\
 	layer_select.h		\
 	layers_dialog.c		\
 	layers_dialog.h		\
-	layers_dialogP.h	\
-	lc_dialog.c		\
-	lc_dialog.h		\
-	lc_dialogP.h		\
 	menus.c			\
 	menus.h			\
-	nav_window.c		\
-	nav_window.h		\
-	ops_buttons.c		\
-	ops_buttons.h		\
 	palette.c		\
 	palette.h		\
 	palette_import.c	\
 	palette_import.h	\
 	palette_select.c	\
 	palette_select.h	\
-	paletteP.h		\
 	paths_dialog.c		\
 	paths_dialog.h		\
-	paths_dialogP.h		\
 	preferences_dialog.c	\
 	preferences_dialog.h	\
-	resolution_calibrate.c	\
-	resolution_calibrate.h	\
 	session.c		\
 	session.h		\
 	test_commands.c		\
@@ -102,6 +76,32 @@ gimp_SOURCES = \
 	tips_dialog.h		\
 	toolbox.c		\
 	toolbox.h		\
+	\
+	cursorutil.c		\
+	cursorutil.h		\
+	devices.c		\
+	devices.h		\
+	dialog_handler.c	\
+	dialog_handler.h	\
+	errorconsole.c		\
+	errorconsole.h		\
+	gimpdnd.c		\
+	gimpdnd.h		\
+	gimpui.c		\
+	gimpui.h		\
+	interface.c		\
+	interface.h		\
+	layers_dialogP.h	\
+	lc_dialog.c		\
+	lc_dialog.h		\
+	lc_dialogP.h		\
+	nav_window.c		\
+	nav_window.h		\
+	ops_buttons.c		\
+	ops_buttons.h		\
+	paths_dialogP.h		\
+	resolution_calibrate.c	\
+	resolution_calibrate.h	\
 	\
 	app_procs.c		\
 	app_procs.h		\

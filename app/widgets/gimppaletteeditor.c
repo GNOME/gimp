@@ -43,7 +43,6 @@
 #include "palette.h"
 #include "palette_import.h"
 #include "palette_select.h"
-#include "paletteP.h"
 #include "session.h"
 
 #include "libgimp/gimpenv.h"
@@ -158,7 +157,6 @@ static void   palette_dialog_drop_color         (GtkWidget      *widget,
 						 gpointer        data);
 static void   palette_dialog_invalidate_preview (GimpPalette    *palette,
 						 PaletteDialog  *palette_dialog);
-static void   palette_dialog_edit_palette       (GimpData       *data);
 
 
 PaletteDialog *top_level_edit_palette  = NULL;
@@ -294,9 +292,13 @@ palette_set_active_color (gint r,
 
 /*  called from palette_select.c  ********************************************/
 
-void 
-palette_create_edit (GimpPalette *palette)
+void
+palette_dialog_edit_palette (GimpData *data)
 {
+  GimpPalette *palette;
+
+  palette = GIMP_PALETTE (data);
+
   if (top_level_edit_palette == NULL)
     {
       top_level_edit_palette = palette_dialog_new (TRUE);
@@ -1431,14 +1433,4 @@ palette_dialog_invalidate_preview (GimpPalette   *palette,
       palette_dialog->columns_valid = FALSE;
       palette_dialog_redraw (palette_dialog);
     }
-}
-
-static void
-palette_dialog_edit_palette (GimpData *data)
-{
-  GimpPalette *palette;
-
-  palette = GIMP_PALETTE (data);
-
-  palette_create_edit (palette);
 }

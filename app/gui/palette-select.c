@@ -39,7 +39,6 @@
 #include "gimppalette.h"
 #include "palette_select.h"
 #include "palette.h"
-#include "paletteP.h"
 #include "session.h"
 
 #include "libgimp/gimpintl.h"
@@ -217,9 +216,5 @@ palette_select_close_callback (GtkWidget *widget,
 static void
 palette_select_edit_palette (GimpData *data)
 {
-  GimpPalette *palette;
-
-  palette = GIMP_PALETTE (data);
-
-  palette_create_edit (palette);
+  palette_dialog_edit_palette (data);
 }
