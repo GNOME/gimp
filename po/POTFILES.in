@@ -18,7 +18,6 @@ app/desaturate.c
 app/devices.c
 app/disp_callbacks.c
 app/docindex.c
-app/edit_selection.c
 app/equalize.c
 app/errorconsole.c
 app/file_new_dialog.c
@@ -90,6 +89,7 @@ app/tools/convolve.c
 app/tools/crop.c
 app/tools/curves.c
 app/tools/dodgeburn.c
+app/tools/edit_selection.c
 app/tools/eraser.c
 app/tools/flip_tool.c
 app/tools/fuzzy_select.c

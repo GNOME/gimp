@@ -6,6 +6,8 @@
 	* app/tools/Makefile.am
 	* app/tools/edit_selection.[ch]: added.
 
+	* po/POTFILES.in: changed.
+
 2001-01-23  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/Makefile.am
