@@ -1,5 +1,4 @@
 #include "config.h"
-#include "../perl-intl.h"
 
 /* dunno where this comes from */
 #undef VOIDUSED
@@ -25,6 +24,8 @@
 # include <pdlcore.h>
 # undef croak
 # define croak Perl_croak
+
+#include "../perl-intl.h"
 
 /* hack, undocumented, argh! */
 static Core* PDL; /* Structure hold core C functions */

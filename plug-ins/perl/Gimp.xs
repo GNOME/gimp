@@ -1,5 +1,4 @@
 #include "config.h"
-#include "perl-intl.h"
 
 #include <libgimp/gimp.h>
 #ifdef GIMP_HAVE_EXPORT
@@ -21,6 +20,8 @@
 #include "XSUB.h"
 #define NEED_newCONSTSUB
 #include "gppport.h"
+
+#include "perl-intl.h"
 
 /* FIXME */
 /* dirty is used in gimp.h.  */

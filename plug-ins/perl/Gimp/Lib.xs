@@ -1,5 +1,4 @@
 #include "config.h"
-#include "../perl-intl.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -33,6 +32,8 @@
 #include "perl.h"
 #include "XSUB.h"
 #include "gppport.h"
+
+#include "../perl-intl.h"
 
 /* dirty is used in gimp.h AND in perl < 5.005 or with PERL_POLLUTE.  */
 #ifdef dirty

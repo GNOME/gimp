@@ -40,7 +40,7 @@ C<Gtk::Object::new> with all the provided arguments.
 
 =item GTK_INIT
 
-This callback is called as early as possible E<after> gtk was initialized,
+This callback is called as early as possible I<after> gtk was initialized,
 but not before. This can be used to register additional subtypes, argument
 types etc. It is similar to GTK_CLASS_INIT.
 

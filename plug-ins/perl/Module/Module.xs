@@ -1,5 +1,4 @@
 #include "config.h"
-#include "../perl-intl.h"
 
 /* FIXME */
 /* sys/param.h is redefining these! */
@@ -16,6 +15,8 @@
 #include "gppport.h"
 
 #include <libgimp/gimpmodule.h>
+
+#include "../perl-intl.h"
 
 MODULE = Gimp::Module	PACKAGE = Gimp::Module
 
