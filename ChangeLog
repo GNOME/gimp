@@ -1,3 +1,10 @@
+2000-12-27  Sven Neumann  <sven@gimp.org>
+
+	* TODO.xml
+	* docs/make-todo: new files. TODO.xml is a first start on a roadmap
+	towards gimp-1.4. All new features and major changes need to be 
+	defined here to be accepted into the gimp-1.3 branch.
+
 2000-12-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpimage.c: gimp_image_merge_layers(): apply the layer mask

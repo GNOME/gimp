@@ -1,0 +1,158 @@
+<!-- Stuff that is scheduled to be done. Ideas do not go here, put
+     them into the old TODO file for now.   -->
+
+<!-- The following comment is not yet valid, since we have not yet
+     set up the website and updated the commit scripts. Please check
+     for parse errors anyway.
+
+     This is used to generate the online TODO list for GIMP using
+     the script docs/make-todo. Whenever a change to this file is
+     committed to CVS, the file is run through make-todo and the online
+     version updated. If you modify this file, you should check for
+     parse errors by running:
+
+     $ docs/make-todo TODO.xml > /dev/null
+
+     before committing, or you may screw up the online version -->
+
+<todo logourl="wilber.png">
+  <title>GIMP TODO List</title>
+
+  <section>
+    <title>Objectification</title>
+    
+    <entry size="small" difficulty="easy" status="0%" target="1.4">
+      <title>Generic GimpObject</title>
+      <description>
+	<p>
+	  Directly derived from GObject, should probably have a name 
+	  argument.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>    
+
+    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+      <title>Cleanup existing internal objects</title>
+      <description>
+	<p>
+	  GimpDrawable, Layer, GimpImage, GDisplay need to be redone as
+	  proper GimpObjects. Write new objects (with proper names) and 
+	  port all stuff to the new objects incrementally. 
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
+    <entry size="small" difficulty="medium" status="0%" target="1.4">
+      <title>Generic data structures</title>
+      <description>
+	<p>
+	  Brushes, Patterns, Gradients should be derived from a GimpData
+	  object.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
+    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+      <title>Generic object container(s)</title>
+      <description>
+	<p>
+	  A GimpContainer that holds GimpObject objects. Comparable to 
+	  the GCimContainer, but no serialization for now. Should probably
+	  dispatch "changed" (or other) signals from its children.
+	</p>
+	<p>
+	  This container will be used for lists of brushes, patterns, 
+	  layers, channels, paths, ...
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
+    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+      <title>Abstract GimpBrush object and derived brush types</title>
+      <description>
+	<p>
+	  The GimpBrush object we have now is not a generic BrushProvider.
+	  We need an abstract object to derive the different kinds of brushes
+	  from (BrushPipes, parametric brushes, ...). It has to provide 
+	  methods for the PaintCore to transparently select and use the brush 
+	  data.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
+  </section> <!-- Objectification -->
+
+  <section>
+    <title>User Interface</title>
+
+    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+      <title>Abstract Container Views</title>
+      <description>
+	<p>
+	  Views on data stored in a GimpContainer. The objects need to provide
+	  hooks that this view can use to show data like patterns, brushes, 
+	  etc. in different views (list, grid, ...)
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
+    <entry size="big" difficulty="advanced" status="0%" target="1.4">
+      <title>Effect Preview Widget</title>
+      <description>
+	<p>
+	  A generic preview widget with functions like scrolling and zooming
+	  useable by effect filters. Should have adaptive supersampling, 
+	  progressive display (if possible) and other neat stuff. 
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
+  </section> <!-- User Interface -->    
+  
+  <section>
+    <title>Internationalization</title>
+
+    <entry size="small" difficulty="medium" status="0%" target="1.4">
+      <title>Context-sensitive translations</title>
+      <description>
+	<p>
+	  The same english string used in different contexts may need to
+	  be translated differently in other languages. Think of a way to
+	  implement this using gettext or come up with something better.
+	</p>
+	<p>
+	  There is a patch with a possible solution on ftp.gimp.org,
+	  but actually we'd like something cleaner if possible.
+	</p>
+      </description>
+      <url>ftp://ftp.gimp.org/pub/gimp/patches/gimp-chyla-20001207-0.patch</url>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
+  </section> <!-- Internationalization -->    
+
+</todo>
+
