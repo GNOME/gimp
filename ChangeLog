@@ -1,3 +1,11 @@
+2001-11-18  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimp.def: Added some missing entry points.
+
+	* libgimp/Makefile.am (libgimp_la_DEPENDENCIES,
+	libgimpui_la_DEPENDENCIES): Depend on corresponding .def file (on
+	Win32).
+
 2001-11-16  Tor Lillqvist  <tml@iki.fi>
 
 	* gimptool-win32.c.in: Implement the --prefix and --*dir options.

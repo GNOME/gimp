@@ -6,6 +6,8 @@ conditional_libgimp_la = libgimp.la
 endif
 
 if OS_WIN32
+gimp_def = gimp.def
+gimpui_def = gimpui.def
 libgimp_export_symbols = -export-symbols gimp.def
 libgimpui_export_symbols = -export-symbols gimpui.def
 
@@ -317,6 +319,8 @@ libgimp_la_LDFLAGS = \
 	$(libgimp_export_symbols)
 libgimp_la_LIBADD = $(GLIB_LIBS) -lm
 
+libgimp_la_DEPENDENCIES = $(gimp_def)
+
 libgimpui_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
 	-release $(LT_RELEASE) \
@@ -324,6 +328,8 @@ libgimpui_la_LDFLAGS = \
 	$(libgimpui_export_symbols)
 
 libgimpui_la_LIBADD = $(GTK_LIBS) $(conditional_libgimp_la)
+
+libgimpui_la_DEPENDENCIES = $(gimpui_def)
 
 .PHONY: files
 
