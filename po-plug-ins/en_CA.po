@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-19 10:51-0400\n"
-"PO-Revision-Date: 2004-10-19 14:31-0400\n"
+"POT-Creation-Date: 2004-10-22 00:04-0400\n"
+"PO-Revision-Date: 2004-10-22 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -382,7 +382,8 @@ msgstr "_Fractals"
 #: plug-ins/common/pat.c:437 plug-ins/common/pcx.c:589
 #: plug-ins/common/pix.c:519 plug-ins/common/png.c:1180
 #: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1059
-#: plug-ins/common/psd_save.c:1589 plug-ins/common/spheredesigner.c:2088
+#: plug-ins/common/psd_save.c:1589 plug-ins/common/raw.c:519
+#: plug-ins/common/raw.c:546 plug-ins/common/spheredesigner.c:2088
 #: plug-ins/common/sunras.c:516 plug-ins/common/tga.c:1032
 #: plug-ins/common/tiff.c:1809 plug-ins/common/xbm.c:1000
 #: plug-ins/common/xwd.c:581 plug-ins/fits/fits.c:454
@@ -420,6 +421,7 @@ msgstr "Save Fractal Parameters"
 #: plug-ins/common/pix.c:336 plug-ins/common/png.c:676
 #: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:936
 #: plug-ins/common/psd.c:1758 plug-ins/common/psp.c:1461
+#: plug-ins/common/raw.c:232 plug-ins/common/raw.c:637
 #: plug-ins/common/spheredesigner.c:1990 plug-ins/common/sunras.c:385
 #: plug-ins/common/svg.c:245 plug-ins/common/svg.c:628
 #: plug-ins/common/tga.c:417 plug-ins/common/tiff.c:513
@@ -1175,11 +1177,12 @@ msgstr "Bad colourmap"
 #: plug-ins/common/pcx.c:311 plug-ins/common/pix.c:342
 #: plug-ins/common/png.c:683 plug-ins/common/pnm.c:404
 #: plug-ins/common/postscript.c:942 plug-ins/common/psd.c:1763
-#: plug-ins/common/sunras.c:439 plug-ins/common/tga.c:422
-#: plug-ins/common/tiff.c:518 plug-ins/common/wmf.c:400
-#: plug-ins/common/xbm.c:728 plug-ins/common/xpm.c:346
-#: plug-ins/common/xwd.c:479 plug-ins/faxg3/faxg3.c:204
-#: plug-ins/gfli/gfli.c:468 plug-ins/sgi/sgi.c:327 plug-ins/xjt/xjt.c:3316
+#: plug-ins/common/raw.c:642 plug-ins/common/sunras.c:439
+#: plug-ins/common/tga.c:422 plug-ins/common/tiff.c:518
+#: plug-ins/common/wmf.c:400 plug-ins/common/xbm.c:728
+#: plug-ins/common/xpm.c:346 plug-ins/common/xwd.c:479
+#: plug-ins/faxg3/faxg3.c:204 plug-ins/gfli/gfli.c:468 plug-ins/sgi/sgi.c:327
+#: plug-ins/xjt/xjt.c:3316
 #, c-format
 msgid "Opening '%s'..."
 msgstr "Opening '%s'..."
@@ -1214,13 +1217,14 @@ msgstr "Unrecognized or invalid BMP compression format."
 #: plug-ins/common/pcx.c:338 plug-ins/common/pcx.c:344
 #: plug-ins/common/pix.c:378 plug-ins/common/png.c:810
 #: plug-ins/common/pnm.c:484 plug-ins/common/psd.c:2172
-#: plug-ins/common/smooth_palette.c:257 plug-ins/common/sunras.c:928
-#: plug-ins/common/tga.c:931 plug-ins/common/tiff.c:836
-#: plug-ins/common/tile.c:266 plug-ins/common/winclipboard.c:579
-#: plug-ins/common/xbm.c:871 plug-ins/faxg3/faxg3.c:466
-#: plug-ins/fits/fits.c:510 plug-ins/gfig/gfig-dialog.c:1288
-#: plug-ins/gimpressionist/general.c:121 plug-ins/sgi/sgi.c:380
-#: plug-ins/twain/twain.c:571 plug-ins/winsnap/winsnap.c:1237
+#: plug-ins/common/raw.c:679 plug-ins/common/smooth_palette.c:257
+#: plug-ins/common/sunras.c:928 plug-ins/common/tga.c:931
+#: plug-ins/common/tiff.c:836 plug-ins/common/tile.c:266
+#: plug-ins/common/winclipboard.c:579 plug-ins/common/xbm.c:871
+#: plug-ins/faxg3/faxg3.c:466 plug-ins/fits/fits.c:510
+#: plug-ins/gfig/gfig-dialog.c:1288 plug-ins/gimpressionist/general.c:121
+#: plug-ins/sgi/sgi.c:380 plug-ins/twain/twain.c:571
+#: plug-ins/winsnap/winsnap.c:1237
 msgid "Background"
 msgstr "Background"
 
@@ -2407,10 +2411,12 @@ msgid "to alpha"
 msgstr "to alpha"
 
 #: plug-ins/common/compose.c:127 plug-ins/common/decompose.c:128
+#: plug-ins/common/raw.c:955
 msgid "RGB"
 msgstr "RGB"
 
 #: plug-ins/common/compose.c:137 plug-ins/common/decompose.c:133
+#: plug-ins/common/raw.c:956
 msgid "RGBA"
 msgstr "RGBA"
 
@@ -2637,6 +2643,7 @@ msgid "D_ivisor:"
 msgstr "D_ivisor:"
 
 #: plug-ins/common/convmatrix.c:957 plug-ins/common/depthmerge.c:748
+#: plug-ins/common/raw.c:974
 msgid "O_ffset:"
 msgstr "O_ffset:"
 
@@ -3171,8 +3178,8 @@ msgstr "Destripe"
 
 #: plug-ins/common/destripe.c:469 plug-ins/common/gtm.c:581
 #: plug-ins/common/postscript.c:2849 plug-ins/common/postscript.c:3008
-#: plug-ins/common/smooth_palette.c:429 plug-ins/common/tile.c:417
-#: plug-ins/imagemap/imap_cmd_guides.c:165
+#: plug-ins/common/raw.c:987 plug-ins/common/smooth_palette.c:429
+#: plug-ins/common/tile.c:417 plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
 msgid "_Width:"
 msgstr "_Width:"
@@ -3382,8 +3389,9 @@ msgstr "Engrave"
 
 #: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1206
 #: plug-ins/common/gtm.c:597 plug-ins/common/postscript.c:2858
-#: plug-ins/common/postscript.c:3017 plug-ins/common/smooth_palette.c:434
-#: plug-ins/common/tile.c:421 plug-ins/imagemap/imap_cmd_guides.c:175
+#: plug-ins/common/postscript.c:3017 plug-ins/common/raw.c:1000
+#: plug-ins/common/smooth_palette.c:434 plug-ins/common/tile.c:421
+#: plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
 msgstr "_Height:"
@@ -5957,6 +5965,78 @@ msgstr "R_epeat:"
 #: plug-ins/common/randomize.c:765
 msgid "Number of times to apply filter"
 msgstr "Number of times to apply filter"
+
+#: plug-ins/common/raw.c:166 plug-ins/common/raw.c:182
+msgid "Raw Image Data"
+msgstr "Raw Image Data"
+
+#: plug-ins/common/raw.c:917
+msgid "Raw Image Loader"
+msgstr "Raw Image Loader"
+
+#: plug-ins/common/raw.c:945
+msgid "Image"
+msgstr "Image"
+
+#: plug-ins/common/raw.c:957
+msgid "Planar RGB"
+msgstr "Planar RGB"
+
+#: plug-ins/common/raw.c:958
+msgid "Indexed"
+msgstr "Indexed"
+
+#: plug-ins/common/raw.c:963
+msgid "Image _Type:"
+msgstr "Image _Type:"
+
+#: plug-ins/common/raw.c:1013
+msgid "Palette"
+msgstr "Palette"
+
+#: plug-ins/common/raw.c:1023 plug-ins/common/raw.c:1111
+msgid "R, G, B (normal)"
+msgstr "R, G, B (normal)"
+
+#: plug-ins/common/raw.c:1024 plug-ins/common/raw.c:1113
+msgid "B, G, R, X (bmp style)"
+msgstr "B, G, R, X (BMP style)"
+
+#: plug-ins/common/raw.c:1029
+msgid "_Palette Type:"
+msgstr "_Palette Type:"
+
+#: plug-ins/common/raw.c:1040
+msgid "Off_set:"
+msgstr "Off_set:"
+
+#: plug-ins/common/raw.c:1052
+msgid "Select Palette File to Load"
+msgstr "Select Palette File to Load"
+
+#: plug-ins/common/raw.c:1055
+msgid "Pal_ette File:"
+msgstr "Pal_ette File:"
+
+#: plug-ins/common/raw.c:1083
+msgid "Raw Image Save"
+msgstr "Raw Image Save"
+
+#: plug-ins/common/raw.c:1097
+msgid "RGB Save Type"
+msgstr "RGB Save Type"
+
+#: plug-ins/common/raw.c:1101
+msgid "Standard (R,G,B)"
+msgstr "Standard (R,G,B)"
+
+#: plug-ins/common/raw.c:1102
+msgid "Planar (RRR,GGG,BBB)"
+msgstr "Planar (RRR,GGG,BBB)"
+
+#: plug-ins/common/raw.c:1107
+msgid "Indexed Palette Type"
+msgstr "Indexed Palette Type"
 
 #: plug-ins/common/ripple.c:138
 msgid "_Ripple..."
