@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.18\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-01-19 00:54+0100\n"
-"PO-Revision-Date: 2004-01-11 16:23+0100\n"
+"PO-Revision-Date: 2004-01-27 11:02+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -387,7 +387,6 @@ msgid "Text"
 msgstr "Testo"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Motivi/3_D Truchet..."
 
@@ -848,7 +847,6 @@ msgid "Spots density Y"
 msgstr "Densità macchie Y"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/B_urn-In..."
 msgstr "<Image>/Script-Fu/Animatori/B_urn-In..."
 
@@ -963,14 +961,12 @@ msgid "Chalk Color"
 msgstr "Colore gesso"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Chip Awa_y..."
-msgstr "<Image>/Script-Fu/Alfa a logotipo/Chip Awa_y..."
+msgstr "<Image>/Script-Fu/Alfa a Logotipo/Chip Awa_y..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Awa_y..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Chip Away..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Chip Awa_y..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:3
 msgid "Blur Amount"
@@ -2314,9 +2310,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Web Title Header..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Motivi/Truchet..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Motivi/T_ruchet..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground Color"
