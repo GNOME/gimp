@@ -47,14 +47,14 @@
 static void gimp_brush_generated_generate (GimpBrushGenerated *brush);
 
 
-static GimpObjectClass *parent_class = NULL;
+static GimpBrushClass *parent_class = NULL;
 
 
 static void
 gimp_brush_generated_destroy (GtkObject *object)
 {
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -62,7 +62,7 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
 {
   GtkObjectClass *object_class;
 
-  object_class = GTK_OBJECT_CLASS (klass);
+  object_class = (GtkObjectClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_BRUSH);
 

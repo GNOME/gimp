@@ -23,7 +23,6 @@
 
 #include "apptypes.h"
 
-#include "gimpsignal.h"
 #include "parasitelist.h"
 
 #include "libgimp/gimpparasite.h"
@@ -36,14 +35,17 @@ enum
   LAST_SIGNAL
 };
 
-static guint parasite_list_signals[LAST_SIGNAL];
 
 static void parasite_list_destroy    (GtkObject         *list);
 static void parasite_list_init       (ParasiteList      *list);
 static void parasite_list_class_init (ParasiteListClass *klass);
-static int  free_a_parasite          (void              *key,
-				      void              *parasite,
-				      void              *unused);
+static int  free_a_parasite          (gpointer           key,
+				      gpointer           parasite,
+				      gpointer           unused);
+
+
+static guint parasite_list_signals[LAST_SIGNAL] = { 0 };
+
 
 static void
 parasite_list_init (ParasiteList *list)
@@ -54,17 +56,37 @@ parasite_list_init (ParasiteList *list)
 static void
 parasite_list_class_init (ParasiteListClass *klass)
 {
-  GtkObjectClass *class = GTK_OBJECT_CLASS (klass);
-  GtkType type = class->type;
+  GtkObjectClass *object_class;
 
-  class->destroy = parasite_list_destroy;
+  object_class = (GtkObjectClass *) klass;
 
   parasite_list_signals[ADD] =
-    gimp_signal_new ("add",    GTK_RUN_FIRST, type, 0, gimp_sigtype_pointer);
-  parasite_list_signals[REMOVE] = 
-    gimp_signal_new ("remove", GTK_RUN_FIRST, type, 0, gimp_sigtype_pointer);
+    gtk_signal_new ("add",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (ParasiteListClass,
+                                       add),
+                    gtk_marshal_NONE__POINTER,
+                    GTK_TYPE_NONE, 1,
+                    GTK_TYPE_POINTER);
 
-  gtk_object_class_add_signals (class, parasite_list_signals, LAST_SIGNAL);
+  parasite_list_signals[REMOVE] = 
+    gtk_signal_new ("remove",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (ParasiteListClass,
+                                       remove),
+                    gtk_marshal_NONE__POINTER,
+                    GTK_TYPE_NONE, 1,
+                    GTK_TYPE_POINTER);
+
+  gtk_object_class_add_signals (object_class, parasite_list_signals,
+				LAST_SIGNAL);
+
+  object_class->destroy = parasite_list_destroy;
+
+  klass->add    = NULL;
+  klass->remove = NULL;
 }
 
 GtkType
@@ -72,7 +94,7 @@ parasite_list_get_type (void)
 {
   static GtkType type = 0;
 
-  if (!type)
+  if (! type)
     {
       GtkTypeInfo info =
       {
@@ -85,8 +107,10 @@ parasite_list_get_type (void)
 	NULL,
 	(GtkClassInitFunc) NULL
       };
+
       type = gtk_type_unique (GIMP_TYPE_OBJECT, &info);
     }
+
   return type;
 }
 

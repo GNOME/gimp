@@ -32,7 +32,6 @@
 #include "gdisplay.h"
 #include "gimpimage.h"
 #include "gimage_mask.h"
-#include "gimpsignal.h"
 #include "gimppreviewcache.h"
 #include "gimplut.h"
 #include "layer.h"
@@ -95,20 +94,28 @@ gimp_channel_get_type (void)
 }
 
 static void
-gimp_channel_class_init (GimpChannelClass *class)
+gimp_channel_class_init (GimpChannelClass *klass)
 {
   GtkObjectClass *object_class;
 
-  object_class = (GtkObjectClass*) class;
-  parent_class = gtk_type_class (gimp_drawable_get_type ());
+  object_class = (GtkObjectClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_DRAWABLE);
 
   channel_signals[REMOVED] =
-	  gimp_signal_new ("removed",
-			   0, object_class->type, 0, gimp_sigtype_void);
+    gtk_signal_new ("removed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpChannelClass,
+				       removed),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
 
   gtk_object_class_add_signals (object_class, channel_signals, LAST_SIGNAL);
 
   object_class->destroy = gimp_channel_destroy;
+
+  klass->removed = NULL;
 }
 
 static void

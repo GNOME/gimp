@@ -67,7 +67,6 @@ struct _GimpBrushPipeClass
 };
 
 
-GtkType     gimp_brush_pixmap_get_type (void);
 GtkType     gimp_brush_pipe_get_type   (void);
 
 GimpBrush * gimp_brush_pipe_load       (gchar *filename);

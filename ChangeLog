@@ -1,3 +1,26 @@
+2001-01-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/gimpsignal.[ch]: removed.
+	* app/gimpmarshal.[ch]: added.
+
+	* app/channel.[ch]
+	* app/gimpbrush.[ch]
+	* app/gimpbrushgenerated.c
+	* app/gimpbrushlist.[ch]
+	* app/gimpbrushpipe.[ch]
+	* app/gimpcontext.c
+	* app/gimpdrawable.c
+	* app/gimpimage.c
+	* app/gimplist.[ch]
+	* app/gimpobject.[ch]
+	* app/gimpset.[ch]
+	* app/layer.c
+	* app/layers_dialog.c
+	* app/module_db.c
+	* app/parasitelist.[ch]: removed gimp_signal_new() and
+	GIMP_TYPE_INIT(). Fixed lots of object related uglyness.
+
 2001-01-09  Sven Neumann  <sven@gimp.org>
 
 	Merged fix from gimp-1-2:

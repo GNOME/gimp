@@ -2268,7 +2268,7 @@ layer_widget_create (GimpImage *gimage,
 
   gtk_widget_ref (layer_widget->list_item);
 
-  gtk_signal_connect_while_alive (GTK_OBJECT (layer), "invalidate_pr",
+  gtk_signal_connect_while_alive (GTK_OBJECT (layer), "invalidate_preview",
 				  GTK_SIGNAL_FUNC (invalidate_preview_callback),
 				  (gpointer)layer_widget,
 				  GTK_OBJECT (layer_widget->list_item));

@@ -22,7 +22,6 @@
 
 #include "apptypes.h"
 #include "gimpset.h"
-#include "gimpsignal.h"
 
 
 /* Yep, this can be optimized quite a lot */
@@ -49,6 +48,7 @@ enum
   LAST_SIGNAL
 };
 
+
 static Node * gimp_set_find_node (GimpSet  *set,
 				  gpointer  object);
 static Node * gimp_set_node_new  (GimpSet  *set,
@@ -56,9 +56,11 @@ static Node * gimp_set_node_new  (GimpSet  *set,
 static void   gimp_set_node_free (GimpSet  *set,
 				  Node     *node);
 
+
 static guint gimp_set_signals[LAST_SIGNAL] = { 0 };
 
 static GimpObjectClass *parent_class = NULL;
+
 
 static void
 gimp_set_destroy (GtkObject *object)
@@ -90,33 +92,39 @@ gimp_set_class_init (GimpSetClass* klass)
 {
   GtkObjectClass *object_class;
 
-  object_class = GTK_OBJECT_CLASS (klass);
+  object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (gimp_object_get_type ());
+  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
 	
   gimp_set_signals[ADD]=
-    gimp_signal_new ("add",
-		     GTK_RUN_FIRST,
-		     object_class->type,
-                     GTK_SIGNAL_OFFSET (GimpSetClass,
-					add),
-		     gimp_sigtype_pointer);
+    gtk_signal_new ("add",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpSetClass,
+                                       add),
+                    gtk_marshal_NONE__POINTER,
+                    GTK_TYPE_NONE, 1,
+                    GTK_TYPE_POINTER);
 
   gimp_set_signals[REMOVE]=
-    gimp_signal_new ("remove",
-		     GTK_RUN_FIRST,
-		     object_class->type,
-                     GTK_SIGNAL_OFFSET (GimpSetClass,
-					remove),
-		     gimp_sigtype_pointer);
+    gtk_signal_new ("remove",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpSetClass,
+                                       remove),
+                    gtk_marshal_NONE__POINTER,
+                    GTK_TYPE_NONE, 1,
+                    GTK_TYPE_POINTER);
 
   gimp_set_signals[ACTIVE_CHANGED]=
-    gimp_signal_new ("active_changed",
-		     GTK_RUN_FIRST,
-		     object_class->type,
-                     GTK_SIGNAL_OFFSET (GimpSetClass,
-					active_changed),
-		     gimp_sigtype_pointer);
+    gtk_signal_new ("active_changed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpSetClass,
+                                       active_changed),
+                    gtk_marshal_NONE__POINTER,
+                    GTK_TYPE_NONE, 1,
+                    GTK_TYPE_POINTER);
 
   gtk_object_class_add_signals (object_class, gimp_set_signals, LAST_SIGNAL);
 
@@ -130,16 +138,26 @@ gimp_set_class_init (GimpSetClass* klass)
 GtkType
 gimp_set_get_type (void)
 {
-  static GtkType gimpset_type = 0;
+  static GtkType set_type = 0;
 
-  GIMP_TYPE_INIT (gimpset_type,
-		  GimpSet,
-		  GimpSetClass,
-		  gimp_set_init,
-		  gimp_set_class_init,
-		  GIMP_TYPE_OBJECT);
+  if (! set_type)
+    {
+      GtkTypeInfo set_info =
+      {
+        "GimpSet",
+        sizeof (GimpSet),
+        sizeof (GimpSetClass),
+        (GtkClassInitFunc) gimp_set_class_init,
+        (GtkObjectInitFunc) gimp_set_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL
+      };
 
-  return gimpset_type;
+      set_type = gtk_type_unique (GIMP_TYPE_OBJECT, &set_info);
+    }
+
+  return set_type;
 }
 
 

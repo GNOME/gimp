@@ -38,14 +38,24 @@ gimp_object_class_init (GimpObjectClass *klass)
 GtkType 
 gimp_object_get_type (void)
 {
-  static GtkType type = 0;
+  static GtkType object_type = 0;
 
-  GIMP_TYPE_INIT (type,
-		  GimpObject,
-		  GimpObjectClass,
-		  gimp_object_init,
-		  gimp_object_class_init,
-		  GTK_TYPE_OBJECT);
+  if (! object_type)
+    {
+      GtkTypeInfo object_info =
+      {
+        "GimpObject",
+        sizeof (GimpObject),
+        sizeof (GimpObjectClass),
+        (GtkClassInitFunc) gimp_object_class_init,
+        (GtkObjectInitFunc) gimp_object_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL,
+      };
 
-  return type;
+      object_type = gtk_type_unique (GTK_TYPE_OBJECT, &object_info);
+    }
+
+  return object_type;
 }

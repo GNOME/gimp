@@ -66,7 +66,7 @@ static gint   brush_compare_func (gconstpointer  first,
 
 
 /*  class functions  */
-static GimpObjectClass* parent_class = NULL;
+static GimpListClass* parent_class = NULL;
 
 
 static void
@@ -91,11 +91,12 @@ gimp_brush_list_class_init (GimpBrushListClass *klass)
 {
   GimpListClass *gimp_list_class;
   
-  gimp_list_class = GIMP_LIST_CLASS (klass);
+  gimp_list_class = (GimpListClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_LIST);
+
   gimp_list_class->add    = gimp_brush_list_add_func;
   gimp_list_class->remove = gimp_brush_list_remove_func;
-
-  parent_class = gtk_type_class (gimp_list_get_type ());
 }
 
 void
@@ -123,7 +124,7 @@ gimp_brush_list_get_type (void)
 	(GtkClassInitFunc) NULL
       };
 
-      type = gtk_type_unique (gimp_list_get_type (), &info);
+      type = gtk_type_unique (GIMP_TYPE_LIST, &info);
     }
 
   return type;
@@ -134,7 +135,7 @@ gimp_brush_list_new (void)
 {
   GimpBrushList *list;
 
-  list = GIMP_BRUSH_LIST (gtk_type_new (gimp_brush_list_get_type ()));
+  list = GIMP_BRUSH_LIST (gtk_type_new (GIMP_TYPE_BRUSH_LIST));
 
   GIMP_LIST (list)->type = GIMP_TYPE_BRUSH;
   GIMP_LIST (list)->weak = FALSE;
@@ -309,15 +310,6 @@ brushes_free (void)
   g_free (vbr_dir);
 }
 
-#if 0
-static GSList *
-insert_brush_in_list (GSList    *list,
-		      GimpBrush *brush)
-{
-  return g_slist_insert_sorted (list, brush, brush_compare_func);
-}
-#endif
-
 gint
 gimp_brush_list_get_brush_index (GimpBrushList *brush_list,
 				 GimpBrush     *brush)
@@ -331,7 +323,7 @@ gimp_brush_list_get_brush_by_index (GimpBrushList *brush_list,
 				    gint           index)
 {
   GimpBrush *brush = NULL;
-  GSList *list;
+  GSList    *list;
 
   /* FIXME: make a gimp_list function that does this? */
   list = g_slist_nth (GIMP_LIST (brush_list)->list, index);

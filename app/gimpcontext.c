@@ -29,8 +29,8 @@
 #include "gimpbrush.h"
 #include "gimpbrushlist.h"
 #include "gimpcontext.h"
+#include "gimpmarshal.h"
 #include "gimprc.h"
-#include "gimpsignal.h"
 #include "gradient_header.h"
 #include "gradient.h"
 #include "patterns.h"
@@ -421,84 +421,108 @@ gimp_context_class_init (GimpContextClass *klass)
   parent_class = gtk_type_class (gimp_object_get_type ());
 
   gimp_context_signals[IMAGE_CHANGED] =
-    gimp_signal_new (gimp_context_signal_names[IMAGE_CHANGED],
-		     GTK_RUN_FIRST,
-		     object_class->type,
-		     GTK_SIGNAL_OFFSET (GimpContextClass,
-					image_changed),
-		     gimp_sigtype_pointer);
+    gtk_signal_new (gimp_context_signal_names[IMAGE_CHANGED],
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpContextClass,
+				       image_changed),
+		    gtk_marshal_NONE__POINTER,
+		    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_POINTER);
 
   gimp_context_signals[DISPLAY_CHANGED] =
-    gimp_signal_new (gimp_context_signal_names[DISPLAY_CHANGED],
-		     GTK_RUN_FIRST,
-		     object_class->type,
-		     GTK_SIGNAL_OFFSET (GimpContextClass,
-					display_changed),
-		     gimp_sigtype_pointer);
+    gtk_signal_new (gimp_context_signal_names[DISPLAY_CHANGED],
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpContextClass,
+				       display_changed),
+		    gtk_marshal_NONE__POINTER,
+		    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_POINTER);
 
   gimp_context_signals[TOOL_CHANGED] =
-    gimp_signal_new (gimp_context_signal_names[TOOL_CHANGED],
-		     GTK_RUN_FIRST,
-		     object_class->type,
-		     GTK_SIGNAL_OFFSET (GimpContextClass,
-					tool_changed),
-		     gimp_sigtype_int);
+    gtk_signal_new (gimp_context_signal_names[TOOL_CHANGED],
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpContextClass,
+				       tool_changed),
+		    gtk_marshal_NONE__INT,
+		    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_INT);
 
   gimp_context_signals[FOREGROUND_CHANGED] =
-    gimp_signal_new (gimp_context_signal_names[FOREGROUND_CHANGED],
-		     GTK_RUN_FIRST,
-		     object_class->type,
-		     GTK_SIGNAL_OFFSET (GimpContextClass,
-					foreground_changed),
-		     gimp_sigtype_int_int_int);
+    gtk_signal_new (gimp_context_signal_names[FOREGROUND_CHANGED],
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpContextClass,
+				       foreground_changed),
+		    gimp_marshal_NONE__INT_INT_INT,
+		    GTK_TYPE_NONE, 3,
+		    GTK_TYPE_INT,
+		    GTK_TYPE_INT,
+		    GTK_TYPE_INT);
 
   gimp_context_signals[BACKGROUND_CHANGED] =
-    gimp_signal_new (gimp_context_signal_names[BACKGROUND_CHANGED],
-		     GTK_RUN_FIRST,
-		     object_class->type,
-		     GTK_SIGNAL_OFFSET (GimpContextClass,
-					background_changed),
-		     gimp_sigtype_int_int_int);
+    gtk_signal_new (gimp_context_signal_names[BACKGROUND_CHANGED],
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpContextClass,
+				       background_changed),
+		    gimp_marshal_NONE__INT_INT_INT,
+		    GTK_TYPE_NONE, 3,
+		    GTK_TYPE_INT,
+		    GTK_TYPE_INT,
+		    GTK_TYPE_INT);
 
   gimp_context_signals[OPACITY_CHANGED] =
-    gimp_signal_new (gimp_context_signal_names[OPACITY_CHANGED],
-		     GTK_RUN_FIRST,
-		     object_class->type,
-		     GTK_SIGNAL_OFFSET (GimpContextClass,
-					opacity_changed),
-		     gimp_sigtype_double);
+    gtk_signal_new (gimp_context_signal_names[OPACITY_CHANGED],
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpContextClass,
+				       opacity_changed),
+		    gimp_marshal_NONE__DOUBLE,
+		    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_DOUBLE);
 
   gimp_context_signals[PAINT_MODE_CHANGED] =
-    gimp_signal_new (gimp_context_signal_names[PAINT_MODE_CHANGED],
-		     GTK_RUN_FIRST,
-		     object_class->type,
-		     GTK_SIGNAL_OFFSET (GimpContextClass,
-					paint_mode_changed),
-		     gimp_sigtype_int);
+    gtk_signal_new (gimp_context_signal_names[PAINT_MODE_CHANGED],
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpContextClass,
+				       paint_mode_changed),
+		    gtk_marshal_NONE__INT,
+		    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_INT);
 
   gimp_context_signals[BRUSH_CHANGED] =
-    gimp_signal_new (gimp_context_signal_names[BRUSH_CHANGED],
-		     GTK_RUN_FIRST,
-		     object_class->type,
-		     GTK_SIGNAL_OFFSET (GimpContextClass,
-					brush_changed),
-		     gimp_sigtype_pointer);
+    gtk_signal_new (gimp_context_signal_names[BRUSH_CHANGED],
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpContextClass,
+				       brush_changed),
+		    gtk_marshal_NONE__POINTER,
+		    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_POINTER);
 
   gimp_context_signals[PATTERN_CHANGED] =
-    gimp_signal_new (gimp_context_signal_names[PATTERN_CHANGED],
-		     GTK_RUN_FIRST,
-		     object_class->type,
-		     GTK_SIGNAL_OFFSET (GimpContextClass,
-					pattern_changed),
-		     gimp_sigtype_pointer);
+    gtk_signal_new (gimp_context_signal_names[PATTERN_CHANGED],
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpContextClass,
+				       pattern_changed),
+		    gtk_marshal_NONE__POINTER,
+		    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_POINTER);
 
   gimp_context_signals[GRADIENT_CHANGED] =
-    gimp_signal_new (gimp_context_signal_names[GRADIENT_CHANGED],
-		     GTK_RUN_FIRST,
-		     object_class->type,
-		     GTK_SIGNAL_OFFSET (GimpContextClass,
-					gradient_changed),
-		     gimp_sigtype_pointer);
+    gtk_signal_new (gimp_context_signal_names[GRADIENT_CHANGED],
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpContextClass,
+				       gradient_changed),
+		    gtk_marshal_NONE__POINTER,
+		    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_POINTER);
 
   gtk_object_class_add_signals (object_class, gimp_context_signals,
 				LAST_SIGNAL);

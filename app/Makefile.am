@@ -16,14 +16,14 @@ libgimpim_a_SOURCES = \
 	gimpdrawable.h		\
 	gimpimage.c		\
 	gimpimage.h		\
+	gimpmarshal.c		\
+	gimpmarshal.h		\
 	gimpobject.c		\
 	gimpobject.h		\
 	gimppreviewcache.h	\
 	gimppreviewcache.c	\
 	gimpset.c		\
-	gimpset.h		\
-	gimpsignal.c		\
-	gimpsignal.h
+	gimpset.h
 
 gimp_SOURCES = \
 	about_dialog.c		\

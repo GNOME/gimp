@@ -57,6 +57,7 @@ static void gimp_drawable_class_init (GimpDrawableClass *klass);
 static void gimp_drawable_init	     (GimpDrawable      *drawable);
 static void gimp_drawable_destroy    (GtkObject		*object);
 
+
 static guint gimp_drawable_signals[LAST_SIGNAL] = { 0 };
 
 static GimpDrawableClass *parent_class = NULL;
@@ -91,16 +92,19 @@ static void
 gimp_drawable_class_init (GimpDrawableClass *klass)
 {
   GtkObjectClass *object_class;
-  GtkType type = GIMP_TYPE_DRAWABLE;
 
-  object_class = GTK_OBJECT_CLASS (klass);
+  object_class = (GtkObjectClass *) klass;
+
   parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
 
   gimp_drawable_signals[INVALIDATE_PREVIEW] =
-    gimp_signal_new ("invalidate_pr", GTK_RUN_LAST, type,
-		     GTK_SIGNAL_OFFSET (GimpDrawableClass,
-					invalidate_preview),
-		     gimp_sigtype_void);
+    gtk_signal_new ("invalidate_preview",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpDrawableClass,
+				       invalidate_preview),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
 
   gtk_object_class_add_signals (object_class, gimp_drawable_signals,
 				LAST_SIGNAL);

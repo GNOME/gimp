@@ -26,7 +26,8 @@
 #define GIMP_TYPE_BRUSH_LIST         (gimp_brush_list_get_type ())
 #define GIMP_BRUSH_LIST(obj)         (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_LIST, GimpBrushList))
 #define GIMP_IS_BRUSH_LIST(obj)      (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH_LIST))
-#define GIMP_BRUSH_LIST_CLASS(klass) (GTK_CHECK_CLASS_CAST (klass, gimp_brush_list_get_type(), GimpBrushListClass))
+#define GIMP_BRUSH_LIST_CLASS(klass) (GTK_CHECK_CLASS_CAST (klass, GIMP_TYPE_BRUSH_LIST, GimpBrushListClass))
+
 
 typedef struct _GimpBrushListClass GimpBrushListClass;
 

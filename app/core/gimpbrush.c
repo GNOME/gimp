@@ -45,18 +45,16 @@
 #include "apptypes.h"
 
 #include "brush_header.h"
-#include "patterns.h"
-#include "pattern_header.h"
 #include "gimpbrush.h"
 #include "gimpbrushlist.h"
-
-#include "gimpsignal.h"
 #include "gimprc.h"
-
+#include "patterns.h"
+#include "pattern_header.h"
 #include "paint_core.h"
 #include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"
+
 
 enum
 {
@@ -68,9 +66,11 @@ enum
 static GimpBrush * gimp_brush_select_brush     (PaintCore *paint_core);
 static gboolean    gimp_brush_want_null_motion (PaintCore *paint_core);
 
-static guint gimp_brush_signals[LAST_SIGNAL];
 
-static GimpObjectClass *parent_class;
+static guint gimp_brush_signals[LAST_SIGNAL] = { 0 };
+
+static GimpObjectClass *parent_class = NULL;
+
 
 static void
 gimp_brush_destroy (GtkObject *object)
@@ -91,26 +91,38 @@ static void
 gimp_brush_class_init (GimpBrushClass *klass)
 {
   GtkObjectClass *object_class;
-  GtkType         type;
-  
-  object_class = GTK_OBJECT_CLASS (klass);
 
-  parent_class = gtk_type_class (gimp_object_get_type ());
+  object_class = (GtkObjectClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
   
-  type = object_class->type;
+  gimp_brush_signals[DIRTY] =
+    gtk_signal_new ("dirty",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpBrushClass,
+				       dirty),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
+  gimp_brush_signals[RENAME] =
+    gtk_signal_new ("rename",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpBrushClass,
+				       rename),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
+  gtk_object_class_add_signals (object_class, gimp_brush_signals, LAST_SIGNAL);
 
   object_class->destroy = gimp_brush_destroy;
 
-  klass->select_brush = gimp_brush_select_brush;
+  klass->dirty            = NULL;
+  klass->rename           = NULL;
+
+  klass->select_brush     = gimp_brush_select_brush;
   klass->want_null_motion = gimp_brush_want_null_motion;
-
-  gimp_brush_signals[DIRTY] =
-    gimp_signal_new ("dirty",  GTK_RUN_FIRST, type, 0, gimp_sigtype_void);
-
-  gimp_brush_signals[RENAME] =
-    gimp_signal_new ("rename", GTK_RUN_FIRST, type, 0, gimp_sigtype_void);
-
-  gtk_object_class_add_signals (object_class, gimp_brush_signals, LAST_SIGNAL);
 }
 
 void

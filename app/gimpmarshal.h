@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,33 +16,24 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_OBJECT_H__
-#define __GIMP_OBJECT_H__
+#ifndef __GIMP_MARSHAL_H__
+#define __GIMP_MARSHAL_H__
 
 
-#include <gtk/gtkobject.h>
+void   gimp_marshal_NONE__INT_INT_INT_INT (GtkObject     *object,
+					   GtkSignalFunc  func,
+					   gpointer       func_data,
+					   GtkArg        *args);
+
+void   gimp_marshal_NONE__INT_INT_INT     (GtkObject     *object,
+					   GtkSignalFunc  func,
+					   gpointer       func_data,
+					   GtkArg        *args);
+
+void   gimp_marshal_NONE__DOUBLE          (GtkObject     *object,
+					   GtkSignalFunc  func,
+					   gpointer       func_data,
+					   GtkArg        *args);
 
 
-#define GIMP_TYPE_OBJECT         (gimp_object_get_type ())
-#define GIMP_OBJECT(obj)         (GTK_CHECK_CAST ((obj), GIMP_TYPE_OBJECT, GimpObject))
-#define GIMP_IS_OBJECT(obj)      (GTK_CHECK_TYPE ((obj), GIMP_TYPE_OBJECT))
-#define GIMP_OBJECT_CLASS(klass) (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OBJECT, GimpObjectClass))
-
-
-typedef struct _GimpObjectClass GimpObjectClass;
-
-struct _GimpObject
-{
-  GtkObject object;
-};
-
-struct _GimpObjectClass
-{
-  GtkObjectClass parent_class;
-};
-
-
-GtkType   gimp_object_get_type (void);
-
-
-#endif  /* __GIMP_OBJECT_H__ */
+#endif /* __GIMP_MARSHAL_H__ */

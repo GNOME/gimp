@@ -25,7 +25,6 @@
 #include "apptypes.h"
 
 #include "gimpobject.h"
-#include "gimpsignal.h"
 #include "gimplist.h"
 
 
@@ -74,23 +73,35 @@ gimp_list_init (GimpList *list)
 static void
 gimp_list_class_init (GimpListClass *klass)
 {
-  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
-  GtkType type = object_class->type;
+  GtkObjectClass *object_class;
 
-  parent_class = gtk_type_parent_class (type);
+  object_class = (GtkObjectClass *) klass;
 
-  object_class->destroy = gimp_list_destroy;
+  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
 
   gimp_list_signals[ADD]=
-    gimp_signal_new ("add", GTK_RUN_FIRST, type, 0,
-		     gimp_sigtype_pointer);
-  gimp_list_signals[REMOVE]=
-    gimp_signal_new ("remove", GTK_RUN_FIRST, type, 0,
-		     gimp_sigtype_pointer);
+    gtk_signal_new ("add",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpListClass,
+				       add),
+                    gtk_marshal_NONE__POINTER,
+                    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_POINTER);
 
-  gtk_object_class_add_signals (object_class,
-				gimp_list_signals,
-				LAST_SIGNAL);
+  gimp_list_signals[REMOVE]=
+    gtk_signal_new ("remove",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpListClass,
+				       remove),
+                    gtk_marshal_NONE__POINTER,
+                    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_POINTER);
+
+  gtk_object_class_add_signals (object_class, gimp_list_signals, LAST_SIGNAL);
+
+  object_class->destroy = gimp_list_destroy;
 
   klass->add    = gimp_list_add_func;
   klass->remove = gimp_list_remove_func;
@@ -99,16 +110,26 @@ gimp_list_class_init (GimpListClass *klass)
 GtkType
 gimp_list_get_type (void)
 {
-  static GtkType type;
+  static GtkType list_type = 0;
 
-  GIMP_TYPE_INIT (type,
-		  GimpList,
-		  GimpListClass,
-		  gimp_list_init,
-		  gimp_list_class_init,
-		  GIMP_TYPE_OBJECT);
+  if (! list_type)
+    {
+      GtkTypeInfo list_info =
+      {
+	"GimpList",
+	sizeof (GimpList),
+	sizeof (GimpListClass),
+	(GtkClassInitFunc) gimp_list_class_init,
+	(GtkObjectInitFunc) gimp_list_init,
+	/* reserved_1 */ NULL,
+	/* reserved_2 */ NULL,
+	(GtkClassInitFunc) NULL
+      };
 
-  return type;
+      list_type = gtk_type_unique (GIMP_TYPE_OBJECT, &list_info);
+    }
+
+  return list_type;
 }
 
 GimpList *
@@ -117,7 +138,7 @@ gimp_list_new (GtkType  type,
 {
   GimpList *list;
 
-  list = gtk_type_new (gimp_list_get_type ());
+  list = gtk_type_new (GIMP_TYPE_LIST);
 
   list->type = type;
   list->weak = weak;
@@ -172,9 +193,7 @@ gimp_list_add (GimpList *list,
       gtk_object_sink (GTK_OBJECT (object));
     }
 
-  GIMP_LIST_CLASS (GTK_OBJECT (list)->klass)->add (list, object);
-
-  gtk_signal_emit (GTK_OBJECT(list), gimp_list_signals[ADD], object);
+  gtk_signal_emit (GTK_OBJECT (list), gimp_list_signals[ADD], object);
 
   return TRUE;
 }
@@ -190,8 +209,6 @@ gimp_list_remove (GimpList *list,
       g_warning ("gimp_list_remove: can't find val");
       return FALSE;
     }
-
-  GIMP_LIST_CLASS (GTK_OBJECT (list)->klass)->remove (list, object);
 
   gtk_signal_emit (GTK_OBJECT (list), gimp_list_signals[REMOVE], object);
 

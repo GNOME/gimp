@@ -32,8 +32,8 @@
 #include "gimage_mask.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
+#include "gimpmarshal.h"
 #include "gimprc.h"
-#include "gimpsignal.h"
 #include "gimpparasite.h"
 #include "layer.h"
 #include "paint_funcs.h"
@@ -162,37 +162,88 @@ static void
 gimp_image_class_init (GimpImageClass *klass)
 {
   GtkObjectClass *object_class;
-  GtkType         type;
 
-  object_class = GTK_OBJECT_CLASS (klass);
-  parent_class = gtk_type_class (gimp_object_get_type ());
+  object_class = (GtkObjectClass *) klass;
 
-  type = object_class->type;
+  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
 
   gimp_image_signals[CLEAN] =
-	  gimp_signal_new ("clean", GTK_RUN_FIRST, type, 0,
-			   gimp_sigtype_void);
+    gtk_signal_new ("clean",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpImageClass,
+				       clean),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
   gimp_image_signals[DIRTY] =
-	  gimp_signal_new ("dirty", GTK_RUN_FIRST, type, 0,
-			   gimp_sigtype_void);
+    gtk_signal_new ("dirty",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpImageClass,
+				       dirty),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
   gimp_image_signals[REPAINT] =
-	  gimp_signal_new ("repaint", GTK_RUN_FIRST, type, 0,
-			   gimp_sigtype_int_int_int_int);
+    gtk_signal_new ("repaint",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpImageClass,
+				       repaint),
+                    gimp_marshal_NONE__INT_INT_INT_INT,
+                    GTK_TYPE_NONE, 4,
+		    GTK_TYPE_INT,
+		    GTK_TYPE_INT,
+		    GTK_TYPE_INT,
+		    GTK_TYPE_INT);
+
   gimp_image_signals[RENAME] =
-	  gimp_signal_new ("rename", GTK_RUN_FIRST, type, 0,
-			   gimp_sigtype_void);
+    gtk_signal_new ("rename",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpImageClass,
+				       rename),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
   gimp_image_signals[RESIZE] =
-	  gimp_signal_new ("resize", GTK_RUN_FIRST, type, 0,
-			   gimp_sigtype_void);
+    gtk_signal_new ("resize",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpImageClass,
+				       resize),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
   gimp_image_signals[RESTRUCTURE] =
-	  gimp_signal_new ("restructure", GTK_RUN_FIRST, type, 0,
-			   gimp_sigtype_void);
+    gtk_signal_new ("restructure",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpImageClass,
+				       restructure),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
   gimp_image_signals[COLORMAP_CHANGED] =
-	  gimp_signal_new ("colormap_changed", GTK_RUN_FIRST, type, 0,
-			   gimp_sigtype_int);
+    gtk_signal_new ("colormap_changed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpImageClass,
+				       colormap_changed),
+                    gtk_marshal_NONE__INT,
+                    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_INT);
+
   gimp_image_signals[UNDO_EVENT] = 
-	  gimp_signal_new ("undo_event", GTK_RUN_FIRST, type, 0,
-			   gimp_sigtype_int);
+    gtk_signal_new ("undo_event",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpImageClass,
+				       undo_event),
+                    gtk_marshal_NONE__INT,
+                    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_INT);
   
   gtk_object_class_add_signals (object_class, gimp_image_signals, LAST_SIGNAL);
 
@@ -250,15 +301,26 @@ gimp_image_init (GimpImage *gimage)
 GtkType 
 gimp_image_get_type (void) 
 {
-  static GtkType type;
+  static GtkType image_type = 0;
 
-  GIMP_TYPE_INIT (type,
-		  GimpImage,
-		  GimpImageClass,
-		  gimp_image_init,
-		  gimp_image_class_init,
-		  GIMP_TYPE_OBJECT);
-  return type;
+  if (! image_type)
+    {
+      GtkTypeInfo image_info =
+      {
+        "GimpImage",
+        sizeof (GimpImage),
+        sizeof (GimpImageClass),
+        (GtkClassInitFunc) gimp_image_class_init,
+        (GtkObjectInitFunc) gimp_image_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL,
+      };
+
+      image_type = gtk_type_unique (GIMP_TYPE_OBJECT, &image_info);
+    }
+
+  return image_type;
 }
 
 static void

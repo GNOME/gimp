@@ -24,9 +24,9 @@
 
 
 #define GIMP_TYPE_OBJECT         (gimp_object_get_type ())
-#define GIMP_OBJECT(obj)         (GTK_CHECK_CAST (obj, GIMP_TYPE_OBJECT, GimpObject))
-#define GIMP_IS_OBJECT(obj)      (GTK_CHECK_TYPE (obj, GIMP_TYPE_OBJECT))
-#define GIMP_OBJECT_CLASS(klass) (GTK_CHECK_CLASS_CAST (klass, GIMP_TYPE_OBJECT, GimpObjectClass))
+#define GIMP_OBJECT(obj)         (GTK_CHECK_CAST ((obj), GIMP_TYPE_OBJECT, GimpObject))
+#define GIMP_IS_OBJECT(obj)      (GTK_CHECK_TYPE ((obj), GIMP_TYPE_OBJECT))
+#define GIMP_OBJECT_CLASS(klass) (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OBJECT, GimpObjectClass))
 
 
 typedef struct _GimpObjectClass GimpObjectClass;
@@ -42,19 +42,7 @@ struct _GimpObjectClass
 };
 
 
-#define GIMP_TYPE_INIT(typevar, obtype, classtype, obinit, classinit, parent) \
-if(!typevar){ \
-	GtkTypeInfo _info={#obtype, \
-			   sizeof(obtype), \
-			   sizeof(classtype), \
-			   (GtkClassInitFunc)classinit, \
-			   (GtkObjectInitFunc)obinit, \
-			   NULL, NULL, NULL}; \
-	typevar=gtk_type_unique(parent, &_info); \
-}
-
-
-GtkType  gimp_object_get_type (void);
+GtkType   gimp_object_get_type (void);
 
 
 #endif  /* __GIMP_OBJECT_H__ */

@@ -23,7 +23,13 @@
 #include "gimpobject.h"
 
 
-typedef struct _GimpBrushClass	   GimpBrushClass;
+#define GIMP_TYPE_BRUSH         (gimp_brush_get_type ())
+#define GIMP_BRUSH(obj)         (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH, GimpBrush))
+#define GIMP_IS_BRUSH(obj)      (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH))
+#define GIMP_BRUSH_CLASS(klass) (GTK_CHECK_CLASS_CAST ((klass), gimp_brush_get_type(), GimpBrushClass))
+
+
+typedef struct _GimpBrushClass GimpBrushClass;
 
 struct _GimpBrush
 {
@@ -42,14 +48,14 @@ struct _GimpBrushClass
 {
   GimpObjectClass parent_class;
 
+  void        (* dirty)            (GimpBrush *brush);
+  void        (* rename)           (GimpBrush *brush);
+
+  /* FIXME: these are no virtual function pointers but bad hacks: */
   GimpBrush * (* select_brush)     (PaintCore *paint_core);
   gboolean    (* want_null_motion) (PaintCore *paint_core);
 };
 
-#define GIMP_BRUSH_CLASS(klass) GTK_CHECK_CLASS_CAST (klass, gimp_brush_get_type(), GimpBrushClass)
-#define GIMP_TYPE_BRUSH         (gimp_brush_get_type ())
-#define GIMP_BRUSH(obj)         (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH, GimpBrush))
-#define GIMP_IS_BRUSH(obj)      (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH))
 
 GtkType     gimp_brush_get_type    (void);
 GimpBrush * gimp_brush_load        (gchar     *filename);

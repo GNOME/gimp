@@ -39,7 +39,6 @@
 #include "temp_buf.h"
 #include "parasitelist.h"
 #include "undo.h"
-#include "gimpsignal.h"
 #include "gimppreviewcache.h"
 #include "tile_manager.h"
 #include "tile.h"
@@ -82,12 +81,13 @@ static guint layer_signals[LAST_SIGNAL] = { 0 };
 static GimpDrawableClass *layer_parent_class      = NULL;
 static GimpChannelClass  *layer_mask_parent_class = NULL;
 
+
 GtkType
 gimp_layer_get_type (void)
 {
   static GtkType layer_type = 0;
 
-  if (!layer_type)
+  if (! layer_type)
     {
       GtkTypeInfo layer_info =
       {
@@ -113,14 +113,19 @@ gimp_layer_class_init (GimpLayerClass *klass)
   GtkObjectClass    *object_class;
   GimpDrawableClass *drawable_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class   = (GtkObjectClass *) klass;
   drawable_class = (GimpDrawableClass *) klass;
 
   layer_parent_class = gtk_type_class (GIMP_TYPE_DRAWABLE);
 
   layer_signals[REMOVED] =
-	  gimp_signal_new ("removed",
-			   0, object_class->type, 0, gimp_sigtype_void);
+    gtk_signal_new ("removed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpLayerClass,
+                                       removed),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
 
   gtk_object_class_add_signals (object_class, layer_signals, LAST_SIGNAL);
 
@@ -141,7 +146,7 @@ gimp_layer_mask_get_type (void)
 {
   static GtkType layer_mask_type = 0;
 
-  if (!layer_mask_type)
+  if (! layer_mask_type)
     {
       GtkTypeInfo layer_mask_info =
       {
@@ -167,8 +172,9 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *class)
 {
   GtkObjectClass *object_class;
 
-  object_class = (GtkObjectClass*) class;
-  layer_mask_parent_class = gtk_type_class (gimp_channel_get_type ());
+  object_class = (GtkObjectClass *) class;
+
+  layer_mask_parent_class = gtk_type_class (GIMP_TYPE_CHANNEL);
 
   /*
   gtk_object_class_add_signals (object_class, layer_mask_signals, LAST_SIGNAL);

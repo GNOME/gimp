@@ -63,6 +63,8 @@ struct _GimpChannel
 struct _GimpChannelClass
 {
   GimpDrawableClass parent_class;
+
+  void (* removed) (GimpChannel *channel);
 };
 
 

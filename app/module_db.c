@@ -37,7 +37,6 @@
 
 #include "appenv.h"
 #include "module_db.h"
-#include "gimpsignal.h"
 #include "gimprc.h"
 #include "datafiles.h"
 #include "gimpset.h"
@@ -397,6 +396,8 @@ module_db_browser_new (void)
 typedef struct
 {
   GtkObjectClass parent_class;
+
+  void (* modified) (ModuleInfo *module_info);
 } ModuleInfoClass;
 
 enum
@@ -424,18 +425,23 @@ static void
 module_info_class_init (ModuleInfoClass *klass)
 {
   GtkObjectClass *object_class;
-  GtkType type;
 
-  object_class = GTK_OBJECT_CLASS (klass);
+  object_class = (GtkObjectClass *) klass;
 
-  type = object_class->type;
+  module_info_signals[MODIFIED] =
+    gtk_signal_new ("modified",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (ModuleInfoClass,
+				       modified),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
+  gtk_object_class_add_signals (object_class, module_info_signals, LAST_SIGNAL);
 
   object_class->destroy = module_info_destroy;
 
-  module_info_signals[MODIFIED] =
-    gimp_signal_new ("modified", 0, type, 0, gimp_sigtype_void);
-
-  gtk_object_class_add_signals (object_class, module_info_signals, LAST_SIGNAL);
+  klass->modified = NULL;
 }
 
 static void

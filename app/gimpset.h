@@ -34,10 +34,10 @@
  * is also illegal to ask for a weak untyped gimpset.
 */
 
-#define GIMP_TYPE_SET         gimp_set_get_type ()
-#define GIMP_SET(obj)         GTK_CHECK_CAST (obj, GIMP_TYPE_SET, GimpSet)
-#define GIMP_IS_SET(obj)      GTK_CHECK_TYPE (obj, gimp_set_get_type())
-#define GIMP_SET_CLASS(klass) GTK_CHECK_CLASS_CAST (klass, gimp_set_get_type(), GimpSetClass)
+#define GIMP_TYPE_SET         (gimp_set_get_type ())
+#define GIMP_SET(obj)         (GTK_CHECK_CAST ((obj), GIMP_TYPE_SET, GimpSet))
+#define GIMP_IS_SET(obj)      (GTK_CHECK_TYPE ((obj), gimp_set_get_type()))
+#define GIMP_SET_CLASS(klass) (GTK_CHECK_CLASS_CAST ((klass), gimp_set_get_type(), GimpSetClass))
 
 
 typedef struct _GimpSetClass GimpSetClass;
@@ -57,12 +57,12 @@ struct _GimpSetClass
 {
   GimpObjectClass parent_class;
 
-  void (* add)            (GimpSet *gimpset,
-			   gpointer object);
-  void (* remove)         (GimpSet *gimpset,
-			   gpointer object);
-  void (* active_changed) (GimpSet *gimpset,
-			   gpointer object);
+  void (* add)            (GimpSet  *gimpset,
+			   gpointer  object);
+  void (* remove)         (GimpSet  *gimpset,
+			   gpointer  object);
+  void (* active_changed) (GimpSet  *gimpset,
+			   gpointer  object);
 };
 
 

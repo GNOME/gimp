@@ -56,12 +56,12 @@
 #include "libgimp/gimpintl.h"
 
 
-static GimpBrushClass  *parent_class;
-
-
 static GimpBrush * gimp_brush_pipe_select_brush     (PaintCore *paint_core);
 static gboolean    gimp_brush_pipe_want_null_motion (PaintCore *paint_core);
 static void        gimp_brush_pipe_destroy          (GtkObject *object);
+
+
+static GimpBrushClass *parent_class = NULL;
 
 
 static GimpBrush *
@@ -182,8 +182,8 @@ gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
   GtkObjectClass *object_class;
   GimpBrushClass *brush_class;
 
-  object_class = GTK_OBJECT_CLASS (klass);
-  brush_class = GIMP_BRUSH_CLASS (klass);
+  object_class = (GtkObjectClass *) klass;
+  brush_class  = (GimpBrushClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_BRUSH);
 
@@ -405,5 +405,3 @@ gimp_brush_pipe_load (gchar *filename)
 
   return GIMP_BRUSH (pipe);
 }
-
-

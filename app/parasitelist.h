@@ -27,6 +27,9 @@
 #define GIMP_IS_PARASITE_LIST(obj) (GTK_CHECK_TYPE ((obj), GIMP_TYPE_PARASITE_LIST))
 #define PARASITE_LIST_CLASS(class) GIMP_CHECK_CLASS_CAST (class, parasite_list_get_type(), ParasiteListClass)
 
+
+typedef struct _ParasiteListClass ParasiteListClass;
+
 struct _ParasiteList
 {
   GimpObject  object;
@@ -34,7 +37,7 @@ struct _ParasiteList
   GHashTable *table;
 };
 
-typedef struct _ParasiteListClass
+struct _ParasiteListClass
 {
   GimpObjectClass parent_class;
 
@@ -42,7 +45,7 @@ typedef struct _ParasiteListClass
 		   GimpParasite *parasite);
   void (* remove) (ParasiteList *list,
 		   GimpParasite *parasite);
-} ParasiteListClass;
+};
 
 
 /* function declarations */
