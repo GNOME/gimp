@@ -144,7 +144,8 @@ app/gui/templates-menu.c
 app/gui/themes.c
 app/gui/tips-dialog.c
 app/gui/tips-parser.c
-app/gui/tool-options-dialog.c
+app/gui/tool-options-commands.c
+app/gui/tool-options-menu.c
 app/gui/toolbox-menu.c
 app/gui/user-install-dialog.c
 app/gui/vectors-commands.c
@@ -288,6 +289,7 @@ app/widgets/gimptexteditor.c
 app/widgets/gimptoolbox-color-area.c
 app/widgets/gimptoolbox-indicator-area.c
 app/widgets/gimptoolbox.c
+app/widgets/gimptooloptionseditor.c
 app/widgets/gimpundoeditor.c
 app/widgets/gimpvectorstreeview.c
 app/widgets/gimpwidgets-constructors.c
