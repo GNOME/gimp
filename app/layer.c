@@ -75,7 +75,7 @@ static TempBuf * gimp_layer_mask_preview_private (GimpLayer          *layer,
 						  gint                height);
 
 
-static GimpDrawableClass *parent_class      = NULL;
+static GimpDrawableClass *parent_class = NULL;
 
 
 GtkType
@@ -503,17 +503,6 @@ gimp_layer_create_mask (GimpLayer   *layer,
   g_free (mask_name);
 
   return mask;
-}
-
-void
-gimp_layer_delete (GimpLayer *layer)
-{
-  /*  Layers are normally deleted by removing them from the associated
-      image. The only case where layer_delete() is useful is if you want
-      to remove a floating layer object that has not been added to an
-      image yet. We use gtk_object_sink() for this reason here.
-   */
-  gtk_object_sink (GTK_OBJECT (layer));
 }
 
 static void

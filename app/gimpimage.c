@@ -1413,7 +1413,7 @@ gimp_image_set_tattoo_state (GimpImage *gimage,
       Tattoo ctattoo;
       channel = (Channel *) channels->data;
       
-      ctattoo = channel_get_tattoo (channel);
+      ctattoo = gimp_drawable_get_tattoo (GIMP_DRAWABLE (channel));
       if (ctattoo > maxval)
 	maxval = ctattoo;
       /* Now check path an't got this tattoo */
@@ -2250,7 +2250,7 @@ gimp_image_get_channel_by_tattoo (const GimpImage *gimage,
     {
       channel = (Channel *) channels->data;
 
-      if (channel_get_tattoo (channel) == tattoo)
+      if (gimp_drawable_get_tattoo (GIMP_DRAWABLE (channel)) == tattoo)
 	return channel;
     }
 

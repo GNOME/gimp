@@ -29,6 +29,7 @@
 #include "channel.h"
 #include "drawable.h"
 #include "gimpimage.h"
+#include "pdb_glue.h"
 
 #include "libgimpcolor/gimpcolor.h"
 
@@ -249,7 +250,7 @@ channel_delete_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    channel_delete (channel);
+    gtk_object_sink (GTK_OBJECT (channel));
 
   return procedural_db_return_args (&channel_delete_proc, success);
 }

@@ -31,6 +31,7 @@
 #include "floating_sel.h"
 #include "gimpimage.h"
 #include "layer.h"
+#include "pdb_glue.h"
 #include "undo.h"
 
 static ProcRecord layer_new_proc;
@@ -554,7 +555,7 @@ layer_delete_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    gimp_layer_delete (layer);
+    gtk_object_sink (GTK_OBJECT (layer));
 
   return procedural_db_return_args (&layer_delete_proc, success);
 }

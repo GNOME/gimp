@@ -1094,8 +1094,8 @@ channels_dialog_add_channel_to_sel_callback (GtkWidget *widget,
 					     gpointer   data)
 {
   GimpImage *gimage;
-  Channel *active_channel;
-  Channel *new_channel;
+  Channel   *active_channel;
+  Channel   *new_channel;
 
   if (!channelsD || !(gimage = channelsD->gimage))
     return;
@@ -1108,7 +1108,7 @@ channels_dialog_add_channel_to_sel_callback (GtkWidget *widget,
 			    CHANNEL_OP_ADD, 
 			    0, 0);  /* off x/y */
       gimage_mask_load (gimage, new_channel);
-      channel_delete (new_channel);
+      gtk_object_unref (GTK_OBJECT (new_channel));
       gdisplays_flush ();
     }
 }
@@ -1118,8 +1118,8 @@ channels_dialog_sub_channel_from_sel_callback (GtkWidget *widget,
 					       gpointer   data)
 {
   GimpImage *gimage;
-  Channel *active_channel;
-  Channel *new_channel;
+  Channel   *active_channel;
+  Channel   *new_channel;
 
   if (!channelsD || !(gimage = channelsD->gimage))
     return;
@@ -1132,7 +1132,7 @@ channels_dialog_sub_channel_from_sel_callback (GtkWidget *widget,
 			     CHANNEL_OP_SUB, 
 			     0, 0);  /* off x/y */
       gimage_mask_load (gimage, new_channel);
-      channel_delete (new_channel);
+      gtk_object_unref (GTK_OBJECT (new_channel));
       gdisplays_flush ();
     }
 }
@@ -1142,8 +1142,8 @@ channels_dialog_intersect_channel_with_sel_callback (GtkWidget *widget,
 						     gpointer   data)
 {
   GimpImage *gimage;
-  Channel *active_channel;
-  Channel *new_channel;
+  Channel   *active_channel;
+  Channel   *new_channel;
 
   if (!channelsD || !(gimage = channelsD->gimage))
     return;
@@ -1156,7 +1156,7 @@ channels_dialog_intersect_channel_with_sel_callback (GtkWidget *widget,
 			    CHANNEL_OP_INTERSECT, 
 			    0, 0);  /* off x/y */
       gimage_mask_load (gimage, new_channel);
-      channel_delete (new_channel);
+      gtk_object_unref (GTK_OBJECT (new_channel));
       gdisplays_flush ();
     }
 }

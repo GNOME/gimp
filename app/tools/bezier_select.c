@@ -2448,7 +2448,7 @@ bezier_convert (BezierSelect *bezier_sel,
   /* destroy previous mask */
   if (bezier_sel->mask)
     {
-      channel_delete (bezier_sel->mask);
+      gtk_object_unref (GTK_OBJECT (bezier_sel->mask));
       bezier_sel->mask = NULL;
     }
 

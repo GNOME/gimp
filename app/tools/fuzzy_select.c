@@ -391,8 +391,7 @@ fuzzy_select (GImage       *gimage,
     channel_combine_mask (gimp_image_get_mask (gimage),
 			  fuzzy_mask, op, off_x, off_y);
 
-  /*  free the fuzzy region struct  */
-  channel_delete (fuzzy_mask);
+  gtk_object_unref (GTK_OBJECT (fuzzy_mask));
   fuzzy_mask = NULL;
 }
 

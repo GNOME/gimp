@@ -1,3 +1,41 @@
+2001-01-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/Makefile.am
+	* app/pdb/pdb_glue.h: new file which contains the stuff that makes
+	PDB code generation easier but is ugly when used in the app
+	(see my comment in the log below).
+
+	Contains:
+	gimp_drawable_[layer|layer_mask|channel]()
+	[channel|gimp_layer]_[set|get]_[name|tattoo]()
+
+	* app/channel.[ch]
+	* app/channels_dialog.c
+	* app/gimpdrawable.h
+	* app/gimpimage.c
+	* app/gimplayermask.h
+	* app/layer.c
+	* app/layer.h
+	* app/toolbox.c
+	* app/undo.c
+	* app/xcf.c
+	* app/pdb/channel_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/tools/bezier_select.c
+	* app/tools/bucket_fill.c
+	* app/tools/by_color_select.c
+	* app/tools/ellipse_select.c
+	* app/tools/free_select.c
+	* app/tools/fuzzy_select.c
+	* app/tools/iscissors.c
+	* app/tools/rect_select.c
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/selection.pdb: changed accordingly.
+
 2001-01-29  Sven Neumann  <sven@gimp.org>
 
 	* AUTHORS

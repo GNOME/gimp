@@ -500,7 +500,7 @@ bucket_fill (GimpImage      *gimage,
 
   /*  free the mask  */
   if (mask)
-    channel_delete (mask);
+    gtk_object_unref (GTK_OBJECT (mask));
 
   if (new_buf)
     temp_buf_free (pat_buf);

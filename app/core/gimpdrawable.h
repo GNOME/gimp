@@ -23,12 +23,6 @@
 #include "gimpobject.h"
 
 
-/* PDB stuff */
-#define gimp_drawable_layer      GIMP_IS_LAYER
-#define gimp_drawable_layer_mask GIMP_IS_LAYER_MASK
-#define gimp_drawable_channel    GIMP_IS_CHANNEL
-
-
 #define GIMP_TYPE_DRAWABLE            (gimp_drawable_get_type ())
 #define GIMP_DRAWABLE(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_DRAWABLE, GimpDrawable))
 #define GIMP_IS_DRAWABLE(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_DRAWABLE))

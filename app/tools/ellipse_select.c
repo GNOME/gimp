@@ -76,14 +76,14 @@ ellipse_select (GimpImage *gimage,
 		       feather_radius,
 		       feather_radius,
 		       op, 0, 0);
-      channel_delete (new_mask);
+      gtk_object_unref (GTK_OBJECT (new_mask));
     }
   else if (op == SELECTION_INTERSECT)
     {
       new_mask = channel_new_mask (gimage, gimage->width, gimage->height);
       channel_combine_ellipse (new_mask, CHANNEL_OP_ADD, x, y, w, h, antialias);
       channel_combine_mask (gimp_image_get_mask (gimage), new_mask, op, 0, 0);
-      channel_delete (new_mask);
+      gtk_object_unref (GTK_OBJECT (new_mask));
     }
   else
     channel_combine_ellipse (gimp_image_get_mask (gimage), op,

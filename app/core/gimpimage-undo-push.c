@@ -1439,7 +1439,9 @@ undo_push_layer (GimpImage *gimage,
       /*  if this is a remove layer, delete the layer  */
       if (type == LAYER_REMOVE_UNDO)
 	gtk_object_unref (GTK_OBJECT (lu->layer));
+
       g_free (lu);
+
       return FALSE;
     }
 }
@@ -1797,7 +1799,7 @@ undo_push_channel (GimpImage *gimage,
   else
     {
       if (type == CHANNEL_REMOVE_UNDO)
-	channel_delete (cu->channel);
+	gtk_object_unref (GTK_OBJECT (cu->channel));
       g_free (cu);
       return FALSE;
     }
@@ -1870,7 +1872,7 @@ undo_free_channel (UndoState  state,
    */
   if ((state == REDO && type == CHANNEL_ADD_UNDO) ||
       (state == UNDO && type == CHANNEL_REMOVE_UNDO))
-    channel_delete (cu->channel);
+    gtk_object_unref (GTK_OBJECT (cu->channel));
 
   g_free (cu);
 }

@@ -75,4 +75,3 @@ GimpLayer     * gimp_layer_mask_get_layer   (GimpLayerMask       *layer_mask);
 
 
 #endif /* __GIMP_LAYER_MASK_H__ */
- 

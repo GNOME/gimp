@@ -31,6 +31,7 @@
 #include "drawable.h"
 #include "gimplayermask.h"
 #include "layer.h"
+#include "pdb_glue.h"
 #include "temp_buf.h"
 #include "tile.h"
 #include "tile_manager.h"

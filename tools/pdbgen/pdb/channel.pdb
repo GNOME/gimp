@@ -210,7 +210,7 @@ HELP
     @inargs = ( &channel_arg );
     $inargs[0]->{desc} .= ' to delete';
 
-    %invoke = ( code => 'channel_delete (channel);' );
+    %invoke = ( code => 'gtk_object_sink (GTK_OBJECT (channel));' );
 }
 
 sub channel_combine_masks {
@@ -278,7 +278,7 @@ HELP
     $date = '1998';
 CODE
 
-@headers = qw("channel.h");
+@headers = qw("channel.h" "pdb_glue.h");
 
 unshift @procs, qw(channel_new channel_copy channel_delete
 		   channel_combine_masks);

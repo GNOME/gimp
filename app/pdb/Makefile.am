@@ -3,6 +3,7 @@
 noinst_LTLIBRARIES = libapppdb.la
 
 libapppdb_la_SOURCES = \
+	pdb_glue.h		\
 	internal_procs.c	\
 	internal_procs.h	\
 	procedural_db.c		\

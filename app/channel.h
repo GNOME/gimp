@@ -96,10 +96,6 @@ Channel       * channel_new                 (GimpImage     *gimage,
 					     const GimpRGB *color);
 Channel       * channel_copy                (const Channel *channel);
 
-const gchar   * channel_get_name            (const Channel *channel);
-void            channel_set_name            (Channel       *channel, 
-					     const gchar   *name);
-
 gint            channel_get_opacity         (const Channel *channel);
 void            channel_set_opacity         (Channel       *channel,
 					     gint           opacity);
@@ -108,7 +104,6 @@ const GimpRGB * channel_get_color           (const Channel *channel);
 void 		channel_set_color           (Channel       *channel, 
 					     const GimpRGB *color);
 
-void            channel_delete              (Channel       *channel);
 void            channel_scale               (Channel       *channel, 
 					     gint           new_width, 
 					     gint           new_height);
@@ -125,10 +120,6 @@ gboolean        channel_toggle_visibility   (Channel       *channel);
 TempBuf       * channel_preview             (Channel       *channel, 
 					     gint           width,
 					     gint           height);
-
-Tattoo          channel_get_tattoo          (const Channel *channel);
-void            channel_set_tattoo          (Channel       *channel,
-					     Tattoo         value);
 
 /* selection mask functions  */
 

@@ -549,7 +549,7 @@ iscissors_convert (Iscissors *iscissors,
     }
 
   if (iscissors->mask)
-    channel_delete (iscissors->mask);
+    gtk_object_unref (GTK_OBJECT (iscissors->mask));
   
   iscissors->mask = scan_converter_to_channel (sc, gdisp->gimage);
   scan_converter_free (sc);
@@ -1139,8 +1139,10 @@ iscissors_reset (Iscissors *iscissors)
 
   /*  free mask  */
   if (iscissors->mask)
-    channel_delete (iscissors->mask);
-  iscissors->mask = NULL;
+    {
+      gtk_object_unref (GTK_OBJECT (iscissors->mask));
+      iscissors->mask = NULL;
+    }
 
   /* free the gradient map */
   if (iscissors->gradient_map)

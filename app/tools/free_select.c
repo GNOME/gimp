@@ -166,7 +166,8 @@ free_select (GImage           *gimage,
       else
 	channel_combine_mask (gimp_image_get_mask (gimage),
 			      mask, op, 0, 0);
-      channel_delete (mask);
+
+      gtk_object_unref (GTK_OBJECT (mask));
     }
 }
 

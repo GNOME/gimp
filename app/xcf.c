@@ -2148,7 +2148,7 @@ xcf_load_channel_props (XcfInfo *info,
 	  info->active_channel = channel;
 	  break;
 	case PROP_SELECTION:
-	  channel_delete (gimage->selection_mask);
+	  gtk_object_unref (GTK_OBJECT (gimage->selection_mask));
 	  gimage->selection_mask = channel;
 	  channel->boundary_known = FALSE;
 	  channel->bounds_known   = FALSE;
@@ -2352,7 +2352,7 @@ xcf_load_channel (XcfInfo *info,
 
   /* read in the hierarchy */
   xcf_seek_pos (info, hierarchy_offset);
-  if (!xcf_load_hierarchy (info, GIMP_DRAWABLE(channel)->tiles))
+  if (!xcf_load_hierarchy (info, GIMP_DRAWABLE (channel)->tiles))
     goto error;
 
   /* attach the floating selection... */
@@ -2361,13 +2361,13 @@ xcf_load_channel (XcfInfo *info,
       GimpLayer *floating_sel;
 
       floating_sel = info->floating_sel;
-      floating_sel_attach (floating_sel, GIMP_DRAWABLE(channel));
+      floating_sel_attach (floating_sel, GIMP_DRAWABLE (channel));
     }
 
   return channel;
 
 error:
-  channel_delete (channel);
+  gtk_object_unref (GTK_OBJECT (channel));
   return NULL;
 }
 

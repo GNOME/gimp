@@ -1009,7 +1009,7 @@ selection_combine_invoker (Argument *args)
 				operation, 
 				0, 0);  /* off x/y */
 	  gimage_mask_load (gimage, new_channel);
-	  channel_delete (new_channel);
+	  gtk_object_unref (GTK_OBJECT (new_channel));
 	}
       else
 	success = FALSE;

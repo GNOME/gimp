@@ -765,8 +765,8 @@ toolbox_drag_drop (GtkWidget      *widget,
 
 	  gimp_drawable_set_gimage (GIMP_DRAWABLE (new_layer), new_gimage);
 
-	  gimp_layer_set_name (GIMP_LAYER (new_layer),
-			       gimp_object_get_name (GIMP_OBJECT (drawable)));
+	  gimp_object_set_name (GIMP_OBJECT (new_layer),
+				gimp_object_get_name (GIMP_OBJECT (drawable)));
 
 	  if (layer)
 	    {

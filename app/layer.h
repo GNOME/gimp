@@ -23,13 +23,6 @@
 #include "gimpdrawable.h"
 
 
-/*  PDB stuff  */
-#define gimp_layer_set_name(l,n)   gimp_object_set_name(GIMP_OBJECT(l),(n))
-#define gimp_layer_get_name(l)     gimp_object_get_name(GIMP_OBJECT(l))
-#define gimp_layer_set_tattoo(l,t) gimp_drawable_set_tattoo(GIMP_DRAWABLE(l),(t))
-#define gimp_layer_get_tattoo(l)   gimp_drawable_get_tattoo(GIMP_DRAWABLE(l))
-
-
 #define GIMP_TYPE_LAYER            (gimp_layer_get_type ())
 #define GIMP_LAYER(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_LAYER, GimpLayer))
 #define GIMP_LAYER_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER, GimpLayerClass))
@@ -116,7 +109,6 @@ GimpLayerMask * gimp_layer_create_mask         (GimpLayer        *layer,
 						AddMaskType       add_mask_type);
 GimpLayerMask * gimp_layer_add_mask            (GimpLayer        *layer,
 						GimpLayerMask    *mask);
-void            gimp_layer_delete              (GimpLayer        *layer);
 void            gimp_layer_apply_mask          (GimpLayer        *layer,
 						MaskApplyMode     mode);
 void            gimp_layer_translate           (GimpLayer        *layer,

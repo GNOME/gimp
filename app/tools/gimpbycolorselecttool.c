@@ -367,7 +367,7 @@ by_color_select (GImage       *gimage,
     channel_combine_mask (gimp_image_get_mask (gimage),
 			  new_mask, op, off_x, off_y);
 
-  channel_delete (new_mask);
+  gtk_object_unref (GTK_OBJECT (new_mask));
 }
 
 /*  by_color select action functions  */

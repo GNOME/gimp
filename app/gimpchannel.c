@@ -208,19 +208,6 @@ channel_copy (const Channel *channel)
   return new_channel;
 }
 
-void
-channel_set_name (Channel     *channel,
-                  const gchar *name)
-{
-  gimp_object_set_name (GIMP_OBJECT (channel), name);
-}
-
-const gchar *
-channel_get_name (const Channel *channel)
-{
-  return gimp_object_get_name (GIMP_OBJECT (channel));
-}
-
 void 
 channel_set_color (Channel       *channel,
 		   const GimpRGB *color)
@@ -260,17 +247,6 @@ channel_set_opacity (Channel *channel,
   opacity = CLAMP (opacity, 0, 100);
 
   channel->color.a = opacity / 100.0;
-}
-
-void
-channel_delete (Channel *channel)
-{
-  /*  Channels are normally deleted by removing them from the associated
-      image. The only case where channel_delete() is useful is if you want
-      to remove a floating channel object that has not been added to an
-      image yet. We use gtk_object_sink() for this reason here.
-   */
-  gtk_object_sink (GTK_OBJECT (channel));
 }
 
 static void
@@ -544,19 +520,6 @@ channel_preview_private (Channel *channel,
 			      preview_buf);
       return preview_buf;
     }
-}
-
-Tattoo
-channel_get_tattoo (const Channel *channel)
-{
-  return gimp_drawable_get_tattoo (GIMP_DRAWABLE (channel));
-}
-
-void
-channel_set_tattoo (Channel *channel, 
-		    Tattoo   value)
-{
-  gimp_drawable_set_tattoo (GIMP_DRAWABLE (channel), value);
 }
 
 /******************************/
@@ -1635,7 +1598,7 @@ channel_translate (Channel *mask,
       copy_region (&srcPR, &destPR);
 
       /*  free the temporary mask  */
-      channel_delete (tmp_mask);
+      gtk_object_unref (GTK_OBJECT (tmp_mask));
     }
 
   /*  calculate new bounds  */
