@@ -6,8 +6,6 @@ use File::Basename;
 
 require Exporter;
 
-warn "$0\n";
-
 =head1 NAME
 
 Gimp::Fu - "easy to use" framework for Gimp scripts

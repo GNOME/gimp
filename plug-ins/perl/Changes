@@ -8,6 +8,7 @@ Revision history for Gimp-Perl extension.
         - added ... to hopefully all plug-ins that open a dialog.
 	- make clean wrongly deleted po/Makefile.
 	- po/Makefile.PL left temporary files around.
+        - trimmed examples/logulator down by two thirds.
 
 1.2   Thu May 11 18:55:13 CEST 2000
 	- image types updated to reflect gimp's reality.

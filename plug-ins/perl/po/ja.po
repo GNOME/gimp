@@ -13,15 +13,6 @@ msgstr ""
 "Content-Type: text/plain; charset=EUC-JP\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "<Image>/Filters/Logulator/Bovination"
-msgstr ""
-
-msgid "<Image>/Filters/Logulator/Blended"
-msgstr ""
-
-msgid "<Image>/Filters/Logulator/Basic I"
-msgstr ""
-
 msgid "FATAL: unable to create $tmp: $!\n"
 msgstr ""
 
@@ -31,10 +22,6 @@ msgstr ""
 
 msgid "<Image>/Filters/Web/Prepare for GIF..."
 msgstr ""
-
-#, fuzzy
-msgid "<Image>/Filters/Logulator/3D Outline..."
-msgstr "<Image>/フィルタ/色/火"
 
 #, fuzzy
 msgid "<Image>/Filters/Animation/Animate Cells..."
@@ -55,9 +42,6 @@ msgid "being called as '%s', but '%s' not registered in the pdb"
 msgstr ""
 
 msgid "argument type %s expected (not %s)"
-msgstr ""
-
-msgid "<Image>/Filters/Logulator/Glowing Hot"
 msgstr ""
 
 msgid "Browse"
@@ -94,9 +78,6 @@ msgid "function '$exe' not found in this script (must be one of "
 msgstr ""
 
 msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
-msgstr ""
-
-msgid "<Image>/Filters/Logulator/Basic II"
 msgstr ""
 
 msgid "Load"
@@ -216,9 +197,6 @@ msgstr ""
 msgid "<Image>/Image/Alpha/Alpha2Color..."
 msgstr ""
 
-msgid "<Image>/Filters/Logulator/Starburst"
-msgstr ""
-
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
 msgstr ""
 
@@ -295,9 +273,6 @@ msgstr "<Image>/フィルタ/マップ/ピクセルマップ"
 msgid "<Image>/Guides/To Selection..."
 msgstr "<Image>/ガイド/選択領域へ"
 
-msgid "<Image>/Filters/Logulator/Comic Book"
-msgstr ""
-
 msgid "<Image>/Guides/Remove Guides"
 msgstr ""
 
@@ -347,9 +322,6 @@ msgid "PDB Explorer - the olof edition (yet still an alpha version)"
 msgstr ""
 
 msgid "Illegal default font description for $function: $val\n"
-msgstr ""
-
-msgid "<Image>/Filters/Logulator/Chalk"
 msgstr ""
 
 msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
@@ -518,9 +490,6 @@ msgstr ""
 msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr ""
 
-msgid "<Image>/Filters/Logulator/Glossy"
-msgstr ""
-
 msgid "WARNING"
 msgstr ""
 
@@ -534,9 +503,6 @@ msgid "<Image>/Filters/Render/Fit Text..."
 msgstr "<Image>/フィルタ/下塗り/ぴったり文字..."
 
 msgid "Unable to convert a reference to type '%s'"
-msgstr ""
-
-msgid "<Image>/Filters/Logulator/Particle Trace"
 msgstr ""
 
 msgid "argument incompatible with type IMAGE"
@@ -562,9 +528,6 @@ msgid "<Image>/Filters/Map/Pixelmap..."
 msgstr "<Image>/フィルタ/マップ/ピクセルマップ"
 
 msgid "Color"
-msgstr ""
-
-msgid "<Image>/Filters/Logulator/Alien Glow"
 msgstr ""
 
 msgid "FATAL: canonicalize_colour did not return a value!"
@@ -610,11 +573,11 @@ msgstr ""
 msgid "perl-arrayref required as datatype for a gimp-array"
 msgstr ""
 
-msgid "<Toolbox>/Xtns/Create_Images"
-msgstr "<Toolbox>/拡張/画像作成"
-
 msgid "required callback 'query' not found\n"
 msgstr ""
+
+msgid "<Toolbox>/Xtns/Create_Images"
+msgstr "<Toolbox>/拡張/画像作成"
 
 msgid "Save $name"
 msgstr ""
@@ -727,13 +690,7 @@ msgstr ""
 msgid "Help"
 msgstr "ヘルプ"
 
-msgid "<Image>/Filters/Logulator/Cool Metal"
-msgstr ""
-
 msgid "<Image>/Filters/Logulator/Carved"
-msgstr ""
-
-msgid "<Image>/Filters/Logulator/Textured"
 msgstr ""
 
 msgid "no font specified, using default"
@@ -758,17 +715,14 @@ msgstr ""
 msgid "unable to grok colour specification"
 msgstr ""
 
-msgid "You need at least 2 layers to perform prep4gif"
-msgstr ""
-
 #, fuzzy
 msgid "<Image>/Edit/Repeat & Duplicate..."
 msgstr "<Image>/フィルタ/下塗り/破裂..."
 
-msgid "too many arguments"
+msgid "You need at least 2 layers to perform prep4gif"
 msgstr ""
 
-msgid "<Image>/Filters/Logulator/Gradient Bevel"
+msgid "too many arguments"
 msgstr ""
 
 msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
@@ -833,9 +787,6 @@ msgstr ""
 msgid "closing connection %d (%d requests in %g seconds)"
 msgstr ""
 
-msgid "<Image>/Filters/Logulator/Frosty"
-msgstr ""
-
 #, fuzzy
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
 msgstr "<Toolbox>/拡張/下塗り/れんが"
@@ -850,12 +801,12 @@ msgstr "<Image>/ガイド/ガイド格子"
 msgid "server version $Gimp::VERSION started"
 msgstr ""
 
-msgid "authorization unnecessary"
-msgstr ""
-
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
+msgstr ""
+
+msgid "authorization unnecessary"
 msgstr ""
 
 #, fuzzy
@@ -898,12 +849,6 @@ msgstr "<Toolbox>/拡張/Perl プラグイン例"
 msgid "You can't run this script without an ALPHA CHANNEL!!"
 msgstr ""
 
-msgid "<Image>/Filters/Logulator/Neon"
-msgstr ""
-
-msgid "<Image>/Filters/Logulator/Chrome"
-msgstr ""
-
 #, fuzzy
 msgid "<Image>/Filters/Misc/Magick..."
 msgstr "<Image>/フィルタ/ノイズ/フィードバック"
@@ -918,13 +863,10 @@ msgstr ""
 msgid "Unable to read temporary image tile $tmp: $!"
 msgstr ""
 
-msgid "export failed"
-msgstr ""
-
 msgid "Help for "
 msgstr ""
 
-msgid "<Image>/Filters/Logulator/Chip Away"
+msgid "export failed"
 msgstr ""
 
 msgid "dunno how to pass arg type %d"
@@ -968,9 +910,6 @@ msgstr "<Image>/選択/三角形"
 msgid "<Image>/Filters/Animation/BlowInOut..."
 msgstr "<Image>/フィルタ/動画/動画セル"
 
-msgid "<Image>/Filters/Logulator/Starscape"
-msgstr ""
-
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
 msgstr ""
 
@@ -998,3 +937,7 @@ msgstr ""
 
 msgid "(none)"
 msgstr ""
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Logulator/3D Outline..."
+#~ msgstr "<Image>/フィルタ/色/火"

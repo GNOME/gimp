@@ -12,31 +12,17 @@ msgstr ""
 "Content-Type: text/plain; charset=koi8-r\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-msgid "<Image>/Filters/Logulator/Bovination"
-msgstr "<Image>/Фильтры/Регистратор/Bovination"
-
-msgid "<Image>/Filters/Logulator/Blended"
-msgstr "<Image>/Фильтры/Регистратор/Смешанный"
-
-msgid "<Image>/Filters/Logulator/Basic I"
-msgstr "<Image>/Фильтры/Регистратор/Основа I"
-
 msgid "FATAL: unable to create $tmp: $!\n"
 msgstr "ФАТАЛЬНАЯ ОШИБКА: невозможно создать $tmp: $!\n"
 
-msgid "<Image>/Filters/Animation/Seth Spin..."
-msgstr "<Image>/Фильтры/Анимация/Seth Spin..."
-
 msgid ""
-"Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
-"string"
-msgstr "Ожидалось INT32, а получено '%s'. Добавьте '*1' если вы действительно намереваетесь посылать строку"
+"Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string"
+msgstr ""
+"Ожидалось INT32, а получено '%s'. Добавьте '*1' если вы действительно "
+"намереваетесь посылать строку"
 
 msgid "<Image>/Filters/Web/Prepare for GIF..."
 msgstr "<Image>/Фильтры/Web/Подготовить для GIF..."
-
-msgid "<Image>/Filters/Logulator/3D Outline..."
-msgstr "<Image>/Фильтры/Регистратор/3D контур..."
 
 msgid "<Image>/Filters/Animation/Animate Cells..."
 msgstr "<Image>/Фильтры/Анимация/Анимировать клетки..."
@@ -57,9 +43,6 @@ msgstr "вызвано как '%s', но '%s' не зарегистрировано в pdb"
 msgid "argument type %s expected (not %s)"
 msgstr "ожидался аргумент типа %s (а не %s)"
 
-msgid "<Image>/Filters/Logulator/Glowing Hot"
-msgstr "<Image>/Фильтры/Регистратор/Glowing Hot"
-
 msgid "Browse"
 msgstr "Просмотр"
 
@@ -69,10 +52,10 @@ msgstr "Сбросить все значения в исходные"
 msgid "WARNING: client tried to unlock without holding a lock"
 msgstr ""
 
-msgid "required callback 'run' not found\n"
+msgid "$_: illegal switch, try $0 --help\n"
 msgstr ""
 
-msgid "$_: illegal switch, try $0 --help\n"
+msgid "required callback 'run' not found\n"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
@@ -93,12 +76,8 @@ msgstr "<Image>/Фильтры/Web/Perl-o-tine..."
 msgid "function '$exe' not found in this script (must be one of "
 msgstr ""
 
-msgid ""
-"pixel size mismatch, pdl has %d channel pixels but %d channels are required"
+msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
-
-msgid "<Image>/Filters/Logulator/Basic II"
-msgstr "<Image>/Фильтры/Регистратор/Основа II"
 
 msgid "Load"
 msgstr "Загрузить"
@@ -129,6 +108,10 @@ msgstr "ФОН"
 
 msgid "<Toolbox>/Xtns/Render/Bricks..."
 msgstr "<Toolbox>/Расш./Визуализация/Кирпичи..."
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
+msgstr "<Toolbox>/Расш./Анимация/Доска объявлений..."
 
 msgid "illegal type for colour specification"
 msgstr "неправильный тип спецификации цвета"
@@ -163,11 +146,11 @@ msgstr ""
 msgid "trying to start gimp with options \"$opt\"\n"
 msgstr "попытка запуска Gimp с параметром \"$opt\"\n"
 
-msgid "expected perl-server at other end of socket, got @r\n"
-msgstr "на другом конце сокета ожидался perl-сервер, получено @r\n"
-
 msgid "pdl height != region height"
 msgstr "pdl-высота != высота области"
+
+msgid "expected perl-server at other end of socket, got @r\n"
+msgstr "на другом конце сокета ожидался perl-сервер, получено @r\n"
 
 msgid "received QUIT request"
 msgstr "получен запрос на выход (QUIT)"
@@ -193,8 +176,7 @@ msgid ""
 "           -gimp <anything>           used internally only\n"
 "           -h | -help | --help | -?   print some help\n"
 "           -v | --verbose             be more verbose in what you do\n"
-"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using "
-"PORT)\n"
+"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using PORT)\n"
 "                                      (for more info, see Gimp::Net(3))\n"
 msgstr ""
 
@@ -205,9 +187,6 @@ msgstr ""
 
 msgid "<Image>/Image/Alpha/Alpha2Color..."
 msgstr "<Image>/Изображение/Альфа/Альфа-канал -> Цвет..."
-
-msgid "<Image>/Filters/Logulator/Starburst"
-msgstr "<Image>/Фильтры/Регистратор/Взрыв звезды"
 
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
 msgstr "<Image>/Фильтры/Регистратор/SOTA хром"
@@ -274,17 +253,13 @@ msgstr "Визуальный Scriptor"
 
 msgid "No horizontal or vertical guides found. Aborted."
 msgstr ""
-"Не найдено ни вертикальных ни горизонтальных направляющих. Выполнение "
-"прервано."
+"Не найдено ни вертикальных ни горизонтальных направляющих. Выполнение прервано."
 
 msgid "<Image>/Filters/Map/Image Tile..."
 msgstr "<Image>/Фильтры/Отображение/Image Tile..."
 
 msgid "<Image>/Guides/To Selection..."
 msgstr "<Image>/Направляющие/В выделение..."
-
-msgid "<Image>/Filters/Logulator/Comic Book"
-msgstr "<Image>/Фильтры/Регистратор/Комикс"
 
 msgid "<Image>/Guides/Remove Guides"
 msgstr "<Image>/Направляющие/Удалить"
@@ -334,14 +309,11 @@ msgstr "Исследователь ПБД - olof-редакция (еще очень даже альфа-версия)"
 msgid "Illegal default font description for $function: $val\n"
 msgstr "Недопустимое описание шрифта по умолчанию для $function: $val\n"
 
-msgid "<Image>/Select/Round Rectangular Selection..."
-msgstr "<Image>/Выделение/Выделение скругленного прямоугольника..."
-
-msgid "<Image>/Filters/Logulator/Chalk"
-msgstr "<Image>/Фильтры/Регистратор/Мел"
-
 msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
 msgstr "невозможно преобразовать Gimp::Drawable в Gimp::GDrawable (id %d)"
+
+msgid "<Image>/Select/Round Rectangular Selection..."
+msgstr "<Image>/Выделение/Выделение скругленного прямоугольника..."
 
 msgid ""
 "BLURB:\n"
@@ -370,17 +342,15 @@ msgid "<Image>/Filters/Logulator/Blended II..."
 msgstr "<Image>/Фильтры/Регистратор/Смешанный II..."
 
 msgid ""
-"$function: function name contains unusual characters, good style is to use "
-"only 0-9, a-z and _"
+"$function: function name contains unusual characters, good style is to use only "
+"0-9, a-z and _"
 msgstr ""
 "$function: название функции содержит необычные символы, хороший стиль - "
 "использование только 0-9, a-z and _"
 
-msgid ""
-"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
+msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
-"путь меню _должен_ начинаться с <Image>, <Toolbox>, <Load>, <Save> или "
-"<None>!"
+"путь меню _должен_ начинаться с <Image>, <Toolbox>, <Load>, <Save> или <None>!"
 
 msgid "<Image>/Filters/Render/Highlight Edges..."
 msgstr "<Image>/Фильтры/Визуализация/Яркие края..."
@@ -389,13 +359,14 @@ msgid "Spin Layer DEST (250ms)"
 msgstr ""
 
 msgid "register called with too many or wrong arguments\n"
-msgstr "регистр вызван со слишком большим числом аргументов или с неверными аргументами\n"
-
-msgid "params and return_vals must be array refs (even if empty)!"
-msgstr "params и return_vals должны быть ссылками на массив (даже если пусты)!"
+msgstr ""
+"регистр вызван со слишком большим числом аргументов или с неверными аргументами\n"
 
 msgid "$_ is not a valid import tag for package $pkg"
 msgstr ""
+
+msgid "params and return_vals must be array refs (even if empty)!"
+msgstr "params и return_vals должны быть ссылками на массив (даже если пусты)!"
 
 msgid "<Image>/Filters/Colors/Map To Gradient..."
 msgstr "<Image>/Фильтры/Цвета/Отобразить в градиент..."
@@ -414,7 +385,11 @@ msgid ""
 "\n"
 "EMBEDDED POD DOCUMENTATION:\n"
 "\n"
-msgstr "\n\nВСТРОЕННАЯ ДОКУМЕНТАЦИЯ В ФОРМАТЕ POD:\n\n"
+msgstr ""
+"\n"
+"\n"
+"ВСТРОЕННАЯ ДОКУМЕНТАЦИЯ В ФОРМАТЕ POD:\n"
+"\n"
 
 msgid "/Filters/Logulator"
 msgstr "/Фильтры/Регистратор"
@@ -443,7 +418,8 @@ msgid "[unfinished]\n"
 msgstr "[незавершенное]\n"
 
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
-msgstr "невозможно подключиться к серверу gimp (убедитесь, что Perl-Server запущен)"
+msgstr ""
+"невозможно подключиться к серверу gimp (убедитесь, что Perl-Server запущен)"
 
 msgid "<Image>/Filters/Logulator/Crystal"
 msgstr "<Image>/Фильтры/Регистратор/Кристалл"
@@ -484,11 +460,11 @@ msgstr "Типы изображений"
 msgid "Menu Path"
 msgstr "Путь меню"
 
-msgid "Unable to grok '%s' as colour specifier"
-msgstr ""
-
 msgid "9x15bold"
 msgstr "9x15bold"
+
+msgid "Unable to grok '%s' as colour specifier"
+msgstr ""
 
 msgid "Accelerator"
 msgstr "Ускоритель"
@@ -505,18 +481,14 @@ msgstr "Отмена"
 msgid "only blessed scalars accepted here"
 msgstr ""
 
-msgid ""
-"dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
+msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr ""
-
-msgid "<Image>/Filters/Logulator/Glossy"
-msgstr "<Image>/Фильтры/Регистратор/Глянец"
-
-msgid "argument is not of type %s"
-msgstr "аргумент не типа %s"
 
 msgid "WARNING"
 msgstr "ВНИМАНИЕ"
+
+msgid "argument is not of type %s"
+msgstr "аргумент не типа %s"
 
 msgid "Description"
 msgstr "Описание"
@@ -526,9 +498,6 @@ msgstr "<Image>/Фильтры/Визуализация/Fit Text..."
 
 msgid "Unable to convert a reference to type '%s'"
 msgstr ""
-
-msgid "<Image>/Filters/Logulator/Particle Trace"
-msgstr "<Image>/Фильтры/Регистратор/След частицы"
 
 msgid "argument incompatible with type IMAGE"
 msgstr "аргумент несовместим с типом ИЗОБРАЖЕНИЕ"
@@ -553,9 +522,6 @@ msgstr "<Image>/Фильтры/Отображение/Отображение точек..."
 
 msgid "Color"
 msgstr "Цвет"
-
-msgid "<Image>/Filters/Logulator/Alien Glow"
-msgstr "<Image>/Фильтры/Регистратор/Чужое свечение"
 
 msgid "FATAL: canonicalize_colour did not return a value!"
 msgstr "ФАТАЛЬНО: canonicalize_colour не вернуло значение!"
@@ -609,8 +575,7 @@ msgid "Save $name"
 msgstr "Сохранить $name"
 
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
-msgstr ""
-"run_mode должен быть INTERACTIVE, NONINTERACTIVE или RUN_WITH_LAST_VALS\n"
+msgstr "run_mode должен быть INTERACTIVE, NONINTERACTIVE или RUN_WITH_LAST_VALS\n"
 
 msgid "<Image>/Video/VCR Console..."
 msgstr "<Image>/Видео/Пульт видеомагнитофона..."
@@ -625,16 +590,17 @@ msgid "interface=... tag is no longer supported\n"
 msgstr "тэг interface=... больше не поддерживается\n"
 
 msgid ""
-"Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
-"'use strict'"
-msgstr "Ожидалось INT32, а получено '%s'. Возможно вы имели в виду '%s' вместо этого и забыли про 'use strict'"
+"Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to 'use "
+"strict'"
+msgstr ""
+"Ожидалось INT32, а получено '%s'. Возможно вы имели в виду '%s' вместо этого и "
+"забыли про 'use strict'"
 
 msgid "<Image>/Filters/Logulator/Transparent Logo..."
 msgstr "<Image>/Фильтры/Регистратор/Прозрачная эмблема..."
 
 msgid ""
-"malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
-"PARAM_TYPE"
+"malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE"
 msgstr ""
 
 msgid "Background"
@@ -665,8 +631,8 @@ msgid "unable to create listening tcp socket: $!\n"
 msgstr ""
 
 msgid ""
-"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
-"gimp-1.1 and report this error"
+"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-1.1 "
+"and report this error"
 msgstr ""
 
 msgid "<Image>/Filters/Render/Brushed Metal..."
@@ -678,11 +644,11 @@ msgstr ""
 msgid "Saving '$filename' as COLORHTML..."
 msgstr "Сохранение '$filename' как COLORHTML..."
 
-msgid "too many"
-msgstr "слишком много"
-
 msgid "required callback 'net' not found\n"
 msgstr ""
+
+msgid "too many"
+msgstr "слишком много"
 
 msgid "<Image>/Filters/Render/Add Glow"
 msgstr "<Image>/Фильтры/Визуализация/Добавить свечение"
@@ -696,11 +662,11 @@ msgstr "Дальше..."
 msgid "arguments to main not yet supported!"
 msgstr ""
 
-msgid "<Image>/Filters/Logulator/Newsprint text"
-msgstr "<Image>/Фильтры/Регистратор/Газетный текст"
-
 msgid "Seth Spin..."
 msgstr ""
+
+msgid "<Image>/Filters/Logulator/Newsprint text"
+msgstr "<Image>/Фильтры/Регистратор/Газетный текст"
 
 msgid "<Image>/Filters/Noise/Xach Vision..."
 msgstr "<Image>/Фильтры/Шум/Xach-видение..."
@@ -714,17 +680,17 @@ msgstr "НАЗВАНИЕ"
 msgid "Help"
 msgstr "Справка"
 
-msgid "<Image>/Filters/Logulator/Cool Metal"
-msgstr "<Image>/Фильтры/Регистратор/Прохладный метал"
-
 msgid "<Image>/Filters/Logulator/Carved"
 msgstr "<Image>/Фильтры/Регистратор/Вырезка"
 
-msgid "<Image>/Filters/Logulator/Textured"
-msgstr "<Image>/Фильтры/Регистратор/Текстурированное"
-
 msgid "no font specified, using default"
 msgstr "шрифт не указан, используется установленный по умолчанию"
+
+msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
+msgstr "преобразование к типу $pf_type2string{$type} еще не реализовано\n"
+
+msgid "gimp_tile_get_data is not yet implemented\n"
+msgstr "gimp_tile_get_data еще не реализовано\n"
 
 msgid "<Image>/Filters/Map/Xach Shadows..."
 msgstr "<Image>/Фильтры/Отображение/Xach-тени..."
@@ -732,35 +698,27 @@ msgstr "<Image>/Фильтры/Отображение/Xach-тени..."
 msgid "<Image>/Filters/Map/Xach Blocks..."
 msgstr "<Image>/Фильтры/Отображение/Xach-блоки..."
 
-msgid "gimp_tile_get_data is not yet implemented\n"
-msgstr "gimp_tile_get_data еще не реализовано\n"
-
-msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
-msgstr "преобразование к типу $pf_type2string{$type} еще не реализовано\n"
-
 msgid "<Image>/Filters/Logulator/Speed text"
 msgstr "<Image>/Фильтры/Регистратор/Скоростной текст"
 
 msgid "unable to grok colour specification"
 msgstr ""
 
-msgid "You need at least 2 layers to perform prep4gif"
-msgstr "Вам нужны хотя бы 2 слоя для выполнения prep4gif"
-
 msgid "<Image>/Edit/Repeat & Duplicate..."
 msgstr "<Image>/Правка/Повтор и дублирование..."
 
+msgid "You need at least 2 layers to perform prep4gif"
+msgstr "Вам нужны хотя бы 2 слоя для выполнения prep4gif"
+
 msgid "too many arguments"
 msgstr "слишком много аргументов"
-
-msgid "<Image>/Filters/Logulator/Gradient Bevel"
-msgstr "<Image>/Фильтры/Регистратор/Градиентный скос"
 
 msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
 msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-*-*"
 
 msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
-msgstr "ожидаемая версия протокола  $Gimp::_PROT_VERSION, а сервер использует $r[0]\n"
+msgstr ""
+"ожидаемая версия протокола  $Gimp::_PROT_VERSION, а сервер использует $r[0]\n"
 
 msgid "Restore values to the previous ones"
 msgstr ""
@@ -777,15 +735,14 @@ msgstr "<Image>/Фильтры/Шум/Обратная связь..."
 msgid "unable to create listening unix socket: $!\n"
 msgstr ""
 
-msgid ""
-"invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
+msgid "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
 msgstr ""
-
-msgid "<Image>/View/3D Surface..."
-msgstr "<Image>/Вид/3D поверхность..."
 
 msgid "Last Modified"
 msgstr "Последнее измененное"
+
+msgid "<Image>/View/3D Surface..."
+msgstr "<Image>/Вид/3D поверхность..."
 
 msgid "Shortcuts"
 msgstr "Сокращения"
@@ -816,9 +773,6 @@ msgstr "(НЕ ИНИЦИАЛИЗИРОВАНО)"
 msgid "closing connection %d (%d requests in %g seconds)"
 msgstr ""
 
-msgid "<Image>/Filters/Logulator/Frosty"
-msgstr "<Image>/Фильтры/Регистратор/Мороз"
-
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
 msgstr "<Toolbox>/Расш./Визуализация/Золотая середина..."
 
@@ -831,13 +785,13 @@ msgstr "<Image>/Направляющие/Центрировать..."
 msgid "server version $Gimp::VERSION started"
 msgstr "запущен сервер версии $Gimp::VERSION"
 
-msgid "authorization unnecessary"
-msgstr "авторизация не нужна"
-
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
 msgstr ""
+
+msgid "authorization unnecessary"
+msgstr "авторизация не нужна"
 
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
 msgstr "<Image>/Фильтры/Улучшение/Warp Sharp..."
@@ -875,12 +829,6 @@ msgstr "<Toolbox>/Расш./Пример дополнения Perl"
 msgid "You can't run this script without an ALPHA CHANNEL!!"
 msgstr "Вы не можете запустить этот скрипт без Альфа-канала!!!"
 
-msgid "<Image>/Filters/Logulator/Neon"
-msgstr "<Image>/Фильтры/Регистратор/Неон"
-
-msgid "<Image>/Filters/Logulator/Chrome"
-msgstr "<Image>/Фильтры/Регистратор/Хром"
-
 msgid "<Image>/Filters/Misc/Magick..."
 msgstr "<Image>/ФИльтры/Разное/Магия..."
 
@@ -898,9 +846,6 @@ msgstr "Справка о "
 
 msgid "export failed"
 msgstr "сбой экспортирования"
-
-msgid "<Image>/Filters/Logulator/Chip Away"
-msgstr "<Image>/Фильтры/Регистратор/Chip Away"
 
 msgid "dunno how to pass arg type %d"
 msgstr "неизвестно как передать аргумент типа %d"
@@ -941,18 +886,15 @@ msgstr "<Image>/Выделение/Треугольник..."
 msgid "<Image>/Filters/Animation/BlowInOut..."
 msgstr "<Image>/Фильтры/Анимация/BlowInOut..."
 
-msgid "<Image>/Filters/Logulator/Starscape"
-msgstr "<Image>/Фильтры/Регистратор/Starscape"
+msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
+msgstr "<Image>/Фильтры/Улучшение/2х2 Улучшение контраста"
 
 msgid "<Image>/Layers/Stack/Reorder Layers..."
 msgstr "<Image>/Слои/Стопка/Переупорядочить..."
 
-msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
-msgstr "<Image>/Фильтры/Улучшение/2х2 Улучшение контраста"
-
 msgid ""
-"$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
-"a-z and _ allowed"
+"$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z "
+"and _ allowed"
 msgstr ""
 
 msgid "<Image>/Filters/Colors/Fire..."
@@ -969,3 +911,66 @@ msgstr "получена недопустимая команда, соединение оборвано"
 
 msgid "(none)"
 msgstr "(нет)"
+
+#~ msgid "<Image>/Filters/Logulator/Bovination"
+#~ msgstr "<Image>/Фильтры/Регистратор/Bovination"
+
+#~ msgid "<Image>/Filters/Logulator/Blended"
+#~ msgstr "<Image>/Фильтры/Регистратор/Смешанный"
+
+#~ msgid "<Image>/Filters/Logulator/Basic I"
+#~ msgstr "<Image>/Фильтры/Регистратор/Основа I"
+
+#~ msgid "<Image>/Filters/Logulator/3D Outline..."
+#~ msgstr "<Image>/Фильтры/Регистратор/3D контур..."
+
+#~ msgid "<Image>/Filters/Logulator/Glowing Hot"
+#~ msgstr "<Image>/Фильтры/Регистратор/Glowing Hot"
+
+#~ msgid "<Image>/Filters/Logulator/Basic II"
+#~ msgstr "<Image>/Фильтры/Регистратор/Основа II"
+
+#~ msgid "<Image>/Filters/Logulator/Starburst"
+#~ msgstr "<Image>/Фильтры/Регистратор/Взрыв звезды"
+
+#~ msgid "<Image>/Filters/Logulator/Comic Book"
+#~ msgstr "<Image>/Фильтры/Регистратор/Комикс"
+
+#~ msgid "<Image>/Filters/Logulator/Chalk"
+#~ msgstr "<Image>/Фильтры/Регистратор/Мел"
+
+#~ msgid "<Image>/Filters/Logulator/Glossy"
+#~ msgstr "<Image>/Фильтры/Регистратор/Глянец"
+
+#~ msgid "<Image>/Filters/Logulator/Particle Trace"
+#~ msgstr "<Image>/Фильтры/Регистратор/След частицы"
+
+#~ msgid "<Image>/Filters/Logulator/Alien Glow"
+#~ msgstr "<Image>/Фильтры/Регистратор/Чужое свечение"
+
+#~ msgid "<Image>/Filters/Logulator/Cool Metal"
+#~ msgstr "<Image>/Фильтры/Регистратор/Прохладный метал"
+
+#~ msgid "<Image>/Filters/Logulator/Textured"
+#~ msgstr "<Image>/Фильтры/Регистратор/Текстурированное"
+
+#~ msgid "<Image>/Filters/Logulator/Gradient Bevel"
+#~ msgstr "<Image>/Фильтры/Регистратор/Градиентный скос"
+
+#~ msgid "<Image>/Filters/Logulator/Frosty"
+#~ msgstr "<Image>/Фильтры/Регистратор/Мороз"
+
+#~ msgid "<Image>/Filters/Logulator/Neon"
+#~ msgstr "<Image>/Фильтры/Регистратор/Неон"
+
+#~ msgid "<Image>/Filters/Logulator/Chrome"
+#~ msgstr "<Image>/Фильтры/Регистратор/Хром"
+
+#~ msgid "<Image>/Filters/Logulator/Chip Away"
+#~ msgstr "<Image>/Фильтры/Регистратор/Chip Away"
+
+#~ msgid "<Image>/Filters/Logulator/Starscape"
+#~ msgstr "<Image>/Фильтры/Регистратор/Starscape"
+
+#~ msgid "<Image>/Filters/Animation/Seth Spin..."
+#~ msgstr "<Image>/Фильтры/Анимация/Seth Spin..."

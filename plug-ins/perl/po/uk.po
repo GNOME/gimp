@@ -12,15 +12,6 @@ msgstr ""
 "Content-Type: text/plain; charset=koi8-u\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-msgid "<Image>/Filters/Logulator/Bovination"
-msgstr "<Image>/Ф╕льтри/Ре╓стратор/Bovination"
-
-msgid "<Image>/Filters/Logulator/Blended"
-msgstr "<Image>/Ф╕льтри/Ре╓стратор/Зм╕шаний"
-
-msgid "<Image>/Filters/Logulator/Basic I"
-msgstr "<Image>/Ф╕льтри/Ре╓стратор/Основний I"
-
 msgid "FATAL: unable to create $tmp: $!\n"
 msgstr "ПОМИЛКА: невдалося створити $tmp: $!\n"
 
@@ -30,9 +21,6 @@ msgstr ""
 
 msgid "<Image>/Filters/Web/Prepare for GIF..."
 msgstr "<Image>/Ф╕льтри/WWW/П╕дготувати для GIF..."
-
-msgid "<Image>/Filters/Logulator/3D Outline..."
-msgstr "<Image>/Ф╕льтри/Logulator/3D Контур..."
 
 msgid "<Image>/Filters/Animation/Animate Cells..."
 msgstr "<Image>/Ф╕льтри/Ан╕мац╕я/Ан╕мувати ком╕рки..."
@@ -52,9 +40,6 @@ msgstr ""
 
 msgid "argument type %s expected (not %s)"
 msgstr ""
-
-msgid "<Image>/Filters/Logulator/Glowing Hot"
-msgstr "<Image>/Ф╕льтри/Ре╓стратор/Glowing Hot"
 
 msgid "Browse"
 msgstr "Перегляд"
@@ -91,9 +76,6 @@ msgstr ""
 
 msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
-
-msgid "<Image>/Filters/Logulator/Basic II"
-msgstr "<Image>/Ф╕льтри/Logulator/Основний II"
 
 msgid "Load"
 msgstr "Завантажити"
@@ -203,9 +185,6 @@ msgstr ""
 msgid "<Image>/Image/Alpha/Alpha2Color..."
 msgstr "<Image>/Зображення/Альфа/Альфа в кол╕р..."
 
-msgid "<Image>/Filters/Logulator/Starburst"
-msgstr "<Image>/Ф╕льтри/Logulator/Starburst"
-
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
 msgstr "<Image>/Ф╕льтри/Logulator/SOTA Хром"
 
@@ -279,9 +258,6 @@ msgstr "<Image>/Ф╕льтри/Мапа/Image Tile..."
 msgid "<Image>/Guides/To Selection..."
 msgstr "<Image>/Направляюч╕/У вид╕лення..."
 
-msgid "<Image>/Filters/Logulator/Comic Book"
-msgstr "<Image>/Ф╕льтри/Logulator/Ком╕кси"
-
 msgid "<Image>/Guides/Remove Guides"
 msgstr "<Image>/Направляюч╕/Видалити"
 
@@ -329,9 +305,6 @@ msgstr "Досл╕дник ПБД - olof-редакц╕я (ще лиша╓ться альфа-верс╕╓ю)"
 
 msgid "Illegal default font description for $function: $val\n"
 msgstr ""
-
-msgid "<Image>/Filters/Logulator/Chalk"
-msgstr "<Image>/Ф╕льтри/Logulator/Крейда"
 
 msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
 msgstr ""
@@ -497,9 +470,6 @@ msgstr ""
 msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr ""
 
-msgid "<Image>/Filters/Logulator/Glossy"
-msgstr "<Image>/Ф╕льтри/Logulator/Глянс"
-
 msgid "WARNING"
 msgstr "ПОПЕРЕДЖЕННЯ"
 
@@ -514,9 +484,6 @@ msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Fit Text..."
 
 msgid "Unable to convert a reference to type '%s'"
 msgstr ""
-
-msgid "<Image>/Filters/Logulator/Particle Trace"
-msgstr "<Image>/Ф╕льтри/Logulator/Сл╕д частки"
 
 msgid "argument incompatible with type IMAGE"
 msgstr ""
@@ -541,9 +508,6 @@ msgstr "<Image>/Ф╕льтри/Мапа/Точкова мапа..."
 
 msgid "Color"
 msgstr "Кол╕р"
-
-msgid "<Image>/Filters/Logulator/Alien Glow"
-msgstr "<Image>/Ф╕льтри/Logulator/Чуже сяйво"
 
 msgid "FATAL: canonicalize_colour did not return a value!"
 msgstr ""
@@ -587,11 +551,11 @@ msgstr ""
 msgid "perl-arrayref required as datatype for a gimp-array"
 msgstr ""
 
-msgid "<Toolbox>/Xtns/Create_Images"
-msgstr "<Toolbox>/Розш./Створити_зображення"
-
 msgid "required callback 'query' not found\n"
 msgstr ""
+
+msgid "<Toolbox>/Xtns/Create_Images"
+msgstr "<Toolbox>/Розш./Створити_зображення"
 
 msgid "Save $name"
 msgstr "Зберегти $name"
@@ -700,14 +664,8 @@ msgstr "НАЗВА"
 msgid "Help"
 msgstr "Дов╕дка"
 
-msgid "<Image>/Filters/Logulator/Cool Metal"
-msgstr "<Image>/Ф╕льтри/Logulator/Холодний метал"
-
 msgid "<Image>/Filters/Logulator/Carved"
 msgstr "<Image>/Ф╕льтри/Logulator/Вир╕зка"
-
-msgid "<Image>/Filters/Logulator/Textured"
-msgstr "<Image>/Ф╕льтри/Logulator/Текстура"
 
 msgid "no font specified, using default"
 msgstr "шрифту не вказано, використову╓ться типовий"
@@ -730,17 +688,14 @@ msgstr "<Image>/Ф╕льтри/Logulator/Швидк╕сний текст"
 msgid "unable to grok colour specification"
 msgstr ""
 
-msgid "You need at least 2 layers to perform prep4gif"
-msgstr ""
-
 msgid "<Image>/Edit/Repeat & Duplicate..."
 msgstr "<Image>/Редагування/Повторення та дублювання"
 
+msgid "You need at least 2 layers to perform prep4gif"
+msgstr ""
+
 msgid "too many arguments"
 msgstr "недто багато аргумент╕в"
-
-msgid "<Image>/Filters/Logulator/Gradient Bevel"
-msgstr "<Image>/Ф╕льтри/Logulator/Град╕╓нтний ск╕с"
 
 msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
 msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-koi8-u"
@@ -801,9 +756,6 @@ msgstr "(НЕ╤Н╤Ц╤АЛ╤ЗОВАНО)"
 msgid "closing connection %d (%d requests in %g seconds)"
 msgstr ""
 
-msgid "<Image>/Filters/Logulator/Frosty"
-msgstr "<Image>/Ф╕льтри/Logulator/Мороз"
-
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
 msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Золота середина..."
 
@@ -816,13 +768,13 @@ msgstr "<Image>/Направляюч╕/Центрувати..."
 msgid "server version $Gimp::VERSION started"
 msgstr "серверну верс╕ю $Gimp::VERSION запущено"
 
-msgid "authorization unnecessary"
-msgstr "авторизац╕я непотр╕бна"
-
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
 msgstr ""
+
+msgid "authorization unnecessary"
+msgstr "авторизац╕я непотр╕бна"
 
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
 msgstr ""
@@ -860,12 +812,6 @@ msgstr "<Toolbox>/Розш./Приклад доповнення Perl"
 msgid "You can't run this script without an ALPHA CHANNEL!!"
 msgstr ""
 
-msgid "<Image>/Filters/Logulator/Neon"
-msgstr "<Image>/Ф╕льтри/Logulator/Неон"
-
-msgid "<Image>/Filters/Logulator/Chrome"
-msgstr "<Image>/Ф╕льтри/Logulator/Хром"
-
 msgid "<Image>/Filters/Misc/Magick..."
 msgstr "<Image>/Ф╕льтри/Р╕зне/Маг╕я..."
 
@@ -878,14 +824,11 @@ msgstr ""
 msgid "Unable to read temporary image tile $tmp: $!"
 msgstr ""
 
-msgid "export failed"
-msgstr ""
-
 msgid "Help for "
 msgstr "Дов╕дка про "
 
-msgid "<Image>/Filters/Logulator/Chip Away"
-msgstr "<Image>/Ф╕льтри/Logulator/Chip Away"
+msgid "export failed"
+msgstr ""
 
 msgid "dunno how to pass arg type %d"
 msgstr ""
@@ -926,9 +869,6 @@ msgstr "<Image>/Вид╕лення/Трикутник..."
 msgid "<Image>/Filters/Animation/BlowInOut..."
 msgstr "<Image>/Ф╕льтри/Ан╕мац╕я/BlowInOut..."
 
-msgid "<Image>/Filters/Logulator/Starscape"
-msgstr "<Image>/Ф╕льтри/Logulator/Starscape"
-
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
 msgstr "<Image>/Ф╕льтри/Покращення/2х2 Покращення контрасту"
 
@@ -954,3 +894,63 @@ msgstr "отримано недопустиму команду, з'╓днання об╕рвано"
 
 msgid "(none)"
 msgstr "(нема╓)"
+
+#~ msgid "<Image>/Filters/Logulator/Bovination"
+#~ msgstr "<Image>/Ф╕льтри/Ре╓стратор/Bovination"
+
+#~ msgid "<Image>/Filters/Logulator/Blended"
+#~ msgstr "<Image>/Ф╕льтри/Ре╓стратор/Зм╕шаний"
+
+#~ msgid "<Image>/Filters/Logulator/Basic I"
+#~ msgstr "<Image>/Ф╕льтри/Ре╓стратор/Основний I"
+
+#~ msgid "<Image>/Filters/Logulator/3D Outline..."
+#~ msgstr "<Image>/Ф╕льтри/Logulator/3D Контур..."
+
+#~ msgid "<Image>/Filters/Logulator/Glowing Hot"
+#~ msgstr "<Image>/Ф╕льтри/Ре╓стратор/Glowing Hot"
+
+#~ msgid "<Image>/Filters/Logulator/Basic II"
+#~ msgstr "<Image>/Ф╕льтри/Logulator/Основний II"
+
+#~ msgid "<Image>/Filters/Logulator/Starburst"
+#~ msgstr "<Image>/Ф╕льтри/Logulator/Starburst"
+
+#~ msgid "<Image>/Filters/Logulator/Comic Book"
+#~ msgstr "<Image>/Ф╕льтри/Logulator/Ком╕кси"
+
+#~ msgid "<Image>/Filters/Logulator/Chalk"
+#~ msgstr "<Image>/Ф╕льтри/Logulator/Крейда"
+
+#~ msgid "<Image>/Filters/Logulator/Glossy"
+#~ msgstr "<Image>/Ф╕льтри/Logulator/Глянс"
+
+#~ msgid "<Image>/Filters/Logulator/Particle Trace"
+#~ msgstr "<Image>/Ф╕льтри/Logulator/Сл╕д частки"
+
+#~ msgid "<Image>/Filters/Logulator/Alien Glow"
+#~ msgstr "<Image>/Ф╕льтри/Logulator/Чуже сяйво"
+
+#~ msgid "<Image>/Filters/Logulator/Cool Metal"
+#~ msgstr "<Image>/Ф╕льтри/Logulator/Холодний метал"
+
+#~ msgid "<Image>/Filters/Logulator/Textured"
+#~ msgstr "<Image>/Ф╕льтри/Logulator/Текстура"
+
+#~ msgid "<Image>/Filters/Logulator/Gradient Bevel"
+#~ msgstr "<Image>/Ф╕льтри/Logulator/Град╕╓нтний ск╕с"
+
+#~ msgid "<Image>/Filters/Logulator/Frosty"
+#~ msgstr "<Image>/Ф╕льтри/Logulator/Мороз"
+
+#~ msgid "<Image>/Filters/Logulator/Neon"
+#~ msgstr "<Image>/Ф╕льтри/Logulator/Неон"
+
+#~ msgid "<Image>/Filters/Logulator/Chrome"
+#~ msgstr "<Image>/Ф╕льтри/Logulator/Хром"
+
+#~ msgid "<Image>/Filters/Logulator/Chip Away"
+#~ msgstr "<Image>/Ф╕льтри/Logulator/Chip Away"
+
+#~ msgid "<Image>/Filters/Logulator/Starscape"
+#~ msgstr "<Image>/Ф╕льтри/Logulator/Starscape"

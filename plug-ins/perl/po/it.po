@@ -11,15 +11,6 @@ msgstr ""
 "Date: mer set  8 02:12:22 CEST 1999\n"
 "From: Marco Munari <mar@chiara.dei.unipd.it>\n"
 
-msgid "<Image>/Filters/Logulator/Bovination"
-msgstr "<Image>/Filtri/Logulator/Bovination"
-
-msgid "<Image>/Filters/Logulator/Blended"
-msgstr "<Image>/Filtri/Logulator/Blended"
-
-msgid "<Image>/Filters/Logulator/Basic I"
-msgstr "<Image>/Filtri/Logulator/Basic I"
-
 msgid "FATAL: unable to create $tmp: $!\n"
 msgstr "FATALITA`: incapace di creare $tmp: $!\n"
 
@@ -31,9 +22,6 @@ msgstr ""
 
 msgid "<Image>/Filters/Web/Prepare for GIF..."
 msgstr "<Image>/Filtri/Web/Prepara per GIF"
-
-msgid "<Image>/Filters/Logulator/3D Outline..."
-msgstr "<Image>/Filtri/Logulator/3D Outline..."
 
 msgid "<Image>/Filters/Animation/Animate Cells..."
 msgstr "<Image>/Filtri/Animazione/Animazione Celle..."
@@ -58,9 +46,6 @@ msgstr "being called as '%s', but '%s' not registered in the pdb"
 # notr
 msgid "argument type %s expected (not %s)"
 msgstr "atteso argomento di tipo %s (non %s)"
-
-msgid "<Image>/Filters/Logulator/Glowing Hot"
-msgstr "<Image>/Filtri/Logulator/Glowing Hot"
 
 msgid "Browse"
 msgstr "Esplora"
@@ -101,9 +86,6 @@ msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are requir
 msgstr ""
 "grandezza dei pixel non prevista, pdl ha %d pixel di canali ma sono richiesti %d "
 "canali"
-
-msgid "<Image>/Filters/Logulator/Basic II"
-msgstr "<Image>/Filtri/Logulator/Basic II"
 
 msgid "Load"
 msgstr "Carico"
@@ -195,7 +177,6 @@ msgstr " abbinando funzioni"
 
 # msgid "Internal error: unable to convert reference in sv2net, please report!"
 # msgstr "Errore interno: impossibile convertire referenze in sv2net!"
-
 msgid "<Toolbox>/Xtns/Render/Random Art #1..."
 msgstr "<Toolbox>/Xtns/Render/Arte Casuale #1..."
 
@@ -227,9 +208,6 @@ msgstr ""
 
 msgid "<Image>/Image/Alpha/Alpha2Color..."
 msgstr "<Image>/Immagine/Alpha/Alfa a colore"
-
-msgid "<Image>/Filters/Logulator/Starburst"
-msgstr "<Image>/Filtri/Logulator/Starburst"
 
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
 msgstr "<Image>/Filtri/Logulator/SOTA Chrome"
@@ -304,9 +282,6 @@ msgstr "<Image>/Filtri/Map/Tile Immagine..."
 msgid "<Image>/Guides/To Selection..."
 msgstr "<Image>/Guide/A selezione..."
 
-msgid "<Image>/Filters/Logulator/Comic Book"
-msgstr "<Image>/Filtri/Logulator/Comic Book"
-
 # msgid "Internal error: stashname too long, please report!"
 # msgstr "Errore interno: stashname troppo lungo, please report!"
 msgid "<Image>/Guides/Remove Guides"
@@ -356,9 +331,6 @@ msgstr "PDB Explorer - edizione olof (versione alpha)"
 
 msgid "Illegal default font description for $function: $val\n"
 msgstr "Font descriprion di default illegale per $function: $val\n"
-
-msgid "<Image>/Filters/Logulator/Chalk"
-msgstr "<Image>/Filtri/Logulator/Chalk"
 
 msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
 msgstr "non riesco a convertire Gimp::Drawable in Gimp::GDrawable (id %d)"
@@ -546,9 +518,6 @@ msgstr ""
 "dimensione non prevista, pdl ha dimensione %d ma al piu` sono permesse %d "
 "dimensioni"
 
-msgid "<Image>/Filters/Logulator/Glossy"
-msgstr "<Image>/Filtri/Logulator/Glossy"
-
 msgid "WARNING"
 msgstr "ATTENZIONE"
 
@@ -563,9 +532,6 @@ msgstr "<Image>/Filtri/Render/Riempi Testo..."
 
 msgid "Unable to convert a reference to type '%s'"
 msgstr "Incapace di convertire un riferimento a tipo '%s'"
-
-msgid "<Image>/Filters/Logulator/Particle Trace"
-msgstr "<Image>/Filtri/Logulator/Particle Trace"
 
 msgid "argument incompatible with type IMAGE"
 msgstr "argomento incompatibile con tipo IMAGE"
@@ -590,9 +556,6 @@ msgstr "<Image>/Filtri/Map/Pixelmap..."
 
 msgid "Color"
 msgstr "Colore"
-
-msgid "<Image>/Filters/Logulator/Alien Glow"
-msgstr "<Image>/Filtri/Logulator/Alien Glow"
 
 msgid "FATAL: canonicalize_colour did not return a value!"
 msgstr "Avviso: canonicalize_colour non ha ricevuto nessun valore!"
@@ -639,11 +602,11 @@ msgstr "ora accetto connessioni alla porta $Gimp::Net::default_tcp_port"
 msgid "perl-arrayref required as datatype for a gimp-array"
 msgstr "perl-arrayref richiesto come tipo di dati per gimp-array"
 
-msgid "<Toolbox>/Xtns/Create_Images"
-msgstr "<Toolbox>/Xtns/Crea_Immagine"
-
 msgid "required callback 'query' not found\n"
 msgstr "callback 'query' richiesto e non trovato\n"
+
+msgid "<Toolbox>/Xtns/Create_Images"
+msgstr "<Toolbox>/Xtns/Crea_Immagine"
 
 msgid "Save $name"
 msgstr "Salva $name"
@@ -761,14 +724,8 @@ msgstr "NOME"
 msgid "Help"
 msgstr "Aiuto"
 
-msgid "<Image>/Filters/Logulator/Cool Metal"
-msgstr "<Image>/Filtri/Logulator/Cool Metal"
-
 msgid "<Image>/Filters/Logulator/Carved"
 msgstr "<Image>/Filtri/Logulator/Carved"
-
-msgid "<Image>/Filters/Logulator/Textured"
-msgstr "<Image>/Filtri/Logulator/Textured"
 
 msgid "no font specified, using default"
 msgstr "nessun font specificato, utilizzo valore preimpostato"
@@ -791,17 +748,14 @@ msgstr "<Image>/Filtri/Logulator/Speed text"
 msgid "unable to grok colour specification"
 msgstr "impossibile accettare specificazione di colore"
 
-msgid "You need at least 2 layers to perform prep4gif"
-msgstr "E' necessario avere almeno 2 livelli per utilizzare prep4gif"
-
 msgid "<Image>/Edit/Repeat & Duplicate..."
 msgstr "<Image>/Modifica/Ripeti e duplica..."
 
+msgid "You need at least 2 layers to perform prep4gif"
+msgstr "E' necessario avere almeno 2 livelli per utilizzare prep4gif"
+
 msgid "too many arguments"
 msgstr "troppi argomenti"
-
-msgid "<Image>/Filters/Logulator/Gradient Bevel"
-msgstr "<Image>/Filtri/Logulator/Gradient Bevel"
 
 msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
 msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
@@ -870,9 +824,6 @@ msgstr "(NON INIZIALIZZATO)"
 msgid "closing connection %d (%d requests in %g seconds)"
 msgstr "ora chiudo connessione %d (%d richiesto in %g secondi)"
 
-msgid "<Image>/Filters/Logulator/Frosty"
-msgstr "<Image>/Filtri/Logulator/Frosty"
-
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
 msgstr "<Toolbox>/Xtns/Render/Effetto oro..."
 
@@ -885,15 +836,15 @@ msgstr "<Image>/Guide/Centra guide..."
 msgid "server version $Gimp::VERSION started"
 msgstr "versione del server $Gimp::VERSION avviata"
 
-msgid "authorization unnecessary"
-msgstr "autorizzazione non necessaria"
-
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
 msgstr ""
 "$function: il richiamo a $AUTOLOAD senza specificare il tag di importazione "
 ":auto viene deprecato!\n"
+
+msgid "authorization unnecessary"
+msgstr "autorizzazione non necessaria"
 
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
 msgstr "<Image>/Filtri/Avanzati/Warp Sharp..."
@@ -931,12 +882,6 @@ msgstr "<Toolbox>/Xtns/Plug-in Perl di Esempio"
 msgid "You can't run this script without an ALPHA CHANNEL!!"
 msgstr "Non è possibile eseguire lo script senza un CANALE ALPHA!!"
 
-msgid "<Image>/Filters/Logulator/Neon"
-msgstr "<Image>/Filtri/Logulator/Neon"
-
-msgid "<Image>/Filters/Logulator/Chrome"
-msgstr "<Image>/Filtri/Logulator/Chrome"
-
 msgid "<Image>/Filters/Misc/Magick..."
 msgstr "<Image>/Filtri/Misc/Magick..."
 
@@ -949,14 +894,11 @@ msgstr "<Image>/Selezione/Arrotondata..."
 msgid "Unable to read temporary image tile $tmp: $!"
 msgstr "Impossibile leggere il file temporaneo $tmp: $!"
 
-msgid "export failed"
-msgstr "esportazione fallita"
-
 msgid "Help for "
 msgstr "Aiuto per "
 
-msgid "<Image>/Filters/Logulator/Chip Away"
-msgstr "<Image>/Filtri/Logulator/Chip Away"
+msgid "export failed"
+msgstr "esportazione fallita"
 
 msgid "dunno how to pass arg type %d"
 msgstr "impossibile passare tipo di argomento %d"
@@ -999,9 +941,6 @@ msgstr "<Image>/Selezione/Triangolo..."
 msgid "<Image>/Filters/Animation/BlowInOut..."
 msgstr "<Image>/Filtri/Animazione/BlowInOut..."
 
-msgid "<Image>/Filters/Logulator/Starscape"
-msgstr "<Image>/Filtri/Logulator/Starscape"
-
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
 msgstr "<Image>/Filtri/Enhance/2x2 Rafforza Contrasto"
 
@@ -1032,6 +971,66 @@ msgstr "ricevuto comando illegale, chiudo connessione"
 
 msgid "(none)"
 msgstr "(niente)"
+
+#~ msgid "<Image>/Filters/Logulator/Bovination"
+#~ msgstr "<Image>/Filtri/Logulator/Bovination"
+
+#~ msgid "<Image>/Filters/Logulator/Blended"
+#~ msgstr "<Image>/Filtri/Logulator/Blended"
+
+#~ msgid "<Image>/Filters/Logulator/Basic I"
+#~ msgstr "<Image>/Filtri/Logulator/Basic I"
+
+#~ msgid "<Image>/Filters/Logulator/3D Outline..."
+#~ msgstr "<Image>/Filtri/Logulator/3D Outline..."
+
+#~ msgid "<Image>/Filters/Logulator/Glowing Hot"
+#~ msgstr "<Image>/Filtri/Logulator/Glowing Hot"
+
+#~ msgid "<Image>/Filters/Logulator/Basic II"
+#~ msgstr "<Image>/Filtri/Logulator/Basic II"
+
+#~ msgid "<Image>/Filters/Logulator/Starburst"
+#~ msgstr "<Image>/Filtri/Logulator/Starburst"
+
+#~ msgid "<Image>/Filters/Logulator/Comic Book"
+#~ msgstr "<Image>/Filtri/Logulator/Comic Book"
+
+#~ msgid "<Image>/Filters/Logulator/Chalk"
+#~ msgstr "<Image>/Filtri/Logulator/Chalk"
+
+#~ msgid "<Image>/Filters/Logulator/Glossy"
+#~ msgstr "<Image>/Filtri/Logulator/Glossy"
+
+#~ msgid "<Image>/Filters/Logulator/Particle Trace"
+#~ msgstr "<Image>/Filtri/Logulator/Particle Trace"
+
+#~ msgid "<Image>/Filters/Logulator/Alien Glow"
+#~ msgstr "<Image>/Filtri/Logulator/Alien Glow"
+
+#~ msgid "<Image>/Filters/Logulator/Cool Metal"
+#~ msgstr "<Image>/Filtri/Logulator/Cool Metal"
+
+#~ msgid "<Image>/Filters/Logulator/Textured"
+#~ msgstr "<Image>/Filtri/Logulator/Textured"
+
+#~ msgid "<Image>/Filters/Logulator/Gradient Bevel"
+#~ msgstr "<Image>/Filtri/Logulator/Gradient Bevel"
+
+#~ msgid "<Image>/Filters/Logulator/Frosty"
+#~ msgstr "<Image>/Filtri/Logulator/Frosty"
+
+#~ msgid "<Image>/Filters/Logulator/Neon"
+#~ msgstr "<Image>/Filtri/Logulator/Neon"
+
+#~ msgid "<Image>/Filters/Logulator/Chrome"
+#~ msgstr "<Image>/Filtri/Logulator/Chrome"
+
+#~ msgid "<Image>/Filters/Logulator/Chip Away"
+#~ msgstr "<Image>/Filtri/Logulator/Chip Away"
+
+#~ msgid "<Image>/Filters/Logulator/Starscape"
+#~ msgstr "<Image>/Filtri/Logulator/Starscape"
 
 #~ msgid "<Image>/Filters/"
 #~ msgstr "<Image>/Filtri/"

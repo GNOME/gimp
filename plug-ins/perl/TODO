@@ -24,6 +24,8 @@ API generalization
    gimp_desaturate -> drawable
 
 bugs
+  STIFTUNG, FOUNDATION etc.. => ask.
+  * URGENT: deinit might block... tis'is bad, but not close'ing is also bad
   * --enable-perl-prefix, --with-perl=, --with-perl-cc=
   * URGENT: podperl doesn't work.
   * try to work around the redhat-undef $fh => no close problem.

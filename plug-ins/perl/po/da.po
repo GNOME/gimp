@@ -13,15 +13,6 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-msgid "<Image>/Filters/Logulator/Bovination"
-msgstr "<Image>/Filter/Logulator/Bovination"
-
-msgid "<Image>/Filters/Logulator/Blended"
-msgstr "<Image>/Filtre/Logulator/Blandet"
-
-msgid "<Image>/Filters/Logulator/Basic I"
-msgstr "<Image>/Filtre/Logulator/Basic I"
-
 msgid "FATAL: unable to create $tmp: $!\n"
 msgstr "FATAL: kunne ikke oprette '$tmp': $!\n"
 
@@ -33,10 +24,6 @@ msgstr ""
 
 msgid "<Image>/Filters/Web/Prepare for GIF..."
 msgstr "<Image>/Filtre/Web/Forbered for GIF..."
-
-#, fuzzy
-msgid "<Image>/Filters/Logulator/3D Outline..."
-msgstr "<Image>/Filter/Logulator/3D-omrids"
 
 #, fuzzy
 msgid "<Image>/Filters/Animation/Animate Cells..."
@@ -62,9 +49,6 @@ msgstr "bliver kaldt som '%s', men '%s' er ikke registreret i pdb"
 
 msgid "argument type %s expected (not %s)"
 msgstr "argument af type %s forventet (ikke %s)"
-
-msgid "<Image>/Filters/Logulator/Glowing Hot"
-msgstr "<Image>/Filter/Logulator/Gloende hed"
 
 msgid "Browse"
 msgstr "Gennemse"
@@ -103,9 +87,6 @@ msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are requir
 msgstr ""
 "pikselstørrelsen stemmer ikke, pdl har %d kanaler med piksler men %d kanaler "
 "behøves"
-
-msgid "<Image>/Filters/Logulator/Basic II"
-msgstr "<Image>/Filtre/Logulator/Basic II"
 
 msgid "Load"
 msgstr "Indlæs"
@@ -234,9 +215,6 @@ msgstr ""
 msgid "<Image>/Image/Alpha/Alpha2Color..."
 msgstr "<Image>/Bilde/Alfa/Alfa-til-farve..."
 
-msgid "<Image>/Filters/Logulator/Starburst"
-msgstr "<Image>/Filtre/Logulator/Stjerneskud"
-
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
 msgstr "<Image>/Filter/Logulator/SOTA krom"
 
@@ -313,9 +291,6 @@ msgstr "<Image>/Filtre/Kort/Billeflise"
 msgid "<Image>/Guides/To Selection..."
 msgstr "<Image>/Guider/Til udvalg"
 
-msgid "<Image>/Filters/Logulator/Comic Book"
-msgstr "<Image>/Filtre/Logulator/Tegneserie"
-
 msgid "<Image>/Guides/Remove Guides"
 msgstr "<Image>/Guider/Fjern guider"
 
@@ -365,9 +340,6 @@ msgstr "PDB-udforsker - olof udgaven (stadig en alfa-version)"
 
 msgid "Illegal default font description for $function: $val\n"
 msgstr "Ugyldig standard skrifttypebeskrivelse for $function: $val\n"
-
-msgid "<Image>/Filters/Logulator/Chalk"
-msgstr "<Image>/Filter/Logulator/Kridt"
 
 msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
 msgstr "kunne ikke konvertere Gimp::Drawable til Gimp::GDrawable (id %d)"
@@ -550,9 +522,6 @@ msgstr "kun guddommelige skalarværdier accepteres her"
 msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr "dimensionsfejl, pdl har dimension %d men mindst %d dimensioner tillades"
 
-msgid "<Image>/Filters/Logulator/Glossy"
-msgstr "<Image>/Filter/Logulator/Glittet"
-
 msgid "WARNING"
 msgstr "ADVARSEL"
 
@@ -567,9 +536,6 @@ msgstr "<Image>/Filtre/Renderer/Tilpas tekst..."
 
 msgid "Unable to convert a reference to type '%s'"
 msgstr "Kunne ikke konvertere en reference til type '%s'"
-
-msgid "<Image>/Filters/Logulator/Particle Trace"
-msgstr "<Image>/Filtre/Logulator/Partikkelspor"
 
 msgid "argument incompatible with type IMAGE"
 msgstr "argumentet er ikke kompatibelt med type IMAGE"
@@ -594,9 +560,6 @@ msgstr "<Image>/Filtre/Kort/Pikselkort..."
 
 msgid "Color"
 msgstr "Farve"
-
-msgid "<Image>/Filters/Logulator/Alien Glow"
-msgstr "<Image>/Filtre/Logulator/Fremmed glød"
 
 msgid "FATAL: canonicalize_colour did not return a value!"
 msgstr "FATAL: canonicalize_colour returnerede ikke en værdi!"
@@ -641,11 +604,11 @@ msgstr "accepterer forbindelser på port $Gimp::Net::default_tcp_port"
 msgid "perl-arrayref required as datatype for a gimp-array"
 msgstr "perl-arraydef behøves som datatype for en gimp-array"
 
-msgid "<Toolbox>/Xtns/Create_Images"
-msgstr "<Toolbox>/Xtns/Opret billeder"
-
 msgid "required callback 'query' not found\n"
 msgstr "nødvendigt tilbagekald 'query' ikke fundet\n"
+
+msgid "<Toolbox>/Xtns/Create_Images"
+msgstr "<Toolbox>/Xtns/Opret billeder"
 
 msgid "Save $name"
 msgstr "Gem $name"
@@ -764,14 +727,8 @@ msgstr "NAVN"
 msgid "Help"
 msgstr "Hjælp"
 
-msgid "<Image>/Filters/Logulator/Cool Metal"
-msgstr "<Image>/Filter/Logulator/Cool Metal"
-
 msgid "<Image>/Filters/Logulator/Carved"
 msgstr "<Image>/Filtre/Logulator/Skåret"
-
-msgid "<Image>/Filters/Logulator/Textured"
-msgstr "<Image>/Filtre/Logulator/Tekstur"
 
 msgid "no font specified, using default"
 msgstr "ingen skrifttype specificeret, bruger standard"
@@ -795,18 +752,15 @@ msgstr "<Image>/Filter/Logulator/Fart-Tekst"
 msgid "unable to grok colour specification"
 msgstr "kunne ikke forstå farvespecifikationen"
 
-msgid "You need at least 2 layers to perform prep4gif"
-msgstr "Du skal have mindst 2 lag for at udføre prep4gif"
-
 #, fuzzy
 msgid "<Image>/Edit/Repeat & Duplicate..."
 msgstr "<Image>/Rediger/Gentag & duplikér"
 
+msgid "You need at least 2 layers to perform prep4gif"
+msgstr "Du skal have mindst 2 lag for at udføre prep4gif"
+
 msgid "too many arguments"
 msgstr "for mange argumenter"
-
-msgid "<Image>/Filters/Logulator/Gradient Bevel"
-msgstr "<Image>/Filter/Logulator/Farveforløb"
 
 msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
 msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
@@ -876,9 +830,6 @@ msgstr "(UINITIALISERET)"
 msgid "closing connection %d (%d requests in %g seconds)"
 msgstr "lukker forbindelse %d (%d forespørgseler på %g sekunder)"
 
-msgid "<Image>/Filters/Logulator/Frosty"
-msgstr "<Image>/Filtre/Logulator/Frosty"
-
 #, fuzzy
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
 msgstr "<Toolbox>/Xtns/Render/Gyldent snit"
@@ -893,15 +844,15 @@ msgstr "<Image>/Guider/Centreringsguide"
 msgid "server version $Gimp::VERSION started"
 msgstr "server version $Gimp::VERSION startede"
 
-msgid "authorization unnecessary"
-msgstr "Autorisering unødvendig"
-
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
 msgstr ""
 "$function: kald af $AUTOLOAD uden at specificere :auto import tag'en er "
 "forældet!\n"
+
+msgid "authorization unnecessary"
+msgstr "Autorisering unødvendig"
 
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
 msgstr "<Image>/Filter/Forbedr/Warp skarpning..."
@@ -942,12 +893,6 @@ msgstr "<Toolbox>/Udvd/Perl eksempel indstik"
 msgid "You can't run this script without an ALPHA CHANNEL!!"
 msgstr "Du kan ikke køre dette skript uden en ALFA KANAL!!"
 
-msgid "<Image>/Filters/Logulator/Neon"
-msgstr "<Image>/Filter/Logulator/Neon"
-
-msgid "<Image>/Filters/Logulator/Chrome"
-msgstr "<Image>/Filter/Logulator/Krom"
-
 #, fuzzy
 msgid "<Image>/Filters/Misc/Magick..."
 msgstr "<Image>/Filter/Forskelligt/Magick"
@@ -962,14 +907,11 @@ msgstr "<Image>/Udvalg/Afrund..."
 msgid "Unable to read temporary image tile $tmp: $!"
 msgstr "Kunne ikke læse midlertidig billedflise $tmp: $!"
 
-msgid "export failed"
-msgstr "Eksport fejlede"
-
 msgid "Help for "
 msgstr "Hjælp om "
 
-msgid "<Image>/Filters/Logulator/Chip Away"
-msgstr "<Image>/Filtre/Logulator/Hug af"
+msgid "export failed"
+msgstr "Eksport fejlede"
 
 msgid "dunno how to pass arg type %d"
 msgstr "Véd ikke hvordan argumenttype %d skal videresendes"
@@ -1012,9 +954,6 @@ msgstr "<Image>/Udvalg/Trekant"
 msgid "<Image>/Filters/Animation/BlowInOut..."
 msgstr "<Image>/Filtre/Animation/BlæsIndUd"
 
-msgid "<Image>/Filters/Logulator/Starscape"
-msgstr "<Image>/Filter/Logulator/Starscape"
-
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
 msgstr "<Image>/Filtre/Enhance/2x2 kontrast forbedring"
 
@@ -1044,3 +983,64 @@ msgstr "ugyldig kommando modtaget, afbryder forbindelsen"
 
 msgid "(none)"
 msgstr "(ingen)"
+
+#~ msgid "<Image>/Filters/Logulator/Bovination"
+#~ msgstr "<Image>/Filter/Logulator/Bovination"
+
+#~ msgid "<Image>/Filters/Logulator/Blended"
+#~ msgstr "<Image>/Filtre/Logulator/Blandet"
+
+#~ msgid "<Image>/Filters/Logulator/Basic I"
+#~ msgstr "<Image>/Filtre/Logulator/Basic I"
+
+#, fuzzy
+#~ msgid "<Image>/Filters/Logulator/3D Outline..."
+#~ msgstr "<Image>/Filter/Logulator/3D-omrids"
+
+#~ msgid "<Image>/Filters/Logulator/Glowing Hot"
+#~ msgstr "<Image>/Filter/Logulator/Gloende hed"
+
+#~ msgid "<Image>/Filters/Logulator/Basic II"
+#~ msgstr "<Image>/Filtre/Logulator/Basic II"
+
+#~ msgid "<Image>/Filters/Logulator/Starburst"
+#~ msgstr "<Image>/Filtre/Logulator/Stjerneskud"
+
+#~ msgid "<Image>/Filters/Logulator/Comic Book"
+#~ msgstr "<Image>/Filtre/Logulator/Tegneserie"
+
+#~ msgid "<Image>/Filters/Logulator/Chalk"
+#~ msgstr "<Image>/Filter/Logulator/Kridt"
+
+#~ msgid "<Image>/Filters/Logulator/Glossy"
+#~ msgstr "<Image>/Filter/Logulator/Glittet"
+
+#~ msgid "<Image>/Filters/Logulator/Particle Trace"
+#~ msgstr "<Image>/Filtre/Logulator/Partikkelspor"
+
+#~ msgid "<Image>/Filters/Logulator/Alien Glow"
+#~ msgstr "<Image>/Filtre/Logulator/Fremmed glød"
+
+#~ msgid "<Image>/Filters/Logulator/Cool Metal"
+#~ msgstr "<Image>/Filter/Logulator/Cool Metal"
+
+#~ msgid "<Image>/Filters/Logulator/Textured"
+#~ msgstr "<Image>/Filtre/Logulator/Tekstur"
+
+#~ msgid "<Image>/Filters/Logulator/Gradient Bevel"
+#~ msgstr "<Image>/Filter/Logulator/Farveforløb"
+
+#~ msgid "<Image>/Filters/Logulator/Frosty"
+#~ msgstr "<Image>/Filtre/Logulator/Frosty"
+
+#~ msgid "<Image>/Filters/Logulator/Neon"
+#~ msgstr "<Image>/Filter/Logulator/Neon"
+
+#~ msgid "<Image>/Filters/Logulator/Chrome"
+#~ msgstr "<Image>/Filter/Logulator/Krom"
+
+#~ msgid "<Image>/Filters/Logulator/Chip Away"
+#~ msgstr "<Image>/Filtre/Logulator/Hug af"
+
+#~ msgid "<Image>/Filters/Logulator/Starscape"
+#~ msgstr "<Image>/Filter/Logulator/Starscape"
