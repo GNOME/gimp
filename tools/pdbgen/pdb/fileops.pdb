@@ -296,8 +296,11 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw(<process.h> "config/gimpbaseconfig.h") ],
-	vars => [ 'static gint id = 0', 'static gint pid', 'gchar *filename' ],
+	headers => [ qw(<process.h>
+	                "config/gimpbaseconfig.h"
+                        "config/gimpconfig-path.h") ],
+	vars => [ 'static gint id = 0', 'static gint pid',
+	          'gchar *filename', 'gchar *path' ],
 	code => <<'CODE'
 {
   if (id == 0)
@@ -306,9 +309,12 @@ HELP
   filename = g_strdup_printf ("gimp_temp_%d%d.%s",
 			      pid, id++, extension);
 
-  name = g_build_filename (GIMP_BASE_CONFIG (gimp->config)->temp_path,
-                           filename, NULL);
+  path = gimp_config_path_expand (GIMP_BASE_CONFIG (gimp->config)->temp_path,
+                                  TRUE, NULL);
 
+  name = g_build_filename (path, filename, NULL);
+
+  g_free (path);
   g_free (filename);
 }
 CODE

@@ -42,6 +42,7 @@
 #include "procedural_db.h"
 
 #include "config/gimpbaseconfig.h"
+#include "config/gimpconfig-path.h"
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"
@@ -416,6 +417,7 @@ temp_name_invoker (Gimp     *gimp,
   static gint id = 0;
   static gint pid;
   gchar *filename;
+  gchar *path;
 
   extension = (gchar *) args[0].value.pdb_pointer;
   if (extension == NULL)
@@ -429,9 +431,12 @@ temp_name_invoker (Gimp     *gimp,
       filename = g_strdup_printf ("gimp_temp_%d%d.%s",
 				  pid, id++, extension);
     
-      name = g_build_filename (GIMP_BASE_CONFIG (gimp->config)->temp_path,
-			       filename, NULL);
+      path = gimp_config_path_expand (GIMP_BASE_CONFIG (gimp->config)->temp_path,
+				      TRUE, NULL);
     
+      name = g_build_filename (path, filename, NULL);
+    
+      g_free (path);
       g_free (filename);
     }
 
