@@ -1,3 +1,14 @@
+Tue Feb  2 22:25:57 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/fileops.c: GIMP now automagically saves
+	xv-compatible thumbnails upon image save.  More
+	work soon.
+
+	* app/fileops.c: Disabled gimage_set_save_proc()
+	call which was causing files to continue saving
+	in the same format regardless of the user's selected
+	format.  Needs attention.
+
 Tue Feb 02 20:58:40 1999  Tor Lillqvist  <tml@iki.fi>
 
 	* app/gimpdrawable.c (gimp_drawable_set_name): Fix adding of

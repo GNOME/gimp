@@ -864,7 +864,118 @@ file_save (GimpImage* gimage,
       gimp_image_set_filename (gimage, filename);
 
       /*  use the same plug-in for this image next time  */
-      gimage_set_save_proc(gimage, file_proc);
+      /* DISABLED - gets stuck on first saved format... needs
+	 attention --Adam */
+      /* gimage_set_save_proc(gimage, file_proc); */
+
+#warning CRUFTY THUMBNAIL SAVING
+      /* If you have problems, blame Adam... not quite finished. */
+      {
+	TempBuf* tempbuf;
+	gint i,j;
+	unsigned char* tbd;
+	gchar* pname;
+	gchar* xpname;
+	gchar* fname;
+	gint w,h;
+	FILE* fp;
+
+	if (gimp_image_preview_valid (gimage, Gray))
+	  {
+	    printf("(gimage already has valid preview - %dx%d)\n",
+		   gimage->comp_preview->width,
+		   gimage->comp_preview->height);
+	  }
+
+	pname = g_dirname(filename);
+	xpname = g_strconcat(pname,G_DIR_SEPARATOR_S,".xvpics",
+			     NULL);
+
+	fname = g_strconcat (xpname,G_DIR_SEPARATOR_S,
+			     raw_filename,
+			     NULL);
+
+	unlink (fname);
+
+	if (gimage->width<=80 && gimage->height<=60)
+	  {
+	    w = gimage->width;
+	    h = gimage->height;
+	  }
+	else
+	  {
+	    /* Ratio molesting to fit within .xvpic thumbnail size limits  */
+	    if (60*gimage->width < 80*gimage->height)
+	      {
+		h = 60;
+		w = (60*gimage->width)/gimage->height;
+		if (w==0)
+		  w = 1;
+	      }
+	    else
+	      {
+		w = 80;
+		h = (80*gimage->height)/gimage->width;
+		if (h==0)
+		  h = 1;
+	      }
+	  }
+
+	printf("tn: %d x %d\n", w, h);fflush(stdout);
+
+	tempbuf = gimp_image_composite_preview (gimage, Gray, w, h);
+	tbd = temp_buf_data(tempbuf);
+
+	mkdir (xpname, 0755);
+
+	fp = fopen(fname,"wb");
+	g_free(pname);
+	g_free(xpname);
+	g_free(fname);
+
+	if (fp)
+	  {
+	    fprintf(fp,
+		    "P7 332\n#IMGINFO:%dx%d\n"
+		    "#END_OF_COMMENTS\n%d %d 255\n",
+		    gimage->width, gimage->height,
+		    w, h);
+
+	    switch (gimage_base_type(gimage))
+	      {
+	      case INDEXED:
+	      case RGB:
+		for (i=0;i<w;i++)
+		  {
+		    for (j=0;j<h;j++)
+		      {
+			guchar r,g,b;
+			r = *(tbd++);
+			g = *(tbd++);
+			b = *(tbd++);
+			tbd++;
+			fputc(((r>>5)<<5) | ((g>>5)<<2) | (b>>6), fp);
+		      }
+		  }
+		break;
+	      case GRAY:
+		for (i=0;i<w;i++)
+		  {
+		    for (j=0;j<h;j++)
+		      {
+			guchar v;
+			v = *(tbd++);
+			tbd++;
+			fputc(((v>>5)<<5) | ((v>>5)<<2) | (v>>6), fp);
+		      }
+		  }
+		break;
+	      default:
+		g_warning("UNKNOWN GIMAGE TYPE IN THUMBNAIL SAVE");
+	      }
+	    fclose(fp);
+	  }
+      }
     }
 
   g_free (return_vals);
