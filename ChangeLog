@@ -1,5 +1,10 @@
 2003-10-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/align_layers.c: don't include the plug-in name
+	in error messages; GIMP takes care of that for us.
+
+2003-10-21  Sven Neumann  <sven@gimp.org>
+
 	* app/base/base.c (base_init): removed the call to
 	cpu_accel_print_results(); should have got enough testing and
 	gimp-composite outputs the same info anyway.

@@ -106,7 +106,7 @@ typedef struct
   gint	grid_size;
 } ValueType;
 
-static ValueType VALS = 
+static ValueType VALS =
 {
   H_NONE,
   H_BASE_LEFT,
@@ -117,7 +117,7 @@ static ValueType VALS =
   10
 };
 
-typedef struct 
+typedef struct
 {
   gboolean run;
 } Interface;
@@ -174,7 +174,7 @@ run (const gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
@@ -184,7 +184,7 @@ run (const gchar      *name,
       gimp_image_get_layers (image_id, &layer_num);
       if (layer_num < 2)
 	{
-	  g_message (_("Align Visible Layers: there are too few layers."));
+	  g_message (_("There are not enough layers to align."));
 	  return;
 	}
       gimp_get_data (PLUG_IN_NAME, &VALS);
@@ -230,7 +230,7 @@ align_layers (gint32 image_id)
   gint	base_x   = 0;
   gint	base_y   = 0;
   gint  bg_index = 0;
- 
+
   layers = gimp_image_get_layers (image_id, &layer_num);
   bg_index = layer_num - 1;
 
@@ -253,18 +253,18 @@ align_layers (gint32 image_id)
       gint	min_y = G_MAXINT;
       gint	max_x = G_MININT;
       gint	max_y = G_MININT;
-      
+
       /* 0 is the top layer */
       for (index = 0; index < layer_num; index++)
 	{
 	  if (gimp_layer_get_visible (layers[index]))
 	    {
 	      gimp_drawable_offsets (layers[index], &orig_x, &orig_y);
-	      align_layers_get_align_offsets (layers[index], &offset_x, 
+	      align_layers_get_align_offsets (layers[index], &offset_x,
 					      &offset_y);
 	      orig_x += offset_x;
 	      orig_y += offset_y;
-	      
+
 	      if ( orig_x < min_x ) min_x = orig_x;
 	      if ( max_x < orig_x ) max_x = orig_x;
 	      if ( orig_y < min_y ) min_y = orig_y;
@@ -275,7 +275,7 @@ align_layers (gint32 image_id)
       if (VALS.base_is_bottom_layer)
 	{
 	  gimp_drawable_offsets (layers[bg_index], &orig_x, &orig_y);
-	  align_layers_get_align_offsets (layers[bg_index], &offset_x, 
+	  align_layers_get_align_offsets (layers[bg_index], &offset_x,
 					  &offset_y);
 	  orig_x += offset_x;
 	  orig_y += offset_y;
@@ -295,19 +295,19 @@ align_layers (gint32 image_id)
       if ( (VALS.v_style == TOP2BOTTOM) || (VALS.v_style == BOTTOM2TOP))
 	base_y = min_y;
     }
-  
+
   gimp_undo_push_group_start (image_id);
-  
+
   for (vindex = -1, index = 0; index < layer_num; index++)
     {
-      if (gimp_layer_get_visible (layers[index])) 
+      if (gimp_layer_get_visible (layers[index]))
 	vindex++;
-      else 
+      else
 	continue;
 
       gimp_drawable_offsets (layers[index], &orig_x, &orig_y);
       align_layers_get_align_offsets (layers[index], &offset_x, &offset_y);
-      
+
       switch (VALS.h_style)
 	{
 	case H_NONE:
@@ -343,14 +343,14 @@ align_layers (gint32 image_id)
 	  y = (base_y + (visible_layer_num - vindex - 1) * step_y) - offset_y;
 	  break;
 	case SNAP2VGRID:
-	  y = VALS.grid_size 
+	  y = VALS.grid_size
 	    * (int) ((orig_y + offset_y + VALS.grid_size / 2) / VALS.grid_size)
 	    - offset_y;
 	  break;
 	}
       gimp_layer_set_offsets (layers[index], x, y);
     }
-  
+
   gimp_undo_push_group_end (image_id);
 
   return GIMP_PDB_SUCCESS;
@@ -362,7 +362,7 @@ align_layers_get_align_offsets (gint32	drawable_id,
 				gint   *y)
 {
   GimpDrawable	*layer = gimp_drawable_get (drawable_id);
-  
+
   switch (VALS.h_base)
     {
     case H_BASE_LEFT:
@@ -400,7 +400,6 @@ static int
 align_layers_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *optionmenu;
   GtkWidget *toggle;
@@ -526,7 +525,7 @@ align_layers_dialog (void)
                     &VALS.grid_size);
 
   gtk_widget_show (dlg);
-  
+
   gtk_main ();
   gdk_flush ();
 
