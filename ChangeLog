@@ -1,3 +1,7 @@
+2004-11-21  Peteris Krisjanis  <pecisk@gmail.com>
+
+	* configure.in: Added Latvian (lv) language support to ALL_LINGUAS.
+
 2004-11-21  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/scripts/erase-rows.scm: Applied patch from BM
