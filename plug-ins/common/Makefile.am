@@ -6,6 +6,7 @@ libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).
 libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 
 if OS_WIN32
 mwindows = -mwindows
@@ -203,6 +204,7 @@ AlienMap2_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -217,6 +219,7 @@ CEL_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -231,6 +234,7 @@ CML_explorer_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -245,6 +249,7 @@ aa_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(LIBAA)		\
 	$(GTK_LIBS)		\
@@ -260,6 +265,7 @@ align_layers_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -274,6 +280,7 @@ animationplay_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -299,6 +306,7 @@ apply_lens_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -335,6 +343,7 @@ blinds_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -360,6 +369,7 @@ borderaverage_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -374,6 +384,7 @@ bumpmap_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -399,6 +410,7 @@ cartoon_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -413,6 +425,7 @@ ccanalyze_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -427,6 +440,7 @@ channel_mixer_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -441,6 +455,7 @@ checkerboard_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -455,6 +470,7 @@ color_enhance_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -469,6 +485,7 @@ colorify_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -483,6 +500,7 @@ colortoalpha_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -497,6 +515,7 @@ compose_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -522,6 +541,7 @@ convmatrix_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -536,6 +556,7 @@ csource_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -550,6 +571,7 @@ cubism_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -564,6 +586,7 @@ curve_bend_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -578,6 +601,7 @@ decompose_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -592,6 +616,7 @@ deinterlace_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -606,6 +631,7 @@ depthmerge_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -620,6 +646,7 @@ despeckle_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -634,6 +661,7 @@ destripe_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -648,6 +676,7 @@ dicom_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -662,6 +691,7 @@ diffraction_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -676,6 +706,7 @@ displace_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -690,6 +721,7 @@ dog_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -704,6 +736,7 @@ edge_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -718,6 +751,7 @@ emboss_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -732,6 +766,7 @@ engrave_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -746,6 +781,7 @@ exchange_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -760,6 +796,7 @@ film_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -774,6 +811,7 @@ flarefx_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -788,6 +826,7 @@ fp_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -802,6 +841,7 @@ fractaltrace_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -816,6 +856,7 @@ gauss_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -830,6 +871,7 @@ gbr_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -844,6 +886,7 @@ gee_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -858,6 +901,7 @@ gee_zoom_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -872,6 +916,7 @@ gif_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -897,6 +942,7 @@ gih_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -911,6 +957,7 @@ glasstile_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -936,6 +983,7 @@ gqbist_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -950,6 +998,7 @@ gradmap_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -964,6 +1013,7 @@ grid_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -978,6 +1028,7 @@ gtm_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1003,6 +1054,7 @@ header_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1017,6 +1069,7 @@ hot_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1031,6 +1084,7 @@ illusion_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1045,6 +1099,7 @@ iwarp_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1059,6 +1114,7 @@ jigsaw_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1073,6 +1129,7 @@ laplace_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
@@ -1087,6 +1144,7 @@ lic_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1101,6 +1159,7 @@ mail_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(LIBMAIL)		\
 	$(GTK_LIBS)		\
@@ -1116,6 +1175,7 @@ mapcolor_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1130,6 +1190,7 @@ max_rgb_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1144,6 +1205,7 @@ mblur_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1158,6 +1220,7 @@ mng_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(LIBMNG)		\
 	$(GTK_LIBS)		\
@@ -1173,6 +1236,7 @@ mosaic_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1187,6 +1251,7 @@ neon_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1201,6 +1266,7 @@ newsprint_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1215,6 +1281,7 @@ nlfilt_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1229,6 +1296,7 @@ noisify_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1254,6 +1322,7 @@ nova_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1268,6 +1337,7 @@ oilify_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1282,6 +1352,7 @@ papertile_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1296,6 +1367,7 @@ pat_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1310,6 +1382,7 @@ pcx_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1324,6 +1397,7 @@ photocopy_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1338,6 +1412,7 @@ pix_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1352,6 +1427,7 @@ pixelize_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1366,6 +1442,7 @@ plasma_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1380,6 +1457,7 @@ png_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(LIBPNG)		\
 	$(GTK_LIBS)		\
@@ -1395,6 +1473,7 @@ pnm_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1409,6 +1488,7 @@ polar_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1423,6 +1503,7 @@ postscript_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1448,6 +1529,7 @@ psd_save_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1462,6 +1544,7 @@ psp_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(LIBZ)		\
 	$(GTK_LIBS)		\
@@ -1477,6 +1560,7 @@ randomize_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1491,6 +1575,7 @@ raw_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1505,6 +1590,7 @@ retinex_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1519,6 +1605,7 @@ ripple_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1544,6 +1631,7 @@ sample_colorize_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1558,6 +1646,7 @@ scatter_hsv_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1572,6 +1661,7 @@ screenshot_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(LIBSCREENSHOT)		\
 	$(GTK_LIBS)		\
@@ -1587,6 +1677,7 @@ sel_gauss_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1612,6 +1703,7 @@ sharpen_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1626,6 +1718,7 @@ shift_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1640,6 +1733,7 @@ sinus_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1654,6 +1748,7 @@ smooth_palette_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1668,6 +1763,7 @@ snoise_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1682,6 +1778,7 @@ sobel_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1696,6 +1793,7 @@ softglow_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1710,6 +1808,7 @@ sparkle_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1724,6 +1823,7 @@ spheredesigner_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1738,6 +1838,7 @@ spread_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1752,6 +1853,7 @@ struc_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1766,6 +1868,7 @@ sunras_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1780,6 +1883,7 @@ svg_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(LIBSVG)		\
 	$(GTK_LIBS)		\
@@ -1795,6 +1899,7 @@ tga_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1809,6 +1914,7 @@ threshold_alpha_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1823,6 +1929,7 @@ tiff_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(LIBTIFF)		\
 	$(GTK_LIBS)		\
@@ -1838,6 +1945,7 @@ tile_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1852,6 +1960,7 @@ tileit_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1877,6 +1986,7 @@ uniteditor_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1891,6 +2001,7 @@ unsharp_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1905,6 +2016,7 @@ video_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1930,6 +2042,7 @@ vpropagate_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1944,6 +2057,7 @@ warp_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1958,6 +2072,7 @@ waves_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1983,6 +2098,7 @@ whirlpinch_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -1997,6 +2113,7 @@ winclipboard_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(LIBWINCLIPBOARD)		\
 	$(GLIB_LIBS)		\
@@ -2012,6 +2129,7 @@ wind_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -2026,6 +2144,7 @@ winprint_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(LIBWINPRINT)		\
 	$(GLIB_LIBS)		\
@@ -2041,6 +2160,7 @@ wmf_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(LIBWMF)		\
 	$(GTK_LIBS)		\
@@ -2056,6 +2176,7 @@ xbm_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
@@ -2070,6 +2191,7 @@ xpm_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(LIBXPM)		\
 	$(GTK_LIBS)		\
@@ -2085,6 +2207,7 @@ xwd_LDADD = \
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
+	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\

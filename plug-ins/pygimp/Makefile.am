@@ -7,6 +7,7 @@ libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpprocbrowser = $(top_builddir)/plug-ins/dbbrowser/libgimpprocbrowser.la
+libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 
 SUBDIRS = doc plug-ins
 
@@ -53,6 +54,7 @@ gimpprocbrowsermodule_la_LIBADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpconfig)	\
+	$(libgimpmath)		\
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\

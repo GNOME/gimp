@@ -46,6 +46,7 @@ libgimpconfig = \$(top_builddir)/libgimpconfig/libgimpconfig-\$(GIMP_API_VERSION
 libgimp = \$(top_builddir)/libgimp/libgimp-\$(GIMP_API_VERSION).la
 libgimpcolor = \$(top_builddir)/libgimpcolor/libgimpcolor-\$(GIMP_API_VERSION).la
 libgimpbase = \$(top_builddir)/libgimpbase/libgimpbase-\$(GIMP_API_VERSION).la
+libgimpmath = \$(top_builddir)/libgimpmath/libgimpmath-\$(GIMP_API_VERSION).la
 
 if OS_WIN32
 mwindows = -mwindows
@@ -102,6 +103,7 @@ foreach (sort keys %plugins) {
         $libgimp .= "\t\t\\\n\t\$(libgimpwidgets)";
 	$libgimp .= "\t\\\n\t\$(libgimp)";
         $libgimp .= "\t\t\\\n\t\$(libgimpcolor)";
+        $libgimp .= "\t\t\\\n\t\$(libgimpmath)";
         $libgimp .= "\t\t\\\n\t\$(libgimpbase)";
     } else {
         $libgimp .= "\$(libgimp)";

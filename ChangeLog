@@ -1,3 +1,9 @@
+2005-02-23  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/*/Makefile.am
+	* plug-ins/common/mkgen.pl: add libgimpmath deps
+	needed because libgimpconfig links it.
+
 2005-02-23  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/common/displace.c: fixed the numbers of parameters check
