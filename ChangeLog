@@ -1,3 +1,14 @@
+2004-10-06  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.[ch]
+	* app/batch.[ch]
+	* app/main.c: added new command-line option "--batch-interpreter"
+	that allows to specify the procedure to use to process batch
+	commands. Removed the perl-server hack but kept Script-Fu as the
+	default for backward compatibility.
+
+	* docs/gimp.1.in: documented the new option.
+
 2004-10-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/file-commands.c (file_revert_confirm_callback):

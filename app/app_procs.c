@@ -156,7 +156,8 @@ app_run (const gchar         *full_prog_name,
          const gchar         *alternate_system_gimprc,
          const gchar         *alternate_gimprc,
          const gchar         *session_name,
-         const gchar        **batch_cmds,
+         const gchar         *batch_interpreter,
+         const gchar        **batch_commands,
          gboolean             no_interface,
          gboolean             no_data,
          gboolean             no_fonts,
@@ -362,7 +363,7 @@ app_run (const gchar         *full_prog_name,
     gui_post_init (gimp);
 #endif
 
-  batch_run (gimp, batch_cmds);
+  batch_run (gimp, batch_interpreter, batch_commands);
 
   loop = g_main_loop_new (NULL, FALSE);
 

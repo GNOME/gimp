@@ -9,7 +9,7 @@ gimp - an image manipulation and paint program.
 [\-\-session \fI<name>\fP] [\-g] [\-\-gimprc \fI<gimprc>\fP]
 [\-\-system\-gimprc \fI<gimprc>\fP] [\-\-dump\-gimprc\fP]
 [\-\-console\-messages] [\-\-debug\-handlers]
-[\-b] [\-\-batch \fI<commands>\fP]
+[\-\-batch\-interpreter \fI<procedure>\fP] [\-b] [\-\-batch \fI<commands>\fP]
 [\fIfilename\fP] ...
 
 .SH DESCRIPTION
@@ -97,6 +97,10 @@ If a stack-trace should be generated in case of fatal signals.
 .TP 8
 .B \-\-pdb\-compat\-mode \fI{off|on|warn}\fP
 If the PDB should provide aliases for deprecated functions.
+.TP 8
+.B \-\-batch-interpreter \fI<procedure>\fP
+Speficies the procedure to use to process batch events. The default is
+to let Script-Fu evaluate the commands.
 .TP 8
 .B \-b, \-\-batch \fI<commands>\fP
 Execute the set of \fI<commands>\fP non-interactively. The set

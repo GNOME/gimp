@@ -2,6 +2,7 @@
 # marked to allow runtime translation of messages
 
 app/app_procs.c
+app/batch.c
 app/main.c
 app/sanity.c
 

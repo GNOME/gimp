@@ -95,11 +95,12 @@ main (int    argc,
       char **argv)
 {
   const gchar        *abort_message           = NULL;
-  gchar              *full_prog_name          = NULL;
-  gchar              *alternate_system_gimprc = NULL;
-  gchar              *alternate_gimprc        = NULL;
-  gchar              *session_name            = NULL;
-  gchar             **batch_cmds              = NULL;
+  const gchar        *full_prog_name          = NULL;
+  const gchar        *alternate_system_gimprc = NULL;
+  const gchar        *alternate_gimprc        = NULL;
+  const gchar        *session_name            = NULL;
+  const gchar        *batch_interpreter       = NULL;
+  const gchar       **batch_commands          = NULL;
   gboolean            show_help               = FALSE;
   gboolean            no_interface            = FALSE;
   gboolean            no_data                 = FALSE;
@@ -231,8 +232,8 @@ main (int    argc,
   mallopt (M_MMAP_THRESHOLD, 64 * 64 - 1);
 #endif
 
-  batch_cmds    = g_new (gchar *, argc);
-  batch_cmds[0] = NULL;
+  batch_commands    = g_new (const gchar *, argc);
+  batch_commands[0] = NULL;
 
   for (i = 1; i < argc; i++)
     {
@@ -251,18 +252,32 @@ main (int    argc,
 	  no_interface = TRUE;
  	  argv[i] = NULL;
 	}
+      else if (strcmp (argv[i], "--batch-interpreter") == 0)
+	{
+	  argv[i] = NULL;
+	  if (argc <= ++i)
+            {
+	      show_help = TRUE;
+	    }
+          else
+            {
+	      batch_interpreter = argv[i];
+	      argv[i] = NULL;
+            }
+	}
       else if ((strcmp (argv[i], "--batch") == 0) ||
 	       (strcmp (argv[i], "-b") == 0))
 	{
 	  argv[i] = NULL;
 	  for (j = 0, i++ ; i < argc; j++, i++)
 	    {
-	      batch_cmds[j] = argv[i];
+	      batch_commands[j] = argv[i];
 	      argv[i] = NULL;
 	    }
-	  batch_cmds[j] = NULL;
+	  batch_commands[j] = NULL;
 
-	  if (batch_cmds[0] == NULL)  /* We need at least one batch command */
+          /* We need at least one batch command */
+	  if (batch_commands[0] == NULL)
 	    show_help = TRUE;
 	}
       else if (strcmp (argv[i], "--system-gimprc") == 0)
@@ -461,7 +476,8 @@ main (int    argc,
            alternate_system_gimprc,
            alternate_gimprc,
            session_name,
-           (const gchar **) batch_cmds,
+           batch_interpreter,
+           batch_commands,
            no_interface,
            no_data,
            no_fonts,
@@ -473,7 +489,7 @@ main (int    argc,
            stack_trace_mode,
            pdb_compat_mode);
 
-  g_free (batch_cmds);
+  g_free (batch_commands);
 
   return EXIT_SUCCESS;
 }
@@ -513,6 +529,8 @@ gimp_show_help (const gchar *progname)
              "                           Debugging mode for fatal signals.\n"));
   g_print (_("  --pdb-compat-mode <off | on | warn>\n"
              "                           Procedural Database compatibility mode.\n"));
+  g_print (_("  --batch-interpreter <procedure>\n"
+             "                           The procedure to process batch commands with.\n"));
   g_print (_("  -b, --batch <commands>   Process commands in batch mode.\n"));
   g_print ("\n");
 };

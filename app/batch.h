@@ -25,7 +25,8 @@
 
 
 void   batch_run (Gimp         *gimp,
-                  const gchar **batch_cmds);
+                  const gchar  *batch_interpreter,
+                  const gchar **batch_commands);
 
 
 #endif /* __BATCH_H__ */
