@@ -885,12 +885,14 @@ bumpmap_dialog (void)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
                              _("_Map type:"), 0.0, 0.5, combo, 2, FALSE);
+
+  gtk_table_set_row_spacing (GTK_TABLE (table), row++, 12);
 
   /* Compensate darkening */
   button = gtk_check_button_new_with_mnemonic (_("Co_mpensate for darkening"));
-  gtk_table_attach_defaults (GTK_TABLE (table), button, 1, 3, row, row + 1);
+  gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 3, row, row + 1);
   gtk_widget_show (button);
   row++;
 
@@ -904,7 +906,7 @@ bumpmap_dialog (void)
 
   /* Invert bumpmap */
   button = gtk_check_button_new_with_mnemonic (_("I_nvert bumpmap"));
-  gtk_table_attach_defaults (GTK_TABLE (table), button, 1, 3, row, row + 1);
+  gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 3, row, row + 1);
   gtk_widget_show (button);
   row++;
 
@@ -918,9 +920,10 @@ bumpmap_dialog (void)
 
   /* Tile bumpmap */
   button = gtk_check_button_new_with_mnemonic (_("_Tile bumpmap"));
-  gtk_table_attach_defaults (GTK_TABLE (table), button, 1, 3, row, row + 1);
+  gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 3, row, row + 1);
   gtk_widget_show (button);
-  row++;
+
+  gtk_table_set_row_spacing (GTK_TABLE (table), row++, 12);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), bmvals.tiled);
   g_signal_connect (button, "toggled",
