@@ -16,20 +16,45 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __ROTATE_TOOL_H__
-#define __ROTATE_TOOL_H__
+#ifndef __GIMP_ROTATE_TOOL_H__
+#define __GIMP_ROTATE_TOOL_H__
 
 
-TileManager * rotate_tool_rotate     (GimpImage      *gimage,
-				      GimpDrawable   *drawable,
-				      GDisplay       *gdisp,
-				      gdouble         angle,
-				      TileManager    *float_tiles,
-				      gboolean        interpolation,
-				      GimpMatrix3     matrix);
-
-Tool        * tools_new_rotate_tool  (void);
-void          tools_free_rotate_tool (Tool           *tool);
+#include "gimptransformtool.h"
 
 
-#endif  /*  __ROTATE_TOOL_H__  */
+#define GIMP_TYPE_ROTATE_TOOL            (gimp_rotate_tool_get_type ())
+#define GIMP_ROTATE_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_ROTATE_TOOL, GimpRotateTool))
+#define GIMP_IS_ROTATE_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_ROTATE_TOOL))
+#define GIMP_ROTATE_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ROTATE_TOOL, GimpRotateToolClass))
+#define GIMP_IS_ROTATE_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ROTATE_TOOL))
+
+
+typedef struct _GimpRotateTool      GimpRotateTool;
+typedef struct _GimpRotateToolClass GimpRotateToolClass;
+
+struct _GimpRotateTool
+{
+  GimpTransformTool  parent_instance;
+};
+
+struct _GimpRotateToolClass
+{
+  GimpTransformToolClass  parent_class;
+};
+
+
+GtkType       gimp_rotate_tool_get_type (void);
+
+void          gimp_rotate_tool_register (void);
+
+
+TileManager * gimp_rotate_tool_rotate   (GimpImage      *gimage,
+					 GimpDrawable   *drawable,
+					 GDisplay       *gdisp,
+					 gdouble         angle,
+					 TileManager    *float_tiles,
+					 gboolean        interpolation,
+					 GimpMatrix3     matrix);
+
+#endif  /*  __GIMP_ROTATE_TOOL_H__  */

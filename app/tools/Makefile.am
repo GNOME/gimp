@@ -58,18 +58,18 @@ libapptools_la_SOURCES = \
 	gimppathtool.h		\
 	gimppenciltool.c	\
 	gimppenciltool.h	\
-##	gimpperspectivetool.c	\
-##	gimpperspectivetool.h	\
+	gimpperspectivetool.c	\
+	gimpperspectivetool.h	\
 	gimprectselecttool.c	\
 	gimprectselecttool.h	\
-##	gimprotatetool.c	\
-##	gimprotatetool.h	\
+	gimprotatetool.c	\
+	gimprotatetool.h	\
 	gimpscaletool.c		\
 	gimpscaletool.h		\
 	gimpselectiontool.c	\
 	gimpselectiontool.h	\
-##	gimpsheartool.c		\
-##	gimpsheartool.h		\
+	gimpsheartool.c		\
+	gimpsheartool.h		\
 	gimpsmudgetool.c	\
 	gimpsmudgetool.h	\
 	gimptexttool.c		\

@@ -81,10 +81,10 @@ register_tools (void)
   /*  transform tools  */
 
   gimp_flip_tool_register ();
-  /* gimp_perspective_tool_register (); */
-  /* gimp_shear_tool_register (); */
+  gimp_perspective_tool_register ();
+  gimp_shear_tool_register ();
   gimp_scale_tool_register ();
-  /* gimp_rotate_tool_register (); */
+  gimp_rotate_tool_register ();
   gimp_crop_tool_register ();
   gimp_move_tool_register ();
 

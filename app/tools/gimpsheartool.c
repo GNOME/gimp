@@ -27,25 +27,27 @@
 
 #include "apptypes.h"
 
-#include "draw_core.h"
-#include "drawable.h"
+#include "gui/info-dialog.h"
+
+#include "floating_sel.h"
 #include "gdisplay.h"
+#include "gdisplay_ops.h"
 #include "gimage_mask.h"
+#include "gimplayer.h"
 #include "gimpimage.h"
 #include "gimpprogress.h"
-#include "info_dialog.h"
-#include "shear_tool.h"
 #include "selection.h"
-#include "tile_manager.h"
 #include "undo.h"
+#include "pixel_region.h"
+#include "tile_manager.h"
 
-#include "tools.h"
+#include "gimpsheartool.h"
+#include "tool_manager.h"
 #include "tool_options.h"
-#include "transform_core.h"
-#include "transform_tool.h"
 
 #include "libgimp/gimpintl.h"
 
+#include "pixmaps2.h"
 
 /*  index into trans_info array  */
 #define HORZ_OR_VERT 0
@@ -57,35 +59,148 @@
 
 
 /*  forward function declarations  */
-static TileManager * shear_tool_transform (Tool           *tool,
-					   GDisplay       *gdisp,
-					   TransformState  state);
 
-static void          shear_tool_recalc    (Tool           *tool,
-					   GDisplay       *gdisp);
-static void          shear_tool_motion    (Tool           *tool,
-					   GDisplay       *gdisp);
-static void          shear_info_update    (Tool           *tool);
+static void          gimp_shear_tool_class_init (GimpShearToolClass *klass);
+static void          gimp_shear_tool_init      (GimpShearTool       *shear_tool);
 
-static void          shear_x_mag_changed  (GtkWidget      *widget,
-					   gpointer        data);
-static void          shear_y_mag_changed  (GtkWidget      *widget,
-					   gpointer        data);
+static void          gimp_shear_tool_destroy   (GtkObject      *object);
+
+static TileManager * gimp_shear_tool_transform (GimpTransformTool *transform_tool,
+						GDisplay       *gdisp,
+						TransformState  state);
+
+static void          shear_tool_recalc         (GimpTool       *tool,
+						GDisplay       *gdisp);
+static void          shear_tool_motion         (GimpTool       *tool,
+						GDisplay       *gdisp);
+static void          shear_info_update         (GimpTool       *tool);
+
+static void          shear_x_mag_changed       (GtkWidget      *widget,
+						gpointer        data);
+static void          shear_y_mag_changed       (GtkWidget      *widget,
+						gpointer        data);
 
 
 /*  variables local to this file  */
 static gdouble  xshear_val;
 static gdouble  yshear_val;
 
+static GimpTransformToolClass *parent_class = NULL;
+
+
+/* Public functions */
+
+void 
+gimp_shear_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_SHEAR_TOOL,
+                              FALSE,
+			      "gimp:shear_tool",
+			      _("Shear Tool"),
+			      _("Shear the layer or selection"),
+			      N_("/Tools/Transform Tools/Shear"), "<shift>F",
+			      NULL, "tools/shear.html",
+			      (const gchar **) shear_bits);
+}
+
+GtkType
+gimp_shear_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
+
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+        "GimpShearTool",
+        sizeof (GimpShearTool),
+        sizeof (GimpShearToolClass),
+        (GtkClassInitFunc) gimp_shear_tool_class_init,
+        (GtkObjectInitFunc) gimp_shear_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL,
+      };
+
+      tool_type = gtk_type_unique (GIMP_TYPE_TRANSFORM_TOOL, &tool_info);
+    }
+
+  return tool_type;
+}
+
+TileManager *
+gimp_shear_tool_shear (GimpImage    *gimage,
+		       GimpDrawable *drawable,
+		       GDisplay     *gdisp,
+		       TileManager  *float_tiles,
+		       gboolean      interpolation,
+		       GimpMatrix3   matrix)
+{
+  GimpProgress *progress;
+  TileManager  *ret;
+
+  progress = progress_start (gdisp, _("Shearing..."), FALSE, NULL, NULL);
+
+  ret = gimp_transform_tool_do (gimage, drawable, float_tiles,
+				interpolation, matrix,
+				progress ? progress_update_and_flush :
+				(GimpProgressFunc) NULL,
+				progress);
+
+  if (progress)
+    progress_end (progress);
+
+  return ret;
+}
+
+/* private functions */
+
+static void
+gimp_shear_tool_class_init (GimpShearToolClass *klass)
+{
+  GtkObjectClass         *object_class;
+  GimpTransformToolClass *trans_class;
+
+  object_class = (GtkObjectClass *) klass;
+  trans_class  = (GimpTransformToolClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_TRANSFORM_TOOL);
+
+  object_class->destroy     = gimp_shear_tool_destroy;
+
+  trans_class->transform    = gimp_shear_tool_transform;
+}
+
+static void
+gimp_shear_tool_init (GimpShearTool *shear_tool)
+{
+  GimpTool          *tool;
+  GimpTransformTool *tr_tool;
+
+  tool    = GIMP_TOOL (shear_tool);
+  tr_tool = GIMP_TRANSFORM_TOOL (shear_tool);
+
+  tool->tool_cursor   = GIMP_SHEAR_TOOL_CURSOR;
+
+  /*  assemble the transformation matrix  */
+  gimp_matrix3_identity (tr_tool->transform);
+
+}
+
+static void
+gimp_shear_tool_destroy (GtkObject *object)
+{
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
 
 static TileManager *
-shear_tool_transform (Tool           *tool,
-		      GDisplay       *gdisp,
-		      TransformState  state)
+gimp_shear_tool_transform (GimpTransformTool       *transform_tool,
+			   GDisplay                *gdisp,
+			   TransformState          state)
 {
-  TransformCore *transform_core;
-
-  transform_core = (TransformCore *) tool->private;
+  GimpTool *tool;
+  tool = GIMP_TOOL (transform_tool);
 
   switch (state)
     {
@@ -109,9 +224,9 @@ shear_tool_transform (Tool           *tool,
 				      shear_y_mag_changed, tool);
 	}
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
-      transform_core->trans_info[HORZ_OR_VERT] = ORIENTATION_UNKNOWN;
-      transform_core->trans_info[XSHEAR] = 0.0;
-      transform_core->trans_info[YSHEAR] = 0.0;
+      transform_tool->trans_info[HORZ_OR_VERT] = ORIENTATION_UNKNOWN;
+      transform_tool->trans_info[XSHEAR] = 0.0;
+      transform_tool->trans_info[YSHEAR] = 0.0;
 
       return NULL;
       break;
@@ -127,54 +242,27 @@ shear_tool_transform (Tool           *tool,
 
     case TRANSFORM_FINISH:
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
-      return shear_tool_shear (gdisp->gimage,
-			       gimp_image_active_drawable (gdisp->gimage),
-			       gdisp,
-			       transform_core->original,
-			       transform_tool_smoothing (),
-			       transform_core->transform);
+      return gimp_shear_tool_shear (gdisp->gimage,
+				    gimp_image_active_drawable (gdisp->gimage),
+				    gdisp,
+				    transform_tool->original,
+				    gimp_transform_tool_smoothing (),
+				    transform_tool->transform);
       break;
     }
 
   return NULL;
 }
 
-Tool *
-tools_new_shear_tool (void)
-{
-  Tool          *tool;
-  TransformCore *private;
-
-  tool = transform_core_new (SHEAR, TRUE);
-
-  tool->tool_cursor = GIMP_SHEAR_TOOL_CURSOR;
-
-  private = tool->private;
-
-  /*  set the rotation specific transformation attributes  */
-  private->trans_func = shear_tool_transform;
-
-  /*  assemble the transformation matrix  */
-  gimp_matrix3_identity (private->transform);
-
-  return tool;
-}
-
-void
-tools_free_shear_tool (Tool *tool)
-{
-  transform_core_free (tool);
-}
-
 static void
-shear_info_update (Tool *tool)
+shear_info_update (GimpTool *tool)
 {
-  TransformCore *transform_core;
+  GimpTransformTool *transform_tool;
 
-  transform_core = (TransformCore *) tool->private;
+  transform_tool = GIMP_TRANSFORM_TOOL (tool);
 
-  xshear_val = transform_core->trans_info[XSHEAR];
-  yshear_val = transform_core->trans_info[YSHEAR];
+  xshear_val = transform_tool->trans_info[XSHEAR];
+  yshear_val = transform_tool->trans_info[YSHEAR];
 
   info_dialog_update (transform_info);
   info_dialog_popup (transform_info);
@@ -184,24 +272,26 @@ static void
 shear_x_mag_changed (GtkWidget *widget,
 		     gpointer   data)
 {
-  Tool          *tool;
-  TransformCore *transform_core;
-  gint           value;
+  GimpTool          *tool;
+  GimpDrawTool      *draw_tool;
+  GimpTransformTool *transform_tool;
+  gint               value;
 
-  tool = (Tool *) data;
+  tool = (GimpTool *) data;
 
   if (tool)
     {
-      transform_core = (TransformCore *) tool->private;
+      draw_tool      = GIMP_DRAW_TOOL (tool);
+      transform_tool = GIMP_TRANSFORM_TOOL (tool);
 
       value = GTK_ADJUSTMENT (widget)->value;
 
-      if (value != transform_core->trans_info[XSHEAR])
+      if (value != transform_tool->trans_info[XSHEAR])
 	{
-	  draw_core_pause (transform_core->core, tool);
-	  transform_core->trans_info[XSHEAR] = value;
+	  gimp_draw_tool_pause (draw_tool);
+	  transform_tool->trans_info[XSHEAR] = value;
 	  shear_tool_recalc (tool, tool->gdisp);
-	  draw_core_resume (transform_core->core, tool);
+	  gimp_draw_tool_resume (draw_tool);
 	}
     }
 }
@@ -210,97 +300,99 @@ static void
 shear_y_mag_changed (GtkWidget *widget,
 		     gpointer   data)
 {
-  Tool          *tool;
-  TransformCore *transform_core;
-  gint           value;
+  GimpTool          *tool;
+  GimpDrawTool      *draw_tool;
+  GimpTransformTool *transform_tool;
+  gint               value;
 
-  tool = (Tool *) data;
+  tool = (GimpTool *) data;
 
   if (tool)
     {
-      transform_core = (TransformCore *) tool->private;
+      draw_tool      = GIMP_DRAW_TOOL (tool);
+      transform_tool = GIMP_TRANSFORM_TOOL (tool);
 
       value = GTK_ADJUSTMENT (widget)->value;
 
-      if (value != transform_core->trans_info[YSHEAR])
+      if (value != transform_tool->trans_info[YSHEAR])
 	{
-	  draw_core_pause (transform_core->core, tool);
-	  transform_core->trans_info[YSHEAR] = value;
+	  gimp_draw_tool_pause (draw_tool);
+	  transform_tool->trans_info[YSHEAR] = value;
 	  shear_tool_recalc (tool, tool->gdisp);
-	  draw_core_resume (transform_core->core, tool);
+	  gimp_draw_tool_resume (draw_tool);
 	}
     }
 }
 
 static void
-shear_tool_motion (Tool     *tool,
+shear_tool_motion (GimpTool     *tool,
 		   GDisplay *gdisp)
 {
-  TransformCore *transform_core;
-  gint           diffx, diffy;
-  gint           dir;
+  GimpTransformTool *transform_tool;
+  gint               diffx, diffy;
+  gint               dir;
 
-  transform_core = (TransformCore *) tool->private;
+  transform_tool = GIMP_TRANSFORM_TOOL (tool);
 
-  diffx = transform_core->curx - transform_core->lastx;
-  diffy = transform_core->cury - transform_core->lasty;
+  diffx = transform_tool->curx - transform_tool->lastx;
+  diffy = transform_tool->cury - transform_tool->lasty;
 
   /*  If we haven't yet decided on which way to control shearing
    *  decide using the maximum differential
    */
 
-  if (transform_core->trans_info[HORZ_OR_VERT] == ORIENTATION_UNKNOWN)
+  if (transform_tool->trans_info[HORZ_OR_VERT] == ORIENTATION_UNKNOWN)
     {
       if (abs (diffx) > MIN_MOVE || abs (diffy) > MIN_MOVE)
 	{
 	  if (abs (diffx) > abs (diffy))
 	    {
-	      transform_core->trans_info[HORZ_OR_VERT] = ORIENTATION_HORIZONTAL;
-	      transform_core->trans_info[ORIENTATION_VERTICAL] = 0.0;
+	      transform_tool->trans_info[HORZ_OR_VERT] = ORIENTATION_HORIZONTAL;
+	      transform_tool->trans_info[ORIENTATION_VERTICAL] = 0.0;
 	    }
 	  else
 	    {
-	      transform_core->trans_info[HORZ_OR_VERT] = ORIENTATION_VERTICAL;
-	      transform_core->trans_info[ORIENTATION_HORIZONTAL] = 0.0;
+	      transform_tool->trans_info[HORZ_OR_VERT] = ORIENTATION_VERTICAL;
+	      transform_tool->trans_info[ORIENTATION_HORIZONTAL] = 0.0;
 	    }
 	}
       /*  set the current coords to the last ones  */
       else
 	{
-	  transform_core->curx = transform_core->lastx;
-	  transform_core->cury = transform_core->lasty;
+	  transform_tool->curx = transform_tool->lastx;
+	  transform_tool->cury = transform_tool->lasty;
 	}
     }
 
   /*  if the direction is known, keep track of the magnitude  */
-  if (transform_core->trans_info[HORZ_OR_VERT] != ORIENTATION_UNKNOWN)
+  if (transform_tool->trans_info[HORZ_OR_VERT] != ORIENTATION_UNKNOWN)
     {
-      dir = transform_core->trans_info[HORZ_OR_VERT];
-      switch (transform_core->function)
+      dir = transform_tool->trans_info[HORZ_OR_VERT];
+      switch (transform_tool->function)
 	{
 	case TRANSFORM_HANDLE_1:
 	  if (dir == ORIENTATION_HORIZONTAL)
-	    transform_core->trans_info[XSHEAR] -= diffx;
+	    transform_tool->trans_info[XSHEAR] -= diffx;
 	  else
-	    transform_core->trans_info[YSHEAR] -= diffy;
+	    transform_tool->trans_info[YSHEAR] -= diffy;
 	  break;
 	case TRANSFORM_HANDLE_2:
 	  if (dir == ORIENTATION_HORIZONTAL)
-	    transform_core->trans_info[XSHEAR] -= diffx;
+	    transform_tool->trans_info[XSHEAR] -= diffx;
 	  else
-	    transform_core->trans_info[YSHEAR] += diffy;
+	    transform_tool->trans_info[YSHEAR] += diffy;
 	  break;
 	case TRANSFORM_HANDLE_3:
 	  if (dir == ORIENTATION_HORIZONTAL)
-	    transform_core->trans_info[XSHEAR] += diffx;
+	    transform_tool->trans_info[XSHEAR] += diffx;
 	  else
-	    transform_core->trans_info[YSHEAR] -= diffy;
+	    transform_tool->trans_info[YSHEAR] -= diffy;
 	  break;
 	case TRANSFORM_HANDLE_4:
 	  if (dir == ORIENTATION_HORIZONTAL)
-	    transform_core->trans_info[XSHEAR] += diffx;
+	    transform_tool->trans_info[XSHEAR] += diffx;
 	  else
-	    transform_core->trans_info[YSHEAR] += diffy;
+	    transform_tool->trans_info[YSHEAR] += diffy;
 	  break;
 	default:
 	  break;
@@ -309,20 +401,20 @@ shear_tool_motion (Tool     *tool,
 }
 
 static void
-shear_tool_recalc (Tool     *tool,
+shear_tool_recalc (GimpTool     *tool,
 		   GDisplay *gdisp)
 {
-  TransformCore *transform_core;
-  gfloat         width, height;
-  gfloat         cx, cy;
+  GimpTransformTool *transform_tool;
+  gfloat             width, height;
+  gfloat             cx, cy;
 
-  transform_core = (TransformCore *) tool->private;
+  transform_tool = GIMP_TRANSFORM_TOOL (tool);
 
-  cx = (transform_core->x1 + transform_core->x2) / 2.0;
-  cy = (transform_core->y1 + transform_core->y2) / 2.0;
+  cx = (transform_tool->x1 + transform_tool->x2) / 2.0;
+  cy = (transform_tool->y1 + transform_tool->y2) / 2.0;
 
-  width = transform_core->x2 - transform_core->x1;
-  height = transform_core->y2 - transform_core->y1;
+  width = transform_tool->x2 - transform_tool->x1;
+  height = transform_tool->y2 - transform_tool->y1;
 
   if (width == 0)
     width = 1;
@@ -330,47 +422,22 @@ shear_tool_recalc (Tool     *tool,
     height = 1;
 
   /*  assemble the transformation matrix  */
-  gimp_matrix3_identity  (transform_core->transform);
-  gimp_matrix3_translate (transform_core->transform, -cx, -cy);
+  gimp_matrix3_identity  (transform_tool->transform);
+  gimp_matrix3_translate (transform_tool->transform, -cx, -cy);
 
   /*  shear matrix  */
-  if (transform_core->trans_info[HORZ_OR_VERT] == ORIENTATION_HORIZONTAL)
-    gimp_matrix3_xshear (transform_core->transform,
-			 (float) transform_core->trans_info [XSHEAR] / height);
+  if (transform_tool->trans_info[HORZ_OR_VERT] == ORIENTATION_HORIZONTAL)
+    gimp_matrix3_xshear (transform_tool->transform,
+			 (float) transform_tool->trans_info [XSHEAR] / height);
   else
-    gimp_matrix3_yshear (transform_core->transform,
-			 (float) transform_core->trans_info [YSHEAR] / width);
+    gimp_matrix3_yshear (transform_tool->transform,
+			 (float) transform_tool->trans_info [YSHEAR] / width);
 
-  gimp_matrix3_translate (transform_core->transform, +cx, +cy);
+  gimp_matrix3_translate (transform_tool->transform, +cx, +cy);
 
   /*  transform the bounding box  */
-  transform_core_transform_bounding_box (tool);
+  gimp_transform_tool_transform_bounding_box (transform_tool);
 
   /*  update the information dialog  */
   shear_info_update (tool);
-}
-
-TileManager *
-shear_tool_shear (GimpImage    *gimage,
-		  GimpDrawable *drawable,
-		  GDisplay     *gdisp,
-		  TileManager  *float_tiles,
-		  gboolean      interpolation,
-		  GimpMatrix3   matrix)
-{
-  GimpProgress *progress;
-  TileManager  *ret;
-
-  progress = progress_start (gdisp, _("Shearing..."), FALSE, NULL, NULL);
-
-  ret = transform_core_do (gimage, drawable, float_tiles,
-			   interpolation, matrix,
-			   progress ? progress_update_and_flush :
-			   (GimpProgressFunc) NULL,
-			   progress);
-
-  if (progress)
-    progress_end (progress);
-
-  return ret;
 }

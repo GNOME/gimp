@@ -626,7 +626,6 @@ static char *pencil_bits [] =
 /*  Image name: perspective  */
 
 
-/*
 #define perspective_width 22
 #define perspective_height 22
 static char *perspective_bits [] =
@@ -654,7 +653,6 @@ static char *perspective_bits [] =
   "......................",
   "......................"
 };
-*/
 /*  GIMP icon image format -- S. Kimball, P. Mattis  */
 /*  Image name: rect  */
 
@@ -690,7 +688,6 @@ static char *rect_bits [] =
 /*  Image name: rotate  */
 
 
-/*
 #define rotate_width 22
 #define rotate_height 22
 static char *rotate_bits [] =
@@ -718,7 +715,6 @@ static char *rotate_bits [] =
   "....aaa....eaee.......",
   "............ee........"
 };
-*/
 /*  GIMP icon image format -- S. Kimball, P. Mattis  */
 /*  Image name: scale  */
 
@@ -787,10 +783,9 @@ static char *sharpen_bits [] =
 /*  Image name: skew  */
 
 
-/*
-#define skew_width 22
-#define skew_height 22
-static char *skew_bits [] =
+#define shear_width 22
+#define shear_height 22
+static char *shear_bits [] =
 {
   "......................",
   "......................",
@@ -815,7 +810,7 @@ static char *skew_bits [] =
   "......................",
   "......................"
 };
-*/
+
 /*  GIMP icon image format -- S. Kimball, P. Mattis  */
 /*  Image name: text  */
 

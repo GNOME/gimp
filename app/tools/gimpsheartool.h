@@ -16,19 +16,45 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __SHEAR_TOOL_H__
-#define __SHEAR_TOOL_H__
+#ifndef __GIMP_SHEAR_TOOL_H__
+#define __GIMP_SHEAR_TOOL_H__
 
 
-TileManager * shear_tool_shear      (GimpImage      *gimage,
-				     GimpDrawable   *drawable,
-				     GDisplay       *gdisp,
-				     TileManager    *float_tiles,
-				     gboolean        interpolation,
-				     GimpMatrix3     matrix);
-
-Tool        * tools_new_shear_tool  (void);
-void          tools_free_shear_tool (Tool           *matrix);
+#include "gimptransformtool.h"
 
 
-#endif  /*  __SHEAR_TOOL_H__  */
+#define GIMP_TYPE_SHEAR_TOOL            (gimp_shear_tool_get_type ())
+#define GIMP_SHEAR_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_SHEAR_TOOL, GimpShearTool))
+#define GIMP_IS_SHEAR_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_SHEAR_TOOL))
+#define GIMP_SHEAR_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SHEAR_TOOL, GimpShearToolClass))
+#define GIMP_IS_SHEAR_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SHEAR_TOOL))
+
+
+typedef struct _GimpShearTool      GimpShearTool;
+typedef struct _GimpShearToolClass GimpShearToolClass;
+
+struct _GimpShearTool
+{
+  GimpTransformTool  parent_instance;
+};
+
+struct _GimpShearToolClass
+{
+  GimpTransformToolClass  parent_class;
+};
+
+
+GtkType       gimp_shear_tool_get_type (void);
+
+void          gimp_shear_tool_register (void);
+
+
+TileManager * gimp_shear_tool_shear  (GimpImage      *gimage,
+				      GimpDrawable   *drawable,
+				      GDisplay       *gdisp,
+				      TileManager    *float_tiles,
+				      gboolean        interpolation,
+				      GimpMatrix3     matrix);
+
+
+#endif  /*  __GIMP_SHEAR_TOOL_H__  */

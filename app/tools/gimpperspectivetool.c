@@ -30,234 +30,109 @@
 #include "gimage_mask.h"
 #include "gimpimage.h"
 #include "gimpprogress.h"
-#include "info_dialog.h"
+#include "gui/info-dialog.h"
 #include "selection.h"
 #include "tile_manager.h"
 #include "undo.h"
 
-#include "perspective_tool.h"
-#include "tools.h"
-#include "transform_core.h"
-#include "transform_tool.h"
+#include "gimpperspectivetool.h"
+#include "tool_manager.h"
+#include "tool_options.h"
 
 #include "libgimp/gimpintl.h"
 
+#include "pixmaps2.h"
 
 /*  forward function declarations  */
-static TileManager * perspective_tool_transform   (Tool           *tool,
-						   GDisplay       *gdisp,
-						   TransformState  state);
-static void          perspective_tool_recalc      (Tool           *tool,
-						   GDisplay       *gdisp);
-static void          perspective_tool_motion      (Tool           *tool,
-						   GDisplay       *gdisp);
-static void          perspective_info_update      (Tool           *tool);
+static void          gimp_perspective_tool_class_init  (GimpPerspectiveToolClass *klass);
+static void          gimp_perspective_tool_init        (GimpPerspectiveTool      *perspective_tool);
+
+static void          gimp_perspective_tool_destroy     (GtkObject         *object);
+
+static TileManager * gimp_perspective_tool_transform   (GimpTransformTool *transform_tool,
+							GDisplay       *gdisp,
+							TransformState  state);
+static void          perspective_tool_recalc           (GimpTool       *tool,
+							GDisplay       *gdisp);
+static void          perspective_tool_motion           (GimpTool       *tool,
+							GDisplay       *gdisp);
+static void          perspective_info_update           (GimpTool       *tool);
 
 
 /*  storage for information dialog fields  */
 static gchar  matrix_row_buf [3][MAX_INFO_BUF];
 
+static GimpTransformToolClass *parent_class = NULL;
 
-static TileManager *
-perspective_tool_transform (Tool           *tool,
-			    GDisplay       *gdisp,
-			    TransformState  state)
+
+/*  public functions  */
+
+void 
+gimp_perspective_tool_register (void)
 {
-  TransformCore *transform_core;
-
-  transform_core = (TransformCore *) tool->private;
-
-  switch (state)
-    {
-    case TRANSFORM_INIT:
-      if (!transform_info)
-	{
-	  transform_info =
-	    info_dialog_new (_("Perspective Transform Information"),
-			     gimp_standard_help_func,
-			     "tools/transform_perspective.html");
-	  info_dialog_add_label (transform_info, _("Matrix:"),
-				 matrix_row_buf[0]);
-	  info_dialog_add_label (transform_info, "", matrix_row_buf[1]);
-	  info_dialog_add_label (transform_info, "", matrix_row_buf[2]);
-	}
-      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
-
-      transform_core->trans_info [X0] = (double) transform_core->x1;
-      transform_core->trans_info [Y0] = (double) transform_core->y1;
-      transform_core->trans_info [X1] = (double) transform_core->x2;
-      transform_core->trans_info [Y1] = (double) transform_core->y1;
-      transform_core->trans_info [X2] = (double) transform_core->x1;
-      transform_core->trans_info [Y2] = (double) transform_core->y2;
-      transform_core->trans_info [X3] = (double) transform_core->x2;
-      transform_core->trans_info [Y3] = (double) transform_core->y2;
-
-      return NULL;
-      break;
-
-    case TRANSFORM_MOTION:
-      perspective_tool_motion (tool, gdisp);
-      perspective_tool_recalc (tool, gdisp);
-      break;
-
-    case TRANSFORM_RECALC:
-      perspective_tool_recalc (tool, gdisp);
-      break;
-
-    case TRANSFORM_FINISH:
-      /*  Let the transform core handle the inverse mapping  */
-      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
-      return
-	perspective_tool_perspective (gdisp->gimage,
-				      gimp_image_active_drawable (gdisp->gimage),
-				      gdisp,
-				      transform_core->original,
-				      transform_tool_smoothing (),
-				      transform_core->transform);
-      break;
-    }
-
-  return NULL;
+  tool_manager_register_tool (GIMP_TYPE_PERSPECTIVE_TOOL,
+                              FALSE,
+			      "gimp:perspective_tool",
+			      _("Perspective Tool"),
+			      _("Change perspective of the layer or selection"),
+			      N_("/Tools/Transform Tools/Perspective"), "<shift>P",
+			      NULL, "tools/perspective.html",
+			      (const gchar **) perspective_bits);
 }
 
-Tool *
-tools_new_perspective_tool (void)
+GtkType
+gimp_perspective_tool_get_type (void)
 {
-  Tool          *tool;
-  TransformCore *private;
+  static GtkType tool_type = 0;
 
-  tool = transform_core_new (PERSPECTIVE, TRUE);
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+        "GimpPerspectiveTool",
+        sizeof (GimpPerspectiveTool),
+        sizeof (GimpPerspectiveToolClass),
+        (GtkClassInitFunc) gimp_perspective_tool_class_init,
+        (GtkObjectInitFunc) gimp_perspective_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL,
+      };
 
-  tool->tool_cursor = GIMP_PERSPECTIVE_TOOL_CURSOR;
+      tool_type = gtk_type_unique (GIMP_TYPE_TRANSFORM_TOOL, &tool_info);
+    }
 
-  private = tool->private;
+  return tool_type;
+}
 
-  /*  set the rotation specific transformation attributes  */
-  private->trans_func = perspective_tool_transform;
-  private->trans_info[X0] = 0;
-  private->trans_info[Y0] = 0;
-  private->trans_info[X1] = 0;
-  private->trans_info[Y1] = 0;
-  private->trans_info[X2] = 0;
-  private->trans_info[Y2] = 0;
-  private->trans_info[X3] = 0;
-  private->trans_info[Y3] = 0;
+TileManager *
+gimp_perspective_tool_perspective (GimpImage    *gimage,
+				   GimpDrawable *drawable,
+				   GDisplay     *gdisp,
+				   TileManager  *float_tiles,
+				   gboolean      interpolation,
+				   GimpMatrix3   matrix)
+{
+  GimpProgress *progress;
+  TileManager  *ret;
 
-  /*  assemble the transformation matrix  */
-  gimp_matrix3_identity (private->transform);
+  progress = progress_start (gdisp, _("Perspective..."), FALSE, NULL, NULL);
 
-  return tool;
+  ret = gimp_transform_tool_do (gimage, drawable, float_tiles,
+				interpolation, matrix,
+				progress ? progress_update_and_flush :
+				(GimpProgressFunc) NULL,
+				progress);
+
+  if (progress)
+    progress_end (progress);
+
+  return ret;
 }
 
 void
-tools_free_perspective_tool (Tool *tool)
-{
-  transform_core_free (tool);
-}
-
-static void
-perspective_info_update (Tool *tool)
-{
-  TransformCore *transform_core;
-  gint           i;
-  
-  transform_core = (TransformCore *) tool->private;
-
-  for (i = 0; i < 3; i++)
-    {
-      gchar *p = matrix_row_buf[i];
-      gint   j;
-      
-      for (j = 0; j < 3; j++)
-	{
-	  p += g_snprintf (p, MAX_INFO_BUF - (p - matrix_row_buf[i]),
-			   "%10.3g", transform_core->transform[i][j]);
-	}
-    }
-
-  info_dialog_update (transform_info);
-  info_dialog_popup (transform_info);
-
-  return;
-}
-
-static void
-perspective_tool_motion (Tool     *tool,
-			 GDisplay *gdisp)
-{
-  TransformCore *transform_core;
-  gint            diff_x, diff_y;
-
-  transform_core = (TransformCore *) tool->private;
-
-  diff_x = transform_core->curx - transform_core->lastx;
-  diff_y = transform_core->cury - transform_core->lasty;
-
-  switch (transform_core->function)
-    {
-    case TRANSFORM_HANDLE_1:
-      transform_core->trans_info [X0] += diff_x;
-      transform_core->trans_info [Y0] += diff_y;
-      break;
-    case TRANSFORM_HANDLE_2:
-      transform_core->trans_info [X1] += diff_x;
-      transform_core->trans_info [Y1] += diff_y;
-      break;
-    case TRANSFORM_HANDLE_3:
-      transform_core->trans_info [X2] += diff_x;
-      transform_core->trans_info [Y2] += diff_y;
-      break;
-    case TRANSFORM_HANDLE_4:
-      transform_core->trans_info [X3] += diff_x;
-      transform_core->trans_info [Y3] += diff_y;
-      break;
-    default:
-      break;
-    }
-}
-
-static void
-perspective_tool_recalc (Tool     *tool,
-			 GDisplay *gdisp)
-{
-  TransformCore *transform_core;
-  GimpMatrix3    m;
-  gdouble        cx, cy;
-  gdouble        scalex, scaley;
-
-  transform_core = (TransformCore *) tool->private;
-
-  /*  determine the perspective transform that maps from
-   *  the unit cube to the trans_info coordinates
-   */
-  perspective_find_transform (transform_core->trans_info, m);
-
-  cx     = transform_core->x1;
-  cy     = transform_core->y1;
-  scalex = 1.0;
-  scaley = 1.0;
-
-  if (transform_core->x2 - transform_core->x1)
-    scalex = 1.0 / (transform_core->x2 - transform_core->x1);
-  if (transform_core->y2 - transform_core->y1)
-    scaley = 1.0 / (transform_core->y2 - transform_core->y1);
-
-  /*  assemble the transformation matrix  */
-  gimp_matrix3_identity  (transform_core->transform);
-  gimp_matrix3_translate (transform_core->transform, -cx, -cy);
-  gimp_matrix3_scale     (transform_core->transform, scalex, scaley);
-  gimp_matrix3_mult      (m, transform_core->transform);
-
-  /*  transform the bounding box  */
-  transform_core_transform_bounding_box (tool);
-
-  /*  update the information dialog  */
-  perspective_info_update (tool);
-}
-
-void
-perspective_find_transform (gdouble     *coords,
-			    GimpMatrix3  matrix)
+gimp_perspective_tool_find_transform (gdouble     *coords,
+				      GimpMatrix3  matrix)
 {
   gdouble dx1, dx2, dx3, dy1, dy2, dy3;
   gdouble det1, det2;
@@ -303,27 +178,215 @@ perspective_find_transform (gdouble     *coords,
   matrix[2][2] = 1.0;
 }
 
-TileManager *
-perspective_tool_perspective (GImage       *gimage,
-			      GimpDrawable *drawable,
-			      GDisplay     *gdisp,
-			      TileManager  *float_tiles,
-			      gboolean      interpolation,
-			      GimpMatrix3   matrix)
+/* private function definitions */
+
+static void
+gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass)
 {
-  GimpProgress *progress;
-  TileManager  *ret;
+  GtkObjectClass         *object_class;
+  GimpTransformToolClass *trans_class;
 
-  progress = progress_start (gdisp, _("Perspective..."), FALSE, NULL, NULL);
+  object_class = (GtkObjectClass *) klass;
+  trans_class  = (GimpTransformToolClass *) klass;
 
-  ret = transform_core_do (gimage, drawable, float_tiles,
-			   interpolation, matrix,
-			   progress ? progress_update_and_flush :
-			   (GimpProgressFunc) NULL,
-			   progress);
+  parent_class = gtk_type_class (GIMP_TYPE_TRANSFORM_TOOL);
 
-  if (progress)
-    progress_end (progress);
+  object_class->destroy     = gimp_perspective_tool_destroy;
 
-  return ret;
+  trans_class->transform    = gimp_perspective_tool_transform;
 }
+
+static void
+gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
+{
+  GimpTool          *tool;
+  GimpTransformTool *tr_tool;
+
+  tool    = GIMP_TOOL (perspective_tool);
+  tr_tool = GIMP_TRANSFORM_TOOL (perspective_tool);
+
+  tool->tool_cursor   = GIMP_PERSPECTIVE_TOOL_CURSOR;
+
+  tr_tool->trans_info[X0] = 0;
+  tr_tool->trans_info[Y0] = 0;
+  tr_tool->trans_info[X1] = 0;
+  tr_tool->trans_info[Y1] = 0;
+  tr_tool->trans_info[X2] = 0;
+  tr_tool->trans_info[Y2] = 0;
+  tr_tool->trans_info[X3] = 0;
+  tr_tool->trans_info[Y3] = 0;
+
+  /*  assemble the transformation matrix  */
+  gimp_matrix3_identity (tr_tool->transform);
+
+}
+
+static void
+gimp_perspective_tool_destroy (GtkObject *object)
+{
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static TileManager *
+gimp_perspective_tool_transform (GimpTransformTool  *transform_tool,
+				 GDisplay           *gdisp,
+				 TransformState      state)
+{
+  GimpTool *tool;
+
+  tool = GIMP_TOOL (transform_tool);
+
+  switch (state)
+    {
+    case TRANSFORM_INIT:
+      if (!transform_info)
+	{
+	  transform_info =
+	    info_dialog_new (_("Perspective Transform Information"),
+			     gimp_standard_help_func,
+			     "tools/transform_perspective.html");
+	  info_dialog_add_label (transform_info, _("Matrix:"),
+				 matrix_row_buf[0]);
+	  info_dialog_add_label (transform_info, "", matrix_row_buf[1]);
+	  info_dialog_add_label (transform_info, "", matrix_row_buf[2]);
+	}
+      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
+
+      transform_tool->trans_info [X0] = (double) transform_tool->x1;
+      transform_tool->trans_info [Y0] = (double) transform_tool->y1;
+      transform_tool->trans_info [X1] = (double) transform_tool->x2;
+      transform_tool->trans_info [Y1] = (double) transform_tool->y1;
+      transform_tool->trans_info [X2] = (double) transform_tool->x1;
+      transform_tool->trans_info [Y2] = (double) transform_tool->y2;
+      transform_tool->trans_info [X3] = (double) transform_tool->x2;
+      transform_tool->trans_info [Y3] = (double) transform_tool->y2;
+
+      return NULL;
+      break;
+
+    case TRANSFORM_MOTION:
+      perspective_tool_motion (tool, gdisp);
+      perspective_tool_recalc (tool, gdisp);
+      break;
+
+    case TRANSFORM_RECALC:
+      perspective_tool_recalc (tool, gdisp);
+      break;
+
+    case TRANSFORM_FINISH:
+      /*  Let the transform tool handle the inverse mapping  */
+      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
+      return
+	gimp_perspective_tool_perspective (gdisp->gimage,
+					   gimp_image_active_drawable (gdisp->gimage),
+					   gdisp,
+					   transform_tool->original,
+					   gimp_transform_tool_smoothing (),
+					   transform_tool->transform);
+      break;
+    }
+
+  return NULL;
+}
+
+static void
+perspective_info_update (GimpTool *tool)
+{
+  GimpTransformTool *transform_tool;
+  gint               i;
+  
+  transform_tool = GIMP_TRANSFORM_TOOL (tool);
+
+  for (i = 0; i < 3; i++)
+    {
+      gchar *p = matrix_row_buf[i];
+      gint   j;
+      
+      for (j = 0; j < 3; j++)
+	{
+	  p += g_snprintf (p, MAX_INFO_BUF - (p - matrix_row_buf[i]),
+			   "%10.3g", transform_tool->transform[i][j]);
+	}
+    }
+
+  info_dialog_update (transform_info);
+  info_dialog_popup (transform_info);
+
+  return;
+}
+
+static void
+perspective_tool_motion (GimpTool *tool,
+			 GDisplay *gdisp)
+{
+  GimpTransformTool *transform_tool;
+  gint               diff_x, diff_y;
+
+  transform_tool = GIMP_TRANSFORM_TOOL (tool);
+
+  diff_x = transform_tool->curx - transform_tool->lastx;
+  diff_y = transform_tool->cury - transform_tool->lasty;
+
+  switch (transform_tool->function)
+    {
+    case TRANSFORM_HANDLE_1:
+      transform_tool->trans_info [X0] += diff_x;
+      transform_tool->trans_info [Y0] += diff_y;
+      break;
+    case TRANSFORM_HANDLE_2:
+      transform_tool->trans_info [X1] += diff_x;
+      transform_tool->trans_info [Y1] += diff_y;
+      break;
+    case TRANSFORM_HANDLE_3:
+      transform_tool->trans_info [X2] += diff_x;
+      transform_tool->trans_info [Y2] += diff_y;
+      break;
+    case TRANSFORM_HANDLE_4:
+      transform_tool->trans_info [X3] += diff_x;
+      transform_tool->trans_info [Y3] += diff_y;
+      break;
+    default:
+      break;
+    }
+}
+
+static void
+perspective_tool_recalc (GimpTool *tool,
+			 GDisplay *gdisp)
+{
+  GimpTransformTool *transform_tool;
+  GimpMatrix3        m;
+  gdouble            cx, cy;
+  gdouble            scalex, scaley;
+
+  transform_tool = GIMP_TRANSFORM_TOOL (tool);
+
+  /*  determine the perspective transform that maps from
+   *  the unit cube to the trans_info coordinates
+   */
+  gimp_perspective_tool_find_transform (transform_tool->trans_info, m);
+
+  cx     = transform_tool->x1;
+  cy     = transform_tool->y1;
+  scalex = 1.0;
+  scaley = 1.0;
+
+  if (transform_tool->x2 - transform_tool->x1)
+    scalex = 1.0 / (transform_tool->x2 - transform_tool->x1);
+  if (transform_tool->y2 - transform_tool->y1)
+    scaley = 1.0 / (transform_tool->y2 - transform_tool->y1);
+
+  /*  assemble the transformation matrix  */
+  gimp_matrix3_identity  (transform_tool->transform);
+  gimp_matrix3_translate (transform_tool->transform, -cx, -cy);
+  gimp_matrix3_scale     (transform_tool->transform, scalex, scaley);
+  gimp_matrix3_mult      (m, transform_tool->transform);
+
+  /*  transform the bounding box  */
+  gimp_transform_tool_transform_bounding_box (transform_tool);
+
+  /*  update the information dialog  */
+  perspective_info_update (tool);
+}
+

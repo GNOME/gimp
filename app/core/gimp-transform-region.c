@@ -79,10 +79,6 @@ struct _TransformOptions
 {
   ToolOptions  tool_options;
 
-  GtkType      type;
-  GtkType      type_d;
-  GtkWidget   *type_w[4];  /* 4 radio buttons */
-
   gboolean     smoothing;
   gboolean     smoothing_d;
   GtkWidget   *smoothing_w;
@@ -166,8 +162,6 @@ static void    gimp_transform_tool_control     (GimpTool               *tool,
 			                        GDisplay               *gdisp);
 
 static void    gimp_transform_tool_draw        (GimpDrawTool           *draw_tool);
-
-static void    gimp_transform_tool_change_type (GtkType new_type);
 
 static TransformOptions * transform_options_new   (void);
 static void               transform_options_reset (ToolOptions *tool_options);
@@ -1791,16 +1785,6 @@ gimp_transform_tool_show_path_update (GtkWidget *widget,
   gimp_transform_tool_showpath_changed (0); /* resume */
 }
 
-/* FIXME Do we still want to do this this way?  Perhaps we should make
-separate icons for each tool. */
-
-static void
-gimp_transform_tool_type_callback (GtkWidget *widget,
-			           gpointer   data)
-{
-  gimp_transform_tool_change_type ((GtkType) data);
-}
-
 static void
 gimp_transform_tool_direction_callback (GtkWidget *widget,
 			                gpointer   data)
@@ -1830,15 +1814,6 @@ transform_options_reset (ToolOptions *tool_options)
 
   options = (TransformOptions *) tool_options;
 
-  /* FIXME this is gross. */
-  gtk_toggle_button_set_active (((options->type_d == GIMP_TYPE_ROTATE_TOOL) ?
-				 GTK_TOGGLE_BUTTON (options->type_w[0]) :
-				 ((options->type_d == GIMP_TYPE_SCALE_TOOL) ?
-				  GTK_TOGGLE_BUTTON (options->type_w[1]) :
-				  ((options->type_d == GIMP_TYPE_SHEAR_TOOL) ?
-				   GTK_TOGGLE_BUTTON (options->type_w[2]) :
-				   GTK_TOGGLE_BUTTON (options->type_w[3])))),
-				TRUE);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->smoothing_w),
 				options->smoothing_d);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->showpath_w),
@@ -1861,8 +1836,8 @@ transform_options_new (void)
   TransformOptions *options;
 
   GtkWidget *table;
-  GtkWidget *vbox;
   GtkWidget *hbox;
+  GtkWidget *hbox2;
   GtkWidget *label;
   GtkWidget *frame;
   GtkWidget *fbox;
@@ -1872,7 +1847,6 @@ transform_options_new (void)
   tool_options_init ((ToolOptions *) options,
 		     transform_options_reset);
 
-  options->type      = options->type_d      = GIMP_TYPE_SCALE_TOOL; /* FIXME: GIMP_TYPE_ROTATE_TOOL; */
   options->smoothing = options->smoothing_d = TRUE;
   options->showpath  = options->showpath_d  = TRUE;
   options->clip      = options->clip_d      = FALSE;
@@ -1880,42 +1854,11 @@ transform_options_new (void)
   options->grid_size = options->grid_size_d = 32;
   options->show_grid = options->show_grid_d = TRUE;
 
-  /* the main table */
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
-  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox), table,
+
+  /*  the top hbox (containing two frames) */
+  hbox2 = gtk_hbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox), hbox2,
 		      FALSE, FALSE, 0);
-
-  /*  the left vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_table_attach_defaults (GTK_TABLE (table), vbox, 0, 1, 0, 1);
-
-  /*  the transform type radio buttons  */
-  frame =
-    gimp_radio_group_new (TRUE, _("Transform"),
-
-			  _("Rotation"), gimp_transform_tool_type_callback,
-			  GIMP_TYPE_ROTATE_TOOL, NULL, &options->type_w[0], TRUE,
-
-			  _("Scaling"), gimp_transform_tool_type_callback,
-			  GIMP_TYPE_SCALE_TOOL, NULL, &options->type_w[1], FALSE,
-
-			  _("Shearing"), gimp_transform_tool_type_callback,
-			  GIMP_TYPE_SHEAR_TOOL, NULL, &options->type_w[2], FALSE,
-
-			  _("Perspective"), gimp_transform_tool_type_callback,
-			  GIMP_TYPE_PERSPECTIVE_TOOL, NULL, &options->type_w[3], FALSE,
-
-			  NULL);
-
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  gtk_widget_show (vbox);
-
-  /*  the right vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_table_attach_defaults (GTK_TABLE (table), vbox, 1, 2, 0, 1);
 
   /*  the second radio frame and box, for transform direction  */
   frame = gimp_radio_group_new (TRUE, _("Tool Paradigm"),
@@ -1930,12 +1873,12 @@ transform_options_new (void)
 
 				NULL);
 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /*  the grid frame  */
   frame = gtk_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox2), frame, FALSE, FALSE, 0);
 
   fbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (fbox), 2);
@@ -1977,7 +1920,13 @@ transform_options_new (void)
   gtk_widget_show (fbox);
   gtk_widget_show (frame);
 
-  gtk_widget_show (vbox);
+  gtk_widget_show (hbox2);
+
+  /* the main table */
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
+  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox), table,
+		      FALSE, FALSE, 0);
 
   /*  the smoothing toggle button  */
   options->smoothing_w = gtk_check_button_new_with_label (_("Smoothing"));
@@ -1985,7 +1934,7 @@ transform_options_new (void)
 		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &options->smoothing);
   gtk_table_attach_defaults (GTK_TABLE (table), 
-			     options->smoothing_w, 0, 1, 1, 2);
+			     options->smoothing_w, 0, 1, 0, 1);
   gtk_widget_show (options->smoothing_w);
 
   /*  the showpath toggle button  */
@@ -1994,7 +1943,7 @@ transform_options_new (void)
 		      GTK_SIGNAL_FUNC (gimp_transform_tool_show_path_update),
 		      &options->showpath);
   gtk_table_attach_defaults (GTK_TABLE (table), 
-			     options->showpath_w, 1, 2, 1, 2);
+			     options->showpath_w, 1, 2, 0, 1);
   gtk_widget_show (options->showpath_w);
 
   gtk_widget_show (table);
@@ -2009,25 +1958,6 @@ transform_options_new (void)
   gtk_widget_show (options->clip_w);
   
   return options;
-}
-
-static void
-gimp_transform_tool_change_type (GtkType new_type)
-{
-  if (transform_options->type != new_type)
-    {
-      GimpToolInfo *tool_info;
-
-      /*  change the type, free the old tool, create the new tool  */
-      transform_options->type = new_type;
-
-      tool_info = tool_manager_get_info_by_type (new_type);
-
-      if (gimp_context_get_tool (gimp_context_get_user ()) != tool_info)
-	gimp_context_set_tool (gimp_context_get_user (), tool_info);
-      else
-	gimp_context_tool_changed (gimp_context_get_user ());
-    }
 }
 
 gboolean

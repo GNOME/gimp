@@ -2157,7 +2157,7 @@ perspective_invoker (Argument *args)
       /* Determine the perspective transform that maps from
        * the unit cube to the trans_info coordinates
        */
-      perspective_find_transform (trans_info, m);
+      gimp_perspective_tool_find_transform (trans_info, m);
     
       tile_manager_get_offsets (float_tiles, &offset_x, &offset_y);        
       cx = (gdouble) offset_x;
@@ -2176,7 +2176,7 @@ perspective_invoker (Argument *args)
       gimp_matrix3_mult      (m, matrix);
     
       /* Perspective the buffer */
-      new_tiles = perspective_tool_perspective (gimage, drawable, NULL,
+      new_tiles = gimp_perspective_tool_perspective (gimage, drawable, NULL,
 						float_tiles, interpolation,
 						matrix);
     
@@ -2428,7 +2428,7 @@ rotate_invoker (Argument *args)
       gimp_matrix3_translate (matrix, +cx, +cy);
     
       /* Rotate the buffer */
-      new_tiles = rotate_tool_rotate (gimage, drawable, NULL, angle,
+      new_tiles = gimp_rotate_tool_rotate (gimage, drawable, NULL, angle,
 				      float_tiles, interpolation, matrix);
     
       /* Free the cut/copied buffer */
@@ -2696,7 +2696,7 @@ shear_invoker (Argument *args)
       gimp_matrix3_translate (matrix, +cx, +cy);
     
       /* Shear the buffer */
-      new_tiles = shear_tool_shear (gimage, drawable, NULL, float_tiles,
+      new_tiles = gimp_shear_tool_shear (gimage, drawable, NULL, float_tiles,
 				    interpolation, matrix);
     
       /* Free the cut/copied buffer */

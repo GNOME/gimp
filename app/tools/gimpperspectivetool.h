@@ -16,21 +16,46 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PERSPECTIVE_TOOL_H__
-#define __PERSPECTIVE_TOOL_H__
+#ifndef __GIMP_PERSPECTIVE_TOOL_H__
+#define __GIMP_PERSPECTIVE_TOOL_H__
 
 
-TileManager * perspective_tool_perspective (GimpImage      *gimage,
-					    GimpDrawable   *drawable,
-					    GDisplay       *gdisp,
-					    TileManager    *float_tiles,
-					    gboolean        interpolation,
-					    GimpMatrix3     matrix);
-void          perspective_find_transform   (gdouble        *coords,
-					    GimpMatrix3     matrix);
-
-Tool        * tools_new_perspective_tool   (void);
-void          tools_free_perspective_tool  (Tool           *tool);
+#include "gimptransformtool.h"
 
 
-#endif  /*  __PERSPECTIVE_TOOL_H__  */
+#define GIMP_TYPE_PERSPECTIVE_TOOL            (gimp_perspective_tool_get_type ())
+#define GIMP_PERSPECTIVE_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_PERSPECTIVE_TOOL, GimpPerspectiveTool))
+#define GIMP_IS_PERSPECTIVE_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_PERSPECTIVE_TOOL))
+#define GIMP_PERSPECTIVE_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PERSPECTIVE_TOOL, GimpPerspectiveToolClass))
+#define GIMP_IS_PERSPECTIVE_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PERSPECTIVE_TOOL))
+
+
+typedef struct _GimpPerspectiveTool      GimpPerspectiveTool;
+typedef struct _GimpPerspectiveToolClass GimpPerspectiveToolClass;
+
+struct _GimpPerspectiveTool
+{
+  GimpTransformTool  parent_instance;
+};
+
+struct _GimpPerspectiveToolClass
+{
+  GimpTransformToolClass  parent_class;
+};
+
+
+GtkType       gimp_perspective_tool_get_type (void);
+
+void          gimp_perspective_tool_register (void);
+
+
+TileManager * gimp_perspective_tool_perspective (GimpImage      *gimage,
+						 GimpDrawable   *drawable,
+						 GDisplay       *gdisp,
+						 TileManager    *float_tiles,
+						 gboolean        interpolation,
+						 GimpMatrix3     matrix);
+void          gimp_perspective_tool_find_transform   (gdouble        *coords,
+						      GimpMatrix3     matrix);
+
+#endif  /*  __GIMP_PERSPECTIVE_TOOL_H__  */

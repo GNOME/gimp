@@ -24,9 +24,6 @@
 
 
 #define GIMP_TYPE_BY_COLOR_SELECT_TOOL GTK_TYPE_NONE
-#define GIMP_TYPE_ROTATE_TOOL          GTK_TYPE_NONE
-#define GIMP_TYPE_SHEAR_TOOL           GTK_TYPE_NONE
-#define GIMP_TYPE_PERSPECTIVE_TOOL     GTK_TYPE_NONE
 
 /*  The possibilities for where the cursor lies  */
 #define  ACTIVE_LAYER      (1 << 0)
