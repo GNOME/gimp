@@ -88,7 +88,7 @@ static struct
 } info =
 /* Initialize to this, change if non-interactive later */
 {  
-  10,
+  20,
   "GIMP Brush Pipe"
 };
 
@@ -97,7 +97,7 @@ static gboolean run_flag = FALSE;
 static gint     num_useable_layers;
 
 
-static GimpPixPipeParams gihparms;
+static GimpPixPipeParams gihparams;
 
 typedef struct
 {
@@ -322,27 +322,27 @@ run (gchar      *name,
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_gih_save", &info);
 
-	  gimp_pixpipe_params_init (&gihparms);
+	  gimp_pixpipe_params_init (&gihparams);
 
 	  /* Setup default values */
-	  if (gihparms.rows < 1) gihparms.rows = 1;	  
-	  if (gihparms.cols < 1) gihparms.cols = 1;
+	  if (gihparams.rows < 1) gihparams.rows = 1;	  
+	  if (gihparams.cols < 1) gihparams.cols = 1;
 	  
-	  gihparms.ncells = num_useable_layers * gihparms.rows * gihparms.cols;
+	  gihparams.ncells = num_useable_layers * gihparams.rows * gihparams.cols;
 	  
-	  if (gihparms.cellwidth == 1 && gihparms.cellheight == 1)
+	  if (gihparams.cellwidth == 1 && gihparams.cellheight == 1)
 	    {
-	      gihparms.cellwidth  = 
-		gimp_image_width (image_ID)  / gihparms.cols;
-	      gihparms.cellheight = 
-		gimp_image_height (image_ID) / gihparms.rows;
+	      gihparams.cellwidth  = 
+		gimp_image_width (image_ID)  / gihparams.cols;
+	      gihparams.cellheight = 
+		gimp_image_height (image_ID) / gihparams.rows;
 	    }
 
 	  pipe_parasite =
 	    gimp_image_parasite_find (orig_image_ID,
 				      "gimp-brush-pipe-parameters");
 	  if (pipe_parasite)
-	    gimp_pixpipe_params_parse (pipe_parasite->data, &gihparms);
+	    gimp_pixpipe_params_parse (pipe_parasite->data, &gihparams);
 
 	  if (!gih_save_dialog (image_ID))
 	    status = GIMP_PDB_CANCEL;
@@ -359,26 +359,26 @@ run (gchar      *name,
 	      strncpy (info.description, param[6].data.d_string, MAXDESCLEN);
 	      info.description[MAXDESCLEN] = 0;
 
-	      gimp_pixpipe_params_init (&gihparms);
+	      gimp_pixpipe_params_init (&gihparams);
 
-	      gihparms.cellwidth  = param[7].data.d_int32;
-	      gihparms.cellheight = param[8].data.d_int32;
-	      gihparms.cols       = param[9].data.d_int8;
-	      gihparms.rows       = param[10].data.d_int8;
-	      gihparms.dim        = param[11].data.d_int32;
-	      gihparms.ncells     = 1; 
+	      gihparams.cellwidth  = param[7].data.d_int32;
+	      gihparams.cellheight = param[8].data.d_int32;
+	      gihparams.cols       = param[9].data.d_int8;
+	      gihparams.rows       = param[10].data.d_int8;
+	      gihparams.dim        = param[11].data.d_int32;
+	      gihparams.ncells     = 1; 
 
-	      if (param[13].data.d_int32 != gihparms.dim)
+	      if (param[13].data.d_int32 != gihparams.dim)
 		{
 		  status = GIMP_PDB_CALLING_ERROR;
 		}
 	      else
 		{
-		  for (i = 0; i < gihparms.dim; i++)
+		  for (i = 0; i < gihparams.dim; i++)
 		    {
-		      gihparms.rank[i]      = param[12].data.d_int8array[i];
-		      gihparms.selection[i] = g_strdup (param[14].data.d_stringarray[i]);
-		      gihparms.ncells       *= gihparms.rank[i];
+		      gihparams.rank[i]      = param[12].data.d_int8array[i];
+		      gihparams.selection[i] = g_strdup (param[14].data.d_stringarray[i]);
+		      gihparams.ncells       *= gihparams.rank[i];
 		    }
 		}
 	    }
@@ -389,9 +389,9 @@ run (gchar      *name,
 	  pipe_parasite =
 	    gimp_image_parasite_find (orig_image_ID,
 				      "gimp-brush-pipe-parameters");
-	  gimp_pixpipe_params_init (&gihparms);
+	  gimp_pixpipe_params_init (&gihparams);
 	  if (pipe_parasite)
-	    gimp_pixpipe_params_parse (pipe_parasite->data, &gihparms);
+	    gimp_pixpipe_params_parse (pipe_parasite->data, &gihparams);
 	  break;
 	}
 
@@ -470,7 +470,6 @@ gih_load_one_brush (gint   fd,
        (bh.magic_number != GBRUSH_MAGIC || bh.version != 2)) ||
       bh.header_size <= sizeof (bh)) 
     {
-      close (fd);
       return FALSE;
     }
   
@@ -628,7 +627,7 @@ gih_load_image (gchar *filename)
   gchar   *name = NULL;
   gint     num_of_brushes = 0;
   gchar   *paramstring;
-/*    GimpParasite *pipe_parasite; */
+  GimpParasite *pipe_parasite;
 
   temp = g_strdup_printf (_("Loading %s:"), filename);
   gimp_progress_init (temp);
@@ -697,24 +696,35 @@ gih_load_image (gchar *filename)
       gimp_progress_update ((gdouble) i / (gdouble) num_of_brushes);
     }
 
-  /*  Some code to attach the paramstring as parasite.
-      Commented out at the moment since we do not load the pipe
-      as specified and attaching this data breaks saving. 
-
   while (*paramstring && isspace (*paramstring))
     paramstring++;
 
+  /*  Since we do not (yet) load the pipe as described in the header,
+      but use one layer per brush, we have to alter the paramstring
+      before attaching it as a parasite.
+   */
+
   if (*paramstring)
     {
-      pipe_parasite = gimp_parasite_new ("gimp-brush-pipe-parameters",
-					 GIMP_PARASITE_PERSISTENT,
-					 strlen (paramstring) + 1, 
-					 paramstring);
-      gimp_image_parasite_attach (image_ID, pipe_parasite);
-      gimp_parasite_free (pipe_parasite);
-    }
+      gimp_pixpipe_params_parse (paramstring, &gihparams);
+      
+      gihparams.cellwidth  = gimp_image_width  (image_ID);
+      gihparams.cellheight = gimp_image_height (image_ID);
+      gihparams.cols       = 1;
+      gihparams.rows       = 1;
 
-   */
+      paramstring = gimp_pixpipe_params_build (&gihparams);
+      if (paramstring)
+	{
+	  pipe_parasite = gimp_parasite_new ("gimp-brush-pipe-parameters",
+					     GIMP_PARASITE_PERSISTENT,
+					     strlen (paramstring) + 1, 
+					     paramstring);
+	  gimp_image_parasite_attach (image_ID, pipe_parasite);
+	  gimp_parasite_free (pipe_parasite);
+	  g_free (paramstring);
+	}
+    }
 
   g_string_free (buffer, TRUE);
 
@@ -810,7 +820,7 @@ ok_callback (GtkWidget *widget,
   gint i;
 
   for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
-    gihparms.selection[i] = g_strdup (gihparms.selection[i]);
+    gihparams.selection[i] = g_strdup (gihparams.selection[i]);
 
   run_flag = TRUE;
   gtk_widget_destroy (GTK_WIDGET (data));
@@ -891,7 +901,7 @@ gih_save_dialog (gint32 image_ID)
   box = gtk_hbox_new (FALSE, 4);
 
   spinbutton = gimp_spin_button_new (&adjustment,
-				     gihparms.cellwidth,
+				     gihparams.cellwidth,
 				     2, gimp_image_width (image_ID), 1, 1, 1,
 				     1, 0);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
@@ -902,7 +912,7 @@ gih_save_dialog (gint32 image_ID)
   cellw_adjust.toplayer    = layer_ID[nlayers-1];
   cellw_adjust.nguides     = 0;
   cellw_adjust.guides      = NULL;
-  cellw_adjust.value       = &gihparms.cellwidth;
+  cellw_adjust.value       = &gihparams.cellwidth;
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (size_adjustment_callback),
 		      &cellw_adjust);
@@ -913,7 +923,7 @@ gih_save_dialog (gint32 image_ID)
   gtk_widget_show (label);
 
   spinbutton = gimp_spin_button_new (&adjustment,
-				     gihparms.cellheight,
+				     gihparams.cellheight,
 				     2, gimp_image_height (image_ID), 1, 1, 1,
 				     1, 0);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
@@ -922,7 +932,7 @@ gih_save_dialog (gint32 image_ID)
   cellh_adjust.toplayer    = layer_ID[nlayers-1];
   cellh_adjust.nguides     = 0;
   cellh_adjust.guides      = NULL;
-  cellh_adjust.value       = &gihparms.cellheight;
+  cellh_adjust.value       = &gihparams.cellheight;
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (size_adjustment_callback),
 		      &cellh_adjust);
@@ -942,16 +952,16 @@ gih_save_dialog (gint32 image_ID)
    * Number of cells: ___
    */
   spinbutton = gimp_spin_button_new (&adjustment,
-				     gihparms.ncells, 1, 1000, 1, 10, 10,
+				     gihparams.ncells, 1, 1000, 1, 10, 10,
 				     1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Number of Cells:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &gihparms.ncells);
+		      &gihparams.ncells);
 
-  if (gihparms.dim == 1)
+  if (gihparams.dim == 1)
     cellw_adjust.ncells = cellh_adjust.ncells = adjustment;
   else
     cellw_adjust.ncells = cellh_adjust.ncells = NULL;
@@ -961,24 +971,24 @@ gih_save_dialog (gint32 image_ID)
    */
   box = gtk_hbox_new (FALSE, 0);
 
-  g_snprintf (buffer, sizeof (buffer), "%2d", gihparms.rows);
+  g_snprintf (buffer, sizeof (buffer), "%2d", gihparams.rows);
   label = gtk_label_new (buffer);
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   cellh_adjust.count_label = label;
-  cellh_adjust.count       = &gihparms.rows;
-  cellh_adjust.other_count = &gihparms.cols;
+  cellh_adjust.count       = &gihparams.rows;
+  cellh_adjust.other_count = &gihparams.cols;
   gtk_widget_show (label);
 
   label = gtk_label_new (_(" Rows of "));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  g_snprintf (buffer, sizeof (buffer), "%2d", gihparms.cols);
+  g_snprintf (buffer, sizeof (buffer), "%2d", gihparams.cols);
   label = gtk_label_new (buffer);
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   cellw_adjust.count_label = label;
-  cellw_adjust.count       = &gihparms.cols;  
-  cellw_adjust.other_count = &gihparms.rows;
+  cellw_adjust.count       = &gihparams.cols;  
+  cellw_adjust.other_count = &gihparams.rows;
   gtk_widget_show (label);
 
   label = gtk_label_new (_(" Columns on each Layer"));
@@ -1000,14 +1010,14 @@ gih_save_dialog (gint32 image_ID)
   /*
    * Dimension: ___
    */
-  spinbutton = gimp_spin_button_new (&adjustment, gihparms.dim,
+  spinbutton = gimp_spin_button_new (&adjustment, gihparams.dim,
 				     1, 5, 1, 1, 1, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
 			     _("Dimension:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &gihparms.dim);
+		      &gihparams.dim);
 
   /*
    * Ranks: __ __ __ __ __
@@ -1022,16 +1032,16 @@ gih_save_dialog (gint32 image_ID)
       gtk_widget_show (box);
 
       spinbutton = gimp_spin_button_new (&adjustment,
-					 gihparms.rank[i], 0, 100, 1, 1, 1,
+					 gihparams.rank[i], 0, 100, 1, 1, 1,
 					 1, 0);
       gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, TRUE, 0);
       gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 			  GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-			  &gihparms.rank[i]);
+			  &gihparams.rank[i]);
       gtk_widget_show (spinbutton);
       if (i == 0)
 	{ 
-	  if (gihparms.dim == 1)
+	  if (gihparams.dim == 1)
 	    cellw_adjust.rank0 = cellh_adjust.rank0 = adjustment;
 	  else
 	    cellw_adjust.rank0 = cellh_adjust.rank0 = NULL;
@@ -1057,9 +1067,9 @@ gih_save_dialog (gint32 image_ID)
     {
       cb = gtk_combo_new ();
       gtk_combo_set_popdown_strings (GTK_COMBO (cb), cbitems);
-      if (gihparms.selection[i])
+      if (gihparams.selection[i])
 	gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (cb)->entry)
-			    , gihparms.selection[i]);
+			    , gihparams.selection[i]);
       else
 	gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (cb)->entry), "random");
       gtk_entry_set_editable (GTK_ENTRY (GTK_COMBO (cb)->entry), FALSE);
@@ -1067,7 +1077,7 @@ gih_save_dialog (gint32 image_ID)
       gtk_box_pack_start (GTK_BOX (box), cb, FALSE, TRUE, 0);
       gtk_signal_connect (GTK_OBJECT (GTK_COMBO (cb)->entry), "changed",
 			  GTK_SIGNAL_FUNC (cb_callback),
-			  &gihparms.selection[i]);
+			  &gihparams.selection[i]);
       gtk_widget_show (cb);
     }
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 7,
@@ -1087,9 +1097,9 @@ gih_save_dialog (gint32 image_ID)
   if (run_flag)
     {
       /* Fix up bogus values */
-      gihparms.ncells =
-	MIN (gihparms.ncells, 
-	     num_useable_layers * gihparms.rows * gihparms.cols);
+      gihparams.ncells =
+	MIN (gihparams.ncells, 
+	     num_useable_layers * gihparams.rows * gihparams.cols);
     }
 
   return run_flag;
@@ -1198,7 +1208,7 @@ gih_save_image (gchar  *filename,
   gint imagew, imageh, offsetx, offsety;
   gint k, x, y, thisx, thisy, xnext, ynext, thisw, thish;
 
-  if (gihparms.ncells < 1)
+  if (gihparams.ncells < 1)
     return FALSE;
 
   imagew = gimp_image_width (image_ID);
@@ -1217,10 +1227,10 @@ gih_save_image (gchar  *filename,
       return FALSE;
     }
 
-  parstring = gimp_pixpipe_params_build (&gihparms);
+  parstring = gimp_pixpipe_params_build (&gihparams);
 
   header = g_strdup_printf ("%s\n%d %s\n",
-			    info.description, gihparms.ncells, parstring);
+			    info.description, gihparams.ncells, parstring);
 
   if (write (fd, header, strlen (header)) != strlen (header))
     {
@@ -1251,10 +1261,10 @@ gih_save_image (gchar  *filename,
       drawable = gimp_drawable_get (layer_ID[layer]);
       gimp_drawable_offsets (layer_ID[layer], &offsetx, &offsety);
 
-      for (row = 0; row < gihparms.rows; row++)
+      for (row = 0; row < gihparams.rows; row++)
 	{
-	  y = (row * imageh) / gihparms.rows ;
-	  ynext = ((row + 1) * imageh / gihparms.rows);
+	  y = (row * imageh) / gihparams.rows ;
+	  ynext = ((row + 1) * imageh / gihparams.rows);
 	  /* Assume layer is offset to positive direction in x and y.
 	   * That's reasonable, as otherwise all of the layer
 	   * won't be visible.
@@ -1264,10 +1274,10 @@ gih_save_image (gchar  *filename,
 	  thish = (ynext - offsety) - thisy;
 	  thish = MIN (thish, drawable->height - thisy);
 
-	  for (col = 0; col < gihparms.cols; col++)
+	  for (col = 0; col < gihparams.cols; col++)
 	    {
-	      x = (col * imagew / gihparms.cols);
-	      xnext = ((col + 1) * imagew / gihparms.cols);
+	      x = (col * imagew / gihparams.cols);
+	      xnext = ((col + 1) * imagew / gihparams.cols);
 	      thisx = MAX (0, x - offsetx);
 	      thisw = (xnext - offsetx) - thisx;
 	      thisw = MIN (thisw, drawable->width - thisx);
@@ -1282,7 +1292,7 @@ gih_save_image (gchar  *filename,
 		}
 
 	      k++;
-	      gimp_progress_update ((gdouble) k / gihparms.ncells);
+	      gimp_progress_update ((gdouble) k / gihparams.ncells);
 	    }
 	}
 

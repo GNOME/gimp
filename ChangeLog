@@ -1,3 +1,9 @@
+2000-12-19  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/gih.c: alter the pixpipe parameters and attach them
+	as parasite, so saving a loaded .gih file yields the same brush again
+	(minus the brush spacing which is not yet stored in the image).
+	
 2000-12-18  Sven Neumann  <sven@gimp.org>
 	    Jens Lautenbacher <jtl@gimp.org>
 
