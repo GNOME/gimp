@@ -1,3 +1,11 @@
+Tue Jan  4 22:25:18 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* PLUGIN_MAINTAINERS: New file. Please read it and add email
+	addresses and other missing information to it
+
+	* README: point users to the gnome bugtracker instead of the
+	wilberworks one
+
 2000-01-04  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/makefile.{cygwin.msc}: Add gimpcolorspace object.
