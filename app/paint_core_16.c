@@ -80,6 +80,8 @@ static Canvas *  canvas_tiles = NULL;
 
 /* the paint hit to mask and apply */
 static Canvas *  canvas_buf = NULL;
+static guint canvas_buf_height = 0;
+static guint canvas_buf_width = 0;
 
 /* original image for clone tool */
 static Canvas *  orig_buf = NULL;
@@ -327,6 +329,8 @@ paint_core_16_cleanup  (
     {
       canvas_delete (canvas_buf);
       canvas_buf = NULL;
+      canvas_buf_height = 0;
+      canvas_buf_width = 0;
     }
 
   if (orig_buf)
@@ -621,7 +625,13 @@ paint_core_16_area  (
 
   if (canvas_buf)
     canvas_delete (canvas_buf);
-  canvas_buf = canvas_new (tag, (x2 - x1), (y2 - y1), STORAGE_FLAT);
+
+  canvas_buf = canvas_new (tag,
+                           (x2 - x1), (y2 - y1),
+                           STORAGE_FLAT);
+
+  canvas_buf_width = (x2 - x1);
+  canvas_buf_height = (y2 - y1);
   
   return canvas_buf;
 }
@@ -725,7 +735,7 @@ paint_core_16_area_paste  (
   
   painthit_init (drawable,
                  paint_core->x, paint_core->y,
-                 canvas_width (canvas_buf), canvas_height (canvas_buf));
+                 canvas_buf_width, canvas_buf_height);
   switch (apply_mode)
     {
     case CONSTANT:
@@ -772,7 +782,7 @@ paint_core_16_area_replace  (
   
   painthit_init (drawable,
                  paint_core->x, paint_core->y,
-                 canvas_width (canvas_buf), canvas_height (canvas_buf));
+                 canvas_buf_width, canvas_buf_height);
   
   painthit_replace (paint_core, brush_mask, brush_opacity,
                     drawable, image_opacity);
@@ -850,7 +860,7 @@ painthit_create_constant (
     
     pixelarea_init (&srcPR, canvas_tiles,
                     paint_core->x, paint_core->y,
-                    canvas_width (canvas_buf), canvas_height (canvas_buf),
+                    canvas_buf_width, canvas_buf_height,
                     TRUE);      
     pixelarea_init (&maskPR, brush_mask,
                     xoff, yoff,
@@ -862,11 +872,11 @@ painthit_create_constant (
   /*  apply the canvas tiles to the canvas buf  */
   pixelarea_init (&srcPR, canvas_buf,
                   0, 0,
-                  canvas_width (canvas_buf), canvas_height (canvas_buf),
+                  canvas_buf_width, canvas_buf_height,
                   TRUE);
   pixelarea_init (&maskPR, canvas_tiles,
                   paint_core->x, paint_core->y,
-                  canvas_width (canvas_buf), canvas_height (canvas_buf),
+                  canvas_buf_width, canvas_buf_height,
                   FALSE);      
   apply_mask_to_area (&srcPR, &maskPR, 1.0);
 }
@@ -884,7 +894,7 @@ painthit_create_incremental (
   /*  combine the canvas buf and the brush mask to the canvas buf  */
   pixelarea_init (&srcPR, canvas_buf,
                   0, 0,
-                  canvas_width (canvas_buf), canvas_height (canvas_buf),
+                  canvas_buf_width, canvas_buf_height,
                   TRUE);
   pixelarea_init (&maskPR, brush_mask,
                   0, 0,
@@ -978,13 +988,20 @@ brush_mask_get  (
       bm = paint_core->brush_mask;
 #endif
       break;
+      
     case HARD:
       bm = brush_mask_solidify (paint_core->brush_mask);
       break;
+
+    case EXACT:
+      bm = paint_core->brush_mask;
+      break;
+      
     default:
       bm = NULL;
       break;
     }
+
   return bm;
 }
 

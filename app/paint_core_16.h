@@ -41,7 +41,8 @@ typedef enum
 typedef enum
 {
   HARD,    /* pencil */
-  SOFT     /* paintbrush */
+  SOFT,    /* paintbrush */
+  EXACT    /* no modification of brush mask */
 } BrushHardness;
 
 

@@ -668,12 +668,10 @@ layer_scale (layer, new_width, new_height, local_origin)
    *   resampling because that doesn't necessarily make sense for INDEXED
    *   images.
    */
-  pixelarea_ref (&destPR); 
   if (tag_format (layer_tag) == FORMAT_INDEXED)
     scale_area_no_resample (&srcPR, &destPR);
   else
     scale_area (&srcPR, &destPR);
-  pixelarea_unref (&destPR);
 
   /*  Push the layer on the undo stack  */
   undo_push_layer_mod (gimage_get_ID (GIMP_DRAWABLE(layer)->gimage_ID), layer);

@@ -65,6 +65,12 @@ struct _PixelArea
 
   /* how to handle hitting the edge */
   EdgeType edgetype;
+
+  /* cached values for current chunk */
+  Tag tag;
+  guchar * data;
+  guint rowstride;
+  guint is_reffed;
 };
 
 

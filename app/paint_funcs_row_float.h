@@ -42,11 +42,12 @@ copy_row_float (
                 struct _PixelRow * dest
                 );
 
-void
-color_row_float (
-	      struct _PixelRow * dest_row,
-	      struct _PixelRow * col
-	      );
+void 
+color_row_float  (
+                  void *, void *,
+                  guint, guint,
+                  guint, guint
+                  );
 
 void
 blend_row_float (

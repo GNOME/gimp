@@ -16,9 +16,10 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+/* define this so these routines get compiled */
+#define DEBUG_PIXELROW
 
 #include "pixelrow.h"
-
 
 void 
 pixelrow_init  (
@@ -28,37 +29,19 @@ pixelrow_init  (
                 int width
                 )
 {
-  if (p)
-    {
-      p->tag = tag;
-      p->buffer = buffer;
-      p->width = width;
-
-      p->bytes = tag_bytes (tag);
-    }
+  g_return_if_fail (p != NULL);
+  p->tag = tag;
+  p->buffer = buffer;
+  p->width = width;
 }
-
-
-guchar * 
-pixelrow_getdata  (
-                   PixelRow * p,
-                   int x
-                   )
-{
-  if (p && (x < p->width))
-    return (p->buffer + (x * p->bytes));
-  return NULL;
-}
-
 
 Tag 
 pixelrow_tag  (
                PixelRow * p
                )
 {
-  if (p)
-    return p->tag;
-  return tag_null ();
+  g_return_val_if_fail (p != NULL, tag_null());
+  return p->tag;
 }
 
 
@@ -67,9 +50,8 @@ pixelrow_width  (
                  PixelRow * p
                  )
 {
-  if (p)
-    return p->width;
-  return 0;
+  g_return_val_if_fail (p != NULL, 0);
+  return p->width;
 }
 
 
@@ -78,9 +60,8 @@ pixelrow_data  (
                 PixelRow * p
                 )
 {
-  if (p)
-    return p->buffer;
-  return NULL;
+  g_return_val_if_fail (p != NULL, 0);
+  return p->buffer;
 }
 
 

@@ -52,9 +52,9 @@ struct _Tile16
 
 
 static int  tile16_index       (TileBuf *, int, int);
-static int  tile16_xoffset     (TileBuf *, int);
-static int  tile16_yoffset     (TileBuf *, int);
 
+#define tile16_xoffset(t,x) (x)%TILE16_WIDTH
+#define tile16_yoffset(t,y) (y)%TILE16_HEIGHT
 
 
 
@@ -490,35 +490,14 @@ tile16_index (
               int y
               )
 {
-  if (t)
+  if (t && (x < t->width) && (y < t->height))    
     {
-      if ((x < t->width) && (y < t->height))    
-        {
-          x = x / TILE16_WIDTH;
-          y = y / TILE16_HEIGHT;
-          return (y * ((t->width + TILE16_WIDTH - 1) / TILE16_WIDTH) + x);
-        }
+      x = x / TILE16_WIDTH;
+      y = y / TILE16_HEIGHT;
+      return (y * ((t->width + TILE16_WIDTH - 1) / TILE16_WIDTH) + x);
     }
   return -1;
 }
 
 
-static int
-tile16_xoffset (
-                TileBuf * t,
-                int x
-                )
-{
-  return x % TILE16_WIDTH;
-}
-
-
-static int
-tile16_yoffset (
-                TileBuf * t,
-                int y
-                )
-{
-  return y % TILE16_HEIGHT;
-}
 

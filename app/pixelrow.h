@@ -29,21 +29,25 @@ struct _PixelRow
   Tag        tag;
   guchar *   buffer;
   int        width;
-
-  int        bytes;
 };
 
+/* if you define DEBUG_PIXELROW, then actual functions which check
+   inputs will be used.  otherwise, the macros below will be used */
 
-/* init a new row */
-void              pixelrow_init           (PixelRow *, Tag, guchar *, int);
+#ifdef DEBUG_PIXELROW
 
-/* get a pointer to a specific element of the array */
-guchar *          pixelrow_getdata        (PixelRow *, int);
+void     pixelrow_init   (PixelRow *, Tag, guchar *, int);
+Tag      pixelrow_tag    (PixelRow *);
+int      pixelrow_width  (PixelRow *);
+guchar * pixelrow_data   (PixelRow *);
 
-/* retrieve the member fields */
-Tag               pixelrow_tag            (PixelRow *);
-int               pixelrow_width          (PixelRow *);
-guchar *          pixelrow_data           (PixelRow *);
+#else
 
+#define pixelrow_init(p,t,b,w) (p)->tag=(t);(p)->buffer=(b);(p)->width=(w)
+#define pixelrow_tag(p)        (p)->tag
+#define pixelrow_width(p)      (p)->width
+#define pixelrow_data(p)       (p)->buffer
+
+#endif
 
 #endif /* __PIXEL_ROW_H__ */

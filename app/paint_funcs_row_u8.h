@@ -62,11 +62,12 @@ extract_channel_row_u8 (
 			gint channel
 	);
 
-void
-color_row_u8 (
-	      struct _PixelRow *dest_row,
-	      struct _PixelRow *col
-	      );
+void 
+color_row_u8  (
+               void *, void *,
+               guint, guint,
+               guint, guint
+               );
 
 void
 blend_row_u8 (

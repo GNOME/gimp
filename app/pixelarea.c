@@ -132,6 +132,11 @@ pixelarea_init2  (
       pa->edgetype = EDGETYPE_NEXT;
       break;
     }
+
+  pa->tag = canvas_tag (c);
+  pa->data = NULL;
+  pa->rowstride = 0;
+  pa->is_reffed = 0;
 }
 
 void 
@@ -141,12 +146,12 @@ pixelarea_getdata  (
                     int row
                     )
 {
-  if (pa && (row >= 0) &&
-      (row < (pa->chunk.y2 - pa->chunk.y1)) && pixelarea_data (pa))
+  if (pa && pa->is_reffed && (row >= 0) &&
+      (row < (pa->chunk.y2 - pa->chunk.y1)))
     {
       pixelrow_init (pr,
-                     pixelarea_tag (pa),
-                     pixelarea_data (pa) + row * pixelarea_rowstride (pa),
+                     pa->tag,
+                     pa->data + row * pa->rowstride,
                      pa->chunk.x2 - pa->chunk.x1);
     }
   else
@@ -327,7 +332,7 @@ pixelarea_tag  (
 {
   if (pa == NULL)
     return tag_null ();
-  return canvas_tag (pa->canvas);
+  return pa->tag;
 }
 
 
@@ -397,8 +402,7 @@ pixelarea_data (
                 )
 {
   g_return_val_if_fail (pa != NULL, NULL);
-  return canvas_portion_data (pa->canvas,
-                              pa->chunk.x1, pa->chunk.y1);
+  return pa->data;
 }
 
 
@@ -408,8 +412,7 @@ pixelarea_rowstride (
                      )
 {
   g_return_val_if_fail (pa != NULL, 0);
-  return canvas_portion_rowstride (pa->canvas,
-                                   pa->chunk.x1, pa->chunk.y1);
+  return pa->rowstride;
 }
 
 
@@ -421,6 +424,7 @@ pixelarea_ref (
   RefRC rc = REFRC_FAIL;
   
   g_return_val_if_fail (pa != NULL, FALSE);
+  g_return_val_if_fail (pa->is_reffed == 0, TRUE);
   
   switch (pa->reftype)
     {
@@ -440,7 +444,15 @@ pixelarea_ref (
     }
 
   if (rc != REFRC_OK)
-    return FALSE;
+    {
+      return FALSE;
+    }
+
+  pa->data = canvas_portion_data (pa->canvas,
+                                  pa->chunk.x1, pa->chunk.y1);
+  pa->rowstride = canvas_portion_rowstride (pa->canvas,
+                                            pa->chunk.x1, pa->chunk.y1);;
+  pa->is_reffed = 1;
   
   return TRUE;
 }
@@ -451,10 +463,11 @@ pixelarea_unref (
                  PixelArea * pa                 
                  )
 {
-   RefRC rc = REFRC_FAIL;
-
-   g_return_val_if_fail (pa != NULL, FALSE);
-
+  RefRC rc = REFRC_FAIL;
+  
+  g_return_val_if_fail (pa != NULL, FALSE);
+  g_return_val_if_fail (pa->is_reffed == 1, TRUE);
+  
   switch (pa->reftype)
     {
     case REFTYPE_WRITE:
@@ -468,6 +481,10 @@ pixelarea_unref (
       break;
     }
 
+  pa->data = NULL;
+  pa->rowstride = 0;
+  pa->is_reffed = 0;
+  
   if (rc != REFRC_OK)
     return FALSE;
   

@@ -16,19 +16,10 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+/* define this so these routines get compiled */
+#define DEBUG_TAGS
+
 #include "tag.h"
-
-/* fields within a Tag */
-
-#define MASK_PRECISION  0xff
-#define SHIFT_PRECISION 24
-
-#define MASK_FORMAT     0xff
-#define SHIFT_FORMAT    16
-
-#define MASK_ALPHA      0xff
-#define SHIFT_ALPHA     8
-
 
 
 Tag

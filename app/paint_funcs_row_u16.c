@@ -217,28 +217,38 @@ extract_channel_row_u16 (
      *dest++ = src[ i * num_channels + channel];
 }	
 
-void
-color_row_u16 (
-	      PixelRow * dest_row,
-	      PixelRow * col
-	      )
+void 
+color_row_u16  (
+                void * dest,
+                void * color,
+                guint width,
+                guint height,
+                guint pixelstride,
+                guint rowstride
+                )
 {
-#define FIXME
-  /* this should probably handle the case of an ALPHA_NO color applied
-     to an ALPHA_YES area */
-  
-  gint     b;
-  guint16 *dest         = (guint16*) pixelrow_data (dest_row);
-  guint16 *color        = (guint16*) pixelrow_data (col);
-  gint     num_channels = tag_num_channels (pixelrow_tag (dest_row));
-  gint     width        = pixelrow_width (dest_row);  
-  
-  while (width--)
-    {
-      for (b = 0; b < num_channels; b++)
-        dest[b] = color[b];
+  gint b, w;
+  guint16 * c, *d;
 
-      dest += num_channels;
+  while (height--)
+    {
+      d = dest;  
+      w = width;
+
+      while (w--)
+        {
+          c = color;
+          b = pixelstride;
+
+          while (b--)
+            {
+              d[b] = c[b];
+            }
+
+          d += pixelstride;
+        }
+
+      dest += rowstride;
     }
 }
 

@@ -219,22 +219,36 @@ extract_channel_row_u8 (
 
 void 
 color_row_u8  (
-               PixelRow * dest_row,
-               PixelRow * col
+               void * dest,
+               void * color,
+               guint width,
+               guint height,
+               guint pixelstride,
+               guint rowstride
                )
 {
-  gint    b;
-  guint8 *dest         = (guint8*) pixelrow_data (dest_row);
-  guint8 *color        = (guint8*) pixelrow_data (col);
-  gint    num_channels = tag_num_channels (pixelrow_tag (dest_row));
-  gint    width        = pixelrow_width (dest_row);  
+  gint b, w;
+  guint8 * c, *d;
 
-  while (width--)
+  while (height--)
     {
-      for (b = 0; b < num_channels; b++)
-        dest[b] = color[b];
+      d = dest;  
+      w = width;
 
-      dest += num_channels;
+      while (w--)
+        {
+          c = color;
+          b = pixelstride;
+
+          while (b--)
+            {
+              d[b] = c[b];
+            }
+
+          d += pixelstride;
+        }
+
+      dest += rowstride;
     }
 }
 

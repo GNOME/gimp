@@ -35,6 +35,7 @@ struct _RenderInfo
 {
   GDisplay *gdisp;
   Canvas *src_canvas;
+  guint src_width;
   guint *alpha;
   guchar *scale;
   guchar *src;
@@ -2465,6 +2466,7 @@ render_image_init_info (RenderInfo *info,
   info->src_y = UNSCALE (gdisp, info->y);
 
   info->src_canvas = gimage_projection (gdisp->gimage);
+  info->src_width = canvas_width (info->src_canvas);
   info->src_bpp = tag_bytes (canvas_tag (info->src_canvas));
 
   info->dest = gximage_get_data ();
@@ -2576,7 +2578,7 @@ render_image_tile_fault (RenderInfo *info)
 	  if (x >= x_portion + portion_width)
 	    {
 	      canvas_portion_unref (info->src_canvas, x_portion, y_portion);
-              if (x >= canvas_width (info->src_canvas))
+              if (x >= info->src_width)
 		return tile_buf;
 	      x_portion += portion_width;
               canvas_portion_refro (info->src_canvas, x_portion, y_portion ); 

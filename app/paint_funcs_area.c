@@ -554,15 +554,27 @@ extract_channel_area (
 }
 
 
-/* ---------------------------------------------------------*/
+/* ---------------------------------------------------------------
 
-typedef void (*ColorRowFunc) (PixelRow*, PixelRow*);
+                          color area
+
+   the precision specific functions assume that the color has
+   an identical tag to the area/row being colored.  they take:
+
+     void * to dest buffer
+     void * to color buffer
+     width and height of buffer
+     pixel and row stride of buffer
+
+*/
+
+typedef void (*ColorRowFunc) (void *, void *, guint, guint, guint, guint);
 static ColorRowFunc color_area_funcs (Tag);
 
 static ColorRowFunc 
 color_area_funcs (
-		Tag tag
-		)
+                  Tag tag
+                  )
 	  
 {
   switch (tag_precision (tag))
@@ -577,32 +589,84 @@ color_area_funcs (
     return NULL;
   } 
 }
- 
+
+
+void
+color_row (
+           PixelRow * row,
+           PixelRow * col
+           )
+{
+  Tag t = pixelrow_tag (row);
+  ColorRowFunc func = color_area_funcs (t);
+  PixelRow color;
+  guchar color_data[TAG_MAX_BYTES];
+
+  g_return_if_fail (row != NULL);
+  g_return_if_fail (col != NULL);
+  g_return_if_fail (func != NULL);
+  
+  if (tag_equal (t, pixelrow_tag (col)) != TRUE)
+    {
+      pixelrow_init (&color, t, color_data, 1);
+      copy_row (col, &color);
+      col = &color;
+    }
+
+  func ((void *) pixelrow_data (row),
+        (void *) pixelrow_data (col),
+        pixelrow_width (row),
+        1,
+        tag_num_channels (t),
+        0);
+}
+
+
 void 
 color_area  (
              PixelArea * area,
-             PixelRow * color
+             PixelRow * col
              )
 {
-  void * pag;
-  Tag area_tag = pixelarea_tag (area); 
-  ColorRowFunc color_row = color_area_funcs (area_tag);
-  /* put in tags check*/
+  Tag t = pixelarea_tag (area);
+  ColorRowFunc func = color_area_funcs (t);
+  PixelRow color;
+  guchar color_data[TAG_MAX_BYTES];
 
-  for (pag = pixelarea_register (1, area);
-       pag != NULL;
-       pag = pixelarea_process (pag))
+  g_return_if_fail (area != NULL);
+  g_return_if_fail (col != NULL);
+  g_return_if_fail (func != NULL);
+  
+  if (tag_equal (t, pixelrow_tag (col)) != TRUE)
     {
-      PixelRow row;
-      gint h = pixelarea_height (area);
-      while (h--)
-        {
-          pixelarea_getdata (area, &row, h);
-          (*color_row) (&row, color);
-        }
+      pixelrow_init (&color, t, color_data, 1);
+      copy_row (col, &color);
+      col = &color;
     }
+
+  {
+    guint pixelstride = tag_num_channels (t);
+    void * col_data = (void *) pixelrow_data (col);
+    void * pag;
+    
+    for (pag = pixelarea_register (1, area);
+         pag != NULL;
+         pag = pixelarea_process (pag))
+      {
+        func ((void*) pixelarea_data (area),
+              col_data,
+              pixelarea_width (area),
+              pixelarea_height (area),
+              pixelstride,
+              pixelarea_rowstride (area));
+      }
+  }
 }
 
+
+
+
+/* ---------------------------------------------------------*/
 
 typedef void (*BlendRowFunc) (PixelRow*, PixelRow*, PixelRow*, gfloat);
 static BlendRowFunc blend_area_funcs (Tag);
@@ -1156,6 +1220,7 @@ convolve_area  (
                 gint mode
                 )
 {
+  void * pag;
   gint offset;
   guint src_area_height = pixelarea_areaheight (src_area);  
   guint src_area_width = pixelarea_areawidth (src_area);  
@@ -1180,8 +1245,15 @@ convolve_area  (
       src_area_height < (matrix_size - 1))
     return;
 
-  (*convolve_area_func) (src_area, dest_area, matrix, 
-				matrix_size, divisor, mode, offset);
+  /* the processing loop is needed so the pixelareas will be
+     reffed properly, even though both buffers are flat */
+  for (pag = pixelarea_register (2, src_area, dest_area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      (*convolve_area_func) (src_area, dest_area, matrix, 
+                             matrix_size, divisor, mode, offset);
+    }
 }
 
 static void
@@ -4123,10 +4195,9 @@ draw_segments (
   /* initialize line with opacity */
   {
     Tag t = tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO);
-    ColorRowFunc color_row = color_area_funcs (t);
     PixelRow paint;
     pixelrow_init (&paint, t, (guchar*)&opacity, 1);
-    (*color_row)(&line, &paint);
+    color_row (&line, &paint);
   }
 
   for (i = 0; i < num_segs; i++)

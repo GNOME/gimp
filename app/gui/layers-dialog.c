@@ -2502,9 +2502,7 @@ layer_widget_preview_redraw (LayerWidget *layer_widget,
                   0, 0,
                   0, 0,
                   FALSE);
-  pixelarea_ref (&area);
   pixelarea_print (&area, 0,0);
-  pixelarea_unref (&area);
 }
 #endif
 	  break;

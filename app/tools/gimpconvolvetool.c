@@ -249,13 +249,13 @@ convolve_motion (PaintCore *paint_core,
   
   painthit_canvas = paint_core_16_area (paint_core, drawable);
 
-  /* check if we actually need to convolve */
+  /* check if the area is large enough to convolve */
   if (paint_core->w >= matrix_size && paint_core->h >= matrix_size)
     {
-      /* the area is large enough to convolve */
       Canvas * temp_canvas;
       PixelArea temp_area;
 
+      /* alloc a scratch space */
       temp_canvas = canvas_new (tag_set_alpha (tag, ALPHA_YES),
                                 paint_core->w, paint_core->h,
                                 STORAGE_FLAT);
@@ -272,30 +272,21 @@ convolve_motion (PaintCore *paint_core,
                       TRUE);
       copy_area (&src_area, &temp_area);
       
-#define FIXME
-      /* these refs should really be done inside the area function via
-         a pixelarea_process() loop.  the idea with the area funcs is
-         that they handle all the messy details of reffing so that the
-         high level code doesn't need to worry about it */
-      canvas_portion_refro (temp_canvas, 0, 0);
-      canvas_portion_refrw (painthit_canvas, 0, 0);
 
+      /* do the convolution */
       pixelarea_init (&temp_area, temp_canvas,
                       0, 0,
                       0, 0,
                       FALSE);  
-      
       pixelarea_init (&painthit_area, painthit_canvas,
                       0, 0,
                       0, 0,
                       TRUE);
-      
       convolve_area (&temp_area, &painthit_area,
                      custom_matrix, matrix_size, matrix_divisor, NORMAL);
       
-      canvas_portion_unref (painthit_canvas, 0, 0);
-      canvas_portion_unref (temp_canvas, 0, 0);
-    
+
+      /* clean up the scratch space */
       canvas_delete ( temp_canvas );
     }
   else

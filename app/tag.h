@@ -27,6 +27,18 @@ typedef guint Tag;
 /* the largest possible value that can come from tag_bytes(). */
 #define TAG_MAX_BYTES 16
 
+
+/* fields within a Tag */
+#define MASK_PRECISION  0xff
+#define SHIFT_PRECISION 24
+
+#define MASK_FORMAT     0xff
+#define SHIFT_FORMAT    16
+
+#define MASK_ALPHA      0xff
+#define SHIFT_ALPHA     8
+
+
 /* supported precisions */
 typedef enum
 {  
@@ -55,27 +67,59 @@ typedef enum
   ALPHA_YES
 } Alpha;
 
+/* if you define DEBUG_TAGS, then actual functions which check
+   inputs will be used.  otherwise, the macros below will be used */
+
+#ifdef DEBUG_TAGS
 
 Tag       tag_new               (Precision, Format, Alpha);
-
+Tag       tag_null              (void);
 Precision tag_precision         (Tag);
 Format    tag_format            (Tag);
 Alpha     tag_alpha             (Tag);
-
 Tag       tag_set_precision     (Tag, Precision);
 Tag       tag_set_format        (Tag, Format);
 Tag       tag_set_alpha         (Tag, Alpha);
 
+#else
+
+#define tag_new(p,f,a) \
+        ((((p) & MASK_PRECISION) << SHIFT_PRECISION) | \
+         (((f) & MASK_FORMAT) << SHIFT_FORMAT) | \
+         (((a) & MASK_ALPHA) << SHIFT_ALPHA))
+
+#define tag_null() \
+        tag_new (PRECISION_NONE, FORMAT_NONE, ALPHA_NONE)
+
+#define tag_precision(t) \
+        (((t) >> SHIFT_PRECISION) & MASK_PRECISION)
+
+#define tag_format(t) \
+        (((t) >> SHIFT_FORMAT) & MASK_FORMAT)
+
+#define tag_alpha(t) \
+        (((t) >> SHIFT_ALPHA) & MASK_ALPHA)
+
+#define tag_set_precision(t,p) \
+        (((t) & ~(MASK_PRECISION << SHIFT_PRECISION)) | \
+         (((p) &  MASK_PRECISION) << SHIFT_PRECISION))
+
+#define tag_set_format(t,f) \
+        (((t) & ~(MASK_FORMAT << SHIFT_FORMAT)) | \
+         (((f) &  MASK_FORMAT) << SHIFT_FORMAT))
+
+#define tag_set_alpha(t,a) \
+        (((t) & ~(MASK_ALPHA << SHIFT_ALPHA)) | \
+         (((a) &  MASK_ALPHA) << SHIFT_ALPHA))
+#endif
+
 guint     tag_num_channels      (Tag);
 guint     tag_bytes             (Tag);
 guint     tag_equal             (Tag, Tag);
-
+gint      tag_valid             (Tag);
 gchar *   tag_string_precision  (Precision);
 gchar *   tag_string_format     (Format);
 gchar *   tag_string_alpha      (Alpha);
-
-Tag       tag_null              (void);
-gint      tag_valid             (Tag);
 
 
 
