@@ -117,7 +117,6 @@ void        gimp_size_entry_add_field  (GimpSizeEntry   *gse,
 
 /* this one is just a convenience function if you want to add labels
  * to the empty cells of the widget
- * (take care not to specify cells which already have a widget ;-)
  */
 void        gimp_size_entry_attach_label          (GimpSizeEntry *gse,
 						   gchar         *text,
@@ -137,10 +136,20 @@ void        gimp_size_entry_set_resolution        (GimpSizeEntry *gse,
 					           gfloat         resolution,
 						   guint          keep_size);
 
+/* this one sets the values (in pixels) which will be treated as
+ * 0% and 100% when we want "percent" in the unit menu
+ *
+ * does nothing if update_policy != GIMP_SIZE_ENTRY_UPDATE_SIZE
+ */
+void        gimp_size_entry_set_size              (GimpSizeEntry *gse,
+					           gint           field,
+					           gfloat         lower,
+						   gfloat         upper);
+
 /* these functions set/return the value in the units the user selected
  * note that in some cases where the caller chooses not to have the
  * reference value row and the user selected the reference unit
- * the both values 'value' and 'refvalue' will be the same
+ * the both values 'value' and 'refval' will be the same
  */
 void        gimp_size_entry_set_value_boundaries  (GimpSizeEntry *gse,
 						   gint           field,

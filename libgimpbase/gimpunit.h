@@ -36,7 +36,6 @@
 extern "C" {
 #endif /* __cplusplus */
 
-
 typedef enum
 {
   UNIT_PIXEL = 0,
@@ -44,8 +43,18 @@ typedef enum
   UNIT_MM    = 2,
   UNIT_POINT = 3,
   UNIT_PICA  = 4,
-  UNIT_END   = 5     /* never use UNIT_END but
-			gimp_unit_get_number_of_units() instead */
+  UNIT_END   = 5,      /*  never use UNIT_END but
+			*  gimp_unit_get_number_of_units() instead
+			*/
+
+  UNIT_PERCENT = 65536 /*  this one does not really belong here but it's
+			*  convenient to use the unit system for the
+			*  various strings (symbol, singular, ...)
+			*
+			*  you can only ask it for it's strings, asking for
+			*  factor, digits or deletion_flag will produce
+			*  an error.
+			*/
 } GUnit;
 
 
@@ -77,7 +86,7 @@ GUnit    gimp_unit_new                 (gchar  *identifier,
  */
 guint    gimp_unit_get_deletion_flag   (GUnit  unit);
 void     gimp_unit_set_deletion_flag   (GUnit  unit,
-					      guint  deletion_flag);
+					guint  deletion_flag);
 
 /* The meaning of 'factor' is:
  * distance_in_units == ( factor * distance_in_inches )

@@ -49,6 +49,8 @@ struct _GimpSizeEntryField
   gint           index;
 
   gfloat         resolution;
+  gfloat         lower;
+  gfloat         upper;
 
   GtkObject     *value_adjustment;
   GtkWidget     *value_spinbutton;
@@ -223,6 +225,8 @@ gimp_size_entry_new (gint             number_of_fields,
       gsef->gse = gse;
       gsef->index = i;
       gsef->resolution = 1.0; /*  just to avoid division by zero  */
+      gsef->lower = 0.0;
+      gsef->upper = 100.0;
       gsef->value = 0;
       gsef->min_value = 0;
       gsef->max_value = SIZE_MAX_VALUE;
@@ -240,7 +244,8 @@ gimp_size_entry_new (gint             number_of_fields,
 						   1.0, 10.0, 0.0);
       gsef->value_spinbutton =
 	gtk_spin_button_new (GTK_ADJUSTMENT (gsef->value_adjustment), 1.0,
-			     MIN (gimp_unit_get_digits (unit), 5) + 1);
+			     (unit == UNIT_PERCENT) ? 2 :
+			     (MIN (gimp_unit_get_digits (unit), 5) + 1));
       gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(gsef->value_spinbutton),
 				       GTK_SHADOW_NONE);
       gtk_widget_set_usize (gsef->value_spinbutton, spinbutton_usize, 0);
@@ -303,7 +308,8 @@ gimp_size_entry_new (gint             number_of_fields,
     }
 
   gse->unitmenu = gimp_unit_menu_new (unit_format, unit,
-				      gse->menu_show_pixels, FALSE, TRUE);
+				      gse->menu_show_pixels,
+				      gse->menu_show_percent, TRUE);
   gtk_table_attach_defaults (GTK_TABLE (gse), gse->unitmenu,
 			     i+2, i+3,
 			     gse->show_refval+1, gse->show_refval+2);
@@ -340,6 +346,8 @@ gimp_size_entry_add_field  (GimpSizeEntry   *gse,
   gsef->gse = gse;
   gsef->index = 0;
   gsef->resolution = 1.0; /*  just to avoid division by zero  */
+  gsef->lower = 0.0;
+  gsef->upper = 100.0;
   gsef->value = 0;
   gsef->min_value = 0;
   gsef->max_value = SIZE_MAX_VALUE;
@@ -443,6 +451,29 @@ gimp_size_entry_set_resolution (GimpSizeEntry *gse,
 }
 
 
+/*  percent stuff  ***********/
+
+void
+gimp_size_entry_set_size (GimpSizeEntry *gse,
+			  gint           field,
+			  gfloat         lower,
+			  gfloat         upper)
+{
+  GimpSizeEntryField *gsef;
+
+  g_return_if_fail (gse != NULL);
+  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+  g_return_if_fail ((field >= 0) && (field < gse->number_of_fields));
+  g_return_if_fail (lower < upper);
+
+  gsef = (GimpSizeEntryField*) g_slist_nth_data (gse->fields, field);
+  gsef->lower = lower;
+  gsef->upper = upper;
+
+  gimp_size_entry_set_refval (gse, field, gsef->refval);
+}
+
+
 /*  value stuff  ***********/
 
 void
@@ -476,18 +507,32 @@ gimp_size_entry_set_value_boundaries  (GimpSizeEntry *gse,
     case GIMP_SIZE_ENTRY_UPDATE_NONE:
       break;
     case GIMP_SIZE_ENTRY_UPDATE_SIZE:
-      if (gse->unit) /* unit != UNIT_PIXEL */
-	gimp_size_entry_set_refval_boundaries (gse, field,
-					       gsef->min_value *
-					       gsef->resolution /
-					       gimp_unit_get_factor (gse->unit),
-					       gsef->max_value *
-					       gsef->resolution /
-					       gimp_unit_get_factor (gse->unit));
-      else /* unit == UNIT_PIXEL */
-	gimp_size_entry_set_refval_boundaries (gse, field,
-					       gsef->min_value,
-					       gsef->max_value);
+      switch (gse->unit)
+	{
+	case UNIT_PIXEL:
+	  gimp_size_entry_set_refval_boundaries (gse, field,
+						 gsef->lower +
+						 (gsef->upper - gsef->lower) *
+						 gsef->min_value / 100,
+						 gsef->lower +
+						 (gsef->upper - gsef->lower) *
+						 gsef->max_value / 100);
+	  break;
+	case UNIT_PERCENT:
+	  gimp_size_entry_set_refval_boundaries (gse, field,
+						 gsef->min_value,
+						 gsef->max_value);
+	  break;
+	default:
+	  gimp_size_entry_set_refval_boundaries (gse, field,
+						 gsef->min_value *
+						 gsef->resolution /
+						 gimp_unit_get_factor (gse->unit),
+						 gsef->max_value *
+						 gsef->resolution /
+						 gimp_unit_get_factor (gse->unit));
+	  break;
+	}
       break;
     case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
       gimp_size_entry_set_refval_boundaries (gse, field,
@@ -531,23 +576,31 @@ gimp_size_entry_update_value (GimpSizeEntryField *gsef,
       break;
 
     case GIMP_SIZE_ENTRY_UPDATE_SIZE:
-      if (gsef->gse->unit) /* unit != UNIT_PIXEL */
-	gsef->refval = gsef->value * gsef->resolution /
-	  gimp_unit_get_factor (gsef->gse->unit);
-      else /* unit == UNIT_PIXEL */
-	gsef->refval = value;
+      switch (gsef->gse->unit)
+	{
+	case UNIT_PIXEL:
+	  gsef->refval = value;
+	  break;
+	case UNIT_PERCENT:
+	  gsef->refval =
+	    gsef->lower + (gsef->upper - gsef->lower) * value / 100;
+	  break;
+	default:
+	  gsef->refval = gsef->value * gsef->resolution /
+	    gimp_unit_get_factor (gsef->gse->unit);
+	  break;
+	}
       if (gsef->gse->show_refval)
 	gtk_adjustment_set_value (GTK_ADJUSTMENT (gsef->refval_adjustment),
 				  gsef->refval);
       break;
-
     case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
       gsef->refval = value * gimp_unit_get_factor (gsef->gse->unit);
       if (gsef->gse->show_refval)
 	gtk_adjustment_set_value (GTK_ADJUSTMENT (gsef->refval_adjustment),
 				  gsef->refval);
       break;
-
+      
     default:
       break;
     }
@@ -632,20 +685,33 @@ gimp_size_entry_set_refval_boundaries  (GimpSizeEntry *gse,
       break;
 
     case GIMP_SIZE_ENTRY_UPDATE_SIZE:
-      if (gse->unit) /* unit != UNIT_PIXEL */
-	gimp_size_entry_set_value_boundaries (gse, field,
-					      gsef->min_refval *
-					      gimp_unit_get_factor (gse->unit) /
-					      gsef->resolution,
-					      gsef->max_refval *
-					      gimp_unit_get_factor (gse->unit) /
-					      gsef->resolution);
-      else /* unit == UNIT_PIXEL */
-	gimp_size_entry_set_value_boundaries (gse, field,
-					      gsef->min_refval,
-					      gsef->max_refval);
+      switch (gse->unit)
+	{
+	case UNIT_PIXEL:
+	  gimp_size_entry_set_value_boundaries (gse, field,
+						100 * (gsef->min_refval -
+						       gsef->lower) /
+						(gsef->upper - gsef->lower),
+						100 * (gsef->max_refval -
+						       gsef->lower) /
+						(gsef->upper - gsef->lower));
+	  break;
+	case UNIT_PERCENT:
+	  gimp_size_entry_set_value_boundaries (gse, field,
+						gsef->min_refval,
+						gsef->max_refval);
+	  break;
+	default:
+	  gimp_size_entry_set_value_boundaries (gse, field,
+						gsef->min_refval *
+						gimp_unit_get_factor (gse->unit) /
+						gsef->resolution,
+						gsef->max_refval *
+						gimp_unit_get_factor (gse->unit) /
+						gsef->resolution);
+	  break;
+	}
       break;
-
     case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
       gimp_size_entry_set_value_boundaries (gse, field,
 					    gsef->min_refval /
@@ -716,15 +782,23 @@ gimp_size_entry_update_refval (GimpSizeEntryField *gsef,
       break;
 
     case GIMP_SIZE_ENTRY_UPDATE_SIZE:
-      if (gsef->gse->unit) /* unit != UNIT_PIXEL */
-	gsef->value = gsef->refval * gimp_unit_get_factor (gsef->gse->unit) /
-	  gsef->resolution;
-      else /* unit == UNIT_PIXEL */
-	gsef->value = refval;
+      switch (gsef->gse->unit)
+	{
+	case UNIT_PIXEL:
+	  gsef->value = refval;
+	  break;
+	case UNIT_PERCENT:
+	  gsef->value =
+	    100 * (refval - gsef->lower) / (gsef->upper - gsef->lower);
+	  break;
+	default:
+	  gsef->value = gsef->refval * gimp_unit_get_factor (gsef->gse->unit) /
+	    gsef->resolution;
+	  break;
+	}
       gtk_adjustment_set_value (GTK_ADJUSTMENT (gsef->value_adjustment),
 				gsef->value);
       break;
-
     case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
       gsef->value = refval / gimp_unit_get_factor (gsef->gse->unit);
       gtk_adjustment_set_value (GTK_ADJUSTMENT (gsef->value_adjustment),
@@ -810,6 +884,9 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
 	  if (unit == UNIT_PIXEL)
 	    gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
 					gsef->refval_digits);
+	  else if (unit == UNIT_PERCENT)
+	    gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
+					2);
 	  else
 	    gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
 					MIN(gimp_unit_get_digits (unit), 5) + 1);
@@ -835,6 +912,7 @@ gimp_size_entry_set_unit (GimpSizeEntry *gse,
   g_return_if_fail (gse != NULL);
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
   g_return_if_fail (gse->menu_show_pixels || (unit != UNIT_PIXEL));
+  g_return_if_fail (gse->menu_show_percent || (unit != UNIT_PERCENT));
 
   gimp_unit_menu_set_unit (GIMP_UNIT_MENU (gse->unitmenu), unit);
   gimp_size_entry_update_unit (gse, unit);

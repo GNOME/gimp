@@ -51,6 +51,9 @@
 static gfloat      angle_val;
 static gfloat      center_vals[2];
 
+/*  needed for size update  */
+static GtkWidget  *sizeentry;
+
 /*  forward function declarations  */
 static void *      rotate_tool_rotate  (GImage *, GimpDrawable *, GDisplay *,
 					double, TileManager *, int, GimpMatrix);
@@ -100,31 +103,31 @@ rotate_tool_transform (Tool     *tool,
 	  spinbutton2 =
 	    info_dialog_add_spinbutton (transform_info, _("Center X:"), NULL,
 					-1, 1, 1, 10, 1, 1, 2, NULL, NULL);
-	  widget =
+	  sizeentry =
 	    info_dialog_add_sizeentry (transform_info, _("Y:"),
 				       center_vals, 1,
 				       gdisp->dot_for_dot ? 
 				       UNIT_PIXEL : gdisp->gimage->unit, "%a",
-				       TRUE, FALSE, FALSE,
+				       TRUE, TRUE, FALSE,
 				       GIMP_SIZE_ENTRY_UPDATE_SIZE,
 				       rotate_center_changed, tool);
-	  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (widget),
+	  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
 				     GTK_SPIN_BUTTON (spinbutton2), NULL);
 
-	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (widget), 0,
+	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
 						 -4096,
 						 4096 + gdisp->gimage->width);
-	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (widget), 0,
+	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
 					  gdisp->gimage->xresolution, FALSE);
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0,
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0,
 				      center_vals[0]);
 
-	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (widget), 1,
+	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
 						 -4096,
 						 4096 + gdisp->gimage->height);
-	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (widget), 1,
+	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1,
 					  gdisp->gimage->yresolution, FALSE);
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1,
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
 				      center_vals[1]);
 
 	  gtk_table_set_row_spacing (GTK_TABLE (transform_info->info_table),
@@ -133,6 +136,11 @@ rotate_tool_transform (Tool     *tool,
 				     2, 0);
 	}
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
+
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (sizeentry), 0,
+				transform_core->x1, transform_core->x2);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (sizeentry), 1,
+				transform_core->y1, transform_core->y2);
 
       transform_core->trans_info[ANGLE] = 0.0;
       transform_core->trans_info[REAL_ANGLE] = 0.0;
@@ -156,9 +164,13 @@ rotate_tool_transform (Tool     *tool,
 
     case FINISH :
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
-      return rotate_tool_rotate (gdisp->gimage, gimage_active_drawable (gdisp->gimage), gdisp,
-				 transform_core->trans_info[ANGLE], transform_core->original,
-				 transform_tool_smoothing (), transform_core->transform);
+      return rotate_tool_rotate (gdisp->gimage,
+				 gimage_active_drawable (gdisp->gimage),
+				 gdisp,
+				 transform_core->trans_info[ANGLE],
+				 transform_core->original,
+				 transform_tool_smoothing (),
+				 transform_core->transform);
       break;
     }
 

@@ -54,7 +54,7 @@ static void        scale_tool_motion  (Tool *, void *);
 static void        scale_info_update  (Tool *);
 static Argument *  scale_invoker      (Argument *);
 
-/*  callback functions for the info dialog entries  */
+/*  callback functions for the info dialog fields  */
 static void        scale_size_changed (GtkWidget *w, gpointer data);
 static void        scale_unit_changed (GtkWidget *w, gpointer data);
 
@@ -65,7 +65,7 @@ scale_tool_transform (Tool     *tool,
 {
   GDisplay      *gdisp;
   TransformCore *transform_core;
-  GtkWidget     *spinbutton2;
+  GtkWidget     *spinbutton;
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
@@ -82,7 +82,7 @@ scale_tool_transform (Tool     *tool,
 	  info_dialog_add_label (transform_info, _("Height:"),
 				 orig_height_buf);
 
-	  spinbutton2 =
+	  spinbutton =
 	    info_dialog_add_spinbutton (transform_info, _("Current Width:"),
 					NULL, -1, 1, 1, 10, 1, 1, 2, NULL, NULL);
 	  sizeentry =
@@ -90,11 +90,11 @@ scale_tool_transform (Tool     *tool,
 				       size_vals, 1,
 				       gdisp->dot_for_dot ? 
 				       UNIT_PIXEL : gdisp->gimage->unit, "%a",
-				       TRUE, FALSE, FALSE,
+				       TRUE, TRUE, FALSE,
 				       GIMP_SIZE_ENTRY_UPDATE_SIZE,
 				       scale_size_changed, tool);
 	  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
-				     GTK_SPIN_BUTTON (spinbutton2), NULL);
+				     GTK_SPIN_BUTTON (spinbutton), NULL);
 	  gtk_signal_connect (GTK_OBJECT (sizeentry), "unit_changed",
 			      scale_unit_changed, tool);
 
@@ -123,6 +123,11 @@ scale_tool_transform (Tool     *tool,
 				     2, 0);
 	}
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
+
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (sizeentry), 0,
+				0, transform_core->x2 - transform_core->x1);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (sizeentry), 1,
+				0, transform_core->y2- transform_core->y1);
 
       transform_core->trans_info [X1] = (double) transform_core->x1;
       transform_core->trans_info [Y1] = (double) transform_core->y1;
@@ -197,10 +202,11 @@ scale_info_update (Tool *tool)
   float           unit_factor;
   gchar           format_buf[16];
 
+  static GUnit    label_unit = UNIT_PIXEL;
+
   gdisp = (GDisplay *) tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
   unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (sizeentry));;
-  unit_factor = gimp_unit_get_factor (unit);
 
   /*  Find original sizes  */
   x1 = transform_core->x1;
@@ -208,11 +214,16 @@ scale_info_update (Tool *tool)
   x2 = transform_core->x2;
   y2 = transform_core->y2;
 
-  if (unit) /* unit != UNIT_PIXEL */
+  if (unit != UNIT_PERCENT)
+    label_unit = unit;
+
+  unit_factor = gimp_unit_get_factor (label_unit);
+
+  if (label_unit) /* unit != UNIT_PIXEL */
     {
       g_snprintf (format_buf, 16, "%%.%df %s",
-		  gimp_unit_get_digits (unit) + 1,
-		  gimp_unit_get_symbol (unit));
+		  gimp_unit_get_digits (label_unit) + 1,
+		  gimp_unit_get_symbol (label_unit));
       g_snprintf (orig_width_buf, MAX_INFO_BUF, format_buf,
 		  (x2 - x1) * unit_factor / gdisp->gimage->xresolution);
       g_snprintf (orig_height_buf, MAX_INFO_BUF, format_buf,

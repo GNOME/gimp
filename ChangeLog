@@ -1,7 +1,23 @@
+1999-04-06  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/gimpunit.c
+	* libgimp/gimpunit.[ch]
+	* libgimp/gimpunitmenu.c
+	* libgimp/gimpsizeentry.[ch]: enabled "percent" pseudo-unit.
+	New function gimp_size_entry_set_size() to set the values which
+	will be treated as 0% and 100%.
+
+	* app/crop.c
+	* app/rotate_tool.c
+	* app/scale_tool.c: enable "percent".
+
+	* app/rect_select.c fixed size selections can be made in units and
+	percent now, table layout, label adjustment.
+
 Mon Apr  5 23:24:30 BST 1999 Andy Thomas <alt@gimp.org>
 
 	Changed:-
-	
+
 	* app/bezier_select.c 
 	* app/bezier_selectP.h
 	* app/paths_cmds.c 

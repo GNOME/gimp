@@ -24,7 +24,7 @@
 #include "gimpunit.h"
 #include "libgimp/gimpintl.h"
 
-/* internal structures */
+/*  internal structures  */
 
 typedef struct {
   guint    delete_on_exit;
@@ -51,8 +51,14 @@ static GimpUnitDef gimp_unit_defs[UNIT_END] =
   { FALSE,  6.0, 1, "picas",       "pc", "pc", N_("pica"),       N_("picas") },
 };
 
+/*  not a unit at all but kept here to have the strings in one place
+ */
+static GimpUnitDef gimp_unit_percent =
+{
+  FALSE,    0.0, 0, "percent",     "%",  "%",  N_("percent"),    N_("percent")
+};
 
-/* public functions */
+/*  public functions  */
 
 gint
 gimp_unit_get_number_of_units (void)
@@ -235,6 +241,9 @@ gimp_unit_get_identifier (GUnit unit)
   if (unit < UNIT_END)
     return g_strdup (gimp_unit_defs[unit].identifier);
 
+  if (unit == UNIT_PERCENT)
+    return g_strdup (gimp_unit_percent.identifier);
+
   return_vals = gimp_run_procedure ("gimp_unit_get_identifier",
 				    &nreturn_vals,
 				    PARAM_INT32, unit,
@@ -263,6 +272,9 @@ gimp_unit_get_symbol (GUnit unit)
   if (unit < UNIT_END)
     return g_strdup (gimp_unit_defs[unit].symbol);
 
+  if (unit == UNIT_PERCENT)
+    return g_strdup (gimp_unit_percent.symbol);
+
   return_vals = gimp_run_procedure ("gimp_unit_get_symbol",
 				    &nreturn_vals,
 				    PARAM_INT32, unit,
@@ -285,6 +297,14 @@ gimp_unit_get_abbreviation (GUnit unit)
   int nreturn_vals;
 
   gchar *abbreviation;
+
+  g_return_val_if_fail (unit >= UNIT_PIXEL, g_strdup (""));
+
+  if (unit < UNIT_END)
+    return g_strdup (gimp_unit_defs[unit].abbreviation);
+
+  if (unit == UNIT_PERCENT)
+    return g_strdup (gimp_unit_percent.abbreviation);
 
   return_vals = gimp_run_procedure ("gimp_unit_get_abbreviation",
 				    &nreturn_vals,
@@ -314,6 +334,9 @@ gimp_unit_get_singular (GUnit unit)
   if (unit < UNIT_END)
     return g_strdup (gettext (gimp_unit_defs[unit].singular));
 
+  if (unit == UNIT_PERCENT)
+    return g_strdup (gettext (gimp_unit_percent.singular));
+
   return_vals = gimp_run_procedure ("gimp_unit_get_singular",
 				    &nreturn_vals,
 				    PARAM_INT32, unit,
@@ -341,6 +364,9 @@ gimp_unit_get_plural (GUnit unit)
 
   if (unit < UNIT_END)
     return g_strdup (gettext (gimp_unit_defs[unit].plural));
+
+  if (unit == UNIT_PERCENT)
+    return g_strdup (gettext (gimp_unit_percent.plural));
 
   return_vals = gimp_run_procedure ("gimp_unit_get_plural",
 				    &nreturn_vals,

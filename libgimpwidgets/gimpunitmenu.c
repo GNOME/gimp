@@ -129,9 +129,11 @@ gimp_unit_menu_new (gchar       *format,
   GUnit         u;
 
   g_return_val_if_fail ((unit >= UNIT_PIXEL) &&
-			(unit < gimp_unit_get_number_of_units ()), NULL);
+			(unit < gimp_unit_get_number_of_units ()) ||
+			(unit == UNIT_PERCENT), NULL);
 
-  if (unit >= gimp_unit_get_number_of_built_in_units ())
+  if ((unit >= gimp_unit_get_number_of_built_in_units ()) &&
+      (unit != UNIT_PERCENT))
     show_custom = TRUE;
 
   gum = gtk_type_new (gimp_unit_menu_get_type ());
@@ -145,6 +147,29 @@ gimp_unit_menu_new (gchar       *format,
        u < gimp_unit_get_number_of_built_in_units();
        u++)
     {
+      /*  special cases "pixels" and "percent"  */
+      if (u == UNIT_INCH)
+	{
+	  if (show_percent)
+	    {
+	      menuitem =
+		gtk_menu_item_new_with_label (gimp_unit_menu_build_string (format, UNIT_PERCENT));
+	      gtk_menu_append (GTK_MENU (menu), menuitem);
+	      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+				  (GtkSignalFunc) gimp_unit_menu_callback, gum);
+	      gtk_object_set_data (GTK_OBJECT (menuitem),
+				   "gimp_unit_menu", (gpointer) UNIT_PERCENT);
+	      gtk_widget_show (menuitem);
+	    }
+	  
+	  if (show_pixels || show_percent)
+	    {
+	      menuitem = gtk_menu_item_new ();
+	      gtk_menu_append (GTK_MENU (menu), menuitem);
+	      gtk_widget_show (menuitem);
+	    }
+	}
+
       menuitem =
 	gtk_menu_item_new_with_label (gimp_unit_menu_build_string (format, u));
       gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -152,17 +177,10 @@ gimp_unit_menu_new (gchar       *format,
 			  (GtkSignalFunc) gimp_unit_menu_callback, gum);
       gtk_object_set_data (GTK_OBJECT (menuitem), "gimp_unit_menu", (gpointer)u);
       gtk_widget_show (menuitem);
-
-      /*  add a separator after "pixels"  */
-      if (u == UNIT_PIXEL)
-	{
-	  menuitem = gtk_menu_item_new ();
-	  gtk_menu_append (GTK_MENU (menu), menuitem);
-	  gtk_widget_show (menuitem);
-	}
     }
 
-  if (unit >= gimp_unit_get_number_of_built_in_units ())
+  if ((unit >= gimp_unit_get_number_of_built_in_units ()) &&
+      (unit != UNIT_PERCENT))
     {
       menuitem = gtk_menu_item_new ();
       gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -182,26 +200,26 @@ gimp_unit_menu_new (gchar       *format,
       menuitem = gtk_menu_item_new ();
       gtk_menu_append (GTK_MENU (menu), menuitem);
       gtk_widget_show (menuitem);
-      
+
       menuitem =
 	gtk_menu_item_new_with_label (_("More..."));
       gtk_menu_append (GTK_MENU (menu), menuitem);
       gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			  (GtkSignalFunc) gimp_unit_menu_callback, gum);
       gtk_object_set_data (GTK_OBJECT (menuitem), "gimp_unit_menu",
-			   (gpointer)65536);
+			   (gpointer) (UNIT_PERCENT + 1));
       gtk_widget_show(menuitem);
     }
-  
+
   gtk_option_menu_set_menu (GTK_OPTION_MENU (gum), menu);
 
   gum->unit = unit;
   gtk_option_menu_set_history (GTK_OPTION_MENU (gum),
 			       (unit == UNIT_PIXEL) ? 0 :
-			       (show_pixels ?
-				((unit < UNIT_END) ? unit + 1 : UNIT_END + 2) :
-				((unit < UNIT_END) ? unit - 1 : UNIT_END)));
-  
+			       ((unit == UNIT_PERCENT) ? (show_pixels ? 1 : 0) :
+				(((show_pixels || show_percent) ? 2 : 0) +
+				 ((show_pixels && show_percent) ? 1 : 0) +
+				 ((unit < UNIT_END) ? (unit - 1) : UNIT_END)))); 
   return GTK_WIDGET (gum);
 }
 
@@ -216,17 +234,19 @@ gimp_unit_menu_set_unit (GimpUnitMenu *gum,
 
   g_return_if_fail (gum != NULL);
   g_return_if_fail (GIMP_IS_UNIT_MENU (gum));
-  g_return_if_fail ((unit >= UNIT_PIXEL) &&
-		    ((unit > UNIT_PIXEL) || gum->show_pixels) &&
-		    (unit < gimp_unit_get_number_of_units ()));
+  g_return_if_fail (((unit >= UNIT_PIXEL) &&
+		     ((unit > UNIT_PIXEL) || gum->show_pixels) &&
+		     (unit < gimp_unit_get_number_of_units ())) ||
+		    ((unit == UNIT_PERCENT) && gum->show_percent));
 
   if (unit == gum->unit)
     return;
 
   items = GTK_MENU_SHELL (GTK_OPTION_MENU (gum)->menu)->children;
-  user_unit = UNIT_END + (gum->show_pixels ? 2 : 0);
+  user_unit = UNIT_END + (((gum->show_pixels || gum->show_percent) ? 2 : 0) +
+			  ((gum->show_pixels && gum->show_percent) ? 1 : 0));
 
-  if (unit >= UNIT_END)
+  if ((unit >= UNIT_END) && (unit != UNIT_PERCENT))
     {
       if ((g_list_length (items) - 3) >= user_unit)
 	{
@@ -256,9 +276,13 @@ gimp_unit_menu_set_unit (GimpUnitMenu *gum,
   gum->unit = unit;
   gtk_option_menu_set_history (GTK_OPTION_MENU (gum),
 			       (unit == UNIT_PIXEL) ? 0 :
-			       (gum->show_pixels ?
-				((unit < UNIT_END) ? unit + 1 : UNIT_END + 2) :
-				((unit < UNIT_END) ? unit - 1 : UNIT_END)));
+			       ((unit == UNIT_PERCENT) ?
+				(gum->show_pixels ? 1 : 0) :
+				(((gum->show_pixels ||
+				   gum->show_percent) ? 2 : 0) +
+				 ((gum->show_pixels &&
+				   gum->show_percent) ? 1 : 0) +
+				 ((unit < UNIT_END) ? (unit - 1) : UNIT_END))));
 }
 
 GUnit
@@ -545,15 +569,18 @@ gimp_unit_menu_callback (GtkWidget *widget,
     return;
 
   /*  was "More..." selected?  */
-  if (new_unit == 65536)
+  if (new_unit == (UNIT_PERCENT + 1))
     {
       gtk_option_menu_set_history (GTK_OPTION_MENU (gum),
 				   (gum->unit == UNIT_PIXEL) ? 0 :
-				   (gum->show_pixels ?
-				    ((gum->unit < UNIT_END) ?
-				     gum->unit + 1 : UNIT_END + 2) :
-				    ((gum->unit < UNIT_END) ?
-				     gum->unit - 1 : UNIT_END)));
+				   ((gum->unit == UNIT_PERCENT) ?
+				    (gum->show_pixels ? 1 : 0) :
+				    ((gum->show_pixels ||
+				      gum->show_percent ? 2 : 0) +
+				     (gum->show_pixels &&
+				      gum->show_percent ? 1 : 0) +
+				     ((gum->unit < UNIT_END) ?
+				      gum->unit - 1 : UNIT_END))));
       if (! gum->selection)
 	gimp_unit_menu_create_selection (gum);
       return;

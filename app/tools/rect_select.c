@@ -26,6 +26,7 @@
 
 #include "config.h"
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpunitmenu.h"
 
 #define NO  0
 #define YES 1
@@ -60,13 +61,36 @@ selection_toggle_update (GtkWidget *w,
 }
 
 static void
-selection_spinbutton_update (GtkWidget *widget,
+selection_adjustment_update (GtkWidget *widget,
 			     gpointer   data)
 {
   int *val;
 
-  val = data;
-  *val = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
+  val = (int *) data;
+  *val = GTK_ADJUSTMENT (widget)->value;
+}
+
+static void
+selection_unitmenu_update (GtkWidget *widget,
+			   gpointer   data)
+{
+  GUnit         *val;
+  GtkSpinButton *spinbutton;
+  int            digits;
+
+  val = (GUnit *) data;
+  *val = gimp_unit_menu_get_unit (GIMP_UNIT_MENU (widget));
+
+  digits = ((*val == UNIT_PIXEL) ? 0 :
+	    ((*val == UNIT_PERCENT) ? 2 :
+	     (MIN (6, MAX (3, gimp_unit_get_digits (*val))))));
+
+  spinbutton = GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT (widget),
+						     "fixed_width_spinbutton"));
+  gtk_spin_button_set_digits (spinbutton, digits);
+  spinbutton = GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT (widget),
+						     "fixed_height_spinbutton"));
+  gtk_spin_button_set_digits (spinbutton, digits);
 }
 
 static void
@@ -90,7 +114,6 @@ create_selection_options (ToolType tool_type)
   GtkObject *feather_scale_data;
   GtkWidget *fixed_size_toggle;
   GtkAdjustment *adj;
-  GtkWidget *spinbutton;
 
   /*  the new options structure  */
   options = (SelectionOptions *) g_malloc (sizeof (SelectionOptions));
@@ -101,6 +124,7 @@ create_selection_options (ToolType tool_type)
   options->fixed_size = FALSE;
   options->fixed_height = 1;
   options->fixed_width = 1;
+  options->fixed_unit = UNIT_PIXEL;
   options->sample_merged = TRUE;
 
   /*  the main vbox  */
@@ -175,6 +199,12 @@ create_selection_options (ToolType tool_type)
   /* Widgets for fixed size select */
   if (tool_type == RECT_SELECT || tool_type == ELLIPSE_SELECT) 
     {
+      GtkWidget *alignment;
+      GtkWidget *table;
+      GtkWidget *width_spinbutton;
+      GtkWidget *height_spinbutton;
+      GtkWidget *unitmenu;
+
       fixed_size_toggle = gtk_check_button_new_with_label (_("Fixed size / aspect ratio"));
       gtk_box_pack_start (GTK_BOX(vbox), fixed_size_toggle, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT(fixed_size_toggle), "toggled",
@@ -183,42 +213,78 @@ create_selection_options (ToolType tool_type)
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(fixed_size_toggle),
 				   options->fixed_size);
       gtk_widget_show(fixed_size_toggle);
-      
-      hbox = gtk_hbox_new (TRUE, 5);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      label = gtk_label_new (_("Width: "));
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      adj = (GtkAdjustment *) gtk_adjustment_new (options->fixed_width, 1.0,
+
+      alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+      gtk_box_pack_start (GTK_BOX (vbox), alignment, FALSE, FALSE, 0);
+      gtk_widget_show (alignment);
+
+      table = gtk_table_new (3, 2, FALSE);
+      gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 1);
+      gtk_container_add (GTK_CONTAINER (alignment), table);
+
+      label = gtk_label_new (_("Width:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label,
+			0, 1, 0, 1,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      adj = (GtkAdjustment *) gtk_adjustment_new (options->fixed_width, 1e-5,
                                                   32767.0, 1.0, 50.0, 0.0);
-      spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);
-      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(spinbutton), TRUE);
-      gtk_widget_set_usize (spinbutton, 75, 0);
-      gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
-                          (GtkSignalFunc) selection_spinbutton_update,
+      width_spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(width_spinbutton),
+				       GTK_SHADOW_NONE);
+      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (width_spinbutton), TRUE);
+      gtk_widget_set_usize (width_spinbutton, 75, 0);
+      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+                          (GtkSignalFunc) selection_adjustment_update,
                           &options->fixed_width);
+      gtk_table_attach (GTK_TABLE (table), width_spinbutton,
+			1, 2, 0, 1,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
-      gtk_widget_show (spinbutton);
-      gtk_widget_show (hbox);
+      gtk_widget_show (width_spinbutton);
       
-      hbox = gtk_hbox_new (TRUE, 5);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      label = gtk_label_new (_("Height: "));
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      adj = (GtkAdjustment *) gtk_adjustment_new (options->fixed_height, 1.0,
+      label = gtk_label_new (_("Height:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label,
+			0, 1, 1, 2,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      adj = (GtkAdjustment *) gtk_adjustment_new (options->fixed_height, 1e-5,
                                                   32767.0, 1.0, 50.0, 0.0);
-      spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);
-      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(spinbutton), TRUE);
-      gtk_widget_set_usize (spinbutton, 75, 0);
-      gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
-                          (GtkSignalFunc) selection_spinbutton_update,
+      height_spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(height_spinbutton),
+				       GTK_SHADOW_NONE);
+      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(height_spinbutton), TRUE);
+      gtk_widget_set_usize (height_spinbutton, 75, 0);
+      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+                          (GtkSignalFunc) selection_adjustment_update,
                           &options->fixed_height);
+      gtk_table_attach (GTK_TABLE (table), height_spinbutton,
+			1, 2, 1, 2,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
-      gtk_widget_show (spinbutton);
-      gtk_widget_show (hbox);
+      gtk_widget_show (height_spinbutton);
+
+      label = gtk_label_new (_("Unit:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label,
+			0, 1, 2, 3,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      unitmenu = gimp_unit_menu_new ("%a", UNIT_PIXEL, TRUE, TRUE, TRUE);
+      gtk_signal_connect (GTK_OBJECT (unitmenu), "unit_changed",
+                          (GtkSignalFunc) selection_unitmenu_update,
+                          &options->fixed_unit);
+      gtk_object_set_data (GTK_OBJECT (unitmenu), "fixed_width_spinbutton",
+			   width_spinbutton);
+      gtk_object_set_data (GTK_OBJECT (unitmenu), "fixed_height_spinbutton",
+			   height_spinbutton);
+      gtk_table_attach (GTK_TABLE (table), unitmenu,
+			1, 2, 2, 3,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+      gtk_widget_show (unitmenu);
+      
+      gtk_widget_show (table);
     }
 
   /*  the feather toggle button  */
@@ -231,10 +297,11 @@ create_selection_options (ToolType tool_type)
   gtk_widget_show (feather_toggle);
 
   /*  the feather radius scale  */
-  hbox = gtk_hbox_new (FALSE, 1);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Feather Radius: "));
+  label = gtk_label_new (_("Feather Radius:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -308,6 +375,8 @@ rect_select_button_press (Tool           *tool,
   RectSelect * rect_sel;
   gchar select_mode[STATUSBAR_SIZE];
   int x, y;
+  GUnit unit = UNIT_PIXEL;
+  float unit_factor;
 
   gdisp = (GDisplay *) gdisp_ptr;
   rect_sel = (RectSelect *) tool->private;
@@ -322,15 +391,39 @@ rect_select_button_press (Tool           *tool,
       rect_sel->fixed_size = rect_options->fixed_size;
       rect_sel->fixed_width = rect_options->fixed_width;
       rect_sel->fixed_height = rect_options->fixed_height;
+      unit = rect_options->fixed_unit;
       break;
     case ELLIPSE_SELECT:
       rect_sel->fixed_size = ellipse_options->fixed_size;
       rect_sel->fixed_width = ellipse_options->fixed_width;
       rect_sel->fixed_height = ellipse_options->fixed_height;
+      unit = ellipse_options->fixed_unit;
       break;
     default:
       break;
     }
+
+  switch (unit)
+    {
+    case UNIT_PIXEL:
+      break;
+    case UNIT_PERCENT:
+      rect_sel->fixed_width =
+	gdisp->gimage->width * rect_sel->fixed_width / 100;
+      rect_sel->fixed_height =
+	gdisp->gimage->height * rect_sel->fixed_height / 100;
+      break;
+    default:
+      unit_factor = gimp_unit_get_factor (unit);
+      rect_sel->fixed_width =
+	 rect_sel->fixed_width * gdisp->gimage->xresolution / unit_factor;
+      rect_sel->fixed_height =
+	rect_sel->fixed_height * gdisp->gimage->yresolution / unit_factor;
+      break;
+    }
+
+  rect_sel->fixed_width = MAX (1, rect_sel->fixed_width);
+  rect_sel->fixed_height = MAX (1, rect_sel->fixed_height);
 
   rect_sel->w = 0;
   rect_sel->h = 0;

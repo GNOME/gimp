@@ -65,6 +65,13 @@ static GimpUnitDef gimp_unit_defs[UNIT_END] =
   { FALSE,  6.0, 1, "picas",       "pc", "pc", N_("pica"),       N_("picas") },
 };
 
+/*  not a unit at all but kept here to have the strings in one place
+ */
+static GimpUnitDef gimp_unit_percent =
+{
+  FALSE,    0.0, 0, "percent",     "%",  "%",  N_("percent"),    N_("percent")
+};
+
 static GSList* user_units = NULL;
 static gint    number_of_user_units = 0;
 
@@ -176,11 +183,15 @@ gchar *
 gimp_unit_get_identifier (GUnit unit)
 {
   g_return_val_if_fail ( (unit >= UNIT_PIXEL) && 
-			 (unit < (UNIT_END + number_of_user_units)),
+			 (unit < (UNIT_END + number_of_user_units)) ||
+			 (unit == UNIT_PERCENT),
 			 gimp_unit_defs[UNIT_INCH].identifier );
 
   if (unit < UNIT_END)
     return gimp_unit_defs[unit].identifier;
+
+  if (unit == UNIT_PERCENT)
+    return gimp_unit_percent.identifier;
 
   return gimp_unit_get_user_unit (unit)->identifier;
 }
@@ -190,11 +201,15 @@ gchar *
 gimp_unit_get_symbol (GUnit unit)
 {
   g_return_val_if_fail ( (unit >= UNIT_PIXEL) &&
-			 (unit < (UNIT_END + number_of_user_units)),
+			 (unit < (UNIT_END + number_of_user_units)) ||
+			 (unit == UNIT_PERCENT),
 			 gimp_unit_defs[UNIT_INCH].symbol );
 
   if (unit < UNIT_END)
     return gimp_unit_defs[unit].symbol;
+
+  if (unit == UNIT_PERCENT)
+    return gimp_unit_percent.symbol;
 
   return gimp_unit_get_user_unit (unit)->symbol;
 }
@@ -204,11 +219,15 @@ gchar *
 gimp_unit_get_abbreviation (GUnit unit)
 {
   g_return_val_if_fail ( (unit >= UNIT_PIXEL) &&
-			 (unit < (UNIT_END + number_of_user_units)),
+			 (unit < (UNIT_END + number_of_user_units)) ||
+			 (unit == UNIT_PERCENT),
 			 gimp_unit_defs[UNIT_INCH].abbreviation );
 
   if (unit < UNIT_END)
     return gimp_unit_defs[unit].abbreviation;
+
+  if (unit == UNIT_PERCENT)
+    return gimp_unit_percent.abbreviation;
 
   return gimp_unit_get_user_unit (unit)->abbreviation;
 }
@@ -218,11 +237,15 @@ gchar *
 gimp_unit_get_singular (GUnit unit)
 {
   g_return_val_if_fail ( (unit >= UNIT_PIXEL) &&
-			 (unit < (UNIT_END + number_of_user_units)),
+			 (unit < (UNIT_END + number_of_user_units)) ||
+			 (unit == UNIT_PERCENT),
 			 gettext(gimp_unit_defs[UNIT_INCH].singular) );
 
   if (unit < UNIT_END)
     return gettext (gimp_unit_defs[unit].singular);
+
+  if (unit == UNIT_PERCENT)
+    return gettext (gimp_unit_percent.singular);
 
   return gimp_unit_get_user_unit (unit)->singular;
 }
@@ -232,11 +255,15 @@ gchar *
 gimp_unit_get_plural (GUnit unit)
 {
   g_return_val_if_fail ( (unit >= UNIT_PIXEL) &&
-			 (unit < (UNIT_END + number_of_user_units)),
+			 (unit < (UNIT_END + number_of_user_units)) ||
+			 (unit == UNIT_PERCENT),
 			 gettext(gimp_unit_defs[UNIT_INCH].plural) );
 
   if (unit < UNIT_END)
     return gettext (gimp_unit_defs[unit].plural);
+
+  if (unit == UNIT_PERCENT)
+    return gettext (gimp_unit_percent.plural);
 
   return gimp_unit_get_user_unit (unit)->plural;
 }
