@@ -179,42 +179,42 @@ info_window_image_preview_book (InfoDialog *info_win)
   gtk_container_add (GTK_CONTAINER (frame), table2);
   gtk_container_add (GTK_CONTAINER (alignment), frame); 
 
-  labelAvalue = gtk_label_new ("N/A");
+  labelAvalue = gtk_label_new (_("N/A"));
   gtk_widget_show (labelAvalue);
   gtk_table_attach (GTK_TABLE (table2), labelAvalue, 1, 2, 4, 5,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
-  labelBvalue = gtk_label_new ("N/A");
+  labelBvalue = gtk_label_new (_("N/A"));
   gtk_widget_show (labelBvalue);
   gtk_table_attach (GTK_TABLE (table2), labelBvalue, 1, 2, 3, 4,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
-  labelGvalue = gtk_label_new ("N/A");
+  labelGvalue = gtk_label_new (_("N/A"));
   gtk_widget_show (labelGvalue);
   gtk_table_attach (GTK_TABLE (table2), labelGvalue, 1, 2, 2, 3,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
-  labelRvalue = gtk_label_new ("N/A");
+  labelRvalue = gtk_label_new (_("N/A"));
   gtk_widget_show (labelRvalue);
   gtk_table_attach (GTK_TABLE (table2), labelRvalue, 1, 2, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
-  labelA = gtk_label_new ("A:");
+  labelA = gtk_label_new (_("A:"));
   gtk_widget_show (labelA);
   gtk_table_attach (GTK_TABLE (table2), labelA, 0, 1, 4, 5,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
-  labelB = gtk_label_new ("B:");
+  labelB = gtk_label_new (_("B:"));
   gtk_widget_show (labelB);
   gtk_table_attach (GTK_TABLE (table2), labelB, 0, 1, 3, 4,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
-  labelG = gtk_label_new ("G:");
+  labelG = gtk_label_new (_("G:"));
   gtk_widget_show (labelG);
   gtk_table_attach (GTK_TABLE (table2), labelG, 0, 1, 2, 3,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
-  labelR = gtk_label_new ("R:");
+  labelR = gtk_label_new (_("R:"));
   gtk_widget_show (labelR);
   gtk_table_attach (GTK_TABLE (table2), labelR, 0, 1, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -227,7 +227,6 @@ info_window_image_preview_book (InfoDialog *info_win)
 					 dropper_xpm);
   pixmapwid = gtk_pixmap_new (pixmap, mask);
 
-  gtk_misc_set_alignment (GTK_MISC (pixmapwid), 0.2, 0.2);
   gtk_table_attach (GTK_TABLE (table2), pixmapwid, 0, 2, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (pixmapwid);
@@ -417,7 +416,7 @@ info_window_update (InfoDialog *info_win,
   unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
   unit_digits = gimp_unit_get_digits (gdisp->gimage->unit);
   g_snprintf (format_buf, sizeof (format_buf),
-	      "%%d x %%d pixels (%%.%df x %%.%df %s)",
+	      _("%%d x %%d pixels (%%.%df x %%.%df %s)"),
 	      unit_digits + 1, unit_digits + 1,
 	      gimp_unit_get_symbol (gdisp->gimage->unit));
   g_snprintf (iwd->dimensions_str, MAX_BUF, format_buf,

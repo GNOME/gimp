@@ -1,3 +1,10 @@
+Wed Oct 27 02:03:47 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/info_window.c
+	* app/ops_buttons.c: cosmetic changes
+
+	* pixmaps/*.xpm: cropped most of the icons to their minimum size
+
 1999-10-26  Michael Natterer  <mitch@gimp.org>
 
 	Put the active tool, brush, pattern and gradient to the context

@@ -36,39 +36,24 @@ ops_button_box_new (GtkWidget     *parent,
 {
   GtkWidget *button;
   GtkWidget *button_box;
-  GtkWidget *box;
-  GtkWidget *pixmapwid;
+  GtkWidget *pixmap_widget;
   GdkPixmap *pixmap;
   GdkBitmap *mask;
   GtkStyle  *style;
   GSList    *group = NULL;
-  GSList    *box_list = NULL;
-  GSList    *list;
-  gint       max_width = 0;
-  gint       width;
-  gint       height;
   
   gtk_widget_realize (parent);
   style = gtk_widget_get_style (parent);
 
-  button_box = gtk_hbox_new (FALSE, 1);
+  button_box = gtk_hbox_new (TRUE, 1);
 
   while (ops_button->xpm_data)
     {
-      box = gtk_hbox_new (FALSE, 0);
-      gtk_container_set_border_width (GTK_CONTAINER (box), 0);
-      
       pixmap = gdk_pixmap_create_from_xpm_d (parent->window,
 					     &mask,
 					     &style->bg[GTK_STATE_NORMAL],
 					     ops_button->xpm_data);
-      gdk_window_get_size (pixmap, &width, &height);
-      max_width = MAX (max_width, width);
-
-      pixmapwid = gtk_pixmap_new (pixmap, mask);
-      gtk_box_pack_start (GTK_BOX (box), pixmapwid, TRUE, TRUE, 1);
-      gtk_widget_show (pixmapwid);
-      box_list = g_slist_prepend (box_list, box);
+      pixmap_widget = gtk_pixmap_new (pixmap, mask);
 
       switch (ops_type)
 	{
@@ -83,11 +68,11 @@ ops_button_box_new (GtkWidget     *parent,
 	  break;
 	default :
 	  button = NULL; /*stop compiler complaints */
-	  g_error("ops_button_box_new: unknown type %d\n",ops_type);
+	  g_error("ops_button_box_new: unknown type %d\n", ops_type);
 	  break;
 	}
 
-      gtk_container_add (GTK_CONTAINER (button), box);
+      gtk_container_add (GTK_CONTAINER (button), pixmap_widget);
       
       if (ops_button->ext_callbacks == NULL)
 	{
@@ -108,6 +93,7 @@ ops_button_box_new (GtkWidget     *parent,
 
       gtk_box_pack_start (GTK_BOX(button_box), button, TRUE, TRUE, 0); 
 
+      gtk_widget_show (pixmap_widget);
       gtk_widget_show (button);
 
       ops_button->widget = button;
@@ -115,13 +101,6 @@ ops_button_box_new (GtkWidget     *parent,
 
       ops_button++;
     }
-
-  for (list = box_list; list; list = list->next)
-    {
-      gtk_widget_set_usize (GTK_WIDGET (list->data), max_width, -1);
-      gtk_widget_show (GTK_WIDGET (list->data));
-    }
-  g_slist_free (box_list);
   
   return (button_box);
 }
