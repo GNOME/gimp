@@ -40,11 +40,6 @@ static char ident[] = "@(#) GIMP Film plug-in v1.04 1999-10-08";
 #include <string.h>
 #include <ctype.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -83,10 +78,10 @@ typedef struct
 /* Data to use for the dialog */
 typedef struct
 {
-  GtkObject *advanced_adj[7];
-  GtkWidget *image_list_all;
-  GtkWidget *image_list_film;
-  gint       run;
+  GtkObject    *advanced_adj[7];
+  GtkTreeModel *image_list_all;
+  GtkTreeModel *image_list_film;
+  gint          run;
 } FilmInterface;
 
 
@@ -112,7 +107,7 @@ static gchar   * compose_image_name (gint32          image_ID);
 
 static gint32    film               (void);
 
-static gint      check_filmvals     (void);
+static gboolean  check_filmvals     (void);
 
 static void      convert_to_rgb     (GimpDrawable   *srcdrawable,
 				     gint            numpix,
@@ -123,7 +118,7 @@ static void      set_pixels         (gint            numpix,
 				     guchar         *dst,
 				     GimpRGB        *color);
 
-static gint      scale_layer        (gint32          src_layer,
+static gboolean  scale_layer        (gint32          src_layer,
 				     gint            src_x0,
 				     gint            src_y0,
 				     gint            src_width,
@@ -151,15 +146,15 @@ static void      draw_number        (gint32          layer_ID,
 				     gint            height);
 
 
-static void        add_list_item_callback (GtkWidget *widget,
-					   GtkWidget *list);
-static void        del_list_item_callback (GtkWidget *widget,
-					   GtkWidget *list);
+static void        add_list_item_callback (GtkWidget        *widget,
+					   GtkTreeSelection *sel);
+static void        del_list_item_callback (GtkWidget        *widget,
+					   GtkTreeSelection *sel);
 
-static GtkWidget * add_image_list         (gboolean   add_box_flag,
-					   gint       n,
-					   gint32    *image_id,
-					   GtkWidget *hbox);
+static GtkTreeModel * add_image_list      (gboolean          add_box_flag,
+					   gint              n,
+					   gint32           *image_id,
+					   GtkWidget        *hbox);
 
 static gint        film_dialog               (gint32     image_ID);
 static void        film_ok_callback          (GtkWidget *widget,
@@ -334,7 +329,7 @@ run (gchar      *name,
       break;
     }
 
-  if (check_filmvals () < 0)
+  if (! check_filmvals ())
     status = GIMP_PDB_CALLING_ERROR;
 
   if (status == GIMP_PDB_SUCCESS)
@@ -524,9 +519,9 @@ film (void)
 
 	  layer_ID_src = layers[k];
 	  /* Scale the layer and insert int new image */
-	  if (scale_layer (layer_ID_src, 0, 0, width, height,
-			   layer_ID_dst, picture_x0, picture_y0,
-			   picture_width, picture_height) < 0)
+	  if (! scale_layer (layer_ID_src, 0, 0, width, height,
+                             layer_ID_dst, picture_x0, picture_y0,
+                             picture_width, picture_height))
 	    {
 	      printf ("film: error during scale_layer\n");
 	      return -1;
@@ -573,8 +568,8 @@ film (void)
 }
 
 /* Check filmvals. Unreasonable values are reset to a default. */
-/* If this is not possible, -1 is returned. Otherwise 0 is returned. */
-static gint
+/* If this is not possible, FALSE is returned. Otherwise TRUE is returned. */
+static gboolean
 check_filmvals (void)
 {
   if (filmvals.film_height < 10)
@@ -587,9 +582,9 @@ check_filmvals (void)
     strcpy (filmvals.number_fontf, "courier");
 
   if (filmvals.num_images < 1)
-    return -1;
+    return FALSE;
 
-  return 0;
+  return TRUE;
 }
 
 /* Converts numpix pixels from src to RGB at dst */
@@ -667,7 +662,7 @@ convert_to_rgb (GimpDrawable *srcdrawable,
    default:
      printf ("convert_to_rgb: unknown image type\n");
      break;
- }
+   }
 }
 
 /* Assigns numpix pixels starting at dst with color r,g,b */
@@ -694,8 +689,8 @@ set_pixels (gint     numpix,
 }
 
 /* Scales a portion of a layer and places it in another layer. */
-/* On success, 0 is returned. Otherwise -1 is returned */
-static gint
+/* On success, TRUE is returned. Otherwise FALSE is returned */
+static gboolean
 scale_layer (gint32  src_layer,
 	     gint    src_x0,
 	     gint    src_y0,
@@ -795,7 +790,7 @@ scale_layer (gint32  src_layer,
 
   gimp_drawable_detach (dst_drawable);
 
-  return 0;
+  return TRUE;
 }
 
 /* Create the RGB-pixels that make up the hole */
@@ -968,7 +963,7 @@ create_new_image (gchar          *filename,
                   GimpDrawable  **drawable,
                   GimpPixelRgn   *pixel_rgn)
 {
-  gint32 image_ID;
+  gint32            image_ID;
   GimpImageBaseType gitype;
 
   if ((gdtype == GIMP_GRAY_IMAGE) || (gdtype == GIMP_GRAYA_IMAGE))
@@ -1014,77 +1009,100 @@ compose_image_name (gint32 image_ID)
 }
 
 static void
-add_list_item_callback (GtkWidget *widget,
-                        GtkWidget *list)
+add_list_item_callback (GtkWidget        *widget,
+                        GtkTreeSelection *sel)
 {
-  GList     *tmp_list;
-  GtkWidget *label;
-  GtkWidget *list_item;
+  GtkTreeModel *model;
+  GList        *paths;
+  GList        *list;
 
-  tmp_list = GTK_LIST (list)->selection;
+  paths = gtk_tree_selection_get_selected_rows (sel, &model);
 
-  while (tmp_list)
+  for (list = paths; list; list = g_list_next (list))
     {
-      if ((label = (GtkWidget *) tmp_list->data) != NULL)
-	{
+      GtkTreeIter iter;
+
+      if (gtk_tree_model_get_iter (model, &iter, list->data))
+        {
 	  gint32  image_ID; 
           gchar  *name;
 
-          image_ID = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (label),
-                                                         "image"));
-          name = compose_image_name (image_ID);
+          gtk_tree_model_get (model, &iter,
+                              0, &image_ID,
+                              1, &name,
+                              -1);
 
-	  list_item = gtk_list_item_new_with_label (name);
-	  g_object_set_data (G_OBJECT (list_item), "image",
-                             GINT_TO_POINTER (image_ID));
+          gtk_list_store_append (GTK_LIST_STORE (filmint.image_list_film),
+                                 &iter);
+
+          gtk_list_store_set (GTK_LIST_STORE (filmint.image_list_film),
+                              &iter,
+                              0, image_ID,
+                              1, name,
+                              -1);
 
           g_free (name);
-
-	  gtk_container_add (GTK_CONTAINER (filmint.image_list_film),
-                             list_item);
-	  gtk_widget_show (list_item);
 	}
 
-      tmp_list = tmp_list->next;
+      gtk_tree_path_free (list->data);
     }
+
+  g_list_free (paths);
 }
 
 static void
-del_list_item_callback (GtkWidget *widget,
-                        GtkWidget *list)
+del_list_item_callback (GtkWidget        *widget,
+                        GtkTreeSelection *sel)
 {
-  GList *tmp_list;
-  GList *clear_list;
+  GtkTreeModel *model;
+  GList        *paths;
+  GList        *references = NULL;
+  GList        *list;
 
-  tmp_list = GTK_LIST (list)->selection;
-  clear_list = NULL;
+  paths = gtk_tree_selection_get_selected_rows (sel, &model);
 
-  while (tmp_list)
+  for (list = paths; list; list = g_list_next (list))
     {
-      clear_list = g_list_prepend (clear_list, tmp_list->data);
-      tmp_list = tmp_list->next;
+      GtkTreeRowReference *ref;
+
+      ref = gtk_tree_row_reference_new (model, list->data);
+      references = g_list_prepend (references, ref);
+      gtk_tree_path_free (list->data);
     }
 
-  clear_list = g_list_reverse (clear_list);
+  g_list_free (paths);
 
-  gtk_list_remove_items (GTK_LIST (list), clear_list);
+  for (list = references; list; list = g_list_next (list))
+    {
+      GtkTreePath *path;
+      GtkTreeIter  iter;
 
-  g_list_free (clear_list);
+      path = gtk_tree_row_reference_get_path (list->data);
+
+      if (gtk_tree_model_get_iter (model, &iter, path))
+        gtk_list_store_remove (GTK_LIST_STORE (model), &iter);
+
+      gtk_tree_path_free (path);
+      gtk_tree_row_reference_free (list->data);
+    }
+
+  g_list_free (references);
 }
 
-static GtkWidget *
+static GtkTreeModel *
 add_image_list (gboolean   add_box_flag,
                 gint       n,
                 gint32    *image_id,
                 GtkWidget *hbox)
 {
-  GtkWidget *vbox;
-  GtkWidget *label;
-  GtkWidget *scrolled_win;
-  GtkWidget *list;
-  GtkWidget *list_item;
-  GtkWidget *button;
-  gint       i;
+  GtkWidget        *vbox;
+  GtkWidget        *label;
+  GtkWidget        *scrolled_win;
+  GtkWidget        *tv;
+  GtkWidget        *button;
+  GtkListStore     *store;
+  GtkTreeSelection *sel;
+  gint              i;
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
@@ -1098,31 +1116,48 @@ add_image_list (gboolean   add_box_flag,
   gtk_widget_show (label);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
+                                       GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (vbox), scrolled_win, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_win);
 
-  list = gtk_list_new ();
-  gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_BROWSE);
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
-					 list);
-  gtk_widget_show (list);
+  store = gtk_list_store_new (2, G_TYPE_INT, G_TYPE_STRING);
+  tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
+  g_object_unref (store);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), scrolled_win);
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tv), FALSE);
+
+  if (! add_box_flag)
+    gtk_tree_view_set_reorderable (GTK_TREE_VIEW (tv), TRUE);
+
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv), 0, NULL,
+                                               gtk_cell_renderer_text_new (),
+                                               "text", 1,
+                                               NULL);
+
+  gtk_container_add (GTK_CONTAINER (scrolled_win), tv);
+  gtk_widget_show (tv);
+
+  sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
+  gtk_tree_selection_set_mode (sel, GTK_SELECTION_MULTIPLE);
 
   for (i = 0; i < n; i++)
     {
-      gchar *name = compose_image_name (image_id[i]);
+      GtkTreeIter  iter;
+      gchar       *name;
 
-      list_item = gtk_list_item_new_with_label (name);
+      gtk_list_store_append (store, &iter);
+
+      name = compose_image_name (image_id[i]);
+
+      gtk_list_store_set (store, &iter,
+                          0, image_id[i],
+                          1, name,
+                          -1);
 
       g_free (name);
-
-      g_object_set_data (G_OBJECT (list_item), "image",
-                         GINT_TO_POINTER (image_id[i]));
-      gtk_container_add (GTK_CONTAINER (list), list_item);
-      gtk_widget_show (list_item);
     }
 
   button = gtk_button_new_from_stock (add_box_flag ?
@@ -1134,9 +1169,9 @@ add_image_list (gboolean   add_box_flag,
                     add_box_flag ?
                     G_CALLBACK (add_list_item_callback) :
                     G_CALLBACK (del_list_item_callback),
-                    list);
+                    sel);
 
-  return list;
+  return GTK_TREE_MODEL (store);
 }
 
 static void
@@ -1492,29 +1527,26 @@ static void
 film_ok_callback (GtkWidget *widget,
                   gpointer   data)
 {
-  gint         num_images;
-  GtkWidget   *label;
-  GList       *tmp_list;
-  gint32       image_ID;
+  gint        num_images = 0;
+  gboolean    iter_valid;
+  GtkTreeIter iter;
 
-  /* Read image list */
-  num_images = 0;
-  if (filmint.image_list_film != NULL)
+  for (iter_valid = gtk_tree_model_get_iter_first (filmint.image_list_film,
+                                                   &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (filmint.image_list_film, &iter))
     {
-      for (tmp_list = GTK_LIST (filmint.image_list_film)->children;
-	   tmp_list;
-	   tmp_list = g_list_next (tmp_list))
-	{
-	  if ((label = (GtkWidget *) tmp_list->data) != NULL)
-	    {
-	      image_ID = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (label),
-                                                             "image"));
-	      if ((image_ID >= 0) && (num_images < MAX_FILM_PICTURES))
-		filmvals.image[num_images++] = image_ID;
-	    }
-	}
-      filmvals.num_images = num_images;
+      gint image_ID;
+
+      gtk_tree_model_get (filmint.image_list_film, &iter,
+                          0, &image_ID,
+                          -1);
+
+      if ((image_ID >= 0) && (num_images < MAX_FILM_PICTURES))
+        filmvals.image[num_images++] = image_ID;
     }
+
+  filmvals.num_images = num_images;
 
   filmint.run = TRUE;
 
