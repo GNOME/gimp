@@ -1,5 +1,13 @@
 2005-03-21  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/dialogs-actions.h: bail out if
+	widgets/gimpaction.group.h has not been included beforehand.
+
+	* app/actions/actions.c: include widgets/gimpaction.group.h. Fixes
+	build with amd64/gcc-4.0 (Debian bug report #300227).
+
+2005-03-21  Sven Neumann  <sven@gimp.org>
+
 	* etc/controllerrc: fixed defaults for mouse wheel controller (bug
 	#171083, fix spotted by Michael Schumacher).
 
