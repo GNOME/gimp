@@ -1,5 +1,23 @@
 2004-07-27  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/Makefile.am
+	* libgimp/gimp.h
+	* libgimp/gimpui.h
+	* libgimp/gimppalettemenu.[ch]
+	* libgimp/gimppaletteselect.[ch]: added palette select wrapper and
+	widget (straight copy & string replace of the font select stuff).
+	Fixes bug #136130.
+
+	* plug-ins/script-fu/script-fu-enums.h
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/siod-wrapper.c: added SF_PALETTE so it can
+	be used in scripts.
+
+	* plug-ins/script-fu/scripts/test-sphere.scm: added a palette
+	parameter to the test script.
+
+2004-07-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage.c (gimp_image_finalize): remove the image
 	from the image hash table and set its "gimp" pointer to NULL
 	*after* all layers, channels, vectors and the selection are

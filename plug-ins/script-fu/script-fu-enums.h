@@ -38,13 +38,14 @@ typedef enum
   SF_GRADIENT,
   SF_FILENAME,
   SF_DIRNAME,
-  SF_OPTION
+  SF_OPTION,
+  SF_PALETTE
 } SFArgType;
 
 typedef enum
 {
   SF_SLIDER = 0,
-  SF_SPINNER  
+  SF_SPINNER
 } SFAdjustmentType;
 
 #endif /*  __SCRIPT_FU_ENUMS__  */

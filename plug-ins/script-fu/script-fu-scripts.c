@@ -100,6 +100,7 @@ typedef union
   SFFilename     sfa_file;
   gchar         *sfa_font;
   gchar         *sfa_gradient;
+  gchar         *sfa_palette;
   gchar         *sfa_pattern;
   SFBrush        sfa_brush;
   SFOption       sfa_option;
@@ -189,6 +190,9 @@ static void       script_fu_gradient_callback   (const gchar      *name,
                                                  gboolean          closing,
                                                  gpointer          data);
 static void       script_fu_font_callback       (const gchar      *name,
+                                                 gboolean          closing,
+                                                 gpointer          data);
+static void       script_fu_palette_callback    (const gchar      *name,
                                                  gboolean          closing,
                                                  gpointer          data);
 static void       script_fu_brush_callback      (const gchar      *name,
@@ -539,6 +543,19 @@ script_fu_add_script (LISP a)
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
+		case SF_PALETTE:
+		  if (!TYPEP (car (a), tc_string))
+		    return my_err ("script-fu-register: palette defaults must be string values", NIL);
+		  script->arg_defaults[i].sfa_palette =
+                    g_strdup (get_c_string (car (a)));
+		  script->arg_values[i].sfa_palette =
+                    g_strdup (script->arg_defaults[i].sfa_palette);
+
+		  args[i + 1].type = GIMP_PDB_STRING;
+		  args[i + 1].name = "palette";
+		  args[i + 1].description = script->arg_labels[i];
+		  break;
+
 		case SF_PATTERN:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: pattern defaults must be string values", NIL);
@@ -835,6 +852,7 @@ script_fu_script_proc (const gchar      *name,
 		    break;
 
 		  case SF_FONT:
+                  case SF_PALETTE:
 		  case SF_PATTERN:
 		  case SF_GRADIENT:
 		  case SF_BRUSH:
@@ -905,6 +923,7 @@ script_fu_script_proc (const gchar      *name,
                           break;
 
                         case SF_FONT:
+                        case SF_PALETTE:
                         case SF_PATTERN:
                         case SF_GRADIENT:
                         case SF_BRUSH:
@@ -1032,6 +1051,11 @@ script_fu_free_script (SFScript *script)
 	    case SF_FONT:
 	      g_free (script->arg_defaults[i].sfa_font);
 	      g_free (script->arg_values[i].sfa_font);
+	      break;
+
+	    case SF_PALETTE:
+	      g_free (script->arg_defaults[i].sfa_palette);
+	      g_free (script->arg_values[i].sfa_palette);
 	      break;
 
 	    case SF_PATTERN:
@@ -1329,6 +1353,13 @@ script_fu_interface (SFScript *script)
                                                 &script->arg_values[i].sfa_font);
 	  break;
 
+	case SF_PALETTE:
+	  widget = gimp_palette_select_widget_new (_("Script-Fu Palette Selection"),
+                                                   script->arg_values[i].sfa_palette,
+                                                   script_fu_palette_callback,
+                                                   &script->arg_values[i].sfa_palette);
+	  break;
+
 	case SF_PATTERN:
           leftalign = TRUE;
 	  widget = gimp_pattern_select_widget_new (_("Script-fu Pattern Selection"),
@@ -1418,6 +1449,10 @@ script_fu_interface_quit (SFScript *script)
   	gimp_font_select_widget_close (sf_interface->args_widgets[i]);
 	break;
 
+      case SF_PALETTE:
+  	gimp_palette_select_widget_close (sf_interface->args_widgets[i]);
+	break;
+
       case SF_PATTERN:
   	gimp_pattern_select_widget_close (sf_interface->args_widgets[i]);
 	break;
@@ -1481,6 +1516,17 @@ static void
 script_fu_font_callback (const gchar *name,
                          gboolean     closing,
                          gpointer     data)
+{
+  gchar **fname = data;
+
+  g_free (*fname);
+  *fname = g_strdup (name);
+}
+
+static void
+script_fu_palette_callback (const gchar *name,
+                            gboolean     closing,
+                            gpointer     data)
 {
   gchar **fname = data;
 
@@ -1592,6 +1638,10 @@ script_fu_ok (SFScript *script)
           length += strlen (script->arg_values[i].sfa_font) + 3;
           break;
 
+        case SF_PALETTE:
+          length += strlen (script->arg_values[i].sfa_palette) + 3;
+          break;
+
         case SF_PATTERN:
           length += strlen (script->arg_values[i].sfa_pattern) + 3;
           break;
@@ -1695,6 +1745,12 @@ script_fu_ok (SFScript *script)
         case SF_FONT:
           g_snprintf (buffer, sizeof (buffer), "\"%s\"",
                       script->arg_values[i].sfa_font);
+          text = buffer;
+          break;
+
+        case SF_PALETTE:
+          g_snprintf (buffer, sizeof (buffer), "\"%s\"",
+                      script->arg_values[i].sfa_palette);
           text = buffer;
           break;
 
@@ -1811,6 +1867,11 @@ script_fu_reset (SFScript *script)
         case SF_FONT:
           gimp_font_select_widget_set (widget,
                                        script->arg_defaults[i].sfa_font);
+          break;
+
+        case SF_PALETTE:
+          gimp_palette_select_widget_set (widget,
+                                          script->arg_defaults[i].sfa_palette);
           break;
 
         case SF_PATTERN:

@@ -175,6 +175,8 @@ libgimp_2_0_la_SOURCES = \
 	gimpimage.h		\
 	gimplayer.c		\
 	gimplayer.h		\
+	gimppaletteselect.c	\
+	gimppaletteselect.h	\
 	gimppatternselect.c	\
 	gimppatternselect.h	\
 	gimppixelfetcher.c	\
@@ -208,6 +210,8 @@ libgimpui_2_0_la_SOURCES = \
 	gimpfontmenu.h		\
 	gimpgradientmenu.c 	\
 	gimpgradientmenu.h 	\
+	gimppalettemenu.c	\
+	gimppalettemenu.h	\
 	gimppatternmenu.c	\
 	gimppatternmenu.h	\
 	gimpdrawablecombobox.c	\
@@ -232,6 +236,7 @@ gimpinclude_HEADERS = \
 	gimpgradientselect.h	\
 	gimpimage.h		\
 	gimplayer.h		\
+	gimppaletteselect.h	\
 	gimppatternselect.h	\
 	gimppixelfetcher.h	\
 	gimppixelrgn.h		\
@@ -247,6 +252,7 @@ gimpinclude_HEADERS = \
 	gimpbrushmenu.h		\
 	gimpfontmenu.h		\
 	gimpgradientmenu.h	\
+	gimppalettemenu.h	\
 	gimppatternmenu.h	\
 	gimppixbuf.h		\
 	gimpdrawablecombobox.h	\

@@ -397,6 +397,7 @@ init_constants (void)
   setvar (cintern ("SF-BRUSH"),       flocons (SF_BRUSH),      NIL);
   setvar (cintern ("SF-GRADIENT"),    flocons (SF_GRADIENT),   NIL);
   setvar (cintern ("SF-OPTION"),      flocons (SF_OPTION),     NIL);
+  setvar (cintern ("SF-PALETTE"),     flocons (SF_PALETTE),    NIL);
 
   /* for SF_ADJUSTMENT */
   setvar (cintern ("SF-SLIDER"),      flocons (SF_SLIDER),     NIL);

@@ -1,6 +1,8 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
+ * gimppaletteselect.h
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -17,36 +19,24 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_UI_H__
-#define __GIMP_UI_H__
-
-#include <gtk/gtk.h>
-
-#include <libgimpwidgets/gimpwidgets.h>
-
-#include <libgimp/gimpuitypes.h>
-
-#include <libgimp/gimpexport.h>
-#include <libgimp/gimpmenu.h>
-#include <libgimp/gimpbrushmenu.h>
-#include <libgimp/gimpfontmenu.h>
-#include <libgimp/gimpgradientmenu.h>
-#include <libgimp/gimppalettemenu.h>
-#include <libgimp/gimppatternmenu.h>
-#include <libgimp/gimppixbuf.h>
-#include <libgimp/gimpdrawablecombobox.h>
-#include <libgimp/gimpimagecombobox.h>
-
+#ifndef __GIMP_PALETTE_SELECT_H__
+#define __GIMP_PALETTE_SELECT_H__
 
 G_BEGIN_DECLS
 
-/* For information look into the C source or the html documentation */
+
+typedef void (* GimpRunPaletteCallback)   (const gchar *palette_name,
+                                           gboolean     dialog_closing,
+                                           gpointer     user_data);
 
 
-void gimp_ui_init (const gchar *prog_name,
-		   gboolean     preview);
+const gchar * gimp_palette_select_new     (const gchar            *title,
+                                           const gchar            *palette_name,
+                                           GimpRunPaletteCallback  callback,
+                                           gpointer                data);
+void          gimp_palette_select_destroy (const gchar            *palette_callback);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_UI_H__ */
+#endif /* __GIMP_PALETTE_SELECT_H__ */

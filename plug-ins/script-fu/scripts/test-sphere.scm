@@ -229,6 +229,7 @@
 		    SF-TOGGLE     "Gradient reverse"   FALSE
 		    SF-FONT       "Font"               "Agate"
 		    SF-ADJUSTMENT "Font size (pixels)" '(50 1 1000 1 10 0 1)
+		    SF-PALETTE    "Palette"            "Default"
 		    SF-FILENAME   "Environment map"
 		                  (string-append ""
 						 gimp-data-dir

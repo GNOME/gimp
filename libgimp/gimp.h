@@ -38,6 +38,7 @@
 #include <libgimp/gimpgradientselect.h>
 #include <libgimp/gimpimage.h>
 #include <libgimp/gimplayer.h>
+#include <libgimp/gimppaletteselect.h>
 #include <libgimp/gimppatternselect.h>
 #include <libgimp/gimppixelfetcher.h>
 #include <libgimp/gimppixelrgn.h>

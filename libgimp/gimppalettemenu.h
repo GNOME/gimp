@@ -1,6 +1,8 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
+ * gimppalettemenu.h
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -17,36 +19,22 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_UI_H__
-#define __GIMP_UI_H__
-
-#include <gtk/gtk.h>
-
-#include <libgimpwidgets/gimpwidgets.h>
-
-#include <libgimp/gimpuitypes.h>
-
-#include <libgimp/gimpexport.h>
-#include <libgimp/gimpmenu.h>
-#include <libgimp/gimpbrushmenu.h>
-#include <libgimp/gimpfontmenu.h>
-#include <libgimp/gimpgradientmenu.h>
-#include <libgimp/gimppalettemenu.h>
-#include <libgimp/gimppatternmenu.h>
-#include <libgimp/gimppixbuf.h>
-#include <libgimp/gimpdrawablecombobox.h>
-#include <libgimp/gimpimagecombobox.h>
-
+#ifndef __GIMP_PALETTE_MENU_H__
+#define __GIMP_PALETTE_MENU_H__
 
 G_BEGIN_DECLS
 
-/* For information look into the C source or the html documentation */
 
+GtkWidget * gimp_palette_select_widget_new   (const gchar            *title,
+                                              const gchar            *palette_name,
+                                              GimpRunPaletteCallback  callback,
+                                              gpointer                data);
 
-void gimp_ui_init (const gchar *prog_name,
-		   gboolean     preview);
+void        gimp_palette_select_widget_close (GtkWidget              *widget);
+void        gimp_palette_select_widget_set   (GtkWidget              *widget,
+                                              const gchar            *palette_name);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_UI_H__ */
+#endif /* __GIMP_PALETTE_MENU_H__ */
