@@ -18,15 +18,12 @@
 #ifndef __CLONE_H__
 #define __CLONE_H__
 
-#include "paint_core.h"
-#include "procedural_db.h"
-#include "tools.h"
+struct _tool;
+struct _ProcRecord;
 
-void *        clone_paint_func  (PaintCore *, GimpDrawable *, int);
-Tool *        tools_new_clone   (void);
-void          tools_free_clone  (Tool *);
+struct _tool *  tools_new_clone   (void);
+void            tools_free_clone  (struct _tool *);
 
-/*  Procedure definition and marshalling function  */
-extern ProcRecord clone_proc;
+extern struct _ProcRecord clone_proc;
 
 #endif  /*  __CLONE_H__  */

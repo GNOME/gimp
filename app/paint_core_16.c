@@ -676,9 +676,9 @@ paint_core_16_area_original  (
          pag = pixelarea_process (pag))
       {
         if (pixelarea_data (&undoPR))
-          copy_area (&undoPR, &destPR);
+          ray_copy_area (&undoPR, &destPR);
         else
-          copy_area (&srcPR, &destPR);
+          ray_copy_area (&srcPR, &destPR);
       }
   }
   canvas_set_autoalloc (undo_tiles, TRUE);

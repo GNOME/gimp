@@ -34,8 +34,6 @@
 #include "tools.h"
 
 
-PaintCore16 non_gui_paint_core_16;
-
 
 /*  forward function declarations  */
 static void         paintbrush_motion      (PaintCore16 *, GimpDrawable *, double, gboolean, gboolean);

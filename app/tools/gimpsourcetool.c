@@ -17,18 +17,23 @@
  */
 #include <stdlib.h>
 #include <string.h>
+
 #include "appenv.h"
 #include "brushes.h"
-#include "drawable.h"
-#include "errors.h"
-#include "gdisplay.h"
-#include "gimage_mask.h"
-#include "interface.h"
-#include "paint_funcs.h"
-#include "paint_core.h"
-#include "patterns.h"
+#include "canvas.h"
 #include "clone.h"
-#include "selection.h"
+#include "draw_core.h"
+#include "drawable.h"
+#include "gimage.h"
+//#include "errors.h"
+#include "gdisplay.h"
+//#include "gimage_mask.h"
+#include "interface.h"
+#include "paint_core_16.h"
+#include "patterns.h"
+#include "pixelarea.h"
+#include "procedural_db.h"
+// #include "selection.h"
 #include "tools.h"
 
 #define TARGET_HEIGHT  15
@@ -42,9 +47,7 @@ typedef enum
 
 /*  forward function declarations  */
 static void         clone_draw            (Tool *);
-static void         clone_motion          (PaintCore *, GimpDrawable *, GimpDrawable *, CloneType, int, int);
-static void	    clone_line_image      (GImage *, GImage *, GimpDrawable *, GimpDrawable *, unsigned char *,
-					   unsigned char *, int, int, int, int);
+static void         clone_motion          (PaintCore16 *, GimpDrawable *, GimpDrawable *, CloneType, int, int);
 static void         clone_line_pattern    (GImage *, GimpDrawable *, GPatternP, unsigned char *,
 					   int, int, int, int);
 
@@ -75,6 +78,260 @@ static int          trans_tx, trans_ty;       /*  transformed target  */
 static int          src_gdisp_ID = -1;        /*  ID of source gdisplay  */
 static GimpDrawable * src_drawable_ = NULL;   /*  source drawable */
 static CloneOptions *clone_options = NULL;
+
+
+/*
+     This stuff was my "super-smart" copy_area().  i've just moved it
+     here for the moment until we make a decision on Paint, PixelRow,
+     and so on.
+*/
+#include "pixelrow.h"
+
+static void
+copy_row_u8_rgb_to_u8_rgb (
+                           PixelRow * src_row,
+                           PixelRow * dest_row
+                           )
+{
+  int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
+  Tag stag = pixelrow_tag (src_row);
+  Tag dtag = pixelrow_tag (dest_row);
+
+  if (tag_alpha (stag) == tag_alpha (dtag))
+    {
+      memcpy (pixelrow_data (dest_row),
+              pixelrow_data (src_row),
+              w * tag_bytes (stag));
+    }
+  else
+    {
+      guchar * s = pixelrow_data (src_row);
+      guchar * d = pixelrow_data (dest_row);
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = s[0];
+            d[1] = s[1];
+            d[2] = s[2];
+            d[3] = 255;
+            s += 3;
+            d += 4;
+          }
+      else
+        while (w--)
+          {
+            d[0] = s[0];
+            d[1] = s[1];
+            d[2] = s[2];
+            s += 4;
+            d += 3;
+          }
+    }
+}
+
+static void 
+copy_row_u8_gray_to_u8_rgb  (
+                             PixelRow * src_row,
+                             PixelRow * dest_row
+                             )
+{
+  int w = MIN (pixelrow_width (src_row), pixelrow_width (dest_row));
+  Tag stag = pixelrow_tag (src_row);
+  Tag dtag = pixelrow_tag (dest_row);
+  guchar * s = pixelrow_data (src_row);
+  guchar * d = pixelrow_data (dest_row);
+
+  if (tag_alpha (stag) == ALPHA_YES)
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = s[0];
+            d[3] = s[1];
+            s += 2;
+            d += 4;
+          }
+      else
+        while (w--)
+          {
+            if (s[1] < 128)
+              d[0] = d[1] = d[2] = 0;
+            else
+              d[0] = d[1] = d[2] = s[0];
+            s += 2;
+            d += 3;
+          }
+    }
+  else
+    {
+      if (tag_alpha (dtag) == ALPHA_YES)
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = s[0];
+            d[3] = 255;
+            s += 1;
+            d += 4;
+          }
+      else
+        while (w--)
+          {
+            d[0] = d[1] = d[2] = s[0];
+            s += 1;
+            d += 3;
+          }
+    }
+}
+
+
+static void
+copy_row_u8_rgb_to_u8 (
+                       PixelRow * src_row,
+                       PixelRow * dest_row
+                       )
+{
+  switch (tag_format (pixelrow_tag (dest_row)))
+    {
+    case FORMAT_RGB:
+      copy_row_u8_rgb_to_u8_rgb (src_row, dest_row);
+      break;
+    case FORMAT_GRAY:
+    case FORMAT_INDEXED:
+    case FORMAT_NONE:
+      g_warning ("doh in copy_row_u8_rgb_to_u8()");
+      break;	
+    }
+}
+
+static void 
+copy_row_u8_gray_to_u8  (
+                         PixelRow * src_row,
+                         PixelRow * dest_row
+                         )
+{
+  switch (tag_format (pixelrow_tag (dest_row)))
+    {
+    case FORMAT_RGB:
+      copy_row_u8_gray_to_u8_rgb (src_row, dest_row);
+      break;
+    case FORMAT_GRAY:
+    case FORMAT_INDEXED:
+    case FORMAT_NONE:
+      g_warning ("doh in copy_row_u8_gray_to_u8()");
+      break;	
+    }
+}
+
+static void
+copy_row_u8_rgb (
+                 PixelRow * src_row,
+                 PixelRow * dest_row
+                 )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      copy_row_u8_rgb_to_u8 (src_row, dest_row);
+      break;
+    case PRECISION_U16:
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      g_warning ("doh in copy_row_u8_rgb()");
+      break;	
+    }
+}
+
+static void 
+copy_row_u8_gray  (
+                   PixelRow * src_row,
+                   PixelRow * dest_row
+                   )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      copy_row_u8_gray_to_u8 (src_row, dest_row);
+      break;
+    case PRECISION_U16:
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      g_warning ("doh in copy_row_u8_gray()");
+      break;	
+    }
+}
+
+static void
+copy_row_u8 (
+             PixelRow * src_row,
+             PixelRow * dest_row
+             )
+{
+  switch (tag_format (pixelrow_tag (src_row)))
+    {
+    case FORMAT_RGB:
+      copy_row_u8_rgb (src_row, dest_row);
+      break;
+    case FORMAT_GRAY:
+      copy_row_u8_gray (src_row, dest_row);
+      break;
+    case FORMAT_INDEXED:
+    case FORMAT_NONE:
+      g_warning ("doh in copy_row_u8()");
+      break;	
+    }
+}
+
+static void
+copy_row (
+          PixelRow * src_row,
+          PixelRow * dest_row
+          )
+{
+  switch (tag_precision (pixelrow_tag (src_row)))
+    {
+    case PRECISION_U8:
+      copy_row_u8 (src_row, dest_row);
+      break;
+    case PRECISION_U16:
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      g_warning ("doh in copy_row()");
+      break;	
+    }
+}
+
+void 
+ray_copy_area  (
+                PixelArea * src_area,
+                PixelArea * dest_area
+                )
+{
+  PixelRow srow;
+  PixelRow drow;
+  void * pag;
+  
+  for (pag = pixelarea_register (2, src_area, dest_area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      int h = pixelarea_height (src_area);
+      while (h--)
+        {
+          pixelarea_getdata (src_area, &srow, h);
+          pixelarea_getdata (dest_area, &drow, h);
+          copy_row (&srow, &drow);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
 
 
 static void
@@ -166,7 +423,7 @@ create_clone_options (void)
 }
 
 void *
-clone_paint_func (PaintCore *paint_core,
+clone_paint_func (PaintCore16 *paint_core,
 		  GimpDrawable *drawable,
 		  int        state)
 {
@@ -266,14 +523,14 @@ Tool *
 tools_new_clone ()
 {
   Tool * tool;
-  PaintCore * private;
+  PaintCore16 * private;
 
   if (! clone_options)
     clone_options = create_clone_options ();
 
-  tool = paint_core_new (CLONE);
+  tool = paint_core_16_new (CLONE);
 
-  private = (PaintCore *) tool->private;
+  private = (PaintCore16 *) tool->private;
   private->paint_func = clone_paint_func;
   private->core->draw_func = clone_draw;
 
@@ -283,15 +540,15 @@ tools_new_clone ()
 void
 tools_free_clone (Tool *tool)
 {
-  paint_core_free (tool);
+  paint_core_16_free (tool);
 }
 
 static void
 clone_draw (Tool *tool)
 {
-  PaintCore * paint_core;
+  PaintCore16 * paint_core;
 
-  paint_core = (PaintCore *) tool->private;
+  paint_core = (PaintCore16 *) tool->private;
 
   if (clone_options->type == ImageClone)
     {
@@ -304,185 +561,166 @@ clone_draw (Tool *tool)
     }
 }
 
-static void
-clone_motion (PaintCore *paint_core,
-	      GimpDrawable *drawable,
-	      GimpDrawable *src_drawable,
-	      CloneType  type,
-	      int        offset_x,
-	      int        offset_y)
+
+
+static int 
+clone_motion_image  (
+                     PaintCore16 * paint_core,
+                     Canvas * painthit,
+                     GimpDrawable * drawable,
+                     GimpDrawable * src_drawable,
+                     int x,
+                     int y
+                     )
 {
-  GImage *gimage;
-  GImage *src_gimage;
-  unsigned char * s;
-  unsigned char * d;
-  TempBuf * orig;
-  TempBuf * area;
-  void * pr;
-  int y;
-  int x1, y1, x2, y2;
-  int has_alpha;
-  PixelRegion srcPR, destPR;
-  GPatternP pattern;
+  GImage * src_gimage = drawable_gimage (src_drawable);
+  GImage * gimage = drawable_gimage (drawable);
+  int rc = FALSE;
 
-  pr      = NULL;
-  pattern = NULL;
-
-  /*  Make sure we still have a source!  */
-  if ((! (src_gimage = drawable_gimage (src_drawable)) && type == ImageClone) ||
-      ! (gimage = drawable_gimage (drawable)))
-    return;
-
-  /*  Get a region which can be used to paint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
-    return;
-
-  /*  Determine whether the source image has an alpha channel  */
-  has_alpha = drawable_has_alpha (src_drawable);
-
-  switch (type)
+  if (gimage && src_gimage)
     {
-    case ImageClone:
-      /*  Set the paint area to transparent  */
-      memset (temp_buf_data (area), 0, area->width * area->height * area->bytes);
-
-      /*  If the source gimage is different from the destination,
-       *  then we should copy straight from the destination image
-       *  to the canvas.
-       *  Otherwise, we need a call to get_orig_image to make sure
-       *  we get a copy of the unblemished (offset) image
-       */
+      PixelArea srcPR, destPR;
+      int x1, y1, x2, y2;
+    
       if (src_drawable != drawable)
-	{
-	  x1 = BOUNDS (area->x + offset_x, 0, drawable_width (src_drawable));
-	  y1 = BOUNDS (area->y + offset_y, 0, drawable_height (src_drawable));
-	  x2 = BOUNDS (area->x + offset_x + area->width,
-		       0, drawable_width (src_drawable));
-	  y2 = BOUNDS (area->y + offset_y + area->height,
-		       0, drawable_height (src_drawable));
-
-	  if (!(x2 - x1) || !(y2 - y1))
-	    return;
-
-	  pixel_region_init (&srcPR, drawable_data (src_drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-	}
+        {
+          x1 = BOUNDS (x,
+                       0, drawable_width (src_drawable));
+          y1 = BOUNDS (y,
+                       0, drawable_height (src_drawable));
+          x2 = BOUNDS (x + canvas_width (painthit),
+                       0, drawable_width (src_drawable));
+          y2 = BOUNDS (y + canvas_height (painthit),
+                       0, drawable_height (src_drawable));
+          if (!(x2 - x1) || !(y2 - y1))
+            return FALSE;
+          
+          pixelarea_init (&srcPR, drawable_data_canvas (src_drawable), NULL,
+                          x1, y1, (x2 - x1), (y2 - y1), FALSE);
+        }
       else
-	{
-	  x1 = BOUNDS (area->x + offset_x, 0, drawable_width (drawable));
-	  y1 = BOUNDS (area->y + offset_y, 0, drawable_height (drawable));
-	  x2 = BOUNDS (area->x + offset_x + area->width,
-		       0, drawable_width (drawable));
-	  y2 = BOUNDS (area->y + offset_y + area->height,
-		       0, drawable_height (drawable));
+        {
+          Canvas * orig;
+          
+          x1 = BOUNDS (x,
+                       0, drawable_width (drawable));
+          y1 = BOUNDS (y,
+                       0, drawable_height (drawable));
+          x2 = BOUNDS (x + canvas_width (painthit),
+                       0, drawable_width (drawable));
+          y2 = BOUNDS (y + canvas_height (painthit),
+                       0, drawable_height (drawable));
+          if (!(x2 - x1) || !(y2 - y1))
+            return FALSE;
 
-	  if (!(x2 - x1) || !(y2 - y1))
-	    return;
+          orig = paint_core_16_area_original (paint_core, drawable,
+                                              x1, y1, x2, y2);
+          pixelarea_init (&srcPR, orig, NULL,
+                          0, 0, (x2 - x1), (y2 - y1), FALSE);
+        }
+      
+      pixelarea_init (&destPR, painthit, NULL,
+                      (x1 - x), (y1 - y), (x2 - x1), (y2 - y1), TRUE);
 
-	  /*  get the original image  */
-	  orig = paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2);
-
-	  srcPR.bytes = orig->bytes;
-	  srcPR.x = 0; srcPR.y = 0;
-	  srcPR.w = x2 - x1;
-	  srcPR.h = y2 - y1;
-	  srcPR.rowstride = srcPR.bytes * orig->width;
-	  srcPR.data = temp_buf_data (orig);
-	}
-
-      offset_x = x1 - (area->x + offset_x);
-      offset_y = y1 - (area->y + offset_y);
-
-      /*  configure the destination  */
-      destPR.bytes = area->bytes;
-      destPR.x = 0; destPR.y = 0;
-      destPR.w = srcPR.w;
-      destPR.h = srcPR.h;
-      destPR.rowstride = destPR.bytes * area->width;
-      destPR.data = temp_buf_data (area) + offset_y * destPR.rowstride +
-	offset_x * destPR.bytes;
-
-      pr = pixel_regions_register (2, &srcPR, &destPR);
-      break;
-
-    case PatternClone:
-      pattern = get_active_pattern ();
-
-      if (!pattern)
-	return;
-
-      destPR.bytes = area->bytes;
-      destPR.x = 0; destPR.y = 0;
-      destPR.w = area->width;
-      destPR.h = area->height;
-      destPR.rowstride = destPR.bytes * area->width;
-      destPR.data = temp_buf_data (area);
-
-      pr = pixel_regions_register (1, &destPR);
-      break;
+      ray_copy_area (&srcPR, &destPR);
+      
+      rc = TRUE;
     }
-
-  for (; pr != NULL; pr = pixel_regions_process (pr))
-    {
-      s = srcPR.data;
-      d = destPR.data;
-      for (y = 0; y < destPR.h; y++)
-	{
-	  switch (type)
-	    {
-	    case ImageClone:
-	      clone_line_image (gimage, src_gimage, drawable, src_drawable, s, d,
-				has_alpha, srcPR.bytes, destPR.bytes, destPR.w);
-	      s += srcPR.rowstride;
-	      break;
-	    case PatternClone:
-	      clone_line_pattern (gimage, drawable, pattern, d,
-				  area->x + offset_x, area->y + y + offset_y,
-				  destPR.bytes, destPR.w);
-	      break;
-	    }
-
-	  d += destPR.rowstride;
-	}
-    }
-
-  /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_paste_canvas (paint_core, drawable, OPAQUE_OPACITY,
-			   (int) (get_brush_opacity () * 255),
-			   get_brush_paint_mode (), SOFT, CONSTANT);
+  return rc;
 }
 
-static void
-clone_line_image (GImage        *dest,
-		  GImage        *src,
-		  GimpDrawable  *d_drawable,
-		  GimpDrawable  *s_drawable,
-		  unsigned char *s,
-		  unsigned char *d,
-		  int            has_alpha,
-		  int            src_bytes,
-		  int            dest_bytes,
-		  int            width)
+
+static int 
+clone_motion_pattern  (
+                       PaintCore16 * paint_core,
+                       Canvas * painthit,
+                       GimpDrawable * drawable,
+                       GPatternP pattern,
+                       int x,
+                       int y
+                       )
 {
-  unsigned char rgb[3];
-  int src_alpha, dest_alpha;
-
-  src_alpha = src_bytes - 1;
-  dest_alpha = dest_bytes - 1;
-
-  while (width--)
+  GImage * gimage;
+  int rc = FALSE;
+  
+  gimage = drawable_gimage (drawable);
+  if (gimage)
     {
-      gimage_get_color (src, drawable_type (s_drawable), rgb, s);
-      gimage_transform_color (dest, d_drawable, rgb, d, RGB);
+      PixelArea destPR;
+      void * pag;
 
-      if (has_alpha)
-	d[dest_alpha] = s[src_alpha];
-      else
-	d[dest_alpha] = OPAQUE_OPACITY;
+      pixelarea_init (&destPR, painthit, NULL,
+                      0, 0, 0, 0, TRUE);
+      
+      for (pag = pixelarea_register (1, &destPR);
+           pag != NULL;
+           pag = pixelarea_process (pag))
+        {
+#if 0
+          guchar * d = destPR.data;
+          int y1;
+          
+          for (y1 = 0; y1 < destPR.h; y1++)
+            {
+              clone_line_pattern (gimage, drawable, pattern, d,
+                                  x, y + y1,
+                                  destPR.bytes, destPR.w);
+              d += destPR.rowstride;
+            }
+#endif
+        }
+      rc = TRUE;
+    }
 
-      s += src_bytes;
-      d += dest_bytes;
+  return rc;
+}
+
+
+static void 
+clone_motion  (
+               PaintCore16 * paint_core,
+               GimpDrawable * drawable,
+               GimpDrawable * src_drawable,
+               CloneType type,
+               int offset_x,
+               int offset_y
+               )
+{
+  Canvas * painthit = paint_core_16_area (paint_core, drawable);
+  int rc = FALSE;
+
+  if (painthit)
+    {
+      switch (type)
+        {
+        case ImageClone:
+          {
+            rc = clone_motion_image (paint_core, painthit,
+                                     drawable, src_drawable,
+                                     paint_core->x + offset_x,
+                                     paint_core->y + offset_y);
+          }
+          break;
+        case PatternClone:
+          {
+            GPatternP pattern;
+            if ((pattern = get_active_pattern ()))
+              rc = clone_motion_pattern (paint_core, painthit,
+                                         drawable, pattern,
+                                         paint_core->x + offset_x,
+                                         paint_core->y + offset_y);
+          }
+          break;
+        }
+      
+      if (rc == TRUE)
+        paint_core_16_area_paste (paint_core, drawable,
+                                  1.0, (gfloat) get_brush_opacity (),
+                                  SOFT, CONSTANT,
+                                  get_brush_paint_mode ());
     }
 }
+
 
 static void
 clone_line_pattern (GImage        *dest,
@@ -494,6 +732,7 @@ clone_line_pattern (GImage        *dest,
 		    int            bytes,
 		    int            width)
 {
+#if 0
   unsigned char *pat, *p;
   int color, alpha;
   int i;
@@ -521,10 +760,11 @@ clone_line_pattern (GImage        *dest,
 
       d += bytes;
     }
+#endif
 }
 
 static void *
-clone_non_gui_paint_func (PaintCore *paint_core,
+clone_non_gui_paint_func (PaintCore16 *paint_core,
 			  GimpDrawable *drawable,
 			  int        state)
 {
@@ -670,39 +910,39 @@ clone_invoker (Argument *args)
 
   if (success)
     /*  init the paint core  */
-    success = paint_core_init (&non_gui_paint_core, drawable,
-			       stroke_array[0], stroke_array[1]);
+    success = paint_core_16_init (&non_gui_paint_core_16, drawable,
+                                  stroke_array[0], stroke_array[1]);
 
   if (success)
     {
       /*  set the paint core's paint func  */
-      non_gui_paint_core.paint_func = clone_non_gui_paint_func;
+      non_gui_paint_core_16.paint_func = clone_non_gui_paint_func;
 
-      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
-      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
+      non_gui_paint_core_16.startx = non_gui_paint_core_16.lastx = stroke_array[0];
+      non_gui_paint_core_16.starty = non_gui_paint_core_16.lasty = stroke_array[1];
 
-      non_gui_offset_x = (int) (src_x - non_gui_paint_core.startx);
-      non_gui_offset_y = (int) (src_y - non_gui_paint_core.starty);
+      non_gui_offset_x = (int) (src_x - non_gui_paint_core_16.startx);
+      non_gui_offset_y = (int) (src_y - non_gui_paint_core_16.starty);
 
       if (num_strokes == 1)
-	clone_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
+	clone_non_gui_paint_func (&non_gui_paint_core_16, drawable, 0);
 
       for (i = 1; i < num_strokes; i++)
 	{
-	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
-	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
+	  non_gui_paint_core_16.curx = stroke_array[i * 2 + 0];
+	  non_gui_paint_core_16.cury = stroke_array[i * 2 + 1];
 
-	  paint_core_interpolate (&non_gui_paint_core, drawable);
+	  paint_core_16_interpolate (&non_gui_paint_core_16, drawable);
 
-	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
-	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
+	  non_gui_paint_core_16.lastx = non_gui_paint_core_16.curx;
+	  non_gui_paint_core_16.lasty = non_gui_paint_core_16.cury;
 	}
 
       /*  finish the painting  */
-      paint_core_finish (&non_gui_paint_core, drawable, -1);
+      paint_core_16_finish (&non_gui_paint_core_16, drawable, -1);
 
       /*  cleanup  */
-      paint_core_cleanup ();
+      paint_core_16_cleanup ();
     }
 
   return procedural_db_return_args (&clone_proc, success);
