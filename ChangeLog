@@ -1,3 +1,10 @@
+2002-09-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/color-select.c
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimptoolbox.c: removed some leftover GtkTargetEntry
+	arrays.
+
 2002-09-03  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gimpressionist/ppmtool.c (saveppm): merged fix for
@@ -6,7 +13,7 @@
 2002-09-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpviewable.c: small speedup: use
-	g_object_[get|set]_qdata() instead of g_object_[set|set]_data().
+	g_object_[get|set]_qdata() instead of g_object_[get|set]_data().
 
 2002-09-02  Michael Natterer  <mitch@gimp.org>
 

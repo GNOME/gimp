@@ -102,18 +102,6 @@ static void       toolbox_drop_buffer           (GtkWidget      *widget,
 
 static GimpDockClass *parent_class = NULL;
 
-static GtkTargetEntry toolbox_target_table[] =
-{
-  GIMP_TARGET_URI_LIST,
-  GIMP_TARGET_TEXT_PLAIN,
-  GIMP_TARGET_NETSCAPE_URL,
-  GIMP_TARGET_LAYER,
-  GIMP_TARGET_CHANNEL,
-  GIMP_TARGET_LAYER_MASK,
-  GIMP_TARGET_TOOL,
-  GIMP_TARGET_BUFFER
-};
-
 
 GType
 gimp_toolbox_get_type (void)

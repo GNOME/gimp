@@ -208,14 +208,6 @@ static ColorSelectFillUpdateProc update_procs[] =
   color_select_update_green_blue,
 };
 
-/*  dnd stuff  */
-static GtkTargetEntry color_select_target_table[] =
-{
-  GIMP_TARGET_COLOR
-};
-static guint n_color_select_targets = (sizeof (color_select_target_table) /
-				       sizeof (color_select_target_table[0]));
-
 
 /*  Register the GIMP colour selector with the color notebook  */
 void

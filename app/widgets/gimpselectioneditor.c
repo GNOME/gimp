@@ -90,11 +90,6 @@ static gboolean  gimp_selection_editor_idle_render (GimpSelectionEditor *editor)
 
 static GimpEditorClass *parent_class = NULL;
 
-static GtkTargetEntry selection_editor_targets[] =
-{
-  GIMP_TARGET_COLOR
-};
-
 
 GType
 gimp_selection_editor_get_type (void)
