@@ -109,7 +109,7 @@ pixelarea_getdata  (
                     int row
                     )
 {
-  if (pa && (row >= 0) && (row < pa->h))
+  if (pa && pixelarea_data (pa) && (row >= 0) && (row < pa->h))
     pixelrow_init (pr,
                    pixelarea_tag (pa),
                    pixelarea_data (pa) + row * pixelarea_rowstride (pa),

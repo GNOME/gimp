@@ -2914,6 +2914,8 @@ swap_area  (
   Tag dest_tag = pixelarea_tag (dest_area); 
 
    /* put in tags check */
+  if (tag_equal (src_tag, dest_tag) == FALSE)
+    g_warning ("bad tags in swap_area...");
   
   for (pag = pixelarea_register (2, src_area, dest_area);
        pag != NULL;

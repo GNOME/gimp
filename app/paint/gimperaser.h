@@ -18,16 +18,13 @@
 #ifndef __ERASER_H__
 #define __ERASER_H__
 
-#include "paint_core.h"
-#include "procedural_db.h"
-#include "tools.h"
+struct _ProcRecord;
+struct _tool;
 
-void *        eraser_paint_func  (PaintCore *, GimpDrawable *, int);
-Tool *        tools_new_eraser   (void);
-void          tools_free_eraser  (Tool *);
+struct _tool * tools_new_eraser   (void);
+void           tools_free_eraser  (struct _tool *);
 
-/*  Procedure definition and marshalling function  */
-extern ProcRecord eraser_proc;
-extern ProcRecord eraser_extended_proc;
+extern struct _ProcRecord eraser_proc;
+extern struct _ProcRecord eraser_extended_proc;
 
 #endif  /*  __ERASER_H__  */

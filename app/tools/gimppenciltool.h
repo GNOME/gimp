@@ -18,15 +18,12 @@
 #ifndef __PENCIL_H__
 #define __PENCIL_H__
 
-#include "tools.h"
-#include "paint_core.h"
-#include "procedural_db.h"
+struct _ProcRecord;
+struct _tool;
 
-void *        pencil_paint_func  (PaintCore *, GimpDrawable *, int);
-Tool *        tools_new_pencil   (void);
-void          tools_free_pencil  (Tool *);
+struct _tool * tools_new_pencil   (void);
+void           tools_free_pencil  (struct _tool *);
 
-/*  Procedure definition and marshalling function  */
-extern ProcRecord pencil_proc;
+extern struct _ProcRecord pencil_proc;
 
 #endif  /*  __PENCIL_H__  */

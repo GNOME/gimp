@@ -23,14 +23,13 @@
 #include "canvas.h"
 #include "drawable.h"
 #include "errors.h"
-#include "gdisplay.h"
+#include "gimage.h"
 #include "paint.h"
 #include "paint_core_16.h"
 #include "paint_funcs_area.h"
 #include "paintbrush.h"
 #include "palette.h"
 #include "pixelarea.h"
-#include "selection.h"
 #include "tools.h"
 
 

@@ -18,15 +18,12 @@
 #ifndef __AIRBRUSH_H__
 #define __AIRBRUSH_H__
 
-#include "tools.h"
-#include "paint_core.h"
-#include "procedural_db.h"
+struct _ProcRecord;
+struct _tool;
 
-void *        airbrush_paint_func  (PaintCore *, GimpDrawable *, int);
-Tool *        tools_new_airbrush   (void);
-void          tools_free_airbrush  (Tool *);
+struct _tool * tools_new_airbrush   (void);
+void           tools_free_airbrush  (struct _tool *);
 
-/*  Procedure definition and marshalling function  */
-extern ProcRecord airbrush_proc;
+extern struct _ProcRecord airbrush_proc;
 
 #endif  /*  __AIRBRUSH_H__  */

@@ -15,29 +15,35 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+
 #include <stdlib.h>
+
 #include "appenv.h"
+#include "airbrush.h"
 #include "brushes.h"
+#include "canvas.h"
 #include "drawable.h"
 #include "errors.h"
-#include "gdisplay.h"
-#include "paint_funcs.h"
-#include "paint_core.h"
+#include "gdisplay.h" /* for airbrush_time_out() */
+#include "gimage.h"
+#include "paint.h"
+#include "paint_core_16.h"
+#include "paint_funcs_area.h"
 #include "palette.h"
-#include "airbrush.h"
-#include "selection.h"
+#include "pixelarea.h"
 #include "tools.h"
+
 
 typedef struct _AirbrushTimeout AirbrushTimeout;
 
 struct _AirbrushTimeout
 {
-  PaintCore *paint_core;
+  PaintCore16 *paint_core;
   GimpDrawable *drawable;
 };
 
 /*  forward function declarations  */
-static void         airbrush_motion   (PaintCore *, GimpDrawable *, double);
+static void         airbrush_motion   (PaintCore16 *, GimpDrawable *, double);
 static gint         airbrush_time_out (gpointer);
 static Argument *   airbrush_invoker  (Argument *);
 
@@ -137,10 +143,13 @@ create_airbrush_options (void)
   return options;
 }
 
-void *
-airbrush_paint_func (PaintCore *paint_core,
-		     GimpDrawable *drawable,
-		     int        state)
+
+void * 
+airbrush_paint_func  (
+                      PaintCore16 * paint_core,
+                      GimpDrawable * drawable,
+                      int state
+                      )
 {
   GBrushP brush;
 
@@ -185,28 +194,32 @@ airbrush_paint_func (PaintCore *paint_core,
 }
 
 
-Tool *
-tools_new_airbrush ()
+Tool * 
+tools_new_airbrush  (
+                     void
+                     )
 {
   Tool * tool;
-  PaintCore * private;
+  PaintCore16 * private;
 
   if (! airbrush_options)
     airbrush_options = create_airbrush_options ();
 
-  tool = paint_core_new (AIRBRUSH);
+  tool = paint_core_16_new (AIRBRUSH);
 
-  private = (PaintCore *) tool->private;
+  private = (PaintCore16 *) tool->private;
   private->paint_func = airbrush_paint_func;
 
   return tool;
 }
 
 
-void
-tools_free_airbrush (Tool *tool)
+void 
+tools_free_airbrush  (
+                      Tool * tool
+                      )
 {
-  paint_core_free (tool);
+  paint_core_16_free (tool);
 
   if (timer_state == ON)
     gtk_timeout_remove (timer);
@@ -231,46 +244,44 @@ airbrush_time_out (gpointer client_data)
 }
 
 
-static void
-airbrush_motion (PaintCore *paint_core,
-		 GimpDrawable *drawable,
-		 double     pressure)
+static void 
+airbrush_motion  (
+                  PaintCore16 * paint_core,
+                  GimpDrawable * drawable,
+                  double pressure
+                  )
 {
-  GImage *gimage;
-  TempBuf * area;
-  unsigned char col[MAX_CHANNELS];
+  Canvas * painthit;
+  PixelArea a;
+      
+  /* Get the working canvas */
+  painthit = paint_core_16_area (paint_core, drawable);
+  pixelarea_init (&a, painthit, NULL, 0, 0, 0, 0, TRUE);
 
-  if (!drawable) 
-    return;
-
-  if (! (gimage = drawable_gimage (drawable)))
-    return;
-
-  gimage_get_foreground (gimage, drawable, col);
-
-  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
-    return;
-
-  /*  color the pixels  */
-  col[area->bytes - 1] = OPAQUE_OPACITY;
-
-  /*  color the pixels  */
-  color_pixels (temp_buf_data (area), col,
-		area->width * area->height, area->bytes);
-
-  /*  paste the newly painted area to the image  */
-  paint_core_paste_canvas (paint_core, drawable,
-			   (int) (pressure * 2.55),
-			   (int) (get_brush_opacity () * 255),
-			   get_brush_paint_mode (),
-			   SOFT, CONSTANT);
+  /* construct the paint hit */
+  {
+    Paint * paint = paint_new (canvas_tag (painthit), drawable);
+    gimp16_palette_get_foreground (paint);
+    color_area (&a, paint);
+    paint_delete (paint);
+  }
+  
+  /* apply it to the image */
+  paint_core_16_area_paste (paint_core, drawable,
+                            (gfloat) pressure / 100.0,
+                            (gfloat) get_brush_opacity (),
+                            SOFT,
+                            CONSTANT,
+                            get_brush_paint_mode ());
 }
 
 
-static void *
-airbrush_non_gui_paint_func (PaintCore *paint_core,
-			     GimpDrawable *drawable,
-			     int        state)
+static void * 
+airbrush_non_gui_paint_func  (
+                              PaintCore16 * paint_core,
+                              GimpDrawable * drawable,
+                              int state
+                              )
 {
   airbrush_motion (paint_core, drawable, non_gui_pressure);
 
@@ -382,36 +393,36 @@ airbrush_invoker (Argument *args)
 
   if (success)
     /*  init the paint core  */
-    success = paint_core_init (&non_gui_paint_core, drawable,
+    success = paint_core_16_init (&non_gui_paint_core_16, drawable,
 			       stroke_array[0], stroke_array[1]);
 
   if (success)
     {
       /*  set the paint core's paint func  */
-      non_gui_paint_core.paint_func = airbrush_non_gui_paint_func;
+      non_gui_paint_core_16.paint_func = airbrush_non_gui_paint_func;
 
-      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
-      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
+      non_gui_paint_core_16.startx = non_gui_paint_core_16.lastx = stroke_array[0];
+      non_gui_paint_core_16.starty = non_gui_paint_core_16.lasty = stroke_array[1];
 
       if (num_strokes == 1)
-	airbrush_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
+	airbrush_non_gui_paint_func (&non_gui_paint_core_16, drawable, 0);
 
       for (i = 1; i < num_strokes; i++)
 	{
-	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
-	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
+	  non_gui_paint_core_16.curx = stroke_array[i * 2 + 0];
+	  non_gui_paint_core_16.cury = stroke_array[i * 2 + 1];
 
-	  paint_core_interpolate (&non_gui_paint_core, drawable);
+	  paint_core_16_interpolate (&non_gui_paint_core_16, drawable);
 
-	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
-	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
+	  non_gui_paint_core_16.lastx = non_gui_paint_core_16.curx;
+	  non_gui_paint_core_16.lasty = non_gui_paint_core_16.cury;
 	}
 
       /*  finish the painting  */
-      paint_core_finish (&non_gui_paint_core, drawable, -1);
+      paint_core_16_finish (&non_gui_paint_core_16, drawable, -1);
 
       /*  cleanup  */
-      paint_core_cleanup ();
+      paint_core_16_cleanup ();
     }
 
   return procedural_db_return_args (&airbrush_proc, success);
