@@ -168,7 +168,7 @@ void      Create_A_Preview        (GtkWidget  **,
 
 void      Create_A_Table_Entry    (GtkWidget  **,
 				   GtkWidget  *,
-				   char       *);
+				   const char *);
 
 GSList*   Button_In_A_Box        (GtkWidget  *,
 				  GSList     *,

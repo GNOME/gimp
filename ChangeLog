@@ -1,3 +1,10 @@
+2000-04-11  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/fp/fp.h
+	* plug-ins/fp_gtk.c: Used N_() and hopefully got this fixed.
+	non-English users please test Filter Pack. Tried de_DE OK.
+	If I didn't screw up this closes #6698, #8680.
+
 2000-04-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_cern.l

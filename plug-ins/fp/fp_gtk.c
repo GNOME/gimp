@@ -13,6 +13,25 @@
 
 #include "fp.h"
 
+/* These values are translated for the GUI but also used internally
+   to figure out which button the user pushed, etc.
+   Not my design, please don't blame me -- njl */
+
+static const char *hue_red=	N_("Red:");
+static const char *hue_green=	N_("Green:");
+static const char *hue_blue=	N_("Blue:");
+static const char *hue_cyan=	N_("Cyan:");
+static const char *hue_yellow=	N_("Yellow:");
+static const char *hue_magenta=	N_("Magenta:");
+
+static const char *val_darker=	N_("Darker:");
+static const char *val_lighter=	N_("Lighter:");
+
+static const char *sat_more=	N_("More Sat:");
+static const char *sat_less=	N_("Less Sat:");
+
+static const char *current_val= N_("Current:");
+
 AdvancedWindow AW = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
 extern FP_Params Current;
@@ -146,13 +165,13 @@ fp_create_circle_palette (void)
   Create_A_Preview (&centerPreview, &centerFrame,
 		    reduced->width, reduced->height);
 
-  Create_A_Table_Entry (&rVbox, rFrame, _("Red:"));
-  Create_A_Table_Entry (&gVbox, gFrame, _("Green:"));
-  Create_A_Table_Entry (&bVbox, bFrame, _("Blue:"));
-  Create_A_Table_Entry (&cVbox, cFrame, _("Cyan:"));
-  Create_A_Table_Entry (&yVbox, yFrame, _("Yellow:"));
-  Create_A_Table_Entry (&mVbox, mFrame, _("Magenta:"));
-  Create_A_Table_Entry (&centerVbox, centerFrame, _("Current:"));
+  Create_A_Table_Entry (&rVbox, rFrame, hue_red);
+  Create_A_Table_Entry (&gVbox, gFrame, hue_green);
+  Create_A_Table_Entry (&bVbox, bFrame, hue_blue);
+  Create_A_Table_Entry (&cVbox, cFrame, hue_cyan);
+  Create_A_Table_Entry (&yVbox, yFrame, hue_yellow);
+  Create_A_Table_Entry (&mVbox, mFrame, hue_magenta);
+  Create_A_Table_Entry (&centerVbox, centerFrame, current_val);
   
   gtk_table_attach (GTK_TABLE (table), rVbox, 8, 11 ,4 , 7,
 		    GTK_EXPAND , GTK_EXPAND, 0 ,0);
@@ -236,7 +255,7 @@ fp_create_range (void)
 			   GTK_SIGNAL_FUNC (fp_change_current_range),
 			   ShMidHi + MIDTONES,
 			   Current.Range == MIDTONES);
-  group=Button_In_A_Box (vbox, group, _("Highlights"), 
+  group = Button_In_A_Box (vbox, group, _("Highlights"), 
 			 GTK_SIGNAL_FUNC (fp_change_current_range),
 			 ShMidHi + HIGHLIGHTS,
 			 Current.Range == HIGHLIGHTS);
@@ -293,9 +312,9 @@ fp_create_lnd (void)
   Create_A_Preview (&darkerPreview, &darkerFrame,
 		    reduced->width, reduced->height);
  
-  Create_A_Table_Entry (&lighterVbox, lighterFrame, _("Lighter:"));
-  Create_A_Table_Entry (&middleVbox, middleFrame, _("Current:"));
-  Create_A_Table_Entry (&darkerVbox, darkerFrame, _("Darker:"));
+  Create_A_Table_Entry (&lighterVbox, lighterFrame, val_lighter);
+  Create_A_Table_Entry (&middleVbox, middleFrame, current_val);
+  Create_A_Table_Entry (&darkerVbox, darkerFrame, val_darker);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
@@ -342,9 +361,9 @@ fp_create_msnls (void)
   Create_A_Preview (&plusSatPreview, &moreFrame,
 		    reduced->width, reduced->height);
  
-  Create_A_Table_Entry (&moreVbox, moreFrame, _("More Sat:"));
-  Create_A_Table_Entry (&middleVbox, middleFrame, _("Current:"));
-  Create_A_Table_Entry (&lessVbox, lessFrame, _("Less Sat:"));
+  Create_A_Table_Entry (&moreVbox, moreFrame, sat_more);
+  Create_A_Table_Entry (&middleVbox, middleFrame, current_val);
+  Create_A_Table_Entry (&lessVbox, lessFrame, sat_less);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
@@ -546,15 +565,18 @@ Frames_Check_Button_In_A_Box (GtkWidget     *vbox,
 
 void
 Create_A_Table_Entry (GtkWidget **box,
-		      GtkWidget  *SmallerFrame,
-		      gchar      *description)
+		      GtkWidget *SmallerFrame,
+		      const gchar *description)
 {
   GtkWidget *label, *button, *table;
 
   *box = gtk_vbox_new (FALSE, 1);
   gtk_container_border_width (GTK_CONTAINER (*box), PR_BX_BRDR);
   gtk_widget_show (*box);
-  label = gtk_label_new (description);
+
+  /* Delayed translation applied here */
+  label = gtk_label_new (gettext(description));
+
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_widget_show (label);
 
@@ -566,12 +588,12 @@ Create_A_Table_Entry (GtkWidget **box,
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    0, 0, 0, 0);
 
-  if (strcmp (description, "Current:"))
+  if (description != current_val)
     {
       button = gtk_button_new ();
       gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			  GTK_SIGNAL_FUNC (selectionMade),
-			  description);
+			  (gchar *) description);
 
     gtk_container_add (GTK_CONTAINER (button), SmallerFrame);
     gtk_widget_show (button);
@@ -710,18 +732,27 @@ selectionMade (GtkWidget *widget,
 {
   Current.Touched[Current.ValueBy] = 1;
   
-  if      (!strcmp ("Red:", data))     Update_Current_FP (HUE, RED);
-  else if (!strcmp ("Green:", data))   Update_Current_FP (HUE, GREEN);
-  else if (!strcmp ("Blue:", data))    Update_Current_FP (HUE, BLUE);
-  else if (!strcmp ("Cyan:", data))    Update_Current_FP (HUE, CYAN);
-  else if (!strcmp ("Yellow:", data))  Update_Current_FP (HUE, YELLOW);
-  else if (!strcmp ("Magenta:", data)) Update_Current_FP (HUE, MAGENTA);
-  else if (!strcmp ("Darker:", data))  Update_Current_FP (VALUE, DOWN);
-  else if (!strcmp ("Lighter:", data)) Update_Current_FP (VALUE, UP);
-  else if (!strcmp ("More Sat:", data)) 
+  if (data == (gpointer) hue_red) {
+    Update_Current_FP (HUE, RED);
+  } else if (data == (gpointer) hue_green) {
+    Update_Current_FP (HUE, GREEN);
+  } else if (data == (gpointer) hue_blue) {
+    Update_Current_FP (HUE, BLUE);
+  } else if (data == (gpointer) hue_cyan) {
+    Update_Current_FP (HUE, CYAN);
+  } else if (data == (gpointer) hue_yellow) {
+    Update_Current_FP (HUE, YELLOW);
+  } else if (data == (gpointer) hue_magenta) {
+    Update_Current_FP (HUE, MAGENTA);
+  } else if (data == (gpointer) val_darker) {
+    Update_Current_FP (VALUE, DOWN);
+  } else if (data == (gpointer) val_lighter) {
+    Update_Current_FP (VALUE, UP);
+  } else if (data == (gpointer) sat_more) {
     Update_Current_FP (SATURATION, UP);
-  else if (!strcmp ("Less Sat:", data)) 
-    Update_Current_FP (SATURATION, DOWN );
+  } else if (data == (gpointer) sat_less) {
+    Update_Current_FP (SATURATION, DOWN);
+  }
 
   refreshPreviews (Current.VisibleFrames);
 }
