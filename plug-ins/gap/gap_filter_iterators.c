@@ -381,7 +381,7 @@ static void p_delta_LightSettings(t_LightSettings *val, t_LightSettings *val_fro
 #include "iter_ALT/mod/plug_in_despeckle_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_emboss_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_exchange_iter_ALT.inc"
-#include "iter_ALT/mod/plug_in_flame_iter_ALT.inc
+#include "iter_ALT/mod/plug_in_flame_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_lighting_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_map_object_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_maze_iter_ALT.inc"
