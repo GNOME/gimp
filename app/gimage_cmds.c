@@ -32,6 +32,8 @@
 #include "layer.h"
 #include "layer_pvt.h"
 
+#include "libgimp/gimplimits.h"
+
 static ProcRecord image_list_proc;
 static ProcRecord image_new_proc;
 static ProcRecord image_resize_proc;
@@ -3321,15 +3323,25 @@ static Argument *
 image_set_resolution_invoker (Argument *args)
 {
   gboolean success = TRUE;
+  gdouble xresolution, yresolution;
   GimpImage *gimage;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
-  gimage->xresolution = args[1].value.pdb_float;
+  xresolution = args[1].value.pdb_float;
+  yresolution = args[2].value.pdb_float;
 
-  gimage->yresolution = args[2].value.pdb_float;
+  if (xresolution < GIMP_MIN_RESOLUTION || xresolution > GIMP_MAX_RESOLUTION ||
+      yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
+    success = FALSE;
+
+  if (success)
+    {
+      gimage->xresolution = args[1].value.pdb_float;
+      gimage->yresolution = args[2].value.pdb_float;
+    }
 
   return procedural_db_return_args (&image_set_resolution_proc, success);
 }
