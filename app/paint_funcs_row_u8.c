@@ -45,6 +45,8 @@ color_row_u8 (
   guint8 *color        = (guint8*)paint_data (col);
   gint    num_channels = tag_num_channels ( pixelrow_tag (dest_row));
   gint    width        = pixelrow_width (dest_row);  
+
+  printf ("  coloring %d pixels with %d channels\n", width, num_channels);
   
   while (width--)
     {

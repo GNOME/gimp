@@ -18,15 +18,12 @@
 #ifndef __PAINTBRUSH_H__
 #define __PAINTBRUSH_H__
 
-#include "tools.h"
-#include "paint_core.h"
-#include "procedural_db.h"
+struct _tool;
+struct _ProcRecord;
 
-void *        paintbrush_paint_func  (PaintCore *, GimpDrawable *, int);
-Tool *        tools_new_paintbrush   (void);
-void          tools_free_paintbrush  (Tool *);
+struct _tool *  tools_new_paintbrush   (void);
+void            tools_free_paintbrush  (struct _tool *);
 
-/*  Procedure definition and marshalling function  */
-extern ProcRecord paintbrush_proc;
+extern struct _ProcRecord paintbrush_proc;
 
 #endif  /*  __PAINTBRUSH_H__  */

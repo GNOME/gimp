@@ -125,6 +125,35 @@ static MenuItem palette_ops[] =
   { NULL, 0, 0, NULL, NULL, NULL, NULL },
 };
 
+/* ------------------------------
+
+   experimental gimp16 stuff
+
+*/
+
+
+#include "tag.h"
+#include "paint.h"
+
+int
+gimp16_palette_get_foreground (
+                               Paint * p
+                               )
+{
+  Tag t = tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO);
+  return paint_load (p, t, foreground);
+}
+
+int
+gimp16_palette_get_background (
+                               Paint * p
+                               )
+{
+  Tag t = tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO);
+  return paint_load (p, t, background);
+}
+
+
 void
 palettes_init ()
 {

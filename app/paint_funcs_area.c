@@ -180,7 +180,7 @@ color_area  (
   void *  pag;
   Tag src_tag = pixelarea_tag (src_area); 
   Tag color_tag = paint_tag (color); 
-
+  
    /*put in tags check*/
 
   for (pag = pixelarea_register (1, src_area);
@@ -189,6 +189,7 @@ color_area  (
     {
       PixelRow row;
       gint h = pixelarea_height (src_area);
+      printf ("coloring %d rows\n", h);
       while (h--)
         {
           pixelarea_getdata (src_area, &row, h);

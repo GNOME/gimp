@@ -19,7 +19,6 @@
 #define __PAINT_CORE_16_H__
 
 
-
 /* Forward declarations */
 struct _Canvas;
 struct _DrawCore;

@@ -265,7 +265,7 @@ pixelarea_register (
   va_start (ap, num_areas);
   while (num_areas --)
     {
-      PixelArea *pa = va_arg (ap, PixelArea *);      
+      PixelArea * pa = va_arg (ap, PixelArea *);      
       pixelareagroup_addarea (pag, pa);
     }
   va_end (ap);
@@ -381,15 +381,9 @@ pixelareagroup_delete (
                        )
 {
   if (pag->pixelareas)
-    {
-      GList * list = pag->pixelareas;
-      while (list)
-        {
-          g_free (list->data);
-          list = g_list_next (list);
-        }
-      g_list_free (pag->pixelareas);
-    }
+    /* the data items are pointers to PixelAreas, which are always
+       located on the stack, so don;t free them... */
+    g_list_free (pag->pixelareas);
   g_free (pag);
 }
 

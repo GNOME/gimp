@@ -566,7 +566,7 @@ paint_core_16_no_draw  (
 Canvas * 
 paint_core_16_area  (
                      PaintCore16 * paint_core,
-                     GimpDrawable *drawable
+                     GimpDrawable * drawable
                      )
 {
   Tag   tag;
@@ -802,7 +802,7 @@ painthit_create_constant (
                           PaintCore16 * paint_core,
                           Canvas * brush_mask,
                           Paint * brush_opacity 
-)
+                          )
 {
   PixelArea srcPR, maskPR;
 
@@ -859,7 +859,7 @@ painthit_create_incremental (
                              PaintCore16 * paint_core,
                              Canvas * brush_mask,
                              Paint * brush_opacity 
-                            )
+                             )
 {
   PixelArea srcPR, maskPR;
 

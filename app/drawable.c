@@ -649,7 +649,8 @@ gimp_drawable_configure (GimpDrawable *drawable,
   drawable->has_alpha = alpha;
   drawable->offset_x = 0;
   drawable->offset_y = 0;
-
+  drawable->tag = tag_by_bytes (bpp);
+  
   if (drawable->tiles)
     tile_manager_destroy (drawable->tiles);
   drawable->tiles = tile_manager_new (width, height, bpp);

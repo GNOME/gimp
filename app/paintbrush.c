@@ -17,47 +17,59 @@
  */
 #include <stdlib.h>
 #include <math.h>
+
 #include "appenv.h"
 #include "brushes.h"
+#include "canvas.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
-#include "paint_funcs.h"
-#include "paint_core.h"
-#include "palette.h"
+#include "paint.h"
+#include "paint_core_16.h"
+#include "paint_funcs_area.h"
 #include "paintbrush.h"
+#include "palette.h"
+#include "pixelarea.h"
 #include "selection.h"
 #include "tools.h"
 
+
+PaintCore16 non_gui_paint_core_16;
+
+
 /*  forward function declarations  */
-static void         paintbrush_motion      (PaintCore *, GimpDrawable *, double);
+static void         paintbrush_motion      (PaintCore16 *, GimpDrawable *, double);
 static Argument *   paintbrush_invoker     (Argument *);
 
-static double non_gui_fade_out;
 
-
-/*  defines  */
-#define  PAINT_LEFT_THRESHOLD  0.05
-
+/* local types */
 typedef struct _PaintOptions PaintOptions;
 struct _PaintOptions
 {
   double fade_out;
 };
 
+
 /*  local variables  */
 static PaintOptions *paint_options = NULL;
+static double non_gui_fade_out;
 
 
-static void
-paintbrush_scale_update (GtkAdjustment *adjustment,
-			 double        *scale_val)
+
+static void 
+paintbrush_scale_update  (
+                          GtkAdjustment * adjustment,
+                          double * scale_val
+                          )
 {
   *scale_val = adjustment->value;
 }
 
-static PaintOptions *
-create_paint_options (void)
+
+static PaintOptions * 
+create_paint_options  (
+                       void
+                       )
 {
   PaintOptions *options;
   GtkWidget *vbox;
@@ -103,10 +115,13 @@ create_paint_options (void)
   return options;
 }
 
-void *
-paintbrush_paint_func (PaintCore *paint_core,
-		       GimpDrawable *drawable,
-		       int        state)
+
+static void * 
+paintbrush_paint_func  (
+                        PaintCore16 * paint_core,
+                        GimpDrawable * drawable,
+                        int state
+                        )
 {
   switch (state)
     {
@@ -128,82 +143,105 @@ paintbrush_paint_func (PaintCore *paint_core,
 }
 
 
-Tool *
-tools_new_paintbrush ()
+Tool * 
+tools_new_paintbrush  (
+                       void
+                       )
 {
   Tool * tool;
-  PaintCore * private;
+  PaintCore16 * private;
 
   if (! paint_options)
     paint_options = create_paint_options ();
 
-  tool = paint_core_new (PAINTBRUSH);
+  tool = paint_core_16_new (PAINTBRUSH);
 
-  private = (PaintCore *) tool->private;
+  private = (PaintCore16 *) tool->private;
   private->paint_func = paintbrush_paint_func;
 
   return tool;
 }
 
 
-void
-tools_free_paintbrush (Tool *tool)
+void 
+tools_free_paintbrush  (
+                        Tool * tool
+                        )
 {
-  paint_core_free (tool);
+  paint_core_16_free (tool);
 }
 
 
-void
-paintbrush_motion (PaintCore *paint_core,
-		   GimpDrawable *drawable,
-		   double     fade_out)
+static Paint *
+arg_float (
+           Tag t,
+           GimpDrawable *d,
+           float f
+           )
 {
-  GImage *gimage;
-  TempBuf * area;
-  double x, paint_left;
-  unsigned char blend = OPAQUE_OPACITY;
-  unsigned char col[MAX_CHANNELS];
+  Paint *p = paint_new (t, d);
+  paint_load (p, tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO), &f);
+  return p;
+}
 
-  if (! (gimage = drawable_gimage (drawable)))
-    return;
 
-  gimage_get_foreground (gimage, drawable, col);
+static void 
+paintbrush_motion  (
+                    PaintCore16 * paint_core,
+                    GimpDrawable * drawable,
+                    double fade_out
+                    )
+{
+  double     paint_left;
 
-  /*  Get a region which can be used to paint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
-    return;
-
-  /*  factor in the fade out value  */
+  /* model the paint left on the brush as a gaussian curve */
+  paint_left = 1;
   if (fade_out)
     {
-      /*  Model the amount of paint left as a gaussian curve  */
-      x = ((double) paint_core->distance / fade_out);
-      paint_left = exp (- x * x * 0.5);
-
-      blend = (int) (255 * paint_left);
+      paint_left = ((double) paint_core->distance / fade_out);
+      paint_left = exp (- paint_left * paint_left * 0.5);
     }
 
-  if (blend)
+  /* apply the next bit of remaining paint */
+  if (paint_left > 0.001)
     {
-      /*  set the alpha channel  */
-      col[area->bytes - 1] = OPAQUE_OPACITY;
+      Canvas * area;
+      PixelArea a;
+      
+      /* Get the working canvas */
+      area = paint_core_16_area (paint_core, drawable);
+      pixelarea_init (&a, area, NULL, 0, 0, 0, 0, TRUE);
 
-      /*  color the pixels  */
-      color_pixels (temp_buf_data (area), col,
-		    area->width * area->height, area->bytes);
+      /* construct the paint hit */
+      {
+        Paint * paint = paint_new (canvas_tag (area), drawable);
+        gimp16_palette_get_foreground (paint);
+        color_area (&a, paint);
+        paint_delete (paint);
+      }
 
-      /*  paste the newly painted canvas to the gimage which is being worked on  */
-      paint_core_paste_canvas (paint_core, drawable, blend,
-			       (int) (get_brush_opacity () * 255),
-			       get_brush_paint_mode (), SOFT, CONSTANT);
+      /* apply it to the image */
+      {
+        Tag tag = tag_new (canvas_precision (area), FORMAT_GRAY, ALPHA_NO);      
+        Paint * b_opac = arg_float (tag, drawable, (float) get_brush_opacity ());
+        Paint * i_opac = arg_float (tag, drawable, (float) paint_left);
+#if 0
+        paint_core_16_area_paste (paint_core, drawable, b_opac, i_opac,
+                                  SOFT, CONSTANT, get_brush_paint_mode ());
+#endif
+        paint_delete (b_opac);
+        paint_delete (i_opac);
+      }
     }
 }
 
 
-static void *
-paintbrush_non_gui_paint_func (PaintCore *paint_core,
-			       GimpDrawable *drawable,
-			       int        state)
+static void * 
+paintbrush_non_gui_paint_func  (
+                                PaintCore16 * paint_core,
+                                GimpDrawable * drawable,
+                                int state
+                                )
 {
   paintbrush_motion (paint_core, drawable, non_gui_fade_out);
 
@@ -259,8 +297,11 @@ ProcRecord paintbrush_proc =
   { { paintbrush_invoker } },
 };
 
-static Argument *
-paintbrush_invoker (Argument *args)
+
+static Argument * 
+paintbrush_invoker  (
+                     Argument * args
+                     )
 {
   int success = TRUE;
   GImage *gimage;
@@ -314,36 +355,36 @@ paintbrush_invoker (Argument *args)
 
   if (success)
     /*  init the paint core  */
-    success = paint_core_init (&non_gui_paint_core, drawable,
-			       stroke_array[0], stroke_array[1]);
+    success = paint_core_16_init (&non_gui_paint_core_16, drawable,
+                                  stroke_array[0], stroke_array[1]);
 
   if (success)
     {
       /*  set the paint core's paint func  */
-      non_gui_paint_core.paint_func = paintbrush_non_gui_paint_func;
+      non_gui_paint_core_16.paint_func = paintbrush_non_gui_paint_func;
 
-      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
-      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
+      non_gui_paint_core_16.startx = non_gui_paint_core_16.lastx = stroke_array[0];
+      non_gui_paint_core_16.starty = non_gui_paint_core_16.lasty = stroke_array[1];
 
       if (num_strokes == 1)
-	paintbrush_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
+	paintbrush_non_gui_paint_func (&non_gui_paint_core_16, drawable, 0);
 
       for (i = 1; i < num_strokes; i++)
 	{
-	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
-	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
+	  non_gui_paint_core_16.curx = stroke_array[i * 2 + 0];
+	  non_gui_paint_core_16.cury = stroke_array[i * 2 + 1];
 
-	  paint_core_interpolate (&non_gui_paint_core, drawable);
+	  paint_core_16_interpolate (&non_gui_paint_core_16, drawable);
 
-	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
-	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
+	  non_gui_paint_core_16.lastx = non_gui_paint_core_16.curx;
+	  non_gui_paint_core_16.lasty = non_gui_paint_core_16.cury;
 	}
 
       /*  finish the painting  */
-      paint_core_finish (&non_gui_paint_core, drawable, -1);
+      paint_core_16_finish (&non_gui_paint_core_16, drawable, -1);
 
       /*  cleanup  */
-      paint_core_cleanup ();
+      paint_core_16_cleanup ();
     }
 
   return procedural_db_return_args (&paintbrush_proc, success);
