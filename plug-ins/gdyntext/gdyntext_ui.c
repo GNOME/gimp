@@ -20,11 +20,17 @@
  * $Id$
  */
 
+#include "config.h"
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdio.h>
 #include <string.h>
 #include <gtk/gtk.h>
+
+#include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
+
 #include "gdyntext.h"
 #include "message_window.h"
 #include "charmap_window.h"
@@ -114,11 +120,11 @@ GtkWidget			*load_file_selection = NULL;
 gdouble				col[3];
 
 
-#define COLOR_PREVIEW_WIDTH				20
-#define COLOR_PREVIEW_HEIGHT			20
+#define COLOR_PREVIEW_WIDTH		20
+#define COLOR_PREVIEW_HEIGHT		20
 #define DEFAULT_FONT_PREVIEW_TEXT	"ABCDEFGHIJKLMNOPQRSTUVWXYZ"\
-																	"abcdefghijklmnopqrstuvwxyz"\
-																	"0123456789"
+  					"abcdefghijklmnopqrstuvwxyz"\
+					"0123456789"
 
 #define TO_RGB(val) ( \
 	((gint32)(val[0] * 255.0) << 16) + \

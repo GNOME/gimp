@@ -20,10 +20,16 @@
  * $Id$
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
+
+#include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
+
 #include "gdyntext.h"
 #include "font_selection.h"
 

@@ -20,14 +20,21 @@
  * $Id$
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <ctype.h>
 #include <gtk/gtk.h>
+
+#include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
+
 #include "gdyntext.h"
 #include "font_selection.h"
+
 
 
 static void gdt_query(void);
@@ -283,7 +290,7 @@ void gdt_save(GdtVals *data)
 	gimp_parasite_free(parasite);
 
 	if (!data->change_layer_name) {
-		gimp_layer_set_name(data->layer_id, _("GDynText Layer "));
+		gimp_layer_set_name(data->layer_id, _("GDynText Layer"));
 		gimp_displays_flush();
 		g_free(lname);
 		return;
@@ -305,11 +312,11 @@ void gdt_render_text(GdtVals *data)
 void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 {
 	gint layer_ox, layer_oy, i, nret_vals, xoffs;
-	gint32 layer_f, selection_empty, selection_channel;
-	gint32 text_width, text_height;
-  gint32 text_ascent, text_descent;
-  gint32 layer_width, layer_height;
-  gint32 image_width, image_height;
+	gint32 layer_f, selection_empty, selection_channel = -1;
+	gint32 text_width, text_height = 0;
+	gint32 text_ascent, text_descent;
+	gint32 layer_width, layer_height;
+	gint32 image_width, image_height;
 	gint32 space_width;
 	gfloat font_size;
 	gint32 font_size_type;

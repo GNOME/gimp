@@ -20,10 +20,10 @@
  * $Id$
  */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include "gdyntext.h"
+#include <glib.h>
+
+#include "gdyntextutil.h"
 
 
 /* substitution of '\' escaped sequences */

@@ -1,8 +1,12 @@
 2000-07-30  Sven Neumann  <sven@gimp.org>
 	
-	* plug-ins/gdyntext/gdyntext.c: 
-	* plug-ins/gdyntext/gdyntext_ui.c:
-	* plug-ins/gdyntext/gdyntextcompat.c: corrected various problems 
+	* plug-ins/gdyntext/charmap.c
+	* plug-ins/gdyntext/charmap_window.c
+	* plug-ins/gdyntext/font_selection.c
+	* plug-ins/gdyntext/gdyntext.[ch]
+	* plug-ins/gdyntext/gdyntext_ui.c
+	* plug-ins/gdyntext/gdyntextcompat.c
+	* plug-ins/gdyntext/gdyntextutil.c: corrected various problems 
 	with i18n
 	
 2000-07-30  Michael Natterer  <mitch@gimp.org>
