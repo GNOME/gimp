@@ -1,3 +1,9 @@
+Fri Dec 31 14:30:10 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/gif.c: small i18n fix
+	
+	* plug-ins/gap/gap_mov_dialog.c: s/snprintf/g_snprintf/
+
 Thu Dec 30 22:55:35 GMT 1999  Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/common/pcx.c: Teach it about .pcc files.

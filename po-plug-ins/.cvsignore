@@ -7,3 +7,4 @@ POTFILES
 cat-id-tbl.c
 gimp-std-plugins.pot
 stamp-cat-id
+messages

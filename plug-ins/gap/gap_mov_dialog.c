@@ -1081,13 +1081,18 @@ p_points_to_tab(t_mov_path_preview *path_ptr)
 
 void p_update_point_labels(t_mov_path_preview *path_ptr)
 { 
-  snprintf(&path_ptr->X_Label[0], LABEL_LENGTH, _("X [%d]: "), pvals->point_idx + 1);
-  snprintf(&path_ptr->Y_Label[0], LABEL_LENGTH, _("Y [%d]: "), pvals->point_idx + 1);
-  snprintf(&path_ptr->Opacity_Label[0], LABEL_LENGTH, _("Opacity [%d]: "), pvals->point_idx + 1);
-  snprintf(&path_ptr->Wresize_Label[0], LABEL_LENGTH, _("Width [%d]: "), pvals->point_idx + 1);
-  snprintf(&path_ptr->Hresize_Label[0], LABEL_LENGTH, _("Height [%d]: "), pvals->point_idx + 1);
-  snprintf(&path_ptr->Rotation_Label[0], LABEL_LENGTH, _("Rotate deg[%d]: "), pvals->point_idx + 1);
-
+  g_snprintf (&path_ptr->X_Label[0], LABEL_LENGTH, _("X [%d]: "), 
+	      pvals->point_idx + 1);
+  g_snprintf (&path_ptr->Y_Label[0], LABEL_LENGTH, _("Y [%d]: "), 
+	      pvals->point_idx + 1);
+  g_snprintf (&path_ptr->Opacity_Label[0], LABEL_LENGTH, _("Opacity [%d]: "), 
+	      pvals->point_idx + 1);
+  g_snprintf (&path_ptr->Wresize_Label[0], LABEL_LENGTH, _("Width [%d]: "), 
+	      pvals->point_idx + 1);
+  g_snprintf (&path_ptr->Hresize_Label[0], LABEL_LENGTH, _("Height [%d]: "), 
+	      pvals->point_idx + 1);
+  g_snprintf (&path_ptr->Rotation_Label[0], LABEL_LENGTH, _("Rotate deg[%d]: "), 
+	      pvals->point_idx + 1);
 
   if(NULL != path_ptr->X_LabelPtr)
   {  gtk_label_set(GTK_LABEL(path_ptr->X_LabelPtr),

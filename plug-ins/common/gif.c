@@ -952,8 +952,7 @@ save_image (char   *filename,
   if (run_mode != RUN_NONINTERACTIVE)
     {
       /* init the progress meter */    
-      temp_buf = g_malloc (strlen (filename) + 11);
-      sprintf (temp_buf, "Saving %s:", filename);
+      temp_buf = g_strdup_printf (_("Saving %s:"), filename);
       gimp_progress_init (temp_buf);
       g_free (temp_buf);
     }
@@ -963,7 +962,7 @@ save_image (char   *filename,
   outfile = fopen (filename, "wb");
   if (!outfile)
     {
-      g_message ("GIF: can't open %s\n", filename);
+      g_message (_("GIF: can't open %s\n"), filename);
       return FALSE;
     }
 
@@ -2453,7 +2452,7 @@ cl_hash (register count_int hsize)			/* reset code table */
 static void
 writeerr ()
 {
-  g_message ("GIF: error writing output file\n");
+  g_message (_("GIF: error writing output file\n"));
   return;
 }
 
@@ -2620,7 +2619,7 @@ comment_entry_callback (GtkWidget *widget,
   /* Temporary kludge for overlength strings - just return */
   if (ssize>240)
     {
-      g_message ("GIF save: Your comment string is too long.\n");
+      g_message (_("GIF save: Your comment string is too long.\n"));
       g_free(str);
       return;
     }
