@@ -1,3 +1,9 @@
+2002-02-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint-funcs/paint-funcs.[ch]: scale_region_no_resample() no
+	longer needs to be public, as we can call
+	scale_region(src, dest, GIMP_INTERPOLATION_NONE).
+
 2002-02-12  Nathan Summers  <rock@gimp.org>
 
         * app/plug-in/plug-in-rc.c: implement a new pluginrc flag,

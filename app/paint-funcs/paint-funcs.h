@@ -254,7 +254,7 @@ void  extract_from_inten_pixels           (guchar       *src,
 /*  extract information from indexed pixels based on
  *  a mask.
  */
-void  extract_from_indexed_pixels         (guchar *src,
+void  extract_from_indexed_pixels         (guchar       *src,
 					   guchar       *dest,
 					   const guchar *mask,
 					   const guchar *cmap,
@@ -270,7 +270,7 @@ void  extract_from_indexed_pixels         (guchar *src,
  *  src_type == 1  (GRAY)
  *  src_type == 2  (INDEXED)
  */
-void  map_to_color                        (guint                  src_type,
+void  map_to_color                        (guint         src_type,
 					   const guchar *cmap,
 					   const guchar *src,
 					   guchar       *rgb);
@@ -317,18 +317,16 @@ void  border_region                       (PixelRegion *, gint16, gint16);
 void  scale_region                        (PixelRegion *, PixelRegion *,
                                            GimpInterpolationType);
 
-void  scale_region_no_resample            (PixelRegion *, PixelRegion *);
-
 void  subsample_region                    (PixelRegion *, PixelRegion *,
 					   int);
 
 float shapeburst_region                   (PixelRegion *, PixelRegion *);
 
-void thin_region                           (PixelRegion *, gint16 xradius,
-					    gint16 yradius, int edge_lock);
+void  thin_region                         (PixelRegion *, gint16 xradius,
+                                           gint16 yradius, int edge_lock);
 
-void fatten_region                         (PixelRegion *, 
-					    gint16 xradius, gint16 yradius);
+void  fatten_region                       (PixelRegion *, 
+                                           gint16 xradius, gint16 yradius);
 
 void  swap_region                         (PixelRegion *, PixelRegion *);
 

@@ -2669,7 +2669,7 @@ gaussian_blur_region (PixelRegion *srcR,
 
 /* non-interpolating scale_region.  [adam]
  */
-void
+static void
 scale_region_no_resample (PixelRegion *srcPR,
 			  PixelRegion *destPR)
 {
