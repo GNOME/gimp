@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-04 02:48+0100\n"
-"PO-Revision-Date: 2004-01-27 16:11-0300\n"
+"POT-Creation-Date: 2004-02-04 14:55+0100\n"
+"PO-Revision-Date: 2004-02-04 12:50-0300\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -134,13 +134,11 @@ msgstr "  -s, --no-splash          No mostrar la ventana de inicio.\n"
 
 #: app/main.c:519
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-msgstr ""
-"  -S, --no-splash-image    No poner una imagen en la ventana de inicio.\n"
+msgstr "  -S, --no-splash-image    No poner una imagen en la ventana de inicio.\n"
 
 #: app/main.c:520
 msgid "  --session <name>         Use an alternate sessionrc file.\n"
-msgstr ""
-"  --session <nombre>         U so de un archivo de sesión alternativo.\n"
+msgstr "  --session <nombre>         U so de un archivo de sesión alternativo.\n"
 
 #: app/main.c:521
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
@@ -148,12 +146,10 @@ msgstr "  -g, --gimprc <gimprc>    Usar un archivo «gimprc» alternativo.\n"
 
 #: app/main.c:522
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr ""
-"  --system-gimprc <gimprc> Usar un archivo de sistema «gimprc» alternativo.\n"
+msgstr "  --system-gimprc <gimprc> Usar un archivo de sistema «gimprc» alternativo.\n"
 
 #: app/main.c:523
-msgid ""
-"  --dump-gimprc            Output a gimprc file with default settings.\n"
+msgid "  --dump-gimprc            Output a gimprc file with default settings.\n"
 msgstr ""
 "  --dump-gimprc            Saca un archivo gimprc con la configuración "
 "predeterminada.\n"
@@ -169,8 +165,7 @@ msgstr ""
 # //R Posiblemente estará mal
 # Creo que ahora está un poco mejor. FVD
 #: app/main.c:525
-msgid ""
-"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Activar los manejadores de señales no fatales de "
 "depuración.\n"
@@ -194,8 +189,7 @@ msgstr ""
 
 #: app/main.c:530
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
-msgstr ""
-"  -b, --batch <comandos>   Procesa los comandos en modo no interactivo.\n"
+msgstr "  -b, --batch <comandos>   Procesa los comandos en modo no interactivo.\n"
 
 #: app/main.c:550
 msgid "(This console window will close in ten seconds)\n"
@@ -504,8 +498,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:130
 msgid "Sets the text to appear in image window titles."
-msgstr ""
-"Establece el texto que aparecerá en los títulos de las ventanas de imágenes."
+msgstr "Establece el texto que aparecerá en los títulos de las ventanas de imágenes."
 
 #: app/config/gimprc-blurbs.h:133
 msgid "When enabled, the GIMP will use a different info window per image view."
@@ -528,8 +521,7 @@ msgstr ""
 "pseudo-color."
 
 #: app/config/gimprc-blurbs.h:143
-msgid ""
-"Sets the level of interpolation used for scaling and other transformations."
+msgid "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Establece el nivel de interpolación utilizado para el re-dimensionado y "
 "otras transformaciones."
@@ -636,8 +628,7 @@ msgstr ""
 "inicio."
 
 #: app/config/gimprc-blurbs.h:229
-msgid ""
-"Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Recordar la herramienta, el patrón, el color y las brochas actuales entre "
 "distintas sesiones de El GIMP."
@@ -779,8 +770,7 @@ msgstr "Guardar las combinaciones de teclas modificadas al salir de El GIMP."
 
 #: app/config/gimprc-blurbs.h:305
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr ""
-"Restaurar las combinaciones de teclas guardadas en cada inicio de El GIMP."
+msgstr "Restaurar las combinaciones de teclas guardadas en cada inicio de El GIMP."
 
 # "si es", no "si sea". FVD
 #: app/config/gimprc-blurbs.h:308
@@ -834,8 +824,7 @@ msgstr "Establece la forma en que se muestra la transparencia en las imágenes."
 
 #: app/config/gimprc-blurbs.h:338
 msgid "Sets the size of the checkerboard used to display transparency."
-msgstr ""
-"Establece el tamaño del cuadriculado utilizado para mostrar la transparencia."
+msgstr "Establece el tamaño del cuadriculado utilizado para mostrar la transparencia."
 
 #: app/config/gimprc-blurbs.h:341
 msgid ""
@@ -1619,8 +1608,7 @@ msgstr ""
 #: app/core/gimpbrush.c:584
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr ""
-"Error fatal de análisis en el archivo de brocha «%s»: Versión desconocida %d."
+msgstr "Error fatal de análisis en el archivo de brocha «%s»: Versión desconocida %d."
 
 #: app/core/gimpbrush.c:600 app/core/gimpbrush.c:720
 #, c-format
@@ -1801,8 +1789,7 @@ msgstr "%s copia"
 #: app/core/gimpdatafactory.c:559
 #, c-format
 msgid "Trying legacy loader on file '%s' with unknown extension."
-msgstr ""
-"Probando el cargador heredado con el archivo «%s» sin una extensión conocida."
+msgstr "Probando el cargador heredado con el archivo «%s» sin una extensión conocida."
 
 #: app/core/gimpdatafactory.c:583
 #, c-format
@@ -1912,8 +1899,7 @@ msgid "The foreground color of the grid."
 msgstr "El color de frente de la rejilla"
 
 #: app/core/gimpgrid.c:139
-msgid ""
-"The background color of the grid; only used in double dashed line style."
+msgid "The background color of the grid; only used in double dashed line style."
 msgstr ""
 "El color de fondo de la rejilla, sólo se utiliza en el estilo de línea de "
 "guiones dobles."
@@ -1927,8 +1913,7 @@ msgid "Vertical spacing of grid lines."
 msgstr "Espacio vertical de las líneas de la rejilla."
 
 #: app/core/gimpgrid.c:159
-msgid ""
-"Horizontal offset of the first grid line; this may be a negative number."
+msgid "Horizontal offset of the first grid line; this may be a negative number."
 msgstr ""
 "Deslizamiento horizontal de la primera línea de la rejilla, puede ser un "
 "número negativo."
@@ -2236,8 +2221,7 @@ msgstr "Rotar la capa"
 
 #: app/core/gimplayer.c:964
 msgid "Cannot add layer mask to layer which is not part of an image."
-msgstr ""
-"No se puede añadir una máscara a la capa dado que no es parte de una imagen."
+msgstr "No se puede añadir una máscara a la capa dado que no es parte de una imagen."
 
 #: app/core/gimplayer.c:971
 msgid "Unable to add a layer mask since the layer already has one."
@@ -2309,26 +2293,22 @@ msgstr ""
 #: app/core/gimppalette.c:493
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
-msgstr ""
-"Leyendo el archivo de paleta «%s»: Falta la componente ROJO en la línea %d."
+msgstr "Leyendo el archivo de paleta «%s»: Falta la componente ROJO en la línea %d."
 
 #: app/core/gimppalette.c:501
 #, c-format
 msgid "Reading palette '%s': Missing GREEN component in line %d."
-msgstr ""
-"Leyendo el archivo de paleta «%s»: Falta la componente VERDE en la línea %d."
+msgstr "Leyendo el archivo de paleta «%s»: Falta la componente VERDE en la línea %d."
 
 #: app/core/gimppalette.c:509
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
-msgstr ""
-"Leyendo el archivo de paleta «%s»: Falta la componente AZUL en la línea %d."
+msgstr "Leyendo el archivo de paleta «%s»: Falta la componente AZUL en la línea %d."
 
 #: app/core/gimppalette.c:519
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
-msgstr ""
-"Leyendo el archivo de paleta «%s»: Valor RGB fuera de rango en la línea %d."
+msgstr "Leyendo el archivo de paleta «%s»: Valor RGB fuera de rango en la línea %d."
 
 #: app/core/gimppalette.c:681
 msgid "Black"
@@ -2344,8 +2324,7 @@ msgstr ""
 
 #: app/core/gimppattern.c:357
 #, c-format
-msgid ""
-"Fatal parse error in pattern file '%s': Unknown pattern format version %d."
+msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
 "Error de análisis fatal en el archivo de patrón «%s»: Versión del formato de "
 "patrón desconocida %d."
@@ -2594,9 +2573,8 @@ msgid "Zoom Ratio:"
 msgstr "Relación de aumento:"
 
 #: app/display/gimpdisplayshell-scale.c:567
-#, fuzzy
 msgid "Zoom:"
-msgstr "Aumento 1:1"
+msgstr "Aumento:"
 
 #: app/display/gimpdisplayshell-title.c:219
 msgid "RGB-empty"
@@ -2729,8 +2707,7 @@ msgid "Mode:"
 msgstr "Modo:"
 
 #: app/gui/brush-select.c:322
-msgid ""
-"Unable to run brush callback. The corresponding plug-in may have crashed."
+msgid "Unable to run brush callback. The corresponding plug-in may have crashed."
 msgstr ""
 "No se puede ejecutar una llamada revertida a la brocha. El complemento "
 "correspondiente debe haber fallado."
@@ -3469,8 +3446,7 @@ msgid "/By Extension"
 msgstr "/Por extensión"
 
 #: app/gui/font-select.c:234
-msgid ""
-"Unable to run font callback. The corresponding plug-in may have crashed."
+msgid "Unable to run font callback. The corresponding plug-in may have crashed."
 msgstr ""
 "No se puede ejecutar la llamada inversa de la tipografía. El complemento "
 "correspondiente debe haber fallado."
@@ -3577,8 +3553,7 @@ msgstr "/Cargar co_lor izquierdo desde/Color de frente"
 
 #: app/gui/gradient-editor-menu.c:71
 msgid "/Load Left Color From/_Left Neighbor's Right Endpoint"
-msgstr ""
-"/Cargar color izquierdo desde/Punto fina_l derecho del vecino izquierdo"
+msgstr "/Cargar color izquierdo desde/Punto fina_l derecho del vecino izquierdo"
 
 #: app/gui/gradient-editor-menu.c:75
 msgid "/Load Left Color From/_Right Endpoint"
@@ -3745,8 +3720,7 @@ msgid "Re-distribute _Handles in Selection"
 msgstr "Redistribuir los _tiradores en la selección"
 
 #: app/gui/gradient-select.c:272
-msgid ""
-"Unable to run gradient callback. The corresponding plug-in may have crashed."
+msgid "Unable to run gradient callback. The corresponding plug-in may have crashed."
 msgstr ""
 "No se puede ejecutar la llamada inversa del gradiente. El complemento "
 "correspondiente debe haber fallado."
@@ -3894,6 +3868,7 @@ msgstr ""
 "que cero."
 
 #. <Image>/File
+#. <Toolbox>/File
 #: app/gui/image-menu.c:99 app/gui/toolbox-menu.c:49
 msgid "/_File"
 msgstr "/_Archivo"
@@ -3907,6 +3882,7 @@ msgid "/File/_Open..."
 msgstr "/Archivo/A_brir..."
 
 #. <Image>/File/Open Recent
+#. <Toolbox>/File/Open Recent
 #: app/gui/image-menu.c:114 app/gui/toolbox-menu.c:64
 msgid "/File/Open _Recent"
 msgstr "/Archivo/Abrir _reciente"
@@ -4113,49 +4089,40 @@ msgid "/View/Zoom/Zoom to _Fit Window"
 msgstr "/Ver/Aumento/Aumentar hasta a_justar a la ventana"
 
 #: app/gui/image-menu.c:381
-#, fuzzy
 msgid "/View/Zoom/16:1  (1600%)"
-msgstr "/Ver/Aumento/16:1"
+msgstr "/Ver/Aumento/16:1  (1600%)"
 
 #: app/gui/image-menu.c:385
-#, fuzzy
 msgid "/View/Zoom/8:1  (800%)"
-msgstr "/Ver/Aumento/8:1"
+msgstr "/Ver/Aumento/8:1  (800%)"
 
 #: app/gui/image-menu.c:389
-#, fuzzy
 msgid "/View/Zoom/4:1  (400%)"
-msgstr "/Ver/Aumento/4:1"
+msgstr "/Ver/Aumento/4:1 (400%)"
 
 #: app/gui/image-menu.c:393
-#, fuzzy
 msgid "/View/Zoom/2:1  (200%)"
-msgstr "/Ver/Aumento/2:1"
+msgstr "/Ver/Aumento/2:1 (200%)"
 
 #: app/gui/image-menu.c:397
-#, fuzzy
 msgid "/View/Zoom/1:1  (100%)"
-msgstr "/Ver/Aumento/1:1"
+msgstr "/Ver/Aumento/1:1 (100%)"
 
 #: app/gui/image-menu.c:401
-#, fuzzy
 msgid "/View/Zoom/1:2  (50%)"
-msgstr "/Ver/Aumento/1:2"
+msgstr "/Ver/Aumento/1:2 (50%)"
 
 #: app/gui/image-menu.c:405
-#, fuzzy
 msgid "/View/Zoom/1:4  (25%)"
-msgstr "/Ver/Aumento/1:2"
+msgstr "/Ver/Aumento/1:4 (25%)"
 
 #: app/gui/image-menu.c:409
-#, fuzzy
 msgid "/View/Zoom/1:8  (12.5%)"
-msgstr "/Ver/Aumento/1:1"
+msgstr "/Ver/Aumento/1:8  (12.5%)"
 
 #: app/gui/image-menu.c:413
-#, fuzzy
 msgid "/View/Zoom/1:16  (6.25%)"
-msgstr "/Ver/Aumento/1:16"
+msgstr "/Ver/Aumento/1:16  (6.25%)"
 
 #: app/gui/image-menu.c:427
 msgid "/View/_Info Window"
@@ -4784,14 +4751,14 @@ msgid "_Redo"
 msgstr "_Rehacer"
 
 #: app/gui/image-menu.c:1712
-#, fuzzy, c-format
+#, c-format
 msgid "Other (%s) ..."
-msgstr "Otro (%d:%d) ..."
+msgstr "Otro (%s) ..."
 
 #: app/gui/image-menu.c:1721
-#, fuzzy, c-format
+#, c-format
 msgid "_Zoom (%s)"
-msgstr "A_mpliación (%d:%d)"
+msgstr "A_umento (%s)"
 
 #: app/gui/images-menu.c:42
 msgid "/_Raise Views"
@@ -5396,8 +5363,7 @@ msgid "Preview"
 msgstr "Vista previa"
 
 #: app/gui/palette-select.c:250
-msgid ""
-"Unable to run palette callback. The corresponding plug-in may have crashed."
+msgid "Unable to run palette callback. The corresponding plug-in may have crashed."
 msgstr ""
 "No se puede ejecutar la llamada inversa de la paleta. El complemento "
 "correspondiente debe haber fallado."
@@ -5439,8 +5405,7 @@ msgid "/_Refresh Palettes"
 msgstr "/_Refrescar paletas"
 
 #: app/gui/pattern-select.c:252
-msgid ""
-"Unable to run pattern callback. The corresponding plug-in may have crashed."
+msgid "Unable to run pattern callback. The corresponding plug-in may have crashed."
 msgstr ""
 "No se puede ejecutar la devolución del patrón. El complemento "
 "correspondiente debe haber fallado."
@@ -5485,8 +5450,7 @@ msgstr "Volver a mostrar el último"
 
 #: app/gui/preferences-dialog.c:274
 msgid "You will have to restart GIMP for the following changes to take effect:"
-msgstr ""
-"Necesitará reiniciar El GIMP para que los siguientes cambios tengan efecto:"
+msgstr "Necesitará reiniciar El GIMP para que los siguientes cambios tengan efecto:"
 
 #: app/gui/preferences-dialog.c:858
 msgid "Show _Menubar"
@@ -6178,6 +6142,7 @@ msgid "Original Width:"
 msgstr "Anchura original:"
 
 #. the new size labels
+#. the print size labels
 #: app/gui/resize-dialog.c:318 app/gui/resize-dialog.c:564
 msgid "New Width:"
 msgstr "Anchura nueva:"
@@ -6335,8 +6300,7 @@ msgstr "<b>¡El archivo de consejos de GIMP para estar perdido!</b>"
 #: app/gui/tips-dialog.c:95
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
-msgstr ""
-"Debería haber un archivo llamado «%s». Por favor compruebe su instalación."
+msgstr "Debería haber un archivo llamado «%s». Por favor compruebe su instalación."
 
 #: app/gui/tips-dialog.c:101
 msgid "<b>The GIMP tips file could not be parsed!</b>"
@@ -6436,8 +6400,7 @@ msgstr "/Archivo/Diálogos/Crear un empotrable nuevo/Capas, cana_les y rutas"
 
 #: app/gui/toolbox-menu.c:99
 msgid "/File/Dialogs/Create New Dock/_Brushes, Patterns & Gradients"
-msgstr ""
-"/Archivo/Diálogos/Crear un empotrable nuevo/_Brochas, patrones y degradados"
+msgstr "/Archivo/Diálogos/Crear un empotrable nuevo/_Brochas, patrones y degradados"
 
 #: app/gui/toolbox-menu.c:103
 msgid "/File/Dialogs/Create New Dock/_Misc. Stuff"
@@ -6897,8 +6860,7 @@ msgid "Click \"Continue\" to accept the settings above."
 msgstr "Presione «Continuar» para aceptar los ajustes de arriba."
 
 #: app/gui/user-install-dialog.c:956
-msgid ""
-"<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
+msgid "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>Para obtener un rendimiento óptimo de El GIMP podrían tener que ajustarse "
 "algunas opciones.</b>"
@@ -6973,8 +6935,7 @@ msgstr ""
 #: app/gui/user-install-dialog.c:1263
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
-msgstr ""
-"Obtener la resolución desde el sistema de ventanas (actualmente %d x %d ppp)"
+msgstr "Obtener la resolución desde el sistema de ventanas (actualmente %d x %d ppp)"
 
 #: app/gui/user-install-dialog.c:1282
 msgid "Alternatively, you can set the monitor resolution manually."
@@ -7014,6 +6975,7 @@ msgid "New Path Options"
 msgstr "Opciones de ruta nueva"
 
 #. The name entry hbox, label and entry
+#. The name entry
 #: app/gui/vectors-commands.c:495 app/gui/vectors-commands.c:613
 msgid "Path name:"
 msgstr "Nombre de la ruta:"
@@ -7208,8 +7170,7 @@ msgid "Threshold"
 msgstr "Umbral B/N"
 
 #: app/pdb/image_cmds.c:3650
-msgid ""
-"Image resolution is out of bounds, using the default resolution instead."
+msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 "La resolución de la Imagen se sale de los límites; usando la resolución "
 "predefinida en su lugar."
@@ -7462,8 +7423,7 @@ msgid "(invalid UTF-8 string)"
 msgstr "(cadena UTF-8 inválida)"
 
 #: app/text/gimptext.c:178
-msgid ""
-"Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "El «hinting» altera el contorno de la tipografía para producir un mapa de "
 "bits preciso en tamaños pequeños"
@@ -7708,17 +7668,15 @@ msgstr "Tipo de relleno  %s"
 #: app/tools/gimpbucketfilloptions.c:266
 #, c-format
 msgid "Affected Area  %s"
-msgstr ""
+msgstr "Área afectada  %s"
 
 #: app/tools/gimpbucketfilloptions.c:269
-#, fuzzy
 msgid "Fill Whole Selection"
-msgstr "Selección flotante"
+msgstr "Rellenar la selección completamente"
 
 #: app/tools/gimpbucketfilloptions.c:270
-#, fuzzy
 msgid "Fill Similar Colors"
-msgstr "Buscando colores similares"
+msgstr "Rellenar colores similares"
 
 #: app/tools/gimpbucketfilloptions.c:276 app/tools/gimpselectionoptions.c:474
 msgid "Finding Similar Colors"
@@ -7939,6 +7897,7 @@ msgid "Origin X:"
 msgstr "Origen X:"
 
 #. the pixel size labels
+#. the unit size labels
 #: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
@@ -8564,8 +8523,7 @@ msgstr "Bordes suavizados"
 
 #: app/tools/gimpselectionoptions.c:153
 msgid "Allow completely transparent regions to be selected"
-msgstr ""
-"Permitir que las regiones completamente transparentes sean seleccionadas"
+msgstr "Permitir que las regiones completamente transparentes sean seleccionadas"
 
 #: app/tools/gimpselectionoptions.c:159
 msgid "Base selection on all visible layers"
@@ -8573,8 +8531,7 @@ msgstr "Selección base en todas las capas visibles"
 
 #: app/tools/gimpselectionoptions.c:174
 msgid "Use all visible layers when shrinking the selection"
-msgstr ""
-"Utilizar todas las capas visibles cuando se está achicando la selección"
+msgstr "Utilizar todas las capas visibles cuando se está achicando la selección"
 
 #: app/tools/gimpselectionoptions.c:403 app/tools/gimptextoptions.c:349
 msgid "Antialiasing"
@@ -8759,8 +8716,7 @@ msgstr "Transformando..."
 
 #: app/tools/gimptransformtool.c:336
 msgid "Transformations do not work on layers that contain layer masks."
-msgstr ""
-"Las transformaciones no funcionan sobre capas que contienen máscaras de capa."
+msgstr "Las transformaciones no funcionan sobre capas que contienen máscaras de capa."
 
 #: app/tools/gimpvectoroptions.c:113
 msgid "restrict editing to polygonals"
@@ -8885,8 +8841,7 @@ msgstr "Pulse y arrastre para mover el ancla. (pruebe con SHIFT)"
 
 #: app/tools/gimpvectortool.c:1179
 msgid "Click-Drag to change the shape of the curve. (SHIFT: symmetrical)"
-msgstr ""
-"Pulse y arrastre para cambiar la forma de la curva. (SHIFT: simetricamente)"
+msgstr "Pulse y arrastre para cambiar la forma de la curva. (SHIFT: simetricamente)"
 
 #: app/tools/gimpvectortool.c:1183
 msgid "Click-Drag to move the component around. (try SHIFT)"
@@ -9492,8 +9447,7 @@ msgid "Auto"
 msgstr "Auto"
 
 #: app/widgets/gimpimagedock.c:214
-msgid ""
-"When enabled the dialog automatically follows the image you are working on."
+msgid "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
 "Cuando está activado el diálogo automáticamente sigue a la imagen en la que "
 "está trabajando."
@@ -9672,8 +9626,7 @@ msgstr "Borrar la plantilla seleccionada"
 
 #: app/widgets/gimptemplateview.c:388
 #, c-format
-msgid ""
-"Are you sure you want to delete template '%s' from the list and from disk?"
+msgid "Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr "¿Está seguro de que quiere borrar «%s» de la lista y del disco?"
 
 #: app/widgets/gimptemplateview.c:392
@@ -10031,18 +9984,9 @@ msgstr "No se ha podido buscar dentro del archivo XCF: %s"
 #: app/xcf/xcf.c:264
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr ""
-"Error XCF: Se encontró una versión %d de archivo de tipo XCF no soportada"
+msgstr "Error XCF: Se encontró una versión %d de archivo de tipo XCF no soportada"
 
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Cree y edite imágenes o fotografías"
 
-#~ msgid "/View/Zoom/1:4"
-#~ msgstr "/Ver/Aumento/1:4"
-
-#~ msgid "/View/Zoom/1:8"
-#~ msgstr "/Ver/Aumento/1:8"
-
-#~ msgid "@GIMP_VISIBLE_NAME@"
-#~ msgstr "@GIMP_VISIBLE_NAME@"
