@@ -842,6 +842,8 @@ crop_tool_crop_image (GimpImage *gimage,
 		   x1, y1, x2, y2,
 		   layer_only,
 		   crop_layers);
+
+  gimp_image_flush (gimage);
 }
 
 static void

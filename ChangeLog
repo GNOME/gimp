@@ -1,5 +1,11 @@
 2002-09-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpcroptool.c (crop_tool_crop_image): call
+	gimp_image_flush() after cropping. Fixes #90977 (Thanks to
+	Toby Smith).
+
+2002-09-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable-bucket-fill.c: put the call to
 	gimp_drawable_mask_bounds() back because we always need the region
 	to apply the fill (fixes non-seed-fill fills). Also take
