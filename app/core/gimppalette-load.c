@@ -63,6 +63,8 @@ static gboolean   gimp_palette_get_popup_size   (GimpViewable      *viewable,
 static TempBuf  * gimp_palette_get_new_preview  (GimpViewable      *viewable,
                                                  gint               width,
                                                  gint               height);
+static gchar    * gimp_palette_get_description  (GimpViewable      *viewable,
+                                                 gchar            **tooltip);
 static void       gimp_palette_dirty            (GimpData          *data);
 static gboolean   gimp_palette_save             (GimpData          *data,
                                                  GError           **error);
@@ -128,6 +130,7 @@ gimp_palette_class_init (GimpPaletteClass *klass)
   viewable_class->get_preview_size = gimp_palette_get_preview_size;
   viewable_class->get_popup_size   = gimp_palette_get_popup_size;
   viewable_class->get_new_preview  = gimp_palette_get_new_preview;
+  viewable_class->get_description  = gimp_palette_get_description;
 
   data_class->dirty                = gimp_palette_dirty;
   data_class->save                 = gimp_palette_save;
@@ -302,6 +305,22 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
   g_free (b);
 
   return temp_buf;
+}
+
+static gchar *
+gimp_palette_get_description (GimpViewable  *viewable,
+                              gchar        **tooltip)
+{
+  GimpPalette *palette;
+
+  palette = GIMP_PALETTE (viewable);
+
+  if (tooltip)
+    *tooltip = NULL;
+
+  return g_strdup_printf ("%s (%d)",
+                          GIMP_OBJECT (palette)->name,
+                          palette->n_colors);
 }
 
 GimpData *

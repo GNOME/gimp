@@ -1,5 +1,53 @@
 2003-04-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpviewable.[ch]: added vitrual function
+	GimpViewable::get_description() which returns the string that
+	should be presented to the user plus an optional tooltip with more
+	information. The default implementation just returns the object's
+	name and no tooltip.
+
+	* app/core/gimpbrush.c
+	* app/core/gimpbuffer.c
+	* app/core/gimpimage.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern.c
+	* app/core/gimptoolinfo.c: implement get_description().
+
+	* app/core/gimpimagefile.[ch]: ditto. Renamed
+	gimp_imagefile_get_description() to
+	gimp_imagefile_get_desc_string(). Well, um, gimme a better name...
+
+	* app/gui/file-open-dialog.c: changed accordingly.
+
+	* app/file/file-utils.[ch]: renamed readXVThumb() to
+	file_utils_readXVThumb().
+
+	* tools/pdbgen/pdb/fileops.pdb: changed accordingly.
+
+	* app/widgets/widgets-types.h: removed GimpItemGetNameFunc typedef.
+
+	* app/widgets/gimpcontainerview-utils.[ch]: removed the the actual
+	get_name_funcs. They now live in the core as
+	GimpViewable::get_description() implementations.
+
+	* app/widgets/gimpcontainermenu.[ch]
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainermenuimpl.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpcontainerview.[ch]
+	* app/widgets/gimpmenuitem.[ch]
+	* app/widgets/gimpviewabledialog.c: removed get_name_func stuff
+	and use gimp_viewable_get_description().
+
+	* app/widgets/gimpcontainermenu.[ch]: added "preview_border_width"
+	to gimp_container_menu_set_preview_size().
+
+	* app/widgets/gimpimagedock.c: changed accordingly.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
+2003-04-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpbrushfactoryview.[ch]
 	* app/widgets/gimpbufferview.[ch]
 	* app/widgets/gimpcontainereditor.[ch]

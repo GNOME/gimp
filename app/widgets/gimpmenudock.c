@@ -222,7 +222,7 @@ gimp_image_dock_style_set (GtkWidget *widget,
   gtk_widget_set_size_request (widget, minimal_width, -1);
 
   gimp_container_menu_set_preview_size (GIMP_CONTAINER_MENU (image_dock->menu),
-                                        menu_preview_height);
+                                        menu_preview_height, 1);
 
   gtk_widget_set_size_request (image_dock->auto_button, -1,
                                menu_preview_height +

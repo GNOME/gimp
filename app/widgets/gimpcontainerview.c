@@ -33,7 +33,6 @@
 #include "core/gimpviewable.h"
 
 #include "gimpcontainerview.h"
-#include "gimpcontainerview-utils.h"
 #include "gimpdnd.h"
 #include "gimppreviewrenderer.h"
 
@@ -187,7 +186,6 @@ gimp_container_view_init (GimpContainerView      *view,
   view->preview_size         = 0;
   view->preview_border_width = 1;
   view->reorderable          = FALSE;
-  view->get_name_func        = NULL;
 
   view->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_box_pack_start (GTK_BOX (view), view->scrolled_win, TRUE, TRUE, 0);
@@ -274,28 +272,12 @@ gimp_container_view_real_set_container (GimpContainerView *view,
                                              view->container->children_type);
 	    }
 	}
-
-      if (view->get_name_func &&
-	  gimp_container_view_is_built_in_name_func (view->get_name_func))
-	{
-	  gimp_container_view_set_name_func (view, NULL);
-	}
     }
 
   view->container = container;
 
   if (view->container)
     {
-      if (! view->get_name_func)
-	{
-	  GimpItemGetNameFunc get_name_func;
-
-	  get_name_func =
-            gimp_container_view_get_built_in_name_func (view->container->children_type);
-
-	  gimp_container_view_set_name_func (view, get_name_func);
-	}
-
       gimp_container_foreach (view->container,
 			      (GFunc) gimp_container_view_add_foreach,
 			      view);
@@ -449,15 +431,6 @@ gimp_container_view_set_preview_size (GimpContainerView *view,
 
       GIMP_CONTAINER_VIEW_GET_CLASS (view)->set_preview_size (view);
     }
-}
-
-void
-gimp_container_view_set_name_func (GimpContainerView   *view,
-				   GimpItemGetNameFunc  get_name_func)
-{
-  g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
-
-  view->get_name_func = get_name_func;
 }
 
 void

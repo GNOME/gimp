@@ -23,17 +23,7 @@
 #define __GIMP_CONTAINER_VIEW_UTILS_H__
 
 
-/*  public  */
-
 GimpContainerView * gimp_container_view_get_by_dockable (GimpDockable *dockable);
-
-
-/*  private  */
-
-GimpItemGetNameFunc   gimp_container_view_get_built_in_name_func
-                                            (GType                type);
-gboolean              gimp_container_view_is_built_in_name_func
-                                            (GimpItemGetNameFunc  get_name_func);
 
 
 #endif  /*  __GIMP_CONTAINER_VIEW_UTILS_H__  */

@@ -37,6 +37,8 @@ static void      gimp_tool_info_class_init      (GimpToolInfoClass *klass);
 static void      gimp_tool_info_init            (GimpToolInfo      *tool_info);
 
 static void      gimp_tool_info_finalize        (GObject           *object);
+static gchar *   gimp_tool_info_get_description (GimpViewable      *viewable,
+                                                 gchar            **tooltip);
 
 
 static GimpDataClass *parent_class = NULL;
@@ -73,13 +75,17 @@ gimp_tool_info_get_type (void)
 static void
 gimp_tool_info_class_init (GimpToolInfoClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass      *object_class;
+  GimpViewableClass *viewable_class;
 
-  object_class = G_OBJECT_CLASS (klass);
+  object_class   = G_OBJECT_CLASS (klass);
+  viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize = gimp_tool_info_finalize;
+  object_class->finalize          = gimp_tool_info_finalize;
+
+  viewable_class->get_description = gimp_tool_info_get_description;
 }
 
 static void
@@ -148,6 +154,20 @@ gimp_tool_info_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gchar *
+gimp_tool_info_get_description (GimpViewable  *viewable,
+                                gchar        **tooltip)
+{
+  GimpToolInfo *tool_info;
+
+  tool_info = GIMP_TOOL_INFO (viewable);
+
+  if (tooltip)
+    *tooltip = NULL;
+
+  return g_strdup (tool_info->blurb);
 }
 
 GimpToolInfo *

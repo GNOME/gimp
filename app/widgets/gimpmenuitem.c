@@ -102,7 +102,6 @@ gimp_menu_item_init (GimpMenuItem *menu_item)
 
   menu_item->preview_size         = 0;
   menu_item->preview_border_width = 1;
-  menu_item->get_name_func        = NULL;
 }
 
 GtkWidget *
@@ -176,47 +175,20 @@ gimp_menu_item_real_set_viewable (GimpMenuItem *menu_item,
 				NULL);
 }
 
-void
-gimp_menu_item_set_name_func (GimpMenuItem        *menu_item,
-			      GimpItemGetNameFunc  get_name_func)
-{
-  g_return_if_fail (GIMP_IS_MENU_ITEM (menu_item));
-
-  if (menu_item->get_name_func != get_name_func)
-    {
-      GimpViewable *viewable;
-
-      menu_item->get_name_func = get_name_func;
-
-      viewable = GIMP_PREVIEW (menu_item->preview)->viewable;
-
-      if (viewable)
-	gimp_menu_item_name_changed (viewable, menu_item);
-    }
-}
-
 static void
 gimp_menu_item_name_changed (GimpViewable *viewable,
                              GimpMenuItem *menu_item)
 {
-  if (menu_item->get_name_func)
-    {
-      gchar *name    = NULL;
-      gchar *tooltip = NULL;
+  gchar *name    = NULL;
+  gchar *tooltip = NULL;
 
-      name = menu_item->get_name_func (G_OBJECT (menu_item), &tooltip);
+  name = gimp_viewable_get_description (viewable, &tooltip);
 
-      gtk_label_set_text (GTK_LABEL (menu_item->name_label), name);
-      gimp_help_set_help_data (GTK_WIDGET (menu_item), tooltip, NULL);
+  gtk_label_set_text (GTK_LABEL (menu_item->name_label), name);
+  gimp_help_set_help_data (GTK_WIDGET (menu_item), tooltip, NULL);
 
-      g_free (name);
-      g_free (tooltip);
-    }
-  else
-    {
-      gtk_label_set_text (GTK_LABEL (menu_item->name_label),
-			  gimp_object_get_name (GIMP_OBJECT (viewable)));
-    }
+  g_free (name);
+  g_free (tooltip);
 }
 
 static GimpViewable *

@@ -94,7 +94,7 @@ void            gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
                                                  gint           thumb_size);
 gboolean        gimp_imagefile_save_thumbnail   (GimpImagefile *imagefile,
                                                  GimpImage     *gimage);
-const gchar   * gimp_imagefile_get_description  (GimpImagefile *imagefile);
+const gchar   * gimp_imagefile_get_desc_string  (GimpImagefile *imagefile);
 
 
 #endif /* __GIMP_IMAGEFILE_H__ */

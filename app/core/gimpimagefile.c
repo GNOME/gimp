@@ -61,6 +61,7 @@
 #include "gimpmarshal.h"
 
 #include "file/file-open.h"
+#include "file/file-utils.h"
 
 #include "gimp-intl.h"
 
@@ -102,6 +103,8 @@ static void          gimp_imagefile_set_info        (GimpImagefile  *imagefile,
 static TempBuf     * gimp_imagefile_get_new_preview (GimpViewable   *viewable,
                                                      gint            width,
                                                      gint            height);
+static gchar       * gimp_imagefile_get_description (GimpViewable   *viewable,
+                                                     gchar         **tooltip);
 
 static TempBuf     * gimp_imagefile_read_png_thumb  (GimpImagefile  *imagefile,
                                                      gint            thumb_size);
@@ -206,6 +209,7 @@ gimp_imagefile_class_init (GimpImagefileClass *klass)
 
   viewable_class->name_changed_signal = "info_changed";
   viewable_class->get_new_preview     = gimp_imagefile_get_new_preview;
+  viewable_class->get_description     = gimp_imagefile_get_description;
 
   g_type_class_ref (GIMP_TYPE_IMAGE_TYPE);
 
@@ -678,8 +682,55 @@ gimp_imagefile_get_new_preview (GimpViewable *viewable,
   return temp_buf;
 }
 
+static gchar *
+gimp_imagefile_get_description (GimpViewable   *viewable,
+                                gchar         **tooltip)
+{
+  GimpImagefile *imagefile;
+  const gchar   *uri;
+  gchar         *basename;
+
+  imagefile = GIMP_IMAGEFILE (viewable);
+
+  uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+
+  basename = file_utils_uri_to_utf8_basename (uri);
+
+  if (tooltip)
+    {
+      gchar       *filename;
+      const gchar *desc;
+
+      filename = file_utils_uri_to_utf8_filename (uri);
+      desc     = gimp_imagefile_get_desc_string (imagefile);
+
+      if (desc)
+        {
+          *tooltip = g_strdup_printf ("%s\n%s", filename, desc);
+          g_free (filename);
+        }
+      else
+        {
+          *tooltip = filename;
+        }
+    }
+
+  if (imagefile->width > 0 && imagefile->height > 0)
+    {
+      gchar *tmp = basename;
+
+      basename = g_strdup_printf ("%s (%d x %d)",
+                                  tmp,
+                                  imagefile->width,
+                                  imagefile->height);
+      g_free (tmp);
+    }
+
+  return basename;
+}
+
 const gchar *
-gimp_imagefile_get_description (GimpImagefile *imagefile)
+gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
 {
   g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), NULL);
 

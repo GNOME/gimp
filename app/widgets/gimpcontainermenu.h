@@ -42,17 +42,15 @@ typedef struct _GimpContainerMenuClass  GimpContainerMenuClass;
 
 struct _GimpContainerMenu
 {
-  GtkMenu              parent_instance;
+  GtkMenu        parent_instance;
 
-  GimpContainer       *container;
-  GimpContext         *context;
+  GimpContainer *container;
+  GimpContext   *context;
 
-  GHashTable          *hash_table;
+  GHashTable    *hash_table;
 
-  gint                 preview_size;
-  gint                 preview_border_width;
-
-  GimpItemGetNameFunc  get_name_func;
+  gint           preview_size;
+  gint           preview_border_width;
 };
 
 struct _GimpContainerMenuClass
@@ -95,9 +93,8 @@ void      gimp_container_menu_set_container    (GimpContainerMenu   *menu,
 void      gimp_container_menu_set_context      (GimpContainerMenu   *menu,
 						GimpContext         *context);
 void      gimp_container_menu_set_preview_size (GimpContainerMenu   *menu,
-						gint                 preview_size);
-void      gimp_container_menu_set_name_func    (GimpContainerMenu   *menu,
-						GimpItemGetNameFunc  get_name_func);
+						gint                 preview_size,
+                                                gint                 preview_border_width);
 
 void      gimp_container_menu_select_item      (GimpContainerMenu   *menu,
 						GimpViewable        *viewable);

@@ -34,10 +34,10 @@ gchar         * file_utils_uri_to_utf8_filename (const gchar   *uri);
 
 /* .xvpics thumbnail stuff  */
 
-guchar        * readXVThumb           (const gchar   *fnam,
-				       gint          *w,
-				       gint          *h,
-				       gchar        **imginfo /* caller frees if != NULL */);
+guchar        * file_utils_readXVThumb          (const gchar   *fnam,
+                                                 gint          *w,
+                                                 gint          *h,
+                                                 gchar        **imginfo /* caller frees if != NULL */);
 
 
 #endif /* __FILE_UTILS_H__ */

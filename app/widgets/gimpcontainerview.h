@@ -38,23 +38,21 @@ typedef struct _GimpContainerViewClass  GimpContainerViewClass;
 
 struct _GimpContainerView
 {
-  GimpEditor           parent_instance;
+  GimpEditor     parent_instance;
 
-  GimpContainer       *container;
-  GimpContext         *context;
+  GimpContainer *container;
+  GimpContext   *context;
 
-  GHashTable          *hash_table;
+  GHashTable    *hash_table;
 
-  gint                 preview_size;
-  gint                 preview_border_width;
-  gboolean             reorderable;
+  gint           preview_size;
+  gint           preview_border_width;
+  gboolean       reorderable;
 
-  GimpItemGetNameFunc  get_name_func;
-
-  GtkWidget           *scrolled_win;
+  GtkWidget     *scrolled_win;
 
   /*  initialized by subclass  */
-  GtkWidget           *dnd_widget;
+  GtkWidget     *dnd_widget;
 };
 
 struct _GimpContainerViewClass
@@ -109,8 +107,6 @@ void      gimp_container_view_set_context      (GimpContainerView   *view,
 void      gimp_container_view_set_preview_size (GimpContainerView   *view,
 						gint                 preview_size,
                                                 gint                 preview_border_width);
-void      gimp_container_view_set_name_func    (GimpContainerView   *view,
-						GimpItemGetNameFunc  get_name_func);
 
 void      gimp_container_view_enable_dnd       (GimpContainerView   *editor,
 						GtkButton           *button,

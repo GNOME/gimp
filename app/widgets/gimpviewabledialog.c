@@ -32,7 +32,6 @@
 
 #include "file/file-utils.h"
 
-#include "gimpcontainerview-utils.h"
 #include "gimppreview.h"
 #include "gimpviewabledialog.h"
 
@@ -295,19 +294,9 @@ static void
 gimp_viewable_dialog_name_changed (GimpObject         *object,
                                    GimpViewableDialog *dialog)
 {
-  GimpItemGetNameFunc  get_name_func;
-  gchar               *name;
+  gchar *name;
 
-  get_name_func = gimp_container_view_get_built_in_name_func (G_TYPE_FROM_INSTANCE (object));
-
-  if (get_name_func && dialog->preview)
-    {
-      name = get_name_func (G_OBJECT (dialog->preview), NULL);
-    }
-  else
-    {
-      name = g_strdup (gimp_object_get_name (object));
-    }
+  name = gimp_viewable_get_description (GIMP_VIEWABLE (object), NULL);
 
   if (GIMP_IS_ITEM (object))
     {

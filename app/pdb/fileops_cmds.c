@@ -242,7 +242,7 @@ file_load_thumbnail_invoker (Gimp     *gimp,
       tname = g_build_filename (pname, ".xvpics", fname, NULL);
       g_free (pname);
       g_free (fname);
-      raw_thumb = readXVThumb (tname, &width, &height, &imginfo);
+      raw_thumb = file_utils_readXVThumb (tname, &width, &height, &imginfo);
       g_free (tname);
     
       if (raw_thumb)

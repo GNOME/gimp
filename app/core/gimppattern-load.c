@@ -70,6 +70,8 @@ static gboolean   gimp_pattern_get_popup_size  (GimpViewable     *viewable,
 static TempBuf  * gimp_pattern_get_new_preview (GimpViewable     *viewable,
                                                 gint              width,
                                                 gint              height);
+static gchar    * gimp_pattern_get_description (GimpViewable     *viewable,
+                                                gchar           **tooltip);
 static gchar    * gimp_pattern_get_extension   (GimpData         *data);
 static GimpData * gimp_pattern_duplicate       (GimpData         *data,
                                                 gboolean          stingy_memory_use);
@@ -127,6 +129,7 @@ gimp_pattern_class_init (GimpPatternClass *klass)
 
   viewable_class->get_popup_size  = gimp_pattern_get_popup_size;
   viewable_class->get_new_preview = gimp_pattern_get_new_preview;
+  viewable_class->get_description = gimp_pattern_get_description;
 
   data_class->get_extension       = gimp_pattern_get_extension;
   data_class->duplicate           = gimp_pattern_duplicate;
@@ -214,6 +217,23 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
 		      0, 0, copy_width, copy_height, 0, 0);
 
   return temp_buf;
+}
+
+static gchar *
+gimp_pattern_get_description (GimpViewable  *viewable,
+                              gchar        **tooltip)
+{
+  GimpPattern *pattern;
+
+  pattern = GIMP_PATTERN (viewable);
+
+  if (tooltip)
+    *tooltip = NULL;
+
+  return g_strdup_printf ("%s (%d x %d)",
+                          GIMP_OBJECT (pattern)->name,
+                          pattern->mask->width,
+                          pattern->mask->height);
 }
 
 static gchar *

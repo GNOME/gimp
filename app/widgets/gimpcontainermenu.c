@@ -31,7 +31,7 @@
 #include "core/gimpviewable.h"
 
 #include "gimpcontainermenu.h"
-#include "gimpcontainerview-utils.h"
+#include "gimppreviewrenderer.h"
 
 
 enum
@@ -234,27 +234,12 @@ gimp_container_menu_real_set_container (GimpContainerMenu *menu,
 						gimp_container_menu_context_changed,
 						menu);
 	}
-
-      if (menu->get_name_func &&
-	  gimp_container_view_is_built_in_name_func (menu->get_name_func))
-	{
-	  gimp_container_menu_set_name_func (menu, NULL);
-	}
     }
 
   menu->container = container;
 
   if (menu->container)
     {
-      if (! menu->get_name_func)
-	{
-	  GimpItemGetNameFunc get_name_func;
-
-	  get_name_func = gimp_container_view_get_built_in_name_func (menu->container->children_type);
-
-	  gimp_container_menu_set_name_func (menu, get_name_func);
-	}
-
       gimp_container_foreach (menu->container,
 			      (GFunc) gimp_container_menu_add_foreach,
 			      menu);
@@ -344,27 +329,23 @@ gimp_container_menu_set_context (GimpContainerMenu *menu,
 
 void
 gimp_container_menu_set_preview_size (GimpContainerMenu *menu,
-				      gint               preview_size)
+				      gint               preview_size,
+                                      gint               preview_border_width)
 {
   g_return_if_fail (GIMP_IS_CONTAINER_MENU (menu));
   g_return_if_fail (preview_size  > 0 &&
                     preview_size <= GIMP_VIEWABLE_MAX_POPUP_SIZE);
+  g_return_if_fail (preview_border_width >= 0 &&
+                    preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH);
 
-  if (menu->preview_size != preview_size)
+  if (menu->preview_size         != preview_size ||
+      menu->preview_border_width != preview_border_width)
     {
-      menu->preview_size = preview_size;
+      menu->preview_size         = preview_size;
+      menu->preview_border_width = preview_border_width;
 
       GIMP_CONTAINER_MENU_GET_CLASS (menu)->set_preview_size (menu);
     }
-}
-
-void
-gimp_container_menu_set_name_func (GimpContainerMenu   *menu,
-				   GimpItemGetNameFunc  get_name_func)
-{
-  g_return_if_fail (GIMP_IS_CONTAINER_MENU (menu));
-
-  menu->get_name_func = get_name_func;
 }
 
 void

@@ -112,6 +112,8 @@ static gsize    gimp_image_get_memsize           (GimpObject     *object);
 
 static void     gimp_image_invalidate_preview    (GimpViewable   *viewable);
 static void     gimp_image_size_changed          (GimpViewable   *viewable);
+static gchar  * gimp_image_get_description       (GimpViewable   *viewable,
+                                                  gchar         **tooltip);
 static void     gimp_image_real_colormap_changed (GimpImage      *gimage,
 						  gint            ncol);
 
@@ -398,6 +400,7 @@ gimp_image_class_init (GimpImageClass *klass)
   viewable_class->get_popup_size      = gimp_image_get_popup_size;
   viewable_class->get_preview         = gimp_image_get_preview;
   viewable_class->get_new_preview     = gimp_image_get_new_preview;
+  viewable_class->get_description     = gimp_image_get_description;
 
   klass->mode_changed                 = NULL;
   klass->alpha_changed                = NULL;
@@ -695,6 +698,31 @@ gimp_image_size_changed (GimpViewable *viewable)
     }
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimp_image_get_mask (gimage)));
+}
+
+static gchar *
+gimp_image_get_description (GimpViewable  *viewable,
+                            gchar        **tooltip)
+{
+  GimpImage   *gimage;
+  const gchar *uri;
+  gchar       *basename;
+  gchar       *retval;
+
+  gimage = GIMP_IMAGE (viewable);
+
+  uri = gimp_image_get_uri (GIMP_IMAGE (gimage));
+
+  basename = file_utils_uri_to_utf8_basename (uri);
+
+  if (tooltip)
+    *tooltip = file_utils_uri_to_utf8_filename (uri);
+
+  retval = g_strdup_printf ("%s-%d", basename, gimp_image_get_ID (gimage));
+
+  g_free (basename);
+
+  return retval;
 }
 
 static void 

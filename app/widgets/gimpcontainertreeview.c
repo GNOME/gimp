@@ -286,10 +286,7 @@ gimp_container_tree_view_set (GimpContainerTreeView *tree_view,
 
   view = GIMP_CONTAINER_VIEW (tree_view);
 
-  if (view->get_name_func)
-    name = view->get_name_func (G_OBJECT (viewable), NULL);
-  else
-    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (viewable)));
+  name = gimp_viewable_get_description (viewable, NULL);
 
   renderer = gimp_preview_renderer_new (G_TYPE_FROM_INSTANCE (viewable),
                                         view->preview_size,
@@ -883,10 +880,7 @@ gimp_container_tree_view_name_changed (GimpObject            *object,
     {
       gchar *name;
 
-      if (view->get_name_func)
-        name = view->get_name_func (G_OBJECT (object), NULL);
-      else
-        name = g_strdup (gimp_object_get_name (object));
+      name = gimp_viewable_get_description (GIMP_VIEWABLE (object), NULL);
 
       gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
                           COLUMN_NAME, name,

@@ -47,29 +47,31 @@ enum
 };
 
 
-static void    gimp_viewable_class_init         (GimpViewableClass *klass);
-static void    gimp_viewable_init               (GimpViewable      *viewable);
+static void    gimp_viewable_class_init          (GimpViewableClass *klass);
+static void    gimp_viewable_init                (GimpViewable      *viewable);
 
-static void    gimp_viewable_finalize               (GObject       *object);
-static void    gimp_viewable_set_property           (GObject       *object,
-                                                     guint          property_id,
-                                                     const GValue  *value,
-                                                     GParamSpec    *pspec);
-static void    gimp_viewable_get_property           (GObject       *object,
-                                                     guint          property_id,
-                                                     GValue        *value,
-                                                     GParamSpec    *pspec);
+static void    gimp_viewable_finalize               (GObject        *object);
+static void    gimp_viewable_set_property           (GObject        *object,
+                                                     guint           property_id,
+                                                     const GValue   *value,
+                                                     GParamSpec     *pspec);
+static void    gimp_viewable_get_property           (GObject        *object,
+                                                     guint           property_id,
+                                                     GValue         *value,
+                                                     GParamSpec     *pspec);
 
-static gsize   gimp_viewable_get_memsize             (GimpObject   *object);
+static gsize   gimp_viewable_get_memsize             (GimpObject    *object);
 
-static void    gimp_viewable_real_invalidate_preview (GimpViewable *viewable);
+static void    gimp_viewable_real_invalidate_preview (GimpViewable  *viewable);
 
-static void    gimp_viewable_real_get_preview_size   (GimpViewable *viewable,
-                                                      gint          size,
-                                                      gboolean      popup,
-                                                      gboolean      dot_for_dot,
-                                                      gint         *width,
-                                                      gint         *height);
+static void    gimp_viewable_real_get_preview_size   (GimpViewable  *viewable,
+                                                      gint           size,
+                                                      gboolean       popup,
+                                                      gboolean       dot_for_dot,
+                                                      gint          *width,
+                                                      gint          *height);
+static gchar * gimp_viewable_real_get_description    (GimpViewable  *viewable,
+                                                      gchar        **tooltip);
 
 
 static guint  viewable_signals[LAST_SIGNAL] = { 0 };
@@ -156,6 +158,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   klass->get_popup_size          = NULL;
   klass->get_preview             = NULL;
   klass->get_new_preview         = NULL;
+  klass->get_description         = gimp_viewable_real_get_description;
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_STOCK_ID, "stock-id",
                                    NULL, NULL, 0);
@@ -273,6 +276,16 @@ gimp_viewable_real_get_preview_size (GimpViewable *viewable,
 {
   *width  = size;
   *height = size;
+}
+
+static gchar *
+gimp_viewable_real_get_description (GimpViewable  *viewable,
+                                    gchar        **tooltip)
+{
+  if (tooltip)
+    *tooltip = NULL;
+
+  return g_strdup (gimp_object_get_name (GIMP_OBJECT (viewable)));
 }
 
 void
@@ -545,6 +558,16 @@ gimp_viewable_get_new_preview_pixbuf (GimpViewable *viewable,
     }
 
   return pixbuf;
+}
+
+gchar *
+gimp_viewable_get_description (GimpViewable  *viewable,
+                               gchar        **tooltip)
+{
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+
+  return GIMP_VIEWABLE_GET_CLASS (viewable)->get_description (viewable,
+                                                              tooltip);
 }
 
 const gchar *

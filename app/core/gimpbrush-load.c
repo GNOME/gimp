@@ -80,6 +80,8 @@ static gboolean    gimp_brush_get_popup_size        (GimpViewable   *viewable,
 static TempBuf   * gimp_brush_get_new_preview       (GimpViewable   *viewable,
                                                      gint            width,
                                                      gint            height);
+static gchar     * gimp_brush_get_description       (GimpViewable   *viewable,
+                                                     gchar         **tooltip);
 static gchar     * gimp_brush_get_extension         (GimpData       *data);
 
 static GimpBrush * gimp_brush_real_select_brush     (GimpBrush      *brush,
@@ -153,6 +155,7 @@ gimp_brush_class_init (GimpBrushClass *klass)
 
   viewable_class->get_popup_size  = gimp_brush_get_popup_size;
   viewable_class->get_new_preview = gimp_brush_get_new_preview;
+  viewable_class->get_description = gimp_brush_get_description;
 
   data_class->get_extension       = gimp_brush_get_extension;
 
@@ -326,6 +329,23 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
     }
 
   return return_buf;
+}
+
+static gchar *
+gimp_brush_get_description (GimpViewable  *viewable,
+                            gchar        **tooltip)
+{
+  GimpBrush *brush;
+
+  brush = GIMP_BRUSH (viewable);
+
+  if (tooltip)
+    *tooltip = NULL;
+
+  return g_strdup_printf ("%s (%d x %d)",
+                          GIMP_OBJECT (brush)->name,
+                          brush->mask->width,
+                          brush->mask->height);
 }
 
 static gchar *

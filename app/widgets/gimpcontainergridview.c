@@ -533,6 +533,7 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
       gint           item_height;
       gint           index;
       gint           row;
+      gchar         *name;
 
       adj = gtk_scrolled_window_get_vadjustment
 	(GTK_SCROLLED_WINDOW (view->scrolled_win));
@@ -557,21 +558,9 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
       gimp_preview_set_border_color (preview, &black_color);
       gimp_preview_renderer_update (preview->renderer);
 
-      if (view->get_name_func)
-	{
-	  gchar *name;
-
-	  name = view->get_name_func (G_OBJECT (preview), NULL);
-
-	  gtk_label_set_text (GTK_LABEL (grid_view->name_label), name);
-
-	  g_free (name);
-	}
-      else
-	{
-	  gtk_label_set_text (GTK_LABEL (grid_view->name_label),
-			      GIMP_OBJECT (viewable)->name);
-	}
+      name = gimp_viewable_get_description (preview->renderer->viewable, NULL);
+      gtk_label_set_text (GTK_LABEL (grid_view->name_label), name);
+      g_free (name);
     }
   else
     {

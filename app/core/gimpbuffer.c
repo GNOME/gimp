@@ -55,6 +55,8 @@ static gboolean  gimp_buffer_get_popup_size   (GimpViewable    *viewable,
 static TempBuf * gimp_buffer_get_new_preview  (GimpViewable    *viewable,
                                                gint             width,
                                                gint             height);
+static gchar   * gimp_buffer_get_description  (GimpViewable    *viewable,
+                                               gchar          **tooltip);
 
 
 static GimpViewableClass *parent_class = NULL;
@@ -108,6 +110,7 @@ gimp_buffer_class_init (GimpBufferClass *klass)
   viewable_class->get_preview_size = gimp_buffer_get_preview_size;
   viewable_class->get_popup_size   = gimp_buffer_get_popup_size;
   viewable_class->get_new_preview  = gimp_buffer_get_new_preview;
+  viewable_class->get_description  = gimp_buffer_get_description;
 }
 
 static void
@@ -270,6 +273,23 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
     }
 
   return temp_buf;
+}
+
+static gchar *
+gimp_buffer_get_description (GimpViewable  *viewable,
+                             gchar        **tooltip)
+{
+  GimpBuffer *buffer;
+
+  buffer = GIMP_BUFFER (viewable);
+
+  if (tooltip)
+    *tooltip = NULL;
+
+  return g_strdup_printf ("%s (%d x %d)",
+                          GIMP_OBJECT (buffer)->name,
+                          gimp_buffer_get_width (buffer),
+                          gimp_buffer_get_height (buffer));
 }
 
 GimpBuffer *

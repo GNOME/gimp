@@ -350,7 +350,7 @@ static void
 file_open_imagefile_info_changed (GimpImagefile *imagefile,
                                   GtkLabel      *label)
 {
-  gtk_label_set_text (label, gimp_imagefile_get_description (imagefile));
+  gtk_label_set_text (label, gimp_imagefile_get_desc_string (imagefile));
 }
 
 static void

@@ -594,12 +594,13 @@ file_check_magic_list (GSList *magics_list,
 
 
 /* The readXVThumb function source may be re-used under
-   the XFree86-style license. <adam@gimp.org> */
+ * the XFree86-style license. <adam@gimp.org>
+ */
 guchar *
-readXVThumb (const gchar  *fnam,
-	     gint         *w,
-	     gint         *h,
-	     gchar       **imginfo /* caller frees if != NULL */)
+file_utils_readXVThumb (const gchar  *fnam,
+                        gint         *w,
+                        gint         *h,
+                        gchar       **imginfo /* caller frees if != NULL */)
 {
   FILE        *fp;
   const gchar *P7_332 = "P7 332";

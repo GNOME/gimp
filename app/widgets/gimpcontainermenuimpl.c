@@ -176,9 +176,6 @@ gimp_container_menu_impl_insert_item (GimpContainerMenu *menu,
                                   menu->preview_size,
                                   menu->preview_border_width);
 
-  gimp_menu_item_set_name_func (GIMP_MENU_ITEM (menu_item),
-				menu->get_name_func);
-
   g_signal_connect (menu_item, "activate",
                     G_CALLBACK (gimp_container_menu_impl_item_selected),
                     menu);
