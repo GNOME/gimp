@@ -83,7 +83,11 @@ helper_run (gchar * name,
 
   g_message ("run called %s", name);
 
-  run_mode = param[0].data.d_int32;
+  /* No parameters have been defined: asking for one */
+  /* seg-faults, since param[0] == NULL              */
+  /* See helper_query                       -garo-   */
+   
+  /* run_mode = param[0].data.d_int32; */
 
   *nreturn_vals = 1;
   *return_vals = values;

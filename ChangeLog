@@ -1,3 +1,11 @@
+2001-04-29  Garry R. Osgood  <grosgood@rcn.com>
+	* plug-ins/plugin-helper/plugin-helper.c
+	extensions don't have parameters,
+	but helper_run() was asking anyway -
+	and segfaulting. Commented out
+	line for now; everything still seems
+	prototypical in Plug In Helper Land.
+	
 2001-04-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimplayer.[ch]: added a "linked_changed" signal and emit it
