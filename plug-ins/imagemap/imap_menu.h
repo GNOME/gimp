@@ -77,6 +77,7 @@ typedef struct {
 
    CommandFactory_t cmd_grid_settings;
    CommandFactory_t cmd_create_guides;
+   CommandFactory_t cmd_use_gimp_guides;
 
    CommandFactory_t cmd_about;
 } Menu_t;
@@ -127,6 +128,8 @@ typedef struct {
 	((menu)->cmd_grid_settings = (command))
 #define menu_set_create_guides_command(menu, command) \
 	((menu)->cmd_create_guides = (command))
+#define menu_set_use_gimp_guides_command(menu, command) \
+	((menu)->cmd_use_gimp_guides = (command))
 #define menu_set_about_command(menu, command) \
 	((menu)->cmd_about = (command))
 

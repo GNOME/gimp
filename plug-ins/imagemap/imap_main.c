@@ -45,6 +45,7 @@
 #include "imap_cmd_copy.h"
 #include "imap_cmd_cut.h"
 #include "imap_cmd_create.h"
+#include "imap_cmd_gimp_guides.h"
 #include "imap_cmd_guides.h"
 #include "imap_cmd_move.h"
 #include "imap_cmd_move_down.h"
@@ -1397,6 +1398,12 @@ factory_create_guides_dialog(void)
 }
 
 static Command_t*
+factory_use_gimp_guides_dialog(void)
+{
+   return gimp_guides_command_new(_shapes, _drawable);
+}
+
+static Command_t*
 factory_about_dialog(void)
 {
    return command_new(do_about_dialog);
@@ -1474,6 +1481,7 @@ dialog(GimpDrawable *drawable)
    menu_set_edit_map_info_command(menu, factory_settings_dialog);
    menu_set_grid_settings_command(menu, factory_grid_settings_dialog);
    menu_set_create_guides_command(menu, factory_create_guides_dialog);
+   menu_set_use_gimp_guides_command(menu, factory_use_gimp_guides_dialog);
    menu_set_about_command(menu, factory_about_dialog);
 
    /* Create popup */

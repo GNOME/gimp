@@ -160,9 +160,9 @@ menu_fuzzy_select(GtkWidget *widget, gpointer data)
       _menu_callback_lock = FALSE;
    } else {
 /*
-      set_arrow_func();
-      tools_select_arrow();
-      popup_select_arrow();
+      set_fuzzy_select_func();
+      tools_select_fuzzy();
+      popup_select_fuzzy();
 */
    }
 }
@@ -380,6 +380,9 @@ make_goodies_menu(GtkWidget *menu_bar)
    _menu.grid = make_check_item(goodies_menu, _("Grid"), menu_grid, NULL);
    make_item_with_label(goodies_menu, _("Grid Settings..."), menu_command,
 			&_menu.cmd_grid_settings);
+   make_separator(goodies_menu);
+   make_item_with_label(goodies_menu, _("Use GIMP Guides..."), menu_command,
+			&_menu.cmd_use_gimp_guides);
    make_item_with_label(goodies_menu, _("Create Guides..."), menu_command,
 			&_menu.cmd_create_guides);
 }

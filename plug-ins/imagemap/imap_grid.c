@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#include <stdlib.h>
+
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -73,7 +75,7 @@ static void
 grid_settings_ok_cb(gpointer data)
 {
    GridDialog_t *param = (GridDialog_t*) data;
-   gint new_snap;
+   gboolean new_snap;
 
    new_snap = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(param->snap));
    grid_width = gtk_spin_button_get_value_as_int(
@@ -198,15 +200,8 @@ create_grid_settings_dialog()
    
    data->dialog = dialog = make_default_dialog(_("Grid Settings"));
    default_dialog_set_ok_cb(dialog, grid_settings_ok_cb, (gpointer) data);
-   
-   main_table = gtk_table_new(4, 2, FALSE);
-   gtk_container_set_border_width(GTK_CONTAINER(main_table), 10);
-   gtk_table_set_row_spacings(GTK_TABLE(main_table), 10);
-   gtk_table_set_col_spacings(GTK_TABLE(main_table), 10);
-   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog->dialog)->vbox), 
-		      main_table, TRUE, TRUE, 10);
-   gtk_widget_show(main_table);
-   
+   main_table = default_dialog_add_table(dialog, 4, 2);
+
    data->snap = gtk_check_button_new_with_mnemonic(_("_Snap-To Grid Enabled"));
    g_signal_connect(G_OBJECT(data->snap), "toggled", 
                     G_CALLBACK (snap_toggled_cb), data);

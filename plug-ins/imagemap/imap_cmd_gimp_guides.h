@@ -21,30 +21,13 @@
  *
  */
 
-#include "config.h"
+#ifndef _IMAP_CMD_GIMP_GUIDES_H
+#define _IMAP_CMD_GIMP_GUIDES_H
 
-#include <gtk/gtk.h>
+#include "imap_command.h"
+#include "imap_object.h"
 
-#include "imap_about.h"
-#include "imap_default_dialog.h"
+Command_t *gimp_guides_command_new(ObjectList_t *list, 
+				   GimpDrawable *_drawable);
 
-#include "libgimp/stdplugins-intl.h"
-
-void
-do_about_dialog(void)
-{
-   static DefaultDialog_t *dialog;
-   if (!dialog) {
-      dialog = make_default_dialog(_("About"));
-      default_dialog_hide_cancel_button(dialog);
-      default_dialog_hide_apply_button(dialog);
-      default_dialog_hide_help_button(dialog);
-      default_dialog_set_label(dialog, _("Imagemap plug-in 2.0"));
-      default_dialog_set_label(
-	 dialog, _("Copyright(c) 1999-2002 by Maurits Rijk"));
-      default_dialog_set_label(dialog, _("lpeek.mrijk@consunet.nl"));
-      default_dialog_set_label(
-	 dialog, _("  Released under the GNU General Public License  "));
-   }
-   default_dialog_show(dialog);
-}
+#endif /* _IMAP_CMD_GUIDES_H */

@@ -85,7 +85,7 @@ type_toggled_cb(GtkWidget *widget, gpointer data)
 }
 
 static SettingsDialog_t*
-make_settings_dialog()
+create_settings_dialog()
 {
    SettingsDialog_t *data = g_new(SettingsDialog_t, 1);
    GtkWidget *table, *vscrollbar, *frame, *hbox, *label;
@@ -93,14 +93,7 @@ make_settings_dialog()
 
    dialog = data->dialog = make_default_dialog(_("Settings for this Mapfile"));
    default_dialog_set_ok_cb(dialog, settings_ok_cb, (gpointer) data);
-
-   table = gtk_table_new(9, 3, FALSE);
-   gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog->dialog)->vbox), 
-		     table);
-   gtk_table_set_row_spacings(GTK_TABLE(table), 10);
-   gtk_table_set_col_spacings(GTK_TABLE(table), 10);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 10);
-   gtk_widget_show(table);
+   table = default_dialog_add_table(dialog, 9, 3);
 
    create_label_in_table(table, 0, 0, _("Filename:"));
    data->filename = create_label_in_table(table, 0, 1, "");
@@ -169,7 +162,7 @@ do_settings_dialog(void)
    MapInfo_t *info = get_map_info();
 
    if (!dialog)
-      dialog = make_settings_dialog();
+      dialog = create_settings_dialog();
 
    gtk_label_set_text(GTK_LABEL(dialog->filename), filename);
    browse_widget_set_filename(dialog->imagename, info->image_name);

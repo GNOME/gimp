@@ -158,12 +158,7 @@ make_guides_dialog()
 		     data->guide_bounds);
    gtk_widget_show(data->guide_bounds);
 
-   table = gtk_table_new(4, 4, FALSE);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 10);
-   gtk_table_set_row_spacings(GTK_TABLE(table), 10);
-   gtk_table_set_col_spacings(GTK_TABLE(table), 10);
-   gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog->dialog)->vbox), table);
-   gtk_widget_show(table);
+   table = default_dialog_add_table(dialog, 4, 4);
 
    label = create_label_in_table(table, 0, 0, _("_Width:"));
    data->width = create_spin_button_in_table(table, label, 0, 1, 32, 1, 100);

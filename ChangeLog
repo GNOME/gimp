@@ -1,3 +1,27 @@
+2002-08-21  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/imagemap/imap_cmd_guides.c (make_guides_dialog)
+	* plug-ins/imagemap/imap_settings.c (create_settings_dialog)
+	* plug-ins/imagemap/imap_grid.c (create_grid_settings_dialog): replaced
+	some code by default_dialog_add_table convenience func.
+
+	* plug-ins/imagemap/imap_default_dialog.h
+	* plug-ins/imagemap/imap_default_dialog.c: added convenience func 
+	default_dialog_add_table.
+
+	* plug-ins/imagemap/imap_grid.c: fixed warning for missing prototype
+	of abs.
+
+	* plug-ins/imagemap/imap_about.c: updated copyright date
+	
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_menu.h 
+	* plug-ins/imagemap/imap_menu.c 
+	* plug-ins/imagemap/Makefile.am
+	* plug-ins/imagemap/imap_cmd_gimp_guides.h
+	* plug-ins/imagemap/imap_cmd_gimp_guides.c: new functionality to allow
+	creation of imagemap's using GIMP guides.
+	
 2002-08-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/menus.c (menus_last_opened_add): don't g_free() static

@@ -53,6 +53,8 @@ imagemap_SOURCES = \
 	imap_cmd_delete_point.h		\
 	imap_cmd_edit_object.c		\
 	imap_cmd_edit_object.h		\
+	imap_cmd_gimp_guides.c		\
+	imap_cmd_gimp_guides.h		\
 	imap_cmd_guides.c		\
 	imap_cmd_guides.h		\
 	imap_cmd_insert_point.c		\

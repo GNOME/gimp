@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2000 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,5 +55,7 @@ void default_dialog_set_title(DefaultDialog_t *dialog, const gchar *title);
 void default_dialog_set_ok_sensitivity(DefaultDialog_t *dialog, 
 				       gint sensitive);
 void default_dialog_set_label(DefaultDialog_t *dialog, gchar *text);
+GtkWidget *default_dialog_add_table(DefaultDialog_t *dialog, gint rows, 
+				    gint cols);
 
 #endif /* _IMAP_DEFAULT_DIALOG_H */
