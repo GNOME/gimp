@@ -1,5 +1,10 @@
 2005-01-02  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/sparkle.c: applied patch from Shlomi Fish that
+	fixes regressions in Sparkle plug-in (bug #132145).
+
+2005-01-02  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/plugin-defs.pl: changed for move of JPEG plug-in.
 
 2005-01-01  Bill Skaggs <weskaggs@primate.ucdavis.edu>

@@ -695,7 +695,7 @@ sparkle (GimpDrawable *drawable,
                 }
 
               if (has_alpha)
-                d[alpha] = src[alpha];
+                d[alpha] = s[alpha];
 
               s += src_rgn.bpp;
               d += dest_rgn.bpp;
@@ -756,14 +756,13 @@ sparkle (GimpDrawable *drawable,
                   /* fspike im x,y intens rlength angle */
                   if (svals.spike_pts > 0)
                     {
-                      gdouble random_1 = g_rand_double(gr);
                       /* major spikes */
                       if (svals.spike_angle == -1)
                         spike_angle = g_rand_double_range (gr, 0, 360.0);
                       else
                         spike_angle = svals.spike_angle;
 
-                      if (random_1 <= svals.density)
+                      if (g_rand_double (gr) <= svals.density)
                         {
                           fspike (&src_rgn, &dest_rgn, x1, y1, x2, y2,
                                   x + src_rgn.x, y + src_rgn.y,
@@ -949,7 +948,7 @@ fspike (GimpPixelRgn *src_rgn,
   for (i = 0; i < svals.spike_pts; i++)
     {
       if (svals.colortype == NATURAL)
-        gimp_pixel_rgn_get_pixel (src_rgn, pixel, xr, yr);
+        gimp_pixel_rgn_get_pixel (dest_rgn, pixel, xr, yr);
 
       color[0] = pixel[0];
       color[1] = pixel[1];
@@ -977,7 +976,7 @@ fspike (GimpPixelRgn *src_rgn,
             r += 255;
 
           b += (svals.random_saturation *
-                g_rand_double_range (gr, -0.5, 0.5)) * 255;
+                g_rand_double_range (gr, -1.0, 1.0)) * 255;
 
           if (b > 255)
             b = 255;
@@ -991,7 +990,7 @@ fspike (GimpPixelRgn *src_rgn,
 
       dx = 0.2 * cos (theta * G_PI / 180.0);
       dy = 0.2 * sin (theta * G_PI / 180.0);
-      xrt = (gdouble) xr; /* (gdouble) is needed because some */
+      xrt = (gdouble) xr; /* (gdouble) is needed because some      */
       yrt = (gdouble) yr; /* compilers optimize too much otherwise */
       rpos = 0.2;
 
