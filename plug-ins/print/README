@@ -1,4 +1,4 @@
-This is Gimp-Print version 4.0.1, a stable release in the 4.0 line.
+This is Gimp-Print version 4.0.2, a stable release in the 4.0 line.
 Gimp-print is the print facility for the Gimp, and in addition a suite
 of drivers that may be used with common UNIX spooling systems using
 GhostScript or CUPS.  These drivers provide printing quality for

@@ -1,10 +1,22 @@
-This is gimp-print version 4.0.1, a stable release in the 4.0 line.
+This is gimp-print version 4.0.2, a stable release in the 4.0 line.
 
 This software includes the Print plug-in for the Gimp (1.0, 1.1, and
 1.2), and GhostScript and CUPS drivers.  The support for printers in
 GhostScript and CUPS is identical to the support for these printers in
 the Print plugin -- they use the identical code base.  Please read
 Ghost/README and CUPS/README.txt for more information on this.
+
+
+Gimp-Print 4.0.2 contains the following fixes over Gimp-Print 4.0.1:
+
+1) The GhostScript driver (used either alone or with foomatic) now
+   prints multi-page documents correctly.  4.0.0, 4.0.1, and some
+   earlier versions printed each page progressively paler.
+
+2) The CUPS driver now prints with proper density on all printers.  In
+   4.0.0 and 4.0.1 it printed too pale with all non-Epson printers,
+   and the Epson Stylus Photo 870 and 1270 printed with a slight
+   magenta cast.
 
 
 Gimp-Print 4.0.1 contains the following fixes over Gimp-Print 4.0.0:
