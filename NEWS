@@ -40,11 +40,36 @@ Overview of Changes in GIMP 2.1.3
 
 - Fixes to the Decompose plug-in (bug #147603).
 
+- Added palette selector widgets to libgimpui.
+
+- Allow to disable mnemonics in menus (bug #120034).
+
+- Ported TWAIN plug-in to Mac OS X (bug #147962).
+
+- Support motion event history as provided by some input device drivers.
+
+- Let the undo system know more specifically what an undo step
+  does. Use that info to keep tools active across modifications to
+  the image that don't affect the tool (bug #109561).
+
+- Changed default config for keyboard controller to allow scrolling
+  the display using the cursor keys (#53988).
+
+- Added GimpPreviewArea widget as replacement for the deprecated
+  GtkPreview widget. Ported most plug-ins to the new widget.
+
+- Added shapes for generated brushes and allow for softer brushes.
+
+- Allow to specify the aspect ratio in the scale tool.
+
+- Lots of bug fixes and other goodies. Check the ChangeLog for details.
+
 
 Contributors:
 
    Michael Natterer, Sven Neumann, Helvetix Victorinox, Shlomi Fish, 
-   Bill Skaggs, Brion Vibber, Raphael Quinet
+   Bill Skaggs, Brion Vibber, Raphael Quinet, Simon Budig, David Odin,
+   Manish Singh, Hans Breuer, Michael Schumacher, Dave Neary
 
 
 
