@@ -26,6 +26,7 @@ FILES	=\
     CD \
     CD_Half \
     Caribbean_Blues \
+    Coffee \
     Cold_Steel \
     Cold_Steel_2 \
     Crown_molding \
@@ -57,6 +58,7 @@ FILES	=\
     Horizon_2 \
     Incandescent \
     Land_1 \
+    Land_and_Sea \
     Metallic_Something	\
     Mexican_flag \
     Mexican_flag_smooth \

@@ -1,3 +1,13 @@
+Wed May 13 00:03:18 MEST 1998
+	
+	* added nine new scripts from Chris Gutteridge
+	(asc2img.scm, camo.scm, coffee.scm, distress_selection.scm, 
+	 fuzzyborder.scm, old_photo.scm, rendermap.scm
+	 spinning_globe.scm, tileblur.scm)
+
+	* added two gradients that are used by the new scripts
+	(Coffee, Land_and_Sea)
+
 Tue May 12 02:49:12 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/app_procs.c: create tips dialog after loading files on the

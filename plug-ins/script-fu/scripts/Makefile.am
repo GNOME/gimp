@@ -12,6 +12,7 @@ scriptdata_DATA = \
 	alien-glow-bullet.scm			\
 	alien-glow-button.scm			\
 	alien-glow-logo.scm			\
+	asc2img.scm				\
 	basic1-logo.scm				\
 	basic2-logo.scm				\
 	beavis.jpg				\
@@ -24,6 +25,7 @@ scriptdata_DATA = \
 	blend-anim.scm				\
 	blended-logo.scm			\
 	bovinated-logo.scm			\
+	camo.scm				\
 	carve-it.scm				\
 	carved-logo.scm				\
 	chalk.scm				\
@@ -32,17 +34,20 @@ scriptdata_DATA = \
 	chrome-logo.scm				\
 	circuit.scm				\
 	clothify.scm				\
+	coffee.scm				\
 	color-cycling.scm			\
 	comic-logo.scm				\
 	coolmetal-logo.scm			\
 	copy-visible.scm			\
 	crystal-logo.scm			\
+	distress_selection.scm			\
 	drop-shadow.scm				\
 	egg.scm					\
 	erase-rows.scm				\
 	flatland.scm				\
 	font-map.scm				\
 	frosty-logo.scm				\
+	fuzzy_border.scm			\
 	gimp-headers.scm			\
 	gimp-labels.scm				\
 	glossy.scm				\
@@ -56,10 +61,12 @@ scriptdata_DATA = \
 	land.scm				\
 	lava.scm				\
 	line-nova.scm				\
+	old_photo.scm				\
 	mkbrush.scm				\
 	neon-logo.scm				\
 	perspective-shadow.scm			\
 	predator.scm				\
+	rendermap.scm				\
 	ripply-anim.scm				\
 	round-corners.scm			\
 	select_to_brush.scm			\
@@ -68,6 +75,7 @@ scriptdata_DATA = \
 	slide.scm				\
 	sota-chrome-logo.scm			\
 	sphere.scm				\
+	spinning_globe.scm			\
 	starburst-logo.scm			\
 	starscape-logo.scm			\
 	swirltile.scm				\
@@ -80,6 +88,7 @@ scriptdata_DATA = \
 	texture3.jpg				\
 	textured-logo.scm			\
 	title-header.scm			\
+	tileblur.scm				\
 	trochoid.scm				\
 	truchet.scm				\
 	unsharp-mask.scm			\
