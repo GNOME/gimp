@@ -574,10 +574,6 @@ mw_preview_new (GtkWidget        *parent,
   GtkWidget *vbox;
   GtkWidget *button;
    
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
-
   frame = gtk_frame_new (_("Preview"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);

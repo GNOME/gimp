@@ -461,12 +461,6 @@ mov_dialog ( GimpDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
-
   /* dialog */
   dlg = gtk_dialog_new ();
   ok_data.dlg = dlg;

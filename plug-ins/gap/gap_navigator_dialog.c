@@ -3115,10 +3115,6 @@ int  gap_navigator(gint32 image_id)
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  gtk_preview_set_gamma(gimp_gamma());
-  gtk_preview_set_install_cmap(gimp_install_cmap());
-  gtk_widget_set_default_colormap(gtk_preview_get_cmap());
-
   /*  The main shell */
   shell = gimp_dialog_new (_("Video Navigator"), "gap_navigator",
 			   gimp_standard_help_func, "filters/gap_navigator_dialog.html",
