@@ -293,21 +293,21 @@ gimp_size_entry_new (gint                       number_of_fields,
       gsef = g_new0 (GimpSizeEntryField, 1);
       gse->fields = g_slist_append (gse->fields, gsef);
 
-      gsef->gse = gse;
-      gsef->resolution = 1.0; /*  just to avoid division by zero  */
-      gsef->lower = 0.0;
-      gsef->upper = 100.0;
-      gsef->value = 0;
-      gsef->min_value = 0;
-      gsef->max_value = SIZE_MAX_VALUE;
+      gsef->gse               = gse;
+      gsef->resolution        = 1.0; /*  just to avoid division by zero  */
+      gsef->lower             = 0.0;
+      gsef->upper             = 100.0;
+      gsef->value             = 0;
+      gsef->min_value         = 0;
+      gsef->max_value         = SIZE_MAX_VALUE;
       gsef->refval_adjustment = NULL;
-      gsef->value_adjustment = NULL;
-      gsef->refval = 0;
-      gsef->min_refval = 0;
-      gsef->max_refval = SIZE_MAX_VALUE;
-      gsef->refval_digits =
+      gsef->value_adjustment  = NULL;
+      gsef->refval            = 0;
+      gsef->min_refval        = 0;
+      gsef->max_refval        = SIZE_MAX_VALUE;
+      gsef->refval_digits     = 
 	(update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE) ? 0 : 3;
-      gsef->stop_recursion = 0;
+      gsef->stop_recursion    = 0;
 
       gsef->value_adjustment = gtk_adjustment_new (gsef->value,
 						   gsef->min_value,
@@ -405,17 +405,17 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
   gse->fields = g_slist_prepend (gse->fields, gsef);
   gse->number_of_fields++;
 
-  gsef->gse           = gse;
-  gsef->resolution    = 1.0; /*  just to avoid division by zero  */
-  gsef->lower         = 0.0;
-  gsef->upper         = 100.0;
-  gsef->value         = 0;
-  gsef->min_value     = 0;
-  gsef->max_value     = SIZE_MAX_VALUE;
-  gsef->refval        = 0;
-  gsef->min_refval    = 0;
-  gsef->max_refval    = SIZE_MAX_VALUE;
-  gsef->refval_digits =
+  gsef->gse            = gse;
+  gsef->resolution     = 1.0; /*  just to avoid division by zero  */
+  gsef->lower          = 0.0;
+  gsef->upper          = 100.0;
+  gsef->value          = 0;
+  gsef->min_value      = 0;
+  gsef->max_value      = SIZE_MAX_VALUE;
+  gsef->refval         = 0;
+  gsef->min_refval     = 0;
+  gsef->max_refval     = SIZE_MAX_VALUE;
+  gsef->refval_digits  =
     (gse->update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE) ? 0 : 3;
   gsef->stop_recursion = 0;
 
@@ -467,12 +467,31 @@ gimp_size_entry_attach_label (GimpSizeEntry *gse,
 			      gint           column,
 			      gfloat         alignment)
 {
-  GtkWidget* label;
+  GtkWidget *label;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
   g_return_if_fail (text != NULL);
 
   label = gtk_label_new_with_mnemonic (text);
+
+  if (column == 0)
+    {
+      GtkTableChild *child;
+      GList         *list;
+
+      for (list = GTK_TABLE (gse)->children; list; list = g_list_next (list))
+        {
+          child = (GtkTableChild *) list->data;
+
+          if (child->left_attach == 1 && child->top_attach == row)
+            {
+              gtk_label_set_mnemonic_widget (GTK_LABEL (label),
+                                             child->widget);
+              break;
+            }
+        }
+    }
+      
   gtk_misc_set_alignment (GTK_MISC (label), alignment, 0.5);
 
   gtk_table_attach (GTK_TABLE (gse), label, column, column+1, row, row+1,

@@ -1,5 +1,11 @@
 2002-05-27  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpsizeentry.c (gimp_size_entry_attach_label):
+	set the spinbutton which is attached right of the label as
+	mnemonic_widget for the label.
+
+2002-05-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpconfig.[ch]: added "gint nest_level" to the
 	deserialization functions, so nested calls to deserialize()
 	don't error on the trailing ')'. Made the scanner config parse
