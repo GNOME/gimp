@@ -29,12 +29,12 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimpgradient.h"
 
+#include "widgets/gimpcolordialog.h"
 #include "widgets/gimpgradienteditor.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "dialogs/dialogs.h"
-#include "dialogs/color-dialog.h"
 
 #include "gradient-editor-commands.h"
 
@@ -43,14 +43,14 @@
 
 /*  local function prototypes  */
 
-static void   gradient_editor_left_color_changed     (ColorDialog       *cnb,
-                                                      const GimpRGB     *color,
-                                                      ColorDialogState   state,
-                                                      gpointer           data);
-static void   gradient_editor_right_color_changed    (ColorDialog       *cnb,
-                                                      const GimpRGB     *color,
-                                                      ColorDialogState   state,
-                                                      gpointer           data);
+static void   gradient_editor_left_color_update      (GimpColorDialog     *dialog,
+                                                      const GimpRGB       *color,
+                                                      GimpColorDialogState state,
+                                                      GimpGradientEditor  *editor);
+static void   gradient_editor_right_color_update     (GimpColorDialog     *dialog,
+                                                      const GimpRGB       *color,
+                                                      GimpColorDialogState state,
+                                                      GimpGradientEditor  *editor);
 
 static GimpGradientSegment *
               gradient_editor_save_selection         (GimpGradientEditor  *editor);
@@ -80,18 +80,27 @@ gradient_editor_left_color_cmd_callback (GtkAction *action,
   editor->left_saved_segments = gradient_editor_save_selection (editor);
 
   editor->color_dialog =
-    color_dialog_new (GIMP_VIEWABLE (gradient),
-                      _("Left Endpoint Color"),
-                      GIMP_STOCK_GRADIENT,
-                      _("Gradient Segment's Left Endpoint Color"),
-                      GTK_WIDGET (editor),
-                      global_dialog_factory,
-                      "gimp-gradient-editor-color-dialog",
-                      &editor->control_sel_l->left_color,
-                      gradient_editor_left_color_changed, editor,
-                      editor->instant_update, TRUE);
+    gimp_color_dialog_new (GIMP_VIEWABLE (gradient),
+                           _("Left Endpoint Color"),
+                           GIMP_STOCK_GRADIENT,
+                           _("Gradient Segment's Left Endpoint Color"),
+                           GTK_WIDGET (editor),
+                           global_dialog_factory,
+                           "gimp-gradient-editor-color-dialog",
+                           &editor->control_sel_l->left_color,
+                           editor->instant_update, TRUE);
+
+  g_signal_connect (editor->color_dialog, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &editor->color_dialog);
+
+  g_signal_connect (editor->color_dialog, "update",
+                    G_CALLBACK (gradient_editor_left_color_update),
+                    editor);
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
+
+  gtk_window_present (GTK_WINDOW (editor->color_dialog));
 }
 
 void
@@ -173,18 +182,27 @@ gradient_editor_right_color_cmd_callback (GtkAction *action,
   editor->right_saved_segments = gradient_editor_save_selection (editor);
 
   editor->color_dialog =
-    color_dialog_new (GIMP_VIEWABLE (gradient),
-                      _("Right Endpoint Color"),
-                      GIMP_STOCK_GRADIENT,
-                      _("Gradient Segment's Right Endpoint Color"),
-                      GTK_WIDGET (editor),
-                      global_dialog_factory,
-                      "gimp-gradient-editor-color-dialog",
-                      &editor->control_sel_l->right_color,
-                      gradient_editor_right_color_changed, editor,
-                      editor->instant_update, TRUE);
+    gimp_color_dialog_new (GIMP_VIEWABLE (gradient),
+                           _("Right Endpoint Color"),
+                           GIMP_STOCK_GRADIENT,
+                           _("Gradient Segment's Right Endpoint Color"),
+                           GTK_WIDGET (editor),
+                           global_dialog_factory,
+                           "gimp-gradient-editor-color-dialog",
+                           &editor->control_sel_l->right_color,
+                           editor->instant_update, TRUE);
+
+  g_signal_connect (editor->color_dialog, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &editor->color_dialog);
+
+  g_signal_connect (editor->color_dialog, "update",
+                    G_CALLBACK (gradient_editor_right_color_update),
+                    editor);
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
+
+  gtk_window_present (GTK_WINDOW (editor->color_dialog));
 }
 
 void
@@ -559,19 +577,16 @@ gradient_editor_blend_opacity_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static void
-gradient_editor_left_color_changed (ColorDialog      *cnb,
-                                    const GimpRGB    *color,
-                                    ColorDialogState  state,
-                                    gpointer          data)
+gradient_editor_left_color_update (GimpColorDialog      *dialog,
+                                   const GimpRGB        *color,
+                                   GimpColorDialogState  state,
+                                   GimpGradientEditor   *editor)
 {
-  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
-  GimpGradient       *gradient;
-
-  gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
+  GimpGradient *gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
   switch (state)
     {
-    case COLOR_DIALOG_UPDATE:
+    case GIMP_COLOR_DIALOG_UPDATE:
       gimp_gradient_segment_range_blend (gradient,
                                          editor->control_sel_l,
                                          editor->control_sel_r,
@@ -580,7 +595,7 @@ gradient_editor_left_color_changed (ColorDialog      *cnb,
                                          TRUE, TRUE);
       break;
 
-    case COLOR_DIALOG_OK:
+    case GIMP_COLOR_DIALOG_OK:
       gimp_gradient_segment_range_blend (gradient,
                                          editor->control_sel_l,
                                          editor->control_sel_r,
@@ -588,16 +603,16 @@ gradient_editor_left_color_changed (ColorDialog      *cnb,
                                          &editor->control_sel_r->right_color,
                                          TRUE, TRUE);
       gimp_gradient_segments_free (editor->left_saved_segments);
-      color_dialog_free (cnb);
+      gtk_widget_destroy (editor->color_dialog);
       editor->color_dialog = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
       break;
 
-    case COLOR_DIALOG_CANCEL:
+    case GIMP_COLOR_DIALOG_CANCEL:
       gradient_editor_replace_selection (editor, editor->left_saved_segments);
       GIMP_DATA (gradient)->dirty = editor->left_saved_dirty;
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gradient));
-      color_dialog_free (cnb);
+      gtk_widget_destroy (editor->color_dialog);
       editor->color_dialog = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
       break;
@@ -605,19 +620,16 @@ gradient_editor_left_color_changed (ColorDialog      *cnb,
 }
 
 static void
-gradient_editor_right_color_changed (ColorDialog      *cnb,
-                                     const GimpRGB    *color,
-                                     ColorDialogState  state,
-                                     gpointer          data)
+gradient_editor_right_color_update (GimpColorDialog      *dialog,
+                                    const GimpRGB        *color,
+                                    GimpColorDialogState  state,
+                                    GimpGradientEditor   *editor)
 {
-  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
-  GimpGradient       *gradient;
-
-  gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
+  GimpGradient *gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
   switch (state)
     {
-    case COLOR_DIALOG_UPDATE:
+    case GIMP_COLOR_DIALOG_UPDATE:
       gimp_gradient_segment_range_blend (gradient,
                                          editor->control_sel_l,
                                          editor->control_sel_r,
@@ -626,7 +638,7 @@ gradient_editor_right_color_changed (ColorDialog      *cnb,
                                          TRUE, TRUE);
       break;
 
-    case COLOR_DIALOG_OK:
+    case GIMP_COLOR_DIALOG_OK:
       gimp_gradient_segment_range_blend (gradient,
                                          editor->control_sel_l,
                                          editor->control_sel_r,
@@ -634,16 +646,16 @@ gradient_editor_right_color_changed (ColorDialog      *cnb,
                                          color,
                                          TRUE, TRUE);
       gimp_gradient_segments_free (editor->right_saved_segments);
-      color_dialog_free (cnb);
+      gtk_widget_destroy (editor->color_dialog);
       editor->color_dialog = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
       break;
 
-    case COLOR_DIALOG_CANCEL:
+    case GIMP_COLOR_DIALOG_CANCEL:
       gradient_editor_replace_selection (editor, editor->right_saved_segments);
       GIMP_DATA (gradient)->dirty = editor->right_saved_dirty;
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gradient));
-      color_dialog_free (cnb);
+      gtk_widget_destroy (editor->color_dialog);
       editor->color_dialog = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
       break;

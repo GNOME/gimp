@@ -27,41 +27,26 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "dialogs/dialogs-types.h"
-#endif
-#include "dialogs/dialogs-types.h"
-#include "dialogs/color-dialog.h"
-
+#include "gimpcolordialog.h"
 #include "gimpcolorpanel.h"
 #include "gimpitemfactory.h"
 
 
-struct _GimpColorPanel
-{
-  GimpColorButton  parent;
-
-  GimpContext     *context;
-
-  ColorDialog   *color_dialog;
-};
-
-
 /*  local function prototypes  */
 
-static void       gimp_color_panel_class_init      (GimpColorPanelClass *klass);
-static void       gimp_color_panel_init            (GimpColorPanel      *panel);
+static void       gimp_color_panel_class_init    (GimpColorPanelClass  *klass);
+static void       gimp_color_panel_init          (GimpColorPanel       *panel);
 
-static void       gimp_color_panel_destroy         (GtkObject           *object);
-static gboolean   gimp_color_panel_button_press    (GtkWidget           *widget,
-                                                    GdkEventButton      *bevent);
-static void       gimp_color_panel_color_changed   (GimpColorButton     *button);
-static void       gimp_color_panel_clicked         (GtkButton           *button);
+static void       gimp_color_panel_destroy       (GtkObject            *object);
+static gboolean   gimp_color_panel_button_press  (GtkWidget            *widget,
+                                                  GdkEventButton       *bevent);
+static void       gimp_color_panel_color_changed (GimpColorButton      *button);
+static void       gimp_color_panel_clicked       (GtkButton            *button);
 
-static void       gimp_color_panel_select_callback (ColorDialog       *dialog,
-                                                    const GimpRGB       *color,
-                                                    ColorDialogState   state,
-                                                    gpointer             data);
+static void       gimp_color_panel_dialog_update (GimpColorDialog      *dialog,
+                                                  const GimpRGB        *color,
+                                                  GimpColorDialogState  state,
+                                                  GimpColorPanel       *panel);
 
 
 static GimpColorButtonClass *parent_class = NULL;
@@ -125,8 +110,7 @@ gimp_color_panel_destroy (GtkObject *object)
 
   if (panel->color_dialog)
     {
-      color_dialog_hide (panel->color_dialog);
-      color_dialog_free (panel->color_dialog);
+      gtk_widget_destroy (panel->color_dialog);
       panel->color_dialog = NULL;
     }
 
@@ -228,7 +212,8 @@ gimp_color_panel_color_changed (GimpColorButton *button)
   if (panel->color_dialog)
     {
       gimp_color_button_get_color (GIMP_COLOR_BUTTON (button), &color);
-      color_dialog_set_color (panel->color_dialog, &color);
+      gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (panel->color_dialog),
+                                   &color);
     }
 }
 
@@ -243,40 +228,43 @@ gimp_color_panel_clicked (GtkButton *button)
   if (! panel->color_dialog)
     {
       panel->color_dialog =
-	color_dialog_new (NULL, GIMP_COLOR_BUTTON (button)->title, NULL, NULL,
-                          GTK_WIDGET (button),
-                          NULL, NULL,
-                          (const GimpRGB *) &color,
-                          gimp_color_panel_select_callback,
-                          panel,
-                          FALSE,
-                          gimp_color_button_has_alpha (GIMP_COLOR_BUTTON (button)));
+	gimp_color_dialog_new (NULL,
+                               GIMP_COLOR_BUTTON (button)->title,
+                               NULL, NULL,
+                               GTK_WIDGET (button),
+                               NULL, NULL,
+                               (const GimpRGB *) &color,
+                               FALSE,
+                               gimp_color_button_has_alpha (GIMP_COLOR_BUTTON (button)));
+
+      g_signal_connect (panel->color_dialog, "destroy",
+                        G_CALLBACK (gtk_widget_destroyed),
+                        &panel->color_dialog);
+
+      g_signal_connect (panel->color_dialog, "update",
+                        G_CALLBACK (gimp_color_panel_dialog_update),
+                        panel);
     }
-  else
-    {
-      color_dialog_show (panel->color_dialog);
-    }
+
+  gtk_window_present (GTK_WINDOW (panel->color_dialog));
 }
 
 static void
-gimp_color_panel_select_callback (ColorDialog      *dialog,
-				  const GimpRGB    *color,
-				  ColorDialogState  state,
-				  gpointer          data)
+gimp_color_panel_dialog_update (GimpColorDialog      *dialog,
+                                const GimpRGB        *color,
+                                GimpColorDialogState  state,
+                                GimpColorPanel       *panel)
 {
-  GimpColorPanel *panel = GIMP_COLOR_PANEL (data);
-
-  if (panel->color_dialog)
+  switch (state)
     {
-      switch (state)
-	{
-	case COLOR_DIALOG_UPDATE:
-	  break;
-	case COLOR_DIALOG_OK:
-	  gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
-	  /* Fallthrough */
-	case COLOR_DIALOG_CANCEL:
-	  color_dialog_hide (panel->color_dialog);
-	}
+    case GIMP_COLOR_DIALOG_UPDATE:
+      break;
+
+    case GIMP_COLOR_DIALOG_OK:
+      gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
+      /* Fallthrough */
+
+    case GIMP_COLOR_DIALOG_CANCEL:
+      gtk_widget_hide (panel->color_dialog);
     }
 }

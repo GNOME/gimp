@@ -45,6 +45,25 @@ gimp_aspect_type_get_type (void)
 }
 
 GType
+gimp_color_dialog_state_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_COLOR_DIALOG_OK, "GIMP_COLOR_DIALOG_OK", "ok" },
+    { GIMP_COLOR_DIALOG_CANCEL, "GIMP_COLOR_DIALOG_CANCEL", "cancel" },
+    { GIMP_COLOR_DIALOG_UPDATE, "GIMP_COLOR_DIALOG_UPDATE", "update" },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    type = g_enum_register_static ("GimpColorDialogState", values);
+
+  return type;
+}
+
+GType
 gimp_color_frame_mode_get_type (void)
 {
   static const GEnumValue values[] =

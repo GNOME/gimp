@@ -33,6 +33,14 @@
 
 typedef struct _GimpColorPanelClass GimpColorPanelClass;
 
+struct _GimpColorPanel
+{
+  GimpColorButton  parent_instance;
+
+  GimpContext     *context;
+  GtkWidget       *color_dialog;
+};
+
 struct _GimpColorPanelClass
 {
   GimpColorButtonClass  parent_class;

@@ -35,9 +35,6 @@
 
 /* TODO:
  *
- * - Fix memory leaks: grad_free_gradient_editor() and any others
- * which I may have missed.
- *
  * - Add all of Marcelo's neat suggestions:
  *   - Hue rotate, saturation, brightness, contrast.
  *
@@ -72,8 +69,6 @@
 #include "gimpview.h"
 #include "gimpviewrenderergradient.h"
 #include "gimpwidgets-utils.h"
-
-#include "dialogs/color-dialog.h"
 
 #include "gimp-intl.h"
 
@@ -463,7 +458,7 @@ gimp_gradient_editor_set_data (GimpDataEditor *editor,
 
   if (gradient_editor->color_dialog)
     {
-      color_dialog_free (gradient_editor->color_dialog);
+      gtk_widget_destroy (gradient_editor->color_dialog);
       gradient_editor->color_dialog = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
     }

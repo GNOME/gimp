@@ -47,6 +47,8 @@ libappwidgets_a_sources = \
 	gimpclipboard.h			\
 	gimpcolorbar.c			\
 	gimpcolorbar.h			\
+	gimpcolordialog.c		\
+	gimpcolordialog.h		\
 	gimpcolordisplayeditor.c	\
 	gimpcolordisplayeditor.h	\
 	gimpcoloreditor.c		\

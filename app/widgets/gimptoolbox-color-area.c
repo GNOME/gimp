@@ -27,35 +27,30 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
+#include "gimpcolordialog.h"
 #include "gimpdialogfactory.h"
 #include "gimpfgbgeditor.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-color-area.h"
-
-#ifdef __GNUC__
-#warning FIXME #include "dialogs/dialogs-types.h"
-#endif
-#include "dialogs/dialogs-types.h"
-#include "dialogs/color-dialog.h"
 
 #include "gimp-intl.h"
 
 
 /*  local function prototypes  */
 
-static void     color_area_color_clicked   (GimpFgBgEditor   *editor,
-                                            GimpActiveColor   active_color,
-                                            GimpContext      *context);
-static void     color_area_select_callback (ColorDialog      *color_dialog,
-                                            const GimpRGB    *color,
-                                            ColorDialogState  state,
-                                            gpointer          data);
+static void   color_area_color_clicked (GimpFgBgEditor       *editor,
+                                        GimpActiveColor       active_color,
+                                        GimpContext          *context);
+static void   color_area_dialog_update (GimpColorDialog      *dialog,
+                                        const GimpRGB        *color,
+                                        GimpColorDialogState  state,
+                                        GimpContext          *context);
 
 
 /*  local variables  */
 
-static GtkWidget       *color_area            = NULL;
-static ColorDialog     *color_dialog          = NULL;
+static GtkWidget       *color_area          = NULL;
+static GtkWidget       *color_dialog        = NULL;
 static gboolean         color_dialog_active = FALSE;
 static GimpActiveColor  edit_color;
 static GimpRGB          revert_fg;
@@ -92,36 +87,31 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
 /*  private functions  */
 
 static void
-color_area_select_callback (ColorDialog      *color_dialog,
-			    const GimpRGB    *color,
-			    ColorDialogState  state,
-			    gpointer          data)
+color_area_dialog_update (GimpColorDialog      *dialog,
+                          const GimpRGB        *color,
+                          GimpColorDialogState  state,
+                          GimpContext          *context)
 {
-  GimpContext *context = GIMP_CONTEXT (data);
-
-  if (color_dialog)
+  switch (state)
     {
-      switch (state)
-	{
-	case COLOR_DIALOG_OK:
-	  color_dialog_hide (color_dialog);
-	  color_dialog_active = FALSE;
-	  /* Fallthrough */
+    case GIMP_COLOR_DIALOG_OK:
+      gtk_widget_hide (color_dialog);
+      color_dialog_active = FALSE;
+      /* Fallthrough */
 
-	case COLOR_DIALOG_UPDATE:
-	  if (edit_color == GIMP_ACTIVE_COLOR_FOREGROUND)
-	    gimp_context_set_foreground (context, color);
-	  else
-	    gimp_context_set_background (context, color);
-	  break;
+    case GIMP_COLOR_DIALOG_UPDATE:
+      if (edit_color == GIMP_ACTIVE_COLOR_FOREGROUND)
+        gimp_context_set_foreground (context, color);
+      else
+        gimp_context_set_background (context, color);
+      break;
 
-	case COLOR_DIALOG_CANCEL:
-	  color_dialog_hide (color_dialog);
-	  color_dialog_active = FALSE;
-	  gimp_context_set_foreground (context, &revert_fg);
-	  gimp_context_set_background (context, &revert_bg);
-          break;
-	}
+    case GIMP_COLOR_DIALOG_CANCEL:
+      gtk_widget_hide (color_dialog);
+      color_dialog_active = FALSE;
+      gimp_context_set_foreground (context, &revert_fg);
+      gimp_context_set_background (context, &revert_bg);
+      break;
     }
 }
 
@@ -158,21 +148,24 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
 
       toplevel_factory = gimp_dialog_factory_from_name ("toplevel");
 
-      color_dialog = color_dialog_new (NULL, title, NULL, NULL,
-                                       GTK_WIDGET (editor),
-                                       toplevel_factory,
-                                       "gimp-toolbox-color-dialog",
-                                       (const GimpRGB *) &color,
-                                       color_area_select_callback,
-                                       context, TRUE, FALSE);
+      color_dialog = gimp_color_dialog_new (NULL, title, NULL, NULL,
+                                            GTK_WIDGET (editor),
+                                            toplevel_factory,
+                                            "gimp-toolbox-color-dialog",
+                                            (const GimpRGB *) &color,
+                                            TRUE, FALSE);
       color_dialog_active = TRUE;
+
+      g_signal_connect (color_dialog, "update",
+                        G_CALLBACK (color_area_dialog_update),
+                        context);
     }
   else
     {
-      color_dialog_set_title (color_dialog, title);
-      color_dialog_set_color (color_dialog, &color);
+      gtk_window_set_title (GTK_WINDOW (color_dialog), title);
+      gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (color_dialog), &color);
 
-      color_dialog_show (color_dialog);
+      gtk_window_present (GTK_WINDOW (color_dialog));
       color_dialog_active = TRUE;
     }
 }

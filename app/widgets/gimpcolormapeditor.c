@@ -50,14 +50,13 @@
 
 #include "display/gimpdisplayshell-render.h"
 
+#include "gimpcolordialog.h"
 #include "gimpcolormapeditor.h"
 #include "gimpdnd.h"
 #include "gimpdialogfactory.h"
 #include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
 #include "gimpwidgets-utils.h"
-
-#include "dialogs/color-dialog.h"
 
 #include "gimp-intl.h"
 
@@ -260,7 +259,7 @@ gimp_colormap_editor_destroy (GtkObject *object)
 
   if (editor->color_dialog)
     {
-      color_dialog_free (editor->color_dialog);
+      gtk_widget_destroy (editor->color_dialog);
       editor->color_dialog = NULL;
     }
 
@@ -273,7 +272,7 @@ gimp_colormap_editor_unmap (GtkWidget *widget)
   GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (widget);
 
   if (editor->color_dialog)
-    color_dialog_hide (editor->color_dialog);
+    gtk_widget_hide (editor->color_dialog);
 
   GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
@@ -294,7 +293,7 @@ gimp_colormap_editor_set_image (GimpImageEditor *image_editor,
 					    editor);
 
       if (editor->color_dialog)
-        color_dialog_hide (editor->color_dialog);
+        gtk_widget_hide (editor->color_dialog);
 
       if (! HAVE_COLORMAP (gimage))
 	{
@@ -863,27 +862,25 @@ gimp_colormap_hex_entry_focus_out (GtkEntry           *entry,
 }
 
 static void
-gimp_colormap_color_dialog_callback (ColorDialog      *color_dialog,
-                                     const GimpRGB    *color,
-                                     ColorDialogState  state,
-                                     gpointer          data)
+gimp_colormap_color_dialog_update (GimpColorDialog      *color_dialog,
+                                   const GimpRGB        *color,
+                                   GimpColorDialogState  state,
+                                   GimpColormapEditor   *editor)
 {
-  GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (data);
-  GimpImage          *gimage;
-
-  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
+  GimpImage *gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
   switch (state)
     {
-    case COLOR_DIALOG_UPDATE:
+    case GIMP_COLOR_DIALOG_UPDATE:
       break;
 
-    case COLOR_DIALOG_OK:
+    case GIMP_COLOR_DIALOG_OK:
       gimp_image_set_colormap_entry (gimage, editor->col_index, color, TRUE);
       gimp_image_flush (gimage);
       /* Fall through */
-    case COLOR_DIALOG_CANCEL:
-      color_dialog_hide (editor->color_dialog);
+
+    case GIMP_COLOR_DIALOG_CANCEL:
+      gtk_widget_hide (editor->color_dialog);
       break;
     }
 }
@@ -911,25 +908,33 @@ gimp_colormap_edit_clicked (GtkWidget          *widget,
           toplevel_factory = gimp_dialog_factory_from_name ("toplevel");
 
           editor->color_dialog =
-            color_dialog_new (GIMP_VIEWABLE (gimage),
-                              _("Edit Indexed Color"),
-                              GIMP_STOCK_CONVERT_INDEXED,
-                              _("Edit indexed image palette color"),
-                              GTK_WIDGET (editor),
-                              toplevel_factory,
-                              "gimp-colormap-editor-color-dialog",
-                              (const GimpRGB *) &color,
-                              gimp_colormap_color_dialog_callback,
-                              editor,
-                              FALSE, FALSE);
+            gimp_color_dialog_new (GIMP_VIEWABLE (gimage),
+                                   _("Edit Indexed Color"),
+                                   GIMP_STOCK_CONVERT_INDEXED,
+                                   _("Edit indexed image palette color"),
+                                   GTK_WIDGET (editor),
+                                   toplevel_factory,
+                                   "gimp-colormap-editor-color-dialog",
+                                   (const GimpRGB *) &color,
+                                   FALSE, FALSE);
+
+          g_signal_connect (editor->color_dialog, "destroy",
+                            G_CALLBACK (gtk_widget_destroyed),
+                            &editor->color_dialog);
+
+          g_signal_connect (editor->color_dialog, "update",
+                            G_CALLBACK (gimp_colormap_color_dialog_update),
+                            editor);
         }
       else
         {
-          color_dialog_set_viewable (editor->color_dialog,
-                                     GIMP_VIEWABLE (gimage));
-          color_dialog_show (editor->color_dialog);
-          color_dialog_set_color (editor->color_dialog, &color);
+          gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (editor->color_dialog),
+                                             GIMP_VIEWABLE (gimage));
+          gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog),
+                                       &color);
         }
+
+      gtk_window_present (GTK_WINDOW (editor->color_dialog));
     }
 }
 

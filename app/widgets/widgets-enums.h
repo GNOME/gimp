@@ -47,6 +47,18 @@ typedef enum
 } GimpAspectType;
 
 
+#define GIMP_TYPE_COLOR_DIALOG_STATE (gimp_color_dialog_state_get_type ())
+
+GType gimp_color_dialog_state_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_COLOR_DIALOG_OK,
+  GIMP_COLOR_DIALOG_CANCEL,
+  GIMP_COLOR_DIALOG_UPDATE
+} GimpColorDialogState;
+
+
 #define GIMP_TYPE_COLOR_FRAME_MODE (gimp_color_frame_mode_get_type ())
 
 GType gimp_color_frame_mode_get_type (void) G_GNUC_CONST;

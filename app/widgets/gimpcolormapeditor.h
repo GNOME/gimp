@@ -22,8 +22,6 @@
 
 #include "gimpimageeditor.h"
 
-#include "gui/gui-types.h" /* temp hack */
-
 
 #define GIMP_TYPE_COLORMAP_EDITOR            (gimp_colormap_editor_get_type ())
 #define GIMP_COLORMAP_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLORMAP_EDITOR, GimpColormapEditor))
@@ -53,7 +51,7 @@ struct _GimpColormapEditor
   GtkWidget       *index_spinbutton;
   GtkWidget       *color_entry;
 
-  ColorDialog     *color_dialog;
+  GtkWidget       *color_dialog;
 };
 
 struct _GimpColormapEditorClass

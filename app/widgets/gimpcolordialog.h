@@ -1,6 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimpcolordialog.h
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,51 +18,62 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __COLOR_DIALOG_H__
-#define __COLOR_DIALOG_H__
+#ifndef __GIMP_COLOR_DIALOG_H__
+#define __GIMP_COLOR_DIALOG_H__
 
 
-typedef enum
+#include "gimpviewabledialog.h"
+
+#include "gui/color-history.h"
+
+
+#define GIMP_TYPE_COLOR_DIALOG            (gimp_color_dialog_get_type ())
+#define GIMP_COLOR_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_DIALOG, GimpColorDialog))
+#define GIMP_COLOR_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_DIALOG, GimpColorDialogClass))
+#define GIMP_IS_COLOR_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_DIALOG))
+#define GIMP_IS_COLOR_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_DIALOG))
+#define GIMP_COLOR_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_DIALOG, GimpColorDialogClass))
+
+
+typedef struct _GimpColorDialogClass GimpColorDialogClass;
+
+struct _GimpColorDialog
 {
-  COLOR_DIALOG_OK,
-  COLOR_DIALOG_CANCEL,
-  COLOR_DIALOG_UPDATE
-} ColorDialogState;
+  GimpViewableDialog   parent_instance;
+
+  gboolean             wants_updates;
+
+  GtkWidget           *selection;
+  GtkWidget           *history[COLOR_HISTORY_SIZE];
+};
+
+struct _GimpColorDialogClass
+{
+  GimpViewableDialogClass  parent_class;
+
+  void (* update) (GimpColorDialog      *dialog,
+                   const GimpRGB        *color,
+                   GimpColorDialogState  state);
+};
 
 
-typedef void (* ColorDialogCallback) (ColorDialog      *cnb,
-                                      const GimpRGB    *color,
-                                      ColorDialogState  state,
-                                      gpointer          callback_data);
+GType       gimp_color_dialog_get_type  (void) G_GNUC_CONST;
+
+GtkWidget * gimp_color_dialog_new       (GimpViewable      *viewable,
+                                         const gchar       *title,
+                                         const gchar       *stock_id,
+                                         const gchar       *desc,
+                                         GtkWidget         *parent,
+                                         GimpDialogFactory *dialog_factory,
+                                         const gchar       *dialog_identifier,
+                                         const GimpRGB     *color,
+                                         gboolean           wants_update,
+                                         gboolean           show_alpha);
+
+void        gimp_color_dialog_set_color (GimpColorDialog   *dialog,
+                                         const GimpRGB     *color);
+void        gimp_color_dialog_get_color (GimpColorDialog   *dialog,
+                                         GimpRGB           *color);
 
 
-ColorDialog * color_dialog_new   (GimpViewable        *viewable,
-                                  const gchar         *title,
-                                  const gchar         *stock_id,
-                                  const gchar         *desc,
-                                  GtkWidget           *parent,
-                                  GimpDialogFactory   *dialog_factory,
-                                  const gchar         *dialog_identifier,
-                                  const GimpRGB       *color,
-                                  ColorDialogCallback  callback,
-                                  gpointer             callback_data,
-                                  gboolean             wants_update,
-                                  gboolean             show_alpha);
-
-void   color_dialog_free         (ColorDialog         *cnb);
-
-void   color_dialog_set_viewable (ColorDialog         *cnb,
-                                  GimpViewable        *viewable);
-void   color_dialog_set_title    (ColorDialog         *cnb,
-                                  const gchar         *title);
-
-void   color_dialog_show         (ColorDialog         *cnb);
-void   color_dialog_hide         (ColorDialog         *cnb);
-
-void   color_dialog_set_color    (ColorDialog         *cnb,
-                                  const GimpRGB       *color);
-void   color_dialog_get_color    (ColorDialog         *cnb,
-                                  GimpRGB             *color);
-
-
-#endif /* __COLOR_DIALOG_H__ */
+#endif /* __GIMP_COLOR_DIALOG_H__ */

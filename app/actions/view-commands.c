@@ -40,11 +40,11 @@
 #include "display/gimpdisplayshell-scale.h"
 
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimpcolordialog.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpuimanager.h"
 
-#include "dialogs/color-dialog.h"
 #include "dialogs/dialogs.h"
 #include "dialogs/info-dialog.h"
 #include "dialogs/info-window.h"
@@ -63,6 +63,19 @@
 #define IS_ACTIVE_DISPLAY(gdisp) \
   ((gdisp) == \
    gimp_context_get_display (gimp_get_user_context ((gdisp)->gimage->gimp)))
+
+
+/*  local function prototypes  */
+
+static void   view_padding_color_dialog_update    (GimpColorDialog      *dialog,
+                                                   const GimpRGB        *color,
+                                                   GimpColorDialogState  state,
+                                                   GimpDisplayShell     *shell);
+static void   view_change_screen_confirm_callback (GtkWidget            *query_box,
+                                                   gint                  value,
+                                                   gpointer              data);
+static void   view_change_screen_destroy_callback (GtkWidget            *query_box,
+                                                   GtkWidget            *shell);
 
 
 /*  public functions  */
@@ -473,41 +486,6 @@ view_snap_to_grid_cmd_callback (GtkAction *action,
   gimp_display_shell_set_snap_to_grid (shell, active);
 }
 
-static void
-view_padding_color_callback (ColorDialog      *cnb,
-                             const GimpRGB    *color,
-                             ColorDialogState  state,
-                             gpointer          data)
-{
-  GimpDisplayShell   *shell = GIMP_DISPLAY_SHELL (data);
-  GimpDisplayOptions *options;
-  gboolean            fullscreen;
-
-  fullscreen = gimp_display_shell_get_fullscreen (shell);
-
-  if (fullscreen)
-    options = shell->fullscreen_options;
-  else
-    options = shell->options;
-
-  switch (state)
-    {
-    case COLOR_DIALOG_OK:
-      options->padding_mode_set = TRUE;
-
-      gimp_display_shell_set_padding (shell, GIMP_CANVAS_PADDING_MODE_CUSTOM,
-                                      color);
-      /* fallthru */
-
-    case COLOR_DIALOG_CANCEL:
-      g_object_set_data (G_OBJECT (shell), "padding-color-dialog", NULL);
-      break;
-
-    default:
-      break;
-    }
-}
-
 void
 view_padding_color_cmd_callback (GtkAction *action,
                                  gint       value,
@@ -543,29 +521,32 @@ view_padding_color_cmd_callback (GtkAction *action,
 
     case GIMP_CANVAS_PADDING_MODE_CUSTOM:
       {
-        ColorDialog *color_dialog;
+        GtkWidget *color_dialog;
 
         color_dialog = g_object_get_data (G_OBJECT (shell),
-                                            "padding-color-dialog");
+                                          "padding-color-dialog");
 
         if (! color_dialog)
           {
-            color_dialog = color_dialog_new (GIMP_VIEWABLE (gdisp->gimage),
-                                             _("Set Canvas Padding Color"),
-                                             GTK_STOCK_SELECT_COLOR,
-                                             NULL,
-                                             gdisp->shell,
-                                             NULL, NULL,
-                                             &options->padding_color,
-                                             view_padding_color_callback,
-                                             shell,
-                                             FALSE, FALSE);
+            color_dialog = gimp_color_dialog_new (GIMP_VIEWABLE (gdisp->gimage),
+                                                  _("Set Canvas Padding Color"),
+                                                  GTK_STOCK_SELECT_COLOR,
+                                                  _("Set Custom Canvas Padding Color"),
+                                                  gdisp->shell,
+                                                  NULL, NULL,
+                                                  &options->padding_color,
+                                                  FALSE, FALSE);
+
+            g_signal_connect (color_dialog, "update",
+                              G_CALLBACK (view_padding_color_dialog_update),
+                              gdisp->shell);
+
             g_object_set_data_full (G_OBJECT (shell), "padding-color-dialog",
                                     color_dialog,
-                                    (GDestroyNotify) color_dialog_free);
+                                    (GDestroyNotify) gtk_widget_destroy);
           }
 
-        color_dialog_show (color_dialog);
+        gtk_window_present (GTK_WINDOW (color_dialog));
       }
       break;
 
@@ -632,27 +613,6 @@ view_fullscreen_cmd_callback (GtkAction *action,
     }
 }
 
-static void
-view_change_screen_confirm_callback (GtkWidget *query_box,
-                                     gint       value,
-                                     gpointer   data)
-{
-  GdkScreen *screen;
-
-  screen = gdk_display_get_screen (gtk_widget_get_display (GTK_WIDGET (data)),
-                                   value);
-
-  if (screen)
-    gtk_window_set_screen (GTK_WINDOW (data), screen);
-}
-
-static void
-view_change_screen_destroy_callback (GtkWidget *query_box,
-                                     GtkWidget *shell)
-{
-  g_object_set_data (G_OBJECT (shell), "gimp-change-screen-dialog", NULL);
-}
-
 void
 view_change_screen_cmd_callback (GtkAction *action,
                                  gpointer   data)
@@ -696,4 +656,62 @@ view_change_screen_cmd_callback (GtkAction *action,
                     gdisp->shell);
 
   gtk_widget_show (qbox);
+}
+
+
+/*  private functions  */
+
+static void
+view_padding_color_dialog_update (GimpColorDialog      *dialog,
+                                  const GimpRGB        *color,
+                                  GimpColorDialogState  state,
+                                  GimpDisplayShell     *shell)
+{
+  GimpDisplayOptions *options;
+  gboolean            fullscreen;
+
+  fullscreen = gimp_display_shell_get_fullscreen (shell);
+
+  if (fullscreen)
+    options = shell->fullscreen_options;
+  else
+    options = shell->options;
+
+  switch (state)
+    {
+    case GIMP_COLOR_DIALOG_OK:
+      options->padding_mode_set = TRUE;
+
+      gimp_display_shell_set_padding (shell, GIMP_CANVAS_PADDING_MODE_CUSTOM,
+                                      color);
+      /* fallthru */
+
+    case GIMP_COLOR_DIALOG_CANCEL:
+      g_object_set_data (G_OBJECT (shell), "padding-color-dialog", NULL);
+      break;
+
+    default:
+      break;
+    }
+}
+
+static void
+view_change_screen_confirm_callback (GtkWidget *query_box,
+                                     gint       value,
+                                     gpointer   data)
+{
+  GdkScreen *screen;
+
+  screen = gdk_display_get_screen (gtk_widget_get_display (GTK_WIDGET (data)),
+                                   value);
+
+  if (screen)
+    gtk_window_set_screen (GTK_WINDOW (data), screen);
+}
+
+static void
+view_change_screen_destroy_callback (GtkWidget *query_box,
+                                     GtkWidget *shell)
+{
+  g_object_set_data (G_OBJECT (shell), "gimp-change-screen-dialog", NULL);
 }
