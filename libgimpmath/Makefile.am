@@ -52,8 +52,6 @@ INCLUDES = \
 	-I$(includedir)
 
 EXTRA_DIST = \
-	makefile.mingw		\
-	makefile.mingw.in	\
 	makefile.msc		\
 	gimpmath.def
 
