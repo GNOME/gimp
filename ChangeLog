@@ -1,3 +1,10 @@
+2004-11-21  Sven Neumann  <sven@gimp.org>
+
+	* tools/gimp-remote.c: added --no-splash command-line option that
+	is passed to gimp. Addresses Debian bug report #277989.
+
+	* docs/gimp-remote.1.in: document the new option.
+
 2004-11-21  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: reverted previous change, as not all the lv.pos are

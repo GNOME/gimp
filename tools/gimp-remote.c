@@ -62,8 +62,9 @@ static void start_new_gimp (GdkScreen   *screen,
                             GString     *file_list) G_GNUC_NORETURN;
 
 
-static gboolean  existing = FALSE;
-static gboolean  query    = FALSE;
+static gboolean  existing  = FALSE;
+static gboolean  query     = FALSE;
+static gboolean  no_splash = FALSE;
 
 
 static GdkWindow *
@@ -176,6 +177,7 @@ usage (const gchar *name)
            "  --display <display>   Use the designated X display.\n"
            "  -e, --existing        Use a running GIMP only, never start a new one.\n"
            "  -q, --query           Query if a GIMP is running, then quit.\n"
+           "  -s, --no-splash       Start GIMP w/o showing the startup window.\n"
            "\n");
   g_print ("Example:  %s http://www.gimp.org/icons/frontpage-small.gif\n"
 	   "     or:  %s localfile.png\n\n", name, name);
@@ -203,6 +205,9 @@ start_new_gimp (GdkScreen   *screen,
   file_list = g_string_prepend (file_list, display_name);
   file_list = g_string_prepend (file_list, "--display\n");
   g_free (display_name);
+
+  if (no_splash)
+    file_list = g_string_prepend (file_list, "--no-splash\n");
 
   file_list = g_string_prepend (file_list, "gimp\n");
 
@@ -310,6 +315,10 @@ parse_option (const gchar *progname,
   else if (strcmp (arg, "-q") == 0 || strcmp (arg, "--query") == 0)
     {
       query = TRUE;
+    }
+  else if (strcmp (arg, "-s") == 0 || strcmp (arg, "--no-splash") == 0)
+    {
+      no_splash = TRUE;
     }
   else if (strcmp (arg, "-n") == 0 || strcmp (arg, "--new") == 0)
     {
