@@ -133,6 +133,7 @@ install-plugins:
 	-cd examples && $GIMPTOOL2 --install-admin-bin tex-to-float
 	-cd examples && $GIMPTOOL2 --install-admin-bin ditherize
 	-cd examples && $GIMPTOOL2 --install-admin-bin border.pl
+	-cd examples && $GIMPTOOL2 --install-admin-bin view3d.pl
 EOF
 }
 

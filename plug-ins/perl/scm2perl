@@ -58,7 +58,7 @@ use Parse::RecDescent;
 $RD_HINT=1;
 
 unless(@ARGV) {
-   print STDERR "Script-Fu to Perl Translater 1.0\n";
+   print STDERR "Script-Fu to Perl Translator 1.0\n";
    print STDERR "Usage: $0 file.scm ...\n";
    exit(1);
 }

@@ -43,6 +43,7 @@ $VERSION = 1.05;
 	SHARPEN		SQUARE		STATUS_CALLING_ERROR		STATUS_EXECUTION_ERROR
 	STATUS_PASS_THROUGH		STATUS_SUCCESS	SUBTRACT_MODE	TRANS_IMAGE_FILL
 	VALUE_MODE	DIVIDE_MODE	PARASITE_PERSISTANT		WHITE_IMAGE_FILL
+        SPIRAL_CLOCKWISE		SPIRAL_ANTICLOCKWISE
 	
 	TRACE_NONE	TRACE_CALL	TRACE_TYPE	TRACE_NAME	TRACE_DESC
 	TRACE_ALL
@@ -60,6 +61,84 @@ $VERSION = 1.05;
 );
 
 bootstrap Gimp $VERSION;
+
+# defs missing from libgimp
+
+sub BEHIND_MODE		(){ 2 };
+
+sub FG_BG_RGB		(){ 0 };
+sub FG_BG_HSV		(){ 1 };
+sub FG_TRANS		(){ 2 };
+sub CUSTOM		(){ 3 };
+
+sub LINEAR		(){ 0 };
+sub BILINEAR		(){ 1 };
+sub RADIAL		(){ 2 };
+sub SQUARE		(){ 3 };
+sub CONICAL_SYMMETRIC	(){ 4 };
+sub CONICAL_ASYMMETRIC	(){ 5 };
+sub SHAPEBURST_ANGULAR	(){ 6 };
+sub SHAPEBURST_SPHERICAL(){ 7 };
+sub SHAPEBURST_DIMPLED	(){ 8 };
+sub SPIRAL_CLOCKWISE	(){ 9 };
+sub SPIRAL_ANTICLOCKWISE(){10 };
+
+sub REPEAT_NONE		(){ 0 };
+sub REPEAT_SAWTOOTH	(){ 1 };
+sub REPEAT_TRIANGULAR	(){ 2 };
+
+sub FG_BUCKET_FILL	(){ 0 };
+sub BG_BUCKET_FILL	(){ 1 };
+sub PATTERN_BUCKET_FILL	(){ 2 };
+
+sub RED_CHANNEL		(){ 0 };
+sub GREEN_CHANNEL	(){ 1 };
+sub BLUE_CHANNEL	(){ 2 };
+sub GRAY_CHANNEL	(){ 3 };
+sub INDEXED_CHANNEL	(){ 4 };
+
+sub WHITE_MASK		(){ 0 };
+sub BLACK_MASK		(){ 1 };
+sub ALPHA_MASK		(){ 2 };
+
+sub APPLY		(){ 0 };
+sub DISCARD		(){ 1 };
+
+sub EXPAND_AS_NECESSARY	(){ 0 };
+sub CLIP_TO_IMAGE	(){ 1 };
+sub CLIP_TO_BOTTOM_LAYER(){ 2 };
+
+sub SELECTION_ADD	(){ 0 };
+sub SELECTION_SUB	(){ 1 };
+sub SELECTION_REPLACE	(){ 2 };
+sub SELECTION_INTERSECT	(){ 3 };
+
+sub PIXELS		(){ 0 };
+sub POINTS		(){ 1 };
+
+sub IMAGE_CLONE		(){ 0 };
+sub PATTERN_CLONE	(){ 1 };
+
+sub BLUR		(){ 0 };
+sub SHARPEN		(){ 1 };
+
+sub ALL_HUES		(){ 0 };
+sub RED_HUES		(){ 1 };
+sub YELLOW_HUES		(){ 2 };
+sub GREEN_HUES		(){ 3 };
+sub CYAN_HUES		(){ 4 };
+sub BLUE_HUES		(){ 5 };
+sub MAGENTA_HUES	(){ 6 };
+
+sub MESSAGE_BOX		(){ 0 };
+sub CONSOLE		(){ 1 };
+
+sub SHADOWS		(){ 0 };
+sub MIDTONES		(){ 1 };
+sub HIGHLIGHTS		(){ 2 };
+
+sub HORIZONTAL		(){ 0 };
+sub VERTICAL		(){ 1 };
 
 # internal constants shared with Perl-Server
 

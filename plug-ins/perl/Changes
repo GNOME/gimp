@@ -1,5 +1,11 @@
 Revision history for Gimp-Perl extension.
 
+	- corrected a minor typoe found by Stefan Traby <stefan@sime.com>
+        - added SPIRAL* constants for gimp_blend
+        - moved constants from Gimp.xs and extradefs.h to Gimp.pm, where
+          they belong (either there or into Gimp.xs)
+	- added view3d.pl to examples (untested)
+
 1.05  Fri Dec 18 22:05:25 CET 1998
 	- some 5.006 compatibility fixes
         - disabled some functionality for poor gtk-1.0 which
