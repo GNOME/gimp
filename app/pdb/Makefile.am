@@ -28,7 +28,6 @@ libapppdb_a_SOURCES = \
 	layer_cmds.c		\
 	message_cmds.c		\
 	misc_cmds.c		\
-	misc_tools_cmds.c	\
 	paint_tools_cmds.c	\
 	palette_cmds.c		\
 	palette_select_cmds.c	\

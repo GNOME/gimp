@@ -1,5 +1,10 @@
 2004-01-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/Makefile.am
+	* app/pdb/misc_tools_cmds.c: forgot to remove this file.
+
+2004-01-05  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/Makefile.am
 	* tools/pdbgen/groups.pl
 	* tools/pdbgen/pdb/misc_tools.pdb: removed the "misc tools" PDB group.
