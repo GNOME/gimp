@@ -176,6 +176,7 @@ deinterlace (GimpDrawable *drawable)
   GimpPixelRgn srcPR, destPR;
   gint width, height;
   gint bytes;
+  gint has_alpha;
   guchar *dest;
   guchar *upper;
   guchar *lower;
@@ -191,6 +192,7 @@ deinterlace (GimpDrawable *drawable)
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
    */
@@ -223,8 +225,36 @@ deinterlace (GimpDrawable *drawable)
 	{
 	  gimp_pixel_rgn_get_row (&srcPR, upper, x1, row-1, (x2-x1));
 	  gimp_pixel_rgn_get_row (&srcPR, lower, x1, row+1, (x2-x1));
-	  for (col=0; col < ((x2-x1)*bytes); col++)
-	    dest[col]=(upper[col]+lower[col])>>1;
+
+          if (has_alpha)
+            {
+              guchar *upix = upper;
+              guchar *lpix = lower;
+              guchar *dpix = dest;
+
+	      for (col = 0; col < x2-x1; col++)
+                {
+                  gint b;
+                  guint ualpha = upix[bytes-1];
+                  guint lalpha = lpix[bytes-1];
+                  guint alpha = ualpha + lalpha;
+
+                  if (dpix[bytes-1] = alpha >> 1)
+                    {
+                      for (b = 0; b < bytes-1; b++)
+                          dpix[b] = (upix[b] * ualpha
+                                     + lpix[b] * lalpha) / alpha;
+                    }
+                  upix += bytes;
+                  lpix += bytes;
+                  dpix += bytes;
+                }
+            }
+          else
+            {
+              for (col = 0; col < ((x2-x1)*bytes); col++)
+                   dest[col] = (upper[col] + lower[col]) >> 1;
+            }
 	}
       gimp_pixel_rgn_set_row (&destPR, dest, x1, row, (x2-x1));
 

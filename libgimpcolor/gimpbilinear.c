@@ -173,6 +173,7 @@ gimp_bilinear_rgba (gdouble  x,
 {
   gdouble m0, m1;
   gdouble ix, iy;
+  gdouble a0, a1, a2, a3, alpha;
   GimpRGB v;
 
   g_assert (values != NULL);
@@ -188,33 +189,41 @@ gimp_bilinear_rgba (gdouble  x,
   ix = 1.0 - x;
   iy = 1.0 - y;
 
-  /* Red */
-
-  m0 = ix * values[0].r + x * values[1].r;
-  m1 = ix * values[2].r + x * values[3].r;
-
-  v.r = iy * m0 + y * m1;
-
-  /* Green */
-
-  m0 = ix * values[0].g + x * values[1].g;
-  m1 = ix * values[2].g + x * values[3].g;
-
-  v.g = iy * m0 + y * m1;
-
-  /* Blue */
-
-  m0 = ix * values[0].b + x * values[1].b;
-  m1 = ix * values[2].b + x * values[3].b;
-
-  v.b = iy * m0 + y * m1;
+  a0 = values[0].a;
+  a1 = values[1].a;
+  a2 = values[2].a;
+  a3 = values[3].a;
 
   /* Alpha */
 
-  m0 = ix * values[0].a + x * values[1].a;
-  m1 = ix * values[2].a + x * values[3].a;
+  m0 = ix * a0 + x * a1;
+  m1 = ix * a2 + x * a3;
 
-  v.a = iy * m0 + y * m1;
+  alpha = v.a = iy * m0 + y * m1;
+
+  if (alpha > 0)
+    {
+      /* Red */
+
+      m0 = ix * a0 * values[0].r + x * a1 * values[1].r;
+      m1 = ix * a2 * values[2].r + x * a3 * values[3].r;
+
+      v.r = (iy * m0 + y * m1)/alpha;
+
+      /* Green */
+
+      m0 = ix * a0 * values[0].g + x * a1 * values[1].g;
+      m1 = ix * a2 * values[2].g + x * a3 * values[3].g;
+
+      v.g = (iy * m0 + y * m1)/alpha;
+
+      /* Blue */
+
+      m0 = ix * a0 * values[0].b + x * a1 * values[1].b;
+      m1 = ix * a2 * values[2].b + x * a3 * values[3].b;
+
+      v.b = (iy * m0 + y * m1)/alpha;
+    }
 
   return v;
 }

@@ -421,14 +421,39 @@ iwarp_get_point (gdouble  x,
   iwarp_get_pixel (xi, yi, p0);
   iwarp_get_pixel (xi + 1, yi, p1);
   iwarp_get_pixel (xi, yi + 1, p2);
-  iwarp_get_pixel (xi + 1, yi + 1, p3); 	         
-  for (i = 0; i < image_bpp; i++)
+  iwarp_get_pixel (xi + 1, yi + 1, p3);
+  if (layer_alpha)
     {
-      m0 = p0[i] + dx * (p1[i] - p0[i]);
-      m1 = p2[i] + dx * (p3[i] - p2[i]);
-      color[i] = (guchar) (m0 + dy * (m1 - m0));
+      gdouble a0 = p0[image_bpp-1];
+      gdouble a1 = p1[image_bpp-1];
+      gdouble a2 = p2[image_bpp-1];
+      gdouble a3 = p3[image_bpp-1];
+      gdouble alpha;
+
+      m0 = a0 + dx * (a1 - a0);
+      m1 = a2 + dx * (a3 - a2);
+      alpha = (m0 + dy * (m1 - m0));
+      color[image_bpp-1] = alpha;
+      if (color[image_bpp-1])
+        {
+          for (i = 0; i < image_bpp-1; i++)
+            {
+              m0 = a0*p0[i] + dx * (a1*p1[i] - a0*p0[i]);
+              m1 = a2*p2[i] + dx * (a3*p3[i] - a2*p2[i]);
+              color[i] = (m0 + dy * (m1 - m0))/alpha;
+            }
+        }
     }
-} 
+  else
+    {
+      for (i = 0; i < image_bpp; i++)
+        {
+          m0 = p0[i] + dx * (p1[i] - p0[i]);
+          m1 = p2[i] + dx * (p3[i] - p2[i]);
+          color[i] = m0 + dy * (m1 - m0);
+        }
+    }
+}
 
 static gboolean
 iwarp_supersample_test (GimpVector2 *v0,
@@ -613,13 +638,11 @@ iwarp_supersample (gint    sxl,
 			   srow[row-sxl], srow[row-sxl+1],
 			   row, col, color, &cc, 0, 1.0);
 	  if (layer_alpha)
-	    dest = dest_data + (col-syl) * (stride) + (row-sxl) * (image_bpp+1);
+	    dest = dest_data + (col-syl) * (stride) + (row-sxl) * image_bpp;
 	  else 
 	    dest = dest_data + (col-syl) * stride + (row-sxl) * image_bpp;
 	  for (i = 0; i < image_bpp; i++)
 	    *dest++ = color[i] / cc;
-	  if (layer_alpha)
-	    *dest++ = 255; 
 	  (*progress)++;
 	}
 
@@ -679,16 +702,12 @@ iwarp_frame (void)
 				       color);
 		      for (i = 0; i < image_bpp; i++)
 			*dest++ = color[i];
-		      if (layer_alpha)
-			*dest++ = 255;
 		    }
 		  else
 		    {
 		      iwarp_get_pixel (col, row, color);
 		      for (i = 0; i < image_bpp; i++)
 			*dest++ = color[i];
-		      if (layer_alpha)
-			*dest++ = 255;
 		    }
 		}
 	      dest_row += dest_rgn.rowstride;
@@ -721,6 +740,11 @@ iwarp (void)
   gchar   *st;
   gdouble  delta;
 
+  if (image_bpp == 1 || image_bpp == 3)
+    layer_alpha = FALSE;
+  else
+    layer_alpha = TRUE;
+
   if (animate_num_frames > 1 && do_animate)
     {
       animlayers = g_new (gint32, animate_num_frames);
@@ -735,10 +759,6 @@ iwarp (void)
 	  delta = 1.0 / (animate_num_frames - 1);
 	}
       layerID = gimp_image_get_active_layer (imageID);
-      if (image_bpp == 1 || image_bpp == 3)
-	layer_alpha = TRUE;
-      else
-	layer_alpha = FALSE;
       frame_number = 0;
       for (i = 0; i < animate_num_frames; i++)
 	{
@@ -896,7 +916,7 @@ iwarp_init (void)
 			      xl, (gint) (pre2img * y) + yl, sel_width);
       for (x = 0; x < preview_width; x++)
 	{
-	  pts = srcimage + (y * preview_width +x) * image_bpp;
+	  pts = srcimage + (y * preview_width + x) * image_bpp;
 	  xi = (gint) (pre2img * x);
 	  for (i = 0; i < image_bpp; i++)
 	    {

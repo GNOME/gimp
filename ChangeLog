@@ -1,3 +1,23 @@
+2003-02-18  Sven Neumann  <sven@gimp.org>
+
+	Applied patches from David Necas <yeti@physics.muni.cz> that fix
+	incorrect RGBA resampling in a number of plug-ins:
+
+	* libgimpcolor/gimpbilinear.c (gimp_bilinear_rgba): fixes RGBA
+	resampling in Map Object and Lighting Effects plug-ins (#72876 and
+	#105496).
+
+	* plug-ins/common/curve_bend.c: fixes bug #72863.
+	* plug-ins/common/deinterlace.c: fixes bug #72856.
+	* plug-ins/common/gauss_iir.c: fixes bug #72848.
+	* plug-ins/common/gauss_rle.c: fixes bug #72849.
+	* plug-ins/common/iwarp.c: fixes bug #72865 (except preview, see
+	comment).
+	* plug-ins/common/mblur.c: fixes bug #72850.
+	* plug-ins/common/pixelize.c: fixes bug #72851.
+	* plug-ins/common/polar.c: fixes bug #72866.
+	* plug-ins/common/ripple.c: fixes bug #72868.
+
 2003-02-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimppropwidgets.[ch]: added gimp_prop_preview_new().

@@ -574,8 +574,6 @@ gauss_iir (GimpDrawable *drawable,
   gdouble progress, max_progress;
   gint initial_p[4];
   gint initial_m[4];
-  guchar *guc_tmp1, *guc_tmp2;
-  gint *gi_tmp1, *gi_tmp2;
   gdouble std_dev;
 
   if (horz <= 0.0 && vert <= 0.0)
@@ -609,8 +607,6 @@ gauss_iir (GimpDrawable *drawable,
   max_progress  = (horz <= 0.0 ) ? 0 : width * height * horz;
   max_progress += (vert <= 0.0 ) ? 0 : width * height * vert;
 
-  if (has_alpha)
-    multiply_alpha (src, height, bytes);
   
   /*  First the vertical pass  */
   if (vert > 0.0)
@@ -627,6 +623,8 @@ gauss_iir (GimpDrawable *drawable,
 	  memset(val_m, 0, height * bytes * sizeof (gdouble));
 
 	  gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, (y2 - y1));
+          if (has_alpha)
+              multiply_alpha (src, height, bytes);
 
 	  sp_p = src;
 	  sp_m = src + (height - 1) * bytes;
@@ -634,21 +632,11 @@ gauss_iir (GimpDrawable *drawable,
 	  vm = val_m + (height - 1) * bytes;
 
 	  /*  Set up the first vals  */
-#ifndef ORIGINAL_READABLE_CODE
-	  for(guc_tmp1 = sp_p, guc_tmp2 = sp_m,
-		gi_tmp1 = initial_p, gi_tmp2 = initial_m;
-	      (guc_tmp1 - sp_p) < bytes;)
-	    {
-	      *gi_tmp1++ = *guc_tmp1++;
-	      *gi_tmp2++ = *guc_tmp2++;
-	    }
-#else
 	  for (i = 0; i < bytes; i++)
 	    {
 	      initial_p[i] = sp_p[i];
 	      initial_m[i] = sp_m[i];
 	    }
-#endif
 
 	  for (row = 0; row < height; row++)
 	    {
@@ -679,6 +667,8 @@ gauss_iir (GimpDrawable *drawable,
 	    }
 
 	  transfer_pixels (val_p, val_m, dest, bytes, height);
+          if (has_alpha)
+              separate_alpha (src, height, bytes);
 
 	  gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x1, y1, (y2 - y1));
 
@@ -712,6 +702,8 @@ if (horz > 0.0)
 	  memset(val_m, 0, width * bytes * sizeof (gdouble));
 
 	  gimp_pixel_rgn_get_row (&src_rgn, src, x1, row + y1, (x2 - x1));
+          if (has_alpha)
+              multiply_alpha (dest, width, bytes);
 
 	  sp_p = src;
 	  sp_m = src + (width - 1) * bytes;
@@ -719,21 +711,11 @@ if (horz > 0.0)
 	  vm = val_m + (width - 1) * bytes;
 
 	  /*  Set up the first vals  */
-#ifndef ORIGINAL_READABLE_CODE
-	  for(guc_tmp1 = sp_p, guc_tmp2 = sp_m,
-		gi_tmp1 = initial_p, gi_tmp2 = initial_m;
-	      (guc_tmp1 - sp_p) < bytes;)
-	    {
-	      *gi_tmp1++ = *guc_tmp1++;
-	      *gi_tmp2++ = *guc_tmp2++;
-	    }
-#else
 	  for (i = 0; i < bytes; i++)
 	    {
 	      initial_p[i] = sp_p[i];
 	      initial_m[i] = sp_m[i];
 	    }
-#endif
 
 	  for (col = 0; col < width; col++)
 	    {
@@ -764,6 +746,8 @@ if (horz > 0.0)
 	    }
 
 	  transfer_pixels (val_p, val_m, dest, bytes, width);
+          if (has_alpha)
+              separate_alpha (dest, width, bytes);
 
 	  gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, (x2 - x1));
 
@@ -772,9 +756,6 @@ if (horz > 0.0)
 	    gimp_progress_update (progress / max_progress);
 	}
     }
-
-  if (has_alpha)
-    separate_alpha (dest, width, bytes);
 
   /*  merge the shadow, update the drawable  */
   gimp_drawable_flush (drawable);
@@ -864,12 +845,8 @@ find_constants (gdouble n_p[],
     2 * cos (constants[3]) * exp (constants[1] + 2 * constants[0]);
   d_p [4] = exp (2 * constants[0] + 2 * constants[1]);
 
-#ifndef ORIGINAL_READABLE_CODE
-  memcpy(d_m, d_p, 5 * sizeof(gdouble));
-#else
   for (i = 0; i <= 4; i++)
     d_m [i] = d_p [i];
-#endif
 
   n_m[0] = 0.0;
   for (i = 1; i <= 4; i++)
@@ -889,14 +866,8 @@ find_constants (gdouble n_p[],
 	sum_d += d_p[i];
       }
 
-#ifndef ORIGINAL_READABLE_CODE
-    sum_d++;
-    a = sum_n_p / sum_d;
-    b = sum_n_m / sum_d;
-#else
-    a = sum_n_p / (1 + sum_d);
-    b = sum_n_m / (1 + sum_d);
-#endif
+    a = sum_n_p / (1.0 + sum_d);
+    b = sum_n_m / (1.0 + sum_d);
 
     for (i = 0; i <= 4; i++)
       {

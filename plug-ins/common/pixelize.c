@@ -125,7 +125,8 @@ static void   pixelize_small       (GimpDrawable  *drawable,
                                     gint           tile_height);
 static void   pixelize_sub         (gint           pixelwidth,
                                     gint           pixelheight,
-                                    gint           bpp);
+                                    gint           bpp,
+                                    gint           has_alpha);
 
 /***** Local vars *****/
 
@@ -440,7 +441,7 @@ pixelize_large (GimpDrawable *drawable,
   guchar       *src_row, *dest_row;
   guchar       *src, *dest;
   gulong       *average;
-  gint          row, col, b, bpp;
+  gint          row, col, b, bpp, has_alpha;
   gint          x, y, x_step, y_step;
   gulong        count;
   gint          x1, y1, x2, y2;
@@ -450,6 +451,7 @@ pixelize_large (GimpDrawable *drawable,
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   bpp = gimp_drawable_bpp (drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   average = g_new (gulong, bpp);
 
   /* Initialize progress */
@@ -479,24 +481,50 @@ pixelize_large (GimpDrawable *drawable,
 	      for (row = 0; row < src_rgn.h; row++)
 		{
 		  src = src_row;
-		  for (col = 0; col < src_rgn.w; col++)
-		    {
-		      for(b = 0; b < bpp; b++)
-			average[b] += src[b];
-		      src += src_rgn.bpp;
-		      count += 1;
-		    }
+                  if (has_alpha)
+                    {
+                      for (col = 0; col < src_rgn.w; col++)
+                        {
+                          gulong alpha = src[bpp-1];
+
+                          average[bpp-1] += alpha;
+                          for (b = 0; b < bpp-1; b++)
+                              average[b] += src[b] * alpha;
+                          src += src_rgn.bpp;
+                        }
+                    }
+                  else
+                    {
+                      for (col = 0; col < src_rgn.w; col++)
+                        {
+                          for (b = 0; b < bpp; b++)
+                              average[b] += src[b];
+                          src += src_rgn.bpp;
+                        }
+                    }
 		  src_row += src_rgn.rowstride;
 		}
 	      /* Update progress */
+              count += src_rgn.w * src_rgn.h;
 	      progress += src_rgn.w * src_rgn.h;
 	      gimp_progress_update ((double) progress / (double) max_progress);
 	    }
 
 	  if (count > 0)
 	    {
-	      for (b = 0; b < bpp; b++)
-		average[b] = (guchar) (average[b] / count);
+              if (has_alpha)
+                {
+                  gulong alpha = average[bpp-1];
+
+                  if (average[bpp-1] = alpha/count)
+                      for (b = 0; b < bpp-1; b++)
+                          average[b] /= alpha;
+                }
+              else
+                {
+                  for (b = 0; b < bpp; b++)
+                      average[b] /= count;
+                }
 	    }
 
 	  gimp_pixel_rgn_init (&dest_rgn, drawable,
@@ -551,7 +579,7 @@ pixelize_small (GimpDrawable *drawable,
                 gint          tile_height)
 {
   GimpPixelRgn src_rgn, dest_rgn;
-  gint         bpp;
+  gint         bpp, has_alpha;
   gint         x1, y1, x2, y2;
   gint         progress, max_progress;
 
@@ -564,6 +592,7 @@ pixelize_small (GimpDrawable *drawable,
   max_progress = (x2 - x1) * (y2 - y1);
 
   bpp = drawable->bpp;
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   area.width  = (tile_width  / pixelwidth)  * pixelwidth;
   area.height = (tile_height / pixelheight) * pixelheight;
@@ -584,7 +613,7 @@ pixelize_small (GimpDrawable *drawable,
 	  gimp_pixel_rgn_get_rect (&src_rgn, area.data,
 				   area.x, area.y, area.w, area.h);
 
-	  pixelize_sub (pixelwidth, pixelheight, bpp);
+	  pixelize_sub (pixelwidth, pixelheight, bpp, has_alpha);
 
 	  gimp_pixel_rgn_set_rect (&dest_rgn, area.data,
 				   area.x, area.y, area.w, area.h);
@@ -611,9 +640,10 @@ pixelize_small (GimpDrawable *drawable,
 static void
 pixelize_sub (gint pixelwidth,
               gint pixelheight,
-	      gint bpp)
+	      gint bpp,
+              gint has_alpha)
 {
-  glong average[4];		/* bpp <= 4 */
+  gulong average[4];		/* bpp <= 4 */
   gint	x, y, w, h;
   guchar *buf_row, *buf;
   gint	row, col;
@@ -643,21 +673,50 @@ pixelize_sub (gint pixelwidth,
 	  for (row = 0; row < h; row++)
 	    {
 	      buf = buf_row;
-	      for (col = 0; col < w; col++)
-		{
-		  for (i = 0; i < bpp; i++)
-		    average[i] += buf[i];
-		  count++;
-		  buf += bpp;
-		}
+              if (has_alpha)
+                {
+                  for (col = 0; col < w; col++)
+                    {
+                      gulong alpha = buf[bpp-1];
+
+                      average[bpp-1] += alpha;
+                      for (i = 0; i < bpp-1; i++)
+                          average[i] += buf[i] * alpha;
+                      buf += bpp;
+                    }
+                }
+              else
+                {
+                  for (col = 0; col < w; col++)
+                    {
+                      for (i = 0; i < bpp; i++)
+                          average[i] += buf[i];
+                      buf += bpp;
+                    }
+                }
 	      buf_row += rowstride;
 	    }
 
+          count += w*h;
+
 	  /* Average */
 	  if (count > 0)
-	    {
-	      for (i = 0; i < bpp; i++)
-		average[i] /= count;
+            {
+              if (has_alpha)
+                {
+                  gulong alpha = average[bpp-1];
+
+                  if (average[bpp-1] = alpha/count)
+                    {
+                      for (i = 0; i < bpp-1; i++)
+                          average[i] /= alpha;
+                    }
+                }
+              else
+                {
+                  for (i = 0; i < bpp; i++)
+                      average[i] /= count;
+                }
 	    }
 
 	  /* Write */

@@ -363,7 +363,7 @@ polarize (void)
   guchar    *dest, *d;
   guchar     pixel[4][4];
   guchar     pixel2[4];
-  guchar     values[4];
+  gdouble    values[4];
   gint       progress, max_progress;
   double     cx, cy;
   gint       x1, y1, x2, y2;
@@ -407,15 +407,41 @@ polarize (void)
 		  gimp_pixel_fetcher_get_pixel (pft, cx, cy + 1, pixel[2]);
 		  gimp_pixel_fetcher_get_pixel (pft, cx + 1, cy + 1, pixel[3]);
 
-		  for (b = 0; b < img_bpp; b++)
-		    {
-		      values[0] = pixel[0][b];
-		      values[1] = pixel[1][b];
-		      values[2] = pixel[2][b];
-		      values[3] = pixel[3][b];
-	   
-		      d[b] = gimp_bilinear_8 (cx, cy, values);
-		    }
+                  if (img_has_alpha)
+                    {
+                      gdouble alpha;
+                      values[0] = pixel[0][img_bpp-1];
+                      values[1] = pixel[1][img_bpp-1];
+                      values[2] = pixel[2][img_bpp-1];
+                      values[3] = pixel[3][img_bpp-1];
+                      alpha = gimp_bilinear (cx, cy, values);
+                      d[img_bpp-1] = alpha;
+
+                      if (d[img_bpp-1]) 
+                        {
+                          for (b = 0; b < img_bpp-1; b++)
+                            {
+                              values[0] = pixel[0][img_bpp-1] * pixel[0][b];
+                              values[1] = pixel[1][img_bpp-1] * pixel[1][b];
+                              values[2] = pixel[2][img_bpp-1] * pixel[2][b];
+                              values[3] = pixel[3][img_bpp-1] * pixel[3][b];
+
+                              d[b] = gimp_bilinear (cx, cy, values)/alpha;
+                            }
+                        }
+                    }
+                  else
+                    {
+                      for (b = 0; b < img_bpp; b++)
+                        {
+                          values[0] = pixel[0][b];
+                          values[1] = pixel[1][b];
+                          values[2] = pixel[2][b];
+                          values[3] = pixel[3][b];
+              
+                          d[b] = gimp_bilinear (cx, cy, values);
+                        }
+                    }
 		}
 	      else
 		{

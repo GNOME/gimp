@@ -73,17 +73,23 @@ static void    run    (gchar      *name,
 		       gint       *nreturn_vals,
 		       GimpParam **return_vals);
 
-static void    ripple             (GimpDrawable *drawable);
+static void    ripple              (GimpDrawable *drawable);
 
-static gint    ripple_dialog      (void);
-static void    ripple_ok_callback (GtkWidget *widget,
-				   gpointer   data);
+static gint    ripple_dialog       (void);
+static void    ripple_ok_callback  (GtkWidget    *widget,
+				    gpointer      data);
 
-static gdouble displace_amount (gint     location);
-static guchar  averagetwo      (gdouble  location,
-				guchar  *v);
-static guchar  averagefour     (gdouble  location,
-				guchar  *v);
+static gdouble displace_amount     (gint      location);
+static void    average_two_pixels  (guchar   *dest,
+                                    guchar    pixels[4][4],
+                                    gdouble   x,
+                                    gint      bpp,
+                                    gboolean  has_alpha);
+static void    average_four_pixels (guchar   *dest,
+                                    guchar    pixels[4][4],
+                                    gdouble   x,
+                                    gint      bpp,
+                                    gboolean  has_alpha);
 
 /***** Local vars *****/
 
@@ -251,25 +257,24 @@ ripple (GimpDrawable *drawable)
   GimpPixelRgn dest_rgn;
   gpointer  pr;
   GimpPixelFetcher *pft;
-  gint    width, height;
-  gint    bytes;
-  guchar *destline;
-  guchar *dest;
-  guchar *otherdest;
-  guchar  pixel[4][4];
-  gint    x1, y1, x2, y2;
-  gint    x, y;
-  gint    progress, max_progress;
-  gdouble needx, needy;
-
-  guchar  values[4];
+  gint     width, height;
+  gint     bytes;
+  gboolean has_alpha;
+  guchar  *destline;
+  guchar  *dest;
+  guchar  *otherdest;
+  guchar   pixel[4][4];
+  gint     x1, y1, x2, y2;
+  gint     x, y;
+  gint     progress, max_progress;
+  gdouble  needx, needy;
 
   gint xi, yi;
-  gint k;
 
   pft = gimp_pixel_fetcher_new (drawable);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   width  = drawable->width;
   height = drawable->height;
@@ -344,12 +349,9 @@ ripple (GimpDrawable *drawable)
 			  gimp_pixel_fetcher_get_pixel (pft, x, yi + 1, 
 							pixel[1]);
 
-                          for (k = 0; k < bytes; k++)
-			    {
-                              values[0] = pixel[0][k];
-                              values[1] = pixel[1][k];
-                              *otherdest++ = averagetwo(needy, values);
-			    }
+                          average_two_pixels (otherdest, pixel,
+                                              needy, bytes, has_alpha);
+                          otherdest += bytes;
 			}
                       else
 			{
@@ -361,14 +363,9 @@ ripple (GimpDrawable *drawable)
 			  gimp_pixel_fetcher_get_pixel (pft, x, yi + 2, 
 							pixel[3]);
 
-                          for (k = 0; k < bytes; k++)
-			    {
-                              values[0] = pixel[0][k];
-                              values[1] = pixel[1][k];
-                              values[2] = pixel[2][k];
-                              values[3] = pixel[3][k];
-                              *otherdest++ = averagefour (needy, values);
-			    }
+                          average_four_pixels(otherdest, pixel,
+                                              needy, bytes, has_alpha);
+                          otherdest += bytes;
                       }
 		    } /* antialias */
                   else
@@ -428,12 +425,9 @@ ripple (GimpDrawable *drawable)
 			  gimp_pixel_fetcher_get_pixel (pft, xi + 1, y, 
 							pixel[1]);
 
-                          for (k = 0; k < bytes; k++)
-			    {
-                              values[0] = pixel[0][k];
-                              values[1] = pixel[1][k];
-                              *dest++ = averagetwo (needx, values);
-			    }
+                          average_two_pixels (dest, pixel,
+                                              needx, bytes, has_alpha);
+                          dest += bytes;
 			}
                       else
 			{
@@ -445,14 +439,9 @@ ripple (GimpDrawable *drawable)
 			  gimp_pixel_fetcher_get_pixel (pft, xi + 2, y, 
 							pixel[3]);
 
-                          for (k = 0; k < bytes; k++)
-			    {
-                              values[0] = pixel[0][k];
-                              values[1] = pixel[1][k];
-                              values[2] = pixel[2][k];
-                              values[3] = pixel[3][k];
-                              *dest++ = averagefour (needx, values);
-			    }
+                          average_four_pixels(dest, pixel,
+                                              needx, bytes, has_alpha);
+                          dest += bytes;
 			}
 		    } /* antialias */
 
@@ -652,22 +641,66 @@ ripple_ok_callback (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-static guchar
-averagetwo (gdouble  location,
-	    guchar  *v)
+static void
+average_two_pixels (guchar   *dest,
+                    guchar    pixels[4][4],
+                    gdouble   x,
+                    gint      bpp,
+                    gboolean  has_alpha)
 {
-  location = fmod(location, 1.0);
+  gint b;
 
-  return (guchar) ((1.0 - location) * v[0] + location * v[1]);
+  x = fmod (x, 1.0);
+  if (has_alpha)
+    {
+      double xa0 = pixels[0][bpp-1] * (1.0 - x);
+      double xa1 = pixels[1][bpp-1] * x;
+      double alpha;
+
+      alpha = xa0 + xa1;
+      dest[bpp-1] = alpha;
+      if (dest[bpp-1])
+          for (b = 0; b < bpp-1; b++)
+              dest[b] = (xa0 * pixels[0][b] + xa1 * pixels[1][b])/alpha;
+    }
+  else
+    {
+      for (b = 0; b < bpp; b++)
+          dest[b] = (1.0 - x) * pixels[0][b] + x * pixels[1][b];
+    }
 }
 
-static guchar
-averagefour (gdouble  location,
-	     guchar  *v)
+static void
+average_four_pixels (guchar   *dest,
+                     guchar    pixels[4][4],
+                     gdouble   x,
+                     gint      bpp,
+                     gboolean  has_alpha)
 {
-  location = fmod(location, 1.0);
+  gint b;
 
-  return ((1.0 - location) * (v[0] + v[2]) + location * (v[1] + v[3]))/2;
+  x = fmod (x, 1.0);
+  if (has_alpha)
+    {
+      double xa0 = pixels[0][bpp-1] * (1.0 - x)/2;
+      double xa1 = pixels[1][bpp-1] * x/2;
+      double xa2 = pixels[2][bpp-1] * (1.0 - x)/2;
+      double xa3 = pixels[3][bpp-1] * x/2;
+      double alpha;
+
+      alpha = xa0 + xa1 + xa2 + xa3;
+      dest[bpp-1] = alpha;
+      if (dest[bpp-1])
+          for (b = 0; b < bpp-1; b++)
+              dest[b] = (xa0 * pixels[0][b] + xa1 * pixels[1][b]
+                         + xa2 * pixels[2][b] + xa3 * pixels[3][b])/alpha;
+    }
+  else
+    {
+      for (b = 0; b < bpp; b++)
+          dest[b] = (1.0 - x) * (pixels[0][b] + pixels[2][b])
+                    + x * (pixels[1][b] + pixels[3][b]);
+    }
 }
 
 static gdouble
@@ -676,12 +709,13 @@ displace_amount (gint location)
   switch (rvals.waveform)
     {
     case SINE:
-      return rvals.amplitude*sin(location*(2*G_PI)/(double)rvals.period);
+      return (rvals.amplitude *
+              sin (location * (2 * G_PI) / (gdouble) rvals.period));
     case SAWTOOTH:
       return floor (rvals.amplitude *
-		    (fabs ((((location%rvals.period) /
-			     (double)rvals.period) * 4) - 2) - 1));
+		    (fabs ((((location % rvals.period) /
+			     (gdouble) rvals.period) * 4) - 2) - 1));
     }
 
-  return 0;
+  return 0.0;
 }

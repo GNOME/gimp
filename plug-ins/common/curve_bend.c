@@ -3590,11 +3590,22 @@ p_vertical_bend (BenderDialog *cd,
                if(cd->smoothing == TRUE)
                {
                  /* smooting is on, so we are using a mixed color */
+                 gulong alpha1 = last_arr[l_x].color[3];
+                 gulong alpha2 = color[3];
+                 gulong alpha;
                  l_mixmask =  255 * ((gdouble)(l_dy) / (gdouble)(l_diff+1));
-                 mixcolor[0] =  MIX_CHANNEL(last_arr[l_x].color[0], color[0], l_mixmask);
-                 mixcolor[1] =  MIX_CHANNEL(last_arr[l_x].color[1], color[1], l_mixmask);
-                 mixcolor[2] =  MIX_CHANNEL(last_arr[l_x].color[2], color[2], l_mixmask);
-                 mixcolor[3] =  MIX_CHANNEL(last_arr[l_x].color[3], color[3], l_mixmask);
+                 alpha = alpha1 * l_mixmask + alpha2 * (255 - l_mixmask);
+                 mixcolor[3] = alpha/255;
+                 if (mixcolor[3])
+                   {
+                     mixcolor[0] = (alpha1 * l_mixmask * last_arr[l_x].color[0]
+                                    + alpha2 * (255 - l_mixmask) * color[0])/alpha;
+                     mixcolor[1] = (alpha1 * l_mixmask * last_arr[l_x].color[1]
+                                    + alpha2 * (255 - l_mixmask) * color[1])/alpha;
+                     mixcolor[2] = (alpha1 * l_mixmask * last_arr[l_x].color[2]
+                                    + alpha2 * (255 - l_mixmask) * color[2])/alpha;
+                     /*mixcolor[2] =  MIX_CHANNEL(last_arr[l_x].color[2], color[2], l_mixmask);*/
+                   }
                }
                else
                {

@@ -118,6 +118,7 @@ static GtkObject *length, *angle;
 static gint img_width, img_height, img_bpp;
 static gint sel_x1, sel_y1, sel_x2, sel_y2;
 static gint sel_width, sel_height;
+static gint has_alpha;
 
 static double cen_x, cen_y;
 
@@ -245,6 +246,7 @@ run (gchar      *name,
 				   gimp_tile_width () - 1) / gimp_tile_width ());
 
       /* Run! */
+      has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
       mblur ();
 
       /* If run mode is interactive, flush displays */
@@ -357,9 +359,20 @@ mblur_linear (void)
 	      for (i = 0; i < n; )
 		{
 		  gimp_pixel_fetcher_get_pixel (pft, xx, yy, pixel);
-		  for (c= 0; c < img_bpp; c++)
-		    sum[c]+= pixel[c];
-		  i++;
+                  if (has_alpha)
+                    {
+                      gint32 alpha = pixel[img_bpp-1];
+
+                      sum[img_bpp-1] += alpha;
+                      for (c = 0; c < img_bpp-1; c++)
+                          sum[c] += pixel[c] * alpha;
+                    }
+                  else
+                    {
+                      for (c = 0; c < img_bpp; c++)
+                          sum[c] += pixel[c];
+                    }
+                  i++;
 
 		  while (e >= 0 && dx)
 		    {
@@ -379,16 +392,27 @@ mblur_linear (void)
 		    break;
 		}
 
-	      if ( i==0 )
+	      if (i == 0)
 		{
 		  gimp_pixel_fetcher_get_pixel (pft, xx, yy, d); 
 		}
 	      else
 		{
-		  for (c=0; c < img_bpp; c++)
-		    d[c]= sum[c] / i;
+                  if (has_alpha)
+                    {
+                      gint32 alpha = sum[img_bpp-1];
+
+                      if (d[img_bpp-1] = alpha/i)
+                          for (c = 0; c < img_bpp-1; c++)
+                              d[c] = sum[c] / alpha;
+                    }
+                  else
+                    {
+                      for (c = 0; c < img_bpp; c++)
+                          d[c] = sum[c] / i;
+                    }
 		}
-	      d+= dest_rgn.bpp;
+	      d += dest_rgn.bpp;
 	    }
 	  dest += dest_rgn.rowstride;
 	}
@@ -483,8 +507,19 @@ mblur_radial (void)
 
 		  ++count;
 		  gimp_pixel_fetcher_get_pixel (pft, xx, yy, pixel);
-		  for (c = 0; c < img_bpp; c++) 
-		    sum[c] += pixel[c];
+                  if (has_alpha)
+                    {
+                      gint32 alpha = pixel[img_bpp-1];
+
+                      sum[img_bpp-1] += alpha;
+                      for (c = 0; c < img_bpp-1; c++)
+                          sum[c] += pixel[c] * alpha;
+                    }
+                  else
+                    {
+                      for (c = 0; c < img_bpp; c++)
+                          sum[c] += pixel[c];
+                    }
 		}
 
 	      if (count == 0)
@@ -493,8 +528,19 @@ mblur_radial (void)
 		}
 	      else
 		{
-		  for (c = 0; c < img_bpp; c++)
-		    d[c]= sum[c] / count;
+                  if (has_alpha)
+                    {
+                      gint32 alpha = sum[img_bpp-1];
+
+                      if (d[img_bpp-1] = alpha/count)
+                          for (c = 0; c < img_bpp-1; c++)
+                              d[c] = sum[c] / alpha;
+                    }
+                  else
+                    {
+                      for (c = 0; c < img_bpp; c++)
+                          d[c] = sum[c] / count;
+                    }
 		}
 	      d += dest_rgn.bpp;
 	    }
@@ -568,8 +614,19 @@ mblur_zoom (void)
 		    break;
 
 		  gimp_pixel_fetcher_get_pixel (pft, xx, yy, pixel);
-		  for (c = 0; c < img_bpp; c++)
-		    sum[c] += pixel[c];	  
+                  if (has_alpha)
+                    {
+                      gint32 alpha = pixel[img_bpp-1];
+
+                      sum[img_bpp-1] += alpha;
+                      for (c = 0; c < img_bpp-1; c++)
+                          sum[c] += pixel[c] * alpha;
+                    }
+                  else
+                    {
+                      for (c = 0; c < img_bpp; c++)
+                          sum[c] += pixel[c];
+                    }
 		}
 
 	      if (i == 0)
@@ -578,8 +635,19 @@ mblur_zoom (void)
 		}
 	      else
 		{
-		  for (c = 0; c < img_bpp; c++)
-		    d[c] = sum[c] / i;
+                  if (has_alpha)
+                    {
+                      gint32 alpha = sum[img_bpp-1];
+
+                      if (d[img_bpp-1] = alpha/i)
+                          for (c = 0; c < img_bpp-1; c++)
+                              d[c] = sum[c] / alpha;
+                    }
+                  else
+                    {
+                      for (c = 0; c < img_bpp; c++)
+                          d[c] = sum[c] / i;
+                    }
 		}
 	      d += dest_rgn.bpp;
 	    }
