@@ -46,6 +46,11 @@
 #include "gimppattern.h"
 #include "gimprc.h"
 
+
+#define PAINT_OPTIONS_MASK GIMP_CONTEXT_OPACITY_MASK | \
+                           GIMP_CONTEXT_PAINT_MODE_MASK
+
+
 /*
  *  the list of all images
  */
@@ -59,11 +64,11 @@ GimpDataFactory *global_pattern_factory  = NULL;
 GimpDataFactory *global_gradient_factory = NULL;
 GimpDataFactory *global_palette_factory  = NULL;
 
+/*
+ *  the global tool context
+ */
+GimpContext *global_tool_context = NULL;
 
-static GimpContext *global_tool_context = NULL;
-
-#define PAINT_OPTIONS_MASK GIMP_CONTEXT_OPACITY_MASK | \
-                           GIMP_CONTEXT_PAINT_MODE_MASK
 
 
 static void
@@ -258,7 +263,7 @@ context_manager_init (void)
   register_tools ();
 
   if (! global_paint_options && active_tool &&
-      (tool_context = tool_manager_get_info_by_type (GTK_OBJECT (active_tool)->klass->type)->context))
+      (tool_context = tool_manager_get_info_by_tool (active_tool)->context))
     {
       gimp_context_set_parent (tool_context, user_context);
     }

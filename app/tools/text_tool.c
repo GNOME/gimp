@@ -156,6 +156,7 @@ void
 gimp_text_tool_register (void)
 {
   tool_manager_register_tool (GIMP_TYPE_TEXT_TOOL,
+			      FALSE,
 			      "gimp:text_tool",
 			      _("Text Tool"),
 			      _("Add text to the image"),

@@ -224,6 +224,7 @@ tool_manager_init (void)
 
 void
 tool_manager_register_tool (GtkType       tool_type,
+			    gboolean      tool_context,
 			    const gchar  *identifier,
 			    const gchar  *blurb,
 			    const gchar  *help,
@@ -236,6 +237,7 @@ tool_manager_register_tool (GtkType       tool_type,
   GimpToolInfo *tool_info;
 
   tool_info = gimp_tool_info_new (tool_type,
+				  tool_context,
 				  identifier,
 				  blurb,
 				  help,

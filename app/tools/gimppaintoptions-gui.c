@@ -38,8 +38,24 @@
 #include "libgimp/gimpintl.h"
 
 
-static PaintPressureOptions * paint_pressure_options_new (GtkType    tool_type);
-static void   paint_pressure_options_reset (PaintPressureOptions *pressure_options);
+#define DEFAULT_USE_FADE        FALSE
+#define DEFAULT_FADE_OUT        100.0
+#define DEFAULT_FADE_UNIT       GIMP_UNIT_PIXEL
+#define DEFAULT_USE_GRADIENT    FALSE
+#define DEFAULT_GRADIENT_LENGTH 100.0
+#define DEFAULT_GRADIENT_UNIT   GIMP_UNIT_PIXEL
+#define DEFAULT_GRADIENT_TYPE   LOOP_TRIANGLE
+
+
+static PaintPressureOptions * paint_pressure_options_new (GtkType       tool_type,
+                                                          PaintOptions *paint_options);
+static void   paint_pressure_options_reset (PaintPressureOptions *pressure_options,
+                                            PaintOptions         *paint_options);
+
+static PaintGradientOptions * paint_gradient_options_new (GtkType       tool_type,
+                                                          PaintOptions *paint_options);
+static void   paint_gradient_options_reset (PaintGradientOptions *gradient_options,
+                                            PaintOptions         *paint_options);
 
 static void   paint_options_opacity_adjustment_update (GtkAdjustment *adjustment,
 						       gpointer       data);
@@ -52,6 +68,9 @@ static void   paint_options_paint_mode_changed        (GimpContext   *context,
 						       LayerModeEffects  paint_mode,
 						       gpointer       data);
 
+static void   paint_gradient_options_gradient_toggle_callback (GtkWidget    *widget,
+                                                               PaintOptions *options);
+
 
 /*  declared extern in paint_options.h  */
 PaintPressureOptions non_gui_pressure_options = 
@@ -63,6 +82,19 @@ PaintPressureOptions non_gui_pressure_options =
   FALSE, FALSE, NULL,
   FALSE, FALSE, NULL
 };
+
+PaintGradientOptions non_gui_gradient_options = 
+{
+  NULL,
+  DEFAULT_USE_FADE,        DEFAULT_USE_FADE,        NULL,
+  DEFAULT_FADE_OUT,        DEFAULT_FADE_OUT,        NULL,
+  DEFAULT_FADE_UNIT,       DEFAULT_FADE_UNIT,       NULL,
+  DEFAULT_USE_GRADIENT,    DEFAULT_USE_GRADIENT,    NULL,
+  DEFAULT_GRADIENT_LENGTH, DEFAULT_GRADIENT_LENGTH, NULL,
+  DEFAULT_GRADIENT_UNIT,   DEFAULT_GRADIENT_UNIT,   NULL,
+  DEFAULT_GRADIENT_TYPE,   DEFAULT_GRADIENT_TYPE,   NULL
+};
+
 
 /*  a list of all PaintOptions  */
 static GSList *paint_options_list = NULL;
@@ -186,13 +218,22 @@ paint_options_init (PaintOptions         *options,
       gtk_widget_show (options->incremental_w);
     }
 
-  options->pressure_options = paint_pressure_options_new (tool_type);
+  options->pressure_options = paint_pressure_options_new (tool_type, options);
 
   if (options->pressure_options->frame)
     {
       gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
 			  options->pressure_options->frame, FALSE, FALSE, 0);
       gtk_widget_show (options->pressure_options->frame);
+    }
+
+  options->gradient_options = paint_gradient_options_new (tool_type, options);
+
+  if (options->gradient_options->frame)
+    {
+      gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
+			  options->gradient_options->frame, FALSE, FALSE, 0);
+      gtk_widget_show (options->gradient_options->frame);
     }
 
   /*  register this Paintoptions structure  */
@@ -237,7 +278,9 @@ paint_options_reset (PaintOptions *options)
 				    options->incremental_d);
     }
 
-  paint_pressure_options_reset (options->pressure_options);
+  paint_pressure_options_reset (options->pressure_options, options);
+
+  paint_gradient_options_reset (options->gradient_options, options);
 }
 
 void
@@ -313,13 +356,14 @@ paint_mode_menu_new (GtkSignalFunc    callback,
 /*  private functions  */
 
 static PaintPressureOptions *
-paint_pressure_options_new (GtkType tool_type)
+paint_pressure_options_new (GtkType       tool_type,
+                            PaintOptions *paint_options)
 {
   PaintPressureOptions *pressure = NULL;
-  GtkWidget            *frame = NULL;
-  GtkWidget            *wbox = NULL;
+  GtkWidget            *frame    = NULL;
+  GtkWidget            *wbox     = NULL;
 
-  pressure = g_new (PaintPressureOptions, 1);
+  pressure = g_new0 (PaintPressureOptions, 1);
 
   pressure->opacity  = pressure->opacity_d  = TRUE;
   pressure->pressure = pressure->pressure_d = TRUE;
@@ -442,7 +486,8 @@ paint_pressure_options_new (GtkType tool_type)
 }
 
 static void
-paint_pressure_options_reset (PaintPressureOptions *pressure)
+paint_pressure_options_reset (PaintPressureOptions *pressure,
+                              PaintOptions         *paint_options)
 {
   if (pressure->opacity_w)
     {
@@ -468,6 +513,245 @@ paint_pressure_options_reset (PaintPressureOptions *pressure)
     {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->color_w),
 				    pressure->color_d);
+    }
+}
+
+static PaintGradientOptions *
+paint_gradient_options_new (GtkType       tool_type,
+                            PaintOptions *paint_options)
+{
+  PaintGradientOptions *gradient   = NULL;
+  GtkWidget            *abox       = NULL;
+  GtkWidget            *table      = NULL;
+  GtkWidget            *type_label = NULL;
+  GtkWidget            *spinbutton = NULL;
+
+  gradient = g_new0 (PaintGradientOptions, 1);
+
+  gradient->use_fade        = gradient->use_fade_d        = DEFAULT_USE_FADE;
+  gradient->fade_out        = gradient->fade_out_d        = DEFAULT_FADE_OUT;
+  gradient->fade_unit       = gradient->fade_unit_d       = DEFAULT_FADE_UNIT;
+  gradient->use_gradient    = gradient->use_gradient_d    = DEFAULT_USE_GRADIENT;
+  gradient->gradient_length = gradient->gradient_length_d = DEFAULT_GRADIENT_LENGTH;
+  gradient->gradient_unit   = gradient->gradient_unit_d   = DEFAULT_GRADIENT_UNIT;
+  gradient->gradient_type   = gradient->gradient_type_d   = DEFAULT_GRADIENT_TYPE;
+
+  gradient->use_fade_w        = NULL;
+  gradient->fade_out_w        = NULL;
+  gradient->fade_unit_w       = NULL;
+  gradient->use_gradient_w    = NULL;
+  gradient->gradient_length_w = NULL;
+  gradient->gradient_unit_w   = NULL;
+  gradient->gradient_type_w   = NULL;
+
+  if (tool_type == GIMP_TYPE_PAINTBRUSH_TOOL)
+    {
+      gradient->frame = gtk_frame_new (_("Gradient Options"));
+      table = gtk_table_new (3, 3, FALSE);
+      gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+      gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
+      gtk_table_set_row_spacing (GTK_TABLE (table), 1, 3);
+      gtk_container_add (GTK_CONTAINER (gradient->frame), table);
+      gtk_widget_show (table);
+    }
+
+  /*  the fade options  */
+  if (tool_type == GIMP_TYPE_PAINTBRUSH_TOOL)
+    {
+      abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
+      gtk_table_attach (GTK_TABLE (table), abox, 0, 1, 0, 1,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (abox);
+
+      /*  the use fade toggle  */
+      gradient->use_fade_w =
+        gtk_check_button_new_with_label (_("Fade Out"));
+      gtk_container_add (GTK_CONTAINER (abox), gradient->use_fade_w);
+      gtk_signal_connect (GTK_OBJECT (gradient->use_fade_w), "toggled",
+                          GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+                          &gradient->use_fade);
+      gtk_widget_show (gradient->use_fade_w);
+
+      /*  the fade-out sizeentry  */
+      gradient->fade_out_w =
+        gtk_adjustment_new (gradient->fade_out_d,
+                            1e-5, 32767.0, 1.0, 50.0, 0.0);
+      spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (gradient->fade_out_w),
+                                        1.0, 0.0);
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
+                                       GTK_SHADOW_NONE);
+      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+      gtk_widget_set_usize (spinbutton, 75, 0);
+      gtk_signal_connect (GTK_OBJECT (gradient->fade_out_w), "value_changed",
+                          GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+                          &gradient->fade_out);
+      gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 1, 2, 0, 1);
+      gtk_widget_show (spinbutton);
+
+      /*  the fade-out unitmenu  */
+      gradient->fade_unit_w =
+        gimp_unit_menu_new ("%a", gradient->fade_unit_d, TRUE, TRUE, TRUE);
+      gtk_signal_connect (GTK_OBJECT (gradient->fade_unit_w), "unit_changed",
+                          GTK_SIGNAL_FUNC (gimp_unit_menu_update),
+                          &gradient->fade_unit);
+      gtk_object_set_data (GTK_OBJECT (gradient->fade_unit_w), "set_digits",
+                           spinbutton);
+      gtk_table_attach (GTK_TABLE (table), gradient->fade_unit_w, 2, 3, 0, 1,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (gradient->fade_unit_w);
+
+      /*  automatically set the sensitive state of the fadeout stuff  */
+      gtk_widget_set_sensitive (spinbutton, gradient->use_fade_d);
+      gtk_widget_set_sensitive (gradient->fade_unit_w, gradient->use_fade_d);
+      gtk_object_set_data (GTK_OBJECT (gradient->use_fade_w),
+                           "set_sensitive", spinbutton);
+      gtk_object_set_data (GTK_OBJECT (spinbutton),
+                           "set_sensitive", gradient->fade_unit_w);
+    }
+
+  /*  the gradient options  */
+  if (tool_type == GIMP_TYPE_PAINTBRUSH_TOOL)
+    {
+      abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
+      gtk_table_attach (GTK_TABLE (table), abox, 0, 1, 1, 2,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (abox);
+
+      /*  the use gradient toggle  */
+      gradient->use_gradient_w =
+        gtk_check_button_new_with_label (_("Gradient"));
+      gtk_container_add (GTK_CONTAINER (abox), gradient->use_gradient_w);
+      gtk_signal_connect (GTK_OBJECT (gradient->use_gradient_w), "toggled",
+                          GTK_SIGNAL_FUNC (paint_gradient_options_gradient_toggle_callback),
+                          paint_options);
+      gtk_widget_show (gradient->use_gradient_w);
+
+      /*  the gradient length scale  */
+      gradient->gradient_length_w =
+        gtk_adjustment_new (gradient->gradient_length_d,
+                            1e-5, 32767.0, 1.0, 50.0, 0.0);
+      spinbutton =
+        gtk_spin_button_new (GTK_ADJUSTMENT (gradient->gradient_length_w),
+                             1.0, 0.0);
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
+                                       GTK_SHADOW_NONE);
+      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+      gtk_widget_set_usize (spinbutton, 75, 0);
+      gtk_signal_connect (GTK_OBJECT (gradient->gradient_length_w), "value_changed",
+                          GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+                          &gradient->gradient_length);
+      gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 1, 2, 1, 2);
+      gtk_widget_show (spinbutton);
+
+      /*  the gradient unitmenu  */
+      gradient->gradient_unit_w =
+        gimp_unit_menu_new ("%a", gradient->gradient_unit_d, TRUE, TRUE, TRUE);
+      gtk_signal_connect (GTK_OBJECT (gradient->gradient_unit_w), "unit_changed",
+                          GTK_SIGNAL_FUNC (gimp_unit_menu_update),
+                          &gradient->gradient_unit);
+      gtk_object_set_data (GTK_OBJECT (gradient->gradient_unit_w), "set_digits",
+                           spinbutton);
+      gtk_table_attach (GTK_TABLE (table), gradient->gradient_unit_w, 2, 3, 1, 2,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (gradient->gradient_unit_w);
+
+      /*  the gradient type  */
+      type_label = gtk_label_new (_("Type:"));
+      gtk_misc_set_alignment (GTK_MISC (type_label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), type_label, 0, 1, 2, 3,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (type_label);
+
+      abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+      gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 3, 2, 3);
+      gtk_widget_show (abox);
+
+      gradient->gradient_type_w = gimp_option_menu_new2
+        (FALSE, gimp_menu_item_update,
+         &gradient->gradient_type, (gpointer) gradient->gradient_type_d,
+
+         _("Once Forward"),  (gpointer) ONCE_FORWARD, NULL,
+         _("Once Backward"), (gpointer) ONCE_BACKWARDS, NULL,
+         _("Loop Sawtooth"), (gpointer) LOOP_SAWTOOTH, NULL,
+         _("Loop Triangle"), (gpointer) LOOP_TRIANGLE, NULL,
+
+         NULL);
+      gtk_container_add (GTK_CONTAINER (abox), gradient->gradient_type_w);
+      gtk_widget_show (gradient->gradient_type_w);
+
+      gtk_widget_show (table);
+
+      /*  automatically set the sensitive state of the gradient stuff  */
+      gtk_widget_set_sensitive (spinbutton, gradient->use_gradient_d);
+      gtk_widget_set_sensitive (spinbutton, gradient->use_gradient_d);
+      gtk_widget_set_sensitive (gradient->gradient_unit_w,
+                                gradient->use_gradient_d);
+      gtk_widget_set_sensitive (gradient->gradient_type_w,
+                                gradient->use_gradient_d);
+      gtk_widget_set_sensitive (type_label, gradient->use_gradient_d);
+      gtk_widget_set_sensitive (paint_options->incremental_w,
+                                ! gradient->use_gradient_d);
+      gtk_object_set_data (GTK_OBJECT (gradient->use_gradient_w),
+                           "set_sensitive",
+                           spinbutton);
+      gtk_object_set_data (GTK_OBJECT (spinbutton), "set_sensitive",
+                           gradient->gradient_unit_w);
+      gtk_object_set_data (GTK_OBJECT (gradient->gradient_unit_w),
+                           "set_sensitive",
+                           gradient->gradient_type_w);
+      gtk_object_set_data (GTK_OBJECT (gradient->gradient_type_w),
+                           "set_sensitive",
+                           type_label);
+      gtk_object_set_data (GTK_OBJECT (gradient->use_gradient_w),
+                           "inverse_sensitive",
+                           paint_options->incremental_w);
+    }
+
+  return gradient;
+}
+
+static void
+paint_gradient_options_reset (PaintGradientOptions *gradient,
+                              PaintOptions         *paint_options)
+{
+  GtkWidget *spinbutton;
+  gint       digits;
+
+  if (gradient->use_fade_w)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gradient->use_fade_w),
+                                    gradient->use_fade_d);
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (gradient->fade_out_w),
+                                gradient->fade_out_d);
+      gimp_unit_menu_set_unit (GIMP_UNIT_MENU (gradient->fade_unit_w),
+                               gradient->fade_unit_d);
+      digits = ((gradient->fade_unit_d == GIMP_UNIT_PIXEL) ? 0 :
+                ((gradient->fade_unit_d == GIMP_UNIT_PERCENT) ? 2 :
+                 (MIN (6, MAX (3, gimp_unit_get_digits (gradient->fade_unit_d))))));
+      spinbutton = gtk_object_get_data (GTK_OBJECT (gradient->fade_unit_w),
+                                        "set_digits");
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
+    }
+
+  if (gradient->use_gradient_w)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gradient->use_gradient_w),
+                                    gradient->use_gradient_d);
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (gradient->gradient_length_w),
+                                gradient->gradient_length_d);
+      gimp_unit_menu_set_unit (GIMP_UNIT_MENU (gradient->gradient_unit_w),
+                               gradient->gradient_unit_d);
+      digits = ((gradient->gradient_unit_d == GIMP_UNIT_PIXEL) ? 0 :
+                ((gradient->gradient_unit_d == GIMP_UNIT_PERCENT) ? 2 :
+                 (MIN (6, MAX (3, gimp_unit_get_digits (gradient->gradient_unit_d))))));
+      spinbutton = gtk_object_get_data (GTK_OBJECT (gradient->gradient_unit_w),
+                                        "set_digits");
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
+
+      gradient->gradient_type = gradient->gradient_type_d;
+
+      gtk_option_menu_set_history (GTK_OPTION_MENU (gradient->gradient_type_w),
+                                   gradient->gradient_type_d);
     }
 }
 
@@ -514,4 +798,27 @@ paint_options_paint_mode_changed (GimpContext      *context,
 				  gpointer          data)
 {
   gimp_option_menu_set_history (GTK_OPTION_MENU (data), (gpointer) paint_mode);
+}
+
+static void
+paint_gradient_options_gradient_toggle_callback (GtkWidget    *widget,
+                                                 PaintOptions *options)
+{
+#warning (FIXME make incremental_save part of the struct)
+  static gboolean incremental_save = FALSE;
+
+  gimp_toggle_button_update (widget, &options->gradient_options->use_gradient);
+
+  if (options->gradient_options->use_gradient)
+    {
+      incremental_save = options->incremental;
+      gtk_toggle_button_set_active
+	(GTK_TOGGLE_BUTTON (options->incremental_w), TRUE);
+    }
+  else
+    {
+      gtk_toggle_button_set_active
+	(GTK_TOGGLE_BUTTON (options->incremental_w),
+	 incremental_save);
+    }
 }

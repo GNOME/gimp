@@ -96,10 +96,14 @@ static void   gimp_measure_tool_draw            (GimpDrawTool   *draw_tool);
 
 
 
+static gdouble measure_get_angle                      (gint       dx,
+                                                       gint       dy,
+                                                       gdouble    xres,
+                                                       gdouble    yres);
 static MeasureOptions * measure_tool_options_new      (void);
 static void   measure_tool_options_reset              (void);
-static void   measure_tool_info_window_close_callback (GtkWidget      *widget,
-						       gpointer        data);
+static void   measure_tool_info_window_close_callback (GtkWidget *widget,
+						       gpointer   data);
 static void   measure_tool_info_update                (void);
 
 
@@ -117,6 +121,7 @@ void
 gimp_measure_tool_register (void)
 {
   tool_manager_register_tool (GIMP_TYPE_MEASURE_TOOL,
+                              FALSE,
 			      "gimp:measure_tool",
 			      _("Measure Tool"),
 			      _("Measure angles and legnths"),

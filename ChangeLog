@@ -1,3 +1,32 @@
+2001-02-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/context_manager.[ch]: made the global_paint_options public.
+
+	* app/tools/gimptoolinfo.[ch]: added a "tool_context" boolean to
+	the constructor and create a private context for the tool
+	initialized with global_paint_options's values.
+
+	* app/tools/tool_manager.[ch]: changed tool_manager_register_tool()
+	accordingly.
+
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/measure.c
+	* app/tools/move.c
+	* app/tools/text_tool.c: changed accordingly.
+
+	* app/tools/paint_options.[ch]: added the fade out and gradient
+	options here so they can be used by all paint tools.
+
+	* app/tools/gimppaintbrushtool.c: removed them here. Changed
+	the non_gui stuff: removed the non_gui_paint_func and handle
+	the non_gui stuff in the normal paint method. Allocate a
+	non_gui_paintbrush instead of the old non_gui_paint_core.
+
+	The non_gui stuff will change totally and will be handled
+	by GimpPaintTool only.
+
+	* app/tools/tool.c: removed the STUB()'s again.
+
 2001-02-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/Makefile.am: build the measure tool again.

@@ -67,34 +67,6 @@ typedef struct _PaintbrushOptions PaintbrushOptions;
 struct _PaintbrushOptions
 {
   PaintOptions  paint_options;
-
-  gboolean      use_fade;
-  gboolean      use_fade_d;
-  GtkWidget    *use_fade_w;
-
-  gdouble       fade_out;
-  gdouble       fade_out_d;
-  GtkObject    *fade_out_w;
-
-  GimpUnit      fade_unit;
-  GimpUnit      fade_unit_d;
-  GtkWidget    *fade_unit_w;
-
-  gboolean      use_gradient;
-  gboolean      use_gradient_d;
-  GtkWidget    *use_gradient_w;
-
-  gdouble       gradient_length;
-  gdouble       gradient_length_d;
-  GtkObject    *gradient_length_w;
-
-  GimpUnit      gradient_unit;
-  GimpUnit      gradient_unit_d;
-  GtkWidget    *gradient_unit_w;
-
-  gint          gradient_type;
-  gint          gradient_type_d;
-  GtkWidget    *gradient_type_w;
 };
 
 /*  the paint brush tool options  */
@@ -114,6 +86,7 @@ static GimpPaintToolClass *parent_class;
 static void  gimp_paintbrush_tool_motion     (GimpPaintTool        *,
 					      GimpDrawable         *,
 					      PaintPressureOptions *,
+					      PaintGradientOptions *,
 					      gdouble               ,
 					      gdouble               ,
 					      PaintApplicationMode  ,
@@ -154,66 +127,11 @@ gimp_paintbrush_tool_get_type (void)
 
 
 static void
-gimp_paintbrush_tool_gradient_toggle_callback (GtkWidget *widget,
-					       gpointer   data)
-{
-  PaintbrushOptions *options = paintbrush_options;
-
-  static gboolean incremental_save = FALSE;
-
-  gimp_toggle_button_update (widget, data);
-
-  if (paintbrush_options->use_gradient)
-    {
-      incremental_save = options->paint_options.incremental;
-      gtk_toggle_button_set_active
-	(GTK_TOGGLE_BUTTON (options->paint_options.incremental_w), TRUE);
-    }
-  else
-    {
-      gtk_toggle_button_set_active
-	(GTK_TOGGLE_BUTTON (options->paint_options.incremental_w),
-	 incremental_save);
-    }
-}
-
-static void
 gimp_paintbrush_tool_options_reset (void)
 {
   PaintbrushOptions *options = paintbrush_options;
-  GtkWidget         *spinbutton;
-  gint               digits;
 
   paint_options_reset ((PaintOptions *) options);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_fade_w),
-				options->use_fade_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->fade_out_w),
-			    options->fade_out_d);
-  gimp_unit_menu_set_unit (GIMP_UNIT_MENU (options->fade_unit_w),
-			   options->fade_unit_d);
-  digits = ((options->fade_unit_d == GIMP_UNIT_PIXEL) ? 0 :
-	    ((options->fade_unit_d == GIMP_UNIT_PERCENT) ? 2 :
-	     (MIN (6, MAX (3, gimp_unit_get_digits (options->fade_unit_d))))));
-  spinbutton = gtk_object_get_data (GTK_OBJECT (options->fade_unit_w), "set_digits");
-  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_gradient_w),
-				options->use_gradient_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->gradient_length_w),
-			    options->gradient_length_d);
-  gimp_unit_menu_set_unit (GIMP_UNIT_MENU (options->gradient_unit_w),
-			   options->gradient_unit_d);
-  digits = ((options->gradient_unit_d == GIMP_UNIT_PIXEL) ? 0 :
-	    ((options->gradient_unit_d == GIMP_UNIT_PERCENT) ? 2 :
-	     (MIN (6, MAX (3, gimp_unit_get_digits (options->gradient_unit_d))))));
-  spinbutton = gtk_object_get_data (GTK_OBJECT (options->gradient_unit_w), "set_digits");
-  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
-
-  options->gradient_type = options->gradient_type_d;
-
-  gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w),
-			       options->gradient_type_d);
 }
 
 static PaintbrushOptions *
@@ -221,255 +139,101 @@ gimp_paintbrush_tool_options_new (void)
 {
   PaintbrushOptions *options;
 
-  GtkWidget *vbox;
-  GtkWidget *abox;
-  GtkWidget *table;
-  GtkWidget *type_label;
-  GtkWidget *spinbutton;
-
   /*  the new paint tool options structure  */
-  options = g_new (PaintbrushOptions, 1);
+  options = g_new0 (PaintbrushOptions, 1);
   paint_options_init ((PaintOptions *) options,
 		      GIMP_TYPE_PAINTBRUSH_TOOL,
 		      gimp_paintbrush_tool_options_reset);
 
-  options->use_fade        =
-                  options->use_fade_d        = PAINTBRUSH_DEFAULT_USE_FADE;
-  options->fade_out        =
-                  options->fade_out_d        = PAINTBRUSH_DEFAULT_FADE_OUT;
-  options->fade_unit        =
-                  options->fade_unit_d       = PAINTBRUSH_DEFAULT_FADE_UNIT;
-  options->use_gradient    =
-                  options->use_gradient_d    = PAINTBRUSH_DEFAULT_USE_GRADIENT;
-  options->gradient_length =
-                  options->gradient_length_d = PAINTBRUSH_DEFAULT_GRADIENT_LENGTH;
-  options->gradient_unit        =
-                  options->gradient_unit_d   = PAINTBRUSH_DEFAULT_GRADIENT_UNIT;
-  options->gradient_type   =
-                  options->gradient_type_d   = PAINTBRUSH_DEFAULT_GRADIENT_TYPE;
-
-  /*  the main vbox  */
-  vbox = ((ToolOptions *) options)->main_vbox;
-
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 3);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-
-  /*  the use fade toggle  */
-  abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
-  gtk_table_attach (GTK_TABLE (table), abox, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (abox);
-
-  options->use_fade_w =
-    gtk_check_button_new_with_label (_("Fade Out"));
-  gtk_container_add (GTK_CONTAINER (abox), options->use_fade_w);
-  gtk_signal_connect (GTK_OBJECT (options->use_fade_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &options->use_fade);
-  gtk_widget_show (options->use_fade_w);
-
-  /*  the fade-out sizeentry  */
-  options->fade_out_w =
-    gtk_adjustment_new (options->fade_out_d,  1e-5, 32767.0, 1.0, 50.0, 0.0);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (options->fade_out_w), 1.0, 0.0);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton), GTK_SHADOW_NONE);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
-  gtk_signal_connect (GTK_OBJECT (options->fade_out_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &options->fade_out);
-  gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 1, 2, 0, 1);
-  gtk_widget_show (spinbutton);
-
-  /*  the fade-out unitmenu  */
-  options->fade_unit_w =
-    gimp_unit_menu_new ("%a", options->fade_unit_d, TRUE, TRUE, TRUE);
-  gtk_signal_connect (GTK_OBJECT (options->fade_unit_w), "unit_changed",
-		      GTK_SIGNAL_FUNC (gimp_unit_menu_update),
-		      &options->fade_unit);
-  gtk_object_set_data (GTK_OBJECT (options->fade_unit_w), "set_digits", spinbutton);
-  gtk_table_attach (GTK_TABLE (table), options->fade_unit_w, 2, 3, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (options->fade_unit_w);
-
-  /*  automatically set the sensitive state of the fadeout stuff  */
-  gtk_widget_set_sensitive (spinbutton, options->use_fade_d);
-  gtk_widget_set_sensitive (options->fade_unit_w, options->use_fade_d);
-  gtk_object_set_data (GTK_OBJECT (options->use_fade_w),
-		       "set_sensitive", spinbutton);
-  gtk_object_set_data (GTK_OBJECT (spinbutton),
-		       "set_sensitive", options->fade_unit_w);
-
-  /*  the use gradient toggle  */
-  abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
-  gtk_table_attach (GTK_TABLE (table), abox, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (abox);
-
-  options->use_gradient_w =
-    gtk_check_button_new_with_label (_("Gradient"));
-  gtk_container_add (GTK_CONTAINER (abox), options->use_gradient_w);
-  gtk_signal_connect (GTK_OBJECT (options->use_gradient_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_paintbrush_tool_gradient_toggle_callback),
-		      &options->use_gradient);
-  gtk_widget_show (options->use_gradient_w);
-
-  /*  the gradient length scale  */
-  options->gradient_length_w =
-    gtk_adjustment_new (options->gradient_length_d,  1e-5, 32767.0, 1.0, 50.0, 0.0);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (options->gradient_length_w), 1.0, 0.0);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton), GTK_SHADOW_NONE);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
-  gtk_signal_connect (GTK_OBJECT (options->gradient_length_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &options->gradient_length);
-  gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 1, 2, 1, 2);
-  gtk_widget_show (spinbutton);
-
-  /*  the gradient unitmenu  */
-  options->gradient_unit_w =
-    gimp_unit_menu_new ("%a", options->gradient_unit_d, TRUE, TRUE, TRUE);
-  gtk_signal_connect (GTK_OBJECT (options->gradient_unit_w), "unit_changed",
-		      GTK_SIGNAL_FUNC (gimp_unit_menu_update),
-		      &options->gradient_unit);
-  gtk_object_set_data (GTK_OBJECT (options->gradient_unit_w), "set_digits",
-		       spinbutton);
-  gtk_table_attach (GTK_TABLE (table), options->gradient_unit_w, 2, 3, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (options->gradient_unit_w);
-
-  /*  the gradient type  */
-  type_label = gtk_label_new (_("Type:"));
-  gtk_misc_set_alignment (GTK_MISC (type_label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), type_label, 0, 1, 2, 3,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (type_label);
-
-  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 3, 2, 3);
-  gtk_widget_show (abox);
-
-  options->gradient_type_w = gimp_option_menu_new2
-    (FALSE, gimp_menu_item_update,
-     &options->gradient_type, (gpointer) options->gradient_type_d,
-
-     _("Once Forward"),  (gpointer) ONCE_FORWARD, NULL,
-     _("Once Backward"), (gpointer) ONCE_BACKWARDS, NULL,
-     _("Loop Sawtooth"), (gpointer) LOOP_SAWTOOTH, NULL,
-     _("Loop Triangle"), (gpointer) LOOP_TRIANGLE, NULL,
-
-     NULL);
-  gtk_container_add (GTK_CONTAINER (abox), options->gradient_type_w);
-  gtk_widget_show (options->gradient_type_w);
-
-  gtk_widget_show (table);
-
-  /*  automatically set the sensitive state of the gradient stuff  */
-  gtk_widget_set_sensitive (spinbutton, options->use_gradient_d);
-  gtk_widget_set_sensitive (spinbutton, options->use_gradient_d);
-  gtk_widget_set_sensitive (options->gradient_unit_w, options->use_gradient_d);
-  gtk_widget_set_sensitive (options->gradient_type_w, options->use_gradient_d);
-  gtk_widget_set_sensitive (type_label, options->use_gradient_d);
-  gtk_widget_set_sensitive (options->paint_options.incremental_w,
-			    ! options->use_gradient_d);
-  gtk_object_set_data (GTK_OBJECT (options->use_gradient_w), "set_sensitive",
-		       spinbutton);
-  gtk_object_set_data (GTK_OBJECT (spinbutton), "set_sensitive",
-		       options->gradient_unit_w);
-  gtk_object_set_data (GTK_OBJECT (options->gradient_unit_w), "set_sensitive",
-		       options->gradient_type_w);
-  gtk_object_set_data (GTK_OBJECT (options->gradient_type_w), "set_sensitive",
-		       type_label);
-  gtk_object_set_data (GTK_OBJECT (options->use_gradient_w), "inverse_sensitive",
-		       options->paint_options.incremental_w);
-
   return options;
 }
-
-#define TIMED_BRUSH 0
 
 static void
 gimp_paintbrush_tool_paint (GimpPaintTool *paint_tool,
 			    GimpDrawable  *drawable,
 			    PaintState     state)
 {
-  GDisplay *gdisp = gdisplay_active ();
-  double fade_out;
-  double gradient_length;	
-  double unit_factor;
+  PaintPressureOptions *pressure_options;
+  PaintGradientOptions *gradient_options;
+  gboolean              incremental;
+  GimpImage            *gimage;
+  gdouble               fade_out;
+  gdouble               gradient_length;
+  gdouble               unit_factor;
 
-  g_return_if_fail (gdisp != NULL);
+  gimage = gimp_drawable_gimage (drawable);
 
-#if TIMED_BRUSH
-  static GTimer *timer = NULL;
-#endif
+  g_return_if_fail (gimage != NULL);
+
+  if (! gimage)
+    return;
+
+  if (paintbrush_options)
+    {
+      pressure_options = paintbrush_options->paint_options.pressure_options;
+      gradient_options = paintbrush_options->paint_options.gradient_options;
+      incremental      = paintbrush_options->paint_options.incremental;
+    }
+  else
+    {
+      pressure_options = &non_gui_pressure_options;
+      gradient_options = &non_gui_gradient_options;
+      incremental      = non_gui_incremental;
+    }
+
   switch (state)
     {
     case INIT_PAINT:
-#if TIMED_BRUSH
-      timer = g_timer_new();
-      g_timer_start(timer);
-#endif /* TIMED_BRUSH */
       break;
 
     case MOTION_PAINT:
-      switch (paintbrush_options->fade_unit)
+      switch (gradient_options->fade_unit)
 	{
 	case GIMP_UNIT_PIXEL:
-	  fade_out = paintbrush_options->fade_out;
+	  fade_out = gradient_options->fade_out;
 	  break;
 	case GIMP_UNIT_PERCENT:
-	  fade_out = MAX (gdisp->gimage->width, gdisp->gimage->height) *
-	    paintbrush_options->fade_out / 100;
+	  fade_out = (MAX (gimage->width, gimage->height) *
+		      gradient_options->fade_out / 100);
 	  break;
 	default:
-	  unit_factor = gimp_unit_get_factor (paintbrush_options->fade_unit);
-	  fade_out = paintbrush_options->fade_out *
-	    MAX (gdisp->gimage->xresolution, gdisp->gimage->yresolution) / unit_factor;
+	  unit_factor = gimp_unit_get_factor (gradient_options->fade_unit);
+	  fade_out = (gradient_options->fade_out *
+		      MAX (gimage->xresolution,
+			   gimage->yresolution) / unit_factor);
 	  break;
 	}
 
-      switch (paintbrush_options->gradient_unit)
+      switch (gradient_options->gradient_unit)
 	{
 	case GIMP_UNIT_PIXEL:
-	  gradient_length = paintbrush_options->gradient_length;
+	  gradient_length = gradient_options->gradient_length;
 	  break;
 	case GIMP_UNIT_PERCENT:
-	  gradient_length = MAX (gdisp->gimage->width, gdisp->gimage->height) *
-	    paintbrush_options->gradient_length / 100;
+	  gradient_length = (MAX (gimage->width, gimage->height) *
+			     gradient_options->gradient_length / 100);
 	  break;
 	default:
-	  unit_factor = gimp_unit_get_factor (paintbrush_options->gradient_unit);
-	  gradient_length = paintbrush_options->gradient_length *
-	    MAX (gdisp->gimage->xresolution, gdisp->gimage->yresolution) / unit_factor;
+	  unit_factor = gimp_unit_get_factor (gradient_options->gradient_unit);
+	  gradient_length = (gradient_options->gradient_length *
+			     MAX (gimage->xresolution,
+				  gimage->yresolution) / unit_factor);
 	  break;
 	}
 
       gimp_paintbrush_tool_motion (paint_tool, drawable,
-				   paintbrush_options->paint_options.pressure_options,
-				   paintbrush_options->use_fade ? fade_out : 0,
-				   paintbrush_options->use_gradient ? gradient_length : 0,
-				   paintbrush_options->paint_options.incremental,
-				   paintbrush_options->gradient_type);
+				   pressure_options,
+				   gradient_options,
+				   gradient_options->use_fade ? fade_out : 0,
+				   gradient_options->use_gradient ? gradient_length : 0,
+				   incremental,
+				   gradient_options->gradient_type);
       break;
 
-    case FINISH_PAINT :
-#if TIMED_BRUSH
-      if (timer)
-      {
-	g_timer_stop(timer);
-	g_print ("painting took %f:\n", g_timer_elapsed(timer, NULL));
-	g_timer_destroy(timer);
-	timer = NULL;
-      }
-#endif /* TIMED_BRUSH */
+    case FINISH_PAINT:
       break;
 
-    default :
+    default:
       break;
     }
 }
@@ -520,6 +284,7 @@ void
 gimp_paintbrush_tool_register (void)
 {
   tool_manager_register_tool (GIMP_TYPE_PAINTBRUSH_TOOL,
+			      TRUE,
   			      "gimp:paintbrush_tool",
   			      _("Paintbrush"),
   			      _("Paint fuzzy brush strokes"),
@@ -533,6 +298,7 @@ static void
 gimp_paintbrush_tool_motion (GimpPaintTool        *paint_tool,
 			     GimpDrawable         *drawable,
 			     PaintPressureOptions *pressure_options,
+			     PaintGradientOptions *gradient_options,
 			     double                fade_out,
 			     double                gradient_length,
 			     PaintApplicationMode  incremental,
@@ -636,141 +402,55 @@ gimp_paintbrush_tool_motion (GimpPaintTool        *paint_tool,
 }
 
 
-#warning (FIX non-gui paint tools)
-#if 0
-
-static gpointer
-gimp_paintbrush_tool_non_gui_paint_func (GimpPaintTool *paint_tool,
-					 GimpDrawable  *drawable,
-					 PaintState     state)
-{
-  GImage  *gimage;
-  gdouble  fade_out;
-  gdouble  gradient_length;	
-  gdouble  unit_factor;
-
-  if (! (gimage = gimp_drawable_gimage (drawable)))
-    return NULL;
-
-  switch (non_gui_fade_unit)
-    {
-    case GIMP_UNIT_PIXEL:
-      fade_out = non_gui_fade_out;
-      break;
-    case GIMP_UNIT_PERCENT:
-      fade_out = MAX (gimage->width, gimage->height) *
-	non_gui_fade_out / 100;
-      break;
-    default:
-      unit_factor = gimp_unit_get_factor (non_gui_fade_unit);
-      fade_out = non_gui_fade_out *
-	MAX (gimage->xresolution, gimage->yresolution) / unit_factor;
-      break;
-    }
-
-  switch (non_gui_gradient_unit)
-    {
-    case GIMP_UNIT_PIXEL:
-      gradient_length = non_gui_gradient_length;
-      break;
-    case GIMP_UNIT_PERCENT:
-      gradient_length = MAX (gimage->width, gimage->height) *
-	non_gui_gradient_length / 100;
-      break;
-    default:
-      unit_factor = gimp_unit_get_factor (non_gui_gradient_unit);
-      gradient_length = non_gui_gradient_length *
-	MAX (gimage->xresolution, gimage->yresolution) / unit_factor;
-      break;
-    }
-
-  gimp_paintbrush_tool_motion (paint_tool,drawable,
-			       &non_gui_pressure_options,
-			       fade_out,
-			       gradient_length,
-			       non_gui_incremental,
-			       non_gui_gradient_type);
-
-  return NULL;
-}
+static GimpPaintbrushTool *non_gui_paintbrush = NULL;
 
 gboolean
 gimp_paintbrush_tool_non_gui_default (GimpDrawable *drawable,
 				      gint          num_strokes,
 				      double       *stroke_array)
 {
-  PaintbrushOptions *options = paintbrush_options;
-  gdouble            fade_out        = PAINTBRUSH_DEFAULT_FADE_OUT;
-  gboolean           incremental     = PAINTBRUSH_DEFAULT_INCREMENTAL;
-  gboolean           use_gradient    = PAINTBRUSH_DEFAULT_USE_GRADIENT;
-  gboolean           use_fade        = PAINTBRUSH_DEFAULT_USE_FADE;
-  gdouble            gradient_length = PAINTBRUSH_DEFAULT_GRADIENT_LENGTH;
-  gint               gradient_type   = PAINTBRUSH_DEFAULT_GRADIENT_TYPE;
-  GimpUnit           fade_unit       = PAINTBRUSH_DEFAULT_FADE_UNIT;
-  GimpUnit           gradient_unit   = PAINTBRUSH_DEFAULT_GRADIENT_UNIT;
-  gint               i;
+  GimpPaintTool *paint_tool;
+  gint           i;
 
-  if (options)
+  if (! non_gui_paintbrush)
     {
-      fade_out        = options->fade_out;
-      incremental     = options->paint_options.incremental;
-      use_gradient    = options->use_gradient;
-      gradient_length = options->gradient_length;
-      gradient_type   = options->gradient_type;
-      use_fade        = options->use_fade;
-      fade_unit       = options->fade_unit;
-      gradient_unit   = options->gradient_unit;
+      non_gui_paintbrush = gtk_type_new (GIMP_TYPE_PAINTBRUSH_TOOL);
     }
 
-  if (use_gradient == FALSE)
-    gradient_length = 0.0;
-
-  if (use_fade == FALSE)
-    fade_out = 0.0;
+  paint_tool = GIMP_PAINT_TOOL (non_gui_paintbrush);
 
   /* Hmmm... PDB paintbrush should have gradient type added to it!
    * thats why the code below is duplicated.
    */
-  if (gimp_paint_tool_start (&non_gui_paint_tool, drawable,
-			     stroke_array[0], stroke_array[1]))
+  if (gimp_paint_tool_start (paint_tool, drawable,
+			     stroke_array[0],
+			     stroke_array[1]))
     {
-      non_gui_fade_out        = fade_out;
-      non_gui_gradient_length = gradient_length;
-      non_gui_gradient_type   = gradient_type;
-      non_gui_incremental     = incremental;
-      non_gui_fade_unit       = fade_unit;
-      non_gui_gradient_unit   = gradient_unit;
+      paint_tool->startx = paint_tool->lastx = stroke_array[0];
+      paint_tool->starty = paint_tool->lasty = stroke_array[1];
 
-      /* Set the paint core's paint func */
-      non_gui_paint_tool_class->paint = gimp_paintbrush_tool_non_gui_paint_func;
-
-      non_gui_paint_tool->startx = non_gui_paint_tool->lastx = stroke_array[0];
-      non_gui_paint_tool->starty = non_gui_paint_tool->lasty = stroke_array[1];
-
-      non_gui_paint_tool->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
-
-      gimp_paintbrush_tool_non_gui_paint_func (&non_gui_paint_tool, drawable, 0);
+      gimp_paint_tool_paint (paint_tool, drawable, MOTION_PAINT);
 
       for (i = 1; i < num_strokes; i++)
        {
-         non_gui_paint_tool->curx = stroke_array[i * 2 + 0];
-         non_gui_paint_tool->cury = stroke_array[i * 2 + 1];
+         paint_tool->curx = stroke_array[i * 2 + 0];
+         paint_tool->cury = stroke_array[i * 2 + 1];
 
-         gimp_paint_tool_interpolate (&non_gui_paint_tool, drawable);
+         gimp_paint_tool_interpolate (paint_tool, drawable);
 
-         non_gui_paint_tool->lastx = non_gui_paint_tool->curx;
-         non_gui_paint_tool->lasty = non_gui_paint_tool->cury;
+         paint_tool->lastx = paint_tool->curx;
+         paint_tool->lasty = paint_tool->cury;
        }
 
       /* Finish the painting */
-      gimp_paint_tool_finish (&non_gui_paint_tool, drawable);
+      gimp_paint_tool_finish (paint_tool, drawable);
 
-      /* Cleanup */
-      gimp_paint_tool_cleanup ();
       return TRUE;
     }
   else
-    return FALSE;
+    {
+      return FALSE;
+    }
 }
 
 gboolean
@@ -781,47 +461,50 @@ gimp_paintbrush_tool_non_gui (GimpDrawable *drawable,
 			      gint          method,
 			      gdouble       gradient_length)
 {
-  gint i;
+  GimpPaintTool *paint_tool;
+  gint           i;
+
+  if (! non_gui_paintbrush)
+    {
+      non_gui_paintbrush = gtk_type_new (GIMP_TYPE_PAINTBRUSH_TOOL);
+    }
+
+  paint_tool = GIMP_PAINT_TOOL (non_gui_paintbrush);
 
   /* Code duplicated above */
-  if (gimp_paint_tool_start (&non_gui_paint_tool, drawable,
-			     stroke_array[0], stroke_array[1]))
+  if (gimp_paint_tool_start (paint_tool, drawable,
+			     stroke_array[0],
+			     stroke_array[1]))
     {
-      non_gui_fade_out        = fade_out;
-      non_gui_gradient_length = gradient_length;
-      non_gui_gradient_type   = LOOP_TRIANGLE;
-      non_gui_incremental     = method;
+      non_gui_gradient_options.fade_out        = fade_out;
+      non_gui_gradient_options.gradient_length = gradient_length;
+      non_gui_gradient_options.gradient_type   = LOOP_TRIANGLE;
+      non_gui_incremental                      = method;
 
-      /* Set the paint core's paint func */
-      non_gui_paint_tool_class->paint = gimp_paintbrush_tool_non_gui_paint_func;
-
-      non_gui_paint_tool->startx = non_gui_paint_tool->lastx = stroke_array[0];
-      non_gui_paint_tool->starty = non_gui_paint_tool->lasty = stroke_array[1];
-
-      non_gui_paint_tool->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
+      paint_tool->startx = paint_tool->lastx = stroke_array[0];
+      paint_tool->starty = paint_tool->lasty = stroke_array[1];
 
       if (num_strokes == 1)
-       gimp_paintbrush_tool_non_gui_paint_func (&non_gui_paint_tool, drawable, 0);
+	gimp_paint_tool_paint (paint_tool, drawable, MOTION_PAINT);
 
       for (i = 1; i < num_strokes; i++)
        {
-         non_gui_paint_tool->curx = stroke_array[i * 2 + 0];
-         non_gui_paint_tool->cury = stroke_array[i * 2 + 1];
+         paint_tool->curx = stroke_array[i * 2 + 0];
+         paint_tool->cury = stroke_array[i * 2 + 1];
 
-         gimp_paint_tool_interpolate (&non_gui_paint_tool, drawable);
+         gimp_paint_tool_interpolate (paint_tool, drawable);
 
-         non_gui_paint_tool->lastx = non_gui_paint_tool->curx;
-         non_gui_paint_tool->lasty = non_gui_paint_tool->cury;
+	 paint_tool->lastx = paint_tool->curx;
+         paint_tool->lasty = paint_tool->cury;
        }
 
       /* Finish the painting */
-      gimp_paint_tool_finish (&non_gui_paint_tool, drawable);
+      gimp_paint_tool_finish (paint_tool, drawable);
 
-      /* Cleanup */
-      gimp_paint_tool_cleanup ();
       return TRUE;
     }
   else
-    return FALSE;
+    {
+      return FALSE;
+    }
 }
-#endif

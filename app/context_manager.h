@@ -33,6 +33,11 @@ extern GimpDataFactory *global_pattern_factory;
 extern GimpDataFactory *global_gradient_factory;
 extern GimpDataFactory *global_palette_factory;
 
+/*
+ *  the global tool context
+ */
+extern GimpContext *global_tool_context;
+
 
 void   context_manager_init                     (void);
 void   context_manager_free                     (void);

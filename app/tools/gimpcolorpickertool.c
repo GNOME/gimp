@@ -153,6 +153,7 @@ void
 gimp_color_picker_tool_register (void)
 {
   tool_manager_register_tool (GIMP_TYPE_COLOR_PICKER_TOOL,
+                              FALSE,
 			      "gimp:color_picker_tool",
 			      _("Color Picker"),
 			      _("Pick colors from the image"),

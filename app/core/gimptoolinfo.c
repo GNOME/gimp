@@ -22,6 +22,8 @@
 
 #include "apptypes.h"
 
+#include "context_manager.h"
+#include "gimpcontext.h"
 #include "gimptoolinfo.h"
 #include "temp_buf.h"
 
@@ -197,6 +199,7 @@ gimp_tool_info_get_new_preview (GimpViewable *viewable,
 
 GimpToolInfo *
 gimp_tool_info_new (GtkType       tool_type,
+                    gboolean      tool_context,
 		    const gchar  *identifier,
 		    const gchar  *blurb,
 		    const gchar  *help,
@@ -225,6 +228,12 @@ gimp_tool_info_new (GtkType       tool_type,
 
   tool_info->icon_data     = icon_data;
 
+  if (tool_context)
+    {
+      tool_info->context = gimp_context_new (identifier,
+                                             global_tool_context);
+    }
+
   return tool_info;
 }
 
@@ -237,6 +246,7 @@ gimp_tool_info_get_standard (void)
     {
       standard_tool_info =
 	gimp_tool_info_new (GIMP_TYPE_COLOR_PICKER_TOOL,
+                            FALSE,
 			    "gimp:standard_tool",
 			    "Standard Tool",
 			    "Well something must be broken",

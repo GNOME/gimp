@@ -39,6 +39,7 @@ void        tool_manager_register              (GimpToolClass  *tool_type
 void        tool_manager_init                  (void);
 
 void        tool_manager_register_tool         (GtkType         tool_type,
+						gboolean        tool_context,
 						const gchar    *identifier,
 						const gchar    *blurb,
 						const gchar    *help,

@@ -82,6 +82,7 @@ void
 gimp_move_tool_register (void)
 {
   tool_manager_register_tool (GIMP_TYPE_MOVE_TOOL,
+                              FALSE,
 			      "gimp:move_tool",
 			      _("Move Tool"),
 			      _("Move layers & selections"),

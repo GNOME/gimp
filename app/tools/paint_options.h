@@ -51,6 +51,42 @@ struct _PaintPressureOptions
 };
 
 
+typedef struct _PaintGradientOptions PaintGradientOptions;
+
+struct _PaintGradientOptions
+{
+  GtkWidget    *frame;
+
+  gboolean      use_fade;
+  gboolean      use_fade_d;
+  GtkWidget    *use_fade_w;
+
+  gdouble       fade_out;
+  gdouble       fade_out_d;
+  GtkObject    *fade_out_w;
+
+  GimpUnit      fade_unit;
+  GimpUnit      fade_unit_d;
+  GtkWidget    *fade_unit_w;
+
+  gboolean      use_gradient;
+  gboolean      use_gradient_d;
+  GtkWidget    *use_gradient_w;
+
+  gdouble       gradient_length;
+  gdouble       gradient_length_d;
+  GtkObject    *gradient_length_w;
+
+  GimpUnit      gradient_unit;
+  GimpUnit      gradient_unit_d;
+  GtkWidget    *gradient_unit_w;
+
+  gint          gradient_type;
+  gint          gradient_type_d;
+  GtkWidget    *gradient_type_w;
+};
+
+
 typedef struct _PaintOptions PaintOptions;
 
 struct _PaintOptions
@@ -77,11 +113,17 @@ struct _PaintOptions
 
   /*  the pressure-sensitivity options  */
   PaintPressureOptions *pressure_options;
+
+  /*  the fade out and gradient options  */
+  PaintGradientOptions *gradient_options;
 };
 
 
 /*  the default pressure_options for non_gui use  */
 extern PaintPressureOptions non_gui_pressure_options;
+
+/*  the default gradient_options for non_gui use  */
+extern PaintGradientOptions non_gui_gradient_options;
 
 
 /*  paint tool options functions  */
@@ -90,6 +132,7 @@ PaintOptions * paint_options_new    (GtkType               tool_type,
 				     ToolOptionsResetFunc  reset_func);
 
 void           paint_options_reset  (PaintOptions         *options);
+
 
 /*  to be used by "derived" paint options only  */
 void           paint_options_init   (PaintOptions         *options,

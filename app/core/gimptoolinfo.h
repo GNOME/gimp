@@ -64,6 +64,7 @@ struct _GimpToolInfoClass
 GtkType        gimp_tool_info_get_type     (void);
 
 GimpToolInfo * gimp_tool_info_new          (GtkType       tool_type,
+					    gboolean      tool_context,
 					    const gchar  *identifier,
 					    const gchar  *blurb,
 					    const gchar  *help,
