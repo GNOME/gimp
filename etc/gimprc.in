@@ -158,7 +158,7 @@
 #  Uncomment this line to disable them.
 # (no-cursor-updating)
 
-# Layer preview sizes (also used for the Undo History):
+# Layer preview size (also used for the Undo History):
 #  none:    no previews in layers dialog/layer selector
 #  tiny:    16x16
 #  small:   32x32
@@ -167,8 +167,8 @@
 #  huge:   128x128
 (preview-size small)
 
-# Navigation window preview sizes:
-(navigation-preview-size large)
+# Navigation window preview size:
+(navigation-preview-size medium)
 
 # Tooltips
 #  Comment this out to disable the tooltips in the toolbox

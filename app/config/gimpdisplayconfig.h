@@ -56,6 +56,7 @@ struct _GimpDisplayConfig
   gdouble              monitor_xres;
   gdouble              monitor_yres;
   gboolean             monitor_res_from_gdk;
+  GimpPreviewSize      nav_preview_size;
 };
 
 struct _GimpDisplayConfigClass

@@ -48,11 +48,9 @@ static void  gimp_gui_config_get_property (GObject            *object,
 enum
 {
   PROP_0,
-  PROP_LAST_OPENED_SIZE,
   PROP_TRANSPARENCY_SIZE,
   PROP_TRANSPARENCY_TYPE,
   PROP_DEFAULT_THRESHOLD,
-  PROP_NAV_PREVIEW_SIZE,
   PROP_INFO_WINDOW_PER_DISPLAY,
   PROP_TRUST_DIRTY_FLAG,
   PROP_SAVE_DEVICE_STATUS,
@@ -61,6 +59,7 @@ enum
   PROP_SHOW_TIPS,
   PROP_SHOW_TOOL_TIPS,
   PROP_TEAROFF_MENUS,
+  PROP_LAST_OPENED_SIZE,
   PROP_MAX_NEW_IMAGE_SIZE,
   PROP_THEME_PATH,
   PROP_THEME,
@@ -112,10 +111,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   object_class->set_property = gimp_gui_config_set_property;
   object_class->get_property = gimp_gui_config_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_LAST_OPENED_SIZE,
-                                "last-opened-size",
-                                0, G_MAXINT, 4,
-                                GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TRANSPARENCY_SIZE,
                                  "transparency-size",
                                  GIMP_TYPE_CHECK_SIZE, GIMP_MEDIUM_CHECKS,
@@ -128,10 +123,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                 "default-threshold",
                                 0, 255, 15,
                                 0);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_NAV_PREVIEW_SIZE,
-                                 "navigation-preview-size",
-                                 GIMP_TYPE_PREVIEW_SIZE, GIMP_PREVIEW_SIZE_HUGE,
-                                 0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INFO_WINDOW_PER_DISPLAY,
                                     "info-window-per-display",
                                     FALSE,
@@ -164,6 +155,10 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     "tearoff-menus",
                                     TRUE,
                                     GIMP_PARAM_RESTART);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_LAST_OPENED_SIZE,
+                                "last-opened-size",
+                                0, 1024, 4,
+                                GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_MAX_NEW_IMAGE_SIZE,
                                    "max-new-image-size",
                                    0, G_MAXULONG, 1 << 25,
@@ -212,9 +207,6 @@ gimp_gui_config_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_LAST_OPENED_SIZE:
-      gui_config->last_opened_size = g_value_get_int (value);
-      break;
     case PROP_TRANSPARENCY_SIZE:
       gui_config->transparency_size = g_value_get_enum (value);
       break;
@@ -223,9 +215,6 @@ gimp_gui_config_set_property (GObject      *object,
       break;
     case PROP_DEFAULT_THRESHOLD:
       gui_config->default_threshold = g_value_get_int (value);
-      break;
-    case PROP_NAV_PREVIEW_SIZE:
-      gui_config->nav_preview_size = g_value_get_enum (value);
       break;
     case PROP_INFO_WINDOW_PER_DISPLAY:
       gui_config->info_window_per_display = g_value_get_boolean (value);
@@ -250,6 +239,9 @@ gimp_gui_config_set_property (GObject      *object,
       break;
     case PROP_TEAROFF_MENUS:
       gui_config->tearoff_menus = g_value_get_boolean (value);
+      break;
+    case PROP_LAST_OPENED_SIZE:
+      gui_config->last_opened_size = g_value_get_int (value);
       break;
     case PROP_MAX_NEW_IMAGE_SIZE:
       gui_config->max_new_image_size = g_value_get_ulong (value);
@@ -287,9 +279,6 @@ gimp_gui_config_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_LAST_OPENED_SIZE:
-      g_value_set_int (value, gui_config->last_opened_size);
-      break;
     case PROP_TRANSPARENCY_SIZE:
       g_value_set_enum (value, gui_config->transparency_size);
       break;
@@ -298,9 +287,6 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_DEFAULT_THRESHOLD:
       g_value_set_int (value, gui_config->default_threshold);
-      break;
-    case PROP_NAV_PREVIEW_SIZE:
-      g_value_set_enum (value, gui_config->nav_preview_size);
       break;
     case PROP_INFO_WINDOW_PER_DISPLAY:
       g_value_set_boolean (value, gui_config->info_window_per_display);
@@ -325,6 +311,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_TEAROFF_MENUS:
       g_value_set_boolean (value, gui_config->tearoff_menus);
+      break;
+    case PROP_LAST_OPENED_SIZE:
+      g_value_set_int (value, gui_config->last_opened_size);
       break;
     case PROP_MAX_NEW_IMAGE_SIZE:
       g_value_set_ulong (value, gui_config->max_new_image_size);

@@ -67,7 +67,8 @@ enum
   PROP_CONFIRM_ON_CLOSE,
   PROP_MONITOR_XRESOLUTION,
   PROP_MONITOR_YRESOLUTION,
-  PROP_MONITOR_RES_FROM_GDK
+  PROP_MONITOR_RES_FROM_GDK,
+  PROP_NAV_PREVIEW_SIZE
 };
 
 static GObjectClass *parent_class = NULL;
@@ -179,6 +180,10 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                     "monitor-resolution-from-windowing-system",
                                     TRUE,
                                     0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_NAV_PREVIEW_SIZE,
+                                 "navigation-preview-size",
+                                 GIMP_TYPE_PREVIEW_SIZE, GIMP_PREVIEW_SIZE_MEDIUM,
+                                 0);
 }
 
 static void
@@ -256,6 +261,9 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_MONITOR_RES_FROM_GDK:
       display_config->monitor_res_from_gdk = g_value_get_boolean (value);
       break;
+    case PROP_NAV_PREVIEW_SIZE:
+      display_config->nav_preview_size = g_value_get_enum (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -322,6 +330,9 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_MONITOR_RES_FROM_GDK:
       g_value_set_boolean (value, display_config->monitor_res_from_gdk);
+      break;
+    case PROP_NAV_PREVIEW_SIZE:
+      g_value_set_enum (value, display_config->nav_preview_size);
       break;
 
     default:

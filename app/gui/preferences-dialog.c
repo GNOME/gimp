@@ -752,6 +752,7 @@ prefs_enum_option_menu_add (GObject     *config,
   return menu;
 }
 
+#if 0
 static GtkWidget *
 prefs_enum_option_menu_add_with_values (GObject     *config,
                                         const gchar *property_name,
@@ -778,6 +779,7 @@ prefs_enum_option_menu_add_with_values (GObject     *config,
 
   return menu;
 }
+#endif
 
 static GtkWidget *
 prefs_boolean_option_menu_add (GObject     *config,
@@ -1183,13 +1185,9 @@ prefs_dialog_new (Gimp    *gimp,
   prefs_enum_option_menu_add (config, "preview-size", 0, 0,
                               _("_Preview Size:"),
                               GTK_TABLE (table), 0);
-  prefs_enum_option_menu_add_with_values (config, "navigation-preview-size",
-                                          _("_Nav Preview Size:"),
-                                          GTK_TABLE (table), 1,
-                                          3,
-                                          GIMP_PREVIEW_SIZE_MEDIUM,
-                                          GIMP_PREVIEW_SIZE_EXTRA_LARGE,
-                                          GIMP_PREVIEW_SIZE_HUGE);
+  prefs_enum_option_menu_add (config, "navigation-preview-size", 0, 0,
+                              _("_Navigation Preview Size:"),
+                              GTK_TABLE (table), 1);
   prefs_spin_button_add (config, "last-opened-size", 1.0, 5.0, 0,
                          _("_Recent Documents List Size:"),
                          GTK_TABLE (table), 3);

@@ -40,11 +40,9 @@ struct _GimpGuiConfig
 {
   GimpDisplayConfig    parent_instance;
 
-  gint                 last_opened_size;
   GimpCheckSize        transparency_size;
   GimpCheckType        transparency_type;
   gint                 default_threshold;
-  GimpPreviewSize      nav_preview_size;
   gboolean             info_window_per_display;
   gboolean             trust_dirty_flag;
   gboolean             save_device_status;
@@ -53,6 +51,7 @@ struct _GimpGuiConfig
   gboolean             show_tips;
   gboolean             show_tool_tips;
   gboolean             tearoff_menus;
+  gint                 last_opened_size;
   gulong               max_new_image_size;
   gchar               *theme_path;
   gchar               *theme;

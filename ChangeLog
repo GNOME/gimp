@@ -1,3 +1,18 @@
+2002-11-21  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpdisplayconfig.[ch]
+	* app/config/gimpguiconfig.[ch]: moved navigation_preview_size to
+	GimpDisplayConfig.
+
+	* app/gui/preferences-dialog.c: offer the full choice of
+	GimpPreviewSizes for the navigation preview size.
+
+	* app/display/gimpnavigationview.c: multiply the preview size by 3
+	to get reasonable values. Added some broken code that connects to
+	notify::navigation-preview-size.
+
+	* etc/gimprc.in: updated accordingly.
+
 2002-11-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/tile-cache.[ch]: added tile_cache_init() and
