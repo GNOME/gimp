@@ -1,3 +1,14 @@
+2003-11-23  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolordisplay.[ch]: made "enabled" an object
+	property and removed the "enabled_changed" signal.
+
+	* libgimpwidgets/gimpcolordisplaystack.c
+	* app/widgets/gimpcolordisplayeditor.c: connect to "notify::enabled"
+	instead.
+
+	* libgimpwidgets/gimpwidgets.def: added new symbols.
+
 2003-11-23  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcolordisplay.[ch]: added new signal

@@ -32,14 +32,26 @@
 
 enum
 {
+  PROP_0,
+  PROP_ENABLED
+};
+
+enum
+{
   CHANGED,
-  ENABLED_CHANGED,
   LAST_SIGNAL
 };
 
 
-static void   gimp_color_display_class_init (GimpColorDisplayClass *klass);
-static void   gimp_color_display_init       (GimpColorDisplay      *display);
+static void   gimp_color_display_class_init   (GimpColorDisplayClass *klass);
+static void   gimp_color_display_set_property (GObject           *object,
+                                               guint              property_id,
+                                               const GValue      *value,
+                                               GParamSpec        *pspec);
+static void   gimp_color_display_get_property (GObject           *object,
+                                               guint              property_id,
+                                               GValue            *value,
+                                               GParamSpec        *pspec);
 
 
 static GObjectClass *parent_class = NULL;
@@ -64,7 +76,7 @@ gimp_color_display_get_type (void)
 	NULL,           /* class_data     */
 	sizeof (GimpColorDisplay),
 	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_color_display_init,
+	NULL            /* instance_init  */
       };
 
       display_type = g_type_register_static (G_TYPE_OBJECT,
@@ -78,22 +90,24 @@ gimp_color_display_get_type (void)
 static void
 gimp_color_display_class_init (GimpColorDisplayClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->set_property = gimp_color_display_set_property;
+  object_class->get_property = gimp_color_display_get_property;
+
+  g_object_class_install_property (object_class, PROP_ENABLED,
+                                   g_param_spec_boolean ("enabled", NULL, NULL,
+                                                         TRUE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 
   display_signals[CHANGED] =
     g_signal_new ("changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorDisplayClass, changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
-
-  display_signals[ENABLED_CHANGED] =
-    g_signal_new ("enabled_changed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColorDisplayClass, enabled_changed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -111,9 +125,41 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
 }
 
 static void
-gimp_color_display_init (GimpColorDisplay *display)
+gimp_color_display_set_property (GObject      *object,
+                                 guint         property_id,
+                                 const GValue *value,
+                                 GParamSpec   *pspec)
 {
-  display->enabled = TRUE;
+  GimpColorDisplay *display = GIMP_COLOR_DISPLAY (object);
+
+  switch (property_id)
+    {
+    case PROP_ENABLED:
+      display->enabled = g_value_get_boolean (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_color_display_get_property (GObject    *object,
+                                 guint       property_id,
+                                 GValue     *value,
+                                 GParamSpec *pspec)
+{
+  GimpColorDisplay *display = GIMP_COLOR_DISPLAY (object);
+
+  switch (property_id)
+    {
+    case PROP_ENABLED:
+      g_value_set_boolean (value, display->enabled);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 GimpColorDisplay *
@@ -216,14 +262,6 @@ gimp_color_display_changed (GimpColorDisplay *display)
 }
 
 void
-gimp_color_display_enabled_changed (GimpColorDisplay *display)
-{
-  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
-
-  g_signal_emit (display, display_signals[ENABLED_CHANGED], 0);
-}
-
-void
 gimp_color_display_set_enabled (GimpColorDisplay *display,
                                 gboolean          enabled)
 {
@@ -231,9 +269,9 @@ gimp_color_display_set_enabled (GimpColorDisplay *display,
 
   if (enabled != display->enabled)
     {
-      display->enabled = enabled ? TRUE : FALSE;
-
-      gimp_color_display_enabled_changed (display);
+      g_object_set (display,
+                    "enabled", enabled,
+                    NULL);
     }
 }
 

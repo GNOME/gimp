@@ -64,7 +64,6 @@ struct _GimpColorDisplayClass
 
   /*  signals  */
   void               (* changed)         (GimpColorDisplay *display);
-  void               (* enabled_changed) (GimpColorDisplay *display);
 };
 
 
@@ -85,7 +84,6 @@ GtkWidget    * gimp_color_display_configure       (GimpColorDisplay *display);
 void           gimp_color_display_configure_reset (GimpColorDisplay *display);
 
 void           gimp_color_display_changed         (GimpColorDisplay *display);
-void           gimp_color_display_enabled_changed (GimpColorDisplay *display);
 
 void           gimp_color_display_set_enabled     (GimpColorDisplay *display,
                                                    gboolean          enabled);

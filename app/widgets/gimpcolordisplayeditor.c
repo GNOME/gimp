@@ -86,6 +86,7 @@ static void   gimp_color_display_editor_reordered      (GimpColorDisplayStack  *
                                                         GimpColorDisplayEditor *editor);
 
 static void   gimp_color_display_editor_enabled        (GimpColorDisplay       *display,
+                                                        GParamSpec             *pspec,
                                                         GimpColorDisplayEditor *editor);
 static void   gimp_color_display_editor_enable_toggled (GtkCellRendererToggle  *toggle,
                                                         const gchar            *path,
@@ -399,7 +400,7 @@ gimp_color_display_editor_new (GimpColorDisplayStack *stack)
                           DEST_COLUMN_FILTER,  display,
                           -1);
 
-      g_signal_connect_object (display, "enabled_changed",
+      g_signal_connect_object (display, "notify::enabled",
                                G_CALLBACK (gimp_color_display_editor_enabled),
                                G_OBJECT (editor), 0);
     }
@@ -590,7 +591,7 @@ gimp_color_display_editor_added (GimpColorDisplayStack  *stack,
                       DEST_COLUMN_FILTER,  display,
                       -1);
 
-  g_signal_connect_object (display, "enabled_changed",
+  g_signal_connect_object (display, "notify::enabled",
                            G_CALLBACK (gimp_color_display_editor_enabled),
                            G_OBJECT (editor), 0);
 
@@ -700,6 +701,7 @@ gimp_color_display_editor_reordered (GimpColorDisplayStack  *stack,
 
 static void
 gimp_color_display_editor_enabled (GimpColorDisplay       *display,
+                                   GParamSpec             *pspec,
                                    GimpColorDisplayEditor *editor)
 {
   GtkTreeIter iter;

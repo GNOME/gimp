@@ -50,6 +50,7 @@ static void   gimp_color_display_stack_finalize        (GObject               *o
 static void   gimp_color_display_stack_display_changed (GimpColorDisplay      *display,
                                                         GimpColorDisplayStack *stack);
 static void   gimp_color_display_stack_display_enabled (GimpColorDisplay      *display,
+                                                        GParamSpec            *pspec,
                                                         GimpColorDisplayStack *stack);
 
 
@@ -219,7 +220,7 @@ gimp_color_display_stack_add (GimpColorDisplayStack *stack,
   g_signal_connect_object (display, "changed",
                            G_CALLBACK (gimp_color_display_stack_display_changed),
                            G_OBJECT (stack), 0);
-  g_signal_connect_object (display, "enabled_changed",
+  g_signal_connect_object (display, "notify::enabled",
                            G_CALLBACK (gimp_color_display_stack_display_enabled),
                            G_OBJECT (stack), 0);
 
@@ -336,6 +337,7 @@ gimp_color_display_stack_display_changed (GimpColorDisplay      *display,
 
 static void
 gimp_color_display_stack_display_enabled (GimpColorDisplay      *display,
+                                          GParamSpec            *pspec,
                                           GimpColorDisplayStack *stack)
 {
   gimp_color_display_stack_changed (stack);
