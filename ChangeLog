@@ -1,3 +1,21 @@
+Sat Jan 31 20:49:11 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	*plug-ins/ edge.c  
+		added a check so it woudlnt segfault when
+	passed a non-existend drawable
+	
+	threshold_alpha  added a non-interactive mode
+
+	*app/brightness_contrast.c
+	 app/color_balance.c 
+	 app/colormaps.c
+	 app/curves.c 
+	 app/hue_saturation.c
+	 app/posterize.c 
+	 app/threshold.c
+		-added an additioanl check so it wouldnt except
+	 a indexed drawable. This was previosly possible via the pdb.
+
 Sat Jan 31 00:16:22 PST 1998 Manish Singh <yosh@gimp.org>
 
         * plug-ins/xpm/xpm.c: Changed to use g_strcasecmp

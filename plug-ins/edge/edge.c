@@ -225,7 +225,8 @@ run (gchar  *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  /* make sure the drawable exist and is not indexed */
+  if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id))
     {
       gimp_progress_init ("Edge detection...");
 
@@ -241,6 +242,11 @@ run (gchar  *name,
       /*  Store data  */
       if (run_mode == RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_edge", &evals, sizeof (EdgeVals));
+    }
+  else
+     {
+      /* gimp_message ("edge: cannot operate on indexed color images"); */
+      status = STATUS_EXECUTION_ERROR;
     }
 
   values[0].data.d_status = status;

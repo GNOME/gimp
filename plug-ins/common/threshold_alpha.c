@@ -178,6 +178,7 @@ query ()
     { PARAM_INT32, "run_mode", "Interactive, non-interactive"},
     { PARAM_IMAGE, "image", "Input image (not used)"},
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { PARAM_INT32, "threshold", "Threshold" },
   };
   static GParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);
@@ -236,7 +237,12 @@ run (char	*name,
 	return;
       break;
     case RUN_NONINTERACTIVE:
-      /* You must copy the values of parameters to VALS or dialog variables. */
+      if (nparams != 4)
+	status = STATUS_CALLING_ERROR;
+      if (status == STATUS_SUCCESS)
+	{
+	  VALS.threshold = param[3].data.d_int32;
+	} 
       break;
     case RUN_WITH_LAST_VALS:
       gimp_get_data (PLUG_IN_NAME, &VALS);

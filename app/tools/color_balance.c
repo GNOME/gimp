@@ -954,6 +954,10 @@ color_balance_invoker (Argument *args)
       if (drawable == NULL || gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
+  /*  make sure the drawable is not indexed color  */
+  if (success)
+    success = ! drawable_indexed (drawable);
+
   /*  transfer_mode  */
   if (success)
     {
