@@ -36,6 +36,7 @@
 
 #include "widgets/gimpcontainerentry.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpenumwidgets.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewablebutton.h"
 #include "widgets/gimpviewabledialog.h"
