@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -49,6 +51,9 @@ static void   gimp_brush_editor_set_data     (GimpDataEditor       *editor,
                                               GimpData             *data);
 
 static void   gimp_brush_editor_update_brush (GtkAdjustment        *adjustment,
+                                              GimpBrushEditor      *editor);
+static void   gimp_brush_editor_notify_brush (GimpBrushGenerated   *brush,
+                                              GParamSpec           *pspec,
                                               GimpBrushEditor      *editor);
 
 
@@ -86,9 +91,7 @@ gimp_brush_editor_get_type (void)
 static void
 gimp_brush_editor_class_init (GimpBrushEditorClass *klass)
 {
-  GimpDataEditorClass *editor_class;
-
-  editor_class = GIMP_DATA_EDITOR_CLASS (klass);
+  GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -188,30 +191,38 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
 
   brush_editor = GIMP_BRUSH_EDITOR (editor);
 
+  if (editor->data)
+    g_signal_handlers_disconnect_by_func (editor->data,
+                                          gimp_brush_editor_notify_brush,
+                                          editor);
+
   GIMP_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
+
+  if (editor->data)
+    g_signal_connect (editor->data, "notify",
+                      G_CALLBACK (gimp_brush_editor_notify_brush),
+                      editor);
 
   gimp_preview_set_viewable (GIMP_PREVIEW (brush_editor->preview),
                              (GimpViewable *) data);
 
   if (editor->data && GIMP_IS_BRUSH_GENERATED (editor->data))
     {
-      GimpBrushGenerated *brush;
+      GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (editor->data);
 
-      brush = GIMP_BRUSH_GENERATED (editor->data);
-
-      radius   = gimp_brush_generated_get_radius (brush);
-      hardness = gimp_brush_generated_get_hardness (brush);
+      radius   = gimp_brush_generated_get_radius       (brush);
+      hardness = gimp_brush_generated_get_hardness     (brush);
       ratio    = gimp_brush_generated_get_aspect_ratio (brush);
-      angle    = gimp_brush_generated_get_angle (brush);
+      angle    = gimp_brush_generated_get_angle        (brush);
     }
 
   gtk_widget_set_sensitive (brush_editor->options_table,
                             editor->data_editable);
 
-  gtk_adjustment_set_value (brush_editor->radius_data, radius);
-  gtk_adjustment_set_value (brush_editor->hardness_data, hardness);
+  gtk_adjustment_set_value (brush_editor->radius_data,       radius);
+  gtk_adjustment_set_value (brush_editor->hardness_data,     hardness);
   gtk_adjustment_set_value (brush_editor->aspect_ratio_data, ratio);
-  gtk_adjustment_set_value (brush_editor->angle_data, angle);
+  gtk_adjustment_set_value (brush_editor->angle_data,        angle);
 }
 
 
@@ -263,13 +274,66 @@ gimp_brush_editor_update_brush (GtkAdjustment   *adjustment,
       ratio    != gimp_brush_generated_get_aspect_ratio (brush) ||
       angle    != gimp_brush_generated_get_angle        (brush))
     {
+      g_signal_handlers_block_by_func (brush,
+                                       gimp_brush_editor_notify_brush,
+                                       editor);
+
       gimp_data_freeze (GIMP_DATA (brush));
+      g_object_freeze_notify (G_OBJECT (brush));
 
       gimp_brush_generated_set_radius       (brush, radius);
       gimp_brush_generated_set_hardness     (brush, hardness);
       gimp_brush_generated_set_aspect_ratio (brush, ratio);
       gimp_brush_generated_set_angle        (brush, angle);
 
+      g_object_thaw_notify (G_OBJECT (brush));
       gimp_data_thaw (GIMP_DATA (brush));
+
+      g_signal_handlers_unblock_by_func (brush,
+                                         gimp_brush_editor_notify_brush,
+                                         editor);
+    }
+}
+
+static void
+gimp_brush_editor_notify_brush (GimpBrushGenerated   *brush,
+                                GParamSpec           *pspec,
+                                GimpBrushEditor      *editor)
+{
+  GtkAdjustment *adj   = NULL;
+  gdouble        value = 0.0;
+
+  if (! strcmp (pspec->name, "radius"))
+    {
+      adj   = editor->radius_data;
+      value = brush->radius;
+    }
+  else if (! strcmp (pspec->name, "hardness"))
+    {
+      adj   = editor->hardness_data;
+      value = brush->hardness;
+    }
+  else if (! strcmp (pspec->name, "angle"))
+    {
+      adj   = editor->angle_data;
+      value = brush->angle;
+    }
+  else if (! strcmp (pspec->name, "aspect-ratio"))
+    {
+      adj   = editor->aspect_ratio_data;
+      value = brush->aspect_ratio;
+    }
+
+  if (adj)
+    {
+      g_signal_handlers_block_by_func (adj,
+                                       gimp_brush_editor_update_brush,
+                                       editor);
+
+      gtk_adjustment_set_value (adj, value);
+
+      g_signal_handlers_unblock_by_func (adj,
+                                         gimp_brush_editor_update_brush,
+                                         editor);
     }
 }

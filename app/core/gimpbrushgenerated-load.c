@@ -45,17 +45,35 @@
 #define OVERSAMPLING 5
 
 
+enum
+{
+  PROP_0,
+  PROP_RADIUS,
+  PROP_HARDNESS,
+  PROP_ANGLE,
+  PROP_ASPECT_RATIO
+};
+
+
 /*  local function prototypes  */
 
 static void   gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass);
 static void   gimp_brush_generated_init       (GimpBrushGenerated      *brush);
 
-static gboolean   gimp_brush_generated_save          (GimpData  *data,
-                                                      GError   **error);
-static void       gimp_brush_generated_dirty         (GimpData  *data);
-static gchar    * gimp_brush_generated_get_extension (GimpData  *data);
-static GimpData * gimp_brush_generated_duplicate     (GimpData  *data,
-                                                      gboolean   stingy_memory_use);
+static void   gimp_brush_generated_set_property      (GObject      *object,
+                                                      guint         property_id,
+                                                      const GValue *value,
+                                                      GParamSpec   *pspec);
+static void   gimp_brush_generated_get_property      (GObject      *object,
+                                                      guint         property_id,
+                                                      GValue       *value,
+                                                      GParamSpec   *pspec);
+static gboolean   gimp_brush_generated_save          (GimpData     *data,
+                                                      GError      **error);
+static void       gimp_brush_generated_dirty         (GimpData     *data);
+static gchar    * gimp_brush_generated_get_extension (GimpData     *data);
+static GimpData * gimp_brush_generated_duplicate     (GimpData     *data,
+                                                      gboolean      stingy_memory_use);
 
 
 static GimpBrushClass *parent_class = NULL;
@@ -92,16 +110,40 @@ gimp_brush_generated_get_type (void)
 static void
 gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
 {
-  GimpDataClass *data_class;
-
-  data_class = GIMP_DATA_CLASS (klass);
+  GObjectClass  *object_class = G_OBJECT_CLASS (klass);
+  GimpDataClass *data_class   = GIMP_DATA_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  data_class->save          = gimp_brush_generated_save;
-  data_class->dirty         = gimp_brush_generated_dirty;
-  data_class->get_extension = gimp_brush_generated_get_extension;
-  data_class->duplicate     = gimp_brush_generated_duplicate;
+  object_class->set_property = gimp_brush_generated_set_property;
+  object_class->get_property = gimp_brush_generated_get_property;
+
+  data_class->save           = gimp_brush_generated_save;
+  data_class->dirty          = gimp_brush_generated_dirty;
+  data_class->get_extension  = gimp_brush_generated_get_extension;
+  data_class->duplicate      = gimp_brush_generated_duplicate;
+
+  g_object_class_install_property (object_class, PROP_RADIUS,
+                                   g_param_spec_double ("radius", NULL, NULL,
+                                                        1.0, 1000.0, 5.0,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class, PROP_HARDNESS,
+                                   g_param_spec_double ("hardness", NULL, NULL,
+                                                        0.0, 1.0, 0.0,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class, PROP_ANGLE,
+                                   g_param_spec_double ("angle", NULL, NULL,
+                                                        0.0, 180.0, 0.0,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class, PROP_ASPECT_RATIO,
+                                   g_param_spec_double ("aspect-ratio",
+                                                        NULL, NULL,
+                                                        1.0, 20.0, 1.0,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -111,6 +153,62 @@ gimp_brush_generated_init (GimpBrushGenerated *brush)
   brush->hardness     = 0.0;
   brush->angle        = 0.0;
   brush->aspect_ratio = 1.0;
+}
+
+static void
+gimp_brush_generated_set_property (GObject      *object,
+                                   guint         property_id,
+                                   const GValue *value,
+                                   GParamSpec   *pspec)
+{
+  GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (object);
+
+  switch (property_id)
+    {
+    case PROP_RADIUS:
+      gimp_brush_generated_set_radius (brush, g_value_get_double (value));
+      break;
+    case PROP_HARDNESS:
+      gimp_brush_generated_set_radius (brush, g_value_get_double (value));
+      break;
+    case PROP_ANGLE:
+      gimp_brush_generated_set_radius (brush, g_value_get_double (value));
+      break;
+    case PROP_ASPECT_RATIO:
+      gimp_brush_generated_set_radius (brush, g_value_get_double (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_brush_generated_get_property (GObject    *object,
+                                   guint       property_id,
+                                   GValue     *value,
+                                   GParamSpec *pspec)
+{
+  GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (object);
+
+  switch (property_id)
+    {
+    case PROP_RADIUS:
+      g_value_set_double (value, brush->angle);
+      break;
+    case PROP_HARDNESS:
+      g_value_set_double (value, brush->hardness);
+      break;
+    case PROP_ANGLE:
+      g_value_set_double (value, brush->angle);
+      break;
+    case PROP_ASPECT_RATIO:
+      g_value_set_double (value, brush->aspect_ratio);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static gboolean
@@ -410,6 +508,7 @@ gimp_brush_generated_load (const gchar  *filename,
                         NULL);
 
   gimp_data_freeze (GIMP_DATA (brush));
+  g_object_freeze_notify (G_OBJECT (brush));
 
   /* read brush spacing */
   fgets (string, 255, file);
@@ -433,6 +532,7 @@ gimp_brush_generated_load (const gchar  *filename,
 
   fclose (file);
 
+  g_object_thaw_notify (G_OBJECT (brush));
   gimp_data_thaw (GIMP_DATA (brush));
 
   if (stingy_memory_use)
@@ -453,6 +553,7 @@ gimp_brush_generated_set_radius (GimpBrushGenerated *brush,
     {
       brush->radius = radius;
 
+      g_object_notify (G_OBJECT (brush), "radius");
       gimp_data_dirty (GIMP_DATA (brush));
     }
 
@@ -471,6 +572,7 @@ gimp_brush_generated_set_hardness (GimpBrushGenerated *brush,
     {
       brush->hardness = hardness;
 
+      g_object_notify (G_OBJECT (brush), "hardness");
       gimp_data_dirty (GIMP_DATA (brush));
     }
 
@@ -492,6 +594,7 @@ gimp_brush_generated_set_angle (GimpBrushGenerated *brush,
     {
       brush->angle = angle;
 
+      g_object_notify (G_OBJECT (brush), "angle");
       gimp_data_dirty (GIMP_DATA (brush));
     }
 
@@ -510,6 +613,7 @@ gimp_brush_generated_set_aspect_ratio (GimpBrushGenerated *brush,
     {
       brush->aspect_ratio = ratio;
 
+      g_object_notify (G_OBJECT (brush), "aspect-ratio");
       gimp_data_dirty (GIMP_DATA (brush));
     }
 

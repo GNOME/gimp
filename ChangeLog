@@ -1,5 +1,13 @@
 2004-06-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpbrushgenerated.c: added properties for all brush
+	parameters.
+
+	* app/widgets/gimpbrusheditor.c: listen to property changes of the
+	edited brush and update the scales accordingly.
+
+2004-06-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/preferences-dialog.c: more work on the controller page,
 	made integer controller properties editable.
 
