@@ -1,3 +1,9 @@
+Sun May  3 00:24:31 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/channels_dialog.c: minimalistic change to the interface,
+	make it's possible to set the channel opacity to 100.0% 
+	(was 99.0% before)
+
 Sat May  2 14:31:46 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/about_dialog.c
