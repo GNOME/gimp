@@ -22,20 +22,15 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.4  1998/04/13 05:43:17  yosh
- *   Have fun recompiling gimp everyone. It's the great FSF address change!
- *
- *   -Yosh
- *
- *   Revision 1.3  1998/04/01 22:14:49  neo
- *   Added checks for print spoolers to configure.in as suggested by Michael
- *   Sweet. The print plug-in still needs some changes to Makefile.am to make
- *   make use of this.
- *
- *   Updated print and sgi plug-ins to version on the registry.
+ *   Revision 1.5  1998/05/11 19:53:31  neo
+ *   Updated print plug-in to version 2.0
  *
  *
  *   --Sven
+ *
+ *   Revision 1.11  1998/05/08  19:20:50  mike
+ *   Updated for new driver interface.
+ *   Added media size, imageable area, and parameter functions.
  *
  *   Revision 1.10  1998/03/01  17:20:48  mike
  *   Updated version number & date.
@@ -96,7 +91,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION		"1.4 - 1 March 1998"
+#define PLUG_IN_VERSION		"2.0 - 8 May 1998"
 #define PLUG_IN_NAME		"Print"
 
 #define MEDIA_LETTER		0	/* 8.5x11" a.k.a. "A" size */
@@ -126,21 +121,25 @@ typedef struct
 {
   char	*long_name,			/* Long name for UI */
 	*short_name;			/* Short name for printrc file */
-  int	xdpi,				/* X resolution */
-	ydpi,				/* Y resolution */
-	large_sizes,			/* TRUE if supports large sizes */
-	color,				/* TRUE if supports color */
+  int	color,				/* TRUE if supports color */
 	model;				/* Model number */
   float	gamma,				/* Gamma correction */
 	density;			/* Ink "density" or black level */
-  void	(*print)(FILE *prn, GDrawable *drawable, int media_size,
-	         int xdpi, int ydpi, int output_type, int model,
-	         guchar *lut, guchar *cmap, int orientation,
-	         int scaling, int left, int top);
-					/* Print function */
+  char	**(*parameters)(int model, char *ppd_file, char *name, int *count);
+					/* Parameter names */
+  void	(*media_size)(int model, char *ppd_file, char *media_size,
+                      int *width, int *length);
+  void	(*imageable_area)(int model, char *ppd_file, char *media_size,
+                          int *left, int *right, int *bottom, int *top);
+  void	(*print)(int model, char *ppd_file, char *resolution,
+                 char *media_size, char *media_type, char *media_source,
+                 int output_type, int orientation, float scaling, int left,
+                 int top, int copies, FILE *prn, GDrawable *drawable,
+                 guchar *lut, guchar *cmap);	/* Print function */
 } printer_t;
 
-typedef void (*convert_t)(guchar *in, guchar *out, int width, int bpp, guchar *lut, guchar *cmap);
+typedef void (*convert_t)(guchar *in, guchar *out, int width, int bpp,
+                          guchar *lut, guchar *cmap);
 
 
 /*
@@ -153,14 +152,43 @@ extern void	dither_cmyk(guchar *, int, int, int, unsigned char *,
 extern void	gray_to_gray(guchar *, guchar *, int, int, guchar *, guchar *);
 extern void	indexed_to_gray(guchar *, guchar *, int, int, guchar *, guchar *);
 extern void	indexed_to_rgb(guchar *, guchar *, int, int, guchar *, guchar *);
-extern int	media_width(int, int);
-extern int	media_height(int, int);
 extern void	rgb_to_gray(guchar *, guchar *, int, int, guchar *, guchar *);
 extern void	rgb_to_rgb(guchar *, guchar *, int, int, guchar *, guchar *);
 
-extern void	escp2_print(FILE *, GDrawable *, int, int, int, int, int, guchar *, guchar *, int, int, int, int);
-extern void	pcl_print(FILE *, GDrawable *, int, int, int, int, int, guchar *, guchar *, int, int, int, int);
-extern void	ps_print(FILE *, GDrawable *, int, int, int, int, int, guchar *, guchar *, int, int, int, int);
+extern void	default_media_size(int model, char *ppd_file, char *media_size,
+		                   int *width, int *length);
+
+extern char	**escp2_parameters(int model, char *ppd_file, char *name,
+		                   int *count);
+extern void	escp2_imageable_area(int model, char *ppd_file, char *media_size,
+		                     int *left, int *right, int *bottom, int *top);
+extern void	escp2_print(int model, char *ppd_file, char *resolution,
+		            char *media_size, char *media_type, char *media_source,
+		            int output_type, int orientation, float scaling,
+		            int left, int top, int copies, FILE *prn,
+		            GDrawable *drawable, guchar *lut, guchar *cmap);
+
+extern char	**pcl_parameters(int model, char *ppd_file, char *name,
+		                 int *count);
+extern void	pcl_imageable_area(int model, char *ppd_file, char *media_size,
+		                   int *left, int *right, int *bottom, int *top);
+extern void	pcl_print(int model, char *ppd_file, char *resolution,
+		          char *media_size, char *media_type, char *media_source,
+		          int output_type, int orientation, float scaling,
+		          int left, int top, int copies, FILE *prn,
+		          GDrawable *drawable, guchar *lut, guchar *cmap);
+
+extern char	**ps_parameters(int model, char *ppd_file, char *name,
+		                int *count);
+extern void	ps_media_size(int model, char *ppd_file, char *media_size,
+		              int *width, int *length);
+extern void	ps_imageable_area(int model, char *ppd_file, char *media_size,
+		                  int *left, int *right, int *bottom, int *top);
+extern void	ps_print(int model, char *ppd_file, char *resolution,
+		         char *media_size, char *media_type, char *media_source,
+		         int output_type, int orientation, float scaling,
+		         int left, int top, int copies, FILE *prn,
+		         GDrawable *drawable, guchar *lut, guchar *cmap);
 
 
 /*

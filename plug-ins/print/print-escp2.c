@@ -21,45 +21,27 @@
  *
  * Contents:
  *
- *   escp2_print() - Print an image to an EPSON printer.
- *   escp2_write() - Send ESC/P2 graphics using TIFF packbits compression.
+ *   escp2_parameters()     - Return the parameter values for the given
+ *                            parameter.
+ *   escp2_imageable_area() - Return the imageable area of the page.
+ *   escp2_print()          - Print an image to an EPSON printer.
+ *   escp2_write()          - Send ESC/P2 graphics using TIFF packbits compression.
  *
  * Revision History:
  *
  *   $Log$
- *   Revision 1.6  1998/04/13 05:43:12  yosh
- *   Have fun recompiling gimp everyone. It's the great FSF address change!
- *
- *   -Yosh
- *
- *   Revision 1.5  1998/04/07 03:41:11  yosh
- *   configure.in: fix for $srcdir != $builddir for data. Tightened check for
- *   random() and add -lucb on systems that need it. Fix for xdelta.h check. Find
- *   xemacs as well as emacs. Properly define settings for print plugin.
- *
- *   app/Makefile.am: ditch -DNDEBUG, since nothing uses it
- *
- *   flame: properly handle random() and friends
- *
- *   pnm: workaround for systems with old sprintfs
- *
- *   print, sgi: fold back in portability fixes
- *
- *   threshold_alpha: properly get params in non-interactive mode
- *
- *   bmp: updated and merged in
- *
- *   -Yosh
- *
- *   Revision 1.4  1998/04/01 22:14:44  neo
- *   Added checks for print spoolers to configure.in as suggested by Michael
- *   Sweet. The print plug-in still needs some changes to Makefile.am to make
- *   make use of this.
- *
- *   Updated print and sgi plug-ins to version on the registry.
+ *   Revision 1.7  1998/05/11 19:49:56  neo
+ *   Updated print plug-in to version 2.0
  *
  *
  *   --Sven
+ *
+ *   Revision 1.10  1998/05/08  21:18:34  mike
+ *   Now enable microweaving in 720 DPI mode.
+ *
+ *   Revision 1.9  1998/05/08  20:49:43  mike
+ *   Updated to support media size, imageable area, and parameter functions.
+ *   Added support for scaling modes - scale by percent or scale by PPI.
  *
  *   Revision 1.8  1998/01/21  21:33:47  mike
  *   Updated copyright.
@@ -110,25 +92,130 @@ static void	escp2_write(FILE *, unsigned char *, int, int, int, int, int, int);
 
 
 /*
+ * 'escp2_parameters()' - Return the parameter values for the given parameter.
+ */
+
+char **					/* O - Parameter values */
+escp2_parameters(int  model,		/* I - Printer model */
+                 char *ppd_file,	/* I - PPD file (not used) */
+                 char *name,		/* I - Name of parameter */
+                 int  *count)		/* O - Number of values */
+{
+  int		i;
+  char		**p,
+		**valptrs;
+  static char	*media_sizes[] =
+		{
+		  "Letter",
+		  "Legal",
+		  "A4",
+		  "Tabloid",
+		  "A3",
+		  "12x18"
+		};
+  static char	*resolutions[] =
+		{
+		  "360 DPI",
+		  "720 DPI"
+		};
+
+
+  if (count == NULL)
+    return (NULL);
+
+  *count = 0;
+
+  if (name == NULL)
+    return (NULL);
+
+  if (strcmp(name, "PageSize") == 0)
+  {
+    if (model == 5 || model == 2)
+      *count = 6;
+    else
+      *count = 3;
+
+    p = media_sizes;
+  }
+  else if (strcmp(name, "Resolution") == 0)
+  {
+    *count = 2;
+    p = resolutions;
+  }
+  else
+    return (NULL);
+
+  valptrs = g_new(char *, *count);
+  for (i = 0; i < *count; i ++)
+    valptrs[i] = strdup(p[i]);
+
+  return (valptrs);
+}
+
+
+/*
+ * 'escp2_imageable_area()' - Return the imageable area of the page.
+ */
+
+void
+escp2_imageable_area(int  model,	/* I - Printer model */
+                     char *ppd_file,	/* I - PPD file (not used) */
+                     char *media_size,	/* I - Media size */
+                     int  *left,	/* O - Left position in points */
+                     int  *right,	/* O - Right position in points */
+                     int  *bottom,	/* O - Bottom position in points */
+                     int  *top)		/* O - Top position in points */
+{
+  int	width, length;			/* Size of page */
+
+
+  default_media_size(model, ppd_file, media_size, &width, &length);
+
+  switch (model)
+  {
+    default :
+        *left   = 14;
+        *right  = width - 14;
+        *top    = length - 14;
+        *bottom = 40;
+        break;
+
+    case 3 :
+    case 4 :
+    case 5 :
+        *left   = 8;
+        *right  = width - 9;
+        *top    = length - 32;
+        *bottom = 40;
+        break;
+  };
+}
+
+
+/*
  * 'escp2_print()' - Print an image to an EPSON printer.
  */
 
 void
-escp2_print(FILE      *prn,		/* I - Print file or command */
-            GDrawable *drawable,	/* I - Image to print */
-            int       media_size,	/* I - Output size */
-            int       xdpi,		/* I - Horizontal resolution */
-            int       ydpi,		/* I - Vertical resolution */
-            int       output_type,	/* I - Color or grayscale? */
-            int       model,		/* I - Model of printer */
-            guchar    *lut,		/* I - Brightness lookup table */
-            guchar    *cmap,		/* I - Colormap (for indexed images) */
+escp2_print(int       model,		/* I - Model */
+            char      *ppd_file,	/* I - PPD file (not used) */
+            char      *resolution,	/* I - Resolution */
+            char      *media_size,	/* I - Media size */
+            char      *media_type,	/* I - Media type */
+            char      *media_source,	/* I - Media source */
+            int       output_type,	/* I - Output type (color/grayscale) */
             int       orientation,	/* I - Orientation of image */
-            int       scaling,		/* I - Scaling of image */
-            int       left,		/* I - Left offset of image (10ths) */
-            int       top)		/* I - Top offset of image (10ths) */
+            float     scaling,		/* I - Scaling of image */
+            int       left,		/* I - Left offset of image (points) */
+            int       top,		/* I - Top offset of image (points) */
+            int       copies,		/* I - Number of copies */
+            FILE      *prn,		/* I - File to print to */
+            GDrawable *drawable,	/* I - Image to print */
+            guchar    *lut,		/* I - Brightness lookup table */
+            guchar    *cmap)		/* I - Colormap (for indexed images) */
 {
   int		x, y;		/* Looping vars */
+  int		xdpi, ydpi;	/* Resolution */
   int		n;		/* Output number */
   GPixelRgn	rgn;		/* Image region */
   unsigned char	*in,		/* Input pixels */
@@ -137,8 +224,13 @@ escp2_print(FILE      *prn,		/* I - Print file or command */
 		*cyan,		/* Cyan bitmap data */
 		*magenta,	/* Magenta bitmap data */
 		*yellow;	/* Yellow bitmap data */
-  int		page_width,	/* Width of page */
+  int		page_left,	/* Left margin of page */
+		page_right,	/* Right margin of page */
+		page_top,	/* Top of page */
+		page_bottom,	/* Bottom of page */
+		page_width,	/* Width of page */
 		page_height,	/* Height of page */
+		page_length,	/* True length of page */
 		out_width,	/* Width of image on page */
 		out_height,	/* Height of image on page */
 		out_bpp,	/* Output bytes per pixel */
@@ -190,43 +282,105 @@ escp2_print(FILE      *prn,		/* I - Print file or command */
   };
 
  /*
+  * Figure out the output resolution...
+  */
+
+  xdpi = ydpi = atoi(resolution);
+
+ /*
   * Compute the output size...
   */
 
   landscape   = 0;
-  page_width  = media_width(media_size, xdpi);
-  page_height = media_height(media_size, ydpi);
+  escp2_imageable_area(model, ppd_file, media_size, &page_left, &page_right,
+                       &page_bottom, &page_top);
+
+  page_width  = page_right - page_left;
+  page_height = page_top - page_bottom;
+
+  default_media_size(model, ppd_file, media_size, &n, &page_length);
 
  /*
   * Portrait width/height...
   */
 
-  out_width  = page_width * scaling / 100;
-  out_height = out_width * ydpi / xdpi * drawable->height / drawable->width;
-  if (out_height > page_height)
+  if (scaling < 0.0)
   {
-    out_height = page_height;
-    out_width  = out_height * xdpi / ydpi * drawable->width / drawable->height;
+   /*
+    * Scale to pixels per inch...
+    */
+
+    out_width  = drawable->width * -72.0 / scaling;
+    out_height = drawable->height * -72.0 / scaling;
+  }
+  else
+  {
+   /*
+    * Scale by percent...
+    */
+
+    out_width  = page_width * scaling / 100.0;
+    out_height = out_width * drawable->height / drawable->width;
+    if (out_height > page_height)
+    {
+      out_height = page_height * scaling / 100.0;
+      out_width  = out_height * drawable->width / drawable->height;
+    };
   };
 
  /*
   * Landscape width/height...
   */
 
-  temp_width  = page_width * scaling / 100;
-  temp_height = temp_width * ydpi / xdpi * drawable->width / drawable->height;
-  if (temp_height > page_height)
+  if (scaling < 0.0)
   {
-    temp_height = page_height;
-    temp_width  = temp_height * xdpi / ydpi * drawable->height / drawable->width;
+   /*
+    * Scale to pixels per inch...
+    */
+
+    temp_width  = drawable->height * -72.0 / scaling;
+    temp_height = drawable->width * -72.0 / scaling;
+  }
+  else
+  {
+   /*
+    * Scale by percent...
+    */
+
+    temp_width  = page_width * scaling / 100.0;
+    temp_height = temp_width * drawable->width / drawable->height;
+    if (temp_height > page_height)
+    {
+      temp_height = page_height;
+      temp_width  = temp_height * drawable->height / drawable->width;
+    };
   };
 
  /*
-  * See which orientation has the greatest area...
+  * See which orientation has the greatest area (or if we need to rotate the
+  * image to fit it on the page...)
   */
 
-  if ((temp_width * temp_height) > (out_width * out_height) &&
-      orientation != ORIENT_PORTRAIT)
+  if (orientation == ORIENT_AUTO)
+  {
+    if (scaling < 0.0)
+    {
+      if ((out_width > page_width && out_height < page_width) ||
+          (out_height > page_height && out_width < page_height))
+	orientation = ORIENT_LANDSCAPE;
+      else
+	orientation = ORIENT_PORTRAIT;
+    }
+    else
+    {
+      if ((temp_width * temp_height) > (out_width * out_height))
+	orientation = ORIENT_LANDSCAPE;
+      else
+	orientation = ORIENT_PORTRAIT;
+    };
+  };
+
+  if (orientation == ORIENT_LANDSCAPE)
   {
     out_width  = temp_width;
     out_height = temp_height;
@@ -239,6 +393,12 @@ escp2_print(FILE      *prn,		/* I - Print file or command */
     x    = top;
     top  = left;
     left = x;
+  };
+
+  if (top < 0 || left < 0)
+  {
+    left = (page_width - out_width) / 2;
+    top  = (page_height + out_height) / 2;
   };
 
  /*
@@ -270,59 +430,67 @@ escp2_print(FILE      *prn,		/* I - Print file or command */
   };
 
   fwrite("\033(C\002\000", 5, 1, prn);		/* Page length */
-  n = page_height + ydpi;
+  n = ydpi * page_length / 72;
   putc(n & 255, prn);
   putc(n >> 8, prn);
 
-  if (left < 0 || top < 0)
-  {
-    left = (page_width - out_width) / 2;
-    top  = (page_height - out_height + ydpi) / 2;
-  }
-  else
-  {
-    left *= xdpi / 10;
-    top  = top * ydpi / 10 + ydpi / 2;
-  };
-
   fwrite("\033(c\004\000", 5, 1, prn);		/* Top/bottom margins */
-  putc(top & 255, prn);
-  putc(top >> 8, prn);
-  n = page_height + ydpi / 2;
+  n = ydpi * (page_length - page_top) / 72;
+  putc(n & 255, prn);
+  putc(n >> 8, prn);
+  n = ydpi * (page_length - page_bottom) / 72;
+  putc(n & 255, prn);
+  putc(n >> 8, prn);
+
+  fwrite("\033(V\002\000", 5, 1, prn);		/* Absolute vertical position */
+  n = ydpi * (page_length - top) / 72;
   putc(n & 255, prn);
   putc(n >> 8, prn);
 
   switch (model)				/* Printer specific initialization */
   {
     case 0 : /* ESC */
+        if (output_type == OUTPUT_COLOR && ydpi > 360)
+      	  fwrite("\033(i\001\000\001", 6, 1, prn);	/* Microweave mode on */
         break;
 
     case 1 : /* ESC Pro, Pro XL, 400, 500 */
         fwrite("\033(e\002\000\000\001", 7, 1, prn);	/* Small dots */
+
+        if (ydpi > 360)
+      	  fwrite("\033(i\001\000\001", 6, 1, prn);	/* Microweave mode on */
         break;
 
     case 2 : /* ESC 1500 */
         fwrite("\033(e\002\000\000\001", 7, 1, prn);	/* Small dots */
+
+        if (ydpi > 360)
+      	  fwrite("\033(i\001\000\001", 6, 1, prn);	/* Microweave mode on */
         break;
 
     case 3 : /* ESC 600 */
-	if (output_type == OUTPUT_GRAY)
-	  fwrite("\033(K\002\000\000\001", 7, 1, prn);	/* Fast black printing */
-	else
-	  fwrite("\033(K\002\000\000\002", 7, 1, prn);	/* Color printing */
-
-        fwrite("\033(e\002\000\000\003", 7, 1, prn);	/* Small dots */
-        break;
-
-    case 4 : /* ESC 800, 1520, 3000 */
+    case 4 : /* ESC 800 */
+    case 5 : /* 1520, 3000 */
 	if (output_type == OUTPUT_GRAY)
 	  fwrite("\033(K\002\000\000\001", 7, 1, prn);	/* Fast black printing */
 	else
 	  fwrite("\033(K\002\000\000\002", 7, 1, prn);	/* Color printing */
 
         fwrite("\033(e\002\000\000\002", 7, 1, prn);	/* Small dots */
+
+        if (ydpi > 360)
+      	  fwrite("\033(i\001\000\001", 6, 1, prn);	/* Microweave mode on */
         break;
   };
+
+ /*
+  * Convert image size to printer resolution...
+  */
+
+  out_width  = xdpi * out_width / 72;
+  out_height = ydpi * out_height / 72;
+
+  left = ydpi * left / 72;
 
  /*
   * Allocate memory for the raster data...
@@ -493,7 +661,7 @@ escp2_print(FILE      *prn,		/* I - Print file or command */
  * 'escp2_write()' - Send ESC/P2 graphics using TIFF packbits compression.
  */
 
-static void
+void
 escp2_write(FILE          *prn,		/* I - Print file or command */
             unsigned char *line,	/* I - Output bitmap data */
             int           length,	/* I - Length of bitmap data */

@@ -21,72 +21,29 @@
  *
  * Contents:
  *
- *   dither_black()    - Dither grayscale pixels to black.
- *   dither_cmyk()     - Dither RGB pixels to cyan, magenta, yellow, and black.
- *   gray_to_gray()    - Convert grayscale image data to grayscale.
- *   indexed_to_gray() - Convert indexed image data to grayscale.
- *   indexed_to_rgb()  - Convert indexed image data to RGB.
- *   media_width()     - Get the addressable width of the page.
- *   media_height()    - Get the addressable height of the page.
- *   rgb_to_gray()     - Convert RGB image data to grayscale.
- *   rgb_to_rgb()      - Convert RGB image data to RGB.
+ *   dither_black()       - Dither grayscale pixels to black.
+ *   dither_cmyk()        - Dither RGB pixels to cyan, magenta, yellow, and
+ *                          black.
+ *   gray_to_gray()       - Convert grayscale image data to grayscale.
+ *   indexed_to_gray()    - Convert indexed image data to grayscale.
+ *   indexed_to_rgb()     - Convert indexed image data to RGB.
+ *   rgb_to_gray()        - Convert RGB image data to grayscale.
+ *   rgb_to_rgb()         - Convert RGB image data to RGB.
+ *   default_media_size() - Return the size of a default page size.
  *
  * Revision History:
  *
  *   $Log$
- *   Revision 1.7  1998/04/13 05:43:15  yosh
- *   Have fun recompiling gimp everyone. It's the great FSF address change!
- *
- *   -Yosh
- *
- *   Revision 1.6  1998/04/11 05:07:46  yosh
- *   * app/app_procs.c: fixed up idle handler for file open (look like testgtk
- *   idle demo)
- *
- *   * app/colomaps.c: fixup for visual test and use of gdk_color_alloc for some
- *   fixed colors (from Owen Taylor)
- *
- *   * app/errors.h
- *   * app/errors.c
- *   * app/main.c
- *   * libgimp/gimp.c: redid the signal handlers so we only get a debug prompt on
- *   SIGSEGV, SIGBUS, and SIGFPE.
- *
- *   * applied gimp-jbuhler-980408-0 and gimp-joke-980409-0 (warning fixups)
- *
- *   * applied gimp-monnaux-980409-0 for configurable plugin path for multiarch
- *   setups
- *
- *   -Yosh
- *
- *   Revision 1.5  1998/04/07 03:41:15  yosh
- *   configure.in: fix for $srcdir != $builddir for data. Tightened check for
- *   random() and add -lucb on systems that need it. Fix for xdelta.h check. Find
- *   xemacs as well as emacs. Properly define settings for print plugin.
- *
- *   app/Makefile.am: ditch -DNDEBUG, since nothing uses it
- *
- *   flame: properly handle random() and friends
- *
- *   pnm: workaround for systems with old sprintfs
- *
- *   print, sgi: fold back in portability fixes
- *
- *   threshold_alpha: properly get params in non-interactive mode
- *
- *   bmp: updated and merged in
- *
- *   -Yosh
- *
- *   Revision 1.4  1998/04/01 22:14:47  neo
- *   Added checks for print spoolers to configure.in as suggested by Michael
- *   Sweet. The print plug-in still needs some changes to Makefile.am to make
- *   make use of this.
- *
- *   Updated print and sgi plug-ins to version on the registry.
+ *   Revision 1.8  1998/05/11 19:51:25  neo
+ *   Updated print plug-in to version 2.0
  *
  *
  *   --Sven
+ *
+ *   Revision 1.12  1998/05/08  19:20:50  mike
+ *   Updated CMYK generation code to use new method.
+ *   Updated dithering algorithm (slightly more uniform now, less speckling)
+ *   Added default media size function.
  *
  *   Revision 1.11  1998/03/01  18:03:27  mike
  *   Whoops - need to add 255 - alpha to the output values (transparent to white
@@ -152,15 +109,16 @@
 
 
 /*
- * Error buffer for dither functions.  This needs to be at least 11xMAXDPI
+ * Error buffer for dither functions.  This needs to be at least 14xMAXDPI
  * (currently 720) to avoid problems...
  */
 
-int	error[2][4][11*720+4] =
+int	error[2][4][14*720+4] =
 	{
 	  { { 0 }, { 0 }, { 0 } , { 0 } },
 	  { { 0 }, { 0 }, { 0 } , { 0 } }
-        };
+	};
+
 
 /*
  * 'dither_black()' - Dither grayscale pixels to black.
@@ -203,7 +161,7 @@ dither_black(guchar        *gray,	/* I - Grayscale pixels */
        x < dst_width;
        x ++, kerror0 ++, kerror1 ++)
   {
-    k = 255 - *gray + ditherk / 4;
+    k = 255 - *gray + ditherk / 8;
     if (k > 127)
     {
       *kptr |= bit;
@@ -212,13 +170,13 @@ dither_black(guchar        *gray,	/* I - Grayscale pixels */
 
     if (ditherbit & bit)
     {
-      kerror1[0] = 3 * k;
-      ditherk    = kerror0[1] + k;
+      kerror1[0] = 5 * k;
+      ditherk    = kerror0[1] + 3 * k;
     }
     else
     {
-      kerror1[0] = k;
-      ditherk    = kerror0[1] + 3 * k;
+      kerror1[0] = 3 * k;
+      ditherk    = kerror0[1] + 5 * k;
     };
 
     if (bit == 1)
@@ -349,12 +307,12 @@ dither_cmyk(guchar        *rgb,		/* I - RGB pixels */
         * CMY as necessary to give better blues, greens, and reds... :)
         */
 
-        c  = (255 - (rgb[1] + rgb[2]) / 8) * (c - k) / divk;
-        m  = (255 - (rgb[0] + rgb[2]) / 8) * (m - k) / divk;
-        y  = (255 - (rgb[0] + rgb[1]) / 8) * (y - k) / divk;
+        c  = (255 - rgb[1] / 4) * (c - k) / divk;
+        m  = (255 - rgb[2] / 4) * (m - k) / divk;
+        y  = (255 - rgb[0] / 4) * (y - k) / divk;
       };
 
-      k += ditherk / 4;
+      k += ditherk / 8;
       if (k > 127)
       {
 	*kptr |= bit;
@@ -363,13 +321,13 @@ dither_cmyk(guchar        *rgb,		/* I - RGB pixels */
 
       if (ditherbit & bit)
       {
-	kerror1[0] = 3 * k;
-	ditherk    = kerror0[1] + k;
+	kerror1[0] = 5 * k;
+	ditherk    = kerror0[1] + 3 * k;
       }
       else
       {
-	kerror1[0] = k;
-	ditherk    = kerror0[1] + 3 * k;
+	kerror1[0] = 3 * k;
+	ditherk    = kerror0[1] + 5 * k;
       };
 
       if (bit == 1)
@@ -382,12 +340,12 @@ dither_cmyk(guchar        *rgb,		/* I - RGB pixels */
       * better reds, greens, and blues...
       */
 
-      c  = (255 - (rgb[1] + rgb[2]) / 8) * (c - k) / 255 + k;
-      m  = (255 - (rgb[0] + rgb[2]) / 8) * (m - k) / 255 + k;
-      y  = (255 - (rgb[0] + rgb[1]) / 8) * (y - k) / 255 + k;
+      c  = (255 - rgb[1] / 4) * (c - k) / 255 + k;
+      m  = (255 - rgb[2] / 4) * (m - k) / 255 + k;
+      y  = (255 - rgb[0] / 4) * (y - k) / 255 + k;
     };
 
-    c += ditherc / 4;
+    c += ditherc / 8;
     if (c > 127)
     {
       *cptr |= bit;
@@ -396,16 +354,16 @@ dither_cmyk(guchar        *rgb,		/* I - RGB pixels */
 
     if (ditherbit & bit)
     {
-      cerror1[0] = 3 * c;
-      ditherc    = cerror0[1] + c;
+      cerror1[0] = 5 * c;
+      ditherc    = cerror0[1] + 3 * c;
     }
     else
     {
-      cerror1[0] = c;
-      ditherc    = cerror0[1] + 3 * c;
+      cerror1[0] = 3 * c;
+      ditherc    = cerror0[1] + 5 * c;
     };
 
-    m += ditherm / 4;
+    m += ditherm / 8;
     if (m > 127)
     {
       *mptr |= bit;
@@ -414,16 +372,16 @@ dither_cmyk(guchar        *rgb,		/* I - RGB pixels */
 
     if (ditherbit & bit)
     {
-      merror1[0] = 3 * m;
-      ditherm    = merror0[1] + m;
+      merror1[0] = 5 * m;
+      ditherm    = merror0[1] + 3 * m;
     }
     else
     {
-      merror1[0] = m;
-      ditherm    = merror0[1] + 3 * m;
+      merror1[0] = 3 * m;
+      ditherm    = merror0[1] + 5 * m;
     };
 
-    y += dithery / 4;
+    y += dithery / 8;
     if (y > 127)
     {
       *yptr |= bit;
@@ -432,13 +390,13 @@ dither_cmyk(guchar        *rgb,		/* I - RGB pixels */
 
     if (ditherbit & bit)
     {
-      yerror1[0] = 3 * y;
-      dithery    = yerror0[1] + y;
+      yerror1[0] = 5 * y;
+      dithery    = yerror0[1] + 3 * y;
     }
     else
     {
-      yerror1[0] = y;
-      dithery    = yerror0[1] + 3 * y;
+      yerror1[0] = 3 * y;
+      dithery    = yerror0[1] + 5 * y;
     };
 
     if (bit == 1)
@@ -607,70 +565,6 @@ indexed_to_rgb(guchar *indexed,		/* I - Indexed pixels */
 
 
 /*
- * 'media_width()' - Get the addressable width of the page.
- *
- * This function assumes a standard left/right margin of 0.25".
- */
-
-int
-media_width(int media_size,		/* I - Media size code */
-            int dpi)			/* I - Resolution in dots-per-inch */
-{
-  switch (media_size)
-  {
-    case MEDIA_LETTER :
-    case MEDIA_LEGAL :
-        return (8 * dpi);
-
-    case MEDIA_TABLOID :
-        return ((int)(10.5 * dpi + 0.5));
-
-    case MEDIA_A4 :
-        return ((int)(7.77 * dpi + 0.5));
-
-    case MEDIA_A3 :
-        return ((int)(11.09 * dpi + 0.5));
-
-    default :
-        return (0);
-  };
-}
-
-
-/*
- * 'media_height()' - Get the addressable height of the page.
- *
- * This function assumes a standard top/bottom margin of 0.5".
- */
-
-int
-media_height(int media_size,		/* I - Media size code */
-             int dpi)			/* I - Resolution in dots-per-inch */
-{
-  switch (media_size)
-  {
-    case MEDIA_LETTER :
-        return (10 * dpi);
-
-    case MEDIA_LEGAL :
-        return (13 * dpi);
-
-    case MEDIA_TABLOID :
-        return (16 * dpi);
-
-    case MEDIA_A4 :
-        return ((int)(10.69 * dpi + 0.5));
-
-    case MEDIA_A3 :
-        return ((int)(15.54 * dpi + 0.5));
-
-    default :
-        return (0);
-  };
-}
-
-
-/*
  * 'rgb_to_gray()' - Convert RGB image data to grayscale.
  */
 
@@ -757,6 +651,55 @@ rgb_to_rgb(guchar *rgbin,		/* I - RGB pixels */
       rgbout += 3;
       width --;
     };
+  };
+}
+
+
+/*
+ * 'default_media_size()' - Return the size of a default page size.
+ */
+
+void
+default_media_size(int  model,		/* I - Printer model */
+        	   char *ppd_file,	/* I - PPD file (not used) */
+        	   char *media_size,	/* I - Media size */
+        	   int  *width,		/* O - Width in points */
+        	   int  *length)	/* O - Length in points */
+{
+  if (strcmp(media_size, "Letter") == 0)
+  {
+    *width  = 612;
+    *length = 792;
+  }
+  else if (strcmp(media_size, "Legal") == 0)
+  {
+    *width  = 612;
+    *length = 1008;
+  }
+  else if (strcmp(media_size, "Tabloid") == 0)
+  {
+    *width  = 792;
+    *length = 1214;
+  }
+  else if (strcmp(media_size, "12x18") == 0)
+  {
+    *width  = 864;
+    *length = 1296;
+  }
+  else if (strcmp(media_size, "A4") == 0)
+  {
+    *width  = 595;
+    *length = 842;
+  }
+  else if (strcmp(media_size, "A3") == 0)
+  {
+    *width  = 842;
+    *length = 1191;
+  }
+  else
+  {
+    *width  = 0;
+    *length = 0;
   };
 }
 

@@ -21,46 +21,29 @@
  *
  * Contents:
  *
- *   pcl_print() - Print an image to an HP printer.
- *   pcl_mode0() - Send PCL graphics using mode 0 (no) compression.
- *   pcl_mode2() - Send PCL graphics using mode 2 (TIFF) compression.
+ *   pcl_parameters()     - Return the parameter values for the given
+ *                          parameter.
+ *   pcl_imageable_area() - Return the imageable area of the page.
+ *   pcl_print()          - Print an image to an HP printer.
+ *   pcl_mode0()          - Send PCL graphics using mode 0 (no) compression.
+ *   pcl_mode2()          - Send PCL graphics using mode 2 (TIFF) compression.
  *
  * Revision History:
  *
  *   $Log$
- *   Revision 1.6  1998/04/13 05:43:13  yosh
- *   Have fun recompiling gimp everyone. It's the great FSF address change!
- *
- *   -Yosh
- *
- *   Revision 1.5  1998/04/07 03:41:12  yosh
- *   configure.in: fix for $srcdir != $builddir for data. Tightened check for
- *   random() and add -lucb on systems that need it. Fix for xdelta.h check. Find
- *   xemacs as well as emacs. Properly define settings for print plugin.
- *
- *   app/Makefile.am: ditch -DNDEBUG, since nothing uses it
- *
- *   flame: properly handle random() and friends
- *
- *   pnm: workaround for systems with old sprintfs
- *
- *   print, sgi: fold back in portability fixes
- *
- *   threshold_alpha: properly get params in non-interactive mode
- *
- *   bmp: updated and merged in
- *
- *   -Yosh
- *
- *   Revision 1.4  1998/04/01 22:14:45  neo
- *   Added checks for print spoolers to configure.in as suggested by Michael
- *   Sweet. The print plug-in still needs some changes to Makefile.am to make
- *   make use of this.
- *
- *   Updated print and sgi plug-ins to version on the registry.
+ *   Revision 1.7  1998/05/11 19:50:36  neo
+ *   Updated print plug-in to version 2.0
  *
  *
  *   --Sven
+ *
+ *   Revision 1.10  1998/05/08  21:22:00  mike
+ *   Added quality mode command for DeskJet printers (high quality for 300
+ *   DPI or higher).
+ *
+ *   Revision 1.9  1998/05/08  19:20:50  mike
+ *   Updated to support media size, imageable area, and parameter functions.
+ *   Added support for scaling modes - scale by percent or scale by PPI.
  *
  *   Revision 1.8  1998/01/21  21:33:47  mike
  *   Updated copyright.
@@ -109,25 +92,197 @@ static void	pcl_mode2(FILE *, unsigned char *, int, int);
 
 
 /*
+ * 'pcl_parameters()' - Return the parameter values for the given parameter.
+ */
+
+char **				/* O - Parameter values */
+pcl_parameters(int  model,	/* I - Printer model */
+               char *ppd_file,	/* I - PPD file (not used) */
+               char *name,	/* I - Name of parameter */
+               int  *count)	/* O - Number of values */
+{
+  int		i;
+  char		**p,
+		**valptrs;
+  static char	*media_sizes[] =
+		{
+		  "Letter",
+		  "Legal",
+		  "A4",
+		  "Tabloid",
+		  "A3",
+		  "12x18"
+		};
+  static char	*media_types[] =
+		{
+		  "Plain",
+		  "Premium",
+		  "Glossy",
+		  "Transparency"
+		};
+  static char	*media_sources[] =
+		{
+		  "Manual",
+		  "Tray 1",
+		  "Tray 2",
+		  "Tray 3",
+		  "Tray 4",
+		};
+  static char	*resolutions[] =
+		{
+		  "150 DPI",
+		  "300 DPI",
+		  "600 DPI"
+		};
+
+
+  if (count == NULL)
+    return (NULL);
+
+  *count = 0;
+
+  if (name == NULL)
+    return (NULL);
+
+  if (strcmp(name, "PageSize") == 0)
+  {
+    if (model == 5 || model == 1100)
+      *count = 6;
+    else
+      *count = 3;
+
+    p = media_sizes;
+  }
+  else if (strcmp(name, "MediaType") == 0)
+  {
+    if (model < 500)
+    {
+      *count = 0;
+      return (NULL);
+    }
+    else
+    {
+      *count = 4;
+      p = media_types;
+    };
+  }
+  else if (strcmp(name, "InputSlot") == 0)
+  {
+    if (model < 500)
+    {
+      *count = 5;
+      p = media_sources;
+    }
+    else
+    {
+      *count = 0;
+      return (NULL);
+    };
+  }
+  else if (strcmp(name, "Resolution") == 0)
+  {
+    if (model == 4 || model == 5 || model == 800 || model == 600)
+      *count = 3;
+    else
+      *count = 2;
+
+    p = resolutions;
+  }
+  else
+    return (NULL);
+
+  valptrs = g_new(char *, *count);
+  for (i = 0; i < *count; i ++)
+    valptrs[i] = strdup(p[i]);
+
+  return (valptrs);
+}
+
+
+/*
+ * 'pcl_imageable_area()' - Return the imageable area of the page.
+ */
+
+void
+pcl_imageable_area(int  model,		/* I - Printer model */
+                   char *ppd_file,	/* I - PPD file (not used) */
+                   char *media_size,	/* I - Media size */
+                   int  *left,		/* O - Left position in points */
+                   int  *right,		/* O - Right position in points */
+                   int  *bottom,	/* O - Bottom position in points */
+                   int  *top)		/* O - Top position in points */
+{
+  int	width, length;			/* Size of page */
+
+
+  default_media_size(model, ppd_file, media_size, &width, &length);
+
+  switch (model)
+  {
+    default :
+        *left   = 18;
+        *right  = width - 18;
+        *top    = length - 12;
+        *bottom = 12;
+        break;
+
+    case 500 :
+        *left   = 18;
+        *right  = width - 18;
+        *top    = length - 7;
+        *bottom = 41;
+        break;
+
+    case 501 :
+        *left   = 18;
+        *right  = width - 18;
+        *top    = length - 7;
+        *bottom = 33;
+        break;
+
+    case 550 :
+    case 800 :
+    case 1100 :
+        *left   = 18;
+        *right  = width - 18;
+        *top    = length - 3;
+        *bottom = 33;
+        break;
+
+    case 600 :
+        *left   = 18;
+        *right  = width - 18;
+        *top    = length - 0;
+        *bottom = 33;
+        break;
+  };
+}
+
+
+/*
  * 'pcl_print()' - Print an image to an HP printer.
  */
 
 void
-pcl_print(FILE      *prn,		/* I - Print file or command */
-          GDrawable *drawable,		/* I - Image to print */
-          int       media_size,		/* I - Output size */
-          int       xdpi,		/* I - Horizontal resolution */
-          int       ydpi,		/* I - Vertical resolution */
-          int       output_type,	/* I - Color or grayscale? */
-          int       model,		/* I - Model of printer */
-          guchar    *lut,		/* I - Brightness lookup table */
-          guchar    *cmap,		/* I - Colormap (for indexed images) */
+pcl_print(int       model,		/* I - Model */
+          char      *ppd_file,		/* I - PPD file (not used) */
+          char      *resolution,	/* I - Resolution */
+          char      *media_size,	/* I - Media size */
+          char      *media_type,	/* I - Media type */
+          char      *media_source,	/* I - Media source */
+          int       output_type,	/* I - Output type (color/grayscale) */
           int       orientation,	/* I - Orientation of image */
-          int       scaling,		/* I - Scaling of image */
-          int       left,		/* I - Left offset of image (10ths) */
-          int       top)		/* I - Top offset of image (10ths) */
+          float     scaling,		/* I - Scaling of image */
+          int       left,		/* I - Left offset of image (points) */
+          int       top,		/* I - Top offset of image (points) */
+          int       copies,		/* I - Number of copies */
+          FILE      *prn,		/* I - File to print to */
+          GDrawable *drawable,		/* I - Image to print */
+          guchar    *lut,		/* I - Brightness lookup table */
+          guchar    *cmap)		/* I - Colormap (for indexed images) */
 {
   int		x, y;		/* Looping vars */
+  int		xdpi, ydpi;	/* Resolution */
   GPixelRgn	rgn;		/* Image region */
   unsigned char	*in,		/* Input pixels */
 		*out,		/* Output pixels */
@@ -135,7 +290,11 @@ pcl_print(FILE      *prn,		/* I - Print file or command */
 		*cyan,		/* Cyan bitmap data */
 		*magenta,	/* Magenta bitmap data */
 		*yellow;	/* Yellow bitmap data */
-  int		page_width,	/* Width of page */
+  int		page_left,	/* Left margin of page */
+		page_right,	/* Right margin of page */
+		page_top,	/* Top of page */
+		page_bottom,	/* Bottom of page */
+		page_width,	/* Width of page */
 		page_height,	/* Height of page */
 		out_width,	/* Width of image on page */
 		out_height,	/* Height of image on page */
@@ -193,43 +352,112 @@ pcl_print(FILE      *prn,		/* I - Print file or command */
   };
 
  /*
+  * Figure out the output resolution...
+  */
+
+  xdpi = atoi(resolution);
+
+  if ((model == 800 || model == 1100) &&
+      output_type == OUTPUT_COLOR && xdpi == 600)
+    xdpi = 300;
+
+  if (model == 600 && xdpi == 600)
+    ydpi = 300;
+  else
+    ydpi = xdpi;
+
+ /*
   * Compute the output size...
   */
 
-  landscape   = 0;
-  page_width  = media_width(media_size, xdpi);
-  page_height = media_height(media_size, ydpi);
+  landscape = 0;
+  pcl_imageable_area(model, ppd_file, media_size, &page_left, &page_right,
+                     &page_bottom, &page_top);
+
+  page_width  = page_right - page_left;
+  page_height = page_top - page_bottom;
 
  /*
   * Portrait width/height...
   */
 
-  out_width  = page_width * scaling / 100;
-  out_height = out_width * ydpi / xdpi * drawable->height / drawable->width;
-  if (out_height > page_height)
+  if (scaling < 0.0)
   {
-    out_height = page_height;
-    out_width  = out_height * xdpi / ydpi * drawable->width / drawable->height;
+   /*
+    * Scale to pixels per inch...
+    */
+
+    out_width  = drawable->width * -72.0 / scaling;
+    out_height = drawable->height * -72.0 / scaling;
+  }
+  else
+  {
+   /*
+    * Scale by percent...
+    */
+
+    out_width  = page_width * scaling / 100.0;
+    out_height = out_width * drawable->height / drawable->width;
+    if (out_height > page_height)
+    {
+      out_height = page_height * scaling / 100.0;
+      out_width  = out_height * drawable->width / drawable->height;
+    };
   };
 
  /*
   * Landscape width/height...
   */
 
-  temp_width  = page_width * scaling / 100;
-  temp_height = temp_width * ydpi / xdpi * drawable->width / drawable->height;
-  if (temp_height > page_height)
+  if (scaling < 0.0)
   {
-    temp_height = page_height;
-    temp_width  = temp_height * xdpi / ydpi * drawable->height / drawable->width;
+   /*
+    * Scale to pixels per inch...
+    */
+
+    temp_width  = drawable->height * -72.0 / scaling;
+    temp_height = drawable->width * -72.0 / scaling;
+  }
+  else
+  {
+   /*
+    * Scale by percent...
+    */
+
+    temp_width  = page_width * scaling / 100.0;
+    temp_height = temp_width * drawable->width / drawable->height;
+    if (temp_height > page_height)
+    {
+      temp_height = page_height;
+      temp_width  = temp_height * drawable->height / drawable->width;
+    };
   };
 
  /*
-  * See which orientation has the greatest area...
+  * See which orientation has the greatest area (or if we need to rotate the
+  * image to fit it on the page...)
   */
 
-  if ((temp_width * temp_height) > (out_width * out_height) &&
-      orientation != ORIENT_PORTRAIT)
+  if (orientation == ORIENT_AUTO)
+  {
+    if (scaling < 0.0)
+    {
+      if ((out_width > page_width && out_height < page_width) ||
+          (out_height > page_height && out_width < page_height))
+	orientation = ORIENT_LANDSCAPE;
+      else
+	orientation = ORIENT_PORTRAIT;
+    }
+    else
+    {
+      if ((temp_width * temp_height) > (out_width * out_height))
+	orientation = ORIENT_LANDSCAPE;
+      else
+	orientation = ORIENT_PORTRAIT;
+    };
+  };
+
+  if (orientation == ORIENT_LANDSCAPE)
   {
     out_width  = temp_width;
     out_height = temp_height;
@@ -244,6 +472,18 @@ pcl_print(FILE      *prn,		/* I - Print file or command */
     left = x;
   };
 
+  if (top < 0 || left < 0)
+  {
+    left = (page_width - out_width) / 2;
+    top  = (page_height + out_height) / 2;
+  };
+
+#ifdef DEBUG
+  printf("page_width = %d, page_height = %d\n", page_width, page_height);
+  printf("out_width = %d, out_height = %d\n", out_width, out_height);
+  printf("xdpi = %d, ydpi = %d, landscape = %d\n", xdpi, ydpi, landscape);
+#endif /* DEBUG */
+
  /*
   * Let the user know what we're doing...
   */
@@ -254,28 +494,63 @@ pcl_print(FILE      *prn,		/* I - Print file or command */
   * Send PCL initialization commands...
   */
 
-  fputs("\033E", prn); 		/* PCL reset */
+  fputs("\033E", prn); 				/* PCL reset */
 
-  switch (media_size)		/* Set media size... */
+  if (strcmp(media_size, "Letter") == 0)	/* Set media size */
   {
-    case MEDIA_LETTER :
-        fputs("\033&l2A", prn);
-        break;
-    case MEDIA_LEGAL :
-        fputs("\033&l3A", prn);
-        break;
-    case MEDIA_TABLOID :
-        fputs("\033&l6A", prn);
-        break;
-    case MEDIA_A4 :
-        fputs("\033&l26A", prn);
-        break;
-    case MEDIA_A3 :
-        fputs("\033&l27A", prn);
-        break;
+    fputs("\033&l2A", prn);
+    top = 792 - top;
+  }
+  else if (strcmp(media_size, "Legal") == 0)
+  {
+    fputs("\033&l3A", prn);
+    top = 1008 - top;
+  }
+  else if (strcmp(media_size, "Tabloid") == 0)
+  {
+    fputs("\033&l6A", prn);
+    top = 1214 - top;
+  }
+  else if (strcmp(media_size, "A4") == 0)
+  {
+    fputs("\033&l26A", prn);
+    top = 842 - top;
+  }
+  else if (strcmp(media_size, "A3") == 0)
+  {
+    fputs("\033&l27A", prn);
+    top = 1191 - top;
   };
 
-  if (xdpi != ydpi)		/* Set resolution */
+  fputs("\033&l0L", prn);			/* Turn off perforation skip */
+  fputs("\033&l0E", prn);			/* Reset top margin to 0 */
+
+  if (strcmp(media_type, "Plain") == 0)		/* Set media type */
+    fputs("\033&l0M", prn);
+  else if (strcmp(media_type, "Premium") == 0)
+    fputs("\033&l2M", prn);
+  else if (strcmp(media_type, "Glossy") == 0)
+    fputs("\033&l3M", prn);
+  else if (strcmp(media_type, "Transparency") == 0)
+    fputs("\033&l4M", prn);
+
+  if (strcmp(media_type, "Manual") == 0)	/* Set media source */
+    fputs("\033&l2H", prn);
+  else if (strcmp(media_type, "Tray 1") == 0)
+    fputs("\033&l8H", prn);
+  else if (strcmp(media_type, "Tray 2") == 0)
+    fputs("\033&l1H", prn);
+  else if (strcmp(media_type, "Tray 3") == 0)
+    fputs("\033&l4H", prn);
+  else if (strcmp(media_type, "Tray 4") == 0)
+    fputs("\033&l5H", prn);
+
+  if (model >= 500 && model < 1200 && xdpi >= 300)
+    fputs("\033*r2Q", prn);
+  else if (model == 1200 && xdpi >= 300)
+    fputs("\033*o1Q", prn);
+
+  if (xdpi != ydpi)				/* Set resolution */
   {
    /*
     * Send 26-byte configure image data command with horizontal and
@@ -283,74 +558,70 @@ pcl_print(FILE      *prn,		/* I - Print file or command */
     */
 
     fputs("\033*g26W", prn);
-    putc(2, prn);			/* Format 2 */
+    putc(2, prn);				/* Format 2 */
     if (output_type == OUTPUT_COLOR)
-      putc(4, prn);			/* # output planes */
+      putc(4, prn);				/* # output planes */
     else
-      putc(1, prn);			/* # output planes */
+      putc(1, prn);				/* # output planes */
 
-    putc(xdpi >> 8, prn);		/* Black resolution */
+    putc(xdpi >> 8, prn);			/* Black resolution */
     putc(xdpi, prn);
     putc(ydpi >> 8, prn);
     putc(ydpi, prn);
     putc(0, prn);
-    putc(2, prn);			/* # of black levels */
+    putc(2, prn);				/* # of black levels */
 
-    putc(xdpi >> 8, prn);		/* Cyan resolution */
+    putc(xdpi >> 8, prn);			/* Cyan resolution */
     putc(xdpi, prn);
     putc(ydpi >> 8, prn);
     putc(ydpi, prn);
     putc(0, prn);
-    putc(2, prn);			/* # of cyan levels */
+    putc(2, prn);				/* # of cyan levels */
 
-    putc(xdpi >> 8, prn);		/* Magenta resolution */
+    putc(xdpi >> 8, prn);			/* Magenta resolution */
     putc(xdpi, prn);
     putc(ydpi >> 8, prn);
     putc(ydpi, prn);
     putc(0, prn);
-    putc(2, prn);			/* # of magenta levels */
+    putc(2, prn);				/* # of magenta levels */
 
-    putc(xdpi >> 8, prn);		/* Yellow resolution */
+    putc(xdpi >> 8, prn);			/* Yellow resolution */
     putc(xdpi, prn);
     putc(ydpi >> 8, prn);
     putc(ydpi, prn);
     putc(0, prn);
-    putc(2, prn);			/* # of yellow levels */
+    putc(2, prn);				/* # of yellow levels */
   }
   else
   {
-    fprintf(prn, "\033*t%dR", xdpi);	/* Simple resolution */
+    fprintf(prn, "\033*t%dR", xdpi);		/* Simple resolution */
     if (output_type == OUTPUT_COLOR)
     {
       if (model == 501 || model == 1200)
-        fputs("\033*r-3U", prn);	/* Simple CMY color */
+        fputs("\033*r-3U", prn);		/* Simple CMY color */
       else
-        fputs("\033*r-4U", prn);	/* Simple KCMY color */
+        fputs("\033*r-4U", prn);		/* Simple KCMY color */
     };
   };
 
   if (model < 3 || model == 500)
-    fputs("\033*b0M", prn);	/* Mode 0 (no compression) */
+    fputs("\033*b0M", prn);			/* Mode 0 (no compression) */
   else
-    fputs("\033*b2M", prn);	/* Mode 2 (TIFF) */
+    fputs("\033*b2M", prn);			/* Mode 2 (TIFF) */
 
-  if (left < 0 || top < 0)
-  {
-    left = (page_width - out_width) / 2;
-    top  = (page_height - out_height) / 2;
-  }
-  else
-  {
-    left *= 30;
-    top  *= 30;
-  };
+ /*
+  * Convert image size to printer resolution and setup the page for printing...
+  */
 
-  fprintf(prn, "\033&a%dH", 720 * left / xdpi);	/* Set left raster position */
-  fprintf(prn, "\033&a%dV", 720 * top / ydpi);	/* Set top raster position */
+  out_width  = xdpi * out_width / 72;
+  out_height = ydpi * out_height / 72;
+
+  fprintf(prn, "\033&a%dH", 10 * left);		/* Set left raster position */
+  fprintf(prn, "\033&a%dV", 10 * top);		/* Set top raster position */
   fprintf(prn, "\033*r%dS", out_width);		/* Set raster width */
   fprintf(prn, "\033*r%dT", out_height);	/* Set raster height */
 
-  fputs("\033*r1A", prn); 	/* Start GFX */
+  fputs("\033*r1A", prn); 			/* Start GFX */
 
  /*
   * Allocate memory for the raster data...
@@ -535,7 +806,7 @@ pcl_print(FILE      *prn,		/* I - Print file or command */
  * 'pcl_mode0()' - Send PCL graphics using mode 0 (no) compression.
  */
 
-static void
+void
 pcl_mode0(FILE          *prn,		/* I - Print file or command */
           unsigned char *line,		/* I - Output bitmap data */
           int           length,		/* I - Length of bitmap data */
@@ -550,7 +821,7 @@ pcl_mode0(FILE          *prn,		/* I - Print file or command */
  * 'pcl_mode2()' - Send PCL graphics using mode 2 (TIFF) compression.
  */
 
-static void
+void
 pcl_mode2(FILE          *prn,		/* I - Print file or command */
           unsigned char *line,		/* I - Output bitmap data */
           int           length,		/* I - Length of bitmap data */
