@@ -228,7 +228,7 @@ allocate_empty_segs (void)
   int need_num_segs;
 
   /*  find the maximum possible number of empty segments given the current mask  */
-  need_num_segs = cur_PR->w + 2;
+  need_num_segs = cur_PR->w + 3;
 
   if (need_num_segs > max_empty_segs)
     {

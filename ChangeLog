@@ -1,3 +1,8 @@
+2000-08-17  Sven Neumann  <sven@gimp.org>
+
+	* app/boundary.c (allocate_vert_segs): applied a fix for bug #16221
+	found by Seth Burgess <sjburges@gimp.org>.
+
 Wed Aug 16 18:39:44 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* configure.in: removed awk dependency for authors list
