@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
-"POT-Creation-Date: 2000-02-02 03:22+0900\n"
+"POT-Creation-Date: 2000-02-02 17:39-0800\n"
 "PO-Revision-Date: 2000-02-02 03:38+09:00\n"
 "Last-Translator: Çòºê ÂÙ¹° <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -29,7 +29,7 @@ msgstr "¥¨¥¤¥ê¥¢¥ó¥Þ¥Ã¥×"
 #: plug-ins/FractalExplorer/Dialogs.c:298
 #: plug-ins/FractalExplorer/Dialogs.c:1377 plug-ins/gdyntext/gdyntext_ui.c:490
 #: plug-ins/gfig/gfig.c:6003 plug-ins/imagemap/imap_about.c:33
-#: plug-ins/script-fu/script-fu-scripts.c:1454
+#: plug-ins/script-fu/script-fu-scripts.c:1461
 #: plug-ins/webbrowser/webbrowser.c:273
 msgid "About"
 msgstr "¤³¤Î¥×¥é¥°¥¤¥ó¤Ë¤Ä¤¤¤Æ"
@@ -57,9 +57,9 @@ msgstr "¤³¤Î¥×¥é¥°¥¤¥ó¤Ë¤Ä¤¤¤Æ"
 #: plug-ins/common/edge.c:657 plug-ins/common/emboss.c:535
 #: plug-ins/common/engrave.c:234 plug-ins/common/exchange.c:302
 #: plug-ins/common/film.c:1225 plug-ins/common/flarefx.c:338
-#: plug-ins/common/fractaltrace.c:740 plug-ins/common/gauss_iir.c:355
-#: plug-ins/common/gauss_iir.c:448 plug-ins/common/gauss_rle.c:350
-#: plug-ins/common/gauss_rle.c:443 plug-ins/common/gbr.c:473
+#: plug-ins/common/fractaltrace.c:740 plug-ins/common/gauss_iir.c:354
+#: plug-ins/common/gauss_iir.c:444 plug-ins/common/gauss_rle.c:348
+#: plug-ins/common/gauss_rle.c:438 plug-ins/common/gbr.c:473
 #: plug-ins/common/gicon.c:455 plug-ins/common/gif.c:1155
 #: plug-ins/common/gif.c:1226 plug-ins/common/glasstile.c:237
 #: plug-ins/common/gpb.c:286 plug-ins/common/gqbist.c:661
@@ -68,7 +68,7 @@ msgstr "¤³¤Î¥×¥é¥°¥¤¥ó¤Ë¤Ä¤¤¤Æ"
 #: plug-ins/common/iwarp.c:1080 plug-ins/common/jigsaw.c:2316
 #: plug-ins/common/jpeg.c:1611 plug-ins/common/lic.c:1014
 #: plug-ins/common/mail.c:504 plug-ins/common/mapcolor.c:333
-#: plug-ins/common/max_rgb.c:264 plug-ins/common/mblur.c:784
+#: plug-ins/common/max_rgb.c:264 plug-ins/common/mblur.c:783
 #: plug-ins/common/newsprint.c:1229 plug-ins/common/nlfilt.c:359
 #: plug-ins/common/noisify.c:327 plug-ins/common/nova.c:364
 #: plug-ins/common/oilify.c:460 plug-ins/common/papertile.c:248
@@ -82,7 +82,7 @@ msgstr "¤³¤Î¥×¥é¥°¥¤¥ó¤Ë¤Ä¤¤¤Æ"
 #: plug-ins/common/shift.c:382 plug-ins/common/smooth_palette.c:404
 #: plug-ins/common/snoise.c:527 plug-ins/common/sobel.c:262
 #: plug-ins/common/sparkle.c:364 plug-ins/common/spheredesigner.c:2236
-#: plug-ins/common/spread.c:382 plug-ins/common/sunras.c:1593
+#: plug-ins/common/spread.c:377 plug-ins/common/sunras.c:1593
 #: plug-ins/common/tga.c:1463 plug-ins/common/threshold_alpha.c:268
 #: plug-ins/common/tiff.c:1448 plug-ins/common/tile.c:394
 #: plug-ins/common/tileit.c:402 plug-ins/common/unsharp.c:798
@@ -94,13 +94,14 @@ msgstr "¤³¤Î¥×¥é¥°¥¤¥ó¤Ë¤Ä¤¤¤Æ"
 #: plug-ins/fits/fits.c:1003 plug-ins/flame/flame.c:582
 #: plug-ins/flame/flame.c:894 plug-ins/fp/fp_gtk.c:882
 #: plug-ins/gap/gap_arr_dialog.c:965 plug-ins/gap/gap_arr_dialog.c:1189
-#: plug-ins/gap/gap_decode_xanim.c:175 plug-ins/gap/gap_mod_layer.c:145
+#: plug-ins/gap/gap_decode_xanim.c:176 plug-ins/gap/gap_mod_layer.c:145
 #: plug-ins/gap/gap_mov_dialog.c:461 plug-ins/gap/gap_mpege.c:191
 #: plug-ins/gap/gap_resi_dialog.c:149 plug-ins/gdyntext/gdyntext_ui.c:188
 #: plug-ins/gdyntext/gdyntext_ui.c:503 plug-ins/gfig/gfig.c:5054
 #: plug-ins/gfig/gfig.c:5465 plug-ins/gfig/gfig.c:5633
 #: plug-ins/gfig/gfig.c:6006 plug-ins/gflare/gflare.c:2408
 #: plug-ins/gflare/gflare.c:3446 plug-ins/gflare/gflare.c:5457
+#: plug-ins/gfli/gfli.c:837 plug-ins/gfli/gfli.c:908
 #: plug-ins/gimpressionist/gimpressionist.c:368
 #: plug-ins/gimpressionist/gimpressionist.c:490
 #: plug-ins/gimpressionist/orientmap.c:626
@@ -109,7 +110,7 @@ msgstr "¤³¤Î¥×¥é¥°¥¤¥ó¤Ë¤Ä¤¤¤Æ"
 #: plug-ins/imagemap/imap_default_dialog.c:101 plug-ins/maze/maze_face.c:203
 #: plug-ins/mosaic/mosaic.c:548 plug-ins/pagecurl/pagecurl.c:581
 #: plug-ins/print/print.c:1497 plug-ins/rcm/rcm_dialog.c:746
-#: plug-ins/script-fu/script-fu-scripts.c:1468
+#: plug-ins/script-fu/script-fu-scripts.c:1475
 #: plug-ins/script-fu/script-fu-server.c:559 plug-ins/sel2path/sel2path.c:347
 #: plug-ins/sgi/sgi.c:655 plug-ins/sinus/sinus.c:754
 #: plug-ins/struc/struc.c:257 plug-ins/webbrowser/webbrowser.c:286
@@ -140,8 +141,8 @@ msgstr "Î»²ò"
 #: plug-ins/common/emboss.c:537 plug-ins/common/engrave.c:236
 #: plug-ins/common/exchange.c:304 plug-ins/common/film.c:1227
 #: plug-ins/common/flarefx.c:340 plug-ins/common/fractaltrace.c:742
-#: plug-ins/common/gauss_iir.c:357 plug-ins/common/gauss_iir.c:450
-#: plug-ins/common/gauss_rle.c:352 plug-ins/common/gauss_rle.c:445
+#: plug-ins/common/gauss_iir.c:356 plug-ins/common/gauss_iir.c:446
+#: plug-ins/common/gauss_rle.c:350 plug-ins/common/gauss_rle.c:440
 #: plug-ins/common/gbr.c:475 plug-ins/common/gicon.c:457
 #: plug-ins/common/gif.c:1157 plug-ins/common/gif.c:1228
 #: plug-ins/common/glasstile.c:239 plug-ins/common/gpb.c:288
@@ -151,7 +152,7 @@ msgstr "Î»²ò"
 #: plug-ins/common/jigsaw.c:2318 plug-ins/common/jpeg.c:1613
 #: plug-ins/common/lic.c:1016 plug-ins/common/mail.c:506
 #: plug-ins/common/mapcolor.c:335 plug-ins/common/max_rgb.c:266
-#: plug-ins/common/mblur.c:786 plug-ins/common/newsprint.c:1231
+#: plug-ins/common/mblur.c:785 plug-ins/common/newsprint.c:1231
 #: plug-ins/common/nlfilt.c:361 plug-ins/common/noisify.c:329
 #: plug-ins/common/nova.c:366 plug-ins/common/oilify.c:462
 #: plug-ins/common/papertile.c:250 plug-ins/common/pat.c:430
@@ -165,7 +166,7 @@ msgstr "Î»²ò"
 #: plug-ins/common/shift.c:384 plug-ins/common/smooth_palette.c:406
 #: plug-ins/common/snoise.c:529 plug-ins/common/sobel.c:264
 #: plug-ins/common/sparkle.c:366 plug-ins/common/spheredesigner.c:2240
-#: plug-ins/common/spread.c:384 plug-ins/common/sunras.c:1595
+#: plug-ins/common/spread.c:379 plug-ins/common/sunras.c:1595
 #: plug-ins/common/tga.c:1465 plug-ins/common/threshold_alpha.c:270
 #: plug-ins/common/tiff.c:1450 plug-ins/common/tile.c:396
 #: plug-ins/common/tileit.c:404 plug-ins/common/unsharp.c:800
@@ -184,14 +185,15 @@ msgstr "Î»²ò"
 #: plug-ins/gfig/gfig.c:5064 plug-ins/gfig/gfig.c:5474
 #: plug-ins/gfig/gfig.c:5667 plug-ins/gfig/gfig.c:6271
 #: plug-ins/gflare/gflare.c:3337 plug-ins/gflare/gflare.c:3456
-#: plug-ins/gflare/gflare.c:5466 plug-ins/gimpressionist/gimpressionist.c:499
+#: plug-ins/gflare/gflare.c:5466 plug-ins/gfli/gfli.c:839
+#: plug-ins/gfli/gfli.c:910 plug-ins/gimpressionist/gimpressionist.c:499
 #: plug-ins/gimpressionist/orientmap.c:640
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/ifscompose/ifscompose.c:806
 #: plug-ins/imagemap/imap_default_dialog.c:116 plug-ins/maze/maze_face.c:207
 #: plug-ins/mosaic/mosaic.c:550 plug-ins/pagecurl/pagecurl.c:583
 #: plug-ins/print/print.c:1395 plug-ins/print/print.c:1505
-#: plug-ins/rcm/rcm_dialog.c:748 plug-ins/script-fu/script-fu-scripts.c:1477
+#: plug-ins/rcm/rcm_dialog.c:748 plug-ins/script-fu/script-fu-scripts.c:1484
 #: plug-ins/script-fu/script-fu-server.c:568 plug-ins/sel2path/sel2path.c:356
 #: plug-ins/sgi/sgi.c:657 plug-ins/sinus/sinus.c:756
 #: plug-ins/struc/struc.c:259 plug-ins/webbrowser/webbrowser.c:295
@@ -953,7 +955,7 @@ msgstr "²èÁü¤«¤é"
 msgid "Waves"
 msgstr "ÇÈ"
 
-#: plug-ins/Lighting/lighting_ui.c:50 plug-ins/common/mblur.c:809
+#: plug-ins/Lighting/lighting_ui.c:50 plug-ins/common/mblur.c:804
 #: plug-ins/flame/flame.c:667 plug-ins/sinus/sinus.c:1035
 msgid "Linear"
 msgstr "Àþ·Á"
@@ -1233,7 +1235,7 @@ msgstr "¥é¥¤¥È¸ú²Ì"
 
 #. Add Ok, Cancel and Help buttons to the action area
 #. ==================================================
-#: plug-ins/Lighting/lighting_ui.c:1070 plug-ins/common/sample_colorize.c:1296
+#: plug-ins/Lighting/lighting_ui.c:1070 plug-ins/common/sample_colorize.c:1295
 #: plug-ins/common/tileit.c:580 plug-ins/dbbrowser/dbbrowser_utils.c:155
 #: plug-ins/gdyntext/gdyntext_ui.c:525 plug-ins/gimpressionist/orientmap.c:633
 #: plug-ins/gimpressionist/presets.c:640 plug-ins/gimpressionist/sizemap.c:492
@@ -1285,8 +1287,9 @@ msgstr "<Image>/¥Õ¥£¥ë¥¿/¥Þ¥Ã¥×/¥Þ¥Ã¥×¥ª¥Ö¥¸¥§¥¯¥È..."
 #: plug-ins/common/psd.c:1708 plug-ins/common/sunras.c:443
 #: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:423
 #: plug-ins/common/xbm.c:553 plug-ins/common/xpm.c:326
-#: plug-ins/common/xwd.c:457 plug-ins/faxg3/faxg3.c:191 plug-ins/sgi/sgi.c:331
-#: plug-ins/sgi/sgi.c:333 plug-ins/xjt/xjt.c:3160
+#: plug-ins/common/xwd.c:457 plug-ins/faxg3/faxg3.c:191
+#: plug-ins/gfli/gfli.c:469 plug-ins/sgi/sgi.c:331 plug-ins/sgi/sgi.c:333
+#: plug-ins/xjt/xjt.c:3160
 #, c-format
 msgid "Loading %s:"
 msgstr "%s ÆÉ¤ß¹þ¤ßÃæ:"
@@ -1359,8 +1362,8 @@ msgstr "%s ¤¬³«¤±¤Þ¤»¤ó\n"
 #: plug-ins/common/sunras.c:526 plug-ins/common/tga.c:1197
 #: plug-ins/common/tiff.c:1204 plug-ins/common/xbm.c:790
 #: plug-ins/common/xpm.c:643 plug-ins/common/xwd.c:561
-#: plug-ins/fits/fits.c:473 plug-ins/sgi/sgi.c:549 plug-ins/sgi/sgi.c:551
-#: plug-ins/xjt/xjt.c:1562
+#: plug-ins/fits/fits.c:473 plug-ins/gfli/gfli.c:667 plug-ins/sgi/sgi.c:549
+#: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1562
 #, c-format
 msgid "Saving %s:"
 msgstr "%s ÊÝÂ¸Ãæ:"
@@ -1970,23 +1973,22 @@ msgstr "²Ä»ë¥ì¥¤¥ä¡¼¤ÎÀ°Îó"
 #: plug-ins/common/blinds.c:424 plug-ins/common/blur.c:644
 #: plug-ins/common/checkerboard.c:371 plug-ins/common/cubism.c:328
 #: plug-ins/common/edge.c:669 plug-ins/common/engrave.c:246
-#: plug-ins/common/gauss_iir.c:367 plug-ins/common/gauss_rle.c:362
+#: plug-ins/common/gauss_iir.c:366 plug-ins/common/gauss_rle.c:360
 #: plug-ins/common/glasstile.c:249 plug-ins/common/illusion.c:329
 #: plug-ins/common/jpeg.c:1656 plug-ins/common/max_rgb.c:275
-#: plug-ins/common/mblur.c:795 plug-ins/common/noisify.c:339
-#: plug-ins/common/nova.c:376 plug-ins/common/oilify.c:472
-#: plug-ins/common/pixelize.c:301 plug-ins/common/plasma.c:311
-#: plug-ins/common/png.c:945 plug-ins/common/polar.c:988
-#: plug-ins/common/randomize.c:732 plug-ins/common/ripple.c:653
-#: plug-ins/common/scatter_hsv.c:445 plug-ins/common/sel_gauss.c:258
-#: plug-ins/common/shift.c:395 plug-ins/common/smooth_palette.c:415
-#: plug-ins/common/snoise.c:540 plug-ins/common/sobel.c:274
-#: plug-ins/common/sparkle.c:378 plug-ins/common/threshold_alpha.c:279
-#: plug-ins/common/unsharp.c:809 plug-ins/common/video.c:2187
-#: plug-ins/common/vpropagate.c:984 plug-ins/common/whirlpinch.c:867
-#: plug-ins/common/wind.c:775 plug-ins/common/xpm.c:811
-#: plug-ins/mosaic/mosaic.c:660 plug-ins/struc/struc.c:269
-#: plug-ins/xjt/xjt.c:759
+#: plug-ins/common/noisify.c:339 plug-ins/common/nova.c:376
+#: plug-ins/common/oilify.c:472 plug-ins/common/pixelize.c:301
+#: plug-ins/common/plasma.c:311 plug-ins/common/png.c:945
+#: plug-ins/common/polar.c:988 plug-ins/common/randomize.c:732
+#: plug-ins/common/ripple.c:653 plug-ins/common/scatter_hsv.c:445
+#: plug-ins/common/sel_gauss.c:258 plug-ins/common/shift.c:395
+#: plug-ins/common/smooth_palette.c:415 plug-ins/common/snoise.c:540
+#: plug-ins/common/sobel.c:274 plug-ins/common/sparkle.c:378
+#: plug-ins/common/threshold_alpha.c:279 plug-ins/common/unsharp.c:809
+#: plug-ins/common/video.c:2187 plug-ins/common/vpropagate.c:984
+#: plug-ins/common/whirlpinch.c:867 plug-ins/common/wind.c:775
+#: plug-ins/common/xpm.c:811 plug-ins/mosaic/mosaic.c:660
+#: plug-ins/struc/struc.c:269 plug-ins/xjt/xjt.c:759
 msgid "Parameter Settings"
 msgstr "¥Ñ¥é¥á¡¼¥¿ÀßÄê"
 
@@ -2069,14 +2071,14 @@ msgstr "¥¢¥Ë¥á¡¼¥·¥ç¥óºÆÀ¸: "
 
 #. The close button
 #: plug-ins/common/animationplay.c:709 plug-ins/common/plugindetails.c:998
-#: plug-ins/common/sample_colorize.c:1300
+#: plug-ins/common/sample_colorize.c:1299
 #: plug-ins/dbbrowser/dbbrowser_utils.c:164
 #: plug-ins/gap/gap_navigator_dialog.c:2852
 #: plug-ins/gdyntext/charmap_window.c:140 plug-ins/gdyntext/gdyntext_ui.c:518
 #: plug-ins/helpbrowser/helpbrowser.c:827
 #: plug-ins/ifscompose/ifscompose.c:1250 plug-ins/imagemap/imap_menu.c:226
 #: plug-ins/script-fu/script-fu-console.c:205
-#: plug-ins/script-fu/script-fu-scripts.c:1962
+#: plug-ins/script-fu/script-fu-scripts.c:1956
 msgid "Close"
 msgstr "ÊÄ¤¸¤ë"
 
@@ -2395,7 +2397,8 @@ msgid "Color to Alpha"
 msgstr "¿§¤òÆ©ÌÀÅÙ¤Ë"
 
 #: plug-ins/common/colortoalpha.c:440 plug-ins/common/mail.c:542
-#: plug-ins/common/mapcolor.c:381
+#: plug-ins/common/mapcolor.c:381 plug-ins/gfli/gfli.c:863
+#: plug-ins/gfli/gfli.c:934
 msgid "From:"
 msgstr "ºÇ½é:"
 
@@ -2946,8 +2949,8 @@ msgid ""
 "This plug-in selectively performs a median or adaptive box filter on an "
 "image."
 msgstr ""
-"¤³¤Î¥×¥é¥°¥¤¥ó¤Ï²èÁü¤ËÂÐ¤·¤ÆÁªÂòÅª¤ËÊä´Ö¤·¤¿¤êÅ¬±þ¥Ü¥Ã¥¯¥¹¥Õ¥£¥ë¥¿¤È¤·¤Æ¤È¤·¤Æ"
-"»ÈÍÑ¤·¤¿¤ê¤Ç¤­¤ë."
+"¤³¤Î¥×¥é¥°¥¤¥ó¤Ï²èÁü¤ËÂÐ¤·¤ÆÁªÂòÅª¤ËÊä´Ö¤·¤¿¤êÅ¬±þ¥Ü¥Ã¥¯¥¹¥Õ¥£¥ë¥¿¤È¤·¤Æ¤È¤·¤"
+"Æ»ÈÍÑ¤·¤¿¤ê¤Ç¤­¤ë."
 
 #: plug-ins/common/despeckle.c:182
 msgid "<Image>/Filters/Enhance/Despeckle..."
@@ -3390,57 +3393,57 @@ msgstr "Çò"
 msgid "Mandelbrot Parameters"
 msgstr "¥Þ¥ó¥Ç¥ë¥Ö¥í¡¼¥Ñ¥é¥á¡¼¥¿"
 
-#: plug-ins/common/gauss_iir.c:166
+#: plug-ins/common/gauss_iir.c:165
 msgid "<Image>/Filters/Blur/Gaussian Blur (IIR)..."
 msgstr "<Image>/¥Õ¥£¥ë¥¿/¤Ü¤«¤·/¥¬¥¦¥·¥¢¥ó¤Ü¤«¤· (IIR)..."
 
-#: plug-ins/common/gauss_iir.c:239
+#: plug-ins/common/gauss_iir.c:238
 msgid "gauss_iir: you must specify either horizontal or vertical (or both)"
 msgstr "gauss_iir: ²£¤Þ¤¿¤Ï½Ä¤Î¤É¤Á¤é¤«¤Ï¤«¤Ê¤é¤º»ØÄê¤·¤Æ¤¯¤À¤µ¤¤."
 
-#: plug-ins/common/gauss_iir.c:289 plug-ins/common/gauss_iir.c:350
-#: plug-ins/common/gauss_iir.c:443
+#: plug-ins/common/gauss_iir.c:288 plug-ins/common/gauss_iir.c:349
+#: plug-ins/common/gauss_iir.c:439
 msgid "IIR Gaussian Blur"
 msgstr "IIR ¥¬¥¦¥·¥¢¥ó¤Ü¤«¤·"
 
-#: plug-ins/common/gauss_iir.c:376 plug-ins/common/gauss_rle.c:371
+#: plug-ins/common/gauss_iir.c:375 plug-ins/common/gauss_rle.c:369
 msgid "Blur Horizontally"
 msgstr "¿åÊ¿Êý¸þ¤Ë¤Ü¤«¤¹"
 
-#: plug-ins/common/gauss_iir.c:384 plug-ins/common/gauss_rle.c:379
+#: plug-ins/common/gauss_iir.c:383 plug-ins/common/gauss_rle.c:377
 msgid "Blur Vertically"
 msgstr "±ôÄ¾Êý¸þ¤Ë¤Ü¤«¤¹"
 
-#: plug-ins/common/gauss_iir.c:395 plug-ins/common/gauss_rle.c:390
+#: plug-ins/common/gauss_iir.c:394 plug-ins/common/gauss_rle.c:388
 #: plug-ins/common/sel_gauss.c:274
 msgid "Blur Radius:"
 msgstr "¤Ü¤«¤·È¾·Â:"
 
 #. parameter settings
-#: plug-ins/common/gauss_iir.c:460 plug-ins/common/gauss_rle.c:455
+#: plug-ins/common/gauss_iir.c:456 plug-ins/common/gauss_rle.c:450
 msgid "Blur Radius"
 msgstr "¤Ü¤«¤·È¾·Â"
 
-#: plug-ins/common/gauss_iir.c:496 plug-ins/common/gauss_rle.c:491
-#: plug-ins/common/jigsaw.c:2353 plug-ins/common/spread.c:422
+#: plug-ins/common/gauss_iir.c:468 plug-ins/common/gauss_rle.c:462
+#: plug-ins/common/jigsaw.c:2353 plug-ins/common/spread.c:402
 msgid "Horizontal:"
 msgstr "¿åÊ¿:"
 
-#: plug-ins/common/gauss_iir.c:497 plug-ins/common/gauss_rle.c:492
-#: plug-ins/common/jigsaw.c:2362 plug-ins/common/spread.c:423
+#: plug-ins/common/gauss_iir.c:471 plug-ins/common/gauss_rle.c:465
+#: plug-ins/common/jigsaw.c:2362 plug-ins/common/spread.c:405
 msgid "Vertical:"
 msgstr "±ôÄ¾:"
 
-#: plug-ins/common/gauss_rle.c:161
+#: plug-ins/common/gauss_rle.c:159
 msgid "<Image>/Filters/Blur/Gaussian Blur (RLE)..."
 msgstr "<Image>/¥Õ¥£¥ë¥¿/¤Ü¤«¤·/¥¬¥¦¥·¥¢¥ó¤Ü¤«¤· (RLE)..."
 
-#: plug-ins/common/gauss_rle.c:233
+#: plug-ins/common/gauss_rle.c:231
 msgid "gauss_rle: you must specify either horizontal or vertical (or both)"
 msgstr "gauss_rle: ²£¤Þ¤¿¤Ï½Ä¤Î¤É¤Á¤é¤«¤Ï¤«¤Ê¤é¤º»ØÄê¤·¤Æ¤¯¤À¤µ¤¤."
 
-#: plug-ins/common/gauss_rle.c:284 plug-ins/common/gauss_rle.c:345
-#: plug-ins/common/gauss_rle.c:438
+#: plug-ins/common/gauss_rle.c:282 plug-ins/common/gauss_rle.c:343
+#: plug-ins/common/gauss_rle.c:433
 msgid "RLE Gaussian Blur"
 msgstr "RLE ¥¬¥¦¥·¥¢¥ó¤Ü¤«¤·"
 
@@ -3684,8 +3687,9 @@ msgid "Create images based on a random genetic formula"
 msgstr "Íð¿ôÈÆ´Ø¿ô¤Ë¤è¤Ã¤Æ²èÁü¤ò¤Ä¤¯¤ê½Ð¤¹"
 
 #: plug-ins/common/gqbist.c:335
+#, fuzzy
 msgid ""
-"This Plug-in is based on an article by Jöòn Loviscach (appeared in c't "
+"This Plug-in is based on an article by Jörn Loviscach (appeared in c't "
 "10/95, page 326). It generates modern art pictures from a random genetic "
 "formula."
 msgstr ""
@@ -4014,7 +4018,7 @@ msgid "Threshold"
 msgstr "ïçÃÍ"
 
 #. parameter settings
-#: plug-ins/common/iwarp.c:1039 plug-ins/common/sample_colorize.c:1310
+#: plug-ins/common/iwarp.c:1039 plug-ins/common/sample_colorize.c:1309
 #: plug-ins/gap/gap_mod_layer.c:219 plug-ins/gfig/gfig.c:4943
 #: plug-ins/gflare/gflare.c:2950 plug-ins/sinus/sinus.c:896
 msgid "Settings"
@@ -4272,6 +4276,7 @@ msgid "Send to Mail"
 msgstr "¥á¡¼¥ë¤Ç²èÁü¤òÁ÷¤ë"
 
 #: plug-ins/common/mail.c:530 plug-ins/common/mapcolor.c:381
+#: plug-ins/gfli/gfli.c:872 plug-ins/gfli/gfli.c:943
 msgid "To:"
 msgstr "°¸:"
 
@@ -4398,30 +4403,35 @@ msgstr "<Image>/¥Õ¥£¥ë¥¿/¤Ü¤«¤·/¥â¡¼¥·¥ç¥ó¤Ü¤«¤·..."
 msgid "Blurring..."
 msgstr "¤Ü¤«¤·¤Æ¤¤¤Þ¤¹..."
 
-#: plug-ins/common/mblur.c:779
+#: plug-ins/common/mblur.c:778
 msgid "Motion Blur"
 msgstr "¥â¡¼¥·¥ç¥ó¤Ü¤«¤·"
 
-#: plug-ins/common/mblur.c:805
+#: plug-ins/common/mblur.c:800
 msgid "Blur Type"
 msgstr "¤Ü¤«¤·¤Î¼ïÎà"
 
-#: plug-ins/common/mblur.c:810 plug-ins/gimpressionist/orientation.c:161
+#: plug-ins/common/mblur.c:805 plug-ins/gimpressionist/orientation.c:161
 #: plug-ins/gimpressionist/size.c:160
 msgid "Radial"
 msgstr "È¾·Â"
 
-#: plug-ins/common/mblur.c:811 plug-ins/flame/flame.c:1034
+#: plug-ins/common/mblur.c:806 plug-ins/flame/flame.c:1034
 #: plug-ins/imagemap/imap_popup.c:140
 msgid "Zoom"
 msgstr "³ÈÂç"
 
-#: plug-ins/common/mblur.c:823
+#: plug-ins/common/mblur.c:812
+#, fuzzy
+msgid "Blur Parameters"
+msgstr "¥Ñ¥é¥á¡¼¥¿"
+
+#: plug-ins/common/mblur.c:824
 msgid "Length:"
 msgstr "Ä¹¤µ:"
 
 #. Angle
-#: plug-ins/common/mblur.c:831 plug-ins/common/newsprint.c:1025
+#: plug-ins/common/mblur.c:832 plug-ins/common/newsprint.c:1025
 #: plug-ins/common/warp.c:693 plug-ins/gimpressionist/orientmap.c:551
 #: plug-ins/ifscompose/ifscompose.c:555
 msgid "Angle:"
@@ -5215,88 +5225,88 @@ msgstr "»ÄÇ°¤Ç¤¹¤¬¥Á¥ã¥ó¥Í¥ë¤ä¥Þ¥¹¥¯¤ò²óÅ¾¤µ¤»¤ë¤³¤È¤Ï¤Ç¤­¤Þ¤»¤ó."
 msgid "Rotating..."
 msgstr "²óÅ¾¤·¤Æ¤¤¤Þ¤¹..."
 
-#: plug-ins/common/sample_colorize.c:301
+#: plug-ins/common/sample_colorize.c:300
 msgid ""
 "Colorize the contents of the specified drawable similar to sample drawable"
 msgstr "»ØÄê¤·¤¿ÉÁ²èÂÐ¾Ý¤ò¥µ¥ó¥×¥ëÉÁ²èÂÐ¾Ý¤Î¤è¤¦¤Ë¿§¤Å¤±¤¹¤ë."
 
-#: plug-ins/common/sample_colorize.c:306
+#: plug-ins/common/sample_colorize.c:305
 msgid "<Image>/Filters/Colors/Map/Sample Colorize..."
 msgstr "<Image>/¥Õ¥£¥ë¥¿/¿§/¥Þ¥Ã¥×/¥µ¥ó¥×¥ë¿§ÉÕ¤±..."
 
-#: plug-ins/common/sample_colorize.c:1291
+#: plug-ins/common/sample_colorize.c:1290
 msgid "Sample Colorize"
 msgstr "¥µ¥ó¥×¥ë¿§ÉÕ¤±"
 
-#: plug-ins/common/sample_colorize.c:1298
+#: plug-ins/common/sample_colorize.c:1297
 msgid "Get Sample Colors"
 msgstr "¥µ¥ó¥×¥ë¿§¼èÆÀ"
 
 #. layer optionmenu (Dst)
-#: plug-ins/common/sample_colorize.c:1325
+#: plug-ins/common/sample_colorize.c:1324
 msgid "Destination:"
 msgstr "Àè:"
 
 #. layer optionmenu (Sample)
-#: plug-ins/common/sample_colorize.c:1344
+#: plug-ins/common/sample_colorize.c:1343
 msgid "Sample:"
 msgstr "¥µ¥ó¥×¥ë:"
 
 #. Add extra menu items for Gradient
-#: plug-ins/common/sample_colorize.c:1363
+#: plug-ins/common/sample_colorize.c:1362
 msgid "** From GRADIENT **"
 msgstr "** ¥°¥é¥Ç¡¼¥·¥ç¥ó¤«¤é **"
 
 #. Add extra menu items for Inverted Gradient
-#: plug-ins/common/sample_colorize.c:1371
+#: plug-ins/common/sample_colorize.c:1370
 msgid "** From INVERSE GRADIENT **"
 msgstr "** È¿Å¾¥°¥é¥Ç¡¼¥·¥ç¥ó¤«¤é **"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1386
-#: plug-ins/common/sample_colorize.c:1411
+#: plug-ins/common/sample_colorize.c:1385
+#: plug-ins/common/sample_colorize.c:1410
 msgid "Show Selection"
 msgstr "ÁªÂòÉ½¼¨"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1396
-#: plug-ins/common/sample_colorize.c:1421
+#: plug-ins/common/sample_colorize.c:1395
+#: plug-ins/common/sample_colorize.c:1420
 msgid "Show Color"
 msgstr "¿§É½¼¨"
 
-#: plug-ins/common/sample_colorize.c:1527
+#: plug-ins/common/sample_colorize.c:1526
 msgid "In Level:"
 msgstr "ÆþÎÏ¥ì¥Ù¥ë: "
 
-#: plug-ins/common/sample_colorize.c:1571
+#: plug-ins/common/sample_colorize.c:1570
 msgid "Out Level:"
 msgstr "½ÐÎÏ¥ì¥Ù¥ë: "
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1606
+#: plug-ins/common/sample_colorize.c:1605
 msgid "Hold Intensity"
 msgstr "¶¯ÅÙÊÝ»ý"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1616
+#: plug-ins/common/sample_colorize.c:1615
 msgid "Original Intensity"
 msgstr "¥ª¥ê¥¸¥Ê¥ë¶¯ÅÙ"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1633
+#: plug-ins/common/sample_colorize.c:1632
 msgid "Use Subcolors"
 msgstr "¥µ¥Ö¥«¥é¡¼»ÈÍÑ"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1643
+#: plug-ins/common/sample_colorize.c:1642
 msgid "Smooth Samplecolors"
 msgstr "³ê¤é¤«¤Ê¥µ¥ó¥×¥ë¥«¥é¡¼"
 
-#: plug-ins/common/sample_colorize.c:2669
+#: plug-ins/common/sample_colorize.c:2668
 msgid "Sample Analyze..."
 msgstr "¥µ¥ó¥×¥ë¤ò²òÀÏ¤·¤Æ¤¤¤Þ¤¹..."
 
-#: plug-ins/common/sample_colorize.c:3034
+#: plug-ins/common/sample_colorize.c:3033
 msgid "Remap Colorized..."
 msgstr "ºÆ¥Þ¥Ã¥×¿§ÉÕ¤±¤·¤Æ¤¤¤Þ¤¹..."
 
@@ -5808,20 +5818,20 @@ msgstr "¥ì¥ó¥À¥ê¥ó¥°¤·¤Æ¤¤¤Þ¤¹..."
 msgid "<Image>/Filters/Render/Sphere Designer..."
 msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/µåÌÌ¥Ç¥¶¥¤¥Ê¡¼..."
 
-#: plug-ins/common/spread.c:132
+#: plug-ins/common/spread.c:130
 msgid "<Image>/Filters/Noise/Spread..."
 msgstr "<Image>/¥Õ¥£¥ë¥¿/¥Î¥¤¥º/³È»¶..."
 
-#: plug-ins/common/spread.c:207
+#: plug-ins/common/spread.c:205
 msgid "Spreading..."
 msgstr "³È»¶¤µ¤»¤Æ¤¤¤Þ¤¹..."
 
-#: plug-ins/common/spread.c:377
+#: plug-ins/common/spread.c:372
 msgid "Spread"
 msgstr "³È»¶"
 
 #. parameter settings
-#: plug-ins/common/spread.c:394
+#: plug-ins/common/spread.c:389
 msgid "Spread Amount"
 msgstr "³È»¶ÎÌ"
 
@@ -7069,29 +7079,29 @@ msgstr "<Image>/¥Ó¥Ç¥ª/¥Õ¥ì¡¼¥à¤ËÊ¬³ä/MPEG1"
 msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
 msgstr "<Toolbox>/³ÈÄ¥/¥Õ¥ì¡¼¥à¤ËÊ¬³ä/MPEG1"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:332 plug-ins/gap/gap_decode_xanim.c:326
+#: plug-ins/gap/gap_decode_mpeg_main.c:332 plug-ins/gap/gap_decode_xanim.c:328
 #: plug-ins/gap/gap_range_ops.c:1184
 msgid "OVERWRITE frame"
 msgstr "¥Õ¥ì¡¼¥à¾å½ñ¤­"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:334 plug-ins/gap/gap_decode_xanim.c:328
+#: plug-ins/gap/gap_decode_mpeg_main.c:334 plug-ins/gap/gap_decode_xanim.c:330
 #: plug-ins/gap/gap_range_ops.c:1186
 msgid "OVERWRITE all"
 msgstr "Á´¤Æ¾å½ñ¤­"
 
 #. the  Action Button
-#: plug-ins/gap/gap_decode_mpeg_main.c:336 plug-ins/gap/gap_decode_xanim.c:173
-#: plug-ins/gap/gap_decode_xanim.c:330 plug-ins/gap/gap_lib.c:1011
+#: plug-ins/gap/gap_decode_mpeg_main.c:336 plug-ins/gap/gap_decode_xanim.c:174
+#: plug-ins/gap/gap_decode_xanim.c:332 plug-ins/gap/gap_lib.c:1011
 #: plug-ins/gap/gap_range_ops.c:1188
 msgid "CANCEL"
 msgstr "¥­¥ã¥ó¥»¥ë"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:342 plug-ins/gap/gap_decode_xanim.c:336
+#: plug-ins/gap/gap_decode_mpeg_main.c:342 plug-ins/gap/gap_decode_xanim.c:338
 #: plug-ins/gap/gap_lib.c:1019 plug-ins/gap/gap_range_ops.c:1191
 msgid "GAP Question"
 msgstr "GAP ¼ÁÌä"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:343
+#: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:339
 msgid "file already exists:"
 msgstr "¥Õ¥¡¥¤¥ë¤Ï´û¤ËÂ¸ºß¤·¤Þ¤¹:"
 
@@ -7117,7 +7127,7 @@ msgstr ""
 msgid "From"
 msgstr "»Ï¤á"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:648 plug-ins/gap/gap_decode_xanim.c:222
+#: plug-ins/gap/gap_decode_mpeg_main.c:648 plug-ins/gap/gap_decode_xanim.c:223
 msgid "Framenumber of 1.st frame to extract"
 msgstr "ºÇ½é¤Ë¼è¤ê½Ð¤¹¥Õ¥ì¡¼¥àÈÖ¹æ"
 
@@ -7125,7 +7135,7 @@ msgstr "ºÇ½é¤Ë¼è¤ê½Ð¤¹¥Õ¥ì¡¼¥àÈÖ¹æ"
 msgid "To"
 msgstr "½ª¤ê"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:656 plug-ins/gap/gap_decode_xanim.c:230
+#: plug-ins/gap/gap_decode_mpeg_main.c:656 plug-ins/gap/gap_decode_xanim.c:231
 msgid "Framenumber of last frame to extract"
 msgstr "ºÇ¸å¤Ë¼è¤ê½Ð¤¹¥Õ¥ì¡¼¥àÈÖ¹æ"
 
@@ -7141,12 +7151,12 @@ msgstr ""
 "¥Ç¥£¥¹¥¯¤Ë½ñ¤¯Æ°²è¥Õ¥ì¡¼¥à¤Î Basename.\n"
 "(¥Õ¥ì¡¼¥àÈÖ¹æ¤È .xcf ¤¬ÉÕ¤±¤é¤ì¤Þ¤¹)"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:671 plug-ins/gap/gap_decode_xanim.c:277
+#: plug-ins/gap/gap_decode_mpeg_main.c:671 plug-ins/gap/gap_decode_xanim.c:278
 #: plug-ins/imagemap/imap_toolbar.c:109
 msgid "Open"
 msgstr "³«¤¯"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:672 plug-ins/gap/gap_decode_xanim.c:278
+#: plug-ins/gap/gap_decode_mpeg_main.c:672 plug-ins/gap/gap_decode_xanim.c:279
 msgid "Open the 1.st one of the extracted frames"
 msgstr "¼è¤ê½Ð¤µ¤ì¤¿¥Õ¥ì¡¼¥à¤ÎºÇ½é¤Î¤â¤Î¤ò³«¤¯"
 
@@ -7160,66 +7170,62 @@ msgstr ""
 "·Ù¹ð: MPEG1 Æ°²è°Ê³°¤Î¥Õ¥¡¥¤¥ë¤òÊ¬³ä¤·¤Ê¤¤¤Ç²¼¤µ¤¤\n"
 "Â³¹Ô¤¹¤ëÁ°¤Ëºî¶ÈÃæ¤ÎÁ´¤Æ¤Î²èÁü¤òÊÝÂ¸¤·¤Æ²¼¤µ¤¤."
 
-#: plug-ins/gap/gap_decode_xanim.c:111
+#: plug-ins/gap/gap_decode_xanim.c:112
 msgid "Conditions to run the xanim based video split"
 msgstr "xanim ¤Ë¤è¤ë²èÁüÊ¬³ä¤ËÉ¬Í×¤ÊÀßÄê"
 
-#: plug-ins/gap/gap_decode_xanim.c:119
+#: plug-ins/gap/gap_decode_xanim.c:120
 msgid "1.) xanim 2.80.0 exporting edition (the loki version)"
 msgstr "1.) xanim 2.80.0 ¹ñºÝÈÇ (loki ¥Ð¡¼¥¸¥ç¥ó)"
 
-#: plug-ins/gap/gap_decode_xanim.c:123
+#: plug-ins/gap/gap_decode_xanim.c:124
 msgid "    must be installed somewhere in your PATH"
 msgstr "    ¤¬ PATH ¤ÎÄÌ¤Ã¤¿¤È¤³¤í¤Ë¥¤¥ó¥¹¥È¡¼¥ë¤µ¤ì¤Æ¤¤¤ë¤³¤È"
 
-#: plug-ins/gap/gap_decode_xanim.c:127
+#: plug-ins/gap/gap_decode_xanim.c:128
 msgid "    you can get xanim exporting edition at"
 msgstr "    ¹ñºÝÈÇ¤Î xanim ¤Ï°Ê²¼¤Î¾ì½ê¤Ç¼ê¤ËÆþ¤ì¤é¤ì¤Þ¤¹"
 
-#: plug-ins/gap/gap_decode_xanim.c:143
+#: plug-ins/gap/gap_decode_xanim.c:144
 msgid ""
 "2.) if your xanim exporting edition is not in your PATH or is not named xanim"
 msgstr ""
 "2.) xanim ¤¬¹ñºÝÈÇ¤Ç¤Ê¤«¤Ã¤¿¤ê PATH ¤¬ÄÌ¤Ã¤Æ¤Ê¤«¤Ã¤¿¤ê xanim "
 "¤È¤¤¤¦Ì¾Á°¤Ç¤Ï¤Ê¤¤¾ì¹ç"
 
-#: plug-ins/gap/gap_decode_xanim.c:147
+#: plug-ins/gap/gap_decode_xanim.c:148
 msgid "    you have to set Environment variable GAP_XANIM_PROG "
 msgstr "    ´Ä¶­ÊÑ¿ô GAP_XANIM_PROG ¤¬¹ñºÝÈÇ xanim ¤ò»Ø¤¹¤è¤¦¤Ë¤·¤Æ"
 
-#: plug-ins/gap/gap_decode_xanim.c:151
+#: plug-ins/gap/gap_decode_xanim.c:152
 msgid "    to your xanim exporting program and restart gimp"
 msgstr "    gimp ¤òºÆµ¯Æ°¤·¤Æ²¼¤µ¤¤"
 
-#: plug-ins/gap/gap_decode_xanim.c:159
+#: plug-ins/gap/gap_decode_xanim.c:160
 msgid "An ERROR occured while trying to call xanim:"
 msgstr "xanim ¸Æ¤Ó½Ð¤·Ãæ¤Ë¥¨¥é¡¼È¯À¸"
 
-#: plug-ins/gap/gap_decode_xanim.c:163
-msgid "--------------------------------------------"
-msgstr "--------------------------------------------"
-
-#: plug-ins/gap/gap_decode_xanim.c:178
+#: plug-ins/gap/gap_decode_xanim.c:179
 msgid "XANIM Information"
 msgstr "XANIM ¾ðÊó"
 
-#: plug-ins/gap/gap_decode_xanim.c:208
+#: plug-ins/gap/gap_decode_xanim.c:209
 msgid "XCF"
 msgstr "XCF"
 
-#: plug-ins/gap/gap_decode_xanim.c:208
+#: plug-ins/gap/gap_decode_xanim.c:209
 msgid "PPM"
 msgstr "PPM"
 
-#: plug-ins/gap/gap_decode_xanim.c:208
+#: plug-ins/gap/gap_decode_xanim.c:209
 msgid "JPEG"
 msgstr "JPEG"
 
-#: plug-ins/gap/gap_decode_xanim.c:211
+#: plug-ins/gap/gap_decode_xanim.c:212
 msgid "Video:"
 msgstr "Æ°²è:"
 
-#: plug-ins/gap/gap_decode_xanim.c:212
+#: plug-ins/gap/gap_decode_xanim.c:213
 msgid ""
 "Name of a videofile to READ by xanim\n"
 "frames are extracted from the videofile\n"
@@ -7231,23 +7237,23 @@ msgstr ""
 "¤½¤ì¤¾¤ìÊÌ¤Î¥Õ¥¡¥¤¥ë¤Ë½ñ¤­½Ð¤·¤Þ¤¹.\n"
 "xanim ¤Ï¹ñºÝÈÇ¤Ç¤Ê¤±¤ì¤Ð¤Ê¤ê¤Þ¤»¤ó."
 
-#: plug-ins/gap/gap_decode_xanim.c:221 plug-ins/gap/gap_lib.c:2085
+#: plug-ins/gap/gap_decode_xanim.c:222 plug-ins/gap/gap_lib.c:2085
 #: plug-ins/gap/gap_lib.c:2260 plug-ins/gap/gap_range_ops.c:242
 #: plug-ins/gap/gap_range_ops.c:584
 msgid "From :"
 msgstr "ºÇ½é :"
 
-#: plug-ins/gap/gap_decode_xanim.c:229 plug-ins/gap/gap_lib.c:2093
+#: plug-ins/gap/gap_decode_xanim.c:230 plug-ins/gap/gap_lib.c:2093
 #: plug-ins/gap/gap_lib.c:2268 plug-ins/gap/gap_range_ops.c:249
 #: plug-ins/gap/gap_range_ops.c:592
 msgid "To :"
 msgstr "ºÇ¸å :"
 
-#: plug-ins/gap/gap_decode_xanim.c:237
+#: plug-ins/gap/gap_decode_xanim.c:238
 msgid "Framenames:"
 msgstr "¥Õ¥ì¡¼¥àÌ¾:"
 
-#: plug-ins/gap/gap_decode_xanim.c:238
+#: plug-ins/gap/gap_decode_xanim.c:239
 msgid ""
 "Basename for the AnimFrames to write on disk\n"
 "(framenumber and extension is added)"
@@ -7255,11 +7261,11 @@ msgstr ""
 "¥Ç¥£¥¹¥¯¤Ë½ñ¤­½Ð¤¹Æ°²è¥Õ¥ì¡¼¥à¤Î Basename ¤Ç¤¹.\n"
 "(¥Õ¥ì¡¼¥àÈÖ¹æ¤È³ÈÄ¥»Ò¤¬ÉÕ¤±²Ã¤¨¤é¤ì¤Þ¤¹)"
 
-#: plug-ins/gap/gap_decode_xanim.c:245
+#: plug-ins/gap/gap_decode_xanim.c:246
 msgid "Format"
 msgstr "·Á¼°"
 
-#: plug-ins/gap/gap_decode_xanim.c:246
+#: plug-ins/gap/gap_decode_xanim.c:247
 msgid ""
 "Fileformat for the extracted AnimFrames\n"
 "(xcf is extracted as ppm and converted to xcf)"
@@ -7267,56 +7273,61 @@ msgstr ""
 "Ãê½Ð¤¹¤ëÆ°²è¤Î¥Õ¥¡¥¤¥ë·Á¼°¤Ç¤¹.\n"
 "(xcf ¤ò»ØÄê¤¹¤ë¤È ppm ¤ÇÃê½Ð¤·¤Æ xcf ¤ËÊÑ´¹¤·¤Þ¤¹)"
 
-#: plug-ins/gap/gap_decode_xanim.c:253
+#: plug-ins/gap/gap_decode_xanim.c:254
 msgid "Extract Frames"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:254
+#: plug-ins/gap/gap_decode_xanim.c:255
 msgid "Enable extraction of Frames"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:258
+#: plug-ins/gap/gap_decode_xanim.c:259
 msgid "Extract Audio"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:259
+#: plug-ins/gap/gap_decode_xanim.c:260
 msgid ""
 "Enable extraction of audio to raw audiofile\n"
 "(frame range limits are ignored for audio)"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:264
+#: plug-ins/gap/gap_decode_xanim.c:265
 msgid "Jpeg Quality:"
 msgstr "JPEG ÉÊ¼Á:"
 
-#: plug-ins/gap/gap_decode_xanim.c:265
+#: plug-ins/gap/gap_decode_xanim.c:266
 msgid ""
 "Quality for resulting jpeg frames\n"
 "(is ignored when other formats are used)"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:273
+#: plug-ins/gap/gap_decode_xanim.c:274
 msgid ""
 "\n"
 "Warning: xanim 2.80 has just limited MPEG support\n"
 "most of the frames (type P and B) will be skipped"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:282
+#: plug-ins/gap/gap_decode_xanim.c:283
 msgid "xanim asynchron"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:283
+#: plug-ins/gap/gap_decode_xanim.c:284
 msgid ""
 "Run xanim asynchron and delete unwanted frames\n"
 "(out of the specified range) while xanim is still running"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:337
-msgid "file alreay exists:"
-msgstr "¥Õ¥¡¥¤¥ë¤Ï´û¤ËÂ¸ºß¤·¤Þ¤¹:"
+#: plug-ins/gap/gap_decode_xanim.c:288
+msgid "Split any Xanim readable Video to Frames"
+msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:529
+#: plug-ins/gap/gap_decode_xanim.c:289
+#, fuzzy
+msgid "Select Framerange"
+msgstr "G¥Õ¥ì¥¢ºï½ü"
+
+#: plug-ins/gap/gap_decode_xanim.c:531
 #, c-format
 msgid ""
 "cant find any extracted frames,\n"
@@ -7324,79 +7335,79 @@ msgid ""
 "maybe xanim has failed or was canclled"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:554
+#: plug-ins/gap/gap_decode_xanim.c:556
 #, c-format
 msgid "frames are not extracted, because overwrite of %s was cancelled"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:564
+#: plug-ins/gap/gap_decode_xanim.c:566
 #, c-format
 msgid "failed to overwrite %s (check permissions ?)"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:586
+#: plug-ins/gap/gap_decode_xanim.c:588
 #, c-format
 msgid "failed to write %s (check permissions ?)"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:710
+#: plug-ins/gap/gap_decode_xanim.c:712
 #, c-format
 msgid "could not execute %s (check if xanim is installed)"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:718
+#: plug-ins/gap/gap_decode_xanim.c:720
 #, c-format
 msgid "%s does not look like xanim"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:742
+#: plug-ins/gap/gap_decode_xanim.c:744
 #, c-format
 msgid ""
 "The xanim program on your system \"%s\"\n"
 "does not support the exporting options Ea, Ee, Eq"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:749
+#: plug-ins/gap/gap_decode_xanim.c:751
 #, c-format
 msgid ""
 "The xanim program on your system \"%s\"\n"
 "does not support exporting of single frames"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:1012
+#: plug-ins/gap/gap_decode_xanim.c:1014
 #, c-format
 msgid "videofile %s not existent or empty\n"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:1065
+#: plug-ins/gap/gap_decode_xanim.c:1067
 #, c-format
 msgid ""
 "could not create %s directory\n"
 "(that is required for xanim frame export)"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:1076
+#: plug-ins/gap/gap_decode_xanim.c:1078
 msgid "extracting frames..."
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:1101
+#: plug-ins/gap/gap_decode_xanim.c:1103
 #, c-format
 msgid ""
 "could not start xanim process\n"
 "(program=%s)"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:1122
+#: plug-ins/gap/gap_decode_xanim.c:1124
 msgid ""
 "cant find any extracted frames,\n"
 "xanim has failed or was canclled"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:1141
+#: plug-ins/gap/gap_decode_xanim.c:1143
 msgid "renaming frames..."
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:1146
+#: plug-ins/gap/gap_decode_xanim.c:1148
 msgid "converting frames..."
 msgstr ""
 
@@ -9546,6 +9557,33 @@ msgstr "\"%s\" ¤¬¸«¤Ä¤«¤ê¤Þ¤»¤ó: \"%s\" ¤ò»ÈÍÑ¤·¤Þ¤¹"
 msgid "More..."
 msgstr "¾ÜºÙÀßÄê..."
 
+#: plug-ins/gfli/gfli.c:437 plug-ins/gfli/gfli.c:476 plug-ins/gfli/gfli.c:699
+#, fuzzy, c-format
+msgid "FLI: can't open \"%s\"\n"
+msgstr "%s: \"%s\" ¤ò³«¤±¤Ê¤¤\n"
+
+#: plug-ins/gfli/gfli.c:536
+#, fuzzy, c-format
+msgid "Frame (%i)"
+msgstr "¥Õ¥ì¡¼¥à %d"
+
+#: plug-ins/gfli/gfli.c:633
+#, fuzzy
+msgid "FLI: Sorry, can't save images with Alpha.\n"
+msgstr "¥¢¥ë¥Õ¥¡¥Á¥ã¥ó¥Í¥ë¤ò»ý¤Ã¤¿²èÁü¤ÏÊÝÂ¸¤Ç¤­¤Þ¤»¤ó\n"
+
+#: plug-ins/gfli/gfli.c:663
+msgid "FLI: Sorry, I can save only INDEXED and GRAY images.\n"
+msgstr ""
+
+#: plug-ins/gfli/gfli.c:832
+msgid "GFLI 1.2 - Load framestack"
+msgstr ""
+
+#: plug-ins/gfli/gfli.c:903
+msgid "GFLI 1.2 - Save framestack"
+msgstr ""
+
 #: plug-ins/gimpressionist/brush.c:183
 msgid "GIMPressionist: Can only save drawables!\n"
 msgstr ""
@@ -10828,6 +10866,7 @@ msgid "Title:"
 msgstr ""
 
 #: plug-ins/imagemap/imap_settings.c:88
+#: plug-ins/script-fu/script-fu-scripts.c:1927
 msgid "Author:"
 msgstr "ºî¼Ô:"
 
@@ -11445,94 +11484,6 @@ msgstr ""
 msgid "Misc"
 msgstr ""
 
-#: plug-ins/script-fu/regex.c:965
-msgid "Success"
-msgstr ""
-
-#. REG_NOERROR
-#: plug-ins/script-fu/regex.c:966
-msgid "No match"
-msgstr ""
-
-#. REG_NOMATCH
-#: plug-ins/script-fu/regex.c:967
-msgid "Invalid regular expression"
-msgstr ""
-
-#. REG_BADPAT
-#: plug-ins/script-fu/regex.c:968
-msgid "Invalid collation character"
-msgstr ""
-
-#. REG_ECOLLATE
-#: plug-ins/script-fu/regex.c:969
-msgid "Invalid character class name"
-msgstr ""
-
-#. REG_ECTYPE
-#: plug-ins/script-fu/regex.c:970
-msgid "Trailing backslash"
-msgstr ""
-
-#. REG_EESCAPE
-#: plug-ins/script-fu/regex.c:971
-msgid "Invalid back reference"
-msgstr ""
-
-#. REG_ESUBREG
-#: plug-ins/script-fu/regex.c:972
-msgid "Unmatched [ or [^"
-msgstr ""
-
-#. REG_EBRACK
-#: plug-ins/script-fu/regex.c:973
-msgid "Unmatched ( or \\("
-msgstr ""
-
-#. REG_EPAREN
-#: plug-ins/script-fu/regex.c:974
-msgid "Unmatched \\{"
-msgstr ""
-
-#. REG_EBRACE
-#: plug-ins/script-fu/regex.c:975
-msgid "Invalid content of \\{\\}"
-msgstr ""
-
-#. REG_BADBR
-#: plug-ins/script-fu/regex.c:976
-msgid "Invalid range end"
-msgstr ""
-
-#. REG_ERANGE
-#: plug-ins/script-fu/regex.c:977
-msgid "Memory exhausted"
-msgstr ""
-
-#. REG_ESPACE
-#: plug-ins/script-fu/regex.c:978
-msgid "Invalid preceding regular expression"
-msgstr ""
-
-#. REG_BADRPT
-#: plug-ins/script-fu/regex.c:979
-msgid "Premature end of regular expression"
-msgstr ""
-
-#. REG_EEND
-#: plug-ins/script-fu/regex.c:980
-msgid "Regular expression too big"
-msgstr ""
-
-#. REG_ESIZE
-#: plug-ins/script-fu/regex.c:981
-msgid "Unmatched ) or \\)"
-msgstr ""
-
-#: plug-ins/script-fu/regex.c:5431
-msgid "No previous regular expression"
-msgstr ""
-
 #: plug-ins/script-fu/script-fu-console.c:157
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu ¥³¥ó¥½¡¼¥ë¥â¡¼¥É¤Ï¥¤¥ó¥¿¥é¥¯¥Æ¥£¥ÖÆ°ºî¤·¤«¤·¤Þ¤»¤ó"
@@ -11568,43 +11519,43 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu É¾²Á¥â¡¼¥É¤ÏÈó¥¤¥ó¥¿¥é¥¯¥Æ¥£¥ÖÆ°ºî¤·¤«¤Ç¤­¤Þ¤»¤ó"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1234
+#: plug-ins/script-fu/script-fu-scripts.c:1232
 msgid "Script Arguments"
 msgstr "¥¹¥¯¥ê¥×¥È°ú¿ô"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1297
+#: plug-ins/script-fu/script-fu-scripts.c:1296
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu ¿§ÁªÂò"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1304
+#: plug-ins/script-fu/script-fu-scripts.c:1302
 msgid "Script Toggle"
 msgstr "¥¹¥¯¥ê¥×¥ÈÀÚÂØ¤¨"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1357
+#: plug-ins/script-fu/script-fu-scripts.c:1364
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu ¥Õ¥¡¥¤¥ëÁªÂò"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1386
+#: plug-ins/script-fu/script-fu-scripts.c:1396
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu ¥Ñ¥¿¡¼¥óÁªÂò"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1392
+#: plug-ins/script-fu/script-fu-scripts.c:1403
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu ¥°¥é¥Ç¡¼¥·¥ç¥óÁªÂò"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1400
+#: plug-ins/script-fu/script-fu-scripts.c:1411
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu ¥Ö¥é¥·ÁªÂò"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1435
+#: plug-ins/script-fu/script-fu-scripts.c:1436
 msgid " Reset to Defaults "
 msgstr " ½é´üÃÍ¤ËÌá¤¹ "
 
-#: plug-ins/script-fu/script-fu-scripts.c:1578
+#: plug-ins/script-fu/script-fu-scripts.c:1589
 msgid "NOT SET"
 msgstr "Ì¤»ØÄê"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1649
+#: plug-ins/script-fu/script-fu-scripts.c:1660
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -11612,23 +11563,22 @@ msgstr ""
 "¾¯¤Ê¤¯¤È¤âÁªÂò¤·¤¿¥Õ¥©¥ó¥ÈÃæ¤Ë°ì¤Ä°Ê¾å\n"
 "ÉÔÀµ¤Ê¤â¤Î¤¬¤¢¤ê¤Þ¤¹.ÀßÄê¤ò³ÎÇ§¤·¤Æ²¼¤µ¤¤.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1914
-msgid "Author: "
-msgstr "ºî¼Ô: "
+#: plug-ins/script-fu/script-fu-scripts.c:1933
+#, fuzzy
+msgid "Copyright:"
+msgstr "Ãøºî¸¢É½¼¨ :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1924
-msgid "Copyright: "
-msgstr "Ãøºî¸¡É½¼¨: "
+#: plug-ins/script-fu/script-fu-scripts.c:1939
+#, fuzzy
+msgid "Date:"
+msgstr "ÆüÉÕ :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1934
-msgid "Date: "
-msgstr "ÆüÉÕ: "
+#: plug-ins/script-fu/script-fu-scripts.c:1947
+#, fuzzy
+msgid "Image Types:"
+msgstr "²èÁü¼ï"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1946
-msgid "Image types: "
-msgstr "²èÁü¼ï: "
-
-#: plug-ins/script-fu/script-fu-scripts.c:2103
+#: plug-ins/script-fu/script-fu-scripts.c:2096
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu ¥Õ¥©¥ó¥ÈÁªÂò"
 
@@ -11646,19 +11596,19 @@ msgstr "¥µ¡¼¥Ð¥Ý¡¼¥È: "
 msgid "Server Logfile: "
 msgstr "¥µ¡¼¥Ð¥í¥°¥Õ¥¡¥¤¥ë: "
 
-#: plug-ins/script-fu/script-fu.c:160
+#: plug-ins/script-fu/script-fu.c:165
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
 msgstr "<Toolbox>/³ÈÄ¥/Script-Fu/¥³¥ó¥½¡¼¥ë..."
 
-#: plug-ins/script-fu/script-fu.c:172
+#: plug-ins/script-fu/script-fu.c:177
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/³ÈÄ¥/Script-Fu/¥µ¡¼¥Ð..."
 
-#: plug-ins/script-fu/script-fu.c:1001 plug-ins/script-fu/script-fu.c:1002
+#: plug-ins/script-fu/script-fu.c:1007 plug-ins/script-fu/script-fu.c:1008
 msgid "Re-read all available scripts"
 msgstr "Á´¤Æ¤Î¥¹¥¯¥ê¥×¥È¤òºÆÆÉ¤ß¹þ¤ß"
 
-#: plug-ins/script-fu/script-fu.c:1006
+#: plug-ins/script-fu/script-fu.c:1012
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/³ÈÄ¥/Script-Fu/ºÆÆÉ¤ß¹þ¤ß"
 
@@ -11943,3 +11893,21 @@ msgstr "¥¨¥é¡¼: XJT ¥×¥í¥Ñ¥Æ¥£¥Õ¥¡¥¤¥ë %s ¤¬ÆÉ¤á¤Þ¤»¤ó"
 #, c-format
 msgid "Error,XJT propertyfile %s is empty"
 msgstr "¥¨¥é¡¼: XJT ¥×¥í¥Ñ¥Æ¥£¥Õ¥¡¥¤¥ë %s ¤¬¶õ¤Ç¤¹<"
+
+#~ msgid "--------------------------------------------"
+#~ msgstr "--------------------------------------------"
+
+#~ msgid "file alreay exists:"
+#~ msgstr "¥Õ¥¡¥¤¥ë¤Ï´û¤ËÂ¸ºß¤·¤Þ¤¹:"
+
+#~ msgid "Author: "
+#~ msgstr "ºî¼Ô: "
+
+#~ msgid "Copyright: "
+#~ msgstr "Ãøºî¸¡É½¼¨: "
+
+#~ msgid "Date: "
+#~ msgstr "ÆüÉÕ: "
+
+#~ msgid "Image types: "
+#~ msgstr "²èÁü¼ï: "

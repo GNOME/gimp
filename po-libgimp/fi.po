@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 1999-11-01 08:54-0800\n"
+"POT-Creation-Date: 2000-01-31 19:22-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13,51 +13,68 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: ENCODING\n"
 
-#: libgimp/gimpexport.c:121
-msgid "can't handle layers"
+#: libgimp/gimpcolorbutton.c:105
+msgid "/Use Foreground Color"
+msgstr ""
+
+#: libgimp/gimpcolorbutton.c:106
+msgid "/Use Background Color"
+msgstr ""
+
+#: libgimp/gimpexport.c:124
+#, fuzzy
+msgid "can't Handle Layers"
 msgstr "ei pysty k‰sittelem‰‰n tasoja"
 
-#: libgimp/gimpexport.c:122 libgimp/gimpexport.c:131
-msgid "Merge visible layers"
+#: libgimp/gimpexport.c:125 libgimp/gimpexport.c:134
+#, fuzzy
+msgid "Merge Visible Layers"
 msgstr "Yhdist‰ n‰kyv‰t tasot"
 
-#: libgimp/gimpexport.c:130
-msgid "can only handle layers as animation frames"
+#: libgimp/gimpexport.c:133
+#, fuzzy
+msgid "can only Handle Layers as Animation Frames"
 msgstr "voi k‰ytt‰‰ tasoja ainoastaan animaation ruutuina"
 
-#: libgimp/gimpexport.c:131
-msgid "Save as animation"
+#: libgimp/gimpexport.c:134
+#, fuzzy
+msgid "Save as Animation"
 msgstr "Tallenna animaationa"
 
-#: libgimp/gimpexport.c:139
-msgid "can't handle transparency"
+#: libgimp/gimpexport.c:142
+#, fuzzy
+msgid "can't Handle Transparency"
 msgstr "ei pysty k‰sittelem‰‰n l‰pin‰kyvyytt‰"
 
-#: libgimp/gimpexport.c:140
+#: libgimp/gimpexport.c:143
 msgid "Flatten Image"
 msgstr "Yhdist‰ kuva"
 
-#: libgimp/gimpexport.c:148
-msgid "can only handle RGB images"
+#: libgimp/gimpexport.c:151
+#, fuzzy
+msgid "can only Handle RGB Images"
 msgstr "k‰sittelee ainoastaan t‰ysv‰rikuvia"
 
-#: libgimp/gimpexport.c:149 libgimp/gimpexport.c:176 libgimp/gimpexport.c:185
+#: libgimp/gimpexport.c:152 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
 msgid "Convert to RGB"
 msgstr "Muunna t‰ysv‰rikuvaksi"
 
-#: libgimp/gimpexport.c:157
-msgid "can only handle grayscale images"
+#: libgimp/gimpexport.c:160
+#, fuzzy
+msgid "can only Handle Grayscale Images"
 msgstr "k‰sittelee ainoastaan harmaas‰vykuvia"
 
-#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:176 libgimp/gimpexport.c:195
-msgid "Convert to grayscale"
+#: libgimp/gimpexport.c:161 libgimp/gimpexport.c:180 libgimp/gimpexport.c:201
+#, fuzzy
+msgid "Convert to Grayscale"
 msgstr "Muunna harmaas‰vyksi"
 
-#: libgimp/gimpexport.c:166
-msgid "can only handle indexed images"
+#: libgimp/gimpexport.c:169
+#, fuzzy
+msgid "can only Handle Indexed Images"
 msgstr "k‰sittelee ainoastaan indeksoituja kuvia"
 
-#: libgimp/gimpexport.c:167 libgimp/gimpexport.c:185 libgimp/gimpexport.c:194
+#: libgimp/gimpexport.c:170 libgimp/gimpexport.c:189 libgimp/gimpexport.c:199
 msgid ""
 "Convert to indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -65,102 +82,136 @@ msgstr ""
 "Muunna indeksoiduksi k‰ytt‰en oletusasetuksia\n"
 "(Tee se k‰sin jos haluat k‰ytt‰‰ muita kuin oletuksia)"
 
-#: libgimp/gimpexport.c:175
-msgid "can only handle RGB or grayscale images"
+#: libgimp/gimpexport.c:179
+#, fuzzy
+msgid "can only Handle RGB or Grayscale Images"
 msgstr "k‰sittelee ainoastaan t‰ysv‰ri- tai harmaas‰vykuvia"
 
-#: libgimp/gimpexport.c:184
-msgid "can only handle RGB or indexed images"
+#: libgimp/gimpexport.c:188
+#, fuzzy
+msgid "can only Handle RGB or Indexed Images"
 msgstr "k‰sittelee ainoastaan t‰ysv‰ri- tai indeksoituja kuvia"
 
-#: libgimp/gimpexport.c:193
-msgid "can only handle grayscale or indexed images"
+#: libgimp/gimpexport.c:198
+#, fuzzy
+msgid "can only Handle Grayscale or Indexed Images"
 msgstr "k‰sittelee ainoastaan harmaas‰vy- tai indeksoituja kuvia"
 
-#: libgimp/gimpexport.c:203
-msgid "needs an alpha channel"
+#: libgimp/gimpexport.c:209
+#, fuzzy
+msgid "needs an Alpha Channel"
 msgstr "vaatii ett‰ kuvassa on alfakanava"
 
-#: libgimp/gimpexport.c:204
-msgid "Add alpha channel"
+#: libgimp/gimpexport.c:210
+#, fuzzy
+msgid "Add Alpha Channel"
 msgstr "Lis‰‰ alfakanava"
 
-#: libgimp/gimpexport.c:274
+#.
+#. *  Plug-ins have called gtk_init () before calling gimp_export ().
+#. *  Otherwise bad things will happen now!!
+#.
+#. the dialog
+#: libgimp/gimpexport.c:279
 msgid "Export File"
 msgstr "Tiedoston ulosvienti"
 
-#: libgimp/gimpexport.c:290
+#: libgimp/gimpexport.c:284
 msgid "Export"
 msgstr "Vie"
 
-#: libgimp/gimpexport.c:315
-msgid ""
-"Your image should be exported before it can be saved for the following "
-"reasons:"
-msgstr ""
-"Kuvaasi pit‰‰ ennen tallennusta muokata ulosvienti‰ varten koska:"
-
-#: libgimp/gimpexport.c:373
-msgid "The export conversion won't modify your original image."
-msgstr "Muokkaus ulosvienti‰ varten ei vaikuta alkuper‰iseen kuvaan."
-
-#: libgimp/gimpexport.c:305
-msgid "Cancel"
-msgstr "Peru"
-
-#: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
-msgid "Close"
-msgstr "Sulje"
-
-#: libgimp/gimpunit.c:44
-msgid "pixel"
-msgstr ""
-
-#: libgimp/gimpunit.c:44
-msgid "pixels"
-msgstr ""
-
-#: libgimp/gimpunit.c:47
-msgid "inch"
-msgstr "tuuma"
-
-#: libgimp/gimpunit.c:47
-msgid "inches"
-msgstr "tuumaa"
-
-#: libgimp/gimpunit.c:48
-msgid "millimeter"
-msgstr "millimetri"
-
-#: libgimp/gimpunit.c:48
-msgid "millimeters"
-msgstr "millimetrej‰"
-
-#: libgimp/gimpunit.c:51
-msgid "point"
-msgstr "piste"
-
-#: libgimp/gimpunit.c:51
-msgid "points"
-msgstr "pistett‰"
-
-#: libgimp/gimpunit.c:52
-msgid "pica"
-msgstr ""
-
-#: libgimp/gimpunit.c:52
-msgid "picas"
-msgstr "picaa"
-
-#: libgimp/gimpunit.c:59
-msgid "percent"
-msgstr "%"
-
-#: libgimp/gimpexport.c:298
+#: libgimp/gimpexport.c:286
 msgid "Ignore"
 msgstr "Ohita"
 
-#: libgimp/gimpfileselection.c:355
-#: libgimp/gimpunitmenu.c:510
+#: libgimp/gimpexport.c:288
+msgid "Cancel"
+msgstr "Peru"
+
+#: libgimp/gimpexport.c:303
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr "Kuvaasi pit‰‰ ennen tallennusta muokata ulosvienti‰ varten koska:"
+
+#. the footline
+#: libgimp/gimpexport.c:366
+msgid "The export conversion won't modify your original image."
+msgstr "Muokkaus ulosvienti‰ varten ei vaikuta alkuper‰iseen kuvaan."
+
+#: libgimp/gimpfileselection.c:352
+#, fuzzy
+msgid "Select File"
+msgstr "Valitse"
+
+#: libgimp/gimpfileselection.c:362 libgimp/gimpunitmenu.c:462
 msgid "Select"
 msgstr "Valitse"
+
+#: libgimp/gimpfileselection.c:363 libgimp/gimpunitmenu.c:464
+msgid "Close"
+msgstr "Sulje"
+
+#. pseudo unit
+#: libgimp/gimpunit.c:46
+msgid "pixel"
+msgstr ""
+
+#: libgimp/gimpunit.c:46
+msgid "pixels"
+msgstr ""
+
+#. standard units
+#: libgimp/gimpunit.c:49
+msgid "inch"
+msgstr "tuuma"
+
+#: libgimp/gimpunit.c:49
+msgid "inches"
+msgstr "tuumaa"
+
+#: libgimp/gimpunit.c:50
+msgid "millimeter"
+msgstr "millimetri"
+
+#: libgimp/gimpunit.c:50
+msgid "millimeters"
+msgstr "millimetrej‰"
+
+#. professional units
+#: libgimp/gimpunit.c:53
+msgid "point"
+msgstr "piste"
+
+#: libgimp/gimpunit.c:53
+msgid "points"
+msgstr "pistett‰"
+
+#: libgimp/gimpunit.c:54
+msgid "pica"
+msgstr ""
+
+#: libgimp/gimpunit.c:54
+msgid "picas"
+msgstr "picaa"
+
+#: libgimp/gimpunit.c:61
+msgid "percent"
+msgstr "%"
+
+#: libgimp/gimpunitmenu.c:215
+msgid "More..."
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:457
+#, fuzzy
+msgid "Unit Selection"
+msgstr "Valitse"
+
+#: libgimp/gimpunitmenu.c:493
+msgid "Unit"
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:494
+msgid "Factor"
+msgstr ""

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-02-02 10:54+0100\n"
+"POT-Creation-Date: 2000-02-02 17:39-0800\n"
 "PO-Revision-Date: 2000-02-01 22:50+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -86,7 +86,7 @@ msgstr "Beenden"
 #: app/color_balance.c:275 app/color_notebook.c:115 app/convert.c:506
 #: app/curves.c:584 app/file_new_dialog.c:199 app/file_new_dialog.c:370
 #: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:370 app/gimpprogress.c:115
-#: app/gimpui.c:79 app/global_edit.c:739 app/gradient.c:1788
+#: app/gimpui.c:86 app/global_edit.c:739 app/gradient.c:1788
 #: app/gradient.c:4875 app/gradient.c:5436 app/hue_saturation.c:377
 #: app/interface.c:967 app/layers_dialog.c:3342 app/layers_dialog.c:3533
 #: app/layers_dialog.c:3633 app/layers_dialog.c:3735 app/layers_dialog.c:3998
@@ -254,7 +254,7 @@ msgstr "Helligkeit-Kontrast funktioniert nicht bei indizierten Bildern."
 #: app/channels_dialog.c:2446 app/channels_dialog.c:2620
 #: app/color_balance.c:271 app/color_notebook.c:112 app/convert.c:504
 #: app/curves.c:580 app/file_new_dialog.c:197 app/file_new_dialog.c:366
-#: app/gdisplay_color_ui.c:127 app/gimpui.c:77 app/gimpui.c:457
+#: app/gdisplay_color_ui.c:127 app/gimpui.c:84 app/gimpui.c:488
 #: app/hue_saturation.c:373 app/layers_dialog.c:3340 app/layers_dialog.c:3531
 #: app/layers_dialog.c:3631 app/layers_dialog.c:3996 app/levels.c:351
 #: app/module_db.c:281 app/posterize.c:197 app/preferences_dialog.c:1464
@@ -1431,14 +1431,16 @@ msgid "Unknown brush format version #%d in \"%s\"\n"
 msgstr "Unbekanntes Pinselformat Version #%d in \"%s\"\n"
 
 #: app/gimpbrushpipe.c:300
-msgid "Image hoses should have at least one brush."
+msgid "Brush pipes should have at least one brush."
 msgstr ""
 
 #: app/gimpbrushpipe.c:396
-msgid "Failed to load one of the brushes in the image hose."
+msgid ""
+"Failed to load one of the\n"
+"brushes in the brush pipe."
 msgstr ""
 
-#: app/gimpbrushpipe.c:456
+#: app/gimpbrushpipe.c:457
 #, fuzzy
 msgid "Failed to load pixmap brush."
 msgstr "Konnte keinen Pfad aus %s lesen"
@@ -1617,7 +1619,23 @@ msgstr "Konnte %s nicht wieder öffnen\n"
 msgid "Can't write to %s; %s"
 msgstr "Kann nicht in %s schreiben; %s"
 
-#: app/gimpui.c:452
+#: app/gimpui.c:449
+#, c-format
+msgid "Message repeated %d times"
+msgstr ""
+
+#: app/gimpui.c:462
+msgid "Message repeated once"
+msgstr ""
+
+#: app/gimpui.c:476
+msgid ""
+"WARNING:\n"
+"Too many open message dialogs.\n"
+"Messages are redirected to stderr.\n"
+msgstr ""
+
+#: app/gimpui.c:483
 msgid "GIMP Message"
 msgstr "GIMP Meldung"
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 1999-11-01 08:54-0800\n"
+"POT-Creation-Date: 2000-01-31 19:22-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13,145 +13,68 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: ENCODING\n"
 
-#: libgimp/gimpexport.c:305
-msgid "Cancel"
-msgstr "Zru¹i»"
-
-#: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
-msgid "Close"
-msgstr "Zatvori»"
-
-#: libgimp/gimpunit.c:44
-msgid "pixel"
-msgstr "pixlov"
-
-#: libgimp/gimpunit.c:44
-msgid "pixels"
-msgstr "pixlov"
-
-#: libgimp/gimpunit.c:47
-msgid "inch"
-msgstr "palcov"
-
-#: libgimp/gimpunit.c:47
-msgid "inches"
-msgstr "palcov"
-
-#: libgimp/gimpunit.c:48
-msgid "millimeter"
-msgstr "milimeter"
-
-#: libgimp/gimpunit.c:48
-msgid "millimeters"
-msgstr "milimetre"
-
-#: libgimp/gimpunit.c:51
-msgid "point"
-msgstr "bod"
-
-#: libgimp/gimpunit.c:51
-msgid "points"
-msgstr "body"
-
-#: libgimp/gimpunit.c:52
-msgid "pica"
+#: libgimp/gimpcolorbutton.c:105
+msgid "/Use Foreground Color"
 msgstr ""
 
-#: libgimp/gimpunit.c:52
-msgid "picas"
+#: libgimp/gimpcolorbutton.c:106
+msgid "/Use Background Color"
 msgstr ""
 
-#: libgimp/gimpunit.c:59
-msgid "percent"
-msgstr "percent"
-
-#: libgimp/gimpexport.c:298
-msgid "Ignore"
-msgstr "Ignorova»"
-
-#: libgimp/gimpfileselection.c:355
-#: libgimp/gimpunitmenu.c:510
-msgid "Select"
-msgstr "/Selekcia"
-
-#: libgimp/gimpfileselection.c:352
-msgid "Select File"
-msgstr "Výber súboru"
-
-#: libgimp/gimpenv.c:86
-msgid "warning: no home directory."
-msgstr "warovanie: chýba domáci adresár."
-
-#: libgimp/gimpunitmenu.c:207
-msgid "More..."
-msgstr "Viac..."
-
-#: libgimp/gimpunitmenu.c:333
-msgid "unit-menu-format string ended within %%-sequence"
-msgstr ""
-
-#: libgimp/gimpunitmenu.c:366
-msgid "unit-menu-format contains unknown format sequence '%%%c'"
-msgstr ""
-
-#: libgimp/gimpunitmenu.c:453
-msgid "Unit Selection"
-msgstr "Výber jednotiek"
-
-#: libgimp/gimpunitmenu.c:479
-msgid "Unit "
-msgstr "Jednotka:"
-
-#: libgimp/gimpunitmenu.c:481
-msgid "Factor"
-msgstr "Faktor"
-
-#: libgimp/gimpexport.c:121
+#: libgimp/gimpexport.c:124
 #, fuzzy
-msgid "can't handle layers"
+msgid "can't Handle Layers"
 msgstr "Veµkos» vrstvy"
 
-#: libgimp/gimpexport.c:122 libgimp/gimpexport.c:131
-msgid "Merge visible layers"
+#: libgimp/gimpexport.c:125 libgimp/gimpexport.c:134
+#, fuzzy
+msgid "Merge Visible Layers"
 msgstr "Zlúèi» viditeµné vrstvy"
 
-#: libgimp/gimpexport.c:130
-msgid "can only handle layers as animation frames"
+#: libgimp/gimpexport.c:133
+#, fuzzy
+msgid "can only Handle Layers as Animation Frames"
 msgstr "vrstvy mô¾u by» len políèkami animácie"
 
-#: libgimp/gimpexport.c:131
-msgid "Save as animation"
+#: libgimp/gimpexport.c:134
+#, fuzzy
+msgid "Save as Animation"
 msgstr "Ulo¾i» ako animáciu"
 
-#: libgimp/gimpexport.c:139
-msgid "can't handle transparency"
+#: libgimp/gimpexport.c:142
+#, fuzzy
+msgid "can't Handle Transparency"
 msgstr "transparentnos» nie je podporovaná"
 
-#: libgimp/gimpexport.c:140
+#: libgimp/gimpexport.c:143
 msgid "Flatten Image"
 msgstr "Do jednej vrstvy"
 
-#: libgimp/gimpexport.c:148
-msgid "can only handle RGB images"
+#: libgimp/gimpexport.c:151
+#, fuzzy
+msgid "can only Handle RGB Images"
 msgstr "funguje len pre RGB obrázky"
 
-#: libgimp/gimpexport.c:149 libgimp/gimpexport.c:176 libgimp/gimpexport.c:185
+#: libgimp/gimpexport.c:152 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
 msgid "Convert to RGB"
 msgstr "Konverzia do RGB"
 
-#: libgimp/gimpexport.c:157
-msgid "can only handle grayscale images"
+#: libgimp/gimpexport.c:160
+#, fuzzy
+msgid "can only Handle Grayscale Images"
 msgstr "funguje len pre obrázky v odtieòoch ¹edej"
 
-#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:176 libgimp/gimpexport.c:195
-msgid "Convert to grayscale"
+#: libgimp/gimpexport.c:161 libgimp/gimpexport.c:180 libgimp/gimpexport.c:201
+#, fuzzy
+msgid "Convert to Grayscale"
 msgstr "Konverzia do odtieòov ¹edej"
 
-#: libgimp/gimpexport.c:166
-msgid "can only handle indexed images"
+#: libgimp/gimpexport.c:169
+#, fuzzy
+msgid "can only Handle Indexed Images"
 msgstr "funguje len pre indexované obrázky"
 
-#: libgimp/gimpexport.c:167 libgimp/gimpexport.c:185 libgimp/gimpexport.c:194
+#: libgimp/gimpexport.c:170 libgimp/gimpexport.c:189 libgimp/gimpexport.c:199
 msgid ""
 "Convert to indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -159,43 +82,139 @@ msgstr ""
 "Skonvertova» na indexované pou¾itím ¹tandardných nastavení\n"
 "(Pou¾ite manuálne nastavenie pre vylep¹enie výsledku)"
 
-#: libgimp/gimpexport.c:175
-msgid "can only handle RGB or grayscale images"
+#: libgimp/gimpexport.c:179
+#, fuzzy
+msgid "can only Handle RGB or Grayscale Images"
 msgstr "funguje len pre RGB/¹edé obrázky"
 
-#: libgimp/gimpexport.c:184
-msgid "can only handle RGB or indexed images"
+#: libgimp/gimpexport.c:188
+#, fuzzy
+msgid "can only Handle RGB or Indexed Images"
 msgstr "funguje len pre RGB/indexované obrázky"
 
-#: libgimp/gimpexport.c:193
-msgid "can only handle grayscale or indexed images"
+#: libgimp/gimpexport.c:198
+#, fuzzy
+msgid "can only Handle Grayscale or Indexed Images"
 msgstr "funguje len pre indexované/¹edé obrázky"
 
-#: libgimp/gimpexport.c:203
+#: libgimp/gimpexport.c:209
 #, fuzzy
-msgid "needs an alpha channel"
+msgid "needs an Alpha Channel"
 msgstr "Alfa kanál vrstvy"
 
-#: libgimp/gimpexport.c:204
+#: libgimp/gimpexport.c:210
 #, fuzzy
-msgid "Add alpha channel"
+msgid "Add Alpha Channel"
 msgstr "/Prida» alfa kanál"
 
-#: libgimp/gimpexport.c:274
+#.
+#. *  Plug-ins have called gtk_init () before calling gimp_export ().
+#. *  Otherwise bad things will happen now!!
+#.
+#. the dialog
+#: libgimp/gimpexport.c:279
 msgid "Export File"
 msgstr "Exportova» súbor"
 
-#: libgimp/gimpexport.c:290
+#: libgimp/gimpexport.c:284
 msgid "Export"
 msgstr "Export"
 
-#: libgimp/gimpexport.c:315
+#: libgimp/gimpexport.c:286
+msgid "Ignore"
+msgstr "Ignorova»"
+
+#: libgimp/gimpexport.c:288
+msgid "Cancel"
+msgstr "Zru¹i»"
+
+#: libgimp/gimpexport.c:303
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr ""
 "Vá¹ obrázok by mal by» pred ulo¾ením exportovaný z nasledovnýchdôvodov:"
 
-#: libgimp/gimpexport.c:373
+#. the footline
+#: libgimp/gimpexport.c:366
 msgid "The export conversion won't modify your original image."
 msgstr "Konverzia pri exporte neovplyvní pôvodný obrázok."
+
+#: libgimp/gimpfileselection.c:352
+msgid "Select File"
+msgstr "Výber súboru"
+
+#: libgimp/gimpfileselection.c:362 libgimp/gimpunitmenu.c:462
+msgid "Select"
+msgstr "/Selekcia"
+
+#: libgimp/gimpfileselection.c:363 libgimp/gimpunitmenu.c:464
+msgid "Close"
+msgstr "Zatvori»"
+
+#. pseudo unit
+#: libgimp/gimpunit.c:46
+msgid "pixel"
+msgstr "pixlov"
+
+#: libgimp/gimpunit.c:46
+msgid "pixels"
+msgstr "pixlov"
+
+#. standard units
+#: libgimp/gimpunit.c:49
+msgid "inch"
+msgstr "palcov"
+
+#: libgimp/gimpunit.c:49
+msgid "inches"
+msgstr "palcov"
+
+#: libgimp/gimpunit.c:50
+msgid "millimeter"
+msgstr "milimeter"
+
+#: libgimp/gimpunit.c:50
+msgid "millimeters"
+msgstr "milimetre"
+
+#. professional units
+#: libgimp/gimpunit.c:53
+msgid "point"
+msgstr "bod"
+
+#: libgimp/gimpunit.c:53
+msgid "points"
+msgstr "body"
+
+#: libgimp/gimpunit.c:54
+msgid "pica"
+msgstr ""
+
+#: libgimp/gimpunit.c:54
+msgid "picas"
+msgstr ""
+
+#: libgimp/gimpunit.c:61
+msgid "percent"
+msgstr "percent"
+
+#: libgimp/gimpunitmenu.c:215
+msgid "More..."
+msgstr "Viac..."
+
+#: libgimp/gimpunitmenu.c:457
+msgid "Unit Selection"
+msgstr "Výber jednotiek"
+
+#: libgimp/gimpunitmenu.c:493
+#, fuzzy
+msgid "Unit"
+msgstr "Jednotka:"
+
+#: libgimp/gimpunitmenu.c:494
+msgid "Factor"
+msgstr "Faktor"
+
+#~ msgid "warning: no home directory."
+#~ msgstr "warovanie: chýba domáci adresár."

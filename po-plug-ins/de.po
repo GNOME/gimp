@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-02-01 23:29+0100\n"
+"POT-Creation-Date: 2000-02-02 17:39-0800\n"
 "PO-Revision-Date: 2000-02-01 23:32+0100\n"
 "Last-Translator: Bernhard Valenti <bernhard.valenti@gmx.net>\n"
 "Language-Team: German <de@li.org>\n"
@@ -96,13 +96,14 @@ msgstr "Über"
 #: plug-ins/fits/fits.c:1003 plug-ins/flame/flame.c:582
 #: plug-ins/flame/flame.c:894 plug-ins/fp/fp_gtk.c:882
 #: plug-ins/gap/gap_arr_dialog.c:965 plug-ins/gap/gap_arr_dialog.c:1189
-#: plug-ins/gap/gap_decode_xanim.c:175 plug-ins/gap/gap_mod_layer.c:145
+#: plug-ins/gap/gap_decode_xanim.c:176 plug-ins/gap/gap_mod_layer.c:145
 #: plug-ins/gap/gap_mov_dialog.c:461 plug-ins/gap/gap_mpege.c:191
 #: plug-ins/gap/gap_resi_dialog.c:149 plug-ins/gdyntext/gdyntext_ui.c:188
 #: plug-ins/gdyntext/gdyntext_ui.c:503 plug-ins/gfig/gfig.c:5054
 #: plug-ins/gfig/gfig.c:5465 plug-ins/gfig/gfig.c:5633
 #: plug-ins/gfig/gfig.c:6006 plug-ins/gflare/gflare.c:2408
 #: plug-ins/gflare/gflare.c:3446 plug-ins/gflare/gflare.c:5457
+#: plug-ins/gfli/gfli.c:837 plug-ins/gfli/gfli.c:908
 #: plug-ins/gimpressionist/gimpressionist.c:368
 #: plug-ins/gimpressionist/gimpressionist.c:490
 #: plug-ins/gimpressionist/orientmap.c:626
@@ -186,7 +187,8 @@ msgstr "OK"
 #: plug-ins/gfig/gfig.c:5064 plug-ins/gfig/gfig.c:5474
 #: plug-ins/gfig/gfig.c:5667 plug-ins/gfig/gfig.c:6271
 #: plug-ins/gflare/gflare.c:3337 plug-ins/gflare/gflare.c:3456
-#: plug-ins/gflare/gflare.c:5466 plug-ins/gimpressionist/gimpressionist.c:499
+#: plug-ins/gflare/gflare.c:5466 plug-ins/gfli/gfli.c:839
+#: plug-ins/gfli/gfli.c:910 plug-ins/gimpressionist/gimpressionist.c:499
 #: plug-ins/gimpressionist/orientmap.c:640
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/ifscompose/ifscompose.c:806
@@ -1291,8 +1293,9 @@ msgstr "<Image>/Filter/Abbilden/Auf Object..."
 #: plug-ins/common/psd.c:1708 plug-ins/common/sunras.c:443
 #: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:423
 #: plug-ins/common/xbm.c:553 plug-ins/common/xpm.c:326
-#: plug-ins/common/xwd.c:457 plug-ins/faxg3/faxg3.c:191 plug-ins/sgi/sgi.c:331
-#: plug-ins/sgi/sgi.c:333 plug-ins/xjt/xjt.c:3160
+#: plug-ins/common/xwd.c:457 plug-ins/faxg3/faxg3.c:191
+#: plug-ins/gfli/gfli.c:469 plug-ins/sgi/sgi.c:331 plug-ins/sgi/sgi.c:333
+#: plug-ins/xjt/xjt.c:3160
 #, c-format
 msgid "Loading %s:"
 msgstr "Öffne %s:"
@@ -1365,8 +1368,8 @@ msgstr "kann %s nicht öffnen\n"
 #: plug-ins/common/sunras.c:526 plug-ins/common/tga.c:1197
 #: plug-ins/common/tiff.c:1204 plug-ins/common/xbm.c:790
 #: plug-ins/common/xpm.c:643 plug-ins/common/xwd.c:561
-#: plug-ins/fits/fits.c:473 plug-ins/sgi/sgi.c:549 plug-ins/sgi/sgi.c:551
-#: plug-ins/xjt/xjt.c:1562
+#: plug-ins/fits/fits.c:473 plug-ins/gfli/gfli.c:667 plug-ins/sgi/sgi.c:549
+#: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1562
 #, c-format
 msgid "Saving %s:"
 msgstr "Sichere %s:"
@@ -2412,7 +2415,8 @@ msgid "Color to Alpha"
 msgstr "Farbe zu Transparenz"
 
 #: plug-ins/common/colortoalpha.c:440 plug-ins/common/mail.c:542
-#: plug-ins/common/mapcolor.c:381
+#: plug-ins/common/mapcolor.c:381 plug-ins/gfli/gfli.c:863
+#: plug-ins/gfli/gfli.c:934
 msgid "From:"
 msgstr "Von:"
 
@@ -4323,6 +4327,7 @@ msgid "Send to Mail"
 msgstr "Als Mail senden"
 
 #: plug-ins/common/mail.c:530 plug-ins/common/mapcolor.c:381
+#: plug-ins/gfli/gfli.c:872 plug-ins/gfli/gfli.c:943
 msgid "To:"
 msgstr "Bis:"
 
@@ -7150,29 +7155,29 @@ msgstr ""
 "und in separate Dateien auf der Festplatte geschrieben.\n"
 "Audio-Informationen in der Videodatei werden ignoriert"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:332 plug-ins/gap/gap_decode_xanim.c:326
+#: plug-ins/gap/gap_decode_mpeg_main.c:332 plug-ins/gap/gap_decode_xanim.c:328
 #: plug-ins/gap/gap_range_ops.c:1184
 msgid "OVERWRITE frame"
 msgstr "ÜBERSCHREIBE Frame"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:334 plug-ins/gap/gap_decode_xanim.c:328
+#: plug-ins/gap/gap_decode_mpeg_main.c:334 plug-ins/gap/gap_decode_xanim.c:330
 #: plug-ins/gap/gap_range_ops.c:1186
 msgid "OVERWRITE all"
 msgstr "Alle ÜBERSCHREIBEN"
 
 #. the  Action Button
-#: plug-ins/gap/gap_decode_mpeg_main.c:336 plug-ins/gap/gap_decode_xanim.c:173
-#: plug-ins/gap/gap_decode_xanim.c:330 plug-ins/gap/gap_lib.c:1011
+#: plug-ins/gap/gap_decode_mpeg_main.c:336 plug-ins/gap/gap_decode_xanim.c:174
+#: plug-ins/gap/gap_decode_xanim.c:332 plug-ins/gap/gap_lib.c:1011
 #: plug-ins/gap/gap_range_ops.c:1188
 msgid "CANCEL"
 msgstr "ABBRECHEN"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:342 plug-ins/gap/gap_decode_xanim.c:336
+#: plug-ins/gap/gap_decode_mpeg_main.c:342 plug-ins/gap/gap_decode_xanim.c:338
 #: plug-ins/gap/gap_lib.c:1019 plug-ins/gap/gap_range_ops.c:1191
 msgid "GAP Question"
 msgstr "GAP-Frage"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:343
+#: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:339
 msgid "file already exists:"
 msgstr "Datei existiert bereits:"
 
@@ -7198,7 +7203,7 @@ msgstr ""
 msgid "From"
 msgstr "Von"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:648 plug-ins/gap/gap_decode_xanim.c:222
+#: plug-ins/gap/gap_decode_mpeg_main.c:648 plug-ins/gap/gap_decode_xanim.c:223
 msgid "Framenumber of 1.st frame to extract"
 msgstr "Framenummer des ersten Frames, der extrahiert werden soll"
 
@@ -7206,7 +7211,7 @@ msgstr "Framenummer des ersten Frames, der extrahiert werden soll"
 msgid "To"
 msgstr "Nach"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:656 plug-ins/gap/gap_decode_xanim.c:230
+#: plug-ins/gap/gap_decode_mpeg_main.c:656 plug-ins/gap/gap_decode_xanim.c:231
 msgid "Framenumber of last frame to extract"
 msgstr "Framenummer des ersten Frames, der extrahiert werden soll"
 
@@ -7222,12 +7227,12 @@ msgstr ""
 "Basisname für die AnimFrames, die auf Festplatte geschrieben werden\n"
 "(Framenummer und \".xcf\" wird hinzugefügt)"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:671 plug-ins/gap/gap_decode_xanim.c:277
+#: plug-ins/gap/gap_decode_mpeg_main.c:671 plug-ins/gap/gap_decode_xanim.c:278
 #: plug-ins/imagemap/imap_toolbar.c:109
 msgid "Open"
 msgstr "Öffnen"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:672 plug-ins/gap/gap_decode_xanim.c:278
+#: plug-ins/gap/gap_decode_mpeg_main.c:672 plug-ins/gap/gap_decode_xanim.c:279
 msgid "Open the 1.st one of the extracted frames"
 msgstr "Öffne den Ersten der extrahierten Frames"
 
@@ -7241,64 +7246,60 @@ msgstr ""
 "WARNUNG: Versuchen Sie nicht, andere Dateien als MPEG1-Videos aufzuteilen.\n"
 "Bevor Sie weitermachen, sollten Sie alle geöffneten Bilder speichern"
 
-#: plug-ins/gap/gap_decode_xanim.c:111
+#: plug-ins/gap/gap_decode_xanim.c:112
 msgid "Conditions to run the xanim based video split"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:119
+#: plug-ins/gap/gap_decode_xanim.c:120
 msgid "1.) xanim 2.80.0 exporting edition (the loki version)"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:123
+#: plug-ins/gap/gap_decode_xanim.c:124
 msgid "    must be installed somewhere in your PATH"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:127
+#: plug-ins/gap/gap_decode_xanim.c:128
 msgid "    you can get xanim exporting edition at"
 msgstr "    Sie können xanim mit Export-Funktionen hier kriegen:"
 
-#: plug-ins/gap/gap_decode_xanim.c:143
+#: plug-ins/gap/gap_decode_xanim.c:144
 msgid ""
 "2.) if your xanim exporting edition is not in your PATH or is not named xanim"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:147
+#: plug-ins/gap/gap_decode_xanim.c:148
 msgid "    you have to set Environment variable GAP_XANIM_PROG "
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:151
+#: plug-ins/gap/gap_decode_xanim.c:152
 msgid "    to your xanim exporting program and restart gimp"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:159
+#: plug-ins/gap/gap_decode_xanim.c:160
 msgid "An ERROR occured while trying to call xanim:"
 msgstr "Ein Fehler trat auf während des Versuchs xanim zu starten:"
 
-#: plug-ins/gap/gap_decode_xanim.c:163
-msgid "--------------------------------------------"
-msgstr "--------------------------------------------"
-
-#: plug-ins/gap/gap_decode_xanim.c:178
+#: plug-ins/gap/gap_decode_xanim.c:179
 msgid "XANIM Information"
 msgstr "XANIM Information"
 
-#: plug-ins/gap/gap_decode_xanim.c:208
+#: plug-ins/gap/gap_decode_xanim.c:209
 msgid "XCF"
 msgstr "XCF"
 
-#: plug-ins/gap/gap_decode_xanim.c:208
+#: plug-ins/gap/gap_decode_xanim.c:209
 msgid "PPM"
 msgstr "PPM"
 
-#: plug-ins/gap/gap_decode_xanim.c:208
+#: plug-ins/gap/gap_decode_xanim.c:209
 msgid "JPEG"
 msgstr "JPEG"
 
-#: plug-ins/gap/gap_decode_xanim.c:211
+#: plug-ins/gap/gap_decode_xanim.c:212
 msgid "Video:"
 msgstr "Video:"
 
-#: plug-ins/gap/gap_decode_xanim.c:212
+#: plug-ins/gap/gap_decode_xanim.c:213
 msgid ""
 "Name of a videofile to READ by xanim\n"
 "frames are extracted from the videofile\n"
@@ -7310,23 +7311,23 @@ msgstr ""
 "und in separate Dateien auf der Festplatte geschrieben.\n"
 "xanim mit Export-Funktionen wird benötigt"
 
-#: plug-ins/gap/gap_decode_xanim.c:221 plug-ins/gap/gap_lib.c:2085
+#: plug-ins/gap/gap_decode_xanim.c:222 plug-ins/gap/gap_lib.c:2085
 #: plug-ins/gap/gap_lib.c:2260 plug-ins/gap/gap_range_ops.c:242
 #: plug-ins/gap/gap_range_ops.c:584
 msgid "From :"
 msgstr "Von :"
 
-#: plug-ins/gap/gap_decode_xanim.c:229 plug-ins/gap/gap_lib.c:2093
+#: plug-ins/gap/gap_decode_xanim.c:230 plug-ins/gap/gap_lib.c:2093
 #: plug-ins/gap/gap_lib.c:2268 plug-ins/gap/gap_range_ops.c:249
 #: plug-ins/gap/gap_range_ops.c:592
 msgid "To :"
 msgstr "Bis :"
 
-#: plug-ins/gap/gap_decode_xanim.c:237
+#: plug-ins/gap/gap_decode_xanim.c:238
 msgid "Framenames:"
 msgstr "Framenamen:"
 
-#: plug-ins/gap/gap_decode_xanim.c:238
+#: plug-ins/gap/gap_decode_xanim.c:239
 msgid ""
 "Basename for the AnimFrames to write on disk\n"
 "(framenumber and extension is added)"
@@ -7334,11 +7335,11 @@ msgstr ""
 "Basisname für die AnimFrames, die auf Festplatte geschrieben werden\n"
 "(Framenummer und Erweiterung wird hinzugefügt)"
 
-#: plug-ins/gap/gap_decode_xanim.c:245
+#: plug-ins/gap/gap_decode_xanim.c:246
 msgid "Format"
 msgstr "Format"
 
-#: plug-ins/gap/gap_decode_xanim.c:246
+#: plug-ins/gap/gap_decode_xanim.c:247
 msgid ""
 "Fileformat for the extracted AnimFrames\n"
 "(xcf is extracted as ppm and converted to xcf)"
@@ -7346,29 +7347,29 @@ msgstr ""
 "Dateiformat für die extrahierten AnimFrames\n"
 "(xcf wird als ppm extrahiert und zu xcf convertiert)"
 
-#: plug-ins/gap/gap_decode_xanim.c:253
+#: plug-ins/gap/gap_decode_xanim.c:254
 msgid "Extract Frames"
 msgstr "Frames extrahieren"
 
-#: plug-ins/gap/gap_decode_xanim.c:254
+#: plug-ins/gap/gap_decode_xanim.c:255
 msgid "Enable extraction of Frames"
 msgstr "Frames extrahieren"
 
-#: plug-ins/gap/gap_decode_xanim.c:258
+#: plug-ins/gap/gap_decode_xanim.c:259
 msgid "Extract Audio"
 msgstr "Audio extrahieren"
 
-#: plug-ins/gap/gap_decode_xanim.c:259
+#: plug-ins/gap/gap_decode_xanim.c:260
 msgid ""
 "Enable extraction of audio to raw audiofile\n"
 "(frame range limits are ignored for audio)"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_xanim.c:264
+#: plug-ins/gap/gap_decode_xanim.c:265
 msgid "Jpeg Quality:"
 msgstr "Jpeg Qualität:"
 
-#: plug-ins/gap/gap_decode_xanim.c:265
+#: plug-ins/gap/gap_decode_xanim.c:266
 msgid ""
 "Quality for resulting jpeg frames\n"
 "(is ignored when other formats are used)"
@@ -7376,7 +7377,7 @@ msgstr ""
 "Qualität der jpeg Frames\n"
 "(wird ignoriert falls andere Formate verwendet werden)"
 
-#: plug-ins/gap/gap_decode_xanim.c:273
+#: plug-ins/gap/gap_decode_xanim.c:274
 msgid ""
 "\n"
 "Warning: xanim 2.80 has just limited MPEG support\n"
@@ -7386,11 +7387,11 @@ msgstr ""
 "Warnung: xanim 2.80 hat nur eingeschränkte MPEG Unterstützungdie meisten "
 "Frames (Typ P und B) werden übersprungen"
 
-#: plug-ins/gap/gap_decode_xanim.c:282
+#: plug-ins/gap/gap_decode_xanim.c:283
 msgid "xanim asynchron"
 msgstr "xanim asynchron"
 
-#: plug-ins/gap/gap_decode_xanim.c:283
+#: plug-ins/gap/gap_decode_xanim.c:284
 msgid ""
 "Run xanim asynchron and delete unwanted frames\n"
 "(out of the specified range) while xanim is still running"
@@ -7398,11 +7399,17 @@ msgstr ""
 "xanim asynchron laufen lassen und ungewollte Frames löschen\n"
 "(außerhalb des spezifizierten Bereichs) während xanim läuft"
 
-#: plug-ins/gap/gap_decode_xanim.c:337
-msgid "file alreay exists:"
-msgstr "Datei existiert bereits:"
+#: plug-ins/gap/gap_decode_xanim.c:288
+#, fuzzy
+msgid "Split any Xanim readable Video to Frames"
+msgstr "Teile Bild in Frames"
 
-#: plug-ins/gap/gap_decode_xanim.c:529
+#: plug-ins/gap/gap_decode_xanim.c:289
+#, fuzzy
+msgid "Select Framerange"
+msgstr "Frame-Reichweite auswählen"
+
+#: plug-ins/gap/gap_decode_xanim.c:531
 #, c-format
 msgid ""
 "cant find any extracted frames,\n"
@@ -7413,33 +7420,33 @@ msgstr ""
 "%s\n"
 "möglicherweise schlug xanim fehl oder wurde abgebrochen"
 
-#: plug-ins/gap/gap_decode_xanim.c:554
+#: plug-ins/gap/gap_decode_xanim.c:556
 #, c-format
 msgid "frames are not extracted, because overwrite of %s was cancelled"
 msgstr ""
 "Frames werden nicht extrahiert, da das Überschreiben von %s abgebrochen wurde"
 
-#: plug-ins/gap/gap_decode_xanim.c:564
+#: plug-ins/gap/gap_decode_xanim.c:566
 #, c-format
 msgid "failed to overwrite %s (check permissions ?)"
 msgstr "Fehler beim überschreiben von %s (Berechtigungen überprüfen ?)"
 
-#: plug-ins/gap/gap_decode_xanim.c:586
+#: plug-ins/gap/gap_decode_xanim.c:588
 #, c-format
 msgid "failed to write %s (check permissions ?)"
 msgstr "Fehler beim schreiben von %s (Berechtigungen überprüfen ?)"
 
-#: plug-ins/gap/gap_decode_xanim.c:710
+#: plug-ins/gap/gap_decode_xanim.c:712
 #, c-format
 msgid "could not execute %s (check if xanim is installed)"
 msgstr "%s konnte nicht ausgeführt werden (ist xanim installiert ?)"
 
-#: plug-ins/gap/gap_decode_xanim.c:718
+#: plug-ins/gap/gap_decode_xanim.c:720
 #, c-format
 msgid "%s does not look like xanim"
 msgstr "%s scheint nicht xanim zu sein"
 
-#: plug-ins/gap/gap_decode_xanim.c:742
+#: plug-ins/gap/gap_decode_xanim.c:744
 #, c-format
 msgid ""
 "The xanim program on your system \"%s\"\n"
@@ -7448,7 +7455,7 @@ msgstr ""
 "Das xanim Programm auf ihrem System \"%s\"\n"
 "unterstützt die Exportieroptionen Ea, Ee, Eq nicht"
 
-#: plug-ins/gap/gap_decode_xanim.c:749
+#: plug-ins/gap/gap_decode_xanim.c:751
 #, c-format
 msgid ""
 "The xanim program on your system \"%s\"\n"
@@ -7457,12 +7464,12 @@ msgstr ""
 "Das xanim Programm auf ihrem System \"%s\"\n"
 "unterstützt das Exportieren von einzelnen Frames nicht"
 
-#: plug-ins/gap/gap_decode_xanim.c:1012
+#: plug-ins/gap/gap_decode_xanim.c:1014
 #, c-format
 msgid "videofile %s not existent or empty\n"
 msgstr "Die Videodatei %s existiert nicht oder ist leer\n"
 
-#: plug-ins/gap/gap_decode_xanim.c:1065
+#: plug-ins/gap/gap_decode_xanim.c:1067
 #, c-format
 msgid ""
 "could not create %s directory\n"
@@ -7471,11 +7478,11 @@ msgstr ""
 "Verzeichnis %s konnte nicht erstellt werden\n"
 "(wird von xanim zum Frame exportieren benötigt)"
 
-#: plug-ins/gap/gap_decode_xanim.c:1076
+#: plug-ins/gap/gap_decode_xanim.c:1078
 msgid "extracting frames..."
 msgstr "Extrahiere Frames.."
 
-#: plug-ins/gap/gap_decode_xanim.c:1101
+#: plug-ins/gap/gap_decode_xanim.c:1103
 #, c-format
 msgid ""
 "could not start xanim process\n"
@@ -7484,7 +7491,7 @@ msgstr ""
 "konnte xanim nicht starten\n"
 "(Programm=%s)"
 
-#: plug-ins/gap/gap_decode_xanim.c:1122
+#: plug-ins/gap/gap_decode_xanim.c:1124
 msgid ""
 "cant find any extracted frames,\n"
 "xanim has failed or was canclled"
@@ -7492,11 +7499,11 @@ msgstr ""
 "konnte keine exportierten Frames finden\n"
 "xanim schlug fehl oder wurde abgebrochen"
 
-#: plug-ins/gap/gap_decode_xanim.c:1141
+#: plug-ins/gap/gap_decode_xanim.c:1143
 msgid "renaming frames..."
 msgstr "Benenne Frames um..."
 
-#: plug-ins/gap/gap_decode_xanim.c:1146
+#: plug-ins/gap/gap_decode_xanim.c:1148
 msgid "converting frames..."
 msgstr "Konvertiere Frames.."
 
@@ -9523,7 +9530,6 @@ msgstr "keine gültige GFlare-Datei: %s"
 msgid "invalid formatted GFlare file: %s\n"
 msgstr "Ungültiges Format in GFlare Datei: %s\n"
 
-
 #: plug-ins/gflare/gflare.c:1451
 #, c-format
 msgid ""
@@ -9777,6 +9783,33 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:4643
 msgid "More..."
 msgstr "Mehr..."
+
+#: plug-ins/gfli/gfli.c:437 plug-ins/gfli/gfli.c:476 plug-ins/gfli/gfli.c:699
+#, fuzzy, c-format
+msgid "FLI: can't open \"%s\"\n"
+msgstr "%s: kann \"%s\" nicht öffnen\n"
+
+#: plug-ins/gfli/gfli.c:536
+#, fuzzy, c-format
+msgid "Frame (%i)"
+msgstr "Frame %d"
+
+#: plug-ins/gfli/gfli.c:633
+#, fuzzy
+msgid "FLI: Sorry, can't save images with Alpha.\n"
+msgstr "Kann Bild nicht mit Alpha speichern\n"
+
+#: plug-ins/gfli/gfli.c:663
+msgid "FLI: Sorry, I can save only INDEXED and GRAY images.\n"
+msgstr ""
+
+#: plug-ins/gfli/gfli.c:832
+msgid "GFLI 1.2 - Load framestack"
+msgstr ""
+
+#: plug-ins/gfli/gfli.c:903
+msgid "GFLI 1.2 - Save framestack"
+msgstr ""
 
 # unterschied drawable/bild!! TODO
 #: plug-ins/gimpressionist/brush.c:183
@@ -12184,6 +12217,12 @@ msgstr ""
 #, c-format
 msgid "Error,XJT propertyfile %s is empty"
 msgstr ""
+
+#~ msgid "--------------------------------------------"
+#~ msgstr "--------------------------------------------"
+
+#~ msgid "file alreay exists:"
+#~ msgstr "Datei existiert bereits:"
 
 #~ msgid "Author: "
 #~ msgstr "Author: "
