@@ -18,8 +18,10 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "config.h"
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 #define ENTRY_WIDTH 100
 
@@ -113,13 +115,15 @@ query ()
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_gauss_rle",
-			  "Applies a gaussian blur to the specified drawable.",
-			  "Applies a gaussian blur to the drawable, with specified radius of affect.  The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius.  Horizontal and vertical blurring can be independently invoked by specifying only one to run.  The RLE gaussian blurring performs most efficiently on computer-generated images or images with large areas of constant intensity.  Values for radii less than 1.0 are invalid as they will generate spurious results.",
+			  _("Applies a gaussian blur to the specified drawable."),
+			  _("Applies a gaussian blur to the drawable, with specified radius of affect.  The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius.  Horizontal and vertical blurring can be independently invoked by specifying only one to run.  The RLE gaussian blurring performs most efficiently on computer-generated images or images with large areas of constant intensity.  Values for radii less than 1.0 are invalid as they will generate spurious results."),
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1995-1996",
-			  "<Image>/Filters/Blur/Gaussian Blur (RLE)...",
+			  N_("<Image>/Filters/Blur/Gaussian Blur (RLE)..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -150,6 +154,7 @@ run (gchar   *name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_gauss_rle", &bvals);
 
@@ -159,6 +164,7 @@ run (gchar   *name,
       break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 6)
 	status = STATUS_CALLING_ERROR;
@@ -174,6 +180,7 @@ run (gchar   *name,
       break;
 
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_gauss_rle", &bvals);
       break;
@@ -184,7 +191,7 @@ run (gchar   *name,
 
   if (!(bvals.horizontal || bvals.vertical))
     {
-      gimp_message ("gauss_rle: you must specify either horizontal or vertical (or both)");
+      gimp_message ( _("gauss_rle: you must specify either horizontal or vertical (or both)"));
       status = STATUS_CALLING_ERROR;
     }
 
@@ -197,7 +204,7 @@ run (gchar   *name,
       if (gimp_drawable_is_rgb (drawable->id) ||
           gimp_drawable_is_gray (drawable->id))
         {
-          gimp_progress_init ("RLE Gaussian Blur");
+          gimp_progress_init ( _("RLE Gaussian Blur"));
 
           /*  set the tile cache size so that the gaussian blur works well  */
           gimp_tile_cache_ntiles (2 * (MAX (drawable->width, drawable->height) /
@@ -218,7 +225,7 @@ run (gchar   *name,
         }
       else
         {
-          gimp_message ("gauss_rle: cannot operate on indexed color images");
+          gimp_message ( _("gauss_rle: cannot operate on indexed color images"));
           status = STATUS_EXECUTION_ERROR;
         }
 
@@ -252,7 +259,7 @@ gauss_rle_dialog ()
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "RLE Gaussian Blur");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("RLE Gaussian Blur"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) gauss_close_callback,
@@ -266,7 +273,7 @@ gauss_rle_dialog ()
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) gauss_ok_callback,
@@ -275,7 +282,7 @@ gauss_rle_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -284,7 +291,7 @@ gauss_rle_dialog ()
   gtk_widget_show (button);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Parameter Settings");
+  frame = gtk_frame_new ( _("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -292,7 +299,7 @@ gauss_rle_dialog ()
   gtk_container_border_width (GTK_CONTAINER (vbox), 10);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_label ("Blur Horizontally");
+  toggle = gtk_check_button_new_with_label ( _("Blur Horizontally"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gauss_toggle_update,
@@ -300,7 +307,7 @@ gauss_rle_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.horizontal);
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label ("Blur Vertically");
+  toggle = gtk_check_button_new_with_label ( _("Blur Vertically"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gauss_toggle_update,
@@ -311,7 +318,7 @@ gauss_rle_dialog ()
   hbox = gtk_hbox_new (FALSE, 5);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
 
-  label = gtk_label_new ("Blur Radius: ");
+  label = gtk_label_new ( _("Blur Radius: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
   gtk_widget_show (label);
 

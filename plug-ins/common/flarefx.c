@@ -38,8 +38,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "config.h"
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* --- Defines --- */
 #define ENTRY_WIDTH 75
@@ -182,13 +184,15 @@ static void query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0; 
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_flarefx",
-			  "Add lens flare effetcs",
-			  "More here later",
+			  _("Add lens flare effetcs"),
+			  _("More here later"),
 			  "Karl-Johan Andersson", /* Author */
 			  "Karl-Johan Andersson", /* Copyright */
 			  "1998",
-			  "<Image>/Filters/Light Effects/FlareFX...",
+			  N_("<Image>/Filters/Light Effects/FlareFX..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -220,6 +224,7 @@ static void run (gchar   *name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_flarefx", &fvals);
 
@@ -232,6 +237,7 @@ static void run (gchar   *name,
       break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
 	status = STATUS_CALLING_ERROR;
@@ -243,6 +249,7 @@ static void run (gchar   *name,
       break;
 
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_flarefx", &fvals);
       break;
@@ -256,7 +263,7 @@ static void run (gchar   *name,
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
 	{
-	  gimp_progress_init ("Render flare...");
+	  gimp_progress_init ( _("Render flare..."));
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 	  
 	  FlareFX (drawable);
@@ -313,7 +320,7 @@ static gint flare_dialog( GDrawable *drawable )
 #endif
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "FlareFX");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("FlareFX"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) flare_close_callback,
@@ -327,7 +334,7 @@ static gint flare_dialog( GDrawable *drawable )
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) flare_ok_callback,
@@ -336,7 +343,7 @@ static gint flare_dialog( GDrawable *drawable )
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -690,7 +697,7 @@ flare_center_create ( GDrawable *drawable )
   center->oldy = 0;
   center->in_call = TRUE;  /* to avoid side effects while initialization */
 
-  frame = gtk_frame_new ( "Center of FlareFX" );
+  frame = gtk_frame_new ( _("Center of FlareFX") );
   gtk_signal_connect( GTK_OBJECT( frame ), "destroy",
 		      (GtkSignalFunc) flare_center_destroy,
 		      center );
@@ -703,7 +710,7 @@ flare_center_create ( GDrawable *drawable )
   gtk_table_set_row_spacings (GTK_TABLE (table), 3);
   gtk_table_set_col_spacings (GTK_TABLE (table), 5);
 
-  label = gtk_label_new ( "X: " );
+  label = gtk_label_new ( _("X: ") );
   gtk_misc_set_alignment( GTK_MISC(label), 0.0, 0.5 );
   gtk_table_attach( GTK_TABLE(table), label, 0, 1, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0 );
   gtk_widget_show(label);
@@ -717,7 +724,7 @@ flare_center_create ( GDrawable *drawable )
   gtk_table_attach( GTK_TABLE(table), entry, 1, 2, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0 );
   gtk_widget_show(entry);
 
-  label = gtk_label_new ( "Y: " );
+  label = gtk_label_new ( _("Y: ") );
   gtk_misc_set_alignment( GTK_MISC(label), 0.0, 0.5 );
   gtk_table_attach( GTK_TABLE(table), label, 2, 3, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0 );
   gtk_widget_show(label);

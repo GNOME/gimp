@@ -22,17 +22,17 @@
 *******************************************************************************/
 
 #define PLUG_IN_NAME     "plug_in_fractal_trace"
-#define PLUG_IN_TITLE    "Fractal Trace"
 #define PLUG_IN_VERSION  "v0.4 test version (Dec. 25 1997)"
-#define PLUG_IN_CATEGORY "<Image>/Filters/Map/Fractal Trace..."
 
 /******************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <gtk/gtk.h>
 #include <math.h>
-#include <libgimp/gimp.h>
+#include "config.h"
+#include <gtk/gtk.h>
+#include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 #ifndef PI_2
 #define PI_2 (3.14159265358979323*2.0)
@@ -120,15 +120,17 @@ static void query( void )
 
   static GParamDef *rets = NULL;
   static int nrets = 0;
+
+  INIT_I18N();
   
   gimp_install_procedure(
 			 PLUG_IN_NAME,
-			 "transform image with the Mandelbrot Fractal",
-			 "transform image with the Mandelbrot Fractal",
+			 _("transform image with the Mandelbrot Fractal"),
+			 _("transform image with the Mandelbrot Fractal"),
 			 "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
 			 "Copyright (C) 1997 Hirotsuna Mizuno",
 			 PLUG_IN_VERSION,
-			 PLUG_IN_CATEGORY,
+			 N_("<Image>/Filters/Map/Fractal Trace..."),
 			 "RGB*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs,
@@ -194,9 +196,11 @@ static void run( char *name, int argc, GParam *args, int *retc, GParam **rets )
 
   switch( run_mode ){
   case RUN_WITH_LAST_VALS:
+    INIT_I18N();
     gimp_get_data( PLUG_IN_NAME, &parameters );
     break;
   case RUN_INTERACTIVE:
+    INIT_I18N_UI();
     gimp_get_data( PLUG_IN_NAME, &parameters );
     if( !dialog_show() ){
       status = STATUS_EXECUTION_ERROR;
@@ -215,6 +219,7 @@ static void run( char *name, int argc, GParam *args, int *retc, GParam **rets )
       parameters.depth        = args[7].data.d_int32;
       parameters.outside_type = args[8].data.d_int32;
     }
+    INIT_I18N();
     break;
   }
 
@@ -407,7 +412,7 @@ static void filter( GDrawable *drawable )
   gdouble cx, cy;
   gdouble px, py;
 
-  gimp_progress_init( PLUG_IN_TITLE );
+  gimp_progress_init( _("Fractal Trace"));
 
   scale_x = ( parameters.x2 - parameters.x1 ) / selection.width;
   scale_y = ( parameters.y2 - parameters.y1 ) / selection.height;
@@ -540,7 +545,7 @@ static GtkWidget* dialog_entry_table( void )
   dialog_entry_gdouble_new( "X2",   &parameters.x2,    table, 1 );
   dialog_entry_gdouble_new( "Y1",   &parameters.y1,    table, 2 );
   dialog_entry_gdouble_new( "Y2",   &parameters.y2,    table, 3 );
-  dialog_entry_gint32_new( "DEPTH", &parameters.depth, table, 4 );
+  dialog_entry_gint32_new( _("DEPTH"), &parameters.depth, table, 4 );
 
   return table;
 }
@@ -733,7 +738,7 @@ static gint dialog_show( void )
   {
     gint    argc = 1;
     gchar **argv = g_new( gchar *, 1 );
-    argv[0]      = g_strdup( PLUG_IN_TITLE );
+    argv[0]      = g_strdup( _("Fractal Trace"));
     gtk_init( &argc, &argv );
     gtk_rc_parse( gimp_gtkrc() );
   }
@@ -749,7 +754,7 @@ static gint dialog_show( void )
   {
     GtkWidget *button;
     
-    button = gtk_button_new_with_label( "OK" );
+    button = gtk_button_new_with_label( _("OK") );
     gtk_signal_connect( GTK_OBJECT( button ), "clicked",
 			GTK_SIGNAL_FUNC( dialog_ok_callback ),
 			GTK_OBJECT( dialog ) );
@@ -759,7 +764,7 @@ static gint dialog_show( void )
     gtk_widget_grab_default( button );
     gtk_widget_show( button );
 
-    button = gtk_button_new_with_label( "Cancel" );
+    button = gtk_button_new_with_label( _("Cancel") );
     gtk_signal_connect( GTK_OBJECT( button ), "clicked",
 			GTK_SIGNAL_FUNC( dialog_cancel_callback ),
 			GTK_OBJECT( dialog ) );
@@ -767,7 +772,7 @@ static gint dialog_show( void )
 			button, TRUE, TRUE, 0 );
     gtk_widget_show( button );
 
-    button = gtk_button_new_with_label( "Help" );
+    button = gtk_button_new_with_label( _("Help") );
     gtk_signal_connect( GTK_OBJECT( button ), "clicked",
 			GTK_SIGNAL_FUNC( dialog_help_callback ),
 			GTK_OBJECT( dialog ) );
@@ -817,7 +822,7 @@ static gint dialog_show( void )
     gtk_box_pack_start( GTK_BOX( vbox ), separator, FALSE, FALSE, 0 );
     gtk_widget_show( entrytable );
 
-    frame = gtk_frame_new( "Outside Type" );
+    frame = gtk_frame_new( _("Outside Type") );
     gtk_container_border_width( GTK_CONTAINER( frame ), 5 );
     gtk_box_pack_start( GTK_BOX( vbox ), frame, TRUE, TRUE, 0 );
     gtk_widget_show( frame );
@@ -829,7 +834,7 @@ static gint dialog_show( void )
 
     group = NULL;
     
-    button = gtk_radio_button_new_with_label( group, "Wrap" );
+    button = gtk_radio_button_new_with_label( group, _("Wrap") );
     gtk_box_pack_start( GTK_BOX( framebox ), button, FALSE, FALSE, 0 );
     gtk_signal_connect( GTK_OBJECT( button ), "toggled",
 			GTK_SIGNAL_FUNC( dialog_outside_type_callback ),
@@ -841,7 +846,7 @@ static gint dialog_show( void )
     }
     group = gtk_radio_button_group( GTK_RADIO_BUTTON( button ) );
 
-    button = gtk_radio_button_new_with_label( group, "Transparent" );
+    button = gtk_radio_button_new_with_label( group, _("Transparent") );
     gtk_box_pack_start( GTK_BOX( framebox ), button, FALSE, FALSE, 0 );
     gtk_signal_connect( GTK_OBJECT( button ), "toggled",
 			GTK_SIGNAL_FUNC( dialog_outside_type_callback ),
@@ -856,7 +861,7 @@ static gint dialog_show( void )
     }
     group = gtk_radio_button_group( GTK_RADIO_BUTTON( button ) );
     
-    button = gtk_radio_button_new_with_label( group, "Black" );
+    button = gtk_radio_button_new_with_label( group, _("Black") );
     gtk_box_pack_start( GTK_BOX( framebox ), button, FALSE, FALSE, 0 );
     gtk_signal_connect( GTK_OBJECT( button ), "toggled",
 			GTK_SIGNAL_FUNC( dialog_outside_type_callback ),
@@ -868,7 +873,7 @@ static gint dialog_show( void )
     }
     group = gtk_radio_button_group( GTK_RADIO_BUTTON( button ) );
     
-    button = gtk_radio_button_new_with_label( group, "White" );
+    button = gtk_radio_button_new_with_label( group, _("White") );
     gtk_box_pack_start( GTK_BOX( framebox ), button, FALSE, FALSE, 0 );
     gtk_signal_connect( GTK_OBJECT( button ), "toggled",
 			GTK_SIGNAL_FUNC( dialog_outside_type_callback ),

@@ -1,3 +1,12 @@
+1999-12-24  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/common/exchange.c
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/fractaltrace.c
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c
+	* po-plug-ins/POTFILES.in: Added gettext support.
+
 Don Dez 23 14:27:14 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/gdisplay_color.c

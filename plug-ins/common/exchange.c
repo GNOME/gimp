@@ -37,8 +37,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "config.h"
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* big scales */
 #define	SCALE_WIDTH	225
@@ -113,13 +115,15 @@ void	query()
 	static int nargs = sizeof(args) / sizeof(args[0]);
 	static int nreturn_vals = 0;
 
+    INIT_I18N();
+
 	gimp_install_procedure("plug_in_exchange",
-			       "Color Exchange",
-			       "Exchange one color with another, optionally setting a threshold to convert from one shade to another",
+			       _("Color Exchange"),
+			       _("Exchange one color with another, optionally setting a threshold to convert from one shade to another"),
 			       "robert@experimental.net",
 			       "robert@experimental.net",
 			       "June 17th, 1997",
-			       "<Image>/Filters/Colors/Map/Color Exchange...",
+			       N_("<Image>/Filters/Colors/Map/Color Exchange..."),
 			       "RGB*",
 			       PROC_PLUG_IN,
 			       nargs, nreturn_vals,
@@ -148,6 +152,7 @@ void	run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 	switch (runmode)
 	{
 	        case RUN_INTERACTIVE:
+              INIT_I18N_UI();
 				/* retrieve stored arguments (if any) */
 				gimp_get_data("plug_in_exchange", &xargs);
 				/* initialize using foreground color */
@@ -168,6 +173,7 @@ void	run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 					return;
 				break;
 		case RUN_WITH_LAST_VALS:
+          INIT_I18N();
 				gimp_get_data("plug_in_exchange", &xargs);
 				/* 
 				 * instead of recalling the last-set values,
@@ -177,6 +183,7 @@ void	run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 				gimp_palette_get_foreground(&xargs.fromred, &xargs.fromgreen, &xargs.fromblue);
 				break;
 		case RUN_NONINTERACTIVE:
+          INIT_I18N();
 				if (nparams != 10)
 					status = STATUS_EXECUTION_ERROR;
 				if (status == STATUS_SUCCESS)
@@ -199,7 +206,7 @@ void	run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 	{
 		if (gimp_drawable_is_rgb(drw->id))
 		{
-			gimp_progress_init("Color Exchange...");
+			gimp_progress_init( _("Color Exchange..."));
 			gimp_tile_cache_ntiles(2 * (drw->width / gimp_tile_width() + 1));
 			exchange();	
 			gimp_drawable_detach(drw);
@@ -262,7 +269,7 @@ int	doDialog()
 
 	/* set up the dialog */
 	dialog = gtk_dialog_new();
-	gtk_window_set_title(GTK_WINDOW(dialog), "Color Exchange");
+	gtk_window_set_title(GTK_WINDOW(dialog), _("Color Exchange"));
 	gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
 	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
 			   (GtkSignalFunc) gtk_main_quit,
@@ -276,7 +283,7 @@ int	doDialog()
 	gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
 	gtk_widget_show (hbbox);
 	
-	button = gtk_button_new_with_label ("OK");
+	button = gtk_button_new_with_label ( _("OK"));
 	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
 	gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			    (GtkSignalFunc) ok_callback,
@@ -285,7 +292,7 @@ int	doDialog()
 	gtk_widget_grab_default (button);
 	gtk_widget_show (button);
 	
-	button = gtk_button_new_with_label ("Cancel");
+	button = gtk_button_new_with_label ( _("Cancel"));
 	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
 	gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 				   (GtkSignalFunc) gtk_widget_destroy,
@@ -310,7 +317,7 @@ int	doDialog()
 	gtk_container_border_width(GTK_CONTAINER(tobox), 0);
 	gtk_box_pack_start(GTK_BOX(mainbox), tobox, TRUE, TRUE, 0);
 
-	frame = gtk_frame_new("Preview");
+	frame = gtk_frame_new( _("Preview"));
 	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
 	gtk_container_border_width(GTK_CONTAINER(frame), 0);
 	gtk_box_pack_start(GTK_BOX(prevbox), frame, TRUE, TRUE, 0);
@@ -325,7 +332,7 @@ int	doDialog()
 	/* and our scales */
 	for (framenumber = 0; framenumber < 2; framenumber++)
 	{
-		frame = gtk_frame_new(framenumber ? "To color" : "From color");
+		frame = gtk_frame_new(framenumber ? _("To color") : _("From color"));
 		gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
 		gtk_container_border_width(GTK_CONTAINER(frame), 0);
 		gtk_box_pack_start(framenumber ? GTK_BOX(tobox) : GTK_BOX(frombox),
@@ -334,20 +341,20 @@ int	doDialog()
 		table = gtk_table_new(8, 2, FALSE);
 		gtk_container_border_width(GTK_CONTAINER(table), 0);
 		gtk_container_add(GTK_CONTAINER(frame), table);
-		doLabelAndScale("Red", table, framenumber ? &xargs.tored : &xargs.fromred);
+		doLabelAndScale( _("Red"), table, framenumber ? &xargs.tored : &xargs.fromred);
 		if (! framenumber)
-			doLabelAndScale("Red threshold", table, &xargs.red_threshold);
-		doLabelAndScale("Green", table, framenumber ? &xargs.togreen : &xargs.fromgreen);
+			doLabelAndScale( _("Red threshold"), table, &xargs.red_threshold);
+		doLabelAndScale( _("Green"), table, framenumber ? &xargs.togreen : &xargs.fromgreen);
 		if (! framenumber)
-			doLabelAndScale("Green threshold", table, &xargs.green_threshold);
-		doLabelAndScale("Blue", table, framenumber ? &xargs.toblue : &xargs.fromblue);
+			doLabelAndScale( _("Green threshold"), table, &xargs.green_threshold);
+		doLabelAndScale( _("Blue"), table, framenumber ? &xargs.toblue : &xargs.fromblue);
 		if (! framenumber)
-			doLabelAndScale("Blue threshold", table, &xargs.blue_threshold);
+			doLabelAndScale( _("Blue threshold"), table, &xargs.blue_threshold);
 		if (! framenumber)
 		{
 			GtkWidget	*button;
 			
-			button = gtk_check_button_new_with_label("Lock thresholds");
+			button = gtk_check_button_new_with_label( _("Lock thresholds"));
 			gtk_table_attach(GTK_TABLE(table), button, 1, 2, 6, 7, GTK_FILL, 0, 0, 0);
 			gtk_signal_connect(GTK_OBJECT(button), "clicked", (GtkSignalFunc) lock_callback, dialog);
 			gtk_widget_show(button);

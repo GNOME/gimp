@@ -41,8 +41,13 @@ plug-ins/common/displace.c
 plug-ins/common/edge.c
 plug-ins/common/emboss.c
 plug-ins/common/engrave.c
+plug-ins/common/exchange.c
 plug-ins/common/film.c
 plug-ins/flame/flame.c
+plug-ins/common/flarefx.c
+plug-ins/common/fractaltrace.c
+plug-ins/common/gauss_iir.c
+plug-ins/common/gauss_rle.c
 plug-ins/common/gif.c
 plug-ins/common/gifload.c
 plug-ins/common/grid.c
