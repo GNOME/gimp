@@ -10,6 +10,7 @@ make test TEST_VERBOSE=1
 
 bugs
 
+  * $Config{cc} might not understand Gimps CFLAGS (-mpentium).
   * do NOT modinstall with older gimp versions (!!!!!!!!!)
 [DONE]  * make parasiterc ascii-only !!!!
   * improve examples/example-*.pl

@@ -24,13 +24,21 @@ sub MY::const_loadlibs {
    $self->SUPER::const_loadlibs(@_);
 }
 
+sub MY::install {
+   <<EOF;
+install :: all \$(INST_DYNAMIC)
+	\$(CP) \$(INST_DYNAMIC) \$(gimpplugindir)/modules/\$(DLBASE).\$(DLEXT)
+	\$(CHMOD) 755 \$(gimpplugindir)/modules/\$(DLBASE).\$(DLEXT)
+
+uninstall ::
+	\$(RM_F) \$(gimpplugindir)/modules/\$(DLBASE).\$(DLEXT)
+EOF
+}
+
 sub MY::postamble {
    <<"EOF";
 clean ::
 	test -f Makefile || mv -f Makefile.old Makefile
-
-modinstall :: \$(INST_DYNAMIC)
-	mv \$(INST_DYNAMIC) \$(gimpplugindir)/modules/
 
 perlxsi.c:
 	\$(FULLPERL) -MExtUtils::Embed -e xsinit
@@ -42,7 +50,7 @@ WriteMakefile(
     INSTALLDIRS => 'perl',
     INSTALLARCHLIB => '/tmp',
     OBJECT	=> 'perlmod$(OBJ_EXT) perlxsi$(OBJ_EXT)',
-    INC		=> "$_ccopts $_gccflags $CPPFLAGS -I.. $CFLAGS $DEFS".($IN_GIMP ? " -DIN_GIMP" : ""),
+    INC		=> "-I.. $_ccopts $_gccflags $CPPFLAGS $CFLAGS $DEFS".($IN_GIMP ? " -DIN_GIMP" : ""),
     macro	=> \%cfg,
     DEFINE	=> '',
     dynamic_lib	=> { OTHERLDFLAGS => "$LDFLAGS $LIBS $_ldopts $_gldflags" },

@@ -200,7 +200,7 @@ install ::
 	   fi \
 	done ; \
 	$(MAKE) UNINST=1 really-install install-plugins
-	cd ./embed && $(MAKE) modinstall
+	cd embed && $(MAKE) install
 
 '.$install;
 }
@@ -217,12 +217,13 @@ check :: test
 
 MY_FIXIN = \$(PERL) -I\$(PERL_ARCHLIB) -I\$(PERL_LIB) -MExtUtils::MakeMaker -e 'MY->fixin(\@ARGV)'
 
+all ::
+	cd embed && \$(MAKE) all
+
 clean ::
+	cd embed && \$(MAKE) clean
 	test -f Makefile || mv -f Makefile.old Makefile
 	\$(RM_RF) inst-temp
-
-all ::
-	cd ./embed && \$(MAKE)
 
 install-plugins ::
 	\$(RM_RF) inst-temp
@@ -269,11 +270,6 @@ close C;
 
 print "ok\n";
 
-print "configuring in ./embed...\n";
-chdir "./embed" or die "unable to cd to 'embed'\n";
-system($Config{perlpath},"Makefile.PL");
-chdir ".." or die "unable to cd to '..'\n";
-
 WriteMakefile(
     'dist'	=> {
 	            PREOP	=> 'chmod -R u=rwX,go=rX . ;',
@@ -303,7 +299,7 @@ WriteMakefile(
     		    'Gimp/Config.pm'	=> '$(INST_LIBDIR)/Gimp/Config.pm',
     		   },
     'LIBS'	=> [''],
-    'INC'	=> "$CPPFLAGS $CFLAGS $GIMP_INC_NOUI",
+    'INC'	=> "$GIMP_INC_NOUI $CPPFLAGS $CFLAGS",
     'DEFINE'	=> ($IN_GIMP ? " -DIN_GIMP " : "")." $DEFS",
     'EXE_FILES'	=> ['scm2perl','scm2scm'],
     'macro'	=> \%cfg,
