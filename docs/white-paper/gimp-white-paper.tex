@@ -49,7 +49,7 @@ follow.
 
 The plug-in architecture also allows the \gimp\ to support a wide
 variety of file formats.  File operations are implemented by special
-``file plug-ins'', allowing additional file formats to be added
+\emph{file plug-ins}, allowing additional file formats to be added
 without modification to the core.  File formats supported in version
 1.0 include the popular GIF and JPEG standards, as well as PNG, TIFF,
 XPM, SGI, PCX, and Windows BMP.
@@ -86,18 +86,21 @@ superior product has arisen.
 
 \section{Images}
 
-The basic operating element of any digital image editor is the {\it
-image}.  In the \gimp, images are constructed out of {\it layers},
-which are stacked on top of on another through a process called {\it
-composition} to produce a {\it projection}, which is what is displayed
-to the user.  In addition to having any number of layers, a \gimp\
-image may have one or more user-defined {\it channels}, as well as a
-{\it selection mask}.  Channels and selection masks are discussed more
-later.  Together, these three things (layers, channels, and selection
-masks) along with {\it layer masks} (also to be discussed later) are
-known as {\it drawables}, because the drawing tools work on all of
-them.\footnote{There is presently no way to draw directly onto a
-selection mask using the user interface.}
+The basic operating element of any digital image editor is the
+\emph{image}.  In the \gimp, images are constructed out of
+\emph{layers}, which are stacked on top of on another through a
+process called \emph{composition} to produce a \emph{projection},
+which is what is displayed to the user.  In addition to having any
+number of layers, a \gimp\ image may have one or more user-defined
+\emph{channels}, as well as a \emph{selection mask}.  Channels and
+selection masks are discussed later.  Together, these three objects
+(layers, channels, and selection masks) along with \emph{layer masks}
+(also to be discussed later) are known as \emph{drawables}, because
+the drawing tools work on all of them and they are the only internal
+structures into which the program can paint to.\footnote{There is
+presently no way to draw directly onto a selection mask using the user
+interface.  However, the user can create an invisible channel, paint
+there, and ask the program to turn the channel into a selection mask.}
 
 Images in the \gimp\ are typed, and there are presently three types of
 image: RGB, grayscale, and indexed.  The type of image determines the
@@ -112,12 +115,16 @@ image must be compatible with the image type.
 
 \section{Drawables}
 
-A {\it drawable} is a planar array of pixel data; however, the
+A \emph{drawable} is a linear array of pixel data; however, the
 contents of a drawable need not necessarily be used solely for
-rendering as pixel data.  Each drawable contains from one to four data
-channels (not to be confused with the channels spoken of elsewhere in
-this document), depending on the type of the drawable.  Each data
-channel is one byte deep.
+rendering as pixel data (for example, selection masks are drawables
+internal to the program, and they are not directly `paintable' by the
+user).
+
+Each drawable contains from one to four data channels (not to be
+confused with the channels spoken of elsewhere in this document),
+depending on the type of the drawable.  Each data channel is eight
+bits deep.
 
 There are six types of drawables (see table \ref{tab:drawables}).
 
@@ -126,12 +133,12 @@ There are six types of drawables (see table \ref{tab:drawables}).
 \begin{tabular}{lcl}
 Type & Data channels & Contents of channels \\
 \hline
-RGB & 3 & red, green, blue \\
-RGB w/ alpha & 4 & red, green, blue, alpha \\
-Grayscale & 1 & intensity \\ 
-Grayscale w/ alpha & 2 & intensity, alpha \\
-Indexed & 1 & color index \\
-Indexed w/ alpha & 2 & color index, alpha \\
+RGB			& 3	& red, green, blue \\
+RGB w/ alpha		& 4	& red, green, blue, alpha \\
+Grayscale		& 1	& intensity \\ 
+Grayscale w/ alpha	& 2	& intensity, alpha \\
+Indexed			& 1	& color index \\
+Indexed w/ alpha	& 2	& color index, alpha \\
 \end{tabular}
 \caption{Drawable Types}
 \label{tab:drawables}
@@ -139,31 +146,37 @@ Indexed w/ alpha & 2 & color index, alpha \\
 
 \subsection{Layers}
 
-Each {\it layer} is a drawable.  Layers of any type are possible, but
-the type of a layer must be compatible with the type of the image of
-which it is a part.  A layer type is compatible with an image type if
-the two are the same, or if the layer type is the same as the image
-type with an added alpha channel.  Every layer is part of exactly one
-image.
+Each \emph{layer} is a drawable.  Layers of any drawable type are
+possible, but the type of a layer must be compatible with the type of
+the image of which it is a part.  A layer type is compatible with an
+image type if the two are the same, or if the layer type is the same
+as the image type with an added alpha channel (for example, a
+grayscale image cannot contain an RGB layer).  Every layer is part of
+exactly one image.
 
 \subsubsection{Layer masks}
 
 \subsection{Channels}
 
 The term ``channels'' actually refers to three different things in the
-\gimp: layer masks, selection masks, and ``generic'' channels.  In all
-three cases, a channel consists of a rectangular array of byte values;
-the interpretation of these values varies depending on the type of
+\gimp: layer masks, selection masks, and custom channels.  In all
+three cases, a channel consists of an array of 8-bit values; the
+interpretation of these values varies depending on the type of
 channel.
 
 In addition to these channel types, each image also has either one or
-three ``virtual'' channels (three for RGB images, one for grayscale
-and indexed).  This/these are merely the pixel array resulting from
-the layer composition process, and is made available to support the
-``sample merged'' functionality in some of the tools.  Also, with RGB
-images, it is possible to deselect one or more of the red, green or
-blue channels; doing so will cause that portion of the colorspace to
-be excluded from the composition process.
+three `virtual' channels (one for grayscale and indexed images, three
+for RGB).  The virtual channels are merely a convenience to the user;
+they are not drawables by themselves.  As with the custom channels,
+the virtual ones can be made active or inactive (visible or
+invisible).  Normally all the virtual channels are active, all
+painting operations modify each of the channels.  When a channel is
+inactive, painting operations will ignore that channel.
+
+This is useful in two situations.  First, when the user wants to see
+only a subset of the color channels (RGB).  Second, when the user
+wants to paint on the image but only modify a subset of the channels
+instead of all of them.
 
 \section{Tiles}
 
@@ -185,15 +198,16 @@ conical, and the special ``shapeburst'' mode, which makes the gradient
 follow the shape of the active selection.
 
 Normally, the blend tool creates color gradients between the current
-foreground and background colors.  It supports three blending modes:
+foreground and background colors.  It supports four blending modes:
 linear interpolation between the RGB components, linear interpolation
-between the HSV versions of the colors (for rainbow effects), and
-blending from the foreground color to transparent.
+between the HSV versions of the colors (for rainbow effects), blending
+from the foreground color to transparent, and the very powerful custom
+gradient feature.
 
 Gradients are calculated with respect to a direction vector.  The user
-can specify whether the gradient is to be rendered normally, or
-repeated along the direction vector using a sawtooth or triangular
-wave pattern.
+can specify whether the gradient is to be rendered normally (only once
+along the direction vector), or repeated along the direction vector
+using a sawtooth or triangular wave pattern.
 
 A unique feature of the \gimp's gradient tool is its support for
 user-defined, custom color gradients.  The \gimp\ sports a
@@ -226,7 +240,7 @@ replicate) that make creation of custom gradients easy and convenient.
 The color segments support full transparency information, making for
 even more flexible gradients.
 
-To avoid sampling artifacts (the ``jaggies''), the gradient rendering
+To avoid sampling artifacts (the `jaggies'), the gradient rendering
 engine supports adaptive supersampling with customizable threshold and
 recursion depth parameters.  With adaptive supersampling even the most
 complex custom gradients will be rendered smoothly without
