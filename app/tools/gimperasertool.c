@@ -42,7 +42,7 @@
 #include "libgimp/gimpintl.h"
 
 
-/* Defaults */
+/*  Defaults  */
 #define ERASER_DEFAULT_HARD        FALSE
 #define ERASER_DEFAULT_INCREMENTAL FALSE
 #define ERASER_DEFAULT_ANTI_ERASE  FALSE
@@ -50,6 +50,7 @@
 /*  the eraser structures  */
 
 typedef struct _EraserOptions EraserOptions;
+
 struct _EraserOptions
 {
   PaintOptions  paint_options;
@@ -64,6 +65,18 @@ struct _EraserOptions
 };
 
 
+/*  forward function declarations  */
+static gpointer   eraser_paint_func (PaintCore            *paint_core,
+				     GimpDrawable         *drawable,
+				     PaintState            state);
+static void       eraser_motion     (PaintCore            *paint_core,
+				     GimpDrawable         *drawable,
+				     PaintPressureOptions *pressure_options,
+				     gboolean              hard,
+				     gboolean              incremental,
+				     gboolean              anti_erase);
+
+
 /*  the eraser tool options  */
 static EraserOptions *eraser_options = NULL;
 
@@ -71,11 +84,6 @@ static EraserOptions *eraser_options = NULL;
 static gboolean       non_gui_hard;
 static gboolean       non_gui_incremental;
 static gboolean	      non_gui_anti_erase;
-
-/*  forward function declarations  */
-static void       eraser_motion            (PaintCore *, GimpDrawable *,
-					    PaintPressureOptions *,
-					    gboolean, gboolean, gboolean);
 
 
 /*  functions  */
@@ -137,7 +145,7 @@ eraser_options_new (void)
 static void
 eraser_modifier_key_func (Tool        *tool,
 			  GdkEventKey *kevent,
-			  gpointer     gdisp_ptr)
+			  GDisplay    *gdisp)
 {
   switch (kevent->keyval)
     {
@@ -164,10 +172,10 @@ eraser_modifier_key_func (Tool        *tool,
 }
 
 
-void *
+static gpointer
 eraser_paint_func (PaintCore    *paint_core,
 		   GimpDrawable *drawable,
-		   int           state)
+		   PaintState    state)
 {
   switch (state)
     {
@@ -196,8 +204,8 @@ eraser_paint_func (PaintCore    *paint_core,
 Tool *
 tools_new_eraser (void)
 {
-  Tool * tool;
-  PaintCore * private;
+  Tool      *tool;
+  PaintCore *private;
 
   /*  The tool options  */
   if (! eraser_options)
@@ -274,10 +282,10 @@ eraser_motion (PaintCore            *paint_core,
 }
 
 
-static void *
+static gpointer
 eraser_non_gui_paint_func (PaintCore    *paint_core,
 			   GimpDrawable *drawable,
-			   int           state)
+			   PaintState    state)
 {
   eraser_motion (paint_core, drawable,
 		 &non_gui_pressure_options,
@@ -288,8 +296,8 @@ eraser_non_gui_paint_func (PaintCore    *paint_core,
 
 gboolean
 eraser_non_gui_default (GimpDrawable *drawable,
-			int           num_strokes,
-			double       *stroke_array)
+			gint          num_strokes,
+			gdouble      *stroke_array)
 {
   gboolean  hardness   = ERASER_DEFAULT_HARD;
   gboolean  method     = ERASER_DEFAULT_INCREMENTAL;
@@ -310,13 +318,13 @@ eraser_non_gui_default (GimpDrawable *drawable,
 
 gboolean
 eraser_non_gui (GimpDrawable *drawable,
-    		int           num_strokes,
-		double       *stroke_array,
-		int           hardness,
-		int           method,
-		int	      anti_erase)
+    		gint          num_strokes,
+		gdouble      *stroke_array,
+		gint          hardness,
+		gint          method,
+		gboolean      anti_erase)
 {
-  int i;
+  gint i;
   
   if (paint_core_init (&non_gui_paint_core, drawable,
 		       stroke_array[0], stroke_array[1]))
@@ -351,6 +359,6 @@ eraser_non_gui (GimpDrawable *drawable,
       paint_core_cleanup ();
       return TRUE;
     }
-  else
-    return FALSE;
+
+  return FALSE;
 }

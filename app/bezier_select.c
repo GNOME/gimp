@@ -119,19 +119,19 @@ typedef struct
 
 static void       bezier_select_button_press    (Tool             *tool,
 						 GdkEventButton   *bevent,
-						 gpointer          gdisp_ptr);
+						 GDisplay         *gdisp);
 static void       bezier_select_button_release  (Tool             *tool,
 						 GdkEventButton   *bevent,
-						 gpointer          gdisp_ptr);
+						 GDisplay         *gdisp);
 static void       bezier_select_motion          (Tool             *tool,
 						 GdkEventMotion   *mevent,
-						 gpointer          gdisp_ptr);
+						 GDisplay         *gdisp);
 static void       bezier_select_control         (Tool             *tool,
 						 ToolAction        action,
-						 gpointer          gdisp_ptr);
+						 GDisplay         *gdisp);
 static void       bezier_select_cursor_update   (Tool             *tool,
 						 GdkEventMotion   *mevent,
-						 gpointer          gdisp_ptr);
+						 GDisplay         *gdisp);
 static void       bezier_select_draw            (Tool             *tool);
 
 static void       bezier_offset_point           (BezierPoint      *pt,
@@ -308,22 +308,19 @@ tools_free_bezier_select (Tool *tool)
 }
 
 gint
-bezier_select_load (void        *gdisp_ptr,
+bezier_select_load (GDisplay    *gdisp,
 		    BezierPoint *pts,
 		    gint         num_pts,
 		    gint         closed)
 {
-  GDisplay     *gdisp;
   Tool         *tool;
   BezierSelect *bezier_sel;
-
-  gdisp = (GDisplay *) gdisp_ptr;
 
   /*  select the bezier tool  */
   gimp_context_set_tool (gimp_context_get_user (), BEZIER_SELECT);
   tool            = active_tool;
   tool->state     = ACTIVE;
-  tool->gdisp_ptr = gdisp_ptr;
+  tool->gdisp     = gdisp;
   bezier_sel = (BezierSelect *) tool->private;
 
   bezier_sel->points     = pts;
@@ -333,7 +330,7 @@ bezier_select_load (void        *gdisp_ptr,
   bezier_sel->state      = BEZIER_EDIT;
   bezier_sel->draw       = BEZIER_DRAW_ALL;
 
-  bezier_convert (bezier_sel, tool->gdisp_ptr, SUBDIVIDE, FALSE);
+  bezier_convert (bezier_sel, tool->gdisp, SUBDIVIDE, FALSE);
 
   draw_core_start (bezier_sel->core, gdisp->canvas->window, tool);
 
@@ -966,9 +963,8 @@ bezier_start_new_segment (BezierSelect *bezier_sel,
 static void
 bezier_select_button_press (Tool           *tool,
 			    GdkEventButton *bevent,
-			    gpointer        gdisp_ptr)
+			    GDisplay       *gdisp)
 {
-  GDisplay     *gdisp;
   BezierSelect *bezier_sel;
   BezierPoint  *points;
   BezierPoint  *start_pt;
@@ -978,8 +974,6 @@ bezier_select_button_press (Tool           *tool,
   gint          x, y;
   gint          halfwidth, dummy;
 
-  gdisp = (GDisplay *) gdisp_ptr;
-
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
   bezier_sel = tool->private;
@@ -987,12 +981,12 @@ bezier_select_button_press (Tool           *tool,
 
   if (bezier_options->extend)
     {
-      tool->gdisp_ptr = gdisp_ptr;
+      tool->gdisp = gdisp;
     }
   else
     {
       /*  If the tool was being used in another image...reset it  */
-      if (tool->state == ACTIVE && gdisp_ptr != tool->gdisp_ptr)
+      if (tool->state == ACTIVE && gdisp != tool->gdisp)
 	{
 	  draw_core_stop (bezier_sel->core, tool);
 	  bezier_select_reset (bezier_sel);
@@ -1008,8 +1002,8 @@ bezier_select_button_press (Tool           *tool,
 
   curTool = active_tool;
   curSel = curTool->private;
-  curGdisp = (GDisplay *) gdisp_ptr;
-  active_tool->gdisp_ptr = gdisp_ptr;
+  curGdisp = (GDisplay *) gdisp;
+  active_tool->gdisp = gdisp;
   curCore = bezier_sel->core;
 
   switch (bezier_sel->state)
@@ -1019,19 +1013,19 @@ bezier_select_button_press (Tool           *tool,
 	break;
 
       grab_pointer = TRUE;
-      tool->state = ACTIVE;
-      tool->gdisp_ptr = gdisp_ptr;
+      tool->state  = ACTIVE;
+      tool->gdisp  = gdisp;
 
 /*       if (bevent->state & GDK_MOD1_MASK) */
 /* 	{ */
-/* 	  init_edit_selection (tool, gdisp_ptr, bevent, EDIT_MASK_TRANSLATE); */
+/* 	  init_edit_selection (tool, gdisp, bevent, EDIT_MASK_TRANSLATE); */
 /* 	  break; */
 /* 	} */
 /*       else if (!(bevent->state & GDK_SHIFT_MASK) && !(bevent->state & GDK_CONTROL_MASK)) */
 /* 	if (! (layer_is_floating_sel (gimp_image_get_active_layer (gdisp->gimage))) && */
 /* 	    gdisplay_mask_value (gdisp, bevent->x, bevent->y) > HALF_WAY) */
 /* 	  { */
-/* 	    init_edit_selection (tool, gdisp_ptr, bevent, EDIT_MASK_TO_LAYER_TRANSLATE); */
+/* 	    init_edit_selection (tool, gdisp, bevent, EDIT_MASK_TO_LAYER_TRANSLATE); */
 /* 	    break; */
 /* 	  } */
 
@@ -1079,7 +1073,7 @@ bezier_select_button_press (Tool           *tool,
 	    {
 	      paths_dialog_set_default_op ();
 	      /* recursive call */
-	      bezier_select_button_press (tool, bevent, gdisp_ptr);
+	      bezier_select_button_press (tool, bevent, gdisp);
 	    }
 	  return;
 	}
@@ -1120,7 +1114,7 @@ bezier_select_button_press (Tool           *tool,
 	    {
 	      paths_dialog_set_default_op ();
 	      /* recursive call */
-	      bezier_select_button_press (tool, bevent, gdisp_ptr);
+	      bezier_select_button_press (tool, bevent, gdisp);
 	    }
 	  return;
 	}
@@ -1150,7 +1144,7 @@ bezier_select_button_press (Tool           *tool,
 	    {
 	      paths_dialog_set_default_op ();
 	      /* recursive call */
-	      bezier_select_button_press (tool, bevent, gdisp_ptr);
+	      bezier_select_button_press (tool, bevent, gdisp);
 	    }
 	  return;
 	}
@@ -1303,12 +1297,12 @@ bezier_select_button_press (Tool           *tool,
 static void
 bezier_select_button_release (Tool           *tool,
 			      GdkEventButton *bevent,
-			      gpointer        gdisp_ptr)
+			      GDisplay       *gdisp)
 {
-  GDisplay     *gdisp;
   BezierSelect *bezier_sel;
 
-  gdisp = tool->gdisp_ptr;
+  gdisp = tool->gdisp;
+
   bezier_sel = tool->private;
   bezier_sel->state &= ~(BEZIER_DRAG);
 
@@ -1316,7 +1310,7 @@ bezier_select_button_release (Tool           *tool,
   gdk_flush ();
 
   if (bezier_sel->closed)
-    bezier_convert (bezier_sel, tool->gdisp_ptr, SUBDIVIDE, FALSE);
+    bezier_convert (bezier_sel, tool->gdisp, SUBDIVIDE, FALSE);
 
   /* Here ?*/
   paths_newpoint_current (bezier_sel,gdisp);
@@ -1381,11 +1375,10 @@ bez_copy_points (BezierSelect *tobez,
 static void
 bezier_select_motion (Tool           *tool,
 		      GdkEventMotion *mevent,
-		      gpointer        gdisp_ptr)
+		      GDisplay       *gdisp)
 {
   static gint lastx, lasty;
 
-  GDisplay     *gdisp;
   BezierSelect *bezier_sel;
   BezierPoint  *anchor;
   BezierPoint  *opposite_control;
@@ -1396,7 +1389,6 @@ bezier_select_motion (Tool           *tool,
   if (tool->state != ACTIVE)
     return;
 
-  gdisp = gdisp_ptr;
   bezier_sel = tool->private;
 
   if (!bezier_sel->cur_anchor || !bezier_sel->cur_control)
@@ -1726,9 +1718,8 @@ bezier_point_on_curve (GDisplay     *gdisp,
 static void
 bezier_select_cursor_update (Tool           *tool,
 			     GdkEventMotion *mevent,
-			     gpointer        gdisp_ptr)
+			     GDisplay       *gdisp)
 {
-  GDisplay     *gdisp;
   BezierSelect *bezier_sel;
   gboolean      on_curve;
   gboolean      on_control_pnt;
@@ -1736,11 +1727,9 @@ bezier_select_cursor_update (Tool           *tool,
   gint          halfwidth, dummy;
   gint          x, y;
 
-  gdisp = (GDisplay *) gdisp_ptr;
-
   bezier_sel = tool->private;
 
-  if (gdisp != tool->gdisp_ptr || bezier_sel->core->draw_state == INVISIBLE)
+  if (gdisp != tool->gdisp || bezier_sel->core->draw_state == INVISIBLE)
     {
       gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
 				    BEZIER_SELECT,
@@ -1929,7 +1918,7 @@ bezier_select_cursor_update (Tool           *tool,
 static void
 bezier_select_control (Tool       *tool,
 		       ToolAction  action,
-		       gpointer    gdisp_ptr)
+		       GDisplay   *gdisp)
 {
   BezierSelect * bezier_sel;
 
@@ -2016,10 +2005,10 @@ bezier_select_draw (Tool *tool)
   GDisplay     *gdisp;
   BezierSelect *bezier_sel;
 
-  gdisp = tool->gdisp_ptr;
+  gdisp      = tool->gdisp;
   bezier_sel = tool->private;
 
-  bezier_draw(gdisp,bezier_sel);
+  bezier_draw (gdisp, bezier_sel);
 }
 
 
@@ -2447,17 +2436,17 @@ bezier_convert (BezierSelect *bezier_sel,
 		gint          subdivisions,
 		gboolean      antialias)
 {
-  PixelRegion maskPR;
-  BezierPoint * points;
-  BezierPoint * start_pt;
-  BezierPoint * next_curve;
-  GSList * list;
-  unsigned char *buf, *b;
-  int draw_type;
-  int * vals, val;
-  int start, end;
-  int x, x2, w;
-  int i, j;
+  PixelRegion  maskPR;
+  BezierPoint *points;
+  BezierPoint *start_pt;
+  BezierPoint *next_curve;
+  GSList      *list;
+  guchar      *buf, *b;
+  gint         draw_type;
+  gint        *vals, val;
+  gint         start, end;
+  gint         x, x2, w;
+  gint         i, j;
 
   if (!bezier_sel->closed)
     gimp_fatal_error ("bezier_convert(): tried to convert an open bezier curve");
@@ -2622,16 +2611,16 @@ bezier_convert_points (BezierSelect *bezier_sel,
 }
 
 static void
-bezier_convert_line (GSList ** scanlines,
-		     int       x1,
-		     int       y1,
-		     int       x2,
-		     int       y2)
+bezier_convert_line (GSList **scanlines,
+		     gint     x1,
+		     gint     y1,
+		     gint     x2,
+		     gint     y2)
 {
-  int    dx, dy; 
-  int    error, inc; 
-  int    tmp;
-  double slope;
+  gint    dx, dy; 
+  gint    error, inc; 
+  gint    tmp;
+  gdouble slope;
 
   if (y1 == y2)
     return;
@@ -2739,11 +2728,11 @@ bezier_convert_line (GSList ** scanlines,
 }
 
 static GSList *
-bezier_insert_in_list (GSList * list,
-		       int      x)
+bezier_insert_in_list (GSList *list,
+		       gint    x)
 {
-  GSList * orig = list;
-  GSList * rest;
+  GSList *orig = list;
+  GSList *rest;
 
   if (!list)
     return g_slist_prepend (list, (void *) ((long) x));
@@ -2770,21 +2759,22 @@ bezier_insert_in_list (GSList * list,
 }
 
 gboolean 
-bezier_tool_selected()
+bezier_tool_selected (void)
 {
-  return(active_tool &&
-	 active_tool->type == BEZIER_SELECT &&
-	 active_tool->state == ACTIVE);
+  return (active_tool &&
+	  active_tool->type == BEZIER_SELECT &&
+	  active_tool->state == ACTIVE);
 }
 
 void
-bezier_paste_bezierselect_to_current(GDisplay *gdisp,BezierSelect *bsel)
+bezier_paste_bezierselect_to_current (GDisplay     *gdisp,
+				      BezierSelect *bsel)
 {
   BezierPoint *pts;
-  gint i;
-  Tool * tool;
-  BezierPoint  *bpnt = NULL;
-  int need_move = 0;
+  gint         i;
+  Tool        *tool;
+  BezierPoint *bpnt = NULL;
+  gint         need_move = 0;
 
 /*   g_print ("bezier_paste_bezierselect_to_current::\n"); */
 /*   printSel(bsel); */
@@ -2794,22 +2784,22 @@ bezier_paste_bezierselect_to_current(GDisplay *gdisp,BezierSelect *bsel)
       active_tool->type == BEZIER_SELECT &&
       active_tool->state == ACTIVE)
     {
-      BezierSelect *bezier_sel = (BezierSelect*)active_tool->private;
+      BezierSelect *bezier_sel = (BezierSelect *) active_tool->private;
       if(bezier_sel)
 	{
-	  draw_core_stop ( curSel->core, active_tool );
+	  draw_core_stop (curSel->core, active_tool);
 	  bezier_select_reset (bezier_sel);
 	}
     }
 
   gimp_context_set_tool (gimp_context_get_user (), BEZIER_SELECT);
   active_tool->paused_count = 0;
-  active_tool->gdisp_ptr = gdisp;
-  active_tool->drawable = gimp_image_active_drawable (gdisp->gimage);  
+  active_tool->gdisp        = gdisp;
+  active_tool->drawable     = gimp_image_active_drawable (gdisp->gimage);  
 
   tool = active_tool;
 
-  bezier_select_reset( curSel );
+  bezier_select_reset (curSel);
 
   draw_core_start (curSel->core, gdisp->canvas->window, tool);
 
@@ -2817,20 +2807,22 @@ bezier_paste_bezierselect_to_current(GDisplay *gdisp,BezierSelect *bsel)
 
   pts = (BezierPoint *) bsel->points;
 
-  for (i=0; i< bsel->num_points; i++)
+  for (i = 0; i < bsel->num_points; i++)
     {
-      if(need_move)
+      if (need_move)
 	{
-	  bezier_add_point( curSel, BEZIER_MOVE, pts->x, pts->y);
+	  bezier_add_point (curSel, BEZIER_MOVE, pts->x, pts->y);
 	  need_move = 0;
 	}
       else
-	bezier_add_point( curSel, pts->type, pts->x, pts->y);
+	{
+	  bezier_add_point (curSel, pts->type, pts->x, pts->y);
+	}
 
-      if(bpnt == NULL)
+      if (bpnt == NULL)
 	bpnt = curSel->last_point;
 
-      if(pts->next_curve)
+      if (pts->next_curve)
 	{
 /* 	  g_print ("bezier_paste_bezierselect_to_current:: Close last curve off \n"); */
 	  curSel->last_point->next = bpnt;
@@ -2847,21 +2839,21 @@ bezier_paste_bezierselect_to_current(GDisplay *gdisp,BezierSelect *bsel)
 	}
     }
       
-  if ( bsel->closed )
+  if (bsel->closed)
     {
       curSel->last_point->next = bpnt;
       bpnt->prev = curSel->last_point;
       curSel->cur_anchor = curSel->points;
       curSel->cur_control = curSel->points->next;
       curSel->closed = 1;
-      if (curTool->gdisp_ptr)
-	bezier_convert(curSel, curTool->gdisp_ptr, SUBDIVIDE, FALSE);
+      if (curTool->gdisp)
+	bezier_convert (curSel, curTool->gdisp, SUBDIVIDE, FALSE);
     }
 
 /*   g_print ("After pasting...\n"); */
 /*   printSel(curSel); */
 
-  if(bsel->num_points == 0)
+  if (bsel->num_points == 0)
     {
       curSel->state = BEZIER_START;
       curSel->draw = 0;
@@ -2876,17 +2868,17 @@ bezier_paste_bezierselect_to_current(GDisplay *gdisp,BezierSelect *bsel)
 }
 
 static void
-bezier_to_sel_internal(BezierSelect  *bezier_sel,
-		       Tool          *tool,
-		       GDisplay      *gdisp,
-		       gint           op, 
-		       gint           replace)
+bezier_to_sel_internal (BezierSelect  *bezier_sel,
+			Tool          *tool,
+			GDisplay      *gdisp,
+			gint           op, 
+			gint           replace)
 {
   /*  If we're antialiased, then recompute the
    *  mask...
    */
   if (bezier_options->antialias)
-    bezier_convert (bezier_sel, tool->gdisp_ptr, SUBDIVIDE, TRUE);
+    bezier_convert (bezier_sel, tool->gdisp, SUBDIVIDE, TRUE);
   
 /*   if (!bezier_options->extend) */
 /*     { */
@@ -3156,7 +3148,8 @@ test_add_point_on_segment (BezierSelect *bezier_sel,
   return FALSE;
 }
 
-void bezier_select_mode(gint mode)
+void
+bezier_select_mode (gint mode)
 {
   ModeEdit = mode;
 }

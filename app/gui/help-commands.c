@@ -1080,11 +1080,12 @@ tools_select_cmd_callback (GtkWidget *widget,
 			   gpointer   callback_data,
 			   guint      callback_action)
 {
-  ToolType  tool_type;
-  GDisplay *gdisp;
-  gdisp = gdisplay_active ();
+  ToolType   tool_type;
+  GDisplay  *gdisp;
 
   tool_type = (ToolType) callback_action;
+  gdisp     = gdisplay_active ();
+
 
   gimp_context_set_tool (gimp_context_get_user (), tool_type);
 
@@ -1101,12 +1102,12 @@ tools_select_cmd_callback (GtkWidget *widget,
       active_tool->drawable = gimp_image_active_drawable (gdisp->gimage);
     }
 
-  /*  setting the gdisp_ptr here is a HACK to allow the tools'
+  /*  setting the tool->gdisp here is a HACK to allow the tools'
    *  dialog windows being hidden if the tool was selected from
    *  a tear-off-menu and there was no mouse click in the display
    *  before deleting it
    */
-  active_tool->gdisp_ptr = gdisp;
+  active_tool->gdisp = gdisp;
 }
 
 /*****  Filters  *****/

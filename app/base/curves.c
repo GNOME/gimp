@@ -108,40 +108,72 @@ static CRMatrix CR_basis =
 
 /*  curves action functions  */
 
-static void   curves_button_press   (Tool *, GdkEventButton *, gpointer);
-static void   curves_button_release (Tool *, GdkEventButton *, gpointer);
-static void   curves_motion         (Tool *, GdkEventMotion *, gpointer);
-static void   curves_control        (Tool *, ToolAction,       gpointer);
+static void   curves_button_press         (Tool           *tool,
+					   GdkEventButton *bevent,
+					   GDisplay       *gdisp);
+static void   curves_button_release       (Tool           *tool,
+					   GdkEventButton *bevent,
+					   GDisplay       *gdisp);
+static void   curves_motion               (Tool           *tool,
+					   GdkEventMotion *mevent,
+					   GDisplay       *gdisp);
+static void   curves_control              (Tool           *tool,
+					   ToolAction      action,
+					   GDisplay       *gdisp);
 
-static CurvesDialog * curves_dialog_new (void);
+static CurvesDialog * curves_dialog_new   (void);
 
-static void   curves_update           (CurvesDialog *, int);
-static void   curves_plot_curve       (CurvesDialog *, int, int, int, int);
-static void   curves_preview          (CurvesDialog *);
+static void   curves_update               (CurvesDialog   *cd,
+					   gint            );
+static void   curves_plot_curve           (CurvesDialog   *cd,
+					   gint            ,
+					   gint            ,
+					   gint            ,
+					   gint            );
+static void   curves_preview              (CurvesDialog   *cd);
 
-static void   curves_channel_callback (GtkWidget *, gpointer);
+static void   curves_channel_callback     (GtkWidget      *widget,
+					   gpointer        data);
 
-static void   curves_smooth_callback      (GtkWidget *, gpointer);
-static void   curves_free_callback        (GtkWidget *, gpointer);
+static void   curves_smooth_callback      (GtkWidget      *widget,
+					   gpointer        data);
+static void   curves_free_callback        (GtkWidget      *widget,
+					   gpointer        data);
 
-static void   curves_channel_reset        (int);
-static void   curves_reset_callback       (GtkWidget *, gpointer);
-static void   curves_ok_callback          (GtkWidget *, gpointer);
-static void   curves_cancel_callback      (GtkWidget *, gpointer);
-static void   curves_load_callback        (GtkWidget *, gpointer);
-static void   curves_save_callback        (GtkWidget *, gpointer);
-static void   curves_preview_update       (GtkWidget *, gpointer);
-static gint   curves_xrange_events        (GtkWidget *, GdkEvent *, CurvesDialog *);
-static gint   curves_yrange_events        (GtkWidget *, GdkEvent *, CurvesDialog *);
-static gint   curves_graph_events         (GtkWidget *, GdkEvent *, CurvesDialog *);
-static void   curves_CR_compose           (CRMatrix, CRMatrix, CRMatrix);
+static void   curves_channel_reset        (gint            );
+static void   curves_reset_callback       (GtkWidget      *widget,
+					   gpointer        data);
+static void   curves_ok_callback          (GtkWidget      *widget,
+					   gpointer        data);
+static void   curves_cancel_callback      (GtkWidget      *widget,
+					   gpointer        data);
+static void   curves_load_callback        (GtkWidget      *widget,
+					   gpointer        data);
+static void   curves_save_callback        (GtkWidget      *widget,
+					   gpointer        data);
+static void   curves_preview_update       (GtkWidget      *widget,
+					   gpointer        data);
+static gint   curves_xrange_events        (GtkWidget      *widget,
+					   GdkEvent       *event,
+					   CurvesDialog   *cd);
+static gint   curves_yrange_events        (GtkWidget      *widget,
+					   GdkEvent       *event,
+					   CurvesDialog   *cd);
+static gint   curves_graph_events         (GtkWidget      *widget,
+					   GdkEvent       *event,
+					   CurvesDialog   *cd);
+static void   curves_CR_compose           (CRMatrix        ,
+					   CRMatrix        ,
+					   CRMatrix        );
 
-static void   file_dialog_create          (GtkWidget *);
-static void   file_dialog_ok_callback     (GtkWidget *, gpointer);
-static void   file_dialog_cancel_callback (GtkWidget *, gpointer);
+static void   file_dialog_create          (GtkWidget      *widget);
+static void   file_dialog_ok_callback     (GtkWidget      *widget,
+					   gpointer        data);
+static void   file_dialog_cancel_callback (GtkWidget      *widget,
+					   gpointer        data);
 
-static gboolean  curves_read_from_file    (FILE *f);
-static void      curves_write_to_file     (FILE *f);
+static gboolean  curves_read_from_file    (FILE           *f);
+static void      curves_write_to_file     (FILE           *f);
 
 
 /*  curves machinery  */
@@ -152,10 +184,10 @@ curves_lut_func (CurvesDialog *cd,
 		 gint          channel,
 		 gfloat        value)
 {
-  gfloat f;
-  gint index;
+  gfloat  f;
+  gint    index;
   gdouble inten;
-  gint j;
+  gint    j;
 
   if (nchannels == 1)
     j = 0;
@@ -197,15 +229,15 @@ curves_colour_update (Tool           *tool,
 		      gint            x,
 		      gint            y)
 {
-  guchar *color;
-  gint    offx;
-  gint    offy;
-  gint    maxval;
+  guchar        *color;
+  gint           offx;
+  gint           offy;
+  gint           maxval;
   gboolean       has_alpha;
   gboolean       is_indexed;
   GimpImageType  sample_type;
 
-  if(!tool || tool->state != ACTIVE)
+  if (!tool || tool->state != ACTIVE)
     return;
 
   drawable_offsets (drawable, &offx, &offy);
@@ -213,7 +245,7 @@ curves_colour_update (Tool           *tool,
   x -= offx;
   y -= offy;
 
-  if (!(color = image_map_get_color_at(curves_dialog->image_map, x, y)))
+  if (!(color = image_map_get_color_at (curves_dialog->image_map, x, y)))
     return;
 
   sample_type = gimp_drawable_type (drawable);
@@ -283,16 +315,14 @@ curves_add_point (GimpDrawable *drawable,
 static void
 curves_button_press (Tool           *tool,
 		     GdkEventButton *bevent,
-		     gpointer        gdisp_ptr)
+		     GDisplay       *gdisp)
 {
-  gint x, y;
-  GDisplay     *gdisp;
+  gint          x, y;
   GimpDrawable *drawable;
 
-  gdisp = gdisp_ptr;
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  tool->gdisp_ptr = gdisp;
+  tool->gdisp = gdisp;
 
   if (drawable != tool->drawable)
     {
@@ -318,20 +348,18 @@ curves_button_press (Tool           *tool,
 static void
 curves_button_release (Tool           *tool,
 		       GdkEventButton *bevent,
-		       gpointer        gdisp_ptr)
+		       GDisplay       *gdisp)
 {
-  gint x, y;
+  gint          x, y;
   GimpDrawable *drawable;
-  GDisplay     *gdisp;
 
-  gdisp = (GDisplay *) gdisp_ptr;
-
-  if(!curves_dialog || 
-     !gdisp || 
-     !(drawable = gimp_image_active_drawable (gdisp->gimage)))
+  if (! curves_dialog || 
+      ! gdisp || 
+      ! (drawable = gimp_image_active_drawable (gdisp->gimage)))
      return;
 
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
+  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
+			       FALSE, FALSE);
   curves_colour_update (tool, gdisp, drawable, x, y);
 
   if (bevent->state & GDK_SHIFT_MASK)
@@ -355,13 +383,10 @@ curves_button_release (Tool           *tool,
 static void
 curves_motion (Tool           *tool,
 	       GdkEventMotion *mevent,
-	       gpointer        gdisp_ptr)
+	       GDisplay       *gdisp)
 {
-  gint x, y;
-  GDisplay     *gdisp;
+  gint          x, y;
   GimpDrawable *drawable;
-
-  gdisp = (GDisplay *) gdisp_ptr;
 
   if (! curves_dialog ||
       ! gdisp || 
@@ -376,7 +401,7 @@ curves_motion (Tool           *tool,
 static void
 curves_control (Tool       *tool,
 		ToolAction  action,
-		gpointer    gdisp_ptr)
+		GDisplay   *gdisp)
 {
   switch (action)
     {
@@ -1279,7 +1304,7 @@ curves_ok_callback (GtkWidget *widget,
 
   cd->image_map = NULL;
 
-  active_tool->gdisp_ptr = NULL;
+  active_tool->gdisp    = NULL;
   active_tool->drawable = NULL;
 }
 
@@ -1303,7 +1328,7 @@ curves_cancel_callback (GtkWidget *widget,
       cd->image_map = NULL;
     }
 
-  active_tool->gdisp_ptr = NULL;
+  active_tool->gdisp    = NULL;
   active_tool->drawable = NULL;
 }
 

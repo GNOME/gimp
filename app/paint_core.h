@@ -22,13 +22,16 @@
 
 /* the different states that the painting function can be called with  */
 
-#define INIT_PAINT       0 /* Setup PaintFunc internals */ 
-#define MOTION_PAINT     1 /* PaintFunc performs motion-related rendering */
-#define PAUSE_PAINT      2 /* Unused. Reserved */
-#define RESUME_PAINT     3 /* Unused. Reserved */
-#define FINISH_PAINT     4 /* Cleanup and/or reset PaintFunc operation */
-#define PRETRACE_PAINT   5 /* PaintFunc performs window tracing activity prior to rendering */
-#define POSTTRACE_PAINT  6 /* PaintFunc performs window tracing activity following rendering */
+typedef enum /*< skip >*/
+{
+  INIT_PAINT,       /* Setup PaintFunc internals */ 
+  MOTION_PAINT,     /* PaintFunc performs motion-related rendering */
+  PAUSE_PAINT,      /* Unused. Reserved */
+  RESUME_PAINT,     /* Unused. Reserved */
+  FINISH_PAINT,     /* Cleanup and/or reset PaintFunc operation */
+  PRETRACE_PAINT,   /* PaintFunc performs window tracing activity prior to rendering */
+  POSTTRACE_PAINT   /* PaintFunc performs window tracing activity following rendering */
+} PaintState;
 
 typedef enum /*< skip >*/
 {
@@ -44,54 +47,56 @@ typedef enum /*< skip >*/
                                             */
 } ToolFlags;
 
-typedef void * (* PaintFunc)   (PaintCore *, GimpDrawable *, int);
+typedef gpointer (* PaintFunc) (PaintCore    *paint_core,
+				GimpDrawable *drawable,
+				PaintState    paint_state);
 
 struct _PaintCore
 {
-  DrawCore *      core;          /*  Core select object         */
+  DrawCore      * core;          /*  Core select object         */
 
-  double          startx;        /*  starting x coord           */
-  double          starty;        /*  starting y coord           */
-  double          startpressure; /*  starting pressure          */
-  double          startxtilt;    /*  starting xtilt             */
-  double          startytilt;    /*  starting ytilt             */
+  gdouble         startx;        /*  starting x coord           */
+  gdouble         starty;        /*  starting y coord           */
+  gdouble         startpressure; /*  starting pressure          */
+  gdouble         startxtilt;    /*  starting xtilt             */
+  gdouble         startytilt;    /*  starting ytilt             */
 #ifdef GTK_HAVE_SIX_VALUATORS
-  double          startwheel;    /*  starting wheel             */ 
+  gdouble         startwheel;    /*  starting wheel             */ 
 #endif /* GTK_HAVE_SIX_VALUATORS */
 
-  double          curx;          /*  current x coord            */
-  double          cury;          /*  current y coord            */
-  double          curpressure;   /*  current pressure           */
-  double          curxtilt;      /*  current xtilt              */
-  double          curytilt;      /*  current ytilt              */
+  gdouble         curx;          /*  current x coord            */
+  gdouble         cury;          /*  current y coord            */
+  gdouble         curpressure;   /*  current pressure           */
+  gdouble         curxtilt;      /*  current xtilt              */
+  gdouble         curytilt;      /*  current ytilt              */
 #ifdef GTK_HAVE_SIX_VALUATORS
-  double          curwheel;      /*  current wheel              */
+  gdouble         curwheel;      /*  current wheel              */
 #endif /* GTK_HAVE_SIX_VALUATORS */
 
-  double          lastx;         /*  last x coord               */
-  double          lasty;         /*  last y coord               */
-  double          lastpressure;  /*  last pressure              */
-  double          lastxtilt;     /*  last xtilt                 */
-  double          lastytilt;     /*  last ytilt                 */
+  gdouble         lastx;         /*  last x coord               */
+  gdouble         lasty;         /*  last y coord               */
+  gdouble         lastpressure;  /*  last pressure              */
+  gdouble         lastxtilt;     /*  last xtilt                 */
+  gdouble         lastytilt;     /*  last ytilt                 */
 #ifdef GTK_HAVE_SIX_VALUATORS
-  double          lastwheel;     /*  last wheel                 */ 
+  gdouble         lastwheel;     /*  last wheel                 */ 
 #endif /* GTK_HAVE_SIX_VALUATORS */ 
 
-  int             state;         /*  state of buttons and keys  */
+  gint            state;         /*  state of buttons and keys  */
 
-  double          distance;      /*  distance traveled by brush */
-  double          pixel_dist;    /*  distance in pixels         */
-  double          spacing;       /*  spacing                    */
+  gdouble         distance;      /*  distance traveled by brush */
+  gdouble         pixel_dist;    /*  distance in pixels         */
+  gdouble         spacing;       /*  spacing                    */
 
-  int             x1, y1;        /*  image space coordinate     */
-  int             x2, y2;        /*  image space coords         */
+  gint            x1, y1;        /*  image space coordinate     */
+  gint            x2, y2;        /*  image space coords         */
 
-  GimpBrush *     brush;         /*  current brush	        */
+  GimpBrush     * brush;         /*  current brush	        */
 
   PaintFunc       paint_func;    /*  painting function          */
 
-  int             pick_colors;   /*  pick color if ctrl or alt is pressed  */
-  int             pick_state;    /*  was ctrl or alt pressed when clicked? */
+  gboolean        pick_colors;   /*  pick color if ctrl or alt is pressed  */
+  gboolean        pick_state;    /*  was ctrl or alt pressed when clicked? */
   ToolFlags       flags;	 /*  tool flags, see ToolFlags above       */
 
   guint           context_id;    /*  for the statusbar          */
@@ -100,30 +105,38 @@ struct _PaintCore
 extern PaintCore  non_gui_paint_core;
 
 /*  Special undo type  */
-typedef struct _paint_undo PaintUndo;
+typedef struct _PaintUndo PaintUndo;
 
-struct _paint_undo
+struct _PaintUndo
 {
-  int             tool_ID;
-  double          lastx;
-  double          lasty;
-  double	  lastpressure;
-  double          lastxtilt;
-  double          lastytilt;
+  gint     tool_ID;
+  gdouble  lastx;
+  gdouble  lasty;
+  gdouble  lastpressure;
+  gdouble  lastxtilt;
+  gdouble  lastytilt;
 #ifdef GTK_HAVE_SIX_VALUATORS
-  double         lastwheel;
+  gdouble  lastwheel;
 #endif /* GTK_HAVE_SIX_VALUATORS */
 };
 
 /*  paint tool action functions  */
-void          paint_core_button_press    (Tool *tool, GdkEventButton *bevent, gpointer gdisp_ptr);
-void          paint_core_button_release  (Tool *tool, GdkEventButton *bevent, gpointer gdisp_ptr);
-void          paint_core_motion          (Tool *tool, GdkEventMotion *mevent, gpointer gdisp_ptr);
-void          paint_core_cursor_update   (Tool *tool, GdkEventMotion *mevent, gpointer gdisp_ptr);
+void          paint_core_button_press    (Tool                *tool,
+					  GdkEventButton      *bevent,
+					  GDisplay            *gdisp);
+void          paint_core_button_release  (Tool                *tool,
+					  GdkEventButton      *bevent,
+					  GDisplay            *gdisp);
+void          paint_core_motion          (Tool                *tool,
+					  GdkEventMotion      *mevent,
+					  GDisplay            *gdisp);
+void          paint_core_cursor_update   (Tool                *tool,
+					  GdkEventMotion      *mevent,
+					  GDisplay            *gdisp);
 
 void          paint_core_control         (Tool                *tool, 
-					  ToolAction           action, 
-					  gpointer             gdisp_ptr);
+					  ToolAction           action,
+					  GDisplay            *gdisp);
 
 /*  paint tool functions  */
 void          paint_core_no_draw         (Tool                *tool);
@@ -179,5 +192,6 @@ void   paint_core_color_area_with_pixmap (PaintCore            *paint_core,
 					  TempBuf              *area, 
 					  gdouble               scale, 
 					  BrushApplicationMode  mode);
+
 
 #endif  /*  __PAINT_CORE_H__  */

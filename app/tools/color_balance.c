@@ -62,21 +62,33 @@ static ColorBalanceDialog *color_balance_dialog = NULL;
 
 /*  color balance action functions  */
 
-static void   color_balance_control (Tool *, ToolAction, gpointer);
+static void   color_balance_control (Tool       *tool,
+				     ToolAction  action,
+				     GDisplay   *gdisp);
 
 static ColorBalanceDialog * color_balance_dialog_new (void);
 
-static void   color_balance_update               (ColorBalanceDialog *, int);
-static void   color_balance_preview              (ColorBalanceDialog *);
-static void   color_balance_reset_callback       (GtkWidget *, gpointer);
-static void   color_balance_ok_callback          (GtkWidget *, gpointer);
-static void   color_balance_cancel_callback      (GtkWidget *, gpointer);
-static void   color_balance_range_callback       (GtkWidget *, gpointer);
-static void   color_balance_preserve_update      (GtkWidget *, gpointer);
-static void   color_balance_preview_update       (GtkWidget *, gpointer);
-static void   color_balance_cr_adjustment_update (GtkAdjustment *, gpointer);
-static void   color_balance_mg_adjustment_update (GtkAdjustment *, gpointer);
-static void   color_balance_yb_adjustment_update (GtkAdjustment *, gpointer);
+static void   color_balance_update               (ColorBalanceDialog *cbd,
+						  gint                );
+static void   color_balance_preview              (ColorBalanceDialog *cbd);
+static void   color_balance_reset_callback       (GtkWidget          *widget,
+						  gpointer            data);
+static void   color_balance_ok_callback          (GtkWidget          *widget,
+						  gpointer            data);
+static void   color_balance_cancel_callback      (GtkWidget          *widget,
+						  gpointer            data);
+static void   color_balance_range_callback       (GtkWidget          *widget,
+						  gpointer            data);
+static void   color_balance_preserve_update      (GtkWidget          *widget,
+						  gpointer            data);
+static void   color_balance_preview_update       (GtkWidget          *widget,
+						  gpointer            data);
+static void   color_balance_cr_adjustment_update (GtkAdjustment      *adj,
+						  gpointer            data);
+static void   color_balance_mg_adjustment_update (GtkAdjustment      *adj,
+						  gpointer            data);
+static void   color_balance_yb_adjustment_update (GtkAdjustment      *adj,
+						  gpointer            data);
 
 /*  color balance machinery  */
 
@@ -86,12 +98,12 @@ color_balance (PixelRegion *srcPR,
 	       void        *data)
 {
   ColorBalanceDialog *cbd;
-  guchar *src, *s;
-  guchar *dest, *d;
-  gint alpha;
-  gint r, g, b;
-  gint r_n, g_n, b_n;
-  gint w, h;
+  guchar             *src, *s;
+  guchar             *dest, *d;
+  gboolean            alpha;
+  gint                r, g, b;
+  gint                r_n, g_n, b_n;
+  gint                w, h;
 
   cbd = (ColorBalanceDialog *) data;
 
@@ -143,7 +155,7 @@ color_balance (PixelRegion *srcPR,
 static void
 color_balance_control (Tool       *tool,
 		       ToolAction  action,
-		       gpointer    gdisp_ptr)
+		       GDisplay   *gdisp)
 {
   ColorBalance * color_bal;
 
@@ -599,7 +611,7 @@ color_balance_ok_callback (GtkWidget *widget,
 
   cbd->image_map = NULL;
 
-  active_tool->gdisp_ptr = NULL;
+  active_tool->gdisp    = NULL;
   active_tool->drawable = NULL;
 }
 
@@ -623,7 +635,7 @@ color_balance_cancel_callback (GtkWidget *widget,
       cbd->image_map = NULL;
     }
 
-  active_tool->gdisp_ptr = NULL;
+  active_tool->gdisp    = NULL;
   active_tool->drawable = NULL;
 }
 

@@ -45,12 +45,33 @@
 /*  the move structures  */
 
 typedef struct _MoveTool MoveTool;
+
 struct _MoveTool
 {
   Layer    *layer;
   Guide    *guide;
   GDisplay *disp;
 };
+
+
+/*  move tool action functions  */
+static void   move_tool_button_press   (Tool           *tool,
+					GdkEventButton *bevent,
+					GDisplay       *gdisp);
+static void   move_tool_button_release (Tool           *tool,
+					GdkEventButton *bevent,
+					GDisplay       *gdisp);
+static void   move_tool_motion         (Tool           *tool,
+					GdkEventMotion *mevent,
+					GDisplay       *gdisp);
+static void   move_tool_cursor_update  (Tool           *tool,
+					GdkEventMotion *mevent,
+					GDisplay       *gdisp);
+static void   move_tool_control	       (Tool           *tool,
+					ToolAction      tool_action,
+					GDisplay       *gdisp);
+
+static void   move_create_gc           (GDisplay       *gdisp);
 
 
 /*  the move tool options  */
@@ -60,48 +81,37 @@ static ToolOptions *move_options = NULL;
 static GdkGC *move_gc = NULL;
 
 
-/*  move tool action functions  */
-static void   move_tool_button_press   (Tool *, GdkEventButton *, gpointer);
-static void   move_tool_button_release (Tool *, GdkEventButton *, gpointer);
-static void   move_tool_motion         (Tool *, GdkEventMotion *, gpointer);
-static void   move_tool_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void   move_tool_control	       (Tool *, ToolAction,       gpointer);
-
-static void   move_create_gc           (GDisplay *gdisp);
-
-
 /*  move action functions  */
 
 static void
 move_tool_button_press (Tool           *tool,
 			GdkEventButton *bevent,
-			gpointer        gdisp_ptr)
+			GDisplay       *gdisp)
 {
-  GDisplay *gdisp;
   MoveTool *move;
   Layer    *layer;
   Guide    *guide;
   gint      x, y;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   move = (MoveTool *) tool->private;
 
-  tool->gdisp_ptr = gdisp_ptr;
+  tool->gdisp = gdisp;
   move->layer = NULL;
   move->guide = NULL;
   move->disp  = NULL;
 
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
+  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
+			       FALSE, FALSE);
 
   if (bevent->state & GDK_MOD1_MASK &&
       !gimage_mask_is_empty (gdisp->gimage))
     {
-      init_edit_selection (tool, gdisp_ptr, bevent, EDIT_MASK_TRANSLATE);
+      init_edit_selection (tool, gdisp, bevent, EDIT_MASK_TRANSLATE);
       tool->state = ACTIVE;
     }
   else if (bevent->state & GDK_SHIFT_MASK)
     {
-      init_edit_selection (tool, gdisp_ptr, bevent, EDIT_LAYER_TRANSLATE);
+      init_edit_selection (tool, gdisp, bevent, EDIT_LAYER_TRANSLATE);
       tool->state = ACTIVE;
     }
   else
@@ -138,7 +148,7 @@ move_tool_button_press (Tool           *tool,
 	  else
 	    {
 	      gimp_image_set_active_layer (gdisp->gimage, layer);
-	      init_edit_selection (tool, gdisp_ptr, bevent, EDIT_LAYER_TRANSLATE);
+	      init_edit_selection (tool, gdisp, bevent, EDIT_LAYER_TRANSLATE);
 	    }
 	  tool->state = ACTIVE;
 	}
@@ -202,15 +212,13 @@ move_draw_guide (GDisplay *gdisp,
 static void
 move_tool_button_release (Tool           *tool,
 			  GdkEventButton *bevent,
-			  gpointer        gdisp_ptr)
+			  GDisplay       *gdisp)
 {
   MoveTool *move;
-  GDisplay *gdisp;
   gboolean  delete_guide;
   gint      x1, y1;
   gint      x2, y2;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   move = (MoveTool *) tool->private;
 
   gdk_flush ();
@@ -259,7 +267,7 @@ move_tool_button_release (Tool           *tool,
 	}
       else
 	{
-	  move_tool_motion (tool, NULL, gdisp_ptr);
+	  move_tool_motion (tool, NULL, gdisp);
 	}
 
       selection_resume (gdisp->select);
@@ -285,15 +293,13 @@ move_tool_button_release (Tool           *tool,
 static void
 move_tool_motion (Tool           *tool,
 		  GdkEventMotion *mevent,
-		  gpointer        gdisp_ptr)
+		  GDisplay       *gdisp)
 
 {
   MoveTool *move;
-  GDisplay *gdisp;
   gint      x, y;
 
   move = (MoveTool *) tool->private;
-  gdisp = (GDisplay *) gdisp_ptr;
 
   if (move->guide)
     {
@@ -323,16 +329,14 @@ move_tool_motion (Tool           *tool,
 static void
 move_tool_cursor_update (Tool           *tool,
 			 GdkEventMotion *mevent,
-			 gpointer        gdisp_ptr)
+			 GDisplay       *gdisp)
 {
   MoveTool *move;
-  GDisplay *gdisp;
   Guide    *guide;
   Layer    *layer;
   gint      x, y;
 
   move = (MoveTool *) tool->private;
-  gdisp = (GDisplay *) gdisp_ptr;
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
 			       FALSE, FALSE);
@@ -357,7 +361,7 @@ move_tool_cursor_update (Tool           *tool,
       if (gdisp->draw_guides &&
 	  (guide = gdisplay_find_guide (gdisp, mevent->x, mevent->y)))
 	{
-	  tool->gdisp_ptr = gdisp_ptr;
+	  tool->gdisp = gdisp;
 	  gdisplay_install_tool_cursor (gdisp, GDK_HAND2,
 					TOOL_TYPE_NONE,
 					CURSOR_MODIFIER_HAND,
@@ -372,10 +376,10 @@ move_tool_cursor_update (Tool           *tool,
 		    gdisplay_draw_guide (gdisp, move->guide, FALSE);
 		}
 
-	      gdisp = gdisp_ptr;
+	      gdisp = gdisp;
 	      gdisplay_draw_guide (gdisp, guide, TRUE);
 	      move->guide = guide;
-	      move->disp = gdisp;
+	      move->disp  = gdisp;
 	    }
 	}
       else if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage, x, y)))
@@ -412,7 +416,7 @@ move_tool_cursor_update (Tool           *tool,
 static void
 move_tool_control (Tool       *tool,
 		   ToolAction  action,
-		   gpointer    gdisp_ptr)
+		   GDisplay   *gdisp)
 {
   MoveTool *move;
 
@@ -425,7 +429,7 @@ move_tool_control (Tool       *tool,
 
     case RESUME:
       if (move->guide)
-	gdisplay_draw_guide (gdisp_ptr, move->guide, TRUE);
+	gdisplay_draw_guide (gdisp, move->guide, TRUE);
       break;
 
     case HALT:
@@ -458,7 +462,7 @@ move_tool_start_hguide (Tool     *tool,
 
   selection_pause (gdisp->select);
 
-  tool->gdisp_ptr = gdisp;
+  tool->gdisp       = gdisp;
   tool->scroll_lock = TRUE;
 
   private = tool->private;
@@ -482,7 +486,7 @@ move_tool_start_vguide (Tool     *tool,
 
   selection_pause (gdisp->select);
 
-  tool->gdisp_ptr = gdisp;
+  tool->gdisp       = gdisp;
   tool->scroll_lock = TRUE;
 
   private = tool->private;
@@ -539,10 +543,10 @@ tools_free_move_tool (Tool *tool)
 
   move = (MoveTool *) tool->private;
 
-  if (tool->gdisp_ptr)
+  if (tool->gdisp)
     {
       if (move->guide)
-	gdisplay_draw_guide (tool->gdisp_ptr, move->guide, FALSE);
+	gdisplay_draw_guide (tool->gdisp, move->guide, FALSE);
     }
 
   g_free (move);

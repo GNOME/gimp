@@ -20,19 +20,6 @@
 #define __FREE_SELECT_H__
 
 
-/*  free select action functions  */
-
-void   free_select_button_press   (Tool           *tool,
-				   GdkEventButton *bevent,
-				   gpointer        gdisp_ptr);
-void   free_select_button_release (Tool           *tool,
-				   GdkEventButton *bevent,
-				   gpointer        gdisp_ptr);
-void   free_select_motion         (Tool           *tool,
-				   GdkEventMotion *mevent,
-				   gpointer        gdisp_ptr);
-
-
 /*  free select functions  */
 
 void   free_select                (GimpImage        *gimage,

@@ -20,21 +20,18 @@
 #define __ERASER_H__
 
 
-void     * eraser_paint_func      (PaintCore    *,
-				   GimpDrawable *,
-				   gint          );
-gboolean   eraser_non_gui         (GimpDrawable *,
-				   gint          ,
-				   gdouble      *,
-				   gint          ,
-				   gint          ,
-				   gint          );
-gboolean   eraser_non_gui_default (GimpDrawable *,
-				   gint          ,
-				   gdouble      *);
+gboolean   eraser_non_gui         (GimpDrawable *drawable,
+				   gint          num_strokes,
+				   gdouble      *stroke_array,
+				   gint          hardness,
+				   gint          method,
+				   gboolean      anti_erase);
+gboolean   eraser_non_gui_default (GimpDrawable *paint_core,
+				   gint          num_strokes,
+				   gdouble      *stroke_array);
 
-Tool     * tools_new_eraser       (void          );
-void       tools_free_eraser      (Tool         *);
+Tool     * tools_new_eraser       (void);
+void       tools_free_eraser      (Tool         *tool);
 
 
 #endif  /*  __ERASER_H__  */

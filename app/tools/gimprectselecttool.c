@@ -48,26 +48,29 @@
 #define STATUSBAR_SIZE 128
 
 
+extern void   ellipse_select                 (GimpImage  *gimage,
+					      gint        x,
+					      gint        y,
+					      gint        w,
+					      gint        h,
+					      SelectOps   op,
+					      gboolean    antialias,
+					      gboolean    feather,
+					      gdouble     feather_radius);
+
+static void   selection_tool_update_op_state (RectSelect *rect_sel,
+					      gint        x,
+					      gint        y,
+					      gint        state, 
+					      GDisplay   *gdisp);
+
+
 /*  the rectangular selection tool options  */
 static SelectionOptions *rect_options = NULL;
 
 /*  in gimp, ellipses are rectangular, too ;)  */
 extern SelectionOptions *ellipse_options;
-extern void ellipse_select (GimpImage *gimage,
-			    gint       x,
-			    gint       y,
-			    gint       w,
-			    gint       h,
-			    SelectOps  op,
-			    gboolean   antialias,
-			    gboolean   feather,
-			    gdouble    feather_radius);
 
-static void selection_tool_update_op_state (RectSelect *rect_sel,
-					    gint        x,
-					    gint        y,
-					    gint        state, 
-					    GDisplay   *gdisp);
 
 /*************************************/
 /*  Rectangular selection apparatus  */
@@ -117,16 +120,14 @@ rect_select (GimpImage *gimage,
 void
 rect_select_button_press (Tool           *tool,
 			  GdkEventButton *bevent,
-			  gpointer        gdisp_ptr)
+			  GDisplay       *gdisp)
 {
-  GDisplay   *gdisp;
   RectSelect *rect_sel;
   gchar       select_mode[STATUSBAR_SIZE];
   gint        x, y;
   GimpUnit    unit = GIMP_UNIT_PIXEL;
   gdouble     unit_factor;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   rect_sel = (RectSelect *) tool->private;
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);
@@ -185,15 +186,15 @@ rect_select_button_press (Tool           *tool,
 		    NULL, NULL, bevent->time);
 
   tool->state = ACTIVE;
-  tool->gdisp_ptr = gdisp_ptr;
+  tool->gdisp = gdisp;
 
   switch (rect_sel->op)
     {
     case SELECTION_MOVE_MASK:
-      init_edit_selection (tool, gdisp_ptr, bevent, EDIT_MASK_TRANSLATE);
+      init_edit_selection (tool, gdisp, bevent, EDIT_MASK_TRANSLATE);
       return;
     case SELECTION_MOVE:
-      init_edit_selection (tool, gdisp_ptr, bevent, EDIT_MASK_TO_LAYER_TRANSLATE);
+      init_edit_selection (tool, gdisp, bevent, EDIT_MASK_TO_LAYER_TRANSLATE);
       return;
     default:
       break;
@@ -228,15 +229,13 @@ rect_select_button_press (Tool           *tool,
 void
 rect_select_button_release (Tool           *tool,
 			    GdkEventButton *bevent,
-			    gpointer        gdisp_ptr)
+			    GDisplay       *gdisp)
 {
   RectSelect *rect_sel;
-  GDisplay   *gdisp;
-  gint x1, y1;
-  gint x2, y2;
-  gint w, h;
+  gint        x1, y1;
+  gint        x2, y2;
+  gint        w, h;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   rect_sel = (RectSelect *) tool->private;
 
   gdk_pointer_ungrab (bevent->time);
@@ -301,18 +300,16 @@ rect_select_button_release (Tool           *tool,
 void
 rect_select_motion (Tool           *tool,
 		    GdkEventMotion *mevent,
-		    gpointer        gdisp_ptr)
+		    GDisplay       *gdisp)
 {
   RectSelect *rect_sel;
-  GDisplay   *gdisp;
-  gchar   size[STATUSBAR_SIZE];
-  gint    ox, oy;
-  gint    x, y;
-  gint    w, h, s;
-  gint    tw, th;
-  gdouble ratio;
+  gchar       size[STATUSBAR_SIZE];
+  gint        ox, oy;
+  gint        x, y;
+  gint        w, h, s;
+  gint        tw, th;
+  gdouble     ratio;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   rect_sel = (RectSelect *) tool->private;
 
   /*  needed for immediate cursor update on modifier event  */
@@ -326,7 +323,7 @@ rect_select_motion (Tool           *tool,
     {
       rect_sel->op = SELECTION_REPLACE;
 
-      rect_select_cursor_update (tool, mevent, gdisp_ptr);
+      rect_select_cursor_update (tool, mevent, gdisp);
     }
 
   draw_core_pause (rect_sel->core, tool);
@@ -472,12 +469,10 @@ rect_select_motion (Tool           *tool,
 void
 rect_select_draw (Tool *tool)
 {
-  GDisplay   *gdisp;
   RectSelect *rect_sel;
-  gint x1, y1;
-  gint x2, y2;
+  gint        x1, y1;
+  gint        x2, y2;
 
-  gdisp = (GDisplay *) tool->gdisp_ptr;
   rect_sel = (RectSelect *) tool->private;
 
   x1 = MIN (rect_sel->x, rect_sel->x + rect_sel->w);
@@ -485,8 +480,8 @@ rect_select_draw (Tool *tool)
   x2 = MAX (rect_sel->x, rect_sel->x + rect_sel->w);
   y2 = MAX (rect_sel->y, rect_sel->y + rect_sel->h);
 
-  gdisplay_transform_coords (gdisp, x1, y1, &x1, &y1, 0);
-  gdisplay_transform_coords (gdisp, x2, y2, &x2, &y2, 0);
+  gdisplay_transform_coords (tool->gdisp, x1, y1, &x1, &y1, 0);
+  gdisplay_transform_coords (tool->gdisp, x2, y2, &x2, &y2, 0);
 
   gdk_draw_rectangle (rect_sel->core->win,
 		      rect_sel->core->gc, 0,
@@ -553,7 +548,7 @@ selection_tool_update_op_state (RectSelect *rect_sel,
 void
 rect_select_oper_update  (Tool           *tool,
 			  GdkEventMotion *mevent,
-			  gpointer        gdisp_ptr)
+			  GDisplay       *gdisp)
 {
   RectSelect *rect_sel;
 
@@ -565,16 +560,16 @@ rect_select_oper_update  (Tool           *tool,
   selection_tool_update_op_state (rect_sel,
 				  rect_sel->current_x,
 				  rect_sel->current_y,
-				  mevent->state, gdisp_ptr);
+				  mevent->state, gdisp);
 }
 
 void
 rect_select_modifier_update (Tool        *tool,
 			     GdkEventKey *kevent,
-			     gpointer     gdisp_ptr)
+			     GDisplay    *gdisp)
 {
   RectSelect *rect_sel;
-  gint state;
+  gint        state;
 
   state = kevent->state;
 
@@ -606,19 +601,17 @@ rect_select_modifier_update (Tool        *tool,
   selection_tool_update_op_state (rect_sel,
 				  rect_sel->current_x,
 				  rect_sel->current_y,
-				  state, gdisp_ptr);
+				  state, gdisp);
 }
 
 void
 rect_select_cursor_update (Tool           *tool,
 			   GdkEventMotion *mevent,
-			   gpointer        gdisp_ptr)
+			   GDisplay       *gdisp)
 {
   RectSelect *rect_sel;
-  GDisplay   *gdisp;
 
   rect_sel = (RectSelect *) tool->private;
-  gdisp = (GDisplay *) gdisp_ptr;
 
   switch (rect_sel->op)
     {
@@ -670,7 +663,7 @@ rect_select_cursor_update (Tool           *tool,
 void
 rect_select_control (Tool       *tool,
 		     ToolAction  action,
-		     gpointer    gdisp_ptr)
+		     GDisplay   *gdisp)
 {
   RectSelect *rect_sel;
 

@@ -20,9 +20,6 @@
 #define __SCALE_TOOL_H__
 
 
-TileManager * scale_tool_transform  (Tool           *tool,
-				     gpointer        gdisp_ptr,
-				     TransformState  state);
 TileManager * scale_tool_scale      (GimpImage      *gimage,
 				     GimpDrawable   *drawable,
 				     GDisplay       *gdisp,

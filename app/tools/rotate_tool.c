@@ -55,34 +55,42 @@
 #define EPSILON      0.018  /*  ~ 1 degree  */
 #define FIFTEEN_DEG  (G_PI / 12.0)
 
+
+/*  forward function declarations  */
+static TileManager * rotate_tool_transform (Tool           *tool,
+					    GDisplay       *gdisp,
+					    TransformState  state);
+
+static void          rotate_tool_recalc    (Tool           *tool,
+					    GDisplay       *gdisp);
+static void          rotate_tool_motion    (Tool           *tool,
+					    GDisplay       *gdisp);
+static void          rotate_info_update    (Tool           *tool);
+
+static void          rotate_angle_changed  (GtkWidget      *entry,
+					    gpointer        data);
+static void          rotate_center_changed (GtkWidget      *entry,
+					    gpointer        data);
+
+
 /*  variables local to this file  */
 static gdouble    angle_val;
 static gdouble    center_vals[2];
 
 /*  needed for size update  */
-static GtkWidget *sizeentry;
+static GtkWidget *sizeentry = NULL;
 
-/*  forward function declarations  */
-static void   rotate_tool_recalc  (Tool *, void *);
-static void   rotate_tool_motion  (Tool *, void *);
-static void   rotate_info_update  (Tool *);
 
-/*  callback functions for the info dialog sizeentries  */
-static void   rotate_angle_changed  (GtkWidget *entry, gpointer data);
-static void   rotate_center_changed (GtkWidget *entry, gpointer data);
-
-TileManager *
+static TileManager *
 rotate_tool_transform (Tool           *tool,
-		       gpointer        gdisp_ptr,
+		       GDisplay       *gdisp,
 		       TransformState  state)
 {
   TransformCore *transform_core;
-  GDisplay      *gdisp;
   GtkWidget     *widget;
   GtkWidget     *spinbutton2;
 
   transform_core = (TransformCore *) tool->private;
-  gdisp = (GDisplay *) gdisp_ptr;
 
   switch (state)
     {
@@ -174,12 +182,12 @@ rotate_tool_transform (Tool           *tool,
       break;
 
     case TRANSFORM_MOTION:
-      rotate_tool_motion (tool, gdisp_ptr);
-      rotate_tool_recalc (tool, gdisp_ptr);
+      rotate_tool_motion (tool, gdisp);
+      rotate_tool_recalc (tool, gdisp);
       break;
 
     case TRANSFORM_RECALC:
-      rotate_tool_recalc (tool, gdisp_ptr);
+      rotate_tool_recalc (tool, gdisp);
       break;
 
     case TRANSFORM_FINISH:
@@ -246,7 +254,6 @@ rotate_angle_changed (GtkWidget *widget,
 		      gpointer   data)
 {
   Tool          *tool;
-  GDisplay      *gdisp;
   TransformCore *transform_core;
   gdouble        value;
 
@@ -254,7 +261,6 @@ rotate_angle_changed (GtkWidget *widget,
 
   if (tool)
     {
-      gdisp = (GDisplay *) tool->gdisp_ptr;
       transform_core = (TransformCore *) tool->private;
 
       value = gimp_deg_to_rad (GTK_ADJUSTMENT (widget)->value);
@@ -263,7 +269,7 @@ rotate_angle_changed (GtkWidget *widget,
 	{
 	  draw_core_pause (transform_core->core, tool);      
 	  transform_core->trans_info[ANGLE] = value;
-	  rotate_tool_recalc (tool, gdisp);
+	  rotate_tool_recalc (tool, tool->gdisp);
 	  draw_core_resume (transform_core->core, tool);
 	}
     }
@@ -274,7 +280,6 @@ rotate_center_changed (GtkWidget *widget,
 		       gpointer   data)
 {
   Tool          *tool;
-  GDisplay      *gdisp;
   TransformCore *transform_core;
   gint           cx;
   gint           cy;
@@ -283,7 +288,6 @@ rotate_center_changed (GtkWidget *widget,
 
   if (tool)
     {
-      gdisp = (GDisplay *) tool->gdisp_ptr;
       transform_core = (TransformCore *) tool->private;
 
       cx = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
@@ -295,15 +299,15 @@ rotate_center_changed (GtkWidget *widget,
 	  draw_core_pause (transform_core->core, tool);      
 	  transform_core->cx = cx;
 	  transform_core->cy = cy;
-	  rotate_tool_recalc (tool, gdisp);
+	  rotate_tool_recalc (tool, tool->gdisp);
 	  draw_core_resume (transform_core->core, tool);
 	}
     }
 }
 
 static void
-rotate_tool_motion (Tool *tool,
-		    void *gdisp_ptr)
+rotate_tool_motion (Tool     *tool,
+		    GDisplay *gdisp)
 {
   TransformCore *transform_core;
   gdouble        angle1, angle2, angle;
@@ -361,14 +365,12 @@ rotate_tool_motion (Tool *tool,
 }
 
 static void
-rotate_tool_recalc (Tool *tool,
-		    void *gdisp_ptr)
+rotate_tool_recalc (Tool     *tool,
+		    GDisplay *gdisp)
 {
   TransformCore *transform_core;
-  GDisplay      *gdisp;
   gdouble        cx, cy;
 
-  gdisp = (GDisplay *) tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
   cx = transform_core->cx;

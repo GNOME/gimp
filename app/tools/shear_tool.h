@@ -20,9 +20,6 @@
 #define __SHEAR_TOOL_H__
 
 
-TileManager * shear_tool_transform  (Tool           *tool,
-				     gpointer        gdisp_ptr,
-				     TransformState  state);
 TileManager * shear_tool_shear      (GimpImage      *gimage,
 				     GimpDrawable   *drawable,
 				     GDisplay       *gdisp,

@@ -20,12 +20,9 @@
 #define __PENCIL_H__
 
 
-void     * pencil_paint_func (PaintCore    *,
-			      GimpDrawable *,
-			      gint          );
-gboolean   pencil_non_gui    (GimpDrawable *,
-			      gint          ,
-			      gdouble      *);
+gboolean   pencil_non_gui    (GimpDrawable *drawable,
+			      gint          num_strokes,
+			      gdouble      *stroke_array);
 
 Tool     * tools_new_pencil  (void);
 void       tools_free_pencil (Tool         *tool);

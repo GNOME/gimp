@@ -127,15 +127,12 @@ edit_selection_snap (GDisplay *gdisp,
 
 void
 init_edit_selection (Tool           *tool,
-		     gpointer        gdisp_ptr,
+		     GDisplay       *gdisp,
 		     GdkEventButton *bevent,
 		     EditType        edit_type)
 {
-  GDisplay *gdisp;
   Layer *layer;
-  gint x, y;
-
-  gdisp = (GDisplay *) gdisp_ptr;
+  gint   x, y;
 
   undo_push_group_start (gdisp->gimage, LAYER_DISPLACE_UNDO);
 
@@ -218,14 +215,11 @@ init_edit_selection (Tool           *tool,
 void
 edit_selection_button_release (Tool           *tool,
 			       GdkEventButton *bevent,
-			       gpointer        gdisp_ptr)
+			       GDisplay       *gdisp)
 {
   gint      x;
   gint      y;
-  GDisplay *gdisp;
   Layer    *layer;
-
-  gdisp = (GDisplay *) gdisp_ptr;
 
   /*  resume the current selection and ungrab the pointer  */
   selection_resume (gdisp->select);
@@ -312,19 +306,16 @@ edit_selection_button_release (Tool           *tool,
 void
 edit_selection_motion (Tool           *tool,
 		       GdkEventMotion *mevent,
-		       gpointer        gdisp_ptr)
+		       GDisplay       *gdisp)
 {
-  GDisplay *gdisp;
-  gchar     offset[STATUSBAR_SIZE];
-  gdouble   lastmotion_x, lastmotion_y;
+  gchar   offset[STATUSBAR_SIZE];
+  gdouble lastmotion_x, lastmotion_y;
 
   if (tool->state != ACTIVE)
     {
       g_warning ("BUG: Tracking motion while !ACTIVE");
       return;
     }
-
-  gdisp = (GDisplay *) gdisp_ptr;
 
   gdk_flush ();
 
@@ -521,7 +512,7 @@ edit_selection_draw (Tool *tool)
   gint        off_x, off_y;
   GdkSegment *segs_copy;
 
-  gdisp = (GDisplay *) tool->gdisp_ptr;
+  gdisp  = tool->gdisp;
   select = gdisp->select;
 
   switch (edit_select.edit_type)
@@ -637,7 +628,7 @@ edit_selection_draw (Tool *tool)
 void
 edit_selection_control (Tool       *tool,
 			ToolAction  action,
-			gpointer    gdisp_ptr)
+			GDisplay   *gdisp)
 {
   switch (action)
     {
@@ -663,11 +654,8 @@ edit_selection_control (Tool       *tool,
 void
 edit_selection_cursor_update (Tool           *tool,
 			      GdkEventMotion *mevent,
-			      gpointer        gdisp_ptr)
+			      GDisplay       *gdisp)
 {
-  GDisplay *gdisp;
-
-  gdisp = (GDisplay *) gdisp_ptr;
   gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
 				TOOL_TYPE_NONE,
 				CURSOR_MODIFIER_MOVE,
@@ -770,18 +758,15 @@ process_event_queue_keys (GdkEventKey *kevent,
 void
 edit_sel_arrow_keys_func (Tool        *tool,
 			  GdkEventKey *kevent,
-			  gpointer     gdisp_ptr)
+			  GDisplay    *gdisp)
 {
   gint      inc_x, inc_y, mask_inc_x, mask_inc_y;
-  GDisplay *gdisp;
   Layer    *layer;
   Layer    *floating_layer;
   GSList   *layer_list;
   EditType  edit_type;
 
   layer = NULL;
-
-  gdisp = (GDisplay *) gdisp_ptr;
 
   inc_x = 
     process_event_queue_keys (kevent,

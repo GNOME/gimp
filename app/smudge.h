@@ -33,16 +33,14 @@ typedef enum
   SMUDGE_MODE_SHADOWS 
 } SmudgeMode;
 
-void     * smudge_paint_func       (PaintCore    *,
-				    GimpDrawable *,
-				    gint          );
-gboolean   smudge_non_gui          (GimpDrawable *,
-				    gdouble       ,
-				    gint          ,
-				    gdouble      *);
-gboolean   smudge_non_gui_default  (GimpDrawable *,
-				    gint          ,
-				    gdouble      *);
+
+gboolean   smudge_non_gui          (GimpDrawable *drawable,
+				    gdouble       rate,
+				    gint          num_strokes,
+				    gdouble      *stroke_array);
+gboolean   smudge_non_gui_default  (GimpDrawable *drawable,
+				    gint          num_strokes,
+				    gdouble      *stroke_array);
 
 Tool     * tools_new_smudge        (void);
 void       tools_free_smudge       (Tool         *tool);

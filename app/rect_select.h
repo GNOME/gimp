@@ -23,25 +23,25 @@
 /*  rect select action functions  */
 void   rect_select_button_press    (Tool           *tool,
 				    GdkEventButton *bevent,
-				    gpointer        gdisp_ptr);
+				    GDisplay       *gdisp);
 void   rect_select_button_release  (Tool           *tool,
 				    GdkEventButton *bevent,
-				    gpointer        gdisp_ptr);
+				    GDisplay       *gdisp);
 void   rect_select_motion          (Tool           *tool,
 				    GdkEventMotion *mevent,
-				    gpointer        gdisp_ptr);
+				    GDisplay       *gdisp);
 void   rect_select_modifier_update (Tool           *tool,
 				    GdkEventKey    *kevent,
-				    gpointer        gdisp_ptr);
+				    GDisplay       *gdisp);
 void   rect_select_cursor_update   (Tool           *tool,
 				    GdkEventMotion *mevent,
-				    gpointer        gdisp_ptr);
+				    GDisplay       *gdisp);
 void   rect_select_oper_update     (Tool           *tool,
 				    GdkEventMotion *mevent,
-				    gpointer        gdisp_ptr);
+				    GDisplay       *gdisp);
 void   rect_select_control         (Tool           *tool,
 				    ToolAction      tool_action,
-				    gpointer        gdisp_ptr);
+				    GDisplay       *gdisp);
 
 /*  rect select functions  */
 void   rect_select_draw            (Tool           *tool);

@@ -20,9 +20,6 @@
 #define __ROTATE_TOOL_H__
 
 
-TileManager * rotate_tool_transform  (Tool           *tool,
-				      gpointer        gdisp_ptr,
-				      TransformState  state);
 TileManager * rotate_tool_rotate     (GimpImage      *gimage,
 				      GimpDrawable   *drawable,
 				      GDisplay       *gdisp,

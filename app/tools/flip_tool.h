@@ -20,10 +20,6 @@
 #define __FLIP_TOOL_H__
 
 
-TileManager * flip_tool_transform  (Tool                    *tool,
-				    gpointer                 gdisp_ptr,
-				    TransformState           state);
-
 TileManager * flip_tool_flip       (GimpImage               *gimage,
 				    GimpDrawable            *drawable,
 				    TileManager             *orig,

@@ -51,23 +51,32 @@ struct _HistogramTool
   gint x, y;   /*  coords for last mouse click  */
 };
 
+
+/*  histogram_tool action functions  */
+static void   histogram_tool_control          (Tool                *tool,
+					       ToolAction           tool_action,
+					       GDisplay            *gdisp);
+
+static HistogramToolDialog *  histogram_tool_dialog_new (void);
+
+static void   histogram_tool_close_callback   (GtkWidget           *widget,
+					       gpointer             data);
+static void   histogram_tool_channel_callback (GtkWidget           *widget,
+					       gpointer             data);
+static void   histogram_tool_gradient_draw    (GtkWidget           *gdisp,
+					       gint                 channel);
+
+static void   histogram_tool_dialog_update    (HistogramToolDialog *htd,
+					       gint                 start,
+					       gint                 end);
+
+
 /*  the histogram tool options  */
 static ToolOptions * histogram_tool_options = NULL;
 
 /*  the histogram tool dialog  */
 static HistogramToolDialog * histogram_tool_dialog = NULL;
 
-/*  histogram_tool action functions  */
-static void   histogram_tool_control (Tool *, ToolAction, gpointer);
-
-static HistogramToolDialog *  histogram_tool_dialog_new (void);
-
-static void   histogram_tool_close_callback   (GtkWidget *, gpointer);
-static void   histogram_tool_channel_callback (GtkWidget *, gpointer);
-static void   histogram_tool_gradient_draw    (GtkWidget *, gint);
-
-static void   histogram_tool_dialog_update    (HistogramToolDialog *,
-					       gint, gint);
 
 /*  histogram_tool machinery  */
 
@@ -78,13 +87,13 @@ histogram_tool_histogram_range (HistogramWidget *widget,
 				gpointer         data)
 {
   HistogramToolDialog *htd;
-  gdouble pixels;
-  gdouble count;
+  gdouble              pixels;
+  gdouble              count;
 
   htd = (HistogramToolDialog *) data;
 
   if (htd == NULL || htd->hist == NULL ||
-      gimp_histogram_nchannels(htd->hist) <= 0)
+      gimp_histogram_nchannels (htd->hist) <= 0)
     return;
 
   pixels = gimp_histogram_get_count (htd->hist, 0, 255);
@@ -148,7 +157,7 @@ histogram_tool_dialog_update (HistogramToolDialog *htd,
 static void
 histogram_tool_control (Tool       *tool,
 			ToolAction  action,
-			gpointer    gdisp_ptr)
+			GDisplay   *gdisp)
 {
   switch (action)
     {
@@ -171,8 +180,8 @@ histogram_tool_control (Tool       *tool,
 Tool *
 tools_new_histogram_tool (void)
 {
-  Tool * tool;
-  HistogramTool * private;
+  Tool          *tool;
+  HistogramTool *private;
 
   /*  The tool options  */
   if (! histogram_tool_options)
@@ -181,7 +190,7 @@ tools_new_histogram_tool (void)
       tools_register (HISTOGRAM, histogram_tool_options);
     }
 
-  tool = tools_new_tool (HISTOGRAM);
+  tool    = tools_new_tool (HISTOGRAM);
   private = g_new0 (HistogramTool, 1);
 
   tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
@@ -402,7 +411,7 @@ histogram_tool_close_callback (GtkWidget *widget,
 
   gimp_dialog_hide (htd->shell);
        
-  active_tool->gdisp_ptr = NULL;
+  active_tool->gdisp    = NULL;
   active_tool->drawable = NULL;
 }
 
@@ -426,7 +435,7 @@ histogram_tool_gradient_draw (GtkWidget *gradient,
 {
   guchar buf[HISTOGRAM_WIDTH * 3];
   guchar r, g, b;
-  gint i;
+  gint   i;
 
   r = g = b = 0;
   switch (channel)
@@ -458,5 +467,3 @@ histogram_tool_gradient_draw (GtkWidget *gradient,
   
   gtk_widget_queue_draw (gradient);
 }
-
- 

@@ -20,9 +20,6 @@
 #define  __BOUNDARY_H__
 
 
-#include "paint_funcs.h"
-
-
 typedef enum
 {
   WithinBounds,

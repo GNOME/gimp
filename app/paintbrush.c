@@ -62,6 +62,7 @@
 /*  the paintbrush structures  */
 
 typedef struct _PaintbrushOptions PaintbrushOptions;
+
 struct _PaintbrushOptions
 {
   PaintOptions  paint_options;
@@ -108,13 +109,16 @@ static GimpUnit  non_gui_gradient_unit;
 
 
 /*  forward function declarations  */
-static void paintbrush_motion (PaintCore *,
-			       GimpDrawable *,
-			       PaintPressureOptions *,
-			       gdouble,
-			       gdouble,
-			       PaintApplicationMode,
-			       GradientPaintMode);
+static void       paintbrush_motion     (PaintCore            *,
+					 GimpDrawable         *,
+					 PaintPressureOptions *,
+					 gdouble               ,
+					 gdouble               ,
+					 PaintApplicationMode  ,
+					 GradientPaintMode     );
+static gpointer   paintbrush_paint_func (PaintCore            *paint_core,
+					 GimpDrawable         *drawable,
+					 PaintState            state);
 
 
 /*  functions  */
@@ -125,7 +129,7 @@ paintbrush_gradient_toggle_callback (GtkWidget *widget,
 {
   PaintbrushOptions *options = paintbrush_options;
 
-  static int incremental_save = FALSE;
+  static gboolean incremental_save = FALSE;
 
   gimp_toggle_button_update (widget, data);
 
@@ -147,8 +151,8 @@ static void
 paintbrush_options_reset (void)
 {
   PaintbrushOptions *options = paintbrush_options;
-  GtkWidget *spinbutton;
-  gint       digits;
+  GtkWidget         *spinbutton;
+  gint               digits;
 
   paint_options_reset ((PaintOptions *) options);
 
@@ -358,10 +362,10 @@ paintbrush_options_new (void)
 
 #define TIMED_BRUSH 0
 
-void *
+static gpointer
 paintbrush_paint_func (PaintCore    *paint_core,
 		       GimpDrawable *drawable,
-		       int           state)
+		       PaintState    state)
 {  
   GDisplay *gdisp = gdisplay_active ();
   double fade_out;
@@ -584,15 +588,15 @@ paintbrush_motion (PaintCore            *paint_core,
 }
 
 
-static void *
+static gpointer
 paintbrush_non_gui_paint_func (PaintCore    *paint_core,
 			       GimpDrawable *drawable,
-			       int           state)
+			       PaintState    state)
 {
-  GImage *gimage;
-  double fade_out;
-  double gradient_length;	
-  double unit_factor;
+  GImage  *gimage;
+  gdouble  fade_out;
+  gdouble  gradient_length;	
+  gdouble  unit_factor;
 
   if (! (gimage = drawable_gimage (drawable)))
     return NULL;

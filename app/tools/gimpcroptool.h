@@ -29,17 +29,15 @@ typedef enum
 
 void   crop_draw       (Tool      *tool);
 void   crop_image      (GimpImage *gimage,
-			gint,
-			gint,
-			gint,
-			gint,
-			gint,
-			gint);
+			gint       x1,
+			gint       y1,
+			gint       x2,
+			gint       y2,
+			gboolean   layer_only,
+			gboolean   crop_layers);
 
 Tool * tools_new_crop  (void);
 void   tools_free_crop (Tool      *tool);
 
 
 #endif  /*  __CROP_H__  */
-
-

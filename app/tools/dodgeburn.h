@@ -34,21 +34,18 @@ typedef enum
 } DodgeBurnMode;
 
 
-void     * dodgeburn_paint_func      (PaintCore *,
-				      GimpDrawable *,
-				      gint);
-gboolean   dodgeburn_non_gui         (GimpDrawable *,
-				      gdouble,
-				      DodgeBurnType,
-				      DodgeBurnMode,
-				      gint,
-				      gdouble *);
-gboolean   dodgeburn_non_gui_default (GimpDrawable *,
-				      gint,
-				      gdouble *);
+gboolean   dodgeburn_non_gui         (GimpDrawable  *drawable,
+				      gdouble        exposure,
+				      DodgeBurnType  type,
+				      DodgeBurnMode  mode,
+				      gint           num_strokes,
+				      gdouble       *stroke_array);
+gboolean   dodgeburn_non_gui_default (GimpDrawable  *drawable,
+				      gint           num_strokes,
+				      gdouble       *stroke_array);
 
 Tool     * tools_new_dodgeburn       (void);
-void       tools_free_dodgeburn      (Tool *);
+void       tools_free_dodgeburn      (Tool          *tool);
 
 
 #endif  /*  __DODGEBURN_H__  */

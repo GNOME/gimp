@@ -1,3 +1,59 @@
+2000-12-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/airbrush.[ch]
+	* app/bezier_select.c
+	* app/bezier_selectP.h
+	* app/blend.[ch]
+	* app/boundary.h
+	* app/brightness_contrast.[ch]
+	* app/bucket_fill.c
+	* app/by_color_select.c
+	* app/clone.[ch]
+	* app/color_balance.c
+	* app/color_picker.c
+	* app/commands.c
+	* app/convolve.[ch]
+	* app/crop.c
+	* app/crop.h
+	* app/curves.c
+	* app/dodgeburn.[ch]
+	* app/edit_selection.[ch]
+	* app/ellipse_select.c
+	* app/eraser.[ch]
+	* app/flip_tool.[ch]
+	* app/free_select.[ch]
+	* app/fuzzy_select.[ch]
+	* app/gdisplay.c
+	* app/gimage.c
+	* app/histogram_tool.[ch]
+	* app/hue_saturation.[ch]
+	* app/image_map.[ch]
+	* app/ink.[ch]
+	* app/iscissors.c
+	* app/levels.c
+	* app/magnify.[ch]
+	* app/move.c
+	* app/nav_window.[ch]
+	* app/paint_core.[ch]
+	* app/paintbrush.[ch]
+	* app/path_bezier.[ch]
+	* app/path_tool.c
+	* app/pencil.[ch]
+	* app/perspective_tool.[ch]
+	* app/posterize.c
+	* app/rect_select.[ch]
+	* app/rotate_tool.[ch]
+	* app/scale_tool.[ch]
+	* app/selection.[ch]
+	* app/shear_tool.[ch]
+	* app/smudge.[ch]
+	* app/text_tool.[ch]
+	* app/threshold.c
+	* app/tools.[ch]
+	* app/transform_core.[ch]: removed the "gdisp_ptr" madness and
+	useless casts all over the place. Introduced a "PaintState" enum
+	instead of #define's. Various cleanups.
+
 2000-12-30  Michael Natterer  <mitch@gimp.org>
 
 	One more 17C3 commit ...

@@ -81,7 +81,7 @@ typedef void (* BezierPointsFunc) (BezierSelect *bezier_sel,
 				   gpointer      data);
 
 /*  Functions  */
-gint  bezier_select_load                   (void             *gdisp_ptr,
+gint  bezier_select_load                   (GDisplay         *gdisp,
 					    BezierPoint      *points,
 					    gint              n_points,
 					    gint              closed);

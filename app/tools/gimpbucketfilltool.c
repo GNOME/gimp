@@ -85,14 +85,30 @@ static BucketOptions *bucket_options = NULL;
 
 /*  local function prototypes  */
 
-static void  bucket_fill_button_press    (Tool *, GdkEventButton *, gpointer);
-static void  bucket_fill_button_release  (Tool *, GdkEventButton *, gpointer);
-static void  bucket_fill_cursor_update   (Tool *, GdkEventMotion *, gpointer);
+static void  bucket_fill_button_press    (Tool           *tool,
+					  GdkEventButton *bevent,
+					  GDisplay       *gdisp);
+static void  bucket_fill_button_release  (Tool           *tool,
+					  GdkEventButton *bevent,
+					  GDisplay       *gdisp);
+static void  bucket_fill_cursor_update   (Tool           *tool,
+					  GdkEventMotion *mevent,
+					  GDisplay       *gdisp);
 
-static void  bucket_fill_line_color      (guchar *, guchar *, guchar *,
-					  gboolean, gint, gint);
-static void  bucket_fill_line_pattern    (guchar *, guchar *, TempBuf *,
-					  gboolean, gint, gint, gint, gint);
+static void  bucket_fill_line_color      (guchar         *,
+					  guchar         *,
+					  guchar         *,
+					  gboolean        ,
+					  gint            ,
+					  gint            );
+static void  bucket_fill_line_pattern    (guchar         *,
+					  guchar         *,
+					  TempBuf        *,
+					  gboolean        ,
+					  gint            ,
+					  gint            ,
+					  gint            ,
+					  gint            );
 
 
 /*  functions  */
@@ -123,7 +139,7 @@ bucket_options_new (void)
   GtkWidget *frame;
 
   /*  the new bucket fill tool options structure  */
-  options = (BucketOptions *) g_malloc (sizeof (BucketOptions));
+  options = g_new (BucketOptions, 1);
   paint_options_init ((PaintOptions *) options,
 		      BUCKET_FILL,
 		      bucket_options_reset);
@@ -194,13 +210,11 @@ bucket_options_new (void)
 static void
 bucket_fill_button_press (Tool           *tool,
 			  GdkEventButton *bevent,
-			  gpointer        gdisp_ptr)
+			  GDisplay       *gdisp)
 {
-  GDisplay * gdisp;
-  BucketTool * bucket_tool;
-  gboolean use_offsets;
+  BucketTool *bucket_tool;
+  gboolean    use_offsets;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   bucket_tool = (BucketTool *) tool->private;
 
   use_offsets = (bucket_options->sample_merged) ? FALSE : TRUE;
@@ -217,21 +231,19 @@ bucket_fill_button_press (Tool           *tool,
 		    NULL, NULL, bevent->time);
 
   /*  Make the tool active and set the gdisplay which owns it  */
-  tool->gdisp_ptr = gdisp_ptr;
+  tool->gdisp = gdisp;
   tool->state = ACTIVE;
 }
 
 static void
 bucket_fill_button_release (Tool           *tool,
 			    GdkEventButton *bevent,
-			    gpointer        gdisp_ptr)
+			    GDisplay       *gdisp)
 {
-  GDisplay * gdisp;
-  BucketTool * bucket_tool;
-  Argument *return_vals;
-  gint nreturn_vals;
+  BucketTool *bucket_tool;
+  Argument   *return_vals;
+  gint        nreturn_vals;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   bucket_tool = (BucketTool *) tool->private;
 
   gdk_pointer_ungrab (bevent->time);
@@ -267,16 +279,13 @@ bucket_fill_button_release (Tool           *tool,
 static void
 bucket_fill_cursor_update (Tool           *tool,
 			   GdkEventMotion *mevent,
-			   gpointer        gdisp_ptr)
+			   GDisplay       *gdisp)
 {
-  GDisplay *gdisp;
-  Layer    *layer;
-  GdkCursorType ctype      = GDK_TOP_LEFT_ARROW;
-  CursorModifier cmodifier = CURSOR_MODIFIER_NONE;
-  gint x, y;
-  gint off_x, off_y;
-
-  gdisp = (GDisplay *) gdisp_ptr;
+  Layer          *layer;
+  GdkCursorType   ctype     = GDK_TOP_LEFT_ARROW;
+  CursorModifier  cmodifier = CURSOR_MODIFIER_NONE;
+  gint            x, y;
+  gint            off_x, off_y;
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
@@ -321,7 +330,7 @@ bucket_fill_cursor_update (Tool           *tool,
 static void
 bucket_fill_modifier_key_func (Tool        *tool,
 			       GdkEventKey *kevent,
-			       gpointer     gdisp_ptr)
+			       GDisplay    *gdisp)
 {
   switch (kevent->keyval)
     {
@@ -359,14 +368,14 @@ bucket_fill (GimpImage      *gimage,
   TileManager *buf_tiles;
   PixelRegion  bufPR, maskPR;
   Channel     *mask = NULL;
-  gint       bytes;
-  gboolean   has_alpha;
-  gint       x1, y1, x2, y2;
-  guchar     col [MAX_CHANNELS];
-  guchar    *d1, *d2;
-  GPattern  *pattern;
-  TempBuf   *pat_buf;
-  gboolean   new_buf = FALSE;
+  gint         bytes;
+  gboolean     has_alpha;
+  gint         x1, y1, x2, y2;
+  guchar       col [MAX_CHANNELS];
+  guchar      *d1, *d2;
+  GPattern    *pattern;
+  TempBuf     *pat_buf;
+  gboolean     new_buf = FALSE;
 
   pat_buf = NULL;
 
@@ -433,7 +442,7 @@ bucket_fill (GimpImage      *gimage,
       /*  make sure we handle the mask correctly if it was sample-merged  */
       if (sample_merged)
 	{
-	  int off_x, off_y;
+	  gint off_x, off_y;
 
 	  /*  Limit the channel bounds to the drawable's extents  */
 	  drawable_offsets (drawable, &off_x, &off_y);
@@ -533,8 +542,8 @@ bucket_fill_line_pattern (guchar   *buf,
 			  gint      width)
 {
   guchar *pat, *p;
-  gint alpha, b;
-  gint i;
+  gint    alpha, b;
+  gint    i;
 
   /*  Get a pointer to the appropriate scanline of the pattern buffer  */
   pat = temp_buf_data (pattern) +
@@ -571,8 +580,8 @@ bucket_fill_region (BucketFillMode  fill_mode,
 		    gboolean        has_alpha)
 {
   guchar *s, *m;
-  gint y;
-  void *pr;
+  gint    y;
+  void   *pr;
 
   for (pr = pixel_regions_register (2, bufPR, maskPR);
        pr != NULL;
@@ -612,8 +621,8 @@ bucket_fill_region (BucketFillMode  fill_mode,
 Tool *
 tools_new_bucket_fill (void)
 {
-  Tool * tool;
-  BucketTool * private;
+  Tool       *tool;
+  BucketTool *private;
 
   /*  The tool options  */
   if (! bucket_options)
@@ -630,7 +639,7 @@ tools_new_bucket_fill (void)
 
   tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
 
-  tool->private = (void *) private;
+  tool->private = (gpointer) private;
 
   tool->button_press_func   = bucket_fill_button_press;
   tool->button_release_func = bucket_fill_button_release;
@@ -643,7 +652,7 @@ tools_new_bucket_fill (void)
 void
 tools_free_bucket_fill (Tool *tool)
 {
-  BucketTool * bucket_tool;
+  BucketTool *bucket_tool;
 
   bucket_tool = (BucketTool *) tool->private;
 

@@ -375,10 +375,10 @@ gdisplay_delete (GDisplay *gdisp)
 
   /*  clear out the pointer to this gdisp from the active tool  */
   if (active_tool &&
-      active_tool->gdisp_ptr == gdisp)
+      active_tool->gdisp == gdisp)
     {
       active_tool->drawable = NULL;
-      active_tool->gdisp_ptr = NULL;
+      active_tool->gdisp    = NULL;
     }
 
   /*  free the selection structure  */

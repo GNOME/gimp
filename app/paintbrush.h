@@ -20,9 +20,6 @@
 #define __PAINTBRUSH_H__
 
 
-void     * paintbrush_paint_func      (PaintCore    *,
-				       GimpDrawable *,
-				       gint          );
 gboolean   paintbrush_non_gui         (GimpDrawable *,
 				       gint          ,
 				       gdouble      *,

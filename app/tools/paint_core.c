@@ -196,18 +196,16 @@ paint_core_sample_color (GimpDrawable *drawable,
 
 
 void
-paint_core_button_press (Tool           *tool, 
-			 GdkEventButton *bevent, 
-			 gpointer        gdisp_ptr)
+paint_core_button_press (Tool           *tool,
+			 GdkEventButton *bevent,
+			 GDisplay       *gdisp)
 {
   PaintCore    *paint_core;
-  GDisplay     *gdisp;
   GimpBrush    *current_brush;
   gboolean      draw_line;
   gdouble       x, y;
   GimpDrawable *drawable;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   paint_core = (PaintCore *) tool->private;
 
   g_return_if_fail (gdisp != NULL);
@@ -230,7 +228,7 @@ paint_core_button_press (Tool           *tool,
 #endif /* GTK_HAVE_SIX_VALUATORS */ 
   paint_core->state = bevent->state;
 
-  if (gdisp_ptr != tool->gdisp_ptr ||
+  if (gdisp != tool->gdisp ||
       paint_core->context_id < 1)
     {
       /* initialize the statusbar display */
@@ -239,7 +237,7 @@ paint_core_button_press (Tool           *tool,
     }
 
   /*  if this is a new image, reinit the core vals  */
-  if ((gdisp_ptr != tool->gdisp_ptr) || ! (bevent->state & GDK_SHIFT_MASK))
+  if ((gdisp != tool->gdisp) || ! (bevent->state & GDK_SHIFT_MASK))
     {
       /*  initialize some values  */
       paint_core->startx        = paint_core->lastx        = paint_core->curx = x;
@@ -295,7 +293,7 @@ paint_core_button_press (Tool           *tool,
     }
 
   tool->state        = ACTIVE;
-  tool->gdisp_ptr    = gdisp_ptr;
+  tool->gdisp        = gdisp;
   tool->paused_count = 0;
 
   /*  pause the current selection and grab the pointer  */
@@ -369,7 +367,7 @@ paint_core_button_press (Tool           *tool,
 
   if (paint_core->flags & TOOL_TRACES_ON_WINDOW)
     (* paint_core->paint_func) (paint_core, drawable, PRETRACE_PAINT);
-  
+
   gdisplay_flush_now (gdisp);
 
   if (paint_core->flags & TOOL_TRACES_ON_WINDOW)
@@ -382,14 +380,12 @@ paint_core_button_press (Tool           *tool,
 void
 paint_core_button_release (Tool           *tool,
 			   GdkEventButton *bevent,
-			   gpointer        gdisp_ptr)
+			   GDisplay       *gdisp)
 {
-  GDisplay  *gdisp;
   GImage    *gimage;
   PaintCore *paint_core;
 
-  gdisp = (GDisplay *) gdisp_ptr;
-  gimage = gdisp->gimage;
+  gimage     = gdisp->gimage;
   paint_core = (PaintCore *) tool->private;
 
   /*  resume the current selection and ungrab the pointer  */
@@ -415,14 +411,12 @@ paint_core_button_release (Tool           *tool,
 }
 
 void
-paint_core_motion (Tool           *tool, 
-		   GdkEventMotion *mevent, 
-		   gpointer        gdisp_ptr)
+paint_core_motion (Tool           *tool,
+		   GdkEventMotion *mevent,
+		   GDisplay       *gdisp)
 {
-  GDisplay  *gdisp;
   PaintCore *paint_core;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   paint_core = (PaintCore *) tool->private;
 
   gdisplay_untransform_coords_f (gdisp, (double) mevent->x, (double) mevent->y,
@@ -470,11 +464,10 @@ paint_core_motion (Tool           *tool,
 }
 
 void
-paint_core_cursor_update (Tool           *tool, 
-			  GdkEventMotion *mevent, 
-			  gpointer        gdisp_ptr)
+paint_core_cursor_update (Tool           *tool,
+			  GdkEventMotion *mevent,
+			  GDisplay       *gdisp)
 {
-  GDisplay      *gdisp;
   Layer         *layer;
   PaintCore     *paint_core;
   gint           x, y;
@@ -484,14 +477,12 @@ paint_core_cursor_update (Tool           *tool,
   CursorModifier cmodifier = CURSOR_MODIFIER_NONE;
   gboolean       ctoggle   = FALSE;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   paint_core = (PaintCore *) tool->private;
 
   /*  undraw the current tool  */
   draw_core_pause (paint_core->core, tool);
 
-  if (gdisp_ptr != tool->gdisp_ptr ||
-      paint_core->context_id < 1)
+  if (gdisp != tool->gdisp || paint_core->context_id < 1)
     {
       /* initialize the statusbar display */
       paint_core->context_id = 
@@ -504,16 +495,16 @@ paint_core_cursor_update (Tool           *tool,
   if ((layer = gimp_image_get_active_layer (gdisp->gimage)))
     {
       /* If shift is down and this is not the first paint stroke, draw a line */
-      if (gdisp_ptr == tool->gdisp_ptr && (mevent->state & GDK_SHIFT_MASK))
+      if (gdisp == tool->gdisp && (mevent->state & GDK_SHIFT_MASK))
 	{ 
 	  gdouble dx, dy, d;
 
-	  ctype = GDK_PENCIL;	  
+	  ctype = GDK_PENCIL;
 	  /*  Get the current coordinates */ 
-	  gdisplay_untransform_coords_f (gdisp, 
-					 (double) mevent->x, 
+	  gdisplay_untransform_coords_f (gdisp,
+					 (double) mevent->x,
 					 (double) mevent->y,
-					 &paint_core->curx, 
+					 &paint_core->curx,
 					 &paint_core->cury, TRUE);
 
 	  dx = paint_core->curx - paint_core->lastx;
@@ -527,7 +518,7 @@ paint_core_cursor_update (Tool           *tool,
 	      gint tangens2[6] = {  34, 106, 196, 334, 618, 1944 };
 	      gint cosinus[7]  = { 256, 247, 222, 181, 128,   66, 0 };
 	      gint i, radius, frac;
-      
+
 	      if (idy)
 		{
 		  radius = sqrt (SQR (idx) + SQR (idy));
@@ -640,17 +631,15 @@ paint_core_cursor_update (Tool           *tool,
 }
 
 void
-paint_core_control (Tool       *tool, 
-		    ToolAction  action, 
-		    gpointer    gdisp_ptr)
+paint_core_control (Tool       *tool,
+		    ToolAction  action,
+		    GDisplay   *gdisp)
 {
   PaintCore    *paint_core;
-  GDisplay     *gdisp;
   GimpDrawable *drawable;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   paint_core = (PaintCore *) tool->private;
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  drawable   = gimp_image_active_drawable (gdisp->gimage);
 
   switch (action)
     {
@@ -684,7 +673,7 @@ paint_core_draw (Tool *tool)
      and we don't care about a redraw                       */
   if (paint_core->core->gc != NULL)
     {
-      gdisp = (GDisplay *) tool->gdisp_ptr;
+      gdisp = tool->gdisp;
 
       gdisplay_transform_coords (gdisp, paint_core->lastx, paint_core->lasty,
 				 &tx1, &ty1, 1);
@@ -853,10 +842,9 @@ paint_core_interpolate (PaintCore    *paint_core,
 {
   GimpBrush *current_brush;
   GimpVector2 delta;
-#ifdef GTK_HAVE_SIX_VALUATORS
-  gdouble dpressure, dxtilt, dytilt, dwheel;
-#else /* !GTK_HAVE_SIX_VALUATORS */
   gdouble dpressure, dxtilt, dytilt;
+#ifdef GTK_HAVE_SIX_VALUATORS
+  gdouble dwheel;
 #endif /* GTK_HAVE_SIX_VALUATORS */
   /*   double spacing; */
   /*   double lastscale, curscale; */
@@ -888,7 +876,7 @@ paint_core_interpolate (PaintCore    *paint_core,
 #endif /* GTK_HAVE_SIX_VALUATORS */
     return;
 
-/* calculate the distance traveled in the coordinate space of the brush */
+  /* calculate the distance traveled in the coordinate space of the brush */
   mag = gimp_vector2_length (&(paint_core->brush->x_axis));
   xd  = gimp_vector2_inner_product (&delta,
 				    &(paint_core->brush->x_axis)) / (mag*mag);
@@ -897,11 +885,11 @@ paint_core_interpolate (PaintCore    *paint_core,
   yd  = gimp_vector2_inner_product (&delta,
 				    &(paint_core->brush->y_axis)) / (mag*mag);
 
-  dist = 0.5 * sqrt (xd*xd + yd*yd); 
-  total = dist + paint_core->distance;
+  dist    = 0.5 * sqrt (xd*xd + yd*yd); 
+  total   = dist + paint_core->distance;
   initial = paint_core->distance;
 
-  pixel_dist = gimp_vector2_length (&delta);
+  pixel_dist    = gimp_vector2_length (&delta);
   pixel_initial = paint_core->pixel_dist;  
 
   /*  FIXME: need to adapt the spacing to the size  */
@@ -911,9 +899,9 @@ paint_core_interpolate (PaintCore    *paint_core,
 
   while (paint_core->distance < total)
     {
-      n = (int) (paint_core->distance / paint_core->spacing + 1.0 + EPSILON);
+      n = (gint) (paint_core->distance / paint_core->spacing + 1.0 + EPSILON);
       left = n * paint_core->spacing - paint_core->distance;
-      
+
       paint_core->distance += left;
 
       if (paint_core->distance <= (total+EPSILON))
@@ -943,6 +931,7 @@ paint_core_interpolate (PaintCore    *paint_core,
 	  paint_core->brush = current_brush;
 	}
     }
+
   paint_core->distance    = total;
   paint_core->pixel_dist  = pixel_initial + pixel_dist;
   paint_core->curx        = paint_core->lastx + delta.x;
@@ -1190,7 +1179,8 @@ paint_core_paste_canvas (PaintCore	      *paint_core,
   MaskBuf *brush_mask;
 
   /*  get the brush mask  */
-  brush_mask = paint_core_get_brush_mask (paint_core, brush_hardness, brush_scale);
+  brush_mask = paint_core_get_brush_mask (paint_core,
+					  brush_hardness, brush_scale);
 
   /*  paste the canvas buf  */
   paint_core_paste (paint_core, brush_mask, drawable,
@@ -1255,9 +1245,9 @@ paint_core_calculate_brush_size (MaskBuf *mask,
 	ratio = 1 / 16;
       else
 	ratio = sqrt (scale);
-      
-      *width  = MAX ((gint)(mask->width  * ratio + 0.5), 1);
-      *height = MAX ((gint)(mask->height * ratio + 0.5), 1);
+
+      *width  = MAX ((gint) (mask->width  * ratio + 0.5), 1);
+      *height = MAX ((gint) (mask->height * ratio + 0.5), 1);
     }
 }  
 
@@ -1279,12 +1269,12 @@ paint_core_subsample_mask (MaskBuf *mask,
   gint        r, s;
 
   x += (x < 0) ? mask->width : 0;
-  left = x - floor(x);
-  index1 = (int) (left * (gdouble)(SUBSAMPLE + 1));
+  left = x - floor (x);
+  index1 = (gint) (left * (gdouble) (SUBSAMPLE + 1));
 
   y += (y < 0) ? mask->height : 0;
-  left = y - floor(y);
-  index2 = (int) (left * (gdouble)(SUBSAMPLE + 1));
+  left = y - floor (y);
+  index2 = (gint) (left * (gdouble) (SUBSAMPLE + 1));
 
   kernel = subsample[index2][index1];
 
@@ -1307,7 +1297,7 @@ paint_core_subsample_mask (MaskBuf *mask,
       last_brush_mask = mask;
       cache_invalid = FALSE;
     }
-  
+
   dest = kernel_brushes[index2][index1] = mask_buf_new (mask->width  + 2, 
 							mask->height + 2);
 
@@ -1416,9 +1406,10 @@ paint_core_pressurize_mask (MaskBuf *brush_mask,
     }
 #else /* ! FANCY_PRESSURE */
 
-  for (i=0;i<256;i++)
+  for (i = 0; i < 256; i++)
     {
-      int tmp = (pressure/0.5)*i;
+      gint tmp = (pressure / 0.5) * i;
+
       if (tmp > 255)
 	mapi[i] = 255;
       else
@@ -1430,7 +1421,7 @@ paint_core_pressurize_mask (MaskBuf *brush_mask,
   /* Now convert the brush */
 
   source = mask_buf_data (subsample_mask);
-  dest = mask_buf_data (pressure_brush);
+  dest   = mask_buf_data (pressure_brush);
 
   i = subsample_mask->width * subsample_mask->height;
   while (i--)
@@ -1527,13 +1518,13 @@ paint_core_scale_pixmap (MaskBuf *brush_mask,
 
   scale = CLAMP (scale, 0.0, 1.0);
 
-  if (scale == 0.0) 
+  if (scale == 0.0)
     return NULL;
 
   if (scale == 1.0)
     return brush_mask;
 
-  paint_core_calculate_brush_size (brush_mask, scale, 
+  paint_core_calculate_brush_size (brush_mask, scale,
 				   &dest_width, &dest_height);
 
   if (brush_mask == last_brush && !cache_invalid &&
@@ -1568,13 +1559,15 @@ paint_core_get_brush_mask (PaintCore	        *paint_core,
   switch (brush_hardness)
     {
     case SOFT:
-      mask = paint_core_subsample_mask (mask, paint_core->curx, paint_core->cury);
+      mask = paint_core_subsample_mask (mask,
+					paint_core->curx, paint_core->cury);
       break;
     case HARD:
       mask = paint_core_solidify_mask (mask);
       break;
     case PRESSURE:
-      mask = paint_core_pressurize_mask (mask, paint_core->curx, paint_core->cury, 
+      mask = paint_core_pressurize_mask (mask,
+					 paint_core->curx, paint_core->cury, 
 					 paint_core->curpressure);
       break;
     default:
@@ -1623,8 +1616,10 @@ paint_core_paste (PaintCore	       *paint_core,
   /*  Otherwise:
    *   combine the canvas buf and the brush mask to the canvas buf
    */
-  else  /*  mode != CONSTANT  */
-    brush_to_canvas_buf (paint_core, brush_mask, brush_opacity);
+  else
+    {
+      brush_to_canvas_buf (paint_core, brush_mask, brush_opacity);
+    }
 
   /*  intialize canvas buf source pixel regions  */
   srcPR.bytes = canvas_buf->bytes;
@@ -1678,7 +1673,7 @@ paint_core_replace (PaintCore		 *paint_core,
   gint         offx;
   gint         offy;
 
-  if (!drawable_has_alpha (drawable))
+  if (! drawable_has_alpha (drawable))
     {
       paint_core_paste (paint_core, brush_mask, drawable,
 			brush_opacity, image_opacity, NORMAL_MODE,
@@ -1711,7 +1706,7 @@ paint_core_replace (PaintCore		 *paint_core,
 			 canvas_buf->x, canvas_buf->y,
 			 canvas_buf->width, canvas_buf->height, FALSE);
     }
-  else   
+  else
     {
       /* The mask is just the brush mask */
       maskPR.bytes     = 1;
@@ -1722,7 +1717,7 @@ paint_core_replace (PaintCore		 *paint_core,
       maskPR.rowstride = maskPR.bytes * brush_mask->width;
       maskPR.data      = mask_buf_data (brush_mask);
     }
-  
+
   /*  intialize canvas buf source pixel regions  */
   srcPR.bytes     = canvas_buf->bytes;
   srcPR.x         = 0; 

@@ -30,26 +30,26 @@ typedef enum
 
 
 void   init_edit_selection           (Tool           *tool,
-				      gpointer        gdisp_ptr,
+				      GDisplay       *gdisp,
 				      GdkEventButton *bevent,
 				      EditType        edit_type);
 
-void   edit_selection_button_release (Tool           *tool, 
-				      GdkEventButton *bevent, 
-				      gpointer        gdisp_ptr);
-void   edit_selection_motion         (Tool           *tool, 
-				      GdkEventMotion *mevent, 
-				      gpointer        gdisp_ptr);
-void   edit_selection_control        (Tool           *tool, 
-				      ToolAction      action,    
-				      gpointer        gdisp_ptr);
-void   edit_selection_cursor_update  (Tool           *tool, 
-				      GdkEventMotion *mevent, 
-				      gpointer        gdisp_ptr);
+void   edit_selection_button_release (Tool           *tool,
+				      GdkEventButton *bevent,
+				      GDisplay       *gdisp);
+void   edit_selection_motion         (Tool           *tool,
+				      GdkEventMotion *mevent,
+				      GDisplay       *gdisp);
+void   edit_selection_control        (Tool           *tool,
+				      ToolAction      action,
+				      GDisplay       *gdisp);
+void   edit_selection_cursor_update  (Tool           *tool,
+				      GdkEventMotion *mevent,
+				      GDisplay       *gdisp);
 void   edit_selection_draw           (Tool           *tool);
 void   edit_sel_arrow_keys_func      (Tool           *tool,
 				      GdkEventKey    *kevent,
-				      gpointer        gdisp_ptr);
+				      GDisplay       *gdisp);
 
 
 #endif  /*  __EDIT_SELECTION_H__  */

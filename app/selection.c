@@ -499,20 +499,17 @@ selection_march_ants (gpointer data)
 
 Selection *
 selection_create (GdkWindow *win,
-		  gpointer   gdisp_ptr,
-		  int        size,
-		  int        width,
-		  int        speed)
+		  GDisplay  *gdisp,
+		  gint       size,
+		  gint       width,
+		  gint       speed)
 {
-  GdkColor fg, bg;
-  GDisplay *gdisp;
-  Selection * new;
-  int base_type;
-  int i;
+  GdkColor   fg, bg;
+  Selection *new;
+  gint       base_type;
+  gint       i;
 
-  gdisp = (GDisplay *) gdisp_ptr;
-
-  new = (Selection *) g_malloc (sizeof (Selection));
+  new = g_new (Selection, 1);
   base_type = gimp_image_base_type (gdisp->gimage);
 
   if (cycled_marching_ants)
@@ -532,7 +529,7 @@ selection_create (GdkWindow *win,
     }
 
   new->win            = win;
-  new->gdisp          = gdisp_ptr;
+  new->gdisp          = gdisp;
   new->segs_in        = NULL;
   new->segs_out       = NULL;
   new->segs_layer     = NULL;
@@ -563,8 +560,8 @@ selection_create (GdkWindow *win,
   else
     {
       /*  get black and white pixels for this gdisplay  */
-      fg.pixel = gdisplay_black_pixel ((GDisplay *) gdisp_ptr);
-      bg.pixel = gdisplay_white_pixel ((GDisplay *) gdisp_ptr);
+      fg.pixel = gdisplay_black_pixel (gdisp);
+      bg.pixel = gdisplay_white_pixel (gdisp);
 
       gdk_gc_set_foreground (new->gc_in, &fg);
       gdk_gc_set_background (new->gc_in, &bg);
@@ -581,8 +578,8 @@ selection_create (GdkWindow *win,
 #endif
 
   /*  Setup 2nd & 3rd GCs  */
-  fg.pixel = gdisplay_white_pixel ((GDisplay *) gdisp_ptr);
-  bg.pixel = gdisplay_gray_pixel ((GDisplay *) gdisp_ptr);
+  fg.pixel = gdisplay_white_pixel (gdisp);
+  bg.pixel = gdisplay_gray_pixel (gdisp);
 
   /*  create a new graphics context  */
   new->gc_out = gdk_gc_new (new->win);
@@ -592,8 +589,8 @@ selection_create (GdkWindow *win,
   gdk_gc_set_line_attributes (new->gc_out, 1, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
 
   /*  get black and color pixels for this gdisplay  */
-  fg.pixel = gdisplay_black_pixel ((GDisplay *) gdisp_ptr);
-  bg.pixel = gdisplay_color_pixel ((GDisplay *) gdisp_ptr);
+  fg.pixel = gdisplay_black_pixel (gdisp);
+  bg.pixel = gdisplay_color_pixel (gdisp);
 
   /*  create a new graphics context  */
   new->gc_layer = gdk_gc_new (new->win);
@@ -719,7 +716,7 @@ selection_layer_invis (Selection *select)
 
 void
 selection_hide (Selection *select,
-		void      *gdisp_ptr)
+		GDisplay  *gdisp)
 {
   selection_invis (select);
   selection_layer_invis (select);

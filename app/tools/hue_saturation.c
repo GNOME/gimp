@@ -43,8 +43,8 @@
 #define HUE_PARTITION_MASK  GDK_EXPOSURE_MASK | GDK_ENTER_NOTIFY_MASK
 
 #define SLIDER_WIDTH  200
-#define DA_WIDTH  40
-#define DA_HEIGHT 20
+#define DA_WIDTH       40
+#define DA_HEIGHT      20
 
 #define HUE_PARTITION      0x0
 #define HUE_SLIDER         0x1
@@ -61,6 +61,38 @@ struct _HueSaturation
 {
   gint x, y;    /*  coords for last mouse click  */
 };
+
+
+/*  hue saturation action functions  */
+static void   hue_saturation_control (Tool       *tool,
+				      ToolAction  tool_action,
+				      GDisplay   *gdisp);
+
+static HueSaturationDialog * hue_saturation_dialog_new (void);
+
+static void   hue_saturation_update                  (HueSaturationDialog *hsd,
+						      gint);
+static void   hue_saturation_preview                 (HueSaturationDialog *hsd);
+static void   hue_saturation_reset_callback          (GtkWidget *,
+						      gpointer);
+static void   hue_saturation_ok_callback             (GtkWidget *,
+						      gpointer);
+static void   hue_saturation_cancel_callback         (GtkWidget *,
+						      gpointer);
+static void   hue_saturation_partition_callback      (GtkWidget *,
+						      gpointer);
+static void   hue_saturation_preview_update          (GtkWidget *,
+						      gpointer);
+static void   hue_saturation_hue_adjustment_update        (GtkAdjustment *,
+							   gpointer);
+static void   hue_saturation_lightness_adjustment_update  (GtkAdjustment *,
+							   gpointer);
+static void   hue_saturation_saturation_adjustment_update (GtkAdjustment *,
+							   gpointer);
+static gint   hue_saturation_hue_partition_events    (GtkWidget *,
+						      GdkEvent *,
+						      HueSaturationDialog *hsd);
+
 
 /*  the hue-saturation tool options  */
 static ToolOptions *hue_saturation_options = NULL;
@@ -82,27 +114,6 @@ static gint default_colors[6][3] =
   { 255,   0, 255 }
 };
 
-/*  hue saturation action functions  */
-static void   hue_saturation_control (Tool *, ToolAction, gpointer);
-
-static HueSaturationDialog * hue_saturation_dialog_new (void);
-
-static void   hue_saturation_update                  (HueSaturationDialog *,
-						      gint);
-static void   hue_saturation_preview                 (HueSaturationDialog *);
-static void   hue_saturation_reset_callback          (GtkWidget *, gpointer);
-static void   hue_saturation_ok_callback             (GtkWidget *, gpointer);
-static void   hue_saturation_cancel_callback         (GtkWidget *, gpointer);
-static void   hue_saturation_partition_callback      (GtkWidget *, gpointer);
-static void   hue_saturation_preview_update          (GtkWidget *, gpointer);
-static void   hue_saturation_hue_adjustment_update        (GtkAdjustment *,
-							   gpointer);
-static void   hue_saturation_lightness_adjustment_update  (GtkAdjustment *,
-							   gpointer);
-static void   hue_saturation_saturation_adjustment_update (GtkAdjustment *,
-							   gpointer);
-static gint   hue_saturation_hue_partition_events    (GtkWidget *, GdkEvent *,
-						      HueSaturationDialog *);
 
 /*  hue saturation machinery  */
 
@@ -223,7 +234,7 @@ hue_saturation (PixelRegion *srcPR,
 static void
 hue_saturation_control (Tool       *tool,
 			ToolAction  action,
-			gpointer    gdisp_ptr)
+			GDisplay   *gdisp)
 {
   switch (action)
     {
@@ -691,7 +702,7 @@ hue_saturation_ok_callback (GtkWidget *widget,
   active_tool->preserve = TRUE;
 
   if (!hsd->preview)
-    image_map_apply (hsd->image_map, hue_saturation, (void *) hsd);
+    image_map_apply (hsd->image_map, hue_saturation, (gpointer) hsd);
 
   if (hsd->image_map)
     image_map_commit (hsd->image_map);
@@ -700,7 +711,7 @@ hue_saturation_ok_callback (GtkWidget *widget,
 
   hsd->image_map = NULL;
 
-  active_tool->gdisp_ptr = NULL;
+  active_tool->gdisp    = NULL;
   active_tool->drawable = NULL;
 }
 
@@ -724,7 +735,7 @@ hue_saturation_cancel_callback (GtkWidget *widget,
       hsd->image_map = NULL;
     }
 
-  active_tool->gdisp_ptr = NULL;
+  active_tool->gdisp    = NULL;
   active_tool->drawable = NULL;
 }
 

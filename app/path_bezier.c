@@ -77,7 +77,7 @@ path_bezier_draw_handles (Tool *tool,
 {
    PathTool *path_tool = (PathTool *) (tool->private);
    PathBezierData *data = (PathBezierData *) segment->data;
-   GDisplay * gdisp = tool->gdisp_ptr;
+   GDisplay * gdisp = tool->gdisp;
 
    gint sx, sy, hx, hy;
    

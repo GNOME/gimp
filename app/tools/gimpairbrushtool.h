@@ -20,18 +20,16 @@
 #define __AIRBRUSH_H__
 
 
-void     * airbrush_paint_func      (PaintCore    *,
-				     GimpDrawable *,
-				     gint);
-gboolean   airbrush_non_gui         (GimpDrawable *,
-				     gdouble,
-				     gint,
-				     gdouble *);
-gboolean   airbrush_non_gui_default (GimpDrawable *,
-				     gint,
-				     gdouble *);
+gboolean   airbrush_non_gui         (GimpDrawable *drawable,
+				     gdouble       pressure,
+				     gint          num_strokes,
+				     gdouble      *stroke_array);
+gboolean   airbrush_non_gui_default (GimpDrawable *drawable,
+				     gint          num_strokes,
+				     gdouble      *stroke_array);
+
 Tool     * tools_new_airbrush       (void);
-void       tools_free_airbrush      (Tool *);
+void       tools_free_airbrush      (Tool         *tool);
 
 
 #endif  /*  __AIRBRUSH_H__  */

@@ -123,9 +123,9 @@ gimage_invalidate_previews (void)
 static void
 gimage_dirty_handler (GimpImage *gimage)
 {
-  if (active_tool && !active_tool->preserve)
+  if (active_tool && ! active_tool->preserve)
     {
-      GDisplay* gdisp = active_tool->gdisp_ptr;
+      GDisplay* gdisp = active_tool->gdisp;
 
       if (gdisp)
 	{
@@ -149,8 +149,8 @@ gimlist_cb (gpointer image,
 gint
 gimage_image_count (void)
 {
-  GSList *list=NULL;
-  gint num_images = 0;
+  GSList *list       = NULL;
+  gint    num_images = 0;
 
   gimage_foreach (gimlist_cb, &list);
   num_images = g_slist_length (list);

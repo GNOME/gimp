@@ -107,16 +107,16 @@ image_map_do (gpointer data)
 }
 
 ImageMap
-image_map_create (void         *gdisp_ptr,
+image_map_create (GDisplay     *gdisp,
 		  GimpDrawable *drawable)
 {
   _ImageMap *_image_map;
 
   _image_map = g_new (_ImageMap, 1);
-  _image_map->gdisp = (GDisplay *) gdisp_ptr;
-  _image_map->drawable = drawable;
+  _image_map->gdisp      = gdisp;
+  _image_map->drawable   = drawable;
   _image_map->undo_tiles = NULL;
-  _image_map->state = WAITING;
+  _image_map->state      = WAITING;
 
   /* Interactive tools based on image_map disable the undo stack */
   /* to avert any unintented undo interaction through the UI     */

@@ -82,6 +82,28 @@ struct _ConvolveOptions
 };
 
 
+/*  forward function declarations  */
+static void       calculate_matrix    (ConvolveType          type,
+				       gdouble               rate);
+static void       integer_matrix      (gfloat               *source,
+				       gint                 *dest,
+				       gint                  size);
+static void       copy_matrix         (gfloat               *src,
+				       gfloat               *dest,
+				       gint                  size);
+static gint       sum_matrix          (gint                 *matrix,
+				       gint                  size);
+
+static gpointer   convolve_paint_func (PaintCore            *paint_core,
+				       GimpDrawable         *drawable,
+				       PaintState            state);
+static void       convolve_motion     (PaintCore            *paint_core,
+				       GimpDrawable         *drawable, 
+				       PaintPressureOptions *pressure_options,
+				       ConvolveType          type,
+				       gdouble               rate);
+
+
 /*  the convolve tool options  */
 static ConvolveOptions * convolve_options = NULL;
 
@@ -121,18 +143,7 @@ static gfloat       sharpen_matrix [25] =
 };
 
 
-/*  forward function declarations  */
-static void         calculate_matrix     (ConvolveType, double);
-static void         integer_matrix       (float *, int *, int);
-static void         copy_matrix          (float *, float *, int);
-static int          sum_matrix           (int *, int);
-
-static void         convolve_motion      (PaintCore *, GimpDrawable *, 
-					  PaintPressureOptions *,
-					  ConvolveType, double);
-
 /* functions  */
-
 
 static void
 convolve_options_reset (void)
@@ -205,10 +216,10 @@ convolve_options_new (void)
   return options;
 }
 
-void *
+static gpointer
 convolve_paint_func (PaintCore    *paint_core,
 		     GimpDrawable *drawable,
-		     int           state)
+		     PaintState    state)
 {
   switch (state)
     {
@@ -216,6 +227,9 @@ convolve_paint_func (PaintCore    *paint_core,
       convolve_motion (paint_core, drawable, 
 		       convolve_options->paint_options.pressure_options,
 		       convolve_options->type, convolve_options->rate);
+      break;
+
+    default:
       break;
     }
 
@@ -225,7 +239,7 @@ convolve_paint_func (PaintCore    *paint_core,
 static void
 convolve_modifier_key_func (Tool        *tool,
 			    GdkEventKey *kevent,
-			    gpointer     gdisp_ptr)
+			    GDisplay    *gdisp)
 {
   switch (kevent->keyval)
     {
@@ -282,18 +296,18 @@ convolve_modifier_key_func (Tool        *tool,
 static void
 convolve_cursor_update_func (Tool           *tool,
 			     GdkEventMotion *mevent,
-			     gpointer        gdisp_ptr)
+			     GDisplay       *gdisp)
 {
   tool->toggled = (convolve_options->type == SHARPEN_CONVOLVE);
 
-  paint_core_cursor_update (tool, mevent, gdisp_ptr);
+  paint_core_cursor_update (tool, mevent, gdisp);
 }
 
 Tool *
 tools_new_convolve (void)
 {
-  Tool * tool;
-  PaintCore * private;
+  Tool      *tool;
+  PaintCore *private;
 
   /*  The tool options  */
   if (! convolve_options)
@@ -570,34 +584,34 @@ calculate_matrix (ConvolveType type,
 }
 
 static void
-integer_matrix (float *source,
-		int   *dest,
-		int    size)
+integer_matrix (gfloat *source,
+		gint   *dest,
+		gint    size)
 {
-  int i;
+  gint i;
 
 #define PRECISION  10000
 
   for (i = 0; i < size*size; i++)
-    *dest++ = (int) (*source ++ * PRECISION);
+    *dest++ = (gint) (*source ++ * PRECISION);
 }
 
 static void
-copy_matrix (float *src,
-	     float *dest,
-	     int    size)
+copy_matrix (gfloat *src,
+	     gfloat *dest,
+	     gint    size)
 {
-  int i;
+  gint i;
 
   for (i = 0; i < size*size; i++)
     *dest++ = *src++;
 }
 
 static int
-sum_matrix (int *matrix,
-	    int  size)
+sum_matrix (gint *matrix,
+	    gint  size)
 {
-  int sum = 0;
+  gint sum = 0;
 
   size *= size;
 
@@ -608,10 +622,10 @@ sum_matrix (int *matrix,
 }
 
 
-static void *
-convolve_non_gui_paint_func (PaintCore *paint_core,
+static gpointer
+convolve_non_gui_paint_func (PaintCore    *paint_core,
 			     GimpDrawable *drawable,
-			     int        state)
+			     PaintState    state)
 {
   convolve_motion (paint_core, drawable, &non_gui_pressure_options,
 		   non_gui_type, non_gui_rate);
@@ -621,11 +635,11 @@ convolve_non_gui_paint_func (PaintCore *paint_core,
 
 gboolean
 convolve_non_gui_default (GimpDrawable *drawable,
-			  int           num_strokes,
-			  double       *stroke_array)
+			  gint          num_strokes,
+			  gdouble      *stroke_array)
 {
-  double rate = DEFAULT_CONVOLVE_RATE;
-  ConvolveType type = DEFAULT_CONVOLVE_TYPE;
+  gdouble          rate    = DEFAULT_CONVOLVE_RATE;
+  ConvolveType     type    = DEFAULT_CONVOLVE_TYPE;
   ConvolveOptions *options = convolve_options;
 
   if (options)
@@ -641,17 +655,17 @@ gboolean
 convolve_non_gui (GimpDrawable *drawable,
     		  double        rate,
 		  ConvolveType  type,
-		  int           num_strokes,
-		  double       *stroke_array)
+		  gint          num_strokes,
+		  gdouble      *stroke_array)
 {
-  int i;
+  gint i;
 
   if (paint_core_init (&non_gui_paint_core, drawable,
 		       stroke_array[0], stroke_array[1]))
     {
       /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = convolve_non_gui_paint_func;
-      
+
       non_gui_type = type;
       non_gui_rate = rate;
 
@@ -678,6 +692,6 @@ convolve_non_gui (GimpDrawable *drawable,
       paint_core_cleanup ();
       return TRUE;
     }
-  else
-    return FALSE;
+
+  return FALSE;
 }

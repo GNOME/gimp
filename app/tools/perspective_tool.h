@@ -20,9 +20,6 @@
 #define __PERSPECTIVE_TOOL_H__
 
 
-TileManager * perspective_tool_transform   (Tool           *tool,
-					    gpointer        gdisp_ptr,
-					    TransformState  state);
 TileManager * perspective_tool_perspective (GimpImage      *gimage,
 					    GimpDrawable   *drawable,
 					    GDisplay       *gdisp,

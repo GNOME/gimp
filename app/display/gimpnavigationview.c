@@ -77,6 +77,7 @@ typedef enum
 #define PREVIEW_UPDATE_TIMEOUT  1100
 
 typedef struct _NavWinData NavWinData;
+
 struct _NavWinData
 {
   NavWinType  ptype;
@@ -88,7 +89,7 @@ struct _NavWinData
   GtkWidget  *zoom_label;
   GtkObject  *zoom_adjustment;
   GtkWidget  *preview;
-  void       *gdisp_ptr;    /* I'm not happy 'bout this one */
+  GDisplay   *gdisp;        /* I'm not happy 'bout this one */
   GdkGC      *gc;
   gint        dispx;        /* x pos of top left corner of display area */
   gint        dispy;        /* y pos of top left corner of display area */
@@ -251,10 +252,6 @@ nav_window_draw_sqr (NavWinData *iwd,
 		     gint        w,
 		     gint        h)
 {
-  GDisplay *gdisp;
-
-  gdisp = (GDisplay *) iwd->gdisp_ptr;
-
   gdk_gc_set_function (iwd->gc, GDK_INVERT);
 
   if (undraw)
@@ -307,7 +304,7 @@ set_size_data (NavWinData *iwd)
   GDisplay  *gdisp;
   GimpImage *gimage;
 
-  gdisp = (GDisplay *)(iwd->gdisp_ptr);
+  gdisp  = iwd->gdisp;
   gimage = gdisp->gimage;
 
   sel_width = gimage->width;
@@ -345,9 +342,6 @@ create_preview_widget (NavWinData *iwd)
   GtkWidget *hbox;  
   GtkWidget *image;
   GtkWidget *frame;
-  GDisplay  *gdisp;
-
-  gdisp = (GDisplay *)(iwd->gdisp_ptr);
 
   hbox = gtk_hbox_new (FALSE,0);
   iwd->previewBox = hbox;
@@ -406,7 +400,7 @@ update_real_view (NavWinData *iwd,
   gint xpnt;
   gint ypnt;
 
-  gdisp = (GDisplay *) iwd->gdisp_ptr;
+  gdisp = iwd->gdisp;
 
   xratio = SCALEFACTOR_X (gdisp);
   yratio = SCALEFACTOR_Y (gdisp);
@@ -433,7 +427,7 @@ update_real_view (NavWinData *iwd,
   yoffset = ypnt - gdisp->offset_y;
   
   iwd->block_window_marker = TRUE;
-  scroll_display (iwd->gdisp_ptr, xoffset, yoffset);
+  scroll_display (iwd->gdisp, xoffset, yoffset);
   iwd->block_window_marker = FALSE;
 }
 
@@ -454,10 +448,8 @@ nav_window_update_preview (NavWinData *iwd)
 
   gimp_add_busy_cursors (); 
 
-  gdisp = (GDisplay *) iwd->gdisp_ptr;
-
-  /* Calculate preview size */
-  gimage = ((GDisplay *) (iwd->gdisp_ptr))->gimage;
+  gdisp  = iwd->gdisp;
+  gimage = gdisp->gimage;
 
   /* Min size is 2 */
   pwidth  = iwd->pwidth;
@@ -615,10 +607,8 @@ nav_window_update_preview_blank (NavWinData *iwd)
   GimpImage *gimage;
   GDisplay  *gdisp;
 
-  gdisp = (GDisplay *) iwd->gdisp_ptr;
-
-  /* Calculate preview size */
-  gimage = ((GDisplay *) (iwd->gdisp_ptr))->gimage;
+  gdisp  = iwd->gdisp;
+  gimage = gdisp->gimage;
 
 #endif /* 0 */
   
@@ -670,9 +660,9 @@ update_zoom_label (NavWinData *iwd)
 
   /* Update the zoom scale string */
   g_snprintf (scale_str, MAX_SCALE_BUF, "%d:%d",
-	      SCALEDEST (((GDisplay *)iwd->gdisp_ptr)), 
-	      SCALESRC (((GDisplay *)iwd->gdisp_ptr)));
-  
+	      SCALEDEST (iwd->gdisp), 
+	      SCALESRC (iwd->gdisp));
+
   gtk_label_set_text (GTK_LABEL (iwd->zoom_label), scale_str);
 }
 
@@ -689,8 +679,8 @@ update_zoom_adjustment (NavWinData *iwd)
   adj = GTK_ADJUSTMENT (iwd->zoom_adjustment);
 
   f = 
-    ((gdouble) SCALEDEST (((GDisplay *) iwd->gdisp_ptr))) / 
-    ((gdouble) SCALESRC (((GDisplay *) iwd->gdisp_ptr)));
+    ((gdouble) SCALEDEST (iwd->gdisp)) / 
+    ((gdouble) SCALESRC (iwd->gdisp));
   
   if (f < 1.0)
     {
@@ -782,7 +772,7 @@ nav_window_preview_events (GtkWidget *widget,
   if(!iwd || iwd->frozen == TRUE)
     return FALSE;
 
-  gdisp = (GDisplay *) iwd->gdisp_ptr;
+  gdisp = iwd->gdisp;
 
   switch (event->type)
     {
@@ -998,7 +988,7 @@ nav_window_expose_events (GtkWidget *widget,
   if(!iwd || iwd->frozen == TRUE)
     return FALSE;
 
-  gdisp = (GDisplay *) iwd->gdisp_ptr;
+  gdisp = iwd->gdisp;
 
   switch (event->type)
     {
@@ -1025,12 +1015,12 @@ nav_window_expose_events (GtkWidget *widget,
 static gint 
 nav_preview_update_do (NavWinData *iwd)
 {
-  /* If the gdisp_ptr has gone then don't do anything in this timer */
-  if (!iwd->gdisp_ptr)
+  /* If the gdisp has gone then don't do anything in this timer */
+  if (!iwd->gdisp)
     return FALSE;
 
   nav_window_update_preview (iwd);
-  nav_window_disp_area (iwd, iwd->gdisp_ptr);
+  nav_window_disp_area (iwd, iwd->gdisp);
   gtk_widget_queue_draw (iwd->preview); 
 
   iwd->installedDirtyTimer = FALSE;
@@ -1076,16 +1066,13 @@ navwindow_zoomin (GtkWidget *widget,
 		  gpointer   data)
 {
   NavWinData *iwd;
-  GDisplay   *gdisp;
 
-  iwd = (NavWinData *)data;
+  iwd = (NavWinData *) data;
 
   if(!iwd || iwd->frozen == TRUE)
     return;
 
-  gdisp = (GDisplay *) iwd->gdisp_ptr;
-
-  change_scale (gdisp, ZOOMIN);
+  change_scale (iwd->gdisp, ZOOMIN);
 }
 
 static void
@@ -1093,16 +1080,13 @@ navwindow_zoomout (GtkWidget *widget,
 		   gpointer   data)
 {
   NavWinData *iwd;
-  GDisplay   *gdisp;
 
   iwd = (NavWinData *)data;
 
   if (!iwd || iwd->frozen == TRUE)
     return;
 
-  gdisp = (GDisplay *) iwd->gdisp_ptr;
-
-  change_scale (gdisp, ZOOMOUT);
+  change_scale (iwd->gdisp, ZOOMOUT);
 }
 
 static void
@@ -1110,7 +1094,6 @@ zoom_adj_changed (GtkAdjustment *adj,
 		  gpointer       data)
 {
   NavWinData *iwd;
-  GDisplay   *gdisp;
   gint scalesrc;
   gint scaledest;
 
@@ -1119,8 +1102,6 @@ zoom_adj_changed (GtkAdjustment *adj,
   if (!iwd || iwd->frozen == TRUE)
     return;
   
-  gdisp = (GDisplay *) iwd->gdisp_ptr;
-
   if (adj->value < 0.0)
     {
       scalesrc = abs ((gint) adj->value - 1);
@@ -1133,7 +1114,7 @@ zoom_adj_changed (GtkAdjustment *adj,
     }
 
   iwd->block_adj_sig = TRUE;
-  change_scale (gdisp, (scaledest * 100) + scalesrc);
+  change_scale (iwd->gdisp, (scaledest * 100) + scalesrc);
   iwd->block_adj_sig = FALSE;
 }
 
@@ -1168,8 +1149,8 @@ nav_create_button_area (InfoDialog *info_win)
 
   /*  user zoom ratio  */
   g_snprintf (scale_str, MAX_SCALE_BUF, "%d:%d",
-	      SCALEDEST (((GDisplay *)iwd->gdisp_ptr)), 
-	      SCALESRC (((GDisplay *)iwd->gdisp_ptr)));
+	      SCALEDEST (iwd->gdisp), 
+	      SCALESRC (iwd->gdisp));
   
   label1 = gtk_label_new (scale_str);
   gtk_widget_show (label1);
@@ -1256,12 +1237,12 @@ info_window_image_preview_new (InfoDialog *info_win)
 }
 
 NavWinData *
-create_dummy_iwd (void       *gdisp_ptr,
+create_dummy_iwd (GDisplay   *gdisp,
 		  NavWinType  ptype)
 {
   NavWinData *iwd;
 
-  iwd = (NavWinData *) g_malloc (sizeof (NavWinData));
+  iwd = g_new (NavWinData, 1);
   iwd->ptype               = ptype;
   iwd->info_win            = NULL;
   iwd->showingPreview      = TRUE;
@@ -1269,7 +1250,7 @@ create_dummy_iwd (void       *gdisp_ptr,
   iwd->preview             = NULL;
   iwd->zoom_label          = NULL;
   iwd->zoom_adjustment     = NULL;
-  iwd->gdisp_ptr           = gdisp_ptr;
+  iwd->gdisp               = gdisp;
   iwd->dispx               = -1;
   iwd->dispy               = -1;
   iwd->dispwidth           = -1;
@@ -1299,7 +1280,7 @@ create_dummy_iwd (void       *gdisp_ptr,
 static InfoDialog *nav_window_auto = NULL;
 
 static gchar *
-nav_window_title(GDisplay   *gdisp)
+nav_window_title (GDisplay *gdisp)
 {
   gchar *title;
   gchar *title_buf;
@@ -1326,8 +1307,8 @@ nav_window_change_display (GimpContext *context, /* NOT USED */
   NavWinData *iwd;
   gchar      *title_buf;
 
-  iwd = (NavWinData *)nav_window_auto->user_data;
-  old_gdisp = (GDisplay *) iwd->gdisp_ptr;
+  iwd       = (NavWinData *) nav_window_auto->user_data;
+  old_gdisp = iwd->gdisp;
 
   if (!nav_window_auto || gdisp == old_gdisp || !gdisp)
     {
@@ -1347,7 +1328,7 @@ nav_window_change_display (GimpContext *context, /* NOT USED */
 
   if (gimage && gimp_set_have (image_context, gimage))
     {
-      iwd->gdisp_ptr = gdisp;
+      iwd->gdisp = gdisp;
 
       /* Update preview to new display */
       nav_window_preview_resized (nav_window_auto);
@@ -1382,9 +1363,10 @@ nav_window_follow_auto (void)
   if (!gdisp) 
     return;
 
-  if(!nav_window_auto)
+  if (!nav_window_auto)
     {
-      nav_window_auto = nav_window_create ((void *) gdisp);
+      nav_window_auto = nav_window_create (gdisp);
+
       gtk_signal_connect (GTK_OBJECT (gimp_context_get_user ()), 
 			  "display_changed",
 			  GTK_SIGNAL_FUNC (nav_window_change_display), 
@@ -1400,20 +1382,17 @@ nav_window_follow_auto (void)
 
 
 InfoDialog *
-nav_window_create (void *gdisp_ptr)
+nav_window_create (GDisplay *gdisp)
 {
   InfoDialog *info_win;
-  GDisplay   *gdisp;
   NavWinData *iwd;
   GtkWidget  *container;
   gchar      *title_buf;
   GimpImageBaseType type;
 
-  gdisp = (GDisplay *) gdisp_ptr;
-  
   type = gimp_image_base_type (gdisp->gimage);
 
-  title_buf = nav_window_title(gdisp);
+  title_buf = nav_window_title (gdisp);
 
   info_win = info_dialog_new (title_buf,
 			      gimp_standard_help_func,
@@ -1434,7 +1413,7 @@ nav_window_create (void *gdisp_ptr)
 		      (GtkSignalFunc) nav_window_destroy_callback,
 		      info_win);
 
-  iwd = create_dummy_iwd (gdisp_ptr, NAV_WINDOW);
+  iwd = create_dummy_iwd (gdisp, NAV_WINDOW);
   info_win->user_data = iwd;
   iwd->info_win = info_win;
 
@@ -1501,7 +1480,7 @@ nav_window_update_window_marker (InfoDialog *info_win)
 		       iwd->dispwidth, iwd->dispheight);
 
   /* Update to new size */
-  nav_window_disp_area (iwd, iwd->gdisp_ptr);
+  nav_window_disp_area (iwd, iwd->gdisp);
 
   /* and redraw */
   nav_window_draw_sqr (iwd,
@@ -1563,14 +1542,14 @@ nav_window_get_gdisp (void)
   for (listPtr = list; listPtr; listPtr = g_slist_next (listPtr))
     {
       gimage = GIMP_IMAGE (listPtr->data);
-      gdisp = gdisplays_check_valid (NULL,gimage);
+      gdisp = gdisplays_check_valid (NULL, gimage);
       if (gdisp)
 	break;
     }
   
   g_slist_free (list);
 
-  return (gdisp);
+  return gdisp;
 }
 
 
@@ -1589,12 +1568,12 @@ nav_window_free (GDisplay   *del_gdisp,
     {
       if (nav_window_auto != NULL)
 	{
-	  GDisplay * gdisp;
+	  GDisplay *gdisp;
 
 	  iwd = (NavWinData *) nav_window_auto->user_data;
 
 	  /* Only freeze if we are displaying the image we have deleted */
-	  if ((GDisplay *) iwd->gdisp_ptr != del_gdisp)
+	  if (iwd->gdisp != del_gdisp)
 	    return;
 
 	  if (iwd->timer_id)
@@ -1605,7 +1584,9 @@ nav_window_free (GDisplay   *del_gdisp,
 	  gdisp = nav_window_get_gdisp ();
 
 	  if (gdisp)
-	    nav_window_change_display (NULL, gdisp, NULL);
+	    {
+	      nav_window_change_display (NULL, gdisp, NULL);
+	    }
 	  else
 	    {
 	      /* Clear window and freeze */
@@ -1615,7 +1596,7 @@ nav_window_free (GDisplay   *del_gdisp,
 				    _("Navigation: No Image"));
 
 	      gtk_widget_set_sensitive (nav_window_auto->vbox, FALSE);
-	      iwd->gdisp_ptr = NULL;
+	      iwd->gdisp = NULL;
 	      gtk_widget_hide (GTK_WIDGET (nav_window_auto->shell));
 	    }
 	}
@@ -1651,7 +1632,7 @@ nav_popup_click_handler (GtkWidget      *widget,
 
   bevent = (GdkEventButton *)event;
 
-  if(!gdisp->nav_popup)
+  if (! gdisp->nav_popup)
     {
       /* popup a simplfied window with the nav box in it */
       GtkWidget *frame;
@@ -1674,14 +1655,14 @@ nav_popup_click_handler (GtkWidget      *widget,
       gtk_container_add (GTK_CONTAINER (frame), vbox);
       gtk_object_set_data (GTK_OBJECT (gdisp->nav_popup),"navpop_prt",
 			   (gpointer) iwp);
-      nav_window_disp_area (iwp, iwp->gdisp_ptr);
+      nav_window_disp_area (iwp, iwp->gdisp);
     }
   else
     {
       gtk_widget_hide (gdisp->nav_popup);
       iwp = (NavWinData *) gtk_object_get_data (GTK_OBJECT (gdisp->nav_popup), 
 						"navpop_prt");
-      nav_window_disp_area (iwp, iwp->gdisp_ptr);
+      nav_window_disp_area (iwp, iwp->gdisp);
       nav_window_update_preview (iwp); 
     }
 

@@ -29,41 +29,58 @@
 #define  NON_ACTIVE_LAYER  (1 << 2)
 
 /*  Tool action function declarations  */
-typedef void   (* ButtonPressFunc)    (Tool *, GdkEventButton *, gpointer);
-typedef void   (* ButtonReleaseFunc)  (Tool *, GdkEventButton *, gpointer);
-typedef void   (* MotionFunc)         (Tool *, GdkEventMotion *, gpointer);
-typedef void   (* ArrowKeysFunc)      (Tool *, GdkEventKey *,    gpointer);
-typedef void   (* ModifierKeyFunc)    (Tool *, GdkEventKey *,    gpointer);
-typedef void   (* CursorUpdateFunc)   (Tool *, GdkEventMotion *, gpointer);
-typedef void   (* OperUpdateFunc)     (Tool *, GdkEventMotion *, gpointer);
-typedef void   (* ToolCtlFunc)        (Tool *, ToolAction,       gpointer);
+typedef void   (* ButtonPressFunc)    (Tool           *tool,
+				       GdkEventButton *bevent,
+				       GDisplay       *gdisp);
+typedef void   (* ButtonReleaseFunc)  (Tool           *tool,
+				       GdkEventButton *bevent,
+				       GDisplay       *gdisp);
+typedef void   (* MotionFunc)         (Tool           *tool,
+				       GdkEventMotion *mevent,
+				       GDisplay       *gdisp);
+typedef void   (* ArrowKeysFunc)      (Tool           *tool,
+				       GdkEventKey    *kevent,
+				       GDisplay       *gdisp);
+typedef void   (* ModifierKeyFunc)    (Tool           *tool,
+				       GdkEventKey    *kevent,
+				       GDisplay       *gdisp);
+typedef void   (* CursorUpdateFunc)   (Tool           *tool,
+				       GdkEventMotion *mevent,
+				       GDisplay       *gdisp);
+typedef void   (* OperUpdateFunc)     (Tool           *tool,
+				       GdkEventMotion *mevent,
+				       GDisplay       *gdisp);
+typedef void   (* ToolCtlFunc)        (Tool           *tool,
+				       ToolAction      action,
+				       GDisplay       *gdisp);
 
 /*  ToolInfo function declarations  */
 typedef Tool * (* ToolInfoNewFunc)    (void);
-typedef void   (* ToolInfoFreeFunc)   (Tool *);
-typedef void   (* ToolInfoInitFunc)   (GDisplay *);
+typedef void   (* ToolInfoFreeFunc)   (Tool           *tool);
+typedef void   (* ToolInfoInitFunc)   (GDisplay       *gdisp);
 
 /*  The types of tools...  */
 struct _Tool
 {
   /*  Data  */
-  ToolType   type;          /*  Tool type                                   */
-  gint       ID;            /*  unique tool ID                              */
+  ToolType      type;         /*  Tool type                                   */
+  gint          ID;           /*  unique tool ID                              */
 
-  ToolState  state;         /*  state of tool activity                      */
-  gint       paused_count;  /*  paused control count                        */
-  gboolean   scroll_lock;   /*  allow scrolling or not                      */
-  gboolean   auto_snap_to;  /*  snap to guides automatically                */
+  ToolState     state;        /*  state of tool activity                      */
+  gint          paused_count; /*  paused control count                        */
+  gboolean      scroll_lock;  /*  allow scrolling or not                      */
+  gboolean      auto_snap_to; /*  snap to guides automatically                */
 
-  gboolean   preserve;      /*  Preserve this tool across drawable changes  */
-  void      *gdisp_ptr;     /*  pointer to currently active gdisp           */
-  void      *drawable;      /*  pointer to the tool's current drawable      */
+  gboolean      preserve;     /*  Preserve this tool across drawable changes  */
+  GDisplay     *gdisp;        /*  pointer to currently active gdisp           */
+  GimpDrawable *drawable;     /*  pointer to the tool's current drawable      */
 
-  gboolean   toggled;       /*  Bad hack to let the paint_core show the     */
-                            /*  right toggle cursors                        */
+  gboolean      toggled;      /*  Bad hack to let the paint_core show the
+			       *  right toggle cursors
+			       */
 
 
-  void      *private;       /*  Tool-specific information                   */
+  gpointer      private;      /*  Tool-specific information                 */
 
   /*  Action functions  */
   ButtonPressFunc    button_press_func;
@@ -98,7 +115,7 @@ struct _ToolInfo
   ToolInfoFreeFunc free_func;
   ToolInfoInitFunc init_func;
 
-  GtkWidget *tool_widget;
+  GtkWidget   *tool_widget;
 
   GimpContext *tool_context;
 
@@ -106,34 +123,37 @@ struct _ToolInfo
   BitmapCursor toggle_cursor;
 };
 
-/*  Global Data Structures  */
-extern Tool     * active_tool;
-extern ToolInfo   tool_info[];
-extern gint       num_tools;
 
 /*  Function declarations  */
-Tool   * tools_new_tool             (ToolType     tool_type);
+Tool      * tools_new_tool             (ToolType     tool_type);
 
-void     tools_select               (ToolType     tool_type);
-void     tools_initialize           (ToolType     tool_type,
-				     GDisplay    *gdisplay);
+void        tools_select               (ToolType     tool_type);
+void        tools_initialize           (ToolType     tool_type,
+					GDisplay    *gdisplay);
 
-void     active_tool_control        (ToolAction   action,
-				     void        *gdisp_ptr);
+void        active_tool_control        (ToolAction   action,
+					GDisplay    *gdisp);
 
-void     tools_help_func            (const gchar *help_data);
+void        tools_help_func            (const gchar *help_data);
 
-void     tools_register             (ToolType     tool_type,
-				     ToolOptions *tool_options);
+void        tools_register             (ToolType     tool_type,
+					ToolOptions *tool_options);
 
-void     tool_options_dialog_new   (void);
-void     tool_options_dialog_show  (void);
-void     tool_options_dialog_free  (void);
+void        tool_options_dialog_new   (void);
+void        tool_options_dialog_show  (void);
+void        tool_options_dialog_free  (void);
 
-gchar  * tool_active_PDB_string    (void);
+gchar     * tool_active_PDB_string    (void);
 
-/* don't unref this pixmaps, they are static! */
-GdkPixmap * tool_get_pixmap        (ToolType     tool_type);
-GdkBitmap * tool_get_mask          (ToolType     tool_type);
+/*  don't unref these pixmaps, they are static!  */
+GdkPixmap * tool_get_pixmap           (ToolType      tool_type);
+GdkBitmap * tool_get_mask             (ToolType      tool_type);
+
+
+/*  Global Data Structures  */
+extern Tool     *active_tool;
+extern ToolInfo  tool_info[];
+extern gint      num_tools;
+
 
 #endif  /*  __TOOLS_H__  */

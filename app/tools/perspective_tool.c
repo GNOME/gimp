@@ -41,23 +41,28 @@
 #include "libgimp/gimpintl.h"
 
 
+/*  forward function declarations  */
+static TileManager * perspective_tool_transform   (Tool           *tool,
+						   GDisplay       *gdisp,
+						   TransformState  state);
+static void          perspective_tool_recalc      (Tool           *tool,
+						   GDisplay       *gdisp);
+static void          perspective_tool_motion      (Tool           *tool,
+						   GDisplay       *gdisp);
+static void          perspective_info_update      (Tool           *tool);
+
+
 /*  storage for information dialog fields  */
 static gchar  matrix_row_buf [3][MAX_INFO_BUF];
 
-/*  forward function declarations  */
-static void   perspective_tool_recalc (Tool *, void *);
-static void   perspective_tool_motion (Tool *, void *);
-static void   perspective_info_update (Tool *);
 
-TileManager *
+static TileManager *
 perspective_tool_transform (Tool           *tool,
-			    gpointer        gdisp_ptr,
+			    GDisplay       *gdisp,
 			    TransformState  state)
 {
-  GDisplay      *gdisp;
   TransformCore *transform_core;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
   switch (state)
@@ -89,12 +94,12 @@ perspective_tool_transform (Tool           *tool,
       break;
 
     case TRANSFORM_MOTION:
-      perspective_tool_motion (tool, gdisp_ptr);
-      perspective_tool_recalc (tool, gdisp_ptr);
+      perspective_tool_motion (tool, gdisp);
+      perspective_tool_recalc (tool, gdisp);
       break;
 
     case TRANSFORM_RECALC:
-      perspective_tool_recalc (tool, gdisp_ptr);
+      perspective_tool_recalc (tool, gdisp);
       break;
 
     case TRANSFORM_FINISH:
@@ -173,14 +178,12 @@ perspective_info_update (Tool *tool)
 }
 
 static void
-perspective_tool_motion (Tool *tool,
-			 void *gdisp_ptr)
+perspective_tool_motion (Tool     *tool,
+			 GDisplay *gdisp)
 {
-  GDisplay      *gdisp;
   TransformCore *transform_core;
   gint            diff_x, diff_y;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
   diff_x = transform_core->curx - transform_core->lastx;
@@ -210,16 +213,14 @@ perspective_tool_motion (Tool *tool,
 }
 
 static void
-perspective_tool_recalc (Tool *tool,
-			 void *gdisp_ptr)
+perspective_tool_recalc (Tool     *tool,
+			 GDisplay *gdisp)
 {
   TransformCore *transform_core;
-  GDisplay      *gdisp;
   GimpMatrix3    m;
   gdouble        cx, cy;
   gdouble        scalex, scaley;
 
-  gdisp = (GDisplay *) tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
   /*  determine the perspective transform that maps from

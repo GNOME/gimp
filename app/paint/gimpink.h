@@ -23,6 +23,7 @@
 Tool * tools_new_ink   (void);
 void   tools_free_ink  (Tool *tool);
 
+
 /*  Procedure definition and marshalling function  */
 extern ProcRecord ink_proc;
 

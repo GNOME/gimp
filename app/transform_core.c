@@ -51,37 +51,6 @@
 #include "libgimp/gimpmath.h"
 
 
-/*  variables  */
-static TranInfo  old_trans_info;
-InfoDialog      *transform_info = NULL;
-static gboolean  transform_info_inited = FALSE;
-
-/*  forward function declarations  */
-static void      transform_core_bounds      (Tool *, void *);
-static void      transform_core_recalc      (Tool *, void *);
-static void      transform_core_doit        (Tool *, gpointer);
-static gdouble   cubic                      (gdouble, gint, gint, gint, gint);
-static void      transform_core_setup_grid  (Tool *);
-static void      transform_core_grid_recalc (TransformCore *);
-
-
-#define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
-                ((1-dy) * (jk + dx * (j1k - jk)) + \
-		    dy  * (jk1 + dx * (j1k1 - jk1)))
-
-/* access interleaved pixels */
-#define CUBIC_ROW(dx, row, step) \
-  cubic(dx, (row)[0], (row)[step], (row)[step+step], (row)[step+step+step])
-#define CUBIC_SCALED_ROW(dx, row, step, i) \
-  cubic(dx, (row)[0] * (row)[i], \
-            (row)[step] * (row)[step + i], \
-            (row)[step+step]* (row)[step+step + i], \
-            (row)[step+step+step] * (row)[step+step+step + i])
-
-#define REF_TILE(i,x,y) \
-     tile[i] = tile_manager_get_tile (float_tiles, x, y, TRUE, FALSE); \
-     src[i] = tile_data_pointer (tile[i], (x) % TILE_WIDTH, (y) % TILE_HEIGHT);
-
 /* This should be migrated to pixel_region or similar... */
 /* PixelSurround describes a (read-only)
  *  region around a pixel in a tile manager
@@ -100,9 +69,48 @@ typedef struct _PixelSurround
   gint         row_stride;
 } PixelSurround;
 
+#define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
+                ((1-dy) * (jk + dx * (j1k - jk)) + \
+		    dy  * (jk1 + dx * (j1k1 - jk1)))
+
+/* access interleaved pixels */
+#define CUBIC_ROW(dx, row, step) \
+  cubic(dx, (row)[0], (row)[step], (row)[step+step], (row)[step+step+step])
+#define CUBIC_SCALED_ROW(dx, row, step, i) \
+  cubic(dx, (row)[0] * (row)[i], \
+            (row)[step] * (row)[step + i], \
+            (row)[step+step]* (row)[step+step + i], \
+            (row)[step+step+step] * (row)[step+step+step + i])
+
+#define REF_TILE(i,x,y) \
+     tile[i] = tile_manager_get_tile (float_tiles, x, y, TRUE, FALSE); \
+     src[i] = tile_data_pointer (tile[i], (x) % TILE_WIDTH, (y) % TILE_HEIGHT);
+
+/*  forward function declarations  */
+static void      transform_core_bounds      (Tool          *tool,
+					     GDisplay      *gdisp);
+static void      transform_core_recalc      (Tool          *tool,
+					     GDisplay      *gdisp);
+static void      transform_core_doit        (Tool          *tool,
+					     GDisplay      *gdisp);
+static gdouble   cubic                      (gdouble        dx,
+					     gint           jm1,
+					     gint           j,
+					     gint           jp1,
+					     gint           jp2);
+static void      transform_core_setup_grid  (Tool          *tool);
+static void      transform_core_grid_recalc (TransformCore *transform_core);
+
+
+/*  variables  */
+static TranInfo  old_trans_info;
+InfoDialog      *transform_info        = NULL;
+static gboolean  transform_info_inited = FALSE;
+
+
 static void
 pixel_surround_init (PixelSurround *ps,
-		     TileManager   *t,
+		     TileManager   *tm,
 		     gint           w,
 		     gint           h,
 		     guchar         bg[MAX_CHANNELS])
@@ -113,14 +121,15 @@ pixel_surround_init (PixelSurround *ps,
     {
       ps->bg[i] = bg[i];
     }
-  ps->tile = 0;
-  ps->mgr = t;
-  ps->bpp = tile_manager_level_bpp (t);
-  ps->w = w;
-  ps->h = h;
+
+  ps->tile       = NULL;
+  ps->mgr        = tm;
+  ps->bpp        = tile_manager_level_bpp (tm);
+  ps->w          = w;
+  ps->h          = h;
   /* make sure buffer is big enough */
-  ps->buff_size = w * h * ps->bpp;
-  ps->buff = g_malloc (ps->buff_size);
+  ps->buff_size  = w * h * ps->bpp;
+  ps->buff       = g_malloc (ps->buff_size);
   ps->row_stride = 0;
 }
 
@@ -170,7 +179,10 @@ pixel_surround_lock (PixelSurround *ps,
 
 	  if (tile)
 	    {
-	      guchar* buff = tile_data_pointer (tile, i % TILE_WIDTH, j % TILE_HEIGHT);
+	      guchar *buff = tile_data_pointer (tile,
+						i % TILE_WIDTH,
+						j % TILE_HEIGHT);
+
 	      for (k = buff; k < buff+ps->bpp; ++k, ++ptr)
 		{
 		  *ptr = *k;
@@ -191,7 +203,7 @@ pixel_surround_lock (PixelSurround *ps,
   return ps->buff;
 }
 
-static int
+static gint
 pixel_surround_rowstride (PixelSurround *ps)
 {
   return ps->row_stride;
@@ -226,7 +238,7 @@ transform_ok_callback (GtkWidget *widget,
   Tool *tool;
 
   tool = (Tool *) data;
-  transform_core_doit (tool, tool->gdisp_ptr);
+  transform_core_doit (tool, tool->gdisp);
 }
 
 static void
@@ -248,7 +260,7 @@ transform_reset_callback (GtkWidget *widget,
     transform_core->trans_info [i] = old_trans_info [i];
 
   /*  recalculate the tool's transformation matrix  */
-  transform_core_recalc (tool, tool->gdisp_ptr);
+  transform_core_recalc (tool, tool->gdisp);
   
   /*  resume drawing the current tool  */
   draw_core_resume (transform_core->core, tool);
@@ -265,9 +277,8 @@ static const gchar *action_labels[] =
 void
 transform_core_button_press (Tool           *tool,
 			     GdkEventButton *bevent,
-			     gpointer        gdisp_ptr)
+			     GDisplay       *gdisp)
 {
-  GDisplay      *gdisp;
   TransformCore *transform_core;
   GimpDrawable  *drawable;
   gint           dist;
@@ -276,7 +287,6 @@ transform_core_button_press (Tool           *tool,
   gint           i;
   gint           off_x, off_y;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
   transform_core->bpressed = TRUE; /* ALT */
@@ -294,7 +304,7 @@ transform_core_button_press (Tool           *tool,
    *  check to make sure that the display which currently owns the
    *  tool is the one which just received the button pressed event
    */
-  if ((gdisp == tool->gdisp_ptr) && transform_core->interactive)
+  if ((gdisp == tool->gdisp) && transform_core->interactive)
     {
       /*  start drawing the bounding box and handles...  */
       draw_core_start (transform_core->core, gdisp->canvas->window, tool);
@@ -377,12 +387,12 @@ transform_core_button_press (Tool           *tool,
 	 *  and reset
 	 */
 	if (tool->state == ACTIVE)
-	  transform_core_reset (tool, gdisp_ptr);
+	  transform_core_reset (tool, gdisp);
 
 	/*  Set the pointer to the active display  */
-	tool->gdisp_ptr = gdisp;
+	tool->gdisp    = gdisp;
 	tool->drawable = drawable;
-	tool->state = ACTIVE;
+	tool->state    = ACTIVE;
 
 	/*  Grab the pointer if we're in non-interactive mode  */
 	if (!transform_core->interactive)
@@ -396,14 +406,14 @@ transform_core_button_press (Tool           *tool,
 	 *  perspective) that actually need the bounds for
 	 *  initializing
 	 */
-	transform_core_bounds (tool, gdisp_ptr);
+	transform_core_bounds (tool, gdisp);
 
 	/*  Calculate the grid line endpoints  */
 	if (transform_tool_show_grid ())
 	  transform_core_setup_grid (tool);
 
 	/*  Initialize the transform tool  */
-	(* transform_core->trans_func) (tool, gdisp_ptr, TRANSFORM_INIT);
+	(* transform_core->trans_func) (tool, gdisp, TRANSFORM_INIT);
 
 	if (transform_info && !transform_info_inited)
 	  {
@@ -422,24 +432,22 @@ transform_core_button_press (Tool           *tool,
 	  }
 
 	/*  Recalculate the transform tool  */
-	transform_core_recalc (tool, gdisp_ptr);
+	transform_core_recalc (tool, gdisp);
 
 	/*  recall this function to find which handle we're dragging  */
 	if (transform_core->interactive)
-	  transform_core_button_press (tool, bevent, gdisp_ptr);
+	  transform_core_button_press (tool, bevent, gdisp);
       }
 }
 
 void
 transform_core_button_release (Tool           *tool,
 			       GdkEventButton *bevent,
-			       gpointer        gdisp_ptr)
+			       GDisplay       *gdisp)
 {
-  GDisplay      *gdisp;
   TransformCore *transform_core;
   gint           i;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
   transform_core->bpressed = FALSE; /* ALT */
@@ -459,7 +467,7 @@ transform_core_button_release (Tool           *tool,
       /* Shift-clicking is another way to approve the transform  */
       if ((bevent->state & GDK_SHIFT_MASK) || (tool->type == FLIP))
 	{
-	  transform_core_doit (tool, gdisp_ptr);
+	  transform_core_doit (tool, gdisp);
 	}
       else
 	{
@@ -478,7 +486,7 @@ transform_core_button_release (Tool           *tool,
 	transform_core->trans_info [i] = old_trans_info [i];
 
       /*  recalculate the tool's transformation matrix  */
-      transform_core_recalc (tool, gdisp_ptr);
+      transform_core_recalc (tool, gdisp);
 
       /*  resume drawing the current tool  */
       draw_core_resume (transform_core->core, tool);
@@ -495,9 +503,8 @@ transform_core_button_release (Tool           *tool,
 
 void
 transform_core_doit (Tool     *tool,
-		     gpointer  gdisp_ptr)
+		     GDisplay *gdisp)
 {
-  GDisplay      *gdisp;
   TransformCore *transform_core;
   TileManager   *new_tiles;
   TransformUndo *tu;
@@ -507,7 +514,6 @@ transform_core_doit (Tool     *tool,
 
   gimp_add_busy_cursors ();
 
-  gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
   /* undraw the tool before we muck around with the transform matrix */
@@ -539,12 +545,12 @@ transform_core_doit (Tool     *tool,
 
   /*  Send the request for the transformation to the tool...
    */
-  new_tiles = (* transform_core->trans_func) (tool, gdisp_ptr,
+  new_tiles = (* transform_core->trans_func) (tool, gdisp,
 					      TRANSFORM_FINISH);
 
-  (* transform_core->trans_func) (tool, gdisp_ptr, TRANSFORM_INIT);
+  (* transform_core->trans_func) (tool, gdisp, TRANSFORM_INIT);
 
-  transform_core_recalc (tool, gdisp_ptr);
+  transform_core_recalc (tool, gdisp);
 
   if (new_tiles)
     {
@@ -604,7 +610,7 @@ transform_core_doit (Tool     *tool,
 
   gdisplays_flush ();
 
-  transform_core_reset (tool, gdisp_ptr);
+  transform_core_reset (tool, gdisp);
 
   /*  if this tool is non-interactive, make it inactive after use  */
   if (!transform_core->interactive)
@@ -614,12 +620,10 @@ transform_core_doit (Tool     *tool,
 void
 transform_core_motion (Tool           *tool,
 		       GdkEventMotion *mevent,
-		       gpointer        gdisp_ptr)
+		       GDisplay       *gdisp)
 {
-  GDisplay      *gdisp;
   TransformCore *transform_core;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
   if (transform_core->bpressed == FALSE)
@@ -646,7 +650,7 @@ transform_core_motion (Tool           *tool,
   transform_core->state = mevent->state;
 
   /*  recalculate the tool's transformation matrix  */
-  (* transform_core->trans_func) (tool, gdisp_ptr, TRANSFORM_MOTION);
+  (* transform_core->trans_func) (tool, gdisp, TRANSFORM_MOTION);
 
   transform_core->lastx = transform_core->curx;
   transform_core->lasty = transform_core->cury;
@@ -658,15 +662,13 @@ transform_core_motion (Tool           *tool,
 void
 transform_core_cursor_update (Tool           *tool,
 			      GdkEventMotion *mevent,
-			      gpointer        gdisp_ptr)
+			      GDisplay       *gdisp)
 {
-  GDisplay      *gdisp;
   TransformCore *transform_core;
   GimpDrawable  *drawable;
   GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;
   gint           x, y;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
@@ -701,7 +703,7 @@ transform_core_cursor_update (Tool           *tool,
 void
 transform_core_control (Tool       *tool,
 			ToolAction  action,
-			gpointer    gdisp_ptr)
+			GDisplay   *gdisp)
 {
   TransformCore *transform_core;
 
@@ -714,12 +716,12 @@ transform_core_control (Tool       *tool,
       break;
 
     case RESUME:
-      transform_core_recalc (tool, gdisp_ptr);
+      transform_core_recalc (tool, gdisp);
       draw_core_resume (transform_core->core, tool);
       break;
 
     case HALT:
-      transform_core_reset (tool, gdisp_ptr);
+      transform_core_reset (tool, gdisp);
       break;
 
     default:
@@ -743,7 +745,7 @@ transform_core_draw (Tool *tool)
   gint           i, k, gci;
   gint           xa, ya, xb, yb;
 
-  gdisp = tool->gdisp_ptr;
+  gdisp          = tool->gdisp;
   transform_core = (TransformCore *) tool->private;
 
   gdisplay_transform_coords (gdisp, transform_core->tx1, transform_core->ty1,
@@ -962,14 +964,12 @@ transform_core_transform_bounding_box (Tool *tool)
 }
 
 void
-transform_core_reset (Tool *tool,
-		      void *gdisp_ptr)
+transform_core_reset (Tool     *tool,
+		      GDisplay *gdisp)
 {
   TransformCore *transform_core;
-  GDisplay      *gdisp;
 
   transform_core = (TransformCore *) tool->private;
-  gdisp = (GDisplay *) gdisp_ptr;
 
   if (transform_core->original)
     tile_manager_destroy (transform_core->original);
@@ -980,25 +980,23 @@ transform_core_reset (Tool *tool,
   draw_core_stop (transform_core->core, tool);
   info_dialog_popdown (transform_info);
 
-  tool->state = INACTIVE;
-  tool->gdisp_ptr = NULL;
+  tool->state    = INACTIVE;
+  tool->gdisp    = NULL;
   tool->drawable = NULL;
 }
 
 static void
-transform_core_bounds (Tool *tool,
-		       void *gdisp_ptr)
+transform_core_bounds (Tool     *tool,
+		       GDisplay *gdisp)
 {
-  GDisplay      *gdisp;
   TransformCore *transform_core;
   TileManager   *tiles;
   GimpDrawable  *drawable;
   gint           offset_x, offset_y;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
-  tiles = transform_core->original;
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  tiles          = transform_core->original;
+  drawable       = gimp_image_active_drawable (gdisp->gimage);
 
   /*  find the boundaries  */
   if (tiles)
@@ -1128,16 +1126,16 @@ transform_core_setup_grid (Tool *tool)
 }
 
 static void
-transform_core_recalc (Tool *tool,
-		       void *gdisp_ptr)
+transform_core_recalc (Tool     *tool,
+		       GDisplay *gdisp)
 {
   TransformCore *transform_core;
 
   transform_core = (TransformCore *) tool->private;
 
-  transform_core_bounds (tool, gdisp_ptr);
+  transform_core_bounds (tool, gdisp);
 
-  (* transform_core->trans_func) (tool, gdisp_ptr, TRANSFORM_RECALC);
+  (* transform_core->trans_func) (tool, gdisp, TRANSFORM_RECALC);
 }
 
 /*  Actually carry out a transformation  */

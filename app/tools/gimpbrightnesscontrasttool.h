@@ -20,12 +20,12 @@
 #define __BRIGHTNESS_CONTRAST_H__
 
 
-Tool * tools_new_brightness_contrast  (void);
-void   tools_free_brightness_contrast (Tool     *tool);
+Tool * tools_new_brightness_contrast   (void);
+void   tools_free_brightness_contrast  (Tool     *tool);
 
 void   brightness_contrast_dialog_hide (void);
 
-void   brightness_contrast_initialize (GDisplay *gdisp);
+void   brightness_contrast_initialize  (GDisplay *gdisp);
 
 
 #endif  /*  __BRIGHTNESS_CONTRAST_H__  */

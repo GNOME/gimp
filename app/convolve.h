@@ -28,19 +28,17 @@ typedef enum
 } ConvolveType;
 
 
-void     * convolve_paint_func      (PaintCore    *,
-				     GimpDrawable *,
-				     gint          );
-gboolean   convolve_non_gui         (GimpDrawable *,
-				     gdouble       ,
-				     ConvolveType  ,
-				     gint          ,
-				     gdouble      *);
-gboolean   convolve_non_gui_default (GimpDrawable *,
-				     gint          ,
-				     gdouble      *);
-Tool     * tools_new_convolve       (void          );
-void       tools_free_convolve      (Tool         *);
+gboolean   convolve_non_gui         (GimpDrawable *drawable,
+				     gdouble       rate,
+				     ConvolveType  type,
+				     gint          num_strokes,
+				     gdouble      *stroke_array);
+gboolean   convolve_non_gui_default (GimpDrawable *drawable,
+				     gint          num_strokes,
+				     gdouble      *stroke_array);
+
+Tool     * tools_new_convolve       (void);
+void       tools_free_convolve      (Tool         *tool);
 
 
 #endif  /*  __CONVOLVE_H__  */

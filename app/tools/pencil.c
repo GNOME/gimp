@@ -40,6 +40,8 @@
 #include "tool_options.h"
 
 
+#define PENCIL_INCREMENTAL_DEFAULT FALSE
+
 /*  the pencil tool options  */
 typedef struct _PencilOptions PencilOptions;
 
@@ -48,23 +50,29 @@ struct _PencilOptions
   PaintOptions  paint_options;
 };
 
-static PencilOptions *pencil_options = NULL; 
 
 /*  forward function declarations  */
-static void      pencil_motion (PaintCore *, GimpDrawable *, 
-				PaintPressureOptions *, gboolean);
+static void       pencil_motion     (PaintCore            *paint_core,
+				     GimpDrawable         *drawable,
+				     PaintPressureOptions *pressure_options,
+				     gboolean              );
+static gpointer   pencil_paint_func (PaintCore            *paint_core,
+				     GimpDrawable         *drawable,
+				     PaintState            state);
+
+
+static PencilOptions *pencil_options = NULL; 
 
 static gboolean  non_gui_incremental = FALSE;
 static void      pencil_options_reset (void);
 
-#define PENCIL_INCREMENTAL_DEFAULT FALSE
 
 /*  functions  */
 
-void *
+gpointer
 pencil_paint_func (PaintCore    *paint_core,
 		   GimpDrawable *drawable,
-		   int           state)
+		   PaintState    state)
 {
   switch (state)
     {
@@ -203,10 +211,10 @@ pencil_motion (PaintCore            *paint_core,
 			   HARD, scale, paint_appl_mode);
 }
 
-static void *
+static gpointer
 pencil_non_gui_paint_func (PaintCore    *paint_core,
 			   GimpDrawable *drawable,
-			   int           state)
+			   PaintState    state)
 {
   pencil_motion (paint_core, drawable, &non_gui_pressure_options, 
 		 non_gui_incremental);

@@ -61,6 +61,16 @@ struct _FlipOptions
   GtkWidget               *type_w[2];
 };
 
+
+/*  local function prototypes  */
+
+static TileManager * flip_tool_transform  (Tool           *tool,
+					   GDisplay       *gdisp,
+					   TransformState  state);
+
+
+/*  private variables  */
+
 static FlipOptions *flip_options = NULL;
 
 /*  functions  */
@@ -117,7 +127,7 @@ flip_options_new (void)
 static void
 flip_modifier_key_func (Tool        *tool,
 			GdkEventKey *kevent,
-			gpointer     gdisp_ptr)
+			GDisplay    *gdisp)
 {
   switch (kevent->keyval)
     {
@@ -139,17 +149,15 @@ flip_modifier_key_func (Tool        *tool,
       break;
     }
 }
-  
-TileManager *
+
+static TileManager *
 flip_tool_transform (Tool           *tool,
-                     gpointer        gdisp_ptr,
+                     GDisplay       *gdisp,
                      TransformState  state)
 {
   TransformCore *transform_core;
-  GDisplay      *gdisp;
 
   transform_core = (TransformCore *) tool->private;
-  gdisp = (GDisplay *) gdisp_ptr;
 
   switch (state)
     {
@@ -179,14 +187,11 @@ flip_tool_transform (Tool           *tool,
 static void
 flip_cursor_update (Tool           *tool,
 		    GdkEventMotion *mevent,
-		    gpointer        gdisp_ptr)
+		    GDisplay       *gdisp)
 {
-  GDisplay      *gdisp;
   GimpDrawable  *drawable;
   GdkCursorType  ctype = GIMP_BAD_CURSOR;
 
-  gdisp = (GDisplay *) gdisp_ptr;
-  
   if ((drawable = gimp_image_active_drawable (gdisp->gimage)))
     {
       gint x, y;
@@ -231,10 +236,10 @@ tools_new_flip (void)
       tools_register (FLIP, (ToolOptions *) flip_options);
     }
 
-  tool = transform_core_new (FLIP, FALSE);
+  tool    = transform_core_new (FLIP, FALSE);
   private = tool->private;
 
-  private->trans_func = flip_tool_transform;
+  private->trans_func            = flip_tool_transform;
   private->trans_info[FLIP_INFO] = -1.0;
 
   tool->modifier_key_func  = flip_modifier_key_func;

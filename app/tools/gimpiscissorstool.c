@@ -133,6 +133,7 @@ struct _iscissors
 };
 
 typedef struct _IScissorsOptions IScissorsOptions;
+
 struct _IScissorsOptions
 {
   SelectionOptions  selection_options;
@@ -187,7 +188,7 @@ struct _IScissorsOptions
 /*  static variables  */
 
 /*  where to move on a given link direction  */
-static int move [8][2] =
+static gint move [8][2] =
 {
   { 1, 0 },
   { 0, 1 },
@@ -271,57 +272,72 @@ static IScissorsOptions *iscissors_options = NULL;
 /***********************************************************************/
 /*  Local function prototypes  */
 
-static void   iscissors_button_press    (Tool *, GdkEventButton *, gpointer);
-static void   iscissors_button_release  (Tool *, GdkEventButton *, gpointer);
-static void   iscissors_motion          (Tool *, GdkEventMotion *, gpointer);
-static void   iscissors_oper_update     (Tool *, GdkEventMotion *, gpointer);
-static void   iscissors_modifier_update (Tool *, GdkEventKey *,    gpointer);
-static void   iscissors_cursor_update   (Tool *, GdkEventMotion *, gpointer);
-static void   iscissors_control         (Tool *, ToolAction, gpointer);
+static void          iscissors_button_press    (Tool           *tool,
+						GdkEventButton *bevent,
+						GDisplay       *gdisp);
+static void          iscissors_button_release  (Tool           *tool,
+						GdkEventButton *bevent,
+						GDisplay       *gdisp);
+static void          iscissors_motion          (Tool           *tool,
+						GdkEventMotion *mevent,
+						GDisplay       *gdisp);
+static void          iscissors_oper_update     (Tool           *tool,
+						GdkEventMotion *mevent,
+						GDisplay       *gdisp);
+static void          iscissors_modifier_update (Tool           *tool,
+						GdkEventKey    *kevent,
+						GDisplay       *gdisp);
+static void          iscissors_cursor_update   (Tool           *tool,
+						GdkEventMotion *mevent,
+						GDisplay       *gdisp);
+static void          iscissors_control         (Tool           *tool,
+						ToolAction      tool_action,
+						GDisplay       *gdisp);
 
-static void   iscissors_reset           (Iscissors *iscissors);
-static void   iscissors_draw            (Tool      *tool);
+static void          iscissors_reset           (Iscissors      *iscissors);
+static void          iscissors_draw            (Tool           *tool);
 
-static TileManager * gradient_map_new          (GImage      *gimage);
+static TileManager * gradient_map_new          (GImage         *gimage);
 
-static void          find_optimal_path         (TileManager *gradient_map,
-						TempBuf     *dp_buf,
-						gint         x1,
-						gint         y1,
-						gint         x2,
-						gint         y2,
-						gint         xs,
-						gint         ys);
-static void          find_max_gradient         (Iscissors   *iscissors,
-						GImage      *gimage,
-						gint        *x,
-						gint        *y);
-static void          calculate_curve           (Tool        *tool,
-						ICurve      *curve);
-static void          iscissors_draw_curve      (GDisplay    *gdisp,
-						Iscissors   *iscissors,
-						ICurve      *curve);
-static void          iscissors_free_icurves    (GSList      *list);
-static void          iscissors_free_buffers    (Iscissors   *iscissors);
+static void          find_optimal_path         (TileManager    *gradient_map,
+						TempBuf        *dp_buf,
+						gint            x1,
+						gint            y1,
+						gint            x2,
+						gint            y2,
+						gint            xs,
+						gint            ys);
+static void          find_max_gradient         (Iscissors      *iscissors,
+						GImage         *gimage,
+						gint           *x,
+						gint           *y);
+static void          calculate_curve           (Tool           *tool,
+						ICurve         *curve);
+static void          iscissors_draw_curve      (GDisplay       *gdisp,
+						Iscissors      *iscissors,
+						ICurve         *curve);
+static void          iscissors_free_icurves    (GSList         *list);
+static void          iscissors_free_buffers    (Iscissors      *iscissors);
 
-static gint          mouse_over_vertex         (Iscissors   *iscissors,
-						gint         x,
-						gint         y);
-static gboolean      clicked_on_vertex         (Tool        *tool);
-static GSList      * mouse_over_curve          (Iscissors   *iscissors,
-						gint         x,
-						gint         y);
-static gboolean      clicked_on_curve          (Tool        *tool);
+static gint          mouse_over_vertex         (Iscissors      *iscissors,
+						gint            x,
+						gint            y);
+static gboolean      clicked_on_vertex         (Tool           *tool);
+static GSList      * mouse_over_curve          (Iscissors      *iscissors,
+						gint            x,
+						gint            y);
+static gboolean      clicked_on_curve          (Tool           *tool);
 
 static void          precalculate_arrays       (void);
-static GPtrArray   * plot_pixels               (Iscissors   *iscissors,
-						TempBuf     *dp_buf,
-						gint         x1,
-						gint         y1,
-						gint         xs,
-						gint         ys,
-						gint         xe,
-						gint         ye);
+static GPtrArray   * plot_pixels               (Iscissors      *iscissors,
+						TempBuf        *dp_buf,
+						gint            x1,
+						gint            y1,
+						gint            xs,
+						gint            ys,
+						gint            xe,
+						gint            ye);
+
 
 static void
 iscissors_options_reset (void)
@@ -412,23 +428,21 @@ tools_free_iscissors (Tool *tool)
 static void
 iscissors_button_press (Tool           *tool,
 			GdkEventButton *bevent,
-			gpointer        gdisp_ptr)
+			GDisplay       *gdisp)
 {
-  GDisplay     *gdisp;
   GimpDrawable *drawable;
   Iscissors    *iscissors;
   gboolean      grab_pointer = FALSE;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  drawable  = gimp_image_active_drawable (gdisp->gimage);
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
 			       &iscissors->x, &iscissors->y, FALSE, FALSE);
 
   /*  If the tool was being used in another image...reset it  */
 
-  if (tool->state == ACTIVE && gdisp_ptr != tool->gdisp_ptr)
+  if (tool->state == ACTIVE && gdisp != tool->gdisp)
     {
       /*iscissors->draw = DRAW_CURVE; XXX? */
       draw_core_stop (iscissors->core, tool);
@@ -436,19 +450,19 @@ iscissors_button_press (Tool           *tool,
     }
 
   tool->state = ACTIVE;
-  tool->gdisp_ptr = gdisp_ptr;
+  tool->gdisp = gdisp;
 
   switch (iscissors->state)
     {
     case NO_ACTION:
 #if 0
       /* XXX what's this supposed to do? */
-      if (!(bevent->state & GDK_SHIFT_MASK) &&
-	  !(bevent->state & GDK_CONTROL_MASK))
-	if (selection_point_inside (gdisp->select, gdisp_ptr,
+      if (! (bevent->state & GDK_SHIFT_MASK) &&
+	  ! (bevent->state & GDK_CONTROL_MASK))
+	if (selection_point_inside (gdisp->select, gdisp,
 				    bevent->x, bevent->y))
 	  {
-	    init_edit_selection (tool, gdisp->select, gdisp_ptr,
+	    init_edit_selection (tool, gdisp->select, gdisp,
 				 bevent->x, bevent->y);
 	    return;
 	  }
@@ -534,17 +548,16 @@ iscissors_button_press (Tool           *tool,
 
 static void
 iscissors_convert (Iscissors *iscissors,
-		   gpointer   gdisp_ptr)
+		   GDisplay  *gdisp)
 {
-  GDisplay *gdisp = (GDisplay *) gdisp_ptr;
   ScanConverter    *sc;
   ScanConvertPoint *pts;
-  guint   npts;
-  GSList *list;
-  ICurve *icurve;
-  guint   packed;
-  gint    i;
-  gint    index;
+  guint             npts;
+  GSList           *list;
+  ICurve           *icurve;
+  guint             packed;
+  gint              i;
+  gint              index;
 
   sc = scan_converter_new (gdisp->gimage->width, gdisp->gimage->height, 1);
 
@@ -583,13 +596,11 @@ iscissors_convert (Iscissors *iscissors,
 static void
 iscissors_button_release (Tool           *tool,
 			  GdkEventButton *bevent,
-			  gpointer        gdisp_ptr)
+			  GDisplay       *gdisp)
 {
   Iscissors *iscissors;
-  GDisplay  *gdisp;
   ICurve    *curve;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
 
   TRC (("iscissors_button_release\n"));
@@ -694,18 +705,16 @@ iscissors_button_release (Tool           *tool,
 
   /*  convert the curves into a region  */
   if (iscissors->connected)
-    iscissors_convert (iscissors, gdisp_ptr);
+    iscissors_convert (iscissors, gdisp);
 }
 
 static void
 iscissors_motion (Tool           *tool,
 		  GdkEventMotion *mevent,
-		  gpointer        gdisp_ptr)
+		  GDisplay       *gdisp)
 {
   Iscissors *iscissors;
-  GDisplay *gdisp;
   
-  gdisp = (GDisplay *) gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
 
   if (tool->state != ACTIVE || iscissors->state == NO_ACTION)
@@ -763,16 +772,16 @@ iscissors_motion (Tool           *tool,
 static void
 iscissors_draw (Tool *tool)
 {
-  GDisplay *gdisp;
+  GDisplay  *gdisp;
   Iscissors *iscissors;
-  ICurve *curve;
-  GSList *list;
-  int tx1, ty1, tx2, ty2;
-  int txn, tyn;
+  ICurve    *curve;
+  GSList    *list;
+  gint       tx1, ty1, tx2, ty2;
+  gint       txn, tyn;
 
   TRC (("iscissors_draw\n"));
 
-  gdisp = (GDisplay *) tool->gdisp_ptr;
+  gdisp     = tool->gdisp;
   iscissors = (Iscissors *) tool->private;
 
   gdisplay_transform_coords (gdisp, iscissors->ix, iscissors->iy, &tx1, &ty1,
@@ -900,14 +909,12 @@ iscissors_draw_curve (GDisplay  *gdisp,
 static void
 iscissors_oper_update (Tool           *tool,
 		       GdkEventMotion *mevent,
-		       gpointer        gdisp_ptr)
+		       GDisplay       *gdisp)
 {
   Iscissors *iscissors;
-  GDisplay  *gdisp;
   gint       x, y;
 
   iscissors = (Iscissors *) tool->private;
-  gdisp = (GDisplay *) gdisp_ptr;
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
@@ -954,7 +961,7 @@ iscissors_oper_update (Tool           *tool,
 static void
 iscissors_modifier_update (Tool        *tool,
 			   GdkEventKey *kevent,
-			   gpointer     gdisp_ptr)
+			   GDisplay    *gdisp)
 {
   Iscissors *iscissors;
   SelectOps  op;
@@ -997,13 +1004,11 @@ iscissors_modifier_update (Tool        *tool,
 static void
 iscissors_cursor_update (Tool           *tool,
 			 GdkEventMotion *mevent,
-			 gpointer        gdisp_ptr)
+			 GDisplay       *gdisp)
 {
   Iscissors *iscissors;
-  GDisplay *gdisp;
 
   iscissors = (Iscissors *) tool->private;
-  gdisp = (GDisplay *) gdisp_ptr;
 
   switch (iscissors->op)
     {
@@ -1073,7 +1078,7 @@ iscissors_cursor_update (Tool           *tool,
 static void
 iscissors_control (Tool       *tool,
 		   ToolAction  action,
-		   gpointer    gdisp_ptr)
+		   GDisplay   *gdisp)
 {
   Iscissors * iscissors;
   Iscissors_draw draw;
@@ -1409,11 +1414,11 @@ calculate_curve (Tool   *tool,
 {
   GDisplay  *gdisp;
   Iscissors *iscissors;
-  gint x, y, dir;
-  gint xs, ys, xe, ye;
-  gint x1, y1, x2, y2;
-  gint width, height;
-  gint ewidth, eheight;
+  gint       x, y, dir;
+  gint       xs, ys, xe, ye;
+  gint       x1, y1, x2, y2;
+  gint       width, height;
+  gint       ewidth, eheight;
 
   TRC (("calculate_curve(%p, %p)\n", tool, curve));
 
@@ -1427,7 +1432,7 @@ calculate_curve (Tool   *tool,
    *            structure.
    */
 
-  gdisp = (GDisplay *) tool->gdisp_ptr;
+  gdisp     = tool->gdisp;
   iscissors = (Iscissors *) tool->private;
 
   /*  Get the bounding box  */

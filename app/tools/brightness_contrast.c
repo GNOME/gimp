@@ -83,7 +83,9 @@ static BrightnessContrastDialog *brightness_contrast_dialog = NULL;
 
 /*  brightness contrast action functions  */
 
-static void   brightness_contrast_control (Tool *, ToolAction, gpointer);
+static void   brightness_contrast_control (Tool       *tool,
+					   ToolAction  action,
+					   GDisplay   *gdisp);
 
 static BrightnessContrastDialog * brightness_contrast_dialog_new (void);
 
@@ -104,7 +106,7 @@ static void   brightness_contrast_contrast_adjustment_update   (GtkAdjustment *,
 static void
 brightness_contrast_control (Tool       *tool,
 			     ToolAction  action,
-			     gpointer    gdisp_ptr)
+			     GDisplay   *gdisp)
 {
   switch (action)
     {
@@ -393,13 +395,13 @@ brightness_contrast_ok_callback (GtkWidget *widget,
   active_tool->preserve = TRUE;
 
   if (!bcd->preview)
-  {
-    brightness_contrast_lut_setup (bcd->lut, bcd->brightness / 255.0,
-				   bcd->contrast / 127.0,
-				   gimp_drawable_bytes (bcd->drawable));
-    image_map_apply (bcd->image_map, (ImageMapApplyFunc) gimp_lut_process_2,
-		     (void *) bcd->lut);
-  }
+    {
+      brightness_contrast_lut_setup (bcd->lut, bcd->brightness / 255.0,
+				     bcd->contrast / 127.0,
+				     gimp_drawable_bytes (bcd->drawable));
+      image_map_apply (bcd->image_map, (ImageMapApplyFunc) gimp_lut_process_2,
+		       (void *) bcd->lut);
+    }
 
   if (bcd->image_map)
     image_map_commit (bcd->image_map);
@@ -408,7 +410,7 @@ brightness_contrast_ok_callback (GtkWidget *widget,
 
   bcd->image_map = NULL;
 
-  active_tool->gdisp_ptr = NULL;
+  active_tool->gdisp    = NULL;
   active_tool->drawable = NULL;
 }
 
@@ -432,7 +434,7 @@ brightness_contrast_cancel_callback (GtkWidget *widget,
       gdisplays_flush ();
     }
 
-  active_tool->gdisp_ptr = NULL;
+  active_tool->gdisp    = NULL;
   active_tool->drawable = NULL;
 }
 

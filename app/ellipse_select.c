@@ -93,12 +93,10 @@ ellipse_select (GimpImage *gimage,
 void
 ellipse_select_draw (Tool *tool)
 {
-  GDisplay      *gdisp;
   EllipseSelect *ellipse_sel;
   gint           x1, y1;
   gint           x2, y2;
 
-  gdisp = (GDisplay *) tool->gdisp_ptr;
   ellipse_sel = (EllipseSelect *) tool->private;
 
   x1 = MIN (ellipse_sel->x, ellipse_sel->x + ellipse_sel->w);
@@ -106,8 +104,8 @@ ellipse_select_draw (Tool *tool)
   x2 = MAX (ellipse_sel->x, ellipse_sel->x + ellipse_sel->w);
   y2 = MAX (ellipse_sel->y, ellipse_sel->y + ellipse_sel->h);
 
-  gdisplay_transform_coords (gdisp, x1, y1, &x1, &y1, 0);
-  gdisplay_transform_coords (gdisp, x2, y2, &x2, &y2, 0);
+  gdisplay_transform_coords (tool->gdisp, x1, y1, &x1, &y1, 0);
+  gdisplay_transform_coords (tool->gdisp, x2, y2, &x2, &y2, 0);
 
   gdk_draw_arc (ellipse_sel->core->win,
 		ellipse_sel->core->gc, 0,

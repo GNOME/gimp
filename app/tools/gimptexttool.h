@@ -20,13 +20,13 @@
 #define __TEXT_TOOL_H__
 
 
+#define SUPERSAMPLE  3
+
 typedef enum 
 {
   PIXELS,
   POINTS
 } SizeType;
-
-#define SUPERSAMPLE  3
 
 
 Tool      * tools_new_text   (void);

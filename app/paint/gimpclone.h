@@ -26,21 +26,19 @@ typedef enum
   PATTERN_CLONE
 } CloneType;
 
-void     * clone_paint_func      (PaintCore *,
-				  GimpDrawable *,
-				  gint);
-gboolean   clone_non_gui         (GimpDrawable *,
-				  GimpDrawable *,
-				  CloneType,
-				  gdouble,
-				  gdouble,
-				  gint,
-				  gdouble *);
-gboolean   clone_non_gui_default (GimpDrawable *,
-				  gint,
-				  gdouble *);
+
+gboolean   clone_non_gui         (GimpDrawable *drawable,
+				  GimpDrawable *src_drawable,
+				  CloneType     clone_type,
+				  gdouble       src_x,
+				  gdouble       src_y,
+				  gint          num_strokes,
+				  gdouble      *stroke_array);
+gboolean   clone_non_gui_default (GimpDrawable *drawable,
+				  gint          num_strokes,
+				  gdouble      *stroke_array);
 Tool     * tools_new_clone       (void);
-void       tools_free_clone      (Tool *);
+void       tools_free_clone      (Tool         *tool);
 
 
 #endif  /*  __CLONE_H__  */

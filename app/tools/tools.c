@@ -1324,17 +1324,17 @@ tools_initialize (ToolType  tool_type,
       active_tool->drawable = gimp_image_active_drawable (gdisp->gimage);
     }
 
-  /*  don't set gdisp_ptr here! (see commands.c)  */
+  /*  don't set tool->gdisp here! (see commands.c)  */
 }
 
 
 void
 active_tool_control (ToolAction  action,
-		     void       *gdisp_ptr)
+		     GDisplay   *gdisp)
 {
   if (active_tool)
     {
-      if (active_tool->gdisp_ptr == gdisp_ptr)
+      if (active_tool->gdisp == gdisp)
 	{
 	  switch (action)
 	    {
@@ -1344,7 +1344,7 @@ active_tool_control (ToolAction  action,
 		  if (! active_tool->paused_count)
 		    {
 		      active_tool->state = PAUSED;
-		      (* active_tool->control_func) (active_tool, action, gdisp_ptr);
+		      (* active_tool->control_func) (active_tool, action, gdisp);
 		    }
 		}
 	      active_tool->paused_count++;
@@ -1357,14 +1357,14 @@ active_tool_control (ToolAction  action,
 		  if (! active_tool->paused_count)
 		    {
 		      active_tool->state = ACTIVE;
-		      (* active_tool->control_func) (active_tool, action, gdisp_ptr);
+		      (* active_tool->control_func) (active_tool, action, gdisp);
 		    }
 		}
 	      break;
 
 	    case HALT :
 	      active_tool->state = INACTIVE;
-	      (* active_tool->control_func) (active_tool, action, gdisp_ptr);
+	      (* active_tool->control_func) (active_tool, action, gdisp);
 	      break;
 
 	    case DESTROY :
@@ -1388,52 +1388,45 @@ active_tool_control (ToolAction  action,
 static void
 standard_button_press_func (Tool           *tool,
 			    GdkEventButton *bevent,
-			    gpointer        gdisp_ptr)
+			    GDisplay       *gdisp)
 {
-  GDisplay *gdisp;
-
-  gdisp = gdisp_ptr;
-
-  tool->gdisp_ptr = gdisp;
+  tool->gdisp    = gdisp;
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 }
 
 static void
 standard_button_release_func (Tool           *tool,
 			      GdkEventButton *bevent,
-			      gpointer        gdisp_ptr)
+			      GDisplay       *gdisp)
 {
 }
 
 static void
 standard_motion_func (Tool           *tool,
 		      GdkEventMotion *mevent,
-		      gpointer        gdisp_ptr)
+		      GDisplay       *gdisp)
 {
 }
 
 static void
 standard_arrow_keys_func (Tool        *tool,
 			  GdkEventKey *kevent,
-			  gpointer     gdisp_ptr)
+			  GDisplay    *gdisp)
 {
 }
 
 static void
 standard_modifier_key_func (Tool        *tool,
 			    GdkEventKey *kevent,
-			    gpointer     gdisp_ptr)
+			    GDisplay    *gdisp)
 {
 }
 
 static void
 standard_cursor_update_func (Tool           *tool,
 			     GdkEventMotion *mevent,
-			     gpointer        gdisp_ptr)
+			     GDisplay       *gdisp)
 {
-  GDisplay *gdisp;
-
-  gdisp = (GDisplay *) gdisp_ptr;
   gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW,
 				TOOL_TYPE_NONE,
 				CURSOR_MODIFIER_NONE,
@@ -1443,14 +1436,14 @@ standard_cursor_update_func (Tool           *tool,
 static void
 standard_operator_update_func (Tool           *tool,
 			       GdkEventMotion *mevent,
-			       gpointer        gdisp_ptr)
+			       GDisplay       *gdisp)
 {
 }
 
 static void
 standard_control_func (Tool       *tool,
 		       ToolAction  action,
-		       gpointer    gdisp_ptr)
+		       GDisplay   *gdisp)
 {
 }
 
@@ -1475,7 +1468,7 @@ tools_new_tool (ToolType tool_type)
   tool->auto_snap_to = TRUE;      /*  Snap to guides   */
 
   tool->preserve  = TRUE;         /*  Preserve tool across drawable changes  */
-  tool->gdisp_ptr = NULL;
+  tool->gdisp     = NULL;
   tool->drawable  = NULL;
 
   tool->toggled   = FALSE;

@@ -54,29 +54,37 @@
 /*  the minimum movement before direction of shear can be determined (pixels) */
 #define MIN_MOVE     5
 
+
+/*  forward function declarations  */
+static TileManager * shear_tool_transform (Tool           *tool,
+					   GDisplay       *gdisp,
+					   TransformState  state);
+
+static void          shear_tool_recalc    (Tool           *tool,
+					   GDisplay       *gdisp);
+static void          shear_tool_motion    (Tool           *tool,
+					   GDisplay       *gdisp);
+static void          shear_info_update    (Tool           *tool);
+
+static void          shear_x_mag_changed  (GtkWidget      *widget,
+					   gpointer        data);
+static void          shear_y_mag_changed  (GtkWidget      *widget,
+					   gpointer        data);
+
+
 /*  variables local to this file  */
 static gdouble  xshear_val;
 static gdouble  yshear_val;
 
-/*  forward function declarations  */
-static void   shear_tool_recalc  (Tool *, void *);
-static void   shear_tool_motion  (Tool *, void *);
-static void   shear_info_update  (Tool *);
 
-/*  Info dialog callback funtions  */
-static void   shear_x_mag_changed (GtkWidget *widget, gpointer data);
-static void   shear_y_mag_changed (GtkWidget *widget, gpointer data);
-
-TileManager *
+static TileManager *
 shear_tool_transform (Tool           *tool,
-		      gpointer        gdisp_ptr,
+		      GDisplay       *gdisp,
 		      TransformState  state)
 {
   TransformCore *transform_core;
-  GDisplay       *gdisp;
 
   transform_core = (TransformCore *) tool->private;
-  gdisp = (GDisplay *) gdisp_ptr;
 
   switch (state)
     {
@@ -108,12 +116,12 @@ shear_tool_transform (Tool           *tool,
       break;
 
     case TRANSFORM_MOTION:
-      shear_tool_motion (tool, gdisp_ptr);
-      shear_tool_recalc (tool, gdisp_ptr);
+      shear_tool_motion (tool, gdisp);
+      shear_tool_recalc (tool, gdisp);
       break;
 
     case TRANSFORM_RECALC:
-      shear_tool_recalc (tool, gdisp_ptr);
+      shear_tool_recalc (tool, gdisp);
       break;
 
     case TRANSFORM_FINISH:
@@ -175,14 +183,12 @@ shear_x_mag_changed (GtkWidget *widget,
 {
   Tool          *tool;
   TransformCore *transform_core;
-  GDisplay      *gdisp;
   gint           value;
 
   tool = (Tool *) data;
 
   if (tool)
     {
-      gdisp = (GDisplay *) tool->gdisp_ptr;
       transform_core = (TransformCore *) tool->private;
 
       value = GTK_ADJUSTMENT (widget)->value;
@@ -191,7 +197,7 @@ shear_x_mag_changed (GtkWidget *widget,
 	{
 	  draw_core_pause (transform_core->core, tool);
 	  transform_core->trans_info[XSHEAR] = value;
-	  shear_tool_recalc (tool, gdisp);
+	  shear_tool_recalc (tool, tool->gdisp);
 	  draw_core_resume (transform_core->core, tool);
 	}
     }
@@ -203,14 +209,12 @@ shear_y_mag_changed (GtkWidget *widget,
 {
   Tool          *tool;
   TransformCore *transform_core;
-  GDisplay      *gdisp;
   gint           value;
 
   tool = (Tool *) data;
 
   if (tool)
     {
-      gdisp = (GDisplay *) tool->gdisp_ptr;
       transform_core = (TransformCore *) tool->private;
 
       value = GTK_ADJUSTMENT (widget)->value;
@@ -219,15 +223,15 @@ shear_y_mag_changed (GtkWidget *widget,
 	{
 	  draw_core_pause (transform_core->core, tool);
 	  transform_core->trans_info[YSHEAR] = value;
-	  shear_tool_recalc (tool, gdisp);
+	  shear_tool_recalc (tool, tool->gdisp);
 	  draw_core_resume (transform_core->core, tool);
 	}
     }
 }
 
 static void
-shear_tool_motion (Tool *tool,
-		   void *gdisp_ptr)
+shear_tool_motion (Tool     *tool,
+		   GDisplay *gdisp)
 {
   TransformCore *transform_core;
   gint           diffx, diffy;
@@ -302,15 +306,13 @@ shear_tool_motion (Tool *tool,
 }
 
 static void
-shear_tool_recalc (Tool *tool,
-		   void *gdisp_ptr)
+shear_tool_recalc (Tool     *tool,
+		   GDisplay *gdisp)
 {
   TransformCore *transform_core;
-  GDisplay      *gdisp;
   gfloat         width, height;
   gfloat         cx, cy;
 
-  gdisp = (GDisplay *) tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
   cx = (transform_core->x1 + transform_core->x2) / 2.0;

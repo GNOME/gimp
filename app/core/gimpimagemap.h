@@ -26,8 +26,8 @@
  *   MUST be followed with an image_map_commit or an image_map_abort call
  *   The image map is no longer valid after a call to commit or abort.
  */
-ImageMap image_map_create       (void *,
-			         GimpDrawable *);
+ImageMap image_map_create       (GDisplay     *gdisp,
+			         GimpDrawable *drawable);
 void     image_map_apply        (ImageMap,
 			         ImageMapApplyFunc,
 			         void *);

@@ -31,7 +31,9 @@ enum BoundingBox
 
 typedef gdouble TranInfo[TRAN_INFO_SIZE];
 
-typedef TileManager * (* TransformFunc) (Tool *, void *, TransformState);
+typedef TileManager * (* TransformFunc) (Tool           *tool,
+					 GDisplay       *gdisp,
+					 TransformState  state);
 
 
 struct _TransformCore
@@ -99,7 +101,7 @@ struct _TransformUndo
   gint         tool_type;
   TranInfo     trans_info;
   TileManager *original;
-  void        *path_undo;
+  gpointer     path_undo;
 };
 
 
@@ -107,23 +109,33 @@ struct _TransformUndo
 extern InfoDialog * transform_info;
 
 /*  transform tool action functions  */
-void          transform_core_button_press   (Tool *, GdkEventButton *, gpointer);
-void          transform_core_button_release (Tool *, GdkEventButton *, gpointer);
-void          transform_core_motion         (Tool *, GdkEventMotion *, gpointer);
-void          transform_core_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-void          transform_core_control        (Tool *, ToolAction,       gpointer);
+void          transform_core_button_press           (Tool           *tool,
+						     GdkEventButton *bevent,
+						     GDisplay       *gdisp);
+void          transform_core_button_release         (Tool           *tool,
+						     GdkEventButton *bevent,
+						     GDisplay       *gdisp);
+void          transform_core_motion                 (Tool           *tool,
+						     GdkEventMotion *mevent,
+						     GDisplay       *gdisp);
+void          transform_core_cursor_update          (Tool           *tool,
+						     GdkEventMotion *mevent,
+						     GDisplay       *gdisp);
+void          transform_core_control                (Tool           *tool,
+					             ToolAction      tool_action,
+						     GDisplay       *gdisp);
 
 /*  transform tool functions  */
-Tool        * transform_core_new                    (ToolType  tool_type,
-						     gboolean  interactive);
-void          transform_core_free                   (Tool     *tool);
-void          transform_core_draw                   (Tool     *tool);
-void          transform_core_no_draw                (Tool     *tool);
-void          transform_core_transform_bounding_box (Tool     *tool);
-void          transform_core_reset                  (Tool     *tool,
-						     void     *gdisp_ptr);
+Tool        * transform_core_new                    (ToolType        tool_type,
+						     gboolean        interactive);
+void          transform_core_free                   (Tool           *tool);
+void          transform_core_draw                   (Tool           *tool);
+void          transform_core_no_draw                (Tool           *tool);
+void          transform_core_transform_bounding_box (Tool           *tool);
+void          transform_core_reset                  (Tool           *tool,
+						     GDisplay       *gdisp);
 void	      transform_core_grid_density_changed   (void);
-void	      transform_core_showpath_changed       (gint      type);
+void	      transform_core_showpath_changed       (gint            type);
 
 /*  transform functions  */
 TileManager * transform_core_do    (GImage          *gimage,

@@ -21,7 +21,7 @@
 #define __NAV_WINDOW_H__
 
 
-InfoDialog * nav_window_create                (gpointer        );
+InfoDialog * nav_window_create                (GDisplay       *gdisp);
 void         nav_window_free                  (GDisplay       *gdisp,
 					       InfoDialog     *idialog);
 void         nav_window_update_window_marker  (InfoDialog     *idialog);

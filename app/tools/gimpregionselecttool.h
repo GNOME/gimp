@@ -20,14 +20,6 @@
 #define __FUZZY_SELECT_H__
 
 
-extern Channel *fuzzy_mask;
-
-
-/*  fuzzy select functions  */
-Tool    * tools_new_fuzzy_select  (void);
-void      tools_free_fuzzy_select (Tool         *tool);
-
-/*  functions  */
 Channel * find_contiguous_region  (GimpImage    *gimage,
 				   GimpDrawable *drawable,
 				   gboolean      antialias,
@@ -40,6 +32,12 @@ void      fuzzy_select            (GimpImage    *gimage,
 				   gint          op,
 				   gboolean      feather,
 				   gdouble       feather_radius);
+
+Tool    * tools_new_fuzzy_select  (void);
+void      tools_free_fuzzy_select (Tool         *tool);
+
+
+extern Channel *fuzzy_mask;
 
 
 #endif  /* __FUZZY_SELECT_H__ */

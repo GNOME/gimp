@@ -54,6 +54,7 @@ struct _HueSaturationDialog
   gboolean       preview;
 };
 
+
 Tool * tools_new_hue_saturation           (void);
 void   tools_free_hue_saturation          (Tool                 *tool);
 

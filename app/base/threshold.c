@@ -56,36 +56,50 @@ struct _Threshold
   gint x, y;    /*  coords for last mouse click  */
 };
 
+
+/*  threshold action functions  */
+static void   threshold_control               (Tool            *tool,
+					       ToolAction       tool_action,
+					       GDisplay        *gdisp);
+
+static ThresholdDialog * threshold_dialog_new (void);
+
+static void   threshold_update                (ThresholdDialog *td,
+					       gint             update);
+static void   threshold_preview               (ThresholdDialog *td);
+static void   threshold_reset_callback        (GtkWidget       *widget,
+					       gpointer         data);
+static void   threshold_ok_callback           (GtkWidget       *widget,
+					       gpointer         data);
+static void   threshold_cancel_callback       (GtkWidget       *widget,
+					       gpointer         data);
+static void   threshold_preview_update        (GtkWidget       *widget,
+					       gpointer         data);
+static void   threshold_low_threshold_adjustment_update  (GtkAdjustment *adj,
+							  gpointer       data);
+static void   threshold_high_threshold_adjustment_update (GtkAdjustment *adj,
+							  gpointer       data);
+
+static void   threshold                       (PixelRegion     *,
+					       PixelRegion     *,
+					       gpointer         );
+static void   threshold_histogram_range       (HistogramWidget *,
+					       gint             ,
+					       gint             ,
+					       gpointer         );
+
+
 /*  the threshold tool options  */
 static ToolOptions *threshold_options = NULL;
 
 /*  the threshold tool dialog  */
 static ThresholdDialog *threshold_dialog = NULL;
 
-/*  threshold action functions  */
-static void   threshold_control (Tool *, ToolAction, gpointer);
 
-static ThresholdDialog * threshold_dialog_new (void);
-
-static void   threshold_update                     (ThresholdDialog *,
-						    gint);
-static void   threshold_preview                    (ThresholdDialog *);
-static void   threshold_reset_callback             (GtkWidget *, gpointer);
-static void   threshold_ok_callback                (GtkWidget *, gpointer);
-static void   threshold_cancel_callback            (GtkWidget *, gpointer);
-static void   threshold_preview_update             (GtkWidget *, gpointer);
-static void   threshold_low_threshold_adjustment_update  (GtkAdjustment *,
-							  gpointer);
-static void   threshold_high_threshold_adjustment_update (GtkAdjustment *,
-							  gpointer);
-
-static void   threshold                 (PixelRegion *, PixelRegion *, void *);
-static void   threshold_histogram_range (HistogramWidget *, gint, gint,
-					 gpointer);
 /*  threshold machinery  */
 
 void
-threshold_2 (void        *data,
+threshold_2 (gpointer     data,
 	     PixelRegion *srcPR,
 	     PixelRegion *destPR)
 {
@@ -152,7 +166,7 @@ threshold (PixelRegion *srcPR,
 static void
 threshold_control (Tool       *tool,
 		   ToolAction  action,
-		   gpointer    gdisp_ptr)
+		   GDisplay   *gdisp)
 {
   switch (action)
     {
@@ -453,7 +467,7 @@ threshold_ok_callback (GtkWidget *widget,
 
   td->image_map = NULL;
 
-  active_tool->gdisp_ptr = NULL;
+  active_tool->gdisp    = NULL;
   active_tool->drawable = NULL;
 }
 
@@ -477,7 +491,7 @@ threshold_cancel_callback (GtkWidget *widget,
       gdisplays_flush ();
     }
 
-  active_tool->gdisp_ptr = NULL;
+  active_tool->gdisp    = NULL;
   active_tool->drawable = NULL;
 }
 

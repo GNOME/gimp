@@ -755,9 +755,8 @@ path_tool_cursor_position (Tool *tool,
 void
 path_tool_button_press (Tool           *tool,
 			GdkEventButton *bevent,
-			gpointer        gdisp_ptr)
+			GDisplay       *gdisp)
 {
-   GDisplay * gdisp;
    PathTool * path_tool;
    gint grab_pointer=0;
    gint x, y, halfwidth, dummy;
@@ -766,9 +765,8 @@ path_tool_button_press (Tool           *tool,
    fprintf (stderr, "path_tool_button_press\n");
 #endif PATH_TOOL_DEBUG
 
-   gdisp = (GDisplay *) gdisp_ptr;
    path_tool = (PathTool *) tool->private;
-   tool->gdisp_ptr = gdisp_ptr;
+   tool->gdisp = gdisp;
   
    /* Transform window-coordinates to canvas-coordinates */
    gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);
@@ -1099,16 +1097,14 @@ path_tool_button_press_curve (Tool *tool,
 void
 path_tool_button_release (Tool           *tool,
 			  GdkEventButton *bevent,
-			  gpointer        gdisp_ptr)
+			  GDisplay       *gdisp)
 {
-   GDisplay * gdisp;
    PathTool * path_tool;
  
 #ifdef PATH_TOOL_DEBUG
    fprintf (stderr, "path_tool_button_release\n");
 #endif PATH_TOOL_DEBUG
  
-   gdisp = (GDisplay *) gdisp_ptr;
    path_tool = (PathTool *) tool->private;
    
    path_tool->state &= ~PATH_TOOL_DRAG;
@@ -1125,14 +1121,12 @@ path_tool_button_release (Tool           *tool,
 void
 path_tool_motion (Tool           *tool,
 		  GdkEventMotion *mevent,
-		  gpointer        gdisp_ptr)
+		  GDisplay       *gdisp)
 {
-   GDisplay * gdisp;
    PathTool * path_tool;
 
    if (gtk_events_pending()) return;
    
-   gdisp = (GDisplay *) gdisp_ptr;
    path_tool = (PathTool *) tool->private;
 
    switch (path_tool->click_type) {
@@ -1314,10 +1308,9 @@ path_tool_motion_curve (Tool           *tool,
 void
 path_tool_cursor_update (Tool           *tool,
 			 GdkEventMotion *mevent,
-			 gpointer        gdisp_ptr)
+			 GDisplay       *gdisp)
 {
    PathTool *path_tool;
-   GDisplay *gdisp;
    gint     x, y, halfwidth, dummy, cursor_location;
   
 #ifdef PATH_TOOL_DEBUG
@@ -1325,7 +1318,6 @@ path_tool_cursor_update (Tool           *tool,
     */
 #endif PATH_TOOL_DEBUG
 
-   gdisp = (GDisplay *) gdisp_ptr;
    path_tool = (PathTool *) tool->private;
 
    gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
@@ -1361,16 +1353,14 @@ path_tool_cursor_update (Tool           *tool,
 void
 path_tool_control (Tool       *tool,
 		   ToolAction  action,
-		   gpointer    gdisp_ptr)
+		   GDisplay   *gdisp)
 {
-   GDisplay * gdisp;
    PathTool * path_tool;
 
 #ifdef PATH_TOOL_DEBUG
    fprintf (stderr, "path_tool_control\n");
 #endif PATH_TOOL_DEBUG
 
-   gdisp = (GDisplay *) tool->gdisp_ptr;
    path_tool = (PathTool *) tool->private;
 
    switch (action)
@@ -1462,7 +1452,7 @@ tools_free_path_tool (Tool *tool)
    fprintf (stderr, "tools_free_path_tool start\n");
 #endif PATH_TOOL_DEBUG
    path_tool = (PathTool *) tool->private;
-   gdisp = (GDisplay *) tool->gdisp_ptr;
+   gdisp = tool->gdisp;
 
    if (tool->state == ACTIVE)
    {
@@ -1850,7 +1840,7 @@ path_tool_draw_helper (Path *path,
       return;
    }
    
-   gdisp = tool->gdisp_ptr;
+   gdisp = tool->gdisp;
 
    path_tool = (PathTool *) tool->private;
    core = path_tool->core;
@@ -1894,7 +1884,7 @@ path_tool_draw (Tool *tool)
    fprintf (stderr, "path_tool_draw\n");
 #endif PATH_TOOL_DEBUG
    
-   gdisp = tool->gdisp_ptr;
+   gdisp = tool->gdisp;
    path_tool = tool->private;
    cur_path = path_tool->cur_path;
    

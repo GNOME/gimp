@@ -64,6 +64,27 @@ struct _PosterizeDialog
   GimpLut       *lut;
 };
 
+
+/*  posterize action functions  */
+static void   posterize_control                  (Tool            *tool,
+						  ToolAction       tool_action,
+						  GDisplay        *gdisp);
+
+static PosterizeDialog * posterize_dialog_new    (void);
+
+static void   posterize_preview                  (PosterizeDialog *pd);
+static void   posterize_reset_callback           (GtkWidget       *widget,
+						  gpointer         data);
+static void   posterize_ok_callback              (GtkWidget       *widget,
+						  gpointer         data);
+static void   posterize_cancel_callback          (GtkWidget       *widget,
+						  gpointer         data);
+static void   posterize_preview_update           (GtkWidget       *widget,
+						  gpointer         data);
+static void   posterize_levels_adjustment_update (GtkAdjustment   *adjustment,
+						  gpointer         data);
+
+
 /*  the posterize tool options  */
 static ToolOptions *posterize_options = NULL;
 
@@ -71,24 +92,12 @@ static ToolOptions *posterize_options = NULL;
 static PosterizeDialog *posterize_dialog = NULL;
 
 
-/*  posterize action functions  */
-static void   posterize_control (Tool *, ToolAction, gpointer);
-
-static PosterizeDialog * posterize_dialog_new (void);
-
-static void   posterize_preview                  (PosterizeDialog *);
-static void   posterize_reset_callback           (GtkWidget *, gpointer);
-static void   posterize_ok_callback              (GtkWidget *, gpointer);
-static void   posterize_cancel_callback          (GtkWidget *, gpointer);
-static void   posterize_preview_update           (GtkWidget *, gpointer);
-static void   posterize_levels_adjustment_update (GtkAdjustment *, gpointer);
-
 /*  posterize select action functions  */
 
 static void
 posterize_control (Tool       *tool,
 		   ToolAction  action,
-		   gpointer    gdisp_ptr)
+		   GDisplay   *gdisp)
 {
   switch (action)
     {
@@ -311,7 +320,7 @@ posterize_ok_callback (GtkWidget *widget,
       posterize_lut_setup( pd->lut, pd->levels,
 			   gimp_drawable_bytes (pd->drawable));
       image_map_apply (pd->image_map, (ImageMapApplyFunc) gimp_lut_process_2,
-		       (void *) pd->lut);
+		       (gpointer) pd->lut);
     }
 
   if (pd->image_map)
@@ -321,7 +330,7 @@ posterize_ok_callback (GtkWidget *widget,
 
   pd->image_map = NULL;
 
-  active_tool->gdisp_ptr = NULL;
+  active_tool->gdisp    = NULL;
   active_tool->drawable = NULL;
 }
 
@@ -345,7 +354,7 @@ posterize_cancel_callback (GtkWidget *widget,
       gdisplays_flush ();
     }
 
-  active_tool->gdisp_ptr = NULL;
+  active_tool->gdisp    = NULL;
   active_tool->drawable = NULL;
 }
 

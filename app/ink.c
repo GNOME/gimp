@@ -57,7 +57,13 @@
 
 /*  the Ink structures  */
 
-typedef Blob *(*BlobFunc) (gdouble, gdouble, gdouble, gdouble, gdouble, gdouble);
+typedef Blob * (* BlobFunc) (gdouble,
+			     gdouble,
+			     gdouble,
+			     gdouble,
+			     gdouble,
+			     gdouble);
+
 
 typedef struct _InkTool InkTool;
 
@@ -88,8 +94,8 @@ typedef struct _BrushWidget BrushWidget;
 
 struct _BrushWidget
 {
-  GtkWidget   *widget;
-  gboolean     state;
+  GtkWidget *widget;
+  gboolean   state;
 };
 
 typedef struct _InkOptions InkOptions;
@@ -130,95 +136,109 @@ struct _InkOptions
 };
 
 
-/* the ink tool options  */
-static InkOptions * ink_options = NULL;
+/*  local function prototypes  */
+
+static void        ink_button_press     (Tool           *tool,
+					 GdkEventButton *mevent,
+					 GDisplay       *gdisp);
+static void        ink_button_release   (Tool           *tool,
+					 GdkEventButton *bevent,
+					 GDisplay       *gdisp);
+static void        ink_motion           (Tool           *tool,
+					 GdkEventMotion *mevent,
+					 GDisplay       *gdisp);
+static void        ink_cursor_update    (Tool           *tool,
+					 GdkEventMotion *mevent,
+					 GDisplay       *gdisp);
+static void        ink_control          (Tool           *tool,
+					 ToolAction      tool_action,
+					 GDisplay       *gdisp);
+
+static void        time_smoother_add    (InkTool        *ink_tool,
+					 guint32         value);
+static gdouble     time_smoother_result (InkTool        *ink_tool);
+static void        time_smoother_init   (InkTool        *ink_tool,
+					 guint32         initval);
+static void        dist_smoother_add    (InkTool        *ink_tool,
+					 gdouble         value);
+static gdouble     dist_smoother_result (InkTool        *ink_tool);
+static void        dist_smoother_init   (InkTool        *ink_tool,
+					 gdouble         initval);
+
+static void        ink_init             (InkTool        *ink_tool, 
+					 GimpDrawable   *drawable, 
+					 gdouble         x, 
+					 gdouble         y);
+static void        ink_finish           (InkTool        *ink_tool, 
+					 GimpDrawable   *drawable, 
+					 gint            tool_id);
+static void        ink_cleanup          (void);
+
+static void        ink_type_update      (GtkWidget      *radio_button,
+					 BlobFunc        function);
+static GdkPixmap * blob_pixmap          (GdkColormap    *colormap,
+					 GdkVisual      *visual,
+					 BlobFunc        function);
+static void        paint_blob           (GdkDrawable    *drawable, 
+					 GdkGC          *gc,
+					 Blob           *blob);
+
+/*  Rendering functions  */
+static void        ink_set_paint_area   (InkTool        *ink_tool, 
+					 GimpDrawable   *drawable, 
+					 Blob           *blob);
+static void        ink_paste            (InkTool        *ink_tool, 
+					 GimpDrawable   *drawable,
+					 Blob           *blob);
+
+static void        ink_to_canvas_tiles  (InkTool        *ink_tool,
+					 Blob           *blob,
+					 guchar         *color);
+
+static void        ink_set_undo_tiles   (GimpDrawable   *drawable,
+					 gint            x, 
+					 gint            y,
+					 gint            w, 
+					 gint            h);
+static void        ink_set_canvas_tiles (gint            x, 
+					 gint            y,
+					 gint            w, 
+					 gint            h);
+
+/*  Brush pseudo-widget callbacks  */
+static void   brush_widget_active_rect    (BrushWidget    *brush_widget,
+					   GtkWidget      *widget,
+					   GdkRectangle   *rect);
+static void   brush_widget_realize        (GtkWidget      *widget);
+static void   brush_widget_expose         (GtkWidget      *widget,
+					   GdkEventExpose *event,
+					   BrushWidget    *brush_widget);
+static void   brush_widget_button_press   (GtkWidget      *widget,
+					   GdkEventButton *event,
+					   BrushWidget    *brush_widget);
+static void   brush_widget_button_release (GtkWidget      *widget,
+					   GdkEventButton *event,
+					   BrushWidget    *brush_widget);
+static void   brush_widget_motion_notify  (GtkWidget      *widget,
+					   GdkEventMotion *event,
+					   BrushWidget    *brush_widget);
+
 
 /* local variables */
 
+/* the ink tool options  */
+static InkOptions *ink_options = NULL;
+
 /*  undo blocks variables  */
-static TileManager *  undo_tiles = NULL;
+static TileManager *undo_tiles = NULL;
 
 /* Tiles used to render the stroke at 1 byte/pp */
-static TileManager *  canvas_tiles = NULL;
+static TileManager *canvas_tiles = NULL;
 
 /* Flat buffer that is used to used to render the dirty region
  * for composition onto the destination drawable
  */
-static TempBuf *  canvas_buf = NULL;
-
-
-/*  local function prototypes  */
-
-static void   ink_button_press   (Tool *, GdkEventButton *, gpointer);
-static void   ink_button_release (Tool *, GdkEventButton *, gpointer);
-static void   ink_motion         (Tool *, GdkEventMotion *, gpointer);
-static void   ink_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void   ink_control        (Tool *, ToolAction,       gpointer);
-
-static void    time_smoother_add    (InkTool* ink_tool, guint32 value);
-static gdouble time_smoother_result (InkTool* ink_tool);
-static void    time_smoother_init   (InkTool* ink_tool, guint32 initval);
-static void    dist_smoother_add    (InkTool* ink_tool, gdouble value);
-static gdouble dist_smoother_result (InkTool* ink_tool);
-static void    dist_smoother_init   (InkTool* ink_tool, gdouble initval);
-
-static void ink_init   (InkTool      *ink_tool, 
-			GimpDrawable *drawable, 
-			double        x, 
-			double        y);
-static void ink_finish (InkTool      *ink_tool, 
-			GimpDrawable *drawable, 
-			int           tool_id);
-static void ink_cleanup (void);
-
-static void ink_type_update               (GtkWidget      *radio_button,
-                                           BlobFunc        function);
-static GdkPixmap *blob_pixmap (GdkColormap *colormap,
-			       GdkVisual   *visual,
-			       BlobFunc     function);
-static void paint_blob (GdkDrawable  *drawable, 
-			GdkGC        *gc,
-			Blob         *blob);
-
-/*  Rendering functions  */
-static void ink_set_paint_area  (InkTool      *ink_tool, 
-				 GimpDrawable *drawable, 
-				 Blob         *blob);
-static void ink_paste           (InkTool      *ink_tool, 
-				 GimpDrawable *drawable,
-				 Blob         *blob);
-
-static void ink_to_canvas_tiles (InkTool      *ink_tool,
-				 Blob         *blob,
-				 guchar       *color);
-
-static void ink_set_undo_tiles  (GimpDrawable *drawable,
-				 int           x, 
-				 int           y,
-				 int           w, 
-				 int           h);
-static void ink_set_canvas_tiles(int           x, 
-				 int           y,
-				 int           w, 
-				 int           h);
-
-/*  Brush pseudo-widget callbacks  */
-static void brush_widget_active_rect      (BrushWidget    *brush_widget,
-					   GtkWidget      *w, 
-					   GdkRectangle   *rect);
-static void brush_widget_realize          (GtkWidget      *w);
-static void brush_widget_expose           (GtkWidget      *w, 
-					   GdkEventExpose *event,
-					   BrushWidget    *brush_widget);
-static void brush_widget_button_press     (GtkWidget      *w, 
-					   GdkEventButton *event,
-					   BrushWidget    *brush_widget);
-static void brush_widget_button_release   (GtkWidget      *w,  
-					   GdkEventButton *event,
-					   BrushWidget    *brush_widget);
-static void brush_widget_motion_notify    (GtkWidget      *w, 
-					   GdkEventMotion *event,
-					   BrushWidget    *brush_widget);
+static TempBuf *canvas_buf = NULL;
 
 
 /*  functions  */
@@ -798,15 +818,13 @@ ink_pen_ellipse (gdouble x_center, gdouble y_center,
 static void
 ink_button_press (Tool           *tool,
 		  GdkEventButton *bevent,
-		  gpointer        gdisp_ptr)
+		  GDisplay       *gdisp)
 {
   gdouble       x, y;
-  GDisplay     *gdisp;
   InkTool      *ink_tool;
   GimpDrawable *drawable;
   Blob         *b;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   ink_tool = (InkTool *) tool->private;
 
   /*  Keep the coordinates of the target  */
@@ -816,8 +834,8 @@ ink_button_press (Tool           *tool,
 
   ink_init (ink_tool, drawable, x, y);
 
-  tool->state = ACTIVE;
-  tool->gdisp_ptr = gdisp_ptr;
+  tool->state        = ACTIVE;
+  tool->gdisp        = gdisp;
   tool->paused_count = 0;
 
   /*  pause the current selection and grab the pointer  */
@@ -834,7 +852,7 @@ ink_button_press (Tool           *tool,
 		      GDK_BUTTON_RELEASE_MASK,
 		      NULL, NULL, bevent->time);
   
-  tool->gdisp_ptr = gdisp_ptr;
+  tool->gdisp = gdisp;
   tool->state = ACTIVE;
 
   b = ink_pen_ellipse (x, y, 
@@ -856,14 +874,12 @@ ink_button_press (Tool           *tool,
 static void
 ink_button_release (Tool           *tool,
 		    GdkEventButton *bevent,
-		    gpointer        gdisp_ptr)
+		    GDisplay       *gdisp)
 {
-  GDisplay * gdisp;
-  GImage * gimage;
-  InkTool * ink_tool;
+  GImage  *gimage;
+  InkTool *ink_tool;
 
-  gdisp = (GDisplay *) gdisp_ptr;
-  gimage = gdisp->gimage;
+  gimage   = gdisp->gimage;
   ink_tool = (InkTool *) tool->private;
 
   /*  resume the current selection and ungrab the pointer  */
@@ -965,21 +981,18 @@ time_smoother_add (InkTool* ink_tool, guint32 value)
 static void
 ink_motion (Tool           *tool,
 	    GdkEventMotion *mevent,
-	    gpointer        gdisp_ptr)
+	    GDisplay       *gdisp)
 {
-  GDisplay *gdisp;
-  InkTool  *ink_tool;
+  InkTool      *ink_tool;
   GimpDrawable *drawable;
-  Blob *b, *blob_union;
+  Blob         *b, *blob_union;
 
-  double x, y;
-  double pressure;
-  double velocity;
-  double dist;
+  gdouble x, y;
+  gdouble pressure;
+  gdouble velocity;
+  gdouble dist;
   gdouble lasttime, thistime;
   
-
-  gdisp = (GDisplay *) gdisp_ptr;
   ink_tool = (InkTool *) tool->private;
 
   gdisplay_untransform_coords_f (gdisp, mevent->x, mevent->y, &x, &y, TRUE);
@@ -1034,14 +1047,11 @@ ink_motion (Tool           *tool,
 static void
 ink_cursor_update (Tool           *tool,
 		   GdkEventMotion *mevent,
-		   gpointer        gdisp_ptr)
+		   GDisplay       *gdisp)
 {
-  GDisplay *gdisp;
-  Layer *layer;
-  GdkCursorType ctype = GDK_TOP_LEFT_ARROW;
-  int x, y;
-
-  gdisp = (GDisplay *) gdisp_ptr;
+  Layer         *layer;
+  GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;
+  gint           x, y;
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
@@ -1073,7 +1083,7 @@ ink_cursor_update (Tool           *tool,
 static void
 ink_control (Tool       *tool,
 	     ToolAction  action,
-	     gpointer    gdisp_ptr)
+	     GDisplay   *gdisp)
 {
   InkTool *ink_tool;
 
@@ -1099,8 +1109,10 @@ ink_control (Tool       *tool,
 }
 
 static void
-ink_init (InkTool *ink_tool, GimpDrawable *drawable, 
-	  double x, double y)
+ink_init (InkTool      *ink_tool,
+	  GimpDrawable *drawable, 
+	  gdouble       x,
+	  gdouble       y)
 {
   /*  free the block structures  */
   if (undo_tiles)
@@ -1123,7 +1135,9 @@ ink_init (InkTool *ink_tool, GimpDrawable *drawable,
 }
 
 static void
-ink_finish (InkTool *ink_tool, GimpDrawable *drawable, int tool_id)
+ink_finish (InkTool      *ink_tool,
+	    GimpDrawable *drawable,
+	    gint          tool_id)
 {
   /*  push an undo  */
   drawable_apply_image (drawable, ink_tool->x1, ink_tool->y1,
@@ -1178,9 +1192,9 @@ ink_set_paint_area (InkTool      *ink_tool,
 		    GimpDrawable *drawable, 
 		    Blob         *blob)
 {
-  int x, y, width, height;
-  int x1, y1, x2, y2;
-  int bytes;
+  gint x, y, width, height;
+  gint x1, y1, x2, y2;
+  gint bytes;
   
   blob_bounds (blob, &x, &y, &width, &height);
 
@@ -1203,10 +1217,12 @@ enum { ROW_START, ROW_STOP };
 /* The insertion sort here, for SUBSAMPLE = 8, tends to beat out
  * qsort() by 4x with CFLAGS=-O2, 2x with CFLAGS=-g
  */
-static void insert_sort (int *data, int n)
+static void
+insert_sort (gint *data,
+	     gint  n)
 {
-  int i, j, k;
-  int tmp1, tmp2;
+  gint i, j, k;
+  gint tmp1, tmp2;
 
   for (i=2; i<2*n; i+=2)
     {
@@ -1230,7 +1246,7 @@ static void insert_sort (int *data, int n)
 static void
 fill_run (guchar *dest,
 	  guchar  alpha,
-	  int     w)
+	  gint    w)
 {
   if (alpha == 255)
     {
@@ -1247,17 +1263,20 @@ fill_run (guchar *dest,
 }
 
 static void
-render_blob_line (Blob *blob, guchar *dest,
-		  int x, int y, int width)
+render_blob_line (Blob   *blob,
+		  guchar *dest,
+		  gint    x,
+		  gint    y,
+		  gint    width)
 {
-  int buf[4*SUBSAMPLE];
-  int *data = buf;
-  int n = 0;
-  int i, j;
-  int current = 0;		/* number of filled rows at this point
-				 * in the scan line */
-
-  int last_x;
+  gint  buf[4*SUBSAMPLE];
+  gint *data = buf;
+  gint  n = 0;
+  gint  i, j;
+  gint  current = 0;  /* number of filled rows at this point
+		       * in the scan line
+		       */
+  gint last_x;
 
   /* Sort start and ends for all lines */
   
@@ -1309,8 +1328,8 @@ render_blob_line (Blob *blob, guchar *dest,
   last_x = 0;
   for (i=0; i<n;)
     {
-      int cur_x = data[2*i] / SUBSAMPLE - x;
-      int pixel;
+      gint cur_x = data[2*i] / SUBSAMPLE - x;
+      gint pixel;
 
       /* Fill in portion leading up to this pixel */
       if (current && cur_x != last_x)
@@ -1339,7 +1358,7 @@ render_blob_line (Blob *blob, guchar *dest,
 	  i++;
 	}
 
-      dest[cur_x] = MAX(dest[cur_x], (pixel * 255) / (SUBSAMPLE * SUBSAMPLE));
+      dest[cur_x] = MAX (dest[cur_x], (pixel * 255) / (SUBSAMPLE * SUBSAMPLE));
 
       last_x = cur_x + 1;
     }
@@ -1349,12 +1368,13 @@ render_blob_line (Blob *blob, guchar *dest,
 }
 
 static void
-render_blob (PixelRegion *dest, Blob *blob)
+render_blob (PixelRegion *dest,
+	     Blob        *blob)
 {
-  int i;
-  int h;
-  unsigned char * s;
-  void * pr;
+  gint      i;
+  gint      h;
+  guchar   *s;
+  gpointer  pr;
 
   for (pr = pixel_regions_register (1, dest); 
        pr != NULL; 
@@ -1377,10 +1397,10 @@ ink_paste (InkTool      *ink_tool,
 	   GimpDrawable *drawable,
 	   Blob         *blob)
 {
-  GImage *gimage;
-  PixelRegion srcPR;
-  int offx, offy;
-  unsigned char col[MAX_CHANNELS];
+  GImage      *gimage;
+  PixelRegion  srcPR;
+  gint         offx, offy;
+  gchar        col[MAX_CHANNELS];
 
   if (! (gimage = drawable_gimage (drawable)))
     return;
@@ -1502,9 +1522,12 @@ ink_set_undo_tiles (GimpDrawable *drawable,
 
 
 static void
-ink_set_canvas_tiles (int x, int y, int w, int h)
+ink_set_canvas_tiles (gint x,
+		      gint y,
+		      gint w,
+		      gint h)
 {
-  int i, j;
+  gint  i, j;
   Tile *tile;
 
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
@@ -1537,8 +1560,8 @@ ink_no_draw (Tool *tool)
 Tool *
 tools_new_ink (void)
 {
-  Tool * tool;
-  InkTool * private;
+  Tool    *tool;
+  InkTool *private;
 
   /*  The tool options  */
   if (! ink_options)
@@ -1550,10 +1573,10 @@ tools_new_ink (void)
       ink_options_reset ();
     }
 
-  tool = tools_new_tool (INK);
+  tool    = tools_new_tool (INK);
   private = g_new0 (InkTool, 1);
 
-  private->core = draw_core_new (ink_no_draw);
+  private->core      = draw_core_new (ink_no_draw);
   private->last_blob = NULL;
 
   tool->private = private;
@@ -1570,7 +1593,7 @@ tools_new_ink (void)
 void
 tools_free_ink (Tool *tool)
 {
-  InkTool * ink_tool;
+  InkTool *ink_tool;
 
   ink_tool = (InkTool *) tool->private;
 

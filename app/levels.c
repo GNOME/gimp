@@ -46,6 +46,7 @@
 
 #include "libgimp/gimpintl.h"
 
+
 #define LOW_INPUT          0x1
 #define GAMMA              0x2
 #define HIGH_INPUT         0x4
@@ -71,6 +72,7 @@
 			GDK_BUTTON_RELEASE_MASK | \
 			GDK_BUTTON1_MOTION_MASK | \
 			GDK_POINTER_MOTION_HINT_MASK
+
 
 /*  the levels structures  */
 
@@ -121,6 +123,61 @@ struct _LevelsDialog
   GimpLut        *lut;
 };
 
+
+/*  levels action functions  */
+static void   levels_control                       (Tool          *tool,
+						    ToolAction     tool_action,
+						    GDisplay      *gdisp);
+
+static LevelsDialog * levels_dialog_new            (void);
+
+static void   levels_calculate_transfers           (LevelsDialog  *ld);
+static void   levels_update                        (LevelsDialog  *ld,
+						    gint           channel);
+static void   levels_preview                       (LevelsDialog  *ld);
+static void   levels_channel_callback              (GtkWidget     *widget,
+						    gpointer       data);
+static void   levels_reset_callback                (GtkWidget     *widget,
+						    gpointer       data);
+static void   levels_ok_callback                   (GtkWidget     *widget,
+						    gpointer       data);
+static void   levels_cancel_callback               (GtkWidget     *widget,
+						    gpointer       data);
+static void   levels_auto_callback                 (GtkWidget     *widget,
+						    gpointer       data);
+static void   levels_load_callback                 (GtkWidget     *widget,
+						    gpointer       data);
+static void   levels_save_callback                 (GtkWidget     *widget,
+						    gpointer       data);
+static void   levels_preview_update                (GtkWidget     *widget,
+						    gpointer       data);
+static void   levels_low_input_adjustment_update   (GtkAdjustment *adjustment,
+						    gpointer       data);
+static void   levels_gamma_adjustment_update       (GtkAdjustment *adjustment,
+						    gpointer       data);
+static void   levels_high_input_adjustment_update  (GtkAdjustment *adjustment,
+						    gpointer       data);
+static void   levels_low_output_adjustment_update  (GtkAdjustment *adjustment,
+						    gpointer       data);
+static void   levels_high_output_adjustment_update (GtkAdjustment *adjustment,
+						    gpointer       data);
+static gint   levels_input_da_events               (GtkWidget     *widget,
+						    GdkEvent      *event,
+						    LevelsDialog  *ld);
+static gint   levels_output_da_events              (GtkWidget     *widget,
+						    GdkEvent      *event,
+						    LevelsDialog  *ld);
+
+static void   file_dialog_create                   (GtkWidget     *widget);
+static void   file_dialog_ok_callback              (GtkWidget     *widget,
+						    gpointer       data);
+static void   file_dialog_cancel_callback          (GtkWidget     *widget,
+						    gpointer       data);
+
+static gboolean  levels_read_from_file             (FILE          *f);
+static void      levels_write_to_file              (FILE          *f);
+
+
 /*  the levels tool options  */
 static ToolOptions *levels_options = NULL;
 
@@ -133,46 +190,13 @@ static gboolean   load_save;
 
 static GtkWidget *color_option_items[5];
 
-/*  levels action functions  */
-static void   levels_control (Tool *, ToolAction, gpointer);
-
-static LevelsDialog * levels_dialog_new (void);
-
-static void   levels_calculate_transfers           (LevelsDialog *);
-static void   levels_update                        (LevelsDialog *, gint);
-static void   levels_preview                       (LevelsDialog *);
-static void   levels_channel_callback              (GtkWidget *, gpointer);
-static void   levels_reset_callback                (GtkWidget *, gpointer);
-static void   levels_ok_callback                   (GtkWidget *, gpointer);
-static void   levels_cancel_callback               (GtkWidget *, gpointer);
-static void   levels_auto_callback                 (GtkWidget *, gpointer);
-static void   levels_load_callback                 (GtkWidget *, gpointer);
-static void   levels_save_callback                 (GtkWidget *, gpointer);
-static void   levels_preview_update                (GtkWidget *, gpointer);
-static void   levels_low_input_adjustment_update   (GtkAdjustment *, gpointer);
-static void   levels_gamma_adjustment_update       (GtkAdjustment *, gpointer);
-static void   levels_high_input_adjustment_update  (GtkAdjustment *, gpointer);
-static void   levels_low_output_adjustment_update  (GtkAdjustment *, gpointer);
-static void   levels_high_output_adjustment_update (GtkAdjustment *, gpointer);
-static gint   levels_input_da_events               (GtkWidget *, GdkEvent *, 
-						    LevelsDialog *);
-static gint   levels_output_da_events              (GtkWidget *, GdkEvent *,
-						    LevelsDialog *);
-
-static void   file_dialog_create                   (GtkWidget *);
-static void   file_dialog_ok_callback              (GtkWidget *, gpointer);
-static void   file_dialog_cancel_callback          (GtkWidget *, gpointer);
-
-static gboolean  levels_read_from_file             (FILE *f);
-static void      levels_write_to_file              (FILE *f);
-
 
 /*  levels action functions  */
 
 static void
 levels_control (Tool       *tool,
 		ToolAction  action,
-		gpointer    gdisp_ptr)
+		GDisplay   *gdisp)
 {
   switch (action)
     {
@@ -1028,7 +1052,7 @@ levels_ok_callback (GtkWidget *widget,
 
   ld->image_map = NULL;
 
-  active_tool->gdisp_ptr = NULL;
+  active_tool->gdisp    = NULL;
   active_tool->drawable = NULL;
 }
 
@@ -1052,7 +1076,7 @@ levels_cancel_callback (GtkWidget *widget,
       ld->image_map = NULL;
     }
 
-  active_tool->gdisp_ptr = NULL;
+  active_tool->gdisp    = NULL;
   active_tool->drawable = NULL;
 }
 

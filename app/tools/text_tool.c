@@ -81,9 +81,9 @@ typedef struct _TextTool TextTool;
 
 struct _TextTool
 {
-  gint  click_x;
-  gint  click_y;
-  void *gdisp_ptr;
+  gint      click_x;
+  gint      click_y;
+  GDisplay *gdisp;
 };
 
 typedef struct _TextOptions TextOptions;
@@ -106,31 +106,45 @@ struct _TextOptions
 };
 
 
+static void   text_button_press           (Tool           *tool,
+					   GdkEventButton *bevent,
+					   GDisplay       *gdisp);
+static void   text_button_release         (Tool           *tool,
+					   GdkEventButton *bevent,
+					   GDisplay       *gdisp);
+static void   text_cursor_update          (Tool           *tool,
+					   GdkEventMotion *mevent,
+					   GDisplay       *gdisp);
+static void   text_control                (Tool           *tool,
+					   ToolAction      tool_action,
+					   GDisplay       *gdisp);
+
+static void   text_dialog_create          (void);
+static void   text_dialog_ok_callback     (GtkWidget      *widget,
+					   gpointer        data);
+static void   text_dialog_cancel_callback (GtkWidget      *widget,
+					   gpointer        data);
+static gint   text_dialog_delete_callback (GtkWidget      *widget,
+					   GdkEvent       *event,
+					   gpointer        data);
+
+static void   text_init_render            (TextTool      *text_tool);
+static void   text_gdk_image_to_region    (GdkImage      *image,
+					   gint           ,
+					   PixelRegion   *);
+static void   text_size_multiply          (gchar        **fontname,
+					   gint           size);
+static void   text_set_resolution         (gchar        **fontname,
+					   gdouble        xres,
+					   gdouble        yres);
+
+
 /*  the text tool options  */
 static TextOptions *text_options = NULL;
 
 /*  local variables  */
 static TextTool  *the_text_tool   = NULL;
 static GtkWidget *text_tool_shell = NULL;
-
-
-static void   text_button_press   (Tool *, GdkEventButton *, gpointer);
-static void   text_button_release (Tool *, GdkEventButton *, gpointer);
-static void   text_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void   text_control        (Tool *, ToolAction,       gpointer);
-
-static void   text_dialog_create          (void);
-static void   text_dialog_ok_callback     (GtkWidget *, gpointer);
-static void   text_dialog_cancel_callback (GtkWidget *, gpointer);
-static gint   text_dialog_delete_callback (GtkWidget *, GdkEvent *, gpointer);
-
-static void   text_init_render         (TextTool *);
-static void   text_gdk_image_to_region (GdkImage *, gint, PixelRegion *);
-static void   text_size_multiply       (gchar **fontname, gint);
-static void   text_set_resolution      (gchar **fontname, gdouble, gdouble);
-
-/*  Layer       * text_render (GImage *, GimpDrawable *, */
-/*  			   gint, gint, gchar *, gchar *, gint, gint); */
 
 
 /*  functions  */
@@ -304,19 +318,16 @@ text_call_gdyntext (GDisplay *gdisp)
 static void
 text_button_press (Tool           *tool,
 		   GdkEventButton *bevent,
-		   gpointer        gdisp_ptr)
+		   GDisplay       *gdisp)
 {
-  GDisplay *gdisp;
-  Layer *layer;
+  Layer    *layer;
   TextTool *text_tool;
 
-  gdisp = gdisp_ptr;
-
-  text_tool = tool->private;
-  text_tool->gdisp_ptr = gdisp_ptr;
+  text_tool        = tool->private;
+  text_tool->gdisp = gdisp;
 
   tool->state = ACTIVE;
-  tool->gdisp_ptr = gdisp_ptr;
+  tool->gdisp = gdisp;
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
 			       &text_tool->click_x, &text_tool->click_y,
@@ -328,7 +339,7 @@ text_button_press (Tool           *tool,
     /*  If there is a floating selection, and this aint it, use the move tool  */
     if (layer_is_floating_sel (layer))
       {
-	init_edit_selection (tool, gdisp_ptr, bevent, EDIT_LAYER_TRANSLATE);
+	init_edit_selection (tool, gdisp, bevent, EDIT_LAYER_TRANSLATE);
 	return;
       }
 
@@ -348,7 +359,7 @@ text_button_press (Tool           *tool,
 static void
 text_button_release (Tool           *tool,
 		     GdkEventButton *bevent,
-		     gpointer        gdisp_ptr)
+		     GDisplay       *gdisp)
 {
   tool->state = INACTIVE;
 }
@@ -356,13 +367,10 @@ text_button_release (Tool           *tool,
 static void
 text_cursor_update (Tool           *tool,
 		    GdkEventMotion *mevent,
-		    gpointer        gdisp_ptr)
+		    GDisplay       *gdisp)
 {
-  GDisplay *gdisp;
   Layer *layer;
-  gint x, y;
-
-  gdisp = (GDisplay *) gdisp_ptr;
+  gint   x, y;
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
@@ -387,7 +395,7 @@ text_cursor_update (Tool           *tool,
 static void
 text_control (Tool       *tool,
 	      ToolAction  action,
-	      gpointer    gdisp_ptr)
+	      GDisplay   *gdisp)
 {
   switch (action)
     {
@@ -467,16 +475,16 @@ static void
 text_init_render (TextTool *text_tool)
 {
   GDisplay *gdisp;
-  gchar *fontname;
-  gchar *text;
-  gboolean antialias = text_options->antialias;
+  gchar    *fontname;
+  gchar    *text;
+  gboolean  antialias = text_options->antialias;
 
   fontname = gtk_font_selection_dialog_get_font_name
     (GTK_FONT_SELECTION_DIALOG (text_tool_shell));
   if (!fontname)
     return;
 
-  gdisp = (GDisplay *) text_tool->gdisp_ptr;
+  gdisp = text_tool->gdisp;
 
   /* override the user's antialias setting if this is an indexed image */
   if (gimp_image_base_type (gdisp->gimage) == INDEXED)

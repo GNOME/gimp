@@ -77,6 +77,16 @@ struct _AirbrushOptions
 };
 
 
+/*  local function prototypes  */
+
+static gpointer   airbrush_paint_func         (PaintCore    *paint_core,
+					       GimpDrawable *drawable,
+					       PaintState    state);
+static gpointer   airbrush_non_gui_paint_func (PaintCore    *paint_core,
+					       GimpDrawable *drawable,
+					       PaintState    state);
+
+
 /*  the airbrush tool options  */
 static AirbrushOptions *airbrush_options = NULL; 
 
@@ -189,13 +199,13 @@ tools_new_airbrush (void)
   return tool;
 }
 
-void *
+static gpointer
 airbrush_paint_func (PaintCore    *paint_core,
 		     GimpDrawable *drawable,
-		     int           state)
+		     PaintState    state)
 {
   GimpBrush *brush;
-  gdouble rate;
+  gdouble    rate;
 
   if (!drawable) 
     return NULL;
@@ -357,10 +367,10 @@ airbrush_motion (PaintCore	      *paint_core,
 			   SOFT, scale, mode);
 }
 
-static void *
+static gpointer
 airbrush_non_gui_paint_func (PaintCore    *paint_core,
 			     GimpDrawable *drawable,
-			     int           state)
+			     PaintState    state)
 {
   airbrush_motion (paint_core, drawable, &non_gui_pressure_options, 
 		   non_gui_pressure, non_gui_incremental);
@@ -370,8 +380,8 @@ airbrush_non_gui_paint_func (PaintCore    *paint_core,
 
 gboolean
 airbrush_non_gui_default (GimpDrawable *drawable,
-			  int           num_strokes,
-			  double       *stroke_array)
+			  gint          num_strokes,
+			  gdouble      *stroke_array)
 {
   AirbrushOptions *options = airbrush_options;
   gdouble pressure = AIRBRUSH_PRESSURE_DEFAULT;
@@ -384,11 +394,11 @@ airbrush_non_gui_default (GimpDrawable *drawable,
 
 gboolean
 airbrush_non_gui (GimpDrawable *drawable,
-    		  double        pressure,
-		  int           num_strokes,
-		  double       *stroke_array)
+    		  gdouble       pressure,
+		  gint          num_strokes,
+		  gdouble      *stroke_array)
 {
-  int i;
+  gint i;
 
   if (paint_core_init (&non_gui_paint_core, drawable,
 		       stroke_array[0], stroke_array[1]))
@@ -419,8 +429,9 @@ airbrush_non_gui (GimpDrawable *drawable,
 
       /* Cleanup */
       paint_core_cleanup ();
+
       return TRUE;
     }
-  else
-    return FALSE;
+
+  return FALSE;
 }

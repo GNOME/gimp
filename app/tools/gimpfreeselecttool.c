@@ -51,6 +51,7 @@
 /*  the free selection structures  */
 
 typedef struct _FreeSelect FreeSelect;
+
 struct _FreeSelect
 {
   DrawCore  *core;      /*  Core select object                      */
@@ -64,6 +65,18 @@ struct _FreeSelect
   gint      num_pts;    /*  Number of points in the polygon         */
 };
 
+
+/*  local function prototypes  */
+
+static void   free_select_button_press   (Tool           *tool,
+					  GdkEventButton *bevent,
+					  GDisplay       *gdisp);
+static void   free_select_button_release (Tool           *tool,
+					  GdkEventButton *bevent,
+					  GDisplay       *gdisp);
+static void   free_select_motion         (Tool           *tool,
+					  GdkEventMotion *mevent,
+					  GDisplay       *gdisp);
 
 
 /*  the free selection tool options  */
@@ -157,15 +170,13 @@ free_select (GImage           *gimage,
     }
 }
 
-void
+static void
 free_select_button_press (Tool           *tool,
 			  GdkEventButton *bevent,
-			  gpointer        gdisp_ptr)
+			  GDisplay       *gdisp)
 {
-  GDisplay   *gdisp;
   FreeSelect *free_sel;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   free_sel = (FreeSelect *) tool->private;
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
@@ -175,15 +186,15 @@ free_select_button_press (Tool           *tool,
 		    NULL, NULL, bevent->time);
 
   tool->state = ACTIVE;
-  tool->gdisp_ptr = gdisp_ptr;
+  tool->gdisp = gdisp;
 
   switch (free_sel->op)
     {
     case SELECTION_MOVE_MASK:
-      init_edit_selection (tool, gdisp_ptr, bevent, EDIT_MASK_TRANSLATE);
+      init_edit_selection (tool, gdisp, bevent, EDIT_MASK_TRANSLATE);
       return;
     case SELECTION_MOVE:
-      init_edit_selection (tool, gdisp_ptr, bevent, EDIT_MASK_TO_LAYER_TRANSLATE);
+      init_edit_selection (tool, gdisp, bevent, EDIT_MASK_TO_LAYER_TRANSLATE);
       return;
     default:
       break;
@@ -197,17 +208,15 @@ free_select_button_press (Tool           *tool,
 		   tool);
 }
 
-void
+static void
 free_select_button_release (Tool           *tool,
 			    GdkEventButton *bevent,
-			    gpointer        gdisp_ptr)
+			    GDisplay       *gdisp)
 {
   FreeSelect       *free_sel;
   ScanConvertPoint *pts;
-  GDisplay         *gdisp;
   gint              i;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   free_sel = (FreeSelect *) tool->private;
 
   gdk_pointer_ungrab (bevent->time);
@@ -251,15 +260,13 @@ free_select_button_release (Tool           *tool,
     }
 }
 
-void
+static void
 free_select_motion (Tool           *tool,
 		    GdkEventMotion *mevent,
-		    gpointer        gdisp_ptr)
+		    GDisplay       *gdisp)
 {
   FreeSelect *free_sel;
-  GDisplay   *gdisp;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   free_sel = (FreeSelect *) tool->private;
 
   /*  needed for immediate cursor update on modifier event  */
@@ -273,7 +280,7 @@ free_select_motion (Tool           *tool,
     {
       free_sel->op = SELECTION_REPLACE;
 
-      rect_select_cursor_update (tool, mevent, gdisp_ptr);
+      rect_select_cursor_update (tool, mevent, gdisp);
     }
 
   if (add_point (free_sel->num_pts, mevent->x, mevent->y))
@@ -291,7 +298,7 @@ free_select_motion (Tool           *tool,
 static void
 free_select_control (Tool       *tool,
 		     ToolAction  action,
-		     gpointer    gdisp_ptr)
+		     GDisplay   *gdisp)
 {
   FreeSelect *free_sel;
 

@@ -155,7 +155,7 @@ path_curve_draw_segment (Tool *tool,
          numpts = path_curve_get_points (((PathTool *) tool->private), segment,
 				         coordinates, 100, 0, 1);
 	 for (index=0; index < numpts; index++) {
-	    gdisplay_transform_coords (tool->gdisp_ptr,
+	    gdisplay_transform_coords (tool->gdisp,
 		                       coordinates[index].x,
 				       coordinates[index].y,
 				       &x, &y, FALSE);

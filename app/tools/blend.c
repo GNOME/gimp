@@ -162,13 +162,24 @@ static guint blend_n_targets = (sizeof (blend_target_table) /
 
 /*  local function prototypes  */
 
-static void   gradient_type_callback    (GtkWidget *, gpointer);
+static void   gradient_type_callback    (GtkWidget      *widget,
+					 gpointer        data);
 
-static void   blend_button_press        (Tool *, GdkEventButton *, gpointer);
-static void   blend_button_release      (Tool *, GdkEventButton *, gpointer);
-static void   blend_motion              (Tool *, GdkEventMotion *, gpointer);
-static void   blend_cursor_update       (Tool *, GdkEventMotion *, gpointer);
-static void   blend_control             (Tool *, ToolAction,       gpointer);
+static void   blend_button_press        (Tool           *tool,
+					 GdkEventButton *bevent,
+					 GDisplay       *gdisp);
+static void   blend_button_release      (Tool           *tool,
+					 GdkEventButton *bevent,
+					 GDisplay       *gdisp);
+static void   blend_motion              (Tool           *tool,
+					 GdkEventMotion *mevent,
+					 GDisplay       *gdisp);
+static void   blend_cursor_update       (Tool           *tool,
+					 GdkEventMotion *mevent,
+					 GDisplay       *gdisp);
+static void   blend_control             (Tool           *tool,
+					 ToolAction      action,
+					 GDisplay       *gdisp);
 
 static void   blend_options_drop_gradient  (GtkWidget *, gradient_t *, gpointer);
 static void   blend_options_drop_tool      (GtkWidget *, ToolType,     gpointer);
@@ -432,12 +443,10 @@ blend_options_new (void)
 static void
 blend_button_press (Tool           *tool,
 		    GdkEventButton *bevent,
-		    gpointer        gdisp_ptr)
+		    GDisplay       *gdisp)
 {
-  GDisplay * gdisp;
-  BlendTool * blend_tool;
+  BlendTool *blend_tool;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   blend_tool = (BlendTool *) tool->private;
 
   switch (drawable_type (gimp_image_active_drawable (gdisp->gimage)))
@@ -463,7 +472,7 @@ blend_button_press (Tool           *tool,
 		    GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
 		    NULL, NULL, bevent->time);
 
-  tool->gdisp_ptr = gdisp_ptr;
+  tool->gdisp = gdisp;
   tool->state = ACTIVE;
 
   /* initialize the statusbar display */
@@ -477,19 +486,17 @@ blend_button_press (Tool           *tool,
 static void
 blend_button_release (Tool           *tool,
 		      GdkEventButton *bevent,
-		      gpointer        gdisp_ptr)
+		      GDisplay       *gdisp)
 {
-  GDisplay * gdisp;
-  GImage * gimage;
-  BlendTool * blend_tool;
+  GImage        *gimage;
+  BlendTool     *blend_tool;
 #ifdef BLEND_UI_CALLS_VIA_PDB
-  Argument *return_vals;
+  Argument      *return_vals;
   int nreturn_vals;
 #else
   gimp_progress *progress;
 #endif
 
-  gdisp = (GDisplay *) gdisp_ptr;
   gimage = gdisp->gimage;
   blend_tool = (BlendTool *) tool->private;
 
@@ -568,13 +575,11 @@ blend_button_release (Tool           *tool,
 static void
 blend_motion (Tool           *tool,
 	      GdkEventMotion *mevent,
-	      gpointer        gdisp_ptr)
+	      GDisplay       *gdisp)
 {
-  GDisplay * gdisp;
-  BlendTool * blend_tool;
-  gchar vector[STATUSBAR_SIZE];
+  BlendTool *blend_tool;
+  gchar      vector[STATUSBAR_SIZE];
 
-  gdisp = (GDisplay *) gdisp_ptr;
   blend_tool = (BlendTool *) tool->private;
 
   /*  undraw the current tool  */
@@ -642,12 +647,8 @@ blend_motion (Tool           *tool,
 static void
 blend_cursor_update (Tool           *tool,
 		     GdkEventMotion *mevent,
-		     gpointer        gdisp_ptr)
+		     GDisplay       *gdisp)
 {
-  GDisplay * gdisp;
-
-  gdisp = (GDisplay *) gdisp_ptr;
-
   switch (drawable_type (gimp_image_active_drawable (gdisp->gimage)))
     {
     case INDEXED_GIMAGE:
@@ -669,16 +670,16 @@ blend_cursor_update (Tool           *tool,
 static void
 blend_draw (Tool *tool)
 {
-  GDisplay * gdisp;
-  BlendTool * blend_tool;
-  int tx1, ty1, tx2, ty2;
+  BlendTool *blend_tool;
+  gint       tx1, ty1, tx2, ty2;
 
-  gdisp = (GDisplay *) tool->gdisp_ptr;
   blend_tool = (BlendTool *) tool->private;
 
-  gdisplay_transform_coords (gdisp, blend_tool->startx, blend_tool->starty,
+  gdisplay_transform_coords (tool->gdisp,
+			     blend_tool->startx, blend_tool->starty,
 			     &tx1, &ty1, 1);
-  gdisplay_transform_coords (gdisp, blend_tool->endx, blend_tool->endy,
+  gdisplay_transform_coords (tool->gdisp,
+			     blend_tool->endx, blend_tool->endy,
 			     &tx2, &ty2, 1);
 
   /*  Draw start target  */
@@ -705,7 +706,7 @@ blend_draw (Tool *tool)
 static void
 blend_control (Tool       *tool,
 	       ToolAction  action,
-	       gpointer    gdisp_ptr)
+	       GDisplay   *gdisp)
 {
   BlendTool * blend_tool;
 

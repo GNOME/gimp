@@ -48,6 +48,7 @@ struct _HistogramToolDialog
   gint             color;
 };
 
+
 /*  histogram_tool functions  */
 Tool * tools_new_histogram_tool       (void);
 void   tools_free_histogram_tool      (Tool            *tool);
