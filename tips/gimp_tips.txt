@@ -166,7 +166,7 @@ If your fonts turn out blocky, that's because they're not scalable
 fonts. Most X servers support scalable Type 1 Postscript fonts.  
 Download and install them.  Some font servers allow you to use 
 TrueType (.ttf) fonts, which are also scalable.
-  
+
 To create a perfect circle, hold Shift while doing an ellipse select. To
 place a circle precisely, drag horizontal and vertical guides tangent to
 the circle you want to select, place your cursor at the intersection

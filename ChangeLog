@@ -1,5 +1,10 @@
 2000-06-08  Sven Neumann  <sven@gimp.org>
 
+	* tips/gimp_tips.txt: somehow a few spaces sneaked in here
+	at the wrong place
+
+2000-06-08  Sven Neumann  <sven@gimp.org>
+
 	* app/eraser.c: as suggested by Daniel Egger, set 
 	TOOL_CAN_HANDLE_CHANGING_BRUSH for the eraser tool. 
 	Fixes bug #13172.
