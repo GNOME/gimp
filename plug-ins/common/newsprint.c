@@ -207,7 +207,7 @@ static spot_info_t spotfn_list[] =
 #define VALID_SPOTFN(x)	((x) >= 0 && (x) < NUM_SPOTFN)
 #define THRESH(x,y)	(thresh[(y)*width + (x)])
 #define THRESHn(n,x,y)	((thresh[n])[(y)*width + (x)])
-    
+
 
 /* Arguments to filter */
 
@@ -290,7 +290,7 @@ typedef struct
   GtkObject  *input_spi;
   GtkObject  *output_lpi;
   GtkObject  *cellsize;
-  GtkWidget  *vbox;            /* container for screen info */    
+  GtkWidget  *vbox;            /* container for screen info */
 
   /* Notebook for the channels (one per colorspace) */
   GtkWidget  *channel_notebook[NUM_CS];
@@ -726,7 +726,7 @@ new_preview (gint *sfn)
 }
 
 
-/* the popup menu "st" has changed, so the previews associated with it 
+/* the popup menu "st" has changed, so the previews associated with it
  * need re-calculation */
 static void
 preview_update (channel_st *st)
@@ -1016,7 +1016,7 @@ new_channel (const chan_tmpl *ct)
   GtkWidget   *menu;
   spot_info_t *sf;
   channel_st  *chst;
-  gint         i;    
+  gint         i;
 
   /* create the channel state record */
   chst = new_preview (ct->spotfn);
@@ -1046,7 +1046,7 @@ new_channel (const chan_tmpl *ct)
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (chst->vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-  
+
   abox = gtk_alignment_new (0.5, 0.0, 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
@@ -1071,7 +1071,7 @@ new_channel (const chan_tmpl *ct)
   while (sf->name)
     {
       chst->menuitem[i] = gtk_menu_item_new_with_label( gettext(sf->name));
-      gtk_menu_shell_append (GTK_MENU_SHELL (menu), 
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu),
                              GTK_WIDGET (chst->menuitem[i]));
       gtk_widget_show (chst->menuitem[i]);
 
@@ -1197,7 +1197,7 @@ newsprint_dialog (GimpDrawable *drawable)
   for(i=0; i<NUM_CS; i++)
     st.chst[i][0] = NULL;
 
-  /* need to know the bpp, so we can tell if we're doing 
+  /* need to know the bpp, so we can tell if we're doing
    * RGB/CMYK or grey style of dialog box */
   bpp = gimp_drawable_bpp (drawable->drawable_id);
   if (gimp_drawable_has_alpha (drawable->drawable_id))
@@ -1759,7 +1759,7 @@ newsprint (GimpDrawable *drawable)
   gdouble    r;
   gdouble    theta;
   gdouble    rot[4];
-  gdouble    k_pullout;
+  gint       k_pullout;
   gint       bpp, colour_bpp;
   gint       has_alpha;
   gint       b;
@@ -1777,7 +1777,7 @@ newsprint (GimpDrawable *drawable)
 
 #ifdef TIMINGS
   GTimer    *timer = g_timer_new ();
-#endif  
+#endif
 
   width = pvals.cell_width;
 
@@ -1787,7 +1787,7 @@ newsprint (GimpDrawable *drawable)
     width = 1;
 
   oversample = pvals.oversample;
-  k_pullout = ((gdouble) pvals.k_pullout) / 100.0;
+  k_pullout = (255 * pvals.k_pullout) / 100;
 
   width *= oversample;
 
@@ -1832,7 +1832,7 @@ do {								\
   /* calculate the RGB / CMYK rotations and threshold matrices */
   if (colour_bpp == 1 || colourspace == CS_INTENSITY)
     {
-      rot[0]    = DEG2RAD (pvals.gry_ang);	
+      rot[0]    = DEG2RAD (pvals.gry_ang);
       thresh[0] = spot2thresh (pvals.gry_spotfn, width);
     }
   else
@@ -1868,7 +1868,7 @@ do {								\
 	  gf = pvals.gry_spotfn;
 	  ASRT (gf);
 	  if (!spotfn_list[gf].thresh)
-	    spotfn_list[gf].thresh = spot2thresh (gf, width);	
+	    spotfn_list[gf].thresh = spot2thresh (gf, width);
 	  thresh[3] = spotfn_list[gf].thresh;
 	}
     }
@@ -1925,20 +1925,21 @@ do {								\
 		      switch (colourspace)
 			{
 			case CS_CMYK:
-			  data[3] = 0xff;
+                          {
+                            gint r,g,b,k;
 
-			  data[0] = 0xff - data[0];
-			  data[3] = MIN (data[3], data[0]);
-			  data[1] = 0xff - data[1];
-			  data[3] = MIN (data[3], data[1]);
-			  data[2] = 0xff - data[2];
-			  data[3] = MIN (data[3], data[2]);
+                            r = data[0];
+                            g = data[1];
+                            b = data[2];
+                            k = k_pullout;
 
-			  data[3] = ((gdouble)data[3]) * k_pullout;
+                            gimp_rgb_to_cmyk_int (&r, &g, &b, &k);
 
-			  data[0] -= data[3];
-			  data[1] -= data[3];
-			  data[2] -= data[3];
+                            data[0] = r;
+                            data[1] = g;
+                            data[2] = b;
+                            data[3] = k;
+                          }
 			  break;
 
 			case CS_INTENSITY:
@@ -1949,7 +1950,7 @@ do {								\
 			default:
 			  break;
 			}
-			
+
 		      for (b = 0; b < cspace_nchans[colourspace]; b++)
 			{
 			  rx = RINT (r * cos (theta + rot[b]));

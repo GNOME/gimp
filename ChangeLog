@@ -1,5 +1,13 @@
 2003-09-02  Sven Neumann  <sven@gimp.org>
 
+	* libgimpcolor/gimpcolorspace.c (gimp_rgb_to_cmyk_int): allow to
+	specify the amount of black pullout. Documented the function.
+
+	* plug-ins/common/newsprint.c: use the RGB to CMYK routine from
+	libgimpcolor.
+
+2003-09-02  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpdrawtool.[ch]: added new function
 	gimp_draw_tool_draw_dashed_line().
 
