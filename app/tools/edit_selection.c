@@ -447,8 +447,16 @@ edit_selection_draw (Tool *tool)
   gdisp = (GDisplay *) tool->gdisp_ptr;
   select = gdisp->select;
 
-  diff_x = 0; /*SCALEX (gdisp, (edit_select.x - edit_select.origx));*/
-  diff_y = 0; /*SCALEY (gdisp, (edit_select.y - edit_select.origy));*/
+  if (edit_select.edit_type == FloatingSelTranslate)
+    {
+      diff_x = SCALEX (gdisp, edit_select.cumlx);
+      diff_y = SCALEY (gdisp, edit_select.cumly);
+    }
+  else
+    {
+      diff_x = 0;
+      diff_y = 0; 
+    }
 
   switch (edit_select.edit_type)
     {
