@@ -22,12 +22,14 @@ xgettext --default-domain=$PACKAGE --directory=.. \
 	../plug-ins/script-fu/scripts/*.scm \
         ../plug-ins/gap/sel-to-anim-img.scm \
         ../plug-ins/webbrowser/web-browser.scm \
-        >> gimp-script-fu.po \
+        >> $PACKAGE..po \
 && test ! -f $PACKAGE.po \
    || ( rm -f ./$PACKAGE.pot \
 && mv $PACKAGE.po ./$PACKAGE.pot );
 
 else
+
+echo "Building the $PACKAGE.pot ..."
 
 xgettext --default-domain=$PACKAGE --directory=.. \
   --add-comments --keyword=_ --keyword=N_ \
@@ -36,12 +38,11 @@ xgettext --default-domain=$PACKAGE --directory=.. \
 	../plug-ins/script-fu/scripts/*.scm \
         ../plug-ins/gap/sel-to-anim-img.scm \
         ../plug-ins/webbrowser/web-browser.scm \
-        >> gimp-script-fu.po \
+        >> $PACKAGE.po \
 && test ! -f $PACKAGE.po \
    || ( rm -f ./$PACKAGE.pot \
 && mv $PACKAGE.po ./$PACKAGE.pot );
 
-echo "Building the $PACKAGE.pot ..."
 echo "Now merging $1.po with $PACKAGE.pot, and creating an updated $1.po ..." 
 
 mv $1.po $1.po.old && msgmerge $1.po.old $PACKAGE.pot -o $1.po \

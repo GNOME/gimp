@@ -1,5 +1,6 @@
 Makefile
 Makefile.in
+makefile.mingw
 .deps
 .libs
 gimp
