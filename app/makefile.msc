@@ -28,7 +28,7 @@ CC = cl -GA -G5 -GF $(OPTIMIZE) -W3 -nologo
 LDFLAGS = /link /subsystem:console /machine:ix86 $(LINKDEBUG)
 INSTALL = copy
 
-GIMP_VER = 1.1
+GIMP_VER = 1.2
 GTK_VER = 1.3
 GLIB_VER = 1.3
 
@@ -132,8 +132,6 @@ gimp_OBJECTS = \
 	fuzzy_select.obj	\
 	gdisplay.obj		\
 	gdisplay_cmds.obj	\
-	gdisplay_color.obj	\
-	gdisplay_color_ui.obj	\
 	gdisplay_ops.obj	\
 	general.obj		\
 	gimage.obj		\

@@ -33,7 +33,6 @@
 #include "draw_core.h"
 #include "gdisplay.h"
 #include "gdisplayP.h"
-#include "gdisplay_color.h"
 #include "gdisplay_ops.h"
 #include "gimage_mask.h"
 #include "gimpcontext.h"
@@ -51,6 +50,10 @@
 #include "scroll.h"
 #include "tools.h"
 #include "undo.h"
+
+#ifdef DISPLAY_FILTERS
+#include "gdisplay_color.h"
+#endif /* DISPLAY_FILTERS */
 
 #include "bezier_selectP.h"
 #include "layer_pvt.h"			/* ick. (not alone either) */
@@ -139,8 +142,10 @@ gdisplay_new (GimpImage *gimage,
   gdisp->idle_render.update_areas = NULL;
   gdisp->idle_render.active       = FALSE;
 
+#ifdef DISPLAY_FILTERS
   gdisp->cd_list = NULL;
   gdisp->cd_ui   = NULL;
+#endif /* DISPLAY_FILTERS */
 
   gdisp->warning_dialog = NULL;
 
@@ -355,8 +360,10 @@ gdisplay_delete (GDisplay *gdisp)
       gdisp->idle_render.active = FALSE;
     }
 
+#ifdef DISPLAY_FILTERS
   /* detach any color displays */
   gdisplay_color_detach_all (gdisp);
+#endif /* DISPLAY_FILTERS */
 
   /* get rid of signals handled by this display */
   gtk_signal_disconnect_by_data (GTK_OBJECT (gdisp->gimage), gdisp);
@@ -1270,9 +1277,11 @@ gdisplay_display_area (GDisplay *gdisp,
   gint x2, y2;
   gint dx, dy;
   gint i, j;
-  GList *list;
   guchar *buf;
   gint bpp, bpl;
+#ifdef DISPLAY_FILTERS
+  GList *list;
+#endif /* DISPLAY_FILTERS */
 
   buf = gximage_get_data ();
   bpp = gximage_get_bpp ();
@@ -1355,6 +1364,7 @@ gdisplay_display_area (GDisplay *gdisp,
 					      0, 0, 0, 0);
 #endif
 
+#ifdef DISPLAY_FILTERS
 	list = gdisp->cd_list;
 	while (list)
 	  {
@@ -1362,6 +1372,7 @@ gdisplay_display_area (GDisplay *gdisp,
 	    node->cd_convert (node->cd_ID, buf, dx, dy, bpp, bpl);
 	    list = list->next;
 	  }
+#endif /* DISPLAY_FILTERS */
 
 	gximage_put (gdisp->canvas->window,
 		     j, i, dx, dy,

@@ -150,8 +150,10 @@ static GimpItemFactoryEntry toolbox_entries[] =
     "file/dialogs/document_index.html", NULL },
   { { N_("/File/Dialogs/Error Console..."), NULL, dialogs_error_console_cmd_callback, 0 },
     "file/dialogs/error_console.html", NULL },
+#ifdef DISPLAY_FILTERS
   { { N_("/File/Dialogs/Display Filters..."), NULL, dialogs_display_filters_cmd_callback, 0 },
     "file/dialogs/display_filters/display_filters.html", NULL },
+#endif /* DISPLAY_FILTERS */
 
   { { "/File/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
@@ -512,8 +514,10 @@ static GimpItemFactoryEntry image_entries[] =
     "dialogs/document_index.html", NULL },
   { { N_("/Dialogs/Error Console..."), NULL, dialogs_error_console_cmd_callback, 0 },
     "dialogs/error_console.html", NULL },
+#ifdef DISPLAY_FILTERS
   { { N_("/Dialogs/Display Filters..."), NULL, dialogs_display_filters_cmd_callback, 0 },
     "dialogs/display_filters/display_filters.html", NULL },
+#endif /* DISPLAY_FILTERS */
   { { N_("/Dialogs/Undo History..."), NULL, dialogs_undo_history_cmd_callback, 0},
     "dialogs/undo_history.html", NULL },
 

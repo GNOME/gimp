@@ -161,10 +161,6 @@ gimp_SOURCES = \
 	gdisplay.h		\
 	gdisplayP.h		\
 	gdisplayF.h		\
-	gdisplay_color.c	\
-	gdisplay_color.h	\
-	gdisplay_color_ui.c	\
-	gdisplay_color_ui.h	\
 	gdisplay_ops.c		\
 	gdisplay_ops.h		\
 	general.c		\

@@ -159,8 +159,10 @@ struct _GDisplay
   
   IdleRenderStruct idle_render;   /* state of this gdisplay's render thread   */
   
+#ifdef DISPLAY_FILTERS
   GList     *cd_list;             /* color display conversion stuff           */
   GtkWidget *cd_ui;		  /* color display filter dialog              */
+#endif /* DISPLAY_FILTERS */
 
   GtkWidget *warning_dialog;      /* "Changes were made to %s. Close anyway?" */
 };

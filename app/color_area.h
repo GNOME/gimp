@@ -29,7 +29,10 @@
  *  Global variables
  */
 extern gint      active_color;     /* foreground (= 0) or background (= 1) */
+
+#ifdef DISPLAY_FILTERS
 extern GDisplay *color_area_gdisp; /* hack for color displays */
+#endif /* DISPLAY_FILTERS */
 
 /*
  *  Functions

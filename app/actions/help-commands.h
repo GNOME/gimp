@@ -124,7 +124,6 @@ void dialogs_input_devices_cmd_callback   (GtkWidget *, gpointer);
 void dialogs_device_status_cmd_callback   (GtkWidget *, gpointer);
 void dialogs_document_index_cmd_callback  (GtkWidget *, gpointer);
 void dialogs_error_console_cmd_callback   (GtkWidget *, gpointer);
-void dialogs_display_filters_cmd_callback (GtkWidget *, gpointer);
 void dialogs_undo_history_cmd_callback    (GtkWidget *, gpointer);
 
 void dialogs_module_browser_cmd_callback  (GtkWidget *, gpointer);
@@ -133,5 +132,9 @@ void help_help_cmd_callback         (GtkWidget *, gpointer);
 void help_context_help_cmd_callback (GtkWidget *, gpointer);
 void help_tips_cmd_callback         (GtkWidget *, gpointer);
 void help_about_cmd_callback        (GtkWidget *, gpointer);
+
+#ifdef DISPLAY_FILTERS
+void dialogs_display_filters_cmd_callback (GtkWidget *, gpointer);
+#endif /* DISPLAY_FILTERS */
 
 #endif /* __COMMANDS_H__ */

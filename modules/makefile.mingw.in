@@ -25,9 +25,7 @@ LDFLAGS = -s
 MODULES =					\
 	colorsel_gtk-$(GIMP_VER).dll		\
 	colorsel_triangle-$(GIMP_VER).dll	\
-	colorsel_water-$(GIMP_VER).dll		\
-	cdisplay_gamma-$(GIMP_VER).dll		\
-	cdisplay_highcontrast-$(GIMP_VER).dll
+	colorsel_water-$(GIMP_VER).dll
 
 all : \
 	$(MODULES)
@@ -47,11 +45,11 @@ colorsel_triangle-$(GIMP_VER).dll : colorsel_triangle.o module.def
 colorsel_water-$(GIMP_VER).dll : colorsel_water.o module.def
 	$(GLIB)/build-dll colorsel_water $(GIMP_VER) module.def colorsel_water.o $(LDFLAGS) -L ../app -lgimp $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS)
 
-cdisplay_gamma-$(GIMP_VER).dll : cdisplay_gamma.o module.def
-	$(GLIB)/build-dll cdisplay_gamma $(GIMP_VER) module.def cdisplay_gamma.o $(LDFLAGS) -L ../app -lgimp -L ../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS)
+## cdisplay_gamma-$(GIMP_VER).dll : cdisplay_gamma.o module.def
+## 	$(GLIB)/build-dll cdisplay_gamma $(GIMP_VER) module.def cdisplay_gamma.o $(LDFLAGS) -L ../app -lgimp -L ../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS)
 
-cdisplay_highcontrast-$(GIMP_VER).dll : cdisplay_highcontrast.o module.def
-	$(GLIB)/build-dll cdisplay_highcontrast $(GIMP_VER) module.def cdisplay_highcontrast.o $(LDFLAGS) -L ../app -lgimp -L ../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS)
+## cdisplay_highcontrast-$(GIMP_VER).dll : cdisplay_highcontrast.o module.def
+## 	$(GLIB)/build-dll cdisplay_highcontrast $(GIMP_VER) module.def cdisplay_highcontrast.o $(LDFLAGS) -L ../app -lgimp -L ../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS)
 
 # Hack to get an updated makefile.mingw automatically after updating
 # makefile.mingw.in. Only for developer use.

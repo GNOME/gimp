@@ -1,3 +1,16 @@
+Sun Dec 24 12:24:01 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* app/Makefile.am
+	* app/app_procs.c
+	* app/color_area.[ch]
+	* app/commands.[ch]
+	* app/gdisplay.[ch]
+	* app/makefile.mingw.in
+	* app/menus.c
+	* modules/Makefile.am
+	* modules/makefile.mingw.in: disabled display filters code, since
+	it is unfinished
+
 2000-12-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/color_cmds.c

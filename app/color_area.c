@@ -30,10 +30,12 @@
 #include "color_area.h"
 #include "color_notebook.h"
 #include "gdisplay.h"
-#include "gdisplay_color.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 
+#ifdef DISPLAY_FILTERS
+#include "gdisplay_color.h"
+#endif /* DISPLAY_FILTERS */
 
 typedef enum
 {
@@ -138,7 +140,9 @@ color_area_draw_rect (GdkDrawable *drawable,
   static gint    rowstride;
   gint    xx, yy;
   guchar *bp;
+#ifdef DISPLAY_FILTERS
   GList  *list;
+#endif /* DISPLAY_FILTERS */
 
   rowstride = 3 * ((width + 3) & -4);
 
@@ -160,12 +164,14 @@ color_area_draw_rect (GdkDrawable *drawable,
 
   bp = color_area_rgb_buf;
 
+#ifdef DISPLAY_FILTERS
   for (list = color_area_gdisp->cd_list; list; list = g_list_next (list))
     {
       ColorDisplayNode *node = (ColorDisplayNode *) list->data;
 
       node->cd_convert (node->cd_ID, bp, width, 1, 3, rowstride);
     }
+#endif /* DISPLAY_FILTERS */
 
   for (yy = 1; yy < height; yy++)
     {
@@ -511,12 +517,14 @@ color_area_create (gint       width,
 		      GTK_SIGNAL_FUNC (color_area_color_changed),
 		      color_area);
 
+#ifdef DISPLAY_FILTERS
   /* display filter dummy gdisplay */
   color_area_gdisp = g_new (GDisplay, 1);
   color_area_gdisp->cd_list = NULL;
   color_area_gdisp->cd_ui   = NULL;
   color_area_gdisp->gimage = g_new (GimpImage, 1);
   color_area_gdisp->gimage->base_type = RGB;
+#endif /* DISPLAY_FILTERS */
 
   return color_area;
 }

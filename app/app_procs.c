@@ -55,7 +55,6 @@
 #include "errorconsole.h"
 #include "fileops.h"
 #include "gdisplay.h"
-#include "gdisplay_color.h"
 #include "gdisplay_ops.h"
 #include "gimpbrushlist.h"
 #include "gimprc.h"
@@ -91,6 +90,10 @@
 #include "errors.h"
 #include "docindex.h"
 #include "colormap_dialog.h"
+
+#ifdef DISPLAY_FILTERS
+#include "gdisplay_color.h"
+#endif /* DISPLAY_FILTERS */
 
 #include "color_notebook.h"
 #include "color_select.h"
@@ -531,7 +534,9 @@ app_init (void)
   RESET_BAR();
   internal_procs_init ();
 
+#ifdef DISPLAY_FILTERS
   color_display_init ();
+#endif /* DISPLAY_FILTERS */
 
   RESET_BAR();
   if (always_restore_session)

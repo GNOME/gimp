@@ -40,7 +40,6 @@
 #include "fileops.h"
 #include "floating_sel.h"
 #include "gdisplay_ops.h"
-#include "gdisplay_color_ui.h"
 #include "gimage_mask.h"
 #include "gimphelp.h"
 #include "gimprc.h"
@@ -62,6 +61,10 @@
 #include "tips_dialog.h"
 #include "tools.h"
 #include "undo.h"
+
+#ifdef DISPLAY_FILTERS
+#include "gdisplay_color_ui.h"
+#endif /* DISPLAY_FILTERS */
 
 #include "libgimp/gimpmath.h"
 #include "libgimp/gimpintl.h"
@@ -1218,6 +1221,7 @@ dialogs_error_console_cmd_callback (GtkWidget *widget,
   error_console_add (NULL);
 }
 
+#ifdef DISPLAY_FILTERS
 void
 dialogs_display_filters_cmd_callback (GtkWidget *widget,
 				      gpointer   client_data)
@@ -1236,6 +1240,7 @@ dialogs_display_filters_cmd_callback (GtkWidget *widget,
   else
     gdk_window_raise (gdisp->cd_ui->window);
 }
+#endif /* DISPLAY_FILTERS */
 
 void
 dialogs_undo_history_cmd_callback (GtkWidget *widget,
