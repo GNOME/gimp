@@ -1,3 +1,12 @@
+2004-12-28  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/compose.c: add "Recompose" (plug_in_recompose) 
+	as described on dev mailing list.
+
+	* plug-ins/common/decompose.c: add "decompose-data" parasite
+	when decoposing, to support Recompose.  Also add missing 
+	alpha channels to newly produced layers
+	
 2004-12-28  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.2.1 release.

@@ -24,7 +24,7 @@
  */
 
 /*  Lab colorspace support originally written by Alexey Dyachenko,
- *  merged into the officical plug-in by Sven Neumann.
+ *  merged into the official plug-in by Sven Neumann.
  */
 
 #include "config.h"
@@ -205,8 +205,10 @@ static COMPOSE_DSC compose_dsc[] =
 
 typedef struct
 {
-  gint32 compose_ID[MAX_COMPOSE_IMAGES];  /* Image IDs of input images */
-  gchar  compose_type[32];                /* type of composition */
+  gint32    compose_ID[MAX_COMPOSE_IMAGES];  /* Image IDs of input images */
+  gchar     compose_type[32];                /* type of composition */
+  gboolean  do_recompose;
+  gint32    source_layer_ID;                 /* for recomposing */
 } ComposeVals;
 
 /* Dialog structure */
@@ -233,7 +235,9 @@ GimpPlugInInfo PLUG_IN_INFO =
 static ComposeVals composevals =
 {
   { 0 },  /* Image IDs of images to compose */
-  "rgb"   /* Type of composition */
+  "rgb",  /* Type of composition */
+  FALSE,  /* Do recompose */
+  -1      /* source layer ID */
 };
 
 static ComposeInterface composeint =
@@ -256,14 +260,15 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image1", "First input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (not used)" },
-    { GIMP_PDB_IMAGE, "image2", "Second input image" },
-    { GIMP_PDB_IMAGE, "image3", "Third input image" },
-    { GIMP_PDB_IMAGE, "image4", "Fourth input image" },
-    { GIMP_PDB_STRING, "compose_type", "What to compose: RGB, RGBA, HSV, CMY, CMYK" }
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image1",       "First input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable (not used)" },
+    { GIMP_PDB_IMAGE,    "image2",       "Second input image" },
+    { GIMP_PDB_IMAGE,    "image3",       "Third input image" },
+    { GIMP_PDB_IMAGE,    "image4",       "Fourth input image" },
+    { GIMP_PDB_STRING,   "compose_type", "What to compose: RGB, RGBA, HSV, CMY, CMYK" }
   };
+
   static GimpParamDef return_vals[] =
   {
     { GIMP_PDB_IMAGE, "new_image", "Output image" }
@@ -271,17 +276,25 @@ query (void)
 
   static GimpParamDef drw_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image1", "First input image (not used)" },
-    { GIMP_PDB_DRAWABLE, "drawable1", "First input drawable" },
-    { GIMP_PDB_DRAWABLE, "drawable2", "Second input drawable" },
-    { GIMP_PDB_DRAWABLE, "drawable3", "Third input drawable" },
-    { GIMP_PDB_DRAWABLE, "drawable4", "Fourth input drawable" },
-    { GIMP_PDB_STRING, "compose_type", "What to compose: RGB, RGBA, HSV, CMY, CMYK" }
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image1",       "First input image (not used)" },
+    { GIMP_PDB_DRAWABLE, "drawable1",    "First input drawable" },
+    { GIMP_PDB_DRAWABLE, "drawable2",    "Second input drawable" },
+    { GIMP_PDB_DRAWABLE, "drawable3",    "Third input drawable" },
+    { GIMP_PDB_DRAWABLE, "drawable4",    "Fourth input drawable" },
+    { GIMP_PDB_STRING,   "compose_type", "What to compose: RGB, RGBA, HSV, CMY, CMYK" }
   };
+
   static GimpParamDef drw_return_vals[] =
   {
     { GIMP_PDB_IMAGE, "new_image", "Output image" }
+  };
+
+  static GimpParamDef recompose_args[] =
+  {
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Image to recompose from" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Not used" },
   };
 
   gimp_install_procedure ("plug_in_compose",
@@ -314,6 +327,23 @@ query (void)
 			  G_N_ELEMENTS (drw_args),
                           G_N_ELEMENTS (drw_return_vals),
 			  drw_args, drw_return_vals);
+
+  gimp_install_procedure ("plug_in_recompose",
+			  "Recompose a layer from multiple drawables of gray images",
+			  "This function recombines the grayscale layers produced "
+			  "by Decompose into a single RGB or RGBA layer, and "
+                          "replaces the originally decomposed layer with the "
+                          "result.",
+			  "Bill Skaggs",
+			  "Bill Skaggs",
+			  "2004",
+			  N_("Recompose"),
+			  "GRAY*",
+			  GIMP_PLUGIN,
+			  G_N_ELEMENTS (recompose_args), 0,
+			  recompose_args, NULL);
+  gimp_plugin_menu_register ("plug_in_recompose", "<Image>/Filters/Colors");
+  gimp_plugin_menu_register ("plug_in_recompose", "<Image>/Image/Mode");
 }
 
 
@@ -326,7 +356,8 @@ run (const gchar      *name,
 {
   static GimpParam  values[2];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32            image_ID, drawable_ID;
+  gint32            image_ID;
+  gint32            drawable_ID = -1;
   gint              compose_by_drawable;
 
   INIT_I18N ();
@@ -342,68 +373,108 @@ run (const gchar      *name,
   values[1].type          = GIMP_PDB_IMAGE;
   values[1].data.d_int32  = -1;
 
-  switch (run_mode)
+  if (strcmp (name, "plug_in_recompose") == 0)
     {
-    case GIMP_RUN_INTERACTIVE:
-      /*  Possibly retrieve data  */
-      gimp_get_data (name , &composevals);
+      gint          nlayers;
+      gint          nret;
+      GimpParasite *parasite = gimp_image_parasite_find (param[1].data.d_image,
+                                                         "decompose-data");
 
-      /* The dialog is now drawable based. Get a drawable-ID of the image */
-      if (strcmp (name, "plug_in_compose") == 0)
+      if (! parasite)
         {
-          gint32 *layer_list;
-          gint nlayers;
+          g_message (_("You can only run 'Recompose' if the active image"
+                       " was originally produced by 'Decompose'."));
+          return;
+        }
 
-          layer_list = gimp_image_get_layers (param[1].data.d_int32, &nlayers);
-          if ((layer_list == NULL) || (nlayers <= 0))
+      nret = sscanf (parasite->data, "source=%d type=%s %d %d %d %d",
+                     &composevals.source_layer_ID,
+                     composevals.compose_type,
+                     &composevals.compose_ID[0],
+                     &composevals.compose_ID[1],
+                     &composevals.compose_ID[2],
+                     &composevals.compose_ID[3]);
+
+      if (nret < 5)
+        {
+          g_message (_("Error scanning 'decompose-data' parasite: "
+                       "too few layers found"));
+          return;
+        }
+      nlayers = nret - 2;
+
+      composevals.do_recompose = TRUE;
+      compose_by_drawable = TRUE;
+
+
+    }
+  else
+    {
+      composevals.do_recompose = FALSE;
+
+      switch (run_mode)
+        {
+        case GIMP_RUN_INTERACTIVE:
+          /*  Possibly retrieve data  */
+          gimp_get_data (name , &composevals);
+
+          /* The dialog is now drawable based. Get a drawable-ID of the image */
+          if (strcmp (name, "plug_in_compose") == 0)
             {
-              g_message (_("Could not get layers for image %d"),
-                         (gint) param[1].data.d_int32);
-              return;
+              gint32 *layer_list;
+              gint nlayers;
+
+              layer_list = gimp_image_get_layers (param[1].data.d_int32, &nlayers);
+              if ((layer_list == NULL) || (nlayers <= 0))
+                {
+                  g_message (_("Could not get layers for image %d"),
+                             (gint) param[1].data.d_int32);
+                  return;
+                }
+              drawable_ID = layer_list[0];
+              g_free (layer_list);
             }
-          drawable_ID = layer_list[0];
-          g_free (layer_list);
+          else
+            {
+              drawable_ID = param[2].data.d_int32;
+            }
+
+          compose_by_drawable = TRUE;
+
+          /*  First acquire information with a dialog  */
+          if (! compose_dialog (composevals.compose_type, drawable_ID))
+            return;
+
+          break;
+
+        case GIMP_RUN_NONINTERACTIVE:
+          /*  Make sure all the arguments are there!  */
+          if (nparams != 7)
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          else
+            {
+              composevals.compose_ID[0] = (compose_by_drawable ?
+                                           param[2].data.d_int32 :
+                                           param[1].data.d_int32);
+              composevals.compose_ID[1] = param[3].data.d_int32;
+              composevals.compose_ID[2] = param[4].data.d_int32;
+              composevals.compose_ID[3] = param[5].data.d_int32;
+              strncpy (composevals.compose_type, param[6].data.d_string,
+                       sizeof (composevals.compose_type));
+              composevals.compose_type[sizeof (composevals.compose_type)-1] = '\0';
+            }
+          break;
+
+        case GIMP_RUN_WITH_LAST_VALS:
+          /*  Possibly retrieve data  */
+          gimp_get_data (name, &composevals);
+          break;
+
+        default:
+          break;
         }
-      else
-        {
-          drawable_ID = param[2].data.d_int32;
-        }
-
-      compose_by_drawable = 1;
-
-      /*  First acquire information with a dialog  */
-      if (! compose_dialog (composevals.compose_type, drawable_ID))
-	return;
-
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      /*  Make sure all the arguments are there!  */
-      if (nparams != 7)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
-      else
-	{
-	  composevals.compose_ID[0] = (compose_by_drawable ?
-                                       param[2].data.d_int32 :
-                                       param[1].data.d_int32);
-	  composevals.compose_ID[1] = param[3].data.d_int32;
-	  composevals.compose_ID[2] = param[4].data.d_int32;
-	  composevals.compose_ID[3] = param[5].data.d_int32;
-	  strncpy (composevals.compose_type, param[6].data.d_string,
-		   sizeof (composevals.compose_type));
-	  composevals.compose_type[sizeof (composevals.compose_type)-1] = '\0';
-	}
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      /*  Possibly retrieve data  */
-      gimp_get_data (name, &composevals);
-      break;
-
-    default:
-      break;
     }
 
   if (status == GIMP_PDB_SUCCESS)
@@ -421,10 +492,18 @@ run (const gchar      *name,
       else
 	{
 	  values[1].data.d_int32 = image_ID;
-	  gimp_image_undo_enable (image_ID);
-	  gimp_image_clean_all (image_ID);
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_display_new (image_ID);
+
+          if (composevals.do_recompose)
+            {
+              gimp_displays_flush ();
+            }
+          else
+            {
+              gimp_image_undo_enable (image_ID);
+              gimp_image_clean_all (image_ID);
+              if (run_mode != GIMP_RUN_NONINTERACTIVE)
+                gimp_display_new (image_ID);
+            }
 	}
 
       /*  Store data  */
@@ -464,16 +543,29 @@ compose (const gchar *compose_type,
     return -1;
 
   num_images = compose_dsc[compose_idx].num_images;
+
   tile_height = gimp_tile_height ();
 
   /* Check image sizes */
   if (compose_by_drawable)
     {
+      if (0 == gimp_drawable_bpp (compose_ID[0]))
+        {
+          g_message (_("Specified layer %d not found"), compose_ID[0]);
+          return -1;
+        }
+
       width = gimp_drawable_width (compose_ID[0]);
       height = gimp_drawable_height (compose_ID[0]);
 
       for (j = 1; j < num_images; j++)
 	{
+          if (0 == gimp_drawable_bpp (compose_ID[j]))
+            {
+	      g_message (_("Specified layer %d not found"), compose_ID[j]);
+	      return -1;
+	    }
+
 	  if ((width != (gint)gimp_drawable_width (compose_ID[j])) ||
 	      (height != (gint)gimp_drawable_height (compose_ID[j])))
 	    {
@@ -538,14 +630,35 @@ compose (const gchar *compose_type,
       src[j] = g_new (guchar, tile_height * width * drawable_src[j]->bpp);
     }
 
-  /* Create new image */
-  gdtype_dst = (compose_dsc[compose_idx].compose_fun == compose_rgba)
-    ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
+  /* Unless recomposing, create new image */
+  if (composevals.do_recompose)
+    {
+      layer_ID_dst = composevals.source_layer_ID;
 
-  image_ID_dst = create_new_image (compose_dsc[compose_idx].filename,
-				   width, height, gdtype_dst,
-				   &layer_ID_dst, &drawable_dst,
-				   &pixel_rgn_dst);
+      if (0 == gimp_drawable_bpp (layer_ID_dst))
+        {
+          g_message (_("Unable to recompose, source layer not found"));
+          return -1;
+        }
+
+      drawable_dst = gimp_drawable_get (layer_ID_dst);
+      gimp_pixel_rgn_init (&pixel_rgn_dst, drawable_dst, 0, 0,
+                           drawable_dst->width,
+                           drawable_dst->height,
+                           TRUE, TRUE);
+      image_ID_dst = gimp_drawable_get_image (layer_ID_dst);
+
+    }
+  else
+    {
+      gdtype_dst = (compose_dsc[compose_idx].compose_fun == compose_rgba)
+        ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
+
+      image_ID_dst = create_new_image (compose_dsc[compose_idx].filename,
+                                       width, height, gdtype_dst,
+                                       &layer_ID_dst, &drawable_dst,
+                                       &pixel_rgn_dst);
+    }
 
   if (! compose_by_drawable)
     {
@@ -588,7 +701,12 @@ compose (const gchar *compose_type,
       gimp_drawable_detach (drawable_src[j]);
     }
   g_free (dst);
+
   gimp_drawable_detach (drawable_dst);
+
+  if (composevals.do_recompose)
+    gimp_drawable_merge_shadow (layer_ID_dst, TRUE);
+
   gimp_drawable_update (layer_ID_dst, 0, 0,
                         gimp_drawable_width (layer_ID_dst),
                         gimp_drawable_height (layer_ID_dst));

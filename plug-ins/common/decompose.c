@@ -57,7 +57,9 @@ static void    run              (const gchar        *name,
 static gint32  decompose        (gint32              image_id,
                                  gint32              drawable_ID,
                                  gchar              *extract_type,
-                                 gint32             *drawable_ID_dst);
+                                 gint32             *image_ID_dst,
+                                 gint32             *num_layers,
+                                 gint32             *layer_ID_dst);
 static gint32  create_new_image (const gchar        *filename,
                                  const gchar        *layername,
                                  guint               width,
@@ -262,14 +264,19 @@ run (const gchar      *name,
 {
   static GimpParam  values[MAX_EXTRACT_IMAGES+1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpImageType     drawable_type;
   gint32            num_images;
   gint32            image_ID_extract[MAX_EXTRACT_IMAGES];
+  gint32            layer_ID_extract[MAX_EXTRACT_IMAGES];
   gint              j;
+  gint32            layer;
+  gint32            num_layers;
+  gint32            image_ID;
 
   INIT_I18N ();
 
   run_mode = param[0].data.d_int32;
+  image_ID = param[1].data.d_image;
+  layer    = param[2].data.d_drawable;
 
   *nreturn_vals = MAX_EXTRACT_IMAGES+1;
   *return_vals  = values;
@@ -319,8 +326,7 @@ run (const gchar      *name,
     }
 
   /*  Make sure that the drawable is RGB color  */
-  drawable_type = gimp_drawable_type (param[2].data.d_drawable);
-  if ((drawable_type != GIMP_RGB_IMAGE) && (drawable_type != GIMP_RGBA_IMAGE))
+  if (gimp_drawable_type_with_alpha (layer) != GIMP_RGBA_IMAGE)
     {
       g_message ("Can only work on RGB images.");
       status = GIMP_PDB_CALLING_ERROR;
@@ -329,8 +335,11 @@ run (const gchar      *name,
     {
       gimp_progress_init (_("Decomposing..."));
 
-      num_images = decompose (param[1].data.d_image, param[2].data.d_drawable,
-                              decovals.extract_type, image_ID_extract);
+      num_images = decompose (image_ID, layer,
+                              decovals.extract_type,
+                              image_ID_extract,
+                              &num_layers,
+                              layer_ID_extract);
 
       if (num_images <= 0)
 	{
@@ -338,13 +347,26 @@ run (const gchar      *name,
 	}
       else
 	{
+          /* create decompose-data parasite */
+          GString *data = g_string_new ("");
+          g_string_printf (data, "source=%d type=%s ", layer, decovals.extract_type);
+          for (j = 0; j < num_layers; j++)
+              g_string_append_printf (data, "%d ", layer_ID_extract[j]);
+
 	  for (j = 0; j < num_images; j++)
 	    {
 	      values[j+1].data.d_int32 = image_ID_extract[j];
+
 	      gimp_image_undo_enable (image_ID_extract[j]);
 	      gimp_image_clean_all (image_ID_extract[j]);
+
+              gimp_image_attach_new_parasite (image_ID_extract[j],
+                                              "decompose-data",
+                                              0, data->len + 1, data->str);
+
 	      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 		gimp_display_new (image_ID_extract[j]);
+
 	    }
 
 	  /*  Store data  */
@@ -365,17 +387,20 @@ static gint32
 decompose (gint32  image_ID,
            gint32  drawable_ID,
            char   *extract_type,
-           gint32 *image_ID_dst)
+           gint32 *image_ID_dst,
+           gint32 *nlayers,
+           gint32 *layer_ID_dst)
 {
-  const gchar *layername;
-  gint    i, j, extract_idx, scan_lines;
-  gint    height, width, tile_height, num_images;
-  gchar  *filename;
-  guchar *src;
-  guchar *dst[MAX_EXTRACT_IMAGES];
-  gint32  layer_ID_dst[MAX_EXTRACT_IMAGES];
-  GimpDrawable *drawable_src, *drawable_dst[MAX_EXTRACT_IMAGES];
-  GimpPixelRgn pixel_rgn_src, pixel_rgn_dst[MAX_EXTRACT_IMAGES];
+  const gchar   *layername;
+  gint          i, j, extract_idx, scan_lines;
+  gint          height, width, tile_height, num_layers;
+  gchar        *filename;
+  guchar       *src;
+  guchar       *dst[MAX_EXTRACT_IMAGES];
+  GimpDrawable *drawable_src;
+  GimpDrawable *drawable_dst[MAX_EXTRACT_IMAGES];
+  GimpPixelRgn  pixel_rgn_src;
+  GimpPixelRgn  pixel_rgn_dst[MAX_EXTRACT_IMAGES];
 
   extract_idx = -1;   /* Search extract type */
   for (j = 0; j < G_N_ELEMENTS (extract); j++)
@@ -415,11 +440,11 @@ decompose (gint32  image_ID,
   src = g_new (guchar, tile_height * width * drawable_src->bpp);
 
   /* Create all new gray images */
-  num_images = extract[extract_idx].num_images;
-  if (num_images > MAX_EXTRACT_IMAGES)
-    num_images = MAX_EXTRACT_IMAGES;
+  num_layers = extract[extract_idx].num_images;
+  if (num_layers > MAX_EXTRACT_IMAGES)
+    num_layers = MAX_EXTRACT_IMAGES;
 
-  for (j = 0; j < num_images; j++)
+  for (j = 0; j < num_layers; j++)
     {
       /* Build a filename like <imagename>-<channel>.<extension> */
       gchar   *fname;
@@ -511,7 +536,7 @@ decompose (gint32  image_ID,
 					dst);
 
       /* Set destination pixel regions */
-      for (j = 0; j < num_images; j++)
+      for (j = 0; j < num_layers; j++)
 	gimp_pixel_rgn_set_rect (&(pixel_rgn_dst[j]), dst[j], 0, i, width,
 				 scan_lines);
       i += scan_lines;
@@ -521,18 +546,21 @@ decompose (gint32  image_ID,
 
   g_free (src);
 
-  for (j = 0; j < num_images; j++)
+  for (j = 0; j < num_layers; j++)
     {
       gimp_drawable_detach (drawable_dst[j]);
       gimp_drawable_update (layer_ID_dst[j], 0, 0,
                             gimp_drawable_width (layer_ID_dst[j]),
                             gimp_drawable_height (layer_ID_dst[j]));
+      gimp_layer_add_alpha (layer_ID_dst[j]);
       g_free (dst[j]);
     }
 
   gimp_drawable_detach (drawable_src);
 
-  return (decovals.as_layers ? 1 : num_images);
+  *nlayers = num_layers;
+
+  return (decovals.as_layers ? 1 : num_layers);
 }
 
 
