@@ -786,7 +786,7 @@ by_color_select_dialog_new (void)
   gtk_widget_show (bcd->shell);
 
   gtk_signal_connect_object (GTK_OBJECT (bcd->shell), "unmap_event",
-			     GTK_SIGNAL_FUNC (gtk_widget_hide), 
+			     GTK_SIGNAL_FUNC (gimp_dialog_hide), 
 			     (gpointer) bcd->shell);
 
   return bcd;
@@ -978,8 +978,7 @@ by_color_select_close_callback (GtkWidget *widget,
 
   bcd = (ByColorDialog *) data;
   
-  if (GTK_WIDGET_VISIBLE (bcd->shell))
-    gtk_widget_hide (bcd->shell);
+  gimp_dialog_hide (bcd->shell);
 
   if (bcd->gimage && gimp_set_have (image_context, bcd->gimage))
     {

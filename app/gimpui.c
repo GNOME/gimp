@@ -165,3 +165,27 @@ gimp_message_box_close_callback (GtkWidget *widget,
   g_free (msg_box->message);
   g_free (msg_box);
 }
+
+
+/*  
+ * A workaround for what I think is a GTK+ bug:
+ *  If a dialog is hidden using gtk_widget_hide(),
+ *  and was iconified before, it is still present 
+ *  in the window_list and can be deiconified by
+ *  the user later. All subsequent calls to 
+ *  gtk_widget_hide() will then fail since the state
+ *  of the widget is still INVISIBLE.
+ *  Calling gdk_window_withdraw() seems to solve this.
+ *                                         --Sven
+ */
+void
+gimp_dialog_hide (GtkWidget *dialog)
+{
+  g_return_if_fail (dialog != NULL && !GTK_WIDGET_NO_WINDOW (dialog));
+  
+  gtk_widget_hide (dialog);
+  gdk_window_withdraw (dialog->window);
+}
+
+
+    

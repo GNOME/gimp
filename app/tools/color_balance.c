@@ -569,8 +569,7 @@ color_balance_ok_callback (GtkWidget *widget,
 
   cbd = (ColorBalanceDialog *) data;
 
-  if (GTK_WIDGET_VISIBLE (cbd->shell))
-    gtk_widget_hide (cbd->shell);
+  gimp_dialog_hide (cbd->shell);
   
   active_tool->preserve = TRUE;
 
@@ -596,8 +595,7 @@ color_balance_cancel_callback (GtkWidget *widget,
 
   cbd = (ColorBalanceDialog *) data;
 
-  if (GTK_WIDGET_VISIBLE (cbd->shell))
-    gtk_widget_hide (cbd->shell);
+  gimp_dialog_hide (cbd->shell);
 
   if (cbd->image_map)
     {

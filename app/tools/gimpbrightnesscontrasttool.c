@@ -371,8 +371,7 @@ brightness_contrast_ok_callback (GtkWidget *widget,
 
   bcd = (BrightnessContrastDialog *) data;
 
-  if (GTK_WIDGET_VISIBLE (bcd->shell))
-    gtk_widget_hide (bcd->shell);
+  gimp_dialog_hide (bcd->shell);
 
   active_tool->preserve = TRUE;
 
@@ -404,8 +403,7 @@ brightness_contrast_cancel_callback (GtkWidget *widget,
 
   bcd = (BrightnessContrastDialog *) data;
 
-  if (GTK_WIDGET_VISIBLE (bcd->shell))
-    gtk_widget_hide (bcd->shell);
+  gimp_dialog_hide (bcd->shell);
 
   if (bcd->image_map)
     {

@@ -1648,8 +1648,8 @@ file_dialog_show (GtkWidget *filesel)
 static int
 file_dialog_hide (GtkWidget *filesel)
 {
-  gtk_widget_hide (filesel);
-
+  gimp_dialog_hide (filesel);
+  
   menus_set_sensitive ("<Toolbox>/File/Open...", TRUE);
   menus_set_sensitive ("<Image>/File/Open...", TRUE);
 

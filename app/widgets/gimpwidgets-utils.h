@@ -36,8 +36,10 @@
 
 /*  a simple message box  */
 
-void gimp_message_box             (gchar        *message,
-				   GtkCallback   callback,
-				   gpointer      data);
+void gimp_message_box   (gchar        *message,
+			 GtkCallback   callback,
+			 gpointer      data);
+
+void gimp_dialog_hide   (GtkWidget    *dialog);
 
 #endif /* __GIMP_UI_H__ */

@@ -288,8 +288,7 @@ posterize_ok_callback (GtkWidget *widget,
 
   pd = (PosterizeDialog *) data;
 
-  if (GTK_WIDGET_VISIBLE (pd->shell))
-    gtk_widget_hide (pd->shell);
+  gimp_dialog_hide (pd->shell);
 
   active_tool->preserve = TRUE;
 
@@ -320,8 +319,7 @@ posterize_cancel_callback (GtkWidget *widget,
 
   pd = (PosterizeDialog *) data;
 
-  if (GTK_WIDGET_VISIBLE (pd->shell))
-    gtk_widget_hide (pd->shell);
+  gimp_dialog_hide (pd->shell);
 
   if (pd->image_map)
     {

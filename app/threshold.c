@@ -421,9 +421,8 @@ threshold_ok_callback (GtkWidget *widget,
 
   td = (ThresholdDialog *) data;
 
-  if (GTK_WIDGET_VISIBLE (td->shell))
-    gtk_widget_hide (td->shell);
-
+  gimp_dialog_hide (td->shell);
+  
   active_tool->preserve = TRUE;
 
   if (!td->preview)
@@ -448,8 +447,7 @@ threshold_cancel_callback (GtkWidget *widget,
 
   td = (ThresholdDialog *) data;
 
-  if (GTK_WIDGET_VISIBLE (td->shell))
-    gtk_widget_hide (td->shell);
+  gimp_dialog_hide (td->shell);
 
   if (td->image_map)
     {

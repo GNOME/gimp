@@ -674,8 +674,7 @@ hue_saturation_ok_callback (GtkWidget *widget,
 
   hsd = (HueSaturationDialog *) data;
 
-  if (GTK_WIDGET_VISIBLE (hsd->shell))
-    gtk_widget_hide (hsd->shell);
+  gimp_dialog_hide (hsd->shell);
 
   active_tool->preserve = TRUE;
 
@@ -701,8 +700,7 @@ hue_saturation_cancel_callback (GtkWidget *widget,
 
   hsd = (HueSaturationDialog *) data;
 
-  if (GTK_WIDGET_VISIBLE (hsd->shell))
-    gtk_widget_hide (hsd->shell);
+  gimp_dialog_hide (hsd->shell);
 
   if (hsd->image_map)
     {

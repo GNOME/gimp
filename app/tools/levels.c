@@ -960,8 +960,7 @@ levels_ok_callback (GtkWidget *widget,
 
   ld = (LevelsDialog *) data;
 
-  if (GTK_WIDGET_VISIBLE (ld->shell))
-    gtk_widget_hide (ld->shell);
+  gimp_dialog_hide (ld->shell);
 
   active_tool->preserve = TRUE;
 
@@ -993,8 +992,7 @@ levels_cancel_callback (GtkWidget *widget,
 
   ld = (LevelsDialog *) data;
 
-  if (GTK_WIDGET_VISIBLE (ld->shell))
-    gtk_widget_hide (ld->shell);
+  gimp_dialog_hide (ld->shell);
 
   if (ld->image_map)
     {
@@ -1455,15 +1453,14 @@ file_dialog_ok_callback (GtkWidget *widget,
 
       fclose (f);
     }
-
-  gtk_widget_hide (file_dlg);
+  file_dialog_cancel_callback (file_dlg, NULL);
 }
 
 static void
 file_dialog_cancel_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  gtk_widget_hide (file_dlg);
+  gimp_dialog_hide (file_dlg);
 }
 
 static gboolean

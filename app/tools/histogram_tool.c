@@ -386,9 +386,8 @@ histogram_tool_close_callback (GtkWidget *widget,
 
   htd = (HistogramToolDialog *) data;
 
-  if (GTK_WIDGET_VISIBLE (htd->shell))
-    gtk_widget_hide (htd->shell);
-
+  gimp_dialog_hide (htd->shell);
+       
   active_tool->gdisp_ptr = NULL;
   active_tool->drawable = NULL;
 }

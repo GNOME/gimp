@@ -1213,8 +1213,7 @@ curves_ok_callback (GtkWidget *widget,
 
   cd = (CurvesDialog *) data;
 
-  if (GTK_WIDGET_VISIBLE (cd->shell))
-    gtk_widget_hide (cd->shell);
+  gimp_dialog_hide (cd->shell);
 
   active_tool->preserve = TRUE;  /* We're about to dirty... */
 
@@ -1241,8 +1240,7 @@ curves_cancel_callback (GtkWidget *widget,
 
   cd = (CurvesDialog *) data;
 
-  if (GTK_WIDGET_VISIBLE (cd->shell))
-    gtk_widget_hide (cd->shell);
+  gimp_dialog_hide (cd->shell);
 
   if (cd->image_map)
     {
@@ -1637,14 +1635,14 @@ file_dialog_ok_callback (GtkWidget *widget,
       fclose (f);
     }
 
-  gtk_widget_hide (file_dlg);
+  file_dialog_cancel_callback (file_dlg, NULL);
 }
 
 static void
 file_dialog_cancel_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  gtk_widget_hide (file_dlg);
+  gimp_dialog_hide (file_dlg);
 }
 
 static gboolean

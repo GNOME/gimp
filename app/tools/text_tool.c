@@ -256,8 +256,8 @@ tools_free_text (Tool *tool)
   g_free (tool->private);
   the_text_tool = NULL;
 
-  if (text_tool_shell && GTK_WIDGET_VISIBLE (text_tool_shell))
-    gtk_widget_hide (text_tool_shell);
+  if (text_tool_shell)
+    gimp_dialog_hide (text_tool_shell);
 }
 
 static void
@@ -377,8 +377,8 @@ text_control (Tool       *tool,
       break;
 
     case HALT:
-      if (text_tool_shell && GTK_WIDGET_VISIBLE (text_tool_shell))
-	gtk_widget_hide (text_tool_shell);
+      if (text_tool_shell)
+	gimp_dialog_hide (text_tool_shell);
       break;
 
     default:
@@ -419,8 +419,7 @@ static void
 text_dialog_ok_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  if (GTK_WIDGET_VISIBLE (text_tool_shell))
-    gtk_widget_hide (text_tool_shell);
+  gimp_dialog_hide (text_tool_shell);
 
   if (the_text_tool)
     text_init_render (the_text_tool);
@@ -440,8 +439,7 @@ static void
 text_dialog_cancel_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  if (GTK_WIDGET_VISIBLE (text_tool_shell))
-    gtk_widget_hide (text_tool_shell);
+  gimp_dialog_hide (text_tool_shell);
 }
 
 static void

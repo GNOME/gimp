@@ -1,3 +1,22 @@
+2000-03-29  Sven Neumann  <sven@gimp.org>
+
+	* app/gimpui.[ch]: (gimp_dialog_hide) new function that calls
+	gdk_window_withdraw() after gtk_widget_hide() so dialogs actually
+	go away even if they have been iconified by the user before.
+
+        * brightness_contrast.c
+	* by_color_select.c
+	* color_balance.c
+	* curves.c
+	* fileops.c
+	* histogram_tool.c
+	* hue_saturation.c
+	* levels.c
+	* posterize.c
+	* text_tool.c
+	* threshold.c: use gimp_dialog_hide() on all(?) tool dialogs and
+	file_selectors. This should fix bugs #2961, #5293, #6441 and #7849.
+
 2000-03-28  Sven Neumann  <sven@gimp.org>
 
         * plugins/script-fu/Makefile.am: don't install test-sphere.scm
