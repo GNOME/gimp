@@ -1165,7 +1165,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 		     gimp_standard_help_func,
 		     "dialogs/preferences/preferences.html",
 		     GTK_WIN_POS_NONE,
-		     FALSE, FALSE, FALSE,
+		     FALSE, TRUE, FALSE,
 
 		     _("OK"), file_prefs_ok_callback,
 		     NULL, NULL, FALSE, FALSE,

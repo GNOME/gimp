@@ -1,3 +1,9 @@
+Mon Oct 11 02:45:06 BST 1999 Nick Lamb <njl195@zepler.org>
+
+	* app/preferences_dialog.c:
+	There are scrollable widgets in this dialog
+	=> GUI 101 - it should be resizable (grow only)
+
 Sat Oct  9 22:23:52 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/by_color_select.c:
