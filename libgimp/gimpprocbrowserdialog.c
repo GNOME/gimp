@@ -449,10 +449,11 @@ dialog_select (dbbrowser_t *dbbrowser,
 
   TODO: Add help */
 
-  if (old_table) gtk_widget_destroy(old_table);
+  if (old_table)
+    gtk_widget_destroy(old_table);
 
-  gtk_container_add (GTK_CONTAINER (dbbrowser->descr_scroll), 
-		     dbbrowser->descr_table );
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (dbbrowser->descr_scroll), 
+					 dbbrowser->descr_table);
   gtk_widget_show(dbbrowser->descr_table);
 }
 
