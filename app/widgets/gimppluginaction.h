@@ -23,7 +23,7 @@
 #define __GIMP_PLUG_IN_ACTION_H__
 
 
-#include <gtk/gtkaction.h>
+#include "gimpaction.h"
 
 
 #define GIMP_TYPE_PLUG_IN_ACTION            (gimp_plug_in_action_get_type ())
@@ -38,14 +38,14 @@ typedef struct _GimpPlugInActionClass GimpPlugInActionClass;
 
 struct _GimpPlugInAction
 {
-  GtkAction      parent_instance;
+  GimpAction     parent_instance;
 
   PlugInProcDef *proc_def;
 };
 
 struct _GimpPlugInActionClass
 {
-  GtkActionClass parent_class;
+  GimpActionClass parent_class;
 
   void (* selected) (GimpPlugInAction *action,
                      PlugInProcDef    *proc_def);

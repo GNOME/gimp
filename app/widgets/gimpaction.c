@@ -1,0 +1,335 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * gimpaction.c
+ * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
+
+#include "widgets-types.h"
+
+#include "config/gimpconfig-params.h"
+#include "config/gimpconfig-types.h"
+
+#include "core/gimpmarshal.h"
+#include "core/gimpviewable.h"
+
+#include "gimpaction.h"
+#include "gimppreview.h"
+
+
+enum
+{
+  PROP_0,
+  PROP_COLOR,
+  PROP_VIEWABLE
+};
+
+
+static void   gimp_action_init          (GimpAction      *action);
+static void   gimp_action_class_init    (GimpActionClass *klass);
+
+static void   gimp_action_finalize      (GObject         *object);
+static void   gimp_action_set_property  (GObject         *object,
+                                         guint            prop_id,
+                                         const GValue    *value,
+                                         GParamSpec      *pspec);
+static void   gimp_action_get_property  (GObject         *object,
+                                         guint            prop_id,
+                                         GValue          *value,
+                                         GParamSpec      *pspec);
+static void   gimp_action_connect_proxy (GtkAction       *action,
+                                         GtkWidget       *proxy);
+static void   gimp_action_set_proxy     (GimpAction      *action,
+                                         GtkWidget       *proxy);
+
+
+static GtkActionClass *parent_class = NULL;
+
+
+GType
+gimp_action_get_type (void)
+{
+  static GType type = 0;
+
+  if (!type)
+    {
+      static const GTypeInfo type_info =
+      {
+        sizeof (GimpActionClass),
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_action_class_init,
+        (GClassFinalizeFunc) NULL,
+        NULL,
+        sizeof (GimpAction),
+        0, /* n_preallocs */
+        (GInstanceInitFunc) gimp_action_init,
+      };
+
+      type = g_type_register_static (GTK_TYPE_ACTION,
+                                     "GimpAction",
+                                     &type_info, 0);
+    }
+
+  return type;
+}
+
+static void
+gimp_action_class_init (GimpActionClass *klass)
+{
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
+  GimpRGB         black;
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->finalize      = gimp_action_finalize;
+  object_class->set_property  = gimp_action_set_property;
+  object_class->get_property  = gimp_action_get_property;
+
+  action_class->connect_proxy = gimp_action_connect_proxy;
+
+  gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+
+  g_object_class_install_property (object_class, PROP_COLOR,
+                                   gimp_param_spec_color ("color",
+                                                          NULL, NULL,
+                                                          &black,
+                                                          G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_VIEWABLE,
+                                   g_param_spec_object ("viewable",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_VIEWABLE,
+                                                        G_PARAM_READWRITE));
+}
+
+static void
+gimp_action_init (GimpAction *action)
+{
+  action->color    = NULL;
+  action->viewable = NULL;
+}
+
+static void
+gimp_action_finalize (GObject *object)
+{
+  GimpAction *action = GIMP_ACTION (object);
+
+  if (action->color)
+    {
+      g_free (action->color);
+      action->color = NULL;
+    }
+
+  if (action->viewable)
+    {
+      g_object_unref (action->viewable);
+      action->viewable = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_action_get_property (GObject    *object,
+                          guint       prop_id,
+                          GValue     *value,
+                          GParamSpec *pspec)
+{
+  GimpAction *action = GIMP_ACTION (object);
+
+  switch (prop_id)
+    {
+    case PROP_COLOR:
+      g_value_set_boxed (value, action->color);
+      break;
+    case PROP_VIEWABLE:
+      g_value_set_object (value, action->viewable);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_action_set_property (GObject      *object,
+                          guint         prop_id,
+                          const GValue *value,
+                          GParamSpec   *pspec)
+{
+  GimpAction *action    = GIMP_ACTION (object);
+  gboolean    set_proxy = FALSE;
+
+  switch (prop_id)
+    {
+    case PROP_COLOR:
+      if (action->color)
+        g_free (action->color);
+      action->color = g_value_dup_boxed (value);
+      set_proxy = TRUE;
+      break;
+    case PROP_VIEWABLE:
+      if (action->viewable)
+        g_object_unref  (action->viewable);
+      action->viewable = (GimpViewable *) g_value_dup_object (value);
+      set_proxy = TRUE;
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+    }
+
+  if (set_proxy)
+    {
+      GSList *list;
+
+      for (list = gtk_action_get_proxies (GTK_ACTION (action));
+           list;
+           list = g_slist_next (list))
+        {
+          gimp_action_set_proxy (action, list->data);
+        }
+    }
+}
+
+static void
+gimp_action_connect_proxy (GtkAction *action,
+                           GtkWidget *proxy)
+{
+  GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
+
+  gimp_action_set_proxy (GIMP_ACTION (action), proxy);
+}
+
+
+/*  public functions  */
+
+GimpAction *
+gimp_action_new (const gchar *name,
+                 const gchar *label,
+                 const gchar *tooltip,
+                 const gchar *stock_id)
+{
+  return g_object_new (GIMP_TYPE_ACTION,
+                       "name",     name,
+                       "label",    label,
+                       "tooltip",  tooltip,
+                       "stock_id", stock_id,
+                       NULL);
+}
+
+
+/*  private functions  */
+
+static void
+gimp_action_set_proxy (GimpAction *action,
+                       GtkWidget  *proxy)
+{
+  if (! GTK_IS_IMAGE_MENU_ITEM (proxy))
+    return;
+
+  if (action->color)
+    {
+      GtkWidget *area;
+
+      area = gtk_image_menu_item_get_image (GTK_IMAGE_MENU_ITEM (proxy));
+
+      if (area && ! GIMP_IS_COLOR_AREA (area))
+        {
+          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), NULL);
+          area = NULL;
+        }
+
+      if (! area)
+        {
+          GdkScreen   *screen;
+          GtkSettings *settings;
+          gint         width, height;
+
+          area = gimp_color_area_new (action->color,
+                                      GIMP_COLOR_AREA_SMALL_CHECKS, 0);
+          gimp_color_area_set_draw_border (GIMP_COLOR_AREA (area), TRUE);
+
+          screen = gtk_widget_get_screen (area);
+          settings = gtk_settings_get_for_screen (screen);
+          gtk_icon_size_lookup_for_settings (settings, GTK_ICON_SIZE_MENU,
+                                             &width, &height);
+
+          gtk_widget_set_size_request (area, width, height);
+          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), area);
+          gtk_widget_show (area);
+        }
+      else
+        {
+          gimp_color_area_set_color (GIMP_COLOR_AREA (area), action->color);
+        }
+    }
+  else if (action->viewable)
+    {
+      GtkWidget *preview;
+
+      preview = gtk_image_menu_item_get_image (GTK_IMAGE_MENU_ITEM (proxy));
+
+      if (preview && ! GIMP_IS_PREVIEW (preview))
+        {
+          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), NULL);
+          preview = NULL;
+        }
+
+      if (! preview)
+        {
+          GdkScreen *screen;
+          gint       width, height;
+
+          screen = gtk_widget_get_screen (proxy);
+          gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
+                                             GTK_ICON_SIZE_MENU,
+                                             &width, &height);
+
+          preview = gimp_preview_new_full (action->viewable,
+                                           width - 2, height - 2, 1,
+                                           FALSE, FALSE, FALSE);
+          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), preview);
+          gtk_widget_show (preview);
+        }
+      else
+        {
+          gimp_preview_set_viewable (GIMP_PREVIEW (preview), action->viewable);
+        }
+    }
+  else
+    {
+      GtkWidget *image;
+
+      image = gtk_image_menu_item_get_image (GTK_IMAGE_MENU_ITEM (proxy));
+
+      if (image && (GIMP_IS_PREVIEW (image) || GIMP_IS_COLOR_AREA (image)))
+        {
+          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), NULL);
+          g_object_notify (G_OBJECT (action), "stock-id");
+        }
+    }
+}

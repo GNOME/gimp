@@ -23,7 +23,7 @@
 #define __GIMP_STRING_ACTION_H__
 
 
-#include <gtk/gtkaction.h>
+#include "gimpaction.h"
 
 
 #define GIMP_TYPE_STRING_ACTION            (gimp_string_action_get_type ())
@@ -38,14 +38,14 @@ typedef struct _GimpStringActionClass GimpStringActionClass;
 
 struct _GimpStringAction
 {
-  GtkAction  parent_instance;
+  GimpAction  parent_instance;
 
-  gchar     *value;
+  gchar      *value;
 };
 
 struct _GimpStringActionClass
 {
-  GtkActionClass parent_class;
+  GimpActionClass parent_class;
 
   void (* selected) (GimpStringAction *action,
                      const gchar      *value);

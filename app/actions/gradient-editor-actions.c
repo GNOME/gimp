@@ -46,12 +46,18 @@ static GimpActionEntry gradient_editor_actions[] =
     NULL, NULL, NULL,
     GIMP_HELP_GRADIENT_EDITOR_DIALOG },
 
-  { "gradient-editor-load-left-color",  NULL, N_("_Load Left Color From")  },
-  { "gradient-editor-save-left-color",  NULL, N_("_Save Left Color To")    },
-  { "gradient-editor-load-right-color", NULL, N_("Load Right Color Fr_om") },
-  { "gradient-editor-save-right-color", NULL, N_("Sa_ve Right Color To")   },
-  { "gradient-editor-blending-func",    NULL, "blending-function"          },
-  { "gradient-editor-coloring-type",    NULL, "coloring-type"              },
+  { "gradient-editor-load-left-color", GTK_STOCK_REVERT_TO_SAVED,
+    N_("_Load Left Color From") },
+  { "gradient-editor-save-left-color", GTK_STOCK_SAVE,
+    N_("_Save Left Color To") },
+
+  { "gradient-editor-load-right-color", GTK_STOCK_REVERT_TO_SAVED,
+    N_("Load Right Color Fr_om") },
+  { "gradient-editor-save-right-color", GTK_STOCK_SAVE,
+    N_("Sa_ve Right Color To") },
+
+  { "gradient-editor-blending-func", NULL, "blending-function" },
+  { "gradient-editor-coloring-type", NULL, "coloring-type"     },
 
   { "gradient-editor-left-color", NULL,
     N_("L_eft Endpoint's Color..."), NULL, NULL,
@@ -63,48 +69,48 @@ static GimpActionEntry gradient_editor_actions[] =
     G_CALLBACK (gradient_editor_right_color_cmd_callback),
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
 
-  { "gradient-editor-flip", NULL,
-    "flip", "F", NULL,
+  { "gradient-editor-flip", GIMP_STOCK_FLIP_HORIZONTAL,
+    "flip", NULL, NULL,
     G_CALLBACK (gradient_editor_flip_cmd_callback),
     GIMP_HELP_GRADIENT_EDITOR_FLIP },
 
-  { "gradient-editor-replicate", NULL,
-    "replicate", "R", NULL,
+  { "gradient-editor-replicate", GIMP_STOCK_DUPLICATE,
+    "replicate", NULL, NULL,
     G_CALLBACK (gradient_editor_replicate_cmd_callback),
     GIMP_HELP_GRADIENT_EDITOR_FLIP },
 
   { "gradient-editor-split-midpoint", NULL,
-    "splitmidpoint", "S", NULL,
+    "splitmidpoint", NULL, NULL,
     G_CALLBACK (gradient_editor_split_midpoint_cmd_callback),
     GIMP_HELP_GRADIENT_EDITOR_SPLIT_MIDPOINT },
 
   { "gradient-editor-split-uniform", NULL,
-    "splituniform", "U", NULL,
+    "splituniform", NULL, NULL,
     G_CALLBACK (gradient_editor_split_uniformly_cmd_callback),
     GIMP_HELP_GRADIENT_EDITOR_SPLIT_UNIFORM },
 
-  { "gradient-editor-delete", NULL,
-    "delete", "D", NULL,
+  { "gradient-editor-delete", GTK_STOCK_DELETE,
+    "delete", "", NULL,
     G_CALLBACK (gradient_editor_delete_cmd_callback),
     GIMP_HELP_GRADIENT_EDITOR_DELETE },
 
   { "gradient-editor-recenter", NULL,
-    "recenter", "C", NULL,
+    "recenter", NULL, NULL,
     G_CALLBACK (gradient_editor_recenter_cmd_callback),
     GIMP_HELP_GRADIENT_EDITOR_RECENTER },
 
   { "gradient-editor-redistribute", NULL,
-    "redistribute", "<control>C", NULL,
+    "redistribute", NULL, NULL,
     G_CALLBACK (gradient_editor_redistribute_cmd_callback),
     GIMP_HELP_GRADIENT_EDITOR_REDISTRIBUTE },
 
   { "gradient-editor-blend-color", NULL,
-    N_("Ble_nd Endpoints' Colors"), "B", NULL,
+    N_("Ble_nd Endpoints' Colors"), NULL, NULL,
     G_CALLBACK (gradient_editor_blend_color_cmd_callback),
     GIMP_HELP_GRADIENT_EDITOR_BLEND_COLOR },
 
   { "gradient-editor-blend-opacity", NULL,
-    N_("Blend Endpoints' Opacit_y"), "<control>B", NULL,
+    N_("Blend Endpoints' Opacit_y"), NULL, NULL,
     G_CALLBACK (gradient_editor_blend_opacity_cmd_callback),
     GIMP_HELP_GRADIENT_EDITOR_BLEND_OPACITY }
 };

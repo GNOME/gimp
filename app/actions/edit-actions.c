@@ -140,7 +140,7 @@ static GimpEnumActionEntry edit_fill_actions[] =
     GIMP_HELP_EDIT_FILL_BG },
 
   { "edit-fill-pattern", GIMP_STOCK_TOOL_BUCKET_FILL,
-    N_("Fill with P_attern"), NULL, NULL,
+    N_("Fill with P_attern"), "<control>semicolon", NULL,
     GIMP_PATTERN_FILL,
     GIMP_HELP_EDIT_FILL_PATTERN }
 };

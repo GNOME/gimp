@@ -23,7 +23,7 @@
 #define __GIMP_ENUM_ACTION_H__
 
 
-#include <gtk/gtkaction.h>
+#include "gimpaction.h"
 
 
 #define GIMP_TYPE_ENUM_ACTION            (gimp_enum_action_get_type ())
@@ -38,14 +38,14 @@ typedef struct _GimpEnumActionClass GimpEnumActionClass;
 
 struct _GimpEnumAction
 {
-  GtkAction parent_instance;
+  GimpAction parent_instance;
 
-  gint      value;
+  gint       value;
 };
 
 struct _GimpEnumActionClass
 {
-  GtkActionClass parent_class;
+  GimpActionClass parent_class;
 
   void (* selected) (GimpEnumAction *action,
                      gint            value);

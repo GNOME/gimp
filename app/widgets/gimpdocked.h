@@ -29,6 +29,8 @@
 #define GIMP_DOCKED_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_DOCKED, GimpDockedInterface))
 
 
+typedef struct _GimpDockedInterface GimpDockedInterface;
+
 struct _GimpDockedInterface
 {
   GTypeInterface base_iface;
@@ -50,8 +52,8 @@ struct _GimpDockedInterface
   gchar         * (* get_title)     (GimpDocked   *docked);
 
   void            (* set_context)   (GimpDocked   *docked,
-                                       GimpContext  *context,
-                                       GimpContext  *prev_context);
+                                     GimpContext  *context,
+                                     GimpContext  *prev_context);
 };
 
 

@@ -86,7 +86,7 @@ gimp_plug_in_action_get_type (void)
         (GInstanceInitFunc) gimp_plug_in_action_init,
       };
 
-      type = g_type_register_static (GTK_TYPE_ACTION,
+      type = g_type_register_static (GIMP_TYPE_ACTION,
                                      "GimpPlugInAction",
                                      &type_info, 0);
     }

@@ -58,8 +58,8 @@ static void   gimp_enum_action_get_property (GObject      *object,
 static void   gimp_enum_action_activate     (GtkAction    *action);
 
 
-static GtkActionClass *parent_class                = NULL;
-static guint           action_signals[LAST_SIGNAL] = { 0 };
+static GimpActionClass *parent_class                = NULL;
+static guint            action_signals[LAST_SIGNAL] = { 0 };
 
 
 GType
@@ -82,7 +82,7 @@ gimp_enum_action_get_type (void)
         (GInstanceInitFunc) gimp_enum_action_init,
       };
 
-      type = g_type_register_static (GTK_TYPE_ACTION,
+      type = g_type_register_static (GIMP_TYPE_ACTION,
                                      "GimpEnumAction",
                                      &type_info, 0);
     }

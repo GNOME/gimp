@@ -35,6 +35,7 @@ typedef struct _GimpMenuFactory              GimpMenuFactory;
 
 typedef struct _GimpActionFactory            GimpActionFactory;
 typedef struct _GimpActionGroup              GimpActionGroup;
+typedef struct _GimpAction                   GimpAction;
 typedef struct _GimpEnumAction               GimpEnumAction;
 typedef struct _GimpPlugInAction             GimpPlugInAction;
 typedef struct _GimpStringAction             GimpStringAction;
@@ -112,7 +113,6 @@ typedef struct _GimpImageDock           GimpImageDock;
 typedef struct _GimpDockable            GimpDockable;
 typedef struct _GimpDockbook            GimpDockbook;
 typedef struct _GimpDocked              GimpDocked; /* dummy typedef */
-typedef struct _GimpDockedInterface     GimpDockedInterface;
 
 typedef struct _GimpContainerPopup      GimpContainerPopup;
 typedef struct _GimpViewableButton      GimpViewableButton;

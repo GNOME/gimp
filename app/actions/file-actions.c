@@ -30,9 +30,11 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimpviewable.h"
 
 #include "file/file-utils.h"
 
+#include "widgets/gimpaction.h"
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
 
@@ -216,8 +218,7 @@ file_actions_last_opened_update (GimpContainer   *container,
           GimpImagefile *imagefile = (GimpImagefile *)
             gimp_container_get_child_by_index (container, i);
 
-          if (g_object_get_data (G_OBJECT (action), "gimp-imagefile") !=
-              (gpointer) imagefile)
+          if (GIMP_ACTION (action)->viewable != (GimpViewable *) imagefile)
             {
               const gchar *uri;
               gchar       *filename;
@@ -234,22 +235,22 @@ file_actions_last_opened_update (GimpContainer   *container,
               g_free (basename);
 
               g_object_set (G_OBJECT (action),
-                            "label",   escaped,
-                            "tooltip", filename,
-                            "visible", TRUE,
+                            "label",    escaped,
+                            "tooltip",  filename,
+                            "visible",  TRUE,
+                            "viewable", imagefile,
                             NULL);
 
               g_free (filename);
               g_free (escaped);
-
-              g_object_set_data (G_OBJECT (action),
-				 "gimp-imagefile", imagefile);
             }
         }
       else
         {
-          g_object_set_data (G_OBJECT (action), "gimp-imagefile", NULL);
-          g_object_set (G_OBJECT (action), "visible", FALSE, NULL);
+          g_object_set (G_OBJECT (action),
+                        "visible",  FALSE,
+                        "viewable", NULL,
+                        NULL);
         }
 
       g_free (name);
