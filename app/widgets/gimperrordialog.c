@@ -34,6 +34,8 @@
 
 #include "gimp-intl.h"
 
+#define GIMP_ERROR_DIALOG_MAX_MESSAGES 3
+
 
 static void   gimp_error_dialog_class_init (GimpErrorDialogClass *klass);
 static void   gimp_error_dialog_init       (GimpErrorDialog      *dialog);
@@ -103,6 +105,11 @@ gimp_error_dialog_init (GimpErrorDialog *dialog)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
                       dialog->vbox, TRUE, TRUE, 0);
   gtk_widget_show (dialog->vbox);
+
+  dialog->last_box     = NULL;
+  dialog->last_domain  = NULL;
+  dialog->last_message = NULL;
+  dialog->num_messages = 0;
 }
 
 static void
@@ -192,44 +199,58 @@ gimp_error_dialog_new (const gchar *title,
   return dialog;
 }
 
-gboolean
+void
 gimp_error_dialog_add (GimpErrorDialog *dialog,
                        const gchar     *stock_id,
                        const gchar     *domain,
                        const gchar     *message)
 {
-  g_return_val_if_fail (GIMP_IS_ERROR_DIALOG (dialog), FALSE);
-  g_return_val_if_fail (domain != NULL, FALSE);
-  g_return_val_if_fail (message != NULL, FALSE);
+  GtkWidget *box;
+  gboolean   overflow = FALSE;
+
+  g_return_if_fail (GIMP_IS_ERROR_DIALOG (dialog));
+  g_return_if_fail (domain != NULL);
+  g_return_if_fail (message != NULL);
+
+  if (++dialog->num_messages > GIMP_ERROR_DIALOG_MAX_MESSAGES)
+    {
+      g_printerr ("%s: %s\n\n", domain, message);
+
+      overflow = TRUE;
+      stock_id = GIMP_STOCK_WILBER_EEK;
+      domain   = _("Too many error messages!");
+      message  = _("Messages are redirected to stderr.");
+    }
 
   if (dialog->last_box     &&
       dialog->last_domain  && strcmp (dialog->last_domain,  domain)  == 0 &&
       dialog->last_message && strcmp (dialog->last_message, message) == 0)
     {
-      gimp_message_box_repeat (GIMP_MESSAGE_BOX (dialog->last_box));
+      if (gimp_message_box_repeat (GIMP_MESSAGE_BOX (dialog->last_box)))
+        return;
     }
+
+  box = g_object_new (GIMP_TYPE_MESSAGE_BOX,
+                      "stock_id",     stock_id,
+                      "border_width", 12,
+                      NULL);
+
+  if (overflow)
+    gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box), domain);
   else
-    {
-      GtkWidget *box = g_object_new (GIMP_TYPE_MESSAGE_BOX,
-                                     "stock_id",     GIMP_STOCK_WARNING,
-                                     "border_width", 12,
-                                     NULL);
+    gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box),
+                                       _("%s Message"), domain);
 
-      gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box),
-                                         _("%s Message"), domain);
-      gimp_message_box_set_text (GIMP_MESSAGE_BOX (box), message);
+  gimp_message_box_set_text (GIMP_MESSAGE_BOX (box), message);
 
-      gtk_container_add (GTK_CONTAINER (dialog->vbox), box);
-      gtk_widget_show (box);
+  gtk_container_add (GTK_CONTAINER (dialog->vbox), box);
+  gtk_widget_show (box);
 
-      dialog->last_box = box;
+  dialog->last_box = box;
 
-      g_free (dialog->last_domain);
-      dialog->last_domain = g_strdup (domain);
+  g_free (dialog->last_domain);
+  dialog->last_domain = g_strdup (domain);
 
-      g_free (dialog->last_message);
-      dialog->last_message = g_strdup (message);
-    }
-
-  return TRUE;
+  g_free (dialog->last_message);
+  dialog->last_message = g_strdup (message);
 }
