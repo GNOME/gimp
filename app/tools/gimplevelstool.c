@@ -305,8 +305,8 @@ gimp_levels_tool_initialize (GimpTool    *tool,
   gimp_enum_combo_box_set_visible (GIMP_ENUM_COMBO_BOX (l_tool->channel_menu),
                                    levels_menu_visible_func, l_tool);
 
-  gimp_enum_combo_box_set_active (GIMP_ENUM_COMBO_BOX (l_tool->channel_menu),
-                                  l_tool->channel);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (l_tool->channel_menu),
+                                 l_tool->channel);
 
   if (! l_tool->color && l_tool->alpha)
     l_tool->channel = 1;
@@ -905,16 +905,15 @@ static void
 levels_channel_callback (GtkWidget      *widget,
 			 GimpLevelsTool *tool)
 {
-  if (gimp_enum_combo_box_get_active (GIMP_ENUM_COMBO_BOX (widget),
-                                      (gint *) &tool->channel))
-    {
-      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->hist_view),
-                                       tool->channel);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                 (gint *) &tool->channel);
 
-      /* FIXME: hack */
-      if (! tool->color && tool->alpha)
-        tool->channel = (tool->channel > 1) ? 2 : 1;
-    }
+  gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->hist_view),
+                                   tool->channel);
+
+  /* FIXME: hack */
+  if (! tool->color && tool->alpha)
+    tool->channel = (tool->channel > 1) ? 2 : 1;
 
   levels_update (tool, ALL);
 }
@@ -938,7 +937,7 @@ levels_menu_visible_func (GtkTreeModel *model,
   GimpHistogramChannel  channel;
 
   gtk_tree_model_get (model, iter,
-                      GIMP_ENUM_STORE_VALUE, &channel,
+                      GIMP_INT_STORE_VALUE, &channel,
                       -1);
 
   switch (channel)

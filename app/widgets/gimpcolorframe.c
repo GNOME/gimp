@@ -151,7 +151,7 @@ gimp_color_frame_set_mode (GimpColorFrame     *frame,
 {
   g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
 
-  gimp_enum_combo_box_set_active (GIMP_ENUM_COMBO_BOX (frame->menu), mode);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (frame->menu), mode);
   frame->frame_mode = mode;
 
   gimp_color_frame_update (frame);
@@ -213,9 +213,9 @@ static void
 gimp_color_frame_menu_callback (GtkWidget      *widget,
                                 GimpColorFrame *frame)
 {
-  if (gimp_enum_combo_box_get_active (GIMP_ENUM_COMBO_BOX (widget),
-                                      (gint *) &frame->frame_mode))
-    gimp_color_frame_update (frame);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                 (gint *) &frame->frame_mode);
+  gimp_color_frame_update (frame);
 }
 
 static void

@@ -53,7 +53,7 @@ gimp_enum_combo_box_get_type (void)
         NULL            /* instance_init  */
       };
 
-      enum_combo_box_type = g_type_register_static (GTK_TYPE_COMBO_BOX,
+      enum_combo_box_type = g_type_register_static (GIMP_TYPE_INT_COMBO_BOX,
                                                     "GimpEnumComboBox",
                                                     &enum_combo_box_info, 0);
     }
@@ -85,111 +85,13 @@ gimp_enum_combo_box_new (GType enum_type)
 
   store = gimp_enum_store_new (enum_type);
 
-  combo_box = gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));
+  combo_box = g_object_new (GIMP_TYPE_ENUM_COMBO_BOX,
+                            "model", store,
+                            NULL);
 
   g_object_unref (store);
 
   return combo_box;
-}
-
-/**
- * gimp_enum_combo_box_new_with_model:
- * @enum_store: a #GimpEnumStore to use as the tree model
- *
- * Creates a new #GimpEnumComboBox using the #GimpEnumStore as its model.
- *
- * Return value: a new #GimpEnumComboBox.
- **/
-GtkWidget *
-gimp_enum_combo_box_new_with_model (GimpEnumStore *enum_store)
-{
-  GtkWidget       *combo_box;
-  GtkCellRenderer *cell;
-
-  g_return_val_if_fail (GIMP_IS_ENUM_STORE (enum_store), NULL);
-
-  combo_box = g_object_new (GIMP_TYPE_ENUM_COMBO_BOX,
-                            "model", enum_store,
-                            NULL);
-
-  cell = g_object_new (GTK_TYPE_CELL_RENDERER_PIXBUF,
-                       "stock_size", GTK_ICON_SIZE_MENU,
-                       NULL);
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), cell, FALSE);
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), cell,
-                                  "stock_id", GIMP_ENUM_STORE_ICON,
-                                  NULL);
-
-  cell = g_object_new (GTK_TYPE_CELL_RENDERER_TEXT, NULL);
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), cell, TRUE);
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), cell,
-                                  "text", GIMP_ENUM_STORE_LABEL,
-                                  NULL);
-
-  return combo_box;
-}
-
-/**
- * gimp_enum_combo_box_set_active:
- * @combo_box: a #GimpEnumComboBox
- * @value:     an enum value
- *
- * Looks up the item that belongs to the given @value and makes it the
- * selected item in the @combo_box.
- *
- * Return value: %TRUE on success or %FALSE if there was no item for
- *               this value.
- **/
-gboolean
-gimp_enum_combo_box_set_active (GimpEnumComboBox *combo_box,
-                                gint              value)
-{
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
-
-  g_return_val_if_fail (GIMP_IS_ENUM_COMBO_BOX (combo_box), FALSE);
-
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
-
-  if (gimp_enum_store_lookup_by_value (model, value, &iter))
-    {
-      gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-/**
- * gimp_enum_combo_box_get_active:
- * @combo_box: a #GimpEnumComboBox
- * @value:     return location for enum value
- *
- * Retrieves the enum value of the selected (active) item in the
- * @combo_box.
- *
- * Return value: %TRUE if @value has been set or %FALSE if no item was
- * active.
- **/
-gboolean
-gimp_enum_combo_box_get_active (GimpEnumComboBox *combo_box,
-                                gint             *value)
-{
-  GtkTreeIter  iter;
-
-  g_return_val_if_fail (GIMP_IS_ENUM_COMBO_BOX (combo_box), FALSE);
-  g_return_val_if_fail (value != NULL, FALSE);
-
-  if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo_box), &iter))
-    {
-      gtk_tree_model_get (gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box)),
-                          &iter,
-                          GIMP_ENUM_STORE_VALUE, value,
-                          -1);
-      return TRUE;
-    }
-
-  return FALSE;
 }
 
 /**

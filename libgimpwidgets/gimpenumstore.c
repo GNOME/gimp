@@ -34,14 +34,13 @@
 
 static void   gimp_enum_store_class_init   (GimpEnumStoreClass *klass);
 
-static void   gimp_enum_store_init         (GimpEnumStore *enum_store);
 static void   gimp_enum_store_finalize     (GObject       *object);
 
 static void   gimp_enum_store_add_value    (GtkListStore  *store,
                                             GEnumValue    *value);
 
 
-static GtkListStoreClass *parent_class = NULL;
+static GimpEnumStoreClass *parent_class = NULL;
 
 
 GType
@@ -54,17 +53,17 @@ gimp_enum_store_get_type (void)
       static const GTypeInfo enum_store_info =
       {
         sizeof (GimpEnumStoreClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
+        NULL,           /* base_init      */
+        NULL,           /* base_finalize  */
         (GClassInitFunc) gimp_enum_store_class_init,
         NULL,           /* class_finalize */
-        NULL,           /* class_data */
+        NULL,           /* class_data     */
         sizeof (GimpEnumStore),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_enum_store_init,
+        0,              /* n_preallocs    */
+        NULL            /* instance_init  */
       };
 
-      enum_store_type = g_type_register_static (GTK_TYPE_LIST_STORE,
+      enum_store_type = g_type_register_static (GIMP_TYPE_INT_STORE,
                                                 "GimpEnumStore",
                                                 &enum_store_info, 0);
     }
@@ -80,23 +79,6 @@ gimp_enum_store_class_init (GimpEnumStoreClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize = gimp_enum_store_finalize;
-}
-
-static void
-gimp_enum_store_init (GimpEnumStore *enum_store)
-{
-  GType types[GIMP_ENUM_STORE_NUM_COLUMNS] =
-    {
-      G_TYPE_INT,       /*  GIMP_ENUM_STORE_VALUE      */
-      G_TYPE_STRING,    /*  GIMP_ENUM_STORE_LABEL      */
-      G_TYPE_STRING,    /*  GIMP_ENUM_STORE_ICON       */
-      G_TYPE_POINTER    /*  GIMP_ENUM_STORE_USER_DATA  */
-    };
-
-  enum_store->enum_class = NULL;
-
-  gtk_list_store_set_column_types (GTK_LIST_STORE (enum_store),
-                                   GIMP_ENUM_STORE_NUM_COLUMNS, types);
 }
 
 static void
@@ -118,10 +100,8 @@ gimp_enum_store_add_value (GtkListStore *store,
 
   gtk_list_store_append (store, &iter);
   gtk_list_store_set (store, &iter,
-                      GIMP_ENUM_STORE_VALUE,     value->value,
-                      GIMP_ENUM_STORE_LABEL,     gettext (value->value_name),
-                      GIMP_ENUM_STORE_ICON,      NULL,
-                      GIMP_ENUM_STORE_USER_DATA, NULL,
+                      GIMP_INT_STORE_VALUE, value->value,
+                      GIMP_INT_STORE_LABEL, gettext (value->value_name),
                       -1);
 }
 
@@ -262,43 +242,6 @@ gimp_enum_store_new_with_values_valist (GType     enum_type,
 }
 
 /**
- * gimp_enum_store_lookup_by_value:
- * @model: a #GimpEnumStore
- * @value: an enum values to lookup in the @model
- * @iter:  return location for the iter of the given @value
- *
- * Iterate over the @model looking for @value.
- *
- * Return value: %TRUE if the value has been located and @iter is
- *               valid, %FALSE otherwise.
- **/
-gboolean
-gimp_enum_store_lookup_by_value (GtkTreeModel *model,
-                                 gint          value,
-                                 GtkTreeIter  *iter)
-{
-  gboolean  iter_valid;
-
-  g_return_val_if_fail (GTK_IS_TREE_MODEL (model), FALSE);
-  g_return_val_if_fail (iter != NULL, FALSE);
-
-  for (iter_valid = gtk_tree_model_get_iter_first (model, iter);
-       iter_valid;
-       iter_valid = gtk_tree_model_iter_next (model, iter))
-    {
-      gint  this;
-
-      gtk_tree_model_get (model, iter,
-                          GIMP_ENUM_STORE_VALUE, &this,
-                          -1);
-      if (this == value)
-        break;
-    }
-
-  return iter_valid;
-}
-
-/**
  * gimp_enum_store_set_stock_prefix:
  * @store:        a #GimpEnumStore
  * @stock_prefix: a prefix to create icon stock ID from enum values
@@ -331,7 +274,7 @@ gimp_enum_store_set_stock_prefix (GimpEnumStore *store,
           gint        value;
 
           gtk_tree_model_get (model, &iter,
-                              GIMP_ENUM_STORE_VALUE, &value,
+                              GIMP_INT_STORE_VALUE, &value,
                               -1);
 
           enum_value = g_enum_get_value (store->enum_class, value);
@@ -342,7 +285,7 @@ gimp_enum_store_set_stock_prefix (GimpEnumStore *store,
         }
 
       gtk_list_store_set (GTK_LIST_STORE (store), &iter,
-                          GIMP_ENUM_STORE_ICON, stock_id,
+                          GIMP_INT_STORE_STOCK_ID, stock_id,
                           -1);
 
       if (stock_id)

@@ -28,13 +28,7 @@
 #include "gimpwidgetstypes.h"
 
 #include "gimpintcombobox.h"
-
-
-enum
-{
-  GIMP_INT_STORE_VALUE,
-  GIMP_INT_STORE_LABEL
-};
+#include "gimpintstore.h"
 
 
 static void  gimp_int_combo_box_init (GimpIntComboBox *combo_box);
@@ -74,11 +68,18 @@ gimp_int_combo_box_init (GimpIntComboBox *combo_box)
   GtkListStore    *store;
   GtkCellRenderer *cell;
 
-  store = gtk_list_store_new (2, G_TYPE_INT, G_TYPE_STRING);
+  store = gimp_int_store_new ();
 
   gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
 
   g_object_unref (store);
+
+  cell = gtk_cell_renderer_pixbuf_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), cell, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), cell,
+                                  "stock_id", GIMP_INT_STORE_STOCK_ID,
+                                  "pixbuf",   GIMP_INT_STORE_PIXBUF,
+                                  NULL);
 
   cell = gtk_cell_renderer_text_new ();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), cell, TRUE);
@@ -146,9 +147,12 @@ gimp_int_combo_box_new_valist (const gchar *first_label,
 
   g_return_val_if_fail (first_label != NULL, NULL);
 
-  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
+  store = gimp_int_store_new ();
 
-  store = GTK_LIST_STORE (gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box)));
+  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
+                            "model", store,
+                            NULL);
+  g_object_unref (store);
 
   for (label = first_label, value = first_value;
        label;
@@ -189,9 +193,12 @@ gimp_int_combo_box_new_array (gint         n_values,
   g_return_val_if_fail (n_values > 0, NULL);
   g_return_val_if_fail (labels != NULL, NULL);
 
-  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
+  store = gimp_int_store_new ();
 
-  store = GTK_LIST_STORE (gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box)));
+  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
+                            "model", store,
+                            NULL);
+  g_object_unref (store);
 
   for (i = 0; i < n_values; i++)
     {
@@ -229,26 +236,12 @@ gimp_int_combo_box_set_active (GimpIntComboBox *combo_box,
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
-  gboolean      iter_valid;
 
   g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box), FALSE);
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
-  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
-       iter_valid;
-       iter_valid = gtk_tree_model_iter_next (model, &iter))
-    {
-      gint  this;
-
-      gtk_tree_model_get (model, &iter,
-                          GIMP_INT_STORE_VALUE, &this,
-                          -1);
-      if (this == value)
-        break;
-    }
-
-  if (iter_valid)
+  if (gimp_int_store_lookup_by_value (model, value, &iter))
     {
       gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
       return TRUE;

@@ -22,7 +22,7 @@
 #ifndef __GIMP_ENUM_COMBO_BOX_H__
 #define __GIMP_ENUM_COMBO_BOX_H__
 
-#include <gtk/gtkcombobox.h>
+#include <libgimpwidgets/gimpintcombobox.h>
 
 
 #define GIMP_TYPE_ENUM_COMBO_BOX            (gimp_enum_combo_box_get_type ())
@@ -37,23 +37,18 @@ typedef struct _GimpEnumComboBoxClass  GimpEnumComboBoxClass;
 
 struct _GimpEnumComboBoxClass
 {
-  GtkComboBoxClass  parent_instance;
+  GimpIntComboBoxClass  parent_instance;
 };
 
 struct _GimpEnumComboBox
 {
-  GtkComboBox       parent_instance;
+  GimpIntComboBox       parent_instance;
 };
 
 
 GType       gimp_enum_combo_box_get_type         (void) G_GNUC_CONST;
 
 GtkWidget * gimp_enum_combo_box_new              (GType             enum_type);
-GtkWidget * gimp_enum_combo_box_new_with_model   (GimpEnumStore    *enum_store);
-gboolean    gimp_enum_combo_box_set_active       (GimpEnumComboBox *combo_box,
-                                                  gint              value);
-gboolean    gimp_enum_combo_box_get_active       (GimpEnumComboBox *combo_box,
-                                                  gint             *value);
 
 void        gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
                                                   const gchar      *stock_prefix);

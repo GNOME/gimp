@@ -22,17 +22,7 @@
 #ifndef __GIMP_ENUM_STORE_H__
 #define __GIMP_ENUM_STORE_H__
 
-#include <gtk/gtkliststore.h>
-
-
-typedef enum
-{
-  GIMP_ENUM_STORE_VALUE,
-  GIMP_ENUM_STORE_LABEL,
-  GIMP_ENUM_STORE_ICON,
-  GIMP_ENUM_STORE_USER_DATA,
-  GIMP_ENUM_STORE_NUM_COLUMNS
-} GimpEnumStoreColumns;
+#include <libgimpwidgets/gimpintstore.h>
 
 
 #define GIMP_TYPE_ENUM_STORE            (gimp_enum_store_get_type ())
@@ -47,14 +37,14 @@ typedef struct _GimpEnumStoreClass  GimpEnumStoreClass;
 
 struct _GimpEnumStoreClass
 {
-  GtkListStoreClass  parent_instance;
+  GimpIntStoreClass  parent_instance;
 };
 
 struct _GimpEnumStore
 {
-  GtkListStore   parent_instance;
+  GimpIntStore       parent_instance;
 
-  GEnumClass    *enum_class;
+  GEnumClass        *enum_class;
 };
 
 
@@ -70,10 +60,6 @@ GtkListStore * gimp_enum_store_new_with_values        (GType    enum_type,
 GtkListStore * gimp_enum_store_new_with_values_valist (GType    enum_type,
                                                        gint     n_values,
                                                        va_list  args);
-
-gboolean       gimp_enum_store_lookup_by_value  (GtkTreeModel  *model,
-                                                 gint           value,
-                                                 GtkTreeIter   *iter);
 
 void           gimp_enum_store_set_stock_prefix (GimpEnumStore *store,
                                                  const gchar   *stock_prefix);

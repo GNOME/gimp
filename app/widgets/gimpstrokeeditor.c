@@ -265,7 +265,7 @@ gimp_stroke_editor_constructor (GType                   type,
                     G_CALLBACK (gimp_stroke_editor_dash_preset),
                     editor->options);
   g_signal_connect_object (editor->options, "dash_info_changed",
-                           G_CALLBACK (gimp_enum_combo_box_set_active),
+                           G_CALLBACK (gimp_int_combo_box_set_active),
                            box, G_CONNECT_SWAPPED);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
@@ -340,6 +340,6 @@ gimp_stroke_editor_dash_preset (GtkWidget *widget,
 {
   gint value;
 
-  if (gimp_enum_combo_box_get_active (GIMP_ENUM_COMBO_BOX (widget), &value))
+  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
     gimp_stroke_options_set_dash_preset (GIMP_STROKE_OPTIONS (data), value);
 }

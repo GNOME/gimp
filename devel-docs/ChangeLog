@@ -2,8 +2,16 @@
 
 	* libgimpwidgets/libgimpwidgets-docs.sgml
 	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types
+	* libgimpwidgets/tmpl/gimpintstore.sgml: added docs for GimpIntStore.
+
+2004-04-20  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
 	* libgimpwidgets/tmpl/gimpoldwidgets.sgml
-	* libgimpwidgets/tmpl/gimpwidgets.sgml
+	* libgimpwidgets/tmpl/gimpwidgets.sgml: added a new chapter for
+	deprecated API.
 
 2004-04-20  Sven Neumann  <sven@gimp.org>
 

@@ -709,14 +709,13 @@ resize_widget_new (GimpViewable *viewable,
       gtk_widget_show (label);
 
       combo = gimp_enum_combo_box_new (GIMP_TYPE_INTERPOLATION_TYPE);
-      gimp_enum_combo_box_set_active (GIMP_ENUM_COMBO_BOX (combo),
-                                      resize->interpolation);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                     resize->interpolation);
+
       g_signal_connect (combo, "changed",
-                        G_CALLBACK (gimp_enum_combo_box_get_active),
+                        G_CALLBACK (gimp_int_combo_box_get_active),
                         &resize->interpolation);
 
-      gimp_enum_combo_box_set_active (GIMP_ENUM_COMBO_BOX (combo),
-                                      resize->interpolation);
       gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
       gtk_widget_show (combo);
 
@@ -896,8 +895,8 @@ response_callback (GtkWidget *widget,
           resize->interpolation =
             resize->gimage->gimp->config->interpolation_type;
 
-          gimp_enum_combo_box_set_active (GIMP_ENUM_COMBO_BOX (private->interpolation_menu),
-                                          resize->interpolation);
+          gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->interpolation_menu),
+                                         resize->interpolation);
         }
       break;
 

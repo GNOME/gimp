@@ -161,6 +161,24 @@ GIMP_PIXMAP_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpintstore</FILE>
+<TITLE>GimpIntStore</TITLE>
+GimpIntStore
+GimpIntStoreColumns
+gimp_int_store_new
+gimp_int_store_lookup_by_value
+<SUBSECTION Standard>
+GimpIntStoreClass
+GIMP_INT_STORE
+GIMP_IS_INT_STORE
+GIMP_TYPE_INT_STORE
+gimp_int_store_get_type
+GIMP_INT_STORE_CLASS
+GIMP_IS_INT_STORE_CLASS
+GIMP_INT_STORE_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpintcombobox</FILE>
 <TITLE>GimpIntComboBox</TITLE>
 GimpIntComboBox

@@ -387,7 +387,7 @@ gimp_histogram_editor_item_visible (GtkTreeModel *model,
   GimpHistogramChannel  channel;
 
   gtk_tree_model_get (model, iter,
-                      GIMP_ENUM_STORE_VALUE, &channel,
+                      GIMP_INT_STORE_VALUE, &channel,
                       -1);
 
   switch (channel)

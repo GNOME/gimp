@@ -322,7 +322,9 @@ gimp_prop_enum_combo_box_new (GObject     *config,
       store = gimp_enum_store_new_with_range (param_spec->value_type,
                                               minimum, maximum);
 
-      combo_box = gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));
+      combo_box = g_object_new (GIMP_TYPE_ENUM_COMBO_BOX,
+                                "model", store,
+                                NULL);
 
       g_object_unref (store);
     }
@@ -331,7 +333,7 @@ gimp_prop_enum_combo_box_new (GObject     *config,
       combo_box = gimp_enum_combo_box_new (param_spec->value_type);
     }
 
-  gimp_enum_combo_box_set_active (GIMP_ENUM_COMBO_BOX (combo_box), value);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo_box), value);
 
   g_signal_connect (combo_box, "changed",
                     G_CALLBACK (gimp_prop_enum_combo_box_callback),
@@ -357,7 +359,7 @@ gimp_prop_enum_combo_box_callback (GtkWidget *widget,
   if (! param_spec)
     return;
 
-  if (gimp_enum_combo_box_get_active (GIMP_ENUM_COMBO_BOX (widget), &value))
+  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
     {
       g_object_set (config,
                     param_spec->name, value,
@@ -376,7 +378,7 @@ gimp_prop_enum_combo_box_notify (GObject    *config,
                 param_spec->name, &value,
                 NULL);
 
-  gimp_enum_combo_box_set_active (GIMP_ENUM_COMBO_BOX (combo_box), value);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo_box), value);
 }
 
 
@@ -441,7 +443,7 @@ gimp_prop_boolean_combo_box_callback (GtkWidget *widget,
   if (! param_spec)
     return;
 
-  value =  gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
+  value = gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
 
   g_object_set (config,
                 param_spec->name, value ? FALSE : TRUE,

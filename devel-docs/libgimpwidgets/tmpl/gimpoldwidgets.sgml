@@ -9,12 +9,10 @@ Old API that is still available but declared as deprecated.
 These functions are not defined if you #define GIMP_DISABLE_DEPRECATED.
 </para>
 
-
 <!-- ##### SECTION See_Also ##### -->
 <para>
 GimpIntComboBox
 </para>
-
 
 <!-- ##### FUNCTION gimp_int_option_menu_new ##### -->
 <para>
