@@ -1,3 +1,8 @@
+Sun Jun  7 18:44:17 EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	* plug-ins/webbrowser/web-browser.scm: changed the URL for the
+	Manual
+
 Sun Jun  7 12:39:56 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/libgck/gck/gcktypes.h
@@ -13,8 +18,8 @@ Sun Jun  7 11:04:38 1998  Tim Janik  <timj@gtk.org>
 
 	* app/commands.h:
  	* app/commands.c:
-	(tips_dialog_cmd_callback): 
-	(filters_repeat_cmd_callback): 
+	(tips_dialog_cmd_callback):
+	(filters_repeat_cmd_callback):
 	(tools_select_cmd_callback): make use of the callback_action argument.
 
 	* app/main.c (main): removed gtk_accelerator_table_set_mod_mask(),
@@ -22,8 +27,8 @@ Sun Jun  7 11:04:38 1998  Tim Janik  <timj@gtk.org>
 
 	* app/layers_dialog.c:
 	* app/interface.c:
-	* app/indexed_palette.c: 
-	* app/channels_dialog.c: 
+	* app/indexed_palette.c:
+	* app/channels_dialog.c:
 	* app/buildmenu.c:
  	conversions for use of GtkAccelGroup.
 
@@ -31,7 +36,7 @@ Sun Jun  7 11:04:38 1998  Tim Janik  <timj@gtk.org>
 	* app/gradient.c:
 	installed accelerators are locked, because these code portions don't
 	support accelerator saving.
-	
+
 	* ChangeLog:
 	* ChangeLog.pre-1-0: ChangeLog split up.
 
@@ -122,4 +127,3 @@ Thu Jun  4 18:12:14 MEST 1998 Sven Neumann <sven@gimp.org>
 Tue Jun  2 16:40:33 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* Made 1.0.0 release
-
