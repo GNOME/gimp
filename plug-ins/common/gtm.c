@@ -145,7 +145,7 @@ query (void)
     { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" }
   };
 
-  gimp_install_procedure ("file_GTM_save",
+  gimp_install_procedure ("file_gtm_save",
                           "GIMP Table Magic",
                           "Allows you to draw an HTML table in GIMP. See help for more info.",
                           "Daniel Dunbar",
@@ -157,7 +157,7 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_save_handler ("file_GTM_save",
+  gimp_register_save_handler ("file_gtm_save",
 			      "html,htm",
 			      "");
 }
@@ -183,13 +183,13 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  gimp_get_data ("file_GTM_save", &gtmvals);
+  gimp_get_data ("file_gtm_save", &gtmvals);
 
   if (save_dialog (param[1].data.d_int32))
     {
       if (save_image (param[3].data.d_string, drawable))
 	{
-	  gimp_set_data ("file_GTM_save", &gtmvals, sizeof (GTMValues));
+	  gimp_set_data ("file_gtm_save", &gtmvals, sizeof (GTMValues));
 	}
       else
 	{

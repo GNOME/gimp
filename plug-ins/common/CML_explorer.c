@@ -89,7 +89,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 #define PARAM_FILE_FORMAT_VERSION 1.0
-#define	PLUG_IN_NAME	          "plug_in_CML_explorer"
+#define PLUG_IN_NAME              "plug_in_cml_explorer"
 #define SHORT_NAME                "CML_explorer"
 #define HELP_ID                   "plug-in-cml-explorer"
 #define VALS                      CML_explorer_vals

@@ -1,3 +1,10 @@
+2004-03-18  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/gtm.c: changed procedure names to be all
+	lowercase so 2.0 ships with a sane namespace and doesn't give bad
+	examples to plug-in authors.
+
 2004-03-18  Sven Neumann  <sven@gimp.org>
 
 	Added support for localized help (bug #136996). Will need some
