@@ -373,9 +373,9 @@ dialogs_buffer_list_view_new (GimpDialogFactory *factory,
 }
 
 GtkWidget *
-dialogs_document_list_new (GimpDialogFactory *factory,
-                           GimpContext       *context,
-                           gint               preview_size)
+dialogs_document_list_view_new (GimpDialogFactory *factory,
+                                GimpContext       *context,
+                                gint               preview_size)
 {
   return gimp_document_view_new (GIMP_VIEW_TYPE_LIST,
                                  context->gimp->documents,
@@ -385,9 +385,9 @@ dialogs_document_list_new (GimpDialogFactory *factory,
 }
 
 GtkWidget *
-dialogs_template_list_new (GimpDialogFactory *factory,
-                           GimpContext       *context,
-                           gint               preview_size)
+dialogs_template_list_view_new (GimpDialogFactory *factory,
+                                GimpContext       *context,
+                                gint               preview_size)
 {
   return gimp_template_view_new (GIMP_VIEW_TYPE_LIST,
                                  context->gimp->templates,
@@ -505,14 +505,26 @@ dialogs_buffer_grid_view_new (GimpDialogFactory *factory,
 }
 
 GtkWidget *
-dialogs_document_grid_new (GimpDialogFactory *factory,
-                           GimpContext       *context,
-                           gint               preview_size)
+dialogs_document_grid_view_new (GimpDialogFactory *factory,
+                                GimpContext       *context,
+                                gint               preview_size)
 {
   return gimp_document_view_new (GIMP_VIEW_TYPE_GRID,
                                  context->gimp->documents,
                                  context,
-                                 preview_size, 1,
+                                 preview_size, 0,
+                                 factory->menu_factory);
+}
+
+GtkWidget *
+dialogs_template_grid_view_new (GimpDialogFactory *factory,
+                                GimpContext       *context,
+                                gint               preview_size)
+{
+  return gimp_template_view_new (GIMP_VIEW_TYPE_GRID,
+                                 context->gimp->templates,
+                                 context,
+                                 preview_size, 0,
                                  factory->menu_factory);
 }
 

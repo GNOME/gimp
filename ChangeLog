@@ -1,3 +1,11 @@
+2004-09-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/dialogs-constrcutors.[ch]: renamed some constructors
+	for consistency and added a (useless) template grid.
+
+	* app/dialogs/dialogs.c: make the arrays of GimpDialogFactoryEntries
+	more readable by using macros to define them.
+
 2004-09-27  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagefile.c: removed conversion to TempBuf.

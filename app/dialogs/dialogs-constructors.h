@@ -105,10 +105,10 @@ GtkWidget * dialogs_tool_list_view_new     (GimpDialogFactory *factory,
 GtkWidget * dialogs_buffer_list_view_new   (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               preview_size);
-GtkWidget * dialogs_document_list_new      (GimpDialogFactory *factory,
+GtkWidget * dialogs_document_list_view_new (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               preview_size);
-GtkWidget * dialogs_template_list_new      (GimpDialogFactory *factory,
+GtkWidget * dialogs_template_list_view_new (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               preview_size);
 
@@ -136,7 +136,10 @@ GtkWidget * dialogs_tool_grid_view_new     (GimpDialogFactory *factory,
 GtkWidget * dialogs_buffer_grid_view_new   (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               preview_size);
-GtkWidget * dialogs_document_grid_new      (GimpDialogFactory *factory,
+GtkWidget * dialogs_document_grid_view_new (GimpDialogFactory *factory,
+                                            GimpContext       *context,
+                                            gint               preview_size);
+GtkWidget * dialogs_template_grid_view_new (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               preview_size);
 
