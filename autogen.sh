@@ -77,19 +77,34 @@ if test x$LIBTOOLIZE != x; then
     check_version $VER $LIBTOOL_REQUIRED_VERSION
 fi
 
+# check if gtk-doc is explicitely disabled
+for ag_option in $AUTOGEN_CONFIGURE_ARGS $@
+do
+  case $ag_option in
+    -disable-gtk-doc | --disable-gtk-doc)
+    enable_gtk_doc=no
+  ;;
+  esac
+done
 
-echo -n "checking for gtkdocize ... "
-if (gtkdocize --version) < /dev/null > /dev/null 2>&1; then
-    echo "yes"
+if test x$enable_gtk_doc = xno; then
+  echo "skipping test for gtkdocize"
 else
-    echo
-    echo "  You must have gtk-doc installed to compile $PROJECT."
-    echo "  Install the appropriate package for your distribution,"
-    echo "  or get the source tarball at"
-    echo "  http://ftp.gnome.org/pub/GNOME/sources/gtk-doc/"
-    DIE=1
+  echo -n "checking for gtkdocize ... "
+  if (gtkdocize --version) < /dev/null > /dev/null 2>&1; then
+      echo "yes"
+  else
+      echo
+      echo "  You must have gtk-doc installed to compile $PROJECT."
+      echo "  Install the appropriate package for your distribution,"
+      echo "  or get the source tarball at"
+      echo "  http://ftp.gnome.org/pub/GNOME/sources/gtk-doc/"
+      echo "  You can also use the option --disable-gtk-doc to skip"
+      echo "  this test but then you will not be able to generate a"
+      echo "  configure script that can build the API documentation."
+      DIE=1
+  fi
 fi
-
 
 echo -n "checking for autoconf >= $AUTOCONF_REQUIRED_VERSION ... "
 if (autoconf --version) < /dev/null > /dev/null 2>&1; then
@@ -211,7 +226,7 @@ fi
 if test -z "$ACLOCAL_FLAGS"; then
 
     acdir=`$ACLOCAL --print-ac-dir`
-    m4list="glib-2.0.m4 glib-gettext.m4 gtk-doc.m4 gtk-2.0.m4 intltool.m4 pkg.m4"
+    m4list="glib-2.0.m4 glib-gettext.m4 gtk-2.0.m4 intltool.m4 pkg.m4"
 
     for file in $m4list
     do
@@ -220,9 +235,9 @@ if test -z "$ACLOCAL_FLAGS"; then
 	    echo "WARNING: aclocal's directory is $acdir, but..."
             echo "         no file $acdir/$file"
             echo "         You may see fatal macro warnings below."
-            echo "         If these files are installed in /some/dir, set the ACLOCAL_FLAGS "
-            echo "         environment variable to \"-I /some/dir\", or install"
-            echo "         $acdir/$file."
+            echo "         If these files are installed in /some/dir, set the "
+            echo "         ACLOCAL_FLAGS environment variable to \"-I /some/dir\""
+            echo "         or install $acdir/$file."
             echo
         fi
     done
@@ -238,7 +253,18 @@ if test $RC -ne 0; then
 fi
 
 $LIBTOOLIZE --force || exit $?
-gtkdocize || exit $?
+
+if test x$enable_gtk_doc = xno; then
+    if test -f gtk-doc.make; then :; else
+       echo "EXTRA_DIST = missing-gtk-doc" > gtk-doc.make
+    fi
+    echo "WARNING: You have disabled gtk-doc."
+    echo "         As a result, you will not be able to generate the API"
+    echo "         documentation and 'make dist' will not work."
+    echo
+else
+    gtkdocize || exit $?
+fi
 
 # optionally feature autoheader
 (autoheader --version)  < /dev/null > /dev/null 2>&1 && autoheader || exit 1

@@ -1,30 +1,30 @@
 ## Process this file with automake to produce Makefile.in
 
 SUBDIRS = \
-	m4macros		\
-	tools			\
-	regexrepl		\
-	cursors			\
-	themes			\
-	po			\
-	po-libgimp		\
-	po-plug-ins		\
-	po-script-fu		\
-	data			\
-	menus			\
-	tips			\
-	libgimpbase		\
-	libgimpcolor		\
-	libgimpmath		\
-	libgimpmodule		\
-	libgimpthumb		\
-	libgimpwidgets		\
-	libgimp			\
-	app			\
-	$(GIMP_MODULES)		\
-	$(GIMP_PLUGINS)		\
-	etc			\
-	$(GIMP_DEVEL_DOCS)	\
+	m4macros	\
+	tools		\
+	regexrepl	\
+	cursors		\
+	themes		\
+	po		\
+	po-libgimp	\
+	po-plug-ins	\
+	po-script-fu	\
+	data		\
+	menus		\
+	tips		\
+	libgimpbase	\
+	libgimpcolor	\
+	libgimpmath	\
+	libgimpmodule	\
+	libgimpthumb	\
+	libgimpwidgets	\
+	libgimp		\
+	app		\
+	$(GIMP_MODULES)	\
+	$(GIMP_PLUGINS)	\
+	etc		\
+	devel-docs	\
 	docs
 
 bin_SCRIPTS = gimptool-@GIMP_TOOL_VERSION@ @GIMPINSTALL@

@@ -1,5 +1,19 @@
 2005-01-20  Sven Neumann  <sven@gimp.org>
 
+	* HACKING
+	* Makefile.am
+	* acinclude.m4
+	* autogen.sh: applied (modified) patch from Raphaël Quinet that
+	allows to build GIMP from CVS without having gtk-doc installed.
+	If you need to do this, pass --disable-gtk-doc to autogen.sh.
+
+	* configure.in: removed --disable-devel-docs option since it has
+	become obsolete now.
+
+	* devel-docs/Makefile.am: require gtk-doc when running 'make dist'.
+
+2005-01-20  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/scale-funcs.[ch]: applied patch from Geert
 	Jordaens that improves results of the Lanczos interpolation
 	routine.
