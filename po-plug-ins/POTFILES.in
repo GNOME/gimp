@@ -101,7 +101,7 @@ plug-ins/common/plugindetails.c
 plug-ins/common/png.c
 plug-ins/common/pnm.c
 plug-ins/common/polar.c
-plug-ins/common/ps.c
+plug-ins/common/postscript.c
 plug-ins/common/psd.c
 plug-ins/common/psd_save.c
 plug-ins/common/psp.c
