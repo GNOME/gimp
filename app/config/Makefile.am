@@ -58,6 +58,8 @@ INCLUDES = \
 
 EXTRA_PROGRAMS = test-config
 
+EXTRA_DIST = makefile.msc
+
 #
 # unit tests for the GimpConfig system
 #

@@ -5,16 +5,6 @@ EXPORTS
 	gimp_channel_menu_new
 	gimp_drawable_menu_new
 	gimp_export_image
-	gimp_fixme_preview_do_row
-	gimp_fixme_preview_fill
-	gimp_fixme_preview_fill_scaled
-	gimp_fixme_preview_fill_with_thumb
-	gimp_fixme_preview_free
-	gimp_fixme_preview_get_pixel
-	gimp_fixme_preview_new
-	gimp_fixme_preview_new2
-	gimp_fixme_preview_put_pixel
-	gimp_fixme_preview_update
 	gimp_font_select_widget_close
 	gimp_font_select_widget_new
 	gimp_font_select_widget_set
@@ -23,7 +13,6 @@ EXPORTS
 	gimp_gradient_select_widget_set
 	gimp_image_menu_new
 	gimp_layer_menu_new
-	gimp_parameter_settings_new
 	gimp_pattern_select_widget_close
 	gimp_pattern_select_widget_new
 	gimp_pattern_select_widget_set

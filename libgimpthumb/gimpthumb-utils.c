@@ -176,7 +176,7 @@ gimp_thumb_find_thumb (const gchar   *uri,
   gint         i, n;
 
   g_return_val_if_fail (gimp_thumb_initialized, NULL);
-  g_return_val_if_fail (size > GIMP_THUMB_SIZE_FAIL, NULL);
+  g_return_val_if_fail (*size > GIMP_THUMB_SIZE_FAIL, NULL);
 
   name = gimp_thumb_png_name (uri);
 

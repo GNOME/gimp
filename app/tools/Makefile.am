@@ -157,6 +157,7 @@ INCLUDES = \
 	$(GTK_CFLAGS)		\
 	-I$(includedir)
 
+EXTRA_DIST = makefile.msc
 
 #
 # rules to generate built sources

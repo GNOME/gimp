@@ -60,6 +60,7 @@ EXTRA_DIST = \
 	intltool-extract.in	\
 	intltool-merge.in	\
 	intltool-update.in	\
+	makefile.msc	\
 	po-libgimp/update.sh	\
 	po-plug-ins/update.sh	\
 	po-script-fu/update.sh

@@ -10,6 +10,7 @@ SUBDIRS = \
 	libgimpbase \
 	libgimpcolor \
 	libgimpmath \
+	libgimpthumb \
 	libgimpwidgets \
 	libgimp \
 #	libgimptool \
@@ -35,7 +36,7 @@ sub-clean:
 sub-themes:
 	cd themes\Default\images
 	nmake -nologo -f makefile.msc
-	cd ....
+	cd ..\..\..
 
 all : \
 	$(PRJ_TOP)\config.h \

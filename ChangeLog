@@ -1,3 +1,35 @@
+2003-12-12  Hans Breuer  <hans@breuer.org>
+
+	[
+	 I've postponed my reservations against pangoft2/fontconfig/freetype2
+	 usage, so The Gimp should now build with msvc without patching it.
+	]
+
+	* app/makefile.msc app/text/makefile.msc : use $(PANGOFT2_CFLAGS) etc.
+
+	* libgimpthumb/makefile.msc : (new file)
+	* makefile.msc : added libgimpthumb
+
+	* libgimpthumb/gimpthumbnail.c : include gimpwin32-io.h
+	* libgimpthumb/gimpthumb-utils.c : don't compare size pointer
+	with GIMP_THUMB_SIZE_FAIL but *size 
+
+	* plug-ins/makefile.msc : handle libgimpoldpreview
+
+	* plug-ins/common/decompose.c : define cbrt() if not __GLIBC__
+
+	* plug-ins/common/winclipboard.c : make it compile without gimpcompat.h
+
+	* plug-ins/imagemap/imagemap_csim_lex.c : its a generated file
+	but still win32/msvc has no unistd.h
+
+	* plug-ins/pygimp/makefile.msc : (new file) to use the binary you 
+	need to patch glib, see bug #98737
+
+	* plug-ins/libgimpoldpreview.c : use <libgimp/gimp.h> instead of "gimp.h"
+
+	* **/Makefile.am : added makefile.msc to EXTRA_DIST
+
 2003-12-12  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimplayer.h: removed preserve_transparency #defines.

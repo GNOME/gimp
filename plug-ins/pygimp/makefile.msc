@@ -1,0 +1,27 @@
+MODULE = gimp
+#OPTIMIZE = -Od -Op
+#DEBUG=1
+
+OBJECTS = \
+  gimpmodule.obj \
+  pygimp-image.obj \
+  pygimp-drawable.obj \
+  pygimp-tile.obj \
+  pygimp-display.obj \
+  pygimp-parasite.obj \
+  pygimp-pdb.obj
+
+PYTHON = ..\..\..\..\python22
+!IFNDEF DEBUG
+EXTRALIBS = $(PYTHON)\libs\python22.lib user32.lib
+!ELSE
+EXTRALIBS = $(PYTHON)\libs\python22_d.lib user32.lib
+!ENDIF
+
+EXTRACFLAGS = -I$(PYTHON)\include
+GIMPTOP=..\.. 
+
+# Lib Extension is
+MODULE_EXT = pyd
+
+!include ..\makefile.msc

@@ -296,7 +296,8 @@ themedata_DATA = $(STOCK_IMAGES)
 EXTRA_DIST = \
 	$(themedata_DATA)	\
 	$(WILBER_IMAGES)	\
-	gimp-dialog-icons.xcf.gz
+	gimp-dialog-icons.xcf.gz \
+	makefile.msc
 
 
 noinst_DATA = gimp-stock-pixbufs.h gimp-wilber-pixbufs.h

@@ -671,7 +671,7 @@ CB_PasteImage (gboolean interactive,
 	gimp_display_new (image_ID);
       else
 	{
-	  gimp_layer_set_visible (drawable_ID, TRUE);
+	  gimp_drawable_set_visible (drawable_ID, TRUE);
 	  gimp_displays_flush ();
 	}
     }

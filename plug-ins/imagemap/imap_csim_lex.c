@@ -26,8 +26,13 @@
 #define YY_FLEX_MINOR_VERSION 5
 
 #include <stdio.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
-
+#endif
+#ifdef _WIN32
+#include <io.h>
+#define isatty(h) _isatty(h)
+#endif
 
 /* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
 #ifdef c_plusplus

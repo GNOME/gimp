@@ -15,4 +15,5 @@ AM_CPPFLAGS = \
 
 EXTRA_DIST = \
 	regex.c		\
-	regex.h
+	regex.h		\
+	makefile.msc

@@ -40,6 +40,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#ifndef __GLIBC__
+/* cbrt() is a GNU extension */
+#define cbrt(x) (pow(x, 1.0/3.0)) 
+#endif
 
 /* Declare local functions
  */

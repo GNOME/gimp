@@ -7,6 +7,7 @@ PKG_VER = 1.3
 
 PKG_LINK = \
 	$(GLIB_LIBS) $(PANGOFT2_LIBS) \
+	$(FREETYPE2_LIBS) \
 	..\config\appconfig-$(PKG_VER).lib \
 	..\base\appbase-$(PKG_VER).lib \
 	..\..\libgimpbase\gimpbase-$(PKG_VER).lib \
@@ -19,9 +20,14 @@ OBJECTS = \
 	gimpfontlist.obj \
 	gimptext.obj \
 	gimptext-parasite.obj \
+!IFNDEF PANGO_WIN32_EXTENDED
+	gimptext-bitmap.obj \
+	gimptext-vectors.obj \
+!ELSE
 	gimptext-bitmap-win32.obj \
-	gimptext-compat.obj \
 	gimptext-vectors-win32.obj \
+!ENDIF
+	gimptext-compat.obj \
 	gimptext-xlfd.obj \
 	gimptextlayer.obj \
 	gimptextlayer-xcf.obj \
@@ -37,8 +43,9 @@ INCLUDES = \
 	$(GLIB_CFLAGS) \
 	$(FONTCONFIG_CFLAGS) \
 	$(PANGO_CFLAGS) $(GTK2_CFLAGS) \
-
-# $(FREETYPE2_CFLAGS) 
+!IFNDEF PANGO_WIN32_EXTENDED
+	$(FREETYPE2_CFLAGS) 
+!ENDIF
 
 all : \
 	$(PRJ_TOP)\config.h \

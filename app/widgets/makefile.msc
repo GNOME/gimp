@@ -29,6 +29,7 @@ OBJECTS = \
 	gimpcellrenderertoggle.obj \
 	gimpcellrendererviewable.obj \
 	gimpchanneltreeview.obj \
+	gimpcolordisplayeditor.obj \
 	gimpcoloreditor.obj \
 	gimpcolorframe.obj \
 	gimpcolormapeditor.obj \

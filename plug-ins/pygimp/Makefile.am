@@ -40,3 +40,5 @@ install-data-local:
 
 snap:
 	$(MAKE) dist distdir=$(PACKAGE)-SNAP-`date +"%Y%m%d"`
+
+EXTRA_DIST = makefile.msc

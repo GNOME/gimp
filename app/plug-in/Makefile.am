@@ -37,3 +37,5 @@ libappplug_in_a_SOURCES = \
 	plug-in-run.h		\
 	plug-in-shm.c		\
 	plug-in-shm.h
+
+EXTRA_DIST = makefile.msc

@@ -75,7 +75,12 @@ sub-libs:
 	cd libgck\gck
 	nmake -nologo -f ..\..\makefile.msc GIMPTOP=..\..\.. LIBRARY=gck OBJECTS="gckcolor.obj" $(TARGET)
 	cd ..\..
-
+	cd libgimpoldpreview
+	nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. LIBRARY=gimpoldpreview OBJECTS="gimpoldpreview.obj" $(TARGET)
+	cd ..
+	cd script-fu\siod
+	nmake -nologo -f ..\..\makefile.msc GIMPTOP=..\..\.. LIBRARY=siod OBJECTS="trace.obj slib.obj sliba.obj regex.obj" $(TARGET)
+	cd ..\..
 
 
 common-plugins-all :
@@ -283,8 +288,10 @@ OBJECTS = \
 	gfig-circle.obj \
 	gfig-dobject.obj \
 	gfig-ellipse.obj \
+	gfig-grid.obj \
 	gfig-line.obj \
 	gfig-poly.obj \
+	gfig-preview.obj \
 	gfig-spiral.obj \
 	gfig-star.obj \
 	gfig-stock.obj
@@ -421,11 +428,6 @@ OPTIMIZE =
 
 !IFDEF EXTRA_script_fu
 OBJECTS = \
-	interp_md5.obj \
-	interp_regex.obj \
-	interp_slib.obj \
-	interp_sliba.obj \
-	interp_trace.obj \
 	siod-wrapper.obj \
 	script-fu.obj \
 	script-fu-console.obj \
@@ -433,7 +435,7 @@ OBJECTS = \
 	script-fu-scripts.obj \
 	script-fu-text-console.obj \
 	..\dbbrowser\dbbrowser_utils.obj
-EXTRALIBS = ..\..\regexrepl\regexrepl.lib kernel32.lib 
+EXTRALIBS = ..\..\regexrepl\regexrepl.lib siod\siod.lib kernel32.lib 
 EXTRACFLAGS = -DREGEX_MALLOC
 HAVE_RESOURCE = YES
 !ENDIF
@@ -499,7 +501,12 @@ OBJECTS = \
 !ENDIF
 
 !IFDEF EXTRA_helpbrowser
-OBJECTS = helpwin.obj
+OBJECTS = \
+	helpbrowser.obj	\
+	domain.obj	\
+	dialog.obj	\
+	queue.obj		\
+	uri.obj
 !ENDIF
 
 !IFDEF EXTRA_guash
@@ -598,7 +605,8 @@ CC = cl -nologo -G5 -GF $(OPTIMIZE) $(RTL) -W2 -Zm200
 CFLAGS = -FImsvc_recommended_pragmas.h \
 	-DHAVE_CONFIG_H $(EXTRACFLAGS) \
 	-DLOCALEDIR=\"?\" \
-	-I. -I$(GIMPTOP) -I$(PLUGINDIR) $(GTK2_CFLAGS) $(INTL_CFLAGS)
+	-I. -I$(GIMPTOP) -I$(PLUGINDIR) -I$(PLUGINDIR)\libgimpoldpreview \
+	$(GTK2_CFLAGS) $(INTL_CFLAGS)
 
 LDFLAGS = /link /subsystem:console /machine:ix86 $(LINKDEBUG)
 
@@ -631,6 +639,7 @@ $(PLUGIN).exe :  $(EXTRA_DEPS) $(OBJECTS) $(RESOURCE)
 	..\..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
 	..\..\libgimpmath\gimpmath-$(GIMP_VER).lib \
 	..\..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
+	..\libgimpoldpreview\gimpoldpreview.lib \
 	$(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS) $(EXTRALIBS) $(LDFLAGS)
 
 $(PLUGIN).res : $(PLUGIN).rc

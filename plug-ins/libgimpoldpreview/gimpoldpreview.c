@@ -33,10 +33,10 @@
 #undef GTK_DISABLE_DEPRECATED
 #include <gtk/gtk.h>
 
-#include "gimp.h"
+#include <libgimp/gimp.h>
 #include "gimpoldpreview.h"
 
-#include "libgimp-intl.h"
+#include <libgimp/libgimp-intl.h>
 
 
 #define PREVIEW_SIZE    128
