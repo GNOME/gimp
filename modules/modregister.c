@@ -17,11 +17,14 @@
  */
 #ifdef __EMX__
 
+#include "config.h"
+
 #include <stdio.h>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 
 #include <libgimp/color_selector.h>
+#include <libgimp/color_display.h>
 #include <libgimp/gimpmodule.h>
 #include <math.h>
 #include "modregister.h"
@@ -55,6 +58,21 @@ mod_color_selector_register (const char *name,
     return (id);
 }
 
+G_MODULE_EXPORT gboolean
+mod_color_display_register (const char              *name,
+    			     GimpColorDisplayMethods *methods)
+{
+    gboolean  retval;
+    display_reg_func reg_func;
+    
+    reg_func = (display_reg_func) get_main_func("gimp_color_display_register");
+    if (!reg_func)
+	return 0;
+    retval = (*reg_func) (name, methods);
+    return (retval);
+
+}
+
 gboolean
 mod_color_selector_unregister (GimpColorSelectorID id,
 			       void (*callback)(void *data),
@@ -67,6 +85,22 @@ mod_color_selector_unregister (GimpColorSelectorID id,
     if (unreg_func)
     {
 	status = (*unreg_func) (id, callback, data);
+    }
+    else
+	status = FALSE;
+    return (status);
+}
+
+G_MODULE_EXPORT gboolean
+mod_color_display_unregister (const char *name)
+{
+    display_unreg_func unreg_func;
+    gboolean status;
+    
+    unreg_func = (display_unreg_func) get_main_func("gimp_color_display_unregister");
+    if (unreg_func)
+    {
+	status = (*unreg_func) (name);
     }
     else
 	status = FALSE;

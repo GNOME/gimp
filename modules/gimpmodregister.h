@@ -21,6 +21,9 @@
 
 #ifdef __EMX__
 
+#include <libgimp/color_display.h>
+#include <libgimp/color_selector.h>
+
 struct main_funcs_struc {
   gchar *name;
   void (*func)();
@@ -29,9 +32,15 @@ struct main_funcs_struc {
 typedef GimpColorSelectorID (*color_reg_func)(const char *,
 					      const char *,
 					      GimpColorSelectorMethods *);
+typedef G_MODULE_EXPORT gboolean (*display_reg_func)
+                 (const char *,GimpColorDisplayMethods *);
+
 typedef gboolean (*color_unreg_func) (GimpColorSelectorID,
 				      void (*)(void *),
 				      void *);
+typedef G_MODULE_EXPORT gboolean (*display_unreg_func) (const char *name);
+
+
 GimpColorSelectorID
 mod_color_selector_register (const char *name,
 			     const char *help_page,
@@ -40,6 +49,13 @@ gboolean
 mod_color_selector_unregister (GimpColorSelectorID id,
 			       void (*callback)(void *data),
 			       void *data);
+
+G_MODULE_EXPORT gboolean
+mod_color_display_register (const char              *name,
+    			     GimpColorDisplayMethods *methods);
+
+G_MODULE_EXPORT gboolean
+mod_color_display_unregister (const char *name);
 
 #endif
 

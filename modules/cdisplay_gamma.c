@@ -26,6 +26,7 @@
 #include <libgimp/stdplugins-intl.h>
 
 #include <gtk/gtk.h>
+#include "modregister.h"
 
 #define COLOR_DISPLAY_NAME "Gamma"
 
@@ -97,7 +98,11 @@ static GimpModuleInfo info = {
 G_MODULE_EXPORT GimpModuleStatus
 module_init (GimpModuleInfo **inforet)
 {
+#ifndef __EMX__ 
   if (gimp_color_display_register (COLOR_DISPLAY_NAME, &methods))
+#else
+  if (mod_color_display_register (COLOR_DISPLAY_NAME, &methods))
+#endif
     {
       *inforet = &info;
       return GIMP_MODULE_OK;
@@ -111,7 +116,11 @@ module_unload (void *shutdown_data,
 	       void (*completed_cb)(void *),
 	       void *completed_data)
 {
+#ifndef __EMX__ 
   gimp_color_display_unregister (COLOR_DISPLAY_NAME);
+#else
+  mod_color_display_unregister (COLOR_DISPLAY_NAME);
+#endif
 }
 
 
