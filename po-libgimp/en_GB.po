@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp CVS\n"
-"POT-Creation-Date: 2000-10-15 12:23-0700\n"
+"POT-Creation-Date: 2000-10-30 21:56-0800\n"
 "PO-Revision-Date: 2000-02-02 14:02+0000\n"
 "Last-Translator: Robert Brady <robert@susu.org.uk>\n"
 "Language-Team: \n"
