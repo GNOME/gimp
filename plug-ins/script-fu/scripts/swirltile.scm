@@ -34,8 +34,7 @@
 
     (plug-in-bump-map 1 img layer-one layer-one azimuth elevation depth 0 0 0 0 FALSE FALSE 0)
 
-;    (gimp-display-new img)
-    (gimp-file-save 1 img layer-one "/home/aklikins/test.jpg" "/home/aklikins/test.jpg")
+    (gimp-display-new img)
     (gimp-image-enable-undo img)))
 
 (script-fu-register "script-fu-swirl-tile"
@@ -49,7 +48,7 @@
 		    SF-ADJUSTMENT "Azimuth" '(135 0 360 1 10 0 0)
 		    SF-ADJUSTMENT "Elevation" '(45 0 90 1 10 0 0)
 		    SF-ADJUSTMENT "Blur Radius" '(3 0 128 1 10 0 0)
-		    SF-ADJUSTMENT "height" '(256 0 1024 1 10 0 1)
+		    SF-ADJUSTMENT "Height" '(256 0 1024 1 10 0 1)
 		    SF-ADJUSTMENT "Width" '(256 0 1024 1 10 0 1)
 		    SF-ADJUSTMENT "Whirl Amount" '(320 0 360 1 10 0 0)
 		    SF-ADJUSTMENT "Roughness" '(.5 0 1 .1 .01 2 1)

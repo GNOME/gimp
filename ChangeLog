@@ -1,3 +1,8 @@
+Tue Nov  3 04:39:40 EST 1998  Adrian Likins <adrian@gimp.org>
+
+	* plug-ins/script-fu/scripts/swirl-tile.scm: ooops, I accidently
+	committed a broken file again. Found by Nick Lamb.
+
 Sun Nov  1 21:20:04 1998  Austin Donnelly  <austin@greenend.org.uk>
 
 	* libgimp/gimpfeatures.h.in: new feature: GIMP_HAVE_RESOLUTION_INFO
