@@ -653,7 +653,8 @@ pnmsaverow_ascii (PNMRowInfo    *ri,
 
   for (i = 0; i < ri->xres*ri->np; i++)
     {
-      rbcur += sprintf((char *) rbcur,"%d\n", 0xff & *(data++));
+      sprintf((char *) rbcur,"%d\n", 0xff & *(data++));
+      rbcur += strlen(rbcur);
     }
   write(ri->fd, ri->rowbuf, strlen((char *) ri->rowbuf));
 }
@@ -668,9 +669,12 @@ pnmsaverow_ascii_indexed (PNMRowInfo    *ri,
 
   for (i = 0; i < ri->xres; i++)
     {
-      rbcur += sprintf((char *) rbcur,"%d\n", 0xff & ri->red[*(data)]);
-      rbcur += sprintf((char *) rbcur,"%d\n", 0xff & ri->grn[*(data)]);
-      rbcur += sprintf((char *) rbcur,"%d\n", 0xff & ri->blu[*(data++)]);
+      sprintf((char *) rbcur,"%d\n", 0xff & ri->red[*(data)]);
+      rbcur += strlen(rbcur);
+      sprintf((char *) rbcur,"%d\n", 0xff & ri->grn[*(data)]);
+      rbcur += strlen(rbcur);
+      sprintf((char *) rbcur,"%d\n", 0xff & ri->blu[*(data++)]);
+      rbcur += strlen(rbcur);
     }
   write(ri->fd, ri->rowbuf, strlen((char *) ri->rowbuf));
 }

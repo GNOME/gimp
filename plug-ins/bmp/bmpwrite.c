@@ -1,13 +1,16 @@
 /* bmpwrite.c	Writes Bitmap files. Even RLE encoded ones.	 */
 /*		(Windows (TM) doesn't read all of those, but who */
 /*		cares? ;-)					 */
+/*              I changed a few things over the time, so perhaps */
+/*              it dos now, but now there's no Windows left on   */
+/*              my computer...                                   */
+
 /* Alexander.Schulz@stud.uni-karlsruhe.de			 */
 
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 #include "bmp.h"
@@ -113,8 +116,8 @@ WriteBMP (filename,image,drawable_ID)
 	}
       break;
     default:
-      fprintf (stderr, "%s: you should not receive this error for any reason\n", prog_name);
-      break;
+      fprintf (stderr, "%s: This should not happen\n", prog_name);
+      return FALSE;
     }
 
   /* Perhaps someone wants RLE encoded Bitmaps */
@@ -157,7 +160,7 @@ WriteBMP (filename,image,drawable_ID)
   /* ... that we write to our headers. */
   
   if ((((cols*BitsPerPixel)/8) % 4) == 0) SpZeile=((cols*BitsPerPixel)/8);
-  else SpZeile=((((cols*BitsPerPixel)/8)/4)+1)*4;
+  else SpZeile=((int)(((cols*BitsPerPixel)/8)/4)+1)*4;
   Bitmap_File_Head.bfSize=0x36+MapSize+(rows*SpZeile);
   Bitmap_File_Head.reserverd=0;
   Bitmap_File_Head.bfOffs=0x36+MapSize;
@@ -170,7 +173,7 @@ WriteBMP (filename,image,drawable_ID)
   else if (BitsPerPixel==8) Bitmap_Head.biCompr=1;
   else if (BitsPerPixel==4) Bitmap_Head.biCompr=2;
   else Bitmap_Head.biCompr=0;
-  Bitmap_Head.biSizeIm=cols*rows;
+  Bitmap_Head.biSizeIm=SpZeile*rows;
   Bitmap_Head.biXPels=1;
   Bitmap_Head.biYPels=1;
   if (BitsPerPixel<24) Bitmap_Head.biClrUsed=colors;
@@ -179,8 +182,8 @@ WriteBMP (filename,image,drawable_ID)
   
 #ifdef DEBUG
   printf("\nSize: %u, Colors: %u, Bits: %u, Width: %u, Height: %u, Comp: %u, Zeile: %u\n",
-         Bitmap_File_Head.bfSize,Bitmap_Head.biClrUsed,Bitmap_Head.biBitCnt,Bitmap_Head.biWidth,
-         Bitmap_Head.biHeight, Bitmap_Head.biCompr,SpZeile);
+         (int)Bitmap_File_Head.bfSize,(int)Bitmap_Head.biClrUsed,Bitmap_Head.biBitCnt,(int)Bitmap_Head.biWidth,
+         (int)Bitmap_Head.biHeight, (int)Bitmap_Head.biCompr,SpZeile);
 #endif
   
   /* And now write the header and the colormap (if any) to disk */
@@ -210,7 +213,7 @@ WriteBMP (filename,image,drawable_ID)
   
   /* After that is done, we write the image ... */
   
-  WriteImage(outfile, pixels, cols, rows, encoded, channels, BitsPerPixel, SpZeile);
+  WriteImage(outfile, pixels, cols, rows, encoded, channels, BitsPerPixel, SpZeile, MapSize);
 
   /* ... and exit normally */
   
@@ -237,15 +240,16 @@ void WriteColorMap(FILE *f, int red[MAXCOLORS], int green[MAXCOLORS],
     }
 }
 
-void WriteImage(f, src, width, height, encoded, channels, bpp, spzeile)
+void WriteImage(f, src, width, height, encoded, channels, bpp, spzeile, MapSize)
   FILE *f;
   guchar *src;
-  int width,height,encoded,channels,bpp,spzeile;
+  int width,height,encoded,channels,bpp,spzeile,MapSize;
 {
-  guchar buf[16];
-  char *temp,v,g;
-  int xpos,ypos,i,j,rowstride,laenge;
-  
+  guchar buf[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0};
+  guchar puffer[8];
+  guchar *temp,v,g;
+  int xpos,ypos,i,j,rowstride,laenge,thiswidth;
+
   xpos=0;
   rowstride=width*channels;
   
@@ -276,6 +280,8 @@ void WriteImage(f, src, width, height, encoded, channels, bpp, spzeile)
       {						/* uncompressed 1,4 and 8 bit */
       case 0:
         {
+	thiswidth=(width/(8/bpp));
+	if (width % (8/bpp)) thiswidth++;
         for (ypos=height-1;ypos>=0;ypos--)	/* for each row		      */
           {
           for (xpos=0;xpos<width;)		/* for each _byte_	      */
@@ -288,7 +294,7 @@ void WriteImage(f, src, width, height, encoded, channels, bpp, spzeile)
               }
             Write(f,&v,1);
             }
-          Write(f,&buf[3],spzeile-(width/(8/bpp)));
+          Write(f,&buf[3],spzeile-thiswidth);
           xpos=0;
           cur_progress++;
           if ((interactive_bmp) && ((cur_progress % 5) == 0))
@@ -367,10 +373,14 @@ void WriteImage(f, src, width, height, encoded, channels, bpp, spzeile)
           }
         fseek(f,-2,SEEK_CUR);			/* Overwrite last End of row */
         Write(f,&buf[12],2);			/* End of file */
-        
+
+        fseek(f,0x22,SEEK_SET);
+	FromL(laenge,puffer);
+	Write(f,puffer,4);
         fseek(f,0x02,SEEK_SET);
-        if (bpp==8) laenge+=0x36+(256*4); else laenge+=0x36+(16*4);
-        Write(f,&laenge,4);
+        laenge+=(0x36+MapSize);
+        FromL(laenge,puffer);
+	Write(f,puffer,4);
         break;
         }      
       }
@@ -391,12 +401,13 @@ save_dialog ()
   GtkWidget *vbox;
   gchar **argv;
   gint argc;
-
+  
   argc = 1;
   argv = g_new (gchar *, 1);
   argv[0] = g_strdup ("bmp");
 
   gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc());
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), "Save as BMP");

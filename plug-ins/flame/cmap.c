@@ -24,6 +24,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+#include "config.h"
+
 unsigned char the_cmaps[][256][3] = {
 /* south-sea-bather */
 {{185, 234, 235}, {193, 238, 235}, {197, 242, 235}, {201, 242, 235}, 
@@ -5616,7 +5618,7 @@ int get_cmap(int n, clrmap c, int cmap_len)
 {
    int i, j;
    if (cmap_random == n)
-      n = random();
+      n = RAND_FUNC ();
    if (n < 0) n = 0;
    n = n % vlen(the_cmaps);
    for (i = 0; i < cmap_len; i++) {

@@ -32,6 +32,8 @@
 #include "libgimp/gimpwire.h"
 #include "app/drawable.h"
 
+#include "config.h"
+
 #include "megawidget.h"
 
 #include "libifs.h"
@@ -169,7 +171,7 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  srandom(time(0));
+  SRAND_FUNC (time(0));
 
   run_mode = param[0].data.d_int32;
   

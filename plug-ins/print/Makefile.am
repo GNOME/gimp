@@ -7,6 +7,12 @@ pluginlib_PROGRAMS = print
 print_SOURCES = \
 	print-escp2.c print-pcl.c print-ps.c print-util.c print.c print.h   
 
+CPPFLAGS = \
+	@LP_DEF@	\
+	@LPSTAT_DEF@	\
+	@LPR_DEF@	\
+	@LPC_DEF@
+
 INCLUDES = \
 	$(X_CFLAGS)			\
 	-I$(top_srcdir)			\

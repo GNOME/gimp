@@ -205,7 +205,7 @@ run (char	*name,
      GParam	**return_vals)
 {
   static GParam	 values[1];
-  GStatusType	status = STATUS_EXECUTION_ERROR;
+  GStatusType	status = STATUS_SUCCESS;
   GRunModeType	run_mode;
   gint		drawable_id;
   
@@ -249,7 +249,8 @@ run (char	*name,
       break;
     }
   
-  status = MAIN_FUNCTION (drawable_id);
+  if (status == STATUS_SUCCESS)
+    status = MAIN_FUNCTION (drawable_id);
 
   if (run_mode != RUN_NONINTERACTIVE)
     gimp_displays_flush();

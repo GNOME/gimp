@@ -39,6 +39,25 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.6  1998/04/07 03:41:16  yosh
+ *   configure.in: fix for $srcdir != $builddir for data. Tightened check for
+ *   random() and add -lucb on systems that need it. Fix for xdelta.h check. Find
+ *   xemacs as well as emacs. Properly define settings for print plugin.
+ *
+ *   app/Makefile.am: ditch -DNDEBUG, since nothing uses it
+ *
+ *   flame: properly handle random() and friends
+ *
+ *   pnm: workaround for systems with old sprintfs
+ *
+ *   print, sgi: fold back in portability fixes
+ *
+ *   threshold_alpha: properly get params in non-interactive mode
+ *
+ *   bmp: updated and merged in
+ *
+ *   -Yosh
+ *
  *   Revision 1.5  1998/04/01 22:14:48  neo
  *   Added checks for print spoolers to configure.in as suggested by Michael
  *   Sweet. The print plug-in still needs some changes to Makefile.am to make
@@ -527,7 +546,7 @@ run(char   *name,		/* I - Name of print program. */
  * 'print_dialog()' - Pop up the print dialog...
  */
 
-int
+static int
 print_dialog(void)
 {
   int		i;		/* Looping var */
@@ -1365,7 +1384,7 @@ get_printers(void)
   memset(plist, 0, sizeof(plist));
   plist_count = 1;
   strcpy(plist[0].name, "File");
-  sprintf(plist[0].command, "file.ps", line);
+  strcpy(plist[0].command, "file.ps");
   strcpy(plist[0].driver, "ps2");
   plist[0].output_type = OUTPUT_COLOR;
 

@@ -20,7 +20,7 @@ extern gint WriteBMP (char *,gint32,gint32);
 extern gint ReadColorMap(FILE *, unsigned char[256][3], int, int, int *);
 extern Image ReadImage(FILE *, int, int, unsigned char[256][3], int, int, int, int, int);
 extern void WriteColorMap(FILE *, int *, int *, int *, int);
-extern void WriteImage(FILE *,guchar *,int,int,int,int,int,int);
+extern void WriteImage(FILE *,guchar *,int,int,int,int,int,int,int);
 
 extern int interactive_bmp;
 extern char *prog_name;

@@ -28,6 +28,25 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.5  1998/04/07 03:41:12  yosh
+ *   configure.in: fix for $srcdir != $builddir for data. Tightened check for
+ *   random() and add -lucb on systems that need it. Fix for xdelta.h check. Find
+ *   xemacs as well as emacs. Properly define settings for print plugin.
+ *
+ *   app/Makefile.am: ditch -DNDEBUG, since nothing uses it
+ *
+ *   flame: properly handle random() and friends
+ *
+ *   pnm: workaround for systems with old sprintfs
+ *
+ *   print, sgi: fold back in portability fixes
+ *
+ *   threshold_alpha: properly get params in non-interactive mode
+ *
+ *   bmp: updated and merged in
+ *
+ *   -Yosh
+ *
  *   Revision 1.4  1998/04/01 22:14:45  neo
  *   Added checks for print spoolers to configure.in as suggested by Michael
  *   Sweet. The print plug-in still needs some changes to Makefile.am to make
@@ -511,7 +530,7 @@ pcl_print(FILE      *prn,		/* I - Print file or command */
  * 'pcl_mode0()' - Send PCL graphics using mode 0 (no) compression.
  */
 
-void
+static void
 pcl_mode0(FILE          *prn,		/* I - Print file or command */
           unsigned char *line,		/* I - Output bitmap data */
           int           length,		/* I - Length of bitmap data */
@@ -526,7 +545,7 @@ pcl_mode0(FILE          *prn,		/* I - Print file or command */
  * 'pcl_mode2()' - Send PCL graphics using mode 2 (TIFF) compression.
  */
 
-void
+static void
 pcl_mode2(FILE          *prn,		/* I - Print file or command */
           unsigned char *line,		/* I - Output bitmap data */
           int           length,		/* I - Length of bitmap data */

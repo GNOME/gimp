@@ -1,4 +1,36 @@
-Sun Apr  5 17:43:50 EDT 1998 Matthew Wilson <msw@gimp.org
+Mon Apr  6 20:38:49 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: fix for $srcdir != $builddir for data. Tightened
+	check for random() and add -lucb on systems that need it. Fix for
+	xdelta.h check. Find xemacs as well as emacs. Properly define
+	settings for print plugin.
+
+	* app/Makefile.am: ditch -DNDEBUG, since nothing uses it
+
+	* plug-ins/flame/Makefile.am
+	* plug-ins/flame/cmap.c
+	* plug-ins/flame/flame.c
+	* plug-ins/flame/libifs.c: properly handle random() and friends
+
+	* plug-ins/pnm/pnm.c: workaround for systems with old sprintfs
+
+	* plug-ins/print/Makefile.am
+	* plug-ins/print/print-escp2.c
+	* plug-ins/print/print-pcl.c
+	* plug-ins/print/print-ps.c
+	* plug-ins/print/print-util.c
+	* plug-ins/print/print.c: fold in portability fixes with the new
+	source. Handle defs from configure in the Makefile
+
+	* plug-ins/sgi/sgi.c
+	* plug-ins/sgi/sgi.h: fold in portability fixes with the new source
+
+	* plug-ins/threshold_alpha/threshold_alpha: properly get params
+	in non-interactive mode
+
+	* updated bmp plugin, folded in portability fixes
+
+Sun Apr  5 17:43:50 EDT 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/bezier_select.c: Destroy the tool when changing displays.
 	* app/command.c: initialize pointers to drawables when selecting

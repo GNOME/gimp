@@ -22,6 +22,25 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.5  1998/04/07 03:41:19  yosh
+ *   configure.in: fix for $srcdir != $builddir for data. Tightened check for
+ *   random() and add -lucb on systems that need it. Fix for xdelta.h check. Find
+ *   xemacs as well as emacs. Properly define settings for print plugin.
+ *
+ *   app/Makefile.am: ditch -DNDEBUG, since nothing uses it
+ *
+ *   flame: properly handle random() and friends
+ *
+ *   pnm: workaround for systems with old sprintfs
+ *
+ *   print, sgi: fold back in portability fixes
+ *
+ *   threshold_alpha: properly get params in non-interactive mode
+ *
+ *   bmp: updated and merged in
+ *
+ *   -Yosh
+ *
  *   Revision 1.4  1998/04/01 22:14:51  neo
  *   Added checks for print spoolers to configure.in as suggested by Michael
  *   Sweet. The print plug-in still needs some changes to Makefile.am to make
@@ -45,6 +64,8 @@
 
 #  include <stdio.h>
 #  include <stdlib.h>
+#  include <unistd.h>
+#  include <string.h>
 
 #  ifdef __cplusplus
 extern "C" {
