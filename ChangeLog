@@ -1,3 +1,13 @@
+2000-06-14  Daniel Egger <egger@suse.de>
+
+	* paint_funcs.c: Remove calls to tile-acessor functions
+	by direct accesses. 
+	Split some loops to speed up the common path without 
+	slowing down other cases because compiler couldn't optimize
+	unnecessary calculations away.
+	This changes speed up GIMP a lot in many cases. Also did
+	some cleanup there.
+
 Fri Jun 16 23:47:00 BST 2000 Andy Thomas <alt@gimp.org>
 
 	* app/edit_selection.c
@@ -170,6 +180,7 @@ Tue Jun 13 19:55:30 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 	* Makefile.am: bumped dependency to gtk+-1.2.8 and included
 	new cursor files
 
+>>>>>>> 1.2757
 2000-06-10  Sven Neumann  <sven@gimp.org>
 
 	* AUTHORS: applied gimp-cornwell-000507-0

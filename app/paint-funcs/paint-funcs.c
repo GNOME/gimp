@@ -29,6 +29,7 @@
 #include "tile_manager.h"
 
 #include "tile_manager_pvt.h"  /* For copy-on-write */
+#include "tile_pvt.h"  /* For accessing the tiles directly */
 #include "tile.h"			/* ick. */
 
 #include "libgimp/gimpintl.h"
@@ -124,9 +125,6 @@ static int add_lut[256][256];
 /*  Local function prototypes  */
 static int *  make_curve         (double, int *);
 static void   run_length_encode  (unsigned char *, int *, int, int);
-#if 0
-static void   draw_segments      (PixelRegion *, BoundSeg *, int, int, int, int);
-#endif
 static double cubic              (double, int, int, int, int);
 static void   apply_layer_mode_replace (unsigned char *, unsigned char *,
 					unsigned char *, unsigned char *,
@@ -153,7 +151,7 @@ update_tile_rowhints (Tile *tile,
   tile_sanitize_rowhints (tile);
 
   bpp = tile_bpp (tile);
-  ewidth = tile_ewidth (tile);
+  ewidth = tile->ewidth;
 
   if (bpp == 1 || bpp == 3)
     {
@@ -410,104 +408,19 @@ run_length_encode (unsigned char *src,
     }
 }
 
-#if 0
-static void
-draw_segments (PixelRegion *destPR,
-	       BoundSeg    *bs,
-	       int          num_segs,
-	       int          off_x,
-	       int          off_y,
-	       int          opacity)
-{
-  int x1, y1, x2, y2;
-  int tmp, i, length;
-  unsigned char *line;
-
-  length = MAX (destPR->w, destPR->h);
-  line = paint_funcs_get_buffer (length);
-  memset (line, opacity, length);
-
-  for (i = 0; i < num_segs; i++)
-    {
-      x1 = bs[i].x1 + off_x;
-      y1 = bs[i].y1 + off_y;
-      x2 = bs[i].x2 + off_x;
-      y2 = bs[i].y2 + off_y;
-
-      if (bs[i].open == 0)
-	{
-	  /*  If it is vertical  */
-	  if (x1 == x2)
-	    {
-	      x1 -= 1;
-	      x2 -= 1;
-	    }
-	  else
-	    {
-	      y1 -= 1;
-	      y2 -= 1;
-	    }
-	}
-
-      /*  render segment  */
-      x1 = CLAMP (x1, 0, destPR->w - 1);
-      y1 = CLAMP (y1, 0, destPR->h - 1);
-      x2 = CLAMP (x2, 0, destPR->w - 1);
-      y2 = CLAMP (y2, 0, destPR->h - 1);
-
-      if (x1 == x2)
-	{
-	  if (y2 < y1)
-	    {
-	      tmp = y1;
-	      y1 = y2;
-	      y2 = tmp;
-	    }
-	  pixel_region_set_col (destPR, x1, y1, (y2 - y1), line);
-	}
-      else
-	{
-	  if (x2 < x1)
-	    {
-	      tmp = x1;
-	      x1 = x2;
-	      x2 = tmp;
-	    }
-	  pixel_region_set_row (destPR, x1, y1, (x2 - x1), line);
-	}
-    }
-}
-#endif
-
 /* Note: cubic function no longer clips result */
-static double
+static inline double
 cubic (double dx,
        int    jm1,
        int    j,
        int    jp1,
        int    jp2)
 {
-  double result;
-
-#if 0
-  /* Equivalent to Gimp 1.1.1 and earlier - some ringing */
-  result = ((( ( - jm1 + j - jp1 + jp2 ) * dx +
-               ( jm1 + jm1 - j - j + jp1 - jp2 ) ) * dx +
-               ( - jm1 + jp1 ) ) * dx + j );
-  /* Recommended by Mitchell and Netravali - too blurred? */
-  result = ((( ( - 7 * jm1 + 21 * j - 21 * jp1 + 7 * jp2 ) * dx +
-               ( 15 * jm1 - 36 * j + 27 * jp1 - 6 * jp2 ) ) * dx +
-               ( - 9 * jm1 + 9 * jp1 ) ) * dx + (jm1 + 16 * j + jp1) ) / 18.0;
-#else
 
   /* Catmull-Rom - not bad */
-  result = ((( ( - jm1 + 3 * j - 3 * jp1 + jp2 ) * dx +
-               ( 2 * jm1 - 5 * j + 4 * jp1 - jp2 ) ) * dx +
-               ( - jm1 + jp1 ) ) * dx + (j + j) ) / 2.0;
-
-#endif
-
-  return result;
+  return (double) ((( ( - jm1 + 3 * j - 3 * jp1 + jp2 ) * dx +
+		  ( 2 * jm1 - 5 * j + 4 * jp1 - jp2 ) ) * dx +
+		  ( - jm1 + jp1 ) ) * dx + (j + j) ) / 2.0;
 }
 
 /*********************/
@@ -533,6 +446,11 @@ paint_funcs_setup ()
 
   /*  generate a table of random seeds  */
   srand (RANDOM_SEED);
+
+  /* FIXME: Why creating an array of random values and shuffly it randomly
+   * afterwards??? 
+   */
+  
   for (i = 0; i < RANDOM_TABLE_SIZE; i++)
     random_table[i] = rand ();
 
@@ -662,14 +580,8 @@ color_pixels (unsigned char *dest,
      break;
    default:
    {
-     int b;
      while (w--)
-     {
-       for (b = 0; b < bytes; b++)
-	 dest[b] = color[b];
-
-       dest += bytes;
-     }
+       memcpy (dest,color,bytes);
    }
   }
 }
@@ -733,27 +645,30 @@ extract_alpha_pixels (const unsigned char *src,
 		      int            w,
 		      int            bytes)
 {
-  int alpha;
   const unsigned char * m;
   int tmp;
-  /*  printf("[eap:%d]", w);*/
 
+  const int alpha = bytes - 1;
+  
   if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  alpha = bytes - 1;
-  while (w --)
     {
-      *dest++ = INT_MULT(src[alpha], *m, tmp);
-
-      if (mask)
-	m++;
-      src += bytes;
-    }
+      m = mask;
+      while (w --)
+        {
+          *dest++ = INT_MULT(src[alpha], *m, tmp);
+          m++;
+          src += bytes;
+        }
+     }  else
+     { 
+       m = &no_mask;
+       while (w --)
+        { 
+          *dest++ = INT_MULT(src[alpha], *m, tmp);
+          src += bytes;
+        }
+     }
 }
-
 
 void
 darken_pixels (const unsigned char *src1,
@@ -1611,87 +1526,145 @@ initial_inten_pixels (const unsigned char *src,
 		      int            length,
 		      int            bytes)
 {
-  int b, dest_bytes;
+  int b;
   const unsigned char * m;
   int tmp;
   int l;
   unsigned char *destp;
   const unsigned char *srcp;
+  const int dest_bytes = bytes + 1;
 
   if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  /*  This function assumes the source has no alpha channel and
-   *  the destination has an alpha channel.  So dest_bytes = bytes + 1
-   */
-  dest_bytes = bytes + 1;
-
-  if (bytes == 3 && affect[0] && affect[1] && affect[2])
   {
+    m = mask;
+    
+    /*  This function assumes the source has no alpha channel and
+     *  the destination has an alpha channel.  So dest_bytes = bytes + 1
+     */
+   
+    if (bytes == 3 && affect[0] && affect[1] && affect[2])
+    {
+      if (!affect[bytes])
+	opacity = 0;
+      destp = dest + bytes;
+      if (opacity != 0)
+	while(length--)
+	{
+	  dest[0] = src[0];
+	  dest[1] = src[1];
+	  dest[2] = src[2];
+	  dest[3] = INT_MULT(opacity, *m, tmp);
+	  src  += bytes;
+	  dest += dest_bytes;
+	  m++;
+	}
+      else
+	while(length--)
+	{
+	  dest[0] = src[0];
+	  dest[1] = src[1];
+	  dest[2] = src[2];
+	  dest[3] = opacity;
+	  src  += bytes;
+	  dest += dest_bytes;
+	}
+      return;
+    }
+    for (b =0; b < bytes; b++)
+    {
+      destp = dest + b;
+      srcp = src + b;
+      l = length;
+      if (affect[b])
+	while(l--)
+	{
+	  *destp = *srcp;
+	  srcp  += bytes;
+	  destp += dest_bytes;
+	}
+      else
+	while(l--)
+	{
+	  *destp = 0;
+	  destp += dest_bytes;
+	}
+    }
+
+    /* fill the alpha channel */ 
     if (!affect[bytes])
       opacity = 0;
     destp = dest + bytes;
-    if (mask && opacity != 0)
-      while(length--)
+    if (opacity != 0)
+      while (length--)
       {
-	dest[0] = src[0];
-	dest[1] = src[1];
-	dest[2] = src[2];
-	dest[3] = INT_MULT(opacity, *m, tmp);
-	src  += bytes;
-	dest += dest_bytes;
+	*destp = INT_MULT(opacity , *m, tmp);
+	destp += dest_bytes;
 	m++;
       }
     else
-      while(length--)
+      while (length--)
       {
-	dest[0] = src[0];
-	dest[1] = src[1];
-	dest[2] = src[2];
-	dest[3] = opacity;
-	src  += bytes;
-	dest += dest_bytes;
-      }
-    return;
-  }
-  for (b =0; b < bytes; b++)
-  {
-    destp = dest + b;
-    srcp = src + b;
-    l = length;
-    if (affect[b])
-      while(l--)
-      {
-	*destp = *srcp;
-	srcp  += bytes;
-	destp += dest_bytes;
-      }
-    else
-      while(l--)
-      {
-	*destp = 0;
+	*destp = opacity;
 	destp += dest_bytes;
       }
   }
-/* fill the alpha channel */ 
-  if (!affect[bytes])
-    opacity = 0;
-  destp = dest + bytes;
-  if (mask && opacity != 0)
-    while (length--)
-    {
-      *destp = INT_MULT(opacity , *m, tmp);
-      destp += dest_bytes;
-      m++;
-    }
+
+  /* If no mask */
   else
+  {
+    m = &no_mask;
+
+    /*  This function assumes the source has no alpha channel and
+     *  the destination has an alpha channel.  So dest_bytes = bytes + 1
+     */
+    
+    if (bytes == 3 && affect[0] && affect[1] && affect[2])
+      {
+	if (!affect[bytes])
+	  opacity = 0;
+	destp = dest + bytes;
+	while(length--)
+	  {
+	    dest[0] = src[0];
+	    dest[1] = src[1];
+	    dest[2] = src[2];
+	    dest[3] = opacity;
+	    src  += bytes;
+	    dest += dest_bytes;
+	  }
+	return;
+      }
+    
+    for (b =0; b < bytes; b++)
+      {
+	destp = dest + b;
+	srcp = src + b;
+	l = length;
+	if (affect[b])
+	  while(l--)
+	    {
+	      *destp = *srcp;
+	      srcp  += bytes;
+	      destp += dest_bytes;
+	    }
+	else
+	  while(l--)
+	    {
+	      *destp = 0;
+	      destp += dest_bytes;
+	    }
+      }
+
+    /* fill the alpha channel */ 
+    if (!affect[bytes])
+      opacity = 0;
+    destp = dest + bytes;
     while (length--)
-    {
-      *destp = opacity;
-      destp += dest_bytes;
-    }
+      {
+	*destp = opacity;
+	destp += dest_bytes;
+      }
+  }
 }
 
 
@@ -2259,13 +2232,13 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 				    int                 length,
 				    int                 bytes)  /*  4 or 2 depending on RGBA or GRAYA  */
 {
-  int alpha, b;
+  int b;
   unsigned char src2_alpha;
   unsigned char new_alpha;
   const unsigned char * m;
   float ratio, compl_ratio;
   long tmp;
-  alpha = bytes - 1;
+  const int alpha = bytes - 1;
 
   if (mask)
     {
@@ -2768,34 +2741,51 @@ replace_inten_pixels (const unsigned char *src1,
 		      int                  has_alpha1,
 		      int                  has_alpha2)
 {
-  int bytes, b;
-  unsigned char mask_alpha;
-  const unsigned char * m;
+  int b;
   int tmp;
+  const int bytes = MIN (bytes1, bytes2);
+
   if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  bytes = MIN (bytes1, bytes2);
-  while (length --)
     {
-      mask_alpha = INT_MULT(*m, opacity, tmp);
+      unsigned char mask_alpha;
+      const unsigned char *m = mask;
+      while (length --)
+        {
+	  mask_alpha = INT_MULT(*m, opacity, tmp);
+	  
+	  for (b = 0; b < bytes; b++)
+	    dest[b] = (affect[b]) ?
+	      INT_BLEND(src2[b], src1[b], mask_alpha, tmp) :
+	      src1[b];
 
-      for (b = 0; b < bytes; b++)
-	dest[b] = (affect[b]) ?
-	  INT_BLEND(src2[b], src1[b], mask_alpha, tmp) :
-	src1[b];
+	  if (has_alpha1 && !has_alpha2)
+	    dest[b] = src1[b];
 
-      if (has_alpha1 && !has_alpha2)
-	dest[b] = src1[b];
+	  m++;
 
-      if (mask)
-	m++;
+	  src1 += bytes1;
+	  src2 += bytes2;
+	  dest += bytes1;
+	}
+    }
+  else
+    {
+      static const unsigned char mask_alpha = OPAQUE_OPACITY ;
 
-      src1 += bytes1;
-      src2 += bytes2;
-      dest += bytes1;
+      while (length --)
+        {
+	  for (b = 0; b < bytes; b++)
+	    dest[b] = (affect[b]) ?
+	      INT_BLEND(src2[b], src1[b], mask_alpha, tmp) :
+	      src1[b];
+
+	  if (has_alpha1 && !has_alpha2)
+	    dest[b] = src1[b];
+
+	  src1 += bytes1;
+	  src2 += bytes2;
+	  dest += bytes1;
+	}
     }
 }
 
@@ -2854,31 +2844,46 @@ erase_inten_pixels (const unsigned char *src1,
 		    int                  length,
 		    int                  bytes)
 {
-  int alpha, b;
+  int b;
   unsigned char src2_alpha;
-  const unsigned char * m;
   long tmp;
+  const int alpha = bytes - 1;
 
   if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  alpha = bytes - 1;
-  while (length --)
     {
-      for (b = 0; b < alpha; b++)
-	dest[b] = src1[b];
+      const unsigned char *m = mask;
+ 
+      while (length --)
+        {
+	  for (b = 0; b < alpha; b++)
+	    dest[b] = src1[b];
 
-      src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
-      dest[alpha] = src1[alpha] - INT_MULT(src1[alpha], src2_alpha, tmp);
+	  src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+	  dest[alpha] = src1[alpha] - INT_MULT(src1[alpha], src2_alpha, tmp);
 
-      if (mask)
-	m++;
+	  m++;
 
-      src1 += bytes;
-      src2 += bytes;
-      dest += bytes;
+	  src1 += bytes;
+	  src2 += bytes;
+	  dest += bytes;
+	}
+    }
+  else
+    {
+      unsigned char *m = &no_mask;
+
+      while (length --)
+        {
+	  for (b = 0; b < alpha; b++)
+	    dest[b] = src1[b];
+
+	  src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+	  dest[alpha] = src1[alpha] - INT_MULT(src1[alpha], src2_alpha, tmp);
+
+	  src1 += bytes;
+	  src2 += bytes;
+	  dest += bytes;
+	}
     }
 }
 
@@ -3293,8 +3298,8 @@ copy_region (PixelRegion *src,
 	  src->curtile && dest->curtile &&
 	  src->offx == 0 && dest->offx == 0 &&
 	  src->offy == 0 && dest->offy == 0 &&
-	  src->w == tile_ewidth(src->curtile) && 
-	  dest->w == tile_ewidth(dest->curtile) &&
+	  src->w == (src->curtile->ewidth) && 
+	  dest->w == (dest->curtile->ewidth) &&
 	  src->h == tile_eheight(src->curtile) && 
 	  dest->h == tile_eheight(dest->curtile)) 
 	{
@@ -4450,9 +4455,9 @@ shapeburst_region (PixelRegion *srcPR,
 		  tile = tile_manager_get_tile (srcPR->tiles, x, y, TRUE, FALSE);
 		  tile_data = tile_data_pointer (tile, x%TILE_WIDTH, y%TILE_HEIGHT);
 		  boundary = MIN ((y % TILE_HEIGHT),
-				  (tile_ewidth(tile) - (x % TILE_WIDTH) - 1));
+				  (tile->ewidth - (x % TILE_WIDTH) - 1));
 		  boundary = MIN (boundary, (y - end)) + 1;
-		  inc = 1 - tile_ewidth (tile);
+		  inc = 1 - (tile->ewidth);
 
 		  while (boundary--)
 		    {
