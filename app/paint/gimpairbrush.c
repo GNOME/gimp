@@ -175,9 +175,7 @@ gimp_airbrush_paint (GimpPaintCore      *paint_core,
 	  timeout_id = 0;
 	}
 
-      gimp_airbrush_motion (paint_core,
-                            drawable,
-                            paint_options);
+      gimp_airbrush_motion (paint_core, drawable, paint_options);
 
       if (options->rate != 0.0)
 	{
@@ -210,41 +208,6 @@ gimp_airbrush_paint (GimpPaintCore      *paint_core,
     }
 }
 
-static gboolean
-gimp_airbrush_timeout (gpointer client_data)
-{
-  gdouble rate;
-
-  gimp_airbrush_motion (airbrush_timeout.paint_core,
-                        airbrush_timeout.drawable,
-                        airbrush_timeout.paint_options);
-
-  gimp_image_flush (gimp_item_get_image (GIMP_ITEM (airbrush_timeout.drawable)));
-
-  rate = ((GimpAirbrushOptions *) airbrush_timeout.paint_options)->rate;
-
-  /*  restart the timer  */
-  if (rate != 0.0)
-    {
-      if (airbrush_timeout.paint_options->pressure_options->rate)
-	{
-          if (timeout_id)
-            g_source_remove (timeout_id);
-
-	  timeout_id = g_timeout_add ((10000 /
-                                       (rate * 2.0 *
-                                        airbrush_timeout.paint_core->cur_coords.pressure)), 
-                                      gimp_airbrush_timeout,
-                                      NULL);
-	  return FALSE;
-	}
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
 static void
 gimp_airbrush_motion (GimpPaintCore    *paint_core,
                       GimpDrawable     *drawable,
@@ -255,8 +218,8 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
   TempBuf                  *area;
   guchar                    col[MAX_CHANNELS];
   gdouble                   scale;
-  GimpPaintApplicationMode  paint_appl_mode;
   gdouble                   pressure;
+  GimpPaintApplicationMode  paint_appl_mode;
 
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
@@ -320,7 +283,44 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
 				MIN (pressure, GIMP_OPACITY_OPAQUE),
 				gimp_context_get_opacity (context),
 				gimp_context_get_paint_mode (context),
-				GIMP_BRUSH_SOFT, scale, paint_appl_mode);
+				GIMP_BRUSH_SOFT,
+                                scale,
+                                paint_appl_mode);
+}
+
+static gboolean
+gimp_airbrush_timeout (gpointer client_data)
+{
+  gdouble rate;
+
+  gimp_airbrush_motion (airbrush_timeout.paint_core,
+                        airbrush_timeout.drawable,
+                        airbrush_timeout.paint_options);
+
+  gimp_image_flush (gimp_item_get_image (GIMP_ITEM (airbrush_timeout.drawable)));
+
+  rate = ((GimpAirbrushOptions *) airbrush_timeout.paint_options)->rate;
+
+  /*  restart the timer  */
+  if (rate != 0.0)
+    {
+      if (airbrush_timeout.paint_options->pressure_options->rate)
+	{
+          if (timeout_id)
+            g_source_remove (timeout_id);
+
+	  timeout_id = g_timeout_add ((10000 /
+                                       (rate * 2.0 *
+                                        airbrush_timeout.paint_core->cur_coords.pressure)), 
+                                      gimp_airbrush_timeout,
+                                      NULL);
+	  return FALSE;
+	}
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 

@@ -120,14 +120,8 @@ gimp_pencil_paint (GimpPaintCore      *paint_core,
 {
   switch (paint_state)
     {
-    case INIT_PAINT:
-      break;
-
     case MOTION_PAINT:
       gimp_pencil_motion (paint_core, drawable, paint_options);
-      break;
-
-    case FINISH_PAINT:
       break;
 
     default:
@@ -140,13 +134,16 @@ gimp_pencil_motion (GimpPaintCore    *paint_core,
                     GimpDrawable     *drawable,
                     GimpPaintOptions *paint_options)
 {
-  GimpImage            *gimage;
-  GimpContext          *context;
-  TempBuf              *area;
-  guchar                col[MAX_CHANNELS];
-  gdouble               opacity;
-  gdouble               scale;
+  GimpPressureOptions      *pressure_options;
+  GimpImage                *gimage;
+  GimpContext              *context;
+  TempBuf                  *area;
+  guchar                    col[MAX_CHANNELS];
+  gdouble                   opacity;
+  gdouble                   scale;
   GimpPaintApplicationMode  paint_appl_mode;
+
+  pressure_options = paint_options->pressure_options;
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -155,7 +152,7 @@ gimp_pencil_motion (GimpPaintCore    *paint_core,
   paint_appl_mode = (paint_options->incremental ?
                      GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);
 
-  if (paint_options->pressure_options->size)
+  if (pressure_options->size)
     scale = paint_core->cur_coords.pressure;
   else
     scale = 1.0;
@@ -165,7 +162,7 @@ gimp_pencil_motion (GimpPaintCore    *paint_core,
     return;
 
   /*  color the pixels  */
-  if (paint_options->pressure_options->color)
+  if (pressure_options->color)
     {
       GimpRGB color;
 
@@ -203,7 +200,7 @@ gimp_pencil_motion (GimpPaintCore    *paint_core,
 
   opacity = gimp_context_get_opacity (context);
 
-  if (paint_options->pressure_options->opacity)
+  if (pressure_options->opacity)
     opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
@@ -211,5 +208,7 @@ gimp_pencil_motion (GimpPaintCore    *paint_core,
                                 MIN (opacity, GIMP_OPACITY_OPAQUE),
                                 gimp_context_get_opacity (context),
                                 gimp_context_get_paint_mode (context),
-                                GIMP_BRUSH_HARD, scale, paint_appl_mode);
+                                GIMP_BRUSH_HARD,
+                                scale,
+                                paint_appl_mode);
 }

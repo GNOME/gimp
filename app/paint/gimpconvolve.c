@@ -61,11 +61,8 @@ static void   gimp_convolve_paint            (GimpPaintCore       *paint_core,
                                               GimpPaintOptions    *paint_options,
                                               GimpPaintCoreState   paint_state);
 static void   gimp_convolve_motion           (GimpPaintCore       *paint_core,
-                                              GimpDrawable        *drawable, 
-                                              GimpPressureOptions *pressure_options,
-                                              GimpConvolveType     type,
-                                              gdouble              rate);
-
+                                              GimpDrawable        *drawable,
+                                              GimpPaintOptions    *paint_options);
 
 static void   gimp_convolve_calculate_matrix (GimpConvolveType     type,
                                               gdouble              rate);
@@ -171,18 +168,10 @@ gimp_convolve_paint (GimpPaintCore      *paint_core,
                      GimpPaintOptions   *paint_options,
                      GimpPaintCoreState  paint_state)
 {
-  GimpConvolveOptions *options;
-
-  options = (GimpConvolveOptions *) paint_options;
-
   switch (paint_state)
     {
     case MOTION_PAINT:
-      gimp_convolve_motion (paint_core,
-                            drawable, 
-                            paint_options->pressure_options,
-                            options->type, 
-                            options->rate);
+      gimp_convolve_motion (paint_core, drawable, paint_options);
       break;
 
     default:
@@ -191,22 +180,26 @@ gimp_convolve_paint (GimpPaintCore      *paint_core,
 }
 
 static void
-gimp_convolve_motion (GimpPaintCore       *paint_core,
-                      GimpDrawable        *drawable,
-                      GimpPressureOptions *pressure_options,
-                      GimpConvolveType     type,
-                      gdouble              rate)
+gimp_convolve_motion (GimpPaintCore    *paint_core,
+                      GimpDrawable     *drawable,
+                      GimpPaintOptions *paint_options)
 {
-  TempBuf          *area;
-  guchar           *temp_data;
-  PixelRegion       srcPR; 
-  PixelRegion       destPR;
-  gdouble           scale;
-  ConvolveClipType  area_hclip = CONVOLVE_NOT_CLIPPED;
-  ConvolveClipType  area_vclip = CONVOLVE_NOT_CLIPPED;
-  gint              marginx    = 0;
-  gint              marginy    = 0;
-  GimpContext      *context;
+  GimpConvolveOptions *options;
+  GimpPressureOptions *pressure_options;
+  TempBuf             *area;
+  guchar              *temp_data;
+  PixelRegion          srcPR; 
+  PixelRegion          destPR;
+  gdouble              scale;
+  ConvolveClipType     area_hclip = CONVOLVE_NOT_CLIPPED;
+  ConvolveClipType     area_vclip = CONVOLVE_NOT_CLIPPED;
+  gint                 marginx    = 0;
+  gint                 marginy    = 0;
+  GimpContext         *context;
+
+  options = (GimpConvolveOptions *) paint_options;
+
+  pressure_options = paint_options->pressure_options;
 
   if (! gimp_item_get_image (GIMP_ITEM (drawable)))
     return;
@@ -246,9 +239,9 @@ gimp_convolve_motion (GimpPaintCore       *paint_core,
   destPR.data      = temp_buf_data (area);
 
   if (pressure_options->rate)
-    rate = rate * 2.0 * paint_core->cur_coords.pressure;
+    options->rate = options->rate * 2.0 * paint_core->cur_coords.pressure;
 
-  gimp_convolve_calculate_matrix (type, rate); 
+  gimp_convolve_calculate_matrix (options->type, options->rate); 
 
   /*  Image region near edges? If so, paint area will be clipped   */
   /*  with respect to brush mask + 1 pixel border (# 19285)        */

@@ -117,16 +117,8 @@ gimp_eraser_paint (GimpPaintCore      *paint_core,
 {
   switch (paint_state)
     {
-    case INIT_PAINT:
-      break;
-
     case MOTION_PAINT:
-      gimp_eraser_motion (paint_core,
-                          drawable,
-                          paint_options);
-      break;
-
-    case FINISH_PAINT:
+      gimp_eraser_motion (paint_core, drawable, paint_options);
       break;
 
     default:
@@ -139,15 +131,16 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
                     GimpDrawable     *drawable,
                     GimpPaintOptions *paint_options)
 {
-  GimpEraserOptions   *options;
-  GimpPressureOptions *pressure_options;
-  GimpImage           *gimage;
-  GimpContext         *context;
-  gdouble              opacity;
-  TempBuf             *area;
-  guchar               col[MAX_CHANNELS];
-  gdouble              scale;
+  GimpEraserOptions        *options;
+  GimpPressureOptions      *pressure_options;
+  GimpImage                *gimage;
+  GimpContext              *context;
+  gdouble                   opacity;
+  TempBuf                  *area;
+  guchar                    col[MAX_CHANNELS];
+  gdouble                   scale;
   GimpBrushApplicationMode  brush_mode;
+  GimpPaintApplicationMode  paint_appl_mode;
 
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
@@ -159,6 +152,9 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   gimp_image_get_background (gimage, drawable, col);
 
   context = gimp_get_current_context (gimage->gimp);
+
+  paint_appl_mode = (paint_options->incremental ?
+                     GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);
 
   if (pressure_options->size)
     scale = paint_core->cur_coords.pressure;
@@ -198,8 +194,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
                                  GIMP_ANTI_ERASE_MODE : GIMP_ERASE_MODE),
 				brush_mode,
 				scale,
-				(paint_options->incremental ? 
-                                 GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT));
+				paint_appl_mode);
 }
 
 

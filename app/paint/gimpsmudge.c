@@ -41,33 +41,29 @@
 static void       gimp_smudge_class_init (GimpSmudgeClass     *klass);
 static void       gimp_smudge_init       (GimpSmudge          *smudge);
 
+static void       gimp_smudge_finalize   (GObject             *object);
+
 static void       gimp_smudge_paint      (GimpPaintCore       *paint_core,
                                           GimpDrawable        *drawable,
                                           GimpPaintOptions    *paint_options,
                                           GimpPaintCoreState   paint_state);
-
 static gboolean   gimp_smudge_start      (GimpPaintCore       *paint_core,
                                           GimpDrawable        *drawable);
 static void       gimp_smudge_motion     (GimpPaintCore       *paint_core,
                                           GimpDrawable        *drawable,
-                                          GimpPressureOptions *pressure_options,
-                                          gdouble              smudge_rate);
-static void       gimp_smudge_finish     (GimpPaintCore       *paint_core,
-                                          GimpDrawable        *drawable);
+                                          GimpPaintOptions    *paint_options);
 
 static void  gimp_smudge_nonclipped_painthit_coords (GimpPaintCore *paint_core,
                                                      gint          *x,
                                                      gint          *y, 
                                                      gint          *w,
                                                      gint          *h);
-static void       gimp_smudge_allocate_accum_buffer (gint           w,
+static void       gimp_smudge_allocate_accum_buffer (GimpSmudge    *smudge,
+                                                     gint           w,
                                                      gint           h, 
                                                      gint           bytes,
                                                      guchar        *do_fill);
 
-
-static PixelRegion  accumPR;
-static guchar      *accum_data = NULL;
 
 static GimpPaintCoreClass *parent_class = NULL;
 
@@ -110,11 +106,15 @@ gimp_smudge_get_type (void)
 static void
 gimp_smudge_class_init (GimpSmudgeClass *klass)
 {
+  GObjectClass       *object_class;
   GimpPaintCoreClass *paint_core_class;
 
+  object_class     = G_OBJECT_CLASS (klass);
   paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->finalize  = gimp_smudge_finalize;
 
   paint_core_class->paint = gimp_smudge_paint;
 }
@@ -127,6 +127,25 @@ gimp_smudge_init (GimpSmudge *smudge)
   paint_core = GIMP_PAINT_CORE (smudge);
 
   paint_core->flags |= CORE_HANDLES_CHANGING_BRUSH;
+
+  smudge->initialized = FALSE;
+  smudge->accum_data  = NULL;
+}
+
+static void
+gimp_smudge_finalize (GObject *object)
+{
+  GimpSmudge *smudge;
+
+  smudge = GIMP_SMUDGE (object);
+
+  if (smudge->accum_data)
+    {
+      g_free (smudge->accum_data);
+      smudge->accum_data = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -135,29 +154,28 @@ gimp_smudge_paint (GimpPaintCore      *paint_core,
                    GimpPaintOptions   *paint_options,
                    GimpPaintCoreState  paint_state)
 {
-  GimpSmudgeOptions *options;
+  GimpSmudge *smudge;
 
-  /* initialization fails if the user starts outside the drawable */
-  static gboolean initialized = FALSE;
-
-  options = (GimpSmudgeOptions *) paint_options;
+  smudge = GIMP_SMUDGE (paint_core);
 
   switch (paint_state)
     {
     case MOTION_PAINT:
-      if (! initialized)
-	initialized = gimp_smudge_start (paint_core, drawable);
+      /* initialization fails if the user starts outside the drawable */
+      if (! smudge->initialized)
+	smudge->initialized = gimp_smudge_start (paint_core, drawable);
 
-      if (initialized)
-	gimp_smudge_motion (paint_core,
-                            drawable,
-                            paint_options->pressure_options,
-                            options->rate);
+      if (smudge->initialized)
+	gimp_smudge_motion (paint_core, drawable, paint_options);
       break;
 
     case FINISH_PAINT:
-      gimp_smudge_finish (paint_core, drawable);
-      initialized = FALSE;
+      if (smudge->accum_data)
+        {
+          g_free (smudge->accum_data);
+          smudge->accum_data = NULL;
+        }
+      smudge->initialized = FALSE;
       break;
 
     default:
@@ -171,12 +189,15 @@ static gboolean
 gimp_smudge_start (GimpPaintCore *paint_core,
                    GimpDrawable  *drawable)
 {
+  GimpSmudge  *smudge;
   GimpImage   *gimage;
   TempBuf     *area;
   PixelRegion  srcPR;
   gint         x, y, w, h;
   gint         was_clipped;
   guchar      *do_fill = NULL;
+
+  smudge = GIMP_SMUDGE (paint_core);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -213,53 +234,62 @@ gimp_smudge_start (GimpPaintCore *paint_core,
                  CLAMP ((gint) paint_core->cur_coords.y,
                         0, gimp_drawable_height (drawable) - 1));
 
-  gimp_smudge_allocate_accum_buffer (w, h, 
-					  gimp_drawable_bytes (drawable), 
-					  do_fill);
+  gimp_smudge_allocate_accum_buffer (smudge,
+                                     w, h, 
+                                     gimp_drawable_bytes (drawable), 
+                                     do_fill);
 
-  accumPR.x = area->x - x; 
-  accumPR.y = area->y - y;
-  accumPR.w = area->width;
-  accumPR.h = area->height;
-  accumPR.rowstride = accumPR.bytes * w; 
-  accumPR.data = accum_data 
-	+ accumPR.rowstride * accumPR.y 
-	+ accumPR.x * accumPR.bytes;
+  smudge->accumPR.x         = area->x - x; 
+  smudge->accumPR.y         = area->y - y;
+  smudge->accumPR.w         = area->width;
+  smudge->accumPR.h         = area->height;
+  smudge->accumPR.rowstride = smudge->accumPR.bytes * w; 
+  smudge->accumPR.data      = (smudge->accum_data +
+                               smudge->accumPR.rowstride * smudge->accumPR.y +
+                               smudge->accumPR.x * smudge->accumPR.bytes);
 
   pixel_region_init (&srcPR, gimp_drawable_data (drawable), 
 		     area->x, area->y, area->width, area->height, FALSE);
 
   /* copy the region under the original painthit. */
-  copy_region (&srcPR, &accumPR);
+  copy_region (&srcPR, &smudge->accumPR);
 
-  accumPR.x = area->x - x; 
-  accumPR.y = area->y - y;
-  accumPR.w = area->width;
-  accumPR.h = area->height;
-  accumPR.rowstride = accumPR.bytes * w;
-  accumPR.data = accum_data
-	+ accumPR.rowstride * accumPR.y 
-	+ accumPR.x * accumPR.bytes;
+  smudge->accumPR.x         = area->x - x; 
+  smudge->accumPR.y         = area->y - y;
+  smudge->accumPR.w         = area->width;
+  smudge->accumPR.h         = area->height;
+  smudge->accumPR.rowstride = smudge->accumPR.bytes * w;
+  smudge->accumPR.data      = (smudge->accum_data +
+                               smudge->accumPR.rowstride * smudge->accumPR.y +
+                               smudge->accumPR.x * smudge->accumPR.bytes);
 
-  if (do_fill) 
-    g_free(do_fill);
+  if (do_fill)
+    g_free (do_fill);
 
   return TRUE;
 }
 
 static void
-gimp_smudge_motion (GimpPaintCore       *paint_core,
-                    GimpDrawable        *drawable,
-                    GimpPressureOptions *pressure_options,
-                    gdouble              smudge_rate)
+gimp_smudge_motion (GimpPaintCore    *paint_core,
+                    GimpDrawable     *drawable,
+                    GimpPaintOptions *paint_options)
 {
-  GimpImage   *gimage;
-  GimpContext *context;
-  TempBuf     *area;
-  PixelRegion  srcPR, destPR, tempPR;
-  gdouble      rate;
-  gdouble      opacity;
-  gint         x, y, w, h;
+  GimpSmudge          *smudge;
+  GimpSmudgeOptions   *options;
+  GimpPressureOptions *pressure_options;
+  GimpImage           *gimage;
+  GimpContext         *context;
+  TempBuf             *area;
+  PixelRegion          srcPR, destPR, tempPR;
+  gdouble              rate;
+  gdouble              opacity;
+  gint                 x, y, w, h;
+
+  smudge = GIMP_SMUDGE (paint_core);
+
+  options = (GimpSmudgeOptions *) paint_options;
+
+  pressure_options = paint_options->pressure_options;
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -284,55 +314,56 @@ gimp_smudge_motion (GimpPaintCore       *paint_core,
 
   /* Enable pressure sensitive rate */
   if (pressure_options->rate)
-    rate = MIN (smudge_rate / 100.0 * paint_core->cur_coords.pressure * 2.0, 1.0);
+    rate = MIN (options->rate / 100.0 * paint_core->cur_coords.pressure * 2.0, 1.0);
   else
-    rate = smudge_rate / 100.0;
+    rate = options->rate / 100.0;
 
   /* The tempPR will be the built up buffer (for smudge) */ 
-  tempPR.bytes = accumPR.bytes;
-  tempPR.rowstride = accumPR.rowstride;
-  tempPR.x = area->x - x; 
-  tempPR.y = area->y - y;
-  tempPR.w = area->width;
-  tempPR.h = area->height;
-  tempPR.data = accum_data +
-    tempPR.rowstride * tempPR.y + tempPR.x * tempPR.bytes;
+  tempPR.x         = area->x - x; 
+  tempPR.y         = area->y - y;
+  tempPR.w         = area->width;
+  tempPR.h         = area->height;
+  tempPR.bytes     = smudge->accumPR.bytes;
+  tempPR.rowstride = smudge->accumPR.rowstride;
+  tempPR.data      = (smudge->accum_data +
+                      tempPR.y * tempPR.rowstride +
+                      tempPR.x * tempPR.bytes);
 
   /* The dest will be the paint area we got above (= canvas_buf) */    
 
-  destPR.bytes = area->bytes;                                     
-  destPR.x = 0; destPR.y = 0;                                     
-  destPR.w = area->width;                                         
-  destPR.h = area->height;                                        
+  destPR.x         = 0;
+  destPR.y         = 0;                                     
+  destPR.w         = area->width;                                         
+  destPR.h         = area->height;                                        
+  destPR.bytes     = area->bytes;
   destPR.rowstride = area->width * area->bytes;                  
-  destPR.data = temp_buf_data (area); 
+  destPR.data      = temp_buf_data (area); 
 
-  /*  
-     Smudge uses the buffer Accum.
-     For each successive painthit Accum is built like this
-	Accum =  rate*Accum  + (1-rate)*I.
-     where I is the pixels under the current painthit. 
-     Then the paint area (canvas_buf) is built as 
-	(Accum,1) (if no alpha),
-  */
+  /*  Smudge uses the buffer Accum.
+   *  For each successive painthit Accum is built like this
+   *    Accum =  rate*Accum  + (1-rate)*I.
+   *  where I is the pixels under the current painthit. 
+   *  Then the paint area (canvas_buf) is built as 
+   *    (Accum,1) (if no alpha),
+   */
 
   blend_region (&srcPR, &tempPR, &tempPR, ROUND (rate * 255.0));
 
   /* re-init the tempPR */
 
-  tempPR.bytes = accumPR.bytes;
-  tempPR.rowstride = accumPR.rowstride;
-  tempPR.x = area->x - x; 
-  tempPR.y = area->y - y;
-  tempPR.w = area->width;
-  tempPR.h = area->height;
-  tempPR.data = accum_data 
-	+ tempPR.rowstride * tempPR.y 
-	+ tempPR.x * tempPR.bytes;
+  tempPR.x         = area->x - x;
+  tempPR.y         = area->y - y;
+  tempPR.w         = area->width;
+  tempPR.h         = area->height;
+  tempPR.bytes     = smudge->accumPR.bytes;
+  tempPR.rowstride = smudge->accumPR.rowstride;
+  tempPR.data      = (smudge->accum_data +
+                      tempPR.y * tempPR.rowstride +
+                      tempPR.x * tempPR.bytes);
 
-  if (! gimp_drawable_has_alpha (drawable))                             
-    add_alpha_region (&tempPR, &destPR);                          
-  else                                                            
+  if (! gimp_drawable_has_alpha (drawable))
+    add_alpha_region (&tempPR, &destPR);
+  else
     copy_region (&tempPR, &destPR);
 
   opacity = gimp_context_get_opacity (context);
@@ -346,18 +377,8 @@ gimp_smudge_motion (GimpPaintCore       *paint_core,
 				  GIMP_OPACITY_OPAQUE,
 				  (pressure_options->pressure ? 
                                    GIMP_BRUSH_PRESSURE : GIMP_BRUSH_SOFT),
-				  1.0, GIMP_PAINT_INCREMENTAL);
-}
-
-static void
-gimp_smudge_finish (GimpPaintCore *paint_core,
-                    GimpDrawable  *drawable)
-{
-  if (accum_data)
-    {
-      g_free (accum_data);
-      accum_data = NULL;
-    }
+				  1.0,
+                                  GIMP_PAINT_INCREMENTAL);
 }
 
 static void 
@@ -368,32 +389,34 @@ gimp_smudge_nonclipped_painthit_coords (GimpPaintCore *paint_core,
                                         gint          *h)
 {
   /* Note: these are the brush mask size plus a border of 1 pixel */
-  *x = (gint) paint_core->cur_coords.x - paint_core->brush->mask->width/2 - 1;
-  *y = (gint) paint_core->cur_coords.y - paint_core->brush->mask->height/2 - 1;
+  *x = (gint) paint_core->cur_coords.x - paint_core->brush->mask->width / 2 - 1;
+  *y = (gint) paint_core->cur_coords.y - paint_core->brush->mask->height / 2 - 1;
   *w = paint_core->brush->mask->width + 2;
   *h = paint_core->brush->mask->height + 2;
 }
 
 static void
-gimp_smudge_allocate_accum_buffer (gint    w,
-                                   gint    h,
-                                   gint    bytes,
-                                   guchar *do_fill)
+gimp_smudge_allocate_accum_buffer (GimpSmudge *smudge,
+                                   gint        w,
+                                   gint        h,
+                                   gint        bytes,
+                                   guchar     *do_fill)
 {
   /*  Allocate the accumulation buffer */
-  accumPR.bytes = bytes;
-  accum_data = g_malloc (w * h * bytes);
+  smudge->accumPR.bytes = bytes;
+  smudge->accum_data    = g_malloc (w * h * bytes);
  
   if (do_fill != NULL)
     {
       /* guchar color[3] = {0,0,0}; */
-      accumPR.x = 0; 
-      accumPR.y = 0;
-      accumPR.w = w;
-      accumPR.h = h;
-      accumPR.rowstride = accumPR.bytes * w;
-      accumPR.data = accum_data;
-      color_region (&accumPR, (const guchar*)do_fill);
+      smudge->accumPR.x         = 0; 
+      smudge->accumPR.y         = 0;
+      smudge->accumPR.w         = w;
+      smudge->accumPR.h         = h;
+      smudge->accumPR.rowstride = smudge->accumPR.bytes * w;
+      smudge->accumPR.data      = smudge->accum_data;
+
+      color_region (&smudge->accumPR, (const guchar *) do_fill);
     }
 }
 

@@ -51,11 +51,8 @@ static void   gimp_clone_paint            (GimpPaintCore       *paint_core,
                                            GimpPaintCoreState   paint_state);
 static void   gimp_clone_motion           (GimpPaintCore       *paint_core,
                                            GimpDrawable        *drawable,
-                                           GimpDrawable        *src_drawable,
-                                           GimpPressureOptions *pressure_options,
-                                           GimpCloneType        type,
-                                           gint                 offset_x,
-                                           gint                 offset_y);
+                                           GimpPaintOptions    *paint_options);
+
 static void   gimp_clone_line_image       (GimpImage           *dest,
                                            GimpImage           *src,
                                            GimpDrawable        *d_drawable,
@@ -187,6 +184,32 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
         clone->posttrace_callback (clone, clone->callback_data);
       break;
 
+    case INIT_PAINT:
+      if (clone->set_source)
+	{
+	  gimp_clone_set_src_drawable (clone, drawable);
+
+	  clone->src_x = paint_core->cur_coords.x;
+	  clone->src_y = paint_core->cur_coords.y;
+
+	  clone->first_stroke = TRUE;
+	}
+      else if (options->aligned == GIMP_CLONE_ALIGN_NO)
+	{
+	  orig_src_x = clone->src_x;
+	  orig_src_y = clone->src_y;
+
+	  clone->first_stroke = TRUE;
+	}
+
+      if (clone->init_callback)
+        clone->init_callback (clone, clone->callback_data);
+
+      if (options->type == GIMP_PATTERN_CLONE)
+	if (! gimp_context_get_pattern (context))
+	  g_message (_("No patterns available for this operation."));
+      break;
+
     case MOTION_PAINT:
       if (clone->set_source)
 	{
@@ -223,39 +246,8 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
 	  clone->src_x = dest_x + clone->offset_x;
 	  clone->src_y = dest_y + clone->offset_y;
 
-	  gimp_clone_motion (paint_core, drawable,
-                             clone->src_drawable, 
-                             options->paint_options.pressure_options, 
-                             options->type,
-                             clone->offset_x,
-                             clone->offset_y);
+	  gimp_clone_motion (paint_core, drawable, paint_options);
 	}
-      break;
-
-    case INIT_PAINT:
-      if (clone->set_source)
-	{
-	  gimp_clone_set_src_drawable (clone, drawable);
-
-	  clone->src_x = paint_core->cur_coords.x;
-	  clone->src_y = paint_core->cur_coords.y;
-
-	  clone->first_stroke = TRUE;
-	}
-      else if (options->aligned == GIMP_CLONE_ALIGN_NO)
-	{
-	  orig_src_x = clone->src_x;
-	  orig_src_y = clone->src_y;
-
-	  clone->first_stroke = TRUE;
-	}
-
-      if (clone->init_callback)
-        clone->init_callback (clone, clone->callback_data);
-
-      if (options->type == GIMP_PATTERN_CLONE)
-	if (! gimp_context_get_pattern (context))
-	  g_message (_("No patterns available for this operation."));
       break;
 
     case FINISH_PAINT:
@@ -275,43 +267,51 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
 }
 
 static void
-gimp_clone_motion (GimpPaintCore       *paint_core,
-                   GimpDrawable        *drawable,
-                   GimpDrawable        *src_drawable,
-                   GimpPressureOptions *pressure_options,
-                   GimpCloneType        type,
-                   gint                 offset_x,
-                   gint                 offset_y)
+gimp_clone_motion (GimpPaintCore    *paint_core,
+                   GimpDrawable     *drawable,
+                   GimpPaintOptions *paint_options)
 {
-  GimpImage   *gimage;
-  GimpImage   *src_gimage = NULL;
-  GimpContext *context;
-  guchar      *s;
-  guchar      *d;
-  TempBuf     *area;
-  gpointer     pr;
-  gint         y;
-  gint         x1, y1, x2, y2;
-  gint         has_alpha = -1;
-  PixelRegion  srcPR, destPR;
-  GimpPattern *pattern;
-  gdouble      opacity;
-  gdouble      scale;
+  GimpClone           *clone;
+  GimpCloneOptions    *options;
+  GimpPressureOptions *pressure_options;
+  GimpImage           *gimage;
+  GimpImage           *src_gimage = NULL;
+  GimpContext         *context;
+  guchar              *s;
+  guchar              *d;
+  TempBuf             *area;
+  gpointer             pr = NULL;
+  gint                 y;
+  gint                 x1, y1, x2, y2;
+  gint                 has_alpha = -1;
+  PixelRegion          srcPR, destPR;
+  GimpPattern         *pattern = NULL;
+  gdouble              opacity;
+  gdouble              scale;
+  gint                 offset_x;
+  gint                 offset_y;
 
-  pr      = NULL;
-  pattern = NULL;
+  clone = GIMP_CLONE (paint_core);
+
+  options = (GimpCloneOptions *) paint_options;
+
+  pressure_options = paint_options->pressure_options;
+
+  /*  make local copies because we change them  */
+  offset_x = clone->offset_x;
+  offset_y = clone->offset_y;
 
   /*  Make sure we still have a source if we are doing image cloning */
-  if (type == GIMP_IMAGE_CLONE)
+  if (options->type == GIMP_IMAGE_CLONE)
     {
-      if (!src_drawable)
+      if (! clone->src_drawable)
 	return;
 
-      if (! (src_gimage = gimp_item_get_image (GIMP_ITEM (src_drawable))))
+      if (! (src_gimage = gimp_item_get_image (GIMP_ITEM (clone->src_drawable))))
 	return;
 
       /*  Determine whether the source image has an alpha channel  */
-      has_alpha = gimp_drawable_has_alpha (src_drawable);
+      has_alpha = gimp_drawable_has_alpha (clone->src_drawable);
     }
 
   /*  We always need a destination image */
@@ -329,18 +329,20 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
   if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, scale)))
     return;
 
-  switch (type)
+  switch (options->type)
     {
     case GIMP_IMAGE_CLONE:
       /*  Set the paint area to transparent  */
       temp_buf_data_clear (area);
 
-      x1 = CLAMP (area->x + offset_x, 0, gimp_drawable_width (src_drawable));
-      y1 = CLAMP (area->y + offset_y, 0, gimp_drawable_height (src_drawable));
+      x1 = CLAMP (area->x + offset_x,
+                  0, gimp_drawable_width (clone->src_drawable));
+      y1 = CLAMP (area->y + offset_y,
+                  0, gimp_drawable_height (clone->src_drawable));
       x2 = CLAMP (area->x + offset_x + area->width,
-                  0, gimp_drawable_width (src_drawable));
+                  0, gimp_drawable_width (clone->src_drawable));
       y2 = CLAMP (area->y + offset_y + area->height,
-                  0, gimp_drawable_height (src_drawable));
+                  0, gimp_drawable_height (clone->src_drawable));
 
       if (!(x2 - x1) || !(y2 - y1))
         return;
@@ -351,9 +353,9 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
        *  Otherwise, we need a call to get_orig_image to make sure
        *  we get a copy of the unblemished (offset) image
        */
-      if (src_drawable != drawable)
+      if (clone->src_drawable != drawable)
 	{
-	  pixel_region_init (&srcPR, gimp_drawable_data (src_drawable),
+	  pixel_region_init (&srcPR, gimp_drawable_data (clone->src_drawable),
 			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
 	}
       else
@@ -361,7 +363,7 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
           TempBuf *orig;
 
 	  /*  get the original image  */
-	  orig = gimp_paint_core_get_orig_image (paint_core, src_drawable,
+	  orig = gimp_paint_core_get_orig_image (paint_core, clone->src_drawable,
                                                  x1, y1, x2, y2);
 
 	  srcPR.bytes     = orig->bytes;
@@ -416,11 +418,11 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
 
       for (y = 0; y < destPR.h; y++)
 	{
-	  switch (type)
+	  switch (options->type)
 	    {
 	    case GIMP_IMAGE_CLONE:
 	      gimp_clone_line_image (gimage, src_gimage,
-                                     drawable, src_drawable,
+                                     drawable, clone->src_drawable,
                                      s, d, has_alpha, 
                                      srcPR.bytes, destPR.bytes, destPR.w);
 	      s += srcPR.rowstride;
@@ -451,7 +453,8 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
 				gimp_context_get_paint_mode (context),
 				(pressure_options->pressure ? 
                                  GIMP_BRUSH_PRESSURE : GIMP_BRUSH_SOFT), 
-				scale, GIMP_PAINT_CONSTANT);
+				scale,
+                                GIMP_PAINT_CONSTANT);
 }
 
 static void

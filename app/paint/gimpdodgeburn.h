@@ -36,7 +36,9 @@ typedef struct _GimpDodgeBurnClass GimpDodgeBurnClass;
 
 struct _GimpDodgeBurn
 {
-  GimpPaintCore parent_instance;
+  GimpPaintCore  parent_instance;
+
+  GimpLut       *lut;
 };
 
 struct _GimpDodgeBurnClass
@@ -62,8 +64,6 @@ struct _GimpDodgeBurnOptions
   gdouble            exposure;
   gdouble            exposure_d;
   GtkObject         *exposure_w;
-
-  GimpLut           *lut;
 };
 
 

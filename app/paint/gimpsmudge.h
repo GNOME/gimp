@@ -20,6 +20,8 @@
 #define __GIMP_SMUDGE_H__
 
 
+#include "base/pixel-region.h"
+
 #include "gimppaintcore.h"
 #include "gimppaintoptions.h"
 
@@ -37,7 +39,11 @@ typedef struct _GimpSmudgeClass GimpSmudgeClass;
 
 struct _GimpSmudge
 {
-  GimpPaintCore parent_instance;
+  GimpPaintCore  parent_instance;
+
+  gboolean       initialized;
+  PixelRegion    accumPR;
+  guchar        *accum_data;
 };
 
 struct _GimpSmudgeClass

@@ -1,3 +1,26 @@
+2002-06-09  Michael Natterer  <mitch@gimp.org>
+
+	Paint cleanup:
+
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimppencil.c
+	* app/paint/gimpsmudge.c
+	* app/tools/gimpblendtool.c: made all *_motion() functions take
+	only (paint_core, drawable, paint_options) and get all parametrs
+	from looking at paint_options. Reordered functions to be
+	consistent. Indentation. Stuff...
+
+	* app/paint/gimpdodgeburn.[ch]: moved the GimpLut from
+	GimpDodgeBurnOptions to the GimpDodgeBurn object struct.
+
+	* app/paint/gimpsmudge.[ch]: moved all global variables to the
+	GimpSmudge object struct.
+
 2002-06-09  Sven Neumann  <sven@gimp.org>
 
 	* app/undo.c

@@ -41,22 +41,16 @@
 #include "gimppaintoptions.h"
 
 
-static void  gimp_paintbrush_class_init (GimpPaintbrushClass *klass);
-static void  gimp_paintbrush_init       (GimpPaintbrush      *paintbrush);
+static void   gimp_paintbrush_class_init (GimpPaintbrushClass *klass);
+static void   gimp_paintbrush_init       (GimpPaintbrush      *paintbrush);
 
-static void  gimp_paintbrush_paint    (GimpPaintCore         *paint_core,
-                                       GimpDrawable          *drawable,
-                                       GimpPaintOptions      *paint_options,
-                                       GimpPaintCoreState     paint_state);
-
-static void  gimp_paintbrush_motion   (GimpPaintCore         *paint_core,
-                                       GimpDrawable          *drawable,
-                                       GimpPressureOptions   *pressure_options,
-                                       GimpGradientOptions   *gradient_options,
-                                       gdouble                fade_out,
-                                       gdouble                gradient_length,
-                                       gboolean               incremental,
-                                       GimpGradientPaintMode  gradient_type);
+static void   gimp_paintbrush_paint      (GimpPaintCore       *paint_core,
+                                          GimpDrawable        *drawable,
+                                          GimpPaintOptions    *paint_options,
+                                          GimpPaintCoreState   paint_state);
+static void   gimp_paintbrush_motion     (GimpPaintCore       *paint_core,
+                                          GimpDrawable        *drawable,
+                                          GimpPaintOptions    *paint_options);
 
 
 static GimpPaintCoreClass *parent_class = NULL;
@@ -125,70 +119,10 @@ gimp_paintbrush_paint (GimpPaintCore      *paint_core,
                        GimpPaintOptions   *paint_options,
                        GimpPaintCoreState  paint_state)
 {
-  GimpPressureOptions *pressure_options;
-  GimpGradientOptions *gradient_options;
-  gboolean             incremental;
-  GimpImage           *gimage;
-  gdouble              fade_out;
-  gdouble              gradient_length;
-  gdouble              unit_factor;
-
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  pressure_options = paint_options->pressure_options;
-  gradient_options = paint_options->gradient_options;
-  incremental      = paint_options->incremental;
-
   switch (paint_state)
     {
-    case INIT_PAINT:
-      break;
-
     case MOTION_PAINT:
-      switch (gradient_options->fade_unit)
-	{
-	case GIMP_UNIT_PIXEL:
-	  fade_out = gradient_options->fade_out;
-	  break;
-	case GIMP_UNIT_PERCENT:
-	  fade_out = (MAX (gimage->width, gimage->height) *
-		      gradient_options->fade_out / 100);
-	  break;
-	default:
-	  unit_factor = gimp_unit_get_factor (gradient_options->fade_unit);
-	  fade_out = (gradient_options->fade_out *
-		      MAX (gimage->xresolution,
-			   gimage->yresolution) / unit_factor);
-	  break;
-	}
-
-      switch (gradient_options->gradient_unit)
-	{
-	case GIMP_UNIT_PIXEL:
-	  gradient_length = gradient_options->gradient_length;
-	  break;
-	case GIMP_UNIT_PERCENT:
-	  gradient_length = (MAX (gimage->width, gimage->height) *
-			     gradient_options->gradient_length / 100);
-	  break;
-	default:
-	  unit_factor = gimp_unit_get_factor (gradient_options->gradient_unit);
-	  gradient_length = (gradient_options->gradient_length *
-			     MAX (gimage->xresolution,
-				  gimage->yresolution) / unit_factor);
-	  break;
-	}
-
-      gimp_paintbrush_motion (paint_core, drawable,
-                              pressure_options,
-                              gradient_options,
-                              gradient_options->use_fade ? fade_out : 0,
-                              gradient_options->use_gradient ? gradient_length : 0,
-                              incremental,
-                              gradient_options->gradient_type);
-      break;
-
-    case FINISH_PAINT:
+      gimp_paintbrush_motion (paint_core, drawable, paint_options);
       break;
 
     default:
@@ -199,61 +133,115 @@ gimp_paintbrush_paint (GimpPaintCore      *paint_core,
 static void
 gimp_paintbrush_motion (GimpPaintCore         *paint_core,
                         GimpDrawable          *drawable,
-                        GimpPressureOptions   *pressure_options,
-                        GimpGradientOptions   *gradient_options,
-                        gdouble                fade_out,
-                        gdouble                gradient_length,
-                        gboolean               incremental,
-                        GimpGradientPaintMode  gradient_type)
+                        GimpPaintOptions      *paint_options)
 {
-  GimpImage   *gimage;
-  GimpContext *context;
-  TempBuf     *area;
-  gdouble      x, paint_left;
-  guchar       local_blend = OPAQUE_OPACITY;
-  guchar       temp_blend  = OPAQUE_OPACITY;
-  guchar       col[MAX_CHANNELS];
-  GimpRGB      color;
-  gdouble      opacity;
-  gdouble      scale;
+  GimpPressureOptions      *pressure_options;
+  GimpGradientOptions      *gradient_options;
+  GimpImage                *gimage;
+  GimpContext              *context;
+  TempBuf                  *area;
+  gdouble                   gradient_length;
+  guchar                    local_blend = OPAQUE_OPACITY;
+  guchar                    col[MAX_CHANNELS];
+  gdouble                   opacity;
+  gdouble                   scale;
+  GimpPaintApplicationMode  paint_appl_mode;
 
-  GimpPaintApplicationMode  paint_appl_mode = (incremental ? 
-                                               GIMP_PAINT_INCREMENTAL : 
-                                               GIMP_PAINT_CONSTANT);
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
+    return;
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  pressure_options = paint_options->pressure_options;
+  gradient_options = paint_options->gradient_options;
 
   context = gimp_get_current_context (gimage->gimp);
+
+  paint_appl_mode = (paint_options->incremental ? 
+                     GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);
+
+  if (gradient_options->use_fade)
+    {
+      gdouble fade_out = 0.0;
+      gdouble unit_factor;
+
+      switch (gradient_options->fade_unit)
+        {
+        case GIMP_UNIT_PIXEL:
+          fade_out = gradient_options->fade_out;
+          break;
+        case GIMP_UNIT_PERCENT:
+          fade_out = (MAX (gimage->width, gimage->height) *
+                      gradient_options->fade_out / 100);
+          break;
+        default:
+          unit_factor = gimp_unit_get_factor (gradient_options->fade_unit);
+          fade_out = (gradient_options->fade_out *
+                      MAX (gimage->xresolution,
+                           gimage->yresolution) / unit_factor);
+          break;
+        }
+
+      /*  factor in the fade out value  */
+      if (fade_out)
+        {
+          gdouble x, paint_left;
+
+          /*  Model the amount of paint left as a gaussian curve  */
+          x = ((gdouble) paint_core->pixel_dist / fade_out);
+          paint_left = exp (- x * x * 5.541);    /*  ln (1/255)  */
+
+          local_blend = (gint) (255 * paint_left);
+        }
+    }
+
+  if (gradient_options->use_gradient)
+    {
+      gdouble unit_factor;
+
+      switch (gradient_options->gradient_unit)
+        {
+        case GIMP_UNIT_PIXEL:
+          gradient_length = gradient_options->gradient_length;
+          break;
+        case GIMP_UNIT_PERCENT:
+          gradient_length = (MAX (gimage->width, gimage->height) *
+                             gradient_options->gradient_length / 100);
+          break;
+        default:
+          unit_factor = gimp_unit_get_factor (gradient_options->gradient_unit);
+          gradient_length = (gradient_options->gradient_length *
+                             MAX (gimage->xresolution,
+                                  gimage->yresolution) / unit_factor);
+          break;
+        }
+    }
+  else
+    {
+      gradient_length = 0.0;
+    }
+
+  if (pressure_options->color)
+    gradient_length = 1.0; /* not really used, only for if cases */
 
   if (pressure_options->size)
     scale = paint_core->cur_coords.pressure;
   else
     scale = 1.0;
 
-  if (pressure_options->color)
-    gradient_length = 1.0; /* not really used, only for if cases */
-
   /*  Get a region which can be used to paint to  */
   if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, scale)))
     return;
 
-  /*  factor in the fade out value  */
-  if (fade_out)
-    {
-      /*  Model the amount of paint left as a gaussian curve  */
-      x = ((double) paint_core->pixel_dist / fade_out);
-      paint_left = exp (- x * x * 5.541);    /*  ln (1/255)  */
-      local_blend = (int) (255 * paint_left);
-    }
-
   if (local_blend)
     {
+      guchar temp_blend;
+
       /*  set the alpha channel  */
       temp_blend = local_blend;
 
       if (gradient_length)
 	{
           GimpGradient *gradient;
+          GimpRGB       color;
 
           gradient = gimp_context_get_gradient (context);
 
@@ -266,7 +254,7 @@ gimp_paintbrush_motion (GimpPaintCore         *paint_core,
                                                      gradient,
                                                      gradient_length,
 						     &color,
-                                                     gradient_type);
+                                                     gradient_options->gradient_type);
 
 	  temp_blend = (gint) ((color.a * local_blend));
 
@@ -311,6 +299,7 @@ gimp_paintbrush_motion (GimpPaintCore         *paint_core,
 				    gimp_context_get_paint_mode (context),
 				    (pressure_options->pressure ? 
                                      GIMP_BRUSH_PRESSURE : GIMP_BRUSH_SOFT),
-				    scale, paint_appl_mode);
+				    scale,
+                                    paint_appl_mode);
     }
 }
