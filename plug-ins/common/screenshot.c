@@ -1,7 +1,7 @@
 /*  
- *  ScreenShot plug-in v0.9.1 
+ *  ScreenShot plug-in v0.9.2
  *  Sven Neumann, neumanns@uni-duesseldorf.de  
- *  1999/08/12
+ *  1999/09/01
  *
  *  Any suggestions, bug-reports or patches are very welcome.
  * 
@@ -40,8 +40,9 @@
  *  (98/05/28)  v0.7   use g_message for error output
  *  (98/06/04)  v0.8   added delay-time for root window shot
  *  (98/06/06)  v0.9   fixed a stupid bug in the dialog
- *  (99/08/12)  v0.9.1 somebody changed the dialog,
+ *  (99/08/12)  v0.9.1 somebody changed the dialog;
  *                     unset the image name and set the resolution
+ *  (99/09/01)  v0.9.2 try to fix a bug 
  */
 
 #include <stdio.h>
@@ -57,7 +58,7 @@
 /* Defines */
 #define PLUG_IN_NAME        "extension_screenshot"
 #define PLUG_IN_PRINT_NAME  "Screen Shot"
-#define PLUG_IN_VERSION     "v0.9.1 (99/08/12)"
+#define PLUG_IN_VERSION     "v0.9.2 (99/09/01)"
 #define PLUG_IN_MENU_PATH   "<Toolbox>/File/Acquire/Screen Shot..."
 #define PLUG_IN_AUTHOR      "Sven Neumann (neumanns@uni-duesseldorf.de)"
 #define PLUG_IN_COPYRIGHT   "Sven Neumann"
@@ -111,17 +112,17 @@ static void  run (gchar *name,
 		  GParam * param,	  /* parameters passed in */
 		  gint *nreturn_vals,     /* number of parameters returned */
 		  GParam ** return_vals); /* parameters to be returned */
-static void  shoot (void);
-static gint  shoot_dialog (void);
+static void  shoot                (void);
+static gint  shoot_dialog         (void);
 static void  shoot_close_callback (GtkWidget *widget,
 				   gpointer   data);
-static void  shoot_ok_callback (GtkWidget *widget,
-				gpointer   data);
-static void  shoot_toggle_update (GtkWidget *widget,
-				  gpointer   radio_button);
-static void  shoot_display_image (gint32 image);
-static void  shoot_delay (gint32 delay);
-static gint shoot_delay_callback (gpointer data);
+static void  shoot_ok_callback    (GtkWidget *widget,
+				   gpointer   data);
+static void  shoot_toggle_update  (GtkWidget *widget,
+				   gpointer   radio_button);
+static void  shoot_display_image  (gint32     image);
+static void  shoot_delay          (gint32     delay);
+static gint  shoot_delay_callback (gpointer   data);
 
 /* Global Variables */
 GPlugInInfo PLUG_IN_INFO =
@@ -163,11 +164,11 @@ static void query (void)
 }
 
 static void 
-run (gchar *name,		/* name of plugin */
-     gint nparams,		/* number of in-paramters */
-     GParam * param,		/* in-parameters */
+run (gchar *name,		/* name of plugin           */
+     gint nparams,		/* number of in-paramters   */
+     GParam * param,		/* in-parameters            */
      gint *nreturn_vals,	/* number of out-parameters */
-     GParam ** return_vals)	/* out-parameters */
+     GParam ** return_vals)	/* out-parameters           */
 {
 
   /* Get the runmode from the in-parameters */
@@ -601,6 +602,7 @@ shoot_display_image (gint32 image)
 			       &retvals,
 			       PARAM_IMAGE, image,
 			       PARAM_END);
+  gimp_destroy_params (params, retvals);
 }
 
 
