@@ -10,12 +10,14 @@ dubbed GIMP 1.4.
 
 Overview of Changes in GIMP 1.3.6
 =================================
+- Added support for large files (> 2GB) [Sven]
+- Cleaned up configure, updated to autoconf-2.52 [Sven]
 - Temporary switch to the Move tool when Space is pressed [Mitch]
-- Cleanup of display code [Mitch]
+- More cleanup of display code [Mitch]
 - Added mnemonics to lots of plug-ins and fixed some bugs [Maurits Rijk]
 - Added new PDB function gimp_image_get_name and corrected behaviour of
   gimp_image_get_filename [Yosh, Sven]
-- Navigation dialog redone as dockable [Mitch]
+- Navigation dialog redone as a dockable [Mitch]
 - Updated print plug-in to new version and depend on libgimpprint [Sven]
 - Generalized and improved the new config framework; use it for parasites,
   documents and devices  [Mitch, Sven]
