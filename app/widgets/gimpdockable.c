@@ -63,6 +63,8 @@ static void       gimp_dockable_style_set         (GtkWidget      *widget,
                                                    GtkStyle       *prev_style);
 static gboolean   gimp_dockable_expose_event      (GtkWidget      *widget,
                                                    GdkEventExpose *event);
+static gboolean   gimp_dockable_drag_event_filter (GtkWidget      *widget,
+                                                   GdkEventAny    *event);
 static gboolean   gimp_dockable_popup_menu        (GtkWidget      *widget);
 
 static void       gimp_dockable_add               (GtkContainer   *container,
@@ -221,6 +223,14 @@ gimp_dockable_init (GimpDockable *dockable)
                      GTK_DEST_DEFAULT_ALL,
                      dialog_target_table, G_N_ELEMENTS (dialog_target_table),
                      GDK_ACTION_MOVE);
+
+  /*  Filter out all button_press events not coming from the event window
+      over the title area.  This keeps events that originate from widgets
+      in the dockable to start a drag.
+   */
+  g_signal_connect (dockable, "button_press_event",
+                    G_CALLBACK (gimp_dockable_drag_event_filter),
+                    NULL);
 }
 
 static void
@@ -569,6 +579,14 @@ gimp_dockable_expose_event (GtkWidget      *widget,
     }
 
   return GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
+}
+
+static gboolean
+gimp_dockable_drag_event_filter (GtkWidget   *widget,
+                                 GdkEventAny *event)
+{
+  /*  stop processing of events not coming from the title event window  */
+  return (event->window != GIMP_DOCKABLE (widget)->title_window);
 }
 
 static gboolean

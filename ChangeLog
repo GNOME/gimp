@@ -1,3 +1,9 @@
+2003-12-11  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdockable.c (gimp_dockable_init): suppress
+	button_press events that reach the dockable widget but don't
+	originate from the title area.
+
 2003-12-11  DindinX  <david@dindinx.org>
 
 	* libgimp/gimpmiscui.c:
