@@ -112,15 +112,10 @@ gimp_palette_get_type (void)
 static void
 gimp_palette_class_init (GimpPaletteClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpObjectClass   *gimp_object_class;
-  GimpViewableClass *viewable_class;
-  GimpDataClass     *data_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  data_class        = GIMP_DATA_CLASS (klass);
+  GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -231,8 +226,8 @@ gimp_palette_get_popup_size (GimpViewable *viewable,
 
 static TempBuf *
 gimp_palette_get_new_preview (GimpViewable *viewable,
-			      gint          width,
-			      gint          height)
+                              gint          width,
+                              gint          height)
 {
   GimpPalette      *palette  = GIMP_PALETTE (viewable);
   GimpPaletteEntry *entry;
@@ -269,28 +264,28 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
       memset (b, 255, width * 3);
 
       for (x = 0; x < columns && list; x++)
-	{
-	  entry = (GimpPaletteEntry *) list->data;
+        {
+          entry = (GimpPaletteEntry *) list->data;
 
-	  list = g_list_next (list);
+          list = g_list_next (list);
 
-	  gimp_rgb_get_uchar (&entry->color,
-			      &b[x * cell_size * 3 + 0],
-			      &b[x * cell_size * 3 + 1],
-			      &b[x * cell_size * 3 + 2]);
+          gimp_rgb_get_uchar (&entry->color,
+                              &b[x * cell_size * 3 + 0],
+                              &b[x * cell_size * 3 + 1],
+                              &b[x * cell_size * 3 + 2]);
 
-	  for (i = 1; i < cell_size; i++)
-	    {
-	      b[(x * cell_size + i) * 3 + 0] = b[(x * cell_size) * 3 + 0];
-	      b[(x * cell_size + i) * 3 + 1] = b[(x * cell_size) * 3 + 1];
-	      b[(x * cell_size + i) * 3 + 2] = b[(x * cell_size) * 3 + 2];
-	    }
-	}
+          for (i = 1; i < cell_size; i++)
+            {
+              b[(x * cell_size + i) * 3 + 0] = b[(x * cell_size) * 3 + 0];
+              b[(x * cell_size + i) * 3 + 1] = b[(x * cell_size) * 3 + 1];
+              b[(x * cell_size + i) * 3 + 2] = b[(x * cell_size) * 3 + 2];
+            }
+        }
 
       for (i = 0; i < cell_size; i++)
-	{
-	  memcpy (buf + ((y * cell_size + i) * width) * 3, b, width * 3);
-	}
+        {
+          memcpy (buf + ((y * cell_size + i) * width) * 3, b, width * 3);
+        }
     }
 
   g_free (b);
@@ -380,13 +375,13 @@ gimp_palette_load (const gchar  *filename,
     {
       /* bad magic, but maybe it has \r\n at the end of lines? */
       if (!strcmp (str, "GIMP Palette\r"))
-	g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+        g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                      _("Fatal parse error in palette file '%s': "
                        "Missing magic header.\n"
                        "Does this file need converting from DOS?"),
                      gimp_filename_to_utf8 (filename));
       else
-	g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+        g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                      _("Fatal parse error in palette file '%s': "
                        "Missing magic header."),
                      gimp_filename_to_utf8 (filename));
@@ -424,48 +419,48 @@ gimp_palette_load (const gchar  *filename,
       g_free (utf8);
 
       if (! fgets (str, sizeof (str), file))
-	{
-	  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in palette file '%s': "
                          "Read error in line %d."),
                        gimp_filename_to_utf8 (filename), linenum);
-	  fclose (file);
-	  g_object_unref (palette);
-	  return NULL;
-	}
+          fclose (file);
+          g_object_unref (palette);
+          return NULL;
+        }
 
       linenum++;
 
       if (! strncmp (str, "Columns: ", strlen ("Columns: ")))
-	{
-	  gint columns;
+        {
+          gint columns;
 
-	  columns = atoi (g_strstrip (&str[strlen ("Columns: ")]));
+          columns = atoi (g_strstrip (&str[strlen ("Columns: ")]));
 
-	  if (columns < 0 || columns > 256)
-	    {
-	      g_message (_("Reading palette file '%s': "
-			   "Invalid number of columns in line %d. "
+          if (columns < 0 || columns > 256)
+            {
+              g_message (_("Reading palette file '%s': "
+                           "Invalid number of columns in line %d. "
                            "Using default value."),
-			 gimp_filename_to_utf8 (filename), linenum);
-	      columns = 0;
-	    }
+                         gimp_filename_to_utf8 (filename), linenum);
+              columns = 0;
+            }
 
-	  palette->n_columns = columns;
+          palette->n_columns = columns;
 
-	  if (! fgets (str, sizeof (str), file))
-	    {
-	      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+          if (! fgets (str, sizeof (str), file))
+            {
+              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                            _("Fatal parse error in palette file '%s': "
                              "Read error in line %d."),
                            gimp_filename_to_utf8 (filename), linenum);
-	      fclose (file);
-	      g_object_unref (palette);
-	      return NULL;
-	    }
+              fclose (file);
+              g_object_unref (palette);
+              return NULL;
+            }
 
-	  linenum++;
-	}
+          linenum++;
+        }
     }
   else /* old palette format */
     {
@@ -484,71 +479,71 @@ gimp_palette_load (const gchar  *filename,
   while (! feof (file))
     {
       if (str[0] != '#')
-	{
-	  tok = strtok (str, " \t");
-	  if (tok)
-	    r = atoi (tok);
-	  else
-	    /* maybe we should just abort? */
-	    g_message (_("Reading palette file '%s': "
-			 "Missing RED component in line %d."),
+        {
+          tok = strtok (str, " \t");
+          if (tok)
+            r = atoi (tok);
+          else
+            /* maybe we should just abort? */
+            g_message (_("Reading palette file '%s': "
+                         "Missing RED component in line %d."),
                        gimp_filename_to_utf8 (filename), linenum);
 
-	  tok = strtok (NULL, " \t");
-	  if (tok)
-	    g = atoi (tok);
-	  else
-	    g_message (_("Reading palette '%s': "
-			 "Missing GREEN component in line %d."),
+          tok = strtok (NULL, " \t");
+          if (tok)
+            g = atoi (tok);
+          else
+            g_message (_("Reading palette '%s': "
+                         "Missing GREEN component in line %d."),
                        gimp_filename_to_utf8 (filename), linenum);
 
-	  tok = strtok (NULL, " \t");
-	  if (tok)
-	    b = atoi (tok);
-	  else
-	    g_message (_("Reading palette file '%s': "
-			 "Missing BLUE component in line %d."),
+          tok = strtok (NULL, " \t");
+          if (tok)
+            b = atoi (tok);
+          else
+            g_message (_("Reading palette file '%s': "
+                         "Missing BLUE component in line %d."),
                        gimp_filename_to_utf8 (filename), linenum);
 
-	  /* optional name */
-	  tok = strtok (NULL, "\n");
+          /* optional name */
+          tok = strtok (NULL, "\n");
 
-	  if (r < 0 || r > 255 ||
-	      g < 0 || g > 255 ||
-	      b < 0 || b > 255)
-	    g_message (_("Reading palette file '%s': "
-			 "RGB value out of range in line %d."),
+          if (r < 0 || r > 255 ||
+              g < 0 || g > 255 ||
+              b < 0 || b > 255)
+            g_message (_("Reading palette file '%s': "
+                         "RGB value out of range in line %d."),
                        gimp_filename_to_utf8 (filename), linenum);
 
           /* don't call gimp_palette_add_entry here, it's rather inefficient */
           entry = g_new0 (GimpPaletteEntry, 1);
 
-	  gimp_rgba_set_uchar (&entry->color,
-			       (guchar) r,
-			       (guchar) g,
-			       (guchar) b,
-			       255);
+          gimp_rgba_set_uchar (&entry->color,
+                               (guchar) r,
+                               (guchar) g,
+                               (guchar) b,
+                               255);
 
           entry->name     = g_strdup (tok ? tok : _("Untitled"));
           entry->position = palette->n_colors;
 
           palette->colors = g_list_prepend (palette->colors, entry);
           palette->n_colors++;
-	}
+        }
 
       if (! fgets (str, sizeof (str), file))
-	{
-	  if (feof (file))
-	    break;
+        {
+          if (feof (file))
+            break;
 
-	  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in palette file '%s': "
                          "Read error in line %d."),
                        gimp_filename_to_utf8 (filename), linenum);
-	  fclose (file);
-	  g_object_unref (palette);
-	  return NULL;
-	}
+          fclose (file);
+          g_object_unref (palette);
+          return NULL;
+        }
 
       linenum++;
     }
@@ -575,7 +570,7 @@ gimp_palette_save (GimpData  *data,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for writing: %s"),
                    gimp_filename_to_utf8 (data->filename),
-		   g_strerror (errno));
+                   g_strerror (errno));
       return FALSE;
     }
 
@@ -627,9 +622,9 @@ gimp_palette_duplicate (GimpData *data,
 }
 
 GimpPaletteEntry *
-gimp_palette_add_entry (GimpPalette *palette,
-			const gchar *name,
-			GimpRGB     *color)
+gimp_palette_add_entry (GimpPalette   *palette,
+                        const gchar   *name,
+                        const GimpRGB *color)
 {
   GimpPaletteEntry *entry;
 
@@ -654,7 +649,7 @@ gimp_palette_add_entry (GimpPalette *palette,
 
 void
 gimp_palette_delete_entry (GimpPalette      *palette,
-			   GimpPaletteEntry *entry)
+                           GimpPaletteEntry *entry)
 {
   GList *list;
   gint   pos = 0;
@@ -672,24 +667,24 @@ gimp_palette_delete_entry (GimpPalette      *palette,
       palette->n_colors--;
 
       for (list = g_list_nth (palette->colors, pos);
-	   list;
-	   list = g_list_next (list))
-	{
-	  entry = (GimpPaletteEntry *) list->data;
+           list;
+           list = g_list_next (list))
+        {
+          entry = (GimpPaletteEntry *) list->data;
 
-	  entry->position = pos++;
-	}
+          entry->position = pos++;
+        }
 
       if (palette->n_colors == 0)
-	{
-	  GimpRGB color;
+        {
+          GimpRGB color;
 
-	  gimp_rgba_set (&color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+          gimp_rgba_set (&color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
 
-	  gimp_palette_add_entry (palette,
-				  _("Black"),
-				  &color);
-	}
+          gimp_palette_add_entry (palette,
+                                  _("Black"),
+                                  &color);
+        }
 
       /*  will make the palette dirty too  */
       gimp_object_name_changed (GIMP_OBJECT (palette));

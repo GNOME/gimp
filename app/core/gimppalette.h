@@ -73,7 +73,7 @@ GimpData         * gimp_palette_load           (const gchar      *filename,
 
 GimpPaletteEntry * gimp_palette_add_entry      (GimpPalette      *palette,
 					        const gchar      *name,
-					        GimpRGB          *color);
+					        const GimpRGB    *color);
 void               gimp_palette_delete_entry   (GimpPalette      *palette,
 					        GimpPaletteEntry *entry);
 

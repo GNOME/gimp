@@ -1,5 +1,11 @@
 2004-06-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimppalette.[ch] (gimp_palette_add_entry): take
+	const GimpRGB* instead of just GimpRGB*.
+	Converted tabs to spaces.
+
+2004-06-30  Michael Natterer  <mitch@gimp.org>
+
 	* widgets/gimpselectiondata.[ch] (gimp_selection_data_get_svg):
 	changed return value from gchar* to const gchar*. Renamed
 	parameters to be consistent with other SVG functions.
