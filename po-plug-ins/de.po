@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.19\n"
-"POT-Creation-Date: 2000-04-12 16:36+0200\n"
-"PO-Revision-Date: 2000-04-13 12:15+02:00\n"
+"POT-Creation-Date: 2000-04-16 14:17+0200\n"
+"PO-Revision-Date: 2000-04-16 14:27+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -49,7 +49,7 @@ msgstr "Über"
 #: plug-ins/common/CML_explorer.c:2266 plug-ins/common/aa.c:363
 #: plug-ins/common/align_layers.c:420 plug-ins/common/apply_lens.c:404
 #: plug-ins/common/blinds.c:342 plug-ins/common/blur.c:622
-#: plug-ins/common/bumpmap.c:806 plug-ins/common/checkerboard.c:359
+#: plug-ins/common/bumpmap.c:868 plug-ins/common/checkerboard.c:359
 #: plug-ins/common/colorify.c:333 plug-ins/common/colortoalpha.c:423
 #: plug-ins/common/compose.c:785 plug-ins/common/convmatrix.c:810
 #: plug-ins/common/csource.c:670 plug-ins/common/cubism.c:316
@@ -76,7 +76,7 @@ msgstr "Über"
 #: plug-ins/common/noisify.c:333 plug-ins/common/nova.c:364
 #: plug-ins/common/oilify.c:462 plug-ins/common/papertile.c:248
 #: plug-ins/common/pat.c:428 plug-ins/common/pixelize.c:289
-#: plug-ins/common/plasma.c:295 plug-ins/common/png.c:1003
+#: plug-ins/common/plasma.c:295 plug-ins/common/png.c:1020
 #: plug-ins/common/pnm.c:950 plug-ins/common/polar.c:943
 #: plug-ins/common/ps.c:2550 plug-ins/common/ps.c:2731
 #: plug-ins/common/psp.c:443 plug-ins/common/randomize.c:710
@@ -93,7 +93,7 @@ msgstr "Über"
 #: plug-ins/common/vpropagate.c:942 plug-ins/common/warp.c:443
 #: plug-ins/common/waves.c:356 plug-ins/common/whirlpinch.c:829
 #: plug-ins/common/wind.c:719 plug-ins/common/wmf.c:938
-#: plug-ins/common/xbm.c:1144 plug-ins/common/xpm.c:801
+#: plug-ins/common/xbm.c:1144 plug-ins/common/xpm.c:815
 #: plug-ins/fits/fits.c:1003 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:929 plug-ins/fp/fp_gtk.c:913
 #: plug-ins/gap/gap_arr_dialog.c:768 plug-ins/gap/gap_arr_dialog.c:1010
@@ -130,7 +130,7 @@ msgstr "OK"
 #: plug-ins/common/CML_explorer.c:1190 plug-ins/common/CML_explorer.c:2268
 #: plug-ins/common/aa.c:365 plug-ins/common/align_layers.c:422
 #: plug-ins/common/apply_lens.c:406 plug-ins/common/blinds.c:344
-#: plug-ins/common/blur.c:624 plug-ins/common/bumpmap.c:808
+#: plug-ins/common/blur.c:624 plug-ins/common/bumpmap.c:870
 #: plug-ins/common/checkerboard.c:361 plug-ins/common/colorify.c:335
 #: plug-ins/common/colortoalpha.c:425 plug-ins/common/compose.c:787
 #: plug-ins/common/convmatrix.c:814 plug-ins/common/csource.c:672
@@ -158,7 +158,7 @@ msgstr "OK"
 #: plug-ins/common/nova.c:366 plug-ins/common/oilify.c:464
 #: plug-ins/common/papertile.c:250 plug-ins/common/pat.c:430
 #: plug-ins/common/pixelize.c:291 plug-ins/common/plasma.c:297
-#: plug-ins/common/png.c:1005 plug-ins/common/pnm.c:952
+#: plug-ins/common/png.c:1022 plug-ins/common/pnm.c:952
 #: plug-ins/common/polar.c:945 plug-ins/common/ps.c:2552
 #: plug-ins/common/ps.c:2733 plug-ins/common/psp.c:445
 #: plug-ins/common/randomize.c:712 plug-ins/common/ripple.c:598
@@ -176,7 +176,7 @@ msgstr "OK"
 #: plug-ins/common/waves.c:358 plug-ins/common/whirlpinch.c:831
 #: plug-ins/common/wind.c:721 plug-ins/common/wmf.c:940
 #: plug-ins/common/xbm.c:894 plug-ins/common/xbm.c:1146
-#: plug-ins/common/xpm.c:803 plug-ins/fits/fits.c:1005
+#: plug-ins/common/xpm.c:817 plug-ins/fits/fits.c:1005
 #: plug-ins/flame/flame.c:626 plug-ins/flame/flame.c:931
 #: plug-ins/fp/fp_gtk.c:917 plug-ins/gap/gap_arr_dialog.c:1012
 #: plug-ins/gap/gap_dbbrowser_utils.c:211
@@ -444,17 +444,17 @@ msgstr "Über AlienMap2"
 #. Preview
 #: plug-ins/FractalExplorer/Dialogs.c:324 plug-ins/Lighting/lighting_ui.c:1093
 #: plug-ins/MapObject/mapobject_ui.c:1399 plug-ins/common/CML_explorer.c:1214
-#: plug-ins/common/blinds.c:362 plug-ins/common/bumpmap.c:828
-#: plug-ins/common/curve_bend.c:1523 plug-ins/common/destripe.c:597
-#: plug-ins/common/emboss.c:762 plug-ins/common/exchange.c:313
-#: plug-ins/common/fractaltrace.c:759 plug-ins/common/iwarp.c:1173
-#: plug-ins/common/mapcolor.c:596 plug-ins/common/nlfilt.c:586
-#: plug-ins/common/polar.c:964 plug-ins/common/ps.c:2869
-#: plug-ins/common/sharpen.c:567 plug-ins/common/spheredesigner.c:2258
-#: plug-ins/common/tileit.c:426 plug-ins/common/waves.c:593
-#: plug-ins/common/whirlpinch.c:847 plug-ins/flame/flame.c:949
-#: plug-ins/gfig/gfig.c:3981 plug-ins/gflare/gflare.c:2518
-#: plug-ins/gflare/gflare.c:3526 plug-ins/gimpressionist/orientmap.c:502
+#: plug-ins/common/blinds.c:362 plug-ins/common/curve_bend.c:1523
+#: plug-ins/common/destripe.c:597 plug-ins/common/emboss.c:762
+#: plug-ins/common/exchange.c:313 plug-ins/common/fractaltrace.c:759
+#: plug-ins/common/iwarp.c:1173 plug-ins/common/mapcolor.c:596
+#: plug-ins/common/nlfilt.c:586 plug-ins/common/polar.c:964
+#: plug-ins/common/ps.c:2869 plug-ins/common/sharpen.c:567
+#: plug-ins/common/spheredesigner.c:2258 plug-ins/common/tileit.c:426
+#: plug-ins/common/waves.c:593 plug-ins/common/whirlpinch.c:847
+#: plug-ins/flame/flame.c:949 plug-ins/gfig/gfig.c:3981
+#: plug-ins/gflare/gflare.c:2518 plug-ins/gflare/gflare.c:3526
+#: plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/ifscompose/ifscompose.c:912
 #: plug-ins/imagemap/imap_edit_area_info.c:287
@@ -1021,7 +1021,7 @@ msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "De-/Aktiviere Entfernung von Treppeneffekten (Kantenglättung)"
 
 #: plug-ins/Lighting/lighting_ui.c:511 plug-ins/MapObject/mapobject_ui.c:647
-#: plug-ins/common/bumpmap.c:962 plug-ins/common/emboss.c:602
+#: plug-ins/common/bumpmap.c:1061 plug-ins/common/emboss.c:602
 #: plug-ins/struc/struc.c:304
 msgid "Depth:"
 msgstr "Tiefe:"
@@ -1151,7 +1151,7 @@ msgid "Intensity Levels"
 msgstr "Intensitätsstufen"
 
 #: plug-ins/Lighting/lighting_ui.c:740 plug-ins/MapObject/mapobject_ui.c:873
-#: plug-ins/common/bumpmap.c:998
+#: plug-ins/common/bumpmap.c:1101
 msgid "Ambient:"
 msgstr "Ambient:"
 
@@ -1463,7 +1463,7 @@ msgstr "Zeige/Verberge Vorschau-Drahtgitter"
 #: plug-ins/common/png.c:421 plug-ins/common/pnm.c:416
 #: plug-ins/common/psd.c:1708 plug-ins/common/sunras.c:443
 #: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:441
-#: plug-ins/common/xbm.c:675 plug-ins/common/xpm.c:328
+#: plug-ins/common/xbm.c:675 plug-ins/common/xpm.c:335
 #: plug-ins/common/xwd.c:448 plug-ins/faxg3/faxg3.c:191
 #: plug-ins/gfli/gfli.c:471 plug-ins/sgi/sgi.c:331 plug-ins/sgi/sgi.c:333
 #: plug-ins/xjt/xjt.c:3253
@@ -1539,7 +1539,7 @@ msgstr "kann %s nicht öffnen\n"
 #: plug-ins/common/pnm.c:788 plug-ins/common/ps.c:1002
 #: plug-ins/common/sunras.c:526 plug-ins/common/tga.c:1197
 #: plug-ins/common/tiff.c:1225 plug-ins/common/xbm.c:959
-#: plug-ins/common/xpm.c:645 plug-ins/common/xwd.c:552
+#: plug-ins/common/xpm.c:654 plug-ins/common/xwd.c:552
 #: plug-ins/fits/fits.c:473 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:549
 #: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1635
 #, c-format
@@ -2130,7 +2130,7 @@ msgstr "Sichtbare Ebenen anordnen"
 #.
 #: plug-ins/common/align_layers.c:431 plug-ins/common/apply_lens.c:415
 #: plug-ins/common/blinds.c:424 plug-ins/common/blur.c:640
-#: plug-ins/common/bumpmap.c:903 plug-ins/common/checkerboard.c:371
+#: plug-ins/common/bumpmap.c:1002 plug-ins/common/checkerboard.c:371
 #: plug-ins/common/cubism.c:328 plug-ins/common/despeckle.c:747
 #: plug-ins/common/destripe.c:658 plug-ins/common/edge.c:668
 #: plug-ins/common/emboss.c:572 plug-ins/common/engrave.c:246
@@ -2140,7 +2140,7 @@ msgstr "Sichtbare Ebenen anordnen"
 #: plug-ins/common/max_rgb.c:277 plug-ins/common/nlfilt.c:400
 #: plug-ins/common/noisify.c:345 plug-ins/common/nova.c:376
 #: plug-ins/common/oilify.c:474 plug-ins/common/pixelize.c:301
-#: plug-ins/common/plasma.c:309 plug-ins/common/png.c:1014
+#: plug-ins/common/plasma.c:309 plug-ins/common/png.c:1031
 #: plug-ins/common/polar.c:984 plug-ins/common/randomize.c:728
 #: plug-ins/common/ripple.c:692 plug-ins/common/scatter_hsv.c:445
 #: plug-ins/common/sel_gauss.c:258 plug-ins/common/sharpen.c:627
@@ -2150,7 +2150,7 @@ msgstr "Sichtbare Ebenen anordnen"
 #: plug-ins/common/unsharp.c:805 plug-ins/common/video.c:2187
 #: plug-ins/common/vpropagate.c:984 plug-ins/common/waves.c:406
 #: plug-ins/common/whirlpinch.c:868 plug-ins/common/wind.c:733
-#: plug-ins/common/xpm.c:813 plug-ins/maze/maze_face.c:212
+#: plug-ins/common/xpm.c:827 plug-ins/maze/maze_face.c:212
 #: plug-ins/mosaic/mosaic.c:660 plug-ins/struc/struc.c:273
 #: plug-ins/xjt/xjt.c:812
 msgid "Parameter Settings"
@@ -2404,65 +2404,70 @@ msgstr "Wiederholen:"
 msgid "Number of times to apply filter"
 msgstr "wie oft der Filter angewendet werden soll"
 
-#: plug-ins/common/bumpmap.c:339
+#: plug-ins/common/bumpmap.c:363
 msgid "<Image>/Filters/Map/Bump Map..."
 msgstr "<Image>/Filter/Abbilden/Bumpmap..."
 
-#: plug-ins/common/bumpmap.c:474
+#: plug-ins/common/bumpmap.c:518
 msgid "Bump-mapping..."
 msgstr "Wende Bumpmap-Effekt an..."
 
-#: plug-ins/common/bumpmap.c:801
+#: plug-ins/common/bumpmap.c:863
 msgid "Bump Map"
 msgstr "Bumpmap"
 
-#: plug-ins/common/bumpmap.c:864
+#: plug-ins/common/bumpmap.c:954
 msgid "Map Type"
 msgstr "Map Typ"
 
-#: plug-ins/common/bumpmap.c:868
+#: plug-ins/common/bumpmap.c:958
 msgid "Linear Map"
 msgstr "Lineare Abb."
 
-#: plug-ins/common/bumpmap.c:869
+#: plug-ins/common/bumpmap.c:959
 msgid "Spherical Map"
 msgstr "Spherische Abb."
 
-#: plug-ins/common/bumpmap.c:870
+#: plug-ins/common/bumpmap.c:960
 msgid "Sinuosidal Map"
 msgstr "Sinusförmige Abb."
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:884
+#: plug-ins/common/bumpmap.c:973
 msgid "Compensate for Darkening"
 msgstr "Verdunkelung kompensieren"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:894
+#: plug-ins/common/bumpmap.c:983
 msgid "Invert Bumpmap"
 msgstr "Bumpmap invertieren"
 
-#: plug-ins/common/bumpmap.c:925
-msgid "Bump Map:"
-msgstr "Bump Map:"
+#. Tile bumpmap
+#: plug-ins/common/bumpmap.c:993
+msgid "Tile Bumpmap"
+msgstr "Bumpmap kacheln"
 
-#: plug-ins/common/bumpmap.c:944 plug-ins/common/emboss.c:584
+#: plug-ins/common/bumpmap.c:1024
+msgid "Bump Map:"
+msgstr "Bumpmap:"
+
+#: plug-ins/common/bumpmap.c:1043 plug-ins/common/emboss.c:584
 msgid "Azimuth:"
 msgstr "Längengrad (Azimuth):"
 
-#: plug-ins/common/bumpmap.c:953 plug-ins/common/emboss.c:593
+#: plug-ins/common/bumpmap.c:1052 plug-ins/common/emboss.c:593
 msgid "Elevation:"
 msgstr "Breitengrad (Elevation):"
 
-#: plug-ins/common/bumpmap.c:971 plug-ins/gap/resize.c:197
+#: plug-ins/common/bumpmap.c:1072 plug-ins/gap/resize.c:197
 msgid "X Offset:"
 msgstr "X-Versatz:"
 
-#: plug-ins/common/bumpmap.c:980 plug-ins/gap/resize.c:214
+#: plug-ins/common/bumpmap.c:1082 plug-ins/gap/resize.c:214
 msgid "Y Offset:"
 msgstr "Y-Versatz:"
 
-#: plug-ins/common/bumpmap.c:989
+#: plug-ins/common/bumpmap.c:1092
 msgid "Waterlevel:"
 msgstr "Wasserhöhe:"
 
@@ -2521,7 +2526,7 @@ msgid "Colorify"
 msgstr "Einfärben"
 
 #: plug-ins/common/colorify.c:344 plug-ins/common/colortoalpha.c:434
-#: plug-ins/common/ps.c:2642 plug-ins/common/xpm.c:433
+#: plug-ins/common/ps.c:2642 plug-ins/common/xpm.c:440
 #: plug-ins/gap/gap_mov_dialog.c:251 plug-ins/gimpressionist/color.c:51
 #: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
 #: plug-ins/print/gimp_main_window.c:425
@@ -5009,19 +5014,19 @@ msgstr ""
 "%s\n"
 "PNG fehler. Datei korrupt?"
 
-#: plug-ins/common/png.c:998
+#: plug-ins/common/png.c:1015
 msgid "Save as PNG"
 msgstr "Als PNG sichern"
 
-#: plug-ins/common/png.c:1027
+#: plug-ins/common/png.c:1044
 msgid "Interlacing (Adam7)"
 msgstr "Interlacing (Adam7)"
 
-#: plug-ins/common/png.c:1036
+#: plug-ins/common/png.c:1053
 msgid "Skip Ancillary Chunks"
 msgstr "Untergeordnete Blöcke überspringen"
 
-#: plug-ins/common/png.c:1053
+#: plug-ins/common/png.c:1070
 msgid "Compression Level:"
 msgstr "Kompressionsgrad:"
 
@@ -6876,11 +6881,11 @@ msgstr "Hot Spot Koordinaten schreiben"
 msgid "Hot Spot X:"
 msgstr "Hot Spot X:"
 
-#: plug-ins/common/xpm.c:796
+#: plug-ins/common/xpm.c:810
 msgid "Save as XPM"
 msgstr "Als XPM sichern"
 
-#: plug-ins/common/xpm.c:826
+#: plug-ins/common/xpm.c:840
 msgid "Alpha Threshold:"
 msgstr "Alpha-Schwellwert:"
 
@@ -12102,7 +12107,7 @@ msgstr "Ausgewälten Bereich löschen"
 msgid "Constructing maze using Prim's Algorithm..."
 msgstr "Erstelle Labyrinth mit dem Prim'schen Algorithmus..."
 
-#: plug-ins/maze/algorithms.c:454
+#: plug-ins/maze/algorithms.c:458
 msgid "Constructing tileable maze using Prim's Algorithm..."
 msgstr "Erstelle nahtloses Labyrinth mit dem Prim'schen Algorithmus..."
 

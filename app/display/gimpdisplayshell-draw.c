@@ -521,26 +521,15 @@ create_toolbox (void)
   GList     *list;
   GtkAccelGroup *table;
   GdkGeometry    geometry;
+  GtkStyle      *style;
+  gint           xthickness;
+  gint           ythickness;
+
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
   /* Register dialog */
   dialog_register_toolbox (window);
-
-  gtk_window_set_wmclass (GTK_WINDOW (window), "toolbox", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (window), _("The GIMP"));
-  gtk_window_set_policy (GTK_WINDOW (window), TRUE, TRUE, FALSE);
-
-  geometry.min_width  = 30;
-  geometry.min_height = 102;
-  geometry.width_inc  = 28;
-  geometry.height_inc = 28;
-  gtk_window_set_geometry_hints (GTK_WINDOW (window), 
-				 NULL,
-				 &geometry, 
-				 GDK_HINT_MIN_SIZE | GDK_HINT_RESIZE_INC);
-
-  session_set_window_geometry (window, &toolbox_session_info, TRUE);
 
   gtk_signal_connect (GTK_OBJECT (window), "delete_event",
 		      GTK_SIGNAL_FUNC (toolbox_delete),
@@ -572,6 +561,29 @@ create_toolbox (void)
       gtk_widget_set_events (window, GDK_POINTER_MOTION_MASK);
       gtk_widget_set_extension_events (window, GDK_EXTENSION_EVENTS_CURSOR);
     }
+  
+  /* set up the window geometry after the events have been set, 
+     since we need to realize the widget */
+  gtk_window_set_wmclass (GTK_WINDOW (window), "toolbox", "Gimp");
+  gtk_window_set_title (GTK_WINDOW (window), _("The GIMP"));
+  gtk_window_set_policy (GTK_WINDOW (window), TRUE, TRUE, FALSE);
+
+  gtk_widget_realize (window);
+  style = gtk_widget_get_style (window);
+  xthickness = ((GtkStyleClass *) style->klass)->xthickness;
+  ythickness = ((GtkStyleClass *) style->klass)->ythickness;
+  
+  geometry.min_width  =   2 + 24 + 2 * xthickness;
+  geometry.min_height = 100 + 24 + 2 * ythickness;
+  geometry.width_inc  =       24 + 2 * xthickness;
+  geometry.height_inc =       24 + 2 * ythickness;
+
+  gtk_window_set_geometry_hints (GTK_WINDOW (window), 
+				 NULL,
+				 &geometry, 
+				 GDK_HINT_MIN_SIZE | GDK_HINT_RESIZE_INC);
+
+  session_set_window_geometry (window, &toolbox_session_info, TRUE);
 
   main_vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 1);
@@ -602,7 +614,8 @@ create_toolbox (void)
   wbox = gtk_hwrap_box_new (FALSE);
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (wbox), GTK_JUSTIFY_TOP);
   gtk_wrap_box_set_line_justify (GTK_WRAP_BOX (wbox), GTK_JUSTIFY_LEFT);
-  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (wbox), 140.0 / 192.0);  /* 5x5 tools */
+  /*  magic number to set a default 5x5 layout  */
+  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (wbox), 5.0 / 5.9);
   gtk_container_set_border_width (GTK_CONTAINER (wbox), 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), wbox, TRUE, TRUE, 0);
   gtk_widget_show (wbox);

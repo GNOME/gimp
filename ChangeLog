@@ -1,3 +1,20 @@
+2000-04-16  Sven Neumann  <sven@gimp.org>
+            Jens Lautenbacher  <jtl@gimp.org>
+
+	* app/ink.c: tweaked dialog layout
+
+	* app/interface.c: take theme's [xy]thickness into account when
+	setting up minimum sizes and size_increments
+
+	* app/tool_options.c: changed the term "Pressure" to "Hardness"
+	in the pressure sensitivity UI
+	
+	* plug-ins/gap/iter_ALT/gen/plug_in_bump_map_iter_ALT.inc: removed
+	* plug-ins/gap/iter_ALT/mod/plug_in_bump_map_iter_ALT.inc: new file
+	* plug-ins/gap/Makefile.am
+	* plug-ins/gap/gap_filter_iterators.c: changed filter_iterator to
+	reflect changes in the bumpmap plug_in
+
 2000-04-16  Jens Lautenbacher  <jtl@gimp.org>
 	    Sven Neumann  <sven@gimp.org>
 

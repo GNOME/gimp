@@ -727,7 +727,7 @@ paint_pressure_options_new (ToolType tool_type)
     case ERASER:
     case PAINTBRUSH:
     case SMUDGE:
-      pressure->pressure_w = gtk_check_button_new_with_label (_("Pressure"));
+      pressure->pressure_w = gtk_check_button_new_with_label (_("Hardness"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->pressure_w);
       gtk_signal_connect (GTK_OBJECT (pressure->pressure_w), "toggled",
 			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),

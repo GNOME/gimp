@@ -15,7 +15,6 @@ EXTRA_DIST = \
 	iter_ALT/gen/plug_in_alpha2color_iter_ALT.inc		\
 	iter_ALT/gen/plug_in_blinds_iter_ALT.inc		\
 	iter_ALT/gen/plug_in_borderaverage_iter_ALT.inc		\
-	iter_ALT/gen/plug_in_bump_map_iter_ALT.inc		\
 	iter_ALT/gen/plug_in_checkerboard_iter_ALT.inc		\
 	iter_ALT/gen/plug_in_color_map_iter_ALT.inc		\
 	iter_ALT/gen/plug_in_colorify_iter_ALT.inc		\
@@ -58,6 +57,7 @@ EXTRA_DIST = \
 	iter_ALT/mod/plug_in_alienmap_iter_ALT.inc		\
 	iter_ALT/mod/plug_in_applylens_iter_ALT.inc		\
 	iter_ALT/mod/plug_in_blur_iter_ALT.inc			\
+	iter_ALT/mod/plug_in_bump_map_iter_ALT.inc		\
 	iter_ALT/mod/plug_in_convmatrix_iter_ALT.inc		\
 	iter_ALT/mod/plug_in_depth_merge_iter_ALT.inc		\
 	iter_ALT/mod/plug_in_despeckle_iter_ALT.inc		\

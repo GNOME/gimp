@@ -17,6 +17,7 @@ gint p_plug_in_bump_map_iter_ALT(GRunModeType run_mode, gint32 total_steps, gdou
       long      compensate;
       long      invert;
       long      type;
+      long      tiled;
     } t_plug_in_bump_map_Vals; 
 
     t_plug_in_bump_map_Vals  buf, *buf_from, *buf_to; 
