@@ -421,7 +421,11 @@ browser_response (GtkWidget     *widget,
                                       &num_procs, &proc_list);
           }
 
-        str = g_strdup_printf (_("%d Procedures"), num_procs);
+        if (num_procs == 1)
+          str = g_strdup (_("1 Procedure"));
+        else
+          str = g_strdup_printf (_("%d Procedures"), num_procs);
+
         gtk_label_set_text (GTK_LABEL (browser->count_label), str);
         g_free (str);
 

@@ -414,7 +414,12 @@ get_plugin_info (PluginBrowser *browser,
       time_ints            = return_vals[10].data.d_int32array;
       realname_strs        = return_vals[12].data.d_stringarray;
 
-      str = g_strdup_printf (_("%d Plug-In Interfaces"), browser->num_plugins);
+      if (browser->num_plugins == 1)
+        str = g_strdup (_("1 Plug-In Interface"));
+      else
+        str = g_strdup_printf (_("%d Plug-In Interfaces"),
+                               browser->num_plugins);
+
       gtk_label_set_text (GTK_LABEL (browser->count_label), str);
       g_free (str);
 

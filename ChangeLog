@@ -1,5 +1,11 @@
 2004-10-29  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/dbbrowser/gimpprocbrowser.c
+	* plug-ins/dbbrowser/plugin-browser.c: don't say "1 Procedures" or
+	"1 Plug-In Interfaces" but use the singular form instead.
+
+2004-10-29  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/flarefx.c
 	* plug-ins/common/nova.c: changed preview cursors to GDK_CROSSHAIR.
 
