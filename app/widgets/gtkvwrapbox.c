@@ -24,12 +24,17 @@
 
 
 /* --- prototypes --- */
-static void gtk_vwrap_box_class_init    (GtkVWrapBoxClass   *klass);
-static void gtk_vwrap_box_init          (GtkVWrapBox        *vwbox);
-static void gtk_vwrap_box_size_request  (GtkWidget          *widget,
-					 GtkRequisition     *requisition);
-static void gtk_vwrap_box_size_allocate (GtkWidget          *widget,
-					 GtkAllocation      *allocation);
+static void    gtk_vwrap_box_class_init    (GtkVWrapBoxClass   *klass);
+static void    gtk_vwrap_box_init          (GtkVWrapBox        *vwbox);
+static void    gtk_vwrap_box_size_request  (GtkWidget          *widget,
+					    GtkRequisition     *requisition);
+static void    gtk_vwrap_box_size_allocate (GtkWidget          *widget,
+					    GtkAllocation      *allocation);
+static GSList* reverse_list_col_children   (GtkWrapBox         *wbox,
+					    GtkWrapBoxChild   **child_p,
+					    GtkAllocation      *area,
+					    guint              *max_width,
+					    gboolean           *can_hexpand);
 
 
 /* --- variables --- */
@@ -79,6 +84,8 @@ gtk_vwrap_box_class_init (GtkVWrapBoxClass *class)
   
   widget_class->size_request = gtk_vwrap_box_size_request;
   widget_class->size_allocate = gtk_vwrap_box_size_allocate;
+
+  wrap_box_class->rlist_line_children = reverse_list_col_children;
 }
 
 static void
@@ -88,12 +95,12 @@ gtk_vwrap_box_init (GtkVWrapBox *vwbox)
   vwbox->max_child_width = 0;
 }
 
-GtkWidget *
+GtkWidget*
 gtk_vwrap_box_new (gboolean homogeneous)
 {
   GtkVWrapBox *vwbox;
 
-  vwbox = GTK_VWRAP_BOX (gtk_widget_new (gtk_vwrap_box_get_type (), NULL));
+  vwbox = GTK_VWRAP_BOX (gtk_widget_new (GTK_TYPE_VWRAP_BOX, NULL));
 
   GTK_WRAP_BOX (vwbox)->homogeneous = homogeneous ? TRUE : FALSE;
 
@@ -262,38 +269,36 @@ gtk_vwrap_box_size_request (GtkWidget      *widget,
 	  requisition->height = layout_height;
 	  requisition->width = layout_width;
 	}
-
-      /*<h2v-off>*/
-      /* g_print ("ratio for width %d height %d = %f\n",
-	       (gint) layout_width,
-	       (gint) layout_height,
-	       ratio); */
-      /*<h2v-on>*/
+      
+      /* g_print ("ratio for height %d width %d = %f\n",
+	 (gint) layout_height,
+	 (gint) layout_width,
+	 ratio);
+      */
     }
   while (col_inc);
 
-  /*<h2v-off>*/
-  requisition->width += GTK_CONTAINER (wbox)->border_width * 2;
-  requisition->height += GTK_CONTAINER (wbox)->border_width * 2;
-  /* g_print ("choosen: width %d, height %d\n",
-	   requisition->width,
-	   requisition->height); */
-  /*<h2v-on>*/
+  requisition->width += GTK_CONTAINER (wbox)->border_width * 2; /*<h2v-skip>*/
+  requisition->height += GTK_CONTAINER (wbox)->border_width * 2; /*<h2v-skip>*/
+  /* g_print ("choosen: height %d, width %d\n",
+     requisition->height,
+     requisition->width);
+  */
 }
 
 static GSList*
-list_col_children (GtkWrapBox       *wbox,
-		   GtkWrapBoxChild **child_p,
-		   guint             col_height,
-		   guint            *max_width,
-		   gboolean         *can_hexpand)
+reverse_list_col_children (GtkWrapBox       *wbox,
+			   GtkWrapBoxChild **child_p,
+			   GtkAllocation    *area,
+			   guint            *max_child_size,
+			   gboolean         *expand_line)
 {
   GSList *slist = NULL;
-  guint height = 0;
+  guint height = 0, col_height = area->height;
   GtkWrapBoxChild *child = *child_p;
   
-  *max_width = 0;
-  *can_hexpand = FALSE;
+  *max_child_size = 0;
+  *expand_line = FALSE;
   
   while (child && !GTK_WIDGET_VISIBLE (child->widget))
     {
@@ -308,8 +313,8 @@ list_col_children (GtkWrapBox       *wbox,
       
       get_child_requisition (wbox, child->widget, &child_requisition);
       height += child_requisition.height;
-      *max_width = MAX (*max_width, child_requisition.width);
-      *can_hexpand |= child->hexpand;
+      *max_child_size = MAX (*max_child_size, child_requisition.width);
+      *expand_line |= child->hexpand;
       slist = g_slist_prepend (slist, child);
       *child_p = child->next;
       child = *child_p;
@@ -322,8 +327,8 @@ list_col_children (GtkWrapBox       *wbox,
 	      if (height + wbox->vspacing + child_requisition.height > col_height)
 		break;
 	      height += wbox->vspacing + child_requisition.height;
-	      *max_width = MAX (*max_width, child_requisition.width);
-	      *can_hexpand |= child->hexpand;
+	      *max_child_size = MAX (*max_child_size, child_requisition.width);
+	      *expand_line |= child->hexpand;
 	      slist = g_slist_prepend (slist, child);
 	      n++;
 	    }
@@ -332,7 +337,7 @@ list_col_children (GtkWrapBox       *wbox,
 	}
     }
   
-  return g_slist_reverse (slist);
+  return slist;
 }
 
 static void
@@ -500,7 +505,13 @@ layout_cols (GtkWrapBox    *wbox,
   guint children_per_line;
   
   next_child = wbox->children;
-  slist = list_col_children (wbox, &next_child, area->height, &min_width, &hexpand);
+  slist = GTK_WRAP_BOX_GET_CLASS (wbox)->rlist_line_children (wbox,
+							      &next_child,
+							      area,
+							      &min_width,
+							      &hexpand);
+  slist = g_slist_reverse (slist);
+
   children_per_line = g_slist_length (slist);
   while (slist)
     {
@@ -516,19 +527,20 @@ layout_cols (GtkWrapBox    *wbox,
       line_list = line;
       n_lines++;
       
-      slist = list_col_children (wbox,
-				 &next_child,
-				 area->height,
-				 &min_width,
-				 &hexpand);
+      slist = GTK_WRAP_BOX_GET_CLASS (wbox)->rlist_line_children (wbox,
+								  &next_child,
+								  area,
+								  &min_width,
+								  &hexpand);
+      slist = g_slist_reverse (slist);
     }
-
+  
   if (total_width > area->width)
     shrink_width = total_width - area->width;
   else
     shrink_width = 0;
   
-  if (1) /* reverse and shrink */
+  if (1) /* reverse lines and shrink */
     {
       Line *prev = NULL, *last = NULL;
       gfloat n_shrink_lines = n_lines;
@@ -632,8 +644,9 @@ gtk_vwrap_box_size_allocate (GtkWidget     *widget,
   
   /*<h2v-off>*/
   /* g_print ("got: width %d, height %d\n",
-	   allocation->width,
-	   allocation->height); */
+     allocation->width,
+     allocation->height);
+  */
   /*<h2v-on>*/
   
   layout_cols (wbox, &area);

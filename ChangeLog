@@ -1,3 +1,8 @@
+Fri Sep  3 23:26:38 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/gtkwrapbox.[ch]
+	* app/gtk[hv]wrapbox.c: gle sync
+
 Fri Sep  3 23:17:44 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/common/mkgen.pl: autogen .cvsignore too

@@ -64,6 +64,12 @@ struct _GtkWrapBox
 struct _GtkWrapBoxClass
 {
   GtkContainerClass parent_class;
+
+  GSList* (*rlist_line_children) (GtkWrapBox       *wbox,
+				  GtkWrapBoxChild **child_p,
+				  GtkAllocation    *area,
+				  guint            *max_child_size,
+				  gboolean         *expand_line);
 };
 struct _GtkWrapBoxChild
 {
@@ -114,6 +120,8 @@ void       gtk_wrap_box_set_child_packing   (GtkWrapBox      *wbox,
 					     gboolean         hfill,
 					     gboolean         vexpand,
 					     gboolean         vfill);
+guint*	   gtk_wrap_box_query_line_lengths  (GtkWrapBox	     *wbox,
+					     guint           *n_lines);
 
 
 

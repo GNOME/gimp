@@ -137,6 +137,8 @@ gtk_wrap_box_class_init (GtkWrapBoxClass *class)
   container_class->child_type = gtk_wrap_box_child_type;
   container_class->set_child_arg = gtk_wrap_box_set_child_arg;
   container_class->get_child_arg = gtk_wrap_box_get_child_arg;
+
+  class->rlist_line_children = NULL;
   
   gtk_object_add_arg_type ("GtkWrapBox::homogeneous",
 			   GTK_TYPE_BOOL, GTK_ARG_READWRITE, ARG_HOMOGENEOUS);
@@ -599,6 +601,54 @@ gtk_wrap_box_set_child_packing (GtkWrapBox *wbox,
     }
 }
 
+guint*
+gtk_wrap_box_query_line_lengths (GtkWrapBox *wbox,
+				 guint      *_n_lines)
+{
+  GtkWrapBoxChild *next_child = NULL;
+  GtkAllocation area, *allocation;
+  gboolean expand_line;
+  GSList *slist;
+  guint max_child_size, border, n_lines = 0, *lines = NULL;
+
+  if (_n_lines)
+    *_n_lines = 0;
+  g_return_val_if_fail (GTK_IS_WRAP_BOX (wbox), NULL);
+
+  allocation = &GTK_WIDGET (wbox)->allocation;
+  border = GTK_CONTAINER (wbox)->border_width;
+  area.x = allocation->x + border;
+  area.y = allocation->y + border;
+  area.width = MAX (1, (gint) allocation->width - border * 2);
+  area.height = MAX (1, (gint) allocation->height - border * 2);
+
+  next_child = wbox->children;
+  slist = GTK_WRAP_BOX_GET_CLASS (wbox)->rlist_line_children (wbox,
+							      &next_child,
+							      &area,
+							      &max_child_size,
+							      &expand_line);
+  while (slist)
+    {
+      guint l = n_lines++;
+
+      lines = g_renew (guint, lines, n_lines);
+      lines[l] = g_slist_length (slist);
+      g_slist_free (slist);
+
+      slist = GTK_WRAP_BOX_GET_CLASS (wbox)->rlist_line_children (wbox,
+								  &next_child,
+								  &area,
+								  &max_child_size,
+								  &expand_line);
+    }
+
+  if (_n_lines)
+    *_n_lines = n_lines;
+
+  return lines;
+}
+
 static void
 gtk_wrap_box_map (GtkWidget *widget)
 {
@@ -659,7 +709,7 @@ gtk_wrap_box_expose (GtkWidget      *widget,
 	  gtk_widget_intersect (child->widget, &event->area, &child_event.area))
 	gtk_widget_event (child->widget, (GdkEvent*) &child_event);
   
-  return FALSE;
+  return TRUE;
 }
 
 static void
