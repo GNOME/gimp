@@ -40,7 +40,7 @@
 
 2003-07-01  Sven Neumann  <sven@gimp.org>
 
-	* tools/authorsgen/contributors: removed a double entry, added
+	* tools/authorsgen/contributors: removed a duplicate entry, added
 	some new ones.
 
 	* AUTHORS
