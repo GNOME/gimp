@@ -108,6 +108,7 @@ gimp_proc_view_new (const gchar     *name,
   if (menu_path)
     {
       label = gtk_label_new_with_mnemonic (menu_path);
+      gtk_label_set_selectable (GTK_LABEL (label), TRUE);
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);

@@ -122,33 +122,22 @@ gimp_proc_browser_dialog_new (gboolean                     scheme_names,
   browser->apply_callback = apply_callback;
   browser->user_data      = user_data;
 
+  browser->dialog =
+    gimp_dialog_new (_("Procedure Browser"), "dbbrowser",
+                     NULL, 0,
+                     gimp_standard_help_func, "plug-in-db-browser",
+
+                     _("Search by _Name"),        RESPONSE_SEARCH_NAME,
+                     _("Search by _Description"), RESPONSE_SEARCH_BLURB,
+
+                     NULL);
+
   if (apply_callback)
-    {
-      browser->dialog =
-        gimp_dialog_new (_("Procedure Browser"), "dbbrowser",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-db-browser",
+    gtk_dialog_add_button (GTK_DIALOG (browser->dialog),
+                           GTK_STOCK_APPLY, GTK_RESPONSE_APPLY);
 
-                         _("Search by _Name"),  RESPONSE_SEARCH_NAME,
-                         _("Search by _Blurb"), RESPONSE_SEARCH_BLURB,
-                         GTK_STOCK_APPLY,       GTK_RESPONSE_APPLY,
-                         GTK_STOCK_CLOSE,       GTK_RESPONSE_CLOSE,
-
-                         NULL);
-    }
-  else
-    {
-      browser->dialog =
-        gimp_dialog_new (_("Procedure Browser"), "dbbrowser",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-db-browser",
-
-                         _("Search by _Name"),  RESPONSE_SEARCH_NAME,
-                         _("Search by _Blurb"), RESPONSE_SEARCH_BLURB,
-                         GTK_STOCK_CLOSE,       GTK_RESPONSE_CLOSE,
-
-                         NULL);
-    }
+  gtk_dialog_add_button (GTK_DIALOG (browser->dialog),
+                         GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
 
   gtk_dialog_set_default_response (GTK_DIALOG (browser->dialog),
                                    RESPONSE_SEARCH_NAME);
