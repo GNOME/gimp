@@ -22,9 +22,12 @@
  * 
  * The interface code is heavily commented in the hope that it will
  * help other plug-in developers to adapt their plug-ins to make use
- * of the gimp_size_entry functionality.
+ * of the gimp_size_entry functionality. 
+ * 
+ * Note: There is a convenience constructor called gimp_coordinetes_new ()
+ *       which simplifies the task of setting up a standard X,Y sizeentry. 
  *
- * For more info see libgimp/gimpsizeentry.h
+ * For more info see libgimp/gimpsizeentry.h and libgimp/gimpwidgets.h
  */
 
 #include "config.h"
@@ -44,15 +47,16 @@
 #define COLOR_BUTTON_WIDTH   55
 
 /* Declare local functions. */
-static void query  (void);
-static void run    (gchar   *name,
-		    gint     nparams,
-		    GParam  *param,
-		    gint    *nreturn_vals,
-		    GParam **return_vals);
+static void   query  (void);
+static void   run    (gchar   *name,
+		      gint     nparams,
+		      GParam  *param,
+		      gint    *nreturn_vals,
+		      GParam **return_vals);
 
-static gint dialog (gint32 image_ID, GDrawable *drawable);
-static void doit   (GDrawable *drawable);
+static guchar best_cmap_match (guchar *cmap, gint ncolors, guchar *color);
+static void   doit            (gint32 image_ID, GDrawable *drawable);
+static gint   dialog          (gint32 image_ID, GDrawable *drawable);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -130,12 +134,13 @@ void query (void)
 
   gimp_install_procedure ("plug_in_grid",
 			  "Draws a grid.",
-			  "no help available",
+			  "Draws a grid using the specified colors. "
+			  "The grid origin is the upper left corner.",
 			  "Tim Newsome",
 			  "Tim Newsome, Sven Neumann, Tom Rathborne",
-			  "1997, 1999",
+			  "1997 - 2000",
 			  N_("<Image>/Filters/Render/Pattern/Grid..."),
-			  "RGB*, GRAY*",
+			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
@@ -217,24 +222,17 @@ run (gchar   *name,
 
   if (status == STATUS_SUCCESS)
     {
-      /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
-	{
-	  gimp_progress_init (_("Drawing Grid..."));
-	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
+      gimp_progress_init (_("Drawing Grid..."));
+      gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
+      
+      doit (image_ID, drawable);
+      
+      if (run_mode != RUN_NONINTERACTIVE)
+	gimp_displays_flush ();
+      
+      if (run_mode == RUN_INTERACTIVE)
+	gimp_set_data ("plug_in_grid", &grid_cfg, sizeof (grid_cfg));
 
-	  doit (drawable);
-
-	  if (run_mode != RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
-
-	  if (run_mode == RUN_INTERACTIVE)
-	    gimp_set_data ("plug_in_grid", &grid_cfg, sizeof (grid_cfg));
-	}
-      else
-	{
-	  status = STATUS_EXECUTION_ERROR;
-	}
       gimp_drawable_detach (drawable);
     }
 
@@ -243,41 +241,126 @@ run (gchar   *name,
 }
 
 
-G_INLINE_FUNC void
-pix_composite (guchar *p1, 
-	       guchar  p2[4], 
-	       gint    bytes, 
-	       gint    alpha)
+#define MAXDIFF 195076
+
+static guchar
+best_cmap_match (guchar *cmap,
+		 gint    ncolors,
+		 guchar *color)
 {
- gint b;
+  guchar cmap_index = 0;
+  gint max = MAXDIFF;
+  gint i, diff, sum;
 
- if (alpha)
-   {
-     bytes--;
-   }
+  for (i = 0; i < ncolors; i++)
+    {
+      diff = color[0] - *cmap++;
+      sum = SQR (diff);
+      diff = color[1] - *cmap++;
+      sum += SQR (diff);
+      diff = color[2] - *cmap++;
+      sum += SQR (diff);
+      
+      if (sum < max)
+	{
+	  cmap_index = i;
+	  max = sum;
+	}
+    }
 
- for (b = 0; b < bytes; b++)
-   {
-     *p1 = *p1 * (1.0 - p2[3]/255.0) + p2[b] * p2[3]/255.0;
-     p1++;
-   }
-
- if (alpha && *p1 < 255)
-   {
-     b = *p1 + 255.0 * ((double)p2[3] / (255.0 - *p1));
-     *p1 = b > 255 ? 255 : b;
-   }
+  return cmap_index;
 }
 
+
+G_INLINE_FUNC void
+pix_composite (guchar   *p1, 
+	       guchar    p2[4], 
+	       gint      bytes,
+	       gboolean  blend,
+	       gboolean  alpha)
+{
+  gint b;
+
+  if (alpha)
+    {
+      bytes--;
+    }
+  
+  if (blend)
+    {
+      for (b = 0; b < bytes; b++)
+	{
+	  *p1 = *p1 * (1.0 - p2[3]/255.0) + p2[b] * p2[3]/255.0;
+	  p1++;
+	}
+    }
+  else
+    {
+      /* blend should only be TRUE for indexed (bytes == 1) */
+      *p1++ = *p2;
+    }
+
+  if (alpha && *p1 < 255)
+    {
+      b = *p1 + 255.0 * ((double)p2[3] / (255.0 - *p1));
+      *p1 = b > 255 ? 255 : b;
+    }
+}
+
+
 static void
-doit (GDrawable * drawable)
+doit (gint32     image_ID,
+      GDrawable *drawable)
 {
   GPixelRgn srcPR, destPR;
   gint width, height, bytes;
   gint x_offset, y_offset;
   guchar *dest;
-  gint x, y, alpha;
+  gint x, y;
+  gboolean alpha;
+  gboolean blend;
+  guchar hcolor[4];
+  guchar vcolor[4];
+  guchar icolor[4];
+  guchar *cmap;
+  gint ncolors;
   
+  switch (gimp_image_base_type (image_ID))
+    {
+    case GIMP_RGB:
+      memcpy (hcolor, grid_cfg.hcolor, 4);
+      memcpy (vcolor, grid_cfg.vcolor, 4);
+      memcpy (icolor, grid_cfg.icolor, 4);
+      blend = TRUE;
+      break;
+      
+    case GIMP_GRAY:
+      hcolor[0] = INTENSITY (grid_cfg.hcolor[0], grid_cfg.hcolor[1], grid_cfg.hcolor[2]);
+      hcolor[3] = grid_cfg.hcolor[3];
+      vcolor[0] = INTENSITY (grid_cfg.vcolor[0], grid_cfg.vcolor[1], grid_cfg.vcolor[2]);
+      vcolor[3] = grid_cfg.vcolor[3];
+      icolor[0] = INTENSITY (grid_cfg.icolor[0], grid_cfg.icolor[1], grid_cfg.icolor[2]);
+      icolor[3] = grid_cfg.icolor[3];
+      blend = TRUE;
+      break;
+      
+    case GIMP_INDEXED:
+      cmap = gimp_image_get_cmap (image_ID, &ncolors);
+      hcolor[0] = best_cmap_match (cmap, ncolors, grid_cfg.hcolor);
+      hcolor[3] = grid_cfg.hcolor[3];
+      vcolor[0] = best_cmap_match (cmap, ncolors, grid_cfg.vcolor);
+      vcolor[3] = grid_cfg.vcolor[3];
+      icolor[0] = best_cmap_match (cmap, ncolors, grid_cfg.icolor);
+      icolor[3] = grid_cfg.icolor[3];
+      g_free (cmap);
+      blend = FALSE;
+      break;
+
+    default:
+      blend = FALSE;
+      g_assert_not_reached ();
+    }
+
   /* Get the input area. This is the bounding box of the selection in
    *  the image (or the entire image if there is no selection). 
    */
@@ -285,8 +368,8 @@ doit (GDrawable * drawable)
 
   width  = gimp_drawable_width (drawable->id);
   height = gimp_drawable_height (drawable->id);
-  bytes  = drawable->bpp;
   alpha  = gimp_drawable_has_alpha (drawable->id);
+  bytes  = drawable->bpp;
 
   /*  initialize the pixel regions  */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
@@ -305,7 +388,7 @@ doit (GDrawable * drawable)
 	{
 	  for (x = sx1; x < sx2; x++)
 	    {
-	      pix_composite (&dest[(x-sx1) * bytes], grid_cfg.hcolor, bytes, alpha);
+	      pix_composite (&dest[(x-sx1) * bytes], hcolor, bytes, blend, alpha);
 	    }
 	}
 
@@ -325,7 +408,7 @@ doit (GDrawable * drawable)
 		   && 
 		   grid_cfg.hspace - (x_offset % grid_cfg.hspace) < grid_cfg.ioffset))
 		{
-		  pix_composite (&dest[(x-sx1) * bytes], grid_cfg.icolor, bytes, alpha);
+		  pix_composite (&dest[(x-sx1) * bytes], icolor, bytes, blend, alpha);
                 }
 	    }
         }
@@ -338,7 +421,7 @@ doit (GDrawable * drawable)
 
           if ((x_offset + (grid_cfg.hwidth / 2)) % grid_cfg.hspace < grid_cfg.hwidth)
             {
-	      pix_composite (&dest[(x-sx1) * bytes], grid_cfg.vcolor, bytes, alpha);
+	      pix_composite (&dest[(x-sx1) * bytes], vcolor, bytes, blend, alpha);
             }
 
           if ((x_offset + (grid_cfg.iwidth / 2)) % grid_cfg.hspace < grid_cfg.iwidth
@@ -351,7 +434,7 @@ doit (GDrawable * drawable)
 		&& 
 		grid_cfg.vspace - (y_offset % grid_cfg.vspace) < grid_cfg.ioffset)))
             {
-	      pix_composite (&dest[(x-sx1) * bytes], grid_cfg.icolor, bytes, alpha);
+	      pix_composite (&dest[(x-sx1) * bytes], icolor, bytes, blend, alpha);
             }
         }
 
@@ -366,6 +449,7 @@ doit (GDrawable * drawable)
   gimp_drawable_merge_shadow (drawable->id, TRUE);
   gimp_drawable_update (drawable->id, sx1, sy1, sx2 - sx1, sy2 - sy1);
 }
+
 
 /***************************************************
  * GUI stuff
@@ -396,6 +480,7 @@ ok_callback (GtkWidget *widget,
 
   gtk_widget_destroy (GTK_WIDGET (data));
 }
+
 
 static void
 entry_callback (GtkWidget *widget, 
@@ -430,6 +515,7 @@ entry_callback (GtkWidget *widget,
 	y = new_y;
     }     
 }
+
 
 static void
 color_callback (GtkWidget *widget, 
@@ -692,7 +778,7 @@ dialog (gint32     image_ID,
   gtk_table_attach_defaults (GTK_TABLE (table), chain_button, 0, 2, 2, 3);
   gtk_widget_show (chain_button);
 
-   /*  attach color selectors  */
+  /*  attach color selectors  */
   hcolor_button = gimp_color_button_new (_("Horizontal Color"), COLOR_BUTTON_WIDTH, 16, 
 					 grid_cfg.hcolor, 4);
   gtk_signal_connect (GTK_OBJECT (hcolor_button), "color_changed", 
