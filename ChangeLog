@@ -1,5 +1,11 @@
 2002-11-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimptoolbox.c (gimp_toolbox_new): add a file dnd
+	dest for the toplevel toolbox widget too. Makes gimp-remote work
+	again.
+
+2002-11-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdrawablelistview.c: removed #undef
 	GTK_DISABLE_DEPRECATED and #warning because we don't use
 	deprecated stuff here.

@@ -472,6 +472,8 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
 			   G_OBJECT (toolbox->wbox),
 			   0);
 
+  gimp_dnd_file_dest_add (GTK_WIDGET (toolbox), gimp_dnd_open_files, NULL);
+
   gimp_dnd_file_dest_add (toolbox->wbox, gimp_dnd_open_files, NULL);
 
   gimp_dnd_viewable_dest_add (toolbox->wbox, GIMP_TYPE_LAYER,
