@@ -101,6 +101,7 @@ struct _NavWinData
   gint       nav_preview_height;
   gboolean   block_adj_sig; 
   gboolean   frozen;       /* Has the dialog been frozen ? */
+  guint      timer_id;
 };
 
 
@@ -209,7 +210,8 @@ nav_window_disp_area (NavWinData *iwd,
       if(iwd->ptype != NAV_POPUP)
 	{
 	  gtk_window_set_focus(GTK_WINDOW (iwd->info_win->shell),iwd->preview);  
-	  gtk_timeout_add(PREVIEW_UPDATE_TIMEOUT,(GtkFunction)nav_preview_update_do_timer,(gpointer)iwd); 
+	  iwd->timer_id = 
+	    gtk_timeout_add(PREVIEW_UPDATE_TIMEOUT,(GtkFunction)nav_preview_update_do_timer,(gpointer)iwd); 
 	}
       else
 	{
@@ -734,7 +736,8 @@ nav_window_preview_events (GtkWidget *widget,
       else
 	{
 	  nav_window_update_preview_blank(iwd); 
-	  gtk_timeout_add(PREVIEW_UPDATE_TIMEOUT,(GtkFunction)nav_preview_update_do_timer,(gpointer)iwd); 
+	  iwd->timer_id = 
+	    gtk_timeout_add(PREVIEW_UPDATE_TIMEOUT,(GtkFunction)nav_preview_update_do_timer,(gpointer)iwd); 
 	}
       break;
 
@@ -956,6 +959,9 @@ nav_window_expose_events (GtkWidget *widget,
 static gint 
 nav_preview_update_do (NavWinData *iwd)
 {
+  /* If the gdisp_ptr has gone then don't do anything in this timer */
+  if(!iwd->gdisp_ptr)
+    return FALSE;
   nav_window_update_preview(iwd);
   nav_window_disp_area(iwd,iwd->gdisp_ptr);
   gtk_widget_queue_draw(iwd->preview); 
@@ -990,7 +996,8 @@ nav_image_need_update (GtkObject *obj,
   /* Update preview at a less busy time */
   nav_window_update_preview_blank(iwd); 
   gtk_widget_draw(iwd->preview, NULL); 
-  gtk_timeout_add(PREVIEW_UPDATE_TIMEOUT,(GtkFunction)nav_preview_update_do_timer,(gpointer)iwd); 
+  iwd->timer_id = 
+    gtk_timeout_add(PREVIEW_UPDATE_TIMEOUT,(GtkFunction)nav_preview_update_do_timer,(gpointer)iwd); 
 }
 
 static void
@@ -1223,6 +1230,7 @@ create_dummy_iwd (void       *gdisp_ptr,
     (nav_preview_size < 0 || nav_preview_size > 256)?NAV_PREVIEW_HEIGHT:nav_preview_size;
   iwd->block_adj_sig = FALSE;
   iwd->frozen = FALSE;
+  iwd->timer_id = 0;
   
   return(iwd);
 }
@@ -1455,9 +1463,10 @@ nav_dialog_popup (InfoDialog *idialog)
       gtk_widget_show (idialog->shell);
       nav_window_update_preview_blank(iwd); 
       nav_window_update_window_marker(idialog);
-      gtk_timeout_add (PREVIEW_UPDATE_TIMEOUT,
-		       (GtkFunction) nav_preview_update_do_timer,
-		       (gpointer) iwd); 
+      iwd->timer_id = 
+	gtk_timeout_add (PREVIEW_UPDATE_TIMEOUT,
+			 (GtkFunction) nav_preview_update_do_timer,
+			 (gpointer) iwd); 
     }
 
   gdk_window_raise (GTK_WIDGET (idialog->shell)->window);
@@ -1505,6 +1514,8 @@ nav_window_get_gdisp (void)
 void
 nav_window_free (GDisplay *del_gdisp,InfoDialog *info_win)
 {
+  NavWinData *iwd;
+
   /* So this functions works both ways..
    * it will come in here with info_win == null
    * if the auto mode is on...
@@ -1514,7 +1525,6 @@ nav_window_free (GDisplay *del_gdisp,InfoDialog *info_win)
     {
       if(nav_window_auto != NULL)
 	{
-	  NavWinData *iwd;
 	  GDisplay * gdisp;
 
 	  iwd = (NavWinData *)nav_window_auto->user_data;
@@ -1522,6 +1532,11 @@ nav_window_free (GDisplay *del_gdisp,InfoDialog *info_win)
 	  /* Only freeze if we are displaying the image we have deleted */
 	  if((GDisplay *) iwd->gdisp_ptr != del_gdisp)
 	    return;
+
+	  if(iwd->timer_id)
+	    gtk_timeout_remove(iwd->timer_id);
+
+	  iwd->timer_id = 0;
 
 	  gdisp = nav_window_get_gdisp();
 
@@ -1541,6 +1556,11 @@ nav_window_free (GDisplay *del_gdisp,InfoDialog *info_win)
 	}
       return;
     }
+
+  /* We are actually freeing a window here so remove any timers left. */
+  iwd = (NavWinData *)info_win->user_data;
+  if(iwd->timer_id)
+    gtk_timeout_remove(iwd->timer_id);
 
   g_free (info_win->user_data);
   info_dialog_free (info_win);

@@ -1,3 +1,10 @@
+Sat Nov 20 22:10:15 GMT 1999 Andy Thomas <alt@gimp.org>
+
+	* app/nav_window.c
+
+	Removed timer when windows are deleted. Removes
+	potential race conditions when closing images.
+
 Sat Nov 20 19:47:24 CET 1999  Marc Lehmann <pcg@goof.com>
 
         * app/gimpui.c: Try some more intelligent behaviour in
