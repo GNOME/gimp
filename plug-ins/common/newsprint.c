@@ -227,9 +227,10 @@ typedef struct
 /* bits of state used by the UI, but not visible from the PDB */
 typedef struct
 {
-  gint    input_spi;     /* input samples per inch */
-  gdouble output_lpi;    /* desired output lines per inch */
-  gint    lock_channels; /* changes to one channel affect all */
+  gdouble  input_spi;     /* input samples per inch */
+  gdouble  output_lpi;    /* desired output lines per inch */
+  gboolean lock_channels; /* changes to one channel affect all */
+  gboolean preview;
 } NewsprintUIValues;
 
 
@@ -312,9 +313,10 @@ static const NewsprintValues factory_defaults =
 
 static const NewsprintUIValues factory_defaults_ui =
 {
-  72,    /* input spi */
-  7.2,   /* output lpi */
-  FALSE  /* lock channels */
+  72,    /* input spi     */
+  7.2,   /* output lpi    */
+  FALSE, /* lock channels */
+  TRUE   /* preview       */
 };
 
 /* Mutable copy for normal use.  Initialised in run(). */
@@ -723,7 +725,7 @@ preview_update (channel_st *st)
   if (!spotfn_list[sfn].prev_thresh)
     {
       spotfn_list[sfn].prev_thresh =
-        spot2thresh (sfn, SPOT_PREVIEW_SZ*PREVIEW_OVERSAMPLE);
+        spot2thresh (sfn, SPOT_PREVIEW_SZ * PREVIEW_OVERSAMPLE);
     }
 
   thresh = spotfn_list[sfn].prev_thresh;
@@ -878,6 +880,8 @@ lpi_callback (GtkAdjustment *adjustment,
 
   gimp_double_adjustment_update (adjustment, &pvals_ui.output_lpi);
 
+  g_print ("lpi (%g / %g = %d)\n", pvals_ui.input_spi, pvals_ui.output_lpi, pvals.cell_width);
+
   g_signal_handlers_block_by_func (st->cellsize,
                                    cellsize_callback,
                                    data);
@@ -898,6 +902,7 @@ spi_callback (GtkAdjustment *adjustment,
 
   gimp_double_adjustment_update (adjustment, &pvals_ui.input_spi);
 
+  g_print ("spi (%g / %g = %d)\n", pvals_ui.input_spi, pvals_ui.output_lpi, pvals.cell_width);
   g_signal_handlers_block_by_func (st->output_lpi,
                                    lpi_callback,
                                    data);
@@ -918,6 +923,7 @@ cellsize_callback (GtkAdjustment *adjustment,
 
   gimp_int_adjustment_update (adjustment, &pvals.cell_width);
 
+  g_print ("cell (%g / %g = %d)\n", pvals_ui.input_spi, pvals_ui.output_lpi, pvals.cell_width);
   g_signal_handlers_block_by_func (st->output_lpi,
                                    lpi_callback,
                                    data);
@@ -1207,7 +1213,7 @@ newsprint_dialog (GimpDrawable *drawable)
                       TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, NULL); // FIXME
+  preview = gimp_drawable_preview_new (drawable, &pvals_ui.preview);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
@@ -1749,28 +1755,28 @@ newsprint (GimpDrawable *drawable,
            GimpPreview  *preview)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
-  guchar    *src_row, *dest_row;
-  guchar    *src, *dest;
-  guchar    *thresh[4];
-  gdouble    r;
-  gdouble    theta;
-  gdouble    rot[4];
-  gint       bpp, colour_bpp;
-  gint       has_alpha;
-  gint       b;
-  gint       tile_width;
-  gint       width;
-  gint       row, col;
-  gint       x, y, x_step, y_step;
-  gint       x1, y1, x2, y2;
-  gint       preview_width, preview_height;
-  gint       rx, ry;
-  gint       progress, max_progress;
-  gint       oversample;
-  gint       colourspace;
-  gpointer   pr;
-  gint       w002;
-  guchar    *preview_buffer = NULL;
+  guchar       *src_row, *dest_row;
+  guchar       *src, *dest;
+  guchar       *thresh[4] = { NULL, NULL, NULL, NULL };
+  gdouble       r;
+  gdouble       theta;
+  gdouble       rot[4];
+  gint          bpp, colour_bpp;
+  gint          has_alpha;
+  gint          b;
+  gint          tile_width;
+  gint          width;
+  gint          row, col;
+  gint          x, y, x_step, y_step;
+  gint          x1, y1, x2, y2;
+  gint          preview_width, preview_height;
+  gint          rx, ry;
+  gint          progress, max_progress;
+  gint          oversample;
+  gint          colourspace;
+  gpointer      pr;
+  gint          w002;
+  guchar       *preview_buffer = NULL;
 
 #ifdef TIMINGS
   GTimer    *timer = g_timer_new ();
@@ -1901,7 +1907,7 @@ do {                                                            \
                                FALSE/*dirty*/, FALSE/*shadow*/);
 
           gimp_pixel_rgn_init (&dest_rgn, drawable, x, y, x_step, y_step,
-                               TRUE, TRUE/*shadow*/);
+                               TRUE/*dirty*/, TRUE/*shadow*/);
 
           /* page in the image, one tile at a time */
           for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
@@ -2057,8 +2063,9 @@ do {                                                            \
   g_timer_destroy (timer);
 #endif
 
-  /* We don't free the threshold matrices, since we're about to
-   * exit, and the OS should clean up after us. */
+  for (b = 0; b < 4; b++)
+    if (thresh[b])
+      g_free (thresh[b]);
 
   if (preview)
     {
