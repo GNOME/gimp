@@ -3692,6 +3692,9 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
 		      ((layer_is_floating_sel (layer_widget->layer) ?
 			_("Floating Selection") :
 			layer_get_name (layer_widget->layer))));
+  gtk_signal_connect (GTK_OBJECT (options->name_entry), "activate",
+		      edit_layer_query_ok_callback,
+		      options);
   gtk_widget_show (options->name_entry);
 
   gtk_widget_show (hbox);

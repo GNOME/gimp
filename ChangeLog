@@ -1,3 +1,8 @@
+2000-06-19  Simon Budig  <simon@gimp.org>
+
+	* app/layers_dialog.c: Layers can be renamed by pressing
+	  return in the entry-widget now.
+
 2000-06-18  Sven Neumann  <sven@gimp.org>
 
 	* AUTHORS: applied gimp-cornwell-000613-0 which brings the 
