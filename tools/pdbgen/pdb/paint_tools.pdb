@@ -546,14 +546,14 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paint/gimppencil.h") ],
+	headers => [ qw("paint/gimppenciloptions.h") ],
 	vars => [ "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new (gimp, GIMP_TYPE_PAINT_OPTIONS);
+  options = gimp_paint_options_new (gimp, GIMP_TYPE_PENCIL_OPTIONS);
 
   success = paint_tools_stroke (gimp,
-                                GIMP_TYPE_PENCIL,
+                                GIMP_TYPE_PAINTBRUSH,
                                 options,
                                 drawable,
                                 num_strokes, strokes);

@@ -24,8 +24,8 @@
 
 #include "tools-types.h"
 
-#include "paint/gimppencil.h"
-#include "paint/gimppaintoptions.h"
+#include "paint/gimppaintbrush.h"
+#include "paint/gimppenciloptions.h"
 
 #include "gimppenciltool.h"
 #include "gimppaintoptions-gui.h"
@@ -48,7 +48,7 @@ gimp_pencil_tool_register (GimpToolRegisterCallback  callback,
                            gpointer                  data)
 {
   (* callback) (GIMP_TYPE_PENCIL_TOOL,
-                GIMP_TYPE_PAINT_OPTIONS,
+                GIMP_TYPE_PENCIL_OPTIONS,
                 gimp_paint_options_gui,
                 GIMP_PAINT_OPTIONS_CONTEXT_MASK,
                 "gimp-pencil-tool",
@@ -81,16 +81,16 @@ gimp_pencil_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
-					  "GimpPencilTool", 
+					  "GimpPencilTool",
                                           &tool_info, 0);
     }
 
   return tool_type;
 }
 
-static void 
+static void
 gimp_pencil_tool_class_init (GimpPencilToolClass *klass)
-{  
+{
   GimpPaintToolClass *paint_tool_class;
 
   paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
@@ -111,5 +111,5 @@ gimp_pencil_tool_init (GimpPencilTool *pencil)
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_PENCIL_TOOL_CURSOR);
 
   paint_tool->pick_colors = TRUE;
-  paint_tool->core        = g_object_new (GIMP_TYPE_PENCIL, NULL);
+  paint_tool->core        = g_object_new (GIMP_TYPE_PAINTBRUSH, NULL);
 }

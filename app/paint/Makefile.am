@@ -49,8 +49,8 @@ libapppaint_a_sources = \
 	gimppaintcore-undo.h	\
 	gimppaintoptions.c	\
 	gimppaintoptions.h	\
-	gimppencil.c		\
-	gimppencil.h		\
+	gimppenciloptions.c	\
+	gimppenciloptions.h	\
 	gimppaintbrush.c	\
 	gimppaintbrush.h	\
 	gimpsmudge.c		\

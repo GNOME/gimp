@@ -33,7 +33,6 @@
 #include "gimpdodgeburn.h"
 #include "gimperaser.h"
 #include "gimppaintbrush.h"
-#include "gimppencil.h"
 #include "gimpsmudge.h"
 
 
@@ -58,8 +57,7 @@ paint_init (Gimp *gimp)
     gimp_clone_register,
     gimp_airbrush_register,
     gimp_eraser_register,
-    gimp_paintbrush_register,
-    gimp_pencil_register,
+    gimp_paintbrush_register
   };
 
   gint i;
@@ -104,12 +102,8 @@ paint_register (Gimp        *gimp,
   g_return_if_fail (g_type_is_a (paint_type, GIMP_TYPE_PAINT_CORE));
   g_return_if_fail (g_type_is_a (paint_options_type, GIMP_TYPE_PAINT_OPTIONS));
   g_return_if_fail (blurb != NULL);
-  
-  if (paint_type == GIMP_TYPE_PENCIL)
-    {
-      pdb_string = "gimp_pencil";
-    }
-  else if (paint_type == GIMP_TYPE_PAINTBRUSH)
+
+  if (paint_type == GIMP_TYPE_PAINTBRUSH)
     {
       pdb_string = "gimp_paintbrush_default";
     }

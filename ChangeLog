@@ -1,5 +1,25 @@
 2003-07-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/Makefile.am
+	* app/paint/gimppencil.[ch]: removed.
+
+	* app/paint/gimppenciloptions.[ch]: new files. Does nothing except
+	setting the default value of "hard" to TRUE.
+
+	* app/paint/paint.c
+	* app/tools/tool_manager.c: changed accordingly.
+
+	* app/tools/gimppenciltool.c
+	* tools/pdbgen/pdb/paint_tools.pdb: use the pintbrush core for
+	pencil drawing.
+
+	* app/pdb/paint_tools_cmds.c: regenerated.
+
+	* app/tools/gimppaintoptions-gui.c: show all paintbrush options
+	except "Hardness" for the pencil tool.
+
+2003-07-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimperaseroptions.[ch]: removed "gboolean hard"
 	member/property...
 
