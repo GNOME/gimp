@@ -1,3 +1,8 @@
+2002-02-26  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am: fixed dependencies.
+	* update.sh: changed to use intltool.
+
 2002-02-25  Sven Neumann  <sven@gimp.org>
 
 	* Added ChangeLog.

@@ -6,7 +6,7 @@ tips_in_files = gimp-tips.xml.in
 
 tipsdata_DATA = $(tips_in_files:.xml.in=.xml)
 
-%.xml: %.xml.in $(INTLTOOL_MERGE) $(wildcard $(srcdir)/*.po)
+%.xml: %.xml.in $(GETTEXT_PACKAGE)-tips.pot $(wildcard $(srcdir)/*.po)
 	$(INTLTOOL_MERGE) $(srcdir) $< $(@) -x -u -c .intltool-merge-cache
 
 $(GETTEXT_PACKAGE)-tips.pot: gimp-tips.xml.in

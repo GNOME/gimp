@@ -1,6 +1,7 @@
 #!/bin/sh
 
 PACKAGE="gimp14-script-fu"
+PATH="$PATH:.."
 
 if [ "x$1" = "x--help" ]; then
 
@@ -14,40 +15,23 @@ echo ./update.sh da -- created new pot file and updated the da.po file
 elif [ "x$1" = "x" ]; then 
 
 echo "Building the $PACKAGE.pot ..."
-
-xgettext --default-domain=$PACKAGE --directory=.. \
-  --add-comments --keyword=_ --keyword=N_ \
-  --files-from=./POTFILES.in \
-&& ./script-fu-xgettext \
+intltool-update --gettext-package $PACKAGE --pot \
+  && ./script-fu-xgettext \
 	../plug-ins/script-fu/scripts/*.scm \
         ../plug-ins/gap/sel-to-anim-img.scm \
-        ../plug-ins/webbrowser/web-browser.scm \
-        >> $PACKAGE.po \
-&& test ! -f $PACKAGE.po \
-   || ( rm -f ./$PACKAGE.pot \
-&& mv $PACKAGE.po ./$PACKAGE.pot );
+        ../plug-ins/webbrowser/web-browser.scm >> $PACKAGE.pot
 
 else
 
 echo "Building the $PACKAGE.pot ..."
-
-xgettext --default-domain=$PACKAGE --directory=.. \
-  --add-comments --keyword=_ --keyword=N_ \
-  --files-from=./POTFILES.in \
-&& ./script-fu-xgettext \
+intltool-update --gettext-package $PACKAGE --pot \
+  && ./script-fu-xgettext \
 	../plug-ins/script-fu/scripts/*.scm \
         ../plug-ins/gap/sel-to-anim-img.scm \
-        ../plug-ins/webbrowser/web-browser.scm \
-        >> $PACKAGE.po \
-&& test ! -f $PACKAGE.po \
-   || ( rm -f ./$PACKAGE.pot \
-&& mv $PACKAGE.po ./$PACKAGE.pot );
+        ../plug-ins/webbrowser/web-browser.scm >> $PACKAGE.pot
 
 echo "Now merging $1.po with $PACKAGE.pot, and creating an updated $1.po ..." 
-
-mv $1.po $1.po.old && msgmerge $1.po.old $PACKAGE.pot -o $1.po \
-&& rm $1.po.old;
-
+mv $1.po $1.po.old && msgmerge $1.po.old $PACKAGE.pot -o $1.po && rm $1.po.old;
 msgfmt --statistics $1.po -o /dev/null
 
 fi;

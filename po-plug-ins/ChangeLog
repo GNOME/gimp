@@ -1,3 +1,7 @@
+2002-02-26  Sven Neumann  <sven@gimp.org>
+
+	* update.sh: changed to use intltool.
+
 2002-01-28  Wang Jian  <lark@linux.net.cn>
 
 	* zh_CN.po: Updated Simplified Chinese translation by
