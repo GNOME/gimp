@@ -1,3 +1,15 @@
+2004-08-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-progress.[ch]: added boolean return values
+	to plug_in_progress_install(), uninstall() and cancel(). Added
+	checks to make sure the installed progress_callback exists, has
+	the correct signature and was installed by this plug-in.
+
+	* tools/pdbgen/pdb/progress.pdb: use the return values to let the
+	PDB wrappers succeed/fail.
+
+	* app/pdb/progress_cmds.c: regenerated.
+
 2004-08-30  Michael Schumacher <schumaml@cvs.gnome.org>
 
 	* libgimp/gimp.def: added gimp_progress_install &

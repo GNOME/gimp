@@ -169,7 +169,8 @@ progress_install_invoker (Gimp         *gimp,
   if (success)
     {
       if (gimp->current_plug_in && gimp->current_plug_in->open)
-        plug_in_progress_install (gimp->current_plug_in, progress_callback);
+        success = plug_in_progress_install (gimp->current_plug_in,
+                                            progress_callback);
       else
         success = FALSE;
     }
@@ -218,7 +219,8 @@ progress_uninstall_invoker (Gimp         *gimp,
   if (success)
     {
       if (gimp->current_plug_in && gimp->current_plug_in->open)
-        plug_in_progress_uninstall (gimp->current_plug_in, progress_callback);
+        success = plug_in_progress_uninstall (gimp->current_plug_in,
+                                              progress_callback);
       else
         success = FALSE;
     }
@@ -267,7 +269,8 @@ progress_cancel_invoker (Gimp         *gimp,
   if (success)
     {
       if (gimp->current_plug_in && gimp->current_plug_in->open)
-        plug_in_progress_cancel (gimp->current_plug_in, progress_callback);
+        success = plug_in_progress_cancel (gimp->current_plug_in,
+                                           progress_callback);
       else
         success = FALSE;
     }

@@ -125,12 +125,27 @@ plug_in_progress_end (PlugIn *plug_in)
     }
 }
 
-void
+gboolean
 plug_in_progress_install (PlugIn      *plug_in,
                           const gchar *progress_callback)
 {
-  g_return_if_fail (plug_in != NULL);
-  g_return_if_fail (progress_callback != NULL);
+  ProcRecord *proc_rec;
+
+  g_return_val_if_fail (plug_in != NULL, FALSE);
+  g_return_val_if_fail (progress_callback != NULL, FALSE);
+
+  proc_rec = procedural_db_lookup (plug_in->gimp, progress_callback);
+
+  if (! proc_rec                                    ||
+      proc_rec->num_args != 3                       ||
+      proc_rec->args[0].arg_type != GIMP_PDB_INT32  ||
+      proc_rec->args[1].arg_type != GIMP_PDB_STRING ||
+      proc_rec->args[2].arg_type != GIMP_PDB_FLOAT  ||
+      proc_rec->proc_type        != GIMP_TEMPORARY  ||
+      proc_rec->exec_method.temporary.plug_in != plug_in)
+    {
+      return FALSE;
+    }
 
   if (plug_in->progress)
     {
@@ -147,29 +162,37 @@ plug_in_progress_install (PlugIn      *plug_in,
                                     "context",       plug_in->context,
                                     "callback-name", progress_callback,
                                     NULL);
+
+  return TRUE;
 }
 
-void
+gboolean
 plug_in_progress_uninstall (PlugIn      *plug_in,
                             const gchar *progress_callback)
 {
-  g_return_if_fail (plug_in != NULL);
-  g_return_if_fail (progress_callback != NULL);
+  g_return_val_if_fail (plug_in != NULL, FALSE);
+  g_return_val_if_fail (progress_callback != NULL, FALSE);
 
   if (GIMP_IS_PDB_PROGRESS (plug_in->progress))
     {
       plug_in_progress_end (plug_in);
       g_object_unref (plug_in->progress);
       plug_in->progress = NULL;
+
+      return TRUE;
     }
+
+  return FALSE;
 }
 
-void
+gboolean
 plug_in_progress_cancel (PlugIn      *plug_in,
                          const gchar *progress_callback)
 {
-  g_return_if_fail (plug_in != NULL);
-  g_return_if_fail (progress_callback != NULL);
+  g_return_val_if_fail (plug_in != NULL, FALSE);
+  g_return_val_if_fail (progress_callback != NULL, FALSE);
+
+  return FALSE;
 }
 
 
