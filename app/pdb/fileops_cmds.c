@@ -834,7 +834,7 @@ static ProcRecord register_file_handler_mime_proc =
 {
   "gimp_register_file_handler_mime",
   "Associates a MIME type with a file handler procedure.",
-  "Registers a MIME type for a file handler procedure. This allows GIMP to determine the MIME type of the file opened, or saved using this procedure.",
+  "Registers a MIME type for a file handler procedure. This allows GIMP to determine the MIME type of the file opened or saved using this procedure.",
   "Sven Neumann",
   "Sven Neumann",
   "2004",

@@ -1,5 +1,10 @@
 2004-05-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/fileops_cmds.c
+	* libgimp/gimpfileops_pdb.c: regenerated.
+
+2004-05-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/select-actions.c (select_actions_update): don't
 	make "select-invert" insensitive if there is no selection.
 

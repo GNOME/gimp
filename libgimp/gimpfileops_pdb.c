@@ -266,7 +266,7 @@ gimp_register_save_handler (const gchar *procedure_name,
  * Associates a MIME type with a file handler procedure.
  *
  * Registers a MIME type for a file handler procedure. This allows GIMP
- * to determine the MIME type of the file opened, or saved using this
+ * to determine the MIME type of the file opened or saved using this
  * procedure.
  *
  * Returns: TRUE on success.
