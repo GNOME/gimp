@@ -36,7 +36,6 @@ $^W=0;
    _EXTENSIVE_TESTS	=> q[@EXTENSIVE_TESTS@],
 
    IN_GIMP		=> q[@IN_GIMP@],
-   top_builddir		=> q[@top_builddir@],
 
    pdl_inc		=> '',
    pdl_typemaps		=> '',
@@ -50,6 +49,7 @@ $^W=0;
 sub expand {
    my $cfg = shift;
    my $count = 5;
+   $cfg =~ s%\$\(top_builddir\)%$topdir/../../%g;
    while($cfg=~/\$\{/ and $count--) {
       while(($k,$v)=each %cfg) {
          $cfg=~s/\$\{$k\}/$v/g;
