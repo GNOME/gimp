@@ -1,9 +1,11 @@
 Revision history for Gimp-Perl extension.
 
+1.047 Wed Nov 11 02:47:12 CET 1998
 	- passing arguments on the commandline works again
 	  (formerly all arguments were treated as integers)
 	- added the PDB extension to the distribution (alpha!)
 	- added tex-to-float and alpha2color.pl plug-ins
+	- fixed some memory leaks (the remaining ones are in the Gimp ;)
 
 1.046 Thu Nov  5 01:53:34 CET 1998
 	- the syntax really gets tricky - references to INT32 and similar

@@ -702,7 +702,7 @@ convert_sv2gimp (char *croak_str, GParam *arg, SV *sv)
   return 1;
 }
 
-/* only free array pointers, but not actual array values.  */
+/* do not free actual string or parasite data */
 static void
 destroy_params (GParam *arg, int count)
 {
@@ -722,6 +722,24 @@ destroy_params (GParam *arg, int count)
   
   g_free (arg);
 }
+
+#ifdef GIMP_HAVE_DESTROY_PARAMDEFS
+#define destroy_paramdefs gimp_destroy_paramdefs
+#else
+static void
+destroy_paramdefs (GParamDef *arg, int count)
+{
+  int i;
+  
+  for (i = 0; i < count; i++)
+    {
+      g_free (arg[i].name);
+      g_free (arg[i].description);
+    }
+  
+  g_free (arg);
+}
+#endif
 
 /* first check wether the procedure exists at all.  */
 static void try_call (char *name, int req)
@@ -995,8 +1013,8 @@ _gimp_procedure_available(proc_name)
 		    g_free (proc_author);
 		    g_free (proc_copyright);
 		    g_free (proc_date);
-		    g_free (params);
-		    g_free (return_vals);
+		    destroy_paramdefs (params, nparams);
+		    destroy_paramdefs (return_vals, nreturn_vals);
 		    RETVAL = TRUE;
 		  }
 		else
@@ -1049,7 +1067,7 @@ gimp_call_procedure (proc_name, ...)
 		    
 		    if (nparams)
 		      args = (GParam *) g_new (GParam, nparams);
-    		    
+		    
 		    for(;items;)
 		      {
 		        j = 0;
@@ -1154,8 +1172,8 @@ gimp_call_procedure (proc_name, ...)
 		    if (values)
 		      gimp_destroy_params (values, nreturn_vals);
 		    
-		    g_free (return_vals);
-		    g_free (params);
+		    destroy_paramdefs (params, nparams);
+		    destroy_paramdefs (return_vals, nreturn_vals);
 		    
 		    if (croak_str[0])
 		      croak (croak_str);
