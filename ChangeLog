@@ -1,3 +1,7 @@
+2003-02-18  Sven Neumann  <sven@gimp.org>
+
+	* data/images/gimp_splash.png: flattened the splash image.
+
 2003-02-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-ins.[ch]: added plug_ins_proc_def_find() which
