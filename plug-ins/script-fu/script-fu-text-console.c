@@ -17,14 +17,17 @@
  */
 
 #include "config.h"
-#include "siod-wrapper.h"
-#include "libgimp/gimp.h"
+
 #include <stdio.h>
-#include "script-fu-intl.h"
 #if HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include <glib.h>
+
+#include "libgimp/gimp.h"
+
+#include "siod-wrapper.h"
+
+#include "script-fu-intl.h"
 
 
 static void script_fu_text_console_interface (void);
@@ -39,7 +42,7 @@ script_fu_text_console_run (gchar      *name,
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunMode   run_mode;
+  GimpRunMode       run_mode;
 
   run_mode = params[0].data.d_int32;
 
@@ -66,11 +69,11 @@ script_fu_text_console_run (gchar      *name,
       break;
     }
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
+
+  *nreturn_vals = 1;
+  *return_vals  = values;
 }
 
 static gboolean
@@ -78,8 +81,7 @@ read_command (GString *command)
 {
   guchar c;
   gint   next;
-  gint   left  = 0;
-  gint   right = 0;
+  gint   level  = 0;
 
   g_string_assign (command, "");
 
@@ -87,31 +89,39 @@ read_command (GString *command)
     {
       c = (guchar) next;
 
-      if ((c == '\n') && (left == right))
-        break;
+      switch (c)
+        {
+        case '\n':
+          if (level == 0)
+            return TRUE;
+          c = ' ';
+          break;
 
-      if (c == '(')
-	left++;
-      else if (c == ')')
-	right++;
-      
-      g_string_append_c (command, c != '\n' ? c : ' ');
+        case '(':
+          level++;
+          break;
+
+        case ')':
+          level--;
+          break;
+
+        default:
+          break;
+        }
+
+      g_string_append_c (command, c);
     }
 
-  return (next == EOF);
+  return FALSE;
 }
 
 static void 
 script_fu_text_console_interface (void)
 {
-  gboolean  quit = FALSE;
-  GString  *command;
+  GString *command = g_string_new (NULL);
 
-  command = g_string_new ("");
-
-  while (!quit)
+  while (read_command (command))
     {
-      quit = read_command (command);
       if (command->len > 0)
         siod_interpret_string (command->str);
     }
