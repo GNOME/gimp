@@ -1,5 +1,11 @@
 2003-06-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpchannel.c (gimp_channel_scale, resize): make sure
+	channels end up at (0, 0) after scaling and resizing.
+	Fixes bug #114213.
+
+2003-06-02  Michael Natterer  <mitch@gimp.org>
+
 	Implemented DISSOLVE_MODE the way it should have always been.
 	Fixes bug #107402.
 

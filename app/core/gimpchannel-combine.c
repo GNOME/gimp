@@ -370,6 +370,12 @@ gimp_channel_scale (GimpItem              *item,
                                     _("Scale Channel"),
                                     channel);
 
+  if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
+    {
+      new_offset_x = 0;
+      new_offset_y = 0;
+    }
+
   GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
                                          new_offset_x, new_offset_y,
                                          interpolation_type);
@@ -395,6 +401,12 @@ gimp_channel_resize (GimpItem *item,
 
   GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
                                           offset_x, offset_y);
+
+  if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
+    {
+      item->offset_x = 0;
+      item->offset_y = 0;
+    }
 
   /*  bounds are now unknown  */
   channel->bounds_known = FALSE;
