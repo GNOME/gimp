@@ -1,5 +1,11 @@
 2003-08-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimphelp-ids.h: added GIMP_HELP_TEXT_EDITOR_DIALOG.
+
+	* app/widgets/gimptexteditor.c: use it.
+
+2003-08-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdockable.[ch]: added "gchar *help_id" member to
 	the GimpDockable struct and "const gchar *help_id" parameter to
 	gimp_dockable_new().

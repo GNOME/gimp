@@ -351,6 +351,7 @@
 #define GIMP_HELP_DISPLAY_FILTER_DIALOG           "dialogs/display_filters/display_filters.html"
 #define GIMP_HELP_UNDO_DIALOG                     "dialogs/undo_history.html"
 #define GIMP_HELP_INDEXED_PALETTE_DIALOG          "dialogs/indexed_palette.html"
+#define GIMP_HELP_TEXT_EDITOR_DIALOG              "dialogs/text_editor.html"
 #define GIMP_HELP_TIPS_DIALOG                     "dialogs/tip_of_the_day.html"
 #define GIMP_HELP_ABOUT_DIALOG                    "dialogs/about.html"
 
