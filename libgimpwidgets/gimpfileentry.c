@@ -126,11 +126,10 @@ gimp_file_entry_class_init (GimpFileEntryClass *klass)
 static void
 gimp_file_entry_init (GimpFileEntry *entry)
 {
-  entry->title          = NULL;
-  entry->file_selection = NULL;
-  entry->check_valid    = FALSE;
-
-  entry->file_exists    = NULL;
+  entry->title       = NULL;
+  entry->file_dialog = NULL;
+  entry->check_valid = FALSE;
+  entry->file_exists = NULL;
 
   gtk_box_set_spacing (GTK_BOX (entry), 4);
   gtk_box_set_homogeneous (GTK_BOX (entry), FALSE);
@@ -160,10 +159,10 @@ gimp_file_entry_destroy (GtkObject *object)
 {
   GimpFileEntry *entry = GIMP_FILE_ENTRY (object);
 
-  if (entry->file_selection)
+  if (entry->file_dialog)
     {
-      gtk_widget_destroy (entry->file_selection);
-      entry->file_selection = NULL;
+      gtk_widget_destroy (entry->file_dialog);
+      entry->file_dialog = NULL;
     }
 
   if (entry->title)
@@ -297,8 +296,8 @@ gimp_file_entry_entry_activate (GtkWidget     *widget,
                                      gimp_file_entry_entry_activate,
                                      entry);
 
-  if (entry->file_selection)
-    gtk_file_selection_set_filename (GTK_FILE_SELECTION (entry->file_selection),
+  if (entry->file_dialog)
+    gtk_file_selection_set_filename (GTK_FILE_SELECTION (entry->file_dialog),
 				     filename);
 
   g_free (filename);
@@ -350,36 +349,36 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
   filename = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
   g_free (utf8);
 
-  if (! entry->file_selection)
+  if (! entry->file_dialog)
     {
       GtkFileSelection *filesel;
 
       if (entry->dir_only)
 	{
-          entry->file_selection = gtk_file_selection_new (entry->title ?
-                                                          entry->title :
-                                                          _("Select Folder"));
+          entry->file_dialog = gtk_file_selection_new (entry->title ?
+                                                       entry->title :
+                                                       _("Select Folder"));
 
 	  /*  hiding these widgets uses internal gtk+ knowledge, but it's
 	   *  easier than creating my own directory browser -- michael
 	   */
 	  gtk_widget_hide
-	    (GTK_FILE_SELECTION (entry->file_selection)->fileop_del_file);
+	    (GTK_FILE_SELECTION (entry->file_dialog)->fileop_del_file);
 	  gtk_widget_hide
-	    (GTK_FILE_SELECTION (entry->file_selection)->file_list->parent);
+	    (GTK_FILE_SELECTION (entry->file_dialog)->file_list->parent);
 	}
       else
         {
-          entry->file_selection = gtk_file_selection_new (entry->title ?
-                                                          entry->title :
-                                                          _("Select File"));
+          entry->file_dialog = gtk_file_selection_new (entry->title ?
+                                                       entry->title :
+                                                       _("Select File"));
         }
 
-      filesel = GTK_FILE_SELECTION (entry->file_selection);
+      filesel = GTK_FILE_SELECTION (entry->file_dialog);
 
-      gtk_window_set_position (GTK_WINDOW (entry->file_selection),
+      gtk_window_set_position (GTK_WINDOW (entry->file_dialog),
 			       GTK_WIN_POS_MOUSE);
-      gtk_window_set_role (GTK_WINDOW (entry->file_selection),
+      gtk_window_set_role (GTK_WINDOW (entry->file_dialog),
                            "gimp-file-entry-file-selection");
 
       gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
@@ -397,13 +396,13 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
                                 filesel);
     }
 
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (entry->file_selection),
+  gtk_file_selection_set_filename (GTK_FILE_SELECTION (entry->file_dialog),
                                    filename);
 
-  gtk_window_set_screen (GTK_WINDOW (entry->file_selection),
+  gtk_window_set_screen (GTK_WINDOW (entry->file_dialog),
                          gtk_widget_get_screen (widget));
 
-  gtk_window_present (GTK_WINDOW (entry->file_selection));
+  gtk_window_present (GTK_WINDOW (entry->file_dialog));
 }
 
 static void

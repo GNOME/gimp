@@ -46,7 +46,7 @@ struct _GimpFileEntry
   GtkWidget *entry;
   GtkWidget *browse_button;
 
-  GtkWidget *file_selection;
+  GtkWidget *file_dialog;
 
   gchar     *title;
   gboolean   dir_only;

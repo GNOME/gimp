@@ -1,3 +1,9 @@
+2004-02-24  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpfileentry.[ch]: renamed member
+	"file_selection" to "file_dialog" because the former refers to the
+	currently used implementation, while the latter is neutral.
+
 2004-02-23  Adam Weinberger  <adamw@FreeBSD.org>
 
 	* configure.in: added "en_CA" (Canadian English) to ALL_LINGUAS.
