@@ -1,3 +1,9 @@
+2001-10-19  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/common/illusion.c: merged fixes for missing PDB parameters
+	from stable branch.
+
 2001-10-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

@@ -1,23 +1,23 @@
 /*
  * illusion.c  -- This is a plug-in for the GIMP 1.0
- *                                                                              
+ *  
  * Copyright (C) 1997  Hirotsuna Mizuno
  *                     s1041150@u-aizu.ac.jp
  *
  * Preview and new mode added May 2000 by tim copperfield
  * 		       timecop@japan.co.jp
  * 		       http://www.ne.jp/asahi/linux/timecop
- *                                                                              
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
  * Software Foundation; either version 2 of the License, or (at your option)
  * any later version.
- *                                                                              
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
  * more details.
- *                                                                              
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
@@ -104,9 +104,11 @@ query (void)
     { GIMP_PDB_INT32,    "run_mode",  "interactive / non-interactive" },
     { GIMP_PDB_IMAGE,    "image",     "input image" },
     { GIMP_PDB_DRAWABLE, "drawable",  "input drawable" },
-    { GIMP_PDB_INT32,    "division",  "the number of divisions" }
+    { GIMP_PDB_INT32,    "division",  "the number of divisions" },
+    { GIMP_PDB_INT32,    "type1",     "Use Type 1 (default=1)" },
+    { GIMP_PDB_INT32,    "type2",     "Use Type 2 (default=0)" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "produce illusion",

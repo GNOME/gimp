@@ -198,6 +198,7 @@ query (void)
     { GIMP_PDB_INT8, "redinvert", "Red inversion mode (1: enabled; 0: disabled)" },
     { GIMP_PDB_INT8, "greeninvert", "Green inversion mode (1: enabled; 0: disabled)" },
     { GIMP_PDB_INT8, "blueinvert", "Green inversion mode (1: enabled; 0: disabled)" },
+    { GIMP_PDB_INT32, "ncolors", "Number of Colors for mapping (2<=ncolors<=8192)" }
   };
   static gint nargs = sizeof(args) / sizeof(args[0]);
 
@@ -322,7 +323,7 @@ run (gchar   *name,
 	  wvals.redinvert = param[18].data.d_int8;
 	  wvals.greeninvert = param[19].data.d_int8;
 	  wvals.blueinvert = param[20].data.d_int8;
-	  wvals.ncolors = param[21].data.d_int8;
+	  wvals.ncolors = CLAMP (param[21].data.d_int32, 2, MAXNCOLORS);
 	}
       make_color_map();
       break;
