@@ -139,6 +139,21 @@ create_query_box (gchar         *title,
   return query_box;
 }
 
+/**
+ * gimp_query_string_box:
+ * @title: The query box dialog's title.
+ * @help_func: The help function to show this dialog's help page.
+ * @help_data: A string pointing to this dialog's html help page.
+ * @message: A string which will be shown above the dialog's entry widget.
+ * @initial: The initial value.
+ * @object: The object this query box is associated with.
+ * @signal: The object's signal which will cause the query box to be closed.
+ * @callback: The function which will be called when the user selects "OK".
+ * @data: The callback's user data.
+ *
+ * Returns: A pointer to the new #GtkDialog.
+ *
+ */
 GtkWidget *
 gimp_query_string_box (gchar                   *title,
 		       GimpHelpFunc             help_func,
@@ -173,6 +188,23 @@ gimp_query_string_box (gchar                   *title,
   return query_box->qbox;
 }
 
+/**
+ * gimp_query_int_box:
+ * @title: The query box dialog's title.
+ * @help_func: The help function to show this dialog's help page.
+ * @help_data: A string pointing to this dialog's html help page.
+ * @message: A string which will be shown above the dialog's entry widget.
+ * @initial: The initial value.
+ * @lower: The lower boundary of the range of possible values.
+ * @upper: The upper boundray of the range of possible values.
+ * @object: The object this query box is associated with.
+ * @signal: The object's signal which will cause the query box to be closed.
+ * @callback: The function which will be called when the user selects "OK".
+ * @data: The callback's user data.
+ *
+ * Returns: A pointer to the new #GtkDialog.
+ *
+ */
 GtkWidget *
 gimp_query_int_box (gchar                *title,
 		    GimpHelpFunc          help_func,
@@ -210,6 +242,24 @@ gimp_query_int_box (gchar                *title,
   return query_box->qbox;
 }
 
+/**
+ * gimp_query_double_box:
+ * @title: The query box dialog's title.
+ * @help_func: The help function to show this dialog's help page.
+ * @help_data: A string pointing to this dialog's html help page.
+ * @message: A string which will be shown above the dialog's entry widget.
+ * @initial: The initial value.
+ * @lower: The lower boundary of the range of possible values.
+ * @upper: The upper boundray of the range of possible values.
+ * @digits: The number of decimal digits the #GtkSpinButton will provide.
+ * @object: The object this query box is associated with.
+ * @signal: The object's signal which will cause the query box to be closed.
+ * @callback: The function which will be called when the user selects "OK".
+ * @data: The callback's user data.
+ *
+ * Returns: A pointer to the new #GtkDialog.
+ *
+ */
 GtkWidget *
 gimp_query_double_box (gchar                   *title,
 		       GimpHelpFunc             help_func,
@@ -248,6 +298,29 @@ gimp_query_double_box (gchar                   *title,
   return query_box->qbox;
 }
 
+/**
+ * gimp_query_size_box:
+ * @title: The query box dialog's title.
+ * @help_func: The help function to show this dialog's help page.
+ * @help_data: A string pointing to this dialog's html help page.
+ * @message: A string which will be shown above the dialog's entry widget.
+ * @initial: The initial value.
+ * @lower: The lower boundary of the range of possible values.
+ * @upper: The upper boundray of the range of possible values.
+ * @digits: The number of decimal digits the #GimpSizeEntry provide in
+ *          "pixel" mode.
+ * @unit: The unit initially shown by the #GimpUnitMenu.
+ * @resolution: The resolution (in dpi) which will be used for pixel/unit
+ *              calculations.
+ * @dot_for_dot: #TRUE if the #GimpUnitMenu's initial unit should be "pixels".
+ * @object: The object this query box is associated with.
+ * @signal: The object's signal which will cause the query box to be closed.
+ * @callback: The function which will be called when the user selects "OK".
+ * @data: The callback's user data.
+ *
+ * Returns: A pointer to the new #GtkDialog.
+ *
+ */
 GtkWidget *
 gimp_query_size_box (gchar                 *title,
 		     GimpHelpFunc           help_func,
@@ -296,6 +369,24 @@ gimp_query_size_box (gchar                 *title,
   return query_box->qbox;
 }
 
+/**
+ * gimp_query_boolean_box:
+ * @title: The query box dialog's title.
+ * @help_func: The help function to show this dialog's help page.
+ * @help_data: A string pointing to this dialog's html help page.
+ * @eek: #TRUE if you want the "Eek" wilber to appear left of the dialog's
+ *       message.
+ * @message: A string which will be shown in the query box.
+ * @true_button: The string to be shown in the dialog's left button.
+ * @false_button: The string to be shown in the dialog's right button.
+ * @object: The object this query box is associated with.
+ * @signal: The object's signal which will cause the query box to be closed.
+ * @callback: The function which will be called when the user selects "OK".
+ * @data: The callback's user data.
+ *
+ * Returns: A pointer to the new #GtkDialog.
+ *
+ */
 GtkWidget *
 gimp_query_boolean_box (gchar                    *title,
 			GimpHelpFunc              help_func,

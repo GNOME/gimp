@@ -1,3 +1,20 @@
+2000-02-12  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/gdisplay_ops.c
+	* app/gradient.c
+	* app/palette.c
+	* plug-ins/gflare/gflare.c: removed the "eek" wilber from all
+	query boxes except the "Quit the GIMP?" warning.
+
+	* libgimp/gimpfileselection.c
+	* libgimp/gimpunitmenu.c: be a bit more clever with widget signals
+	(destroy, unmap) which affect the widget's sub-dialogs.
+
+	* libgimp/gimphelpui.c: pass a GtkWindow, not a GtkWidget to
+	gimp_dialog_set_icon().
+
+	* libgimp/gimpquerybox.[ch]: added documentation.
+
 2000-02-12  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* plug-ins/maze/maze.c

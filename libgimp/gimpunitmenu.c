@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1999 Peter Mattis and Spencer Kimball                
  *
  * gimpunitmenu.c
- * Copyright (C) 1999 Michael Natterer <mitschel@cs.tu-berlin.de>
+ * Copyright (C) 1999 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -492,12 +492,12 @@ gimp_unit_menu_create_selection (GimpUnitMenu *gum)
                       GTK_SIGNAL_FUNC (gtk_widget_destroyed),
                       &gum->selection);
 
-  gtk_signal_connect_object (GTK_OBJECT (gum), "destroy",
-			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
-			     GTK_OBJECT (gum->selection));
-  gtk_signal_connect_object (GTK_OBJECT (gum), "unmap",
-			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
-			     GTK_OBJECT (gum->selection));
+  gtk_signal_connect_object_while_alive (GTK_OBJECT (gum), "destroy",
+					 GTK_SIGNAL_FUNC (gtk_widget_destroy),
+					 GTK_OBJECT (gum->selection));
+  gtk_signal_connect_object_while_alive (GTK_OBJECT (gum), "unmap",
+					 GTK_SIGNAL_FUNC (gtk_widget_destroy),
+					 GTK_OBJECT (gum->selection));
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 0);

@@ -28,6 +28,7 @@
 <!entity libgimp-gimpdialog SYSTEM "sgml/gimpdialog.sgml">
 <!entity libgimp-gimphelpui SYSTEM "sgml/gimphelpui.sgml">
 <!entity libgimp-gimpmenu SYSTEM "sgml/gimpmenu.sgml">
+<!entity libgimp-gimpquerybox SYSTEM "sgml/gimpquerybox.sgml">
 <!entity libgimp-gimpunit SYSTEM "sgml/gimpunit.sgml">
 <!entity libgimp-gimpwidgets SYSTEM "sgml/gimpwidgets.sgml">
 ]>
@@ -72,6 +73,7 @@
     &libgimp-gimpexport;
     &libgimp-gimphelpui;
     &libgimp-gimpmenu;
+    &libgimp-gimpquerybox;
     &libgimp-gimpunit;
     &libgimp-gimpwidgets;
   </chapter>

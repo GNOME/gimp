@@ -349,23 +349,6 @@ gimp_file_selection_filesel_ok_callback (GtkWidget *widget,
 }
 
 static void
-gimp_file_selection_filesel_cancel_callback (GtkWidget *widget,
-					     gpointer   data)
-{
-  gtk_widget_hide (GIMP_FILE_SELECTION (data)->file_selection);
-}
-
-static int
-gimp_file_selection_filesel_delete_callback (GtkWidget *widget,
-					     GdkEvent  *event,
-					     gpointer   data)
-{
-  gimp_file_selection_filesel_cancel_callback (NULL, data);
-
-  return TRUE;
-}
-
-static void
 gimp_file_selection_browse_callback (GtkWidget *widget,
 				     gpointer   data)
 {
@@ -404,7 +387,7 @@ gimp_file_selection_browse_callback (GtkWidget *widget,
       gtk_label_set_text (GTK_LABEL (GTK_BIN (GTK_FILE_SELECTION (gfs->file_selection)->ok_button)->child), _("Select"));
       gtk_label_set_text (GTK_LABEL (GTK_BIN (GTK_FILE_SELECTION (gfs->file_selection)->cancel_button)->child), _("Close"));
 
-      gtk_signal_connect
+      gtk_signal_connect 
 	(GTK_OBJECT (GTK_FILE_SELECTION (gfs->file_selection)->ok_button),
 	 "clicked",
 	 GTK_SIGNAL_FUNC (gimp_file_selection_filesel_ok_callback),
@@ -414,23 +397,23 @@ gimp_file_selection_browse_callback (GtkWidget *widget,
 	 "activate",
 	 GTK_SIGNAL_FUNC (gimp_file_selection_filesel_ok_callback),
 	 gfs);
-      gtk_signal_connect
-	(GTK_OBJECT (GTK_FILE_SELECTION (gfs->file_selection)->cancel_button),
-	 "clicked",
-	 GTK_SIGNAL_FUNC (gimp_file_selection_filesel_cancel_callback),
-	 gfs);
-      gtk_signal_connect
-	(GTK_OBJECT (gfs), "unmap",
-	 GTK_SIGNAL_FUNC (gimp_file_selection_filesel_cancel_callback),
-	 gfs);
-      gtk_signal_connect
-	(GTK_OBJECT (gfs->file_selection), "delete_event",
-	 GTK_SIGNAL_FUNC (gimp_file_selection_filesel_delete_callback),
-	 gfs);
+
+      gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (gfs->file_selection)->cancel_button),
+				 "clicked",
+				 GTK_SIGNAL_FUNC (gtk_widget_hide),
+				 GTK_OBJECT (gfs->file_selection));
+      gtk_signal_connect_object (GTK_OBJECT (gfs), "unmap",
+				 GTK_SIGNAL_FUNC (gtk_widget_hide),
+				 GTK_OBJECT (gfs->file_selection));
+      gtk_signal_connect_object (GTK_OBJECT (gfs->file_selection),
+				 "delete_event",
+				 GTK_SIGNAL_FUNC (gtk_widget_hide),
+				 GTK_OBJECT (gfs->file_selection));
     }
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (gfs->file_selection),
 				   filename);
+
   if (! GTK_WIDGET_VISIBLE (gfs->file_selection))
     gtk_widget_show (gfs->file_selection);
   else

@@ -2272,7 +2272,7 @@ gint32                 *image_ID,gint32                 *drawable_ID,gchar      
 <NAME>GimpFileSelection</NAME>
 struct GimpFileSelection
 {
-  GtkVBox    hbox;
+  GtkHBox    hbox;
 
   GtkWidget *file_exists;
   GtkWidget *entry;
@@ -3478,43 +3478,43 @@ GSerialDescription *d,  void *output, void *serial
 </MACRO>
 <FUNCTION>
 <NAME>parasite_new</NAME>
-<RETURNS>Parasite    *</RETURNS>
-const char *name, guint32 flags,guint32 size, const void *data
+<RETURNS>Parasite     *</RETURNS>
+const gchar    *name,guint32         flags,guint32         size,const gpointer  data
 </FUNCTION>
 <FUNCTION>
 <NAME>parasite_free</NAME>
 <RETURNS>void  </RETURNS>
-Parasite *parasite
+Parasite       *parasite
 </FUNCTION>
 <FUNCTION>
 <NAME>parasite_copy</NAME>
-<RETURNS>Parasite    *</RETURNS>
+<RETURNS>Parasite     *</RETURNS>
 const Parasite *parasite
 </FUNCTION>
 <FUNCTION>
 <NAME>parasite_compare</NAME>
-<RETURNS>int  </RETURNS>
-const Parasite *a, const Parasite *b
+<RETURNS>gboolean  </RETURNS>
+const Parasite *a,const Parasite *b
 </FUNCTION>
 <FUNCTION>
 <NAME>parasite_is_type</NAME>
-<RETURNS>int  </RETURNS>
-const Parasite *parasite,const char *name
+<RETURNS>gboolean  </RETURNS>
+const Parasite *parasite,const gchar    *name
 </FUNCTION>
 <FUNCTION>
 <NAME>parasite_is_persistent</NAME>
-<RETURNS>int  </RETURNS>
+<RETURNS>gboolean  </RETURNS>
 const Parasite *p
 </FUNCTION>
 <FUNCTION>
 <NAME>parasite_is_undoable</NAME>
-<RETURNS>int  </RETURNS>
+<RETURNS>gboolean  </RETURNS>
 const Parasite *p
 </FUNCTION>
 <FUNCTION>
 <NAME>parasite_has_flag</NAME>
-<RETURNS>int  </RETURNS>
-const Parasite *p, gulong flag
+<RETURNS>gboolean  </RETURNS>
+const Parasite *p,gulong          flag
 </FUNCTION>
 <FUNCTION>
 <NAME>parasite_flags</NAME>
@@ -3523,17 +3523,17 @@ const Parasite *p
 </FUNCTION>
 <FUNCTION>
 <NAME>parasite_name</NAME>
-<RETURNS>const char  *</RETURNS>
+<RETURNS>const gchar  *</RETURNS>
 const Parasite *p
 </FUNCTION>
 <FUNCTION>
 <NAME>parasite_data</NAME>
-<RETURNS>void        *</RETURNS>
+<RETURNS>void         *</RETURNS>
 const Parasite *p
 </FUNCTION>
 <FUNCTION>
 <NAME>parasite_data_size</NAME>
-<RETURNS>long  </RETURNS>
+<RETURNS>glong  </RETURNS>
 const Parasite *p
 </FUNCTION>
 <STRUCT>
@@ -3596,11 +3596,11 @@ PixPipeParams *params
 </MACRO>
 <MACRO>
 <NAME>GIMP_MICRO_VERSION</NAME>
-#define GIMP_MICRO_VERSION				(16)
+#define GIMP_MICRO_VERSION				(17)
 </MACRO>
 <MACRO>
 <NAME>GIMP_VERSION</NAME>
-#define GIMP_VERSION					"1.1.16"
+#define GIMP_VERSION					"1.1.17"
 </MACRO>
 <MACRO>
 <NAME>GIMP_CHECK_VERSION</NAME>
@@ -3884,7 +3884,7 @@ const gchar        *title,const gchar        *wmclass_name,GimpHelpFunc        h
 <FUNCTION>
 <NAME>gimp_dialog_set_icon</NAME>
 <RETURNS>void  </RETURNS>
-GtkWidget          *dialog
+GtkWindow          *dialog
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_dialog_create_action_area</NAME>
@@ -3975,4 +3975,65 @@ GtkWidget          *widget,gpointer            data
 <NAME>gimp_table_attach_aligned</NAME>
 <RETURNS>void  </RETURNS>
 GtkTable           *table,gint                column,gint                row,gchar              *label_text,gfloat              xalign,gfloat              yalign,GtkWidget          *widget,gint                colspan,gboolean            left_align
+</FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpQueryStringCallback</NAME>
+<RETURNS>void </RETURNS>
+GtkWidget *query_box,
+					   gchar     *string,
+					   gpointer   data
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpQueryIntCallback</NAME>
+<RETURNS>void </RETURNS>
+GtkWidget *query_box,
+					   gint       value,
+					   gpointer   data
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpQueryDoubleCallback</NAME>
+<RETURNS>void </RETURNS>
+GtkWidget *query_box,
+					   gdouble    value,
+					   gpointer   data
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpQuerySizeCallback</NAME>
+<RETURNS>void </RETURNS>
+GtkWidget *query_box,
+					   gdouble    size,
+					   GimpUnit   unit,
+					   gpointer   data
+</USER_FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpQueryBooleanCallback</NAME>
+<RETURNS>void </RETURNS>
+GtkWidget *query_box,
+					   gboolean   value,
+					   gpointer   data
+</USER_FUNCTION>
+<FUNCTION>
+<NAME>gimp_query_string_box</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+gchar                    *title,GimpHelpFunc              help_func,gchar                    *help_data,gchar                    *message,gchar                    *initial,GtkObject                *object,gchar                    *signal,GimpQueryStringCallback   callback,gpointer                  data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_query_int_box</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+gchar                    *title,GimpHelpFunc              help_func,gchar                    *help_data,char                     *message,gint                      initial,gint                      lower,gint                      upper,GtkObject                *object,gchar                    *signal,GimpQueryIntCallback      callback,gpointer                  data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_query_double_box</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+gchar                    *title,GimpHelpFunc              help_func,gchar                    *help_data,gchar                    *message,gdouble                   initial,gdouble                   lower,gdouble                   upper,gint                      digits,GtkObject                *object,gchar                    *signal,GimpQueryDoubleCallback   callback,gpointer                  data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_query_size_box</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+gchar                    *title,GimpHelpFunc              help_func,gchar                    *help_data,gchar                    *message,gdouble                   initial,gdouble                   lower,gdouble                   upper,gint                      digits,GimpUnit                  unit,gdouble                   resolution,gboolean                  dot_for_dot,GtkObject                *object,gchar                    *signal,GimpQuerySizeCallback     callback,gpointer                  data
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_query_boolean_box</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+gchar                    *title,GimpHelpFunc              help_func,gchar                    *help_data,gboolean                  eek,gchar                    *message,gchar                    *true_button,gchar                    *false_button,GtkObject                *object,gchar                    *signal,GimpQueryBooleanCallback  callback,gpointer                  data
 </FUNCTION>

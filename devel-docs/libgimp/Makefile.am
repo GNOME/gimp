@@ -36,6 +36,7 @@ tmpl_sources = 				\
 	tmpl/gimpmodule.sgml		\
 	tmpl/gimppatheditor.sgml	\
 	tmpl/gimpprotocol.sgml		\
+	tmpl/gimpquerybox.sgml		\
 	tmpl/gimpsizeentry.sgml		\
 	tmpl/gimpui.sgml		\
 	tmpl/gimpunit.sgml		\

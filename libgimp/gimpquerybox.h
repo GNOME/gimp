@@ -47,13 +47,7 @@ typedef void (* GimpQueryBooleanCallback) (GtkWidget *query_box,
 					   gboolean   value,
 					   gpointer   data);
 
-/*  some simple query dialogs
- *  if object != NULL then the query boxes will connect their cancel callback
- *  to the provided signal of this object
- *
- *  it's the caller's job to show the returned widgets
- */
-
+/*  some simple query dialogs  */
 GtkWidget * gimp_query_string_box  (gchar                    *title,
 				    GimpHelpFunc              help_func,
 				    gchar                    *help_data,

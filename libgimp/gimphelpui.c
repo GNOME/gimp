@@ -89,7 +89,7 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
    *  this function is called for almost all gimp windows
    */
   if (GTK_IS_WINDOW (widget))
-    gimp_dialog_set_icon (widget);
+    gimp_dialog_set_icon (GTK_WINDOW (widget));
 
   /*  set up the help signals and tips query widget  */
   if (!tips_query)

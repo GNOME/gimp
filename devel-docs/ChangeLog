@@ -1,3 +1,12 @@
+2000-02-12  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/Makefile.am
+	* libgimp/tmpl/gimpquerybox.sgml: new file.
+
+	* libgimp/libgimp-decl.txt
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt: updated from the libgimp sources.
+
 Sat Feb 12 03:14:38 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* devel-docs/libgimp/tmpl/gimpchainbutton.sgml: documented

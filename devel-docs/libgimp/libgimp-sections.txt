@@ -691,6 +691,20 @@ GIMP_IS_PATH_EDITOR_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpquerybox</FILE>
+GimpQueryStringCallback
+GimpQueryIntCallback
+GimpQueryDoubleCallback
+GimpQuerySizeCallback
+GimpQueryBooleanCallback
+gimp_query_string_box
+gimp_query_int_box
+gimp_query_double_box
+gimp_query_size_box
+gimp_query_boolean_box
+</SECTION>
+
+<SECTION>
 <FILE>gimpsizeentry</FILE>
 GimpSizeEntry
 GIMP_SIZE_ENTRY
