@@ -90,6 +90,7 @@
 #include "base/tile-manager.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpcoreconfig.h"
 #include "core/gimpdatafiles.h"
 #include "core/gimpdrawable.h"
@@ -881,7 +882,6 @@ plug_in_new (gchar *name)
   plug_in = g_new (PlugIn, 1);
 
   plug_in->open               = FALSE;
-  plug_in->destroy            = FALSE;
   plug_in->query              = FALSE;
   plug_in->synchronous        = FALSE;
   plug_in->recurse            = FALSE;
@@ -935,8 +935,7 @@ plug_in_destroy (PlugIn *plug_in)
       if (plug_in == current_plug_in)
 	plug_in_pop ();
 
-      if (!plug_in->destroy)
-	g_free (plug_in);
+      g_free (plug_in);
     }
 }
 
@@ -1377,13 +1376,13 @@ plug_in_run (ProcRecord *proc_rec,
 void
 plug_in_repeat (gboolean with_interface)
 {
-  GDisplay *gdisplay;
-  Argument *args;
-  gint i;
+  GimpDisplay *gdisplay;
+  Argument    *args;
+  gint         i;
 
   if (last_plug_in)
     {
-      gdisplay = gdisplay_active ();
+      gdisplay = gimp_context_get_display (gimp_get_user_context (the_gimp));
       if (!gdisplay) return;
 
       /* construct the procedures arguments */
@@ -2710,15 +2709,15 @@ static void
 plug_in_callback (GtkWidget *widget,
 		  gpointer   client_data)
 {
-  GDisplay   *gdisplay;
-  ProcRecord *proc_rec;
-  Argument   *args;
-  gint i;
-  gint gdisp_ID = -1;
-  gint argc = 0; /* calm down a gcc warning.  */
+  GimpDisplay *gdisplay;
+  ProcRecord  *proc_rec;
+  Argument    *args;
+  gint         i;
+  gint         gdisp_ID = -1;
+  gint         argc     = 0; /* calm down a gcc warning.  */
 
   /* get the active gdisplay */
-  gdisplay = gdisplay_active ();
+  gdisplay = gimp_context_get_display (gimp_get_user_context (the_gimp));
 
   proc_rec = (ProcRecord *) client_data;
 
@@ -3604,7 +3603,7 @@ plug_in_progress_init (PlugIn *plug_in,
 		       gchar  *message,
 		       gint    gdisp_ID)
 {
-  GDisplay *gdisp = NULL;
+  GimpDisplay *gdisp = NULL;
 
   if (!message)
     message = plug_in->args[0];

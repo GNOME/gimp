@@ -94,20 +94,22 @@ gimp_layer_list_item_get_type (void)
 
   if (! list_item_type)
     {
-      static const GtkTypeInfo list_item_info =
+      static const GTypeInfo list_item_info =
       {
-	"GimpLayerListItem",
-	sizeof (GimpLayerListItem),
-	sizeof (GimpLayerListItemClass),
-	(GtkClassInitFunc) gimp_layer_list_item_class_init,
-	(GtkObjectInitFunc) gimp_layer_list_item_init,
-	/* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+        sizeof (GimpLayerListItemClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_layer_list_item_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpLayerListItem),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_layer_list_item_init,
       };
 
-      list_item_type = gtk_type_unique (GIMP_TYPE_DRAWABLE_LIST_ITEM,
-                                        &list_item_info);
+      list_item_type = g_type_register_static (GIMP_TYPE_DRAWABLE_LIST_ITEM,
+                                               "GimpLayerListItem",
+                                               &list_item_info, 0);
     }
 
   return list_item_type;

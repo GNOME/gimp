@@ -26,7 +26,7 @@
 /*  private  */
 
 GimpItemGetNameFunc   gimp_container_view_get_built_in_name_func
-                                            (GtkType              type);
+                                            (GType                type);
 gboolean              gimp_container_view_is_built_in_name_func
                                             (GimpItemGetNameFunc  get_name_func);
 

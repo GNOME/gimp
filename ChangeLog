@@ -1,3 +1,92 @@
+2001-10-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpprogress.[ch]
+	* app/undo.c: s/GDisplay/GimpDisplay/
+
+	* app/plug_in.[ch]: removed unused boolean "destroy" field of
+	the PlugIn struct.
+
+	* app/core/gimpedit.c: don't include "app_procs.h"
+
+	* app/display/gimpdisplay-callbacks.c: moved the "grab_abd_scroll"
+	stuff from gimpdisplay-scroll.* here (less complicated and easier
+	to cleanup...)
+
+	* app/display/gimpdisplay-scroll.[ch]: removed here.
+
+	* app/display/gimpdisplay-render.[ch]
+	* app/display/gimpdisplay-selection.[ch]
+	* app/display/gimpdisplayshell.c: s/GDisplay/GimpDisplay/g
+
+	* app/display/gimpdisplay.[ch]: ditto, removed gdisplay_active()
+	which was just a wrapper around
+	"gimp_context_get_display (gimp_get_user_context (the_gimp))"
+	(which is more to type but makes the use of the global
+	"the_gimp" variable more obvious).
+
+	* app/gui/color-area.h
+	* app/gui/edit-commands.c
+	* app/gui/file-commands.c
+	* app/gui/file-dialog-utils.c
+	* app/gui/image-commands.c
+	* app/gui/info-window.h
+	* app/gui/paths-dialog.h
+	* app/gui/select-commands.c
+	* app/gui/tool-options-dialog.c
+	* app/gui/tools-commands.c
+	* app/gui/view-commands.c: s/GDisplay/GimpDisplay/, gdisplay_active()
+	removal, include "app_procs.h" for "the_gimp".
+
+	* app/tools/gimpbezierselecttool.h
+	* app/tools/gimpbrightnesscontrasttool.[ch]
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpcolorbalancetool.[ch]
+	* app/tools/gimpcurvestool.[ch]
+	* app/tools/gimpeditselectiontool.h
+	* app/tools/gimphistogramtool.[ch]
+	* app/tools/gimphuesaturationtool.[ch]
+	* app/tools/gimplevelstool.[ch]
+	* app/tools/gimpmovetool.h
+	* app/tools/gimpperspectivetool.h
+	* app/tools/gimpposterizetool.[ch]
+	* app/tools/gimprotatetool.h
+	* app/tools/gimpscaletool.h
+	* app/tools/gimpsheartool.h
+	* app/tools/gimptexttool.h
+	* app/tools/gimpthresholdtool.[ch]
+	* app/tools/gimptool.[ch]
+	* app/tools/gimptransformtool.h
+	* app/tools/tool_manager.[ch]: lots of s/GDisplay/GimpDisplay/, made
+	all *_dialog_hide() functions private, cleanup.
+
+	* app/widgets/*: removed GtkType and gtk_type_* stuff entirely and
+	use GObject functions, removed lots of empty "destroy" methods and
+	use more type checking class cast macros instead of casting
+	directly.
+
+	* app/widgets/gimpcontainermenu.c: fixed item insert order.
+
+	* app/widgets/gimphistogramview.[ch]: cleaned up and renamed all
+	functions.
+
+	* app/widgets/gimpwidgets-utils.[ch]: removed gimp_dialog_hide() as
+	Gtk+ does the right thing (TM) now.
+
+	* tools/pdbgen/pdb/color.pdb: implemented "histogram" without
+	digging into tools/ and widgets/ (needs to be done for all
+	color PDB functions).
+
+	* tools/pdbgen/pdb/gimprc.pdb: no need to use "the_gimp" in a PDB
+	function as a "Gimp" pointer is passed to them all.
+
+	* tools/pdbgen/pdb/image.pdb: don't include "app_procs.h"
+
+	* app/pdb/color_cmds.c
+	* app/pdb/gimprc_cmds.c
+	* app/pdb/image_cmds.c: regenerated.
+
+	* app/pdb/procedural_db.c: don't include "app_procs.h"
+
 2001-10-16  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/sel_gauss.c: merged fix for bug #62433 from stable

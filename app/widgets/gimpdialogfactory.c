@@ -187,14 +187,12 @@ gimp_dialog_factory_new (const gchar       *name,
   GimpDialogFactory      *factory;
 
   g_return_val_if_fail (name != NULL, NULL);
-
-  g_return_val_if_fail (context != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-
   g_return_val_if_fail (! item_factory || GTK_IS_ITEM_FACTORY (item_factory),
 			NULL);
 
-  factory_class = gtk_type_class (GIMP_TYPE_DIALOG_FACTORY);
+  /* EEK */
+  factory_class = g_type_class_ref (GIMP_TYPE_DIALOG_FACTORY);
 
   if (g_hash_table_lookup (factory_class->factories, name))
     {
@@ -225,7 +223,7 @@ gimp_dialog_factory_from_name (const gchar *name)
 
   g_return_val_if_fail (name != NULL, NULL);
 
-  factory_class = gtk_type_class (GIMP_TYPE_DIALOG_FACTORY);
+  factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
 
   factory = (GimpDialogFactory *)
     g_hash_table_lookup (factory_class->factories, name);
@@ -244,7 +242,6 @@ gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
 {
   GimpDialogFactoryEntry *entry;
 
-  g_return_if_fail (factory != NULL);
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
   g_return_if_fail (identifier != NULL);
 
@@ -267,7 +264,6 @@ gimp_dialog_factory_find_entry (GimpDialogFactory *factory,
 {
   GList *list;
 
-  g_return_val_if_fail (factory != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
 
@@ -292,7 +288,6 @@ gimp_dialog_factory_find_session_info (GimpDialogFactory *factory,
 {
   GList *list;
 
-  g_return_val_if_fail (factory != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
 
@@ -323,7 +318,6 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
   GimpDialogFactoryEntry *entry;
   GtkWidget              *dialog = NULL;
 
-  g_return_val_if_fail (factory != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
 
@@ -498,7 +492,6 @@ GtkWidget *
 gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
 				const gchar       *identifier)
 {
-  g_return_val_if_fail (factory != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
 
@@ -525,7 +518,6 @@ GtkWidget *
 gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
 				  const gchar       *identifier)
 {
-  g_return_val_if_fail (factory != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
 
@@ -557,9 +549,7 @@ gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
 				  GimpDock          *dock,
 				  const gchar       *identifier)
 {
-  g_return_val_if_fail (factory != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
-  g_return_val_if_fail (dock != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
 
@@ -585,7 +575,6 @@ gimp_dialog_factory_dock_new (GimpDialogFactory *factory)
 {
   GtkWidget *dock;
 
-  g_return_val_if_fail (factory != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (factory->new_dock_func != NULL, NULL);
 
@@ -610,9 +599,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
   GimpSessionInfo        *info;
   GList                  *list;
 
-  g_return_if_fail (factory != NULL);
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
-  g_return_if_fail (dialog != NULL);
   g_return_if_fail (GTK_IS_WIDGET (dialog));
 
   if (g_list_find (factory->open_dialogs, dialog))
@@ -748,9 +735,7 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
   GimpSessionInfo   *session_info;
   GList             *list;
 
-  g_return_if_fail (factory != NULL);
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
-  g_return_if_fail (dialog != NULL);
   g_return_if_fail (GTK_IS_WIDGET (dialog));
 
   if (! g_list_find (factory->open_dialogs, dialog))
@@ -807,7 +792,7 @@ gimp_dialog_factories_session_save (FILE *file)
 
   g_return_if_fail (file != NULL);
 
-  factory_class = gtk_type_class (GIMP_TYPE_DIALOG_FACTORY);
+  factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
 
   g_hash_table_foreach (factory_class->factories,
 			(GHFunc) gimp_dialog_factories_save_foreach,
@@ -819,8 +804,7 @@ gimp_dialog_factories_session_restore (void)
 {
   GimpDialogFactoryClass *factory_class;
 
-  factory_class =
-    GIMP_DIALOG_FACTORY_CLASS (gtk_type_class (GIMP_TYPE_DIALOG_FACTORY));
+  factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
 
   g_hash_table_foreach (factory_class->factories,
 			(GHFunc) gimp_dialog_factories_restore_foreach,
@@ -841,8 +825,7 @@ gimp_dialog_factories_toggle (GimpDialogFactory *toolbox_factory,
 
   doing_update = TRUE;
 
-  factory_class =
-    GIMP_DIALOG_FACTORY_CLASS (gtk_type_class (GIMP_TYPE_DIALOG_FACTORY));
+  factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
 
   switch (toggle_state)
     {
@@ -878,8 +861,7 @@ gimp_dialog_factories_idle (void)
 {
   GimpDialogFactoryClass *factory_class;
 
-  factory_class =
-    GIMP_DIALOG_FACTORY_CLASS (gtk_type_class (GIMP_TYPE_DIALOG_FACTORY));
+  factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
 
   g_hash_table_foreach (factory_class->factories,
 			(GHFunc) gimp_dialog_factories_idle_foreach,
@@ -891,8 +873,7 @@ gimp_dialog_factories_unidle (void)
 {
   GimpDialogFactoryClass *factory_class;
 
-  factory_class =
-    GIMP_DIALOG_FACTORY_CLASS (gtk_type_class (GIMP_TYPE_DIALOG_FACTORY));
+  factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
 
   g_hash_table_foreach (factory_class->factories,
 			(GHFunc) gimp_dialog_factories_unidle_foreach,
@@ -1100,7 +1081,6 @@ static void
 gimp_dialog_factory_get_window_info (GtkWidget       *window,
 				     GimpSessionInfo *info)
 {
-  g_return_if_fail (window != NULL);
   g_return_if_fail (GTK_IS_WIDGET (window));
   g_return_if_fail (GTK_WIDGET_TOPLEVEL (window));
   g_return_if_fail (info != NULL);

@@ -95,19 +95,22 @@ gimp_container_view_get_type (void)
 
   if (! view_type)
     {
-      GtkTypeInfo view_info =
+      static const GTypeInfo view_info =
       {
-	"GimpContainerView",
-	sizeof (GimpContainerView),
-	sizeof (GimpContainerViewClass),
-	(GtkClassInitFunc) gimp_container_view_class_init,
-	(GtkObjectInitFunc) gimp_container_view_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpContainerViewClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_container_view_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpContainerView),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_container_view_init,
       };
 
-      view_type = gtk_type_unique (GTK_TYPE_VBOX, &view_info);
+      view_type = g_type_register_static (GTK_TYPE_VBOX,
+                                          "GimpContainerView",
+                                          &view_info, 0);
     }
 
   return view_type;
@@ -119,9 +122,9 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
   GtkObjectClass *object_class;
   GtkWidgetClass *widget_class;
 
-  object_class = (GtkObjectClass *) klass;
-  widget_class = (GtkWidgetClass *) klass;
-  
+  object_class = GTK_OBJECT_CLASS (klass);
+  widget_class = GTK_WIDGET_CLASS (klass);
+
   parent_class = g_type_class_peek_parent (klass);
 
   view_signals[SELECT_ITEM] =

@@ -31,6 +31,7 @@
 #define GIMP_CHANNEL_LIST_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHANNEL_LIST_VIEW, GimpChannelListViewClass))
 #define GIMP_IS_CHANNEL_LIST_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CHANNEL_LIST_VIEW))
 #define GIMP_IS_CHANNEL_LIST_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHANNEL_LIST_VIEW))
+#define GIMP_CHANNEL_LIST_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CHANNEL_LIST_VIEW, GimpChannelListViewClass))
 
 
 typedef struct _GimpChannelListViewClass  GimpChannelListViewClass;
@@ -51,7 +52,7 @@ struct _GimpChannelListViewClass
 };
 
 
-GtkType   gimp_channel_list_view_get_type (void);
+GType   gimp_channel_list_view_get_type (void);
 
 
 #endif  /*  __GIMP_CHANNEL_LIST_VIEW_H__  */

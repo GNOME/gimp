@@ -43,7 +43,6 @@ typedef void        (* GimpDockableSetContextFunc) (GimpDockable *dockable,
 
 typedef struct _GimpDockableClass GimpDockableClass;
 
-
 struct _GimpDockable
 {
   GtkVBox       parent_instance;

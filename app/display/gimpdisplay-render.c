@@ -47,7 +47,7 @@ typedef void (* RenderFunc) (RenderInfo *info);
 
 struct _RenderInfo
 {
-  GDisplay    *gdisp;
+  GimpDisplay *gdisp;
   TileManager *src_tiles;
   guint       *alpha;
   guchar      *scale;
@@ -195,7 +195,7 @@ static void     render_image_indexed            (RenderInfo   *info);
 static void     render_image_indexed_a          (RenderInfo   *info);
 
 static void     render_image_init_info          (RenderInfo   *info,
-						 GDisplay     *gdisp,
+						 GimpDisplay  *gdisp,
 						 gint          x,
 						 gint          y,
 						 gint          w,
@@ -226,11 +226,11 @@ static RenderFunc render_funcs[6] =
 /*****************************************************************/
 
 void
-render_image (GDisplay *gdisp,
-	      gint      x,
-	      gint      y,
-	      gint      w,
-	      gint      h)
+render_image (GimpDisplay *gdisp,
+	      gint         x,
+	      gint         y,
+	      gint         w,
+	      gint         h)
 {
   RenderInfo info;
   gint       image_type;
@@ -735,12 +735,12 @@ render_image_rgb_a (RenderInfo *info)
 }
 
 static void
-render_image_init_info (RenderInfo *info,
-			GDisplay   *gdisp,
-			gint        x,
-			gint        y,
-			gint        w,
-			gint        h)
+render_image_init_info (RenderInfo  *info,
+			GimpDisplay *gdisp,
+			gint         x,
+			gint         y,
+			gint         w,
+			gint         h)
 {
   info->gdisp      = gdisp;
   info->src_tiles  = gimp_image_projection (gdisp->gimage);

@@ -42,7 +42,6 @@
 static void      gimp_dockbook_class_init       (GimpDockbookClass  *klass);
 static void      gimp_dockbook_init             (GimpDockbook       *dockbook);
 
-static void      gimp_dockbook_destroy          (GtkObject          *object);
 static gboolean  gimp_dockbook_drag_drop        (GtkWidget          *widget,
 						 GdkDragContext     *context,
 						 gint                x,
@@ -77,8 +76,6 @@ static GtkTargetEntry dialog_target_table[] =
 {
   GIMP_TARGET_DIALOG
 };
-static guint n_dialog_targets = (sizeof (dialog_target_table) /
-				 sizeof (dialog_target_table[0]));
 
 
 GType
@@ -88,19 +85,22 @@ gimp_dockbook_get_type (void)
 
   if (! dockbook_type)
     {
-      static const GtkTypeInfo dockbook_info =
+      static const GTypeInfo dockbook_info =
       {
-	"GimpDockbook",
-	sizeof (GimpDockbook),
-	sizeof (GimpDockbookClass),
-	(GtkClassInitFunc) gimp_dockbook_class_init,
-	(GtkObjectInitFunc) gimp_dockbook_init,
-	/* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+        sizeof (GimpDockbookClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_dockbook_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpDockbook),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_dockbook_init,
       };
 
-      dockbook_type = gtk_type_unique (GTK_TYPE_NOTEBOOK, &dockbook_info);
+      dockbook_type = g_type_register_static (GTK_TYPE_NOTEBOOK,
+                                              "GimpDockbook",
+                                              &dockbook_info, 0);
     }
 
   return dockbook_type;
@@ -109,15 +109,11 @@ gimp_dockbook_get_type (void)
 static void
 gimp_dockbook_class_init (GimpDockbookClass *klass)
 {
-  GtkObjectClass *object_class;
   GtkWidgetClass *widget_class;
 
-  object_class = (GtkObjectClass *) klass;
-  widget_class = (GtkWidgetClass *) klass;
+  widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  object_class->destroy   = gimp_dockbook_destroy;
 
   widget_class->drag_drop = gimp_dockbook_drag_drop;
 }
@@ -133,7 +129,7 @@ gimp_dockbook_init (GimpDockbook *dockbook)
 
   gtk_drag_dest_set (GTK_WIDGET (dockbook),
                      GTK_DEST_DEFAULT_ALL,
-                     dialog_target_table, n_dialog_targets,
+                     dialog_target_table, G_N_ELEMENTS (dialog_target_table),
                      GDK_ACTION_MOVE);
 }
 
@@ -141,13 +137,6 @@ GtkWidget *
 gimp_dockbook_new (void)
 {
   return GTK_WIDGET (g_object_new (GIMP_TYPE_DOCKBOOK, NULL));
-}
-
-static void
-gimp_dockbook_destroy (GtkObject *object)
-{
-  if (GTK_OBJECT_CLASS (parent_class))
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static gboolean
@@ -320,7 +309,7 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
   gtk_drag_source_set (GTK_WIDGET (tab_widget),
 		       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-		       dialog_target_table, n_dialog_targets,
+		       dialog_target_table, G_N_ELEMENTS (dialog_target_table),
 		       GDK_ACTION_MOVE);
   g_signal_connect (G_OBJECT (tab_widget), "drag_begin",
 		    G_CALLBACK (gimp_dockbook_tab_drag_begin),
@@ -331,7 +320,7 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
   gtk_drag_dest_set (GTK_WIDGET (tab_widget),
                      GTK_DEST_DEFAULT_ALL,
-                     dialog_target_table, n_dialog_targets,
+                     dialog_target_table, G_N_ELEMENTS (dialog_target_table),
                      GDK_ACTION_MOVE);
   g_signal_connect (G_OBJECT (tab_widget), "drag_drop",
 		    G_CALLBACK (gimp_dockbook_tab_drag_drop),

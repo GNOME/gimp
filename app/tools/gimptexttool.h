@@ -47,7 +47,7 @@ struct _GimpTextTool
   gint          click_x;
   gint          click_y;
 
-  GDisplay     *gdisp;
+  GimpDisplay  *gdisp;
   PangoContext *pango_context;
 };
 

@@ -60,7 +60,7 @@ struct _GimpLayerListViewClass
 };
 
 
-GtkType   gimp_layer_list_view_get_type (void);
+GType   gimp_layer_list_view_get_type (void);
 
 
 #endif  /*  __GIMP_LAYER_LIST_VIEW_H__  */

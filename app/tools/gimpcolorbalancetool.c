@@ -31,8 +31,6 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "widgets/gimpwidgets-utils.h"
-
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
@@ -66,8 +64,9 @@ static void   gimp_color_balance_tool_control    (GimpTool   *tool,
 
 static ColorBalanceDialog * color_balance_dialog_new (void);
 
+static void   color_balance_dialog_hide          (void);
 static void   color_balance_update               (ColorBalanceDialog *cbd,
-						  gint                );
+						  gint                update);
 static void   color_balance_preview              (ColorBalanceDialog *cbd);
 static void   color_balance_reset_callback       (GtkWidget          *widget,
 						  gpointer            data);
@@ -298,13 +297,6 @@ color_balance (PixelRegion *srcPR,
     }
 }
 
-void
-color_balance_dialog_hide (void)
-{
-  if (color_balance_dialog)
-    color_balance_cancel_callback (NULL, (gpointer) color_balance_dialog);
-} 
-
 /**************************/
 /*  Color Balance dialog  */
 /**************************/
@@ -533,6 +525,13 @@ color_balance_dialog_new (void)
 }
 
 static void
+color_balance_dialog_hide (void)
+{
+  if (color_balance_dialog)
+    color_balance_cancel_callback (NULL, (gpointer) color_balance_dialog);
+}
+
+static void
 color_balance_update (ColorBalanceDialog *cbd,
 		      gint                update)
 {
@@ -652,7 +651,7 @@ color_balance_ok_callback (GtkWidget *widget,
 
   cbd = (ColorBalanceDialog *) data;
 
-  gimp_dialog_hide (cbd->shell);
+  gtk_widget_hide (cbd->shell);
   
   active_tool = tool_manager_get_active (the_gimp);
 
@@ -681,7 +680,7 @@ color_balance_cancel_callback (GtkWidget *widget,
 
   cbd = (ColorBalanceDialog *) data;
 
-  gimp_dialog_hide (cbd->shell);
+  gtk_widget_hide (cbd->shell);
 
   active_tool = tool_manager_get_active (the_gimp);
 

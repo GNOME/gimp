@@ -31,6 +31,7 @@
 #define GIMP_CONTAINER_LIST_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_LIST_VIEW, GimpContainerListViewClass))
 #define GIMP_IS_CONTAINER_LIST_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER_LIST_VIEW))
 #define GIMP_IS_CONTAINER_LIST_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_LIST_VIEW))
+#define GIMP_CONTAINER_LIST_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTAINER_LIST_VIEW, GimpContainerListViewClass))
 
 
 typedef struct _GimpContainerListViewClass  GimpContainerListViewClass;
@@ -49,7 +50,8 @@ struct _GimpContainerListViewClass
 };
 
 
-GtkType     gimp_container_list_view_get_type (void);
+GType       gimp_container_list_view_get_type (void);
+
 GtkWidget * gimp_container_list_view_new      (GimpContainer *container,
 					       GimpContext   *context,
 					       gint           preview_size,

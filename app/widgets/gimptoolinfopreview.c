@@ -50,26 +50,29 @@ static gboolean    gimp_tool_info_preview_needs_popup   (GimpPreview  *preview);
 static GimpPreviewClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_tool_info_preview_get_type (void)
 {
-  static GtkType preview_type = 0;
+  static GType preview_type = 0;
 
   if (! preview_type)
     {
-      GtkTypeInfo preview_info =
+      static const GTypeInfo preview_info =
       {
-	"GimpToolInfoPreview",
-	sizeof (GimpToolInfoPreview),
-	sizeof (GimpToolInfoPreviewClass),
-	(GtkClassInitFunc) gimp_tool_info_preview_class_init,
-	(GtkObjectInitFunc) gimp_tool_info_preview_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpToolInfoPreviewClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_tool_info_preview_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpToolInfoPreview),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_tool_info_preview_init,
       };
 
-      preview_type = gtk_type_unique (GIMP_TYPE_PREVIEW, &preview_info);
+      preview_type = g_type_register_static (GIMP_TYPE_PREVIEW,
+                                             "GimpToolInfoPreview",
+                                             &preview_info, 0);
     }
   
   return preview_type;
@@ -78,15 +81,13 @@ gimp_tool_info_preview_get_type (void)
 static void
 gimp_tool_info_preview_class_init (GimpToolInfoPreviewClass *klass)
 {
-  GtkObjectClass   *object_class;
   GtkWidgetClass   *widget_class;
   GimpPreviewClass *preview_class;
 
-  object_class  = (GtkObjectClass *) klass;
-  widget_class  = (GtkWidgetClass *) klass;
-  preview_class = (GimpPreviewClass *) klass;
+  widget_class  = GTK_WIDGET_CLASS (klass);
+  preview_class = GIMP_PREVIEW_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_PREVIEW);
+  parent_class = g_type_class_peek_parent (klass);
 
   widget_class->state_changed = gimp_tool_info_preview_state_changed;
 

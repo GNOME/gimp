@@ -38,7 +38,6 @@
 
 static void     gimp_container_list_view_class_init   (GimpContainerListViewClass *klass);
 static void     gimp_container_list_view_init         (GimpContainerListView      *panel);
-static void     gimp_container_list_view_destroy      (GtkObject                  *object);
 
 static gpointer gimp_container_list_view_insert_item  (GimpContainerView      *view,
 						       GimpViewable           *viewable,
@@ -70,41 +69,39 @@ static GimpContainerViewClass *parent_class = NULL;
 GType
 gimp_container_list_view_get_type (void)
 {
-  static GType list_view_type = 0;
+  static GType view_type = 0;
 
-  if (! list_view_type)
+  if (! view_type)
     {
-      GtkTypeInfo list_view_info =
+      static const GTypeInfo view_info =
       {
-	"GimpContainerListView",
-	sizeof (GimpContainerListView),
-	sizeof (GimpContainerListViewClass),
-	(GtkClassInitFunc) gimp_container_list_view_class_init,
-	(GtkObjectInitFunc) gimp_container_list_view_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpContainerListViewClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_container_list_view_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpContainerListView),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_container_list_view_init,
       };
 
-      list_view_type = gtk_type_unique (GIMP_TYPE_CONTAINER_VIEW,
-					&list_view_info);
+      view_type = g_type_register_static (GIMP_TYPE_CONTAINER_VIEW,
+                                          "GimpContainerListView",
+                                          &view_info, 0);
     }
 
-  return list_view_type;
+  return view_type;
 }
 
 static void
 gimp_container_list_view_class_init (GimpContainerListViewClass *klass)
 {
-  GtkObjectClass         *object_class;
   GimpContainerViewClass *container_view_class;
 
-  object_class         = (GtkObjectClass *) klass;
-  container_view_class = (GimpContainerViewClass *) klass;
+  container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
   
   parent_class = g_type_class_peek_parent (klass);
-
-  object_class->destroy                  = gimp_container_list_view_destroy;
 
   container_view_class->insert_item      = gimp_container_list_view_insert_item;
   container_view_class->remove_item      = gimp_container_list_view_remove_item;
@@ -149,17 +146,6 @@ gimp_container_list_view_init (GimpContainerListView *list_view)
 			   G_OBJECT (list_view),
 			   0);
 
-}
-
-static void
-gimp_container_list_view_destroy (GtkObject *object)
-{
-  GimpContainerListView *list_view;
-
-  list_view = GIMP_CONTAINER_LIST_VIEW (object);
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 GtkWidget *

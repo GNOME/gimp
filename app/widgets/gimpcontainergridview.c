@@ -43,7 +43,6 @@
 
 static void     gimp_container_grid_view_class_init   (GimpContainerGridViewClass *klass);
 static void     gimp_container_grid_view_init         (GimpContainerGridView      *panel);
-static void     gimp_container_grid_view_destroy      (GtkObject                  *object);
 
 static gpointer gimp_container_grid_view_insert_item  (GimpContainerView      *view,
 						       GimpViewable           *viewable,
@@ -77,44 +76,42 @@ static GimpRGB  white_color;
 static GimpRGB  black_color;
 
 
-GtkType
+GType
 gimp_container_grid_view_get_type (void)
 {
-  static GtkType grid_view_type = 0;
+  static GType view_type = 0;
 
-  if (! grid_view_type)
+  if (! view_type)
     {
-      GtkTypeInfo grid_view_info =
+      static const GTypeInfo view_info =
       {
-	"GimpContainerGridView",
-	sizeof (GimpContainerGridView),
-	sizeof (GimpContainerGridViewClass),
-	(GtkClassInitFunc) gimp_container_grid_view_class_init,
-	(GtkObjectInitFunc) gimp_container_grid_view_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpContainerGridViewClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_container_grid_view_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpContainerGridView),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_container_grid_view_init,
       };
 
-      grid_view_type = gtk_type_unique (GIMP_TYPE_CONTAINER_VIEW,
-					&grid_view_info);
+      view_type = g_type_register_static (GIMP_TYPE_CONTAINER_VIEW,
+                                          "GimpContainerGridView",
+                                          &view_info, 0);
     }
 
-  return grid_view_type;
+  return view_type;
 }
 
 static void
 gimp_container_grid_view_class_init (GimpContainerGridViewClass *klass)
 {
-  GtkObjectClass         *object_class;
   GimpContainerViewClass *container_view_class;
 
-  object_class         = (GtkObjectClass *) klass;
-  container_view_class = (GimpContainerViewClass *) klass;
+  container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
   
-  parent_class = gtk_type_class (GIMP_TYPE_CONTAINER_VIEW);
-
-  object_class->destroy = gimp_container_grid_view_destroy;
+  parent_class = g_type_class_peek_parent (klass);
 
   container_view_class->insert_item      = gimp_container_grid_view_insert_item;
   container_view_class->remove_item      = gimp_container_grid_view_remove_item;
@@ -176,17 +173,6 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
                           GTK_CAN_FOCUS);
 
   GTK_WIDGET_SET_FLAGS (grid_view->wrap_box->parent, GTK_CAN_FOCUS);
-}
-
-static void
-gimp_container_grid_view_destroy (GtkObject *object)
-{
-  GimpContainerGridView *grid_view;
-
-  grid_view = GIMP_CONTAINER_GRID_VIEW (object);
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 GtkWidget *

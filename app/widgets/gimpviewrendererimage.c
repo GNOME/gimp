@@ -53,19 +53,22 @@ gimp_image_preview_get_type (void)
 
   if (! preview_type)
     {
-      GtkTypeInfo preview_info =
+      static const GTypeInfo preview_info =
       {
-	"GimpImagePreview",
-	sizeof (GimpImagePreview),
-	sizeof (GimpImagePreviewClass),
-	(GtkClassInitFunc) gimp_image_preview_class_init,
-	(GtkObjectInitFunc) gimp_image_preview_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpImagePreviewClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_image_preview_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpImagePreview),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_image_preview_init,
       };
 
-      preview_type = gtk_type_unique (GIMP_TYPE_PREVIEW, &preview_info);
+      preview_type = g_type_register_static (GIMP_TYPE_PREVIEW,
+                                             "GimpImagePreview",
+                                             &preview_info, 0);
     }
   
   return preview_type;
@@ -74,11 +77,9 @@ gimp_image_preview_get_type (void)
 static void
 gimp_image_preview_class_init (GimpImagePreviewClass *klass)
 {
-  GtkObjectClass   *object_class;
   GimpPreviewClass *preview_class;
 
-  object_class  = (GtkObjectClass *) klass;
-  preview_class = (GimpPreviewClass *) klass;
+  preview_class = GIMP_PREVIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 

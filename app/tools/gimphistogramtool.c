@@ -32,7 +32,6 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimphistogramview.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 
@@ -47,6 +46,32 @@
 
 #define TEXT_WIDTH       45
 #define GRADIENT_HEIGHT  15
+
+
+typedef struct _HistogramToolDialog HistogramToolDialog;
+
+struct _HistogramToolDialog
+{
+  GtkWidget         *shell;
+
+  GtkWidget         *info_labels[7];
+  GtkWidget         *channel_menu;
+  GimpHistogramView *histogram;
+  GimpHistogram     *hist;
+  GtkWidget         *gradient;
+
+  gdouble            mean;
+  gdouble            std_dev;
+  gdouble            median;
+  gdouble            pixels;
+  gdouble            count;
+  gdouble            percentile;
+
+  GimpDrawable      *drawable;
+  ImageMap          *image_map;
+  gint               channel;
+  gint               color;
+};
 
 
 /*  local function prototypes  */
@@ -72,6 +97,11 @@ static void   histogram_tool_gradient_draw    (GtkWidget           *gdisp,
 static void   histogram_tool_dialog_update    (HistogramToolDialog *htd,
 					       gint                 start,
 					       gint                 end);
+
+static void   histogram_tool_histogram_range  (GimpHistogramView   *view,
+                                               gint                 start,
+                                               gint                 end,
+                                               gpointer             data);
 
 
 /*  the histogram tool options  */
@@ -194,9 +224,9 @@ gimp_histogram_tool_initialize (GimpTool *tool,
 		     FALSE);
   gimp_histogram_calculate (histogram_dialog->hist, &PR, NULL);
 
-  histogram_widget_update (histogram_dialog->histogram,
-			   histogram_dialog->hist);
-  histogram_widget_range (histogram_dialog->histogram, 0, 255);
+  gimp_histogram_view_update (histogram_dialog->histogram,
+                              histogram_dialog->hist);
+  gimp_histogram_view_range (histogram_dialog->histogram, 0, 255);
 }
 
 static void
@@ -213,7 +243,8 @@ gimp_histogram_tool_control (GimpTool   *tool,
       break;
 
     case HALT:
-      histogram_dialog_hide ();
+      if (histogram_dialog)
+        histogram_tool_close_callback (NULL, (gpointer) histogram_dialog);
       break;
 
     default:
@@ -224,21 +255,14 @@ gimp_histogram_tool_control (GimpTool   *tool,
     GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
-void
-histogram_dialog_hide (void)
-{
-  if (histogram_dialog)
-    histogram_tool_close_callback (NULL, (gpointer) histogram_dialog);
-}
-
 
 /*  histogram_tool machinery  */
 
-void
-histogram_tool_histogram_range (HistogramWidget *widget,
-				gint             start,
-				gint             end,
-				gpointer         data)
+static void
+histogram_tool_histogram_range (GimpHistogramView *widget,
+				gint               start,
+				gint               end,
+				gpointer           data)
 {
   HistogramToolDialog *htd;
   gdouble              pixels;
@@ -392,7 +416,7 @@ histogram_tool_dialog_new (void)
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
-  htd->histogram = histogram_widget_new (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT);
+  htd->histogram = gimp_histogram_view_new (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT);
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET(htd->histogram));
 
   g_signal_connect (G_OBJECT (htd->histogram), "range_changed",
@@ -463,7 +487,7 @@ histogram_tool_close_callback (GtkWidget *widget,
 
   htd = (HistogramToolDialog *) data;
 
-  gimp_dialog_hide (htd->shell);
+  gtk_widget_hide (htd->shell);
 
   active_tool = tool_manager_get_active (the_gimp);
 
@@ -481,7 +505,7 @@ histogram_tool_channel_callback (GtkWidget *widget,
 
   gimp_menu_item_update (widget, &htd->channel);
 
-  histogram_widget_channel (htd->histogram, htd->channel);
+  gimp_histogram_view_channel (htd->histogram, htd->channel);
   histogram_tool_gradient_draw (htd->gradient, htd->channel);
 }
 

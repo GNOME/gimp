@@ -36,6 +36,7 @@ extern "C" {
 #define GIMP_IMAGE_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE_PREVIEW, GimpImagePreviewClass))
 #define GIMP_IS_IMAGE_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_IMAGE_PREVIEW))
 #define GIMP_IS_IMAGE_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE_PREVIEW))
+#define GIMP_IMAGE_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE_PREVIEW, GimpImagePreviewClass))
 
 
 typedef struct _GimpImagePreviewClass  GimpImagePreviewClass;

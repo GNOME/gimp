@@ -23,11 +23,7 @@
 
 #include <gtk/gtk.h>
 
-#include "core/core-types.h"
-
-#include "display/gimpdisplay.h"
-
-#include "widgets/gimpwidgets-utils.h"
+#include "gui-types.h"
 
 #include "menus.h"
 
@@ -50,20 +46,16 @@ file_dialog_show (GtkWidget *filesel)
 gboolean
 file_dialog_hide (GtkWidget *filesel)
 {
-  gimp_dialog_hide (filesel);
+  gtk_widget_hide (filesel);
   
   menus_set_sensitive ("<Toolbox>/File/Open...", TRUE);
   menus_set_sensitive ("<Image>/File/Open...", TRUE);
+  menus_set_sensitive ("<Image>/File/Save", TRUE);
+  menus_set_sensitive ("<Image>/File/Save as...", TRUE);
+  menus_set_sensitive ("<Image>/File/Save a Copy as...", TRUE);
 
-  if (gdisplay_active ())
-    {
-      menus_set_sensitive ("<Image>/File/Save", TRUE);
-      menus_set_sensitive ("<Image>/File/Save as...", TRUE);
-      menus_set_sensitive ("<Image>/File/Save a Copy as...", TRUE);
-    }
-
-  /*  return FALSE because we are used as "delete_event" handler  */
-  return FALSE;
+  /*  return TRUE because we are used as "delete_event" handler  */
+  return TRUE;
 }
 
 void

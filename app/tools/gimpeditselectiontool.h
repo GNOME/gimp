@@ -30,14 +30,14 @@ typedef enum
 
 
 void   init_edit_selection (GimpTool       *tool,
-                            GDisplay       *gdisp,
+                            GimpDisplay    *gdisp,
                             GdkEventButton *bevent,
                             EditType        edit_type);
 
 
 void   gimp_edit_selection_tool_arrow_key (GimpTool       *tool,
                                            GdkEventKey    *kevent,
-                                           GDisplay       *gdisp);
+                                           GimpDisplay    *gdisp);
 
 gboolean   gtkutil_compress_motion        (GtkWidget      *widget,
 					   gdouble        *lastmotion_x,

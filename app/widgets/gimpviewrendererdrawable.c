@@ -49,26 +49,29 @@ static GtkWidget * gimp_drawable_preview_create_popup (GimpPreview *preview);
 static GimpPreviewClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_drawable_preview_get_type (void)
 {
-  static GtkType preview_type = 0;
+  static GType preview_type = 0;
 
   if (! preview_type)
     {
-      GtkTypeInfo preview_info =
+      static const GTypeInfo preview_info =
       {
-	"GimpDrawablePreview",
-	sizeof (GimpDrawablePreview),
-	sizeof (GimpDrawablePreviewClass),
-	(GtkClassInitFunc) gimp_drawable_preview_class_init,
-	(GtkObjectInitFunc) gimp_drawable_preview_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpDrawablePreviewClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_drawable_preview_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpDrawablePreview),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_drawable_preview_init,
       };
 
-      preview_type = gtk_type_unique (GIMP_TYPE_PREVIEW, &preview_info);
+      preview_type = g_type_register_static (GIMP_TYPE_PREVIEW,
+                                             "GimpDrawablePreview",
+                                             &preview_info, 0);
     }
   
   return preview_type;
@@ -77,13 +80,11 @@ gimp_drawable_preview_get_type (void)
 static void
 gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
 {
-  GtkObjectClass   *object_class;
   GimpPreviewClass *preview_class;
 
-  object_class  = (GtkObjectClass *) klass;
-  preview_class = (GimpPreviewClass *) klass;
+  preview_class = GIMP_PREVIEW_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_PREVIEW);
+  parent_class = g_type_class_peek_parent (klass);
 
   preview_class->render       = gimp_drawable_preview_render;
   preview_class->get_size     = gimp_drawable_preview_get_size;

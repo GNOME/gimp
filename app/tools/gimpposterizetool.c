@@ -30,8 +30,6 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "widgets/gimpwidgets-utils.h"
-
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
@@ -77,6 +75,7 @@ static void   gimp_posterize_tool_control    (GimpTool   *tool,
 
 static PosterizeDialog * posterize_dialog_new    (void);
 
+static void   posterize_dialog_hide              (void);
 static void   posterize_preview                  (PosterizeDialog *pd);
 static void   posterize_reset_callback           (GtkWidget       *widget,
 						  gpointer         data);
@@ -232,13 +231,6 @@ gimp_posterize_tool_control (GimpTool   *tool,
     GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
-void
-posterize_dialog_hide (void)
-{
-  if (posterize_dialog)
-    posterize_cancel_callback (NULL, (gpointer) posterize_dialog);
-}
-
 /**********************/
 /*  Posterize dialog  */
 /**********************/
@@ -326,6 +318,13 @@ posterize_dialog_new (void)
 }
 
 static void
+posterize_dialog_hide (void)
+{
+  if (posterize_dialog)
+    posterize_cancel_callback (NULL, (gpointer) posterize_dialog);
+}
+
+static void
 posterize_preview (PosterizeDialog *pd)
 {
   GimpTool *active_tool;
@@ -365,7 +364,7 @@ posterize_ok_callback (GtkWidget *widget,
 
   pd = (PosterizeDialog *) data;
 
-  gimp_dialog_hide (pd->shell);
+  gtk_widget_hide (pd->shell);
 
   active_tool = tool_manager_get_active (the_gimp);
 
@@ -399,7 +398,7 @@ posterize_cancel_callback (GtkWidget *widget,
 
   pd = (PosterizeDialog *) data;
 
-  gimp_dialog_hide (pd->shell);
+  gtk_widget_hide (pd->shell);
 
   active_tool = tool_manager_get_active (the_gimp);
 

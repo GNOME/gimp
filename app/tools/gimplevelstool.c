@@ -40,7 +40,6 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimphistogramview.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -86,40 +85,40 @@ typedef struct _LevelsDialog LevelsDialog;
 
 struct _LevelsDialog
 {
-  GtkWidget       *shell;
+  GtkWidget         *shell;
 
-  GtkAdjustment   *low_input_data;
-  GtkAdjustment   *gamma_data;
-  GtkAdjustment   *high_input_data;
-  GtkAdjustment   *low_output_data;
-  GtkAdjustment   *high_output_data;
+  GtkAdjustment     *low_input_data;
+  GtkAdjustment     *gamma_data;
+  GtkAdjustment     *high_input_data;
+  GtkAdjustment     *low_output_data;
+  GtkAdjustment     *high_output_data;
 
-  GtkWidget       *input_levels_da[2];
-  GtkWidget       *output_levels_da[2];
-  GtkWidget       *channel_menu;
+  GtkWidget         *input_levels_da[2];
+  GtkWidget         *output_levels_da[2];
+  GtkWidget         *channel_menu;
 
-  HistogramWidget *histogram;
-  GimpHistogram   *hist;
+  GimpHistogramView *histogram;
+  GimpHistogram     *hist;
 
-  GimpDrawable   *drawable;
+  GimpDrawable      *drawable;
 
-  ImageMap       *image_map;
+  ImageMap          *image_map;
 
-  gint            color;
-  gint            channel;
-  gint            low_input[5];
-  gdouble         gamma[5];
-  gint            high_input[5];
-  gint            low_output[5];
-  gint            high_output[5];
-  gboolean        preview;
+  gint               color;
+  gint               channel;
+  gint               low_input[5];
+  gdouble            gamma[5];
+  gint               high_input[5];
+  gint               low_output[5];
+  gint               high_output[5];
+  gboolean           preview;
 
-  gint            active_slider;
-  gint            slider_pos[5];  /*  positions for the five sliders  */
+  gint               active_slider;
+  gint               slider_pos[5];  /*  positions for the five sliders  */
 
-  guchar          input[5][256]; /* this is used only by the gui */
+  guchar             input[5][256]; /* this is used only by the gui */
 
-  GimpLut        *lut;
+  GimpLut           *lut;
 };
 
 
@@ -136,6 +135,7 @@ static void   gimp_levels_tool_control    (GimpTool   *tool,
 
 static LevelsDialog * levels_dialog_new            (void);
 
+static void   levels_dialog_hide                   (void);
 static void   levels_calculate_transfers           (LevelsDialog  *ld);
 static void   levels_update                        (LevelsDialog  *ld,
 						    gint           channel);
@@ -333,8 +333,8 @@ gimp_levels_tool_initialize (GimpTool *tool,
 
   gimp_drawable_calculate_histogram (levels_dialog->drawable,
 				     levels_dialog->hist);
-  histogram_widget_update (levels_dialog->histogram, levels_dialog->hist);
-  histogram_widget_range (levels_dialog->histogram, -1, -1);
+  gimp_histogram_view_update (levels_dialog->histogram, levels_dialog->hist);
+  gimp_histogram_view_range (levels_dialog->histogram, -1, -1);
 }
 
 static void
@@ -360,13 +360,6 @@ gimp_levels_tool_control (GimpTool   *tool,
 
   if (GIMP_TOOL_CLASS (parent_class)->control)
     GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
-}
-
-void
-levels_dialog_hide (void)
-{
-  if (levels_dialog)
-    levels_cancel_callback (NULL, (gpointer) levels_dialog);
 }
 
 void
@@ -537,7 +530,7 @@ levels_dialog_new (void)
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
-  ld->histogram = histogram_widget_new (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT);
+  ld->histogram = gimp_histogram_view_new (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT);
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (ld->histogram));
 
   /* ignore button_events, since we don't want the user to be able to set the range */
@@ -719,6 +712,13 @@ levels_dialog_new (void)
   gtk_widget_show (ld->shell);
 
   return ld;
+}
+
+static void
+levels_dialog_hide (void)
+{
+  if (levels_dialog)
+    levels_cancel_callback (NULL, (gpointer) levels_dialog);
 }
 
 static void
@@ -988,18 +988,20 @@ levels_channel_callback (GtkWidget *widget,
 
   gimp_menu_item_update (widget, &ld->channel);
 
-  if(ld->color)
-    histogram_widget_channel (ld->histogram, ld->channel);
+  if (ld->color)
+    {
+      gimp_histogram_view_channel (ld->histogram, ld->channel);
+    }
   else
     {
-      if(ld->channel > 1) 
+      if (ld->channel > 1) 
 	{
-	  histogram_widget_channel (ld->histogram, 1);
+	  gimp_histogram_view_channel (ld->histogram, 1);
 	  ld->channel = 2;
 	}
       else
 	{
-	  histogram_widget_channel (ld->histogram, 0);
+	  gimp_histogram_view_channel (ld->histogram, 0);
 	  ld->channel = 1;
 	} 
     }
@@ -1093,7 +1095,7 @@ levels_ok_callback (GtkWidget *widget,
 
   ld = (LevelsDialog *) data;
 
-  gimp_dialog_hide (ld->shell);
+  gtk_widget_hide (ld->shell);
 
   active_tool->preserve = TRUE;
 
@@ -1126,7 +1128,7 @@ levels_cancel_callback (GtkWidget *widget,
 
   ld = (LevelsDialog *) data;
 
-  gimp_dialog_hide (ld->shell);
+  gtk_widget_hide (ld->shell);
 
   active_tool = tool_manager_get_active (the_gimp);
 
@@ -1610,7 +1612,7 @@ static void
 file_dialog_cancel_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  gimp_dialog_hide (file_dlg);
+  gtk_widget_hide (file_dlg);
 }
 
 static gboolean

@@ -86,7 +86,6 @@ void    gimp_hue_saturation_tool_register (Gimp *gimp);
 GType   gimp_hue_saturation_tool_get_type (void);
 
 void   hue_saturation_free                (void);
-void   hue_saturation_dialog_hide	  (void);
 void   hue_saturation                     (PixelRegion          *srcPR,
 					   PixelRegion          *destPR,
 					   void                 *data);

@@ -36,11 +36,11 @@ typedef struct _GimpMoveToolClass GimpMoveToolClass;
 
 struct _GimpMoveTool
 {
-  GimpTool   parent_instance;
+  GimpTool     parent_instance;
 
-  GimpLayer *layer;
-  GimpGuide *guide;
-  GDisplay  *disp;
+  GimpLayer   *layer;
+  GimpGuide   *guide;
+  GimpDisplay *disp;
 };
 
 struct _GimpMoveToolClass
@@ -49,14 +49,14 @@ struct _GimpMoveToolClass
 };
 
 
-void    gimp_move_tool_register     (Gimp     *gimp);
+void    gimp_move_tool_register     (Gimp        *gimp);
 
 GType   gimp_move_tool_get_type     (void);
 
-void    gimp_move_tool_start_hguide (GimpTool *tool,
-				     GDisplay *gdisp);
-void    gimp_move_tool_start_vguide (GimpTool *tool,
-				     GDisplay *gdisp);
+void    gimp_move_tool_start_hguide (GimpTool    *tool,
+				     GimpDisplay *gdisp);
+void    gimp_move_tool_start_vguide (GimpTool    *tool,
+				     GimpDisplay *gdisp);
 
 
 #endif  /*  __GIMP_MOVE_TOOL_H__  */

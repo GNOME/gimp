@@ -34,11 +34,6 @@
 #include "app_procs.h"
 
 
-#define return_if_no_display(gdisp) \
-        gdisp = gdisplay_active (); \
-        if (!gdisp) return
-
-
 void
 tools_default_colors_cmd_callback (GtkWidget *widget,
 				   gpointer   data)
@@ -89,12 +84,12 @@ tools_select_cmd_callback (GtkWidget *widget,
   GtkType       tool_type;
   GimpToolInfo *tool_info;
   GimpTool     *active_tool;
-  GDisplay     *gdisp;
+  GimpDisplay  *gdisp;
 
   tool_type = (GtkType) action;
 
   tool_info = tool_manager_get_info_by_type (the_gimp, tool_type);
-  gdisp     = gdisplay_active ();
+  gdisp     = gimp_context_get_display (gimp_get_user_context (the_gimp));
 
   gimp_context_set_tool (gimp_get_user_context (the_gimp), tool_info);
 

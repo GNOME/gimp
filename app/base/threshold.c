@@ -34,7 +34,6 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimphistogramview.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -71,6 +70,7 @@ static void   gimp_threshold_tool_control    (GimpTool   *tool,
 
 static ThresholdDialog * threshold_dialog_new (void);
 
+static void   threshold_dialog_hide           (void);
 static void   threshold_update                (ThresholdDialog *td,
 					       gint             update);
 static void   threshold_preview               (ThresholdDialog *td);
@@ -87,13 +87,13 @@ static void   threshold_low_threshold_adjustment_update  (GtkAdjustment *adj,
 static void   threshold_high_threshold_adjustment_update (GtkAdjustment *adj,
 							  gpointer       data);
 
-static void   threshold                       (PixelRegion     *,
-					       PixelRegion     *,
-					       gpointer         );
-static void   threshold_histogram_range       (HistogramWidget *,
-					       gint             ,
-					       gint             ,
-					       gpointer         );
+static void   threshold                       (PixelRegion       *,
+					       PixelRegion       *,
+					       gpointer           );
+static void   threshold_histogram_range       (GimpHistogramView *,
+					       gint               ,
+					       gint               ,
+					       gpointer           );
 
 
 /*  the threshold tool options  */
@@ -215,8 +215,8 @@ gimp_threshold_tool_initialize (GimpTool *tool,
   g_signal_handlers_block_by_func (G_OBJECT (threshold_dialog->histogram),
                                    threshold_histogram_range,
                                    threshold_dialog);
-  histogram_widget_update (threshold_dialog->histogram,
-			   threshold_dialog->hist);
+  gimp_histogram_view_update (threshold_dialog->histogram,
+                              threshold_dialog->hist);
   g_signal_handlers_unblock_by_func (G_OBJECT (threshold_dialog->histogram),
                                      threshold_histogram_range,
                                      threshold_dialog);
@@ -318,13 +318,6 @@ threshold (PixelRegion *srcPR,
     }
 }
 
-void
-threshold_dialog_hide (void)
-{
-  if (threshold_dialog)
-    threshold_cancel_callback (NULL, (gpointer) threshold_dialog);
-}
-  
 /**********************/
 /*  Threshold dialog  */
 /**********************/
@@ -413,7 +406,7 @@ threshold_dialog_new (void)
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
   gtk_widget_show (frame);
 
-  td->histogram = histogram_widget_new (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT);
+  td->histogram = gimp_histogram_view_new (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT);
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (td->histogram));
   gtk_widget_show (GTK_WIDGET (td->histogram));
 
@@ -443,6 +436,13 @@ threshold_dialog_new (void)
 }
 
 static void
+threshold_dialog_hide (void)
+{
+  if (threshold_dialog)
+    threshold_cancel_callback (NULL, (gpointer) threshold_dialog);
+}
+  
+static void
 threshold_update (ThresholdDialog *td,
 		  gint             update)
 {
@@ -456,9 +456,9 @@ threshold_update (ThresholdDialog *td,
     }
   if (update & HISTOGRAM)
     {
-      histogram_widget_range (td->histogram,
-			      td->low_threshold,
-			      td->high_threshold);
+      gimp_histogram_view_range (td->histogram,
+                                 td->low_threshold,
+                                 td->high_threshold);
     }
 }
 
@@ -506,14 +506,14 @@ threshold_ok_callback (GtkWidget *widget,
 
   td = (ThresholdDialog *) data;
 
-  gimp_dialog_hide (td->shell);
+  gtk_widget_hide (td->shell);
 
   active_tool = tool_manager_get_active (the_gimp);
 
   active_tool->preserve = TRUE;
 
   if (!td->preview)
-    image_map_apply (td->image_map, threshold, (void *) td);
+    image_map_apply (td->image_map, threshold, (gpointer) td);
 
   if (td->image_map)
     image_map_commit (td->image_map);
@@ -535,7 +535,7 @@ threshold_cancel_callback (GtkWidget *widget,
 
   td = (ThresholdDialog *) data;
 
-  gimp_dialog_hide (td->shell);
+  gtk_widget_hide (td->shell);
 
   active_tool = tool_manager_get_active (the_gimp);
 
@@ -621,10 +621,10 @@ threshold_high_threshold_adjustment_update (GtkAdjustment *adjustment,
 }
 
 static void
-threshold_histogram_range (HistogramWidget *widget,
-			   gint             start,
-			   gint             end,
-			   gpointer         data)
+threshold_histogram_range (GimpHistogramView *widget,
+			   gint               start,
+			   gint               end,
+			   gpointer           data)
 {
   ThresholdDialog *td;
 

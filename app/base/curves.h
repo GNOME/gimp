@@ -90,7 +90,6 @@ void    gimp_curves_tool_register (Gimp *gimp);
 GType   gimp_curves_tool_get_type (void);
 
 
-void    curves_dialog_hide     (void);
 void    curves_free            (void);
 gfloat  curves_lut_func        (CurvesDialog *cd,
 				gint          nchannels,

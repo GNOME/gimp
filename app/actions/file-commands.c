@@ -24,6 +24,8 @@
 
 #include "gui-types.h"
 
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpobject.h"
 
@@ -49,7 +51,7 @@
 #define REVERT_DATA_KEY "revert-confirm-dialog"
 
 #define return_if_no_display(gdisp) \
-        gdisp = gdisplay_active (); \
+        gdisp = gimp_context_get_display (gimp_get_user_context (the_gimp)); \
         if (!gdisp) return
 
 
@@ -67,15 +69,15 @@ file_new_cmd_callback (GtkWidget *widget,
 		       gpointer   data,
 		       guint      action)
 {
-  GDisplay  *gdisp;
-  GimpImage *gimage = NULL;
+  GimpDisplay *gdisp;
+  GimpImage   *gimage = NULL;
 
   /*  Before we try to determine the responsible gdisplay,
    *  make sure this wasn't called from the toolbox
    */
   if (action)
     {
-      gdisp = gdisplay_active ();
+      gdisp = gimp_context_get_display (gimp_get_user_context (the_gimp));
 
       if (gdisp)
         gimage = gdisp->gimage;
@@ -135,7 +137,7 @@ void
 file_save_cmd_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
   return_if_no_display (gdisp);
 
   if (! gimp_image_active_drawable (gdisp->gimage))
@@ -182,7 +184,7 @@ void
 file_save_as_cmd_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
   return_if_no_display (gdisp);
 
   file_save_dialog_show (gdisp->gimage);
@@ -192,7 +194,7 @@ void
 file_save_a_copy_as_cmd_callback (GtkWidget *widget,
 				  gpointer   data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
   return_if_no_display (gdisp);
 
   file_save_a_copy_dialog_show (gdisp->gimage);
@@ -202,7 +204,7 @@ void
 file_revert_cmd_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  GDisplay    *gdisp;
+  GimpDisplay *gdisp;
   GtkWidget   *query_box;
   const gchar *filename;
 
@@ -260,7 +262,7 @@ void
 file_close_cmd_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
   return_if_no_display (gdisp);
 
   gdisplay_close_window (gdisp, FALSE);

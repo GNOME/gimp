@@ -43,10 +43,8 @@
 #include "core/gimpimage.h"
 #include "tools/gimpcolorbalancetool.h"
 #include "tools/gimpcurvestool.h"
-#include "tools/gimphistogramtool.h"
 #include "tools/gimphuesaturationtool.h"
 #include "tools/gimpthresholdtool.h"
-#include "widgets/gimphistogramview.h"
 
 static ProcRecord brightness_contrast_proc;
 static ProcRecord levels_proc;
@@ -923,9 +921,15 @@ histogram_invoker (Gimp     *gimp,
   gint32 channel;
   gint32 start_range;
   gint32 end_range;
+  gdouble mean = 0;
+  gdouble std_dev = 0;
+  gdouble median = 0;
+  gdouble pixels = 0;
+  gdouble count = 0;
+  gdouble percentile = 0;
   PixelRegion srcPR, maskPR;
   int x1, y1, x2, y2;
-  HistogramToolDialog htd;
+  GimpHistogram *histogram;
   int off_x, off_y;
   gboolean no_mask;
   GimpChannel *mask;
@@ -953,17 +957,6 @@ histogram_invoker (Gimp     *gimp,
 	success = FALSE;
       else
 	{
-	  htd.shell = NULL;
-	  htd.channel = channel;
-	  htd.drawable = drawable;
-	  htd.color = gimp_drawable_is_rgb (drawable);
-	  htd.histogram = histogram_widget_new (HISTOGRAM_WIDTH,
-						HISTOGRAM_HEIGHT);
-    
-	  g_signal_connect (G_OBJECT (htd.histogram), "range_changed",
-			    G_CALLBACK (histogram_tool_histogram_range),
-			    (gpointer) &htd);
-    
 	  /* The information collection should occur only within selection bounds */
 	  no_mask = (gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) == FALSE);
 	  gimp_drawable_offsets (drawable, &off_x, &off_y);
@@ -973,20 +966,30 @@ histogram_invoker (Gimp     *gimp,
 			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
     
 	  /*  Configure the mask from the gimage's selection mask */
-	  mask = gimp_image_get_mask (gimp_drawable_gimage (GIMP_DRAWABLE (drawable)));
-	  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE(mask)),
+	  mask = gimp_image_get_mask (gimp_drawable_gimage (drawable));
+	  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
 			     x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
     
 	  /* Apply the image transformation to the pixels */
-	  htd.hist = gimp_histogram_new ();
+	  histogram = gimp_histogram_new ();
 	  if (no_mask)
-	    gimp_histogram_calculate (htd.hist, &srcPR, NULL);
+	    gimp_histogram_calculate (histogram, &srcPR, NULL);
 	  else
-	    gimp_histogram_calculate (htd.hist, &srcPR, &maskPR);
+	    gimp_histogram_calculate (histogram, &srcPR, &maskPR);
     
 	  /* Calculate the statistics */
-	  histogram_tool_histogram_range (htd.histogram, start_range, end_range,
-					  &htd);
+    
+	  mean       = gimp_histogram_get_mean (histogram, channel,
+						 start_range, end_range);
+	  std_dev    = gimp_histogram_get_std_dev (histogram, channel,
+						   start_range, end_range);
+	  median     = gimp_histogram_get_median (histogram, channel,
+						  start_range, end_range);
+	  pixels     = gimp_histogram_get_count (histogram, 0, 255);
+	  count      = gimp_histogram_get_count (histogram, start_range, end_range);
+	  percentile = count / pixels;
+    
+	  gimp_histogram_free (histogram);
 	}
     }
 
@@ -994,12 +997,12 @@ histogram_invoker (Gimp     *gimp,
 
   if (success)
     {
-      return_args[1].value.pdb_float = htd.mean;
-      return_args[2].value.pdb_float = htd.std_dev;
-      return_args[3].value.pdb_float = htd.median;
-      return_args[4].value.pdb_float = htd.pixels;
-      return_args[5].value.pdb_float = htd.count;
-      return_args[6].value.pdb_float = htd.percentile;
+      return_args[1].value.pdb_float = mean;
+      return_args[2].value.pdb_float = std_dev;
+      return_args[3].value.pdb_float = median;
+      return_args[4].value.pdb_float = pixels;
+      return_args[5].value.pdb_float = count;
+      return_args[6].value.pdb_float = percentile;
     }
 
   return return_args;

@@ -48,6 +48,7 @@
 #include "tools/gimpmovetool.h"
 #include "tools/tool_manager.h"
 
+#include "widgets/gimpcursor.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -102,7 +103,7 @@ gdisplay_check_device_cursor (GimpDisplay *gdisp)
 {
   GList *list;
 
-  /*  gdk_input_list_devices returns an internal list, so we shouldn't
+  /*  gdk_devices_list() returns an internal list, so we shouldn't
    *  free it afterwards
    */
   for (list = gdk_devices_list (); list; list = g_list_next (list))
@@ -182,13 +183,15 @@ gdisplay_canvas_events (GtkWidget   *canvas,
   GdkEventButton  *bevent;
   GdkEventScroll  *sevent;
   GdkEventKey     *kevent;
-  gdouble          tx            = 0;
-  gdouble          ty            = 0;
-  guint            state         = 0;
-  gint             return_val    = FALSE;
-  static gboolean  scrolled      = FALSE;
-  static guint     key_signal_id = 0;
-  gboolean         update_cursor = FALSE;
+  gdouble          tx             = 0;
+  gdouble          ty             = 0;
+  guint            state          = 0;
+  gint             return_val     = FALSE;
+  static gboolean  scrolling      = FALSE;
+  static gint      scroll_start_x = 0;
+  static gint      scroll_start_y = 0;
+  static guint     key_signal_id  = 0;
+  gboolean         update_cursor  = FALSE;
 
   if (! canvas->window)
     return FALSE;
@@ -335,10 +338,23 @@ gdisplay_canvas_events (GtkWidget   *canvas,
 	  break;
 
 	case 2:
-	  state |= GDK_BUTTON2_MASK;
-	  scrolled = TRUE;
-	  gtk_grab_add (canvas);
-	  start_grab_and_scroll (gdisp, bevent);
+          {
+            GdkCursor *cursor;
+
+            state |= GDK_BUTTON2_MASK;
+
+            scrolling      = TRUE;
+            scroll_start_x = bevent->x + gdisp->offset_x;
+            scroll_start_y = bevent->y + gdisp->offset_y;
+
+            gtk_grab_add (canvas);
+
+            cursor = gimp_cursor_new (GDK_FLEUR,
+                                      GIMP_TOOL_CURSOR_NONE,
+                                      GIMP_CURSOR_MODIFIER_NONE);
+            gdk_window_set_cursor (gdisp->canvas->window, cursor);
+            gdk_cursor_unref (cursor);
+          }
 	  break;
 
 	case 3:
@@ -402,9 +418,13 @@ gdisplay_canvas_events (GtkWidget   *canvas,
 
 	case 2:
 	  state &= ~GDK_BUTTON2_MASK;
-	  scrolled = FALSE;
+	  scrolling = FALSE;
 	  gtk_grab_remove (canvas);
-	  end_grab_and_scroll (gdisp, bevent);
+          gdisplay_real_install_tool_cursor (gdisp,
+                                             gdisp->current_cursor,
+                                             gdisp->tool_cursor,
+                                             GIMP_CURSOR_MODIFIER_NONE,
+                                             TRUE);
 	  break;
 
 	case 3:
@@ -503,7 +523,39 @@ gdisplay_canvas_events (GtkWidget   *canvas,
 		  if (mevent->x < 0 || mevent->y < 0 ||
 		      mevent->x > gdisp->disp_width ||
 		      mevent->y > gdisp->disp_height)
-		    scroll_to_pointer_position (gdisp, mevent);
+                    {
+                      gdouble child_x, child_y;
+                      gint    off_x, off_y;
+
+                      off_x = off_y = 0;
+
+                      /*  The cases for scrolling  */
+                      if (mevent->x < 0)
+                        off_x = mevent->x;
+                      else if (mevent->x > gdisp->disp_width)
+                        off_x = mevent->x - gdisp->disp_width;
+
+                      if (mevent->y < 0)
+                        off_y = mevent->y;
+                      else if (mevent->y > gdisp->disp_height)
+                        off_y = mevent->y - gdisp->disp_height;
+
+                      if (gimp_display_scroll (gdisp, off_x, off_y))
+                        {
+#ifdef __GNUC__
+#warning FIXME: replace gdk_input_window_get_pointer()
+#endif
+#if 0
+                          gdk_input_window_get_pointer (gdisp->canvas->window, mevent->deviceid,
+                                                        &child_x, &child_y, 
+                                                        NULL, NULL, NULL, NULL);
+
+                          if (child_x == mevent->x && child_y == mevent->y)
+                            /*  Put this event back on the queue -- so it keeps scrolling */
+                            gdk_event_put ((GdkEvent *) mevent);
+#endif
+                        }
+                    }
 		}
 
 	      if (active_tool->auto_snap_to)
@@ -517,9 +569,11 @@ gdisplay_canvas_events (GtkWidget   *canvas,
 	      gimp_tool_motion (active_tool, mevent, gdisp);
 	    }
 	}
-      else if ((mevent->state & GDK_BUTTON2_MASK) && scrolled)
+      else if ((mevent->state & GDK_BUTTON2_MASK) && scrolling)
 	{
-	  grab_and_scroll (gdisp, mevent);
+          gimp_display_scroll (gdisp,
+                               scroll_start_x - mevent->x - gdisp->offset_x,
+                               scroll_start_y - mevent->y - gdisp->offset_y);
 	}
 
       if (/* Should we have a tool... */

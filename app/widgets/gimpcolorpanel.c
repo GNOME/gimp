@@ -42,6 +42,7 @@ struct _GimpColorPanel
 /*  local function prototypes  */
 static void   gimp_color_panel_class_init      (GimpColorPanelClass *klass);
 static void   gimp_color_panel_init            (GimpColorPanel      *panel);
+
 static void   gimp_color_panel_destroy         (GtkObject           *object);
 static void   gimp_color_panel_color_changed   (GimpColorButton     *button);
 static void   gimp_color_panel_clicked         (GtkButton           *button);
@@ -55,26 +56,29 @@ static void   gimp_color_panel_select_callback (ColorNotebook       *notebook,
 static GimpColorButtonClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_color_panel_get_type (void)
 {
-  static GtkType panel_type = 0;
+  static GType panel_type = 0;
 
-  if (!panel_type)
+  if (! panel_type)
     {
-      GtkTypeInfo panel_info =
+      static const GTypeInfo panel_info =
       {
-	"GimpColorPanel",
-	sizeof (GimpColorPanel),
-	sizeof (GimpColorPanelClass),
-	(GtkClassInitFunc) gimp_color_panel_class_init,
-	(GtkObjectInitFunc) gimp_color_panel_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpColorPanelClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_color_panel_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpColorPanel),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_color_panel_init,
       };
 
-      panel_type = gtk_type_unique (GIMP_TYPE_COLOR_BUTTON, &panel_info);
+      panel_type = g_type_register_static (GIMP_TYPE_COLOR_BUTTON,
+                                           "GimpColorPanel",
+                                           &panel_info, 0);
     }
   
   return panel_type;
@@ -87,11 +91,11 @@ gimp_color_panel_class_init (GimpColorPanelClass *klass)
   GtkButtonClass       *button_class;
   GimpColorButtonClass *color_button_class;
 
-  object_class       = (GtkObjectClass *) klass;
-  button_class       = (GtkButtonClass *) klass;
-  color_button_class = (GimpColorButtonClass *) klass;
+  object_class       = GTK_OBJECT_CLASS (klass);
+  button_class       = GTK_BUTTON_CLASS (klass);
+  color_button_class = GIMP_COLOR_BUTTON_CLASS (klass);
   
-  parent_class = gtk_type_class (GIMP_TYPE_COLOR_BUTTON);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy             = gimp_color_panel_destroy;
   button_class->clicked             = gimp_color_panel_clicked;
@@ -110,7 +114,6 @@ gimp_color_panel_destroy (GtkObject *object)
 {
   GimpColorPanel *panel;
 
-  g_return_if_fail (object != NULL);
   g_return_if_fail (GIMP_IS_COLOR_PANEL (object));
   
   panel = GIMP_COLOR_PANEL (object);
@@ -121,7 +124,7 @@ gimp_color_panel_destroy (GtkObject *object)
       color_notebook_free (panel->color_notebook);
       panel->color_notebook = NULL;
     }
-  
+
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }

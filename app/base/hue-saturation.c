@@ -32,8 +32,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
-#include "widgets/gimpwidgets-utils.h"
-
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
@@ -74,6 +72,7 @@ static void   gimp_hue_saturation_tool_control    (GimpTool   *tool,
 
 static HueSaturationDialog * hue_saturation_dialog_new (void);
 
+static void   hue_saturation_dialog_hide             (void);
 static void   hue_saturation_update                  (HueSaturationDialog *hsd,
 						      gint);
 static void   hue_saturation_preview                 (HueSaturationDialog *hsd);
@@ -377,13 +376,6 @@ hue_saturation (PixelRegion *srcPR,
 /*  hue saturation action functions  */
 
 void
-hue_saturation_dialog_hide (void)
-{
-  if (hue_saturation_dialog)
-    hue_saturation_cancel_callback (NULL, (gpointer) hue_saturation_dialog);
-} 
-  
-void
 hue_saturation_free (void)
 {
   GimpTool *active_tool;
@@ -661,6 +653,13 @@ hue_saturation_dialog_new (void)
 }
 
 static void
+hue_saturation_dialog_hide (void)
+{
+  if (hue_saturation_dialog)
+    hue_saturation_cancel_callback (NULL, (gpointer) hue_saturation_dialog);
+} 
+  
+static void
 hue_saturation_update (HueSaturationDialog *hsd,
 		       gint                 update)
 {
@@ -758,7 +757,7 @@ hue_saturation_ok_callback (GtkWidget *widget,
 
   hsd = (HueSaturationDialog *) data;
 
-  gimp_dialog_hide (hsd->shell);
+  gtk_widget_hide (hsd->shell);
 
   active_tool = tool_manager_get_active (the_gimp);
 
@@ -787,7 +786,7 @@ hue_saturation_cancel_callback (GtkWidget *widget,
 
   hsd = (HueSaturationDialog *) data;
 
-  gimp_dialog_hide (hsd->shell);
+  gtk_widget_hide (hsd->shell);
 
   active_tool = tool_manager_get_active (the_gimp);
 

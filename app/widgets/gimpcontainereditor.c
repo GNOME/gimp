@@ -39,8 +39,6 @@
 static void   gimp_container_editor_class_init (GimpContainerEditorClass *klass);
 static void   gimp_container_editor_init       (GimpContainerEditor      *view);
 
-static void   gimp_container_editor_destroy    (GtkObject                *object);
-
 static void   gimp_container_editor_select_item      (GtkWidget           *widget,
 						      GimpViewable        *viewable,
 						      gpointer             insert_data,
@@ -67,19 +65,22 @@ gimp_container_editor_get_type (void)
 
   if (! view_type)
     {
-      GtkTypeInfo view_info =
+      static const GTypeInfo view_info =
       {
-	"GimpContainerEditor",
-	sizeof (GimpContainerEditor),
-	sizeof (GimpContainerEditorClass),
-	(GtkClassInitFunc) gimp_container_editor_class_init,
-	(GtkObjectInitFunc) gimp_container_editor_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpContainerEditorClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_container_editor_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpContainerEditor),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_container_editor_init,
       };
 
-      view_type = gtk_type_unique (GTK_TYPE_VBOX, &view_info);
+      view_type = g_type_register_static (GTK_TYPE_VBOX,
+                                          "GimpContainerEditor",
+                                          &view_info, 0);
     }
 
   return view_type;
@@ -88,15 +89,7 @@ gimp_container_editor_get_type (void)
 static void
 gimp_container_editor_class_init (GimpContainerEditorClass *klass)
 {
-  GtkObjectClass *object_class;
-  GtkWidgetClass *widget_class;
-
-  object_class = (GtkObjectClass *) klass;
-  widget_class = (GtkWidgetClass *) klass;
-
   parent_class = g_type_class_peek_parent (klass);
-
-  object_class->destroy = gimp_container_editor_destroy;
 
   klass->select_item    = NULL;
   klass->activate_item  = NULL;
@@ -108,17 +101,6 @@ gimp_container_editor_init (GimpContainerEditor *view)
 {
   view->context_func = NULL;
   view->view         = NULL;
-}
-
-static void
-gimp_container_editor_destroy (GtkObject *object)
-{
-  GimpContainerEditor *editor;
-
-  editor = GIMP_CONTAINER_EDITOR (object);
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 gboolean

@@ -58,19 +58,22 @@ gimp_menu_item_get_type (void)
 
   if (!menu_item_type)
     {
-      static const GtkTypeInfo menu_item_info =
+      static const GTypeInfo menu_item_info =
       {
-	"GimpMenuItem",
-	sizeof (GimpMenuItem),
-	sizeof (GimpMenuItemClass),
-	(GtkClassInitFunc) gimp_menu_item_class_init,
-	(GtkObjectInitFunc) gimp_menu_item_init,
-	/* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+        sizeof (GimpMenuItemClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_menu_item_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpMenuItem),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_menu_item_init,
       };
 
-      menu_item_type = gtk_type_unique (GTK_TYPE_MENU_ITEM, &menu_item_info);
+      menu_item_type = g_type_register_static (GTK_TYPE_MENU_ITEM,
+                                               "GimpMenuItem",
+                                               &menu_item_info, 0);
     }
 
   return menu_item_type;
@@ -129,6 +132,7 @@ gimp_menu_item_real_set_viewable (GimpMenuItem *menu_item,
 {
   menu_item->preview = gimp_preview_new (viewable, menu_item->preview_size,
                                          1, FALSE);
+  gtk_widget_set_usize (menu_item->preview, menu_item->preview_size, -1);
   gtk_box_pack_start (GTK_BOX (menu_item->hbox), menu_item->preview,
                       FALSE, FALSE, 0);
   gtk_widget_show (menu_item->preview);

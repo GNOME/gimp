@@ -50,7 +50,4 @@ void    gimp_posterize_tool_register (Gimp *gimp);
 GType   gimp_posterize_tool_get_type (void);
 
 
-void    posterize_dialog_hide (void);
-
-
 #endif  /*  __GIMP_POSTERIZE_TOOL_H__  */

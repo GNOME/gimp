@@ -31,8 +31,6 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "widgets/gimpwidgets-utils.h"
-
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
@@ -90,6 +88,7 @@ static void   gimp_brightness_contrast_tool_control    (GimpTool   *tool,
 
 static BrightnessContrastDialog * brightness_contrast_dialog_new (void);
 
+static void   brightness_contrast_dialog_hide     (void);
 static void   brightness_contrast_update          (BrightnessContrastDialog *bcd,
 						   gint                      update);
 static void   brightness_contrast_preview         (BrightnessContrastDialog *bcd);
@@ -248,14 +247,6 @@ gimp_brightness_contrast_tool_control (GimpTool   *tool,
     GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
-void
-brightness_contrast_dialog_hide (void)
-{
-  if (brightness_contrast_dialog)
-    brightness_contrast_cancel_callback (NULL,
-	                                 (gpointer) brightness_contrast_dialog);
-}
-
 /********************************/
 /*  Brightness Contrast dialog  */
 /********************************/
@@ -390,6 +381,14 @@ brightness_contrast_dialog_new (void)
 }
 
 static void
+brightness_contrast_dialog_hide (void)
+{
+  if (brightness_contrast_dialog)
+    brightness_contrast_cancel_callback (NULL,
+	                                 (gpointer) brightness_contrast_dialog);
+}
+
+static void
 brightness_contrast_update (BrightnessContrastDialog *bcd,
 			    gint                      update)
 {
@@ -449,7 +448,7 @@ brightness_contrast_ok_callback (GtkWidget *widget,
 
   bcd = (BrightnessContrastDialog *) data;
 
-  gimp_dialog_hide (bcd->shell);
+  gtk_widget_hide (bcd->shell);
 
   active_tool = tool_manager_get_active (the_gimp);
 
@@ -484,7 +483,7 @@ brightness_contrast_cancel_callback (GtkWidget *widget,
 
   bcd = (BrightnessContrastDialog *) data;
 
-  gimp_dialog_hide (bcd->shell);
+  gtk_widget_hide (bcd->shell);
 
   active_tool = tool_manager_get_active (the_gimp);
 

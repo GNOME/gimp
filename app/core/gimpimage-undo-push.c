@@ -36,6 +36,7 @@
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
 #include "core/gimpcoreconfig.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
@@ -388,13 +389,13 @@ pop_stack (GimpImage  *gimage,
 	   GSList    **unstack_ptr,
 	   UndoState   state)
 {
-  Undo     *object;
-  GSList   *stack;
-  GSList   *tmp;
-  gint      status = 0;
-  gint      in_group = 0;
-  gint      x, y;
-  GDisplay *gdisp;
+  Undo        *object;
+  GSList      *stack;
+  GSList      *tmp;
+  gint         status = 0;
+  gint         in_group = 0;
+  gint         x, y;
+  GimpDisplay *gdisp;
 
   /*  Keep popping until we pop a valid object
    *  or get to the end of a group if we're in one
@@ -448,7 +449,8 @@ pop_stack (GimpImage  *gimage,
       if (status && !in_group)
 	{
 	  /*  Flush any image updates and displays  */
-	  gdisp = gdisplay_active();
+	  gdisp = gimp_context_get_display (gimp_get_user_context (the_gimp));
+
 	  if (gdisp != NULL)
 	    {
 	      if (gdisp->disp_xoffset || gdisp->disp_yoffset)

@@ -42,7 +42,6 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimpdnd.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -961,10 +960,6 @@ by_color_select_dialog_new (void)
   gtk_widget_show (hbox);
   gtk_widget_show (bcd->shell);
 
-  g_signal_connect_swapped (G_OBJECT (bcd->shell), "unmap_event",
-			    G_CALLBACK (gimp_dialog_hide), 
-			    bcd->shell);
-
   return bcd;
 }
 
@@ -1216,7 +1211,7 @@ by_color_select_close_callback (GtkWidget *widget,
 
   bcd = (ByColorDialog *) data;
   
-  gimp_dialog_hide (bcd->shell);
+  gtk_widget_hide (bcd->shell);
 
   /* if (bcd->gimage && gimp_container_have (image_context,
    * 					  GIMP_OBJECT (bcd->gimage)))

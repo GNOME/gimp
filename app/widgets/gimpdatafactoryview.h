@@ -34,6 +34,7 @@ typedef void (* GimpDataEditFunc) (GimpData *data);
 #define GIMP_DATA_FACTORY_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DATA_FACTORY_VIEW, GimpDataFactoryViewClass))
 #define GIMP_IS_DATA_FACTORY_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DATA_FACTORY_VIEW))
 #define GIMP_IS_DATA_FACTORY_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DATA_FACTORY_VIEW))
+#define GIMP_DATA_FACTORY_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DATA_FACTORY_VIEW, GimpDataFactoryViewClass))
 
 
 typedef struct _GimpDataFactoryViewClass  GimpDataFactoryViewClass;
@@ -59,7 +60,7 @@ struct _GimpDataFactoryViewClass
 };
 
 
-GtkType     gimp_data_factory_view_get_type  (void);
+GType       gimp_data_factory_view_get_type  (void);
 
 GtkWidget * gimp_data_factory_view_new       (GimpViewType              view_type,
 					      GimpDataFactory          *factory,

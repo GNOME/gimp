@@ -53,8 +53,8 @@ void   paths_dialog_destroy_cb                    (GtkObject *widget,
 
 /* EEEK */
 
-void   paths_newpoint_current       (GimpBezierSelectTool *, GDisplay *);
-void   paths_first_button_press     (GimpBezierSelectTool *, GDisplay *);
+void   paths_newpoint_current       (GimpBezierSelectTool *, GimpDisplay *);
+void   paths_first_button_press     (GimpBezierSelectTool *, GimpDisplay *);
 void   paths_new_bezier_select_tool (void);
 Path * paths_get_bzpaths            (void); 
 void   paths_set_bzpaths            (GimpImage *, Path *);

@@ -26,8 +26,6 @@
 
 #include "core/gimpimage.h"
 
-#include "widgets/gimpcursor.h"
-
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
@@ -39,94 +37,6 @@
 #include "gimprc.h"
 #include "nav_window.h"
 
-
-/*  This is the delay before dithering begins
- *  for example, after an operation such as scrolling
- */
-#define DITHER_DELAY 250  /*  milliseconds  */
-
-/*  STATIC variables  */
-/*  These are the values of the initial pointer grab   */
-static gint startx, starty;
-
-void
-start_grab_and_scroll (GimpDisplay    *gdisp,
-		       GdkEventButton *bevent)
-{
-  GdkCursor *cursor;
-
-  startx = bevent->x + gdisp->offset_x;
-  starty = bevent->y + gdisp->offset_y;
-
-  cursor = gimp_cursor_new (GDK_FLEUR,
-			    GIMP_TOOL_CURSOR_NONE,
-			    GIMP_CURSOR_MODIFIER_NONE);
-  gdk_window_set_cursor (gdisp->canvas->window, cursor);
-  gdk_cursor_unref (cursor);
-}
-
-
-void
-end_grab_and_scroll (GimpDisplay    *gdisp,
-		     GdkEventButton *bevent)
-{
-  gdisplay_real_install_tool_cursor (gdisp,
-				     gdisp->current_cursor,
-				     gdisp->tool_cursor,
-				     GIMP_CURSOR_MODIFIER_NONE,
-				     TRUE);
-}
-
-
-void
-grab_and_scroll (GimpDisplay    *gdisp,
-		 GdkEventMotion *mevent)
-{
-  if (mevent && mevent->window != gdisp->canvas->window)
-    return;
-
-  gimp_display_scroll (gdisp,
-                       startx - mevent->x - gdisp->offset_x,
-                       starty - mevent->y - gdisp->offset_y);
-}
-
-
-void
-scroll_to_pointer_position (GimpDisplay    *gdisp,
-			    GdkEventMotion *mevent)
-{
-  gdouble child_x, child_y;
-  gint    off_x, off_y;
-
-  off_x = off_y = 0;
-
-  /*  The cases for scrolling  */
-  if (mevent->x < 0)
-    off_x = mevent->x;
-  else if (mevent->x > gdisp->disp_width)
-    off_x = mevent->x - gdisp->disp_width;
-
-  if (mevent->y < 0)
-    off_y = mevent->y;
-  else if (mevent->y > gdisp->disp_height)
-    off_y = mevent->y - gdisp->disp_height;
-
-  if (gimp_display_scroll (gdisp, off_x, off_y))
-    {
-#ifdef __GNUC__
-#warning FIXME: replace gdk_input_window_get_pointer()
-#endif
-#if 0
-      gdk_input_window_get_pointer (gdisp->canvas->window, mevent->deviceid,
-				    &child_x, &child_y, 
-				    NULL, NULL, NULL, NULL);
-
-      if (child_x == mevent->x && child_y == mevent->y)
-	/*  Put this event back on the queue -- so it keeps scrolling */
-	gdk_event_put ((GdkEvent *) mevent);
-#endif
-    }
-}
 
 gboolean
 gimp_display_scroll (GimpDisplay *gdisp,

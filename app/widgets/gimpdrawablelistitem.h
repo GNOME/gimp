@@ -36,6 +36,7 @@ extern "C" {
 #define GIMP_DRAWABLE_LIST_ITEM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE_LIST_ITEM, GimpDrawableListItemClass))
 #define GIMP_IS_DRAWABLE_LIST_ITEM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DRAWABLE_LIST_ITEM))
 #define GIMP_IS_DRAWABLE_LIST_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE_LIST_ITEM))
+#define GIMP_DRAWABLE_LIST_ITEM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DRAWABLE_LIST_ITEM, GimpDrawableListItemClass))
 
 
 typedef struct _GimpDrawableListItemClass  GimpDrawableListItemClass;
@@ -53,7 +54,7 @@ struct _GimpDrawableListItemClass
 };
 
 
-GtkType   gimp_drawable_list_item_get_type (void);
+GType   gimp_drawable_list_item_get_type (void);
 
 
 #ifdef __cplusplus

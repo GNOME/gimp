@@ -28,7 +28,6 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "app_procs.h"
 #include "core/gimp.h"
 #include "core/gimpcoreconfig.h"
 #include "gimprc.h"
@@ -170,7 +169,7 @@ get_default_comment_invoker (Gimp     *gimp,
   Argument *return_args;
   gchar *comment;
 
-  comment = the_gimp->config->default_comment;
+  comment = gimp->config->default_comment;
   success = TRUE;
 
   return_args = procedural_db_return_args (&get_default_comment_proc, success);

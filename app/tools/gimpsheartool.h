@@ -52,7 +52,7 @@ GType         gimp_shear_tool_get_type (void);
 
 TileManager * gimp_shear_tool_shear    (GimpImage      *gimage,
 					GimpDrawable   *drawable,
-					GDisplay       *gdisp,
+					GimpDisplay    *gdisp,
 					TileManager    *float_tiles,
 					gboolean        interpolation,
 					GimpMatrix3     matrix);

@@ -28,6 +28,7 @@
 #define GIMP_COLOR_PANEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_PANEL, GimpColorPanelClass))
 #define GIMP_IS_COLOR_PANEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_PANEL))
 #define GIMP_IS_COLOR_PANEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_PANEL))
+#define GIMP_COLOR_PANEL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_PANEL, GimpColorPanelClass))
 
 
 typedef struct _GimpColorPanel       GimpColorPanel;
@@ -38,7 +39,9 @@ struct _GimpColorPanelClass
   GimpColorButtonClass  parent_class;
 };
 
-GtkType     gimp_color_panel_get_type  (void);
+
+GType       gimp_color_panel_get_type  (void);
+
 GtkWidget * gimp_color_panel_new       (const gchar       *title,
 					const GimpRGB     *color,
 					GimpColorAreaType  type,

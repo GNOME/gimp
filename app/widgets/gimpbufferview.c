@@ -44,7 +44,6 @@
 
 static void   gimp_buffer_view_class_init (GimpBufferViewClass *klass);
 static void   gimp_buffer_view_init       (GimpBufferView      *view);
-static void   gimp_buffer_view_destroy    (GtkObject           *object);
 
 static void   gimp_buffer_view_paste_clicked        (GtkWidget      *widget,
 						     GimpBufferView *view);
@@ -64,26 +63,29 @@ static void   gimp_buffer_view_activate_item        (GimpContainerEditor *editor
 static GimpContainerEditorClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_buffer_view_get_type (void)
 {
-  static GtkType view_type = 0;
+  static GType view_type = 0;
 
   if (! view_type)
     {
-      GtkTypeInfo view_info =
+      static const GTypeInfo view_info =
       {
-	"GimpBufferView",
-	sizeof (GimpBufferView),
-	sizeof (GimpBufferViewClass),
-	(GtkClassInitFunc) gimp_buffer_view_class_init,
-	(GtkObjectInitFunc) gimp_buffer_view_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpBufferViewClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_buffer_view_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpBufferView),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_buffer_view_init,
       };
 
-      view_type = gtk_type_unique (GIMP_TYPE_CONTAINER_EDITOR, &view_info);
+      view_type = g_type_register_static (GIMP_TYPE_CONTAINER_EDITOR,
+                                          "GimpBufferView",
+                                          &view_info, 0);
     }
 
   return view_type;
@@ -92,15 +94,11 @@ gimp_buffer_view_get_type (void)
 static void
 gimp_buffer_view_class_init (GimpBufferViewClass *klass)
 {
-  GtkObjectClass           *object_class;
   GimpContainerEditorClass *editor_class;
 
-  object_class = (GtkObjectClass *) klass;
-  editor_class = (GimpContainerEditorClass *) klass;
+  editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  object_class->destroy       = gimp_buffer_view_destroy;
 
   editor_class->select_item   = gimp_buffer_view_select_item;
   editor_class->activate_item = gimp_buffer_view_activate_item;
@@ -113,17 +111,6 @@ gimp_buffer_view_init (GimpBufferView *view)
   view->paste_into_button   = NULL;
   view->paste_as_new_button = NULL;
   view->delete_button       = NULL;
-}
-
-static void
-gimp_buffer_view_destroy (GtkObject *object)
-{
-  GimpBufferView *view;
-
-  view = GIMP_BUFFER_VIEW (object);
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 GtkWidget *

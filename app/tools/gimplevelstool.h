@@ -50,8 +50,7 @@ void    gimp_levels_tool_register (Gimp *gimp);
 GType   gimp_levels_tool_get_type (void);
 
 
-void   levels_dialog_hide (void);
-void   levels_free        (void);
+void    levels_free               (void);
 
 
 #endif  /*  __GIMP_LEVELS_TOOL_H__  */

@@ -58,11 +58,11 @@ static void       gimp_display_shell_destroy      (GtkObject   *object);
 static gboolean   gimp_display_shell_delete_event (GtkWidget   *widget,
                                                    GdkEventAny *aevent);
 
-static void       gdisplay_destroy (GtkWidget *widget,
-                                    GDisplay  *display);
-static gboolean   gdisplay_delete  (GtkWidget *widget,
-                                    GdkEvent  *event,
-                                    GDisplay  *display);
+static void       gdisplay_destroy (GtkWidget   *widget,
+                                    GimpDisplay *display);
+static gboolean   gdisplay_delete  (GtkWidget   *widget,
+                                    GdkEvent    *event,
+                                    GimpDisplay *display);
 
 
 static GtkWindowClass *parent_class = NULL;
@@ -143,16 +143,16 @@ gimp_display_shell_delete_event (GtkWidget   *widget,
 }
 
 static void
-gdisplay_destroy (GtkWidget *widget,
-		  GDisplay  *gdisp)
+gdisplay_destroy (GtkWidget   *widget,
+		  GimpDisplay *gdisp)
 {
   gdisplay_remove_and_delete (gdisp);
 }
 
 static gboolean
-gdisplay_delete (GtkWidget *widget,
-		 GdkEvent  *event,
-		 GDisplay  *gdisp)
+gdisplay_delete (GtkWidget   *widget,
+		 GdkEvent    *event,
+		 GimpDisplay *gdisp)
 {
   gdisplay_close_window (gdisp, FALSE);
 
@@ -162,9 +162,9 @@ gdisplay_delete (GtkWidget *widget,
 static gpointer
 gdisplay_get_accel_context (gpointer data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
 
-  gdisp = (GDisplay *) data;
+  gdisp = (GimpDisplay *) data;
 
   if (gdisp)
     return gdisp->gimage;
@@ -173,11 +173,11 @@ gdisplay_get_accel_context (gpointer data)
 }
 
 void
-create_display_shell (GDisplay *gdisp,
-		      gint      width,
-		      gint      height,
-		      gchar    *title,
-		      gint      type)
+create_display_shell (GimpDisplay *gdisp,
+		      gint         width,
+		      gint         height,
+		      gchar       *title,
+		      gint         type)
 {
   static GdkPixmap *qmasksel_pixmap   = NULL;
   static GdkBitmap *qmasksel_mask     = NULL;

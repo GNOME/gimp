@@ -49,14 +49,14 @@
 static void           tool_options_dialog_tool_changed   (GimpContext  *context,
 							  GimpToolInfo *tool_info,
 							  gpointer      data);
-static GimpViewable * tool_options_dialog_drag_tool      (GtkWidget    *widget,
-							  gpointer      data);
 static void           tool_options_dialog_drop_tool      (GtkWidget    *widget,
 							  GimpViewable *viewable,
 							  gpointer      data);
-static void           tool_options_dialog_reset_callback (GtkWidget    *widget,
+static GimpViewable * tool_options_dialog_drag_tool      (GtkWidget    *widget,
 							  gpointer      data);
 static void           tool_options_dialog_close_callback (GtkWidget    *widget,
+							  gpointer      data);
+static void           tool_options_dialog_reset_callback (GtkWidget    *widget,
 							  gpointer      data);
 
 
@@ -270,7 +270,7 @@ tool_options_dialog_close_callback (GtkWidget *widget,
 
   shell = (GtkWidget *) data;
 
-  gimp_dialog_hide (shell);
+  gtk_widget_hide (shell);
 }
 
 static void

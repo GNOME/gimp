@@ -75,8 +75,6 @@ static GtkTargetEntry dialog_target_table[] =
 {
   GIMP_TARGET_DIALOG
 };
-static guint n_dialog_targets = (sizeof (dialog_target_table) /
-				 sizeof (dialog_target_table[0]));
 
 
 GType
@@ -86,19 +84,22 @@ gimp_dock_get_type (void)
 
   if (! dock_type)
     {
-      static const GtkTypeInfo dock_info =
+      static const GTypeInfo dock_info =
       {
-	"GimpDock",
-	sizeof (GimpDock),
-	sizeof (GimpDockClass),
-	(GtkClassInitFunc) gimp_dock_class_init,
-	(GtkObjectInitFunc) gimp_dock_init,
-	/* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+        sizeof (GimpDockClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_dock_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpDock),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_dock_init,
       };
 
-      dock_type = gtk_type_unique (GTK_TYPE_WINDOW, &dock_info);
+      dock_type = g_type_register_static (GTK_TYPE_WINDOW,
+                                          "GimpDock",
+                                          &dock_info, 0);
     }
 
   return dock_type;
@@ -109,7 +110,7 @@ gimp_dock_class_init (GimpDockClass *klass)
 {
   GtkObjectClass *object_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class = GTK_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -179,7 +180,7 @@ gimp_dock_separator_new (GimpDock *dock)
 
   gtk_drag_dest_set (GTK_WIDGET (event_box),
                      GTK_DEST_DEFAULT_ALL,
-                     dialog_target_table, n_dialog_targets,
+                     dialog_target_table, G_N_ELEMENTS (dialog_target_table),
                      GDK_ACTION_MOVE);
   g_signal_connect (G_OBJECT (event_box), "drag_drop",
 		    G_CALLBACK (gimp_dock_separator_drag_drop),

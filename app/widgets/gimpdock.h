@@ -31,10 +31,10 @@
 #define GIMP_DOCK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCK, GimpDockClass))
 #define GIMP_IS_DOCK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DOCK))
 #define GIMP_IS_DOCK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DOCK))
+#define GIMP_DOCK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DOCK, GimpDockClass))
 
 
 typedef struct _GimpDockClass   GimpDockClass;
-
 
 struct _GimpDock
 {
@@ -55,7 +55,7 @@ struct _GimpDockClass
 };
 
 
-GtkType     gimp_dock_get_type    (void);
+GType       gimp_dock_get_type    (void);
 
 void        gimp_dock_add         (GimpDock          *dock,
 				   GimpDockable      *dockable,

@@ -30,8 +30,6 @@ void     gimp_message_box                  (gchar          *message,
 					    GtkCallback     callback,
 					    gpointer        data);
 
-void     gimp_dialog_hide                  (GtkWidget      *dialog);
-
 void     gimp_menu_position                (GtkMenu        *menu,
 					    gint           *x,
 					    gint           *y,

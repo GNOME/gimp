@@ -38,11 +38,11 @@ void           tool_manager_pop_tool              (Gimp             *gimp);
 
 void           tool_manager_initialize_tool       (Gimp             *gimp,
 						   GimpTool         *tool,
-						   GDisplay         *gdisp);
+						   GimpDisplay      *gdisp);
 
 void           tool_manager_control_active        (Gimp             *gimp,
 						   ToolAction        action,
-						   GDisplay         *gdisp);
+						   GimpDisplay      *gdisp);
 
 const gchar  * tool_manager_active_get_help_data  (Gimp             *gimp);
 

@@ -32,8 +32,6 @@
 #include "gimptool.h"
 #include "tool_manager.h"
 
-#include "app_procs.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -56,31 +54,31 @@ static void   gimp_tool_class_init          (GimpToolClass  *klass);
 static void   gimp_tool_init                (GimpTool       *tool);
 
 static void   gimp_tool_real_initialize     (GimpTool       *tool,
-					     GDisplay       *gdisp);
+					     GimpDisplay    *gdisp);
 static void   gimp_tool_real_control        (GimpTool       *tool,
 					     ToolAction      tool_action,
-					     GDisplay       *gdisp);
+					     GimpDisplay    *gdisp);
 static void   gimp_tool_real_button_press   (GimpTool       *tool,
 					     GdkEventButton *bevent,
-					     GDisplay       *gdisp);
+					     GimpDisplay    *gdisp);
 static void   gimp_tool_real_button_release (GimpTool       *tool,
 					     GdkEventButton *bevent,
-					     GDisplay       *gdisp);
+					     GimpDisplay    *gdisp);
 static void   gimp_tool_real_motion         (GimpTool       *tool,
 					     GdkEventMotion *mevent,
-					     GDisplay       *gdisp);
+					     GimpDisplay    *gdisp);
 static void   gimp_tool_real_arrow_key      (GimpTool       *tool,
 					     GdkEventKey    *kevent,
-					     GDisplay       *gdisp);
+					     GimpDisplay    *gdisp);
 static void   gimp_tool_real_modifier_key   (GimpTool       *tool,
 					     GdkEventKey    *kevent,
-					     GDisplay       *gdisp);
+					     GimpDisplay    *gdisp);
 static void   gimp_tool_real_cursor_update  (GimpTool       *tool,
 					     GdkEventMotion *mevent,
-					     GDisplay       *gdisp);
+					     GimpDisplay    *gdisp);
 static void   gimp_tool_real_oper_update    (GimpTool       *tool,
 					     GdkEventMotion *mevent,
-					     GDisplay       *gdisp);
+					     GimpDisplay    *gdisp);
 
 
 static guint gimp_tool_signals[LAST_SIGNAL] = { 0 };
@@ -252,8 +250,8 @@ gimp_tool_init (GimpTool *tool)
 }
 
 void
-gimp_tool_initialize (GimpTool   *tool, 
-		      GDisplay   *gdisp)
+gimp_tool_initialize (GimpTool    *tool, 
+		      GimpDisplay *gdisp)
 {
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
@@ -263,9 +261,9 @@ gimp_tool_initialize (GimpTool   *tool,
 }
 
 void
-gimp_tool_control (GimpTool   *tool, 
-		   ToolAction  action, 
-		   GDisplay   *gdisp)
+gimp_tool_control (GimpTool    *tool, 
+		   ToolAction   action, 
+		   GimpDisplay *gdisp)
 {
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
@@ -277,7 +275,7 @@ gimp_tool_control (GimpTool   *tool,
 void
 gimp_tool_button_press (GimpTool       *tool,
 			GdkEventButton *bevent,
-			GDisplay       *gdisp)
+			GimpDisplay    *gdisp)
 {
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
@@ -289,7 +287,7 @@ gimp_tool_button_press (GimpTool       *tool,
 void
 gimp_tool_button_release (GimpTool       *tool,
 			  GdkEventButton *bevent,
-			  GDisplay       *gdisp)
+			  GimpDisplay    *gdisp)
 {
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
@@ -301,7 +299,7 @@ gimp_tool_button_release (GimpTool       *tool,
 void
 gimp_tool_motion (GimpTool       *tool,
 		  GdkEventMotion *mevent,
-		  GDisplay       *gdisp)
+		  GimpDisplay    *gdisp)
 {
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
@@ -313,7 +311,7 @@ gimp_tool_motion (GimpTool       *tool,
 void
 gimp_tool_arrow_key (GimpTool    *tool,
 		     GdkEventKey *kevent,
-		     GDisplay    *gdisp)
+		     GimpDisplay *gdisp)
 {
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
@@ -325,7 +323,7 @@ gimp_tool_arrow_key (GimpTool    *tool,
 void
 gimp_tool_modifier_key (GimpTool    *tool,
 			GdkEventKey *kevent,
-			GDisplay    *gdisp)
+			GimpDisplay *gdisp)
 {
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
@@ -337,7 +335,7 @@ gimp_tool_modifier_key (GimpTool    *tool,
 void
 gimp_tool_cursor_update (GimpTool       *tool,
 			 GdkEventMotion *mevent,
-			 GDisplay       *gdisp)
+			 GimpDisplay    *gdisp)
 {
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
@@ -349,7 +347,7 @@ gimp_tool_cursor_update (GimpTool       *tool,
 void
 gimp_tool_oper_update (GimpTool       *tool,
 		       GdkEventMotion *mevent,
-		       GDisplay       *gdisp)
+		       GimpDisplay    *gdisp)
 {
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
@@ -362,22 +360,22 @@ gimp_tool_oper_update (GimpTool       *tool,
 /*  standard member functions  */
 
 static void
-gimp_tool_real_initialize (GimpTool       *tool,
-			   GDisplay       *gdisp)
+gimp_tool_real_initialize (GimpTool    *tool,
+			   GimpDisplay *gdisp)
 {
 }
 
 static void
-gimp_tool_real_control (GimpTool   *tool,
-			ToolAction  tool_action,
-			GDisplay   *gdisp)
+gimp_tool_real_control (GimpTool    *tool,
+			ToolAction   tool_action,
+			GimpDisplay *gdisp)
 {
 }
 
 static void
 gimp_tool_real_button_press (GimpTool       *tool,
 			     GdkEventButton *bevent,
-			     GDisplay       *gdisp)
+			     GimpDisplay    *gdisp)
 {
   tool->gdisp    = gdisp;
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
@@ -388,7 +386,7 @@ gimp_tool_real_button_press (GimpTool       *tool,
 static void
 gimp_tool_real_button_release (GimpTool       *tool,
 			       GdkEventButton *bevent,
-			       GDisplay       *gdisp)
+			       GimpDisplay    *gdisp)
 {
   tool->state = INACTIVE;
 }
@@ -396,28 +394,28 @@ gimp_tool_real_button_release (GimpTool       *tool,
 static void
 gimp_tool_real_motion (GimpTool       *tool,
 		       GdkEventMotion *mevent,
-		       GDisplay       *gdisp)
+		       GimpDisplay    *gdisp)
 {
 }
 
 static void
 gimp_tool_real_arrow_key (GimpTool    *tool,
 			  GdkEventKey *kevent,
-			  GDisplay    *gdisp)
+			  GimpDisplay *gdisp)
 {
 }
 
 static void
 gimp_tool_real_modifier_key (GimpTool    *tool,
 			     GdkEventKey *kevent,
-			     GDisplay    *gdisp)
+			     GimpDisplay *gdisp)
 {
 }
 
 static void
 gimp_tool_real_cursor_update (GimpTool       *tool,
 			      GdkEventMotion *mevent,
-			      GDisplay       *gdisp)
+			      GimpDisplay    *gdisp)
 {
   gdisplay_install_tool_cursor (gdisp,
                                 GDK_TOP_LEFT_ARROW,
@@ -428,20 +426,8 @@ gimp_tool_real_cursor_update (GimpTool       *tool,
 static void
 gimp_tool_real_oper_update (GimpTool       *tool,
 			    GdkEventMotion *mevent,
-			    GDisplay       *gdisp)
+			    GimpDisplay    *gdisp)
 {
-}
-
-
-
-
-
-/*  Function definitions  */
-
-void
-gimp_tool_help_func (const gchar *help_data)
-{
-  gimp_standard_help_func (tool_manager_active_get_help_data (the_gimp));
 }
 
 

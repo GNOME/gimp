@@ -57,26 +57,29 @@ static void   gimp_brush_factory_view_spacing_update  (GtkAdjustment        *adj
 static GimpDataFactoryViewClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_brush_factory_view_get_type (void)
 {
-  static GtkType view_type = 0;
+  static GType view_type = 0;
 
   if (! view_type)
     {
-      GtkTypeInfo view_info =
+      static const GTypeInfo view_info =
       {
-	"GimpBrushFactoryView",
-	sizeof (GimpBrushFactoryView),
-	sizeof (GimpBrushFactoryViewClass),
-	(GtkClassInitFunc) gimp_brush_factory_view_class_init,
-	(GtkObjectInitFunc) gimp_brush_factory_view_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpBrushFactoryViewClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_brush_factory_view_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpBrushFactoryView),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_brush_factory_view_init,
       };
 
-      view_type = gtk_type_unique (GIMP_TYPE_DATA_FACTORY_VIEW, &view_info);
+      view_type = g_type_register_static (GIMP_TYPE_DATA_FACTORY_VIEW,
+                                          "GimpBrushFactoryView",
+                                          &view_info, 0);
     }
 
   return view_type;
@@ -88,10 +91,10 @@ gimp_brush_factory_view_class_init (GimpBrushFactoryViewClass *klass)
   GtkObjectClass           *object_class;
   GimpContainerEditorClass *editor_class;
 
-  object_class = (GtkObjectClass *) klass;
-  editor_class = (GimpContainerEditorClass *) klass;
+  object_class = GTK_OBJECT_CLASS (klass);
+  editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_DATA_FACTORY_VIEW);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy     = gimp_brush_factory_view_destroy;
 
@@ -140,7 +143,7 @@ gimp_brush_factory_view_destroy (GtkObject *object)
 	 view->spacing_changed_handler_id);
 
       view->spacing_changed_handler_id = 0;
-    }			     
+    }
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -160,7 +163,6 @@ gimp_brush_factory_view_new (GimpViewType              view_type,
   GimpBrushFactoryView *factory_view;
   GimpContainerEditor  *editor;
 
-  g_return_val_if_fail (factory != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
   g_return_val_if_fail (preview_size > 0 && preview_size <= 64, NULL);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, NULL);

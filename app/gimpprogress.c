@@ -33,16 +33,16 @@
 
 struct _GimpProgress
 {
-  GDisplay  *gdisp;            /* gdisp in use, or NULL*/
+  GimpDisplay *gdisp;            /* gdisp in use, or NULL*/
 
   /* next four fields are only valid if gdisp is NULL */
-  GtkWidget *dialog;           /* progress dialog, NULL if using gdisp */
-  GtkWidget *dialog_label;
-  GtkWidget *progressbar;
-  GtkWidget *cancelbutton;
+  GtkWidget   *dialog;           /* progress dialog, NULL if using gdisp */
+  GtkWidget   *dialog_label;
+  GtkWidget   *progressbar;
+  GtkWidget   *cancelbutton;
 
-  GCallback  cancel_callback;  /* callback to remove, or NULL */
-  gpointer   cancel_data;
+  GCallback    cancel_callback;  /* callback to remove, or NULL */
+  gpointer     cancel_data;
 };
 
 /* prototypes */
@@ -72,11 +72,11 @@ static void   progress_signal_setup (GimpProgress *progress,
  * shown to the user if it would mean creating a new window.
  */
 GimpProgress *
-progress_start (GDisplay   *gdisp,
-		const char *message,
-		gboolean    important,
-		GCallback   cancel_callback,
-		gpointer    cancel_data)
+progress_start (GimpDisplay *gdisp,
+		const gchar *message,
+		gboolean     important,
+		GCallback    cancel_callback,
+		gpointer     cancel_data)
 {
   GimpProgress *p;
   guint         cid;

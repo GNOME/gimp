@@ -41,7 +41,6 @@
 #include "gimplayer.h"
 #include "gimplist.h"
 
-#include "app_procs.h"
 #include "floating_sel.h"
 #include "undo.h"
 

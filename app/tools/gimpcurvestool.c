@@ -37,7 +37,6 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimpcursor.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -118,6 +117,7 @@ static void   curves_add_point                (GimpDrawable   *drawable,
 
 static CurvesDialog * curves_dialog_new   (void);
 
+static void   curves_dialog_hide          (void);
 static void   curves_update               (CurvesDialog   *cd,
 					   gint            );
 static void   curves_plot_curve           (CurvesDialog   *cd,
@@ -586,13 +586,6 @@ curves_add_point (GimpDrawable *drawable,
 }
 
 void
-curves_dialog_hide (void)
-{
-  if (curves_dialog)
-    curves_cancel_callback (NULL, (gpointer) curves_dialog);
-}
-
-void
 curves_free (void)
 {
   GimpTool *active_tool;
@@ -837,6 +830,13 @@ curves_dialog_new (void)
   gtk_widget_show (vbox);
 
   return cd;
+}
+
+static void
+curves_dialog_hide (void)
+{
+  if (curves_dialog)
+    curves_cancel_callback (NULL, (gpointer) curves_dialog);
 }
 
 static void
@@ -1375,7 +1375,7 @@ curves_ok_callback (GtkWidget *widget,
 
   cd = (CurvesDialog *) data;
 
-  gimp_dialog_hide (cd->shell);
+  gtk_widget_hide (cd->shell);
 
   active_tool = tool_manager_get_active (the_gimp);
 
@@ -1405,7 +1405,7 @@ curves_cancel_callback (GtkWidget *widget,
 
   cd = (CurvesDialog *) data;
 
-  gimp_dialog_hide (cd->shell);
+  gtk_widget_hide (cd->shell);
 
   active_tool = tool_manager_get_active (the_gimp);
 
@@ -1829,7 +1829,7 @@ static void
 file_dialog_cancel_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  gimp_dialog_hide (file_dlg);
+  gtk_widget_hide (file_dlg);
 }
 
 static gboolean

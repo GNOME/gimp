@@ -50,7 +50,7 @@ GType         gimp_scale_tool_get_type (void);
 
 TileManager * gimp_scale_tool_scale    (GimpImage    *gimage,
 					GimpDrawable *drawable,
-					GDisplay     *gdisp,
+					GimpDisplay  *gdisp,
 					gdouble      *trans_info,
 					TileManager  *float_tiles,
 					gboolean      interpolation,

@@ -52,7 +52,7 @@ GType         gimp_rotate_tool_get_type (void);
 
 TileManager * gimp_rotate_tool_rotate   (GimpImage      *gimage,
 					 GimpDrawable   *drawable,
-					 GDisplay       *gdisp,
+					 GimpDisplay    *gdisp,
 					 gdouble         angle,
 					 TileManager    *float_tiles,
 					 gboolean        interpolation,

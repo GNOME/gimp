@@ -31,6 +31,7 @@
 #define GIMP_BRUSH_FACTORY_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_FACTORY_VIEW, GimpBrushFactoryViewClass))
 #define GIMP_IS_BRUSH_FACTORY_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BRUSH_FACTORY_VIEW))
 #define GIMP_IS_BRUSH_FACTORY_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH_FACTORY_VIEW))
+#define GIMP_BRUSH_FACTORY_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BRUSH_FACTORY_VIEW, GimpBrushFactoryViewClass))
 
 
 typedef struct _GimpBrushFactoryViewClass  GimpBrushFactoryViewClass;
@@ -52,7 +53,7 @@ struct _GimpBrushFactoryViewClass
 };
 
 
-GtkType     gimp_brush_factory_view_get_type (void);
+GType       gimp_brush_factory_view_get_type (void);
 
 GtkWidget * gimp_brush_factory_view_new      (GimpViewType              view_type,
 					      GimpDataFactory          *factory,

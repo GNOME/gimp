@@ -37,7 +37,6 @@
 
 static void     gimp_container_menu_impl_class_init   (GimpContainerMenuImplClass *klass);
 static void     gimp_container_menu_impl_init         (GimpContainerMenuImpl      *panel);
-static void     gimp_container_menu_impl_destroy      (GtkObject                  *object);
 
 static gpointer gimp_container_menu_impl_insert_item  (GimpContainerMenu      *view,
 						       GimpViewable           *viewable,
@@ -65,44 +64,42 @@ static void    gimp_container_menu_impl_item_selected (GtkWidget              *w
 static GimpContainerMenuClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_container_menu_impl_get_type (void)
 {
-  static GtkType menu_impl_type = 0;
+  static GType menu_type = 0;
 
-  if (! menu_impl_type)
+  if (! menu_type)
     {
-      GtkTypeInfo menu_impl_info =
+      static const GTypeInfo menu_info =
       {
-	"GimpContainerMenuImpl",
-	sizeof (GimpContainerMenuImpl),
-	sizeof (GimpContainerMenuImplClass),
-	(GtkClassInitFunc) gimp_container_menu_impl_class_init,
-	(GtkObjectInitFunc) gimp_container_menu_impl_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpContainerMenuImplClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_container_menu_impl_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpContainerMenuImpl),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_container_menu_impl_init,
       };
 
-      menu_impl_type = gtk_type_unique (GIMP_TYPE_CONTAINER_MENU,
-					&menu_impl_info);
+      menu_type = g_type_register_static (GIMP_TYPE_CONTAINER_MENU,
+                                          "GimpContainerMenuImpl",
+                                          &menu_info, 0);
     }
 
-  return menu_impl_type;
+  return menu_type;
 }
 
 static void
 gimp_container_menu_impl_class_init (GimpContainerMenuImplClass *klass)
 {
-  GtkObjectClass         *object_class;
   GimpContainerMenuClass *container_menu_class;
 
-  object_class         = (GtkObjectClass *) klass;
-  container_menu_class = (GimpContainerMenuClass *) klass;
+  container_menu_class = GIMP_CONTAINER_MENU_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  object_class->destroy                  = gimp_container_menu_impl_destroy;
 
   container_menu_class->insert_item      = gimp_container_menu_impl_insert_item;
   container_menu_class->remove_item      = gimp_container_menu_impl_remove_item;
@@ -116,17 +113,6 @@ static void
 gimp_container_menu_impl_init (GimpContainerMenuImpl *menu_impl)
 {
   menu_impl->empty_item = NULL;
-}
-
-static void
-gimp_container_menu_impl_destroy (GtkObject *object)
-{
-  GimpContainerMenuImpl *menu_impl;
-
-  menu_impl = GIMP_CONTAINER_MENU_IMPL (object);
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 GtkWidget *

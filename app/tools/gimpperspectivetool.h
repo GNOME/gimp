@@ -52,7 +52,7 @@ GType         gimp_perspective_tool_get_type       (void);
 
 TileManager * gimp_perspective_tool_perspective    (GimpImage      *gimage,
 						    GimpDrawable   *drawable,
-						    GDisplay       *gdisp,
+						    GimpDisplay    *gdisp,
 						    TileManager    *float_tiles,
 						    gboolean        interpolation,
 						    GimpMatrix3     matrix);

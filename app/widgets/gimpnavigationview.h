@@ -36,6 +36,7 @@ extern "C" {
 #define GIMP_NAVIGATION_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_NAVIGATION_PREVIEW, GimpNavigationPreviewClass))
 #define GIMP_IS_NAVIGATION_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_NAVIGATION_PREVIEW))
 #define GIMP_IS_NAVIGATION_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_NAVIGATION_PREVIEW))
+#define GIMP_NAVIGATION_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_NAVIGATION_PREVIEW, GimpNavigationPreviewClass))
 
 
 typedef struct _GimpNavigationPreviewClass  GimpNavigationPreviewClass;
@@ -77,7 +78,7 @@ struct _GimpNavigationPreviewClass
 };
 
 
-GtkType     gimp_navigation_preview_get_type   (void);
+GType       gimp_navigation_preview_get_type   (void);
 
 GtkWidget * gimp_navigation_preview_new        (GimpImage             *gimage,
 						gint                   size);

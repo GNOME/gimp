@@ -107,7 +107,7 @@ struct _GimpTransformToolClass
   GimpDrawToolClass parent_class;
 
   TileManager * (* transform) (GimpTransformTool    *tool,
-		               GDisplay             *gdisp,
+		               GimpDisplay          *gdisp,
 		               TransformState        state);
 
 };
@@ -144,11 +144,11 @@ GType         gimp_transform_tool_get_type               (void);
 
 void          gimp_transform_tool_transform_bounding_box (GimpTransformTool    *tool);
 void          gimp_transform_tool_reset                  (GimpTransformTool    *tool,
-                                                          GDisplay             *gdisp);
+                                                          GimpDisplay          *gdisp);
 void	      gimp_transform_tool_grid_density_changed   (void);
 void	      gimp_transform_tool_showpath_changed       (gint                  type);
 TileManager * gimp_transform_tool_transform              (GimpTransformTool    *tool,
-		                                          GDisplay             *gdisp,
+		                                          GimpDisplay          *gdisp,
 		                                          TransformState        state);
 /*  transform functions  */
 /* FIXME this function needs to be renamed */

@@ -155,7 +155,7 @@ typedef struct _GimpDockbook            GimpDockbook;
 typedef struct _GimpFontSelection       GimpFontSelection;
 typedef struct _GimpFontSelectionDialog GimpFontSelectionDialog;
 
-typedef struct _HistogramWidget         HistogramWidget;
+typedef struct _GimpHistogramView       GimpHistogramView;
 
 
 /*  function types  */

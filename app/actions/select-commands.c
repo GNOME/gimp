@@ -25,17 +25,21 @@
 
 #include "gui-types.h"
 
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
+#include "app_procs.h"
+
 #include "libgimp/gimpintl.h"
 
 
 #define return_if_no_display(gdisp) \
-        gdisp = gdisplay_active (); \
+        gdisp = gimp_context_get_display (gimp_get_user_context (the_gimp)); \
         if (!gdisp) return
 
 
@@ -72,7 +76,7 @@ void
 select_invert_cmd_callback (GtkWidget *widget,
 			    gpointer   data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
   return_if_no_display (gdisp);
 
   gimage_mask_invert (gdisp->gimage);
@@ -83,7 +87,7 @@ void
 select_all_cmd_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
   return_if_no_display (gdisp);
 
   gimage_mask_all (gdisp->gimage);
@@ -94,7 +98,7 @@ void
 select_none_cmd_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
   return_if_no_display (gdisp);
 
   gimage_mask_none (gdisp->gimage);
@@ -105,7 +109,7 @@ void
 select_float_cmd_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
   return_if_no_display (gdisp);
 
   gimage_mask_float (gdisp->gimage,
@@ -118,8 +122,8 @@ void
 select_feather_cmd_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  GtkWidget *qbox;
-  GDisplay  *gdisp;
+  GtkWidget   *qbox;
+  GimpDisplay *gdisp;
 
   return_if_no_display (gdisp);
 
@@ -141,7 +145,7 @@ void
 select_sharpen_cmd_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
   return_if_no_display (gdisp);
 
   gimage_mask_sharpen (gdisp->gimage);
@@ -152,10 +156,10 @@ void
 select_shrink_cmd_callback (GtkWidget *widget,
 			    gpointer   data)
 {
-  GtkWidget *edge_lock;
-  GtkWidget *shrink_dialog;
-  GDisplay  *gdisp;
-  GList     *children;
+  GtkWidget   *edge_lock;
+  GtkWidget   *shrink_dialog;
+  GimpDisplay *gdisp;
+  GList       *children;
 
   return_if_no_display (gdisp);
 
@@ -193,8 +197,8 @@ void
 select_grow_cmd_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  GtkWidget *qbox;
-  GDisplay  *gdisp;
+  GtkWidget   *qbox;
+  GimpDisplay *gdisp;
 
   return_if_no_display (gdisp);
 
@@ -216,8 +220,8 @@ void
 select_border_cmd_callback (GtkWidget *widget,
 			    gpointer   data)
 {
-  GtkWidget *qbox;
-  GDisplay  *gdisp;
+  GtkWidget   *qbox;
+  GimpDisplay *gdisp;
 
   return_if_no_display (gdisp);
 
@@ -239,7 +243,7 @@ void
 select_save_cmd_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
   return_if_no_display (gdisp);
 
   gimage_mask_save (gdisp->gimage);

@@ -16,15 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __HISTOGRAM_TOOL_H__
-#define __HISTOGRAM_TOOL_H__
+#ifndef __GIMP_HISTOGRAM_TOOL_H__
+#define __GIMP_HISTOGRAM_TOOL_H__
 
 
 #include "gimptool.h"
-
-
-/* FIXME: remove the dependency from pdb/color_cmds.c */
-#include "widgets/widgets-types.h"
 
 
 #define HISTOGRAM_WIDTH  256
@@ -53,43 +49,9 @@ struct _GimpHistogramToolClass
 };
 
 
-typedef struct _HistogramToolDialog HistogramToolDialog;
+void    gimp_histogram_tool_register (Gimp *gimp);
 
-struct _HistogramToolDialog
-{
-  GtkWidget       *shell;
-
-  GtkWidget       *info_labels[7];
-  GtkWidget       *channel_menu;
-  HistogramWidget *histogram;
-  GimpHistogram   *hist;
-  GtkWidget       *gradient;
-
-  gdouble          mean;
-  gdouble          std_dev;
-  gdouble          median;
-  gdouble          pixels;
-  gdouble          count;
-  gdouble          percentile;
-
-  GimpDrawable    *drawable;
-  ImageMap        *image_map;
-  gint             channel;
-  gint             color;
-};
+GType   gimp_histogram_tool_get_type (void);
 
 
-void       gimp_histogram_tool_register (Gimp *gimp);
-
-GType      gimp_histogram_tool_get_type (void);
-
-
-void   histogram_dialog_hide          (void);
-void   histogram_tool_free            (void);
-void   histogram_tool_histogram_range (HistogramWidget *hw,
-				       gint             start,
-				       gint             end,
-				       gpointer         data);
-
-
-#endif /* __HISTOGRAM_TOOL_H__ */
+#endif /* __GIMP_HISTOGRAM_TOOL_H__ */

@@ -31,6 +31,7 @@
 #define GIMP_CONTAINER_MENU_IMPL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_MENU_IMPL, GimpContainerMenuImplClass))
 #define GIMP_IS_CONTAINER_MENU_IMPL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER_MENU_IMPL))
 #define GIMP_IS_CONTAINER_MENU_IMPL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_MENU_IMPL))
+#define GIMP_CONTAINER_MENU_IMPL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTAINER_MENU_IMPL, GimpContainerMenuImplClass))
 
 
 typedef struct _GimpContainerMenuImplClass  GimpContainerMenuImplClass;
@@ -48,7 +49,7 @@ struct _GimpContainerMenuImplClass
 };
 
 
-GtkType     gimp_container_menu_impl_get_type (void);
+GType       gimp_container_menu_impl_get_type (void);
 
 GtkWidget * gimp_container_menu_new           (GimpContainer *container,
 					       GimpContext   *context,

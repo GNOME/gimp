@@ -16,22 +16,24 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __HISTOGRAM_WIDGET_H__
-#define __HISTOGRAM_WIDGET_H__
+#ifndef __GIMP_HISTOGRAM_VIEW_H__
+#define __GIMP_HISTOGRAM_VIEW_H__
 
 
 #include <gtk/gtkdrawingarea.h>
 
 
-#define HISTOGRAM_WIDGET_TYPE         (histogram_widget_get_type ())
-#define HISTOGRAM_WIDGET(obj)         G_TYPE_CHECK_INSTANCE_CAST (obj, histogram_widget_get_type (), HistogramWidget)
-#define IS_HISTOGRAM_WIDGET(obj)      G_TYPE_CHECK_INSTANCE_TYPE (obj, histogram_widget_get_type ())
-#define HISTOGRAM_WIDGET_CLASS(klass) G_TYPE_CHECK_CLASS_CAST (klass, histogram_widget_get_type (), HistogramWidget)
+#define GIMP_TYPE_HISTOGRAM_VIEW            (gimp_histogram_view_get_type ())
+#define GIMP_HISTOGRAM_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HISTOGRAM_VIEW, GimpHistogramView))
+#define GIMP_HISTOGRAM_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HISTOGRAM_VIEW, GimpHistogramViewClass))
+#define GIMP_IS_HISTOGRAM_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_HISTOGRAM_VIEW))
+#define GIMP_IS_HISTOGRAM_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_HISTOGRAM_VIEW))
+#define GIMP_HISTOGRAM_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HISTOGRAM_VIEW, GimpHistogramView))
 
 
-typedef struct _HistogramWidgetClass HistogramWidgetClass;
+typedef struct _GimpHistogramViewClass  GimpHistogramViewClass;
 
-struct _HistogramWidget
+struct _GimpHistogramView
 {
   GtkDrawingArea        parent_instance;
 
@@ -41,30 +43,30 @@ struct _HistogramWidget
   gint                  end;
 };
 
-struct _HistogramWidgetClass
+struct _GimpHistogramViewClass
 {
   GtkDrawingAreaClass  parent_class;
 
-  void (* range_changed) (HistogramWidget *hw,
-			  gint             start,
-			  gint             end);
+  void (* range_changed) (GimpHistogramView *view,
+			  gint               start,
+			  gint               end);
 };
 
 
 /*  Histogram functions  */
 
-GtkType           histogram_widget_get_type  (void);
+GType               gimp_histogram_view_get_type  (void);
 
-HistogramWidget * histogram_widget_new       (gint             width,
-					      gint             height);
-void              histogram_widget_update    (HistogramWidget *hw,
-					      GimpHistogram   *histogram);
-void              histogram_widget_range     (HistogramWidget *hw,
-					      gint             start,
-					      gint             end);
-void              histogram_widget_channel   (HistogramWidget *hw,
-					      gint             channel);
-GimpHistogram   * histogram_widget_histogram (HistogramWidget *hw);
+GimpHistogramView * gimp_histogram_view_new       (gint               width,
+                                                   gint               height);
+void                gimp_histogram_view_update    (GimpHistogramView *view,
+                                                   GimpHistogram     *histogram);
+void                gimp_histogram_view_range     (GimpHistogramView *view,
+                                                   gint               start,
+                                                   gint               end);
+void                gimp_histogram_view_channel   (GimpHistogramView *view,
+                                                   gint               channel);
+GimpHistogram     * gimp_histogram_view_histogram (GimpHistogramView *view);
 
 
-#endif /* __HISTOGRAM_WIDGET_H__ */
+#endif /* __GIMP_HISTOGRAM_VIEW_H__ */

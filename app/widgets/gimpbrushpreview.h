@@ -36,6 +36,7 @@ extern "C" {
 #define GIMP_BRUSH_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_PREVIEW, GimpBrushPreviewClass))
 #define GIMP_IS_BRUSH_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_BRUSH_PREVIEW))
 #define GIMP_IS_BRUSH_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH_PREVIEW))
+#define GIMP_BRUSH_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BRUSH_PREVIEW, GimpBrushPreviewClass))
 
 
 typedef struct _GimpBrushPreviewClass  GimpBrushPreviewClass;
@@ -54,7 +55,7 @@ struct _GimpBrushPreviewClass
 };
 
 
-GtkType   gimp_brush_preview_get_type (void);
+GType   gimp_brush_preview_get_type (void);
 
 
 #ifdef __cplusplus

@@ -50,7 +50,4 @@ void    gimp_brightness_contrast_tool_register (Gimp *gimp);
 GType   gimp_brightness_contrast_tool_get_type (void);
 
 
-void   brightness_contrast_dialog_hide (void);
-
-
 #endif  /*  __GIMP_BRIGHTNESS_CONTRAST_TOOL_H__  */

@@ -20,22 +20,11 @@
 #define __GIMP_DISPLAY_SCROLL_H__
 
 
-/*  routines for grabbing the image and scrolling via the pointer  */
-void      start_grab_and_scroll      (GimpDisplay    *gdisp,
-				      GdkEventButton *bevent);
-void      end_grab_and_scroll        (GimpDisplay    *gdisp,
-				      GdkEventButton *bevent);
-void      grab_and_scroll            (GimpDisplay    *gdisp,
-				      GdkEventMotion *mevent);
-void      scroll_to_pointer_position (GimpDisplay    *gdisp,
-				      GdkEventMotion *mevent);
+gboolean   gimp_display_scroll               (GimpDisplay    *gdisp,
+                                              gint            x_offset,
+                                              gint            y_offset);
 
-/* generic scroll-by-offset function */
-gboolean  gimp_display_scroll               (GimpDisplay    *gdisp,
-                                             gint            x_offset,
-                                             gint            y_offset);
-
-void      gimp_display_scroll_clamp_offsets (GimpDisplay    *gdisp);
+void       gimp_display_scroll_clamp_offsets (GimpDisplay    *gdisp);
 
 
 #endif  /*  __GIMP_DISPLAY_SCROLL_H__  */

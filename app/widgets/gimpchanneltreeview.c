@@ -48,8 +48,6 @@
 static void   gimp_channel_list_view_class_init (GimpChannelListViewClass *klass);
 static void   gimp_channel_list_view_init       (GimpChannelListView      *view);
 
-static void   gimp_channel_list_view_destroy    (GtkObject                *object);
-
 static void   gimp_channel_list_view_set_image      (GimpDrawableListView *view,
 						     GimpImage            *gimage);
 
@@ -86,26 +84,29 @@ static void   gimp_channel_list_view_component_toggle
 static GimpDrawableListViewClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_channel_list_view_get_type (void)
 {
-  static GtkType view_type = 0;
+  static GType view_type = 0;
 
   if (! view_type)
     {
-      GtkTypeInfo view_info =
+      static const GTypeInfo view_info =
       {
-	"GimpChannelListView",
-	sizeof (GimpChannelListView),
-	sizeof (GimpChannelListViewClass),
-	(GtkClassInitFunc) gimp_channel_list_view_class_init,
-	(GtkObjectInitFunc) gimp_channel_list_view_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpChannelListViewClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_channel_list_view_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpChannelListView),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_channel_list_view_init,
       };
 
-      view_type = gtk_type_unique (GIMP_TYPE_DRAWABLE_LIST_VIEW, &view_info);
+      view_type = g_type_register_static (GIMP_TYPE_DRAWABLE_LIST_VIEW,
+                                          "GimpChannelListView",
+                                          &view_info, 0);
     }
 
   return view_type;
@@ -114,17 +115,13 @@ gimp_channel_list_view_get_type (void)
 static void
 gimp_channel_list_view_class_init (GimpChannelListViewClass *klass)
 {
-  GtkObjectClass            *object_class;
   GimpContainerViewClass    *container_view_class;
   GimpDrawableListViewClass *drawable_view_class;
 
-  object_class         = (GtkObjectClass *) klass;
-  container_view_class = (GimpContainerViewClass *) klass;
-  drawable_view_class  = (GimpDrawableListViewClass *) klass;
+  container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
+  drawable_view_class  = GIMP_DRAWABLE_LIST_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  object_class->destroy                  = gimp_channel_list_view_destroy;
 
   container_view_class->select_item      = gimp_channel_list_view_select_item;
   container_view_class->set_preview_size = gimp_channel_list_view_set_preview_size;
@@ -181,17 +178,6 @@ gimp_channel_list_view_init (GimpChannelListView *view)
 				  GIMP_TYPE_CHANNEL);
 
   gtk_widget_set_sensitive (view->toselection_button, FALSE);
-}
-
-static void
-gimp_channel_list_view_destroy (GtkObject *object)
-{
-  GimpChannelListView *view;
-
-  view = GIMP_CHANNEL_LIST_VIEW (object);
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 

@@ -51,7 +51,7 @@ struct _GimpTool
   gboolean      auto_snap_to; /*  snap to guides automatically                */
 
   gboolean      preserve;     /*  Preserve this tool across drawable changes  */
-  GDisplay     *gdisp;        /*  pointer to currently active gdisp           */
+  GimpDisplay  *gdisp;        /*  pointer to currently active gdisp           */
   GimpDrawable *drawable;     /*  pointer to the tool's current drawable      */
 
   GimpToolCursorType tool_cursor;
@@ -71,62 +71,62 @@ struct _GimpToolClass
   GimpObjectClass  parent_class;
 
   void (* initialize)     (GimpTool       *tool,
-			   GDisplay       *gdisp);
+			   GimpDisplay    *gdisp);
   void (* control)        (GimpTool       *tool,
 			   ToolAction      action,
-			   GDisplay       *gdisp);
+			   GimpDisplay    *gdisp);
   void (* button_press)   (GimpTool       *tool,
 			   GdkEventButton *bevent,
-			   GDisplay       *gdisp);
+			   GimpDisplay    *gdisp);
   void (* button_release) (GimpTool       *tool,
 			   GdkEventButton *bevent,
-			   GDisplay       *gdisp);
+			   GimpDisplay    *gdisp);
   void (* motion)         (GimpTool       *tool,
 			   GdkEventMotion *mevent,
-			   GDisplay       *gdisp);
+			   GimpDisplay    *gdisp);
   void (* arrow_key)      (GimpTool       *tool,
 			   GdkEventKey    *kevent,
-			   GDisplay       *gdisp);
+			   GimpDisplay    *gdisp);
   void (* modifier_key)   (GimpTool       *tool,
 			   GdkEventKey    *kevent,
-			   GDisplay       *gdisp);
+			   GimpDisplay    *gdisp);
   void (* cursor_update)  (GimpTool       *tool,
 			   GdkEventMotion *mevent,
-			   GDisplay       *gdisp);
+			   GimpDisplay    *gdisp);
   void (* oper_update)    (GimpTool       *tool,
 			   GdkEventMotion *mevent,
-			   GDisplay       *gdisp);
+			   GimpDisplay    *gdisp);
 };
 
 
 GType         gimp_tool_get_type        (void);
 
 void          gimp_tool_initialize      (GimpTool       *tool,
-					 GDisplay       *gdisplay);
+					 GimpDisplay    *gdisp);
 void	      gimp_tool_control         (GimpTool       *tool,
 					 ToolAction      action,
-					 GDisplay       *gdisp);
+					 GimpDisplay    *gdisp);
 void          gimp_tool_button_press    (GimpTool       *tool,
 					 GdkEventButton *bevent,
-					 GDisplay       *gdisp);
+					 GimpDisplay    *gdisp);
 void          gimp_tool_button_release  (GimpTool       *tool,
 					 GdkEventButton *bevent,
-					 GDisplay       *gdisp);
+					 GimpDisplay    *gdisp);
 void          gimp_tool_motion          (GimpTool       *tool,
 					 GdkEventMotion *mevent,
-					 GDisplay       *gdisp);
+					 GimpDisplay    *gdisp);
 void          gimp_tool_arrow_key       (GimpTool       *tool,
 					 GdkEventKey    *kevent,
-					 GDisplay       *gdisp);
+					 GimpDisplay    *gdisp);
 void          gimp_tool_modifier_key    (GimpTool       *tool,
 					 GdkEventKey    *kevent,
-					 GDisplay       *gdisp);
+					 GimpDisplay    *gdisp);
 void          gimp_tool_cursor_update   (GimpTool       *tool,
 					 GdkEventMotion *mevent,
-					 GDisplay       *gdisp);
+					 GimpDisplay    *gdisp);
 void          gimp_tool_oper_update     (GimpTool       *tool,
 					 GdkEventMotion *mevent,
-					 GDisplay       *gdisp);
+					 GimpDisplay    *gdisp);
 
 
 #endif  /*  __GIMP_TOOL_H__  */

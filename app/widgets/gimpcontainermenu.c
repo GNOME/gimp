@@ -83,19 +83,22 @@ gimp_container_menu_get_type (void)
 
   if (! menu_type)
     {
-      GtkTypeInfo menu_info =
+      static const GTypeInfo menu_info =
       {
-	"GimpContainerMenu",
-	sizeof (GimpContainerMenu),
-	sizeof (GimpContainerMenuClass),
-	(GtkClassInitFunc) gimp_container_menu_class_init,
-	(GtkObjectInitFunc) gimp_container_menu_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpContainerMenuClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_container_menu_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpContainerMenu),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_container_menu_init,
       };
 
-      menu_type = gtk_type_unique (GTK_TYPE_MENU, &menu_info);
+      menu_type = g_type_register_static (GTK_TYPE_MENU,
+                                          "GimpContainerMenu",
+                                          &menu_info, 0);
     }
 
   return menu_type;
@@ -106,7 +109,7 @@ gimp_container_menu_class_init (GimpContainerMenuClass *klass)
 {
   GtkObjectClass *object_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class = GTK_OBJECT_CLASS (klass);
   
   parent_class = g_type_class_peek_parent (klass);
 
@@ -481,7 +484,7 @@ gimp_container_menu_add (GimpContainerMenu *menu,
 
   insert_data = GIMP_CONTAINER_MENU_GET_CLASS (menu)->insert_item (menu,
 								   viewable,
-								   -1);
+								   index);
 
   g_hash_table_insert (menu->hash_table, viewable, insert_data);
 }

@@ -56,7 +56,6 @@
 #include "gimpdisplayshell.h"
 #include "gximage.h"
 
-#include "app_procs.h"
 #include "appenv.h"
 #include "colormaps.h"
 #include "gimprc.h"
@@ -75,7 +74,7 @@
 
 
 /* EEEK, we shouldn't use this, but it will go away when
-   GDisplay is made a proper GObject */
+   GimpDisplay is made a proper GObject */
 
 #define g_signal_handlers_disconnect_by_data(instance,data) \
   g_signal_handlers_disconnect_matched (instance,\
@@ -2397,29 +2396,6 @@ gdisplay_selection_visibility (GimpDisplay          *gdisp,
 	  break;
 	}
     }
-}
-
-/**************************************************/
-/*  Functions independent of a specific gdisplay  */
-/**************************************************/
-
-GimpDisplay *
-gdisplay_active (void)
-{
-  GdkEvent *event;
-
-  /*  Whoever finds out why we do this (see below) gets a free beer.
-   *  Report back the reason to Sven and Mitch ... 
-   */
-  event = gtk_get_current_event ();
-  if (event != NULL)
-    {
-      g_warning ("gdisplay_active(): deleging current event");
-
-      gdk_event_free (event);
-    }
-
-  return gimp_context_get_display (gimp_get_user_context (the_gimp));
 }
 
 GimpDisplay *

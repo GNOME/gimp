@@ -68,19 +68,22 @@ gimp_image_dock_get_type (void)
 
   if (! dock_type)
     {
-      static const GtkTypeInfo dock_info =
+      static const GTypeInfo dock_info =
       {
-	"GimpImageDock",
-	sizeof (GimpImageDock),
-	sizeof (GimpImageDockClass),
-	(GtkClassInitFunc) gimp_image_dock_class_init,
-	(GtkObjectInitFunc) gimp_image_dock_init,
-	/* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+        sizeof (GimpImageDockClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_image_dock_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpImageDock),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_image_dock_init,
       };
 
-      dock_type = gtk_type_unique (GIMP_TYPE_DOCK, &dock_info);
+      dock_type = g_type_register_static (GIMP_TYPE_DOCK,
+                                          "GimpImageDock",
+                                          &dock_info, 0);
     }
 
   return dock_type;
@@ -91,7 +94,7 @@ gimp_image_dock_class_init (GimpImageDockClass *klass)
 {
   GtkObjectClass *object_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class = GTK_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 

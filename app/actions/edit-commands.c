@@ -43,13 +43,14 @@
 #include "dialogs.h"
 #include "edit-commands.h"
 
+#include "app_procs.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
 
 #define return_if_no_display(gdisp) \
-        gdisp = gdisplay_active (); \
+        gdisp = gimp_context_get_display (gimp_get_user_context (the_gimp)); \
         if (!gdisp) return
 
 

@@ -49,7 +49,6 @@
 
 static void   gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass);
 static void   gimp_data_factory_view_init       (GimpDataFactoryView      *view);
-static void   gimp_data_factory_view_destroy    (GtkObject                *object);
 
 static void   gimp_data_factory_view_new_clicked       (GtkWidget           *widget,
 							GimpDataFactoryView *view);
@@ -78,19 +77,22 @@ gimp_data_factory_view_get_type (void)
 
   if (! view_type)
     {
-      GtkTypeInfo view_info =
+      static const GTypeInfo view_info =
       {
-	"GimpDataFactoryView",
-	sizeof (GimpDataFactoryView),
-	sizeof (GimpDataFactoryViewClass),
-	(GtkClassInitFunc) gimp_data_factory_view_class_init,
-	(GtkObjectInitFunc) gimp_data_factory_view_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpDataFactoryViewClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_data_factory_view_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpDataFactoryView),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_data_factory_view_init,
       };
 
-      view_type = gtk_type_unique (GIMP_TYPE_CONTAINER_EDITOR, &view_info);
+      view_type = g_type_register_static (GIMP_TYPE_CONTAINER_EDITOR,
+                                          "GimpDataFactoryView",
+                                          &view_info, 0);
     }
 
   return view_type;
@@ -99,15 +101,11 @@ gimp_data_factory_view_get_type (void)
 static void
 gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
 {
-  GtkObjectClass           *object_class;
   GimpContainerEditorClass *editor_class;
 
-  object_class = (GtkObjectClass *) klass;
-  editor_class = (GimpContainerEditorClass *) klass;
+  editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  object_class->destroy       = gimp_data_factory_view_destroy;
 
   editor_class->select_item   = gimp_data_factory_view_select_item;
   editor_class->activate_item = gimp_data_factory_view_activate_item;
@@ -121,17 +119,6 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
   view->edit_button      = NULL;
   view->delete_button    = NULL;
   view->refresh_button   = NULL;
-}
-
-static void
-gimp_data_factory_view_destroy (GtkObject *object)
-{
-  GimpDataFactoryView *view;
-
-  view = GIMP_DATA_FACTORY_VIEW (object);
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 GtkWidget *

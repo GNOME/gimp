@@ -36,6 +36,7 @@ extern "C" {
 #define GIMP_GRADIENT_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GRADIENT_PREVIEW, GimpGradientPreviewClass))
 #define GIMP_IS_GRADIENT_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_GRADIENT_PREVIEW))
 #define GIMP_IS_GRADIENT_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GRADIENT_PREVIEW))
+#define GIMP_GRADIENT_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_GRADIENT_PREVIEW, GimpGradientPreviewClass))
 
 
 typedef struct _GimpGradientPreviewClass  GimpGradientPreviewClass;
@@ -51,7 +52,7 @@ struct _GimpGradientPreviewClass
 };
 
 
-GtkType   gimp_gradient_preview_get_type (void);
+GType   gimp_gradient_preview_get_type (void);
 
 
 #ifdef __cplusplus

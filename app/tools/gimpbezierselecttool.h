@@ -133,7 +133,7 @@ void       bezier_select                     (GimpImage          *gimage,
                                               gboolean            feather,
                                               gdouble             feather_radius);
 
-gint  bezier_select_load                   (GDisplay         *gdisp,
+gint  bezier_select_load                   (GimpDisplay         *gdisp,
 					    GimpBezierSelectPoint      *points,
 					    gint              n_points,
 					    gint              closed);
@@ -150,22 +150,22 @@ void  bezier_add_point                     (GimpBezierSelectTool     *bezier_sel
 					    gint              type,
 					    gdouble           x,
 					    gdouble           y);
-void  bezier_paste_bezierselect_to_current (GDisplay         *gdisp,
+void  bezier_paste_bezierselect_to_current (GimpDisplay         *gdisp,
 					    GimpBezierSelectTool     *bezier_sel);
 void  bezier_select_mode                   (gint);
 void  bezier_stroke 		           (GimpBezierSelectTool     *bezier_sel,
-					    GDisplay         *gdisp,
+					    GimpDisplay         *gdisp,
 					    gint              subdivisions,
 					    gint              open_path);
 void  bezier_to_selection                  (GimpBezierSelectTool     *bezier_sel,
-					    GDisplay         *gdisp);
+					    GimpDisplay         *gdisp);
 gint  bezier_distance_along                (GimpBezierSelectTool     *bezier_sel,
 					    gint              open_path,
 					    gdouble           dist,
 					    gint             *x,
 					    gint             *y,
 					    gdouble          *gradient);
-void  bezier_draw                          (GDisplay         *gdisp,
+void  bezier_draw                          (GimpDisplay         *gdisp,
 					    GimpBezierSelectTool     *bezier_sel);
 
 

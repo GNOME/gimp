@@ -308,7 +308,6 @@ void          gdisplay_flush_displays_only      (GimpDisplay          *gdisp); /
 void          gdisplay_flush_whenever           (GimpDisplay          *gdisp, 
                                                  gboolean              now);
 
-GimpDisplay * gdisplay_active                   (void);
 GimpDisplay * gdisplay_get_by_ID                (Gimp                 *gimp,
                                                  gint                  ID);
 

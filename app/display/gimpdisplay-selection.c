@@ -76,11 +76,11 @@ GdkPixmap * cycled_ants_pixmap = NULL;
 /*  public functions  */
 
 Selection *
-selection_create (GdkWindow *win,
-		  GDisplay  *gdisp,
-		  gint       size,
-		  gint       width,
-		  gint       speed)
+selection_create (GdkWindow   *win,
+		  GimpDisplay *gdisp,
+		  gint         size,
+		  gint         width,
+		  gint         speed)
 {
   GdkColor   fg, bg;
   Selection *new;
@@ -265,8 +265,7 @@ selection_start (Selection *select,
 void
 selection_invis (Selection *select)
 {
-  GDisplay * gdisp;
-  int x1, y1, x2, y2;
+  gint x1, y1, x2, y2;
 
   if (select->state != INVISIBLE)
     {
@@ -276,12 +275,10 @@ selection_invis (Selection *select)
       select->state = INVISIBLE;
     }
 
-  gdisp = (GDisplay *) select->gdisp;
-
   /*  Find the bounds of the selection  */
-  if (gdisplay_mask_bounds (gdisp, &x1, &y1, &x2, &y2))
+  if (gdisplay_mask_bounds (select->gdisp, &x1, &y1, &x2, &y2))
     {
-      gdisplay_expose_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
+      gdisplay_expose_area (select->gdisp, x1, y1, (x2 - x1), (y2 - y1));
     }
   else
     {
@@ -308,7 +305,7 @@ selection_layer_invis (Selection *select)
 
   if (select->segs_layer != NULL && select->num_segs_layer == 4)
     {
-      GDisplay *gdisp;
+      GimpDisplay *gdisp;
 
       gdisp = select->gdisp;
 
@@ -570,21 +567,18 @@ selection_transform_segs (Selection  *select,
 			  GdkSegment *dest_segs,
 			  gint        num_segs)
 {
-  GDisplay *gdisp;
-  gint      x, y;
-  gint      i;
-
-  gdisp = (GDisplay *) select->gdisp;
+  gint x, y;
+  gint i;
 
   for (i = 0; i < num_segs; i++)
     {
-      gdisplay_transform_coords (gdisp, src_segs[i].x1, src_segs[i].y1,
+      gdisplay_transform_coords (select->gdisp, src_segs[i].x1, src_segs[i].y1,
 				 &x, &y, 0);
 
       dest_segs[i].x1 = x;
       dest_segs[i].y1 = y;
 
-      gdisplay_transform_coords (gdisp, src_segs[i].x2, src_segs[i].y2,
+      gdisplay_transform_coords (select->gdisp, src_segs[i].x2, src_segs[i].y2,
 				 &x, &y, 0);
 
       dest_segs[i].x2 = x;
@@ -616,17 +610,14 @@ selection_transform_segs (Selection  *select,
 static void
 selection_generate_segs (Selection *select)
 {
-  GDisplay *gdisp;
   BoundSeg *segs_in;
   BoundSeg *segs_out;
   BoundSeg *segs_layer;
 
-  gdisp = (GDisplay *) select->gdisp;
-
   /*  Ask the gimage for the boundary of its selected region...
    *  Then transform that information into a new buffer of XSegments
    */
-  gimage_mask_boundary (gdisp->gimage, &segs_in, &segs_out,
+  gimage_mask_boundary (select->gdisp->gimage, &segs_in, &segs_out,
 			&select->num_segs_in, &select->num_segs_out);
   if (select->num_segs_in)
     {
@@ -655,7 +646,7 @@ selection_generate_segs (Selection *select)
     }
 
   /*  The active layer's boundary  */
-  gimp_image_layer_boundary (gdisp->gimage, &segs_layer,
+  gimp_image_layer_boundary (select->gdisp->gimage, &segs_layer,
 			     &select->num_segs_layer);
 
   if (select->num_segs_layer)

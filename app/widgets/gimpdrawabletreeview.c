@@ -123,19 +123,22 @@ gimp_drawable_list_view_get_type (void)
 
   if (! view_type)
     {
-      GtkTypeInfo view_info =
+      static const GTypeInfo view_info =
       {
-	"GimpDrawableListView",
-	sizeof (GimpDrawableListView),
-	sizeof (GimpDrawableListViewClass),
-	(GtkClassInitFunc) gimp_drawable_list_view_class_init,
-	(GtkObjectInitFunc) gimp_drawable_list_view_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpDrawableListViewClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_drawable_list_view_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpDrawableListView),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_drawable_list_view_init,
       };
 
-      view_type = gtk_type_unique (GIMP_TYPE_CONTAINER_LIST_VIEW, &view_info);
+      view_type = g_type_register_static (GIMP_TYPE_CONTAINER_LIST_VIEW,
+                                          "GimpDrawableListView",
+                                          &view_info, 0);
     }
 
   return view_type;
@@ -147,8 +150,8 @@ gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass)
   GtkObjectClass         *object_class;
   GimpContainerViewClass *container_view_class;
 
-  object_class         = (GtkObjectClass *) klass;
-  container_view_class = (GimpContainerViewClass *) klass;
+  object_class         = GTK_OBJECT_CLASS (klass);
+  container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -264,7 +267,7 @@ gimp_drawable_list_view_destroy (GtkObject *object)
 GtkWidget *
 gimp_drawable_list_view_new (gint                     preview_size,
 			     GimpImage               *gimage,
-			     GtkType                  drawable_type,
+			     GType                    drawable_type,
 			     const gchar             *signal_name,
 			     GimpGetContainerFunc     get_container_func,
 			     GimpGetDrawableFunc      get_drawable_func,

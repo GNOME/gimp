@@ -414,6 +414,9 @@ tool_manager_register_tool (Gimp         *gimp,
   GtkStyle        *style;
   GdkPixbuf       *pixbuf;
 
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (g_type_is_a (tool_type, GIMP_TYPE_TOOL));
+
   if (tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
       pdb_string = "gimp_pencil";
@@ -490,6 +493,9 @@ tool_manager_register_tool_options (GType            tool_type,
 {
   GimpToolInfo *tool_info;
 
+  g_return_if_fail (g_type_is_a (tool_type, GIMP_TYPE_TOOL));
+  g_return_if_fail (tool_options != NULL);
+
   tool_info = tool_manager_get_info_by_type (the_gimp, tool_type);
 
   if (! tool_info)
@@ -503,11 +509,14 @@ tool_manager_register_tool_options (GType            tool_type,
 }
 
 GimpToolInfo *
-tool_manager_get_info_by_type (Gimp    *gimp,
-			       GType    tool_type)
+tool_manager_get_info_by_type (Gimp  *gimp,
+			       GType  tool_type)
 {
   GimpToolInfo *tool_info;
   GList        *list;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (g_type_is_a (tool_type, GIMP_TYPE_TOOL), NULL);
 
   for (list = GIMP_LIST (gimp->tool_info_list)->list;
        list;
@@ -526,7 +535,7 @@ GimpToolInfo *
 tool_manager_get_info_by_tool (Gimp     *gimp,
 			       GimpTool *tool)
 {
-  g_return_val_if_fail (tool != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_TOOL (tool), NULL);
 
   return tool_manager_get_info_by_type (gimp, G_TYPE_FROM_INSTANCE (tool));
@@ -536,6 +545,8 @@ const gchar *
 tool_manager_active_get_help_data (Gimp *gimp)
 {
   GimpToolManager *tool_manager;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   tool_manager = tool_manager_get (gimp);
 
@@ -568,7 +579,7 @@ tool_manager_set (Gimp            *gimp,
 		  GimpToolManager *tool_manager)
 {
   g_object_set_data (G_OBJECT (gimp), TOOL_MANAGER_DATA_KEY,
-		       tool_manager);
+                     tool_manager);
 }
 
 static void

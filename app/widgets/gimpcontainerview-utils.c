@@ -50,7 +50,7 @@ static gchar * gimp_container_view_buffer_name_func  (GtkWidget *widget);
 /*  public functions  */
 
 GimpItemGetNameFunc
-gimp_container_view_get_built_in_name_func (GtkType  type)
+gimp_container_view_get_built_in_name_func (GType  type)
 {
   if (type == GIMP_TYPE_TOOL_INFO)
     {

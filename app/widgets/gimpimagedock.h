@@ -31,6 +31,7 @@
 #define GIMP_IMAGE_DOCK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE_DOCK, GimpImageDockClass))
 #define GIMP_IS_IMAGE_DOCK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGE_DOCK))
 #define GIMP_IS_IMAGE_DOCK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE_DOCK))
+#define GIMP_IMAGE_DOCK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE_DOCK, GimpImageDockClass))
 
 
 typedef struct _GimpImageDockClass   GimpImageDockClass;
@@ -55,7 +56,7 @@ struct _GimpImageDockClass
 };
 
 
-GtkType     gimp_image_dock_get_type (void);
+GType       gimp_image_dock_get_type (void);
 
 GtkWidget * gimp_image_dock_new      (GimpDialogFactory *factory,
 				      GimpContainer     *image_container);

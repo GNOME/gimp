@@ -23,7 +23,7 @@
 
 
 /* functions */
-GimpProgress * progress_start            (GDisplay      *gdisp,
+GimpProgress * progress_start            (GimpDisplay   *gdisp,
 					  const gchar   *message,
 					  gboolean       important,
 					  GCallback      cancel_callback,

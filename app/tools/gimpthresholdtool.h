@@ -49,22 +49,22 @@ typedef struct _ThresholdDialog ThresholdDialog;
 
 struct _ThresholdDialog
 {
-  GtkWidget       *shell;
+  GtkWidget         *shell;
 
-  GtkAdjustment   *low_threshold_data;
-  GtkAdjustment   *high_threshold_data;
+  GtkAdjustment     *low_threshold_data;
+  GtkAdjustment     *high_threshold_data;
 
-  HistogramWidget *histogram;
-  GimpHistogram   *hist;
+  GimpHistogramView *histogram;
+  GimpHistogram     *hist;
 
-  GimpDrawable    *drawable;
-  ImageMap        *image_map;
+  GimpDrawable      *drawable;
+  ImageMap          *image_map;
 
-  gint             color;
-  gint             low_threshold;
-  gint             high_threshold;
+  gint               color;
+  gint               low_threshold;
+  gint               high_threshold;
 
-  gboolean         preview;
+  gboolean           preview;
 };
 
 
@@ -73,10 +73,9 @@ void    gimp_threshold_tool_register (Gimp *gimp);
 GType   gimp_threshold_tool_get_type (void);
 
 
-void   threshold_dialog_hide (void);
-void   threshold_2           (gpointer     data,
-			      PixelRegion *srcPR,
-			      PixelRegion *destPR);
+void    threshold_2                  (gpointer     data,
+                                      PixelRegion *srcPR,
+                                      PixelRegion *destPR);
 
 
 #endif  /*  __GIMP_THRESHOLD_TOOL_H__  */

@@ -55,19 +55,22 @@ gimp_dockable_get_type (void)
 
   if (! dockable_type)
     {
-      static const GtkTypeInfo dockable_info =
+      static const GTypeInfo dockable_info =
       {
-	"GimpDockable",
-	sizeof (GimpDockable),
-	sizeof (GimpDockableClass),
-	(GtkClassInitFunc) gimp_dockable_class_init,
-	(GtkObjectInitFunc) gimp_dockable_init,
-	/* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+        sizeof (GimpDockableClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_dockable_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpDockable),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_dockable_init,
       };
 
-      dockable_type = gtk_type_unique (GTK_TYPE_VBOX, &dockable_info);
+      dockable_type = g_type_register_static (GTK_TYPE_VBOX,
+                                              "GimpDockable",
+                                              &dockable_info, 0);
     }
 
   return dockable_type;
@@ -79,8 +82,8 @@ gimp_dockable_class_init (GimpDockableClass *klass)
   GtkObjectClass *object_class;
   GtkWidgetClass *widget_class;
 
-  object_class = (GtkObjectClass *) klass;
-  widget_class = (GtkWidgetClass *) klass;
+  object_class = GTK_OBJECT_CLASS (klass);
+  widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 

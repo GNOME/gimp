@@ -36,6 +36,7 @@ extern "C" {
 #define GIMP_TOOL_INFO_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_INFO_PREVIEW, GimpToolInfoPreviewClass))
 #define GIMP_IS_TOOL_INFO_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_TOOL_INFO_PREVIEW))
 #define GIMP_IS_TOOL_INFO_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_INFO_PREVIEW))
+#define GIMP_TOOL_INFO_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_INFO_PREVIEW, GimpToolInfoPreviewClass))
 
 
 typedef struct _GimpToolInfoPreviewClass  GimpToolInfoPreviewClass;
@@ -51,7 +52,7 @@ struct _GimpToolInfoPreviewClass
 };
 
 
-GtkType   gimp_tool_info_preview_get_type (void);
+GType   gimp_tool_info_preview_get_type (void);
 
 
 #ifdef __cplusplus

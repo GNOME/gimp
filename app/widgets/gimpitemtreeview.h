@@ -52,6 +52,7 @@ typedef void            (* GimpDrawableContextFunc) (GimpImage       *gimage);
 #define GIMP_DRAWABLE_LIST_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE_LIST_VIEW, GimpDrawableListViewClass))
 #define GIMP_IS_DRAWABLE_LIST_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DRAWABLE_LIST_VIEW))
 #define GIMP_IS_DRAWABLE_LIST_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE_LIST_VIEW))
+#define GIMP_DRAWABLE_LIST_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DRAWABLE_LIST_VIEW, GimpDrawableListViewClass))
 
 
 typedef struct _GimpDrawableListViewClass  GimpDrawableListViewClass;
@@ -62,7 +63,7 @@ struct _GimpDrawableListView
 
   GimpImage               *gimage;
 
-  GtkType                  drawable_type;
+  GType                    drawable_type;
   gchar                   *signal_name;
 
   GimpGetContainerFunc     get_container_func;
@@ -98,7 +99,7 @@ GType       gimp_drawable_list_view_get_type (void);
 
 GtkWidget * gimp_drawable_list_view_new      (gint                     preview_size,
 					      GimpImage               *gimage,
-					      GtkType                  drawable_type,
+					      GType                    drawable_type,
 					      const gchar             *signal_name,
 					      GimpGetContainerFunc     get_container_func,
 					      GimpGetDrawableFunc      get_drawable_func,

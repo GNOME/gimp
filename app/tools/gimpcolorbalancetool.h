@@ -78,7 +78,6 @@ void   gimp_color_balance_tool_register   (Gimp *gimp);
 GType  gimp_color_balance_tool_get_type   (void);
 
 
-void   color_balance_dialog_hide	  (void);
 void   color_balance                      (PixelRegion       *srcPR,
 					   PixelRegion       *destPR,
 					   void              *data);

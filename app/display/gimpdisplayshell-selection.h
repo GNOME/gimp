@@ -16,19 +16,19 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __SELECTION_H__
-#define __SELECTION_H__
+#ifndef __GIMP_DISPLAY_SELECTION_H__
+#define __GIMP_DISPLAY_SELECTION_H__
 
 
 struct _Selection
 {
   /*  This information is for maintaining the selection's appearance  */
-  GdkWindow   *win;              /*  Window to draw to                 */
-  GDisplay    *gdisp;            /*  GDisplay that owns the selection  */
-  GdkGC       *gc_in;            /*  GC for drawing selection outline  */
+  GdkWindow   *win;              /*  Window to draw to                    */
+  GimpDisplay *gdisp;            /*  GimpDisplay that owns the selection  */
+  GdkGC       *gc_in;            /*  GC for drawing selection outline     */
   GdkGC       *gc_out;           /*  GC for selected regions outside
 				  *  current layer */
-  GdkGC       *gc_layer;         /*  GC for current layer outline      */
+  GdkGC       *gc_layer;         /*  GC for current layer outline         */
 
   /*  This information is for drawing the marching ants around the border  */
   GdkSegment  *segs_in;          /*  gdk segments of area boundary     */
@@ -57,22 +57,22 @@ struct _Selection
 };
 
 
-Selection * selection_create          (GdkWindow *window,
-				       GDisplay  *gdisp,
-				       gint       size,
-				       gint       width,
-				       gint       speed);
-void        selection_free            (Selection *select);
+Selection * selection_create          (GdkWindow   *window,
+				       GimpDisplay *gdisp,
+				       gint         size,
+				       gint         width,
+				       gint         speed);
+void        selection_free            (Selection   *select);
 
-void        selection_pause           (Selection *select);
-void        selection_resume          (Selection *select);
+void        selection_pause           (Selection   *select);
+void        selection_resume          (Selection   *select);
 
-void        selection_start           (Selection *select,
-				       gboolean   recalc);
-void        selection_invis           (Selection *select);
-void        selection_layer_invis     (Selection *select);
+void        selection_start           (Selection   *select,
+				       gboolean     recalc);
+void        selection_invis           (Selection   *select);
+void        selection_layer_invis     (Selection   *select);
 
-void        selection_toggle          (Selection *select);
+void        selection_toggle          (Selection   *select);
 
 
-#endif  /*  __SELECTION_H__  */
+#endif  /*  __GIMP_DISPLAY_SELECTION_H__  */

@@ -36,6 +36,7 @@ extern "C" {
 #define GIMP_LAYER_LIST_ITEM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER_LIST_ITEM, GimpLayerListItemClass))
 #define GIMP_IS_LAYER_LIST_ITEM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LAYER_LIST_ITEM))
 #define GIMP_IS_LAYER_LIST_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER_LIST_ITEM))
+#define GIMP_LAYER_LIST_ITEM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LAYER_LIST_ITEM, GimpLayerListItemClass))
 
 
 typedef struct _GimpLayerListItemClass  GimpLayerListItemClass;
@@ -54,7 +55,7 @@ struct _GimpLayerListItemClass
 };
 
 
-GtkType   gimp_layer_list_item_get_type (void);
+GType   gimp_layer_list_item_get_type (void);
 
 
 #ifdef __cplusplus

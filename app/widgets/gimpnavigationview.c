@@ -82,19 +82,22 @@ gimp_navigation_preview_get_type (void)
 
   if (! preview_type)
     {
-      GtkTypeInfo preview_info =
+      static const GTypeInfo preview_info =
       {
-	"GimpNavigationPreview",
-	sizeof (GimpNavigationPreview),
-	sizeof (GimpNavigationPreviewClass),
-	(GtkClassInitFunc) gimp_navigation_preview_class_init,
-	(GtkObjectInitFunc) gimp_navigation_preview_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpNavigationPreviewClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_navigation_preview_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpNavigationPreview),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_navigation_preview_init,
       };
 
-      preview_type = gtk_type_unique (GIMP_TYPE_IMAGE_PREVIEW, &preview_info);
+      preview_type = g_type_register_static (GIMP_TYPE_IMAGE_PREVIEW,
+                                             "GimpNavigationPreview",
+                                             &preview_info, 0);
     }
 
   return preview_type;
@@ -107,9 +110,9 @@ gimp_navigation_preview_class_init (GimpNavigationPreviewClass *klass)
   GtkWidgetClass   *widget_class;
   GimpPreviewClass *preview_class;
 
-  object_class  = (GtkObjectClass *) klass;
-  widget_class  = (GtkWidgetClass *) klass;
-  preview_class = (GimpPreviewClass *) klass;
+  object_class  = GTK_OBJECT_CLASS (klass);
+  widget_class  = GTK_WIDGET_CLASS (klass);
+  preview_class = GIMP_PREVIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 

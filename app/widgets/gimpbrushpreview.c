@@ -48,26 +48,29 @@ static gboolean    gimp_brush_preview_render_timeout_func (GimpBrushPreview *pre
 static GimpPreviewClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_brush_preview_get_type (void)
 {
-  static GtkType preview_type = 0;
+  static GType preview_type = 0;
 
   if (! preview_type)
     {
-      GtkTypeInfo preview_info =
+      static const GTypeInfo preview_info =
       {
-	"GimpBrushPreview",
-	sizeof (GimpBrushPreview),
-	sizeof (GimpBrushPreviewClass),
-	(GtkClassInitFunc) gimp_brush_preview_class_init,
-	(GtkObjectInitFunc) gimp_brush_preview_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpBrushPreviewClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_brush_preview_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpBrushPreview),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_brush_preview_init,
       };
 
-      preview_type = gtk_type_unique (GIMP_TYPE_PREVIEW, &preview_info);
+      preview_type = g_type_register_static (GIMP_TYPE_PREVIEW,
+                                             "GimpBrushPreview",
+                                             &preview_info, 0);
     }
   
   return preview_type;
@@ -79,12 +82,12 @@ gimp_brush_preview_class_init (GimpBrushPreviewClass *klass)
   GtkObjectClass   *object_class;
   GimpPreviewClass *preview_class;
 
-  object_class  = (GtkObjectClass *) klass;
-  preview_class = (GimpPreviewClass *) klass;
+  object_class  = GTK_OBJECT_CLASS (klass);
+  preview_class = GIMP_PREVIEW_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_PREVIEW);
+  parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_brush_preview_destroy;
+  object_class->destroy         = gimp_brush_preview_destroy;
 
   preview_class->render         = gimp_brush_preview_render;
   preview_class->create_popup   = gimp_brush_preview_create_popup;
@@ -109,8 +112,8 @@ gimp_brush_preview_destroy (GtkObject *object)
     {
       g_source_remove (brush_preview->pipe_timeout_id);
 
-      brush_preview->pipe_timeout_id = 0;
-      brush_preview->pipe_animation_index  = 0;
+      brush_preview->pipe_timeout_id      = 0;
+      brush_preview->pipe_animation_index = 0;
     }
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)

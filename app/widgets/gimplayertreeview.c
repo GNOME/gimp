@@ -85,19 +85,22 @@ gimp_layer_list_view_get_type (void)
 
   if (! view_type)
     {
-      GtkTypeInfo view_info =
+      static const GTypeInfo view_info =
       {
-	"GimpLayerListView",
-	sizeof (GimpLayerListView),
-	sizeof (GimpLayerListViewClass),
-	(GtkClassInitFunc) gimp_layer_list_view_class_init,
-	(GtkObjectInitFunc) gimp_layer_list_view_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpLayerListViewClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_layer_list_view_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpLayerListView),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_layer_list_view_init,
       };
 
-      view_type = gtk_type_unique (GIMP_TYPE_DRAWABLE_LIST_VIEW, &view_info);
+      view_type = g_type_register_static (GIMP_TYPE_DRAWABLE_LIST_VIEW,
+                                          "GimpLayerListView",
+                                          &view_info, 0);
     }
 
   return view_type;

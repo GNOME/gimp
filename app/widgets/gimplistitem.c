@@ -76,21 +76,24 @@ gimp_list_item_get_type (void)
 {
   static GType list_item_type = 0;
 
-  if (!list_item_type)
+  if (! list_item_type)
     {
-      static const GtkTypeInfo list_item_info =
+      static const GTypeInfo list_item_info =
       {
-	"GimpListItem",
-	sizeof (GimpListItem),
-	sizeof (GimpListItemClass),
-	(GtkClassInitFunc) gimp_list_item_class_init,
-	(GtkObjectInitFunc) gimp_list_item_init,
-	/* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+        sizeof (GimpListItemClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_list_item_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpListItem),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_list_item_init,
       };
 
-      list_item_type = gtk_type_unique (GTK_TYPE_LIST_ITEM, &list_item_info);
+      list_item_type = g_type_register_static (GTK_TYPE_LIST_ITEM,
+                                               "GimpListItem",
+                                               &list_item_info, 0);
     }
 
   return list_item_type;
@@ -110,8 +113,8 @@ gimp_list_item_class_init (GimpListItemClass *klass)
   widget_class->drag_motion  = gimp_list_item_drag_motion;
   widget_class->drag_drop    = gimp_list_item_drag_drop;
 
-  klass->set_viewable       = gimp_list_item_real_set_viewable;
-  klass->set_preview_size   = gimp_list_item_real_set_preview_size;
+  klass->set_viewable        = gimp_list_item_real_set_viewable;
+  klass->set_preview_size    = gimp_list_item_real_set_preview_size;
 }
 
 static void

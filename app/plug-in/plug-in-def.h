@@ -44,7 +44,6 @@
 struct _PlugIn
 {
   guint         open : 1;         /* Is the plug-in open* */
-  guint         destroy : 1;      /* Should the plug-in by destroyed* */
   guint         query : 1;        /* Are we querying the plug-in? */
   guint         synchronous : 1;  /* Is the plug-in running synchronously? */
   guint         recurse : 1;      /* Have we called 'gtk_main' recursively? */
