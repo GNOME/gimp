@@ -189,7 +189,7 @@ gimp_histogram_tool_init (GimpHistogramTool *bc_tool)
                                           TRUE,                       /* auto_snap_to */
                                           FALSE,                      /* preserve */
                                           FALSE,                      /* handle_empty_image */
-                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOTION_MODE_HINT,      /* motion_mode */
                                           GIMP_MOUSE_CURSOR,          /* cursor */
                                           GIMP_TOOL_CURSOR_NONE,      /* tool_cursor */
                                           GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */

@@ -182,7 +182,7 @@ gimp_edit_selection_tool_init (GimpEditSelectionTool *edit_selection_tool)
                                           FALSE,                      /* auto_snap_to */
                                           TRUE,                       /* preserve */
                                           FALSE,                      /* handle_empty_image */
-                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOTION_MODE_COMPRESS,  /* motion_mode */
                                           GIMP_MOUSE_CURSOR,          /* cursor */
                                           GIMP_TOOL_CURSOR_NONE,      /* tool_cursor */
                                           GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
@@ -190,7 +190,6 @@ gimp_edit_selection_tool_init (GimpEditSelectionTool *edit_selection_tool)
                                           GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
                                           GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 
-/* FIXME!  tool->motion_mode               = GIMP_MOTION_MODE_COMPRESS; */
 
   edit_selection_tool->origx      = 0;
   edit_selection_tool->origy      = 0;

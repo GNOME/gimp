@@ -201,7 +201,7 @@ gimp_color_picker_tool_init (GimpColorPickerTool *color_picker_tool)
                                           TRUE,                       /* auto_snap_to */
                                           FALSE,                      /* preserve */
                                           FALSE,                      /* handle_empty_image */
-                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOTION_MODE_HINT,      /* motion_mode */
                                           GIMP_MOUSE_CURSOR,          /* cursor */
                                           GIMP_COLOR_PICKER_TOOL_CURSOR,   /* tool_cursor */
                                           GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */

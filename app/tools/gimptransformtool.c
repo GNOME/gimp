@@ -207,19 +207,6 @@ gimp_transform_tool_init (GimpTransformTool *transform_tool)
 
   transform_tool->info_dialog  = NULL;
 
-#if 0
-  tool->control = gimp_tool_control_new  (TRUE,                       /* scroll_lock */
-                                          TRUE,                       /* auto_snap_to */
-                                          FALSE,                      /* preserve */
-                                          FALSE,                      /* handle_empty_image */
-                                          FALSE,                      /* perfectmouse */
-                                          GIMP_MOUSE_CURSOR,          /* cursor */
-                                          GIMP_TOOL_CURSOR_NONE,      /* tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
-                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
-                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
-#endif
 }
 
 static void

@@ -158,9 +158,6 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
 
   tool = GIMP_TOOL (paint_tool);
 
-  /* tool->perfectmouse      = TRUE; */
-  /* FIXME tool->motion_mode       = GIMP_MOTION_MODE_EXACT; */
-
   paint_tool->pick_colors = FALSE;
   paint_tool->pick_state  = FALSE;
 }

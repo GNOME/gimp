@@ -196,7 +196,7 @@ gimp_magnify_tool_init (GimpMagnifyTool *magnify_tool)
                                           FALSE,                      /* auto_snap_to */
                                           TRUE,                       /* preserve */
                                           FALSE,                      /* handle_empty_image */
-                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOTION_MODE_HINT,      /* motion_mode */
                                           GIMP_ZOOM_CURSOR,
                                           GIMP_ZOOM_TOOL_CURSOR,
                                           GIMP_CURSOR_MODIFIER_PLUS,

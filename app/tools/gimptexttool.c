@@ -206,7 +206,7 @@ gimp_text_tool_init (GimpTextTool *text_tool)
                                           TRUE,                       /* auto_snap_to */
                                           TRUE,                       /* preserve */
                                           FALSE,                      /* handle_empty_image */
-                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOTION_MODE_HINT,      /* motion_mode */
                                           GDK_FLEUR,                  /* cursor */
                                           GIMP_TEXT_TOOL_CURSOR,      /* tool_cursor */
                                           GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */

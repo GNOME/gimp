@@ -241,14 +241,9 @@ gimp_selection_tool_cursor_update (GimpTool        *tool,
 
   selection_tool = GIMP_SELECTION_TOOL (tool);
 
-  /*FIXME tool_cursor = tool->tool_cursor;*/
+  tool_cursor = gimp_tool_control_get_tool_cursor(tool->control);
   cmodifier   = GIMP_CURSOR_MODIFIER_NONE;
 
-#ifdef __GNUC__
-#warning FIXME!! (modifier cursors) 
-#endif
-
-#if 0
   switch (selection_tool->op)
     {
     case SELECTION_ADD:
@@ -273,7 +268,7 @@ gimp_selection_tool_cursor_update (GimpTool        *tool,
       cmodifier = GIMP_CURSOR_MODIFIER_ANCHOR;
       break;
     }
-#endif
+
   gimp_tool_set_cursor (tool, gdisp,
                         GIMP_MOUSE_CURSOR,
                         tool_cursor,

@@ -151,11 +151,11 @@ gimp_rotate_tool_init (GimpRotateTool *rotate_tool)
 
   tool = GIMP_TOOL (rotate_tool);
 
-  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+  tool->control = gimp_tool_control_new  (TRUE,                       /* scroll_lock */
                                           TRUE,                       /* auto_snap_to */
-                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* preserve */
                                           FALSE,                      /* handle_empty_image */
-                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOTION_MODE_HINT,      /* motion_mode */
                                           GIMP_MOUSE_CURSOR,          /* cursor */
                                           GIMP_ROTATE_TOOL_CURSOR,    /* tool_cursor */
                                           GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */

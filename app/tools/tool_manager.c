@@ -35,7 +35,7 @@
 
 #include "display/gimpdisplay.h"
 
-#include "gimptoolcontrol-displayshell.h"
+#include "gimptoolcontrol.h"
 #include "gimprectselecttool.h"
 #include "paint_options.h"
 #include "tool_manager.h"

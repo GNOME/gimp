@@ -149,7 +149,7 @@ gimp_convolve_tool_init (GimpConvolveTool *convolve)
                                           TRUE,                       /* auto_snap_to */
                                           TRUE,                       /* preserve */
                                           FALSE,                      /* handle_empty_image */
-                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOTION_MODE_EXACT,     /* motion_mode */
                                           GIMP_BLUR_TOOL_CURSOR,      /* cursor */
                                           GIMP_TOOL_CURSOR_NONE,      /* tool_cursor */
                                           GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */

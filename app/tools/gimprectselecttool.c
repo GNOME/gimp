@@ -160,11 +160,11 @@ gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
 
   tool = GIMP_TOOL (rect_select);
 
-  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+  tool->control = gimp_tool_control_new  (TRUE,                       /* scroll_lock */
                                           TRUE,                       /* auto_snap_to */
-                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* preserve */
                                           FALSE,                      /* handle_empty_image */
-                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOTION_MODE_HINT,      /* motion_mode */
                                           GIMP_MOUSE_CURSOR,          /* cursor */
                                           GIMP_RECT_SELECT_TOOL_CURSOR,  /* tool_cursor */
                                           GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */

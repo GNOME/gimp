@@ -37,7 +37,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "libgimptool/gimptooltypes.h"
-#include "tools/gimptoolcontrol-displayshell.h"
+#include "libgimptool/gimptoolcontrol.h"
 
 #include "tools/gimpmovetool.h"
 #include "tools/tool_manager.h"
@@ -431,10 +431,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           case 1:
             state |= GDK_BUTTON1_MASK;
 
-            if (gimp_tool_control_wants_perfect_mouse(active_tool->control) && gimprc.perfectmouse)
-/* FIXME */
-#if 0
-            if (((active_tool->motion_mode == GIMP_MOTION_MODE_EXACT) &&
+            if (((gimp_tool_control_motion_mode(active_tool->control) == GIMP_MOTION_MODE_EXACT) &&
                  gimprc.perfectmouse) ||
 
                 /*  don't request motion hins for XInput devices because
@@ -443,8 +440,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                  */
                 (gimp_devices_get_current (gimage->gimp) !=
                  gdk_device_get_core_pointer ()))
-#endif
-                 
               {
                 gdk_pointer_grab (canvas->window, FALSE,
                                   GDK_BUTTON1_MOTION_MASK |
@@ -694,9 +689,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           return TRUE;
 
         active_tool = tool_manager_get_active (gimage->gimp);
-/* FIXME */
-#if 0
-        switch (active_tool->motion_mode)
+
+	switch (gimp_tool_control_motion_mode (active_tool->control))
           {
           case GIMP_MOTION_MODE_EXACT:
           case GIMP_MOTION_MODE_HINT:
@@ -706,7 +700,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             compressed_motion = gimp_display_shell_compress_motion (shell);
             break;
           }
-#endif
         if (compressed_motion)
           {
             g_print ("gimp_display_shell_compress_motion() returned an event\n");

@@ -173,7 +173,7 @@ gimp_fuzzy_select_tool_init (GimpFuzzySelectTool *fuzzy_select)
                                           TRUE,                       /* auto_snap_to */
                                           TRUE,                       /* preserve */
                                           FALSE,                      /* handle_empty_image */
-                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOTION_MODE_COMPRESS,  /* motion_mode */
                                           GIMP_MOUSE_CURSOR,          /* cursor */
                                           GIMP_FUZZY_SELECT_TOOL_CURSOR,      /* tool_cursor */
                                           GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
@@ -181,7 +181,6 @@ gimp_fuzzy_select_tool_init (GimpFuzzySelectTool *fuzzy_select)
                                           GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
                                           GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
 
-  /* FIXME!! tool->motion_mode = GIMP_MOTION_MODE_COMPRESS; */
 
   fuzzy_select->fuzzy_mask      = NULL;
   fuzzy_select->x               = 0;

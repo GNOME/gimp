@@ -246,7 +246,7 @@ gimp_by_color_select_tool_init (GimpByColorSelectTool *by_color_select)
                                           TRUE,                       /* auto_snap_to */
                                           FALSE,                      /* preserve */
                                           FALSE,                      /* handle_empty_image */
-                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOTION_MODE_HINT,      /* motion_mode */
                                           GIMP_MOUSE_CURSOR,          /* cursor */
                                           GIMP_RECT_SELECT_TOOL_CURSOR,      /* tool_cursor */
                                           GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */

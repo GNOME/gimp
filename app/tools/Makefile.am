@@ -100,8 +100,6 @@ libapptools_a_SOURCES = @STRIP_BEGIN@ \
 	gimptool.h			\
 	gimptoolcontrol.c		\
 	gimptoolcontrol.h		\
-	gimptoolcontrol-displayshell.c  \
-	gimptoolcontrol-displayshell.h  \
 	gimptoolmodule.c		\
 	gimptoolmodule.h		\
 	gimptransformtool.c		\

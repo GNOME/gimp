@@ -75,8 +75,7 @@ gimp_tool_control_new  (gboolean           scroll_lock,
 	                gboolean           auto_snap_to,
 	                gboolean           preserve,
 	                gboolean           handle_empty_image,
-	                gboolean           perfectmouse,
-	                /* are all these necessary? */
+	                GimpMotionMode     motion_mode,
 			GdkCursorType      cursor,
 			GimpToolCursorType tool_cursor,
 			GimpCursorModifier cursor_modifier,
@@ -93,7 +92,7 @@ gimp_tool_control_new  (gboolean           scroll_lock,
   control->auto_snap_to           = auto_snap_to;
   control->preserve               = preserve;
   control->handle_empty_image     = handle_empty_image;
-  control->perfectmouse           = perfectmouse;
+  control->motion_mode            = motion_mode;
   
   control->cursor                 = cursor;
   control->tool_cursor            = tool_cursor;
@@ -244,3 +243,98 @@ gimp_tool_control_set_scroll_lock            (GimpToolControl     *control,
   control->scroll_lock = scroll_lock; 
 }
 
+GimpMotionMode
+gimp_tool_control_motion_mode            (GimpToolControl   *control)
+{
+  g_return_val_if_fail(GIMP_IS_TOOL_CONTROL(control), GIMP_MOTION_MODE_HINT);
+
+  return control->motion_mode;
+}
+
+gboolean
+gimp_tool_control_handles_empty_image    (GimpToolControl   *control)
+{
+  g_return_val_if_fail(GIMP_IS_TOOL_CONTROL(control), FALSE);
+
+  return control->handle_empty_image;
+}
+
+gboolean
+gimp_tool_control_auto_snap_to           (GimpToolControl   *control)
+{
+  g_return_val_if_fail(GIMP_IS_TOOL_CONTROL(control), FALSE);
+
+  return control->auto_snap_to;
+}
+
+gboolean
+gimp_tool_control_preserve               (GimpToolControl   *control)
+{
+  g_return_val_if_fail(GIMP_IS_TOOL_CONTROL(control), FALSE);
+
+  return control->preserve;
+}
+
+gboolean
+gimp_tool_control_scroll_lock            (GimpToolControl   *control)
+{
+  g_return_val_if_fail(GIMP_IS_TOOL_CONTROL(control), FALSE);
+
+  return control->scroll_lock;
+}
+
+gboolean
+gimp_tool_control_is_toggled             (GimpToolControl   *control)
+{
+  g_return_val_if_fail(GIMP_IS_TOOL_CONTROL(control), FALSE);
+
+  return control->toggled;
+}
+
+GdkCursorType 
+gimp_tool_control_get_cursor  (GimpToolControl   *control)
+{
+  g_return_val_if_fail(GIMP_IS_TOOL_CONTROL(control), FALSE);
+
+  return control->cursor;
+}
+
+GdkCursorType 
+gimp_tool_control_get_toggle_cursor  (GimpToolControl   *control)
+{
+  g_return_val_if_fail(GIMP_IS_TOOL_CONTROL(control), FALSE);
+
+  return control->toggle_cursor;
+}
+
+GimpToolCursorType 
+gimp_tool_control_get_tool_cursor  (GimpToolControl   *control)
+{
+  g_return_val_if_fail(GIMP_IS_TOOL_CONTROL(control), FALSE);
+
+  return control->tool_cursor;
+}
+
+GimpToolCursorType 
+gimp_tool_control_get_toggle_tool_cursor  (GimpToolControl   *control)
+{
+  g_return_val_if_fail(GIMP_IS_TOOL_CONTROL(control), FALSE);
+
+  return control->toggle_tool_cursor;
+}
+
+GimpCursorModifier 
+gimp_tool_control_get_cursor_modifier  (GimpToolControl   *control)
+{
+  g_return_val_if_fail(GIMP_IS_TOOL_CONTROL(control), FALSE);
+
+  return control->cursor_modifier;
+}
+
+GimpCursorModifier 
+gimp_tool_control_get_toggle_cursor_modifier  (GimpToolControl   *control)
+{
+  g_return_val_if_fail(GIMP_IS_TOOL_CONTROL(control), FALSE);
+
+  return control->toggle_cursor_modifier;
+}

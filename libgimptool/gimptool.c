@@ -33,7 +33,7 @@
 #include "display/gimpstatusbar.h" */
 
 #include "gimptool.h"
-/*#include "tool_manager.h"*/
+#include "gimptoolcontrol.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -374,21 +374,18 @@ gimp_tool_real_cursor_update (GimpTool        *tool,
 			      GdkModifierType  state,
 			      GimpDisplay     *gdisp)
 {
-/* FIXME */
-#if 0
-  if (tool->toggled)
+  if (gimp_tool_control_is_toggled(tool->control))
     {
       gimp_tool_set_cursor (tool, gdisp,
-                            tool->toggle_cursor,
-                            tool->toggle_tool_cursor,
-                            tool->toggle_cursor_modifier);
+                            gimp_tool_control_get_toggle_cursor(tool->control),
+                            gimp_tool_control_get_toggle_tool_cursor(tool->control),
+                            gimp_tool_control_get_toggle_cursor_modifier(tool->control));
     }
   else
     {
       gimp_tool_set_cursor (tool, gdisp,
-                            tool->cursor,
-                            tool->tool_cursor,
-                            tool->cursor_modifier);
+                            gimp_tool_control_get_cursor(tool->control),
+                            gimp_tool_control_get_tool_cursor(tool->control),
+                            gimp_tool_control_get_cursor_modifier(tool->control));
     }
- #endif
 }

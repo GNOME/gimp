@@ -22,6 +22,16 @@
  *
  * thanks to Professor D. Forsyth for prompting us to implement this tool. */
 
+/* Personal note: Dr. Barrett, one of the authors of the paper written above
+ * is not only one of the most brilliant people I have ever met, he is an
+ * incredible professor who genuinely cares about his students and wants them
+ * to learn as much as they can about the topic.
+ *
+ * I didn't even notice I was taking a class from the person who wrote the
+ * paper until halfway through the semester.
+ *                                                   -- Rockwalrus
+ */
+
 /* The history of this implementation is lonog and varied.  It was
  * orignally done by Spencer and Peter, and worked fine in the 0.54
  * (motif only) release of the gimp.  Later revisions (0.99.something
@@ -342,11 +352,11 @@ gimp_iscissors_tool_init (GimpIscissorsTool *iscissors)
   iscissors->gradient_map = NULL;
   iscissors->livewire     = NULL;
 
-  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+  tool->control = gimp_tool_control_new  (TRUE,                       /* scroll_lock */
                                           FALSE,                      /* auto_snap_to */
-                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* preserve */
                                           FALSE,                      /* handle_empty_image */
-                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOTION_MODE_HINT,      /* motion_mode */
                                           GIMP_MOUSE_CURSOR,          /* cursor */
                                           GIMP_SCISSORS_TOOL_CURSOR,  /* tool_cursor */
                                           GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */

@@ -41,36 +41,56 @@ GimpToolControl *gimp_tool_control_new  (gboolean           scroll_lock,
   				         GimpCursorModifier cursor_modifier,
 				         GdkCursorType      toggle_cursor,
   				         GimpToolCursorType toggle_tool_cursor,
-  			 	         GimpCursorModifier toggle_cursor_modifier);
-			       
-void gimp_tool_control_pause            (GimpToolControl   *control);
-void gimp_tool_control_resume           (GimpToolControl   *control);
-gboolean gimp_tool_control_is_paused    (GimpToolControl   *control);
+  			  	         GimpCursorModifier toggle_cursor_modifier);
 
-void gimp_tool_control_activate         (GimpToolControl   *control);
-void gimp_tool_control_halt             (GimpToolControl   *control);
-gboolean gimp_tool_control_is_active    (GimpToolControl   *control);
 
-void gimp_tool_control_set_toggle       (GimpToolControl   *control,
-                                         gboolean           toggled);
-void gimp_tool_control_set_preserve     (GimpToolControl   *control,
-                                         gboolean           preserve);
-void gimp_tool_control_set_scroll_lock  (GimpToolControl   *control,
-                                         gboolean           scroll_lock);
+void               gimp_tool_control_pause                      (GimpToolControl   *control);
+void               gimp_tool_control_resume                     (GimpToolControl   *control);
+gboolean           gimp_tool_control_is_paused                  (GimpToolControl   *control);
 
-void gimp_tool_control_set_cursor            (GimpToolControl    *control,
-                                              GdkCursorType       cursor);
-void gimp_tool_control_set_tool_cursor       (GimpToolControl    *control,
-                                              GimpToolCursorType  cursor);
-void gimp_tool_control_set_cursor_modifier   (GimpToolControl    *control,
-                                              GimpCursorModifier  cmodifier);
+void               gimp_tool_control_activate                   (GimpToolControl   *control);
+void               gimp_tool_control_halt                       (GimpToolControl   *control);
+gboolean           gimp_tool_control_is_active                  (GimpToolControl   *control);
 
-void gimp_tool_control_set_toggle_cursor            (GimpToolControl    *control,
-                                                     GdkCursorType       cursor);
-void gimp_tool_control_set_toggle_tool_cursor       (GimpToolControl    *control,
-                                                     GimpToolCursorType  cursor);
-void gimp_tool_control_set_toggle_cursor_modifier   (GimpToolControl    *control,
-                                                     GimpCursorModifier  cmodifier);
+void               gimp_tool_control_set_toggle                 (GimpToolControl   *control,
+                                                                 gboolean           toggled);
+gboolean           gimp_tool_control_is_toggled                 (GimpToolControl   *control);
+
+void               gimp_tool_control_set_preserve               (GimpToolControl   *control,
+                                                                 gboolean           preserve);
+gboolean           gimp_tool_control_preserve                   (GimpToolControl   *control);
+
+void               gimp_tool_control_set_scroll_lock            (GimpToolControl   *control,
+                                                                 gboolean           scroll_lock);
+gboolean           gimp_tool_control_scroll_lock                (GimpToolControl   *control);
+GimpMotionMode     gimp_tool_control_motion_mode                (GimpToolControl   *control);
+gboolean           gimp_tool_control_handles_empty_image        (GimpToolControl   *control);
+gboolean           gimp_tool_control_auto_snap_to               (GimpToolControl   *control);
+
+GdkCursorType      gimp_tool_control_get_cursor                 (GimpToolControl    *control);
+
+void               gimp_tool_control_set_cursor                 (GimpToolControl    *control,
+                                                                 GdkCursorType       cursor);
+GimpToolCursorType gimp_tool_control_get_tool_cursor            (GimpToolControl   *control);
+
+void               gimp_tool_control_set_tool_cursor            (GimpToolControl    *control,
+                                                                 GimpToolCursorType  cursor);
+GimpCursorModifier gimp_tool_control_get_cursor_modifier        (GimpToolControl    *control);
+
+void               gimp_tool_control_set_cursor_modifier        (GimpToolControl    *control,
+                                                                 GimpCursorModifier  cmodifier);
+GdkCursorType      gimp_tool_control_get_toggle_cursor          (GimpToolControl    *control);
+
+void               gimp_tool_control_set_toggle_cursor          (GimpToolControl    *control,
+                                                                 GdkCursorType       cursor);
+GimpToolCursorType gimp_tool_control_get_toggle_tool_cursor     (GimpToolControl    *control);
+
+void               gimp_tool_control_set_toggle_tool_cursor     (GimpToolControl    *control,
+                                                                 GimpToolCursorType  cursor);
+GimpCursorModifier gimp_tool_control_get_toggle_cursor_modifier (GimpToolControl    *control);
+
+void               gimp_tool_control_set_toggle_cursor_modifier (GimpToolControl    *control,
+                                                                 GimpCursorModifier  cmodifier);
 
                                               
 

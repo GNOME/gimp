@@ -48,8 +48,8 @@ struct _GimpToolControl {
                                       *  changes                              */
   gboolean       handle_empty_image; /*  invoke the tool on images without    *
                                       *  active drawable                      */
-  gboolean       perfectmouse;       /*  tool is affected by gimprc's         *
-                                      *  "prefectmouse" setting               */
+   GimpMotionMode motion_mode;       /*  how to process motion events before  *
+                                      *  they are forwarded to the tool       */
   GdkCursorType      cursor;
   GimpToolCursorType tool_cursor;
   GimpCursorModifier cursor_modifier;

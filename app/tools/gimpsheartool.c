@@ -148,11 +148,11 @@ gimp_shear_tool_init (GimpShearTool *shear_tool)
   tool           = GIMP_TOOL (shear_tool);
   transform_tool = GIMP_TRANSFORM_TOOL (shear_tool);
 
-  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
+  tool->control = gimp_tool_control_new  (TRUE,                       /* scroll_lock */
                                           TRUE,                       /* auto_snap_to */
-                                          TRUE,                       /* preserve */
+                                          FALSE,                      /* preserve */
                                           FALSE,                      /* handle_empty_image */
-                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOTION_MODE_HINT,      /* motion_mode */
                                           GIMP_MOUSE_CURSOR,          /* cursor */
                                           GIMP_SHEAR_TOOL_CURSOR,     /* tool_cursor */
                                           GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */

@@ -121,7 +121,7 @@ gimp_airbrush_tool_init (GimpAirbrushTool *airbrush)
                                           TRUE,                       /* auto_snap_to */
                                           TRUE,                       /* preserve */
                                           FALSE,                      /* handle_empty_image */
-                                          FALSE,                      /* perfectmouse */
+                                          GIMP_MOTION_MODE_EXACT,     /* motion_mode */
                                           GIMP_MOUSE_CURSOR,          /* cursor */
                                           GIMP_AIRBRUSH_TOOL_CURSOR,  /* tool_cursor */
                                           GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */

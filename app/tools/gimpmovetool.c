@@ -190,8 +190,8 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
   tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
                                           FALSE,                      /* auto_snap_to */
                                           TRUE,                       /* preserve */
-                                          TRUE,                      /* handle_empty_image */
-                                          FALSE,                      /* perfectmouse */
+                                          TRUE,                       /* handle_empty_image */
+                                          GIMP_MOTION_MODE_HINT,      /* motion_mode */
                                           GIMP_MOUSE_CURSOR,          /* cursor */
                                           GIMP_MOVE_TOOL_CURSOR,      /* tool_cursor */
                                           GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */

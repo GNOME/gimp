@@ -151,4 +151,11 @@ void gimp_tool_control_halt             (GimpToolControl   *control)
 #endif  
 }
   
+GdkCursorType gimp_tool_control_get_toggle_cursor (GimpToolControl *control) {return 0;}
+GdkCursorType gimp_tool_control_get_tool_cursor (GimpToolControl *control){return 0;}
+GimpCursorModifier gimp_tool_control_get_cursor_modifier(GimpToolControl *control){return 0;}
+GimpCursorModifier gimp_tool_control_get_toggle_cursor_modifier(GimpToolControl *control){return 0;}
+gboolean gimp_tool_control_is_toggled (GimpToolControl *control){return 0;}
+GimpToolCursorType gimp_tool_control_get_toggle_tool_cursor(GimpToolControl *control) {return 0;}
+GimpToolCursorType gimp_tool_control_get_cursor(GimpToolControl *control){return 0;}
 
