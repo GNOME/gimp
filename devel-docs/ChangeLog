@@ -1,3 +1,10 @@
+2005-01-23  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpenums.sgml
+	* libgimpbase/libgimpbase-sections.txt
+	* libgimpbase/tmpl/gimpbaseenums.sgml: updated for moved enums.
+
 2005-01-22  Sven Neumann  <sven@gimp.org>
 
 	* app/app-docs.sgml
