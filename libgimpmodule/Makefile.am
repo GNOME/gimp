@@ -49,7 +49,8 @@ AM_CPPFLAGS = \
 
 INCLUDES = \
 	-I$(top_srcdir)	\
-	$(GLIB_CFLAGS)	\
+	$(GLIB_CFLAGS) \
+	$(GMODULE_CFLAGS) \
 	-I$(includedir)
 
 EXTRA_DIST = \
@@ -81,7 +82,8 @@ libgimpmodule_1_3_la_DEPENDENCIES = $(gimpmodule_def)
 
 libgimpmodule_1_3_la_LIBADD = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(GLIB_LIBS)
+	$(GLIB_LIBS)							\
+	$(GMODULE_LIBS)
 
 install-data-local: install-ms-lib install-libtool-import-lib
 

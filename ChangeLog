@@ -12,6 +12,9 @@
 	* libgimpmath/Makefile.am (EXTRA_DIST)
 	* libgimpbase/Makefile.am (EXTRA_DIST): Drop makefile.mingw{,.in}.
 
+	* libgimpmodule/Makefile.am (INCLUDES): Add GMODULE_CFLAGS.
+	(LIBADD): Add GMODULE_LIBS.
+
 2002-12-21  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/imagemap/imap_csim.l: add "<string.h> to remove warning.
