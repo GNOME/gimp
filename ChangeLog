@@ -1,3 +1,8 @@
+2004-10-25  Michael Natterer  <mitch@gimp.org>
+
+	* menus/toolbox-menu.xml.in: commented out the "Debug" submenu.
+	Should do this via an xsltproc --param actually...
+
 2004-10-25  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/newsprint.c: removed debugging g_print and
