@@ -164,8 +164,13 @@ this one may not necessarily fit.
 	 po/gimp.pot		          --  the core
 	 po-libgimp/gimp-libgimp.pot	  --  the libgimp library
 	 po-plugins/gimp-std-plugins.pot  --  most of the plug-ins
-	 plug-ins/perl/po/gimp-perl.pot   --  the gimp-perl scripts
 	 po-script-fu/gimp-script-fu.pot  --  the script-fu scripts
+         tips/gimp-tips.pot               --  the startup tips
+
+        (plug-ins/perl/po/gimp-perl.pot   --  the gimp-perl scripts)
+
+ The perl translation is in brackets since gimp-perl is not built at
+ the moment and it is not sure whether it will be in GIMP-1.4 or not.	
 
  When translating menu_paths, please do not translate the name of the
  item_factory (that is the one in brackets at the front), e.g.
