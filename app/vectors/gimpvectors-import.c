@@ -716,20 +716,24 @@ parse_svg_viewbox (const gchar *value,
   return success;
 }
 
-gboolean
+static gboolean
 parse_svg_transform (const gchar *value,
                      GimpMatrix3 *matrix)
 {
-  gint    i;
-  gchar   keyword[32];
-  gdouble args[6];
-  gint    n_args;
-  gint    key_len;
+  gint i;
 
   gimp_matrix3_identity (matrix);
 
-  for (i= 0; value[i]; i++)
+  for (i = 0; value[i]; i++)
     {
+      GimpMatrix3  trafo;
+      gchar        keyword[32];
+      gdouble      args[6];
+      gint         n_args;
+      gint         key_len;
+
+      gimp_matrix3_identity (&trafo);
+
       /* skip initial whitespace */
       while (g_ascii_isspace (value[i]))
         i++;
@@ -766,10 +770,11 @@ parse_svg_transform (const gchar *value,
           /* skip whitespace */
           while (g_ascii_isspace (value[i]))
             i++;
+
           c = value[i];
           if (g_ascii_isdigit (c) || c == '+' || c == '-' || c == '.')
             {
-              if (n_args == G_N_ELEMENTS(args))
+              if (n_args == G_N_ELEMENTS (args))
                 return FALSE; /* too many args */
 
               args[n_args] = g_ascii_strtod (value + i, &end_ptr);
@@ -788,13 +793,14 @@ parse_svg_transform (const gchar *value,
             return FALSE;
         }
 
-      /* ok, have parsed keyword and args, now modify the transform */
+      /* OK, have parsed keyword and args, now calculate the transform matrix */
+
       if (!strcmp (keyword, "matrix"))
         {
           if (n_args != 6)
             return FALSE;
 
-          gimp_matrix3_affine (matrix,
+          gimp_matrix3_affine (&trafo,
                                args[0], args[1],
                                args[2], args[3],
                                args[4], args[5]);
@@ -806,7 +812,7 @@ parse_svg_transform (const gchar *value,
           else if (n_args != 2)
             return FALSE;
 
-          gimp_matrix3_translate (matrix, args[0], args[1]);
+          gimp_matrix3_translate (&trafo, args[0], args[1]);
         }
       else if (!strcmp (keyword, "scale"))
         {
@@ -815,34 +821,47 @@ parse_svg_transform (const gchar *value,
           else if (n_args != 2)
             return FALSE;
 
-          gimp_matrix3_scale (matrix, args[0], args[1]);
+          gimp_matrix3_scale (&trafo, args[0], args[1]);
         }
       else if (!strcmp (keyword, "rotate"))
         {
-          if (n_args != 1)
+          if (n_args == 1)
+            {
+              gimp_matrix3_rotate (&trafo, gimp_deg_to_rad (args[0]));
+            }
+          else if (n_args == 3)
+            {
+              gimp_matrix3_translate (&trafo, -args[1], -args[2]);
+              gimp_matrix3_rotate (&trafo, gimp_deg_to_rad (args[0]));
+              gimp_matrix3_translate (&trafo, args[1], args[2]);
+            }
+          else
             return FALSE;
-
-          gimp_matrix3_rotate (matrix, gimp_deg_to_rad (args[0]));
         }
       else if (!strcmp (keyword, "skewX"))
         {
           if (n_args != 1)
             return FALSE;
 
-          gimp_matrix3_xshear (matrix, tan (gimp_deg_to_rad (args[0])));
+          gimp_matrix3_xshear (&trafo, tan (gimp_deg_to_rad (args[0])));
         }
       else if (!strcmp (keyword, "skewY"))
         {
           if (n_args != 1)
             return FALSE;
 
-          gimp_matrix3_yshear (matrix, tan (gimp_deg_to_rad (args[0])));
+          gimp_matrix3_yshear (&trafo, tan (gimp_deg_to_rad (args[0])));
         }
       else
         {
           return FALSE; /* unknown keyword */
         }
+
+      gimp_matrix3_invert (&trafo);
+      gimp_matrix3_mult (&trafo, matrix);
     }
+
+  gimp_matrix3_invert (matrix);
 
   return TRUE;
 }
