@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
-"POT-Creation-Date: 2002-02-17 23:17+0000\n"
-"PO-Revision-Date: 2002-02-15 13:01+0000\n"
+"POT-Creation-Date: 2002-03-01 02:25+0000\n"
+"PO-Revision-Date: 2002-03-01 02:30+0000\n"
 "Last-Translator: Filipe Maia <fmaia@gmx.net>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -7162,7 +7162,11 @@ msgstr "<Image>/Imagem/Transformações/Recorte cuidadoso"
 
 #: plug-ins/common/zealouscrop.c:118
 msgid "ZealousCropping(tm)..."
-msgstr "Recortando com cuidado(tm)..."
+msgstr "ZealousCropping(tm)..."
+
+#: plug-ins/common/zealouscrop.c:219
+msgid "ZealousCrop(tm): Nothing to crop."
+msgstr "ZealousCrop(tm): Nada a recortar."
 
 #: plug-ins/dbbrowser/dbbrowser.c:90
 msgid "<Toolbox>/Xtns/DB Browser..."
