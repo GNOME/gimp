@@ -22,6 +22,14 @@
 
 #include <glib-object.h>
 
+#include <libart_lgpl/art_gray_svp.h>
+#include <libart_lgpl/art_misc.h>
+#include <libart_lgpl/art_pathcode.h>
+#include <libart_lgpl/art_svp.h>
+#include <libart_lgpl/art_svp_vpath.h>
+#include <libart_lgpl/art_svp_wind.h>
+#include <libart_lgpl/art_vpath.h>
+
 #include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
@@ -33,111 +41,23 @@
 #include "gimpscanconvert.h"
 
 
-#ifdef DEBUG
-#define TRC(x) printf x
-#else
-#define TRC(x)
-#endif
-
-
 struct _GimpScanConvert
 {
   guint        width;
   guint        height;
-  GSList     **scanlines;   /* array of height*antialias scanlines */
 
   guint        antialias;   /* how much to oversample by */
+                            /* currently only used as boolean value */
 
   /* record the first and last points so we can close the curve */
   gboolean     got_first;
   GimpVector2  first;
   gboolean     got_last;
   GimpVector2  last;
+
+  guint        num_nodes;
+  ArtVpath    *vpath;
 };
-
-
-/* Local helper routines to scan convert the polygon */
-
-static GSList *
-insert_into_sorted_list (GSList *list,
-			 gint    x)
-{
-  GSList *orig = list;
-  GSList *next;
-
-  if (!list)
-    return g_slist_prepend (list, GINT_TO_POINTER (x));
-
-  while (list)
-    {
-      next = g_slist_next (list);
-      if (x < GPOINTER_TO_INT (list->data))
-	{
-	  next = g_slist_prepend (next, list->data);
-	  list->next = next;
-	  list->data = GINT_TO_POINTER (x);
-	  return orig;
-	}
-      else if (!next)
-	{
-	  g_slist_append (list, GINT_TO_POINTER (x));
-	  return orig;
-	}
-      list = g_slist_next (list);
-    }
-
-  return orig;
-}
-
-
-static void
-convert_segment (GimpScanConvert *sc,
-		 gint             x1,
-		 gint             y1,
-		 gint             x2,
-		 gint             y2)
-{
-  gint     ydiff, y;
-  gint     width;
-  gint     height;
-  GSList **scanlines;
-  gfloat   xinc, x;
-
-  /* pre-calculate invariant commonly used values */
-  width     = sc->width  * sc->antialias;
-  height    = sc->height * sc->antialias;
-  scanlines = sc->scanlines;    
-
-  ydiff = y2 - y1;
-
-  if (ydiff)
-    {
-      if (ydiff < 0)
-        {
-          gint tmp;
-          
-          tmp = y2; y2 = y1; y1 = tmp;
-          tmp = x2; x2 = x1; x1 = tmp;
-          
-          ydiff = - ydiff;
-        }
-
-      /* FIXME: using Bresenham here would probably be more appropriate */
-      
-      xinc = (float) (x2 - x1) / (float) ydiff;
-      x = x1 + 0.5 * xinc;
-      
-      for (y = y1 ; y < y2; y++)
-        {
-          if (y >= 0 && y < height)
-            scanlines[y] = insert_into_sorted_list (scanlines[y],
-                                                    CLAMP (ROUND (x),
-                                                           0, width));
-          
-          x += xinc;
-        }
-    }
-}
 
 
 /*  public functions  */
@@ -158,7 +78,9 @@ gimp_scan_convert_new (guint width,
   sc->antialias = antialias;
   sc->width     = width;
   sc->height    = height;
-  sc->scanlines = g_new0 (GSList *, height * antialias);
+
+  sc->num_nodes = 0;
+  sc->vpath     = NULL;
 
   return sc;
 }
@@ -166,12 +88,7 @@ gimp_scan_convert_new (guint width,
 void
 gimp_scan_convert_free (GimpScanConvert *sc)
 {
-  gint i;
-
-  for (i = 0; i < sc->height * sc->antialias; i++)
-    g_slist_free (sc->scanlines[i]);
-
-  g_free (sc->scanlines);
+  art_free (sc->vpath);
   g_free (sc);
 }
 
@@ -197,31 +114,16 @@ gimp_scan_convert_add_points (GimpScanConvert *sc,
       sc->first = points[0];
     }
 
-  /* link from previous point */
-  if (sc->got_last && n_points > 0)
-    {
-      TRC (("|| %g,%g -> %g,%g\n",
-	    sc->last.x, sc->last.y,
-	    points[0].x, points[0].y));
-      convert_segment (sc,
-		       (gint) sc->last.x * antialias,
-		       (gint) sc->last.y * antialias,
-		       (gint) points[0].x * antialias,
-		       (gint) points[0].y * antialias);
-    }
+  /* We need up to two extra nodes later to close and finish the path */
+  sc->vpath = art_renew (sc->vpath, ArtVpath, sc->num_nodes + n_points + 2);
 
-  for (i = 0; i < (n_points - 1); i++)
+  for (i = 0; i < n_points; i++)
     {
-      convert_segment (sc,
-		       (gint) points[i].x * antialias,
-		       (gint) points[i].y * antialias,
-		       (gint) points[i + 1].x * antialias,
-		       (gint) points[i + 1].y * antialias);
+      sc->vpath[sc->num_nodes + i].code = (sc->num_nodes + i) ? ART_LINETO : ART_MOVETO;
+      sc->vpath[sc->num_nodes + i].x = points[i].x;
+      sc->vpath[sc->num_nodes + i].y = points[i].y;
     }
-
-  TRC (("[] %g,%g -> %g,%g\n",
-	points[0].x, points[0].y,
-	points[n_points-1].x, points[n_points-1].y));
+  sc->num_nodes += n_points;
 
   if (n_points > 0)
     {
@@ -242,112 +144,82 @@ gimp_scan_convert_to_channel (GimpScanConvert *sc,
 			      GimpImage       *gimage)
 {
   GimpChannel *mask;
-  GSList      *list;
   PixelRegion  maskPR;
-  guint        widtha;
-  guint        heighta;
-  guint        antialias;
-  guint        antialias2;
-  guchar      *buf;
-  guchar      *b;
-  gint        *vals;
-  gint         val;
-  gint         x, w;
   gint         i, j;
 
-  antialias  = sc->antialias;
-  antialias2 = antialias * antialias;
+  gpointer     pr;  
+  ArtVpath    *pert_vpath;
+  ArtSVP      *svp, *svp2, *svp3;
+  guchar      *dest, *d;
 
   /*  do we need to close the polygon? */
   if (sc->got_first && sc->got_last &&
       (sc->first.x != sc->last.x || sc->first.y != sc->last.y))
     {
-      convert_segment (sc,
-		       (gint) sc->last.x * antialias,
-		       (gint) sc->last.y * antialias,
-		       (gint) sc->first.x * antialias,
-		       (gint) sc->first.y * antialias);
+      sc->vpath[sc->num_nodes].code = ART_LINETO;
+      sc->vpath[sc->num_nodes].x    = sc->first.x;
+      sc->vpath[sc->num_nodes].y    = sc->first.y;
+      sc->num_nodes++;
     }
 
   mask = gimp_channel_new_mask (gimage, sc->width, sc->height);
 
-  buf = g_new0 (guchar, sc->width);
-  widtha  = sc->width * antialias;
-  heighta = sc->height * antialias;
-  /* allocate value array  */
-  vals = g_new (gint, widtha);
+  sc->vpath[sc->num_nodes].code = ART_END;
+  sc->vpath[sc->num_nodes].x    = sc->first.x;
+  sc->vpath[sc->num_nodes].y    = sc->first.y;
+  sc->num_nodes++;
 
-  /* dump scanlines */
-  for (i = 0; i < heighta; i++)
-    {
-      list = sc->scanlines[i];
-      TRC (("%03d: ", i));
-      while (list)
-	{
-	  TRC (("%3d ", GPOINTER_TO_INT (list->data)));
-	  list = g_slist_next (list);
-	}
-      TRC (("\n"));
-    }
+  /*
+   * Current Libart (2.3.8) recommends a slight random distorsion
+   * of the path, because art_svp_uncross and art_svp_rewind_uncrossed
+   * are not yet numerically stable. It is actually possible to construct
+   * worst case scenarios. The slight perturbation should not have any
+   * visible effect.
+   */
+  pert_vpath = art_vpath_perturb (sc->vpath);
+
+  svp  = art_svp_from_vpath (pert_vpath);
+  svp2 = art_svp_uncross (svp);
+  svp3 = art_svp_rewind_uncrossed (svp2, ART_WIND_RULE_ODDEVEN);
 
   pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 0, 0, 
 		     gimp_drawable_width (GIMP_DRAWABLE (mask)), 
 		     gimp_drawable_height (GIMP_DRAWABLE (mask)), TRUE);
 
-  for (i = 0; i < heighta; i++)
+  g_return_val_if_fail (maskPR.bytes == 1, NULL);
+
+  for (pr = pixel_regions_register (1, &maskPR);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
-      list = sc->scanlines[i];
+      art_gray_svp_aa (svp3, maskPR.x, maskPR.y,
+                       maskPR.x + maskPR.w, maskPR.y + maskPR.h,
+                       maskPR.data, maskPR.rowstride);
+      if (!sc->antialias)
+        {
+          /*
+           * Ok, the user didn't want to have antialiasing, so just
+           * remove the results from lots of CPU-Power...
+           */
+          dest = maskPR.data;
 
-      /*  zero the vals array  */
-      if (!(i % antialias))
-	memset (vals, 0, widtha * sizeof (int));
-
-      while (list)
-	{
-	  x = GPOINTER_TO_INT (list->data);
-	  list = g_slist_next (list);
-	  if (!list)
-	    {
-	      g_message ("Cannot properly scanline convert polygon!\n");
-	    }
-	  else
-	    {
-	      w = GPOINTER_TO_INT (list->data) - x;
-
-	      if (w > 0)
-		{
-		  if (antialias == 1)
-		    {
-		      gimp_channel_add_segment (mask, x, i, w, 255);
-		    }
-		  else
-		    {
-		      for (j = 0; j < w; j++)
-			vals[j + x] += 255;
-		    }
-		}
-	      list = g_slist_next (list);
-	    }
-	}
-
-      if (antialias != 1 && !((i+1) % antialias))
-	{
-	  b = buf;
-	  for (j = 0; j < widtha; j += antialias)
-	    {
-	      val = 0;
-	      for (x = 0; x < antialias; x++)
-		val += vals[j + x];
-
-	      *b++ = (guchar) (val / antialias2);
-	    }
-
-	  pixel_region_set_row (&maskPR, 0, (i / antialias), sc->width, buf);
-	}
+          for (j = 0; j < maskPR.h; j++)
+            {
+              d = dest;
+              for (i = 0; i < maskPR.w; i++)
+                {
+                  d[0] = (d[0] >= 127) ? 255 : 0;
+                  d += maskPR.bytes;
+                }
+              dest += maskPR.rowstride;
+            }
+        }
     }
 
-  g_free (vals);
-  g_free (buf);
+  art_free (svp3);
+  art_free (svp2);
+  art_free (svp);
+  art_free (pert_vpath);
 
   return mask;
 }

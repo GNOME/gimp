@@ -1,3 +1,12 @@
+2002-03-06  Simon Budig  <simon@gimp.org>
+
+	* configure.in
+	* app/Makefile.am
+	* app/core/Makefile.am: We depend on Libart now.
+
+	* app/core/gimpscanconvert.c: Converted the Scan-Conversion to
+	use libart. *Way* better results.
+
 2002-03-06  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpbrushpipe.c

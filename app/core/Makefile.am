@@ -11,6 +11,7 @@ INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	-I$(top_srcdir)/app		\
 	$(GTK_CFLAGS)			\
+	$(LIBART_CFLAGS)		\
 	-I$(includedir)			\
 @STRIP_END@
 
