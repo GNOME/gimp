@@ -213,7 +213,7 @@ query (void)
 			  "Federico Mena Quintero and Simon Budig",
 			  "Federico Mena Quintero and Simon Budig",
 			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Distorts/Pagecurl..."),
+			  N_("<Image>/Filters/Distorts/_Pagecurl..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args),

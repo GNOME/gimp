@@ -831,7 +831,7 @@ plugin_query (void)
 			  "Eiichi Takamori",
 			  "Eiichi Takamori, and a lot of GIMP people",
 			  "1997",
-			  N_("<Image>/Filters/Light Effects/GFlare..."),
+			  N_("<Image>/Filters/Light Effects/_GFlare..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

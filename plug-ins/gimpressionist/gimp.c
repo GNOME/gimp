@@ -103,7 +103,7 @@ query(void)
                           "Vidar Madsen <vidar@prosalg.no>",
                           "Vidar Madsen",
                           PLUG_IN_VERSION,
-                          N_("<Image>/Filters/Artistic/GIMPressionist..."),
+                          N_("<Image>/Filters/Artistic/_GIMPressionist..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,

@@ -163,7 +163,7 @@ query (void)
 			  "Tom Bech & Federico Mena Quintero",
 			  "Tom Bech & Federico Mena Quintero",
 			  "Version 0.2.0, March 15 1998",
-			  N_("<Image>/Filters/Light Effects/Lighting Effects..."),
+			  N_("<Image>/Filters/Light Effects/_Lighting Effects..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

@@ -322,7 +322,7 @@ query (void)
 			  "Spencer Kimball",
 			  "Spencer Kimball & Peter Mattis",
 			  "1996",
-			  N_("<Image>/Filters/Distorts/Mosaic..."),
+			  N_("<Image>/Filters/Distorts/_Mosaic..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), nreturn_vals,

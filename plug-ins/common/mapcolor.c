@@ -366,7 +366,7 @@ query (void)
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           dversio,
-                          N_("<Image>/Filters/Colors/Map/Color Range Mapping..."),
+                          N_("<Image>/Filters/Colors/Map/Color Range _Mapping..."),
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (map_args), 0,

@@ -215,6 +215,8 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
     "file/dialogs/error_console.html", NULL },
 
 #ifdef ENABLE_DEBUG_ENTRIES
+  MENU_BRANCH (N_("/File/D_ebug")),
+
   { { "/File/Debug/_Mem Profile", NULL,
       debug_mem_profile_cmd_callback, 0 },
     NULL, NULL, NULL },

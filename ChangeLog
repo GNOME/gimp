@@ -1,3 +1,18 @@
+2003-08-01  Henrik Brix Andersen  <brix@gimp.org>
+
+	* plug-ins/rcm/rcm.c
+	* plug-ins/print/print.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/mosaic/mosaic.c
+	* plug-ins/MapObject/mapobject_main.c
+	* plug-ins/Lighting/lighting_main.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/gimpressionist/gimp.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/common/mapcolor.c
+	* app/gui/toolbox-menu.c: added more mnemonics to fix bug
+	#106991. More will follow soon...
+
 2003-07-31  Manish Singh  <yosh@gimp.org>
 
 	* libgimp/gimpcompat.h: removed references to GIMP_ADD_INVERSE_*
