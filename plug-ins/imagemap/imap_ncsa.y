@@ -22,8 +22,6 @@
  *
  */
 
-#include "config.h"
-
 #include <math.h>
 
 #include <gtk/gtk.h>

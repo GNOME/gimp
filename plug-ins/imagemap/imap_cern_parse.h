@@ -56,7 +56,7 @@
 
 
 #if ! defined (YYSTYPE) && ! defined (YYSTYPE_IS_DECLARED)
-#line 46 "imap_cern.y"
+#line 45 "imap_cern.y"
 typedef union YYSTYPE {
    int val;
    double value;
