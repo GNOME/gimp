@@ -6,12 +6,10 @@
 
 2004-07-01  Roman Joost <roman@bromeco.de>
 
-        * plug-ins/script-fu/scripts/blend-anim.scm
-        * plug-ins/script-fu/scripts/glossy.scm
-        * plug-ins/script-fu/scripts/test-sphere.scm: fixed typos
+	* plug-ins/script-fu/scripts/blend-anim.scm
+	* plug-ins/script-fu/scripts/glossy.scm
+	* plug-ins/script-fu/scripts/test-sphere.scm: fixed typos
         
-        * po-script-fu/de.po: updated german translation
-
 2004-07-01  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpselectiondata.[ch]: added (yet unused) functions

@@ -6,11 +6,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP HEAD\n"
+"Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-01 19:25+0200\n"
-"PO-Revision-Date: 2004-07-01 23:17+0200\n"
-"Last-Translator: Roman Joost <roman@bromeco.de>\n"
+"POT-Creation-Date: 2004-07-01 23:20+0200\n"
+"PO-Revision-Date: 2004-07-01 23:33+0200\n"
+"Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -151,13 +151,12 @@ msgid "Script-Fu _Console"
 msgstr "Skript-Fu _Konsole"
 
 #: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:160
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu"
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Neon..."
+msgstr "<Toolbox>/Xtns/Skript-Fu"
 
 #: plug-ins/script-fu/script-fu.c:153
 msgid "_Start Server..."
-msgstr ""
+msgstr "_Server starten..."
 
 #: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
 msgid "Re-read all available scripts"
@@ -1167,7 +1166,7 @@ msgstr "Effektgröße (Pixel)"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
 msgid "<Image>/Edit/Copy/Copy _Visible"
-msgstr "<Image>/Bearbeiten/_Kopiere Sichtbares"
+msgstr "<Image>/Bearbeiten/Kopieren/_Kopiere Sichtbares"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
@@ -1299,12 +1298,12 @@ msgid "Clear unselected maskarea"
 msgstr "Nicht ausgewählten Maskenbereich löschen"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Fade from %"
 msgstr "Überblenden von %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:8
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Fade to   %"
 msgstr "Überblenden nach %"
 
@@ -1356,7 +1355,7 @@ msgstr "Umriß Farbe"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Black on white"
-msgstr ""
+msgstr "Schwarz auf Weiß"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:4
 msgid "Font _size (pixels)"
@@ -1376,7 +1375,7 @@ msgstr "_Farbe 3"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:8
 msgid "_Filter (regexp)"
-msgstr ""
+msgstr "_Filter (regexp)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:9
 msgid "_Labels"
@@ -1411,7 +1410,7 @@ msgid "Granularity (1 is Low)"
 msgstr "Körnigkeit (1 ist wenig)"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Shadow weight (%)"
 msgstr "Schatten Breite (%)"
 
@@ -1573,7 +1572,7 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/_Farbverlauf..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
-msgid "Bevel height (sharpness)"
+msgid "Bevel height (Sharpness)"
 msgstr "Höhe der Schräge (Schärfe)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
@@ -2416,15 +2415,15 @@ msgstr "Fadenlänge"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:1
 msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
-msgstr "<Toolbox>/Xtns/Web-Browser/_Plugin Registrierung"
+msgstr "<Toolbox>/Xtns/GIMP Online/_Plugin Registrierung"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
-msgstr ""
+msgstr "<Toolbox>/Xtns/GIMP Online/_Entwicklung"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "<Toolbox>/Help/The GIMP Online/_Main Web Site"
-msgstr ""
+msgstr "<Toolbox>/Xtns/GIMP Online/_GIMP"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
@@ -2461,90 +2460,3 @@ msgstr "Glanzlicht Y-Versatz"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "Glanzlicht Deckkraft"
-
-#~ msgid "Blend gradient (sext)"
-#~ msgstr "Farbverlauf (Text)"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
-#~ msgstr "<Toolbox>/Xtns/Skript-Fu/Konsole..."
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
-#~ msgstr "<Toolbox>/Xtns/Skript-Fu/Server..."
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-#~ msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Quirlige Kacheln..."
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-#~ msgstr "<Toolbox>/Xtns/Web-Browser/Entwickler FAQ"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-#~ msgstr "<Toolbox>/Xtns/Web-Browser/GIMP Bugs"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-#~ msgstr "<Toolbox>/Xtns/Web-Browser/GIMP Handbuch"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-#~ msgstr "<Toolbox>/Xtns/Web-Browser/GIMP Neuigkeiten"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-#~ msgstr "<Toolbox>/Xtns/Web-Browser/GIMP Tutorials"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-#~ msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/Dokumentation"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-#~ msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/Download"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-#~ msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/GIMP Kunst"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-#~ msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/GTK+"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-#~ msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/Links"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-#~ msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/Mailing-Listen"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-#~ msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/Resourcen"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-#~ msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-#~ msgstr "<Toolbox>/Xtns/Web-Browser/Gimp-Savvy.com"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-#~ msgstr "<Toolbox>/Xtns/Web-Browser/Grokking the GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-#~ msgstr "<Toolbox>/Xtns/Web-Browser/Benutzer FAQ"
-
-#~ msgid "Border"
-#~ msgstr "Rand"
-
-#~ msgid "Fonts"
-#~ msgstr "Schriften"
-
-#~ msgid ""
-#~ "Burn-In: Need two layers in total!\n"
-#~ "        A foreground text layer with transparency\n"
-#~ "        and a background layer."
-#~ msgstr ""
-#~ "Burn-In: Es werden insgesamt zwei Ebenen benötigt!\n"
-#~ "        Eine transparente Textebene im Vordergrund\n"
-#~ "        sowie eine Hintergrundebene"
-
-#~ msgid "Grids X"
-#~ msgstr "Gitterlinien X"
-
-#~ msgid "Grids Y"
-#~ msgstr "Gitterlinien Y"
-
-#~ msgid "<Image>/Script-Fu/Render/Make Grid System..."
-#~ msgstr "<Image>/Skript-Fu/Render/Gittersystem..."
