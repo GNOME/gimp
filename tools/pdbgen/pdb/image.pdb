@@ -943,16 +943,7 @@ HELP
 }
 
 sub image_get_cmap {
-    $blurb = "Returns the image's colormap";
-
-    $help = <<'HELP';
-This procedure returns an actual pointer to the image's colormap, as well as
-the number of bytes contained in the colormap. The actual number of colors in
-the transmitted colormap will be "num_bytes" / 3. If the image is not of base
-type GIMP_INDEXED, this pointer will be NULL.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp_image_get_colormap');
 
     @inargs = ( &std_image_arg );
 
@@ -976,16 +967,7 @@ CODE
 }
 
 sub image_set_cmap {
-    $blurb = "Sets the entries in the image's colormap.";
-
-    $help = <<'HELP';
-This procedure sets the entries in the specified image's colormap. The number
-of entries is specified by the "num_bytes" parameter and corresponds to the
-number of INT8 triples that must be contained in the "cmap" array. The actual
-number of colors in the transmitted colormap is "num_bytes" / 3.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp_image_set_colormap');
 
     @inargs = (
 	&std_image_arg,
@@ -999,6 +981,65 @@ HELP
     %invoke = (
 	headers => [ qw("core/gimpimage-colormap.h") ],
         code => 'gimp_image_set_colormap (gimage, cmap, num_bytes / 3, TRUE);' );
+}
+
+sub image_get_colormap {
+    $blurb = "Returns the image's colormap";
+
+    $help = <<'HELP';
+This procedure returns an actual pointer to the image's colormap, as well as
+the number of bytes contained in the colormap. The actual number of colors in
+the transmitted colormap will be "num_bytes" / 3. If the image is not of base
+type GIMP_INDEXED, this pointer will be NULL.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &std_image_arg );
+
+    @outargs = (
+	{ name => 'colormap', type => 'int8array', init => 1, wrap => 1,
+	  desc => "The image's colormap",
+	  array => { name => 'num_bytes', init => 1,
+		     desc => 'Number of bytes in the colormap array:
+			      %%desc%%' } }
+    );
+
+    %invoke = (
+	headers => [ qw("core/gimpimage-colormap.h") ],
+	code => <<'CODE'
+{
+  num_bytes = 3 * gimp_image_get_colormap_size (gimage);
+  colormap = g_memdup (gimp_image_get_colormap (gimage), num_bytes);
+}
+CODE
+    );
+}
+
+sub image_set_colormap {
+    $blurb = "Sets the entries in the image's colormap.";
+
+    $help = <<'HELP';
+This procedure sets the entries in the specified image's colormap. The number
+of entries is specified by the "num_bytes" parameter and corresponds to the
+number of INT8 triples that must be contained in the "colormap" array. The actual
+number of colors in the transmitted colormap is "num_bytes" / 3.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'colormap', type => 'int8array', wrap => 1,
+	  desc => "The new colormap values",
+	  array => { name => 'num_bytes', type => '0 <= int32 <= 768',
+		     desc => 'Number of bytes in the colormap array:
+			      %%desc%%' } }
+    );
+
+    %invoke = (
+	headers => [ qw("core/gimpimage-colormap.h") ],
+        code => 'gimp_image_set_colormap (gimage, colormap, num_bytes / 3, TRUE);' );
 }
 
 sub image_clean_all {
@@ -1549,9 +1590,10 @@ unshift @procs, qw(image_list image_new image_duplicate image_delete
                    image_flatten image_merge_visible_layers image_merge_down
                    image_add_layer_mask image_remove_layer_mask
                    image_get_cmap image_set_cmap
+                   image_get_colormap image_set_colormap
 		   image_clean_all image_is_dirty
                    image_thumbnail);
-%exports = (app => [@procs], lib => [@procs[0..34,37..61]]);
+%exports = (app => [@procs], lib => [@procs[0..34,39..63]]);
 
 $desc = 'Image';
 

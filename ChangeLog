@@ -1,12 +1,34 @@
 2004-11-02  Michael Natterer  <mitch@gimp.org>
 
+	More final API cleanup:
+
+	* tools/pdbgen/pdb/image.pdb: added gimp_image_set,get_colormap()
+	and deprecated set,get_cmap().
+
+	* libgimpwidgets/gimppreviewarea.[ch]: renamed
+	gimp_preview_area_set_cmap() to set_colormap().
+
+	* libgimp/gimp.def
+	* libgimp/gimpdrawablepreview.c
+	* libgimp/gimpexport.c
+	* libgimp/gimpimage.[ch]
+	* libgimpwidgets/gimpwidgets.def: changed accordingly.
+
+	* app/pdb/image_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpimage_pdb.[ch]: regenerated.
+
+	(undeprecation of plug-ins will follow...)
+
+2004-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpcroptool.c (crop_recalc): added "gboolean
 	recalc_highlight" and call gimp_display_shell_set_highlight() only
 	when it's TRUE. Pass TRUE from all places where the crop outline
 	actually changed.
 
 	(gimp_crop_tool_control): added back the call to crop_recalc() for
-	"case RESUME" so the outline gets updated on zoom/scroll, but pass
+	the RESUME case so the outline gets updated on zoom/scroll, but pass
 	recalc_highlight = FALSE because it has not changed.
 	Fixes bug #157001.
 

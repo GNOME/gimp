@@ -27,22 +27,30 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#ifndef GIMP_DISABLE_DEPRECATED
 guchar   * gimp_image_get_cmap            (gint32          image_ID,
-					   gint           *num_colors);
+                                           gint           *num_colors);
 gboolean   gimp_image_set_cmap            (gint32          image_ID,
-					   const guchar   *cmap,
+                                           const guchar   *cmap,
 					   gint            num_colors);
+#endif /* GIMP_DISABLE_DEPRECATED */
+
+guchar   * gimp_image_get_colormap        (gint32          image_ID,
+                                           gint           *num_colors);
+gboolean   gimp_image_set_colormap        (gint32          image_ID,
+                                           const guchar   *cmap,
+                                           gint            num_colors);
 
 guchar   * gimp_image_get_thumbnail_data  (gint32          image_ID,
-					   gint           *width,
-					   gint           *height,
-					   gint           *bpp);
+                                           gint           *width,
+                                           gint           *height,
+                                           gint           *bpp);
 
 void       gimp_image_attach_new_parasite (gint32          image_ID,
-					   const gchar    *name,
-					   gint            flags,
-					   gint            size,
-					   gconstpointer   data);
+                                           const gchar    *name,
+                                           gint            flags,
+                                           gint            size,
+                                           gconstpointer   data);
 
 
 G_END_DECLS

@@ -47,7 +47,7 @@ struct _GimpPreviewArea
   gint             max_width;
   gint             max_height;
   guchar          *buf;
-  guchar          *cmap;
+  guchar          *colormap;
 };
 
 struct _GimpPreviewAreaClass
@@ -110,8 +110,8 @@ void        gimp_preview_area_set_offsets    (GimpPreviewArea *area,
                                               gint             x,
                                               gint             y);
 
-void        gimp_preview_area_set_cmap       (GimpPreviewArea *area,
-                                              const guchar    *cmap,
+void        gimp_preview_area_set_colormap   (GimpPreviewArea *area,
+                                              const guchar    *colormap,
                                               gint             num_colors);
 
 void        gimp_preview_area_set_max_size   (GimpPreviewArea *area,

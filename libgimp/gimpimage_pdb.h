@@ -104,11 +104,11 @@ gint32            gimp_image_merge_visible_layers     (gint32                ima
 gint32            gimp_image_merge_down               (gint32                image_ID,
 						       gint32                merge_layer_ID,
 						       GimpMergeType         merge_type);
-guint8*           _gimp_image_get_cmap                (gint32                image_ID,
+guint8*           _gimp_image_get_colormap            (gint32                image_ID,
 						       gint                 *num_bytes);
-gboolean          _gimp_image_set_cmap                (gint32                image_ID,
+gboolean          _gimp_image_set_colormap            (gint32                image_ID,
 						       gint                  num_bytes,
-						       const guint8         *cmap);
+						       const guint8         *colormap);
 gboolean          gimp_image_clean_all                (gint32                image_ID);
 gboolean          gimp_image_is_dirty                 (gint32                image_ID);
 gboolean          _gimp_image_thumbnail               (gint32                image_ID,

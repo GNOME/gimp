@@ -844,7 +844,7 @@ gimp_export_image (gint32                 *image_ID,
             {
               gint n_colors;
 
-              g_free (gimp_image_get_cmap (*image_ID, &n_colors));
+              g_free (gimp_image_get_colormap (*image_ID, &n_colors));
 
               if (n_colors > 2)
                 actions = g_slist_prepend (actions,

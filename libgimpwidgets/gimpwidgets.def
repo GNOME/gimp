@@ -160,7 +160,7 @@ EXPORTS
 	gimp_preview_area_mask
 	gimp_preview_area_menu_popup
 	gimp_preview_area_new
-	gimp_preview_area_set_cmap
+	gimp_preview_area_set_colormap
 	gimp_preview_area_set_max_size
 	gimp_preview_area_set_offsets
 	gimp_preview_draw

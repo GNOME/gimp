@@ -142,7 +142,7 @@ gimp_preview_area_init (GimpPreviewArea *area)
   area->check_size = DEFAULT_CHECK_SIZE;
   area->check_type = DEFAULT_CHECK_TYPE;
   area->buf        = NULL;
-  area->cmap       = NULL;
+  area->colormap   = NULL;
   area->offset_x   = 0;
   area->offset_y   = 0;
   area->width      = 0;
@@ -162,10 +162,10 @@ gimp_preview_area_finalize (GObject *object)
       g_free (area->buf);
       area->buf = NULL;
     }
-  if (area->cmap)
+  if (area->colormap)
     {
-      g_free (area->cmap);
-      area->cmap = NULL;
+      g_free (area->colormap);
+      area->colormap = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -526,7 +526,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
       break;
 
     case GIMP_INDEXED_IMAGE:
-      g_return_if_fail (area->cmap != NULL);
+      g_return_if_fail (area->colormap != NULL);
       for (row = 0; row < height; row++)
         {
           const guchar *s = src;
@@ -534,11 +534,11 @@ gimp_preview_area_draw (GimpPreviewArea *area,
 
           for (col = 0; col < width; col++, s++, d += 3)
             {
-              const guchar *cmap = area->cmap + 3 * s[0];
+              const guchar *colormap = area->colormap + 3 * s[0];
 
-              d[0] = cmap[0];
-              d[1] = cmap[1];
-              d[2] = cmap[2];
+              d[0] = colormap[0];
+              d[1] = colormap[1];
+              d[2] = colormap[2];
             }
 
           src  += rowstride;
@@ -547,7 +547,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
       break;
 
     case GIMP_INDEXEDA_IMAGE:
-      g_return_if_fail (area->cmap != NULL);
+      g_return_if_fail (area->colormap != NULL);
       for (row = y; row < y + height; row++)
         {
           const guchar *s = src;
@@ -555,7 +555,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
 
           for (col = x; col < x + width; col++, s += 2, d += 3)
             {
-              const guchar *cmap  = area->cmap + 3 * s[0];
+              const guchar *colormap  = area->colormap + 3 * s[0];
 
               switch (s[1])
                 {
@@ -564,9 +564,9 @@ gimp_preview_area_draw (GimpPreviewArea *area,
                   break;
 
                 case 255:
-                  d[0] = cmap[0];
-                  d[1] = cmap[1];
-                  d[2] = cmap[2];
+                  d[0] = colormap[0];
+                  d[1] = colormap[1];
+                  d[2] = colormap[2];
                   break;
 
                 default:
@@ -574,9 +574,9 @@ gimp_preview_area_draw (GimpPreviewArea *area,
                     register guint alpha = s[3] + 1;
                     register guint check = CHECK_COLOR (area, row, col);
 
-                    d[0] = ((check << 8) + (cmap[0] - check) * alpha) >> 8;
-                    d[1] = ((check << 8) + (cmap[1] - check) * alpha) >> 8;
-                    d[2] = ((check << 8) + (cmap[2] - check) * alpha) >> 8;
+                    d[0] = ((check << 8) + (colormap[0] - check) * alpha) >> 8;
+                    d[1] = ((check << 8) + (colormap[1] - check) * alpha) >> 8;
+                    d[2] = ((check << 8) + (colormap[2] - check) * alpha) >> 8;
                   }
                   break;
                 }
@@ -869,7 +869,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
       break;
 
     case GIMP_INDEXED_IMAGE:
-      g_return_if_fail (area->cmap != NULL);
+      g_return_if_fail (area->colormap != NULL);
       for (row = 0; row < height; row++)
         {
           const guchar *s1 = src1;
@@ -878,8 +878,8 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
           for (col = 0; col < width; col++, s1++, s2++, d += 3)
             {
-              const guchar *cmap1 = area->cmap + 3 * s1[0];
-              const guchar *cmap2 = area->cmap + 3 * s2[0];
+              const guchar *cmap1 = area->colormap + 3 * s1[0];
+              const guchar *cmap2 = area->colormap + 3 * s2[0];
 
               d[0] = ((cmap1[0] << 8) + (cmap2[0] - cmap1[0]) * opacity) >> 8;
               d[1] = ((cmap1[1] << 8) + (cmap2[1] - cmap1[1]) * opacity) >> 8;
@@ -893,7 +893,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
       break;
 
     case GIMP_INDEXEDA_IMAGE:
-      g_return_if_fail (area->cmap != NULL);
+      g_return_if_fail (area->colormap != NULL);
       for (row = y; row < y + height; row++)
         {
           const guchar *s1 = src1;
@@ -902,8 +902,8 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
           for (col = x; col < x + width; col++, s1 += 2, s2 += 2, d += 3)
             {
-              const guchar *cmap1  = area->cmap + 3 * s1[0];
-              const guchar *cmap2  = area->cmap + 3 * s2[0];
+              const guchar *cmap1  = area->colormap + 3 * s1[0];
+              const guchar *cmap2  = area->colormap + 3 * s2[0];
               guchar        inter[4];
 
               if (s1[1] == s2[1])
@@ -1360,7 +1360,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
       break;
 
     case GIMP_INDEXED_IMAGE:
-      g_return_if_fail (area->cmap != NULL);
+      g_return_if_fail (area->colormap != NULL);
       for (row = 0; row < height; row++)
         {
           const guchar *s1 = src1;
@@ -1370,8 +1370,8 @@ gimp_preview_area_mask (GimpPreviewArea *area,
 
           for (col = 0; col < width; col++, s1++, s2++, m++, d += 3)
             {
-              const guchar *cmap1 = area->cmap + 3 * s1[0];
-              const guchar *cmap2 = area->cmap + 3 * s2[0];
+              const guchar *cmap1 = area->colormap + 3 * s1[0];
+              const guchar *cmap2 = area->colormap + 3 * s2[0];
 
               d[0] = ((cmap1[0] << 8) + (cmap2[0] - cmap1[0]) * m[0]) >> 8;
               d[1] = ((cmap1[1] << 8) + (cmap2[1] - cmap1[1]) * m[0]) >> 8;
@@ -1386,7 +1386,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
       break;
 
     case GIMP_INDEXEDA_IMAGE:
-      g_return_if_fail (area->cmap != NULL);
+      g_return_if_fail (area->colormap != NULL);
       for (row = y; row < y + height; row++)
         {
           const guchar *s1 = src1;
@@ -1396,8 +1396,8 @@ gimp_preview_area_mask (GimpPreviewArea *area,
 
           for (col = x; col < x + width; col++, s1 += 2, s2 += 2, m++, d += 3)
             {
-              const guchar *cmap1  = area->cmap + 3 * s1[0];
-              const guchar *cmap2  = area->cmap + 3 * s2[0];
+              const guchar *cmap1  = area->colormap + 3 * s1[0];
+              const guchar *cmap2  = area->colormap + 3 * s2[0];
 
               switch (m[0])
                 {
@@ -1630,9 +1630,9 @@ gimp_preview_area_set_offsets (GimpPreviewArea *area,
 }
 
 /**
- * gimp_preview_area_set_cmap:
+ * gimp_preview_area_set_colormap:
  * @area:       a #GimpPreviewArea
- * @cmap:       a #guchar buffer that contains the colormap
+ * @colormap:   a #guchar buffer that contains the colormap
  * @num_colors: the number of colors in the colormap
  *
  * Sets the colormap for the #GimpPreviewArea widget. You need to
@@ -1642,25 +1642,25 @@ gimp_preview_area_set_offsets (GimpPreviewArea *area,
  * Since GIMP 2.2
  **/
 void
-gimp_preview_area_set_cmap (GimpPreviewArea *area,
-                            const guchar    *cmap,
-                            gint             num_colors)
+gimp_preview_area_set_colormap (GimpPreviewArea *area,
+                                const guchar    *colormap,
+                                gint             num_colors)
 {
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
-  g_return_if_fail (cmap != NULL || num_colors == 0);
+  g_return_if_fail (colormap != NULL || num_colors == 0);
   g_return_if_fail (num_colors >= 0 && num_colors <= 256);
 
   if (num_colors > 0)
     {
-      if (! area->cmap)
-        area->cmap = g_new0 (guchar, 3 * 256);
+      if (! area->colormap)
+        area->colormap = g_new0 (guchar, 3 * 256);
 
-      memcpy (area->cmap, cmap, 3 * num_colors);
+      memcpy (area->colormap, colormap, 3 * num_colors);
     }
   else
     {
-      g_free (area->cmap);
-      area->cmap = NULL;
+      g_free (area->colormap);
+      area->colormap = NULL;
     }
 }
 

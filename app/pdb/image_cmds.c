@@ -90,6 +90,8 @@ static ProcRecord image_add_layer_mask_proc;
 static ProcRecord image_remove_layer_mask_proc;
 static ProcRecord image_get_cmap_proc;
 static ProcRecord image_set_cmap_proc;
+static ProcRecord image_get_colormap_proc;
+static ProcRecord image_set_colormap_proc;
 static ProcRecord image_clean_all_proc;
 static ProcRecord image_is_dirty_proc;
 static ProcRecord image_thumbnail_proc;
@@ -156,6 +158,8 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_remove_layer_mask_proc);
   procedural_db_register (gimp, &image_get_cmap_proc);
   procedural_db_register (gimp, &image_set_cmap_proc);
+  procedural_db_register (gimp, &image_get_colormap_proc);
+  procedural_db_register (gimp, &image_set_colormap_proc);
   procedural_db_register (gimp, &image_clean_all_proc);
   procedural_db_register (gimp, &image_is_dirty_proc);
   procedural_db_register (gimp, &image_thumbnail_proc);
@@ -2665,12 +2669,12 @@ static ProcArg image_get_cmap_outargs[] =
 static ProcRecord image_get_cmap_proc =
 {
   "gimp_image_get_cmap",
-  "Returns the image's colormap",
-  "This procedure returns an actual pointer to the image's colormap, as well as the number of bytes contained in the colormap. The actual number of colors in the transmitted colormap will be \"num_bytes\" / 3. If the image is not of base type GIMP_INDEXED, this pointer will be NULL.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
+  "This procedure is deprecated! Use 'gimp_image_get_colormap' instead.",
+  "This procedure is deprecated! Use 'gimp_image_get_colormap' instead.",
+  "",
+  "",
+  "",
+  "gimp_image_get_colormap",
   GIMP_INTERNAL,
   1,
   image_get_cmap_inargs,
@@ -2728,18 +2732,154 @@ static ProcArg image_set_cmap_inargs[] =
 static ProcRecord image_set_cmap_proc =
 {
   "gimp_image_set_cmap",
-  "Sets the entries in the image's colormap.",
-  "This procedure sets the entries in the specified image's colormap. The number of entries is specified by the \"num_bytes\" parameter and corresponds to the number of INT8 triples that must be contained in the \"cmap\" array. The actual number of colors in the transmitted colormap is \"num_bytes\" / 3.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
+  "This procedure is deprecated! Use 'gimp_image_set_colormap' instead.",
+  "This procedure is deprecated! Use 'gimp_image_set_colormap' instead.",
+  "",
+  "",
+  "",
+  "gimp_image_set_colormap",
   GIMP_INTERNAL,
   3,
   image_set_cmap_inargs,
   0,
   NULL,
   { { image_set_cmap_invoker } }
+};
+
+static Argument *
+image_get_colormap_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gint32 num_bytes = 0;
+  guint8 *colormap = NULL;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  if (success)
+    {
+      num_bytes = 3 * gimp_image_get_colormap_size (gimage);
+      colormap = g_memdup (gimp_image_get_colormap (gimage), num_bytes);
+    }
+
+  return_args = procedural_db_return_args (&image_get_colormap_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = num_bytes;
+      return_args[2].value.pdb_pointer = colormap;
+    }
+
+  return return_args;
+}
+
+static ProcArg image_get_colormap_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_get_colormap_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "num_bytes",
+    "Number of bytes in the colormap array: 0 < num_bytes"
+  },
+  {
+    GIMP_PDB_INT8ARRAY,
+    "colormap",
+    "The image's colormap"
+  }
+};
+
+static ProcRecord image_get_colormap_proc =
+{
+  "gimp_image_get_colormap",
+  "Returns the image's colormap",
+  "This procedure returns an actual pointer to the image's colormap, as well as the number of bytes contained in the colormap. The actual number of colors in the transmitted colormap will be \"num_bytes\" / 3. If the image is not of base type GIMP_INDEXED, this pointer will be NULL.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  image_get_colormap_inargs,
+  2,
+  image_get_colormap_outargs,
+  { { image_get_colormap_invoker } }
+};
+
+static Argument *
+image_set_colormap_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  gint32 num_bytes;
+  guint8 *colormap;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  num_bytes = args[1].value.pdb_int;
+  if (num_bytes < 0 || num_bytes > 768)
+    success = FALSE;
+
+  colormap = (guint8 *) args[2].value.pdb_pointer;
+
+  if (success)
+    gimp_image_set_colormap (gimage, colormap, num_bytes / 3, TRUE);
+
+  return procedural_db_return_args (&image_set_colormap_proc, success);
+}
+
+static ProcArg image_set_colormap_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_INT32,
+    "num_bytes",
+    "Number of bytes in the colormap array: 0 <= num_bytes <= 768"
+  },
+  {
+    GIMP_PDB_INT8ARRAY,
+    "colormap",
+    "The new colormap values"
+  }
+};
+
+static ProcRecord image_set_colormap_proc =
+{
+  "gimp_image_set_colormap",
+  "Sets the entries in the image's colormap.",
+  "This procedure sets the entries in the specified image's colormap. The number of entries is specified by the \"num_bytes\" parameter and corresponds to the number of INT8 triples that must be contained in the \"colormap\" array. The actual number of colors in the transmitted colormap is \"num_bytes\" / 3.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  NULL,
+  GIMP_INTERNAL,
+  3,
+  image_set_colormap_inargs,
+  0,
+  NULL,
+  { { image_set_colormap_invoker } }
 };
 
 static Argument *

@@ -1306,7 +1306,7 @@ gimp_image_merge_down (gint32        image_ID,
 }
 
 /**
- * _gimp_image_get_cmap:
+ * _gimp_image_get_colormap:
  * @image_ID: The image.
  * @num_bytes: Number of bytes in the colormap array.
  *
@@ -1321,14 +1321,14 @@ gimp_image_merge_down (gint32        image_ID,
  * Returns: The image's colormap.
  */
 guint8 *
-_gimp_image_get_cmap (gint32  image_ID,
-		      gint   *num_bytes)
+_gimp_image_get_colormap (gint32  image_ID,
+			  gint   *num_bytes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  guint8 *cmap = NULL;
+  guint8 *colormap = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_image_get_cmap",
+  return_vals = gimp_run_procedure ("gimp_image_get_colormap",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -1338,46 +1338,46 @@ _gimp_image_get_cmap (gint32  image_ID,
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *num_bytes = return_vals[1].data.d_int32;
-      cmap = g_new (guint8, *num_bytes);
-      memcpy (cmap, return_vals[2].data.d_int8array,
+      colormap = g_new (guint8, *num_bytes);
+      memcpy (colormap, return_vals[2].data.d_int8array,
 	      *num_bytes * sizeof (guint8));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return cmap;
+  return colormap;
 }
 
 /**
- * _gimp_image_set_cmap:
+ * _gimp_image_set_colormap:
  * @image_ID: The image.
  * @num_bytes: Number of bytes in the colormap array.
- * @cmap: The new colormap values.
+ * @colormap: The new colormap values.
  *
  * Sets the entries in the image's colormap.
  *
  * This procedure sets the entries in the specified image's colormap.
  * The number of entries is specified by the \"num_bytes\" parameter
  * and corresponds to the number of INT8 triples that must be contained
- * in the \"cmap\" array. The actual number of colors in the
+ * in the \"colormap\" array. The actual number of colors in the
  * transmitted colormap is \"num_bytes\" / 3.
  *
  * Returns: TRUE on success.
  */
 gboolean
-_gimp_image_set_cmap (gint32        image_ID,
-		      gint          num_bytes,
-		      const guint8 *cmap)
+_gimp_image_set_colormap (gint32        image_ID,
+			  gint          num_bytes,
+			  const guint8 *colormap)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_image_set_cmap",
+  return_vals = gimp_run_procedure ("gimp_image_set_colormap",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, num_bytes,
-				    GIMP_PDB_INT8ARRAY, cmap,
+				    GIMP_PDB_INT8ARRAY, colormap,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

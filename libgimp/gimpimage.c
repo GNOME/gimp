@@ -26,7 +26,41 @@
 
 /**
  * gimp_image_get_cmap:
- * @image_ID: The image.
+ * @image_ID:   The image.
+ * @num_colors: Number of colors in the colormap array.
+ *
+ * This procedure is deprecated! Use gimp_image_get_colormap() instead.
+ *
+ * Returns: The image's colormap.
+ */
+guchar *
+gimp_image_get_cmap (gint32  image_ID,
+		     gint   *num_colors)
+{
+  return gimp_image_get_colormap (image_ID, num_colors);
+}
+
+/**
+ * gimp_image_set_cmap:
+ * @image_ID:   The image.
+ * @cmap:       The new colormap values.
+ * @num_colors: Number of colors in the colormap array.
+ *
+ * This procedure is deprecated! Use gimp_image_set_colormap() instead.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_set_cmap (gint32        image_ID,
+		     const guchar *cmap,
+		     gint          num_colors)
+{
+  return gimp_image_set_colormap (image_ID, cmap, num_colors);
+}
+
+/**
+ * gimp_image_get_colormap:
+ * @image_ID:   The image.
  * @num_colors: Number of colors in the colormap array.
  *
  * Returns the image's colormap
@@ -38,14 +72,13 @@
  * Returns: The image's colormap.
  */
 guchar *
-gimp_image_get_cmap (gint32  image_ID,
-		     gint   *num_colors)
+gimp_image_get_colormap (gint32  image_ID,
+                         gint   *num_colors)
 {
   gint    num_bytes;
   guchar *cmap;
 
-  cmap = _gimp_image_get_cmap (image_ID,
-			       &num_bytes);
+  cmap = _gimp_image_get_colormap (image_ID, &num_bytes);
 
   *num_colors = num_bytes / 3;
 
@@ -53,9 +86,9 @@ gimp_image_get_cmap (gint32  image_ID,
 }
 
 /**
- * gimp_image_set_cmap:
- * @image_ID: The image.
- * @cmap: The new colormap values.
+ * gimp_image_set_colormap:
+ * @image_ID:   The image.
+ * @colormap:   The new colormap values.
  * @num_colors: Number of colors in the colormap array.
  *
  * Sets the entries in the image's colormap.
@@ -68,13 +101,11 @@ gimp_image_get_cmap (gint32  image_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_image_set_cmap (gint32        image_ID,
-		     const guchar *cmap,
-		     gint          num_colors)
+gimp_image_set_colormap (gint32        image_ID,
+                         const guchar *colormap,
+                         gint          num_colors)
 {
-  return _gimp_image_set_cmap (image_ID,
-			       num_colors * 3,
-			       cmap);
+  return _gimp_image_set_colormap (image_ID, num_colors * 3, colormap);
 }
 
 guchar *
