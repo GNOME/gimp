@@ -67,6 +67,14 @@ style "gimp-tiny-font-style"
 class "*Ruler*" style "gimp-tiny-font-style"
 
 
+style "gimp-tool-dialog-style" = "gimp-default-style"
+{
+  GtkDialog::action_area_border = 6
+}
+
+class "GimpToolDialog" style "gimp-tool-dialog-style"
+
+
 style "gimp-grid-view-style" = "gimp-default-style"
 {
   bg[NORMAL] = { 1.0, 1.0, 1.0 }

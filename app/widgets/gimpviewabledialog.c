@@ -36,8 +36,22 @@
 #include "gimpviewabledialog.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_STOCK_ID,
+  PROP_DESC,
+  PROP_PARENT
+};
+
+
 static void   gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass);
 static void   gimp_viewable_dialog_init       (GimpViewableDialog      *dialog);
+
+static void   gimp_viewable_dialog_set_property (GObject            *object,
+                                                 guint               property_id,
+                                                 const GValue       *value,
+                                                 GParamSpec         *pspec);
 
 static void   gimp_viewable_dialog_destroy      (GtkObject          *object);
 
@@ -80,13 +94,33 @@ gimp_viewable_dialog_get_type (void)
 static void
 gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass)
 {
-  GtkObjectClass *object_class;
+  GtkObjectClass *gtk_object_class;
+  GObjectClass   *object_class;
 
-  object_class = GTK_OBJECT_CLASS (klass);
+  gtk_object_class = GTK_OBJECT_CLASS (klass);
+  object_class     = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_viewable_dialog_destroy;
+  gtk_object_class->destroy = gimp_viewable_dialog_destroy;
+
+  object_class->set_property = gimp_viewable_dialog_set_property;
+
+  g_object_class_install_property (object_class, PROP_STOCK_ID,
+                                   g_param_spec_string ("stock-id", NULL, NULL,
+                                                        NULL,
+                                                        G_PARAM_WRITABLE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_DESC,
+                                   g_param_spec_string ("description", NULL, NULL,
+                                                        NULL,
+                                                        G_PARAM_WRITABLE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_PARENT,
+                                   g_param_spec_object ("parent", NULL, NULL,
+                                                        GTK_TYPE_WIDGET,
+                                                        G_PARAM_WRITABLE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -132,6 +166,26 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
   gtk_box_pack_start (GTK_BOX (vbox), dialog->desc_label, FALSE, FALSE, 0);
   gtk_widget_show (dialog->desc_label);
 
+  {
+    PangoAttrList      *attrs;
+    PangoAttribute     *attr;
+
+    attrs = pango_attr_list_new ();
+
+    attr = pango_attr_scale_new (PANGO_SCALE_LARGE);
+    attr->start_index = 0;
+    attr->end_index   = -1;
+    pango_attr_list_insert (attrs, attr);
+
+    attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
+    attr->start_index = 0;
+    attr->end_index   = -1;
+    pango_attr_list_insert (attrs, attr);
+
+    gtk_label_set_attributes (GTK_LABEL (dialog->desc_label), attrs);
+    pango_attr_list_unref (attrs);
+  }
+
   dialog->viewable_label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (dialog->viewable_label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (vbox), dialog->viewable_label, FALSE, FALSE, 0);
@@ -139,11 +193,49 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
 }
 
 static void
+gimp_viewable_dialog_set_property (GObject      *object,
+                                   guint         property_id,
+                                   const GValue *value,
+                                   GParamSpec   *pspec)
+{
+  GimpViewableDialog *dialog = GIMP_VIEWABLE_DIALOG (object);
+
+  switch (property_id)
+    {
+    case PROP_STOCK_ID:
+      gtk_image_set_from_stock (GTK_IMAGE (dialog->icon),
+                                g_value_get_string (value),
+                                GTK_ICON_SIZE_LARGE_TOOLBAR);
+      break;
+    case PROP_DESC:
+      gtk_label_set_text (GTK_LABEL (dialog->desc_label),
+                          g_value_get_string (value));
+      break;
+    case PROP_PARENT:
+      {
+        GtkWidget *parent = g_value_get_object (value);
+
+        if (parent)
+          {
+            if (GTK_IS_WINDOW (parent))
+              gtk_window_set_transient_for (GTK_WINDOW (dialog),
+                                            GTK_WINDOW (parent));
+            else
+              gtk_window_set_screen (GTK_WINDOW (dialog),
+                                     gtk_widget_get_screen (parent));
+          }
+      }
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
 gimp_viewable_dialog_destroy (GtkObject *object)
 {
-  GimpViewableDialog *dialog;
-
-  dialog = GIMP_VIEWABLE_DIALOG (object);
+  GimpViewableDialog *dialog = GIMP_VIEWABLE_DIALOG (object);
 
   if (dialog->preview)
     gimp_viewable_dialog_set_viewable (dialog, NULL);
@@ -164,8 +256,6 @@ gimp_viewable_dialog_new (GimpViewable *viewable,
 {
   GimpViewableDialog *dialog;
   va_list             args;
-  PangoAttrList      *attrs;
-  PangoAttribute     *attr;
 
   g_return_val_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (title != NULL, NULL);
@@ -173,19 +263,13 @@ gimp_viewable_dialog_new (GimpViewable *viewable,
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
   dialog = g_object_new (GIMP_TYPE_VIEWABLE_DIALOG,
-                         "title", title,
-                         "role",  role,
+                         "title",       title,
+                         "role",        role,
+                         "stock_id",    stock_id,
+                         "description", desc,
+                         "parent",      parent,
                          NULL);
 
-  if (parent)
-    {
-      if (GTK_IS_WINDOW (parent))
-        gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                      GTK_WINDOW (parent));
-      else
-        gtk_window_set_screen (GTK_WINDOW (dialog),
-                               gtk_widget_get_screen (parent));
-    }
 
   if (help_func)
     gimp_help_connect (GTK_WIDGET (dialog), help_func, help_id, dialog);
@@ -193,26 +277,6 @@ gimp_viewable_dialog_new (GimpViewable *viewable,
   va_start (args, help_id);
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
   va_end (args);
-
-  gtk_image_set_from_stock (GTK_IMAGE (dialog->icon), stock_id,
-                            GTK_ICON_SIZE_LARGE_TOOLBAR);
-
-  attrs = pango_attr_list_new ();
-
-  attr = pango_attr_scale_new (PANGO_SCALE_LARGE);
-  attr->start_index = 0;
-  attr->end_index   = -1;
-  pango_attr_list_insert (attrs, attr);
-
-  attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
-  attr->start_index = 0;
-  attr->end_index   = -1;
-  pango_attr_list_insert (attrs, attr);
-
-  gtk_label_set_attributes (GTK_LABEL (dialog->desc_label), attrs);
-  pango_attr_list_unref (attrs);
-
-  gtk_label_set_text (GTK_LABEL (dialog->desc_label), desc);
 
   if (viewable)
     gimp_viewable_dialog_set_viewable (dialog, viewable);

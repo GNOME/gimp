@@ -65,6 +65,14 @@ style "gimp-default-style"
 class "GtkWidget" style "gimp-default-style"
 
 
+style "gimp-tool-dialog-style" = "gimp-default-style"
+{
+  GtkDialog::action_area_border = 6
+}
+
+class "GimpToolDialog" style "gimp-tool-dialog-style"
+
+
 style "gimp-grid-view-style" = "gimp-default-style"
 {
   bg[NORMAL] = { 1.0, 1.0, 1.0 }
@@ -76,7 +84,6 @@ widget "*GimpContainerGridView*GtkViewport*" style "gimp-grid-view-style"
 style "gimp-dockable-style" = "gimp-default-style"
 {
   GimpFrame::label_bold         = 0
-  GimpFrame::label_spacing      = 1
   GtkButton::focus_line_width   = 0
   GtkButton::focus_line_padding = 0
 }

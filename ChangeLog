@@ -1,3 +1,19 @@
+2004-05-05  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpviewabledialog.c: added construct properties to
+	make it possible to derive from GimpViewableDialog.
+
+	* app/widgets/gimptooldialog.[ch]: make GimpToolDialog a real
+	object, not just a convenience constructor.
+	
+	* themes/Default/gtkrc
+	* themes/Small/gtkrc: set a smaller border_width of 6 pixels for
+	the action area of tool dialogs.
+
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpimagemaptool.c: set a smaller border_width of 6
+	pixels on tool dialogs to make them more compact.
+
 2004-05-05  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpoffsetarea.[ch]: added new function

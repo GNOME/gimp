@@ -326,7 +326,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
                     G_CALLBACK (gimp_color_picker_tool_info_response),
                     picker_tool);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (picker_tool->dialog)->vbox), hbox,
                       FALSE, FALSE, 0);

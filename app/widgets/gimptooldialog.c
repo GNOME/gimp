@@ -32,7 +32,35 @@
 
 #include "gimpdialogfactory.h"
 #include "gimptooldialog.h"
-#include "gimpviewabledialog.h"
+
+
+GType
+gimp_tool_dialog_get_type (void)
+{
+  static GType dialog_type = 0;
+
+  if (! dialog_type)
+    {
+      static const GTypeInfo dialog_info =
+      {
+        sizeof (GimpToolDialogClass),
+        (GBaseInitFunc)     NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc)    NULL,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpToolDialog),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) NULL
+      };
+
+      dialog_type = g_type_register_static (GIMP_TYPE_VIEWABLE_DIALOG,
+					    "GimpToolDialog",
+					    &dialog_info, 0);
+    }
+
+  return dialog_type;
+}
 
 
 /**
@@ -66,15 +94,16 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
 
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
-  dialog = gimp_viewable_dialog_new (NULL,
-                                     tool_info->blurb,
-                                     GIMP_OBJECT (tool_info)->name,
-                                     stock_id,
-                                     desc ? desc : tool_info->help,
-                                     parent,
-                                     gimp_standard_help_func,
-                                     tool_info->help_id,
-                                     NULL);
+  dialog = g_object_new (GIMP_TYPE_TOOL_DIALOG,
+                         "title",       tool_info->blurb,
+                         "role",        GIMP_OBJECT (tool_info)->name,
+                         "stock_id",    stock_id,
+                         "description", desc ? desc : tool_info->help,
+                         "parent",      parent,
+                         NULL);
+
+  gimp_help_connect (GTK_WIDGET (dialog),
+                     gimp_standard_help_func, tool_info->help_id, dialog);
 
   va_start (args, desc);
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
