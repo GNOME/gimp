@@ -1,7 +1,7 @@
 # Finnish translation of GIMP 1.1
 # Copyright (C) 1999 Free Software Foundation, Inc.
-# Ville Hautam‰ki <villeh@cs.joensuu.fi>, 1998, 2000.
-# Tor Lillqvist <tml@Ìki.fi>, 1999, 2000.
+# Ville Hautam√§ki <villeh@cs.joensuu.fi>, 1998, 2000.
+# Tor Lillqvist <tml@√≠ki.fi>, 1999, 2000.
 #
 # 	Pahasti kesken. Kuka jaksaisi jatkaa...
 msgid ""
@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: Tor Lillqvist tml@iki.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-15\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:294
@@ -47,15 +47,15 @@ msgstr "Tosiaikainen esikatselu"
 
 #: plug-ins/FractalExplorer/Dialogs.c:370
 msgid "If you enable this option the preview will be redrawn automatically"
-msgstr "Jos valitset t‰m‰n esikatselukuva muodostetaan automaattisesti"
+msgstr "Jos valitset t√§m√§n esikatselukuva muodostetaan automaattisesti"
 
 #: plug-ins/FractalExplorer/Dialogs.c:373
 msgid "Redraw"
-msgstr "Virkist‰"
+msgstr "Virkist√§"
 
 #: plug-ins/FractalExplorer/Dialogs.c:379
 msgid "Redraw preview"
-msgstr "Virkist‰ esikatselukuva"
+msgstr "Virkist√§ esikatselukuva"
 
 #. Zoom Options
 #: plug-ins/FractalExplorer/Dialogs.c:382
@@ -64,7 +64,7 @@ msgstr "Zoom-asetukset"
 
 #: plug-ins/FractalExplorer/Dialogs.c:396
 msgid "Undo last zoom"
-msgstr "Peru ‰skeinen zoom"
+msgstr "Peru √§skeinen zoom"
 
 #: plug-ins/FractalExplorer/Dialogs.c:406
 msgid "Redo last zoom"
@@ -89,7 +89,7 @@ msgstr "XMIN:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:458
 msgid "Change the first (minimal) x-coordinate delimitation"
-msgstr "S‰‰d‰ x-koordinaatin v‰himm‰israjaa"
+msgstr "S√§√§d√§ x-koordinaatin v√§himm√§israjaa"
 
 #: plug-ins/FractalExplorer/Dialogs.c:466
 msgid "XMAX:"
@@ -97,7 +97,7 @@ msgstr "XMAX:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:469
 msgid "Change the second (maximal) x-coordinate delimitation"
-msgstr "S‰‰d‰ x-koordinaatin enimm‰israjaa"
+msgstr "S√§√§d√§ x-koordinaatin enimm√§israjaa"
 
 #: plug-ins/FractalExplorer/Dialogs.c:477
 msgid "YMIN:"
@@ -105,7 +105,7 @@ msgstr "YMIN:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:480
 msgid "Change the first (minimal) y-coordinate delimitation"
-msgstr "S‰‰d‰ y-koordinaatin v‰himm‰israjaa"
+msgstr "S√§√§d√§ y-koordinaatin v√§himm√§israjaa"
 
 #: plug-ins/FractalExplorer/Dialogs.c:488
 msgid "YMAX:"
@@ -113,7 +113,7 @@ msgstr "YMAX:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:491
 msgid "Change the second (maximal) y-coordinate delimitation"
-msgstr "S‰‰d‰ y-koordinaatin enimm‰israjaa"
+msgstr "S√§√§d√§ y-koordinaatin enimm√§israjaa"
 
 #: plug-ins/FractalExplorer/Dialogs.c:499
 msgid "ITER:"
@@ -124,8 +124,8 @@ msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
 msgstr ""
-"S‰‰d‰ iteraatiokierrosten lukum‰‰r‰‰. Mit‰ suurempi arvo on, sit‰ enemm‰n "
-"yksityiskohtia lasketaan, mik‰ vie enemm‰n aikaa"
+"S√§√§d√§ iteraatiokierrosten lukum√§√§r√§√§. Mit√§ suurempi arvo on, sit√§ enemm√§n "
+"yksityiskohtia lasketaan, mik√§ vie enemm√§n aikaa"
 
 #: plug-ins/FractalExplorer/Dialogs.c:511
 msgid "CX:"
@@ -136,7 +136,7 @@ msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
-"S‰‰d‰ CX-arvoa (muuttaa fraktaalin aspektia, vaikuttaa kaikkiin "
+"S√§√§d√§ CX-arvoa (muuttaa fraktaalin aspektia, vaikuttaa kaikkiin "
 "fraktaaleihin paitsi Mandelbrot ja Sierpinski)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:523
@@ -148,7 +148,7 @@ msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
-"S‰‰d‰ CY-arvoa (muuttaa fraktaalin aspektia, vaikuttaa kaikkiin "
+"S√§√§d√§ CY-arvoa (muuttaa fraktaalin aspektia, vaikuttaa kaikkiin "
 "fraktaaleihin paitsi Mandelbrot ja Sierpinski)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:543
@@ -190,7 +190,7 @@ msgstr "Barnsley 3"
 
 #: plug-ins/FractalExplorer/Dialogs.c:586
 msgid "Spider"
-msgstr "H‰m‰h‰kki"
+msgstr "H√§m√§h√§kki"
 
 #: plug-ins/FractalExplorer/Dialogs.c:588
 msgid "Man'o'war"
@@ -207,33 +207,33 @@ msgstr "Sierpinski"
 #: plug-ins/FractalExplorer/Dialogs.c:642 plug-ins/common/sinus.c:1785
 #: plug-ins/common/sinus.c:1803
 msgid "Colors"
-msgstr "V‰rit"
+msgstr "V√§rit"
 
 #. Number of Colors frame
 #: plug-ins/FractalExplorer/Dialogs.c:646 plug-ins/common/borderaverage.c:414
 msgid "Number of Colors"
-msgstr "V‰rien lukum‰‰r‰"
+msgstr "V√§rien lukum√§√§r√§"
 
 #: plug-ins/FractalExplorer/Dialogs.c:659
 msgid "Number of Colors:"
-msgstr "V‰rien lukum‰‰r‰:"
+msgstr "V√§rien lukum√§√§r√§:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:662
 msgid "Change the number of colors in the mapping"
-msgstr "S‰‰d‰ kuvauksen k‰ytt‰m‰‰ v‰rilukum‰‰r‰‰"
+msgstr "S√§√§d√§ kuvauksen k√§ytt√§m√§√§ v√§rilukum√§√§r√§√§"
 
 #: plug-ins/FractalExplorer/Dialogs.c:669
 msgid "Use loglog Smoothing"
-msgstr "K‰yt‰ kaksoislogaritmista pehmennyst‰"
+msgstr "K√§yt√§ kaksoislogaritmista pehmennyst√§"
 
 #: plug-ins/FractalExplorer/Dialogs.c:676
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr "K‰yt‰ kaksoislogaritmista pehmennyst‰ raitojen v‰ltt‰miseksi"
+msgstr "K√§yt√§ kaksoislogaritmista pehmennyst√§ raitojen v√§ltt√§miseksi"
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:680
 msgid "Color Density"
-msgstr "V‰ritiheys"
+msgstr "V√§ritiheys"
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
@@ -246,17 +246,17 @@ msgstr "Punainen:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:697
 msgid "Change the intensity of the red channel"
-msgstr "S‰‰d‰ punaisen v‰rikanavan voimakkuutta"
+msgstr "S√§√§d√§ punaisen v√§rikanavan voimakkuutta"
 
 #: plug-ins/FractalExplorer/Dialogs.c:704 plug-ins/common/compose.c:130
 #: plug-ins/common/compose.c:140 plug-ins/common/exchange.c:463
 #: plug-ins/fp/fp_gtk.c:26
 msgid "Green:"
-msgstr "Vihre‰:"
+msgstr "Vihre√§:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:707
 msgid "Change the intensity of the green channel"
-msgstr "S‰‰d‰ vihre‰n v‰rikanavan voimakkuutta"
+msgstr "S√§√§d√§ vihre√§n v√§rikanavan voimakkuutta"
 
 #: plug-ins/FractalExplorer/Dialogs.c:714 plug-ins/common/compose.c:131
 #: plug-ins/common/compose.c:141 plug-ins/common/exchange.c:507
@@ -266,12 +266,12 @@ msgstr "Sininen:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:717
 msgid "Change the intensity of the blue channel"
-msgstr "S‰‰d‰ sinisen v‰rikanavan voimakkuutta"
+msgstr "S√§√§d√§ sinisen v√§rikanavan voimakkuutta"
 
 #. Color Function frame
 #: plug-ins/FractalExplorer/Dialogs.c:723
 msgid "Color Function"
-msgstr "V‰rifunktio"
+msgstr "V√§rifunktio"
 
 #. Redmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:734 plug-ins/common/AlienMap.c:1226
@@ -299,19 +299,19 @@ msgstr "kosini"
 #: plug-ins/common/ps.c:2753 plug-ins/common/psp.c:445
 #: plug-ins/fits/fits.c:1029
 msgid "None"
-msgstr "ei mik‰‰n"
+msgstr "ei mik√§√§n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:747
 #: plug-ins/FractalExplorer/Dialogs.c:788
 #: plug-ins/FractalExplorer/Dialogs.c:829
 msgid "Use sine-function for this color component"
-msgstr "K‰yt‰ t‰lle v‰rikanavalle sinifunktiota"
+msgstr "K√§yt√§ t√§lle v√§rikanavalle sinifunktiota"
 
 #: plug-ins/FractalExplorer/Dialogs.c:750
 #: plug-ins/FractalExplorer/Dialogs.c:791
 #: plug-ins/FractalExplorer/Dialogs.c:832
 msgid "Use cosine-function for this color component"
-msgstr "K‰yt‰ t‰lle v‰rikanavalle kosinifunktiota"
+msgstr "K√§yt√§ t√§lle v√§rikanavalle kosinifunktiota"
 
 #: plug-ins/FractalExplorer/Dialogs.c:753
 #: plug-ins/FractalExplorer/Dialogs.c:794
@@ -319,13 +319,13 @@ msgstr "K‰yt‰ t‰lle v‰rikanavalle kosinifunktiota"
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
-msgstr "K‰yt‰ t‰lle v‰rikanavalle lineaarista kuvausta"
+msgstr "K√§yt√§ t√§lle v√§rikanavalle lineaarista kuvausta"
 
 #: plug-ins/FractalExplorer/Dialogs.c:762
 #: plug-ins/FractalExplorer/Dialogs.c:803
 #: plug-ins/FractalExplorer/Dialogs.c:844
 msgid "Inversion"
-msgstr "K‰‰nteinen"
+msgstr "K√§√§nteinen"
 
 #: plug-ins/FractalExplorer/Dialogs.c:770
 #: plug-ins/FractalExplorer/Dialogs.c:811
@@ -333,13 +333,13 @@ msgstr "K‰‰nteinen"
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
-msgstr "Jos k‰yt‰t t‰t‰, voimakkaat ja heikot v‰rit vaihtavat paikkaa"
+msgstr "Jos k√§yt√§t t√§t√§, voimakkaat ja heikot v√§rit vaihtavat paikkaa"
 
 #. Greenmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:775 plug-ins/common/AlienMap.c:1249
 #: plug-ins/common/decompose.c:122
 msgid "Green"
-msgstr "Vihre‰"
+msgstr "Vihre√§"
 
 #. Bluemode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:816 plug-ins/common/AlienMap.c:1272
@@ -350,30 +350,30 @@ msgstr "Sininen"
 #. Colormode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:857
 msgid "Color Mode"
-msgstr "V‰ritila"
+msgstr "V√§ritila"
 
 #: plug-ins/FractalExplorer/Dialogs.c:868
 msgid "As Specified above"
-msgstr "Kuten yll‰"
+msgstr "Kuten yll√§"
 
 #: plug-ins/FractalExplorer/Dialogs.c:880
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
 msgstr ""
-"Muodosta v‰rikuvaus yll‰olevilla asetuksilla. Tulos n‰kyy esikatselukuvassa."
+"Muodosta v√§rikuvaus yll√§olevilla asetuksilla. Tulos n√§kyy esikatselukuvassa."
 
 #: plug-ins/FractalExplorer/Dialogs.c:890
 msgid "Apply Active Gradient to Final Image"
-msgstr "Sovella k‰ytˆss‰ oleva v‰riliukuma lopulliseen kuvaan"
+msgstr "Sovella k√§yt√∂ss√§ oleva v√§riliukuma lopulliseen kuvaan"
 
 #: plug-ins/FractalExplorer/Dialogs.c:902
 msgid "Create a color-map using a gradient from the gradient editor"
-msgstr "Muodosta v‰rikuvaus k‰ytt‰en v‰riliukumamuokkainta"
+msgstr "Muodosta v√§rikuvaus k√§ytt√§en v√§riliukumamuokkainta"
 
 #: plug-ins/FractalExplorer/Dialogs.c:907
 msgid "FractalExplorer Gradient"
-msgstr "FraktalExplorer-v‰riliukuma"
+msgstr "FraktalExplorer-v√§riliukuma"
 
 #: plug-ins/FractalExplorer/Dialogs.c:939
 msgid "Fractals"
@@ -401,7 +401,7 @@ msgstr "Ei voi avata %s"
 msgid ""
 "Failed to write '%s':\n"
 "%s"
-msgstr "Tiedoston kirjoittaminen ep‰onnistui\n"
+msgstr "Tiedoston kirjoittaminen ep√§onnistui\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1631
 msgid "Save: No filename given"
@@ -419,11 +419,11 @@ msgstr "Lataa fraktaaliparametrit"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1695
 msgid "Click here to load your file"
-msgstr "Napsauta t‰st‰ lataaksesi tiedostoa"
+msgstr "Napsauta t√§st√§ lataaksesi tiedostoa"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1702
 msgid "Click here to cancel load procedure"
-msgstr "Napsauta t‰st‰ peruaksesi latauksen"
+msgstr "Napsauta t√§st√§ peruaksesi latauksen"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1720
 msgid "Save Fractal Parameters"
@@ -431,11 +431,11 @@ msgstr "Tallenna fraktaaliparametrit"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1732
 msgid "Click here to save your file"
-msgstr "Napsauta t‰st‰ tallentaaksesi tiedostoa"
+msgstr "Napsauta t√§st√§ tallentaaksesi tiedostoa"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1739
 msgid "Click here to cancel save procedure"
-msgstr "Napsauta t‰st‰ peruaksesi tallennusta"
+msgstr "Napsauta t√§st√§ peruaksesi tallennusta"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1998 plug-ins/bmp/bmpread.c:97
 #: plug-ins/common/CEL.c:253 plug-ins/common/CML_explorer.c:2391
@@ -467,7 +467,7 @@ msgstr "'%s' ei ole FractalExplorer-tiedosto"
 msgid ""
 "'%s' is corrupt.\n"
 "Line %d Option section incorrect"
-msgstr "Tiedosto '%s' on ep‰kelpo. Virhe havaittu rivill‰ %d."
+msgstr "Tiedosto '%s' on ep√§kelpo. Virhe havaittu rivill√§ %d."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:213
 msgid "<Image>/Filters/Render/Pattern/Fractal Explorer..."
@@ -484,8 +484,8 @@ msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
 msgstr ""
-"Oletko varma, ett‰ haluat tuhota\n"
-"\"%s\" listasta ja levylt‰?"
+"Oletko varma, ett√§ haluat tuhota\n"
+"\"%s\" listasta ja levylt√§?"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:735
 msgid "Delete Fractal"
@@ -493,7 +493,7 @@ msgstr "Poista fraktaali"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:821
 msgid "Edit fractal name"
-msgstr "Muokkaa fraktaalin nime‰"
+msgstr "Muokkaa fraktaalin nime√§"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:832
 msgid "Fractal name:"
@@ -513,20 +513,20 @@ msgstr "'%s' ei ole FractalExplorer-tiedosto"
 msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
-msgstr "Tiedosto '%s' on ep‰kelpo. Virhe havaittu rivill‰ %d."
+msgstr "Tiedosto '%s' on ep√§kelpo. Virhe havaittu rivill√§ %d."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1266
 msgid "My first fractal"
-msgstr "Ensimm‰inen fraktaalini"
+msgstr "Ensimm√§inen fraktaalini"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1282
 msgid "Choose Fractal by double-clicking on it"
-msgstr "Valitse fraktaali kaksoisnapsauttamalla sit‰"
+msgstr "Valitse fraktaali kaksoisnapsauttamalla sit√§"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1319
 #, fuzzy
 msgid "Select folder and rescan collection"
-msgstr "Valitse kansio ja ker‰‰ sielt‰ kokoelma uudelleen "
+msgstr "Valitse kansio ja ker√§√§ sielt√§ kokoelma uudelleen "
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1331
 msgid "Delete currently selected fractal"
@@ -534,11 +534,11 @@ msgstr "Poista valittu fraktaali"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1386
 msgid "Rescan for Fractals"
-msgstr "Ker‰‰ fraktaaleja uudelleen"
+msgstr "Ker√§√§ fraktaaleja uudelleen"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1405
 msgid "Add FractalExplorer Path"
-msgstr "Lis‰‰ FractalExplorer-polku"
+msgstr "Lis√§√§ FractalExplorer-polku"
 
 #: plug-ins/Lighting/lighting_apply.c:135
 #, fuzzy
@@ -584,11 +584,11 @@ msgstr "Yleiset asetukset"
 #: plug-ins/Lighting/lighting_ui.c:383
 #, fuzzy
 msgid "T_ransparent Background"
-msgstr "L‰pin‰kyv‰ tausta"
+msgstr "L√§pin√§kyv√§ tausta"
 
 #: plug-ins/Lighting/lighting_ui.c:393
 msgid "Make destination image transparent where bump height is zero"
-msgstr "Tee tuloskuvasta l‰pin‰kyv‰ kohdissa miss‰ bumpin korkeus on nolla"
+msgstr "Tee tuloskuvasta l√§pin√§kyv√§ kohdissa miss√§ bumpin korkeus on nolla"
 
 #: plug-ins/Lighting/lighting_ui.c:396
 #, fuzzy
@@ -597,21 +597,21 @@ msgstr "Luo uusi kuva"
 
 #: plug-ins/Lighting/lighting_ui.c:406 plug-ins/MapObject/mapobject_ui.c:602
 msgid "Create a new image when applying filter"
-msgstr "Luo uusi kuva k‰ytt‰ess‰si filtteri‰"
+msgstr "Luo uusi kuva k√§ytt√§ess√§si filtteri√§"
 
 #: plug-ins/Lighting/lighting_ui.c:408
 #, fuzzy
 msgid "High _Quality Preview"
-msgstr "Hyv‰laatuinen esikatselu"
+msgstr "Hyv√§laatuinen esikatselu"
 
 #: plug-ins/Lighting/lighting_ui.c:418
 msgid "Enable/disable high quality preview"
-msgstr "Kytke hyv‰laatuinen esikatselu p‰‰lle/pois"
+msgstr "Kytke hyv√§laatuinen esikatselu p√§√§lle/pois"
 
 #: plug-ins/Lighting/lighting_ui.c:426
 #, fuzzy
 msgid "E_nable Antialiasing"
-msgstr "K‰yt‰ antialiasointia"
+msgstr "K√§yt√§ antialiasointia"
 
 #: plug-ins/Lighting/lighting_ui.c:447 plug-ins/MapObject/mapobject_ui.c:635
 #: plug-ins/common/bumpmap.c:1077 plug-ins/common/emboss.c:572
@@ -631,7 +631,7 @@ msgstr "Kynnysarvo:"
 
 #: plug-ins/Lighting/lighting_ui.c:460 plug-ins/MapObject/mapobject_ui.c:655
 msgid "Stop when pixel differences are smaller than this value"
-msgstr "Lopeta kun pikselien erotus on pienempi kuin t‰m‰ arvo"
+msgstr "Lopeta kun pikselien erotus on pienempi kuin t√§m√§ arvo"
 
 #: plug-ins/Lighting/lighting_ui.c:502 plug-ins/MapObject/mapobject_ui.c:681
 msgid "Light Settings"
@@ -643,29 +643,29 @@ msgstr "suunnattu"
 
 #: plug-ins/Lighting/lighting_ui.c:522
 msgid "Point"
-msgstr "pistem‰inen"
+msgstr "pistem√§inen"
 
 #: plug-ins/Lighting/lighting_ui.c:529
 #, fuzzy
 msgid "L_ight Type:"
-msgstr "Valonl‰hteen tyyppi:"
+msgstr "Valonl√§hteen tyyppi:"
 
 #: plug-ins/Lighting/lighting_ui.c:532 plug-ins/MapObject/mapobject_ui.c:708
 msgid "Type of light source to apply"
-msgstr "K‰ytett‰v‰n valol‰hteen tyyppi"
+msgstr "K√§ytett√§v√§n valol√§hteen tyyppi"
 
 #: plug-ins/Lighting/lighting_ui.c:534 plug-ins/MapObject/mapobject_ui.c:710
 msgid "Select Lightsource Color"
-msgstr "Valitse valol‰hteen v‰ri"
+msgstr "Valitse valol√§hteen v√§ri"
 
 #: plug-ins/Lighting/lighting_ui.c:545
 #, fuzzy
 msgid "Lig_ht Color:"
-msgstr "Valol‰hteen v‰ri:"
+msgstr "Valol√§hteen v√§ri:"
 
 #: plug-ins/Lighting/lighting_ui.c:549 plug-ins/MapObject/mapobject_ui.c:723
 msgid "Set light source color"
-msgstr "Valitse valol‰hteen v‰ri"
+msgstr "Valitse valol√§hteen v√§ri"
 
 #: plug-ins/Lighting/lighting_ui.c:551 plug-ins/MapObject/mapobject_ui.c:725
 #: plug-ins/MapObject/mapobject_ui.c:1034
@@ -682,7 +682,7 @@ msgstr "X:"
 
 #: plug-ins/Lighting/lighting_ui.c:580 plug-ins/MapObject/mapobject_ui.c:750
 msgid "Light source X position in XYZ space"
-msgstr "Valol‰hteen X paikka XYZ avaruudessa"
+msgstr "Valol√§hteen X paikka XYZ avaruudessa"
 
 #: plug-ins/Lighting/lighting_ui.c:586 plug-ins/common/flarefx.c:790
 #: plug-ins/common/nova.c:503 plug-ins/common/papertile.c:294
@@ -703,7 +703,7 @@ msgstr "Z"
 
 #: plug-ins/Lighting/lighting_ui.c:613 plug-ins/MapObject/mapobject_ui.c:778
 msgid "Light source Z position in XYZ space"
-msgstr "Valol‰hteen Z paikka XYZ avaruudessa"
+msgstr "Valol√§hteen Z paikka XYZ avaruudessa"
 
 #: plug-ins/Lighting/lighting_ui.c:616 plug-ins/MapObject/mapobject_ui.c:781
 msgid "Direction Vector"
@@ -719,7 +719,7 @@ msgstr "X:"
 
 #: plug-ins/Lighting/lighting_ui.c:643 plug-ins/MapObject/mapobject_ui.c:805
 msgid "Light source X direction in XYZ space"
-msgstr "Valol‰hteen X suunta XYZ avaruudessa"
+msgstr "Valol√§hteen X suunta XYZ avaruudessa"
 
 #. Y
 #: plug-ins/Lighting/lighting_ui.c:648 plug-ins/MapObject/mapobject_ui.c:756
@@ -732,7 +732,7 @@ msgstr "Y:"
 
 #: plug-ins/Lighting/lighting_ui.c:658 plug-ins/MapObject/mapobject_ui.c:818
 msgid "Light source Y direction in XYZ space"
-msgstr "Valol‰hteen Y suunta XYZ avaruudessa"
+msgstr "Valol√§hteen Y suunta XYZ avaruudessa"
 
 #: plug-ins/Lighting/lighting_ui.c:663 plug-ins/MapObject/mapobject_ui.c:770
 #: plug-ins/MapObject/mapobject_ui.c:823
@@ -744,7 +744,7 @@ msgstr "Z"
 
 #: plug-ins/Lighting/lighting_ui.c:673 plug-ins/MapObject/mapobject_ui.c:831
 msgid "Light source Z direction in XYZ space"
-msgstr "Valol‰hteen Z suunta XYZ avaruudessa"
+msgstr "Valol√§hteen Z suunta XYZ avaruudessa"
 
 #: plug-ins/Lighting/lighting_ui.c:699 plug-ins/MapObject/mapobject_ui.c:856
 msgid "Intensity Levels"
@@ -753,11 +753,11 @@ msgstr "Intensiteetti tasot"
 #: plug-ins/Lighting/lighting_ui.c:717
 #, fuzzy
 msgid "_Ambient:"
-msgstr "Ymp‰ristˆ:"
+msgstr "Ymp√§rist√∂:"
 
 #: plug-ins/Lighting/lighting_ui.c:735 plug-ins/MapObject/mapobject_ui.c:888
 msgid "Amount of original color to show where no direct light falls"
-msgstr "N‰ytett‰v‰n alkuper‰isen v‰rin m‰‰r‰, kun suora valo ep‰onnistuu"
+msgstr "N√§ytett√§v√§n alkuper√§isen v√§rin m√§√§r√§, kun suora valo ep√§onnistuu"
 
 #: plug-ins/Lighting/lighting_ui.c:747
 #, fuzzy
@@ -766,7 +766,7 @@ msgstr "Diffuusio:"
 
 #: plug-ins/Lighting/lighting_ui.c:765 plug-ins/MapObject/mapobject_ui.c:914
 msgid "Intensity of original color when lit by a light source"
-msgstr "Alkuper‰isen v‰rin intensiteteetti, kun k‰ynnistetty valol‰hteest‰"
+msgstr "Alkuper√§isen v√§rin intensiteteetti, kun k√§ynnistetty valol√§hteest√§"
 
 #: plug-ins/Lighting/lighting_ui.c:773 plug-ins/MapObject/mapobject_ui.c:922
 msgid "Reflectivity"
@@ -779,7 +779,7 @@ msgstr "Diffuusio:"
 
 #: plug-ins/Lighting/lighting_ui.c:810 plug-ins/MapObject/mapobject_ui.c:954
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr "Suuremmilla arvoilla objekti heijastaa enemm‰n valoa (valoisampi)"
+msgstr "Suuremmilla arvoilla objekti heijastaa enemm√§n valoa (valoisampi)"
 
 #: plug-ins/Lighting/lighting_ui.c:822
 #, fuzzy
@@ -788,7 +788,7 @@ msgstr "Heijastava:"
 
 #: plug-ins/Lighting/lighting_ui.c:841 plug-ins/MapObject/mapobject_ui.c:980
 msgid "Controls how intense the highlights will be"
-msgstr "Kontrolloi sit‰, miten voimakkaita korostukset ovat"
+msgstr "Kontrolloi sit√§, miten voimakkaita korostukset ovat"
 
 #: plug-ins/Lighting/lighting_ui.c:853
 #, fuzzy
@@ -797,16 +797,16 @@ msgstr "Korostus:"
 
 #: plug-ins/Lighting/lighting_ui.c:871 plug-ins/MapObject/mapobject_ui.c:1006
 msgid "Higher values makes the highlights more focused"
-msgstr "Suuremmat arvot tekev‰t korostuksista ter‰v‰mpi‰"
+msgstr "Suuremmat arvot tekev√§t korostuksista ter√§v√§mpi√§"
 
 #: plug-ins/Lighting/lighting_ui.c:905
 #, fuzzy
 msgid "E_nable Bump Mapping"
-msgstr "K‰yt‰ kuhmukuvausta"
+msgstr "K√§yt√§ kuhmukuvausta"
 
 #: plug-ins/Lighting/lighting_ui.c:916
 msgid "Enable/disable bump-mapping (image depth)"
-msgstr "P‰‰lle pois bump-mapping"
+msgstr "P√§√§lle pois bump-mapping"
 
 #: plug-ins/Lighting/lighting_ui.c:934
 #, fuzzy
@@ -823,7 +823,7 @@ msgstr "logaritminen"
 
 #: plug-ins/Lighting/lighting_ui.c:943 plug-ins/flame/flame.c:727
 msgid "Sinusoidal"
-msgstr "sinik‰yr‰n mukainen"
+msgstr "sinik√§yr√§n mukainen"
 
 #: plug-ins/Lighting/lighting_ui.c:944 plug-ins/flame/flame.c:728
 msgid "Spherical"
@@ -832,7 +832,7 @@ msgstr "pallomainen"
 #: plug-ins/Lighting/lighting_ui.c:947
 #, fuzzy
 msgid "Cu_rve:"
-msgstr "K‰yr‰:"
+msgstr "K√§yr√§:"
 
 #: plug-ins/Lighting/lighting_ui.c:953
 #, fuzzy
@@ -864,20 +864,20 @@ msgstr ""
 #: plug-ins/Lighting/lighting_ui.c:1011
 #, fuzzy
 msgid "E_nable Environment Mapping"
-msgstr "K‰yt‰ ymp‰ristˆkuvausta"
+msgstr "K√§yt√§ ymp√§rist√∂kuvausta"
 
 #: plug-ins/Lighting/lighting_ui.c:1022
 msgid "Enable/disable environment-mapping (reflection)"
-msgstr "Kytke ymp‰ristˆnkuvaus (heijastus) p‰‰lle/pois"
+msgstr "Kytke ymp√§rist√∂nkuvaus (heijastus) p√§√§lle/pois"
 
 #: plug-ins/Lighting/lighting_ui.c:1040
 #, fuzzy
 msgid "En_vironment Image:"
-msgstr "Ymp‰ristˆkuva:"
+msgstr "Ymp√§rist√∂kuva:"
 
 #: plug-ins/Lighting/lighting_ui.c:1044
 msgid "Environment image to use"
-msgstr "K‰ytett‰v‰ ymp‰ristˆkuva:"
+msgstr "K√§ytett√§v√§ ymp√§rist√∂kuva:"
 
 #: plug-ins/Lighting/lighting_ui.c:1067
 #, fuzzy
@@ -902,7 +902,7 @@ msgstr "kuhmurainen"
 #: plug-ins/Lighting/lighting_ui.c:1083
 #, fuzzy
 msgid "_Environment Map"
-msgstr "Ymp‰ristˆkuvaus"
+msgstr "Ymp√§rist√∂kuvaus"
 
 #: plug-ins/Lighting/lighting_ui.c:1127
 msgid "Lighting Effects"
@@ -912,7 +912,7 @@ msgstr "Valoefektit"
 #: plug-ins/imagemap/imap_polygon.c:516
 #, fuzzy
 msgid "_Update"
-msgstr "Virkist‰ esikatselu"
+msgstr "Virkist√§ esikatselu"
 
 #: plug-ins/Lighting/lighting_ui.c:1194 plug-ins/MapObject/mapobject_ui.c:1445
 msgid "Recompute preview image"
@@ -926,7 +926,7 @@ msgstr "Heijastavuus"
 #: plug-ins/Lighting/lighting_ui.c:1211
 #, fuzzy
 msgid "Enable/disable real time preview of changes"
-msgstr "Kytke hyv‰laatuinen esikatselu p‰‰lle/pois"
+msgstr "Kytke hyv√§laatuinen esikatselu p√§√§lle/pois"
 
 #: plug-ins/MapObject/mapobject_main.c:202
 msgid "<Image>/Filters/Map/Map Object..."
@@ -970,11 +970,11 @@ msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:564
 msgid "Transparent Background"
-msgstr "L‰pin‰kyv‰ tausta"
+msgstr "L√§pin√§kyv√§ tausta"
 
 #: plug-ins/MapObject/mapobject_ui.c:575
 msgid "Make image transparent outside object"
-msgstr "Objektin ulkopuolisesti kuvasta l‰pin‰kyv‰"
+msgstr "Objektin ulkopuolisesti kuvasta l√§pin√§kyv√§"
 
 #: plug-ins/MapObject/mapobject_ui.c:577
 msgid "Tile Source Image"
@@ -991,11 +991,11 @@ msgstr "Luo uusi kuva"
 #: plug-ins/MapObject/mapobject_ui.c:610
 #, fuzzy
 msgid "Enable _Antialiasing"
-msgstr "K‰yt‰ antialiasointia"
+msgstr "K√§yt√§ antialiasointia"
 
 #: plug-ins/MapObject/mapobject_ui.c:617
 msgid "Enable/disable jagged edges removal (antialiasing)"
-msgstr "P‰‰lle/pois sahalaitaiset reunojen poisto (antialiasointi)"
+msgstr "P√§√§lle/pois sahalaitaiset reunojen poisto (antialiasointi)"
 
 #: plug-ins/MapObject/mapobject_ui.c:647 plug-ins/common/unsharp.c:694
 #: plug-ins/common/wind.c:1022 plug-ins/imagemap/imap_preferences.c:537
@@ -1005,11 +1005,11 @@ msgstr "Kynnysarvo:"
 
 #: plug-ins/MapObject/mapobject_ui.c:696
 msgid "Point Light"
-msgstr "pistem‰inen valol‰hde"
+msgstr "pistem√§inen valol√§hde"
 
 #: plug-ins/MapObject/mapobject_ui.c:698
 msgid "Directional Light"
-msgstr "suunnattu valol‰hde"
+msgstr "suunnattu valol√§hde"
 
 #: plug-ins/MapObject/mapobject_ui.c:700
 msgid "No Light"
@@ -1017,15 +1017,15 @@ msgstr "ei valoa"
 
 #: plug-ins/MapObject/mapobject_ui.c:705
 msgid "Lightsource Type:"
-msgstr "Valonl‰hteen tyyppi:"
+msgstr "Valonl√§hteen tyyppi:"
 
 #: plug-ins/MapObject/mapobject_ui.c:715
 msgid "Lightsource Color:"
-msgstr "Valolahteen v‰ri:"
+msgstr "Valolahteen v√§ri:"
 
 #: plug-ins/MapObject/mapobject_ui.c:874
 msgid "Ambient:"
-msgstr "Ymp‰ristˆ:"
+msgstr "Ymp√§rist√∂:"
 
 #: plug-ins/MapObject/mapobject_ui.c:900 plug-ins/MapObject/mapobject_ui.c:940
 msgid "Diffuse:"
@@ -1054,19 +1054,19 @@ msgstr "Objektin Z paikka XYZ avaruudessa"
 #. Rotation
 #: plug-ins/MapObject/mapobject_ui.c:1081 plug-ins/common/ps.c:2924
 msgid "Rotation"
-msgstr "Pyˆritt‰‰"
+msgstr "Py√∂ritt√§√§"
 
 #: plug-ins/MapObject/mapobject_ui.c:1096
 msgid "Rotation angle about X axis"
-msgstr "Pyˆritys kulma X akselin ymp‰ri"
+msgstr "Py√∂ritys kulma X akselin ymp√§ri"
 
 #: plug-ins/MapObject/mapobject_ui.c:1106
 msgid "Rotation angle about Y axis"
-msgstr "Pyˆritys kulma Y akselin ymp‰ri"
+msgstr "Py√∂ritys kulma Y akselin ymp√§ri"
 
 #: plug-ins/MapObject/mapobject_ui.c:1116
 msgid "Rotation angle about Z axis"
-msgstr "Pyˆritys kulma Z akselin ymp‰ri"
+msgstr "Py√∂ritys kulma Z akselin ymp√§ri"
 
 #: plug-ins/MapObject/mapobject_ui.c:1141
 msgid "Front:"
@@ -1079,7 +1079,7 @@ msgstr "Taka:"
 #: plug-ins/MapObject/mapobject_ui.c:1142
 #: plug-ins/print/gimp_main_window.c:524
 msgid "Top:"
-msgstr "Yl‰:"
+msgstr "Yl√§:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1142
 #: plug-ins/print/gimp_main_window.c:565
@@ -1120,7 +1120,7 @@ msgstr "Z koko"
 #: plug-ins/MapObject/mapobject_ui.c:1241
 #, fuzzy
 msgid "_Top:"
-msgstr "Yl‰:"
+msgstr "Yl√§:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1241
 #, fuzzy
@@ -1139,11 +1139,11 @@ msgstr "Koko"
 #: plug-ins/MapObject/mapobject_ui.c:1287
 #, fuzzy
 msgid "R_adius:"
-msgstr "S‰de:"
+msgstr "S√§de:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1291
 msgid "Cylinder radius"
-msgstr "Sylinterin s‰de"
+msgstr "Sylinterin s√§de"
 
 #: plug-ins/MapObject/mapobject_ui.c:1300 plug-ins/common/mblur.c:791
 #, fuzzy
@@ -1179,21 +1179,21 @@ msgstr "Zoomaa ulos (tee kuvasta pienempi)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1473
 msgid "Zoom in (make image bigger)"
-msgstr "Zoomaa sis‰‰n (tee kuvasta suurempi)"
+msgstr "Zoomaa sis√§√§n (tee kuvasta suurempi)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1475
 #, fuzzy
 msgid "Show Preview _Wireframe"
-msgstr "N‰yt‰ esikatseslu rautalankamallissa"
+msgstr "N√§yt√§ esikatseslu rautalankamallissa"
 
 #: plug-ins/MapObject/mapobject_ui.c:1484
 msgid "Show/hide preview wireframe"
-msgstr "N‰yt‰/piilosta esikatselu rautalankamallissa"
+msgstr "N√§yt√§/piilosta esikatselu rautalankamallissa"
 
 #: plug-ins/bmp/bmpread.c:67
 #, fuzzy
 msgid "Bad colormap"
-msgstr "%s: virheellinen v‰rikartta"
+msgstr "%s: virheellinen v√§rikartta"
 
 #. Set up progress display
 #: plug-ins/bmp/bmpread.c:102 plug-ins/common/CEL.c:257
@@ -1272,7 +1272,7 @@ msgstr "Ladataan %s:"
 
 #: plug-ins/bmp/bmpwrite.c:553
 msgid "Save as BMP"
-msgstr "Talletetaan BMP:n‰"
+msgstr "Talletetaan BMP:n√§"
 
 #. parameter settings
 #: plug-ins/bmp/bmpwrite.c:571
@@ -1286,11 +1286,11 @@ msgstr "RLE koodattu"
 
 #: plug-ins/common/AlienMap.c:941
 msgid "<Image>/Filters/Colors/Map/Alien Map..."
-msgstr "<Image>/Suotimet/V‰rit/Kuvaus/Alien Map..."
+msgstr "<Image>/Suotimet/V√§rit/Kuvaus/Alien Map..."
 
 #: plug-ins/common/AlienMap.c:1084
 msgid "AlienMap: Transforming..."
-msgstr "AlienMap: Muunnos k‰ynniss‰..."
+msgstr "AlienMap: Muunnos k√§ynniss√§..."
 
 #: plug-ins/common/AlienMap.c:1151
 msgid "AlienMap"
@@ -1309,18 +1309,18 @@ msgstr "Punainen:"
 
 #: plug-ins/common/AlienMap.c:1202
 msgid "Change intensity of the red channel"
-msgstr "S‰‰d‰ punaisen v‰rikanavan voimakkuutta"
+msgstr "S√§√§d√§ punaisen v√§rikanavan voimakkuutta"
 
 #: plug-ins/common/AlienMap.c:1208 plug-ins/common/diffraction.c:610
 #: plug-ins/common/diffraction.c:648 plug-ins/common/diffraction.c:686
 #: plug-ins/common/noisify.c:372 plug-ins/common/noisify.c:379
 #, fuzzy
 msgid "_Green:"
-msgstr "Vihre‰:"
+msgstr "Vihre√§:"
 
 #: plug-ins/common/AlienMap.c:1211
 msgid "Change intensity of the green channel"
-msgstr "S‰‰d‰ vihre‰n v‰rikanavan voimakkuutta"
+msgstr "S√§√§d√§ vihre√§n v√§rikanavan voimakkuutta"
 
 #: plug-ins/common/AlienMap.c:1217 plug-ins/common/diffraction.c:619
 #: plug-ins/common/diffraction.c:657 plug-ins/common/diffraction.c:695
@@ -1331,7 +1331,7 @@ msgstr "Sininen:"
 
 #: plug-ins/common/AlienMap.c:1220
 msgid "Change intensity of the blue channel"
-msgstr "S‰‰d‰ sinisen v‰rikanavan voimakkuutta"
+msgstr "S√§√§d√§ sinisen v√§rikanavan voimakkuutta"
 
 #: plug-ins/common/AlienMap.c:1230 plug-ins/common/AlienMap.c:1253
 #: plug-ins/common/AlienMap.c:1276
@@ -1349,45 +1349,45 @@ msgstr "kosini"
 #: plug-ins/common/AlienMap.c:1278 plug-ins/common/tiff.c:1657
 #, fuzzy
 msgid "_None"
-msgstr "ei mik‰‰n"
+msgstr "ei mik√§√§n"
 
 #: plug-ins/common/AlienMap.c:1237
 msgid "Use sine-function for red component."
-msgstr "K‰yt‰ punaiselle v‰rikanavalle sinifunktiota."
+msgstr "K√§yt√§ punaiselle v√§rikanavalle sinifunktiota."
 
 #: plug-ins/common/AlienMap.c:1239
 msgid "Use cosine-function for red component."
-msgstr "K‰yt‰ punaiselle v‰rikanavalle kosinifunktiota."
+msgstr "K√§yt√§ punaiselle v√§rikanavalle kosinifunktiota."
 
 #: plug-ins/common/AlienMap.c:1241
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr "K‰yt‰ punaiselle v‰rikanavalle lineaarista kuvausta."
+msgstr "K√§yt√§ punaiselle v√§rikanavalle lineaarista kuvausta."
 
 #: plug-ins/common/AlienMap.c:1260
 msgid "Use sine-function for green component."
-msgstr "K‰yt‰ vihre‰lle v‰rikanavalle sinifunktiota."
+msgstr "K√§yt√§ vihre√§lle v√§rikanavalle sinifunktiota."
 
 #: plug-ins/common/AlienMap.c:1262
 msgid "Use cosine-function for green component."
-msgstr "K‰yt‰ vihre‰lle v‰rikanavalle kosinifunktiota."
+msgstr "K√§yt√§ vihre√§lle v√§rikanavalle kosinifunktiota."
 
 #: plug-ins/common/AlienMap.c:1264
 msgid ""
 "Green channel: use linear mapping instead of any trigonometrical function"
-msgstr "K‰yt‰ vihre‰lle v‰rikanavalle lineaarista kuvausta."
+msgstr "K√§yt√§ vihre√§lle v√§rikanavalle lineaarista kuvausta."
 
 #: plug-ins/common/AlienMap.c:1283
 msgid "Use sine-function for blue component."
-msgstr "K‰yt‰ siniselle v‰rikanavalle sinifunktiota"
+msgstr "K√§yt√§ siniselle v√§rikanavalle sinifunktiota"
 
 #: plug-ins/common/AlienMap.c:1285
 msgid "Use cosine-function for blue component."
-msgstr "K‰yt‰ siniselle v‰rikanavalle kosinifunktiota"
+msgstr "K√§yt√§ siniselle v√§rikanavalle kosinifunktiota"
 
 #: plug-ins/common/AlienMap.c:1287
 msgid ""
 "Blue channel: use linear mapping instead of any trigonometrical function"
-msgstr "K‰yt‰ siniselle v‰rikanavalle lineaarista kuvausta."
+msgstr "K√§yt√§ siniselle v√§rikanavalle lineaarista kuvausta."
 
 #: plug-ins/common/AlienMap.c:1353
 msgid "About AlienMap"
@@ -1395,11 +1395,11 @@ msgstr "Tietoja AlienMap:ista"
 
 #: plug-ins/common/AlienMap2.c:949
 msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
-msgstr "<Image>/Suotimet/V‰rit/Kuvaus/Alien Map2..."
+msgstr "<Image>/Suotimet/V√§rit/Kuvaus/Alien Map2..."
 
 #: plug-ins/common/AlienMap2.c:1074
 msgid "AlienMap2: Transforming..."
-msgstr "AlienMap2: Muunnos k‰ynniss‰..."
+msgstr "AlienMap2: Muunnos k√§ynniss√§..."
 
 #: plug-ins/common/AlienMap2.c:1141
 msgid "AlienMap2"
@@ -1412,7 +1412,7 @@ msgstr "R/H-taajuus:"
 
 #: plug-ins/common/AlienMap2.c:1193
 msgid "Change frequency of the red/hue channel"
-msgstr "S‰‰d‰ punaisen v‰rin (R) tai v‰ris‰vyn (H) kanavan taajuutta"
+msgstr "S√§√§d√§ punaisen v√§rin (R) tai v√§ris√§vyn (H) kanavan taajuutta"
 
 #: plug-ins/common/AlienMap2.c:1200
 #, fuzzy
@@ -1421,7 +1421,7 @@ msgstr "R/H-vaihesiirto:"
 
 #: plug-ins/common/AlienMap2.c:1203
 msgid "Change angle of the red/hue channel"
-msgstr "S‰‰d‰ punaisen v‰rin (R) tai v‰ris‰vyn (H) kanavan vaihetta"
+msgstr "S√§√§d√§ punaisen v√§rin (R) tai v√§ris√§vyn (H) kanavan vaihetta"
 
 #: plug-ins/common/AlienMap2.c:1210
 #, fuzzy
@@ -1430,7 +1430,7 @@ msgstr "G/S-taajuus:"
 
 #: plug-ins/common/AlienMap2.c:1213
 msgid "Change frequency of the green/saturation channel"
-msgstr "S‰‰d‰ vihre‰n v‰rin (G) tai v‰rikyll‰isyyden (H) kanavan taajuutta"
+msgstr "S√§√§d√§ vihre√§n v√§rin (G) tai v√§rikyll√§isyyden (H) kanavan taajuutta"
 
 #: plug-ins/common/AlienMap2.c:1220
 #, fuzzy
@@ -1439,7 +1439,7 @@ msgstr "G/S-vaihesiirto:"
 
 #: plug-ins/common/AlienMap2.c:1223
 msgid "Change angle of the green/saturation channel"
-msgstr "S‰‰d‰ vihre‰n v‰rin (G) tai v‰rikyll‰isyyden (S) kanavan vaihetta"
+msgstr "S√§√§d√§ vihre√§n v√§rin (G) tai v√§rikyll√§isyyden (S) kanavan vaihetta"
 
 #: plug-ins/common/AlienMap2.c:1230
 #, fuzzy
@@ -1448,7 +1448,7 @@ msgstr "B/L-taajuus:"
 
 #: plug-ins/common/AlienMap2.c:1233
 msgid "Change frequency of the blue/luminance channel"
-msgstr "S‰‰d‰ sinisen v‰rin (B) tai valoisuuden (L) kanavan taajuutta"
+msgstr "S√§√§d√§ sinisen v√§rin (B) tai valoisuuden (L) kanavan taajuutta"
 
 #: plug-ins/common/AlienMap2.c:1240
 #, fuzzy
@@ -1457,7 +1457,7 @@ msgstr "B/L-vaihesiirto:"
 
 #: plug-ins/common/AlienMap2.c:1243
 msgid "Change angle of the blue/luminance channel"
-msgstr "S‰‰d‰ sinisen v‰rin (B) tai valoisuuden (L) kanavan vaihetta"
+msgstr "S√§√§d√§ sinisen v√§rin (B) tai valoisuuden (L) kanavan vaihetta"
 
 #. * Gray: Operation-Mode *
 #: plug-ins/common/AlienMap2.c:1251 plug-ins/common/deinterlace.c:315
@@ -1469,39 +1469,39 @@ msgstr "Toimintatapa"
 #: plug-ins/common/AlienMap2.c:1255
 #, fuzzy
 msgid "_RGB Color Model"
-msgstr "RGB-v‰rimalli"
+msgstr "RGB-v√§rimalli"
 
 #: plug-ins/common/AlienMap2.c:1256
 #, fuzzy
 msgid "_HSL Color Model"
-msgstr "HSL-v‰rimalli"
+msgstr "HSL-v√§rimalli"
 
 #: plug-ins/common/AlienMap2.c:1268
 #, fuzzy
 msgid "_Modify Red/Hue Channel"
-msgstr "S‰‰d‰ punaisen v‰rin (R) tai v‰ris‰vyn (H) kanavaa"
+msgstr "S√§√§d√§ punaisen v√§rin (R) tai v√§ris√§vyn (H) kanavaa"
 
 #: plug-ins/common/AlienMap2.c:1273
 msgid "Use function for red/hue component"
-msgstr "K‰yt‰ funktiota punaisen v‰rin (R) tai v‰ris‰vyn (H) kanavalle"
+msgstr "K√§yt√§ funktiota punaisen v√§rin (R) tai v√§ris√§vyn (H) kanavalle"
 
 #: plug-ins/common/AlienMap2.c:1280
 #, fuzzy
 msgid "Mo_dify Green/Saturation Channel"
-msgstr "S‰‰d‰ vihre‰n v‰rin (G) tai v‰rikyll‰isyyden (S) kanavaa"
+msgstr "S√§√§d√§ vihre√§n v√§rin (G) tai v√§rikyll√§isyyden (S) kanavaa"
 
 #: plug-ins/common/AlienMap2.c:1286
 msgid "Use function for green/saturation component"
-msgstr "K‰yt‰ funktiota vihre‰n v‰rin (G) tai v‰rikyll‰isyyden (S) kanavalle"
+msgstr "K√§yt√§ funktiota vihre√§n v√§rin (G) tai v√§rikyll√§isyyden (S) kanavalle"
 
 #: plug-ins/common/AlienMap2.c:1293
 #, fuzzy
 msgid "Mod_ify Blue/Luminance Channel"
-msgstr "S‰‰d‰ sinisen v‰rin (B) tai valoisuuden (L) kanavaa"
+msgstr "S√§√§d√§ sinisen v√§rin (B) tai valoisuuden (L) kanavaa"
 
 #: plug-ins/common/AlienMap2.c:1299
 msgid "Use function for blue/luminance component"
-msgstr "K‰yt‰ funktiota sinisen v‰rin (B) tai valoisuuden (L) kanavalle"
+msgstr "K√§yt√§ funktiota sinisen v√§rin (B) tai valoisuuden (L) kanavalle"
 
 #: plug-ins/common/AlienMap2.c:1376
 msgid "About AlienMap2"
@@ -1520,7 +1520,7 @@ msgstr "CEL ei voi luoda uutta kuvaa"
 #: plug-ins/common/CEL.c:361
 #, c-format
 msgid "Unsupported number of colors (%d)"
-msgstr "V‰rej‰ on v‰‰r‰ m‰‰r‰ (%d)"
+msgstr "V√§rej√§ on v√§√§r√§ m√§√§r√§ (%d)"
 
 #: plug-ins/common/CEL.c:483
 msgid "Only an indexed-alpha image can be saved in CEL format"
@@ -1528,15 +1528,15 @@ msgstr "Vain indeksoidut alpha kuvat voidaan tallettaa CEL muodossa"
 
 #: plug-ins/common/CML_explorer.c:134
 msgid "Keep image's values"
-msgstr "Pidet‰‰n kuvan arvot"
+msgstr "Pidet√§√§n kuvan arvot"
 
 #: plug-ins/common/CML_explorer.c:135
 msgid "Keep the first value"
-msgstr "Pidet‰‰n ensimm‰inen arvo"
+msgstr "Pidet√§√§n ensimm√§inen arvo"
 
 #: plug-ins/common/CML_explorer.c:136
 msgid "Fill with parameter k"
-msgstr "T‰yt‰ k parametrilla"
+msgstr "T√§yt√§ k parametrilla"
 
 #: plug-ins/common/CML_explorer.c:137
 msgid "k{x(1-x)}^p"
@@ -1641,11 +1641,11 @@ msgstr "Standardi"
 
 #: plug-ins/common/CML_explorer.c:204
 msgid "Use average value"
-msgstr "K‰yt‰ keskiarvoa"
+msgstr "K√§yt√§ keskiarvoa"
 
 #: plug-ins/common/CML_explorer.c:205
 msgid "Use reverse value"
-msgstr "K‰yt‰ k‰‰nteist‰ arvoa"
+msgstr "K√§yt√§ k√§√§nteist√§ arvoa"
 
 #: plug-ins/common/CML_explorer.c:206
 msgid "With random power (0,10)"
@@ -1673,7 +1673,7 @@ msgstr "Kerro gradientti (0,1)"
 
 #: plug-ins/common/CML_explorer.c:212
 msgid "With p and random (0,1)"
-msgstr "P:ll‰ ja satunnaisella (0,1)"
+msgstr "P:ll√§ ja satunnaisella (0,1)"
 
 #: plug-ins/common/CML_explorer.c:225
 msgid "All black"
@@ -1689,7 +1689,7 @@ msgstr "Kaikki valkoista"
 
 #: plug-ins/common/CML_explorer.c:228
 msgid "The first row of the image"
-msgstr "Ensimm‰inen kuvan rivi"
+msgstr "Ensimm√§inen kuvan rivi"
 
 #: plug-ins/common/CML_explorer.c:229
 msgid "Continuous gradient"
@@ -1709,18 +1709,18 @@ msgstr "Satunnainen jaettu"
 
 #: plug-ins/common/CML_explorer.c:233
 msgid "Randoms from seed"
-msgstr "Satunnaiset luvut siemenest‰"
+msgstr "Satunnaiset luvut siemenest√§"
 
 #: plug-ins/common/CML_explorer.c:234
 msgid "Randoms from seed (shared)"
-msgstr "Satunnaiset luvut siemenest‰ (jaettu)"
+msgstr "Satunnaiset luvut siemenest√§ (jaettu)"
 
 #: plug-ins/common/CML_explorer.c:302 plug-ins/common/decompose.c:131
 #: plug-ins/fp/fp_gtk.c:292 plug-ins/fp/fp_gtk.c:426
 #: plug-ins/gimpressionist/orientation.c:167
 #: plug-ins/gimpressionist/size.c:145
 msgid "Hue"
-msgstr "S‰vy"
+msgstr "S√§vy"
 
 #: plug-ins/common/CML_explorer.c:303 plug-ins/common/decompose.c:132
 #: plug-ins/fp/fp_gtk.c:296 plug-ins/fp/fp_gtk.c:430 plug-ins/fp/fp_gtk.c:494
@@ -1762,7 +1762,7 @@ msgstr "Uusi siemen"
 #: plug-ins/common/CML_explorer.c:1275 plug-ins/common/lic.c:739
 #, fuzzy
 msgid "_Hue"
-msgstr "S‰vy"
+msgstr "S√§vy"
 
 #: plug-ins/common/CML_explorer.c:1279
 #, fuzzy
@@ -2259,7 +2259,7 @@ msgstr "pallomainen"
 #: plug-ins/common/papertile.c:383
 #, fuzzy
 msgid "_Transparent"
-msgstr "L‰pin‰kyv‰ tausta"
+msgstr "L√§pin√§kyv√§ tausta"
 
 #: plug-ins/common/blinds.c:414
 msgid "_Displacement:"
@@ -2366,7 +2366,7 @@ msgstr "pallomainen"
 #: plug-ins/common/bumpmap.c:973
 #, fuzzy
 msgid "S_inuosidal Map"
-msgstr "sinik‰yr‰n mukainen"
+msgstr "sinik√§yr√§n mukainen"
 
 #. Compensate darkening
 #: plug-ins/common/bumpmap.c:986
@@ -2402,12 +2402,12 @@ msgstr "Saturaatio"
 #: plug-ins/common/bumpmap.c:1088
 #, fuzzy
 msgid "_X Offset:"
-msgstr "Y-siirtym‰:"
+msgstr "Y-siirtym√§:"
 
 #: plug-ins/common/bumpmap.c:1098
 #, fuzzy
 msgid "_Y Offset:"
-msgstr "Y-siirtym‰:"
+msgstr "Y-siirtym√§:"
 
 #: plug-ins/common/bumpmap.c:1108
 msgid "_Waterlevel:"
@@ -2416,7 +2416,7 @@ msgstr ""
 #: plug-ins/common/bumpmap.c:1117
 #, fuzzy
 msgid "A_mbient:"
-msgstr "Ymp‰ristˆ:"
+msgstr "Ymp√§rist√∂:"
 
 #: plug-ins/common/bz2.c:265 plug-ins/common/bz2.c:352
 msgid "Can't open bzip2ed file without a sensible extension"
@@ -2455,7 +2455,7 @@ msgstr "Koko"
 #: plug-ins/common/color_enhance.c:92
 #, fuzzy
 msgid "<Image>/Layer/Colors/Auto/Color Enhance"
-msgstr "<Image>/Suotimet/V‰rit/Kuvaus/V‰riv‰likuvaus..."
+msgstr "<Image>/Suotimet/V√§rit/Kuvaus/V√§riv√§likuvaus..."
 
 #: plug-ins/common/color_enhance.c:124
 msgid "Color Enhance..."
@@ -2622,7 +2622,7 @@ msgstr ""
 #: plug-ins/common/compose.c:292
 #, fuzzy
 msgid "<Image>/Filters/Colors/Compose..."
-msgstr "<Image>/Suotimet/V‰rit/Kuvaus/Alien Map..."
+msgstr "<Image>/Suotimet/V√§rit/Kuvaus/Alien Map..."
 
 #: plug-ins/common/compose.c:355
 #, c-format
@@ -2670,7 +2670,7 @@ msgstr ""
 #: plug-ins/common/convmatrix.c:85
 #, fuzzy
 msgid "Gr_ey"
-msgstr "Vihre‰"
+msgstr "Vihre√§"
 
 #: plug-ins/common/convmatrix.c:86
 #, fuzzy
@@ -2680,7 +2680,7 @@ msgstr "Punainen"
 #: plug-ins/common/convmatrix.c:87 plug-ins/common/newsprint.c:390
 #, fuzzy
 msgid "_Green"
-msgstr "Vihre‰:"
+msgstr "Vihre√§:"
 
 #: plug-ins/common/convmatrix.c:88 plug-ins/common/newsprint.c:398
 #, fuzzy
@@ -2733,7 +2733,7 @@ msgstr ""
 #: plug-ins/common/convmatrix.c:942
 #, fuzzy
 msgid "O_ffset:"
-msgstr "Y-siirtym‰:"
+msgstr "Y-siirtym√§:"
 
 #: plug-ins/common/convmatrix.c:968
 msgid "A_utomatic"
@@ -2865,7 +2865,7 @@ msgstr "Esikatselu"
 #: plug-ins/common/curve_bend.c:1421
 #, fuzzy
 msgid "Automatic Pre_view"
-msgstr "Virkist‰ esikatselu"
+msgstr "Virkist√§ esikatselu"
 
 #. Options area, bottom of column
 #: plug-ins/common/curve_bend.c:1431 plug-ins/common/ripple.c:512
@@ -2877,20 +2877,20 @@ msgstr "Asetukset"
 #: plug-ins/common/curve_bend.c:1446
 #, fuzzy
 msgid "R_otate:"
-msgstr "Pyˆritt‰‰"
+msgstr "Py√∂ritt√§√§"
 
 #. The smoothing toggle
 #: plug-ins/common/curve_bend.c:1464
 #, fuzzy
 msgid "Sm_oothing"
-msgstr "K‰yt‰ kaksoislogaritmista pehmennyst‰"
+msgstr "K√§yt√§ kaksoislogaritmista pehmennyst√§"
 
 #. The antialiasing toggle
 #: plug-ins/common/curve_bend.c:1474 plug-ins/common/gqbist.c:859
 #: plug-ins/common/ripple.c:521 plug-ins/mosaic/mosaic.c:600
 #, fuzzy
 msgid "_Antialiasing"
-msgstr "K‰yt‰ antialiasointia"
+msgstr "K√§yt√§ antialiasointia"
 
 #. The wor_on_copy toggle
 #: plug-ins/common/curve_bend.c:1484
@@ -2909,7 +2909,7 @@ msgstr ""
 #: plug-ins/common/curve_bend.c:1538
 #, fuzzy
 msgid "Curve _Type:"
-msgstr "K‰yr‰:"
+msgstr "K√§yr√§:"
 
 #. The Copy button
 #: plug-ins/common/curve_bend.c:1548
@@ -3104,7 +3104,7 @@ msgstr ""
 #: plug-ins/common/decompose.c:229
 #, fuzzy
 msgid "<Image>/Filters/Colors/Decompose..."
-msgstr "<Image>/Suotimet/V‰rit/Kuvaus/Alien Map..."
+msgstr "<Image>/Suotimet/V√§rit/Kuvaus/Alien Map..."
 
 #: plug-ins/common/decompose.c:310
 msgid "Decomposing..."
@@ -3238,7 +3238,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_circle.c:279
 #, fuzzy
 msgid "_Radius:"
-msgstr "S‰de:"
+msgstr "S√§de:"
 
 #: plug-ins/common/despeckle.c:766
 msgid "_Black Level:"
@@ -3293,7 +3293,7 @@ msgstr "R/H-taajuus:"
 #: plug-ins/common/diffraction.c:665
 #, fuzzy
 msgid "Co_ntours"
-msgstr "V‰rit"
+msgstr "V√§rit"
 
 #: plug-ins/common/diffraction.c:703
 msgid "_Sharp edges"
@@ -3379,7 +3379,7 @@ msgstr ""
 #: plug-ins/common/edge.c:447 plug-ins/common/unsharp.c:685
 #, fuzzy
 msgid "_Amount:"
-msgstr "Ymp‰ristˆ:"
+msgstr "Ymp√§rist√∂:"
 
 #: plug-ins/common/emboss.c:154
 msgid "<Image>/Filters/Distorts/Emboss..."
@@ -3534,7 +3534,7 @@ msgstr ""
 #: plug-ins/common/nova.c:365
 #, fuzzy
 msgid "Co_lor:"
-msgstr "V‰rit"
+msgstr "V√§rit"
 
 #. Film numbering: Startindex/Font/colour
 #: plug-ins/common/film.c:1262
@@ -3563,7 +3563,7 @@ msgstr "Ala:"
 #: plug-ins/common/film.c:1313
 #, fuzzy
 msgid "At _Top"
-msgstr "Yl‰:"
+msgstr "Yl√§:"
 
 #. ** The right frame keeps the image selection **
 #: plug-ins/common/film.c:1326
@@ -3586,12 +3586,12 @@ msgstr "Uusi korkeus:"
 #: plug-ins/common/film.c:1388
 #, fuzzy
 msgid "Image Spac_ing:"
-msgstr "Valonl‰hteen tyyppi:"
+msgstr "Valonl√§hteen tyyppi:"
 
 #: plug-ins/common/film.c:1406
 #, fuzzy
 msgid "_Hole Offset:"
-msgstr "Y-siirtym‰:"
+msgstr "Y-siirtym√§:"
 
 #: plug-ins/common/film.c:1417
 #, fuzzy
@@ -4183,7 +4183,7 @@ msgstr ""
 #: plug-ins/common/gtm.c:591
 #, fuzzy
 msgid "_Border:"
-msgstr "Lis‰‰ kansio"
+msgstr "Lis√§√§ kansio"
 
 #: plug-ins/common/gtm.c:595
 msgid "The number of pixels in the table border."
@@ -4328,7 +4328,7 @@ msgstr ""
 #: plug-ins/common/iwarp.c:981
 #, fuzzy
 msgid "Number of _Frames:"
-msgstr "V‰rien lukum‰‰r‰:"
+msgstr "V√§rien lukum√§√§r√§:"
 
 #: plug-ins/common/iwarp.c:990
 #, fuzzy
@@ -4346,7 +4346,7 @@ msgstr ""
 #: plug-ins/common/iwarp.c:1040
 #, fuzzy
 msgid "_Deform Radius:"
-msgstr "S‰de:"
+msgstr "S√§de:"
 
 #: plug-ins/common/iwarp.c:1050
 msgid "D_eform Amount:"
@@ -4404,7 +4404,7 @@ msgstr "Kynnysarvo:"
 #: plug-ins/gflare/gflare.c:2793
 #, fuzzy
 msgid "_Settings"
-msgstr "S‰vy asetukset"
+msgstr "S√§vy asetukset"
 
 #: plug-ins/common/iwarp.c:1186
 msgid "IWarp"
@@ -4468,7 +4468,7 @@ msgstr "lineaarinen"
 #: plug-ins/common/jigsaw.c:2667
 #, fuzzy
 msgid "C_urved"
-msgstr "K‰yr‰:"
+msgstr "K√§yr√§:"
 
 #: plug-ins/common/jigsaw.c:2672
 msgid "Each piece has straight sides"
@@ -4497,7 +4497,7 @@ msgstr ""
 
 #: plug-ins/common/jpeg.c:1671
 msgid "Save as JPEG"
-msgstr "Talletetaan JPEG:n‰"
+msgstr "Talletetaan JPEG:n√§"
 
 #. sg - preview
 #: plug-ins/common/jpeg.c:1694 plug-ins/print/gimp_color_window.c:232
@@ -4604,7 +4604,7 @@ msgstr ""
 #: plug-ins/common/lic.c:753
 #, fuzzy
 msgid "_Gradient"
-msgstr "Vihre‰:"
+msgstr "Vihre√§:"
 
 #: plug-ins/common/lic.c:759
 msgid "Convolve"
@@ -4621,7 +4621,7 @@ msgstr ""
 #: plug-ins/common/lic.c:793
 #, fuzzy
 msgid "_Effect Image:"
-msgstr "Ymp‰ristˆkuva:"
+msgstr "Ymp√§rist√∂kuva:"
 
 #: plug-ins/common/lic.c:809
 #, fuzzy
@@ -4719,7 +4719,7 @@ msgstr ""
 
 #: plug-ins/common/mapcolor.c:369
 msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
-msgstr "<Image>/Suotimet/V‰rit/Kuvaus/V‰riv‰likuvaus..."
+msgstr "<Image>/Suotimet/V√§rit/Kuvaus/V√§riv√§likuvaus..."
 
 #: plug-ins/common/mapcolor.c:416 plug-ins/common/mapcolor.c:751
 msgid ""
@@ -4730,7 +4730,7 @@ msgstr ""
 #: plug-ins/common/mapcolor.c:437
 #, fuzzy
 msgid "Adjusting Foreground/Background..."
-msgstr "L‰pin‰kyv‰ tausta"
+msgstr "L√§pin√§kyv√§ tausta"
 
 #: plug-ins/common/mapcolor.c:479
 msgid "Mapping colors..."
@@ -4817,7 +4817,7 @@ msgstr ""
 #: plug-ins/common/mng.c:1111
 #, fuzzy
 msgid "Save as MNG"
-msgstr "Talletetaan BMP:n‰"
+msgstr "Talletetaan BMP:n√§"
 
 #: plug-ins/common/mng.c:1130
 #, fuzzy
@@ -4916,7 +4916,7 @@ msgstr ""
 #: plug-ins/common/newsprint.c:369
 #, fuzzy
 msgid "_Grey"
-msgstr "Vihre‰:"
+msgstr "Vihre√§:"
 
 #: plug-ins/common/newsprint.c:382
 #, fuzzy
@@ -4951,7 +4951,7 @@ msgstr "Kirjoitin:"
 #: plug-ins/common/newsprint.c:1058
 #, fuzzy
 msgid "_Spot Function:"
-msgstr "V‰rifunktio:"
+msgstr "V√§rifunktio:"
 
 #: plug-ins/common/newsprint.c:1217
 msgid "Newsprint"
@@ -5017,7 +5017,7 @@ msgstr ""
 #: plug-ins/common/newsprint.c:1433
 #, fuzzy
 msgid "O_versample:"
-msgstr "K‰‰nteinen"
+msgstr "K√§√§nteinen"
 
 #: plug-ins/common/nlfilt.c:126
 msgid "<Image>/Filters/Enhance/NL Filter..."
@@ -5539,7 +5539,7 @@ msgstr ""
 #: plug-ins/common/polar.c:866
 #, fuzzy
 msgid "Offset _Angle:"
-msgstr "Y-siirtym‰:"
+msgstr "Y-siirtym√§:"
 
 #: plug-ins/common/polar.c:878
 msgid "_Map Backwards"
@@ -5655,12 +5655,12 @@ msgstr ""
 #: plug-ins/common/ps.c:2874
 #, fuzzy
 msgid "_X-Offset:"
-msgstr "Y-siirtym‰:"
+msgstr "Y-siirtym√§:"
 
 #: plug-ins/common/ps.c:2883
 #, fuzzy
 msgid "_Y-Offset:"
-msgstr "Y-siirtym‰:"
+msgstr "Y-siirtym√§:"
 
 #: plug-ins/common/ps.c:2889
 msgid "_Keep Aspect Ratio"
@@ -5926,7 +5926,7 @@ msgstr ""
 #: plug-ins/common/scatter_hsv.c:425
 #, fuzzy
 msgid "H_ue:"
-msgstr "S‰vy"
+msgstr "S√§vy"
 
 #: plug-ins/common/scatter_hsv.c:434
 #, fuzzy
@@ -5993,7 +5993,7 @@ msgstr ""
 #: plug-ins/common/sel_gauss.c:271
 #, fuzzy
 msgid "_Blur Radius:"
-msgstr "S‰de:"
+msgstr "S√§de:"
 
 #: plug-ins/common/sel_gauss.c:278
 msgid "_Max. Delta:"
@@ -6051,7 +6051,7 @@ msgstr "pallomainen"
 #: plug-ins/common/shift.c:384
 #, fuzzy
 msgid "Shift _Amount:"
-msgstr "Ymp‰ristˆ:"
+msgstr "Ymp√§rist√∂:"
 
 #: plug-ins/common/sinus.c:1162
 msgid "<Image>/Filters/Render/Sinus..."
@@ -6118,7 +6118,7 @@ msgstr ""
 #: plug-ins/common/sinus.c:1809
 #, fuzzy
 msgid "_Foreground & Background"
-msgstr "L‰pin‰kyv‰ tausta"
+msgstr "L√§pin√§kyv√§ tausta"
 
 #: plug-ins/common/sinus.c:1811
 msgid "C_hoose here:"
@@ -6139,7 +6139,7 @@ msgstr ""
 #: plug-ins/common/sinus.c:1863
 #, fuzzy
 msgid "F_irst Color:"
-msgstr "Valol‰hteen v‰ri:"
+msgstr "Valol√§hteen v√§ri:"
 
 #: plug-ins/common/sinus.c:1878
 #, fuzzy
@@ -6149,7 +6149,7 @@ msgstr "Tausta"
 #: plug-ins/common/sinus.c:1894 plug-ins/imagemap/imap_preferences.c:515
 #, fuzzy
 msgid "Co_lors"
-msgstr "V‰rit"
+msgstr "V√§rit"
 
 #: plug-ins/common/sinus.c:1903
 msgid "Blend Settings"
@@ -6172,7 +6172,7 @@ msgstr "lineaarinen"
 #: plug-ins/common/sinus.c:1920
 #, fuzzy
 msgid "Sin_usoidal"
-msgstr "sinik‰yr‰n mukainen"
+msgstr "sinik√§yr√§n mukainen"
 
 #: plug-ins/common/sinus.c:1932
 msgid "_Exponent:"
@@ -6288,7 +6288,7 @@ msgstr ""
 #: plug-ins/common/sparkle.c:392
 #, fuzzy
 msgid "F_lare Intensity:"
-msgstr "V‰ritiheys"
+msgstr "V√§ritiheys"
 
 #: plug-ins/common/sparkle.c:395
 msgid "Adjust the Flare Intensity"
@@ -6360,7 +6360,7 @@ msgstr ""
 #: plug-ins/common/sparkle.c:498
 #, fuzzy
 msgid "In_verse"
-msgstr "K‰‰nteinen"
+msgstr "K√§√§nteinen"
 
 #: plug-ins/common/sparkle.c:503
 msgid "Should an Inverse Effect be done?"
@@ -6369,7 +6369,7 @@ msgstr ""
 #: plug-ins/common/sparkle.c:509
 #, fuzzy
 msgid "A_dd Border"
-msgstr "Lis‰‰ kansio"
+msgstr "Lis√§√§ kansio"
 
 #: plug-ins/common/sparkle.c:515
 msgid "Draw a Border of Spikes around the Image"
@@ -6378,7 +6378,7 @@ msgstr ""
 #: plug-ins/common/sparkle.c:532
 #, fuzzy
 msgid "_Natural Color"
-msgstr "V‰rien lukum‰‰r‰"
+msgstr "V√§rien lukum√§√§r√§"
 
 #: plug-ins/common/sparkle.c:535
 msgid "_Foreground Color"
@@ -6421,12 +6421,12 @@ msgstr "lineaarinen"
 #: plug-ins/common/spheredesigner.c:282
 #, fuzzy
 msgid "Phong"
-msgstr "pistem‰inen"
+msgstr "pistem√§inen"
 
 #: plug-ins/common/spheredesigner.c:283
 #, fuzzy
 msgid "Noise"
-msgstr "ei mik‰‰n"
+msgstr "ei mik√§√§n"
 
 #: plug-ins/common/spheredesigner.c:284
 msgid "Wood"
@@ -6487,12 +6487,12 @@ msgstr ""
 #: plug-ins/common/spheredesigner.c:2602
 #, fuzzy
 msgid "Colors:"
-msgstr "V‰rit"
+msgstr "V√§rit"
 
 #: plug-ins/common/spheredesigner.c:2613 plug-ins/common/spheredesigner.c:2624
 #, fuzzy
 msgid "Color Selection Dialog"
-msgstr "V‰rifunktio"
+msgstr "V√§rifunktio"
 
 #. Scale
 #: plug-ins/common/spheredesigner.c:2635 plug-ins/gimpressionist/paper.c:149
@@ -6517,17 +6517,17 @@ msgstr "Skaalaa X:"
 #: plug-ins/common/spheredesigner.c:2726
 #, fuzzy
 msgid "Rotate X:"
-msgstr "Pyˆritt‰‰"
+msgstr "Py√∂ritt√§√§"
 
 #: plug-ins/common/spheredesigner.c:2743
 #, fuzzy
 msgid "Rotate Y:"
-msgstr "Pyˆritt‰‰"
+msgstr "Py√∂ritt√§√§"
 
 #: plug-ins/common/spheredesigner.c:2760
 #, fuzzy
 msgid "Rotate Z:"
-msgstr "Pyˆritt‰‰"
+msgstr "Py√∂ritt√§√§"
 
 #: plug-ins/common/spheredesigner.c:2777
 msgid "Pos X:"
@@ -6549,7 +6549,7 @@ msgstr "kuhmurainen"
 #: plug-ins/common/spheredesigner.c:2864
 #, fuzzy
 msgid "Amount:"
-msgstr "Ymp‰ristˆ:"
+msgstr "Ymp√§rist√∂:"
 
 #: plug-ins/common/spheredesigner.c:2882
 msgid "Exp:"
@@ -7052,7 +7052,7 @@ msgstr ""
 #: plug-ins/common/video.c:2200
 #, fuzzy
 msgid "_Rotated"
-msgstr "Pyˆritt‰‰"
+msgstr "Py√∂ritt√§√§"
 
 #: plug-ins/common/vinvert.c:85
 msgid "<Image>/Filters/Colors/Value Invert"
@@ -7077,7 +7077,7 @@ msgstr ""
 #: plug-ins/common/vpropagate.c:201
 #, fuzzy
 msgid "_Foreground to Peaks"
-msgstr "L‰pin‰kyv‰ tausta"
+msgstr "L√§pin√§kyv√§ tausta"
 
 #: plug-ins/common/vpropagate.c:204
 #, fuzzy
@@ -7096,7 +7096,7 @@ msgstr ""
 #: plug-ins/common/vpropagate.c:213
 #, fuzzy
 msgid "More T_ransparent"
-msgstr "L‰pin‰kyv‰ tausta"
+msgstr "L√§pin√§kyv√§ tausta"
 
 #: plug-ins/common/vpropagate.c:249
 msgid "<Image>/Filters/Distorts/Value Propagate..."
@@ -7152,7 +7152,7 @@ msgstr "Valo"
 #: plug-ins/common/vpropagate.c:1131
 #, fuzzy
 msgid "To _Top"
-msgstr "Yl‰:"
+msgstr "Yl√§:"
 
 #: plug-ins/common/vpropagate.c:1134
 #, fuzzy
@@ -7336,7 +7336,7 @@ msgstr ""
 #: plug-ins/common/whirlpinch.c:716
 #, fuzzy
 msgid "_Pinch Amount:"
-msgstr "Ymp‰ristˆ:"
+msgstr "Ymp√§rist√∂:"
 
 #: plug-ins/common/winclipboard.c:109
 msgid "<Image>/Edit/Copy to Clipboard"
@@ -7874,7 +7874,7 @@ msgstr ""
 #: plug-ins/flame/flame.c:1064
 #, fuzzy
 msgid "Sample _Density:"
-msgstr "V‰ritiheys"
+msgstr "V√§ritiheys"
 
 #: plug-ins/flame/flame.c:1075
 msgid "Spa_tial Oversample:"
@@ -7883,12 +7883,12 @@ msgstr ""
 #: plug-ins/flame/flame.c:1086
 #, fuzzy
 msgid "Spatial _Filter Radius:"
-msgstr "S‰de:"
+msgstr "S√§de:"
 
 #: plug-ins/flame/flame.c:1113
 #, fuzzy
 msgid "Color_map:"
-msgstr "V‰rit"
+msgstr "V√§rit"
 
 #: plug-ins/flame/flame.c:1162
 msgid "Custom Gradient"
@@ -7907,7 +7907,7 @@ msgstr "Z"
 #: plug-ins/fp/fp.c:92
 #, fuzzy
 msgid "<Image>/Filters/Colors/Filter Pack..."
-msgstr "<Image>/Suotimet/V‰rit/Kuvaus/Alien Map..."
+msgstr "<Image>/Suotimet/V√§rit/Kuvaus/Alien Map..."
 
 #: plug-ins/fp/fp.c:127
 msgid "Convert the image to RGB first!"
@@ -8353,7 +8353,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:3042
 msgid "Radius:"
-msgstr "S‰de:"
+msgstr "S√§de:"
 
 #: plug-ins/gfig/gfig.c:3056
 msgid "Fill Type:"
@@ -8488,7 +8488,7 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:3449
 #, fuzzy
 msgid "Select folder and rescan Gfig object collections"
-msgstr "Valitse kansio ja ker‰‰ sielt‰ kokoelma uudelleen "
+msgstr "Valitse kansio ja ker√§√§ sielt√§ kokoelma uudelleen "
 
 #. Position labels
 #: plug-ins/gfig/gfig.c:3520 plug-ins/gimpressionist/size.c:98
@@ -8514,7 +8514,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:3616 plug-ins/gfig/gfig.c:3622
 msgid "(none)"
-msgstr "(ei mik‰‰n)"
+msgstr "(ei mik√§√§n)"
 
 #. Start buildng the dialog up
 #: plug-ins/gfig/gfig.c:3771
@@ -8558,7 +8558,7 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:4410
 #, fuzzy
 msgid "Load Gfig object collection"
-msgstr "Valitse kansio ja ker‰‰ sielt‰ kokoelma uudelleen "
+msgstr "Valitse kansio ja ker√§√§ sielt√§ kokoelma uudelleen "
 
 #: plug-ins/gfig/gfig.c:4435
 msgid "Error in copy layer for onlayers"
@@ -8648,7 +8648,7 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:1253
 #, fuzzy, c-format
 msgid "Failed to open GFlare file '%s': %s"
-msgstr "Tiedoston kirjoittaminen ep‰onnistui\n"
+msgstr "Tiedoston kirjoittaminen ep√§onnistui\n"
 
 #: plug-ins/gflare/gflare.c:1261
 #, fuzzy, c-format
@@ -8673,7 +8673,7 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:1461
 #, fuzzy, c-format
 msgid "Failed to write GFlare file '%s': %s"
-msgstr "Tiedoston kirjoittaminen ep‰onnistui\n"
+msgstr "Tiedoston kirjoittaminen ep√§onnistui\n"
 
 #: plug-ins/gflare/gflare.c:1616
 #, fuzzy, c-format
@@ -8687,7 +8687,7 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:2348
 #, fuzzy
 msgid "A_uto Update Preview"
-msgstr "Virkist‰ esikatselu"
+msgstr "Virkist√§ esikatselu"
 
 #: plug-ins/gflare/gflare.c:2403
 msgid "`Default' is created."
@@ -8700,12 +8700,12 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:2696
 #, fuzzy
 msgid "Ro_tation:"
-msgstr "Pyˆritt‰‰"
+msgstr "Py√∂ritt√§√§"
 
 #: plug-ins/gflare/gflare.c:2708
 #, fuzzy
 msgid "_Hue Rotation:"
-msgstr "Pyˆritt‰‰"
+msgstr "Py√∂ritt√§√§"
 
 #: plug-ins/gflare/gflare.c:2720
 msgid "Vector _Angle:"
@@ -8868,7 +8868,7 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:3661
 #, fuzzy
 msgid "_Rays"
-msgstr "S‰de:"
+msgstr "S√§de:"
 
 #: plug-ins/gflare/gflare.c:3712
 msgid "Size Factor Gradient:"
@@ -8981,7 +8981,7 @@ msgstr ""
 #: plug-ins/gimpressionist/color.c:34
 #, fuzzy
 msgid "Co_lor"
-msgstr "V‰rit"
+msgstr "V√§rit"
 
 #: plug-ins/gimpressionist/color.c:52
 msgid "A_verage under brush"
@@ -9002,7 +9002,7 @@ msgstr ""
 #: plug-ins/gimpressionist/color.c:77
 #, fuzzy
 msgid "Color _noise:"
-msgstr "V‰ritila"
+msgstr "V√§ritila"
 
 #: plug-ins/gimpressionist/color.c:81
 msgid "Adds random noise to the color"
@@ -9308,7 +9308,7 @@ msgstr ""
 #: plug-ins/gimpressionist/orientmap.c:589
 #, fuzzy
 msgid "Ang_le offset:"
-msgstr "Y-siirtym‰:"
+msgstr "Y-siirtym√§:"
 
 #: plug-ins/gimpressionist/orientmap.c:593
 msgid "Offset all vectors with a given angle"
@@ -9340,7 +9340,7 @@ msgstr ""
 #: plug-ins/gimpressionist/paper.c:118
 #, fuzzy
 msgid "_Invert"
-msgstr "K‰‰nteinen"
+msgstr "K√§√§nteinen"
 
 #: plug-ins/gimpressionist/paper.c:126
 msgid "Inverts the Papers texture"
@@ -9349,7 +9349,7 @@ msgstr ""
 #: plug-ins/gimpressionist/paper.c:129
 #, fuzzy
 msgid "O_verlay"
-msgstr "K‰‰nteinen"
+msgstr "K√§√§nteinen"
 
 #: plug-ins/gimpressionist/paper.c:134
 msgid "Applies the paper as it is (without embossing it)"
@@ -9386,7 +9386,7 @@ msgstr ""
 #: plug-ins/gimpressionist/placement.c:80
 #, fuzzy
 msgid "Stroke _density:"
-msgstr "V‰ritiheys"
+msgstr "V√§ritiheys"
 
 #: plug-ins/gimpressionist/placement.c:84
 msgid "The relative density of the brush strokes"
@@ -9405,7 +9405,7 @@ msgstr ""
 msgid ""
 "Failed to save PPM file '%s':\n"
 "%s"
-msgstr "Tiedoston kirjoittaminen ep‰onnistui\n"
+msgstr "Tiedoston kirjoittaminen ep√§onnistui\n"
 
 #: plug-ins/gimpressionist/presets.c:354
 msgid "Save Current"
@@ -9414,7 +9414,7 @@ msgstr ""
 #: plug-ins/gimpressionist/presets.c:582
 #, fuzzy
 msgid "_Presets"
-msgstr "V‰rit"
+msgstr "V√§rit"
 
 #: plug-ins/gimpressionist/presets.c:597
 msgid "Save current..."
@@ -9863,7 +9863,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:177
 #, fuzzy
 msgid "L_eft Border"
-msgstr "Lis‰‰ kansio"
+msgstr "Lis√§√§ kansio"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:181
 #, fuzzy
@@ -9873,12 +9873,12 @@ msgstr "Oikea raja:"
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:185
 #, fuzzy
 msgid "_Upper Border"
-msgstr "Lis‰‰ kansio"
+msgstr "Lis√§√§ kansio"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:189
 #, fuzzy
 msgid "Lo_wer Border"
-msgstr "Lis‰‰ kansio"
+msgstr "Lis√§√§ kansio"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:198
 msgid "_Base URL:"
@@ -10137,7 +10137,7 @@ msgstr "lineaarinen"
 #: plug-ins/imagemap/imap_grid.c:235
 #, fuzzy
 msgid "C_rosses"
-msgstr "V‰rit"
+msgstr "V√§rit"
 
 #: plug-ins/imagemap/imap_grid.c:243
 msgid "Grid Granularity"
@@ -10380,7 +10380,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_preferences.c:492
 #, fuzzy
 msgid "Number of M_RU entries (1 - 16):"
-msgstr "V‰rien lukum‰‰r‰:"
+msgstr "V√§rien lukum√§√§r√§:"
 
 #: plug-ins/imagemap/imap_preferences.c:517
 msgid "Normal:"
@@ -10406,7 +10406,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_rectangle.c:69
 #, fuzzy
 msgid "_Rectangle"
-msgstr "Ker‰‰ uudelleen"
+msgstr "Ker√§√§ uudelleen"
 
 #: plug-ins/imagemap/imap_rectangle.c:390
 msgid "Upper left _x:"
@@ -10604,7 +10604,7 @@ msgstr ""
 #: plug-ins/mosaic/mosaic.c:325
 #, fuzzy
 msgid "<Image>/Filters/Distorts/Mosaic..."
-msgstr "<Image>/Suotimet/V‰rit/Kuvaus/Alien Map..."
+msgstr "<Image>/Suotimet/V√§rit/Kuvaus/Alien Map..."
 
 #. progress bar for gradient finding
 #: plug-ins/mosaic/mosaic.c:450
@@ -10675,7 +10675,7 @@ msgstr "Valoasetukset"
 #: plug-ins/mosaic/mosaic.c:729
 #, fuzzy
 msgid "Color _Variation:"
-msgstr "V‰rifunktio"
+msgstr "V√§rifunktio"
 
 #: plug-ins/mosaic/mosaic.c:2495
 msgid "Unable to add additional point.\n"
@@ -10851,11 +10851,11 @@ msgstr "vaaka"
 
 #: plug-ins/print/gimp_main_window.c:486
 msgid "Upside down"
-msgstr "ylˆsalasin"
+msgstr "yl√∂salasin"
 
 #: plug-ins/print/gimp_main_window.c:488
 msgid "Seascape"
-msgstr "ylˆsalasin vaakasuuntaan"
+msgstr "yl√∂salasin vaakasuuntaan"
 
 #: plug-ins/print/gimp_main_window.c:492
 msgid ""
@@ -11135,7 +11135,7 @@ msgstr ""
 #: plug-ins/print/gimp_main_window.c:1137
 #, fuzzy
 msgid "Set the scale (size) of the image"
-msgstr "Ensimm‰inen kuvan rivi"
+msgstr "Ensimm√§inen kuvan rivi"
 
 #: plug-ins/print/gimp_main_window.c:1170
 msgid ""
@@ -11212,7 +11212,7 @@ msgstr "Kuva-asetukset"
 #: plug-ins/print/gimp_main_window.c:1332
 #, fuzzy
 msgid "Image Type:"
-msgstr "Valonl‰hteen tyyppi:"
+msgstr "Valonl√§hteen tyyppi:"
 
 #: plug-ins/print/gimp_main_window.c:1337
 msgid "Optimize the output for the type of image being printed"
@@ -11228,7 +11228,7 @@ msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:1355
 msgid "Solid Colors"
-msgstr "Yhten‰iset v‰rit"
+msgstr "Yhten√§iset v√§rit"
 
 #: plug-ins/print/gimp_main_window.c:1362
 msgid "Best for images dominated by regions of solid color"
@@ -11255,7 +11255,7 @@ msgstr ""
 #: plug-ins/print/gimp_main_window.c:1418
 #, fuzzy
 msgid "Color output"
-msgstr "V‰ritila"
+msgstr "V√§ritila"
 
 #: plug-ins/print/gimp_main_window.c:1430
 msgid "Print in shades of gray using black ink"
@@ -11293,7 +11293,7 @@ msgstr ""
 #: plug-ins/rcm/rcm.c:112
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map/Colormap Rotation..."
-msgstr "<Image>/Suotimet/V‰rit/Kuvaus/V‰riv‰likuvaus..."
+msgstr "<Image>/Suotimet/V√§rit/Kuvaus/V√§riv√§likuvaus..."
 
 #: plug-ins/rcm/rcm.c:274
 msgid "Rotating the colormap..."
@@ -11567,7 +11567,7 @@ msgstr ""
 #~ msgstr "Ei voi tallettaa."
 
 #~ msgid "Failed to write file\n"
-#~ msgstr "Tiedoston kirjoittaminen ep‰onnistui\n"
+#~ msgstr "Tiedoston kirjoittaminen ep√§onnistui\n"
 
 #~ msgid "Loading %s:"
 #~ msgstr "Ladataan %s:"
@@ -11594,7 +11594,7 @@ msgstr ""
 #~ msgstr "Ei voi avata %s"
 
 #~ msgid "Update Preview"
-#~ msgstr "Virkist‰ esikatselu"
+#~ msgstr "Virkist√§ esikatselu"
 
 #~ msgid "Preview (in image window)"
 #~ msgstr "Esikatselu (kuva-ikkunassa)"
@@ -11623,17 +11623,17 @@ msgstr ""
 #, fuzzy
 #~ msgid ""
 #~ "fractalexplorer-path misconfigured - the following folders were not found:"
-#~ msgstr "fractalexplorer-path on ep‰kelpo - seuraavia kansioita ei lˆytynyt"
+#~ msgstr "fractalexplorer-path on ep√§kelpo - seuraavia kansioita ei l√∂ytynyt"
 
 #~ msgid "Enable Tooltips"
-#~ msgstr "N‰yt‰ vihjeit‰"
+#~ msgstr "N√§yt√§ vihjeit√§"
 
 #~ msgid "Enable/disable tooltip messages"
-#~ msgstr "P‰‰lle/pois vihje viestit"
+#~ msgstr "P√§√§lle/pois vihje viestit"
 
 #, fuzzy
 #~ msgid "_Disable Tooltips"
-#~ msgstr "N‰yt‰ vihjeit‰"
+#~ msgstr "N√§yt√§ vihjeit√§"
 
 #, fuzzy
 #~ msgid "_New Unit"
@@ -11649,10 +11649,10 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "gfig-path misconfigured - the following folders were not found:"
-#~ msgstr "fractalexplorer-path on ep‰kelpo - seuraavia kansioita ei lˆytynyt"
+#~ msgstr "fractalexplorer-path on ep√§kelpo - seuraavia kansioita ei l√∂ytynyt"
 
 #~ msgid "Rescan"
-#~ msgstr "Ker‰‰ uudelleen"
+#~ msgstr "Ker√§√§ uudelleen"
 
 #, fuzzy
 #~ msgid ""
@@ -11664,15 +11664,15 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "gflare-path misconfigured - the following folders were not found:"
-#~ msgstr "fractalexplorer-path on ep‰kelpo - seuraavia kansioita ei lˆytynyt"
+#~ msgstr "fractalexplorer-path on ep√§kelpo - seuraavia kansioita ei l√∂ytynyt"
 
 #, fuzzy
 #~ msgid "_Update Preview"
-#~ msgstr "Virkist‰ esikatselu"
+#~ msgstr "Virkist√§ esikatselu"
 
 #, fuzzy
 #~ msgid "Close"
-#~ msgstr "V‰rit"
+#~ msgstr "V√§rit"
 
 #, fuzzy
 #~ msgid "Image preview"
@@ -11685,7 +11685,7 @@ msgstr ""
 #~ msgstr "Zoomaa uudestaan"
 
 #~ msgid "Step In"
-#~ msgstr "Askella sis‰‰n"
+#~ msgstr "Askella sis√§√§n"
 
 #~ msgid "Step Out"
 #~ msgstr "Askella ulos"
@@ -11697,7 +11697,7 @@ msgstr ""
 #~ msgstr "Bumpmap asetukset"
 
 #~ msgid "Environment Settings"
-#~ msgstr "Ymp‰ristˆasetukset"
+#~ msgstr "Ymp√§rist√∂asetukset"
 
 #~ msgid "Depth:"
 #~ msgstr "Syvyys:"
@@ -11712,23 +11712,23 @@ msgstr ""
 #~ msgstr "Esikatselu!"
 
 #~ msgid "Hue Settings"
-#~ msgstr "S‰vy asetukset"
+#~ msgstr "S√§vy asetukset"
 
 #~ msgid "Saturation Settings"
 #~ msgstr "Saturaatio asetukset"
 
 #~ msgid "Value (Gray Image) Settings"
-#~ msgstr "Arvo (harmaas‰vy kuva) asetukset"
+#~ msgstr "Arvo (harmaas√§vy kuva) asetukset"
 
 #, fuzzy
 #~ msgid "_Edit Flame"
-#~ msgstr "Muokkaa fraktaalin nime‰"
+#~ msgstr "Muokkaa fraktaalin nime√§"
 
 #~ msgid "Monochrome"
-#~ msgstr "Yksiv‰rinen"
+#~ msgstr "Yksiv√§rinen"
 
 #~ msgid "Adjust Color"
-#~ msgstr "S‰‰d‰ v‰rej‰"
+#~ msgstr "S√§√§d√§ v√§rej√§"
 
 #~ msgid "B&W"
 #~ msgstr "Mustavalkoinen"
@@ -11737,10 +11737,10 @@ msgstr ""
 #~ msgstr "Asetukset"
 
 #~ msgid "Offset X:"
-#~ msgstr "X-siirtym‰:"
+#~ msgstr "X-siirtym√§:"
 
 #~ msgid "Error opening \"%s\"!\n"
-#~ msgstr "Tiedoston \"%s\" avaus ep‰onnistui\n"
+#~ msgstr "Tiedoston \"%s\" avaus ep√§onnistui\n"
 
 #~ msgid "OK"
 #~ msgstr "OK"
@@ -11749,7 +11749,7 @@ msgstr ""
 #~ msgstr "Peru"
 
 #~ msgid "Enable/disable jagged edges removal(antialiasing)"
-#~ msgstr "Kytke sahalaitaisten reunojen poisto (antialiasointi) p‰‰lle/pois"
+#~ msgstr "Kytke sahalaitaisten reunojen poisto (antialiasointi) p√§√§lle/pois"
 
 #~ msgid "Env"
 #~ msgstr "env"
@@ -11764,10 +11764,10 @@ msgstr ""
 #~ msgstr "Tiedostoa %.100s ei voitu avata tallennusta varten"
 
 #~ msgid "Transpararent Background"
-#~ msgstr "L‰pin‰kyv‰ tausta"
+#~ msgstr "L√§pin√§kyv√§ tausta"
 
 #~ msgid "Are you sure you want to delete"
-#~ msgstr "Oletko varma ett‰ haluat poistaa"
+#~ msgstr "Oletko varma ett√§ haluat poistaa"
 
 #~ msgid "\"%s\" from the list and from disk?"
-#~ msgstr "'%s' sek‰ listalta ett‰ levylt‰?"
+#~ msgstr "'%s' sek√§ listalta ett√§ levylt√§?"

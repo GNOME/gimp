@@ -10,7 +10,7 @@ msgstr ""
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:294
@@ -37,23 +37,23 @@ msgstr "Om"
 #: plug-ins/ifscompose/ifscompose.c:931 plug-ins/print/gimp_main_window.c:411
 #: plug-ins/rcm/rcm_dialog.c:124 plug-ins/rcm/rcm_dialog.c:671
 msgid "Preview"
-msgstr "Forhåndsvisning"
+msgstr "ForhÃ¥ndsvisning"
 
 #: plug-ins/FractalExplorer/Dialogs.c:363
 msgid "Realtime Preview"
-msgstr "Forhåndsvisning i sanntid"
+msgstr "ForhÃ¥ndsvisning i sanntid"
 
 #: plug-ins/FractalExplorer/Dialogs.c:370
 msgid "If you enable this option the preview will be redrawn automatically"
-msgstr "Hvis du slår på dette valget vil forhåndsvisning tegnes opp automatisk"
+msgstr "Hvis du slÃ¥r pÃ¥ dette valget vil forhÃ¥ndsvisning tegnes opp automatisk"
 
 #: plug-ins/FractalExplorer/Dialogs.c:373
 msgid "Redraw"
-msgstr "Tegn opp på nytt"
+msgstr "Tegn opp pÃ¥ nytt"
 
 #: plug-ins/FractalExplorer/Dialogs.c:379
 msgid "Redraw preview"
-msgstr "Tegn opp forhåndsvisning på nytt"
+msgstr "Tegn opp forhÃ¥ndsvisning pÃ¥ nytt"
 
 #. Zoom Options
 #: plug-ins/FractalExplorer/Dialogs.c:382
@@ -87,7 +87,7 @@ msgstr "XMIN:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:458
 msgid "Change the first (minimal) x-coordinate delimitation"
-msgstr "Endre første (minimum) x-koordinat skilletegn"
+msgstr "Endre fÃ¸rste (minimum) x-koordinat skilletegn"
 
 #: plug-ins/FractalExplorer/Dialogs.c:466
 msgid "XMAX:"
@@ -234,31 +234,31 @@ msgstr "Fargetetthet"
 #: plug-ins/common/compose.c:139 plug-ins/common/exchange.c:419
 #: plug-ins/fp/fp_gtk.c:25
 msgid "Red:"
-msgstr "Rød:"
+msgstr "RÃ¸d:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:697
 msgid "Change the intensity of the red channel"
-msgstr "Endre intensiteten for rød kanal"
+msgstr "Endre intensiteten for rÃ¸d kanal"
 
 #: plug-ins/FractalExplorer/Dialogs.c:704 plug-ins/common/compose.c:130
 #: plug-ins/common/compose.c:140 plug-ins/common/exchange.c:463
 #: plug-ins/fp/fp_gtk.c:26
 msgid "Green:"
-msgstr "Grønn:"
+msgstr "GrÃ¸nn:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:707
 msgid "Change the intensity of the green channel"
-msgstr "Endre intensiteten for grønn kanal"
+msgstr "Endre intensiteten for grÃ¸nn kanal"
 
 #: plug-ins/FractalExplorer/Dialogs.c:714 plug-ins/common/compose.c:131
 #: plug-ins/common/compose.c:141 plug-ins/common/exchange.c:507
 #: plug-ins/fp/fp_gtk.c:27
 msgid "Blue:"
-msgstr "Blå:"
+msgstr "BlÃ¥:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:717
 msgid "Change the intensity of the blue channel"
-msgstr "Endre intensiteten for blå kanal"
+msgstr "Endre intensiteten for blÃ¥ kanal"
 
 #. Color Function frame
 #: plug-ins/FractalExplorer/Dialogs.c:723
@@ -269,7 +269,7 @@ msgstr "Fargefunksjon"
 #: plug-ins/FractalExplorer/Dialogs.c:734 plug-ins/common/AlienMap.c:1226
 #: plug-ins/common/decompose.c:121
 msgid "Red"
-msgstr "Rød"
+msgstr "RÃ¸d"
 
 #: plug-ins/FractalExplorer/Dialogs.c:738
 #: plug-ins/FractalExplorer/Dialogs.c:779
@@ -331,13 +331,13 @@ msgstr ""
 #: plug-ins/FractalExplorer/Dialogs.c:775 plug-ins/common/AlienMap.c:1249
 #: plug-ins/common/decompose.c:122
 msgid "Green"
-msgstr "Grønn"
+msgstr "GrÃ¸nn"
 
 #. Bluemode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:816 plug-ins/common/AlienMap.c:1272
 #: plug-ins/common/decompose.c:127
 msgid "Blue"
-msgstr "Blå"
+msgstr "BlÃ¥"
 
 #. Colormode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:857
@@ -356,11 +356,11 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:890
 msgid "Apply Active Gradient to Final Image"
-msgstr "Legg på aktiv gradient på endelig bilde"
+msgstr "Legg pÃ¥ aktiv gradient pÃ¥ endelig bilde"
 
 #: plug-ins/FractalExplorer/Dialogs.c:902
 msgid "Create a color-map using a gradient from the gradient editor"
-msgstr "Opprett et fargekart ved å bruke en gradient fra gradient-editoren"
+msgstr "Opprett et fargekart ved Ã¥ bruke en gradient fra gradient-editoren"
 
 #: plug-ins/FractalExplorer/Dialogs.c:907
 msgid "FractalExplorer Gradient"
@@ -385,14 +385,14 @@ msgstr "Fraktaler"
 msgid ""
 "Can't open '%s' for writing:\n"
 "%s"
-msgstr "Kan ikke åpne filen for skriving"
+msgstr "Kan ikke Ã¥pne filen for skriving"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1609
 #, fuzzy, c-format
 msgid ""
 "Failed to write '%s':\n"
 "%s"
-msgstr "Feil under skriving av GFlare-fil «%s»: %s"
+msgstr "Feil under skriving av GFlare-fil Â«%sÂ»: %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1631
 msgid "Save: No filename given"
@@ -409,11 +409,11 @@ msgstr "Last fraktalparametere"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1695
 msgid "Click here to load your file"
-msgstr "Klikk her for å laste din fil"
+msgstr "Klikk her for Ã¥ laste din fil"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1702
 msgid "Click here to cancel load procedure"
-msgstr "Klikk her for å avbryte innlesningsprosedyren"
+msgstr "Klikk her for Ã¥ avbryte innlesningsprosedyren"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1720
 msgid "Save Fractal Parameters"
@@ -421,11 +421,11 @@ msgstr "Lagre fraktalparametere"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1732
 msgid "Click here to save your file"
-msgstr "Klikk her for å lagre din fil"
+msgstr "Klikk her for Ã¥ lagre din fil"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1739
 msgid "Click here to cancel save procedure"
-msgstr "Klikk her for å avbryte lagring"
+msgstr "Klikk her for Ã¥ avbryte lagring"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1998 plug-ins/bmp/bmpread.c:97
 #: plug-ins/common/CEL.c:253 plug-ins/common/CML_explorer.c:2391
@@ -443,7 +443,7 @@ msgstr "Klikk her for å avbryte lagring"
 msgid ""
 "Can't open '%s':\n"
 "%s"
-msgstr "Kan ikke åpne «%s»: %s"
+msgstr "Kan ikke Ã¥pne Â«%sÂ»: %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2005
 #, fuzzy, c-format
@@ -463,7 +463,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:213
 msgid "<Image>/Filters/Render/Pattern/Fractal Explorer..."
-msgstr "<Image>/Filtre/Render/Mønster/Fraktalutforsker..."
+msgstr "<Image>/Filtre/Render/MÃ¸nster/Fraktalutforsker..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:353
 msgid "Rendering Fractal..."
@@ -476,7 +476,7 @@ msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
 msgstr ""
-"Er du sikker på om du vil slette\n"
+"Er du sikker pÃ¥ om du vil slette\n"
 "\"%s\" fra listen og disken?"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:735
@@ -485,7 +485,7 @@ msgstr "Slett fraktal"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:821
 msgid "Edit fractal name"
-msgstr "Rediger navn på fraktal"
+msgstr "Rediger navn pÃ¥ fraktal"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:832
 msgid "Fractal name:"
@@ -511,15 +511,15 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1266
 msgid "My first fractal"
-msgstr "Min første fraktal"
+msgstr "Min fÃ¸rste fraktal"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1282
 msgid "Choose Fractal by double-clicking on it"
-msgstr "Velg fraktal ved å dobbeltklikke på den"
+msgstr "Velg fraktal ved Ã¥ dobbeltklikke pÃ¥ den"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1319
 msgid "Select folder and rescan collection"
-msgstr "Velg mappe og les samlingen på nytt"
+msgstr "Velg mappe og les samlingen pÃ¥ nytt"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1331
 msgid "Delete currently selected fractal"
@@ -527,7 +527,7 @@ msgstr "Slett valgt fraktal"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1386
 msgid "Rescan for Fractals"
-msgstr "Søk etter fraktaler på nytt"
+msgstr "SÃ¸k etter fraktaler pÃ¥ nytt"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1405
 msgid "Add FractalExplorer Path"
@@ -580,7 +580,7 @@ msgstr "Gjennomsiktig bakg_runn"
 
 #: plug-ins/Lighting/lighting_ui.c:393
 msgid "Make destination image transparent where bump height is zero"
-msgstr "Gjør målbildet gjennomsiktig når \"bump\"-høyden er null"
+msgstr "GjÃ¸r mÃ¥lbildet gjennomsiktig nÃ¥r \"bump\"-hÃ¸yden er null"
 
 #: plug-ins/Lighting/lighting_ui.c:396
 msgid "Cre_ate New Image"
@@ -592,15 +592,15 @@ msgstr "Opprett et nytt bilde ved bruk av filter"
 
 #: plug-ins/Lighting/lighting_ui.c:408
 msgid "High _Quality Preview"
-msgstr "Forhåndsvisning i høy _kvalitet"
+msgstr "ForhÃ¥ndsvisning i hÃ¸y _kvalitet"
 
 #: plug-ins/Lighting/lighting_ui.c:418
 msgid "Enable/disable high quality preview"
-msgstr "Slå på/av høykvalitets forhåndsvisning"
+msgstr "SlÃ¥ pÃ¥/av hÃ¸ykvalitets forhÃ¥ndsvisning"
 
 #: plug-ins/Lighting/lighting_ui.c:426
 msgid "E_nable Antialiasing"
-msgstr "Slå på a_ntialiasing"
+msgstr "SlÃ¥ pÃ¥ a_ntialiasing"
 
 #: plug-ins/Lighting/lighting_ui.c:447 plug-ins/MapObject/mapobject_ui.c:635
 #: plug-ins/common/bumpmap.c:1077 plug-ins/common/emboss.c:572
@@ -610,7 +610,7 @@ msgstr "_Dybde:"
 
 #: plug-ins/Lighting/lighting_ui.c:450 plug-ins/MapObject/mapobject_ui.c:638
 msgid "Antialiasing quality. Higher is better, but slower"
-msgstr "Kvalitet for antialiasing. Høyere er bedre, men tregere"
+msgstr "Kvalitet for antialiasing. HÃ¸yere er bedre, men tregere"
 
 #: plug-ins/Lighting/lighting_ui.c:457
 msgid "T_hreshold:"
@@ -618,7 +618,7 @@ msgstr "_Terskel:"
 
 #: plug-ins/Lighting/lighting_ui.c:460 plug-ins/MapObject/mapobject_ui.c:655
 msgid "Stop when pixel differences are smaller than this value"
-msgstr "Stopp når pikselforskjellene er mindre enn denne verdien"
+msgstr "Stopp nÃ¥r pikselforskjellene er mindre enn denne verdien"
 
 #: plug-ins/Lighting/lighting_ui.c:502 plug-ins/MapObject/mapobject_ui.c:681
 msgid "Light Settings"
@@ -730,7 +730,7 @@ msgstr "Lyskildens Z-retning i XYZ-rommet"
 
 #: plug-ins/Lighting/lighting_ui.c:699 plug-ins/MapObject/mapobject_ui.c:856
 msgid "Intensity Levels"
-msgstr "Intensitetsnivå"
+msgstr "IntensitetsnivÃ¥"
 
 #: plug-ins/Lighting/lighting_ui.c:717
 msgid "_Ambient:"
@@ -748,7 +748,7 @@ msgstr ""
 #: plug-ins/Lighting/lighting_ui.c:765 plug-ins/MapObject/mapobject_ui.c:914
 msgid "Intensity of original color when lit by a light source"
 msgstr ""
-"Intensiteten for den opprinnelige fargen når den treffes av en lyskilde"
+"Intensiteten for den opprinnelige fargen nÃ¥r den treffes av en lyskilde"
 
 #: plug-ins/Lighting/lighting_ui.c:773 plug-ins/MapObject/mapobject_ui.c:922
 msgid "Reflectivity"
@@ -760,7 +760,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:810 plug-ins/MapObject/mapobject_ui.c:954
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr "Høyere verdier gjør at objektet reflekterer mer lys (ser lysere ut)"
+msgstr "HÃ¸yere verdier gjÃ¸r at objektet reflekterer mer lys (ser lysere ut)"
 
 #: plug-ins/Lighting/lighting_ui.c:822
 msgid "_Specular:"
@@ -768,7 +768,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:841 plug-ins/MapObject/mapobject_ui.c:980
 msgid "Controls how intense the highlights will be"
-msgstr "Kontrollerer hvor intenst høylysene vil være"
+msgstr "Kontrollerer hvor intenst hÃ¸ylysene vil vÃ¦re"
 
 #: plug-ins/Lighting/lighting_ui.c:853
 msgid "_Highlight:"
@@ -776,7 +776,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:871 plug-ins/MapObject/mapobject_ui.c:1006
 msgid "Higher values makes the highlights more focused"
-msgstr "Høyere verdier gjør høylysene mer fokusert"
+msgstr "HÃ¸yere verdier gjÃ¸r hÃ¸ylysene mer fokusert"
 
 #: plug-ins/Lighting/lighting_ui.c:905
 msgid "E_nable Bump Mapping"
@@ -784,7 +784,7 @@ msgstr "_Bruk \"bump mapping\""
 
 #: plug-ins/Lighting/lighting_ui.c:916
 msgid "Enable/disable bump-mapping (image depth)"
-msgstr "Slå på/av \"bump-mapping\" (bildedybde)"
+msgstr "SlÃ¥ pÃ¥/av \"bump-mapping\" (bildedybde)"
 
 #: plug-ins/Lighting/lighting_ui.c:934
 msgid "Bumpm_ap Image:"
@@ -792,7 +792,7 @@ msgstr "\"Bumpm_ap\" bilde:"
 
 #: plug-ins/Lighting/lighting_ui.c:941 plug-ins/flame/flame.c:726
 msgid "Linear"
-msgstr "Lineær"
+msgstr "LineÃ¦r"
 
 #: plug-ins/Lighting/lighting_ui.c:942
 msgid "Logarithmic"
@@ -804,7 +804,7 @@ msgstr "Sinus"
 
 #: plug-ins/Lighting/lighting_ui.c:944 plug-ins/flame/flame.c:728
 msgid "Spherical"
-msgstr "Sfærisk"
+msgstr "SfÃ¦risk"
 
 #: plug-ins/Lighting/lighting_ui.c:947
 msgid "Cu_rve:"
@@ -812,27 +812,27 @@ msgstr "Ku_rve:"
 
 #: plug-ins/Lighting/lighting_ui.c:953
 msgid "Ma_ximum Height:"
-msgstr "Ma_ksimumshøyde:"
+msgstr "Ma_ksimumshÃ¸yde:"
 
 #: plug-ins/Lighting/lighting_ui.c:960
 msgid "Maximum height for bumps"
-msgstr "Maksimumshøyde for bumps"
+msgstr "MaksimumshÃ¸yde for bumps"
 
 #: plug-ins/Lighting/lighting_ui.c:966
 msgid "M_inimum Height:"
-msgstr "M_inimumshøyde:"
+msgstr "M_inimumshÃ¸yde:"
 
 #: plug-ins/Lighting/lighting_ui.c:973
 msgid "Minimum height for bumps"
-msgstr "Minimumshøyde for bumps"
+msgstr "MinimumshÃ¸yde for bumps"
 
 #: plug-ins/Lighting/lighting_ui.c:976
 msgid "Auto_stretch to Fit Value Range"
-msgstr "Autostrekk til å passe i verdiområdet"
+msgstr "Autostrekk til Ã¥ passe i verdiomrÃ¥det"
 
 #: plug-ins/Lighting/lighting_ui.c:986
 msgid "Fit into value range"
-msgstr "Tilpass til verdiområdet"
+msgstr "Tilpass til verdiomrÃ¥det"
 
 #: plug-ins/Lighting/lighting_ui.c:1011
 msgid "E_nable Environment Mapping"
@@ -840,15 +840,15 @@ msgstr "Br_uk \"environment mapping\""
 
 #: plug-ins/Lighting/lighting_ui.c:1022
 msgid "Enable/disable environment-mapping (reflection)"
-msgstr "Slå på/av \"environment mapping\" (refleksjon)"
+msgstr "SlÃ¥ pÃ¥/av \"environment mapping\" (refleksjon)"
 
 #: plug-ins/Lighting/lighting_ui.c:1040
 msgid "En_vironment Image:"
-msgstr "_Bilde av miljø:"
+msgstr "_Bilde av miljÃ¸:"
 
 #: plug-ins/Lighting/lighting_ui.c:1044
 msgid "Environment image to use"
-msgstr "Bilde for miljø som skal brukes"
+msgstr "Bilde for miljÃ¸ som skal brukes"
 
 #: plug-ins/Lighting/lighting_ui.c:1067
 msgid "Op_tions"
@@ -881,7 +881,7 @@ msgstr "_Oppdater"
 
 #: plug-ins/Lighting/lighting_ui.c:1194 plug-ins/MapObject/mapobject_ui.c:1445
 msgid "Recompute preview image"
-msgstr "Beregn forhåndsvisningsbildet på nytt"
+msgstr "Beregn forhÃ¥ndsvisningsbildet pÃ¥ nytt"
 
 #: plug-ins/Lighting/lighting_ui.c:1196
 msgid "I_nteractive"
@@ -889,7 +889,7 @@ msgstr "I_nteraktiv"
 
 #: plug-ins/Lighting/lighting_ui.c:1211
 msgid "Enable/disable real time preview of changes"
-msgstr "Slå på/av sanntids forhåndsvisning av endringer"
+msgstr "SlÃ¥ pÃ¥/av sanntids forhÃ¥ndsvisning av endringer"
 
 #: plug-ins/MapObject/mapobject_main.c:202
 msgid "<Image>/Filters/Map/Map Object..."
@@ -915,7 +915,7 @@ msgstr "Plan"
 
 #: plug-ins/MapObject/mapobject_ui.c:554
 msgid "Sphere"
-msgstr "Sfære"
+msgstr "SfÃ¦re"
 
 #: plug-ins/MapObject/mapobject_ui.c:555
 msgid "Box"
@@ -935,7 +935,7 @@ msgstr "Gjennomsiktig bakgrunn"
 
 #: plug-ins/MapObject/mapobject_ui.c:575
 msgid "Make image transparent outside object"
-msgstr "Gjør bildet gjennomsiktig utenfor objektet"
+msgstr "GjÃ¸r bildet gjennomsiktig utenfor objektet"
 
 #: plug-ins/MapObject/mapobject_ui.c:577
 msgid "Tile Source Image"
@@ -951,11 +951,11 @@ msgstr "Lag nytt bilde"
 
 #: plug-ins/MapObject/mapobject_ui.c:610
 msgid "Enable _Antialiasing"
-msgstr "Slå på _antialiasing"
+msgstr "SlÃ¥ pÃ¥ _antialiasing"
 
 #: plug-ins/MapObject/mapobject_ui.c:617
 msgid "Enable/disable jagged edges removal (antialiasing)"
-msgstr "Slå på/av fjerning av taggete kanter (antialiasing)"
+msgstr "SlÃ¥ pÃ¥/av fjerning av taggete kanter (antialiasing)"
 
 #: plug-ins/MapObject/mapobject_ui.c:647 plug-ins/common/unsharp.c:694
 #: plug-ins/common/wind.c:1022 plug-ins/imagemap/imap_preferences.c:537
@@ -1038,7 +1038,7 @@ msgstr "Bakside:"
 #: plug-ins/MapObject/mapobject_ui.c:1142
 #: plug-ins/print/gimp_main_window.c:524
 msgid "Top:"
-msgstr "Øverst:"
+msgstr "Ã˜verst:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1142
 #: plug-ins/print/gimp_main_window.c:565
@@ -1053,7 +1053,7 @@ msgstr "Venstre:"
 #: plug-ins/MapObject/mapobject_ui.c:1143
 #: plug-ins/print/gimp_main_window.c:537
 msgid "Right:"
-msgstr "Høyre:"
+msgstr "HÃ¸yre:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1149
 msgid "Map Images to Box Faces"
@@ -1066,19 +1066,19 @@ msgstr "Skaler X:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1193
 msgid "X scale (size)"
-msgstr "X-skala (størrelse)"
+msgstr "X-skala (stÃ¸rrelse)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1205
 msgid "Y scale (size)"
-msgstr "Y-skala (størrelse)"
+msgstr "Y-skala (stÃ¸rrelse)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1217
 msgid "Z scale (size)"
-msgstr "Z-skala (størrelse)"
+msgstr "Z-skala (stÃ¸rrelse)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1241
 msgid "_Top:"
-msgstr "_Øverst:"
+msgstr "_Ã˜verst:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1241
 msgid "_Bottom:"
@@ -1091,7 +1091,7 @@ msgstr "Bilder for \"Cap Faces\""
 #: plug-ins/MapObject/mapobject_ui.c:1275
 #: plug-ins/print/gimp_main_window.c:1111
 msgid "Size"
-msgstr "Størrelse"
+msgstr "StÃ¸rrelse"
 
 #: plug-ins/MapObject/mapobject_ui.c:1287
 msgid "R_adius:"
@@ -1123,23 +1123,23 @@ msgstr "Map til objekt"
 
 #: plug-ins/MapObject/mapobject_ui.c:1436 plug-ins/common/diffraction.c:575
 msgid "_Preview!"
-msgstr "_Forhåndsvis!"
+msgstr "_ForhÃ¥ndsvis!"
 
 #: plug-ins/MapObject/mapobject_ui.c:1459
 msgid "Zoom out (make image smaller)"
-msgstr "Zoom ut (gjør bildet mindre)"
+msgstr "Zoom ut (gjÃ¸r bildet mindre)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1473
 msgid "Zoom in (make image bigger)"
-msgstr "Zoom inn (gjør bildet større)"
+msgstr "Zoom inn (gjÃ¸r bildet stÃ¸rre)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1475
 msgid "Show Preview _Wireframe"
-msgstr "Vis _rutenett for forhåndsvisning"
+msgstr "Vis _rutenett for forhÃ¥ndsvisning"
 
 #: plug-ins/MapObject/mapobject_ui.c:1484
 msgid "Show/hide preview wireframe"
-msgstr "Vis/skjul rutenett for forhåndsvisning"
+msgstr "Vis/skjul rutenett for forhÃ¥ndsvisning"
 
 #: plug-ins/bmp/bmpread.c:67
 #, fuzzy
@@ -1161,7 +1161,7 @@ msgstr "%s: ugyldig fargekart"
 #: plug-ins/xjt/xjt.c:3329
 #, fuzzy, c-format
 msgid "Opening '%s'..."
-msgstr "Åpner %s"
+msgstr "Ã…pner %s"
 
 #: plug-ins/bmp/bmpread.c:113 plug-ins/bmp/bmpread.c:121
 #: plug-ins/bmp/bmpread.c:126 plug-ins/bmp/bmpread.c:133
@@ -1203,7 +1203,7 @@ msgstr "Bakgrunn"
 #: plug-ins/bmp/bmpwrite.c:137
 #, fuzzy
 msgid "Cannot operate on unknown image types or alpha images"
-msgstr "BMP: kan ikke operere på ukjente bildetyper eller alpha-bilder"
+msgstr "BMP: kan ikke operere pÃ¥ ukjente bildetyper eller alpha-bilder"
 
 #. And let's begin the progress
 #: plug-ins/bmp/bmpwrite.c:210 plug-ins/common/CEL.c:502
@@ -1219,7 +1219,7 @@ msgstr "BMP: kan ikke operere på ukjente bildetyper eller alpha-bilder"
 #: plug-ins/gfli/gfli.c:680 plug-ins/sgi/sgi.c:535 plug-ins/xjt/xjt.c:1711
 #, fuzzy, c-format
 msgid "Saving '%s'..."
-msgstr "Laster «%s»..."
+msgstr "Laster Â«%sÂ»..."
 
 #: plug-ins/bmp/bmpwrite.c:553
 msgid "Save as BMP"
@@ -1254,31 +1254,31 @@ msgstr "Om..."
 #: plug-ins/common/diffraction.c:639 plug-ins/common/diffraction.c:677
 #: plug-ins/common/noisify.c:371 plug-ins/common/noisify.c:378
 msgid "_Red:"
-msgstr "_Rød:"
+msgstr "_RÃ¸d:"
 
 #: plug-ins/common/AlienMap.c:1202
 msgid "Change intensity of the red channel"
-msgstr "Endre intensiteten for rød kanal"
+msgstr "Endre intensiteten for rÃ¸d kanal"
 
 #: plug-ins/common/AlienMap.c:1208 plug-ins/common/diffraction.c:610
 #: plug-ins/common/diffraction.c:648 plug-ins/common/diffraction.c:686
 #: plug-ins/common/noisify.c:372 plug-ins/common/noisify.c:379
 msgid "_Green:"
-msgstr "_Grønn:"
+msgstr "_GrÃ¸nn:"
 
 #: plug-ins/common/AlienMap.c:1211
 msgid "Change intensity of the green channel"
-msgstr "Endre intensiteten for grønn kanal"
+msgstr "Endre intensiteten for grÃ¸nn kanal"
 
 #: plug-ins/common/AlienMap.c:1217 plug-ins/common/diffraction.c:619
 #: plug-ins/common/diffraction.c:657 plug-ins/common/diffraction.c:695
 #: plug-ins/common/noisify.c:373 plug-ins/common/noisify.c:380
 msgid "_Blue:"
-msgstr "_Blå:"
+msgstr "_BlÃ¥:"
 
 #: plug-ins/common/AlienMap.c:1220
 msgid "Change intensity of the blue channel"
-msgstr "Endre intensiteten for blå kanal"
+msgstr "Endre intensiteten for blÃ¥ kanal"
 
 #: plug-ins/common/AlienMap.c:1230 plug-ins/common/AlienMap.c:1253
 #: plug-ins/common/AlienMap.c:1276
@@ -1297,43 +1297,43 @@ msgstr "I_ngen"
 
 #: plug-ins/common/AlienMap.c:1237
 msgid "Use sine-function for red component."
-msgstr "Bruk sinusfunksjonen for rød komponent."
+msgstr "Bruk sinusfunksjonen for rÃ¸d komponent."
 
 #: plug-ins/common/AlienMap.c:1239
 msgid "Use cosine-function for red component."
-msgstr "Bruk kosinusfunksjonen for rød komponent."
+msgstr "Bruk kosinusfunksjonen for rÃ¸d komponent."
 
 #: plug-ins/common/AlienMap.c:1241
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr "Rød kanal: bruk lineær mapping istedet for trigonometriske funksjoner"
+msgstr "RÃ¸d kanal: bruk lineÃ¦r mapping istedet for trigonometriske funksjoner"
 
 #: plug-ins/common/AlienMap.c:1260
 msgid "Use sine-function for green component."
-msgstr "Bruk sinusfunksjonen for grønn komponent."
+msgstr "Bruk sinusfunksjonen for grÃ¸nn komponent."
 
 #: plug-ins/common/AlienMap.c:1262
 msgid "Use cosine-function for green component."
-msgstr "Bruk kosinusfunksjonen for grønn komponent."
+msgstr "Bruk kosinusfunksjonen for grÃ¸nn komponent."
 
 #: plug-ins/common/AlienMap.c:1264
 msgid ""
 "Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
-"Grønn kanal: bruk lineær mapping istedet for enhver trigonometrisk funksjon"
+"GrÃ¸nn kanal: bruk lineÃ¦r mapping istedet for enhver trigonometrisk funksjon"
 
 #: plug-ins/common/AlienMap.c:1283
 msgid "Use sine-function for blue component."
-msgstr "Bruk sinusfunksjonen for blå komponent."
+msgstr "Bruk sinusfunksjonen for blÃ¥ komponent."
 
 #: plug-ins/common/AlienMap.c:1285
 msgid "Use cosine-function for blue component."
-msgstr "Bruk kosinusfunksjonen for blå komponent."
+msgstr "Bruk kosinusfunksjonen for blÃ¥ komponent."
 
 #: plug-ins/common/AlienMap.c:1287
 msgid ""
 "Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
-"Blå kanal: bruk lineær mapping istedet for enhver trigonometrisk funksjon"
+"BlÃ¥ kanal: bruk lineÃ¦r mapping istedet for enhver trigonometrisk funksjon"
 
 #: plug-ins/common/AlienMap.c:1353
 msgid "About AlienMap"
@@ -1357,7 +1357,7 @@ msgstr "R/G-_frekvens:"
 
 #: plug-ins/common/AlienMap2.c:1193
 msgid "Change frequency of the red/hue channel"
-msgstr "Endre frekvensen for rød/glød kanal"
+msgstr "Endre frekvensen for rÃ¸d/glÃ¸d kanal"
 
 #: plug-ins/common/AlienMap2.c:1200
 msgid "R/H-_Phaseshift:"
@@ -1365,7 +1365,7 @@ msgstr "R/G-_faseskift:"
 
 #: plug-ins/common/AlienMap2.c:1203
 msgid "Change angle of the red/hue channel"
-msgstr "Endre vinkel for rød/glød kanal"
+msgstr "Endre vinkel for rÃ¸d/glÃ¸d kanal"
 
 #: plug-ins/common/AlienMap2.c:1210
 msgid "G/S-Fr_equency:"
@@ -1373,7 +1373,7 @@ msgstr "G/M-fr_ekvens:"
 
 #: plug-ins/common/AlienMap2.c:1213
 msgid "Change frequency of the green/saturation channel"
-msgstr "Endre frekvens for grønn/metning kanal"
+msgstr "Endre frekvens for grÃ¸nn/metning kanal"
 
 #: plug-ins/common/AlienMap2.c:1220
 msgid "G/S-Ph_aseshift:"
@@ -1381,7 +1381,7 @@ msgstr "G/M-f_aseskift:"
 
 #: plug-ins/common/AlienMap2.c:1223
 msgid "Change angle of the green/saturation channel"
-msgstr "Endre vinkel for grønn/metning kanal"
+msgstr "Endre vinkel for grÃ¸nn/metning kanal"
 
 #: plug-ins/common/AlienMap2.c:1230
 msgid "B/L-Freq_uency:"
@@ -1389,7 +1389,7 @@ msgstr "B/L-frek_vens:"
 
 #: plug-ins/common/AlienMap2.c:1233
 msgid "Change frequency of the blue/luminance channel"
-msgstr "Endre frekvens for blå/luminans kanal"
+msgstr "Endre frekvens for blÃ¥/luminans kanal"
 
 #: plug-ins/common/AlienMap2.c:1240
 msgid "B/L-Pha_seshift:"
@@ -1397,7 +1397,7 @@ msgstr "B/L-fa_seskift:"
 
 #: plug-ins/common/AlienMap2.c:1243
 msgid "Change angle of the blue/luminance channel"
-msgstr "Endre vinkel for blå/luminans kanal"
+msgstr "Endre vinkel for blÃ¥/luminans kanal"
 
 #. * Gray: Operation-Mode *
 #: plug-ins/common/AlienMap2.c:1251 plug-ins/common/deinterlace.c:315
@@ -1416,27 +1416,27 @@ msgstr "_HSL-fargemodell"
 
 #: plug-ins/common/AlienMap2.c:1268
 msgid "_Modify Red/Hue Channel"
-msgstr "_Endre rød/glød-kanal"
+msgstr "_Endre rÃ¸d/glÃ¸d-kanal"
 
 #: plug-ins/common/AlienMap2.c:1273
 msgid "Use function for red/hue component"
-msgstr "Bruk funksjon for rød/glød komponent"
+msgstr "Bruk funksjon for rÃ¸d/glÃ¸d komponent"
 
 #: plug-ins/common/AlienMap2.c:1280
 msgid "Mo_dify Green/Saturation Channel"
-msgstr "En_dre kanal for grønn/metning"
+msgstr "En_dre kanal for grÃ¸nn/metning"
 
 #: plug-ins/common/AlienMap2.c:1286
 msgid "Use function for green/saturation component"
-msgstr "Bruk funksjon for grønn/metning komponent"
+msgstr "Bruk funksjon for grÃ¸nn/metning komponent"
 
 #: plug-ins/common/AlienMap2.c:1293
 msgid "Mod_ify Blue/Luminance Channel"
-msgstr "Endre kanal for blå/lysstyrke"
+msgstr "Endre kanal for blÃ¥/lysstyrke"
 
 #: plug-ins/common/AlienMap2.c:1299
 msgid "Use function for blue/luminance component"
-msgstr "Bruk funksjon for blå/lysstyrke"
+msgstr "Bruk funksjon for blÃ¥/lysstyrke"
 
 #: plug-ins/common/AlienMap2.c:1376
 msgid "About AlienMap2"
@@ -1455,7 +1455,7 @@ msgstr "CEL Kan ikke lage nytt bilde"
 #: plug-ins/common/CEL.c:361
 #, c-format
 msgid "Unsupported number of colors (%d)"
-msgstr "Ikke støttet antall farger (%d)"
+msgstr "Ikke stÃ¸ttet antall farger (%d)"
 
 #: plug-ins/common/CEL.c:483
 msgid "Only an indexed-alpha image can be saved in CEL format"
@@ -1467,7 +1467,7 @@ msgstr "Behold bildets verdier"
 
 #: plug-ins/common/CML_explorer.c:135
 msgid "Keep the first value"
-msgstr "Behold første verdi"
+msgstr "Behold fÃ¸rste verdi"
 
 #: plug-ins/common/CML_explorer.c:136
 msgid "Fill with parameter k"
@@ -1584,11 +1584,11 @@ msgstr "Bruk reversert verdi"
 
 #: plug-ins/common/CML_explorer.c:206
 msgid "With random power (0,10)"
-msgstr "Med vilkårlig potens (0,10)"
+msgstr "Med vilkÃ¥rlig potens (0,10)"
 
 #: plug-ins/common/CML_explorer.c:207
 msgid "With random power (0,1)"
-msgstr "Med vilkårlig potens (0,1)"
+msgstr "Med vilkÃ¥rlig potens (0,1)"
 
 #: plug-ins/common/CML_explorer.c:208
 msgid "With gradient power (0,1)"
@@ -1616,7 +1616,7 @@ msgstr "Bare sort"
 
 #: plug-ins/common/CML_explorer.c:226
 msgid "All gray"
-msgstr "Bare grå"
+msgstr "Bare grÃ¥"
 
 #: plug-ins/common/CML_explorer.c:227
 msgid "All white"
@@ -1624,7 +1624,7 @@ msgstr "Bare hvit"
 
 #: plug-ins/common/CML_explorer.c:228
 msgid "The first row of the image"
-msgstr "Første raden av bildet"
+msgstr "FÃ¸rste raden av bildet"
 
 #: plug-ins/common/CML_explorer.c:229
 msgid "Continuous gradient"
@@ -1655,7 +1655,7 @@ msgstr "Tilfeldige tall fra seed (delt)"
 #: plug-ins/gimpressionist/orientation.c:167
 #: plug-ins/gimpressionist/size.c:145
 msgid "Hue"
-msgstr "Glød"
+msgstr "GlÃ¸d"
 
 #: plug-ins/common/CML_explorer.c:303 plug-ins/common/decompose.c:132
 #: plug-ins/fp/fp_gtk.c:296 plug-ins/fp/fp_gtk.c:430 plug-ins/fp/fp_gtk.c:494
@@ -1672,7 +1672,7 @@ msgstr "Verdi"
 
 #: plug-ins/common/CML_explorer.c:475
 msgid "<Image>/Filters/Render/Pattern/CML Explorer..."
-msgstr "<Image>/Filtre/Render/Mønster/CML-utforsker..."
+msgstr "<Image>/Filtre/Render/MÃ¸nster/CML-utforsker..."
 
 #: plug-ins/common/CML_explorer.c:757
 msgid "CML_explorer: evoluting..."
@@ -1696,7 +1696,7 @@ msgstr "Nytt seed"
 
 #: plug-ins/common/CML_explorer.c:1275 plug-ins/common/lic.c:739
 msgid "_Hue"
-msgstr "_Glød"
+msgstr "_GlÃ¸d"
 
 #: plug-ins/common/CML_explorer.c:1279
 msgid "Sat_uration"
@@ -1728,7 +1728,7 @@ msgstr "Start-avstand:"
 
 #: plug-ins/common/CML_explorer.c:1371
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr "Seed for vilkårlig (kun for \"fra seed\" modus)"
+msgstr "Seed for vilkÃ¥rlig (kun for \"fra seed\" modus)"
 
 #: plug-ins/common/CML_explorer.c:1383 plug-ins/maze/maze_face.c:296
 msgid "Seed:"
@@ -1746,9 +1746,9 @@ msgid ""
 "(2) all mutation rates equal to zero."
 msgstr ""
 "\"Fiks startverdi\" knappen er et alias for meg.\n"
-"Den samme startverdien produserer det samme bildet hvis (1), bredden på "
-"bildenen er den samme (dette er grunnen til at bilde på tegnet objekt er "
-"forskjellig fra forhåndsvisning), og (2), alle muteringsrater er lik null."
+"Den samme startverdien produserer det samme bildet hvis (1), bredden pÃ¥ "
+"bildenen er den samme (dette er grunnen til at bilde pÃ¥ tegnet objekt er "
+"forskjellig fra forhÃ¥ndsvisning), og (2), alle muteringsrater er lik null."
 
 #: plug-ins/common/CML_explorer.c:1415
 msgid "O_thers"
@@ -1764,7 +1764,7 @@ msgstr "Kildekanal:"
 
 #: plug-ins/common/CML_explorer.c:1468 plug-ins/common/CML_explorer.c:1526
 msgid "Destination Channel:"
-msgstr "Målkanal:"
+msgstr "MÃ¥lkanal:"
 
 #: plug-ins/common/CML_explorer.c:1471
 msgid "Copy Parameters"
@@ -1800,7 +1800,7 @@ msgstr "Forskjellige arrangeringer:"
 
 #: plug-ins/common/CML_explorer.c:1719
 msgid "Use Cyclic Range"
-msgstr "Bruk syklisk område"
+msgstr "Bruk syklisk omrÃ¥de"
 
 #: plug-ins/common/CML_explorer.c:1729
 msgid "Mod. Rate:"
@@ -1808,7 +1808,7 @@ msgstr "Mod. rate:"
 
 #: plug-ins/common/CML_explorer.c:1738
 msgid "Env. Sensitivity:"
-msgstr "Miljø sensitivitet:"
+msgstr "MiljÃ¸ sensitivitet:"
 
 #: plug-ins/common/CML_explorer.c:1747
 msgid "Diffusion Dist.:"
@@ -1816,7 +1816,7 @@ msgstr "Mutasjons dist.:"
 
 #: plug-ins/common/CML_explorer.c:1756
 msgid "# of Subranges:"
-msgstr "antall underområder:"
+msgstr "antall underomrÃ¥der:"
 
 #: plug-ins/common/CML_explorer.c:1765
 msgid "P(ower Factor):"
@@ -1828,11 +1828,11 @@ msgstr "Parameter k:"
 
 #: plug-ins/common/CML_explorer.c:1783
 msgid "Range Low:"
-msgstr "Område lavt:"
+msgstr "OmrÃ¥de lavt:"
 
 #: plug-ins/common/CML_explorer.c:1792
 msgid "Range High:"
-msgstr "Område høyt:"
+msgstr "OmrÃ¥de hÃ¸yt:"
 
 #: plug-ins/common/CML_explorer.c:1804
 msgid "Plot the Graph of the Settings"
@@ -1860,7 +1860,7 @@ msgstr "Grafen"
 
 #: plug-ins/common/CML_explorer.c:2019
 msgid "Warning: the source and the destination are the same channel."
-msgstr "Advarsel: kilde og mål er samme kanal."
+msgstr "Advarsel: kilde og mÃ¥l er samme kanal."
 
 #: plug-ins/common/CML_explorer.c:2087
 msgid "Save Parameters to"
@@ -1936,7 +1936,7 @@ msgstr "<Image>/Lag/Juster synlige lag..."
 
 #: plug-ins/common/align_layers.c:187
 msgid "Align Visible Layers: there are too few layers."
-msgstr "Juster synlige lag: det er for få lag."
+msgstr "Juster synlige lag: det er for fÃ¥ lag."
 
 #: plug-ins/common/align_layers.c:411
 msgid "Align Visible Layers"
@@ -1981,11 +1981,11 @@ msgstr "Hent inn"
 
 #: plug-ins/common/align_layers.c:448
 msgid "Fill (left to right)"
-msgstr "Fyll (venstre til høyre)"
+msgstr "Fyll (venstre til hÃ¸yre)"
 
 #: plug-ins/common/align_layers.c:450
 msgid "Fill (right to left)"
-msgstr "Fyll (høyre til venstre)"
+msgstr "Fyll (hÃ¸yre til venstre)"
 
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/gfig/gfig.c:3269
@@ -2007,7 +2007,7 @@ msgstr "Senter"
 
 #: plug-ins/common/align_layers.c:466
 msgid "Right Edge"
-msgstr "Høyre kant"
+msgstr "HÃ¸yre kant"
 
 #: plug-ins/common/align_layers.c:470
 msgid "Ho_rizontal Base:"
@@ -2027,7 +2027,7 @@ msgstr "_Vertikal stil:"
 
 #: plug-ins/common/align_layers.c:497
 msgid "Top Edge"
-msgstr "Øvre kant"
+msgstr "Ã˜vre kant"
 
 #: plug-ins/common/align_layers.c:499
 msgid "Bottom Edge"
@@ -2047,7 +2047,7 @@ msgstr "Br_uk (usynlig) bunnlag som basis"
 
 #: plug-ins/common/align_layers.c:530
 msgid "_Grid Size:"
-msgstr "_Størrelse på rutenett:"
+msgstr "_StÃ¸rrelse pÃ¥ rutenett:"
 
 #: plug-ins/common/animationplay.c:241
 msgid "<Image>/Filters/Animation/Animation Playback..."
@@ -2113,15 +2113,15 @@ msgstr "Optimerer animasjon..."
 
 #: plug-ins/common/animoptimize.c:470
 msgid "Not enough memory to allocate buffers for optimization.\n"
-msgstr "Ikke nok minne til å allokere buffere for optimering.\n"
+msgstr "Ikke nok minne til Ã¥ allokere buffere for optimering.\n"
 
 #: plug-ins/common/apply_lens.c:131
 msgid "<Image>/Filters/Glass Effects/Apply Lens..."
-msgstr "<Image>/Filtre/Glass-effekter/Påfør linse..."
+msgstr "<Image>/Filtre/Glass-effekter/PÃ¥fÃ¸r linse..."
 
 #: plug-ins/common/apply_lens.c:195
 msgid "Applying lens..."
-msgstr "Legger på linse..."
+msgstr "Legger pÃ¥ linse..."
 
 #: plug-ins/common/apply_lens.c:386
 msgid "Lens Effect"
@@ -2141,7 +2141,7 @@ msgstr "_Sett omgivelsene til bakgrunnsfargen"
 
 #: plug-ins/common/apply_lens.c:438
 msgid "_Make Surroundings Transparent"
-msgstr "_Gjør omgivelsene gjennomsiktige"
+msgstr "_GjÃ¸r omgivelsene gjennomsiktige"
 
 #: plug-ins/common/apply_lens.c:456
 msgid "_Lens Refraction Index:"
@@ -2149,11 +2149,11 @@ msgstr "Indeks for _lysforskyving i linse:"
 
 #: plug-ins/common/autocrop.c:75
 msgid "<Image>/Image/Transform/Autocrop"
-msgstr "<Image>/Bilde/Transformering/Autobeskjær"
+msgstr "<Image>/Bilde/Transformering/AutobeskjÃ¦r"
 
 #: plug-ins/common/autocrop.c:120
 msgid "Cropping..."
-msgstr "Beskjærer..."
+msgstr "BeskjÃ¦rer..."
 
 #: plug-ins/common/autostretch_hsv.c:92
 msgid "<Image>/Layer/Colors/Auto/Stretch HSV"
@@ -2169,7 +2169,7 @@ msgstr "<Image>/Filtre/Forvrengning/Blinding..."
 
 #: plug-ins/common/blinds.c:274
 msgid "Adding Blinds..."
-msgstr "Legger på blinding..."
+msgstr "Legger pÃ¥ blinding..."
 
 #. Get the preview image and store it also set has_alpha
 #: plug-ins/common/blinds.c:314
@@ -2234,7 +2234,7 @@ msgstr "Gj_enta:"
 
 #: plug-ins/common/blur.c:652 plug-ins/common/randomize.c:761
 msgid "Number of times to apply filter"
-msgstr "Antall ganger filteret skal påføres"
+msgstr "Antall ganger filteret skal pÃ¥fÃ¸res"
 
 #: plug-ins/common/borderaverage.c:99
 msgid "<Image>/Filters/Colors/Border Average..."
@@ -2250,7 +2250,7 @@ msgstr "Kantgjennomsnitt"
 
 #: plug-ins/common/borderaverage.c:391
 msgid "Border Size"
-msgstr "Kantstørrelse"
+msgstr "KantstÃ¸rrelse"
 
 #: plug-ins/common/borderaverage.c:400
 msgid "_Thickness:"
@@ -2258,7 +2258,7 @@ msgstr "_Tykkelse:"
 
 #: plug-ins/common/borderaverage.c:423
 msgid "_Bucket Size:"
-msgstr "Størrelse på _bøtte:"
+msgstr "StÃ¸rrelse pÃ¥ _bÃ¸tte:"
 
 #: plug-ins/common/borderaverage.c:431
 msgid "1 (nonsense?)"
@@ -2286,11 +2286,11 @@ msgstr "Type map"
 
 #: plug-ins/common/bumpmap.c:971
 msgid "_Linear Map"
-msgstr "_Lineært kart"
+msgstr "_LineÃ¦rt kart"
 
 #: plug-ins/common/bumpmap.c:972
 msgid "_Spherical Map"
-msgstr "_Sfærisk kart"
+msgstr "_SfÃ¦risk kart"
 
 #: plug-ins/common/bumpmap.c:973
 msgid "S_inuosidal Map"
@@ -2299,7 +2299,7 @@ msgstr "S_inuslignende kart"
 #. Compensate darkening
 #: plug-ins/common/bumpmap.c:986
 msgid "Co_mpensate for Darkening"
-msgstr "Ko_mpenser for formørking"
+msgstr "Ko_mpenser for formÃ¸rking"
 
 #. Invert bumpmap
 #: plug-ins/common/bumpmap.c:997
@@ -2321,7 +2321,7 @@ msgstr "_Azimuth:"
 
 #: plug-ins/common/bumpmap.c:1068
 msgid "_Elevation:"
-msgstr "Forhøy_else:"
+msgstr "ForhÃ¸y_else:"
 
 #: plug-ins/common/bumpmap.c:1088
 msgid "_X Offset:"
@@ -2333,7 +2333,7 @@ msgstr "_Y-avstand:"
 
 #: plug-ins/common/bumpmap.c:1108
 msgid "_Waterlevel:"
-msgstr "_Vannnivå:"
+msgstr "_VannnivÃ¥:"
 
 #: plug-ins/common/bumpmap.c:1117
 msgid "A_mbient:"
@@ -2342,7 +2342,7 @@ msgstr "A_mbient:"
 #: plug-ins/common/bz2.c:265 plug-ins/common/bz2.c:352
 #, fuzzy
 msgid "Can't open bzip2ed file without a sensible extension"
-msgstr "bz2: kan ikke åpne bzip2-fil uten et fornuftig etternavn\n"
+msgstr "bz2: kan ikke Ã¥pne bzip2-fil uten et fornuftig etternavn\n"
 
 #: plug-ins/common/c_astretch.c:88
 msgid "<Image>/Layer/Colors/Auto/Stretch Contrast"
@@ -2354,7 +2354,7 @@ msgstr "Auto-strekker kontrast..."
 
 #: plug-ins/common/checkerboard.c:104
 msgid "<Image>/Filters/Render/Pattern/Checkerboard..."
-msgstr "<Image>/Filtre/Render/Mønster/Sjakkbrett..."
+msgstr "<Image>/Filtre/Render/MÃ¸nster/Sjakkbrett..."
 
 #: plug-ins/common/checkerboard.c:169
 msgid "Adding Checkerboard..."
@@ -2371,7 +2371,7 @@ msgstr "_Psychobilly"
 #: plug-ins/common/checkerboard.c:438 plug-ins/common/papertile.c:305
 #: plug-ins/gimpressionist/sizemap.c:488
 msgid "_Size:"
-msgstr "_Størrelse:"
+msgstr "_StÃ¸rrelse:"
 
 #: plug-ins/common/color_enhance.c:92
 msgid "<Image>/Layer/Colors/Auto/Color Enhance"
@@ -2452,7 +2452,7 @@ msgstr "HSV"
 #. Gray: Circle: Spinbutton 1
 #: plug-ins/common/compose.c:149 plug-ins/rcm/rcm_dialog.c:456
 msgid "Hue:"
-msgstr "Glød:"
+msgstr "GlÃ¸d:"
 
 #. Gray: Circle: Spinbutton 2
 #: plug-ins/common/compose.c:150 plug-ins/print/gimp_color_window.c:338
@@ -2497,11 +2497,11 @@ msgstr ""
 
 #: plug-ins/common/compose.c:171
 msgid "Blueness_cb470:"
-msgstr "Blåtone_cb470:"
+msgstr "BlÃ¥tone_cb470:"
 
 #: plug-ins/common/compose.c:172
 msgid "Redness_cr470:"
-msgstr "Rødtone_cr470:"
+msgstr "RÃ¸dtone_cr470:"
 
 #: plug-ins/common/compose.c:177
 msgid "Luma_y709:"
@@ -2509,11 +2509,11 @@ msgstr ""
 
 #: plug-ins/common/compose.c:178
 msgid "Blueness_cb709:"
-msgstr "Blåtone_cb709:"
+msgstr "BlÃ¥tone_cb709:"
 
 #: plug-ins/common/compose.c:179
 msgid "Redness_cr709:"
-msgstr "Rødtone_cr709:"
+msgstr "RÃ¸dtone_cr709:"
 
 #: plug-ins/common/compose.c:184
 msgid "Luma_y470f:"
@@ -2521,11 +2521,11 @@ msgstr ""
 
 #: plug-ins/common/compose.c:185
 msgid "Blueness_cb470f:"
-msgstr "Blåtone_cb470f:"
+msgstr "BlÃ¥tone_cb470f:"
 
 #: plug-ins/common/compose.c:186
 msgid "Redness_cr470f:"
-msgstr "Rødtone_cr470f:"
+msgstr "RÃ¸dtone_cr470f:"
 
 #: plug-ins/common/compose.c:191
 msgid "Luma_y709f:"
@@ -2533,11 +2533,11 @@ msgstr ""
 
 #: plug-ins/common/compose.c:192
 msgid "Blueness_cb709f:"
-msgstr "Blåtone_cb709f:"
+msgstr "BlÃ¥tone_cb709f:"
 
 #: plug-ins/common/compose.c:193
 msgid "Redness_cr709f:"
-msgstr "Rødtone_cr709f:"
+msgstr "RÃ¸dtone_cr709f:"
 
 #: plug-ins/common/compose.c:292
 #, fuzzy
@@ -2556,12 +2556,12 @@ msgstr "Komponerer..."
 #: plug-ins/common/compose.c:475
 #, fuzzy
 msgid "Drawables have different size"
-msgstr "Sett sammen: Tegnede objekter har forskjellig størrelse"
+msgstr "Sett sammen: Tegnede objekter har forskjellig stÃ¸rrelse"
 
 #: plug-ins/common/compose.c:492
 #, fuzzy
 msgid "Images have different size"
-msgstr "Sett sammen: Bildene har forskjellig størrelse"
+msgstr "Sett sammen: Bildene har forskjellig stÃ¸rrelse"
 
 #: plug-ins/common/compose.c:506
 #, fuzzy
@@ -2571,7 +2571,7 @@ msgstr "Sett sammen: Feil under henting av lag-id'er"
 #: plug-ins/common/compose.c:523
 #, fuzzy, c-format
 msgid "Image is not a gray image (bpp=%d)"
-msgstr "Sett sammen: Bildet er ikke et gråtonebilde (bpp=%d)"
+msgstr "Sett sammen: Bildet er ikke et grÃ¥tonebilde (bpp=%d)"
 
 #: plug-ins/common/compose.c:991
 msgid "Compose"
@@ -2592,19 +2592,19 @@ msgstr "Kanalrepresentasjoner"
 
 #: plug-ins/common/convmatrix.c:85
 msgid "Gr_ey"
-msgstr "Gr_å"
+msgstr "Gr_Ã¥"
 
 #: plug-ins/common/convmatrix.c:86
 msgid "Re_d"
-msgstr "Rø_d"
+msgstr "RÃ¸_d"
 
 #: plug-ins/common/convmatrix.c:87 plug-ins/common/newsprint.c:390
 msgid "_Green"
-msgstr "_Grønn"
+msgstr "_GrÃ¸nn"
 
 #: plug-ins/common/convmatrix.c:88 plug-ins/common/newsprint.c:398
 msgid "_Blue"
-msgstr "_Blå"
+msgstr "_BlÃ¥"
 
 #: plug-ins/common/convmatrix.c:89
 msgid "_Alpha"
@@ -2621,7 +2621,7 @@ msgstr "_Bryt"
 
 #: plug-ins/common/convmatrix.c:96
 msgid "Cro_p"
-msgstr "Besk_jær"
+msgstr "Besk_jÃ¦r"
 
 #: plug-ins/common/convmatrix.c:193
 msgid "<Image>/Filters/Generic/Convolution Matrix..."
@@ -2729,7 +2729,7 @@ msgstr "Br_uk bakgrunnsfarge"
 
 #: plug-ins/common/cubism.c:306
 msgid "_Tile Size:"
-msgstr "S_tørrelse på flis:"
+msgstr "S_tÃ¸rrelse pÃ¥ flis:"
 
 #: plug-ins/common/cubism.c:316
 msgid "T_ile Saturation:"
@@ -2741,7 +2741,7 @@ msgstr "Kubistisk transformasjon"
 
 #: plug-ins/common/curve_bend.c:357
 msgid "Upper"
-msgstr "Øvre"
+msgstr "Ã˜vre"
 
 #: plug-ins/common/curve_bend.c:358
 msgid "Lower"
@@ -2757,26 +2757,26 @@ msgstr "Fri"
 
 #: plug-ins/common/curve_bend.c:682
 msgid "<Image>/Filters/Distorts/CurveBend..."
-msgstr "<Image>/Filtre/Forvrengning/Kurvebøy..."
+msgstr "<Image>/Filtre/Forvrengning/KurvebÃ¸y..."
 
 #: plug-ins/common/curve_bend.c:811
 msgid "CurveBend operates on layers only (but was called on channel or mask)"
-msgstr "Kurvebøy opererer kun på lag (men ble kalt på en kanal eller en maske)"
+msgstr "KurvebÃ¸y opererer kun pÃ¥ lag (men ble kalt pÃ¥ en kanal eller en maske)"
 
 #. The shell and main vbox
 #: plug-ins/common/curve_bend.c:1353
 msgid "Curve Bend"
-msgstr "Kurvebøy"
+msgstr "KurvebÃ¸y"
 
 #. The preview button
 #: plug-ins/common/curve_bend.c:1412
 msgid "_Preview Once"
-msgstr "_Forhåndsvis en gang"
+msgstr "_ForhÃ¥ndsvis en gang"
 
 #. The preview toggle
 #: plug-ins/common/curve_bend.c:1421
 msgid "Automatic Pre_view"
-msgstr "Automatisk forhånds_visning"
+msgstr "Automatisk forhÃ¥nds_visning"
 
 #. Options area, bottom of column
 #: plug-ins/common/curve_bend.c:1431 plug-ins/common/ripple.c:512
@@ -2869,22 +2869,22 @@ msgstr "Lagre kurvepunkter til fil"
 
 #: plug-ins/common/curve_bend.c:3422
 msgid "Curve Bend..."
-msgstr "Kurvebøy..."
+msgstr "KurvebÃ¸y..."
 
 #: plug-ins/common/decompose.c:118 plug-ins/common/decompose.c:121
 #: plug-ins/common/decompose.c:123
 msgid "red"
-msgstr "rød"
+msgstr "rÃ¸d"
 
 #: plug-ins/common/decompose.c:119 plug-ins/common/decompose.c:122
 #: plug-ins/common/decompose.c:124
 msgid "green"
-msgstr "grønn"
+msgstr "grÃ¸nn"
 
 #: plug-ins/common/decompose.c:120 plug-ins/common/decompose.c:125
 #: plug-ins/common/decompose.c:127
 msgid "blue"
-msgstr "blå"
+msgstr "blÃ¥"
 
 #: plug-ins/common/decompose.c:126 plug-ins/common/decompose.c:147
 msgid "alpha"
@@ -2892,7 +2892,7 @@ msgstr "alpha"
 
 #: plug-ins/common/decompose.c:128 plug-ins/common/decompose.c:131
 msgid "hue"
-msgstr "glød"
+msgstr "glÃ¸d"
 
 #: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:132
 msgid "saturation"
@@ -3146,11 +3146,11 @@ msgstr "_Radius:"
 
 #: plug-ins/common/despeckle.c:766
 msgid "_Black Level:"
-msgstr "_Sort nivå:"
+msgstr "_Sort nivÃ¥:"
 
 #: plug-ins/common/despeckle.c:779
 msgid "_White Level:"
-msgstr "_Hvitt nivå:"
+msgstr "_Hvitt nivÃ¥:"
 
 #: plug-ins/common/destripe.c:149
 msgid "<Image>/Filters/Enhance/Destripe..."
@@ -3178,15 +3178,15 @@ msgstr "_Bredde:"
 
 #: plug-ins/common/diffraction.c:189
 msgid "<Image>/Filters/Render/Pattern/Diffraction Patterns..."
-msgstr "<Image>/Filtre/Render/Mønster/Diffraksjonsmønstre..."
+msgstr "<Image>/Filtre/Render/MÃ¸nster/DiffraksjonsmÃ¸nstre..."
 
 #: plug-ins/common/diffraction.c:331
 msgid "Creating diffraction pattern..."
-msgstr "Oppretter diffraksjonsmønster..."
+msgstr "Oppretter diffraksjonsmÃ¸nster..."
 
 #: plug-ins/common/diffraction.c:529
 msgid "Diffraction Patterns"
-msgstr "Diffraksjonsmønstre"
+msgstr "DiffraksjonsmÃ¸nstre"
 
 #: plug-ins/common/diffraction.c:627
 msgid "_Frequencies"
@@ -3247,12 +3247,12 @@ msgstr "_Y-forskyvning:"
 #. Displacement Type
 #: plug-ins/common/displace.c:385 plug-ins/common/warp.c:481
 msgid "On Edges:"
-msgstr "På kanter:"
+msgstr "PÃ¥ kanter:"
 
 #: plug-ins/common/displace.c:403 plug-ins/common/edge.c:473
 #: plug-ins/common/ripple.c:566 plug-ins/common/waves.c:337
 msgid "_Smear"
-msgstr "_Smør"
+msgstr "_SmÃ¸r"
 
 #: plug-ins/common/displace.c:417 plug-ins/common/edge.c:483
 #: plug-ins/common/fractaltrace.c:804 plug-ins/common/newsprint.c:435
@@ -3302,7 +3302,7 @@ msgstr "E_levasjon:"
 
 #: plug-ins/common/emboss.c:742 plug-ins/common/sinus.c:2067
 msgid "Do _Preview"
-msgstr "_Forhåndsvis"
+msgstr "_ForhÃ¥ndsvis"
 
 #: plug-ins/common/engrave.c:118
 msgid "<Image>/Filters/Distorts/Engrave..."
@@ -3326,7 +3326,7 @@ msgstr "Begrens _linjebredde"
 #: plug-ins/common/tile.c:430 plug-ins/imagemap/imap_cmd_guides.c:169
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
-msgstr "_Høyde:"
+msgstr "_HÃ¸yde:"
 
 #: plug-ins/common/exchange.c:140
 msgid "<Image>/Filters/Colors/Map/Color Exchange..."
@@ -3363,19 +3363,19 @@ msgstr "Fargeutveksling: fra farge"
 
 #: plug-ins/common/exchange.c:441
 msgid "Red Threshold:"
-msgstr "Rød terskel:"
+msgstr "RÃ¸d terskel:"
 
 #: plug-ins/common/exchange.c:485
 msgid "Green Threshold:"
-msgstr "Grønn terskel:"
+msgstr "GrÃ¸nn terskel:"
 
 #: plug-ins/common/exchange.c:529
 msgid "Blue Threshold:"
-msgstr "Blå terskel:"
+msgstr "BlÃ¥ terskel:"
 
 #: plug-ins/common/exchange.c:553
 msgid "Lock Thresholds"
-msgstr "Lås terskler"
+msgstr "LÃ¥s terskler"
 
 #: plug-ins/common/film.c:252
 msgid "<Image>/Filters/Combine/Film..."
@@ -3387,7 +3387,7 @@ msgstr "Setter sammen bilder..."
 
 #: plug-ins/common/film.c:449 plug-ins/common/guillotine.c:176
 msgid "Untitled"
-msgstr "Navnløs"
+msgstr "NavnlÃ¸s"
 
 #. ** Get a RGB copy of the source region **
 #: plug-ins/common/film.c:717
@@ -3400,7 +3400,7 @@ msgstr "Tilgjengelige bilder:"
 
 #: plug-ins/common/film.c:1113
 msgid "On Film:"
-msgstr "På film:"
+msgstr "PÃ¥ film:"
 
 #: plug-ins/common/film.c:1197
 #, fuzzy
@@ -3416,7 +3416,7 @@ msgstr "Film"
 #: plug-ins/common/film.c:1215
 #, fuzzy
 msgid "_Fit Height to Images"
-msgstr "Tilpass høyde til bilder"
+msgstr "Tilpass hÃ¸yde til bilder"
 
 #. Film color
 #: plug-ins/common/film.c:1249
@@ -3456,7 +3456,7 @@ msgstr "Nederst"
 #: plug-ins/common/film.c:1313
 #, fuzzy
 msgid "At _Top"
-msgstr "Øverst"
+msgstr "Ã˜verst"
 
 #. ** The right frame keeps the image selection **
 #: plug-ins/common/film.c:1326
@@ -3466,7 +3466,7 @@ msgstr "Bildeutvalg"
 #: plug-ins/common/film.c:1356
 #, fuzzy
 msgid "All Values are Fractions of the Film Heigh"
-msgstr "Avanserte innstillinger (Alle verdier er brøkdeler av filmhøyden)"
+msgstr "Avanserte innstillinger (Alle verdier er brÃ¸kdeler av filmhÃ¸yden)"
 
 #: plug-ins/common/film.c:1359
 #, fuzzy
@@ -3476,7 +3476,7 @@ msgstr "Avansert"
 #: plug-ins/common/film.c:1377
 #, fuzzy
 msgid "Image _Height:"
-msgstr "Bildehøyde:"
+msgstr "BildehÃ¸yde:"
 
 #: plug-ins/common/film.c:1388
 #, fuzzy
@@ -3496,7 +3496,7 @@ msgstr "Hullbredde:"
 #: plug-ins/common/film.c:1428
 #, fuzzy
 msgid "Hol_e Height:"
-msgstr "Hullhøyde:"
+msgstr "HullhÃ¸yde:"
 
 #: plug-ins/common/film.c:1439
 #, fuzzy
@@ -3506,7 +3506,7 @@ msgstr "Hullmellomrom:"
 #: plug-ins/common/film.c:1457
 #, fuzzy
 msgid "_Number Height:"
-msgstr "Tallhøyde:"
+msgstr "TallhÃ¸yde:"
 
 #. don't translate '<Image>' entry,
 #. * it is keyword for the gtk toolkit
@@ -3530,7 +3530,7 @@ msgstr "Senter av FlareFx"
 #. show / hide cursor
 #: plug-ins/common/flarefx.c:837
 msgid "_Show Cursor"
-msgstr "Vi_s markør"
+msgstr "Vi_s markÃ¸r"
 
 #: plug-ins/common/fractaltrace.c:130
 msgid "<Image>/Filters/Map/Fractal Trace..."
@@ -3580,7 +3580,7 @@ msgstr "<Image>/Filtre/Blur/Gaussian blur (IIR)..."
 #: plug-ins/common/gauss_iir.c:249
 msgid "gauss_iir: you must specify either horizontal or vertical (or both)"
 msgstr ""
-"gauss_iir: du må spesifisere enten horisontal eller vertikal (eller begge)"
+"gauss_iir: du mÃ¥ spesifisere enten horisontal eller vertikal (eller begge)"
 
 #: plug-ins/common/gauss_iir.c:296 plug-ins/common/gauss_iir.c:350
 #: plug-ins/common/gauss_iir.c:437
@@ -3622,7 +3622,7 @@ msgstr "<Image>/Filtre/Blur/Gaussian blur (RLE)..."
 #, fuzzy
 msgid "You must specify either horizontal or vertical (or both)"
 msgstr ""
-"gauss_rle: du må spesifisere enten horisontal eller vertikal (eller begge)"
+"gauss_rle: du mÃ¥ spesifisere enten horisontal eller vertikal (eller begge)"
 
 #: plug-ins/common/gauss_rle.c:290 plug-ins/common/gauss_rle.c:344
 #: plug-ins/common/gauss_rle.c:431
@@ -3634,7 +3634,7 @@ msgstr "RLE Gaussian blur"
 msgid ""
 "Error in GIMP brush file\n"
 "'%s'"
-msgstr "Feil i GIMP-børstefil «%s»."
+msgstr "Feil i GIMP-bÃ¸rstefil Â«%sÂ»."
 
 #: plug-ins/common/gbr.c:356 plug-ins/common/gih.c:480
 #: plug-ins/common/gih.c:1128
@@ -3643,7 +3643,7 @@ msgstr "Uten navn"
 
 #: plug-ins/common/gbr.c:486
 msgid "GIMP brushes are either GRAYSCALE or RGBA\n"
-msgstr "GIMP-børster er enten GRÅTONE eller RGBA\n"
+msgstr "GIMP-bÃ¸rster er enten GRÃ…TONE eller RGBA\n"
 
 #: plug-ins/common/gbr.c:499
 #, c-format
@@ -3652,7 +3652,7 @@ msgstr "Lagrer %s:"
 
 #: plug-ins/common/gbr.c:565
 msgid "Save as Brush"
-msgstr "Lagre som børste"
+msgstr "Lagre som bÃ¸rste"
 
 #: plug-ins/common/gbr.c:592
 msgid "Spacing:"
@@ -3665,7 +3665,7 @@ msgstr "Beskrivelse:"
 
 #: plug-ins/common/gee.c:103
 msgid "<Image>/Filters/Toys/Gee-Slime"
-msgstr "<Image>/Filtre/Leketøy/Gee-slime"
+msgstr "<Image>/Filtre/LeketÃ¸y/Gee-slime"
 
 #: plug-ins/common/gee.c:174
 msgid "GEE-SLIME"
@@ -3684,7 +3684,7 @@ msgstr ""
 
 #: plug-ins/common/gee_zoom.c:139
 msgid "<Image>/Filters/Toys/Gee-Zoom"
-msgstr "<Image>/Filtre/Leketøy/Gee-zoom"
+msgstr "<Image>/Filtre/LeketÃ¸y/Gee-zoom"
 
 #: plug-ins/common/gee_zoom.c:205
 msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
@@ -3765,7 +3765,7 @@ msgstr "Alternativer for animert GIF"
 
 #: plug-ins/common/gif.c:1358
 msgid "Loop forever"
-msgstr "Evig løkke"
+msgstr "Evig lÃ¸kke"
 
 #: plug-ins/common/gif.c:1371
 msgid "Delay between Frames where Unspecified:"
@@ -3808,19 +3808,19 @@ msgstr "Lag %s har ikke en alpha-kanal, hoppet over"
 
 #: plug-ins/common/gih.c:473
 msgid "Error in GIMP brush pipe file."
-msgstr "Feil i penselrørfil."
+msgstr "Feil i penselrÃ¸rfil."
 
 #: plug-ins/common/gih.c:539
 msgid "GIMP brush file appears to be corrupted."
-msgstr "Penselrørfilen ser ut til å ha blitt korrupt."
+msgstr "PenselrÃ¸rfilen ser ut til Ã¥ ha blitt korrupt."
 
 #: plug-ins/common/gih.c:682
 msgid "Couldn't load one brush in the pipe, giving up."
-msgstr "Kunne ikke lese en av penslene i røret, gir opp."
+msgstr "Kunne ikke lese en av penslene i rÃ¸ret, gir opp."
 
 #: plug-ins/common/gih.c:842
 msgid "Save as Brush Pipe"
-msgstr "Lagre som børsterør"
+msgstr "Lagre som bÃ¸rsterÃ¸r"
 
 #: plug-ins/common/gih.c:872
 msgid "Spacing (Percent):"
@@ -3832,7 +3832,7 @@ msgstr "Piksler"
 
 #: plug-ins/common/gih.c:944
 msgid "Cell Size:"
-msgstr "Cellestørrelse:"
+msgstr "CellestÃ¸rrelse:"
 
 #: plug-ins/common/gih.c:956
 msgid "Number of Cells:"
@@ -3904,11 +3904,11 @@ msgstr "_Flisbredde:"
 
 #: plug-ins/common/glasstile.c:293 plug-ins/mosaic/mosaic.c:692
 msgid "Tile _Height:"
-msgstr "Flis_høyde:"
+msgstr "Flis_hÃ¸yde:"
 
 #: plug-ins/common/gqbist.c:438
 msgid "<Image>/Filters/Render/Pattern/Qbist..."
-msgstr "<Image>/Filtre/Render/Mønster/Qbist..."
+msgstr "<Image>/Filtre/Render/MÃ¸nster/Qbist..."
 
 #: plug-ins/common/gqbist.c:535
 msgid "Qbist ..."
@@ -3936,7 +3936,7 @@ msgstr "Gradient-kart..."
 
 #: plug-ins/common/grid.c:152
 msgid "<Image>/Filters/Render/Pattern/Grid..."
-msgstr "<Image>/Filtre/Render/Mønster/Rutenett..."
+msgstr "<Image>/Filtre/Render/MÃ¸nster/Rutenett..."
 
 #: plug-ins/common/grid.c:239
 msgid "Drawing Grid..."
@@ -4005,7 +4005,7 @@ msgid ""
 msgstr ""
 "Er du gal?\n"
 "\n"
-"Du er i ferd med å lage en enorm\n"
+"Du er i ferd med Ã¥ lage en enorm\n"
 "HTML-fil som mest sannsynlig vil\n"
 "krasje din webleser."
 
@@ -4038,7 +4038,7 @@ msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
 msgstr ""
-"Hvis avkrysset vil GTM erstatte enhver rektangulær seksjon av blokker med "
+"Hvis avkrysset vil GTM erstatte enhver rektangulÃ¦r seksjon av blokker med "
 "identisk farge med en stor celle med ROWSPAN og COLSPAN verdier."
 
 #: plug-ins/common/gtm.c:514
@@ -4051,9 +4051,9 @@ msgid ""
 "and the cellcontent.  This is only necessary for pixel level positioning "
 "control."
 msgstr ""
-"Avkrysning av denne taggen vil medføre at GTM ikke etterlater tomrom mellom "
-"TD taggene og celleinnholdet. Dette er kun nødvendig for kontroll av "
-"posisjonering på pikselnivå."
+"Avkrysning av denne taggen vil medfÃ¸re at GTM ikke etterlater tomrom mellom "
+"TD taggene og celleinnholdet. Dette er kun nÃ¸dvendig for kontroll av "
+"posisjonering pÃ¥ pikselnivÃ¥."
 
 #: plug-ins/common/gtm.c:530
 msgid "C_aption"
@@ -4090,11 +4090,11 @@ msgstr "Antall piksler i tabellkanten."
 
 #: plug-ins/common/gtm.c:610
 msgid "The width for each table cell.  Can be a number or a percent."
-msgstr "Bredden for hver celle i tabellen. Kan være et tall eller en prosent."
+msgstr "Bredden for hver celle i tabellen. Kan vÃ¦re et tall eller en prosent."
 
 #: plug-ins/common/gtm.c:626
 msgid "The height for each table cell.  Can be a number or a percent."
-msgstr "Høyden for hver celle i tabellen. Kan være et tall eller en prosent."
+msgstr "HÃ¸yden for hver celle i tabellen. Kan vÃ¦re et tall eller en prosent."
 
 #: plug-ins/common/gtm.c:637
 msgid "Cell-_Padding:"
@@ -4128,7 +4128,7 @@ msgstr "gz: ingen fornuftig filtype, lagrer som gzippet xcf\n"
 #: plug-ins/common/gz.c:444
 #, fuzzy
 msgid "No sensible extension, attempting to load with file magic"
-msgstr "gz: ingen fornuftig filtype, prøver å laste med filmagi\n"
+msgstr "gz: ingen fornuftig filtype, prÃ¸ver Ã¥ laste med filmagi\n"
 
 #: plug-ins/common/hot.c:217
 msgid "<Image>/Filters/Colors/Hot..."
@@ -4161,12 +4161,12 @@ msgstr "Redu_ser metning"
 
 #: plug-ins/common/hot.c:637 plug-ins/common/waves.c:338
 msgid "_Blacken"
-msgstr "_Gjør sortere"
+msgstr "_GjÃ¸r sortere"
 
 #: plug-ins/common/hrz.c:349
 #, fuzzy, c-format
 msgid "'%s' is not a HRZ file"
-msgstr "«%s» er ikke en vanlig fil"
+msgstr "Â«%sÂ» er ikke en vanlig fil"
 
 #: plug-ins/common/hrz.c:461
 msgid "Image must be 256x240"
@@ -4275,7 +4275,7 @@ msgstr ""
 
 #: plug-ins/common/iwarp.c:1111
 msgid "_Bilinear"
-msgstr "_Bilineær"
+msgstr "_BilineÃ¦r"
 
 #: plug-ins/common/iwarp.c:1125
 msgid "Adaptive S_upersample"
@@ -4300,7 +4300,7 @@ msgstr "IWarp"
 
 #: plug-ins/common/jigsaw.c:409
 msgid "<Image>/Filters/Render/Pattern/Jigsaw..."
-msgstr "<Image>/Filtre/Render/Mønster/Puslespill..."
+msgstr "<Image>/Filtre/Render/MÃ¸nster/Puslespill..."
 
 #: plug-ins/common/jigsaw.c:464
 #, fuzzy
@@ -4317,7 +4317,7 @@ msgstr "Antall fliser"
 
 #: plug-ins/common/jigsaw.c:2588
 msgid "Number of pieces going across"
-msgstr "Antall stykker på tvers"
+msgstr "Antall stykker pÃ¥ tvers"
 
 #: plug-ins/common/jigsaw.c:2601
 msgid "Number of pieces going down"
@@ -4329,7 +4329,7 @@ msgstr "Hev kanter"
 
 #: plug-ins/common/jigsaw.c:2624
 msgid "_Bevel Width:"
-msgstr "_Bredde på hevet kant:"
+msgstr "_Bredde pÃ¥ hevet kant:"
 
 #: plug-ins/common/jigsaw.c:2628
 msgid "Degree of slope of each piece's edge"
@@ -4341,7 +4341,7 @@ msgstr ""
 
 #: plug-ins/common/jigsaw.c:2642
 msgid "The amount of highlighting on the edges of each piece"
-msgstr "Mengden høylysning på kantene av hvert stykke"
+msgstr "Mengden hÃ¸ylysning pÃ¥ kantene av hvert stykke"
 
 #: plug-ins/common/jigsaw.c:2659
 msgid "Jigsaw Style"
@@ -4365,20 +4365,20 @@ msgstr "Hvert stykke har buede sider"
 
 #: plug-ins/common/jpeg.c:431
 msgid "Export Preview"
-msgstr "Eksporter forhåndsvisning"
+msgstr "Eksporter forhÃ¥ndsvisning"
 
 #: plug-ins/common/jpeg.c:924
 msgid "JPEG preview"
-msgstr "JPEG forhåndsvisning"
+msgstr "JPEG forhÃ¥ndsvisning"
 
 #: plug-ins/common/jpeg.c:1173
 #, c-format
 msgid "Size: %ld bytes (%02.01f kB)"
-msgstr "Størrelse: %ld bytes (%02.01f kB)"
+msgstr "StÃ¸rrelse: %ld bytes (%02.01f kB)"
 
 #: plug-ins/common/jpeg.c:1608 plug-ins/common/jpeg.c:1716
 msgid "Size: unknown"
-msgstr "Størrelse: ukjent"
+msgstr "StÃ¸rrelse: ukjent"
 
 #: plug-ins/common/jpeg.c:1671
 msgid "Save as JPEG"
@@ -4387,7 +4387,7 @@ msgstr "Lagre som JPEG"
 #. sg - preview
 #: plug-ins/common/jpeg.c:1694 plug-ins/print/gimp_color_window.c:232
 msgid "Image Preview"
-msgstr "Forhåndsvisning av bilde"
+msgstr "ForhÃ¥ndsvisning av bilde"
 
 #: plug-ins/common/jpeg.c:1703
 msgid "Preview (in image window, will modify image's undo history!)"
@@ -4403,7 +4403,7 @@ msgstr "Utjevning:"
 
 #: plug-ins/common/jpeg.c:1787
 msgid "Restart markers"
-msgstr "Gjenstart markører"
+msgstr "Gjenstart markÃ¸rer"
 
 #: plug-ins/common/jpeg.c:1796
 msgid "Restart frequency (rows):"
@@ -4480,7 +4480,7 @@ msgstr "_Lysstyrke"
 
 #: plug-ins/common/lic.c:747
 msgid "Effect Operator"
-msgstr "Effektoperatør"
+msgstr "EffektoperatÃ¸r"
 
 #: plug-ins/common/lic.c:752
 msgid "_Derivative"
@@ -4496,7 +4496,7 @@ msgstr "Konvolver"
 
 #: plug-ins/common/lic.c:764
 msgid "_With White Noise"
-msgstr "_Med hvit støy"
+msgstr "_Med hvit stÃ¸y"
 
 #: plug-ins/common/lic.c:765
 msgid "W_ith Source Image"
@@ -4512,7 +4512,7 @@ msgstr "_Filterlengde:"
 
 #: plug-ins/common/lic.c:818
 msgid "_Noise Magnitude:"
-msgstr "_Støystørrelse:"
+msgstr "_StÃ¸ystÃ¸rrelse:"
 
 #: plug-ins/common/lic.c:827
 msgid "In_tegration Steps:"
@@ -4576,11 +4576,11 @@ msgstr "MIME"
 #: plug-ins/common/mail.c:689
 #, fuzzy
 msgid "some sort of error with the file extension or lack thereof"
-msgstr "mail: en feil med filtype eller mangel på denne\n"
+msgstr "mail: en feil med filtype eller mangel pÃ¥ denne\n"
 
 #: plug-ins/common/mapcolor.c:147
 msgid "First Source Color"
-msgstr "Første kildefarge"
+msgstr "FÃ¸rste kildefarge"
 
 #: plug-ins/common/mapcolor.c:148
 msgid "Second Source Color"
@@ -4588,11 +4588,11 @@ msgstr "Andre kildefarge"
 
 #: plug-ins/common/mapcolor.c:149
 msgid "First Destination Color"
-msgstr "Første målfarge"
+msgstr "FÃ¸rste mÃ¥lfarge"
 
 #: plug-ins/common/mapcolor.c:150
 msgid "Second Destination Color"
-msgstr "Andre målfarge"
+msgstr "Andre mÃ¥lfarge"
 
 #: plug-ins/common/mapcolor.c:354
 msgid "<Image>/Filters/Colors/Map/Adjust FG-BG"
@@ -4600,7 +4600,7 @@ msgstr "<Image>/Filtre/Farger/Kart/Juster FG-BG"
 
 #: plug-ins/common/mapcolor.c:369
 msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
-msgstr "<Image>/Filtre/Farger/Kart/Mapping for fargeområde..."
+msgstr "<Image>/Filtre/Farger/Kart/Mapping for fargeomrÃ¥de..."
 
 #: plug-ins/common/mapcolor.c:416 plug-ins/common/mapcolor.c:751
 msgid ""
@@ -4608,7 +4608,7 @@ msgid ""
 "Cannot operate on gray/indexed images"
 msgstr ""
 "Fargemapping / juster FG/BG:\n"
-"kan ikke operere på gråskala/indekserte bilder"
+"kan ikke operere pÃ¥ grÃ¥skala/indekserte bilder"
 
 #: plug-ins/common/mapcolor.c:437
 #, fuzzy
@@ -4622,15 +4622,15 @@ msgstr "Utplasserer farger"
 
 #: plug-ins/common/mapcolor.c:553
 msgid "Map Color Range"
-msgstr "Plasser fargeområde"
+msgstr "Plasser fargeomrÃ¥de"
 
 #: plug-ins/common/mapcolor.c:604
 msgid "Source color range"
-msgstr "Kildens fargeområde"
+msgstr "Kildens fargeomrÃ¥de"
 
 #: plug-ins/common/mapcolor.c:605
 msgid "Destination color range"
-msgstr "Målets fargeområde"
+msgstr "MÃ¥lets fargeomrÃ¥de"
 
 #: plug-ins/common/mapcolor.c:644 plug-ins/gfli/gfli.c:859
 #: plug-ins/gfli/gfli.c:929
@@ -4644,7 +4644,7 @@ msgstr "<Image>/Filtre/Farger/Max RGB..."
 #: plug-ins/common/max_rgb.c:157
 #, fuzzy
 msgid "Can only operate on RGB drawables."
-msgstr "Maks RGB: Kan kun operere på RGB tegnede objekter."
+msgstr "Maks RGB: Kan kun operere pÃ¥ RGB tegnede objekter."
 
 #: plug-ins/common/max_rgb.c:233
 #, fuzzy
@@ -4682,7 +4682,7 @@ msgstr "Blur type"
 
 #: plug-ins/common/mblur.c:765
 msgid "_Linear"
-msgstr "_Lineær"
+msgstr "_LineÃ¦r"
 
 #: plug-ins/common/mblur.c:768
 msgid "_Radial"
@@ -4723,7 +4723,7 @@ msgstr "Lagre _gamma"
 #: plug-ins/common/mng.c:1170
 #, fuzzy
 msgid "Save Resolution"
-msgstr "Lagre _oppløsning"
+msgstr "Lagre _opplÃ¸sning"
 
 #: plug-ins/common/mng.c:1180
 #, fuzzy
@@ -4751,7 +4751,7 @@ msgstr ""
 #: plug-ins/common/mng.c:1250
 #, fuzzy
 msgid "PNG Compression Level:"
-msgstr "Ko_mpresjonsnivå:"
+msgstr "Ko_mpresjonsnivÃ¥:"
 
 #: plug-ins/common/mng.c:1258 plug-ins/common/png.c:1286
 msgid "Choose a high compression level for small file size"
@@ -4774,7 +4774,7 @@ msgstr "Alternativer for animert GIF"
 
 #: plug-ins/common/mng.c:1306
 msgid "Loop"
-msgstr "Løkke"
+msgstr "LÃ¸kke"
 
 #: plug-ins/common/mng.c:1320
 #, fuzzy
@@ -4808,11 +4808,11 @@ msgstr "PS diamant"
 
 #: plug-ins/common/newsprint.c:369
 msgid "_Grey"
-msgstr "_Grå"
+msgstr "_GrÃ¥"
 
 #: plug-ins/common/newsprint.c:382
 msgid "R_ed"
-msgstr "R_ød"
+msgstr "R_Ã¸d"
 
 #: plug-ins/common/newsprint.c:411
 msgid "C_yan"
@@ -4850,7 +4850,7 @@ msgstr "Newsprint"
 #. resolution settings
 #: plug-ins/common/newsprint.c:1240
 msgid "Resolution"
-msgstr "Oppløsning"
+msgstr "OpplÃ¸sning"
 
 #: plug-ins/common/newsprint.c:1259
 msgid "_Input SPI:"
@@ -4862,7 +4862,7 @@ msgstr "_Utskrift"
 
 #: plug-ins/common/newsprint.c:1280
 msgid "C_ell Size:"
-msgstr "C_ellestørrelse:"
+msgstr "C_ellestÃ¸rrelse:"
 
 #. screen settings
 #: plug-ins/common/newsprint.c:1293 plug-ins/gflare/gflare.c:578
@@ -4891,7 +4891,7 @@ msgstr "I_ntensitet"
 
 #: plug-ins/common/newsprint.c:1390
 msgid "_Lock Channels"
-msgstr "_Lås kanaler"
+msgstr "_LÃ¥s kanaler"
 
 #: plug-ins/common/newsprint.c:1400
 msgid "_Factory Defaults"
@@ -4941,19 +4941,19 @@ msgstr "A_lpha:"
 
 #: plug-ins/common/nlfilt.c:485 plug-ins/common/waves.c:475
 msgid "_Do Preview"
-msgstr "_Forhåndsvis"
+msgstr "_ForhÃ¥ndsvis"
 
 #: plug-ins/common/noisify.c:132
 msgid "<Image>/Filters/Noise/Noisify..."
-msgstr "<Image>/Filtre/Støy/Lag støy..."
+msgstr "<Image>/Filtre/StÃ¸y/Lag stÃ¸y..."
 
 #: plug-ins/common/noisify.c:206
 msgid "Adding Noise..."
-msgstr "Legger til støy..."
+msgstr "Legger til stÃ¸y..."
 
 #: plug-ins/common/noisify.c:308
 msgid "Noisify"
-msgstr "Støy"
+msgstr "StÃ¸y"
 
 #: plug-ins/common/noisify.c:349
 msgid "_Independent"
@@ -4961,7 +4961,7 @@ msgstr "Uavheng_ig"
 
 #: plug-ins/common/noisify.c:362 plug-ins/common/noisify.c:366
 msgid "_Gray:"
-msgstr "_Grå:"
+msgstr "_GrÃ¥:"
 
 #: plug-ins/common/noisify.c:367 plug-ins/common/noisify.c:381
 msgid "_Alpha:"
@@ -5003,7 +5003,7 @@ msgstr ""
 
 #: plug-ins/common/nova.c:399
 msgid "R_andom Hue:"
-msgstr "T_ilfeldig glød:"
+msgstr "T_ilfeldig glÃ¸d:"
 
 #. to avoid side effects while initialization
 #: plug-ins/common/nova.c:467
@@ -5012,11 +5012,11 @@ msgstr "Senter av supernova"
 
 #: plug-ins/common/nova.c:550
 msgid "S_how Cursor"
-msgstr "_Vis markør"
+msgstr "_Vis markÃ¸r"
 
 #: plug-ins/common/oilify.c:118
 msgid "<Image>/Filters/Artistic/Oilify..."
-msgstr "<Image>/Filtre/Artistisk/Gjør oljete..."
+msgstr "<Image>/Filtre/Artistisk/GjÃ¸r oljete..."
 
 #: plug-ins/common/oilify.c:193
 msgid "Oil Painting..."
@@ -5032,7 +5032,7 @@ msgstr "Br_uk intensitetsalgoritme"
 
 #: plug-ins/common/oilify.c:490
 msgid "_Mask Size:"
-msgstr "_Maskestørrelse:"
+msgstr "_MaskestÃ¸rrelse:"
 
 #: plug-ins/common/papertile.c:245
 msgid "Paper Tile"
@@ -5116,7 +5116,7 @@ msgstr "<Image>/Filtre/Kart/Papirflis..."
 
 #: plug-ins/common/pat.c:456
 msgid "Save as Pattern"
-msgstr "Lagre som mønster"
+msgstr "Lagre som mÃ¸nster"
 
 #: plug-ins/common/pcx.c:311
 #, fuzzy, c-format
@@ -5130,7 +5130,7 @@ msgstr "TGA: kan ikke lese bunntekst fra \"%s\"\n"
 msgid ""
 "'%s'\n"
 "is not a PCX file"
-msgstr "«%s» er ikke en vanlig fil"
+msgstr "Â«%sÂ» er ikke en vanlig fil"
 
 #: plug-ins/common/pcx.c:370
 msgid "Unusual PCX flavour, giving up"
@@ -5160,7 +5160,7 @@ msgstr "_Pikselbredde:"
 
 #: plug-ins/common/pixelize.c:363
 msgid "Pixel _Height:"
-msgstr "Piksel_høyde:"
+msgstr "Piksel_hÃ¸yde:"
 
 #: plug-ins/common/plasma.c:192
 msgid "<Image>/Filters/Render/Clouds/Plasma..."
@@ -5249,7 +5249,7 @@ msgstr "Beskrivelse av tillegg"
 
 #: plug-ins/common/plugindetails.c:1000
 msgid "Search by Name"
-msgstr "Søk på navn"
+msgstr "SÃ¸k pÃ¥ navn"
 
 #. list : list in a scrolled_win
 #: plug-ins/common/plugindetails.c:1032
@@ -5283,7 +5283,7 @@ msgstr "Trevisning"
 
 #: plug-ins/common/plugindetails.c:1097
 msgid "Search:"
-msgstr "Søk:"
+msgstr "SÃ¸k:"
 
 #: plug-ins/common/png.c:457
 #, fuzzy, c-format
@@ -5343,7 +5343,7 @@ msgstr "Lagre _lagforskyvning"
 
 #: plug-ins/common/png.c:1257
 msgid "Save _resolution"
-msgstr "Lagre _oppløsning"
+msgstr "Lagre _opplÃ¸sning"
 
 #: plug-ins/common/png.c:1265
 msgid "Save creation _time"
@@ -5351,13 +5351,13 @@ msgstr "Lagre _tid for oppretting"
 
 #: plug-ins/common/png.c:1281
 msgid "Co_mpression Level:"
-msgstr "Ko_mpresjonsnivå:"
+msgstr "Ko_mpresjonsnivÃ¥:"
 
 #: plug-ins/common/pnm.c:438 plug-ins/common/pnm.c:459
 #: plug-ins/common/pnm.c:466 plug-ins/common/pnm.c:475
 #: plug-ins/common/pnm.c:550 plug-ins/common/pnm.c:606
 msgid "PNM: Premature end of file."
-msgstr "PNM: For tidlig slutt på fil."
+msgstr "PNM: For tidlig slutt pÃ¥ fil."
 
 #: plug-ins/common/pnm.c:440
 msgid "PNM: Invalid file."
@@ -5366,15 +5366,15 @@ msgstr "PNM: Ugyldig fil."
 #: plug-ins/common/pnm.c:453
 #, fuzzy
 msgid "File not in a supported format."
-msgstr "PNM: Filen er ikke i et støttet format."
+msgstr "PNM: Filen er ikke i et stÃ¸ttet format."
 
 #: plug-ins/common/pnm.c:462
 msgid "PNM: Invalid X resolution."
-msgstr "PNM: Ugyldig X-oppløsning."
+msgstr "PNM: Ugyldig X-opplÃ¸sning."
 
 #: plug-ins/common/pnm.c:469
 msgid "PNM: Invalid Y resolution."
-msgstr "PNM: Ugyldig Y-oppløsning."
+msgstr "PNM: Ugyldig Y-opplÃ¸sning."
 
 #: plug-ins/common/pnm.c:481
 msgid "PNM: Invalid maximum value."
@@ -5386,7 +5386,7 @@ msgstr "PNM: Feil under lesing av fil."
 
 #: plug-ins/common/pnm.c:773
 msgid "PNM save cannot handle images with alpha channels."
-msgstr "PNM-lagring kan ikke håndtere bilder med alfakanaler"
+msgstr "PNM-lagring kan ikke hÃ¥ndtere bilder med alfakanaler"
 
 #: plug-ins/common/pnm.c:920
 msgid "Save as PNM"
@@ -5394,7 +5394,7 @@ msgstr "Lagre som PNM"
 
 #: plug-ins/common/pnm.c:942
 msgid "Raw"
-msgstr "Rå"
+msgstr "RÃ¥"
 
 #: plug-ins/common/pnm.c:943
 msgid "Ascii"
@@ -5418,7 +5418,7 @@ msgstr "Sirkel_dybde i prosent:"
 
 #: plug-ins/common/polar.c:866
 msgid "Offset _Angle:"
-msgstr "Vinkel på _avstand:"
+msgstr "Vinkel pÃ¥ _avstand:"
 
 #: plug-ins/common/polar.c:878
 msgid "_Map Backwards"
@@ -5462,7 +5462,7 @@ msgstr ""
 
 #: plug-ins/common/ps.c:986 plug-ins/fits/fits.c:452
 msgid "Cannot operate on unknown image types"
-msgstr "Kan ikke operere på ukjent bildetype"
+msgstr "Kan ikke operere pÃ¥ ukjent bildetype"
 
 #: plug-ins/common/ps.c:2192 plug-ins/common/ps.c:2323
 #: plug-ins/common/ps.c:2473 plug-ins/common/ps.c:2601
@@ -5480,7 +5480,7 @@ msgstr ""
 
 #: plug-ins/common/ps.c:2671 plug-ins/print/gimp_main_window.c:1095
 msgid "Resolution:"
-msgstr "Oppløsning:"
+msgstr "OpplÃ¸sning:"
 
 #: plug-ins/common/ps.c:2699
 msgid "Pages:"
@@ -5502,7 +5502,7 @@ msgstr "S/HV"
 #. * Gray *
 #: plug-ins/common/ps.c:2723 plug-ins/rcm/rcm_dialog.c:418
 msgid "Gray"
-msgstr "Grå"
+msgstr "GrÃ¥"
 
 #: plug-ins/common/ps.c:2725 plug-ins/fits/fits.c:1017
 msgid "Automatic"
@@ -5531,7 +5531,7 @@ msgstr "Lagre som PostScript"
 #. Image Size
 #: plug-ins/common/ps.c:2838
 msgid "Image Size"
-msgstr "Bildestørrelse"
+msgstr "BildestÃ¸rrelse"
 
 #: plug-ins/common/ps.c:2874
 msgid "_X-Offset:"
@@ -5579,11 +5579,11 @@ msgstr "_Encapsulated PostScript"
 
 #: plug-ins/common/ps.c:2966
 msgid "P_review"
-msgstr "Fo_rhåndsvisning"
+msgstr "Fo_rhÃ¥ndsvisning"
 
 #: plug-ins/common/ps.c:2987
 msgid "Preview _Size:"
-msgstr "_Størrelse på forhåndsvisning:"
+msgstr "_StÃ¸rrelse pÃ¥ forhÃ¥ndsvisning:"
 
 #: plug-ins/common/psp.c:422
 msgid "Save as PSP"
@@ -5616,15 +5616,15 @@ msgstr ""
 
 #: plug-ins/common/randomize.c:237
 msgid "<Image>/Filters/Noise/Hurl..."
-msgstr "<Image>/Filtre/Støy/Hurl..."
+msgstr "<Image>/Filtre/StÃ¸y/Hurl..."
 
 #: plug-ins/common/randomize.c:249
 msgid "<Image>/Filters/Noise/Pick..."
-msgstr "<Image>/Filtre/Støy/Plukk..."
+msgstr "<Image>/Filtre/StÃ¸y/Plukk..."
 
 #: plug-ins/common/randomize.c:261
 msgid "<Image>/Filters/Noise/Slur..."
-msgstr "<Image>/Filtre/Støy/Slur..."
+msgstr "<Image>/Filtre/StÃ¸y/Slur..."
 
 #: plug-ins/common/randomize.c:746
 msgid "R_andomization (%):"
@@ -5654,7 +5654,7 @@ msgstr "Kanter"
 #. Wave toggle box
 #: plug-ins/common/ripple.c:575
 msgid "Wave Type"
-msgstr "Bølgetype:"
+msgstr "BÃ¸lgetype:"
 
 #: plug-ins/common/ripple.c:579
 msgid "Saw_tooth"
@@ -5712,7 +5712,7 @@ msgstr "Innstillinger"
 #. layer optionmenu (Dst)
 #: plug-ins/common/sample_colorize.c:1400
 msgid "Destination:"
-msgstr "Mål:"
+msgstr "MÃ¥l:"
 
 #. layer optionmenu (Sample)
 #: plug-ins/common/sample_colorize.c:1419
@@ -5743,16 +5743,16 @@ msgstr "Vis farge"
 
 #: plug-ins/common/sample_colorize.c:1612
 msgid "In Level:"
-msgstr "Inn-nivå:"
+msgstr "Inn-nivÃ¥:"
 
 #: plug-ins/common/sample_colorize.c:1662
 msgid "Out Level:"
-msgstr "Ut-nivå:"
+msgstr "Ut-nivÃ¥:"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1702
 msgid "Hold Intensity"
-msgstr "Behold intensitetsnivå"
+msgstr "Behold intensitetsnivÃ¥"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1713
@@ -5779,7 +5779,7 @@ msgstr ""
 
 #: plug-ins/common/scatter_hsv.c:149
 msgid "<Image>/Filters/Noise/Scatter HSV..."
-msgstr "<Image>/Filtre/Støy/Spre HSV..."
+msgstr "<Image>/Filtre/StÃ¸y/Spre HSV..."
 
 #: plug-ins/common/scatter_hsv.c:241
 #, fuzzy
@@ -5792,7 +5792,7 @@ msgstr "Spre HSV"
 
 #: plug-ins/common/scatter_hsv.c:364
 msgid "Preview (1:4) - Right Click to Jump"
-msgstr "Forhåndsvisning (1:4) - Høyreklikk for å hoppe"
+msgstr "ForhÃ¥ndsvisning (1:4) - HÃ¸yreklikk for Ã¥ hoppe"
 
 #: plug-ins/common/scatter_hsv.c:416
 msgid "_Holdness:"
@@ -5800,7 +5800,7 @@ msgstr ""
 
 #: plug-ins/common/scatter_hsv.c:425
 msgid "H_ue:"
-msgstr "_Glød:"
+msgstr "_GlÃ¸d:"
 
 #: plug-ins/common/scatter_hsv.c:434
 msgid "_Saturation:"
@@ -5855,7 +5855,7 @@ msgstr "Selektivt Gaussisk blur"
 
 #: plug-ins/common/sel_gauss.c:218
 msgid "sel_gauss: Cannot operate on indexed color images"
-msgstr "sel_gauss: Kan ikke operere på indekserte fargebilder"
+msgstr "sel_gauss: Kan ikke operere pÃ¥ indekserte fargebilder"
 
 #: plug-ins/common/sel_gauss.c:237
 msgid "Selective Gaussian Blur"
@@ -5880,19 +5880,19 @@ msgstr "Semi-flatten..."
 
 #: plug-ins/common/sharpen.c:171
 msgid "<Image>/Filters/Enhance/Sharpen..."
-msgstr "<Image>/Filtre/Forbedre/Gjør skarpere..."
+msgstr "<Image>/Filtre/Forbedre/GjÃ¸r skarpere..."
 
 #.
 #. * Let the user know what we're doing...
 #.
 #: plug-ins/common/sharpen.c:352
 msgid "Sharpening..."
-msgstr "Gjør skarpere..."
+msgstr "GjÃ¸r skarpere..."
 
 #: plug-ins/common/sharpen.c:523
 #, c-format
 msgid "Sharpen - %s"
-msgstr "Gjør skarpere - %s"
+msgstr "GjÃ¸r skarpere - %s"
 
 #: plug-ins/common/sharpen.c:628
 msgid "_Sharpness:"
@@ -5991,7 +5991,7 @@ msgstr "_Velg her:"
 
 #: plug-ins/common/sinus.c:1825
 msgid "First Color"
-msgstr "Første farge"
+msgstr "FÃ¸rste farge"
 
 #: plug-ins/common/sinus.c:1835
 msgid "Second Color"
@@ -6003,7 +6003,7 @@ msgstr "Alfakanaler"
 
 #: plug-ins/common/sinus.c:1863
 msgid "F_irst Color:"
-msgstr "Fø_rste farge:"
+msgstr "FÃ¸_rste farge:"
 
 #: plug-ins/common/sinus.c:1878
 msgid "S_econd Color:"
@@ -6023,11 +6023,11 @@ msgstr "Gradient"
 
 #: plug-ins/common/sinus.c:1918
 msgid "L_inear"
-msgstr "L_ineær"
+msgstr "L_ineÃ¦r"
 
 #: plug-ins/common/sinus.c:1919
 msgid "Bili_near"
-msgstr "Bili_neær"
+msgstr "Bili_neÃ¦r"
 
 #: plug-ins/common/sinus.c:1920
 msgid "Sin_usoidal"
@@ -6056,20 +6056,20 @@ msgstr "Myk palett"
 
 #: plug-ins/common/smooth_palette.c:468
 msgid "_Search Depth:"
-msgstr "_Søkedybde:"
+msgstr "_SÃ¸kedybde:"
 
 #: plug-ins/common/snoise.c:183
 msgid "<Image>/Filters/Render/Clouds/Solid Noise..."
-msgstr "<Image>/Filtre/Render/Skyer/Solid støy..."
+msgstr "<Image>/Filtre/Render/Skyer/Solid stÃ¸y..."
 
 #: plug-ins/common/snoise.c:309
 msgid "Solid Noise..."
-msgstr "Solid støy..."
+msgstr "Solid stÃ¸y..."
 
 #. Dialog initialization
 #: plug-ins/common/snoise.c:508
 msgid "Solid Noise"
-msgstr "Solid støy"
+msgstr "Solid stÃ¸y"
 
 #: plug-ins/common/snoise.c:548
 msgid "_Detail:"
@@ -6087,11 +6087,11 @@ msgstr "Fl_isbar"
 
 #: plug-ins/common/snoise.c:578
 msgid "_X Size:"
-msgstr "_X-størrelse:"
+msgstr "_X-stÃ¸rrelse:"
 
 #: plug-ins/common/snoise.c:588
 msgid "_Y Size:"
-msgstr "_Y-størrelse:"
+msgstr "_Y-stÃ¸rrelse:"
 
 #: plug-ins/common/sobel.c:141
 msgid "<Image>/Filters/Edge-Detect/Sobel..."
@@ -6141,7 +6141,7 @@ msgstr ""
 
 #: plug-ins/common/sparkle.c:392
 msgid "F_lare Intensity:"
-msgstr "Intensitetsnivå for b_luss:"
+msgstr "IntensitetsnivÃ¥ for b_luss:"
 
 #: plug-ins/common/sparkle.c:395
 msgid "Adjust the Flare Intensity"
@@ -6185,11 +6185,11 @@ msgstr "Juster ugjennomsiktigheten for piggene"
 
 #: plug-ins/common/sparkle.c:453
 msgid "_Random Hue:"
-msgstr "_Tilfeldig glød:"
+msgstr "_Tilfeldig glÃ¸d:"
 
 #: plug-ins/common/sparkle.c:456
 msgid "Adjust the Value how much the Hue should be changed randomly"
-msgstr "Juster verdien for tilfeldig endring av glød"
+msgstr "Juster verdien for tilfeldig endring av glÃ¸d"
 
 #: plug-ins/common/sparkle.c:464
 msgid "Rando_m Saturation:"
@@ -6264,7 +6264,7 @@ msgstr "Glitter"
 #: plug-ins/common/spheredesigner.c:281
 #, fuzzy
 msgid "Lizard"
-msgstr "Lineær"
+msgstr "LineÃ¦r"
 
 #: plug-ins/common/spheredesigner.c:282
 #, fuzzy
@@ -6274,7 +6274,7 @@ msgstr "Ping-pong"
 #: plug-ins/common/spheredesigner.c:283
 #, fuzzy
 msgid "Noise"
-msgstr "Støy"
+msgstr "StÃ¸y"
 
 #: plug-ins/common/spheredesigner.c:284
 msgid "Wood"
@@ -6306,7 +6306,7 @@ msgstr "Lys"
 #: plug-ins/common/spheredesigner.c:2152
 #, fuzzy
 msgid "Open File"
-msgstr "På film:"
+msgstr "PÃ¥ film:"
 
 #: plug-ins/common/spheredesigner.c:2152
 #, fuzzy
@@ -6417,7 +6417,7 @@ msgstr "<Image>/Filtre/Render/Sinus..."
 
 #: plug-ins/common/spread.c:118
 msgid "<Image>/Filters/Noise/Spread..."
-msgstr "<Image>/Filter/Støy/Spredning..."
+msgstr "<Image>/Filter/StÃ¸y/Spredning..."
 
 #: plug-ins/common/spread.c:196
 msgid "Spreading..."
@@ -6438,7 +6438,7 @@ msgstr "<Image>/Filtre/Artistisk/Bruk kanvas..."
 
 #: plug-ins/common/struc.c:1232
 msgid "Applying Canvas..."
-msgstr "Påfører kanvas..."
+msgstr "PÃ¥fÃ¸rer kanvas..."
 
 #: plug-ins/common/struc.c:1266
 msgid "Apply Canvas"
@@ -6453,11 +6453,11 @@ msgstr "Retning"
 
 #: plug-ins/common/struc.c:1298
 msgid "_Top-Right"
-msgstr "Øvers_t til høyre"
+msgstr "Ã˜vers_t til hÃ¸yre"
 
 #: plug-ins/common/struc.c:1301
 msgid "Top-_Left"
-msgstr "Øverst ti_l venstre"
+msgstr "Ã˜verst ti_l venstre"
 
 #: plug-ins/common/struc.c:1304
 msgid "_Bottom-Left"
@@ -6465,35 +6465,35 @@ msgstr "_Nederst til venstre"
 
 #: plug-ins/common/struc.c:1307
 msgid "Bottom-_Right"
-msgstr "Nede_rst til høyre"
+msgstr "Nede_rst til hÃ¸yre"
 
 #: plug-ins/common/sunras.c:394
 msgid "Can't open file as SUN-raster-file"
-msgstr "kan ikke åpne filen som SUN raster-fil"
+msgstr "kan ikke Ã¥pne filen som SUN raster-fil"
 
 #: plug-ins/common/sunras.c:401
 msgid "The type of this SUN-rasterfile is not supported"
-msgstr "Typen for denne SUN raster-filen er ikke støttet"
+msgstr "Typen for denne SUN raster-filen er ikke stÃ¸ttet"
 
 #: plug-ins/common/sunras.c:424
 msgid "Can't read color entries"
-msgstr "Kan ikke lese fargeoppføringer"
+msgstr "Kan ikke lese fargeoppfÃ¸ringer"
 
 #: plug-ins/common/sunras.c:431
 msgid "Type of colormap not supported"
-msgstr "Fargekarttypen er ikke støttet"
+msgstr "Fargekarttypen er ikke stÃ¸ttet"
 
 #: plug-ins/common/sunras.c:469
 msgid "This image depth is not supported"
-msgstr "Denne bildedybden er ikke støttet"
+msgstr "Denne bildedybden er ikke stÃ¸ttet"
 
 #: plug-ins/common/sunras.c:492
 msgid "SUNRAS save cannot handle images with alpha channels"
-msgstr "SUNRAS lagring kan ikke håndtere bilder med alfakanaler"
+msgstr "SUNRAS lagring kan ikke hÃ¥ndtere bilder med alfakanaler"
 
 #: plug-ins/common/sunras.c:503
 msgid "Can't operate on unknown image types"
-msgstr "Kan ikke operere på ukjente bildetyper"
+msgstr "Kan ikke operere pÃ¥ ukjente bildetyper"
 
 #: plug-ins/common/sunras.c:1030 plug-ins/common/sunras.c:1121
 #: plug-ins/common/sunras.c:1202 plug-ins/common/sunras.c:1297
@@ -6555,7 +6555,7 @@ msgstr "<Image>/Lag/Gjennomsiktighet/Terskel for gjennomsiktighet..."
 
 #: plug-ins/common/threshold_alpha.c:142
 msgid "The layer preserves transparency."
-msgstr "Laget tar vare på gjennomsiktighet."
+msgstr "Laget tar vare pÃ¥ gjennomsiktighet."
 
 #: plug-ins/common/threshold_alpha.c:148
 msgid "RGBA/GRAYA drawable is not selected."
@@ -6630,7 +6630,7 @@ msgstr "Flis"
 #. parameter settings
 #: plug-ins/common/tile.c:415
 msgid "Tile to New Size"
-msgstr "Flis til ny størrelse"
+msgstr "Flis til ny stÃ¸rrelse"
 
 #: plug-ins/common/tile.c:441
 msgid "C_reate New Image"
@@ -6638,7 +6638,7 @@ msgstr "L_ag nytt bilde"
 
 #: plug-ins/common/tileit.c:236
 msgid "<Image>/Filters/Map/Small Tiles..."
-msgstr "<Image>/Filtre/Kart/Små fliser..."
+msgstr "<Image>/Filtre/Kart/SmÃ¥ fliser..."
 
 #. Get the preview image
 #. Start buildng the dialog up
@@ -6653,7 +6653,7 @@ msgstr "Vender"
 
 #: plug-ins/common/tileit.c:476
 msgid "Applied to Tile"
-msgstr "Påført på flis"
+msgstr "PÃ¥fÃ¸rt pÃ¥ flis"
 
 #: plug-ins/common/tileit.c:490
 msgid "A_ll Tiles"
@@ -6686,7 +6686,7 @@ msgstr "Innstillinger for segment"
 
 #: plug-ins/common/tiler.c:65
 msgid "<Image>/Filters/Map/Make Seamless"
-msgstr "<Image>/Filtre/Kart/Gjør sømløs"
+msgstr "<Image>/Filtre/Kart/GjÃ¸r sÃ¸mlÃ¸s"
 
 #: plug-ins/common/tiler.c:319
 msgid "Tiler..."
@@ -6717,7 +6717,7 @@ msgstr "Faktor"
 
 #: plug-ins/common/uniteditor.c:85
 msgid "How many units make up an inch."
-msgstr "Hvor mange enheter en tomme består av."
+msgstr "Hvor mange enheter en tomme bestÃ¥r av."
 
 #: plug-ins/common/uniteditor.c:86
 msgid "Digits"
@@ -6802,11 +6802,11 @@ msgstr "_Flertall:"
 
 #: plug-ins/common/uniteditor.c:316
 msgid "Unit factor must not be 0."
-msgstr "Enhetsfaktoren må ikke være 0."
+msgstr "Enhetsfaktoren mÃ¥ ikke vÃ¦re 0."
 
 #: plug-ins/common/uniteditor.c:326
 msgid "All text fields must contain a value."
-msgstr "Alle tekstfelt må inneholde en verdi."
+msgstr "Alle tekstfelt mÃ¥ inneholde en verdi."
 
 #: plug-ins/common/uniteditor.c:541
 msgid "Unit Editor"
@@ -6822,7 +6822,7 @@ msgstr "Opprett en ny enhet med valgt enhet som mal."
 
 #: plug-ins/common/unsharp.c:153
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
-msgstr "<Image>/Filtre/Forbedre/Gjør maske uskarp..."
+msgstr "<Image>/Filtre/Forbedre/GjÃ¸r maske uskarp..."
 
 #: plug-ins/common/unsharp.c:365
 msgid "Merging..."
@@ -6838,7 +6838,7 @@ msgstr "_Staggered"
 
 #: plug-ins/common/video.c:50
 msgid "_Large staggered"
-msgstr "_Stor «staggered»"
+msgstr "_Stor Â«staggeredÂ»"
 
 #: plug-ins/common/video.c:51
 msgid "S_triped"
@@ -6850,7 +6850,7 @@ msgstr "_Bredstripet"
 
 #: plug-ins/common/video.c:53
 msgid "Lo_ng-staggered"
-msgstr "La_ng «staggered»"
+msgstr "La_ng Â«staggeredÂ»"
 
 #: plug-ins/common/video.c:54
 msgid "_3x3"
@@ -6883,7 +6883,7 @@ msgstr "Video"
 #. frame for the radio buttons
 #: plug-ins/common/video.c:2179
 msgid "RGB Pattern Type"
-msgstr "RGB mønstertype"
+msgstr "RGB mÃ¸nstertype"
 
 #: plug-ins/common/video.c:2190
 msgid "_Additive"
@@ -6903,7 +6903,7 @@ msgstr "Vending av verdi..."
 
 #: plug-ins/common/vpropagate.c:192
 msgid "More _White (Larger Value)"
-msgstr "Mer _hvitt (større verdi)"
+msgstr "Mer _hvitt (stÃ¸rre verdi)"
 
 #: plug-ins/common/vpropagate.c:195
 msgid "More Blac_k (Smaller Value)"
@@ -6935,7 +6935,7 @@ msgstr "Mer _gjennomsiktig"
 
 #: plug-ins/common/vpropagate.c:249
 msgid "<Image>/Filters/Distorts/Value Propagate..."
-msgstr "<Image>/Filtre/Forvrengning/Videreføring av verdi..."
+msgstr "<Image>/Filtre/Forvrengning/ViderefÃ¸ring av verdi..."
 
 #: plug-ins/common/vpropagate.c:261
 msgid "<Image>/Filters/Generic/Erode"
@@ -6948,16 +6948,16 @@ msgstr "<Image>/Filtre/Vanlig/Voks"
 #: plug-ins/common/vpropagate.c:461
 #, fuzzy
 msgid "Value Propagating..."
-msgstr "Videreføring av verdi..."
+msgstr "ViderefÃ¸ring av verdi..."
 
 #: plug-ins/common/vpropagate.c:1032
 msgid "Value Propagate"
-msgstr "Videreføring av verdi"
+msgstr "ViderefÃ¸ring av verdi"
 
 #. Propagate Mode
 #: plug-ins/common/vpropagate.c:1054
 msgid "Propagate Mode"
-msgstr "Videreføringsmodus"
+msgstr "ViderefÃ¸ringsmodus"
 
 #: plug-ins/common/vpropagate.c:1095
 msgid "Lower T_hreshold:"
@@ -6965,11 +6965,11 @@ msgstr "Nedre _terskel:"
 
 #: plug-ins/common/vpropagate.c:1104
 msgid "_Upper Threshold:"
-msgstr "_Øvre terskel:"
+msgstr "_Ã˜vre terskel:"
 
 #: plug-ins/common/vpropagate.c:1113
 msgid "_Propagating Rate:"
-msgstr "_Rate for videreføring:"
+msgstr "_Rate for viderefÃ¸ring:"
 
 #: plug-ins/common/vpropagate.c:1125
 msgid "To L_eft"
@@ -6977,7 +6977,7 @@ msgstr "Til v_enstre"
 
 #: plug-ins/common/vpropagate.c:1128
 msgid "To _Right"
-msgstr "Til høy_re"
+msgstr "Til hÃ¸y_re"
 
 #: plug-ins/common/vpropagate.c:1131
 msgid "To _Top"
@@ -6989,11 +6989,11 @@ msgstr "Til _bunn"
 
 #: plug-ins/common/vpropagate.c:1147
 msgid "Propagating _Alpha Channel"
-msgstr "Viderefører _alfakanal"
+msgstr "ViderefÃ¸rer _alfakanal"
 
 #: plug-ins/common/vpropagate.c:1157
 msgid "Propagating Value Channel"
-msgstr "Viderefører verdikanal"
+msgstr "ViderefÃ¸rer verdikanal"
 
 #: plug-ins/common/warp.c:266
 msgid "<Image>/Filters/Map/Warp..."
@@ -7009,7 +7009,7 @@ msgstr "Hovedalternativer"
 
 #: plug-ins/common/warp.c:449
 msgid "Step Size:"
-msgstr "Størrelse på steg:"
+msgstr "StÃ¸rrelse pÃ¥ steg:"
 
 #: plug-ins/common/warp.c:458 plug-ins/ifscompose/ifscompose.c:1294
 msgid "Iterations:"
@@ -7026,7 +7026,7 @@ msgstr "Bryt"
 
 #: plug-ins/common/warp.c:506
 msgid "Smear"
-msgstr "Smør"
+msgstr "SmÃ¸r"
 
 #: plug-ins/common/warp.c:521 plug-ins/fits/fits.c:1005
 #: plug-ins/flame/flame.c:1125 plug-ins/gfig/gfig.c:3192
@@ -7041,11 +7041,11 @@ msgstr "FG farge"
 #. ---------    The secondary table         --------------------------
 #: plug-ins/common/warp.c:559
 msgid "Secondary Options"
-msgstr "Sekundære alternativer"
+msgstr "SekundÃ¦re alternativer"
 
 #: plug-ins/common/warp.c:572
 msgid "Dither Size:"
-msgstr "Dither-størrelse:"
+msgstr "Dither-stÃ¸rrelse:"
 
 #: plug-ins/common/warp.c:581
 msgid "Rotation Angle:"
@@ -7058,11 +7058,11 @@ msgstr "Understeg:"
 #. Magnitude map menu
 #: plug-ins/common/warp.c:597
 msgid "Magnitude Map:"
-msgstr "Størrelseskart:"
+msgstr "StÃ¸rrelseskart:"
 
 #: plug-ins/common/warp.c:616
 msgid "Use Mag Map"
-msgstr "Bruk størrelseskart"
+msgstr "Bruk stÃ¸rrelseskart"
 
 #. --------------------------------------------------------------------
 #. ---------    The "other" table         --------------------------
@@ -7117,11 +7117,11 @@ msgstr "Flyt steg %d..."
 
 #: plug-ins/common/waves.c:124
 msgid "<Image>/Filters/Distorts/Waves..."
-msgstr "<Image>/Filtre/Forvrengning/Bølger..."
+msgstr "<Image>/Filtre/Forvrengning/BÃ¸lger..."
 
 #: plug-ins/common/waves.c:303
 msgid "Waves"
-msgstr "Bølger"
+msgstr "BÃ¸lger"
 
 #: plug-ins/common/waves.c:350
 msgid "_Reflective"
@@ -7137,11 +7137,11 @@ msgstr "_Fase:"
 
 #: plug-ins/common/waves.c:389
 msgid "_Wavelength:"
-msgstr "_Bølgelendge:"
+msgstr "_BÃ¸lgelendge:"
 
 #: plug-ins/common/waves.c:543
 msgid "Waving..."
-msgstr "Lager bølger..."
+msgstr "Lager bÃ¸lger..."
 
 #: plug-ins/common/whirlpinch.c:189
 msgid "<Image>/Filters/Distorts/Whirl and Pinch..."
@@ -7236,7 +7236,7 @@ msgstr "_Venstre"
 
 #: plug-ins/common/wind.c:967
 msgid "_Right"
-msgstr "_Høyre"
+msgstr "_HÃ¸yre"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
@@ -7251,7 +7251,7 @@ msgstr "L_edende"
 
 #: plug-ins/common/wind.c:991
 msgid "Tr_ailing"
-msgstr "_Etterfølgende"
+msgstr "_EtterfÃ¸lgende"
 
 #: plug-ins/common/wind.c:994
 msgid "Bot_h"
@@ -7267,7 +7267,7 @@ msgstr "_Styrke:"
 
 #: plug-ins/common/wind.c:1045
 msgid "Higher values increase the magnitude of the effect"
-msgstr "Høyere verdier øker størrelsen på effekten"
+msgstr "HÃ¸yere verdier Ã¸ker stÃ¸rrelsen pÃ¥ effekten"
 
 #: plug-ins/common/winprint.c:186
 msgid "<Image>/File/Print"
@@ -7284,7 +7284,7 @@ msgstr "PrintDlg feilet: %d"
 
 #: plug-ins/common/winprint.c:336
 msgid "Printer doesn't support bitmaps"
-msgstr "Skriver støtter ikke bitkart"
+msgstr "Skriver stÃ¸tter ikke bitkart"
 
 #: plug-ins/common/winprint.c:378
 msgid "StartPage failed"
@@ -7339,7 +7339,7 @@ msgstr "Tolker %s"
 
 #: plug-ins/common/wmf.c:2137
 msgid "Transferring image"
-msgstr "Overfører bilde"
+msgstr "OverfÃ¸rer bilde"
 
 #: plug-ins/common/xbm.c:253
 msgid "Created with The GIMP"
@@ -7364,7 +7364,7 @@ msgstr "XBM: ingen bildebredde spesifisert\n"
 msgid ""
 "'%s':\n"
 "No image height specified"
-msgstr "XBM: ingen bildehøyde spesifisert\n"
+msgstr "XBM: ingen bildehÃ¸yde spesifisert\n"
 
 #: plug-ins/common/xbm.c:837
 #, fuzzy, c-format
@@ -7388,7 +7388,7 @@ msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
 msgstr ""
-"Du kan ikke lagre en markørmaske for et bilde\n"
+"Du kan ikke lagre en markÃ¸rmaske for et bilde\n"
 "uten en alfakanal."
 
 #: plug-ins/common/xbm.c:1156
@@ -7412,7 +7412,7 @@ msgstr "_Identifikator-prefiks:"
 #. hotspot toggle
 #: plug-ins/common/xbm.c:1226
 msgid "_Write Hot Spot Values"
-msgstr "Skriv «hot spot»-verdier"
+msgstr "Skriv Â«hot spotÂ»-verdier"
 
 #: plug-ins/common/xbm.c:1248
 msgid "Hot Spot _X:"
@@ -7442,7 +7442,7 @@ msgstr "_Alfa-terskel:"
 #: plug-ins/common/xwd.c:386
 #, fuzzy
 msgid "Can't open file as XWD file"
-msgstr "kan ikke åpne filen som XWD-fil"
+msgstr "kan ikke Ã¥pne filen som XWD-fil"
 
 #: plug-ins/common/xwd.c:421
 msgid "can't read color entries"
@@ -7457,15 +7457,15 @@ msgid ""
 msgstr ""
 "load_image (xwd): XWD-fil %s har format %d, dybde %d\n"
 "og bits per piksel %d.\n"
-"Dette er ikke støttet.\n"
+"Dette er ikke stÃ¸ttet.\n"
 
 #: plug-ins/common/xwd.c:505
 msgid "XWD save cannot handle images with alpha channels"
-msgstr "XWD lagring kan ikke håndtere bilder med alfakanaler"
+msgstr "XWD lagring kan ikke hÃ¥ndtere bilder med alfakanaler"
 
 #: plug-ins/common/xwd.c:516
 msgid "cannot operate on unknown image types"
-msgstr "kan ikke operere på ukjent bildetype"
+msgstr "kan ikke operere pÃ¥ ukjent bildetype"
 
 #: plug-ins/common/xwd.c:1228
 msgid "EOF encountered on "
@@ -7473,11 +7473,11 @@ msgstr "EOF funnet ved "
 
 #: plug-ins/common/xwd.c:1374
 msgid "No memory for mapping colors"
-msgstr "Ikke nok minne til å utplassere fargene"
+msgstr "Ikke nok minne til Ã¥ utplassere fargene"
 
 #: plug-ins/common/xwd.c:2059
 msgid "Error during writing indexed/grey image"
-msgstr "Feil under skriving av indeksert/grått bilde"
+msgstr "Feil under skriving av indeksert/grÃ¥tt bilde"
 
 #: plug-ins/common/xwd.c:2148
 msgid "Error during writing rgb image"
@@ -7508,16 +7508,16 @@ msgstr "DB-leser"
 #: plug-ins/dbbrowser/dbbrowser_utils.c:123
 #: plug-ins/dbbrowser/dbbrowser_utils.c:142
 msgid "Search by _Name"
-msgstr "Søk på _navn"
+msgstr "SÃ¸k pÃ¥ _navn"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:125
 #: plug-ins/dbbrowser/dbbrowser_utils.c:144
 msgid "Search by _Blurb"
-msgstr "Søk etter _frase"
+msgstr "SÃ¸k etter _frase"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:205
 msgid "_Search:"
-msgstr "_Søk:"
+msgstr "_SÃ¸k:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:368
 msgid "In:"
@@ -7557,7 +7557,7 @@ msgstr ""
 
 #: plug-ins/fits/fits.c:357
 msgid "Error during open of FITS file"
-msgstr "Feil under åpning av FITS-fil"
+msgstr "Feil under Ã¥pning av FITS-fil"
 
 #: plug-ins/fits/fits.c:362
 msgid "FITS file keeps no displayable images"
@@ -7565,7 +7565,7 @@ msgstr "FITS-filen inneholder ingen visbare bilder"
 
 #: plug-ins/fits/fits.c:441
 msgid "FITS save cannot handle images with alpha channels"
-msgstr "FITS-lagring kan ikke håndtere bilder med alfakanaler"
+msgstr "FITS-lagring kan ikke hÃ¥ndtere bilder med alfakanaler"
 
 #: plug-ins/fits/fits.c:468
 #, fuzzy, c-format
@@ -7612,12 +7612,12 @@ msgstr "Flamme virker kun for RGB tegnede objekter."
 #: plug-ins/flame/flame.c:423
 #, c-format
 msgid "'%s' is not a regular file"
-msgstr "«%s» er ikke en vanlig fil"
+msgstr "Â«%sÂ» er ikke en vanlig fil"
 
 #: plug-ins/flame/flame.c:431
 #, c-format
 msgid "Can't open '%s': %s"
-msgstr "Kan ikke åpne «%s»: %s"
+msgstr "Kan ikke Ã¥pne Â«%sÂ»: %s"
 
 #: plug-ins/flame/flame.c:627
 msgid "Edit Flame"
@@ -7637,7 +7637,7 @@ msgstr "Ha_stighet:"
 
 #: plug-ins/flame/flame.c:710
 msgid "_Randomize"
-msgstr "Gjø_r tilfeldig"
+msgstr "GjÃ¸_r tilfeldig"
 
 #: plug-ins/flame/flame.c:724
 msgid "Same"
@@ -7662,7 +7662,7 @@ msgstr "Polar"
 
 #: plug-ins/flame/flame.c:732
 msgid "Bent"
-msgstr "Bøyd"
+msgstr "BÃ¸yd"
 
 #: plug-ins/flame/flame.c:738
 msgid "_Variation:"
@@ -7727,15 +7727,15 @@ msgstr "<Image>/Lag/Farger/Filterpakke..."
 
 #: plug-ins/fp/fp.c:127
 msgid "Convert the image to RGB first!"
-msgstr "Konverter bildet til RGB først!"
+msgstr "Konverter bildet til RGB fÃ¸rst!"
 
 #: plug-ins/fp/fp.c:132
 msgid "Applying the Filter Pack..."
-msgstr "Legger på filterpakke..."
+msgstr "Legger pÃ¥ filterpakke..."
 
 #: plug-ins/fp/fp_gtk.c:32
 msgid "Darker:"
-msgstr "Mørkere:"
+msgstr "MÃ¸rkere:"
 
 #: plug-ins/fp/fp_gtk.c:33
 msgid "Lighter:"
@@ -7756,7 +7756,7 @@ msgstr "Aktiv:"
 
 #: plug-ins/fp/fp_gtk.c:92
 msgid "Before and After"
-msgstr "Før og etter"
+msgstr "FÃ¸r og etter"
 
 #: plug-ins/fp/fp_gtk.c:100
 msgid "Original:"
@@ -7764,15 +7764,15 @@ msgstr "Original:"
 
 #: plug-ins/fp/fp_gtk.c:204
 msgid "Hue Variations"
-msgstr "Variasjoner i glød:"
+msgstr "Variasjoner i glÃ¸d:"
 
 #: plug-ins/fp/fp_gtk.c:220
 msgid "Roughness"
-msgstr "Røffhet"
+msgstr "RÃ¸ffhet"
 
 #: plug-ins/fp/fp_gtk.c:251
 msgid "Affected Range"
-msgstr "Påvirket område:"
+msgstr "PÃ¥virket omrÃ¥de:"
 
 #: plug-ins/fp/fp_gtk.c:261
 msgid "Shadows"
@@ -7784,7 +7784,7 @@ msgstr "Mellomtoner"
 
 #: plug-ins/fp/fp_gtk.c:269
 msgid "Highlights"
-msgstr "Høylys"
+msgstr "HÃ¸ylys"
 
 #: plug-ins/fp/fp_gtk.c:282
 msgid "Windows"
@@ -7832,7 +7832,7 @@ msgstr "Sirkelpalett"
 
 #: plug-ins/fp/fp_gtk.c:491
 msgid "Lighter And Darker"
-msgstr "Lysere og mørkere"
+msgstr "Lysere og mÃ¸rkere"
 
 #. ******************************************************************
 #. ************************ All the Standard Stuff ******************
@@ -7850,7 +7850,7 @@ msgstr "Mellomtoner:"
 
 #: plug-ins/fp/fp_gtk.c:1038
 msgid "Highlights:"
-msgstr "Høylys:"
+msgstr "HÃ¸ylys:"
 
 #: plug-ins/fp/fp_gtk.c:1052
 msgid "Advanced Filter Pack Options"
@@ -7867,11 +7867,11 @@ msgstr "Forskjellige alternativer"
 
 #: plug-ins/fp/fp_gtk.c:1163
 msgid "Preview as You Drag"
-msgstr "Forhåndsvisning under draoperasjon"
+msgstr "ForhÃ¥ndsvisning under draoperasjon"
 
 #: plug-ins/fp/fp_gtk.c:1167
 msgid "Preview Size"
-msgstr "Størrelse på forhåndsvisning"
+msgstr "StÃ¸rrelse pÃ¥ forhÃ¥ndsvisning"
 
 #: plug-ins/gfig/gfig.c:657
 msgid "<Image>/Filters/Render/Gfig..."
@@ -7886,7 +7886,7 @@ msgstr ""
 msgid ""
 "Error opening file '%s':\n"
 "%s"
-msgstr "Feil under åpning av fil"
+msgstr "Feil under Ã¥pning av fil"
 
 #: plug-ins/gfig/gfig.c:1454
 #, fuzzy
@@ -8009,7 +8009,7 @@ msgstr "Slett et objekt"
 #: plug-ins/gfig/gfig.c:2203 plug-ins/gfig/gfig.c:2641
 #: plug-ins/gfig/gfig.c:3837
 msgid "Brush"
-msgstr "Børste"
+msgstr "BÃ¸rste"
 
 #: plug-ins/gfig/gfig.c:2204
 msgid "Airbrush"
@@ -8021,7 +8021,7 @@ msgstr "Blyant"
 
 #: plug-ins/gfig/gfig.c:2206 plug-ins/gfig/gfig.c:3050
 msgid "Pattern"
-msgstr "Mønster"
+msgstr "MÃ¸nster"
 
 #: plug-ins/gfig/gfig.c:2213
 msgid ""
@@ -8048,7 +8048,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2634
 msgid "Draw on:"
-msgstr "Tegn på:"
+msgstr "Tegn pÃ¥:"
 
 #. Create selection
 #: plug-ins/gfig/gfig.c:2643 plug-ins/imagemap/imap_selection.c:364
@@ -8101,7 +8101,7 @@ msgstr "Omvendt linje"
 
 #: plug-ins/gfig/gfig.c:2706
 msgid "Draw lines in reverse order"
-msgstr "Tegn linjer i omvendt rekkefølge"
+msgstr "Tegn linjer i omvendt rekkefÃ¸lge"
 
 #: plug-ins/gfig/gfig.c:2714
 msgid "Scale to Image"
@@ -8109,7 +8109,7 @@ msgstr "Skaler til bilde"
 
 #: plug-ins/gfig/gfig.c:2722
 msgid "Scale drawings to images size"
-msgstr "Skaler tegninger til bildestørrelse"
+msgstr "Skaler tegninger til bildestÃ¸rrelse"
 
 #: plug-ins/gfig/gfig.c:2744
 msgid "Approx. Circles/Ellipses"
@@ -8145,7 +8145,7 @@ msgstr "Ingen alternativer..."
 #. Start of new brush selection code
 #: plug-ins/gfig/gfig.c:2915
 msgid "Set Brush..."
-msgstr "Sett børste..."
+msgstr "Sett bÃ¸rste..."
 
 #: plug-ins/gfig/gfig.c:3004
 msgid "Add"
@@ -8166,7 +8166,7 @@ msgstr "Type utvalg:"
 #. 3
 #: plug-ins/gfig/gfig.c:3024
 msgid "Feather"
-msgstr "Fjær"
+msgstr "FjÃ¦r"
 
 #: plug-ins/gfig/gfig.c:3042
 msgid "Radius:"
@@ -8211,7 +8211,7 @@ msgstr "Vis bilde"
 
 #: plug-ins/gfig/gfig.c:3164
 msgid "Reload Image"
-msgstr "Last bilde på nytt"
+msgstr "Last bilde pÃ¥ nytt"
 
 #: plug-ins/gfig/gfig.c:3176 plug-ins/imagemap/imap_menu.c:366
 #: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:154
@@ -8232,11 +8232,11 @@ msgstr "Normal"
 
 #: plug-ins/gfig/gfig.c:3194
 msgid "Grey"
-msgstr "Grå"
+msgstr "GrÃ¥"
 
 #: plug-ins/gfig/gfig.c:3195
 msgid "Darker"
-msgstr "Mørkere"
+msgstr "MÃ¸rkere"
 
 #: plug-ins/gfig/gfig.c:3196
 msgid "Lighter"
@@ -8244,11 +8244,11 @@ msgstr "Lysere"
 
 #: plug-ins/gfig/gfig.c:3197
 msgid "Very Dark"
-msgstr "Meget mørk"
+msgstr "Meget mÃ¸rk"
 
 #: plug-ins/gfig/gfig.c:3201
 msgid "Grid Color:"
-msgstr "Farge på rutenett:"
+msgstr "Farge pÃ¥ rutenett:"
 
 #: plug-ins/gfig/gfig.c:3205
 msgid "Max Undo:"
@@ -8268,7 +8268,7 @@ msgstr "Vis rutenett"
 
 #: plug-ins/gfig/gfig.c:3288
 msgid "Lock on Grid"
-msgstr "Lås til rutenett"
+msgstr "LÃ¥s til rutenett"
 
 #: plug-ins/gfig/gfig.c:3303
 msgid "Grid Spacing:"
@@ -8305,12 +8305,12 @@ msgstr "Slett valgt Gfig-objektsamling"
 
 #: plug-ins/gfig/gfig.c:3449
 msgid "Select folder and rescan Gfig object collections"
-msgstr "Velg mappe og les Gfig-objektsamlingen på nytt"
+msgstr "Velg mappe og les Gfig-objektsamlingen pÃ¥ nytt"
 
 #. Position labels
 #: plug-ins/gfig/gfig.c:3520 plug-ins/gimpressionist/size.c:98
 msgid "Size:"
-msgstr "Størrelse:"
+msgstr "StÃ¸rrelse:"
 
 #. Position labels
 #: plug-ins/gfig/gfig.c:3547
@@ -8356,7 +8356,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:4233
 msgid "Enter Gfig Object Name"
-msgstr "Oppfi navn på Gfig-objekt"
+msgstr "Oppfi navn pÃ¥ Gfig-objekt"
 
 #: plug-ins/gfig/gfig.c:4258
 msgid "Gfig Object Name:"
@@ -8365,7 +8365,7 @@ msgstr "Gfig-objektnavn:"
 #. the dialog
 #: plug-ins/gfig/gfig.c:4317
 msgid "Rescan for Gfig Objects"
-msgstr "Søk etter Gfig-objekter på nytt"
+msgstr "SÃ¸k etter Gfig-objekter pÃ¥ nytt"
 
 #: plug-ins/gfig/gfig.c:4336
 msgid "Add Gfig Path"
@@ -8459,17 +8459,17 @@ msgstr "Gradient flare..."
 
 #: plug-ins/gflare/gflare.c:971
 msgid "GFlare: cannot operate on indexed color images"
-msgstr "GFlare: kan ikke operere på indekserte fargebilder"
+msgstr "GFlare: kan ikke operere pÃ¥ indekserte fargebilder"
 
 #: plug-ins/gflare/gflare.c:1253
 #, c-format
 msgid "Failed to open GFlare file '%s': %s"
-msgstr "Kunne ikke åpne GFlare-fil «%s»: %s"
+msgstr "Kunne ikke Ã¥pne GFlare-fil Â«%sÂ»: %s"
 
 #: plug-ins/gflare/gflare.c:1261
 #, c-format
 msgid "'%s' is not a valid GFlare file."
-msgstr "«%s» er ikke en gyldig GFlare-fil."
+msgstr "Â«%sÂ» er ikke en gyldig GFlare-fil."
 
 #: plug-ins/gflare/gflare.c:1314
 #, c-format
@@ -8489,12 +8489,12 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:1461
 #, c-format
 msgid "Failed to write GFlare file '%s': %s"
-msgstr "Feil under skriving av GFlare-fil «%s»: %s"
+msgstr "Feil under skriving av GFlare-fil Â«%sÂ»: %s"
 
 #: plug-ins/gflare/gflare.c:1616
 #, c-format
 msgid "Error reading GFlare folder '%s'"
-msgstr "Feil under lesing av GFlare-mappe «%s»"
+msgstr "Feil under lesing av GFlare-mappe Â«%sÂ»"
 
 #: plug-ins/gflare/gflare.c:2288
 msgid "GFlare"
@@ -8502,11 +8502,11 @@ msgstr "GFlare"
 
 #: plug-ins/gflare/gflare.c:2348
 msgid "A_uto Update Preview"
-msgstr "A_utomatisk oppdatering av forhåndsvisning"
+msgstr "A_utomatisk oppdatering av forhÃ¥ndsvisning"
 
 #: plug-ins/gflare/gflare.c:2403
 msgid "`Default' is created."
-msgstr "«Forvalgt» er opprettet."
+msgstr "Â«ForvalgtÂ»Â er opprettet."
 
 #: plug-ins/gflare/gflare.c:2404
 msgid "Default"
@@ -8518,7 +8518,7 @@ msgstr "Ro_tasjon:"
 
 #: plug-ins/gflare/gflare.c:2708
 msgid "_Hue Rotation:"
-msgstr "R_otasjon av glød:"
+msgstr "R_otasjon av glÃ¸d:"
 
 #: plug-ins/gflare/gflare.c:2720
 msgid "Vector _Angle:"
@@ -8559,7 +8559,7 @@ msgstr "uten navn"
 #: plug-ins/gflare/gflare.c:3001
 #, c-format
 msgid "The name '%s' is used already!"
-msgstr "Navnet «%s» er brukt allerede!"
+msgstr "Navnet Â«%sÂ» er brukt allerede!"
 
 #: plug-ins/gflare/gflare.c:3051
 msgid "Copy GFlare"
@@ -8572,11 +8572,11 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:3075
 #, c-format
 msgid "The name `%s' is used already!"
-msgstr "Navnet «%s» er brukt allerede!"
+msgstr "Navnet Â«%sÂ» er brukt allerede!"
 
 #: plug-ins/gflare/gflare.c:3101
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "Kan ikke slette!! Minst en GFlare må finnes."
+msgstr "Kan ikke slette!! Minst en GFlare mÃ¥ finnes."
 
 #: plug-ins/gflare/gflare.c:3111
 msgid "Delete GFlare"
@@ -8593,7 +8593,7 @@ msgstr "GFlare redigering"
 
 #: plug-ins/gflare/gflare.c:3214
 msgid "Rescan Gradients"
-msgstr "Søk etter gradienter på nytt"
+msgstr "SÃ¸k etter gradienter pÃ¥ nytt"
 
 #. Glow
 #: plug-ins/gflare/gflare.c:3335
@@ -8649,7 +8649,7 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:3491 plug-ins/gflare/gflare.c:3598
 #: plug-ins/gflare/gflare.c:3737
 msgid "Size (%):"
-msgstr "Størrelse (%):"
+msgstr "StÃ¸rrelse (%):"
 
 #: plug-ins/gflare/gflare.c:3503 plug-ins/gflare/gflare.c:3610
 #: plug-ins/gflare/gflare.c:3749
@@ -8659,12 +8659,12 @@ msgstr "Rotasjon:"
 #: plug-ins/gflare/gflare.c:3515 plug-ins/gflare/gflare.c:3623
 #: plug-ins/gflare/gflare.c:3762
 msgid "Hue Rotation:"
-msgstr "Rotasjon av glød:"
+msgstr "Rotasjon av glÃ¸d:"
 
 #: plug-ins/gflare/gflare.c:3529
 #, fuzzy
 msgid "G_low"
-msgstr "Glød"
+msgstr "GlÃ¸d"
 
 #: plug-ins/gflare/gflare.c:3635
 msgid "# of Spikes:"
@@ -8677,7 +8677,7 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:3661
 #, fuzzy
 msgid "_Rays"
-msgstr "Stråler"
+msgstr "StrÃ¥ler"
 
 #: plug-ins/gflare/gflare.c:3712
 msgid "Size Factor Gradient:"
@@ -8742,7 +8742,7 @@ msgstr ""
 #: plug-ins/gimpressionist/brush.c:190
 #, fuzzy
 msgid "Can only save drawables!"
-msgstr "Maks RGB: Kan kun operere på RGB tegnede objekter."
+msgstr "Maks RGB: Kan kun operere pÃ¥ RGB tegnede objekter."
 
 #: plug-ins/gimpressionist/brush.c:196
 msgid "Save brush"
@@ -8754,7 +8754,7 @@ msgstr "_Pensel"
 
 #: plug-ins/gimpressionist/brush.c:374
 msgid "Brush Preview:"
-msgstr "Forhåndsvisning av børste:"
+msgstr "ForhÃ¥ndsvisning av bÃ¸rste:"
 
 #: plug-ins/gimpressionist/brush.c:383 plug-ins/print/gimp_color_window.c:381
 msgid "Gamma:"
@@ -8810,7 +8810,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/color.c:77
 msgid "Color _noise:"
-msgstr "Farge_støy:"
+msgstr "Farge_stÃ¸y:"
 
 #: plug-ins/gimpressionist/color.c:81
 msgid "Adds random noise to the color"
@@ -8879,7 +8879,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/general.c:178
 msgid "Shadow darken:"
-msgstr "Mørkere skygge:"
+msgstr "MÃ¸rkere skygge:"
 
 #: plug-ins/gimpressionist/general.c:182
 msgid "How much to \"darken\" the drop shadow"
@@ -9138,7 +9138,7 @@ msgstr "P_apir"
 
 #: plug-ins/gimpressionist/paper.c:109
 msgid "Paper Preview:"
-msgstr "Forhåndsvisning av papir:"
+msgstr "ForhÃ¥ndsvisning av papir:"
 
 #: plug-ins/gimpressionist/paper.c:118
 msgid "_Invert"
@@ -9206,7 +9206,7 @@ msgstr ""
 msgid ""
 "Failed to save PPM file '%s':\n"
 "%s"
-msgstr "Kunne ikke åpne GFlare-fil «%s»: %s"
+msgstr "Kunne ikke Ã¥pne GFlare-fil Â«%sÂ»: %s"
 
 #: plug-ins/gimpressionist/presets.c:354
 msgid "Save Current"
@@ -9255,35 +9255,35 @@ msgstr ""
 
 #: plug-ins/gimpressionist/preview.c:136
 msgid "Revert to the original image"
-msgstr "Gå tilbake til originalt bilde"
+msgstr "GÃ¥ tilbake til originalt bilde"
 
 #: plug-ins/gimpressionist/size.c:43
 msgid "_Size"
-msgstr "_Størrelse"
+msgstr "_StÃ¸rrelse"
 
 #: plug-ins/gimpressionist/size.c:60
 msgid "Sizes:"
-msgstr "Størrelser:"
+msgstr "StÃ¸rrelser:"
 
 #: plug-ins/gimpressionist/size.c:64
 msgid "The number of sizes of brushes to use"
-msgstr "Antall størrelser på børster som skal brukes"
+msgstr "Antall stÃ¸rrelser pÃ¥ bÃ¸rster som skal brukes"
 
 #: plug-ins/gimpressionist/size.c:72
 msgid "Minimum size:"
-msgstr "Minste størrelse:"
+msgstr "Minste stÃ¸rrelse:"
 
 #: plug-ins/gimpressionist/size.c:76
 msgid "The smallest brush to create"
-msgstr "Den minste børsten som skal opprettes"
+msgstr "Den minste bÃ¸rsten som skal opprettes"
 
 #: plug-ins/gimpressionist/size.c:84
 msgid "Maximum size:"
-msgstr "Maksimal størrelse:"
+msgstr "Maksimal stÃ¸rrelse:"
 
 #: plug-ins/gimpressionist/size.c:88
 msgid "The largest brush to create"
-msgstr "Den største børsten som skal opprettes"
+msgstr "Den stÃ¸rste bÃ¸rsten som skal opprettes"
 
 #: plug-ins/gimpressionist/size.c:111
 msgid ""
@@ -9351,7 +9351,7 @@ msgstr "Slett valgte smvektor"
 
 #: plug-ins/gimpressionist/sizemap.c:492
 msgid "Change the angle of the selected smvector"
-msgstr "Endre vinkel på valgt smvektor"
+msgstr "Endre vinkel pÃ¥ valgt smvektor"
 
 #: plug-ins/gimpressionist/sizemap.c:499
 msgid "S_trength:"
@@ -9359,7 +9359,7 @@ msgstr "S_tyrke:"
 
 #: plug-ins/gimpressionist/sizemap.c:503
 msgid "Change the strength of the selected smvector"
-msgstr "Endre styrke på valgt smvektor"
+msgstr "Endre styrke pÃ¥ valgt smvektor"
 
 #: plug-ins/gimpressionist/sizemap.c:510
 #, fuzzy
@@ -9432,11 +9432,11 @@ msgstr "Enkel"
 
 #: plug-ins/ifscompose/ifscompose.c:677
 msgid "IfsCompose: Target"
-msgstr "IfsCompose: Mål"
+msgstr "IfsCompose: MÃ¥l"
 
 #: plug-ins/ifscompose/ifscompose.c:683
 msgid "Scale Hue by:"
-msgstr "Skaler glød etter:"
+msgstr "Skaler glÃ¸d etter:"
 
 #: plug-ins/ifscompose/ifscompose.c:698
 msgid "Scale Value by:"
@@ -9449,15 +9449,15 @@ msgstr "Full"
 
 #: plug-ins/ifscompose/ifscompose.c:722
 msgid "IfsCompose: Red"
-msgstr "IfsCompose: Rød"
+msgstr "IfsCompose: RÃ¸d"
 
 #: plug-ins/ifscompose/ifscompose.c:729
 msgid "IfsCompose: Green"
-msgstr "IfsCompose: Grønn"
+msgstr "IfsCompose: GrÃ¸nn"
 
 #: plug-ins/ifscompose/ifscompose.c:736
 msgid "IfsCompose: Blue"
-msgstr "IfsCompose: Blå"
+msgstr "IfsCompose: BlÃ¥"
 
 #: plug-ins/ifscompose/ifscompose.c:743
 msgid "IfsCompose: Black"
@@ -9495,7 +9495,7 @@ msgstr "Velg _alt"
 #: plug-ins/ifscompose/ifscompose.c:996
 #, fuzzy
 msgid "Recompute _Center"
-msgstr "Beregn senter på nytt"
+msgstr "Beregn senter pÃ¥ nytt"
 
 #: plug-ins/ifscompose/ifscompose.c:1026
 msgid "Spatial Transformation"
@@ -9665,7 +9665,7 @@ msgstr "_Kant:"
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:181
 #, fuzzy
 msgid "_Right Border"
-msgstr "Høyre kant:"
+msgstr "HÃ¸yre kant:"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:185
 #, fuzzy
@@ -9732,7 +9732,7 @@ msgstr "Basis-_URL:"
 #: plug-ins/imagemap/imap_cmd_guides.c:222
 #, c-format
 msgid "Image dimensions: %d x %d"
-msgstr "Bildestørrelser: %d x %d"
+msgstr "BildestÃ¸rrelser: %d x %d"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:227
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
@@ -9790,7 +9790,7 @@ msgstr "Velg forrige"
 
 #: plug-ins/imagemap/imap_cmd_select_region.c:64
 msgid "Select Region"
-msgstr "Velg område"
+msgstr "Velg omrÃ¥de"
 
 #: plug-ins/imagemap/imap_cmd_send_to_back.c:51
 #: plug-ins/imagemap/imap_toolbar.c:157
@@ -9815,7 +9815,7 @@ msgstr "_Nettsted"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:210
 msgid "_Ftp Site"
-msgstr "_Ftp-område"
+msgstr "_Ftp-omrÃ¥de"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:216
 msgid "_Gopher"
@@ -9843,7 +9843,7 @@ msgstr "e-_post"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:252
 msgid "_URL to activate when this area is clicked: (required)"
-msgstr "_URL som skal aktiveres når dette området mottar klikk: (kreves)"
+msgstr "_URL som skal aktiveres nÃ¥r dette omrÃ¥det mottar klikk: (kreves)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:254
 msgid "Select HTML file"
@@ -9871,7 +9871,7 @@ msgstr "Dimensjoner"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:313
 msgid "Pre_view"
-msgstr "Forhånds_visning"
+msgstr "ForhÃ¥nds_visning"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:351
 msgid "_JavaScript"
@@ -9879,16 +9879,16 @@ msgstr "_JavaScript"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:450
 msgid "Area Settings"
-msgstr "Instillinger for område"
+msgstr "Instillinger for omrÃ¥de"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:494
 #, c-format
 msgid "Area #%d Settings"
-msgstr "Innstillinger for område #%d"
+msgstr "Innstillinger for omrÃ¥de #%d"
 
 #: plug-ins/imagemap/imap_file.c:47 plug-ins/imagemap/imap_menu.c:64
 msgid "Error opening file"
-msgstr "Feil under åpning av fil"
+msgstr "Feil under Ã¥pning av fil"
 
 #: plug-ins/imagemap/imap_file.c:56
 msgid "Load Imagemap"
@@ -9944,7 +9944,7 @@ msgstr "_Bredde"
 
 #: plug-ins/imagemap/imap_grid.c:257
 msgid "_Height"
-msgstr "_Høyde"
+msgstr "_HÃ¸yde"
 
 #: plug-ins/imagemap/imap_grid.c:271
 msgid "Grid Offset"
@@ -9960,7 +9960,7 @@ msgstr "piksler fra _toppen"
 
 #: plug-ins/imagemap/imap_grid.c:295
 msgid "_Preview"
-msgstr "_Forhåndsvisning"
+msgstr "_ForhÃ¥ndsvisning"
 
 #: plug-ins/imagemap/imap_main.c:128
 msgid "<Image>/Filters/Web/ImageMap..."
@@ -9985,7 +9985,7 @@ msgstr "Kunne ikke lagre fil:"
 
 #: plug-ins/imagemap/imap_main.c:976
 msgid "Image size has changed."
-msgstr "Bildestørrelse er endret."
+msgstr "BildestÃ¸rrelse er endret."
 
 #: plug-ins/imagemap/imap_main.c:977
 msgid "Resize area's?"
@@ -10006,7 +10006,7 @@ msgstr "_Fil"
 
 #: plug-ins/imagemap/imap_menu.c:186
 msgid "Open Recent"
-msgstr "Åpne siste"
+msgstr "Ã…pne siste"
 
 #: plug-ins/imagemap/imap_menu.c:208
 #, c-format
@@ -10028,7 +10028,7 @@ msgstr "Velg bort _alt"
 
 #: plug-ins/imagemap/imap_menu.c:278
 msgid "Edit Area Info..."
-msgstr "Rediger områdeinformasjon..."
+msgstr "Rediger omrÃ¥deinformasjon..."
 
 #: plug-ins/imagemap/imap_menu.c:293
 msgid "_View"
@@ -10036,7 +10036,7 @@ msgstr "_Vis"
 
 #: plug-ins/imagemap/imap_menu.c:297
 msgid "Area List"
-msgstr "Områdeliste"
+msgstr "OmrÃ¥deliste"
 
 #: plug-ins/imagemap/imap_menu.c:301
 msgid "Source..."
@@ -10044,7 +10044,7 @@ msgstr "Kilde..."
 
 #: plug-ins/imagemap/imap_menu.c:309 plug-ins/print/gimp_main_window.c:1423
 msgid "Grayscale"
-msgstr "Gråtone"
+msgstr "GrÃ¥tone"
 
 #: plug-ins/imagemap/imap_menu.c:327
 msgid "Zoom To"
@@ -10060,11 +10060,11 @@ msgstr "Pil"
 
 #: plug-ins/imagemap/imap_menu.c:363
 msgid "Select Contiguous Region"
-msgstr "Velg sammenhengende område"
+msgstr "Velg sammenhengende omrÃ¥de"
 
 #: plug-ins/imagemap/imap_menu.c:381
 msgid "_Tools"
-msgstr "Verk_tøy"
+msgstr "Verk_tÃ¸y"
 
 #: plug-ins/imagemap/imap_menu.c:383 plug-ins/imagemap/imap_popup.c:154
 msgid "Grid Settings..."
@@ -10112,7 +10112,7 @@ msgstr "Fje_rn"
 
 #: plug-ins/imagemap/imap_popup.c:133
 msgid "Tools"
-msgstr "Verktøy"
+msgstr "VerktÃ¸y"
 
 #: plug-ins/imagemap/imap_popup.c:146
 msgid "Zoom"
@@ -10136,7 +10136,7 @@ msgstr "Standard karttype"
 
 #: plug-ins/imagemap/imap_preferences.c:465
 msgid "_Prompt for area info"
-msgstr "S_pør etter områdeinformasjon"
+msgstr "S_pÃ¸r etter omrÃ¥deinformasjon"
 
 #: plug-ins/imagemap/imap_preferences.c:467
 msgid "_Require default URL"
@@ -10144,7 +10144,7 @@ msgstr "K_rev forvalgt URL"
 
 #: plug-ins/imagemap/imap_preferences.c:469
 msgid "Show area _handles"
-msgstr "Vis _håndtak for områder"
+msgstr "Vis _hÃ¥ndtak for omrÃ¥der"
 
 #: plug-ins/imagemap/imap_preferences.c:471
 msgid "_Keep NCSA circles true"
@@ -10181,7 +10181,7 @@ msgstr "Valgt:"
 
 #: plug-ins/imagemap/imap_preferences.c:533
 msgid "Co_ntiguous Region"
-msgstr "Sammenhengende område"
+msgstr "Sammenhengende omrÃ¥de"
 
 #: plug-ins/imagemap/imap_preferences.c:539
 msgid "_Automatically convert"
@@ -10197,11 +10197,11 @@ msgstr "_Rektangel"
 
 #: plug-ins/imagemap/imap_rectangle.c:390
 msgid "Upper left _x:"
-msgstr "Øvre venstre _x:"
+msgstr "Ã˜vre venstre _x:"
 
 #: plug-ins/imagemap/imap_rectangle.c:397
 msgid "Upper left _y:"
-msgstr "Øvre venstre _y:"
+msgstr "Ã˜vre venstre _y:"
 
 #: plug-ins/imagemap/imap_selection.c:342
 msgid "URL"
@@ -10209,7 +10209,7 @@ msgstr "URL"
 
 #: plug-ins/imagemap/imap_selection.c:342
 msgid "Target"
-msgstr "Mål"
+msgstr "MÃ¥l"
 
 #: plug-ins/imagemap/imap_selection.c:342
 msgid "Comment"
@@ -10221,7 +10221,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_settings.c:95
 msgid "Image name:"
-msgstr "Navn på bilde:"
+msgstr "Navn pÃ¥ bilde:"
 
 #: plug-ins/imagemap/imap_settings.c:96
 msgid "Select Image File"
@@ -10257,7 +10257,7 @@ msgstr "Rediger kartinformasjon..."
 
 #: plug-ins/imagemap/imap_toolbar.c:102
 msgid "Open"
-msgstr "Åpne"
+msgstr "Ã…pne"
 
 #: plug-ins/imagemap/imap_toolbar.c:107
 msgid "Preferences"
@@ -10285,7 +10285,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_tools.c:145
 msgid "Select existing area"
-msgstr "Velg eksisterende område"
+msgstr "Velg eksisterende omrÃ¥de"
 
 #: plug-ins/imagemap/imap_tools.c:149
 msgid "Fuzzy Select"
@@ -10293,11 +10293,11 @@ msgstr "Fuzzy utvalg"
 
 #: plug-ins/imagemap/imap_tools.c:150
 msgid "Select contiguous regions"
-msgstr "Velg sammenhengende område"
+msgstr "Velg sammenhengende omrÃ¥de"
 
 #: plug-ins/imagemap/imap_tools.c:155
 msgid "Define Rectangle area"
-msgstr "Definer rektangulært område"
+msgstr "Definer rektangulÃ¦rt omrÃ¥de"
 
 #: plug-ins/imagemap/imap_tools.c:159
 msgid "Define Circle/Oval area"
@@ -10313,7 +10313,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_tools.c:173
 msgid "Delete selected area"
-msgstr "Slett valgt område"
+msgstr "Slett valgt omrÃ¥de"
 
 #: plug-ins/maze/algorithms.c:285
 msgid "Constructing maze using Prim's Algorithm..."
@@ -10325,7 +10325,7 @@ msgstr ""
 
 #: plug-ins/maze/maze.c:156
 msgid "<Image>/Filters/Render/Pattern/Maze..."
-msgstr "<Image>/Filter/Render/Mønster/Labyrint..."
+msgstr "<Image>/Filter/Render/MÃ¸nster/Labyrint..."
 
 #: plug-ins/maze/maze.c:403
 msgid "Drawing Maze..."
@@ -10346,7 +10346,7 @@ msgstr "Stykker:"
 
 #: plug-ins/maze/maze_face.c:238
 msgid "Height (Pixels):"
-msgstr "Høyde (Piksler):"
+msgstr "HÃ¸yde (Piksler):"
 
 #: plug-ins/maze/maze_face.c:261
 msgid "Multiple (57):"
@@ -10358,7 +10358,7 @@ msgstr "Avstand (1):"
 
 #: plug-ins/maze/maze_face.c:303
 msgid "Depth First"
-msgstr "Dybde først"
+msgstr "Dybde fÃ¸rst"
 
 #: plug-ins/maze/maze_face.c:310
 msgid "Prim's Algorithm"
@@ -10379,7 +10379,7 @@ msgstr ""
 #: plug-ins/maze/maze_face.c:604
 #, c-format
 msgid "Opening %s"
-msgstr "Åpner %s"
+msgstr "Ã…pner %s"
 
 #: plug-ins/maze/maze_face.c:615
 #, c-format
@@ -10439,7 +10439,7 @@ msgstr "Ok_tagoner & ruter"
 
 #: plug-ins/mosaic/mosaic.c:683
 msgid "T_ile Size:"
-msgstr "Størrelse på fl_is:"
+msgstr "StÃ¸rrelse pÃ¥ fl_is:"
 
 #: plug-ins/mosaic/mosaic.c:701
 msgid "Til_e Spacing:"
@@ -10475,11 +10475,11 @@ msgstr ""
 
 #: plug-ins/pagecurl/pagecurl.c:549
 msgid "Upper Left"
-msgstr "Øvre venstre"
+msgstr "Ã˜vre venstre"
 
 #: plug-ins/pagecurl/pagecurl.c:550
 msgid "Upper Right"
-msgstr "Øvre høyre"
+msgstr "Ã˜vre hÃ¸yre"
 
 #: plug-ins/pagecurl/pagecurl.c:551
 msgid "Lower Left"
@@ -10487,7 +10487,7 @@ msgstr "Nedre venstre"
 
 #: plug-ins/pagecurl/pagecurl.c:552
 msgid "Lower Right"
-msgstr "Nedre høyre"
+msgstr "Nedre hÃ¸yre"
 
 #: plug-ins/pagecurl/pagecurl.c:582
 msgid "Curl Orientation"
@@ -10661,7 +10661,7 @@ msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:551
 msgid "Right Border:"
-msgstr "Høyre kant:"
+msgstr "HÃ¸yre kant:"
 
 #: plug-ins/print/gimp_main_window.c:555
 msgid "Distance from the right of the paper to the image"
@@ -10697,7 +10697,7 @@ msgstr "Begge"
 
 #: plug-ins/print/gimp_main_window.c:620
 msgid "Center the image on the paper"
-msgstr "Sentrer bildet på papiret"
+msgstr "Sentrer bildet pÃ¥ papiret"
 
 #: plug-ins/print/gimp_main_window.c:627
 msgid "Horizontally"
@@ -10855,7 +10855,7 @@ msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:988
 msgid "Media Size:"
-msgstr "Mediestørrelse:"
+msgstr "MediestÃ¸rrelse:"
 
 #: plug-ins/print/gimp_main_window.c:997
 msgid "Dimensions:"
@@ -10873,7 +10873,7 @@ msgstr ""
 #: plug-ins/print/gimp_main_window.c:1017
 #: plug-ins/print/gimp_main_window.c:1229
 msgid "Height:"
-msgstr "Høyde:"
+msgstr "HÃ¸yde:"
 
 #: plug-ins/print/gimp_main_window.c:1028
 msgid "Height of the paper that you wish to print to"
@@ -10913,7 +10913,7 @@ msgstr "Skalering"
 
 #: plug-ins/print/gimp_main_window.c:1137
 msgid "Set the scale (size) of the image"
-msgstr "Sett skala (størrelse) for bildet"
+msgstr "Sett skala (stÃ¸rrelse) for bildet"
 
 #: plug-ins/print/gimp_main_window.c:1170
 msgid ""
@@ -10939,11 +10939,11 @@ msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:1220
 msgid "Set the width of the print"
-msgstr "Sett bredde på utskriften"
+msgstr "Sett bredde pÃ¥ utskriften"
 
 #: plug-ins/print/gimp_main_window.c:1233
 msgid "Set the height of the print"
-msgstr "Sett høyde på utskriften"
+msgstr "Sett hÃ¸yde pÃ¥ utskriften"
 
 #: plug-ins/print/gimp_main_window.c:1253
 msgid "Units:"
@@ -10978,7 +10978,7 @@ msgid ""
 "Image Size"
 msgstr ""
 "Bruk opprinnelig\n"
-"bildestørrelse"
+"bildestÃ¸rrelse"
 
 #: plug-ins/print/gimp_main_window.c:1296
 msgid "Set the print size to the size of the image"
@@ -11091,7 +11091,7 @@ msgstr "Rotert"
 
 #: plug-ins/rcm/rcm_dialog.c:286
 msgid "Change order of arrows"
-msgstr "Endre rekkefølge for piler"
+msgstr "Endre rekkefÃ¸lge for piler"
 
 #: plug-ins/rcm/rcm_dialog.c:293
 msgid "Select all"
@@ -11119,7 +11119,7 @@ msgstr "Endre til dette"
 #. * Gray: What is gray? *
 #: plug-ins/rcm/rcm_dialog.c:535
 msgid "What is Gray?"
-msgstr "Hva er grått?"
+msgstr "Hva er grÃ¥tt?"
 
 #. * Misc: Used unit selection *
 #: plug-ins/rcm/rcm_dialog.c:624
@@ -11145,7 +11145,7 @@ msgstr "Kontiuerlig oppdatering"
 
 #: plug-ins/rcm/rcm_dialog.c:693
 msgid "Area:"
-msgstr "Område:"
+msgstr "OmrÃ¥de:"
 
 #: plug-ins/rcm/rcm_dialog.c:700
 msgid "Entire Layer"
@@ -11179,7 +11179,7 @@ msgstr "<Image>/Velg/Til sti"
 
 #: plug-ins/sel2path/sel2path.c:186
 msgid "No selection to convert"
-msgstr "Ingen utvalg å konvertere"
+msgstr "Ingen utvalg Ã¥ konvertere"
 
 #: plug-ins/sel2path/sel2path.c:308
 msgid "Selection To Path Advanced Settings"
@@ -11188,7 +11188,7 @@ msgstr "Avanserte instillinger for utvalg til sti"
 #: plug-ins/sgi/sgi.c:531
 #, fuzzy, c-format
 msgid "Can't open '%s' for writing"
-msgstr "Kan ikke åpne filen for skriving"
+msgstr "Kan ikke Ã¥pne filen for skriving"
 
 #: plug-ins/sgi/sgi.c:619
 msgid "Save as SGI"
@@ -11219,15 +11219,15 @@ msgstr "<Toolbox>/Fil/Hent/TWAIN..."
 #. Initialize our progress dialog
 #: plug-ins/twain/twain.c:665
 msgid "Transferring TWAIN data"
-msgstr "Overfører TWAIN-data"
+msgstr "OverfÃ¸rer TWAIN-data"
 
 #: plug-ins/webbrowser/webbrowser.c:140
 msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
-msgstr "<Toolbox>/Utvd/Nettleser/Åpne URL..."
+msgstr "<Toolbox>/Utvd/Nettleser/Ã…pne URL..."
 
 #: plug-ins/webbrowser/webbrowser.c:274
 msgid "Open URL"
-msgstr "Åpne URL"
+msgstr "Ã…pne URL"
 
 #: plug-ins/webbrowser/webbrowser.c:308
 msgid "URL:"
@@ -11302,15 +11302,15 @@ msgstr ""
 #: plug-ins/xjt/xjt.c:1301
 #, c-format
 msgid "Can't open (write): %s"
-msgstr "Kan ikke åpne (skrive): %s"
+msgstr "Kan ikke Ã¥pne (skrive): %s"
 
 #: plug-ins/xjt/xjt.c:1702
 msgid "xjt: cannot operate on indexed color images"
-msgstr "xjt: kan ikke operere på indekserte fargebilder"
+msgstr "xjt: kan ikke operere pÃ¥ indekserte fargebilder"
 
 #: plug-ins/xjt/xjt.c:1706
 msgid "xjt: cannot operate on unknown image types"
-msgstr "xjt: kan ikke operere på ukjent bildetype"
+msgstr "xjt: kan ikke operere pÃ¥ ukjent bildetype"
 
 #: plug-ins/xjt/xjt.c:1721 plug-ins/xjt/xjt.c:3339
 #, c-format
@@ -11320,13 +11320,13 @@ msgstr "Kan ikke opprette arbeidskatalog: %s"
 #: plug-ins/xjt/xjt.c:1730
 #, c-format
 msgid "Can't open: %s"
-msgstr "Kan ikke åpne: %s"
+msgstr "Kan ikke Ã¥pne: %s"
 
 #. stat error (file does not exist)
 #: plug-ins/xjt/xjt.c:2551 plug-ins/xjt/xjt.c:2558
 #, c-format
 msgid "Can't open (read): %s"
-msgstr "Kan ikke åpne (lese): %s"
+msgstr "Kan ikke Ã¥pne (lese): %s"
 
 #: plug-ins/xjt/xjt.c:3202
 #, c-format
@@ -11339,7 +11339,7 @@ msgid "Error: XJT propertyfile %s is empty"
 msgstr "Feil: fil %s med egenskaper for XJT er tom"
 
 #~ msgid "Error opening: %s"
-#~ msgstr "Feil under åpning: %s"
+#~ msgstr "Feil under Ã¥pning: %s"
 
 #~ msgid "Could not save."
 #~ msgstr "Kunne ikke lagre."
@@ -11351,10 +11351,10 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Laster %s:"
 
 #~ msgid "%s: can't open \"%s\""
-#~ msgstr "%s: kan ikke åpne \"%s\""
+#~ msgstr "%s: kan ikke Ã¥pne \"%s\""
 
 #~ msgid "Can't open %s"
-#~ msgstr "Kan ikke åpne %s"
+#~ msgstr "Kan ikke Ã¥pne %s"
 
 #~ msgid ""
 #~ "%s\n"
@@ -11371,16 +11371,16 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ "%s"
 
 #~ msgid "Error: could not open \"%s\""
-#~ msgstr "Feil kunne ikke åpne \"%s\""
+#~ msgstr "Feil kunne ikke Ã¥pne \"%s\""
 
 #~ msgid "Unable to open %s"
-#~ msgstr "Kunne ikke åpne %s"
+#~ msgstr "Kunne ikke Ã¥pne %s"
 
 #~ msgid "GIF: can't open %s\n"
-#~ msgstr "GIF: kan ikke åpne %s\n"
+#~ msgstr "GIF: kan ikke Ã¥pne %s\n"
 
 #~ msgid "can't open \"%s\"\n"
-#~ msgstr "kan ikke åpne \"%s\"\n"
+#~ msgstr "kan ikke Ã¥pne \"%s\"\n"
 
 #~ msgid "Max RGB: Scanning..."
 #~ msgstr "Maks RGB: Skanner..."
@@ -11396,7 +11396,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ "Kunne ikke opprette fil"
 
 #~ msgid "PNM: Can't open file %s."
-#~ msgstr "PNM: Kan ikke åpne fil %s."
+#~ msgstr "PNM: Kan ikke Ã¥pne fil %s."
 
 #~ msgid "Scatter HSV: Scattering..."
 #~ msgstr "Spre HSV: Sprer..."
@@ -11406,28 +11406,28 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Rendrer vind..."
 
 #~ msgid "Can't open file for reading"
-#~ msgstr "Kan ikke åpne filen for lesing"
+#~ msgstr "Kan ikke Ã¥pne filen for lesing"
 
 #~ msgid "TGA: can't open \"%s\"\n"
-#~ msgstr "TGA: kan ikke åpne \"%s\"\n"
+#~ msgstr "TGA: kan ikke Ã¥pne \"%s\"\n"
 
 #~ msgid "TIFF: Can't open '%s'"
-#~ msgstr "TIFF: Kan ikke åpne «%s»"
+#~ msgstr "TIFF: Kan ikke Ã¥pne Â«%sÂ»"
 
 #~ msgid "XBM: cannot open \"%s\"\n"
-#~ msgstr "XBM: kan ikke åpne \"%s\"\n"
+#~ msgstr "XBM: kan ikke Ã¥pne \"%s\"\n"
 
 #~ msgid "XBM: cannot create \"%s\"\n"
 #~ msgstr "XBM: kan ikke opprette \"%s\"\n"
 
 #~ msgid "can't open file for reading"
-#~ msgstr "kan ikke åpne filen for lesing"
+#~ msgstr "kan ikke Ã¥pne filen for lesing"
 
 #~ msgid "can't get memory for colormap"
 #~ msgstr "ikke nok minne til fargekart"
 
 #~ msgid "can't open file for writing"
-#~ msgstr "kan ikke åpne filen for skriving"
+#~ msgstr "kan ikke Ã¥pne filen for skriving"
 
 #~ msgid "Prev"
 #~ msgstr "Forrige"
@@ -11439,7 +11439,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Feil under oppretting av lag"
 
 #~ msgid "FLI: Can't open \"%s\""
-#~ msgstr "FLI: kan ikke åpne \"%s\""
+#~ msgstr "FLI: kan ikke Ã¥pne \"%s\""
 
 #~ msgid "Add >>"
 #~ msgstr "Legg til >>"
@@ -11451,10 +11451,10 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Farge:"
 
 #~ msgid "Update Preview"
-#~ msgstr "Oppdater forhåndsvisning"
+#~ msgstr "Oppdater forhÃ¥ndsvisning"
 
 #~ msgid "Preview (in image window)"
-#~ msgstr "Forhåndsvis (i bildevinduet)"
+#~ msgstr "ForhÃ¥ndsvis (i bildevinduet)"
 
 #~ msgid ""
 #~ "C_reate\n"
@@ -11501,16 +11501,16 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Generelt"
 
 #~ msgid "Enable Tooltips"
-#~ msgstr "Slå på verktøytips"
+#~ msgstr "SlÃ¥ pÃ¥ verktÃ¸ytips"
 
 #~ msgid "Enable/disable tooltip messages"
-#~ msgstr "Slå på/av verktøytips meldinger"
+#~ msgstr "SlÃ¥ pÃ¥/av verktÃ¸ytips meldinger"
 
 #~ msgid "_Disable Tooltips"
-#~ msgstr "_Slå av verktøytips"
+#~ msgstr "_SlÃ¥ av verktÃ¸ytips"
 
 #~ msgid "Toggle Tooltips on/off"
-#~ msgstr "Slå verktøytips av/på"
+#~ msgstr "SlÃ¥ verktÃ¸ytips av/pÃ¥"
 
 #~ msgid "Unnamed channel"
 #~ msgstr "Kanal uten navn"
@@ -11522,13 +11522,13 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "_Duplisert enhet"
 
 #~ msgid "Show Tooltips"
-#~ msgstr "Vis verktøytips"
+#~ msgstr "Vis verktÃ¸ytips"
 
 #~ msgid "Rescan"
 #~ msgstr "Gjenles"
 
 #~ msgid "Done"
-#~ msgstr "Fullført"
+#~ msgstr "FullfÃ¸rt"
 
 #~ msgid "Load Gfig obj"
 #~ msgstr "Last Gfig-objekt"
@@ -11543,8 +11543,8 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ "Image size has changed.\n"
 #~ "Resize Area's?"
 #~ msgstr ""
-#~ "Bildestørrelsen er endret\n"
-#~ "Gi områder ny størrelse?"
+#~ "BildestÃ¸rrelsen er endret\n"
+#~ "Gi omrÃ¥der ny stÃ¸rrelse?"
 
 #~ msgid "_Apply"
 #~ msgstr "_Bruk"
@@ -11556,13 +11556,13 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Ikke lagre enhet"
 
 #~ msgid "Don't save the currently selected unit before GIMP exits."
-#~ msgstr "Ikke lagre valgte enhet før GIMP avslutter."
+#~ msgstr "Ikke lagre valgte enhet fÃ¸r GIMP avslutter."
 
 #~ msgid "Save Unit"
 #~ msgstr "Lagre enhet"
 
 #~ msgid "Save the currently selected unit before GIMP exits."
-#~ msgstr "Lagre valgt enhet før GIMP avslutter."
+#~ msgstr "Lagre valgt enhet fÃ¸r GIMP avslutter."
 
 #~ msgid "Save as..."
 #~ msgstr "Lagre som..."
@@ -11577,7 +11577,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Vis litt informasjon om programmet"
 
 #~ msgid "Run with the selected settings"
-#~ msgstr "Kjør med valgte innstillinger"
+#~ msgstr "KjÃ¸r med valgte innstillinger"
 
 #~ msgid "Edit..."
 #~ msgstr "Rediger..."
@@ -11592,7 +11592,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Hjelp..."
 
 #~ msgid "_Update Preview"
-#~ msgstr "_Oppdater forhåndsvisning"
+#~ msgstr "_Oppdater forhÃ¥ndsvisning"
 
 #~ msgid "rgb-compose"
 #~ msgstr "rgb-sammensetting"
@@ -11613,7 +11613,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "ikke en gyldig GFlare-fil: %s"
 
 #~ msgid "could not open \"%s\""
-#~ msgstr "kunne ikke åpne \"%s\""
+#~ msgstr "kunne ikke Ã¥pne \"%s\""
 
 #~ msgid "Set Defaults"
 #~ msgstr "Sett standardverdier"
@@ -11622,7 +11622,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Lukk"
 
 #~ msgid "Image preview"
-#~ msgstr "Forhåndsvisning av bilde"
+#~ msgstr "ForhÃ¥ndsvisning av bilde"
 
 #~ msgid "Undo Zoom"
 #~ msgstr "Angre zoom"
@@ -11643,7 +11643,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Instillinger for \"bumpmap\""
 
 #~ msgid "Environment Settings"
-#~ msgstr "Innstillinger for miljø"
+#~ msgstr "Innstillinger for miljÃ¸"
 
 #~ msgid "Depth:"
 #~ msgstr "Dybde:"
@@ -11655,16 +11655,16 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Materiale"
 
 #~ msgid "Preview!"
-#~ msgstr "Forhåndsvis!"
+#~ msgstr "ForhÃ¥ndsvis!"
 
 #~ msgid "Hue Settings"
-#~ msgstr "Instillinger for glød"
+#~ msgstr "Instillinger for glÃ¸d"
 
 #~ msgid "Saturation Settings"
 #~ msgstr "Instillinger for metning"
 
 #~ msgid "Value (Gray Image) Settings"
-#~ msgstr "Verdi (gråtoner) innstillinger"
+#~ msgstr "Verdi (grÃ¥toner) innstillinger"
 
 #~ msgid "Advanced Settings"
 #~ msgstr "Avanserte instillinger"
@@ -11706,7 +11706,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Lysstyrke"
 
 #~ msgid "Wind Strength must be greater than 0."
-#~ msgstr "Vindstyrken må være større enn 0."
+#~ msgstr "Vindstyrken mÃ¥ vÃ¦re stÃ¸rre enn 0."
 
 #~ msgid "DB Browser (init...)"
 #~ msgstr "DB-leser (init...)"
@@ -11727,16 +11727,16 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Vertikal:"
 
 #~ msgid "Do Preview"
-#~ msgstr "Forhåndsvis"
+#~ msgstr "ForhÃ¥ndsvis"
 
 #~ msgid "Zoom:"
 #~ msgstr "Zoom:"
 
 #~ msgid "Height"
-#~ msgstr "Høyde"
+#~ msgstr "HÃ¸yde"
 
 #~ msgid "Open..."
-#~ msgstr "Åpne..."
+#~ msgstr "Ã…pne..."
 
 #~ msgid "Preferences..."
 #~ msgstr "Brukervalg..."
@@ -11760,7 +11760,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Ut"
 
 #~ msgid "Tile Height:"
-#~ msgstr "Flishøyde:"
+#~ msgstr "FlishÃ¸yde:"
 
 #~ msgid "Reset"
 #~ msgstr "Sett tilbake"
@@ -11784,7 +11784,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Skalering"
 
 #~ msgid "Set Image Scale"
-#~ msgstr "Sett bildestørrelse"
+#~ msgstr "Sett bildestÃ¸rrelse"
 
 #~ msgid "Monochrome"
 #~ msgstr "Monokrom"
@@ -11799,7 +11799,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Oppsett"
 
 #~ msgid "<Image>/Filters/Render/Pattern/Mosaic..."
-#~ msgstr "<Image>/Filter/Render/Mønster/Mosaikk..."
+#~ msgstr "<Image>/Filter/Render/MÃ¸nster/Mosaikk..."
 
 #~ msgid "OK"
 #~ msgstr "OK"
@@ -11826,7 +11826,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Verdi: "
 
 #~ msgid "Press Button"
-#~ msgstr "Trykk på knappen"
+#~ msgstr "Trykk pÃ¥ knappen"
 
 #~ msgid "<Image>/Video/Split Video to Frames"
 #~ msgstr "<Image>/Video/Splitt video til enkeltbilder"
@@ -11844,7 +11844,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Overskriv alt"
 
 #~ msgid "GAP Question"
-#~ msgstr "GAP-spørsmål"
+#~ msgstr "GAP-spÃ¸rsmÃ¥l"
 
 #~ msgid "File already exists"
 #~ msgstr "Filen eksisterer allerede"
@@ -11853,7 +11853,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Dekoder MPEG-film..."
 
 #~ msgid "Framenumber of 1st frame to extract"
-#~ msgstr "Rammenummer til første ramme som skal hentes ut"
+#~ msgstr "Rammenummer til fÃ¸rste ramme som skal hentes ut"
 
 #~ msgid "Framenames:"
 #~ msgstr "Rammenavn:"
@@ -11862,7 +11862,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Splitt MPEG1 vido til enkeltbilder"
 
 #~ msgid "Select Frame Range"
-#~ msgstr "Velg rammeområde"
+#~ msgstr "Velg rammeomrÃ¥de"
 
 #~ msgid "XANIM Information"
 #~ msgstr "XANIM informasjon"
@@ -11877,7 +11877,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Hent ut enkeltbilder"
 
 #~ msgid "Enable extraction of Frames"
-#~ msgstr "Slå på uthenting av enkeltbilder"
+#~ msgstr "SlÃ¥ pÃ¥ uthenting av enkeltbilder"
 
 #~ msgid "Extract Audio"
 #~ msgstr "Hent ut lyd"
@@ -11886,7 +11886,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Jpeg-kvalitet"
 
 #~ msgid "Run asynchronously"
-#~ msgstr "Kjør asynkront"
+#~ msgstr "KjÃ¸r asynkront"
 
 #~ msgid "extracting frames..."
 #~ msgstr "henter ut enkeltbilder..."
@@ -11907,7 +11907,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Fortsett"
 
 #~ msgid "Applying Filter to all Layers..."
-#~ msgstr "Påfører filter på alle lag..."
+#~ msgstr "PÃ¥fÃ¸rer filter pÃ¥ alle lag..."
 
 #~ msgid "<Image>/Filters/Filter all Layers..."
 #~ msgstr "<Image>/Filtre/Filter for alle lag..."
@@ -11928,7 +11928,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "GAP-melding"
 
 #~ msgid "Save Flattened"
-#~ msgstr "Lagre sammenslått"
+#~ msgstr "Lagre sammenslÃ¥tt"
 
 #~ msgid "Save As Is"
 #~ msgstr "Lagre som det er"
@@ -11946,10 +11946,10 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Lag ny nummerering for bildesekvens..."
 
 #~ msgid "Goto Frame (%ld/%ld)"
-#~ msgstr "Gå til bilde (%ld/%ld)"
+#~ msgstr "GÃ¥ til bilde (%ld/%ld)"
 
 #~ msgid "Destination Frame Number (%ld  - %ld)"
-#~ msgstr "Målets bildenummer (%ld - %ld)"
+#~ msgstr "MÃ¥lets bildenummer (%ld - %ld)"
 
 #~ msgid "Number:"
 #~ msgstr "Nummer:"
@@ -11964,16 +11964,16 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Dupliser bilder (%ld/%ld)"
 
 #~ msgid "Source Range starts at this framenumber"
-#~ msgstr "Kildeområdet starter ved dette bildenummeret"
+#~ msgstr "KildeomrÃ¥det starter ved dette bildenummeret"
 
 #~ msgid "Source Range ends at this framenumber"
-#~ msgstr "Kildeområdet slutter ved dette bildenummeret"
+#~ msgstr "KildeomrÃ¥det slutter ved dette bildenummeret"
 
 #~ msgid "N times:"
 #~ msgstr "N ganger:"
 
 #~ msgid "Duplicate Frame Range"
-#~ msgstr "Dupliser bildeområde"
+#~ msgstr "Dupliser bildeomrÃ¥de"
 
 #~ msgid "Exchange current Frame (%ld)"
 #~ msgstr "Bytt ut aktivt bilde (%ld)"
@@ -11985,10 +11985,10 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Skift bildesekvens (%ld/%ld)"
 
 #~ msgid "Affected Range starts at this framenumber"
-#~ msgstr "Påvirket område starter ved dette bildenummer"
+#~ msgstr "PÃ¥virket omrÃ¥de starter ved dette bildenummer"
 
 #~ msgid "Affected Range ends at this framenumber"
-#~ msgstr "Påvirket området slutter ved dette bildenummer"
+#~ msgstr "PÃ¥virket omrÃ¥det slutter ved dette bildenummer"
 
 #~ msgid "N-Shift:"
 #~ msgstr "N-skift:"
@@ -11997,19 +11997,19 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Skift av bildesekvens"
 
 #~ msgid "<Image>/Video/Goto/Next Frame"
-#~ msgstr "<Image>/Video/Gå til/Neste bilde"
+#~ msgstr "<Image>/Video/GÃ¥ til/Neste bilde"
 
 #~ msgid "<Image>/Video/Goto/Previous Frame"
-#~ msgstr "<Image>/Video/Gå til/Forrige bilde"
+#~ msgstr "<Image>/Video/GÃ¥ til/Forrige bilde"
 
 #~ msgid "<Image>/Video/Goto/First Frame"
-#~ msgstr "<Image>/Video/Gå til/Første bilde"
+#~ msgstr "<Image>/Video/GÃ¥ til/FÃ¸rste bilde"
 
 #~ msgid "<Image>/Video/Goto/Last Frame"
-#~ msgstr "<Image>/Video/Gå til/Siste bilde"
+#~ msgstr "<Image>/Video/GÃ¥ til/Siste bilde"
 
 #~ msgid "<Image>/Video/Goto/Any Frame..."
-#~ msgstr "<Image>/Video/Gå til/Ethvert bilde..."
+#~ msgstr "<Image>/Video/GÃ¥ til/Ethvert bilde..."
 
 #~ msgid "<Image>/Video/Delete Frames..."
 #~ msgstr "<Image>/Video/Slett bilder..."
@@ -12027,7 +12027,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "<Image>/Video/Enkeltbilder til bilde..."
 
 #~ msgid "<Image>/Video/Frames Flatten..."
-#~ msgstr "<Image>/Video/Slå sammen bilder..."
+#~ msgstr "<Image>/Video/SlÃ¥ sammen bilder..."
 
 #~ msgid "<Image>/Video/Frames LayerDel..."
 #~ msgstr "<Image>/Video/Enkeltbilder - slett lag..."
@@ -12036,7 +12036,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "<Image>/Video/Konverter bilder..."
 
 #~ msgid "<Image>/Video/Frames Resize..."
-#~ msgstr "<Image>/Video/Endre størrelse på bilder..."
+#~ msgstr "<Image>/Video/Endre stÃ¸rrelse pÃ¥ bilder..."
 
 #~ msgid "<Image>/Video/Split Image to Frames..."
 #~ msgstr "<Image>/Video/Del bilde opp i rammer..."
@@ -12048,37 +12048,37 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "<Image>/Video/Endre rammer..."
 
 #~ msgid "Pattern is equal to LayerName"
-#~ msgstr "Mønster er likt LayerName"
+#~ msgstr "MÃ¸nster er likt LayerName"
 
 #~ msgid "Pattern is Start of LayerName"
-#~ msgstr "Mønster er starten på LayerName"
+#~ msgstr "MÃ¸nster er starten pÃ¥ LayerName"
 
 #~ msgid "Pattern is End of Layername"
-#~ msgstr "Mønster er slutten på LayerName"
+#~ msgstr "MÃ¸nster er slutten pÃ¥ LayerName"
 
 #~ msgid "Pattern is a Part of LayerName"
-#~ msgstr "Mønster er en del av LayerName"
+#~ msgstr "MÃ¸nster er en del av LayerName"
 
 #~ msgid "Pattern is LayerstackNumber List"
-#~ msgstr "Mønsteret er LayerStackNumber liste"
+#~ msgstr "MÃ¸nsteret er LayerStackNumber liste"
 
 #~ msgid "Pattern is REVERSE-stack List"
-#~ msgstr "Mønsteret er REVERS-stack liste"
+#~ msgstr "MÃ¸nsteret er REVERS-stack liste"
 
 #~ msgid "All Visible (ignore Pattern)"
-#~ msgstr "Alle synlige (ignorer mønster)"
+#~ msgstr "Alle synlige (ignorer mÃ¸nster)"
 
 #~ msgid "Select all Layers where Layername is equal to Pattern"
-#~ msgstr "Velg alle lag hvor Layername er likt mønster"
+#~ msgstr "Velg alle lag hvor Layername er likt mÃ¸nster"
 
 #~ msgid "Select all Layers where Layername starts with Pattern"
-#~ msgstr "Velg alle lag hvor Layername starter med mønster"
+#~ msgstr "Velg alle lag hvor Layername starter med mÃ¸nster"
 
 #~ msgid "Select all Layers where Layername ends up with Pattern"
-#~ msgstr "Velg alle lag hvor Layername slutter med Mønster"
+#~ msgstr "Velg alle lag hvor Layername slutter med MÃ¸nster"
 
 #~ msgid "Select all Layers where Layername contains Pattern"
-#~ msgstr "Velg alle lag hvor LayerName inneholder \"Mønster\""
+#~ msgstr "Velg alle lag hvor LayerName inneholder \"MÃ¸nster\""
 
 #~ msgid ""
 #~ "Select Layerstack positions.\n"
@@ -12129,7 +12129,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Flett sammen lag - tilpass bakgrunnslag"
 
 #~ msgid "Apply filter on Layer(s)"
-#~ msgstr "Påfør filter på lag"
+#~ msgstr "PÃ¥fÃ¸r filter pÃ¥ lag"
 
 #~ msgid "Duplicate Layer(s)"
 #~ msgstr "Dupliser lag"
@@ -12138,52 +12138,52 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Slett lag"
 
 #~ msgid "Rename Layer(s)"
-#~ msgstr "Endre navn på lag"
+#~ msgstr "Endre navn pÃ¥ lag"
 
 #~ msgid "From Frame:"
 #~ msgstr "Fra bilde:"
 
 #~ msgid "first handled frame"
-#~ msgstr "første håndterte bilde:"
+#~ msgstr "fÃ¸rste hÃ¥ndterte bilde:"
 
 #~ msgid "To Frame:"
 #~ msgstr "Til bilde:"
 
 #~ msgid "last handled frame"
-#~ msgstr "siste håndterte bilde"
+#~ msgstr "siste hÃ¥ndterte bilde"
 
 #~ msgid "Select Layer(s):"
 #~ msgstr "Velg lag:"
 
 #~ msgid "Select Pattern:"
-#~ msgstr "Velg mønster:"
+#~ msgstr "Velg mÃ¸nster:"
 
 #~ msgid "Case sensitive"
-#~ msgstr "Skill mellom store/små bokstaver"
+#~ msgstr "Skill mellom store/smÃ¥ bokstaver"
 
 #~ msgid "Lowercase and UPPERCASE letters are considered as different"
-#~ msgstr "Små og STORE bokstaver er forskjellige"
+#~ msgstr "SmÃ¥ og STORE bokstaver er forskjellige"
 
 #~ msgid "Invert Selection"
 #~ msgstr "Inverter valg"
 
 #~ msgid "Perform actions on all unselected Layers"
-#~ msgstr "Utfør handlinger på alle bortvalgte lag"
+#~ msgstr "UtfÃ¸r handlinger pÃ¥ alle bortvalgte lag"
 
 #~ msgid "Function:"
 #~ msgstr "Funksjon:"
 
 #~ msgid "Function to be performed on all selected layers"
-#~ msgstr "Funksjon som skal utføres på alle valgte lag"
+#~ msgstr "Funksjon som skal utfÃ¸res pÃ¥ alle valgte lag"
 
 #~ msgid "New Layername:"
-#~ msgstr "Nytt navn på lag:"
+#~ msgstr "Nytt navn pÃ¥ lag:"
 
 #~ msgid "Frames Modify"
 #~ msgstr "Endre bilder"
 
 #~ msgid "Dissolve"
-#~ msgstr "Oppløs"
+#~ msgstr "OpplÃ¸s"
 
 #~ msgid "Multiply"
 #~ msgstr "Multipliser"
@@ -12192,43 +12192,43 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Differanse"
 
 #~ msgid "Darken Only"
-#~ msgstr "Kun mørkere"
+#~ msgstr "Kun mÃ¸rkere"
 
 #~ msgid "Lighten Only"
 #~ msgstr "Kun lysere"
 
 #~ msgid "Left  Top"
-#~ msgstr "Venstre  Øverst"
+#~ msgstr "Venstre  Ã˜verst"
 
 #~ msgid "Left  Bottom"
 #~ msgstr "Venstre  Nederst"
 
 #~ msgid "Right Top"
-#~ msgstr "Høyre Øverst"
+#~ msgstr "HÃ¸yre Ã˜verst"
 
 #~ msgid "Right Bottom"
-#~ msgstr "Høyre Nederst"
+#~ msgstr "HÃ¸yre Nederst"
 
 #~ msgid "Loop Reverse"
-#~ msgstr "Revers løkke"
+#~ msgstr "Revers lÃ¸kke"
 
 #~ msgid "Once"
-#~ msgstr "Én gang"
+#~ msgstr "Ã‰n gang"
 
 #~ msgid "OnceReverse"
-#~ msgstr "Én gang revers"
+#~ msgstr "Ã‰n gang revers"
 
 #~ msgid "Frame Loop"
-#~ msgstr "Ramme i løkke"
+#~ msgstr "Ramme i lÃ¸kke"
 
 #~ msgid "Frame Loop Reverse"
-#~ msgstr "Ramme i revers løkke"
+#~ msgstr "Ramme i revers lÃ¸kke"
 
 #~ msgid "Frame Once"
-#~ msgstr "Ramme én gang"
+#~ msgstr "Ramme Ã©n gang"
 
 #~ msgid "Frame OnceReverse"
-#~ msgstr "Ramme én gang revers"
+#~ msgstr "Ramme Ã©n gang revers"
 
 #~ msgid "Frame PingPong"
 #~ msgstr "Ramme ping-pong"
@@ -12240,10 +12240,10 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Flytt sti"
 
 #~ msgid "Anim Preview"
-#~ msgstr "Forhåndsvisning av animasjon"
+#~ msgstr "ForhÃ¥ndsvisning av animasjon"
 
 #~ msgid "Generate Animated Preview as multilayer image"
-#~ msgstr "Generer animert forhåndsvisning som et bilde med flere lag"
+#~ msgstr "Generer animert forhÃ¥ndsvisning som et bilde med flere lag"
 
 #~ msgid "Copy moving source-layer(s) into frames"
 #~ msgstr "Kopier bevegelig kildelag til rammer"
@@ -12252,19 +12252,19 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Startbilde:"
 
 #~ msgid "First handled frame"
-#~ msgstr "Første håndterte bilde"
+#~ msgstr "FÃ¸rste hÃ¥ndterte bilde"
 
 #~ msgid "End Frame:"
 #~ msgstr "Sluttbilde:"
 
 #~ msgid "Last handled frame"
-#~ msgstr "Siste håndterte bilde"
+#~ msgstr "Siste hÃ¥ndterte bilde"
 
 #~ msgid "Preview Frame:"
-#~ msgstr "Forhåndsvis bilde:"
+#~ msgstr "ForhÃ¥ndsvis bilde:"
 
 #~ msgid "Frame to show when UpdPreview button is pressed"
-#~ msgstr "Ramme som skal vises når UpdPreview tykkes"
+#~ msgstr "Ramme som skal vises nÃ¥r UpdPreview tykkes"
 
 #~ msgid "Layerstack:"
 #~ msgstr "Layerstack:"
@@ -12282,25 +12282,25 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Klipp alle kopierte kildelag ved rammegrense"
 
 #~ msgid "Object on empty frames"
-#~ msgstr "Objekt på tomme rammer"
+#~ msgstr "Objekt pÃ¥ tomme rammer"
 
 #~ msgid "Object on one frame"
-#~ msgstr "Objekt på én ramme"
+#~ msgstr "Objekt pÃ¥ Ã©n ramme"
 
 #~ msgid "Exact Object on frames"
-#~ msgstr "Eksakt objekt på rammer"
+#~ msgstr "Eksakt objekt pÃ¥ rammer"
 
 #~ msgid "Anim Preview Mode"
-#~ msgstr "Forhåndsvisningsmodus for animasjon"
+#~ msgstr "ForhÃ¥ndsvisningsmodus for animasjon"
 
 #~ msgid "Scale Preview"
-#~ msgstr "Skalering av forhåndsvisning"
+#~ msgstr "Skalering av forhÃ¥ndsvisning"
 
 #~ msgid "Framerate"
 #~ msgstr "Bilderate"
 
 #~ msgid "Generate Animated Preview failed\n"
-#~ msgstr "Forhåndsvisning av animert forhåndsvisning feilet\n"
+#~ msgstr "ForhÃ¥ndsvisning av animert forhÃ¥ndsvisning feilet\n"
 
 #~ msgid "Source Select"
 #~ msgstr "Velg kilde"
@@ -12318,7 +12318,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Stegmodus:"
 
 #~ msgid "Handle:"
-#~ msgstr "Håndtak:"
+#~ msgstr "HÃ¥ndtak:"
 
 #~ msgid "X Coordinate"
 #~ msgstr "X-koordinat"
@@ -12345,10 +12345,10 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Vis neste kontrollpunkt"
 
 #~ msgid "First Point"
-#~ msgstr "Første punkt"
+#~ msgstr "FÃ¸rste punkt"
 
 #~ msgid "Show First Controlpoint"
-#~ msgstr "Vis første kontrollpunkt"
+#~ msgstr "Vis fÃ¸rste kontrollpunkt"
 
 #~ msgid "Last Point"
 #~ msgstr "Siste punkt"
@@ -12366,7 +12366,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Nullstill alle punkter"
 
 #~ msgid "Rotate Follow"
-#~ msgstr "Rotering følger"
+#~ msgstr "Rotering fÃ¸lger"
 
 #~ msgid "Delete All Points"
 #~ msgstr "Slett alle punkter"
@@ -12387,7 +12387,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Lagre kontrollpunkter til fil"
 
 #~ msgid "Reset Keyframes"
-#~ msgstr "Nullstill nøkkelbilder"
+#~ msgstr "Nullstill nÃ¸kkelbilder"
 
 #~ msgid "Errors:"
 #~ msgstr "Feil:"
@@ -12396,7 +12396,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Kopierer lag inn i rammer..."
 
 #~ msgid "Generating Animated Preview..."
-#~ msgstr "Genererer animert forhåndsvisning..."
+#~ msgstr "Genererer animert forhÃ¥ndsvisning..."
 
 #~ msgid "Gen + Encode"
 #~ msgstr "Generer og kode inn"
@@ -12417,7 +12417,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Utskrift+fil:"
 
 #~ msgid "Pattern:"
-#~ msgstr "Mønster:"
+#~ msgstr "MÃ¸nster:"
 
 #~ msgid "Duplicate selected Frames"
 #~ msgstr "Dupliser valgte rammer"
@@ -12426,16 +12426,16 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Slett valgte rammer"
 
 #~ msgid "Goto 1st Frame"
-#~ msgstr "Gå til første ramme"
+#~ msgstr "GÃ¥ til fÃ¸rste ramme"
 
 #~ msgid "Goto last Frame"
-#~ msgstr "Gå til siste ramme"
+#~ msgstr "GÃ¥ til siste ramme"
 
 #~ msgid "<Image>/Video/VCR Navigator..."
 #~ msgstr "<Image>/Video/Videonavigering..."
 
 #~ msgid "Cant open two or more Video Navigator Windows."
-#~ msgstr "Kan ikke åpne to eller flere videonavigeringsvinduer."
+#~ msgstr "Kan ikke Ã¥pne to eller flere videonavigeringsvinduer."
 
 #~ msgid "Paste after"
 #~ msgstr "Lim inn etter"
@@ -12447,7 +12447,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Ny bredde:"
 
 #~ msgid "New Height:"
-#~ msgstr "Ny høyde:"
+#~ msgstr "Ny hÃ¸yde:"
 
 #~ msgid "Offset X:"
 #~ msgstr "X-avstand:"
@@ -12492,7 +12492,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Konverter til RGB"
 
 #~ msgid "Convert to Gray"
-#~ msgstr "Konverter til grå"
+#~ msgstr "Konverter til grÃ¥"
 
 #~ msgid "Convert to Indexed"
 #~ msgstr "Konverter til indeksert"
@@ -12543,7 +12543,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Konverterer bilder..."
 
 #~ msgid "Cropping all Animation Frames..."
-#~ msgstr "Beskjærer alle enkeltbildene i animasjonen..."
+#~ msgstr "BeskjÃ¦rer alle enkeltbildene i animasjonen..."
 
 #~ msgid "Scaling all Animation Frames..."
 #~ msgstr "Skalerer alle enkeltbildene i animasjonen..."
@@ -12558,13 +12558,13 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Slett lag i enkeltbilder"
 
 #~ msgid "Select Frame Range & Position"
-#~ msgstr "Velg enkeltbildets område og posisjon"
+#~ msgstr "Velg enkeltbildets omrÃ¥de og posisjon"
 
 #~ msgid "Splitting into Frames..."
 #~ msgstr "Splitter til enkeltbilder..."
 
 #~ msgid "Inverse Order:"
-#~ msgstr "Motsatt rekkefølge:"
+#~ msgstr "Motsatt rekkefÃ¸lge:"
 
 #~ msgid "Start frame 0001 at Top Layer"
 #~ msgstr "Start bilde 0001 i topplag"
@@ -12579,13 +12579,13 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Skaler"
 
 #~ msgid "Resize"
-#~ msgstr "Endre størrelse"
+#~ msgstr "Endre stÃ¸rrelse"
 
 #~ msgid "New width:"
 #~ msgstr "Ny bredde:"
 
 #~ msgid "New height:"
-#~ msgstr "Ny høyde:"
+#~ msgstr "Ny hÃ¸yde:"
 
 #~ msgid "X ratio:"
 #~ msgstr "X-rate:"
@@ -12621,7 +12621,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "nede-senter"
 
 #~ msgid "bottom-right"
-#~ msgstr "nede-høyre"
+#~ msgstr "nede-hÃ¸yre"
 
 #~ msgid "middle-left"
 #~ msgstr "midt-venstre"
@@ -12630,7 +12630,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "senter"
 
 #~ msgid "middle-right"
-#~ msgstr "midt-høyre"
+#~ msgstr "midt-hÃ¸yre"
 
 #~ msgid "top-left"
 #~ msgstr "topp-venstre"
@@ -12639,7 +12639,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "topp-senter"
 
 #~ msgid "top-right"
-#~ msgstr "topp-høyre"
+#~ msgstr "topp-hÃ¸yre"
 
 #~ msgid "GDynText"
 #~ msgstr "GDynText"
@@ -12654,7 +12654,7 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Tekstfarge"
 
 #~ msgid "Toggle anti-aliased text"
-#~ msgstr "Slå av/på anti-aliased tekst"
+#~ msgstr "SlÃ¥ av/pÃ¥ anti-aliased tekst"
 
 #~ msgid "Left aligned text"
 #~ msgstr "Venstrejustert tekst"
@@ -12663,13 +12663,13 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Sentrert tekst"
 
 #~ msgid "Right aligned text"
-#~ msgstr "Høyrejustert tekst"
+#~ msgstr "HÃ¸yrejustert tekst"
 
 #~ msgid "Toggle text font preview"
-#~ msgstr "Slå av/på forhåndsvisning av skrifttype for tekst"
+#~ msgstr "SlÃ¥ av/pÃ¥ forhÃ¥ndsvisning av skrifttype for tekst"
 
 #~ msgid "Toggle CharMap window"
-#~ msgstr "Slå av/på tegnkartvindu"
+#~ msgstr "SlÃ¥ av/pÃ¥ tegnkartvindu"
 
 #~ msgid ""
 #~ "Layer\n"
@@ -12692,16 +12692,16 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 #~ msgstr "Sett tekstrotasjon (grader)"
 
 #~ msgid "Clear preview"
-#~ msgstr "Nullstill forhåndsvisning"
+#~ msgstr "Nullstill forhÃ¥ndsvisning"
 
 #~ msgid "Preview default text sample"
-#~ msgstr "Forhåndsvis forvalgt teksteksempel"
+#~ msgstr "ForhÃ¥ndsvis forvalgt teksteksempel"
 
 #~ msgid "GDynText: Load text"
 #~ msgstr "GDynText: Last tekst"
 
 #~ msgid "Error opening \"%s\"!\n"
-#~ msgstr "Feil under åpneing av \"%s\"!\n"
+#~ msgstr "Feil under Ã¥pneing av \"%s\"!\n"
 
 #~ msgid " Upgrading old GDynText layer to %s."
 #~ msgstr " Oppgraderer gammelt GDynText-lag til %s."

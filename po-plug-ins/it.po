@@ -9,7 +9,7 @@ msgstr ""
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Date: sab ott  2 05:46:51 CEST 1999\n"
 "From: Daniele Medri <madrid@linux.it>\n"
@@ -50,7 +50,7 @@ msgstr "Anteprima in tempo reale"
 #: plug-ins/FractalExplorer/Dialogs.c:370
 msgid "If you enable this option the preview will be redrawn automatically"
 msgstr ""
-"Se selezionate questa opzione l'anteprima si aggiorner‡ automaticamente"
+"Se selezionate questa opzione l'anteprima si aggiorner√† automaticamente"
 
 #: plug-ins/FractalExplorer/Dialogs.c:373
 msgid "Redraw"
@@ -127,7 +127,7 @@ msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
 msgstr ""
-"Cambia il valore di iterazione. Maggiore Ë quest'ultimo e migliore sar‡il "
+"Cambia il valore di iterazione. Maggiore √® quest'ultimo e migliore sar√†il "
 "livello di dettaglio calcolato, con tempi maggiori"
 
 #: plug-ins/FractalExplorer/Dialogs.c:511
@@ -140,7 +140,7 @@ msgid ""
 "but Mandelbrot and Sierpinski)"
 msgstr ""
 "Cambia il valore CX (cambiamento aspetto del frattale, attivato con ogni "
-"frattale purchË Mandelbrot e Sierpinski)"
+"frattale purch√® Mandelbrot e Sierpinski)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:523
 msgid "CY:"
@@ -152,7 +152,7 @@ msgid ""
 "but Mandelbrot and Sierpinski)"
 msgstr ""
 "Cambia il valore CY (cambiamento aspetto del frattale, attivato con ogni "
-"frattale purchË Mandelbrot e Sierpinski)"
+"frattale purch√® Mandelbrot e Sierpinski)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:543
 msgid "Load a fractal from file"
@@ -237,7 +237,7 @@ msgstr ""
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:680
 msgid "Color Density"
-msgstr "Densit‡ colore"
+msgstr "Densit√† colore"
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
@@ -250,7 +250,7 @@ msgstr "Rosso:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:697
 msgid "Change the intensity of the red channel"
-msgstr "Cambia l'intensit‡ del canale rosso"
+msgstr "Cambia l'intensit√† del canale rosso"
 
 #: plug-ins/FractalExplorer/Dialogs.c:704 plug-ins/common/compose.c:130
 #: plug-ins/common/compose.c:140 plug-ins/common/exchange.c:463
@@ -260,7 +260,7 @@ msgstr "Verde:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:707
 msgid "Change the intensity of the green channel"
-msgstr "Cambia l'intensit‡ del canale verde"
+msgstr "Cambia l'intensit√† del canale verde"
 
 #: plug-ins/FractalExplorer/Dialogs.c:714 plug-ins/common/compose.c:131
 #: plug-ins/common/compose.c:141 plug-ins/common/exchange.c:507
@@ -270,7 +270,7 @@ msgstr "Blu:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:717
 msgid "Change the intensity of the blue channel"
-msgstr "Cambia l'intensit‡ del canale blu"
+msgstr "Cambia l'intensit√† del canale blu"
 
 #. Color Function frame
 #: plug-ins/FractalExplorer/Dialogs.c:723
@@ -341,7 +341,7 @@ msgid ""
 "ones and vice versa"
 msgstr ""
 "Se si attiva questa opzione i valori dei colori alti saranno swappati con "
-"ilpi˘ basso e vice versa"
+"ilpi√π basso e vice versa"
 
 #. Greenmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:775 plug-ins/common/AlienMap.c:1249
@@ -358,7 +358,7 @@ msgstr "Blu"
 #. Colormode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:857
 msgid "Color Mode"
-msgstr "Modalit‡ colore"
+msgstr "Modalit√† colore"
 
 #: plug-ins/FractalExplorer/Dialogs.c:868
 msgid "As Specified above"
@@ -369,8 +369,8 @@ msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
 msgstr ""
-"Crea una mappa colore con l'opzione specificata sopra (funzione densit‡/"
-"colore). Il risultato Ë visibile nell'immagine anteprima"
+"Crea una mappa colore con l'opzione specificata sopra (funzione densit√†/"
+"colore). Il risultato √® visibile nell'immagine anteprima"
 
 #: plug-ins/FractalExplorer/Dialogs.c:890
 msgid "Apply Active Gradient to Final Image"
@@ -421,7 +421,7 @@ msgstr "Salva: nessun nome file"
 #: plug-ins/FractalExplorer/Dialogs.c:1638
 #, fuzzy
 msgid "Save: Can't save to a folder."
-msgstr "Salva: non Ë possibile salvare in una directory"
+msgstr "Salva: non √® possibile salvare in una directory"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1683
 msgid "Load Fractal Parameters"
@@ -470,7 +470,7 @@ msgstr "impossibile aprire %s\n"
 msgid ""
 "'%s'\n"
 "is not a FractalExplorer file"
-msgstr "Il File '%s' non Ë un file di FractalExplorer"
+msgstr "Il File '%s' non √® un file di FractalExplorer"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2010
 #, fuzzy, c-format
@@ -478,7 +478,7 @@ msgid ""
 "'%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
-"File '%s' Ë corrotto.\n"
+"File '%s' √® corrotto.\n"
 "Linea %d Opzione sezione incorretta"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:213
@@ -518,7 +518,7 @@ msgstr "Nuovo Frattale"
 #: plug-ins/FractalExplorer/FractalExplorer.c:1186
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
-msgstr "Il File '%s' non Ë un file di FractalExplorer"
+msgstr "Il File '%s' non √® un file di FractalExplorer"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1194
 #, c-format
@@ -526,7 +526,7 @@ msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
-"File '%s' Ë corrotto.\n"
+"File '%s' √® corrotto.\n"
 "Linea %d Opzione sezione incorretta"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1266
@@ -602,7 +602,7 @@ msgstr "Sfondo Trasparente"
 
 #: plug-ins/Lighting/lighting_ui.c:393
 msgid "Make destination image transparent where bump height is zero"
-msgstr "Crea immagine di destinazione dove l'altezza del bump Ë uguale a zero"
+msgstr "Crea immagine di destinazione dove l'altezza del bump √® uguale a zero"
 
 #: plug-ins/Lighting/lighting_ui.c:396
 #, fuzzy
@@ -621,7 +621,7 @@ msgstr "Anteprima In Tempo Reale"
 #: plug-ins/Lighting/lighting_ui.c:418
 #, fuzzy
 msgid "Enable/disable high quality preview"
-msgstr "Attiva/disattiva anteprima ad alta qualit‡"
+msgstr "Attiva/disattiva anteprima ad alta qualit√†"
 
 #: plug-ins/Lighting/lighting_ui.c:426
 #, fuzzy
@@ -637,7 +637,7 @@ msgstr "Definizione:"
 
 #: plug-ins/Lighting/lighting_ui.c:450 plug-ins/MapObject/mapobject_ui.c:638
 msgid "Antialiasing quality. Higher is better, but slower"
-msgstr "Qualit‡ antialiasing. Il pi˘ alto Ë il migliore, ma risulta lento"
+msgstr "Qualit√† antialiasing. Il pi√π alto √® il migliore, ma risulta lento"
 
 #: plug-ins/Lighting/lighting_ui.c:457
 #, fuzzy
@@ -646,7 +646,7 @@ msgstr "Soglia:"
 
 #: plug-ins/Lighting/lighting_ui.c:460 plug-ins/MapObject/mapobject_ui.c:655
 msgid "Stop when pixel differences are smaller than this value"
-msgstr "Ferma quando la differenza tra pixel Ë pi˘ piccola di questo valore"
+msgstr "Ferma quando la differenza tra pixel √® pi√π piccola di questo valore"
 
 #: plug-ins/Lighting/lighting_ui.c:502 plug-ins/MapObject/mapobject_ui.c:681
 msgid "Light Settings"
@@ -765,7 +765,7 @@ msgstr "Posizione Z della sorgente di Luce nello spazio XYZ"
 
 #: plug-ins/Lighting/lighting_ui.c:699 plug-ins/MapObject/mapobject_ui.c:856
 msgid "Intensity Levels"
-msgstr "Livelli di Intensit‡"
+msgstr "Livelli di Intensit√†"
 
 #: plug-ins/Lighting/lighting_ui.c:717
 #, fuzzy
@@ -786,7 +786,7 @@ msgstr "Diffusione:"
 #: plug-ins/Lighting/lighting_ui.c:765 plug-ins/MapObject/mapobject_ui.c:914
 msgid "Intensity of original color when lit by a light source"
 msgstr ""
-"Intensit‡ dei colori originali quando illuminati da una sorgente di luce"
+"Intensit√† dei colori originali quando illuminati da una sorgente di luce"
 
 #: plug-ins/Lighting/lighting_ui.c:773 plug-ins/MapObject/mapobject_ui.c:922
 msgid "Reflectivity"
@@ -804,20 +804,20 @@ msgstr "Alti valori possono rendere la riflessione dell'oggetto molto luminosa"
 #: plug-ins/Lighting/lighting_ui.c:822
 #, fuzzy
 msgid "_Specular:"
-msgstr "Specularit‡:"
+msgstr "Specularit√†:"
 
 #: plug-ins/Lighting/lighting_ui.c:841 plug-ins/MapObject/mapobject_ui.c:980
 msgid "Controls how intense the highlights will be"
-msgstr "Gestione dell'intensit‡ luminosa"
+msgstr "Gestione dell'intensit√† luminosa"
 
 #: plug-ins/Lighting/lighting_ui.c:853
 #, fuzzy
 msgid "_Highlight:"
-msgstr "Intensit‡ luce:"
+msgstr "Intensit√† luce:"
 
 #: plug-ins/Lighting/lighting_ui.c:871 plug-ins/MapObject/mapobject_ui.c:1006
 msgid "Higher values makes the highlights more focused"
-msgstr "Alti valori possono rendere la luminosit‡ molto focalizzata"
+msgstr "Alti valori possono rendere la luminosit√† molto focalizzata"
 
 #: plug-ins/Lighting/lighting_ui.c:905
 #, fuzzy
@@ -826,7 +826,7 @@ msgstr "Utilizza bump mapping"
 
 #: plug-ins/Lighting/lighting_ui.c:916
 msgid "Enable/disable bump-mapping (image depth)"
-msgstr "Attiva/Disabilit‡ bump-mapping (definizione immagine)"
+msgstr "Attiva/Disabilit√† bump-mapping (definizione immagine)"
 
 #: plug-ins/Lighting/lighting_ui.c:934
 #, fuzzy
@@ -892,7 +892,7 @@ msgstr "Utilizza Mapping di Ambiente"
 #: plug-ins/Lighting/lighting_ui.c:1022
 #, fuzzy
 msgid "Enable/disable environment-mapping (reflection)"
-msgstr "Attiva/Disabilit‡ mapping di ambiente (riflessione)"
+msgstr "Attiva/Disabilit√† mapping di ambiente (riflessione)"
 
 #: plug-ins/Lighting/lighting_ui.c:1040
 #, fuzzy
@@ -951,7 +951,7 @@ msgstr "Interlaccia"
 #: plug-ins/Lighting/lighting_ui.c:1211
 #, fuzzy
 msgid "Enable/disable real time preview of changes"
-msgstr "Attiva/disattiva anteprima ad alta qualit‡"
+msgstr "Attiva/disattiva anteprima ad alta qualit√†"
 
 #: plug-ins/MapObject/mapobject_main.c:202
 msgid "<Image>/Filters/Map/Map Object..."
@@ -1058,11 +1058,11 @@ msgstr "Diffusione:"
 
 #: plug-ins/MapObject/mapobject_ui.c:966
 msgid "Specular:"
-msgstr "Specularit‡:"
+msgstr "Specularit√†:"
 
 #: plug-ins/MapObject/mapobject_ui.c:992
 msgid "Highlight:"
-msgstr "Intensit‡ luce:"
+msgstr "Intensit√† luce:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1049
 msgid "Object X position in XYZ space"
@@ -1200,11 +1200,11 @@ msgstr "Anteprima!"
 
 #: plug-ins/MapObject/mapobject_ui.c:1459
 msgid "Zoom out (make image smaller)"
-msgstr "Zoom indietro (rende l'immagine pi˘ piccola)"
+msgstr "Zoom indietro (rende l'immagine pi√π piccola)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1473
 msgid "Zoom in (make image bigger)"
-msgstr "Zoom in avanti (rende l'immagine pi˘ grande)"
+msgstr "Zoom in avanti (rende l'immagine pi√π grande)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1475
 #, fuzzy
@@ -1242,7 +1242,7 @@ msgstr "Salvamento di %s:"
 #: plug-ins/bmp/bmpread.c:146
 #, fuzzy, c-format
 msgid "'%s' is not a valid BMP file"
-msgstr "%s: %s non Ë un file BMP valido"
+msgstr "%s: %s non √® un file BMP valido"
 
 #: plug-ins/bmp/bmpread.c:158 plug-ins/bmp/bmpread.c:176
 #: plug-ins/bmp/bmpread.c:196 plug-ins/bmp/bmpread.c:214
@@ -1278,7 +1278,7 @@ msgstr "Sfondo"
 #, fuzzy
 msgid "Cannot operate on unknown image types or alpha images"
 msgstr ""
-"BMP: non Ë possibile operare su tipi di immagine sconosciuti o immagini alpha"
+"BMP: non √® possibile operare su tipi di immagine sconosciuti o immagini alpha"
 
 #. And let's begin the progress
 #: plug-ins/bmp/bmpwrite.c:210 plug-ins/common/CEL.c:502
@@ -1335,7 +1335,7 @@ msgstr "Rosso:"
 
 #: plug-ins/common/AlienMap.c:1202
 msgid "Change intensity of the red channel"
-msgstr "Cambia l'intensit‡ del canale rosso"
+msgstr "Cambia l'intensit√† del canale rosso"
 
 #: plug-ins/common/AlienMap.c:1208 plug-ins/common/diffraction.c:610
 #: plug-ins/common/diffraction.c:648 plug-ins/common/diffraction.c:686
@@ -1346,7 +1346,7 @@ msgstr "Verde:"
 
 #: plug-ins/common/AlienMap.c:1211
 msgid "Change intensity of the green channel"
-msgstr "Cambia l'intensit‡ del canale verde"
+msgstr "Cambia l'intensit√† del canale verde"
 
 #: plug-ins/common/AlienMap.c:1217 plug-ins/common/diffraction.c:619
 #: plug-ins/common/diffraction.c:657 plug-ins/common/diffraction.c:695
@@ -1357,7 +1357,7 @@ msgstr "Blu:"
 
 #: plug-ins/common/AlienMap.c:1220
 msgid "Change intensity of the blue channel"
-msgstr "Cambia l'intensit‡ del canale blu"
+msgstr "Cambia l'intensit√† del canale blu"
 
 #: plug-ins/common/AlienMap.c:1230 plug-ins/common/AlienMap.c:1253
 #: plug-ins/common/AlienMap.c:1276
@@ -1480,7 +1480,7 @@ msgstr "B/L-Frequenza:"
 
 #: plug-ins/common/AlienMap2.c:1233
 msgid "Change frequency of the blue/luminance channel"
-msgstr "Cambia frequenza del canale blu/luminosit‡"
+msgstr "Cambia frequenza del canale blu/luminosit√†"
 
 #: plug-ins/common/AlienMap2.c:1240
 #, fuzzy
@@ -1489,14 +1489,14 @@ msgstr "B/L-Phaseshift:"
 
 #: plug-ins/common/AlienMap2.c:1243
 msgid "Change angle of the blue/luminance channel"
-msgstr "Cambia angolo del canale blu/luminosit‡"
+msgstr "Cambia angolo del canale blu/luminosit√†"
 
 #. * Gray: Operation-Mode *
 #: plug-ins/common/AlienMap2.c:1251 plug-ins/common/deinterlace.c:315
 #: plug-ins/common/hot.c:613 plug-ins/common/waves.c:333
 #: plug-ins/rcm/rcm_dialog.c:501
 msgid "Mode"
-msgstr "Modalit‡"
+msgstr "Modalit√†"
 
 #: plug-ins/common/AlienMap2.c:1255
 #, fuzzy
@@ -1511,11 +1511,11 @@ msgstr "Modello Colore HSL"
 #: plug-ins/common/AlienMap2.c:1268
 #, fuzzy
 msgid "_Modify Red/Hue Channel"
-msgstr "Modifica Canale Rosso/Tonalit‡"
+msgstr "Modifica Canale Rosso/Tonalit√†"
 
 #: plug-ins/common/AlienMap2.c:1273
 msgid "Use function for red/hue component"
-msgstr "Utilizza funzione per il componente rosso/tonalit‡"
+msgstr "Utilizza funzione per il componente rosso/tonalit√†"
 
 #: plug-ins/common/AlienMap2.c:1280
 #, fuzzy
@@ -1529,11 +1529,11 @@ msgstr "Utilizza funzione per il componente verde/saturazione"
 #: plug-ins/common/AlienMap2.c:1293
 #, fuzzy
 msgid "Mod_ify Blue/Luminance Channel"
-msgstr "Modifica Canale Blu/Luminosit‡"
+msgstr "Modifica Canale Blu/Luminosit√†"
 
 #: plug-ins/common/AlienMap2.c:1299
 msgid "Use function for blue/luminance component"
-msgstr "Utilizza funzione per il componente blu/luminosit‡"
+msgstr "Utilizza funzione per il componente blu/luminosit√†"
 
 #: plug-ins/common/AlienMap2.c:1376
 msgid "About AlienMap2"
@@ -1557,7 +1557,7 @@ msgstr "Numeri di colori non supportati (%d)"
 #: plug-ins/common/CEL.c:483
 msgid "Only an indexed-alpha image can be saved in CEL format"
 msgstr ""
-"Solo un'immagine alpha in Scala di Colore puÚ essere salvata nel formato CEL"
+"Solo un'immagine alpha in Scala di Colore pu√≤ essere salvata nel formato CEL"
 
 #: plug-ins/common/CML_explorer.c:134
 msgid "Keep image's values"
@@ -1682,15 +1682,15 @@ msgstr "Utilizza valori invertiti"
 
 #: plug-ins/common/CML_explorer.c:206
 msgid "With random power (0,10)"
-msgstr "Con potenzialit‡ casuale (0,10)"
+msgstr "Con potenzialit√† casuale (0,10)"
 
 #: plug-ins/common/CML_explorer.c:207
 msgid "With random power (0,1)"
-msgstr "Con potenzialit‡ casuale (0,1)"
+msgstr "Con potenzialit√† casuale (0,1)"
 
 #: plug-ins/common/CML_explorer.c:208
 msgid "With gradient power (0,1)"
-msgstr "Con potenzialit‡ crescente (0,1)"
+msgstr "Con potenzialit√† crescente (0,1)"
 
 #: plug-ins/common/CML_explorer.c:209
 msgid "Multiply rand. value (0,1)"
@@ -1706,7 +1706,7 @@ msgstr "Valori multipli crescenti (0,1)"
 
 #: plug-ins/common/CML_explorer.c:212
 msgid "With p and random (0,1)"
-msgstr "Con p e casualit‡ (0,1)"
+msgstr "Con p e casualit√† (0,1)"
 
 #: plug-ins/common/CML_explorer.c:225
 msgid "All black"
@@ -1734,26 +1734,26 @@ msgstr "Gradiente continuo w/o gap"
 
 #: plug-ins/common/CML_explorer.c:231
 msgid "Random, ch. independent"
-msgstr "Casualit‡, ch. indipendente"
+msgstr "Casualit√†, ch. indipendente"
 
 #: plug-ins/common/CML_explorer.c:232
 msgid "Random shared"
-msgstr "Casualit‡ condivisa"
+msgstr "Casualit√† condivisa"
 
 #: plug-ins/common/CML_explorer.c:233
 msgid "Randoms from seed"
-msgstr "Casualit‡ dal seme"
+msgstr "Casualit√† dal seme"
 
 #: plug-ins/common/CML_explorer.c:234
 msgid "Randoms from seed (shared)"
-msgstr "Casualit‡ dal seme (condivisa)"
+msgstr "Casualit√† dal seme (condivisa)"
 
 #: plug-ins/common/CML_explorer.c:302 plug-ins/common/decompose.c:131
 #: plug-ins/fp/fp_gtk.c:292 plug-ins/fp/fp_gtk.c:426
 #: plug-ins/gimpressionist/orientation.c:167
 #: plug-ins/gimpressionist/size.c:145
 msgid "Hue"
-msgstr "Tonalit‡"
+msgstr "Tonalit√†"
 
 #: plug-ins/common/CML_explorer.c:303 plug-ins/common/decompose.c:132
 #: plug-ins/fp/fp_gtk.c:296 plug-ins/fp/fp_gtk.c:430 plug-ins/fp/fp_gtk.c:494
@@ -1795,7 +1795,7 @@ msgstr "Nuovo seme"
 #: plug-ins/common/CML_explorer.c:1275 plug-ins/common/lic.c:739
 #, fuzzy
 msgid "_Hue"
-msgstr "Tonalit‡"
+msgstr "Tonalit√†"
 
 #: plug-ins/common/CML_explorer.c:1279
 #, fuzzy
@@ -1830,7 +1830,7 @@ msgstr "Inizio Offset:"
 
 #: plug-ins/common/CML_explorer.c:1371
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr "Seme di Casualit‡ (solo per la modalit‡ \"Da Seme\")"
+msgstr "Seme di Casualit√† (solo per la modalit√† \"Da Seme\")"
 
 #: plug-ins/common/CML_explorer.c:1383 plug-ins/maze/maze_face.c:296
 msgid "Seed:"
@@ -1847,9 +1847,9 @@ msgid ""
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
 msgstr ""
-"Il bottone \"Seme Fissato\" Ë un alias.\n"
+"Il bottone \"Seme Fissato\" √® un alias.\n"
 "Lo stesso seme produce la stessa immagine, se (1) la larghezza delle "
-"immaginisono le stesse (questa Ë la ragione per il quale l'immagine Ë "
+"immaginisono le stesse (questa √® la ragione per il quale l'immagine √® "
 "differentedall'anteprima), (2) tutte le mutazioni sono uguali a zero."
 
 #: plug-ins/common/CML_explorer.c:1415
@@ -1912,7 +1912,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1738
 msgid "Env. Sensitivity:"
-msgstr "Sensibilit‡ Ambiente:"
+msgstr "Sensibilit√† Ambiente:"
 
 #: plug-ins/common/CML_explorer.c:1747
 msgid "Diffusion Dist.:"
@@ -1944,7 +1944,7 @@ msgstr "Disegna il Grafico delle Configurazioni"
 
 #: plug-ins/common/CML_explorer.c:1850
 msgid "Ch. Sensitivity:"
-msgstr "Sensibilit‡ Canale:"
+msgstr "Sensibilit√† Canale:"
 
 #: plug-ins/common/CML_explorer.c:1860
 msgid "Mutation Rate:"
@@ -2002,25 +2002,25 @@ msgstr "Caricamento Selettivo da"
 
 #: plug-ins/common/CML_explorer.c:2412
 msgid "Error: it's not CML parameter file."
-msgstr "Errore: non Ë un file dei parametri CML."
+msgstr "Errore: non √® un file dei parametri CML."
 
 #: plug-ins/common/CML_explorer.c:2419
 #, fuzzy, c-format
 msgid ""
 "Warning: '%s'\n"
 "is an old format file."
-msgstr "Attenzione: Ë un vecchio formato file."
+msgstr "Attenzione: √® un vecchio formato file."
 
 #: plug-ins/common/CML_explorer.c:2421
 #, fuzzy, c-format
 msgid ""
 "Warning: '%s'\n"
 "is a parameter file for newer CML_explorer than me."
-msgstr "Attenzione: Ë un file di parametri per una versione aggiornata."
+msgstr "Attenzione: √® un file di parametri per una versione aggiornata."
 
 #: plug-ins/common/CML_explorer.c:2482
 msgid "Error: failed to load parameters"
-msgstr "Errore: non Ë un file dei parametri CML."
+msgstr "Errore: non √® un file dei parametri CML."
 
 #. Create the actual window.
 #: plug-ins/common/aa.c:340
@@ -2351,7 +2351,7 @@ msgstr "Seme Casuale:"
 #: plug-ins/common/blur.c:637
 #, fuzzy
 msgid "R_andomization %:"
-msgstr "Casualit‡ %:"
+msgstr "Casualit√† %:"
 
 #: plug-ins/common/blur.c:640 plug-ins/common/randomize.c:749
 msgid "Percentage of pixels to be filtered"
@@ -2487,7 +2487,7 @@ msgstr "Ambiente:"
 #: plug-ins/common/bz2.c:265 plug-ins/common/bz2.c:352
 #, fuzzy
 msgid "Can't open bzip2ed file without a sensible extension"
-msgstr "bz2: non Ë possibile aprire un file bz2 senza una estensione\n"
+msgstr "bz2: non √® possibile aprire un file bz2 senza una estensione\n"
 
 #: plug-ins/common/c_astretch.c:88
 #, fuzzy
@@ -2602,7 +2602,7 @@ msgstr "HSV"
 #. Gray: Circle: Spinbutton 1
 #: plug-ins/common/compose.c:149 plug-ins/rcm/rcm_dialog.c:456
 msgid "Hue:"
-msgstr "Tonalit‡:"
+msgstr "Tonalit√†:"
 
 #. Gray: Circle: Spinbutton 2
 #: plug-ins/common/compose.c:150 plug-ins/print/gimp_color_window.c:338
@@ -2697,7 +2697,7 @@ msgstr "<Image>/Filtri/Colori/Hot..."
 #: plug-ins/common/compose.c:355
 #, fuzzy, c-format
 msgid "Could not get layers for image %d"
-msgstr "comporse: non Ë possibile utilizzare i livelli dell'immagine %d"
+msgstr "comporse: non √® possibile utilizzare i livelli dell'immagine %d"
 
 #: plug-ins/common/compose.c:407
 msgid "Composing..."
@@ -2883,7 +2883,7 @@ msgstr "Salva Canale Alpha (RGBA/RGB)"
 #: plug-ins/common/csource.c:762 plug-ins/common/sparkle.c:443
 #, fuzzy
 msgid "Op_acity:"
-msgstr "Opacit‡:"
+msgstr "Opacit√†:"
 
 #: plug-ins/common/cubism.c:157
 msgid "<Image>/Filters/Artistic/Cubism..."
@@ -3080,7 +3080,7 @@ msgstr "alpha"
 
 #: plug-ins/common/decompose.c:128 plug-ins/common/decompose.c:131
 msgid "hue"
-msgstr "tonalit‡"
+msgstr "tonalit√†"
 
 #: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:132
 msgid "saturation"
@@ -3802,7 +3802,7 @@ msgstr "<Image>/Filtri/Sfocatura/Sfocatura Gaussiana (IIR)..."
 #: plug-ins/common/gauss_iir.c:249
 msgid "gauss_iir: you must specify either horizontal or vertical (or both)"
 msgstr ""
-"gauss_iir: Ë necessario specificare valore orizzontale o verticale (o "
+"gauss_iir: √® necessario specificare valore orizzontale o verticale (o "
 "entrambi)"
 
 #: plug-ins/common/gauss_iir.c:296 plug-ins/common/gauss_iir.c:350
@@ -3847,7 +3847,7 @@ msgstr "<Image>/Filtri/Sfocatura/Sfocatura Gaussiana (RLE)..."
 #, fuzzy
 msgid "You must specify either horizontal or vertical (or both)"
 msgstr ""
-"gauss_rle: Ë necessario specificare valori orizzontali e verticali (o "
+"gauss_rle: √® necessario specificare valori orizzontali e verticali (o "
 "entrambi)"
 
 #: plug-ins/common/gauss_rle.c:290 plug-ins/common/gauss_rle.c:344
@@ -3980,7 +3980,7 @@ msgid ""
 msgstr ""
 "L'immagine che state tentando di salvare come GIF\n"
 "contiene livelli che si estendono oltre gli attuali\n"
-"margini dell'immagine. Questo non Ë concesso in GIF.\n"
+"margini dell'immagine. Questo non √® concesso in GIF.\n"
 "\n"
 "Potete utilizzare la taglierina per ridimensionare\n"
 "l'immagine o cancellare l'operazione corrente."
@@ -4013,7 +4013,7 @@ msgstr "Esecuzione continua"
 
 #: plug-ins/common/gif.c:1371
 msgid "Delay between Frames where Unspecified:"
-msgstr "Temporizzazione tra frame dove non Ë specificato:"
+msgstr "Temporizzazione tra frame dove non √® specificato:"
 
 #: plug-ins/common/gif.c:1384
 msgid "Milliseconds"
@@ -4334,11 +4334,11 @@ msgstr "Il numero di pixel nel bordo tabella."
 
 #: plug-ins/common/gtm.c:610
 msgid "The width for each table cell.  Can be a number or a percent."
-msgstr "La larghezza di ogni cella. PuÚ essere un numero o una percentuale."
+msgstr "La larghezza di ogni cella. Pu√≤ essere un numero o una percentuale."
 
 #: plug-ins/common/gtm.c:626
 msgid "The height for each table cell.  Can be a number or a percent."
-msgstr "L'altezza per ogni cella. PuÚ essere un numero o una percentuale."
+msgstr "L'altezza per ogni cella. Pu√≤ essere un numero o una percentuale."
 
 #: plug-ins/common/gtm.c:637
 #, fuzzy
@@ -4402,7 +4402,7 @@ msgstr "Azione"
 #: plug-ins/common/hot.c:631
 #, fuzzy
 msgid "Reduce _Luminance"
-msgstr "Riduci Luminosit‡"
+msgstr "Riduci Luminosit√†"
 
 #: plug-ins/common/hot.c:634
 #, fuzzy
@@ -4417,7 +4417,7 @@ msgstr "Nero"
 #: plug-ins/common/hrz.c:349
 #, fuzzy, c-format
 msgid "'%s' is not a HRZ file"
-msgstr "%s: non Ë un file regolare"
+msgstr "%s: non √® un file regolare"
 
 #: plug-ins/common/hrz.c:461
 msgid "Image must be 256x240"
@@ -4447,12 +4447,12 @@ msgstr "Divisione:"
 #: plug-ins/common/illusion.c:446
 #, fuzzy
 msgid "Mode _1"
-msgstr "Modalit‡"
+msgstr "Modalit√†"
 
 #: plug-ins/common/illusion.c:461
 #, fuzzy
 msgid "Mode _2"
-msgstr "Modalit‡"
+msgstr "Modalit√†"
 
 #: plug-ins/common/iwarp.c:259
 msgid "<Image>/Filters/Distorts/IWarp..."
@@ -4508,7 +4508,7 @@ msgstr "Ammontare deformazione:"
 
 #: plug-ins/common/iwarp.c:1059
 msgid "Deform Mode"
-msgstr "Modalit‡ deformazione"
+msgstr "Modalit√† deformazione"
 
 #: plug-ins/common/iwarp.c:1073
 #, fuzzy
@@ -4611,7 +4611,7 @@ msgstr ""
 #: plug-ins/common/jigsaw.c:2638
 #, fuzzy
 msgid "H_ighlight:"
-msgstr "Intensit‡ luce:"
+msgstr "Intensit√† luce:"
 
 #: plug-ins/common/jigsaw.c:2642
 msgid "The amount of highlighting on the edges of each piece"
@@ -4672,7 +4672,7 @@ msgstr ""
 
 #: plug-ins/common/jpeg.c:1736 plug-ins/xjt/xjt.c:910
 msgid "Quality:"
-msgstr "Qualit‡:"
+msgstr "Qualit√†:"
 
 #: plug-ins/common/jpeg.c:1759 plug-ins/xjt/xjt.c:919
 msgid "Smoothing:"
@@ -4722,7 +4722,7 @@ msgstr "Punto fluttuante"
 #: plug-ins/common/jpeg.c:1899
 #, fuzzy
 msgid "DCT method (Speed/quality tradeoff):"
-msgstr "Metodo DCT (velocit‡/qualit‡ cambiate)"
+msgstr "Metodo DCT (velocit√†/qualit√† cambiate)"
 
 #: plug-ins/common/jpeg.c:1907
 #, fuzzy
@@ -5136,7 +5136,7 @@ msgstr "Giallo"
 
 #: plug-ins/common/newsprint.c:448
 msgid "Intensity"
-msgstr "Intensit‡"
+msgstr "Intensit√†"
 
 #: plug-ins/common/newsprint.c:564
 msgid "<Image>/Filters/Distorts/Newsprint..."
@@ -5202,7 +5202,7 @@ msgstr "CMYK"
 #: plug-ins/common/newsprint.c:1369
 #, fuzzy
 msgid "I_ntensity"
-msgstr "Intensit‡"
+msgstr "Intensit√†"
 
 #: plug-ins/common/newsprint.c:1390
 #, fuzzy
@@ -5329,7 +5329,7 @@ msgstr ""
 #: plug-ins/common/nova.c:399
 #, fuzzy
 msgid "R_andom Hue:"
-msgstr "Tonalit‡ casuale:"
+msgstr "Tonalit√† casuale:"
 
 #. to avoid side effects while initialization
 #: plug-ins/common/nova.c:467
@@ -5463,14 +5463,14 @@ msgstr "Salva come pattern"
 msgid ""
 "Can't read header from\n"
 "'%s'"
-msgstr "XBM: non Ë possibile creare \"%s\"\n"
+msgstr "XBM: non √® possibile creare \"%s\"\n"
 
 #: plug-ins/common/pcx.c:317
 #, fuzzy, c-format
 msgid ""
 "'%s'\n"
 "is not a PCX file"
-msgstr "%s: non Ë un file regolare"
+msgstr "%s: non √® un file regolare"
 
 #: plug-ins/common/pcx.c:370
 msgid "Unusual PCX flavour, giving up"
@@ -5564,7 +5564,7 @@ msgstr "Numero di interfacce plugin: %d"
 #. menu path
 #: plug-ins/common/plugindetails.c:335
 msgid "Menu Path:"
-msgstr "Percorso men˘:"
+msgstr "Percorso men√π:"
 
 #. show the name
 #: plug-ins/common/plugindetails.c:356
@@ -5607,7 +5607,7 @@ msgstr "In data"
 
 #: plug-ins/common/plugindetails.c:1034
 msgid "Menu Path"
-msgstr "Men˘ percorso"
+msgstr "Men√π percorso"
 
 #: plug-ins/common/plugindetails.c:1035 plug-ins/common/plugindetails.c:1062
 msgid "Image Types"
@@ -5620,7 +5620,7 @@ msgstr "Lista"
 #. notebook->ctree
 #: plug-ins/common/plugindetails.c:1060
 msgid "Menu Path/Name"
-msgstr "Men˘ percorso/nome"
+msgstr "Men√π percorso/nome"
 
 #: plug-ins/common/plugindetails.c:1077
 msgid "Tree View"
@@ -5737,7 +5737,7 @@ msgstr "PNM: Errore di lettura file."
 
 #: plug-ins/common/pnm.c:773
 msgid "PNM save cannot handle images with alpha channels."
-msgstr "PNM non Ë possibile salvare immagini con canali alpha."
+msgstr "PNM non √® possibile salvare immagini con canali alpha."
 
 #: plug-ins/common/pnm.c:920
 msgid "Save as PNM"
@@ -5808,12 +5808,12 @@ msgstr ""
 #: plug-ins/common/ps.c:888
 #, fuzzy
 msgid "Can't interpret file"
-msgstr "PS: non Ë possibile interpretare il file"
+msgstr "PS: non √® possibile interpretare il file"
 
 #: plug-ins/common/ps.c:975
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr ""
-"Il salvataggio PostScript non puÚ avvenire su immagini con canali alpha"
+"Il salvataggio PostScript non pu√≤ avvenire su immagini con canali alpha"
 
 #: plug-ins/common/ps.c:986 plug-ins/fits/fits.c:452
 msgid "Cannot operate on unknown image types"
@@ -5912,7 +5912,7 @@ msgstr ""
 #. Unit
 #: plug-ins/common/ps.c:2904
 msgid "Unit"
-msgstr "Unit‡"
+msgstr "Unit√†"
 
 #: plug-ins/common/ps.c:2909
 #, fuzzy
@@ -5993,7 +5993,7 @@ msgstr "<Image>/Filtri/Disturbo/Macchia..."
 #: plug-ins/common/randomize.c:746
 #, fuzzy
 msgid "R_andomization (%):"
-msgstr "Casualit‡ (%):"
+msgstr "Casualit√† (%):"
 
 #: plug-ins/common/ripple.c:147
 msgid "<Image>/Filters/Distorts/Ripple..."
@@ -6043,12 +6043,12 @@ msgstr "Ampiezza:"
 
 #: plug-ins/common/rotate.c:421
 msgid "You can not rotate the whole image if there's a selection."
-msgstr "Non Ë possibile ruotare l'intera immagine se vi Ë una selezione."
+msgstr "Non √® possibile ruotare l'intera immagine se vi √® una selezione."
 
 #: plug-ins/common/rotate.c:428
 msgid "You can not rotate the whole image if there's a floating selection."
 msgstr ""
-"Non Ë possibile ruotare l'intera immagine se vi Ë una selezione fluttuante."
+"Non √® possibile ruotare l'intera immagine se vi √® una selezione fluttuante."
 
 #: plug-ins/common/rotate.c:438
 msgid "Sorry, channels and masks can not be rotated."
@@ -6127,7 +6127,7 @@ msgstr ""
 #. check button
 #: plug-ins/common/sample_colorize.c:1713
 msgid "Original Intensity"
-msgstr "Intensit‡ Originale"
+msgstr "Intensit√† Originale"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1731
@@ -6171,7 +6171,7 @@ msgstr ""
 #: plug-ins/common/scatter_hsv.c:425
 #, fuzzy
 msgid "H_ue:"
-msgstr "Tonalit‡:"
+msgstr "Tonalit√†:"
 
 #: plug-ins/common/scatter_hsv.c:434
 #, fuzzy
@@ -6355,7 +6355,7 @@ msgstr "Seme Casuale:"
 #: plug-ins/common/sinus.c:1748
 #, fuzzy
 msgid "_Force Tiling?"
-msgstr "Forza visibilit‡"
+msgstr "Forza visibilit√†"
 
 #: plug-ins/common/sinus.c:1762
 #, fuzzy
@@ -6419,7 +6419,7 @@ msgstr "Colori"
 #: plug-ins/common/sinus.c:1903
 #, fuzzy
 msgid "Blend Settings"
-msgstr "Configurazioni Tonalit‡"
+msgstr "Configurazioni Tonalit√†"
 
 #: plug-ins/common/sinus.c:1914
 msgid "Gradient"
@@ -6551,16 +6551,16 @@ msgstr ""
 #: plug-ins/common/sparkle.c:382
 #, fuzzy
 msgid "Luminosity _Threshold:"
-msgstr "Soglia della Luminosit‡:"
+msgstr "Soglia della Luminosit√†:"
 
 #: plug-ins/common/sparkle.c:385
 msgid "Adjust the Luminosity Threshold"
-msgstr "Aggiusta Soglia Luminosit‡"
+msgstr "Aggiusta Soglia Luminosit√†"
 
 #: plug-ins/common/sparkle.c:392
 #, fuzzy
 msgid "F_lare Intensity:"
-msgstr "Intensit‡"
+msgstr "Intensit√†"
 
 #: plug-ins/common/sparkle.c:395
 msgid "Adjust the Flare Intensity"
@@ -6595,7 +6595,7 @@ msgstr ""
 #: plug-ins/common/sparkle.c:433
 #, fuzzy
 msgid "Spik_e Density:"
-msgstr "Densit‡ campionamento:"
+msgstr "Densit√† campionamento:"
 
 #: plug-ins/common/sparkle.c:436
 msgid "Adjust the Spike Density"
@@ -6608,7 +6608,7 @@ msgstr ""
 #: plug-ins/common/sparkle.c:453
 #, fuzzy
 msgid "_Random Hue:"
-msgstr "Tonalit‡ casuale:"
+msgstr "Tonalit√† casuale:"
 
 #: plug-ins/common/sparkle.c:456
 msgid "Adjust the Value how much the Hue should be changed randomly"
@@ -6753,7 +6753,7 @@ msgstr "Texture"
 
 #: plug-ins/common/spheredesigner.c:2578
 msgid "Texture Properties"
-msgstr "Propriet‡ Texture"
+msgstr "Propriet√† Texture"
 
 #: plug-ins/common/spheredesigner.c:2596
 msgid "Texture:"
@@ -6909,11 +6909,11 @@ msgstr "Tipo di mappa colore non supportata"
 
 #: plug-ins/common/sunras.c:469
 msgid "This image depth is not supported"
-msgstr "La definizione immagine non Ë supportata"
+msgstr "La definizione immagine non √® supportata"
 
 #: plug-ins/common/sunras.c:492
 msgid "SUNRAS save cannot handle images with alpha channels"
-msgstr "SUNRAS non Ë possibile salvare le immagini con canali alpha"
+msgstr "SUNRAS non √® possibile salvare le immagini con canali alpha"
 
 #: plug-ins/common/sunras.c:503
 msgid "Can't operate on unknown image types"
@@ -6945,14 +6945,14 @@ msgstr "RLE encodato"
 msgid ""
 "Cannot read footer from\n"
 "'%s'"
-msgstr "XBM: non Ë possibile creare \"%s\"\n"
+msgstr "XBM: non √® possibile creare \"%s\"\n"
 
 #: plug-ins/common/tga.c:447
 #, fuzzy, c-format
 msgid ""
 "Cannot read extension from\n"
 "'%s'"
-msgstr "XBM: non Ë possibile creare \"%s\"\n"
+msgstr "XBM: non √® possibile creare \"%s\"\n"
 
 #: plug-ins/common/tga.c:1189
 msgid "Save as TGA"
@@ -7114,7 +7114,7 @@ msgstr "Colonna:"
 #: plug-ins/common/tileit.c:604
 #, fuzzy
 msgid "O_pacity:"
-msgstr "Opacit‡:"
+msgstr "Opacit√†:"
 
 #. Lower frame saying howmany segments
 #: plug-ins/common/tileit.c:615
@@ -7138,8 +7138,8 @@ msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
 msgstr ""
-"La definizione di unit‡ sar‡ salvata unicamente prima di uscire da GIMP se "
-"questa colonna Ë "
+"La definizione di unit√† sar√† salvata unicamente prima di uscire da GIMP se "
+"questa colonna √® "
 
 #: plug-ins/common/uniteditor.c:83
 msgid "ID"
@@ -7149,7 +7149,7 @@ msgstr "ID"
 msgid ""
 "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
-"Questa stringa sar‡ utilizzata per identificare una unit‡ nei file di "
+"Questa stringa sar√† utilizzata per identificare una unit√† nei file di "
 "configurazione di GIMP."
 
 #: plug-ins/common/uniteditor.c:85
@@ -7158,7 +7158,7 @@ msgstr "Fattore"
 
 #: plug-ins/common/uniteditor.c:85
 msgid "How many units make up an inch."
-msgstr "Quante unit‡ creano un inch."
+msgstr "Quante unit√† creano un inch."
 
 #: plug-ins/common/uniteditor.c:86
 msgid "Digits"
@@ -7171,7 +7171,7 @@ msgid ""
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
-"Questo campo Ë per valori numerici. Esso specifica quanti decimali il campo "
+"Questo campo √® per valori numerici. Esso specifica quanti decimali il campo "
 "dovrebbe gestire per ottenere la stessa occorrenza di un \"inch\" "
 
 #: plug-ins/common/uniteditor.c:91
@@ -7184,8 +7184,8 @@ msgid ""
 "The unit's symbol if it has one (e.g. \"'\" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
 msgstr ""
-"Il simbolo di unit‡ se esiste (es. \"'\" per i pollici). Utilizzate "
-"l'abbreviazione dell'unit‡ in mancanza di un simbolo."
+"Il simbolo di unit√† se esiste (es. \"'\" per i pollici). Utilizzate "
+"l'abbreviazione dell'unit√† in mancanza di un simbolo."
 
 #: plug-ins/common/uniteditor.c:94
 #, fuzzy
@@ -7194,7 +7194,7 @@ msgstr "Abbreviazione:"
 
 #: plug-ins/common/uniteditor.c:94
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
-msgstr "L'abbreviazione di unit‡ (es. \"cm\" per i centimetri)."
+msgstr "L'abbreviazione di unit√† (es. \"cm\" per i centimetri)."
 
 #: plug-ins/common/uniteditor.c:96
 msgid "Singular"
@@ -7202,7 +7202,7 @@ msgstr "Singolare"
 
 #: plug-ins/common/uniteditor.c:96
 msgid "The unit's singular form."
-msgstr "Forma singolare dell'unit‡."
+msgstr "Forma singolare dell'unit√†."
 
 #: plug-ins/common/uniteditor.c:97
 msgid "Plural"
@@ -7210,15 +7210,15 @@ msgstr "Plurale"
 
 #: plug-ins/common/uniteditor.c:97
 msgid "The unit's plural form."
-msgstr "Forma plurale dell'unit‡."
+msgstr "Forma plurale dell'unit√†."
 
 #: plug-ins/common/uniteditor.c:115
 msgid "<Toolbox>/Xtns/Unit Editor..."
-msgstr "<Toolbox>/Xtns/Editor unit‡..."
+msgstr "<Toolbox>/Xtns/Editor unit√†..."
 
 #: plug-ins/common/uniteditor.c:179
 msgid "New Unit"
-msgstr "Nuova unit‡"
+msgstr "Nuova unit√†"
 
 #: plug-ins/common/uniteditor.c:210
 #, fuzzy
@@ -7257,7 +7257,7 @@ msgstr "Plurale:"
 
 #: plug-ins/common/uniteditor.c:316
 msgid "Unit factor must not be 0."
-msgstr "Il fattore unit‡ non deve essere 0."
+msgstr "Il fattore unit√† non deve essere 0."
 
 #: plug-ins/common/uniteditor.c:326
 msgid "All text fields must contain a value."
@@ -7265,15 +7265,15 @@ msgstr "Tutti i campi devono contenere un valore."
 
 #: plug-ins/common/uniteditor.c:541
 msgid "Unit Editor"
-msgstr "Editor unit‡"
+msgstr "Editor unit√†"
 
 #: plug-ins/common/uniteditor.c:626
 msgid "Create a new unit from scratch."
-msgstr "Crea una nuova unit‡ di misura."
+msgstr "Crea una nuova unit√† di misura."
 
 #: plug-ins/common/uniteditor.c:636
 msgid "Create a new unit with the currently seleted unit as template."
-msgstr "Crea una nuova unit‡ di misura basata su quella selezionata."
+msgstr "Crea una nuova unit√† di misura basata su quella selezionata."
 
 #: plug-ins/common/unsharp.c:153
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
@@ -7371,12 +7371,12 @@ msgstr "Propagazione valore..."
 #: plug-ins/common/vpropagate.c:192
 #, fuzzy
 msgid "More _White (Larger Value)"
-msgstr "Pi˘ Bianco (valori pi˘ grandi)"
+msgstr "Pi√π Bianco (valori pi√π grandi)"
 
 #: plug-ins/common/vpropagate.c:195
 #, fuzzy
 msgid "More Blac_k (Smaller Value)"
-msgstr "Pi˘ Nero (valori pi˘ piccoli)"
+msgstr "Pi√π Nero (valori pi√π piccoli)"
 
 #: plug-ins/common/vpropagate.c:198
 #, fuzzy
@@ -7401,12 +7401,12 @@ msgstr "Solo sfondo"
 #: plug-ins/common/vpropagate.c:210
 #, fuzzy
 msgid "Mor_e Opaque"
-msgstr "Pi˘ Opaco"
+msgstr "Pi√π Opaco"
 
 #: plug-ins/common/vpropagate.c:213
 #, fuzzy
 msgid "More T_ransparent"
-msgstr "Pi˘ Trasparente"
+msgstr "Pi√π Trasparente"
 
 #: plug-ins/common/vpropagate.c:249
 msgid "<Image>/Filters/Distorts/Value Propagate..."
@@ -7449,7 +7449,7 @@ msgstr "Soglia superiore:"
 #: plug-ins/common/vpropagate.c:1113
 #, fuzzy
 msgid "_Propagating Rate:"
-msgstr "Intensit‡ propagazione:"
+msgstr "Intensit√† propagazione:"
 
 #: plug-ins/common/vpropagate.c:1125
 #, fuzzy
@@ -7561,11 +7561,11 @@ msgstr "Scala gradiente:"
 
 #: plug-ins/common/warp.c:662
 msgid "Gradient map selection menu"
-msgstr "Men˘ di selezione scala"
+msgstr "Men√π di selezione scala"
 
 #: plug-ins/common/warp.c:672
 msgid "Vector Mag:"
-msgstr "Intensit‡ vettore:"
+msgstr "Intensit√† vettore:"
 
 #. Angle
 #: plug-ins/common/warp.c:683 plug-ins/ifscompose/ifscompose.c:595
@@ -7767,7 +7767,7 @@ msgstr "Lunghezza:"
 #: plug-ins/common/wind.c:1045
 #, fuzzy
 msgid "Higher values increase the magnitude of the effect"
-msgstr "Alti valori possono rendere la luminosit‡ molto focalizzata"
+msgstr "Alti valori possono rendere la luminosit√† molto focalizzata"
 
 #: plug-ins/common/winprint.c:186
 msgid "<Image>/File/Print"
@@ -7850,7 +7850,7 @@ msgstr "Creata con GIMP"
 msgid ""
 "'%s':\n"
 "Can't read header (ftell == %ld)"
-msgstr "XBM: non Ë possibile leggere l'header (ftell == %ld)\n"
+msgstr "XBM: non √® possibile leggere l'header (ftell == %ld)\n"
 
 #: plug-ins/common/xbm.c:825
 #, fuzzy, c-format
@@ -7883,7 +7883,7 @@ msgid ""
 "(1-bit) indexed image and try again."
 msgstr ""
 "L'immagine che cercate di salvare come\n"
-"XBM contiene pi˘ di due colori.\n"
+"XBM contiene pi√π di due colori.\n"
 "\n"
 "Si consiglia di convertire l'immagine in Scaladi colore bianco/nero (1-bit) "
 "e riprovare."
@@ -7894,7 +7894,7 @@ msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
 msgstr ""
-"Il salvataggio PostScript non puÚ avvenire su immagini con canali alpha"
+"Il salvataggio PostScript non pu√≤ avvenire su immagini con canali alpha"
 
 #: plug-ins/common/xbm.c:1156
 msgid "Save as XBM"
@@ -7951,11 +7951,11 @@ msgstr "Soglia alpha:"
 #: plug-ins/common/xwd.c:386
 #, fuzzy
 msgid "Can't open file as XWD file"
-msgstr "non Ë possibile aprire file come file XWD"
+msgstr "non √® possibile aprire file come file XWD"
 
 #: plug-ins/common/xwd.c:421
 msgid "can't read color entries"
-msgstr "non Ë possibile leggere i colori"
+msgstr "non √® possibile leggere i colori"
 
 #: plug-ins/common/xwd.c:478
 #, c-format
@@ -7966,16 +7966,16 @@ msgid ""
 msgstr ""
 "load_image (xwd): file XWD %s ha formato %d, definizione %d\n"
 "e bit per pixel %d \n"
-"Correntemente questo non Ë supportato.\n"
+"Correntemente questo non √® supportato.\n"
 
 #: plug-ins/common/xwd.c:505
 msgid "XWD save cannot handle images with alpha channels"
-msgstr "Il formato XWD non puÚ salvare le immagini con canali alpha"
+msgstr "Il formato XWD non pu√≤ salvare le immagini con canali alpha"
 
 #: plug-ins/common/xwd.c:516
 msgid "cannot operate on unknown image types"
 msgstr ""
-"non Ë possibile applicare operazioni su formati di immagine sconosciuti"
+"non √® possibile applicare operazioni su formati di immagine sconosciuti"
 
 #: plug-ins/common/xwd.c:1228
 msgid "EOF encountered on "
@@ -8081,7 +8081,7 @@ msgstr ""
 
 #: plug-ins/fits/fits.c:441
 msgid "FITS save cannot handle images with alpha channels"
-msgstr "Salvataggio FITS non puÚ gestire immagini con canali alpha"
+msgstr "Salvataggio FITS non pu√≤ gestire immagini con canali alpha"
 
 #: plug-ins/fits/fits.c:468
 #, fuzzy, c-format
@@ -8123,12 +8123,12 @@ msgstr "Fiamme..."
 
 #: plug-ins/flame/flame.c:312
 msgid "Flame works only on RGB drawables."
-msgstr "Fiamme solo in modalit‡ RGB."
+msgstr "Fiamme solo in modalit√† RGB."
 
 #: plug-ins/flame/flame.c:423
 #, fuzzy, c-format
 msgid "'%s' is not a regular file"
-msgstr "%s: non Ë un file regolare"
+msgstr "%s: non √® un file regolare"
 
 #: plug-ins/flame/flame.c:431
 #, fuzzy, c-format
@@ -8150,12 +8150,12 @@ msgstr "Controlli"
 #: plug-ins/flame/flame.c:693
 #, fuzzy
 msgid "_Speed:"
-msgstr "Velocit‡:"
+msgstr "Velocit√†:"
 
 #: plug-ins/flame/flame.c:710
 #, fuzzy
 msgid "_Randomize"
-msgstr "Casualit‡"
+msgstr "Casualit√†"
 
 #: plug-ins/flame/flame.c:724
 msgid "Same"
@@ -8217,7 +8217,7 @@ msgstr "Gamma:"
 #: plug-ins/flame/flame.c:1064
 #, fuzzy
 msgid "Sample _Density:"
-msgstr "Densit‡ campionamento:"
+msgstr "Densit√† campionamento:"
 
 #: plug-ins/flame/flame.c:1075
 #, fuzzy
@@ -8293,7 +8293,7 @@ msgstr "Originale:"
 
 #: plug-ins/fp/fp_gtk.c:204
 msgid "Hue Variations"
-msgstr "Variazioni tonalit‡"
+msgstr "Variazioni tonalit√†"
 
 #: plug-ins/fp/fp_gtk.c:220
 msgid "Roughness"
@@ -8313,7 +8313,7 @@ msgstr "Mezzi toni"
 
 #: plug-ins/fp/fp_gtk.c:269
 msgid "Highlights"
-msgstr "Luminosit‡"
+msgstr "Luminosit√†"
 
 #: plug-ins/fp/fp_gtk.c:282
 msgid "Windows"
@@ -8379,7 +8379,7 @@ msgstr "Mezzi toni:"
 
 #: plug-ins/fp/fp_gtk.c:1038
 msgid "Highlights:"
-msgstr "Luminosit‡:"
+msgstr "Luminosit√†:"
 
 #: plug-ins/fp/fp_gtk.c:1052
 msgid "Advanced Filter Pack Options"
@@ -8465,7 +8465,7 @@ msgstr "Orientazione:"
 #: plug-ins/gfig/gfig.c:1869
 #, fuzzy
 msgid "Bezier Settings"
-msgstr "Configurazioni Tonalit‡"
+msgstr "Configurazioni Tonalit√†"
 
 #: plug-ins/gfig/gfig.c:1889
 #, fuzzy
@@ -8765,7 +8765,7 @@ msgstr "File"
 #: plug-ins/gfig/gfig.c:3089
 #, fuzzy
 msgid "Segment"
-msgstr "Modalit‡:"
+msgstr "Modalit√†:"
 
 #: plug-ins/gfig/gfig.c:3090
 #, fuzzy
@@ -9060,7 +9060,7 @@ msgstr "Gradiente "
 
 #: plug-ins/gflare/gflare.c:971
 msgid "GFlare: cannot operate on indexed color images"
-msgstr "GFlare: non Ë possibile agire su immagini in scala di colore"
+msgstr "GFlare: non √® possibile agire su immagini in scala di colore"
 
 #: plug-ins/gflare/gflare.c:1253
 #, fuzzy, c-format
@@ -9070,7 +9070,7 @@ msgstr "file GFlare non corretto: %s\n"
 #: plug-ins/gflare/gflare.c:1261
 #, fuzzy, c-format
 msgid "'%s' is not a valid GFlare file."
-msgstr "PNM: %s non Ë un file valido."
+msgstr "PNM: %s non √® un file valido."
 
 #: plug-ins/gflare/gflare.c:1314
 #, c-format
@@ -9123,7 +9123,7 @@ msgstr "Rotazione:"
 #: plug-ins/gflare/gflare.c:2708
 #, fuzzy
 msgid "_Hue Rotation:"
-msgstr "Rotazione tonalit‡:"
+msgstr "Rotazione tonalit√†:"
 
 #: plug-ins/gflare/gflare.c:2720
 #, fuzzy
@@ -9170,7 +9170,7 @@ msgstr "senza nome"
 #: plug-ins/gflare/gflare.c:3001
 #, c-format
 msgid "The name '%s' is used already!"
-msgstr "Il nome '%s' Ë gi‡ in uso!"
+msgstr "Il nome '%s' √® gi√† in uso!"
 
 #: plug-ins/gflare/gflare.c:3051
 msgid "Copy GFlare"
@@ -9183,7 +9183,7 @@ msgstr "Digitate un nome per il GFlare copiato:"
 #: plug-ins/gflare/gflare.c:3075
 #, c-format
 msgid "The name `%s' is used already!"
-msgstr "Il nome '%s' Ë gi‡ in uso!"
+msgstr "Il nome '%s' √® gi√† in uso!"
 
 #: plug-ins/gflare/gflare.c:3101
 msgid "Cannot delete!! There must be at least one GFlare."
@@ -9196,7 +9196,7 @@ msgstr "Elimina GFlare"
 #: plug-ins/gflare/gflare.c:3168
 #, c-format
 msgid "not found %s in gflares_list"
-msgstr "non Ë stato trovato %s nella lista GFlare"
+msgstr "non √® stato trovato %s nella lista GFlare"
 
 #: plug-ins/gflare/gflare.c:3209
 msgid "GFlare Editor"
@@ -9214,12 +9214,12 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:3347 plug-ins/gflare/gflare.c:3377
 #: plug-ins/gflare/gflare.c:3407
 msgid "Opacity:"
-msgstr "Opacit‡:"
+msgstr "Opacit√†:"
 
 #: plug-ins/gflare/gflare.c:3360 plug-ins/gflare/gflare.c:3390
 #: plug-ins/gflare/gflare.c:3420
 msgid "Paint Mode:"
-msgstr "Modalit‡ disegno:"
+msgstr "Modalit√† disegno:"
 
 #. Rays
 #: plug-ins/gflare/gflare.c:3365
@@ -9273,7 +9273,7 @@ msgstr "Rotazione:"
 #: plug-ins/gflare/gflare.c:3515 plug-ins/gflare/gflare.c:3623
 #: plug-ins/gflare/gflare.c:3762
 msgid "Hue Rotation:"
-msgstr "Rotazione tonalit‡:"
+msgstr "Rotazione tonalit√†:"
 
 #: plug-ins/gflare/gflare.c:3529
 #, fuzzy
@@ -9299,7 +9299,7 @@ msgstr "Dimensione fattore gradiente:"
 
 #: plug-ins/gflare/gflare.c:3716
 msgid "Probability Gradient:"
-msgstr "Probabilit‡ gradiente:"
+msgstr "Probabilit√† gradiente:"
 
 #.
 #. *	Shape Radio Button Frame
@@ -9826,7 +9826,7 @@ msgstr ""
 #: plug-ins/gimpressionist/placement.c:80
 #, fuzzy
 msgid "Stroke _density:"
-msgstr "Densit‡ campionamento:"
+msgstr "Densit√† campionamento:"
 
 #: plug-ins/gimpressionist/placement.c:84
 msgid "The relative density of the brush strokes"
@@ -11510,7 +11510,7 @@ msgstr "Stampante:"
 #: plug-ins/print/gimp_main_window.c:677 plug-ins/print/gimp_main_window.c:934
 #, fuzzy
 msgid "Printer Model:"
-msgstr "Modalit‡ disegno:"
+msgstr "Modalit√† disegno:"
 
 #: plug-ins/print/gimp_main_window.c:689
 msgid "Select your printer model"
@@ -11751,7 +11751,7 @@ msgstr ""
 #: plug-ins/print/gimp_main_window.c:1253
 #, fuzzy
 msgid "Units:"
-msgstr "Unit‡"
+msgstr "Unit√†"
 
 #: plug-ins/print/gimp_main_window.c:1258
 msgid "Select the base unit of measurement for printing"
@@ -11790,7 +11790,7 @@ msgstr ""
 #: plug-ins/print/gimp_main_window.c:1319
 #, fuzzy
 msgid "Image / Output Settings"
-msgstr "Configurazioni Tonalit‡"
+msgstr "Configurazioni Tonalit√†"
 
 #: plug-ins/print/gimp_main_window.c:1332
 #, fuzzy
@@ -11840,7 +11840,7 @@ msgstr ""
 #: plug-ins/print/gimp_main_window.c:1418
 #, fuzzy
 msgid "Color output"
-msgstr "Modalit‡ colore"
+msgstr "Modalit√† colore"
 
 #: plug-ins/print/gimp_main_window.c:1430
 msgid "Print in shades of gray using black ink"
@@ -11939,7 +11939,7 @@ msgstr ""
 #: plug-ins/rcm/rcm_dialog.c:624
 #, fuzzy
 msgid "Units"
-msgstr "Unit‡"
+msgstr "Unit√†"
 
 #. Misc: Used unit selection: 3 radio buttons
 #: plug-ins/rcm/rcm_dialog.c:633
@@ -12179,7 +12179,7 @@ msgstr ""
 #~ msgstr "Errore di apertura: %s"
 
 #~ msgid "Could not save."
-#~ msgstr "Non Ë possibile salvare."
+#~ msgstr "Non √® possibile salvare."
 
 #~ msgid "Failed to write file\n"
 #~ msgstr "Errore di scrittura file\n"
@@ -12188,23 +12188,23 @@ msgstr ""
 #~ msgstr "Caricamento di %s:"
 
 #~ msgid "%s: can't open \"%s\""
-#~ msgstr "%s: non Ë possibile aprire \"%s\""
+#~ msgstr "%s: non √® possibile aprire \"%s\""
 
 #~ msgid "Can't open %s"
-#~ msgstr "Non Ë possibile aprire %s"
+#~ msgstr "Non √® possibile aprire %s"
 
 #~ msgid ""
 #~ "%s\n"
 #~ "is not present or is unreadable"
 #~ msgstr ""
 #~ "%s\n"
-#~ "non Ë presente o Ë illeggibile"
+#~ "non √® presente o √® illeggibile"
 
 #~ msgid ""
 #~ "CEL Couldn't write image to\n"
 #~ "%s"
 #~ msgstr ""
-#~ "CEL Non puÚ scrivere l'immagine in\n"
+#~ "CEL Non pu√≤ scrivere l'immagine in\n"
 #~ "%s"
 
 #~ msgid "Error: could not open \"%s\""
@@ -12214,10 +12214,10 @@ msgstr ""
 #~ msgstr "Impossibile aprire %s"
 
 #~ msgid "GIF: can't open %s\n"
-#~ msgstr "GIF: non Ë possibile aprire %s\n"
+#~ msgstr "GIF: non √® possibile aprire %s\n"
 
 #~ msgid "can't open \"%s\"\n"
-#~ msgstr "non Ë possibile aprire \"%s\"\n"
+#~ msgstr "non √® possibile aprire \"%s\"\n"
 
 #~ msgid "Max RGB: Scanning..."
 #~ msgstr "Max RGB: Scansione..."
@@ -12233,16 +12233,16 @@ msgstr ""
 #~ msgstr "PNM: Impossibile aprire il file %s."
 
 #~ msgid "PS: can't open file for reading"
-#~ msgstr "PS: non Ë possibile aprire file in lettura"
+#~ msgstr "PS: non √® possibile aprire file in lettura"
 
 #~ msgid "Interpreting and Loading %s:"
 #~ msgstr "Interpretazione e caricamento di %s:"
 
 #~ msgid "PS: cannot operate on unknown image types"
-#~ msgstr "PS: non Ë possibile operare su un formato immagine sconosciuto"
+#~ msgstr "PS: non √® possibile operare su un formato immagine sconosciuto"
 
 #~ msgid "PS: can't open file for writing"
-#~ msgstr "PS: non Ë possibile aprire il file in scrittura"
+#~ msgstr "PS: non √® possibile aprire il file in scrittura"
 
 #~ msgid "Scatter HSV: Scattering..."
 #~ msgstr "Scatter HSV: creazione..."
@@ -12255,26 +12255,26 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "TGA: can't open \"%s\"\n"
-#~ msgstr "non Ë possibile aprire \"%s\"\n"
+#~ msgstr "non √® possibile aprire \"%s\"\n"
 
 #, fuzzy
 #~ msgid "TIFF: Can't open '%s'"
-#~ msgstr "GIF: non Ë possibile aprire %s\n"
+#~ msgstr "GIF: non √® possibile aprire %s\n"
 
 #~ msgid "XBM: cannot open \"%s\"\n"
-#~ msgstr "XBM: non Ë possibile aprire \"%s\"\n"
+#~ msgstr "XBM: non √® possibile aprire \"%s\"\n"
 
 #~ msgid "XBM: cannot create \"%s\"\n"
-#~ msgstr "XBM: non Ë possibile creare \"%s\"\n"
+#~ msgstr "XBM: non √® possibile creare \"%s\"\n"
 
 #~ msgid "can't open file for reading"
-#~ msgstr "non Ë possibile aprire file in lettura"
+#~ msgstr "non √® possibile aprire file in lettura"
 
 #~ msgid "can't get memory for colormap"
-#~ msgstr "non Ë possibile avere memoria per la mappa del colore"
+#~ msgstr "non √® possibile avere memoria per la mappa del colore"
 
 #~ msgid "can't open file for writing"
-#~ msgstr "non Ë possibile aprire il file in scrittura"
+#~ msgstr "non √® possibile aprire il file in scrittura"
 
 #, fuzzy
 #~ msgid "Prev"
@@ -12318,33 +12318,33 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "<Image>/Layer/Transform/Rotate 90 degrees"
-#~ msgstr "<Image>/Immagine/Trasformazioni/Rotazioni/90∞"
+#~ msgstr "<Image>/Immagine/Trasformazioni/Rotazioni/90¬∞"
 
 #, fuzzy
 #~ msgid "<Image>/Layer/Transform/Rotate 180 degrees"
-#~ msgstr "<Image>/Immagine/Trasformazioni/Rotazioni/180∞"
+#~ msgstr "<Image>/Immagine/Trasformazioni/Rotazioni/180¬∞"
 
 #, fuzzy
 #~ msgid "<Image>/Layer/Transform/Rotate 270 degrees"
-#~ msgstr "<Image>/Immagine/Trasformazioni/Rotazioni/270∞"
+#~ msgstr "<Image>/Immagine/Trasformazioni/Rotazioni/270¬∞"
 
 #, fuzzy
 #~ msgid "<Image>/Image/Transform/Rotate 90 degrees"
-#~ msgstr "<Image>/Immagine/Trasformazioni/Rotazioni/90∞"
+#~ msgstr "<Image>/Immagine/Trasformazioni/Rotazioni/90¬∞"
 
 #, fuzzy
 #~ msgid "<Image>/Image/Transform/Rotate 180 degrees"
-#~ msgstr "<Image>/Immagine/Trasformazioni/Rotazioni/180∞"
+#~ msgstr "<Image>/Immagine/Trasformazioni/Rotazioni/180¬∞"
 
 #, fuzzy
 #~ msgid "<Image>/Image/Transform/Rotate 270 degrees"
-#~ msgstr "<Image>/Immagine/Trasformazioni/Rotazioni/270∞"
+#~ msgstr "<Image>/Immagine/Trasformazioni/Rotazioni/270¬∞"
 
 #~ msgid "<Image>/Image/Mode/Compose..."
-#~ msgstr "<Image>/Immagine/Modalit‡/Componi..."
+#~ msgstr "<Image>/Immagine/Modalit√†/Componi..."
 
 #~ msgid "<Image>/Image/Mode/Decompose..."
-#~ msgstr "<Image>/Immagine/Modalit‡/Decomposizione..."
+#~ msgstr "<Image>/Immagine/Modalit√†/Decomposizione..."
 
 #~ msgid "Del"
 #~ msgstr "Elimina"
@@ -12382,11 +12382,11 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "_New Unit"
-#~ msgstr "Nuova unit‡"
+#~ msgstr "Nuova unit√†"
 
 #, fuzzy
 #~ msgid "_Duplicate Unit"
-#~ msgstr "Duplica Unit‡"
+#~ msgstr "Duplica Unit√†"
 
 #, fuzzy
 #~ msgid ""
@@ -12442,17 +12442,17 @@ msgstr ""
 #~ msgstr "Abbr."
 
 #~ msgid "Don't Save Unit"
-#~ msgstr "Non Salvare Unit‡"
+#~ msgstr "Non Salvare Unit√†"
 
 #~ msgid "Don't save the currently selected unit before GIMP exits."
 #~ msgstr ""
-#~ "Non salvare l'unit‡ attualmente selezionata prima di uscire da GIMP."
+#~ "Non salvare l'unit√† attualmente selezionata prima di uscire da GIMP."
 
 #~ msgid "Save Unit"
-#~ msgstr "Salva Unit‡"
+#~ msgstr "Salva Unit√†"
 
 #~ msgid "Save the currently selected unit before GIMP exits."
-#~ msgstr "Salva l'unit‡ attualmente selezionata prima di uscire da GIMP."
+#~ msgstr "Salva l'unit√† attualmente selezionata prima di uscire da GIMP."
 
 #, fuzzy
 #~ msgid "Save as..."
@@ -12509,7 +12509,7 @@ msgstr ""
 #~ msgstr "file GFlare non valido: %s"
 
 #~ msgid "could not open \"%s\""
-#~ msgstr "non Ë possibile aprire \"%s\""
+#~ msgstr "non √® possibile aprire \"%s\""
 
 #, fuzzy
 #~ msgid "Set Defaults"
@@ -12556,7 +12556,7 @@ msgstr ""
 #~ msgstr "Anteprima!"
 
 #~ msgid "Hue Settings"
-#~ msgstr "Configurazioni tonalit‡"
+#~ msgstr "Configurazioni tonalit√†"
 
 #~ msgid "Saturation Settings"
 #~ msgstr "Configurazioni della Saturazione"
@@ -12651,7 +12651,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Quit"
-#~ msgstr "Qualit‡"
+#~ msgstr "Qualit√†"
 
 #, fuzzy
 #~ msgid "In"
@@ -12708,13 +12708,13 @@ msgstr ""
 #~ msgstr "<Image>/Filters/Render/Scacchiera"
 
 #~ msgid "<Image>/Layers/Rotate/90 degrees"
-#~ msgstr "<Image>/Livelli/Rotazioni/90∞"
+#~ msgstr "<Image>/Livelli/Rotazioni/90¬∞"
 
 #~ msgid "<Image>/Layers/Rotate/180 degrees"
-#~ msgstr "<Image>/Livelli/Rotazioni/180∞"
+#~ msgstr "<Image>/Livelli/Rotazioni/180¬∞"
 
 #~ msgid "<Image>/Layers/Rotate/270 degrees"
-#~ msgstr "<Image>/Livelli/Rotazioni/270∞"
+#~ msgstr "<Image>/Livelli/Rotazioni/270¬∞"
 
 #, fuzzy
 #~ msgid "Sinusodial"
@@ -12816,21 +12816,21 @@ msgstr ""
 #~ msgstr "Estrazione audio"
 
 #~ msgid "Jpeg Quality:"
-#~ msgstr "Qualit‡ Jpeg:"
+#~ msgstr "Qualit√† Jpeg:"
 
 #, fuzzy
 #~ msgid "Split any Xanim readable Video to Frames"
 #~ msgstr "Dividi Immagine in Frame"
 
 #~ msgid "could not execute %s (check if xanim is installed)"
-#~ msgstr "non Ë possibile eseguire %s (verificate se xanim Ë installato)"
+#~ msgstr "non √® possibile eseguire %s (verificate se xanim √® installato)"
 
 #~ msgid ""
 #~ "could not create %s directory\n"
 #~ "(that is required for xanim frame export)"
 #~ msgstr ""
-#~ "non Ë possibile creare la directory %s\n"
-#~ "(questa Ë richiesta per l'esportazione frame di xanim)"
+#~ "non √® possibile creare la directory %s\n"
+#~ "(questa √® richiesta per l'esportazione frame di xanim)"
 
 #~ msgid "extracting frames..."
 #~ msgstr "estrazione frame..."
@@ -12839,14 +12839,14 @@ msgstr ""
 #~ "could not start xanim process\n"
 #~ "(program=%s)"
 #~ msgstr ""
-#~ "non Ë possibile avviare il processo xanim\n"
+#~ "non √® possibile avviare il processo xanim\n"
 #~ "(programma=%s)"
 
 #~ msgid ""
 #~ "can't find any extracted frames,\n"
 #~ "xanim has failed or was cancelled"
 #~ msgstr ""
-#~ "non Ë possibile trovare nessun frame estratto,\n"
+#~ "non √® possibile trovare nessun frame estratto,\n"
 #~ "xanim ha fallito o erano cancellati"
 
 #~ msgid "renaming frames..."
@@ -12868,7 +12868,7 @@ msgstr ""
 #~ "2nd call of %s\n"
 #~ "(define end-settings)"
 #~ msgstr ""
-#~ "2∞ richiamo di %s\n"
+#~ "2¬∞ richiamo di %s\n"
 #~ "(definisci settaggi finali)"
 
 #~ msgid ""
@@ -12910,7 +12910,7 @@ msgstr ""
 #~ "Current frame changed while dialog was open."
 #~ msgstr ""
 #~ "OPERAZIONE CANCELLATA.\n"
-#~ "Il frame corrente Ë cambiato durante l'apertura della finestra di dialogo."
+#~ "Il frame corrente √® cambiato durante l'apertura della finestra di dialogo."
 
 #, fuzzy
 #~ msgid ""
@@ -12930,14 +12930,14 @@ msgstr ""
 #~ "in loss of layer information."
 #~ msgstr ""
 #~ "State utilizzando un formato file diverso da XCF\n"
-#~ "L'operazione di salvataggio puÚ risultare in una\n"
+#~ "L'operazione di salvataggio pu√≤ risultare in una\n"
 #~ "perdita di informazioni per livelli."
 
 #~ msgid "Save Flattened"
 #~ msgstr "Salva appiattita"
 
 #~ msgid "Save As Is"
-#~ msgstr "Salva come Ë"
+#~ msgstr "Salva come √®"
 
 #, fuzzy
 #~ msgid "Error: could not save frame %s"
@@ -12981,7 +12981,7 @@ msgstr ""
 #~ "(you may type in Values > 99)"
 #~ msgstr ""
 #~ "Copia il campo selezionato n-volte \n"
-#~ "(Ë possibile digitare valori maggiori di 99)"
+#~ "(√® possibile digitare valori maggiori di 99)"
 
 #~ msgid "Duplicate Frame Range"
 #~ msgstr "Duplica il campo dei frame"
@@ -13069,22 +13069,22 @@ msgstr ""
 #~ msgstr "<Image>/Video/Modifica frame..."
 
 #~ msgid "Pattern is equal to LayerName"
-#~ msgstr "Il pattern Ë uguale al nome-livello"
+#~ msgstr "Il pattern √® uguale al nome-livello"
 
 #~ msgid "Pattern is Start of LayerName"
-#~ msgstr "Il pattern Ë la parte iniziale del nome-livello"
+#~ msgstr "Il pattern √® la parte iniziale del nome-livello"
 
 #~ msgid "Pattern is End of Layername"
-#~ msgstr "Il pattern Ë la parte finale del nome-livello"
+#~ msgstr "Il pattern √® la parte finale del nome-livello"
 
 #~ msgid "Pattern is a Part of LayerName"
-#~ msgstr "Il pattern Ë una parte del nome-livello"
+#~ msgstr "Il pattern √® una parte del nome-livello"
 
 #~ msgid "Pattern is LayerstackNumber List"
-#~ msgstr "Il pattern Ë il numero Stack di livello in lista"
+#~ msgstr "Il pattern √® il numero Stack di livello in lista"
 
 #~ msgid "Pattern is REVERSE-stack List"
-#~ msgstr "Il pattern Ë l'INVERSO dello stack in lista"
+#~ msgstr "Il pattern √® l'INVERSO dello stack in lista"
 
 #~ msgid "All Visible (ignore Pattern)"
 #~ msgstr "Tutti visibili (ignora pattern)"
@@ -13168,7 +13168,7 @@ msgstr ""
 #~ "Perform function on one or more Layer(s)\n"
 #~ "in all frames of the selected frame range\n"
 #~ msgstr ""
-#~ "Performa funzione su uno o pi˘ livelli\n"
+#~ "Performa funzione su uno o pi√π livelli\n"
 #~ "su tutti i frame del campo selezionato\n"
 
 #~ msgid "From Frame:"
@@ -13225,8 +13225,8 @@ msgstr ""
 #~ "(is used on function rename only)"
 #~ msgstr ""
 #~ "Nuovo nome-livello per tutti i livelli in esame\n"
-#~ "[####] Ë sostituito dal numero del frame\n"
-#~ "(Ë utilizzato nella funzione rinomina solamente)"
+#~ "[####] √® sostituito dal numero del frame\n"
+#~ "(√® utilizzato nella funzione rinomina solamente)"
 
 #~ msgid "Frames Modify"
 #~ msgstr "Modifica frame"
@@ -13388,13 +13388,13 @@ msgstr ""
 #~ msgstr "Oggetto sorgente da inserire dentro al campo Frame"
 
 #~ msgid "Mode:"
-#~ msgstr "Modalit‡:"
+#~ msgstr "Modalit√†:"
 
 #~ msgid "Paintmode"
-#~ msgstr "Modalit‡ di Disegno"
+#~ msgstr "Modalit√† di Disegno"
 
 #~ msgid "Stepmode:"
-#~ msgstr "Modalit‡ di movimento:"
+#~ msgstr "Modalit√† di movimento:"
 
 #~ msgid "Handle:"
 #~ msgstr "Valore:"
@@ -13427,7 +13427,7 @@ msgstr ""
 #~ "(the last Point is duplicated)"
 #~ msgstr ""
 #~ "Aggiungi punto di controllo alla fine\n"
-#~ "(l'ultimo punto Ë duplicato)"
+#~ "(l'ultimo punto √® duplicato)"
 
 #, fuzzy
 #~ msgid "Show Path"
@@ -13439,7 +13439,7 @@ msgstr ""
 #~ "(the current Point is duplicated)"
 #~ msgstr ""
 #~ "Aggiungi punto di controllo alla fine\n"
-#~ "(l'ultimo punto Ë duplicato)"
+#~ "(l'ultimo punto √® duplicato)"
 
 #, fuzzy
 #~ msgid "Delete current Controlpoint"
@@ -13561,11 +13561,11 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "    (use 'Frames Convert' from the Video Menu"
-#~ msgstr "     (utilizza 'Conversione Frame' dal men˘ di AnimFrames"
+#~ msgstr "     (utilizza 'Conversione Frame' dal men√π di AnimFrames"
 
 #, fuzzy
 #~ msgid "    or 'Split Image to Frames' from the Video Menu)"
-#~ msgstr "    o 'Dividi Immagine in Frame' dal men˘ di AnimFrames)"
+#~ msgstr "    o 'Dividi Immagine in Frame' dal men√π di AnimFrames)"
 
 #~ msgid "3.) All Images must have the same size,"
 #~ msgstr "3.) Tutte le immagini devono avere la stessa dimensione,"
@@ -13576,7 +13576,7 @@ msgstr ""
 #, fuzzy
 #~ msgid "    (use Scale or Crop from the Video Menu)"
 #~ msgstr ""
-#~ "    (utilizza lo strumento Scala e Taglierina dal men˘ di AnimFrame)"
+#~ "    (utilizza lo strumento Scala e Taglierina dal men√π di AnimFrame)"
 
 #~ msgid "MPEG_ENCODE Information"
 #~ msgstr "Informazioni MPEG_ENCODE"
@@ -13618,7 +13618,7 @@ msgstr ""
 #~ msgid ""
 #~ "Name of the Startscript           \n"
 #~ "(is generated/executed)"
-#~ msgstr "Nome dello script di partenza:(Ë generato/eseguito)"
+#~ msgstr "Nome dello script di partenza:(√® generato/eseguito)"
 
 #~ msgid "Constant Bitrate :"
 #~ msgstr "Bitrate costante :"
@@ -13882,7 +13882,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Layer Mergemode:"
-#~ msgstr "Modalit‡ di incollamento Livello :"
+#~ msgstr "Modalit√† di incollamento Livello :"
 
 #~ msgid "Exclude BG-Layer"
 #~ msgstr "Escludi livello di Sfondo"
@@ -14130,7 +14130,7 @@ msgstr ""
 #~ msgstr "Ambiente"
 
 #~ msgid "High Preview Quality"
-#~ msgstr "Anteprima ad Alta Qualit‡"
+#~ msgstr "Anteprima ad Alta Qualit√†"
 
 #~ msgid "Spot Light"
 #~ msgstr "Luce Spot"
@@ -14430,9 +14430,9 @@ msgstr ""
 #~ "a prameter file is passed as the 4th arg. You can control CML_explorer "
 #~ "via parameter file."
 #~ msgstr ""
-#~ "Crea una immagine in Lattice Coupled-Map (CML). CML Ë un tipo di Cellula "
+#~ "Crea una immagine in Lattice Coupled-Map (CML). CML √® un tipo di Cellula "
 #~ "Automata sul dominio di valori continui. In RUN_NONINTERACTIVE, il nome "
-#~ "di unfile di parametri Ë passato come quarto argomento. Potete "
+#~ "di unfile di parametri √® passato come quarto argomento. Potete "
 #~ "controllare CML_explorer attraverso il file dei parametri."
 
 #, fuzzy
@@ -14592,7 +14592,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Glow Mode:"
-#~ msgstr "Modalit‡:"
+#~ msgstr "Modalit√†:"
 
 #, fuzzy
 #~ msgid "Rays Opacity (%):"
@@ -14600,7 +14600,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Rays Mode:"
-#~ msgstr "Modalit‡:"
+#~ msgstr "Modalit√†:"
 
 #, fuzzy
 #~ msgid "Preview options"
@@ -14702,10 +14702,10 @@ msgstr ""
 #~ "Questo semplice plugin compie un aggiustamente automatico del contrasto. "
 #~ "Perogni canale nelle immagini, esso trova il minimi e massimi valori... "
 #~ "li utilizzaper aggiustare gli istogrammi individuali ai campi di "
-#~ "contrasto completi.Per alcune immagini puÚ fare quello che desiderate; "
+#~ "contrasto completi.Per alcune immagini pu√≤ fare quello che desiderate; "
 #~ "per altre possono esserci limiti.Questa versione differenzia da Constrast "
-#~ "Autostrech perchË lavora nello spazio HSVe preserva i valori della "
-#~ "Tonalit‡."
+#~ "Autostrech perch√® lavora nello spazio HSVe preserva i valori della "
+#~ "Tonalit√†."
 
 #~ msgid "Apply a 3x3 blurring convolution kernel to the specified drawable."
 #~ msgstr "Applica un 3x3 blurring convolution kernel alla figura specificata."
@@ -14730,7 +14730,7 @@ msgstr ""
 #~ "reasonable randomization"
 #~ msgstr ""
 #~ "Genere un seme di numeri casuali dall'ora corrente - questo garantisceuna "
-#~ "casualit‡ ragionevole."
+#~ "casualit√† ragionevole."
 
 #~ msgid "Other Value"
 #~ msgstr "Altri Valori"
@@ -14755,10 +14755,10 @@ msgstr ""
 #~ "Questo semplice plugin compie un aggiustamente automatico del contrasto. "
 #~ "Per ogni canale nelle immagini, esso trova il minimi e massimi valori... "
 #~ "li utilizza per aggiustare gli istogrammi individuali ai campi di "
-#~ "contrasto completi. Per alcune immagini puÚ fare quello che desiderate; "
+#~ "contrasto completi. Per alcune immagini pu√≤ fare quello che desiderate; "
 #~ "per altre possono esserci limiti. Questa versione differenzia da "
-#~ "Constrast Autostrech perchË lavora nello spazio HSV e preserva i valori "
-#~ "della Tonalit‡."
+#~ "Constrast Autostrech perch√® lavora nello spazio HSV e preserva i valori "
+#~ "della Tonalit√†."
 
 #~ msgid "Adds a checkerboard pattern to an image"
 #~ msgstr "Aggiungi un pattern a scacchi all'immagine"
@@ -14781,13 +14781,13 @@ msgstr ""
 #~ "Questo semplice plugin compie un aggiustamente automatico della "
 #~ "saturazione. Per ogni canale nelle immagini, esso trova il minimi e "
 #~ "massimi valori... li utilizza per aggiustare gli istogrammi individuali "
-#~ "ai campi completi. Per alcune immagini puÚ fare quello che desiderate per "
+#~ "ai campi completi. Per alcune immagini pu√≤ fare quello che desiderate per "
 #~ "altre possono esserci limiti. Questa versione differenzia dal Contrasto "
-#~ "Automatico perchË lavora nello spazio HSV e preserva i valori della "
-#~ "Tonalit‡."
+#~ "Automatico perch√® lavora nello spazio HSV e preserva i valori della "
+#~ "Tonalit√†."
 
 #~ msgid "Similar to the \"Color\" mode for layers."
-#~ msgstr "Simile alla modalit‡ \"Colore\" per i livelli."
+#~ msgstr "Simile alla modalit√† \"Colore\" per i livelli."
 
 #~ msgid "Makes an average of the RGB channels and uses it to set the color"
 #~ msgstr ""
@@ -14972,7 +14972,7 @@ msgstr ""
 #~ "drawable.  The size of the input mask is specified by 'mask_size'."
 #~ msgstr ""
 #~ "Questa funzione performa il ben conosciuto effetto di pitturaad olio "
-#~ "sulla figura. La dimensione della maschera Ë specificatada 'dimensione "
+#~ "sulla figura. La dimensione della maschera √® specificatada 'dimensione "
 #~ "maschera'."
 
 #, fuzzy
@@ -15072,29 +15072,29 @@ msgstr ""
 #~ msgstr "apri file in formato xpm"
 
 #~ msgid "Rotates a layer or the whole image by 90, 180 or 270 degrees"
-#~ msgstr "Ruotate un livello l'intera immagine di 90∞, 180∞ o 270∞"
+#~ msgstr "Ruotate un livello l'intera immagine di 90¬∞, 180¬∞ o 270¬∞"
 
 #~ msgid "Rotates the given layer 90 degrees clockwise."
-#~ msgstr "Rotazione della selezione di 90∞ in senso orario."
+#~ msgstr "Rotazione della selezione di 90¬∞ in senso orario."
 
 #, fuzzy
 #~ msgid "Rotates the given layer 180 degrees."
-#~ msgstr "Rotazione della selezione di 90∞ in senso orario."
+#~ msgstr "Rotazione della selezione di 90¬∞ in senso orario."
 
 #, fuzzy
 #~ msgid "Rotates the given layer 270 degrees clockwise."
-#~ msgstr "Rotazione della selezione di 90∞ in senso orario."
+#~ msgstr "Rotazione della selezione di 90¬∞ in senso orario."
 
 #~ msgid "Rotates the given image 90 degrees clockwise."
-#~ msgstr "Rotazione dell'intera immagine di 90∞ in senso orario"
+#~ msgstr "Rotazione dell'intera immagine di 90¬∞ in senso orario"
 
 #, fuzzy
 #~ msgid "Rotates the given image 180 degrees."
-#~ msgstr "Rotazione dell'intera immagine di 90∞ in senso orario"
+#~ msgstr "Rotazione dell'intera immagine di 90¬∞ in senso orario"
 
 #, fuzzy
 #~ msgid "Rotates the given image 270 degrees clockwise."
-#~ msgstr "Rotazione dell'intera immagine di 90∞ in senso orario"
+#~ msgstr "Rotazione dell'intera immagine di 90¬∞ in senso orario"
 
 #, fuzzy
 #~ msgid "Applies a selective gaussian blur to the specified drawable."
@@ -15172,7 +15172,7 @@ msgstr ""
 #~ "Load a file in X10 or X11 bitmap (XBM) file format.  XBM is a lossless "
 #~ "format for flat black-and-white (two color indexed) images."
 #~ msgstr ""
-#~ "Apre un file bitmap nel formato X10 o X11 (XBM). XBM Ë un formato con "
+#~ "Apre un file bitmap nel formato X10 o X11 (XBM). XBM √® un formato con "
 #~ "perditadi dati per le immagini bianco e nero (due colori in Scala di "
 #~ "Colore."
 
@@ -15185,7 +15185,7 @@ msgstr ""
 #~ msgid ""
 #~ "saves files in the xpm file format (if you're on a 16 bit display...)"
 #~ msgstr ""
-#~ "salva file in formato xpm (se si ha una modalit‡ a 16 bit del display...)"
+#~ "salva file in formato xpm (se si ha una modalit√† a 16 bit del display...)"
 
 #~ msgid "load file of the XWD file format"
 #~ msgstr "apri file del formato XWD"
@@ -15272,7 +15272,7 @@ msgstr ""
 #~ msgstr "Tipi di Immagini: "
 
 #~ msgid "Converts a selection to a path (with advanced user menu)"
-#~ msgstr "Converte una selezione a tracciato (con men˘ utente avanzato)"
+#~ msgstr "Converte una selezione a tracciato (con men√π utente avanzato)"
 
 #~ msgid "Converts a selection to a path"
 #~ msgstr "Converte una selezione a tracciato"

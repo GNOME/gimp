@@ -1,16 +1,16 @@
 # Irish Translations for gimp plug ins 
 # Copyright (C) 2000 Free Software Foundation, Inc.
-# Se·n ” Ceallaigh <s_oceallaigh@yahoo.com>, 2000.
+# Se√°n √ì Ceallaigh <s_oceallaigh@yahoo.com>, 2000.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp po-plug-ins CVS\n"
 "POT-Creation-Date: 2003-06-26 22:14+0200\n"
 "PO-Revision-Date: 2000-08-27 00:23+0000\n"
-"Last-Translator: Se·n ” Ceallaigh <s_oceallaigh@yahoo.com>\n"
+"Last-Translator: Se√°n √ì Ceallaigh <s_oceallaigh@yahoo.com>\n"
 "Language-Team: Gaeilge <gaeilge-a@listserv.heanet.ie>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:294
@@ -37,17 +37,17 @@ msgstr "Faoi"
 #: plug-ins/ifscompose/ifscompose.c:931 plug-ins/print/gimp_main_window.c:411
 #: plug-ins/rcm/rcm_dialog.c:124 plug-ins/rcm/rcm_dialog.c:671
 msgid "Preview"
-msgstr "RÈamhthaispe·ntas"
+msgstr "R√©amhthaispe√°ntas"
 
 #: plug-ins/FractalExplorer/Dialogs.c:363
 msgid "Realtime Preview"
-msgstr "RÈamhthaispe·ntas Beo"
+msgstr "R√©amhthaispe√°ntas Beo"
 
 #: plug-ins/FractalExplorer/Dialogs.c:370
 msgid "If you enable this option the preview will be redrawn automatically"
 msgstr ""
-"M· chuireann t˙ an rogha seo ar s˙il, athscrÌobhfar an rÈamhthaispe·ntas gan "
-"strÛ"
+"M√° chuireann t√∫ an rogha seo ar s√∫il, athscr√≠obhfar an r√©amhthaispe√°ntas gan "
+"str√≥"
 
 #: plug-ins/FractalExplorer/Dialogs.c:373
 msgid "Redraw"
@@ -588,7 +588,7 @@ msgstr ""
 #: plug-ins/Lighting/lighting_ui.c:408
 #, fuzzy
 msgid "High _Quality Preview"
-msgstr "RÈamhthaispe·ntas Beo"
+msgstr "R√©amhthaispe√°ntas Beo"
 
 #: plug-ins/Lighting/lighting_ui.c:418
 msgid "Enable/disable high quality preview"
@@ -872,7 +872,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_polygon.c:516
 #, fuzzy
 msgid "_Update"
-msgstr "RÈamhthaispe·ntas Beo"
+msgstr "R√©amhthaispe√°ntas Beo"
 
 #: plug-ins/Lighting/lighting_ui.c:1194 plug-ins/MapObject/mapobject_ui.c:1445
 msgid "Recompute preview image"
@@ -1119,7 +1119,7 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:1436 plug-ins/common/diffraction.c:575
 #, fuzzy
 msgid "_Preview!"
-msgstr "RÈamhthaispe·ntas"
+msgstr "R√©amhthaispe√°ntas"
 
 #: plug-ins/MapObject/mapobject_ui.c:1459
 msgid "Zoom out (make image smaller)"
@@ -2749,13 +2749,13 @@ msgstr ""
 #: plug-ins/common/curve_bend.c:1412
 #, fuzzy
 msgid "_Preview Once"
-msgstr "RÈamhthaispe·ntas"
+msgstr "R√©amhthaispe√°ntas"
 
 #. The preview toggle
 #: plug-ins/common/curve_bend.c:1421
 #, fuzzy
 msgid "Automatic Pre_view"
-msgstr "RÈamhthaispe·ntas Beo"
+msgstr "R√©amhthaispe√°ntas Beo"
 
 #. Options area, bottom of column
 #: plug-ins/common/curve_bend.c:1431 plug-ins/common/ripple.c:512
@@ -3282,7 +3282,7 @@ msgstr ""
 #: plug-ins/common/emboss.c:742 plug-ins/common/sinus.c:2067
 #, fuzzy
 msgid "Do _Preview"
-msgstr "RÈamhthaispe·ntas"
+msgstr "R√©amhthaispe√°ntas"
 
 #: plug-ins/common/engrave.c:118
 msgid "<Image>/Filters/Distorts/Engrave..."
@@ -4866,7 +4866,7 @@ msgstr ""
 #: plug-ins/common/nlfilt.c:485 plug-ins/common/waves.c:475
 #, fuzzy
 msgid "_Do Preview"
-msgstr "RÈamhthaispe·ntas"
+msgstr "R√©amhthaispe√°ntas"
 
 #: plug-ins/common/noisify.c:132
 msgid "<Image>/Filters/Noise/Noisify..."
@@ -5496,12 +5496,12 @@ msgstr ""
 #: plug-ins/common/ps.c:2966
 #, fuzzy
 msgid "P_review"
-msgstr "RÈamhthaispe·ntas"
+msgstr "R√©amhthaispe√°ntas"
 
 #: plug-ins/common/ps.c:2987
 #, fuzzy
 msgid "Preview _Size:"
-msgstr "RÈamhthaispe·ntas"
+msgstr "R√©amhthaispe√°ntas"
 
 #: plug-ins/common/psp.c:422
 msgid "Save as PSP"
@@ -5756,7 +5756,7 @@ msgstr ""
 #: plug-ins/common/screenshot.c:471
 #, fuzzy
 msgid "_after"
-msgstr "RÈamhthaispe·ntas Beo"
+msgstr "R√©amhthaispe√°ntas Beo"
 
 #: plug-ins/common/screenshot.c:484 plug-ins/winsnap/winsnap.c:1018
 msgid "Seconds Delay"
@@ -8384,7 +8384,7 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:2348
 #, fuzzy
 msgid "A_uto Update Preview"
-msgstr "RÈamhthaispe·ntas Beo"
+msgstr "R√©amhthaispe√°ntas Beo"
 
 #: plug-ins/gflare/gflare.c:2403
 msgid "`Default' is created."
@@ -9092,7 +9092,7 @@ msgstr ""
 #: plug-ins/gimpressionist/presets.c:582
 #, fuzzy
 msgid "_Presets"
-msgstr "RÈamhthaispe·ntas"
+msgstr "R√©amhthaispe√°ntas"
 
 #: plug-ins/gimpressionist/presets.c:597
 msgid "Save current..."
@@ -9736,7 +9736,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_edit_area_info.c:313
 #, fuzzy
 msgid "Pre_view"
-msgstr "RÈamhthaispe·ntas"
+msgstr "R√©amhthaispe√°ntas"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:351
 msgid "_JavaScript"
@@ -9824,7 +9824,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_grid.c:295
 #, fuzzy
 msgid "_Preview"
-msgstr "RÈamhthaispe·ntas"
+msgstr "R√©amhthaispe√°ntas"
 
 #: plug-ins/imagemap/imap_main.c:128
 msgid "<Image>/Filters/Web/ImageMap..."
@@ -11195,11 +11195,11 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "_Update Preview"
-#~ msgstr "RÈamhthaispe·ntas Beo"
+#~ msgstr "R√©amhthaispe√°ntas Beo"
 
 #, fuzzy
 #~ msgid "Image preview"
-#~ msgstr "RÈamhthaispe·ntas Beo"
+#~ msgstr "R√©amhthaispe√°ntas Beo"
 
 #~ msgid "OK"
 #~ msgstr "Ceart go leor"

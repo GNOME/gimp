@@ -9,7 +9,7 @@ msgstr ""
 "Last-Translator:  <>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:294
@@ -89,7 +89,7 @@ msgstr "XMIN:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:458
 msgid "Change the first (minimal) x-coordinate delimitation"
-msgstr "Verander de eerste (minimale) x-coördinaatbegrenzing"
+msgstr "Verander de eerste (minimale) x-coÃ¶rdinaatbegrenzing"
 
 #: plug-ins/FractalExplorer/Dialogs.c:466
 msgid "XMAX:"
@@ -97,7 +97,7 @@ msgstr "XMAX:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:469
 msgid "Change the second (maximal) x-coordinate delimitation"
-msgstr "Verander de tweede (maximale) x-coördinaatbegrenzing"
+msgstr "Verander de tweede (maximale) x-coÃ¶rdinaatbegrenzing"
 
 #: plug-ins/FractalExplorer/Dialogs.c:477
 msgid "YMIN:"
@@ -105,7 +105,7 @@ msgstr "YMIN:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:480
 msgid "Change the first (minimal) y-coordinate delimitation"
-msgstr "Verander de eerste (minimale) y-coördinaatbegrenzing"
+msgstr "Verander de eerste (minimale) y-coÃ¶rdinaatbegrenzing"
 
 #: plug-ins/FractalExplorer/Dialogs.c:488
 msgid "YMAX:"
@@ -113,7 +113,7 @@ msgstr "YMAX:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:491
 msgid "Change the second (maximal) y-coordinate delimitation"
-msgstr "Verander de tweede (maximale) y-coördinaatbegrenzing"
+msgstr "Verander de tweede (maximale) y-coÃ¶rdinaatbegrenzing"
 
 #: plug-ins/FractalExplorer/Dialogs.c:499
 msgid "ITER:"
@@ -841,7 +841,7 @@ msgstr "Logaritmisch"
 
 #: plug-ins/Lighting/lighting_ui.c:943 plug-ins/flame/flame.c:727
 msgid "Sinusoidal"
-msgstr "Sinusoïdaal"
+msgstr "SinusoÃ¯daal"
 
 #: plug-ins/Lighting/lighting_ui.c:944 plug-ins/flame/flame.c:728
 msgid "Spherical"
@@ -1182,7 +1182,7 @@ msgstr "Opties"
 #: plug-ins/MapObject/mapobject_ui.c:1343
 #, fuzzy
 msgid "O_rientation"
-msgstr "Oriëntatie"
+msgstr "OriÃ«ntatie"
 
 #: plug-ins/MapObject/mapobject_ui.c:1380
 msgid "Map to Object"
@@ -1558,7 +1558,7 @@ msgstr "Aantal kleuren (%d) is niet ondersteund"
 
 #: plug-ins/common/CEL.c:483
 msgid "Only an indexed-alpha image can be saved in CEL format"
-msgstr "Alleen een geïndexeerde alpha-afbeelding kan als CEL worden opgeslagen"
+msgstr "Alleen een geÃ¯ndexeerde alpha-afbeelding kan als CEL worden opgeslagen"
 
 #: plug-ins/common/CML_explorer.c:134
 msgid "Keep image's values"
@@ -1876,7 +1876,7 @@ msgstr "Overige parameters"
 
 #: plug-ins/common/CML_explorer.c:1427
 msgid "Copy Settings"
-msgstr "Instellingen kopiëren"
+msgstr "Instellingen kopiÃ«ren"
 
 #: plug-ins/common/CML_explorer.c:1451
 msgid "Source Channel:"
@@ -1888,7 +1888,7 @@ msgstr "Doelkanaal:"
 
 #: plug-ins/common/CML_explorer.c:1471
 msgid "Copy Parameters"
-msgstr "Parameters kopiëren"
+msgstr "Parameters kopiÃ«ren"
 
 #: plug-ins/common/CML_explorer.c:1480
 msgid "Selective Load Settings"
@@ -2323,7 +2323,7 @@ msgstr "Rolgordijnen"
 #. Orientation toggle box
 #: plug-ins/common/blinds.c:365 plug-ins/common/ripple.c:543
 msgid "Orientation"
-msgstr "Oriëntatie"
+msgstr "OriÃ«ntatie"
 
 #: plug-ins/common/blinds.c:369 plug-ins/common/ripple.c:548
 #: plug-ins/common/tileit.c:448
@@ -3054,7 +3054,7 @@ msgstr "Type kromme: "
 #: plug-ins/common/curve_bend.c:1548
 #, fuzzy
 msgid "_Copy"
-msgstr "Kopiëren"
+msgstr "KopiÃ«ren"
 
 #: plug-ins/common/curve_bend.c:1553
 msgid "Copy the active curve to the other border"
@@ -3544,11 +3544,11 @@ msgstr "Hoeveelheid:"
 
 #: plug-ins/common/emboss.c:154
 msgid "<Image>/Filters/Distorts/Emboss..."
-msgstr "<Image>/Filters/Vervormingen/Reliëf..."
+msgstr "<Image>/Filters/Vervormingen/ReliÃ«f..."
 
 #: plug-ins/common/emboss.c:397 plug-ins/common/emboss.c:500
 msgid "Emboss"
-msgstr "Reliëf"
+msgstr "ReliÃ«f"
 
 #: plug-ins/common/emboss.c:530
 msgid "Function"
@@ -3563,7 +3563,7 @@ msgstr "Bumpmap"
 #: plug-ins/common/emboss.c:535
 #, fuzzy
 msgid "_Emboss"
-msgstr "Reliëf"
+msgstr "ReliÃ«f"
 
 #: plug-ins/common/emboss.c:563
 #, fuzzy
@@ -4009,7 +4009,7 @@ msgid ""
 "Sorry, can't save RGB images as GIFs. Convert to Indexed or Grayscale first."
 msgstr ""
 "GIF: Sorry, kan RGB-afbeeldingen niet als GIF opslaan - converteer\n"
-"eerst naar Geïndexeerd of Grijswaarden.\n"
+"eerst naar GeÃ¯ndexeerd of Grijswaarden.\n"
 
 #: plug-ins/common/gif.c:1088
 msgid ""
@@ -4119,7 +4119,7 @@ msgstr "GIMP-penseelbestand lijkt beschadigd te zijn."
 
 #: plug-ins/common/gih.c:682
 msgid "Couldn't load one brush in the pipe, giving up."
-msgstr "Kon niet één penseel in de pijp laden, ik geef op."
+msgstr "Kon niet Ã©Ã©n penseel in de pijp laden, ik geef op."
 
 #: plug-ins/common/gih.c:842
 msgid "Save as Brush Pipe"
@@ -4976,7 +4976,7 @@ msgid ""
 "Cannot operate on gray/indexed images"
 msgstr ""
 "Kleur projecteren / VG/AG aanpassen:\n"
-"ik kan niet op grijswaarden-/geïndexeerde afbeeldingen werken"
+"ik kan niet op grijswaarden-/geÃ¯ndexeerde afbeeldingen werken"
 
 #: plug-ins/common/mapcolor.c:437
 #, fuzzy
@@ -5834,7 +5834,7 @@ msgstr "ASCII"
 
 #: plug-ins/common/polar.c:202
 msgid "<Image>/Filters/Distorts/Polar Coords..."
-msgstr "<Image>/Filters/Vervormingen/Polaire coördinaten..."
+msgstr "<Image>/Filters/Vervormingen/Polaire coÃ¶rdinaten..."
 
 #: plug-ins/common/polar.c:385
 msgid "Polarizing..."
@@ -6330,7 +6330,7 @@ msgstr "Selectieve Gaussiaanse vervaging"
 
 #: plug-ins/common/sel_gauss.c:218
 msgid "sel_gauss: Cannot operate on indexed color images"
-msgstr "sel_gauss: kan niet op geïndexeerde afbeeldingen werken"
+msgstr "sel_gauss: kan niet op geÃ¯ndexeerde afbeeldingen werken"
 
 #: plug-ins/common/sel_gauss.c:237
 msgid "Selective Gaussian Blur"
@@ -6528,7 +6528,7 @@ msgstr "Bilineair"
 #: plug-ins/common/sinus.c:1920
 #, fuzzy
 msgid "Sin_usoidal"
-msgstr "Sinusoïdaal"
+msgstr "SinusoÃ¯daal"
 
 #: plug-ins/common/sinus.c:1932
 #, fuzzy
@@ -6623,7 +6623,7 @@ msgstr "Sobel verticaal"
 #: plug-ins/common/sobel.c:289
 #, fuzzy
 msgid "_Keep Sign of Result (one Direction only)"
-msgstr "Behoud het teken van het resultaat (enkel één richting)"
+msgstr "Behoud het teken van het resultaat (enkel Ã©Ã©n richting)"
 
 #: plug-ins/common/sobel.c:363
 msgid "Sobel Edge Detecting..."
@@ -7776,7 +7776,7 @@ msgstr "Knijphoeveelheid:"
 
 #: plug-ins/common/winclipboard.c:109
 msgid "<Image>/Edit/Copy to Clipboard"
-msgstr "<Image>/Bewerken/Naar klembord kopiëren"
+msgstr "<Image>/Bewerken/Naar klembord kopiÃ«ren"
 
 #: plug-ins/common/winclipboard.c:121
 msgid "<Image>/Edit/Paste from Clipboard"
@@ -7789,7 +7789,7 @@ msgstr "<Toolbox>/Bestand/Importeren/Uit klembord"
 #: plug-ins/common/winclipboard.c:308
 #, fuzzy
 msgid "Copying..."
-msgstr "Kopiëren ..."
+msgstr "KopiÃ«ren ..."
 
 #: plug-ins/common/winclipboard.c:471
 msgid "Unsupported format or Clipboard empty!"
@@ -7857,7 +7857,7 @@ msgstr "Rechts"
 #. **************************************************
 #: plug-ins/common/wind.c:983
 msgid "Edge Affected"
-msgstr "Beïnvloedde rand"
+msgstr "BeÃ¯nvloedde rand"
 
 #: plug-ins/common/wind.c:988
 #, fuzzy
@@ -8008,7 +8008,7 @@ msgstr ""
 "een XBM bevat meer dan twee kleuren.\n"
 "\n"
 "Converteer de afbeelding naar zwart en wit\n"
-"(1 bit) geïndexeerd en probeer nog eens."
+"(1 bit) geÃ¯ndexeerd en probeer nog eens."
 
 #: plug-ins/common/xbm.c:981
 msgid ""
@@ -8113,7 +8113,7 @@ msgstr "Geen geheugen om kleuren in te delen"
 
 #: plug-ins/common/xwd.c:2059
 msgid "Error during writing indexed/grey image"
-msgstr "Fout tijdens het schrijven van geïndexeerde/grijze afbeelding"
+msgstr "Fout tijdens het schrijven van geÃ¯ndexeerde/grijze afbeelding"
 
 #: plug-ins/common/xwd.c:2148
 msgid "Error during writing rgb image"
@@ -8427,7 +8427,7 @@ msgstr "Ruwheid"
 
 #: plug-ins/fp/fp_gtk.c:251
 msgid "Affected Range"
-msgstr "Beïnvloed bereik"
+msgstr "BeÃ¯nvloed bereik"
 
 #: plug-ins/fp/fp_gtk.c:261
 msgid "Shadows"
@@ -8556,7 +8556,7 @@ msgstr "Selecteer vorige vector"
 #: plug-ins/gfig/gfig.c:1716
 #, fuzzy
 msgid "Show next object"
-msgstr "Object kopiëren"
+msgstr "Object kopiÃ«ren"
 
 #: plug-ins/gfig/gfig.c:1728
 msgid "All"
@@ -8565,7 +8565,7 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:1729
 #, fuzzy
 msgid "Show all objects"
-msgstr "Object kopiëren"
+msgstr "Object kopiÃ«ren"
 
 #: plug-ins/gfig/gfig.c:1828
 msgid "Number of Sides/Points/Turns:"
@@ -8582,7 +8582,7 @@ msgstr "Tegen de klok in"
 #: plug-ins/gfig/gfig.c:1849 plug-ins/gimpressionist/orientation.c:100
 #: plug-ins/print/gimp_main_window.c:497
 msgid "Orientation:"
-msgstr "Oriëntatie:"
+msgstr "OriÃ«ntatie:"
 
 #: plug-ins/gfig/gfig.c:1869
 msgid "Bezier Settings"
@@ -8658,7 +8658,7 @@ msgstr "Punt verplaatsen"
 
 #: plug-ins/gfig/gfig.c:2041
 msgid "Copy an object"
-msgstr "Object kopiëren"
+msgstr "Object kopiÃ«ren"
 
 #: plug-ins/gfig/gfig.c:2046
 msgid "Delete an object"
@@ -8707,7 +8707,7 @@ msgstr "Meerdere"
 #: plug-ins/gfig/gfig.c:2629
 msgid "Draw all objects on one layer (original or new) or one object per layer"
 msgstr ""
-"Teken alle objecten in één laag (originele of nieuwe) of één object per laag"
+"Teken alle objecten in Ã©Ã©n laag (originele of nieuwe) of Ã©Ã©n object per laag"
 
 #: plug-ins/gfig/gfig.c:2634
 msgid "Draw on:"
@@ -8748,14 +8748,14 @@ msgstr "Voorgrond"
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
 #: plug-ins/imagemap/imap_toolbar.c:126
 msgid "Copy"
-msgstr "Kopiëren"
+msgstr "KopiÃ«ren"
 
 #: plug-ins/gfig/gfig.c:2691
 msgid ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
 msgstr ""
-"Laagachtergrondtype. Kopiëren zorgt ervoor dat de vorige laag wordt "
+"Laagachtergrondtype. KopiÃ«ren zorgt ervoor dat de vorige laag wordt "
 "gekopieerd voordat het tekenen wordt uitgevoerd."
 
 #: plug-ins/gfig/gfig.c:2696
@@ -9119,7 +9119,7 @@ msgstr "Fout bij het lezen bestand"
 
 #: plug-ins/gfig/gfig.c:6323
 msgid "Hey where has the object gone ?"
-msgstr "Hé, waar is het object naar toe?"
+msgstr "HÃ©, waar is het object naar toe?"
 
 #: plug-ins/gflare/gflare.c:576
 msgid "Addition"
@@ -9140,7 +9140,7 @@ msgstr "Verloopflakkering..."
 #: plug-ins/gflare/gflare.c:971
 msgid "GFlare: cannot operate on indexed color images"
 msgstr ""
-"Verloopflakkering: kan niet met geïndexeerde kleurenafbeeldingen werken"
+"Verloopflakkering: kan niet met geÃ¯ndexeerde kleurenafbeeldingen werken"
 
 #: plug-ins/gflare/gflare.c:1253
 #, fuzzy, c-format
@@ -9271,7 +9271,7 @@ msgstr "De naam '%s' wordt al gebruikt!"
 
 #: plug-ins/gflare/gflare.c:3101
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "Kan niet wissen! Er moet minstens één verloopflakkering zijn."
+msgstr "Kan niet wissen! Er moet minstens Ã©Ã©n verloopflakkering zijn."
 
 #: plug-ins/gflare/gflare.c:3111
 msgid "Delete GFlare"
@@ -9427,7 +9427,7 @@ msgstr "Frame (%i)"
 #, fuzzy
 msgid "Sorry, I can save only INDEXED and GRAY images."
 msgstr ""
-"FLI: sorry, ik kan alleen geïndexeerde of grijswaardenafbeeldingen opslaan"
+"FLI: sorry, ik kan alleen geÃ¯ndexeerde of grijswaardenafbeeldingen opslaan"
 
 #: plug-ins/gfli/gfli.c:818
 msgid "GFLI 1.3 - Load framestack"
@@ -9483,12 +9483,12 @@ msgstr "Geeft de aspectratio van het penseel aan"
 
 #: plug-ins/gimpressionist/brush.c:456 plug-ins/gimpressionist/paper.c:161
 msgid "Relief:"
-msgstr "Reliëf:"
+msgstr "ReliÃ«f:"
 
 #: plug-ins/gimpressionist/brush.c:460 plug-ins/gimpressionist/paper.c:165
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr ""
-"Bepaalt de hoeveelheid reliëf die op de afbeelding moet worden toegepast (in "
+"Bepaalt de hoeveelheid reliÃ«f die op de afbeelding moet worden toegepast (in "
 "procenten)"
 
 #: plug-ins/gimpressionist/color.c:34
@@ -9665,7 +9665,7 @@ msgstr "Info..."
 #: plug-ins/gimpressionist/orientation.c:45
 #, fuzzy
 msgid "Or_ientation"
-msgstr "Oriëntatie"
+msgstr "OriÃ«ntatie"
 
 #: plug-ins/gimpressionist/orientation.c:62
 msgid "Directions:"
@@ -9907,7 +9907,7 @@ msgstr "Op elkaar"
 
 #: plug-ins/gimpressionist/paper.c:134
 msgid "Applies the paper as it is (without embossing it)"
-msgstr "Past het papier zo toe (zonder een reliëf toe te passen)"
+msgstr "Past het papier zo toe (zonder een reliÃ«f toe te passen)"
 
 #: plug-ins/gimpressionist/paper.c:153
 msgid "Specifies the scale of the texture (in percent of original file)"
@@ -10317,7 +10317,7 @@ msgstr "IFS renderen (%d/%d)..."
 #: plug-ins/ifscompose/ifscompose.c:1413
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
-msgstr "IFS naar afbeelding kopiëren (%d/%d)..."
+msgstr "IFS naar afbeelding kopiÃ«ren (%d/%d)..."
 
 #: plug-ins/ifscompose/ifscompose.c:1552
 #, fuzzy, c-format
@@ -11248,7 +11248,7 @@ msgstr "Zie %s"
 #: plug-ins/mosaic/mosaic.c:325
 #, fuzzy
 msgid "<Image>/Filters/Distorts/Mosaic..."
-msgstr "<Image>/Filters/Vervormingen/Reliëf..."
+msgstr "<Image>/Filters/Vervormingen/ReliÃ«f..."
 
 #. progress bar for gradient finding
 #: plug-ins/mosaic/mosaic.c:450
@@ -11363,7 +11363,7 @@ msgstr "Rechtsonder"
 
 #: plug-ins/pagecurl/pagecurl.c:582
 msgid "Curl Orientation"
-msgstr "Oriëntatie oor"
+msgstr "OriÃ«ntatie oor"
 
 #: plug-ins/pagecurl/pagecurl.c:621
 msgid "Shade under Curl"
@@ -12228,7 +12228,7 @@ msgstr "Kan niet openen (schrijven): %s"
 
 #: plug-ins/xjt/xjt.c:1702
 msgid "xjt: cannot operate on indexed color images"
-msgstr "xjt: kan niet op geïndexeerde kleurenafbeeldingen werken"
+msgstr "xjt: kan niet op geÃ¯ndexeerde kleurenafbeeldingen werken"
 
 #: plug-ins/xjt/xjt.c:1706
 msgid "xjt: cannot operate on unknown image types"
@@ -12578,7 +12578,7 @@ msgstr "Fout: XJT-eigenschapsbestand %s is leeg"
 
 #~ msgid "Specifies the amount of embossing to apply to each brush stroke"
 #~ msgstr ""
-#~ "Geeft de hoeveelheid reliëf aan die op elke penseelstreek moet worden "
+#~ "Geeft de hoeveelheid reliÃ«f aan die op elke penseelstreek moet worden "
 #~ "toegepast"
 
 #~ msgid "Quit the program"
@@ -12741,7 +12741,7 @@ msgstr "Fout: XJT-eigenschapsbestand %s is leeg"
 
 #, fuzzy
 #~ msgid "Co_py"
-#~ msgstr "Kopiëren"
+#~ msgstr "KopiÃ«ren"
 
 #, fuzzy
 #~ msgid "_Delete"
