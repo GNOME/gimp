@@ -49,7 +49,7 @@ static void ipal_update_image_list (GimpColormapDialog *ipal);
 static void ipal_add_callback    (GtkWidget *, gpointer);
 static void ipal_edit_callback   (GtkWidget *, gpointer);
 static void ipal_close_callback  (GtkWidget *, gpointer);
-static void ipal_select_callback (gint, gint, gint, ColorNotebookState,
+static void ipal_select_callback (gint, gint, gint, gint, ColorNotebookState,
 				  gpointer);
 
 /*  event callback  */
@@ -90,17 +90,19 @@ palette_drag_color (GtkWidget *widget,
 		    guchar    *r,
 		    guchar    *g,
 		    guchar    *b,
+		    guchar    *a,
 		    gpointer   data)
 {
   GimpColormapDialog *ipal = (GimpColormapDialog *) data;
-  guint col = ipal->dnd_col_index;
-  GimpImage *gimage;
+  guint               col  = ipal->dnd_col_index;
+  GimpImage          *gimage;
 
   gimage = ipal->image;
 
   *r = gimage->cmap[col * 3 + 0];
   *g = gimage->cmap[col * 3 + 1];
   *b = gimage->cmap[col * 3 + 2];
+  *a = 255;
 }
 
 static void
@@ -108,6 +110,7 @@ palette_drop_color (GtkWidget *widget,
 		    guchar     r,
 		    guchar     g,
 		    guchar     b,
+		    guchar     a,
 		    gpointer   data)
 {
   GimpColormapDialog *ipal = (GimpColormapDialog *) data;
@@ -772,13 +775,13 @@ ipal_edit_callback (GtkWidget *widget,
   if (! ipal->color_notebook)
     {
       ipal->color_notebook
-	= color_notebook_new (r, g, b,
-			      ipal_select_callback, ipal, FALSE);
+	= color_notebook_new (r, g, b, 255,
+			      ipal_select_callback, ipal, FALSE, FALSE);
     }
   else
     {
       color_notebook_show (ipal->color_notebook);
-      color_notebook_set_color (ipal->color_notebook, r, g, b, 1);
+      color_notebook_set_color (ipal->color_notebook, r, g, b, 255, TRUE);
     }
 }
 
@@ -797,10 +800,11 @@ static void
 ipal_select_callback (gint                r,
 		      gint                g,
 		      gint                b,
+		      gint                a,
 		      ColorNotebookState  state,
 		      gpointer            data)
 {
-  GimpImage *gimage;
+  GimpImage          *gimage;
   GimpColormapDialog *ipal = data;
   
   g_return_if_fail (ipal);

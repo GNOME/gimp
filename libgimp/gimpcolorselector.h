@@ -28,34 +28,38 @@ extern "C" {
 /* For information look at the html documentation */
 
 
-typedef void        (* GimpColorSelector_Callback) (gpointer   data,
-						    gint       r,
-						    gint       g,
-						    gint       b);
+typedef void        (* GimpColorSelectorCallback) (gpointer   data,
+						   gint       r,
+						   gint       g,
+						   gint       b,
+						   gint       a);
 
-typedef GtkWidget * (* GimpColorSelector_NewFunc)  (gint       r,
-						    gint       g,
-						    gint       b,
-						    GimpColorSelector_Callback cb,
-						    gpointer   data,
-						    gpointer  *selector_data);
+typedef GtkWidget * (* GimpColorSelectorNewFunc)  (gint       r,
+						   gint       g,
+						   gint       b,
+						   gint       a,
+						   gboolean   show_alpha,
+						   GimpColorSelectorCallback cb,
+						   gpointer   data,
+						   gpointer  *selector_data);
 
-typedef void        (* GimpColorSelector_FreeFunc) (gpointer   selector_data);
+typedef void        (* GimpColorSelectorFreeFunc) (gpointer   selector_data);
 
 
-typedef void    (* GimpColorSelector_SetColorFunc) (gpointer   selector_data,
-						    gint       r,
-						    gint       g,
-						    gint       b,
-						    gboolean   set_current);
+typedef void    (* GimpColorSelectorSetColorFunc) (gpointer   selector_data,
+						   gint       r,
+						   gint       g,
+						   gint       b,
+						   gint       a,
+						   gboolean   set_current);
 
 typedef struct _GimpColorSelectorMethods GimpColorSelectorMethods;
 
 struct _GimpColorSelectorMethods
 {
-  GimpColorSelector_NewFunc      new;
-  GimpColorSelector_FreeFunc     free;
-  GimpColorSelector_SetColorFunc setcolor;
+  GimpColorSelectorNewFunc      new;
+  GimpColorSelectorFreeFunc     free;
+  GimpColorSelectorSetColorFunc setcolor;
 };
 
 typedef gpointer GimpColorSelectorID;
@@ -65,15 +69,17 @@ typedef gpointer GimpColorSelectorID;
 
 /*  Bypass when compiling the source for these functions.
  */
-GimpColorSelectorID   gimp_color_selector_register (const gchar *name,
-						    const gchar *help_page,
-				       GimpColorSelectorMethods *methods);
+GimpColorSelectorID
+gimp_color_selector_register   (const gchar                 *name,
+				const gchar                 *help_page,
+				GimpColorSelectorMethods    *methods);
 
-typedef void (* GimpColorSelectorFinishedCB) (gpointer           finished_data);
+typedef void (* GimpColorSelectorFinishedCB) (gpointer       finished_data);
 
-gboolean   gimp_color_selector_unregister  (GimpColorSelectorID  id,
-				    GimpColorSelectorFinishedCB  finished_cb,
-					    gpointer             finished_data);
+gboolean
+gimp_color_selector_unregister (GimpColorSelectorID          id,
+				GimpColorSelectorFinishedCB  finished_cb,
+				gpointer                     finished_data);
 
 #endif /* !__COLOR_NOTEBOOK_C__ */
 

@@ -102,6 +102,7 @@ static void   by_color_select_color_drop      (GtkWidget      *widget,
 					       guchar          r,
 					       guchar          g,
 					       guchar          b,
+					       guchar          a,
 					       gpointer        data);
 
 /*  by_color select action functions  */
@@ -1232,6 +1233,7 @@ by_color_select_color_drop (GtkWidget *widget,
                             guchar      r,
                             guchar      g,
                             guchar      b,
+			    guchar      a,
                             gpointer    data)
 
 {

@@ -101,40 +101,49 @@ struct _DeviceInfoDialog
   GtkWidget **eventboxes;
 };
 
-/*  local functions */
-static void     input_dialog_able_callback     (GtkWidget *w, guint32 deviceid, 
-						gpointer data);
 
-static void     devices_write_rc_device        (DeviceInfo *device_info,
-						FILE *fp);
+/*  local functions */
+static void     input_dialog_able_callback     (GtkWidget   *widget,
+						guint32      deviceid, 
+						gpointer     data);
+
+static void     devices_write_rc_device        (DeviceInfo  *device_info,
+						FILE        *fp);
 static void     devices_write_rc               (void);
 
 static void     device_status_destroy_callback (void);
-static void     devices_close_callback         (GtkWidget *, gpointer);
+static void     devices_close_callback         (GtkWidget   *widget,
+						gpointer     data);
 
-static void     device_status_update           (guint32 deviceid);
+static void     device_status_update           (guint32      deviceid);
 static void     device_status_update_current   (void);
 
-static ToolType device_status_drag_tool        (GtkWidget *,
-						gpointer);
-static void     device_status_drop_tool        (GtkWidget *,
-						ToolType,
-						gpointer);
-static void     device_status_drag_color       (GtkWidget *,
-						guchar *, guchar *, guchar *,
-						gpointer);
-static void     device_status_drop_color       (GtkWidget *,
-						guchar, guchar, guchar,
-						gpointer);
-static void     device_status_drop_brush       (GtkWidget *,
-						GimpBrush *,
-						gpointer);
-static void     device_status_drop_pattern     (GtkWidget *,
-						GPattern *,
-						gpointer);
-static void     device_status_drop_gradient    (GtkWidget *,
-						gradient_t *,
-						gpointer);
+static ToolType device_status_drag_tool        (GtkWidget   *widget,
+						gpointer     data);
+static void     device_status_drop_tool        (GtkWidget   *widget,
+						ToolType     tool,
+						gpointer     data);
+static void     device_status_drag_color       (GtkWidget   *widget,
+						guchar      *r,
+						guchar      *g,
+						guchar      *b,
+						guchar      *a,
+						gpointer     data);
+static void     device_status_drop_color       (GtkWidget   *widget,
+						guchar       r,
+						guchar       g,
+						guchar       b,
+						guchar       a,
+						gpointer     data);
+static void     device_status_drop_brush       (GtkWidget   *widget,
+						GimpBrush   *brush,
+						gpointer     data);
+static void     device_status_drop_pattern     (GtkWidget   *widget,
+						GPattern    *pattern,
+						gpointer     data);
+static void     device_status_drop_gradient    (GtkWidget   *widget,
+						gradient_t  *gradient,
+						gpointer     data);
 
 static void     device_status_color_changed    (GimpContext *context,
 						gint         r,
@@ -147,6 +156,7 @@ static void     device_status_data_changed     (GimpContext *context,
 
 static void     device_status_context_connect  (GimpContext *context,
 						guint32      deviceid);
+
 
 /*  global data  */
 gint current_device = GDK_CORE_POINTER;
@@ -172,6 +182,7 @@ static GtkTargetEntry color_area_target_table[] =
 };
 static guint n_color_area_targets = (sizeof (color_area_target_table) /
 				     sizeof (color_area_target_table[0]));
+
 
 /*  utility functions for the device lists  */
 
@@ -1129,6 +1140,7 @@ device_status_drag_color (GtkWidget *widget,
 			  guchar    *r,
 			  guchar    *g,
 			  guchar    *b,
+			  guchar    *a,
 			  gpointer   data)
 {
   DeviceInfo *device_info;
@@ -1137,6 +1149,7 @@ device_status_drag_color (GtkWidget *widget,
 
   if (device_info)
     {
+      *a = 255;
       gimp_context_get_foreground (device_info->context, r, g, b);
     }
   else
@@ -1150,6 +1163,7 @@ device_status_drop_color (GtkWidget *widget,
 			  guchar     r,
 			  guchar     g,
 			  guchar     b,
+			  guchar     a,
 			  gpointer   data)
 {
   DeviceInfo *device_info;

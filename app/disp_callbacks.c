@@ -898,9 +898,9 @@ gdisplay_bucket_fill (GtkWidget      *widget,
   TileManager  *buf_tiles;
   PixelRegion   bufPR;
   GimpContext  *context;
-  gint     x1, x2, y1, y2;
-  gint     bytes;
-  gboolean has_alpha;
+  gint          x1, x2, y1, y2;
+  gint          bytes;
+  gboolean      has_alpha;
 
   guchar    color[3];
   TempBuf  *pat_buf = NULL;
@@ -995,13 +995,15 @@ gdisplay_drop_color (GtkWidget *widget,
 		     guchar     r,
 		     guchar     g,
 		     guchar     b,
+		     guchar     a,
 		     gpointer   data)
 {
-  guchar color[3];
+  guchar color[4];
 
   color[0] = r;
   color[1] = g;
   color[2] = b;
+  color[3] = a;
 
   gdisplay_bucket_fill (widget, FG_BUCKET_FILL, color, NULL, data);
 }

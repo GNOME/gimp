@@ -304,7 +304,9 @@ color_picker_button_press (Tool           *tool,
 
       gtk_widget_reparent (color_picker_info->info_table, hbox);
 
-      color_panel = color_panel_new (NULL, 48, 64);
+      color_panel = color_panel_new (0, 0, 0, 0,
+				     gimp_drawable_has_alpha (tool->drawable),
+				     48, 64);
       gtk_box_pack_start (GTK_BOX (hbox), color_panel->color_panel_widget,
 			  FALSE, FALSE, 0);
       gtk_widget_show (color_panel->color_panel_widget);
@@ -505,10 +507,10 @@ pick_color_do (GimpImage    *gimage,
       drawable_offsets (drawable, &offx, &offy);
       x -= offx;
       y -= offy;
-      
+
       sample_type = gimp_drawable_type (drawable);
       is_indexed = gimp_drawable_is_indexed (drawable);
-      
+
       get_color_func = (GetColorFunc) gimp_drawable_get_color_at;
       get_color_obj = GTK_OBJECT (drawable);
     }
@@ -523,7 +525,7 @@ pick_color_do (GimpImage    *gimage,
 
   has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (sample_type);
 
-  if (!(color = (*get_color_func) (get_color_obj, x, y)))
+  if (!(color = (* get_color_func) (get_color_obj, x, y)))
     return FALSE;
 
   if (sample_average)
@@ -536,7 +538,7 @@ pick_color_do (GimpImage    *gimage,
 
       for (i = x - radius; i <= x + radius; i++)
 	for (j = y - radius; j <= y + radius; j++)
-	  if ((tmp_color = (*get_color_func) (get_color_obj, i, j)))
+	  if ((tmp_color = (* get_color_func) (get_color_obj, i, j)))
 	    {
 	      count++;
 	      
@@ -545,16 +547,16 @@ pick_color_do (GimpImage    *gimage,
 	      color_avg[BLUE_PIX]  += tmp_color[BLUE_PIX];
 	      if (has_alpha)
 		color_avg[ALPHA_PIX] += tmp_color[3];
-	      
+
 	      g_free (tmp_color);
 	    }
-      
+
       color[RED_PIX]   = (guchar) (color_avg[RED_PIX] / count);
       color[GREEN_PIX] = (guchar) (color_avg[GREEN_PIX] / count);
       color[BLUE_PIX]  = (guchar) (color_avg[BLUE_PIX] / count);
       if (has_alpha)
 	color[ALPHA_PIX] = (guchar) (color_avg[3] / count);
-      
+
       is_indexed = FALSE;
     }
 
@@ -573,6 +575,7 @@ pick_color_do (GimpImage    *gimage,
 			      final);
 
   g_free (color);
+
   return TRUE;
 }
 
@@ -622,7 +625,7 @@ colorpicker_draw (Tool *tool)
 		      ty - radiusy,
 		      2 * radiusx + cx, 2 * radiusy + cy);
 
-  if(radiusx > 1 && radiusy > 1)
+  if (radiusx > 1 && radiusy > 1)
     {
       gdk_draw_rectangle (cp_tool->core->win, cp_tool->core->gc, 0,
 			  tx - radiusx + 2, 
@@ -650,7 +653,10 @@ color_picker_info_update (Tool     *tool,
     }
   else
     {
-      guchar col[3];
+      guchar r = 0;
+      guchar g = 0;
+      guchar b = 0;
+      guchar a = 0;
 
       if (! GTK_WIDGET_IS_SENSITIVE (color_panel->color_panel_widget))
 	gtk_widget_set_sensitive (color_panel->color_panel_widget, TRUE);
@@ -670,9 +676,12 @@ color_picker_info_update (Tool     *tool,
 		      col_value [RED_PIX],
 		      col_value [GREEN_PIX],
 		      col_value [BLUE_PIX]);
-	  col[0] = col_value [RED_PIX];
-	  col[1] = col_value [GREEN_PIX];
-	  col[2] = col_value [BLUE_PIX];
+
+	  r = col_value [RED_PIX];
+	  g = col_value [GREEN_PIX];
+	  b = col_value [BLUE_PIX];
+	  if (sample_type == RGBA_GIMAGE)
+	    a = col_value [ALPHA_PIX];
 	  break;
 
 	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
@@ -688,9 +697,12 @@ color_picker_info_update (Tool     *tool,
 		      col_value [RED_PIX],
 		      col_value [GREEN_PIX],
 		      col_value [BLUE_PIX]);
-	  col[0] = col_value [RED_PIX];
-	  col[1] = col_value [GREEN_PIX];
-	  col[2] = col_value [BLUE_PIX];
+
+	  r = col_value [RED_PIX];
+	  g = col_value [GREEN_PIX];
+	  b = col_value [BLUE_PIX];
+	  if (sample_type == INDEXEDA_GIMAGE)
+	    a = col_value [ALPHA_PIX];
 	  break;
 
 	case GRAY_GIMAGE: case GRAYA_GIMAGE:
@@ -703,13 +715,16 @@ color_picker_info_update (Tool     *tool,
 		      col_value [GRAY_PIX],
 		      col_value [GRAY_PIX],
 		      col_value [GRAY_PIX]);
-	  col[0] = col_value [GRAY_PIX];
-	  col[1] = col_value [GRAY_PIX];
-	  col[2] = col_value [GRAY_PIX];
+
+	  r = col_value [GRAY_PIX];
+	  g = col_value [GRAY_PIX];
+	  b = col_value [GRAY_PIX];
+	  if (sample_type == GRAYA_GIMAGE)
+	    a = col_value [ALPHA_PIX];
 	  break;
 	}
 
-      color_panel_set_color (color_panel, col);
+      color_panel_set_color (color_panel, r, g, b, a);
     }
 
   info_dialog_update (color_picker_info);

@@ -19,6 +19,7 @@
 #ifndef __COLOR_PANEL_H__
 #define __COLOR_PANEL_H__
 
+
 typedef struct _ColorPanel ColorPanel;
 
 struct _ColorPanel
@@ -27,18 +28,26 @@ struct _ColorPanel
   GtkWidget *color_panel_widget;
 
   /*  The actual color  */
-  guchar     color [3];
+  guchar     color [4];
 
   /*  Don't touch this :)  */
-  void      *private_part;
+  gpointer   private_part;
 };
 
-ColorPanel * color_panel_new       (guchar     *initial,
+
+ColorPanel * color_panel_new       (guchar      r,
+				    guchar      g,
+				    guchar      b,
+				    guchar      a,
+				    gboolean    show_alpha,
 				    gint        width,
 				    gint        height);
 
 void         color_panel_set_color (ColorPanel *color_panel,
-				    guchar     *col);
+				    guchar      r,
+				    guchar      g,
+				    guchar      b,
+				    guchar      a);
 
 
 #endif  /*  __COLOR_PANEL_H__  */

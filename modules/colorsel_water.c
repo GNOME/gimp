@@ -34,13 +34,22 @@
 #include <libgimp/gimpintl.h>
 
 /* prototypes */
-static GtkWidget * colorsel_water_new         (int, int, int,
-				               GimpColorSelector_Callback, 
-				               void *,
-				               void **);
-static void        colorsel_water_free        (void *);
-static void        colorsel_water_setcolor    (void *, int, int, int, int);
-static void        colorsel_water_update      ();
+static GtkWidget * colorsel_water_new         (gint                r,
+					       gint                g,
+					       gint                b,
+					       gint                a,
+					       gboolean            show_alpha,
+				               GimpColorSelectorCallback,
+				               gpointer,
+				               gpointer *);
+static void        colorsel_water_free        (gpointer  data);
+static void        colorsel_water_setcolor    (gpointer  data,
+					       gint      r,
+					       gint      g,
+					       gint      b,
+					       gint      a,
+					       gboolean  set_current);
+static void        colorsel_water_update      (void);
 static void        colorsel_water_drag_begin  (GtkWidget          *widget,
 					       GdkDragContext     *context,
 					       gpointer            data);
@@ -71,17 +80,19 @@ static GimpColorSelectorMethods methods =
 };
 
 
-static GimpModuleInfo info = {
-    NULL,
-    N_("Watercolor style color selector as a pluggable module"),
-    "Raph Levien <raph@acm.org>, Sven Neumann <sven@gimp.org>",
-    "v0.3",
-    "(c) 1998-1999, released under the GPL",
-    "May, 10 1999"
+static GimpModuleInfo info =
+{
+  NULL,
+  N_("Watercolor style color selector as a pluggable module"),
+  "Raph Levien <raph@acm.org>, Sven Neumann <sven@gimp.org>",
+  "v0.3",
+  "(c) 1998-1999, released under the GPL",
+  "May, 10 1999"
 };
 
 
-static const GtkTargetEntry targets[] = {
+static const GtkTargetEntry targets[] =
+{
   { "application/x-color", 0 }
 };
 
@@ -97,26 +108,27 @@ module_init (GimpModuleInfo **inforet)
   id = gimp_color_selector_register (_("Watercolor"), "watercolor.html",
 				     &methods);
 #else
-   id = mod_color_selector_register (_("Watercolor"), "watercolor.html",
-				     &methods);
+  id = mod_color_selector_register (_("Watercolor"), "watercolor.html",
+				    &methods);
 #endif
+
   if (id)
-  {
-    info.shutdown_data = id;
-    *inforet = &info;
-    return GIMP_MODULE_OK;
-  }
+    {
+      info.shutdown_data = id;
+      *inforet = &info;
+      return GIMP_MODULE_OK;
+    }
   else
-  {
-    return GIMP_MODULE_UNLOAD;
-  }
+    {
+      return GIMP_MODULE_UNLOAD;
+    }
 }
 
 
 G_MODULE_EXPORT void
-module_unload (void *shutdown_data,
-	       void (*completed_cb)(void *),
-	       void *completed_data)
+module_unload (gpointer                     shutdown_data,
+	       GimpColorSelectorFinishedCB  completed_cb,
+	       gpointer                     completed_data)
 {
 #ifndef __EMX__
   gimp_color_selector_unregister (shutdown_data, completed_cb, completed_data);
@@ -128,61 +140,70 @@ module_unload (void *shutdown_data,
 
 /* definitions and variables */
 
-#define N_BUCKETS 10
-#define LAST_BUCKET (N_BUCKETS)  /* bucket number 0 is current color */
-#define IMAGE_SIZE 200
-#define BUCKET_SIZE 20
+#define N_BUCKETS    10
+#define LAST_BUCKET  (N_BUCKETS)  /* bucket number 0 is current color */
+#define IMAGE_SIZE   200
+#define BUCKET_SIZE  20
 #define PREVIEW_SIZE 40
 
-typedef struct {
-  GimpColorSelector_Callback      callback;
-  void                           *data;
+typedef struct
+{
+  GimpColorSelectorCallback  callback;
+  gpointer                   data;
 } ColorselWater;
 
-static gdouble    bucket[N_BUCKETS + 1][3];
-static GtkWidget *color_preview[N_BUCKETS + 1];
-static gdouble    last_x, last_y, last_pressure;
-static gfloat     pressure_adjust = 1.0;
-static guint32    motion_time;
-static gint       button_state;
+static gdouble        bucket[N_BUCKETS + 1][4];
+static GtkWidget     *color_preview[N_BUCKETS + 1];
+static gdouble        last_x, last_y, last_pressure;
+static gfloat         pressure_adjust = 1.0;
+static guint32        motion_time;
+static gint           button_state;
 static ColorselWater *coldata;
 
 
 static void
-set_bucket (gint i, gdouble r, gdouble g, gdouble b)
+set_bucket (gint    i,
+	    gdouble r,
+	    gdouble g,
+	    gdouble b,
+	    gdouble a)
 {
   if (i >= 0 && i <= N_BUCKETS)
     {
       bucket[i][0] = r;
       bucket[i][1] = g;
       bucket[i][2] = b;
+      bucket[i][3] = a;
     }
 }
 
 static gdouble
-calc (gdouble x, gdouble y, gdouble angle)
+calc (gdouble x,
+      gdouble y,
+      gdouble angle)
 {
   gdouble s, c;
 
   s = 1.6 * sin (angle * G_PI / 180) * 256.0 / IMAGE_SIZE;
   c = 1.6 * cos (angle * G_PI / 180) * 256.0 / IMAGE_SIZE;
+
   return 128 + (x - (IMAGE_SIZE >> 1)) * c - (y - (IMAGE_SIZE >> 1)) * s;
 }
 
 static guchar
 bucket_to_byte (gdouble val)
 {
-  return CLAMP ((gint)(val * 280 - 25), 0, 255);
+  return CLAMP ((gint) (val * 280 - 25), 0, 255);
 }
 
 static void
 draw_bucket (gint i)
 {
   guchar *buf;
-  gint x, y;
-  gint width;
-  gint height;
-  guchar r, g, b;
+  gint    x, y;
+  gint    width;
+  gint    height;
+  guchar  r, g, b;
 
   g_return_if_fail (i >= 0 && i <= N_BUCKETS);
 
@@ -192,11 +213,12 @@ draw_bucket (gint i)
 
   width  = (i == 0 ? PREVIEW_SIZE : BUCKET_SIZE);
   height = width; 
-  buf     = g_new (guchar, 3*width);
+  buf     = g_new (guchar, 3 * width);
   
   r = bucket_to_byte (bucket[i][0]);
   g = bucket_to_byte (bucket[i][1]);
   b = bucket_to_byte (bucket[i][2]);
+
   for (x = 0; x < width; x++)
     {
       buf[x * 3] = r;
@@ -212,7 +234,7 @@ draw_bucket (gint i)
 
 
 static void
-draw_all_buckets ()
+draw_all_buckets (void)
 {
   gint i;
 
@@ -239,12 +261,13 @@ pick_up_bucket_callback (GtkWidget *widget,
       bucket[0][0] = bucket[i][0];
       bucket[0][1] = bucket[i][1];
       bucket[0][2] = bucket[i][2];
+      bucket[0][3] = bucket[i][3];
       colorsel_water_update ();
     }
 }
 
 static void
-shift_buckets ()
+shift_buckets (void)
 {
   gint i;
 
@@ -257,7 +280,8 @@ shift_buckets ()
     {
       if (bucket[i][0] == bucket[0][0] &&
 	  bucket[i][1] == bucket[0][1] &&
-	  bucket[i][2] == bucket[0][2])
+	  bucket[i][2] == bucket[0][2] &&
+	  bucket[i][3] == bucket[0][3])
 	return;
     }
 
@@ -273,6 +297,7 @@ shift_buckets ()
       bucket[i][0] = bucket[i-1][0];
       bucket[i][1] = bucket[i-1][1];
       bucket[i][2] = bucket[i-1][2];
+      bucket[i][3] = bucket[i-1][3];
     }
 }
 
@@ -280,8 +305,8 @@ shift_buckets ()
 static void
 select_area_draw (GtkWidget *preview)
 {
-  guchar buf[3 * IMAGE_SIZE];
-  gint x, y;
+  guchar  buf[3 * IMAGE_SIZE];
+  gint    x, y;
   gdouble r, g, b;
   gdouble dr, dg, db;
 
@@ -297,24 +322,28 @@ select_area_draw (GtkWidget *preview)
 
       for (x = 0; x < IMAGE_SIZE; x++)
 	{
-	  buf[x * 3] = CLAMP ((gint)r, 0, 255);
-	  buf[x * 3 + 1] = CLAMP ((gint)g, 0, 255);
-	  buf[x * 3 + 2] = CLAMP ((gint)b, 0, 255);
+	  buf[x * 3]     = CLAMP ((gint) r, 0, 255);
+	  buf[x * 3 + 1] = CLAMP ((gint) g, 0, 255);
+	  buf[x * 3 + 2] = CLAMP ((gint) b, 0, 255);
 	  r += dr;
 	  g += dg;
 	  b += db;
 	}
+
       gtk_preview_draw_row (GTK_PREVIEW (preview), buf, 0, y, IMAGE_SIZE);
     }
 }
 
 
 static void 
-add_pigment (gboolean erase, gdouble x, gdouble y, gdouble much)
+add_pigment (gboolean erase,
+	     gdouble  x,
+	     gdouble  y,
+	     gdouble  much)
 {
   gdouble r, g, b;
 
-  much *= (gdouble)pressure_adjust; 
+  much *= (gdouble) pressure_adjust; 
 
 #ifdef VERBOSE
   g_print ("x: %g, y: %g, much: %g\n", x, y, much);
@@ -349,8 +378,11 @@ add_pigment (gboolean erase, gdouble x, gdouble y, gdouble much)
 }
 
 static void
-draw_brush (GtkWidget *widget, gboolean erase,
-	    gdouble x, gdouble y, gdouble pressure)
+draw_brush (GtkWidget *widget,
+	    gboolean   erase,
+	    gdouble    x,
+	    gdouble    y,
+	    gdouble    pressure)
 {
   gdouble much; /* how much pigment to mix in */
 
@@ -372,7 +404,8 @@ draw_brush (GtkWidget *widget, gboolean erase,
 
 
 static gint
-button_press_event (GtkWidget *widget, GdkEventButton *event)
+button_press_event (GtkWidget      *widget,
+		    GdkEventButton *event)
 {
   gboolean erase;
 
@@ -395,7 +428,8 @@ button_press_event (GtkWidget *widget, GdkEventButton *event)
 }
 
 static gint
-button_release_event (GtkWidget *widget, GdkEventButton *event)
+button_release_event (GtkWidget      *widget,
+		      GdkEventButton *event)
 {
   button_state &= ~(1 << event->button);
 
@@ -403,14 +437,18 @@ button_release_event (GtkWidget *widget, GdkEventButton *event)
 }
 
 static gint
-motion_notify_event (GtkWidget *widget, GdkEventMotion *event)
+motion_notify_event (GtkWidget      *widget,
+		     GdkEventMotion *event)
 {
   GdkTimeCoord *coords;
-  int nevents;
-  int i;
-  gboolean erase;
+  gint          nevents;
+  gint          i;
+  gboolean      erase;
 
-  if (event->state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK | GDK_BUTTON4_MASK))
+  if (event->state & (GDK_BUTTON1_MASK |
+		      GDK_BUTTON2_MASK |
+		      GDK_BUTTON3_MASK |
+		      GDK_BUTTON4_MASK))
     {
       coords = gdk_input_motion_events (event->window, event->deviceid,
 					motion_time, event->time,
@@ -454,7 +492,8 @@ motion_notify_event (GtkWidget *widget, GdkEventMotion *event)
 }
 
 static gint
-proximity_out_event (GtkWidget *widget, GdkEventProximity *event)
+proximity_out_event (GtkWidget         *widget,
+                     GdkEventProximity *event)
 {
 #ifdef VERBOSE
   g_print ("proximity out\n");
@@ -463,7 +502,8 @@ proximity_out_event (GtkWidget *widget, GdkEventProximity *event)
 }
 
 static void
-new_color_callback (GtkWidget *widget, gpointer data)
+new_color_callback (GtkWidget *widget,
+                    gpointer   data)
 {
 #ifdef VERBOSE
   g_print ("new color\n");
@@ -474,6 +514,7 @@ new_color_callback (GtkWidget *widget, gpointer data)
   bucket[0][0] = 1.0;
   bucket[0][1] = 1.0;
   bucket[0][2] = 1.0;
+  bucket[0][3] = 1.0;
 
   draw_all_buckets ();
   colorsel_water_update ();
@@ -482,7 +523,8 @@ new_color_callback (GtkWidget *widget, gpointer data)
 }
 
 static void
-reset_color_callback (GtkWidget *widget, gpointer data)
+reset_color_callback (GtkWidget *widget,
+		      gpointer   data)
 {
 #ifdef VERBOSE
   g_print ("reset color\n");
@@ -492,6 +534,7 @@ reset_color_callback (GtkWidget *widget, gpointer data)
   bucket[0][0] = 1.0;
   bucket[0][1] = 1.0;
   bucket[0][2] = 1.0;
+  bucket[0][3] = 1.0;
 
   colorsel_water_update ();
 
@@ -499,7 +542,8 @@ reset_color_callback (GtkWidget *widget, gpointer data)
 }
 
 static void
-pressure_adjust_update (GtkAdjustment *adj, gpointer data)
+pressure_adjust_update (GtkAdjustment *adj,
+			gpointer       data)
 {
   pressure_adjust = adj->value / 100;
 }
@@ -510,11 +554,15 @@ pressure_adjust_update (GtkAdjustment *adj, gpointer data)
 
 
 static GtkWidget*
-colorsel_water_new (int r, int g, int b,
-		    GimpColorSelector_Callback callback,
-		    void *callback_data,
+colorsel_water_new (gint                       r,
+		    gint                       g,
+		    gint                       b,
+		    gint                       a,
+		    gboolean                   show_alpha,
+		    GimpColorSelectorCallback  callback,
+		    gpointer                   callback_data,
 		    /* RETURNS: */
-		    void **selector_data)
+		    gpointer                  *selector_data)
 {
   GtkWidget *preview;
   GtkWidget *event_box;
@@ -533,10 +581,10 @@ colorsel_water_new (int r, int g, int b,
   GtkWidget *scale;
   guint      i;
 
-  coldata = g_malloc (sizeof (ColorselWater));
+  coldata = g_new (ColorselWater, 1);
 
   coldata->callback = callback;
-  coldata->data = callback_data;
+  coldata->data     = callback_data;
 
   *selector_data = coldata;
 
@@ -559,24 +607,30 @@ colorsel_water_new (int r, int g, int b,
 
   /* Event signals */
   gtk_signal_connect (GTK_OBJECT (event_box), "motion_notify_event",
-		      (GtkSignalFunc) motion_notify_event, NULL);
+		      GTK_SIGNAL_FUNC (motion_notify_event),
+		      NULL);
   gtk_signal_connect (GTK_OBJECT (event_box), "button_press_event",
-		      (GtkSignalFunc) button_press_event, NULL);
+		      GTK_SIGNAL_FUNC (button_press_event),
+		      NULL);
   gtk_signal_connect (GTK_OBJECT (event_box), "button_release_event",
-		      (GtkSignalFunc) button_release_event, NULL);
+		      GTK_SIGNAL_FUNC (button_release_event),
+		      NULL);
   gtk_signal_connect (GTK_OBJECT (event_box), "proximity_out_event",
-		      (GtkSignalFunc) proximity_out_event, NULL);
+		      GTK_SIGNAL_FUNC (proximity_out_event),
+		      NULL);
 
-  gtk_widget_set_events (event_box, GDK_EXPOSURE_MASK
-			 | GDK_LEAVE_NOTIFY_MASK
-			 | GDK_BUTTON_PRESS_MASK
-			 | GDK_KEY_PRESS_MASK
-			 | GDK_POINTER_MOTION_MASK
-			 | GDK_POINTER_MOTION_HINT_MASK
-			 | GDK_PROXIMITY_OUT_MASK);
+  gtk_widget_set_events (event_box,
+			 GDK_EXPOSURE_MASK            |
+			 GDK_LEAVE_NOTIFY_MASK        |
+			 GDK_BUTTON_PRESS_MASK        |
+			 GDK_KEY_PRESS_MASK           |
+			 GDK_POINTER_MOTION_MASK      |
+			 GDK_POINTER_MOTION_HINT_MASK |
+			 GDK_PROXIMITY_OUT_MASK);
 
   /* The following call enables tracking and processing of extension
-     events for the drawing area */
+   * events for the drawing area
+   */
   gtk_widget_set_extension_events (event_box, GDK_EXTENSION_EVENTS_ALL);
   gtk_widget_grab_focus (event_box);
   
@@ -605,20 +659,16 @@ colorsel_water_new (int r, int g, int b,
 		       GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
 		       targets, 1,
 		       GDK_ACTION_COPY | GDK_ACTION_MOVE);
-  gtk_signal_connect (GTK_OBJECT (color_preview[0]),
-		      "drag_begin",
+  gtk_signal_connect (GTK_OBJECT (color_preview[0]), "drag_begin",
 		      GTK_SIGNAL_FUNC (colorsel_water_drag_begin),
 		      bucket[0]);
-  gtk_signal_connect (GTK_OBJECT (color_preview[0]),
-		      "drag_end",
+  gtk_signal_connect (GTK_OBJECT (color_preview[0]), "drag_end",
 		      GTK_SIGNAL_FUNC (colorsel_water_drag_end),
 		      bucket[0]);
-  gtk_signal_connect (GTK_OBJECT (color_preview[0]),
-		      "drag_data_get",
+  gtk_signal_connect (GTK_OBJECT (color_preview[0]), "drag_data_get",
 		      GTK_SIGNAL_FUNC (colorsel_water_drag_handle),
 		      bucket[0]);
-  gtk_signal_connect (GTK_OBJECT (color_preview[0]),
-		      "drag_data_received",
+  gtk_signal_connect (GTK_OBJECT (color_preview[0]), "drag_data_received",
 		      GTK_SIGNAL_FUNC (colorsel_water_drop_handle),
 		      bucket[0]);
   gtk_container_add (GTK_CONTAINER (frame), color_preview[0]);
@@ -629,12 +679,12 @@ colorsel_water_new (int r, int g, int b,
   button = gtk_button_new_with_label (_("New"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) new_color_callback,
+		      GTK_SIGNAL_FUNC (new_color_callback),
 		      NULL);
   button = gtk_button_new_with_label (_("Reset"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) reset_color_callback,
+		      GTK_SIGNAL_FUNC (reset_color_callback),
 		      NULL);
 
   frame = gtk_frame_new (_("Color History"));
@@ -649,7 +699,7 @@ colorsel_water_new (int r, int g, int b,
       button = gtk_button_new ();
       gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			  GTK_SIGNAL_FUNC (pick_up_bucket_callback), 
-			  (gpointer) GUINT_TO_POINTER (i+1));	  
+			  GUINT_TO_POINTER (i + 1));	  
       gtk_drag_dest_set (button,
 			 GTK_DEST_DEFAULT_HIGHLIGHT |
 			 GTK_DEST_DEFAULT_MOTION |
@@ -660,20 +710,16 @@ colorsel_water_new (int r, int g, int b,
 			   GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
 			   targets, 1,
 			   GDK_ACTION_COPY | GDK_ACTION_MOVE);
-      gtk_signal_connect (GTK_OBJECT (button),
-			  "drag_begin",
+      gtk_signal_connect (GTK_OBJECT (button), "drag_begin",
 			  GTK_SIGNAL_FUNC (colorsel_water_drag_begin),
 			  bucket[i+1]);
-      gtk_signal_connect (GTK_OBJECT (button),
-			  "drag_end",
+      gtk_signal_connect (GTK_OBJECT (button), "drag_end",
 			  GTK_SIGNAL_FUNC (colorsel_water_drag_end),
 			  bucket[i+1]);
-      gtk_signal_connect (GTK_OBJECT (button),
-			  "drag_data_get",
+      gtk_signal_connect (GTK_OBJECT (button), "drag_data_get",
 			  GTK_SIGNAL_FUNC (colorsel_water_drag_handle),
 			  bucket[i+1]);
-      gtk_signal_connect (GTK_OBJECT (button),
-			  "drag_data_received",
+      gtk_signal_connect (GTK_OBJECT (button), "drag_data_received",
 			  GTK_SIGNAL_FUNC (colorsel_water_drop_handle),
 			  bucket[i+1]);
       gtk_table_attach_defaults (GTK_TABLE (table),
@@ -681,9 +727,10 @@ colorsel_water_new (int r, int g, int b,
 				 i % 5, (i % 5) + 1,
 				 i / 5, (i/ 5) + 1);
       color_preview[i+1] = gtk_preview_new (GTK_PREVIEW_COLOR);
-      gtk_preview_size (GTK_PREVIEW (color_preview[i+1]), BUCKET_SIZE, BUCKET_SIZE);
+      gtk_preview_size (GTK_PREVIEW (color_preview[i+1]),
+			BUCKET_SIZE, BUCKET_SIZE);
       gtk_container_add (GTK_CONTAINER (button), color_preview[i+1]);
-      set_bucket (i+1, 1.0, 1.0, 1.0);
+      set_bucket (i+1, 1.0, 1.0, 1.0, 1.0);
     }
 
   hbox2 = gtk_hbox_new (FALSE, 0);
@@ -700,44 +747,52 @@ colorsel_water_new (int r, int g, int b,
 
   gtk_widget_show_all (hbox);
   
-  colorsel_water_setcolor (coldata, r, g, b, 0);
+  colorsel_water_setcolor (coldata, r, g, b, a, 0);
   draw_all_buckets ();
-  
-   return (vbox);
+
+  return vbox;
 }
 
 
 static void
-colorsel_water_free (void *selector_data)
+colorsel_water_free (gpointer  selector_data)
 {
   g_free (selector_data);
 }
 
 static void
-colorsel_water_setcolor (void *data, int r, int g, int b,
-			 int set_current)
+colorsel_water_setcolor (gpointer  data,
+			 gint      r,
+			 gint      g,
+			 gint      b,
+			 gint      a,
+			 gboolean  set_current)
 {
   set_bucket (0, 
 	      ((gdouble) r) / 255.999, 
 	      ((gdouble) g) / 255.999,
-	      ((gdouble) b) / 255.999);
+	      ((gdouble) b) / 255.999,
+	      ((gdouble) a) / 255.999);
+
   draw_bucket (0);
 }
 
 static void
-colorsel_water_update ()
+colorsel_water_update (void)
 {
-  int r;
-  int g;
-  int b;
+  gint r;
+  gint g;
+  gint b;
+  gint a;
 
-  r = (int) (bucket[0][0] * 255.999);
-  g = (int) (bucket[0][1] * 255.999);
-  b = (int) (bucket[0][2] * 255.999);
+  r = (gint) (bucket[0][0] * 255.999);
+  g = (gint) (bucket[0][1] * 255.999);
+  b = (gint) (bucket[0][2] * 255.999);
+  a = (gint) (bucket[0][3] * 255.999);
 
   draw_bucket (0);
 
-  coldata->callback (coldata->data, r, g, b);
+  coldata->callback (coldata->data, r, g, b, a);
 }
 
 static void        
@@ -746,8 +801,8 @@ colorsel_water_drag_begin (GtkWidget      *widget,
 			   gpointer        data)
 {
   GtkWidget *window;
-  gdouble *colors;
-  GdkColor bg;
+  gdouble   *colors;
+  GdkColor   bg;
 
   colors = (gdouble *)data;
 
@@ -760,9 +815,9 @@ colorsel_water_drag_begin (GtkWidget      *widget,
 			    window,
 			    (GtkDestroyNotify) gtk_widget_destroy);
 
-  bg.red = 0xffff * colors[0];
+  bg.red   = 0xffff * colors[0];
   bg.green = 0xffff * colors[1];
-  bg.blue = 0xffff * colors[2];
+  bg.blue  = 0xffff * colors[2];
 
   gdk_color_alloc (gtk_widget_get_colormap (window), &bg);
   gdk_window_set_background (window->window, &bg);
@@ -805,11 +860,12 @@ colorsel_water_drop_handle (GtkWidget        *widget,
       return;
     }
   
-  vals = (guint16 *)selection_data->data;
+  vals = (guint16 *) selection_data->data;
 
   colors[0] = (gdouble)vals[0] / 0xffff;
   colors[1] = (gdouble)vals[1] / 0xffff;
   colors[2] = (gdouble)vals[2] / 0xffff;
+  colors[3] = (gdouble)vals[3] / 0xffff;
   
   draw_all_buckets ();
   colorsel_water_update ();
@@ -831,15 +887,12 @@ colorsel_water_drag_handle (GtkWidget        *widget,
   vals[0] = colors[0] * 0xffff;
   vals[1] = colors[1] * 0xffff;
   vals[2] = colors[2] * 0xffff;
-  vals[3] = 0xffff;
+  vals[3] = colors[3] * 0xffff;
 
   gtk_selection_data_set (selection_data,
 			  gdk_atom_intern ("application/x-color", FALSE),
 			  16, (guchar *)vals, 8);
 }
-
-/* End of colorsel_gtk.c */
-  
 
 
 

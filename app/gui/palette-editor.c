@@ -1008,6 +1008,7 @@ static void
 palette_select_callback (gint                r,
 			 gint                g,
 			 gint                b,
+			 gint                a,
 			 ColorNotebookState  state,
 			 void               *data)
 {
@@ -1086,7 +1087,7 @@ palette_dialog_edit_entry_callback (GtkWidget *widget,
 				    gpointer   data)
 {
   PaletteDialog *palette;
-  guchar *color;
+  guchar        *color;
 
   palette = data;
   if (palette && palette->entries && palette->color)
@@ -1096,9 +1097,9 @@ palette_dialog_edit_entry_callback (GtkWidget *widget,
       if (!palette->color_notebook)
 	{
 	  palette->color_notebook =
-	    color_notebook_new (color[0], color[1], color[2],
+	    color_notebook_new (color[0], color[1], color[2], 255,
 				palette_select_callback, palette,
-				FALSE);
+				FALSE, FALSE);
 	  palette->color_notebook_active = TRUE;
 	}
       else
@@ -1110,7 +1111,8 @@ palette_dialog_edit_entry_callback (GtkWidget *widget,
 	    }
 
 	  color_notebook_set_color (palette->color_notebook,
-				    color[0], color[1], color[2], 1);
+				    color[0], color[1], color[2], 255,
+				    TRUE);
 	}
     }
 }
@@ -1119,10 +1121,10 @@ static void
 palette_dialog_delete_entry_callback (GtkWidget *widget,
 				      gpointer   data)
 {
-  PaletteEntry *entry;
+  PaletteEntry  *entry;
   PaletteDialog *palette;
-  GSList *tmp_link;
-  gint pos = 0;
+  GSList        *tmp_link;
+  gint           pos = 0;
 
   palette = data;
 
@@ -1984,6 +1986,7 @@ palette_dialog_drag_color (GtkWidget *widget,
 			   guchar    *r,
 			   guchar    *g,
 			   guchar    *b,
+			   guchar    *a,
 			   gpointer   data)
 {
   PaletteDialog *palette;
@@ -1995,6 +1998,7 @@ palette_dialog_drag_color (GtkWidget *widget,
       *r = (guchar) palette->dnd_color->color[0];
       *g = (guchar) palette->dnd_color->color[1];
       *b = (guchar) palette->dnd_color->color[2];
+      *a = (guchar) 255;
     }
   else
     {
@@ -2007,6 +2011,7 @@ palette_dialog_drop_color (GtkWidget *widget,
 			   guchar      r,
 			   guchar      g,
 			   guchar      b,
+			   guchar      a,
 			   gpointer    data)
 {
   PaletteDialog *palette;

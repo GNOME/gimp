@@ -17,6 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <stdio.h>
@@ -32,12 +33,23 @@
 
 
 /* prototypes */
-static GtkWidget * colorsel_gtk_new (int, int, int,
-				     GimpColorSelector_Callback, void *,
-				     void **);
-static void        colorsel_gtk_free (void *);
-static void        colorsel_gtk_setcolor (void *, int, int, int, int);
-static void        colorsel_gtk_update (GtkWidget *, gpointer);
+static GtkWidget * colorsel_gtk_new      (gint                       r,
+					  gint                       g,
+					  gint                       b,
+					  gint                       a,
+					  gboolean                   show_alpha,
+					  GimpColorSelectorCallback  callback,
+					  gpointer                   data,
+					  gpointer                  *selector_data);
+static void        colorsel_gtk_free     (gpointer                   data);
+static void        colorsel_gtk_setcolor (gpointer                   data,
+					  gint                       r,
+					  gint                       g,
+					  gint                       b,
+					  gint                       a,
+					  gboolean                   set_current);
+static void        colorsel_gtk_update   (GtkWidget                 *widget,
+					  gpointer                   data);
 
 
 /* local methods */
@@ -48,13 +60,14 @@ static GimpColorSelectorMethods methods =
   colorsel_gtk_setcolor
 };
 
-static GimpModuleInfo info = {
-    NULL,
-    N_("GTK color selector as a pluggable color selector"),
-    "Austin Donnelly <austin@gimp.org>",
-    "v0.02",
-    "(c) 1999, released under the GPL",
-    "17 Jan 1999"
+static GimpModuleInfo info =
+{
+  NULL,
+  N_("GTK color selector as a pluggable color selector"),
+  "Austin Donnelly <austin@gimp.org>",
+  "v0.02",
+  "(c) 1999, released under the GPL",
+  "17 Jan 1999"
 };
 
 
@@ -69,23 +82,24 @@ module_init (GimpModuleInfo **inforet)
 #else
   id = mod_color_selector_register  ("GTK", "gtk.html", &methods);
 #endif   
+
   if (id)
-  {
-    info.shutdown_data = id;
-    *inforet = &info;
-    return GIMP_MODULE_OK;
-  }
+    {
+      info.shutdown_data = id;
+      *inforet = &info;
+      return GIMP_MODULE_OK;
+    }
   else
-  {
-    return GIMP_MODULE_UNLOAD;
-  }
+    {
+      return GIMP_MODULE_UNLOAD;
+    }
 }
 
 
 G_MODULE_EXPORT void
-module_unload (void *shutdown_data,
-	       void (*completed_cb)(void *),
-	       void *completed_data)
+module_unload (gpointer                     shutdown_data,
+	       GimpColorSelectorFinishedCB  completed_cb,
+	       gpointer                     completed_data)
 {
 #ifndef __EMX__
   gimp_color_selector_unregister (shutdown_data, completed_cb, completed_data);
@@ -95,37 +109,43 @@ module_unload (void *shutdown_data,
 }
 
 
+/******************************/
+/* GTK color selector methods */
 
-/**************************************************************/
-/* GTK colour selector methods */
-
-typedef struct {
-  GtkWidget                      *selector;
-  GimpColorSelector_Callback      callback;
-  void                           *client_data;
+typedef struct
+{
+  GtkWidget                 *selector;
+  GimpColorSelectorCallback  callback;
+  void                      *client_data;
 } ColorselGtk;
 
 
 static GtkWidget *
-colorsel_gtk_new (int r, int g, int b,
-		  GimpColorSelector_Callback callback,  void *client_data,
+colorsel_gtk_new (gint                       r,
+		  gint                       g,
+		  gint                       b,
+		  gint                       a,
+		  gboolean                   show_alpha,
+		  GimpColorSelectorCallback  callback,
+		  gpointer                   data,
 		  /* RETURNS: */
-		  void **selector_data)
+		  gpointer                  *selector_data)
 {
   GtkWidget   *hbox;
   GtkWidget   *vbox;
   ColorselGtk *p;
 
-  p = g_malloc (sizeof (ColorselGtk));
+  p = g_new (ColorselGtk, 1);
 
-  p->selector = gtk_color_selection_new ();
-  p->callback = callback;
-  p->client_data = client_data;
+  p->selector    = gtk_color_selection_new ();
+  p->callback    = callback;
+  p->client_data = data;
 
-  colorsel_gtk_setcolor (p, r, g, b, FALSE);
+  colorsel_gtk_setcolor (p, r, g, b, a, FALSE);
 
   gtk_signal_connect (GTK_OBJECT (p->selector), "color_changed",
-		      (GtkSignalFunc) colorsel_gtk_update, p);
+		      GTK_SIGNAL_FUNC (colorsel_gtk_update),
+		      p);
 
   vbox = gtk_vbox_new (TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), p->selector, FALSE, FALSE, 0);
@@ -135,55 +155,60 @@ colorsel_gtk_new (int r, int g, int b,
   hbox = gtk_hbox_new (TRUE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
 
-  (*selector_data) = p;
+  *selector_data = p;
+
   return hbox;
 }
 
-
 static void
-colorsel_gtk_free (void *data)
+colorsel_gtk_free (gpointer data)
 {
   ColorselGtk *p = data;  
 
   /* don't need to gtk_widget_destroy() the selector, since that's
-   * done for us. */
+   * done for us.
+   */
 
   g_free (p);
 }
 
-
 static void
-colorsel_gtk_setcolor (void *data,
-		       int r, int g, int b, int set_current)
+colorsel_gtk_setcolor (gpointer  data,
+		       gint      r,
+		       gint      g,
+		       gint      b,
+		       gint      a,
+		       gboolean  set_current)
 {
   ColorselGtk *p = data;
-  double color[3];
+
+  gdouble color[4];
 
   color[0] = ((gdouble) r) / 255.999;
   color[1] = ((gdouble) g) / 255.999;
   color[2] = ((gdouble) b) / 255.999;
+  color[3] = ((gdouble) a) / 255.999;
 
   gtk_color_selection_set_color (GTK_COLOR_SELECTION (p->selector), color);
 }
 
-
-
 static void
-colorsel_gtk_update (GtkWidget *widget, gpointer data)
+colorsel_gtk_update (GtkWidget *widget,
+		     gpointer   data)
 {
   ColorselGtk *p = data;
-  int r;
-  int g;
-  int b;
-  double color[3];
+  gint         r;
+  gint         g;
+  gint         b;
+  gint         a;
+  gdouble      color[4];
 
   gtk_color_selection_get_color (GTK_COLOR_SELECTION (p->selector), color);
 
-  r = (int) (color[0] * 255.999);
-  g = (int) (color[1] * 255.999);
-  b = (int) (color[2] * 255.999);
+  r = (gint) (color[0] * 255.999);
+  g = (gint) (color[1] * 255.999);
+  b = (gint) (color[2] * 255.999);
+  a = (gint) (color[3] * 255.999);
 
-  p->callback (p->client_data, r, g, b);
+  p->callback (p->client_data, r, g, b, a);
 }
-
-/* End of colorsel_gtk.c */

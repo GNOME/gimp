@@ -255,9 +255,7 @@ edit_qmask_channel_query (GDisplay * gdisp)
   GtkWidget *label;
   GtkWidget *opacity_scale;
   GtkObject *opacity_scale_data;
- 
-  gint i;
-  guchar channel_color[3] = { 0, 0, 0 };
+  guchar     r, g, b, a;
 
   /* channel = gimp_image_get_channel_by_name (gdisp->gimage, "Qmask"); */
   /*  the new options structure  */
@@ -265,10 +263,12 @@ edit_qmask_channel_query (GDisplay * gdisp)
   options->gimage  = gdisp->gimage;
   options->opacity = (gdouble) options->gimage->qmask_opacity;
 
-  for (i = 0; i < 3; i++)
-    channel_color[i] = options->gimage->qmask_color[i];
+  r = options->gimage->qmask_color[0];
+  g = options->gimage->qmask_color[1];
+  b = options->gimage->qmask_color[2];
+  a = 255;
 
-  options->color_panel = color_panel_new (channel_color, 48, 64);
+  options->color_panel = color_panel_new (r, g, b, a, FALSE, 48, 64);
 
   /*  The dialog  */
   options->query_box =

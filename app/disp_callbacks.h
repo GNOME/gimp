@@ -59,6 +59,7 @@ void       gdisplay_drop_color          (GtkWidget      *widget,
 					 guchar          r,
 					 guchar          g,
 					 guchar          b,
+					 guchar          a,
 					 gpointer        data);
 void       gdisplay_drop_pattern        (GtkWidget      *widget,
 					 GPattern       *pattern,

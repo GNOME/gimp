@@ -185,6 +185,7 @@ static void channel_widget_drop_color            (GtkWidget      *widget,
 						  guchar          r,
 						  guchar          g,
 						  guchar          b,
+						  guchar          a,
 						  gpointer        data);
 static void channel_widget_draw_drop_indicator   (ChannelWidget  *cw,
 						  GimpDropType    drop_type);
@@ -1757,10 +1758,11 @@ channel_widget_drop_color (GtkWidget *widget,
 			   guchar     r,
 			   guchar     g,
 			   guchar     b,
+			   guchar     a,
 			   gpointer   data)
 {
   ChannelWidget *channel_widget = (ChannelWidget *) data;
-  Channel *channel = channel_widget->channel;
+  Channel       *channel        = channel_widget->channel;
 
   if (r != channel->col[0] ||
       g != channel->col[1] ||
@@ -1782,7 +1784,7 @@ channel_widget_draw_drop_indicator (ChannelWidget *channel_widget,
 				    GimpDropType   drop_type)
 {
   static GdkGC *gc = NULL;
-  gint y = 0;
+  gint          y = 0;
 
   if (!gc)
     {
@@ -1868,14 +1870,14 @@ channel_widget_button_events (GtkWidget *widget,
   ChannelWidget  *channel_widget;
   GtkWidget      *event_widget;
   GdkEventButton *bevent;
-  gint return_val;
-  gint visible;
-  gint width, height;
+  gint            return_val;
+  gint            visible;
+  gint            width, height;
 
-  static gboolean button_down = FALSE;
+  static gboolean   button_down = FALSE;
   static GtkWidget *click_widget = NULL;
-  static gint old_state;
-  static gint exclusive;
+  static gint       old_state;
+  static gint       exclusive;
 
   channel_widget =
     (ChannelWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
@@ -1895,7 +1897,6 @@ channel_widget_button_events (GtkWidget *widget,
       height  = channel_widget->gimage->height;
       break;
     }
-
 
   switch (event->type)
     {
@@ -1973,7 +1974,7 @@ channel_widget_button_events (GtkWidget *widget,
 	  /* the user moved the cursor out of the widget before
              releasing the button -> cancel the button_press */ 
 	  button_down = FALSE;
-	  
+
 	  if (widget == channel_widget->eye_widget)
 	    {
 	      if (exclusive)
@@ -2009,7 +2010,7 @@ channel_widget_preview_events (GtkWidget *widget,
   ChannelWidget  *channel_widget;
   GdkEventExpose *eevent;
   GdkEventButton *bevent;
-  gboolean valid;
+  gboolean        valid;
 
   valid = FALSE;
 
@@ -2082,8 +2083,8 @@ static void
 channel_widget_preview_redraw (ChannelWidget *channel_widget)
 {
   TempBuf *preview_buf;
-  gint width, height;
-  gint channel;
+  gint     width, height;
+  gint     channel;
 
   /*  allocate the channel widget pixmap  */
   if (! channel_widget->channel_pixmap)
@@ -2180,15 +2181,15 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
 static void
 channel_widget_no_preview_redraw (ChannelWidget *channel_widget)
 {
-  GdkPixmap  *pixmap;
-  GdkPixmap **pixmap_normal;
-  GdkPixmap **pixmap_selected;
-  GdkPixmap **pixmap_insensitive;
-  GdkColor   *color;
-  GtkWidget  *widget;
-  GtkStateType state;
-  gchar *bits;
-  gint   width, height;
+  GdkPixmap     *pixmap;
+  GdkPixmap    **pixmap_normal;
+  GdkPixmap    **pixmap_selected;
+  GdkPixmap    **pixmap_insensitive;
+  GdkColor      *color;
+  GtkWidget     *widget;
+  GtkStateType   state;
+  gchar         *bits;
+  gint           width, height;
 
   state = channel_widget->list_item->state;
 
@@ -2249,10 +2250,10 @@ channel_widget_no_preview_redraw (ChannelWidget *channel_widget)
 static void
 channel_widget_eye_redraw (ChannelWidget *channel_widget)
 {
-  GdkPixmap *pixmap;
-  GdkColor  *color;
-  GtkStateType state;
-  gboolean visible;
+  GdkPixmap    *pixmap;
+  GdkColor     *color;
+  GtkStateType  state;
+  gboolean      visible;
 
   state = channel_widget->list_item->state;
 
@@ -2480,16 +2481,16 @@ struct _NewChannelOptions
 };
 
 static gchar  *channel_name     = NULL;
-static guchar  channel_color[3] = { 0, 0, 0 };
+static guchar  channel_color[4] = { 0, 0, 0, 0 };
 
 static void
 new_channel_query_ok_callback (GtkWidget *widget,
 			       gpointer   data)
 {
   NewChannelOptions *options;
-  Channel   *new_channel;
-  GimpImage *gimage;
-  gint i;
+  Channel           *new_channel;
+  GimpImage         *gimage;
+  gint               i;
 
   options = (NewChannelOptions *) data;
 
@@ -2530,7 +2531,12 @@ channels_dialog_new_channel_query (GimpImage* gimage)
   options = g_new (NewChannelOptions, 1);
   options->gimage      = gimage;
   options->opacity     = 50.0;
-  options->color_panel = color_panel_new (channel_color, 48, 64);
+  options->color_panel = color_panel_new (channel_color[0],
+					  channel_color[1],
+					  channel_color[2],
+					  channel_color[3],
+					  FALSE,
+					  48, 64);
 
   /*  The dialog  */
   options->query_box =
@@ -2633,9 +2639,9 @@ edit_channel_query_ok_callback (GtkWidget *widget,
 {
   EditChannelOptions *options;
   Channel *channel;
-  gint opacity;
-  gint update = FALSE;
-  gint i;
+  gint     opacity;
+  gint     update = FALSE;
+  gint     i;
 
   options = (EditChannelOptions *) data;
   channel = options->channel_widget->channel;
@@ -2654,6 +2660,7 @@ edit_channel_query_ok_callback (GtkWidget *widget,
 	  channel->opacity = opacity;
 	  update = TRUE;
 	}
+
       for (i = 0; i < 3; i++)
 	if (options->color_panel->color[i] != channel->col[i])
 	  {
@@ -2683,17 +2690,23 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   GtkWidget *label;
   GtkWidget *opacity_scale;
   GtkObject *opacity_scale_data;
-  gint i;
+  gint       i;
 
   /*  the new options structure  */
   options = g_new (EditChannelOptions, 1);
   options->channel_widget = channel_widget;
   options->gimage         = channel_widget->gimage;
   options->opacity        = (gdouble) channel_widget->channel->opacity / 2.55;
+
   for (i = 0; i < 3; i++)
     channel_color[i] = channel_widget->channel->col[i];
 
-  options->color_panel = color_panel_new (channel_color, 48, 64);
+  options->color_panel = color_panel_new (channel_color[0],
+					  channel_color[1],
+					  channel_color[2],
+					  channel_color[3],
+					  FALSE,
+					  48, 64);
 
   /*  The dialog  */
   options->query_box =

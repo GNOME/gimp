@@ -30,6 +30,7 @@ typedef enum
 typedef void (* ColorNotebookCallback) (gint               red,
 					gint               green,
 					gint               blue,
+					gint               alpha,
 					ColorNotebookState state,
 					gpointer           data);
 
@@ -42,8 +43,8 @@ struct _ColorNotebook
   GtkWidget             *shell;
   GtkWidget             *notebook;
 
-  gint                   values[3];
-  gint                   orig_values[3];
+  gint                   values[4];
+  gint                   orig_values[4];
 
   ColorNotebookCallback  callback;
   gpointer               client_data;
@@ -57,9 +58,11 @@ struct _ColorNotebook
 ColorNotebook * color_notebook_new       (gint                  red,
 					  gint                  green,
 					  gint                  blue,
+					  gint                  alpha,
 					  ColorNotebookCallback callback,
 					  gpointer              data,
-				          gboolean              wants_update);
+				          gboolean              wants_update,
+					  gboolean              show_aplha);
 
 void            color_notebook_show      (ColorNotebook        *cnb);
 void            color_notebook_hide      (ColorNotebook        *cnb);
@@ -69,6 +72,7 @@ void            color_notebook_set_color (ColorNotebook        *cnb,
 					  gint                  red,
 					  gint                  green,
 					  gint                  blue,
+					  gint                  alpha,
 					  gboolean              set_current);
 
 #endif /* __COLOR_NOTEBOOK_H__ */

@@ -492,11 +492,11 @@ gimp_dnd_get_color_icon (GtkWidget     *widget,
 			 gpointer       get_color_data)
 {
   GtkWidget *preview;
-  guchar r, g, b;
-  guchar row[DRAG_PREVIEW_SIZE * 3];
-  gint   i;
+  guchar     r, g, b, a;
+  guchar     row[DRAG_PREVIEW_SIZE * 3];
+  gint       i;
 
-  (* (GimpDndDragColorFunc) get_color_func) (widget, &r, &g, &b,
+  (* (GimpDndDragColorFunc) get_color_func) (widget, &r, &g, &b, &a,
 					     get_color_data);
 
   for (i = 0; i < DRAG_PREVIEW_SIZE; i++)
@@ -527,9 +527,9 @@ gimp_dnd_get_color_data (GtkWidget     *widget,
 			 gint          *length)
 {
   guint16 *vals;
-  guchar r, g, b;
+  guchar   r, g, b, a;
 
-  (* (GimpDndDragColorFunc) get_color_func) (widget, &r, &g, &b,
+  (* (GimpDndDragColorFunc) get_color_func) (widget, &r, &g, &b, &a,
 					     get_color_data);
 
   vals = g_new (guint16, 4);
@@ -537,7 +537,7 @@ gimp_dnd_get_color_data (GtkWidget     *widget,
   vals[0] = r + (r << 8);
   vals[1] = g + (g << 8);
   vals[2] = b + (b << 8);
-  vals[3] = 0xffff;
+  vals[3] = a + (a << 8);
 
   *format = 16;
   *length = 8;
@@ -554,7 +554,7 @@ gimp_dnd_set_color_data (GtkWidget     *widget,
 			 gint           length)
 {
   guint16 *color_vals;
-  guchar r, g, b;
+  guchar   r, g, b, a;
 
   if ((format != 16) || (length != 8))
     {
@@ -567,8 +567,9 @@ gimp_dnd_set_color_data (GtkWidget     *widget,
   r = color_vals[0] >> 8;
   g = color_vals[1] >> 8;
   b = color_vals[2] >> 8;
+  a = color_vals[3] >> 8;
 
-  (* (GimpDndDropColorFunc) set_color_func) (widget, r, g, b,
+  (* (GimpDndDropColorFunc) set_color_func) (widget, r, g, b, a,
 					     set_color_data);
 }
 
@@ -627,7 +628,7 @@ gimp_dnd_get_brush_data (GtkWidget     *widget,
 			 gint          *length)
 {
   GimpBrush *brush;
-  gchar *name;
+  gchar     *name;
 
   brush = (* (GimpDndDragBrushFunc) get_brush_func) (widget, get_brush_data);
 
@@ -654,7 +655,7 @@ gimp_dnd_set_brush_data (GtkWidget     *widget,
 			 gint           length)
 {
   GimpBrush *brush;
-  gchar *name;
+  gchar     *name;
 
   if ((format != 8) || (length < 1))
     {
@@ -729,7 +730,7 @@ gimp_dnd_get_pattern_data (GtkWidget     *widget,
 			   gint          *length)
 {
   GPattern *pattern;
-  gchar *name;
+  gchar    *name;
 
   pattern = (* (GimpDndDragPatternFunc) get_pattern_func) (widget,
 							   get_pattern_data);
@@ -754,7 +755,7 @@ gimp_dnd_set_pattern_data (GtkWidget     *widget,
 			   gint           length)
 {
   GPattern *pattern;
-  gchar *name;
+  gchar    *name;
 
   if ((format != 8) || (length < 1))
     {
@@ -830,7 +831,7 @@ gimp_dnd_get_gradient_data (GtkWidget     *widget,
 			    gint          *length)
 {
   gradient_t *gradient;
-  gchar *name;
+  gchar      *name;
 
   gradient =
     (* (GimpDndDragGradientFunc) get_gradient_func) (widget, get_gradient_data);
@@ -855,7 +856,7 @@ gimp_dnd_set_gradient_data (GtkWidget     *widget,
 			    gint           length)
 {
   gradient_t *gradient;
-  gchar *name;
+  gchar      *name;
 
   if ((format != 8) || (length < 1))
     {

@@ -40,6 +40,7 @@ struct _ColorPanelPrivate
   GtkWidget *drawing_area;
   GdkGC     *gc;
 
+  gboolean   show_alpha;
   gboolean   button_down;
 
   ColorNotebook *color_notebook;
@@ -55,6 +56,7 @@ static gint color_panel_events          (GtkWidget  *widget,
 static void color_panel_select_callback (gint        r,
 					 gint        g,
 					 gint        b,
+					 gint        a,
 					 ColorNotebookState state,
 					 gpointer    data);
 
@@ -62,11 +64,13 @@ static void color_panel_drag_color      (GtkWidget  *widget,
 					 guchar     *r,
 					 guchar     *g,
 					 guchar     *b,
+					 guchar     *a,
 					 gpointer    data);
 static void color_panel_drop_color      (GtkWidget  *widget,
 					 guchar      r,
 					 guchar      g,
 					 guchar      b,
+					 guchar      a,
 					 gpointer    data);
 
 /*  dnd stuff  */
@@ -80,26 +84,31 @@ static guint n_color_panel_targets = (sizeof (color_panel_target_table) /
 /*  public functions  */
 
 ColorPanel *
-color_panel_new (guchar *initial,
-		 gint    width,
-		 gint    height)
+color_panel_new (guchar    r,
+		 guchar    g,
+		 guchar    b,
+		 guchar    a,
+		 gboolean  show_alpha,
+		 gint      width,
+		 gint      height)
 {
-  ColorPanel *color_panel;
+  ColorPanel        *color_panel;
   ColorPanelPrivate *private;
-  gint i;
 
   private = g_new0 (ColorPanelPrivate, 1);
   private->color_notebook        = NULL;
   private->color_notebook_active = FALSE;
   private->gc                    = NULL;
+  private->show_alpha            = show_alpha;
   private->button_down           = FALSE;
 
   color_panel = g_new (ColorPanel, 1);
   color_panel->private_part = private;
 
-  /*  set the initial color  */
-  for (i = 0; i < 3; i++)
-    color_panel->color[i] = (initial) ? initial[i] : 0;
+  color_panel->color[0] = r;
+  color_panel->color[1] = g;
+  color_panel->color[2] = b;
+  color_panel->color[3] = a;
 
   color_panel->color_panel_widget = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (color_panel->color_panel_widget),
@@ -111,7 +120,7 @@ color_panel_new (guchar *initial,
 			 width, height);
   gtk_widget_set_events (private->drawing_area, EVENT_MASK);
   gtk_signal_connect (GTK_OBJECT (private->drawing_area), "event",
-		      (GtkSignalFunc) color_panel_events,
+		      GTK_SIGNAL_FUNC (color_panel_events),
 		      color_panel);
   gtk_container_add (GTK_CONTAINER (color_panel->color_panel_widget),
 		     private->drawing_area);
@@ -144,17 +153,22 @@ color_panel_new (guchar *initial,
 
 void
 color_panel_set_color (ColorPanel *color_panel,
-		       guchar     *col)
+		       guchar      r,
+		       guchar      g,
+		       guchar      b,
+		       guchar      a)
 {
   ColorPanelPrivate *private = color_panel->private_part;
 
-  color_panel->color[0] = col[0];
-  color_panel->color[1] = col[1];
-  color_panel->color[2] = col[2];
+  color_panel->color[0] = r;
+  color_panel->color[1] = g;
+  color_panel->color[2] = b;
+  color_panel->color[3] = a;
 
   if (private->color_notebook_active)
     color_notebook_set_color (private->color_notebook,
-			      col[0], col[1], col[2], TRUE);
+			      r, g, b, a,
+			      TRUE);
 
   if (private->gc)
     color_panel_draw (color_panel);
@@ -186,9 +200,9 @@ color_panel_free (ColorPanel *color_panel)
 static void
 color_panel_draw (ColorPanel *color_panel)
 {
-  GtkWidget *widget;
+  GtkWidget         *widget;
   ColorPanelPrivate *private;
-  GdkColor fg;
+  GdkColor           fg;
 
   private = (ColorPanelPrivate *) color_panel->private_part;
   widget = private->drawing_area;
@@ -207,8 +221,8 @@ color_panel_events (GtkWidget *widget,
 		    GdkEvent  *event,
 		    gpointer   data)
 {
-  GdkEventButton *bevent;
-  ColorPanel *color_panel;
+  GdkEventButton    *bevent;
+  ColorPanel        *color_panel;
   ColorPanelPrivate *private;
 
   color_panel = (ColorPanel *) data;
@@ -242,9 +256,11 @@ color_panel_events (GtkWidget *widget,
 		color_notebook_new (color_panel->color[0],
 				    color_panel->color[1],
 				    color_panel->color[2],
+				    color_panel->color[3],
 				    color_panel_select_callback,
 				    color_panel,
-				    FALSE);
+				    FALSE,
+				    private->show_alpha);
 	      private->color_notebook_active = TRUE;
 	    }
 	  else
@@ -257,7 +273,9 @@ color_panel_events (GtkWidget *widget,
 	      color_notebook_set_color (private->color_notebook,
 					color_panel->color[0],
 					color_panel->color[1],
-					color_panel->color[2], 1);
+					color_panel->color[2],
+					color_panel->color[3],
+					TRUE);
 	    }
 	  private->button_down = FALSE;
 	}
@@ -278,10 +296,11 @@ static void
 color_panel_select_callback (gint               r,
 			     gint               g,
 			     gint               b,
+			     gint               a,
 			     ColorNotebookState state,
 			     gpointer           data)
 {
-  ColorPanel *color_panel;
+  ColorPanel        *color_panel;
   ColorPanelPrivate *private;
 
   color_panel = (ColorPanel *) data;
@@ -312,6 +331,7 @@ color_panel_drag_color (GtkWidget *widget,
 			guchar    *r,
 			guchar    *g,
 			guchar    *b,
+			guchar    *a,
 			gpointer   data)
 {
   ColorPanel *color_panel;
@@ -321,6 +341,7 @@ color_panel_drag_color (GtkWidget *widget,
   *r = color_panel->color[0];
   *g = color_panel->color[1];
   *b = color_panel->color[2];
+  *a = color_panel->color[3];
 }
 
 static void
@@ -328,9 +349,10 @@ color_panel_drop_color (GtkWidget *widget,
 			guchar     r,
 			guchar     g,
 			guchar     b,
+			guchar     a,
 			gpointer   data)
 {
-  ColorPanel *color_panel;
+  ColorPanel        *color_panel;
   ColorPanelPrivate *private;
 
   color_panel = (ColorPanel *) data;
@@ -339,9 +361,10 @@ color_panel_drop_color (GtkWidget *widget,
   color_panel->color[0] = r;
   color_panel->color[1] = g;
   color_panel->color[2] = b;
+  color_panel->color[3] = a;
 
   if (private->color_notebook_active)
-    color_notebook_set_color (private->color_notebook, r, g, b, TRUE);
+    color_notebook_set_color (private->color_notebook, r, g, b, a, TRUE);
 
   color_panel_draw (color_panel);
 }

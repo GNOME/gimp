@@ -1,5 +1,30 @@
 2001-01-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/by_color_select.c
+	* app/channels_dialog.c
+	* app/color_area.c
+	* app/color_notebook.[ch]
+	* app/color_panel.[ch]
+	* app/color_picker.c
+	* app/color_select.c
+	* app/colormap_dialog.i.c
+	* app/devices.c
+	* app/disp_callbacks.[ch]
+	* app/gimpdnd.[ch]
+	* app/palette.c
+	* app/qmask.c
+
+	* libgimp/gimpcolorselector.h
+
+	* modules/colorsel_gtk.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c: made the color_notebook, the color_area
+	and DND speak in terms of RGBA instead of GRB. The alpha value is
+	not used yet, only the API changed. Everything should work exactly
+	as before.
+
+2001-01-07  Michael Natterer  <mitch@gimp.org>
+
 	* TODO.xml: add "Cleanup GIMP's color selectors".
 
 2001-01-07  Michael Natterer  <mitch@gimp.org>
