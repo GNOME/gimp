@@ -24,6 +24,8 @@
 
 #include "gui-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
@@ -857,8 +859,12 @@ image_menu_setup (GimpItemFactory *factory)
 {
   if (GTK_IS_MENU_BAR (GTK_ITEM_FACTORY (factory)->widget))
     {
-      gimp_item_factory_set_visible (GTK_ITEM_FACTORY (factory),
-                                     "/tearoff", FALSE);
+      if (GIMP_GUI_CONFIG (factory->gimp->config)->tearoff_menus)
+        {
+          gimp_item_factory_set_visible (GTK_ITEM_FACTORY (factory),
+                                         "/tearoff", FALSE);
+        }
+
       gimp_item_factory_set_visible (GTK_ITEM_FACTORY (factory),
                                      "/filters-separator", FALSE);
     }
