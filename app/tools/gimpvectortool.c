@@ -423,12 +423,15 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                       vector_tool->cur_stroke,
                                       vector_tool->cur_anchor,
                                       TRUE, TRUE);
+          
           gimp_draw_tool_on_vectors_handle (GIMP_DRAW_TOOL (tool), gdisp,
                                             vector_tool->vectors, coords,
                                             TARGET, TARGET,
-                                            GIMP_ANCHOR_CONTROL, FALSE,
+                                            GIMP_ANCHOR_CONTROL, TRUE,
                                             &vector_tool->cur_anchor,
                                             &vector_tool->cur_stroke);
+          if (!vector_tool->cur_anchor)
+            vector_tool->function = VECTORS_FINISHED;
         }
     }
 
@@ -858,13 +861,13 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
   GimpVectorTool    *vector_tool;
   GimpDrawTool      *draw_tool;
   GimpVectorOptions *options;
-  GimpAnchor        *anchor         = NULL;
-  GimpAnchor        *anchor2        = NULL;
-  GimpStroke        *stroke         = NULL;
-  gdouble            position       = -1;
-  gboolean           on_handle      = FALSE;
-  gboolean           on_curve       = FALSE;
-  gboolean           on_vectors     = FALSE;
+  GimpAnchor        *anchor     = NULL;
+  GimpAnchor        *anchor2    = NULL;
+  GimpStroke        *stroke     = NULL;
+  gdouble            position   = -1;
+  gboolean           on_handle  = FALSE;
+  gboolean           on_curve   = FALSE;
+  gboolean           on_vectors = FALSE;
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
   options     = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
@@ -1026,11 +1029,10 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
             }
           else
             {
-              vector_tool->function = VECTORS_CONVERT_EDGE;
               if (state & TOGGLE_MASK)
-                vector_tool->restriction = GIMP_ANCHOR_FEATURE_SYMMETRIC;
+                vector_tool->function = VECTORS_CONVERT_EDGE;
               else
-                vector_tool->restriction = GIMP_ANCHOR_FEATURE_NONE;
+                vector_tool->function = VECTORS_MOVE_HANDLE;
             }
         }
       else if (on_curve)
