@@ -1,3 +1,13 @@
+2002-05-27  Sven Neumann  <sven@gimp.org>
+
+	* HACKING
+	* autogen.sh
+	* configure.in: added AC_SYS_LARGEFILE as a first prerequisite to
+	handle bug #74478 (cannot handle swap size of 2GB). This requires
+	autoconf-2.52.
+
+	* acconfig.h: removed since it is now obsolete.
+
 2002-05-26  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/helpbrowser/helpbrowser.c: made Forward button work.

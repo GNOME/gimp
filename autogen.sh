@@ -68,10 +68,10 @@ fi
 
 echo -n "Testing autoconf... "
 VER=`autoconf --version | grep -iw autoconf | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
-if expr $VER \>= 2.13 >/dev/null; then
+if expr $VER \>= 2.52 >/dev/null; then
 	echo "looks OK."
 else
-	echo "too old! (Need 2.13, have $VER)"
+	echo "too old! (Need 2.52, have $VER)"
 	DIE=1
 fi
 

@@ -1,5 +1,8 @@
 dnl Process this file with autoconf to produce a configure script.
 
+# require autoconf 2.52
+AC_PREREQ(2.52)
+
 AC_INIT(etc/gimprc.in)
 
 GLIB_REQUIRED_VERSION=2.0.0
@@ -45,16 +48,19 @@ AC_PROG_CC
 AC_LIBTOOL_WIN32_DLL
 AM_PROG_LIBTOOL
 
-dnl Set AS and ASFLAGS so that automake 1.5 will be happy
+dnl XXXX Hack: Set AS and ASFLAGS so that automake 1.5 will be happy
 AS="\${CC}"
-ASFLAGS="\$(DEFS) \$(DEFAULT_INCLUDES) \$(INCLUDES) \$(AM_CPPFLAGS) \$(CPPFLAGS) \$(AM_CFLAGS) \$(CFLAGS)"
+ASFLAGS="\${CFLAGS}"
 AC_SUBST(AS)
 AC_SUBST(ASFLAGS)
+dnl XXXX Hack: Set CCAS and CCASFLAGS so that automake 1.6 will be happy
+CCAS="\${CC}"
+CCASFLAGS="\${CFLAGS}"
+AC_SUBST(CCAS)
+AC_SUBST(CCASFLAGS)
 
 dnl Initialize maintainer mode
 AM_MAINTAINER_MODE
-
-AC_CANONICAL_HOST
 
 # Honor aclocal flags
 ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
@@ -99,6 +105,8 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_CPP
 
+dnl Large file support for the swap file
+AC_SYS_LARGEFILE
 
 AC_ARG_ENABLE(debug, [  --enable-debug          turn on debugging [default=no]],
 if eval "test x$enable_debug = xyes"; then
@@ -152,7 +160,8 @@ dnl i18n stuff
 
 GETTEXT_PACKAGE=gimp14
 AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE")
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
+                   [Defines the prefix for our translation domains.])
 
 ALL_LINGUAS="ca cs da de el en_GB es fi fr ga gl hu hr it ja ko nl no pl pt pt_BR ro ru sk sv tr uk zh_CN zh_TW"
 
@@ -256,7 +265,7 @@ EOF
     if $CC -c conftest.S ; then
       AC_MSG_RESULT(yes)
       rm -f conftest.*
-      AC_DEFINE(HAVE_ASM_MMX)
+      AC_DEFINE(HAVE_ASM_MMX,,[Define if MMX in assembly is supported.])
       have_asm_mmx=true
     else
       AC_MSG_RESULT(no)
@@ -278,8 +287,12 @@ dnl GIMP_REMOTE="gimp-remote-1.3"
 
 
 dnl Check for shared memory
-AC_CHECK_HEADER(sys/ipc.h, [AC_DEFINE(HAVE_IPC_H)], no_sys_ipc=yes)
-AC_CHECK_HEADER(sys/shm.h, [AC_DEFINE(HAVE_SHM_H)], no_sys_shm=yes)
+AC_CHECK_HEADER(sys/ipc.h,
+  [AC_DEFINE(HAVE_IPC_H,,[Define if you have the <sys/ipc.h> heacder file.])],
+  no_sys_ipc=yes)
+AC_CHECK_HEADER(sys/shm.h,
+  [AC_DEFINE(HAVE_SHM_H,,[Define if you have the <sys/shm.h> heacder file.])],
+  no_sys_shm=yes)
 if test "$ac_cv_header_sys_shm_h" = "yes"; then
   AC_MSG_CHECKING(whether shmctl IPC_RMID allowes subsequent attaches)
   AC_TRY_RUN([
@@ -305,7 +318,7 @@ if test "$ac_cv_header_sys_shm_h" = "yes"; then
 	  exit (0);
 	}
     ],
-    AC_DEFINE(IPC_RMID_DEFERRED_RELEASE)
+    AC_DEFINE(IPC_RMID_DEFERRED_RELEASE,,[FIXME: what do I define?])
       AC_MSG_RESULT(yes),
     AC_MSG_RESULT(no),
     AC_MSG_RESULT(assuming no))
@@ -323,7 +336,7 @@ int main()
 #else
   return (1);
 #endif
-}], AC_DEFINE(HAVE_GLIBC_REGEX)
+}], AC_DEFINE(HAVE_GLIBC_REGEX,,[Define if glibc has regex support.])
     have_glibc_regex=yes
     AC_MSG_RESULT(yes),
     AC_MSG_RESULT(no),
@@ -352,7 +365,7 @@ AC_CHECK_FUNCS(finite, , [
     AC_MSG_RESULT(no)
     AC_MSG_CHECKING(for isfinite in <math.h>)
     AC_TRY_LINK([#include <math.h>], [float f = 0.0; isfinite(f)], [
-      AC_DEFINE(HAVE_ISFINITE)
+      AC_DEFINE(HAVE_ISFINITE,,[Define if you have the isfinite function.])
       AC_MSG_RESULT(yes)], AC_MSG_RESULT(no))])])
 AC_SUBST(HAVE_FINITE)
 AC_SUBST(HAVE_ISFINITE)
@@ -365,19 +378,21 @@ AC_TRY_COMPILE([#include <sys/types.h>],
 if test $gimp_ok = no; then
     AC_EGREP_HEADER(fd_mask, sys/select.h, gimp_ok=yes)
     if test $gimp_ok = yes; then
-        AC_DEFINE(HAVE_SYS_SELECT_H)
+        AC_DEFINE(HAVE_SYS_SELECT_H,,
+                  [Define if you have the <sys/select.h> header.])
     fi
 fi
 AC_MSG_RESULT($gimp_ok)
 if test $gimp_ok = no; then
-    AC_DEFINE(NO_FD_SET)
+    AC_DEFINE(NO_FD_SET,,
+              [Define if you don't have the fd_set function.])
 fi
 
 dnl Check for random number functions
 LIBUCB=""
 AC_CHECK_FUNC(random, [
-  AC_DEFINE(RAND_FUNC, random)
-  AC_DEFINE(SRAND_FUNC, srandom)],
+  AC_DEFINE(RAND_FUNC, random, [Define a random function. FIXME!])
+  AC_DEFINE(SRAND_FUNC, srandom, [Define a srandom function. FIXME!])],
   [AC_CHECK_LIB(ucb, random, [
     AC_DEFINE(RAND_FUNC, random)
     AC_DEFINE(SRAND_FUNC, srandom)
@@ -396,7 +411,7 @@ AC_CHECK_FUNCS(bind_textdomain_codeset)
 LIBS=$gimp_save_LIBS
 
 dnl check for rint
-AC_CHECK_FUNC(rint, AC_DEFINE(HAVE_RINT), [
+AC_CHECK_FUNC(rint, AC_DEFINE(HAVE_RINT,,[Define if you the rint function.]), [
   AC_CHECK_LIB(m, rint, [
     AC_DEFINE(HAVE_RINT)])])
 
@@ -431,7 +446,8 @@ dnl Multi-Processor Support
 AC_ARG_ENABLE(mp, [  --enable-mp             support multiple processors [default=no]])
 if test "x$enable_mp" = "xyes"; then
   AC_CHECK_LIB(pthread, pthread_attr_init, 
-    [AC_DEFINE(ENABLE_MP)
+    [AC_DEFINE(ENABLE_MP,,
+	       [Define to enable support for multiple processors.])
     GIMP_MP_LIBS="-lpthread"
     GIMP_MP_FLAGS="-D_REENTRANT"],
     # AIX has libpthreads, cause they're special. Special friends (TM)
@@ -514,7 +530,8 @@ AC_ARG_WITH(libjpeg,  [  --without-libjpeg       build without JPEG support])
       if test "$jpeg_ok" = yes; then
 	JPEG='jpeg'; XJT='xjt'; LIBJPEG='-ljpeg'
 	AC_CHECK_LIB(jpeg, jpeg_simple_progression,	
-	  AC_DEFINE(HAVE_PROGRESSIVE_JPEG),
+	  AC_DEFINE(HAVE_PROGRESSIVE_JPEG,,
+                    [Define if jpeglib supports progressive JPEG.]),
 	  AC_MSG_WARN(JPEG library does not support progressive saving.))
       else
 	AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG header file not found) ***)
