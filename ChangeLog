@@ -1,3 +1,8 @@
+2000-11-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gap/gap_lib.c: removed some debugging printf statements 
+	that were accidentally left in the code.
+
 2000-11-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/fileops.c: added a confirm dialog for <Image>/File/Revert

@@ -1101,7 +1101,6 @@ gint32 p_save_named_image(gint32 image_id, char *sav_name, GimpRunModeType run_m
   }
   else
   {
-printf("HOF gimp_file_save returned GIMP_PDB_SUCCESS\n");
     g_free(l_params);
     return image_id;
   }
@@ -1206,7 +1205,6 @@ int p_save_named_frame(gint32 image_id, char *sav_name)
 
     if (l_params[0].data.d_status == GIMP_PDB_SUCCESS)
     {
-printf("HOF gimp_xcf_save returned GIMP_PDB_SUCCESS\n");
        l_rc = image_id;
     }
     g_free(l_params);
