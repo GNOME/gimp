@@ -1,5 +1,17 @@
 2000-01-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/preferences_dialog.c: made the handling of the values which
+	can't be changed on the fly consistent:
+
+	- Some of the widget callbacks were connected to gimprc variables
+	  instead of pref dialog's "edit_" variables.
+	- Correctly assign value, edit_value, old_value and save_value for
+	  all of them.
+	- Separated them from the other values in all functions.
+	- Reduced the endless "if" madness in some callbacks.
+
+2000-01-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/preferences_dialog.c: use the int adjustment callback from
 	libgimp, simplified the confirm dialog signal callbacks.
 
