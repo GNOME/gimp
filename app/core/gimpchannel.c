@@ -591,10 +591,12 @@ gimp_channel_stroke (GimpItem     *item,
   gint            n_segs_in;
   gint            n_segs_out;
   gboolean        retval = FALSE;
+  gint            offset_x, offset_y;
 
   channel = GIMP_CHANNEL (item);
 
   gimage = gimp_item_get_image (GIMP_ITEM (channel));
+  gimp_item_offsets (GIMP_ITEM (channel), &offset_x, &offset_y);
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
@@ -610,7 +612,8 @@ gimp_channel_stroke (GimpItem     *item,
     {
       gimp_drawable_stroke_boundary (drawable,
                                      GIMP_STROKE_OPTIONS (stroke_desc),
-                                     segs_in, n_segs_in);
+                                     segs_in, n_segs_in,
+                                     offset_x, offset_y);
       retval = TRUE;
     }
   else if (GIMP_IS_PAINT_INFO (stroke_desc))

@@ -99,7 +99,6 @@ gimp_preview_renderer_vectors_draw (GimpPreviewRenderer *renderer,
   GimpVectors  *vectors;
   GimpStroke   *stroke;
   GdkRectangle  rect, area;
-  gboolean      closed;
   gdouble       xscale, yscale;
 
   rect.width  = renderer->width;
@@ -130,7 +129,7 @@ gimp_preview_renderer_vectors_draw (GimpPreviewRenderer *renderer,
 
       coordinates = gimp_stroke_interpolate (stroke,
                                              MIN (xscale, yscale) / 2,
-                                             &closed);
+                                             NULL);
       if (!coordinates)
         continue;
 

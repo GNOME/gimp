@@ -1286,11 +1286,11 @@ gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
   gboolean    need_endpoint = FALSE;
 
   g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), NULL);
-  g_return_val_if_fail (ret_closed != NULL, NULL);
 
   if (!stroke->anchors)
     {
-      *ret_closed = FALSE;
+      if (ret_closed)
+        *ret_closed = FALSE;
       return NULL;
     }
 
@@ -1339,7 +1339,8 @@ gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
   if (need_endpoint)
     ret_coords = g_array_append_val (ret_coords, segmentcoords[3]);
 
-  *ret_closed = stroke->closed;
+  if (ret_closed)
+    *ret_closed = stroke->closed;
 
   if (ret_coords->len == 0)
     {
