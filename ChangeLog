@@ -1,3 +1,9 @@
+2004-01-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/gimphistogram.c (gimp_histogram_calculate_sub_region):
+	advance the source pointer by 4, not 3 bytes for regions with
+	4 bytes (ouch). Cosmetics.
+
 2004-01-12  DindinX  <david@dindinx.org>
 
 	* libgimp/gimpmisc.[ch]: remove these files

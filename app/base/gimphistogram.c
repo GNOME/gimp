@@ -397,7 +397,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
     {
       gdouble masked;
 
-      src = region->data;
+      src  = region->data;
       msrc = mask->data;
 
       while (h--)
@@ -406,7 +406,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 	  m = msrc;
 	  w = region->w;
 
-	  switch(region->bytes)
+	  switch (region->bytes)
 	    {
 	    case 1:
 	      while (w--)
@@ -463,7 +463,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 		  else
 		    values[0][max] += masked;
 
-		  s += 3;
+		  s += 4;
 		  m += 1;
 		}
 	      break;
