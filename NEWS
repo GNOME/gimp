@@ -6,6 +6,15 @@ here. New features are being added in the HEAD branch that will lead
 to GIMP version 2.4.
 
 
+Bugs fixed in GIMP 2.2.2
+========================
+- let Decompose plug-in create layers with alpha channel
+- fixed crash in save dialog (bug #162443)
+- fixed misbehaviour in Scale and Resize dialogs (bug #162387)
+- fixed preview in Imagemap plug-in (bug #162592)
+- fixed handling of broken menu path translations (bug #162590)
+
+
 Bugs fixed in GIMP 2.2.1
 ========================
 
