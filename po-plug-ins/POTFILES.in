@@ -39,7 +39,6 @@ plug-ins/common/oilify.c
 plug-ins/common/png.c
 plug-ins/common/ps.c
 plug-ins/common/rotate.c
-plug-ins/common/rotators.c
 plug-ins/common/threshold_alpha.c
 plug-ins/common/warp.c
 plug-ins/common/xbm.c

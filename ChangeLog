@@ -1,3 +1,8 @@
+Sat Nov 13 18:07:51 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/common/rotate.c: we don't use gtk, so we don't need
+	INIT_I18N_UI
+
 1999-11-14  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimpexport.c: Include config.h for ENABLE_NLS.

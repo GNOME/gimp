@@ -55,7 +55,6 @@
  */  
 
 #include <stdlib.h>
-#include <gtk/gtk.h>
 #include "config.h"
 #include "libgimp/gimp.h"
 #include "libgimp/stdplugins-intl.h"
@@ -248,10 +247,7 @@ run (gchar    *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  if (run_mode != RUN_INTERACTIVE) 
-    INIT_I18N(); 
-  else
-    INIT_I18N_UI();
+  INIT_I18N(); 
 
   /* get image and drawable */
   image_ID = param[1].data.d_int32;
