@@ -323,8 +323,6 @@ main (gint    argc,
   if (startup_id && *startup_id)
     desktop_startup_id = g_strdup (startup_id);
 
-  g_print ("%s\n", desktop_startup_id);
-
   gtk_init (&argc, &argv);
 
   for (i = 1; i < argc; i++)
@@ -392,84 +390,79 @@ main (gint    argc,
 
   gimp_window = gimp_remote_find_window (display, screen);
 
-  if (query)
+  if (! query)
     {
-      exit (gimp_window ? EXIT_SUCCESS : EXIT_FAILURE);
-    }
-
-  if (gimp_window)
-    {
-      GdkDragContext  *context;
-      GdkDragProtocol  protocol;
-      GtkWidget       *source;
-      GdkAtom          sel_type;
-      GdkAtom          sel_id;
-      GList           *targetlist;
-      guint            timeout;
-
-      gdk_drag_get_protocol_for_display (display,
-                                         GDK_WINDOW_XID (gimp_window),
-                                         &protocol);
-      if (protocol != GDK_DRAG_PROTO_XDND)
+      if (gimp_window)
         {
-          g_printerr ("Gimp Window doesnt use Xdnd-Protocol - huh?\n");
-          return EXIT_FAILURE;
+          GdkDragContext  *context;
+          GdkDragProtocol  protocol;
+          GtkWidget       *source;
+          GdkAtom          sel_type;
+          GdkAtom          sel_id;
+          GList           *targetlist;
+          guint            timeout;
+
+          gdk_drag_get_protocol_for_display (display,
+                                             GDK_WINDOW_XID (gimp_window),
+                                             &protocol);
+          if (protocol != GDK_DRAG_PROTO_XDND)
+            {
+              g_printerr ("Gimp Window doesnt use Xdnd-Protocol - huh?\n");
+              return EXIT_FAILURE;
+            }
+
+          /*  Problem: If the Toolbox is hidden via Tab (gtk_widget_hide)
+           *  it does not accept DnD-Operations and gtk_main() will not be
+           *  terminated. If the Toolbox is simply unmapped (by the WM)
+           *  DnD works. But in both cases gdk_window_is_visible() returns
+           *  FALSE. To work around this we add a timeout and abort after
+           *  1.5 seconds.
+           */
+
+          timeout = g_timeout_add (1500, toolbox_hidden, NULL);
+
+          /*  set up an DND-source  */
+          source = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+          g_signal_connect (source, "selection_get",
+                            G_CALLBACK (source_selection_get),
+                            file_list->str);
+          gtk_widget_realize (source);
+
+
+          /*  specify the id and the content-type of the selection used to
+           *  pass the URIs to Gimp.
+           */
+          sel_id   = gdk_atom_intern ("XdndSelection", FALSE);
+          sel_type = gdk_atom_intern ("text/uri-list", FALSE);
+          targetlist = g_list_prepend (NULL, GUINT_TO_POINTER (sel_type));
+
+          /*  assign the selection to our DnD-source  */
+          gtk_selection_owner_set (source, sel_id, GDK_CURRENT_TIME);
+          gtk_selection_add_target (source, sel_id, sel_type, 0);
+
+          /*  drag_begin/motion/drop  */
+          context = gdk_drag_begin (source->window, targetlist);
+
+          gdk_drag_motion (context, gimp_window, protocol, 0, 0,
+                           GDK_ACTION_COPY, GDK_ACTION_COPY, GDK_CURRENT_TIME);
+
+          gdk_drag_drop (context, GDK_CURRENT_TIME);
+
+          /*  finally enter the mainloop to handle the events  */
+          gtk_main ();
+
+          g_source_remove (timeout);
         }
-
-      /*  Problem: If the Toolbox is hidden via Tab (gtk_widget_hide)
-       *  it does not accept DnD-Operations and gtk_main() will not be
-       *  terminated. If the Toolbox is simply unmapped (by the WM)
-       *  DnD works. But in both cases gdk_window_is_visible() returns
-       *  FALSE. To work around this we add a timeout and abort after
-       *  1.5 seconds.
-       */
-
-      timeout = g_timeout_add (1500, toolbox_hidden, NULL);
-
-      /*  set up an DND-source  */
-      source = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-      g_signal_connect (source, "selection_get",
-                        G_CALLBACK (source_selection_get),
-                        file_list->str);
-      gtk_widget_realize (source);
-
-
-      /*  specify the id and the content-type of the selection used to
-       *  pass the URIs to Gimp.
-       */
-      sel_id   = gdk_atom_intern ("XdndSelection", FALSE);
-      sel_type = gdk_atom_intern ("text/uri-list", FALSE);
-      targetlist = g_list_prepend (NULL, GUINT_TO_POINTER (sel_type));
-
-      /*  assign the selection to our DnD-source  */
-      gtk_selection_owner_set (source, sel_id, GDK_CURRENT_TIME);
-      gtk_selection_add_target (source, sel_id, sel_type, 0);
-
-      /*  drag_begin/motion/drop  */
-      context = gdk_drag_begin (source->window, targetlist);
-
-      gdk_drag_motion (context, gimp_window, protocol, 0, 0,
-                       GDK_ACTION_COPY, GDK_ACTION_COPY, GDK_CURRENT_TIME);
-
-      gdk_drag_drop (context, GDK_CURRENT_TIME);
-
-      /*  finally enter the mainloop to handle the events  */
-      gtk_main ();
-
-      g_source_remove (timeout);
+      else if (! existing)
+        {
+          start_new_gimp (screen, argv[0], desktop_startup_id, file_list);
+        }
     }
-  else
-    {
-      if (existing)
-        exit (EXIT_FAILURE);
 
-      start_new_gimp (screen, argv[0], desktop_startup_id, file_list);
-    }
+  gdk_notify_startup_complete ();
 
   g_string_free (file_list, TRUE);
   g_free (desktop_startup_id);
 
-  gdk_notify_startup_complete ();
-
-  return EXIT_SUCCESS;
+  return (gimp_window ? EXIT_SUCCESS : EXIT_FAILURE);
 }

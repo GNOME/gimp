@@ -1,5 +1,9 @@
 2004-03-07  Sven Neumann  <sven@gimp.org>
 
+	* tools/gimp-remote.c: more cleanup.
+
+2004-03-07  Sven Neumann  <sven@gimp.org>
+
 	* tools/Makefile.am (AM_CPPFLAGS): define GIMP_APP_VERSION
 
 	* tools/gimp-remote.c: when starting a new gimp, make sure the
