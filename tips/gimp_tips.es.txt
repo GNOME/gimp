@@ -25,14 +25,13 @@
 #
 #                            Welcome to the GIMP !
                             ¡ Bienvenido al GIMP !
-
+                                   
 #Nearly all image operations are performed by right-clicking
 #on the image.  And don't worry, you can undo most mistakes...    
 
 Casi todas las operaciones sobre la imagen se realizan pulsando
 el botón derecho en la imagen. No se preocupe, puede deshacer
 la mayoría de sus errores...
-
 
 # Tips for beginners start here
 # (for people who are not familiar yet with layers and image formats)
@@ -340,11 +339,11 @@ guías, y la selección resultante tocará las guías.
 #tool (Image->Colors->Levels).  If there are any color casts, you can
 #correct them with the Curves tool (Image->Colors->Curves).
 
-Si algunas de sus fotos escaneadas no parecen lo suficiente coloridas,
-puede mejorar fácilmente su rango de tonos con el botón "Auto" en la 
-herramienta de nivles (Imagen->Colores->Niveles). Si hay desviaciones
-de color puede corregirlas con la herramienta Curvas
-(Imagen->Colores->Curvas).
+Si algunas de sus fotos escaneadas no parecen lo suficientemente
+coloridas, puede mejorar fácilmente su rango de tonos con el botón
+"Auto" en la herramienta de nivles (Imagen->Colores->Niveles). 
+Si hay desviaciones de color puede corregirlas con la herramienta
+Curvas (Imagen->Colores->Curvas).
 
 # (end of tips)
 
