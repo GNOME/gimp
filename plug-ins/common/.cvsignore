@@ -2,6 +2,8 @@ Makefile
 Makefile.in
 .deps
 .libs
+AlienMap
+AlienMap2
 CEL
 CML_explorer
 aa
@@ -98,12 +100,14 @@ sel_gauss
 semiflatten
 sharpen
 shift
+sinus
 smooth_palette
 snoise
 sobel
 sparkle
 spheredesigner
 spread
+struc
 sunras
 tga
 threshold_alpha

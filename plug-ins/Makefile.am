@@ -56,8 +56,6 @@ SUBDIRS = 			\
 	rcm			\
 	sgi			\
 	sel2path		\
-	sinus			\
-	struc			\
 	$(WEBBROWSER)		\
 	$(XJT)			\
 	common
