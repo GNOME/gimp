@@ -63,6 +63,15 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_CPP
+
+dnl NeXTStep cc seems to need this
+AC_MSG_CHECKING([whether C compiler needs -posix])
+AC_TRY_COMPILE([#include <dirent.h>], [DIR *dir;], posix=no, posix=yes)
+AC_MSG_RESULT($posix)
+if test "$posix" = yes; then
+  CFLAGS="$CFLAGS -posix"
+fi
+
 AC_GIMP_CHECK
 
 if eval "test x$GCC = xyes"; then

@@ -1988,7 +1988,7 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
       merge_layer = layer_new (gimage->ID, (x2 - x1), (y2 - y1),
 			       drawable_type_with_alpha (GIMP_DRAWABLE(layer)),
 			       drawable_name (GIMP_DRAWABLE(layer)),
-			       layer->opacity, layer->mode);
+			       OPAQUE_OPACITY, NORMAL_MODE);
       
       if (!merge_layer) {
 	g_message ("gimage_merge_layers: could not allocate merge layer");
