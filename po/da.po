@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
-"POT-Creation-Date: 2000-03-29 01:35-0800\n"
-"PO-Revision-Date: 2000-03-17 15:12+01:00\n"
+"POT-Creation-Date: 2000-04-01 16:51+0200\n"
+"PO-Revision-Date: 2000-04-01 19:31+02:00\n"
 "Last-Translator: Birger Langkjer <birger.langkjer@image.dk>\n"
 "Language-Team: Danish <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -131,11 +131,11 @@ msgstr "Annullér"
 
 #: app/bezier_select.c:476
 msgid "Bezier path already closed."
-msgstr "Bezier sti allerede lukket."
+msgstr "Bezier-sti allerede lukket."
 
 #: app/bezier_select.c:497
 msgid "Corrupt curve"
-msgstr "Korrupt kurve"
+msgstr "Ødelagt kurve"
 
 #: app/bezier_select.c:2880
 msgid "Curve not closed!"
@@ -143,7 +143,7 @@ msgstr "Kurve ikke lukket!"
 
 #: app/bezier_select.c:3167 app/gimage_mask.c:618
 msgid "Paintbrush operation failed."
-msgstr "Malerpensel-operation fejlede."
+msgstr "Malepensel-operation fejlede."
 
 #: app/blend.c:294
 msgid "Offset:"
@@ -421,7 +421,7 @@ msgstr "Mønsterfyld"
 
 #: app/bucket_fill.c:245
 msgid "Bucket Fill operation failed."
-msgstr "Spandfyldsoperation fejlede."
+msgstr "Udfyldsoperation fejlede."
 
 #: app/bucket_fill.c:348
 msgid "No available patterns for this operation."
@@ -455,11 +455,11 @@ msgstr "Træk fra"
 
 #: app/by_color_select.c:755
 msgid "Intersect"
-msgstr ""
+msgstr "Kryds med"
 
 #: app/by_color_select.c:766
 msgid "Fuzziness Threshold"
-msgstr "Utydelighedstærskel"
+msgstr "Udviskningstærskel"
 
 #: app/channel.c:187 app/channel.c:189 app/layer.c:310 app/layer.c:312
 msgid "copy"
@@ -493,7 +493,7 @@ msgstr "Y:"
 #. The wrap around option
 #: app/channel_ops.c:164
 msgid "Wrap Around"
-msgstr "Omflydning"
+msgstr "Flyd udenom"
 
 #: app/channel_ops.c:174 app/image_new.c:70 app/image_new.c:234
 #: app/layers_dialog.c:3422
@@ -523,16 +523,15 @@ msgstr "Sænk kanal"
 
 #: app/channels_dialog.c:231
 msgid "Duplicate Channel"
-msgstr "Duplikér kanal"
+msgstr "Fordobbel kanal"
 
 #: app/channels_dialog.c:236
-#, fuzzy
 msgid ""
 "Channel to Selection \n"
 "<Shift> Add          <Ctrl> Subtract      <Shift><Ctrl> Intersect"
 msgstr ""
-"Kanal to Selection \n"
-"<Skift> Add          <Ctrl> Subtract      <Skift><Ctrl> Intersect"
+"Kanal til markering \n"
+"<Skift> Tilføj       <Ctrl> Træk fra      <Skift><Ctrl> Kryds med"
 
 #: app/channels_dialog.c:243
 msgid "Delete Channel"
@@ -589,7 +588,7 @@ msgstr "Kilde"
 
 #: app/clone.c:139
 msgid "Image Source"
-msgstr "Billedekilde"
+msgstr "Billedkilde"
 
 #: app/clone.c:141
 msgid "Pattern Source"
@@ -678,7 +677,7 @@ msgstr "Testgennemsnit"
 
 #: app/color_picker.c:214
 msgid "Update Active Color"
-msgstr "Opdatér aktive farve"
+msgstr "Opdatér aktiv farve"
 
 #: app/color_picker.c:255 app/color_picker.c:264
 msgid "Red:"
@@ -725,7 +724,7 @@ msgstr "I/T"
 
 #: app/colormap_dialog.i.c:188
 msgid "Indexed Color Palette"
-msgstr "Indekseret farvepalet"
+msgstr "Indekseret farvepalette"
 
 #. The GIMP image option menu
 #: app/colormap_dialog.i.c:203 app/lc_dialog.c:127
@@ -746,7 +745,7 @@ msgstr "Fjerpensvalg efter:"
 
 #: app/commands.c:369
 msgid "Shrink Selection"
-msgstr "Krym udvalgt"
+msgstr "Krymp udvalg"
 
 #: app/commands.c:372
 msgid "Shrink Selection by:"
@@ -782,11 +781,11 @@ msgstr "Indekseret farvekonversion"
 
 #: app/convert.c:517
 msgid "General Palette Options"
-msgstr "Generelle indstillinger for palette"
+msgstr "Generelle paletteindstillinger"
 
 #: app/convert.c:530
 msgid "Generate Optimal Palette:"
-msgstr "Generér optimal palette:"
+msgstr "Opret optimal palette:"
 
 #: app/convert.c:563
 msgid "# of Colors:"
@@ -859,7 +858,7 @@ msgstr "Vælg personlig palette"
 
 #: app/convolve.c:172
 msgid "Convolve Type"
-msgstr ""
+msgstr "Sammenrulstype"
 
 #: app/convolve.c:176
 msgid "Blur"
@@ -2567,17 +2566,16 @@ msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 msgstr "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 
 #: app/install.c:663
-#, fuzzy
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
 msgstr ""
 "Velkommen til\n"
-"GIMP brugerinstallationsprogrammet"
+"GIMP's brugerinstallationsprogram"
 
 #: app/install.c:665
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr ""
+msgstr "Klik på \"Fortsæt\" for at starte GIMP's brugerinstallation."
 
 #: app/install.c:668
 msgid ""
@@ -2585,6 +2583,9 @@ msgid ""
 "Copyright (C) 1995-2000\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
+"GIMP'en - GNU Image Manipulation Program\n"
+"Ophavsret (C) 1995-2000\n"
+"Spencer Kimball, Peter Mattis og GIMP udviklingsholdet."
 
 #: app/install.c:677
 msgid ""
@@ -2724,13 +2725,12 @@ msgid "Swap Directory:"
 msgstr "Swap-mappe:"
 
 #: app/install.c:1159
-#, fuzzy
 msgid "Calibrate Monitor Resolution"
-msgstr "Hent opløsning for monitor"
+msgstr "Kalibrér skærmopløsning"
 
 #: app/install.c:1267
 msgid "Measure the rulers and enter their lengths below."
-msgstr ""
+msgstr "Mål linealerne og indtast deres længder herunder."
 
 #: app/install.c:1282
 msgid "Horizontal:"
@@ -2747,18 +2747,17 @@ msgid ""
 msgstr ""
 
 #: app/install.c:1335
-#, fuzzy, c-format
+#, c-format
 msgid "Get Resolution from X-server (Currently %d x %d dpi)"
-msgstr "(Den er nu %d x %d dpi)"
+msgstr "Hent opløsning fra X-tjener (Den er nu %d x %d dpi)"
 
 #: app/install.c:1349
 msgid "Alternatively, you can set the monitor resolution manually."
-msgstr ""
+msgstr "Alternativt kan du vælge skærmopløsningen manuelt."
 
 #: app/install.c:1362
-#, fuzzy
 msgid "Monitor Resolution X:"
-msgstr "Hent opløsning for monitor"
+msgstr "Skærmopløsning X:"
 
 #: app/install.c:1398
 msgid ""
@@ -3233,7 +3232,6 @@ msgid "  --debug-handlers         Enable debugging signal handlers.\n"
 msgstr "  --debug-handlers         Brug aflusningssignalhåndtagene.\n"
 
 #: app/main.c:291
-#, fuzzy
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <skærm>        Brug den angivede X-skærm.\n"
 
@@ -3435,14 +3433,12 @@ msgid "/Edit/Clear"
 msgstr "/Redigér/Ryd"
 
 #: app/menus.c:247
-#, fuzzy
 msgid "/Edit/Fill with FG Color"
-msgstr "Udfyld med en farveovergang"
+msgstr "/Redigér/Udfyld med forg.-farve"
 
 #: app/menus.c:249
-#, fuzzy
 msgid "/Edit/Fill with BG Color"
-msgstr "Udfyld med en farveovergang"
+msgstr "/Redigér/Udfyld med bagg.-farve"
 
 #: app/menus.c:251
 msgid "/Edit/Stroke"
@@ -3783,9 +3779,8 @@ msgid "/Filters/Edge-Detect"
 msgstr "/Filtre/Find-kant"
 
 #: app/menus.c:525
-#, fuzzy
 msgid "/Filters/Enhance"
-msgstr "/Filtre/"
+msgstr "/Filtre/Forbedr"
 
 #: app/menus.c:527
 msgid "/Filters/Generic"
@@ -3953,9 +3948,8 @@ msgid "/Subtract from Selection"
 msgstr "/Træk fra markering"
 
 #: app/menus.c:684
-#, fuzzy
 msgid "/Intersect with Selection"
-msgstr "/Krys med udvalg"
+msgstr "/Kryds med markering"
 
 #: app/menus.c:689
 msgid "/Delete Channel"
@@ -3978,14 +3972,12 @@ msgid "/Path to Selection"
 msgstr "/Sti til udvalg"
 
 #: app/menus.c:711
-#, fuzzy
 msgid "/Selection to Path"
-msgstr "Udvalg"
+msgstr "/Markering til sti"
 
 #: app/menus.c:713
-#, fuzzy
 msgid "/Stroke Path"
-msgstr "/Strøg sti"
+msgstr "/Stryg sti"
 
 #: app/menus.c:715
 msgid "/Delete Path"
@@ -4026,16 +4018,15 @@ msgstr "Indlæsning OK"
 
 #: app/module_db.c:60
 msgid "Load failed"
-msgstr "Indlæsning fejlet"
+msgstr "Indlæsning fejlede"
 
 #: app/module_db.c:61
 msgid "Unload requested"
-msgstr ""
+msgstr "Frigivning forespurgt"
 
 #: app/module_db.c:62
-#, fuzzy
 msgid "Unloaded OK"
-msgstr "Frigiv"
+msgstr "Frigav Ok"
 
 #: app/module_db.c:275
 msgid "Module DB"
@@ -4054,7 +4045,7 @@ msgstr "springer over modul: \"%s\"\n"
 #: app/module_db.c:596
 #, c-format
 msgid "module load error: %s: %s"
-msgstr "fejl under læsning af modul: %s: %s"
+msgstr "fejl under indlæsning af modul: %s: %s"
 
 #: app/module_db.c:777
 msgid "<No modules>"
@@ -4339,9 +4330,8 @@ msgid "Duplicate Path"
 msgstr "Duplikér sti"
 
 #: app/paths_dialog.c:172
-#, fuzzy
 msgid "Path to Selection"
-msgstr "/Sti til udvalg"
+msgstr "Sti til markering"
 
 #: app/paths_dialog.c:176
 msgid "Selection to Path"
@@ -4558,9 +4548,9 @@ msgid "You will need to restart GIMP for these changes to take effect."
 msgstr "Du bliver nødt til at genstarte GIMP før ændringerne træder i kraft."
 
 #: app/preferences_dialog.c:1002
-#, fuzzy, c-format
+#, c-format
 msgid "The default comment is limited to %d characters."
-msgstr "Standard kommentarer er begrænset til %d tegn."
+msgstr "Standardkommentaren er begrænset til %d tegn."
 
 #: app/preferences_dialog.c:1424
 msgid "Preferences"
@@ -5029,14 +5019,14 @@ msgid "Procedural Database"
 msgstr "Proceduredatabase"
 
 #: app/procedural_db.c:137 app/procedural_db.c:149
-#, fuzzy, c-format
+#, c-format
 msgid "PDB calling error %s not found"
-msgstr "Fejl ved PDB-kald %s"
+msgstr "PDB-fejlkald %s ikke fundet"
 
 #: app/procedural_db.c:167
 #, c-format
 msgid "PDB calling error %s"
-msgstr "Fejl ved PDB-kald %s"
+msgstr "PDB-fejlkald %s"
 
 #: app/procedural_db.c:243
 #, c-format
@@ -5044,7 +5034,7 @@ msgid ""
 "Incorrect arguments passed to procedural_db_run_proc:\n"
 "Argument %d to '%s' should be a %s, but got passed a %s"
 msgstr ""
-"Ukorrekt argument sendt til procedural_db_run_proc:\n"
+"Ukorrekte argumenter sendt til procedural_db_run_proc:\n"
 "Argument %d til '%s' skulle have været %s, men fik en %s"
 
 #: app/procedural_db_cmds.c:64
@@ -5280,47 +5270,40 @@ msgid "This tool has no options."
 msgstr "Dette værktøj har ingen indstillinger."
 
 #: app/tool_options.c:145
-#, fuzzy
 msgid "Rectangular Selection"
-msgstr "Fjerpensvalg"
+msgstr "Firkantet markering"
 
 #: app/tool_options.c:147
-#, fuzzy
 msgid "Elliptical Selection"
-msgstr "Flydende udvalg"
+msgstr "Elliptisk markering"
 
 #: app/tool_options.c:149
-#, fuzzy
 msgid "Free-Hand Selection"
-msgstr "Fra udvalg"
+msgstr "Frihåndsmarkering"
 
 #: app/tool_options.c:151
-#, fuzzy
 msgid "Fuzzy Selection"
-msgstr "Fra udvalg"
+msgstr "Udvisket markering"
 
 #: app/tool_options.c:153
-#, fuzzy
 msgid "Bezier Selection"
-msgstr "Kantvalg"
+msgstr "Bezier-markering"
 
 #: app/tool_options.c:155 app/tools.c:178
 msgid "Intelligent Scissors"
 msgstr "Intelligent saks"
 
 #: app/tool_options.c:157
-#, fuzzy
 msgid "By-Color Selection"
-msgstr "Ved farvevalg"
+msgstr "Markering efter farve"
 
 #: app/tool_options.c:188
 msgid "Feather"
 msgstr "Fjer"
 
 #: app/tool_options.c:296
-#, fuzzy
 msgid "Fixed Size / Aspect Ratio"
-msgstr "Aspektrate:"
+msgstr "Fast størrelse/aspektrate:"
 
 #: app/tool_options.c:362
 msgid "Unit:"
@@ -5355,9 +5338,8 @@ msgid "Clone Tool"
 msgstr "Kloneværktøj"
 
 #: app/tool_options.c:461
-#, fuzzy
 msgid "Convolver"
-msgstr "Konverter"
+msgstr "Sammenruller"
 
 #: app/tool_options.c:463
 msgid "Ink Tool"
@@ -5368,9 +5350,8 @@ msgid "Dodge or Burn"
 msgstr ""
 
 #: app/tool_options.c:467
-#, fuzzy
 msgid "Smudge Tool"
-msgstr "Alternativer for Smudge"
+msgstr "Udtværingsværktøj"
 
 #: app/tool_options.c:582
 msgid "Incremental"
@@ -5394,7 +5375,7 @@ msgstr "Rate"
 
 #: app/tools.c:88
 msgid "Rect Select"
-msgstr ""
+msgstr "Firk. markering"
 
 #: app/tools.c:89
 msgid "/Tools/Select Tools/Rect Select"
@@ -5430,7 +5411,7 @@ msgstr ""
 
 #: app/tools.c:142
 msgid "Fuzzy Select"
-msgstr ""
+msgstr "Udvisket markering"
 
 #: app/tools.c:143
 msgid "/Tools/Select Tools/Fuzzy Select"
@@ -5442,7 +5423,7 @@ msgstr ""
 
 #: app/tools.c:160
 msgid "Bezier Select"
-msgstr ""
+msgstr "Bezier-markering"
 
 #: app/tools.c:161
 msgid "/Tools/Select Tools/Bezier Select"
@@ -5465,13 +5446,12 @@ msgid "Move"
 msgstr "Flyt"
 
 #: app/tools.c:197
-#, fuzzy
 msgid "/Tools/Transform Tools/Move"
-msgstr "/Værktøj/Transformer"
+msgstr "/Værktøj/Transformation/Flyt"
 
 #: app/tools.c:202
 msgid "Move layers & selections"
-msgstr ""
+msgstr "Flyt lag & markeringer"
 
 #: app/tools.c:214
 msgid "Magnify"
@@ -5486,13 +5466,12 @@ msgid "Zoom in & out"
 msgstr "Zoom ind & ud"
 
 #: app/tools.c:233
-#, fuzzy
 msgid "/Tools/Transform Tools/Crop & Resize"
-msgstr "/Værktøj/Transformer"
+msgstr "/Værktøj/Transformation/Beskær & ændr stør."
 
 #: app/tools.c:238
 msgid "Crop or resize the image"
-msgstr ""
+msgstr "Beskær eller ændr billedstørrelse"
 
 #. the transform type radio buttons
 #: app/tools.c:250 app/tools.c:268 app/tools.c:286 app/tools.c:304
@@ -5501,9 +5480,8 @@ msgid "Transform"
 msgstr "Transformér"
 
 #: app/tools.c:251
-#, fuzzy
 msgid "/Tools/Transform Tools/Transform"
-msgstr "/Værktøj/Transformer"
+msgstr "/Værktøj/Transformation/Transformér"
 
 #: app/tools.c:256 app/tools.c:274 app/tools.c:292 app/tools.c:310
 msgid "Rotation, scaling, shearing, perspective."
@@ -5511,16 +5489,15 @@ msgstr ""
 
 #: app/tools.c:322
 msgid "Flip"
-msgstr ""
+msgstr "Vend"
 
 #: app/tools.c:323
-#, fuzzy
 msgid "/Tools/Transform Tools/Flip"
-msgstr "/Værktøj/Transformer"
+msgstr "/Værktøj/Transformation/Vend"
 
 #: app/tools.c:328
 msgid "Flip the layer or selection"
-msgstr ""
+msgstr "Vend laget eller markeringen om"
 
 #: app/tools.c:340
 msgid "Text"
@@ -5536,16 +5513,15 @@ msgstr "Tilføj tekst til billedet"
 
 #: app/tools.c:359
 msgid "/Tools/Color Picker"
-msgstr "/Værktøj/Farvesnapper"
+msgstr "/Værktøj/Farveopsnapper"
 
 #: app/tools.c:364
 msgid "Pick colors from the image"
 msgstr "Tag farver fra billedet"
 
 #: app/tools.c:377
-#, fuzzy
 msgid "/Tools/Paint Tools/Bucket Fill"
-msgstr "/Værktøj/Udfyldning"
+msgstr "/Værktøj/Maleværktøj/Udfyldning"
 
 #: app/tools.c:382
 msgid "Fill with a color or pattern"
@@ -5569,7 +5545,7 @@ msgstr "/Værktøj/Maleværktøj/Blyant"
 
 #: app/tools.c:418
 msgid "Draw sharp pencil strokes"
-msgstr ""
+msgstr "Tegn tynde blyantstreger"
 
 #: app/tools.c:431
 msgid "/Tools/Paint Tools/Paintbrush"
@@ -5577,7 +5553,7 @@ msgstr "/Værktøj/Maleværktøj/Malepensel"
 
 #: app/tools.c:436
 msgid "Paint fuzzy brush strokes"
-msgstr ""
+msgstr "Mal udviskede penselstrøg"
 
 #: app/tools.c:449
 msgid "/Tools/Paint Tools/Eraser"
@@ -5585,16 +5561,15 @@ msgstr "/Værktøj/Maleværktøj/Viskelæder"
 
 #: app/tools.c:454
 msgid "Erase to background or transparency"
-msgstr ""
+msgstr "Slet til baggrund eller gennemsigtig"
 
 #: app/tools.c:467
-#, fuzzy
 msgid "/Tools/Paint Tools/Airbrush"
-msgstr "/Værktøj/Maleværktøj/?pensel"
+msgstr "/Værktøj/Maleværktøj/Spraydåse"
 
 #: app/tools.c:472
 msgid "Airbrush with variable pressure"
-msgstr ""
+msgstr "Spraydåse med variende tryk"
 
 #: app/tools.c:484
 msgid "Clone"
@@ -5610,11 +5585,11 @@ msgstr ""
 
 #: app/tools.c:502
 msgid "Convolve"
-msgstr ""
+msgstr "Sammenrul"
 
 #: app/tools.c:503
 msgid "/Tools/Paint Tools/Convolve"
-msgstr ""
+msgstr "/Værktøj/Maleværktøj/Sammenrul"
 
 #: app/tools.c:508
 msgid "Blur or sharpen"
@@ -5630,7 +5605,7 @@ msgstr "/Værktøj/Maleværktøj/Blæk"
 
 #: app/tools.c:526
 msgid "Draw in ink"
-msgstr ""
+msgstr "Tegn med blæk"
 
 #: app/tools.c:539
 msgid "/Tools/Paint Tools/DodgeBurn"
@@ -5638,7 +5613,7 @@ msgstr ""
 
 #: app/tools.c:556 app/tools.c:562
 msgid "Smudge"
-msgstr ""
+msgstr "Udtvær"
 
 #: app/tools.c:557
 msgid "/Tools/Paint Tools/Smudge"
@@ -5693,13 +5668,12 @@ msgid "Adjust hue and saturation"
 msgstr "Justér glød og mætning"
 
 #: app/tools.c:706
-#, fuzzy
 msgid "/Image/Colors/Posterize..."
-msgstr "/Billede/Farver/Mindre mættet"
+msgstr "/Billede/Farver/Mindre mætning..."
 
 #: app/tools.c:711
 msgid "Reduce image to a fixed numer of colors"
-msgstr ""
+msgstr "Reducér billedet til et valgt antal farver"
 
 #: app/tools.c:724
 msgid "/Image/Colors/Threshold..."
@@ -5707,7 +5681,7 @@ msgstr "/Billede/Farver/Tærskel..."
 
 #: app/tools.c:729
 msgid "Reduce image to two colors using a threshold"
-msgstr ""
+msgstr "Reducér billedet til to farver vha. en tærskel"
 
 #: app/tools.c:742
 msgid "/Image/Colors/Curves..."
@@ -5731,7 +5705,7 @@ msgstr "/Billede/Histogram..."
 
 #: app/tools.c:783
 msgid "View image histogram"
-msgstr "Vis billedehistogram"
+msgstr "Vis billedhistogram"
 
 #: app/transform_core.c:252
 msgid "Rotate"
@@ -5750,6 +5724,8 @@ msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
 msgstr ""
+"Transformation virker ikke på\n"
+"lag der indeholder lagmasker."
 
 #: app/transform_core.c:1612
 msgid "Transformation"
@@ -5782,7 +5758,7 @@ msgstr "Traditionel"
 
 #: app/transform_tool.c:239
 msgid "Corrective"
-msgstr ""
+msgstr "Korrektiv"
 
 #. the show grid toggle button
 #: app/transform_tool.c:257
@@ -5933,7 +5909,7 @@ msgstr "Transformation"
 
 #: app/undo.c:2891
 msgid "paint core"
-msgstr ""
+msgstr "mal kerne"
 
 #: app/undo.c:2892
 msgid "floating layer"
@@ -5992,9 +5968,8 @@ msgid "resolution change"
 msgstr "opløsningsændring"
 
 #: app/undo.c:2905
-#, fuzzy
 msgid "image scale"
-msgstr "Skalér billede"
+msgstr "skalér billede"
 
 #: app/undo.c:2906
 msgid "image resize"
