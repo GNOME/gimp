@@ -400,12 +400,6 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 				      NULL);
     }
 
-  gdk_pointer_grab (shell->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK |
-		    GDK_BUTTON1_MOTION_MASK |
-		    GDK_BUTTON_RELEASE_MASK,
-		    NULL, NULL, time);
-
   tool->state = ACTIVE;
 }
 
@@ -421,9 +415,6 @@ gimp_measure_tool_button_release (GimpTool        *tool,
   measure_tool = GIMP_MEASURE_TOOL (tool);
 
   measure_tool->function = FINISHED;
-
-  gdk_pointer_ungrab (time);
-  gdk_flush ();
 }
 
 static void

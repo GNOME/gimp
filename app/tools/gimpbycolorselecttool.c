@@ -52,7 +52,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimpbycolorselecttool.h"
 #include "selection_options.h"
@@ -302,14 +301,11 @@ by_color_select_button_press (GimpTool        *tool,
   GimpByColorSelectTool *by_color_sel;
   GimpDrawTool          *draw_tool;
   SelectionOptions      *sel_options;
-  GimpDisplayShell      *shell;
 
   draw_tool    = GIMP_DRAW_TOOL (tool);
   by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
 
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -349,12 +345,6 @@ by_color_select_button_press (GimpTool        *tool,
 
       by_color_dialog->gimage = gdisp->gimage;
     }
-
-  gdk_pointer_grab (shell->canvas->window, FALSE,
-                    GDK_POINTER_MOTION_HINT_MASK |
-		    GDK_BUTTON1_MOTION_MASK |
-                    GDK_BUTTON_RELEASE_MASK,
-                    NULL, NULL, time);
 }
 
 static void
@@ -377,8 +367,6 @@ by_color_select_button_release (GimpTool        *tool,
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
-
-  gdk_pointer_ungrab (time);
 
   tool->state = INACTIVE;
 

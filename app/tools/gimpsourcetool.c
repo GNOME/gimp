@@ -42,7 +42,6 @@
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimpclonetool.h"
 #include "paint_options.h"
@@ -383,8 +382,10 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
   else if (state == POSTTRACE_PAINT)
     {
       /*  Find the target cursor's location onscreen  */
-      gdisplay_transform_coords (src_gdisp, src_x, src_y,
-				 &trans_tx, &trans_ty, 1);
+      gdisplay_transform_coords (src_gdisp,
+                                 src_x, src_y,
+				 &trans_tx, &trans_ty,
+                                 TRUE);
       gimp_draw_tool_resume (draw_tool);
     }
 }

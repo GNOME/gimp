@@ -45,7 +45,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimptransformtool.h"
 #include "tool_manager.h"
@@ -286,14 +285,11 @@ gimp_transform_tool_button_press (GimpTool        *tool,
 {
   GimpTransformTool *tr_tool;
   GimpDrawTool      *draw_tool;
-  GimpDisplayShell  *shell;
   GimpDrawable      *drawable;
   gint               off_x, off_y;
 
   tr_tool   = GIMP_TRANSFORM_TOOL (tool);
   draw_tool = GIMP_DRAW_TOOL (tool);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -376,12 +372,6 @@ gimp_transform_tool_button_press (GimpTool        *tool,
       tr_tool->lastx = tr_tool->startx = coords->x;
       tr_tool->lasty = tr_tool->starty = coords->y;
 
-      gdk_pointer_grab (shell->canvas->window, FALSE,
-			GDK_POINTER_MOTION_HINT_MASK |
-			GDK_BUTTON1_MOTION_MASK |
-			GDK_BUTTON_RELEASE_MASK,
-			NULL, NULL, time);
-
       tool->state = ACTIVE;
     }
 }
@@ -401,10 +391,6 @@ gimp_transform_tool_button_release (GimpTool        *tool,
   /*  if we are creating, there is nothing to be done...exit  */
   if (tr_tool->function == TRANSFORM_CREATING)
     return;
-
-  /*  release of the pointer grab  */
-  gdk_pointer_ungrab (time);
-  gdk_flush ();
 
   /*  if the 3rd button isn't pressed, transform the selected mask  */
   if (! (state & GDK_BUTTON3_MASK))
@@ -723,19 +709,16 @@ static void
 gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
 		          GimpDisplay        *gdisp)
 {
-  GimpDisplayShell *shell;
-  GimpTool         *tool;
-  TileManager      *new_tiles;
-  TransformUndo    *tu;
-  PathUndo         *pundo;
-  gboolean          new_layer;
-  gint              i;
+  GimpTool      *tool;
+  TileManager   *new_tiles;
+  TransformUndo *tu;
+  PathUndo      *pundo;
+  gboolean       new_layer;
+  gint           i;
 
   gimp_set_busy (gdisp->gimage->gimp);
 
   tool = GIMP_TOOL (tr_tool);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /* undraw the tool before we muck around with the transform matrix */
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));

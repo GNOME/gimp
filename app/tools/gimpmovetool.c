@@ -227,19 +227,17 @@ gimp_move_tool_button_press (GimpTool        *tool,
                              GdkModifierType  state,
                              GimpDisplay     *gdisp)
 {
-  GimpMoveTool     *move;
-  MoveOptions      *options;
-  GimpDisplayShell *shell;
-  GimpLayer        *layer;
-  GimpGuide        *guide;
+  GimpMoveTool *move;
+  MoveOptions  *options;
+  GimpLayer    *layer;
+  GimpGuide    *guide;
 
   move = GIMP_MOVE_TOOL (tool);
 
   options = (MoveOptions *) tool->tool_info->tool_options;
 
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
   tool->gdisp = gdisp;
+
   move->layer = NULL;
   move->guide = NULL;
   move->disp  = NULL;
@@ -292,18 +290,9 @@ gimp_move_tool_button_press (GimpTool        *tool,
 	      gimp_image_set_active_layer (gdisp->gimage, layer);
 	      init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
 	    }
+
 	  tool->state = ACTIVE;
 	}
-    }
-
-  /* if we've got an active tool grab the pointer */
-  if (tool->state == ACTIVE)      
-    {
-      gdk_pointer_grab (shell->canvas->window, FALSE,
-			GDK_POINTER_MOTION_HINT_MASK |
-			GDK_BUTTON1_MOTION_MASK |
-			GDK_BUTTON_RELEASE_MASK,
-			NULL, NULL, time);
     }
 }
 
@@ -322,9 +311,6 @@ gimp_move_tool_button_release (GimpTool        *tool,
   move = GIMP_MOVE_TOOL (tool);
 
   tool->state = INACTIVE;
-
-  gdk_pointer_ungrab (time);
-  gdk_flush ();
 
   if (move->guide)
     {

@@ -63,7 +63,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimpbezierselecttool.h"
 #include "gimpiscissorstool.h"
@@ -415,15 +414,11 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
 {
   GimpIscissorsTool *iscissors;
   SelectionOptions  *sel_options;
-  GimpDisplayShell  *shell;
   GimpDrawable      *drawable;
-  gboolean           grab_pointer = FALSE;
 
   iscissors = GIMP_ISCISSORS_TOOL (tool);
 
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -446,8 +441,6 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
     case NO_ACTION:
       iscissors->state = SEED_PLACEMENT;
       iscissors->draw  = DRAW_CURRENT_SEED;
-
-      grab_pointer = TRUE;
 
       if (! (state & GDK_SHIFT_MASK))
 	find_max_gradient (iscissors,
@@ -478,7 +471,6 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
             iscissors->draw |= DRAW_LIVEWIRE;
 
 	  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-	  grab_pointer = TRUE;
 	}
       /*  If the iscissors is connected, check if the click was inside  */
       else if (iscissors->connected && iscissors->mask &&
@@ -513,19 +505,10 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
           if (sel_options->interactive)
             iscissors->draw |= DRAW_LIVEWIRE;
 
-	  grab_pointer = TRUE;
-
 	  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 	}
       break;
     }
-
-  if (grab_pointer)
-    gdk_pointer_grab (shell->canvas->window, FALSE,
-		      GDK_POINTER_MOTION_HINT_MASK |
-		      GDK_BUTTON1_MOTION_MASK |
-		      GDK_BUTTON_RELEASE_MASK,
-		      NULL, NULL, time);  
 }
 
 
@@ -595,9 +578,6 @@ gimp_iscissors_tool_button_release (GimpTool        *tool,
    */
   if (iscissors->state == WAITING)
     return;
-
-  gdk_pointer_ungrab (time);
-  gdk_flush ();
 
   /*  Undraw everything  */
   switch (iscissors->state)

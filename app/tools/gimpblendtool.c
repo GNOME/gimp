@@ -37,7 +37,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell.h"
 
 #include "widgets/gimpdnd.h"
 
@@ -228,13 +227,10 @@ gimp_blend_tool_button_press (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *gdisp)
 {
-  GimpBlendTool    *blend_tool;
-  GimpDisplayShell *shell;
-  gint              off_x, off_y;
+  GimpBlendTool *blend_tool;
+  gint           off_x, off_y;
 
   blend_tool = GIMP_BLEND_TOOL (tool);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   switch (gimp_drawable_type (gimp_image_active_drawable (gdisp->gimage)))
     {
@@ -255,12 +251,6 @@ gimp_blend_tool_button_press (GimpTool        *tool,
 
   tool->gdisp = gdisp;
   tool->state = ACTIVE;
-
-  gdk_pointer_grab (shell->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK |
-		    GDK_BUTTON1_MOTION_MASK |
-		    GDK_BUTTON_RELEASE_MASK,
-		    NULL, NULL, time);
 
   /* initialize the statusbar display */
   gimp_tool_push_status (tool, _("Blend: 0, 0"));
@@ -291,9 +281,6 @@ gimp_blend_tool_button_release (GimpTool        *tool,
   options = (BlendOptions *) tool->tool_info->tool_options;
 
   gimage = gdisp->gimage;
-
-  gdk_pointer_ungrab (time);
-  gdk_flush ();
 
   gimp_tool_pop_status (tool);
 

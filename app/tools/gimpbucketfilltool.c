@@ -37,7 +37,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimpbucketfilltool.h"
 #include "paint_options.h"
@@ -184,13 +183,10 @@ gimp_bucket_fill_tool_button_press (GimpTool        *tool,
 {
   GimpBucketFillTool *bucket_tool;
   BucketOptions      *options;
-  GimpDisplayShell   *shell;
 
   bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
 
   options = (BucketOptions *) tool->tool_info->tool_options;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   bucket_tool->target_x = coords->x;
   bucket_tool->target_y = coords->y;
@@ -206,13 +202,6 @@ gimp_bucket_fill_tool_button_press (GimpTool        *tool,
       bucket_tool->target_y -= off_y;
     }
 
-  gdk_pointer_grab (shell->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK |
-		    GDK_BUTTON1_MOTION_MASK |
-		    GDK_BUTTON_RELEASE_MASK,
-		    NULL, NULL, time);
-
-  /*  Make the tool active and set the gdisplay which owns it  */
   tool->gdisp = gdisp;
   tool->state = ACTIVE;
 }
@@ -232,9 +221,6 @@ gimp_bucket_fill_tool_button_release (GimpTool        *tool,
   bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
 
   options = (BucketOptions *) tool->tool_info->tool_options;
-
-  gdk_pointer_ungrab (time);
-  gdk_flush ();
 
   /*  if the 3rd button isn't pressed, fill the selected region  */
   if (! (state & GDK_BUTTON3_MASK))

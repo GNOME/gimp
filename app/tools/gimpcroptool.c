@@ -302,14 +302,11 @@ gimp_crop_tool_button_press (GimpTool        *tool,
 			     GdkModifierType  state,
 			     GimpDisplay     *gdisp)
 {
-  GimpCropTool     *crop;
-  GimpDrawTool     *draw_tool;
-  GimpDisplayShell *shell;
+  GimpCropTool *crop;
+  GimpDrawTool *draw_tool;
   
   crop      = GIMP_CROP_TOOL (tool);
   draw_tool = GIMP_DRAW_TOOL (tool);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   if (tool->state == INACTIVE || gdisp != tool->gdisp)
     {
@@ -394,12 +391,6 @@ gimp_crop_tool_button_press (GimpTool        *tool,
   crop->lastx = crop->startx = ROUND (coords->x);
   crop->lasty = crop->starty = ROUND (coords->y);
 
-  gdk_pointer_grab (shell->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK |
-                    GDK_BUTTON1_MOTION_MASK |
-		    GDK_BUTTON_RELEASE_MASK,
-		    NULL, NULL, time);
-
   tool->state = ACTIVE;
 }
 
@@ -410,15 +401,12 @@ gimp_crop_tool_button_release (GimpTool        *tool,
 			       GdkModifierType  state,
 			       GimpDisplay     *gdisp)
 {
-  GimpCropTool     *crop;
-  CropOptions      *options;
+  GimpCropTool *crop;
+  CropOptions  *options;
 
   crop = GIMP_CROP_TOOL (tool);
 
   options = (CropOptions *) tool->tool_info->tool_options;
-
-  gdk_pointer_ungrab (time);
-  gdk_flush ();
 
   gimp_tool_pop_status (tool);
 

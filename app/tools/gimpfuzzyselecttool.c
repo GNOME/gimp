@@ -201,13 +201,10 @@ gimp_fuzzy_select_tool_button_press (GimpTool        *tool,
 {
   GimpFuzzySelectTool *fuzzy_sel;
   SelectionOptions    *sel_options;
-  GimpDisplayShell    *shell;
 
   fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (tool);
 
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   fuzzy_sel->x               = coords->x;
   fuzzy_sel->y               = coords->y;
@@ -217,12 +214,6 @@ gimp_fuzzy_select_tool_button_press (GimpTool        *tool,
 
   tool->state = ACTIVE;
   tool->gdisp = gdisp;
-
-  gdk_pointer_grab (shell->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK |
-		    GDK_BUTTON1_MOTION_MASK |
-		    GDK_BUTTON_RELEASE_MASK,
-		    NULL, NULL, time);
 
   switch (GIMP_SELECTION_TOOL (tool)->op)
     {
@@ -257,10 +248,8 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
 
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
-  gdk_pointer_ungrab (time);
-  gdk_flush ();
-
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+
   tool->state = INACTIVE;
 
   /*  First take care of the case where the user "cancels" the action  */

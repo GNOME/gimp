@@ -320,11 +320,8 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  /*  resume the current selection and ungrab the pointer  */
+  /*  resume the current selection  */
   gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_RESUME);
-
-  gdk_pointer_ungrab (time);
-  gdk_flush ();
 
   gimp_tool_pop_status (tool);
 

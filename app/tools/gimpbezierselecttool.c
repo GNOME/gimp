@@ -43,7 +43,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gui/paths-dialog.h"
 
@@ -375,17 +374,14 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
 				      GimpDisplay     *gdisp)
 {
   GimpBezierSelectTool  *bezier_sel;
-  GimpDisplayShell      *shell;
   GimpBezierSelectPoint *points;
   GimpBezierSelectPoint *start_pt;
   GimpBezierSelectPoint *curve_start;
-  gboolean               grab_pointer;
+  gboolean               grab_pointer; /* abused legacy name */
   gint                   op;
   gint                   halfwidth, halfheight;
 
   bezier_sel = GIMP_BEZIER_SELECT_TOOL (tool);
-
-  shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
 
   grab_pointer = FALSE;
 
@@ -454,15 +450,7 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
 	  bezier_sel->draw_mode = BEZIER_DRAW_ALL;  
 	  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
-	  if (grab_pointer)
-	    {
-	      gdk_pointer_grab (shell->canvas->window, FALSE,
-				GDK_POINTER_MOTION_HINT_MASK |
-				GDK_BUTTON1_MOTION_MASK |
-				GDK_BUTTON_RELEASE_MASK,
-				NULL, NULL, time);
-	    }
-	  else
+	  if (! grab_pointer)
 	    {
 	      paths_dialog_set_default_op ();
 
@@ -540,15 +528,8 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
 
 	  bezier_sel->draw_mode = BEZIER_DRAW_ALL;
 	  gimp_draw_tool_resume ((GimpDrawTool *)bezier_sel);
-	  if (grab_pointer)
-	    {
-	      gdk_pointer_grab (shell->canvas->window, FALSE,
-				GDK_POINTER_MOTION_HINT_MASK |
-				GDK_BUTTON1_MOTION_MASK |
-				GDK_BUTTON_RELEASE_MASK,
-				NULL, NULL, time);
-	    }
-	  else
+
+	  if (! grab_pointer)
 	    {
 	      paths_dialog_set_default_op ();
 	      /* recursive call */
@@ -709,13 +690,6 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
       break;
     }
 
-  if (grab_pointer)
-    gdk_pointer_grab (shell->canvas->window, FALSE,
-		      GDK_POINTER_MOTION_HINT_MASK |
-		      GDK_BUTTON1_MOTION_MASK |
-		      GDK_BUTTON_RELEASE_MASK,
-		      NULL, NULL, time);
-
   /* Don't bother doing this if we don't have any points */
   if (bezier_sel->num_points > 0)
     paths_first_button_press (bezier_sel, gdisp);
@@ -735,9 +709,6 @@ gimp_bezier_select_tool_button_release (GimpTool        *tool,
   bezier_sel = GIMP_BEZIER_SELECT_TOOL (tool);
 
   bezier_sel->state &= ~BEZIER_DRAG;
-
-  gdk_pointer_ungrab (time);
-  gdk_flush ();
 
   if (bezier_sel->closed)
     bezier_convert (bezier_sel, gdisp, SUBDIVIDE, FALSE);
@@ -2814,7 +2785,6 @@ void
 bezier_paste_bezierselect_to_current (GimpDisplay          *gdisp,
 				      GimpBezierSelectTool *bsel)
 {
-  GimpDisplayShell      *shell;
   GimpBezierSelectPoint *pts;
   gint                   i;
   GimpTool              *tool;
@@ -2823,8 +2793,6 @@ bezier_paste_bezierselect_to_current (GimpDisplay          *gdisp,
 
 /*   g_print ("bezier_paste_bezierselect_to_current::\n"); */
 /*   printSel(bsel); */
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   tool = tool_manager_get_active (gdisp->gimage->gimp);
 

@@ -427,7 +427,21 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           case 1:
             state |= GDK_BUTTON1_MASK;
 
-            gtk_grab_add (canvas);
+            if (active_tool->perfectmouse && gimprc.perfectmouse)
+              {
+                gdk_pointer_grab (canvas->window, FALSE,
+                                  GDK_BUTTON1_MOTION_MASK |
+                                  GDK_BUTTON_RELEASE_MASK,
+                                  NULL, NULL, time);
+              }
+            else
+              {
+                gdk_pointer_grab (canvas->window, FALSE,
+                                  GDK_POINTER_MOTION_HINT_MASK |
+                                  GDK_BUTTON1_MOTION_MASK |
+                                  GDK_BUTTON_RELEASE_MASK,
+                                  NULL, NULL, time);
+              }
 
             /*  save the current modifier state because tools don't get
              *  key events while BUTTON1 is down
@@ -519,8 +533,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           case 1:
             state &= ~GDK_BUTTON1_MASK;
 
-            gtk_grab_remove (canvas);
-
             if (active_tool && (! gimp_image_is_empty (gimage) ||
                                 active_tool->handle_empty_image))
               {
@@ -546,6 +558,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                         gdisp);
                   }
               }
+
+            gdk_pointer_ungrab (time);
 
             /*  restore the tool's modifier state because it didn't get
              *  key events while BUTTON1 was down

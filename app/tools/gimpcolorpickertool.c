@@ -38,7 +38,6 @@
 #include "gui/palette-editor.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimpdrawtool.h"
 #include "gimpcolorpickertool.h"
@@ -276,14 +275,11 @@ gimp_color_picker_tool_button_press (GimpTool        *tool,
 {
   GimpColorPickerTool        *cp_tool;
   GimpColorPickerToolOptions *options;
-  GimpDisplayShell           *shell;
   gint                        off_x, off_y;
 
   cp_tool = GIMP_COLOR_PICKER_TOOL (tool);
 
   options = (GimpColorPickerToolOptions *) tool->tool_info->tool_options;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  Make the tool active and set it's gdisplay & drawable  */
   tool->gdisp    = gdisp;
@@ -387,12 +383,6 @@ gimp_color_picker_tool_button_press (GimpTool        *tool,
   cp_tool->centerx = coords->x - off_x;
   cp_tool->centery = coords->y - off_y;
 
-  gdk_pointer_grab (shell->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK |
-                    GDK_BUTTON1_MOTION_MASK |
-                    GDK_BUTTON_RELEASE_MASK,
-		    NULL, NULL, time);
-
   /*  if the shift key is down, create a new color.
    *  otherwise, modify the current color.
    */
@@ -446,9 +436,6 @@ gimp_color_picker_tool_button_release (GimpTool        *tool,
   cp_tool = GIMP_COLOR_PICKER_TOOL(tool);
 
   options = (GimpColorPickerToolOptions *) tool->tool_info->tool_options;
-
-  gdk_pointer_ungrab (time);
-  gdk_flush ();
 
   gimp_color_picker_tool_info_update
     (tool,

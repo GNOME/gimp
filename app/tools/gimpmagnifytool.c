@@ -207,12 +207,9 @@ gimp_magnify_tool_button_press (GimpTool        *tool,
 				GdkModifierType  state,
 				GimpDisplay     *gdisp)
 {
-  GimpMagnifyTool  *magnify;
-  GimpDisplayShell *shell;
+  GimpMagnifyTool *magnify;
 
   magnify = GIMP_MAGNIFY_TOOL (tool);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   magnify->x = coords->x;
   magnify->y = coords->y;
@@ -221,12 +218,6 @@ gimp_magnify_tool_button_press (GimpTool        *tool,
 
   tool->state = ACTIVE;
   tool->gdisp = gdisp;
-
-  gdk_pointer_grab (shell->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK |
-		    GDK_BUTTON1_MOTION_MASK |
-		    GDK_BUTTON_RELEASE_MASK,
-		    NULL, NULL, time);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 }
@@ -252,9 +243,6 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
   options = (MagnifyOptions *) tool->tool_info->tool_options;
 
   shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
-
-  gdk_pointer_ungrab (time);
-  gdk_flush ();
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 

@@ -1,3 +1,44 @@
+2002-02-05  Michael Natterer  <mitch@gimp.org>
+
+	Removed pointer grabbing from all tools:
+
+	* app/tools/gimptool.[ch]: added "gboolean perfectmouse" which
+	defaults to FALSE but can be set to TRUE in a tool's instance_init
+	function.
+
+	* app/display/gimpdisplayshell-callbacks.c: look at
+	active_tool->perfectmouse and gimprc.perfectmouse and do the
+	pointer grab/ungrab here. The pointer is now grabbed right before
+	dispatching the button_press to the tool and ungrabbed after
+	the tool's button_release has returned. It is also grabbed
+	*always*, not only if tool->state got ACTIVE by button_press,
+	which makes it all much simpler...
+
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimppathtool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformtool.c: removed
+	gdk_pointer_grab()/ungrab() calls all over the place. Also removed
+	inclusion of "display/gimpdisplayshell.h" from most of them.
+
 2002-02-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptool.[ch]: added fields for both the tool's

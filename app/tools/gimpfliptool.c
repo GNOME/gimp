@@ -34,7 +34,6 @@
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimpfliptool.h"
 #include "tool_options.h"

@@ -44,7 +44,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimpinktool.h"
 #include "gimpinktool-blob.h"
@@ -320,7 +319,8 @@ gimp_ink_tool_init (GimpInkTool *ink_tool)
 
   tool = GIMP_TOOL (ink_tool);
 
-  tool->tool_cursor = GIMP_INK_TOOL_CURSOR;
+  tool->perfectmouse = TRUE;
+  tool->tool_cursor  = GIMP_INK_TOOL_CURSOR;
 }
 
 static void
@@ -374,17 +374,14 @@ gimp_ink_tool_button_press (GimpTool        *tool,
                             GdkModifierType  state,
                             GimpDisplay     *gdisp)
 {
-  GimpInkTool      *ink_tool;
-  InkOptions       *options;
-  GimpDisplayShell *shell;
-  GimpDrawable     *drawable;
-  Blob             *b;
+  GimpInkTool  *ink_tool;
+  InkOptions   *options;
+  GimpDrawable *drawable;
+  Blob         *b;
 
   ink_tool = GIMP_INK_TOOL (tool);
 
   options = (InkOptions *) tool->tool_info->tool_options;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -394,26 +391,9 @@ gimp_ink_tool_button_press (GimpTool        *tool,
   tool->gdisp        = gdisp;
   tool->paused_count = 0;
 
-  /*  pause the current selection and grab the pointer  */
+  /*  pause the current selection  */
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_PAUSE);
 
-  /* add motion memory if you press mod1 first ^ perfectmouse */
-  if (((state & GDK_MOD1_MASK) != 0) != (gimprc.perfectmouse != 0))
-    {
-      gdk_pointer_grab (shell->canvas->window, FALSE,
-                        GDK_BUTTON1_MOTION_MASK |
-                        GDK_BUTTON_RELEASE_MASK,
-                        NULL, NULL, time);
-    }
-  else
-    {
-      gdk_pointer_grab (shell->canvas->window, FALSE,
-                        GDK_POINTER_MOTION_HINT_MASK |
-                        GDK_BUTTON1_MOTION_MASK |
-                        GDK_BUTTON_RELEASE_MASK,
-                        NULL, NULL, time);
-    }
-  
   b = ink_pen_ellipse (options,
                        coords->x,
                        coords->y,
@@ -449,11 +429,8 @@ gimp_ink_tool_button_release (GimpTool        *tool,
 
   gimage = gdisp->gimage;
 
-  /*  resume the current selection and ungrab the pointer  */
+  /*  resume the current selection  */
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_RESUME);
-
-  gdk_pointer_ungrab (time);
-  gdk_flush ();
 
   /*  Set tool state to inactive -- no longer painting */
   tool->state = INACTIVE;

@@ -30,7 +30,6 @@
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimpdrawtool.h"
 #include "gimpselectiontool.h"

@@ -29,7 +29,6 @@
 #include "core/gimpimage.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimppathtool.h"
 #include "path_tool.h"
@@ -269,14 +268,11 @@ gimp_path_tool_button_press (GimpTool        *tool,
                              GdkModifierType  state,
                              GimpDisplay     *gdisp)
 {
-  GimpPathTool     *path_tool;
-  GimpDisplayShell *shell;
-  gint              grab_pointer = 0;
-  gint              halfwidth, halfheight;
+  GimpPathTool *path_tool;
+  gint          grab_pointer = 0;
+  gint          halfwidth, halfheight;
 
   path_tool = GIMP_PATH_TOOL (tool);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
 #ifdef PATH_TOOL_DEBUG
   g_printerr ("path_tool_button_press\n");
@@ -336,13 +332,6 @@ gimp_path_tool_button_press (GimpTool        *tool,
     default:
       g_message("Huh? Whats happening here? (button_press_*)");
     }
- 
-  if (grab_pointer)
-    gdk_pointer_grab (shell->canvas->window, FALSE,
-                      GDK_POINTER_MOTION_HINT_MASK |
-                      GDK_BUTTON1_MOTION_MASK |
-                      GDK_BUTTON_RELEASE_MASK,
-                      NULL, NULL, time);
 }
 
 static gint
@@ -623,9 +612,6 @@ gimp_path_tool_button_release (GimpTool        *tool,
 #endif
  
   path_tool->state &= ~PATH_TOOL_DRAG;
-
-  gdk_pointer_ungrab (time);
-  gdk_flush ();
 }
 
 

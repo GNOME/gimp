@@ -45,7 +45,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimptexttool.h"

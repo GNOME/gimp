@@ -55,6 +55,9 @@ struct _GimpTool
   gboolean      handle_empty_image; /*  invoke the tool on images without
                                      *  active drawable
                                      */
+  gboolean      perfectmouse;       /*  tool is affected by gimprc's
+                                     *  "prefectmouse" setting
+                                     */
 
   gboolean      preserve;     /*  Preserve this tool across drawable changes  */
   GimpDisplay  *gdisp;        /*  pointer to currently active gdisp           */

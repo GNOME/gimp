@@ -257,10 +257,16 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
 }
 
 static void
-gimp_paint_tool_init (GimpPaintTool *tool)
+gimp_paint_tool_init (GimpPaintTool *paint_tool)
 {
-  tool->pick_colors = FALSE;
-  tool->flags       = 0;
+  GimpTool *tool;
+
+  tool = GIMP_TOOL (paint_tool);
+
+  tool->perfectmouse = TRUE;
+
+  paint_tool->pick_colors = FALSE;
+  paint_tool->flags       = 0;
 }
 
 static void
@@ -301,17 +307,14 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 			      GdkModifierType  state,
 			      GimpDisplay     *gdisp)
 {
-  GimpPaintTool    *paint_tool;
-  GimpDisplayShell *shell;
-  GimpBrush    	   *current_brush;
-  gboolean          draw_line;
-  GimpDrawable     *drawable;
-  gdouble           x, y;
-  gint              off_x, off_y;
+  GimpPaintTool *paint_tool;
+  GimpBrush     *current_brush;
+  gboolean       draw_line;
+  GimpDrawable  *drawable;
+  gdouble        x, y;
+  gint           off_x, off_y;
 
   paint_tool = GIMP_PAINT_TOOL (tool);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -390,25 +393,8 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   tool->gdisp        = gdisp;
   tool->paused_count = 0;
 
-  /*  pause the current selection and grab the pointer  */
+  /*  pause the current selection  */
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_PAUSE);
-
-  /* add motion memory if perfectmouse is set */
-  if (gimprc.perfectmouse)
-    {
-      gdk_pointer_grab (shell->canvas->window, FALSE,
-                        GDK_BUTTON1_MOTION_MASK |
-                        GDK_BUTTON_RELEASE_MASK,
-                        NULL, NULL, time);
-    }
-  else
-    {
-      gdk_pointer_grab (shell->canvas->window, FALSE,
-                        GDK_POINTER_MOTION_HINT_MASK |
-                        GDK_BUTTON1_MOTION_MASK |
-                        GDK_BUTTON_RELEASE_MASK,
-                        NULL, NULL, time);
-    }
 
   /*  Let the specific painting function initialize itself  */
   gimp_paint_tool_paint (paint_tool, drawable, INIT_PAINT);
@@ -489,11 +475,8 @@ gimp_paint_tool_button_release (GimpTool        *tool,
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  /*  resume the current selection and ungrab the pointer  */
+  /*  resume the current selection  */
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_RESUME);
-
-  gdk_pointer_ungrab (time);
-  gdk_flush ();
 
   /*  Let the specific painting function finish up  */
   gimp_paint_tool_paint (paint_tool, drawable, FINISH_PAINT);
@@ -576,7 +559,8 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
   /*  undraw the current tool  */
   gimp_draw_tool_pause (draw_tool);
 
-  gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar), "paint_tool");
+  gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar),
+                      g_type_name (G_TYPE_FROM_INSTANCE (tool)));
 
   if ((layer = gimp_image_get_active_layer (gdisp->gimage)))
     {
@@ -649,7 +633,8 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 	      g_snprintf (status_str, sizeof (status_str), format_str, d);
 	    }
 
-	  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "paint_tool",
+	  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar),
+                               g_type_name (G_TYPE_FROM_INSTANCE (tool)),
                                status_str);
 
 	  if (draw_tool->gc == NULL)

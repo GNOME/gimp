@@ -37,7 +37,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimpfreeselecttool.h"
@@ -192,20 +191,11 @@ gimp_free_select_tool_button_press (GimpTool        *tool,
                                     GimpDisplay     *gdisp)
 {
   GimpFreeSelectTool *free_sel;
-  GimpDisplayShell   *shell;
 
   free_sel = GIMP_FREE_SELECT_TOOL (tool);
 
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
   tool->state = ACTIVE;
   tool->gdisp = gdisp;
-
-  gdk_pointer_grab (shell->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK |
-		    GDK_BUTTON1_MOTION_MASK |
-		    GDK_BUTTON_RELEASE_MASK,
-		    NULL, NULL, time);
 
   switch (GIMP_SELECTION_TOOL (tool)->op)
     {
@@ -239,9 +229,6 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
   free_sel = GIMP_FREE_SELECT_TOOL (tool);
 
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
-
-  gdk_pointer_ungrab (time);
-  gdk_flush ();
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
