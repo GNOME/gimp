@@ -301,9 +301,15 @@ script_fu_find_scripts (void)
   while (token)
     {
       if (*token == '~')
-	path = g_strdup_printf ("%s%s", home, token + 1);
-      else
-	path = g_strdup (token);
+	{
+	  path = g_malloc (strlen (home) + strlen (token) + 2);
+	  sprintf (path, "%s%s", home, token + 1);
+	}
+      else 
+	{
+	  path = g_malloc (strlen (token) + 2);
+	  strcpy (path, token);
+	}
 	      
       /* Check if directory exists and if it has any items in it */
       my_err = stat (path, &filestat);
@@ -311,8 +317,8 @@ script_fu_find_scripts (void)
       if (!my_err && S_ISDIR (filestat.st_mode))
 	{
 	  if (path[strlen (path) - 1] != G_DIR_SEPARATOR)
-	    path = g_strconcat (path, G_DIR_SEPARATOR_S, NULL);
-	  
+	    strcat (path, G_DIR_SEPARATOR_S);
+
 	  /* Open directory */
 	  dir = opendir (path);
 	  
@@ -775,6 +781,8 @@ script_fu_report_cc (gchar *command)
       g_free (sf_interface->last_command);
       sf_interface->last_command = g_strdup (command);
     }
+  
+  gdk_flush ();
 }
 
 
