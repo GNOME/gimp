@@ -1751,17 +1751,17 @@ undo_pop_layer_displace (GimpUndo            *undo,
                          GimpUndoAccumulator *accum)
 {
   LayerDisplaceUndo *ldu;
-  GimpLayer         *layer;
+  GimpItem          *item;
   gint               offset_x;
   gint               offset_y;
 
   ldu = (LayerDisplaceUndo *) undo->data;
 
-  layer = GIMP_LAYER (GIMP_ITEM_UNDO (undo)->item);
+  item = GIMP_ITEM_UNDO (undo)->item;
 
-  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &offset_x, &offset_y);
+  gimp_item_offsets (item, &offset_x, &offset_y);
 
-  gimp_layer_translate (layer,
+  gimp_layer_translate (GIMP_LAYER (item),
                         ldu->old_offset_x - offset_x,
                         ldu->old_offset_y - offset_y,
                         FALSE);

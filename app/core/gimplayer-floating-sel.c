@@ -184,13 +184,16 @@ floating_sel_reset (GimpLayer *layer)
 void
 floating_sel_to_layer (GimpLayer *layer)
 {
+  GimpItem  *item;
   GimpImage *gimage;
   gint       off_x, off_y;
   gint       width, height;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
+  item = GIMP_ITEM (layer);
+
+  if (! (gimage = gimp_item_get_image (item)))
     return;
 
   /*  Check if the floating layer belongs to a channel...  */
@@ -204,13 +207,14 @@ floating_sel_to_layer (GimpLayer *layer)
 
   /*  restore the contents of the drawable  */
   floating_sel_restore (layer,
-			GIMP_ITEM (layer)->offset_x,
-			GIMP_ITEM (layer)->offset_y,
-			GIMP_ITEM (layer)->width,
-			GIMP_ITEM (layer)->height);
+			item->offset_x,
+			item->offset_y,
+			item->width,
+			item->height);
 
   /*  determine whether the resulting layer needs an update  */
-  gimp_drawable_offsets (layer->fs.drawable, &off_x, &off_y);
+  gimp_item_offsets (GIMP_ITEM (layer->fs.drawable), &off_x, &off_y);
+
   width  = gimp_item_width  (GIMP_ITEM (layer->fs.drawable));
   height = gimp_item_height (GIMP_ITEM (layer->fs.drawable));
 
@@ -270,7 +274,7 @@ floating_sel_store (GimpLayer *layer,
    *  drawable that this floating selection obscures.  We do this so
    *  that it will be possible to subsequently restore the drawable's area
    */
-  gimp_drawable_offsets (layer->fs.drawable, &offx, &offy);
+  gimp_item_offsets (GIMP_ITEM (layer->fs.drawable), &offx, &offy);
 
   /*  Find the minimum area we need to uncover -- in gimage space  */
   x1 = MAX (GIMP_ITEM (layer)->offset_x, offx);
@@ -317,7 +321,8 @@ floating_sel_restore (GimpLayer *layer,
    */
 
   /*  Find the minimum area we need to uncover -- in gimage space  */
-  gimp_drawable_offsets (layer->fs.drawable, &offx, &offy);
+  gimp_item_offsets (GIMP_ITEM (layer->fs.drawable), &offx, &offy);
+
   x1 = MAX (GIMP_ITEM (layer)->offset_x, offx);
   y1 = MAX (GIMP_ITEM (layer)->offset_y, offy);
   x2 = MIN (GIMP_ITEM (layer)->offset_x + GIMP_ITEM (layer)->width,
@@ -422,7 +427,8 @@ floating_sel_composite (GimpLayer *layer,
   if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
     {
       /*  Find the minimum area we need to composite -- in gimage space  */
-      gimp_drawable_offsets (layer->fs.drawable, &offx, &offy);
+      gimp_item_offsets (GIMP_ITEM (layer->fs.drawable), &offx, &offy);
+
       x1 = MAX (GIMP_ITEM (layer)->offset_x, offx);
       y1 = MAX (GIMP_ITEM (layer)->offset_y, offy);
       x2 = MIN (GIMP_ITEM (layer)->offset_x +

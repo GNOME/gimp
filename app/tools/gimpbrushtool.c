@@ -249,6 +249,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   GimpBrush        *current_brush;
   GimpDrawable     *drawable;
   GimpCoords        curr_coords;
+  gint              off_x, off_y;
   gboolean          draw_line = FALSE;
 
   draw_tool     = GIMP_DRAW_TOOL (tool);
@@ -261,14 +262,10 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 
   curr_coords = *coords;
 
-  {
-    gint off_x, off_y;
+  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
-    gimp_drawable_offsets (drawable, &off_x, &off_y);
-
-    curr_coords.x -= off_x;
-    curr_coords.y -= off_y;
-  }
+  curr_coords.x -= off_x;
+  curr_coords.y -= off_y;
 
   if (draw_tool->gdisp)
     gimp_draw_tool_stop (draw_tool);
@@ -431,6 +428,7 @@ gimp_paint_tool_motion (GimpTool        *tool,
   GimpPaintOptions *paint_options;
   GimpPaintCore    *core;
   GimpDrawable     *drawable;
+  gint              off_x, off_y;
 
   paint_tool    = GIMP_PAINT_TOOL (tool);
   paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
@@ -446,14 +444,10 @@ gimp_paint_tool_motion (GimpTool        *tool,
 
   core->cur_coords = *coords;
 
-  {
-    gint off_x, off_y;
-    
-    gimp_drawable_offsets (drawable, &off_x, &off_y);
+  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
-    core->cur_coords.x -= off_x;
-    core->cur_coords.y -= off_y;
-  }
+  core->cur_coords.x -= off_x;
+  core->cur_coords.y -= off_y;
 
   if (paint_tool->pick_state)
     {
@@ -529,17 +523,14 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 
 	  gdouble dx, dy, dist;
           gchar   status_str[STATUSBAR_SIZE];
+          gint    off_x, off_y;
 
           core->cur_coords = *coords;
 
-          {
-            gint off_x, off_y;
+          gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
 
-            gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
-
-            core->cur_coords.x -= off_x;
-            core->cur_coords.y -= off_y;
-          }
+          core->cur_coords.x -= off_x;
+          core->cur_coords.y -= off_y;
 
 	  if (state & GDK_CONTROL_MASK)
 	    {

@@ -189,7 +189,7 @@ gimp_blend_tool_button_press (GimpTool        *tool,
       break;
     }
 
-  gimp_drawable_offsets (drawable, &off_x, &off_y);
+  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
   blend_tool->endx = blend_tool->startx = coords->x - off_x;
   blend_tool->endy = blend_tool->starty = coords->y - off_y;
@@ -276,8 +276,8 @@ gimp_blend_tool_motion (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-                         &off_x, &off_y);
+  gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (gdisp->gimage)),
+                     &off_x, &off_y);
 
   /*  Get the current coordinates  */
   blend_tool->endx = coords->x - off_x;

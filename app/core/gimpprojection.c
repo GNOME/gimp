@@ -393,27 +393,36 @@ gimp_display_coords_in_active_drawable (GimpDisplay      *gdisp,
                                         const GimpCoords *coords)
 {
   GimpDrawable *drawable;
-  gint          x, y;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), FALSE);
 
   if (!gdisp->gimage)
     return FALSE;
 
-  if (!(drawable = gimp_image_active_drawable (gdisp->gimage)))
-    return FALSE;
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  gimp_drawable_offsets (drawable, &x, &y);
+  if (drawable)
+    {
+      GimpItem *item;
+      gint      x, y;
 
-  x = ROUND (coords->x) - x;
-  if (x < 0 || x > gimp_item_width (GIMP_ITEM (drawable)))
-    return FALSE;
+      item = GIMP_ITEM (drawable);
 
-  y = ROUND (coords->y) - y;
-  if (y < 0 || y > gimp_item_height (GIMP_ITEM (drawable)))
-    return FALSE;
+      gimp_item_offsets (item, &x, &y);
 
-  return TRUE;
+      x = ROUND (coords->x) - x;
+      y = ROUND (coords->y) - y;
+
+      if (x < 0 || x > gimp_item_width (item))
+        return FALSE;
+
+      if (y < 0 || y > gimp_item_height (item))
+        return FALSE;
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 /*  private functions  */

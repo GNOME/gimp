@@ -96,6 +96,9 @@ void            gimp_item_rename          (GimpItem       *item,
 
 gint            gimp_item_width           (const GimpItem *item);
 gint            gimp_item_height          (const GimpItem *item);
+void            gimp_item_offsets         (const GimpItem *item,
+                                           gint           *offset_x,
+                                           gint           *offset_y);
 
 void            gimp_item_scale           (GimpItem       *item,
                                            gint            new_width,

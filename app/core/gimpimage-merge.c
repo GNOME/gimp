@@ -235,7 +235,8 @@ gimp_image_merge_layers (GimpImage     *gimage,
   while (merge_list)
     {
       layer = (GimpLayer *) merge_list->data;
-      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+
+      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
 
       switch (merge_type)
 	{
@@ -245,7 +246,7 @@ gimp_image_merge_layers (GimpImage     *gimage,
 	    {
 	      x1 = off_x;
 	      y1 = off_y;
-	      x2 = off_x + gimp_item_width (GIMP_ITEM (layer));
+	      x2 = off_x + gimp_item_width  (GIMP_ITEM (layer));
 	      y2 = off_y + gimp_item_height (GIMP_ITEM (layer));
 	    }
 	  else
@@ -409,10 +410,11 @@ gimp_image_merge_layers (GimpImage     *gimage,
 	  return NULL;
 	}
 
-      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+
       x3 = CLAMP (off_x, x1, x2);
       y3 = CLAMP (off_y, y1, y2);
-      x4 = CLAMP (off_x + gimp_item_width (GIMP_ITEM (layer)), x1, x2);
+      x4 = CLAMP (off_x + gimp_item_width  (GIMP_ITEM (layer)), x1, x2);
       y4 = CLAMP (off_y + gimp_item_height (GIMP_ITEM (layer)), y1, y2);
 
       /* configure the pixel regions  */

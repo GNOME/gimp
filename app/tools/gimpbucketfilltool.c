@@ -169,8 +169,8 @@ gimp_bucket_fill_tool_button_press (GimpTool        *tool,
     {
       gint off_x, off_y;
 
-      gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-                             &off_x, &off_y);
+      gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (gdisp->gimage)),
+                         &off_x, &off_y);
 
       bucket_tool->target_x -= off_x;
       bucket_tool->target_y -= off_y;
@@ -251,41 +251,33 @@ gimp_bucket_fill_tool_cursor_update (GimpTool        *tool,
 				     GimpDisplay     *gdisp)
 {
   GimpBucketFillOptions *options;
-  GimpLayer             *layer;
   GimpCursorModifier     cmodifier = GIMP_CURSOR_MODIFIER_NONE;
-  gint                   off_x, off_y;
 
   options = GIMP_BUCKET_FILL_OPTIONS (tool->tool_info->tool_options);
 
-  if ((layer = gimp_image_get_active_layer (gdisp->gimage))) 
+  if (gimp_display_coords_in_active_drawable (gdisp, coords))
     {
-      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+      /*  One more test--is there a selected region?
+       *  if so, is cursor inside?
+       */
+      if (gimp_image_mask_is_empty (gdisp->gimage) ||
+          gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
+        {
+          switch (options->fill_mode)
+            {
+            case GIMP_FG_BUCKET_FILL:
+              cmodifier = GIMP_CURSOR_MODIFIER_FOREGROUND;
+              break;
 
-      if (coords->x >= off_x &&
-          coords->y >= off_y &&
-	  coords->x < (off_x + gimp_item_width (GIMP_ITEM (layer))) &&
-	  coords->y < (off_y + gimp_item_height (GIMP_ITEM (layer))))
-	{
-	  /*  One more test--is there a selected region?
-	   *  if so, is cursor inside?
-	   */
-	  if (gimp_image_mask_is_empty (gdisp->gimage) ||
-	      gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
-	    {
-	      switch (options->fill_mode)
-		{
-		case GIMP_FG_BUCKET_FILL:
-		  cmodifier = GIMP_CURSOR_MODIFIER_FOREGROUND;
-		  break;
-		case GIMP_BG_BUCKET_FILL:
-		  cmodifier = GIMP_CURSOR_MODIFIER_BACKGROUND;
-		  break;
-		case GIMP_PATTERN_BUCKET_FILL:
-		  cmodifier = GIMP_CURSOR_MODIFIER_PATTERN;
-		  break;
-		}
-	    }
-	}
+            case GIMP_BG_BUCKET_FILL:
+              cmodifier = GIMP_CURSOR_MODIFIER_BACKGROUND;
+              break;
+
+            case GIMP_PATTERN_BUCKET_FILL:
+              cmodifier = GIMP_CURSOR_MODIFIER_PATTERN;
+              break;
+            }
+        }
     }
 
   gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);

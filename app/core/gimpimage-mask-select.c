@@ -303,7 +303,7 @@ gimp_image_mask_select_fuzzy (GimpImage      *gimage,
     }
   else
     {
-      gimp_drawable_offsets (drawable, &mask_x, &mask_y);
+      gimp_item_offsets (GIMP_ITEM (drawable), &mask_x, &mask_y);
     }
 
   gimp_image_mask_select_channel (gimage,
@@ -354,7 +354,7 @@ gimp_image_mask_select_by_color (GimpImage      *gimage,
     }
   else
     {
-      gimp_drawable_offsets (drawable, &mask_x, &mask_y);
+      gimp_item_offsets (GIMP_ITEM (drawable), &mask_x, &mask_y);
     }
 
   gimp_image_mask_select_channel (gimage,

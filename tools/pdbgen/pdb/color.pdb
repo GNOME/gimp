@@ -577,7 +577,7 @@ HELP
     {
       /* The information collection should occur only within selection bounds */
       no_mask = (gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) == FALSE);
-      gimp_drawable_offsets (drawable, &off_x, &off_y);
+      gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
       /* Configure the src from the drawable data */
       pixel_region_init (&srcPR, gimp_drawable_data (drawable),

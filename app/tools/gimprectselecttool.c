@@ -543,7 +543,7 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
           drawable = gimp_image_active_drawable (tool->gdisp->gimage);
           item     = GIMP_ITEM (drawable);
 
-          gimp_drawable_offsets (drawable, &off_x, &off_y);
+          gimp_item_offsets (item, &off_x, &off_y);
           width  = gimp_item_width  (item);
           height = gimp_item_height (item);
 

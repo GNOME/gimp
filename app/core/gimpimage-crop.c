@@ -120,7 +120,7 @@ gimp_image_crop (GimpImage *gimage,
 
 	  layer = gimp_image_get_active_layer (gimage);
 
-	  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &doff_x, &doff_y);
+	  gimp_item_offsets (GIMP_ITEM (layer), &doff_x, &doff_y);
 
 	  off_x = (doff_x - x1);
 	  off_y = (doff_y - y1);
@@ -184,12 +184,10 @@ gimp_image_crop (GimpImage *gimage,
 
 	      gimp_layer_translate (layer, -x1, -y1, TRUE);
 
-	      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+	      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
 
 	      if (crop_layers)
 		{
-		  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
-
 		  lx1 = CLAMP (off_x, 0, gimage->width);
 		  ly1 = CLAMP (off_y, 0, gimage->height);
 		  lx2 = CLAMP ((gimp_item_width (GIMP_ITEM (layer)) + off_x),

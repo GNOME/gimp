@@ -1298,7 +1298,7 @@ gimp_layer_resize_to_image (GimpLayer *layer)
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_relax (layer, TRUE);
 
-   gimp_drawable_offsets (GIMP_DRAWABLE (layer), &offset_x, &offset_y);
+   gimp_item_offsets (GIMP_ITEM (layer), &offset_x, &offset_y);
    gimp_item_resize (GIMP_ITEM (layer), gimage->width, gimage->height,
                      offset_x, offset_y);
 

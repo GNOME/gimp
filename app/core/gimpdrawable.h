@@ -117,10 +117,6 @@ void            gimp_drawable_set_visible        (GimpDrawable       *drawable,
                                                   gboolean            visible,
                                                   gboolean            push_undo);
 
-void            gimp_drawable_offsets            (const GimpDrawable *drawable, 
-						  gint               *offset_x,
-						  gint               *offset_y);
-
 guchar        * gimp_drawable_cmap               (const GimpDrawable *drawable);
 
 guchar        * gimp_drawable_get_color_at       (GimpDrawable       *drawable,

@@ -301,7 +301,7 @@ layers_crop_cmd_callback (GtkWidget *widget,
       return;
     }
 
-  gimp_drawable_offsets (GIMP_DRAWABLE (active_layer), &off_x, &off_y);
+  gimp_item_offsets (GIMP_ITEM (active_layer), &off_x, &off_y);
 
   off_x -= x1;
   off_y -= y1;
@@ -503,7 +503,7 @@ layers_new_layer_query (GimpImage *gimage,
   GtkWidget       *button;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (! template || GIMP_IS_LAYER (template));
+  g_return_if_fail (template == NULL || GIMP_IS_LAYER (template));
 
   /*  If there is a floating selection, the new command transforms
    *  the current fs into a new layer
@@ -525,9 +525,9 @@ layers_new_layer_query (GimpImage *gimage,
 
       if (template)
         {
-          width  = gimp_item_width  (GIMP_ITEM (template));
-          height = gimp_item_height (GIMP_ITEM (template));
-          gimp_drawable_offsets (GIMP_DRAWABLE (template), &off_x, &off_y);
+          gimp_item_offsets (GIMP_ITEM (template), &off_x, &off_y);
+          width   = gimp_item_width  (GIMP_ITEM (template));
+          height  = gimp_item_height (GIMP_ITEM (template));
           opacity = template->opacity;
           mode    = template->mode;
         }

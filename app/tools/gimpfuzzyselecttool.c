@@ -288,7 +288,7 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
 
           drawable = gimp_image_active_drawable (gdisp->gimage);
 
-          gimp_drawable_offsets (drawable, &off_x, &off_y);
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
         }
 
       gimp_image_mask_select_channel (gdisp->gimage,
@@ -413,7 +413,7 @@ gimp_fuzzy_select_tool_calculate (GimpFuzzySelectTool *fuzzy_sel,
     {
       gint off_x, off_y;
 
-      gimp_drawable_offsets (drawable, &off_x, &off_y);
+      gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
       x -= off_x;
       y -= off_y;

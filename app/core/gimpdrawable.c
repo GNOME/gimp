@@ -504,17 +504,19 @@ gimp_drawable_update (GimpDrawable *drawable,
 		      gint          w,
 		      gint          h)
 {
+  GimpItem  *item;
   GimpImage *gimage;
   gint       offset_x;
   gint       offset_y;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  item   = GIMP_ITEM (drawable);
+  gimage = gimp_item_get_image (item);
 
   g_return_if_fail (gimage != NULL);
 
-  gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+  gimp_item_offsets (item, &offset_x, &offset_y);
   x += offset_x;
   y += offset_y;
 
@@ -712,7 +714,7 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
     {
       gint off_x, off_y;
 
-      gimp_drawable_offsets (drawable, &off_x, &off_y);
+      gimp_item_offsets (item, &off_x, &off_y);
 
       *x1 = CLAMP (*x1 - off_x, 0, gimp_item_width  (item));
       *y1 = CLAMP (*y1 - off_y, 0, gimp_item_height (item));
@@ -854,17 +856,6 @@ gimp_drawable_set_visible (GimpDrawable *drawable,
 
       gimp_drawable_update (drawable, 0, 0, item->width, item->height);
     }
-}
-
-void
-gimp_drawable_offsets (const GimpDrawable *drawable,
-		       gint               *off_x,
-		       gint               *off_y)
-{
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-
-  if (off_x) *off_x = GIMP_ITEM (drawable)->offset_x;
-  if (off_y) *off_y = GIMP_ITEM (drawable)->offset_y;
 }
 
 guchar *

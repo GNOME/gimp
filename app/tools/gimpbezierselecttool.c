@@ -3444,7 +3444,7 @@ bezier_stroke (GimpBezierSelectTool *bezier_sel,
 	  gdouble      *ptr;
 
 	  drawable = gimp_image_active_drawable (gdisp->gimage);
-	  gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+	  gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);
 
 	  ptr = rpnts->stroke_points;
 	  while (ptr < rpnts->stroke_points + (rpnts->num_stroke_points * 2))

@@ -236,11 +236,11 @@ gimp_image_get_new_preview (GimpViewable *viewable,
     {
       layer = (GimpLayer *) reverse_list->data;
 
-      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
 
       x = (gint) RINT (ratio * off_x);
       y = (gint) RINT (ratio * off_y);
-      w = (gint) RINT (ratio * gimp_item_width (GIMP_ITEM (layer)));
+      w = (gint) RINT (ratio * gimp_item_width  (GIMP_ITEM (layer)));
       h = (gint) RINT (ratio * gimp_item_height (GIMP_ITEM (layer)));
 
       if (w < 1 || h < 1)

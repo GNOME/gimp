@@ -622,7 +622,7 @@ gradient_precalc_shapeburst (GimpImage    *gimage,
       gint        offx, offy;
 
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-      gimp_drawable_offsets (drawable, &offx, &offy);
+      gimp_item_offsets (GIMP_ITEM (drawable), &offx, &offy);
 
       /*  the selection mask  */
       mask = gimp_image_get_mask (gimage);

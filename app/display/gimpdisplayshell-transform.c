@@ -100,8 +100,8 @@ gimp_display_shell_transform_xy (GimpDisplayShell *shell,
   scaley = SCALEFACTOR_Y (shell);
 
   if (use_offsets)
-    gimp_drawable_offsets (gimp_image_active_drawable (shell->gdisp->gimage),
-                           &offset_x, &offset_y);
+    gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (shell->gdisp->gimage)),
+                       &offset_x, &offset_y);
 
   *nx = (gint) (scalex * (x + offset_x) - shell->offset_x);
   *ny = (gint) (scaley * (y + offset_y) - shell->offset_y);
@@ -136,8 +136,8 @@ gimp_display_shell_untransform_xy (GimpDisplayShell *shell,
   scaley = SCALEFACTOR_Y (shell);
 
   if (use_offsets)
-    gimp_drawable_offsets (gimp_image_active_drawable (shell->gdisp->gimage),
-                           &offset_x, &offset_y);
+    gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (shell->gdisp->gimage)),
+                       &offset_x, &offset_y);
 
   if (round)
     {
@@ -173,8 +173,8 @@ gimp_display_shell_transform_xy_f  (GimpDisplayShell *shell,
   scaley = SCALEFACTOR_Y (shell);
 
   if (use_offsets)
-    gimp_drawable_offsets (gimp_image_active_drawable (shell->gdisp->gimage),
-                           &offset_x, &offset_y);
+    gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (shell->gdisp->gimage)),
+                       &offset_x, &offset_y);
 
   *nx = scalex * (x + offset_x) - shell->offset_x;
   *ny = scaley * (y + offset_y) - shell->offset_y;
@@ -208,8 +208,8 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
   scaley = SCALEFACTOR_Y (shell);
 
   if (use_offsets)
-    gimp_drawable_offsets (gimp_image_active_drawable (shell->gdisp->gimage),
-                           &offset_x, &offset_y);
+    gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (shell->gdisp->gimage)),
+                       &offset_x, &offset_y);
 
   *nx = (x + shell->offset_x) / scalex - offset_x;
   *ny = (y + shell->offset_y) / scaley - offset_y;

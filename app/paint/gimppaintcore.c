@@ -1475,7 +1475,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
    *  instead of drawable_update because we don't want the drawable
    *  preview to be constantly invalidated
    */
-  gimp_drawable_offsets (drawable, &offx, &offy);
+  gimp_item_offsets (GIMP_ITEM (drawable), &offx, &offy);
   gimp_image_update (gimage,
                      core->canvas_buf->x + offx,
                      core->canvas_buf->y + offy,
@@ -1587,7 +1587,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
    *  instead of drawable_update because we don't want the drawable
    *  preview to be constantly invalidated
    */
-  gimp_drawable_offsets (drawable, &offx, &offy);
+  gimp_item_offsets (GIMP_ITEM (drawable), &offx, &offy);
   gimp_image_update (gimage,
                      core->canvas_buf->x + offx,
                      core->canvas_buf->y + offy,

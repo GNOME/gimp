@@ -266,7 +266,7 @@ gimp_color_picker_tool_button_press (GimpTool        *tool,
                                      GIMP_VIEWABLE (tool->drawable));
 
   /*  Keep the coordinates of the target  */
-  gimp_drawable_offsets (tool->drawable, &off_x, &off_y);
+  gimp_item_offsets (GIMP_ITEM (tool->drawable), &off_x, &off_y);
 
   cp_tool->centerx = coords->x - off_x;
   cp_tool->centery = coords->y - off_y;
@@ -356,7 +356,7 @@ gimp_color_picker_tool_motion (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  gimp_drawable_offsets (tool->drawable, &off_x, &off_y);
+  gimp_item_offsets (GIMP_ITEM (tool->drawable), &off_x, &off_y);
 
   cp_tool->centerx = coords->x - off_x;
   cp_tool->centery = coords->y - off_y;

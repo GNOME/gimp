@@ -106,7 +106,8 @@ gimp_image_mask_boundary (GimpImage  *gimage,
     {
       gint off_x, off_y;
 
-      gimp_drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+
       x1 = CLAMP (off_x, 0, gimage->width);
       y1 = CLAMP (off_y, 0, gimage->height);
       x2 = CLAMP (off_x + gimp_item_width (GIMP_ITEM (layer)), 0,
@@ -273,7 +274,7 @@ gimp_image_mask_extract (GimpImage    *gimage,
   if (cut_gimage && non_empty)
     gimp_drawable_push_undo (drawable, NULL, x1, y1, x2, y2, NULL, FALSE);
 
-  gimp_drawable_offsets (drawable, &off_x, &off_y);
+  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
   /*  Allocate the temp buffer  */
   tiles = tile_manager_new ((x2 - x1), (y2 - y1), bytes);
@@ -692,7 +693,7 @@ gimp_image_mask_stroke (GimpImage    *gimage,
   pdb_string = gimp_context_get_tool (context)->paint_info->pdb_string;
 
   /*  find the drawable offsets  */
-  gimp_drawable_offsets (drawable, &offx, &offy);
+  gimp_item_offsets (GIMP_ITEM (drawable), &offx, &offy);
   gimp_image_mask_stroking = TRUE;
 
   /*  Start an undo group  */

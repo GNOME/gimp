@@ -390,7 +390,7 @@ gimp_image_construct_layers (GimpImage *gimage,
     {
       layer = (GimpLayer *) list->data;
 
-      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
 
       x1 = CLAMP (off_x, x, x + w);
       y1 = CLAMP (off_y, y, y + h);
@@ -520,7 +520,6 @@ gimp_image_initialize_projection (GimpImage *gimage,
 {
 
   GList       *list;
-  GimpLayer   *layer;
   gint         coverage = 0;
   PixelRegion  PR;
   guchar       clear[4] = { 0, 0, 0, 0 };
@@ -534,17 +533,19 @@ gimp_image_initialize_projection (GimpImage *gimage,
        list; 
        list = g_list_next (list))
     {
-      gint off_x, off_y;
+      GimpItem *item;
+      gint      off_x, off_y;
 
-      layer = (GimpLayer *) list->data;
-      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+      item = (GimpItem *) list->data;
 
-      if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)) &&
-	  ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)) &&
+      gimp_item_offsets (item, &off_x, &off_y);
+
+      if (gimp_drawable_get_visible (GIMP_DRAWABLE (item)) &&
+	  ! gimp_drawable_has_alpha (GIMP_DRAWABLE (item)) &&
 	  (off_x <= x) &&
 	  (off_y <= y) &&
-	  (off_x + gimp_item_width (GIMP_ITEM (layer)) >= x + w) &&
-	  (off_y + gimp_item_height (GIMP_ITEM (layer)) >= y + h))
+	  (off_x + gimp_item_width  (item) >= x + w) &&
+	  (off_y + gimp_item_height (item) >= y + h))
 	{
 	  coverage = 1;
 	  break;
@@ -579,8 +580,7 @@ gimp_image_construct (GimpImage *gimage,
 
   if (gimage->layers)
     {
-      gimp_drawable_offsets (GIMP_DRAWABLE ((GimpLayer*) gimage->layers->data),
-			     &xoff, &yoff);
+      gimp_item_offsets (GIMP_ITEM (gimage->layers->data), &xoff, &yoff);
     }
 
   if ((gimage->layers) &&                         /* There's a layer.      */
@@ -601,9 +601,8 @@ gimp_image_construct (GimpImage *gimage,
     {
       gint xoff;
       gint yoff;
-      
-      gimp_drawable_offsets (GIMP_DRAWABLE (gimage->layers->data),
-			     &xoff, &yoff);
+
+      gimp_item_offsets (GIMP_ITEM (gimage->layers->data), &xoff, &yoff);
 
       if ((xoff==0) && (yoff==0)) /* Starts at 0,0         */
 	{

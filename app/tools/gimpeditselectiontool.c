@@ -259,7 +259,7 @@ init_edit_selection (GimpTool    *tool,
 
   active_drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  gimp_drawable_offsets (active_drawable, &off_x, &off_y);
+  gimp_item_offsets (GIMP_ITEM (active_drawable), &off_x, &off_y);
 
   edit_select->edit_type = edit_type;
 
@@ -333,7 +333,7 @@ init_edit_selection (GimpTool    *tool,
                 {
                   g_print ("linked!\n");
 
-                  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &x3, &y3);
+                  gimp_item_offsets (GIMP_ITEM (layer), &x3, &y3);
 
                   x4 = x3 + gimp_item_width  (GIMP_ITEM (layer));
                   y4 = y3 + gimp_item_height (GIMP_ITEM (layer));
@@ -473,6 +473,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 {
   GimpEditSelectionTool *edit_select;
   GimpDisplayShell      *shell;
+  gint                   off_x, off_y;
   gdouble                motion_x, motion_y;
 
   edit_select = GIMP_EDIT_SELECTION_TOOL (tool);
@@ -483,15 +484,11 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  {
-    gint off_x, off_y;
+  gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (gdisp->gimage)),
+                     &off_x, &off_y);
 
-    gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-                           &off_x, &off_y);
-
-    motion_x = coords->x - off_x;
-    motion_y = coords->y - off_y;
-  }
+  motion_x = coords->x - off_x;
+  motion_y = coords->y - off_y;
 
   /* now do the actual move. */
 
@@ -724,8 +721,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
       break;
 
     case EDIT_LAYER_TRANSLATE:
-      gimp_drawable_offsets (GIMP_DRAWABLE (gdisp->gimage->active_layer),
-                             &x1, &y1);
+      gimp_item_offsets (GIMP_ITEM (gdisp->gimage->active_layer), &x1, &y1);
 
       x2 = x1 + gimp_item_width  (GIMP_ITEM (gdisp->gimage->active_layer));
       y2 = y1 + gimp_item_height (GIMP_ITEM (gdisp->gimage->active_layer));
@@ -740,7 +736,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
           if ((layer != gdisp->gimage->active_layer) &&
               gimp_layer_get_linked (layer))
             {
-              gimp_drawable_offsets (GIMP_DRAWABLE (layer), &x3, &y3);
+              gimp_item_offsets (GIMP_ITEM (layer), &x3, &y3);
 
               x4 = x3 + gimp_item_width  (GIMP_ITEM (layer));
               y4 = y3 + gimp_item_height (GIMP_ITEM (layer));

@@ -929,7 +929,7 @@ drawable_offsets_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+    gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);
 
   return_args = procedural_db_return_args (&drawable_offsets_proc, success);
 

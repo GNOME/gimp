@@ -1409,7 +1409,7 @@ levels_input_color_pick (GimpTool     *tool,
   if (! l_tool->active_picker || !drawable)
     return;
 
-  gimp_drawable_offsets (drawable, &x, &y);
+  gimp_item_offsets (GIMP_ITEM (drawable), &x, &y);
 
   x = RINT (coords->x) - x;
   y = RINT (coords->y) - y;

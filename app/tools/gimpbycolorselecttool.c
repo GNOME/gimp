@@ -170,8 +170,8 @@ gimp_by_color_select_tool_button_press (GimpTool        *tool,
     {
       gint off_x, off_y;
 
-      gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-                             &off_x, &off_y);
+      gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (gdisp->gimage)),
+                         &off_x, &off_y);
 
       by_color_sel->x -= off_x;
       by_color_sel->y -= off_y;

@@ -201,7 +201,7 @@ gimp_edit_paste (GimpImage    *gimage,
   /*  Set the offsets to the center of the image  */
   if (drawable)
     {
-      gimp_drawable_offsets (drawable, &cx, &cy);
+      gimp_item_offsets (GIMP_ITEM (drawable), &cx, &cy);
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
       cx += (x1 + x2) >> 1;
       cy += (y1 + y2) >> 1;

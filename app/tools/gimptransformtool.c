@@ -349,7 +349,7 @@ gimp_transform_tool_button_press (GimpTool        *tool,
       /*  Initialisation stuff: if the cursor is clicked inside the current
        *  selection, show the bounding box and handles...
        */
-      gimp_drawable_offsets (drawable, &off_x, &off_y);
+      gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
       if (coords->x >= off_x &&
           coords->y >= off_y &&
@@ -629,19 +629,12 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
 
      if ((drawable = gimp_image_active_drawable (gdisp->gimage)))
         {
-          gint off_x, off_y;
-
-          gimp_drawable_offsets (drawable, &off_x, &off_y);
-
           if (GIMP_IS_LAYER (drawable) &&
               gimp_layer_get_mask (GIMP_LAYER (drawable)))
             {
               ctype = GIMP_BAD_CURSOR;
             }
-          else if (coords->x >= off_x &&
-                   coords->y >= off_y &&
-                   coords->x < (off_x + GIMP_ITEM (drawable)->width) &&
-                   coords->y < (off_y + GIMP_ITEM (drawable)->height))
+          else if (gimp_display_coords_in_active_drawable (gdisp, coords))
             {
               if (gimp_image_mask_is_empty (gdisp->gimage) ||
                   gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
@@ -984,7 +977,7 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
     {
       gint offset_x, offset_y;
 
-      gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+      gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);
 
       gimp_drawable_mask_bounds (drawable,
 				 &tr_tool->x1, &tr_tool->y1,

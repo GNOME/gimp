@@ -357,7 +357,7 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
 
       item = GIMP_ITEM (drawable);
 
-      gimp_drawable_offsets (drawable, &off_x, &off_y);
+      gimp_item_offsets (item, &off_x, &off_y);
 
       x -= off_x;
       y -= off_y;

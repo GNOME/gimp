@@ -65,7 +65,7 @@ gimp_image_pick_color (GimpImage     *gimage,
     {
       gint off_x, off_y;
 
-      gimp_drawable_offsets (drawable, &off_x, &off_y);
+      gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
       x -= off_x;
       y -= off_y;
 

@@ -1667,7 +1667,7 @@ gimp_image_apply_image (GimpImage	     *gimage,
     }
 
   /*  get the layer offsets  */
-  gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+  gimp_item_offsets (item, &offset_x, &offset_y);
 
   /*  make sure the image application coordinates are within gimage bounds  */
   x1 = CLAMP (x, 0, gimp_item_width  (item));
@@ -1789,7 +1789,7 @@ gimp_image_replace_image (GimpImage    *gimage,
     }
 
   /*  get the layer offsets  */
-  gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+  gimp_item_offsets (item, &offset_x, &offset_y);
 
   /*  make sure the image application coordinates are within gimage bounds  */
   x1 = CLAMP (x, 0, gimp_item_width (item));
@@ -2616,8 +2616,8 @@ gimp_image_remove_layer (GimpImage *gimage,
   /* Send out REMOVED signal from layer */
   gimp_item_removed (GIMP_ITEM (layer));
 
-  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &x, &y);
-  w = gimp_item_width (GIMP_ITEM (layer));
+  gimp_item_offsets (GIMP_ITEM (layer), &x, &y);
+  w = gimp_item_width  (GIMP_ITEM (layer));
   h = gimp_item_height (GIMP_ITEM (layer));
 
   g_object_unref (layer);
@@ -2786,11 +2786,11 @@ gimp_image_position_layer (GimpImage   *gimage,
 
   gimp_container_reorder (gimage->layers, GIMP_OBJECT (layer), new_index);
 
-  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+  gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
 
   gimp_image_update (gimage,
 		     off_x, off_y,
-		     gimp_item_width (GIMP_ITEM (layer)),
+		     gimp_item_width  (GIMP_ITEM (layer)),
 		     gimp_item_height (GIMP_ITEM (layer)));
 
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));

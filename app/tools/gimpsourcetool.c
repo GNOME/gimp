@@ -234,30 +234,19 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 			       GimpDisplay     *gdisp)
 {
   GimpCloneOptions *options;
-  GimpLayer        *layer;
   GdkCursorType     ctype = GIMP_MOUSE_CURSOR;
 
   options = (GimpCloneOptions *) tool->tool_info->tool_options;
 
-  if ((layer = gimp_image_get_active_layer (gdisp->gimage))) 
+  if (gimp_display_coords_in_active_drawable (gdisp, coords))
     {
-      gint off_x, off_y;
-
-      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
-
-      if (coords->x >= off_x &&
-          coords->y >= off_y &&
-	  coords->x < (off_x + gimp_item_width  (GIMP_ITEM (layer))) &&
-	  coords->y < (off_y + gimp_item_height (GIMP_ITEM (layer))))
-	{
-	  /*  One more test--is there a selected region?
-	   *  if so, is cursor inside?
-	   */
-	  if (gimp_image_mask_is_empty (gdisp->gimage))
-	    ctype = GIMP_MOUSE_CURSOR;
-	  else if (gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
-	    ctype = GIMP_MOUSE_CURSOR;
-	}
+      /*  One more test--is there a selected region?
+       *  if so, is cursor inside?
+       */
+      if (gimp_image_mask_is_empty (gdisp->gimage))
+        ctype = GIMP_MOUSE_CURSOR;
+      else if (gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
+        ctype = GIMP_MOUSE_CURSOR;
     }
 
   if (options->clone_type == GIMP_IMAGE_CLONE)
@@ -297,7 +286,8 @@ gimp_clone_tool_draw (GimpDrawTool *draw_tool)
               gint off_x;
               gint off_y;
 
-              gimp_drawable_offsets (clone->src_drawable, &off_x, &off_y);
+              gimp_item_offsets (GIMP_ITEM (clone->src_drawable),
+                                 &off_x, &off_y);
 
               gimp_draw_tool_draw_handle (draw_tool,
                                           GIMP_HANDLE_CROSS,

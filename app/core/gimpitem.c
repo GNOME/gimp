@@ -345,6 +345,17 @@ gimp_item_height (const GimpItem *item)
 }
 
 void
+gimp_item_offsets (const GimpItem *item,
+                   gint           *off_x,
+                   gint           *off_y)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  if (off_x) *off_x = item->offset_x;
+  if (off_y) *off_y = item->offset_y;
+}
+
+void
 gimp_item_scale (GimpItem              *item,
                  gint                   new_width,
                  gint                   new_height,

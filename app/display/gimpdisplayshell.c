@@ -1013,7 +1013,7 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
   /*  If there is a floating selection, handle things differently  */
   if ((layer = gimp_image_floating_sel (shell->gdisp->gimage)))
     {
-      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
 
       if (! gimp_channel_bounds (gimp_image_get_mask (shell->gdisp->gimage),
 				 x1, y1, x2, y2))

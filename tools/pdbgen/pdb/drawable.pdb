@@ -325,7 +325,7 @@ HELP
 			 desc => "$_ offset of drawable", void_ret => 1 }
     }
 
-    %invoke = ( code => 'gimp_drawable_offsets (drawable, &offset_x, &offset_y);' );
+    %invoke = ( code => 'gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);' );
 }
 
 sub drawable_is_layer {

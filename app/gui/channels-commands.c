@@ -326,9 +326,9 @@ channels_new_channel_query (GimpImage   *gimage,
 
       if (template)
         {
+          gimp_item_offsets (GIMP_ITEM (template), &off_x, &off_y);
           width  = gimp_item_width  (GIMP_ITEM (template));
           height = gimp_item_height (GIMP_ITEM (template));
-          gimp_drawable_offsets (GIMP_DRAWABLE (template), &off_x, &off_y);
           color  = template->color;
         }
       else

@@ -470,7 +470,7 @@ curves_color_update (GimpTool       *tool,
 
   c_tool = GIMP_CURVES_TOOL (tool);
 
-  gimp_drawable_offsets (drawable, &x, &y);
+  gimp_item_offsets (GIMP_ITEM (drawable), &x, &y);
 
   x = RINT (coords->x) - x;
   y = RINT (coords->y) - y;
