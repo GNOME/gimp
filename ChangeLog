@@ -1,3 +1,7 @@
+Mon Aug 23 19:55:48 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/measure.c: fixed display of distance in the info window
+
 Mon Aug 23 10:37:24 EDT 1999  Austin Donnelly  <austin@gimp.org>
 
 	* gimprc.5.in: add docs for %Dx image-title-format string.

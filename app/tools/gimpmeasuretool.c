@@ -440,8 +440,10 @@ measure_tool_motion (Tool           *tool,
 					   gimp_unit_get_symbol (gdisp->gimage->unit),
 					   _("degrees"));
       
-      distance = sqrt (SQR ((double)(ax - bx) / gdisp->gimage->xresolution) +
-		       SQR ((double)(ay - by) / gdisp->gimage->yresolution));
+      distance =  gimp_unit_get_factor (gdisp->gimage->unit) * 
+	sqrt (SQR ((double)(ax - bx) / gdisp->gimage->xresolution) +
+	      SQR ((double)(ay - by) / gdisp->gimage->yresolution));
+
       measure_tool->angle1 = measure_get_angle (ax, ay, 
 						gdisp->gimage->xresolution, 
 						gdisp->gimage->yresolution); 
@@ -452,8 +454,7 @@ measure_tool_motion (Tool           *tool,
       if (angle > 180.0)
 	angle = fabs (360.0 - angle);
  
-      g_snprintf (status_str, STATUSBAR_SIZE, format_str,
-		  distance * gimp_unit_get_factor (gdisp->gimage->unit), angle);
+      g_snprintf (status_str, STATUSBAR_SIZE, format_str, distance , angle);
       g_free (format_str);
 
       if (measure_tool_options)
