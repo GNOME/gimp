@@ -144,10 +144,13 @@ preview_cache_remove_smallest (GSList **plist)
 	}
     } 
 
-  if (*plist && smallest)
-    *plist = g_slist_remove (*plist, smallest);
+  if (smallest)
+    {
+      *plist = g_slist_remove (*plist, smallest);
 /*   g_print ("removed %d,%d\n",smallest->width,smallest->height); */
 /*   g_print ("removed smallest\n"); */
+      preview_cache_invalidate (smallest, NULL);
+    }
 }
 
 static void
@@ -157,7 +160,7 @@ preview_cache_invalidate (gpointer data,
   PreviewCache *pc = (PreviewCache *) data;
 
   temp_buf_free (pc->preview);
-  g_free(pc);
+  g_free (pc);
 }
 
 static void
@@ -186,6 +189,7 @@ gimp_preview_cache_invalidate (GSList **plist)
   preview_cache_print (*plist);
 
   g_slist_foreach (*plist, preview_cache_invalidate, NULL);
+  g_slist_free (*plist);
   *plist = NULL;
 }
 

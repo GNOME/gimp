@@ -1,3 +1,8 @@
+2003-09-05  Sven Neumann  <sven@gimp.org>
+
+	* app/gimppreviewcache.c: plugged two memleaks. Fix ported from
+	HEAD branch.
+
 2003-08-30  Manish Singh  <yosh@gimp.org>
 
 	* app/convert.c: free the colormap and set colormap size to 0 after
