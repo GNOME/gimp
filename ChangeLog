@@ -1,5 +1,31 @@
 2001-03-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpbrushpreview.c
+	* app/gimpgradientpreview.c
+	* app/gimppalettepreview.c
+	* app/gimppatternpreview.c
+	* app/gimptoolinfopreview.c: removed all dnd code ...
+
+	* app/gimppreview.c: ... and put it where is belongs.
+
+	* app/gimpcontext.c: use g_type_is_a() instead of comparing the
+	types directly.
+
+	* app/gimpdnd.[ch]: same g_type_is_a() fix here. New function
+	gimp_dnd_viewable_source_unset().
+
+	* app/gimpdrawablelistitem.c: gtk_signal_connect_while_alive() to
+	GimpDrawable's "visibility_changed" fixes a crash here.
+
+	* app/gimplayerlistitem.c: check more strictly if DND reordering
+	of layers is allowed.
+
+	* app/gimplistitem.c: more DND reordering checking.
+	Start drawing the drop indicator at x = name_label->allocation.x
+	(looks better IMHO).
+
+2001-03-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/apptypes.h
 	* app/gimplayerlistitem.[ch]: new widget derived from

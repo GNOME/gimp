@@ -160,7 +160,9 @@ gimp_layer_list_item_drag_motion (GtkWidget      *widget,
                                           &drag_action,
                                           &drop_type);
 
-  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (src_viewable)) ||
+  if (! src_viewable                                           ||
+      ! gimp_drawable_has_alpha (GIMP_DRAWABLE (src_viewable)) ||
+      ! layer                                                  ||
       ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     {
       drag_action = GDK_ACTION_DEFAULT;
@@ -238,6 +240,7 @@ gimp_layer_list_item_mask_changed (GimpLayer         *layer,
       layer_item->mask_preview = gimp_preview_new (GIMP_VIEWABLE (mask),
                                                    list_item->preview_size,
                                                    1, FALSE);
+      GIMP_PREVIEW (layer_item->mask_preview)->clickable = TRUE;
       gtk_box_pack_start (GTK_BOX (list_item->hbox), layer_item->mask_preview,
                           FALSE, FALSE, 0);
       gtk_box_reorder_child (GTK_BOX (list_item->hbox),

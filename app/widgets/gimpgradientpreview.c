@@ -25,7 +25,6 @@
 
 #include "apptypes.h"
 
-#include "gimpdnd.h"
 #include "gimpgradient.h"
 #include "gimpgradientpreview.h"
 #include "temp_buf.h"
@@ -34,16 +33,13 @@
 static void   gimp_gradient_preview_class_init (GimpGradientPreviewClass *klass);
 static void   gimp_gradient_preview_init       (GimpGradientPreview      *preview);
 
-static void          gimp_gradient_preview_render       (GimpPreview *preview);
-static void          gimp_gradient_preview_get_size     (GimpPreview *preview,
-							 gint         size,
-							 gint        *width,
-							 gint        *height);
-static gboolean      gimp_gradient_preview_needs_popup  (GimpPreview *preview);
-static GtkWidget   * gimp_gradient_preview_create_popup (GimpPreview *preview);
-
-static GimpViewable * gimp_gradient_preview_drag_viewable (GtkWidget   *widget,
-							   gpointer     data);
+static void        gimp_gradient_preview_render       (GimpPreview *preview);
+static void        gimp_gradient_preview_get_size     (GimpPreview *preview,
+                                                       gint         size,
+                                                       gint        *width,
+                                                       gint        *height);
+static gboolean    gimp_gradient_preview_needs_popup  (GimpPreview *preview);
+static GtkWidget * gimp_gradient_preview_create_popup (GimpPreview *preview);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -94,14 +90,6 @@ gimp_gradient_preview_class_init (GimpGradientPreviewClass *klass)
 static void
 gimp_gradient_preview_init (GimpGradientPreview *gradient_preview)
 {
-  gimp_gtk_drag_source_set_by_type (GTK_WIDGET (gradient_preview),
-				    GDK_BUTTON2_MASK,
-				    GIMP_TYPE_GRADIENT,
-				    GDK_ACTION_COPY);
-  gimp_dnd_viewable_source_set (GTK_WIDGET (gradient_preview),
-				GIMP_TYPE_GRADIENT,
-				gimp_gradient_preview_drag_viewable,
-				NULL);
 }
 
 static void
@@ -173,11 +161,4 @@ gimp_gradient_preview_create_popup (GimpPreview *preview)
 				popup_height,
 				0,
 				TRUE, FALSE, FALSE);
-}
-
-static GimpViewable *
-gimp_gradient_preview_drag_viewable (GtkWidget *widget,
-				     gpointer   data)
-{
-  return GIMP_PREVIEW (widget)->viewable;
 }

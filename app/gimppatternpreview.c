@@ -25,7 +25,6 @@
 
 #include "apptypes.h"
 
-#include "gimpdnd.h"
 #include "gimppattern.h"
 #include "gimppatternpreview.h"
 #include "temp_buf.h"
@@ -34,12 +33,9 @@
 static void   gimp_pattern_preview_class_init (GimpPatternPreviewClass *klass);
 static void   gimp_pattern_preview_init       (GimpPatternPreview      *preview);
 
-static void           gimp_pattern_preview_render        (GimpPreview *preview);
-static GtkWidget    * gimp_pattern_preview_create_popup  (GimpPreview *preview);
-static gboolean       gimp_pattern_preview_needs_popup   (GimpPreview *preview);
-
-static GimpViewable * gimp_pattern_preview_drag_viewable (GtkWidget   *widget,
-							  gpointer     data);
+static void        gimp_pattern_preview_render       (GimpPreview *preview);
+static GtkWidget * gimp_pattern_preview_create_popup (GimpPreview *preview);
+static gboolean    gimp_pattern_preview_needs_popup  (GimpPreview *preview);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -89,14 +85,6 @@ gimp_pattern_preview_class_init (GimpPatternPreviewClass *klass)
 static void
 gimp_pattern_preview_init (GimpPatternPreview *pattern_preview)
 {
-  gimp_gtk_drag_source_set_by_type (GTK_WIDGET (pattern_preview),
-				    GDK_BUTTON2_MASK,
-				    GIMP_TYPE_PATTERN,
-				    GDK_ACTION_COPY);
-  gimp_dnd_viewable_source_set (GTK_WIDGET (pattern_preview),
-				GIMP_TYPE_PATTERN,
-				gimp_pattern_preview_drag_viewable,
-				NULL);
 }
 
 static void
@@ -176,11 +164,4 @@ gimp_pattern_preview_needs_popup (GimpPreview *preview)
     return TRUE;
 
   return FALSE;
-}
-
-static GimpViewable *
-gimp_pattern_preview_drag_viewable (GtkWidget *widget,
-				    gpointer   data)
-{
-  return GIMP_PREVIEW (widget)->viewable;
 }

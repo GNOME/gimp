@@ -132,6 +132,8 @@ void  gimp_dnd_viewable_source_set     (GtkWidget               *widget,
 					GtkType                  type,
 					GimpDndDragViewableFunc  get_viewable_func,
 					gpointer                 data);
+void  gimp_dnd_viewable_source_unset   (GtkWidget               *widget,
+                                        GtkType                  type);
 void  gimp_dnd_viewable_dest_set       (GtkWidget               *widget,
 					GtkType                  type,
 					GimpDndDropViewableFunc  set_viewable_func,

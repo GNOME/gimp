@@ -41,8 +41,6 @@ static GtkWidget * gimp_brush_preview_create_popup        (GimpPreview *preview)
 static gboolean    gimp_brush_preview_needs_popup         (GimpPreview *preview);
 
 static gboolean    gimp_brush_preview_render_timeout_func (GimpBrushPreview *preview);
-static GimpViewable * gimp_brush_preview_drag_viewable     (GtkWidget  *widget,
-							    gpointer    data);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -94,15 +92,6 @@ gimp_brush_preview_class_init (GimpBrushPreviewClass *klass)
 static void
 gimp_brush_preview_init (GimpBrushPreview *brush_preview)
 {
-  gimp_gtk_drag_source_set_by_type (GTK_WIDGET (brush_preview),
-				    GDK_BUTTON2_MASK,
-				    GIMP_TYPE_BRUSH,
-				    GDK_ACTION_COPY);
-  gimp_dnd_viewable_source_set (GTK_WIDGET (brush_preview),
-				GIMP_TYPE_BRUSH,
-				gimp_brush_preview_drag_viewable,
-				NULL);
-
   brush_preview->pipe_timeout_id      = 0;
   brush_preview->pipe_animation_index = 0;
 }
@@ -371,11 +360,4 @@ gimp_brush_preview_render_timeout_func (GimpBrushPreview *brush_preview)
   temp_buf_free (temp_buf);
 
   return TRUE;
-}
-
-static GimpViewable *
-gimp_brush_preview_drag_viewable (GtkWidget *widget,
-				  gpointer   data)
-{
-  return GIMP_PREVIEW (widget)->viewable;
 }

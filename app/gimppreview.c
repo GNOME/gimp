@@ -33,6 +33,7 @@
 
 #include "gimpbrush.h"
 #include "gimpbrushpreview.h"
+#include "gimpdnd.h"
 #include "gimpdrawable.h"
 #include "gimpdrawablepreview.h"
 #include "gimpgradient.h"
@@ -106,6 +107,8 @@ static void        gimp_preview_popup_show           (GimpPreview      *preview,
 static void        gimp_preview_popup_hide           (GimpPreview      *preview);
 static void        gimp_preview_paint                (GimpPreview      *preview);
 static gboolean    gimp_preview_idle_paint           (GimpPreview      *preview);
+static GimpViewable * gimp_preview_drag_viewable     (GtkWidget        *widget,
+						      gpointer          data);
 
 
 static guint preview_signals[LAST_SIGNAL] = { 0 };
@@ -455,6 +458,16 @@ gimp_preview_set_viewable (GimpPreview  *preview,
 
   if (preview->viewable)
     {
+      if (! preview->is_popup)
+	{
+	  GtkType type;
+
+	  type = GTK_OBJECT (preview->viewable)->klass->type;
+
+	  gtk_drag_source_unset (GTK_WIDGET (preview));
+	  gimp_dnd_viewable_source_unset (GTK_WIDGET (preview), type);
+	}
+
       gtk_signal_disconnect_by_func (GTK_OBJECT (preview->viewable),
 				     gimp_preview_paint,
 				     preview);
@@ -468,6 +481,22 @@ gimp_preview_set_viewable (GimpPreview  *preview,
 
   if (preview->viewable)
     {
+      if (! preview->is_popup)
+	{
+	  GtkType type;
+
+	  type = GTK_OBJECT (preview->viewable)->klass->type;
+
+	  gimp_gtk_drag_source_set_by_type (GTK_WIDGET (preview),
+					    GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
+					    type,
+					    GDK_ACTION_COPY);
+	  gimp_dnd_viewable_source_set (GTK_WIDGET (preview),
+					type,
+					gimp_preview_drag_viewable,
+					NULL);
+	}
+
       gtk_signal_connect_object (GTK_OBJECT (preview->viewable),
 				 "invalidate_preview",
 				 GTK_SIGNAL_FUNC (gimp_preview_paint),
@@ -1049,4 +1078,11 @@ gimp_preview_render_and_flush (GimpPreview *preview,
     }
 
   gtk_widget_queue_draw (GTK_WIDGET (preview));
+}
+
+static GimpViewable *
+gimp_preview_drag_viewable (GtkWidget *widget,
+			    gpointer   data)
+{
+  return GIMP_PREVIEW (widget)->viewable;
 }

@@ -489,6 +489,23 @@ gimp_dnd_data_source_set (GimpDndDataType  data_type,
 }
 
 static void
+gimp_dnd_data_source_unset (GtkWidget *widget)
+{
+  gboolean drag_connected;
+
+  drag_connected =
+    (gboolean) gtk_object_get_data (GTK_OBJECT (widget),
+				    "gimp_dnd_drag_connected");
+
+  if (! drag_connected)
+    return;
+
+  gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_get_data_type", NULL);
+  gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_get_data_func", NULL);
+  gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_get_data_data", NULL);
+}
+
+static void
 gimp_dnd_data_dest_set (GimpDndDataType  data_type,
 			GtkWidget       *widget,
 			gpointer         set_data_func,
@@ -738,49 +755,50 @@ gimp_gtk_drag_source_set_by_type (GtkWidget       *widget,
   g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  if (type == GIMP_TYPE_LAYER)
+  if (gtk_type_is_a (type, GIMP_TYPE_LAYER))
     {
       target_table = layer_target_table;
       n_targets    = layer_n_targets;
     }
-  else if (type == GIMP_TYPE_CHANNEL)
+  else if (gtk_type_is_a (type, GIMP_TYPE_CHANNEL))
     {
       target_table = channel_target_table;
       n_targets    = channel_n_targets;
     }
-  else if (type == GIMP_TYPE_LAYER_MASK)
+  else if (gtk_type_is_a (type, GIMP_TYPE_LAYER_MASK))
     {
       target_table = layer_mask_target_table;
       n_targets    = layer_mask_n_targets;
     }
-  else if (type == GIMP_TYPE_BRUSH)
+  else if (gtk_type_is_a (type, GIMP_TYPE_BRUSH))
     {
       target_table = brush_target_table;
       n_targets    = brush_n_targets;
     }
-  else if (type == GIMP_TYPE_PATTERN)
+  else if (gtk_type_is_a (type, GIMP_TYPE_PATTERN))
     {
       target_table = pattern_target_table;
       n_targets    = pattern_n_targets;
     }
-  else if (type == GIMP_TYPE_GRADIENT)
+  else if (gtk_type_is_a (type, GIMP_TYPE_GRADIENT))
     {
       target_table = gradient_target_table;
       n_targets    = gradient_n_targets;
     }
-  else if (type == GIMP_TYPE_PALETTE)
+  else if (gtk_type_is_a (type, GIMP_TYPE_PALETTE))
     {
       target_table = palette_target_table;
       n_targets    = palette_n_targets;
     }
-  else if (type == GIMP_TYPE_TOOL_INFO)
+  else if (gtk_type_is_a (type, GIMP_TYPE_TOOL_INFO))
     {
       target_table = tool_target_table;
       n_targets    = tool_n_targets;
     }
   else
     {
-      g_warning ("%s(): unsupported GtkType", G_GNUC_FUNCTION);
+      g_warning ("%s(): unsupported GtkType \"%s\"",
+		 G_GNUC_FUNCTION, gtk_type_name (type));
     }
 
   if (target_table && n_targets)
@@ -805,49 +823,50 @@ gimp_gtk_drag_dest_set_by_type (GtkWidget       *widget,
   g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  if (type == GIMP_TYPE_LAYER)
+  if (gtk_type_is_a (type, GIMP_TYPE_LAYER))
     {
       target_table = layer_target_table;
       n_targets    = layer_n_targets;
     }
-  else if (type == GIMP_TYPE_CHANNEL)
+  else if (gtk_type_is_a (type, GIMP_TYPE_CHANNEL))
     {
       target_table = channel_target_table;
       n_targets    = channel_n_targets;
     }
-  else if (type == GIMP_TYPE_LAYER_MASK)
+  else if (gtk_type_is_a (type, GIMP_TYPE_LAYER_MASK))
     {
       target_table = layer_mask_target_table;
       n_targets    = layer_mask_n_targets;
     }
-  else if (type == GIMP_TYPE_BRUSH)
+  else if (gtk_type_is_a (type, GIMP_TYPE_BRUSH))
     {
       target_table = brush_target_table;
       n_targets    = brush_n_targets;
     }
-  else if (type == GIMP_TYPE_PATTERN)
+  else if (gtk_type_is_a (type, GIMP_TYPE_PATTERN))
     {
       target_table = pattern_target_table;
       n_targets    = pattern_n_targets;
     }
-  else if (type == GIMP_TYPE_GRADIENT)
+  else if (gtk_type_is_a (type, GIMP_TYPE_GRADIENT))
     {
       target_table = gradient_target_table;
       n_targets    = gradient_n_targets;
     }
-  else if (type == GIMP_TYPE_PALETTE)
+  else if (gtk_type_is_a (type, GIMP_TYPE_PALETTE))
     {
       target_table = palette_target_table;
       n_targets    = palette_n_targets;
     }
-  else if (type == GIMP_TYPE_TOOL_INFO)
+  else if (gtk_type_is_a (type, GIMP_TYPE_TOOL_INFO))
     {
       target_table = tool_target_table;
       n_targets    = tool_n_targets;
     }
   else
     {
-      g_warning ("%s(): unsupported GtkType", G_GNUC_FUNCTION);
+      g_warning ("%s(): unsupported GtkType \"%s\"",
+		 G_GNUC_FUNCTION, gtk_type_name (type));
     }
 
   if (target_table && n_targets)
@@ -871,47 +890,99 @@ gimp_dnd_viewable_source_set (GtkWidget               *widget,
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (get_viewable_func != NULL);
 
-  if (type == GIMP_TYPE_LAYER)
+  if (gtk_type_is_a (type, GIMP_TYPE_LAYER))
     {
       dnd_type = GIMP_DND_DATA_LAYER;
     }
-  else if (type == GIMP_TYPE_CHANNEL)
+  else if (gtk_type_is_a (type, GIMP_TYPE_CHANNEL))
     {
       dnd_type = GIMP_DND_DATA_CHANNEL;
     }
-  else if (type == GIMP_TYPE_LAYER_MASK)
+  else if (gtk_type_is_a (type, GIMP_TYPE_LAYER_MASK))
     {
       dnd_type = GIMP_DND_DATA_LAYER_MASK;
     }
-  else if (type == GIMP_TYPE_BRUSH)
+  else if (gtk_type_is_a (type, GIMP_TYPE_BRUSH))
     {
       dnd_type = GIMP_DND_DATA_BRUSH;
     }
-  else if (type == GIMP_TYPE_PATTERN)
+  else if (gtk_type_is_a (type, GIMP_TYPE_PATTERN))
     {
       dnd_type = GIMP_DND_DATA_PATTERN;
     }
-  else if (type == GIMP_TYPE_GRADIENT)
+  else if (gtk_type_is_a (type, GIMP_TYPE_GRADIENT))
     {
       dnd_type = GIMP_DND_DATA_GRADIENT;
     }
-  else if (type == GIMP_TYPE_PALETTE)
+  else if (gtk_type_is_a (type, GIMP_TYPE_PALETTE))
     {
       dnd_type = GIMP_DND_DATA_PALETTE;
     }
-  else if (type == GIMP_TYPE_TOOL_INFO)
+  else if (gtk_type_is_a (type, GIMP_TYPE_TOOL_INFO))
     {
       dnd_type = GIMP_DND_DATA_TOOL;
     }
   else
     {
-      g_warning ("%s(): unsupported GtkType", G_GNUC_FUNCTION);
+      g_warning ("%s(): unsupported GtkType \"%s\"",
+		 G_GNUC_FUNCTION, gtk_type_name (type));
       return;
     }
 
   gimp_dnd_data_source_set (dnd_type, widget,
 			    GTK_SIGNAL_FUNC (get_viewable_func),
 			    data);
+}
+
+void
+gimp_dnd_viewable_source_unset (GtkWidget *widget,
+				GtkType    type)
+{
+  GimpDndDataType dnd_type;
+
+  g_return_if_fail (widget != NULL);
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  if (gtk_type_is_a (type, GIMP_TYPE_LAYER))
+    {
+      dnd_type = GIMP_DND_DATA_LAYER;
+    }
+  else if (gtk_type_is_a (type, GIMP_TYPE_CHANNEL))
+    {
+      dnd_type = GIMP_DND_DATA_CHANNEL;
+    }
+  else if (gtk_type_is_a (type, GIMP_TYPE_LAYER_MASK))
+    {
+      dnd_type = GIMP_DND_DATA_LAYER_MASK;
+    }
+  else if (gtk_type_is_a (type, GIMP_TYPE_BRUSH))
+    {
+      dnd_type = GIMP_DND_DATA_BRUSH;
+    }
+  else if (gtk_type_is_a (type, GIMP_TYPE_PATTERN))
+    {
+      dnd_type = GIMP_DND_DATA_PATTERN;
+    }
+  else if (gtk_type_is_a (type, GIMP_TYPE_GRADIENT))
+    {
+      dnd_type = GIMP_DND_DATA_GRADIENT;
+    }
+  else if (gtk_type_is_a (type, GIMP_TYPE_PALETTE))
+    {
+      dnd_type = GIMP_DND_DATA_PALETTE;
+    }
+  else if (gtk_type_is_a (type, GIMP_TYPE_TOOL_INFO))
+    {
+      dnd_type = GIMP_DND_DATA_TOOL;
+    }
+  else
+    {
+      g_warning ("%s(): unsupported GtkType \"%s\"",
+		 G_GNUC_FUNCTION, gtk_type_name (type));
+      return;
+    }
+
+  gimp_dnd_data_source_unset (widget);
 }
 
 void
@@ -926,41 +997,42 @@ gimp_dnd_viewable_dest_set (GtkWidget               *widget,
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (set_viewable_func != NULL);
 
-  if (type == GIMP_TYPE_LAYER)
+  if (gtk_type_is_a (type, GIMP_TYPE_LAYER))
     {
       dnd_type = GIMP_DND_DATA_LAYER;
     }
-  else if (type == GIMP_TYPE_CHANNEL)
+  else if (gtk_type_is_a (type, GIMP_TYPE_CHANNEL))
     {
       dnd_type = GIMP_DND_DATA_CHANNEL;
     }
-  else if (type == GIMP_TYPE_LAYER_MASK)
+  else if (gtk_type_is_a (type, GIMP_TYPE_LAYER_MASK))
     {
       dnd_type = GIMP_DND_DATA_LAYER_MASK;
     }
-  else if (type == GIMP_TYPE_BRUSH)
+  else if (gtk_type_is_a (type, GIMP_TYPE_BRUSH))
     {
       dnd_type = GIMP_DND_DATA_BRUSH;
     }
-  else if (type == GIMP_TYPE_PATTERN)
+  else if (gtk_type_is_a (type, GIMP_TYPE_PATTERN))
     {
       dnd_type = GIMP_DND_DATA_PATTERN;
     }
-  else if (type == GIMP_TYPE_GRADIENT)
+  else if (gtk_type_is_a (type, GIMP_TYPE_GRADIENT))
     {
       dnd_type = GIMP_DND_DATA_GRADIENT;
     }
-  else if (type == GIMP_TYPE_PALETTE)
+  else if (gtk_type_is_a (type, GIMP_TYPE_PALETTE))
     {
       dnd_type = GIMP_DND_DATA_PALETTE;
     }
-  else if (type == GIMP_TYPE_TOOL_INFO)
+  else if (gtk_type_is_a (type, GIMP_TYPE_TOOL_INFO))
     {
       dnd_type = GIMP_DND_DATA_TOOL;
     }
   else
     {
-      g_warning ("%s(): unsupported GtkType", G_GNUC_FUNCTION);
+      g_warning ("%s(): unsupported GtkType \"%s\"",
+		 G_GNUC_FUNCTION, gtk_type_name (type));
       return;
     }
 
@@ -975,41 +1047,42 @@ gimp_dnd_viewable_dest_unset (GtkWidget *widget,
 {
   GimpDndDataType dnd_type;
 
-  if (type == GIMP_TYPE_LAYER)
+  if (gtk_type_is_a (type, GIMP_TYPE_LAYER))
     {
       dnd_type = GIMP_DND_DATA_LAYER;
     }
-  else if (type == GIMP_TYPE_CHANNEL)
+  else if (gtk_type_is_a (type, GIMP_TYPE_CHANNEL))
     {
       dnd_type = GIMP_DND_DATA_CHANNEL;
     }
-  else if (type == GIMP_TYPE_LAYER_MASK)
+  else if (gtk_type_is_a (type, GIMP_TYPE_LAYER_MASK))
     {
       dnd_type = GIMP_DND_DATA_LAYER_MASK;
     }
-  else if (type == GIMP_TYPE_BRUSH)
+  else if (gtk_type_is_a (type, GIMP_TYPE_BRUSH))
     {
       dnd_type = GIMP_DND_DATA_BRUSH;
     }
-  else if (type == GIMP_TYPE_PATTERN)
+  else if (gtk_type_is_a (type, GIMP_TYPE_PATTERN))
     {
       dnd_type = GIMP_DND_DATA_PATTERN;
     }
-  else if (type == GIMP_TYPE_GRADIENT)
+  else if (gtk_type_is_a (type, GIMP_TYPE_GRADIENT))
     {
       dnd_type = GIMP_DND_DATA_GRADIENT;
     }
-  else if (type == GIMP_TYPE_PALETTE)
+  else if (gtk_type_is_a (type, GIMP_TYPE_PALETTE))
     {
       dnd_type = GIMP_DND_DATA_PALETTE;
     }
-  else if (type == GIMP_TYPE_TOOL_INFO)
+  else if (gtk_type_is_a (type, GIMP_TYPE_TOOL_INFO))
     {
       dnd_type = GIMP_DND_DATA_TOOL;
     }
   else
     {
-      g_warning ("%s(): unsupported GtkType", G_GNUC_FUNCTION);
+      g_warning ("%s(): unsupported GtkType \"%s\"",
+		 G_GNUC_FUNCTION, gtk_type_name (type));
       return;
     }
 

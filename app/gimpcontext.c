@@ -1044,7 +1044,7 @@ gimp_context_type_to_arg (GtkType type)
 
   for (i = 0; i < GIMP_CONTEXT_NUM_ARGS; i++)
     {
-      if (gimp_context_arg_types[i] == type)
+      if (gtk_type_is_a (type, gimp_context_arg_types[i]))
 	return i;
     }
 

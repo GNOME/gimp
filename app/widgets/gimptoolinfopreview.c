@@ -27,7 +27,6 @@
 
 #include "tools/gimptoolinfo.h"
 
-#include "gimpdnd.h"
 #include "gimptoolinfopreview.h"
 #include "temp_buf.h"
 
@@ -37,17 +36,14 @@
 #define TOOL_INFO_HEIGHT 22
 
 
-static void     gimp_tool_info_preview_class_init (GimpToolInfoPreviewClass *klass);
-static void     gimp_tool_info_preview_init       (GimpToolInfoPreview      *preview);
-static void     gimp_tool_info_preview_state_changed (GtkWidget    *widget,
-						      GtkStateType  previous_state);
+static void   gimp_tool_info_preview_class_init (GimpToolInfoPreviewClass *klass);
+static void   gimp_tool_info_preview_init       (GimpToolInfoPreview      *preview);
 
-static void           gimp_tool_info_preview_render        (GimpPreview *preview);
-static GtkWidget    * gimp_tool_info_preview_create_popup  (GimpPreview *preview);
-static gboolean       gimp_tool_info_preview_needs_popup   (GimpPreview *preview);
-
-static GimpViewable * gimp_tool_info_preview_drag_viewable (GtkWidget   *widget,
-							    gpointer     data);
+static void        gimp_tool_info_preview_state_changed (GtkWidget    *widget,
+							 GtkStateType  previous_state);
+static void        gimp_tool_info_preview_render        (GimpPreview  *preview);
+static GtkWidget * gimp_tool_info_preview_create_popup  (GimpPreview  *preview);
+static gboolean    gimp_tool_info_preview_needs_popup   (GimpPreview  *preview);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -101,14 +97,6 @@ gimp_tool_info_preview_class_init (GimpToolInfoPreviewClass *klass)
 static void
 gimp_tool_info_preview_init (GimpToolInfoPreview *tool_info_preview)
 {
-  gimp_gtk_drag_source_set_by_type (GTK_WIDGET (tool_info_preview),
-				    GDK_BUTTON2_MASK,
-				    GIMP_TYPE_TOOL_INFO,
-				    GDK_ACTION_COPY);
-  gimp_dnd_viewable_source_set (GTK_WIDGET (tool_info_preview),
-				GIMP_TYPE_TOOL_INFO,
-				gimp_tool_info_preview_drag_viewable,
-				NULL);
 }
 
 static void
@@ -227,11 +215,4 @@ gimp_tool_info_preview_needs_popup (GimpPreview *preview)
     return TRUE;
 
   return FALSE;
-}
-
-static GimpViewable *
-gimp_tool_info_preview_drag_viewable (GtkWidget *widget,
-				      gpointer   data)
-{
-  return GIMP_PREVIEW (widget)->viewable;
 }

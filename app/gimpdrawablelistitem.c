@@ -157,6 +157,8 @@ gimp_drawable_list_item_set_viewable (GimpListItem *list_item,
   if (GIMP_LIST_ITEM_CLASS (parent_class)->set_viewable)
     GIMP_LIST_ITEM_CLASS (parent_class)->set_viewable (list_item, viewable);
 
+  GIMP_PREVIEW (list_item->preview)->clickable = TRUE;
+
   drawable_item = GIMP_DRAWABLE_LIST_ITEM (list_item);
   drawable      = GIMP_DRAWABLE (GIMP_PREVIEW (list_item->preview)->viewable);
   visible       = gimp_drawable_get_visible (drawable);
@@ -180,9 +182,11 @@ gimp_drawable_list_item_set_viewable (GimpListItem *list_item,
                       GTK_SIGNAL_FUNC (gimp_drawable_list_item_eye_toggled),
                       list_item);
 
-  gtk_signal_connect (GTK_OBJECT (viewable), "visibility_changed",
-                      GTK_SIGNAL_FUNC (gimp_drawable_list_item_visibility_changed),
-                      list_item);
+  gtk_signal_connect_while_alive
+    (GTK_OBJECT (viewable), "visibility_changed",
+     GTK_SIGNAL_FUNC (gimp_drawable_list_item_visibility_changed),
+     list_item,
+     GTK_OBJECT (list_item));
 }
 
 static gboolean

@@ -25,7 +25,6 @@
 
 #include "apptypes.h"
 
-#include "gimpdnd.h"
 #include "gimppalette.h"
 #include "gimppalettepreview.h"
 #include "temp_buf.h"
@@ -34,16 +33,13 @@
 static void   gimp_palette_preview_class_init (GimpPalettePreviewClass *klass);
 static void   gimp_palette_preview_init       (GimpPalettePreview      *preview);
 
-static void          gimp_palette_preview_get_size     (GimpPreview *preview,
-							gint         size,
-							gint        *width,
-							gint        *height);
-static void          gimp_palette_preview_render       (GimpPreview *preview);
-static GtkWidget   * gimp_palette_preview_create_popup (GimpPreview *preview);
-static gboolean      gimp_palette_preview_needs_popup  (GimpPreview *preview);
-
-static GimpViewable * gimp_palette_preview_drag_viewable (GtkWidget   *widget,
-							  gpointer     data);
+static void        gimp_palette_preview_get_size     (GimpPreview *preview,
+                                                      gint         size,
+                                                      gint        *width,
+                                                      gint        *height);
+static void        gimp_palette_preview_render       (GimpPreview *preview);
+static GtkWidget * gimp_palette_preview_create_popup (GimpPreview *preview);
+static gboolean    gimp_palette_preview_needs_popup  (GimpPreview *preview);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -94,14 +90,6 @@ gimp_palette_preview_class_init (GimpPalettePreviewClass *klass)
 static void
 gimp_palette_preview_init (GimpPalettePreview *palette_preview)
 {
-  gimp_gtk_drag_source_set_by_type (GTK_WIDGET (palette_preview),
-				    GDK_BUTTON2_MASK,
-				    GIMP_TYPE_PALETTE,
-				    GDK_ACTION_COPY);
-  gimp_dnd_viewable_source_set (GTK_WIDGET (palette_preview),
-				GIMP_TYPE_PALETTE,
-				gimp_palette_preview_drag_viewable,
-				palette_preview);
 }
 
 static void
@@ -181,11 +169,4 @@ gimp_palette_preview_needs_popup (GimpPreview *preview)
     return TRUE;
 
   return FALSE;
-}
-
-static GimpViewable *
-gimp_palette_preview_drag_viewable (GtkWidget *widget,
-				    gpointer   data)
-{
-  return GIMP_PREVIEW (widget)->viewable;
 }
