@@ -46,9 +46,6 @@
 #include "channel_pvt.h"
 
 
-#define TileManager Canvas
-#define tile_manager_destroy canvas_delete
-
 typedef int   (* UndoPopFunc)  (GImage *, int, int, void *);
 typedef void  (* UndoFreeFunc) (int, void *);
 
@@ -447,11 +444,14 @@ typedef struct _image_undo ImageUndo;
 
 struct _image_undo
 {
-  TileManager *tiles;
+  Canvas *tiles;
   GimpDrawable *drawable;
   int x1, y1, x2, y2;
+  int type;
 };
 
+#define IMG_UNDO 0
+#define IMG_UNDO_MOD 1
 
 int
 undo_push_image (GImage *gimage,
@@ -464,7 +464,7 @@ undo_push_image (GImage *gimage,
   long size;
   Undo *new;
   ImageUndo *image_undo;
-  TileManager *tiles;
+  Canvas *tiles;
   PixelArea srcPR, destPR;
 
   /*  increment the dirty flag for this gimage  */
@@ -485,11 +485,18 @@ undo_push_image (GImage *gimage,
       /*  If we cannot create a new temp buf--either because our parameters are
        *  degenerate or something else failed, simply return an unsuccessful push.
        */
-      tiles = canvas_new (drawable_tag (drawable), (x2 - x1), (y2 - y1), STORAGE_TILED);
+      tiles = canvas_new (drawable_tag (drawable),
+                          (x2 - x1), (y2 - y1),
+                          STORAGE_TILED);
+
       pixelarea_init (&srcPR, drawable_data (drawable),
-                      x1, y1, (x2 - x1), (y2 - y1), FALSE);
+                      x1, y1,
+                      (x2 - x1), (y2 - y1),
+                      FALSE);
       pixelarea_init (&destPR, tiles,
-                      0, 0, (x2 - x1), (y2 - y1), TRUE);
+                      0, 0,
+                      0, 0,
+                      TRUE);
       copy_area (&srcPR, &destPR);
 
       /*  set the image undo structure  */
@@ -499,6 +506,7 @@ undo_push_image (GImage *gimage,
       image_undo->y1 = y1;
       image_undo->x2 = x2;
       image_undo->y2 = y2;
+      image_undo->type = IMG_UNDO;
 
       new->data      = image_undo;
       new->pop_func  = undo_pop_image;
@@ -523,7 +531,7 @@ undo_push_image_mod (GImage *gimage,
   long size;
   Undo * new;
   ImageUndo *image_undo;
-  TileManager *tiles;
+  Canvas *tiles;
 
   /*  increment the dirty flag for this gimage  */
   gimage_dirty (gimage);
@@ -537,7 +545,7 @@ undo_push_image_mod (GImage *gimage,
   x2 = BOUNDS (x2, 0, drawable_width (drawable));
   y2 = BOUNDS (y2, 0, drawable_height (drawable));
 
-  tiles = (TileManager *) tiles_ptr;
+  tiles = (Canvas *) tiles_ptr;
   size = canvas_width (tiles) * canvas_height (tiles) *
     canvas_bytes (tiles) + sizeof (void *) * 2;
 
@@ -550,6 +558,7 @@ undo_push_image_mod (GImage *gimage,
       image_undo->y1 = y1;
       image_undo->x2 = x2;
       image_undo->y2 = y2;
+      image_undo->type = IMG_UNDO_MOD;
 
       new->data      = image_undo;
       new->pop_func  = undo_pop_image;
@@ -559,7 +568,7 @@ undo_push_image_mod (GImage *gimage,
     }
   else
     {
-      tile_manager_destroy (tiles);
+      canvas_delete (tiles);
       return FALSE;
     }
 }
@@ -572,7 +581,7 @@ undo_pop_image (GImage *gimage,
 		void   *image_undo_ptr)
 {
   ImageUndo *image_undo;
-  TileManager* tiles;
+  Canvas* tiles;
   PixelArea PR1, PR2;
   int x, y;
   int w, h;
@@ -598,16 +607,32 @@ undo_pop_image (GImage *gimage,
   w = image_undo->x2 - image_undo->x1;
   h = image_undo->y2 - image_undo->y1;
 
-  pixelarea_init (&PR1, tiles,
-                  0, 0, w, h, TRUE);
+  switch (image_undo->type)
+    {
+    case IMG_UNDO_MOD:
+      pixelarea_init (&PR1, tiles,
+                      x, y,
+                      w, h,
+                      TRUE);
+      break;
+    case IMG_UNDO:
+      pixelarea_init (&PR1, tiles,
+                      0, 0,
+                      0, 0,
+                      TRUE);
+      break;
+    }
   pixelarea_init (&PR2, drawable_data (image_undo->drawable),
-                  x, y, w, h, TRUE);
+                  x, y,
+                  w, h,
+                  TRUE);
   swap_area (&PR1, &PR2);
   
   drawable_update (image_undo->drawable, x, y, w, h);
 
   return TRUE;
 }
+
 
 
 void
@@ -618,7 +643,7 @@ undo_free_image (int   state,
 
   image_undo = (ImageUndo *) image_undo_ptr;
 
-  tile_manager_destroy (image_undo->tiles);
+  canvas_delete (image_undo->tiles);
   g_free (image_undo);
 }
 
@@ -651,7 +676,7 @@ undo_push_mask (GImage *gimage,
   else
     {
       if (mask_undo->tiles)
-	tile_manager_destroy (mask_undo->tiles);
+	canvas_delete (mask_undo->tiles);
       g_free (mask_undo);
       return FALSE;
     }
@@ -665,9 +690,9 @@ undo_pop_mask (GImage *gimage,
 	       void   *mask_ptr)
 {
   MaskUndo *mask_undo;
-  TileManager *new_tiles;
+  Canvas *new_tiles;
   Channel *sel_mask;
-  TileManager *sel_mask_canvas;
+  Canvas *sel_mask_canvas;
   PixelArea srcPR, destPR;
   int selection;
   int x1, y1, x2, y2;
@@ -731,7 +756,7 @@ undo_pop_mask (GImage *gimage,
                       TRUE);
       copy_area (&srcPR, &destPR);
 
-      tile_manager_destroy (mask_undo->tiles);
+      canvas_delete (mask_undo->tiles);
     }
 
   /* invalidate the current bounds and boundary of the mask */
@@ -780,7 +805,7 @@ undo_free_mask (int   state,
 
   mask_undo = (MaskUndo *) mask_ptr;
   if (mask_undo->tiles)
-    tile_manager_destroy (mask_undo->tiles);
+    canvas_delete (mask_undo->tiles);
   g_free (mask_undo);
 }
 
@@ -908,7 +933,7 @@ undo_pop_transform (GImage *gimage,
 {
   TransformCore * tc;
   TransformUndo * tu;
-  TileManager * temp;
+  Canvas * temp;
   double d;
   int i;
 
@@ -959,7 +984,7 @@ undo_free_transform (int   state,
 
   tu = (TransformUndo *) tu_ptr;
   if (tu->original)
-    tile_manager_destroy (tu->original);
+    canvas_delete (tu->original);
   g_free (tu);
 }
 
@@ -1179,7 +1204,7 @@ undo_push_layer_mod (GImage *gimage,
 {
   Layer *layer;
   Undo *new;
-  TileManager *tiles;
+  Canvas *tiles;
   GimpDrawable * d;
   void **data;
   int size;
@@ -1211,7 +1236,7 @@ undo_push_layer_mod (GImage *gimage,
     }
   else
     {
-      tile_manager_destroy (tiles);
+      canvas_delete (tiles);
       return FALSE;
     }
 }
@@ -1224,8 +1249,8 @@ undo_pop_layer_mod (GImage *gimage,
 		    void   *data_ptr)
 {
   void **data;
-  TileManager *tiles;
-  TileManager *temp;
+  Canvas *tiles;
+  Canvas *temp;
   Layer *layer;
 
   data = (void **) data_ptr;
@@ -1243,7 +1268,7 @@ undo_pop_layer_mod (GImage *gimage,
       break;
     }
 
-  tiles = (TileManager *) data[1];
+  tiles = (Canvas *) data[1];
 
   /*  Issue the first update  */
   gdisplays_update_area (gimage->ID,
@@ -1292,7 +1317,7 @@ undo_free_layer_mod (int   state,
   void ** data;
 
   data = (void **) data_ptr;
-  tile_manager_destroy ((TileManager *) data[1]);
+  canvas_delete ((Canvas *) data[1]);
   g_free (data);
 }
 
@@ -1547,7 +1572,7 @@ undo_push_channel_mod (GImage *gimage,
 		       void   *channel_ptr)
 {
   Channel *channel;
-  TileManager *tiles;
+  Canvas *tiles;
   Undo *new;
   void **data;
   int size;
@@ -1575,7 +1600,7 @@ undo_push_channel_mod (GImage *gimage,
     }
   else
     {
-      tile_manager_destroy (tiles);
+      canvas_delete (tiles);
       return FALSE;
     }
 }
@@ -1588,8 +1613,8 @@ undo_pop_channel_mod (GImage *gimage,
 		      void   *data_ptr)
 {
   void **data;
-  TileManager *tiles;
-  TileManager *temp;
+  Canvas *tiles;
+  Canvas *temp;
   Channel *channel;
 
   data = (void **) data_ptr;
@@ -1607,7 +1632,7 @@ undo_pop_channel_mod (GImage *gimage,
       break;
     }
 
-  tiles = (TileManager *) data[1];
+  tiles = (Canvas *) data[1];
 
   /*  Issue the first update  */
   drawable_update (GIMP_DRAWABLE(channel),
@@ -1636,7 +1661,7 @@ undo_free_channel_mod (int   state,
   void ** data;
 
   data = (void **) data_ptr;
-  tile_manager_destroy ((TileManager *) data[1]);
+  canvas_delete ((Canvas *) data[1]);
   g_free (data);
 }
 
@@ -1670,7 +1695,7 @@ undo_push_fs_to_layer (GImage *gimage,
     }
   else
     {
-      tile_manager_destroy (fsu->layer->fs.backing_store);
+      canvas_delete (fsu->layer->fs.backing_store);
       g_free (fsu);
       return FALSE;
     }
@@ -1760,7 +1785,7 @@ undo_free_fs_to_layer (int   state,
   fsu = (FStoLayerUndo *) fsu_ptr;
 
   if (state == UNDO)
-    tile_manager_destroy (fsu->layer->fs.backing_store);
+    canvas_delete (fsu->layer->fs.backing_store);
   g_free (fsu);
 }
 

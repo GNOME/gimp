@@ -1077,6 +1077,7 @@ gradient_precalc_shapeburst  (
                                 w, h, STORAGE_TILED);
 
   /*  allocate the selection mask copy  */
+#define FIXME
   tempRbuf = canvas_new (tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
                          w, h, STORAGE_TILED);
   pixelarea_init (&tempR, tempRbuf, 0, 0, w, h, TRUE);
@@ -1521,7 +1522,7 @@ gradient_fill_region (GImage       *gimage,
             
             pixelarea_init (&PRapply, apply, 0, 0, 0, FOO, TRUE);
             gimage_apply_painthit (gimage, drawable, NULL, &PRapply,
-                                   TRUE, opacity, mode, 0, yy);
+                                   TRUE, opacity, mode, x, yy);
           }
       }
     }
