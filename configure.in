@@ -121,9 +121,13 @@ dnl Test for libtiff
 	AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)),
       AC_CHECK_LIB(tiff, TIFFWriteScanline,
 	AC_CHECK_HEADER(tiffio.h,
-          TIFF='tiff'; LIBTIFF_LIB='-ltiff -lz -ljpeg',
+          TIFF='tiff'; LIBTIFF_LIB='-ltiff -ljpeg',
 	  AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)),
-        AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF library not found) ***), -lz -ljpeg -lm), -lm)
+	AC_CHECK_LIB(tiff, TIFFFlushData,
+	  AC_CHECK_HEADER(tiffio.h,
+            TIFF='tiff'; LIBTIFF_LIB='-ltiff -ljpeg -lz',
+	    AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)),
+        AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF library not found) ***), -ljpeg -lz -lm), -ljpeg -lm), -lm)
   fi
 
 dnl Test for libjpeg

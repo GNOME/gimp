@@ -1,3 +1,13 @@
+Sun Apr 12 02:23:05 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: I guess it didn't end... an attempt to try to
+	recognize all types of tiff configs
+
+	* app/gdisplay_ops.c: resize on zoom fix for naught window
+	positioning from Kevin Cozens <kcozens@interlog.com>
+
+	* app/errors.c: gdk_exit needs to be prototyped
+
 Sun Apr 12 01:19:35 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: more fixes... when will it all end...

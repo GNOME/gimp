@@ -25,6 +25,7 @@
 #include <unistd.h>
 
 #include <glib.h>
+#include <gdk/gdk.h>
 #include "app_procs.h"
 #include "errors.h"
 

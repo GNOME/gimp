@@ -153,8 +153,8 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
       shell_width = width + border_x;
       shell_height = height + border_y;
 
-      x = HIGHPASS (shell_x, BOUNDS (s_width - shell_width, 0, s_width));
-      y = HIGHPASS (shell_y, BOUNDS (s_height - shell_height, 0, s_height));
+      x = HIGHPASS (shell_x, BOUNDS (s_width - shell_width, border_x, s_width));
+      y = HIGHPASS (shell_y, BOUNDS (s_height - shell_height, border_y, s_height));
 
       if (x != shell_x || y != shell_y)
 	gdk_window_move (gdisp->shell->window, x, y);
@@ -182,8 +182,8 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
       shell_width = width + border_x;
       shell_height = height + border_y;
 
-      x = HIGHPASS (shell_x, BOUNDS (s_width - shell_width, 0, s_width));
-      y = HIGHPASS (shell_y, BOUNDS (s_height - shell_height, 0, s_height));
+      x = HIGHPASS (shell_x, BOUNDS (s_width - shell_width, border_x, s_width));
+      y = HIGHPASS (shell_y, BOUNDS (s_height - shell_height, border_y, s_height));
 
       if (x != shell_x || y != shell_y)
 	gdk_window_move (gdisp->shell->window, x, y);
