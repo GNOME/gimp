@@ -42,6 +42,7 @@ EXTRA_DIST = \
 	ChangeLog		\
 	ChangeLog.pre-1-0	\
 	ChangeLog.pre-1-2	\
+	ChangeLog.pre-2-0	\
 	HACKING			\
 	INSTALL			\
 	LICENSE			\
