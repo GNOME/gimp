@@ -1,3 +1,7 @@
+2004-02-26  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL: improved help on missing libraries at run-time.
+
 2004-02-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/file-dialog-utils.[ch] (file_dialog_hide): changed

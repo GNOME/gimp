@@ -190,11 +190,11 @@ several reasons why this might fail:
   gtk+-2.0.pc to the environment variable PKG_CONFIG_PATH before running 
   configure.
 
-* The GTK+ libraries were not found at run time. The details
-  of how to fix this problem will depend on the system:
+* Libraries you installed are not found when you attempt to start gimp.
+  The details of how to fix this problem will depend on the system:
 
-  Fix: On Linux and other systems using ELF libraries, add the
-  directory to /etc/ld.so.conf or to the environment variable 
+  On Linux and other systems using ELF libraries, add the directory to
+  holding the library to /etc/ld.so.conf or to the environment variable
   LD_LIBRARY_PATH, and run 'ldconfig'.
 
   On other systems, it may be necessary to encode this path
