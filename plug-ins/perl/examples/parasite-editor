@@ -139,8 +139,6 @@ sub create_main {
    my $b;
    my $t;
 
-   parse Gtk::Rc Gimp->gtkrc;
-
    $t = new Gtk::Tooltips;
    my $w = new Gtk::Dialog;
 

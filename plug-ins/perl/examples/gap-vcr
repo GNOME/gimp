@@ -23,7 +23,7 @@ sub create_main {
    $w->add ($h);
 
    $h->add(Gtk::Object::new Gtk::Button 
-           label => '<<',
+           label => '|<<',
            signal::clicked => sub {
               drawable->gap_first;
            });
@@ -38,7 +38,7 @@ sub create_main {
               drawable->gap_next;
            });
    $h->add(Gtk::Object::new Gtk::Button 
-           label => '>>',
+           label => '>>|',
            signal::clicked => sub {
               drawable->gap_last;
            });

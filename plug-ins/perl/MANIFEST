@@ -121,6 +121,7 @@ examples/layerfuncs
 examples/bricks
 examples/dataurl
 examples/colorhtml
+examples/gap-vcr
 pxgettext
 po/ChangeLog
 po/gimp-perl.pot
