@@ -141,7 +141,7 @@ gui_libs_init (gint    *argc,
                      gui_get_background_func);
 
   g_type_class_ref (GIMP_TYPE_COLOR_SELECT);
-  
+
   return TRUE;
 }
 
@@ -338,6 +338,18 @@ gui_restore (Gimp     *gimp,
   g_signal_connect_after (gimp, "exit",
                           G_CALLBACK (gui_exit_finish_callback),
                           NULL);
+
+#ifdef __GNUC__
+#warning FIXME: remove this as soon as we depend on GTK+ >= 2.2.2
+#endif
+  if (! GTK_CHECK_VERSION (2, 2, 2))
+    gimp_message_box (GIMP_STOCK_WILBER_EEK, NULL,
+                      "Please upgrade your GTK+ installation!\n\n"
+                      "The GTK+ version you are using is too old.\n"
+                      "Please upgrade to GTK+ version 2.2.2 or better\n"
+                      "or your extended input devices (tablets) will\n"
+                      "not work at all!",
+                      NULL, NULL);
 }
 
 void
