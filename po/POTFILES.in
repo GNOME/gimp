@@ -10,6 +10,7 @@ app/file-open.c
 app/file-save.c
 app/floating_sel.c
 app/gdisplay.c
+app/gdisplay_color_ui.c
 app/gdisplay_ops.c
 app/gimphelp.c
 app/gimpprogress.c
@@ -136,6 +137,7 @@ app/tools/transform_options.c
 
 app/widgets/gimpchannellistview.c
 app/widgets/gimpcomponentlistitem.c
+app/widgets/gimpcontainergridview.c
 app/widgets/gimpdatafactoryview.c
 app/widgets/gimpdrawablelistview.c
 app/widgets/gimpimagedock.c

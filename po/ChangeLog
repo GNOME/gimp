@@ -1,5 +1,7 @@
 2001-05-14  Sven Neumann  <sven@gimp.org>
 
+	* POTFILES.in: added some missing files.
+	
 	* ro.po: removed duplicate message definition
 
 2001-05-13  Michael Natterer  <mitch@gimp.org>
