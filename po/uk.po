@@ -20,7 +20,7 @@ msgstr "Про GIMP"
 #. this is a font, provide only one single font definition
 #: app/about_dialog.c:243
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
-msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*"
+msgstr "-*-helvetica-medium-r-normal-*-*-140-*-*-*-*-*-*"
 
 #: app/about_dialog.c:252
 #, c-format
@@ -42,7 +42,7 @@ msgstr "Натиск:"
 #. this is a font, provide only one single font definition
 #: app/app_procs.c:267
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
-msgstr "-*-helvetica-bold-r-normal-*-*-100-*-*-*-*-*-*"
+msgstr "-*-helvetica-bold-r-normal-*-*-140-*-*-*-*-*-*"
 
 #: app/app_procs.c:273 app/app_procs.c:275 app/interface.c:528
 msgid "The GIMP"
@@ -161,9 +161,8 @@ msgid "FG to Transparent"
 msgstr "Передн╕й план до прозорого"
 
 #: app/blend.c:308
-#, fuzzy
 msgid "Custom Gradient"
-msgstr "Скоп╕ювати град╕╓нт"
+msgstr "Власний град╕╓нт"
 
 #: app/blend.c:312
 msgid "Blend:"
@@ -1768,7 +1767,7 @@ msgstr ""
 
 #: app/gradient.c:544
 msgid "HSV (clockwise hue)"
-msgstr "HSV (тон за годинниковою)"
+msgstr "HSV (в╕дт╕нок за годинниковою)"
 
 #: app/gradient.c:793
 msgid "Gradient Editor"
@@ -2122,11 +2121,11 @@ msgstr "╤нформац╕я про канал:"
 #. The shell and main vbox
 #: app/hue_saturation.c:248 app/hue_saturation.c:368 app/tools.c:687
 msgid "Hue-Saturation"
-msgstr "Тон-Насичен╕сть"
+msgstr "В╕дт╕нок-Насичен╕сть"
 
 #: app/hue_saturation.c:286
 msgid "Hue-Saturation operates only on RGB color drawables."
-msgstr "Тон-насичен╕сть працю╓ лише на RGB-зображеннях."
+msgstr "В╕дт╕нок-насичен╕сть працю╓ лише на RGB-зображеннях."
 
 #: app/hue_saturation.c:354
 msgid "Master"
@@ -2158,13 +2157,13 @@ msgstr "M"
 
 #: app/hue_saturation.c:445
 msgid "Hue / Lightness / Saturation Adjustments"
-msgstr "Регулювання Тону / Яскравост╕ / Насиченост╕"
+msgstr "Регулювання В╕дт╕нку / Яскравост╕ / Насиченост╕"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:457 app/layers_dialog.c:343 app/paint_funcs.c:94
 #: app/tool_options.c:907
 msgid "Hue"
-msgstr "Тон"
+msgstr "В╕дт╕нок"
 
 #. Create the lightness scale widget
 #: app/hue_saturation.c:491
@@ -2397,7 +2396,6 @@ msgstr ""
 "'--nointerface'\n"
 
 #: app/install.c:144
-#, fuzzy
 msgid ""
 "The gimprc is used to store personal preferences\n"
 "that affect GIMP's default behavior.\n"
@@ -2407,17 +2405,18 @@ msgid ""
 msgstr ""
 "gimprc використову╓ться для збер╕гання персональних установок\n"
 "таких як типова повед╕ка GIMP.\n"
-"Шляхи пошуку пензл╕в, пал╕тр, град╕╓нт╕в,\n"
-"шаблон╕в, допвнень та модул╕в також вказуються тут.\n"
+"Шляхи пошуку пензл╕в, пал╕тр, град╕╓нт╕в, шаблон╕в, доповнень\n"
+"та модул╕в також вказуються тут."
 
 #: app/install.c:152
 msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
 msgstr ""
+"GIMP використову╓ додатковий файл gtkrc, то ж ви можете\n"
+"конф╕гурувати його вигляд не впливаючи на ╕нш╕ GTK-програми."
 
 #: app/install.c:157
-#, fuzzy
 msgid ""
 "Plug-ins and extensions are external programs run\n"
 "by the GIMP which provide additional functionality.\n"
@@ -2431,7 +2430,7 @@ msgstr ""
 "Ц╕ програми розшукують при запуску й ╕нформац╕я про ╖хню\n"
 "функц╕ональн╕сть та mod-times к кешу╓ться у цьому файл╕.\n"
 "Цей файл призначений лише для зчитування GIMP'ом,\n"
-"╕ не повинен редагуватися.\n"
+"╕ не повинен редагуватися."
 
 #: app/install.c:166
 msgid ""
@@ -2590,9 +2589,8 @@ msgid ""
 msgstr ""
 
 #: app/install.c:525
-#, fuzzy
 msgid "GIMP User Installation"
-msgstr "╤нсталяц╕я GIMP"
+msgstr "Користувацька ╕нсталяц╕я GIMP"
 
 #: app/install.c:530
 msgid "Continue"
@@ -2600,16 +2598,16 @@ msgstr "Продовжити"
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
 #: app/install.c:562
-#, fuzzy
 msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
-msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
+msgstr "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 
 #: app/install.c:580
-#, fuzzy
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
-msgstr "╤нсталяц╕я GIMP"
+msgstr ""
+"Ласкаво просимо до\n"
+"Користувацько╖ ╕нсталяц╕╖ GIMP"
 
 #: app/install.c:584
 msgid ""
@@ -2619,7 +2617,6 @@ msgid ""
 msgstr ""
 
 #: app/install.c:593
-#, fuzzy
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -2629,10 +2626,9 @@ msgstr ""
 "Це безкоштовна програма; ви можете розповсюджувати ╖╖ та/чи зм╕нювати\n"
 "у в╕дпов╕дност╕ з GNU General Public License опубл╕кованою\n"
 "Free Software Foundation; верс╕╖ 2, чи (на вашу думку)\n"
-"будь-якою б╕льш п╕знбо╖ верс╕╖.\n"
+"будь-якою б╕льш п╕зн╕шо╖ верс╕╖."
 
 #: app/install.c:598
-#, fuzzy
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
@@ -2640,12 +2636,11 @@ msgid ""
 "See the GNU General Public License for more details."
 msgstr ""
 "Ця програма розповсюджу╓ться в спод╕ванн╕ на те, що вона буде корисною,\n"
-"аде БЕЗ БУДЬ-ЯКИХ ГАРАНТ╤Й, в том числ╕ безумовно╖ гарант╕╖\n"
+"але БЕЗ БУДЬ-ЯКИХ ГАРАНТ╤Й, в тому числ╕ без безумовно╖ гарант╕╖\n"
 "MERCHANTABILITY чи ЗАСТОСУВАННЯ ДЛЯ БУДЬ-ЯКИХ Ц╤ЛЕЙ.\n"
-"Детальн╕ше, див╕ться GNU General Public License.\n"
+"Детальн╕ше, див╕ться GNU General Public License."
 
 #: app/install.c:603
-#, fuzzy
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
@@ -2655,25 +2650,24 @@ msgstr ""
 "Ви мали отримати коп╕ю GNU General Public License\n"
 "разом з ц╕╓ю програмою; якщо цього не сталося, напиш╕ть у Free Software\n"
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
-"MA 02111-1307, USA.\n"
+"MA 02111-1307, USA."
 
 #: app/install.c:609
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr ""
+msgstr "Клацн╕ть \"Продовжити\" щоб ув╕йти в користувацьку ╕нсталяц╕ю."
 
 #: app/install.c:636
-#, fuzzy
 msgid "Personal GIMP Directory"
-msgstr ""
-"Персональна ╕нсталяц╕я GIMP\n"
-"\n"
+msgstr "Персональний каталог GIMP"
 
 #: app/install.c:652
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "For a proper GIMP installation, a subdirectory named\n"
 "%s needs to be created."
-msgstr "Для правильно╖ ╕нсталяц╕╖ GIMP потр╕бно створити\n"
+msgstr ""
+"Для правильно╖ ╕нсталяц╕╖ GIMP ма╓ бути створено\n"
+"каталог %s."
 
 #: app/install.c:658
 msgid ""
@@ -2684,18 +2678,15 @@ msgstr ""
 
 #: app/install.c:662
 msgid "Click \"Continue\" to create your personal GIMP directory."
-msgstr ""
+msgstr "Клацн╕ть \"Продовжити\" щоб створити ваш персональний каталог GIMP."
 
 #: app/install.c:742
-#, fuzzy
 msgid "User Installation Log"
-msgstr ""
-"Журнал користувацько╖ ╕нсталяц╕╖\n"
-"\n"
+msgstr "Журнал користувацько╖ ╕нсталяц╕╖"
 
 #: app/install.c:747
 msgid "GIMP Performance Tuning"
-msgstr ""
+msgstr "Налагодження продуктивност╕ GIMP"
 
 #: app/install.c:750
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
@@ -2703,41 +2694,35 @@ msgstr ""
 
 #: app/install.c:757
 msgid "Click \"Continue\" to accept the settings above."
-msgstr ""
+msgstr "Клацн╕ть \"Продовжити\" щоб прийняти вказан╕ вище установки."
 
 #: app/install.c:766
-#, fuzzy
 msgid "Monitor Resolution"
-msgstr "Отримати розд╕льну здатн╕сть мон╕тора"
+msgstr "Розд╕льну здатн╕сть мон╕тора"
 
 #: app/install.c:769
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
 msgstr ""
+"Для показу зображень у натуральну величину, GIMP мусить знати розд╕льну "
+"здатн╕сть вашого мон╕тора."
 
 #: app/install.c:777
 msgid "Click \"Continue\" to start The GIMP."
-msgstr ""
+msgstr "Клацн╕ть \"Продовжити\" щоб запустити GIMP."
 
 #: app/install.c:785
-#, fuzzy
 msgid "Aborting Installation..."
-msgstr ""
-"Журнал користувацько╖ ╕нсталяц╕╖\n"
-"\n"
+msgstr "Переривання ╕нсталац╕╖..."
 
 #: app/install.c:859
-#, fuzzy
 msgid "does not exist.  Cannot install."
-msgstr " не ╕сну╓.  ╤нсталяц╕я неможлива.\n"
+msgstr " не ╕сну╓.  ╤нсталяц╕я неможлива."
 
 #: app/install.c:871
-#, fuzzy
 msgid "has invalid permissions.  Cannot install."
-msgstr ""
-" ма╓ нев╕рн╕ права доступу.\n"
-"╤нсталяц╕я неможлива."
+msgstr " ма╓ нев╕рн╕ права доступу. ╤нсталяц╕я неможлива."
 
 #: app/install.c:909
 msgid ""
@@ -2755,7 +2740,7 @@ msgstr ""
 
 #: app/install.c:983
 msgid "Click \"Continue\" to complete GIMP installation."
-msgstr ""
+msgstr "Клацн╕ть \"Продовжити\" щоб завершити ╕нсталяц╕ю GIMP."
 
 #: app/install.c:992
 msgid "Installation failed.  Contact system administrator."
@@ -2785,7 +2770,6 @@ msgid "Select Swap Dir"
 msgstr "Вибер╕ть каталог своп╕нгу"
 
 #: app/install.c:1059
-#, fuzzy
 msgid "Swap Directory:"
 msgstr "Каталог своп╕нгу:"
 
@@ -2796,18 +2780,17 @@ msgid ""
 msgstr ""
 
 #: app/install.c:1092
-#, fuzzy, c-format
+#, c-format
 msgid "Get Resolution from X-server (Currently %d x %d dpi)"
-msgstr "(Зараз %d x %d т/д)"
+msgstr "Отримати розд╕льну здатн╕сть в╕д X-сервера (Зараз %d x %d т/д)"
 
 #: app/install.c:1109
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr ""
 
 #: app/install.c:1124
-#, fuzzy
 msgid "Monitor Resolution X:"
-msgstr "Отримати розд╕льну здатн╕сть мон╕тора"
+msgstr "Розд╕льна здатн╕сть мон╕тора X:"
 
 #: app/interface.c:312
 msgid ""
@@ -3794,9 +3777,8 @@ msgid "/Dialogs/Display Filters..."
 msgstr "/Д╕алоги/Ф╕льтри в╕дображення..."
 
 #: app/menus.c:499
-#, fuzzy
 msgid "/Dialogs/Undo History..."
-msgstr "/Вигляд/╤сторя в╕дм╕н..."
+msgstr "/Д╕алоги/╤сторя в╕дм╕н..."
 
 #. <Image>/Filters
 #: app/menus.c:508
@@ -4640,13 +4622,12 @@ msgid "Maximum Image Size:"
 msgstr "Максимальний розм╕р зображення:"
 
 #: app/preferences_dialog.c:1623 app/preferences_dialog.c:1625
-#, fuzzy
 msgid "Default Comment"
-msgstr "Типовий"
+msgstr "Типовий коментар"
 
 #: app/preferences_dialog.c:1633
 msgid "Comment Used for New Images"
-msgstr ""
+msgstr "Коментар, що використову╓ться для нових зображень"
 
 #: app/preferences_dialog.c:1653 app/preferences_dialog.c:1655
 msgid "Display"
@@ -5711,11 +5692,11 @@ msgstr "Налагодження яскравост╕ та контрасту"
 
 #: app/tools.c:688
 msgid "/Image/Colors/Hue-Saturation..."
-msgstr "/Зображення/Кольори/Тон-насичен╕сть..."
+msgstr "/Зображення/Кольори/В╕дт╕нок-насичен╕сть..."
 
 #: app/tools.c:693
 msgid "Adjust hue and saturation"
-msgstr "Регулювання тону та насиченост╕"
+msgstr "Регулювання в╕дт╕нку та насиченост╕"
 
 #: app/tools.c:706
 msgid "/Image/Colors/Posterize..."
@@ -6080,130 +6061,8 @@ msgstr ""
 
 #: modules/colorsel_water.c:97 modules/colorsel_water.c:100
 msgid "Watercolor"
-msgstr ""
+msgstr "Акварель"
 
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr ""
-
-#, fuzzy
-#~ msgid ""
-#~ "For a proper GIMP installation, a subdirectory needs to be created.\n"
-#~ "This subdirectory will contain a number of important files."
-#~ msgstr ""
-#~ "дек╕лька п╕дкаталог╕в. Ц╕ каталоги будуть м╕стити\n"
-#~ "к╕лька важливих файл╕в:\n"
-#~ "\n"
-
-#~ msgid "Custom from Editor"
-#~ msgstr "Власний з редактора"
-
-#~ msgid ""
-#~ "The GIMP - GNU Image Manipulation Program\n"
-#~ "\n"
-#~ msgstr ""
-#~ "GIMP - Програма ман╕пулювання зображеннями GNU\n"
-#~ "\n"
-
-#~ msgid "Install"
-#~ msgstr "╤нсталювати"
-
-#~ msgid "Ignore"
-#~ msgstr "╤гнорувати"
-
-#~ msgid "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
-#~ msgstr "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
-
-#~ msgid "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
-#~ msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
-
-#~ msgid "Installation Log"
-#~ msgstr "Журнал ╕нсталяц╕╖"
-
-#~ msgid "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
-#~ msgstr "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
-
-#~ msgid ""
-#~ "\n"
-#~ "Installation successful!\n"
-#~ msgstr ""
-#~ "\n"
-#~ "╤нсталяц╕ю усп╕шно завершено!\n"
-
-#~ msgid "/File/Dialogs"
-#~ msgstr "/Файл/Д╕алоги"
-
-#~ msgid "/File"
-#~ msgstr "/Файл"
-
-#~ msgid "/Edit"
-#~ msgstr "/Редагування"
-
-#~ msgid "/Edit/Buffer"
-#~ msgstr "/Редагування/Буфер"
-
-#~ msgid "/Select"
-#~ msgstr "/Вид╕лення"
-
-#~ msgid "/View"
-#~ msgstr "/Вигляд"
-
-#~ msgid "/View/Zoom"
-#~ msgstr "/Вигляд/Масштаб"
-
-#~ msgid "/Image"
-#~ msgstr "/Зображення"
-
-#~ msgid "/Image/Mode"
-#~ msgstr "/Зображення/Режим"
-
-#~ msgid "/Image/Colors"
-#~ msgstr "/Зображення/Кольори"
-
-#~ msgid "/Image/Colors/Auto"
-#~ msgstr "/Зображення/Кольори/Авто"
-
-#~ msgid "/Image/Alpha"
-#~ msgstr "/Зображення/Альфа"
-
-#~ msgid "/Image/Transforms"
-#~ msgstr "/Зображення/Перетворення"
-
-#~ msgid "/Layers"
-#~ msgstr "/Шари"
-
-#~ msgid "/Layers/Stack"
-#~ msgstr "/Шари/Купка"
-
-#~ msgid "/Tools"
-#~ msgstr "/╤нструменти"
-
-#~ msgid "/Tools/Select Tools"
-#~ msgstr "/╤нструменти/Вид╕лення"
-
-#~ msgid "/Tools/Transform Tools"
-#~ msgstr "/╤нструменти/Перетворення"
-
-#~ msgid "/Tools/Paint Tools"
-#~ msgstr "/╤нструменти/Малювання"
-
-#~ msgid "/Dialogs"
-#~ msgstr "/Д╕алоги"
-
-#~ msgid "/Filters"
-#~ msgstr "/Ф╕льтри"
-
-#~ msgid "/Script-Fu"
-#~ msgstr "/Script-Fu"
-
-#~ msgid "/Stack"
-#~ msgstr "/Купа"
-
-#~ msgid "Bytes"
-#~ msgstr "Байти"
-
-#~ msgid "KiloBytes"
-#~ msgstr "К╕лобайти"
-
-#~ msgid "MegaBytes"
-#~ msgstr "Мегабайти"
