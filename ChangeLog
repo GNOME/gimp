@@ -1,5 +1,10 @@
 2004-07-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplay.c: added an "id" CONSTRUCT_ONLY
+	property. Some minor cleanup.
+
+2004-07-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/gimp-gui.[ch]: new files defining a GimpGui vtable
 	struct and contianing all the vtable wrapper functions. Reordered

@@ -49,6 +49,7 @@
 enum
 {
   PROP_0,
+  PROP_ID,
   PROP_IMAGE
 };
 
@@ -120,11 +121,18 @@ gimp_display_class_init (GimpDisplayClass *klass)
   object_class->set_property = gimp_display_set_property;
   object_class->get_property = gimp_display_get_property;
 
+  g_object_class_install_property (object_class, PROP_ID,
+                                   g_param_spec_int ("id",
+                                                     NULL, NULL,
+                                                     0, G_MAXINT, 0,
+                                                     G_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_IMAGE,
-				   g_param_spec_object ("image",
-							NULL, NULL,
-							GIMP_TYPE_IMAGE,
-							G_PARAM_READABLE));
+                                   g_param_spec_object ("image",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_IMAGE,
+                                                        G_PARAM_READABLE));
 }
 
 static void
@@ -149,8 +157,13 @@ gimp_display_set_property (GObject      *object,
                            const GValue *value,
                            GParamSpec   *pspec)
 {
+  GimpDisplay *gdisp = GIMP_DISPLAY (object);
+
   switch (property_id)
     {
+    case PROP_ID:
+      gdisp->ID = g_value_get_int (value);
+      break;
     case PROP_IMAGE:
       g_assert_not_reached ();
       break;
@@ -170,6 +183,9 @@ gimp_display_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_ID:
+      g_value_set_int (value, gdisp->ID);
+      break;
     case PROP_IMAGE:
       g_value_set_object (value, gdisp->gimage);
       break;
@@ -194,9 +210,9 @@ gimp_display_new (GimpImage       *gimage,
   if (gimage->gimp->no_interface)
     return NULL;
 
-  gdisp = g_object_new (GIMP_TYPE_DISPLAY, NULL);
-
-  gdisp->ID = gimage->gimp->next_display_ID++;
+  gdisp = g_object_new (GIMP_TYPE_DISPLAY,
+                        "id", gimage->gimp->next_display_ID++,
+                        NULL);
 
   /*  refs the image  */
   gimp_display_connect (gdisp, gimage);
@@ -282,8 +298,7 @@ GimpDisplay *
 gimp_display_get_by_ID (Gimp *gimp,
                         gint  ID)
 {
-  GimpDisplay *gdisp;
-  GList       *list;
+  GList *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -291,7 +306,7 @@ gimp_display_get_by_ID (Gimp *gimp,
        list;
        list = g_list_next (list))
     {
-      gdisp = (GimpDisplay *) list->data;
+      GimpDisplay *gdisp = list->data;
 
       if (gdisp->ID == ID)
 	return gdisp;
@@ -434,24 +449,20 @@ gimp_display_flush_whenever (GimpDisplay *gdisp,
    */
   if (! shell->select)
     {
-      g_warning ("gimp_display_flush_whenever(): called unrealized");
+      g_warning ("%s: called unrealized", G_STRFUNC);
       return;
     }
 
   /*  First the updates...  */
   if (gdisp->update_areas)
     {
-      if (now)
+      if (now)  /* Synchronous */
         {
-          /* Synchronous */
-
-          GSList   *list;
-          GimpArea *area;
+          GSList *list;
 
           for (list = gdisp->update_areas; list; list = g_slist_next (list))
             {
-              /*  Paint the area specified by the GimpArea  */
-              area = (GimpArea *) list->data;
+              GimpArea *area = list->data;
 
               if ((area->x1 != area->x2) && (area->y1 != area->y2))
                 {
@@ -463,10 +474,8 @@ gimp_display_flush_whenever (GimpDisplay *gdisp,
                 }
             }
         }
-      else
+      else  /* Asynchronous */
         {
-          /* Asynchronous */
-
           gimp_display_idlerender_init (gdisp);
         }
 
