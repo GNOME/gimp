@@ -1,3 +1,8 @@
+2000-03-11  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/common/mpeg.c: added missing comma for
+	gimp_register_magic_load_handler() arguments.
+
 2000-03-11  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/twain/*.c: Use GLib's memory functions instead of

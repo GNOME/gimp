@@ -135,7 +135,7 @@ query (void)
 
   gimp_register_magic_load_handler ("file_mpeg_load",
 				    "mpg,mpeg",
-				    ""
+				    "",
 				    "0,long,0x000001b3,0,long,0x000001ba");
 }
 
