@@ -448,6 +448,7 @@ AM_CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
 	-DLOCALEDIR=\""$(localedir)"\"	\
 	-DREGEX_MALLOC			\
+	-DG_LOG_DOMAIN=\"Gimp\"		\
 	@GIMP_THREAD_FLAGS@ 		\
 	@GIMP_MP_FLAGS@
 

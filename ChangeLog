@@ -1,3 +1,12 @@
+2000-07-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* libgimp/Makefile.am: set G_LOG_DOMAINs for the app and for
+	libgimp so we can distinguish their warnings from plug-in ones.
+
+	* libgimp/gimp.c: set the stack_trace_mode before installing
+	signal handlers.
+
 2000-07-30  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gdyntext/gdyntext_ui.c: use gimp_ui_init(). This also

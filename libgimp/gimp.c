@@ -220,6 +220,10 @@ gimp_main (int   argc,
 
   g_set_prgname (g_basename (progname));
 
+  stack_trace_mode = (GimpStackTraceMode) CLAMP (atoi (argv[5]),
+						 GIMP_STACK_TRACE_NEVER,
+						 GIMP_STACK_TRACE_ALWAYS);
+
 #ifndef G_OS_WIN32
   /* No use catching these on Win32, the user won't get any meaningful
    * stack trace from glib anyhow. It's better to let Windows inform
@@ -259,10 +263,6 @@ gimp_main (int   argc,
       gimp_close ();
       return 0;
     }
-
-  stack_trace_mode = (GimpStackTraceMode) CLAMP (atoi (argv[5]),
-						 GIMP_STACK_TRACE_NEVER,
-						 GIMP_STACK_TRACE_ALWAYS);
 
   g_set_message_handler ((GPrintFunc) gimp_message_func);
 
