@@ -54,8 +54,8 @@ typedef enum /*< pdb-skip >*/
 
 typedef enum
 {
-  SIZE_PIXELS,
-  SIZE_POINTS
+  GIMP_PIXELS,
+  GIMP_POINTS
 } SizeType;
 
 typedef enum /*< pdb-skip >*/ /*< skip >*/

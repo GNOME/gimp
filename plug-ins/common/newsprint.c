@@ -1776,6 +1776,10 @@ newsprint (GimpDrawable *drawable)
   gpointer   pr;
   gint       w002;
 
+#ifdef TIMINGS
+  GTimer    *timer = g_timer_new ();
+#endif  
+
   width = pvals.cell_width;
 
   if (width < 0)
@@ -1873,10 +1877,6 @@ do {								\
   /* Initialize progress */
   progress     = 0;
   max_progress = (x2 - x1) * (y2 - y1);
-
-#ifdef TIMINGS
-  gimp_timer_start();
-#endif
 
   for (y = y1; y < y2; y += tile_width - (y % tile_width))
     {
@@ -2035,7 +2035,8 @@ do {								\
     }
 
 #ifdef TIMINGS
-  gimp_timer_stop();
+  g_printerr ("%f seconds\n", g_timer_elapsed (timer));
+  g_timer_destroy (timer);
 #endif
 
   /* We don't free the threshold matrices, since we're about to

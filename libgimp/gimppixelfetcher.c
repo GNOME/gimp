@@ -247,31 +247,6 @@ gimp_get_bg_guchar (GimpDrawable *drawable,
     }
 }
 
-GTimer* _timer = NULL;
-
-void 
-gimp_timer_start(void)
-{
-  g_return_if_fail (!_timer);
-
-  _timer = g_timer_new ();
-}
-
-void
-gimp_timer_stop(void)
-{
-  double elapsed;
-
-  g_return_if_fail (_timer != NULL);
-
-  g_timer_stop (_timer);
-  elapsed = g_timer_elapsed (_timer, NULL);
-  g_timer_destroy (_timer);
-  _timer = NULL;
-
-  g_print ("%ld seconds\n", elapsed);
-}
-
 static void
 gimp_rgn_render_row (guchar     *src,
 		     guchar     *dest,

@@ -1,3 +1,18 @@
+2002-12-01  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-types.h: prefix PIXELS and POINTS with GIMP
+	instead of SIZE so we don't break the libgimp API without a good
+	reason.
+
+	* app/pdb/text_tool_cmds.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* libgimp/gimpmisc.[ch]: removed gimp_timer functions since the
+	GTimer API is simple enough and doesn't need to be wrapped.
+
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/unsharp.c: use GTimer.
+
 2002-12-01  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpdatafiles.c: s/S_ISLINK/S_ISNLK/ (was never
@@ -15,7 +30,7 @@
 	* app/core/core-types.h : renamed PIXELS and POINTS
 	to SIZE_* to avoid clashes with system headers
 	* app/pdb/text_tool_cmds.c : updated ...
-	* tools/pdbgen/enums.py : ... by renaming here too.
+	* tools/pdbgen/enums.pl : ... by renaming here too.
 
 	* app/widgets/gimphistogrambox.c : <string.h> for memcpy()
 	* app/widgets/gimppropwidgets.c : <string.h> for strlen()

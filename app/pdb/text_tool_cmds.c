@@ -111,7 +111,7 @@ text_fontname_invoker (Gimp     *gimp,
     success = FALSE;
 
   size_type = args[8].value.pdb_int;
-  if (size_type < SIZE_PIXELS || size_type > SIZE_POINTS)
+  if (size_type < GIMP_PIXELS || size_type > GIMP_POINTS)
     success = FALSE;
 
   fontname = (gchar *) args[9].value.pdb_pointer;
@@ -183,7 +183,7 @@ static ProcArg text_fontname_inargs[] =
   {
     GIMP_PDB_INT32,
     "size_type",
-    "The units of specified size: SIZE_PIXELS (0) or SIZE_POINTS (1)"
+    "The units of specified size: GIMP_PIXELS (0) or GIMP_POINTS (1)"
   },
   {
     GIMP_PDB_STRING,
@@ -242,7 +242,7 @@ text_get_extents_fontname_invoker (Gimp     *gimp,
     success = FALSE;
 
   size_type = args[2].value.pdb_int;
-  if (size_type < SIZE_PIXELS || size_type > SIZE_POINTS)
+  if (size_type < GIMP_PIXELS || size_type > GIMP_POINTS)
     success = FALSE;
 
   fontname = (gchar *) args[3].value.pdb_pointer;
@@ -288,7 +288,7 @@ static ProcArg text_get_extents_fontname_inargs[] =
   {
     GIMP_PDB_INT32,
     "size_type",
-    "The units of specified size: SIZE_PIXELS (0) or SIZE_POINTS (1)"
+    "The units of specified size: GIMP_PIXELS (0) or GIMP_POINTS (1)"
   },
   {
     GIMP_PDB_STRING,
@@ -450,7 +450,7 @@ static ProcArg text_inargs[] =
   {
     GIMP_PDB_INT32,
     "size_type",
-    "The units of specified size: SIZE_PIXELS (0) or SIZE_POINTS (1)"
+    "The units of specified size: GIMP_PIXELS (0) or GIMP_POINTS (1)"
   },
   {
     GIMP_PDB_STRING,
@@ -603,7 +603,7 @@ static ProcArg text_get_extents_inargs[] =
   {
     GIMP_PDB_INT32,
     "size_type",
-    "The units of specified size: SIZE_PIXELS (0) or SIZE_POINTS (1)"
+    "The units of specified size: GIMP_PIXELS (0) or GIMP_POINTS (1)"
   },
   {
     GIMP_PDB_STRING,

@@ -171,7 +171,7 @@ run (gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
 #ifdef TIMER
-  timerstart();
+  GTimer *timer = g_timer_new ();
 #endif
 
   run_mode = param[0].data.d_int32;
@@ -237,8 +237,10 @@ run (gchar      *name,
       gimp_drawable_detach(drawable);
       values[0].data.d_status = status;
     }
+
 #ifdef TIMER
-  timerstop ();
+  g_printerr ("%f seconds\n", g_timer_elapsed (timer));
+  g_timer_destroy (timer);
 #endif
 }
 
