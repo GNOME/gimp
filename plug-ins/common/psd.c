@@ -111,6 +111,8 @@
  *      * I don't think these should be done lossily -- wait for
  *        GIMP to be able to support them natively.
  *
+ *      Read in the paths.
+ *
  *      File saving (accepting sponsors!)
  */
 
@@ -226,6 +228,25 @@ typedef struct PsdLayer
 } PSDlayer;
 
 
+typedef gint32 Fixed;
+
+typedef struct
+{
+  Fixed hRes;
+  gint16 hRes_unit;
+  gint16 widthUnit;
+
+  Fixed vRes;
+  gint16 vRes_unit;
+  gint16 heightUnit;
+
+/* Res_unit : 
+	1 == Pixels per inch
+        2 == Pixels per cm
+*/
+
+} PSDresolution;
+
 typedef struct PsdImage
 {
   gint num_layers;
@@ -247,6 +268,9 @@ typedef struct PsdImage
   gchar *caption;
 
   guint active_layer_num;
+
+  guint resolution_is_set;
+  PSDresolution resolution;
 } PSDimage;
 
 
@@ -265,6 +289,7 @@ static GImageType psd_type_to_gimp_base_type
                          (psd_imagetype psdtype);
 static GLayerMode psd_lmode_to_gimp_lmode
                          (gchar modekey[4]);
+static GUnit psd_unit_to_gimp_unit(int psdunit);
 static gint32 load_image (char   *filename);
 
 
@@ -492,6 +517,27 @@ psd_type_to_gimp_base_type (psd_imagetype psdtype)
       g_message ("PSD: Error: Can't convert PSD imagetype to GIMP imagetype\n");
       gimp_quit();
       return(RGB);
+    }
+}
+
+
+static GUnit
+psd_unit_to_gimp_unit (int psdunit)
+{
+  switch(psdunit)
+    {
+    case 1:
+      return UNIT_INCH;
+    case 2: /* this means cm to PS, but MM is as close as we have */
+      return UNIT_MM;
+    case 3:
+      return UNIT_POINT;
+    case 4:
+      return UNIT_PICA;
+    case 5: /* 5 == Columns, but what the heck is a column? */
+    default:
+      IFDBG printf("Warning: unable to convert psd unit %d to gimp unit\n", psdunit);
+      return UNIT_PIXEL;
     }
 }
 
@@ -800,8 +846,24 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 	    }
 	}
 	break;
-      case 0x03e9:
       case 0x03ed:
+	{
+	  IFDBG printf ("\t\tResolution Info:\n");
+	  psd_image.resolution_is_set = 1;
+
+	  psd_image.resolution.hRes = getglong(fd, "hRes");
+	  psd_image.resolution.hRes_unit = getgshort(fd, "hRes_unit");
+	  psd_image.resolution.widthUnit = getgshort(fd, "WidthUnit");
+	  psd_image.resolution.vRes = getglong(fd, "vRes");
+	  psd_image.resolution.vRes_unit = getgshort(fd, "vRes_unit");
+	  psd_image.resolution.heightUnit = getgshort(fd, "HeightUnit");
+	  (*offset) += Size;
+	  IFDBG  printf("\t\t\tres = %f, %f\n",
+			psd_image.resolution.hRes / 65536.0, 
+			psd_image.resolution.vRes / 65536.0);
+	} break;
+
+      case 0x03e9:
       case 0x03f1:
       case 0x03f3:
       case 0x03fd:
@@ -1284,6 +1346,8 @@ do_image_resources(FILE *fd)
 
   IFDBG printf("IMAGE RESOURCE BLOCK:\n");
 
+  psd_image.resolution_is_set = 0;
+
   /* FIXME: too trusting that the file isn't corrupt */
   while (offset < PSDheader.imgreslen-1)
     {
@@ -1663,6 +1727,17 @@ load_image(char *name)
 	gimp_image_new (PSDheader.columns, PSDheader.rows, gimagetype);
       gimp_image_set_filename (image_ID, name);
       
+      if (psd_image.resolution_is_set)
+	{
+	  gimp_image_set_resolution(image_ID,
+				    psd_image.resolution.hRes / 65536.0,
+				    psd_image.resolution.vRes / 65536.0);
+	  /* currently can only set one unit for the image so we use the
+	     horizontal unit from the psd image */
+	  gimp_image_set_unit(image_ID, psd_unit_to_gimp_unit( psd_image.resolution.widthUnit));
+	}
+
+
       fgetpos (fd, &tmpfpos);
 
       for (lnum=0; lnum<psd_image.num_layers; lnum++)

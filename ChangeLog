@@ -1,3 +1,7 @@
+Sun Jan 23 23:08:18  2000  Jay Cox  <jaycox@earthlink.net>
+
+	* plug-ins/common/psd.c:  load the resolution info from the psd file.
+
 Sun Jan 23 19:03:28 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/paths_dialog.c: set the menu sensitivity after the last path
