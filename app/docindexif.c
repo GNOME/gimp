@@ -139,11 +139,12 @@ int getinteger( FILE *fp )
 
 void clear_white( FILE *fp )
 {
-  gchar nextchar;
+  int nextchar;
 
   while ( isspace( nextchar = fgetc( fp ) ) )
     /* empty statement */ ;
-  ungetc( nextchar, fp );
+  if (nextchar != EOF)
+    ungetc( nextchar, fp );
 }
 
 /* reset_usize

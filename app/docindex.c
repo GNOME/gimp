@@ -233,7 +233,7 @@ load_idea_manager( idea_manager *ideas )
 	}
     }
   
-  if ( idea_list || fp )
+  if ( idea_list || fp)
     {
       gtk_widget_set_usize( ideas->window, width, height );
       gtk_widget_show( ideas->window );
@@ -245,7 +245,7 @@ load_idea_manager( idea_manager *ideas )
 	  gint length;
 	  clear_white( fp );
 	  
-	  while ( ! feof( fp ) )
+	  while ( ! feof( fp ) && !ferror(fp))
 	    {
 	      length = getinteger( fp );
 	      title = g_malloc0( length + 1 );
@@ -460,7 +460,7 @@ static void idea_add_in_position_with_select( gchar *title, gint position, gbool
 
 	      clear_white( fp );
 	  
-	      while ( ! feof( fp ) )
+	      while ( ! feof( fp ) && !ferror(fp))
 		{
 		  length = getinteger( fp );
 		  title = g_malloc0( length + 1 );

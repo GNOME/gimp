@@ -141,18 +141,22 @@ brush_edit_generated_set_brush(BrushEditGeneratedWindow *begw,
 			       GimpBrush *gbrush)
 {
   GimpBrushGenerated *brush = 0;
-  if (!GIMP_IS_BRUSH_GENERATED(gbrush))
+  if (begw->brush == (GimpBrushGenerated*)gbrush)
+    return;
+  if (begw->brush)
   {
+    gtk_signal_disconnect_by_data(GTK_OBJECT(begw->brush), begw);
+    gtk_object_unref(GTK_OBJECT(begw->brush));
+    begw->brush = NULL;
+  }
+  if (!gbrush || !GIMP_IS_BRUSH_GENERATED(gbrush))
+  {
+    begw->brush = NULL;
     if (GTK_WIDGET_VISIBLE (begw->shell))
       gtk_widget_hide (begw->shell);
     return;
   }
   brush = GIMP_BRUSH_GENERATED(gbrush);
-  if (begw->brush)
-  {
-    gtk_signal_disconnect_by_data(GTK_OBJECT(begw->brush), begw);
-    gtk_object_unref(GTK_OBJECT(begw->brush));
-  }
   if (begw)
   {
     gtk_signal_connect(GTK_OBJECT (brush), "dirty",

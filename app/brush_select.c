@@ -153,7 +153,7 @@ brush_select_new ()
   GtkWidget *option_menu;
   GtkWidget *slider;
   GimpBrushP active;
-  GtkWidget *button1, *button2;
+  GtkWidget *button2;
 
   bsp = g_malloc (sizeof (_BrushSelect));
   bsp->redraw = TRUE;
@@ -287,11 +287,11 @@ brush_select_new ()
   /*  Create the edit/new buttons  */
   util_box = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
-  button1 =  gtk_button_new_with_label ("Edit Brush");
-  gtk_signal_connect (GTK_OBJECT (button1), "clicked",
+  bsp->edit_button =  gtk_button_new_with_label ("Edit Brush");
+  gtk_signal_connect (GTK_OBJECT (bsp->edit_button), "clicked",
 		      (GtkSignalFunc) edit_brush_callback,
 		      NULL);
-  gtk_box_pack_start (GTK_BOX (util_box), button1, TRUE, TRUE, 5);
+  gtk_box_pack_start (GTK_BOX (util_box), bsp->edit_button, TRUE, TRUE, 5);
 
   button2 =  gtk_button_new_with_label ("New Brush");
   gtk_signal_connect (GTK_OBJECT (button2), "clicked",
@@ -299,7 +299,7 @@ brush_select_new ()
 		      NULL);
   gtk_box_pack_start (GTK_BOX (util_box), button2, TRUE, TRUE, 5);
 
-  gtk_widget_show (button1);
+  gtk_widget_show (bsp->edit_button);
   gtk_widget_show (button2);
   gtk_widget_show (util_box);
 
@@ -342,6 +342,10 @@ brush_select_new ()
       brush_select_select (bsp, gimp_brush_list_get_brush_index(brush_list, 
 								active));
       bsp->redraw = old_value;
+      if (GIMP_IS_BRUSH_GENERATED(active))
+	gtk_widget_set_sensitive (bsp->edit_button, 1);
+      else
+	gtk_widget_set_sensitive (bsp->edit_button, 0);
     }
 
   return bsp;
@@ -803,6 +807,12 @@ brush_select_events (GtkWidget    *widget,
 
 	      /*  Make this brush the active brush  */
 	      select_brush (brush);
+            
+	      if (GIMP_IS_BRUSH_GENERATED(brush))
+		gtk_widget_set_sensitive (bsp->edit_button, 1);
+	      else
+		gtk_widget_set_sensitive (bsp->edit_button, 0);
+	      
 	      if (brush_edit_generated_dialog)
 		brush_edit_generated_set_brush(brush_edit_generated_dialog,
 					       get_active_brush());

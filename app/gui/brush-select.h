@@ -40,6 +40,7 @@ struct _BrushSelect {
   /*  Brush preview  */
   GtkWidget *brush_popup;
   GtkWidget *brush_preview;
+  GtkWidget *edit_button;
 };
 
 BrushSelectP  brush_select_new     (void);
