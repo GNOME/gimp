@@ -378,27 +378,29 @@ convert_to_indexed (void *gimage_ptr)
       gtk_widget_show (toggle);
       gtk_widget_show (hbox);
 
-          /* 'custom' palette from dialog */
-      hbox = gtk_hbox_new (FALSE, 1);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      toggle = gtk_radio_button_new_with_label (group, "Use custom palette");
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-      gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  (GtkSignalFunc) indexed_radio_update,
-			  &(dialog->custompal_flag));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
-				   dialog->custompal_flag);
-      gtk_widget_show (toggle);
-
-      palette_option_menu = gtk_option_menu_new();
       menu = build_palette_menu(&default_palette);
-      gtk_option_menu_set_menu (GTK_OPTION_MENU(palette_option_menu), menu);
-      gtk_option_menu_set_history(GTK_OPTION_MENU(palette_option_menu),
-				  default_palette);
-      gtk_box_pack_start(GTK_BOX(hbox), palette_option_menu, TRUE, TRUE, 2);
-		gtk_widget_show(palette_option_menu);
-      gtk_widget_show (hbox);
+      if (menu) {
+          /* 'custom' palette from dialog */
+          hbox = gtk_hbox_new (FALSE, 1);
+          gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+          toggle = gtk_radio_button_new_with_label (group, "Use custom palette");
+          group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+          gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
+          gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			      (GtkSignalFunc) indexed_radio_update,
+			      &(dialog->custompal_flag));
+          gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
+				   dialog->custompal_flag);
+          gtk_widget_show (toggle);
+
+          palette_option_menu = gtk_option_menu_new();
+          gtk_option_menu_set_menu (GTK_OPTION_MENU(palette_option_menu), menu);
+          gtk_option_menu_set_history(GTK_OPTION_MENU(palette_option_menu),
+				      default_palette);
+          gtk_box_pack_start(GTK_BOX(hbox), palette_option_menu, TRUE, TRUE, 2);
+	  gtk_widget_show(palette_option_menu);
+          gtk_widget_show (hbox);
+      }
     }
 
   /*  'mono palette'  */
@@ -456,13 +458,18 @@ build_palette_menu(int *default_palette){
   PaletteEntriesP entries;
   int i;
 
-  menu = gtk_menu_new();
-  list = palette_entries_list;
 
   if(!palette_entries_list) {
     /* fprintf(stderr, "no palette_entries_list, building...\n");*/
      palette_init_palettes();
   }
+
+  list = palette_entries_list;
+
+  if (!list)
+    return NULL;
+
+  menu = gtk_menu_new();
 
   for(i=0,list = palette_entries_list,*default_palette=-1;
       list;

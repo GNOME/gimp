@@ -1,3 +1,8 @@
+Tue Dec 16 16:55:04 PST 1997 Manish Singh <yosh@gimp.org>
+
+	* app/convert.c: no more crashes with indexed conversion and no
+	palettes
+
 Tue Dec 16 12:32:30 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/xcf.c (xcf_load_invoker): Shuji's xcf load close patch.
