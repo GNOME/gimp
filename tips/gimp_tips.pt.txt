@@ -140,46 +140,51 @@ novamente numa selecção.
 # (this is mostly for learning shortcut keys)
 #
 
-If your screen is too cluttered, you can press Tab multiple times
-in an image window to hide or show the toolbox and other dialogs.
+Se o seu ecrã estiver demasiado cheio, pode primir Tab várias vezes
+numa janela de imagem para esconder ou mostrar a caixa de ferramentas
+e outros diálogos.
 
-You can adjust the selection range for fuzzy select
-by clicking and dragging left and right.
+Pode ajustar o alcance da selecção de uma selecção livre
+clicando e arrastando para a esquerda e direita.
 
-Shift-click on the eye icon in the Layers dialog to hide all
-layers but that one.  Shift-click again to show all layers.
+Clique com shift no ícone do olho no diálogo de Camadas 
+para esconder todas as camadas menos uma. Clique com shift
+novamente para mostrar todas as camadas.
 
-Ctrl-click on the layer mask's preview in the Layers dialog 
-toggles the effect of the layer mask.
+Clique com control na previsão de máscara de camada no
+diálogo de Camadas alterna o efeito da máscara de camada.
 
-Alt-click on the layer mask's preview in the Layers dialog 
-toggles viewing the mask directly.
+Clique com Alt na previsão de máscara de camada no diálogo
+de Camadas alterna a visão directa da máscara.
 
-You can use Alt-Tab to cycle through all layers in an image 
-(if your window manager doesn't trap those keys...).
+Pode utilizar Alt-Tab para ciclar entre todas as camadas
+numa imagem (se o seu gestor de janelas não utilizar essa
+combinação de teclas...).
 
-Ctrl-click with the Bucket Fill tool to have it use 
-the background color instead of the foreground color.
+Clique com Ctrl com a ferramenta de Enchimento para que
+ela utilizr a cor de fundo em vez da cor de primeiro plano.
 
-Control-drag with the Transform tool in rotation mode 
-will constrain the rotation to 15 degree angles.
+Arrastar com Ctrl com a ferramenta de Transformação em modo
+de rotação irá restringir a rotação a ângulos de 15 graus.
 
-You can adjust and re-place a selection by using Alt-drag.
+Pode ajustar e recolocar uma selecção utilizando arrastar com Alt.
 
-If your fonts turn out blocky, that's because they're not scalable 
-fonts. Most X servers support scalable Type 1 Postscript fonts.  
-Download and install them.  Some font servers allow you to use 
-TrueType (.ttf) fonts, which are also scalable.
+Se as suas fontes parecerem quadradas, deve-se a não serem fontes
+escaláveis. A maioria dos servidores X suporta fontes Postscript
+tipo 1 escaláveis. Descarregue-as e instale-as. Alguns servidores
+de fontes permitem-lhe utilizar fontes TrueType (.ttf), que são
+também escaláveis.
 
-To create a perfect circle, hold Shift while doing an ellipse select. To
-place a circle precisely, drag horizontal and vertical guides tangent to
-the circle you want to select, place your cursor at the intersection
-of the guides, and the resulting selection will just touch the guides.
+Para criar um círculo perfeito, prima o Shift enquanto faz uma selecção 
+eliptica. Para colocar um círculo precisamente, arraste guias horizontais
+e verticais tangentes ao círculo que quer seleccionar, coloque o cursor
+na intersecção dos guias, e a selecção resultante apenas tocará nos guias.
 
-If some of your scanned photos do not look colorful enough, you can
-easily improve their tonal range with the "Auto" button in the Levels
-tool (Image->Colors->Levels).  If there are any color casts, you can
-correct them with the Curves tool (Image->Colors->Curves).
+Se algumas das suas fotografias passadas no scanner não tiverem cor 
+suficiente, pode facilmente melhorar o seu âmbito de cores com o botão
+"Auto" na ferramenta de Níveis (Imagem->Cores->Níveis). Se existirem
+quaisquer esbatimentos de cor, poderá corrigi-los com a ferramenta de
+Curvas (Imagem->Cores->Curvas).
 
 # (end of tips)
 
