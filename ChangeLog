@@ -1,6 +1,15 @@
 2004-03-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): redid last change so it
+	calls tool_manager_cursor_update_active() *before*
+	tool_manager_button_press_active(). Removes the ugly
+	"force_cursor_updating" boolean again and adds even more ugly code
+	duplication instead.
+
+2004-03-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
 	(gimp_display_shell_canvas_tool_events): added new local state
 	"gboolean force_cursor_updating" which makes the function call
 	tool_manger_cursor_update_active() even though a mouse button is
