@@ -685,6 +685,7 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
+#if 0
   /*
    * Inhale one whole i686 cache line at once. 64 bytes, 16 rgba8 pixels, 4 128 bit xmm registers.
    */
@@ -717,6 +718,7 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.A += 64;
       op.B += 64;
     }
+#endif
 
   for (; op.n_pixels >= 4; op.n_pixels -= 4)
     {

@@ -1,3 +1,9 @@
+2003-09-16  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-sse2.c: Removed code that caused
+	  gcc to complain can't find a register in class `GENERAL_REGS' To
+	  be revisited later.
+
 2003-09-16  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite-generic.c
