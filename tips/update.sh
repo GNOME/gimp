@@ -9,7 +9,7 @@ if expr $VER \>= 0.17 >/dev/null; then
         echo "looks OK."
 else
         echo "too old! (Need 0.17, have $VER)"
-        DIE=1
+        exit 1
 fi
 
 if [ "x$1" = "x--help" ]; then
