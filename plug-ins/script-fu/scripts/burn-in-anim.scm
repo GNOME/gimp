@@ -132,50 +132,53 @@
 				 GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 				 FALSE 0 0 TRUE
 				 (- (+ bl-x-off bl-width) corona-width) 0
-				 (- (+ bl-x-off bl-width) after-glow) 0)))
+				 (- (+ bl-x-off bl-width) after-glow) 0))
 
-          ;--- merge with bg layer
-	  (set! bg-layer (car (gimp-layer-copy bg-source-layer FALSE)))
-	  (gimp-image-add-layer img bg-layer -1)
-	  (gimp-image-lower-layer img bg-layer)
-	  (set! bg-layer-name (string-append "bg-"
-					     (number->string frame-nr 10)))
-	  (gimp-layer-set-name bg-layer bg-layer-name)
-	  (gimp-layer-set-visible bg-layer TRUE)
-	  (set! blended-layer (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
-          ;(set! blended-layer bl-layer)
-	  (gimp-layer-set-visible blended-layer FALSE)
+		 ;--- merge with bg layer
+		 (set! bg-layer (car (gimp-layer-copy bg-source-layer FALSE)))
+		 (gimp-image-add-layer img bg-layer -1)
+		 (gimp-image-lower-layer img bg-layer)
+		 (set! bg-layer-name (string-append "bg-"
+						    (number->string frame-nr 10)))
+		 (gimp-layer-set-name bg-layer bg-layer-name)
+		 (gimp-layer-set-visible bg-layer TRUE)
+		 (set! blended-layer (car (gimp-image-merge-visible-layers img
+									   CLIP-TO-IMAGE)))
+		 ;(set! blended-layer bl-layer)
+		 (gimp-layer-set-visible blended-layer FALSE)
 
-          ;--- end of "while" loop
-	  (set! frame-nr (+ frame-nr 1))
-	  (set! bl-x     (+ bl-x speed)))
+		 ;--- end of "while" loop
+		 (set! frame-nr (+ frame-nr 1))
+		 (set! bl-x     (+ bl-x speed)))
 
-        ;--- finalize the job
-	(gimp-selection-none img)
-	(gimp-image-remove-layer img    source-layer)
-	(gimp-image-remove-layer img bg-source-layer)
+	  ;--- finalize the job
+	  (gimp-selection-none img)
+	  (gimp-image-remove-layer img    source-layer)
+	  (gimp-image-remove-layer img bg-source-layer)
 
-	(gimp-image-set-filename img "burn-in")
+	  (gimp-image-set-filename img "burn-in")
 
-	(if (= optimize TRUE)
-	    (begin
-	      (gimp-convert-indexed img 1 WEB-PALETTE 250 FALSE TRUE "")
-	      (set! img-out (car (plug-in-animationoptimize 0 img bl-layer)))))
+	  (if (= optimize TRUE)
+	      (begin
+		(gimp-convert-indexed img 1 WEB-PALETTE 250 FALSE TRUE "")
+		(set! img-out (car (plug-in-animationoptimize 0
+							      img
+							      bl-layer)))))
 
-	(gimp-layer-set-visible (aref (cadr (gimp-image-get-layers img)) 0)
-				TRUE)
-	(gimp-image-undo-enable img)
-	(gimp-image-clean-all img)
-	(set! img-display (car (gimp-display-new img)))
-	(gimp-palette-set-foreground old-fg)
-	(gimp-palette-set-background old-bg)
+	  (gimp-layer-set-visible (aref (cadr (gimp-image-get-layers img)) 0)
+				  TRUE)
+	  (gimp-image-undo-enable img)
+	  (gimp-image-clean-all img)
+	  (set! img-display (car (gimp-display-new img)))
+	  (gimp-palette-set-foreground old-fg)
+	  (gimp-palette-set-background old-bg)
 
-	(gimp-displays-flush))
+	  (gimp-displays-flush))
 
-    ;--- false form of "if-1"
-    (gimp-message _"Burn-In: Need two layers in total!"
-		  "A foreground text layer with transparency"
-		  "and a background layer.")))
+	;--- false form of "if-1"
+	(gimp-message _"Burn-In: Need two layers in total!"
+		      "A foreground text layer with transparency"
+		      "and a background layer."))))
 
 
 (script-fu-register "script-fu-burn-in-anim"

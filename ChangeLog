@@ -1,7 +1,12 @@
 2003-10-10  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/burn-in-anim.scm: repaired this script
+	(bug #124207).
+
+2003-10-10  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/png.c (load_image): fixed a typo in the patch
-	for bug #123201 that accidentally already commited earlier.
+	for bug #123201 that accidentally already committed earlier.
 
 2003-10-10  Henrik Brix Andersen  <brix@gimp.org>
 
