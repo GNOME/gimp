@@ -681,7 +681,16 @@ whirl_pinch_dialog (void)
   gtk_widget_show (wpint.preview);
 
   /* Controls */
-  table = gimp_parameter_settings_new (main_vbox, 3, 3);
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("_Whirl Angle:"), SCALE_WIDTH, 7,

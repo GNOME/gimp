@@ -1,5 +1,12 @@
 2003-12-09  DindinX  <david@dindinx.org>
 
+	* plug-ins/common/wind.c (pluginCoreIA):
+	* plug-ins/common/whirlpinch (whirl_pinch_dialog):
+	* plug-ins/common/waves (dialog_box): reverted Maurits' patch,
+	to get rid of gimp_parameter_settings_new (see #125141)
+
+2003-12-09  DindinX  <david@dindinx.org>
+
 	* plug-ins/common/xpm.c (save_dialog): reverted Maurits' patch,
 	to get rid of gimp_parameter_settings_new (see #125141)
 

@@ -888,7 +888,15 @@ dialog_box (GimpDrawable *drawable)
   render_effect (drawable, TRUE);
   gtk_widget_show (preview->widget);
 
-  main_vbox = gimp_parameter_settings_new (vbox, 0, 0);
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+ 
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_container_add (GTK_CONTAINER (frame), main_vbox);
+  gtk_widget_show (main_vbox);
 
   /*****************************************************
     outer frame and table
