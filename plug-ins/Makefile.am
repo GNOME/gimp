@@ -53,6 +53,7 @@ SUBDIRS = \
 	rcm			\
 	sgi			\
 	sel2path		\
+	winicon			\
 	$(win32dirs)		\
 	$(xjt)			\
 	common

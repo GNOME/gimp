@@ -248,5 +248,9 @@ plug-ins/sel2path/pxl-outline.c
 plug-ins/sel2path/sel2path.c
 plug-ins/sgi/sgi.c
 plug-ins/twain/twain.c
+plug-ins/winicon/icodialog.c
+plug-ins/winicon/icoload.c
+plug-ins/winicon/icosave.c
+plug-ins/winicon/main.c
 plug-ins/winsnap/winsnap.c
 plug-ins/xjt/xjt.c
