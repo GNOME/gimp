@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.2.3\n"
-"POT-Creation-Date: 2001-08-14 16:51:41+0000\n"
+"POT-Creation-Date: 2001-11-13 03:06-0500\n"
 "PO-Revision-Date: 2001-07-18 04:59+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -127,8 +127,8 @@ msgstr "，需要認証"
 #: UI/UI.pm:0
 msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 msgstr ""
-"-*-courier-medium-r-normal--*-120-*-*-*-*-*,"
-"-*-*-medium-r-normal--*-120-*-*-*-big5-0,*-r-*"
+"-*-courier-medium-r-normal--*-120-*-*-*-*-*,-*-*-medium-r-normal--*-120-*-*-"
+"*-big5-0,*-r-*"
 
 #: UI/UI.pm:0
 msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
@@ -186,7 +186,7 @@ msgstr "<Image>/過濾器/模糊化/2x2 模糊化"
 
 #: examples/colourtoalpha:0
 msgid "<Image>/Filters/Colors/Colour To Alpha..."
-msgstr "<Image>/濾鏡/色彩/色彩轉為 Alpha..."
+msgstr "<Image>/濾鏡/色彩/色彩轉為透明..."
 
 #: examples/fire:0
 msgid "<Image>/Filters/Colors/Fire..."
@@ -194,7 +194,7 @@ msgstr "<Image>/濾鏡/色彩/火焰..."
 
 #: examples/map_to_gradient:0
 msgid "<Image>/Filters/Colors/Map To Gradient..."
-msgstr ""
+msgstr "<Image>/濾鏡/色彩/映射至漸層..."
 
 #: examples/mirrorsplit:0
 msgid "<Image>/Filters/Distorts/MirrorSplit..."
@@ -234,7 +234,7 @@ msgstr "<Image>/濾鏡/Logulator/水晶"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Imigre-26"
-msgstr ""
+msgstr "<Image>/濾鏡/Logulator/Imigre-26"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Newsprint text"
@@ -270,7 +270,7 @@ msgstr ""
 
 #: examples/xachshadow:0
 msgid "<Image>/Filters/Map/Xach Shadows..."
-msgstr ""
+msgstr "<Image>/濾鏡/映射/Xach 陰影..."
 
 #: examples/border:0
 msgid "<Image>/Filters/Misc/Border Average..."
@@ -278,7 +278,7 @@ msgstr ""
 
 #: examples/gimpmagick:0
 msgid "<Image>/Filters/Misc/Magick..."
-msgstr "<Image>/濾鏡/雜項/Magick..."
+msgstr "<Image>/濾鏡/其它/Magick..."
 
 #: examples/ditherize:0
 msgid "<Image>/Filters/Noise/Ditherize..."
@@ -346,7 +346,7 @@ msgstr "<Image>/濾鏡/網站/網頁化..."
 
 #: examples/centerguide:0
 msgid "<Image>/Guides/Center Guide..."
-msgstr ""
+msgstr "<Image>/參考線/中心點參考線..."
 
 #: examples/guidegrid:0
 msgid "<Image>/Guides/Guide Grid..."
@@ -362,11 +362,11 @@ msgstr "<Image>/參考線/轉為選擇區域..."
 
 #: examples/alpha2color:0
 msgid "<Image>/Image/Alpha/Alpha2Color..."
-msgstr "<Image>/影像/透明/透明至色彩..."
+msgstr "<Image>/圖像/透明/透明至色彩..."
 
 #: examples/clear_alpha:0
 msgid "<Image>/Image/Alpha/Clear Alpha..."
-msgstr ""
+msgstr "<Image>/圖像/透明/清除透明..."
 
 #: examples/layerfuncs:0
 msgid "<Image>/Layers/Center Layer"
@@ -378,11 +378,11 @@ msgstr "<Image>/圖層/堆疊/重新排列圖層..."
 
 #: examples/roundrectsel:0
 msgid "<Image>/Select/Round Rectangular Selection..."
-msgstr "<Image>/選取/圓角矩形選擇區域..."
+msgstr "<Image>/選擇/圓角矩形選擇區域..."
 
 #: examples/roundsel:0
 msgid "<Image>/Select/Round..."
-msgstr ""
+msgstr "<Image>/選擇/圓角..."
 
 #: examples/triangle:0
 msgid "<Image>/Select/Triangle..."
@@ -390,7 +390,7 @@ msgstr "<Image>/選擇/三角形..."
 
 #: examples/gap-vcr:0
 msgid "<Image>/Video/VCR Console..."
-msgstr ""
+msgstr "<Image>/視像/錄影控制器..."
 
 #: examples/view3d:0
 msgid "<Image>/View/3D Surface..."
@@ -410,7 +410,7 @@ msgstr ""
 
 #: examples/sethspin:0
 msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr ""
+msgstr "<Toolbox>/擴展/動畫/Seth 旋轉..."
 
 #: examples/Create_Images:0
 msgid "<Toolbox>/Xtns/Create_Images"
@@ -462,7 +462,7 @@ msgstr "<Toolbox>/擴展/描繪/標誌/火焰文字..."
 
 #: examples/glowing_steel:0
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr ""
+msgstr "<Toolbox>/擴展/描繪/標誌/發光金屬..."
 
 #: examples/innerbevel:0
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
@@ -722,7 +722,7 @@ msgstr "儲存 '$filename' 為資料 URL..."
 
 #: examples/sethspin:0
 msgid "Seth Spin..."
-msgstr ""
+msgstr "Seth 旋轉..."
 
 #: examples/PDB:0
 msgid "Shortcuts"
@@ -794,11 +794,11 @@ msgstr "警告：用戶端仍在鎖定時突然中斷連線\n"
 
 #: Perl-Server:0
 msgid "WARNING: client tried to unlock without holding a lock"
-msgstr ""
+msgstr "警告：客戶端嘗試在沒有鎖定的情況下解除鎖定"
 
 #: Perl-Server:0
 msgid "WARNING: shared locking requested but not implemented"
-msgstr ""
+msgstr "警告：要求共用鎖定功能但此功能尚未完成"
 
 #: examples/translogo:0
 msgid "You can't run this script with an INDEXED image!!"
@@ -902,7 +902,7 @@ msgstr "正在關閉連線 %d（%3$g 秒內有 %2$d 個要求）"
 
 #: Gimp/Fu.pm:0
 msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
-msgstr ""
+msgstr "轉換至類型 $pf_type2string{$type} 的功能尚未完成\n"
 
 #: Net/Net.pm:0
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
@@ -988,7 +988,7 @@ msgstr "收到不合法的指令，中斷連結"
 
 #: Gimp/Lib.xs:0
 msgid "illegal parasite specification, arrayref expected"
-msgstr ""
+msgstr "不合法的附帶物件規格，需要 arrayref"
 
 #: Gimp/Lib.xs:0
 msgid "illegal parasite specification, expected three array members"
@@ -996,7 +996,7 @@ msgstr "不合法的附帶物件規格，需要三個陣列元素"
 
 #: Gimp/Lib.xs:0
 msgid "illegal parasite specification, reference expected"
-msgstr ""
+msgstr "不合法的附帶物件規格，需要 reference"
 
 #: Gimp/Lib.xs:0
 msgid "illegal type for colour specification"
@@ -1023,7 +1023,7 @@ msgstr ""
 msgid ""
 "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
 "PARAM_TYPE"
-msgstr ""
+msgstr "不正常的參數定義，需要 [參數類型,\"名稱\",\"描述\"] 或 <參數類型>"
 
 #: Gimp/Fu.pm:0
 msgid ""
@@ -1065,7 +1065,7 @@ msgstr ""
 #: Gimp/Lib.xs:0
 msgid ""
 "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
-msgstr ""
+msgstr "像素大小不配合，pdl 的像素有 %d 個色版但需要的是 %d 個色版"
 
 #: Gimp/Lib.xs:0
 msgid "plug-in returned %d more values than expected"
