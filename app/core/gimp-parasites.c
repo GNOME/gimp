@@ -24,15 +24,14 @@
 #include <unistd.h>
 #endif
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core/core-types.h"
 
 #include "app_procs.h"
 #include "parasitelist.h"
 #include "gimpparasite.h"
 #include "gimprc.h"
-
-#include "libgimp/gimpparasite.h"
-#include "libgimp/gimpenv.h"
 
 
 static ParasiteList *parasites = NULL;

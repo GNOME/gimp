@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -90,12 +92,12 @@ image_add_hguide_invoker (Argument *args)
 static ProcArg image_add_hguide_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "yposition",
     "The guide's y-offset from top of image"
   }
@@ -104,7 +106,7 @@ static ProcArg image_add_hguide_inargs[] =
 static ProcArg image_add_hguide_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "guide",
     "The new guide"
   }
@@ -118,7 +120,7 @@ static ProcRecord image_add_hguide_proc =
   "Adam D. Moss",
   "Adam D. Moss",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_add_hguide_inargs,
   1,
@@ -168,12 +170,12 @@ image_add_vguide_invoker (Argument *args)
 static ProcArg image_add_vguide_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "xposition",
     "The guide's x-offset from left of image"
   }
@@ -182,7 +184,7 @@ static ProcArg image_add_vguide_inargs[] =
 static ProcArg image_add_vguide_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "guide",
     "The new guide"
   }
@@ -196,7 +198,7 @@ static ProcRecord image_add_vguide_proc =
   "Adam D. Moss",
   "Adam D. Moss",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_add_vguide_inargs,
   1,
@@ -250,12 +252,12 @@ image_delete_guide_invoker (Argument *args)
 static ProcArg image_delete_guide_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "guide",
     "The ID of the guide to be removed"
   }
@@ -269,7 +271,7 @@ static ProcRecord image_delete_guide_proc =
   "Adam D. Moss",
   "Adam D. Moss",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_delete_guide_inargs,
   0,
@@ -351,12 +353,12 @@ image_find_next_guide_invoker (Argument *args)
 static ProcArg image_find_next_guide_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "guide",
     "The ID of the current guide (0 if first invocation)"
   }
@@ -365,7 +367,7 @@ static ProcArg image_find_next_guide_inargs[] =
 static ProcArg image_find_next_guide_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "next_guide",
     "The next guide's ID"
   }
@@ -379,7 +381,7 @@ static ProcRecord image_find_next_guide_proc =
   "Adam D. Moss",
   "Adam D. Moss",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_find_next_guide_inargs,
   1,
@@ -434,12 +436,12 @@ image_get_guide_orientation_invoker (Argument *args)
 static ProcArg image_get_guide_orientation_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "guide",
     "The guide"
   }
@@ -448,7 +450,7 @@ static ProcArg image_get_guide_orientation_inargs[] =
 static ProcArg image_get_guide_orientation_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "orientation",
     "The guide's orientation: { HORIZONTAL (0), VERTICAL (1) }"
   }
@@ -462,7 +464,7 @@ static ProcRecord image_get_guide_orientation_proc =
   "Adam D. Moss",
   "Adam D. Moss",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_get_guide_orientation_inargs,
   1,
@@ -517,12 +519,12 @@ image_get_guide_position_invoker (Argument *args)
 static ProcArg image_get_guide_position_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "guide",
     "The guide"
   }
@@ -531,7 +533,7 @@ static ProcArg image_get_guide_position_inargs[] =
 static ProcArg image_get_guide_position_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "position",
     "The guide's position relative to top or left of image"
   }
@@ -545,7 +547,7 @@ static ProcRecord image_get_guide_position_proc =
   "Adam D. Moss",
   "Adam D. Moss",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_get_guide_position_inargs,
   1,

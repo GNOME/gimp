@@ -215,7 +215,7 @@ sub make_arg_recs {
 
 		$result .= <<CODE;
   {
-    PDB_$arg_types{$type}->{name},
+    GIMP_PDB_$arg_types{$type}->{name},
     "$arg->{name}",
     @{[ &quotewrap($desc, 4) ]}
   },
@@ -572,7 +572,7 @@ CODE
 		    my $type = &arg_ptype($arg);
 
 		    $code .= <<CODE;
-  argv[$pos].arg_type = PDB_$arg->{name};
+  argv[$pos].arg_type = GIMP_PDB_$arg->{name};
 CODE
 
 		    my $frag = $_->{code};
@@ -635,7 +635,7 @@ static ProcRecord ${name}_proc =
   "$proc->{author}",
   "$proc->{copyright}",
   "$proc->{date}",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   @{[scalar @inargs]},
   @{[scalar @inargs ? "${name}_inargs" : 'NULL']},
   @{[scalar @outargs]},
@@ -713,6 +713,8 @@ GPL
 		$eek      = 1;
 		$headers .= "\n";
 		$headers .= '#include <gtk/gtk.h>';
+		$headers .= "\n\n";
+		$headers .= '#include "libgimpbase/gimpbasetypes.h"';
 		$headers .= "\n\n";
 		$headers .= '#include "core/core-types.h"';
 		$headers .= "\n";

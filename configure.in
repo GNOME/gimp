@@ -625,9 +625,9 @@ if test "x$enable_perl" != xno; then
       dnl these are gross hacks
       GIMP_CFLAGS_NOUI="-I\$topdir/../.. $GLIB_CFLAGS $GTK_CFLAGS"
       GIMP_CFLAGS="$GIMP_CFLAGS_NOUI"
-      GIMP_LIBS_NOUI="-L\$topdir/../../libgimp/.libs -L\$topdir/../../libgimp -lgimp-$LT_RELEASE $GLIB_LIBS $LIBS"
+      GIMP_LIBS_NOUI="-L\$topdir/../../libgimp/.libs -L\$topdir/../../libgimp -lgimp-$LT_RELEASE -L\$topdir/../../libgimpcolor/.libs -L\$topdir/../../libgimpcolor -lgimpcolor-$LT_RELEASE -L\$topdir/../../libgimpbase/.libs -L\$topdir/../../libgimpbase -lgimpbase-$LT_RELEASE $GLIB_LIBS $LIBS"
       GIMP_LIBS="$GIMP_LIBS_NOUI -lgimpui-$LT_RELEASE"
-      GIMPTOOL="../../gimptool"
+      GIMPTOOL="../../gimptool-1.4"
       IN_GIMP=1
       EXTENSIVE_TESTS=0
 
@@ -784,6 +784,8 @@ gimp.spec
 libgimp/gimpfeatures.h
 libgimp/Makefile
 libgimp/makefile.mingw
+libgimpbase/Makefile
+libgimpbase/makefile.mingw
 libgimpcolor/Makefile
 libgimpcolor/makefile.mingw
 libgimpmath/Makefile

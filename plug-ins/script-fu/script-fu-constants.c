@@ -110,6 +110,49 @@ init_generated_constants (void)
   setvar (cintern ("OFFSET-BACKGROUND"), flocons (0), NIL);
   setvar (cintern ("OFFSET-TRANSPARENT"), flocons (1), NIL);
 
+  setvar (cintern ("PDB-INT32"), flocons (0), NIL);
+  setvar (cintern ("PDB-INT16"), flocons (1), NIL);
+  setvar (cintern ("PDB-INT8"), flocons (2), NIL);
+  setvar (cintern ("PDB-FLOAT"), flocons (3), NIL);
+  setvar (cintern ("PDB-STRING"), flocons (4), NIL);
+  setvar (cintern ("PDB-INT32ARRAY"), flocons (5), NIL);
+  setvar (cintern ("PDB-INT16ARRAY"), flocons (6), NIL);
+  setvar (cintern ("PDB-INT8ARRAY"), flocons (7), NIL);
+  setvar (cintern ("PDB-FLOATARRAY"), flocons (8), NIL);
+  setvar (cintern ("PDB-STRINGARRAY"), flocons (9), NIL);
+  setvar (cintern ("PDB-COLOR"), flocons (10), NIL);
+  setvar (cintern ("PDB-REGION"), flocons (11), NIL);
+  setvar (cintern ("PDB-DISPLAY"), flocons (12), NIL);
+  setvar (cintern ("PDB-IMAGE"), flocons (13), NIL);
+  setvar (cintern ("PDB-LAYER"), flocons (14), NIL);
+  setvar (cintern ("PDB-CHANNEL"), flocons (15), NIL);
+  setvar (cintern ("PDB-DRAWABLE"), flocons (16), NIL);
+  setvar (cintern ("PDB-SELECTION"), flocons (17), NIL);
+  setvar (cintern ("PDB-BOUNDARY"), flocons (18), NIL);
+  setvar (cintern ("PDB-PATH"), flocons (19), NIL);
+  setvar (cintern ("PDB-PARASITE"), flocons (20), NIL);
+  setvar (cintern ("PDB-STATUS"), flocons (21), NIL);
+  setvar (cintern ("PDB-END"), flocons (22), NIL);
+
+  setvar (cintern ("INTERNAL"), flocons (0), NIL);
+  setvar (cintern ("PLUGIN"), flocons (1), NIL);
+  setvar (cintern ("EXTENSION"), flocons (2), NIL);
+  setvar (cintern ("TEMPORARY"), flocons (3), NIL);
+
+  setvar (cintern ("PDB-EXECUTION-ERROR"), flocons (0), NIL);
+  setvar (cintern ("PDB-CALLING-ERROR"), flocons (1), NIL);
+  setvar (cintern ("PDB-PASS-THROUGH"), flocons (2), NIL);
+  setvar (cintern ("PDB-SUCCESS"), flocons (3), NIL);
+  setvar (cintern ("PDB-CANCEL"), flocons (4), NIL);
+
+  setvar (cintern ("UNIT-PIXEL"), flocons (0), NIL);
+  setvar (cintern ("UNIT-INCH"), flocons (1), NIL);
+  setvar (cintern ("UNIT-MM"), flocons (2), NIL);
+  setvar (cintern ("UNIT-POINT"), flocons (3), NIL);
+  setvar (cintern ("UNIT-PICA"), flocons (4), NIL);
+  setvar (cintern ("UNIT-END"), flocons (5), NIL);
+  setvar (cintern ("UNIT-PERCENT"), flocons (65536), NIL);
+
   setvar (cintern ("ONCE-FORWARD"), flocons (0), NIL);
   setvar (cintern ("ONCE-BACKWARDS"), flocons (1), NIL);
   setvar (cintern ("LOOP-SAWTOOTH"), flocons (2), NIL);
@@ -175,41 +218,6 @@ init_generated_constants (void)
   setvar (cintern ("HORIZONTAL"), flocons (0), NIL);
   setvar (cintern ("VERTICAL"), flocons (1), NIL);
   setvar (cintern ("UNKNOWN"), flocons (2), NIL);
-
-  setvar (cintern ("PDB-INT32"), flocons (0), NIL);
-  setvar (cintern ("PDB-INT16"), flocons (1), NIL);
-  setvar (cintern ("PDB-INT8"), flocons (2), NIL);
-  setvar (cintern ("PDB-FLOAT"), flocons (3), NIL);
-  setvar (cintern ("PDB-STRING"), flocons (4), NIL);
-  setvar (cintern ("PDB-INT32ARRAY"), flocons (5), NIL);
-  setvar (cintern ("PDB-INT16ARRAY"), flocons (6), NIL);
-  setvar (cintern ("PDB-INT8ARRAY"), flocons (7), NIL);
-  setvar (cintern ("PDB-FLOATARRAY"), flocons (8), NIL);
-  setvar (cintern ("PDB-STRINGARRAY"), flocons (9), NIL);
-  setvar (cintern ("PDB-COLOR"), flocons (10), NIL);
-  setvar (cintern ("PDB-REGION"), flocons (11), NIL);
-  setvar (cintern ("PDB-DISPLAY"), flocons (12), NIL);
-  setvar (cintern ("PDB-IMAGE"), flocons (13), NIL);
-  setvar (cintern ("PDB-LAYER"), flocons (14), NIL);
-  setvar (cintern ("PDB-CHANNEL"), flocons (15), NIL);
-  setvar (cintern ("PDB-DRAWABLE"), flocons (16), NIL);
-  setvar (cintern ("PDB-SELECTION"), flocons (17), NIL);
-  setvar (cintern ("PDB-BOUNDARY"), flocons (18), NIL);
-  setvar (cintern ("PDB-PATH"), flocons (19), NIL);
-  setvar (cintern ("PDB-PARASITE"), flocons (20), NIL);
-  setvar (cintern ("PDB-STATUS"), flocons (21), NIL);
-  setvar (cintern ("PDB-END"), flocons (22), NIL);
-
-  setvar (cintern ("INTERNAL"), flocons (0), NIL);
-  setvar (cintern ("PLUGIN"), flocons (1), NIL);
-  setvar (cintern ("EXTENSION"), flocons (2), NIL);
-  setvar (cintern ("TEMPORARY"), flocons (3), NIL);
-
-  setvar (cintern ("PDB-EXECUTION-ERROR"), flocons (0), NIL);
-  setvar (cintern ("PDB-CALLING-ERROR"), flocons (1), NIL);
-  setvar (cintern ("PDB-PASS-THROUGH"), flocons (2), NIL);
-  setvar (cintern ("PDB-SUCCESS"), flocons (3), NIL);
-  setvar (cintern ("PDB-CANCEL"), flocons (4), NIL);
 
   setvar (cintern ("CONTINUOUS"), flocons (0), NIL);
   setvar (cintern ("INCREMENTAL"), flocons (1), NIL);

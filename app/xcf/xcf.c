@@ -33,6 +33,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core/core-types.h"
@@ -58,9 +60,6 @@
 #include "path.h"
 #include "pathP.h"
 #include "xcf.h"
-
-#include "libgimp/gimplimits.h"
-#include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -213,20 +212,20 @@ static guint xcf_write_string (FILE     *fp,
 
 static ProcArg xcf_load_args[] =
 {
-  { PDB_INT32,
+  { GIMP_PDB_INT32,
     "dummy_param",
     "dummy parameter" },
-  { PDB_STRING,
+  { GIMP_PDB_STRING,
     "filename",
     "The name of the file to load" },
-  { PDB_STRING,
+  { GIMP_PDB_STRING,
     "raw_filename",
     "The name of the file to load" },
 };
 
 static ProcArg xcf_load_return_vals[] =
 {
-  { PDB_IMAGE,
+  { GIMP_PDB_IMAGE,
     "image",
     "Output image" },
 };
@@ -248,7 +247,7 @@ static PlugInProcDef xcf_plug_in_load_proc =
     "Spencer Kimball & Peter Mattis",
     "Spencer Kimball & Peter Mattis",
     "1995-1996",
-    PDB_INTERNAL,
+    GIMP_INTERNAL,
     3,
     xcf_load_args,
     1,
@@ -261,19 +260,19 @@ static PlugInProcDef xcf_plug_in_load_proc =
 
 static ProcArg xcf_save_args[] =
 {
-  { PDB_INT32,
+  { GIMP_PDB_INT32,
     "dummy_param",
     "dummy parameter" },
-  { PDB_IMAGE,
+  { GIMP_PDB_IMAGE,
     "image",
     "Input image" },
-  { PDB_DRAWABLE,
+  { GIMP_PDB_DRAWABLE,
     "drawable",
     "Active drawable of input image" },
-  { PDB_STRING,
+  { GIMP_PDB_STRING,
     "filename",
     "The name of the file to save the image in" },
-  { PDB_STRING,
+  { GIMP_PDB_STRING,
     "raw_filename",
     "The name of the file to load" },
 };
@@ -295,7 +294,7 @@ static PlugInProcDef xcf_plug_in_save_proc =
     "Spencer Kimball & Peter Mattis",
     "Spencer Kimball & Peter Mattis",
     "1995-1996",
-    PDB_INTERNAL,
+    GIMP_INTERNAL,
     5,
     xcf_save_args,
     0,

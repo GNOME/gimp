@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -93,12 +95,12 @@ gradients_get_list_invoker (Argument *args)
 static ProcArg gradients_get_list_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_gradients",
     "The number of loaded gradients"
   },
   {
-    PDB_STRINGARRAY,
+    GIMP_PDB_STRINGARRAY,
     "gradient_names",
     "The list of gradient names"
   }
@@ -112,7 +114,7 @@ static ProcRecord gradients_get_list_proc =
   "Federico Mena Quintero",
   "Federico Mena Quintero",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   2,
@@ -139,7 +141,7 @@ gradients_get_active_invoker (Argument *args)
 static ProcArg gradients_get_active_outargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The name of the active gradient"
   }
@@ -153,7 +155,7 @@ static ProcRecord gradients_get_active_proc =
   "Federico Mena Quintero",
   "Federico Mena Quintero",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   1,
@@ -192,7 +194,7 @@ gradients_set_active_invoker (Argument *args)
 static ProcArg gradients_set_active_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The name of the gradient to set"
   }
@@ -206,7 +208,7 @@ static ProcRecord gradients_set_active_proc =
   "Federico Mena Quintero",
   "Federico Mena Quintero",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   gradients_set_active_inargs,
   0,
@@ -269,7 +271,7 @@ gradients_sample_uniform_invoker (Argument *args)
 static ProcArg gradients_sample_uniform_inargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_samples",
     "The number of samples to take"
   }
@@ -278,12 +280,12 @@ static ProcArg gradients_sample_uniform_inargs[] =
 static ProcArg gradients_sample_uniform_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "array_length",
     "Length of the color_samples array (4 * num_samples)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "color_samples",
     "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }"
   }
@@ -297,7 +299,7 @@ static ProcRecord gradients_sample_uniform_proc =
   "Federico Mena Quintero",
   "Federico Mena Quintero",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   gradients_sample_uniform_inargs,
   2,
@@ -359,12 +361,12 @@ gradients_sample_custom_invoker (Argument *args)
 static ProcArg gradients_sample_custom_inargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_samples",
     "The number of samples to take"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "positions",
     "The list of positions to sample along the gradient"
   }
@@ -373,12 +375,12 @@ static ProcArg gradients_sample_custom_inargs[] =
 static ProcArg gradients_sample_custom_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "array_length",
     "Length of the color_samples array (4 * num_samples)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "color_samples",
     "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }"
   }
@@ -392,7 +394,7 @@ static ProcRecord gradients_sample_custom_proc =
   "Federico Mena Quintero",
   "Federico Mena Quintero",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   gradients_sample_custom_inargs,
   2,

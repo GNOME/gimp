@@ -36,6 +36,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -86,17 +88,17 @@ file_load_invoker (Argument *args)
 static ProcArg file_load_inargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "run_mode",
     "The run mode: RUN_INTERACTIVE (0) or RUN_NONINTERACTIVE (1)"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "filename",
     "The name of the file to load"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "raw_filename",
     "The name entered"
   }
@@ -105,7 +107,7 @@ static ProcArg file_load_inargs[] =
 static ProcArg file_load_outargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The output image"
   }
@@ -119,7 +121,7 @@ static ProcRecord file_load_proc =
   "Josh MacDonald",
   "Josh MacDonald",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   file_load_inargs,
   1,
@@ -149,7 +151,7 @@ file_save_invoker (Argument *args)
   for (i=5; i<proc->num_args; i++)
   {
     new_args[i].arg_type = proc->args[i].arg_type;
-    if (proc->args[i].arg_type == PDB_STRING)
+    if (proc->args[i].arg_type == GIMP_PDB_STRING)
       new_args[i].value.pdb_pointer = g_strdup("\0");
   }
 
@@ -162,27 +164,27 @@ file_save_invoker (Argument *args)
 static ProcArg file_save_inargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "run_mode",
     "The run mode: RUN_INTERACTIVE (0) or RUN_NONINTERACTIVE (1)"
   },
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "Input image"
   },
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "Drawable to save"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "filename",
     "The name of the file to save the image in"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "raw_filename",
     "The name of the file to save the image in"
   }
@@ -196,7 +198,7 @@ static ProcRecord file_save_proc =
   "Josh MacDonald",
   "Josh MacDonald",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   5,
   file_save_inargs,
   0,
@@ -270,7 +272,7 @@ file_load_thumbnail_invoker (Argument *args)
 static ProcArg file_load_thumbnail_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "filename",
     "The name of the file that owns the thumbnail to load"
   }
@@ -279,22 +281,22 @@ static ProcArg file_load_thumbnail_inargs[] =
 static ProcArg file_load_thumbnail_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "The width of the thumbnail"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "height",
     "The height of the thumbnail"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "thumbnail_data_count",
     "The number of bytes in thumbnail data"
   },
   {
-    PDB_INT8ARRAY,
+    GIMP_PDB_INT8ARRAY,
     "thumb_data",
     "The thumbnail data"
   }
@@ -308,7 +310,7 @@ static ProcRecord file_load_thumbnail_proc =
   "Adam D. Moss, Sven Neumann",
   "Adam D. Moss, Sven Neumann",
   "1999-2000",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   file_load_thumbnail_inargs,
   4,
@@ -345,12 +347,12 @@ file_save_thumbnail_invoker (Argument *args)
 static ProcArg file_save_thumbnail_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "filename",
     "The name of the file the thumbnail belongs to"
   }
@@ -364,7 +366,7 @@ static ProcRecord file_save_thumbnail_proc =
   "Josh MacDonald",
   "Josh MacDonald",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   file_save_thumbnail_inargs,
   0,
@@ -406,7 +408,7 @@ temp_name_invoker (Argument *args)
 static ProcArg temp_name_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "extension",
     "The extension the file will have"
   }
@@ -415,7 +417,7 @@ static ProcArg temp_name_inargs[] =
 static ProcArg temp_name_outargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The new temp filename"
   }
@@ -429,7 +431,7 @@ static ProcRecord temp_name_proc =
   "Josh MacDonald",
   "Josh MacDonald",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   temp_name_inargs,
   1,
@@ -466,10 +468,10 @@ register_magic_load_handler_invoker (Argument *args)
     
       if (proc && ((proc->num_args < 3) ||
 		   (proc->num_values < 1) ||
-		   (proc->args[0].arg_type != PDB_INT32) ||
-		   (proc->args[1].arg_type != PDB_STRING) ||
-		   (proc->args[2].arg_type != PDB_STRING) ||
-		   (proc->values[0].arg_type != PDB_IMAGE)))
+		   (proc->args[0].arg_type != GIMP_PDB_INT32) ||
+		   (proc->args[1].arg_type != GIMP_PDB_STRING) ||
+		   (proc->args[2].arg_type != GIMP_PDB_STRING) ||
+		   (proc->values[0].arg_type != GIMP_PDB_IMAGE)))
 	{
 	  g_message ("load handler \"%s\" does not take the standard load handler args",
 		     name);
@@ -499,22 +501,22 @@ register_magic_load_handler_invoker (Argument *args)
 static ProcArg register_magic_load_handler_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "procedure_name",
     "The name of the procedure to be used for loading"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "extensions",
     "comma separated list of extensions this handler can load (i.e. \"jpg,jpeg\")"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "prefixes",
     "comma separated list of prefixes this handler can load (i.e. \"http:,ftp:\")"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "magics",
     "comma separated list of magic file information this handler can load (i.e. \"0,string,GIF\")"
   }
@@ -528,7 +530,7 @@ static ProcRecord register_magic_load_handler_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   4,
   register_magic_load_handler_inargs,
   0,
@@ -545,7 +547,7 @@ register_load_handler_invoker (Argument *args)
   for (i = 0; i < 3; i++)
     argv[i] = args[i];
 
-  argv[3].arg_type = PDB_STRING;
+  argv[3].arg_type = GIMP_PDB_STRING;
   argv[3].value.pdb_pointer = NULL;
 
   return register_magic_load_handler_invoker (argv);
@@ -554,17 +556,17 @@ register_load_handler_invoker (Argument *args)
 static ProcArg register_load_handler_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "procedure_name",
     "The name of the procedure to be used for loading"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "extensions",
     "comma separated list of extensions this handler can load (i.e. \"jpg,jpeg\")"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "prefixes",
     "comma separated list of prefixes this handler can load (i.e. \"http:,ftp:\")"
   }
@@ -578,7 +580,7 @@ static ProcRecord register_load_handler_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   register_load_handler_inargs,
   0,
@@ -611,11 +613,11 @@ register_save_handler_invoker (Argument *args)
       proc = procedural_db_lookup (name);
     
       if (proc && ((proc->num_args < 5) ||
-		   (proc->args[0].arg_type != PDB_INT32) ||
-		   (proc->args[1].arg_type != PDB_IMAGE) ||
-		   (proc->args[2].arg_type != PDB_DRAWABLE) ||
-		   (proc->args[3].arg_type != PDB_STRING) ||
-		   (proc->args[4].arg_type != PDB_STRING)))
+		   (proc->args[0].arg_type != GIMP_PDB_INT32) ||
+		   (proc->args[1].arg_type != GIMP_PDB_IMAGE) ||
+		   (proc->args[2].arg_type != GIMP_PDB_DRAWABLE) ||
+		   (proc->args[3].arg_type != GIMP_PDB_STRING) ||
+		   (proc->args[4].arg_type != GIMP_PDB_STRING)))
 	{
 	  g_message ("save handler \"%s\" does not take the standard save handler args",
 		     name);
@@ -645,17 +647,17 @@ register_save_handler_invoker (Argument *args)
 static ProcArg register_save_handler_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "procedure_name",
     "The name of the procedure to be used for saving"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "extensions",
     "comma separated list of extensions this handler can save (i.e. \"jpg,jpeg\")"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "prefixes",
     "comma separated list of prefixes this handler can save (i.e. \"http:,ftp:\")"
   }
@@ -669,7 +671,7 @@ static ProcRecord register_save_handler_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   register_save_handler_inargs,
   0,

@@ -32,8 +32,6 @@
 
 #include "procedural_db.h"
 
-#include "libgimp/gimpparasite.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -142,8 +140,8 @@ procedural_db_execute (const gchar *name,
       g_message (_("PDB calling error %s not found"), name);
       
       return_args = g_new (Argument, 1);
-      return_args->arg_type = PDB_STATUS;
-      return_args->value.pdb_int = PDB_CALLING_ERROR;
+      return_args->arg_type = GIMP_PDB_STATUS;
+      return_args->value.pdb_int = GIMP_PDB_CALLING_ERROR;
       return return_args;
     }
   
@@ -154,8 +152,8 @@ procedural_db_execute (const gchar *name,
 	  g_message (_("PDB calling error %s not found"), name);
 
 	  return_args = g_new (Argument, 1);
-	  return_args->arg_type = PDB_STATUS;
-	  return_args->value.pdb_int = PDB_CALLING_ERROR;
+	  return_args->arg_type = GIMP_PDB_STATUS;
+	  return_args->value.pdb_int = GIMP_PDB_CALLING_ERROR;
 	  return return_args;
 	}
       list = list->next;
@@ -166,8 +164,8 @@ procedural_db_execute (const gchar *name,
 	  if (args[i].arg_type != procedure->args[i].arg_type)
 	    {
 	      return_args = g_new (Argument, 1);
-	      return_args->arg_type = PDB_STATUS;
-	      return_args->value.pdb_int = PDB_CALLING_ERROR;
+	      return_args->arg_type = GIMP_PDB_STATUS;
+	      return_args->value.pdb_int = GIMP_PDB_CALLING_ERROR;
 
 	      g_message (_("PDB calling error %s"), procedure->name);
 
@@ -178,37 +176,37 @@ procedural_db_execute (const gchar *name,
       /*  call the procedure  */
       switch (procedure->proc_type)
 	{
-	case PDB_INTERNAL:
+	case GIMP_INTERNAL:
 	  return_args = (* procedure->exec_method.internal.marshal_func) (args);
 	  break;
 
-	case PDB_PLUGIN:
+	case GIMP_PLUGIN:
 	  return_args = plug_in_run (procedure, args, procedure->num_args, TRUE, FALSE, -1);
 	  break;
 
-	case PDB_EXTENSION:
+	case GIMP_EXTENSION:
 	  return_args = plug_in_run (procedure, args, procedure->num_args, TRUE, FALSE, -1);
 	  break;
 
-	case PDB_TEMPORARY:
+	case GIMP_TEMPORARY:
 	  return_args = plug_in_run (procedure, args, procedure->num_args, TRUE, FALSE, -1);
 	  break;
 
 	default:
 	  return_args = g_new (Argument, 1);
-	  return_args->arg_type = PDB_STATUS;
-	  return_args->value.pdb_int = PDB_EXECUTION_ERROR;
+	  return_args->arg_type = GIMP_PDB_STATUS;
+	  return_args->value.pdb_int = GIMP_PDB_EXECUTION_ERROR;
 	  break;
 	}
 
-      if ((return_args[0].value.pdb_int != PDB_SUCCESS) &&
+      if ((return_args[0].value.pdb_int != GIMP_PDB_SUCCESS) &&
 	  (procedure->num_values > 0))
 	memset (&return_args[1], 0, sizeof (Argument) * procedure->num_values);
 
       /*  Check if the return value is a PDB_PASS_THROUGH, in which case run the
        *  next procedure in the list
        */
-      if (return_args[0].value.pdb_int != PDB_PASS_THROUGH)
+      if (return_args[0].value.pdb_int != GIMP_PDB_PASS_THROUGH)
 	break;
       else if (list)  /*  Pass through, so destroy return values and run another procedure  */
 	procedural_db_destroy_args (return_args, procedure->num_values);
@@ -231,8 +229,8 @@ procedural_db_run_proc (const gchar *name,
   if ((proc = procedural_db_lookup (name)) == NULL)
     {
       return_vals = g_new (Argument, 1);
-      return_vals->arg_type = PDB_STATUS;
-      return_vals->value.pdb_int = PDB_CALLING_ERROR;
+      return_vals->arg_type = GIMP_PDB_STATUS;
+      return_vals->value.pdb_int = GIMP_PDB_CALLING_ERROR;
       return return_vals;
     }
 
@@ -243,7 +241,7 @@ procedural_db_run_proc (const gchar *name,
 
   for (i = 0; i < proc->num_args; i++)
     {
-      if (proc->args[i].arg_type != (params[i].arg_type = va_arg (args, PDBArgType)))
+      if (proc->args[i].arg_type != (params[i].arg_type = va_arg (args, GimpPDBArgType)))
 	{
 	  g_message (_("Incorrect arguments passed to procedural_db_run_proc:\n"
 		       "Argument %d to '%s' should be a %s, but got passed a %s"),
@@ -256,44 +254,44 @@ procedural_db_run_proc (const gchar *name,
 
       switch (proc->args[i].arg_type)
 	{
-	case PDB_INT32:
-	case PDB_INT16:
-	case PDB_INT8:
-        case PDB_DISPLAY:
+	case GIMP_PDB_INT32:
+	case GIMP_PDB_INT16:
+	case GIMP_PDB_INT8:
+        case GIMP_PDB_DISPLAY:
 	  params[i].value.pdb_int = (gint32) va_arg (args, gint);
 	  break;
-        case PDB_FLOAT:
+        case GIMP_PDB_FLOAT:
           params[i].value.pdb_float = (gdouble) va_arg (args, gdouble);
           break;
-        case PDB_STRING:
-        case PDB_INT32ARRAY:
-        case PDB_INT16ARRAY:
-        case PDB_INT8ARRAY:
-        case PDB_FLOATARRAY:
-        case PDB_STRINGARRAY:
+        case GIMP_PDB_STRING:
+        case GIMP_PDB_INT32ARRAY:
+        case GIMP_PDB_INT16ARRAY:
+        case GIMP_PDB_INT8ARRAY:
+        case GIMP_PDB_FLOATARRAY:
+        case GIMP_PDB_STRINGARRAY:
           params[i].value.pdb_pointer = va_arg (args, gpointer);
           break;
-        case PDB_COLOR:
+        case GIMP_PDB_COLOR:
 	  params[i].value.pdb_color = va_arg (args, GimpRGB);
           break;
-        case PDB_REGION:
+        case GIMP_PDB_REGION:
           break;
-        case PDB_IMAGE:
-        case PDB_LAYER:
-        case PDB_CHANNEL:
-        case PDB_DRAWABLE:
-        case PDB_SELECTION:
-        case PDB_BOUNDARY:
-        case PDB_PATH:
+        case GIMP_PDB_IMAGE:
+        case GIMP_PDB_LAYER:
+        case GIMP_PDB_CHANNEL:
+        case GIMP_PDB_DRAWABLE:
+        case GIMP_PDB_SELECTION:
+        case GIMP_PDB_BOUNDARY:
+        case GIMP_PDB_PATH:
 	  params[i].value.pdb_int = (gint32) va_arg (args, gint);
 	  break;
-        case PDB_PARASITE:
+        case GIMP_PDB_PARASITE:
           params[i].value.pdb_pointer = va_arg (args, gpointer);
           break;
-        case PDB_STATUS:
+        case GIMP_PDB_STATUS:
 	  params[i].value.pdb_int = (gint32) va_arg (args, gint);
 	  break;
-	case PDB_END:
+	case GIMP_PDB_END:
 	  break;
 	}
     }
@@ -320,13 +318,13 @@ procedural_db_return_args (ProcRecord *procedure,
 
   if (success)
     {
-      return_args[0].arg_type = PDB_STATUS;
-      return_args[0].value.pdb_int = PDB_SUCCESS;
+      return_args[0].arg_type = GIMP_PDB_STATUS;
+      return_args[0].value.pdb_int = GIMP_PDB_SUCCESS;
     }
   else
     {
-      return_args[0].arg_type = PDB_STATUS;
-      return_args[0].value.pdb_int = PDB_EXECUTION_ERROR;
+      return_args[0].arg_type = GIMP_PDB_STATUS;
+      return_args[0].value.pdb_int = GIMP_PDB_EXECUTION_ERROR;
     }
 
   /*  Set the arg types for the return values  */
@@ -351,42 +349,42 @@ procedural_db_destroy_args (Argument *args,
     {
       switch (args[i].arg_type)
 	{
-	case PDB_INT32:
+	case GIMP_PDB_INT32:
 	  /*  Keep this around in case we need to free an array of strings  */
 	  prev_val = args[i].value.pdb_int;
 	  break;
-	case PDB_INT16:
-	case PDB_INT8:
-	case PDB_FLOAT:
+	case GIMP_PDB_INT16:
+	case GIMP_PDB_INT8:
+	case GIMP_PDB_FLOAT:
 	  break;
-	case PDB_STRING:
-	case PDB_INT32ARRAY:
-	case PDB_INT16ARRAY:
-	case PDB_INT8ARRAY:
-	case PDB_FLOATARRAY:
+	case GIMP_PDB_STRING:
+	case GIMP_PDB_INT32ARRAY:
+	case GIMP_PDB_INT16ARRAY:
+	case GIMP_PDB_INT8ARRAY:
+	case GIMP_PDB_FLOATARRAY:
 	  g_free (args[i].value.pdb_pointer);
 	  break;
-	case PDB_STRINGARRAY:
+	case GIMP_PDB_STRINGARRAY:
 	  strs = (gchar **) args[i].value.pdb_pointer;
 	  for (j = 0; j < prev_val; j++)
 	    g_free (strs[j]);
 	  g_free (strs);
 	  break;
-	case PDB_COLOR:
+	case GIMP_PDB_COLOR:
 	  g_free (args[i].value.pdb_pointer);
 	  break;
-	case PDB_REGION:
-	case PDB_DISPLAY:
-	case PDB_IMAGE:
-	case PDB_LAYER:
-	case PDB_CHANNEL:
-	case PDB_DRAWABLE:
-	case PDB_SELECTION:
-	case PDB_BOUNDARY:
-	case PDB_PATH:
-	case PDB_PARASITE:
-	case PDB_STATUS:
-	case PDB_END:
+	case GIMP_PDB_REGION:
+	case GIMP_PDB_DISPLAY:
+	case GIMP_PDB_IMAGE:
+	case GIMP_PDB_LAYER:
+	case GIMP_PDB_CHANNEL:
+	case GIMP_PDB_DRAWABLE:
+	case GIMP_PDB_SELECTION:
+	case GIMP_PDB_BOUNDARY:
+	case GIMP_PDB_PATH:
+	case GIMP_PDB_PARASITE:
+	case GIMP_PDB_STATUS:
+	case GIMP_PDB_END:
 	  break;
 	}
     }

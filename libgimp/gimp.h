@@ -26,6 +26,7 @@
 
 #include <libgimpcolor/gimpcolor.h>
 #include <libgimpmath/gimpmath.h>
+#include <libgimpbase/gimpbase.h>
 
 #include <libgimp/gimpenums.h>
 #include <libgimp/gimptypes.h>
@@ -34,17 +35,12 @@
 #include <libgimp/gimpdrawable.h>
 #include <libgimp/gimpfeatures.h>
 #include <libgimp/gimpgradientselect.h>
-#include <libgimp/gimpenv.h>
 #include <libgimp/gimpimage.h>
 #include <libgimp/gimplayer.h>
-#include <libgimp/gimplimits.h>
-#include <libgimp/gimpparasite.h>
 #include <libgimp/gimppixelrgn.h>
 #include <libgimp/gimpproceduraldb.h>
 #include <libgimp/gimpselection.h>
 #include <libgimp/gimptile.h>
-#include <libgimp/gimpunit.h>
-#include <libgimp/gimputils.h>
 
 #include <libgimp/gimp_pdb.h>
 
@@ -277,40 +273,45 @@ void        gimp_uninstall_temp_proc (gchar        *name);
  *  specified via the variable length argument list. The return
  *  values are returned in the 'GimpParam*' array.
  */
-GimpParam * gimp_run_procedure     (gchar     *name,
-				    gint      *nreturn_vals,
-				    ...);
+GimpParam * gimp_run_procedure       (gchar     *name,
+				      gint      *nreturn_vals,
+				      ...);
 
 /* Run a procedure in the procedure database. The parameters are
  *  specified as an array of GimpParam.  The return
  *  values are returned in the 'GimpParam*' array.
  */
-GimpParam * gimp_run_procedure2    (gchar     *name,
-				    gint      *nreturn_vals,
-				    gint       nparams,
-				    GimpParam *params);
+GimpParam * gimp_run_procedure2      (gchar     *name,
+				      gint      *nreturn_vals,
+				      gint       nparams,
+				      GimpParam *params);
 
 /* Destroy the an array of parameters. This is useful for
  *  destroying the return values returned by a call to
  *  'gimp_run_procedure'.
  */
-void        gimp_destroy_params    (GimpParam    *params,
-				    gint          nparams);
+void        gimp_destroy_params      (GimpParam    *params,
+				      gint          nparams);
 
 /* Destroy the an array of GimpParamDef's. This is useful for
  *  destroying the return values returned by a call to
  *  'gimp_query_procedure'.
  */
-void        gimp_destroy_paramdefs (GimpParamDef *paramdefs,
-				    gint          nparams);
+void        gimp_destroy_paramdefs   (GimpParamDef *paramdefs,
+				      gint          nparams);
 
-gdouble     gimp_gamma             (void);
-gboolean    gimp_install_cmap      (void);
-gboolean    gimp_use_xshm          (void);
-guchar    * gimp_color_cube        (void);
-gint        gimp_min_colors        (void);
+gdouble     gimp_gamma               (void);
+gboolean    gimp_install_cmap        (void);
+gboolean    gimp_use_xshm            (void);
+guchar    * gimp_color_cube          (void);
+gint        gimp_min_colors          (void);
 
-gchar     * gimp_get_progname      (void);
+gchar     * gimp_get_progname        (void);
+
+void        gimp_attach_new_parasite (const gchar    *name,
+				      gint            flags,
+				      gint            size,
+				      const gpointer  data);
 
 
 #ifdef __cplusplus

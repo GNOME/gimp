@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "core/core-types.h"
 #include "tools/tools-types.h"

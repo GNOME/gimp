@@ -84,9 +84,9 @@
 
 #include "core/core-types.h"
 
-#include "libgimp/gimpparasite.h"
-#include "libgimp/gimpprotocol.h"
-#include "libgimp/gimpwire.h"
+#include "libgimpbase/gimpbase.h"
+#include "libgimpbase/gimpprotocol.h"
+#include "libgimpbase/gimpwire.h"
 
 #include "base/tile.h"
 #include "base/tile-manager.h"
@@ -427,7 +427,7 @@ plug_in_init (void)
 
       if (proc_def->prog &&
 	  (proc_def->db_info.num_args == 0) &&
-	  (proc_def->db_info.proc_type == PDB_EXTENSION))
+	  (proc_def->db_info.proc_type == GIMP_EXTENSION))
 	{
 	  if (be_verbose)
 	    g_print ("%s ", proc_def->db_info.name);
@@ -1289,7 +1289,7 @@ plug_in_run (ProcRecord *proc_rec,
 
   return_vals = NULL;
 
-  if (proc_rec->proc_type == PDB_TEMPORARY)
+  if (proc_rec->proc_type == GIMP_TEMPORARY)
     {
       return_vals = plug_in_temp_run (proc_rec, args, argc);
       goto done;
@@ -1338,7 +1338,7 @@ plug_in_run (ProcRecord *proc_rec,
 	  /*  If this is an automatically installed extension, wait for an
 	   *  installation-confirmation message
 	   */
-	  if ((proc_rec->proc_type == PDB_EXTENSION) &&
+	  if ((proc_rec->proc_type == GIMP_EXTENSION) &&
 	      (proc_rec->num_args == 0))
 	    gtk_main ();
 
@@ -1723,8 +1723,8 @@ plug_in_handle_proc_run (GPProcRun *proc_run)
        *  dummy "executiuon error" return value --Michael
        */
       return_vals = g_new (Argument, 1);
-      return_vals[0].arg_type = PDB_STATUS;
-      return_vals[0].value.pdb_int = PDB_EXECUTION_ERROR;
+      return_vals[0].arg_type = GIMP_PDB_STATUS;
+      return_vals[0].value.pdb_int = GIMP_PDB_EXECUTION_ERROR;
     }
 
   if (return_vals)
@@ -1825,7 +1825,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
       if (strncmp (proc_install->menu_path, "<Toolbox>", 9) == 0)
 	{
 	  if ((proc_install->nparams < 1) ||
-	      (proc_install->params[0].type != PDB_INT32))
+	      (proc_install->params[0].type != GIMP_PDB_INT32))
 	    {
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
 			 "attempted to install procedure \"%s\"\n"
@@ -1839,9 +1839,9 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
       else if (strncmp (proc_install->menu_path, "<Image>", 7) == 0)
 	{
 	  if ((proc_install->nparams < 3) ||
-	      (proc_install->params[0].type != PDB_INT32) ||
-	      (proc_install->params[1].type != PDB_IMAGE) ||
-	      (proc_install->params[2].type != PDB_DRAWABLE))
+	      (proc_install->params[0].type != GIMP_PDB_INT32) ||
+	      (proc_install->params[1].type != GIMP_PDB_IMAGE) ||
+	      (proc_install->params[2].type != GIMP_PDB_DRAWABLE))
 	    {
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
 			 "attempted to install procedure \"%s\"\n"
@@ -1855,9 +1855,9 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
       else if (strncmp (proc_install->menu_path, "<Load>", 6) == 0)
 	{
 	  if ((proc_install->nparams < 3) ||
-	      (proc_install->params[0].type != PDB_INT32) ||
-	      (proc_install->params[1].type != PDB_STRING) ||
-	      (proc_install->params[2].type != PDB_STRING))
+	      (proc_install->params[0].type != GIMP_PDB_INT32) ||
+	      (proc_install->params[1].type != GIMP_PDB_STRING) ||
+	      (proc_install->params[2].type != GIMP_PDB_STRING))
 	    {
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
 			 "attempted to install procedure \"%s\"\n"
@@ -1871,11 +1871,11 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
       else if (strncmp (proc_install->menu_path, "<Save>", 6) == 0)
 	{
 	  if ((proc_install->nparams < 5) ||
-	      (proc_install->params[0].type != PDB_INT32) ||
-	      (proc_install->params[1].type != PDB_IMAGE) ||
-	      (proc_install->params[2].type != PDB_DRAWABLE) ||
-	      (proc_install->params[3].type != PDB_STRING) ||
-	      (proc_install->params[4].type != PDB_STRING))
+	      (proc_install->params[0].type != GIMP_PDB_INT32) ||
+	      (proc_install->params[1].type != GIMP_PDB_IMAGE) ||
+	      (proc_install->params[2].type != GIMP_PDB_DRAWABLE) ||
+	      (proc_install->params[3].type != GIMP_PDB_STRING) ||
+	      (proc_install->params[4].type != GIMP_PDB_STRING))
 	    {
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
 			 "attempted to install procedure \"%s\"\n"
@@ -1904,11 +1904,11 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 
   for (i = 1; i < proc_install->nparams; i++) 
     {
-      if ((proc_install->params[i].type == PDB_INT32ARRAY ||
-	   proc_install->params[i].type == PDB_INT8ARRAY ||
-	   proc_install->params[i].type == PDB_FLOATARRAY ||
-	   proc_install->params[i].type == PDB_STRINGARRAY) &&
-	  proc_install->params[i-1].type != PDB_INT32) 
+      if ((proc_install->params[i].type == GIMP_PDB_INT32ARRAY ||
+	   proc_install->params[i].type == GIMP_PDB_INT8ARRAY ||
+	   proc_install->params[i].type == GIMP_PDB_FLOATARRAY ||
+	   proc_install->params[i].type == GIMP_PDB_STRINGARRAY) &&
+	  proc_install->params[i-1].type != GIMP_PDB_INT32) 
 	{
 	  g_message ("Plug-In \"%s\"\n(%s)\n"
 		     "attempted to install procedure \"%s\"\n"
@@ -1928,15 +1928,15 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 
   switch (proc_install->type)
     {
-    case PDB_PLUGIN:
-    case PDB_EXTENSION:
+    case GIMP_PLUGIN:
+    case GIMP_EXTENSION:
       plug_in_def = current_plug_in->user_data;
       prog = plug_in_def->prog;
 
       tmp = plug_in_def->proc_defs;
       break;
 
-    case PDB_TEMPORARY:
+    case GIMP_TEMPORARY:
       prog = "none";
 
       tmp = current_plug_in->temp_proc_defs;
@@ -1950,7 +1950,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 
       if (strcmp (proc_def->db_info.name, proc_install->name) == 0)
 	{
-	  if (proc_install->type == PDB_TEMPORARY)
+	  if (proc_install->type == GIMP_TEMPORARY)
 	    plug_in_proc_def_remove (proc_def);
 	  else
 	    plug_in_proc_def_destroy (proc_def, TRUE);  /* destroys data_only */ 
@@ -2014,13 +2014,13 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 
   switch (proc_install->type)
     {
-    case PDB_PLUGIN:
-    case PDB_EXTENSION:
+    case GIMP_PLUGIN:
+    case GIMP_EXTENSION:
       if (add_proc_def)
 	plug_in_def->proc_defs = g_slist_prepend (plug_in_def->proc_defs, proc_def);
       break;
 
-    case PDB_TEMPORARY:
+    case GIMP_TEMPORARY:
       if (add_proc_def)
 	current_plug_in->temp_proc_defs = 
 	  g_slist_prepend (current_plug_in->temp_proc_defs, proc_def);
@@ -2432,7 +2432,7 @@ plug_in_add_to_db (void)
       proc_def = tmp->data;
       tmp = tmp->next;
 
-      if (proc_def->prog && (proc_def->db_info.proc_type != PDB_INTERNAL))
+      if (proc_def->prog && (proc_def->db_info.proc_type != GIMP_INTERNAL))
 	{
 	  proc_def->db_info.exec_method.plug_in.filename = proc_def->prog;
 	  procedural_db_register (&proc_def->db_info);
@@ -2445,16 +2445,16 @@ plug_in_add_to_db (void)
 
       if (proc_def->extensions || proc_def->prefixes || proc_def->magics)
         {
-          args[0].arg_type          = PDB_STRING;
+          args[0].arg_type          = GIMP_PDB_STRING;
           args[0].value.pdb_pointer = proc_def->db_info.name;
 
-          args[1].arg_type          = PDB_STRING;
+          args[1].arg_type          = GIMP_PDB_STRING;
           args[1].value.pdb_pointer = proc_def->extensions;
 
-	  args[2].arg_type          = PDB_STRING;
+	  args[2].arg_type          = GIMP_PDB_STRING;
 	  args[2].value.pdb_pointer = proc_def->prefixes;
 
-	  args[3].arg_type          = PDB_STRING;
+	  args[3].arg_type          = GIMP_PDB_STRING;
 	  args[3].value.pdb_pointer = proc_def->magics;
 
           if (proc_def->image_types)
@@ -2635,13 +2635,13 @@ plug_in_callback (GtkWidget *widget,
 
   switch (proc_rec->proc_type)
     {
-    case PDB_EXTENSION:
+    case GIMP_EXTENSION:
       /* initialize the first argument  */
       args[0].value.pdb_int = RUN_INTERACTIVE;
       argc = 1;
       break;
 
-    case PDB_PLUGIN:
+    case GIMP_PLUGIN:
       if (gdisplay)
 	{
 	  gdisp_ID = gdisplay->ID;
@@ -2660,12 +2660,12 @@ plug_in_callback (GtkWidget *widget,
 	}
       break;
 
-    case PDB_TEMPORARY:
+    case GIMP_TEMPORARY:
       args[0].value.pdb_int = RUN_INTERACTIVE;
       argc = 1;
       if (proc_rec->num_args >= 3 &&
-	  proc_rec->args[1].arg_type == PDB_IMAGE &&
-	  proc_rec->args[2].arg_type == PDB_DRAWABLE)
+	  proc_rec->args[1].arg_type == GIMP_PDB_IMAGE &&
+	  proc_rec->args[2].arg_type == GIMP_PDB_DRAWABLE)
 	{
 	  if (gdisplay)
 	    {
@@ -2693,7 +2693,7 @@ plug_in_callback (GtkWidget *widget,
   /* run the plug-in procedure */
   plug_in_run (proc_rec, args, argc, FALSE, TRUE, gdisp_ID);
 
-  if (proc_rec->proc_type == PDB_PLUGIN)
+  if (proc_rec->proc_type == GIMP_PLUGIN)
     last_plug_in = proc_rec;
 
   g_free (args);
@@ -2934,25 +2934,25 @@ plug_in_params_to_args (GPParam *params,
 
       switch (args[i].arg_type)
 	{
-	case PDB_INT32:
+	case GIMP_PDB_INT32:
 	  args[i].value.pdb_int = params[i].data.d_int32;
 	  break;
-	case PDB_INT16:
+	case GIMP_PDB_INT16:
 	  args[i].value.pdb_int = params[i].data.d_int16;
 	  break;
-	case PDB_INT8:
+	case GIMP_PDB_INT8:
 	  args[i].value.pdb_int = params[i].data.d_int8;
 	  break;
-	case PDB_FLOAT:
+	case GIMP_PDB_FLOAT:
 	  args[i].value.pdb_float = params[i].data.d_float;
 	  break;
-	case PDB_STRING:
+	case GIMP_PDB_STRING:
 	  if (full_copy)
 	    args[i].value.pdb_pointer = g_strdup (params[i].data.d_string);
 	  else
 	    args[i].value.pdb_pointer = params[i].data.d_string;
 	  break;
-	case PDB_INT32ARRAY:
+	case GIMP_PDB_INT32ARRAY:
 	  if (full_copy)
 	    {
 	      count = args[i-1].value.pdb_int;
@@ -2965,7 +2965,7 @@ plug_in_params_to_args (GPParam *params,
 	      args[i].value.pdb_pointer = params[i].data.d_int32array;
 	    }
 	  break;
-	case PDB_INT16ARRAY:
+	case GIMP_PDB_INT16ARRAY:
 	  if (full_copy)
 	    {
 	      count = args[i-1].value.pdb_int;
@@ -2978,7 +2978,7 @@ plug_in_params_to_args (GPParam *params,
 	      args[i].value.pdb_pointer = params[i].data.d_int16array;
 	    }
 	  break;
-	case PDB_INT8ARRAY:
+	case GIMP_PDB_INT8ARRAY:
 	  if (full_copy)
 	    {
 	      count = args[i-1].value.pdb_int;
@@ -2991,7 +2991,7 @@ plug_in_params_to_args (GPParam *params,
 	      args[i].value.pdb_pointer = params[i].data.d_int8array;
 	    }
 	  break;
-	case PDB_FLOATARRAY:
+	case GIMP_PDB_FLOATARRAY:
 	  if (full_copy)
 	    {
 	      count = args[i-1].value.pdb_int;
@@ -3004,7 +3004,7 @@ plug_in_params_to_args (GPParam *params,
 	      args[i].value.pdb_pointer = params[i].data.d_floatarray;
 	    }
 	  break;
-	case PDB_STRINGARRAY:
+	case GIMP_PDB_STRINGARRAY:
 	  if (full_copy)
 	    {
 	      args[i].value.pdb_pointer = g_new (gchar *, 
@@ -3019,47 +3019,47 @@ plug_in_params_to_args (GPParam *params,
 	      args[i].value.pdb_pointer = params[i].data.d_stringarray;
 	    }
 	  break;
-	case PDB_COLOR:
+	case GIMP_PDB_COLOR:
 	  args[i].value.pdb_color = params[i].data.d_color;
 	  break;
-	case PDB_REGION:
+	case GIMP_PDB_REGION:
 	  g_message ("the \"region\" arg type is not currently supported");
 	  break;
-	case PDB_DISPLAY:
+	case GIMP_PDB_DISPLAY:
 	  args[i].value.pdb_int = params[i].data.d_display;
 	  break;
-	case PDB_IMAGE:
+	case GIMP_PDB_IMAGE:
 	  args[i].value.pdb_int = params[i].data.d_image;
 	  break;
-	case PDB_LAYER:
+	case GIMP_PDB_LAYER:
 	  args[i].value.pdb_int = params[i].data.d_layer;
 	  break;
-	case PDB_CHANNEL:
+	case GIMP_PDB_CHANNEL:
 	  args[i].value.pdb_int = params[i].data.d_channel;
 	  break;
-	case PDB_DRAWABLE:
+	case GIMP_PDB_DRAWABLE:
 	  args[i].value.pdb_int = params[i].data.d_drawable;
 	  break;
-	case PDB_SELECTION:
+	case GIMP_PDB_SELECTION:
 	  args[i].value.pdb_int = params[i].data.d_selection;
 	  break;
-	case PDB_BOUNDARY:
+	case GIMP_PDB_BOUNDARY:
 	  args[i].value.pdb_int = params[i].data.d_boundary;
 	  break;
-	case PDB_PATH:
+	case GIMP_PDB_PATH:
 	  args[i].value.pdb_int = params[i].data.d_path;
 	  break;
-	case PDB_PARASITE:
+	case GIMP_PDB_PARASITE:
 	  if (full_copy)
 	    args[i].value.pdb_pointer =
 	      gimp_parasite_copy ((GimpParasite *) &(params[i].data.d_parasite));
 	  else
 	    args[i].value.pdb_pointer = (gpointer) &(params[i].data.d_parasite);
 	  break;
-	case PDB_STATUS:
+	case GIMP_PDB_STATUS:
 	  args[i].value.pdb_int = params[i].data.d_status;
 	  break;
-	case PDB_END:
+	case GIMP_PDB_END:
 	  break;
 	}
     }
@@ -3087,25 +3087,25 @@ plug_in_args_to_params (Argument *args,
 
       switch (args[i].arg_type)
 	{
-	case PDB_INT32:
+	case GIMP_PDB_INT32:
 	  params[i].data.d_int32 = args[i].value.pdb_int;
 	  break;
-	case PDB_INT16:
+	case GIMP_PDB_INT16:
 	  params[i].data.d_int16 = args[i].value.pdb_int;
 	  break;
-	case PDB_INT8:
+	case GIMP_PDB_INT8:
 	  params[i].data.d_int8 = args[i].value.pdb_int;
 	  break;
-	case PDB_FLOAT:
+	case GIMP_PDB_FLOAT:
 	  params[i].data.d_float = args[i].value.pdb_float;
 	  break;
-	case PDB_STRING:
+	case GIMP_PDB_STRING:
 	  if (full_copy)
 	    params[i].data.d_string = g_strdup (args[i].value.pdb_pointer);
 	  else
 	    params[i].data.d_string = args[i].value.pdb_pointer;
 	  break;
-	case PDB_INT32ARRAY:
+	case GIMP_PDB_INT32ARRAY:
 	  if (full_copy)
 	    {
 	      params[i].data.d_int32array = g_new (gint32, params[i-1].data.d_int32);
@@ -3118,7 +3118,7 @@ plug_in_args_to_params (Argument *args,
 	      params[i].data.d_int32array = args[i].value.pdb_pointer;
 	    }
 	  break;
-	case PDB_INT16ARRAY:
+	case GIMP_PDB_INT16ARRAY:
 	  if (full_copy)
 	    {
 	      params[i].data.d_int16array = g_new (gint16, params[i-1].data.d_int32);
@@ -3131,7 +3131,7 @@ plug_in_args_to_params (Argument *args,
 	      params[i].data.d_int16array = args[i].value.pdb_pointer;
 	    }
 	  break;
-	case PDB_INT8ARRAY:
+	case GIMP_PDB_INT8ARRAY:
 	  if (full_copy)
 	    {
 	      params[i].data.d_int8array = g_new (gint8, params[i-1].data.d_int32);
@@ -3144,7 +3144,7 @@ plug_in_args_to_params (Argument *args,
 	      params[i].data.d_int8array = args[i].value.pdb_pointer;
 	    }
 	  break;
-	case PDB_FLOATARRAY:
+	case GIMP_PDB_FLOATARRAY:
 	  if (full_copy)
 	    {
 	      params[i].data.d_floatarray = g_new (gdouble, params[i-1].data.d_int32);
@@ -3157,7 +3157,7 @@ plug_in_args_to_params (Argument *args,
 	      params[i].data.d_floatarray = args[i].value.pdb_pointer;
 	    }
 	  break;
-	case PDB_STRINGARRAY:
+	case GIMP_PDB_STRINGARRAY:
 	  if (full_copy)
 	    {
 	      params[i].data.d_stringarray = g_new (gchar*, params[i-1].data.d_int32);
@@ -3171,37 +3171,37 @@ plug_in_args_to_params (Argument *args,
 	      params[i].data.d_stringarray = args[i].value.pdb_pointer;
 	    }
 	  break;
-	case PDB_COLOR:
+	case GIMP_PDB_COLOR:
 	  params[i].data.d_color = args[i].value.pdb_color;
 	  break;
-	case PDB_REGION:
+	case GIMP_PDB_REGION:
 	  g_message ("the \"region\" arg type is not currently supported");
 	  break;
-	case PDB_DISPLAY:
+	case GIMP_PDB_DISPLAY:
 	  params[i].data.d_display = args[i].value.pdb_int;
 	  break;
-	case PDB_IMAGE:
+	case GIMP_PDB_IMAGE:
 	  params[i].data.d_image = args[i].value.pdb_int;
 	  break;
-	case PDB_LAYER:
+	case GIMP_PDB_LAYER:
 	  params[i].data.d_layer = args[i].value.pdb_int;
 	  break;
-	case PDB_CHANNEL:
+	case GIMP_PDB_CHANNEL:
 	  params[i].data.d_channel = args[i].value.pdb_int;
 	  break;
-	case PDB_DRAWABLE:
+	case GIMP_PDB_DRAWABLE:
 	  params[i].data.d_drawable = args[i].value.pdb_int;
 	  break;
-	case PDB_SELECTION:
+	case GIMP_PDB_SELECTION:
 	  params[i].data.d_selection = args[i].value.pdb_int;
 	  break;
-	case PDB_BOUNDARY:
+	case GIMP_PDB_BOUNDARY:
 	  params[i].data.d_boundary = args[i].value.pdb_int;
 	  break;
-	case PDB_PATH:
+	case GIMP_PDB_PATH:
 	  params[i].data.d_path = args[i].value.pdb_int;
 	  break;
-	case PDB_PARASITE:
+	case GIMP_PDB_PARASITE:
 	  if (full_copy)
 	    {
 	      GimpParasite *tmp;
@@ -3236,10 +3236,10 @@ plug_in_args_to_params (Argument *args,
 			sizeof (GimpParasite));
 	    }
 	  break;
-	case PDB_STATUS:
+	case GIMP_PDB_STATUS:
 	  params[i].data.d_status = args[i].value.pdb_int;
 	  break;
-	case PDB_END:
+	case GIMP_PDB_END:
 	  break;
 	}
     }
@@ -3258,32 +3258,32 @@ plug_in_params_destroy (GPParam *params,
     {
       switch (params[i].type)
 	{
-	case PDB_INT32:
-	case PDB_INT16:
-	case PDB_INT8:
-	case PDB_FLOAT:
+	case GIMP_PDB_INT32:
+	case GIMP_PDB_INT16:
+	case GIMP_PDB_INT8:
+	case GIMP_PDB_FLOAT:
 	  break;
-	case PDB_STRING:
+	case GIMP_PDB_STRING:
 	  if (full_destroy)
 	    g_free (params[i].data.d_string);
 	  break;
-	case PDB_INT32ARRAY:
+	case GIMP_PDB_INT32ARRAY:
 	  if (full_destroy)
 	    g_free (params[i].data.d_int32array);
 	  break;
-	case PDB_INT16ARRAY:
+	case GIMP_PDB_INT16ARRAY:
 	  if (full_destroy)
 	    g_free (params[i].data.d_int16array);
 	  break;
-	case PDB_INT8ARRAY:
+	case GIMP_PDB_INT8ARRAY:
 	  if (full_destroy)
 	    g_free (params[i].data.d_int8array);
 	  break;
-	case PDB_FLOATARRAY:
+	case GIMP_PDB_FLOATARRAY:
 	  if (full_destroy)
 	    g_free (params[i].data.d_floatarray);
 	  break;
-	case PDB_STRINGARRAY:
+	case GIMP_PDB_STRINGARRAY:
 	  if (full_destroy)
 	    {
 	      for (j = 0; j < params[i-1].data.d_int32; j++)
@@ -3291,21 +3291,21 @@ plug_in_params_destroy (GPParam *params,
 	      g_free (params[i].data.d_stringarray);
 	    }
 	  break;
-	case PDB_COLOR:
+	case GIMP_PDB_COLOR:
 	  break;
-	case PDB_REGION:
+	case GIMP_PDB_REGION:
 	  g_message ("the \"region\" arg type is not currently supported");
 	  break;
-	case PDB_DISPLAY:
-	case PDB_IMAGE:
-	case PDB_LAYER:
-	case PDB_CHANNEL:
-	case PDB_DRAWABLE:
-	case PDB_SELECTION:
-	case PDB_BOUNDARY:
-	case PDB_PATH:
+	case GIMP_PDB_DISPLAY:
+	case GIMP_PDB_IMAGE:
+	case GIMP_PDB_LAYER:
+	case GIMP_PDB_CHANNEL:
+	case GIMP_PDB_DRAWABLE:
+	case GIMP_PDB_SELECTION:
+	case GIMP_PDB_BOUNDARY:
+	case GIMP_PDB_PATH:
 	  break;
-	case PDB_PARASITE:
+	case GIMP_PDB_PARASITE:
 	  if (full_destroy)
 	    if (params[i].data.d_parasite.data)
 	    {
@@ -3315,9 +3315,9 @@ plug_in_params_destroy (GPParam *params,
 	      params[i].data.d_parasite.data = 0;
 	    }
 	  break;
-	case PDB_STATUS:
+	case GIMP_PDB_STATUS:
 	  break;
-	case PDB_END:
+	case GIMP_PDB_END:
 	  break;
 	}
     }
@@ -3338,32 +3338,32 @@ plug_in_args_destroy (Argument *args,
     {
       switch (args[i].arg_type)
 	{
-	case PDB_INT32:
-	case PDB_INT16:
-	case PDB_INT8:
-	case PDB_FLOAT:
+	case GIMP_PDB_INT32:
+	case GIMP_PDB_INT16:
+	case GIMP_PDB_INT8:
+	case GIMP_PDB_FLOAT:
 	  break;
-	case PDB_STRING:
+	case GIMP_PDB_STRING:
 	  if (full_destroy)
 	    g_free (args[i].value.pdb_pointer);
 	  break;
-	case PDB_INT32ARRAY:
+	case GIMP_PDB_INT32ARRAY:
 	  if (full_destroy)
 	    g_free (args[i].value.pdb_pointer);
 	  break;
-	case PDB_INT16ARRAY:
+	case GIMP_PDB_INT16ARRAY:
 	  if (full_destroy)
 	    g_free (args[i].value.pdb_pointer);
 	  break;
-	case PDB_INT8ARRAY:
+	case GIMP_PDB_INT8ARRAY:
 	  if (full_destroy)
 	    g_free (args[i].value.pdb_pointer);
 	  break;
-	case PDB_FLOATARRAY:
+	case GIMP_PDB_FLOATARRAY:
 	  if (full_destroy)
 	    g_free (args[i].value.pdb_pointer);
 	  break;
-	case PDB_STRINGARRAY:
+	case GIMP_PDB_STRINGARRAY:
 	  if (full_destroy)
 	    {
 	      count = args[i-1].value.pdb_int;
@@ -3375,30 +3375,30 @@ plug_in_args_destroy (Argument *args,
 	      g_free (args[i].value.pdb_pointer);
 	    }
 	  break;
-	case PDB_COLOR:
+	case GIMP_PDB_COLOR:
 	  break;
-	case PDB_REGION:
+	case GIMP_PDB_REGION:
 	  g_message ("the \"region\" arg type is not currently supported");
 	  break;
-	case PDB_DISPLAY:
-	case PDB_IMAGE:
-	case PDB_LAYER:
-	case PDB_CHANNEL:
-	case PDB_DRAWABLE:
-	case PDB_SELECTION:
-	case PDB_BOUNDARY:
-	case PDB_PATH:
+	case GIMP_PDB_DISPLAY:
+	case GIMP_PDB_IMAGE:
+	case GIMP_PDB_LAYER:
+	case GIMP_PDB_CHANNEL:
+	case GIMP_PDB_DRAWABLE:
+	case GIMP_PDB_SELECTION:
+	case GIMP_PDB_BOUNDARY:
+	case GIMP_PDB_PATH:
 	  break;
-	case PDB_PARASITE:
+	case GIMP_PDB_PARASITE:
 	  if (full_destroy)
 	    {
 	      gimp_parasite_free ((GimpParasite *) (args[i].value.pdb_pointer));
 	      args[i].value.pdb_pointer = NULL;
 	    }
 	  break;
-	case PDB_STATUS:
+	case GIMP_PDB_STATUS:
 	  break;
-	case PDB_END:
+	case GIMP_PDB_END:
 	  break;
 	}
     }

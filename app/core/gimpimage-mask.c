@@ -632,12 +632,12 @@ gimage_mask_stroke (GimpImage    *gimage,
       return_vals =
 	procedural_db_run_proc (tool_manager_active_get_PDB_string (),
 				&nreturn_vals,
-				PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
-				PDB_INT32, (gint32) cpnt,
-				PDB_FLOATARRAY, stroke_points,
-				PDB_END);
+				GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
+				GIMP_PDB_INT32, (gint32) cpnt,
+				GIMP_PDB_FLOATARRAY, stroke_points,
+				GIMP_PDB_END);
       
-      if (return_vals && return_vals[0].value.pdb_int == PDB_SUCCESS)
+      if (return_vals && return_vals[0].value.pdb_int == GIMP_PDB_SUCCESS)
 	{
 	  /* Not required */
 	  /*gdisplays_flush ();*/

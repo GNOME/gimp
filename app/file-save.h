@@ -23,17 +23,17 @@
 extern GSList *save_procs;
 
 
-PDBStatusType   file_save           (GimpImage     *gimage,
-				     gchar         *filename,
-				     gchar         *raw_filename,
-				     RunModeType    run_mode,
-				     gboolean       set_filename);
+GimpPDBStatusType   file_save           (GimpImage     *gimage,
+					 gchar         *filename,
+					 gchar         *raw_filename,
+					 RunModeType    run_mode,
+					 gboolean       set_filename);
 
-gboolean        file_save_with_proc (GimpImage     *gimage,
-				     gchar         *full_filename,
-				     gchar         *raw_filename,
-				     PlugInProcDef *save_proc,
-				     gboolean       set_filename);
+gboolean            file_save_with_proc (GimpImage     *gimage,
+					 gchar         *full_filename,
+					 gchar         *raw_filename,
+					 PlugInProcDef *save_proc,
+					 gboolean       set_filename);
 
 
 #endif /* __FILE_SAVE_H__ */

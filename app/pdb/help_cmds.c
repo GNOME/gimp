@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -62,12 +64,12 @@ help_invoker (Argument *args)
 static ProcArg help_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "prog_name",
     "The plug-in's executable name or an empty string"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "help_page",
     "The location of the help page"
   }
@@ -81,7 +83,7 @@ static ProcRecord help_proc =
   "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer <mitch@gimp.org>",
   "2000",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   help_inargs,
   0,

@@ -86,8 +86,10 @@ foreach (sort keys %plugins) {
 
         $libgimp .= "\t\t\\\n\t\$(top_builddir)/libgimpwidgets/libgimpwidgets-\$(LT_RELEASE).la";
         $libgimp .= "\t\\\n\t\$(top_builddir)/libgimpcolor/libgimpcolor-\$(LT_RELEASE).la";
+        $libgimp .= "\t\\\n\t\$(top_builddir)/libgimpbase/libgimpbase-\$(LT_RELEASE).la";
     } else {
         $libgimp .= "\t\t\\\n\t\$(top_builddir)/libgimpcolor/libgimpcolor-\$(LT_RELEASE).la";
+        $libgimp .= "\t\\\n\t\$(top_builddir)/libgimpbase/libgimpbase-\$(LT_RELEASE).la";
     }
 
     my $optlib = "";

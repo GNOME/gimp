@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 #include "procedural_db.h"
@@ -161,22 +163,22 @@ airbrush_invoker (Argument *args)
 static ProcArg airbrush_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "pressure",
     "The pressure of the airbrush strokes (0 <= pressure <= 100)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "strokes",
     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
   }
@@ -190,7 +192,7 @@ static ProcRecord airbrush_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   4,
   airbrush_inargs,
   0,
@@ -227,17 +229,17 @@ airbrush_default_invoker (Argument *args)
 static ProcArg airbrush_default_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "strokes",
     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
   }
@@ -251,7 +253,7 @@ static ProcRecord airbrush_default_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   airbrush_default_inargs,
   0,
@@ -339,72 +341,72 @@ blend_invoker (Argument *args)
 static ProcArg blend_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "blend_mode",
     "The type of blend: { FG_BG_RGB (0), FG_BG_HSV (1), FG_TRANS (2), CUSTOM (3) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "paint_mode",
     "The paint application mode: { NORMAL_MODE (0), DISSOLVE_MODE (1), BEHIND_MODE (2), MULTIPLY_MODE (3), SCREEN_MODE (4), OVERLAY_MODE (5), DIFFERENCE_MODE (6), ADDITION_MODE (7), SUBTRACT_MODE (8), DARKEN_ONLY_MODE (9), LIGHTEN_ONLY_MODE (10), HUE_MODE (11), SATURATION_MODE (12), COLOR_MODE (13), VALUE_MODE (14), DIVIDE_MODE (15), DODGE_MODE (16), BURN_MODE (17), HARDLIGHT_MODE (18) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "gradient_type",
     "The type of gradient: { LINEAR (0), BILINEAR (1), RADIAL (2), SQUARE (3), CONICAL_SYMMETRIC (4), CONICAL_ASYMMETRIC (5), SHAPEBURST_ANGULAR (6), SHAPEBURST_SPHERICAL (7), SHAPEBURST_DIMPLED (8), SPIRAL_CLOCKWISE (9), SPIRAL_ANTICLOCKWISE (10) }"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "opacity",
     "The opacity of the final blend (0 <= opacity <= 100)"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "offset",
     "Offset relates to the starting and ending coordinates specified for the blend. This parameter is mode dependent (0 <= offset)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "repeat",
     "Repeat mode: { REPEAT_NONE (0), REPEAT_SAWTOOTH (1), REPEAT_TRIANGULAR (2) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "supersample",
     "Do adaptive supersampling (TRUE or FALSE)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "max_depth",
     "Maximum recursion levels for supersampling"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "threshold",
     "Supersampling threshold"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "x1",
     "The x coordinate of this blend's starting point"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "y1",
     "The y coordinate of this blend's starting point"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "x2",
     "The x coordinate of this blend's ending point"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "y2",
     "The y coordinate of this blend's ending point"
   }
@@ -418,7 +420,7 @@ static ProcRecord blend_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   14,
   blend_inargs,
   0,
@@ -479,42 +481,42 @@ bucket_fill_invoker (Argument *args)
 static ProcArg bucket_fill_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "fill_mode",
     "The type of fill: { FG_BUCKET_FILL (0), BG_BUCKET_FILL (1), PATTERN_BUCKET_FILL (2) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "paint_mode",
     "The paint application mode: { NORMAL_MODE (0), DISSOLVE_MODE (1), BEHIND_MODE (2), MULTIPLY_MODE (3), SCREEN_MODE (4), OVERLAY_MODE (5), DIFFERENCE_MODE (6), ADDITION_MODE (7), SUBTRACT_MODE (8), DARKEN_ONLY_MODE (9), LIGHTEN_ONLY_MODE (10), HUE_MODE (11), SATURATION_MODE (12), COLOR_MODE (13), VALUE_MODE (14), DIVIDE_MODE (15), DODGE_MODE (16), BURN_MODE (17), HARDLIGHT_MODE (18) }"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "opacity",
     "The opacity of the final bucket fill (0 <= opacity <= 100)"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "threshold",
     "The threshold determines how extensive the seed fill will be. It's value is specified in terms of intensity levels (0 <= threshold <= 255). This parameter is only valid when there is no selection in the specified image."
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "sample_merged",
     "Use the composite image, not the drawable"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "x",
     "The x coordinate of this bucket fill's application. This parameter is only valid when there is no selection in the specified image."
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "y",
     "The y coordinate of this bucket fill's application. This parameter is only valid when there is no selection in the specified image."
   }
@@ -528,7 +530,7 @@ static ProcRecord bucket_fill_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   8,
   bucket_fill_inargs,
   0,
@@ -589,42 +591,42 @@ by_color_select_invoker (Argument *args)
 static ProcArg by_color_select_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_COLOR,
+    GIMP_PDB_COLOR,
     "color",
     "The color to select"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "threshold",
     "Threshold in intensity levels 0 <= threshold <= 255"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "operation",
     "The selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "antialias",
     "Antialiasing (TRUE or FALSE)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "feather",
     "Feather option for selections"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "feather_radius",
     "Radius for feather operation"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "sample_merged",
     "Use the composite image, not the drawable"
   }
@@ -638,7 +640,7 @@ static ProcRecord by_color_select_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   8,
   by_color_select_inargs,
   0,
@@ -692,37 +694,37 @@ clone_invoker (Argument *args)
 static ProcArg clone_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "src_drawable",
     "The source drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "clone_type",
     "The type of clone: { IMAGE_CLONE (0), PATTERN_CLONE (1) }"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "src_x",
     "The x coordinate in the source image"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "src_y",
     "The y coordinate in the source image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "strokes",
     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
   }
@@ -736,7 +738,7 @@ static ProcRecord clone_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   7,
   clone_inargs,
   0,
@@ -773,17 +775,17 @@ clone_default_invoker (Argument *args)
 static ProcArg clone_default_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "strokes",
     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
   }
@@ -797,7 +799,7 @@ static ProcRecord clone_default_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   clone_default_inargs,
   0,
@@ -871,42 +873,42 @@ color_picker_invoker (Argument *args)
 static ProcArg color_picker_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "x",
     "x coordinate of upper-left corner of rectangle"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "y",
     "y coordinate of upper-left corner of rectangle"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "sample_merged",
     "Use the composite image, not the drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "sample_average",
     "Average the color of all the pixels in a specified radius"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "average_radius",
     "The radius of pixels to average"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "save_color",
     "Save the color to the active palette"
   }
@@ -915,7 +917,7 @@ static ProcArg color_picker_inargs[] =
 static ProcArg color_picker_outargs[] =
 {
   {
-    PDB_COLOR,
+    GIMP_PDB_COLOR,
     "color",
     "The return color"
   }
@@ -929,7 +931,7 @@ static ProcRecord color_picker_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   8,
   color_picker_inargs,
   1,
@@ -976,27 +978,27 @@ convolve_invoker (Argument *args)
 static ProcArg convolve_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "pressure",
     "The pressure: 0 <= pressure <= 100"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "convolve_type",
     "Convolve type: { BLUR_CONVOLVE (0), SHARPEN_CONVOLVE (1) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "strokes",
     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
   }
@@ -1010,7 +1012,7 @@ static ProcRecord convolve_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   5,
   convolve_inargs,
   0,
@@ -1047,17 +1049,17 @@ convolve_default_invoker (Argument *args)
 static ProcArg convolve_default_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "strokes",
     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
   }
@@ -1071,7 +1073,7 @@ static ProcRecord convolve_default_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   convolve_default_inargs,
   0,
@@ -1126,27 +1128,27 @@ crop_invoker (Argument *args)
 static ProcArg crop_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "new_width",
     "New image width: (0 < new_width <= width)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "new_height",
     "New image height: (0 < new_height <= height)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offx",
     "x offset: (0 <= offx <= (width - new_width))"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offy",
     "y offset: (0 <= offy <= (height - new_height))"
   }
@@ -1160,7 +1162,7 @@ static ProcRecord crop_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   5,
   crop_inargs,
   0,
@@ -1212,32 +1214,32 @@ dodgeburn_invoker (Argument *args)
 static ProcArg dodgeburn_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "exposure",
     "The exposer of the strokes (0 <= exposure <= 100)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "dodgeburn_type",
     "The type either dodge or burn: { DODGE (0), BURN (1) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "dodgeburn_mode",
     "The mode: { DODGEBURN_HIGHLIGHTS (0), DODGEBURN_MIDTONES (1), DODGEBURN_SHADOWS (2) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "strokes",
     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
   }
@@ -1251,7 +1253,7 @@ static ProcRecord dodgeburn_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   6,
   dodgeburn_inargs,
   0,
@@ -1288,17 +1290,17 @@ dodgeburn_default_invoker (Argument *args)
 static ProcArg dodgeburn_default_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "strokes",
     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
   }
@@ -1312,7 +1314,7 @@ static ProcRecord dodgeburn_default_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   dodgeburn_default_inargs,
   0,
@@ -1370,47 +1372,47 @@ ellipse_select_invoker (Argument *args)
 static ProcArg ellipse_select_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "x",
     "x coordinate of upper-left corner of ellipse bounding box"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "y",
     "y coordinate of upper-left corner of ellipse bounding box"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "width",
     "The width of the ellipse: 0 < width"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "height",
     "The height of the ellipse: 0 < height"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "operation",
     "The selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "antialias",
     "Antialiasing (TRUE or FALSE)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "feather",
     "Feather option for selections"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "feather_radius",
     "Radius for feather operation"
   }
@@ -1424,7 +1426,7 @@ static ProcRecord ellipse_select_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   9,
   ellipse_select_inargs,
   0,
@@ -1471,27 +1473,27 @@ eraser_invoker (Argument *args)
 static ProcArg eraser_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "strokes",
     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "hardness",
     "HARD (0) or SOFT (1)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "method",
     "CONTINUOUS (0) or INCREMENTAL (1)"
   }
@@ -1505,7 +1507,7 @@ static ProcRecord eraser_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   5,
   eraser_inargs,
   0,
@@ -1542,17 +1544,17 @@ eraser_default_invoker (Argument *args)
 static ProcArg eraser_default_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "strokes",
     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
   }
@@ -1566,7 +1568,7 @@ static ProcRecord eraser_default_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   eraser_default_inargs,
   0,
@@ -1642,12 +1644,12 @@ flip_invoker (Argument *args)
 static ProcArg flip_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "flip_type",
     "Type of flip: HORIZONTAL (0) or VERTICAL (1)"
   }
@@ -1656,7 +1658,7 @@ static ProcArg flip_inargs[] =
 static ProcArg flip_outargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The flipped drawable"
   }
@@ -1670,7 +1672,7 @@ static ProcRecord flip_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   flip_inargs,
   1,
@@ -1722,37 +1724,37 @@ free_select_invoker (Argument *args)
 static ProcArg free_select_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_segs",
     "Number of points (count 1 coordinate as two points)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "segs",
     "Array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "operation",
     "The selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "antialias",
     "Antialiasing (TRUE or FALSE)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "feather",
     "Feather option for selections"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "feather_radius",
     "Radius for feather operation"
   }
@@ -1766,7 +1768,7 @@ static ProcRecord free_select_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   7,
   free_select_inargs,
   0,
@@ -1835,47 +1837,47 @@ fuzzy_select_invoker (Argument *args)
 static ProcArg fuzzy_select_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "x",
     "x coordinate of initial seed fill point: (image coordinates)"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "y",
     "y coordinate of initial seed fill point: (image coordinates)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "threshold",
     "Threshold in intensity levels 0 <= threshold <= 255"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "operation",
     "The selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "antialias",
     "Antialiasing (TRUE or FALSE)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "feather",
     "Feather option for selections"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "feather_radius",
     "Radius for feather operation"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "sample_merged",
     "Use the composite image, not the drawable"
   }
@@ -1890,7 +1892,7 @@ static ProcRecord fuzzy_select_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   9,
   fuzzy_select_inargs,
   0,
@@ -1943,32 +1945,32 @@ paintbrush_invoker (Argument *args)
 static ProcArg paintbrush_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "fade_out",
     "Fade out parameter: 0 <= fade_out"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "strokes",
     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "method",
     "CONTINUOUS (0) or INCREMENTAL (1)"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "gradient_length",
     "Length of gradient to draw: 0 <= gradient_length"
   }
@@ -1982,7 +1984,7 @@ static ProcRecord paintbrush_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   6,
   paintbrush_inargs,
   0,
@@ -2019,17 +2021,17 @@ paintbrush_default_invoker (Argument *args)
 static ProcArg paintbrush_default_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "strokes",
     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
   }
@@ -2043,7 +2045,7 @@ static ProcRecord paintbrush_default_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   paintbrush_default_inargs,
   0,
@@ -2080,17 +2082,17 @@ pencil_invoker (Argument *args)
 static ProcArg pencil_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "strokes",
     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
   }
@@ -2104,7 +2106,7 @@ static ProcRecord pencil_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   pencil_inargs,
   0,
@@ -2209,52 +2211,52 @@ perspective_invoker (Argument *args)
 static ProcArg perspective_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "interpolation",
     "Whether to use interpolation"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "x0",
     "The new x coordinate of upper-left corner of original bounding box"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "y0",
     "The new y coordinate of upper-left corner of original bounding box"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "x1",
     "The new x coordinate of upper-right corner of original bounding box"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "y1",
     "The new y coordinate of upper-right corner of original bounding box"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "x2",
     "The new x coordinate of lower-left corner of original bounding box"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "y2",
     "The new y coordinate of lower-left corner of original bounding box"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "x3",
     "The new x coordinate of lower-right corner of original bounding box"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "y3",
     "The new y coordinate of lower-right corner of original bounding box"
   }
@@ -2263,7 +2265,7 @@ static ProcArg perspective_inargs[] =
 static ProcArg perspective_outargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The newly mapped drawable"
   }
@@ -2278,7 +2280,7 @@ static ProcRecord perspective_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   10,
   perspective_inargs,
   1,
@@ -2333,42 +2335,42 @@ rect_select_invoker (Argument *args)
 static ProcArg rect_select_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "x",
     "x coordinate of upper-left corner of rectangle"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "y",
     "y coordinate of upper-left corner of rectangle"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "width",
     "The width of the rectangle: 0 < width"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "height",
     "The height of the rectangle: 0 < height"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "operation",
     "The selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "feather",
     "Feather option for selections"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "feather_radius",
     "Radius for feather operation"
   }
@@ -2382,7 +2384,7 @@ static ProcRecord rect_select_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   8,
   rect_select_inargs,
   0,
@@ -2460,17 +2462,17 @@ rotate_invoker (Argument *args)
 static ProcArg rotate_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "interpolation",
     "Whether to use interpolation"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "angle",
     "The angle of rotation (radians)"
   }
@@ -2479,7 +2481,7 @@ static ProcArg rotate_inargs[] =
 static ProcArg rotate_outargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The rotated drawable"
   }
@@ -2493,7 +2495,7 @@ static ProcRecord rotate_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   rotate_inargs,
   1,
@@ -2589,32 +2591,32 @@ scale_invoker (Argument *args)
 static ProcArg scale_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "interpolation",
     "Whether to use interpolation"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "x0",
     "The new x coordinate of upper-left corner of newly scaled region"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "y0",
     "The new y coordinate of upper-left corner of newly scaled region"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "x1",
     "The new x coordinate of lower-right corner of newly scaled region"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "y1",
     "The new y coordinate of lower-right corner of newly scaled region"
   }
@@ -2623,7 +2625,7 @@ static ProcArg scale_inargs[] =
 static ProcArg scale_outargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The scaled drawable"
   }
@@ -2637,7 +2639,7 @@ static ProcRecord scale_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   6,
   scale_inargs,
   1,
@@ -2728,22 +2730,22 @@ shear_invoker (Argument *args)
 static ProcArg shear_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "interpolation",
     "Whether to use interpolation"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "shear_type",
     "Type of shear: HORIZONTAL (0) or VERTICAL (1)"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "magnitude",
     "The magnitude of the shear"
   }
@@ -2752,7 +2754,7 @@ static ProcArg shear_inargs[] =
 static ProcArg shear_outargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The sheared drawable"
   }
@@ -2766,7 +2768,7 @@ static ProcRecord shear_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   4,
   shear_inargs,
   1,
@@ -2808,22 +2810,22 @@ smudge_invoker (Argument *args)
 static ProcArg smudge_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "pressure",
     "The pressure of the smudge strokes (0 <= pressure <= 100)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "strokes",
     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
   }
@@ -2837,7 +2839,7 @@ static ProcRecord smudge_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   4,
   smudge_inargs,
   0,
@@ -2874,17 +2876,17 @@ smudge_default_invoker (Argument *args)
 static ProcArg smudge_default_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_strokes",
     "Number of stroke control points (count each coordinate as 2 points)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "strokes",
     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
   }
@@ -2898,7 +2900,7 @@ static ProcRecord smudge_default_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   smudge_default_inargs,
   0,
@@ -2989,47 +2991,47 @@ transform_2d_invoker (Argument *args)
 static ProcArg transform_2d_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "interpolation",
     "Whether to use interpolation"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "source_x",
     "X coordinate of the transformation center"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "source_y",
     "Y coordinate of the transformation center"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "scale_x",
     "Amount to scale in x direction"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "scale_y",
     "Amount to scale in y direction"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "angle",
     "The angle of rotation (radians)"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "dest_x",
     "X coordinate of where the centre goes"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "dest_y",
     "Y coordinate of where the centre goes"
   }
@@ -3038,7 +3040,7 @@ static ProcArg transform_2d_inargs[] =
 static ProcArg transform_2d_outargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The transformed drawable"
   }
@@ -3052,7 +3054,7 @@ static ProcRecord transform_2d_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   9,
   transform_2d_inargs,
   1,

@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -212,12 +214,12 @@ image_list_invoker (Argument *args)
 static ProcArg image_list_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_images",
     "The number of images currently open"
   },
   {
-    PDB_INT32ARRAY,
+    GIMP_PDB_INT32ARRAY,
     "image_ids",
     "The list of images currently open"
   }
@@ -231,7 +233,7 @@ static ProcRecord image_list_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   2,
@@ -275,17 +277,17 @@ image_new_invoker (Argument *args)
 static ProcArg image_new_inargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "The width of the image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "height",
     "The height of the image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "type",
     "The type of image: { RGB (0), GRAY (1), INDEXED (2) }"
   }
@@ -294,7 +296,7 @@ static ProcArg image_new_inargs[] =
 static ProcArg image_new_outargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The ID of the newly created image"
   }
@@ -308,7 +310,7 @@ static ProcRecord image_new_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   image_new_inargs,
   1,
@@ -354,27 +356,27 @@ image_resize_invoker (Argument *args)
 static ProcArg image_resize_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "new_width",
     "New image width: 0 < new_width"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "new_height",
     "New image height: 0 < new_height"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offx",
     "x offset between upper left corner of old and new images: (new - old)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offy",
     "y offset between upper left corner of old and new images: (new - old)"
   }
@@ -388,7 +390,7 @@ static ProcRecord image_resize_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   5,
   image_resize_inargs,
   0,
@@ -428,17 +430,17 @@ image_scale_invoker (Argument *args)
 static ProcArg image_scale_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "new_width",
     "New image width: 0 < new_width"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "new_height",
     "New image height: 0 < new_height"
   }
@@ -452,7 +454,7 @@ static ProcRecord image_scale_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   image_scale_inargs,
   0,
@@ -479,7 +481,7 @@ image_delete_invoker (Argument *args)
 static ProcArg image_delete_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -493,7 +495,7 @@ static ProcRecord image_delete_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_delete_inargs,
   0,
@@ -520,7 +522,7 @@ image_free_shadow_invoker (Argument *args)
 static ProcArg image_free_shadow_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -534,7 +536,7 @@ static ProcRecord image_free_shadow_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_free_shadow_inargs,
   0,
@@ -584,7 +586,7 @@ image_get_layers_invoker (Argument *args)
 static ProcArg image_get_layers_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -593,12 +595,12 @@ static ProcArg image_get_layers_inargs[] =
 static ProcArg image_get_layers_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_layers",
     "The number of layers contained in the image"
   },
   {
-    PDB_INT32ARRAY,
+    GIMP_PDB_INT32ARRAY,
     "layer_ids",
     "The list of layers contained in the image"
   }
@@ -612,7 +614,7 @@ static ProcRecord image_get_layers_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_get_layers_inargs,
   2,
@@ -662,7 +664,7 @@ image_get_channels_invoker (Argument *args)
 static ProcArg image_get_channels_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -671,12 +673,12 @@ static ProcArg image_get_channels_inargs[] =
 static ProcArg image_get_channels_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_channels",
     "The number of channels contained in the image"
   },
   {
-    PDB_INT32ARRAY,
+    GIMP_PDB_INT32ARRAY,
     "channel_ids",
     "The list of channels contained in the image"
   }
@@ -690,7 +692,7 @@ static ProcRecord image_get_channels_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_get_channels_inargs,
   2,
@@ -717,7 +719,7 @@ image_unset_active_channel_invoker (Argument *args)
 static ProcArg image_unset_active_channel_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -731,7 +733,7 @@ static ProcRecord image_unset_active_channel_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_unset_active_channel_inargs,
   0,
@@ -771,17 +773,17 @@ image_pick_correlate_layer_invoker (Argument *args)
 static ProcArg image_pick_correlate_layer_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "x",
     "The x coordinate for the pick"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "y",
     "The y coordinate for the pick"
   }
@@ -790,7 +792,7 @@ static ProcArg image_pick_correlate_layer_inargs[] =
 static ProcArg image_pick_correlate_layer_outargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer found at the specified coordinates"
   }
@@ -804,7 +806,7 @@ static ProcRecord image_pick_correlate_layer_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   image_pick_correlate_layer_inargs,
   1,
@@ -836,12 +838,12 @@ image_raise_layer_invoker (Argument *args)
 static ProcArg image_raise_layer_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer to raise"
   }
@@ -855,7 +857,7 @@ static ProcRecord image_raise_layer_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_raise_layer_inargs,
   0,
@@ -887,12 +889,12 @@ image_lower_layer_invoker (Argument *args)
 static ProcArg image_lower_layer_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer to lower"
   }
@@ -906,7 +908,7 @@ static ProcRecord image_lower_layer_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_lower_layer_inargs,
   0,
@@ -938,12 +940,12 @@ image_raise_layer_to_top_invoker (Argument *args)
 static ProcArg image_raise_layer_to_top_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer to raise to top"
   }
@@ -957,7 +959,7 @@ static ProcRecord image_raise_layer_to_top_proc =
   "Wolfgang Hofer, Sven Neumann",
   "Wolfgang Hofer",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_raise_layer_to_top_inargs,
   0,
@@ -989,12 +991,12 @@ image_lower_layer_to_bottom_invoker (Argument *args)
 static ProcArg image_lower_layer_to_bottom_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer to lower to bottom"
   }
@@ -1008,7 +1010,7 @@ static ProcRecord image_lower_layer_to_bottom_proc =
   "Wolfgang Hofer, Sven Neumann",
   "Wolfgang Hofer",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_lower_layer_to_bottom_inargs,
   0,
@@ -1050,12 +1052,12 @@ image_merge_visible_layers_invoker (Argument *args)
 static ProcArg image_merge_visible_layers_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "merge_type",
     "The type of merge: { EXPAND_AS_NECESSARY (0), CLIP_TO_IMAGE (1), CLIP_TO_BOTTOM_LAYER (2) }"
   }
@@ -1064,7 +1066,7 @@ static ProcArg image_merge_visible_layers_inargs[] =
 static ProcArg image_merge_visible_layers_outargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The resulting layer"
   }
@@ -1078,7 +1080,7 @@ static ProcRecord image_merge_visible_layers_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_merge_visible_layers_inargs,
   1,
@@ -1125,17 +1127,17 @@ image_merge_down_invoker (Argument *args)
 static ProcArg image_merge_down_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "merge_layer",
     "The layer to merge down from"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "merge_type",
     "The type of merge: { EXPAND_AS_NECESSARY (0), CLIP_TO_IMAGE (1), CLIP_TO_BOTTOM_LAYER (2) }"
   }
@@ -1144,7 +1146,7 @@ static ProcArg image_merge_down_inargs[] =
 static ProcArg image_merge_down_outargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The resulting layer"
   }
@@ -1158,7 +1160,7 @@ static ProcRecord image_merge_down_proc =
   "Larry Ewing",
   "Larry Ewing",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   image_merge_down_inargs,
   1,
@@ -1192,7 +1194,7 @@ image_flatten_invoker (Argument *args)
 static ProcArg image_flatten_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -1201,7 +1203,7 @@ static ProcArg image_flatten_inargs[] =
 static ProcArg image_flatten_outargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The resulting layer"
   }
@@ -1215,7 +1217,7 @@ static ProcRecord image_flatten_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_flatten_inargs,
   1,
@@ -1257,17 +1259,17 @@ image_add_layer_invoker (Argument *args)
 static ProcArg image_add_layer_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "position",
     "The layer position"
   }
@@ -1281,7 +1283,7 @@ static ProcRecord image_add_layer_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   image_add_layer_inargs,
   0,
@@ -1313,12 +1315,12 @@ image_remove_layer_invoker (Argument *args)
 static ProcArg image_remove_layer_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   }
@@ -1332,7 +1334,7 @@ static ProcRecord image_remove_layer_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_remove_layer_inargs,
   0,
@@ -1369,17 +1371,17 @@ image_add_layer_mask_invoker (Argument *args)
 static ProcArg image_add_layer_mask_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer to receive the mask"
   },
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "mask",
     "The mask to add to the layer"
   }
@@ -1393,7 +1395,7 @@ static ProcRecord image_add_layer_mask_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   image_add_layer_mask_inargs,
   0,
@@ -1430,17 +1432,17 @@ image_remove_layer_mask_invoker (Argument *args)
 static ProcArg image_remove_layer_mask_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer from which to remove mask"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "mode",
     "Removal mode: { APPLY (0), DISCARD (1) }"
   }
@@ -1454,7 +1456,7 @@ static ProcRecord image_remove_layer_mask_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   image_remove_layer_mask_inargs,
   0,
@@ -1486,12 +1488,12 @@ image_raise_channel_invoker (Argument *args)
 static ProcArg image_raise_channel_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel to raise"
   }
@@ -1505,7 +1507,7 @@ static ProcRecord image_raise_channel_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_raise_channel_inargs,
   0,
@@ -1537,12 +1539,12 @@ image_lower_channel_invoker (Argument *args)
 static ProcArg image_lower_channel_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer to lower"
   }
@@ -1556,7 +1558,7 @@ static ProcRecord image_lower_channel_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_lower_channel_inargs,
   0,
@@ -1591,17 +1593,17 @@ image_add_channel_invoker (Argument *args)
 static ProcArg image_add_channel_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "position",
     "The channel position"
   }
@@ -1615,7 +1617,7 @@ static ProcRecord image_add_channel_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   image_add_channel_inargs,
   0,
@@ -1647,12 +1649,12 @@ image_remove_channel_invoker (Argument *args)
 static ProcArg image_remove_channel_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel"
   }
@@ -1666,7 +1668,7 @@ static ProcRecord image_remove_channel_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_remove_channel_inargs,
   0,
@@ -1700,7 +1702,7 @@ image_active_drawable_invoker (Argument *args)
 static ProcArg image_active_drawable_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -1709,7 +1711,7 @@ static ProcArg image_active_drawable_inargs[] =
 static ProcArg image_active_drawable_outargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The active drawable"
   }
@@ -1723,7 +1725,7 @@ static ProcRecord image_active_drawable_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_active_drawable_inargs,
   1,
@@ -1757,7 +1759,7 @@ image_base_type_invoker (Argument *args)
 static ProcArg image_base_type_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -1766,7 +1768,7 @@ static ProcArg image_base_type_inargs[] =
 static ProcArg image_base_type_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "base_type",
     "The image's base type: { RGB (0), GRAY (1), INDEXED (2) }"
   }
@@ -1780,7 +1782,7 @@ static ProcRecord image_base_type_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_base_type_inargs,
   1,
@@ -1822,7 +1824,7 @@ image_get_cmap_invoker (Argument *args)
 static ProcArg image_get_cmap_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -1831,12 +1833,12 @@ static ProcArg image_get_cmap_inargs[] =
 static ProcArg image_get_cmap_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_bytes",
     "Number of bytes in the colormap array: 0 < num_bytes"
   },
   {
-    PDB_INT8ARRAY,
+    GIMP_PDB_INT8ARRAY,
     "cmap",
     "The image's colormap"
   }
@@ -1850,7 +1852,7 @@ static ProcRecord image_get_cmap_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_get_cmap_inargs,
   2,
@@ -1900,17 +1902,17 @@ image_set_cmap_invoker (Argument *args)
 static ProcArg image_set_cmap_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_bytes",
     "Number of bytes in the colormap array: 0 <= num_bytes <= 768"
   },
   {
-    PDB_INT8ARRAY,
+    GIMP_PDB_INT8ARRAY,
     "cmap",
     "The new colormap values"
   }
@@ -1924,7 +1926,7 @@ static ProcRecord image_set_cmap_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   image_set_cmap_inargs,
   0,
@@ -1958,7 +1960,7 @@ image_undo_is_enabled_invoker (Argument *args)
 static ProcArg image_undo_is_enabled_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -1967,7 +1969,7 @@ static ProcArg image_undo_is_enabled_inargs[] =
 static ProcArg image_undo_is_enabled_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "enabled",
     "True if undo is enabled for this image"
   }
@@ -1981,7 +1983,7 @@ static ProcRecord image_undo_is_enabled_proc =
   "Raphael Quinet",
   "Raphael Quinet",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_undo_is_enabled_inargs,
   1,
@@ -2014,7 +2016,7 @@ image_undo_enable_invoker (Argument *args)
 static ProcArg image_undo_enable_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -2023,7 +2025,7 @@ static ProcArg image_undo_enable_inargs[] =
 static ProcArg image_undo_enable_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "enabled",
     "True if the image undo has been enabled"
   }
@@ -2037,7 +2039,7 @@ static ProcRecord image_undo_enable_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_undo_enable_inargs,
   1,
@@ -2070,7 +2072,7 @@ image_undo_disable_invoker (Argument *args)
 static ProcArg image_undo_disable_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -2079,7 +2081,7 @@ static ProcArg image_undo_disable_inargs[] =
 static ProcArg image_undo_disable_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "disabled",
     "True if the image undo has been disabled"
   }
@@ -2093,7 +2095,7 @@ static ProcRecord image_undo_disable_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_undo_disable_inargs,
   1,
@@ -2126,7 +2128,7 @@ image_undo_freeze_invoker (Argument *args)
 static ProcArg image_undo_freeze_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -2135,7 +2137,7 @@ static ProcArg image_undo_freeze_inargs[] =
 static ProcArg image_undo_freeze_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "frozen",
     "True if the image undo has been frozen"
   }
@@ -2149,7 +2151,7 @@ static ProcRecord image_undo_freeze_proc =
   "Adam D. Moss",
   "Adam D. Moss",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_undo_freeze_inargs,
   1,
@@ -2182,7 +2184,7 @@ image_undo_thaw_invoker (Argument *args)
 static ProcArg image_undo_thaw_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -2191,7 +2193,7 @@ static ProcArg image_undo_thaw_inargs[] =
 static ProcArg image_undo_thaw_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "thawed",
     "True if the image undo has been thawed"
   }
@@ -2205,7 +2207,7 @@ static ProcRecord image_undo_thaw_proc =
   "Adam D. Moss",
   "Adam D. Moss",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_undo_thaw_inargs,
   1,
@@ -2232,7 +2234,7 @@ image_clean_all_invoker (Argument *args)
 static ProcArg image_clean_all_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -2246,7 +2248,7 @@ static ProcRecord image_clean_all_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_clean_all_inargs,
   0,
@@ -2280,7 +2282,7 @@ image_floating_selection_invoker (Argument *args)
 static ProcArg image_floating_selection_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -2289,7 +2291,7 @@ static ProcArg image_floating_selection_inargs[] =
 static ProcArg image_floating_selection_outargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "floating_sel",
     "The image's floating selection"
   }
@@ -2303,7 +2305,7 @@ static ProcRecord image_floating_selection_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_floating_selection_inargs,
   1,
@@ -2345,7 +2347,7 @@ image_floating_sel_attached_to_invoker (Argument *args)
 static ProcArg image_floating_sel_attached_to_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -2354,7 +2356,7 @@ static ProcArg image_floating_sel_attached_to_inargs[] =
 static ProcArg image_floating_sel_attached_to_outargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable the floating selection is attached to"
   }
@@ -2368,7 +2370,7 @@ static ProcRecord image_floating_sel_attached_to_proc =
   "Wolfgang Hofer",
   "Wolfgang Hofer",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_floating_sel_attached_to_inargs,
   1,
@@ -2448,17 +2450,17 @@ image_thumbnail_invoker (Argument *args)
 static ProcArg image_thumbnail_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "The thumbnail width"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "height",
     "The thumbnail height"
   }
@@ -2467,27 +2469,27 @@ static ProcArg image_thumbnail_inargs[] =
 static ProcArg image_thumbnail_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "The previews width"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "height",
     "The previews height"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "bpp",
     "The previews bpp"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "thumbnail_data_count",
     "The number of bytes in thumbnail data"
   },
   {
-    PDB_INT8ARRAY,
+    GIMP_PDB_INT8ARRAY,
     "thumbnail_data",
     "The thumbnail data"
   }
@@ -2501,7 +2503,7 @@ static ProcRecord image_thumbnail_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   image_thumbnail_inargs,
   5,
@@ -2533,12 +2535,12 @@ image_set_tattoo_state_invoker (Argument *args)
 static ProcArg image_set_tattoo_state_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "tattoo",
     "The new tattoo state of the image"
   }
@@ -2552,7 +2554,7 @@ static ProcRecord image_set_tattoo_state_proc =
   "Andy Thomas",
   "Andy Thomas",
   "2000",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_set_tattoo_state_inargs,
   0,
@@ -2588,7 +2590,7 @@ image_get_tattoo_state_invoker (Argument *args)
 static ProcArg image_get_tattoo_state_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -2597,7 +2599,7 @@ static ProcArg image_get_tattoo_state_inargs[] =
 static ProcArg image_get_tattoo_state_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "tattoo",
     "The tattoo state associated with the image"
   }
@@ -2611,7 +2613,7 @@ static ProcRecord image_get_tattoo_state_proc =
   "Andy Thomas",
   "Andy Thomas",
   "2000",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_get_tattoo_state_inargs,
   1,
@@ -2645,7 +2647,7 @@ image_duplicate_invoker (Argument *args)
 static ProcArg image_duplicate_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -2654,7 +2656,7 @@ static ProcArg image_duplicate_inargs[] =
 static ProcArg image_duplicate_outargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "new_image",
     "The new, duplicated image"
   }
@@ -2668,7 +2670,7 @@ static ProcRecord image_duplicate_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_duplicate_inargs,
   1,
@@ -2698,7 +2700,7 @@ image_width_invoker (Argument *args)
 static ProcArg image_width_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -2707,7 +2709,7 @@ static ProcArg image_width_inargs[] =
 static ProcArg image_width_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "The image's width"
   }
@@ -2721,7 +2723,7 @@ static ProcRecord image_width_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_width_inargs,
   1,
@@ -2751,7 +2753,7 @@ image_height_invoker (Argument *args)
 static ProcArg image_height_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -2760,7 +2762,7 @@ static ProcArg image_height_inargs[] =
 static ProcArg image_height_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "height",
     "The image's height"
   }
@@ -2774,7 +2776,7 @@ static ProcRecord image_height_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_height_inargs,
   1,
@@ -2808,7 +2810,7 @@ image_get_active_layer_invoker (Argument *args)
 static ProcArg image_get_active_layer_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -2817,7 +2819,7 @@ static ProcArg image_get_active_layer_inargs[] =
 static ProcArg image_get_active_layer_outargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "active_layer",
     "The active layer"
   }
@@ -2831,7 +2833,7 @@ static ProcRecord image_get_active_layer_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_get_active_layer_inargs,
   1,
@@ -2863,12 +2865,12 @@ image_set_active_layer_invoker (Argument *args)
 static ProcArg image_set_active_layer_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "active_layer",
     "The new image active layer"
   }
@@ -2882,7 +2884,7 @@ static ProcRecord image_set_active_layer_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_set_active_layer_inargs,
   0,
@@ -2916,7 +2918,7 @@ image_get_active_channel_invoker (Argument *args)
 static ProcArg image_get_active_channel_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -2925,7 +2927,7 @@ static ProcArg image_get_active_channel_inargs[] =
 static ProcArg image_get_active_channel_outargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "active_channel",
     "The active channel"
   }
@@ -2939,7 +2941,7 @@ static ProcRecord image_get_active_channel_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_get_active_channel_inargs,
   1,
@@ -2971,12 +2973,12 @@ image_set_active_channel_invoker (Argument *args)
 static ProcArg image_set_active_channel_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "active_channel",
     "The new image active channel"
   }
@@ -2990,7 +2992,7 @@ static ProcRecord image_set_active_channel_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_set_active_channel_inargs,
   0,
@@ -3024,7 +3026,7 @@ image_get_selection_invoker (Argument *args)
 static ProcArg image_get_selection_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -3033,7 +3035,7 @@ static ProcArg image_get_selection_inargs[] =
 static ProcArg image_get_selection_outargs[] =
 {
   {
-    PDB_SELECTION,
+    GIMP_PDB_SELECTION,
     "selection",
     "The selection channel"
   }
@@ -3047,7 +3049,7 @@ static ProcRecord image_get_selection_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_get_selection_inargs,
   1,
@@ -3092,12 +3094,12 @@ image_get_component_active_invoker (Argument *args)
 static ProcArg image_get_component_active_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "component",
     "The image component: { RED_CHANNEL (0), GREEN_CHANNEL (1), BLUE_CHANNEL (2), GRAY_CHANNEL (3), INDEXED_CHANNEL (4), ALPHA_CHANNEL (5) }"
   }
@@ -3106,7 +3108,7 @@ static ProcArg image_get_component_active_inargs[] =
 static ProcArg image_get_component_active_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "active",
     "Component is active (TRUE or FALSE)"
   }
@@ -3120,7 +3122,7 @@ static ProcRecord image_get_component_active_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_get_component_active_inargs,
   1,
@@ -3165,17 +3167,17 @@ image_set_component_active_invoker (Argument *args)
 static ProcArg image_set_component_active_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "component",
     "The image component: { RED_CHANNEL (0), GREEN_CHANNEL (1), BLUE_CHANNEL (2), GRAY_CHANNEL (3), INDEXED_CHANNEL (4), ALPHA_CHANNEL (5) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "active",
     "Component is active (TRUE or FALSE)"
   }
@@ -3189,7 +3191,7 @@ static ProcRecord image_set_component_active_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   image_set_component_active_inargs,
   0,
@@ -3234,12 +3236,12 @@ image_get_component_visible_invoker (Argument *args)
 static ProcArg image_get_component_visible_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "component",
     "The image component: { RED_CHANNEL (0), GREEN_CHANNEL (1), BLUE_CHANNEL (2), GRAY_CHANNEL (3), INDEXED_CHANNEL (4), ALPHA_CHANNEL (5) }"
   }
@@ -3248,7 +3250,7 @@ static ProcArg image_get_component_visible_inargs[] =
 static ProcArg image_get_component_visible_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "visible",
     "Component is visible (TRUE or FALSE)"
   }
@@ -3262,7 +3264,7 @@ static ProcRecord image_get_component_visible_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_get_component_visible_inargs,
   1,
@@ -3307,17 +3309,17 @@ image_set_component_visible_invoker (Argument *args)
 static ProcArg image_set_component_visible_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "component",
     "The image component: { RED_CHANNEL (0), GREEN_CHANNEL (1), BLUE_CHANNEL (2), GRAY_CHANNEL (3), INDEXED_CHANNEL (4), ALPHA_CHANNEL (5) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "visible",
     "Component is visible (TRUE or FALSE)"
   }
@@ -3331,7 +3333,7 @@ static ProcRecord image_set_component_visible_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   image_set_component_visible_inargs,
   0,
@@ -3361,7 +3363,7 @@ image_get_filename_invoker (Argument *args)
 static ProcArg image_get_filename_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -3370,7 +3372,7 @@ static ProcArg image_get_filename_inargs[] =
 static ProcArg image_get_filename_outargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "filename",
     "The filename"
   }
@@ -3384,7 +3386,7 @@ static ProcRecord image_get_filename_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_get_filename_inargs,
   1,
@@ -3416,12 +3418,12 @@ image_set_filename_invoker (Argument *args)
 static ProcArg image_set_filename_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "filename",
     "The new image filename"
   }
@@ -3435,7 +3437,7 @@ static ProcRecord image_set_filename_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_set_filename_inargs,
   0,
@@ -3468,7 +3470,7 @@ image_get_resolution_invoker (Argument *args)
 static ProcArg image_get_resolution_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -3477,12 +3479,12 @@ static ProcArg image_get_resolution_inargs[] =
 static ProcArg image_get_resolution_outargs[] =
 {
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "xresolution",
     "The resolutionin the x-axis, in dots per inch"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "yresolution",
     "The resolutionin the y-axis, in dots per inch"
   }
@@ -3496,7 +3498,7 @@ static ProcRecord image_get_resolution_proc =
   "Austin Donnelly",
   "Austin Donnelly",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_get_resolution_inargs,
   2,
@@ -3544,17 +3546,17 @@ image_set_resolution_invoker (Argument *args)
 static ProcArg image_set_resolution_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "xresolution",
     "The new image resolution (xresolution)in the x-axis, in dots per inch"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "yresolution",
     "The new image resolution (yresolution)in the y-axis, in dots per inch"
   }
@@ -3568,7 +3570,7 @@ static ProcRecord image_set_resolution_proc =
   "Austin Donnelly",
   "Austin Donnelly",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   image_set_resolution_inargs,
   0,
@@ -3598,7 +3600,7 @@ image_get_unit_invoker (Argument *args)
 static ProcArg image_get_unit_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -3607,7 +3609,7 @@ static ProcArg image_get_unit_inargs[] =
 static ProcArg image_get_unit_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "unit",
     "The unit"
   }
@@ -3621,7 +3623,7 @@ static ProcRecord image_get_unit_proc =
   "Michael Natterer",
   "Michael Natterer",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_get_unit_inargs,
   1,
@@ -3653,12 +3655,12 @@ image_set_unit_invoker (Argument *args)
 static ProcArg image_set_unit_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "unit",
     "The new image unit"
   }
@@ -3672,7 +3674,7 @@ static ProcRecord image_set_unit_proc =
   "Michael Natterer",
   "Michael Natterer",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_set_unit_inargs,
   0,
@@ -3714,12 +3716,12 @@ image_get_layer_by_tattoo_invoker (Argument *args)
 static ProcArg image_get_layer_by_tattoo_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "tattoo",
     "The tattoo of the layer to find"
   }
@@ -3728,7 +3730,7 @@ static ProcArg image_get_layer_by_tattoo_inargs[] =
 static ProcArg image_get_layer_by_tattoo_outargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer with the specified tattoo"
   }
@@ -3742,7 +3744,7 @@ static ProcRecord image_get_layer_by_tattoo_proc =
   "Jay Cox",
   "Jay Cox",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_get_layer_by_tattoo_inargs,
   1,
@@ -3784,12 +3786,12 @@ image_get_channel_by_tattoo_invoker (Argument *args)
 static ProcArg image_get_channel_by_tattoo_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "tattoo",
     "The tattoo of the channel to find"
   }
@@ -3798,7 +3800,7 @@ static ProcArg image_get_channel_by_tattoo_inargs[] =
 static ProcArg image_get_channel_by_tattoo_outargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel with the specified tattoo"
   }
@@ -3812,7 +3814,7 @@ static ProcRecord image_get_channel_by_tattoo_proc =
   "Jay Cox",
   "Jay Cox",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_get_channel_by_tattoo_inargs,
   1,

@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -104,17 +106,17 @@ patterns_popup_invoker (Argument *args)
 static ProcArg patterns_popup_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "pattern_callback",
     "The callback PDB proc to call when pattern selection is made"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "popup_title",
     "Title to give the pattern popup window"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "initial_pattern",
     "The name of the pattern to set as the first selected"
   }
@@ -128,7 +130,7 @@ static ProcRecord patterns_popup_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   patterns_popup_inargs,
   0,
@@ -173,7 +175,7 @@ patterns_close_popup_invoker (Argument *args)
 static ProcArg patterns_close_popup_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "pattern_callback",
     "The name of the callback registered for this popup"
   }
@@ -187,7 +189,7 @@ static ProcRecord patterns_close_popup_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   patterns_close_popup_inargs,
   0,
@@ -239,12 +241,12 @@ patterns_set_popup_invoker (Argument *args)
 static ProcArg patterns_set_popup_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "pattern_callback",
     "The name of the callback registered for this popup"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "pattern_name",
     "The name of the pattern to set as selected"
   }
@@ -258,7 +260,7 @@ static ProcRecord patterns_set_popup_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   patterns_set_popup_inargs,
   0,

@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -75,7 +77,7 @@ edit_cut_invoker (Argument *args)
 static ProcArg edit_cut_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable to cut from"
   }
@@ -89,7 +91,7 @@ static ProcRecord edit_cut_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   edit_cut_inargs,
   0,
@@ -120,7 +122,7 @@ edit_copy_invoker (Argument *args)
 static ProcArg edit_copy_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable to copy from"
   }
@@ -134,7 +136,7 @@ static ProcRecord edit_copy_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   edit_copy_inargs,
   0,
@@ -176,12 +178,12 @@ edit_paste_invoker (Argument *args)
 static ProcArg edit_paste_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable to paste to"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "paste_into",
     "Clear selection, or paste behind it?"
   }
@@ -190,7 +192,7 @@ static ProcArg edit_paste_inargs[] =
 static ProcArg edit_paste_outargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "floating_sel",
     "The new floating selection"
   }
@@ -204,7 +206,7 @@ static ProcRecord edit_paste_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   edit_paste_inargs,
   1,
@@ -235,7 +237,7 @@ edit_clear_invoker (Argument *args)
 static ProcArg edit_clear_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable to clear from"
   }
@@ -249,7 +251,7 @@ static ProcRecord edit_clear_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   edit_clear_inargs,
   0,
@@ -285,12 +287,12 @@ edit_fill_invoker (Argument *args)
 static ProcArg edit_fill_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable to fill to"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "fill_type",
     "The type of fill: FG_IMAGE_FILL (0), BG_IMAGE_FILL (1), WHITE_IMAGE_FILL (2), TRANS_IMAGE_FILL (3), NO_IMAGE_FILL (4)"
   }
@@ -304,7 +306,7 @@ static ProcRecord edit_fill_proc =
   "Spencer Kimball & Peter Mattis & Raphael Quinet",
   "Spencer Kimball & Peter Mattis",
   "1995-2000",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   edit_fill_inargs,
   0,
@@ -335,7 +337,7 @@ edit_stroke_invoker (Argument *args)
 static ProcArg edit_stroke_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable to stroke to"
   }
@@ -349,7 +351,7 @@ static ProcRecord edit_stroke_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   edit_stroke_inargs,
   0,

@@ -52,12 +52,10 @@
 #include <glib.h>
 
 #ifndef G_OS_WIN32
-#include "gimpsignal.h"
+#include "libgimpbase/gimpsignal.h"
 #else
 #include <signal.h>
 #endif
-
-#include "gimpenv.h"
 
 #ifdef HAVE_IPC_H
 #include <sys/ipc.h>
@@ -80,9 +78,13 @@
 #  include <fcntl.h>
 #endif
 
+#include "libgimpbase/gimpbasetypes.h"
+
+#include "libgimpbase/gimpenv.h"
+#include "libgimpbase/gimpprotocol.h"
+#include "libgimpbase/gimpwire.h"
+
 #include "gimp.h"
-#include "gimpprotocol.h"
-#include "gimpwire.h"
 
 
 #define WRITE_BUFFER_SIZE  1024
@@ -846,6 +848,19 @@ gchar *
 gimp_get_progname (void)
 {
   return progname;
+}
+
+void
+gimp_attach_new_parasite (const gchar    *name, 
+			  gint            flags,
+			  gint            size, 
+			  const gpointer  data)
+{
+  GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
+
+  gimp_parasite_attach (parasite);
+
+  gimp_parasite_free (parasite);
 }
 
 #ifndef G_OS_WIN32

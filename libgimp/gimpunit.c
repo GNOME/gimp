@@ -24,7 +24,10 @@
 
 #include <glib.h>
 
-#include "gimpunit.h"
+#include "libgimpbase/gimpbasetypes.h"
+
+#include "libgimpbase/gimpunit.h"
+
 #include "gimpunit_pdb.h"
 
 #include "libgimp-intl.h"

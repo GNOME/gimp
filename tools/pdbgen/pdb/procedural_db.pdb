@@ -68,7 +68,7 @@ HELP
     );
 
     @outargs = (
-	{ name => "${type}_type", type => 'enum PDBArgType (no PDB_END)',
+	{ name => "${type}_type", type => 'enum GimpPDBArgType (no GIMP_PDB_END)',
 	  desc => "The type of $long_type { %%desc%% }", void_ret => 1,
 	  alias => "${type}->arg_type", no_declare => 1 },
 	{ name => "${type}_name", type => 'string',
@@ -226,7 +226,7 @@ HELP
 	  desc => 'The copyright' },
 	{ name => 'date', type => 'string',
 	  desc => 'Copyright date' },
-        { name => 'proc_type', type => 'enum PDBProcType',
+        { name => 'proc_type', type => 'enum GimpPDBProcType',
 	  desc => 'The procedure type: { %%desc%% }' },
         { name => 'num_args', type => 'int32',
 	  desc => 'The number of input arguments' },
@@ -421,10 +421,10 @@ struct _PDBData
   gchar *data;
 };
 
-static FILE *procedural_db_out = NULL;
-static GList *data_list = NULL;
+static FILE  *procedural_db_out = NULL;
+static GList *data_list         = NULL;
 
-static char *proc_type_str[] = 
+static gchar *proc_type_str[] = 
 {
   N_("Internal GIMP procedure"),
   N_("GIMP Plug-In"),
@@ -432,11 +432,11 @@ static char *proc_type_str[] =
   N_("Temporary Procedure")
 };
 
-static const char * const type_str[] =
+static const gchar * const type_str[] =
 {
 CODE
 
-foreach (@{$Gimp::CodeGen::enums::enums{PDBArgType}->{symbols}}) {
+foreach (@{$Gimp::CodeGen::enums::enums{GimpPDBArgType}->{symbols}}) {
     $extra{app}->{decls} .= qq/  "$_",\n/;
 }
 
@@ -576,7 +576,7 @@ procedural_db_print_entry (gpointer key,
 const char *
 pdb_type_name (gint type)
 {
-  if (type >= 0 && type <= PDB_END)
+  if (type >= 0 && type <= GIMP_PDB_END)
     return type_str[type];
   else
     return g_strdup_printf ("(PDB type %d unknown)", type);

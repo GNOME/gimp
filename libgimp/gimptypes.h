@@ -23,11 +23,7 @@
 #define __GIMP_TYPES_H__
 
 
-#include <libgimpcolor/gimpcolortypes.h>
-
-
-/*  these will go to a separate library soon  */
-#include "gimpunit.h"
+#include <libgimpbase/gimpbasetypes.h>
 
 
 #ifdef __cplusplus
@@ -46,7 +42,6 @@ typedef struct _GimpParamColor  GimpParamColor;
 typedef struct _GimpParamRegion GimpParamRegion;
 typedef union  _GimpParamData   GimpParamData;
 typedef struct _GimpParam       GimpParam;
-typedef struct _GimpParasite    GimpParasite;
 
 
 #ifdef __cplusplus

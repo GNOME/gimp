@@ -36,8 +36,6 @@
 #include "drawable.h"
 #include "undo.h"
 
-#include "libgimp/gimpparasite.h"
-
 #include "libgimp/gimpintl.h"
 
 

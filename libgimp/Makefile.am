@@ -25,7 +25,6 @@ EXTRA_DIST = \
 	gimpui.def
 
 lib_LTLIBRARIES = libgimp-1.3.la libgimpui-1.3.la
-noinst_LIBRARIES = libgimpi.a
 
 PDB_WRAPPERS_C = \
 	gimpbrushes_pdb.c		\
@@ -94,28 +93,6 @@ PDB_WRAPPERS_H = \
 	gimpundo_pdb.h			\
 	gimpunit_pdb.h
 
-libgimpi_a_SOURCES = \
-	gimpenv.c		\
-	gimpenv.h		\
-	gimpsignal.c            \
-	gimpsignal.h            \
-	gimputils.c		\
-	gimputils.h		\
-	gimpparasite.c		\
-	gimpparasite.h		\
-	gimpparasiteio.c	\
-	gimpparasiteio.h	\
-	\
-	gimpprotocol.c		\
-	gimpprotocol.h		\
-	gimpwire.c		\
-	gimpwire.h
-
-if STATICLIBS
-## Evil hack to insure all deps are satisfied on first-run make
-libgimpi_a_DEPENDENCIES = libgimp-1.3.la
-endif
-
 # help `make' along by giving another name for the file, which it knows
 # how to build
 ../libgimp/gimpfeatures.h: gimpfeatures.h
@@ -125,7 +102,6 @@ libgimp_1_3_la_SOURCES = \
 	gimp.c				\
 	gimp.h				\
 	gimptypes.h			\
-	gimplimits.h			\
 	${PDB_WRAPPERS_C}		\
 	${PDB_WRAPPERS_H}		\
 	gimpchannel.c			\
@@ -139,10 +115,6 @@ libgimp_1_3_la_SOURCES = \
 	gimpimage.h			\
 	gimplayer.c			\
 	gimplayer.h			\
-	gimpparasite.c			\
-	gimpparasite.h			\
-	gimpparasiteio.c		\
-	gimpparasiteio.h		\
 	gimppixelrgn.c			\
 	gimppixelrgn.h			\
 	gimpproceduraldb.c		\
@@ -152,19 +124,6 @@ libgimp_1_3_la_SOURCES = \
 	gimptile.c			\
 	gimptile.h			\
 	gimpunit.c			\
-	gimpunit.h			\
-	\
-	gimpenv.c			\
-	gimpenv.h			\
-	gimpsignal.c			\
-	gimpsignal.h			\
-	gimputils.c			\
-	gimputils.h			\
-	\
-	gimpprotocol.c			\
-	gimpprotocol.h			\
-	gimpwire.c			\
-	gimpwire.h			\
 	\
 	gimpintl.h			\
 	stdplugins-intl.h		\
@@ -194,22 +153,15 @@ gimpinclude_HEADERS = \
 	gimpchannel.h			\
 	gimpdrawable.h			\
 	gimpenums.h			\
-	gimpenv.h			\
 	gimpfeatures.h			\
 	gimpgradientselect.h		\
 	gimpimage.h			\
 	gimplayer.h			\
-	gimplimits.h			\
 	gimpmodule.h			\
-	gimpparasite.h			\
-	gimpparasiteio.h		\
 	gimppixelrgn.h			\
 	gimpproceduraldb.h		\
 	gimpselection.h			\
-	gimpsignal.h			\
 	gimptile.h			\
-	gimpunit.h			\
-	gimputils.h			\
 	\
 	gimpexport.h			\
 	\

@@ -48,7 +48,6 @@
 #include "core/core-types.h"
 
 #include "datafiles.h"
-#include "gimprc.h"
 
 #include "libgimp/gimpenv.h"
 
@@ -147,7 +146,7 @@ gimp_datafiles_read_directories (const gchar            *path_str,
     {
       _chdrive (local_path[0]);
     }
-#endif  
+#endif
 
   path = gimp_path_parse (local_path, 16, TRUE, NULL);
 

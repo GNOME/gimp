@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -54,7 +56,7 @@ version_invoker (Argument *args)
 static ProcArg version_outargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "version",
     "The gimp version"
   }
@@ -68,7 +70,7 @@ static ProcRecord version_proc =
   "Manish Singh",
   "Manish Singh",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   1,
@@ -91,7 +93,7 @@ quit_invoker (Argument *args)
 static ProcArg quit_inargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "kill",
     "Flag specifying whether to kill the gimp process or exit normally"
   }
@@ -105,7 +107,7 @@ static ProcRecord quit_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   quit_inargs,
   0,

@@ -72,7 +72,7 @@ package Gimp::CodeGen::pdb;
 		    id_ret_func => 'gimp_drawable_get_ID (GIMP_DRAWABLE ($var))' },
     parasite   => { name => 'PARASITE',
 		    type => 'GimpParasite *',
-		    headers => [ qw("libgimp/gimpparasite.h") ] },
+		    headers => [ qw("libgimpbase/gimpparasite.h") ] },
 
     boundary => { name => 'BOUNDARY', type => 'gpointer ' }, # ??? FIXME
     path     => { name => 'PATH'    , type => 'gpointer ' }, # ??? FIXME

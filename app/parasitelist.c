@@ -21,11 +21,11 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core/core-types.h"
 
 #include "parasitelist.h"
-
-#include "libgimp/gimpparasite.h"
 
 
 enum

@@ -37,23 +37,6 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-typedef enum _GimpUnit GimpUnit;
-
-enum _GimpUnit
-{
-  GIMP_UNIT_PIXEL   = 0,
-
-  GIMP_UNIT_INCH    = 1,
-  GIMP_UNIT_MM      = 2,
-  GIMP_UNIT_POINT   = 3,
-  GIMP_UNIT_PICA    = 4,
-
-  GIMP_UNIT_END     = 5,
-
-  GIMP_UNIT_PERCENT = 65536
-};
-
-
 gint       gimp_unit_get_number_of_units          (void);
 gint       gimp_unit_get_number_of_built_in_units (void);
 

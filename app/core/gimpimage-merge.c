@@ -24,6 +24,7 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
 
@@ -56,9 +57,6 @@
 #include "parasitelist.h"
 #include "path.h"
 #include "undo.h"
-
-#include "libgimp/gimplimits.h"
-#include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 

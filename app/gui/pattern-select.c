@@ -241,18 +241,18 @@ pattern_select_change_callbacks (PatternSelect *psp,
       return_vals =
 	procedural_db_run_proc (name,
 				&nreturn_vals,
-				PDB_STRING,    GIMP_OBJECT (pattern)->name,
-				PDB_INT32,     pattern->mask->width,
-				PDB_INT32,     pattern->mask->height,
-				PDB_INT32,     pattern->mask->bytes,
-				PDB_INT32,     (pattern->mask->bytes  *
+				GIMP_PDB_STRING,    GIMP_OBJECT (pattern)->name,
+				GIMP_PDB_INT32,     pattern->mask->width,
+				GIMP_PDB_INT32,     pattern->mask->height,
+				GIMP_PDB_INT32,     pattern->mask->bytes,
+				GIMP_PDB_INT32,     (pattern->mask->bytes  *
 						pattern->mask->height *
 						pattern->mask->width),
-				PDB_INT8ARRAY, temp_buf_data (pattern->mask),
-				PDB_INT32,     (gint) closing,
-				PDB_END);
+				GIMP_PDB_INT8ARRAY, temp_buf_data (pattern->mask),
+				GIMP_PDB_INT32,     (gint) closing,
+				GIMP_PDB_END);
  
-      if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
+      if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
 	g_warning ("failed to run pattern callback function");
 
       procedural_db_destroy_args (return_vals, nreturn_vals);

@@ -359,11 +359,11 @@ text_call_gdyntext (GDisplay *gdisp)
 
   /*  plug-in arguments as if called by <Image>/Filters/...  */
   args = g_new (Argument, 3);
-  args[0].arg_type = PDB_INT32;
+  args[0].arg_type = GIMP_PDB_INT32;
   args[0].value.pdb_int = RUN_INTERACTIVE;
-  args[1].arg_type = PDB_IMAGE;
+  args[1].arg_type = GIMP_PDB_IMAGE;
   args[1].value.pdb_int = (gint32) gimp_image_get_ID (gdisp->gimage);
-  args[2].arg_type = PDB_DRAWABLE;
+  args[2].arg_type = GIMP_PDB_DRAWABLE;
   args[2].value.pdb_int = (gint32) gimp_drawable_get_ID (gimp_image_active_drawable (gdisp->gimage));
 
   plug_in_run (proc_rec, args, 3, FALSE, TRUE, gdisp->ID);

@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -65,7 +67,7 @@ convert_rgb_invoker (Argument *args)
 static ProcArg convert_rgb_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -79,7 +81,7 @@ static ProcRecord convert_rgb_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   convert_rgb_inargs,
   0,
@@ -107,7 +109,7 @@ convert_grayscale_invoker (Argument *args)
 static ProcArg convert_grayscale_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -121,7 +123,7 @@ static ProcRecord convert_grayscale_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   convert_grayscale_inargs,
   0,
@@ -220,37 +222,37 @@ convert_indexed_invoker (Argument *args)
 static ProcArg convert_indexed_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "dither_type",
     "dither type (0=none, 1=fs, 2=fs/low-bleed 3=fixed)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "palette_type",
     "The type of palette to use: { MAKE_PALETTE (0), REUSE_PALETTE (1), WEB_PALETTE (2), MONO_PALETTE (3), CUSTOM_PALETTE (4) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_cols",
     "the number of colors to quantize to, ignored unless (palette_type == MAKE_PALETTE)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "alpha_dither",
     "dither transparency to fake partial opacity"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "remove_unused",
     "remove unused or duplicate colour entries from final palette, ignored if (palette_type == MAKE_PALETTE)"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "palette",
     "The name of the custom palette to use, ignored unless (palette_type == CUSTOM_PALETTE)"
   }
@@ -264,7 +266,7 @@ static ProcRecord convert_indexed_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   7,
   convert_indexed_inargs,
   0,

@@ -160,8 +160,8 @@ file_save_callback (GtkWidget *widget,
 			      RUN_WITH_LAST_VALS,
 			      TRUE);
 
-	  if (status != PDB_SUCCESS &&
-	      status != PDB_CANCEL)
+	  if (status != GIMP_PDB_SUCCESS &&
+	      status != GIMP_PDB_CANCEL)
 	    {
 	      g_message (_("Save failed.\n%s"), filename);
 	    }
@@ -418,11 +418,11 @@ file_save_ok_callback (GtkWidget *widget,
 	  file_dialog_hide (filesave);
 
 	  args = g_new (Argument, 3);
-	  args[0].arg_type      = PDB_INT32;
+	  args[0].arg_type      = GIMP_PDB_INT32;
 	  args[0].value.pdb_int = RUN_INTERACTIVE;
-	  args[1].arg_type      = PDB_IMAGE;
+	  args[1].arg_type      = GIMP_PDB_IMAGE;
 	  args[1].value.pdb_int = gimp_image_get_ID (the_gimage);
-	  args[2].arg_type      = PDB_DRAWABLE;
+	  args[2].arg_type      = GIMP_PDB_DRAWABLE;
 	  args[2].value.pdb_int = gimp_drawable_get_ID (the_drawable);
 
 	  plug_in_run (proc_rec, args, 3, FALSE, TRUE, 0);

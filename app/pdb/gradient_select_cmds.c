@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -112,22 +114,22 @@ gradients_popup_invoker (Argument *args)
 static ProcArg gradients_popup_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "gradients_callback",
     "The callback PDB proc to call when gradient selection is made"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "popup_title",
     "Title to give the gradient popup window"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "initial_gradient",
     "The name of the pattern to set as the first selected"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "sample_size",
     "Size of the sample to return when the gradient is changed (0 < sample_size <= 10000)"
   }
@@ -141,7 +143,7 @@ static ProcRecord gradients_popup_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   4,
   gradients_popup_inargs,
   0,
@@ -187,7 +189,7 @@ gradients_close_popup_invoker (Argument *args)
 static ProcArg gradients_close_popup_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "gradients_callback",
     "The name of the callback registered for this popup"
   }
@@ -201,7 +203,7 @@ static ProcRecord gradients_close_popup_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   gradients_close_popup_inargs,
   0,
@@ -255,12 +257,12 @@ gradients_set_popup_invoker (Argument *args)
 static ProcArg gradients_set_popup_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "gradients_callback",
     "The name of the callback registered for this popup"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "gradient_name",
     "The name of the gradient to set as selected"
   }
@@ -274,7 +276,7 @@ static ProcRecord gradients_set_popup_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   gradients_set_popup_inargs,
   0,
@@ -358,12 +360,12 @@ gradients_get_gradient_data_invoker (Argument *args)
 static ProcArg gradients_get_gradient_data_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The gradient name (\"\" means current active gradient)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "sample_size",
     "Size of the sample to return when the gradient is changed (0 < sample_size <= 10000)"
   }
@@ -372,17 +374,17 @@ static ProcArg gradients_get_gradient_data_inargs[] =
 static ProcArg gradients_get_gradient_data_outargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The gradient name"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "The gradient sample width (r,g,b,a)"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "grad_data",
     "The gradient sample data"
   }
@@ -396,7 +398,7 @@ static ProcRecord gradients_get_gradient_data_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   gradients_get_gradient_data_inargs,
   3,

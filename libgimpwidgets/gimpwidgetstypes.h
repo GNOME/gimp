@@ -23,10 +23,7 @@
 #define __GIMP_WIDGETS_TYPES_H__
 
 
-/* EEK */
-#include <libgimp/gimpunit.h>
-
-#include <libgimpcolor/gimpcolortypes.h>
+#include <libgimpbase/gimpbasetypes.h>
 
 
 #ifdef __cplusplus

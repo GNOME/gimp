@@ -27,7 +27,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
-#include "libgimp/gimpunit.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "gimpwidgetstypes.h"
 

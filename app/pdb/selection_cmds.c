@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -111,7 +113,7 @@ selection_bounds_invoker (Argument *args)
 static ProcArg selection_bounds_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -120,27 +122,27 @@ static ProcArg selection_bounds_inargs[] =
 static ProcArg selection_bounds_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "non_empty",
     "True if there is a selection"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "x1",
     "x coordinate of upper left corner of selection bounds"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "y1",
     "y coordinate of upper left corner of selection bounds"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "x2",
     "x coordinate of lower right corner of selection bounds"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "y2",
     "y coordinate of lower right corner of selection bounds"
   }
@@ -154,7 +156,7 @@ static ProcRecord selection_bounds_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   selection_bounds_inargs,
   5,
@@ -190,17 +192,17 @@ selection_value_invoker (Argument *args)
 static ProcArg selection_value_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "x",
     "x coordinate of value"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "y",
     "y coordinate of value"
   }
@@ -209,7 +211,7 @@ static ProcArg selection_value_inargs[] =
 static ProcArg selection_value_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "value",
     "Value of the selection: (0 <= value <= 255)"
   }
@@ -223,7 +225,7 @@ static ProcRecord selection_value_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   selection_value_inargs,
   1,
@@ -253,7 +255,7 @@ selection_is_empty_invoker (Argument *args)
 static ProcArg selection_is_empty_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -262,7 +264,7 @@ static ProcArg selection_is_empty_inargs[] =
 static ProcArg selection_is_empty_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "is_empty",
     "Is the selection empty?"
   }
@@ -276,7 +278,7 @@ static ProcRecord selection_is_empty_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   selection_is_empty_inargs,
   1,
@@ -309,17 +311,17 @@ selection_translate_invoker (Argument *args)
 static ProcArg selection_translate_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offx",
     "x offset for translation"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offy",
     "y offset for translation"
   }
@@ -333,7 +335,7 @@ static ProcRecord selection_translate_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   selection_translate_inargs,
   0,
@@ -378,17 +380,17 @@ selection_float_invoker (Argument *args)
 static ProcArg selection_float_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable from which to float selection"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offx",
     "x offset for translation"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offy",
     "y offset for translation"
   }
@@ -397,7 +399,7 @@ static ProcArg selection_float_inargs[] =
 static ProcArg selection_float_outargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The floated layer"
   }
@@ -411,7 +413,7 @@ static ProcRecord selection_float_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   selection_float_inargs,
   1,
@@ -438,7 +440,7 @@ selection_clear_invoker (Argument *args)
 static ProcArg selection_clear_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -452,7 +454,7 @@ static ProcRecord selection_clear_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   selection_clear_inargs,
   0,
@@ -479,7 +481,7 @@ selection_invert_invoker (Argument *args)
 static ProcArg selection_invert_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -493,7 +495,7 @@ static ProcRecord selection_invert_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   selection_invert_inargs,
   0,
@@ -520,7 +522,7 @@ selection_sharpen_invoker (Argument *args)
 static ProcArg selection_sharpen_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -534,7 +536,7 @@ static ProcRecord selection_sharpen_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   selection_sharpen_inargs,
   0,
@@ -561,7 +563,7 @@ selection_all_invoker (Argument *args)
 static ProcArg selection_all_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -575,7 +577,7 @@ static ProcRecord selection_all_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   selection_all_inargs,
   0,
@@ -602,7 +604,7 @@ selection_none_invoker (Argument *args)
 static ProcArg selection_none_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -616,7 +618,7 @@ static ProcRecord selection_none_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   selection_none_inargs,
   0,
@@ -648,12 +650,12 @@ selection_feather_invoker (Argument *args)
 static ProcArg selection_feather_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "radius",
     "Radius of feather (in pixels)"
   }
@@ -667,7 +669,7 @@ static ProcRecord selection_feather_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   selection_feather_inargs,
   0,
@@ -699,12 +701,12 @@ selection_border_invoker (Argument *args)
 static ProcArg selection_border_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "radius",
     "Radius of border (in pixels)"
   }
@@ -718,7 +720,7 @@ static ProcRecord selection_border_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   selection_border_inargs,
   0,
@@ -750,12 +752,12 @@ selection_grow_invoker (Argument *args)
 static ProcArg selection_grow_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "steps",
     "Steps of grow (in pixels)"
   }
@@ -769,7 +771,7 @@ static ProcRecord selection_grow_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   selection_grow_inargs,
   0,
@@ -801,12 +803,12 @@ selection_shrink_invoker (Argument *args)
 static ProcArg selection_shrink_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "radius",
     "Radius of shrink (in pixels)"
   }
@@ -820,7 +822,7 @@ static ProcRecord selection_shrink_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   selection_shrink_inargs,
   0,
@@ -851,7 +853,7 @@ selection_layer_alpha_invoker (Argument *args)
 static ProcArg selection_layer_alpha_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "Layer with alpha"
   }
@@ -865,7 +867,7 @@ static ProcRecord selection_layer_alpha_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   selection_layer_alpha_inargs,
   0,
@@ -901,7 +903,7 @@ selection_load_invoker (Argument *args)
 static ProcArg selection_load_inargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel"
   }
@@ -915,7 +917,7 @@ static ProcRecord selection_load_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   selection_load_inargs,
   0,
@@ -949,7 +951,7 @@ selection_save_invoker (Argument *args)
 static ProcArg selection_save_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -958,7 +960,7 @@ static ProcArg selection_save_inargs[] =
 static ProcArg selection_save_outargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The new channel"
   }
@@ -972,7 +974,7 @@ static ProcRecord selection_save_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   selection_save_inargs,
   1,
@@ -1022,12 +1024,12 @@ selection_combine_invoker (Argument *args)
 static ProcArg selection_combine_inargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "operation",
     "The selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
   }
@@ -1041,7 +1043,7 @@ static ProcRecord selection_combine_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   selection_combine_inargs,
   0,

@@ -812,11 +812,11 @@ file_open_ok_callback (GtkWidget *widget,
 
   status = file_open_with_display (full_filename, raw_filename);
 
-  if (status == PDB_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       file_dialog_hide (data);
     }
-  else if (status != PDB_CANCEL)
+  else if (status != GIMP_PDB_CANCEL)
     {
       g_message (_("Open failed.\n%s"), full_filename);
     }
@@ -855,11 +855,11 @@ file_open_ok_callback (GtkWidget *widget,
                 status = file_open_with_display (full_filename,
 						 (gchar *) list->data);
 
-                if (status == PDB_SUCCESS)
+                if (status == GIMP_PDB_SUCCESS)
                   {
                     file_dialog_hide (data);
                   }
-                else if (status != PDB_CANCEL)
+                else if (status != GIMP_PDB_CANCEL)
                   {
                     g_message (_("Open failed.\n%s"), full_filename);
                   }
@@ -940,7 +940,7 @@ file_revert_confirm_callback (GtkWidget *widget,
 	  gdisplays_shrink_wrap (new_gimage);
 	  gimp_image_clean_all (new_gimage);
 	}
-      else if (status != PDB_CANCEL)
+      else if (status != GIMP_PDB_CANCEL)
 	{
 	  g_message (_("Revert failed.\n%s"), filename);
 	}

@@ -26,13 +26,10 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimpunit.h"
-
 #include "gimpwidgetstypes.h"
 
 #include "gimppatheditor.h"
 #include "gimpfileselection.h"
-#include "gimpsizeentry.h"
 #include "gimpwidgets.h"
 
 #include "pixmaps/new.xpm"

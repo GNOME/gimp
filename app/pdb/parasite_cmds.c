@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -31,7 +33,7 @@
 #include "drawable.h"
 #include "gimpparasite.h"
 
-#include "libgimp/gimpparasite.h"
+#include "libgimpbase/gimpparasite.h"
 
 static ProcRecord parasite_find_proc;
 static ProcRecord parasite_attach_proc;
@@ -92,7 +94,7 @@ parasite_find_invoker (Argument *args)
 static ProcArg parasite_find_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The name of the parasite to find"
   }
@@ -101,7 +103,7 @@ static ProcArg parasite_find_inargs[] =
 static ProcArg parasite_find_outargs[] =
 {
   {
-    PDB_PARASITE,
+    GIMP_PDB_PARASITE,
     "parasite",
     "The found parasite"
   }
@@ -115,7 +117,7 @@ static ProcRecord parasite_find_proc =
   "Jay Cox",
   "Jay Cox",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   parasite_find_inargs,
   1,
@@ -142,7 +144,7 @@ parasite_attach_invoker (Argument *args)
 static ProcArg parasite_attach_inargs[] =
 {
   {
-    PDB_PARASITE,
+    GIMP_PDB_PARASITE,
     "parasite",
     "The parasite to attach to the gimp"
   }
@@ -156,7 +158,7 @@ static ProcRecord parasite_attach_proc =
   "Jay Cox",
   "Jay Cox",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   parasite_attach_inargs,
   0,
@@ -183,7 +185,7 @@ parasite_detach_invoker (Argument *args)
 static ProcArg parasite_detach_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The name of the parasite to detach from the gimp."
   }
@@ -197,7 +199,7 @@ static ProcRecord parasite_detach_proc =
   "Jay Cox",
   "Jay Cox",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   parasite_detach_inargs,
   0,
@@ -225,12 +227,12 @@ parasite_list_invoker (Argument *args)
 static ProcArg parasite_list_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_parasites",
     "The number of attached parasites"
   },
   {
-    PDB_STRINGARRAY,
+    GIMP_PDB_STRINGARRAY,
     "parasites",
     "The names of currently attached parasites"
   }
@@ -244,7 +246,7 @@ static ProcRecord parasite_list_proc =
   "Marc Lehmann",
   "Marc Lehmann",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   2,
@@ -286,12 +288,12 @@ drawable_parasite_find_invoker (Argument *args)
 static ProcArg drawable_parasite_find_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The name of the parasite to find"
   }
@@ -300,7 +302,7 @@ static ProcArg drawable_parasite_find_inargs[] =
 static ProcArg drawable_parasite_find_outargs[] =
 {
   {
-    PDB_PARASITE,
+    GIMP_PDB_PARASITE,
     "parasite",
     "The found parasite"
   }
@@ -314,7 +316,7 @@ static ProcRecord drawable_parasite_find_proc =
   "Jay Cox",
   "Jay Cox",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   drawable_parasite_find_inargs,
   1,
@@ -346,12 +348,12 @@ drawable_parasite_attach_invoker (Argument *args)
 static ProcArg drawable_parasite_attach_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_PARASITE,
+    GIMP_PDB_PARASITE,
     "parasite",
     "The parasite to attach to a drawable"
   }
@@ -365,7 +367,7 @@ static ProcRecord drawable_parasite_attach_proc =
   "Jay Cox",
   "Jay Cox",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   drawable_parasite_attach_inargs,
   0,
@@ -397,12 +399,12 @@ drawable_parasite_detach_invoker (Argument *args)
 static ProcArg drawable_parasite_detach_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The name of the parasite to detach from a drawable."
   }
@@ -416,7 +418,7 @@ static ProcRecord drawable_parasite_detach_proc =
   "Jay Cox",
   "Jay Cox",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   drawable_parasite_detach_inargs,
   0,
@@ -454,7 +456,7 @@ drawable_parasite_list_invoker (Argument *args)
 static ProcArg drawable_parasite_list_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -463,12 +465,12 @@ static ProcArg drawable_parasite_list_inargs[] =
 static ProcArg drawable_parasite_list_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_parasites",
     "The number of attached parasites"
   },
   {
-    PDB_STRINGARRAY,
+    GIMP_PDB_STRINGARRAY,
     "parasites",
     "The names of currently attached parasites"
   }
@@ -482,7 +484,7 @@ static ProcRecord drawable_parasite_list_proc =
   "Marc Lehmann",
   "Marc Lehmann",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   drawable_parasite_list_inargs,
   2,
@@ -524,12 +526,12 @@ image_parasite_find_invoker (Argument *args)
 static ProcArg image_parasite_find_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The name of the parasite to find"
   }
@@ -538,7 +540,7 @@ static ProcArg image_parasite_find_inargs[] =
 static ProcArg image_parasite_find_outargs[] =
 {
   {
-    PDB_PARASITE,
+    GIMP_PDB_PARASITE,
     "parasite",
     "The found parasite"
   }
@@ -552,7 +554,7 @@ static ProcRecord image_parasite_find_proc =
   "Jay Cox",
   "Jay Cox",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_parasite_find_inargs,
   1,
@@ -584,12 +586,12 @@ image_parasite_attach_invoker (Argument *args)
 static ProcArg image_parasite_attach_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_PARASITE,
+    GIMP_PDB_PARASITE,
     "parasite",
     "The parasite to attach to an image"
   }
@@ -603,7 +605,7 @@ static ProcRecord image_parasite_attach_proc =
   "Jay Cox",
   "Jay Cox",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_parasite_attach_inargs,
   0,
@@ -635,12 +637,12 @@ image_parasite_detach_invoker (Argument *args)
 static ProcArg image_parasite_detach_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The name of the parasite to detach from an image."
   }
@@ -654,7 +656,7 @@ static ProcRecord image_parasite_detach_proc =
   "Jay Cox",
   "Jay Cox",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   image_parasite_detach_inargs,
   0,
@@ -692,7 +694,7 @@ image_parasite_list_invoker (Argument *args)
 static ProcArg image_parasite_list_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -701,12 +703,12 @@ static ProcArg image_parasite_list_inargs[] =
 static ProcArg image_parasite_list_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_parasites",
     "The number of attached parasites"
   },
   {
-    PDB_STRINGARRAY,
+    GIMP_PDB_STRINGARRAY,
     "parasites",
     "The names of currently attached parasites"
   }
@@ -720,7 +722,7 @@ static ProcRecord image_parasite_list_proc =
   "Marc Lehmann",
   "Marc Lehmann",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   image_parasite_list_inargs,
   2,

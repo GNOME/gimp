@@ -201,8 +201,8 @@ gimp_LDADD = \
 	base/libappbase.la						\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimp/libgimpi.a				\
 	$(GTK_LIBS)							\
 	$(GIMP_THREAD_LIBS)						\
 	$(GIMP_MP_LIBS)							\

@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -72,7 +74,7 @@ floating_sel_remove_invoker (Argument *args)
 static ProcArg floating_sel_remove_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "floating_sel",
     "The floating selection"
   }
@@ -86,7 +88,7 @@ static ProcRecord floating_sel_remove_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   floating_sel_remove_inargs,
   0,
@@ -118,7 +120,7 @@ floating_sel_anchor_invoker (Argument *args)
 static ProcArg floating_sel_anchor_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "floating_sel",
     "The floating selection"
   }
@@ -132,7 +134,7 @@ static ProcRecord floating_sel_anchor_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   floating_sel_anchor_inargs,
   0,
@@ -164,7 +166,7 @@ floating_sel_to_layer_invoker (Argument *args)
 static ProcArg floating_sel_to_layer_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "floating_sel",
     "The floating selection"
   }
@@ -178,7 +180,7 @@ static ProcRecord floating_sel_to_layer_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   floating_sel_to_layer_inargs,
   0,
@@ -210,12 +212,12 @@ floating_sel_attach_invoker (Argument *args)
 static ProcArg floating_sel_attach_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer (is attached as floating selection)"
   },
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable (where to attach the floating selection)"
   }
@@ -229,7 +231,7 @@ static ProcRecord floating_sel_attach_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   floating_sel_attach_inargs,
   0,
@@ -264,12 +266,12 @@ floating_sel_rigor_invoker (Argument *args)
 static ProcArg floating_sel_rigor_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "floating_sel",
     "The floating selection"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "undo",
     "TRUE or FALSE"
   }
@@ -283,7 +285,7 @@ static ProcRecord floating_sel_rigor_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   floating_sel_rigor_inargs,
   0,
@@ -318,12 +320,12 @@ floating_sel_relax_invoker (Argument *args)
 static ProcArg floating_sel_relax_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "floating_sel",
     "The floating selection"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "undo",
     "TRUE or FALSE"
   }
@@ -337,7 +339,7 @@ static ProcRecord floating_sel_relax_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   floating_sel_relax_inargs,
   0,

@@ -42,6 +42,7 @@ LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(top_builddir)/plug-ins/libgck/gck/libgck-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)

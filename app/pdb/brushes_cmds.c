@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -87,7 +89,7 @@ static ProcRecord brushes_refresh_proc =
   "Seth Burgess",
   "Seth Burgess",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   0,
@@ -120,22 +122,22 @@ brushes_get_brush_invoker (Argument *args)
 static ProcArg brushes_get_brush_outargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The brush name"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "The brush width"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "height",
     "The brush height"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "spacing",
     "The brush spacing: 0 <= spacing <= 1000"
   }
@@ -149,7 +151,7 @@ static ProcRecord brushes_get_brush_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   4,
@@ -185,7 +187,7 @@ brushes_set_brush_invoker (Argument *args)
 static ProcArg brushes_set_brush_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The brush name"
   }
@@ -199,7 +201,7 @@ static ProcRecord brushes_set_brush_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   brushes_set_brush_inargs,
   0,
@@ -221,7 +223,7 @@ brushes_get_opacity_invoker (Argument *args)
 static ProcArg brushes_get_opacity_outargs[] =
 {
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "opacity",
     "The brush opacity: 0 <= opacity <= 100"
   }
@@ -235,7 +237,7 @@ static ProcRecord brushes_get_opacity_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   1,
@@ -262,7 +264,7 @@ brushes_set_opacity_invoker (Argument *args)
 static ProcArg brushes_set_opacity_inargs[] =
 {
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "opacity",
     "The brush opacity: 0 <= opacity <= 100"
   }
@@ -276,7 +278,7 @@ static ProcRecord brushes_set_opacity_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   brushes_set_opacity_inargs,
   0,
@@ -298,7 +300,7 @@ brushes_get_spacing_invoker (Argument *args)
 static ProcArg brushes_get_spacing_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "spacing",
     "The brush spacing: 0 <= spacing <= 1000"
   }
@@ -312,7 +314,7 @@ static ProcRecord brushes_get_spacing_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   1,
@@ -339,7 +341,7 @@ brushes_set_spacing_invoker (Argument *args)
 static ProcArg brushes_set_spacing_inargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "spacing",
     "The brush spacing: 0 <= spacing <= 1000"
   }
@@ -353,7 +355,7 @@ static ProcRecord brushes_set_spacing_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   brushes_set_spacing_inargs,
   0,
@@ -375,7 +377,7 @@ brushes_get_paint_mode_invoker (Argument *args)
 static ProcArg brushes_get_paint_mode_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "paint_mode",
     "The paint mode: { NORMAL_MODE (0), DISSOLVE_MODE (1), BEHIND_MODE (2), MULTIPLY_MODE (3), SCREEN_MODE (4), OVERLAY_MODE (5), DIFFERENCE_MODE (6), ADDITION_MODE (7), SUBTRACT_MODE (8), DARKEN_ONLY_MODE (9), LIGHTEN_ONLY_MODE (10), HUE_MODE (11), SATURATION_MODE (12), COLOR_MODE (13), VALUE_MODE (14), DIVIDE_MODE (15), DODGE_MODE (16), BURN_MODE (17), HARDLIGHT_MODE (18) }"
   }
@@ -389,7 +391,7 @@ static ProcRecord brushes_get_paint_mode_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   1,
@@ -416,7 +418,7 @@ brushes_set_paint_mode_invoker (Argument *args)
 static ProcArg brushes_set_paint_mode_inargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "paint_mode",
     "The paint mode: { NORMAL_MODE (0), DISSOLVE_MODE (1), BEHIND_MODE (2), MULTIPLY_MODE (3), SCREEN_MODE (4), OVERLAY_MODE (5), DIFFERENCE_MODE (6), ADDITION_MODE (7), SUBTRACT_MODE (8), DARKEN_ONLY_MODE (9), LIGHTEN_ONLY_MODE (10), HUE_MODE (11), SATURATION_MODE (12), COLOR_MODE (13), VALUE_MODE (14), DIVIDE_MODE (15), DODGE_MODE (16), BURN_MODE (17), HARDLIGHT_MODE (18) }"
   }
@@ -430,7 +432,7 @@ static ProcRecord brushes_set_paint_mode_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   brushes_set_paint_mode_inargs,
   0,
@@ -471,12 +473,12 @@ brushes_list_invoker (Argument *args)
 static ProcArg brushes_list_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_brushes",
     "The number of brushes in the brush list"
   },
   {
-    PDB_STRINGARRAY,
+    GIMP_PDB_STRINGARRAY,
     "brush_list",
     "The list of brush names"
   }
@@ -490,7 +492,7 @@ static ProcRecord brushes_list_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   2,
@@ -564,7 +566,7 @@ brushes_get_brush_data_invoker (Argument *args)
 static ProcArg brushes_get_brush_data_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "the brush name (\"\" means current active pattern)"
   }
@@ -573,42 +575,42 @@ static ProcArg brushes_get_brush_data_inargs[] =
 static ProcArg brushes_get_brush_data_outargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The brush name"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "opacity",
     "The brush opacity: 0 <= opacity <= 100"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "spacing",
     "The brush spacing: 0 <= spacing <= 1000"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "paint_mode",
     "The paint mode: { NORMAL_MODE (0), DISSOLVE_MODE (1), BEHIND_MODE (2), MULTIPLY_MODE (3), SCREEN_MODE (4), OVERLAY_MODE (5), DIFFERENCE_MODE (6), ADDITION_MODE (7), SUBTRACT_MODE (8), DARKEN_ONLY_MODE (9), LIGHTEN_ONLY_MODE (10), HUE_MODE (11), SATURATION_MODE (12), COLOR_MODE (13), VALUE_MODE (14), DIVIDE_MODE (15), DODGE_MODE (16), BURN_MODE (17), HARDLIGHT_MODE (18) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "The brush width"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "height",
     "The brush height"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "length",
     "Length of brush mask data"
   },
   {
-    PDB_INT8ARRAY,
+    GIMP_PDB_INT8ARRAY,
     "mask_data",
     "The brush mask data"
   }
@@ -622,7 +624,7 @@ static ProcRecord brushes_get_brush_data_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   brushes_get_brush_data_inargs,
   8,

@@ -91,7 +91,7 @@ file_open_image (const gchar   *filename,
   gint           i;
   struct stat    statbuf;
 
-  *status = PDB_CANCEL;  /* inhibits error messages by caller */
+  *status = GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
 
   if (! file_proc)
     file_proc = file_proc_find (load_procs, filename);
@@ -165,7 +165,7 @@ file_open_image (const gchar   *filename,
   procedural_db_destroy_args (return_vals, proc->num_values);
   g_free (args);
 
-  if (*status == PDB_SUCCESS && gimage_id != -1)
+  if (*status == GIMP_PDB_SUCCESS && gimage_id != -1)
     {
       return gimp_image_get_by_ID (gimage_id);
     }

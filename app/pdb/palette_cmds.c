@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -69,7 +71,7 @@ palette_get_foreground_invoker (Argument *args)
 static ProcArg palette_get_foreground_outargs[] =
 {
   {
-    PDB_COLOR,
+    GIMP_PDB_COLOR,
     "foreground",
     "The foreground color"
   }
@@ -83,7 +85,7 @@ static ProcRecord palette_get_foreground_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   1,
@@ -108,7 +110,7 @@ palette_get_background_invoker (Argument *args)
 static ProcArg palette_get_background_outargs[] =
 {
   {
-    PDB_COLOR,
+    GIMP_PDB_COLOR,
     "background",
     "The background color"
   }
@@ -122,7 +124,7 @@ static ProcRecord palette_get_background_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   1,
@@ -146,7 +148,7 @@ palette_set_foreground_invoker (Argument *args)
 static ProcArg palette_set_foreground_inargs[] =
 {
   {
-    PDB_COLOR,
+    GIMP_PDB_COLOR,
     "foreground",
     "The foreground color"
   }
@@ -160,7 +162,7 @@ static ProcRecord palette_set_foreground_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   palette_set_foreground_inargs,
   0,
@@ -184,7 +186,7 @@ palette_set_background_invoker (Argument *args)
 static ProcArg palette_set_background_inargs[] =
 {
   {
-    PDB_COLOR,
+    GIMP_PDB_COLOR,
     "background",
     "The background color"
   }
@@ -198,7 +200,7 @@ static ProcRecord palette_set_background_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   palette_set_background_inargs,
   0,
@@ -221,7 +223,7 @@ static ProcRecord palette_set_default_colors_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   0,
@@ -244,7 +246,7 @@ static ProcRecord palette_swap_colors_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   0,
@@ -277,7 +279,7 @@ static ProcRecord palette_refresh_proc =
   "Adrian Likins <adrian@gimp.org>",
   "Adrian Likins",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   0,

@@ -22,9 +22,9 @@
 
 #include <gtk/gtk.h>
 
-#include "core/core-types.h"
+#include "libgimpbase/gimpbase.h"
 
-#include "libgimp/gimpparasite.h"
+#include "core/core-types.h"
 
 #include "base/tile-manager.h"
 

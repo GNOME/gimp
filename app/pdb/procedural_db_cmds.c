@@ -26,10 +26,11 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
-#include "appenums.h"
 
 #ifdef HAVE_GLIBC_REGEX
 #include <regex.h>
@@ -39,6 +40,7 @@
 
 
 #include "libgimp/gimpintl.h"
+#include "libgimpbase/gimpbasetypes.h"
 
 /*  Query structure  */
 typedef struct _PDBQuery PDBQuery;
@@ -66,10 +68,10 @@ struct _PDBData
   gchar *data;
 };
 
-static FILE *procedural_db_out = NULL;
-static GList *data_list = NULL;
+static FILE  *procedural_db_out = NULL;
+static GList *data_list         = NULL;
 
-static char *proc_type_str[] = 
+static gchar *proc_type_str[] = 
 {
   N_("Internal GIMP procedure"),
   N_("GIMP Plug-In"),
@@ -77,31 +79,31 @@ static char *proc_type_str[] =
   N_("Temporary Procedure")
 };
 
-static const char * const type_str[] =
+static const gchar * const type_str[] =
 {
-  "PDB_INT32",
-  "PDB_INT16",
-  "PDB_INT8",
-  "PDB_FLOAT",
-  "PDB_STRING",
-  "PDB_INT32ARRAY",
-  "PDB_INT16ARRAY",
-  "PDB_INT8ARRAY",
-  "PDB_FLOATARRAY",
-  "PDB_STRINGARRAY",
-  "PDB_COLOR",
-  "PDB_REGION",
-  "PDB_DISPLAY",
-  "PDB_IMAGE",
-  "PDB_LAYER",
-  "PDB_CHANNEL",
-  "PDB_DRAWABLE",
-  "PDB_SELECTION",
-  "PDB_BOUNDARY",
-  "PDB_PATH",
-  "PDB_PARASITE",
-  "PDB_STATUS",
-  "PDB_END"
+  "GIMP_PDB_INT32",
+  "GIMP_PDB_INT16",
+  "GIMP_PDB_INT8",
+  "GIMP_PDB_FLOAT",
+  "GIMP_PDB_STRING",
+  "GIMP_PDB_INT32ARRAY",
+  "GIMP_PDB_INT16ARRAY",
+  "GIMP_PDB_INT8ARRAY",
+  "GIMP_PDB_FLOATARRAY",
+  "GIMP_PDB_STRINGARRAY",
+  "GIMP_PDB_COLOR",
+  "GIMP_PDB_REGION",
+  "GIMP_PDB_DISPLAY",
+  "GIMP_PDB_IMAGE",
+  "GIMP_PDB_LAYER",
+  "GIMP_PDB_CHANNEL",
+  "GIMP_PDB_DRAWABLE",
+  "GIMP_PDB_SELECTION",
+  "GIMP_PDB_BOUNDARY",
+  "GIMP_PDB_PATH",
+  "GIMP_PDB_PARASITE",
+  "GIMP_PDB_STATUS",
+  "GIMP_PDB_END"
 };
 
 static ProcRecord procedural_db_dump_proc;
@@ -259,7 +261,7 @@ procedural_db_print_entry (gpointer key,
 const char *
 pdb_type_name (gint type)
 {
-  if (type >= 0 && type <= PDB_END)
+  if (type >= 0 && type <= GIMP_PDB_END)
     return type_str[type];
   else
     return g_strdup_printf ("(PDB type %d unknown)", type);
@@ -295,7 +297,7 @@ procedural_db_dump_invoker (Argument *args)
 static ProcArg procedural_db_dump_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "filename",
     "The dump filename"
   }
@@ -309,7 +311,7 @@ static ProcRecord procedural_db_dump_proc =
   "Spencer Kimball & Josh MacDonald",
   "Spencer Kimball & Josh MacDonald & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   procedural_db_dump_inargs,
   0,
@@ -397,37 +399,37 @@ procedural_db_query_invoker (Argument *args)
 static ProcArg procedural_db_query_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The regex for procedure name"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "blurb",
     "The regex for procedure blurb"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "help",
     "The regex for procedure help"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "author",
     "The regex for procedure author"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "copyright",
     "The regex for procedure copyright"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "date",
     "The regex for procedure date"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "proc_type",
     "The regex for procedure type: { 'Internal GIMP procedure', 'GIMP Plug-in', 'GIMP Extension' }"
   }
@@ -436,12 +438,12 @@ static ProcArg procedural_db_query_inargs[] =
 static ProcArg procedural_db_query_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_matches",
     "The number of matching procedures"
   },
   {
-    PDB_STRINGARRAY,
+    GIMP_PDB_STRINGARRAY,
     "procedure_names",
     "The list of procedure names"
   }
@@ -455,7 +457,7 @@ static ProcRecord procedural_db_query_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   7,
   procedural_db_query_inargs,
   2,
@@ -498,7 +500,7 @@ procedural_db_proc_info_invoker (Argument *args)
 static ProcArg procedural_db_proc_info_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "procedure",
     "The procedure name"
   }
@@ -507,42 +509,42 @@ static ProcArg procedural_db_proc_info_inargs[] =
 static ProcArg procedural_db_proc_info_outargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "blurb",
     "A short blurb"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "help",
     "Detailed procedure help"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "author",
     "Author(s) of the procedure"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "copyright",
     "The copyright"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "date",
     "Copyright date"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "proc_type",
     "The procedure type: { INTERNAL (0), PLUGIN (1), EXTENSION (2), TEMPORARY (3) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_args",
     "The number of input arguments"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_values",
     "The number of return values"
   }
@@ -556,7 +558,7 @@ static ProcRecord procedural_db_proc_info_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   procedural_db_proc_info_inargs,
   8,
@@ -604,12 +606,12 @@ procedural_db_proc_arg_invoker (Argument *args)
 static ProcArg procedural_db_proc_arg_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "procedure",
     "The procedure name"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "arg_num",
     "The argument number"
   }
@@ -618,17 +620,17 @@ static ProcArg procedural_db_proc_arg_inargs[] =
 static ProcArg procedural_db_proc_arg_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "arg_type",
     "The type of argument { PDB_INT32 (0), PDB_INT16 (1), PDB_INT8 (2), PDB_FLOAT (3), PDB_STRING (4), PDB_INT32ARRAY (5), PDB_INT16ARRAY (6), PDB_INT8ARRAY (7), PDB_FLOATARRAY (8), PDB_STRINGARRAY (9), PDB_COLOR (10), PDB_REGION (11), PDB_DISPLAY (12), PDB_IMAGE (13), PDB_LAYER (14), PDB_CHANNEL (15), PDB_DRAWABLE (16), PDB_SELECTION (17), PDB_BOUNDARY (18), PDB_PATH (19), PDB_PARASITE (20), PDB_STATUS (21) }"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "arg_name",
     "The name of the argument"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "arg_desc",
     "A description of the argument"
   }
@@ -642,7 +644,7 @@ static ProcRecord procedural_db_proc_arg_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   procedural_db_proc_arg_inargs,
   3,
@@ -690,12 +692,12 @@ procedural_db_proc_val_invoker (Argument *args)
 static ProcArg procedural_db_proc_val_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "procedure",
     "The procedure name"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "val_num",
     "The return value number"
   }
@@ -704,17 +706,17 @@ static ProcArg procedural_db_proc_val_inargs[] =
 static ProcArg procedural_db_proc_val_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "val_type",
     "The type of return value { PDB_INT32 (0), PDB_INT16 (1), PDB_INT8 (2), PDB_FLOAT (3), PDB_STRING (4), PDB_INT32ARRAY (5), PDB_INT16ARRAY (6), PDB_INT8ARRAY (7), PDB_FLOATARRAY (8), PDB_STRINGARRAY (9), PDB_COLOR (10), PDB_REGION (11), PDB_DISPLAY (12), PDB_IMAGE (13), PDB_LAYER (14), PDB_CHANNEL (15), PDB_DRAWABLE (16), PDB_SELECTION (17), PDB_BOUNDARY (18), PDB_PATH (19), PDB_PARASITE (20), PDB_STATUS (21) }"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "val_name",
     "The name of the return value"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "val_desc",
     "A description of the return value"
   }
@@ -728,7 +730,7 @@ static ProcRecord procedural_db_proc_val_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   procedural_db_proc_val_inargs,
   3,
@@ -785,7 +787,7 @@ procedural_db_get_data_invoker (Argument *args)
 static ProcArg procedural_db_get_data_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "identifier",
     "The identifier associated with data"
   }
@@ -794,12 +796,12 @@ static ProcArg procedural_db_get_data_inargs[] =
 static ProcArg procedural_db_get_data_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "bytes",
     "The number of bytes in the data"
   },
   {
-    PDB_INT8ARRAY,
+    GIMP_PDB_INT8ARRAY,
     "data",
     "A byte array containing data"
   }
@@ -813,7 +815,7 @@ static ProcRecord procedural_db_get_data_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   procedural_db_get_data_inargs,
   2,
@@ -863,7 +865,7 @@ procedural_db_get_data_size_invoker (Argument *args)
 static ProcArg procedural_db_get_data_size_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "identifier",
     "The identifier associated with data"
   }
@@ -872,7 +874,7 @@ static ProcArg procedural_db_get_data_size_inargs[] =
 static ProcArg procedural_db_get_data_size_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "bytes",
     "The number of bytes in the data"
   }
@@ -886,7 +888,7 @@ static ProcRecord procedural_db_get_data_size_proc =
   "Nick Lamb",
   "Nick Lamb",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   procedural_db_get_data_size_inargs,
   1,
@@ -946,17 +948,17 @@ procedural_db_set_data_invoker (Argument *args)
 static ProcArg procedural_db_set_data_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "identifier",
     "The identifier associated with data"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "bytes",
     "The number of bytes in the data"
   },
   {
-    PDB_INT8ARRAY,
+    GIMP_PDB_INT8ARRAY,
     "data",
     "A byte array containing data"
   }
@@ -970,7 +972,7 @@ static ProcRecord procedural_db_set_data_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   procedural_db_set_data_inargs,
   0,

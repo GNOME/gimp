@@ -67,7 +67,7 @@ user directory.
 
 For plug-ins which do not use GTK+, the --build and --install options can be
 appended with -noui for appropriate settings. For plug-ins that use GTK+ but
-not libgumpui, append -nogimpui.
+not libgimpui, append -nogimpui.
 
 All binary build and install options can be appended with -strip to discard
 debugging information.
@@ -196,9 +196,9 @@ while test $# -gt 0; do
       done
       case $1 in
         --libs)
-          echo $libdirs -lgimpui-@LT_RELEASE@ -lgimpwidgets-@LT_RELEASE@ -lgimp-@LT_RELEASE@ -lgimpcolor-@LT_RELEASE@ -lgimpmath-@LT_RELEASE@ $my_gtk_libs ;;
+          echo $libdirs -lgimpui-@LT_RELEASE@ -lgimpwidgets-@LT_RELEASE@ -lgimp-@LT_RELEASE@ -lgimpcolor-@LT_RELEASE@ -lgimpmath-@LT_RELEASE@ -lgimpbase-@LT_RELEASE@ $my_gtk_libs ;;
         --libs-nogimpui)
-          echo $libdirs -lgimp-@LT_RELEASE@ -lgimpcolor-@LT_RELEASE@ -lgimpmath-@LT_RELEASE@ $my_gtk_libs ;;
+          echo $libdirs -lgimp-@LT_RELEASE@ -lgimpcolor-@LT_RELEASE@ -lgimpmath-@LT_RELEASE@ -lgimpbase-@LT_RELEASE@ $my_gtk_libs ;;
       esac
       ;;
     --libs-noui)
@@ -218,7 +218,7 @@ while test $# -gt 0; do
           fi
         fi
       done
-      echo -L@libdir@ -lgimp-@LT_RELEASE@ -lgimpcolor-@LT_RELEASE@ -lgimpmath-@LT_RELEASE@ $my_glib_libs
+      echo -L@libdir@ -lgimp-@LT_RELEASE@ -lgimpcolor-@LT_RELEASE@ -lgimpmath-@LT_RELEASE@ -lgimpbase-@LT_RELEASE@ $my_glib_libs
       ;;
     --install-bin | --install-admin-bin \
     | --install-bin-strip | --install-admin-bin-strip \

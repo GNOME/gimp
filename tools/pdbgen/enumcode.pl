@@ -124,21 +124,23 @@ extern "C" {
 HEADER
 
 foreach (sort keys %enums) {
-    print ENUMFILE "typedef enum\n{\n";
-    my $enum = $enums{$_}; my $body = "";
-    foreach $symbol (@{$enum->{symbols}}) {
-	my $sym = $symbol;
-	$sym = $enum->{nicks}->{$sym} if exists $enum->{nicks}->{$sym};
-	$body .= "  GIMP_$sym";
-	$body .= " = $enum->{mapping}->{$symbol}" if !$enum->{contig};
-	$body .= ",\n";
-    }
+    if (!/GimpPDB/ && !/GimpUnit/) {
+	print ENUMFILE "typedef enum\n{\n";
+	my $enum = $enums{$_}; my $body = "";
+	foreach $symbol (@{$enum->{symbols}}) {
+	    my $sym = $symbol;
+	    $sym = $enum->{nicks}->{$sym} if exists $enum->{nicks}->{$sym};
+	    $body .= "  GIMP_$sym";
+	    $body .= " = $enum->{mapping}->{$symbol}" if !$enum->{contig};
+	    $body .= ",\n";
+	}
 
-    $body =~ s/,\n$//s;
-    $body .= "\n} ";
-    $body .= "Gimp" if !/^Gimp/;
-    $body .= "$_;\n\n";
-    print ENUMFILE $body
+	$body =~ s/,\n$//s;
+	$body .= "\n} ";
+	$body .= "Gimp" if !/^Gimp/;
+	$body .= "$_;\n\n";
+	print ENUMFILE $body
+    }
 }
 
 print ENUMFILE <<HEADER;

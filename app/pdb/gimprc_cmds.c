@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -71,7 +73,7 @@ gimprc_query_invoker (Argument *args)
 static ProcArg gimprc_query_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "token",
     "The token to query for"
   }
@@ -80,7 +82,7 @@ static ProcArg gimprc_query_inargs[] =
 static ProcArg gimprc_query_outargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "value",
     "The value associated with the queried token"
   }
@@ -94,7 +96,7 @@ static ProcRecord gimprc_query_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   gimprc_query_inargs,
   1,
@@ -126,12 +128,12 @@ gimprc_set_invoker (Argument *args)
 static ProcArg gimprc_set_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "token",
     "The token to modify"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "value",
     "The value to set the token to"
   }
@@ -145,7 +147,7 @@ static ProcRecord gimprc_set_proc =
   "Seth Burgess",
   "Seth Burgess",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   gimprc_set_inargs,
   0,
@@ -179,12 +181,12 @@ get_monitor_resolution_invoker (Argument *args)
 static ProcArg get_monitor_resolution_outargs[] =
 {
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "xres",
     "X resolution"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "yres",
     "Y resolution"
   }
@@ -198,7 +200,7 @@ static ProcRecord get_monitor_resolution_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   2,

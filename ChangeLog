@@ -1,3 +1,73 @@
+2001-05-21  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.am
+	* configure.in
+	* gimptool-1.4.in: added new directory libgimpbase/
+
+	* app/Makefile.am: link against the new lib.
+
+	* app/appenums.h: removed the PDB enums which are in
+	libgimpbase/gimpbasetypes.h now. They are all "Gimp" prefixed.
+
+	* app/apptypes.h: #include "libgimpbase/gimpbasetypes.h"
+
+	* app/[lots]
+	* app/core/[of]
+	* app/gui/[files]
+	* app/tools/: changed includes and all PDB types.
+
+	* app/pdb/*: regenerated.
+
+	* libgimp/Makefile.am: don't build libgimpi.a uglyness any more.
+
+	* libgimp/gimpenv.[ch]
+	* libgimp/gimplimits.[hh]
+	* libgimp/gimpparasite.[ch]
+	* libgimp/gimpparasiteio.[ch]
+	* libgimp/gimpprotocol.[ch]
+	* libgimp/gimpsignal.[ch]
+	* libgimp/gimpunit.h
+	* libgimp/gimputils.[ch]
+	* libgimp/gimpwire.[ch]: removed...
+
+	* libgimpbase/*: ...and added here as new library.
+
+	* libgimp/gimp.[ch]
+	* libgimp/gimpdrawable.[ch]
+	* libgimp/gimpenums.h
+	* libgimp/gimpimage.[ch]
+	* libgimp/gimptile.c
+	* libgimp/gimptypes.h
+	* libgimp/gimpunit.c: changed accordingly. Added the
+	gimp_*_add_new_parasite to gimp.[ch], gimpdrawable.[ch] and
+	gimpimage.[ch].
+
+	* libgimpwidgets/gimppatheditor.c
+	* libgimpwidgets/gimpquerybox.c
+	* libgimpwidgets/gimpsizeentry.c
+	* libgimpwidgets/gimpunitmenu.c
+	* libgimpwidgets/gimpwidgets.c
+	* libgimpwidgets/gimpwidgetstypes.h: changed includes accordingly.
+
+	* plug-ins/*/Makefile.am
+	* plug-ins/common/mkgen.pl: link against libgimpbase.
+
+	* tools/pdbgen/Makefile.am: scan libgimpbase/gimpbasetypes.h, so
+	the enums are known to pdbgen...
+
+	* tools/pdbgen/enumcode.pl: ...but don't write them out to
+	libgimp/gimpenums.h
+
+	* tools/pdbgen/app.pl: include libgimp/gimpbase.h in all *_cmds.c
+	files. Added GIMP_ to the type names ganerated in app/.
+
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* tools/pdbgen/pdb.pl
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb
+	* tools/pdbgen/pdb/unit.pdb: changed includes.
+
 Mon May 21 04:08:29 CEST 2001  Marc Lehmann <pcg@goof.com>
 
 	* autogen.sh: allow for automake 1.4-p1 and similar version numbers.

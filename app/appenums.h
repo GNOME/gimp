@@ -84,53 +84,6 @@ typedef enum /*< skip >*/
   GIMP_ZOOM_OUT
 } GimpZoomType;
 
-/*  Procedural database types  */
-typedef enum
-{
-  PDB_INT32,
-  PDB_INT16,
-  PDB_INT8,
-  PDB_FLOAT,
-  PDB_STRING,
-  PDB_INT32ARRAY,
-  PDB_INT16ARRAY,
-  PDB_INT8ARRAY,
-  PDB_FLOATARRAY,
-  PDB_STRINGARRAY,
-  PDB_COLOR,
-  PDB_REGION,
-  PDB_DISPLAY,
-  PDB_IMAGE,
-  PDB_LAYER,
-  PDB_CHANNEL,
-  PDB_DRAWABLE,
-  PDB_SELECTION,
-  PDB_BOUNDARY,
-  PDB_PATH,
-  PDB_PARASITE,
-  PDB_STATUS,
-  PDB_END
-} PDBArgType;
-
-/*  Error types  */
-typedef enum
-{
-  PDB_EXECUTION_ERROR,
-  PDB_CALLING_ERROR,
-  PDB_PASS_THROUGH,
-  PDB_SUCCESS,
-  PDB_CANCEL
-} PDBStatusType;
-
-/*  Procedure types  */
-typedef enum /*< chop=PDB_ >*/
-{
-  PDB_INTERNAL,
-  PDB_PLUGIN,
-  PDB_EXTENSION,
-  PDB_TEMPORARY
-} PDBProcType;
-
 /*  Selection Boolean operations  */
 typedef enum /*< chop=CHANNEL_OP_ >*/
 {

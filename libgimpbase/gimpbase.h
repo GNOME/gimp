@@ -27,6 +27,7 @@
 #include <libgimpbase/gimplimits.h>
 #include <libgimpbase/gimpparasite.h>
 #include <libgimpbase/gimpunit.h>
+#include <libgimpbase/gimputils.h>
 
 
 #endif  /* __GIMP_BASE_H__ */

@@ -20,10 +20,9 @@
 #define __APPTYPES_H__
 
 
-#include "libgimp/gimpunit.h"
-
 #include "libgimpcolor/gimpcolortypes.h"
 #include "libgimpmath/gimpmathtypes.h"
+#include "libgimpbase/gimpbasetypes.h"
 
 #include "base/base-types.h"
 
@@ -43,8 +42,6 @@ typedef struct _GDisplay            GDisplay;
 typedef struct _GimpHistogram       GimpHistogram;
 
 typedef struct _GimpImageNewValues  GimpImageNewValues;
-
-typedef struct _GimpParasite        GimpParasite;
 
 typedef struct _GimpProgress        GimpProgress;
 

@@ -20,6 +20,10 @@
 #ifndef __GIMP_BASE_TYPES_H__
 #define __GIMP_BASE_TYPES_H__
 
+
+#include <libgimpcolor/gimpcolortypes.h>
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -27,7 +31,10 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-typedef enum
+typedef struct _GimpParasite    GimpParasite;
+
+
+typedef enum /*< chop=GIMP_ >*/
 {
   GIMP_UNIT_PIXEL   = 0,
 
@@ -41,7 +48,7 @@ typedef enum
   GIMP_UNIT_PERCENT = 65536
 } GimpUnit;
 
-typedef enum
+typedef enum /*< chop=GIMP_ >*/
 {
   GIMP_PDB_INT32,
   GIMP_PDB_INT16,
@@ -68,7 +75,7 @@ typedef enum
   GIMP_PDB_END
 } GimpPDBArgType;
 
-typedef enum
+typedef enum /*< chop=GIMP_ >*/
 {
   GIMP_INTERNAL,
   GIMP_PLUGIN,
@@ -76,7 +83,7 @@ typedef enum
   GIMP_TEMPORARY
 } GimpPDBProcType;
 
-typedef enum
+typedef enum /*< chop=GIMP_ >*/
 {
   GIMP_PDB_EXECUTION_ERROR,
   GIMP_PDB_CALLING_ERROR,

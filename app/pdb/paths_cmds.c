@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 #include "procedural_db.h"
@@ -113,7 +115,7 @@ path_list_invoker (Argument *args)
 static ProcArg path_list_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The ID of the image to list the paths from"
   }
@@ -122,12 +124,12 @@ static ProcArg path_list_inargs[] =
 static ProcArg path_list_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_paths",
     "The number of paths returned"
   },
   {
-    PDB_STRINGARRAY,
+    GIMP_PDB_STRINGARRAY,
     "path_list",
     "List of the paths belonging to this image"
   }
@@ -141,7 +143,7 @@ static ProcRecord path_list_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   path_list_inargs,
   2,
@@ -236,12 +238,12 @@ path_get_points_invoker (Argument *args)
 static ProcArg path_get_points_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The ID of the image to list the paths from"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "pathname",
     "the name of the path whose points should be listed"
   }
@@ -250,22 +252,22 @@ static ProcArg path_get_points_inargs[] =
 static ProcArg path_get_points_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "path_type",
     "The type of the path. Currently only one type (1 = Bezier) is supported"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "path_closed",
     "Return if the path is closed. {0=path open, 1= path closed}"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_path_point_details",
     "The number of points returned. Each point is made up of (x,y,pnt_type) of floats"
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "points_pairs",
     "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be {1.0= BEZIER_ANCHOR, 2.0= BEZIER_CONTROL}. Note all points are returned in pixel resolution"
   }
@@ -279,7 +281,7 @@ static ProcRecord path_get_points_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   path_get_points_inargs,
   4,
@@ -322,7 +324,7 @@ path_get_current_invoker (Argument *args)
 static ProcArg path_get_current_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The ID of the image to get the current paths from"
   }
@@ -331,7 +333,7 @@ static ProcArg path_get_current_inargs[] =
 static ProcArg path_get_current_outargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "current_path_name",
     "The name of the current path"
   }
@@ -345,7 +347,7 @@ static ProcRecord path_get_current_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   path_get_current_inargs,
   1,
@@ -377,12 +379,12 @@ path_set_current_invoker (Argument *args)
 static ProcArg path_set_current_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The ID of the image to list set the paths in"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "set_current_path_name",
     "The name of the path to set the current path to"
   }
@@ -396,7 +398,7 @@ static ProcRecord path_set_current_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   path_set_current_inargs,
   0,
@@ -449,27 +451,27 @@ path_set_points_invoker (Argument *args)
 static ProcArg path_set_points_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The ID of the image to set the paths in"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "pathname",
     "The name of the path to create (if it exists then a unique name will be created - query the list of paths if you want to make sure that the name of the path you create is unique. This will be set as the current path."
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "ptype",
     "The type of the path. Currently only one type (1 = Bezier) is supported"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_path_points",
     "The number of points in the path. Each point is made up of (x,y,type) of floats. Currently only the creation of bezier curves is allowed. The type parameter must be set to (1) to indicate a BEZIER type curve. For BEZIERS. Note the that points must be given in the following order... ACCACCAC ... If the path is not closed the last control point is missed off. Points consist of three control points (control/anchor/control) so for a curve that is not closed there must be at least two points passed (2 x,y pairs). If num_path_pnts % 3 = 0 then the path is assumed to be closed and the points are ACCACCACCACC."
   },
   {
-    PDB_FLOATARRAY,
+    GIMP_PDB_FLOATARRAY,
     "points_pairs",
     "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be {1.0= BEZIER_ANCHOR, 2.0= BEZIER_CONTROL}. Note all points are returned in pixel resolution"
   }
@@ -483,7 +485,7 @@ static ProcRecord path_set_points_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   5,
   path_set_points_inargs,
   0,
@@ -527,7 +529,7 @@ path_stroke_current_invoker (Argument *args)
 static ProcArg path_stroke_current_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The ID of the image which contains the path to stroke"
   }
@@ -541,7 +543,7 @@ static ProcRecord path_stroke_current_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   path_stroke_current_inargs,
   0,
@@ -599,12 +601,12 @@ path_get_point_at_dist_invoker (Argument *args)
 static ProcArg path_get_point_at_dist_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The ID of the image the paths belongs to"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "distance",
     "The distance along the path"
   }
@@ -613,17 +615,17 @@ static ProcArg path_get_point_at_dist_inargs[] =
 static ProcArg path_get_point_at_dist_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "x_point",
     "The x position of the point"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "y_point",
     "The y position of the point"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "gradient",
     "The gradient at the specified point"
   }
@@ -637,7 +639,7 @@ static ProcRecord path_get_point_at_dist_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   path_get_point_at_dist_inargs,
   3,
@@ -704,12 +706,12 @@ path_get_tattoo_invoker (Argument *args)
 static ProcArg path_get_tattoo_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "pathname",
     "the name of the path whose tattoo should be obtained"
   }
@@ -718,7 +720,7 @@ static ProcArg path_get_tattoo_inargs[] =
 static ProcArg path_get_tattoo_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "tattoo",
     "The tattoo associated with the name path"
   }
@@ -732,7 +734,7 @@ static ProcRecord path_get_tattoo_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   path_get_tattoo_inargs,
   1,
@@ -781,12 +783,12 @@ get_path_by_tattoo_invoker (Argument *args)
 static ProcArg get_path_by_tattoo_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "tattoo",
     "The tattoo of the required path"
   }
@@ -795,7 +797,7 @@ static ProcArg get_path_by_tattoo_inargs[] =
 static ProcArg get_path_by_tattoo_outargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "path_name",
     "The name of the path with the specified tattoo"
   }
@@ -809,7 +811,7 @@ static ProcRecord get_path_by_tattoo_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   get_path_by_tattoo_inargs,
   1,
@@ -841,12 +843,12 @@ path_delete_invoker (Argument *args)
 static ProcArg path_delete_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The ID of the image to list delete the paths from"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "path_name_to_del",
     "The name of the path to delete"
   }
@@ -860,7 +862,7 @@ static ProcRecord path_delete_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   path_delete_inargs,
   0,
@@ -927,12 +929,12 @@ path_get_locked_invoker (Argument *args)
 static ProcArg path_get_locked_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "pathname",
     "the name of the path whose locked status should be obtained"
   }
@@ -941,7 +943,7 @@ static ProcArg path_get_locked_inargs[] =
 static ProcArg path_get_locked_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "lockstatus",
     "The lock status associated with the name path. 0 returned if the path is not locked. 1 is returned if the path is locked"
   }
@@ -955,7 +957,7 @@ static ProcRecord path_get_locked_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   path_get_locked_inargs,
   1,
@@ -1018,17 +1020,17 @@ path_set_locked_invoker (Argument *args)
 static ProcArg path_set_locked_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "pathname",
     "the name of the path whose locked status should be set"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "lockstatus",
     "The lock status associated with the name path. 0 if the path is not locked. 1 if the path is to be locked"
   }
@@ -1042,7 +1044,7 @@ static ProcRecord path_set_locked_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   path_set_locked_inargs,
   0,
@@ -1105,17 +1107,17 @@ path_set_tattoo_invoker (Argument *args)
 static ProcArg path_set_tattoo_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "pathname",
     "the name of the path whose tattoo should be set"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "tattovalue",
     "The tattoo associated with the name path. Only values returned from 'path_get_tattoo' should be used here"
   }
@@ -1129,7 +1131,7 @@ static ProcRecord path_set_tattoo_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   path_set_tattoo_inargs,
   0,

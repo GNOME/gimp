@@ -1469,8 +1469,8 @@ menus_last_opened_cmd_callback (GtkWidget *widget,
 
   status = file_open_with_display (raw_filename, raw_filename);
 
-  if (status != PDB_SUCCESS &&
-      status != PDB_CANCEL)
+  if (status != GIMP_PDB_SUCCESS &&
+      status != GIMP_PDB_CANCEL)
     {
       g_message (_("Error opening file: %s\n"), raw_filename);
     }

@@ -21,9 +21,13 @@
 
 #include <string.h>
 
+#include <glib.h>
+
+#include "libgimpbase/gimpbase.h"
+#include "libgimpbase/gimpprotocol.h"
+#include "libgimpbase/gimpwire.h"
+
 #include "gimp.h"
-#include "gimpprotocol.h"
-#include "gimpwire.h"
 
 
 /*  This is the percentage of the maximum cache size that 

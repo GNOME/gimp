@@ -102,7 +102,7 @@ file_dialog_update_menus (GSList *procs,
       file_proc = procs->data;
       procs     = procs->next;
 
-      if (file_proc->db_info.proc_type != PDB_EXTENSION)
+      if (file_proc->db_info.proc_type != GIMP_EXTENSION)
 	menus_set_sensitive (file_proc->menu_path,
 			     (file_proc->image_types_val & image_type));
     }

@@ -3,8 +3,9 @@
 SUBDIRS = \
 	tools		\
 	intl		\
-	libgimpmath	\
+	libgimpbase	\
 	libgimpcolor	\
+	libgimpmath	\
 	libgimpwidgets	\
 	libgimp		\
 	app		\

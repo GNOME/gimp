@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -58,7 +60,7 @@ undo_push_group_start_invoker (Argument *args)
 static ProcArg undo_push_group_start_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The ID of the image in which to pop an undo group"
   }
@@ -72,7 +74,7 @@ static ProcRecord undo_push_group_start_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   undo_push_group_start_inargs,
   0,
@@ -99,7 +101,7 @@ undo_push_group_end_invoker (Argument *args)
 static ProcArg undo_push_group_end_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The ID of the image in which to pop an undo group"
   }
@@ -113,7 +115,7 @@ static ProcRecord undo_push_group_end_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   undo_push_group_end_inargs,
   0,

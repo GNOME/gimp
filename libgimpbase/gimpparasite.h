@@ -74,21 +74,6 @@ const gchar  * gimp_parasite_name                (const GimpParasite *parasite);
 gpointer       gimp_parasite_data                (const GimpParasite *parasite);
 glong          gimp_parasite_data_size           (const GimpParasite *parasite);
 
-void           gimp_attach_new_parasite          (const gchar        *name, 
-						  gint                flags,
-						  gint                size, 
-						  const gpointer      data);
-void           gimp_drawable_attach_new_parasite (gint32              drawable_ID,
-						  const gchar        *name, 
-						  gint                flags,
-						  gint                size, 
-						  const gpointer      data);
-void           gimp_image_attach_new_parasite    (gint32              image_ID,
-						  const gchar        *name, 
-						  gint                flags,
-						  gint                size, 
-						  const gpointer      data);
-
 
 #ifdef __cplusplus
 }

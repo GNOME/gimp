@@ -25,6 +25,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 #include "procedural_db.h"
@@ -253,52 +255,52 @@ text_fontname_invoker (Argument *args)
 static ProcArg text_fontname_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable: (-1 for a new text layer)"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "x",
     "The x coordinate for the left of the text bounding box"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "y",
     "The y coordinate for the top of the text bounding box"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "text",
     "The text to generate"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "border",
     "The size of the border: -1 <= border"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "antialias",
     "Antialiasing (TRUE or FALSE)"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "size",
     "The size of text in either pixels or points"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "size_type",
     "The units of specified size: PIXELS (0) or POINTS (1)"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "fontname",
     "The fontname (conforming to the X Logical Font Description Conventions)"
   }
@@ -307,7 +309,7 @@ static ProcArg text_fontname_inargs[] =
 static ProcArg text_fontname_outargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "text_layer",
     "The new text layer"
   }
@@ -322,7 +324,7 @@ static ProcRecord text_fontname_proc =
   "Martin Edlman & Sven Neumann",
   "Spencer Kimball & Peter Mattis",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   10,
   text_fontname_inargs,
   1,
@@ -390,22 +392,22 @@ text_get_extents_fontname_invoker (Argument *args)
 static ProcArg text_get_extents_fontname_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "text",
     "The text to generate"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "size",
     "The size of text in either pixels or points"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "size_type",
     "The units of specified size: PIXELS (0) or POINTS (1)"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "fontname",
     "The fontname (conforming to the X Logical Font Description Conventions)"
   }
@@ -414,22 +416,22 @@ static ProcArg text_get_extents_fontname_inargs[] =
 static ProcArg text_get_extents_fontname_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "The width of the specified font"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "height",
     "The height of the specified font"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "ascent",
     "The ascent of the specified font"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "descent",
     "The descent of the specified font"
   }
@@ -443,7 +445,7 @@ static ProcRecord text_get_extents_fontname_proc =
   "Martin Edlman & Sven Neumann",
   "Spencer Kimball & Peter Mattis",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   4,
   text_get_extents_fontname_inargs,
   4,
@@ -504,7 +506,7 @@ text_invoker (Argument *args)
   for (i = 0; i < 9; i++)
     argv[i] = args[i];
 
-  argv[9].arg_type = PDB_STRING;
+  argv[9].arg_type = GIMP_PDB_STRING;
   argv[9].value.pdb_pointer =
     text_xlfd_create (foundry,
 		      family,
@@ -521,87 +523,87 @@ text_invoker (Argument *args)
 static ProcArg text_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   },
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The affected drawable: (-1 for a new text layer)"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "x",
     "The x coordinate for the left of the text bounding box"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "y",
     "The y coordinate for the top of the text bounding box"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "text",
     "The text to generate"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "border",
     "The size of the border: -1 <= border"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "antialias",
     "Antialiasing (TRUE or FALSE)"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "size",
     "The size of text in either pixels or points"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "size_type",
     "The units of specified size: PIXELS (0) or POINTS (1)"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "foundry",
     "The font foundry, \"*\" for any"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "family",
     "The font family, \"*\" for any"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "weight",
     "The font weight, \"*\" for any"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "slant",
     "The font slant, \"*\" for any"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "set_width",
     "The font set-width, \"*\" for any"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "spacing",
     "The font spacing, \"*\" for any"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "registry",
     "The font registry, \"*\" for any"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "encoding",
     "The font encoding, \"*\" for any"
   }
@@ -610,7 +612,7 @@ static ProcArg text_inargs[] =
 static ProcArg text_outargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "text_layer",
     "The new text layer"
   }
@@ -625,7 +627,7 @@ static ProcRecord text_proc =
   "Martin Edlman",
   "Spencer Kimball & Peter Mattis",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   17,
   text_inargs,
   1,
@@ -686,7 +688,7 @@ text_get_extents_invoker (Argument *args)
   for (i = 0; i < 3; i++)
     argv[i] = args[i];
 
-  argv[3].arg_type = PDB_STRING;
+  argv[3].arg_type = GIMP_PDB_STRING;
   argv[3].value.pdb_pointer =
     text_xlfd_create (foundry,
 		      family,
@@ -703,57 +705,57 @@ text_get_extents_invoker (Argument *args)
 static ProcArg text_get_extents_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "text",
     "The text to generate"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "size",
     "The size of text in either pixels or points"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "size_type",
     "The units of specified size: PIXELS (0) or POINTS (1)"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "foundry",
     "The font foundry, \"*\" for any"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "family",
     "The font family, \"*\" for any"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "weight",
     "The font weight, \"*\" for any"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "slant",
     "The font slant, \"*\" for any"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "set_width",
     "The font set-width, \"*\" for any"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "spacing",
     "The font spacing, \"*\" for any"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "registry",
     "The font registry, \"*\" for any"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "encoding",
     "The font encoding, \"*\" for any"
   }
@@ -762,22 +764,22 @@ static ProcArg text_get_extents_inargs[] =
 static ProcArg text_get_extents_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "The width of the specified font"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "height",
     "The height of the specified font"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "ascent",
     "The ascent of the specified font"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "descent",
     "The descent of the specified font"
   }
@@ -791,7 +793,7 @@ static ProcRecord text_get_extents_proc =
   "Martin Edlman",
   "Spencer Kimball & Peter Mattis",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   11,
   text_get_extents_inargs,
   4,

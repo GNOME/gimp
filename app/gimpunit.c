@@ -26,19 +26,13 @@
 
 #include <glib.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "apptypes.h"
 
 #include "app_procs.h"
 #include "gimprc.h"
 #include "unitrc.h"
-
-
-/* NOTE:
- *
- * one of our header files is in libgimp/ (see the note there)
- */
-#include "libgimp/gimpunit.h"
-#include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpintl.h"
 

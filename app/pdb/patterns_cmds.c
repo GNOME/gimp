@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -72,17 +74,17 @@ patterns_get_pattern_invoker (Argument *args)
 static ProcArg patterns_get_pattern_outargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The pattern name"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "The pattern width"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "height",
     "The pattern height"
   }
@@ -96,7 +98,7 @@ static ProcRecord patterns_get_pattern_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   3,
@@ -141,7 +143,7 @@ patterns_set_pattern_invoker (Argument *args)
 static ProcArg patterns_set_pattern_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The pattern name"
   }
@@ -155,7 +157,7 @@ static ProcRecord patterns_set_pattern_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   patterns_set_pattern_inargs,
   0,
@@ -196,12 +198,12 @@ patterns_list_invoker (Argument *args)
 static ProcArg patterns_list_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_patterns",
     "The number of patterns in the pattern list"
   },
   {
-    PDB_STRINGARRAY,
+    GIMP_PDB_STRINGARRAY,
     "pattern_list",
     "The list of pattern names"
   }
@@ -215,7 +217,7 @@ static ProcRecord patterns_list_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   2,
@@ -288,7 +290,7 @@ patterns_get_pattern_data_invoker (Argument *args)
 static ProcArg patterns_get_pattern_data_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "the pattern name (\"\" means current active pattern)"
   }
@@ -297,32 +299,32 @@ static ProcArg patterns_get_pattern_data_inargs[] =
 static ProcArg patterns_get_pattern_data_outargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The pattern name"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "The pattern width"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "height",
     "The pattern height"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "mask_bpp",
     "Pattern bytes per pixel"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "length",
     "Length of pattern mask data"
   },
   {
-    PDB_INT8ARRAY,
+    GIMP_PDB_INT8ARRAY,
     "mask_data",
     "The pattern mask data"
   }
@@ -336,7 +338,7 @@ static ProcRecord patterns_get_pattern_data_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   patterns_get_pattern_data_inargs,
   6,

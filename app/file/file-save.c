@@ -79,7 +79,7 @@ GSList *save_procs = NULL;
 
 /*  public functions  */
 
-PDBStatusType
+GimpPDBStatusType
 file_save (GimpImage   *gimage,
 	   gchar       *filename,
 	   gchar       *raw_filename,
@@ -95,7 +95,7 @@ file_save (GimpImage   *gimage,
   struct stat    statbuf;
 
   if (gimp_image_active_drawable (gimage) == NULL)
-    return PDB_EXECUTION_ERROR;
+    return GIMP_PDB_EXECUTION_ERROR;
 
   file_proc = gimp_image_get_save_proc (gimage);
 
@@ -108,7 +108,7 @@ file_save (GimpImage   *gimage,
 		   "%s: Unknown file type."),
 		 filename);
 
-      return PDB_CANCEL;  /* inhibits error messages by caller */
+      return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
     }
 
   /* check if we are saving to a file */
@@ -123,7 +123,7 @@ file_save (GimpImage   *gimage,
 		       "%s is not a regular file."),
 		     filename);
 
-          return PDB_CANCEL;  /* inhibits error messages by caller */
+          return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
         }
 
       euid = geteuid ();
@@ -142,7 +142,7 @@ file_save (GimpImage   *gimage,
 		       "%s: Permission denied."),
 		     filename);
 
-          return PDB_CANCEL;  /* inhibits error messages by caller */
+          return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
         }
     }
 
@@ -166,7 +166,7 @@ file_save (GimpImage   *gimage,
 
   status = return_vals[0].value.pdb_int;
 
-  if (status == PDB_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  set this image to clean  */
       gimp_image_clean_all (gimage);
@@ -221,7 +221,7 @@ file_save_with_proc (GimpImage     *gimage,
 		     PlugInProcDef *save_proc,
 		     gboolean       set_filename)
 {
-  gint     status  = PDB_EXECUTION_ERROR;
+  gint     status  = GIMP_PDB_EXECUTION_ERROR;
   gboolean success = FALSE;
 
   if (gimage != NULL)
@@ -233,14 +233,14 @@ file_save_with_proc (GimpImage     *gimage,
                           RUN_INTERACTIVE,
                           set_filename);
 
-      if (status == PDB_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
         success = TRUE;
     }
 
   /* If there was an error but file_save() didn't print an error
    * message, then we'd better.
    */
-  if (status != PDB_SUCCESS && status != PDB_CANCEL)
+  if (status != GIMP_PDB_SUCCESS && status != GIMP_PDB_CANCEL)
     g_message (_("Save failed.\n%s"), full_filename);
 
   return success;

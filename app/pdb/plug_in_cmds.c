@@ -25,6 +25,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -87,12 +89,12 @@ progress_init_invoker (Argument *args)
 static ProcArg progress_init_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "message",
     "Message to use in the progress dialog"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "gdisplay",
     "GDisplay to update progressbar in, or -1 for a seperate window"
   }
@@ -106,7 +108,7 @@ static ProcRecord progress_init_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   progress_init_inargs,
   0,
@@ -135,7 +137,7 @@ progress_update_invoker (Argument *args)
 static ProcArg progress_update_inargs[] =
 {
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "percentage",
     "Percentage of progress completed"
   }
@@ -149,7 +151,7 @@ static ProcRecord progress_update_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   progress_update_inargs,
   0,
@@ -175,7 +177,7 @@ temp_PDB_name_invoker (Argument *args)
 static ProcArg temp_PDB_name_outargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "temp_name",
     "A unique temporary name for a temporary PDB entry"
   }
@@ -189,7 +191,7 @@ static ProcRecord temp_PDB_name_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   1,
@@ -313,7 +315,7 @@ plugins_query_invoker (Argument *args)
 static ProcArg plugins_query_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "search_string",
     "If not an empty string then use this as a search pattern"
   }
@@ -322,62 +324,62 @@ static ProcArg plugins_query_inargs[] =
 static ProcArg plugins_query_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_plugins",
     "The number of plugins"
   },
   {
-    PDB_STRINGARRAY,
+    GIMP_PDB_STRINGARRAY,
     "menu_path",
     "The menu path of the plugin"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_plugins",
     "The number of plugins"
   },
   {
-    PDB_STRINGARRAY,
+    GIMP_PDB_STRINGARRAY,
     "plugin_accelerator",
     "String representing keyboard accelerator (could be empty string)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_plugins",
     "The number of plugins"
   },
   {
-    PDB_STRINGARRAY,
+    GIMP_PDB_STRINGARRAY,
     "plugin_location",
     "Location of the plugin program"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_plugins",
     "The number of plugins"
   },
   {
-    PDB_STRINGARRAY,
+    GIMP_PDB_STRINGARRAY,
     "plugin_image_type",
     "Type of image that this plugin will work on"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_plugins",
     "The number of plugins"
   },
   {
-    PDB_INT32ARRAY,
+    GIMP_PDB_INT32ARRAY,
     "plugin_install_time",
     "Time that the plugin was installed"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_plugins",
     "The number of plugins"
   },
   {
-    PDB_STRINGARRAY,
+    GIMP_PDB_STRINGARRAY,
     "plugin_real_name",
     "The internal name of the plugin"
   }
@@ -391,7 +393,7 @@ static ProcRecord plugins_query_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   plugins_query_inargs,
   12,
@@ -435,12 +437,12 @@ plugin_domain_register_invoker (Argument *args)
 static ProcArg plugin_domain_register_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "domain_name",
     "The name of the textdomain (must be unique)."
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "domain_path",
     "The absolute path to the compiled message catalog (may be NULL)."
   }
@@ -454,7 +456,7 @@ static ProcRecord plugin_domain_register_proc =
   "Sven Neumann",
   "Sven Neumann",
   "2000",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   plugin_domain_register_inargs,
   0,
@@ -491,7 +493,7 @@ plugin_help_register_invoker (Argument *args)
 static ProcArg plugin_help_register_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "help_path",
     "The rootdir of the plug-in's help pages"
   }
@@ -505,7 +507,7 @@ static ProcRecord plugin_help_register_proc =
   "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer <mitch@gimp.org>",
   "2000",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   plugin_help_register_inargs,
   0,

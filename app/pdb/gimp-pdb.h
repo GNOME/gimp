@@ -22,7 +22,7 @@
 
 struct _Argument
 {
-  PDBArgType    arg_type;       /*  argument type        */
+  GimpPDBArgType  arg_type;       /*  argument type        */
 
   union _ArgValue
   {
@@ -76,9 +76,9 @@ struct _NetExec
 
 struct _ProcArg
 {
-  PDBArgType  arg_type;       /*  Argument type (int, char, char *, etc)  */
-  gchar      *name;           /*  Argument name  */
-  gchar      *description;    /*  Argument description  */
+  GimpPDBArgType  arg_type;    /*  Argument type (int, char, char *, etc)  */
+  gchar          *name;        /*  Argument name  */
+  gchar          *description; /*  Argument description  */
 };
 
 
@@ -95,7 +95,7 @@ struct _ProcRecord
   gchar       *date;          /*  Date field  */
 
   /*  Procedure type  */
-  PDBProcType  proc_type;     /*  Type of procedure--Internal, Plug-In, Extension  */
+  GimpPDBProcType  proc_type; /*  Type of procedure--Internal, Plug-In, Extension  */
 
   /*  Input arguments  */
   gint32       num_args;      /*  Number of procedure arguments  */
@@ -134,7 +134,7 @@ Argument    * procedural_db_return_args  (ProcRecord  *procedure,
 void          procedural_db_destroy_args (Argument    *args,
 					  gint         nargs);
 
-/* "type" should really be a PDBArgType, but we can cope with
+/* "type" should really be a GimpPDBArgType, but we can cope with
  *  out-of-range values.
  */
 const gchar * pdb_type_name (gint type); /* really exists in _cmds.c file */

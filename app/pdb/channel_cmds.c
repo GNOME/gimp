@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -127,32 +129,32 @@ channel_new_invoker (Argument *args)
 static ProcArg channel_new_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image to which to add the channel"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "The channel width: (0 < width)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "height",
     "The channel height: (0 < height)"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The channel name"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "opacity",
     "The channel opacity: (0 <= opacity <= 100)"
   },
   {
-    PDB_COLOR,
+    GIMP_PDB_COLOR,
     "color",
     "The channel compositing color"
   }
@@ -161,7 +163,7 @@ static ProcArg channel_new_inargs[] =
 static ProcArg channel_new_outargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The newly created channel"
   }
@@ -175,7 +177,7 @@ static ProcRecord channel_new_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   6,
   channel_new_inargs,
   1,
@@ -209,7 +211,7 @@ channel_copy_invoker (Argument *args)
 static ProcArg channel_copy_inargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel to copy"
   }
@@ -218,7 +220,7 @@ static ProcArg channel_copy_inargs[] =
 static ProcArg channel_copy_outargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel_copy",
     "The newly copied channel"
   }
@@ -232,7 +234,7 @@ static ProcRecord channel_copy_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   channel_copy_inargs,
   1,
@@ -259,7 +261,7 @@ channel_delete_invoker (Argument *args)
 static ProcArg channel_delete_inargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel to delete"
   }
@@ -273,7 +275,7 @@ static ProcRecord channel_delete_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   channel_delete_inargs,
   0,
@@ -318,27 +320,27 @@ channel_combine_masks_invoker (Argument *args)
 static ProcArg channel_combine_masks_inargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel1",
     "The channel1"
   },
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel2",
     "The channel2"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "operation",
     "The selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offx",
     "x offset between upper left corner of channels: (second - first)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offy",
     "y offset between upper left corner of channels: (second - first)"
   }
@@ -352,7 +354,7 @@ static ProcRecord channel_combine_masks_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   5,
   channel_combine_masks_inargs,
   0,
@@ -382,7 +384,7 @@ channel_get_name_invoker (Argument *args)
 static ProcArg channel_get_name_inargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel"
   }
@@ -391,7 +393,7 @@ static ProcArg channel_get_name_inargs[] =
 static ProcArg channel_get_name_outargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The channel name"
   }
@@ -405,7 +407,7 @@ static ProcRecord channel_get_name_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   channel_get_name_inargs,
   1,
@@ -437,12 +439,12 @@ channel_set_name_invoker (Argument *args)
 static ProcArg channel_set_name_inargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The new channel name"
   }
@@ -456,7 +458,7 @@ static ProcRecord channel_set_name_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   channel_set_name_inargs,
   0,
@@ -486,7 +488,7 @@ channel_get_visible_invoker (Argument *args)
 static ProcArg channel_get_visible_inargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel"
   }
@@ -495,7 +497,7 @@ static ProcArg channel_get_visible_inargs[] =
 static ProcArg channel_get_visible_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "visible",
     "The channel visibility"
   }
@@ -509,7 +511,7 @@ static ProcRecord channel_get_visible_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   channel_get_visible_inargs,
   1,
@@ -539,12 +541,12 @@ channel_set_visible_invoker (Argument *args)
 static ProcArg channel_set_visible_inargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "visible",
     "The new channel visibility"
   }
@@ -558,7 +560,7 @@ static ProcRecord channel_set_visible_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   channel_set_visible_inargs,
   0,
@@ -588,7 +590,7 @@ channel_get_show_masked_invoker (Argument *args)
 static ProcArg channel_get_show_masked_inargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel"
   }
@@ -597,7 +599,7 @@ static ProcArg channel_get_show_masked_inargs[] =
 static ProcArg channel_get_show_masked_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "show_masked",
     "The channel composite method"
   }
@@ -611,7 +613,7 @@ static ProcRecord channel_get_show_masked_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   channel_get_show_masked_inargs,
   1,
@@ -641,12 +643,12 @@ channel_set_show_masked_invoker (Argument *args)
 static ProcArg channel_set_show_masked_inargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "show_masked",
     "The new channel composite method"
   }
@@ -660,7 +662,7 @@ static ProcRecord channel_set_show_masked_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   channel_set_show_masked_inargs,
   0,
@@ -690,7 +692,7 @@ channel_get_opacity_invoker (Argument *args)
 static ProcArg channel_get_opacity_inargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel"
   }
@@ -699,7 +701,7 @@ static ProcArg channel_get_opacity_inargs[] =
 static ProcArg channel_get_opacity_outargs[] =
 {
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "opacity",
     "The channel opacity"
   }
@@ -713,7 +715,7 @@ static ProcRecord channel_get_opacity_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   channel_get_opacity_inargs,
   1,
@@ -745,12 +747,12 @@ channel_set_opacity_invoker (Argument *args)
 static ProcArg channel_set_opacity_inargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "opacity",
     "The new channel opacity (0 <= opacity <= 100)"
   }
@@ -764,7 +766,7 @@ static ProcRecord channel_set_opacity_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   channel_set_opacity_inargs,
   0,
@@ -800,7 +802,7 @@ channel_get_color_invoker (Argument *args)
 static ProcArg channel_get_color_inargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel"
   }
@@ -809,7 +811,7 @@ static ProcArg channel_get_color_inargs[] =
 static ProcArg channel_get_color_outargs[] =
 {
   {
-    PDB_COLOR,
+    GIMP_PDB_COLOR,
     "color",
     "The channel compositing color"
   }
@@ -823,7 +825,7 @@ static ProcRecord channel_get_color_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   channel_get_color_inargs,
   1,
@@ -858,12 +860,12 @@ channel_set_color_invoker (Argument *args)
 static ProcArg channel_set_color_inargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel"
   },
   {
-    PDB_COLOR,
+    GIMP_PDB_COLOR,
     "color",
     "The new channel compositing color"
   }
@@ -877,7 +879,7 @@ static ProcRecord channel_set_color_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   channel_set_color_inargs,
   0,
@@ -907,7 +909,7 @@ channel_get_tattoo_invoker (Argument *args)
 static ProcArg channel_get_tattoo_inargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel"
   }
@@ -916,7 +918,7 @@ static ProcArg channel_get_tattoo_inargs[] =
 static ProcArg channel_get_tattoo_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "tattoo",
     "The channel tattoo"
   }
@@ -930,7 +932,7 @@ static ProcRecord channel_get_tattoo_proc =
   "Jay Cox",
   "Jay Cox",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   channel_get_tattoo_inargs,
   1,
@@ -962,12 +964,12 @@ channel_set_tattoo_invoker (Argument *args)
 static ProcArg channel_set_tattoo_inargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "channel",
     "The channel"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "tattoo",
     "The new channel tattoo"
   }
@@ -981,7 +983,7 @@ static ProcRecord channel_set_tattoo_proc =
   "Jay Cox",
   "Jay Cox",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   channel_set_tattoo_inargs,
   0,

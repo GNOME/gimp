@@ -214,7 +214,7 @@ HELP
     &unit_prop_proc('plural', 'string', 'plural form');
 }
 
-@headers = qw("libgimp/gimpunit.h");
+@headers = qw("libgimpbase/gimpunit.h");
 
 @procs = qw(unit_get_number_of_units unit_get_number_of_built_in_units
 	    unit_new unit_get_deletion_flag unit_set_deletion_flag

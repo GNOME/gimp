@@ -251,13 +251,13 @@ gradient_select_change_callbacks (GradientSelect *gsp,
       return_vals =
 	procedural_db_run_proc (name,
 				&nreturn_vals,
-				PDB_STRING,     GIMP_OBJECT (gradient)->name,
-				PDB_INT32,      gsp->sample_size * 4,
-				PDB_FLOATARRAY, values,
-				PDB_INT32,      (gint) closing,
-				PDB_END);
+				GIMP_PDB_STRING,     GIMP_OBJECT (gradient)->name,
+				GIMP_PDB_INT32,      gsp->sample_size * 4,
+				GIMP_PDB_FLOATARRAY, values,
+				GIMP_PDB_INT32,      (gint) closing,
+				GIMP_PDB_END);
  
-      if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
+      if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
 	g_message ("failed to run gradient callback function");
       else
 	procedural_db_destroy_args (return_vals, nreturn_vals);

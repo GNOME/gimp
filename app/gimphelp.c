@@ -208,13 +208,13 @@ gimp_help_internal (const gchar *help_path,
 	}
 
       args = g_new (Argument, 4);
-      args[0].arg_type = PDB_INT32;
+      args[0].arg_type = GIMP_PDB_INT32;
       args[0].value.pdb_int = RUN_INTERACTIVE;
-      args[1].arg_type = PDB_STRING;
+      args[1].arg_type = GIMP_PDB_STRING;
       args[1].value.pdb_pointer = (gpointer) help_path;
-      args[2].arg_type = PDB_STRING;
+      args[2].arg_type = GIMP_PDB_STRING;
       args[2].value.pdb_pointer = (gpointer) current_locale;
-      args[3].arg_type = PDB_STRING;
+      args[3].arg_type = GIMP_PDB_STRING;
       args[3].value.pdb_pointer = (gpointer) help_data;
 
       plug_in_run (proc_rec, args, 4, FALSE, TRUE, 0);
@@ -229,10 +229,10 @@ gimp_help_internal (const gchar *help_path,
       return_vals =
         procedural_db_run_proc ("extension_gimp_help_browser_temp",
                                 &nreturn_vals,
-				PDB_STRING, help_path,
-				PDB_STRING, current_locale,
-                                PDB_STRING, help_data,
-                                PDB_END);
+				GIMP_PDB_STRING, help_path,
+				GIMP_PDB_STRING, current_locale,
+                                GIMP_PDB_STRING, help_data,
+                                GIMP_PDB_END);
 
       procedural_db_destroy_args (return_vals, nreturn_vals);
     }
@@ -279,10 +279,10 @@ gimp_help_netscape (const gchar *help_path,
   return_vals =
     procedural_db_run_proc ("extension_web_browser",
 			    &nreturn_vals,
-			    PDB_INT32,  RUN_NONINTERACTIVE,
-			    PDB_STRING, url,
-			    PDB_INT32,  FALSE,
-			    PDB_END);
+			    GIMP_PDB_INT32,  RUN_NONINTERACTIVE,
+			    GIMP_PDB_STRING, url,
+			    GIMP_PDB_INT32,  FALSE,
+			    GIMP_PDB_END);
 
   procedural_db_destroy_args (return_vals, nreturn_vals);
 

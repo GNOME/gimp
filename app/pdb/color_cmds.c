@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 #include "procedural_db.h"
@@ -134,17 +136,17 @@ brightness_contrast_invoker (Argument *args)
 static ProcArg brightness_contrast_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "brightness",
     "Brightness adjustment: (-127 <= brightness <= 127)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "contrast",
     "Contrast adjustment: (-127 <= contrast <= 127)"
   }
@@ -158,7 +160,7 @@ static ProcRecord brightness_contrast_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   brightness_contrast_inargs,
   0,
@@ -267,37 +269,37 @@ levels_invoker (Argument *args)
 static ProcArg levels_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "channel",
     "The channel to modify: { VALUE_LUT (0), RED_LUT (1), GREEN_LUT (2), BLUE_LUT (3), ALPHA_LUT (4) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "low_input",
     "Intensity of lowest input: (0 <= low_input <= 255)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "high_input",
     "Intensity of highest input: (0 <= high_input <= 255)"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "gamma",
     "Gamma correction factor: (0.1 <= gamma <= 10)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "low_output",
     "Intensity of lowest output: (0 <= low_output <= 255)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "high_output",
     "Intensity of highest output: (0 <= high_output <= 255)"
   }
@@ -311,7 +313,7 @@ static ProcRecord levels_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   7,
   levels_inargs,
   0,
@@ -371,12 +373,12 @@ posterize_invoker (Argument *args)
 static ProcArg posterize_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "levels",
     "Levels of posterization: (2 <= levels <= 255)"
   }
@@ -390,7 +392,7 @@ static ProcRecord posterize_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   posterize_inargs,
   0,
@@ -422,7 +424,7 @@ desaturate_invoker (Argument *args)
 static ProcArg desaturate_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -436,7 +438,7 @@ static ProcRecord desaturate_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   desaturate_inargs,
   0,
@@ -471,12 +473,12 @@ equalize_invoker (Argument *args)
 static ProcArg equalize_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "mask_only",
     "Equalization option"
   }
@@ -490,7 +492,7 @@ static ProcRecord equalize_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   equalize_inargs,
   0,
@@ -522,7 +524,7 @@ invert_invoker (Argument *args)
 static ProcArg invert_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -536,7 +538,7 @@ static ProcRecord invert_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   invert_inargs,
   0,
@@ -628,22 +630,22 @@ curves_spline_invoker (Argument *args)
 static ProcArg curves_spline_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "channel",
     "The channel to modify: { VALUE_LUT (0), RED_LUT (1), GREEN_LUT (2), BLUE_LUT (3), ALPHA_LUT (4) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_points",
     "The number of values in the control point array (3 < num_points <= 32)"
   },
   {
-    PDB_INT8ARRAY,
+    GIMP_PDB_INT8ARRAY,
     "control_pts",
     "The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }"
   }
@@ -657,7 +659,7 @@ static ProcRecord curves_spline_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   4,
   curves_spline_inargs,
   0,
@@ -736,22 +738,22 @@ curves_explicit_invoker (Argument *args)
 static ProcArg curves_explicit_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "channel",
     "The channel to modify: { VALUE_LUT (0), RED_LUT (1), GREEN_LUT (2), BLUE_LUT (3), ALPHA_LUT (4) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_bytes",
     "The number of bytes in the new curve (always 256)"
   },
   {
-    PDB_INT8ARRAY,
+    GIMP_PDB_INT8ARRAY,
     "curve",
     "The explicit curve"
   }
@@ -765,7 +767,7 @@ static ProcRecord curves_explicit_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   4,
   curves_explicit_inargs,
   0,
@@ -854,32 +856,32 @@ color_balance_invoker (Argument *args)
 static ProcArg color_balance_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "transfer_mode",
     "Transfer mode: { SHADOWS (0), MIDTONES (1), HIGHLIGHTS (2) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "preserve_lum",
     "Preserve luminosity values at each pixel"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "cyan_red",
     "Cyan-Red color balance: (-100 <= cyan_red <= 100)"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "magenta_green",
     "Magenta-Green color balance: (-100 <= magenta_green <= 100)"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "yellow_blue",
     "Yellow-Blue color balance: (-100 <= yellow_blue <= 100)"
   }
@@ -893,7 +895,7 @@ static ProcRecord color_balance_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   6,
   color_balance_inargs,
   0,
@@ -995,22 +997,22 @@ histogram_invoker (Argument *args)
 static ProcArg histogram_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "channel",
     "The channel to modify: { VALUE_LUT (0), RED_LUT (1), GREEN_LUT (2), BLUE_LUT (3), ALPHA_LUT (4) }"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "start_range",
     "Start of the intensity measurement range"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "end_range",
     "End of the intensity measurement range"
   }
@@ -1019,32 +1021,32 @@ static ProcArg histogram_inargs[] =
 static ProcArg histogram_outargs[] =
 {
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "mean",
     "Mean itensity value"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "std_dev",
     "Standard deviation of intensity values"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "median",
     "Median itensity value"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "pixels",
     "Alpha-weighted pixel count for entire image"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "count",
     "Alpha-weighted pixel count for range"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "percentile",
     "Percentile that range falls under"
   }
@@ -1058,7 +1060,7 @@ static ProcRecord histogram_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   4,
   histogram_inargs,
   6,
@@ -1144,27 +1146,27 @@ hue_saturation_invoker (Argument *args)
 static ProcArg hue_saturation_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "hue_range",
     "Range of affected hues: { ALL_HUES (0), RED_HUES (1), YELLOW_HUES (2), GREEN_HUES (3), CYAN_HUES (4), BLUE_HUES (5), MAGENTA_HUES (6) }"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "hue_offset",
     "Hue offset in degrees: (-180 <= hue_offset <= 180)"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "lightness",
     "lightness modification: (-100 <= lightness <= 100)"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "saturation",
     "saturation modification: (-100 <= saturation <= 100)"
   }
@@ -1178,7 +1180,7 @@ static ProcRecord hue_saturation_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   5,
   hue_saturation_inargs,
   0,
@@ -1241,17 +1243,17 @@ threshold_invoker (Argument *args)
 static ProcArg threshold_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "low_threshold",
     "The low threshold value: 0 <= low_threshold <= 255"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "high_threshold",
     "The high threshold value: 0 <= high_threshold <= 255"
   }
@@ -1265,7 +1267,7 @@ static ProcRecord threshold_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   threshold_inargs,
   0,

@@ -100,3 +100,17 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
 
   return image_data;
 }
+
+void
+gimp_image_attach_new_parasite (gint32          image_ID, 
+				const gchar    *name, 
+				gint            flags,
+				gint            size, 
+				const gpointer  data)
+{
+  GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
+
+  gimp_image_parasite_attach (image_ID, parasite);
+
+  gimp_parasite_free (parasite);
+}

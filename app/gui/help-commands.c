@@ -813,10 +813,10 @@ image_invert_cmd_callback (GtkWidget *widget,
   return_vals =
     procedural_db_run_proc ("gimp_invert",
 			    &nreturn_vals,
-			    PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
-			    PDB_END);
+			    GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
+			    GIMP_PDB_END);
 
-  if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
+  if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
     g_message (_("Invert operation failed."));
 
   procedural_db_destroy_args (return_vals, nreturn_vals);

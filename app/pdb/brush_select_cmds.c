@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -118,32 +120,32 @@ brushes_popup_invoker (Argument *args)
 static ProcArg brushes_popup_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "brush_callback",
     "The callback PDB proc to call when brush selection is made"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "popup_title",
     "Title to give the brush popup window"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "initial_brush",
     "The name of the brush to set as the first selected"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "opacity",
     "The initial opacity of the brush"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "spacing",
     "The initial spacing of the brush (if < 0 then use brush default spacing)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "paint_mode",
     "The initial paint mode: { NORMAL_MODE (0), DISSOLVE_MODE (1), BEHIND_MODE (2), MULTIPLY_MODE (3), SCREEN_MODE (4), OVERLAY_MODE (5), DIFFERENCE_MODE (6), ADDITION_MODE (7), SUBTRACT_MODE (8), DARKEN_ONLY_MODE (9), LIGHTEN_ONLY_MODE (10), HUE_MODE (11), SATURATION_MODE (12), COLOR_MODE (13), VALUE_MODE (14), DIVIDE_MODE (15), DODGE_MODE (16), BURN_MODE (17), HARDLIGHT_MODE (18) }"
   }
@@ -157,7 +159,7 @@ static ProcRecord brushes_popup_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   6,
   brushes_popup_inargs,
   0,
@@ -202,7 +204,7 @@ brushes_close_popup_invoker (Argument *args)
 static ProcArg brushes_close_popup_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "brush_callback",
     "The name of the callback registered for this popup"
   }
@@ -216,7 +218,7 @@ static ProcRecord brushes_close_popup_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   brushes_close_popup_inargs,
   0,
@@ -286,27 +288,27 @@ brushes_set_popup_invoker (Argument *args)
 static ProcArg brushes_set_popup_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "brush_callback",
     "The name of the callback registered for this popup"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "brush_name",
     "The name of the brush to set as selected"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "opacity",
     "The initial opacity of the brush"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "spacing",
     "The initial spacing of the brush (if < 0 then use brush default spacing)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "paint_mode",
     "The initial paint mode: { NORMAL_MODE (0), DISSOLVE_MODE (1), BEHIND_MODE (2), MULTIPLY_MODE (3), SCREEN_MODE (4), OVERLAY_MODE (5), DIFFERENCE_MODE (6), ADDITION_MODE (7), SUBTRACT_MODE (8), DARKEN_ONLY_MODE (9), LIGHTEN_ONLY_MODE (10), HUE_MODE (11), SATURATION_MODE (12), COLOR_MODE (13), VALUE_MODE (14), DIVIDE_MODE (15), DODGE_MODE (16), BURN_MODE (17), HARDLIGHT_MODE (18) }"
   }
@@ -320,7 +322,7 @@ static ProcRecord brushes_set_popup_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   5,
   brushes_set_popup_inargs,
   0,

@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -115,12 +117,12 @@ drawable_merge_shadow_invoker (Argument *args)
 static ProcArg drawable_merge_shadow_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "undo",
     "Push merge to undo stack?"
   }
@@ -134,7 +136,7 @@ static ProcRecord drawable_merge_shadow_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   drawable_merge_shadow_inargs,
   0,
@@ -166,12 +168,12 @@ drawable_fill_invoker (Argument *args)
 static ProcArg drawable_fill_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "fill_type",
     "The type of fill: FG_IMAGE_FILL (0), BG_IMAGE_FILL (1), WHITE_IMAGE_FILL (2), TRANS_IMAGE_FILL (3), NO_IMAGE_FILL (4)"
   }
@@ -185,7 +187,7 @@ static ProcRecord drawable_fill_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   drawable_fill_inargs,
   0,
@@ -224,27 +226,27 @@ drawable_update_invoker (Argument *args)
 static ProcArg drawable_update_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "x",
     "x coordinate of upper left corner of update region"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "y",
     "y coordinate of upper left corner of update region"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "Width of update region"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "height",
     "Height of update region"
   }
@@ -258,7 +260,7 @@ static ProcRecord drawable_update_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   5,
   drawable_update_inargs,
   0,
@@ -302,7 +304,7 @@ drawable_mask_bounds_invoker (Argument *args)
 static ProcArg drawable_mask_bounds_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -311,27 +313,27 @@ static ProcArg drawable_mask_bounds_inargs[] =
 static ProcArg drawable_mask_bounds_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "non_empty",
     "TRUE if there is a selection"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "x1",
     "x coordinate of the upper left corner of selection bounds"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "y1",
     "y coordinate of the upper left corner of selection bounds"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "x2",
     "x coordinate of the lower right corner of selection bounds"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "y2",
     "y coordinate of the lower right corner of selection bounds"
   }
@@ -345,7 +347,7 @@ static ProcRecord drawable_mask_bounds_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   drawable_mask_bounds_inargs,
   5,
@@ -379,7 +381,7 @@ drawable_image_invoker (Argument *args)
 static ProcArg drawable_image_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -388,7 +390,7 @@ static ProcArg drawable_image_inargs[] =
 static ProcArg drawable_image_outargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The drawable's image"
   }
@@ -402,7 +404,7 @@ static ProcRecord drawable_image_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   drawable_image_inargs,
   1,
@@ -432,7 +434,7 @@ drawable_type_invoker (Argument *args)
 static ProcArg drawable_type_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -441,7 +443,7 @@ static ProcArg drawable_type_inargs[] =
 static ProcArg drawable_type_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "type",
     "The drawable's type: { RGB_IMAGE (0), RGBA_IMAGE (1), GRAY_IMAGE (2), GRAYA_IMAGE (3), INDEXED_IMAGE (4), INDEXEDA_IMAGE (5) }"
   }
@@ -455,7 +457,7 @@ static ProcRecord drawable_type_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   drawable_type_inargs,
   1,
@@ -485,7 +487,7 @@ drawable_has_alpha_invoker (Argument *args)
 static ProcArg drawable_has_alpha_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -494,7 +496,7 @@ static ProcArg drawable_has_alpha_inargs[] =
 static ProcArg drawable_has_alpha_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "has_alpha",
     "Does the drawable have an alpha channel?"
   }
@@ -508,7 +510,7 @@ static ProcRecord drawable_has_alpha_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   drawable_has_alpha_inargs,
   1,
@@ -538,7 +540,7 @@ drawable_type_with_alpha_invoker (Argument *args)
 static ProcArg drawable_type_with_alpha_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -547,7 +549,7 @@ static ProcArg drawable_type_with_alpha_inargs[] =
 static ProcArg drawable_type_with_alpha_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "type_with_alpha",
     "The drawable's type with alpha: { RGBA_IMAGE (1), GRAYA_IMAGE (3), INDEXEDA_IMAGE (5) }"
   }
@@ -561,7 +563,7 @@ static ProcRecord drawable_type_with_alpha_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   drawable_type_with_alpha_inargs,
   1,
@@ -591,7 +593,7 @@ drawable_is_rgb_invoker (Argument *args)
 static ProcArg drawable_is_rgb_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -600,7 +602,7 @@ static ProcArg drawable_is_rgb_inargs[] =
 static ProcArg drawable_is_rgb_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "is_rgb",
     "non-zero if the drawable is an RGB type"
   }
@@ -614,7 +616,7 @@ static ProcRecord drawable_is_rgb_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   drawable_is_rgb_inargs,
   1,
@@ -644,7 +646,7 @@ drawable_is_gray_invoker (Argument *args)
 static ProcArg drawable_is_gray_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -653,7 +655,7 @@ static ProcArg drawable_is_gray_inargs[] =
 static ProcArg drawable_is_gray_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "is_gray",
     "non-zero if the drawable is a grayscale type"
   }
@@ -667,7 +669,7 @@ static ProcRecord drawable_is_gray_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   drawable_is_gray_inargs,
   1,
@@ -697,7 +699,7 @@ drawable_is_indexed_invoker (Argument *args)
 static ProcArg drawable_is_indexed_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -706,7 +708,7 @@ static ProcArg drawable_is_indexed_inargs[] =
 static ProcArg drawable_is_indexed_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "is_indexed",
     "non-zero if the drawable is an indexed type"
   }
@@ -720,7 +722,7 @@ static ProcRecord drawable_is_indexed_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   drawable_is_indexed_inargs,
   1,
@@ -750,7 +752,7 @@ drawable_bytes_invoker (Argument *args)
 static ProcArg drawable_bytes_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -759,7 +761,7 @@ static ProcArg drawable_bytes_inargs[] =
 static ProcArg drawable_bytes_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "bytes",
     "Bytes per pixel"
   }
@@ -773,7 +775,7 @@ static ProcRecord drawable_bytes_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   drawable_bytes_inargs,
   1,
@@ -803,7 +805,7 @@ drawable_width_invoker (Argument *args)
 static ProcArg drawable_width_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -812,7 +814,7 @@ static ProcArg drawable_width_inargs[] =
 static ProcArg drawable_width_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "Width of drawable"
   }
@@ -826,7 +828,7 @@ static ProcRecord drawable_width_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   drawable_width_inargs,
   1,
@@ -856,7 +858,7 @@ drawable_height_invoker (Argument *args)
 static ProcArg drawable_height_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -865,7 +867,7 @@ static ProcArg drawable_height_inargs[] =
 static ProcArg drawable_height_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "height",
     "Height of drawable"
   }
@@ -879,7 +881,7 @@ static ProcRecord drawable_height_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   drawable_height_inargs,
   1,
@@ -917,7 +919,7 @@ drawable_offsets_invoker (Argument *args)
 static ProcArg drawable_offsets_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -926,12 +928,12 @@ static ProcArg drawable_offsets_inargs[] =
 static ProcArg drawable_offsets_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offset_x",
     "x offset of drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offset_y",
     "y offset of drawable"
   }
@@ -945,7 +947,7 @@ static ProcRecord drawable_offsets_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   drawable_offsets_inargs,
   2,
@@ -975,7 +977,7 @@ drawable_is_layer_invoker (Argument *args)
 static ProcArg drawable_is_layer_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -984,7 +986,7 @@ static ProcArg drawable_is_layer_inargs[] =
 static ProcArg drawable_is_layer_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "layer",
     "Non-zero if the drawable is a layer"
   }
@@ -998,7 +1000,7 @@ static ProcRecord drawable_is_layer_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   drawable_is_layer_inargs,
   1,
@@ -1028,7 +1030,7 @@ drawable_is_layer_mask_invoker (Argument *args)
 static ProcArg drawable_is_layer_mask_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -1037,7 +1039,7 @@ static ProcArg drawable_is_layer_mask_inargs[] =
 static ProcArg drawable_is_layer_mask_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "layer_mask",
     "Non-zero if the drawable is a layer mask"
   }
@@ -1051,7 +1053,7 @@ static ProcRecord drawable_is_layer_mask_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   drawable_is_layer_mask_inargs,
   1,
@@ -1081,7 +1083,7 @@ drawable_is_channel_invoker (Argument *args)
 static ProcArg drawable_is_channel_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   }
@@ -1090,7 +1092,7 @@ static ProcArg drawable_is_channel_inargs[] =
 static ProcArg drawable_is_channel_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "channel",
     "Non-zero if the drawable is a channel"
   }
@@ -1104,7 +1106,7 @@ static ProcRecord drawable_is_channel_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   drawable_is_channel_inargs,
   1,
@@ -1175,17 +1177,17 @@ drawable_get_pixel_invoker (Argument *args)
 static ProcArg drawable_get_pixel_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "x_coord",
     "The x coordinate"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "y_coord",
     "The y coordinate"
   }
@@ -1194,12 +1196,12 @@ static ProcArg drawable_get_pixel_inargs[] =
 static ProcArg drawable_get_pixel_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_channels",
     "The number of channels for the pixel"
   },
   {
-    PDB_INT8ARRAY,
+    GIMP_PDB_INT8ARRAY,
     "pixel",
     "The pixel value"
   }
@@ -1213,7 +1215,7 @@ static ProcRecord drawable_get_pixel_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   drawable_get_pixel_inargs,
   2,
@@ -1278,27 +1280,27 @@ drawable_set_pixel_invoker (Argument *args)
 static ProcArg drawable_set_pixel_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "x_coord",
     "The x coordinate"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "y_coord",
     "The y coordinate"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "num_channels",
     "The number of channels for the pixel"
   },
   {
-    PDB_INT8ARRAY,
+    GIMP_PDB_INT8ARRAY,
     "pixel",
     "The pixel value"
   }
@@ -1312,7 +1314,7 @@ static ProcRecord drawable_set_pixel_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   5,
   drawable_set_pixel_inargs,
   0,
@@ -1344,12 +1346,12 @@ drawable_set_image_invoker (Argument *args)
 static ProcArg drawable_set_image_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -1363,7 +1365,7 @@ static ProcRecord drawable_set_image_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   drawable_set_image_inargs,
   0,
@@ -1442,17 +1444,17 @@ drawable_thumbnail_invoker (Argument *args)
 static ProcArg drawable_thumbnail_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "The thumbnail width"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "height",
     "The thumbnail height"
   }
@@ -1461,27 +1463,27 @@ static ProcArg drawable_thumbnail_inargs[] =
 static ProcArg drawable_thumbnail_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "The previews width"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "height",
     "The previews height"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "bpp",
     "The previews bpp"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "thumbnail_data_count",
     "The number of pixels in thumbnail data"
   },
   {
-    PDB_INT8ARRAY,
+    GIMP_PDB_INT8ARRAY,
     "thumbnail_data",
     "The thumbnail data"
   }
@@ -1495,7 +1497,7 @@ static ProcRecord drawable_thumbnail_proc =
   "Andy Thomas",
   "Andy Thomas",
   "1999",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   drawable_thumbnail_inargs,
   5,
@@ -1538,27 +1540,27 @@ drawable_offset_invoker (Argument *args)
 static ProcArg drawable_offset_inargs[] =
 {
   {
-    PDB_DRAWABLE,
+    GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable to offset"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "wrap_around",
     "wrap image around or fill vacated regions"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "fill_type",
     "fill vacated regions of drawable with background or transparent: OFFSET_BACKGROUND (0) or OFFSET_TRANSPARENT (1)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offset_x",
     "offset by this amount in X direction"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offset_y",
     "offset by this amount in Y direction"
   }
@@ -1572,7 +1574,7 @@ static ProcRecord drawable_offset_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   5,
   drawable_offset_inargs,
   0,

@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 
@@ -55,8 +57,6 @@
 #include "parasitelist.h"
 #include "path_transform.h"
 #include "undo.h"
-
-#include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 

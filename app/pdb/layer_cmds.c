@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -167,37 +169,37 @@ layer_new_invoker (Argument *args)
 static ProcArg layer_new_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image to which to add the layer"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "width",
     "The layer width: (0 < width)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "height",
     "The layer height: (0 < height)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "type",
     "The layer type: { RGB_IMAGE (0), RGBA_IMAGE (1), GRAY_IMAGE (2), GRAYA_IMAGE (3), INDEXED_IMAGE (4), INDEXEDA_IMAGE (5) }"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The layer name"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "opacity",
     "The layer opacity: (0 <= opacity <= 100)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "mode",
     "The layer combination mode: { NORMAL_MODE (0), DISSOLVE_MODE (1), BEHIND_MODE (2), MULTIPLY_MODE (3), SCREEN_MODE (4), OVERLAY_MODE (5), DIFFERENCE_MODE (6), ADDITION_MODE (7), SUBTRACT_MODE (8), DARKEN_ONLY_MODE (9), LIGHTEN_ONLY_MODE (10), HUE_MODE (11), SATURATION_MODE (12), COLOR_MODE (13), VALUE_MODE (14), DIVIDE_MODE (15), DODGE_MODE (16), BURN_MODE (17), HARDLIGHT_MODE (18) }"
   }
@@ -206,7 +208,7 @@ static ProcArg layer_new_inargs[] =
 static ProcArg layer_new_outargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The newly created layer"
   }
@@ -220,7 +222,7 @@ static ProcRecord layer_new_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   7,
   layer_new_inargs,
   1,
@@ -257,12 +259,12 @@ layer_copy_invoker (Argument *args)
 static ProcArg layer_copy_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer to copy"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "add_alpha",
     "Add an alpha channel to the copied layer"
   }
@@ -271,7 +273,7 @@ static ProcArg layer_copy_inargs[] =
 static ProcArg layer_copy_outargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer_copy",
     "The newly copied layer"
   }
@@ -285,7 +287,7 @@ static ProcRecord layer_copy_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   layer_copy_inargs,
   1,
@@ -324,12 +326,12 @@ layer_create_mask_invoker (Argument *args)
 static ProcArg layer_create_mask_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer to which to add the mask"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "mask_type",
     "The type of mask: { WHITE_MASK (0), BLACK_MASK (1), ALPHA_MASK (2), SELECTION_MASK (3), INV_SELECTION_MASK (4) }"
   }
@@ -338,7 +340,7 @@ static ProcArg layer_create_mask_inargs[] =
 static ProcArg layer_create_mask_outargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "mask",
     "The newly created mask"
   }
@@ -352,7 +354,7 @@ static ProcRecord layer_create_mask_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   layer_create_mask_inargs,
   1,
@@ -413,22 +415,22 @@ layer_scale_invoker (Argument *args)
 static ProcArg layer_scale_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "new_width",
     "New layer width: (0 < new_width)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "new_height",
     "New layer height: (0 < new_height)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "local_origin",
     "Use a local origin (as opposed to the image origin)"
   }
@@ -442,7 +444,7 @@ static ProcRecord layer_scale_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   4,
   layer_scale_inargs,
   0,
@@ -506,27 +508,27 @@ layer_resize_invoker (Argument *args)
 static ProcArg layer_resize_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "new_width",
     "New layer width: (0 < new_width)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "new_height",
     "New layer height: (0 < new_height)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offx",
     "x offset between upper left corner of old and new layers: (new - old)"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offy",
     "y offset between upper left corner of old and new layers: (new - old)"
   }
@@ -540,7 +542,7 @@ static ProcRecord layer_resize_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   5,
   layer_resize_inargs,
   0,
@@ -567,7 +569,7 @@ layer_delete_invoker (Argument *args)
 static ProcArg layer_delete_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer to delete"
   }
@@ -581,7 +583,7 @@ static ProcRecord layer_delete_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   layer_delete_inargs,
   0,
@@ -645,17 +647,17 @@ layer_translate_invoker (Argument *args)
 static ProcArg layer_translate_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offx",
     "Offset in x direction"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offy",
     "Offset in y direction"
   }
@@ -669,7 +671,7 @@ static ProcRecord layer_translate_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   layer_translate_inargs,
   0,
@@ -696,7 +698,7 @@ layer_add_alpha_invoker (Argument *args)
 static ProcArg layer_add_alpha_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   }
@@ -710,7 +712,7 @@ static ProcRecord layer_add_alpha_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   layer_add_alpha_inargs,
   0,
@@ -776,17 +778,17 @@ layer_set_offsets_invoker (Argument *args)
 static ProcArg layer_set_offsets_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offx",
     "Offset in x direction"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "offy",
     "Offset in y direction"
   }
@@ -800,7 +802,7 @@ static ProcRecord layer_set_offsets_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   3,
   layer_set_offsets_inargs,
   0,
@@ -830,7 +832,7 @@ layer_mask_invoker (Argument *args)
 static ProcArg layer_mask_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   }
@@ -839,7 +841,7 @@ static ProcArg layer_mask_inargs[] =
 static ProcArg layer_mask_outargs[] =
 {
   {
-    PDB_CHANNEL,
+    GIMP_PDB_CHANNEL,
     "mask",
     "The layer mask"
   }
@@ -853,7 +855,7 @@ static ProcRecord layer_mask_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   layer_mask_inargs,
   1,
@@ -883,7 +885,7 @@ layer_is_floating_sel_invoker (Argument *args)
 static ProcArg layer_is_floating_sel_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   }
@@ -892,7 +894,7 @@ static ProcArg layer_is_floating_sel_inargs[] =
 static ProcArg layer_is_floating_sel_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "is_floating_sel",
     "Non-zero if the layer is a floating selection"
   }
@@ -906,7 +908,7 @@ static ProcRecord layer_is_floating_sel_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   layer_is_floating_sel_inargs,
   1,
@@ -936,7 +938,7 @@ layer_get_name_invoker (Argument *args)
 static ProcArg layer_get_name_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   }
@@ -945,7 +947,7 @@ static ProcArg layer_get_name_inargs[] =
 static ProcArg layer_get_name_outargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The layer name"
   }
@@ -959,7 +961,7 @@ static ProcRecord layer_get_name_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   layer_get_name_inargs,
   1,
@@ -991,12 +993,12 @@ layer_set_name_invoker (Argument *args)
 static ProcArg layer_set_name_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   },
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "name",
     "The new layer name"
   }
@@ -1010,7 +1012,7 @@ static ProcRecord layer_set_name_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   layer_set_name_inargs,
   0,
@@ -1040,7 +1042,7 @@ layer_get_visible_invoker (Argument *args)
 static ProcArg layer_get_visible_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   }
@@ -1049,7 +1051,7 @@ static ProcArg layer_get_visible_inargs[] =
 static ProcArg layer_get_visible_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "visible",
     "The layer visibility"
   }
@@ -1063,7 +1065,7 @@ static ProcRecord layer_get_visible_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   layer_get_visible_inargs,
   1,
@@ -1093,12 +1095,12 @@ layer_set_visible_invoker (Argument *args)
 static ProcArg layer_set_visible_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "visible",
     "The new layer visibility"
   }
@@ -1112,7 +1114,7 @@ static ProcRecord layer_set_visible_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   layer_set_visible_inargs,
   0,
@@ -1142,7 +1144,7 @@ layer_get_preserve_trans_invoker (Argument *args)
 static ProcArg layer_get_preserve_trans_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   }
@@ -1151,7 +1153,7 @@ static ProcArg layer_get_preserve_trans_inargs[] =
 static ProcArg layer_get_preserve_trans_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "preserve_trans",
     "The layer's preserve transperancy setting"
   }
@@ -1165,7 +1167,7 @@ static ProcRecord layer_get_preserve_trans_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   layer_get_preserve_trans_inargs,
   1,
@@ -1195,12 +1197,12 @@ layer_set_preserve_trans_invoker (Argument *args)
 static ProcArg layer_set_preserve_trans_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "preserve_trans",
     "The new layer's preserve transperancy setting"
   }
@@ -1214,7 +1216,7 @@ static ProcRecord layer_set_preserve_trans_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   layer_set_preserve_trans_inargs,
   0,
@@ -1244,7 +1246,7 @@ layer_get_apply_mask_invoker (Argument *args)
 static ProcArg layer_get_apply_mask_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   }
@@ -1253,7 +1255,7 @@ static ProcArg layer_get_apply_mask_inargs[] =
 static ProcArg layer_get_apply_mask_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "apply_mask",
     "The layer apply mask"
   }
@@ -1267,7 +1269,7 @@ static ProcRecord layer_get_apply_mask_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   layer_get_apply_mask_inargs,
   1,
@@ -1297,12 +1299,12 @@ layer_set_apply_mask_invoker (Argument *args)
 static ProcArg layer_set_apply_mask_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "apply_mask",
     "The new layer apply mask"
   }
@@ -1316,7 +1318,7 @@ static ProcRecord layer_set_apply_mask_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   layer_set_apply_mask_inargs,
   0,
@@ -1346,7 +1348,7 @@ layer_get_show_mask_invoker (Argument *args)
 static ProcArg layer_get_show_mask_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   }
@@ -1355,7 +1357,7 @@ static ProcArg layer_get_show_mask_inargs[] =
 static ProcArg layer_get_show_mask_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "show_mask",
     "The layer show mask"
   }
@@ -1369,7 +1371,7 @@ static ProcRecord layer_get_show_mask_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   layer_get_show_mask_inargs,
   1,
@@ -1399,12 +1401,12 @@ layer_set_show_mask_invoker (Argument *args)
 static ProcArg layer_set_show_mask_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "show_mask",
     "The new layer show mask"
   }
@@ -1418,7 +1420,7 @@ static ProcRecord layer_set_show_mask_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   layer_set_show_mask_inargs,
   0,
@@ -1448,7 +1450,7 @@ layer_get_edit_mask_invoker (Argument *args)
 static ProcArg layer_get_edit_mask_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   }
@@ -1457,7 +1459,7 @@ static ProcArg layer_get_edit_mask_inargs[] =
 static ProcArg layer_get_edit_mask_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "edit_mask",
     "The layer show mask"
   }
@@ -1471,7 +1473,7 @@ static ProcRecord layer_get_edit_mask_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   layer_get_edit_mask_inargs,
   1,
@@ -1501,12 +1503,12 @@ layer_set_edit_mask_invoker (Argument *args)
 static ProcArg layer_set_edit_mask_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "edit_mask",
     "The new layer show mask"
   }
@@ -1520,7 +1522,7 @@ static ProcRecord layer_set_edit_mask_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   layer_set_edit_mask_inargs,
   0,
@@ -1550,7 +1552,7 @@ layer_get_opacity_invoker (Argument *args)
 static ProcArg layer_get_opacity_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   }
@@ -1559,7 +1561,7 @@ static ProcArg layer_get_opacity_inargs[] =
 static ProcArg layer_get_opacity_outargs[] =
 {
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "opacity",
     "The layer opacity"
   }
@@ -1573,7 +1575,7 @@ static ProcRecord layer_get_opacity_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   layer_get_opacity_inargs,
   1,
@@ -1605,12 +1607,12 @@ layer_set_opacity_invoker (Argument *args)
 static ProcArg layer_set_opacity_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   },
   {
-    PDB_FLOAT,
+    GIMP_PDB_FLOAT,
     "opacity",
     "The new layer opacity (0 <= opacity <= 100)"
   }
@@ -1624,7 +1626,7 @@ static ProcRecord layer_set_opacity_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   layer_set_opacity_inargs,
   0,
@@ -1654,7 +1656,7 @@ layer_get_mode_invoker (Argument *args)
 static ProcArg layer_get_mode_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   }
@@ -1663,7 +1665,7 @@ static ProcArg layer_get_mode_inargs[] =
 static ProcArg layer_get_mode_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "mode",
     "The layer combination mode"
   }
@@ -1677,7 +1679,7 @@ static ProcRecord layer_get_mode_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   layer_get_mode_inargs,
   1,
@@ -1709,12 +1711,12 @@ layer_set_mode_invoker (Argument *args)
 static ProcArg layer_set_mode_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "mode",
     "The new layer combination mode"
   }
@@ -1728,7 +1730,7 @@ static ProcRecord layer_set_mode_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   layer_set_mode_inargs,
   0,
@@ -1758,7 +1760,7 @@ layer_get_linked_invoker (Argument *args)
 static ProcArg layer_get_linked_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   }
@@ -1767,7 +1769,7 @@ static ProcArg layer_get_linked_inargs[] =
 static ProcArg layer_get_linked_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "linked",
     "The layer linked state (for moves)"
   }
@@ -1781,7 +1783,7 @@ static ProcRecord layer_get_linked_proc =
   "Wolfgang Hofer",
   "Wolfgang Hofer",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   layer_get_linked_inargs,
   1,
@@ -1811,12 +1813,12 @@ layer_set_linked_invoker (Argument *args)
 static ProcArg layer_set_linked_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "linked",
     "The new layer linked state"
   }
@@ -1830,7 +1832,7 @@ static ProcRecord layer_set_linked_proc =
   "Wolfgang Hofer",
   "Wolfgang Hofer",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   layer_set_linked_inargs,
   0,
@@ -1860,7 +1862,7 @@ layer_get_tattoo_invoker (Argument *args)
 static ProcArg layer_get_tattoo_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   }
@@ -1869,7 +1871,7 @@ static ProcArg layer_get_tattoo_inargs[] =
 static ProcArg layer_get_tattoo_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "tattoo",
     "The layer tattoo"
   }
@@ -1883,7 +1885,7 @@ static ProcRecord layer_get_tattoo_proc =
   "Jay Cox",
   "Jay Cox",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   layer_get_tattoo_inargs,
   1,
@@ -1915,12 +1917,12 @@ layer_set_tattoo_invoker (Argument *args)
 static ProcArg layer_set_tattoo_inargs[] =
 {
   {
-    PDB_LAYER,
+    GIMP_PDB_LAYER,
     "layer",
     "The layer"
   },
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "tattoo",
     "The new layer tattoo"
   }
@@ -1934,7 +1936,7 @@ static ProcRecord layer_set_tattoo_proc =
   "Jay Cox",
   "Jay Cox",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   2,
   layer_set_tattoo_inargs,
   0,

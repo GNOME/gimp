@@ -171,6 +171,7 @@ AlienMap_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -182,6 +183,7 @@ AlienMap2_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -193,6 +195,7 @@ CEL_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -204,6 +207,7 @@ CML_explorer_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -215,6 +219,7 @@ aa_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(LIBAA)							\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
@@ -227,6 +232,7 @@ align_layers_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -238,6 +244,7 @@ animationplay_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -247,6 +254,7 @@ animoptimize_SOURCES = \
 animoptimize_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
 	$(INTLLIBS)
 
@@ -258,6 +266,7 @@ apply_lens_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -267,6 +276,7 @@ autocrop_SOURCES = \
 autocrop_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
 	$(INTLLIBS)
 
@@ -276,6 +286,7 @@ autostretch_hsv_SOURCES = \
 autostretch_hsv_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
 	$(INTLLIBS)
 
@@ -287,6 +298,7 @@ blinds_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -298,6 +310,7 @@ blur_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -309,6 +322,7 @@ borderaverage_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -320,6 +334,7 @@ bumpmap_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -329,6 +344,7 @@ bz2_SOURCES = \
 bz2_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
 	$(INTLLIBS)
 
@@ -338,6 +354,7 @@ c_astretch_SOURCES = \
 c_astretch_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
 	$(INTLLIBS)
 
@@ -349,6 +366,7 @@ checkerboard_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -360,6 +378,7 @@ color_enhance_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -371,6 +390,7 @@ colorify_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -382,6 +402,7 @@ colortoalpha_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -393,6 +414,7 @@ compose_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -404,6 +426,7 @@ convmatrix_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -415,6 +438,7 @@ csource_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -426,6 +450,7 @@ cubism_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -437,6 +462,7 @@ curve_bend_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -448,6 +474,7 @@ decompose_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -459,6 +486,7 @@ deinterlace_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -470,6 +498,7 @@ depthmerge_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -481,6 +510,7 @@ despeckle_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -492,6 +522,7 @@ destripe_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -503,6 +534,7 @@ diffraction_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -514,6 +546,7 @@ displace_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -525,6 +558,7 @@ edge_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -536,6 +570,7 @@ emboss_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -547,6 +582,7 @@ engrave_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -558,6 +594,7 @@ exchange_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -569,6 +606,7 @@ film_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -580,6 +618,7 @@ flarefx_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -591,6 +630,7 @@ fractaltrace_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -602,6 +642,7 @@ gauss_iir_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -613,6 +654,7 @@ gauss_rle_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -624,6 +666,7 @@ gbr_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -635,6 +678,7 @@ gee_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -646,6 +690,7 @@ gee_zoom_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -657,6 +702,7 @@ gicon_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -668,6 +714,7 @@ gif_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -677,6 +724,7 @@ gifload_SOURCES = \
 gifload_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -688,6 +736,7 @@ gih_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -699,6 +748,7 @@ glasstile_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -710,6 +760,7 @@ gqbist_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -721,6 +772,7 @@ gradmap_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
 	$(INTLLIBS)
 
@@ -732,6 +784,7 @@ grid_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -743,6 +796,7 @@ gtm_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -752,6 +806,7 @@ guillotine_SOURCES = \
 guillotine_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
 	$(INTLLIBS)
 
@@ -761,6 +816,7 @@ gz_SOURCES = \
 gz_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
 	$(INTLLIBS)
 
@@ -772,6 +828,7 @@ header_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -783,6 +840,7 @@ hot_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -794,6 +852,7 @@ hrz_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -805,6 +864,7 @@ illusion_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -816,6 +876,7 @@ iwarp_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -827,6 +888,7 @@ jigsaw_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -838,6 +900,7 @@ jpeg_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(LIBJPEG)							\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
@@ -850,6 +913,7 @@ laplace_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
 	$(INTLLIBS)
 
@@ -861,6 +925,7 @@ lic_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -872,6 +937,7 @@ mail_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -883,6 +949,7 @@ mapcolor_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -894,6 +961,7 @@ max_rgb_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -905,6 +973,7 @@ mblur_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -914,6 +983,7 @@ mpeg_SOURCES = \
 mpeg_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(LIBMPEG)							\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
@@ -926,6 +996,7 @@ newsprint_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -937,6 +1008,7 @@ nlfilt_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -948,6 +1020,7 @@ noisify_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -957,6 +1030,7 @@ normalize_SOURCES = \
 normalize_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
 	$(INTLLIBS)
 
@@ -968,6 +1042,7 @@ nova_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -979,6 +1054,7 @@ oilify_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -990,6 +1066,7 @@ papertile_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1001,6 +1078,7 @@ pat_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1012,6 +1090,7 @@ pcx_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1023,6 +1102,7 @@ pix_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1034,6 +1114,7 @@ pixelize_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1045,6 +1126,7 @@ plasma_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1056,6 +1138,7 @@ plugindetails_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1067,6 +1150,7 @@ png_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(LIBPNG)							\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
@@ -1079,6 +1163,7 @@ pnm_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1090,6 +1175,7 @@ polar_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1101,6 +1187,7 @@ ps_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1110,6 +1197,7 @@ psd_SOURCES = \
 psd_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
 	$(INTLLIBS)
 
@@ -1121,6 +1209,7 @@ psp_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(LIBZ)							\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
@@ -1133,6 +1222,7 @@ randomize_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1144,6 +1234,7 @@ ripple_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1153,6 +1244,7 @@ rotate_SOURCES = \
 rotate_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
 	$(INTLLIBS)
 
@@ -1164,6 +1256,7 @@ sample_colorize_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1175,6 +1268,7 @@ scatter_hsv_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1186,6 +1280,7 @@ screenshot_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1197,6 +1292,7 @@ sel_gauss_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1206,6 +1302,7 @@ semiflatten_SOURCES = \
 semiflatten_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
 	$(INTLLIBS)
 
@@ -1217,6 +1314,7 @@ sharpen_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1228,6 +1326,7 @@ shift_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1239,6 +1338,7 @@ sinus_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1250,6 +1350,7 @@ smooth_palette_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1261,6 +1362,7 @@ snoise_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1272,6 +1374,7 @@ sobel_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1283,6 +1386,7 @@ sparkle_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1294,6 +1398,7 @@ spread_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1305,6 +1410,7 @@ struc_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1316,6 +1422,7 @@ sunras_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1327,6 +1434,7 @@ tga_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1338,6 +1446,7 @@ threshold_alpha_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1349,6 +1458,7 @@ tiff_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(LIBTIFF)							\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
@@ -1361,6 +1471,7 @@ tile_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1372,6 +1483,7 @@ tileit_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1381,6 +1493,7 @@ tiler_SOURCES = \
 tiler_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
 	$(INTLLIBS)
 
@@ -1392,6 +1505,7 @@ uniteditor_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1403,6 +1517,7 @@ unsharp_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1412,6 +1527,7 @@ url_SOURCES = \
 url_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
 	$(INTLLIBS)
 
@@ -1423,6 +1539,7 @@ video_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1432,6 +1549,7 @@ vinvert_SOURCES = \
 vinvert_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
 	$(INTLLIBS)
 
@@ -1443,6 +1561,7 @@ vpropagate_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1454,6 +1573,7 @@ warp_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1465,6 +1585,7 @@ waves_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1476,6 +1597,7 @@ whirlpinch_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1487,6 +1609,7 @@ wind_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1498,6 +1621,7 @@ wmf_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1509,6 +1633,7 @@ xbm_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1520,6 +1645,7 @@ xpm_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(LIBXPM)							\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
@@ -1532,6 +1658,7 @@ xwd_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
@@ -1541,5 +1668,6 @@ zealouscrop_SOURCES = \
 zealouscrop_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)							\
 	$(INTLLIBS)

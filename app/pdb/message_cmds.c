@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -59,7 +61,7 @@ message_invoker (Argument *args)
 static ProcArg message_inargs[] =
 {
   {
-    PDB_STRING,
+    GIMP_PDB_STRING,
     "message",
     "Message to display in the dialog"
   }
@@ -73,7 +75,7 @@ static ProcRecord message_proc =
   "Manish Singh",
   "Manish Singh",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   message_inargs,
   0,
@@ -95,7 +97,7 @@ message_get_handler_invoker (Argument *args)
 static ProcArg message_get_handler_outargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "handler",
     "The current handler type: { MESSAGE_BOX (0), CONSOLE (1), ERROR_CONSOLE (2) }"
   }
@@ -109,7 +111,7 @@ static ProcRecord message_get_handler_proc =
   "Manish Singh",
   "Manish Singh",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   1,
@@ -136,7 +138,7 @@ message_set_handler_invoker (Argument *args)
 static ProcArg message_set_handler_inargs[] =
 {
   {
-    PDB_INT32,
+    GIMP_PDB_INT32,
     "handler",
     "The new handler type: { MESSAGE_BOX (0), CONSOLE (1), ERROR_CONSOLE (2) }"
   }
@@ -150,7 +152,7 @@ static ProcRecord message_set_handler_proc =
   "Manish Singh",
   "Manish Singh",
   "1998",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   message_set_handler_inargs,
   0,

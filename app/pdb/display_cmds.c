@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "core/core-types.h"
 #include "procedural_db.h"
 
@@ -73,7 +75,7 @@ display_new_invoker (Argument *args)
 static ProcArg display_new_inargs[] =
 {
   {
-    PDB_IMAGE,
+    GIMP_PDB_IMAGE,
     "image",
     "The image"
   }
@@ -82,7 +84,7 @@ static ProcArg display_new_inargs[] =
 static ProcArg display_new_outargs[] =
 {
   {
-    PDB_DISPLAY,
+    GIMP_PDB_DISPLAY,
     "display",
     "The new display"
   }
@@ -96,7 +98,7 @@ static ProcRecord display_new_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   display_new_inargs,
   1,
@@ -123,7 +125,7 @@ display_delete_invoker (Argument *args)
 static ProcArg display_delete_inargs[] =
 {
   {
-    PDB_DISPLAY,
+    GIMP_PDB_DISPLAY,
     "display",
     "The display to delete"
   }
@@ -137,7 +139,7 @@ static ProcRecord display_delete_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   1,
   display_delete_inargs,
   0,
@@ -160,7 +162,7 @@ static ProcRecord displays_flush_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  PDB_INTERNAL,
+  GIMP_INTERNAL,
   0,
   NULL,
   0,

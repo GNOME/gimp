@@ -132,13 +132,13 @@ batch_run_cmd (gchar *cmd)
   vals = procedural_db_execute ("extension_script_fu_eval", args);
   switch (vals[0].value.pdb_int)
     {
-    case PDB_EXECUTION_ERROR:
+    case GIMP_PDB_EXECUTION_ERROR:
       g_print ("batch command: experienced an execution error.\n");
       break;
-    case PDB_CALLING_ERROR:
+    case GIMP_PDB_CALLING_ERROR:
       g_print ("batch command: experienced a calling error.\n");
       break;
-    case PDB_SUCCESS:
+    case GIMP_PDB_SUCCESS:
       g_print ("batch command: executed successfully.\n");
       break;
     default:
@@ -212,9 +212,9 @@ batch_read (gpointer          data,
 #endif /* !G_OS_WIN32 */
 
 static void
-batch_pserver  (gint  run_mode,
-                gint  flags,
-                gint  extra)
+batch_pserver (gint  run_mode,
+               gint  flags,
+               gint  extra)
 {
   ProcRecord *pserver_proc;
   Argument   *args;
@@ -240,13 +240,13 @@ batch_pserver  (gint  run_mode,
   vals = procedural_db_execute ("extension_perl_server", args);
   switch (vals[0].value.pdb_int)
     {
-    case PDB_EXECUTION_ERROR:
+    case GIMP_PDB_EXECUTION_ERROR:
       g_print ("perl server: experienced an execution error.\n");
       break;
-    case PDB_CALLING_ERROR:
+    case GIMP_PDB_CALLING_ERROR:
       g_print ("perl server: experienced a calling error.\n");
       break;
-    case PDB_SUCCESS:
+    case GIMP_PDB_SUCCESS:
       g_print ("perl server: executed successfully.\n");
       break;
     default:

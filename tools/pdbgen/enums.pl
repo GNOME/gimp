@@ -20,6 +20,117 @@
 package Gimp::CodeGen::enums;
 
 %enums = (
+    GimpUnit =>
+	{ contig => 0,
+	  header => 'libgimpbase/gimpbasetypes.h',
+	  symbols => [ qw(GIMP_UNIT_PIXEL GIMP_UNIT_INCH GIMP_UNIT_MM
+			  GIMP_UNIT_POINT GIMP_UNIT_PICA GIMP_UNIT_END
+			  GIMP_UNIT_PERCENT) ],
+	  mapping => { GIMP_UNIT_PIXEL => '0',
+		       GIMP_UNIT_INCH => '1',
+		       GIMP_UNIT_MM => '2',
+		       GIMP_UNIT_POINT => '3',
+		       GIMP_UNIT_PICA => '4',
+		       GIMP_UNIT_END => '5',
+		       GIMP_UNIT_PERCENT => '65536' },
+	  nicks   => { GIMP_UNIT_PIXEL => 'UNIT_PIXEL',
+		       GIMP_UNIT_INCH => 'UNIT_INCH',
+		       GIMP_UNIT_MM => 'UNIT_MM',
+		       GIMP_UNIT_POINT => 'UNIT_POINT',
+		       GIMP_UNIT_PICA => 'UNIT_PICA',
+		       GIMP_UNIT_END => 'UNIT_END',
+		       GIMP_UNIT_PERCENT => 'UNIT_PERCENT' }
+	},
+    GimpPDBArgType =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbasetypes.h',
+	  symbols => [ qw(GIMP_PDB_INT32 GIMP_PDB_INT16 GIMP_PDB_INT8
+			  GIMP_PDB_FLOAT GIMP_PDB_STRING GIMP_PDB_INT32ARRAY
+			  GIMP_PDB_INT16ARRAY GIMP_PDB_INT8ARRAY
+			  GIMP_PDB_FLOATARRAY GIMP_PDB_STRINGARRAY
+			  GIMP_PDB_COLOR GIMP_PDB_REGION GIMP_PDB_DISPLAY
+			  GIMP_PDB_IMAGE GIMP_PDB_LAYER GIMP_PDB_CHANNEL
+			  GIMP_PDB_DRAWABLE GIMP_PDB_SELECTION
+			  GIMP_PDB_BOUNDARY GIMP_PDB_PATH GIMP_PDB_PARASITE
+			  GIMP_PDB_STATUS GIMP_PDB_END) ],
+	  mapping => { GIMP_PDB_INT32 => '0',
+		       GIMP_PDB_INT16 => '1',
+		       GIMP_PDB_INT8 => '2',
+		       GIMP_PDB_FLOAT => '3',
+		       GIMP_PDB_STRING => '4',
+		       GIMP_PDB_INT32ARRAY => '5',
+		       GIMP_PDB_INT16ARRAY => '6',
+		       GIMP_PDB_INT8ARRAY => '7',
+		       GIMP_PDB_FLOATARRAY => '8',
+		       GIMP_PDB_STRINGARRAY => '9',
+		       GIMP_PDB_COLOR => '10',
+		       GIMP_PDB_REGION => '11',
+		       GIMP_PDB_DISPLAY => '12',
+		       GIMP_PDB_IMAGE => '13',
+		       GIMP_PDB_LAYER => '14',
+		       GIMP_PDB_CHANNEL => '15',
+		       GIMP_PDB_DRAWABLE => '16',
+		       GIMP_PDB_SELECTION => '17',
+		       GIMP_PDB_BOUNDARY => '18',
+		       GIMP_PDB_PATH => '19',
+		       GIMP_PDB_PARASITE => '20',
+		       GIMP_PDB_STATUS => '21',
+		       GIMP_PDB_END => '22' },
+	  nicks   => { GIMP_PDB_INT32 => 'PDB_INT32',
+		       GIMP_PDB_INT16 => 'PDB_INT16',
+		       GIMP_PDB_INT8 => 'PDB_INT8',
+		       GIMP_PDB_FLOAT => 'PDB_FLOAT',
+		       GIMP_PDB_STRING => 'PDB_STRING',
+		       GIMP_PDB_INT32ARRAY => 'PDB_INT32ARRAY',
+		       GIMP_PDB_INT16ARRAY => 'PDB_INT16ARRAY',
+		       GIMP_PDB_INT8ARRAY => 'PDB_INT8ARRAY',
+		       GIMP_PDB_FLOATARRAY => 'PDB_FLOATARRAY',
+		       GIMP_PDB_STRINGARRAY => 'PDB_STRINGARRAY',
+		       GIMP_PDB_COLOR => 'PDB_COLOR',
+		       GIMP_PDB_REGION => 'PDB_REGION',
+		       GIMP_PDB_DISPLAY => 'PDB_DISPLAY',
+		       GIMP_PDB_IMAGE => 'PDB_IMAGE',
+		       GIMP_PDB_LAYER => 'PDB_LAYER',
+		       GIMP_PDB_CHANNEL => 'PDB_CHANNEL',
+		       GIMP_PDB_DRAWABLE => 'PDB_DRAWABLE',
+		       GIMP_PDB_SELECTION => 'PDB_SELECTION',
+		       GIMP_PDB_BOUNDARY => 'PDB_BOUNDARY',
+		       GIMP_PDB_PATH => 'PDB_PATH',
+		       GIMP_PDB_PARASITE => 'PDB_PARASITE',
+		       GIMP_PDB_STATUS => 'PDB_STATUS',
+		       GIMP_PDB_END => 'PDB_END' }
+	},
+    GimpPDBProcType =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbasetypes.h',
+	  symbols => [ qw(GIMP_INTERNAL GIMP_PLUGIN GIMP_EXTENSION
+			  GIMP_TEMPORARY) ],
+	  mapping => { GIMP_INTERNAL => '0',
+		       GIMP_PLUGIN => '1',
+		       GIMP_EXTENSION => '2',
+		       GIMP_TEMPORARY => '3' },
+	  nicks   => { GIMP_INTERNAL => 'INTERNAL',
+		       GIMP_PLUGIN => 'PLUGIN',
+		       GIMP_EXTENSION => 'EXTENSION',
+		       GIMP_TEMPORARY => 'TEMPORARY' }
+	},
+    GimpPDBStatusType =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbasetypes.h',
+	  symbols => [ qw(GIMP_PDB_EXECUTION_ERROR GIMP_PDB_CALLING_ERROR
+			  GIMP_PDB_PASS_THROUGH GIMP_PDB_SUCCESS
+			  GIMP_PDB_CANCEL) ],
+	  mapping => { GIMP_PDB_EXECUTION_ERROR => '0',
+		       GIMP_PDB_CALLING_ERROR => '1',
+		       GIMP_PDB_PASS_THROUGH => '2',
+		       GIMP_PDB_SUCCESS => '3',
+		       GIMP_PDB_CANCEL => '4' },
+	  nicks   => { GIMP_PDB_EXECUTION_ERROR => 'PDB_EXECUTION_ERROR',
+		       GIMP_PDB_CALLING_ERROR => 'PDB_CALLING_ERROR',
+		       GIMP_PDB_PASS_THROUGH => 'PDB_PASS_THROUGH',
+		       GIMP_PDB_SUCCESS => 'PDB_SUCCESS',
+		       GIMP_PDB_CANCEL => 'PDB_CANCEL' }
+	},
     GimpFillType =>
 	{ contig => 1,
 	  header => 'appenums.h',
@@ -86,65 +197,6 @@ package Gimp::CodeGen::enums;
 	  mapping => { HORIZONTAL => '0',
 		       VERTICAL => '1',
 		       UNKNOWN => '2' }
-	},
-    PDBArgType =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(PDB_INT32 PDB_INT16 PDB_INT8 PDB_FLOAT PDB_STRING
-			  PDB_INT32ARRAY PDB_INT16ARRAY PDB_INT8ARRAY
-			  PDB_FLOATARRAY PDB_STRINGARRAY PDB_COLOR
-			  PDB_REGION PDB_DISPLAY PDB_IMAGE PDB_LAYER
-			  PDB_CHANNEL PDB_DRAWABLE PDB_SELECTION
-			  PDB_BOUNDARY PDB_PATH PDB_PARASITE PDB_STATUS
-			  PDB_END) ],
-	  mapping => { PDB_INT32 => '0',
-		       PDB_INT16 => '1',
-		       PDB_INT8 => '2',
-		       PDB_FLOAT => '3',
-		       PDB_STRING => '4',
-		       PDB_INT32ARRAY => '5',
-		       PDB_INT16ARRAY => '6',
-		       PDB_INT8ARRAY => '7',
-		       PDB_FLOATARRAY => '8',
-		       PDB_STRINGARRAY => '9',
-		       PDB_COLOR => '10',
-		       PDB_REGION => '11',
-		       PDB_DISPLAY => '12',
-		       PDB_IMAGE => '13',
-		       PDB_LAYER => '14',
-		       PDB_CHANNEL => '15',
-		       PDB_DRAWABLE => '16',
-		       PDB_SELECTION => '17',
-		       PDB_BOUNDARY => '18',
-		       PDB_PATH => '19',
-		       PDB_PARASITE => '20',
-		       PDB_STATUS => '21',
-		       PDB_END => '22' }
-	},
-    PDBStatusType =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(PDB_EXECUTION_ERROR PDB_CALLING_ERROR
-			  PDB_PASS_THROUGH PDB_SUCCESS PDB_CANCEL) ],
-	  mapping => { PDB_EXECUTION_ERROR => '0',
-		       PDB_CALLING_ERROR => '1',
-		       PDB_PASS_THROUGH => '2',
-		       PDB_SUCCESS => '3',
-		       PDB_CANCEL => '4' }
-	},
-    PDBProcType =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(PDB_INTERNAL PDB_PLUGIN PDB_EXTENSION
-			  PDB_TEMPORARY) ],
-	  mapping => { PDB_INTERNAL => '0',
-		       PDB_PLUGIN => '1',
-		       PDB_EXTENSION => '2',
-		       PDB_TEMPORARY => '3' },
-	  nicks   => { PDB_INTERNAL => 'INTERNAL',
-		       PDB_PLUGIN => 'PLUGIN',
-		       PDB_EXTENSION => 'EXTENSION',
-		       PDB_TEMPORARY => 'TEMPORARY' }
 	},
     ChannelOps =>
 	{ contig => 1,

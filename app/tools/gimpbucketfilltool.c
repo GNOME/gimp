@@ -357,17 +357,17 @@ gimp_bucket_fill_tool_button_release (GimpTool       *tool,
       return_vals =
 	procedural_db_run_proc ("gimp_bucket_fill",
 				&nreturn_vals,
-				PDB_DRAWABLE, gimp_drawable_get_ID (gimp_image_active_drawable (gdisp->gimage)),
-				PDB_INT32, (gint32) bucket_options->fill_mode,
-				PDB_INT32, (gint32) gimp_context_get_paint_mode (NULL),
-				PDB_FLOAT, (gdouble) gimp_context_get_opacity (NULL) * 100,
-				PDB_FLOAT, (gdouble) bucket_options->threshold,
-				PDB_INT32, (gint32) bucket_options->sample_merged,
-				PDB_FLOAT, (gdouble) bucket_tool->target_x,
-				PDB_FLOAT, (gdouble) bucket_tool->target_y,
-				PDB_END);
+				GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (gimp_image_active_drawable (gdisp->gimage)),
+				GIMP_PDB_INT32, (gint32) bucket_options->fill_mode,
+				GIMP_PDB_INT32, (gint32) gimp_context_get_paint_mode (NULL),
+				GIMP_PDB_FLOAT, (gdouble) gimp_context_get_opacity (NULL) * 100,
+				GIMP_PDB_FLOAT, (gdouble) bucket_options->threshold,
+				GIMP_PDB_INT32, (gint32) bucket_options->sample_merged,
+				GIMP_PDB_FLOAT, (gdouble) bucket_tool->target_x,
+				GIMP_PDB_FLOAT, (gdouble) bucket_tool->target_y,
+				GIMP_PDB_END);
 
-      if (return_vals && return_vals[0].value.pdb_int == PDB_SUCCESS)
+      if (return_vals && return_vals[0].value.pdb_int == GIMP_PDB_SUCCESS)
 	gdisplays_flush ();
       else
 	g_message (_("Bucket Fill operation failed."));

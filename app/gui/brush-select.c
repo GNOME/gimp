@@ -376,19 +376,19 @@ brush_select_change_callbacks (BrushSelect *bsp,
       return_vals =
 	procedural_db_run_proc (name,
 				&nreturn_vals,
-				PDB_STRING,    GIMP_OBJECT (brush)->name,
-				PDB_FLOAT,     gimp_context_get_opacity (bsp->context),
-				PDB_INT32,     bsp->spacing_value,
-				PDB_INT32,     (gint) gimp_context_get_paint_mode (bsp->context),
-				PDB_INT32,     brush->mask->width,
-				PDB_INT32,     brush->mask->height,
-				PDB_INT32,     (brush->mask->width *
+				GIMP_PDB_STRING,    GIMP_OBJECT (brush)->name,
+				GIMP_PDB_FLOAT,     gimp_context_get_opacity (bsp->context),
+				GIMP_PDB_INT32,     bsp->spacing_value,
+				GIMP_PDB_INT32,     (gint) gimp_context_get_paint_mode (bsp->context),
+				GIMP_PDB_INT32,     brush->mask->width,
+				GIMP_PDB_INT32,     brush->mask->height,
+				GIMP_PDB_INT32,     (brush->mask->width *
 						brush->mask->height),
-				PDB_INT8ARRAY, temp_buf_data (brush->mask),
-				PDB_INT32,     (gint) closing,
-				PDB_END);
+				GIMP_PDB_INT8ARRAY, temp_buf_data (brush->mask),
+				GIMP_PDB_INT32,     (gint) closing,
+				GIMP_PDB_END);
  
-      if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
+      if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
 	g_message ("failed to run brush callback function");
       
       procedural_db_destroy_args (return_vals, nreturn_vals);
