@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-04-22 14:09+0200\n"
-"PO-Revision-Date: 2004-04-22 14:09+0200\n"
+"PO-Revision-Date: 2004-05-13 12:46+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -223,7 +223,7 @@ msgstr "%.2f KB"
 #: libgimpbase/gimputils.c:253
 #, c-format
 msgid "%.1f KB"
-msgstr "%1.f KB"
+msgstr "%.1f KB"
 
 #: libgimpbase/gimputils.c:257
 #, c-format
@@ -233,12 +233,12 @@ msgstr "%d KB"
 #: libgimpbase/gimputils.c:264
 #, c-format
 msgid "%.2f MB"
-msgstr "%2.f MB"
+msgstr "%.2f MB"
 
 #: libgimpbase/gimputils.c:268
 #, c-format
 msgid "%.1f MB"
-msgstr "%1.f MB"
+msgstr "%.1f MB"
 
 #: libgimpbase/gimputils.c:272
 #, c-format
