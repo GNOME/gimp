@@ -21,3 +21,5 @@ config.h.in
 stamp-h.in
 ABOUT-NLS
 .xvpics
+build
+
