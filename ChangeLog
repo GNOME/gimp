@@ -1,3 +1,9 @@
+2005-02-19  Hans Breuer  <hans@breuer.org>
+
+	* plug-ins/makefile.msc plug-ins/script-fu/script-fu-server.c :
+	now that I'm aware of script-fu-server running on win32 make it
+	compile with msvc, too ;)
+
 2005-02-19  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdockable.c

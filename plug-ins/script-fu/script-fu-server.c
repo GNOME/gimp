@@ -24,14 +24,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <time.h>
 #include <errno.h>
+#ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
+#endif
 #include <sys/types.h>
 
 #ifdef G_OS_WIN32
 #include <winsock2.h>
+#include <libgimpbase/gimpwin32-io.h>
 #else
 #include <sys/socket.h>
 #include <netinet/in.h>

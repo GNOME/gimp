@@ -543,10 +543,11 @@ OBJECTS = \
 	script-fu-scripts.obj \
 	script-fu-text-console.obj \
 	script-fu-interface.obj \
+	script-fu-server.obj \
 	..\dbbrowser\gimpprocbrowser.obj \
 	..\dbbrowser\gimpprocbox.obj \
 	..\dbbrowser\gimpprocview.obj
-EXTRALIBS = ..\..\regexrepl\regexrepl.lib siod\siod.lib kernel32.lib 
+EXTRALIBS = ..\..\regexrepl\regexrepl.lib siod\siod.lib kernel32.lib wsock32.lib
 EXTRACFLAGS = -DREGEX_MALLOC
 HAVE_RESOURCE = YES
 !ENDIF
