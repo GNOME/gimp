@@ -42,6 +42,13 @@ typedef enum
   PatternClone
 } CloneType;
 
+typedef enum
+{
+  AlignNo,
+  AlignYes,
+  AlignRegister
+} AlignType;
+
 /*  forward function declarations  */
 static void         clone_draw            (Tool *);
 static void         clone_motion          (PaintCore *, GimpDrawable *, GimpDrawable *, CloneType, int, int);
@@ -59,7 +66,7 @@ typedef struct _CloneOptions CloneOptions;
 struct _CloneOptions
 {
   CloneType type;
-  int       aligned;
+  AlignType aligned;
 };
 
 /*  local variables  */
@@ -77,24 +84,17 @@ static CloneOptions *clone_options = NULL;
 
 
 static void
-clone_toggle_update (GtkWidget *widget,
-		     gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
 clone_type_callback (GtkWidget *w,
 		     gpointer   client_data)
 {
   clone_options->type =(CloneType) client_data;
+}
+
+static void
+align_type_callback (GtkWidget *w,
+		     gpointer   client_data)
+{
+  clone_options->aligned =(AlignType) client_data;
 }
 
 static CloneOptions *
@@ -103,7 +103,6 @@ create_clone_options (void)
   CloneOptions *options;
   GtkWidget *vbox;
   GtkWidget *label;
-  GtkWidget *aligned_toggle;
   GtkWidget *radio_frame;
   GtkWidget *radio_box;
   GtkWidget *radio_button;
@@ -114,11 +113,17 @@ create_clone_options (void)
     "Image Source",
     "Pattern Source"
   };
+  char *align_names[3] =
+  {
+    "Non Aligned",
+    "Aligned",
+    "Registered"
+  };
 
   /*  the new options structure  */
   options = (CloneOptions *) g_malloc (sizeof (CloneOptions));
   options->type = ImageClone;
-  options->aligned = TRUE;
+  options->aligned = AlignRegister;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
@@ -149,15 +154,28 @@ create_clone_options (void)
   gtk_widget_show (radio_box);
   gtk_widget_show (radio_frame);
 
-  /*  the aligned toggle button  */
-  aligned_toggle = gtk_check_button_new_with_label ("Aligned");
-  gtk_box_pack_start (GTK_BOX (vbox), aligned_toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (aligned_toggle), "toggled",
-		      (GtkSignalFunc) clone_toggle_update,
-		      &options->aligned);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (aligned_toggle), options->aligned);
-  gtk_widget_show (aligned_toggle);
+  /*  the radio frame and box  */
+  radio_frame = gtk_frame_new ("Alignment");
+  gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
 
+  radio_box = gtk_vbox_new (FALSE, 1);
+  gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
+
+  /*  the radio buttons  */
+  group = NULL;  
+  for (i = 0; i < 3; i++)
+    {
+      radio_button = gtk_radio_button_new_with_label (group, align_names[i]);
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
+      gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
+			  (GtkSignalFunc) align_type_callback,
+			  (void *)((long) i));
+      gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
+      gtk_widget_show (radio_button);
+    }
+  gtk_widget_show (radio_box);
+  gtk_widget_show (radio_frame);
+  
   /*  Register this selection options widget with the main tools options dialog  */
   tools_register_options (CLONE, vbox);
 
@@ -195,17 +213,21 @@ clone_paint_func (PaintCore *paint_core,
 	{
 	  dest_x = x1;
 	  dest_y = y1;
-	  if (first)
+
+          if (clone_options->aligned == AlignRegister)
+            {
+	      offset_x = 0;
+	      offset_y = 0;
+            }
+          else if (first)
 	    {
 	      offset_x = src_x - dest_x;
 	      offset_y = src_y - dest_y;
 	      first = FALSE;
 	    }
-	  else
-	    {
-	      src_x = dest_x + offset_x;
-	      src_y = dest_y + offset_y;
-	    }
+
+          src_x = dest_x + offset_x;
+          src_y = dest_y + offset_y;
 
 	  clone_motion (paint_core, drawable, src_drawable_, clone_options->type, offset_x, offset_y);
 	}
@@ -222,7 +244,7 @@ clone_paint_func (PaintCore *paint_core,
 	  src_y = paint_core->cury;
 	  first = TRUE;
 	}
-      else if (clone_options->aligned == FALSE)
+      else if (clone_options->aligned == AlignNo)
 	first = TRUE;
 
       if (clone_options->type == PatternClone)
