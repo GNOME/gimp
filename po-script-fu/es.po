@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-21 17:24+0200\n"
+"POT-Creation-Date: 2004-09-25 00:02+0200\n"
 "PO-Revision-Date: 2004-08-21 17:28+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -45,7 +45,8 @@ msgstr "Ojear..."
 
 #: plug-ins/script-fu/script-fu-console.c:545
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "El modo de evaluación de Script-Fu sólo permite invocación no interactiva"
+msgstr ""
+"El modo de evaluación de Script-Fu sólo permite invocación no interactiva"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1115
@@ -503,7 +504,8 @@ msgstr "Valor delta en el color"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/_Flecha..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/_Flecha..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -559,7 +561,8 @@ msgstr "Arriba"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/Barra _Hor..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/Barra _Hor..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
@@ -571,7 +574,8 @@ msgstr "Longitud de la barra"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/_Bolita..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/_Bolita..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -590,7 +594,8 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/B_otón..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/B_otón..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow Radius"
@@ -736,11 +741,13 @@ msgstr "Color superior-izquierdo"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Flecha..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Flecha..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Bolita..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Bolita..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
@@ -748,15 +755,18 @@ msgstr "Diámetro"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/B_otón..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/B_otón..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/E_ncabezado..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/E_ncabezado..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Barra _Hor...."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Barra _Hor...."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -1408,12 +1418,18 @@ msgid "Shadow Weight (%)"
 msgstr "Peso de la sombra (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Classic.Gimp.Org/Cabecera _grande..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Classic.Gimp.Org/Cabecera "
+"_grande..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Classic.Gimp.Org/Cabecera _pequeña..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Classic.Gimp.Org/Cabecera "
+"_pequeña..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1458,26 +1474,32 @@ msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
 "Label..."
 msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Classic.Gimp.Org/Etiqueta del sub-botón "
-"del t_ubo..."
+"<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Classic.Gimp.Org/Etiqueta del "
+"sub-botón del t_ubo..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
 "Button Label..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Classic.Gimp.Org/Etiqueta de sub-sub-botón del tu_bo..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Classic.Gimp.Org/Etiqueta de "
+"sub-sub-botón del tu_bo..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
 "Labels..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Classic.Gimp.Org/Etiquetas _generales del tubo..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Classic.Gimp.Org/Etiquetas "
+"_generales del tubo..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
 "Label..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Classic.Gimp.Org/Etiqueta de botón del _tubo..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Classic.Gimp.Org/Etiqueta de "
+"botón del _tubo..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
@@ -2477,4 +2499,3 @@ msgstr "Desplazamiento Y del brillo"
 
 #~ msgid "Unable to open the SIOD output pipe"
 #~ msgstr "No se puede abrir la tubería SIOD de salida"
-

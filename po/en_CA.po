@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-23 12:46-0400\n"
+"POT-Creation-Date: 2004-09-25 00:01+0200\n"
 "PO-Revision-Date: 2004-09-23 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
@@ -1974,7 +1974,7 @@ msgstr "Enable QuickMask"
 msgid "Disable QuickMask"
 msgstr "Disable QuickMask"
 
-#: app/core/gimpimage-undo-push.c:2940
+#: app/core/gimpimage-undo-push.c:2939
 #, c-format
 msgid "Can't undo %s"
 msgstr "Can't undo %s"
@@ -7023,7 +7023,7 @@ msgstr "/I_mport Path..."
 msgid "/E_xport Path..."
 msgstr "/E_xport Path..."
 
-#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:56
+#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:57
 msgid "Airbrush"
 msgstr "Airbrush"
 
@@ -7051,7 +7051,7 @@ msgstr "Paintbrush"
 msgid "No brushes available for use with this tool."
 msgstr "No brushes available for use with this tool."
 
-#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:52
+#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:53
 msgid "Pencil"
 msgstr "Pencil"
 
@@ -7118,20 +7118,20 @@ msgstr "Levels"
 msgid "Posterize"
 msgstr "Posterize"
 
-#: app/pdb/color_cmds.c:722 app/pdb/color_cmds.c:839
+#: app/pdb/color_cmds.c:726 app/pdb/color_cmds.c:843
 #: app/tools/gimpcurvestool.c:138
 msgid "Curves"
 msgstr "Curves"
 
-#: app/pdb/color_cmds.c:957 app/tools/gimpcolorbalancetool.c:96
+#: app/pdb/color_cmds.c:961 app/tools/gimpcolorbalancetool.c:96
 msgid "Color Balance"
 msgstr "Colour Balance"
 
-#: app/pdb/color_cmds.c:1235 app/tools/gimphuesaturationtool.c:110
+#: app/pdb/color_cmds.c:1239 app/tools/gimphuesaturationtool.c:110
 msgid "Hue-Saturation"
 msgstr "Hue-Saturation"
 
-#: app/pdb/color_cmds.c:1334 app/tools/gimpthresholdtool.c:92
+#: app/pdb/color_cmds.c:1338 app/tools/gimpthresholdtool.c:92
 msgid "Threshold"
 msgstr "Threshold"
 
@@ -7495,20 +7495,20 @@ msgstr "Grid Line Spacing"
 msgid "This tool has no options."
 msgstr "This tool has no options."
 
-#: app/tools/gimpairbrushtool.c:57
+#: app/tools/gimpairbrushtool.c:58
 msgid "Airbrush with variable pressure"
 msgstr "Airbrush with variable pressure"
 
-#: app/tools/gimpairbrushtool.c:58
+#: app/tools/gimpairbrushtool.c:59
 msgid "/Tools/Paint Tools/_Airbrush"
 msgstr "/Tools/Paint Tools/_Airbrush"
 
-#: app/tools/gimpairbrushtool.c:124 app/tools/gimpconvolvetool.c:239
+#: app/tools/gimpairbrushtool.c:125 app/tools/gimpconvolvetool.c:239
 #: app/tools/gimpsmudgetool.c:125
 msgid "Rate:"
 msgstr "Rate:"
 
-#: app/tools/gimpairbrushtool.c:130
+#: app/tools/gimpairbrushtool.c:131
 msgid "Pressure:"
 msgstr "Pressure:"
 
@@ -8333,11 +8333,11 @@ msgstr "Length:"
 msgid "Use Color from Gradient"
 msgstr "Use Colour from Gradient"
 
-#: app/tools/gimppenciltool.c:53
+#: app/tools/gimppenciltool.c:54
 msgid "Paint hard edged pixels"
 msgstr "Paint hard edged pixels"
 
-#: app/tools/gimppenciltool.c:54
+#: app/tools/gimppenciltool.c:55
 msgid "/Tools/Paint Tools/Pe_ncil"
 msgstr "/Tools/Paint Tools/Pe_ncil"
 

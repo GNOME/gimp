@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-05 21:58+0200\n"
+"POT-Creation-Date: 2004-09-25 00:01+0200\n"
 "PO-Revision-Date: 2004-06-26 17:50+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -363,7 +363,7 @@ msgstr "解析您的“%s”文件时出错。默认值将被使用。您的配�
 msgid "Could not create temporary file for '%s': %s"
 msgstr "无法为“%s”创建临时文件：%s"
 
-#: app/config/gimpconfigwriter.c:568
+#: app/config/gimpconfigwriter.c:571
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -372,7 +372,7 @@ msgstr ""
 "写“%s”的临时文件时出错：%s\n"
 "原始文件没有被修改。"
 
-#: app/config/gimpconfigwriter.c:576
+#: app/config/gimpconfigwriter.c:579
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -381,12 +381,12 @@ msgstr ""
 "写“%s”的临时文件时出错：%s\n"
 "没有创建文件。"
 
-#: app/config/gimpconfigwriter.c:587
+#: app/config/gimpconfigwriter.c:590
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "写“%s”时出错：%s"
 
-#: app/config/gimpconfigwriter.c:605
+#: app/config/gimpconfigwriter.c:608
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "无法创建“%s”：%s"
@@ -1197,7 +1197,7 @@ msgid "Drawable Mod"
 msgstr "可绘模"
 
 #: app/core/core-enums.c:596 app/core/core-enums.c:626
-#: app/core/gimpchannel.c:1617 app/core/gimpselection.c:570
+#: app/core/gimpchannel.c:1591 app/core/gimpselection.c:567
 msgid "Selection Mask"
 msgstr "选区蒙板"
 
@@ -1239,7 +1239,7 @@ msgstr "应用图层蒙板"
 msgid "Floating Selection to Layer"
 msgstr "浮动选区到图层"
 
-#: app/core/core-enums.c:606 app/core/gimpselection.c:827
+#: app/core/core-enums.c:606 app/core/gimpselection.c:824
 msgid "Float Selection"
 msgstr "浮动选区"
 
@@ -1275,7 +1275,8 @@ msgstr "变换"
 msgid "Paint"
 msgstr "涂画"
 
-#: app/core/core-enums.c:614 app/core/core-enums.c:654 app/core/gimpitem.c:987
+#: app/core/core-enums.c:614 app/core/core-enums.c:654
+#: app/core/gimpitem.c:1047
 msgid "Attach Parasite"
 msgstr ""
 
@@ -1534,7 +1535,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "画笔文件“%s”中含有无效的 UTF-8 字符串。"
 
 #: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1306
-#: app/core/gimpitem.c:466 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:471 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
 msgstr "未命名"
@@ -1564,80 +1565,80 @@ msgstr "画笔文件“%s”出现严重解析错误：未知 GIMP 画笔版本�
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "画笔文件“%s”出现严重解析错误：文件已损坏。"
 
-#: app/core/gimpchannel.c:252 app/pdb/internal_procs.c:86
+#: app/core/gimpchannel.c:251 app/pdb/internal_procs.c:86
 msgid "Channel"
 msgstr "通道"
 
-#: app/core/gimpchannel.c:253
+#: app/core/gimpchannel.c:252
 msgid "Rename Channel"
 msgstr "重命名通道"
 
-#: app/core/gimpchannel.c:254 app/tools/gimpeditselectiontool.c:251
+#: app/core/gimpchannel.c:253 app/tools/gimpeditselectiontool.c:251
 #: app/tools/gimpeditselectiontool.c:1204
 msgid "Move Channel"
 msgstr "移动通道"
 
-#: app/core/gimpchannel.c:255
+#: app/core/gimpchannel.c:254
 msgid "Scale Channel"
 msgstr "缩放通道"
 
-#: app/core/gimpchannel.c:256
+#: app/core/gimpchannel.c:255
 msgid "Resize Channel"
 msgstr "通道改变大小"
 
-#: app/core/gimpchannel.c:257
+#: app/core/gimpchannel.c:256
 msgid "Flip Channel"
 msgstr "翻转通道"
 
-#: app/core/gimpchannel.c:258
+#: app/core/gimpchannel.c:257
 msgid "Rotate Channel"
 msgstr "旋转通道"
 
-#: app/core/gimpchannel.c:259 app/core/gimpdrawable-transform.c:1080
+#: app/core/gimpchannel.c:258 app/core/gimpdrawable-transform.c:1080
 msgid "Transform Channel"
 msgstr "变换通道"
 
-#: app/core/gimpchannel.c:281
+#: app/core/gimpchannel.c:280
 msgid "Feather Channel"
 msgstr "羽化通道"
 
-#: app/core/gimpchannel.c:282
+#: app/core/gimpchannel.c:281
 msgid "Sharpen Channel"
 msgstr "锐化通道"
 
-#: app/core/gimpchannel.c:283
+#: app/core/gimpchannel.c:282
 msgid "Clear Channel"
 msgstr "清除通道"
 
-#: app/core/gimpchannel.c:284
+#: app/core/gimpchannel.c:283
 msgid "Fill Channel"
 msgstr "填充通道"
 
-#: app/core/gimpchannel.c:285
+#: app/core/gimpchannel.c:284
 msgid "Invert Channel"
 msgstr "反转通道"
 
-#: app/core/gimpchannel.c:286
+#: app/core/gimpchannel.c:285
 msgid "Border Channel"
 msgstr "取通道边界"
 
-#: app/core/gimpchannel.c:287
+#: app/core/gimpchannel.c:286
 msgid "Grow Channel"
 msgstr "通道增长"
 
-#: app/core/gimpchannel.c:288
+#: app/core/gimpchannel.c:287
 msgid "Shrink Channel"
 msgstr "通道收缩"
 
-#: app/core/gimpchannel.c:584
+#: app/core/gimpchannel.c:582
 msgid "Cannot stroke empty channel."
 msgstr "无法勾画空通道。"
 
-#: app/core/gimpchannel.c:1499
+#: app/core/gimpchannel.c:1473
 msgid "Set Channel Color"
 msgstr "设置通道颜色"
 
-#: app/core/gimpchannel.c:1546
+#: app/core/gimpchannel.c:1520
 msgid "Set Channel Opacity"
 msgstr "设置通道不透明度"
 
@@ -1681,11 +1682,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:410 app/core/gimpdatafactory.c:413
-#: app/core/gimpitem.c:304 app/core/gimpitem.c:307
+#: app/core/gimpitem.c:309 app/core/gimpitem.c:312
 msgid "copy"
 msgstr "副本"
 
-#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:316
+#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:321
 #, c-format
 msgid "%s copy"
 msgstr "%s副本"
@@ -1891,7 +1892,7 @@ msgstr "启用快速蒙板"
 msgid "Disable QuickMask"
 msgstr "禁用快速蒙板"
 
-#: app/core/gimpimage-undo-push.c:2937
+#: app/core/gimpimage-undo-push.c:2939
 #, c-format
 msgid "Can't undo %s"
 msgstr "无法撤销 %s"
@@ -2065,11 +2066,11 @@ msgstr "%d 个图层"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "无法打开缩略图文件“%s”：%s"
 
-#: app/core/gimpitem.c:997
+#: app/core/gimpitem.c:1057
 msgid "Attach Parasite to Item"
 msgstr ""
 
-#: app/core/gimpitem.c:1036 app/core/gimpitem.c:1043
+#: app/core/gimpitem.c:1096 app/core/gimpitem.c:1103
 msgid "Remove Parasite from Item"
 msgstr ""
 
@@ -2230,67 +2231,67 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "图案文件“%s”中含有无效的 UTF-8 字符串。"
 
-#: app/core/gimpselection.c:180 app/tools/gimpeditselectiontool.c:259
+#: app/core/gimpselection.c:179 app/tools/gimpeditselectiontool.c:259
 #: app/tools/gimpeditselectiontool.c:1116 app/tools/gimpmoveoptions.c:184
 #: app/tools/gimpmoveoptions.c:185
 msgid "Move Selection"
 msgstr "移动选区"
 
-#: app/core/gimpselection.c:197 app/gui/select-commands.c:177
+#: app/core/gimpselection.c:196 app/gui/select-commands.c:177
 msgid "Feather Selection"
 msgstr "羽化选区"
 
-#: app/core/gimpselection.c:198
+#: app/core/gimpselection.c:197
 msgid "Sharpen Selection"
 msgstr "锐化选区"
 
-#: app/core/gimpselection.c:199 app/widgets/gimpselectioneditor.c:172
+#: app/core/gimpselection.c:198 app/widgets/gimpselectioneditor.c:172
 msgid "Select None"
 msgstr "全不选"
 
-#: app/core/gimpselection.c:200 app/widgets/gimpselectioneditor.c:164
+#: app/core/gimpselection.c:199 app/widgets/gimpselectioneditor.c:164
 msgid "Select All"
 msgstr "全选"
 
-#: app/core/gimpselection.c:201 app/widgets/gimpselectioneditor.c:180
+#: app/core/gimpselection.c:200 app/widgets/gimpselectioneditor.c:180
 msgid "Invert Selection"
 msgstr "反转选区"
 
-#: app/core/gimpselection.c:202 app/gui/select-commands.c:270
+#: app/core/gimpselection.c:201 app/gui/select-commands.c:270
 msgid "Border Selection"
 msgstr "取选区边界"
 
-#: app/core/gimpselection.c:203 app/gui/select-commands.c:247
+#: app/core/gimpselection.c:202 app/gui/select-commands.c:247
 msgid "Grow Selection"
 msgstr "选区增长"
 
-#: app/core/gimpselection.c:204 app/gui/select-commands.c:213
+#: app/core/gimpselection.c:203 app/gui/select-commands.c:213
 msgid "Shrink Selection"
 msgstr "选区收缩"
 
-#: app/core/gimpselection.c:303
+#: app/core/gimpselection.c:301
 msgid "No selection to stroke."
 msgstr "没有选区可勾画。"
 
-#: app/core/gimpselection.c:312 app/widgets/gimpselectioneditor.c:212
+#: app/core/gimpselection.c:310 app/widgets/gimpselectioneditor.c:212
 msgid "Stroke Selection"
 msgstr "勾画选区"
 
-#: app/core/gimpselection.c:602 app/gui/channels-commands.c:209
+#: app/core/gimpselection.c:599 app/gui/channels-commands.c:209
 #: app/pdb/selection_cmds.c:923 app/pdb/selection_cmds.c:1041
 #: app/widgets/gimpchanneltreeview.c:291
 msgid "Channel to Selection"
 msgstr "通道到选区"
 
-#: app/core/gimpselection.c:674
+#: app/core/gimpselection.c:671
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "无法剪切或复制，因为选择区域为空。"
 
-#: app/core/gimpselection.c:820
+#: app/core/gimpselection.c:817
 msgid "Cannot float selection because the selected region is empty."
 msgstr "无法浮动选区，因为选择区域为空。"
 
-#: app/core/gimpselection.c:843 app/gui/layers-commands.c:989
+#: app/core/gimpselection.c:840 app/gui/layers-commands.c:989
 msgid "Floating Selection"
 msgstr "浮动选区"
 
@@ -3987,6 +3988,11 @@ msgstr "/查看(V)/缩放(Z)/1:1 (12.5%)"
 #: app/gui/image-menu.c:420
 msgid "/View/Zoom/1:16  (6.25%)"
 msgstr "/查看(V)/缩放(Z)/1:16 (6.25%)"
+
+#: app/gui/image-menu.c:427
+#, fuzzy
+msgid "/View/Zoom/O_ther..."
+msgstr "/查看(V)/缩放(Z)/缩小(_O)"
 
 #: app/gui/image-menu.c:434
 msgid "/View/_Info Window"
@@ -6893,7 +6899,7 @@ msgstr "/导入路径(_M)..."
 msgid "/E_xport Path..."
 msgstr "/导出路径(_X)..."
 
-#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:56
+#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:57
 msgid "Airbrush"
 msgstr "喷枪"
 
@@ -6921,7 +6927,7 @@ msgstr "画笔"
 msgid "No brushes available for use with this tool."
 msgstr "没有可供此工具使用的画笔。"
 
-#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:52
+#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:53
 msgid "Pencil"
 msgstr "铅笔"
 
@@ -6988,20 +6994,20 @@ msgstr "色阶"
 msgid "Posterize"
 msgstr "海报效果"
 
-#: app/pdb/color_cmds.c:722 app/pdb/color_cmds.c:839
+#: app/pdb/color_cmds.c:726 app/pdb/color_cmds.c:843
 #: app/tools/gimpcurvestool.c:138
 msgid "Curves"
 msgstr "曲线"
 
-#: app/pdb/color_cmds.c:957 app/tools/gimpcolorbalancetool.c:96
+#: app/pdb/color_cmds.c:961 app/tools/gimpcolorbalancetool.c:96
 msgid "Color Balance"
 msgstr "色彩平衡"
 
-#: app/pdb/color_cmds.c:1235 app/tools/gimphuesaturationtool.c:110
+#: app/pdb/color_cmds.c:1239 app/tools/gimphuesaturationtool.c:110
 msgid "Hue-Saturation"
 msgstr "色调-饱和度"
 
-#: app/pdb/color_cmds.c:1334 app/tools/gimpthresholdtool.c:92
+#: app/pdb/color_cmds.c:1338 app/tools/gimpthresholdtool.c:92
 msgid "Threshold"
 msgstr "阈值"
 
@@ -7326,8 +7332,8 @@ msgstr "固定宽高比"
 msgid "Transform Selection"
 msgstr "变换选区"
 
-#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:238
-#: app/vectors/gimpvectors.c:537
+#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:534
 msgid "Transform Path"
 msgstr "变换路径"
 
@@ -7359,20 +7365,20 @@ msgstr "网格线间距"
 msgid "This tool has no options."
 msgstr "这个工具没有选项。"
 
-#: app/tools/gimpairbrushtool.c:57
+#: app/tools/gimpairbrushtool.c:58
 msgid "Airbrush with variable pressure"
 msgstr "带各种压力的喷枪"
 
-#: app/tools/gimpairbrushtool.c:58
+#: app/tools/gimpairbrushtool.c:59
 msgid "/Tools/Paint Tools/_Airbrush"
 msgstr "/工具(T)/涂画工具(P)/喷枪(_A)"
 
-#: app/tools/gimpairbrushtool.c:124 app/tools/gimpconvolvetool.c:239
+#: app/tools/gimpairbrushtool.c:125 app/tools/gimpconvolvetool.c:239
 #: app/tools/gimpsmudgetool.c:125
 msgid "Rate:"
 msgstr "比率："
 
-#: app/tools/gimpairbrushtool.c:130
+#: app/tools/gimpairbrushtool.c:131
 msgid "Pressure:"
 msgstr "压力："
 
@@ -7790,8 +7796,8 @@ msgid "Exposure:"
 msgstr "曝光量："
 
 #: app/tools/gimpeditselectiontool.c:247
-#: app/tools/gimpeditselectiontool.c:1156 app/vectors/gimpvectors.c:233
-#: app/vectors/gimpvectors.c:372
+#: app/tools/gimpeditselectiontool.c:1156 app/vectors/gimpvectors.c:230
+#: app/vectors/gimpvectors.c:369
 msgid "Move Path"
 msgstr "移动路径"
 
@@ -8197,11 +8203,11 @@ msgstr "长度："
 msgid "Use Color from Gradient"
 msgstr "使用渐变中的颜色"
 
-#: app/tools/gimppenciltool.c:53
+#: app/tools/gimppenciltool.c:54
 msgid "Paint hard edged pixels"
 msgstr "画出带硬质边界的点"
 
-#: app/tools/gimppenciltool.c:54
+#: app/tools/gimppenciltool.c:55
 msgid "/Tools/Paint Tools/Pe_ncil"
 msgstr "/工具(T)/涂画工具(P)/铅笔(_N)"
 
@@ -8713,31 +8719,31 @@ msgstr "点击可使此节点成为角点。"
 msgid "There is no active layer or channel to stroke to"
 msgstr "没有活动图层或通道可以勾画"
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimpvectors.c:228
 msgid "Path"
 msgstr "路径"
 
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimpvectors.c:229
 msgid "Rename Path"
 msgstr "重命名路径"
 
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimpvectors.c:231
 msgid "Scale Path"
 msgstr "缩放路径"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:232
 msgid "Resize Path"
 msgstr "路径改变大小"
 
-#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:463
+#: app/vectors/gimpvectors.c:233 app/vectors/gimpvectors.c:460
 msgid "Flip Path"
 msgstr "翻转路径"
 
-#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:506
+#: app/vectors/gimpvectors.c:234 app/vectors/gimpvectors.c:503
 msgid "Rotate Path"
 msgstr "旋转路径"
 
-#: app/vectors/gimpvectors.c:566
+#: app/vectors/gimpvectors.c:562
 msgid "Cannot stroke empty path."
 msgstr "无法勾画空路径。"
 
@@ -8919,12 +8925,12 @@ msgid "Cyan:"
 msgstr "青色："
 
 #: app/widgets/gimpcolorframe.c:305
-msgid "Yellow:"
-msgstr "黄色："
-
-#: app/widgets/gimpcolorframe.c:306
 msgid "Magenta:"
 msgstr "品红："
+
+#: app/widgets/gimpcolorframe.c:306
+msgid "Yellow:"
+msgstr "黄色："
 
 #: app/widgets/gimpcolorframe.c:307
 msgid "Black:"
@@ -9007,20 +9013,16 @@ msgstr "您确认要从列表以及磁盘中删除“%s”吗？"
 msgid "Delete Data Object"
 msgstr "删除数据对象"
 
-#: app/widgets/gimpdevicestatus.c:291
+#: app/widgets/gimpdevicestatus.c:289
 msgid "Save device status"
 msgstr "保存设备状态"
 
-#: app/widgets/gimpdevicestatus.c:298
-msgid "Configure input devices"
-msgstr "配置输入设备"
-
-#: app/widgets/gimpdevicestatus.c:404
+#: app/widgets/gimpdevicestatus.c:395
 #, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "前景：%d, %d, %d"
 
-#: app/widgets/gimpdevicestatus.c:409
+#: app/widgets/gimpdevicestatus.c:400
 #, c-format
 msgid "Background: %d, %d, %d"
 msgstr "背景：%d, %d, %d"
@@ -9241,26 +9243,26 @@ msgstr "宽度"
 msgid "Height"
 msgstr "高度"
 
-#: app/widgets/gimphelp.c:198
+#: app/widgets/gimphelp.c:196
 msgid "Could not find GIMP Help Browser"
 msgstr "找不到 GIMP 帮助浏览器"
 
-#: app/widgets/gimphelp.c:200
+#: app/widgets/gimphelp.c:198
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
 msgstr ""
 "找不到 GIMP 帮助浏览器过程。可能由于您没有安装 GtkHtml2 因而它没有被编译。"
 
-#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
+#: app/widgets/gimphelp.c:202 app/widgets/gimphelp.c:235
 msgid "Use web browser instead"
 msgstr "使用 Web 浏览器替代"
 
-#: app/widgets/gimphelp.c:234
+#: app/widgets/gimphelp.c:232
 msgid "Could not start GIMP Help Browser"
 msgstr "无法启动 GIMP 帮助浏览器"
 
-#: app/widgets/gimphelp.c:236
+#: app/widgets/gimphelp.c:234
 msgid "Could not start the GIMP Help Browser."
 msgstr "无法启动 GIMP 帮助浏览器。"
 
@@ -9871,3 +9873,6 @@ msgstr "XCF 错误：遇到不支持的 XCF 文件版本 %d"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "创建并编辑图像或照片"
+
+#~ msgid "Configure input devices"
+#~ msgstr "配置输入设备"

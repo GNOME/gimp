@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-02 11:33+0200\n"
+"POT-Creation-Date: 2004-09-25 00:01+0200\n"
 "PO-Revision-Date: 2004-09-03 18:13+0200\n"
 "Last-Translator: Laurent Dhima <laurenti@alblinux.net>\n"
 "Language-Team: Albanian <gnome-albanian-perkthyesit@lists.sourceforge.net>\n"
@@ -21,11 +21,11 @@ msgid ""
 "GIMP is not properly installed for the current user.\n"
 "User installation was skipped because the '--no-interface' flag was used.\n"
 "To perform user installation, run the GIMP without the '--no-interface' flag."
-msgstr "është nuk instaluar për përdorues jo interfaqja përdorues jo interfaqja."
+msgstr ""
+"është nuk instaluar për përdorues jo interfaqja përdorues jo interfaqja."
 
 #: app/app_procs.c:226
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
 "location and permissions of the swap directory defined in your Preferences "
@@ -102,7 +102,8 @@ msgstr ""
 
 #: app/main.c:519
 msgid "  --no-cpu-accel           Do not use special CPU accelerations.\n"
-msgstr "  --no-cpu-accel           Mos përdor përshpejtsimet speciale të CPU.\n"
+msgstr ""
+"  --no-cpu-accel           Mos përdor përshpejtsimet speciale të CPU.\n"
 
 #: app/main.c:520
 msgid ""
@@ -138,11 +139,13 @@ msgstr "  -g, --gimprc <gimprc>    Përdor një file të ndryshëm gimprc.\n"
 
 #: app/main.c:527
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr "  --system-gimprc <gimprc> Përdor një file të ndryshëm sistemi gimprc.\n"
+msgstr ""
+"  --system-gimprc <gimprc> Përdor një file të ndryshëm sistemi gimprc.\n"
 
 #: app/main.c:528
 #, fuzzy
-msgid "  --dump-gimprc            Output a gimprc file with default settings.\n"
+msgid ""
+"  --dump-gimprc            Output a gimprc file with default settings.\n"
 msgstr "Rezultati a me prezgjedhur rregullimet j"
 
 #: app/main.c:529
@@ -154,7 +157,8 @@ msgstr "Shfaq nga a dialog j"
 
 #: app/main.c:530
 #, fuzzy
-msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgid ""
+"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr "Aktivo j"
 
 #: app/main.c:531
@@ -303,20 +307,17 @@ msgstr "gabim"
 
 #. please don't translate 'yes' and 'no'
 #: app/config/gimpconfig-deserialize.c:453
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "po jo për"
 
 #: app/config/gimpconfig-deserialize.c:527
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "I pavlefshëm për"
 
 #: app/config/gimpconfig-deserialize.c:542
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "I pavlefshëm për"
 
@@ -326,8 +327,7 @@ msgid "while parsing token '%s': %s"
 msgstr ""
 
 #: app/config/gimpconfig-deserialize.c:759
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "për është nuk a"
 
@@ -342,8 +342,7 @@ msgstr ""
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
 #: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:425
 #: app/xcf/xcf.c:273
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "nuk hap për"
 
@@ -352,75 +351,64 @@ msgstr "nuk hap për"
 #: app/core/gimpgradient.c:584 app/core/gimppalette.c:567 app/gui/themes.c:238
 #: app/tools/gimpimagemaptool.c:546 app/vectors/gimpvectors-export.c:83
 #: app/xcf/xcf.c:330
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "nuk hap për"
 
 #: app/config/gimpconfig-utils.c:564 app/config/gimpconfig-utils.c:587
 #: app/vectors/gimpvectors-export.c:96
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error while writing '%s': %s"
 msgstr "Gabim"
 
 #: app/config/gimpconfig-utils.c:575
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error while reading '%s': %s"
 msgstr "Gabim"
 
 #: app/config/gimpconfig-utils.c:612
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
 msgstr "gabim E prezgjedhur A nga."
 
 #: app/config/gimpconfigwriter.c:107
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "nuk për"
 
 #: app/config/gimpconfigwriter.c:571
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
 msgstr "Gabim për nuk."
 
 #: app/config/gimpconfigwriter.c:579
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
 msgstr "Gabim për."
 
 #: app/config/gimpconfigwriter.c:590
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Gabim"
 
 #: app/config/gimpconfigwriter.c:608
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not create '%s': %s"
 msgstr "nuk"
 
 #: app/config/gimprc.c:335 app/config/gimprc.c:348
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Parsing '%s'\n"
 msgstr "j"
 
 #: app/config/gimprc.c:595
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Saving '%s'\n"
 msgstr "Duke ruajtur j"
 
@@ -543,7 +531,8 @@ msgstr "Instalo a në."
 
 #: app/config/gimprc-blurbs.h:167
 #, fuzzy
-msgid "Sets the level of interpolation used for scaling and other transformations."
+msgid ""
+"Sets the level of interpolation used for scaling and other transformations."
 msgstr "niveli nga për dhe tjetër."
 
 #: app/config/gimprc-blurbs.h:171
@@ -646,7 +635,8 @@ msgstr "e fundit në."
 
 #: app/config/gimprc-blurbs.h:253
 #, fuzzy
-msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid ""
+"Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr "Kujto dhe."
 
 #: app/config/gimprc-blurbs.h:257
@@ -687,7 +677,9 @@ msgstr "Kur aktiv i dukshëm nga prezgjedhur me Paraqitja Shfaq."
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
-msgstr "Kur aktiv paneli i gjendjes është i dukshëm nga prezgjedhur me Paraqitja Shfaq."
+msgstr ""
+"Kur aktiv paneli i gjendjes është i dukshëm nga prezgjedhur me Paraqitja "
+"Shfaq."
 
 #: app/config/gimprc-blurbs.h:283
 #, fuzzy
@@ -744,7 +736,9 @@ msgid ""
 "GIMP is used with large images. Also, things can get horribly slow if the "
 "swap file is created on a directory that is mounted over NFS.  For these "
 "reasons, it may be desirable to put your swap file in \"/tmp\"."
-msgstr "pozicioni a është dhe disk dhe mbrapa në merr është me merr është në a është në."
+msgstr ""
+"pozicioni a është dhe disk dhe mbrapa në merr është me merr është në a është "
+"në."
 
 #: app/config/gimprc-blurbs.h:319
 #, fuzzy
@@ -791,7 +785,8 @@ msgid ""
 "memory and disk. Setting this value higher will cause the GIMP to use less "
 "swap space, but will also cause the GIMP to use more memory. Conversely, a "
 "smaller cache size causes the GIMP to use more swap space and less memory."
-msgstr "është dhe disk Rregullimi hapësirë tjetër a madhësia tjetër hapësirë dhe."
+msgstr ""
+"është dhe disk Rregullimi hapësirë tjetër a madhësia tjetër hapësirë dhe."
 
 #: app/config/gimprc-blurbs.h:355
 #, fuzzy
@@ -843,14 +838,15 @@ msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Kur aktiv F1 hap ndihmë."
 
 #: app/config/gimprc-blurbs.h:384
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Sets the external web browser to be used.  This can be an absolute path or "
 "the name of an executable to search for in the user's PATH. If the command "
 "contains '%s' it will be replaced with the URL, else the URL will be "
 "appended to the command with a space separating the two."
-msgstr "i jashtëm shtegu emri nga e ekzekutueshme kërko për në përdorues përmban me URL URL me a hapësirë dy."
+msgstr ""
+"i jashtëm shtegu emri nga e ekzekutueshme kërko për në përdorues përmban me "
+"URL URL me a hapësirë dy."
 
 #: app/config/gimpscanner.c:220
 #, fuzzy
@@ -858,8 +854,7 @@ msgid "invalid UTF-8 string"
 msgstr "I pavlefshëm"
 
 #: app/config/gimpscanner.c:497
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Gabim në"
 
@@ -1645,32 +1640,27 @@ msgid "GIMP"
 msgstr ""
 
 #: app/core/gimpbrush.c:534
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not read %d bytes from '%s': %s"
 msgstr "nuk bytes"
 
 #: app/core/gimpbrush.c:569
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr "gabim në Nuk njihet."
 
 #: app/core/gimpbrush.c:582
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr "gabim në Nuk njihet versioni."
 
 #: app/core/gimpbrush.c:598 app/core/gimpbrush.c:718
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr "gabim në File."
 
 #: app/core/gimpbrush.c:606 app/core/gimpbrushpipe.c:365
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "E pavlefshme në."
 
@@ -1681,29 +1671,25 @@ msgid "Unnamed"
 msgstr "Pa emër"
 
 #: app/core/gimpbrush.c:707
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr "gabim në."
 
 #: app/core/gimpbrushgenerated.c:390
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
 msgstr "gabim në Not a."
 
 #: app/core/gimpbrushgenerated.c:401
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
 msgstr "gabim në Nuk njihet versioni."
 
 #: app/core/gimpbrushpipe.c:380 app/core/gimpbrushpipe.c:400
 #: app/core/gimpbrushpipe.c:490
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "gabim në File është."
 
@@ -1817,8 +1803,7 @@ msgid "Alpha to Selection"
 msgstr "Alfa Zgjedhja"
 
 #: app/core/gimpchannel-select.c:409
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s Channel to Selection"
 msgstr "Kanali Zgjedhja"
 
@@ -1833,14 +1818,12 @@ msgid "Select by Color"
 msgstr "Zgjidh nga Ngjyra"
 
 #: app/core/gimpdata.c:249
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not delete '%s': %s"
 msgstr "nuk elemino"
 
 #: app/core/gimpdatafactory.c:296 app/core/gimpdatafactory.c:478
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Warning: Failed to save data:\n"
 "%s"
@@ -1852,20 +1835,17 @@ msgid "copy"
 msgstr "kopjo"
 
 #: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:321
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s copy"
 msgstr "kopjo"
 
 #: app/core/gimpdatafactory.c:560
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Trying legacy loader on file '%s' with unknown extension."
 msgstr "në me nuk njihet."
 
 #: app/core/gimpdatafactory.c:584
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Warning: Failed to load data:\n"
 "%s"
@@ -1926,38 +1906,32 @@ msgid "Transformation"
 msgstr "Transformimi"
 
 #: app/core/gimpenvirontable.c:285
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Empty variable name in environment file %s"
 msgstr "Bosh emri në"
 
 #: app/core/gimpenvirontable.c:303
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "emri në"
 
 #: app/core/gimpgradient.c:361
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
 msgstr "gabim në Not a."
 
 #: app/core/gimpgradient.c:376
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
 msgstr "E pavlefshme në."
 
 #: app/core/gimpgradient.c:404
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt."
 msgstr "gabim në File është."
 
 #: app/core/gimpgradient.c:461
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "në."
 
@@ -1973,7 +1947,8 @@ msgstr "nga."
 
 #: app/core/gimpgrid.c:139
 #, fuzzy
-msgid "The background color of the grid; only used in double dashed line style."
+msgid ""
+"The background color of the grid; only used in double dashed line style."
 msgstr "nga në."
 
 #: app/core/gimpgrid.c:145
@@ -1988,7 +1963,8 @@ msgstr "Vertikal nga rreshta."
 
 #: app/core/gimpgrid.c:159
 #, fuzzy
-msgid "Horizontal offset of the first grid line; this may be a negative number."
+msgid ""
+"Horizontal offset of the first grid line; this may be a negative number."
 msgstr "nga i pari a."
 
 #: app/core/gimpgrid.c:166
@@ -2090,7 +2066,7 @@ msgstr "Aktivo"
 msgid "Disable QuickMask"
 msgstr "Ç'aktivo"
 
-#: app/core/gimpimage-undo-push.c:2937
+#: app/core/gimpimage-undo-push.c:2939
 #, c-format
 msgid "Can't undo %s"
 msgstr ""
@@ -2176,8 +2152,7 @@ msgid "Lower Layer to Bottom"
 msgstr "Inferior Poshtë"
 
 #: app/core/gimpimage.c:2799
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Layer '%s' has no alpha. Layer was placed above it."
 msgstr "jo."
 
@@ -2283,14 +2258,12 @@ msgid "1 Layer"
 msgstr ""
 
 #: app/core/gimpimagefile.c:526
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%d Layers"
 msgstr "Nivelet"
 
 #: app/core/gimpimagefile.c:567
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "nuk hap"
 
@@ -2393,35 +2366,30 @@ msgid "Layer to Image Size"
 msgstr "Madhësia"
 
 #: app/core/gimppalette.c:384
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Fatal parse error in palette file '%s': Missing magic header.\n"
 "Does this file need converting from DOS?"
 msgstr "gabim në Mungues titull?"
 
 #: app/core/gimppalette.c:390
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
 msgstr "gabim në Mungues titull."
 
 #: app/core/gimppalette.c:404 app/core/gimppalette.c:429
 #: app/core/gimppalette.c:459 app/core/gimppalette.c:538
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr "gabim në Lexo gabim në."
 
 #: app/core/gimppalette.c:419
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "E pavlefshme në"
 
 #: app/core/gimppalette.c:447
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
@@ -2429,26 +2397,22 @@ msgstr "Shi E pavlefshme nga kollonat në prezgjedhur."
 
 #. maybe we should just abort?
 #: app/core/gimppalette.c:493
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Shi Mungues komponenti në."
 
 #: app/core/gimppalette.c:501
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Reading palette '%s': Missing GREEN component in line %d."
 msgstr "Shi Mungues komponenti në."
 
 #: app/core/gimppalette.c:509
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Shi Mungues komponenti në."
 
 #: app/core/gimppalette.c:519
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "Shi nga në."
 
@@ -2458,28 +2422,25 @@ msgstr "E zezë"
 
 #: app/core/gimppattern.c:337 app/core/gimppattern.c:384
 #: app/core/gimppattern.c:415
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
 msgstr "gabim në nuk bytes"
 
 #: app/core/gimppattern.c:357
-#, c-format
-#, fuzzy
-msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
+#, fuzzy, c-format
+msgid ""
+"Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr "gabim në Nuk njihet versioni."
 
 #: app/core/gimppattern.c:367
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr "gabim në."
 
 #: app/core/gimppattern.c:393
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "E pavlefshme në."
 
@@ -2700,8 +2661,7 @@ msgid "Toggle QuickMask"
 msgstr "Kavo"
 
 #: app/display/gimpdisplayshell.c:1405
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Close %s?"
 msgstr "Mbyll?"
 
@@ -2863,8 +2823,7 @@ msgid "Invalid character sequence in URI"
 msgstr "E pavlefshme në URI"
 
 #: app/gui/about-dialog.c:45
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Version %s brought to you by"
 msgstr "Versioni %s krijuar për ju nga"
 
@@ -2902,7 +2861,8 @@ msgstr "Modaliteti:"
 
 #: app/gui/brush-select.c:322
 #, fuzzy
-msgid "Unable to run brush callback. The corresponding plug-in may have crashed."
+msgid ""
+"Unable to run brush callback. The corresponding plug-in may have crashed."
 msgstr "në."
 
 #: app/gui/brushes-menu.c:45
@@ -2951,8 +2911,7 @@ msgid "/_Delete Buffer"
 msgstr "Elemino Buffer"
 
 #: app/gui/channels-commands.c:143
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s Channel Copy"
 msgstr "Kanali Kopjo"
 
@@ -3604,8 +3563,7 @@ msgstr "Ruaj Zgjedhja File."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
 #: app/widgets/gimpdnd.c:1328 app/widgets/gimpdocumentview.c:468
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Opening '%s' failed:\n"
 "\n"
@@ -3613,8 +3571,7 @@ msgid ""
 msgstr "j j"
 
 #: app/gui/file-commands.c:233 app/gui/file-save-dialog.c:341
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Saving '%s' failed:\n"
 "\n"
@@ -3637,8 +3594,7 @@ msgid "Revert failed. No file name associated with this image."
 msgstr "Rikthe Jo emri me figurë."
 
 #: app/gui/file-commands.c:314
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Revert '%s' to\n"
 "'%s'?\n"
@@ -3657,8 +3613,7 @@ msgid "(Unnamed Template)"
 msgstr "Pa emër Shabllon"
 
 #: app/gui/file-commands.c:462
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
 "\n"
@@ -3682,8 +3637,7 @@ msgid "From _Template:"
 msgstr "Nga Shabllon:"
 
 #: app/gui/file-new-dialog.c:270
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "You are trying to create an image with an initial size of %s.\n"
 "\n"
@@ -3692,7 +3646,9 @@ msgid ""
 "\n"
 "To prevent this dialog from appearing, increase the \"Maximum Image Size\" "
 "setting (currently %s) in the Preferences dialog."
-msgstr "Ti figurë me madhësia nga j OK figurë Anullo nuk a figurë j dialog Madhësia në Preferimet dialog."
+msgstr ""
+"Ti figurë me madhësia nga j OK figurë Anullo nuk a figurë j dialog Madhësia "
+"në Preferimet dialog."
 
 #: app/gui/file-new-dialog.c:285
 #, fuzzy
@@ -3718,8 +3674,7 @@ msgid "Save a Copy of the Image"
 msgstr "Ruaj a Kopjo nga"
 
 #: app/gui/file-save-dialog.c:260
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "File '%s' exists.\n"
 "Overwrite it?"
@@ -3737,7 +3692,8 @@ msgstr "Prapashtesa"
 
 #: app/gui/font-select.c:234
 #, fuzzy
-msgid "Unable to run font callback. The corresponding plug-in may have crashed."
+msgid ""
+"Unable to run font callback. The corresponding plug-in may have crashed."
 msgstr "gërmë në."
 
 #: app/gui/fonts-menu.c:44
@@ -4049,12 +4005,12 @@ msgstr "në Zgjedhja"
 
 #: app/gui/gradient-select.c:272
 #, fuzzy
-msgid "Unable to run gradient callback. The corresponding plug-in may have crashed."
+msgid ""
+"Unable to run gradient callback. The corresponding plug-in may have crashed."
 msgstr "në."
 
 #: app/gui/gradients-commands.c:73
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Save '%s' as POV-Ray"
 msgstr "Ruaj"
 
@@ -4163,8 +4119,7 @@ msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "Ripërmaso Gabim Së bashku gjerësia dhe lartësia zero."
 
 #: app/gui/image-commands.c:523
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "You are trying to create an image with a size of %s.\n"
 "\n"
@@ -4173,7 +4128,9 @@ msgid ""
 "\n"
 "To prevent this dialog from appearing, increase the \"Maximum Image Size\" "
 "setting (currently %s) in the Preferences dialog."
-msgstr "Ti figurë me a madhësia nga j OK figurë Anullo nuk a figurë j dialog Madhësia në Preferimet dialog."
+msgstr ""
+"Ti figurë me a madhësia nga j OK figurë Anullo nuk a figurë j dialog "
+"Madhësia në Preferimet dialog."
 
 #: app/gui/image-commands.c:535
 #, fuzzy
@@ -4515,6 +4472,11 @@ msgstr "Paraqitja Shkalla e zmadhimit"
 #, fuzzy
 msgid "/View/Zoom/1:16  (6.25%)"
 msgstr "Paraqitja Shkalla e zmadhimit"
+
+#: app/gui/image-menu.c:427
+#, fuzzy
+msgid "/View/Zoom/O_ther..."
+msgstr "Paraqitja Shkalla e zmadhimit Shkalla e zmadhimit Zvogëlo"
 
 #: app/gui/image-menu.c:434
 #, fuzzy
@@ -5250,14 +5212,12 @@ msgid "/Filters/To_ys"
 msgstr "Filtrat Për"
 
 #: app/gui/image-menu.c:1471
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "_Undo %s"
 msgstr "Anullo"
 
 #: app/gui/image-menu.c:1476
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "_Redo %s"
 msgstr "Përsërite"
 
@@ -5270,14 +5230,12 @@ msgid "_Redo"
 msgstr "_Përsërit"
 
 #: app/gui/image-menu.c:1750
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Other (%s) ..."
 msgstr "Tjetër."
 
 #: app/gui/image-menu.c:1759
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "_Zoom (%s)"
 msgstr "Shkalla e zmadhimit"
 
@@ -5418,14 +5376,12 @@ msgid "Visual Depth:"
 msgstr "Viazual Thellësia:"
 
 #: app/gui/info-window.c:516
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "pixels/%s"
 msgstr "pixels"
 
 #: app/gui/info-window.c:518
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%g x %g %s"
 msgstr "x"
 
@@ -6002,7 +5958,8 @@ msgstr "Shikoje"
 
 #: app/gui/palette-select.c:250
 #, fuzzy
-msgid "Unable to run palette callback. The corresponding plug-in may have crashed."
+msgid ""
+"Unable to run palette callback. The corresponding plug-in may have crashed."
 msgstr "në."
 
 #: app/gui/palettes-commands.c:82
@@ -6050,7 +6007,8 @@ msgstr "Rifresko"
 
 #: app/gui/pattern-select.c:252
 #, fuzzy
-msgid "Unable to run pattern callback. The corresponding plug-in may have crashed."
+msgid ""
+"Unable to run pattern callback. The corresponding plug-in may have crashed."
 msgstr "në."
 
 #. disabled because they are useless now
@@ -6085,8 +6043,7 @@ msgid "Re_peat \"%s\""
 msgstr ""
 
 #: app/gui/plug-in-menus.c:344
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "R_e-show \"%s\""
 msgstr "R e"
 
@@ -6549,8 +6506,7 @@ msgid "Get Monitor Resolution"
 msgstr "Ekrani Thellësia e ngjyrave"
 
 #: app/gui/preferences-dialog.c:1752
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "(Currently %d x %d dpi)"
 msgstr "x dpi"
 
@@ -6992,8 +6948,7 @@ msgid "Resolution X:"
 msgstr "Thellësia e ngjyrave X:"
 
 #: app/gui/resize-dialog.c:651 app/widgets/gimptemplateeditor.c:403
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "pixels/%a"
 msgstr "pixels a"
 
@@ -7127,14 +7082,12 @@ msgid "/_Delete Template"
 msgstr "Elemino Shabllon"
 
 #: app/gui/themes.c:231 app/plug-in/plug-ins.c:250
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Writing '%s'\n"
 msgstr "j"
 
 #: app/gui/themes.c:284
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr "tema j"
 
@@ -7143,8 +7096,7 @@ msgid "<b>Your GIMP tips file appears to be missing!</b>"
 msgstr ""
 
 #: app/gui/tips-dialog.c:90
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "There should be a file called '%s'. Please check your installation."
 msgstr "a."
 
@@ -7476,7 +7428,9 @@ msgid ""
 "of your configuration so it can. be remembered for the next session.  You "
 "may edit this file if you wish, but it is much easier to define the keys "
 "from within The GIMP.  Deleting this file will restore the default shortcuts."
-msgstr "Kyçi në është a nga për në vazhdim Ti ndrysho është Duke eleminuar prezgjedhur."
+msgstr ""
+"Kyçi në është a nga për në vazhdim Ti ndrysho është Duke eleminuar "
+"prezgjedhur."
 
 #: app/gui/user-install-dialog.c:167
 #, fuzzy
@@ -7500,7 +7454,8 @@ msgid ""
 "additional units and use them just like you use the built-in units inches, "
 "millimeters, points and picas.  This file is overwritten each time you quit "
 "the GIMP."
-msgstr "është përdorues Bankë të dhënash (databazë) Ti dhe në dhe është ora dil."
+msgstr ""
+"është përdorues Bankë të dhënash (databazë) Ti dhe në dhe është ora dil."
 
 #: app/gui/user-install-dialog.c:189
 #, fuzzy
@@ -7558,7 +7513,9 @@ msgid ""
 "system-supported DLL modules.  The GIMP checks this folder in addition to "
 "the system-wide GIMP module folder when searching for modules to load during "
 "initialization."
-msgstr "kartelë është përdorues sistemi modulët kartelë në sistemi kartelë për modulët ngarkoje nisje."
+msgstr ""
+"kartelë është përdorues sistemi modulët kartelë në sistemi kartelë për "
+"modulët ngarkoje nisje."
 
 #: app/gui/user-install-dialog.c:245
 #, fuzzy
@@ -7657,7 +7614,9 @@ msgid ""
 "under the terms of the GNU General Public License as published by the Free "
 "Software Foundation; either version 2 of the License, or (at your option) "
 "any later version."
-msgstr "programi është dhe nga GNU Të përgjithshme Publik Liçenca nga I lirë Software versioni nga Liçenca çdo versioni."
+msgstr ""
+"programi është dhe nga GNU Të përgjithshme Publik Liçenca nga I lirë "
+"Software versioni nga Liçenca çdo versioni."
 
 #: app/gui/user-install-dialog.c:773
 #, fuzzy
@@ -7666,7 +7625,9 @@ msgid ""
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
 "FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
 "more details."
-msgstr "programi është në nga A Shiko GNU Të përgjithshme Publik Liçenca për tjetër detajet."
+msgstr ""
+"programi është në nga A Shiko GNU Të përgjithshme Publik Liçenca për tjetër "
+"detajet."
 
 #: app/gui/user-install-dialog.c:779
 #, fuzzy
@@ -7674,7 +7635,9 @@ msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
-msgstr "Ti a kopjo nga GNU Të përgjithshme Publik Liçenca me programi nuk I lirë Software Temple Boston USA."
+msgstr ""
+"Ti a kopjo nga GNU Të përgjithshme Publik Liçenca me programi nuk I lirë "
+"Software Temple Boston USA."
 
 #: app/gui/user-install-dialog.c:804
 #, fuzzy
@@ -7687,8 +7650,7 @@ msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr "Vazhdo personale kartelë."
 
 #: app/gui/user-install-dialog.c:849
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
 "created."
@@ -7699,7 +7661,8 @@ msgstr "a a kartelë<b></b>."
 msgid ""
 "This folder will contain a number of important files.  Click on one of the "
 "files or folders in the tree to get more information about the selected item."
-msgstr "kartelë a nga me rëndësi në nga në degëzimi merr tjetër informacione element."
+msgstr ""
+"kartelë a nga me rëndësi në nga në degëzimi merr tjetër informacione element."
 
 #: app/gui/user-install-dialog.c:944
 #, fuzzy
@@ -7722,7 +7685,8 @@ msgstr "Vazhdo rregullimet."
 
 #: app/gui/user-install-dialog.c:958
 #, fuzzy
-msgid "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
+msgid ""
+"<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr "<b> rregullimet</b>"
 
 #: app/gui/user-install-dialog.c:965
@@ -7742,20 +7706,17 @@ msgid "Aborting Installation..."
 msgstr ""
 
 #: app/gui/user-install-dialog.c:1058 app/gui/user-install-dialog.c:1091
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Creating folder '%s'..."
 msgstr "kartelë."
 
 #: app/gui/user-install-dialog.c:1071 app/gui/user-install-dialog.c:1104
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "kartelë"
 
 #: app/gui/user-install-dialog.c:1117
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Duke kopjuar."
 
@@ -7774,7 +7735,8 @@ msgid ""
 "written to a swap file.  This file should be located on a local filesystem "
 "with enough free space (several hundred MB). On a UNIX system, you may want "
 "to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
-msgstr "Gjithçka figurë dhe Cache a në a lokal me hapësirë MB Në a sistemi sistemi."
+msgstr ""
+"Gjithçka figurë dhe Cache a në a lokal me hapësirë MB Në a sistemi sistemi."
 
 #: app/gui/user-install-dialog.c:1206
 #, fuzzy
@@ -7789,8 +7751,7 @@ msgid ""
 msgstr "sistemi nuk."
 
 #: app/gui/user-install-dialog.c:1265
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Thellësia e ngjyrave sistemi x dpi"
 
@@ -7926,7 +7887,7 @@ msgstr "Pozicioni."
 msgid "/E_xport Path..."
 msgstr "E Pozicioni."
 
-#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:56
+#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:57
 msgid "Airbrush"
 msgstr ""
 
@@ -7955,7 +7916,7 @@ msgstr ""
 msgid "No brushes available for use with this tool."
 msgstr "Jo për me."
 
-#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:52
+#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:53
 msgid "Pencil"
 msgstr ""
 
@@ -8024,27 +7985,28 @@ msgstr ""
 msgid "Posterize"
 msgstr ""
 
-#: app/pdb/color_cmds.c:722 app/pdb/color_cmds.c:839
+#: app/pdb/color_cmds.c:726 app/pdb/color_cmds.c:843
 #: app/tools/gimpcurvestool.c:138
 msgid "Curves"
 msgstr ""
 
-#: app/pdb/color_cmds.c:957 app/tools/gimpcolorbalancetool.c:96
+#: app/pdb/color_cmds.c:961 app/tools/gimpcolorbalancetool.c:96
 msgid "Color Balance"
 msgstr "Ekuilibrimi i ngjyrës"
 
-#: app/pdb/color_cmds.c:1235 app/tools/gimphuesaturationtool.c:110
+#: app/pdb/color_cmds.c:1239 app/tools/gimphuesaturationtool.c:110
 #, fuzzy
 msgid "Hue-Saturation"
 msgstr "Tonaliteti"
 
-#: app/pdb/color_cmds.c:1334 app/tools/gimpthresholdtool.c:92
+#: app/pdb/color_cmds.c:1338 app/tools/gimpthresholdtool.c:92
 msgid "Threshold"
 msgstr ""
 
 #: app/pdb/image_cmds.c:3660
 #, fuzzy
-msgid "Image resolution is out of bounds, using the default resolution instead."
+msgid ""
+"Image resolution is out of bounds, using the default resolution instead."
 msgstr "është nga prezgjedhur."
 
 #: app/pdb/internal_procs.c:80
@@ -8176,16 +8138,14 @@ msgid "Transform Tool procedures"
 msgstr ""
 
 #: app/pdb/procedural_db.c:248
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "PDB calling error:\n"
 "procedure '%s' not found"
 msgstr "gabim nuk"
 
 #: app/pdb/procedural_db.c:286 app/pdb/procedural_db.c:389
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
 "Argument #%d type mismatch (expected %s, got %s)"
@@ -8216,8 +8176,7 @@ msgid "Free Select"
 msgstr "I lirë Zgjidh"
 
 #: app/plug-in/plug-in.c:702
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
 "(%s)\n"
@@ -8227,8 +8186,7 @@ msgid ""
 msgstr "Zmadho j j Zmadho sipër i brendshëm Ti ruaj dhe në."
 
 #: app/plug-in/plug-in-rc.c:155
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "versioni."
 
@@ -8246,8 +8204,7 @@ msgid "Querying new Plug-ins"
 msgstr "i ri"
 
 #: app/plug-in/plug-ins.c:164
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Querying plug-in: '%s'\n"
 msgstr "në j"
 
@@ -8257,8 +8214,7 @@ msgid "Initializing Plug-ins"
 msgstr ""
 
 #: app/plug-in/plug-ins.c:190
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "në j"
 
@@ -8268,8 +8224,7 @@ msgid "Starting Extensions"
 msgstr "Duke filluar Shtesat"
 
 #: app/plug-in/plug-ins.c:357
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Starting extension: '%s'\n"
 msgstr "Duke filluar j"
 
@@ -8351,15 +8306,15 @@ msgid "Rotate Text Layer"
 msgstr "Rrotullo Teksti"
 
 #: app/text/gimptextlayer-xcf.c:73
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Problems parsing the text parasite for layer '%s':\n"
 "%s\n"
 "\n"
 "Some text properties may be wrong. Unless you want to edit the text layer, "
 "you don't need to worry about this."
-msgstr "tekst për niveli j j tekst pronësitë ndrysho tekst niveli informacione."
+msgstr ""
+"tekst për niveli j j tekst pronësitë ndrysho tekst niveli informacione."
 
 #: app/tools/tools-enums.c:14
 #, fuzzy
@@ -8437,23 +8392,23 @@ msgstr "Linja Hapësira e ndërmjetme"
 msgid "This tool has no options."
 msgstr "jo."
 
-#: app/tools/gimpairbrushtool.c:57
+#: app/tools/gimpairbrushtool.c:58
 #, fuzzy
 msgid "Airbrush with variable pressure"
 msgstr "me"
 
-#: app/tools/gimpairbrushtool.c:58
+#: app/tools/gimpairbrushtool.c:59
 #, fuzzy
 msgid "/Tools/Paint Tools/_Airbrush"
 msgstr "Veglat Paint Veglat"
 
-#: app/tools/gimpairbrushtool.c:124 app/tools/gimpconvolvetool.c:239
+#: app/tools/gimpairbrushtool.c:125 app/tools/gimpconvolvetool.c:239
 #: app/tools/gimpsmudgetool.c:125
 #, fuzzy
 msgid "Rate:"
 msgstr "Taksa:"
 
-#: app/tools/gimpairbrushtool.c:130
+#: app/tools/gimpairbrushtool.c:131
 msgid "Pressure:"
 msgstr "Trysnia:"
 
@@ -8556,8 +8511,7 @@ msgstr ""
 
 #. fill type
 #: app/tools/gimpbucketfilloptions.c:258
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Fill Type  %s"
 msgstr "Mbush (përshtat) Lloji"
 
@@ -8740,8 +8694,7 @@ msgstr ""
 
 #. the pick FG/BG frame
 #: app/tools/gimpcolorpickeroptions.c:175
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Pick Mode  %s"
 msgstr "Modaliteti"
 
@@ -8777,16 +8730,14 @@ msgstr "Veglat Paint Veglat Con"
 
 #. the type radio box
 #: app/tools/gimpconvolvetool.c:221
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Convolve Type  %s"
 msgstr "Lloji"
 
 #. tool toggle
 #: app/tools/gimpcropoptions.c:187 app/tools/gimpmagnifyoptions.c:230
 #: app/tools/gimpmoveoptions.c:228
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Tool Toggle  %s"
 msgstr "Kavo"
 
@@ -8797,8 +8748,7 @@ msgstr "Aktual"
 
 #. enlarge toggle
 #: app/tools/gimpcropoptions.c:203
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Allow Enlarging  %s"
 msgstr "Lejo"
 
@@ -8923,8 +8873,7 @@ msgstr "Veglat Paint Veglat"
 
 #. the type (dodge or burn)
 #: app/tools/gimpdodgeburntool.c:198
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Type  %s"
 msgstr "Lloji"
 
@@ -8982,8 +8931,7 @@ msgstr "Veglat Paint Veglat"
 
 #. the anti_erase toggle
 #: app/tools/gimperasertool.c:185
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Anti Erase  %s"
 msgstr "Fshi"
 
@@ -8994,8 +8942,7 @@ msgstr ""
 
 #. tool toggle
 #: app/tools/gimpflipoptions.c:181
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Flip Type  %s"
 msgstr "Lloji"
 
@@ -9419,12 +9366,12 @@ msgstr "Gjatësia:"
 msgid "Use Color from Gradient"
 msgstr "Ngjyra"
 
-#: app/tools/gimppenciltool.c:53
+#: app/tools/gimppenciltool.c:54
 #, fuzzy
 msgid "Paint hard edged pixels"
 msgstr "Paint pixels"
 
-#: app/tools/gimppenciltool.c:54
+#: app/tools/gimppenciltool.c:55
 #, fuzzy
 msgid "/Tools/Paint Tools/Pe_ncil"
 msgstr "Veglat Paint Veglat"
@@ -9647,7 +9594,8 @@ msgstr "Veglat Paint Veglat"
 
 #: app/tools/gimptextoptions.c:146
 #, fuzzy
-msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid ""
+"Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr "gërmë a"
 
 #: app/tools/gimptextoptions.c:153
@@ -9747,7 +9695,9 @@ msgid ""
 "modifications.\n"
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
-msgstr "niveli është a tekst niveli tjetër Duke ndryshuar niveli me tekst j ndrysho niveli a i ri tekst niveli tekst."
+msgstr ""
+"niveli është a tekst niveli tjetër Duke ndryshuar niveli me tekst j ndrysho "
+"niveli a i ri tekst niveli tekst."
 
 #: app/tools/gimpthresholdtool.c:93
 #, fuzzy
@@ -9803,8 +9753,7 @@ msgid "15 Degrees  %s"
 msgstr ""
 
 #: app/tools/gimptransformoptions.c:418
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Keep Height  %s"
 msgstr "Lartësia"
 
@@ -9817,8 +9766,7 @@ msgid ""
 msgstr "Aktivo dhe j Gjerësia"
 
 #: app/tools/gimptransformoptions.c:432
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Keep Width  %s"
 msgstr "Gjerësia"
 
@@ -9846,8 +9794,7 @@ msgid "Polygonal"
 msgstr ""
 
 #: app/tools/gimpvectoroptions.c:197 app/widgets/gimpvectorstreeview.c:160
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Path to Selection\n"
 "%s  Add\n"
@@ -10056,8 +10003,7 @@ msgid "Imported Path"
 msgstr "Pozicioni"
 
 #: app/vectors/gimpvectors-import.c:291
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "No paths found in '%s'"
 msgstr "Jo në"
 
@@ -10067,8 +10013,7 @@ msgid "No paths found in the buffer"
 msgstr "Jo në"
 
 #: app/vectors/gimpvectors-import.c:304
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Failed to import paths from '%s': %s"
 msgstr "Dështoi importo"
 
@@ -10106,8 +10051,7 @@ msgid "Delete"
 msgstr "Elemino"
 
 #: app/widgets/gimpchanneltreeview.c:121
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "New Channel\n"
 "%s New Channel Dialog"
@@ -10134,8 +10078,7 @@ msgid "Reorder Channel"
 msgstr "Kanali"
 
 #: app/widgets/gimpchanneltreeview.c:143
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Channel to Selection\n"
 "%s  Add\n"
@@ -10179,8 +10122,7 @@ msgid "Reset the selected filter to default values"
 msgstr "Nga fillimi filtro prezgjedhur"
 
 #: app/widgets/gimpcolordisplayeditor.c:545
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Configure Selected Filter: %s"
 msgstr "Konfiguro I zgjedhur Filtri"
 
@@ -10280,8 +10222,7 @@ msgid "Edit Color"
 msgstr "Ndrysho Ngjyra"
 
 #: app/widgets/gimpcolormapeditor.c:232
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Add Color from FG\n"
 "%s  from BG"
@@ -10343,8 +10284,7 @@ msgid "Refresh"
 msgstr "Rifresko"
 
 #: app/widgets/gimpdatafactoryview.c:408
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Are you sure you want to delete '%s' from the list and from disk?"
 msgstr "elemino lista dhe disk?"
 
@@ -10359,20 +10299,17 @@ msgid "Save device status"
 msgstr "Ruaj periferik gjendja"
 
 #: app/widgets/gimpdevicestatus.c:395
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "Plani i parë"
 
 #: app/widgets/gimpdevicestatus.c:400
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Background: %d, %d, %d"
 msgstr "Sfondi"
 
 #: app/widgets/gimpdnd.c:1292
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
 "\n"
@@ -10394,8 +10331,7 @@ msgid "Close this Tab"
 msgstr "Mbyll Tab"
 
 #: app/widgets/gimpdocumentview.c:168
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Open the selected entry\n"
 "%s  Raise window if already open\n"
@@ -10408,8 +10344,7 @@ msgid "Remove selected entry"
 msgstr "Hiq"
 
 #: app/widgets/gimpdocumentview.c:192
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Recreate preview\n"
 "%s  Reload all previews\n"
@@ -10422,16 +10357,14 @@ msgid "Clear Errors"
 msgstr "Pastro"
 
 #: app/widgets/gimperrorconsole.c:182
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Save all Errors\n"
 "%s  Save Selection"
 msgstr "Ruaj j Ruaj Zgjedhja"
 
 #: app/widgets/gimperrorconsole.c:271 app/widgets/gimpwidgets-utils.c:199
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s Message"
 msgstr "Mesazh"
 
@@ -10446,8 +10379,7 @@ msgid "Save Error Log to File"
 msgstr "Ruaj Gabim Log File"
 
 #: app/widgets/gimperrorconsole.c:399
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Error writing file '%s':\n"
 "%s"
@@ -10481,8 +10413,7 @@ msgid "Instant update"
 msgstr ""
 
 #: app/widgets/gimpgradienteditor.c:516
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Zoom factor: %d:1"
 msgstr "Shkalla e zmadhimit"
 
@@ -10492,8 +10423,7 @@ msgid "Displaying [%0.6f, %0.6f]"
 msgstr ""
 
 #: app/widgets/gimpgradienteditor.c:794
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Position: %0.6f"
 msgstr "Pozicioni"
 
@@ -10553,8 +10483,7 @@ msgid "Click: select    Drag: move"
 msgstr "zgjidh"
 
 #: app/widgets/gimpgradienteditor.c:1355 app/widgets/gimpgradienteditor.c:1364
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Handle position: %0.6f"
 msgstr "Handle"
 
@@ -10600,28 +10529,28 @@ msgstr "Gjerësia"
 msgid "Height"
 msgstr "Lartësia"
 
-#: app/widgets/gimphelp.c:198
+#: app/widgets/gimphelp.c:196
 #, fuzzy
 msgid "Could not find GIMP Help Browser"
 msgstr "nuk gjej Shfletuesi"
 
-#: app/widgets/gimphelp.c:200
+#: app/widgets/gimphelp.c:198
 #, fuzzy
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
 msgstr "nuk gjej Shfletuesi nuk instaluar."
 
-#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
+#: app/widgets/gimphelp.c:202 app/widgets/gimphelp.c:235
 msgid "Use web browser instead"
 msgstr ""
 
-#: app/widgets/gimphelp.c:234
+#: app/widgets/gimphelp.c:232
 #, fuzzy
 msgid "Could not start GIMP Help Browser"
 msgstr "nuk nisje Shfletuesi"
 
-#: app/widgets/gimphelp.c:236
+#: app/widgets/gimphelp.c:234
 #, fuzzy
 msgid "Could not start the GIMP Help Browser."
 msgstr "nuk nisje Shfletuesi."
@@ -10662,7 +10591,8 @@ msgstr "Automatike"
 
 #: app/widgets/gimpimagedock.c:222
 #, fuzzy
-msgid "When enabled the dialog automatically follows the image you are working on."
+msgid ""
+"When enabled the dialog automatically follows the image you are working on."
 msgstr "Kur aktiv dialog figurë në."
 
 #: app/widgets/gimpimageview.c:139
@@ -10686,16 +10616,14 @@ msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr ""
 
 #: app/widgets/gimpitemtreeview.c:362
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "%s\n"
 "%s  To Top"
 msgstr "j Për Sipër"
 
 #: app/widgets/gimpitemtreeview.c:376
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "%s\n"
 "%s  To Bottom"
@@ -10711,8 +10639,7 @@ msgid "Set Item Exclusive Linked"
 msgstr ""
 
 #: app/widgets/gimplayertreeview.c:207
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "New Layer\n"
 "%s  New Layer Dialog"
@@ -10746,8 +10673,7 @@ msgid "Columns:"
 msgstr "Kollonat:"
 
 #: app/widgets/gimppaletteeditor.c:311
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "New Color from FG\n"
 "%s  from BG"
@@ -10769,8 +10695,7 @@ msgid "Edit Color Palette Entry"
 msgstr "Ndrysho Ngjyra"
 
 #: app/widgets/gimppropwidgets.c:1241
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "tekst është."
 
@@ -10780,8 +10705,7 @@ msgid "Save Selection to Channel"
 msgstr "Ruaj Zgjedhja Kanali"
 
 #: app/widgets/gimpselectioneditor.c:195 app/widgets/gimpvectorstreeview.c:180
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Selection to Path\n"
 "%s  Advanced Options"
@@ -10865,9 +10789,9 @@ msgid "Delete the selected template"
 msgstr "Elemino"
 
 #: app/widgets/gimptemplateview.c:388
-#, c-format
-#, fuzzy
-msgid "Are you sure you want to delete template '%s' from the list and from disk?"
+#, fuzzy, c-format
+msgid ""
+"Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr "elemino lista dhe disk?"
 
 #: app/widgets/gimptemplateview.c:392
@@ -10891,14 +10815,12 @@ msgid "Open Text File (UTF-8)"
 msgstr "Hap Teksti File"
 
 #: app/widgets/gimptexteditor.c:454
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "E pavlefshme në."
 
 #: app/widgets/gimpthumbbox.c:189
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Click to update preview\n"
 "%s  Click to force update even if preview is up-to-date"
@@ -10910,8 +10832,7 @@ msgid "No Selection"
 msgstr "Jo Zgjedhja"
 
 #: app/widgets/gimpthumbbox.c:382 app/widgets/gimpthumbbox.c:402
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Thumbnail %d of %d"
 msgstr "nga"
 
@@ -10969,16 +10890,14 @@ msgid "Delete saved options..."
 msgstr "Elemino."
 
 #: app/widgets/gimptooloptionseditor.c:168
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Reset to default values\n"
 "%s  Reset all Tool Options"
 msgstr "Nga fillimi prezgjedhur j Nga fillimi Mundësitë"
 
 #: app/widgets/gimptooloptionseditor.c:268
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s Options"
 msgstr "Mundësitë"
 
@@ -11002,8 +10921,7 @@ msgid "[ Base Image ]"
 msgstr "Bazë"
 
 #: app/widgets/gimpvectorstreeview.c:131
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "New Path\n"
 "%s New Path Dialog"
@@ -11134,8 +11052,7 @@ msgid "Saturation"
 msgstr ""
 
 #: app/widgets/gimpwidgets-utils.c:114
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Message repeated %d times."
 msgstr "Mesazh."
 
@@ -11261,26 +11178,22 @@ msgstr "E pavlefshme në"
 
 #: app/xcf/xcf-save.c:157 app/xcf/xcf-save.c:167 app/xcf/xcf-save.c:177
 #: app/xcf/xcf-save.c:187 app/xcf/xcf-save.c:211 app/xcf/xcf.c:324
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Gabim"
 
 #: app/xcf/xcf-write.c:86
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error writing XCF: %s"
 msgstr "Gabim"
 
 #: app/xcf/xcf-seek.c:44 app/xcf/xcf-seek.c:61 app/xcf/xcf-seek.c:72
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not seek in XCF file: %s"
 msgstr "nuk në"
 
 #: app/xcf/xcf.c:264
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "gabim versioni"
 
@@ -11288,4 +11201,3 @@ msgstr "gabim versioni"
 #, fuzzy
 msgid "Create and edit images or photographs"
 msgstr "Krijo dhe ndrysho"
-

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-02 11:36+0200\n"
+"POT-Creation-Date: 2004-09-25 00:02+0200\n"
 "PO-Revision-Date: 2004-09-03 18:18+0200\n"
 "Last-Translator: Laurent Dhima <laurenti@alblinux.net>\n"
 "Language-Team: Albanian <gnome-albanian-perkthyesit@lists.sourceforge.net>\n"
@@ -17,8 +17,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:533 plug-ins/gfig/gfig.c:2903
 #: plug-ins/gflare/gflare.c:898
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "No %s in gimprc:\n"
 "You need to add an entry like\n"
@@ -343,8 +342,8 @@ msgstr "Kosinus"
 #: plug-ins/FractalExplorer/Dialogs.c:1039
 #: plug-ins/FractalExplorer/Dialogs.c:1080 plug-ins/Lighting/lighting_ui.c:507
 #: plug-ins/common/CML_explorer.c:169 plug-ins/common/align_layers.c:426
-#: plug-ins/common/align_layers.c:454 plug-ins/common/postscript.c:2841
-#: plug-ins/common/postscript.c:2853 plug-ins/common/psp.c:418
+#: plug-ins/common/align_layers.c:454 plug-ins/common/postscript.c:2846
+#: plug-ins/common/postscript.c:2858 plug-ins/common/psp.c:418
 #: plug-ins/fits/fits.c:1013
 msgid "None"
 msgstr "Asnjë"
@@ -448,7 +447,7 @@ msgstr ""
 #: plug-ins/common/mng.c:542 plug-ins/common/mng.c:874
 #: plug-ins/common/pat.c:428 plug-ins/common/pcx.c:584
 #: plug-ins/common/pix.c:516 plug-ins/common/png.c:1174
-#: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:995
+#: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:996
 #: plug-ins/common/psd_save.c:1555 plug-ins/common/spheredesigner.c:2082
 #: plug-ins/common/sunras.c:512 plug-ins/common/tga.c:1028
 #: plug-ins/common/tiff.c:1804 plug-ins/common/xbm.c:995
@@ -456,14 +455,12 @@ msgstr ""
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
 #: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2601
 #: plug-ins/xjt/xjt.c:1272 plug-ins/xjt/xjt.c:1711
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "nuk hap për"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1841
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not write '%s': %s"
 msgstr "nuk"
 
@@ -499,7 +496,7 @@ msgstr "Ruaj Parametrat"
 #: plug-ins/common/mng.c:1043 plug-ins/common/pat.c:295
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:333
 #: plug-ins/common/png.c:670 plug-ins/common/pnm.c:394
-#: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
+#: plug-ins/common/postscript.c:873 plug-ins/common/psd.c:1756
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
 #: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:243
 #: plug-ins/common/svg.c:626 plug-ins/common/tga.c:413
@@ -508,20 +505,17 @@ msgstr "Ruaj Parametrat"
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
 #: plug-ins/help/domain.c:380 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "nuk hap për"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2136
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "është nuk a"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2142
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "është Linja"
 
@@ -536,8 +530,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3827
 #: plug-ins/gflare/gflare.c:3109
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "elemino lista dhe disk?"
 
@@ -563,14 +556,12 @@ msgid "New Fractal"
 msgstr "E re"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1170
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "File është nuk a"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1179
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
@@ -1164,7 +1155,7 @@ msgid "Object Z position in XYZ space"
 msgstr "Z në hapësirë"
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1080 plug-ins/common/postscript.c:3005
+#: plug-ins/MapObject/mapobject_ui.c:1080 plug-ins/common/postscript.c:3010
 msgid "Rotation"
 msgstr ""
 
@@ -1329,8 +1320,8 @@ msgstr ""
 #: plug-ins/common/hrz.c:339 plug-ins/common/jpeg.c:819
 #: plug-ins/common/pat.c:300 plug-ins/common/pcx.c:306
 #: plug-ins/common/pix.c:339 plug-ins/common/png.c:677
-#: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
-#: plug-ins/common/psd.c:1773 plug-ins/common/sunras.c:435
+#: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:879
+#: plug-ins/common/psd.c:1761 plug-ins/common/sunras.c:435
 #: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:513
 #: plug-ins/common/wmf.c:401 plug-ins/common/xbm.c:723
 #: plug-ins/common/xpm.c:329 plug-ins/common/xwd.c:434
@@ -1343,8 +1334,7 @@ msgstr ""
 #: plug-ins/bmp/bmpread.c:170 plug-ins/bmp/bmpread.c:179
 #: plug-ins/bmp/bmpread.c:185 plug-ins/bmp/bmpread.c:193
 #: plug-ins/bmp/bmpread.c:207 plug-ins/bmp/bmpread.c:339
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "është nuk a"
 
@@ -1352,8 +1342,7 @@ msgstr "është nuk a"
 #: plug-ins/bmp/bmpread.c:260 plug-ins/bmp/bmpread.c:279
 #: plug-ins/bmp/bmpread.c:298 plug-ins/bmp/bmpread.c:304
 #: plug-ins/bmp/bmpread.c:310
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr "Gabim titull"
 
@@ -1374,7 +1363,7 @@ msgstr "I pavlefshëm."
 #: plug-ins/common/jpeg.c:979 plug-ins/common/pcx.c:333
 #: plug-ins/common/pcx.c:339 plug-ins/common/pix.c:375
 #: plug-ins/common/png.c:804 plug-ins/common/pnm.c:479
-#: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:253
+#: plug-ins/common/psd.c:2170 plug-ins/common/smooth_palette.c:253
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
 #: plug-ins/common/tiff.c:831 plug-ins/common/tile.c:264
 #: plug-ins/common/winclipboard.c:573 plug-ins/common/xbm.c:866
@@ -1391,7 +1380,7 @@ msgid "Cannot save images with alpha channel."
 msgstr "ruaj me."
 
 #: plug-ins/bmp/bmpwrite.c:182 plug-ins/common/dicom.c:631
-#: plug-ins/common/postscript.c:986 plug-ins/common/xwd.c:524
+#: plug-ins/common/postscript.c:987 plug-ins/common/xwd.c:524
 #: plug-ins/fits/fits.c:441 plug-ins/xjt/xjt.c:1686
 #, fuzzy
 msgid "Cannot operate on unknown image types."
@@ -1406,14 +1395,13 @@ msgstr "në nuk njihet figurë."
 #: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1316
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:544
 #: plug-ins/common/pix.c:522 plug-ins/common/png.c:1181
-#: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
+#: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1001
 #: plug-ins/common/psd_save.c:1560 plug-ins/common/sunras.c:517
 #: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1809
 #: plug-ins/common/xbm.c:1000 plug-ins/common/xpm.c:619
 #: plug-ins/common/xwd.c:538 plug-ins/fits/fits.c:457 plug-ins/gfli/gfli.c:683
 #: plug-ins/sgi/sgi.c:544 plug-ins/xjt/xjt.c:1691
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Saving '%s'..."
 msgstr "Duke ruajtur."
 
@@ -1525,7 +1513,8 @@ msgstr "për jeshile komponenti."
 
 #: plug-ins/common/AlienMap.c:1256
 #, fuzzy
-msgid "Green channel: use linear mapping instead of any trigonometrical function"
+msgid ""
+"Green channel: use linear mapping instead of any trigonometrical function"
 msgstr "nga çdo"
 
 #: plug-ins/common/AlienMap.c:1275
@@ -1540,7 +1529,8 @@ msgstr "për blu komponenti."
 
 #: plug-ins/common/AlienMap.c:1279
 #, fuzzy
-msgid "Blue channel: use linear mapping instead of any trigonometrical function"
+msgid ""
+"Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr "Blu nga çdo"
 
 #: plug-ins/common/AlienMap.c:1360
@@ -2160,8 +2150,7 @@ msgid "Save Parameters to"
 msgstr "Ruaj Parametrat"
 
 #: plug-ins/common/CML_explorer.c:2191
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Parameters were Saved to '%s'"
 msgstr "Parametrat"
 
@@ -2171,8 +2160,7 @@ msgid "CML File Operation Warning"
 msgstr "File Veprimi Kujdes"
 
 #: plug-ins/common/CML_explorer.c:2223 plug-ins/common/channel_mixer.c:1256
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "File '%s' exists.\n"
 "Overwrite it?"
@@ -2194,14 +2182,12 @@ msgid "Error: it's not CML parameter file."
 msgstr "Gabim nuk."
 
 #: plug-ins/common/CML_explorer.c:2370
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Warning: '%s' is an old format file."
 msgstr "Kujdes është."
 
 #: plug-ins/common/CML_explorer.c:2373
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
 msgstr "Kujdes është a për e(i) freskët."
 
@@ -2420,8 +2406,7 @@ msgid "Step"
 msgstr ""
 
 #: plug-ins/common/animationplay.c:1241
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Frame %d of %d"
 msgstr "Korniza nga"
 
@@ -2773,8 +2758,7 @@ msgstr "Rezultatet"
 
 #. output results
 #: plug-ins/common/ccanalyze.c:592 plug-ins/imagemap/imap_cmd_guides.c:228
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Image dimensions: %d x %d"
 msgstr "x"
 
@@ -2789,32 +2773,27 @@ msgid "Only one unique color"
 msgstr "Vetëm"
 
 #: plug-ins/common/ccanalyze.c:599
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Number of unique colors: %d"
 msgstr "Numri nga"
 
 #: plug-ins/common/ccanalyze.c:602
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Uncompressed size: %s"
 msgstr "madhësia"
 
 #: plug-ins/common/ccanalyze.c:609
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Filename: %s"
 msgstr "Emri i file"
 
 #: plug-ins/common/ccanalyze.c:610
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Compressed size: %s"
 msgstr "madhësia"
 
 #: plug-ins/common/ccanalyze.c:611
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Compression ratio (approx.): %d to 1"
 msgstr "Kompresim"
 
@@ -2858,8 +2837,7 @@ msgid "Save Channel Mixer Settings"
 msgstr "Ruaj Kanali Kontrolli i volumit Rregullimet"
 
 #: plug-ins/common/channel_mixer.c:1223
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "Parametrat"
 
@@ -2914,7 +2892,7 @@ msgid "Colorify"
 msgstr ""
 
 #: plug-ins/common/colorify.c:258 plug-ins/common/colortoalpha.c:325
-#: plug-ins/common/postscript.c:2826 plug-ins/common/xpm.c:457
+#: plug-ins/common/postscript.c:2831 plug-ins/common/xpm.c:457
 #: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:107
 #: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1417
 msgid "Color"
@@ -3079,8 +3057,7 @@ msgid "<Image>/Filters/Colors/C_ompose..."
 msgstr "<Image> Filtrat Ngjyrat C."
 
 #: plug-ins/common/compose.c:360
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not get layers for image %d"
 msgstr "nuk merr për figurë"
 
@@ -3104,8 +3081,7 @@ msgid "Error in getting layer IDs"
 msgstr "Gabim në niveli"
 
 #: plug-ins/common/compose.c:529
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "është nuk a jeshile figurë"
 
@@ -3791,7 +3767,7 @@ msgid "Create _Histogram"
 msgstr "Krijo"
 
 #: plug-ins/common/destripe.c:664 plug-ins/common/gtm.c:583
-#: plug-ins/common/postscript.c:2782 plug-ins/common/postscript.c:2941
+#: plug-ins/common/postscript.c:2787 plug-ins/common/postscript.c:2946
 #: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:411
 #: plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
@@ -3799,8 +3775,7 @@ msgid "_Width:"
 msgstr "_Gjerësia:"
 
 #: plug-ins/common/dicom.c:317
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "është nuk a."
 
@@ -3997,8 +3972,8 @@ msgid "_Limit Line Width"
 msgstr "Kufiri Linja Gjerësia"
 
 #: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1229
-#: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2791
-#: plug-ins/common/postscript.c:2950 plug-ins/common/smooth_palette.c:436
+#: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2796
+#: plug-ins/common/postscript.c:2955 plug-ins/common/smooth_palette.c:436
 #: plug-ins/common/tile.c:415 plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
@@ -4338,14 +4313,12 @@ msgid "Unsupported brush format"
 msgstr ""
 
 #: plug-ins/common/gbr.c:387
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "Gabim në"
 
 #: plug-ins/common/gbr.c:395
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "E pavlefshme në."
 
@@ -4436,7 +4409,8 @@ msgstr "komente në ASCII Jo komenti është."
 
 #: plug-ins/common/gif.c:971
 #, fuzzy
-msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid ""
+"Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr "ruaj i pari."
 
 #: plug-ins/common/gif.c:1114
@@ -4535,8 +4509,7 @@ msgid "Error writing output file."
 msgstr "Gabim."
 
 #: plug-ins/common/gif.c:2693
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "prezgjedhur komenti është."
 
@@ -4551,27 +4524,23 @@ msgid "Non-square pixels.  Image might look squashed."
 msgstr "pixels."
 
 #: plug-ins/common/gifload.c:866
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Background (%d%s)"
 msgstr "Sfondi"
 
 #: plug-ins/common/gifload.c:914 plug-ins/common/iwarp.c:787
 #: plug-ins/common/iwarp.c:819
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Frame %d"
 msgstr "Korniza"
 
 #: plug-ins/common/gifload.c:916
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Korniza"
 
 #: plug-ins/common/gifload.c:946
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
 "play or re-save perfectly."
@@ -4945,8 +4914,7 @@ msgid "_Blacken"
 msgstr ""
 
 #: plug-ins/common/hrz.c:348
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "'%s' is not a HRZ file"
 msgstr "është nuk a"
 
@@ -4997,8 +4965,7 @@ msgid "Warping..."
 msgstr ""
 
 #: plug-ins/common/iwarp.c:794 plug-ins/common/iwarp.c:807
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Warping Frame No. %d..."
 msgstr "Korniza Jo."
 
@@ -5191,8 +5158,7 @@ msgid "JPEG preview"
 msgstr ""
 
 #: plug-ins/common/jpeg.c:1235
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Size: %ld bytes (%02.01f kB)"
 msgstr "Madhësia bytes"
 
@@ -5972,8 +5938,7 @@ msgid "_Alpha:"
 msgstr "Alfa:"
 
 #: plug-ins/common/noisify.c:385
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Channel #%d:"
 msgstr "Kanali:"
 
@@ -6141,8 +6106,7 @@ msgid "<Image>/Filters/Map/_Paper Tile..."
 msgstr "<Image> Filtrat Letra."
 
 #: plug-ins/common/pat.c:338
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "E pavlefshme në."
 
@@ -6152,14 +6116,12 @@ msgid "Save as Pattern"
 msgstr "Ruaj Motivi"
 
 #: plug-ins/common/pcx.c:313
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not read header from '%s'"
 msgstr "nuk titull"
 
 #: plug-ins/common/pcx.c:320
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "'%s' is not a PCX file"
 msgstr "është nuk a"
 
@@ -6249,8 +6211,7 @@ msgstr "Hollësi"
 
 #. Number of plugins
 #: plug-ins/common/plugindetails.c:334
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Number of Plugin Interfaces: %d"
 msgstr "Numri nga Plugin"
 
@@ -6328,15 +6289,13 @@ msgid "Search:"
 msgstr "Kërko:"
 
 #: plug-ins/common/png.c:653
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Gabim File?"
 
 #. Aie! Unknown type
 #: plug-ins/common/png.c:787
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Nuk njihet në."
 
@@ -6348,8 +6307,7 @@ msgid ""
 msgstr "niveli figurë."
 
 #: plug-ins/common/png.c:1159
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Gabim nuk ruaj figurë."
 
@@ -6534,121 +6492,119 @@ msgid ""
 "checked the image will be mapped onto a circle."
 msgstr "figurë a figurë a."
 
-#: plug-ins/common/postscript.c:887
-#, c-format
-#, fuzzy
+#: plug-ins/common/postscript.c:888
+#, fuzzy, c-format
 msgid "Could not interpret '%s'"
 msgstr "nuk"
 
-#: plug-ins/common/postscript.c:975
+#: plug-ins/common/postscript.c:976
 #, fuzzy
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "PostScript ruaj me"
 
-#: plug-ins/common/postscript.c:1470 plug-ins/common/postscript.c:1500
-#, c-format
-#, fuzzy
+#: plug-ins/common/postscript.c:1475 plug-ins/common/postscript.c:1505
+#, fuzzy, c-format
 msgid "Error starting ghostscript (%s)"
 msgstr "Gabim"
 
-#: plug-ins/common/postscript.c:2300 plug-ins/common/postscript.c:2432
-#: plug-ins/common/postscript.c:2582 plug-ins/common/postscript.c:2710
+#: plug-ins/common/postscript.c:2305 plug-ins/common/postscript.c:2437
+#: plug-ins/common/postscript.c:2587 plug-ins/common/postscript.c:2715
 #: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
 #: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
 #, fuzzy
 msgid "Write error occurred"
 msgstr "Shkrim gabim"
 
-#: plug-ins/common/postscript.c:2736
+#: plug-ins/common/postscript.c:2741
 #, fuzzy
 msgid "Load PostScript"
 msgstr "Ngarko PostScript"
 
 #. Rendering
-#: plug-ins/common/postscript.c:2756
+#: plug-ins/common/postscript.c:2761
 msgid "Rendering"
 msgstr ""
 
 #. Resolution
-#: plug-ins/common/postscript.c:2773 plug-ins/common/svg.c:820
+#: plug-ins/common/postscript.c:2778 plug-ins/common/svg.c:820
 #: plug-ins/print/gimp_main_window.c:1100
 msgid "Resolution:"
 msgstr "Thellësia e ngjyrave:"
 
-#: plug-ins/common/postscript.c:2801
+#: plug-ins/common/postscript.c:2806
 #, fuzzy
 msgid "Pages:"
 msgstr "Faqe:"
 
-#: plug-ins/common/postscript.c:2807
+#: plug-ins/common/postscript.c:2812
 #, fuzzy
 msgid "Try Bounding Box"
 msgstr "Kuti"
 
 #. Colouring
-#: plug-ins/common/postscript.c:2820
+#: plug-ins/common/postscript.c:2825
 msgid "Coloring"
 msgstr ""
 
-#: plug-ins/common/postscript.c:2824
+#: plug-ins/common/postscript.c:2829
 #, fuzzy
 msgid "B/W"
 msgstr "B W"
 
 #. * Gray *
-#: plug-ins/common/postscript.c:2825 plug-ins/rcm/rcm_dialog.c:409
+#: plug-ins/common/postscript.c:2830 plug-ins/rcm/rcm_dialog.c:409
 msgid "Gray"
 msgstr "Gri"
 
-#: plug-ins/common/postscript.c:2827 plug-ins/fits/fits.c:1001
+#: plug-ins/common/postscript.c:2832 plug-ins/fits/fits.c:1001
 msgid "Automatic"
 msgstr "Në menyrë automatike"
 
-#: plug-ins/common/postscript.c:2837
+#: plug-ins/common/postscript.c:2842
 #, fuzzy
 msgid "Text Antialiasing"
 msgstr "Teksti Antialiasing"
 
-#: plug-ins/common/postscript.c:2842 plug-ins/common/postscript.c:2854
+#: plug-ins/common/postscript.c:2847 plug-ins/common/postscript.c:2859
 msgid "Weak"
 msgstr ""
 
-#: plug-ins/common/postscript.c:2843 plug-ins/common/postscript.c:2855
+#: plug-ins/common/postscript.c:2848 plug-ins/common/postscript.c:2860
 msgid "Strong"
 msgstr ""
 
-#: plug-ins/common/postscript.c:2849
+#: plug-ins/common/postscript.c:2854
 #, fuzzy
 msgid "Graphic Antialiasing"
 msgstr "Antialiasing"
 
-#: plug-ins/common/postscript.c:2901
+#: plug-ins/common/postscript.c:2906
 #, fuzzy
 msgid "Save as PostScript"
 msgstr "Ruaj PostScript"
 
 #. Image Size
-#: plug-ins/common/postscript.c:2924
+#: plug-ins/common/postscript.c:2929
 #, fuzzy
 msgid "Image Size"
 msgstr "Madhësia"
 
-#: plug-ins/common/postscript.c:2959
+#: plug-ins/common/postscript.c:2964
 #, fuzzy
 msgid "_X-Offset:"
 msgstr "X:"
 
-#: plug-ins/common/postscript.c:2968
+#: plug-ins/common/postscript.c:2973
 #, fuzzy
 msgid "_Y-Offset:"
 msgstr "Y:"
 
-#: plug-ins/common/postscript.c:2974
+#: plug-ins/common/postscript.c:2979
 #, fuzzy
 msgid "_Keep Aspect Ratio"
 msgstr "Përpjestimi"
 
-#: plug-ins/common/postscript.c:2980
+#: plug-ins/common/postscript.c:2985
 #, fuzzy
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
@@ -6656,41 +6612,41 @@ msgid ""
 msgstr "Kur figurë madhësia."
 
 #. Unit
-#: plug-ins/common/postscript.c:2989
+#: plug-ins/common/postscript.c:2994
 msgid "Unit"
 msgstr "Njësia"
 
-#: plug-ins/common/postscript.c:2993
+#: plug-ins/common/postscript.c:2998
 #, fuzzy
 msgid "_Inch"
 msgstr "Inch"
 
-#: plug-ins/common/postscript.c:2994
+#: plug-ins/common/postscript.c:2999
 #, fuzzy
 msgid "_Millimeter"
 msgstr "Milimetër"
 
 #. Format
-#: plug-ins/common/postscript.c:3020
+#: plug-ins/common/postscript.c:3025
 msgid "Output"
 msgstr "Rezultati"
 
-#: plug-ins/common/postscript.c:3027
+#: plug-ins/common/postscript.c:3032
 #, fuzzy
 msgid "_PostScript Level 2"
 msgstr "PostScript Etiketa 2"
 
-#: plug-ins/common/postscript.c:3036
+#: plug-ins/common/postscript.c:3041
 #, fuzzy
 msgid "_Encapsulated PostScript"
 msgstr "PostScript"
 
-#: plug-ins/common/postscript.c:3045
+#: plug-ins/common/postscript.c:3050
 #, fuzzy
 msgid "P_review"
 msgstr "P"
 
-#: plug-ins/common/postscript.c:3066
+#: plug-ins/common/postscript.c:3071
 #, fuzzy
 msgid "Preview _Size:"
 msgstr "Shikoje Madhësia:"
@@ -7699,8 +7655,7 @@ msgid "Bottom-_Right"
 msgstr "Poshtë Djathtas"
 
 #: plug-ins/common/sunras.c:391
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not open '%s' as SUN-raster-file"
 msgstr "nuk hap"
 
@@ -7710,8 +7665,7 @@ msgid "The type of this SUN-rasterfile is not supported"
 msgstr "lloji nga është nuk"
 
 #: plug-ins/common/sunras.c:422
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not read color entries from '%s'"
 msgstr "nuk"
 
@@ -7803,8 +7757,7 @@ msgid "Constrain aspect ratio"
 msgstr ""
 
 #: plug-ins/common/svg.c:826
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "pixels/%a"
 msgstr "pixels a"
 
@@ -7816,7 +7769,8 @@ msgstr "Shtigjet"
 
 #: plug-ins/common/svg.c:852
 #, fuzzy
-msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid ""
+"Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr "shtegu nga me shtegu"
 
 #: plug-ins/common/svg.c:865
@@ -7825,8 +7779,7 @@ msgid "Merge Imported Paths"
 msgstr "Shtigjet"
 
 #: plug-ins/common/tga.c:426
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "fund'faqe"
 
@@ -8045,7 +7998,8 @@ msgstr "ID"
 
 #: plug-ins/common/uniteditor.c:85
 #, fuzzy
-msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgid ""
+"This string will be used to identify a unit in GIMP's configuration files."
 msgstr "a në."
 
 #: plug-ins/common/uniteditor.c:87
@@ -8507,8 +8461,7 @@ msgid "Finding XY gradient..."
 msgstr ""
 
 #: plug-ins/common/warp.c:1219
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Flow Step %d..."
 msgstr "Fluksi."
 
@@ -8549,16 +8502,14 @@ msgid ""
 msgstr "Web nuk a Preferimet Dialogu."
 
 #: plug-ins/common/webbrowser.c:161
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Could not parse specified web browser command:\n"
 "%s"
 msgstr "nuk j"
 
 #: plug-ins/common/webbrowser.c:174
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Could not execute specified web browser:\n"
 "%s"
@@ -8741,8 +8692,7 @@ msgid "SetStretchBltMode failed (warning only)"
 msgstr ""
 
 #: plug-ins/common/winprint.c:555
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, "
 "error = %d, y = %d"
@@ -8774,8 +8724,7 @@ msgid "Scale (log 2):"
 msgstr "Shkalla:"
 
 #: plug-ins/common/wmf.c:396 plug-ins/sgi/sgi.c:317
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not open '%s' for reading."
 msgstr "nuk hap për."
 
@@ -8789,32 +8738,28 @@ msgid "Created with The GIMP"
 msgstr "Krijuar me"
 
 #: plug-ins/common/xbm.c:803
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "'%s':\n"
 "Could not read header (ftell == %ld)"
 msgstr "nuk titull"
 
 #: plug-ins/common/xbm.c:810
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "'%s':\n"
 "No image width specified"
 msgstr "figurë gjerësia"
 
 #: plug-ins/common/xbm.c:817
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "'%s':\n"
 "No image height specified"
 msgstr "figurë lartësia"
 
 #: plug-ins/common/xbm.c:824
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "'%s':\n"
 "No image data type specified"
@@ -8828,7 +8773,8 @@ msgid ""
 "colors.\n"
 "\n"
 "Please convert it to a black and white (1-bit) indexed image and try again."
-msgstr "figurë ruaj përmban tjetër dy j konvertoje a e zezë dhe e bardhë figurë dhe."
+msgstr ""
+"figurë ruaj përmban tjetër dy j konvertoje a e zezë dhe e bardhë figurë dhe."
 
 #: plug-ins/common/xbm.c:970
 #, fuzzy
@@ -8887,8 +8833,7 @@ msgid "_Mask File Extension:"
 msgstr "Maska File Prapashtesa:"
 
 #: plug-ins/common/xpm.c:341
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error opening file '%s'"
 msgstr "Gabim"
 
@@ -8908,8 +8853,7 @@ msgid "_Alpha Threshold:"
 msgstr "Alfa:"
 
 #: plug-ins/common/xwd.c:391
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not read XWD header from '%s'"
 msgstr "nuk titull"
 
@@ -8918,8 +8862,7 @@ msgid "can't read color entries"
 msgstr ""
 
 #: plug-ins/common/xwd.c:485
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "load_image (xwd): XWD-file %s has format %d, depth %d\n"
 "and bits per pixel %d.\n"
@@ -9094,8 +9037,7 @@ msgid "Flame works only on RGB drawables."
 msgstr "Flame në."
 
 #: plug-ins/flame/flame.c:395
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "'%s' is not a regular file"
 msgstr "është nuk a i rregullt"
 
@@ -9876,8 +9818,7 @@ msgid "Select"
 msgstr "Zgjidh"
 
 #: plug-ins/gfig/gfig.c:3096
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%d unsaved Gfig objects. Continue with exiting?"
 msgstr "Vazhdo me?"
 
@@ -9950,8 +9891,7 @@ msgstr "Duke ndryshuar nuk ruaj"
 
 #. Create new entry with name + copy at end & copy object into it
 #: plug-ins/gfig/gfig.c:3982
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s copy"
 msgstr "kopjo"
 
@@ -10056,26 +9996,22 @@ msgid "Gradient Flare..."
 msgstr "Shkallëzimi."
 
 #: plug-ins/gflare/gflare.c:1269
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Failed to open GFlare file '%s': %s"
 msgstr "Dështoi hap"
 
 #: plug-ins/gflare/gflare.c:1277
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "'%s' is not a valid GFlare file."
 msgstr "është nuk a."
 
 #: plug-ins/gflare/gflare.c:1331
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "invalid formatted GFlare file: %s\n"
 msgstr "I pavlefshëm j"
 
 #: plug-ins/gflare/gflare.c:1456
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "GFlare '%s' is not saved. If you add a new entry in '%s', like:\n"
 "(gflare-path \"%s\")\n"
@@ -10083,8 +10019,7 @@ msgid ""
 msgstr "është nuk shto a i ri në j shtegu a kartelë ruaj kartelë."
 
 #: plug-ins/gflare/gflare.c:1489
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "Dështoi"
 
@@ -10168,8 +10103,7 @@ msgid "Enter a name for the new GFlare"
 msgstr "Shto a emri për i ri"
 
 #: plug-ins/gflare/gflare.c:3003
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "The name '%s' is used already!"
 msgstr "emri është!"
 
@@ -10184,8 +10118,7 @@ msgid "Enter a name for the copied GFlare"
 msgstr "Shto a emri për"
 
 #: plug-ins/gflare/gflare.c:3077
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "The name `%s' is used already!"
 msgstr "emri është!"
 
@@ -10200,8 +10133,7 @@ msgid "Delete GFlare"
 msgstr "Elemino"
 
 #: plug-ins/gflare/gflare.c:3170
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "not found %s in gflares_list"
 msgstr "nuk në lista"
 
@@ -10351,14 +10283,12 @@ msgid "none"
 msgstr "asnjë"
 
 #: plug-ins/gflare/gflare.c:4469
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Not found \"%s\": used \"%s\" instead"
 msgstr "Not"
 
 #: plug-ins/gfli/gfli.c:528
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Frame (%i)"
 msgstr "Korniza"
 
@@ -10552,7 +10482,8 @@ msgstr ""
 
 #: plug-ins/gimpressionist/general.c:196
 #, fuzzy
-msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid ""
+"The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "nga e"
 
 #: plug-ins/gimpressionist/general.c:201
@@ -10583,8 +10514,7 @@ msgstr ""
 
 #. don't translate the gimprc entry
 #: plug-ins/gimpressionist/gimpressionist.c:64
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "It is highly recommended to add\n"
 " (gimpressionist-path \"%s\")\n"
@@ -10909,8 +10839,7 @@ msgid "Focus the brush strokes around the center of the image"
 msgstr "Fokus nga figurë"
 
 #: plug-ins/gimpressionist/ppmtool.c:499
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Dështoi ruaj"
 
@@ -11004,12 +10933,14 @@ msgstr ""
 
 #: plug-ins/gimpressionist/size.c:111
 #, fuzzy
-msgid "Let the value (brightness) of the region determine the size of the stroke"
+msgid ""
+"Let the value (brightness) of the region determine the size of the stroke"
 msgstr "nga madhësia nga"
 
 #: plug-ins/gimpressionist/size.c:118
 #, fuzzy
-msgid "The distance from the center of the image determines the size of the stroke"
+msgid ""
+"The distance from the center of the image determines the size of the stroke"
 msgstr "nga figurë madhësia nga"
 
 #: plug-ins/gimpressionist/size.c:125
@@ -11119,14 +11050,12 @@ msgid "Please check your installation."
 msgstr ""
 
 #: plug-ins/help/domain.c:174
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Help ID '%s' unknown"
 msgstr "nuk njihet"
 
 #: plug-ins/help/domain.c:414
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Parse error in '%s':\n"
 "%s"
@@ -11345,14 +11274,12 @@ msgstr ""
 
 #. transfer the image to the drawable
 #: plug-ins/ifscompose/ifscompose.c:1414
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "Duke kopjuar figurë."
 
 #: plug-ins/ifscompose/ifscompose.c:1553
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Transformation %s"
 msgstr "Transformimi"
 
@@ -11362,8 +11289,7 @@ msgid "Open failed"
 msgstr "Hap"
 
 #: plug-ins/ifscompose/ifscompose.c:2691
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "File '%s' doesn't seem to be an IFS Compose file."
 msgstr "File Kompozo."
 
@@ -11725,8 +11651,7 @@ msgid "Area Settings"
 msgstr "Rregullimet"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:494
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Area #%d Settings"
 msgstr "Rregullimet"
 
@@ -11832,8 +11757,7 @@ msgid "Do you really want to discard your changes?"
 msgstr "Bëje?"
 
 #: plug-ins/imagemap/imap_main.c:947
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "File \"%s\" saved."
 msgstr "File."
 
@@ -11870,14 +11794,12 @@ msgid "Open Recent"
 msgstr "Hap të fundit të përdorur"
 
 #: plug-ins/imagemap/imap_menu.c:208
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "_Undo %s"
 msgstr "Anullo"
 
 #: plug-ins/imagemap/imap_menu.c:224
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "_Redo %s"
 msgstr "Përsërite"
 
@@ -12240,8 +12162,7 @@ msgid "Constructing tileable maze using Prim's Algorithm..."
 msgstr ""
 
 #: plug-ins/maze/maze.c:157
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Generates a maze using either the depth-first search method or Prim's "
 "algorithm.  Can make tileable mazes too.  See %s for more help."
@@ -12301,8 +12222,7 @@ msgid "Prim's Algorithm"
 msgstr ""
 
 #: plug-ins/maze/maze_face.c:314
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Selection is %dx%d"
 msgstr "Zgjedhja është"
 
@@ -12320,8 +12240,7 @@ msgid "Opening %s"
 msgstr "Duke hapur %s"
 
 #: plug-ins/maze/maze_face.c:597
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "See %s"
 msgstr "Shiko"
 
@@ -12474,8 +12393,7 @@ msgstr "është dhe në dhe Shpejt dhe punë për tekst dhe."
 #. * Create the main dialog
 #.
 #: plug-ins/print/gimp_main_window.c:360
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s -- Print v%s"
 msgstr "Printo"
 
@@ -12506,7 +12424,10 @@ msgid ""
 "to only horizontal or vertical motion.\n"
 "If you click another button while dragging the mouse, the image will return "
 "to its original position."
-msgstr "Pozicioni figurë në faqe dhe me primar figurë dhe me sekondë figurë me nga figurë pikë dhe me e treta figurë në nga figurë madhësia poshtë shift dhe figurë figurë."
+msgstr ""
+"Pozicioni figurë në faqe dhe me primar figurë dhe me sekondë figurë me nga "
+"figurë pikë dhe me e treta figurë në nga figurë madhësia poshtë shift dhe "
+"figurë figurë."
 
 #: plug-ins/print/gimp_main_window.c:485
 msgid "Portrait"
@@ -12723,7 +12644,13 @@ msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
 "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
-msgstr "j C nga Printo Zhvillim j sitihttp://gimp-print.sourceforge.net. j programi është dhe nga GNU Të përgjithshme Publik Liçenca nga I lirë Software versioni nga Liçenca j çdo versioni j programi është në nga A Shiko Të përgjithshme Publik Liçenca për tjetër detajet j a kopjo nga GNU Të përgjithshme Publik Liçenca me programi nuk I lirë Software Temple Boston USA j"
+msgstr ""
+"j C nga Printo Zhvillim j sitihttp://gimp-print.sourceforge.net. j programi "
+"është dhe nga GNU Të përgjithshme Publik Liçenca nga I lirë Software "
+"versioni nga Liçenca j çdo versioni j programi është në nga A Shiko Të "
+"përgjithshme Publik Liçenca për tjetër detajet j a kopjo nga GNU Të "
+"përgjithshme Publik Liçenca me programi nuk I lirë Software Temple Boston "
+"USA j"
 
 #: plug-ins/print/gimp_main_window.c:917
 #, fuzzy
@@ -13004,7 +12931,8 @@ msgstr "Përshtat Rezultati."
 
 #: plug-ins/print/gimp_main_window.c:1467
 #, fuzzy
-msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgid ""
+"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr "Përshtat dhe"
 
 #: plug-ins/print/print.c:164
@@ -13139,8 +13067,7 @@ msgid "Selection To Path Advanced Settings"
 msgstr "Zgjedhja Për Pozicioni Të detajuara Rregullimet"
 
 #: plug-ins/sgi/sgi.c:539
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not open '%s' for writing."
 msgstr "nuk hap për."
 
@@ -13206,38 +13133,32 @@ msgid "No data captured"
 msgstr "Jo"
 
 #: plug-ins/xjt/xjt.c:715
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "XJT file contains unknown layermode %d"
 msgstr "përmban nuk njihet"
 
 #: plug-ins/xjt/xjt.c:752
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
 msgstr "Kujdes"
 
 #: plug-ins/xjt/xjt.c:768
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "XJT file contains unknown pathtype %d"
 msgstr "përmban nuk njihet"
 
 #: plug-ins/xjt/xjt.c:784
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
 msgstr "Kujdes"
 
 #: plug-ins/xjt/xjt.c:803
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "XJT file contains unknown unittype %d"
 msgstr "përmban nuk njihet"
 
 #: plug-ins/xjt/xjt.c:824
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
 msgstr "Kujdes"
 
@@ -13252,20 +13173,16 @@ msgid "Clear Transparent"
 msgstr "Pastro E tejdukshme"
 
 #: plug-ins/xjt/xjt.c:1702 plug-ins/xjt/xjt.c:3332
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not create working folder '%s': %s"
 msgstr "nuk kartelë"
 
 #: plug-ins/xjt/xjt.c:3198
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error: Could not read XJT property file '%s'."
 msgstr "Gabim nuk."
 
 #: plug-ins/xjt/xjt.c:3204
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Gabim është."
-

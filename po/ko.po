@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-05 21:58+0200\n"
+"POT-Creation-Date: 2004-09-25 00:01+0200\n"
 "PO-Revision-Date: 2004-01-20 19:30+0900\n"
 "Last-Translator: Dongsu Jang <iolo@hellocity.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -366,7 +366,7 @@ msgstr ""
 msgid "Could not create temporary file for '%s': %s"
 msgstr "임시 파일 '%s' 만들기 실패: %s"
 
-#: app/config/gimpconfigwriter.c:568
+#: app/config/gimpconfigwriter.c:571
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -375,7 +375,7 @@ msgstr ""
 "임시 파일 '%s' 쓰기 오류: %s\n"
 "원래 파일은 바뀌지 않았습니다."
 
-#: app/config/gimpconfigwriter.c:576
+#: app/config/gimpconfigwriter.c:579
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -384,12 +384,12 @@ msgstr ""
 "임시 파일 '%s'에 쓰기 실패: %s\n"
 "아무 파일도 만들어 지지 않았습니다."
 
-#: app/config/gimpconfigwriter.c:587
+#: app/config/gimpconfigwriter.c:590
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "'%s' 쓰기 오류: %s"
 
-#: app/config/gimpconfigwriter.c:605
+#: app/config/gimpconfigwriter.c:608
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "'%s'을(를) 만들 수 없습니다: %s"
@@ -1240,7 +1240,7 @@ msgid "Drawable Mod"
 msgstr "Drawable 모드"
 
 #: app/core/core-enums.c:596 app/core/core-enums.c:626
-#: app/core/gimpchannel.c:1617 app/core/gimpselection.c:570
+#: app/core/gimpchannel.c:1591 app/core/gimpselection.c:567
 msgid "Selection Mask"
 msgstr "선택 마스크"
 
@@ -1284,7 +1284,7 @@ msgstr "레이어 마스크 적용"
 msgid "Floating Selection to Layer"
 msgstr "떠있는 선택을 레이어으로"
 
-#: app/core/core-enums.c:606 app/core/gimpselection.c:827
+#: app/core/core-enums.c:606 app/core/gimpselection.c:824
 msgid "Float Selection"
 msgstr "선택 띄우기"
 
@@ -1321,7 +1321,8 @@ msgstr "변형"
 msgid "Paint"
 msgstr "페인트"
 
-#: app/core/core-enums.c:614 app/core/core-enums.c:654 app/core/gimpitem.c:987
+#: app/core/core-enums.c:614 app/core/core-enums.c:654
+#: app/core/gimpitem.c:1047
 msgid "Attach Parasite"
 msgstr "기생 덧붙이기"
 
@@ -1581,7 +1582,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "브러시 파일 '%s'에 잘못된 UTF-8 문자열이 있습니다."
 
 #: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1306
-#: app/core/gimpitem.c:466 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:471 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
 msgstr "이름없음"
@@ -1611,80 +1612,80 @@ msgstr "브러시 파일 '%s'에 치명적인 해석 오류: 알 수 없는 김�
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr " 브러시 파일 '%s'에 치명적인 해석 오류: 파일 손상된 것 같습니다."
 
-#: app/core/gimpchannel.c:252 app/pdb/internal_procs.c:86
+#: app/core/gimpchannel.c:251 app/pdb/internal_procs.c:86
 msgid "Channel"
 msgstr "채널"
 
-#: app/core/gimpchannel.c:253
+#: app/core/gimpchannel.c:252
 msgid "Rename Channel"
 msgstr "채널 이름 바꾸기"
 
-#: app/core/gimpchannel.c:254 app/tools/gimpeditselectiontool.c:251
+#: app/core/gimpchannel.c:253 app/tools/gimpeditselectiontool.c:251
 #: app/tools/gimpeditselectiontool.c:1204
 msgid "Move Channel"
 msgstr "채널 이동"
 
-#: app/core/gimpchannel.c:255
+#: app/core/gimpchannel.c:254
 msgid "Scale Channel"
 msgstr "채널 배율 조정"
 
-#: app/core/gimpchannel.c:256
+#: app/core/gimpchannel.c:255
 msgid "Resize Channel"
 msgstr "채널 크기 조정"
 
-#: app/core/gimpchannel.c:257
+#: app/core/gimpchannel.c:256
 msgid "Flip Channel"
 msgstr "채널 뒤집기"
 
-#: app/core/gimpchannel.c:258
+#: app/core/gimpchannel.c:257
 msgid "Rotate Channel"
 msgstr "채널 회전"
 
-#: app/core/gimpchannel.c:259 app/core/gimpdrawable-transform.c:1080
+#: app/core/gimpchannel.c:258 app/core/gimpdrawable-transform.c:1080
 msgid "Transform Channel"
 msgstr "채널 변형"
 
-#: app/core/gimpchannel.c:281
+#: app/core/gimpchannel.c:280
 msgid "Feather Channel"
 msgstr "채널 페더"
 
-#: app/core/gimpchannel.c:282
+#: app/core/gimpchannel.c:281
 msgid "Sharpen Channel"
 msgstr "채널 선명하게"
 
-#: app/core/gimpchannel.c:283
+#: app/core/gimpchannel.c:282
 msgid "Clear Channel"
 msgstr "채널 지움"
 
-#: app/core/gimpchannel.c:284
+#: app/core/gimpchannel.c:283
 msgid "Fill Channel"
 msgstr "채널 채우기"
 
-#: app/core/gimpchannel.c:285
+#: app/core/gimpchannel.c:284
 msgid "Invert Channel"
 msgstr "채널 반전"
 
-#: app/core/gimpchannel.c:286
+#: app/core/gimpchannel.c:285
 msgid "Border Channel"
 msgstr "채널 경계선"
 
-#: app/core/gimpchannel.c:287
+#: app/core/gimpchannel.c:286
 msgid "Grow Channel"
 msgstr "채널 늘이기"
 
-#: app/core/gimpchannel.c:288
+#: app/core/gimpchannel.c:287
 msgid "Shrink Channel"
 msgstr "채널 줄이기"
 
-#: app/core/gimpchannel.c:584
+#: app/core/gimpchannel.c:582
 msgid "Cannot stroke empty channel."
 msgstr "빈 채널에는 따라 그리기를 할 수 없습니다."
 
-#: app/core/gimpchannel.c:1499
+#: app/core/gimpchannel.c:1473
 msgid "Set Channel Color"
 msgstr "채널 색상 지정"
 
-#: app/core/gimpchannel.c:1546
+#: app/core/gimpchannel.c:1520
 msgid "Set Channel Opacity"
 msgstr "채널 불투명도 지정"
 
@@ -1728,11 +1729,11 @@ msgstr ""
 " %s"
 
 #: app/core/gimpdatafactory.c:410 app/core/gimpdatafactory.c:413
-#: app/core/gimpitem.c:304 app/core/gimpitem.c:307
+#: app/core/gimpitem.c:309 app/core/gimpitem.c:312
 msgid "copy"
 msgstr "복사"
 
-#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:316
+#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:321
 #, c-format
 msgid "%s copy"
 msgstr "%s 복사"
@@ -1939,7 +1940,7 @@ msgstr "퀵마스크 사용"
 msgid "Disable QuickMask"
 msgstr "퀵마스크 사용 안함"
 
-#: app/core/gimpimage-undo-push.c:2937
+#: app/core/gimpimage-undo-push.c:2939
 #, c-format
 msgid "Can't undo %s"
 msgstr "%s을(를) 취소할 수 없습니다"
@@ -2110,11 +2111,11 @@ msgstr "%d 레이어"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "썸네일 '%s' 열기 실패: %s"
 
-#: app/core/gimpitem.c:997
+#: app/core/gimpitem.c:1057
 msgid "Attach Parasite to Item"
 msgstr "항목에 기생 덧붙이기"
 
-#: app/core/gimpitem.c:1036 app/core/gimpitem.c:1043
+#: app/core/gimpitem.c:1096 app/core/gimpitem.c:1103
 msgid "Remove Parasite from Item"
 msgstr "항목의 기생 지우기"
 
@@ -2278,67 +2279,67 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "무늬 파일 '%s'에 잘못된 UTF-8 문자열이 있습니다."
 
-#: app/core/gimpselection.c:180 app/tools/gimpeditselectiontool.c:259
+#: app/core/gimpselection.c:179 app/tools/gimpeditselectiontool.c:259
 #: app/tools/gimpeditselectiontool.c:1116 app/tools/gimpmoveoptions.c:184
 #: app/tools/gimpmoveoptions.c:185
 msgid "Move Selection"
 msgstr "선택 이동"
 
-#: app/core/gimpselection.c:197 app/gui/select-commands.c:177
+#: app/core/gimpselection.c:196 app/gui/select-commands.c:177
 msgid "Feather Selection"
 msgstr "선택 페더"
 
-#: app/core/gimpselection.c:198
+#: app/core/gimpselection.c:197
 msgid "Sharpen Selection"
 msgstr "선택 선명하게"
 
-#: app/core/gimpselection.c:199 app/widgets/gimpselectioneditor.c:172
+#: app/core/gimpselection.c:198 app/widgets/gimpselectioneditor.c:172
 msgid "Select None"
 msgstr "선택 없음"
 
-#: app/core/gimpselection.c:200 app/widgets/gimpselectioneditor.c:164
+#: app/core/gimpselection.c:199 app/widgets/gimpselectioneditor.c:164
 msgid "Select All"
 msgstr "전체 선택"
 
-#: app/core/gimpselection.c:201 app/widgets/gimpselectioneditor.c:180
+#: app/core/gimpselection.c:200 app/widgets/gimpselectioneditor.c:180
 msgid "Invert Selection"
 msgstr "선택 반전"
 
-#: app/core/gimpselection.c:202 app/gui/select-commands.c:270
+#: app/core/gimpselection.c:201 app/gui/select-commands.c:270
 msgid "Border Selection"
 msgstr "테두리 선택"
 
-#: app/core/gimpselection.c:203 app/gui/select-commands.c:247
+#: app/core/gimpselection.c:202 app/gui/select-commands.c:247
 msgid "Grow Selection"
 msgstr "선택 늘이기"
 
-#: app/core/gimpselection.c:204 app/gui/select-commands.c:213
+#: app/core/gimpselection.c:203 app/gui/select-commands.c:213
 msgid "Shrink Selection"
 msgstr "선택 줄이기"
 
-#: app/core/gimpselection.c:303
+#: app/core/gimpselection.c:301
 msgid "No selection to stroke."
 msgstr "따라 그리기할 선택이 없습니다."
 
-#: app/core/gimpselection.c:312 app/widgets/gimpselectioneditor.c:212
+#: app/core/gimpselection.c:310 app/widgets/gimpselectioneditor.c:212
 msgid "Stroke Selection"
 msgstr "선택 따라 그리기"
 
-#: app/core/gimpselection.c:602 app/gui/channels-commands.c:209
+#: app/core/gimpselection.c:599 app/gui/channels-commands.c:209
 #: app/pdb/selection_cmds.c:923 app/pdb/selection_cmds.c:1041
 #: app/widgets/gimpchanneltreeview.c:291
 msgid "Channel to Selection"
 msgstr "채널을 선택으로"
 
-#: app/core/gimpselection.c:674
+#: app/core/gimpselection.c:671
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "선택한 영역이 비어있으므로, 잘라내기나 복사를 할 수 없습니다."
 
-#: app/core/gimpselection.c:820
+#: app/core/gimpselection.c:817
 msgid "Cannot float selection because the selected region is empty."
 msgstr "선택된 영역이 비어있으므로, 띄울 수 없습니다."
 
-#: app/core/gimpselection.c:843 app/gui/layers-commands.c:989
+#: app/core/gimpselection.c:840 app/gui/layers-commands.c:989
 msgid "Floating Selection"
 msgstr "떠있는 선택"
 
@@ -4039,6 +4040,11 @@ msgstr "/보기(V)/배율(Z)/1:8  (12.5%)"
 #: app/gui/image-menu.c:420
 msgid "/View/Zoom/1:16  (6.25%)"
 msgstr "/보기(V)/배율(Z)/1:16  (6.25%)"
+
+#: app/gui/image-menu.c:427
+#, fuzzy
+msgid "/View/Zoom/O_ther..."
+msgstr "/보기(V)/배율(Z)/축소(_O)"
 
 #: app/gui/image-menu.c:434
 msgid "/View/_Info Window"
@@ -6952,7 +6958,7 @@ msgstr "/경로 가져오기(_M)..."
 msgid "/E_xport Path..."
 msgstr "/경로 내보내기(X)..."
 
-#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:56
+#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:57
 msgid "Airbrush"
 msgstr "에어브러시"
 
@@ -6980,7 +6986,7 @@ msgstr "페인트브러시"
 msgid "No brushes available for use with this tool."
 msgstr "이 도구에 맞는 브러시가 없습니다."
 
-#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:52
+#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:53
 msgid "Pencil"
 msgstr "연필"
 
@@ -7047,20 +7053,20 @@ msgstr "레벨"
 msgid "Posterize"
 msgstr "포스터화"
 
-#: app/pdb/color_cmds.c:722 app/pdb/color_cmds.c:839
+#: app/pdb/color_cmds.c:726 app/pdb/color_cmds.c:843
 #: app/tools/gimpcurvestool.c:138
 msgid "Curves"
 msgstr "곡선"
 
-#: app/pdb/color_cmds.c:957 app/tools/gimpcolorbalancetool.c:96
+#: app/pdb/color_cmds.c:961 app/tools/gimpcolorbalancetool.c:96
 msgid "Color Balance"
 msgstr "색상 균형"
 
-#: app/pdb/color_cmds.c:1235 app/tools/gimphuesaturationtool.c:110
+#: app/pdb/color_cmds.c:1239 app/tools/gimphuesaturationtool.c:110
 msgid "Hue-Saturation"
 msgstr "색상-채도"
 
-#: app/pdb/color_cmds.c:1334 app/tools/gimpthresholdtool.c:92
+#: app/pdb/color_cmds.c:1338 app/tools/gimpthresholdtool.c:92
 msgid "Threshold"
 msgstr "임계값"
 
@@ -7392,8 +7398,8 @@ msgstr "고정된 종횡비"
 msgid "Transform Selection"
 msgstr "선택 변형"
 
-#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:238
-#: app/vectors/gimpvectors.c:537
+#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:534
 msgid "Transform Path"
 msgstr "경로 변형"
 
@@ -7425,20 +7431,20 @@ msgstr "모눈 줄 간격"
 msgid "This tool has no options."
 msgstr "이 도구는 선택사항이 없습니다."
 
-#: app/tools/gimpairbrushtool.c:57
+#: app/tools/gimpairbrushtool.c:58
 msgid "Airbrush with variable pressure"
 msgstr "압력 감지 에어브러시"
 
-#: app/tools/gimpairbrushtool.c:58
+#: app/tools/gimpairbrushtool.c:59
 msgid "/Tools/Paint Tools/_Airbrush"
 msgstr "/도구(T)/그리기 도구(P)/에어브러시(_A)"
 
-#: app/tools/gimpairbrushtool.c:124 app/tools/gimpconvolvetool.c:239
+#: app/tools/gimpairbrushtool.c:125 app/tools/gimpconvolvetool.c:239
 #: app/tools/gimpsmudgetool.c:125
 msgid "Rate:"
 msgstr "감도:"
 
-#: app/tools/gimpairbrushtool.c:130
+#: app/tools/gimpairbrushtool.c:131
 msgid "Pressure:"
 msgstr "압력:"
 
@@ -7856,8 +7862,8 @@ msgid "Exposure:"
 msgstr "노출:"
 
 #: app/tools/gimpeditselectiontool.c:247
-#: app/tools/gimpeditselectiontool.c:1156 app/vectors/gimpvectors.c:233
-#: app/vectors/gimpvectors.c:372
+#: app/tools/gimpeditselectiontool.c:1156 app/vectors/gimpvectors.c:230
+#: app/vectors/gimpvectors.c:369
 msgid "Move Path"
 msgstr "경로 이동"
 
@@ -8264,11 +8270,11 @@ msgstr "길이:"
 msgid "Use Color from Gradient"
 msgstr "그라디언트의 색상 사용"
 
-#: app/tools/gimppenciltool.c:53
+#: app/tools/gimppenciltool.c:54
 msgid "Paint hard edged pixels"
 msgstr "가장자리가 딱딱한 픽셀로 그리기"
 
-#: app/tools/gimppenciltool.c:54
+#: app/tools/gimppenciltool.c:55
 msgid "/Tools/Paint Tools/Pe_ncil"
 msgstr "/도구(T)/그리기 도구(P)/연필(_N)"
 
@@ -8779,31 +8785,31 @@ msgstr "클릭으로 이 노드를 뾰족하게 만드십시오."
 msgid "There is no active layer or channel to stroke to"
 msgstr "따라 그릴 활성 레이어나 채널이 없습니다"
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimpvectors.c:228
 msgid "Path"
 msgstr "경로"
 
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimpvectors.c:229
 msgid "Rename Path"
 msgstr "경로 이름 바꾸기"
 
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimpvectors.c:231
 msgid "Scale Path"
 msgstr "경로 배율 조정"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:232
 msgid "Resize Path"
 msgstr "경로 크기 조정"
 
-#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:463
+#: app/vectors/gimpvectors.c:233 app/vectors/gimpvectors.c:460
 msgid "Flip Path"
 msgstr "경로 뒤집기"
 
-#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:506
+#: app/vectors/gimpvectors.c:234 app/vectors/gimpvectors.c:503
 msgid "Rotate Path"
 msgstr "경로 회전"
 
-#: app/vectors/gimpvectors.c:566
+#: app/vectors/gimpvectors.c:562
 msgid "Cannot stroke empty path."
 msgstr "빈 경로를 따라 그릴 수 없습니다."
 
@@ -8985,12 +8991,12 @@ msgid "Cyan:"
 msgstr "청록색:"
 
 #: app/widgets/gimpcolorframe.c:305
-msgid "Yellow:"
-msgstr "노란색:"
-
-#: app/widgets/gimpcolorframe.c:306
 msgid "Magenta:"
 msgstr "자홍색:"
+
+#: app/widgets/gimpcolorframe.c:306
+msgid "Yellow:"
+msgstr "노란색:"
 
 #: app/widgets/gimpcolorframe.c:307
 msgid "Black:"
@@ -9073,20 +9079,16 @@ msgstr "정말 '%s'을(를) 목록과 디스크에서 지웁니까?"
 msgid "Delete Data Object"
 msgstr "데이터 객체 지우기"
 
-#: app/widgets/gimpdevicestatus.c:291
+#: app/widgets/gimpdevicestatus.c:289
 msgid "Save device status"
 msgstr "장치 상태 저장"
 
-#: app/widgets/gimpdevicestatus.c:298
-msgid "Configure input devices"
-msgstr "입력 장치 설정"
-
-#: app/widgets/gimpdevicestatus.c:404
+#: app/widgets/gimpdevicestatus.c:395
 #, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "전경: %d, %d, %d"
 
-#: app/widgets/gimpdevicestatus.c:409
+#: app/widgets/gimpdevicestatus.c:400
 #, c-format
 msgid "Background: %d, %d, %d"
 msgstr "배경: %d, %d, %d"
@@ -9307,11 +9309,11 @@ msgstr "너비"
 msgid "Height"
 msgstr "높이"
 
-#: app/widgets/gimphelp.c:198
+#: app/widgets/gimphelp.c:196
 msgid "Could not find GIMP Help Browser"
 msgstr "김프 도움말 브라우저를 찾을 수 없습니다"
 
-#: app/widgets/gimphelp.c:200
+#: app/widgets/gimphelp.c:198
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
@@ -9319,15 +9321,15 @@ msgstr ""
 "김프 도움말 브라우저 프로시져가 없습니다. GtkHtml2가 설치되어 있지 않았다면 "
 "컴파일되지 않았을 수 있습니다."
 
-#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
+#: app/widgets/gimphelp.c:202 app/widgets/gimphelp.c:235
 msgid "Use web browser instead"
 msgstr "웹 브라우저를 대신 사용하십시오"
 
-#: app/widgets/gimphelp.c:234
+#: app/widgets/gimphelp.c:232
 msgid "Could not start GIMP Help Browser"
 msgstr "김프 도움말 브라우저를 시작할 수 없습니다"
 
-#: app/widgets/gimphelp.c:236
+#: app/widgets/gimphelp.c:234
 msgid "Could not start the GIMP Help Browser."
 msgstr "김프 도움말 브라우저를 시작할 수 없습니다."
 
@@ -9938,6 +9940,9 @@ msgstr "XCF 오류: XCF 파일 버젼 %d은(는) 지원되지 않습니다."
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "이미지나 사진을 만들고 편집합니다"
+
+#~ msgid "Configure input devices"
+#~ msgstr "입력 장치 설정"
 
 #~ msgid "All Files"
 #~ msgstr "모든 파일"

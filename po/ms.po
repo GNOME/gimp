@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-05 21:58+0200\n"
+"POT-Creation-Date: 2004-09-25 00:01+0200\n"
 "PO-Revision-Date: 2003-11-04 09:00+0800\n"
 "Last-Translator: MIMOS Open Source Development Group <ismas@mimos.my>\n"
 "Language-Team: Projek Gabai <gabai-penyumbang@lists.sf.net>\n"
@@ -373,7 +373,7 @@ msgstr ""
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Gagal mewujudkan fail sementara bagi '%s': %s"
 
-#: app/config/gimpconfigwriter.c:568
+#: app/config/gimpconfigwriter.c:571
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -382,7 +382,7 @@ msgstr ""
 "Ralat menulis ke fail sementara bagi '%s': %s\n"
 "Fail asal tidak diganggu."
 
-#: app/config/gimpconfigwriter.c:576
+#: app/config/gimpconfigwriter.c:579
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -391,12 +391,12 @@ msgstr ""
 "Ralat menulis ke fail sementara bagi '%s': %s\n"
 "Tiada fail diwujudkan."
 
-#: app/config/gimpconfigwriter.c:587
+#: app/config/gimpconfigwriter.c:590
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Ralat menulis ke '%s': %s"
 
-#: app/config/gimpconfigwriter.c:605
+#: app/config/gimpconfigwriter.c:608
 #, fuzzy, c-format
 msgid "Could not create '%s': %s"
 msgstr "Tidak dapat menghapuskan '%s': %s"
@@ -1281,7 +1281,7 @@ msgid "Drawable Mod"
 msgstr "Prosedur boleh lukis"
 
 #: app/core/core-enums.c:596 app/core/core-enums.c:626
-#: app/core/gimpchannel.c:1617 app/core/gimpselection.c:570
+#: app/core/gimpchannel.c:1591 app/core/gimpselection.c:567
 msgid "Selection Mask"
 msgstr "Topeng Pemilihan"
 
@@ -1325,7 +1325,7 @@ msgstr "gunakan Topeng Lapisan"
 msgid "Floating Selection to Layer"
 msgstr "Pemilihan Apung ke Lapisan"
 
-#: app/core/core-enums.c:606 app/core/gimpselection.c:827
+#: app/core/core-enums.c:606 app/core/gimpselection.c:824
 msgid "Float Selection"
 msgstr "Apungkan Pemilihan"
 
@@ -1362,7 +1362,8 @@ msgstr "Jelma"
 msgid "Paint"
 msgstr "Cat"
 
-#: app/core/core-enums.c:614 app/core/core-enums.c:654 app/core/gimpitem.c:987
+#: app/core/core-enums.c:614 app/core/core-enums.c:654
+#: app/core/gimpitem.c:1047
 msgid "Attach Parasite"
 msgstr "Lampirkan Parasit"
 
@@ -1627,7 +1628,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Rentetan UTF-8 tak sah dalam fail berus '%s'."
 
 #: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1306
-#: app/core/gimpitem.c:466 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:471 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
 msgstr "Tanpa nama"
@@ -1660,80 +1661,80 @@ msgstr ""
 "Ralat mati huraian:\n"
 "Fail berus '%s' rosak."
 
-#: app/core/gimpchannel.c:252 app/pdb/internal_procs.c:86
+#: app/core/gimpchannel.c:251 app/pdb/internal_procs.c:86
 msgid "Channel"
 msgstr "Saluran"
 
-#: app/core/gimpchannel.c:253
+#: app/core/gimpchannel.c:252
 msgid "Rename Channel"
 msgstr "Namakan semula Saluran"
 
-#: app/core/gimpchannel.c:254 app/tools/gimpeditselectiontool.c:251
+#: app/core/gimpchannel.c:253 app/tools/gimpeditselectiontool.c:251
 #: app/tools/gimpeditselectiontool.c:1204
 msgid "Move Channel"
 msgstr "Alihkan Saluran"
 
-#: app/core/gimpchannel.c:255
+#: app/core/gimpchannel.c:254
 msgid "Scale Channel"
 msgstr "Skalakan Saluran"
 
-#: app/core/gimpchannel.c:256
+#: app/core/gimpchannel.c:255
 msgid "Resize Channel"
 msgstr "Ubah saiz Saluran"
 
-#: app/core/gimpchannel.c:257
+#: app/core/gimpchannel.c:256
 msgid "Flip Channel"
 msgstr "Terbalikkan Saluran"
 
-#: app/core/gimpchannel.c:258
+#: app/core/gimpchannel.c:257
 msgid "Rotate Channel"
 msgstr "Putar Saluran"
 
-#: app/core/gimpchannel.c:259 app/core/gimpdrawable-transform.c:1080
+#: app/core/gimpchannel.c:258 app/core/gimpdrawable-transform.c:1080
 msgid "Transform Channel"
 msgstr "Jelmakan Saluran"
 
-#: app/core/gimpchannel.c:281
+#: app/core/gimpchannel.c:280
 msgid "Feather Channel"
 msgstr "Saluran Bulu Pelepah"
 
-#: app/core/gimpchannel.c:282
+#: app/core/gimpchannel.c:281
 msgid "Sharpen Channel"
 msgstr "Jelaskan Saluran"
 
-#: app/core/gimpchannel.c:283
+#: app/core/gimpchannel.c:282
 msgid "Clear Channel"
 msgstr "Kosongkan Saluran"
 
-#: app/core/gimpchannel.c:284
+#: app/core/gimpchannel.c:283
 msgid "Fill Channel"
 msgstr "Isikan Saluran"
 
-#: app/core/gimpchannel.c:285
+#: app/core/gimpchannel.c:284
 msgid "Invert Channel"
 msgstr "Songsangkan Saluran"
 
-#: app/core/gimpchannel.c:286
+#: app/core/gimpchannel.c:285
 msgid "Border Channel"
 msgstr "Saluran Sempadan"
 
-#: app/core/gimpchannel.c:287
+#: app/core/gimpchannel.c:286
 msgid "Grow Channel"
 msgstr "Tambahkan Saluran"
 
-#: app/core/gimpchannel.c:288
+#: app/core/gimpchannel.c:287
 msgid "Shrink Channel"
 msgstr "Kecilkan Saluran"
 
-#: app/core/gimpchannel.c:584
+#: app/core/gimpchannel.c:582
 msgid "Cannot stroke empty channel."
 msgstr "Tidak boleh menanda saluran kosong"
 
-#: app/core/gimpchannel.c:1499
+#: app/core/gimpchannel.c:1473
 msgid "Set Channel Color"
 msgstr "Setkan Warna Saluran"
 
-#: app/core/gimpchannel.c:1546
+#: app/core/gimpchannel.c:1520
 msgid "Set Channel Opacity"
 msgstr "Setkan Kelegapan Saluran"
 
@@ -1777,11 +1778,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:410 app/core/gimpdatafactory.c:413
-#: app/core/gimpitem.c:304 app/core/gimpitem.c:307
+#: app/core/gimpitem.c:309 app/core/gimpitem.c:312
 msgid "copy"
 msgstr "salin"
 
-#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:316
+#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:321
 #, c-format
 msgid "%s copy"
 msgstr "salinan %s "
@@ -2001,7 +2002,7 @@ msgstr "Membolehkan QuickMask"
 msgid "Disable QuickMask"
 msgstr "Melumpuhkan QuickMask"
 
-#: app/core/gimpimage-undo-push.c:2937
+#: app/core/gimpimage-undo-push.c:2939
 #, c-format
 msgid "Can't undo %s"
 msgstr "Tidak dapat buat asal %s"
@@ -2176,11 +2177,11 @@ msgstr "%d Lapisan"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Gagal membuka fail saiz kecil '%s': %s"
 
-#: app/core/gimpitem.c:997
+#: app/core/gimpitem.c:1057
 msgid "Attach Parasite to Item"
 msgstr "Lampirkan Parasit ke Item"
 
-#: app/core/gimpitem.c:1036 app/core/gimpitem.c:1043
+#: app/core/gimpitem.c:1096 app/core/gimpitem.c:1103
 msgid "Remove Parasite from Item"
 msgstr "Alihkan Parasit ke Item"
 
@@ -2367,73 +2368,73 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Rentetan UTF-8 tak sah dalam fail corak '%s'."
 
-#: app/core/gimpselection.c:180 app/tools/gimpeditselectiontool.c:259
+#: app/core/gimpselection.c:179 app/tools/gimpeditselectiontool.c:259
 #: app/tools/gimpeditselectiontool.c:1116 app/tools/gimpmoveoptions.c:184
 #: app/tools/gimpmoveoptions.c:185
 msgid "Move Selection"
 msgstr "Alihkan Pemilihan"
 
-#: app/core/gimpselection.c:197 app/gui/select-commands.c:177
+#: app/core/gimpselection.c:196 app/gui/select-commands.c:177
 msgid "Feather Selection"
 msgstr "Pemilihan Bulu Pelepah"
 
-#: app/core/gimpselection.c:198
+#: app/core/gimpselection.c:197
 msgid "Sharpen Selection"
 msgstr "Jelaskan Pemilihan"
 
-#: app/core/gimpselection.c:199 app/widgets/gimpselectioneditor.c:172
+#: app/core/gimpselection.c:198 app/widgets/gimpselectioneditor.c:172
 msgid "Select None"
 msgstr "Pilih Tiada"
 
-#: app/core/gimpselection.c:200 app/widgets/gimpselectioneditor.c:164
+#: app/core/gimpselection.c:199 app/widgets/gimpselectioneditor.c:164
 msgid "Select All"
 msgstr "Pilih Semua"
 
-#: app/core/gimpselection.c:201 app/widgets/gimpselectioneditor.c:180
+#: app/core/gimpselection.c:200 app/widgets/gimpselectioneditor.c:180
 msgid "Invert Selection"
 msgstr "Songsangkan Pemilihan"
 
-#: app/core/gimpselection.c:202 app/gui/select-commands.c:270
+#: app/core/gimpselection.c:201 app/gui/select-commands.c:270
 msgid "Border Selection"
 msgstr "Pemilihan Sempadan"
 
-#: app/core/gimpselection.c:203 app/gui/select-commands.c:247
+#: app/core/gimpselection.c:202 app/gui/select-commands.c:247
 msgid "Grow Selection"
 msgstr "Tambahkan Pemilihan"
 
-#: app/core/gimpselection.c:204 app/gui/select-commands.c:213
+#: app/core/gimpselection.c:203 app/gui/select-commands.c:213
 msgid "Shrink Selection"
 msgstr "Kecilkan Pemilihan"
 
-#: app/core/gimpselection.c:303
+#: app/core/gimpselection.c:301
 msgid "No selection to stroke."
 msgstr "Tiada pemilihan untuk ditanda"
 
-#: app/core/gimpselection.c:312 app/widgets/gimpselectioneditor.c:212
+#: app/core/gimpselection.c:310 app/widgets/gimpselectioneditor.c:212
 msgid "Stroke Selection"
 msgstr "Tandakan Pemilihan"
 
-#: app/core/gimpselection.c:602 app/gui/channels-commands.c:209
+#: app/core/gimpselection.c:599 app/gui/channels-commands.c:209
 #: app/pdb/selection_cmds.c:923 app/pdb/selection_cmds.c:1041
 #: app/widgets/gimpchanneltreeview.c:291
 msgid "Channel to Selection"
 msgstr "Saluran ke Pemilihan"
 
-#: app/core/gimpselection.c:674
+#: app/core/gimpselection.c:671
 #, fuzzy
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr ""
 "Tidak dapat memotong atau menyalin kerana\n"
 "kawasan yang dipilih kosong."
 
-#: app/core/gimpselection.c:820
+#: app/core/gimpselection.c:817
 #, fuzzy
 msgid "Cannot float selection because the selected region is empty."
 msgstr ""
 "Tidak dapat mengapungkan pemilihan kerana\n"
 "kawasan yang dipilih kosong."
 
-#: app/core/gimpselection.c:843 app/gui/layers-commands.c:989
+#: app/core/gimpselection.c:840 app/gui/layers-commands.c:989
 msgid "Floating Selection"
 msgstr "Pemilihan Apung"
 
@@ -4184,6 +4185,11 @@ msgstr "/Lihat/Zum/1:1"
 #, fuzzy
 msgid "/View/Zoom/1:16  (6.25%)"
 msgstr "/Lihat/Zum/1:16"
+
+#: app/gui/image-menu.c:427
+#, fuzzy
+msgid "/View/Zoom/O_ther..."
+msgstr "/Lihat/Zum/Zum _Ke luar"
 
 #: app/gui/image-menu.c:434
 msgid "/View/_Info Window"
@@ -7255,7 +7261,7 @@ msgstr "/I_mport Laluan..."
 msgid "/E_xport Path..."
 msgstr "/E_ksport Laluan..."
 
-#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:56
+#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:57
 msgid "Airbrush"
 msgstr "Penyembur"
 
@@ -7283,7 +7289,7 @@ msgstr "Berus cat"
 msgid "No brushes available for use with this tool."
 msgstr "Berus tidak ada untuk digunakan dengan alat ini."
 
-#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:52
+#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:53
 msgid "Pencil"
 msgstr "Pensil"
 
@@ -7350,20 +7356,20 @@ msgstr "Aras"
 msgid "Posterize"
 msgstr "Memposterkan"
 
-#: app/pdb/color_cmds.c:722 app/pdb/color_cmds.c:839
+#: app/pdb/color_cmds.c:726 app/pdb/color_cmds.c:843
 #: app/tools/gimpcurvestool.c:138
 msgid "Curves"
 msgstr "Lengkung"
 
-#: app/pdb/color_cmds.c:957 app/tools/gimpcolorbalancetool.c:96
+#: app/pdb/color_cmds.c:961 app/tools/gimpcolorbalancetool.c:96
 msgid "Color Balance"
 msgstr "Imbangan Warna"
 
-#: app/pdb/color_cmds.c:1235 app/tools/gimphuesaturationtool.c:110
+#: app/pdb/color_cmds.c:1239 app/tools/gimphuesaturationtool.c:110
 msgid "Hue-Saturation"
 msgstr "Kepekatan Warna"
 
-#: app/pdb/color_cmds.c:1334 app/tools/gimpthresholdtool.c:92
+#: app/pdb/color_cmds.c:1338 app/tools/gimpthresholdtool.c:92
 msgid "Threshold"
 msgstr "Ambang"
 
@@ -7701,8 +7707,8 @@ msgstr "Nisbah Aspek Tetap"
 msgid "Transform Selection"
 msgstr "Jelmakan Pemilihan"
 
-#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:238
-#: app/vectors/gimpvectors.c:537
+#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:534
 msgid "Transform Path"
 msgstr "Jelmakan Laluan"
 
@@ -7734,20 +7740,20 @@ msgstr "Langkauan Garis Grid"
 msgid "This tool has no options."
 msgstr "Alat ini tidak ada opsyen."
 
-#: app/tools/gimpairbrushtool.c:57
+#: app/tools/gimpairbrushtool.c:58
 msgid "Airbrush with variable pressure"
 msgstr "Penyembur dengan tekanan berubah-ubah"
 
-#: app/tools/gimpairbrushtool.c:58
+#: app/tools/gimpairbrushtool.c:59
 msgid "/Tools/Paint Tools/_Airbrush"
 msgstr "/Alat/Alat Cat/_Penyembur"
 
-#: app/tools/gimpairbrushtool.c:124 app/tools/gimpconvolvetool.c:239
+#: app/tools/gimpairbrushtool.c:125 app/tools/gimpconvolvetool.c:239
 #: app/tools/gimpsmudgetool.c:125
 msgid "Rate:"
 msgstr "Kadar:"
 
-#: app/tools/gimpairbrushtool.c:130
+#: app/tools/gimpairbrushtool.c:131
 msgid "Pressure:"
 msgstr "Tekanan:"
 
@@ -8171,8 +8177,8 @@ msgid "Exposure:"
 msgstr "Pendedahan:"
 
 #: app/tools/gimpeditselectiontool.c:247
-#: app/tools/gimpeditselectiontool.c:1156 app/vectors/gimpvectors.c:233
-#: app/vectors/gimpvectors.c:372
+#: app/tools/gimpeditselectiontool.c:1156 app/vectors/gimpvectors.c:230
+#: app/vectors/gimpvectors.c:369
 msgid "Move Path"
 msgstr "Alihkan Laluan"
 
@@ -8582,11 +8588,11 @@ msgstr "Panjang:"
 msgid "Use Color from Gradient"
 msgstr "Gunakan Warna dari Kecerunan"
 
-#: app/tools/gimppenciltool.c:53
+#: app/tools/gimppenciltool.c:54
 msgid "Paint hard edged pixels"
 msgstr "Cat piksel bertepi keras"
 
-#: app/tools/gimppenciltool.c:54
+#: app/tools/gimppenciltool.c:55
 msgid "/Tools/Paint Tools/Pe_ncil"
 msgstr "/Alat/Alat Cat/Pe_nsel"
 
@@ -9119,31 +9125,31 @@ msgstr "Klik untuk membuatkan nod ini bersudut."
 msgid "There is no active layer or channel to stroke to"
 msgstr "Tidak ada lapisan atau saluran aktif untuk ditandakan"
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimpvectors.c:228
 msgid "Path"
 msgstr "Laluan"
 
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimpvectors.c:229
 msgid "Rename Path"
 msgstr "Namakan semula Laluan"
 
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimpvectors.c:231
 msgid "Scale Path"
 msgstr "Skalakan Laluan"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:232
 msgid "Resize Path"
 msgstr "Ubah saiz Laluan"
 
-#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:463
+#: app/vectors/gimpvectors.c:233 app/vectors/gimpvectors.c:460
 msgid "Flip Path"
 msgstr "Terbalikkan Laluan"
 
-#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:506
+#: app/vectors/gimpvectors.c:234 app/vectors/gimpvectors.c:503
 msgid "Rotate Path"
 msgstr "Putarkan Laluan"
 
-#: app/vectors/gimpvectors.c:566
+#: app/vectors/gimpvectors.c:562
 msgid "Cannot stroke empty path."
 msgstr "Tidak boleh menanda laluan kosong."
 
@@ -9324,12 +9330,12 @@ msgid "Cyan:"
 msgstr "Cyan:"
 
 #: app/widgets/gimpcolorframe.c:305
-msgid "Yellow:"
-msgstr "Kuning:"
-
-#: app/widgets/gimpcolorframe.c:306
 msgid "Magenta:"
 msgstr "Magenta:"
+
+#: app/widgets/gimpcolorframe.c:306
+msgid "Yellow:"
+msgstr "Kuning:"
 
 #: app/widgets/gimpcolorframe.c:307
 msgid "Black:"
@@ -9414,20 +9420,16 @@ msgstr ""
 msgid "Delete Data Object"
 msgstr "Hapuskan Objek Data"
 
-#: app/widgets/gimpdevicestatus.c:291
+#: app/widgets/gimpdevicestatus.c:289
 msgid "Save device status"
 msgstr "Simpan status peranti"
 
-#: app/widgets/gimpdevicestatus.c:298
-msgid "Configure input devices"
-msgstr "Buat konfigurasi peranti input"
-
-#: app/widgets/gimpdevicestatus.c:404
+#: app/widgets/gimpdevicestatus.c:395
 #, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "Latar depan: %d, %d, %d"
 
-#: app/widgets/gimpdevicestatus.c:409
+#: app/widgets/gimpdevicestatus.c:400
 #, c-format
 msgid "Background: %d, %d, %d"
 msgstr "Latar belakang: %d, %d, %d"
@@ -9646,11 +9648,11 @@ msgstr "Lebar"
 msgid "Height"
 msgstr "Tinggi"
 
-#: app/widgets/gimphelp.c:198
+#: app/widgets/gimphelp.c:196
 msgid "Could not find GIMP Help Browser"
 msgstr "Tidak dapat menjumpai Pelayar Bantuan GIMP"
 
-#: app/widgets/gimphelp.c:200
+#: app/widgets/gimphelp.c:198
 #, fuzzy
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
@@ -9660,15 +9662,15 @@ msgstr ""
 "Mungkin tidak dikompil kerana\n"
 "anda tidak memasang GtkXmHTML."
 
-#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
+#: app/widgets/gimphelp.c:202 app/widgets/gimphelp.c:235
 msgid "Use web browser instead"
 msgstr "Sebaliknya gunakan pelayar web"
 
-#: app/widgets/gimphelp.c:234
+#: app/widgets/gimphelp.c:232
 msgid "Could not start GIMP Help Browser"
 msgstr "Tidak dapat memulakan Pelayar Bantuan GIMP"
 
-#: app/widgets/gimphelp.c:236
+#: app/widgets/gimphelp.c:234
 msgid "Could not start the GIMP Help Browser."
 msgstr "Tidak dapat memulakan Pelayar Bantuan GIMP"
 
@@ -10288,6 +10290,9 @@ msgstr "Ralat XCF: versi fail XCF %d yang disokong ditemui"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Wujudkan dan edit imej atau gambar"
+
+#~ msgid "Configure input devices"
+#~ msgstr "Buat konfigurasi peranti input"
 
 #~ msgid ""
 #~ "  -S, --no-splash-image    Do not add an image to the startup window.\n"

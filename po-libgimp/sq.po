@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-02 11:36+0200\n"
+"POT-Creation-Date: 2004-08-05 21:59+0200\n"
 "PO-Revision-Date: 2004-09-03 18:16+0200\n"
 "Last-Translator: Laurent Dhima <laurenti@alblinux.net>\n"
 "Language-Team: Albanian <gnome-albanian-perkthyesit@lists.sourceforge.net>\n"
@@ -35,11 +35,11 @@ msgstr "Zhyt (bashko) nivelet e dukshëm"
 #: libgimp/gimpexport.c:224
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s nuk mund të trajtojë zhvendosjen e niveleve, madhësinë apo tejdukshmërinë"
+msgstr ""
+"%s nuk mund të trajtojë zhvendosjen e niveleve, madhësinë apo tejdukshmërinë"
 
 #: libgimp/gimpexport.c:233 libgimp/gimpexport.c:242
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s can only handle layers as animation frames"
 msgstr "Animacion korniza"
 
@@ -96,8 +96,7 @@ msgid ""
 msgstr "prezgjedhur rregullimet j Bëje"
 
 #: libgimp/gimpexport.c:306
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
 msgstr "dy"
 
@@ -158,8 +157,7 @@ msgstr "Eksporto"
 
 #. the headline
 #: libgimp/gimpexport.c:485
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
@@ -171,16 +169,14 @@ msgid "The export conversion won't modify your original image."
 msgstr "eksporto figurë."
 
 #: libgimp/gimpexport.c:665
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr "Ti informacione ruaj a niveli nuk ruaj i dukshëm."
 
 #: libgimp/gimpexport.c:671
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
@@ -214,14 +210,12 @@ msgid "(invalid UTF-8 string)"
 msgstr "I pavlefshëm"
 
 #: libgimpbase/gimputils.c:244
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%d Bytes"
 msgstr "Bytes"
 
 #: libgimpbase/gimputils.c:249
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%.2f KB"
 msgstr "KB"
 
@@ -231,14 +225,12 @@ msgid "%.1f KB"
 msgstr "%.1f KB"
 
 #: libgimpbase/gimputils.c:257
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%d KB"
 msgstr "KB"
 
 #: libgimpbase/gimputils.c:264
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%.2f MB"
 msgstr "MB"
 
@@ -253,8 +245,7 @@ msgid "%d MB"
 msgstr "%d MB"
 
 #: libgimpbase/gimputils.c:279
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%.2f GB"
 msgstr "GB"
 
@@ -264,28 +255,24 @@ msgid "%.1f GB"
 msgstr "%.1f GB"
 
 #: libgimpbase/gimputils.c:287
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%d GB"
 msgstr "GB"
 
 #: libgimpmodule/gimpmodule.c:177
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Loading module: '%s'\n"
 msgstr "j"
 
 #: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
 #: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
 #: libgimpmodule/gimpmodule.c:450
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Modulë ngarkoje gabim"
 
 #: libgimpmodule/gimpmodule.c:283
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "j"
 
@@ -309,8 +296,7 @@ msgid "Not loaded"
 msgstr "Not"
 
 #: libgimpthumb/gimpthumb-utils.c:196
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Dështoi kartelë."
 
@@ -733,4 +719,3 @@ msgstr ""
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Trysnia"
-

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-05 21:59+0200\n"
+"POT-Creation-Date: 2004-09-25 00:02+0200\n"
 "PO-Revision-Date: 2003-06-05 07:54+0800\n"
 "Last-Translator: Young-Boo Park <DIRBOO@hitel.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -338,8 +338,8 @@ msgstr "닫기"
 #: plug-ins/FractalExplorer/Dialogs.c:1039
 #: plug-ins/FractalExplorer/Dialogs.c:1080 plug-ins/Lighting/lighting_ui.c:507
 #: plug-ins/common/CML_explorer.c:169 plug-ins/common/align_layers.c:426
-#: plug-ins/common/align_layers.c:454 plug-ins/common/postscript.c:2838
-#: plug-ins/common/postscript.c:2850 plug-ins/common/psp.c:418
+#: plug-ins/common/align_layers.c:454 plug-ins/common/postscript.c:2846
+#: plug-ins/common/postscript.c:2858 plug-ins/common/psp.c:418
 #: plug-ins/fits/fits.c:1013
 msgid "None"
 msgstr "없음"
@@ -438,7 +438,7 @@ msgstr "파일이름:"
 #: plug-ins/common/mng.c:542 plug-ins/common/mng.c:874
 #: plug-ins/common/pat.c:428 plug-ins/common/pcx.c:584
 #: plug-ins/common/pix.c:516 plug-ins/common/png.c:1174
-#: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:995
+#: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:996
 #: plug-ins/common/psd_save.c:1555 plug-ins/common/spheredesigner.c:2082
 #: plug-ins/common/sunras.c:512 plug-ins/common/tga.c:1028
 #: plug-ins/common/tiff.c:1804 plug-ins/common/xbm.c:995
@@ -486,7 +486,7 @@ msgstr "파라미터 저장"
 #: plug-ins/common/mng.c:1043 plug-ins/common/pat.c:295
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:333
 #: plug-ins/common/png.c:670 plug-ins/common/pnm.c:394
-#: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
+#: plug-ins/common/postscript.c:873 plug-ins/common/psd.c:1756
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
 #: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:243
 #: plug-ins/common/svg.c:626 plug-ins/common/tga.c:413
@@ -1136,7 +1136,7 @@ msgid "Object Z position in XYZ space"
 msgstr "XYZ 공간중 라이트 근원지 Z위치"
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1080 plug-ins/common/postscript.c:3002
+#: plug-ins/MapObject/mapobject_ui.c:1080 plug-ins/common/postscript.c:3010
 msgid "Rotation"
 msgstr "회전하기"
 
@@ -1304,8 +1304,8 @@ msgstr "%s: 잘못된 컬러맵\n"
 #: plug-ins/common/hrz.c:339 plug-ins/common/jpeg.c:819
 #: plug-ins/common/pat.c:300 plug-ins/common/pcx.c:306
 #: plug-ins/common/pix.c:339 plug-ins/common/png.c:677
-#: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
-#: plug-ins/common/psd.c:1773 plug-ins/common/sunras.c:435
+#: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:879
+#: plug-ins/common/psd.c:1761 plug-ins/common/sunras.c:435
 #: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:513
 #: plug-ins/common/wmf.c:401 plug-ins/common/xbm.c:723
 #: plug-ins/common/xpm.c:329 plug-ins/common/xwd.c:434
@@ -1342,11 +1342,11 @@ msgstr ""
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:312
 #: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:580
 #: plug-ins/common/dicom.c:441 plug-ins/common/film.c:975
-#: plug-ins/common/gifload.c:857 plug-ins/common/hrz.c:373
+#: plug-ins/common/gifload.c:864 plug-ins/common/hrz.c:373
 #: plug-ins/common/jpeg.c:979 plug-ins/common/pcx.c:333
 #: plug-ins/common/pcx.c:339 plug-ins/common/pix.c:375
 #: plug-ins/common/png.c:804 plug-ins/common/pnm.c:479
-#: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:253
+#: plug-ins/common/psd.c:2170 plug-ins/common/smooth_palette.c:253
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
 #: plug-ins/common/tiff.c:831 plug-ins/common/tile.c:264
 #: plug-ins/common/winclipboard.c:573 plug-ins/common/xbm.c:866
@@ -1363,7 +1363,7 @@ msgid "Cannot save images with alpha channel."
 msgstr "XWD 저장은 알파 채널을 가진 그림을 조작할 수 없습니다"
 
 #: plug-ins/bmp/bmpwrite.c:182 plug-ins/common/dicom.c:631
-#: plug-ins/common/postscript.c:986 plug-ins/common/xwd.c:524
+#: plug-ins/common/postscript.c:987 plug-ins/common/xwd.c:524
 #: plug-ins/fits/fits.c:441 plug-ins/xjt/xjt.c:1686
 #, fuzzy
 msgid "Cannot operate on unknown image types."
@@ -1378,7 +1378,7 @@ msgstr "모르는 그림형식에서는 동작할 수 없습니다"
 #: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1316
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:544
 #: plug-ins/common/pix.c:522 plug-ins/common/png.c:1181
-#: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
+#: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1001
 #: plug-ins/common/psd_save.c:1560 plug-ins/common/sunras.c:517
 #: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1809
 #: plug-ins/common/xbm.c:1000 plug-ins/common/xpm.c:619
@@ -2216,7 +2216,7 @@ msgstr "모든 나타난 계층 선택"
 #: plug-ins/common/sobel.c:242 plug-ins/common/sparkle.c:350
 #: plug-ins/common/struc.c:1266 plug-ins/common/threshold_alpha.c:232
 #: plug-ins/common/unsharp.c:651 plug-ins/common/video.c:2151
-#: plug-ins/common/vpropagate.c:1073 plug-ins/common/waves.c:343
+#: plug-ins/common/vpropagate.c:1077 plug-ins/common/waves.c:343
 #: plug-ins/common/whirlpinch.c:698 plug-ins/common/wind.c:892
 #: plug-ins/common/xpm.c:783 plug-ins/maze/maze_face.c:202
 #: plug-ins/xjt/xjt.c:856
@@ -2820,7 +2820,7 @@ msgid "Colorify"
 msgstr "색상화"
 
 #: plug-ins/common/colorify.c:258 plug-ins/common/colortoalpha.c:325
-#: plug-ins/common/postscript.c:2823 plug-ins/common/xpm.c:457
+#: plug-ins/common/postscript.c:2831 plug-ins/common/xpm.c:457
 #: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:107
 #: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1417
 msgid "Color"
@@ -3690,7 +3690,7 @@ msgid "Create _Histogram"
 msgstr "히스토그램"
 
 #: plug-ins/common/destripe.c:664 plug-ins/common/gtm.c:583
-#: plug-ins/common/postscript.c:2779 plug-ins/common/postscript.c:2938
+#: plug-ins/common/postscript.c:2787 plug-ins/common/postscript.c:2946
 #: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:411
 #: plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
@@ -3911,8 +3911,8 @@ msgid "_Limit Line Width"
 msgstr ""
 
 #: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1229
-#: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2788
-#: plug-ins/common/postscript.c:2947 plug-ins/common/smooth_palette.c:436
+#: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2796
+#: plug-ins/common/postscript.c:2955 plug-ins/common/smooth_palette.c:436
 #: plug-ins/common/tile.c:415 plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
 #, fuzzy
@@ -4470,23 +4470,23 @@ msgstr "%s: BMP파일 %s가 정확치 않습니다.\n"
 msgid "Non-square pixels.  Image might look squashed."
 msgstr ""
 
-#: plug-ins/common/gifload.c:859
+#: plug-ins/common/gifload.c:866
 #, fuzzy, c-format
 msgid "Background (%d%s)"
 msgstr "배경 (%dms)"
 
-#: plug-ins/common/gifload.c:907 plug-ins/common/iwarp.c:787
+#: plug-ins/common/gifload.c:914 plug-ins/common/iwarp.c:787
 #: plug-ins/common/iwarp.c:819
 #, c-format
 msgid "Frame %d"
 msgstr "프레임 %d"
 
-#: plug-ins/common/gifload.c:909
+#: plug-ins/common/gifload.c:916
 #, fuzzy, c-format
 msgid "Frame %d (%d%s)"
 msgstr "프레임 %d (%dms)"
 
-#: plug-ins/common/gifload.c:939
+#: plug-ins/common/gifload.c:946
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -6433,160 +6433,160 @@ msgid ""
 "checked the image will be mapped onto a circle."
 msgstr ""
 
-#: plug-ins/common/postscript.c:887
+#: plug-ins/common/postscript.c:888
 #, fuzzy, c-format
 msgid "Could not interpret '%s'"
 msgstr "애러: \"%s\"를 열수 없습니다."
 
-#: plug-ins/common/postscript.c:975
+#: plug-ins/common/postscript.c:976
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "PostScript 저장은 알파 채널들을 가지고 이미지를 조정할 수 없습니다."
 
-#: plug-ins/common/postscript.c:1470 plug-ins/common/postscript.c:1500
+#: plug-ins/common/postscript.c:1475 plug-ins/common/postscript.c:1505
 #, c-format
 msgid "Error starting ghostscript (%s)"
 msgstr ""
 
-#: plug-ins/common/postscript.c:2297 plug-ins/common/postscript.c:2429
-#: plug-ins/common/postscript.c:2579 plug-ins/common/postscript.c:2707
+#: plug-ins/common/postscript.c:2305 plug-ins/common/postscript.c:2437
+#: plug-ins/common/postscript.c:2587 plug-ins/common/postscript.c:2715
 #: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
 #: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
 #, fuzzy
 msgid "Write error occurred"
 msgstr "쓰기 애러 발생"
 
-#: plug-ins/common/postscript.c:2733
+#: plug-ins/common/postscript.c:2741
 msgid "Load PostScript"
 msgstr "PostScript 읽기"
 
 #. Rendering
-#: plug-ins/common/postscript.c:2753
+#: plug-ins/common/postscript.c:2761
 msgid "Rendering"
 msgstr "랜더링"
 
 #. Resolution
-#: plug-ins/common/postscript.c:2770 plug-ins/common/svg.c:820
+#: plug-ins/common/postscript.c:2778 plug-ins/common/svg.c:820
 #: plug-ins/print/gimp_main_window.c:1100
 msgid "Resolution:"
 msgstr "해상도:"
 
-#: plug-ins/common/postscript.c:2798
+#: plug-ins/common/postscript.c:2806
 msgid "Pages:"
 msgstr "페이지:"
 
-#: plug-ins/common/postscript.c:2804
+#: plug-ins/common/postscript.c:2812
 #, fuzzy
 msgid "Try Bounding Box"
 msgstr "바운딩박스 시도"
 
 #. Colouring
-#: plug-ins/common/postscript.c:2817
+#: plug-ins/common/postscript.c:2825
 #, fuzzy
 msgid "Coloring"
 msgstr "컬러링"
 
-#: plug-ins/common/postscript.c:2821
+#: plug-ins/common/postscript.c:2829
 #, fuzzy
 msgid "B/W"
 msgstr "B&W"
 
 #. * Gray *
-#: plug-ins/common/postscript.c:2822 plug-ins/rcm/rcm_dialog.c:409
+#: plug-ins/common/postscript.c:2830 plug-ins/rcm/rcm_dialog.c:409
 #, fuzzy
 msgid "Gray"
 msgstr "그레이"
 
-#: plug-ins/common/postscript.c:2824 plug-ins/fits/fits.c:1001
+#: plug-ins/common/postscript.c:2832 plug-ins/fits/fits.c:1001
 msgid "Automatic"
 msgstr "자동"
 
-#: plug-ins/common/postscript.c:2834
+#: plug-ins/common/postscript.c:2842
 #, fuzzy
 msgid "Text Antialiasing"
 msgstr "텍스트 안티엘리어싱"
 
-#: plug-ins/common/postscript.c:2839 plug-ins/common/postscript.c:2851
+#: plug-ins/common/postscript.c:2847 plug-ins/common/postscript.c:2859
 #, fuzzy
 msgid "Weak"
 msgstr "약하게"
 
-#: plug-ins/common/postscript.c:2840 plug-ins/common/postscript.c:2852
+#: plug-ins/common/postscript.c:2848 plug-ins/common/postscript.c:2860
 #, fuzzy
 msgid "Strong"
 msgstr "힘있게"
 
-#: plug-ins/common/postscript.c:2846
+#: plug-ins/common/postscript.c:2854
 #, fuzzy
 msgid "Graphic Antialiasing"
 msgstr "그래픽 안티엘리어싱"
 
-#: plug-ins/common/postscript.c:2898
+#: plug-ins/common/postscript.c:2906
 #, fuzzy
 msgid "Save as PostScript"
 msgstr "포스트스크립트 저장"
 
 #. Image Size
-#: plug-ins/common/postscript.c:2921
+#: plug-ins/common/postscript.c:2929
 msgid "Image Size"
 msgstr "이미지 크기"
 
-#: plug-ins/common/postscript.c:2956
+#: plug-ins/common/postscript.c:2964
 #, fuzzy
 msgid "_X-Offset:"
 msgstr "X 옵셋:"
 
-#: plug-ins/common/postscript.c:2965
+#: plug-ins/common/postscript.c:2973
 #, fuzzy
 msgid "_Y-Offset:"
 msgstr "Y 옵셋:"
 
-#: plug-ins/common/postscript.c:2971
+#: plug-ins/common/postscript.c:2979
 #, fuzzy
 msgid "_Keep Aspect Ratio"
 msgstr "영상비 유지"
 
-#: plug-ins/common/postscript.c:2977
+#: plug-ins/common/postscript.c:2985
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
 
 #. Unit
-#: plug-ins/common/postscript.c:2986
+#: plug-ins/common/postscript.c:2994
 msgid "Unit"
 msgstr "단위"
 
-#: plug-ins/common/postscript.c:2990
+#: plug-ins/common/postscript.c:2998
 #, fuzzy
 msgid "_Inch"
 msgstr "인치"
 
-#: plug-ins/common/postscript.c:2991
+#: plug-ins/common/postscript.c:2999
 #, fuzzy
 msgid "_Millimeter"
 msgstr "밀리미터"
 
 #. Format
-#: plug-ins/common/postscript.c:3017
+#: plug-ins/common/postscript.c:3025
 msgid "Output"
 msgstr "출력"
 
-#: plug-ins/common/postscript.c:3024
+#: plug-ins/common/postscript.c:3032
 #, fuzzy
 msgid "_PostScript Level 2"
 msgstr "포스트스크립트 레벨 2"
 
-#: plug-ins/common/postscript.c:3033
+#: plug-ins/common/postscript.c:3041
 #, fuzzy
 msgid "_Encapsulated PostScript"
 msgstr "싸여진 포스트스크립트"
 
-#: plug-ins/common/postscript.c:3042
+#: plug-ins/common/postscript.c:3050
 #, fuzzy
 msgid "P_review"
 msgstr "미리보기"
 
-#: plug-ins/common/postscript.c:3063
+#: plug-ins/common/postscript.c:3071
 #, fuzzy
 msgid "Preview _Size:"
 msgstr "미리보기 크기"
@@ -8214,61 +8214,61 @@ msgstr "<Image>/필터/결합/깊이(depth) 머지"
 msgid "<Image>/Filters/Generic/_Dilate"
 msgstr "<Image>/필터/랜더/채커보드"
 
-#: plug-ins/common/vpropagate.c:455
+#: plug-ins/common/vpropagate.c:459
 #, fuzzy
 msgid "Value Propagating..."
 msgstr "색상 변화"
 
-#: plug-ins/common/vpropagate.c:1027
+#: plug-ins/common/vpropagate.c:1031
 msgid "Value Propagate"
 msgstr ""
 
 #. Propagate Mode
-#: plug-ins/common/vpropagate.c:1042
+#: plug-ins/common/vpropagate.c:1046
 msgid "Propagate Mode"
 msgstr ""
 
-#: plug-ins/common/vpropagate.c:1083
+#: plug-ins/common/vpropagate.c:1087
 #, fuzzy
 msgid "Lower T_hreshold:"
 msgstr "발단규모(Threshold):"
 
-#: plug-ins/common/vpropagate.c:1092
+#: plug-ins/common/vpropagate.c:1096
 #, fuzzy
 msgid "_Upper Threshold:"
 msgstr "발단규모(Threshold):"
 
-#: plug-ins/common/vpropagate.c:1101
+#: plug-ins/common/vpropagate.c:1105
 #, fuzzy
 msgid "_Propagating Rate:"
 msgstr "변화율"
 
-#: plug-ins/common/vpropagate.c:1113
+#: plug-ins/common/vpropagate.c:1117
 #, fuzzy
 msgid "To L_eft"
 msgstr "위-왼쪽"
 
-#: plug-ins/common/vpropagate.c:1116
+#: plug-ins/common/vpropagate.c:1120
 #, fuzzy
 msgid "To _Right"
 msgstr "라이트 없음"
 
-#: plug-ins/common/vpropagate.c:1119
+#: plug-ins/common/vpropagate.c:1123
 #, fuzzy
 msgid "To _Top"
 msgstr "어디로 :"
 
-#: plug-ins/common/vpropagate.c:1122
+#: plug-ins/common/vpropagate.c:1126
 #, fuzzy
 msgid "To _Bottom"
 msgstr "왼쪽  아래"
 
-#: plug-ins/common/vpropagate.c:1135
+#: plug-ins/common/vpropagate.c:1139
 #, fuzzy
 msgid "Propagating _Alpha Channel"
 msgstr "채널"
 
-#: plug-ins/common/vpropagate.c:1145
+#: plug-ins/common/vpropagate.c:1149
 msgid "Propagating Value Channel"
 msgstr ""
 

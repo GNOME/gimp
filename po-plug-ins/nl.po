@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-17 19:35+0200\n"
+"POT-Creation-Date: 2004-09-25 00:02+0200\n"
 "PO-Revision-Date: 2004-08-18 01:05+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -328,8 +328,8 @@ msgstr "Cosinus"
 #: plug-ins/FractalExplorer/Dialogs.c:1039
 #: plug-ins/FractalExplorer/Dialogs.c:1080 plug-ins/Lighting/lighting_ui.c:507
 #: plug-ins/common/CML_explorer.c:169 plug-ins/common/align_layers.c:426
-#: plug-ins/common/align_layers.c:454 plug-ins/common/postscript.c:2841
-#: plug-ins/common/postscript.c:2853 plug-ins/common/psp.c:418
+#: plug-ins/common/align_layers.c:454 plug-ins/common/postscript.c:2846
+#: plug-ins/common/postscript.c:2858 plug-ins/common/psp.c:418
 #: plug-ins/fits/fits.c:1013
 msgid "None"
 msgstr "Geen"
@@ -433,7 +433,7 @@ msgstr "Fractals"
 #: plug-ins/common/mng.c:542 plug-ins/common/mng.c:874
 #: plug-ins/common/pat.c:428 plug-ins/common/pcx.c:584
 #: plug-ins/common/pix.c:516 plug-ins/common/png.c:1174
-#: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:995
+#: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:996
 #: plug-ins/common/psd_save.c:1555 plug-ins/common/spheredesigner.c:2082
 #: plug-ins/common/sunras.c:512 plug-ins/common/tga.c:1028
 #: plug-ins/common/tiff.c:1804 plug-ins/common/xbm.c:995
@@ -480,7 +480,7 @@ msgstr "Sla fractalparameters op"
 #: plug-ins/common/mng.c:1043 plug-ins/common/pat.c:295
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:333
 #: plug-ins/common/png.c:670 plug-ins/common/pnm.c:394
-#: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
+#: plug-ins/common/postscript.c:873 plug-ins/common/psd.c:1756
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
 #: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:243
 #: plug-ins/common/svg.c:626 plug-ins/common/tga.c:413
@@ -1064,7 +1064,7 @@ msgid "Object Z position in XYZ space"
 msgstr "Z-positie van object in XYZ-ruimte"
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1080 plug-ins/common/postscript.c:3005
+#: plug-ins/MapObject/mapobject_ui.c:1080 plug-ins/common/postscript.c:3010
 msgid "Rotation"
 msgstr "Draaiing"
 
@@ -1211,8 +1211,8 @@ msgstr "Slechte kleurenkaart"
 #: plug-ins/common/hrz.c:339 plug-ins/common/jpeg.c:819
 #: plug-ins/common/pat.c:300 plug-ins/common/pcx.c:306
 #: plug-ins/common/pix.c:339 plug-ins/common/png.c:677
-#: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
-#: plug-ins/common/psd.c:1773 plug-ins/common/sunras.c:435
+#: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:879
+#: plug-ins/common/psd.c:1761 plug-ins/common/sunras.c:435
 #: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:513
 #: plug-ins/common/wmf.c:401 plug-ins/common/xbm.c:723
 #: plug-ins/common/xpm.c:329 plug-ins/common/xwd.c:434
@@ -1250,11 +1250,11 @@ msgstr "Niet herkend of ongeldig BMP compressieformaat."
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:312
 #: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:580
 #: plug-ins/common/dicom.c:441 plug-ins/common/film.c:975
-#: plug-ins/common/gifload.c:857 plug-ins/common/hrz.c:373
+#: plug-ins/common/gifload.c:864 plug-ins/common/hrz.c:373
 #: plug-ins/common/jpeg.c:979 plug-ins/common/pcx.c:333
 #: plug-ins/common/pcx.c:339 plug-ins/common/pix.c:375
 #: plug-ins/common/png.c:804 plug-ins/common/pnm.c:479
-#: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:253
+#: plug-ins/common/psd.c:2170 plug-ins/common/smooth_palette.c:253
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
 #: plug-ins/common/tiff.c:831 plug-ins/common/tile.c:264
 #: plug-ins/common/winclipboard.c:573 plug-ins/common/xbm.c:866
@@ -1270,7 +1270,7 @@ msgid "Cannot save images with alpha channel."
 msgstr "Kan afbeeldingen met alphakanaal niet opslaan."
 
 #: plug-ins/bmp/bmpwrite.c:182 plug-ins/common/dicom.c:631
-#: plug-ins/common/postscript.c:986 plug-ins/common/xwd.c:524
+#: plug-ins/common/postscript.c:987 plug-ins/common/xwd.c:524
 #: plug-ins/fits/fits.c:441 plug-ins/xjt/xjt.c:1686
 msgid "Cannot operate on unknown image types."
 msgstr "Kan niet werken met onbekende afbeeldingstypen."
@@ -1285,7 +1285,7 @@ msgstr "Kan niet werken met onbekende afbeeldingstypen."
 #: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1316
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:544
 #: plug-ins/common/pix.c:522 plug-ins/common/png.c:1181
-#: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
+#: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1001
 #: plug-ins/common/psd_save.c:1560 plug-ins/common/sunras.c:517
 #: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1809
 #: plug-ins/common/xbm.c:1000 plug-ins/common/xpm.c:619
@@ -2081,7 +2081,7 @@ msgstr "Zichtbare lagen uitlijnen"
 #: plug-ins/common/sobel.c:242 plug-ins/common/sparkle.c:350
 #: plug-ins/common/struc.c:1266 plug-ins/common/threshold_alpha.c:232
 #: plug-ins/common/unsharp.c:651 plug-ins/common/video.c:2151
-#: plug-ins/common/vpropagate.c:1073 plug-ins/common/waves.c:343
+#: plug-ins/common/vpropagate.c:1077 plug-ins/common/waves.c:343
 #: plug-ins/common/whirlpinch.c:698 plug-ins/common/wind.c:892
 #: plug-ins/common/xpm.c:783 plug-ins/maze/maze_face.c:202
 #: plug-ins/xjt/xjt.c:856
@@ -2627,7 +2627,7 @@ msgid "Colorify"
 msgstr "Verkleuren"
 
 #: plug-ins/common/colorify.c:258 plug-ins/common/colortoalpha.c:325
-#: plug-ins/common/postscript.c:2826 plug-ins/common/xpm.c:457
+#: plug-ins/common/postscript.c:2831 plug-ins/common/xpm.c:457
 #: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:107
 #: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1417
 msgid "Color"
@@ -3441,7 +3441,7 @@ msgid "Create _Histogram"
 msgstr "Histogram maken"
 
 #: plug-ins/common/destripe.c:664 plug-ins/common/gtm.c:583
-#: plug-ins/common/postscript.c:2782 plug-ins/common/postscript.c:2941
+#: plug-ins/common/postscript.c:2787 plug-ins/common/postscript.c:2946
 #: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:411
 #: plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
@@ -3630,8 +3630,8 @@ msgid "_Limit Line Width"
 msgstr "Beperk lijnbreedte"
 
 #: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1229
-#: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2791
-#: plug-ins/common/postscript.c:2950 plug-ins/common/smooth_palette.c:436
+#: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2796
+#: plug-ins/common/postscript.c:2955 plug-ins/common/smooth_palette.c:436
 #: plug-ins/common/tile.c:415 plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
@@ -4135,24 +4135,24 @@ msgstr "Dit is niet een GIF-bestand"
 msgid "Non-square pixels.  Image might look squashed."
 msgstr "Niet-vierkante pixels. Afbeelding kan vervormd uitzien."
 
-#: plug-ins/common/gifload.c:859
+#: plug-ins/common/gifload.c:866
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Achtergrond (%d%s)"
 
 # What is the Dutch translation for this phrase?
-#: plug-ins/common/gifload.c:907 plug-ins/common/iwarp.c:787
+#: plug-ins/common/gifload.c:914 plug-ins/common/iwarp.c:787
 #: plug-ins/common/iwarp.c:819
 #, c-format
 msgid "Frame %d"
 msgstr "Frame %d"
 
-#: plug-ins/common/gifload.c:909
+#: plug-ins/common/gifload.c:916
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Frame %d (%d%s)"
 
-#: plug-ins/common/gifload.c:939
+#: plug-ins/common/gifload.c:946
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -5880,109 +5880,109 @@ msgid ""
 msgstr ""
 "Indien geselecteerd zal de afbeelding naar een cirkel worden geprojecteerd."
 
-#: plug-ins/common/postscript.c:887
+#: plug-ins/common/postscript.c:888
 #, c-format
 msgid "Could not interpret '%s'"
 msgstr "Kon '%s' niet interpreteren"
 
-#: plug-ins/common/postscript.c:975
+#: plug-ins/common/postscript.c:976
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "PostScript-opslaan kan niet met afbeeldingen met alphakanalen werken"
 
-#: plug-ins/common/postscript.c:1470 plug-ins/common/postscript.c:1500
+#: plug-ins/common/postscript.c:1475 plug-ins/common/postscript.c:1505
 #, c-format
 msgid "Error starting ghostscript (%s)"
 msgstr "Fout bij het starten van ghostscript (%s)"
 
-#: plug-ins/common/postscript.c:2300 plug-ins/common/postscript.c:2432
-#: plug-ins/common/postscript.c:2582 plug-ins/common/postscript.c:2710
+#: plug-ins/common/postscript.c:2305 plug-ins/common/postscript.c:2437
+#: plug-ins/common/postscript.c:2587 plug-ins/common/postscript.c:2715
 #: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
 #: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
 msgid "Write error occurred"
 msgstr "Er was een schrijffout"
 
-#: plug-ins/common/postscript.c:2736
+#: plug-ins/common/postscript.c:2741
 msgid "Load PostScript"
 msgstr "PostScript laden"
 
 #. Rendering
-#: plug-ins/common/postscript.c:2756
+#: plug-ins/common/postscript.c:2761
 msgid "Rendering"
 msgstr "Renderen"
 
 #. Resolution
-#: plug-ins/common/postscript.c:2773 plug-ins/common/svg.c:820
+#: plug-ins/common/postscript.c:2778 plug-ins/common/svg.c:820
 #: plug-ins/print/gimp_main_window.c:1100
 msgid "Resolution:"
 msgstr "Resolutie:"
 
-#: plug-ins/common/postscript.c:2801
+#: plug-ins/common/postscript.c:2806
 msgid "Pages:"
 msgstr "Pagina's:"
 
 # Kept the PS terminology intact
-#: plug-ins/common/postscript.c:2807
+#: plug-ins/common/postscript.c:2812
 msgid "Try Bounding Box"
 msgstr "Probeer 'Bounding Box'"
 
 #. Colouring
-#: plug-ins/common/postscript.c:2820
+#: plug-ins/common/postscript.c:2825
 msgid "Coloring"
 msgstr "Inkleuren"
 
-#: plug-ins/common/postscript.c:2824
+#: plug-ins/common/postscript.c:2829
 msgid "B/W"
 msgstr "Z/W"
 
 #. * Gray *
-#: plug-ins/common/postscript.c:2825 plug-ins/rcm/rcm_dialog.c:409
+#: plug-ins/common/postscript.c:2830 plug-ins/rcm/rcm_dialog.c:409
 msgid "Gray"
 msgstr "Grijs"
 
-#: plug-ins/common/postscript.c:2827 plug-ins/fits/fits.c:1001
+#: plug-ins/common/postscript.c:2832 plug-ins/fits/fits.c:1001
 msgid "Automatic"
 msgstr "Automatisch"
 
-#: plug-ins/common/postscript.c:2837
+#: plug-ins/common/postscript.c:2842
 msgid "Text Antialiasing"
 msgstr "Anti-aliasen tekst"
 
-#: plug-ins/common/postscript.c:2842 plug-ins/common/postscript.c:2854
+#: plug-ins/common/postscript.c:2847 plug-ins/common/postscript.c:2859
 msgid "Weak"
 msgstr "Zwak"
 
-#: plug-ins/common/postscript.c:2843 plug-ins/common/postscript.c:2855
+#: plug-ins/common/postscript.c:2848 plug-ins/common/postscript.c:2860
 msgid "Strong"
 msgstr "Sterk"
 
-#: plug-ins/common/postscript.c:2849
+#: plug-ins/common/postscript.c:2854
 msgid "Graphic Antialiasing"
 msgstr "Anti-aliasen afbeelding"
 
-#: plug-ins/common/postscript.c:2901
+#: plug-ins/common/postscript.c:2906
 msgid "Save as PostScript"
 msgstr "Opslaan als PostScript"
 
 #. Image Size
-#: plug-ins/common/postscript.c:2924
+#: plug-ins/common/postscript.c:2929
 msgid "Image Size"
 msgstr "Afbeeldingsgrootte"
 
-#: plug-ins/common/postscript.c:2959
+#: plug-ins/common/postscript.c:2964
 msgid "_X-Offset:"
 msgstr "X-verspringing:"
 
-#: plug-ins/common/postscript.c:2968
+#: plug-ins/common/postscript.c:2973
 msgid "_Y-Offset:"
 msgstr "Y-verspringing:"
 
 # What is the Dutch translation of 'aspect ratio'?
-#: plug-ins/common/postscript.c:2974
+#: plug-ins/common/postscript.c:2979
 msgid "_Keep Aspect Ratio"
 msgstr "Behoud aspectratio"
 
 # What is the Dutch translation of 'aspect ratio'?
-#: plug-ins/common/postscript.c:2980
+#: plug-ins/common/postscript.c:2985
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5991,36 +5991,36 @@ msgstr ""
 "opgegeven grootte te passen zonder de aspectratio te veranderen."
 
 #. Unit
-#: plug-ins/common/postscript.c:2989
+#: plug-ins/common/postscript.c:2994
 msgid "Unit"
 msgstr "Eenheid"
 
-#: plug-ins/common/postscript.c:2993
+#: plug-ins/common/postscript.c:2998
 msgid "_Inch"
 msgstr "Duim"
 
-#: plug-ins/common/postscript.c:2994
+#: plug-ins/common/postscript.c:2999
 msgid "_Millimeter"
 msgstr "Millimeter"
 
 #. Format
-#: plug-ins/common/postscript.c:3020
+#: plug-ins/common/postscript.c:3025
 msgid "Output"
 msgstr "Uitvoer"
 
-#: plug-ins/common/postscript.c:3027
+#: plug-ins/common/postscript.c:3032
 msgid "_PostScript Level 2"
 msgstr "PostScript Niveau 2"
 
-#: plug-ins/common/postscript.c:3036
+#: plug-ins/common/postscript.c:3041
 msgid "_Encapsulated PostScript"
 msgstr "Encapsulated PostScript"
 
-#: plug-ins/common/postscript.c:3045
+#: plug-ins/common/postscript.c:3050
 msgid "P_review"
 msgstr "Vooruitblik"
 
-#: plug-ins/common/postscript.c:3066
+#: plug-ins/common/postscript.c:3071
 msgid "Preview _Size:"
 msgstr "Vooruitblikgrootte:"
 
@@ -7482,52 +7482,52 @@ msgstr "<Image>/Filters/Algemeen/Eroderen"
 msgid "<Image>/Filters/Generic/_Dilate"
 msgstr "<Image>/Filters/Algemeen/Verwijden"
 
-#: plug-ins/common/vpropagate.c:455
+#: plug-ins/common/vpropagate.c:459
 msgid "Value Propagating..."
 msgstr "Waarde doorgeven..."
 
-#: plug-ins/common/vpropagate.c:1027
+#: plug-ins/common/vpropagate.c:1031
 msgid "Value Propagate"
 msgstr "Waarde doorgeven"
 
 #. Propagate Mode
-#: plug-ins/common/vpropagate.c:1042
+#: plug-ins/common/vpropagate.c:1046
 msgid "Propagate Mode"
 msgstr "Doorgeefmodus"
 
-#: plug-ins/common/vpropagate.c:1083
+#: plug-ins/common/vpropagate.c:1087
 msgid "Lower T_hreshold:"
 msgstr "Onderste drempel:"
 
-#: plug-ins/common/vpropagate.c:1092
+#: plug-ins/common/vpropagate.c:1096
 msgid "_Upper Threshold:"
 msgstr "Bovenste drempel:"
 
-#: plug-ins/common/vpropagate.c:1101
+#: plug-ins/common/vpropagate.c:1105
 msgid "_Propagating Rate:"
 msgstr "Voortplantingssnelheid:"
 
-#: plug-ins/common/vpropagate.c:1113
+#: plug-ins/common/vpropagate.c:1117
 msgid "To L_eft"
 msgstr "Naar links"
 
-#: plug-ins/common/vpropagate.c:1116
+#: plug-ins/common/vpropagate.c:1120
 msgid "To _Right"
 msgstr "Naar rechts"
 
-#: plug-ins/common/vpropagate.c:1119
+#: plug-ins/common/vpropagate.c:1123
 msgid "To _Top"
 msgstr "Naar boven"
 
-#: plug-ins/common/vpropagate.c:1122
+#: plug-ins/common/vpropagate.c:1126
 msgid "To _Bottom"
 msgstr "Naar onder"
 
-#: plug-ins/common/vpropagate.c:1135
+#: plug-ins/common/vpropagate.c:1139
 msgid "Propagating _Alpha Channel"
 msgstr "Alphakanaal doorgeven"
 
-#: plug-ins/common/vpropagate.c:1145
+#: plug-ins/common/vpropagate.c:1149
 msgid "Propagating Value Channel"
 msgstr "Doorgeven waardekanaal"
 

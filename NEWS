@@ -30,6 +30,7 @@ Bugs fixed in GIMP 2.0.5
 - made menu entry translatable (#153456)
 - use the global gradient for the airbrush and pencil tools (#153584)
 - fixed PDB call gimp-curves-spline (#153635)
+- fixed projection when undoing floating_sel_to_layer (#149558)
 
 
 Bugs fixed in GIMP 2.0.4

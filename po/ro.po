@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-05 21:58+0200\n"
+"POT-Creation-Date: 2004-09-25 00:01+0200\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -375,26 +375,26 @@ msgstr ""
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Nu am putut deschide fişierul %s"
 
-#: app/config/gimpconfigwriter.c:568
+#: app/config/gimpconfigwriter.c:571
 #, fuzzy, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
 msgstr "Eroare la deschiderea fişierului %s: %s"
 
-#: app/config/gimpconfigwriter.c:576
+#: app/config/gimpconfigwriter.c:579
 #, fuzzy, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
 msgstr "Eroare la deschiderea fişierului %s: %s"
 
-#: app/config/gimpconfigwriter.c:587
+#: app/config/gimpconfigwriter.c:590
 #, fuzzy, c-format
 msgid "Error writing to '%s': %s"
 msgstr "eroare de procesare: \"%s\"\n"
 
-#: app/config/gimpconfigwriter.c:605
+#: app/config/gimpconfigwriter.c:608
 #, fuzzy, c-format
 msgid "Could not create '%s': %s"
 msgstr "Nu am putut redeschide %s\n"
@@ -1203,7 +1203,7 @@ msgid "Drawable Mod"
 msgstr ""
 
 #: app/core/core-enums.c:596 app/core/core-enums.c:626
-#: app/core/gimpchannel.c:1617 app/core/gimpselection.c:570
+#: app/core/gimpchannel.c:1591 app/core/gimpselection.c:567
 msgid "Selection Mask"
 msgstr "Masca de selecţie"
 
@@ -1253,7 +1253,7 @@ msgstr "/Aplică stratul mască"
 msgid "Floating Selection to Layer"
 msgstr "Selecţie Plutitoare"
 
-#: app/core/core-enums.c:606 app/core/gimpselection.c:827
+#: app/core/core-enums.c:606 app/core/gimpselection.c:824
 #, fuzzy
 msgid "Float Selection"
 msgstr "Selecţie Plutitoare"
@@ -1295,7 +1295,8 @@ msgstr "Transformare"
 msgid "Paint"
 msgstr "desen"
 
-#: app/core/core-enums.c:614 app/core/core-enums.c:654 app/core/gimpitem.c:987
+#: app/core/core-enums.c:614 app/core/core-enums.c:654
+#: app/core/gimpitem.c:1047
 #, fuzzy
 msgid "Attach Parasite"
 msgstr "ataşează parazit"
@@ -1588,7 +1589,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Eroare în fişierul de pensule al GIMP \"%s\"."
 
 #: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1306
-#: app/core/gimpitem.c:466 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:471 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
 msgstr "Fară nume"
@@ -1616,96 +1617,96 @@ msgstr "Fişierul de pensule al GIMP pare să fie trunchiat: \"%s\"."
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Fişierul de pensule al GIMP pare să fie trunchiat: \"%s\"."
 
-#: app/core/gimpchannel.c:252 app/pdb/internal_procs.c:86
+#: app/core/gimpchannel.c:251 app/pdb/internal_procs.c:86
 msgid "Channel"
 msgstr "Canal"
 
-#: app/core/gimpchannel.c:253
+#: app/core/gimpchannel.c:252
 #, fuzzy
 msgid "Rename Channel"
 msgstr "Ridică canalul"
 
-#: app/core/gimpchannel.c:254 app/tools/gimpeditselectiontool.c:251
+#: app/core/gimpchannel.c:253 app/tools/gimpeditselectiontool.c:251
 #: app/tools/gimpeditselectiontool.c:1204
 #, fuzzy
 msgid "Move Channel"
 msgstr "Ridică canalul"
 
-#: app/core/gimpchannel.c:255
+#: app/core/gimpchannel.c:254
 #, fuzzy
 msgid "Scale Channel"
 msgstr "Canal nou"
 
-#: app/core/gimpchannel.c:256
+#: app/core/gimpchannel.c:255
 #, fuzzy
 msgid "Resize Channel"
 msgstr "Ridică canalul"
 
-#: app/core/gimpchannel.c:257
+#: app/core/gimpchannel.c:256
 #, fuzzy
 msgid "Flip Channel"
 msgstr "Canale"
 
-#: app/core/gimpchannel.c:258
+#: app/core/gimpchannel.c:257
 #, fuzzy
 msgid "Rotate Channel"
 msgstr "/Ridică canalul"
 
-#: app/core/gimpchannel.c:259 app/core/gimpdrawable-transform.c:1080
+#: app/core/gimpchannel.c:258 app/core/gimpdrawable-transform.c:1080
 #, fuzzy
 msgid "Transform Channel"
 msgstr "Transformare"
 
-#: app/core/gimpchannel.c:281
+#: app/core/gimpchannel.c:280
 #, fuzzy
 msgid "Feather Channel"
 msgstr "Elimină canal"
 
-#: app/core/gimpchannel.c:282
+#: app/core/gimpchannel.c:281
 #, fuzzy
 msgid "Sharpen Channel"
 msgstr "Canal nou"
 
-#: app/core/gimpchannel.c:283
+#: app/core/gimpchannel.c:282
 #, fuzzy
 msgid "Clear Channel"
 msgstr "Coboară canalul"
 
-#: app/core/gimpchannel.c:284
+#: app/core/gimpchannel.c:283
 #, fuzzy
 msgid "Fill Channel"
 msgstr "Canale"
 
-#: app/core/gimpchannel.c:285
+#: app/core/gimpchannel.c:284
 #, fuzzy
 msgid "Invert Channel"
 msgstr "Coboară canalul"
 
-#: app/core/gimpchannel.c:286
+#: app/core/gimpchannel.c:285
 #, fuzzy
 msgid "Border Channel"
 msgstr "Coboară canalul"
 
-#: app/core/gimpchannel.c:287
+#: app/core/gimpchannel.c:286
 #, fuzzy
 msgid "Grow Channel"
 msgstr "Coboară canalul"
 
-#: app/core/gimpchannel.c:288
+#: app/core/gimpchannel.c:287
 #, fuzzy
 msgid "Shrink Channel"
 msgstr "Coboară canalul"
 
-#: app/core/gimpchannel.c:584
+#: app/core/gimpchannel.c:582
 msgid "Cannot stroke empty channel."
 msgstr ""
 
-#: app/core/gimpchannel.c:1499
+#: app/core/gimpchannel.c:1473
 #, fuzzy
 msgid "Set Channel Color"
 msgstr "Culoarea pentru noul canal"
 
-#: app/core/gimpchannel.c:1546
+#: app/core/gimpchannel.c:1520
 #, fuzzy
 msgid "Set Channel Opacity"
 msgstr "Opţiuni pentru noul canal"
@@ -1753,11 +1754,11 @@ msgid ""
 msgstr "Nu am reuşit să citesc traseul din %s"
 
 #: app/core/gimpdatafactory.c:410 app/core/gimpdatafactory.c:413
-#: app/core/gimpitem.c:304 app/core/gimpitem.c:307
+#: app/core/gimpitem.c:309 app/core/gimpitem.c:312
 msgid "copy"
 msgstr "copiere"
 
-#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:316
+#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:321
 #, c-format
 msgid "%s copy"
 msgstr "%s copiere"
@@ -1989,7 +1990,7 @@ msgstr "Masca de selecţie"
 msgid "Disable QuickMask"
 msgstr ""
 
-#: app/core/gimpimage-undo-push.c:2937
+#: app/core/gimpimage-undo-push.c:2939
 #, c-format
 msgid "Can't undo %s"
 msgstr "Nu pot reface %s"
@@ -2193,12 +2194,12 @@ msgstr "Strat"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nu am putut redeschide %s\n"
 
-#: app/core/gimpitem.c:997
+#: app/core/gimpitem.c:1057
 #, fuzzy
 msgid "Attach Parasite to Item"
 msgstr "ataşează parazit"
 
-#: app/core/gimpitem.c:1036 app/core/gimpitem.c:1043
+#: app/core/gimpitem.c:1096 app/core/gimpitem.c:1103
 #, fuzzy
 msgid "Remove Parasite from Item"
 msgstr "elimină parazit"
@@ -2381,81 +2382,81 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Eroare în fişierul de pensule al GIMP \"%s\"."
 
-#: app/core/gimpselection.c:180 app/tools/gimpeditselectiontool.c:259
+#: app/core/gimpselection.c:179 app/tools/gimpeditselectiontool.c:259
 #: app/tools/gimpeditselectiontool.c:1116 app/tools/gimpmoveoptions.c:184
 #: app/tools/gimpmoveoptions.c:185
 #, fuzzy
 msgid "Move Selection"
 msgstr "Nici o selecţie."
 
-#: app/core/gimpselection.c:197 app/gui/select-commands.c:177
+#: app/core/gimpselection.c:196 app/gui/select-commands.c:177
 msgid "Feather Selection"
 msgstr "Selecţie pană"
 
-#: app/core/gimpselection.c:198
+#: app/core/gimpselection.c:197
 #, fuzzy
 msgid "Sharpen Selection"
 msgstr "Micşorează selecţia"
 
-#: app/core/gimpselection.c:199 app/widgets/gimpselectioneditor.c:172
+#: app/core/gimpselection.c:198 app/widgets/gimpselectioneditor.c:172
 #, fuzzy
 msgid "Select None"
 msgstr "/Selecţie/Deselectează tot"
 
-#: app/core/gimpselection.c:200 app/widgets/gimpselectioneditor.c:164
+#: app/core/gimpselection.c:199 app/widgets/gimpselectioneditor.c:164
 #, fuzzy
 msgid "Select All"
 msgstr "/Selecţie/Selectează tot"
 
-#: app/core/gimpselection.c:201 app/widgets/gimpselectioneditor.c:180
+#: app/core/gimpselection.c:200 app/widgets/gimpselectioneditor.c:180
 #, fuzzy
 msgid "Invert Selection"
 msgstr "/Intersectează cu selecţia"
 
-#: app/core/gimpselection.c:202 app/gui/select-commands.c:270
+#: app/core/gimpselection.c:201 app/gui/select-commands.c:270
 msgid "Border Selection"
 msgstr "Selecţie bordură"
 
-#: app/core/gimpselection.c:203 app/gui/select-commands.c:247
+#: app/core/gimpselection.c:202 app/gui/select-commands.c:247
 msgid "Grow Selection"
 msgstr "Măreşte selecţia"
 
-#: app/core/gimpselection.c:204 app/gui/select-commands.c:213
+#: app/core/gimpselection.c:203 app/gui/select-commands.c:213
 msgid "Shrink Selection"
 msgstr "Micşorează selecţia"
 
-#: app/core/gimpselection.c:303
+#: app/core/gimpselection.c:301
 #, fuzzy
 msgid "No selection to stroke."
 msgstr "Nu există nici o selecţie pe care să o ştanţez!"
 
-#: app/core/gimpselection.c:312 app/widgets/gimpselectioneditor.c:212
+#: app/core/gimpselection.c:310 app/widgets/gimpselectioneditor.c:212
 #, fuzzy
 msgid "Stroke Selection"
 msgstr "Micşorează selecţia"
 
-#: app/core/gimpselection.c:602 app/gui/channels-commands.c:209
+#: app/core/gimpselection.c:599 app/gui/channels-commands.c:209
 #: app/pdb/selection_cmds.c:923 app/pdb/selection_cmds.c:1041
 #: app/widgets/gimpchanneltreeview.c:291
 #, fuzzy
 msgid "Channel to Selection"
 msgstr "/Canal -> Selecţie"
 
-#: app/core/gimpselection.c:674
+#: app/core/gimpselection.c:671
 #, fuzzy
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr ""
 "Nu pot să tai/copiez deoarece regiunea\n"
 "selectată este goală."
 
-#: app/core/gimpselection.c:820
+#: app/core/gimpselection.c:817
 #, fuzzy
 msgid "Cannot float selection because the selected region is empty."
 msgstr ""
 "Nu pot să tai/copiez deoarece regiunea\n"
 "selectată este goală."
 
-#: app/core/gimpselection.c:843 app/gui/layers-commands.c:989
+#: app/core/gimpselection.c:840 app/gui/layers-commands.c:989
 msgid "Floating Selection"
 msgstr "Selecţie Plutitoare"
 
@@ -4446,6 +4447,11 @@ msgstr "/Vizualizare/Rescalare/1:1"
 #, fuzzy
 msgid "/View/Zoom/1:16  (6.25%)"
 msgstr "/Vizualizare/Rescalare/1:16"
+
+#: app/gui/image-menu.c:427
+#, fuzzy
+msgid "/View/Zoom/O_ther..."
+msgstr "/Vizualizare/Micşorează"
 
 #: app/gui/image-menu.c:434
 #, fuzzy
@@ -7927,7 +7933,7 @@ msgstr "/Importă traseu..."
 msgid "/E_xport Path..."
 msgstr "/Exportă traseu..."
 
-#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:56
+#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:57
 msgid "Airbrush"
 msgstr ""
 
@@ -7958,7 +7964,7 @@ msgstr ""
 msgid "No brushes available for use with this tool."
 msgstr "Nu sunt disponibile pensule pentru a fi folosite cu această unealtă."
 
-#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:52
+#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:53
 msgid "Pencil"
 msgstr ""
 
@@ -8027,20 +8033,20 @@ msgstr "Nivele"
 msgid "Posterize"
 msgstr ""
 
-#: app/pdb/color_cmds.c:722 app/pdb/color_cmds.c:839
+#: app/pdb/color_cmds.c:726 app/pdb/color_cmds.c:843
 #: app/tools/gimpcurvestool.c:138
 msgid "Curves"
 msgstr "Curbe"
 
-#: app/pdb/color_cmds.c:957 app/tools/gimpcolorbalancetool.c:96
+#: app/pdb/color_cmds.c:961 app/tools/gimpcolorbalancetool.c:96
 msgid "Color Balance"
 msgstr "Balanţa de culori"
 
-#: app/pdb/color_cmds.c:1235 app/tools/gimphuesaturationtool.c:110
+#: app/pdb/color_cmds.c:1239 app/tools/gimphuesaturationtool.c:110
 msgid "Hue-Saturation"
 msgstr "Nuanţa-Saturare"
 
-#: app/pdb/color_cmds.c:1334 app/tools/gimpthresholdtool.c:92
+#: app/pdb/color_cmds.c:1338 app/tools/gimpthresholdtool.c:92
 msgid "Threshold"
 msgstr "Prag de declanşare"
 
@@ -8387,8 +8393,8 @@ msgstr "Dimensiune fixă / Raport de aspect"
 msgid "Transform Selection"
 msgstr "Transformare"
 
-#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:238
-#: app/vectors/gimpvectors.c:537
+#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:534
 #, fuzzy
 msgid "Transform Path"
 msgstr "Transformare"
@@ -8425,21 +8431,21 @@ msgstr ""
 msgid "This tool has no options."
 msgstr "Această unealtă nu are nici un fel de opţiuni."
 
-#: app/tools/gimpairbrushtool.c:57
+#: app/tools/gimpairbrushtool.c:58
 msgid "Airbrush with variable pressure"
 msgstr ""
 
-#: app/tools/gimpairbrushtool.c:58
+#: app/tools/gimpairbrushtool.c:59
 #, fuzzy
 msgid "/Tools/Paint Tools/_Airbrush"
 msgstr "/Unelte/Unelte de trasformare/Deplasare"
 
-#: app/tools/gimpairbrushtool.c:124 app/tools/gimpconvolvetool.c:239
+#: app/tools/gimpairbrushtool.c:125 app/tools/gimpconvolvetool.c:239
 #: app/tools/gimpsmudgetool.c:125
 msgid "Rate:"
 msgstr ""
 
-#: app/tools/gimpairbrushtool.c:130
+#: app/tools/gimpairbrushtool.c:131
 msgid "Pressure:"
 msgstr "Presiune:"
 
@@ -8905,8 +8911,8 @@ msgid "Exposure:"
 msgstr "Expunere:"
 
 #: app/tools/gimpeditselectiontool.c:247
-#: app/tools/gimpeditselectiontool.c:1156 app/vectors/gimpvectors.c:233
-#: app/vectors/gimpvectors.c:372
+#: app/tools/gimpeditselectiontool.c:1156 app/vectors/gimpvectors.c:230
+#: app/vectors/gimpvectors.c:369
 #, fuzzy
 msgid "Move Path"
 msgstr "redenumeşte stratul"
@@ -9378,11 +9384,11 @@ msgstr ""
 msgid "Use Color from Gradient"
 msgstr "Gradient personalizat"
 
-#: app/tools/gimppenciltool.c:53
+#: app/tools/gimppenciltool.c:54
 msgid "Paint hard edged pixels"
 msgstr ""
 
-#: app/tools/gimppenciltool.c:54
+#: app/tools/gimppenciltool.c:55
 #, fuzzy
 msgid "/Tools/Paint Tools/Pe_ncil"
 msgstr "/Unelte/Unelte de trasformare/Deplasare"
@@ -9948,37 +9954,37 @@ msgstr ""
 "Stratul activ nu are un canal de transparenţă(alfa)\n"
 "pe care să-l convertesc la o selecţie."
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimpvectors.c:228
 #, fuzzy
 msgid "Path"
 msgstr "Trasee"
 
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimpvectors.c:229
 #, fuzzy
 msgid "Rename Path"
 msgstr "redenumeşte stratul"
 
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimpvectors.c:231
 #, fuzzy
 msgid "Scale Path"
 msgstr "Salvează în"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:232
 #, fuzzy
 msgid "Resize Path"
 msgstr "/Inserează traseu"
 
-#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:463
+#: app/vectors/gimpvectors.c:233 app/vectors/gimpvectors.c:460
 #, fuzzy
 msgid "Flip Path"
 msgstr "Trasee"
 
-#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:506
+#: app/vectors/gimpvectors.c:234 app/vectors/gimpvectors.c:503
 #, fuzzy
 msgid "Rotate Path"
 msgstr "/Inserează traseu"
 
-#: app/vectors/gimpvectors.c:566
+#: app/vectors/gimpvectors.c:562
 msgid "Cannot stroke empty path."
 msgstr ""
 
@@ -10181,13 +10187,13 @@ msgstr "Bleu"
 
 #: app/widgets/gimpcolorframe.c:305
 #, fuzzy
-msgid "Yellow:"
-msgstr "Galben"
+msgid "Magenta:"
+msgstr "Violet"
 
 #: app/widgets/gimpcolorframe.c:306
 #, fuzzy
-msgid "Magenta:"
-msgstr "Violet"
+msgid "Yellow:"
+msgstr "Galben"
 
 #: app/widgets/gimpcolorframe.c:307
 #, fuzzy
@@ -10278,22 +10284,17 @@ msgstr ""
 msgid "Delete Data Object"
 msgstr "Elimină traseul"
 
-#: app/widgets/gimpdevicestatus.c:291
+#: app/widgets/gimpdevicestatus.c:289
 #, fuzzy
 msgid "Save device status"
 msgstr "Stare dispozitiv"
 
-#: app/widgets/gimpdevicestatus.c:298
-#, fuzzy
-msgid "Configure input devices"
-msgstr "Nivele intrare:"
-
-#: app/widgets/gimpdevicestatus.c:404
+#: app/widgets/gimpdevicestatus.c:395
 #, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "Prim plan: %d, %d, %d"
 
-#: app/widgets/gimpdevicestatus.c:409
+#: app/widgets/gimpdevicestatus.c:400
 #, c-format
 msgid "Background: %d, %d, %d"
 msgstr "Fundal: %d, %d, %d"
@@ -10523,11 +10524,11 @@ msgstr "Lăţime"
 msgid "Height"
 msgstr "Înălţime"
 
-#: app/widgets/gimphelp.c:198
+#: app/widgets/gimphelp.c:196
 msgid "Could not find GIMP Help Browser"
 msgstr "Nu am găsit programul de afişare informaţii de ajutor"
 
-#: app/widgets/gimphelp.c:200
+#: app/widgets/gimphelp.c:198
 #, fuzzy
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
@@ -10538,17 +10539,17 @@ msgstr ""
 "Probabil nu a fost compilată deoarece\n"
 "nu aveţi instalat pe sistem GtkXmHTML."
 
-#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
+#: app/widgets/gimphelp.c:202 app/widgets/gimphelp.c:235
 #, fuzzy
 msgid "Use web browser instead"
 msgstr "Folosesc Netscape în schimb."
 
-#: app/widgets/gimphelp.c:234
+#: app/widgets/gimphelp.c:232
 #, fuzzy
 msgid "Could not start GIMP Help Browser"
 msgstr "Nu am găsit programul de afişare informaţii de ajutor"
 
-#: app/widgets/gimphelp.c:236
+#: app/widgets/gimphelp.c:234
 #, fuzzy
 msgid "Could not start the GIMP Help Browser."
 msgstr "Nu am găsit programul de afişare informaţii de ajutor"
@@ -11207,6 +11208,10 @@ msgstr "Eroare XCF: am găsit versiunea de fişier XCF nesuportată %d"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Configure input devices"
+#~ msgstr "Nivele intrare:"
 
 #~ msgid ""
 #~ "  -S, --no-splash-image    Do not add an image to the startup window.\n"

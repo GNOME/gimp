@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-05 21:58+0200\n"
+"POT-Creation-Date: 2004-09-25 00:01+0200\n"
 "PO-Revision-Date: 2004-07-17 02:33+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -385,7 +385,7 @@ msgstr ""
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Temporärdatei für »%s« konnte nicht angelegt werden: %s"
 
-#: app/config/gimpconfigwriter.c:568
+#: app/config/gimpconfigwriter.c:571
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -394,7 +394,7 @@ msgstr ""
 "Fehler beim Schreiben in Temporärdatei für »%s«: %s\n"
 "Die Originaldatei wurde nicht geändert."
 
-#: app/config/gimpconfigwriter.c:576
+#: app/config/gimpconfigwriter.c:579
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -403,12 +403,12 @@ msgstr ""
 "Fehler beim Schreiben in Temporärdatei für »%s«: %s\n"
 "Es wurde keine Datei angelegt."
 
-#: app/config/gimpconfigwriter.c:587
+#: app/config/gimpconfigwriter.c:590
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Fehler beim Schreiben von »%s«: %s"
 
-#: app/config/gimpconfigwriter.c:605
+#: app/config/gimpconfigwriter.c:608
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "»%s« konnte nicht angelegt werden: %s"
@@ -1256,7 +1256,7 @@ msgid "Drawable Mod"
 msgstr ""
 
 #: app/core/core-enums.c:596 app/core/core-enums.c:626
-#: app/core/gimpchannel.c:1617 app/core/gimpselection.c:570
+#: app/core/gimpchannel.c:1591 app/core/gimpselection.c:567
 msgid "Selection Mask"
 msgstr "Auswahlmaske"
 
@@ -1300,7 +1300,7 @@ msgstr "Ebenenmaske anwenden"
 msgid "Floating Selection to Layer"
 msgstr "Schwebende Auswahl in Ebene"
 
-#: app/core/core-enums.c:606 app/core/gimpselection.c:827
+#: app/core/core-enums.c:606 app/core/gimpselection.c:824
 msgid "Float Selection"
 msgstr "Auswahl anheben"
 
@@ -1336,7 +1336,8 @@ msgstr "Transformation"
 msgid "Paint"
 msgstr "Zeichnen"
 
-#: app/core/core-enums.c:614 app/core/core-enums.c:654 app/core/gimpitem.c:987
+#: app/core/core-enums.c:614 app/core/core-enums.c:654
+#: app/core/gimpitem.c:1047
 msgid "Attach Parasite"
 msgstr "Parasit zuweisen"
 
@@ -1603,7 +1604,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ungültiger UTF-8 Text in Pinseldatei »%s«."
 
 #: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1306
-#: app/core/gimpitem.c:466 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:471 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
 msgstr "Namenlos"
@@ -1643,80 +1644,80 @@ msgstr ""
 "Schwerwiegend Fehler beim Verarbeiten von Pinseldatei »%s«: Datei ist "
 "fehlerhaft."
 
-#: app/core/gimpchannel.c:252 app/pdb/internal_procs.c:86
+#: app/core/gimpchannel.c:251 app/pdb/internal_procs.c:86
 msgid "Channel"
 msgstr "Kanal"
 
-#: app/core/gimpchannel.c:253
+#: app/core/gimpchannel.c:252
 msgid "Rename Channel"
 msgstr "Kanal umbenennen"
 
-#: app/core/gimpchannel.c:254 app/tools/gimpeditselectiontool.c:251
+#: app/core/gimpchannel.c:253 app/tools/gimpeditselectiontool.c:251
 #: app/tools/gimpeditselectiontool.c:1204
 msgid "Move Channel"
 msgstr "Kanal verschieben"
 
-#: app/core/gimpchannel.c:255
+#: app/core/gimpchannel.c:254
 msgid "Scale Channel"
 msgstr "Kanal skalieren"
 
-#: app/core/gimpchannel.c:256
+#: app/core/gimpchannel.c:255
 msgid "Resize Channel"
 msgstr "Kanalgröße ändern"
 
-#: app/core/gimpchannel.c:257
+#: app/core/gimpchannel.c:256
 msgid "Flip Channel"
 msgstr "Kanal spiegeln"
 
-#: app/core/gimpchannel.c:258
+#: app/core/gimpchannel.c:257
 msgid "Rotate Channel"
 msgstr "Kanal drehen"
 
-#: app/core/gimpchannel.c:259 app/core/gimpdrawable-transform.c:1080
+#: app/core/gimpchannel.c:258 app/core/gimpdrawable-transform.c:1080
 msgid "Transform Channel"
 msgstr "Kanal transformieren"
 
-#: app/core/gimpchannel.c:281
+#: app/core/gimpchannel.c:280
 msgid "Feather Channel"
 msgstr "Kanal ausblenden"
 
-#: app/core/gimpchannel.c:282
+#: app/core/gimpchannel.c:281
 msgid "Sharpen Channel"
 msgstr "Kanal schärfen"
 
-#: app/core/gimpchannel.c:283
+#: app/core/gimpchannel.c:282
 msgid "Clear Channel"
 msgstr "Kanal löschen"
 
-#: app/core/gimpchannel.c:284
+#: app/core/gimpchannel.c:283
 msgid "Fill Channel"
 msgstr "Kanal füllen"
 
-#: app/core/gimpchannel.c:285
+#: app/core/gimpchannel.c:284
 msgid "Invert Channel"
 msgstr "Kanal invertieren"
 
-#: app/core/gimpchannel.c:286
+#: app/core/gimpchannel.c:285
 msgid "Border Channel"
 msgstr "Kanal umranden"
 
-#: app/core/gimpchannel.c:287
+#: app/core/gimpchannel.c:286
 msgid "Grow Channel"
 msgstr "Kanal vergrößern"
 
-#: app/core/gimpchannel.c:288
+#: app/core/gimpchannel.c:287
 msgid "Shrink Channel"
 msgstr "Kanal verkleinern"
 
-#: app/core/gimpchannel.c:584
+#: app/core/gimpchannel.c:582
 msgid "Cannot stroke empty channel."
 msgstr "Leere Kanäle können nicht nachgezogen werden."
 
-#: app/core/gimpchannel.c:1499
+#: app/core/gimpchannel.c:1473
 msgid "Set Channel Color"
 msgstr "Farbe für Kanal setzen"
 
-#: app/core/gimpchannel.c:1546
+#: app/core/gimpchannel.c:1520
 msgid "Set Channel Opacity"
 msgstr "Transparenz des Kanals setzen"
 
@@ -1760,11 +1761,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:410 app/core/gimpdatafactory.c:413
-#: app/core/gimpitem.c:304 app/core/gimpitem.c:307
+#: app/core/gimpitem.c:309 app/core/gimpitem.c:312
 msgid "copy"
 msgstr "Kopie"
 
-#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:316
+#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:321
 #, c-format
 msgid "%s copy"
 msgstr "%s-Kopie"
@@ -1986,7 +1987,7 @@ msgstr "QuickMask aktivieren"
 msgid "Disable QuickMask"
 msgstr "QuickMask deaktivieren"
 
-#: app/core/gimpimage-undo-push.c:2937
+#: app/core/gimpimage-undo-push.c:2939
 #, c-format
 msgid "Can't undo %s"
 msgstr "%s konnte nicht rückgängig gemacht werden"
@@ -2157,11 +2158,11 @@ msgstr "%d Ebenen"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Vorschaudatei »%s« konnte nicht geöffnet werden: %s"
 
-#: app/core/gimpitem.c:997
+#: app/core/gimpitem.c:1057
 msgid "Attach Parasite to Item"
 msgstr "Parasit zuweisen"
 
-#: app/core/gimpitem.c:1036 app/core/gimpitem.c:1043
+#: app/core/gimpitem.c:1096 app/core/gimpitem.c:1103
 msgid "Remove Parasite from Item"
 msgstr "Parasit entfernen"
 
@@ -2344,71 +2345,71 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Ungültiger UTF-8 Text in Musterdatei '%s'."
 
-#: app/core/gimpselection.c:180 app/tools/gimpeditselectiontool.c:259
+#: app/core/gimpselection.c:179 app/tools/gimpeditselectiontool.c:259
 #: app/tools/gimpeditselectiontool.c:1116 app/tools/gimpmoveoptions.c:184
 #: app/tools/gimpmoveoptions.c:185
 msgid "Move Selection"
 msgstr "Auswahl verschieben"
 
-#: app/core/gimpselection.c:197 app/gui/select-commands.c:177
+#: app/core/gimpselection.c:196 app/gui/select-commands.c:177
 msgid "Feather Selection"
 msgstr "Auswahl ausblenden"
 
-#: app/core/gimpselection.c:198
+#: app/core/gimpselection.c:197
 msgid "Sharpen Selection"
 msgstr "Auswahl schärfen"
 
-#: app/core/gimpselection.c:199 app/widgets/gimpselectioneditor.c:172
+#: app/core/gimpselection.c:198 app/widgets/gimpselectioneditor.c:172
 msgid "Select None"
 msgstr "Nichts auswählen"
 
-#: app/core/gimpselection.c:200 app/widgets/gimpselectioneditor.c:164
+#: app/core/gimpselection.c:199 app/widgets/gimpselectioneditor.c:164
 msgid "Select All"
 msgstr "Alles auswählen"
 
-#: app/core/gimpselection.c:201 app/widgets/gimpselectioneditor.c:180
+#: app/core/gimpselection.c:200 app/widgets/gimpselectioneditor.c:180
 msgid "Invert Selection"
 msgstr "Auswahl invertieren"
 
-#: app/core/gimpselection.c:202 app/gui/select-commands.c:270
+#: app/core/gimpselection.c:201 app/gui/select-commands.c:270
 msgid "Border Selection"
 msgstr "Auswahl umranden"
 
-#: app/core/gimpselection.c:203 app/gui/select-commands.c:247
+#: app/core/gimpselection.c:202 app/gui/select-commands.c:247
 msgid "Grow Selection"
 msgstr "Auswahl vergrößern"
 
-#: app/core/gimpselection.c:204 app/gui/select-commands.c:213
+#: app/core/gimpselection.c:203 app/gui/select-commands.c:213
 msgid "Shrink Selection"
 msgstr "Auswahl verkleinern"
 
-#: app/core/gimpselection.c:303
+#: app/core/gimpselection.c:301
 msgid "No selection to stroke."
 msgstr "Keine Auswahl zum Nachziehen."
 
-#: app/core/gimpselection.c:312 app/widgets/gimpselectioneditor.c:212
+#: app/core/gimpselection.c:310 app/widgets/gimpselectioneditor.c:212
 msgid "Stroke Selection"
 msgstr "Auswahl nachziehen"
 
-#: app/core/gimpselection.c:602 app/gui/channels-commands.c:209
+#: app/core/gimpselection.c:599 app/gui/channels-commands.c:209
 #: app/pdb/selection_cmds.c:923 app/pdb/selection_cmds.c:1041
 #: app/widgets/gimpchanneltreeview.c:291
 msgid "Channel to Selection"
 msgstr "Auswahl aus Kanal"
 
-#: app/core/gimpselection.c:674
+#: app/core/gimpselection.c:671
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr ""
 "Ausschneiden oder Kopieren fehlgeschlagen, da der ausgewählte Bereich leer "
 "ist."
 
-#: app/core/gimpselection.c:820
+#: app/core/gimpselection.c:817
 msgid "Cannot float selection because the selected region is empty."
 msgstr ""
 "Die Auswahl konnte nicht schwebend gemacht werden, da der ausgewählte "
 "Bereich leer ist."
 
-#: app/core/gimpselection.c:843 app/gui/layers-commands.c:989
+#: app/core/gimpselection.c:840 app/gui/layers-commands.c:989
 msgid "Floating Selection"
 msgstr "Schwebende Auswahl"
 
@@ -4133,6 +4134,11 @@ msgstr "/Ansicht/Zoom/1:8  (12,5%)"
 #: app/gui/image-menu.c:420
 msgid "/View/Zoom/1:16  (6.25%)"
 msgstr "/Ansicht/Zoom/1:16  (6,25%)"
+
+#: app/gui/image-menu.c:427
+#, fuzzy
+msgid "/View/Zoom/O_ther..."
+msgstr "/Ansicht/Zoom/Ver_kleinern"
 
 #: app/gui/image-menu.c:434
 msgid "/View/_Info Window"
@@ -7095,7 +7101,7 @@ msgstr "/Pfad i_mportieren..."
 msgid "/E_xport Path..."
 msgstr "/Pfad e_xportieren..."
 
-#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:56
+#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:57
 msgid "Airbrush"
 msgstr "Airbrush"
 
@@ -7123,7 +7129,7 @@ msgstr "Pinsel"
 msgid "No brushes available for use with this tool."
 msgstr "Keine Pinsel für dieses Werkzeug vorhanden."
 
-#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:52
+#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:53
 msgid "Pencil"
 msgstr "Stift"
 
@@ -7190,20 +7196,20 @@ msgstr "Werte"
 msgid "Posterize"
 msgstr "Posterisieren"
 
-#: app/pdb/color_cmds.c:722 app/pdb/color_cmds.c:839
+#: app/pdb/color_cmds.c:726 app/pdb/color_cmds.c:843
 #: app/tools/gimpcurvestool.c:138
 msgid "Curves"
 msgstr "Kurven"
 
-#: app/pdb/color_cmds.c:957 app/tools/gimpcolorbalancetool.c:96
+#: app/pdb/color_cmds.c:961 app/tools/gimpcolorbalancetool.c:96
 msgid "Color Balance"
 msgstr "Farbabgleich"
 
-#: app/pdb/color_cmds.c:1235 app/tools/gimphuesaturationtool.c:110
+#: app/pdb/color_cmds.c:1239 app/tools/gimphuesaturationtool.c:110
 msgid "Hue-Saturation"
 msgstr "Farbton-Sättigung"
 
-#: app/pdb/color_cmds.c:1334 app/tools/gimpthresholdtool.c:92
+#: app/pdb/color_cmds.c:1338 app/tools/gimpthresholdtool.c:92
 msgid "Threshold"
 msgstr "Schwellwert"
 
@@ -7536,8 +7542,8 @@ msgstr "Festes Seitenverhältnis"
 msgid "Transform Selection"
 msgstr "Auswahl transformieren"
 
-#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:238
-#: app/vectors/gimpvectors.c:537
+#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:534
 msgid "Transform Path"
 msgstr "Pfad transformieren"
 
@@ -7569,20 +7575,20 @@ msgstr "Abstand der Gitterlinien"
 msgid "This tool has no options."
 msgstr "Dieses Werkzeug verfügt über keine Einstellungsmöglichkeiten."
 
-#: app/tools/gimpairbrushtool.c:57
+#: app/tools/gimpairbrushtool.c:58
 msgid "Airbrush with variable pressure"
 msgstr "Mit variablem Druck airbrushen"
 
-#: app/tools/gimpairbrushtool.c:58
+#: app/tools/gimpairbrushtool.c:59
 msgid "/Tools/Paint Tools/_Airbrush"
 msgstr "/Werkzeuge/Malwerkzeuge/_Airbrush"
 
-#: app/tools/gimpairbrushtool.c:124 app/tools/gimpconvolvetool.c:239
+#: app/tools/gimpairbrushtool.c:125 app/tools/gimpconvolvetool.c:239
 #: app/tools/gimpsmudgetool.c:125
 msgid "Rate:"
 msgstr "Rate:"
 
-#: app/tools/gimpairbrushtool.c:130
+#: app/tools/gimpairbrushtool.c:131
 msgid "Pressure:"
 msgstr "Druck:"
 
@@ -8001,8 +8007,8 @@ msgid "Exposure:"
 msgstr "Belichtung:"
 
 #: app/tools/gimpeditselectiontool.c:247
-#: app/tools/gimpeditselectiontool.c:1156 app/vectors/gimpvectors.c:233
-#: app/vectors/gimpvectors.c:372
+#: app/tools/gimpeditselectiontool.c:1156 app/vectors/gimpvectors.c:230
+#: app/vectors/gimpvectors.c:369
 msgid "Move Path"
 msgstr "Pfad verschieben"
 
@@ -8410,11 +8416,11 @@ msgstr "Länge:"
 msgid "Use Color from Gradient"
 msgstr "Farbe aus Farbverlauf"
 
-#: app/tools/gimppenciltool.c:53
+#: app/tools/gimppenciltool.c:54
 msgid "Paint hard edged pixels"
 msgstr "Pixel mit harten Kanten zeichnen"
 
-#: app/tools/gimppenciltool.c:54
+#: app/tools/gimppenciltool.c:55
 msgid "/Tools/Paint Tools/Pe_ncil"
 msgstr "/Werkzeuge/Malwerkzeuge/_Stift"
 
@@ -8937,31 +8943,31 @@ msgstr ""
 "Es gibt weder eine aktive Ebene noch einen aktiven Kanal, die bzw. der "
 "nachgezogen werden kann"
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimpvectors.c:228
 msgid "Path"
 msgstr "Pfad"
 
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimpvectors.c:229
 msgid "Rename Path"
 msgstr "Pfad umbenennen"
 
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimpvectors.c:231
 msgid "Scale Path"
 msgstr "Pfad skalieren"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:232
 msgid "Resize Path"
 msgstr "Pfadgröße ändern"
 
-#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:463
+#: app/vectors/gimpvectors.c:233 app/vectors/gimpvectors.c:460
 msgid "Flip Path"
 msgstr "Pfad spiegeln"
 
-#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:506
+#: app/vectors/gimpvectors.c:234 app/vectors/gimpvectors.c:503
 msgid "Rotate Path"
 msgstr "Pfad drehen"
 
-#: app/vectors/gimpvectors.c:566
+#: app/vectors/gimpvectors.c:562
 msgid "Cannot stroke empty path."
 msgstr "Leere Pfade können nicht nachgezogen werden."
 
@@ -9143,12 +9149,12 @@ msgid "Cyan:"
 msgstr "Cyan:"
 
 #: app/widgets/gimpcolorframe.c:305
-msgid "Yellow:"
-msgstr "Gelb:"
-
-#: app/widgets/gimpcolorframe.c:306
 msgid "Magenta:"
 msgstr "Magenta:"
+
+#: app/widgets/gimpcolorframe.c:306
+msgid "Yellow:"
+msgstr "Gelb:"
 
 #: app/widgets/gimpcolorframe.c:307
 msgid "Black:"
@@ -9231,20 +9237,16 @@ msgstr "»%s« wirklich aus der Liste und von der Platte löschen?"
 msgid "Delete Data Object"
 msgstr "Datenobjekt löschen"
 
-#: app/widgets/gimpdevicestatus.c:291
+#: app/widgets/gimpdevicestatus.c:289
 msgid "Save device status"
 msgstr "Gerätestatus speichern"
 
-#: app/widgets/gimpdevicestatus.c:298
-msgid "Configure input devices"
-msgstr "Eingabegeräte konfigurieren"
-
-#: app/widgets/gimpdevicestatus.c:404
+#: app/widgets/gimpdevicestatus.c:395
 #, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "Vordergrund: %d, %d, %d"
 
-#: app/widgets/gimpdevicestatus.c:409
+#: app/widgets/gimpdevicestatus.c:400
 #, c-format
 msgid "Background: %d, %d, %d"
 msgstr "Hintergrund: %d, %d, %d"
@@ -9465,11 +9467,11 @@ msgstr "Breite"
 msgid "Height"
 msgstr "Höhe"
 
-#: app/widgets/gimphelp.c:198
+#: app/widgets/gimphelp.c:196
 msgid "Could not find GIMP Help Browser"
 msgstr "GIMP Hilfe-Browser konnte nicht gefunden werden"
 
-#: app/widgets/gimphelp.c:200
+#: app/widgets/gimphelp.c:198
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
@@ -9477,15 +9479,15 @@ msgstr ""
 "Der GIMP Hilfe-Browser konnte nicht gefunden werden. Eventuell ist er nicht "
 "kompiliert worden, weil GtkHtml2 nicht installiert ist."
 
-#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
+#: app/widgets/gimphelp.c:202 app/widgets/gimphelp.c:235
 msgid "Use web browser instead"
 msgstr "Stattdessen Webbrowser verwenden"
 
-#: app/widgets/gimphelp.c:234
+#: app/widgets/gimphelp.c:232
 msgid "Could not start GIMP Help Browser"
 msgstr "GIMP Hilfe-Browser konnte nicht gestartet werden"
 
-#: app/widgets/gimphelp.c:236
+#: app/widgets/gimphelp.c:234
 msgid "Could not start the GIMP Help Browser."
 msgstr "Der GIMP Hilfe-Browser konnte nicht gestartet werden."
 
@@ -10101,3 +10103,6 @@ msgstr "XCF-Fehler: nicht unterstützte XCF-Dateiversion %d aufgetreten"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Bilder und Photos erstellen und bearbeiten"
+
+#~ msgid "Configure input devices"
+#~ msgstr "Eingabegeräte konfigurieren"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-05 21:58+0200\n"
+"POT-Creation-Date: 2004-09-25 00:01+0200\n"
 "PO-Revision-Date: 2004-01-25 15:36-0200\n"
 "Last-Translator: Nikos Charonitakis <charosn@her.fothnet.gr>\n"
 "Language-Team: Greek <nls@hellug.gr>\n"
@@ -366,7 +366,7 @@ msgid "Could not create temporary file for '%s': %s"
 msgstr "Αδυναμία δημιουργίας του προσωρινού αρχείου για '%s': %s"
 
 #
-#: app/config/gimpconfigwriter.c:568
+#: app/config/gimpconfigwriter.c:571
 #, fuzzy, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -376,7 +376,7 @@ msgstr ""
 "Το πρωτότυπο αρχείο δεν πειράχτηκε."
 
 #
-#: app/config/gimpconfigwriter.c:576
+#: app/config/gimpconfigwriter.c:579
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -385,12 +385,12 @@ msgstr ""
 "Σφάλμα κατά την εγγραφή στο προσωρινό αρχείο για το '%s': %s\n"
 "Δεν δημιουργήθηκε κανένα αρχείο."
 
-#: app/config/gimpconfigwriter.c:587
+#: app/config/gimpconfigwriter.c:590
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Σφάλμα κατά την εγγραφή στο '%s': %s"
 
-#: app/config/gimpconfigwriter.c:605
+#: app/config/gimpconfigwriter.c:608
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Αδυναμία δημιουργίας του '%s': %s"
@@ -1203,7 +1203,7 @@ msgid "Drawable Mod"
 msgstr ""
 
 #: app/core/core-enums.c:596 app/core/core-enums.c:626
-#: app/core/gimpchannel.c:1617 app/core/gimpselection.c:570
+#: app/core/gimpchannel.c:1591 app/core/gimpselection.c:567
 msgid "Selection Mask"
 msgstr "Μάσκα Επιλογής"
 
@@ -1249,7 +1249,7 @@ msgid "Floating Selection to Layer"
 msgstr "Επιπλέουσα Επιλογή στο Στρώμα"
 
 #
-#: app/core/core-enums.c:606 app/core/gimpselection.c:827
+#: app/core/core-enums.c:606 app/core/gimpselection.c:824
 msgid "Float Selection"
 msgstr "Επίπλευση Επιλογής"
 
@@ -1292,7 +1292,8 @@ msgid "Paint"
 msgstr "Βαφή"
 
 #
-#: app/core/core-enums.c:614 app/core/core-enums.c:654 app/core/gimpitem.c:987
+#: app/core/core-enums.c:614 app/core/core-enums.c:654
+#: app/core/gimpitem.c:1047
 msgid "Attach Parasite"
 msgstr "Προσκόλληση Παρασίτου"
 
@@ -1567,7 +1568,7 @@ msgstr "Μη έγκυρη συμβολοσειρά UTF-8 στο αρχείο π�
 
 #
 #: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1306
-#: app/core/gimpitem.c:466 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:471 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
 msgstr "Χωρίς όνομα"
@@ -1604,81 +1605,81 @@ msgstr ""
 "Μοιραίο συντακτικό σφάλμα στο αρχείο πινέλων '%s': Το αρχείο έχει "
 "καταστραφεί."
 
-#: app/core/gimpchannel.c:252 app/pdb/internal_procs.c:86
+#: app/core/gimpchannel.c:251 app/pdb/internal_procs.c:86
 msgid "Channel"
 msgstr "Κανάλι"
 
-#: app/core/gimpchannel.c:253
+#: app/core/gimpchannel.c:252
 msgid "Rename Channel"
 msgstr "Μετονομασία Καναλιού"
 
-#: app/core/gimpchannel.c:254 app/tools/gimpeditselectiontool.c:251
+#: app/core/gimpchannel.c:253 app/tools/gimpeditselectiontool.c:251
 #: app/tools/gimpeditselectiontool.c:1204
 msgid "Move Channel"
 msgstr "Μετακίνηση Καναλιού"
 
-#: app/core/gimpchannel.c:255
+#: app/core/gimpchannel.c:254
 msgid "Scale Channel"
 msgstr "Μεγένθυνση/Σμίκρυνση Καναλιού"
 
-#: app/core/gimpchannel.c:256
+#: app/core/gimpchannel.c:255
 msgid "Resize Channel"
 msgstr "Αλλαγή μεγέθους Καναλιού"
 
-#: app/core/gimpchannel.c:257
+#: app/core/gimpchannel.c:256
 msgid "Flip Channel"
 msgstr "Αναστροφή Καναλιού"
 
-#: app/core/gimpchannel.c:258
+#: app/core/gimpchannel.c:257
 msgid "Rotate Channel"
 msgstr "Περιστροφή Καναλιού"
 
-#: app/core/gimpchannel.c:259 app/core/gimpdrawable-transform.c:1080
+#: app/core/gimpchannel.c:258 app/core/gimpdrawable-transform.c:1080
 msgid "Transform Channel"
 msgstr "Μετασχηματισμός Καναλιού"
 
-#: app/core/gimpchannel.c:281
+#: app/core/gimpchannel.c:280
 msgid "Feather Channel"
 msgstr "Πλούμισμα Καναλιού"
 
-#: app/core/gimpchannel.c:282
+#: app/core/gimpchannel.c:281
 msgid "Sharpen Channel"
 msgstr "Όξυνση Καναλιού"
 
-#: app/core/gimpchannel.c:283
+#: app/core/gimpchannel.c:282
 msgid "Clear Channel"
 msgstr "Καθαρισμός Καναλιού"
 
-#: app/core/gimpchannel.c:284
+#: app/core/gimpchannel.c:283
 msgid "Fill Channel"
 msgstr "Γέμισμα Καναλιού"
 
-#: app/core/gimpchannel.c:285
+#: app/core/gimpchannel.c:284
 msgid "Invert Channel"
 msgstr "Αντιστροφή Καναλιού"
 
-#: app/core/gimpchannel.c:286
+#: app/core/gimpchannel.c:285
 #, fuzzy
 msgid "Border Channel"
 msgstr "Χαμήλωμα Καναλιού"
 
-#: app/core/gimpchannel.c:287
+#: app/core/gimpchannel.c:286
 msgid "Grow Channel"
 msgstr "Ανάπτυξη Καναλιού"
 
-#: app/core/gimpchannel.c:288
+#: app/core/gimpchannel.c:287
 msgid "Shrink Channel"
 msgstr "Συστολή Καναλιού"
 
-#: app/core/gimpchannel.c:584
+#: app/core/gimpchannel.c:582
 msgid "Cannot stroke empty channel."
 msgstr ""
 
-#: app/core/gimpchannel.c:1499
+#: app/core/gimpchannel.c:1473
 msgid "Set Channel Color"
 msgstr "Καθορισμός Χρώματος Καναλιού"
 
-#: app/core/gimpchannel.c:1546
+#: app/core/gimpchannel.c:1520
 msgid "Set Channel Opacity"
 msgstr "Καθορισμός Αδιαφάνειας Καναλιού"
 
@@ -1727,11 +1728,11 @@ msgstr ""
 
 #
 #: app/core/gimpdatafactory.c:410 app/core/gimpdatafactory.c:413
-#: app/core/gimpitem.c:304 app/core/gimpitem.c:307
+#: app/core/gimpitem.c:309 app/core/gimpitem.c:312
 msgid "copy"
 msgstr "αντιγραφή"
 
-#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:316
+#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:321
 #, c-format
 msgid "%s copy"
 msgstr "%s αντίγραφο"
@@ -1961,7 +1962,7 @@ msgstr "Ενεργοποίηση ΤαχυΜάσκας"
 msgid "Disable QuickMask"
 msgstr "Απενεργοποίηση ΤαχυΜάσκας"
 
-#: app/core/gimpimage-undo-push.c:2937
+#: app/core/gimpimage-undo-push.c:2939
 #, c-format
 msgid "Can't undo %s"
 msgstr "Αδυναμία ακύρωσης της προηγούμενης ενέργειας %s"
@@ -2158,12 +2159,12 @@ msgid "Could not open thumbnail '%s': %s"
 msgstr "Αδύνατο το άνοιγμα αρχείου: %s"
 
 #
-#: app/core/gimpitem.c:997
+#: app/core/gimpitem.c:1057
 #, fuzzy
 msgid "Attach Parasite to Item"
 msgstr "Επισύναψη αρχείου"
 
-#: app/core/gimpitem.c:1036 app/core/gimpitem.c:1043
+#: app/core/gimpitem.c:1096 app/core/gimpitem.c:1103
 #, fuzzy
 msgid "Remove Parasite from Item"
 msgstr "Αφαίρεση του στοιχείου"
@@ -2328,7 +2329,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr ""
 
-#: app/core/gimpselection.c:180 app/tools/gimpeditselectiontool.c:259
+#: app/core/gimpselection.c:179 app/tools/gimpeditselectiontool.c:259
 #: app/tools/gimpeditselectiontool.c:1116 app/tools/gimpmoveoptions.c:184
 #: app/tools/gimpmoveoptions.c:185
 #, fuzzy
@@ -2336,71 +2337,71 @@ msgid "Move Selection"
 msgstr "Καμία Επιλογή"
 
 #
-#: app/core/gimpselection.c:197 app/gui/select-commands.c:177
+#: app/core/gimpselection.c:196 app/gui/select-commands.c:177
 msgid "Feather Selection"
 msgstr "Επιλογή Πλουμίσματος"
 
-#: app/core/gimpselection.c:198
+#: app/core/gimpselection.c:197
 msgid "Sharpen Selection"
 msgstr "Επιλογή Σμίκρυνσης"
 
 #
-#: app/core/gimpselection.c:199 app/widgets/gimpselectioneditor.c:172
+#: app/core/gimpselection.c:198 app/widgets/gimpselectioneditor.c:172
 #, fuzzy
 msgid "Select None"
 msgstr "/Επιλογή/Τίποτα"
 
-#: app/core/gimpselection.c:200 app/widgets/gimpselectioneditor.c:164
+#: app/core/gimpselection.c:199 app/widgets/gimpselectioneditor.c:164
 #, fuzzy
 msgid "Select All"
 msgstr "/Επιλογή/Όλα"
 
-#: app/core/gimpselection.c:201 app/widgets/gimpselectioneditor.c:180
+#: app/core/gimpselection.c:200 app/widgets/gimpselectioneditor.c:180
 #, fuzzy
 msgid "Invert Selection"
 msgstr "Αντ_ιστρφή επιλογής"
 
-#: app/core/gimpselection.c:202 app/gui/select-commands.c:270
+#: app/core/gimpselection.c:201 app/gui/select-commands.c:270
 msgid "Border Selection"
 msgstr "Επιλογή Περιγράμματος"
 
-#: app/core/gimpselection.c:203 app/gui/select-commands.c:247
+#: app/core/gimpselection.c:202 app/gui/select-commands.c:247
 msgid "Grow Selection"
 msgstr "Επέκταση Επιλογής"
 
-#: app/core/gimpselection.c:204 app/gui/select-commands.c:213
+#: app/core/gimpselection.c:203 app/gui/select-commands.c:213
 msgid "Shrink Selection"
 msgstr "Σμίκρυνσης Επιλογής"
 
-#: app/core/gimpselection.c:303
+#: app/core/gimpselection.c:301
 #, fuzzy
 msgid "No selection to stroke."
 msgstr "Δεν υπάρχει επιλογή για πινελιά!"
 
-#: app/core/gimpselection.c:312 app/widgets/gimpselectioneditor.c:212
+#: app/core/gimpselection.c:310 app/widgets/gimpselectioneditor.c:212
 #, fuzzy
 msgid "Stroke Selection"
 msgstr "Σμίκρυνσης Επιλογής"
 
-#: app/core/gimpselection.c:602 app/gui/channels-commands.c:209
+#: app/core/gimpselection.c:599 app/gui/channels-commands.c:209
 #: app/pdb/selection_cmds.c:923 app/pdb/selection_cmds.c:1041
 #: app/widgets/gimpchanneltreeview.c:291
 #, fuzzy
 msgid "Channel to Selection"
 msgstr "Επιλογή Χρώματος"
 
-#: app/core/gimpselection.c:674
+#: app/core/gimpselection.c:671
 #, fuzzy
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Επιλογή Εικονιδίου"
 
-#: app/core/gimpselection.c:820
+#: app/core/gimpselection.c:817
 #, fuzzy
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Επιλογή Εικονιδίου"
 
 #
-#: app/core/gimpselection.c:843 app/gui/layers-commands.c:989
+#: app/core/gimpselection.c:840 app/gui/layers-commands.c:989
 #, fuzzy
 msgid "Floating Selection"
 msgstr "Επιλογή Γραμματοσειράς"
@@ -4381,6 +4382,11 @@ msgstr "/Εμφάνιση/Κλίμακα/1:1"
 #, fuzzy
 msgid "/View/Zoom/1:16  (6.25%)"
 msgstr "/Εμφάνιση/Κλίμακα/1:16"
+
+#: app/gui/image-menu.c:427
+#, fuzzy
+msgid "/View/Zoom/O_ther..."
+msgstr "/Εμφάνιση/Κλίμακα/Σ_μίκρυνση"
 
 #: app/gui/image-menu.c:434
 msgid "/View/_Info Window"
@@ -7742,7 +7748,7 @@ msgstr "_Εισαγωγή..."
 msgid "/E_xport Path..."
 msgstr "_Εξαγωγή..."
 
-#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:56
+#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:57
 msgid "Airbrush"
 msgstr "Αερογράφος"
 
@@ -7777,7 +7783,7 @@ msgstr "Πινέλο"
 msgid "No brushes available for use with this tool."
 msgstr "Με συγχωρείτε, δεν υπάρχει βοήθεια για αυτές τις ρυθμίσεις."
 
-#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:52
+#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:53
 msgid "Pencil"
 msgstr "Μολύβι"
 
@@ -7850,21 +7856,21 @@ msgstr "Επίπεδα"
 msgid "Posterize"
 msgstr "στερεοφωνικό"
 
-#: app/pdb/color_cmds.c:722 app/pdb/color_cmds.c:839
+#: app/pdb/color_cmds.c:726 app/pdb/color_cmds.c:843
 #: app/tools/gimpcurvestool.c:138
 msgid "Curves"
 msgstr "Καμπύλες"
 
-#: app/pdb/color_cmds.c:957 app/tools/gimpcolorbalancetool.c:96
+#: app/pdb/color_cmds.c:961 app/tools/gimpcolorbalancetool.c:96
 msgid "Color Balance"
 msgstr "Εξισορρόπηση Χρώματος"
 
 #
-#: app/pdb/color_cmds.c:1235 app/tools/gimphuesaturationtool.c:110
+#: app/pdb/color_cmds.c:1239 app/tools/gimphuesaturationtool.c:110
 msgid "Hue-Saturation"
 msgstr "Απόχρωση-Κορεσμός"
 
-#: app/pdb/color_cmds.c:1334 app/tools/gimpthresholdtool.c:92
+#: app/pdb/color_cmds.c:1338 app/tools/gimpthresholdtool.c:92
 msgid "Threshold"
 msgstr "Κατώφλι"
 
@@ -8230,8 +8236,8 @@ msgstr "Διατήρηση αναλογιών"
 msgid "Transform Selection"
 msgstr "Πληροφορίες Τροχιάς"
 
-#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:238
-#: app/vectors/gimpvectors.c:537
+#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:534
 #, fuzzy
 msgid "Transform Path"
 msgstr "Πληροφορίες Τροχιάς"
@@ -8268,21 +8274,21 @@ msgstr ""
 msgid "This tool has no options."
 msgstr "Το παρόν αντικείμενο δεν έχει ιδιότητες."
 
-#: app/tools/gimpairbrushtool.c:57
+#: app/tools/gimpairbrushtool.c:58
 msgid "Airbrush with variable pressure"
 msgstr ""
 
-#: app/tools/gimpairbrushtool.c:58
+#: app/tools/gimpairbrushtool.c:59
 #, fuzzy
 msgid "/Tools/Paint Tools/_Airbrush"
 msgstr "Εξ' ορισμού Μεγέθυνση"
 
-#: app/tools/gimpairbrushtool.c:124 app/tools/gimpconvolvetool.c:239
+#: app/tools/gimpairbrushtool.c:125 app/tools/gimpconvolvetool.c:239
 #: app/tools/gimpsmudgetool.c:125
 msgid "Rate:"
 msgstr "Ρυθμός:"
 
-#: app/tools/gimpairbrushtool.c:130
+#: app/tools/gimpairbrushtool.c:131
 msgid "Pressure:"
 msgstr "Πίεση:"
 
@@ -8769,8 +8775,8 @@ msgstr "Έκθεση:"
 
 #
 #: app/tools/gimpeditselectiontool.c:247
-#: app/tools/gimpeditselectiontool.c:1156 app/vectors/gimpvectors.c:233
-#: app/vectors/gimpvectors.c:372
+#: app/tools/gimpeditselectiontool.c:1156 app/vectors/gimpvectors.c:230
+#: app/vectors/gimpvectors.c:369
 #, fuzzy
 msgid "Move Path"
 msgstr "Μετονομασία διαβάθμισης"
@@ -9263,11 +9269,11 @@ msgstr "Μήκος:"
 msgid "Use Color from Gradient"
 msgstr "Προσαρμοσμένη Διαβάθμιση"
 
-#: app/tools/gimppenciltool.c:53
+#: app/tools/gimppenciltool.c:54
 msgid "Paint hard edged pixels"
 msgstr ""
 
-#: app/tools/gimppenciltool.c:54
+#: app/tools/gimppenciltool.c:55
 #, fuzzy
 msgid "/Tools/Paint Tools/Pe_ncil"
 msgstr "Εξ' ορισμού Μεγέθυνση"
@@ -9848,35 +9854,35 @@ msgstr ""
 msgid "There is no active layer or channel to stroke to"
 msgstr ""
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimpvectors.c:228
 msgid "Path"
 msgstr "Διαδρομή"
 
 #
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimpvectors.c:229
 #, fuzzy
 msgid "Rename Path"
 msgstr "Μετονομασία διαβάθμισης"
 
 #
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimpvectors.c:231
 msgid "Scale Path"
 msgstr "Μεγένθυνση/Σμίκρυνση Διαδρομής"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:232
 msgid "Resize Path"
 msgstr "Αλλαγή Μεγέθους Διαδρομής"
 
-#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:463
+#: app/vectors/gimpvectors.c:233 app/vectors/gimpvectors.c:460
 msgid "Flip Path"
 msgstr "Αναστροφή Διαδρομής"
 
-#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:506
+#: app/vectors/gimpvectors.c:234 app/vectors/gimpvectors.c:503
 #, fuzzy
 msgid "Rotate Path"
 msgstr "Επικόλληση Έργου"
 
-#: app/vectors/gimpvectors.c:566
+#: app/vectors/gimpvectors.c:562
 msgid "Cannot stroke empty path."
 msgstr ""
 
@@ -10091,13 +10097,13 @@ msgstr "Κυανό"
 
 #: app/widgets/gimpcolorframe.c:305
 #, fuzzy
-msgid "Yellow:"
-msgstr "Κίτρινο"
+msgid "Magenta:"
+msgstr "Πορφυρό"
 
 #: app/widgets/gimpcolorframe.c:306
 #, fuzzy
-msgid "Magenta:"
-msgstr "Πορφυρό"
+msgid "Yellow:"
+msgstr "Κίτρινο"
 
 #: app/widgets/gimpcolorframe.c:307
 #, fuzzy
@@ -10197,24 +10203,19 @@ msgstr ""
 msgid "Delete Data Object"
 msgstr "Διαγραφή Παραμέτρου"
 
-#: app/widgets/gimpdevicestatus.c:291
+#: app/widgets/gimpdevicestatus.c:289
 #, fuzzy
 msgid "Save device status"
 msgstr "Κατάσταση Συσκευής"
 
-#: app/widgets/gimpdevicestatus.c:298
-#, fuzzy
-msgid "Configure input devices"
-msgstr "Byte Εισόδου"
-
 #
-#: app/widgets/gimpdevicestatus.c:404
+#: app/widgets/gimpdevicestatus.c:395
 #, fuzzy, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "Προσκήνιο"
 
 #
-#: app/widgets/gimpdevicestatus.c:409
+#: app/widgets/gimpdevicestatus.c:400
 #, fuzzy, c-format
 msgid "Background: %d, %d, %d"
 msgstr "Φόντο"
@@ -10453,27 +10454,27 @@ msgstr "Πλάτος"
 msgid "Height"
 msgstr "Ύψος"
 
-#: app/widgets/gimphelp.c:198
+#: app/widgets/gimphelp.c:196
 msgid "Could not find GIMP Help Browser"
 msgstr "Αδύνατη η εύρεση του Εξερευνητή Βοήθειας του GIMP"
 
-#: app/widgets/gimphelp.c:200
+#: app/widgets/gimphelp.c:198
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
 msgstr ""
 
-#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
+#: app/widgets/gimphelp.c:202 app/widgets/gimphelp.c:235
 #, fuzzy
 msgid "Use web browser instead"
 msgstr "Χρήση Netscape αντίθετα"
 
-#: app/widgets/gimphelp.c:234
+#: app/widgets/gimphelp.c:232
 #, fuzzy
 msgid "Could not start GIMP Help Browser"
 msgstr "Αδύνατη η εύρεση του Εξερευνητή Βοήθειας του GIMP"
 
-#: app/widgets/gimphelp.c:236
+#: app/widgets/gimphelp.c:234
 #, fuzzy
 msgid "Could not start the GIMP Help Browser."
 msgstr "Αδύνατη η εύρεση του Εξερευνητή Βοήθειας του GIMP"
@@ -11132,6 +11133,10 @@ msgstr "Σρφάλμα XCF: βρέθηκε μη υποστηριζόμενη έ�
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Δημιουργία κι επεξεργασία εικόνων ή φωτογραφιών"
+
+#, fuzzy
+#~ msgid "Configure input devices"
+#~ msgstr "Byte Εισόδου"
 
 #~ msgid "Image Mod"
 #~ msgstr "Μεταβολή Εικόνας"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-08 14:23+0200\n"
+"POT-Creation-Date: 2004-09-25 00:02+0200\n"
 "PO-Revision-Date: 2004-08-08 14:24+0200\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
@@ -1385,12 +1385,14 @@ msgstr "Тежина сенке (%)"
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/Проширења/Скрипт-Фу/Вeb теме/Classic.Gimp.оrg/Велико заглавље..."
+msgstr ""
+"<Toolbox>/Проширења/Скрипт-Фу/Вeb теме/Classic.Gimp.оrg/Велико заглавље..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/Проширења/Скрипт-Фу/Вeb теме/Classic.Gimp.оrg/Мало заглавље..."
+msgstr ""
+"<Toolbox>/Проширења/Скрипт-Фу/Вeb теме/Classic.Gimp.оrg/Мало заглавље..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1434,25 +1436,33 @@ msgstr "Боја сенке"
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
 "Label..."
-msgstr "<Toolbox>/Проширења/Скрипт-Фу/Вeb теме/Classic.Gimp.оrg/Ознака другог дугмета...."
+msgstr ""
+"<Toolbox>/Проширења/Скрипт-Фу/Вeb теме/Classic.Gimp.оrg/Ознака другог "
+"дугмета...."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
 "Button Label..."
-msgstr "<Toolbox>/Проширења/Скрипт-Фу/Вeb Теме/Classic.Gimp.Org/Ознака трећег дугмета..."
+msgstr ""
+"<Toolbox>/Проширења/Скрипт-Фу/Вeb Теме/Classic.Gimp.Org/Ознака трећег "
+"дугмета..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
 "Labels..."
-msgstr "<Toolbox>/Проширења/Скрипт-Фу/Вeb теме/Classic.Gimp.оrg/Опште ознаке за ваљке..."
+msgstr ""
+"<Toolbox>/Проширења/Скрипт-Фу/Вeb теме/Classic.Gimp.оrg/Опште ознаке за "
+"ваљке..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
 "Label..."
-msgstr "<Toolbox>/Проширења/Скрипт-Фу/Веб теме/Classic.Gimp.оrg/Ознака ваљк. дугмета..."
+msgstr ""
+"<Toolbox>/Проширења/Скрипт-Фу/Веб теме/Classic.Gimp.оrg/Ознака ваљк. "
+"дугмета..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."

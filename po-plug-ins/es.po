@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-21 17:30+0200\n"
+"POT-Creation-Date: 2004-09-25 00:02+0200\n"
 "PO-Revision-Date: 2004-08-21 17:30+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -333,8 +333,8 @@ msgstr "Coseno"
 #: plug-ins/FractalExplorer/Dialogs.c:1039
 #: plug-ins/FractalExplorer/Dialogs.c:1080 plug-ins/Lighting/lighting_ui.c:507
 #: plug-ins/common/CML_explorer.c:169 plug-ins/common/align_layers.c:426
-#: plug-ins/common/align_layers.c:454 plug-ins/common/postscript.c:2841
-#: plug-ins/common/postscript.c:2853 plug-ins/common/psp.c:418
+#: plug-ins/common/align_layers.c:454 plug-ins/common/postscript.c:2846
+#: plug-ins/common/postscript.c:2858 plug-ins/common/psp.c:418
 #: plug-ins/fits/fits.c:1013
 msgid "None"
 msgstr "Ninguno"
@@ -435,7 +435,7 @@ msgstr "_Fractales"
 #: plug-ins/common/mng.c:542 plug-ins/common/mng.c:874
 #: plug-ins/common/pat.c:428 plug-ins/common/pcx.c:584
 #: plug-ins/common/pix.c:516 plug-ins/common/png.c:1174
-#: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:995
+#: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:996
 #: plug-ins/common/psd_save.c:1555 plug-ins/common/spheredesigner.c:2082
 #: plug-ins/common/sunras.c:512 plug-ins/common/tga.c:1028
 #: plug-ins/common/tiff.c:1804 plug-ins/common/xbm.c:995
@@ -480,7 +480,7 @@ msgstr "Guardar parámetros de fractal"
 #: plug-ins/common/mng.c:1043 plug-ins/common/pat.c:295
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:333
 #: plug-ins/common/png.c:670 plug-ins/common/pnm.c:394
-#: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
+#: plug-ins/common/postscript.c:873 plug-ins/common/psd.c:1756
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
 #: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:243
 #: plug-ins/common/svg.c:626 plug-ins/common/tga.c:413
@@ -659,7 +659,8 @@ msgstr "U_mbral:"
 #: plug-ins/Lighting/lighting_ui.c:447 plug-ins/Lighting/lighting_ui.c:463
 #: plug-ins/MapObject/mapobject_ui.c:656
 msgid "Stop when pixel differences are smaller than this value"
-msgstr "Parar cuando las diferencias entre píxeles sean más pequeñas que este valor"
+msgstr ""
+"Parar cuando las diferencias entre píxeles sean más pequeñas que este valor"
 
 #: plug-ins/Lighting/lighting_ui.c:459 plug-ins/common/threshold_alpha.c:244
 msgid "Threshold:"
@@ -1062,7 +1063,7 @@ msgid "Object Z position in XYZ space"
 msgstr "Posición Z del objeto en el espacio XYZ"
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1080 plug-ins/common/postscript.c:3005
+#: plug-ins/MapObject/mapobject_ui.c:1080 plug-ins/common/postscript.c:3010
 msgid "Rotation"
 msgstr "Rotación"
 
@@ -1208,8 +1209,8 @@ msgstr "Mapa de colores malo"
 #: plug-ins/common/hrz.c:339 plug-ins/common/jpeg.c:819
 #: plug-ins/common/pat.c:300 plug-ins/common/pcx.c:306
 #: plug-ins/common/pix.c:339 plug-ins/common/png.c:677
-#: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
-#: plug-ins/common/psd.c:1773 plug-ins/common/sunras.c:435
+#: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:879
+#: plug-ins/common/psd.c:1761 plug-ins/common/sunras.c:435
 #: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:513
 #: plug-ins/common/wmf.c:401 plug-ins/common/xbm.c:723
 #: plug-ins/common/xpm.c:329 plug-ins/common/xwd.c:434
@@ -1246,11 +1247,11 @@ msgstr "Formato de compresión BMP no reconocido o inválido."
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:312
 #: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:580
 #: plug-ins/common/dicom.c:441 plug-ins/common/film.c:975
-#: plug-ins/common/gifload.c:857 plug-ins/common/hrz.c:373
+#: plug-ins/common/gifload.c:864 plug-ins/common/hrz.c:373
 #: plug-ins/common/jpeg.c:979 plug-ins/common/pcx.c:333
 #: plug-ins/common/pcx.c:339 plug-ins/common/pix.c:375
 #: plug-ins/common/png.c:804 plug-ins/common/pnm.c:479
-#: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:253
+#: plug-ins/common/psd.c:2170 plug-ins/common/smooth_palette.c:253
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
 #: plug-ins/common/tiff.c:831 plug-ins/common/tile.c:264
 #: plug-ins/common/winclipboard.c:573 plug-ins/common/xbm.c:866
@@ -1266,7 +1267,7 @@ msgid "Cannot save images with alpha channel."
 msgstr "No se puede guardar imágenes con canales alfa."
 
 #: plug-ins/bmp/bmpwrite.c:182 plug-ins/common/dicom.c:631
-#: plug-ins/common/postscript.c:986 plug-ins/common/xwd.c:524
+#: plug-ins/common/postscript.c:987 plug-ins/common/xwd.c:524
 #: plug-ins/fits/fits.c:441 plug-ins/xjt/xjt.c:1686
 msgid "Cannot operate on unknown image types."
 msgstr "No puede operar sobre tipos de imagen desconocidos."
@@ -1280,7 +1281,7 @@ msgstr "No puede operar sobre tipos de imagen desconocidos."
 #: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1316
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:544
 #: plug-ins/common/pix.c:522 plug-ins/common/png.c:1181
-#: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
+#: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1001
 #: plug-ins/common/psd_save.c:1560 plug-ins/common/sunras.c:517
 #: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1809
 #: plug-ins/common/xbm.c:1000 plug-ins/common/xpm.c:619
@@ -1373,7 +1374,8 @@ msgstr "Usar función coseno para componente roja."
 
 #: plug-ins/common/AlienMap.c:1233
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr "Canal rojo: usar un mapeo lineal en lugar de cualquier función trigonométrica"
+msgstr ""
+"Canal rojo: usar un mapeo lineal en lugar de cualquier función trigonométrica"
 
 #: plug-ins/common/AlienMap.c:1252
 msgid "Use sine-function for green component."
@@ -1384,7 +1386,8 @@ msgid "Use cosine-function for green component."
 msgstr "Usar función coseno para componente verde."
 
 #: plug-ins/common/AlienMap.c:1256
-msgid "Green channel: use linear mapping instead of any trigonometrical function"
+msgid ""
+"Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 "Canal verde: usar un mapeo lineal en lugar de cualquier función "
 "trigonométrica"
@@ -1398,8 +1401,10 @@ msgid "Use cosine-function for blue component."
 msgstr "Usar función coseno para componente azul."
 
 #: plug-ins/common/AlienMap.c:1279
-msgid "Blue channel: use linear mapping instead of any trigonometrical function"
-msgstr "Canal azul: usar un mapeo lineal en lugar de cualquier función trigonométrica"
+msgid ""
+"Blue channel: use linear mapping instead of any trigonometrical function"
+msgstr ""
+"Canal azul: usar un mapeo lineal en lugar de cualquier función trigonométrica"
 
 #: plug-ins/common/AlienMap.c:1360
 msgid "About AlienMap"
@@ -2054,7 +2059,7 @@ msgstr "Alinear capas visibles"
 #: plug-ins/common/sobel.c:242 plug-ins/common/sparkle.c:350
 #: plug-ins/common/struc.c:1266 plug-ins/common/threshold_alpha.c:232
 #: plug-ins/common/unsharp.c:651 plug-ins/common/video.c:2151
-#: plug-ins/common/vpropagate.c:1073 plug-ins/common/waves.c:343
+#: plug-ins/common/vpropagate.c:1077 plug-ins/common/waves.c:343
 #: plug-ins/common/whirlpinch.c:698 plug-ins/common/wind.c:892
 #: plug-ins/common/xpm.c:783 plug-ins/maze/maze_face.c:202
 #: plug-ins/xjt/xjt.c:856
@@ -2588,7 +2593,7 @@ msgid "Colorify"
 msgstr "Colorear"
 
 #: plug-ins/common/colorify.c:258 plug-ins/common/colortoalpha.c:325
-#: plug-ins/common/postscript.c:2826 plug-ins/common/xpm.c:457
+#: plug-ins/common/postscript.c:2831 plug-ins/common/xpm.c:457
 #: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:107
 #: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1417
 msgid "Color"
@@ -2937,7 +2942,8 @@ msgstr "<Image>/Filtros/Distorsión/Doblar _curva..."
 
 #: plug-ins/common/curve_bend.c:709
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr "sólo puede funcionar en capas (pero fue llamada en un canal o una máscara)."
+msgstr ""
+"sólo puede funcionar en capas (pero fue llamada en un canal o una máscara)."
 
 #: plug-ins/common/curve_bend.c:727
 msgid "Cannot operate on layers with masks."
@@ -3375,7 +3381,7 @@ msgid "Create _Histogram"
 msgstr "Crear _histograma"
 
 #: plug-ins/common/destripe.c:664 plug-ins/common/gtm.c:583
-#: plug-ins/common/postscript.c:2782 plug-ins/common/postscript.c:2941
+#: plug-ins/common/postscript.c:2787 plug-ins/common/postscript.c:2946
 #: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:411
 #: plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
@@ -3562,8 +3568,8 @@ msgid "_Limit Line Width"
 msgstr "_Limitar la anchura de línea"
 
 #: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1229
-#: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2791
-#: plug-ins/common/postscript.c:2950 plug-ins/common/smooth_palette.c:436
+#: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2796
+#: plug-ins/common/postscript.c:2955 plug-ins/common/smooth_palette.c:436
 #: plug-ins/common/tile.c:415 plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
@@ -3941,7 +3947,8 @@ msgstr "Nombre de icono:"
 
 #: plug-ins/common/gif.c:688
 msgid "Couldn't simply reduce colors further. Saving as opaque."
-msgstr "Simplemente no se han podido reducir más los colores. Guardando como opaco."
+msgstr ""
+"Simplemente no se han podido reducir más los colores. Guardando como opaco."
 
 #: plug-ins/common/gif.c:910
 msgid ""
@@ -3952,7 +3959,8 @@ msgstr ""
 "se guardará ningún comentario."
 
 #: plug-ins/common/gif.c:971
-msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid ""
+"Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "No se pueden guardar imágenes RGB.Conviertalas a INDEXADA o TONOS DE GRIS "
 "primero."
@@ -3969,7 +3977,8 @@ msgstr ""
 
 #: plug-ins/common/gif.c:1153
 msgid "Delay inserted to prevent evil CPU-sucking anim."
-msgstr "Retardo insertado para evitar la maldita animación de chupadora de CPU."
+msgstr ""
+"Retardo insertado para evitar la maldita animación de chupadora de CPU."
 
 #: plug-ins/common/gif.c:1196
 msgid "GIF Warning"
@@ -4060,23 +4069,23 @@ msgstr "No es un archivo de tipo GIF"
 msgid "Non-square pixels.  Image might look squashed."
 msgstr "Píxeles no cuadrados. La imagen se verá aplastada."
 
-#: plug-ins/common/gifload.c:859
+#: plug-ins/common/gifload.c:866
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Fondo (%d%s)"
 
-#: plug-ins/common/gifload.c:907 plug-ins/common/iwarp.c:787
+#: plug-ins/common/gifload.c:914 plug-ins/common/iwarp.c:787
 #: plug-ins/common/iwarp.c:819
 #, c-format
 msgid "Frame %d"
 msgstr "Cuadro %d"
 
-#: plug-ins/common/gifload.c:909
+#: plug-ins/common/gifload.c:916
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Cuadro %d (%d%s)"
 
-#: plug-ins/common/gifload.c:939
+#: plug-ins/common/gifload.c:946
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -4350,7 +4359,8 @@ msgstr "El número de píxeles en el borde de la tabla."
 
 #: plug-ins/common/gtm.c:587
 msgid "The width for each table cell.  Can be a number or a percent."
-msgstr "La anchura de cada celda de tabla. Puede ser un número o un porcentaje."
+msgstr ""
+"La anchura de cada celda de tabla. Puede ser un número o un porcentaje."
 
 #: plug-ins/common/gtm.c:603
 msgid "The height for each table cell.  Can be a number or a percent."
@@ -5018,7 +5028,8 @@ msgstr "Nivel de compresión de PNG:"
 
 #: plug-ins/common/mng.c:1365 plug-ins/common/png.c:1705
 msgid "Choose a high compression level for small file size"
-msgstr "Seleccione un nivel de compresión alto para achicar el tamaño del archivo"
+msgstr ""
+"Seleccione un nivel de compresión alto para achicar el tamaño del archivo"
 
 #: plug-ins/common/mng.c:1379
 msgid "JPEG Compression Quality:"
@@ -5791,107 +5802,107 @@ msgstr ""
 "Si no se activa la imagen será mapeada circularmente en un rectángulo. Si se "
 "activa la imagen será proyectada en un círculo."
 
-#: plug-ins/common/postscript.c:887
+#: plug-ins/common/postscript.c:888
 #, c-format
 msgid "Could not interpret '%s'"
 msgstr "No se pudo interpretar el archivo «%s»"
 
-#: plug-ins/common/postscript.c:975
+#: plug-ins/common/postscript.c:976
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "Guardar como PostScript no funciona con imágenes con canales alfa"
 
-#: plug-ins/common/postscript.c:1470 plug-ins/common/postscript.c:1500
+#: plug-ins/common/postscript.c:1475 plug-ins/common/postscript.c:1505
 #, c-format
 msgid "Error starting ghostscript (%s)"
 msgstr "Ocurrió un error la iniciar ghostscript (%s)"
 
-#: plug-ins/common/postscript.c:2300 plug-ins/common/postscript.c:2432
-#: plug-ins/common/postscript.c:2582 plug-ins/common/postscript.c:2710
+#: plug-ins/common/postscript.c:2305 plug-ins/common/postscript.c:2437
+#: plug-ins/common/postscript.c:2587 plug-ins/common/postscript.c:2715
 #: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
 #: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
 msgid "Write error occurred"
 msgstr "Ocurrió un error de escritura"
 
-#: plug-ins/common/postscript.c:2736
+#: plug-ins/common/postscript.c:2741
 msgid "Load PostScript"
 msgstr "Cargar PostScript"
 
 #. Rendering
-#: plug-ins/common/postscript.c:2756
+#: plug-ins/common/postscript.c:2761
 msgid "Rendering"
 msgstr "Renderizado"
 
 #. Resolution
-#: plug-ins/common/postscript.c:2773 plug-ins/common/svg.c:820
+#: plug-ins/common/postscript.c:2778 plug-ins/common/svg.c:820
 #: plug-ins/print/gimp_main_window.c:1100
 msgid "Resolution:"
 msgstr "Resolución:"
 
-#: plug-ins/common/postscript.c:2801
+#: plug-ins/common/postscript.c:2806
 msgid "Pages:"
 msgstr "Páginas:"
 
 # //R ¿Está bien traducido?
-#: plug-ins/common/postscript.c:2807
+#: plug-ins/common/postscript.c:2812
 msgid "Try Bounding Box"
 msgstr "Intentar con cajas de contorno"
 
 #. Colouring
-#: plug-ins/common/postscript.c:2820
+#: plug-ins/common/postscript.c:2825
 msgid "Coloring"
 msgstr "Coloreado"
 
-#: plug-ins/common/postscript.c:2824
+#: plug-ins/common/postscript.c:2829
 msgid "B/W"
 msgstr "B/N"
 
 #. * Gray *
-#: plug-ins/common/postscript.c:2825 plug-ins/rcm/rcm_dialog.c:409
+#: plug-ins/common/postscript.c:2830 plug-ins/rcm/rcm_dialog.c:409
 msgid "Gray"
 msgstr "Gris"
 
-#: plug-ins/common/postscript.c:2827 plug-ins/fits/fits.c:1001
+#: plug-ins/common/postscript.c:2832 plug-ins/fits/fits.c:1001
 msgid "Automatic"
 msgstr "Automático"
 
-#: plug-ins/common/postscript.c:2837
+#: plug-ins/common/postscript.c:2842
 msgid "Text Antialiasing"
 msgstr "Alisado de texto"
 
-#: plug-ins/common/postscript.c:2842 plug-ins/common/postscript.c:2854
+#: plug-ins/common/postscript.c:2847 plug-ins/common/postscript.c:2859
 msgid "Weak"
 msgstr "Débil"
 
-#: plug-ins/common/postscript.c:2843 plug-ins/common/postscript.c:2855
+#: plug-ins/common/postscript.c:2848 plug-ins/common/postscript.c:2860
 msgid "Strong"
 msgstr "Fuerte"
 
-#: plug-ins/common/postscript.c:2849
+#: plug-ins/common/postscript.c:2854
 msgid "Graphic Antialiasing"
 msgstr "Alisado de gráficos"
 
-#: plug-ins/common/postscript.c:2901
+#: plug-ins/common/postscript.c:2906
 msgid "Save as PostScript"
 msgstr "Guardar como PostScript"
 
 #. Image Size
-#: plug-ins/common/postscript.c:2924
+#: plug-ins/common/postscript.c:2929
 msgid "Image Size"
 msgstr "Tamaño de imagen"
 
-#: plug-ins/common/postscript.c:2959
+#: plug-ins/common/postscript.c:2964
 msgid "_X-Offset:"
 msgstr "Desplazamiento-_X:"
 
-#: plug-ins/common/postscript.c:2968
+#: plug-ins/common/postscript.c:2973
 msgid "_Y-Offset:"
 msgstr "Desplazamiento-_Y:"
 
-#: plug-ins/common/postscript.c:2974
+#: plug-ins/common/postscript.c:2979
 msgid "_Keep Aspect Ratio"
 msgstr "Man_tener razón de aspecto"
 
-#: plug-ins/common/postscript.c:2980
+#: plug-ins/common/postscript.c:2985
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5900,36 +5911,36 @@ msgstr ""
 "el tamaño dado sin cambiar la razón de aspecto."
 
 #. Unit
-#: plug-ins/common/postscript.c:2989
+#: plug-ins/common/postscript.c:2994
 msgid "Unit"
 msgstr "Unidad"
 
-#: plug-ins/common/postscript.c:2993
+#: plug-ins/common/postscript.c:2998
 msgid "_Inch"
 msgstr "P_ulgada"
 
-#: plug-ins/common/postscript.c:2994
+#: plug-ins/common/postscript.c:2999
 msgid "_Millimeter"
 msgstr "_Milímetro"
 
 #. Format
-#: plug-ins/common/postscript.c:3020
+#: plug-ins/common/postscript.c:3025
 msgid "Output"
 msgstr "Salida"
 
-#: plug-ins/common/postscript.c:3027
+#: plug-ins/common/postscript.c:3032
 msgid "_PostScript Level 2"
 msgstr "_PostScript nivel 2"
 
-#: plug-ins/common/postscript.c:3036
+#: plug-ins/common/postscript.c:3041
 msgid "_Encapsulated PostScript"
 msgstr "PostScript _encapsulado"
 
-#: plug-ins/common/postscript.c:3045
+#: plug-ins/common/postscript.c:3050
 msgid "P_review"
 msgstr "Vista p_revia"
 
-#: plug-ins/common/postscript.c:3066
+#: plug-ins/common/postscript.c:3071
 msgid "Preview _Size:"
 msgstr "Tamaño de la vi_sta previa:"
 
@@ -6555,7 +6566,8 @@ msgstr "Saturació_n aleatoria:"
 
 #: plug-ins/common/sparkle.c:453
 msgid "Adjust the Value how much the Saturation should be changed randomly"
-msgstr "Ajusta el valor de cuánto debe cambiarse la saturación de forma aleatoria"
+msgstr ""
+"Ajusta el valor de cuánto debe cambiarse la saturación de forma aleatoria"
 
 #: plug-ins/common/sparkle.c:471
 msgid "_Preserve Luminosity"
@@ -6907,7 +6919,8 @@ msgid "Import _Paths"
 msgstr "Importar _rutas"
 
 #: plug-ins/common/svg.c:852
-msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid ""
+"Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importar los elementos de la ruta del SVG para que puedan ser utilizados con "
 "la herramienta de ruta de El GIMP"
@@ -7121,7 +7134,8 @@ msgid "ID"
 msgstr "Identificador"
 
 #: plug-ins/common/uniteditor.c:85
-msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgid ""
+"This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Esta cadena será usada para identificar una unidad en los archivos de "
 "configuración de El GIMP."
@@ -7369,52 +7383,52 @@ msgstr "<Image>/Filtros/Genérico/Er_osión"
 msgid "<Image>/Filters/Generic/_Dilate"
 msgstr "<Image>/Filtros/Genérico/_Distensión"
 
-#: plug-ins/common/vpropagate.c:455
+#: plug-ins/common/vpropagate.c:459
 msgid "Value Propagating..."
 msgstr "Propagación de valor..."
 
-#: plug-ins/common/vpropagate.c:1027
+#: plug-ins/common/vpropagate.c:1031
 msgid "Value Propagate"
 msgstr "Propagar valor"
 
 #. Propagate Mode
-#: plug-ins/common/vpropagate.c:1042
+#: plug-ins/common/vpropagate.c:1046
 msgid "Propagate Mode"
 msgstr "Modo de propagación"
 
-#: plug-ins/common/vpropagate.c:1083
+#: plug-ins/common/vpropagate.c:1087
 msgid "Lower T_hreshold:"
 msgstr "Umbral in_ferior:"
 
-#: plug-ins/common/vpropagate.c:1092
+#: plug-ins/common/vpropagate.c:1096
 msgid "_Upper Threshold:"
 msgstr "Um_bral superior:"
 
-#: plug-ins/common/vpropagate.c:1101
+#: plug-ins/common/vpropagate.c:1105
 msgid "_Propagating Rate:"
 msgstr "Tasa de _propagación:"
 
-#: plug-ins/common/vpropagate.c:1113
+#: plug-ins/common/vpropagate.c:1117
 msgid "To L_eft"
 msgstr "A la izqui_erda"
 
-#: plug-ins/common/vpropagate.c:1116
+#: plug-ins/common/vpropagate.c:1120
 msgid "To _Right"
 msgstr "A la de_recha"
 
-#: plug-ins/common/vpropagate.c:1119
+#: plug-ins/common/vpropagate.c:1123
 msgid "To _Top"
 msgstr "A la c_ima"
 
-#: plug-ins/common/vpropagate.c:1122
+#: plug-ins/common/vpropagate.c:1126
 msgid "To _Bottom"
 msgstr "Al f_ondo"
 
-#: plug-ins/common/vpropagate.c:1135
+#: plug-ins/common/vpropagate.c:1139
 msgid "Propagating _Alpha Channel"
 msgstr "Propagando canal _alfa"
 
-#: plug-ins/common/vpropagate.c:1145
+#: plug-ins/common/vpropagate.c:1149
 msgid "Propagating Value Channel"
 msgstr "Propagando canal de valor"
 
@@ -8416,7 +8430,8 @@ msgstr "Crear una espiral"
 
 #: plug-ins/gfig/gfig.c:1503
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr "Crear una curva de Bezier. Mays + botón termina la creación del objeto."
+msgstr ""
+"Crear una curva de Bezier. Mays + botón termina la creación del objeto."
 
 #: plug-ins/gfig/gfig.c:1509
 msgid "Move an object"
@@ -9194,7 +9209,8 @@ msgstr "Cuadro (%i)"
 
 #: plug-ins/gfli/gfli.c:679
 msgid "Sorry, I can save only INDEXED and GRAY images."
-msgstr "Lo siento, sólo se pueden guardar imágenes INDEXADAS y en TONOS DE GRIS."
+msgstr ""
+"Lo siento, sólo se pueden guardar imágenes INDEXADAS y en TONOS DE GRIS."
 
 #: plug-ins/gfli/gfli.c:812
 msgid "GFLI 1.3 - Load framestack"
@@ -9251,7 +9267,8 @@ msgstr "Relieve:"
 
 #: plug-ins/gimpressionist/brush.c:471 plug-ins/gimpressionist/paper.c:168
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
-msgstr "Especifica la cantidad de relieve a aplicar a la imagen (en porcentaje)"
+msgstr ""
+"Especifica la cantidad de relieve a aplicar a la imagen (en porcentaje)"
 
 #: plug-ins/gimpressionist/color.c:34
 msgid "Co_lor"
@@ -9267,7 +9284,8 @@ msgstr "C_entro de la brocha"
 
 #: plug-ins/gimpressionist/color.c:61
 msgid "Color is computed from the average of all pixels under the brush"
-msgstr "Se calcula el color con el promedio de todos los píxeles bajo la brocha"
+msgstr ""
+"Se calcula el color con el promedio de todos los píxeles bajo la brocha"
 
 #: plug-ins/gimpressionist/color.c:65
 msgid "Samples the color from the pixel in the center of the brush"
@@ -9307,7 +9325,8 @@ msgstr "Fondo con color sólido"
 
 #: plug-ins/gimpressionist/general.c:126
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr "Usar un fondo transparente; sólo las pinceladas pintadas serán visibles"
+msgstr ""
+"Usar un fondo transparente; sólo las pinceladas pintadas serán visibles"
 
 #: plug-ins/gimpressionist/general.c:141
 msgid "Paint edges"
@@ -9315,7 +9334,8 @@ msgstr "Pintar bordes"
 
 #: plug-ins/gimpressionist/general.c:146
 msgid "Selects if to place strokes all the way out to the edges of the image"
-msgstr "Seleccione si se colocarán pinceladas a lo largo de los bordes de la imagen"
+msgstr ""
+"Seleccione si se colocarán pinceladas a lo largo de los bordes de la imagen"
 
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:150 plug-ins/maze/maze_face.c:279
@@ -9324,7 +9344,8 @@ msgstr "Convertible en mosaico"
 
 #: plug-ins/gimpressionist/general.c:154
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr "Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
+msgstr ""
+"Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
 
 #: plug-ins/gimpressionist/general.c:158
 msgid "Drop Shadow"
@@ -9355,7 +9376,8 @@ msgid "Shadow depth:"
 msgstr "Profundidad de sombras:"
 
 #: plug-ins/gimpressionist/general.c:196
-msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid ""
+"The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 "La profundidad de las sombras arrojadas, es decir, cómo de apartada del "
 "objeto debería estar"
@@ -9453,7 +9475,8 @@ msgstr "Radio"
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
-msgstr "La distancia al centro de la imagen determina la dirección de la pincelada"
+msgstr ""
+"La distancia al centro de la imagen determina la dirección de la pincelada"
 
 #: plug-ins/gimpressionist/orientation.c:134
 msgid "Selects a random direction of each stroke"
@@ -9466,7 +9489,8 @@ msgstr "Radial"
 
 #: plug-ins/gimpressionist/orientation.c:144
 msgid "Let the direction from the center determine the direction of the stroke"
-msgstr "Hace que la dirección desde el centro determine la dirección de la pincelada"
+msgstr ""
+"Hace que la dirección desde el centro determine la dirección de la pincelada"
 
 #: plug-ins/gimpressionist/orientation.c:152
 #: plug-ins/gimpressionist/size.c:138
@@ -9636,7 +9660,8 @@ msgstr "Aplica el papel como está (sin darle relieve)"
 
 #: plug-ins/gimpressionist/paper.c:156
 msgid "Specifies the scale of the texture (in percent of original file)"
-msgstr "Especifica la escala de la textura (en porcentaje con el archivo original)"
+msgstr ""
+"Especifica la escala de la textura (en porcentaje con el archivo original)"
 
 #: plug-ins/gimpressionist/placement.c:36
 msgid "Pl_acement"
@@ -9770,12 +9795,16 @@ msgid "The largest brush to create"
 msgstr "La mayor brocha a crear"
 
 #: plug-ins/gimpressionist/size.c:111
-msgid "Let the value (brightness) of the region determine the size of the stroke"
-msgstr "Hace que el valor (brillo) de la región determine el tamaño de la pincelada"
+msgid ""
+"Let the value (brightness) of the region determine the size of the stroke"
+msgstr ""
+"Hace que el valor (brillo) de la región determine el tamaño de la pincelada"
 
 #: plug-ins/gimpressionist/size.c:118
-msgid "The distance from the center of the image determines the size of the stroke"
-msgstr "La distancia al centro de la imagen determina el tamaño de la pincelada"
+msgid ""
+"The distance from the center of the image determines the size of the stroke"
+msgstr ""
+"La distancia al centro de la imagen determina el tamaño de la pincelada"
 
 #: plug-ins/gimpressionist/size.c:125
 msgid "Selects a random size for each stroke"
@@ -9791,7 +9820,8 @@ msgstr "El tono de la región determina el tamaño de la pincelada"
 
 #: plug-ins/gimpressionist/size.c:160
 msgid "The brush-size that matches the original image the closest is selected"
-msgstr "Selecciona el tamaño de la pincelada que más se parece a la imagen original"
+msgstr ""
+"Selecciona el tamaño de la pincelada que más se parece a la imagen original"
 
 #: plug-ins/gimpressionist/size.c:171
 msgid "Manually specify the stroke size"
@@ -11597,7 +11627,8 @@ msgid "Adjust Output..."
 msgstr "Ajustar la salida..."
 
 #: plug-ins/print/gimp_main_window.c:1467
-msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgid ""
+"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
 "Ajustar el balance de color, brillo, contraste, saturación y el algoritmo de "
 "entramado"
@@ -11841,4 +11872,3 @@ msgstr "Error: El archivo de propiedades XJT «%s» está vacío."
 
 #~ msgid "write error occured"
 #~ msgstr "ocurrió un error de escritura"
-

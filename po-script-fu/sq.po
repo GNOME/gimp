@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-02 11:37+0200\n"
+"POT-Creation-Date: 2004-09-25 00:02+0200\n"
 "PO-Revision-Date: 2004-09-03 18:20+0200\n"
 "Last-Translator: Laurent Dhima <laurenti@alblinux.net>\n"
 "Language-Team: Albanian <gnome-albanian-perkthyesit@lists.sourceforge.net>\n"
@@ -695,8 +695,7 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
 msgstr "<Toolbox> Script ASCII."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
-#, no-c-format
-#, fuzzy
+#, fuzzy, no-c-format
 msgid "Buffer Amount (% Height of Text)"
 msgstr "Buffer Shuma nga Teksti"
 
@@ -1399,14 +1398,12 @@ msgid "Clear Unselected Maskarea"
 msgstr "Pastro"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:6
-#, no-c-format
-#, fuzzy
+#, fuzzy, no-c-format
 msgid "Fade From %"
 msgstr "Nga"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:8
-#, no-c-format
-#, fuzzy
+#, fuzzy, no-c-format
 msgid "Fade To   %"
 msgstr "Për"
 
@@ -1532,19 +1529,20 @@ msgid "Blur Border"
 msgstr "Korniza"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
-#, no-c-format
-#, fuzzy
+#, fuzzy, no-c-format
 msgid "Shadow Weight (%)"
 msgstr "Gjerësia"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 msgstr "<Toolbox> Script Web Faqja Temat Klasike."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 msgstr "<Toolbox> Script Web Faqja Temat Klasike E vogël."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
@@ -2761,4 +2759,3 @@ msgstr "X"
 #, fuzzy
 msgid "Highlight Y Offset"
 msgstr "Y"
-

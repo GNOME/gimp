@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-08 14:23+0200\n"
+"POT-Creation-Date: 2004-09-25 00:02+0200\n"
 "PO-Revision-Date: 2004-08-08 14:24+0200\n"
 "Last-Translator: Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
@@ -494,7 +494,8 @@ msgstr "Delta Vrednost Boje"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Vanzemaljsko svetlo/Strelica..."
+msgstr ""
+"<Toolbox>/Proširenja/Skript-Fu/Veb teme/Vanzemaljsko svetlo/Strelica..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -550,7 +551,8 @@ msgstr "Gore"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Vanzemaljsko svetlo/Hor. Crta..."
+msgstr ""
+"<Toolbox>/Proširenja/Skript-Fu/Veb teme/Vanzemaljsko svetlo/Hor. Crta..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
@@ -1385,12 +1387,14 @@ msgstr "Težina senke (%)"
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Classic.Gimp.org/Veliko zaglavlje..."
+msgstr ""
+"<Toolbox>/Proširenja/Skript-Fu/Veb teme/Classic.Gimp.org/Veliko zaglavlje..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Classic.Gimp.org/Malo zaglavlje..."
+msgstr ""
+"<Toolbox>/Proširenja/Skript-Fu/Veb teme/Classic.Gimp.org/Malo zaglavlje..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1434,25 +1438,33 @@ msgstr "Boja senke"
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
 "Label..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Classic.Gimp.org/Oznaka drugog dugmeta...."
+msgstr ""
+"<Toolbox>/Proširenja/Skript-Fu/Veb teme/Classic.Gimp.org/Oznaka drugog "
+"dugmeta...."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
 "Button Label..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb Teme/Classic.Gimp.Org/Oznaka trećeg dugmeta..."
+msgstr ""
+"<Toolbox>/Proširenja/Skript-Fu/Veb Teme/Classic.Gimp.Org/Oznaka trećeg "
+"dugmeta..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
 "Labels..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Classic.Gimp.org/Opšte oznake za valjke..."
+msgstr ""
+"<Toolbox>/Proširenja/Skript-Fu/Veb teme/Classic.Gimp.org/Opšte oznake za "
+"valjke..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
 "Label..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Classic.Gimp.org/Oznaka valjk. dugmeta..."
+msgstr ""
+"<Toolbox>/Proširenja/Skript-Fu/Veb teme/Classic.Gimp.org/Oznaka valjk. "
+"dugmeta..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
