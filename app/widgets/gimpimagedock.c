@@ -298,7 +298,7 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
                         &menu_preview_width, &menu_preview_height);
 
   image_dock->menu = gimp_container_menu_new (image_container, context,
-                                              menu_preview_height);
+                                              menu_preview_height, 1);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (image_dock->option_menu),
 			    image_dock->menu);
   gtk_widget_show (image_dock->menu);

@@ -120,7 +120,8 @@ gimp_container_menu_impl_init (GimpContainerMenuImpl *menu_impl)
 GtkWidget *
 gimp_container_menu_new (GimpContainer *container,
 			 GimpContext   *context,
-			 gint           preview_size)
+			 gint           preview_size,
+                         gint           preview_border_width)
 {
   GimpContainerMenuImpl *menu_impl;
   GimpContainerMenu     *menu;
@@ -130,17 +131,22 @@ gimp_container_menu_new (GimpContainer *container,
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (preview_size > 0 &&
 			preview_size <= GIMP_VIEWABLE_MAX_POPUP_SIZE, NULL);
+  g_return_val_if_fail (preview_border_width >= 0 &&
+                        preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
+                        NULL);
 
   menu_impl = g_object_new (GIMP_TYPE_CONTAINER_MENU_IMPL, NULL);
 
   menu = GIMP_CONTAINER_MENU (menu_impl);
 
-  menu->preview_size = preview_size;
+  menu->preview_size         = preview_size;
+  menu->preview_border_width = preview_border_width;
 
   menu_impl->empty_item = gtk_menu_item_new_with_label ("(none)");
   gtk_widget_set_size_request (menu_impl->empty_item,
                                -1,
                                preview_size +
+                               2 * preview_border_width +
                                2 * menu_impl->empty_item->style->ythickness);
   gtk_widget_set_sensitive (menu_impl->empty_item, FALSE);
   gtk_widget_show (menu_impl->empty_item);
@@ -166,7 +172,9 @@ gimp_container_menu_impl_insert_item (GimpContainerMenu *menu,
 {
   GtkWidget *menu_item;
 
-  menu_item = gimp_menu_item_new (viewable, menu->preview_size);
+  menu_item = gimp_menu_item_new (viewable,
+                                  menu->preview_size,
+                                  menu->preview_border_width);
 
   gimp_menu_item_set_name_func (GIMP_MENU_ITEM (menu_item),
 				menu->get_name_func);
@@ -303,7 +311,7 @@ gimp_container_menu_impl_set_preview_size (GimpContainerMenu *menu)
 
           gimp_preview_set_size (GIMP_PREVIEW (menu_item->preview),
                                  menu->preview_size,
-                                 GIMP_PREVIEW (menu_item->preview)->renderer->border_width);
+                                 menu->preview_border_width);
         }
     }
 }

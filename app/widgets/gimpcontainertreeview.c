@@ -162,8 +162,6 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
   tree_view->model_column_renderer = COLUMN_RENDERER;
   tree_view->model_column_name     = COLUMN_NAME;
 
-  tree_view->preview_border_width = 1;
-
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (view->scrolled_win),
                                        GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (view->scrolled_win), 
@@ -295,7 +293,7 @@ gimp_container_tree_view_set (GimpContainerTreeView *tree_view,
 
   renderer = gimp_preview_renderer_new (G_TYPE_FROM_INSTANCE (viewable),
                                         view->preview_size,
-                                        tree_view->preview_border_width,
+                                        view->preview_border_width,
                                         FALSE);
   gimp_preview_renderer_set_viewable (renderer, viewable);
   gimp_preview_renderer_remove_idle (renderer);
@@ -621,8 +619,9 @@ gimp_container_tree_view_set_preview_size (GimpContainerView *view)
                           COLUMN_RENDERER, &renderer,
                           -1);
 
-      gimp_preview_renderer_set_size (renderer, view->preview_size,
-                                      tree_view->preview_border_width);
+      gimp_preview_renderer_set_size (renderer,
+                                      view->preview_size,
+                                      view->preview_border_width);
 
       g_object_unref (renderer);
     }

@@ -161,7 +161,7 @@ file_new_dialog_create (Gimp      *gimp,
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), optionmenu);
 
-  info->template_menu = gimp_container_menu_new (gimp->templates, NULL, 16);
+  info->template_menu = gimp_container_menu_new (gimp->templates, NULL, 16, 0);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), info->template_menu);
   gtk_widget_show (info->template_menu);
 

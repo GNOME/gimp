@@ -241,7 +241,7 @@ palette_import_dialog_new (Gimp *gimp)
                              import_dialog->gradient_menu, 1, FALSE);
 
   menu = gimp_container_menu_new (gimp->gradient_factory->container,
-                                  import_dialog->context, 24);
+                                  import_dialog->context, 24, 1);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (import_dialog->gradient_menu),
                             menu);
   gtk_widget_show (menu);
@@ -252,7 +252,7 @@ palette_import_dialog_new (Gimp *gimp)
                              NULL, 1.0, 0.5,
                              import_dialog->image_menu, 1, FALSE);
 
-  menu = gimp_container_menu_new (gimp->images, import_dialog->context, 24);
+  menu = gimp_container_menu_new (gimp->images, import_dialog->context, 24, 1);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (import_dialog->image_menu), menu);
   gtk_widget_show (menu);
 

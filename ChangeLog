@@ -1,5 +1,25 @@
 2003-04-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainertreeview.[ch]: removed
+	tree_view->preview_border_width.
+
+	* app/widgets/gimpcontainermenu.[ch]
+	* app/widgets/gimpcontainerview.[ch]: and added it here so it is
+	configurable in all views. Synced the changes in both classes.
+
+	* app/widgets/gimpcontainermenuimpl.[ch]
+	* app/widgets/gimpmenuitem.[ch]: made preview_border_size
+	configurable here, too.
+
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpimagedock.c
+	* app/gui/palette-import-dialog.c: changed accordingly.
+
+	* app/gui/file-new-dialog.c: Removed the border from the template
+	menu previews.
+
+2003-04-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpundo.h: #define GIMP_UNDO_PREVIEW_SIZE 64
 
 	* app/core/gimpundo.c (gimp_undo_create_preview_private): 

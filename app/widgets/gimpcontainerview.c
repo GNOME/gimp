@@ -177,17 +177,16 @@ static void
 gimp_container_view_init (GimpContainerView      *view,
                           GimpContainerViewClass *klass)
 {
-  view->container     = NULL;
-  view->context       = NULL;
-
-  view->hash_table    = g_hash_table_new_full (g_direct_hash, g_direct_equal,
-                                               NULL,
-                                               klass->insert_data_free);
-
-  view->preview_size  = 0;
-  view->reorderable   = FALSE;
-
-  view->get_name_func = NULL;
+  view->container            = NULL;
+  view->context              = NULL;
+  view->hash_table           = g_hash_table_new_full (g_direct_hash,
+                                                      g_direct_equal,
+                                                      NULL,
+                                                      klass->insert_data_free);
+  view->preview_size         = 0;
+  view->preview_border_width = 1;
+  view->reorderable          = FALSE;
+  view->get_name_func        = NULL;
 
   view->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_box_pack_start (GTK_BOX (view), view->scrolled_win, TRUE, TRUE, 0);
@@ -226,7 +225,7 @@ gimp_container_view_set_container (GimpContainerView *view,
 				   GimpContainer     *container)
 {
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
-  g_return_if_fail (! container || GIMP_IS_CONTAINER (container));
+  g_return_if_fail (container == NULL || GIMP_IS_CONTAINER (container));
 
   if (container != view->container)
     GIMP_CONTAINER_VIEW_GET_CLASS (view)->set_container (view, container);
@@ -715,8 +714,7 @@ gimp_container_view_context_changed (GimpContext       *context,
 
   insert_data = g_hash_table_lookup (view->hash_table, viewable);
 
-  g_signal_emit (view, view_signals[SELECT_ITEM], 0,
-		 viewable, insert_data);
+  g_signal_emit (view, view_signals[SELECT_ITEM], 0, viewable, insert_data);
 }
 
 static void

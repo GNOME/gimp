@@ -58,8 +58,6 @@ struct _GimpContainerTreeView
   GList             *renderer_cells;
   GList             *editable_cells;
 
-  gint               preview_border_width;
-
   GQuark             invalidate_preview_handler_id;
   GQuark             name_changed_handler_id;
 

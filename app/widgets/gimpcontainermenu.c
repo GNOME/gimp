@@ -163,12 +163,11 @@ gimp_container_menu_class_init (GimpContainerMenuClass *klass)
 static void
 gimp_container_menu_init (GimpContainerMenu *menu)
 {
-  menu->container    = NULL;
-  menu->context      = NULL;
-
-  menu->hash_table   = g_hash_table_new (g_direct_hash, g_direct_equal);
-
-  menu->preview_size = 0;
+  menu->container            = NULL;
+  menu->context              = NULL;
+  menu->hash_table           = g_hash_table_new (g_direct_hash, g_direct_equal);
+  menu->preview_size         = 0;
+  menu->preview_border_width = 1;
 }
 
 static void
@@ -199,12 +198,10 @@ gimp_container_menu_set_container (GimpContainerMenu *menu,
 				   GimpContainer     *container)
 {
   g_return_if_fail (GIMP_IS_CONTAINER_MENU (menu));
-  g_return_if_fail (! container || GIMP_IS_CONTAINER (container));
+  g_return_if_fail (container == NULL || GIMP_IS_CONTAINER (container));
 
   if (container != menu->container)
-    {
-      GIMP_CONTAINER_MENU_GET_CLASS (menu)->set_container (menu, container);
-    }
+    GIMP_CONTAINER_MENU_GET_CLASS (menu)->set_container (menu, container);
 }
 
 static void
@@ -367,52 +364,61 @@ gimp_container_menu_set_name_func (GimpContainerMenu   *menu,
 {
   g_return_if_fail (GIMP_IS_CONTAINER_MENU (menu));
 
-  if (menu->get_name_func != get_name_func)
-    {
-      menu->get_name_func = get_name_func;
-    }
+  menu->get_name_func = get_name_func;
 }
 
 void
 gimp_container_menu_select_item (GimpContainerMenu *menu,
 				 GimpViewable      *viewable)
 {
-  gpointer insert_data;
-
   g_return_if_fail (GIMP_IS_CONTAINER_MENU (menu));
   g_return_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable));
 
-  insert_data = g_hash_table_lookup (menu->hash_table, viewable);
+  if (menu->hash_table)
+    {
+      gpointer insert_data;
 
-  g_signal_emit (menu, menu_signals[SELECT_ITEM], 0, viewable, insert_data);
+      insert_data = g_hash_table_lookup (menu->hash_table, viewable);
+
+      g_signal_emit (menu, menu_signals[SELECT_ITEM], 0,
+                     viewable, insert_data);
+    }
 }
 
 void
 gimp_container_menu_activate_item (GimpContainerMenu *menu,
 				   GimpViewable      *viewable)
 {
-  gpointer insert_data;
-
   g_return_if_fail (GIMP_IS_CONTAINER_MENU (menu));
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  insert_data = g_hash_table_lookup (menu->hash_table, viewable);
+  if (menu->hash_table)
+    {
+      gpointer insert_data;
 
-  g_signal_emit (menu, menu_signals[ACTIVATE_ITEM], 0, viewable, insert_data);
+      insert_data = g_hash_table_lookup (menu->hash_table, viewable);
+
+      g_signal_emit (menu, menu_signals[ACTIVATE_ITEM], 0,
+                     viewable, insert_data);
+    }
 }
 
 void
 gimp_container_menu_context_item (GimpContainerMenu *menu,
 				  GimpViewable      *viewable)
 {
-  gpointer insert_data;
-
   g_return_if_fail (GIMP_IS_CONTAINER_MENU (menu));
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  insert_data = g_hash_table_lookup (menu->hash_table, viewable);
+  if (menu->hash_table)
+    {
+      gpointer insert_data;
 
-  g_signal_emit (menu, menu_signals[CONTEXT_ITEM], 0, viewable, insert_data);
+      insert_data = g_hash_table_lookup (menu->hash_table, viewable);
+
+      g_signal_emit (menu, menu_signals[CONTEXT_ITEM], 0,
+                     viewable, insert_data);
+    }
 }
 
 void
@@ -424,9 +430,26 @@ gimp_container_menu_item_selected (GimpContainerMenu *menu,
 
   if (menu->container && menu->context)
     {
-      gimp_context_set_by_type (menu->context,
+      GimpContext *context;
+
+      /*  ref and remember the context because menu->context may
+       *  become NULL by calling gimp_context_set_by_type()
+       */
+      context = g_object_ref (menu->context);
+
+      g_signal_handlers_block_by_func (context,
+                                       gimp_container_menu_context_changed,
+                                       menu);
+
+      gimp_context_set_by_type (context,
 				menu->container->children_type,
 				GIMP_OBJECT (viewable));
+
+      g_signal_handlers_unblock_by_func (context,
+                                         gimp_container_menu_context_changed,
+                                         menu);
+
+      g_object_unref (context);
     }
 
   gimp_container_menu_select_item (menu, viewable);
@@ -508,11 +531,11 @@ gimp_container_menu_remove (GimpContainerMenu *menu,
 
   if (insert_data)
     {
-      g_hash_table_remove (menu->hash_table, viewable);
-
       GIMP_CONTAINER_MENU_GET_CLASS (menu)->remove_item (menu,
 							 viewable,
 							 insert_data);
+
+      g_hash_table_remove (menu->hash_table, viewable);
     }
 }
 

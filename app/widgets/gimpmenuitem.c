@@ -33,6 +33,7 @@
 #include "gimpdnd.h"
 #include "gimpmenuitem.h"
 #include "gimppreview.h"
+#include "gimppreviewrenderer.h"
 
 
 static void           gimp_menu_item_class_init    (GimpMenuItemClass *klass);
@@ -96,26 +97,32 @@ gimp_menu_item_init (GimpMenuItem *menu_item)
   gtk_container_add (GTK_CONTAINER (menu_item), menu_item->hbox);
   gtk_widget_show (menu_item->hbox);
 
-  menu_item->preview       = NULL;
-  menu_item->name_label    = NULL;
+  menu_item->preview              = NULL;
+  menu_item->name_label           = NULL;
 
-  menu_item->preview_size  = 0;
-  menu_item->get_name_func = NULL;
+  menu_item->preview_size         = 0;
+  menu_item->preview_border_width = 1;
+  menu_item->get_name_func        = NULL;
 }
 
 GtkWidget *
 gimp_menu_item_new (GimpViewable  *viewable,
-                    gint           preview_size)
+                    gint           preview_size,
+                    gint           preview_border_width)
 {
   GimpMenuItem *menu_item;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (preview_size > 0 &&
                         preview_size <= GIMP_VIEWABLE_MAX_POPUP_SIZE, NULL);
+  g_return_val_if_fail (preview_border_width >= 0 &&
+                        preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
+                        NULL);
 
   menu_item = g_object_new (GIMP_TYPE_MENU_ITEM, NULL);
 
-  menu_item->preview_size = preview_size;
+  menu_item->preview_size         = preview_size;
+  menu_item->preview_border_width = preview_border_width;
 
   gimp_menu_item_set_viewable (menu_item, viewable);
 
@@ -133,9 +140,14 @@ static void
 gimp_menu_item_real_set_viewable (GimpMenuItem *menu_item,
                                   GimpViewable *viewable)
 {
-  menu_item->preview = gimp_preview_new (viewable, menu_item->preview_size,
-                                         1, FALSE);
-  gtk_widget_set_size_request (menu_item->preview, menu_item->preview_size, -1);
+  menu_item->preview = gimp_preview_new (viewable,
+                                         menu_item->preview_size,
+                                         menu_item->preview_border_width,
+                                         FALSE);
+  gtk_widget_set_size_request (menu_item->preview,
+                               menu_item->preview_size +
+                               2 * menu_item->preview_border_width,
+                               -1);
   gtk_box_pack_start (GTK_BOX (menu_item->hbox), menu_item->preview,
                       FALSE, FALSE, 0);
   gtk_widget_show (menu_item->preview);

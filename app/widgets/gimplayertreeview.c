@@ -231,7 +231,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   view->model_column_mask_visible = tree_view->n_model_columns;
   tree_view->model_columns[tree_view->n_model_columns++] = G_TYPE_BOOLEAN;
 
-  tree_view->preview_border_width = 2;
+  GIMP_CONTAINER_VIEW (view)->preview_border_width = 2;
 
   view->options_box = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (view->options_box), 2);
@@ -547,8 +547,9 @@ gimp_layer_tree_view_set_preview_size (GimpContainerView *view)
 
       if (renderer)
         {
-          gimp_preview_renderer_set_size (renderer, view->preview_size,
-                                          tree_view->preview_border_width);
+          gimp_preview_renderer_set_size (renderer,
+                                          view->preview_size,
+                                          view->preview_border_width);
           g_object_unref (renderer);
         }
     }
@@ -890,7 +891,7 @@ gimp_layer_tree_view_mask_update (GimpLayerTreeView *layer_view,
 
       renderer = gimp_preview_renderer_new (G_TYPE_FROM_INSTANCE (mask),
                                             container_view->preview_size,
-                                            tree_view->preview_border_width,
+                                            container_view->preview_border_width,
                                             FALSE);
       gimp_preview_renderer_set_viewable (renderer, GIMP_VIEWABLE (mask));
 
