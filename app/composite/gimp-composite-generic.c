@@ -1411,7 +1411,7 @@ gimp_composite_scale_any_any_any_generic (GimpCompositeContext * ctx)
  *
  * Initialise the generic set of compositing functions.
  *
- * Return value:
+ * Returns: boolean indicating that the initialisation was successful.
  **/
 gboolean
 gimp_composite_generic_init (void)

@@ -345,7 +345,6 @@ gimp_composite_pixelformat_astext (GimpPixelFormat format)
  * compositing operation handlers, followed by overloading those which
  * are supported by the current cpu/hardware.
  *
- * Return: void
  **/
 void
 gimp_composite_init (void)
