@@ -1,3 +1,30 @@
+1999-08-24  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/gpb.c: Added saving of .gih files.
+
+	* plug-ins/common/psp.c: Small changes, renamed the parasite.
+
+	* docs/parasites.txt: Suggesta a parasite for pixmap brush pipes.
+
+	* docs/gih.txt: Add the above parasite on the second line after
+	the number of brushes. Suggest how to edit brush pipes.
+
+	* docs/gpb.txt: Mention the gpb plug-in. 
+
+	* app/pixmapbrush.c: Small clarification.
+
+	Fixes by Hans Breuer:
+
+	* libgimp/gimp.def: Add missing entries.
+
+	* app/gimpimage.h: Added declaration of	gimp_image_{freeze,thaw}_undo.
+
+	* modules/makefile.msc: Drop the .msvc from dll names.
+
+	* plug-ins/common/jpeg.c: Guard inclusion of
+	unistd.h. (save_dialog): Restrict text box height to help people
+	with small displays.
+
 1999-08-24  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/color_panel.[ch]: new function color_panel_set_color().

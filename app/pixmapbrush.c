@@ -233,16 +233,16 @@ pixmapbrush_motion (PaintCore *paint_core,
        */
       if(RANDOM)
 	{
-	  /* eeek, what a ugly line */
+	  index  = rand()%gimp_brush_list_length (GIMP_BRUSH_PIPE(paint_core->brush)->brush_list);
 	  paint_core->brush = 
-	    gimp_brush_list_get_brush_by_index(GIMP_BRUSH_PIPE(paint_core->brush)->brush_list,
-					       (rand()%gimp_brush_list_length
-						(GIMP_BRUSH_PIPE(paint_core->brush)->brush_list)));
+	    gimp_brush_list_get_brush_by_index(GIMP_BRUSH_PIPE(paint_core->brush)->brush_list, index);
       }
       else
-	paint_core->brush = gimp_brush_list_get_brush_by_index(GIMP_BRUSH_PIPE(paint_core->brush)->brush_list, index++);
-      if (index == gimp_brush_list_length (GIMP_BRUSH_PIPE(saved_brush)->brush_list))
-	index = 0;
+	{
+	  paint_core->brush = gimp_brush_list_get_brush_by_index(GIMP_BRUSH_PIPE(saved_brush)->brush_list, index++);
+	  if (index == gimp_brush_list_length (GIMP_BRUSH_PIPE(saved_brush)->brush_list))
+	    index = 0;
+	}
     }
   
   /* Get a region which can be used to paint to  */

@@ -16,9 +16,11 @@ brush.
 The greyscale mask and the rgb data need to be of
 the same height and width.
 
-At the time of writing this, there isnt a gpb file
-loader or saver plugin, so the easiest way to
-create gpb's is:
+The easiest way to create a gpb file is to use the gpb plug-in.
+Create an RGBA image, and save as a .gpb file.
+
+(Before that plug-in was written, the easiest way to
+create gpbs was:
 
 	1. Create a rgb image of some sort. The best
 	images seem to be something on a black background,
@@ -57,6 +59,7 @@ create gpb's is:
 		cat foo.gbr foo.pat > foo.gpb
 
 	7. Copy that foo.gpb to your brushes dir
+)
 
 
 Adrian Likins

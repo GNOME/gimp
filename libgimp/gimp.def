@@ -24,8 +24,10 @@ EXPORTS
 	gimp_channel_width
 	gimp_color_cube
 	gimp_data_directory
+	gimp_default_display
 	gimp_destroy_paramdefs
 	gimp_destroy_params
+	gimp_detach_parasite
 	gimp_directory
 	gimp_display_delete
 	gimp_display_new
@@ -64,6 +66,7 @@ EXPORTS
 	gimp_drawable_width
 	gimp_extension_ack
 	gimp_extension_process
+	gimp_find_parasite
 	gimp_gamma
 	gimp_get_data
 	gimp_get_data_size
@@ -78,6 +81,7 @@ EXPORTS
 	gimp_image_add_layer
 	gimp_image_add_layer_mask
 	gimp_image_add_vguide
+	gimp_image_attach_new_parasite
 	gimp_image_attach_parasite
 	gimp_image_base_type
 	gimp_image_clean_all
@@ -93,6 +97,7 @@ EXPORTS
 	gimp_image_freeze_undo
 	gimp_image_get_active_channel
 	gimp_image_get_active_layer
+	gimp_image_get_channel_by_tattoo
 	gimp_image_get_channels
 	gimp_image_get_cmap
 	gimp_image_get_component_active
@@ -100,9 +105,11 @@ EXPORTS
 	gimp_image_get_filename
 	gimp_image_get_guide_orientation
 	gimp_image_get_guide_position
+	gimp_image_get_layer_by_tattoo
 	gimp_image_get_layers
 	gimp_image_get_resolution
 	gimp_image_get_selection
+	gimp_image_get_thumbnail_data
 	gimp_image_get_unit
 	gimp_image_height
 	gimp_image_lower_channel
@@ -198,6 +205,7 @@ EXPORTS
 	gimp_pixel_rgn_set_row
 	gimp_pixel_rgns_process
 	gimp_pixel_rgns_register
+	gimp_pixel_rgns_register2
 	gimp_progress_init
 	gimp_progress_update
 	gimp_query_database
@@ -253,10 +261,12 @@ EXPORTS
 	parasite_copy
 	parasite_data
 	parasite_data_size
+	parasite_flags
 	parasite_free
 	parasite_has_flag
 	parasite_is_persistent
 	parasite_is_type
+	parasite_is_undoable
 	parasite_name
 	parasite_new
 	set_gimp_PLUG_IN_INFO_PTR

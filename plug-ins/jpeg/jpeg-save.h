@@ -113,7 +113,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <jpeglib.h>
 #include <jerror.h>
 #include "gtk/gtk.h"
@@ -1657,6 +1659,8 @@ save_dialog ()
 
   text = gtk_text_new (NULL, NULL);
   gtk_text_set_editable (GTK_TEXT (text), TRUE);
+  gtk_widget_set_usize(text,-1,3); /* //HB: restrict to 3 line height 
+                                    * to allow 800x600 mode */
   if(image_comment) 
     gtk_text_insert(GTK_TEXT(text),NULL,NULL,NULL,image_comment,-1);
   gtk_table_attach (GTK_TABLE (com_table), text, 0, 1, 0, 1,

@@ -1461,7 +1461,7 @@ read_tube_block (FILE *f,
   guint32 step_size, column_count, row_count, cell_count;
   guint32 placement_mode, selection_mode;
   gint i;
-  Parasite *hose_parasite;
+  Parasite *pipe_parasite;
   gchar *parasite_text;
 
   if (fread (&version, 2, 1, f) < 1
@@ -1492,15 +1492,17 @@ read_tube_block (FILE *f,
   for (i = 1; i < row_count; i++)
     gimp_image_add_hguide (image_ID, (ia->height * i)/row_count);
 
-  /* We use a parasite to pass in the tube (hose) parameters in
+  /* We use a parasite to pass in the tube (pipe) parameters in
    * case we will have any use of those (for instance in some
-   * yet to be written code that saves a GIMP image hose format
+   * yet to be written code that saves a GIMP image pipe format
    * file.
    */
   parasite_text =
-    g_strdup_printf ("step:%d cols:%d rows:%d "
+    g_strdup_printf ("ncells:%d step:%d dim:%d cols:%d rows:%d "
+		     "rank0:%d rank1:%d "
 		     "placement:%s selection:%s",
-		     step_size, column_count, row_count,
+		     cell_count, step_size, 2, column_count, row_count,
+		     column_count, row_count,
 		     (placement_mode == tpmRandom ? "random" :
 		      (placement_mode == tpmConstant ? "constant" :
 		       "default")),
@@ -1510,10 +1512,11 @@ read_tube_block (FILE *f,
 			(selection_mode == tsmPressure ? "pressure" :
 			 (selection_mode == tsmVelocity ? "velocity" :
 			  "default"))))));
-  hose_parasite = parasite_new("gimp-image-hose-parameters", PARASITE_PERSISTENT,
-			       strlen (parasite_text) + 1, parasite_text);
-  gimp_image_attach_parasite(image_ID, hose_parasite);
-  parasite_free (hose_parasite);
+  pipe_parasite = parasite_new ("gimp-brush-pipe-parameters",
+				PARASITE_PERSISTENT,
+				strlen (parasite_text) + 1, parasite_text);
+  gimp_image_attach_parasite (image_ID, pipe_parasite);
+  parasite_free (pipe_parasite);
   g_free (parasite_text);
 }
 

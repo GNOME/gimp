@@ -36,9 +36,9 @@ GTK = ..\..\gtk+
 CFLAGS = -DHAVE_CONFIG_H -DMODULE_COMPILATION -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk\win32 -I$(GTK)
 
 MODULES = \
-	colorsel_gtk-$(GIMP_VER).msvc.dll \
-	colorsel_triangle-$(GIMP_VER).msvc.dll \
-	colorsel_water-$(GIMP_VER).msvc.dll
+	colorsel_gtk-$(GIMP_VER).dll \
+	colorsel_triangle-$(GIMP_VER).dll \
+	colorsel_water-$(GIMP_VER).dll
 
 
 all : \
@@ -50,13 +50,13 @@ install : all
 ..\config.h : ..\config.h.win32
 	copy ..\config.h.win32 ..\config.h
 
-colorsel_gtk-$(GIMP_VER).msvc.dll : colorsel_gtk.obj module.def
+colorsel_gtk-$(GIMP_VER).dll : colorsel_gtk.obj module.def
 	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_gtk.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
 
-colorsel_triangle-$(GIMP_VER).msvc.dll : colorsel_triangle.obj module.def
+colorsel_triangle-$(GIMP_VER).dll : colorsel_triangle.obj module.def
 	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_triangle.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
 
-colorsel_water-$(GIMP_VER).msvc.dll : colorsel_water.obj module.def
+colorsel_water-$(GIMP_VER).dll : colorsel_water.obj module.def
 	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_water.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\win32\gdk-$(GTK_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
 
 # General rule for building 

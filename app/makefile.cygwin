@@ -134,8 +134,8 @@ gimp_OBJECTS = \
 	gimage_mask_cmds.o	\
 	gimpbrush.o		\
 	gimpbrushgenerated.o	\
-	gimpbrushhose.o		\
 	gimpbrushlist.o		\
+	gimpbrushpipe.o		\
 	gimpbrushpixmap.o	\
 	gimpcontext.o		\
 	gimpdnd.o		\

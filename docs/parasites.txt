@@ -37,6 +37,39 @@ Global data follows no strict rules.
         human-readable text, preferably in utf8 encoding.  A trailing \0
         might be included and is not part of the comment.
 
+gimp-brush-pipe-parameters" (IMAGE, PERSISTENT)
+	This is all very preliminary:
+
+	A string, containing parameters describing how an brush pipe
+	should be used. The contents is a space-separated list of
+	keywords and values. The keyword and value are separated by a
+	colon.
+
+	This parasite is currently attached to an image by the psp
+	plug-in when it loads a .tub file (Paint Shop Pro picture
+	tube). It is used (first attached with values asked from the
+	user, if nonexistent) by the gpb plug-in when it saves a .gih
+	file. The .gih file contains the same text in it.
+
+	The keywords are:
+	ncells: the number of brushes in the brush pipe
+	step: the default spacing for the pipe
+	dim: the dimension of the hose. the number of cells
+		in the pipe should be equal to the product
+		of the ranks of each dimension.
+	cols: number of columns in each layer of the image,
+		to be used when editing the pipe as a GIMP image
+	rows: ditto for rows. Note that the number of columns and rows
+		not necessarily are identical to the ranks of the
+		dimensions of a pipe, but in the case of two-
+		and three-dimensional pipes, it probably is.
+	rank0, rank1: (one for each dimension): the index range
+		for that dimension
+	These are even more vague so far:
+	placement: "default", "constant", "random"
+	selection: "default", "random", "incremental", "angular",
+		"pressure", "velocity"
+
 "tiff-save-options" (IMAGE)
         The TiffSaveVals structure from the TIFF plugin.
 
