@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -468,6 +470,12 @@ gimp_statusbar_push (GimpStatusbar *statusbar,
   g_return_if_fail (message != NULL);
 
   context_id = gimp_statusbar_get_context_id (statusbar, context);
+
+  /*  do nothing if this message is at the top of the queue already  */
+  msg = statusbar->messages ? statusbar->messages->data : NULL;
+  if (msg &&
+      msg->context_id == context_id && strcmp (msg->text, message) == 0)
+    return;
 
   for (list = statusbar->messages; list; list = g_slist_next (list))
     {

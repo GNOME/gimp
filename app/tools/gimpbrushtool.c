@@ -120,6 +120,12 @@ static void   gimp_paint_tool_notify_brush   (GimpDisplayConfig   *config,
                                               GParamSpec          *pspec,
                                               GimpPaintTool       *paint_tool);
 
+static void   gimp_paint_tool_push_status    (GimpTool            *tool,
+                                              GimpDisplayShell    *shell,
+                                              const gchar         *message);
+static void   gimp_paint_tool_pop_status     (GimpTool            *tool,
+                                              GimpDisplayShell    *status);
+
 
 static GimpColorToolClass *parent_class = NULL;
 
@@ -638,8 +644,7 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
   if (gimp_draw_tool_is_active (draw_tool))
     gimp_draw_tool_stop (draw_tool);
 
-  gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar),
-                      G_OBJECT_TYPE_NAME (tool));
+  gimp_paint_tool_pop_status (tool, shell);
 
   if (tool->gdisp          &&
       tool->gdisp != gdisp &&
@@ -707,17 +712,16 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
               g_snprintf (status_str, sizeof (status_str), format_str, dist);
             }
 
-          gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar),
-                               G_OBJECT_TYPE_NAME (tool), status_str);
+          gimp_paint_tool_push_status (tool, shell, status_str);
 
           paint_tool->draw_line = TRUE;
         }
       else
         {
           if (gdisp == tool->gdisp)
-            gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar),
-                                 G_OBJECT_TYPE_NAME (tool),
-                                 _("Press Shift to draw a straight line."));
+            gimp_paint_tool_push_status (tool, shell,
+                                         _("Press Shift to "
+                                           "draw a straight line."));
 
           paint_tool->draw_line = FALSE;
         }
@@ -932,4 +936,21 @@ gimp_paint_tool_notify_brush (GimpDisplayConfig *config,
   paint_tool->draw_brush  = config->show_brush_outline;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (paint_tool));
+}
+
+static void
+gimp_paint_tool_push_status (GimpTool         *tool,
+                             GimpDisplayShell *shell,
+                             const gchar      *message)
+{
+  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar),
+                       G_OBJECT_TYPE_NAME (tool), message);
+}
+
+static void
+gimp_paint_tool_pop_status (GimpTool         *tool,
+                            GimpDisplayShell *shell)
+{
+  gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar),
+                      G_OBJECT_TYPE_NAME (tool));
 }

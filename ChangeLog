@@ -1,5 +1,10 @@
 2005-04-01  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpstatusbar.c (gimp_statusbar_push): do nothing if
+	this message is at the top of the stack already.
+
+2005-04-01  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimppainttool.c: added a statusbar message suggesting
 	to use Shift to draw a straight line.
 
