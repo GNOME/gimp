@@ -197,7 +197,6 @@ void  gimp_dnd_tool_dest_set       (GtkWidget           *widget,
 
 void  gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 					  GdkDragContext *context,
-					  GimpDrawable   *drawable,
-					  GdkGC          *gc);
+					  GimpDrawable   *drawable);
 
 #endif /* __GIMP_DND_H__ */

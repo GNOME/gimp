@@ -1593,8 +1593,7 @@ channel_widget_drag_begin_callback (GtkWidget      *widget,
     (ChannelWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
 
   gimp_dnd_set_drawable_preview_icon (widget, context,
-				      GIMP_DRAWABLE (channel_widget->channel),
-				      channel_widget->channel_preview->style->black_gc);
+				      GIMP_DRAWABLE (channel_widget->channel));
 }
 
 static gboolean

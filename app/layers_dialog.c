@@ -95,27 +95,29 @@ typedef struct _LayerWidget LayerWidget;
 
 struct _LayerWidget
 {
+  GtkWidget *list_item;
+
   GtkWidget *eye_widget;
   GtkWidget *linked_widget;
   GtkWidget *clip_widget;
   GtkWidget *layer_preview;
   GtkWidget *mask_preview;
-  GtkWidget *list_item;
   GtkWidget *label;
+
+  GdkPixmap *layer_pixmap;
+  GdkPixmap *mask_pixmap;
 
   GImage    *gimage;
   Layer     *layer;
-  GdkPixmap *layer_pixmap;
-  GdkPixmap *mask_pixmap;
-  gint       active_preview;
   gint       width, height;
 
   /*  state information  */
-  gboolean  layer_mask;
-  gboolean  apply_mask;
-  gboolean  edit_mask;
-  gboolean  show_mask;
-  gboolean  visited;
+  gint       active_preview;
+  gboolean   layer_mask;
+  gboolean   apply_mask;
+  gboolean   edit_mask;
+  gboolean   show_mask;
+  gboolean   visited;
 
   GimpDropType drop_type;
 };
@@ -955,7 +957,7 @@ layers_dialog_set_menu_sensitivity (void)
     return;
 
   if ((layer = (layersD->active_layer)) != NULL)
-    lm = (layer->mask) ? TRUE : FALSE;
+    lm = (layer_get_mask (layer)) ? TRUE : FALSE;
   else
     lm = FALSE;
 
@@ -1152,8 +1154,7 @@ layers_dialog_position_layer (Layer *layer,
   gtk_list_insert_items (GTK_LIST (layersD->layer_list), list, new_index);
   layersD->layer_widgets = g_slist_insert (layersD->layer_widgets,
 					   layer_widget, new_index);
- 
-  
+
   /*  Adjust the scrollbar so the layer is visible  */
   layers_dialog_scroll_index (new_index > 0 ? new_index + 1: 0);
 
@@ -1244,6 +1245,7 @@ layers_dialog_remove_layer_mask (Layer *layer)
   layer_widget->active_preview = LAYER_PREVIEW;
 
   gtk_widget_queue_draw (layer_widget->layer_preview);
+  gtk_widget_queue_resize (layer_widget->layer_preview->parent);
 }
 
 /*****************************************************/
@@ -1630,16 +1632,28 @@ layers_dialog_apply_layer_mask_callback (GtkWidget *widget,
     return;
 
   /*  Make sure there is a layer mask to apply  */
-  if ((layer =  gimage->active_layer) != NULL)
+  if ((layer = gimage->active_layer) != NULL &&
+      layer_get_mask (layer))
     {
-      if (layer->mask)
-	gimage_remove_layer_mask (drawable_gimage (GIMP_DRAWABLE (layer)), layer, APPLY);
+      gboolean flush = !layer->apply_mask || layer->show_mask;
+
+      gimage_remove_layer_mask (drawable_gimage (GIMP_DRAWABLE (layer)),
+				layer, APPLY);
+
+      if (flush)
+	gdisplays_flush ();
+      else
+	{
+	  LayerWidget *layer_widget = layer_widget_get_ID (layer);
+
+	  layer_widget_layer_flush (layer_widget->list_item, NULL);
+	}
     }
 }
 
 void
 layers_dialog_delete_layer_mask_callback (GtkWidget *widget,
-					 gpointer   data)
+					  gpointer   data)
 {
   GImage *gimage;
   Layer  *layer;
@@ -1648,10 +1662,22 @@ layers_dialog_delete_layer_mask_callback (GtkWidget *widget,
     return;
 
   /*  Make sure there is a layer mask to apply  */
-  if ((layer =  gimage->active_layer) != NULL)
+  if ((layer = gimage->active_layer) != NULL &&
+      layer_get_mask (layer))
     {
-      if (layer->mask)
-	gimage_remove_layer_mask (drawable_gimage (GIMP_DRAWABLE (layer)), layer, DISCARD);
+      gboolean flush = layer->apply_mask || layer->show_mask;
+
+      gimage_remove_layer_mask (drawable_gimage (GIMP_DRAWABLE (layer)),
+				layer, DISCARD);
+
+      if (flush)
+	gdisplays_flush ();
+      else
+	{
+	  LayerWidget *layer_widget = layer_widget_get_ID (layer);
+
+	  layer_widget_layer_flush (layer_widget->list_item, NULL);
+	}
     }
 }
 
@@ -1893,7 +1919,7 @@ layers_dialog_drag_trashcan_callback (GtkWidget      *widget,
       else if (layer_mask &&
 	       layer_mask_get_layer (layer_mask) == layersD->active_layer)
 	{
-	  layers_dialog_apply_layer_mask_callback (widget, NULL);
+	  layers_dialog_delete_layer_mask_callback (widget, NULL);
 
 	  return_val = TRUE;
 	}
@@ -1947,21 +1973,21 @@ layer_widget_create (GImage *gimage,
   layer_widget = g_new (LayerWidget, 1);
   layer_widget->gimage        = gimage;
   layer_widget->layer         = layer;
+  layer_widget->list_item     = list_item;
   layer_widget->layer_preview = NULL;
   layer_widget->mask_preview  = NULL;
   layer_widget->layer_pixmap  = NULL;
   layer_widget->mask_pixmap   = NULL;
-  layer_widget->list_item     = list_item;
   layer_widget->width         = -1;
   layer_widget->height        = -1;
-  layer_widget->layer_mask    = (layer->mask != NULL);
+  layer_widget->layer_mask    = (layer_get_mask (layer) != NULL);
   layer_widget->apply_mask    = layer->apply_mask;
   layer_widget->edit_mask     = layer->edit_mask;
   layer_widget->show_mask     = layer->show_mask;
   layer_widget->visited       = TRUE;
   layer_widget->drop_type     = GIMP_DROP_NONE;
 
-  if (layer->mask)
+  if (layer_get_mask (layer))
     layer_widget->active_preview =
       (layer->edit_mask) ? MASK_PREVIEW : LAYER_PREVIEW;
   else
@@ -2186,7 +2212,7 @@ layer_widget_drag_motion_callback (GtkWidget      *widget,
 
   gdk_drag_status (context, drag_action, time);
 
-  if (drop_type != dest->drop_type)
+  if (dest && drop_type != dest->drop_type)
     {
       layer_widget_draw_drop_indicator (dest, dest->drop_type);
       layer_widget_draw_drop_indicator (dest, drop_type);
@@ -2204,10 +2230,8 @@ layer_widget_drag_begin_callback (GtkWidget      *widget,
 
   layer_widget = (LayerWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
 
-  gimp_dnd_set_drawable_preview_icon
-    (widget, context,
-     GIMP_DRAWABLE (layer_widget->layer),
-     layer_widget->layer_preview->style->black_gc);
+  gimp_dnd_set_drawable_preview_icon (widget, context,
+				      GIMP_DRAWABLE (layer_widget->layer));
 }
 
 static void
@@ -2220,8 +2244,7 @@ layer_mask_drag_begin_callback (GtkWidget      *widget,
 
   gimp_dnd_set_drawable_preview_icon
     (widget, context,
-     GIMP_DRAWABLE (layer_get_mask (layer_widget->layer)),
-     layer_widget->mask_preview->style->black_gc);
+     GIMP_DRAWABLE (layer_get_mask (layer_widget->layer)));
 }
 
 static gboolean
@@ -2278,6 +2301,7 @@ layer_widget_drag_drop_callback (GtkWidget      *widget,
 	    {
 	      gimp_image_position_layer (layersD->gimage, src->layer,
 					 dest_index, TRUE);
+
 	      gdisplays_flush ();
 
 	      return_val = TRUE;
@@ -2285,8 +2309,13 @@ layer_widget_drag_drop_callback (GtkWidget      *widget,
 	}
     }
 
-  layer_widget_draw_drop_indicator (dest, dest->drop_type);
-  dest->drop_type = GIMP_DROP_NONE;
+  if (dest)
+    {
+      if (!return_val)
+	layer_widget_draw_drop_indicator (dest, dest->drop_type);
+
+      dest->drop_type = GIMP_DROP_NONE;
+    }
 
   gtk_drag_finish (context, return_val, FALSE, time);
 
@@ -2558,11 +2587,11 @@ layer_widget_preview_events (GtkWidget *widget,
     {
     case LAYER_PREVIEW:
       pixmap = &layer_widget->layer_pixmap;
-      valid = GIMP_DRAWABLE(layer_widget->layer)->preview_valid;
+      valid = GIMP_DRAWABLE (layer_widget->layer)->preview_valid;
       break;
     case MASK_PREVIEW:
       pixmap = &layer_widget->mask_pixmap;
-      valid = GIMP_DRAWABLE(layer_widget->layer->mask)->preview_valid;
+      valid = GIMP_DRAWABLE (layer_get_mask (layer_widget->layer))->preview_valid;
       break;
     }
 
@@ -3050,8 +3079,8 @@ layer_widget_linked_redraw (LayerWidget *layer_widget)
 static void
 layer_widget_clip_redraw (LayerWidget *layer_widget)
 {
-  GdkColor *color;
-  GtkStateType state;
+  GdkColor     *color;
+  GtkStateType  state;
 
   state = layer_widget->list_item->state;
   color = &layer_widget->clip_widget->style->fg[state];
@@ -3063,37 +3092,33 @@ layer_widget_clip_redraw (LayerWidget *layer_widget)
 static void
 layer_widget_exclusive_visible (LayerWidget *layer_widget)
 {
-  GSList *list;
+  GSList      *list;
   LayerWidget *lw;
-  int visible = FALSE;
+  gboolean     visible = FALSE;
 
   if (!layersD)
     return;
 
   /*  First determine if _any_ other layer widgets are set to visible  */
-  list = layersD->layer_widgets;
-  while (list)
+  for (list = layersD->layer_widgets; list;  list = g_slist_next (list))
     {
       lw = (LayerWidget *) list->data;
+
       if (lw != layer_widget)
 	visible |= GIMP_DRAWABLE (lw->layer)->visible;
-
-      list = g_slist_next (list);
     }
 
   /*  Now, toggle the visibility for all layers except the specified one  */
-  list = layersD->layer_widgets;
-  while (list)
+  for (list = layersD->layer_widgets; list; list = g_slist_next (list))
     {
       lw = (LayerWidget *) list->data;
+
       if (lw != layer_widget)
 	GIMP_DRAWABLE (lw->layer)->visible = !visible;
       else
 	GIMP_DRAWABLE (lw->layer)->visible = TRUE;
 
       layer_widget_eye_redraw (lw);
-
-      list = g_slist_next (list);
     }
 }
 
@@ -3103,10 +3128,10 @@ layer_widget_layer_flush (GtkWidget *widget,
 {
   LayerWidget *layer_widget;
   Layer *layer;
-  char *name;
-  char *label_name;
-  int update_layer_preview = FALSE;
-  int update_mask_preview = FALSE;
+  gchar *name;
+  gchar *label_name;
+  gboolean update_layer_preview = FALSE;
+  gboolean update_mask_preview  = FALSE;
 
   layer_widget = (LayerWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
   layer = layer_widget->layer;
@@ -3164,23 +3189,25 @@ layer_widget_layer_flush (GtkWidget *widget,
     gtk_label_set (GTK_LABEL (layer_widget->label), name);
 
   /*  show the layer mask preview if necessary  */
-  if (layer_widget->layer->mask == NULL && layer_widget->layer_mask)
+  if (layer_get_mask (layer_widget->layer) == NULL &&
+      layer_widget->layer_mask)
     {
       layer_widget->layer_mask = FALSE;
       layers_dialog_remove_layer_mask (layer_widget->layer);
     }
-  else if (layer_widget->layer->mask != NULL && !layer_widget->layer_mask)
+  else if (layer_get_mask (layer_widget->layer) != NULL &&
+	   !layer_widget->layer_mask)
     {
       layer_widget->layer_mask = TRUE;
       layers_dialog_add_layer_mask (layer_widget->layer);
     }
 
   /*  Update the previews  */
-  update_layer_preview = (! GIMP_DRAWABLE(layer)->preview_valid);
+  update_layer_preview = (! GIMP_DRAWABLE (layer)->preview_valid);
 
-  if (layer->mask)
+  if (layer_get_mask (layer))
     {
-      update_mask_preview = (! GIMP_DRAWABLE(layer->mask)->preview_valid);
+      update_mask_preview = (! GIMP_DRAWABLE (layer_get_mask (layer))->preview_valid);
 
       if (layer->apply_mask != layer_widget->apply_mask)
 	{

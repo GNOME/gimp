@@ -1,3 +1,22 @@
+2000-04-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpdnd.[ch]
+	* app/channels_dialog.c
+	* app/layers_dialog.c: removed the GdkGC parameter from
+	gimp_dnd_set_drawable_preview_icon() since it's no longer used.
+
+	* app/gimpimage.c: dirty the view correctly after applying the
+	layer mask. Don't gdisplays_flush() because it's the job of the
+	caller.
+
+	* app/layers_dialog.c: when applying a layer mask, flush either
+	the display or just the layer_widget, depending on the previous
+	visibility state of the mask. Cleanups.
+
+	* plug-ins/print/gimp_color_window.c
+	* plug-ins/print/gimp_main_window.c: including config.h re-enables
+	i18n.
+
 Sun Apr  2 15:59:25 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* configure.in: applied fix for missing "-" as reported in bug
@@ -14,9 +33,9 @@ Sun Apr  2 15:59:25 PDT 2000 Manish Singh <yosh@gimp.org>
 	* plug-ins/common/despeckle.c
 	* plug-ins/common/flarefx.c
 	* plug-ins/common/gqbist.c
-	* plug-ins/common/winclipboard.c: 
+	* plug-ins/common/winclipboard.c
 	* plug-ins/gap/gap_filter_foreach.c: microscopic cosmetic changes
-	
+
 	* plug-ins/gap/gap_main.c: moved the "Goto" entries into their own
 	menu so the menu gets smaller
 	

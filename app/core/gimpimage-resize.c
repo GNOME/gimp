@@ -3071,8 +3071,9 @@ gimp_image_remove_layer_mask (GimpImage     *gimage,
   /*  end the undo group  */
   undo_push_group_end (gimage);
 
-  /*  If the layer mode is discard, update the layer--invalidate gimage also  */
-  if (mode == DISCARD)
+  /*  If applying actually changed the view  */
+  if ((mode == APPLY   && (!lmu->apply_mask || lmu->show_mask)) ||
+      (mode == DISCARD && ( lmu->apply_mask || lmu->show_mask)))
     {
       gimp_image_invalidate_preview (gimage);
 
@@ -3084,7 +3085,6 @@ gimp_image_remove_layer_mask (GimpImage     *gimage,
 		       drawable_height (GIMP_DRAWABLE (layer)));
     }
 
-  gdisplays_flush ();
   return NULL;
 }
 
