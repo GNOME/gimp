@@ -265,7 +265,7 @@ void
 gimp_dialog_create_action_areav (GtkDialog *dialog,
 				 va_list    args)
 {
-  GtkWidget *hbbox;
+  GtkWidget *hbbox = NULL;
   GtkWidget *button;
 
   /*  action area variables  */

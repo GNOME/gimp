@@ -1,5 +1,9 @@
 2000-04-14  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimpdialog.c: fixed a compiler warning.
+
+2000-04-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/brush_select.c: when re-drawing a dirty brush, clear it's
 	preview area first.
 
