@@ -1,3 +1,9 @@
+2001-01-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/color_notebook.c: added a global color history of 16 colors.
+	The "Add" button uses neither LRU nor pure right-shift order but
+	something in between. The history is scheduled to go to sessionrc.
+
 2001-01-15  Sven Neumann  <sven@gimp.org>
 
 	* app/devices.c: use a GimpColorArea for the foreground color in

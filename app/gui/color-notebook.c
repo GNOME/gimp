@@ -45,8 +45,8 @@
 #include "libgimp/gimpintl.h"
 
 
-#define COLOR_AREA_SIZE  20
-
+#define COLOR_AREA_SIZE    20
+#define COLOR_HISTORY_SIZE 16
 
 typedef enum
 {
@@ -68,6 +68,8 @@ struct _ColorNotebook
   GtkWidget                *toggles[7];
   GtkObject                *slider_data[7];
   GtkWidget                *hex_entry;
+
+  GtkWidget                *history[COLOR_HISTORY_SIZE];
 
   GimpHSV                   hsv;
   GimpRGB                   rgb;
@@ -153,9 +155,21 @@ static gint       color_notebook_hex_entry_events (GtkWidget        *widget,
 						   GdkEvent         *event,
 						   gpointer          data);
 
+static void       color_history_color_clicked     (GtkWidget        *widget,
+						   gpointer          data);
+static void       color_history_color_changed     (GtkWidget        *widget,
+						   gpointer          data);
+static void       color_history_add_clicked       (GtkWidget        *widget,
+						   gpointer          data);
+
 
 /* master list of all registered colour selectors */
 static ColorSelectorInfo *selector_info = NULL;
+
+static GList    *color_notebooks           = NULL;
+
+static GimpRGB   color_history[COLOR_HISTORY_SIZE];
+static gboolean  color_history_initialized = FALSE;
 
 
 ColorNotebook *
@@ -166,6 +180,7 @@ color_notebook_new (GimpRGB               *color,
 		    gboolean               show_alpha)
 {
   ColorNotebook         *cnp;
+  GtkWidget             *main_vbox;
   GtkWidget             *main_hbox;
   GtkWidget             *right_vbox;
   GtkWidget             *colors_frame;
@@ -174,6 +189,7 @@ color_notebook_new (GimpRGB               *color,
   GtkWidget             *table;
   GtkWidget             *label;
   GtkWidget             *button;
+  GtkWidget             *arrow;
   GtkWidget             *color_area;
   GimpRGB                bw;
   GSList                *group;
@@ -193,7 +209,7 @@ color_notebook_new (GimpRGB               *color,
     N_("A")
   };
   static gchar *slider_tips[7] = 
-  { 
+  {
     N_("Hue"),
     N_("Saturation"),
     N_("Value"),
@@ -208,6 +224,17 @@ color_notebook_new (GimpRGB               *color,
 
   g_return_val_if_fail (selector_info != NULL, NULL);
   g_return_val_if_fail (color != NULL, NULL);
+
+  /* EEK */
+  if (! color_history_initialized)
+    {
+      gint i;
+
+      for (i = 0; i < COLOR_HISTORY_SIZE; i++)
+	gimp_rgba_set (&color_history[i], 1.0, 1.0, 1.0, 1.0);
+
+      color_history_initialized = TRUE;
+    }
 
   cnp = g_new0 (ColorNotebook, 1);
 
@@ -238,9 +265,13 @@ color_notebook_new (GimpRGB               *color,
 
 		     NULL);
 
+  main_vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 2);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (cnp->shell)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
+
   main_hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 2);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (cnp->shell)->vbox), main_hbox);
+  gtk_container_add (GTK_CONTAINER (main_vbox), main_hbox);
   gtk_widget_show (main_hbox);
 
   /* do we actually need a notebook? */
@@ -464,6 +495,48 @@ color_notebook_new (GimpRGB               *color,
 
   color_notebook_update_scales (cnp, -1);
 
+  /* The color history */
+  hbox = gtk_hbox_new (TRUE, 2);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  button = gtk_button_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gimp_help_set_help_data (button,
+			   _("Add the current color to the color history"),
+			   NULL);
+  gtk_widget_show (button);
+
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      GTK_SIGNAL_FUNC (color_history_add_clicked),
+		      cnp);
+
+  arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
+  gtk_container_add (GTK_CONTAINER (button), arrow);
+  gtk_widget_show (arrow);
+
+  for (i = 0; i < COLOR_HISTORY_SIZE; i++)
+    {
+      button = gtk_button_new ();
+      gtk_widget_set_usize (button, COLOR_AREA_SIZE, COLOR_AREA_SIZE);
+      gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+
+      cnp->history[i] = gimp_color_area_new (&color_history[i], 
+					     GIMP_COLOR_AREA_SMALL_CHECKS,
+					     GDK_BUTTON2_MASK);
+      gtk_container_add (GTK_CONTAINER (button), cnp->history[i]);
+      gtk_widget_show (cnp->history[i]);
+      gtk_widget_show (button);
+
+      gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			  GTK_SIGNAL_FUNC (color_history_color_clicked),
+			  cnp);
+
+      gtk_signal_connect (GTK_OBJECT (cnp->history[i]), "color_changed",
+			  GTK_SIGNAL_FUNC (color_history_color_changed),
+			  &color_history[i]);
+    }
+
   gtk_widget_show (cnp->shell);
 
   /* this must come after showing the widget, otherwise we get a
@@ -476,6 +549,8 @@ color_notebook_new (GimpRGB               *color,
 			  GTK_SIGNAL_FUNC (color_notebook_page_switch),
 			  cnp);
     }
+
+  color_notebooks = g_list_prepend (color_notebooks, cnp);
 
   return cnp;
 }
@@ -504,6 +579,8 @@ color_notebook_free (ColorNotebook *cnp)
   ColorSelectorInstance *csel, *next;
 
   g_return_if_fail (cnp != NULL);
+
+  color_notebooks = g_list_remove (color_notebooks, cnp);
 
   gtk_widget_destroy (cnp->shell);
 
@@ -1068,4 +1145,126 @@ color_notebook_hex_entry_events (GtkWidget *widget,
     }
 
   return FALSE;
+}
+
+static void
+color_history_color_clicked (GtkWidget *widget,
+			     gpointer   data)
+{
+  ColorNotebook *cnp;
+  GimpColorArea *color_area;
+
+  cnp = (ColorNotebook *) data;
+
+  color_area = GIMP_COLOR_AREA (GTK_BIN (widget)->child);
+
+  gimp_color_area_get_color (color_area, &cnp->rgb);
+
+  color_notebook_update_hsv_values (cnp);
+  color_notebook_update_scales (cnp, -1);
+
+  color_notebook_update (cnp,
+			 UPDATE_NOTEBOOK   |
+			 UPDATE_ORIG_COLOR |
+			 UPDATE_NEW_COLOR  |
+			 UPDATE_CALLER);
+}
+
+static void
+color_history_color_changed (GtkWidget *widget,
+			     gpointer   data)
+{
+  GimpRGB *color;
+  GimpRGB  changed_color;
+  gint     i;
+
+  color = (GimpRGB *) data;
+
+  gimp_color_area_get_color (GIMP_COLOR_AREA (widget), &changed_color);
+
+  for (i = 0; i < COLOR_HISTORY_SIZE; i++)
+    {
+      if (color == &color_history[i])
+	{
+	  GList         *list;
+	  ColorNotebook *notebook;
+
+	  color_history[i] = changed_color;
+
+	  for (list = color_notebooks; list; list = g_list_next (list))
+	    {
+	      notebook = (ColorNotebook *) list->data;
+
+	      if (notebook->history[i] == widget)
+		continue;
+
+	      gtk_signal_handler_block_by_data
+		(GTK_OBJECT (notebook->history[i]), data);
+
+	      gimp_color_area_set_color
+		(GIMP_COLOR_AREA (notebook->history[i]), &changed_color);
+
+	      gtk_signal_handler_unblock_by_data 
+		(GTK_OBJECT (notebook->history[i]), data);
+	    }
+	}
+    }
+}
+
+static void
+color_history_add_clicked (GtkWidget *widget,
+			   gpointer   data)
+{
+  ColorNotebook *cnp;
+  gint           shift_begin = -1;
+  gint           i, j;
+
+  cnp = (ColorNotebook *) data;
+
+  /*  is the added color already there?  */
+  for (i = 0; i < COLOR_HISTORY_SIZE; i++)
+    {
+      if (gimp_rgba_distance (&color_history[i], &cnp->rgb) < 0.0001)
+	{
+	  shift_begin = i;
+
+	  goto doit;
+	}
+    }
+
+  /*  if not, are there two equal colors?  */
+  if (shift_begin == -1)
+    {
+      for (i = 0; i < COLOR_HISTORY_SIZE; i++)
+	{
+	  for (j = i + 1; j < COLOR_HISTORY_SIZE; j++)
+	    {
+	      if (gimp_rgba_distance (&color_history[i],
+				      &color_history[j]) < 0.0001)
+		{
+		  shift_begin = i;
+
+		  goto doit;
+		}
+	      
+	    }
+	}
+    }
+
+  /*  if not, shift them all  */
+  if (shift_begin == -1)
+    {
+      shift_begin = COLOR_HISTORY_SIZE - 1;
+    }
+
+ doit:
+
+  for (i = shift_begin; i > 0; i--)
+    {
+      gimp_color_area_set_color (GIMP_COLOR_AREA (cnp->history[i]),
+				 &color_history[i - 1]);
+    }
+
+  gimp_color_area_set_color (GIMP_COLOR_AREA (cnp->history[0]),
+			     &cnp->rgb);
 }
