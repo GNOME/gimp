@@ -115,7 +115,7 @@ void   		layer_mask_unref (LayerMask *);
 void            layer_set_name (Layer *, char *);
 char *          layer_get_name (Layer *);
 unsigned char * layer_data (Layer *);
-LayerMask *     layer_mask (Layer *);
+LayerMask *     layer_get_mask (Layer *);
 int             layer_has_alpha (Layer *);
 int             layer_is_floating_sel (Layer *);
 int		layer_linked (Layer *);

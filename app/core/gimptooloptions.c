@@ -38,9 +38,9 @@ tool_options_toggle_update (GtkWidget *widget,
 			    gpointer   data)
 {
   GtkWidget *set_sensitive;
-  int       *toggle_val;
+  gboolean  *toggle_val;
 
-  toggle_val = (int *) data;
+  toggle_val = (gboolean *) data;
   *toggle_val = (GTK_TOGGLE_BUTTON (widget)->active) ? TRUE : FALSE;
 
   /*  a tool options toggle button can set the sensitive state of
@@ -70,9 +70,9 @@ void
 tool_options_int_adjustment_update (GtkWidget *widget,
 				    gpointer   data)
 {
-  int *val;
+  gint *val;
 
-  val = (int *) data;
+  val = (gint *) data;
   *val = GTK_ADJUSTMENT (widget)->value;
 }
 
@@ -80,9 +80,9 @@ void
 tool_options_double_adjustment_update (GtkWidget *widget,
 				       gpointer   data)
 {
-  double *val;
+  gdouble *val;
 
-  val = (double *) data;
+  val = (gdouble *) data;
   *val = GTK_ADJUSTMENT (widget)->value;
 }
 
@@ -112,7 +112,7 @@ tool_options_unitmenu_update (GtkWidget *widget,
 {
   GUnit     *val;
   GtkWidget *spinbutton;
-  int        digits;
+  gint       digits;
 
   val = (GUnit *) data;
   *val = gimp_unit_menu_get_unit (GIMP_UNIT_MENU (widget));
@@ -134,14 +134,15 @@ static void
 tool_options_radio_buttons_update (GtkWidget *widget,
 				   gpointer   data)
 {
-  int *toggle_val;
+  gint *toggle_val;
 
-  toggle_val = (int *) data;
+  toggle_val = (gint *) data;
   if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = (int) gtk_object_get_data (GTK_OBJECT (widget), "toggle_value");
+    *toggle_val = (gint) gtk_object_get_data (GTK_OBJECT (widget),
+					      "toggle_value");
 }
 
-GtkWidget*
+GtkWidget *
 tool_options_radio_buttons_new (gchar*      label,
 				gpointer    toggle_val,
 				GtkWidget*  button_widget[],
@@ -154,7 +155,7 @@ tool_options_radio_buttons_new (gchar*      label,
   GSList *group = NULL;
   gint i;
 
-  frame = gtk_frame_new (_(label));
+  frame = gtk_frame_new (label);
 
   g_return_val_if_fail (toggle_val != NULL, frame);
 
@@ -164,8 +165,8 @@ tool_options_radio_buttons_new (gchar*      label,
 
   for (i=0; i<num; i++)
     {
-      button_widget[i] = gtk_radio_button_new_with_label (group,
-							  gettext (button_label[i]));
+      button_widget[i] =
+	gtk_radio_button_new_with_label (group, gettext (button_label[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button_widget[i]));
       gtk_box_pack_start (GTK_BOX (vbox), button_widget[i], FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button_widget[i]), "toggled",
@@ -189,7 +190,7 @@ tool_options_init (ToolOptions          *options,
 		   ToolOptionsResetFunc  reset_func)
 {
   options->main_vbox  = gtk_vbox_new (FALSE, 2);
-  options->title = _(title);
+  options->title      = title;
   options->reset_func = reset_func;
 }
 
@@ -576,9 +577,12 @@ paint_options_init (PaintOptions         *options,
 		     reset_func);
 
   /*  initialize the paint options structure  */
-  options->global       = NULL;
-  options->opacity_w    = NULL;
-  options->paint_mode_w = NULL;
+  options->incremental = options->incremental_d = FALSE;
+
+  options->global        = NULL;
+  options->opacity_w     = NULL;
+  options->paint_mode_w  = NULL;
+  options->incremental_w = NULL;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -659,16 +663,71 @@ paint_options_init (PaintOptions         *options,
   /*  show the main table  */
   gtk_widget_show (table);
 
-  /*  a separator after the common paint options  */
-  if (tool_type != PENCIL)
+  /*  a separator after the common paint options which can be global  */
+  switch (tool_type)
     {
+    case BUCKET_FILL:
+    case BLEND:
+    case CLONE:
+    case CONVOLVE:
+    case INK:
+    case DODGEBURN:
+    case SMUDGE:
+    case PIXMAPBRUSH:
       separator = gtk_hseparator_new ();
       gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
       gtk_widget_show (separator);
+      break;
+    case AIRBRUSH:
+    case ERASER:
+    case PAINTBRUSH:
+    case PENCIL:
+      break;
+    default:
+      break;
     }
 
   if (! global_paint_options)
     gtk_widget_show (vbox);
+
+  /*  the "incremental" toggle  */
+  switch (tool_type)
+    {
+    case AIRBRUSH:
+    case ERASER:
+    case PAINTBRUSH:
+    case PENCIL:
+      options->incremental_w =
+	gtk_check_button_new_with_label (_("Incremental"));
+      gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
+			  options->incremental_w, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (options->incremental_w), "toggled",
+			  (GtkSignalFunc) tool_options_toggle_update,
+			  &options->incremental);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
+				    options->incremental_d);
+      gtk_widget_show (options->incremental_w);
+
+      /*  a separator after the common paint options which can't be global  */
+      if (tool_type != PENCIL)
+	{
+	  separator = gtk_hseparator_new ();
+	  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
+			      separator, FALSE, FALSE, 0);
+	  gtk_widget_show (separator);
+	}
+      break;
+    case BUCKET_FILL:
+    case BLEND:
+    case CLONE:
+    case CONVOLVE:
+    case DODGEBURN:
+    case SMUDGE:
+    case PIXMAPBRUSH:
+      break;
+    default:
+      break;
+    }
 
   /*  register this Paintoptions structure  */
   paint_options_list = g_slist_prepend (paint_options_list, options);
@@ -679,18 +738,9 @@ paint_options_new (ToolType              tool_type,
 		   ToolOptionsResetFunc  reset_func)
 {
   PaintOptions *options;
-  GtkWidget *label;
 
   options = g_new (PaintOptions, 1);
   paint_options_init (options, tool_type, reset_func);
-
-  options->global = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
-		      options->global, FALSE, FALSE, 0);
-
-  label = gtk_label_new (_("This tool has no options."));
-  gtk_box_pack_start (GTK_BOX (options->global), label, FALSE, FALSE, 6);
-  gtk_widget_show (label);
 
   if (global_paint_options && options->global)
     gtk_widget_show (options->global);
@@ -720,6 +770,11 @@ paint_options_reset (PaintOptions *options)
 				   gimp_context_get_paint_mode (default_context));
       gtk_option_menu_set_history (GTK_OPTION_MENU (options->paint_mode_w),
 				   gimp_context_get_paint_mode (default_context));
+    }
+  if (options->incremental_w)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(options->incremental_w),
+				    options->incremental_d);
     }
 }
 

@@ -1,3 +1,32 @@
+1999-08-19  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/Makefile.am
+	* app/gimpdnd.h: new file containing the dnd data definitions.
+
+	* app/disp_callbacks.[ch]
+	* app/interface.c: drop layers on the toolbox to create a new
+	image and on the display to copy it to the image's layer stack.
+
+	* app/layers_dialog.c: drop layer on the "New" button to create an
+	empty layer with the dropped layer's properties, to "Duplicate" to
+	duplicate it and on the trashcan to delete it.
+	Thanks to Andy for the ultra-cool dnd preview pixmap patch.
+
+	* app/layer.[ch]
+	* app/undo.c: renamed layer_mask() to layer_get_mask(). Prototyped
+	some function headers.
+
+	* app/disp_callbacks.c: Wheelmouse stuff: Shift+wheel scales the
+	display.
+
+	* app/airbrush.c
+	* app/eraser.c
+	* app/paint_options.h
+	* app/paintbrush.c
+	* app/pencil.c
+	* app/tool_options.c: moved the "Incremental" toggle to the
+	PaintOptions structure because it is used more often now.
+
 Thu Aug 19 18:27:42 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/measure.c: use <Ctrl> and/or <Alt> to add horizontal

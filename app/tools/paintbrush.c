@@ -70,10 +70,6 @@ struct _PaintbrushOptions
   int           gradient_type;
   int           gradient_type_d;
   GtkWidget    *gradient_type_w;
-
-  gboolean      incremental;
-  gboolean      incremental_d;
-  GtkWidget    *incremental_w;
 };
 
 /*  the paint brush tool options  */
@@ -105,14 +101,15 @@ paintbrush_gradient_toggle_callback (GtkWidget *widget,
 
   if (paintbrush_options->use_gradient)
     {
-      incremental_save = options->incremental;
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
-				    TRUE);
+      incremental_save = options->paint_options.incremental;
+      gtk_toggle_button_set_active
+	(GTK_TOGGLE_BUTTON (options->paint_options.incremental_w), TRUE);
     }
   else
     {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
-				    incremental_save);
+      gtk_toggle_button_set_active
+	(GTK_TOGGLE_BUTTON (options->paint_options.incremental_w),
+	 incremental_save);
     }
 }
 
@@ -140,8 +137,6 @@ paintbrush_options_reset (void)
 			    options->gradient_length_d);
   gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w), 
 			       options->gradient_type_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
-				options->incremental_d);
 }
 
 static PaintbrushOptions *
@@ -178,8 +173,6 @@ paintbrush_options_new (void)
 		      paintbrush_options_reset);
   options->fade_out        = 
                   options->fade_out_d        = PAINTBRUSH_DEFAULT_FADE_OUT;
-  options->incremental     = 
-                  options->incremental_d     = PAINTBRUSH_DEFAULT_INCREMENTAL;
   options->use_gradient    = 
                   options->use_gradient_d    = PAINTBRUSH_DEFAULT_USE_GRADIENT;
   options->gradient_length = 
@@ -268,20 +261,13 @@ paintbrush_options_new (void)
   gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w), 
 			       options->gradient_type_d);
   
-  /* the incremental toggle */
-  options->incremental_w = gtk_check_button_new_with_label (_("Incremental"));
-  gtk_box_pack_start (GTK_BOX (vbox), options->incremental_w, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (options->incremental_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
-		      &options->incremental);
-  gtk_widget_show (options->incremental_w);
-  
   /*  automatically set the sensitive state of the gradient stuff  */
   gtk_widget_set_sensitive (scale, options->use_gradient_d);
   gtk_widget_set_sensitive (length_label, options->use_gradient_d);
   gtk_widget_set_sensitive (options->gradient_type_w, options->use_gradient_d);
   gtk_widget_set_sensitive (type_label, options->use_gradient_d);
-  gtk_widget_set_sensitive (options->incremental_w, ! options->use_gradient_d);
+  gtk_widget_set_sensitive (options->paint_options.incremental_w,
+			    ! options->use_gradient_d);
   gtk_object_set_data (GTK_OBJECT (options->use_gradient_w), "set_sensitive",
 		       scale);
   gtk_object_set_data (GTK_OBJECT (scale), "set_sensitive",
@@ -291,7 +277,7 @@ paintbrush_options_new (void)
   gtk_object_set_data (GTK_OBJECT (options->gradient_type_w), "set_sensitive",
 		       type_label);
   gtk_object_set_data (GTK_OBJECT (options->use_gradient_w), "inverse_sensitive",
-		       options->incremental_w);
+		       options->paint_options.incremental_w);
 
   return options;
 }
@@ -320,7 +306,7 @@ paintbrush_paint_func (PaintCore    *paint_core,
 			 paintbrush_options->fade_out, 
 			 paintbrush_options->use_gradient ? 
 			 exp(paintbrush_options->gradient_length/10) : 0,
-			 paintbrush_options->incremental,
+			 paintbrush_options->paint_options.incremental,
 			 paintbrush_options->gradient_type);
       break;
 
@@ -378,12 +364,12 @@ tools_free_paintbrush (Tool *tool)
 
 
 static void
-paintbrush_motion (PaintCore    *paint_core,
-		   GimpDrawable *drawable,
-		   double        fade_out,
-		   double        gradient_length,
-		   PaintApplicationMode      incremental,
-		   GradientPaintMode         gradient_type)
+paintbrush_motion (PaintCore            *paint_core,
+		   GimpDrawable         *drawable,
+		   double                fade_out,
+		   double                gradient_length,
+		   PaintApplicationMode  incremental,
+		   GradientPaintMode     gradient_type)
 {
   GImage *gimage;
   TempBuf * area;
@@ -404,7 +390,6 @@ paintbrush_motion (PaintCore    *paint_core,
 
   /* silly hack to be removed later */
   /* paint_core->brush = gimp_brush_list_get_brush_by_index(brush_list,(rand()% gimp_brush_list_length(brush_list))); */
-  
 
 
   /*  Get a region which can be used to paint to  */
@@ -431,7 +416,7 @@ paintbrush_motion (PaintCore    *paint_core,
       /* need to make a gui to handle this */
       mode = gradient_type;
 
-      if(gradient_length)
+      if (gradient_length)
 	{
 	  paint_core_get_color_from_gradient (paint_core, gradient_length, &r,&g,&b,&a,mode);
 	  r = r * 255.0;
@@ -444,7 +429,7 @@ paintbrush_motion (PaintCore    *paint_core,
 	  col[2] = (gint)b;
 	  /* always use incremental mode with gradients */
 	  /* make the gui cool later */
-	  incremental = INCREMENTAL;
+	  paint_appl_mode = INCREMENTAL;
 	}
       /* just leave this because I know as soon as i delete it i'll find a bug */
       /*          printf("temp_blend: %u grad_len: %f distance: %f \n",temp_blend, gradient_length, distance); */ 
@@ -454,10 +439,10 @@ paintbrush_motion (PaintCore    *paint_core,
 
       /* we check to see if this is a pixmap, if so composite the
 	 pixmap image into the are instead of the color */
-      if(GIMP_IS_BRUSH_PIXMAP(paint_core->brush) && !gradient_length)
+      if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush) && !gradient_length)
 	{
-	  color_area_with_pixmap(gimage, drawable, area, paint_core->brush);
-	  incremental = INCREMENTAL;
+	  color_area_with_pixmap (gimage, drawable, area, paint_core->brush);
+	  paint_appl_mode = INCREMENTAL;
 	}
       else
 	{
@@ -471,7 +456,7 @@ paintbrush_motion (PaintCore    *paint_core,
 			       (int) (gimp_context_get_opacity (NULL) * 255),
 			       gimp_context_get_paint_mode (NULL),
 			       PRESSURE,
-			       incremental ? INCREMENTAL : CONSTANT);
+			       paint_appl_mode);
     }
 }
 
@@ -481,11 +466,11 @@ paintbrush_non_gui_paint_func (PaintCore    *paint_core,
 			       GimpDrawable *drawable,
 			       int           state)
 {	
-  paintbrush_motion(paint_core,drawable, 
-		    non_gui_fade_out,
-		    (non_gui_gradient_length)?exp(non_gui_gradient_length/10):0,
-		    non_gui_incremental, 
-		    non_gui_gradient_type);
+  paintbrush_motion (paint_core,drawable, 
+		     non_gui_fade_out,
+		     (non_gui_gradient_length)?exp(non_gui_gradient_length/10):0,
+		     non_gui_incremental, 
+		     non_gui_gradient_type);
 
   return NULL;
 }
@@ -496,35 +481,35 @@ paintbrush_non_gui_default (GimpDrawable *drawable,
 			    double        *stroke_array)
 {
   PaintbrushOptions *options = paintbrush_options;
-  double             fade_out = PAINTBRUSH_DEFAULT_FADE_OUT;
-  gboolean           incremental = PAINTBRUSH_DEFAULT_INCREMENTAL;
-  int                use_gradient = PAINTBRUSH_DEFAULT_USE_GRADIENT;
+  double             fade_out        = PAINTBRUSH_DEFAULT_FADE_OUT;
+  gboolean           incremental     = PAINTBRUSH_DEFAULT_INCREMENTAL;
+  int                use_gradient    = PAINTBRUSH_DEFAULT_USE_GRADIENT;
   double             gradient_length = PAINTBRUSH_DEFAULT_GRADIENT_LENGTH;
-  int                gradient_type = PAINTBRUSH_DEFAULT_GRADIENT_TYPE;
+  int                gradient_type   = PAINTBRUSH_DEFAULT_GRADIENT_TYPE;
   int                i;
-  
-  if(options)
+
+  if (options)
     {
-      fade_out = options->fade_out;
-      incremental = options->incremental;
-      use_gradient = options->use_gradient;
+      fade_out        = options->fade_out;
+      incremental     = options->paint_options.incremental;
+      use_gradient    = options->use_gradient;
       gradient_length = options->gradient_length;
-      gradient_type = options->gradient_type;
+      gradient_type   = options->gradient_type;
     }
 
-  if(use_gradient == 0)
-      gradient_length = 0.0;
+  if (use_gradient == 0)
+    gradient_length = 0.0;
 
   /* Hmmm... PDB paintbrush should have gradient type added to it!*/
   /* thats why the code below is duplicated.
    */ 
   if (paint_core_init (&non_gui_paint_core, drawable,
-                      stroke_array[0], stroke_array[1]))
+		       stroke_array[0], stroke_array[1]))
     {
-      non_gui_fade_out = fade_out;
+      non_gui_fade_out        = fade_out;
       non_gui_gradient_length = gradient_length;
-      non_gui_gradient_type = gradient_type;
-      non_gui_incremental = incremental;
+      non_gui_gradient_type   = gradient_type;
+      non_gui_incremental     = incremental;
 
       /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = paintbrush_non_gui_paint_func;
@@ -570,10 +555,10 @@ paintbrush_non_gui (GimpDrawable *drawable,
   if (paint_core_init (&non_gui_paint_core, drawable,
                       stroke_array[0], stroke_array[1]))
     {
-      non_gui_fade_out = fade_out;
+      non_gui_fade_out        = fade_out;
       non_gui_gradient_length = gradient_length;
-      non_gui_gradient_type = LOOP_TRIANGLE;
-      non_gui_incremental = method;
+      non_gui_gradient_type   = LOOP_TRIANGLE;
+      non_gui_incremental     = method;
 
       /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = paintbrush_non_gui_paint_func;

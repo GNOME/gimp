@@ -33,8 +33,11 @@
 #include "scale.h"
 #include "scroll.h"
 #include "tools.h"
+#include "undo.h"
 #include "gimage.h"
 #include "dialog_handler.h"
+
+#include "libgimp/gimpintl.h"
 
 /* Function declarations */
 
@@ -104,7 +107,7 @@ key_to_state (int key)
 }
 
 gint
-gdisplay_shell_events (GtkWidget *w,
+gdisplay_shell_events (GtkWidget *widget,
 		       GdkEvent  *event,
 		       GDisplay  *gdisp)
 {
@@ -289,27 +292,37 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  /*  wheelmouse support  */
 	case 4:
 	  state |= GDK_BUTTON4_MASK;
-	  {
-	    GtkAdjustment *adj =
-	      (state & GDK_CONTROL_MASK) ? gdisp->hsbdata : gdisp->vsbdata;
-	    gfloat new_value = adj->value - adj->page_increment / 2;
-	    new_value =
-	      CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
-	    gtk_adjustment_set_value (adj, new_value);
-	  }
+	  if (state & GDK_SHIFT_MASK)
+	    {
+	      change_scale (gdisp, ZOOMIN);
+	    }
+	  else
+	    {
+	      GtkAdjustment *adj =
+		(state & GDK_CONTROL_MASK) ? gdisp->hsbdata : gdisp->vsbdata;
+	      gfloat new_value = adj->value - adj->page_increment / 2;
+	      new_value =
+		CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
+	      gtk_adjustment_set_value (adj, new_value);
+	    }
 	  return_val = TRUE;
 	  break;
 
 	case 5:
 	  state |= GDK_BUTTON5_MASK;
-	  {
-	    GtkAdjustment *adj =
-	      (state & GDK_CONTROL_MASK) ? gdisp->hsbdata : gdisp->vsbdata;
-	    gfloat new_value = adj->value + adj->page_increment / 2;
-	    new_value = CLAMP (new_value,
-			       adj->lower, adj->upper - adj->page_size);
-	    gtk_adjustment_set_value (adj, new_value);
-	  }
+	  if (state & GDK_SHIFT_MASK)
+	    {
+	      change_scale (gdisp, ZOOMOUT);
+	    }
+	  else
+	    {
+	      GtkAdjustment *adj =
+		(state & GDK_CONTROL_MASK) ? gdisp->hsbdata : gdisp->vsbdata;
+	      gfloat new_value = adj->value + adj->page_increment / 2;
+	      new_value = CLAMP (new_value,
+				 adj->lower, adj->upper - adj->page_size);
+	      gtk_adjustment_set_value (adj, new_value);
+	    }
 	  return_val = TRUE;
 	  break;
 
@@ -587,4 +600,145 @@ gdisplay_origin_button_press (GtkWidget      *widget,
   gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "button_press_event");
 
   return FALSE;
+}
+
+gboolean
+gdisplay_drag_drop (GtkWidget      *widget,
+		    GdkDragContext *context,
+		    gint            x,
+		    gint            y,
+		    guint           time,
+		    gpointer        data)
+{
+  GDisplay  *gdisp;
+  GtkWidget *src_widget;
+  gboolean   return_val = FALSE;
+
+  gdisp = (GDisplay *) data;
+
+  if ((src_widget = gtk_drag_get_source_widget (context)))
+    {
+      GimpDrawable *drawable   = NULL;
+      Layer        *layer      = NULL;
+      Channel      *channel    = NULL;
+      LayerMask    *layer_mask = NULL;
+
+      layer = (Layer *) gtk_object_get_data (GTK_OBJECT (src_widget),
+					     "gimp_layer");
+      channel = (Channel *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						 "gimp_channel");
+      layer_mask = (LayerMask *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						      "gimp_layer_mask");
+
+      if (layer)
+	{
+	  drawable = GIMP_DRAWABLE (layer);
+	}
+      else if (channel)
+	{
+	  drawable = GIMP_DRAWABLE (channel);
+	}
+      else if (layer_mask)
+	{
+	  drawable = GIMP_DRAWABLE (layer_mask);
+	  channel  = GIMP_CHANNEL  (layer_mask);
+	}
+
+      /*  FIXME: implement special treatment of channel etc.
+       */
+      if (drawable)
+	{
+          GImage      *gimage;
+	  Layer       *new_layer;
+	  GImage      *dest_gimage;
+	  gint         width, height;
+	  gint         dest_width, dest_height;
+	  gint         off_x, off_y;
+	  TileManager *tiles;
+	  PixelRegion  srcPR, destPR;
+	  guchar       bg[MAX_CHANNELS];
+	  gint         bytes, type;
+
+	  gimage = gimp_drawable_gimage (drawable);
+          width  = gimp_drawable_width  (drawable);
+          height = gimp_drawable_height (drawable);
+
+	  /*  How many bytes in the temp buffer?  */
+	  switch (drawable_type (drawable))
+	    {
+	    case RGB_GIMAGE: case RGBA_GIMAGE:
+	      bytes = 4; type = RGB;
+	      break;
+	    case GRAY_GIMAGE: case GRAYA_GIMAGE:
+	      bytes = 2; type = GRAY;
+	      break;
+	    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+	      bytes = 4; type = INDEXED;
+	      break;
+	    default:
+	      bytes = 3; type = RGB;
+	      break;
+	    }
+
+	  gimage_get_background (gimage, drawable, bg);
+
+	  tiles = tile_manager_new (width, height, bytes);
+
+	  pixel_region_init (&srcPR, drawable_data (drawable),
+			     0, 0, width, height, FALSE);
+	  pixel_region_init (&destPR, tiles,
+			     0, 0, width, height, TRUE);
+
+	  if (type == INDEXED)
+	    /*  If the layer is indexed...we need to extract pixels  */
+	    extract_from_region (&srcPR, &destPR, NULL,
+				 drawable_cmap (drawable), bg, type,
+				 drawable_has_alpha (drawable), FALSE);
+	  else if (bytes > srcPR.bytes)
+	    /*  If the layer doesn't have an alpha channel, add one  */
+	    add_alpha_region (&srcPR, &destPR);
+	  else
+	    /*  Otherwise, do a straight copy  */
+	    copy_region (&srcPR, &destPR);
+
+	  dest_gimage = gdisp->gimage;
+	  dest_width  = dest_gimage->width;
+	  dest_height = dest_gimage->height;
+
+	  new_layer =
+	    layer_from_tiles (dest_gimage,
+			      GIMP_DRAWABLE (gimage_get_active_layer (dest_gimage)),
+			      tiles, _("Pasted Layer"),
+			      OPAQUE_OPACITY, NORMAL_MODE);
+
+	  tile_manager_destroy (tiles);
+
+	  if (new_layer)
+	    {
+	      undo_push_group_start (dest_gimage, EDIT_PASTE_UNDO);
+
+	      gimp_drawable_set_gimage (GIMP_DRAWABLE (new_layer), dest_gimage);
+
+	      off_x = (dest_gimage->width - width) / 2;
+	      off_y = (dest_gimage->height - height) / 2;
+
+	      layer_translate (new_layer, off_x, off_y);
+
+	      gimage_add_layer (dest_gimage, new_layer, -1);
+
+	      gdisplays_flush ();
+
+	      return_val = TRUE;
+
+	      undo_push_group_end (dest_gimage);
+	    }
+	}
+    }
+
+  gtk_drag_finish (context, return_val, FALSE, time);
+
+  if (return_val)
+    gimp_context_set_display (gimp_context_get_user (), gdisp);
+
+  return return_val;
 }

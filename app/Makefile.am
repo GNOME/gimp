@@ -197,6 +197,7 @@ gimp_SOURCES = \
 	gimpbrushlistP.h	\
 	gimpcontext.c		\
 	gimpcontext.h		\
+	gimpdnd.h		\
 	gimphistogram.c		\
 	gimphistogram.h		\
 	gimphistogramP.h	\

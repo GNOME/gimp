@@ -196,11 +196,11 @@ layer_invalidate_preview (GtkObject *object)
 }
 
 static void
-transform_color (GImage * gimage,
-		 PixelRegion * layerPR,
-		 PixelRegion * bufPR,
-		 GimpDrawable *drawable,
-		 GimpImageBaseType type)
+transform_color (GImage            *gimage,
+		 PixelRegion       *layerPR,
+		 PixelRegion       *bufPR,
+		 GimpDrawable      *drawable,
+		 GimpImageBaseType  type)
 {
   int i, h;
   unsigned char * s, * d;
@@ -234,13 +234,13 @@ transform_color (GImage * gimage,
 
 
 Layer *
-layer_new (GimpImage* gimage,
-	   int width,
-	   int height,
-	   GimpImageType type,
-	   char * name,
-	   int opacity,
-	   LayerModeEffects mode)
+layer_new (GimpImage        *gimage,
+	   gint              width,
+	   gint              height,
+	   GimpImageType     type,
+	   gchar            *name,
+	   gint              opacity,
+	   LayerModeEffects  mode)
 {
   Layer * layer;
 
@@ -297,9 +297,8 @@ layer_unref (Layer *layer)
 
 
 Layer *
-layer_copy (layer, add_alpha)
-     Layer * layer;
-     int add_alpha;
+layer_copy (Layer *layer,
+	    gint   add_alpha)
 {
   char * layer_name;
   Layer * new_layer;
@@ -397,12 +396,12 @@ layer_copy (layer, add_alpha)
 
 
 Layer *
-layer_from_tiles (void *gimage_ptr,
-		  GimpDrawable *drawable,
-		  TileManager *tiles,
-		  char *name,
-		  int opacity,
-		  LayerModeEffects mode)
+layer_from_tiles (void             *gimage_ptr,
+		  GimpDrawable     *drawable,
+		  TileManager      *tiles,
+		  gchar            *name,
+		  gint              opacity,
+		  LayerModeEffects  mode)
 {
   GImage * gimage;
   Layer * new_layer;
@@ -449,9 +448,8 @@ layer_from_tiles (void *gimage_ptr,
 
 
 LayerMask *
-layer_add_mask (layer, mask)
-     Layer * layer;
-     LayerMask * mask;
+layer_add_mask (Layer     *layer,
+		LayerMask *mask)
 {
   if (layer->mask)
     return NULL;
@@ -471,9 +469,8 @@ layer_add_mask (layer, mask)
 
 
 LayerMask *
-layer_create_mask (layer, add_mask_type)
-     Layer * layer;
-     AddMaskType add_mask_type;
+layer_create_mask (Layer       *layer,
+		   AddMaskType  add_mask_type)
 {
   PixelRegion maskPR, layerPR;
   LayerMask *mask;
@@ -516,8 +513,7 @@ layer_create_mask (layer, add_mask_type)
 
 
 Layer *
-layer_get_ID (ID)
-     int ID;
+layer_get_ID (gint ID)
 {
   GimpDrawable *drawable;
   drawable = drawable_get_ID (ID);
@@ -529,7 +525,7 @@ layer_get_ID (ID)
 
 
 void
-layer_delete (Layer * layer)
+layer_delete (Layer *layer)
 {
   gtk_object_unref (GTK_OBJECT (layer));
 }
@@ -569,7 +565,8 @@ gimp_layer_destroy (GtkObject *object)
  * to the removed signal to update bits of UI that are tied to a
  * particular layer. */
 void
-layer_removed (Layer *layer, gpointer image)
+layer_removed (Layer    *layer,
+	       gpointer  image)
 {
   g_return_if_fail (layer != NULL);
   g_return_if_fail (GIMP_IS_LAYER (layer));
@@ -578,9 +575,8 @@ layer_removed (Layer *layer, gpointer image)
 }
 
 void
-layer_apply_mask (layer, mode)
-     Layer * layer;
-     int mode;
+layer_apply_mask (Layer *layer,
+		  gint  mode)
 {
   PixelRegion srcPR, maskPR;
 
@@ -620,13 +616,11 @@ layer_apply_mask (layer, mode)
     }
 }
 
-
-
 static void
-layer_translate_lowlevel (layer, off_x, off_y, temporary)
-     Layer * layer;
-     int off_x, off_y;
-     gboolean temporary;
+layer_translate_lowlevel (Layer    *layer,
+			  gint      off_x,
+			  gint      off_y,
+			  gboolean  temporary)
 {
   if (!temporary)
     {
@@ -666,28 +660,23 @@ layer_translate_lowlevel (layer, off_x, off_y, temporary)
 
 
 void
-layer_temporarily_translate (layer, off_x, off_y)
-     Layer * layer;
-     int off_x, off_y;
+layer_temporarily_translate (Layer *layer,
+			     gint   off_x,
+			     gint   off_y)
 {
   layer_translate_lowlevel (layer, off_x, off_y, TRUE);
 }
 
-
 void
-layer_translate (layer, off_x, off_y)
-     Layer * layer;
-     int off_x, off_y;
+layer_translate (Layer *layer,
+		 gint   off_x,
+		 gint   off_y)
 {
   layer_translate_lowlevel (layer, off_x, off_y, FALSE);
 }
 
-
-
-
 void
-layer_add_alpha (layer)
-     Layer *layer;
+layer_add_alpha (Layer *layer)
 {
   PixelRegion srcPR, destPR;
   TileManager *new_tiles;
@@ -739,10 +728,10 @@ layer_add_alpha (layer)
 
 
 void
-layer_scale (layer, new_width, new_height, local_origin)
-     Layer *layer;
-     int new_width, new_height;
-     int local_origin;
+layer_scale (Layer *layer,
+	     gint   new_width,
+	     gint   new_height,
+	     gint   local_origin)
 {
   PixelRegion srcPR, destPR;
   TileManager *new_tiles;
@@ -813,10 +802,11 @@ layer_scale (layer, new_width, new_height, local_origin)
 
 
 void
-layer_resize (layer, new_width, new_height, offx, offy)
-     Layer *layer;
-     int new_width, new_height;
-     int offx, offy;
+layer_resize (Layer *layer,
+	      gint   new_width,
+	      gint   new_height,
+	      gint   offx,
+	      gint   offy)
 {
   PixelRegion srcPR, destPR;
   TileManager *new_tiles;
@@ -907,9 +897,8 @@ layer_resize (layer, new_width, new_height, offx, offy)
 
 
 BoundSeg *
-layer_boundary (layer, num_segs)
-     Layer *layer;
-     int *num_segs;
+layer_boundary (Layer *layer,
+		gint  *num_segs)
 {
   BoundSeg *new_segs;
 
@@ -962,8 +951,7 @@ layer_boundary (layer, num_segs)
 
 
 void
-layer_invalidate_boundary (layer)
-     Layer *layer;
+layer_invalidate_boundary (Layer *layer)
 {
   GImage *gimage;
   Channel *mask;
@@ -993,9 +981,9 @@ layer_invalidate_boundary (layer)
 
 
 int
-layer_pick_correlate (layer, x, y)
-     Layer *layer;
-     int x, y;
+layer_pick_correlate (Layer *layer,
+		      gint   x,
+		      gint   y)
 {
   Tile *tile;
   Tile *mask_tile;
@@ -1048,34 +1036,33 @@ layer_pick_correlate (layer, x, y)
 /* access functions */
 
 void
-layer_set_name (Layer *layer, char *name)
+layer_set_name (Layer *layer,
+		gchar *name)
 {
-  gimp_drawable_set_name(GIMP_DRAWABLE(layer), name);
+  gimp_drawable_set_name (GIMP_DRAWABLE (layer), name);
 }
 
-char *
+gchar *
 layer_get_name (Layer *layer)
 {
-  return gimp_drawable_get_name(GIMP_DRAWABLE(layer));
+  return gimp_drawable_get_name (GIMP_DRAWABLE (layer));
 }
 
 
-unsigned char *
-layer_data (Layer * layer)
+guchar *
+layer_data (Layer *layer)
 {
   return NULL;
 }
 
-
 LayerMask *
-layer_mask (Layer * layer)
+layer_get_mask (Layer *layer)
 {
   return layer->mask;
 }
 
-
 int
-layer_has_alpha (Layer * layer)
+layer_has_alpha (Layer *layer)
 {
   if (GIMP_DRAWABLE(layer)->type == RGBA_GIMAGE ||
       GIMP_DRAWABLE(layer)->type == GRAYA_GIMAGE ||
@@ -1084,7 +1071,6 @@ layer_has_alpha (Layer * layer)
   else
     return 0;
 }
-
 
 int
 layer_is_floating_sel (Layer *layer)
@@ -1103,8 +1089,8 @@ layer_linked (Layer *layer)
 
 TempBuf *
 layer_preview (Layer *layer,
-	       int w,
-	       int h)
+	       gint   w,
+	       gint   h)
 {
   GImage *gimage;
   TempBuf *preview_buf;
@@ -1174,9 +1160,9 @@ layer_preview (Layer *layer,
 
 
 TempBuf *
-layer_mask_preview (layer, w, h)
-     Layer *layer;
-     int w, h;
+layer_mask_preview (Layer *layer,
+		    gint   w,
+		    gint   h)
 {
   TempBuf *preview_buf;
   LayerMask *mask;
@@ -1226,9 +1212,9 @@ layer_mask_preview (layer, w, h)
 }
 
 Tattoo
-layer_get_tattoo(const Layer *layer)
+layer_get_tattoo (const Layer *layer)
 {
-  return (gimp_drawable_get_tattoo(GIMP_DRAWABLE(layer)));
+  return (gimp_drawable_get_tattoo (GIMP_DRAWABLE (layer)));
 }
 
 void
@@ -1251,12 +1237,11 @@ layer_invalidate_previews (GimpImage* gimage)
 
 
 static void
-layer_preview_scale (type, cmap, srcPR, destPR, subsample)
-     int type;
-     unsigned char *cmap;
-     PixelRegion *srcPR;
-     PixelRegion *destPR;
-     int subsample;
+layer_preview_scale (gint         type,
+		     guchar      *cmap,
+		     PixelRegion *srcPR,
+		     PixelRegion *destPR,
+		     gint         subsample)
 {
 #define EPSILON 0.000001
   unsigned char * src, * s;
@@ -1438,8 +1423,12 @@ gimp_layer_mask_destroy (GtkObject *object)
 }
 
 LayerMask *
-layer_mask_new (GimpImage* gimage, int width, int height, char *name, int opacity,
-	     unsigned char *col)
+layer_mask_new (GimpImage *gimage,
+		gint       width,
+		gint       height,
+		gchar     *name,
+		gint       opacity,
+		guchar    *col)
 {
   LayerMask * layer_mask;
   int i;
@@ -1507,7 +1496,7 @@ layer_mask_copy (LayerMask *layer_mask)
 
 
 LayerMask *
-layer_mask_get_ID (int ID)
+layer_mask_get_ID (gint ID)
 {
   GimpDrawable *drawable;
   drawable = drawable_get_ID (ID);
@@ -1518,7 +1507,7 @@ layer_mask_get_ID (int ID)
 }
 
 void
-layer_mask_delete (LayerMask * layermask)
+layer_mask_delete (LayerMask *layermask)
 {
   gtk_object_unref (GTK_OBJECT (layermask));
 }
@@ -1539,7 +1528,8 @@ layer_mask_unref (LayerMask *mask)
 }
 
 void
-channel_layer_mask (Channel *mask, Layer * layer)
+channel_layer_mask (Channel *mask,
+		    Layer   *layer)
 {
   PixelRegion srcPR, destPR;
   unsigned char empty = 0;

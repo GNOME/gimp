@@ -37,22 +37,12 @@
 
 /*  the pencil tool options  */
 
-typedef struct _PencilOptions PencilOptions;
-struct _PencilOptions
-{
-  PaintOptions paint_options;
-
-  gboolean      incremental;
-  gboolean      incremental_d;
-  GtkWidget    *incremental_w;
-};
-
-static PencilOptions *pencil_options = NULL; 
+static PaintOptions *pencil_options = NULL; 
 
 /*  forward function declarations  */
-static void         pencil_motion   (PaintCore *, GimpDrawable *, gboolean);
+static void      pencil_motion (PaintCore *, GimpDrawable *, gboolean);
 
-static gboolean     non_gui_incremental = FALSE;
+static gboolean  non_gui_incremental = FALSE;
 
 #define PENCIL_INCREMENTAL_DEFAULT FALSE
 
@@ -85,7 +75,7 @@ pencil_paint_func (PaintCore    *paint_core,
 void
 pencil_options_reset (void)
 {
-  paint_options_reset (&pencil_options->paint_options);
+  paint_options_reset (pencil_options);
 }
 
 Tool *
@@ -172,10 +162,10 @@ pencil_motion (PaintCore    *paint_core,
 
 static void *
 pencil_non_gui_paint_func (PaintCore    *paint_core,
-                          GimpDrawable *drawable,
-                          int           state)
+			   GimpDrawable *drawable,
+			   int           state)
 {
-  pencil_motion (paint_core, drawable, non_gui_incremental );
+  pencil_motion (paint_core, drawable, non_gui_incremental);
 
   return NULL;
 }
@@ -183,8 +173,8 @@ pencil_non_gui_paint_func (PaintCore    *paint_core,
 
 gboolean
 pencil_non_gui (GimpDrawable *drawable,
-               int           num_strokes,
-               double       *stroke_array)
+		int           num_strokes,
+		double       *stroke_array)
 {
   int i;
 

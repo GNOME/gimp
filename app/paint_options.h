@@ -37,8 +37,12 @@ struct _PaintOptions
 
   /*  options used by all paint tools  */
   GtkObject   *opacity_w;
-
   GtkWidget   *paint_mode_w;
+
+  /*  the incremental toggle  */
+  gboolean     incremental;
+  gboolean     incremental_d;
+  GtkWidget   *incremental_w;
 };
 
 

@@ -50,10 +50,6 @@ struct _EraserOptions
   gboolean      hard_d;
   GtkWidget    *hard_w;
 
-  gboolean      incremental;
-  gboolean      incremental_d;
-  GtkWidget    *incremental_w;
-
   gboolean	anti_erase;
   gboolean	anti_erase_d;
   GtkWidget    *anti_erase_w;
@@ -84,8 +80,8 @@ eraser_options_reset (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->hard_w),
 				options->hard_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
-				options->incremental_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->anti_erase_w),
+				options->anti_erase_d);
 }
   
 static EraserOptions *
@@ -101,7 +97,6 @@ eraser_options_new (void)
 		      ERASER,
 		      eraser_options_reset);
   options->hard        = options->hard_d        = ERASER_DEFAULT_HARD;
-  options->incremental = options->incremental_d = ERASER_DEFAULT_INCREMENTAL;
   options->anti_erase  = options->anti_erase_d  = ERASER_DEFAULT_ANTI_ERASE;
 
   /*  the main vbox  */
@@ -116,17 +111,7 @@ eraser_options_new (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->hard_w),
 				options->hard_d);
   gtk_widget_show (options->hard_w);
-  
-  /* the incremental toggle */
-  options->incremental_w = gtk_check_button_new_with_label (_("Incremental"));
-  gtk_box_pack_start (GTK_BOX (vbox), options->incremental_w, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (options->incremental_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
-		      &options->incremental);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
-				options->incremental_d);
-  gtk_widget_show (options->incremental_w);
-  
+
   /* the anti_erase toggle */
   options->anti_erase_w = gtk_check_button_new_with_label (_("Anti erase"));
   gtk_box_pack_start (GTK_BOX (vbox), options->anti_erase_w, FALSE, FALSE, 0);
@@ -139,7 +124,6 @@ eraser_options_new (void)
 
   return options;
 }
-
 
 static void
 eraser_modifier_key_func (Tool        *tool,
@@ -170,7 +154,11 @@ eraser_paint_func (PaintCore    *paint_core,
       break;
 
     case MOTION_PAINT :
-      eraser_motion (paint_core, drawable, eraser_options->hard, eraser_options->incremental, eraser_options->anti_erase);
+      eraser_motion (paint_core,
+		     drawable,
+		     eraser_options->hard,
+		     eraser_options->paint_options.incremental,
+		     eraser_options->anti_erase);
       break;
 
     case FINISH_PAINT :
@@ -305,20 +293,21 @@ eraser_non_gui_default (GimpDrawable *drawable,
 			int           num_strokes,
 			double       *stroke_array)
 {
-  gint   hardness = ERASER_DEFAULT_HARD;
-  gint   method   = ERASER_DEFAULT_INCREMENTAL;
-  gint   anti_erase = ERASER_DEFAULT_ANTI_ERASE;
+  gboolean  hardness   = ERASER_DEFAULT_HARD;
+  gboolean  method     = ERASER_DEFAULT_INCREMENTAL;
+  gboolean  anti_erase = ERASER_DEFAULT_ANTI_ERASE;
 
   EraserOptions *options = eraser_options;
 
-  if(options)
+  if (options)
     {
-      hardness = options->hard;
-      method   = options->incremental;
+      hardness   = options->hard;
+      method     = options->paint_options.incremental;
       anti_erase = options->anti_erase;
     }
 
-  return eraser_non_gui(drawable,num_strokes,stroke_array,hardness,method,anti_erase);
+  return eraser_non_gui (drawable, num_strokes, stroke_array,
+			 hardness, method, anti_erase);
 }
 
 gboolean
@@ -334,9 +323,9 @@ eraser_non_gui (GimpDrawable *drawable,
   if (paint_core_init (&non_gui_paint_core, drawable,
 		       stroke_array[0], stroke_array[1]))
     {
-      non_gui_hard = hardness;
+      non_gui_hard        = hardness;
       non_gui_incremental = method;
-      non_gui_anti_erase = anti_erase;
+      non_gui_anti_erase  = anti_erase;
 
       /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = eraser_non_gui_paint_func;

@@ -25,10 +25,18 @@
 			   GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | \
 			   GDK_PROXIMITY_OUT_MASK
 
-gint gdisplay_shell_events (GtkWidget *, GdkEvent *, GDisplay *);
+gint gdisplay_shell_events  (GtkWidget *, GdkEvent *, GDisplay *);
 gint gdisplay_canvas_events (GtkWidget *, GdkEvent *);
+
 gint gdisplay_hruler_button_press (GtkWidget *, GdkEventButton *, gpointer);
 gint gdisplay_vruler_button_press (GtkWidget *, GdkEventButton *, gpointer);
 gint gdisplay_origin_button_press (GtkWidget *, GdkEventButton *, gpointer);
 
-#endif /*  __DISP_CALLBACKS_H__  */
+gboolean gdisplay_drag_drop (GtkWidget      *widget,
+			     GdkDragContext *context,
+			     gint            x,
+			     gint            y,
+			     guint           time,
+			     gpointer        data);
+
+#endif /* __DISP_CALLBACKS_H__ */

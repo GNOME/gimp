@@ -40,7 +40,7 @@
 #define MAX_PRESSURE  0.075
 
 /* Default pressure setting */
-#define AIRBRUSH_PRESSURE_DEFAULT 10.0
+#define AIRBRUSH_PRESSURE_DEFAULT    10.0
 #define AIRBRUSH_INCREMENTAL_DEFAULT FALSE
 
 #define OFF           0
@@ -51,7 +51,7 @@
 typedef struct _AirbrushTimeout AirbrushTimeout;
 struct _AirbrushTimeout
 {
-  PaintCore *paint_core;
+  PaintCore    *paint_core;
   GimpDrawable *drawable;
 };
 
@@ -67,10 +67,6 @@ struct _AirbrushOptions
   double       pressure;
   double       pressure_d;
   GtkObject   *pressure_w;
-
-  gboolean      incremental;
-  gboolean      incremental_d;
-  GtkWidget    *incremental_w;
 };
 
 
@@ -103,9 +99,6 @@ airbrush_options_reset (void)
 			    options->rate_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->pressure_w),
 			    options->pressure_d);
-  
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
-				options->incremental_d);
 }
 
 static AirbrushOptions *
@@ -125,8 +118,6 @@ airbrush_options_new (void)
 		      airbrush_options_reset);
   options->rate     = options->rate_d     = 80.0;
   options->pressure = options->pressure_d = AIRBRUSH_PRESSURE_DEFAULT;
-  options->incremental     = 
-    options->incremental_d     = AIRBRUSH_INCREMENTAL_DEFAULT;
 
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;
@@ -172,14 +163,6 @@ airbrush_options_new (void)
 		      &options->pressure);
   gtk_widget_show (scale);
 
-  
-  /* the incremental toggle */
-  options->incremental_w = gtk_check_button_new_with_label (_("Incremental"));
-  gtk_box_pack_start (GTK_BOX (vbox), options->incremental_w, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (options->incremental_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
-		      &options->incremental);
-  gtk_widget_show (options->incremental_w);
   gtk_widget_show (table);
 
   return options;
@@ -208,9 +191,9 @@ tools_new_airbrush ()
 }
 
 void *
-airbrush_paint_func (PaintCore *paint_core,
+airbrush_paint_func (PaintCore    *paint_core,
 		     GimpDrawable *drawable,
-		     int        state)
+		     int           state)
 {
   GimpBrushP brush;
 
@@ -236,16 +219,17 @@ airbrush_paint_func (PaintCore *paint_core,
       timer_state = OFF;
 
       airbrush_motion (paint_core, drawable, airbrush_options->pressure,
-		       airbrush_options->incremental ? INCREMENTAL : CONSTANT);
+		       airbrush_options->paint_options.incremental ?
+		       INCREMENTAL : CONSTANT);
 
       if (airbrush_options->rate != 0.0)
-      {
-	airbrush_timeout.paint_core = paint_core;
-	airbrush_timeout.drawable = drawable;
-	timer = gtk_timeout_add ((10000 / airbrush_options->rate),
-				 airbrush_time_out, NULL);
-	timer_state = ON;
-      }
+	{
+	  airbrush_timeout.paint_core = paint_core;
+	  airbrush_timeout.drawable = drawable;
+	  timer = gtk_timeout_add ((10000 / airbrush_options->rate),
+				   airbrush_time_out, NULL);
+	  timer_state = ON;
+	}
       break;
 
     case FINISH_PAINT :
@@ -280,7 +264,8 @@ airbrush_time_out (gpointer client_data)
   airbrush_motion (airbrush_timeout.paint_core,
 		   airbrush_timeout.drawable,
 		   airbrush_options->pressure,
-		   airbrush_options->incremental ? INCREMENTAL : CONSTANT);
+		   airbrush_options->paint_options.incremental ?
+		   INCREMENTAL : CONSTANT);
   gdisplays_flush ();
 
   /*  restart the timer  */

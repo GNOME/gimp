@@ -33,6 +33,7 @@
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimage.h"
+#include "gimpdnd.h"
 #include "gimprc.h"
 #include "indicator_area.h"
 #include "interface.h"
@@ -74,15 +75,21 @@ static GdkPixmap *create_pixmap    (GdkWindow  *parent,
 				    char      **data,
 				    int         width,
 				    int         height);
-static void gimp_set_drop_open     (GtkWidget *);
-static void gimp_dnd_data_received (GtkWidget *,
-				    GdkDragContext *,
-				    gint,
-				    gint,
-				    GtkSelectionData *,
-				    guint,
-				    guint);
-static void gimp_dnd_open_files    (gchar *);
+
+static void     toolbox_set_drag_dest      (GtkWidget *);
+static void     toolbox_drag_data_received (GtkWidget *,
+					    GdkDragContext *,
+					    gint,
+					    gint,
+					    GtkSelectionData *,
+					    guint,
+					    guint);
+static gboolean toolbox_drag_drop          (GtkWidget *,
+					    GdkDragContext *,
+					    gint,
+					    gint,
+					    guint);
+static void     gimp_dnd_open_files        (gchar *);
 
 static int pixmap_colors[8][3] =
 {
@@ -109,22 +116,26 @@ GtkTooltips * tool_tips;
 static GdkColor    colors[12];
 static GtkWidget * toolbox_shell = NULL;
 
-enum {
-  TARGET_URI_LIST,
-  TARGET_TEXT_PLAIN,
-  TARGET_URL
-} TargetType;
-
-static
-GtkTargetEntry dnd_target_table[] =
+static GtkTargetEntry toolbox_target_table[] =
 {
-  { "text/uri-list", 0, TARGET_URI_LIST },
-  { "text/plain", 0, TARGET_TEXT_PLAIN },
-  { "_NETSCAPE_URL",0, TARGET_URL }
+  GIMP_TARGET_URI_LIST,
+  GIMP_TARGET_TEXT_PLAIN,
+  GIMP_TARGET_NETSCAPE_URL,
+  GIMP_TARGET_LAYER,
+  GIMP_TARGET_CHANNEL,
+  GIMP_TARGET_LAYER_MASK
 };
+static guint toolbox_n_targets = (sizeof (toolbox_target_table) /
+				  sizeof (toolbox_target_table[0]));
 
-static guint
-dnd_n_targets = sizeof(dnd_target_table) / sizeof(dnd_target_table[0]);
+static GtkTargetEntry display_target_table[] =
+{
+  GIMP_TARGET_LAYER,
+  GIMP_TARGET_CHANNEL,
+  GIMP_TARGET_LAYER_MASK
+};
+static guint display_n_targets = (sizeof (display_target_table) /
+				  sizeof (display_target_table[0]));
 
 static void
 tools_select_update (GtkWidget *widget,
@@ -583,8 +594,7 @@ create_toolbox ()
   if (show_indicators && (!no_data) )
       create_indicator_area (vbox);
   gtk_widget_show (window);
-  gimp_set_drop_open (window);
-
+  toolbox_set_drag_dest (window);
 
   toolbox_shell = window;
 }
@@ -685,12 +695,21 @@ create_display_shell (GDisplay* gdisp,
 		      (GtkSignalFunc) gdisplay_destroy,
 		      gdisp);
 
+  /*  active display callback  */
   gtk_signal_connect (GTK_OBJECT (gdisp->shell), "button_press_event",
 		      (GtkSignalFunc) gdisplay_shell_events,
 		      gdisp);
-
   gtk_signal_connect (GTK_OBJECT (gdisp->shell), "key_press_event",
 		      (GtkSignalFunc) gdisplay_shell_events,
+		      gdisp);
+
+  /*  dnd stuff  */
+  gtk_drag_dest_set (gdisp->shell,
+		     GTK_DEST_DEFAULT_ALL,
+		     display_target_table, display_n_targets,
+		     GDK_ACTION_COPY);
+  gtk_signal_connect (GTK_OBJECT (gdisp->shell), "drag_drop",
+		      GTK_SIGNAL_FUNC (gdisplay_drag_drop),
 		      gdisp);
 
   /*  the vbox, table containing all widgets  */
@@ -1420,26 +1439,29 @@ message_box_close_callback (GtkWidget *widget,
 
 /* DnD functions */ 
 static void
-gimp_set_drop_open (GtkWidget *object)
+toolbox_set_drag_dest (GtkWidget *object)
 {
   gtk_drag_dest_set (object,
 		     GTK_DEST_DEFAULT_ALL,
-		     dnd_target_table, dnd_n_targets,
+		     toolbox_target_table, toolbox_n_targets,
 		     GDK_ACTION_COPY);
-  gtk_signal_connect (GTK_OBJECT (object),
-		      "drag_data_received",
-		      GTK_SIGNAL_FUNC (gimp_dnd_data_received),
+
+  gtk_signal_connect (GTK_OBJECT (object), "drag_data_received",
+		      GTK_SIGNAL_FUNC (toolbox_drag_data_received),
 		      object);
+  gtk_signal_connect (GTK_OBJECT (object), "drag_drop",
+		      GTK_SIGNAL_FUNC (toolbox_drag_drop),
+		      NULL);
 }
 
 static void
-gimp_dnd_data_received (GtkWidget          *widget,
-			GdkDragContext     *context,
-			gint                x,
-			gint                y,
-			GtkSelectionData   *data,
-			guint               info,
-			guint               time)
+toolbox_drag_data_received (GtkWidget          *widget,
+			    GdkDragContext     *context,
+			    gint                x,
+			    gint                y,
+			    GtkSelectionData   *data,
+			    guint               info,
+			    guint               time)
 {
   switch (context->action)
     {
@@ -1454,6 +1476,99 @@ gimp_dnd_data_received (GtkWidget          *widget,
       break;
     }
   return;
+}
+
+static gboolean
+toolbox_drag_drop (GtkWidget      *widget,
+		   GdkDragContext *context,
+		   gint            x,
+		   gint            y,
+		   guint           time)
+{
+  GtkWidget *src_widget;
+  gboolean return_val = FALSE;
+
+  if ((src_widget = gtk_drag_get_source_widget (context)))
+    {
+      GimpDrawable *drawable   = NULL;
+      Layer        *layer      = NULL;
+      Channel      *channel    = NULL;
+      LayerMask    *layer_mask = NULL;
+
+      layer = (Layer *) gtk_object_get_data (GTK_OBJECT (src_widget),
+					     "gimp_layer");
+      channel = (Channel *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						 "gimp_channel");
+      layer_mask = (LayerMask *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						      "gimp_layer_mask");
+
+      if (layer)
+	{
+	  drawable = GIMP_DRAWABLE (layer);
+	}
+      else if (channel)
+	{
+	  drawable = GIMP_DRAWABLE (channel);
+	}
+      else if (layer_mask)
+	{
+	  drawable = GIMP_DRAWABLE (layer_mask);
+	  channel  = GIMP_CHANNEL  (layer_mask);
+	}
+
+      if (layer)
+	{
+          GImage    *gimage;
+	  LayerMask *mask;
+	  Layer     *new_layer;
+	  GImage    *new_gimage;
+	  LayerMask *new_mask;
+          gint       width, height;
+	  gint       off_x, off_y;
+
+	  gimage = gimp_drawable_gimage (drawable);
+          width  = gimp_drawable_width  (drawable);
+          height = gimp_drawable_height (drawable);
+
+	  new_gimage = gimage_new (width, height, gimage->base_type);
+	  gimage_disable_undo (new_gimage);
+
+	  gimage_set_resolution (new_gimage,
+				 gimage->xresolution, gimage->yresolution);
+	  gimage_set_unit (new_gimage, gimage->unit);
+
+	  new_layer = layer_copy (layer, FALSE);
+
+	  gimp_drawable_set_gimage (GIMP_DRAWABLE (new_layer), new_gimage);
+
+	  layer_set_name (GIMP_LAYER (new_layer),
+			  layer_get_name (GIMP_LAYER (layer)));
+
+	  mask     = layer_get_mask (layer);
+	  new_mask = layer_get_mask (new_layer);
+
+	  if (new_mask)
+	    {
+	      gimp_drawable_set_name (GIMP_DRAWABLE (new_mask),
+				      gimp_drawable_get_name (GIMP_DRAWABLE (mask)));
+	    }
+
+	  gimp_drawable_offsets (GIMP_DRAWABLE (new_layer), &off_x, &off_y);
+	  layer_translate (new_layer, -off_x, -off_y);
+
+	  gimage_add_layer (new_gimage, new_layer, 0);
+
+	  gdisplay_new (new_gimage, 0x0101);
+
+	  gimage_enable_undo (new_gimage);
+
+	  return_val = TRUE;
+	}
+    }
+
+  gtk_drag_finish (context, return_val, FALSE, time);
+
+  return return_val;
 }
 
 static void
