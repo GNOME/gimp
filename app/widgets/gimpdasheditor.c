@@ -421,9 +421,9 @@ gimp_dash_editor_new (GimpStrokeOptions *stroke_options)
 {
   g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (stroke_options), NULL);
 
-  return GTK_WIDGET (g_object_new (GIMP_TYPE_DASH_EDITOR,
-                                   "stroke-options", stroke_options,
-                                   NULL));
+  return g_object_new (GIMP_TYPE_DASH_EDITOR,
+                       "stroke-options", stroke_options,
+                       NULL);
 }
 
 

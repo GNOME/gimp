@@ -37,9 +37,9 @@
 /*  memory sizes
  */
 #define GIMP_MAX_MEMSIZE     ((guint64) 1 << 42) /*  4 terabyte;
-                                        *  needs a 64bit variable
-                                        *  and must be < G_MAXDOUBLE
-                                        */
+                                                  *  needs a 64bit variable
+                                                  *  and must be < G_MAXDOUBLE
+                                                  */
 
 
 /*  the size of the checks which indicate transparency...

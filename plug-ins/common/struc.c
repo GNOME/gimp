@@ -1391,7 +1391,7 @@ strucpi (GimpDrawable *drawable)
 	  for (col = 0; col < (x2 - x1) * bytes; col+=bytes)
 	    {
 	      varde = cur_row[col] + mult*sdata[rcol*xm+rrow*ym+offs];
-	      *d++ = (guchar) CLAMP (varde, 0, 255);
+	      *d++ = (guchar) CLAMP0255 (varde);
 	      if (bytes == 2)
 		*d++ = cur_row[col+1];
 	      rcol++;
@@ -1403,11 +1403,11 @@ strucpi (GimpDrawable *drawable)
 	  for (col = 0; col < (x2 - x1) * bytes; col+=bytes)
 	    {
 	      varde = cur_row[col] + mult * sdata[rcol*xm+rrow*ym+offs];
-	      *d++ = (guchar) CLAMP (varde, 0, 255);
+	      *d++ = (guchar) CLAMP0255 (varde);
 	      varde = cur_row[col+1] + mult * sdata[rcol*xm+rrow*ym+offs];
-	      *d++ = (guchar) CLAMP (varde, 0, 255);
+	      *d++ = (guchar) CLAMP0255 (varde);
 	      varde = cur_row[col+2] + mult * sdata[rcol*xm+rrow*ym+offs];
-	      *d++ = (guchar) CLAMP (varde, 0, 255);
+	      *d++ = (guchar) CLAMP0255 (varde);
 	      if (bytes == 4)
 		*d++ = cur_row[col+3];
 	      rcol++;

@@ -228,10 +228,10 @@ gimp_stroke_editor_constructor (GType                   type,
                          "width-request", 14,
                          NULL);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, TRUE, 0);
-  g_signal_connect_object (G_OBJECT (button), "clicked",
+  g_signal_connect_object (button, "clicked",
                            G_CALLBACK (gimp_dash_editor_shift_left),
                            dash_editor, G_CONNECT_SWAPPED);
-  g_signal_connect_after (G_OBJECT (button), "expose-event",
+  g_signal_connect_after (button, "expose-event",
                           G_CALLBACK (gimp_stroke_editor_paint_button),
                           button);
   gtk_widget_show (button);
@@ -244,10 +244,10 @@ gimp_stroke_editor_constructor (GType                   type,
                          "width-request", 14,
                          NULL);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, TRUE, 0);
-  g_signal_connect_object (G_OBJECT (button), "clicked",
+  g_signal_connect_object (button, "clicked",
                            G_CALLBACK (gimp_dash_editor_shift_right),
                            dash_editor, G_CONNECT_SWAPPED);
-  g_signal_connect_after (G_OBJECT (button), "expose-event",
+  g_signal_connect_after (button, "expose-event",
                           G_CALLBACK (gimp_stroke_editor_paint_button),
                           NULL);
   gtk_widget_show (button);
@@ -263,7 +263,7 @@ gimp_stroke_editor_constructor (GType                   type,
   box = gimp_enum_option_menu_new (GIMP_TYPE_DASH_PRESET,
                                    G_CALLBACK (gimp_stroke_editor_dash_preset),
                                    editor->options);
-  g_signal_connect_object (G_OBJECT (editor->options), "dash_info_changed",
+  g_signal_connect_object (editor->options, "dash_info_changed",
                            G_CALLBACK (gtk_option_menu_set_history),
                            box, G_CONNECT_SWAPPED);
 

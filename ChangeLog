@@ -1,5 +1,23 @@
 2004-01-06  Manish Singh  <yosh@gimp.org>
 
+	* app/widgets/gimpdasheditor.c (gimp_dash_editor_new): remove
+	unnecessary GTK_WIDGET() cast.
+
+	* app/widgets/gimpstrokeeditor.c (gimp_stroke_editor_constructor):
+	remove unnecessary G_OBJECT() casts.
+
+	* libgimpbase/gimplimits.h: cosmetic cleanup.
+
+	* libgimpbase/gimpenv.c (gimp_toplevel_directory): add (void)
+	to prototype.
+
+	* plug-ins/script-fu/script-fu-console.c (script_fu_cc_key_function):
+	set cursor to end of line after history navigation.
+
+	* plug-ins/common/struc.c (strucpi): use CLAMP0255.
+
+2004-01-06  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/common/png.c: Implemented default settings, for both
 	the UI and the PDB. Settings are stored in gimprc, but right now
 	saving is broken since gimp_gimprc_set is broken right now.

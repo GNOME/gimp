@@ -53,9 +53,6 @@
 #define BUFSIZE     256
 
 
-#define message(string) printf("(%s): %d ::: %s\n", __PRETTY_FUNCTION__, __LINE__, string)
-
-
 typedef struct
 {
   GtkTextBuffer *console;
@@ -553,6 +550,8 @@ script_fu_cc_key_function (GtkWidget   *widget,
 
       gtk_entry_set_text (GTK_ENTRY (cint.cc),
 			  (gchar *) (g_list_nth (history, history_cur))->data);
+
+      gtk_editable_set_position (GTK_EDITABLE (cint.cc), -1);
 
       return TRUE;
     }

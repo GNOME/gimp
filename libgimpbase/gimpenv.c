@@ -190,7 +190,7 @@ gimp_personal_rc_file (const gchar *basename)
 
 #ifdef G_OS_WIN32
 gchar *
-gimp_toplevel_directory ()
+gimp_toplevel_directory (void)
 {
   /* Figure it out from the executable name */
   static gchar *toplevel = NULL;
