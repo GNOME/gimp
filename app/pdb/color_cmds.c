@@ -574,7 +574,7 @@ curves_spline_invoker (Gimp     *gimp,
     success = FALSE;
 
   num_points = args[2].value.pdb_int;
-  if (num_points <= 3 || num_points > 32)
+  if (num_points <= 3 || num_points > 34)
     success = FALSE;
 
   control_pts = (guint8 *) args[3].value.pdb_pointer;
@@ -648,7 +648,7 @@ static ProcArg curves_spline_inargs[] =
   {
     GIMP_PDB_INT32,
     "num_points",
-    "The number of values in the control point array (3 < num_points <= 32)"
+    "The number of values in the control point array (3 < num_points <= 34)"
   },
   {
     GIMP_PDB_INT8ARRAY,

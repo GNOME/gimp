@@ -1,3 +1,13 @@
+2002-04-16  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagefile.c (gimp_imagefile_png_thumb_path): create
+	the thumbnail directories if they don't exist.
+	(gimp_imagefile_png_thumb_name): reimplemented w/o snprintf().
+
+	* app/pdb/color_cmds.c
+	* tools/pdbgen/pdb/color.pdb: merged fix for bug #78877 from stable
+	branch.
+
 2002-04-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/temp-buf.c: fixed temp_buf_copy() and

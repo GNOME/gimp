@@ -272,12 +272,18 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile)
       GimpImage         *gimage = NULL;
       GimpPDBStatusType  dummy;
       gchar             *filename;
+      gchar             *thumb_name;
       time_t             mtime;
 
       filename = g_filename_from_uri (uri, NULL, NULL);
 
       /*  no thumbnails of remote images :-(  */
       if (! filename)
+        return;
+
+      thumb_name = gimp_imagefile_png_thumb_path (uri, 128);
+      /*  the thumbnail directory doesn't exist and couldn't be created */
+      if (! thumb_name)
         return;
 
       if (gimp_imagefile_test (filename, &mtime))
@@ -295,49 +301,52 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile)
 
       if (gimage)
         {
-          gchar     *temp_name;
-          gchar     *thumb_name;
+          gchar     *temp_name = NULL;
           GdkPixbuf *pixbuf;
-          gint       w, h;
+          gint       width, height;
           gchar     *w_str;
           gchar     *h_str;
           gchar     *t_str;
+          GError    *error = NULL;
 
           if (gimage->width <= 128 && gimage->height <= 128)
             {
-              w = gimage->width;
-              h = gimage->height;
+              width = gimage->width;
+              height = gimage->height;
             }
           else
             {
               if (gimage->width < gimage->height)
                 {
-                  h = 128;
-                  w = MAX (1, (128 * gimage->width) / gimage->height);
+                  height = 128;
+                  width = MAX (1, (128 * gimage->width) / gimage->height);
                 }
               else
                 {
-                  w = 128;
-                  h = MAX (1, (128 * gimage->height) / gimage->width);
+                  width = 128;
+                  height = MAX (1, (128 * gimage->height) / gimage->width);
                 }
             }
 
-          pixbuf = gimp_viewable_get_new_preview_pixbuf (GIMP_VIEWABLE (gimage),
-                                                         w, h);
-
-          temp_name  = NULL;
-          thumb_name = gimp_imagefile_png_thumb_path (uri, 128);
+          pixbuf = 
+            gimp_viewable_get_new_preview_pixbuf (GIMP_VIEWABLE (gimage), 
+                                                  width, height);
 
           w_str = g_strdup_printf ("%d", gimage->width);
           h_str = g_strdup_printf ("%d", gimage->height);
           t_str = g_strdup_printf ("%ld", mtime);
 
-          gdk_pixbuf_save (pixbuf, thumb_name, "png", NULL,
-                           "tEXt::Thumb::Image::Width",  w_str,
-                           "tEXt::Thumb::Image::Height", h_str,
-                           "tEXt::Thumb::URI",           uri,
-                           "tEXt::Thumb::MTime",         t_str,
-                           NULL);
+          if (! gdk_pixbuf_save (pixbuf, thumb_name, "png", &error,
+                                 "tEXt::Thumb::Image::Width",  w_str,
+                                 "tEXt::Thumb::Image::Height", h_str,
+                                 "tEXt::Thumb::URI",           uri,
+                                 "tEXt::Thumb::MTime",         t_str,
+                                 NULL))
+            {
+              g_message (_("Couldn't write thumbnail for '%s'\nas '%s'.\n%s"), 
+                           uri, thumb_name, error->message);
+              g_error_free (error);
+            }
 
           g_free (w_str);
           g_free (h_str);
@@ -534,15 +543,23 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
 static const gchar *
 gimp_imagefile_png_thumb_name (const gchar *uri)
 {
-  guchar        digest[16];
-  static gchar  name[40];
-  gint          i;
+  static gchar name[40];
+  guchar       digest[16];
+  guchar       n;
+  gint         i;
 
   gimp_md5_get_digest (uri, -1, digest);
 
   for (i = 0; i < 16; i++)
-    g_snprintf (name + (2 * i), 3, "%02x", digest[i]);
-  g_snprintf (name + 32, 5, ".png");
+    {
+      n = (digest[i] >> 4) & 0xF;
+      name[i * 2]     = (n > 9) ? 'a' + n - 10 : '0' + n;
+
+      n = digest[i] & 0xF;
+      name[i * 2 + 1] = (n > 9) ? 'a' + n - 10 : '0' + n;
+    }
+
+  strncpy (name + 32, ".png", 5);
 
   return (const gchar *) name;
 }
@@ -552,7 +569,8 @@ gimp_imagefile_png_thumb_path (const gchar *uri,
                                gint         size)
 {
   const gchar *name;
-  gchar       *thumb_name;
+  gchar       *thumb_dir; 
+  gchar       *thumb_name = NULL;
   gint         i, n;
 
   name = gimp_imagefile_png_thumb_name (uri);
@@ -564,9 +582,32 @@ gimp_imagefile_png_thumb_path (const gchar *uri,
   if (i == n)
     i--;
 
-  thumb_name = g_build_filename (g_get_home_dir(), ".thumbnails",
-                                 thumb_sizes[i].dirname, 
-                                 name, NULL);
+  thumb_dir = g_build_filename (g_get_home_dir(), ".thumbnails",
+                                thumb_sizes[i].dirname, NULL);
+
+  if (! g_file_test (thumb_dir, G_FILE_TEST_IS_DIR))
+    {
+      gchar *parent = g_build_filename (g_get_home_dir(), ".thumbnails", NULL);
+
+      if (g_file_test (parent, G_FILE_TEST_IS_DIR) || 
+          (mkdir (parent, 0700) == 0))
+        {
+          mkdir (thumb_dir, 0700);
+        }
+
+      g_free (parent);
+
+      if (! g_file_test (thumb_dir, G_FILE_TEST_IS_DIR))
+        {
+          g_message (_("Couldn't create thumbnail directory '%s'"), 
+                     thumb_dir); 
+          g_free (thumb_dir);
+          return NULL;
+        }
+    }
+
+  thumb_name = g_build_filename (thumb_dir, name, NULL);
+  g_free (thumb_dir);
 
   return thumb_name;
 }
