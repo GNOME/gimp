@@ -346,7 +346,7 @@ layer_copy (Layer    *layer,
 			 new_type, layer_name, layer->opacity, layer->mode);
   if (!new_layer)
     {
-      g_message ("layer_copy: could not allocate new layer");
+      g_message (_("layer_copy: could not allocate new layer"));
       goto cleanup;
     }
 
@@ -421,7 +421,7 @@ layer_new_from_tiles (GimpImage        *gimage,
 
   if (!new_layer)
     {
-      g_message ("layer_new_from_tiles: could not allocate new layer");
+      g_message (_("layer_new_from_tiles: could not allocate new layer"));
       return NULL;
     }
 
@@ -723,17 +723,15 @@ layer_add_alpha (Layer *layer)
 			   "restructure");
 }
 
-void
-layer_scale (Layer *layer,
-	     gint   new_width,
-	     gint   new_height,
-	     gint   local_origin)
+static void
+layer_scale_lowlevel(Layer *layer,
+                     gint   new_width,
+                     gint   new_height,
+                     gint   new_offset_x,
+                     gint   new_offset_y)
 {
   PixelRegion srcPR, destPR;
   TileManager *new_tiles;
-
-  if (new_width == 0 || new_height == 0)
-    return;
 
   /*  Update the old layer position  */
   drawable_update (GIMP_DRAWABLE(layer),
@@ -761,29 +759,12 @@ layer_scale (Layer *layer,
   undo_push_layer_mod (GIMP_DRAWABLE(layer)->gimage, layer);
 
   /*  Configure the new layer  */
-  if (local_origin)
-    {
-      int cx, cy;
 
-      cx = GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width / 2;
-      cy = GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height / 2;
-
-      GIMP_DRAWABLE(layer)->offset_x = cx - (new_width / 2); 
-      GIMP_DRAWABLE(layer)->offset_y = cy - (new_height / 2); 
-    }
-  else
-    {
-      double xrat, yrat;
-
-      xrat = (double) new_width / (double) GIMP_DRAWABLE(layer)->width;
-      yrat = (double) new_height / (double) GIMP_DRAWABLE(layer)->height;
-
-      GIMP_DRAWABLE(layer)->offset_x = (int) (xrat * GIMP_DRAWABLE(layer)->offset_x);
-      GIMP_DRAWABLE(layer)->offset_y = (int) (yrat * GIMP_DRAWABLE(layer)->offset_y);
-    }
-  GIMP_DRAWABLE(layer)->tiles = new_tiles;
-  GIMP_DRAWABLE(layer)->width = new_width;
-  GIMP_DRAWABLE(layer)->height = new_height;
+  GIMP_DRAWABLE(layer)->offset_x = new_offset_x;
+  GIMP_DRAWABLE(layer)->offset_y = new_offset_y;
+  GIMP_DRAWABLE(layer)->tiles    = new_tiles;
+  GIMP_DRAWABLE(layer)->width    = new_width;
+  GIMP_DRAWABLE(layer)->height   = new_height;
 
   /*  If there is a layer mask, make sure it gets scaled also  */
   if (layer->mask) 
@@ -794,9 +775,144 @@ layer_scale (Layer *layer,
     }
   
   /*  Update the new layer position  */
+
   drawable_update (GIMP_DRAWABLE(layer),
 		   0, 0,
 		   GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+}
+
+/**
+ * layer_check_scaling:
+ * @layer:      Layer to check
+ * @new_width:  proposed width of layer, in pixels
+ * @new_height: proposed height of layer, in pixels
+ * Scales layer dimensions, then snaps them to pixel centers
+ * Returns FALSE if any dimension reduces to zero as a result 
+ * of this; otherwise, returns TRUE.
+ */
+
+gboolean layer_check_scaling (Layer  *layer,
+			      gint    new_width,
+			      gint    new_height)
+{
+   GImage  *gimage           =  GIMP_DRAWABLE(layer)->gimage;
+   gdouble  img_scale_w      = (gdouble)new_width/(gdouble)gimage->width;
+   gdouble  img_scale_h      = (gdouble)new_height/(gdouble)gimage->height;
+   gint     new_layer_width  = (gint)(0.5 + img_scale_w * (gdouble)GIMP_DRAWABLE(layer)->width); 
+   gint     new_layer_height = (gint)(0.5 + img_scale_h * (gdouble)GIMP_DRAWABLE(layer)->height);
+
+   return (new_layer_width != 0 && new_layer_height != 0);  
+}
+
+/**
+ * layer_scale_by_factors:
+ * @layer: Layer to be transformed by explicit width and height factors.
+ * @w_factor: scale factor to apply to width and horizontal offset
+ * @h_factor: scale factor to apply to height and vertical offset
+ * 
+ * Scales layer dimensions and offsets by uniform width and
+ * height factors.
+ * 
+ * Use layer_scale_by_factors() in circumstances when the
+ * same width and height scaling factors are to be uniformly
+ * applied to a set of layers. In this context, the layer's
+ * dimensions and offsets from the sides of the containing
+ * image all change by these predetermined factors. By fiat,
+ * the fixed point of the transform is the upper left hand
+ * corner of the image. Returns gboolean FALSE if a requested
+ * scale factor is zero or if a scaling zero's out a layer
+ * dimension; returns TRUE otherwise.
+ *
+ * Use layer_scale() in circumstances where new layer width
+ * and height dimensions are predetermined instead.
+ *
+ * #Returns: TRUE, if the scaled layer has positive dimensions
+ *           FALSE if the scaled layer has at least one zero dimension
+ *
+ * #Side effects: undo set created for layer.
+ *                Old layer imagery scaled 
+ *                & painted to new layer tiles 
+ */
+
+gboolean
+layer_scale_by_factors(Layer   *layer,
+                       gdouble  w_factor,
+                       gdouble  h_factor)
+{
+  gint new_width, new_height, new_offset_x, new_offset_y;
+  
+  if (w_factor == 0.0 || h_factor == 0.0)
+    {
+      g_message(_("layer_scale_by_factors: Error. Requested width or height scale equals zero."));
+      return FALSE;
+    }
+
+  new_offset_x = (gint)(0.5 + w_factor * (gdouble)GIMP_DRAWABLE(layer)->offset_x);
+  new_offset_y = (gint)(0.5 + h_factor * (gdouble)GIMP_DRAWABLE(layer)->offset_y);
+  new_width    = (gint)(0.5 + w_factor * (gdouble)GIMP_DRAWABLE(layer)->width);
+  new_height   = (gint)(0.5 + h_factor * (gdouble)GIMP_DRAWABLE(layer)->height);
+
+  if(new_width != 0 && new_height != 0)
+    {
+      layer_scale_lowlevel(layer, new_width, new_height, new_offset_x, new_offset_y);
+      return TRUE;
+    }
+  else
+    return FALSE;
+}
+
+/**
+ * layer_scale:
+ * @layer: The    layer to be transformed by width & height scale factors
+ * @new_width:    The width that layer will acquire
+ * @new_height:   The height that the layer will acquire
+ * @local_origin: sets fixed point of the scaling transform. See below.
+ *
+ * Sets layer dimensions to new_width and
+ * new_height. Derives vertical and horizontal scaling
+ * transforms from new width and height. If local_origin is
+ * TRUE, the fixed point of the scaling transform coincides
+ * with the layer's center point.  Otherwise, the fixed
+ * point is taken to be [-GIMP_DRAWABLE(layer)->offset_x,
+ * -GIMP_DRAWABLE(layer)->offset_y].
+ *
+ * Since this function derives scale factors from new and
+ * current layer dimensions, these factors will vary from
+ * layer to layer because of aliasing artifacts; factor
+ * variations among layers can be quite large where layer
+ * dimensions approach pixel dimensions. Use 
+ * layer_scale_by_factors where constant scales are to
+ * be uniformly applied to a number of layers.
+ *
+ * Side effects: undo set created for layer.
+ *               Old layer imagery scaled 
+ *               & painted to new layer tiles 
+ */
+    
+void
+layer_scale (Layer   *layer,
+	     gint     new_width,
+	     gint     new_height,
+	     gboolean local_origin)
+{
+  gint new_offset_x, new_offset_y;
+
+  if (new_width == 0 || new_height == 0)
+    {
+      g_message(_("layer_scale: Error. Requested width or height equals zero."));
+      return;
+    }
+  if (local_origin)
+    {
+      new_offset_x = GIMP_DRAWABLE(layer)->offset_x + ((GIMP_DRAWABLE(layer)->width  - new_width)/2.0);
+      new_offset_y = GIMP_DRAWABLE(layer)->offset_y + ((GIMP_DRAWABLE(layer)->height - new_height)/2.0);
+    }
+  else
+    {
+      new_offset_x = (gint)(((gdouble) new_width * GIMP_DRAWABLE(layer)->offset_x/(gdouble) GIMP_DRAWABLE(layer)->width));
+      new_offset_y = (gint)(((gdouble) new_height * GIMP_DRAWABLE(layer)->offset_y/(gdouble) GIMP_DRAWABLE(layer)->height));
+    }
+  layer_scale_lowlevel(layer, new_width, new_height, new_offset_x, new_offset_y);
 }
 
 void

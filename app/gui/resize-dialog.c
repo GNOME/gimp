@@ -65,19 +65,19 @@ struct _ResizePrivate
   gint    orig_x, orig_y;
 };
 
-static void  resize_draw        (Resize *);
-static void  unit_update        (GtkWidget *, gpointer);
-static gint  resize_bound_off_x (Resize *, gint);
-static gint  resize_bound_off_y (Resize *, gint);
-static void  orig_labels_update (GtkWidget *, gpointer);
-static void  size_callback      (GtkWidget *, gpointer);
-static void  ratio_callback     (GtkWidget *, gpointer);
-static void  size_update        (Resize *, gdouble, gdouble, gdouble, gdouble);
-static void  offset_update      (GtkWidget *, gpointer);
-static gint  resize_events      (GtkWidget *, GdkEvent *);
-static void  printsize_update   (GtkWidget *, gpointer);
-static void  resolution_update  (GtkWidget *, gpointer);
-
+static void  resize_draw                 (Resize *);
+static void  unit_update                 (GtkWidget *, gpointer);
+static gint  resize_bound_off_x          (Resize *, gint);
+static gint  resize_bound_off_y          (Resize *, gint);
+static void  orig_labels_update          (GtkWidget *, gpointer);
+static void  size_callback               (GtkWidget *, gpointer);
+static void  ratio_callback              (GtkWidget *, gpointer);
+static void  size_update                 (Resize *, gdouble, gdouble, gdouble, gdouble);
+static void  offset_update               (GtkWidget *, gpointer);
+static gint  resize_events               (GtkWidget *, GdkEvent *);
+static void  printsize_update            (GtkWidget *, gpointer);
+static void  resolution_update           (GtkWidget *, gpointer);
+static void  resize_scale_warn_callback  (GtkWidget *, gboolean, gpointer);
 
 Resize *
 resize_widget_new (ResizeType    type,
@@ -1191,3 +1191,164 @@ resize_events (GtkWidget *widget,
 
   return FALSE;
 }
+
+/*** Resize sanity checks ***/
+
+void resize_scale_implement (ImageResize *image_scale)
+{
+  GImage      *gimage        = NULL;
+  gboolean     rulers_flush  = FALSE;
+  gboolean     display_flush = FALSE;  /* this is a bit ugly: 
+				          we hijack the flush variable 
+					  to check if an undo_group was 
+					  already started */
+  g_assert(image_scale != NULL);
+  gimage = image_scale->gimage;
+  g_assert(gimage != NULL);
+
+  if (image_scale->resize->resolution_x != gimage->xresolution ||
+      image_scale->resize->resolution_y != gimage->yresolution)
+    {
+      undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
+	  
+      gimage_set_resolution (gimage,
+			     image_scale->resize->resolution_x,
+			     image_scale->resize->resolution_y);
+
+      rulers_flush = TRUE;
+      display_flush = TRUE;
+    }
+
+  if (image_scale->resize->unit != gimage->unit)
+    {
+      if (!display_flush)
+	undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
+
+      gimage_set_unit (gimage, image_scale->resize->unit);
+      gdisplays_setup_scale (gimage);
+      gdisplays_resize_cursor_label (gimage);
+
+      rulers_flush = TRUE;
+      display_flush = TRUE;
+    }
+
+  if (image_scale->resize->width != gimage->width ||
+      image_scale->resize->height != gimage->height)
+    {
+      if (image_scale->resize->width > 0 &&
+	  image_scale->resize->height > 0) 
+	{
+	  if (!display_flush)
+	    undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
+
+	  gimage_scale (gimage,
+			image_scale->resize->width,
+			image_scale->resize->height);
+
+	  display_flush = TRUE;
+	}
+      else
+	{
+	  g_message (_("Scale Error: Both width and height must be "
+		       "greater than zero."));
+	  return;
+	}
+    }
+
+  if (rulers_flush)
+    {
+      gdisplays_setup_scale (gimage);
+      gdisplays_resize_cursor_label (gimage);
+    }
+      
+  if (display_flush)
+    {
+      undo_push_group_end (gimage);
+      gdisplays_flush ();
+    }
+}
+
+static
+void resize_scale_warn_callback (GtkWidget *widget,
+				 gboolean   do_scale,
+		                 gpointer   client_data)
+{
+  ImageResize *image_scale = NULL;
+  GImage      *gimage      = NULL;
+
+  g_assert(client_data != NULL);
+  image_scale = (ImageResize *) client_data;
+  gimage      = image_scale->gimage;
+  g_assert(gimage != NULL);
+
+  if(do_scale == TRUE) /* User doesn't mind losing layers... */
+    {
+      resize_scale_implement(image_scale);
+      resize_widget_free (image_scale->resize);
+      g_free (image_scale);
+    }
+  else
+    gtk_widget_set_sensitive (image_scale->resize->resize_shell, TRUE);
+}
+
+gboolean 
+resize_check_layer_scaling (ImageResize *image_scale)
+{
+  /* Inventory the layer list in gimage and return TRUE if, after
+   * scaling, they all retain positive x and y pixel dimensions.
+   * Otherwise, put up a modal boolean dialog box and ask the user if
+   * she wishes to proceed. Return FALSE in the dialog case; the dialog box
+   * callback will complete the job if the user really wants to
+   * proceed. <02/22/2000 gosgood@idt.net>
+   */
+
+  gboolean   success = FALSE;
+  GImage    *gimage  = NULL;
+  GSList    *list    = NULL;
+  Layer     *layer   = NULL;
+  GtkWidget *dialog  = NULL;
+  gchar     *str     = NULL;
+
+  g_assert(image_scale != NULL);
+
+  if(NULL != (gimage = image_scale->gimage))
+    {
+      /* Step through layers; test scaled dimensions. */
+
+      success = TRUE;
+      list    = gimage->layers;
+      while(list && success == TRUE)
+	{
+	  layer   = (Layer *)list->data;
+	  success = layer_check_scaling (layer, 
+					 image_scale->resize->width,
+					 image_scale->resize->height);
+	  list   = g_slist_next (list);
+	  
+	}
+      /* Warn user on failure */
+      if(success == FALSE)
+	{
+	  gtk_widget_set_sensitive (image_scale->resize->resize_shell, FALSE);
+
+	  str = g_strdup (_("The chosen image size will shrink\n"
+			    "some layers completely away.\nIs this what you want?"));
+
+	  dialog =
+	    gimp_query_boolean_box (_("Layer Too Small"),
+				    gimp_standard_help_func,
+				    "dialogs/scale_layer_warn.html",
+				    FALSE,
+				    str,
+				    _("OK"), _("Cancel"),
+				    NULL, NULL,
+				    resize_scale_warn_callback,
+				    image_scale);
+
+	  g_free (str);
+	  gtk_widget_show (dialog);
+	}
+    }
+  return success;
+}
+

@@ -82,6 +82,7 @@ void   		layer_unref (Layer *);
 Layer *         layer_new_from_tiles        (GimpImage *, GimpImageType, TileManager *,
 					     gchar *, gint, LayerModeEffects);
 LayerMask *     layer_add_mask              (Layer *, LayerMask *);
+gboolean        layer_check_scaling         (Layer *, gint, gint);
 LayerMask *     layer_create_mask           (Layer *, AddMaskType);
 Layer *         layer_get_ID                (gint);
 void            layer_delete                (Layer *);
@@ -90,7 +91,8 @@ void            layer_apply_mask            (Layer *, MaskApplyMode);
 void            layer_temporarily_translate (Layer *, gint, gint);
 void            layer_translate             (Layer *, gint, gint);
 void            layer_add_alpha             (Layer *);
-void            layer_scale                 (Layer *, gint, gint, gint);
+gboolean        layer_scale_by_factors      (Layer *, gdouble, gdouble);
+void            layer_scale                 (Layer *, gint, gint, gboolean);
 void            layer_resize                (Layer *, gint, gint, gint, gint);
 void            layer_resize_to_image       (Layer *);
 BoundSeg *      layer_boundary              (Layer *, gint *);

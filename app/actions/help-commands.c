@@ -65,27 +65,21 @@
         gdisp = gdisplay_active (); \
         if (!gdisp) return
 
-typedef struct
-{
-  Resize    *resize;
-  GimpImage *gimage;
-} ImageResize;
-
 /*  external functions  */
 extern void   layers_dialog_layer_merge_query (GImage *, gboolean);
 
 /*  local functions  */
-static void   image_resize_callback        (GtkWidget *, gpointer);
-static void   image_scale_callback         (GtkWidget *, gpointer);
-static void   image_cancel_callback        (GtkWidget *, gpointer);
-static void   gimage_mask_feather_callback (GtkWidget *, gdouble, GimpUnit,
-					    gpointer);
-static void   gimage_mask_border_callback  (GtkWidget *, gdouble, GimpUnit,
-					    gpointer);
-static void   gimage_mask_grow_callback    (GtkWidget *, gdouble, GimpUnit,
-					    gpointer);
-static void   gimage_mask_shrink_callback  (GtkWidget *, gdouble, GimpUnit,
-					    gpointer);
+static void     image_resize_callback        (GtkWidget *, gpointer);
+static void     image_scale_callback         (GtkWidget *, gpointer);
+static void     image_cancel_callback        (GtkWidget *, gpointer);
+static void     gimage_mask_feather_callback (GtkWidget *, gdouble, GimpUnit,
+					      gpointer);
+static void     gimage_mask_border_callback  (GtkWidget *, gdouble, GimpUnit,
+		  			      gpointer);
+static void     gimage_mask_grow_callback    (GtkWidget *, gdouble, GimpUnit,
+					      gpointer);
+static void     gimage_mask_shrink_callback  (GtkWidget *, gdouble, GimpUnit,
+					      gpointer);
 
 /*  local variables  */
 static gdouble   selection_feather_radius    = 5.0;
@@ -1318,94 +1312,29 @@ static void
 image_scale_callback (GtkWidget *widget,
 		      gpointer   client_data)
 {
-  ImageResize *image_scale;
-  GImage      *gimage;
-  gboolean     rulers_flush = FALSE;
-  gboolean     display_flush = FALSE;  /* this is a bit ugly: 
-				          we hijack the flush variable 
-					  to check if an undo_group was 
-					  already started */
+  ImageResize *image_scale = NULL;
 
-  image_scale = (ImageResize *) client_data;
-
-  if ((gimage = image_scale->gimage) != NULL)
+  g_assert((image_scale = (ImageResize *) client_data) != NULL);
+  g_assert(image_scale->gimage != NULL);
+ 
+  if(TRUE == resize_check_layer_scaling(image_scale))
     {
-      if (image_scale->resize->resolution_x != gimage->xresolution ||
-	  image_scale->resize->resolution_y != gimage->yresolution)
-	{
-	  undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
-	  
-	  gimage_set_resolution (gimage,
-				 image_scale->resize->resolution_x,
-				 image_scale->resize->resolution_y);
-
-	  rulers_flush = TRUE;
-	  display_flush = TRUE;
-	}
-
-      if (image_scale->resize->unit != gimage->unit)
-	{
-	  if (!display_flush)
-	    undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
-
-	  gimage_set_unit (gimage, image_scale->resize->unit);
-	  gdisplays_setup_scale (gimage);
-	  gdisplays_resize_cursor_label (gimage);
-
-	  rulers_flush = TRUE;
-	  display_flush = TRUE;
-	}
-
-      if (image_scale->resize->width != gimage->width ||
-	  image_scale->resize->height != gimage->height)
-	{
-	  if (image_scale->resize->width > 0 &&
-	      image_scale->resize->height > 0) 
-	    {
-	      if (!display_flush)
-		undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
-
-	      gimage_scale (gimage,
-			    image_scale->resize->width,
-			    image_scale->resize->height);
-
-	      display_flush = TRUE;
-	    }
-	  else
-	    {
-	      g_message (_("Scale Error: Both width and height must be "
-			   "greater than zero."));
-	      return;
-	    }
-	}
-
-      if (rulers_flush)
-	{
-	  gdisplays_setup_scale (gimage);
-	  gdisplays_resize_cursor_label (gimage);
-	}
-      
-      if (display_flush)
-	{
-	  undo_push_group_end (gimage);
-	  gdisplays_flush ();
-	}
+      resize_scale_implement(image_scale);
+      resize_widget_free (image_scale->resize);
+      g_free (image_scale);
     }
-
-  resize_widget_free (image_scale->resize);
-  g_free (image_scale);
 }
 
 static void
 image_cancel_callback (GtkWidget *widget,
 		       gpointer   client_data)
 {
-  ImageResize *image_resize;
+  ImageResize *image_scale;
 
-  image_resize = (ImageResize *) client_data;
+  image_scale = (ImageResize *) client_data;
 
-  resize_widget_free (image_resize->resize);
-  g_free (image_resize);
+  resize_widget_free (image_scale->resize);
+  g_free (image_scale);
 }
 
 static void

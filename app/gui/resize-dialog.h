@@ -19,6 +19,7 @@
 #define __RESIZE_H__
 
 #include "libgimp/gimpunit.h"
+#include "gimage.h"
 
 typedef enum
 {
@@ -59,9 +60,16 @@ struct _Resize
   void *       private_part;
 };
 
+typedef struct
+{
+  Resize    *resize;
+  GimpImage *gimage;
+} ImageResize;
+
 /* If resolution_x is zero, then don't show resolution modification
  * parts of the dialog. If object is non-NULL, then attach the cancel
  * callback to its destroy signal. */
+
 Resize * resize_widget_new    (ResizeType    type,
 			       ResizeTarget  target,
 			       GtkObject   * object,
@@ -75,5 +83,10 @@ Resize * resize_widget_new    (ResizeType    type,
 			       GtkSignalFunc cancel_cb,
 			       gpointer      user_data);
 void     resize_widget_free   (Resize      * resize);
+
+/* Layer scaling sanity check and warning dialogs */
+
+gboolean resize_check_layer_scaling (ImageResize *);
+void     resize_scale_implement     (ImageResize *);
 
 #endif  /*  __RESIZE_H__  */

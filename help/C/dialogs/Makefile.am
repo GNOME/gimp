@@ -37,6 +37,7 @@ helpdata_DATA = \
         really_close.html \
         really_quit.html \
         scale_image.html \
+	scale_layer_warn.html \
 	set_canvas_size.html \
         shrink_selection.html \
         tip_of_the_day.html \

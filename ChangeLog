@@ -1,3 +1,36 @@
+2000-02-26 Garry R. Osgood <gosgood@idt.net>
+        * app/commands.c
+        * app/gimpimage.c
+	* app/layer.c
+	* app/layer.h
+	* app/resize.c
+	* app/resize.h
+	* help/C/dialogs/Makefile.am
+	* help/C/dialogs/scale_layer_warn.html (new: placeholder)
+
+	Aliasing artifacts that changed relative positions
+	of layers under scaling, giving rise to #5271, are 
+	minimized by a new layer.c function, 
+	layer_scale_by_factors(). Closes #5271. See
+	http://idt.net/~gosgood/gimp-patch/patch07.html
+	for further detail. See also usage documentation
+	for layer_scale() and layer_scale_by_factors()
+	in layer.c. 
+
+	Provided logic for the Scale Image dialog box
+	<Image->Scale Image...>
+	to pre-check an image's layers for the possibility
+	that a particular scaling, s: 0 < s < 1, reduces
+	a layer dimension to zero. Should this case prevail,
+	a boolean dialog box warns the user of the possibility.
+	The user may (1) Cancel, returning focus to Scale
+	Image and the possibility of corrective adjustment, or
+	(2) OK the scaling. The layers that will vanish upon
+	the new scaling are culled from the GimpImage::layers
+	list first. >>Please Test This!<< I've tested it
+	fairly thoroughly, but my physician reports that I
+	suffer from hubris. ;)
+   	
 2000-02-26  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimphelpui.[ch]
