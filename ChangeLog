@@ -1,3 +1,8 @@
+Sun Mar 14 14:27:25 EST 1999
+
+        * plug-ins/gfig/gfig.c: backport from HEAD
+	* plug-ins/libgck/gck/*.[ch]: backport from HEAD
+
 Sun Mar 14 12:46:41 EST 1999 Matt Wilson <msw@gimp.org>
 
 	* app/image_render.c: rendering functions seem to work for all

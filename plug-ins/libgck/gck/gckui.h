@@ -103,7 +103,7 @@ GtkWidget            *gck_radiobutton_new            (char *name,GtkWidget *cont
                                                       GtkWidget *previous,
                                                       GtkSignalFunc status_changed_func);
 
-GtkWidget            *gck_radiobutton_pixmap_new     (char *name, 
+GtkWidget            *gck_radiobutton_pixmap_new     (char *name,
                                                       GdkPixmap *pixm,
                                                       GdkBitmap *mask,
                                                       GtkWidget *container,
@@ -126,10 +126,10 @@ GtkWidget            *gck_hbox_new                   (GtkWidget *container,
 
 GtkWidget            *gck_menu_bar_new               (GtkWidget *container,
                                                       GckMenuItem menu_items[],
-                                                      GtkAcceleratorTable *acc_table);
+                                                      GtkAccelGroup *acc_group);
 
 GtkWidget            *gck_menu_new                   (GckMenuItem *menu_items,
-                                                      GtkAcceleratorTable *acc_table);
+                                                      GtkAccelGroup *acc_group);
 
 GtkWidget            *gck_option_menu_new            (char *name,GtkWidget *container,
                                                       gint expand,gint fill,

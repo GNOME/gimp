@@ -134,9 +134,9 @@ GckApplicationWindow *gck_application_window_new(char *name)
 
   /* Create application accelerator table */
   /* ==================================== */
-  
-  appwin->accelerator_table = gtk_accelerator_table_new();
-  gtk_window_add_accelerator_table(GTK_WINDOW(appwin->widget),appwin->accelerator_table);
+
+  appwin->accelerator_group = gtk_accel_group_new();
+  gtk_window_add_accel_group(GTK_WINDOW(appwin->widget),appwin->accelerator_group);
 
   g_function_leave("gck_application_window_new");
   return (appwin);
@@ -194,7 +194,7 @@ GckDialogWindow *gck_dialog_window_new(char *name,GckPosition ActionPos,
   dialog->okbutton=NULL;
   dialog->cancelbutton=NULL;
   dialog->helpbutton=NULL;
-  
+
   if (ActionPos==GCK_TOP || ActionPos==GCK_BOTTOM)
     mainbox= gck_vbox_new(dialog->widget,FALSE,FALSE,FALSE,0,0,2);
   else
@@ -281,13 +281,13 @@ void gck_dialog_window_destroy(GckDialogWindow * dialog)
 GtkWidget *gck_vseparator_new(GtkWidget *container)
 {
   GtkWidget *separator;
-  
+
   g_function_enter("gck_vseparator_new");
 
   separator=gtk_vseparator_new();
   if (container!=NULL)
     gtk_container_add(GTK_CONTAINER(container),separator);
-  
+
   if (_GckAutoShowFlag==TRUE)
     gtk_widget_show(separator);
 
@@ -302,13 +302,13 @@ GtkWidget *gck_vseparator_new(GtkWidget *container)
 GtkWidget *gck_hseparator_new(GtkWidget *container)
 {
   GtkWidget *separator;
-  
+
   g_function_enter("gck_hseparator_new");
 
   separator=gtk_hseparator_new();
   if (container!=NULL)
     gtk_container_add(GTK_CONTAINER(container),separator);
-  
+
   if (_GckAutoShowFlag==TRUE) gtk_widget_show(separator);
 
   g_function_leave("gck_hseparator_new");
@@ -379,7 +379,7 @@ GtkWidget *gck_label_new(char *name, GtkWidget *container)
   return (label);
 }
 
-GtkWidget *gck_label_aligned_new(char *name, GtkWidget * container, 
+GtkWidget *gck_label_aligned_new(char *name, GtkWidget * container,
                                  gdouble xalign, gdouble yalign)
 {
   GtkWidget *label;
@@ -415,7 +415,7 @@ GtkWidget *gck_drawing_area_new(GtkWidget *container,gint width,gint height,
 {
   GtkWidget *drawingarea;
   gint container_type;
-  
+
   g_function_enter("gck_drawing_area_new");
 
   drawingarea = gtk_drawing_area_new();
@@ -434,7 +434,7 @@ GtkWidget *gck_drawing_area_new(GtkWidget *container,gint width,gint height,
       else
         gtk_container_add(GTK_CONTAINER(container), drawingarea);
     }
-  
+
   if (_GckAutoShowFlag == TRUE)
     gtk_widget_show(drawingarea);
 
@@ -594,14 +594,14 @@ GtkWidget *gck_entryfield_text_new (char *name, GtkWidget *container,
       hbox = gtk_hbox_new(FALSE, 0);
 
       if (container!=NULL)
-        { 
+        {
           container_type=GTK_WIDGET_TYPE(container);
           if (container_type == gtk_vbox_get_type() || container_type == gtk_hbox_get_type())
             gtk_box_pack_start(GTK_BOX(container), hbox, FALSE, FALSE, 0);
           else
             gtk_container_add(GTK_CONTAINER(container), hbox);
         }
-  
+
       gtk_container_border_width(GTK_CONTAINER(hbox), 2);
       gtk_widget_show(hbox);
 
@@ -625,9 +625,9 @@ GtkWidget *gck_entryfield_text_new (char *name, GtkWidget *container,
 
   if (_GckAutoShowFlag == TRUE && (container!=NULL || hbox!=NULL))
     gtk_widget_show(entry);
-  
+
   gtk_object_set_data(GTK_OBJECT(entry),"EntryLabel",(gpointer)label);
-  
+
   g_function_leave("gck_entryfield_text_new");
 
   return (entry);
@@ -662,7 +662,7 @@ GtkWidget *gck_pushbutton_new(char *name, GtkWidget *container,
   g_function_enter("gck_pushbutton_new");
 
   button = gtk_button_new();
-  
+
   if (container!=NULL)
     {
       container_type=GTK_WIDGET_TYPE(container);
@@ -702,7 +702,7 @@ GtkWidget *gck_pushbutton_pixmap_new(char *name,
   g_function_enter("gck_pushbutton_pixmap_new");
 
   button = gtk_button_new();
-  
+
   if (container!=NULL)
     {
       container_type=GTK_WIDGET_TYPE(container);
@@ -730,7 +730,7 @@ GtkWidget *gck_pushbutton_pixmap_new(char *name,
     gtk_widget_show(button);
 
   g_function_leave("gck_pushbutton_pixmap_new");
-  return (button);  
+  return (button);
 }
 
 GtkWidget *gck_togglebutton_pixmap_new(char *name,
@@ -746,7 +746,7 @@ GtkWidget *gck_togglebutton_pixmap_new(char *name,
   g_function_enter("gck_togglebutton_pixmap_new");
 
   button = gtk_toggle_button_new();
-  
+
   if (container!=NULL)
     {
       container_type=GTK_WIDGET_TYPE(container);
@@ -774,7 +774,7 @@ GtkWidget *gck_togglebutton_pixmap_new(char *name,
     gtk_widget_show(button);
 
   g_function_leave("gck_togglebutton_pixmap_new");
-  return (button);  
+  return (button);
 }
 
 /********************************/
@@ -820,7 +820,7 @@ GtkWidget *gck_checkbutton_new(char *name, GtkWidget *container,
 /* Create radio-button template */
 /********************************/
 
-GtkWidget *gck_radiobutton_new(char *name, 
+GtkWidget *gck_radiobutton_new(char *name,
                                GtkWidget *container,
                                GtkWidget *previous,
                                GtkSignalFunc status_changed_func)
@@ -833,7 +833,7 @@ GtkWidget *gck_radiobutton_new(char *name,
 
   if (previous!=NULL)
     group=gtk_radio_button_group(GTK_RADIO_BUTTON(previous));
-  
+
   if (name==NULL)
     button = gtk_radio_button_new(group);
   else
@@ -858,7 +858,7 @@ GtkWidget *gck_radiobutton_new(char *name,
   return (button);
 }
 
-GtkWidget *gck_radiobutton_pixmap_new(char *name, 
+GtkWidget *gck_radiobutton_pixmap_new(char *name,
                                       GdkPixmap *pixm,
                                       GdkBitmap *mask,
                                       GtkWidget *container,
@@ -872,7 +872,7 @@ GtkWidget *gck_radiobutton_pixmap_new(char *name,
 
   if (previous != NULL)
     group=gtk_radio_button_group(GTK_RADIO_BUTTON(previous));
-  
+
   button = gtk_radio_button_new(group);
 
   gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(button),FALSE);
@@ -920,7 +920,7 @@ GtkWidget *gck_vbox_new(GtkWidget * container,
   g_function_enter("gck_vbox_new");
 
   vbox = gtk_vbox_new(homogenous, spacing);
-  
+
   if (container!=NULL)
     {
       container_type=GTK_WIDGET_TYPE(container);
@@ -978,7 +978,7 @@ GtkWidget *gck_hbox_new(GtkWidget * container,
 
 GtkWidget *gck_option_menu_new(char *name, GtkWidget *container,
                                gint expand, gint fill, gint padding,
-                               char *item_labels[], 
+                               char *item_labels[],
                                GtkSignalFunc item_selected_func,
                                gpointer data)
 {
@@ -1036,7 +1036,7 @@ GtkWidget *gck_option_menu_new(char *name, GtkWidget *container,
 /******************/
 
 GtkWidget *gck_menu_bar_new(GtkWidget *container,GckMenuItem menu_items[],
-                            GtkAcceleratorTable *acc_table)
+                            GtkAccelGroup *acc_group)
 {
   GtkWidget *menubar,*menu_item;
   gint container_type;
@@ -1060,20 +1060,20 @@ GtkWidget *gck_menu_bar_new(GtkWidget *container,GckMenuItem menu_items[],
         {
           menu_item = gtk_menu_item_new_with_label(menu_items->label);
           gtk_container_add(GTK_CONTAINER(menubar),menu_item);
-    
+
           gtk_object_set_data(GTK_OBJECT(menu_item),"_GckMenuItem",(gpointer)menu_items);
-    
+
           if (menu_items->item_selected_func!=NULL)
             gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
               (GtkSignalFunc)menu_items->item_selected_func,(gpointer)menu_item);
-    
+
           if (menu_items->subitems!=NULL)
 	    gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu_item),
-              gck_menu_new(menu_items->subitems,acc_table));
-    
+              gck_menu_new(menu_items->subitems,acc_group));
+
           gtk_widget_show(menu_item);
           menu_items->widget = menu_item;
-    
+
           menu_items++;
         }
     }
@@ -1089,7 +1089,7 @@ GtkWidget *gck_menu_bar_new(GtkWidget *container,GckMenuItem menu_items[],
 /* Create menu */
 /***************/
 
-GtkWidget *gck_menu_new(GckMenuItem *menu_items,GtkAcceleratorTable *acc_table)
+GtkWidget *gck_menu_new(GckMenuItem *menu_items,GtkAccelGroup *acc_group)
 {
   GtkWidget *menu,*menu_item;
   gint i=0;
@@ -1097,19 +1097,21 @@ GtkWidget *gck_menu_new(GckMenuItem *menu_items,GtkAcceleratorTable *acc_table)
   g_function_enter("gck_menu_new");
 
   menu = gtk_menu_new();
-  
+
   while (menu_items[i].label!=NULL)
     {
       if (menu_items[i].label[0] == '-')
         menu_item = gtk_menu_item_new();
-      else 
+      else
 	{
 	  menu_item = gtk_menu_item_new_with_label(menu_items[i].label);
-	  if (menu_items->accelerator_key && acc_table)
-            gtk_widget_install_accelerator(menu_item,acc_table,
-                                           menu_items[i].label,
-                                           menu_items[i].accelerator_key,
-					   menu_items[i].accelerator_mods);
+	  if (menu_items->accelerator_key && acc_group)
+            gtk_widget_add_accelerator(menu_item,
+				       menu_items[i].label,
+				       acc_group,
+				       menu_items[i].accelerator_key,
+				       menu_items[i].accelerator_mods,
+				       GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
           gtk_object_set_data(GTK_OBJECT(menu_item),"_GckMenuItem",(gpointer)&menu_items[i]);
 
@@ -1122,7 +1124,7 @@ GtkWidget *gck_menu_new(GckMenuItem *menu_items,GtkAcceleratorTable *acc_table)
 
       if (menu_items[i].subitems!=NULL)
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu_item),
-          gck_menu_new(menu_items[i].subitems,acc_table));
+          gck_menu_new(menu_items[i].subitems,acc_group));
 
       gtk_widget_show(menu_item);
       menu_items[i].widget = menu_item;

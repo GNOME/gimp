@@ -20,28 +20,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- * 
+ *
  * Some of this code was taken from the Whirl plug-in
  * which was copyrighted by Federico Mena Quintero (as below).
- * 
+ *
  * Whirl plug-in --- distort an image into a whirlpool
- * Copyright (C) 1997 Federico Mena Quintero           
+ * Copyright (C) 1997 Federico Mena Quintero
  *
  */
 
 /* Change log:-
- * 0.9 First public release. 
+ * 0.9 First public release.
  * 0.95 Second release.
- * 
+ *
  * 0.96 Added patch from  Rob Saunders that introduces a isometric type grid
  *      Removed use of gtk_idle* stuff on position update. Not required.
  *
- * 1.0  Fixed to work with the new gtk+-0.99.4 (tooltips stuff has changed).  
- * 
+ * 1.0  Fixed to work with the new gtk+-0.99.4 (tooltips stuff has changed).
+ *
  * 1.1  Fixed crashes when objects not fully defined
- * 
+ *
  * 1.2  More bug fixes and prevent gtk warning when creating new figs
- * 
+ *
  * 1.3  Portability fixes and fixed bug reports 257 and 258 from and 81 & 101 & 133
  *      http://www.wilberworks.com/bugs.cgi
  */
@@ -54,8 +54,10 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <ctype.h>
-#include "gtk/gtk.h"
+#include <math.h>
+#include <gtk/gtk.h>
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 #include "pix_data.h"
 
 
@@ -63,7 +65,7 @@
  * following #define
  */
 
-#define HAVE_PATCHED 1 
+#define HAVE_PATCHED 1
 
 #ifdef HAVE_PATCHED
 #define GFIG_LCC 1
@@ -113,7 +115,7 @@
 		       GDK_BUTTON_RELEASE_MASK | \
 		       GDK_BUTTON_MOTION_MASK | \
 		       GDK_KEY_PRESS_MASK | \
-		       GDK_KEY_RELEASE_MASK 
+		       GDK_KEY_RELEASE_MASK
 
 GDrawable *gfig_select_drawable;
 GtkWidget *gfig_preview;
@@ -124,7 +126,7 @@ GdkPixmap *gfig_pixmap;
 gint32 gfig_image;
 gint32 gfig_drawable;
 GtkWidget *brush_page_pw;
-
+GtkWidget *brush_sel_button;
 
 static gint   tile_width, tile_height;
 static gint   img_width, img_height,img_bpp,real_img_bpp;
@@ -184,9 +186,6 @@ static void      gfig_new_gc(void);
 static void      find_grid_pos(GdkPoint *p,GdkPoint *gp, guint state);
 static gint      brush_list_button_press(GtkWidget *widget,GdkEventButton *event,gpointer   data);
 static gint      calculate_point_to_line_distance(GdkPoint *p, GdkPoint *A, GdkPoint *B, GdkPoint *I);
-
-/* gtk private function forward declaration */
-gchar * gdk_pixmap_extract_color (gchar *buffer);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -251,7 +250,7 @@ typedef enum BrshType {
 
 #define GRID_TYPE_MENU 1
 #define GRID_RENDER_MENU 2
-#define GRID_IGNORE 0 
+#define GRID_IGNORE 0
 #define GRID_HIGHTLIGHT 1
 #define GRID_RESTORE 2
 
@@ -296,7 +295,7 @@ typedef struct GfigOptWidgets
 
 static GFIGOPTWIDGETS gfig_opt_widget;
 
-typedef struct SelectItVals 
+typedef struct SelectItVals
 {
   GFIGOPTS opts;
   gint showimage;
@@ -350,9 +349,9 @@ typedef enum Selection_Type {
   REPLACE=2,
   INTERSECT=3
 } SELECTION_TYPE;
-    
 
-typedef enum Arc_Type { 
+
+typedef enum Arc_Type {
   ARC_SEGMENT,
   ARC_SECTOR
 } ARC_TYPE;
@@ -437,7 +436,7 @@ static DOBJECT *tmp_line; /* Needed when drawing lines */
 static DOBJECT *tmp_bezier; /* Neeed when drawing bezier curves */
 
 typedef struct DAllObjs {
-  struct DAllObjs * next; 
+  struct DAllObjs * next;
   DOBJECT * obj; /* Object on list */
 } DALLOBJS;
 
@@ -457,7 +456,7 @@ typedef struct DFigObj {
   GtkWidget *list_item;
   GtkWidget *label_widget;
   GtkWidget *pixmap_widget;
-} GFIGOBJ;  
+} GFIGOBJ;
 
 
 typedef struct BrushDesc {
@@ -496,7 +495,7 @@ static gint drawing_pic = FALSE; /* If true drawing to the small preview */
 GtkWidget *status_label_dname;
 GtkWidget *status_label_fname;
 GFIGOBJ * gfig_obj_for_menu; /* More static data - need to know which object was selected*/
-GtkWidget *save_menu_item;  
+GtkWidget *save_menu_item;
 GtkWidget *save_button;
 GtkTooltips *gfig_tooltips; /* Central tool tips bit */
 
@@ -607,7 +606,7 @@ query ()
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE, "image", "Input image (unused)" },
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "dummy", "dummy" } 
+    { PARAM_INT32, "dummy", "dummy" }
   };
   static GParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);
@@ -652,8 +651,8 @@ run    (gchar    *name,
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
 
-  gfig_select_drawable = 
-    drawable = 
+  gfig_select_drawable =
+    drawable =
     gimp_drawable_get (param[2].data.d_drawable);
 
   tile_width  = gimp_tile_width();
@@ -668,7 +667,7 @@ run    (gchar    *name,
   sel_height = sel_y2 - sel_y1;
 
   /* Calculate preview size */
-  
+
   if (sel_width > sel_height) {
     pwidth  = MIN(sel_width, PREVIEW_SIZE);
     pheight = sel_height * pwidth / sel_width;
@@ -676,13 +675,13 @@ run    (gchar    *name,
     pheight = MIN(sel_height, PREVIEW_SIZE);
     pwidth  = sel_width * pheight / sel_height;
   }
-  
+
   preview_width  = MAX(pwidth, 2);  /* Min size is 2 */
-  preview_height = MAX(pheight, 2); 
+  preview_height = MAX(pheight, 2);
 
   org_scale_x_factor = scale_x_factor = (gdouble)sel_width/(gdouble)preview_width;
   org_scale_y_factor = scale_y_factor = (gdouble)sel_height/(gdouble)preview_height;
-  
+
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
@@ -713,7 +712,7 @@ run    (gchar    *name,
       gimp_tile_cache_ntiles((drawable->width + gimp_tile_width() - 1) / gimp_tile_width());
 
       do_gfig();
-   
+
       if (run_mode != RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
@@ -734,7 +733,7 @@ run    (gchar    *name,
 
 /* From testgtk */
 static void
-ok_warn_window(GtkWidget * widget, 
+ok_warn_window(GtkWidget * widget,
 		    gpointer   data)
 {
   gtk_widget_destroy (GTK_WIDGET (data));
@@ -751,7 +750,7 @@ create_warn_dialog (gchar *msg)
 
   gtk_window_set_title (GTK_WINDOW (window), "Warning");
   gtk_container_border_width (GTK_CONTAINER (window), 0);
-  
+
   button = gtk_button_new_with_label ("OK");
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) ok_warn_window,
@@ -775,14 +774,14 @@ gfig_clear_selection(gint32 image_ID)
   GParam *return_vals;
   int nreturn_vals;
 
-  /* Clear any selection - needed because drawing circles/ellipses 
+  /* Clear any selection - needed because drawing circles/ellipses
    * uses the selection method and will confuse the output.
    */
   return_vals = gimp_run_procedure ("gimp_selection_clear",
                                     &nreturn_vals,
                                     PARAM_IMAGE, image_ID,
                                     PARAM_END);
-  
+
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
@@ -804,17 +803,17 @@ plug_in_parse_gfig_path()
   struct stat filestat;
   gint	err;
   gchar buf[256];
-  
+
   if(gfig_path_list)
     g_list_free(gfig_path_list);
-  
+
   gfig_path_list = NULL;
-  
+
   return_vals = gimp_run_procedure ("gimp_gimprc_query",
 				    &nreturn_vals,
 				    PARAM_STRING, "gfig-path",
 				    PARAM_END);
-  
+
   if (return_vals[0].data.d_status != STATUS_SUCCESS || return_vals[1].data.d_string == NULL)
     {
       g_warning("No gfig-path in gimprc: gfig_path_list is NULL\nSee README file");
@@ -828,10 +827,10 @@ plug_in_parse_gfig_path()
       gimp_destroy_params (return_vals, nreturn_vals);
       return;
     }
-  
+
   path_string = g_strdup (return_vals[1].data.d_string);
   gimp_destroy_params (return_vals, nreturn_vals);
-  
+
   /* Set local path to contain temp_path, where (supposedly)
    * there may be working files.
    */
@@ -947,11 +946,11 @@ gfig_list_pos(GFIGOBJ *gfig)
 
   n = 0;
   tmp = gfig_list;
-  
-  while (tmp) 
+
+  while (tmp)
     {
       g = tmp->data;
-      
+
       if (strcmp (gfig->draw_name, g->draw_name) <= 0)
 	break;
       n++;
@@ -1072,7 +1071,7 @@ gfig_list_load_all(GList *plist)
 	      if (!err && S_ISREG (filestat.st_mode))
 		{
 		  gfig = gfig_load (filename, dir_ent->d_name);
-		  
+
 		  if (gfig)
 		    {
 		      /* Read only ?*/
@@ -1122,7 +1121,7 @@ gfig_load_objs(GFIGOBJ *gfig,gint load_count,FILE *fp)
     {
       obj = NULL;
       get_line(load_buf,MAX_LOAD_LINE,fp,0);
-      
+
       if(!strcmp(load_buf,"<LINE>"))
 	{
 	  obj = d_load_line(fp);
@@ -1159,7 +1158,7 @@ gfig_load_objs(GFIGOBJ *gfig,gint load_count,FILE *fp)
 	{
 	  g_warning("Unknown obj type file %s line %d\n",gfig->filename,line_no);
 	}
-      
+
       if(obj)
 	{
 	  add_to_all_obj(gfig,obj);
@@ -1176,7 +1175,7 @@ gfig_load (gchar *filename, gchar *name)
   gchar str_buf[MAX_LOAD_LINE];
   gint chk_count;
   gint load_count = 0;
-  
+
   g_assert (filename != NULL);
 
 #ifdef DEBUG
@@ -1211,7 +1210,7 @@ gfig_load (gchar *filename, gchar *name)
       create_warn_dialog(err);
       return(NULL);
     }
-  
+
   get_line(load_buf,MAX_LOAD_LINE,fp,0);
   sscanf(load_buf,"Name: %100s",str_buf);
   gfig_name_decode(load_buf,str_buf);
@@ -1240,7 +1239,7 @@ gfig_load (gchar *filename, gchar *name)
   gfig_load_objs(gfig,load_count,fp);
 
   /* Check count ? */
-  
+
   chk_count = gfig_obj_counts(gfig->obj_list);
 
   if(chk_count != load_count)
@@ -1336,24 +1335,24 @@ update_options(GFIGOBJ *old_obj)
     }
   if(selvals.opts.drawgrid != current_obj->opts.drawgrid)
     {
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (gfig_opt_widget.drawgrid),current_obj->opts.drawgrid);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_opt_widget.drawgrid),current_obj->opts.drawgrid);
     }
   if(selvals.opts.snap2grid != current_obj->opts.snap2grid)
     {
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (gfig_opt_widget.snap2grid),current_obj->opts.snap2grid);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_opt_widget.snap2grid),current_obj->opts.snap2grid);
     }
   if(selvals.opts.lockongrid != current_obj->opts.lockongrid)
     {
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (gfig_opt_widget.lockongrid),current_obj->opts.lockongrid);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_opt_widget.lockongrid),current_obj->opts.lockongrid);
     }
   if(selvals.opts.showcontrol != current_obj->opts.showcontrol)
     {
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (gfig_opt_widget.showcontrol),current_obj->opts.showcontrol);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_opt_widget.showcontrol),current_obj->opts.showcontrol);
     }
   if(selvals.opts.gridtype != current_obj->opts.gridtype)
     {
       gtk_option_menu_set_history (GTK_OPTION_MENU (gfig_opt_widget.gridtypemenu),
-				   current_obj->opts.gridtype); 
+				   current_obj->opts.gridtype);
 
       gridtype_menu_callback(
 			     gtk_menu_get_active(
@@ -1387,7 +1386,7 @@ load_options(GFIGOBJ *gfig,FILE *fp)
 
   if(strcmp(load_buf,"<OPTIONS>"))
     return(-1);
-  
+
   get_line(load_buf,MAX_LOAD_LINE,fp,0);
 
 #ifdef DEBUG
@@ -1455,7 +1454,7 @@ load_options(GFIGOBJ *gfig,FILE *fp)
 #ifdef DEBUG
       printf("opt line '%s'\n",load_buf);
 #endif /* DEBUG */
-    }  
+    }
   return(0);
 }
 
@@ -1485,7 +1484,7 @@ gfig_save_callbk()
   savename = current_obj->filename;
 
   fp = fopen (savename, "w+");
-  
+
   if (!fp)
     {
       gchar errbuf[256];
@@ -1497,9 +1496,9 @@ gfig_save_callbk()
 
   /* Write header out */
   fputs(GFIG_HEADER,fp);
-  
-  /* 
-   * draw_name 
+
+  /*
+   * draw_name
    * version
    * obj_list
    *
@@ -1513,7 +1512,7 @@ gfig_save_callbk()
   count = gfig_obj_counts(objs);
 
   fprintf(fp,"ObjCount: %d\n",count);
-  
+
   save_options(fp);
 
   objs = current_obj->obj_list;
@@ -1561,14 +1560,14 @@ file_selection_ok (GtkWidget        *w,
 
   /* Check if directory exists */
   err = stat (filenamebuf, &filestat);
-  
+
   if (!err && S_ISDIR (filestat.st_mode))
     {
       /* Can't save to directory */
       create_warn_dialog("Save:- Can't save to a directory");
       return;
     }
-  
+
   obj->filename = g_strdup(filenamebuf);
 
   real_current = current_obj;
@@ -1662,6 +1661,108 @@ typedef struct
 } _GdkPixmapColor;
 
 
+static gchar*
+my_gdk_pixmap_skip_whitespaces (gchar *buffer)
+{
+  gint32 index = 0;
+
+  while (buffer[index] != 0 && (buffer[index] == 0x20 || buffer[index] == 0x09))
+    index++;
+
+  return &buffer[index];
+}
+
+static gchar*
+my_gdk_pixmap_skip_string (gchar *buffer)
+{
+  gint32 index = 0;
+
+  while (buffer[index] != 0 && buffer[index] != 0x20 && buffer[index] != 0x09)
+    index++;
+
+  return &buffer[index];
+}
+
+/* Xlib crashed ince at a color name lengths around 125 */
+#define MAX_COLOR_LEN 120
+
+static gchar*
+my_gdk_pixmap_extract_color (gchar *buffer)
+{
+  gint counter, numnames;
+  gchar *ptr = NULL, ch, temp[128];
+  gchar color[MAX_COLOR_LEN], *retcol;
+  gint space;
+
+  counter = 0;
+  while (ptr == NULL)
+    {
+      if (buffer[counter] == 'c')
+        {
+          ch = buffer[counter + 1];
+          if (ch == 0x20 || ch == 0x09)
+            ptr = &buffer[counter + 1];
+        }
+      else if (buffer[counter] == 0)
+        return NULL;
+
+      counter++;
+    }
+
+  ptr = my_gdk_pixmap_skip_whitespaces (ptr);
+
+  if (ptr[0] == 0)
+    return NULL;
+  else if (ptr[0] == '#')
+    {
+      counter = 1;
+      while (ptr[counter] != 0 &&
+             ((ptr[counter] >= '0' && ptr[counter] <= '9') ||
+              (ptr[counter] >= 'a' && ptr[counter] <= 'f') ||
+              (ptr[counter] >= 'A' && ptr[counter] <= 'F')))
+        counter++;
+
+      retcol = g_new (gchar, counter+1);
+      strncpy (retcol, ptr, counter);
+
+      retcol[counter] = 0;
+
+      return retcol;
+    }
+
+  color[0] = 0;
+  numnames = 0;
+
+  space = MAX_COLOR_LEN - 1;
+  while (space > 0)
+    {
+      sscanf (ptr, "%127s", temp);
+
+      if (((gint)ptr[0] == 0) ||
+          (strcmp ("s", temp) == 0) || (strcmp ("m", temp) == 0) ||
+          (strcmp ("g", temp) == 0) || (strcmp ("g4", temp) == 0))
+        {
+          break;
+        }
+      else
+        {
+          if (numnames > 0)
+            {
+              space -= 1;
+              strcat (color, " ");
+            }
+          strncat (color, temp, space);
+          space -= MIN (space, strlen (temp));
+          ptr = my_gdk_pixmap_skip_string (ptr);
+          ptr = my_gdk_pixmap_skip_whitespaces (ptr);
+          numnames++;
+        }
+    }
+
+  retcol = g_strdup (color);
+  return retcol;
+}
+
 GdkPixmap*
 my_gdk_pixmap_create_from_xpm_d (GdkWindow  *window,
 			      GdkBitmap **mask,
@@ -1704,7 +1805,7 @@ my_gdk_pixmap_create_from_xpm_d (GdkWindow  *window,
       if (color_name != NULL)
 	g_free (color_name);
 
-      color_name = (gchar *)gdk_pixmap_extract_color (&buffer[cpp]);
+      color_name = (gchar *)my_gdk_pixmap_extract_color (&buffer[cpp]);
 
       if (color_name != NULL)
 	{
@@ -1810,10 +1911,10 @@ cache_preview()
 
   gimp_pixel_rgn_init(&src_rgn,gfig_select_drawable,sel_x1,sel_y1,sel_width,sel_height,FALSE,FALSE);
 
-  src_rows = g_new(guchar ,sel_width*4); 
+  src_rows = g_new(guchar ,sel_width*4);
   p = pv_cache = g_new(guchar ,preview_width*preview_height*4);
 
-  real_img_bpp = gimp_drawable_bpp(gfig_select_drawable->id);   
+  real_img_bpp = gimp_drawable_bpp(gfig_select_drawable->id);
 
   has_alpha = gimp_drawable_has_alpha(gfig_select_drawable->id);
 
@@ -1838,18 +1939,18 @@ cache_preview()
   /*memset(p,-1,preview_width*preview_height*4); return;*/
 
   for (y = 0; y < preview_height; y++) {
-  
+
     gimp_pixel_rgn_get_row(&src_rgn,
 			   src_rows,
 			   sel_x1,
 			   sel_y1 + (y*sel_height)/preview_height,
 			   sel_width);
-      
+
     for (x = 0; x < (preview_width); x ++) {
       /* Get the pixels of each col */
       int i;
       for (i = 0 ; i < 3; i++ )
-	p[x*img_bpp+i] = src_rows[((x*sel_width)/preview_width)*src_rgn.bpp +((isgrey)?0:i)]; 
+	p[x*img_bpp+i] = src_rows[((x*sel_width)/preview_width)*src_rgn.bpp +((isgrey)?0:i)];
       if(has_alpha)
 	p[x*img_bpp+3] = src_rows[((x*sel_width)/preview_width)*src_rgn.bpp + ((isgrey)?1:3)];
     }
@@ -1863,8 +1964,8 @@ refill_cache()
 {
   GdkCursorType ctype1 = GDK_WATCH;
   GdkCursorType ctype2 = GDK_TOP_LEFT_ARROW;
-  static GdkCursor *preview_cursor1;  
-  static GdkCursor *preview_cursor2;  
+  static GdkCursor *preview_cursor1;
+  static GdkCursor *preview_cursor2;
 
   if(!preview_cursor1)
     preview_cursor1 = gdk_cursor_new(ctype1);
@@ -1974,7 +2075,7 @@ gfig_obj_modified(GFIGOBJ *obj,gint stat_type)
   /* Set the new one up */
   if(stat_type == GFIG_MODIFIED)
     gfig_set_pixmap(obj,Floppy6_xpm);
-  else 
+  else
     gfig_set_pixmap(obj,blank_xpm);
 
   /* Remove old */
@@ -2072,11 +2173,11 @@ but_with_pix(char **pixdata, GSList **group, gint baction)
 
   button = gtk_radio_button_new(*group);
   gtk_container_border_width (GTK_CONTAINER (button), 0);
-  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE); 
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      (GtkSignalFunc) toggle_obj_type,
 		      (gpointer)baction);
-  
+
   gtk_widget_show(button);
 
   *group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
@@ -2140,7 +2241,7 @@ small_preview(GtkWidget * list)
   gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
 		      (GtkSignalFunc) edit_button_press,
 		      (gpointer) list);
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Edit Gfig object collection",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Edit Gfig object collection",NULL);
   gtk_widget_show(button);
 
   button = gtk_button_new_with_label ("Merge");
@@ -2148,7 +2249,7 @@ small_preview(GtkWidget * list)
   gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
 		      (GtkSignalFunc) merge_button_press,
 		      (gpointer)list);
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Merge Gfig Object collection into the current edit session",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Merge Gfig Object collection into the current edit session",NULL);
   gtk_widget_show(button);
 
   return(vbox);
@@ -2157,7 +2258,7 @@ small_preview(GtkWidget * list)
 /* Special case for now - options on poly/star/spiral button */
 
 static void
-num_sides_dialog (gchar * d_title, 
+num_sides_dialog (gchar * d_title,
 		  gint * num_sides,
 		  gint * which_way,
 		  gint adj_min,
@@ -2176,7 +2277,7 @@ num_sides_dialog (gchar * d_title,
 
   gtk_window_set_title (GTK_WINDOW (window), d_title);
   gtk_container_border_width (GTK_CONTAINER (window), 0);
-  
+
   button = gtk_button_new_with_label ("Close");
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) ok_warn_window,
@@ -2217,7 +2318,7 @@ num_sides_dialog (gchar * d_title,
 		     (GtkSignalFunc) gfig_entry_update,
 		     num_sides);
   gtk_box_pack_start(GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_show(entry); 
+  gtk_widget_show(entry);
 
   if(which_way)
     {
@@ -2228,12 +2329,12 @@ num_sides_dialog (gchar * d_title,
       /* Add special toggle for spiral */
       option_menu = gtk_option_menu_new ();
       menu = gtk_menu_new();
-      
+
       menuitem = gtk_menu_item_new_with_label("Clockwise");
       gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			  (GtkSignalFunc)gfig_toggle_update,
 			  (gpointer)which_way);
-      
+
       gtk_widget_show (menuitem);
       gtk_menu_append (GTK_MENU (menu), menuitem);
 
@@ -2241,10 +2342,10 @@ num_sides_dialog (gchar * d_title,
       gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			  (GtkSignalFunc)gfig_toggle_update,
 			  (gpointer)which_way);
-      
+
       gtk_widget_show (menuitem);
       gtk_menu_append (GTK_MENU (menu), menuitem);
-      
+
       gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
       gtk_widget_show (option_menu);
       gtk_box_pack_start (GTK_BOX (hbox), option_menu,TRUE,TRUE,0);
@@ -2268,7 +2369,7 @@ bezier_dialog (void)
 
   gtk_window_set_title (GTK_WINDOW (window), "Bezier settings");
   gtk_container_border_width (GTK_CONTAINER (window), 0);
-  
+
   button = gtk_button_new_with_label ("Close");
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) ok_warn_window,
@@ -2286,7 +2387,7 @@ bezier_dialog (void)
 		      (GtkSignalFunc) gfig_toggle_update,
 		      (gpointer)&bezier_closed);
   gtk_tooltips_set_tip(gfig_tooltips,toggle,"Close curve on completion",NULL);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),bezier_closed);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),bezier_closed);
   gtk_widget_show(toggle);
   gtk_box_pack_start(GTK_BOX(vbox),toggle, TRUE, TRUE, 0);
 
@@ -2295,7 +2396,7 @@ bezier_dialog (void)
 		      (GtkSignalFunc) gfig_toggle_update,
 		      (gpointer)&bezier_line_frame);
   gtk_tooltips_set_tip(gfig_tooltips,toggle,"Draws lines between the control points. Only during curve creation",NULL);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),bezier_line_frame);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),bezier_line_frame);
   gtk_widget_show(toggle);
   gtk_box_pack_start(GTK_BOX(vbox),toggle, TRUE, TRUE, 0);
 
@@ -2313,7 +2414,7 @@ poly_button_press (GtkWidget      *w,
       (event->button == 1))
     num_sides_dialog("Regular polygon number of sides",&poly_num_sides,NULL,3,200);
   return FALSE;
-}              
+}
 
 static gint
 star_button_press (GtkWidget      *w,
@@ -2324,7 +2425,7 @@ star_button_press (GtkWidget      *w,
       (event->button == 1))
     num_sides_dialog("Star number of points",&star_num_sides,NULL,3,200);
   return FALSE;
-}              
+}
 
 static gint
 spiral_button_press (GtkWidget      *w,
@@ -2335,7 +2436,7 @@ spiral_button_press (GtkWidget      *w,
       (event->button == 1))
     num_sides_dialog("Spiral number of points",&spiral_num_turns,&spiral_toggle,1,20);
   return FALSE;
-}              
+}
 
 static gint
 bezier_button_press (GtkWidget      *w,
@@ -2346,7 +2447,7 @@ bezier_button_press (GtkWidget      *w,
       (event->button == 1))
     bezier_dialog();
   return FALSE;
-}              
+}
 
 static GtkWidget *
 draw_buttons(GtkWidget *ww)
@@ -2359,33 +2460,33 @@ draw_buttons(GtkWidget *ww)
   frame = gtk_frame_new ("Ops");
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 1);
-  
+
   /* Create group */
   group = NULL;
   vbox = gtk_vbox_new(FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (frame), vbox); 
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_container_border_width(GTK_CONTAINER(vbox), 2);
 
   /* Put buttons in */
   button = but_with_pix(line_xpm,&group,LINE);
   gtk_box_pack_start(GTK_BOX(vbox), button, TRUE, TRUE, 0);
   gtk_widget_show(button);
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Create line",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Create line",NULL);
 
   button = but_with_pix(circle_xpm,&group,CIRCLE);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show(button);
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Create circle",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Create circle",NULL);
 
   button = but_with_pix(ellipse_xpm,&group,ELLIPSE);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show(button);
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Create ellipse",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Create ellipse",NULL);
 
   button = but_with_pix(curve_xpm,&group,ARC);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show(button);
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Create arch",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Create arch",NULL);
 
   button = but_with_pix(poly_xpm,&group,POLY);
   gtk_container_add (GTK_CONTAINER (vbox), button);
@@ -2394,7 +2495,7 @@ draw_buttons(GtkWidget *ww)
   gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
 		      (GtkSignalFunc) poly_button_press,
 		      NULL);
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Create reg polygon",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Create reg polygon",NULL);
 
   button = but_with_pix(star_xpm,&group,STAR);
   gtk_container_add (GTK_CONTAINER (vbox), button);
@@ -2402,7 +2503,7 @@ draw_buttons(GtkWidget *ww)
   gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
 		      (GtkSignalFunc) star_button_press,
 		      NULL);
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Create star",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Create star",NULL);
 
   button = but_with_pix(spiral_xpm,&group,SPIRAL);
   gtk_box_pack_start(GTK_BOX(vbox), button, TRUE, TRUE, 0);
@@ -2410,7 +2511,7 @@ draw_buttons(GtkWidget *ww)
   gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
 		      (GtkSignalFunc) spiral_button_press,
 		      NULL);
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Create spiral",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Create spiral",NULL);
 
   button = but_with_pix(bezier_xpm,&group,BEZIER);
   gtk_box_pack_start(GTK_BOX(vbox), button, TRUE, TRUE, 0);
@@ -2419,27 +2520,27 @@ draw_buttons(GtkWidget *ww)
 		      (GtkSignalFunc) bezier_button_press,
 		      NULL);
 
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Create bezier curve. Shift + Button ends object creation.",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Create bezier curve. Shift + Button ends object creation.",NULL);
 
   button = but_with_pix(move_obj_xpm,&group,MOVE_OBJ);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show(button);
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Move an object",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Move an object",NULL);
 
   button = but_with_pix(move_point_xpm,&group,MOVE_POINT);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show(button);
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Move a single point",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Move a single point",NULL);
 
   button = but_with_pix(copy_obj_xpm,&group,COPY_OBJ);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show(button);
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Copy an object",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Copy an object",NULL);
 
   button = but_with_pix(delete_xpm,&group,DEL_OBJ);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show(button);
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Delete an object",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Delete an object",NULL);
 
   button = obj_select_buttons();
   gtk_container_add (GTK_CONTAINER (vbox), button);
@@ -2674,13 +2775,13 @@ gfig_brush_fill_preview_xy(GtkWidget *pw,gint x1 ,gint y1)
 
   /* Given an x and y fill preview in correctly offsetted */
   for(row_count = 0; row_count < BRUSH_PREVIEW_SZ; row_count++)
-    gtk_preview_draw_row(GTK_PREVIEW(pw), 
-			 &bdesc->pv_buf[bdesc->x_off*bdesc->bpp 
+    gtk_preview_draw_row(GTK_PREVIEW(pw),
+			 &bdesc->pv_buf[bdesc->x_off*bdesc->bpp
 				       + (bdesc->width
 					  *bdesc->bpp
-					  *(row_count + bdesc->y_off))], 
-			 0, 
-			 row_count, 
+					  *(row_count + bdesc->y_off))],
+			 0,
+			 row_count,
 			 BRUSH_PREVIEW_SZ);
 }
 
@@ -2699,10 +2800,10 @@ gfig_brush_fill_preview(GtkWidget *pw,gint32 layer_ID, BRUSHDESC * bdesc)
   brushdrawable = gimp_drawable_get(layer_ID);
 
   bdesc->bpp = bcount;
-  
+
   /* Fill the preview with the current brush name */
   gimp_pixel_rgn_init(&src_rgn,brushdrawable,0,0,bdesc->width,bdesc->height,FALSE,FALSE);
-  
+
   bdesc->pv_buf = g_new(guchar ,bdesc->width*bdesc->height*bcount);
   bdesc->x_off = bdesc->y_off = 0; /* Start from top left */
 
@@ -2762,7 +2863,7 @@ mygimp_brush_info(gint32 *width,
 {
   GParam *return_vals;
   int nreturn_vals;
- 
+
   return_vals = gimp_run_procedure ("gimp_brushes_get_brush",
                                     &nreturn_vals,
 				    PARAM_END);
@@ -2779,7 +2880,7 @@ mygimp_brush_info(gint32 *width,
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
-}          
+}
 
 static void
 gfig_brush_img_del(void)
@@ -2791,7 +2892,7 @@ gfig_brush_img_del(void)
 static gint32
 gfig_gen_brush_preview(BRUSHDESC *bdesc)
 {
-  /* Given the name of a brush then paint it and return the ID of the image 
+  /* Given the name of a brush then paint it and return the ID of the image
    * the preview can be got from
    */
   GParam *return_vals = NULL;
@@ -2832,7 +2933,7 @@ gfig_gen_brush_preview(BRUSHDESC *bdesc)
    * paint with brush
    * restore colours
    */
-  
+
   gimp_palette_get_foreground(&fR,&fG,&fB);
   gimp_palette_get_background(&bR,&bG,&bB);
   saved_bname = mygimp_brush_get();
@@ -2858,49 +2959,45 @@ gfig_gen_brush_preview(BRUSHDESC *bdesc)
 	 {
 	 case BRUSH_BRUSH_TYPE:
 	   return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					     PARAM_IMAGE, brush_image_ID,
 					     PARAM_DRAWABLE, layer_ID,
 					     PARAM_FLOAT,0.0,
 					     PARAM_INT32,2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					     PARAM_FLOATARRAY, &line_pnts[0],  
+					     PARAM_FLOATARRAY, &line_pnts[0],
 					     PARAM_END);
 	   break;
 	 case BRUSH_PENCIL_TYPE:
 	   return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					     PARAM_IMAGE, brush_image_ID,
 					     PARAM_DRAWABLE, layer_ID,
 					     PARAM_INT32,2,
-					     PARAM_FLOATARRAY, &line_pnts[0],  
+					     PARAM_FLOATARRAY, &line_pnts[0],
 					     PARAM_END);
 	   break;
 	 case BRUSH_AIRBRUSH_TYPE:
 	   return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					     PARAM_IMAGE, brush_image_ID,
 					     PARAM_DRAWABLE, layer_ID,
 					     PARAM_FLOAT,(gdouble)selvals.airbrushpressure,
 					     PARAM_INT32,2,
-					     PARAM_FLOATARRAY, &line_pnts[0],  
+					     PARAM_FLOATARRAY, &line_pnts[0],
 					     PARAM_END);
 	   break;
 	 case BRUSH_PATTERN_TYPE:
 	   return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					     PARAM_IMAGE, brush_image_ID,
 					     PARAM_DRAWABLE, layer_ID,
 					     PARAM_DRAWABLE, layer_ID,
 					     PARAM_INT32, 1,
 					     PARAM_FLOAT,(gdouble)0.0,
 					     PARAM_FLOAT,(gdouble)0.0,
 					     PARAM_INT32,2,
-					     PARAM_FLOATARRAY, &line_pnts[0],  
+					     PARAM_FLOATARRAY, &line_pnts[0],
 					     PARAM_END);
 	   break;
 	 default:
 	   break;
-	 }  
+	 }
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  gimp_palette_set_background(bR,bG,bB);  
+  gimp_palette_set_background(bR,bG,bB);
   gimp_palette_set_foreground(fR,fG,fB);
   mygimp_brush_set(saved_bname);
 
@@ -3144,9 +3241,9 @@ paint_page()
   vbox = gtk_vbox_new(FALSE, 0);
   gtk_container_border_width(GTK_CONTAINER(vbox), 4);
 
-  table = gtk_table_new (6, 6, FALSE); 
+  table = gtk_table_new (6, 6, FALSE);
   gtk_table_set_row_spacings(GTK_TABLE(table),6);
-  gtk_container_border_width (GTK_CONTAINER (table), 1); 
+  gtk_container_border_width (GTK_CONTAINER (table), 1);
   gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
   gtk_widget_show(table);
 
@@ -3194,7 +3291,7 @@ paint_page()
 
   toggle = gtk_check_button_new_with_label ("Scale to image ");
   gtk_table_attach(GTK_TABLE(table), toggle, 1, 2, 3, 4, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle),selvals.scaletoimage);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle),selvals.scaletoimage);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gfig_scale2img_update,
 		      (gpointer)&selvals.scaletoimage);
@@ -3212,7 +3309,7 @@ paint_page()
                       (GtkSignalFunc)gfig_scale_update_scale,
                       &selvals.scaletoimagefp);
   gtk_widget_show (scale_scale);
-  gtk_widget_show (hbox);   
+  gtk_widget_show (hbox);
   gtk_table_attach(GTK_TABLE(table), hbox, 2, 4, 3, 4, GTK_FILL|GTK_EXPAND , GTK_FILL, 0, 0);
   gtk_widget_set_sensitive(GTK_WIDGET(scale_scale),FALSE);
   gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer)scale_scale_data);
@@ -3223,11 +3320,13 @@ paint_page()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gfig_toggle_update,
 		      (gpointer)&selvals.approxcircles);
-  gtk_tooltips_set_tip(gfig_tooltips,toggle,"Approx. circles & ellipses using lines. Allows the use of brush fading with these types of objects.",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,toggle,"Approx. circles & ellipses using lines. Allows the use of brush fading with these types of objects.",NULL);
   gtk_widget_show(toggle);
 
   return(vbox);
 }
+
+#if 0 /* NOT USED */
 
 static void
 gfig_get_brushes(GtkWidget *list)
@@ -3254,7 +3353,7 @@ gfig_get_brushes(GtkWidget *list)
     }
 
   num_brs = return_vals[1].data.d_int32;
-  
+
   brush_names = return_vals[2].data.d_stringarray;
 
   for( i = 0 ; i < num_brs; i++)
@@ -3276,7 +3375,7 @@ gfig_get_brushes(GtkWidget *list)
 	  list_item2sel = i;
 	}
     }
-  
+
   if(fbdesc != (BRUSHDESC*)-1)
     {
       /* First item selected by default - unselected it ! */
@@ -3287,7 +3386,7 @@ gfig_get_brushes(GtkWidget *list)
   gimp_destroy_params (return_vals, nreturn_vals);
   gtk_list_select_item(GTK_LIST(list),list_item2sel);
 }
-
+#endif
 
 #if 0 /* NOT USED */
 static gint
@@ -3312,7 +3411,7 @@ set_brush_press(GtkWidget *widget,
 #ifdef DEBUG
       printf("Str = %s\n",str);
 #endif /* DEBUG */
-      
+
       /* set it */
       return_vals = gimp_run_procedure ("gimp_brushes_set_brush",
 					&nreturn_vals,
@@ -3333,12 +3432,54 @@ set_brush_press(GtkWidget *widget,
 
 #endif /* NOT USED */
 
+static void
+gfig_brush_invoker(gchar    *name,
+		   gdouble  opacity,
+		   gint     spacing,
+		   gint     paint_mode,
+		   gint     width,
+		   gint     height,
+		   gchar *  mask_data,
+		   gint     closing,
+		   gpointer udata)
+{
+  BRUSHDESC *bdesc = g_malloc0(sizeof(BRUSHDESC)); /* Mem leak */
+
+  bdesc->bpp = 3;
+  bdesc->width = width;
+  bdesc->height = height;
+  bdesc->bname = g_strdup(name);
+
+  brush_list_button_press(NULL,NULL,bdesc);
+
+}
+
+#if 0 /* GIMP 1.1.x */
+static gint
+select_brush_press(GtkWidget *widget,
+		  GdkEventButton *event,
+		  gpointer   data)
+{
+   BRUSHDESC *bdesc = g_malloc0(sizeof(BRUSHDESC));
+   gimp_interactive_selection_brush("Gfig brush selection",
+				    mygimp_brush_get(),
+				    1.0, /* Opacity */
+				    -1,  /* spacing (default)*/
+				    1,   /* Paint mode */
+				    gfig_brush_invoker,
+				    NULL);
+
+   bdesc->bpp = 3;
+   bdesc->bname = mygimp_brush_get();
+
+   brush_list_button_press(NULL,NULL,bdesc);
+
+   return(TRUE);
+}
+#endif
 static GtkWidget *
 brush_page()
 {
-  GtkWidget *list_frame;
-  GtkWidget *list;
-  GtkWidget *scrolled_win;
   GtkWidget *table;
   GtkWidget *label;
   GtkWidget *pw;
@@ -3346,13 +3487,16 @@ brush_page()
   GtkObject *fade_out_scale_data;
   GtkObject *pressure_scale_data;
   GtkWidget *vbox;
+  GtkWidget *button;
+  BRUSHDESC *bdesc = g_malloc0(sizeof(BRUSHDESC)); /* Initial brush settings */
+
 
   vbox = gtk_vbox_new(FALSE, 0);
   gtk_container_border_width(GTK_CONTAINER(vbox), 4);
 
-  table = gtk_table_new (6, 6, FALSE); 
+  table = gtk_table_new (6, 6, FALSE);
   gtk_table_set_row_spacings(GTK_TABLE(table),6);
-  gtk_container_border_width (GTK_CONTAINER (table), 1); 
+  gtk_container_border_width (GTK_CONTAINER (table), 1);
   gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
   gtk_widget_show(table);
 
@@ -3366,7 +3510,7 @@ brush_page()
   /* Fade option */
  /*  the fade-out scale  From GIMP itself*/
   fade_out_hbox = gtk_hbox_new (FALSE, 1);
-  
+
   label = gtk_label_new ("Fade Out:");
   gtk_box_pack_start (GTK_BOX (fade_out_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -3381,7 +3525,7 @@ brush_page()
                       &selvals.brushfade);
   gtk_widget_show (scale);
   gtk_table_attach(GTK_TABLE(table), fade_out_hbox, 1, 2, 0, 1, GTK_FILL|GTK_EXPAND , GTK_FILL, 0, 0);
-  gtk_widget_show (fade_out_hbox);   
+  gtk_widget_show (fade_out_hbox);
 
   pressure_hbox = gtk_hbox_new (FALSE, 1);
   label = gtk_label_new ("Pressure:");
@@ -3414,6 +3558,7 @@ brush_page()
                       (GtkSignalFunc)gfig_brush_update_preview,
                       (gpointer)brush_page_pw);
 
+#if 0
   /* Brush list */
   list_frame = gtk_frame_new(NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (list_frame), GTK_SHADOW_ETCHED_IN);
@@ -3427,12 +3572,27 @@ brush_page()
 
   list = gtk_list_new ();
   gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_SINGLE);
-  gtk_container_add (GTK_CONTAINER (scrolled_win), list);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
+					 list);
   gtk_widget_show (list);
   gtk_table_attach(GTK_TABLE(table), list_frame, 0, 4, 1, 5, GTK_FILL|GTK_EXPAND , GTK_FILL|GTK_EXPAND, 0, 0);
 
   /* Get brush list and insert in table */
   gfig_get_brushes(list);
+#endif /* 0 */
+#if 0 /* GIMP 1.1.x */
+  /* Start of new brush selection code */
+  brush_sel_button = button = gtk_button_new_with_label ("Set brush...");
+  gtk_table_attach(GTK_TABLE(table), button, 0,4,1,5, 0, 0, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
+		      (GtkSignalFunc) select_brush_press,
+		      NULL);
+  gtk_widget_show(button);
+#endif
+  /* Setup initial brush settings */
+  bdesc->bpp = 3;
+  bdesc->bname = mygimp_brush_get();
+  brush_list_button_press(NULL,NULL,bdesc);
 
   return(vbox);
 }
@@ -3444,28 +3604,28 @@ select_menu_callback (GtkWidget *widget, gpointer data)
 
   if(mtype == SELECT_TYPE_MENU)
     {
-      SELECTION_TYPE type = 
+      SELECTION_TYPE type =
 	(SELECTION_TYPE)gtk_object_get_user_data (GTK_OBJECT (widget));
 
       selopt.type = type;
     }
   else if(mtype == SELECT_ARCTYPE_MENU)
     {
-      ARC_TYPE type = 
+      ARC_TYPE type =
 	(ARC_TYPE)gtk_object_get_user_data (GTK_OBJECT (widget));
 
       selopt.as_pie = type;
     }
   else if(mtype == SELECT_TYPE_MENU_FILL)
     {
-      FILL_TYPE type = 
+      FILL_TYPE type =
 	(FILL_TYPE)gtk_object_get_user_data (GTK_OBJECT (widget));
 
       selopt.fill_type = type;
     }
   else if(mtype == SELECT_TYPE_MENU_WHEN)
     {
-      FILL_WHEN type = 
+      FILL_WHEN type =
 	(FILL_WHEN)gtk_object_get_user_data (GTK_OBJECT (widget));
       selopt.fill_when = type;
     }
@@ -3646,21 +3806,21 @@ select_page()
   vbox = gtk_vbox_new(FALSE, 0);
   gtk_container_border_width(GTK_CONTAINER(vbox), 4);
 
-  table = gtk_table_new (7, 7, FALSE); 
+  table = gtk_table_new (7, 7, FALSE);
   gtk_table_set_row_spacings(GTK_TABLE(table),6);
-  gtk_container_border_width (GTK_CONTAINER (table), 1); 
+  gtk_container_border_width (GTK_CONTAINER (table), 1);
   gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
   gtk_widget_show(table);
 
-  /* The secltion settings - 
+  /* The secltion settings -
    * 1) Type (option menu)
    * 2) Anti A (toggle)
    * 3) Feather (toggle)
    * 4) F radius (slider)
-   * 5) Fill type (option menu) 
+   * 5) Fill type (option menu)
    * 6) Opacity (slider)
    * 7) When to fill (toggle)
-   * 8) Arc as segment/sector 
+   * 8) Arc as segment/sector
    */
 
   /* Put widgets in */
@@ -3673,7 +3833,7 @@ select_page()
 
   menu = select_page_menu_type();
   gtk_box_pack_start (GTK_BOX (hbox), menu, TRUE, TRUE, 0);
-  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);  gtk_widget_show (hbox);   
+  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);  gtk_widget_show (hbox);
 
 
   /* 2 */
@@ -3682,7 +3842,7 @@ select_page()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gfig_toggle_update,
 		      (gpointer)&selopt.antia);
-  gtk_widget_show(toggle); 
+  gtk_widget_show(toggle);
 
   /* 3 */
   toggle = gtk_check_button_new_with_label ("Feather");
@@ -3690,11 +3850,11 @@ select_page()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gfig_toggle_update,
 		      (gpointer)&selopt.feather);
-  gtk_widget_show(toggle); 
+  gtk_widget_show(toggle);
 
   /* 4 */
   hbox = gtk_hbox_new (FALSE, 1);
-  
+
   label = gtk_label_new ("Feather Radius:");
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -3709,7 +3869,7 @@ select_page()
                       &selopt.feather_radius);
   gtk_widget_show (scale);
   gtk_table_attach(GTK_TABLE(table), hbox, 1, 3, 1, 2, GTK_FILL|GTK_EXPAND , GTK_FILL, 0, 0);
-  gtk_widget_show (hbox);   
+  gtk_widget_show (hbox);
 
   /* 5 */
   hbox = gtk_hbox_new (FALSE, 1);
@@ -3720,11 +3880,11 @@ select_page()
 
   menu = select_page_menu_fill_type();
   gtk_box_pack_start (GTK_BOX (hbox), menu, TRUE, TRUE, 0);
-  gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);  gtk_widget_show (hbox);   
+  gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);  gtk_widget_show (hbox);
 
   /* 6 */
   hbox = gtk_hbox_new (FALSE, 1);
-  
+
   label = gtk_label_new ("Fill Opacity:");
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -3739,7 +3899,7 @@ select_page()
                       &selopt.fill_opacity);
   gtk_widget_show (scale);
   gtk_table_attach(GTK_TABLE(table), hbox, 1, 3, 2, 3, GTK_FILL|GTK_EXPAND , GTK_FILL, 0, 0);
-  gtk_widget_show (hbox);   
+  gtk_widget_show (hbox);
 
   /* 7 */
   hbox = gtk_hbox_new (FALSE, 1);
@@ -3750,7 +3910,7 @@ select_page()
 
   menu = select_page_menu_fill_when();
   gtk_box_pack_start (GTK_BOX (hbox), menu, TRUE, TRUE, 0);
-  gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, 4, 5, GTK_FILL, GTK_FILL, 0, 0);  gtk_widget_show (hbox);   
+  gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, 4, 5, GTK_FILL, GTK_FILL, 0, 0);  gtk_widget_show (hbox);
 
   /* 8 */
   hbox = gtk_hbox_new (FALSE, 1);
@@ -3761,7 +3921,7 @@ select_page()
 
   menu = select_page_menu_arctype();
   gtk_box_pack_start (GTK_BOX (hbox), menu, TRUE, TRUE, 0);
-  gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, 5, 6, GTK_FILL, GTK_FILL, 0, 0);  gtk_widget_show (hbox);   
+  gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, 5, 6, GTK_FILL, GTK_FILL, 0, 0);  gtk_widget_show (hbox);
 
   return(vbox);
 }
@@ -3827,7 +3987,7 @@ option_page_menu_gridtype(void)
 		      (gpointer)GRID_TYPE_MENU);
   gtk_widget_show (menuitem);
   gtk_menu_append (GTK_MENU (menu), menuitem);
-   
+
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
   gtk_widget_show (option_menu);
 
@@ -3924,9 +4084,9 @@ options_page()
   vbox = gtk_vbox_new(FALSE, 0);
   gtk_container_border_width(GTK_CONTAINER(vbox), 4);
 
-  table = gtk_table_new (6, 6, FALSE); 
+  table = gtk_table_new (6, 6, FALSE);
   gtk_table_set_row_spacings(GTK_TABLE(table),6);
-  gtk_container_border_width (GTK_CONTAINER (table), 1); 
+  gtk_container_border_width (GTK_CONTAINER (table), 1);
   gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
   gtk_widget_show(table);
 
@@ -3939,7 +4099,7 @@ options_page()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) toggle_show_image,
 		      (gpointer)1);
-  gtk_widget_show(toggle); 
+  gtk_widget_show(toggle);
 
   button = gtk_button_new_with_label ("Reload image");
   gtk_table_attach(GTK_TABLE(table), button, 1, 2, 0, 1, 0, 0, 0, 0);
@@ -3974,7 +4134,7 @@ options_page()
   gtk_table_attach(GTK_TABLE(table), menu, 3, 4, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 
 
-  gtk_widget_show(toggle); 
+  gtk_widget_show(toggle);
   gfig_opt_widget.showcontrol = toggle;
 
   sprintf(buf,"Max Undo:");
@@ -4005,7 +4165,7 @@ options_page()
 		     (GtkSignalFunc) gfig_entry_update,
 		     &selvals.maxundo);
   gtk_table_attach(GTK_TABLE(table), entry, 4, 5, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show(entry); 
+  gtk_widget_show(entry);
 
   toggle = gtk_check_button_new_with_label ("Show tool tips ");
   gtk_table_attach(GTK_TABLE(table), toggle, 0, 1, 3, 4, GTK_FILL, GTK_FILL, 0, 0);
@@ -4015,8 +4175,8 @@ options_page()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) toggle_tooltips,
 		      (gpointer)&selvals.showtooltips);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle),selvals.showtooltips);
-  gtk_widget_show(toggle); 
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle),selvals.showtooltips);
+  gtk_widget_show(toggle);
 
   toggle = gtk_check_button_new_with_label ("Show pos");
   gtk_table_attach(GTK_TABLE(table), toggle, 1, 2, 3, 4, GTK_FILL, GTK_FILL, 0, 0);
@@ -4026,7 +4186,7 @@ options_page()
   gtk_signal_connect_after (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gfig_pos_enable,
 		      (gpointer)1);
-  gtk_widget_show(toggle); 
+  gtk_widget_show(toggle);
 
   button = gtk_button_new_with_label ("About");
   gtk_table_attach(GTK_TABLE(table), button, 3, 4, 4, 5, GTK_FILL, GTK_FILL, 0, 0);
@@ -4054,16 +4214,16 @@ grid_frame()
   frame = gtk_frame_new ("Grid");
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 1);
-  
+
   table = gtk_table_new (7, 7, FALSE);
-  gtk_container_add (GTK_CONTAINER (frame), table); 
+  gtk_container_add (GTK_CONTAINER (frame), table);
 
   toggle = gtk_check_button_new_with_label ("Snap to grid");
   gtk_table_attach(GTK_TABLE(table), toggle, 1, 2, 3, 4, GTK_FILL, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gfig_toggle_update,
 		      (gpointer)&selvals.opts.snap2grid);
-  gtk_widget_show(toggle); 
+  gtk_widget_show(toggle);
   gfig_opt_widget.snap2grid = toggle;
 
   toggle = gtk_check_button_new_with_label ("Display grid");
@@ -4074,7 +4234,7 @@ grid_frame()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) draw_grid_clear,
 		      (gpointer)1);
-  gtk_widget_show(toggle); 
+  gtk_widget_show(toggle);
   gfig_opt_widget.drawgrid = toggle;
 
 
@@ -4117,14 +4277,14 @@ grid_frame()
 		     (GtkSignalFunc) gfig_entry_update,
 		     &selvals.opts.gridspacing);
   gtk_table_attach(GTK_TABLE(table), entry, 3, 4, 4, 5, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show(entry); 
+  gtk_widget_show(entry);
   gtk_widget_show(table);
   gtk_widget_show(frame);
 
   return(frame);
 }
 
-void 
+void
 clear_list_items(GtkList *list)
 {
   gtk_list_clear_items(list,0,-1);
@@ -4147,7 +4307,7 @@ build_list_items(GtkWidget *list)
       else
 	list_pix = gfig_new_pixmap(list,blank_xpm);
 
-      list_item = gfig_list_item_new_with_label_and_pixmap(g,g->draw_name,list_pix);      
+      list_item = gfig_list_item_new_with_label_and_pixmap(g,g->draw_name,list_pix);
       gtk_object_set_user_data (GTK_OBJECT (list_item), (gpointer)g);
       gtk_list_append_items (GTK_LIST (list), g_list_append(NULL,list_item));
 
@@ -4191,7 +4351,7 @@ add_objects_list ()
   gfig_gtk_list = list = gtk_list_new ();
   /* gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_MULTIPLE); */
   gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_BROWSE);
-  gtk_container_add (GTK_CONTAINER (scrolled_win), list);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),						 list);
   gtk_widget_show (list);
 
   /* Load saved objects */
@@ -4206,7 +4366,7 @@ add_objects_list ()
   gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
 		      (GtkSignalFunc) rescan_button_press,
 		      NULL);
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Select directory and rescan Gfig object collection",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Select directory and rescan Gfig object collection",NULL);
   gtk_table_attach(GTK_TABLE(table), button, 2, 3, 0, 1, GTK_FILL, GTK_FILL,  0, 0);
 
   button = gtk_button_new_with_label ("Load");
@@ -4214,7 +4374,7 @@ add_objects_list ()
   gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
 		      (GtkSignalFunc) load_button_press,
 		      list);
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Load a single Gfig object collection",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Load a single Gfig object collection",NULL);
   gtk_table_attach(GTK_TABLE(table), button, 2, 3, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 
   button = gtk_button_new_with_label ("New");
@@ -4222,7 +4382,7 @@ add_objects_list ()
 		      (GtkSignalFunc) new_button_press,
 		      "New gfig obj");
   gtk_widget_show(button);
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Create a new Gfig object collection for editing",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Create a new Gfig object collection for editing",NULL);
   gtk_table_attach(GTK_TABLE(table), button, 2, 3, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
 
 
@@ -4231,7 +4391,7 @@ add_objects_list ()
 		      (GtkSignalFunc) gfig_delete_gfig_callback,
 		      (gpointer)list);
   gtk_widget_show(button);
-  gtk_tooltips_set_tip(gfig_tooltips,button,"Delete currently selected Gfig Object collection",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,button,"Delete currently selected Gfig Object collection",NULL);
   gtk_table_attach(GTK_TABLE(table), button, 2, 3, 3, 4, GTK_FILL, GTK_FILL, 0, 0);
 
   /* Attach the frame for the list Show the widgets */
@@ -4257,65 +4417,27 @@ gfig_pos_enable(GtkWidget *widget, gpointer data)
   gtk_widget_set_sensitive(GTK_WIDGET(y_pos_label),enable);
 }
 
-void
-my_gtk_label_set2 (GtkLabel *label,
-               const char *str)
-{
-  gtk_label_set(label,str);
-  gtk_container_need_resize (GTK_CONTAINER (gtk_widget_get_toplevel (GTK_WIDGET(label))));
-}
-
-void
-my_gtk_label_set (GtkLabel *label,
-               const char *str)
-{
-  char* p;
-  g_return_if_fail (label != NULL);
-  g_return_if_fail (GTK_IS_LABEL (label));
-  g_return_if_fail (str != NULL);
-  if (label->label)
-    g_free (label->label);
-  label->label = g_strdup (str);
-  if (label->row)
-    g_slist_free (label->row);
-  label->row = NULL;
-  label->row = g_slist_append (label->row, label->label);
-  p = label->label;
-  while ((p = strchr(p, '\n')))
-    label->row = g_slist_append (label->row, ++p);
-  if (GTK_WIDGET_VISIBLE (label))
-    {
-      gdk_window_clear_area (GTK_WIDGET (label)->window,
-			     GTK_WIDGET (label)->allocation.x,
-			     GTK_WIDGET (label)->allocation.y,
-			     GTK_WIDGET (label)->allocation.width,
-			     GTK_WIDGET (label)->allocation.height);  
-      gtk_widget_draw(GTK_WIDGET(label),NULL);
-    }
-}      
-
-
 static void
 gfig_pos_update_labels(gpointer data)
 {
   static gchar buf[256];
 
   /*gtk_idle_remove(pos_tag);*/
-  pos_tag = -1;  
+  pos_tag = -1;
 
   if(x_pos_val < 0)
     sprintf(buf," X:%.3d ",x_pos_val);
   else
     sprintf(buf," X:  %.3d ",x_pos_val);
 
-  my_gtk_label_set(GTK_LABEL(x_pos_label),buf);
+  gtk_label_set_text(GTK_LABEL(x_pos_label),buf);
 
   if(y_pos_val < 0)
     sprintf(buf," Y:%.3d ",y_pos_val);
   else
     sprintf(buf," Y:  %.3d ",y_pos_val);
 
-  my_gtk_label_set(GTK_LABEL(y_pos_label),buf);
+  gtk_label_set_text(GTK_LABEL(y_pos_label),buf);
 }
 
 static void
@@ -4343,10 +4465,10 @@ static void
 gfig_obj_size_update(gint sz)
 {
   static gchar buf[256];
-  
+
   sprintf(buf,"%6d",sz);
-  my_gtk_label_set(GTK_LABEL(obj_size_label),buf);
-}  
+  gtk_label_set_text(GTK_LABEL(obj_size_label),buf);
+}
 
 static GtkWidget *
 gfig_obj_size_label(void)
@@ -4363,14 +4485,14 @@ gfig_obj_size_label(void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 
   obj_size_label = gtk_label_new("");
-  gtk_misc_set_alignment (GTK_MISC (obj_size_label), 0.5, 0.5);    
+  gtk_misc_set_alignment (GTK_MISC (obj_size_label), 0.5, 0.5);
   gtk_widget_show(obj_size_label);
   gtk_box_pack_start (GTK_BOX (hbox), obj_size_label, FALSE, FALSE, 0);
 
   gtk_widget_show(hbox);
 
   sprintf(buf,"%6d",0);
-  gtk_label_set(GTK_LABEL(obj_size_label),buf);
+  gtk_label_set_text(GTK_LABEL(obj_size_label),buf);
 
   return(hbox);
 }
@@ -4408,9 +4530,9 @@ gfig_pos_labels(void)
   gtk_widget_show(vbox);
 
   sprintf(buf," X:  %.3d ",0);
-  gtk_label_set(GTK_LABEL(x_pos_label),buf);
+  gtk_label_set_text(GTK_LABEL(x_pos_label),buf);
   sprintf(buf," Y:  %.3d ",0);
-  gtk_label_set(GTK_LABEL(y_pos_label),buf);
+  gtk_label_set_text(GTK_LABEL(y_pos_label),buf);
 
   return(hbox);
 }
@@ -4426,7 +4548,7 @@ make_pos_info(void)
   hbox = gtk_hbox_new (TRUE, 1);
 
   gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_ETCHED_IN);
-  gtk_container_add (GTK_CONTAINER (xframe), hbox);  
+  gtk_container_add (GTK_CONTAINER (xframe), hbox);
 
   /* Add labels */
   label = gfig_pos_labels();
@@ -4462,7 +4584,7 @@ make_status(void)
   gtk_label_set_justify(GTK_LABEL(label),GTK_JUSTIFY_RIGHT);
   gtk_table_attach(GTK_TABLE(table), label, 1, 2, 0, 1, 0 , GTK_FILL, 0, 0);
 
-  
+
   label = gtk_label_new("Filename:");
   gtk_misc_set_alignment(GTK_MISC(label),0.5,0.5);
   gtk_widget_show(label);
@@ -4490,7 +4612,7 @@ make_status(void)
   gtk_table_attach(GTK_TABLE(table), progress_widget, 2, 4, 2, 3, 0 , 0, 0, 0);
 #endif /* 0 */
 
-  gtk_container_add (GTK_CONTAINER (xframe), table);  
+  gtk_container_add (GTK_CONTAINER (xframe), table);
 
   gtk_widget_show(table);
   gtk_widget_show(xframe);
@@ -4506,10 +4628,10 @@ make_preview(void)
   GtkWidget * table;
   GtkWidget * ruler;
 
-  
+
   gfig_preview = gtk_preview_new(GTK_PREVIEW_COLOR);
   gtk_widget_set_events( GTK_WIDGET(gfig_preview), PREVIEW_MASK );
-  gfig_preview_exp_id = 
+  gfig_preview_exp_id =
     gtk_signal_connect_after( GTK_OBJECT(gfig_preview), "expose_event",
 			      (GtkSignalFunc) gfig_preview_expose,
 			      NULL);
@@ -4527,7 +4649,7 @@ make_preview(void)
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_attach(GTK_TABLE(table), gfig_preview, 1, 2, 1, 2, GTK_FILL ,GTK_FILL , 0, 0);
-  gtk_container_add (GTK_CONTAINER (xframe), table); 
+  gtk_container_add (GTK_CONTAINER (xframe), table);
 
   ruler = gtk_hruler_new ();
   gtk_ruler_set_range (GTK_RULER (ruler), 0, preview_width, 0, PREVIEW_SIZE);
@@ -4561,7 +4683,7 @@ make_preview(void)
 
   xframe = make_status();
   gtk_box_pack_start(GTK_BOX(vbox), xframe, TRUE, TRUE, 0);
-  
+
   gtk_widget_show(vbox);
   gtk_widget_show(hbox);
 
@@ -4665,7 +4787,7 @@ gfig_dialog ()
 		      NULL);
 
   /* Tooltips bis */
-  gfig_tooltips = gtk_tooltips_new(); 
+  gfig_tooltips = gtk_tooltips_new();
 
   /*  Action area  */
   button = gtk_button_new_with_label ("Done");
@@ -4725,50 +4847,50 @@ gfig_dialog ()
   frame = gtk_frame_new ("preview");
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 1);
-  table = gtk_table_new (6, 6, FALSE); 
-  gtk_container_border_width (GTK_CONTAINER (table), 1); 
-  gtk_container_add (GTK_CONTAINER (frame), table); 
+  table = gtk_table_new (6, 6, FALSE);
+  gtk_container_border_width (GTK_CONTAINER (table), 1);
+  gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (top_level_dlg)->vbox), frame, TRUE, TRUE, 0);
 
   /* Preview itself */
   xframe = make_preview();
   gtk_table_attach(GTK_TABLE(table), xframe, 1, 2, 0, 2, GTK_FILL, GTK_FILL, 0, 0);
 
-  gtk_widget_show(table); 
-  gtk_widget_show(frame); 
+  gtk_widget_show(table);
+  gtk_widget_show(frame);
   gtk_widget_show(gfig_preview);
 
   /* Add buttons beside the preview frame */
   xframe = draw_buttons(top_level_dlg);
-  gtk_table_attach(GTK_TABLE(table), xframe, 0,1, 0, 2, GTK_FILL, GTK_FILL, 0, 0);    
+  gtk_table_attach(GTK_TABLE(table), xframe, 0,1, 0, 2, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(xframe);
 
   frame = gtk_frame_new ("Settings");
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 1);
-  
+
   gtk_table_attach(GTK_TABLE(table), frame, 2, 3, 0, 2, GTK_FILL , GTK_FILL, 0, 0);
   table = gtk_table_new (7, 7, FALSE);
-  
+
   gtk_container_border_width (GTK_CONTAINER (table), 1);
   gtk_table_set_row_spacings(GTK_TABLE(table),1);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   /* listbox + entry */
   oframe = add_objects_list();
-  gtk_table_attach(GTK_TABLE(table), oframe, 0,6, 0 , 1, GTK_EXPAND|GTK_FILL, GTK_FILL, 0, 0);  
+  gtk_table_attach(GTK_TABLE(table), oframe, 0,6, 0 , 1, GTK_EXPAND|GTK_FILL, GTK_FILL, 0, 0);
 
   /* Grid entry */
 
   xframe = grid_frame();
-  gtk_table_attach(GTK_TABLE(table), xframe, 0,6, 3, 4, GTK_EXPAND|GTK_FILL, GTK_FILL, 0, 0);  
+  gtk_table_attach(GTK_TABLE(table), xframe, 0,6, 3, 4, GTK_EXPAND|GTK_FILL, GTK_FILL, 0, 0);
 
   /* The notebook */
   notebook = gtk_notebook_new();
   gtk_notebook_set_tab_pos(GTK_NOTEBOOK(notebook), GTK_POS_TOP);
   gtk_widget_show(notebook);
   gtk_table_attach(GTK_TABLE(table), notebook, 0, 6, 5, 6, GTK_FILL|GTK_EXPAND, GTK_FILL|GTK_EXPAND, 0, 0);
-  
+
   page = paint_page();
   label = gtk_label_new("Paint");
   gtk_widget_show(label);
@@ -4804,8 +4926,8 @@ gfig_dialog ()
   gtk_widget_show(page);
 
 
-  gtk_widget_show(frame); 
-  gtk_widget_show(table); 
+  gtk_widget_show(frame);
+  gtk_widget_show(table);
 
   gtk_widget_show (top_level_dlg);
   dialog_update_preview();
@@ -4819,7 +4941,7 @@ gfig_dialog ()
 
   /* Tool tips and colors */
   if(gdk_color_parse("bisque",&color) == FALSE || !gdk_color_alloc(xxx,&color))
-    gtk_tooltips_set_colors(gfig_tooltips,&top_level_dlg->style->white,&top_level_dlg->style->black);  
+    gtk_tooltips_set_colors(gfig_tooltips,&top_level_dlg->style->white,&top_level_dlg->style->black);
   else
     gtk_tooltips_set_colors(gfig_tooltips,&color,&top_level_dlg->style->black);
 
@@ -4840,7 +4962,7 @@ gfig_close_callback (GtkWidget *widget,
 }
 
 static void
-done_ok_window(GtkWidget * widget, 
+done_ok_window(GtkWidget * widget,
 		    gpointer   data)
 {
   gfig_run = TRUE;
@@ -4859,7 +4981,7 @@ done_warn_dialog (GtkWidget *w,gint count)
 
   gtk_window_set_title (GTK_WINDOW (window), "Warning");
   gtk_container_border_width (GTK_CONTAINER (window), 0);
-  
+
   button = gtk_button_new_with_label ("OK");
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) done_ok_window,
@@ -4987,7 +5109,7 @@ adjust_pic_coords(gint coord,gint ratio)
 
   return((SMALL_PREVIEW_SZ * coord)/pratio);
 }
- 
+
 static gint
 gfig_preview_events ( GtkWidget *widget,
 			     GdkEvent *event )
@@ -5074,7 +5196,7 @@ gfig_preview_events ( GtkWidget *widget,
 	  else
 	    break;
 	}
-      
+
       /* make small preview reflect changes ?*/
       list_button_update(current_obj);
 
@@ -5150,7 +5272,7 @@ gfig_list_add(GFIGOBJ *obj)
   GtkWidget *list_pix;
 
   list_pix = gfig_new_pixmap(gfig_gtk_list,Floppy6_xpm);
-  list_item = gfig_list_item_new_with_label_and_pixmap(obj,obj->draw_name,list_pix);      
+  list_item = gfig_list_item_new_with_label_and_pixmap(obj,obj->draw_name,list_pix);
 
   gtk_object_set_user_data (GTK_OBJECT (list_item), (gpointer)obj);
 
@@ -5159,8 +5281,8 @@ gfig_list_add(GFIGOBJ *obj)
   list = g_list_append(NULL, list_item);
   gtk_list_insert_items(GTK_LIST(gfig_gtk_list), list, pos);
   gtk_widget_show (list_item);
-  gtk_list_select_item(GTK_LIST(gfig_gtk_list), pos);  
-  
+  gtk_list_select_item(GTK_LIST(gfig_gtk_list), pos);
+
   gtk_signal_connect(GTK_OBJECT(list_item), "button_press_event",
 		     (GtkSignalFunc) list_button_press,
 		     (gpointer)obj);
@@ -5193,7 +5315,7 @@ gfig_list_ok_callback (GtkWidget *w,
 #endif /* DEBUG */
 
   /* Need to reorder the list */
-  /* gtk_label_set (GTK_LABEL (options->layer_widget->label), layer->name);*/
+  /* gtk_label_set_text (GTK_LABEL (options->layer_widget->label), layer->name);*/
 
   pos = gtk_list_child_position(GTK_LIST(gfig_gtk_list),list);
 #ifdef DEBUG
@@ -5265,7 +5387,7 @@ gfig_dialog_edit_list (GtkWidget *lwidget,GFIGOBJ *obj,gint created)
   options->name_entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), options->name_entry, TRUE, TRUE, 0);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),obj->draw_name);
-		      
+
   gtk_widget_show (options->name_entry);
   gtk_widget_show (hbox);
 
@@ -5306,7 +5428,7 @@ gfig_rescan_ok_callback (GtkWidget *w,
   GList *list;
 
   list = rescan_list;
-  while (list) 
+  while (list)
     {
 #ifdef DEBUG
       printf("(ADD) list->data = %s\n",(gchar *)list->data);
@@ -5314,7 +5436,7 @@ gfig_rescan_ok_callback (GtkWidget *w,
       list = list->next;
     }
   list = gfig_path_list;
-  while (list) 
+  while (list)
     {
 #ifdef DEBUG
       printf("(CONF) list->data = %s\n",(gchar *)list->data);
@@ -5347,15 +5469,15 @@ gfig_rescan_file_selection_ok(GtkWidget *w,
   if (!S_ISDIR(filestat.st_mode))
     {
      g_warning("Entry %.100s is not a directory\n",filenamebuf);
-    }  
+    }
   else
     {
 
       list_item = gtk_list_item_new_with_label(filenamebuf);
       gtk_widget_show(list_item);
-      
+
       gtk_list_prepend_items(GTK_LIST(lw),g_list_append(NULL, list_item));
-      
+
       rescan_list = g_list_prepend(rescan_list,g_strdup(filenamebuf));
     }
 
@@ -5422,7 +5544,8 @@ gfig_rescan_list (void)
 
   list_widget = gtk_list_new ();
   gtk_list_set_selection_mode (GTK_LIST (list_widget), GTK_SELECTION_BROWSE);
-  gtk_container_add (GTK_CONTAINER (scrolled_win), list_widget);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
+					 list_widget);
   gtk_widget_show (list_widget);
   gtk_box_pack_start (GTK_BOX (vbox), list_frame, TRUE, TRUE, 0);
 
@@ -5448,7 +5571,7 @@ gfig_rescan_list (void)
   /* Clear the old list out */
   if((list = rescan_list))
     {
-      while (list) 
+      while (list)
 	{
 	  g_free(list->data);
 	  list = list->next;
@@ -5513,7 +5636,7 @@ gfig_load_file_selection_ok(GtkWidget *w,
 #endif /* DEBUG */
 
   err = stat (filename, &filestat);
-  
+
   if (!err && S_ISREG (filestat.st_mode))
     {
       /* Hack - current object MUST be NULL to prevent setup_undo()
@@ -5523,13 +5646,13 @@ gfig_load_file_selection_ok(GtkWidget *w,
       current_obj = NULL;
       gfig = gfig_load (filename,filename);
       current_obj = current_saved;
-      
+
       if (gfig)
 	{
 	  /* Read only ?*/
 	  if(access(filename,W_OK))
 	    gfig->obj_status |= GFIG_READONLY;
-	  
+
 	  gfig_list_add(gfig);
 	  new_obj_2edit(gfig);
 	}
@@ -5568,7 +5691,7 @@ load_button_press(GtkWidget *widget,
 }
 
 #if 0 /* NOT USED */
-static void 
+static void
 mygimp_edit_clear(gint32 image_ID, gint32 layer_ID)
 {
   GParam *return_vals;
@@ -5578,7 +5701,7 @@ mygimp_edit_clear(gint32 image_ID, gint32 layer_ID)
                                     PARAM_IMAGE, image_ID,
                                     PARAM_DRAWABLE, layer_ID,
                                     PARAM_END);
-  gimp_destroy_params (return_vals, nreturn_vals);    
+  gimp_destroy_params (return_vals, nreturn_vals);
 }
 #endif /* NOT USED */
 
@@ -5647,9 +5770,9 @@ paint_layer_new(gchar *new_name)
       gimp_image_add_layer(gfig_image,layer_id,-1);
       gimp_drawable_fill(layer_id,1);
     }
-  
+
   gfig_drawable = layer_id;
-  
+
   switch(selvals.onlayerbg)
     {
     case LAYER_TRANS_BG:
@@ -5683,7 +5806,6 @@ paint_layer_fill()
 
   return_vals = gimp_run_procedure ("gimp_bucket_fill",
                                     &nreturn_vals,
-				    PARAM_IMAGE, gfig_image,
 				    PARAM_DRAWABLE, gfig_drawable,
 				    PARAM_INT32, selopt.fill_type, /* Fill mode */
 				    PARAM_INT32, 0, /* NORMAL */
@@ -5696,7 +5818,7 @@ paint_layer_fill()
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
-       
+
 static void
 gfig_paint_callback(GtkWidget *widget,
 		  gpointer   data)
@@ -5727,7 +5849,7 @@ gfig_paint_callback(GtkWidget *widget,
       if(ccount == obj_show_single || obj_show_single == -1)
 	{
 	  sprintf(buf,"Gfig Layer %d",layer_count++);
-	  
+
 	  if(selvals.painttype != PAINT_SELECTION_TYPE)
 	    {
 	      switch(selvals.onlayers)
@@ -5755,26 +5877,26 @@ gfig_paint_callback(GtkWidget *widget,
 		  break;
 		}
 	    }
-	  
+
 	  objs->obj->paintfunc(objs->obj);
-	  
+
 	  /* Fill layer if required */
-	  if(selvals.painttype == PAINT_SELECTION_FILL_TYPE 
+	  if(selvals.painttype == PAINT_SELECTION_FILL_TYPE
 	     && selopt.fill_when == FILL_EACH)
 	    paint_layer_fill();
 	}
 
       objs = objs->next;
-      
+
       ccount++;
-#if 0 
+#if 0
       gtk_progress_bar_update(GTK_PROGRESS_BAR(progress_widget),(gfloat)ccount/(gfloat)count);
       gtk_widget_draw(GTK_WIDGET(progress_widget),NULL);
 #endif /* 0 */
     }
 
   /* Fill layer if required */
-  if(selvals.painttype == PAINT_SELECTION_FILL_TYPE 
+  if(selvals.painttype == PAINT_SELECTION_FILL_TYPE
      && selopt.fill_when == FILL_AFTER)
     paint_layer_fill();
 
@@ -5809,7 +5931,7 @@ about_button_press(GtkWidget *widget,
 
   gtk_window_set_title (GTK_WINDOW (window), "About");
   gtk_container_border_width (GTK_CONTAINER (window), 0);
-  
+
   button = gtk_button_new_with_label ("OK");
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) ok_warn_window,
@@ -5905,7 +6027,7 @@ new_gfig_obj(gchar * name)
 
   /* Leave options as before */
   pic_obj = current_obj = gfig;
-  
+
   new_list_item = gfig_list_add(gfig);
 
   tmp_bezier = obj_creating = tmp_line = NULL;
@@ -5922,7 +6044,7 @@ new_button_press(GtkWidget *widget,
 		  gpointer   data)
 {
   GtkWidget * new_list_item;
-  
+
   new_list_item = new_gfig_obj((gchar*)data);
   gfig_dialog_edit_list(new_list_item,current_obj,TRUE);
 
@@ -5958,7 +6080,7 @@ delete_button_press_ok(GtkWidget *widget,
   /* Get the list and which item is selected */
   /* Only allow single selections */
 
-  sellist = GTK_LIST(list)->selection; 
+  sellist = GTK_LIST(list)->selection;
 
   sel_obj = (GFIGOBJ *)gtk_object_get_user_data(GTK_OBJECT((GtkWidget *)(sellist->data)));
 
@@ -5976,7 +6098,7 @@ delete_button_press_ok(GtkWidget *widget,
     {
       clear_undo();
     }
-  
+
   /* Free current obj */
   gfig_free_everything(sel_obj);
 
@@ -5985,7 +6107,7 @@ delete_button_press_ok(GtkWidget *widget,
   pos--;
 
   if(pos < 0 && g_list_length(gfig_list) == 0)
-    {      
+    {
       /* Warning - we have a problem here
        * since we are not really "creating an entry"
        * why call gfig_new?
@@ -6002,7 +6124,7 @@ delete_button_press_ok(GtkWidget *widget,
 
   delete_dialog = NULL;
 
-  gtk_list_select_item(GTK_LIST(gfig_gtk_list), pos);  
+  gtk_list_select_item(GTK_LIST(gfig_gtk_list), pos);
 
   current_obj = g_list_nth(gfig_list,pos)->data;
 
@@ -6029,7 +6151,7 @@ gfig_delete_gfig_callback(GtkWidget *widget,
   GFIGOBJ * sel_obj;
 
 
-  sellist = GTK_LIST(list)->selection; 
+  sellist = GTK_LIST(list)->selection;
 
   sel_obj = (GFIGOBJ *)gtk_object_get_user_data(GTK_OBJECT((GtkWidget *)(sellist->data)));
   if(delete_dialog)
@@ -6039,31 +6161,31 @@ gfig_delete_gfig_callback(GtkWidget *widget,
   gtk_window_set_title(GTK_WINDOW(delete_dialog), "Delete gfig drawing");
   gtk_window_position(GTK_WINDOW(delete_dialog), GTK_WIN_POS_MOUSE);
   gtk_container_border_width(GTK_CONTAINER(delete_dialog), 0);
-  
+
   vbox = gtk_vbox_new(FALSE, 0);
   gtk_container_border_width(GTK_CONTAINER(vbox), 8);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(delete_dialog)->vbox), vbox,
 		     FALSE, FALSE, 0);
   gtk_widget_show(vbox);
-  
+
   /* Question */
-  
+
   label = gtk_label_new("Are you sure you want to delete");
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
   gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
   gtk_widget_show(label);
-  
+
   str = g_malloc((strlen(sel_obj->draw_name) + 32 * sizeof(char)));
-    
+
   sprintf(str, "\"%s\" from the list and from disk?", sel_obj->draw_name);
-  
+
   label = gtk_label_new(str);
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
   gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
   gtk_widget_show(label);
-  
+
   g_free(str);
-  
+
   /* Buttons */
   button = gtk_button_new_with_label ("Delete");
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
@@ -6074,7 +6196,7 @@ gfig_delete_gfig_callback(GtkWidget *widget,
   gtk_widget_grab_default (button);
   gtk_object_set_user_data(GTK_OBJECT(button),widget);
   gtk_widget_show (button);
-  
+
   button = gtk_button_new_with_label ("Cancel");
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) delete_button_press_cancel,
@@ -6084,14 +6206,14 @@ gfig_delete_gfig_callback(GtkWidget *widget,
   gtk_widget_grab_default (button);
   gtk_object_set_user_data(GTK_OBJECT(button),widget);
   gtk_widget_show (button);
-  
+
   /* Show! */
-  
+
   gtk_widget_set_sensitive(GTK_WIDGET(delete_frame_to_freeze), FALSE);
   gtk_widget_show(delete_dialog);
 
   return(FALSE);
-} 
+}
 
 static void
 gfig_update_stat_labels()
@@ -6103,14 +6225,14 @@ gfig_update_stat_labels()
   else
     sprintf(str,"<NONE>");
 
-  gtk_label_set(GTK_LABEL(status_label_dname),str);
+  gtk_label_set_text(GTK_LABEL(status_label_dname),str);
 
   if(current_obj->filename)
     {
       gint slen;
       gchar *hm = getenv("HOME");
       gchar *dfn = g_strdup(current_obj->filename);
-      
+
       if(!strncmp(dfn,hm,strlen(hm)-1))
 	 {
 	   strcpy(dfn,"~");
@@ -6131,11 +6253,11 @@ gfig_update_stat_labels()
   else
     sprintf(str,"<NONE>");
 
-  gtk_label_set(GTK_LABEL(status_label_fname),str);
+  gtk_label_set_text(GTK_LABEL(status_label_fname),str);
 
 }
 
-static void 
+static void
 new_obj_2edit(GFIGOBJ *obj)
 {
   GFIGOBJ * old_current = current_obj;
@@ -6155,7 +6277,7 @@ new_obj_2edit(GFIGOBJ *obj)
   /* Change options */
   update_options(old_current);
 
-  /* If have old object and NOT scaleing currently then force 
+  /* If have old object and NOT scaleing currently then force
    * back to saved coord type.
    */
 
@@ -6165,7 +6287,7 @@ new_obj_2edit(GFIGOBJ *obj)
   update_draw_area(gfig_preview,NULL);
   /* And preview */
   list_button_update(current_obj);
-  
+
   if(obj->obj_status & GFIG_READONLY)
     {
       create_warn_dialog("Editing read-only object - you will not be able to save it");
@@ -6193,10 +6315,10 @@ edit_button_press(GtkWidget *widget,
   /* Get the list and which item is selected */
   /* Only allow single selections */
 
-  sellist = GTK_LIST(list)->selection; 
+  sellist = GTK_LIST(list)->selection;
 
   sel_obj = (GFIGOBJ *)gtk_object_get_user_data(GTK_OBJECT((GtkWidget *)(sellist->data)));
-  
+
   if(sel_obj)
     new_obj_2edit(sel_obj);
   else
@@ -6222,7 +6344,7 @@ merge_button_press(GtkWidget *widget,
   /* Get the list and which item is selected */
   /* Only allow single selections */
 
-  sellist = GTK_LIST(list)->selection; 
+  sellist = GTK_LIST(list)->selection;
 
   sel_obj = (GFIGOBJ *)gtk_object_get_user_data(GTK_OBJECT((GtkWidget *)(sellist->data)));
   if(sel_obj && sel_obj->obj_list && sel_obj != current_obj)
@@ -6311,7 +6433,7 @@ gfig_op_menu_create(GtkWidget *window)
 		     (GtkSignalFunc)gfig_save_menu_callback,
 		     NULL);
 
-#if 0 
+#if 0
   gtk_widget_install_accelerator(menu_item,
 				 accelerator_table,
 				"activate",'S',0);
@@ -6324,7 +6446,7 @@ gfig_op_menu_create(GtkWidget *window)
 		     (GtkSignalFunc)gfig_rename_menu_callback,
 		     NULL);
 
-#if 0 
+#if 0
   gtk_widget_install_accelerator(menu_item,
 				 accelerator_table,
 				"activate",'A',0);
@@ -6337,7 +6459,7 @@ gfig_op_menu_create(GtkWidget *window)
 		     (GtkSignalFunc)gfig_copy_menu_callback,
 		     NULL);
 
-#if 0 
+#if 0
   gtk_widget_install_accelerator(menu_item,
 				 accelerator_table,
 				"activate",'C',0);
@@ -6350,7 +6472,7 @@ gfig_op_menu_create(GtkWidget *window)
 		     (GtkSignalFunc)gfig_edit_menu_callback,
 		     NULL);
 
-#if 0 
+#if 0
   gtk_widget_install_accelerator(menu_item,
 				 accelerator_table,
 				"activate",'E',0);
@@ -6416,43 +6538,43 @@ gfig_entry_update(GtkWidget *widget, gint *value)
 {
   GtkAdjustment *adjustment;
   gdouble        new_value;
-  
+
   new_value = atoi(gtk_entry_get_text(GTK_ENTRY(widget)));
-  
+
   if (*value != new_value) {
     adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
-    
+
     if ((new_value >= adjustment->lower) &&
 	(new_value <= adjustment->upper)) {
       *value            = new_value;
       adjustment->value = new_value;
-      
+
       gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
-      
+
       /*dialog_update_preview();*/
-    } 
-  } 
-} 
+    }
+  }
+}
 
 static void
 gfig_scale_update(GtkAdjustment *adjustment, gint *value)
 {
   GtkWidget *entry;
   char       buf[256];
-  
+
   if (*value != adjustment->value) {
     *value = adjustment->value;
-    
+
     entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
     sprintf(buf,"%d",*value);
-    
+
     gtk_signal_handler_block_by_data(GTK_OBJECT(entry), value);
     gtk_entry_set_text(GTK_ENTRY(entry), buf);
     gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), value);
-    
+
     /*dialog_update_preview(); */
   }
-} 
+}
 
 
 static void
@@ -6468,7 +6590,7 @@ gfig_scale_update_scale(GtkAdjustment *adjustment, gdouble *value)
 	update_draw_area(gfig_preview,NULL);
       }
   }
-} 
+}
 
 
 static void
@@ -6476,23 +6598,23 @@ gfig_scale_update_fp(GtkAdjustment *adjustment, gdouble *value)
 {
   GtkWidget *entry;
   char       buf[256];
-  
+
   if (*value != adjustment->value) {
     *value = adjustment->value;
-    
+
     entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
     if(entry)
       {
 	sprintf(buf,"%0.3f",*value);
-	
+
 	gtk_signal_handler_block_by_data(GTK_OBJECT(entry), value);
 	gtk_entry_set_text(GTK_ENTRY(entry), buf);
 	gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), value);
       }
-    
+
     /*dialog_update_preview(); */
   }
-} 
+}
 
 #if 0 /* NOT USED */
 
@@ -6501,23 +6623,23 @@ gfig_entry_update_fp(GtkWidget *widget, gdouble *value)
 {
   GtkAdjustment *adjustment;
   gdouble        new_value;
-  
+
   new_value = (double)atof(gtk_entry_get_text(GTK_ENTRY(widget)));
-  
+
   if (*value != new_value) {
     adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
-    
+
     if ((new_value >= adjustment->lower) &&
 	(new_value <= adjustment->upper)) {
       *value            = new_value;
       adjustment->value = new_value;
-      
+
       gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
-      
+
       /*dialog_update_preview();*/
-    } 
-  } 
-} 
+    }
+  }
+}
 #endif /* NOT USED */
 
 /* Use to toggle the toggles */
@@ -6565,7 +6687,7 @@ gfig_toggle_update(GtkWidget *widget,
 
 /* Given a row then srink it down a bit */
 static void
-do_gfig_preview(guchar *dest_row, 
+do_gfig_preview(guchar *dest_row,
 	    guchar *src_row,
 	    gint width,
 	    gint dh,
@@ -6579,11 +6701,11 @@ static void
 dialog_update_preview(void)
 {
   gint y;
-  gint check,check_0,check_1;  
+  gint check,check_0,check_1;
 
   if(!selvals.showimage)
     {
-      memset(preview_row,-1,preview_width*4);      
+      memset(preview_row,-1,preview_width*4);
       for (y = 0; y < preview_height; y++) {
 	gtk_preview_draw_row(GTK_PREVIEW(gfig_preview), preview_row, 0, y, preview_width);
       }
@@ -6596,7 +6718,7 @@ dialog_update_preview(void)
     }
 
   for (y = 0; y < preview_height; y++) {
-    
+
     if ((y / CHECK_SIZE) & 1) {
       check_0 = CHECK_DARK;
       check_1 = CHECK_LIGHT;
@@ -6622,18 +6744,18 @@ dialog_update_preview(void)
 	      check = check_0;
 	    else
 	      check = check_1;
-	    
+
 	    alphaval = preview_row[i + 3];
-	    
-	    preview_row[j] = 
+
+	    preview_row[j] =
 	      check + (((preview_row[i] - check)*alphaval)/255);
-	    preview_row[j + 1] = 
+	    preview_row[j + 1] =
 	      check + (((preview_row[i + 1] - check)*alphaval)/255);
-	    preview_row[j + 2] = 
+	    preview_row[j + 2] =
 	      check + (((preview_row[i + 2] - check)*alphaval)/255);
 	  }
       }
-    
+
     gtk_preview_draw_row(GTK_PREVIEW(gfig_preview), preview_row, 0, y, preview_width);
   }
 }
@@ -6653,7 +6775,7 @@ gfig_new_gc()
  gdk_gc_set_line_attributes (gfig_gc, 1, GDK_LINE_SOLID,GDK_CAP_BUTT,GDK_JOIN_MITER);
 }
 
-static gint 
+static gint
 get_num_radials()
 {
   gint gridsp = MAX_GRID + MIN_GRID;
@@ -6666,7 +6788,7 @@ get_num_radials()
 
 #define SQ_SIZE 8
 
-static gint 
+static gint
 inside_sqr(GdkPoint *cpnt, GdkPoint *testpnt)
 {
   /* Return TRUE if testpnt is near cpnt */
@@ -6693,15 +6815,15 @@ find_grid_pos(GdkPoint *p,GdkPoint *gp,guint is_butt3)
   static gdouble cons_radius;
   static gdouble cons_ang;
   static gboolean cons_center;
-  
+
   if(selvals.opts.gridtype == RECT_GRID)
     {
       if(p->x % selvals.opts.gridspacing > selvals.opts.gridspacing/2)
 	x += selvals.opts.gridspacing;
-      
+
       if(p->y % selvals.opts.gridspacing > selvals.opts.gridspacing/2)
 	y += selvals.opts.gridspacing;
-      
+
       gp->x = (x/selvals.opts.gridspacing)*selvals.opts.gridspacing;
       gp->y = (y/selvals.opts.gridspacing)*selvals.opts.gridspacing;
 
@@ -6719,7 +6841,7 @@ find_grid_pos(GdkPoint *p,GdkPoint *gp,guint is_butt3)
 	}
     }
   else if(selvals.opts.gridtype == POLAR_GRID)
-    { 
+    {
       gdouble ang_grid;
       gdouble ang_radius;
       gdouble real_radius;
@@ -6863,14 +6985,14 @@ find_grid_pos(GdkPoint *p,GdkPoint *gp,guint is_butt3)
 
 	     if(y % selvals.opts.gridspacing > selvals.opts.gridspacing/2)
 	       y += selvals.opts.gridspacing;
-	
+
 	     gp->y = (selvals.opts.gridspacing/2) + ((y/selvals.opts.gridspacing)*selvals.opts.gridspacing);
 	  }
 	else
 	  {
 	     if(y % selvals.opts.gridspacing > selvals.opts.gridspacing/2)
 	       y += selvals.opts.gridspacing;
-	
+
 	     gp->y = (y/selvals.opts.gridspacing)*selvals.opts.gridspacing;
 	  }
 
@@ -6984,7 +7106,7 @@ toggle_obj_type(GtkWidget *widget,
 {
   GdkCursorType ctype = GDK_LAST_CURSOR;
   static GdkCursor* p_cursors[DEL_OBJ + 1];
-      
+
 
   if(selvals.otype != (DOBJTYPE)data)
     {
@@ -7077,7 +7199,7 @@ draw_grid_polar(GdkGC *drawgc)
       gint lx,ly;
 
       ang_loop = loop * ang_grid;
-	
+
       lx = (gint)rint(ang_radius * cos(ang_loop));
       ly = (gint)rint(ang_radius * sin(ang_loop));
 
@@ -7132,9 +7254,9 @@ draw_grid_iso(GdkGC *drawgc)
    gint diagonal_end;
    gint diagonal_width;
    gint diagonal_height;
-   
+
    step = selvals.opts.gridspacing;
-   
+
    /* Draw the vertical lines */
    for (loop = 0 ; loop < preview_width ; loop += step)
      {
@@ -7149,13 +7271,13 @@ draw_grid_iso(GdkGC *drawgc)
    diagonal_start = preview_width/2;
    diagonal_start = diagonal_start - (diagonal_start % step);
    diagonal_start = -diagonal_start;
-   
+
    diagonal_end = preview_height + (preview_width/2);
    diagonal_end = diagonal_end - (diagonal_end % step);
-   
+
    diagonal_width = preview_width;
    diagonal_height = diagonal_width/2;
-   
+
    /* Draw diagonal lines */
    for (loop = diagonal_start ; loop < diagonal_end ; loop += step)
      {
@@ -7245,10 +7367,10 @@ do_gfig(void)
 
 /* Stuff for the generation/deletion of objects. */
 
-/* Objects are easy one they are created - you just go down the object 
- * list calling the draw function for each object but... when they 
- * are been created we have to be a little more careful. When 
- * the first point is placed on the canvas we create the object, 
+/* Objects are easy one they are created - you just go down the object
+ * list calling the draw function for each object but... when they
+ * are been created we have to be a little more careful. When
+ * the first point is placed on the canvas we create the object,
  * the mouse position then defines the next point that can move around.
  * careful how we draw this position.
  */
@@ -7265,7 +7387,7 @@ free_all_objs(DALLOBJS * objs)
 {
   /* Free all objects */
   DALLOBJS * next;
-  
+
   while(objs)
     {
       free_one_obj(objs->obj);
@@ -7296,7 +7418,7 @@ get_line(gchar *buf,gint s,FILE * from,gint init)
   /* The last newline is a pain */
   if(slen > 0)
     buf[slen - 1] = '\0';
-  
+
   if(ferror(from))
     {
       g_warning("Error reading file");
@@ -7360,7 +7482,7 @@ clear_undo()
 {
   int lv;
 
-  for(lv = undo_water_mark; lv >= 0; lv--) 
+  for(lv = undo_water_mark; lv >= 0; lv--)
     {
       if(undo_table[lv])
 	free_all_objs(undo_table[lv]);
@@ -7377,7 +7499,7 @@ setup_undo()
   /* Copy object list to undo buffer */
 #if DEBUG
   printf("setup undo level [%d]\n",undo_water_mark);
-#endif /*DEBUG*/  
+#endif /*DEBUG*/
 
   if(!current_obj)
     {
@@ -7402,7 +7524,7 @@ setup_undo()
     }
   undo_table[undo_water_mark] = copy_all_objs(current_obj->obj_list);
   gtk_widget_set_sensitive(undo_widget,TRUE);
-  
+
   gfig_obj_modified(current_obj,GFIG_MODIFIED);
   current_obj->obj_status |= GFIG_MODIFIED;
 }
@@ -7491,8 +7613,8 @@ void
 reverse_pairs_list(gdouble *list, gint size)
 {
   int i;
-  struct cs { 
-    gdouble i1; 
+  struct cs {
+    gdouble i1;
     gdouble i2;
   } copyit,*orglist;
 
@@ -7611,7 +7733,7 @@ remove_obj_from_list(GFIGOBJ *obj,DOBJECT *del_obj)
   /* Nearest object to given point or NULL */
   DALLOBJS *all;
   DALLOBJS  *prev_all = NULL;
-  
+
   g_assert(del_obj != NULL);
 
   all = obj->obj_list;
@@ -7658,10 +7780,10 @@ get_diffs(DOBJECT *obj,gint16 *xdiff, gint16 *ydiff, GdkPoint *to_pnt)
   g_assert(obj != NULL);
 
   spnt = obj->points;
-  
+
   if(!spnt)
     return(NULL); /* no-line */
-  
+
   /* Slow slow slowwwwww....*/
   while(spnt)
     {
@@ -7688,7 +7810,7 @@ update_pnts(DOBJECT *obj,gint16 xdiff, gint16 ydiff)
 
   if(!spnt)
     return; /* no-line */
-  
+
   /* Go around all the points drawing a line from one to the next */
   while(spnt)
     {
@@ -7708,13 +7830,13 @@ do_move_all_obj(GdkPoint *to_pnt)
   DOBJECT *obj;
   gint16 xdiff = 0;
   gint16 ydiff = 0;
-  
+
   xdiff = move_all_pnt->x - to_pnt->x;
   ydiff = move_all_pnt->y - to_pnt->y;
-  
+
   if(!xdiff && !ydiff)
     return;
-  
+
   all = current_obj->obj_list;
 
   while(all)
@@ -7723,9 +7845,9 @@ do_move_all_obj(GdkPoint *to_pnt)
 
       /* undraw ! */
       draw_one_obj(obj);
-      
+
       update_pnts(obj,xdiff,ydiff);
-      
+
       /* Draw in new pos */
       draw_one_obj(obj);
 
@@ -7743,20 +7865,20 @@ do_move_obj(DOBJECT *obj,GdkPoint *to_pnt)
   /* Then draw in new pos */
   gint16 xdiff = 0;
   gint16 ydiff = 0;
-  
+
   get_diffs(obj,&xdiff,&ydiff,to_pnt);
-  
+
   if(!xdiff && !ydiff)
     return;
-  
+
   /* undraw ! */
   draw_one_obj(obj);
-  
+
   update_pnts(obj,xdiff,ydiff);
-  
+
   /* Draw in new pos */
   draw_one_obj(obj);
-  
+
 }
 
 static void
@@ -7767,21 +7889,21 @@ do_move_obj_pnt(DOBJECT *obj,GdkPoint *to_pnt)
   DOBJPOINTS *spnt;
   gint16 xdiff = 0;
   gint16 ydiff = 0;
-  
+
   spnt = get_diffs(obj,&xdiff,&ydiff,to_pnt);
-  
+
   if((!xdiff && !ydiff) || !spnt)
     return;
-  
+
   /* undraw ! */
   draw_one_obj(obj);
 
   spnt->pnt.x = spnt->pnt.x - xdiff;
   spnt->pnt.y = spnt->pnt.y - ydiff;
-  
+
   /* Draw in new pos */
   draw_one_obj(obj);
-  
+
 }
 
 /* Save a line away to the specified stream */
@@ -7805,7 +7927,7 @@ d_save_line(DOBJECT * obj, FILE *to)
 	      (gint)spnt->pnt.y);
       spnt = spnt->next;
     }
-  
+
   fprintf(to,"</LINE>\n");
 }
 
@@ -7857,7 +7979,7 @@ d_copy_line(DOBJECT *obj)
   g_assert(obj->type == LINE);
 
   nl = d_new_line(obj->points->pnt.x,obj->points->pnt.y);
-  
+
   nl->points->next = d_copy_dobjpoints(obj->points->next);
 
   return(nl);
@@ -7913,7 +8035,7 @@ d_draw_line(DOBJECT * obj)
   draw_sqr(&spnt->pnt);
 }
 
-static void 
+static void
 d_paint_line(DOBJECT *obj)
 {
   DOBJPOINTS * spnt;
@@ -7940,7 +8062,7 @@ d_paint_line(DOBJECT *obj)
 
   /* The second *2 to get around bug in GIMP */
   line_pnts = g_malloc0(GFIG_LCC*(2*seg_count + 1)*sizeof(gdouble));
-  
+
   /* Go around all the points drawing a line from one to the next */
   while(spnt)
     {
@@ -7966,53 +8088,49 @@ d_paint_line(DOBJECT *obj)
 	{
 	case BRUSH_BRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,seg_count*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_PENCIL_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32,seg_count*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_AIRBRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.airbrushpressure,
 					    PARAM_INT32,seg_count*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_PATTERN_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32, 1,
 					    PARAM_FLOAT,(gdouble)0.0,
 					    PARAM_FLOAT,(gdouble)0.0,
 					    PARAM_INT32,seg_count*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	default:
 	  break;
 	}
     }
-  else 
+  else
     {
       /* We want to do a selection */
       return_vals = gimp_run_procedure ("gimp_free_select", &nreturn_vals,
 					PARAM_IMAGE, gfig_image,
 					PARAM_INT32,seg_count*2,
-					PARAM_FLOATARRAY, &line_pnts[0],  
+					PARAM_FLOATARRAY, &line_pnts[0],
 					PARAM_INT32,selopt.type,
 					PARAM_INT32,selopt.antia,
 					PARAM_INT32,selopt.feather,
@@ -8026,7 +8144,7 @@ d_paint_line(DOBJECT *obj)
 }
 
 
-/* Create a new line object. starting at the x,y point might add styles 
+/* Create a new line object. starting at the x,y point might add styles
  * later.
  */
 
@@ -8035,7 +8153,7 @@ d_new_line(gint x, gint y)
 {
   DOBJECT *nobj;
   DOBJPOINTS *npnt;
- 
+
   /* Get new object and starting point */
 
   /* Start point */
@@ -8076,7 +8194,7 @@ d_delete_line(DOBJECT * obj)
  * pos = -1 = tail
  * 0 < pos = nth position
  */
- 
+
 static void
 d_pnt_add_line(DOBJECT *obj, gint x, gint y, gint pos)
 {
@@ -8086,7 +8204,7 @@ d_pnt_add_line(DOBJECT *obj, gint x, gint y, gint pos)
 
   npnts->pnt.x = x;
   npnts->pnt.y = y;
-  
+
   if(!pos)
     {
       /* Add to head */
@@ -8126,7 +8244,7 @@ d_update_line(GdkPoint *pnt)
 
   /* Get start of segments */
   spnt = obj_creating->points;
-  
+
   if(!spnt)
     return; /* No points */
 
@@ -8135,7 +8253,7 @@ d_update_line(GdkPoint *pnt)
       /* undraw  current */
       /* Draw square on point */
       draw_circle(&epnt->pnt);
-      
+
       gdk_draw_line(gfig_preview->window,
 			/*gfig_preview->style->bg_gc[GTK_STATE_NORMAL],*/
 			gfig_gc,
@@ -8145,7 +8263,7 @@ d_update_line(GdkPoint *pnt)
 			(gint)epnt->pnt.y);
       g_free(epnt);
     }
-  
+
   /* draw new */
   /* Draw circle on point */
   draw_circle(pnt);
@@ -8177,7 +8295,7 @@ d_line_start(GdkPoint *pnt,gint shift_down)
   else
     {
       /* Contniuation */
-      d_update_line(pnt);	
+      d_update_line(pnt);
     }
 }
 
@@ -8208,7 +8326,7 @@ d_line_end(GdkPoint *pnt,gint shift_down)
 	  tmp_line = obj_creating;
 	  add_to_all_obj(current_obj,obj_creating);
 	}
-      
+
       obj_creating = d_new_line(pnt->x,pnt->y);
     }
   else
@@ -8258,7 +8376,7 @@ d_save_circle(DOBJECT * obj, FILE *to)
 	      (gint)spnt->pnt.y);
       spnt = spnt->next;
     }
-  
+
   fprintf(to,"</CIRCLE>\n");
 }
 
@@ -8297,10 +8415,10 @@ d_load_circle(FILE *from)
 	  DOBJPOINTS *edge_pnt;
 	  /* Circles only have two points */
 	  edge_pnt = (DOBJPOINTS *)g_malloc0(sizeof(DOBJPOINTS));
-	  
+
 	  edge_pnt->pnt.x = xpnt;
 	  edge_pnt->pnt.y = ypnt;
-	  
+
 	  new_obj->points->next = edge_pnt;
 	}
     }
@@ -8386,7 +8504,7 @@ d_paint_circle(DOBJECT *obj)
 #endif /* DEBUG */
       d_paint_poly(obj);
       return;
-    }      
+    }
 
 
   /* Drawing circles is hard .
@@ -8431,7 +8549,7 @@ d_paint_circle(DOBJECT *obj)
 				    PARAM_INT32,selopt.feather,
 				    PARAM_FLOAT,(gdouble)selopt.feather_radius,
 				    PARAM_END);
-  
+
   gimp_destroy_params (return_vals, nreturn_vals);
 
   /* Is selection all we need ? */
@@ -8439,7 +8557,6 @@ d_paint_circle(DOBJECT *obj)
     return;
 
   return_vals = gimp_run_procedure ("gimp_edit_stroke", &nreturn_vals,
-				    PARAM_IMAGE, gfig_image,
 				    PARAM_DRAWABLE, gfig_drawable,
 				    PARAM_END);
 
@@ -8448,7 +8565,7 @@ d_paint_circle(DOBJECT *obj)
   return_vals = gimp_run_procedure ("gimp_selection_clear", &nreturn_vals,
 				    PARAM_IMAGE, gfig_image,
 				    PARAM_END);
-  
+
   gimp_destroy_params (return_vals, nreturn_vals);
 
 }
@@ -8484,7 +8601,7 @@ d_new_circle(gint x, gint y)
 {
   DOBJECT *nobj;
   DOBJPOINTS *npnt;
- 
+
   /* Get new object and starting point */
 
   /* Start point */
@@ -8517,10 +8634,10 @@ d_update_circle(GdkPoint *pnt)
 
   /* Undraw last one then draw new one */
   center_pnt = obj_creating->points;
-  
+
   if(!center_pnt)
     return; /* No points */
-  
+
   if((edge_pnt = center_pnt->next))
     {
       /* Undraw current */
@@ -8529,7 +8646,7 @@ d_update_circle(GdkPoint *pnt)
 			   (center_pnt->pnt.x - edge_pnt->pnt.x)) +
 			  ((center_pnt->pnt.y - edge_pnt->pnt.y) *
 			   (center_pnt->pnt.y - edge_pnt->pnt.y)));
-      
+
       gdk_draw_arc (gfig_preview->window,
 		    gfig_gc,
 		    0,
@@ -8552,7 +8669,7 @@ d_update_circle(GdkPoint *pnt)
 		       (center_pnt->pnt.x - edge_pnt->pnt.x)) +
 		      ((center_pnt->pnt.y - edge_pnt->pnt.y) *
 		       (center_pnt->pnt.y - edge_pnt->pnt.y)));
-  
+
   gdk_draw_arc (gfig_preview->window,
 		gfig_gc,
 		0,
@@ -8611,7 +8728,7 @@ d_save_ellipse(DOBJECT * obj, FILE *to)
 	      (gint)spnt->pnt.y);
       spnt = spnt->next;
     }
-  
+
   fprintf(to,"</ELLIPSE>\n");
 }
 
@@ -8650,10 +8767,10 @@ d_load_ellipse(FILE *from)
 	  DOBJPOINTS *edge_pnt;
 	  /* Circles only have two points */
 	  edge_pnt = (DOBJPOINTS *)g_malloc0(sizeof(DOBJPOINTS));
-	  
+
 	  edge_pnt->pnt.x = xpnt;
 	  edge_pnt->pnt.y = ypnt;
-	  
+
 	  new_obj->points->next = edge_pnt;
 	}
     }
@@ -8693,7 +8810,7 @@ d_draw_ellipse(DOBJECT * obj)
     top_x = 2*center_pnt->pnt.x - edge_pnt->pnt.x;
   else
     top_x = edge_pnt->pnt.x;
-  
+
   if(edge_pnt->pnt.y > center_pnt->pnt.y)
     top_y = 2*center_pnt->pnt.y - edge_pnt->pnt.y;
   else
@@ -8762,7 +8879,7 @@ d_paint_approx_ellipse(DOBJECT *obj)
 
   /* The second 2* to get around bug in GIMP */
   line_pnts = g_malloc0(GFIG_LCC*(2*seg_count + 1)*sizeof(gdouble));
-  
+
   /* Go around all the points drawing a line from one to the next */
 
   radius_pnt = center_pnt->next; /* this defines the vetices */
@@ -8778,11 +8895,11 @@ d_paint_approx_ellipse(DOBJECT *obj)
     {
       gdouble lx,ly;
       GdkPoint calc_pnt;
-      
+
       ang_loop = (gdouble)loop * ang_grid;
 
       radius = a_axis*b_axis/(sqrt(cos(ang_loop)*cos(ang_loop)*(b_axis*b_axis - a_axis*a_axis) + a_axis*a_axis));
-	
+
       lx = radius * cos(ang_loop);
       ly = radius * sin(ang_loop);
 
@@ -8829,40 +8946,36 @@ d_paint_approx_ellipse(DOBJECT *obj)
 	{
 	case BRUSH_BRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_PENCIL_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_AIRBRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.airbrushpressure,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_PATTERN_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32, 1,
 					    PARAM_FLOAT,(gdouble)0.0,
 					    PARAM_FLOAT,(gdouble)0.0,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	default:
@@ -8875,7 +8988,7 @@ d_paint_approx_ellipse(DOBJECT *obj)
       return_vals = gimp_run_procedure ("gimp_free_select", &nreturn_vals,
 					PARAM_IMAGE, gfig_image,
 					PARAM_INT32,(i/2)*2,
-					PARAM_FLOATARRAY, &line_pnts[0],  
+					PARAM_FLOATARRAY, &line_pnts[0],
 					PARAM_INT32,selopt.type,
 					PARAM_INT32,selopt.antia,
 					PARAM_INT32,selopt.feather,
@@ -8918,7 +9031,7 @@ d_paint_ellipse(DOBJECT *obj)
 #endif /* DEBUG */
       d_paint_approx_ellipse(obj);
       return;
-    }      
+    }
 
   center_pnt = obj->points;
 
@@ -8939,7 +9052,7 @@ d_paint_ellipse(DOBJECT *obj)
     top_x = 2*center_pnt->pnt.x - edge_pnt->pnt.x;
   else
     top_x = edge_pnt->pnt.x;
-  
+
   if(edge_pnt->pnt.y > center_pnt->pnt.y)
     top_y = 2*center_pnt->pnt.y - edge_pnt->pnt.y;
   else
@@ -8968,7 +9081,7 @@ d_paint_ellipse(DOBJECT *obj)
 				    PARAM_INT32,selopt.feather,
 				    PARAM_FLOAT,(gdouble)selopt.feather_radius,
 				    PARAM_END);
-  
+
   gimp_destroy_params (return_vals, nreturn_vals);
 
   /* Is selection all we need ? */
@@ -8976,7 +9089,6 @@ d_paint_ellipse(DOBJECT *obj)
     return;
 
   return_vals = gimp_run_procedure ("gimp_edit_stroke", &nreturn_vals,
-				    PARAM_IMAGE, gfig_image,
 				    PARAM_DRAWABLE, gfig_drawable,
 				    PARAM_END);
 
@@ -8985,7 +9097,7 @@ d_paint_ellipse(DOBJECT *obj)
   return_vals = gimp_run_procedure ("gimp_selection_clear", &nreturn_vals,
 				    PARAM_IMAGE, gfig_image,
 				    PARAM_END);
-  
+
   gimp_destroy_params (return_vals, nreturn_vals);
 
 }
@@ -9021,7 +9133,7 @@ d_new_ellipse(gint x, gint y)
 {
   DOBJECT *nobj;
   DOBJPOINTS *npnt;
- 
+
   /* Get new object and starting point */
 
   /* Start point */
@@ -9057,29 +9169,29 @@ d_update_ellipse(GdkPoint *pnt)
 
   /* Undraw last one then draw new one */
   center_pnt = obj_creating->points;
-  
+
   if(!center_pnt)
     return; /* No points */
 
-  
+
   if((edge_pnt = center_pnt->next))
     {
       /* Undraw current */
       bound_wx = abs(center_pnt->pnt.x - edge_pnt->pnt.x)*2;
       bound_wy = abs(center_pnt->pnt.y - edge_pnt->pnt.y)*2;
-      
+
       if(edge_pnt->pnt.x > center_pnt->pnt.x)
 	top_x = 2*center_pnt->pnt.x - edge_pnt->pnt.x;
       else
 	top_x = edge_pnt->pnt.x;
-      
+
       if(edge_pnt->pnt.y > center_pnt->pnt.y)
 	top_y = 2*center_pnt->pnt.y - edge_pnt->pnt.y;
       else
 	top_y = edge_pnt->pnt.y;
 
       draw_circle(&edge_pnt->pnt);
-      
+
       gdk_draw_arc (gfig_preview->window,
 		    gfig_gc,
 		    0,
@@ -9105,12 +9217,12 @@ d_update_ellipse(GdkPoint *pnt)
     top_x = 2*center_pnt->pnt.x - edge_pnt->pnt.x;
   else
     top_x = edge_pnt->pnt.x;
-  
+
   if(edge_pnt->pnt.y > center_pnt->pnt.y)
     top_y = 2* center_pnt->pnt.y - edge_pnt->pnt.y;
   else
     top_y = edge_pnt->pnt.y;
-  
+
   gdk_draw_arc (gfig_preview->window,
 		gfig_gc,
 		0,
@@ -9120,7 +9232,7 @@ d_update_ellipse(GdkPoint *pnt)
 		bound_wy,
 		0,
 		360*64);
-  
+
   center_pnt->next = edge_pnt;
 }
 
@@ -9154,7 +9266,7 @@ void
 d_save_poly(DOBJECT * obj, FILE *to)
 {
   DOBJPOINTS * spnt;
-  
+
   spnt = obj->points;
 
   if(!spnt)
@@ -9169,7 +9281,7 @@ d_save_poly(DOBJECT * obj, FILE *to)
 	      (gint)spnt->pnt.y);
       spnt = spnt->next;
     }
-  
+
   fprintf(to,"<EXTRA>\n");
   fprintf(to,"%d\n</EXTRA>\n",(gint)obj->type_data);
   fprintf(to,"</POLY>\n");
@@ -9219,7 +9331,7 @@ d_load_poly(FILE *from)
 		  g_warning("[%d] Internal load error while loading poly",
 			    line_no);
 		  return(NULL);
-		} 
+		}
 	      /* Go around and read the last line */
 	      continue;
 	    }
@@ -9231,7 +9343,7 @@ d_load_poly(FILE *from)
 	    }
 	  return(new_obj);
 	}
-      
+
       if(!new_obj)
 	new_obj = d_new_poly(xpnt,ypnt);
       else
@@ -9297,7 +9409,7 @@ d_draw_poly(DOBJECT *obj)
       GdkPoint calc_pnt;
 
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
-	
+
       lx = radius * cos(ang_loop);
       ly = radius * sin(ang_loop);
 
@@ -9314,7 +9426,7 @@ d_draw_poly(DOBJECT *obj)
 	  if(drawing_pic)
 	    {
 	      gdk_draw_line(pic_preview->window,
-			    pic_preview->style->black_gc,			    
+			    pic_preview->style->black_gc,
 			    adjust_pic_coords(calc_pnt.x,
 					      preview_width),
 			    adjust_pic_coords(calc_pnt.y,
@@ -9399,7 +9511,7 @@ d_paint_poly(DOBJECT *obj)
 
   /* The second 2* to get around bug in GIMP */
   line_pnts = g_malloc0(GFIG_LCC*(2*seg_count + 1)*sizeof(gdouble));
-  
+
   /* Go around all the points drawing a line from one to the next */
 
   radius_pnt = center_pnt->next; /* this defines the vetices */
@@ -9418,9 +9530,9 @@ d_paint_poly(DOBJECT *obj)
     {
       gdouble lx,ly;
       GdkPoint calc_pnt;
-      
+
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
-	
+
       lx = radius * cos(ang_loop);
       ly = radius * sin(ang_loop);
 
@@ -9467,40 +9579,36 @@ d_paint_poly(DOBJECT *obj)
 	{
 	case BRUSH_BRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_PENCIL_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_AIRBRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.airbrushpressure,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_PATTERN_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32, 1,
 					    PARAM_FLOAT,(gdouble)0.0,
 					    PARAM_FLOAT,(gdouble)0.0,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	default:
@@ -9513,7 +9621,7 @@ d_paint_poly(DOBJECT *obj)
       return_vals = gimp_run_procedure ("gimp_free_select", &nreturn_vals,
 					PARAM_IMAGE, gfig_image,
 					PARAM_INT32,(i/2)*2,
-					PARAM_FLOATARRAY, &line_pnts[0],  
+					PARAM_FLOATARRAY, &line_pnts[0],
 					PARAM_INT32,selopt.type,
 					PARAM_INT32,selopt.antia,
 					PARAM_INT32,selopt.feather,
@@ -9558,7 +9666,7 @@ d_poly2lines(DOBJECT *obj)
   if(!center_pnt)
     return; /* no-line */
 
-  /* Undraw it to start with - removes control points */ 
+  /* Undraw it to start with - removes control points */
   obj->drawfunc(obj);
 
   /* NULL out these points free later */
@@ -9582,9 +9690,9 @@ d_poly2lines(DOBJECT *obj)
     {
       gdouble lx,ly;
       GdkPoint calc_pnt;
-      
+
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
-	
+
       lx = radius * cos(ang_loop);
       ly = radius * sin(ang_loop);
 
@@ -9662,7 +9770,7 @@ d_star2lines(DOBJECT *obj)
   if(!center_pnt)
     return; /* no-line */
 
-  /* Undraw it to start with - removes control points */ 
+  /* Undraw it to start with - removes control points */
   obj->drawfunc(obj);
 
   /* NULL out these points free later */
@@ -9708,7 +9816,7 @@ d_star2lines(DOBJECT *obj)
     {
       gdouble lx,ly;
       GdkPoint calc_pnt;
-      
+
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
 
       if(loop%2)
@@ -9792,7 +9900,7 @@ d_new_poly(gint x, gint y)
 {
   DOBJECT *nobj;
   DOBJPOINTS *npnt;
- 
+
   /* Get new object and starting point */
 
   /* Start point */
@@ -9826,7 +9934,7 @@ d_update_poly(GdkPoint *pnt)
 
   /* Undraw last one then draw new one */
   center_pnt = obj_creating->points;
-  
+
   if(!center_pnt)
     return; /* No points */
 
@@ -9835,7 +9943,7 @@ d_update_poly(GdkPoint *pnt)
    * Only undraw if already have edge point.
    */
 
-  /* Hack - turn off cnt points in draw routine 
+  /* Hack - turn off cnt points in draw routine
    * Looking back over the other update routines I could
    * use this trick again and cut down on code size!
    */
@@ -9868,7 +9976,7 @@ d_update_poly(GdkPoint *pnt)
   draw_circle(&edge_pnt->pnt);
 }
 
-/* first point is center 
+/* first point is center
  * next defines the radius
  */
 
@@ -9914,7 +10022,7 @@ static double
 line_grad(double x1,double y1, double x2, double y2)
 {
   double dx,dy;
-  
+
   dx = x1 - x2;
   dy = y1 - y2;
 
@@ -9953,12 +10061,12 @@ line_definition(double x1, double y1, double x2, double y2, double *lgrad, doubl
   /* Invert grad for perpen gradient */
 
   *lgrad = -1.0/grad1;
-  
+
   *lconst = line_cons(midx,midy,*lgrad);
 }
 
-/* Arch details 
- * Given three points get arc radius and the co-ords 
+/* Arch details
+ * Given three points get arc radius and the co-ords
  * of center point.
  */
 
@@ -10008,7 +10116,7 @@ arc_details(GdkPoint *vert_a,GdkPoint *vert_b, GdkPoint *vert_c,GdkPoint *center
 #ifdef DEBUG
   printf("Area of triangle = %f\n",area);
 #endif /* DEBUG */
-  
+
   /* Circumcircle */
   circumcircle_R = len_a*len_b*len_c/(4*area);
   *radius = circumcircle_R;
@@ -10029,7 +10137,7 @@ arc_details(GdkPoint *vert_a,GdkPoint *vert_b, GdkPoint *vert_c,GdkPoint *center
 
 	  if(by > maxy)
 	    maxy = by;
-	  
+
 	  if(by < miny)
 	    miny = by;
 
@@ -10067,7 +10175,7 @@ arc_details(GdkPoint *vert_a,GdkPoint *vert_b, GdkPoint *vert_c,GdkPoint *center
 
 	  if(bx > maxx)
 	    maxx = bx;
-	  
+
 	  if(bx < minx)
 	    minx = bx;
 
@@ -10163,7 +10271,7 @@ d_save_arc(DOBJECT * obj, FILE *to)
 	      (gint)spnt->pnt.y);
       spnt = spnt->next;
     }
-  
+
   fprintf(to,"</ARC>\n");
 }
 
@@ -10195,7 +10303,7 @@ d_load_arc(FILE *from)
 	    }
 	  return(new_obj);
 	}
-      
+
       num_pnts++;
 
       if(!new_obj)
@@ -10277,7 +10385,7 @@ arc_drawing_details(DOBJECT *obj,
     }
 
   arc_details(&pnt1->pnt,&pnt2->pnt,&pnt3->pnt,center_pnt,radius);
-  
+
   ang1 = arc_angle(&pnt1->pnt,center_pnt);
   ang2 = arc_angle(&pnt2->pnt,center_pnt);
   ang3 = arc_angle(&pnt3->pnt,center_pnt);
@@ -10288,7 +10396,7 @@ arc_drawing_details(DOBJECT *obj,
 
   if(ang3 > maxang)
     maxang = ang3;
-  
+
   *minang = ang1;
 
   if(ang3 < *minang)
@@ -10312,7 +10420,7 @@ d_draw_arc(DOBJECT * obj)
     return;
 
   arc_drawing_details(obj,&minang,&center_pnt,&arcang,&radius,TRUE,FALSE);
-  
+
 #ifdef DEBUG
   printf("Min ang = %f Arc ang = %f\n",minang,arcang);
 #endif /* DEBUG */
@@ -10400,7 +10508,7 @@ d_paint_arc(DOBJECT *obj)
     {
       gdouble lx,ly;
       GdkPoint calc_pnt;
-      
+
       ang_loop = (gdouble)loop * ang_grid + minang;
 
       lx = radius * cos(ang_loop);
@@ -10440,40 +10548,36 @@ d_paint_arc(DOBJECT *obj)
 	{
 	case BRUSH_BRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_PENCIL_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_AIRBRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.airbrushpressure,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_PATTERN_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32, 1,
 					    PARAM_FLOAT,(gdouble)0.0,
 					    PARAM_FLOAT,(gdouble)0.0,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	default:
@@ -10493,14 +10597,14 @@ d_paint_arc(DOBJECT *obj)
       return_vals = gimp_run_procedure ("gimp_free_select", &nreturn_vals,
 					PARAM_IMAGE, gfig_image,
 					PARAM_INT32,(i/2)*2,
-					PARAM_FLOATARRAY, &line_pnts[0],  
+					PARAM_FLOATARRAY, &line_pnts[0],
 					PARAM_INT32,selopt.type,
 					PARAM_INT32,selopt.antia,
 					PARAM_INT32,selopt.feather,
 					PARAM_FLOAT,(gdouble)selopt.feather_radius,
 					PARAM_END);
     }
-  
+
   gimp_destroy_params (return_vals, nreturn_vals);
 
   g_free(line_pnts);
@@ -10538,7 +10642,7 @@ d_new_arc(gint x, gint y)
 {
   DOBJECT *nobj;
   DOBJPOINTS *npnt;
- 
+
   /* Get new object and starting point */
 
   /* Start point */
@@ -10644,7 +10748,7 @@ void
 d_save_star(DOBJECT * obj, FILE *to)
 {
   DOBJPOINTS * spnt;
-  
+
   spnt = obj->points;
 
   if(!spnt)
@@ -10659,7 +10763,7 @@ d_save_star(DOBJECT * obj, FILE *to)
 	      (gint)spnt->pnt.y);
       spnt = spnt->next;
     }
-  
+
   fprintf(to,"<EXTRA>\n");
   fprintf(to,"%d\n</EXTRA>\n",(gint)obj->type_data);
   fprintf(to,"</STAR>\n");
@@ -10708,7 +10812,7 @@ d_load_star(FILE *from)
 		  g_warning("[%d] Internal load error while loading star",
 			    line_no);
 		  return(NULL);
-		} 
+		}
 	      /* Go around and read the last line */
 	      continue;
 	    }
@@ -10720,7 +10824,7 @@ d_load_star(FILE *from)
 	    }
 	  return(new_obj);
 	}
-      
+
       if(!new_obj)
 	new_obj = d_new_star(xpnt,ypnt);
       else
@@ -10804,7 +10908,7 @@ d_draw_star(DOBJECT *obj)
       GdkPoint calc_pnt;
 
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
-	
+
       if(loop%2)
 	{
 	  lx = inner_radius * cos(ang_loop);
@@ -10829,7 +10933,7 @@ d_draw_star(DOBJECT *obj)
 	  if(drawing_pic)
 	    {
 	      gdk_draw_line(pic_preview->window,
-			    pic_preview->style->black_gc,			    
+			    pic_preview->style->black_gc,
 			    adjust_pic_coords(calc_pnt.x,
 					      preview_width),
 			    adjust_pic_coords(calc_pnt.y,
@@ -10917,7 +11021,7 @@ d_paint_star(DOBJECT *obj)
 
   /* The second 2* to get around bug in GIMP */
   line_pnts = g_malloc0(GFIG_LCC*(2*seg_count + 1)*sizeof(gdouble));
-  
+
   /* Go around all the points drawing a line from one to the next */
   /* Next point defines the radius */
   outer_radius_pnt = center_pnt->next; /* this defines the vetices */
@@ -10958,9 +11062,9 @@ d_paint_star(DOBJECT *obj)
     {
       gdouble lx,ly;
       GdkPoint calc_pnt;
-      
+
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
-	
+
       if(loop%2)
 	{
 	  lx = inner_radius * cos(ang_loop);
@@ -11016,40 +11120,36 @@ d_paint_star(DOBJECT *obj)
 	{
 	case BRUSH_BRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_PENCIL_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_AIRBRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.airbrushpressure,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_PATTERN_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32, 1,
 					    PARAM_FLOAT,(gdouble)0.0,
 					    PARAM_FLOAT,(gdouble)0.0,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	default:
@@ -11062,7 +11162,7 @@ d_paint_star(DOBJECT *obj)
       return_vals = gimp_run_procedure ("gimp_free_select", &nreturn_vals,
 					PARAM_IMAGE, gfig_image,
 					PARAM_INT32,(i/2)*2,
-					PARAM_FLOATARRAY, &line_pnts[0],  
+					PARAM_FLOATARRAY, &line_pnts[0],
 					PARAM_INT32,selopt.type,
 					PARAM_INT32,selopt.antia,
 					PARAM_INT32,selopt.feather,
@@ -11106,7 +11206,7 @@ d_new_star(gint x, gint y)
 {
   DOBJECT *nobj;
   DOBJPOINTS *npnt;
- 
+
   /* Get new object and starting point */
 
   /* Start point */
@@ -11140,7 +11240,7 @@ d_update_star(GdkPoint *pnt)
 
   /* Undraw last one then draw new one */
   center_pnt = obj_creating->points;
-  
+
   if(!center_pnt)
     return; /* No points */
 
@@ -11149,7 +11249,7 @@ d_update_star(GdkPoint *pnt)
    * Only undraw if already have edge point.
    */
 
-  /* Hack - turn off cnt points in draw routine 
+  /* Hack - turn off cnt points in draw routine
    * Looking back over the other update routines I could
    * use this trick again and cut down on code size!
    */
@@ -11192,7 +11292,7 @@ d_update_star(GdkPoint *pnt)
   draw_circle(&inner_pnt->pnt);
 }
 
-/* first point is center 
+/* first point is center
  * next defines the radius
  */
 
@@ -11220,7 +11320,7 @@ void
 d_save_spiral(DOBJECT * obj, FILE *to)
 {
   DOBJPOINTS * spnt;
-  
+
   spnt = obj->points;
 
   if(!spnt)
@@ -11235,7 +11335,7 @@ d_save_spiral(DOBJECT * obj, FILE *to)
 	      (gint)spnt->pnt.y);
       spnt = spnt->next;
     }
-  
+
   fprintf(to,"<EXTRA>\n");
   fprintf(to,"%d\n</EXTRA>\n",(gint)obj->type_data);
   fprintf(to,"</SPIRAL>\n");
@@ -11285,7 +11385,7 @@ d_load_spiral(FILE *from)
 		  g_warning("[%d] Internal load error while loading spiral",
 			    line_no);
 		  return(NULL);
-		} 
+		}
 	      /* Go around and read the last line */
 	      continue;
 	    }
@@ -11297,7 +11397,7 @@ d_load_spiral(FILE *from)
 	    }
 	  return(new_obj);
 	}
-      
+
       if(!new_obj)
 	new_obj = d_new_spiral(xpnt,ypnt);
       else
@@ -11373,7 +11473,7 @@ d_draw_spiral(DOBJECT *obj)
       GdkPoint calc_pnt;
 
       ang_loop = (gdouble)loop * ang_grid;
-	
+
       lx = sp_cons * ang_loop * cos(ang_loop)*clock_wise;
       ly = sp_cons * ang_loop * sin(ang_loop);
 
@@ -11390,7 +11490,7 @@ d_draw_spiral(DOBJECT *obj)
 	  if(drawing_pic)
 	    {
 	      gdk_draw_line(pic_preview->window,
-			    pic_preview->style->black_gc,			    
+			    pic_preview->style->black_gc,
 			    adjust_pic_coords(calc_pnt.x,
 					      preview_width),
 			    adjust_pic_coords(calc_pnt.y,
@@ -11485,7 +11585,7 @@ d_paint_spiral(DOBJECT *obj)
       GdkPoint calc_pnt;
 
       ang_loop = (gdouble)loop * ang_grid;
-	
+
       lx = sp_cons * ang_loop * cos(ang_loop)*clock_wise;
       ly = sp_cons * ang_loop * sin(ang_loop);
 
@@ -11523,40 +11623,36 @@ d_paint_spiral(DOBJECT *obj)
 	{
 	case BRUSH_BRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_PENCIL_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_AIRBRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.airbrushpressure,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_PATTERN_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32, 1,
 					    PARAM_FLOAT,(gdouble)0.0,
 					    PARAM_FLOAT,(gdouble)0.0,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	default:
@@ -11569,7 +11665,7 @@ d_paint_spiral(DOBJECT *obj)
       return_vals = gimp_run_procedure ("gimp_free_select", &nreturn_vals,
 					PARAM_IMAGE, gfig_image,
 					PARAM_INT32,(i/2)*2,
-					PARAM_FLOATARRAY, &line_pnts[0],  
+					PARAM_FLOATARRAY, &line_pnts[0],
 					PARAM_INT32,selopt.type,
 					PARAM_INT32,selopt.antia,
 					PARAM_INT32,selopt.feather,
@@ -11613,7 +11709,7 @@ d_new_spiral(gint x, gint y)
 {
   DOBJECT *nobj;
   DOBJPOINTS *npnt;
- 
+
   /* Get new object and starting point */
 
   /* Start point */
@@ -11647,7 +11743,7 @@ d_update_spiral(GdkPoint *pnt)
 
   /* Undraw last one then draw new one */
   center_pnt = obj_creating->points;
-  
+
   if(!center_pnt)
     return; /* No points */
 
@@ -11656,7 +11752,7 @@ d_update_spiral(GdkPoint *pnt)
    * Only undraw if already have edge point.
    */
 
-  /* Hack - turn off cnt points in draw routine 
+  /* Hack - turn off cnt points in draw routine
    * Looking back over the other update routines I could
    * use this trick again and cut down on code size!
    */
@@ -11689,7 +11785,7 @@ d_update_spiral(GdkPoint *pnt)
   draw_circle(&edge_pnt->pnt);
 }
 
-/* first point is center 
+/* first point is center
  * next defines the radius
  */
 
@@ -11716,7 +11812,7 @@ void
 d_save_bezier(DOBJECT * obj, FILE *to)
 {
   DOBJPOINTS * spnt;
-  
+
   spnt = obj->points;
 
   if(!spnt)
@@ -11731,7 +11827,7 @@ d_save_bezier(DOBJECT * obj, FILE *to)
 	      (gint)spnt->pnt.y);
       spnt = spnt->next;
     }
-  
+
   fprintf(to,"<EXTRA>\n");
   fprintf(to,"%d\n</EXTRA>\n",(gint)obj->type_data);
   fprintf(to,"</BEZIER>\n");
@@ -11781,7 +11877,7 @@ d_load_bezier(FILE *from)
 		  g_warning("[%d] Internal load error while loading bezier",
 			    line_no);
 		  return(NULL);
-		} 
+		}
 	      /* Go around and read the last line */
 	      continue;
 	    }
@@ -11793,7 +11889,7 @@ d_load_bezier(FILE *from)
 	    }
 	  return(new_obj);
 	}
-      
+
       if(!new_obj)
 	new_obj = d_new_bezier(xpnt,ypnt);
       else
@@ -11850,7 +11946,7 @@ d_bz_get_array(gint *sz)
 static void
 d_bz_line()
 {
-  gint i,x0,y0,x1,y1; 
+  gint i,x0,y0,x1,y1;
 
   g_assert((fp_pnt_cnt%4) == 0);
 
@@ -11893,10 +11989,10 @@ typedef gdouble (*fp_pnt)[2];
 void
 DrawBezier (gdouble (*points)[2], gint np, gdouble mid, gint depth)
 {
-  gint i,j,x0=0,y0=0,x1,y1; 
+  gint i,j,x0=0,y0=0,x1,y1;
   fp_pnt left;
   fp_pnt right;
-  
+
     if (depth==0) /* draw polyline */
       {
 	for (i=0; i<np; i++)
@@ -11920,7 +12016,7 @@ DrawBezier (gdouble (*points)[2], gint np, gdouble mid, gint depth)
 	  {
 	    right[i][0]=points[i][0];
 	    right[i][1]=points[i][1];
-	  } 
+	  }
 	left[0][0]=right[0][0];
 	left[0][1]=right[0][1];
 	for (j=np-1; j>=1; j--)
@@ -12056,40 +12152,36 @@ d_paint_bezier(DOBJECT *obj)
 	{
 	case BRUSH_BRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_PENCIL_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_AIRBRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.airbrushpressure,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	case BRUSH_PATTERN_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32, 1,
 					    PARAM_FLOAT,(gdouble)0.0,
 					    PARAM_FLOAT,(gdouble)0.0,
 					    PARAM_INT32,(i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
 					    PARAM_END);
 	  break;
 	default:
@@ -12102,7 +12194,7 @@ d_paint_bezier(DOBJECT *obj)
       return_vals = gimp_run_procedure ("gimp_free_select", &nreturn_vals,
 					PARAM_IMAGE, gfig_image,
 					PARAM_INT32,(i/2)*2,
-					PARAM_FLOATARRAY, &line_pnts[0],  
+					PARAM_FLOATARRAY, &line_pnts[0],
 					PARAM_INT32,selopt.type,
 					PARAM_INT32,selopt.antia,
 					PARAM_INT32,selopt.feather,
@@ -12147,7 +12239,7 @@ d_new_bezier(gint x, gint y)
 {
   DOBJECT *nobj;
   DOBJPOINTS *npnt;
- 
+
   /* Get new object and starting point */
 
   /* Start point */
@@ -12183,11 +12275,11 @@ d_update_bezier(GdkPoint *pnt)
 
   /* Undraw last one then draw new one */
   s_pnt = tmp_bezier->points;
-  
+
   if(!s_pnt)
     return; /* No points */
 
-  /* Hack - turn off cnt points in draw routine 
+  /* Hack - turn off cnt points in draw routine
    */
 
   if((l_pnt = s_pnt->next))
@@ -12221,7 +12313,7 @@ d_update_bezier(GdkPoint *pnt)
   draw_circle(&l_pnt->pnt);
 }
 
-/* first point is center 
+/* first point is center
  * next defines the radius
  */
 
@@ -12246,10 +12338,10 @@ d_bezier_end(GdkPoint *pnt, gint shift_down)
     {
       tmp_bezier = obj_creating;
     }
-  
+
   l_pnt = tmp_bezier->points->next;
 
-  if(!l_pnt) 
+  if(!l_pnt)
     return;
 
   if(shift_down)
@@ -12348,7 +12440,7 @@ draw_one_obj(DOBJECT * obj)
 void
 draw_objects(DALLOBJS * objs,gint show_single)
 {
-  /* Show_single - only one object to draw Unless shift 
+  /* Show_single - only one object to draw Unless shift
    * is down in whcih case show all.
    */
 
@@ -12390,7 +12482,7 @@ static void
 add_to_all_obj(GFIGOBJ * fobj,DOBJECT *obj)
 {
   DALLOBJS *nobj;
-  
+
   nobj = g_malloc0(sizeof(DALLOBJS));
 
   nobj->obj = obj;
@@ -12443,7 +12535,7 @@ object_operation_start(GdkPoint *pnt,gint shift_down)
 	  d_draw_bezier(operation_obj);
 	}
       /* If shift is down the break into sep lines */
-      if((operation_obj->type == POLY  
+      if((operation_obj->type == POLY
 	  || operation_obj->type == STAR)
 	 && shift_down)
 	{
@@ -12636,7 +12728,7 @@ object_start(GdkPoint *pnt,gint shift_down)
       break;
     }
 }
-  
+
 /* Real object now !*/
 void
 object_end(GdkPoint *pnt,gint shift_down)
