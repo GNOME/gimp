@@ -1,5 +1,14 @@
 2002-12-17  Sven Neumann  <sven@gimp.org>
 
+	* app/main.c: don't install signal handlers for fatal signals if
+	stack_trace_mode is STACK_TRACE_NEVER (fixes bug #71409).
+
+	* plug-ins/common/jpeg.c: applied a patch from Raphael Quinet that
+	suppressed saving of default settings when a JPEG image is loaded
+	(fixes bug #75398).
+
+2002-12-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/webbrowser/web-browser.scm: applied a patch from Raphael
 	Quinet that removes outdated links and adds one for the GUG
 	(bug #101435).
