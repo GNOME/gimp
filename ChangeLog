@@ -1,3 +1,8 @@
+2004-10-27  Philip Lafleur <plafleur@cvs.gnome.org>
+
+	* app/display/gimpdisplayshell-preview.c: Hopefully fixed all cases
+	of the perspective tool preview breaking with certain orientations.
+
 2004-10-27  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/enumcode.pl: Don't declare $first twice.
