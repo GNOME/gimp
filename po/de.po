@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.4\n"
-"POT-Creation-Date: 2002-12-19 11:49+0100\n"
-"PO-Revision-Date: 2002-12-19 12:00+0100\n"
+"POT-Creation-Date: 2003-01-02 17:20+0100\n"
+"PO-Revision-Date: 2003-01-02 17:21+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -128,18 +128,18 @@ msgid "Quit"
 msgstr "Beenden"
 
 #. the cancel button
-#: app/app_procs.c:796 app/brightness_contrast.c:236 app/channel_ops.c:99
+#: app/app_procs.c:796 app/brightness_contrast.c:244 app/channel_ops.c:99
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
-#: app/color_balance.c:292 app/color_notebook.c:128 app/convert.c:517
-#: app/curves.c:586 app/file_new_dialog.c:212 app/file_new_dialog.c:362
+#: app/color_balance.c:299 app/color_notebook.c:128 app/convert.c:517
+#: app/curves.c:592 app/file_new_dialog.c:212 app/file_new_dialog.c:362
 #: app/gdisplay_ops.c:313 app/gimphelp.c:201 app/gimpprogress.c:120
 #: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4944
-#: app/gradient.c:5505 app/hue_saturation.c:394 app/interface.c:1047
+#: app/gradient.c:5505 app/hue_saturation.c:402 app/interface.c:1047
 #: app/layers_dialog.c:3563 app/layers_dialog.c:3747 app/layers_dialog.c:3842
-#: app/layers_dialog.c:4103 app/levels.c:363 app/palette.c:1825
-#: app/posterize.c:218 app/preferences_dialog.c:1485 app/qmask.c:282
+#: app/layers_dialog.c:4103 app/levels.c:375 app/palette.c:1825
+#: app/posterize.c:229 app/preferences_dialog.c:1485 app/qmask.c:282
 #: app/resize.c:225 app/resize.c:1400 app/resolution_calibrate.c:116
-#: app/threshold.c:292 app/user_install.c:605
+#: app/threshold.c:301 app/user_install.c:605
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -279,49 +279,55 @@ msgstr "Farbverlauf..."
 msgid "Blend: "
 msgstr "Farbverlauf: "
 
-#: app/brightness_contrast.c:132 app/brightness_contrast.c:227
+#: app/brightness_contrast.c:133 app/brightness_contrast.c:235
 #: app/tools.c:1054
 msgid "Brightness-Contrast"
 msgstr "Helligkeit-Kontrast"
 
-#: app/brightness_contrast.c:175
+#: app/brightness_contrast.c:176 app/color_balance.c:217 app/curves.c:450
+#: app/hue_saturation.c:292 app/levels.c:246 app/posterize.c:160
+#: app/threshold.c:217
+msgid "The image has no drawables."
+msgstr "Das Bild enthält keine Ebenen."
+
+#: app/brightness_contrast.c:182
 msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "Helligkeit-Kontrast funktioniert nicht bei indizierten Bildern."
 
-#: app/brightness_contrast.c:232 app/channel_ops.c:97
+#: app/brightness_contrast.c:240 app/channel_ops.c:97
 #: app/channels_dialog.c:2539 app/channels_dialog.c:2702
-#: app/color_balance.c:288 app/color_notebook.c:125 app/convert.c:515
-#: app/curves.c:582 app/file_new_dialog.c:212 app/file_new_dialog.c:358
-#: app/gimpui.c:127 app/hue_saturation.c:390 app/layers_dialog.c:3561
+#: app/color_balance.c:295 app/color_notebook.c:125 app/convert.c:515
+#: app/curves.c:588 app/file_new_dialog.c:212 app/file_new_dialog.c:358
+#: app/gimpui.c:127 app/hue_saturation.c:398 app/layers_dialog.c:3561
 #: app/layers_dialog.c:3745 app/layers_dialog.c:3840 app/layers_dialog.c:4101
-#: app/levels.c:359 app/module_db.c:315 app/posterize.c:214
+#: app/levels.c:371 app/module_db.c:315 app/posterize.c:225
 #: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
-#: app/resize.c:1400 app/resolution_calibrate.c:114 app/threshold.c:288
+#: app/resize.c:1400 app/resolution_calibrate.c:114 app/threshold.c:297
 msgid "OK"
 msgstr "OK"
 
-#: app/brightness_contrast.c:234 app/by_color_select.c:727
-#: app/color_balance.c:290 app/curves.c:584 app/file_new_dialog.c:360
-#: app/hue_saturation.c:392 app/levels.c:361 app/posterize.c:216
-#: app/resize.c:222 app/threshold.c:290 app/tools.c:1547
+#: app/brightness_contrast.c:242 app/by_color_select.c:727
+#: app/color_balance.c:297 app/curves.c:590 app/file_new_dialog.c:360
+#: app/hue_saturation.c:400 app/levels.c:373 app/posterize.c:227
+#: app/resize.c:222 app/threshold.c:299 app/tools.c:1547
 #: app/transform_core.c:411 modules/colorsel_water.c:634
 msgid "Reset"
 msgstr "Standard"
 
 #. Create the brightness scale widget
-#: app/brightness_contrast.c:252
+#: app/brightness_contrast.c:260
 msgid "Brightness:"
 msgstr "Helligkeit:"
 
 #. Create the contrast scale widget
-#: app/brightness_contrast.c:283
+#: app/brightness_contrast.c:291
 msgid "Contrast:"
 msgstr "Kontrast:"
 
 #. The preview toggle
-#: app/brightness_contrast.c:318 app/color_balance.c:458 app/curves.c:706
-#: app/fileops.c:420 app/hue_saturation.c:582 app/levels.c:592
-#: app/palette.c:3229 app/posterize.c:255 app/threshold.c:365
+#: app/brightness_contrast.c:326 app/color_balance.c:465 app/curves.c:712
+#: app/fileops.c:420 app/hue_saturation.c:590 app/levels.c:604
+#: app/palette.c:3229 app/posterize.c:266 app/threshold.c:374
 msgid "Preview"
 msgstr "Vorschau"
 
@@ -565,18 +571,18 @@ msgstr "Kanal löschen"
 msgid "Empty Channel Copy"
 msgstr "Leerer Kanal Kopie"
 
-#: app/channels_dialog.c:1440 app/color_balance.c:360 app/color_select.c:254
-#: app/curves.c:607 app/histogram_tool.c:322 app/levels.c:392
+#: app/channels_dialog.c:1440 app/color_balance.c:367 app/color_select.c:254
+#: app/curves.c:613 app/histogram_tool.c:322 app/levels.c:404
 msgid "Red"
 msgstr "Rot"
 
-#: app/channels_dialog.c:1444 app/color_balance.c:385 app/color_select.c:255
-#: app/curves.c:608 app/histogram_tool.c:323 app/levels.c:393
+#: app/channels_dialog.c:1444 app/color_balance.c:392 app/color_select.c:255
+#: app/curves.c:614 app/histogram_tool.c:323 app/levels.c:405
 msgid "Green"
 msgstr "Grün"
 
-#: app/channels_dialog.c:1448 app/color_balance.c:410 app/color_select.c:256
-#: app/curves.c:609 app/histogram_tool.c:324 app/levels.c:394
+#: app/channels_dialog.c:1448 app/color_balance.c:417 app/color_select.c:256
+#: app/curves.c:615 app/histogram_tool.c:324 app/levels.c:406
 msgid "Blue"
 msgstr "Blau"
 
@@ -639,47 +645,47 @@ msgid "No patterns available for this operation."
 msgstr "Für diese Funktion sind keine Muster vorhanden."
 
 #. The shell and main vbox
-#: app/color_balance.c:173 app/color_balance.c:283 app/tools.c:1026
+#: app/color_balance.c:173 app/color_balance.c:290 app/tools.c:1026
 msgid "Color Balance"
 msgstr "Farbausgleich"
 
-#: app/color_balance.c:217
+#: app/color_balance.c:223
 msgid "Color balance operates only on RGB color drawables."
 msgstr "Farbausgleich funktioniert nur bei RGB Bildern."
 
-#: app/color_balance.c:272 app/dodgeburn.c:186
+#: app/color_balance.c:279 app/dodgeburn.c:186
 msgid "Shadows"
 msgstr "Schatten"
 
-#: app/color_balance.c:273 app/dodgeburn.c:184
+#: app/color_balance.c:280 app/dodgeburn.c:184
 msgid "Midtones"
 msgstr "Mitten"
 
-#: app/color_balance.c:274 app/dodgeburn.c:182
+#: app/color_balance.c:281 app/dodgeburn.c:182
 msgid "Highlights"
 msgstr "Glanzlichter"
 
-#: app/color_balance.c:305
+#: app/color_balance.c:312
 msgid "Color Levels:"
 msgstr "Farbwerte:"
 
 #. Create the cyan-red scale widget
-#: app/color_balance.c:345
+#: app/color_balance.c:352
 msgid "Cyan"
 msgstr "Cyan"
 
 #. Create the magenta-green scale widget
-#: app/color_balance.c:370
+#: app/color_balance.c:377
 msgid "Magenta"
 msgstr "Magenta"
 
 #. Create the yellow-blue scale widget
-#: app/color_balance.c:395
+#: app/color_balance.c:402
 msgid "Yellow"
 msgstr "Gelb"
 
 #. The preserve luminosity toggle
-#: app/color_balance.c:448
+#: app/color_balance.c:455
 msgid "Preserve Luminosity"
 msgstr "Helligkeit erhalten"
 
@@ -758,15 +764,15 @@ msgstr "S"
 msgid "V"
 msgstr "V"
 
-#: app/color_select.c:245 app/hue_saturation.c:372
+#: app/color_select.c:245 app/hue_saturation.c:380
 msgid "R"
 msgstr "R"
 
-#: app/color_select.c:246 app/hue_saturation.c:374
+#: app/color_select.c:246 app/hue_saturation.c:382
 msgid "G"
 msgstr "G"
 
-#: app/color_select.c:247 app/hue_saturation.c:376
+#: app/color_select.c:247 app/hue_saturation.c:384
 msgid "B"
 msgstr "B"
 
@@ -780,8 +786,8 @@ msgstr "Farbton"
 msgid "Saturation"
 msgstr "Sättigung"
 
-#: app/color_select.c:253 app/curves.c:606 app/histogram_tool.c:321
-#: app/layers_dialog.c:394 app/levels.c:391 app/paint_funcs.c:102
+#: app/color_select.c:253 app/curves.c:612 app/histogram_tool.c:321
+#: app/layers_dialog.c:394 app/levels.c:403 app/paint_funcs.c:102
 #: app/tool_options.c:937
 msgid "Value"
 msgstr "Wert"
@@ -1000,57 +1006,57 @@ msgid "Auto Shrink"
 msgstr "Automatisch schrumpfen"
 
 #. The shell and main vbox
-#: app/curves.c:403 app/curves.c:577 app/tools.c:1166
+#: app/curves.c:403 app/curves.c:583 app/tools.c:1166
 msgid "Curves"
 msgstr "Kurven"
 
-#: app/curves.c:450
+#: app/curves.c:456
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Kurven können bei indizierten Bildern nicht angepaßt werden."
 
-#: app/curves.c:599
+#: app/curves.c:605
 msgid "Modify Curves for Channel:"
 msgstr "Verändere Kurven für Kanal:"
 
-#: app/curves.c:610 app/levels.c:395
+#: app/curves.c:616 app/levels.c:407
 msgid "Alpha"
 msgstr "Alpha"
 
 #. The option menu for selecting the drawing method
-#: app/curves.c:689
+#: app/curves.c:695
 msgid "Curve Type:"
 msgstr "Kurventyp:"
 
-#: app/curves.c:696
+#: app/curves.c:702
 msgid "Smooth"
 msgstr "Weich"
 
-#: app/curves.c:697
+#: app/curves.c:703
 msgid "Free"
 msgstr "Frei"
 
-#: app/curves.c:723 app/levels.c:620 app/module_db.c:874
+#: app/curves.c:729 app/levels.c:632 app/module_db.c:874
 msgid "Load"
 msgstr "Öffnen"
 
-#: app/curves.c:731 app/devices.c:758 app/levels.c:630 app/palette.c:2054
+#: app/curves.c:737 app/devices.c:758 app/levels.c:642 app/palette.c:2054
 #: app/preferences_dialog.c:384 app/preferences_dialog.c:1483
 msgid "Save"
 msgstr "Sichern"
 
-#: app/curves.c:1330
+#: app/curves.c:1342
 msgid "Load Curves"
 msgstr "Kurven öffnen"
 
-#: app/curves.c:1345
+#: app/curves.c:1357
 msgid "Save Curves"
 msgstr "Kurven sichern"
 
-#: app/curves.c:1636
+#: app/curves.c:1648
 msgid "Load/Save Curves"
 msgstr "Öffne/Sichere Kurven"
 
-#: app/curves.c:1681 app/curves.c:1699 app/levels.c:1490 app/levels.c:1508
+#: app/curves.c:1693 app/curves.c:1711 app/levels.c:1511 app/levels.c:1529
 #: app/paths_dialog.c:1918
 #, c-format
 msgid "Unable to open file %s"
@@ -1666,7 +1672,7 @@ msgstr ""
 "Es sind nicht genügend Ebenen unter dieser Ebene als \"Sichtbar\"\n"
 "markiert, um den Vorgang \"Nach unten vereinen\" auszuführen."
 
-#: app/gimpimage.c:3095
+#: app/gimpimage.c:3087
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1674,7 +1680,7 @@ msgstr ""
 "Kann keine Ebenenenmaske hinzufügen, da\n"
 "diese Ebene bereits eine Maske hat."
 
-#: app/gimpimage.c:3101
+#: app/gimpimage.c:3093
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1682,7 +1688,7 @@ msgstr ""
 "Kann keine Maske zu einer Ebene in\n"
 "einem indizierten Bild hinzufügen."
 
-#: app/gimpimage.c:3107
+#: app/gimpimage.c:3099
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1690,20 +1696,20 @@ msgstr ""
 "Kann keine Maske zu einer Ebene\n"
 "ohne Alphakanal hinzufügen."
 
-#: app/gimpimage.c:3116
+#: app/gimpimage.c:3108
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kann keine Ebenenmaske mit anderen Abmessungen als die Ebene hinzufügen."
 
-#: app/gimpimage.c:3224
+#: app/gimpimage.c:3216
 msgid "Channel cannot be raised any further"
 msgstr "Kanal kann nicht weiter angehoben werden"
 
-#: app/gimpimage.c:3275
+#: app/gimpimage.c:3267
 msgid "Channel cannot be lowered any further"
 msgstr "Kanal kann nicht weiter abgesenkt werden"
 
-#: app/gimpimage.c:3496 app/palette.c:358 app/palette.c:936 app/palette.c:1072
+#: app/gimpimage.c:3488 app/palette.c:358 app/palette.c:936 app/palette.c:1072
 #: app/palette.c:2014 app/palette.c:2740 app/palette.c:2872
 msgid "Untitled"
 msgstr "Unbenannt"
@@ -2239,46 +2245,46 @@ msgid "Information on Channel:"
 msgstr "Informationen über Kanal:"
 
 #. The shell and main vbox
-#: app/hue_saturation.c:248 app/hue_saturation.c:385 app/tools.c:1082
+#: app/hue_saturation.c:248 app/hue_saturation.c:393 app/tools.c:1082
 msgid "Hue-Saturation"
 msgstr "Farbton-Sättigung"
 
-#: app/hue_saturation.c:292
+#: app/hue_saturation.c:298
 msgid "Hue-Saturation operates only on RGB color drawables."
 msgstr "Farbton-Sättigung funktioniert nur bei RGB Bildern."
 
-#: app/hue_saturation.c:371
+#: app/hue_saturation.c:379
 msgid "Master"
 msgstr "Gesamt"
 
-#: app/hue_saturation.c:373
+#: app/hue_saturation.c:381
 msgid "Y"
 msgstr "Y"
 
-#: app/hue_saturation.c:375
+#: app/hue_saturation.c:383
 msgid "C"
 msgstr "C"
 
-#: app/hue_saturation.c:377
+#: app/hue_saturation.c:385
 msgid "M"
 msgstr "M"
 
-#: app/hue_saturation.c:462
+#: app/hue_saturation.c:470
 msgid "Hue / Lightness / Saturation Adjustments"
 msgstr "Farbton / Helligkeit / Sättigung"
 
 #. Create the hue scale widget
-#: app/hue_saturation.c:474
+#: app/hue_saturation.c:482
 msgid "Hue:"
 msgstr "Farbton:"
 
 #. Create the lightness scale widget
-#: app/hue_saturation.c:508
+#: app/hue_saturation.c:516
 msgid "Lightness:"
 msgstr "Helligkeit:"
 
 #. Create the saturation scale widget
-#: app/hue_saturation.c:542
+#: app/hue_saturation.c:550
 msgid "Saturation:"
 msgstr "Sättigung:"
 
@@ -2811,7 +2817,7 @@ msgid "Layers, Channels & Paths"
 msgstr "Ebenen, Kanäle und Pfade"
 
 #. The Auto-button
-#: app/lc_dialog.c:169 app/levels.c:610
+#: app/lc_dialog.c:169 app/levels.c:622
 msgid "Auto"
 msgstr "Auto"
 
@@ -2824,35 +2830,35 @@ msgid "Channels"
 msgstr "Kanäle"
 
 #. The shell and main vbox
-#: app/levels.c:200 app/levels.c:354 app/tools.c:1194
+#: app/levels.c:202 app/levels.c:366 app/tools.c:1194
 msgid "Levels"
 msgstr "Werte"
 
-#: app/levels.c:244
+#: app/levels.c:252
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr "Werte für indizierte Bilder können nicht geändert werden. "
 
-#: app/levels.c:383
+#: app/levels.c:395
 msgid "Modify Levels for Channel:"
 msgstr "Verändere Werte für Kanal:"
 
-#: app/levels.c:407
+#: app/levels.c:419
 msgid "Input Levels:"
 msgstr "Quellwerte:"
 
-#: app/levels.c:516
+#: app/levels.c:528
 msgid "Output Levels:"
 msgstr "Zielwerte:"
 
-#: app/levels.c:1101
+#: app/levels.c:1122
 msgid "Load Levels"
 msgstr "Werte öffnen"
 
-#: app/levels.c:1116
+#: app/levels.c:1137
 msgid "Save Levels"
 msgstr "Werte sichern"
 
-#: app/levels.c:1445
+#: app/levels.c:1466
 msgid "Load/Save Levels"
 msgstr "Werte öffnen/sichern"
 
@@ -4244,15 +4250,15 @@ msgstr ""
 "durcheinander gebracht. Am besten speichern Sie\n"
 "Ihre Bilder jetzt ab und starten GIMP neu."
 
-#: app/posterize.c:116 app/posterize.c:209 app/tools.c:1110
+#: app/posterize.c:118 app/posterize.c:220 app/tools.c:1110
 msgid "Posterize"
 msgstr "Posterisieren"
 
-#: app/posterize.c:158
+#: app/posterize.c:166
 msgid "Posterize does not operate on indexed drawables."
 msgstr "Posterisieren funktioniert nicht mit indizierten Bildern."
 
-#: app/posterize.c:231
+#: app/posterize.c:242
 msgid "Posterize Levels:"
 msgstr "Posterisieren Werte:"
 
@@ -5060,15 +5066,15 @@ msgstr ""
 msgid "Text Layer"
 msgstr "Textebene"
 
-#: app/threshold.c:175 app/threshold.c:283 app/tools.c:1138
+#: app/threshold.c:175 app/threshold.c:292 app/tools.c:1138
 msgid "Threshold"
 msgstr "Schwellwert"
 
-#: app/threshold.c:217
+#: app/threshold.c:223
 msgid "Threshold does not operate on indexed drawables."
 msgstr "Schwellwert funktioniert nicht mit indizierten Bildern"
 
-#: app/threshold.c:305
+#: app/threshold.c:314
 msgid "Threshold Range:"
 msgstr "Schwellwert Bereich:"
 
@@ -6468,7 +6474,12 @@ msgstr ""
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF Fehler: nicht unterstützte XCF Dateiversion %d aufgetreten"
 
-#: app/xcf.c:477
+#: app/xcf.c:475
+#, c-format
+msgid "XCF file save failed: %s"
+msgstr "Sichern der XCF-Datei schlug fehl: %s"
+
+#: app/xcf.c:481
 #, c-format
 msgid ""
 "Open failed on '%s':\n"
@@ -6477,7 +6488,7 @@ msgstr ""
 "Kann '%s' nicht öffnen:\n"
 "%s"
 
-#: app/xcf.c:1846
+#: app/xcf.c:1850
 msgid ""
 "XCF: This file is corrupt!  I have loaded as much\n"
 "of it as I can, but it is incomplete."
@@ -6485,7 +6496,7 @@ msgstr ""
 "Die XCF-Datei scheint beschädigt zu sein. Es wurde soviel\n"
 "wie möglich geladen, dennoch ist das Bild unvollständig."
 
-#: app/xcf.c:1852
+#: app/xcf.c:1856
 msgid ""
 "XCF: This file is corrupt!  I could not even\n"
 "salvage any partial image data from it."
@@ -6493,7 +6504,7 @@ msgstr ""
 "Die XCF-Datei scheint beschädigt zu sein. Es konnte\n"
 "nicht einmal ein Teil der Daten gelesen werden."
 
-#: app/xcf.c:1879
+#: app/xcf.c:1883
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -6503,7 +6514,7 @@ msgstr ""
 "hat indizierte Farbpaletten falsch gesichert.\n"
 "Farben wurden durch Graustufen ersetzt."
 
-#: app/xcf.c:3012
+#: app/xcf.c:3016
 #, c-format
 msgid "Error writing XCF: %s"
 msgstr "Fehler beim Schreiben der XCF-Datei: %s"
