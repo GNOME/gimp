@@ -20,7 +20,7 @@ Utilities to set up and manipulate vectors.
 
 <!-- ##### STRUCT GimpVector2 ##### -->
 <para>
-
+A two dimensional vector.
 </para>
 
 @x: 
@@ -28,7 +28,7 @@ Utilities to set up and manipulate vectors.
 
 <!-- ##### STRUCT GimpVector3 ##### -->
 <para>
-
+A three dimensional vector.
 </para>
 
 @x: 
@@ -37,7 +37,7 @@ Utilities to set up and manipulate vectors.
 
 <!-- ##### STRUCT GimpVector4 ##### -->
 <para>
-
+A four dimensional vector.
 </para>
 
 @x: 
@@ -52,6 +52,127 @@ Utilities to set up and manipulate vectors.
 
 @x: 
 @y: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector2_set ##### -->
+<para>
+
+</para>
+
+@vector: 
+@x: 
+@y: 
+
+
+<!-- ##### FUNCTION gimp_vector2_length ##### -->
+<para>
+
+</para>
+
+@vector: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector2_length_val ##### -->
+<para>
+
+</para>
+
+@vector: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector2_mul ##### -->
+<para>
+
+</para>
+
+@vector: 
+@factor: 
+
+
+<!-- ##### FUNCTION gimp_vector2_mul_val ##### -->
+<para>
+
+</para>
+
+@vector: 
+@factor: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector2_normalize ##### -->
+<para>
+
+</para>
+
+@vector: 
+
+
+<!-- ##### FUNCTION gimp_vector2_normalize_val ##### -->
+<para>
+
+</para>
+
+@vector: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector2_neg ##### -->
+<para>
+
+</para>
+
+@vector: 
+
+
+<!-- ##### FUNCTION gimp_vector2_neg_val ##### -->
+<para>
+
+</para>
+
+@vector: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector2_add ##### -->
+<para>
+
+</para>
+
+@result: 
+@vector1: 
+@vector2: 
+
+
+<!-- ##### FUNCTION gimp_vector2_add_val ##### -->
+<para>
+
+</para>
+
+@vector1: 
+@vector2: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector2_sub ##### -->
+<para>
+
+</para>
+
+@result: 
+@vector1: 
+@vector2: 
+
+
+<!-- ##### FUNCTION gimp_vector2_sub_val ##### -->
+<para>
+
+</para>
+
+@vector1: 
+@vector2: 
 @Returns: 
 
 
@@ -95,127 +216,6 @@ Utilities to set up and manipulate vectors.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_vector2_length ##### -->
-<para>
-
-</para>
-
-@vector: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_vector2_length_val ##### -->
-<para>
-
-</para>
-
-@vector: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_vector2_normalize ##### -->
-<para>
-
-</para>
-
-@vector: 
-
-
-<!-- ##### FUNCTION gimp_vector2_normalize_val ##### -->
-<para>
-
-</para>
-
-@vector: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_vector2_mul ##### -->
-<para>
-
-</para>
-
-@vector: 
-@factor: 
-
-
-<!-- ##### FUNCTION gimp_vector2_mul_val ##### -->
-<para>
-
-</para>
-
-@vector: 
-@factor: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_vector2_sub ##### -->
-<para>
-
-</para>
-
-@result: 
-@vector1: 
-@vector2: 
-
-
-<!-- ##### FUNCTION gimp_vector2_sub_val ##### -->
-<para>
-
-</para>
-
-@vector1: 
-@vector2: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_vector2_set ##### -->
-<para>
-
-</para>
-
-@vector: 
-@x: 
-@y: 
-
-
-<!-- ##### FUNCTION gimp_vector2_add ##### -->
-<para>
-
-</para>
-
-@result: 
-@vector1: 
-@vector2: 
-
-
-<!-- ##### FUNCTION gimp_vector2_add_val ##### -->
-<para>
-
-</para>
-
-@vector1: 
-@vector2: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_vector2_neg ##### -->
-<para>
-
-</para>
-
-@vector: 
-
-
-<!-- ##### FUNCTION gimp_vector2_neg_val ##### -->
-<para>
-
-</para>
-
-@vector: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_vector2_rotate ##### -->
 <para>
 
@@ -232,6 +232,139 @@ Utilities to set up and manipulate vectors.
 
 @vector: 
 @alpha: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector3_new ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+@z: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector3_set ##### -->
+<para>
+
+</para>
+
+@vector: 
+@x: 
+@y: 
+@z: 
+
+
+<!-- ##### FUNCTION gimp_vector3_length ##### -->
+<para>
+
+</para>
+
+@vector: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector3_length_val ##### -->
+<para>
+
+</para>
+
+@vector: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector3_mul ##### -->
+<para>
+
+</para>
+
+@vector: 
+@factor: 
+
+
+<!-- ##### FUNCTION gimp_vector3_mul_val ##### -->
+<para>
+
+</para>
+
+@vector: 
+@factor: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector3_normalize ##### -->
+<para>
+
+</para>
+
+@vector: 
+
+
+<!-- ##### FUNCTION gimp_vector3_normalize_val ##### -->
+<para>
+
+</para>
+
+@vector: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector3_neg ##### -->
+<para>
+
+</para>
+
+@vector: 
+
+
+<!-- ##### FUNCTION gimp_vector3_neg_val ##### -->
+<para>
+
+</para>
+
+@vector: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector3_add ##### -->
+<para>
+
+</para>
+
+@result: 
+@vector1: 
+@vector2: 
+
+
+<!-- ##### FUNCTION gimp_vector3_add_val ##### -->
+<para>
+
+</para>
+
+@vector1: 
+@vector2: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector3_sub ##### -->
+<para>
+
+</para>
+
+@result: 
+@vector1: 
+@vector2: 
+
+
+<!-- ##### FUNCTION gimp_vector3_sub_val ##### -->
+<para>
+
+</para>
+
+@vector1: 
+@vector2: 
 @Returns: 
 
 
@@ -272,139 +405,6 @@ Utilities to set up and manipulate vectors.
 
 @vector1: 
 @vector2: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_vector3_length ##### -->
-<para>
-
-</para>
-
-@vector: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_vector3_length_val ##### -->
-<para>
-
-</para>
-
-@vector: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_vector3_normalize ##### -->
-<para>
-
-</para>
-
-@vector: 
-
-
-<!-- ##### FUNCTION gimp_vector3_normalize_val ##### -->
-<para>
-
-</para>
-
-@vector: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_vector3_mul ##### -->
-<para>
-
-</para>
-
-@vector: 
-@factor: 
-
-
-<!-- ##### FUNCTION gimp_vector3_mul_val ##### -->
-<para>
-
-</para>
-
-@vector: 
-@factor: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_vector3_sub ##### -->
-<para>
-
-</para>
-
-@result: 
-@vector1: 
-@vector2: 
-
-
-<!-- ##### FUNCTION gimp_vector3_sub_val ##### -->
-<para>
-
-</para>
-
-@vector1: 
-@vector2: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_vector3_set ##### -->
-<para>
-
-</para>
-
-@vector: 
-@x: 
-@y: 
-@z: 
-
-
-<!-- ##### FUNCTION gimp_vector3_new ##### -->
-<para>
-
-</para>
-
-@x: 
-@y: 
-@z: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_vector3_add ##### -->
-<para>
-
-</para>
-
-@result: 
-@vector1: 
-@vector2: 
-
-
-<!-- ##### FUNCTION gimp_vector3_add_val ##### -->
-<para>
-
-</para>
-
-@vector1: 
-@vector2: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_vector3_neg ##### -->
-<para>
-
-</para>
-
-@vector: 
-
-
-<!-- ##### FUNCTION gimp_vector3_neg_val ##### -->
-<para>
-
-</para>
-
-@vector: 
 @Returns: 
 
 

@@ -484,6 +484,15 @@ gimp_matrix3_is_simple (const GimpMatrix3 *matrix)
   return TRUE;
 }
 
+/**
+ * gimp_matrix4_to_deg:
+ * @matrix:
+ * @a:
+ * @b:
+ * @c:
+ *
+ *
+ **/
 void
 gimp_matrix4_to_deg (const GimpMatrix4 *matrix,
                      gdouble           *a,

@@ -26,21 +26,21 @@ basic matrix manipulations and tests.
 
 <!-- ##### STRUCT GimpMatrix2 ##### -->
 <para>
-
+A two by two matrix.
 </para>
 
 @coeff: 
 
 <!-- ##### STRUCT GimpMatrix3 ##### -->
 <para>
-
+A three by three matrix.
 </para>
 
 @coeff: 
 
 <!-- ##### STRUCT GimpMatrix4 ##### -->
 <para>
-
+A four by four matrix.
 </para>
 
 @coeff: 

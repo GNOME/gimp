@@ -6,7 +6,8 @@ Mathematical definitions and macros.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-Mathematical definitions and macros.
+Mathematical definitions and macros. These macros should be used
+rather than the ones from math.h for enhanced portability.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -16,57 +17,59 @@ Mathematical definitions and macros.
 
 <!-- ##### MACRO RINT ##### -->
 <para>
-
+This macro rounds its argument @x to an integer value in floating point
+format.
 </para>
 
-@x: 
+@x: the value to be rounded.
 
 
 <!-- ##### MACRO ROUND ##### -->
 <para>
-
+This macro rounds its argument @x to the nearest integer.
 </para>
 
-@x: 
+@x: the value to be rounded.
 
 
 <!-- ##### MACRO SQR ##### -->
 <para>
-
+This macro squares its argument @x.
 </para>
 
-@x: 
+@x: the value to be squared.
 
 
 <!-- ##### MACRO MAX255 ##### -->
 <para>
-
+This macro limits it argument @a, an (0-511) int, to 255.
 </para>
 
-@a: 
+@a: the value to be limited.
 
 
 <!-- ##### MACRO CLAMP0255 ##### -->
 <para>
-
+This macro clamps its argument @a, an int32-range int, between 0 and
+255 inclusive.
 </para>
 
-@a: 
+@a: the value to be clamped.
 
 
 <!-- ##### MACRO gimp_deg_to_rad ##### -->
 <para>
-
+This macro converts its argument @angle from degree to radian.
 </para>
 
-@angle: 
+@angle: the angle to be converted.
 
 
 <!-- ##### MACRO gimp_rad_to_deg ##### -->
 <para>
-
+This macro converts its argument @angle from radian to degree.
 </para>
 
-@angle: 
+@angle: the angle to be converted.
 
 

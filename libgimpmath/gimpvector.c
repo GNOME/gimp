@@ -52,97 +52,50 @@ static const GimpVector3 gimp_vector3_unit_z = { 0.0, 0.0, 1.0 };
 /**************************************/
 
 /**
- * gimp_vector2_inner_product:
- * @vector1: the first vector (by address),
- * @vector2: the second vector (by address).
+ * gimp_vector2_new:
+ * @x: the X coordinate.
+ * @y: the Y coordinate.
  *
- * Computes the inner (dot) product of two 2D vectors.
- * This product is nul iff the two vectors are orthognal.
+ * Creates a #GimpVector2 of coordinates @x and @y.
  *
- * Returns: The inner product.
- **/
-gdouble
-gimp_vector2_inner_product (const GimpVector2 *vector1,
-                            const GimpVector2 *vector2)
-{
-  return (vector1->x * vector2->x + vector1->y * vector2->y);
-}
-
-/**
- * gimp_vector2_inner_product_val:
- * @vector1: the first vector (by value),
- * @vector2: the second vector (by value).
- *
- * Computes the inner (dot) product of two 2D vectors.
- * This product is nul iff the two vectors are orthognal.
- *
- * Returns: The inner product.
- **/
-gdouble
-gimp_vector2_inner_product_val (GimpVector2 vector1,
-                                GimpVector2 vector2)
-{
-  return (vector1.x * vector2.x + vector1.y * vector2.y);
-}
-
-/**
- * gimp_vector2_cross_product:
- * @vector1: the first vector (by address)
- * @vector2: the second vector (by address)
- *
- * Compute the cross product of two vectors.
- * The result is a vector (a #GimpVector2) which is orthognal to both
- * of vector1 and vector2. If vector1 and vector2 and parallel, the
- * result will be the nul vector.
- *
- * Note that in 2D, this function is mostly useful to test if two
- * vectors are parallel or not, or to compute the area spawned by two
- * vectors.
- *
- * Returns: The cross product.
+ * Returns: the resulting #GimpVector2.
  **/
 GimpVector2
-gimp_vector2_cross_product (const GimpVector2 *vector1,
-                            const GimpVector2 *vector2)
+gimp_vector2_new (gdouble x,
+                  gdouble y)
 {
-  GimpVector2 normal;
+  GimpVector2 vector;
 
-  normal.x = vector1->x * vector2->y - vector1->y * vector2->x;
-  normal.y = vector1->y * vector2->x - vector1->x * vector2->y;
+  vector.x = x;
+  vector.y = y;
 
-  return normal;
+  return vector;
 }
 
 /**
- * gimp_vector2_cross_product_val:
- * @vector1: the first vector (by value)
- * @vector2: the second vector (by value)
+ * gimp_vector2_set:
+ * @vector: a pointer to a #GimpVector2.
+ * @x: the X coordinate.
+ * @y: the Y coordinate.
  *
- * This function is mainly another implementation of
- * gimp_vector2_cross_product where the arguments are passed by value
- * rather than by address.
- *
- * Returns: The cross product.
+ * Sets the X and Y coordinates of @vector to @x and @y.
  **/
-GimpVector2
-gimp_vector2_cross_product_val (GimpVector2 vector1,
-                                GimpVector2 vector2)
+void
+gimp_vector2_set (GimpVector2 *vector,
+                  gdouble      x,
+                  gdouble      y)
 {
-  GimpVector2 normal;
-
-  normal.x = vector1.x * vector2.y - vector1.y * vector2.x;
-  normal.y = vector1.y * vector2.x - vector1.x * vector2.y;
-
-  return normal;
+  vector->x = x;
+  vector->y = y;
 }
 
 /**
  * gimp_vector2_length:
- * @vector: a #GimpVector2 (by address)
+ * @vector: a pointer to a #GimpVector2.
  *
  * Computes the length of a 2D vector.
  *
- * Returns: the length of the given vector (a positive gdouble)
+ * Returns: the length of @vector (a positive gdouble).
  **/
 gdouble
 gimp_vector2_length (const GimpVector2 *vector)
@@ -152,11 +105,12 @@ gimp_vector2_length (const GimpVector2 *vector)
 
 /**
  * gimp_vector2_length_val:
- * @vector: a #GimpVector2 (by value)
+ * @vector: a #GimpVector2.
  *
- * Computes the length of a 2D vector.
+ * This function is identical to gimp_vector2_length() but the
+ * vector is passed by value rather than by reference.
  *
- * Returns: the length of the given vector (a positive gdouble)
+ * Returns: the length of @vector (a positive gdouble).
  **/
 gdouble
 gimp_vector2_length_val (GimpVector2 vector)
@@ -165,12 +119,50 @@ gimp_vector2_length_val (GimpVector2 vector)
 }
 
 /**
- * gimp_vector2_normalize:
- * @vector: a #GimpVector2 (by address)
+ * gimp_vector2_mul:
+ * @vector: a pointer to a #GimpVector2.
+ * @factor: a scalar.
  *
- * Normalizes the vector pointed by the argument, so the length of the
- * pointed vector will be 1.0 after this. The nul vector will not be changed,
- * though.
+ * Multiplies each component of the @vector by @factor. Note that this
+ * is equivalent to multiplying the vectors length by @factor.
+ **/
+void
+gimp_vector2_mul (GimpVector2 *vector,
+                  gdouble      factor)
+{
+  vector->x *= factor;
+  vector->y *= factor;
+}
+
+/**
+ * gimp_vector2_mul_val:
+ * @vector: a #GimpVector2.
+ * @factor: a scalar.
+ *
+ * This function is identical to gimp_vector2_mul() but the vector is
+ * passed by value rather than by reference.
+ *
+ * Returns: the resulting #GimpVector2.
+ **/
+GimpVector2
+gimp_vector2_mul_val (GimpVector2 vector,
+                      gdouble     factor)
+{
+  GimpVector2 result;
+
+  result.x = vector.x * factor;
+  result.y = vector.y * factor;
+
+  return result;
+}
+
+
+/**
+ * gimp_vector2_normalize:
+ * @vector: a pointer to a #GimpVector2.
+ *
+ * Normalizes the @vector so the length of the @vector is 1.0. The nul
+ * vector will not be changed.
  **/
 void
 gimp_vector2_normalize (GimpVector2 *vector)
@@ -193,13 +185,13 @@ gimp_vector2_normalize (GimpVector2 *vector)
 
 /**
  * gimp_vector2_normalize_val:
- * @vector: a #GimpVector2 (by value)
+ * @vector: a #GimpVector2.
  *
- * Computes and returns the normalized vector corresponding with the one
- * passed in argument.
+ * This function is identical to gimp_vector2_normalize() but the
+ * vector is passed by value rather than by reference.
  *
  * Returns: a #GimpVector2 parallel to @vector, pointing in the same
- *          direction but with a length of 1.0.
+ * direction but with a length of 1.0.
  **/
 GimpVector2
 gimp_vector2_normalize_val (GimpVector2 vector)
@@ -223,51 +215,46 @@ gimp_vector2_normalize_val (GimpVector2 vector)
 }
 
 /**
- * gimp_vector2_mul:
- * @vector: a #GimpVector2 (by address)
- * @factor: a scalar
+ * gimp_vector2_neg:
+ * @vector: a pointer to a #GimpVector2.
  *
- * Multiplies each component of the @vector by @factor.
- * Note that the vector's length will be multiplied by @factor.
+ * Negates the @vector (i.e. negate all its coordinates).
  **/
 void
-gimp_vector2_mul (GimpVector2 *vector,
-                  gdouble      factor)
+gimp_vector2_neg (GimpVector2 *vector)
 {
-  vector->x *= factor;
-  vector->y *= factor;
+  vector->x *= -1.0;
+  vector->y *= -1.0;
 }
 
 /**
- * gimp_vector2_mul_val:
- * @vector: a #GimpVector2 (by value)
- * @factor: a scalar.
+ * gimp_vector2_neg_val:
+ * @vector: a #GimpVector2.
  *
- * Computes and returns a #GimpVector2 pointing in the same direction
- * than @vector, but with a length multiplied by @factor.
+ * This function is identical to gimp_vector2_neg() but the vector
+ * is passed by value rather than by reference.
  *
- * Returns: the resulting #GimpVector2.
+ * Returns: the negated #GimpVector2.
  **/
 GimpVector2
-gimp_vector2_mul_val (GimpVector2 vector,
-                      gdouble     factor)
+gimp_vector2_neg_val (GimpVector2 vector)
 {
   GimpVector2 result;
 
-  result.x = vector.x * factor;
-  result.y = vector.y * factor;
+  result.x = vector.x * -1.0;
+  result.y = vector.y * -1.0;
 
   return result;
 }
 
 /**
  * gimp_vector2_add:
- * @result: a placeholder for the resulting #GimpVector2
- * @vector1: a #GimpVector2 (by address)
- * @vector2: a #GimpVector2 (by address)
+ * @result: destination for the resulting #GimpVector2.
+ * @vector1: a pointer to the first #GimpVector2.
+ * @vector2: a pointer to the second #GimpVector2.
  *
- * Computes the sum of two 2D vectors.
- * The result is stored in the #GimpVector2 pointed by @result.
+ * Computes the sum of two 2D vectors. The resulting #GimpVector2 is
+ * stored in @result.
  **/
 void
 gimp_vector2_add (GimpVector2       *result,
@@ -280,10 +267,11 @@ gimp_vector2_add (GimpVector2       *result,
 
 /**
  * gimp_vector2_add_val:
- * @vector1: a #GimpVector2 (by value)
- * @vector2: a #GimpVector2 (by value)
+ * @vector1: the first #GimpVector2.
+ * @vector2: the second #GimpVector2.
  *
- * Computes and returns the sum of two 2D vectors.
+ * This function is identical to gimp_vector2_add() but the vectors
+ * are passed by value rather than by reference.
  *
  * Returns: the resulting #GimpVector2.
  **/
@@ -301,12 +289,12 @@ gimp_vector2_add_val (GimpVector2 vector1,
 
 /**
  * gimp_vector2_sub:
- * @result: a placeholder for the resulting #GimpVector2
- * @vector1: a #GimpVector2 (by address)
- * @vector2: a #GimpVector2 (by address)
+ * @result: the destination for the resulting #GimpVector2.
+ * @vector1: a pointer to the first #GimpVector2.
+ * @vector2: a pointer to the second #GimpVector2.
  *
  * Computes the difference of two 2D vectors (@vector1 minus @vector2).
- * The result is stored in the #GimpVector2 pointed by @result.
+ * The resulting #GimpVector2 is stored in @result.
  **/
 void
 gimp_vector2_sub (GimpVector2       *result,
@@ -319,11 +307,11 @@ gimp_vector2_sub (GimpVector2       *result,
 
 /**
  * gimp_vector2_sub_val:
- * @vector1: a #GimpVector2 (by value)
- * @vector2: a #GimpVector2 (by value)
+ * @vector1: the first #GimpVector2.
+ * @vector2: the second #GimpVector2.
  *
- * Computes and returns the difference of two 2D vectors (@vector1 minus
- * @vector2).
+ * This function is identical to gimp_vector2_sub() but the vectors
+ * are passed by value rather than by reference.
  *
  * Returns: the resulting #GimpVector2.
  **/
@@ -340,81 +328,94 @@ gimp_vector2_sub_val (GimpVector2 vector1,
 }
 
 /**
- * gimp_vector2_set:
- * @vector: a #GimpVector2 (by address)
- * @x: a gdouble used as first coordinate
- * @y: a gdouble used as second coordinate
+ * gimp_vector2_inner_product:
+ * @vector1: a pointer to the first #GimpVector2.
+ * @vector2: a pointer to the second #GimpVector2.
  *
- * Sets the first and second coordinates of @vector to @x and @y.
+ * Computes the inner (dot) product of two 2D vectors.
+ * This product is zero if and only if the two vectors are orthognal.
+ *
+ * Returns: The inner product.
  **/
-void
-gimp_vector2_set (GimpVector2 *vector,
-                  gdouble      x,
-                  gdouble      y)
+gdouble
+gimp_vector2_inner_product (const GimpVector2 *vector1,
+                            const GimpVector2 *vector2)
 {
-  vector->x = x;
-  vector->y = y;
+  return (vector1->x * vector2->x + vector1->y * vector2->y);
 }
 
 /**
- * gimp_vector2_new:
- * @x: a gdouble used as first coordinate
- * @y: a gdouble used as second coordinate
+ * gimp_vector2_inner_product_val:
+ * @vector1: the first #GimpVector2.
+ * @vector2: the second #GimpVector2.
  *
- * Creates a #GimpVector2 of coordinate @x and @y.
+ * This function is identical to gimp_vector2_inner_product() but the
+ * vectors are passed by value rather than by reference.
  *
- * Returns: the resulting GimpVector2.
+ * Returns: The inner product.
+ **/
+gdouble
+gimp_vector2_inner_product_val (GimpVector2 vector1,
+                                GimpVector2 vector2)
+{
+  return (vector1.x * vector2.x + vector1.y * vector2.y);
+}
+
+/**
+ * gimp_vector2_cross_product:
+ * @vector1: a pointer to the first #GimpVector2.
+ * @vector2: a pointer to the second #GimpVector2.
+ *
+ * Compute the cross product of two vectors. The result is a
+ * #GimpVector2 which is orthognal to both @vector1 and @vector2. If
+ * @vector1 and @vector2 are parallel, the result will be the nul
+ * vector.
+ *
+ * Note that in 2D, this function is useful to test if two vectors are
+ * parallel or not, or to compute the area spawned by two vectors.
+ *
+ * Returns: The cross product.
  **/
 GimpVector2
-gimp_vector2_new (gdouble x,
-                  gdouble y)
+gimp_vector2_cross_product (const GimpVector2 *vector1,
+                            const GimpVector2 *vector2)
 {
-  GimpVector2 vector;
+  GimpVector2 normal;
 
-  vector.x = x;
-  vector.y = y;
+  normal.x = vector1->x * vector2->y - vector1->y * vector2->x;
+  normal.y = vector1->y * vector2->x - vector1->x * vector2->y;
 
-  return vector;
+  return normal;
 }
 
 /**
- * gimp_vector2_neg:
- * @vector: a #GimpVector2 (by address)
+ * gimp_vector2_cross_product_val:
+ * @vector1: the first #GimpVector2.
+ * @vector2: the second #GimpVector2.
  *
- * Negates the @vector (i.e. negate all its coordinates).
- **/
-void
-gimp_vector2_neg (GimpVector2 *vector)
-{
-  vector->x *= -1.0;
-  vector->y *= -1.0;
-}
-
-/**
- * gimp_vector2_neg_val:
- * @vector: a #GimpVector2 (by value)
+ * This function is identical to gimp_vector2_cross_product() but the
+ * vectors are passed by value rather than by reference.
  *
- * Computes and returns the negation of the @vector.
- *
- * Returns: the negated vector.
+ * Returns: The cross product.
  **/
 GimpVector2
-gimp_vector2_neg_val (GimpVector2 vector)
+gimp_vector2_cross_product_val (GimpVector2 vector1,
+                                GimpVector2 vector2)
 {
-  GimpVector2 result;
+  GimpVector2 normal;
 
-  result.x = vector.x * -1.0;
-  result.y = vector.y * -1.0;
+  normal.x = vector1.x * vector2.y - vector1.y * vector2.x;
+  normal.y = vector1.y * vector2.x - vector1.x * vector2.y;
 
-  return result;
+  return normal;
 }
 
 /**
  * gimp_vector2_rotate:
- * @vector: a #GimpVector2 (by address)
- * @alpha: an angle (in radians)
+ * @vector: a pointer to a #GimpVector2.
+ * @alpha: an angle (in radians).
  *
- * Rotates the @vector by @alpha radians, counterclockwize.
+ * Rotates the @vector counterclockwise by @alpha radians.
  **/
 void
 gimp_vector2_rotate (GimpVector2 *vector,
@@ -430,13 +431,14 @@ gimp_vector2_rotate (GimpVector2 *vector,
 
 /**
  * gimp_vector2_rotate_val:
- * @vector: a #GimpVector2 (by value)
- * @alpha: an angle (in radians)
+ * @vector: a #GimpVector2.
+ * @alpha: an angle (in radians).
  *
- * Computes and returns the rotation of the @vector by @alpha radians,
- * counterclockwize.
+ * This function is identical to gimp_vector2_rotate() but the vector
+ * is passed by value rather than by reference.
  *
- * Returns: the @vector rotated by @alpha radians.
+ * Returns: a #GimpVector2 representing @vector rotated by @alpha
+ * radians.
  **/
 GimpVector2
 gimp_vector2_rotate_val (GimpVector2 vector,
@@ -455,102 +457,56 @@ gimp_vector2_rotate_val (GimpVector2 vector,
 /**************************************/
 
 /**
- * gimp_vector3_inner_product:
- * @vector1: the first #GimpVector3 (by address),
- * @vector2: the second #GimpVector3 (by address).
+ * gimp_vector3_new:
+ * @x: the X coordinate.
+ * @y: the Y coordinate.
+ * @z: the Z coordinate.
  *
- * Computes the inner (dot) product of two 23 vectors.
- * This product is nul iff the two vectors are orthognal.
+ * Creates a #GimpVector3 of coordinate @x, @y and @z.
  *
- * Returns: The inner product.
- **/
-gdouble
-gimp_vector3_inner_product (const GimpVector3 *vector1,
-                            const GimpVector3 *vector2)
-{
-  return (vector1->x * vector2->x +
-          vector1->y * vector2->y +
-          vector1->z * vector2->z);
-}
-
-/**
- * gimp_vector3_inner_product_val:
- * @vector1: the first #GimpVector3 (by value),
- * @vector2: the second #GimpVector3 (by value).
- *
- * Computes the inner (dot) product of two 3D vectors.
- * This product is nul iff the two vectors are orthognal.
- *
- * Returns: The inner product.
- **/
-gdouble
-gimp_vector3_inner_product_val (GimpVector3 vector1,
-                                GimpVector3 vector2)
-{
-  return (vector1.x * vector2.x +
-          vector1.y * vector2.y +
-          vector1.z * vector2.z);
-}
-
-/**
- * gimp_vector3_cross_product:
- * @vector1: the first #GimpVector3 (by address)
- * @vector2: the second #GimpVector3 (by address)
- *
- * Compute the cross product of two vectors.
- * The result is a #GimpVector3 which is orthognal to both
- * of vector1 and vector2. If vector1 and vector2 and parallel, the
- * result will be the nul vector.
- *
- * This function can be used to compute the normal of the plan defined by
- * @vector1 and @vector2.
- *
- * Returns: The cross product.
+ * Returns: the resulting #GimpVector3.
  **/
 GimpVector3
-gimp_vector3_cross_product (const GimpVector3 *vector1,
-                            const GimpVector3 *vector2)
+gimp_vector3_new (gdouble  x,
+                  gdouble  y,
+                  gdouble  z)
 {
-  GimpVector3 normal;
+  GimpVector3 vector;
 
-  normal.x = vector1->y * vector2->z - vector1->z * vector2->y;
-  normal.y = vector1->z * vector2->x - vector1->x * vector2->z;
-  normal.z = vector1->x * vector2->y - vector1->y * vector2->x;
+  vector.x = x;
+  vector.y = y;
+  vector.z = z;
 
-  return normal;
+  return vector;
 }
 
 /**
- * gimp_vector3_cross_product_val:
- * @vector1: the first #GimpVector3 (by value)
- * @vector2: the second #GimpVector3 (by value)
+ * gimp_vector3_set:
+ * @vector: a pointer to a #GimpVector3.
+ * @x: the X coordinate.
+ * @y: the Y coordinate.
+ * @z: the Z coordinate.
  *
- * This function is mainly another implementation of
- * #gimp_vector3_cross_product where the arguments are passed by value
- * rather than by address.
- *
- * Returns: The cross product.
+ * Sets the X, Y and Z coordinates of @vector to @x, @y and @z.
  **/
-GimpVector3
-gimp_vector3_cross_product_val (GimpVector3 vector1,
-                                GimpVector3 vector2)
+void
+gimp_vector3_set (GimpVector3 *vector,
+                  gdouble      x,
+                  gdouble      y,
+                  gdouble      z)
 {
-  GimpVector3 normal;
-
-  normal.x = vector1.y * vector2.z - vector1.z * vector2.y;
-  normal.y = vector1.z * vector2.x - vector1.x * vector2.z;
-  normal.z = vector1.x * vector2.y - vector1.y * vector2.x;
-
-  return normal;
+  vector->x = x;
+  vector->y = y;
+  vector->z = z;
 }
 
 /**
  * gimp_vector3_length:
- * @vector: a #GimpVector3 (by address)
+ * @vector: a pointer to a #GimpVector3.
  *
- * Computes and returns the length of a 3D vector.
+ * Computes the length of a 3D vector.
  *
- * Returns: the length of @vector.
+ * Returns: the length of @vector (a positive gdouble).
  **/
 gdouble
 gimp_vector3_length (const GimpVector3 *vector)
@@ -562,11 +518,12 @@ gimp_vector3_length (const GimpVector3 *vector)
 
 /**
  * gimp_vector3_length_val:
- * @vector: a #GimpVector3 (by value)
+ * @vector: a #GimpVector3.
  *
- * Computes and returns the length of a 3D vector.
+ * This function is identical to gimp_vector3_length() but the vector
+ * is passed by value rather than by reference.
  *
- * Returns: the length of @vector.
+ * Returns: the length of @vector (a positive gdouble).
  **/
 gdouble
 gimp_vector3_length_val (GimpVector3 vector)
@@ -577,11 +534,51 @@ gimp_vector3_length_val (GimpVector3 vector)
 }
 
 /**
- * gimp_vector3_normalize:
- * @vector: a #GimpVector3 (by address)
+ * gimp_vector3_mul:
+ * @vector: a pointer to a #GimpVector3.
+ * @factor: a scalar.
  *
- * Normalizes the vector pointed by @vector, so its length will be 1.0.
- * The nul vector will not be changed though.
+ * Multiplies each component of the @vector by @factor. Note that
+ * this is equivalent to multiplying the vectors length by @factor.
+ **/
+void
+gimp_vector3_mul (GimpVector3 *vector,
+                  gdouble      factor)
+{
+  vector->x *= factor;
+  vector->y *= factor;
+  vector->z *= factor;
+}
+
+/**
+ * gimp_vector3_mul_val:
+ * @vector: a #GimpVector3.
+ * @factor: a scalar.
+ *
+ * This function is identical to gimp_vector3_mul() but the vector is
+ * passed by value rather than by reference.
+ *
+ * Returns: the resulting #GimpVector3.
+ **/
+GimpVector3
+gimp_vector3_mul_val (GimpVector3 vector,
+                      gdouble     factor)
+{
+  GimpVector3 result;
+
+  result.x = vector.x * factor;
+  result.y = vector.y * factor;
+  result.z = vector.z * factor;
+
+  return result;
+}
+
+/**
+ * gimp_vector3_normalize:
+ * @vector: a pointer to a #GimpVector3.
+ *
+ * Normalizes the @vector so the length of the @vector is 1.0. The nul
+ * vector will not be changed.
  **/
 void
 gimp_vector3_normalize (GimpVector3 *vector)
@@ -605,13 +602,13 @@ gimp_vector3_normalize (GimpVector3 *vector)
 
 /**
  * gimp_vector3_normalize_val:
- * @vector: a #GimpVector3 (by value)
+ * @vector: a #GimpVector3.
  *
- * Computes and returns the normalized vector corresponding with the one
- * passed in argument.
+ * This function is identical to gimp_vector3_normalize() but the
+ * vector is passed by value rather than by reference.
  *
- * Returns: a #GimpVector2 parallel to @vector, pointing in the same
- *          direction but with a length of 1.0.
+ * Returns: a #GimpVector3 parallel to @vector, pointing in the same
+ * direction but with a length of 1.0.
  **/
 GimpVector3
 gimp_vector3_normalize_val (GimpVector3 vector)
@@ -636,140 +633,48 @@ gimp_vector3_normalize_val (GimpVector3 vector)
 }
 
 /**
- * gimp_vector3_mul:
- * @vector: a #GimpVector3 (by address)
- * @factor: a scalar
+ * gimp_vector3_neg:
+ * @vector: a pointer to a #GimpVector3.
  *
- * Multiplies each component of the @vector by @factor.
- * Note that this is equivalent to multiplied the length of @vector
- * by @factor.
+ * Negates the @vector (i.e. negate all its coordinates).
  **/
 void
-gimp_vector3_mul (GimpVector3 *vector,
-                  gdouble      factor)
+gimp_vector3_neg (GimpVector3 *vector)
 {
-  vector->x *= factor;
-  vector->y *= factor;
-  vector->z *= factor;
+  vector->x *= -1.0;
+  vector->y *= -1.0;
+  vector->z *= -1.0;
 }
 
 /**
- * gimp_vector3_mul_val:
- * @vector: a #GimpVector3 (by value)
- * @factor: a scalar.
+ * gimp_vector3_neg_val:
+ * @vector: a #GimpVector3.
  *
- * Computes and returns a #GimpVector3 pointing in the same direction
- * than @vector, but with a length multiplied by @factor.
+ * This function is identical to gimp_vector3_neg() but the vector
+ * is passed by value rather than by reference.
  *
- * Returns: the resulting #GimpVector3.
+ * Returns: the negated #GimpVector3.
  **/
 GimpVector3
-gimp_vector3_mul_val (GimpVector3 vector,
-                      gdouble     factor)
+gimp_vector3_neg_val (GimpVector3 vector)
 {
   GimpVector3 result;
 
-  result.x = vector.x * factor;
-  result.y = vector.y * factor;
-  result.z = vector.z * factor;
+  result.x = vector.x * -1.0;
+  result.y = vector.y * -1.0;
+  result.z = vector.z * -1.0;
 
   return result;
-}
-
-/**
- * gimp_vector3_sub:
- * @result: a placeholder for the resulting #GimpVector3
- * @vector1: a #GimpVector3 (by address)
- * @vector2: a #GimpVector3 (by address)
- *
- * Computes the difference of two 3D vectors (@vector1 minus @vector2).
- * The result is stored in the #GimpVector3 pointed by @result.
- **/
-void
-gimp_vector3_sub (GimpVector3       *result,
-                  const GimpVector3 *vector1,
-                  const GimpVector3 *vector2)
-{
-  result->x = vector1->x - vector2->x;
-  result->y = vector1->y - vector2->y;
-  result->z = vector1->z - vector2->z;
-}
-
-/**
- * gimp_vector3_sub_val:
- * @vector1: a #GimpVector3 (by value)
- * @vector2: a #GimpVector3 (by value)
- *
- * Computes and returns the difference of two 3D vectors (@vector1 minus
- * @vector2).
- *
- * Returns: the resulting #GimpVector3.
- **/
-GimpVector3
-gimp_vector3_sub_val (GimpVector3 vector1,
-                     GimpVector3 vector2)
-{
-  GimpVector3 result;
-
-  result.x = vector1.x - vector2.x;
-  result.y = vector1.y - vector2.y;
-  result.z = vector1.z - vector2.z;
-
-  return result;
-}
-
-/**
- * gimp_vector3_set:
- * @vector: a #GimpVector3 (by address)
- * @x: a gdouble used as first coordinate
- * @y: a gdouble used as second coordinate
- * @z: a gdouble used as third coordinate
- *
- * Sets the three coordinates of @vector to @x, @y and @z.
- **/
-void
-gimp_vector3_set (GimpVector3 *vector,
-                  gdouble      x,
-                  gdouble      y,
-                  gdouble      z)
-{
-  vector->x = x;
-  vector->y = y;
-  vector->z = z;
-}
-
-/**
- * gimp_vector3_new:
- * @x: a gdouble used as first coordinate
- * @y: a gdouble used as second coordinate
- * @z: a gdouble used as third coordinate
- *
- * Creates a #GimpVector3 of coordinate @x, @y and @z.
- *
- * Returns: the resulting GimpVector3.
- **/
-GimpVector3
-gimp_vector3_new (gdouble  x,
-                  gdouble  y,
-                  gdouble  z)
-{
-  GimpVector3 vector;
-
-  vector.x = x;
-  vector.y = y;
-  vector.z = z;
-
-  return vector;
 }
 
 /**
  * gimp_vector3_add:
- * @result: a placeholder for the resulting #GimpVector3
- * @vector1: a #GimpVector3 (by address)
- * @vector2: a #GimpVector3 (by address)
+ * @result: destination for the resulting #GimpVector3.
+ * @vector1: a pointer to the first #GimpVector3.
+ * @vector2: a pointer to the second #GimpVector3.
  *
- * Computes the sum of two 3D vectors.
- * The result is stored in the #GimpVector3 pointed by @result.
+ * Computes the sum of two 3D vectors. The resulting #GimpVector3 is
+ * stored in @result.
  **/
 void
 gimp_vector3_add (GimpVector3       *result,
@@ -783,11 +688,11 @@ gimp_vector3_add (GimpVector3       *result,
 
 /**
  * gimp_vector3_add_val:
- * @vector1: a #GimpVector3 (by value)
- * @vector2: a #GimpVector3 (by value)
+ * @vector1: a #GimpVector3.
+ * @vector2: a #GimpVector3.
  *
- * Computes and returns the sum of two 3D vectors (@vector1 minus
- * @vector2).
+ * This function is identical to gimp_vector3_add() but the vectors
+ * are passed by value rather than by reference.
  *
  * Returns: the resulting #GimpVector3.
  **/
@@ -805,53 +710,150 @@ gimp_vector3_add_val (GimpVector3 vector1,
 }
 
 /**
- * gimp_vector3_neg:
- * @vector: a #GimpVector3 (by address)
+ * gimp_vector3_sub:
+ * @result: the destination for the resulting #GimpVector3.
+ * @vector1: a pointer to the first #GimpVector3.
+ * @vector2: a pointer to the second #GimpVector3.
  *
- * Negates the @vector (i.e. negate all its coordinates).
+ * Computes the difference of two 3D vectors (@vector1 minus @vector2).
+ * The resulting #GimpVector3 is stored in @result.
  **/
 void
-gimp_vector3_neg (GimpVector3 *vector)
+gimp_vector3_sub (GimpVector3       *result,
+                  const GimpVector3 *vector1,
+                  const GimpVector3 *vector2)
 {
-  vector->x *= -1.0;
-  vector->y *= -1.0;
-  vector->z *= -1.0;
+  result->x = vector1->x - vector2->x;
+  result->y = vector1->y - vector2->y;
+  result->z = vector1->z - vector2->z;
 }
 
 /**
- * gimp_vector3_neg_val:
- * @vector: a #GimpVector3 (by value)
+ * gimp_vector3_sub_val:
+ * @vector1: a #GimpVector3.
+ * @vector2: a #GimpVector3.
  *
- * Computes and returns the negation of the @vector.
+ * This function is identical to gimp_vector3_sub() but the vectors
+ * are passed by value rather than by reference.
  *
- * Returns: the negated vector.
+ * Returns: the resulting #GimpVector3.
  **/
 GimpVector3
-gimp_vector3_neg_val (GimpVector3 vector)
+gimp_vector3_sub_val (GimpVector3 vector1,
+                     GimpVector3 vector2)
 {
   GimpVector3 result;
 
-  result.x = vector.x * -1.0;
-  result.y = vector.y * -1.0;
-  result.z = vector.z * -1.0;
+  result.x = vector1.x - vector2.x;
+  result.y = vector1.y - vector2.y;
+  result.z = vector1.z - vector2.z;
 
   return result;
 }
 
 /**
+ * gimp_vector3_inner_product:
+ * @vector1: a pointer to the first #GimpVector3.
+ * @vector2: a pointer to the second #GimpVector3.
+ *
+ * Computes the inner (dot) product of two 3D vectors. This product
+ * is zero if and only if the two vectors are orthognal.
+ *
+ * Returns: The inner product.
+ **/
+gdouble
+gimp_vector3_inner_product (const GimpVector3 *vector1,
+                            const GimpVector3 *vector2)
+{
+  return (vector1->x * vector2->x +
+          vector1->y * vector2->y +
+          vector1->z * vector2->z);
+}
+
+/**
+ * gimp_vector3_inner_product_val:
+ * @vector1: the first #GimpVector3.
+ * @vector2: the second #GimpVector3.
+ *
+ * This function is identical to gimp_vector3_inner_product() but the
+ * vectors are passed by value rather than by reference.
+ *
+ * Returns: The inner product.
+ **/
+gdouble
+gimp_vector3_inner_product_val (GimpVector3 vector1,
+                                GimpVector3 vector2)
+{
+  return (vector1.x * vector2.x +
+          vector1.y * vector2.y +
+          vector1.z * vector2.z);
+}
+
+/**
+ * gimp_vector3_cross_product:
+ * @vector1: a pointer to the first #GimpVector3.
+ * @vector2: a pointer to the second #GimpVector3.
+ *
+ * Compute the cross product of two vectors. The result is a
+ * #GimpVector3 which is orthognal to both @vector1 and @vector2. If
+ * @vector1 and @vector2 and parallel, the result will be the nul
+ * vector.
+ *
+ * This function can be used to compute the normal of the plane
+ * defined by @vector1 and @vector2.
+ *
+ * Returns: The cross product.
+ **/
+GimpVector3
+gimp_vector3_cross_product (const GimpVector3 *vector1,
+                            const GimpVector3 *vector2)
+{
+  GimpVector3 normal;
+
+  normal.x = vector1->y * vector2->z - vector1->z * vector2->y;
+  normal.y = vector1->z * vector2->x - vector1->x * vector2->z;
+  normal.z = vector1->x * vector2->y - vector1->y * vector2->x;
+
+  return normal;
+}
+
+/**
+ * gimp_vector3_cross_product_val:
+ * @vector1: the first #GimpVector3.
+ * @vector2: the second #GimpVector3.
+ *
+ * This function is identical to gimp_vector3_cross_product() but the
+ * vectors are passed by value rather than by reference.
+ *
+ * Returns: The cross product.
+ **/
+GimpVector3
+gimp_vector3_cross_product_val (GimpVector3 vector1,
+                                GimpVector3 vector2)
+{
+  GimpVector3 normal;
+
+  normal.x = vector1.y * vector2.z - vector1.z * vector2.y;
+  normal.y = vector1.z * vector2.x - vector1.x * vector2.z;
+  normal.z = vector1.x * vector2.y - vector1.y * vector2.x;
+
+  return normal;
+}
+
+/**
  * gimp_vector3_rotate:
- * @vector: a #GimpVector3 (by address)
+ * @vector: a pointer to a #GimpVector3.
  * @alpha: the angle (in radian) of rotation around the Z axis.
  * @beta: the angle (in radian) of rotation around the Y axis.
  * @gamma: the angle (in radian) of rotation around the X axis.
  *
- * Rotates the @vector around the three axis (Z, Y, and X) by
- * @alpha, @beta and @gamma, respectively.
+ * Rotates the @vector around the three axis (Z, Y, and X) by @alpha,
+ * @beta and @gamma, respectively.
  *
- * Note that the order of the rotation is very important.  If you expect
- * a vector to be rotated around X, and then around Y, you will have to
- * call this function twice.  Also, it is often wise to call this function
- * with only one of @alpha, @beta and @gamma non-nul.
+ * Note that the order of the rotation is very important. If you
+ * expect a vector to be rotated around X, and then around Y, you will
+ * have to call this function twice. Also, it is often wise to call
+ * this function with only one of @alpha, @beta and @gamma non-zero.
  **/
 void
 gimp_vector3_rotate (GimpVector3 *vector,
@@ -884,19 +886,13 @@ gimp_vector3_rotate (GimpVector3 *vector,
 
 /**
  * gimp_vector3_rotate_val:
- * @vector: a #GimpVector3 (by value)
+ * @vector: a #GimpVector3.
  * @alpha: the angle (in radian) of rotation around the Z axis.
  * @beta: the angle (in radian) of rotation around the Y axis.
  * @gamma: the angle (in radian) of rotation around the X axis.
  *
- * Rotates the @vector around the three axis (Z, Y, and X) by
- * @alpha, @beta and @gamma, respectively, and return the resulting
- * vector.
- *
- * Note that the order of the rotation is very important.  If you expect
- * a vector to be rotated around X, and then around Y, you will have to
- * call this function twice. Also, it is often wise to call this function
- * with only one of @alpha, @beta and @gamma non-nul.
+ * This function is identical to gimp_vector3_rotate() but the vectors
+ * are passed by value rather than by reference.
  *
  * Returns: the rotated vector.
  **/
@@ -939,16 +935,16 @@ gimp_vector3_rotate_val (GimpVector3 vector,
  * @h: the height of the screen rectangle.
  * @x: the abscisse of the point in the screen rectangle to map.
  * @y: the ordinate of the point in the screen rectangle to map.
- * @vp: position of the observer (by address).
- * @p: the resulting point (by address).
+ * @vp: the position of the observer.
+ * @p: the resulting point.
  *
- * \"Compute screen (sx,sy)-(sx+w,sy+h) to 3D unit square mapping.
- * The plane to map to is given in the z field of p. The observer
- * is located at position vp (vp->z!=0.0).\"
+ * \"Compute screen (sx, sy) - (sx + w, sy + h) to 3D unit square
+ * mapping. The plane to map to is given in the z field of p. The
+ * observer is located at position vp (vp->z != 0.0).\"
  *
- * In other words, this computes the projection of the point (@x ,@y) to
- * the plane z = @p->z (parallel to XY), from the @vp point of view through
- * the screen (@sx, @sy)->(@sx+@w, @sy+@h)
+ * In other words, this computes the projection of the point (@x, @y)
+ * to the plane z = @p->z (parallel to XY), from the @vp point of view
+ * through the screen (@sx, @sy)->(@sx + @w, @sy + @h)
  **/
 
 void
@@ -986,12 +982,12 @@ gimp_vector_2d_to_3d (gint               sx,
  * @h: the height of the screen rectangle.
  * @x: the abscisse of the point in the screen rectangle to map.
  * @y: the ordinate of the point in the screen rectangle to map.
- * @vp: position of the observer (by value).
- * @p: the resulting point (by value).
+ * @vp: position of the observer.
+ * @p: the resulting point.
  *
- * This is mostly the same function as #gimp_vector_2d_to_3d, with
- * the position of the observer and the projecting plane given by value
- * rather than by address.  Also, the resulting point is returned.
+ * This function is identical to gimp_vector_2d_to_3d() but the
+ * position of the @observer and the resulting point @p are passed by
+ * value rather than by reference.
  *
  * Returns: the computed #GimpVector3 point.
  **/
@@ -1033,15 +1029,15 @@ gimp_vector_2d_to_3d_val (gint        sx,
  * @h: the height of the screen rectangle.
  * @x: the abscisse of the point in the screen rectangle to map (return value).
  * @y: the ordinate of the point in the screen rectangle to map (return value).
- * @vp: position of the observer (by address).
- * @p: the 3D point to project to the plane. (by address).
+ * @vp: position of the observer.
+ * @p: the 3D point to project to the plane.
  *
- * Convert the given 3D point to 2D (project it onto the
- * viewing plane, (sx,sy,0)-(sx+w,sy+h,0). The input is
- * assumed to be in the unit square (0,0,z)-(1,1,z).
- * The viewpoint of the observer is passed in vp.
+ * Convert the given 3D point to 2D (project it onto the viewing
+ * plane, (sx, sy, 0) - (sx + w, sy + h, 0). The input is assumed to
+ * be in the unit square (0, 0, z) - (1, 1, z). The viewpoint of the
+ * observer is passed in vp.
  *
- * This is basically the opposite of the #gimp_vector_2d_to_3d function.
+ * This is basically the opposite of gimp_vector_2d_to_3d().
  **/
 void
 gimp_vector_3d_to_2d (gint               sx,

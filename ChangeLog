@@ -1,3 +1,17 @@
+2003-11-15  Henrik Brix Andersen  <brix@gimp.org>
+
+	* libgimpmath/gimpmatrix.c (gimp_matrix4_to_deg): added an inline
+	gtk-doc stub to be filled in. Someone please fill this in...
+
+	* devel-docs/libgimpmath/tmpl/gimpmatrix.sgml
+	* devel-docs/libgimpmath/tmpl/gimpvector.sgml
+	* devel-docs/libgimpmath/tmpl/gimpmath.sgml: added descriptions
+
+	* devel-docs/libgimpmath/libgimpmath-sections.txt: reordered functions
+
+	* libgimpmath/gimpvector.[ch]: reordered functions here as well to
+	be consistent, touched up the inline gtk-docs
+
 2003-11-15  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/gih.c (gih_load_one_brush): add an alpha channel
