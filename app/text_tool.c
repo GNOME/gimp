@@ -18,7 +18,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "gdk/gdkkeysyms.h"
+#include <gdk/gdkkeysyms.h>
+#include <gdk/gdkprivate.h>
 #include "appenv.h"
 #include "actionarea.h"
 #include "buildmenu.h"
@@ -1590,7 +1591,22 @@ text_load_font (TextTool *text_tool)
 		     weight_str, slant_str, set_width_str, spacing_str,
 		     registry_str, encoding_str, fontname))
     {
+      /* Trap errors with bad fonts -Yosh */
+      gdk_error_warnings = 0;
+      gdk_error_code = 0;
       font = gdk_font_load (fontname);
+      gdk_error_warnings = 1;
+
+      if (gdk_error_code == -1)
+	{
+	  char *buf;
+	  buf = g_malloc (strlen (family_str) + 87);
+	  sprintf(buf, "I'm sorry, but the font %s is corrupt.\nPlease ask the system adminstrator to replace it.", family_str);
+	  message_box (buf, NULL, NULL);
+	  g_free (buf);
+	  return FALSE;
+	}
+
       if (font)
 	{
 	  if (text_tool->font)
@@ -1758,8 +1774,11 @@ text_render (GImage *gimage,
   if (!crop) border = 0;
 
   /* load the font in */
+  gdk_error_warnings = 0;
+  gdk_error_code = 0;
   font = gdk_font_load (fontname);
-  if (!font)
+  gdk_error_warnings = 1;
+  if (!font || (gdk_error_code == -1))
     return NULL;
 
   /* determine the bounding box of the text */
@@ -1934,8 +1953,11 @@ text_get_extents (char *fontname,
   int line_width, line_height;
 
   /* load the font in */
+  gdk_error_warnings = 0;
+  gdk_error_code = 0;
   font = gdk_font_load (fontname);
-  if (!font)
+  gdk_error_warnings = 1;
+  if (!font || (gdk_error_code == -1))
     return FALSE;
 
   /* determine the bounding box of the text */

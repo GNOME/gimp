@@ -1,3 +1,8 @@
+Wed Apr 29 01:43:30 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/text_tool.c: don't die on corrupted fonts. Give some
+	error messages instead.
+
 Tue Apr 28 23:17:37 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/gradient.c: enable adjustment of the gradient list box
