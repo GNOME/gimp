@@ -1,6 +1,6 @@
 /* bmp.c                                          */
-/* Version 0.44	                                  */
-/* This is a File input and output filter for     */
+/* Version 0.51	                                  */
+/* This is a File input and output filter for the */
 /* Gimp. It loads and saves images in windows(TM) */
 /* bitmap format.                                 */
 /* Some Parts that deal with the interaction with */
@@ -17,6 +17,13 @@
 /*            11.04.1998 Arch. cleanup (-Wall)    */
 /*                       Parses gtkrc             */
 /*            14.04.1998 Another Bug in Padding   */
+/*            28.04.1998 RLE-Encoding rewritten   */
+/*            29.10.1998 Changes by Tor Lillqvist */
+/*                       <tml@iki.fi> to support  */
+/*                       16 and 32 bit images     */
+/*            28.11.1998 Bug in RLE-read-padding  */
+/*                       fixed.                   */
+
 /* 
  * The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis

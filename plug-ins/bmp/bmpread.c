@@ -210,7 +210,7 @@ Image ReadImage (fd, len, height, cmap, ncols, bpp, compression, spzeile, grey)
       layer = gimp_layer_new (image, _("Background"), len, height, GRAY_IMAGE, 100, NORMAL_MODE);
       channels = 1;
     }
-  else 
+  else
     {
       if (bpp<24) 
 	{
@@ -273,8 +273,8 @@ Image ReadImage (fd, len, height, cmap, ncols, bpp, compression, spzeile, grey)
           for (i=1;(i<=(8/bpp)) && (xpos<len);i++,xpos++)
             {
               temp = dest + (ypos * rowstride) + (xpos * channels);
-              /* look at my bitmask !! */
               *temp=( v & ( ((1<<bpp)-1) << (8-(i*bpp)) ) ) >> (8-(i*bpp));
+	      if (grey) *temp=cmap[*temp][0];
             }
           if (xpos == len)
             {
@@ -306,6 +306,7 @@ Image ReadImage (fd, len, height, cmap, ncols, bpp, compression, spzeile, grey)
 		      {
 			temp = dest + (ypos * rowstride) + (xpos * channels);
 			*temp=( buf[1] & ( ((1<<bpp)-1) << (8-(i*bpp)) ) ) >> (8-(i*bpp));
+			if (grey) *temp=cmap[*temp][0];
 		      }
 		  }
 	      }
@@ -321,10 +322,12 @@ Image ReadImage (fd, len, height, cmap, ncols, bpp, compression, spzeile, grey)
 		      {
 			temp = dest + (ypos * rowstride) + (xpos * channels);
 			*temp=(v & ( ((1<<bpp)-1) << (8-(i*bpp)) ) ) >> (8-(i*bpp));
+			if (grey) *temp=cmap[*temp][0];
 			i++;
 			xpos++;
 		      }
 		  }
+		if ((wieviel % 2) && (bpp==4)) wieviel++;
 		if ( (wieviel / (8/bpp)) % 2) egal=ReadOK(fd,&v,1);
 		/*if odd(x div (8 div bpp )) then blockread(f,z^,1);*/
 	      }
@@ -352,8 +355,8 @@ Image ReadImage (fd, len, height, cmap, ncols, bpp, compression, spzeile, grey)
 	break;
       }
     }
-  }    
-  
+  }
+
   fclose(fd);
   if (bpp<24) for (i = 0, j = 0; i < ncols; i++)
     {
@@ -361,11 +364,11 @@ Image ReadImage (fd, len, height, cmap, ncols, bpp, compression, spzeile, grey)
       gimp_cmap[j++] = cmap[i][1];
       gimp_cmap[j++] = cmap[i][2];
     }
-  
+
   if (interactive_bmp) gimp_progress_update (1);
   gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, TRUE, FALSE);
   gimp_pixel_rgn_set_rect(&pixel_rgn, dest, 0, 0, drawable->width, drawable->height);
-  if (bpp<24) gimp_image_set_cmap(image, gimp_cmap, ncols);
+  if ((!grey) && (bpp<24)) gimp_image_set_cmap(image, gimp_cmap, ncols);
   gimp_drawable_flush(drawable);
   gimp_drawable_detach(drawable);
   g_free(dest);

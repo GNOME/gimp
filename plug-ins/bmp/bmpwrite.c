@@ -29,9 +29,9 @@ int max_progress;
 typedef struct
 {
   gint run;
-} GIFSaveInterface;
+} BMPSaveInterface;
 
-static GIFSaveInterface gsint =
+static BMPSaveInterface gsint =
 {
   FALSE   /*  run  */
 };
@@ -255,7 +255,9 @@ void WriteImage(f, src, width, height, encoded, channels, bpp, spzeile, MapSize)
   guchar buf[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0};
   guchar puffer[8];
   guchar *temp,v,g;
+  guchar *Zeile,*ketten;
   int xpos,ypos,i,j,rowstride,laenge,thiswidth;
+  int breite, n, k;
 
   xpos=0;
   rowstride=width*channels;
@@ -265,134 +267,161 @@ void WriteImage(f, src, width, height, encoded, channels, bpp, spzeile, MapSize)
   if (bpp==24)
     {
       for (ypos=height-1;ypos>=0;ypos--)	/* for each row   */
-      {
-        for (i=0;i<width;i++)			/* for each pixel */
-        {
-          temp = src + (ypos * rowstride) + (xpos * channels);
-          buf[2]=(unsigned char) *temp;
-          temp++;
-          buf[1]=(unsigned char) *temp;
-          temp++;
-          buf[0]=(unsigned char) *temp;
-          xpos++;
-          Write(f,buf,3);
-        }
-        Write(f,&buf[3],spzeile-(width*3));
-        cur_progress++;
-        if ((interactive_bmp) && ((cur_progress % 5) == 0)) gimp_progress_update ((double) cur_progress / (double) max_progress);
-        xpos=0;
-      }
+	{
+	  for (i=0;i<width;i++)			/* for each pixel */
+	    {
+	      temp = src + (ypos * rowstride) + (xpos * channels);
+	      buf[2]=(unsigned char) *temp;
+	      temp++;
+	      buf[1]=(unsigned char) *temp;
+	      temp++;
+	      buf[0]=(unsigned char) *temp;
+	      xpos++;
+	      Write(f,buf,3);
+	    }
+	  Write(f,&buf[3],spzeile-(width*3));
+	  cur_progress++;
+	  if ((interactive_bmp) && ((cur_progress % 5) == 0)) gimp_progress_update ((double) cur_progress / (double) max_progress);
+	  xpos=0;
+	}
     } else {
-    switch(encoded)				/* now it gets more difficult */
-      {						/* uncompressed 1,4 and 8 bit */
-      case 0:
-        {
-	thiswidth=(width/(8/bpp));
-	if (width % (8/bpp)) thiswidth++;
-        for (ypos=height-1;ypos>=0;ypos--)	/* for each row		      */
-          {
-          for (xpos=0;xpos<width;)		/* for each _byte_	      */
-            {
-            v=0;
-            for (i=1;(i<=(8/bpp)) && (xpos<width);i++,xpos++)	/* for each pixel */
-              {
-              temp = src + (ypos * rowstride) + (xpos * channels);
-              v=v | ((unsigned char) *temp << (8-(i*bpp)));
-              }
-            Write(f,&v,1);
-            }
-          Write(f,&buf[3],spzeile-thiswidth);
-          xpos=0;
-          cur_progress++;
-          if ((interactive_bmp) && ((cur_progress % 5) == 0))
-          gimp_progress_update ((double) cur_progress / (double) max_progress);
-          }
-        break;
-        }
-      default:
-        {			/* Save RLE encoded file, quite difficult */
-        laenge=0;		/* and doesn't work completely		  */
-        buf[12]=0;
-        buf[13]=1;
-        buf[14]=0;
-        buf[15]=0;
-        for (ypos=height-1;ypos>=0;ypos--)	/* each row separately */
-          {
-          for (xpos=0;xpos<width;)		/* loop for one row    */
-            {
-              temp = src + (ypos * rowstride) + (xpos * channels);
-              buf[1] = (unsigned char) *temp;
-              j=0;
-              while (((unsigned char) *temp == (unsigned char) buf[1]) && (j<255) && (xpos<width))
-                {
-                xpos++;
-                if (xpos<width) temp = src + (ypos * rowstride) + (xpos * channels);
-                j++;
-                }
-              if (1) /* (j>2) */
-                {
-                buf[0]=(unsigned char) j;
-                if (bpp==4) 
-                  {
-                  buf[1]=buf[1] | (buf[1] << 4);
-                  }
-                Write(f,buf,2);			/* Count -- Color */
-                laenge+=2;
-                }
-              else				/* unpacked */
-                {
-                xpos-=j;
-                j=3;
-                xpos+=j;
-                v=*(src + (ypos * rowstride) + ((xpos-1) * channels));
-                buf[0]=0;
-                Write(f,buf,1);
-                laenge++;
-                temp = src + (ypos * rowstride) + (xpos * channels);
-                while ((j<255) && (xpos<width) && ((unsigned char) v != ((unsigned char) *temp)))
-                  {
-                  v=(unsigned char) *temp;
-                  xpos++;
-                  j++;
-                  temp = src + (ypos * rowstride) + (xpos * channels);
-                  }
-                xpos-=j;
-                buf[0]=(unsigned char) j;
-                Write(f,buf,1);
-                laenge++;
-                for (i=0;i<j;i+=(8/bpp),xpos+=(8/bpp))
-                  {
-                  temp = src + (ypos * rowstride) + (xpos * channels);
-                  v=(unsigned char) *temp;
-                  temp++;
-                  g=(unsigned char) *temp;
-                  if (bpp==4) v=v | (g << 4);
-                  Write(f,&v,1);
-                  }
-                laenge+=j/(8/bpp);
-                if ((j/(8/bpp)) % 2) { Write(f,&buf[12],1); laenge++; }
-                }
-            }
-          Write(f,&buf[14],2);		/* End of row */
-          laenge+=2;
-          cur_progress++;
-          if ((interactive_bmp) &&((cur_progress % 5) == 0)) gimp_progress_update ((double) cur_progress / (double)  max_progress);
-          }
-        fseek(f,-2,SEEK_CUR);			/* Overwrite last End of row */
-        Write(f,&buf[12],2);			/* End of file */
+      switch(encoded)				/* now it gets more difficult */
+	{						/* uncompressed 1,4 and 8 bit */
+	case 0:
+	  {
+	    thiswidth=(width/(8/bpp));
+	    if (width % (8/bpp)) thiswidth++;
+	    for (ypos=height-1;ypos>=0;ypos--)	/* for each row		      */
+	      {
+		for (xpos=0;xpos<width;)		/* for each _byte_	      */
+		  {
+		    v=0;
+		    for (i=1;(i<=(8/bpp)) && (xpos<width);i++,xpos++)	/* for each pixel */
+		      {
+			temp = src + (ypos * rowstride) + (xpos * channels);
+			v=v | ((unsigned char) *temp << (8-(i*bpp)));
+		      }
+		    Write(f,&v,1);
+		  }
+		Write(f,&buf[3],spzeile-thiswidth);
+		xpos=0;
+		cur_progress++;
+		if ((interactive_bmp) && ((cur_progress % 5) == 0))
+		  gimp_progress_update ((double) cur_progress / (double) max_progress);
+	      }
+	    break;
+	  }
+	default:
+	  {						 /* Save RLE encoded file, quite difficult */
+	    laenge = 0;
+	    buf[12] = 0;
+	    buf[13] = 1;
+	    buf[14] = 0;
+	    buf[15] = 0;
+	    Zeile = (guchar *) g_malloc (width / (8 / bpp) + 10);
+	    ketten = (guchar *) g_malloc (width / (8 / bpp) + 10);
+	    for (ypos = height - 1; ypos >= 0; ypos--) {	/* each row separately */
+	      /*printf("Line: %i\n",ypos); */
+	      j = 0;
+	      /* first copy the pixels to a buffer, making one byte from two 4bit pixels */
+	      for (xpos = 0; xpos < width;) {
+		v = 0;
+		for (i = 1; (i <= (8 / bpp)) && (xpos < width); i++, xpos++) {	/* for each pixel */
+		  temp = src + (ypos * rowstride) + (xpos * channels);
+		  v = v | ((guchar) * temp << (8 - (i * bpp)));
+		}
+		Zeile[j++] = v;
+	      }
+	      breite = width / (8 / bpp);
+	      if (width % (8 / bpp))
+		breite++;
+	      /* then check for strings of equal bytes */
+	      for (i = 0; i < breite;) {
+		j = 0;
+		while ((i + j < breite) && (j < (255 / (8 / bpp))) && (Zeile[i + j] == Zeile[i]))
+		  j++;
+		ketten[i] = j;
+		/*printf("%i:",ketten[i]); */
+		i += j;
+	      }
+	      /*printf("\n"); */
+	      /* then write the strings and the other pixels to the file */
+	      for (i = 0; i < breite;) {
+		if (ketten[i] < 3)
+		  /* strings of different pixels ... */
+		  {
+		    j = 0;
+		    while ((i + j < breite) && (j < (255 / (8 / bpp))) && (ketten[i + j] < 3))
+		      j += ketten[i + j];
+		    /* this can only happen if j jumps over the end with a 2 in ketten[i+j] */
+		    if (j > (255 / (8 / bpp)))
+		      j -= 2;
+		    /* 00 01 and 00 02 are reserved */
+		    if (j > 2) {
+		      Write (f, &buf[12], 1);
+		      n = j * (8 / bpp);
+		      if (n + i * (8 / bpp) > width)
+			n--;
+		      Write (f, &n, 1);
+		      laenge += 2;
+		      Write (f, &Zeile[i], j);
+		      /*printf("0.%i.",n); */
+		      /*for (k=j;k;k--) printf("#"); */
+		      laenge += j;
+		      if ((j) % 2) {
+			Write (f, &buf[12], 1);
+			laenge++;			 /*printf("0"); */
+		      }
+		      /*printf("|"); */
+		    } else {
+		      for (k = i; k < i + j; k++) {
+			n = (8 / bpp);
+			if (n + i * (8 / bpp) > width)
+			  n--;
+			Write (f, &n, 1);
+			Write (f, &Zeile[k], 1);
+			/*printf("%i.#|",n); */
+			laenge += 2;
+		      }
+		    }
+		    i += j;
+		  } else
+		    /* strings of equal pixels */
+		    {
+		      n = ketten[i] * (8 / bpp);
+		      if (n + i * (8 / bpp) > width)
+			n--;
+		      Write (f, &n, 1);
+		      Write (f, &Zeile[i], 1);
+		      /*printf("%i.#|",n); */
+		      i += ketten[i];
+		      laenge += 2;
+		    }
+	      }
+	      /*printf("\n"); */
+	      Write (f, &buf[14], 2);		 /* End of row */
+	      laenge += 2;
+	      cur_progress++;
+	      if ((interactive_bmp) && ((cur_progress % 5) == 0))
+		gimp_progress_update ((double)cur_progress / max_progress);
+	    }
+	    fseek (f, -2, SEEK_CUR);		 /* Overwrite last End of row ... */
+	    Write (f, &buf[12], 2);			 /* ... with End of file */
 
-        fseek(f,0x22,SEEK_SET);
-	FromL(laenge,puffer);
-	Write(f,puffer,4);
-        fseek(f,0x02,SEEK_SET);
-        laenge+=(0x36+MapSize);
-        FromL(laenge,puffer);
-	Write(f,puffer,4);
-        break;
-        }      
-      }
+	    fseek (f, 0x22, SEEK_SET);               /* Write length of image */
+	    FromL (laenge, puffer);
+	    Write (f, puffer, 4);
+	    fseek (f, 0x02, SEEK_SET);               /* Write length of file */
+	    laenge += (0x36 + MapSize);
+	    FromL (laenge, puffer);
+	    Write (f, puffer, 4);
+	    g_free (ketten);
+	    g_free (Zeile);
+	    break;
+	  }
+	}
     }
-    if (interactive_bmp) gimp_progress_update(1);
+  if (interactive_bmp) gimp_progress_update(1);
 }
 
 
