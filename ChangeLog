@@ -1,3 +1,14 @@
+Wed Jun  7 12:00:39 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	[patches from Daniel Egger]
+
+	* app/layers_dialog.c: Disable the "Add Layermask" menuentry
+	for indexed images.
+
+	* app/gimpimage.c: Leave gimp_image_add_layer_mask(...) after
+	spitting out messages when trying to add a layermask to an
+	indexed image.
+
 2000-06-07  Sven Neumann  <sven@gimp.org>
 
 	* app/pixel_region.c: applied patch provided by Daniel Egger:

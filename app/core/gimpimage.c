@@ -3025,15 +3025,21 @@ gimp_image_add_layer_mask (GimpImage *gimage,
   if (layer->mask != NULL)
     {
       g_message(_("Unable to add a layer mask since\nthe layer already has one."));
+      return (NULL);
     }
+
   if (drawable_indexed (GIMP_DRAWABLE (layer)))
     {
       g_message(_("Unable to add a layer mask to a\nlayer in an indexed image."));
+      return (NULL);
     }
+
   if (! layer_has_alpha (layer))
     {
       g_message (_("Cannot add layer mask to a layer\nwith no alpha channel."));
+      return (NULL);
     }
+
   if ((drawable_width (GIMP_DRAWABLE(layer)) !=
        drawable_width (GIMP_DRAWABLE(mask))) ||
       (drawable_height (GIMP_DRAWABLE(layer)) !=
