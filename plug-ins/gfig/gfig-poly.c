@@ -43,8 +43,8 @@
 
 static gint poly_num_sides = 3; /* Default to three sided object */
 
-static void      d_draw_poly (Dobject *obj);
-static Dobject  *d_copy_poly (Dobject *obj);
+static void        d_draw_poly (GfigObject *obj);
+static GfigObject *d_copy_poly (GfigObject *obj);
 
 void
 tool_options_poly (GtkWidget *notebook)
@@ -57,7 +57,7 @@ tool_options_poly (GtkWidget *notebook)
 }
 
 static void
-d_draw_poly (Dobject *obj)
+d_draw_poly (GfigObject *obj)
 {
   DobjPoints *center_pnt;
   DobjPoints *radius_pnt;
@@ -141,7 +141,7 @@ d_draw_poly (Dobject *obj)
 }
 
 void
-d_paint_poly (Dobject *obj)
+d_paint_poly (GfigObject *obj)
 {
   /* first point center */
   /* Next point is radius */
@@ -248,7 +248,7 @@ d_paint_poly (Dobject *obj)
 }
 
 void
-d_poly2lines (Dobject *obj)
+d_poly2lines (GfigObject *obj)
 {
   /* first point center */
   /* Next point is radius */
@@ -340,7 +340,7 @@ d_poly2lines (Dobject *obj)
 }
 
 void
-d_star2lines (Dobject *obj)
+d_star2lines (GfigObject *obj)
 {
   /* first point center */
   /* Next point is radius */
@@ -463,10 +463,10 @@ d_star2lines (Dobject *obj)
   obj->class->drawfunc (obj);
 }
 
-static Dobject *
-d_copy_poly (Dobject *obj)
+static GfigObject *
+d_copy_poly (GfigObject *obj)
 {
-  Dobject *np;
+  GfigObject *np;
 
   g_assert (obj->type == POLY);
 
@@ -480,7 +480,7 @@ d_copy_poly (Dobject *obj)
 void
 d_poly_object_class_init (void)
 {
-  DobjClass *class = &dobj_class[POLY];
+  GfigObjectClass *class = &dobj_class[POLY];
 
   class->type      = POLY;
   class->name      = "Poly";
@@ -541,7 +541,7 @@ d_update_poly (GdkPoint *pnt)
 
 void
 d_poly_start (GdkPoint *pnt,
-              gint      shift_down)
+              gboolean  shift_down)
 {
   obj_creating = d_new_object (POLY, pnt->x, pnt->y);
   obj_creating->type_data = poly_num_sides;
@@ -549,7 +549,7 @@ d_poly_start (GdkPoint *pnt,
 
 void
 d_poly_end (GdkPoint *pnt,
-            gint      shift_down)
+            gboolean  shift_down)
 {
   draw_circle (pnt);
   add_to_all_obj (gfig_context->current_obj, obj_creating);

@@ -42,9 +42,9 @@
 
 static gint star_num_sides = 3; /* Default to three sided object */
 
-static void      d_draw_star  (Dobject *obj);
-static void      d_paint_star (Dobject *obj);
-static Dobject  *d_copy_star  (Dobject * obj);
+static void        d_draw_star  (GfigObject *obj);
+static void        d_paint_star (GfigObject *obj);
+static GfigObject *d_copy_star  (GfigObject * obj);
 
 void
 tool_options_star (GtkWidget *notebook)
@@ -57,7 +57,7 @@ tool_options_star (GtkWidget *notebook)
 }
 
 static void
-d_draw_star (Dobject *obj)
+d_draw_star (GfigObject *obj)
 {
   DobjPoints *center_pnt;
   DobjPoints *outer_radius_pnt;
@@ -167,7 +167,7 @@ d_draw_star (Dobject *obj)
 }
 
 static void
-d_paint_star (Dobject *obj)
+d_paint_star (GfigObject *obj)
 {
   /* first point center */
   /* Next point is radius */
@@ -304,10 +304,10 @@ d_paint_star (Dobject *obj)
   g_free (line_pnts);
 }
 
-static Dobject *
-d_copy_star (Dobject *obj)
+static GfigObject *
+d_copy_star (GfigObject *obj)
 {
-  Dobject *np;
+  GfigObject *np;
 
   g_assert (obj->type == STAR);
 
@@ -321,7 +321,7 @@ d_copy_star (Dobject *obj)
 void
 d_star_object_class_init (void)
 {
-  DobjClass *class = &dobj_class[STAR];
+  GfigObjectClass *class = &dobj_class[STAR];
 
   class->type      = STAR;
   class->name      = "Star";

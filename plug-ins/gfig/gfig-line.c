@@ -39,10 +39,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-Dobject *
-d_copy_line (Dobject *obj)
+GfigObject *
+d_copy_line (GfigObject *obj)
 {
-  Dobject *nl;
+  GfigObject *nl;
 
   g_assert (obj->type == LINE);
 
@@ -53,7 +53,7 @@ d_copy_line (Dobject *obj)
 }
 
 void
-d_draw_line (Dobject *obj)
+d_draw_line (GfigObject *obj)
 {
   DobjPoints *spnt;
   DobjPoints *epnt;
@@ -77,7 +77,7 @@ d_draw_line (Dobject *obj)
 }
 
 void
-d_paint_line (Dobject *obj)
+d_paint_line (GfigObject *obj)
 {
   DobjPoints *spnt;
   gdouble    *line_pnts;
@@ -136,7 +136,7 @@ d_paint_line (Dobject *obj)
 void
 d_line_object_class_init (void)
 {
-  DobjClass *class = &dobj_class[LINE];
+  GfigObjectClass *class = &dobj_class[LINE];
 
   class->type      = LINE;
   class->name      = "Line";
@@ -164,10 +164,10 @@ d_delete_line (Dobject *obj)
  */
 
 void
-d_pnt_add_line (Dobject *obj,
-                gint     x,
-                gint     y,
-                gint     pos)
+d_pnt_add_line (GfigObject *obj,
+                gint        x,
+                gint        y,
+                gint        pos)
 {
   DobjPoints *npnts = new_dobjpoint (x, y);
 

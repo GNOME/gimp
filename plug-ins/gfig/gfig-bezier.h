@@ -26,17 +26,17 @@
 #ifndef __GFIG_BEZIER_H__
 #define __GFIG_BEZIER_H__
 
-extern Dobject *tmp_bezier;
+extern GfigObject *tmp_bezier;
 
-void d_draw_bezier              (Dobject   *obj);
+void d_draw_bezier              (GfigObject *obj);
 
-void d_update_bezier            (GdkPoint  *pnt);
-void d_bezier_start             (GdkPoint  *pnt,
-                                 gint       shift_down);
-void d_bezier_end               (GdkPoint  *pnt,
-                                 gint       shift_down);
+void d_update_bezier            (GdkPoint   *pnt);
+void d_bezier_start             (GdkPoint   *pnt,
+                                 gboolean    shift_down);
+void d_bezier_end               (GdkPoint   *pnt,
+                                 gboolean    shift_down);
 void d_bezier_object_class_init (void);
 
-void tool_options_bezier        (GtkWidget *notebook);
+void tool_options_bezier        (GtkWidget  *notebook);
 
 #endif /* __GFIG_BEZIER_H__ */

@@ -41,9 +41,9 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static void     d_draw_spiral  (Dobject *obj);
-static void     d_paint_spiral (Dobject *obj);
-static Dobject *d_copy_spiral  (Dobject * obj);
+static void        d_draw_spiral  (GfigObject *obj);
+static void        d_paint_spiral (GfigObject *obj);
+static GfigObject *d_copy_spiral  (GfigObject *obj);
 
 static gint spiral_num_turns = 4; /* Default to 4 turns */
 static gint spiral_toggle    = 0; /* 0 = clockwise -1 = anti-clockwise */
@@ -59,7 +59,7 @@ tool_options_spiral (GtkWidget *notebook)
 }
 
 static void
-d_draw_spiral (Dobject *obj)
+d_draw_spiral (GfigObject *obj)
 {
   DobjPoints *center_pnt;
   DobjPoints *radius_pnt;
@@ -151,7 +151,7 @@ d_draw_spiral (Dobject *obj)
 }
 
 static void
-d_paint_spiral (Dobject *obj)
+d_paint_spiral (GfigObject *obj)
 {
   /* first point center */
   /* Next point is radius */
@@ -261,10 +261,10 @@ d_paint_spiral (Dobject *obj)
   g_free (line_pnts);
 }
 
-static Dobject *
-d_copy_spiral (Dobject *obj)
+static GfigObject *
+d_copy_spiral (GfigObject *obj)
 {
-  Dobject *np;
+  GfigObject *np;
 
   g_assert (obj->type == SPIRAL);
 
@@ -278,7 +278,7 @@ d_copy_spiral (Dobject *obj)
 void
 d_spiral_object_class_init (void)
 {
-  DobjClass *class = &dobj_class[SPIRAL];
+  GfigObjectClass *class = &dobj_class[SPIRAL];
 
   class->type      = SPIRAL;
   class->name      = "Spiral";

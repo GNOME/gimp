@@ -51,24 +51,24 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static Dobject  *operation_obj = NULL;
-static GdkPoint *move_all_pnt; /* Point moving all from */
+static GfigObject *operation_obj = NULL;
+static GdkPoint   *move_all_pnt; /* Point moving all from */
 
 
-static void draw_one_obj         (Dobject    *obj);
-static void do_move_obj          (Dobject    *obj,
+static void draw_one_obj         (GfigObject *obj);
+static void do_move_obj          (GfigObject *obj,
                                   GdkPoint   *to_pnt);
 static void do_move_all_obj      (GdkPoint   *to_pnt);
-static void do_move_obj_pnt      (Dobject    *obj,
+static void do_move_obj_pnt      (GfigObject *obj,
                                   GdkPoint   *to_pnt);
 static void remove_obj_from_list (GFigObj    *obj,
-                                  Dobject    *del_obj);
+                                  GfigObject *del_obj);
 static gint scan_obj_points      (DobjPoints *opnt,
                                   GdkPoint   *pnt);
 
 void
-d_save_object (Dobject *obj,
-               GString *string)
+d_save_object (GfigObject *obj,
+               GString    *string)
 {
   do_save_obj (obj, string);
 
@@ -106,15 +106,15 @@ gfig_read_object_type (gchar *desc)
   return OBJ_TYPE_NONE;
 }
 
-Dobject *
+GfigObject *
 d_load_object (gchar *desc,
                FILE  *fp)
 {
-  Dobject  *new_obj = NULL;
-  gint      xpnt;
-  gint      ypnt;
-  gchar     buf[MAX_LOAD_LINE];
-  DobjType  type;
+  GfigObject *new_obj = NULL;
+  gint        xpnt;
+  gint        ypnt;
+  gchar       buf[MAX_LOAD_LINE];
+  DobjType    type;
 
   type = gfig_read_object_type (desc);
   if (type == OBJ_TYPE_NONE)
@@ -166,12 +166,12 @@ d_load_object (gchar *desc,
   return new_obj;
 }
 
-Dobject *
+GfigObject *
 d_new_object (DobjType    type,
               gint        x,
               gint        y)
 {
-  Dobject *nobj = g_new0 (Dobject, 1);
+  GfigObject *nobj = g_new0 (GfigObject, 1);
 
   nobj->type = type;
   nobj->class = &dobj_class[type];
@@ -265,10 +265,10 @@ d_copy_dobjpoints (DobjPoints *pnts)
 }
 
 static DobjPoints *
-get_diffs (Dobject  *obj,
-           gint     *xdiff,
-           gint     *ydiff,
-           GdkPoint *to_pnt)
+get_diffs (GfigObject *obj,
+           gint       *xdiff,
+           gint       *ydiff,
+           GdkPoint   *to_pnt)
 {
   DobjPoints *spnt;
 
@@ -316,14 +316,14 @@ scan_obj_points (DobjPoints *opnt,
   return FALSE;
 }
 
-static Dobject *
+static GfigObject *
 get_nearest_objs (GFigObj  *obj,
                   GdkPoint *pnt)
 {
   /* Nearest object to given point or NULL */
-  GList   *all;
-  Dobject *test_obj;
-  gint     count = 0;
+  GList      *all;
+  GfigObject *test_obj;
+  gint        count = 0;
 
   if (!obj)
     return NULL;
@@ -346,7 +346,7 @@ void
 object_operation_start (GdkPoint *pnt,
                         gint      shift_down)
 {
-  Dobject *new_obj;
+  GfigObject *new_obj;
 
   /* Find point in given object list */
   operation_obj = get_nearest_objs (gfig_context->current_obj, pnt);
@@ -411,7 +411,7 @@ object_operation_start (GdkPoint *pnt,
       /* Copy the "operation object" */
       /* Then bung us into "copy/move" mode */
 
-      new_obj = (Dobject*) operation_obj->class->copyfunc (operation_obj);
+      new_obj = (GfigObject*) operation_obj->class->copyfunc (operation_obj);
       if (new_obj)
         {
           gfig_style_copy (&new_obj->style, &operation_obj->style, "Object");
@@ -537,9 +537,9 @@ object_operation (GdkPoint *to_pnt,
 }
 
 static void
-update_pnts (Dobject *obj,
-             gint     xdiff,
-             gint     ydiff)
+update_pnts (GfigObject *obj,
+             gint        xdiff,
+             gint        ydiff)
 {
   DobjPoints *spnt;
 
@@ -554,8 +554,8 @@ update_pnts (Dobject *obj,
 }
 
 static void
-remove_obj_from_list (GFigObj *obj,
-                      Dobject *del_obj)
+remove_obj_from_list (GFigObj    *obj,
+                      GfigObject *del_obj)
 {
   /* Nearest object to given point or NULL */
 
@@ -571,7 +571,7 @@ remove_obj_from_list (GFigObj *obj,
 
       if (obj->obj_list)
         {
-          Dobject *new_current = obj->obj_list->data;
+          GfigObject *new_current = obj->obj_list->data;
           gfig_style_set_context_from_style (&new_current->style);
         }
       else
@@ -602,7 +602,7 @@ do_move_all_obj (GdkPoint *to_pnt)
 
       for (all = gfig_context->current_obj->obj_list; all; all = all->next)
         {
-          Dobject *obj = all->data;
+          GfigObject *obj = all->data;
 
           /* undraw ! */
           draw_one_obj (obj);
@@ -618,8 +618,8 @@ do_move_all_obj (GdkPoint *to_pnt)
 }
 
 void
-do_save_obj (Dobject *obj,
-             GString *string)
+do_save_obj (GfigObject *obj,
+             GString    *string)
 {
   DobjPoints *spnt;
 
@@ -630,8 +630,8 @@ do_save_obj (Dobject *obj,
 }
 
 static void
-do_move_obj (Dobject  *obj,
-             GdkPoint *to_pnt)
+do_move_obj (GfigObject *obj,
+             GdkPoint   *to_pnt)
 {
   /* Move the whole line - undraw the line to start with */
   /* Then draw in new pos */
@@ -653,8 +653,8 @@ do_move_obj (Dobject  *obj,
 }
 
 static void
-do_move_obj_pnt (Dobject  *obj,
-                 GdkPoint *to_pnt)
+do_move_obj_pnt (GfigObject *obj,
+                 GdkPoint   *to_pnt)
 {
   /* Move the whole line - undraw the line to start with */
   /* Then draw in new pos */
@@ -685,8 +685,8 @@ copy_all_objs (GList *objs)
 
   while (objs)
     {
-      Dobject *object = objs->data;
-      Dobject *new_object = (Dobject *) object->class->copyfunc (object);
+      GfigObject *object = objs->data;
+      GfigObject *new_object = (GfigObject *) object->class->copyfunc (object);
 
       new_all_objs = g_list_append (new_all_objs, new_object);
 
@@ -698,7 +698,7 @@ copy_all_objs (GList *objs)
 
 /* Screen refresh */
 static void
-draw_one_obj (Dobject * obj)
+draw_one_obj (GfigObject * obj)
 {
   obj->class->drawfunc (obj);
 }
@@ -746,8 +746,8 @@ scale_obj_points (DobjPoints *opnt,
 }
 
 void
-add_to_all_obj (GFigObj *fobj,
-                Dobject *obj)
+add_to_all_obj (GFigObj    *fobj,
+                GfigObject *obj)
 {
   GList *nobj = NULL;
 
@@ -939,7 +939,7 @@ object_update (GdkPoint *pnt)
  */
 
 void
-free_one_obj (Dobject *obj)
+free_one_obj (GfigObject *obj)
 {
   d_delete_dobjpoints (obj->points);
   g_free (obj);

@@ -312,13 +312,13 @@ arc_angle (GdkPoint *pnt,
 }
 
 static void
-arc_drawing_details (Dobject  *obj,
-                     gdouble  *minang,
-                     GdkPoint *center_pnt,
-                     gdouble  *arcang,
-                     gdouble  *radius,
-                     gint      draw_cnts,
-                     gint      do_scale)
+arc_drawing_details (GfigObject *obj,
+                     gdouble    *minang,
+                     GdkPoint   *center_pnt,
+                     gdouble    *arcang,
+                     gdouble    *radius,
+                     gint        draw_cnts,
+                     gint        do_scale)
 {
   DobjPoints *pnt1 = NULL;
   DobjPoints *pnt2 = NULL;
@@ -403,7 +403,7 @@ arc_drawing_details (Dobject  *obj,
 }
 
 static void
-d_draw_arc (Dobject * obj)
+d_draw_arc (GfigObject * obj)
 {
   GdkPoint center_pnt;
   gdouble  radius, minang, arcang;
@@ -419,7 +419,7 @@ d_draw_arc (Dobject * obj)
 }
 
 static void
-d_paint_arc (Dobject *obj)
+d_paint_arc (GfigObject *obj)
 {
   /* first point center */
   /* Next point is radius */
@@ -524,10 +524,10 @@ d_paint_arc (Dobject *obj)
   g_free (line_pnts);
 }
 
-static Dobject *
-d_copy_arc (Dobject *obj)
+static GfigObject *
+d_copy_arc (GfigObject *obj)
 {
-  Dobject *nc;
+  GfigObject *nc;
 
   g_assert (obj->type == ARC);
 
@@ -540,7 +540,7 @@ d_copy_arc (Dobject *obj)
 void
 d_arc_object_class_init (void)
 {
-  DobjClass *class = &dobj_class[ARC];
+  GfigObjectClass *class = &dobj_class[ARC];
 
   class->type      = ARC;
   class->name      = "Arc";

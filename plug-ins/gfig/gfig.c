@@ -86,12 +86,10 @@ gint obj_show_single   = -1; /* -1 all >= 0 object number */
 /* Points used to draw the object  */
 
 
-Dobject *obj_creating; /* Object we are creating */
-Dobject *tmp_line;     /* Needed when drawing lines */
+GfigObject *obj_creating; /* Object we are creating */
+GfigObject *tmp_line;     /* Needed when drawing lines */
 
-
-gint need_to_scale;
-
+gboolean need_to_scale;
 
 static gint       load_options            (GFigObj *gfig,
                                            FILE    *fp);
@@ -372,11 +370,11 @@ gfig_load_objs (GFigObj *gfig,
                 gint     load_count,
                 FILE    *fp)
 {
-  Dobject *obj;
-  gchar    load_buf[MAX_LOAD_LINE];
-  glong    offset;
-  glong    offset2;
-  Style    style;
+  GfigObject *obj;
+  gchar       load_buf[MAX_LOAD_LINE];
+  glong       offset;
+  glong       offset2;
+  Style       style;
 
   while (load_count-- > 0)
     {
@@ -543,8 +541,8 @@ save_options (GString *string)
 }
 
 static void
-gfig_save_obj_start (Dobject *obj,
-                     GString *string)
+gfig_save_obj_start (GfigObject *obj,
+                     GString    *string)
 {
   g_string_append_printf (string, "<%s ", obj->class->name);
   gfig_style_save_as_attributes (&obj->style, string);
@@ -552,8 +550,8 @@ gfig_save_obj_start (Dobject *obj,
 }
 
 static void
-gfig_save_obj_end (Dobject *obj,
-                   GString *string)
+gfig_save_obj_end (GfigObject *obj,
+                   GString    *string)
 {
   g_string_append_printf (string, "</%s>\n",obj->class->name);
 }
@@ -691,7 +689,7 @@ gfig_save_as_string (void)
        objs;
        objs = g_list_next (objs))
     {
-      Dobject *object = objs->data;
+      GfigObject *object = objs->data;
 
       gfig_save_obj_start (object, string);
 

@@ -42,10 +42,10 @@
 
 static gint bezier_closed     = 0; /* Closed curve 0 = false 1 = true */
 static gint bezier_line_frame = 0; /* Show frame = false 1 = true */
-Dobject *tmp_bezier;               /* Needed when drawing bezier curves */
+GfigObject *tmp_bezier;               /* Needed when drawing bezier curves */
 
-static void       d_paint_bezier          (Dobject *obj);
-static Dobject  * d_copy_bezier           (Dobject * obj);
+static void        d_paint_bezier (GfigObject *obj);
+static GfigObject *d_copy_bezier  (GfigObject *obj);
 
 
 #define FP_PNT_MAX  10
@@ -123,7 +123,7 @@ DrawBezier (gdouble (*points)[2],
             gdouble   mid,
             gint      depth)
 {
-  gint i, j, x0 = 0, y0 = 0, x1, y1;
+  gint   i, j, x0 = 0, y0 = 0, x1, y1;
   fp_pnt left;
   fp_pnt right;
 
@@ -175,7 +175,7 @@ DrawBezier (gdouble (*points)[2],
 }
 
 void
-d_draw_bezier (Dobject *obj)
+d_draw_bezier (GfigObject *obj)
 {
   DobjPoints *spnt;
   gint        seg_count = 0;
@@ -220,7 +220,7 @@ d_draw_bezier (Dobject *obj)
 }
 
 static void
-d_paint_bezier (Dobject *obj)
+d_paint_bezier (GfigObject *obj)
 {
   gdouble    *line_pnts;
   gdouble   (*bz_line_pnts)[2];
@@ -280,10 +280,10 @@ d_paint_bezier (Dobject *obj)
   /* Don't free line_pnts - may need again */
 }
 
-static Dobject *
-d_copy_bezier (Dobject *obj)
+static GfigObject *
+d_copy_bezier (GfigObject *obj)
 {
-  Dobject *np;
+  GfigObject *np;
 
   g_assert (obj->type == BEZIER);
 
@@ -297,7 +297,7 @@ d_copy_bezier (Dobject *obj)
 void
 d_bezier_object_class_init (void)
 {
-  DobjClass *class = &dobj_class[BEZIER];
+  GfigObjectClass *class = &dobj_class[BEZIER];
 
   class->type      = BEZIER;
   class->name      = "Bezier";

@@ -26,18 +26,18 @@
 #ifndef __GFIG_LINE_H__
 #define __GFIG_LINE_H__
 
-void     d_save_line              (Dobject  *obj,
-                                   GString  *string);
+void        d_save_line              (GfigObject *obj,
+                                      GString    *string);
 
-void     d_draw_line              (Dobject  *obj);
-void     d_paint_line             (Dobject  *obj);
-Dobject *d_copy_line              (Dobject  *obj);
+void        d_draw_line              (GfigObject *obj);
+void        d_paint_line             (GfigObject *obj);
+GfigObject *d_copy_line              (GfigObject *obj);
 
-void     d_update_line            (GdkPoint *pnt);
-void     d_line_start             (GdkPoint *pnt,
-                                   gboolean  shift_down);
-void     d_line_end               (GdkPoint *pnt,
-                                   gboolean  shift_down);
-void     d_line_object_class_init (void);
+void        d_update_line            (GdkPoint   *pnt);
+void        d_line_start             (GdkPoint   *pnt,
+                                      gboolean    shift_down);
+void        d_line_end               (GdkPoint   *pnt,
+                                      gboolean    shift_down);
+void        d_line_object_class_init (void);
 
 #endif /* __GFIG_LINE_H__ */

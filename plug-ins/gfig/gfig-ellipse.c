@@ -42,7 +42,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 static void
-d_draw_ellipse (Dobject * obj)
+d_draw_ellipse (GfigObject * obj)
 {
   DobjPoints *center_pnt;
   DobjPoints *edge_pnt;
@@ -83,7 +83,7 @@ d_draw_ellipse (Dobject * obj)
 }
 
 static void
-d_paint_approx_ellipse (Dobject *obj)
+d_paint_approx_ellipse (GfigObject *obj)
 {
   /* first point center */
   /* Next point is radius */
@@ -197,7 +197,7 @@ d_paint_approx_ellipse (Dobject *obj)
 
 
 static void
-d_paint_ellipse (Dobject *obj)
+d_paint_ellipse (GfigObject *obj)
 {
   DobjPoints *center_pnt;
   DobjPoints *edge_pnt;
@@ -269,10 +269,10 @@ d_paint_ellipse (Dobject *obj)
   gimp_edit_stroke (gfig_context->drawable_id);
 }
 
-static Dobject *
-d_copy_ellipse (Dobject * obj)
+static GfigObject *
+d_copy_ellipse (GfigObject * obj)
 {
-  Dobject *nc;
+  GfigObject *nc;
 
   g_assert (obj->type == ELLIPSE);
 
@@ -285,7 +285,7 @@ d_copy_ellipse (Dobject * obj)
 void
 d_ellipse_object_class_init (void)
 {
-  DobjClass *class = &dobj_class[ELLIPSE];
+  GfigObjectClass *class = &dobj_class[ELLIPSE];
 
   class->type      = ELLIPSE;
   class->name      = "Ellipse";

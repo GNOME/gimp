@@ -130,7 +130,7 @@ typedef struct
   gint32       image_id;         /* Gimp image id */
   gint32       drawable_id;      /* Gimp drawable to paint on */
   GFigObj     *current_obj;
-  Dobject     *selected_obj;
+  GfigObject  *selected_obj;
   GtkWidget   *preview;
   Style       *style[1000];       /* hack, but hopefully way more than enough! */
   gint         num_styles;
@@ -155,7 +155,8 @@ GFigContext *gfig_context;
 extern selection_option selopt;
 extern SelectItVals selvals;
 
-void       add_to_all_obj          (GFigObj * fobj, Dobject *obj);
+void       add_to_all_obj          (GFigObj    *fobj,
+                                    GfigObject *obj);
 
 gchar *get_line (gchar *buf,
                  gint   s,
@@ -179,6 +180,7 @@ void draw_circle (GdkPoint *p);
 void draw_sqr (GdkPoint *p);
 
 void       list_button_update   (GFigObj *obj);
+
 GtkWidget *num_sides_widget     (gchar *d_title,
                                  gint  *num_sides,
                                  gint  *which_way,

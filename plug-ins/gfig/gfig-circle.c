@@ -50,7 +50,7 @@ calc_radius (GdkPoint *center, GdkPoint *edge)
 }
 
 static void
-d_draw_circle (Dobject *obj)
+d_draw_circle (GfigObject *obj)
 {
   DobjPoints *center_pnt;
   DobjPoints *edge_pnt;
@@ -76,7 +76,7 @@ d_draw_circle (Dobject *obj)
 }
 
 static void
-d_paint_circle (Dobject *obj)
+d_paint_circle (GfigObject *obj)
 {
   DobjPoints *center_pnt;
   DobjPoints *edge_pnt;
@@ -135,10 +135,10 @@ d_paint_circle (Dobject *obj)
 
 }
 
-static Dobject*
-d_copy_circle (Dobject * obj)
+static GfigObject*
+d_copy_circle (GfigObject * obj)
 {
-  Dobject *nc;
+  GfigObject *nc;
 
   g_assert (obj->type == CIRCLE);
 
@@ -151,7 +151,7 @@ d_copy_circle (Dobject * obj)
 void
 d_circle_object_class_init (void)
 {
-  DobjClass *class = &dobj_class[CIRCLE];
+  GfigObjectClass *class = &dobj_class[CIRCLE];
 
   class->type      = CIRCLE;
   class->name      = "Circle";

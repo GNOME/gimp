@@ -1415,12 +1415,12 @@ save_file_chooser_response (GtkFileChooser *chooser,
   gtk_widget_destroy (GTK_WIDGET (chooser));
 }
 
-static Dobject *
+static GfigObject *
 gfig_select_obj_by_number (gint count)
 {
-  GList   *objs;
-  Dobject *object = NULL;
-  gint     k;
+  GList      *objs;
+  GfigObject *object = NULL;
+  gint        k;
 
   gfig_context->selected_obj = NULL;
 
@@ -1721,13 +1721,13 @@ paint_layer_fill (void)
 void
 gfig_paint_callback (void)
 {
-  GList   *objs;
-  gint     layer_count = 0;
-  gchar    buf[128];
-  gint     count;
-  gint     ccount = 0;
-  Style   *style0;
-  Dobject *object;
+  GList      *objs;
+  gint        layer_count = 0;
+  gchar       buf[128];
+  gint        count;
+  gint        ccount = 0;
+  Style      *style0;
+  GfigObject *object;
 
   if (!gfig_context->enable_repaint || !gfig_context->current_obj)
     return;

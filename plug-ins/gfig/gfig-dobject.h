@@ -28,8 +28,8 @@
 #include "gfig-types.h"
 #include "gfig-style.h"
 
-typedef void     (*DobjFunc)       (Dobject *);
-typedef Dobject *(*DobjGenFunc)    (Dobject *);
+typedef void        (*DobjFunc)       (GfigObject *);
+typedef GfigObject *(*DobjGenFunc)    (GfigObject *);
 
 typedef struct DobjPoints
 {
@@ -45,19 +45,19 @@ typedef struct
   DobjFunc      drawfunc;   /* How do I draw myself */
   DobjFunc      paintfunc;  /* Draw me on canvas */
   DobjGenFunc   copyfunc;   /* copy */
-} DobjClass;
+} GfigObjectClass;
 
-DobjClass dobj_class[10];
+GfigObjectClass dobj_class[10];
 
 /* The object itself */
-struct _Dobject
+struct _GfigObject
 {
-  DobjType      type;       /* What is the type? */
-  DobjClass    *class;      /* What class does it belong to? */
-  gint          type_data;  /* Extra data needed by the object */
-  DobjPoints   *points;     /* List of points */
-  Style         style;      /* this object's individual style settings */
-  gint          style_no;   /* style index of this specific object */
+  DobjType         type;       /* What is the type? */
+  GfigObjectClass *class;      /* What class does it belong to? */
+  gint             type_data;  /* Extra data needed by the object */
+  DobjPoints      *points;     /* List of points */
+  Style            style;      /* this object's individual style settings */
+  gint             style_no;   /* style index of this specific object */
 };
 
 /* States of the object */
@@ -65,36 +65,36 @@ struct _Dobject
 #define GFIG_MODIFIED 0x1
 #define GFIG_READONLY 0x2
 
-extern Dobject *obj_creating;
-extern Dobject *tmp_line;
+extern GfigObject *obj_creating;
+extern GfigObject *tmp_line;
 
 
-void        d_pnt_add_line           (Dobject    *obj,
+void        d_pnt_add_line           (GfigObject *obj,
                                       gint        x,
                                       gint        y,
                                       gint        pos);
 
 DobjPoints *new_dobjpoint            (gint        x,
                                       gint        y);
-void        do_save_obj              (Dobject    *obj,
+void        do_save_obj              (GfigObject *obj,
                                       GString    *to);
 
 DobjPoints *d_copy_dobjpoints        (DobjPoints *pnts);
-void        free_one_obj             (Dobject    *obj);
+void        free_one_obj             (GfigObject *obj);
 void        d_delete_dobjpoints      (DobjPoints *pnts);
 void        object_update            (GdkPoint   *pnt);
 GList      *copy_all_objs            (GList      *objs);
 void        draw_objects             (GList      *objs,
                                       gboolean    show_single);
 
-Dobject    *d_load_object            (gchar      *desc,
+GfigObject *d_load_object            (gchar      *desc,
                                       FILE       *fp);
 
-Dobject    *d_new_object             (DobjType    type,
+GfigObject *d_new_object             (DobjType    type,
                                       gint        x,
                                       gint        y);
 
-void        d_save_object            (Dobject    *obj,
+void        d_save_object            (GfigObject *obj,
                                       GString    *string);
 
 void        free_all_objs            (GList      *objs);
