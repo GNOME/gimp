@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.2\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
-"PO-Revision-Date: 2001-06-22 14:41+0200\n"
+"POT-Creation-Date: 2001-08-30 01:00+0200\n"
+"PO-Revision-Date: 2001-08-30 01:00+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -850,7 +850,7 @@ msgid "Base Color"
 msgstr "Grundfarbe"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Base Radius (pixel)"
+msgid "Base Radius (pixels)"
 msgstr "Grundradius (Pixel)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0

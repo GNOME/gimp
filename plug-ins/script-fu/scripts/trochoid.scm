@@ -390,7 +390,7 @@
 		    "Shuji Narazaki"
 		    "1997"
 		    ""
-		    SF-ADJUSTMENT _"Base Radius (pixel)" '(40 0 512 1 1 0 0)
+		    SF-ADJUSTMENT _"Base Radius (pixels)" '(40 0 512 1 1 0 0)
 		    SF-ADJUSTMENT _"Wheel Radius (hypo < 0 < epi)" '(60 0 512 1 1 0 0)
 		    SF-ADJUSTMENT _"Pen Rad. / Wheel Rad. [0.0:1.0]" '(0.8 0 1 .01 .01 2 0)
 		    SF-ADJUSTMENT _"Hue Rate" '(1.0 0 1 .01 .01 2 0)
