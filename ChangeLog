@@ -1,3 +1,15 @@
+2004-03-04  Sven Neumann  <sven@gimp.org>
+
+	* autogen.sh: follow the changes done for other modules such as
+	glib, pango and gtk+:
+
+	- exit with $? instead of 1 in case of failure
+	- exit with $? if ./configure failed
+	- removed --enable-gtk-doc option
+	- added $AUTOGEN_CONFIGURE_ARGS
+
+	* HACKING: document the new behaviour.
+
 2004-03-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpcoreconfig.[ch]

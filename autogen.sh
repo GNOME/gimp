@@ -180,28 +180,29 @@ $ACLOCAL $ACLOCAL_FLAGS
 RC=$?
 if test $RC -ne 0; then
    echo "$ACLOCAL gave errors. Please fix the error conditions and try again."
-   exit 1
+   exit $RC
 fi
 
-libtoolize --force || exit 1
+libtoolize --force || exit $?
 
 # optionally feature autoheader
 (autoheader --version)  < /dev/null > /dev/null 2>&1 && autoheader || exit 1
 
-$AUTOMAKE --add-missing || exit 1
-autoconf || exit 1
+$AUTOMAKE --add-missing || exit $?
+autoconf || exit $?
 
-glib-gettextize --copy --force || exit 1
-intltoolize --copy --force --automake || exit 1
+glib-gettextize --copy --force || exit $?
+intltoolize --copy --force --automake || exit $?
 
 cd $ORIGDIR
 
-if $srcdir/configure --enable-maintainer-mode --enable-gtk-doc "$@"; then
-  echo
-  echo "Now type 'make' to compile $PROJECT."
-else
+$srcdir/configure --enable-maintainer-mode $AUTOGEN_CONFIGURE_ARGS "$@"
+RC=$?
+if test $RC -ne 0; then
   echo
   echo "Configure failed or did not finish!"
-  exit 1
+  exit $RC
 fi
 
+echo
+echo "Now type 'make' to compile $PROJECT."

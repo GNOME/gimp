@@ -7,7 +7,7 @@ to have the following packages (or newer versions) installed:
         - ftp://ftp.gnu.org/gnu/autoconf/
     * GNU automake 1.7  (1.8 and 1.6 will also work)
         - ftp://ftp.gnu.org/gnu/automake/
-    * GNU libtool 1.3.4  (1.5.0 if you are compiling on Win32)
+    * GNU libtool 1.4  (1.5 if you are compiling on Win32)
         - ftp://ftp.gnu.org/gnu/libtool/
 
 Fine GNU mirrors are listed at http://www.gnu.org/prep/ftp.html
@@ -51,12 +51,11 @@ Note that autogen.sh runs configure for you.  If you wish to pass
 options like --prefix=/usr to configure you can give those options to
 autogen.sh and they will be passed on to configure.
 
-autogen.sh by default passes --enable-gtk-doc to configure in order to
-enable the creation of the GIMP API reference manuals in the devel-docs
-directory. You will need a recent version of gtk-doc as well as a
-working setup for handling DocBook XML. If you run into any problems
-here, you can disable creation of the docs by passing --disable-gtk-doc
-to autogen.sh.
+If AUTOGEN_CONFIGURE_ARGS is set, these options will also be passed to
+the configure script. If for example you want to enable the build of
+the GIMP API reference manuals, you can set AUTOGEN_CONFIGURE_ARGS to
+"--enable-gtk-doc". Please note that you will then need a recent
+version of gtk-doc as well as a working setup for handling DocBook/XML.
 
 
 CVS
