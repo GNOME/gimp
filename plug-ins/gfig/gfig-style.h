@@ -89,8 +89,6 @@ void     mygimp_brush_info                 (gint                 *width,
 void     gfig_read_gimp_style              (Style                *style,
                                             const gchar          *name);
 
-void     gfig_style_append                 (Style                *style);
-
 void     gfig_style_apply                  (Style                *style);
 
 void     gfig_style_copy                   (Style                *style1,

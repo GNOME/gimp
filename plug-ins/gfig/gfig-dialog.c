@@ -214,7 +214,6 @@ gfig_dialog (void)
   GtkWidget    *toolbar;
   GtkWidget    *combo;
   GtkWidget    *frame;
-  gint          k;
   gint          img_width;
   gint          img_height;
   GtkWidget    *toggle;
@@ -236,21 +235,15 @@ gfig_dialog (void)
   gfig_list = NULL;
   undo_level = -1;
   parasite = gimp_drawable_parasite_find (gfig_context->drawable_id, "gfig");
-  for (k=0; k < 1000; k++)
-    gfig_context->style[k] = NULL;
-  gfig_context->num_styles = 0;
   gfig_context->enable_repaint = FALSE;
 
   /* debug */
   gfig_context->debug_styles = FALSE;
 
-  /* initial gimp and default styles */
-  gfig_read_gimp_style (&gfig_context->gimp_style, "Gimp");
+  /* initial default style */
+  gfig_read_gimp_style (&gfig_context->default_style, "Base");
   gfig_context->default_style.paint_type = selvals.painttype;
   gfig_context->current_style = &gfig_context->default_style;
-  gfig_style_append (&gfig_context->gimp_style);
-  gfig_read_gimp_style (&gfig_context->default_style, "Base");
-  gfig_style_append (&gfig_context->default_style);
 
   if (parasite)
     {

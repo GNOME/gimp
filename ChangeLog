@@ -1,5 +1,12 @@
 2004-11-28  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-style.[ch]
+	* plug-ins/gfig/gfig.h: removed unused stack of styles. Removed
+	gimp_style from GFigContext.
+
+2004-11-28  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gfig/gfig.c (run): push a context for GFig.
 
 2004-11-28  DindinX  <dindinx@gimp.org>

@@ -131,9 +131,6 @@ typedef struct
   GFigObj     *current_obj;
   GfigObject  *selected_obj;
   GtkWidget   *preview;
-  Style       *style[1000];       /* hack, but hopefully way more than enough! */
-  gint         num_styles;
-  Style        gimp_style;
   Style        default_style;
   Style       *current_style;
   BrushDesc    bdesc;
@@ -209,8 +206,6 @@ void    gfig_draw_line          (gint x0,
 gboolean gfig_preview_expose    (GtkWidget *widget,
                                  GdkEvent  *event);
 void      gfig_paint_callback   (void);
-void     gfig_read_gimp_style   (Style *style,
-                                 const gchar *name);
 GFigObj  *gfig_load             (const gchar *filename,
                                  const gchar *name);
 void   gfig_name_encode         (gchar *dest,

@@ -299,7 +299,7 @@ gfig_load_styles (GFigObj *gfig,
 }
 
 void
-gfig_save_style (Style *style,
+gfig_save_style (Style   *style,
                  GString *string)
 {
   gchar buffer[G_ASCII_DTOSTR_BUF_SIZE];
@@ -383,16 +383,14 @@ gfig_style_save_as_attributes (Style   *style,
 void
 gfig_save_styles (GString *string)
 {
-  gint k;
-
   if (gfig_context->debug_styles)
     g_printerr ("Saving global styles.\n");
 
+  /* why? */
   gfig_style_copy (&gfig_context->default_style,
                    gfig_context->current_style, "object");
 
-  for (k = 1; k < gfig_context->num_styles; k++)
-    gfig_save_style (gfig_context->style[k], string);
+  gfig_save_style (&gfig_context->default_style, string);
 }
 
 /*
@@ -576,13 +574,6 @@ gfig_style_apply (Style *style)
 
   if (gfig_context->debug_styles)
     g_printerr ("done.\n");
-}
-
-void
-gfig_style_append (Style *style)
-{
-  gfig_context->style[gfig_context->num_styles] = style;
-  ++gfig_context->num_styles;
 }
 
 /*
