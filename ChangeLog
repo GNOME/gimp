@@ -1,5 +1,10 @@
 2004-08-18  Sven Neumann  <sven@gimp.org>
 
+	* modules/colorsel_triangle.c: fixed crashes that occured with
+	small sizes, some code cleanups and a simple optimization.
+
+2004-08-18  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimphelp-ids.h: define GIMP_HELP_DOCK_SEPARATOR.
 
 	* app/widgets/gimpdock.c

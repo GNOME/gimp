@@ -35,10 +35,11 @@
 #include "libgimp/libgimp-intl.h"
 
 
-#define BGCOLOR             180
-#define PREVIEW_MASK        (GDK_BUTTON_PRESS_MASK   | \
-                             GDK_BUTTON_RELEASE_MASK | \
-                             GDK_BUTTON_MOTION_MASK )
+#define BGCOLOR       180
+#define MINIMUM_SIZE  48
+#define PREVIEW_MASK  (GDK_BUTTON_PRESS_MASK   | \
+                       GDK_BUTTON_RELEASE_MASK | \
+                       GDK_BUTTON_MOTION_MASK )
 
 
 #define COLORSEL_TYPE_TRIANGLE            (colorsel_triangle_type)
@@ -90,10 +91,12 @@ static void       colorsel_xy_to_triangle_buf       (gint              x,
 
 static GtkWidget *colorsel_triangle_create_preview  (ColorselTriangle *triangle);
 static void       colorsel_triangle_update_preview  (ColorselTriangle *triangle);
+static void       colorsel_triangle_size_allocate   (GtkWidget        *widget,
+                                                     GtkAllocation    *allocation,
+                                                     ColorselTriangle *triangle);
 static gboolean   colorsel_triangle_event           (GtkWidget        *widget,
                                                      GdkEvent         *event,
                                                      ColorselTriangle *triangle);
-
 
 static const GimpModuleInfo colorsel_triangle_info =
 {
@@ -179,10 +182,6 @@ colorsel_triangle_init (ColorselTriangle *triangle)
   triangle->oldval = 0;
   triangle->mode   = 0;
 
-  triangle->wheelradius = GIMP_COLOR_SELECTOR_SIZE / 2;
-  triangle->triangleradius = GIMP_COLOR_SELECTOR_SIZE / 2
-                              - GIMP_COLOR_SELECTOR_BAR_SIZE;
-
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (triangle), frame, TRUE, TRUE, 0);
@@ -190,6 +189,7 @@ colorsel_triangle_init (ColorselTriangle *triangle)
 
   triangle->preview = colorsel_triangle_create_preview (triangle);
   gtk_container_add (GTK_CONTAINER (frame), triangle->preview);
+  gtk_widget_set_size_request (triangle->preview, MINIMUM_SIZE, MINIMUM_SIZE);
   gtk_widget_show (triangle->preview);
 }
 
@@ -208,7 +208,7 @@ colorsel_triangle_create_preview (ColorselTriangle *triangle)
 {
   GtkWidget *preview = gimp_preview_area_new ();
 
-  gtk_widget_add_events (GTK_WIDGET (preview), PREVIEW_MASK);
+  gtk_widget_add_events (preview, PREVIEW_MASK);
 
   g_signal_connect (preview, "motion_notify_event",
                     G_CALLBACK (colorsel_triangle_event),
@@ -219,9 +219,10 @@ colorsel_triangle_create_preview (ColorselTriangle *triangle)
   g_signal_connect (preview, "button_release_event",
                     G_CALLBACK (colorsel_triangle_event),
                     triangle);
-  g_signal_connect_swapped (preview, "size_allocate",
-                            G_CALLBACK (colorsel_triangle_update_preview),
-                            triangle);
+
+  g_signal_connect (preview, "size_allocate",
+                    G_CALLBACK (colorsel_triangle_size_allocate),
+                    triangle);
 
   return preview;
 }
@@ -234,17 +235,20 @@ colorsel_triangle_update_preview (ColorselTriangle *triangle)
   gint               x, y, k, r2, dx, col;
   gint               x0, y0;
   gdouble            hue, sat, val, atn;
-  gint               hx,hy, sx,sy, vx,vy;
+  gint               hx, hy;
+  gint               sx, sy;
+  gint               vx, vy;
   gint               width, height, size;
+  gint               d;
 
   width  = GIMP_PREVIEW_AREA (triangle->preview)->width;
   height = GIMP_PREVIEW_AREA (triangle->preview)->height;
 
-  /* return gracefully if the widget is not yet configured */
-  if (width * height == 0)
+  /* return gracefully if the widget is not yet configured or too small */
+  if (width < MINIMUM_SIZE || height < MINIMUM_SIZE)
     return;
 
-  triangle->wheelradius = MIN (width-1, height-1) / 2;
+  triangle->wheelradius    = MIN (width - 1, height - 1) / 2;
   triangle->triangleradius = RINT (0.8 * triangle->wheelradius);
 
   size = triangle->wheelradius * 2 + 1;
@@ -272,16 +276,15 @@ colorsel_triangle_update_preview (ColorselTriangle *triangle)
 
   for (y = triangle->wheelradius; y >= -triangle->wheelradius; y--)
     {
-      dx = RINT (sqrt (fabs (triangle->wheelradius * triangle->wheelradius -
-                             y * y)));
+      dx = RINT (sqrt (fabs (SQR (triangle->wheelradius) - SQR (y))));
       for (x = -dx, k = 0; x <= dx; x++)
         {
           buf[k] = buf[k+1] = buf[k+2] = BGCOLOR;
-          r2 = (x * x) + (y * y);
+          r2 = SQR (x) + SQR (y);
 
-          if (r2 <= triangle->wheelradius * triangle->wheelradius)
+          if (r2 <= SQR (triangle->wheelradius))
             {
-              if (r2 > triangle->triangleradius * triangle->triangleradius)
+              if (r2 > SQR (triangle->triangleradius))
                 {
                   atn = atan2 (x, y);
                   if (atn < 0)
@@ -298,6 +301,7 @@ colorsel_triangle_update_preview (ColorselTriangle *triangle)
 
           k += 3;
         }
+
       memcpy (preview_buf + ((triangle->wheelradius - y) * size +
                              triangle->wheelradius - dx ) * 3,
               buf,
@@ -307,10 +311,12 @@ colorsel_triangle_update_preview (ColorselTriangle *triangle)
   /* marker in outer ring */
 
   x0 = RINT (sin (hue * G_PI / 180) *
-             ((gdouble) (triangle->wheelradius - triangle->triangleradius + 1) / 2 +
+             ((gdouble) (triangle->wheelradius -
+                         triangle->triangleradius + 1) / 2 +
               triangle->triangleradius));
   y0 = RINT (cos (hue * G_PI / 180) *
-             ((gdouble) (triangle->wheelradius - triangle->triangleradius + 1) / 2 +
+             ((gdouble) (triangle->wheelradius -
+                         triangle->triangleradius + 1) / 2 +
               triangle->triangleradius));
 
   atn = atan2 (x0, y0);
@@ -321,13 +327,15 @@ colorsel_triangle_update_preview (ColorselTriangle *triangle)
 
   col = GIMP_RGB_INTENSITY (buf[0], buf[1], buf[2]) > 127 ? 0 : 255;
 
-  for (y = y0 - 4 ; y <= y0 + 4 ; y++)
-    {
-      for (x = x0 - 4, k=0 ; x <= x0 + 4 ; x++)
-        {
-          r2 = (x - x0) * (x - x0) + (y - y0) * (y - y0);
+  d = CLAMP (triangle->wheelradius / 16, 2, 4);
 
-          if (r2 <= 20 && r2 >= 6)
+  for (y = y0 - d ; y <= y0 + d ; y++)
+    {
+      for (x = x0 - d, k = 0; x <= x0 + d ; x++)
+        {
+          r2 = SQR (x - x0) + SQR (y - y0);
+
+          if ((r2 <= d * 5) && (r2 >= d + 2))
             {
               buf[k] = buf[k+1] = buf[k+2] = col;
             }
@@ -336,6 +344,7 @@ colorsel_triangle_update_preview (ColorselTriangle *triangle)
               atn = atan2 (x, y);
               if (atn < 0)
                 atn = atn + 2 * G_PI;
+
               gimp_hsv_to_rgb4 (buf + k, atn / (2 * G_PI), 1, 1);
             }
 
@@ -343,9 +352,9 @@ colorsel_triangle_update_preview (ColorselTriangle *triangle)
         }
 
       memcpy (preview_buf + ((triangle->wheelradius - y) * size +
-                             triangle->wheelradius + x0 - 4) * 3,
+                             triangle->wheelradius + x0 - d) * 3,
               buf,
-              27);
+              (2 * d + 1) * 3);
     }
 
   /* marker in triangle */
@@ -363,7 +372,7 @@ colorsel_triangle_update_preview (ColorselTriangle *triangle)
       for (x = x0 - 4, k=0 ; x <= x0 + 4 ; x++)
         {
           buf[k] = buf[k+1] = buf[k+2] = BGCOLOR;
-          r2 = (x - x0) * (x - x0) + (y - y0) * (y - y0);
+          r2 = SQR (x - x0) + SQR (y - y0);
 
           if (r2 <= 20 && r2 >= 6)
             {
@@ -371,16 +380,18 @@ colorsel_triangle_update_preview (ColorselTriangle *triangle)
             }
           else
             {
-              if (x * x + y * y > triangle->triangleradius * triangle->triangleradius)
+              if (SQR (x) + SQR (y) > SQR (triangle->triangleradius))
                 {
                   atn = atan2 (x, y);
                   if (atn < 0)
                     atn = atn + 2 * G_PI;
+
                   gimp_hsv_to_rgb4 (buf + k, atn / (2 * G_PI), 1, 1);
                 }
               else
                 {
-                  colorsel_xy_to_triangle_buf (x, y, hue, buf + k, hx, hy, sx, sy, vx, vy);
+                  colorsel_xy_to_triangle_buf (x, y, hue, buf + k,
+                                               hx, hy, sx, sy, vx, vy);
                 }
             }
 
@@ -390,15 +401,11 @@ colorsel_triangle_update_preview (ColorselTriangle *triangle)
       memcpy (preview_buf + ((triangle->wheelradius - y) * size +
                              triangle->wheelradius + x0 - 4) * 3,
               buf,
-              27);
+              9 * 3);
     }
 
-  gimp_preview_area_fill (GIMP_PREVIEW_AREA (triangle->preview),
-                          0, 0, width, height,
-                          BGCOLOR, BGCOLOR, BGCOLOR);
-
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (triangle->preview),
-                          (width - size) / 2,
+                          (width  - size) / 2,
                           (height - size) / 2,
                           size,
                           size,
@@ -449,29 +456,49 @@ colorsel_xy_to_triangle_buf (gint     x,
     }
 }
 
+static void
+colorsel_triangle_size_allocate (GtkWidget        *widget,
+                                 GtkAllocation    *allocation,
+                                 ColorselTriangle *triangle)
+{
+  gimp_preview_area_fill (GIMP_PREVIEW_AREA (widget),
+                          0, 0, allocation->width, allocation->height,
+                          BGCOLOR, BGCOLOR, BGCOLOR);
+
+  colorsel_triangle_update_preview (triangle);
+}
+
 static gboolean
 colorsel_triangle_event (GtkWidget        *widget,
                          GdkEvent         *event,
                          ColorselTriangle *triangle)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (triangle);
-  gint               x,y, angle, mousex, mousey;
+  gint               x, y, angle;
   gdouble            r;
   gdouble            hue, sat, val;
-  gint               hx,hy, sx,sy, vx,vy;
+  gint               hx, hy;
+  gint               sx, sy;
+  gint               vx, vy;
   gint               width, height;
 
   width  = GIMP_PREVIEW_AREA (triangle->preview)->width;
   height = GIMP_PREVIEW_AREA (triangle->preview)->height;
 
+  /* return gracefully if the widget is not yet configured or too small */
+  if (width < MINIMUM_SIZE || height < MINIMUM_SIZE)
+    return FALSE;
+
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
       gtk_grab_add (widget);
+
       x = event->button.x - (width - 1) / 2 - 1;
       y = - event->button.y + (height - 1) / 2 + 1;
-      r = sqrt ((gdouble) (x * x + y * y));
+      r = sqrt ((gdouble) (SQR (x) + SQR (y)));
       angle = ((gint) RINT (atan2 (x, y) / G_PI * 180) + 360 ) % 360;
+
       if ( /* r <= triangle->wheelradius  && */ r > triangle->triangleradius)
         triangle->mode = 1;  /* Dragging in the Ring */
       else
@@ -479,9 +506,13 @@ colorsel_triangle_event (GtkWidget        *widget,
       break;
 
     case GDK_MOTION_NOTIFY:
-      x = event->motion.x - (width - 1) / 2 - 1;
-      y = - event->motion.y + (height - 1) / 2 + 1;
-      r = sqrt ((gdouble) (x * x + y * y));
+      gtk_widget_get_pointer (widget, &x, &y);
+      if (x != event->motion.x || y != event->motion.y)
+        return FALSE;
+
+      x = x - (width - 1) / 2 - 1;
+      y = - y + (height - 1) / 2 + 1;
+      r = sqrt ((gdouble) (SQR (x) + SQR (y)));
       angle = ((gint) RINT (atan2 (x, y) / G_PI * 180) + 360 ) % 360;
       break;
 
@@ -493,21 +524,10 @@ colorsel_triangle_event (GtkWidget        *widget,
       gimp_color_selector_color_changed (GIMP_COLOR_SELECTOR (triangle));
 
       return FALSE;
-      break;
 
     default:
-      gtk_widget_get_pointer (widget, &x, &y);
-      x = x - (width - 1) / 2 - 1;
-      y = - y + (height - 1) / 2 + 1;
-      r = sqrt ((gdouble) (x * x + y * y));
-      angle = ((gint) RINT (atan2 (x, y) / G_PI * 180) + 360 ) % 360;
-      break;
+      return FALSE;
     }
-
-  gtk_widget_get_pointer (widget, &mousex, &mousey);
-  if ((event->type == GDK_MOTION_NOTIFY &&
-      (mousex != event->motion.x || mousey != event->motion.y)))
-     return FALSE;
 
   if (triangle->mode == 1 ||
       (r > triangle->wheelradius &&
@@ -521,12 +541,14 @@ colorsel_triangle_event (GtkWidget        *widget,
   else
     {
       hue = selector->hsv.h * 2 * G_PI;
+
       hx = sin (hue) * triangle->triangleradius;
       hy = cos (hue) * triangle->triangleradius;
       sx = sin (hue - 2 * G_PI / 3) * triangle->triangleradius;
       sy = cos (hue - 2 * G_PI / 3) * triangle->triangleradius;
       vx = sin (hue + 2 * G_PI / 3) * triangle->triangleradius;
       vy = cos (hue + 2 * G_PI / 3) * triangle->triangleradius;
+
       hue = selector->hsv.h * 360.0;
 
       if ((x - sx) * vx + (y - sy) * vy < 0)
