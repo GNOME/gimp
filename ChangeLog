@@ -16,7 +16,7 @@
 2004-08-28  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/plugindetails.c: workaround to avoid a warning
-	by gcc about the use of "%c" in the format string.
+	by gcc about the use of "%c" in the format string for strftime.
 
 2004-08-28  Sven Neumann  <sven@gimp.org>
 
