@@ -36,7 +36,7 @@
  * Returns the number of units which are known to the #GimpUnit system.
  *
  * Returns: The number of defined units.
- */
+ **/
 gint
 gimp_unit_get_number_of_units (void)
 {
@@ -54,7 +54,7 @@ gimp_unit_get_number_of_units (void)
  *  UNIT_PIXEL).
  *
  * Returns: The number of built-in units.
- */
+ **/
 gint
 gimp_unit_get_number_of_built_in_units (void)
 {
@@ -81,7 +81,7 @@ gimp_unit_get_number_of_built_in_units (void)
  * gimp_unit_set_deletion_flag() to make the unit definition persistent.
  *
  * Returns: The ID of the new unit.
- */
+ **/
 GimpUnit
 gimp_unit_new (gchar   *identifier,
                gdouble  factor,
@@ -102,7 +102,7 @@ gimp_unit_new (gchar   *identifier,
  * @unit: The unit you want to know the @deletion_flag of.
  *
  * Returns: The unit's @deletion_flag.
- */
+ **/
 gboolean
 gimp_unit_get_deletion_flag (GimpUnit unit)
 {
@@ -117,12 +117,12 @@ gimp_unit_get_deletion_flag (GimpUnit unit)
  * @deletion_flag: The new deletion_flag.
  *
  * Sets a #GimpUnit's @deletion_flag. If the @deletion_flag of a unit is
- * %TRUE when GIMP exits, this unit will not be saved in the uses's
+ * %TRUE when GIMP exits, this unit will not be saved in the users's
  * "unitrc" file.
  *
  * Trying to change the @deletion_flag of a built-in unit will be silently
  * ignored.
- */
+ **/
 void
 gimp_unit_set_deletion_flag (GimpUnit unit,
                              gboolean deletion_flag)
@@ -143,7 +143,7 @@ gimp_unit_set_deletion_flag (GimpUnit unit,
  * Returns 0 for @unit == GIMP_UNIT_PIXEL.
  *
  * Returns: The unit's factor.
- */
+ **/
 gdouble
 gimp_unit_get_factor (GimpUnit unit)
 {
@@ -162,7 +162,7 @@ gimp_unit_get_factor (GimpUnit unit)
  * Returns 0 for @unit == GIMP_UNIT_PIXEL.
  *
  * Returns: The suggested number of digits.
- */
+ **/
 gint
 gimp_unit_get_digits (GimpUnit unit)
 {
@@ -178,7 +178,7 @@ gimp_unit_get_digits (GimpUnit unit)
  * This is an unstranslated string and must not be changed or freed.
  *
  * Returns: The unit's identifier.
- */
+ **/
 const gchar *
 gimp_unit_get_identifier (GimpUnit unit)
 {
@@ -196,7 +196,7 @@ gimp_unit_get_identifier (GimpUnit unit)
  * NOTE: This string must not be changed or freed.
  *
  * Returns: The unit's symbol.
- */
+ **/
 const gchar *
 gimp_unit_get_symbol (GimpUnit unit)
 {
@@ -215,7 +215,7 @@ gimp_unit_get_symbol (GimpUnit unit)
  * NOTE: This string must not be changed or freed.
  *
  * Returns: The unit's abbreviation.
- */
+ **/
 const gchar *
 gimp_unit_get_abbreviation (GimpUnit unit)
 {
@@ -234,7 +234,7 @@ gimp_unit_get_abbreviation (GimpUnit unit)
  * NOTE: This string must not be changed or freed.
  *
  * Returns: The unit's singular form.
- */
+ **/
 const gchar *
 gimp_unit_get_singular (GimpUnit unit)
 {
@@ -253,8 +253,7 @@ gimp_unit_get_singular (GimpUnit unit)
  * NOTE: This string must not be changed or freed.
  *
  * Returns: The unit's plural form.
- *
- */
+ **/
 const gchar *
 gimp_unit_get_plural (GimpUnit unit)
 {
