@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.1\n"
-"POT-Creation-Date: 2001-12-29 21:02+0100\n"
-"PO-Revision-Date: 2001-12-02 20:41+0100\n"
+"POT-Creation-Date: 2002-01-26 22:16+0100\n"
+"PO-Revision-Date: 2002-01-26 23:18+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -235,11 +235,11 @@ msgstr ""
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Dette konsollvinduet vil lukkes om ti sekunder)\n"
 
-#: app/nav_window.c:382
+#: app/nav_window.c:379
 msgid "Navigation: No Image"
 msgstr "Navigasjon: Ikke noe bilde"
 
-#: app/nav_window.c:667
+#: app/nav_window.c:664
 #, c-format
 msgid "Navigation: %s-%d.%d"
 msgstr "Navigasjon: %s-%d.%d"
@@ -452,28 +452,28 @@ msgstr "Gjenopprett"
 
 #: app/config/gimpconfig-deserialize.c:153 app/plug-in/plug-in-rc.c:143
 msgid "fatal parse error"
-msgstr ""
+msgstr "fatal feil i tolking"
 
 #: app/config/gimpconfig-deserialize.c:299
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr ""
+msgstr "forventet «ja» eller «nei» for bolsk tegn %s, fikk «%s»"
 
 #: app/config/gimpconfig-deserialize.c:355
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr ""
+msgstr "ugyldig verdi «%s» for tegn %s"
 
 #: app/config/gimpconfig-deserialize.c:451
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
-msgstr ""
+msgstr "verdi for tegn %s er ikke en gyldig UTF-8-streng"
 
 #: app/config/gimpconfig.c:118 app/config/gimpconfig.c:150
 #: app/config/gimprc.c:145
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open file '%s': %s"
-msgstr "Kan ikke åpne fil %s"
+msgstr "Kunne ikke åpne fil «%s»: %s"
 
 #. register all internal procedures
 #: app/core/gimp.c:425
@@ -514,9 +514,8 @@ msgstr "Gradienter"
 
 #. initialize the document history
 #: app/core/gimp.c:458
-#, fuzzy
 msgid "Documents"
-msgstr "Dokumentindeks"
+msgstr "Dokumenter"
 
 #: app/core/gimp.c:670 app/file/file-open.c:171
 msgid "Open"
@@ -543,19 +542,18 @@ msgstr ""
 
 #: app/core/gimpbrush.c:524 app/core/gimpbrushpipe.c:305
 #: app/core/gimppalette.c:313 app/core/gimppattern.c:326
-#: app/gui/palette-import-dialog.c:288
 msgid "Unnamed"
 msgstr "Uten navn"
 
 #: app/core/gimpbrushpipe.c:282
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open file '%s'"
-msgstr "Kan ikke gjenåpne %s\n"
+msgstr "Kunne ikke åpne fil «%s»"
 
 #: app/core/gimpbrushpipe.c:303
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid UTF-8 string in GIMP brush file '%s'."
-msgstr "Feil i GIMP penselfil \"%s\"."
+msgstr "Ugyldig UTF-8-streng i GIMP penselfil «%s»."
 
 #: app/core/gimpbrushpipe.c:312 app/core/gimpbrushpipe.c:330
 #: app/core/gimpbrushpipe.c:418
@@ -578,13 +576,13 @@ msgid ""
 msgstr ""
 
 #: app/core/gimpdatafactory.c:298
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load data from\n"
 "'%s'"
 msgstr ""
-"Advarsel: Klarte ikke å lese børste\n"
-"\"%s\""
+"Advarsel: Klarte ikke å laste data fra\n"
+"«%s»"
 
 #: app/core/gimpdrawable.c:393 app/core/gimpdrawable.c:396
 #: app/widgets/gimpdatafactoryview.c:301 app/widgets/gimpdatafactoryview.c:304
@@ -597,14 +595,12 @@ msgid "%s copy"
 msgstr "%s kopier"
 
 #: app/core/gimpdrawable.c:952
-#, fuzzy
 msgid "parasite attached to drawable"
 msgstr "parasitt festet til tegnet objekt"
 
 #: app/core/gimpdrawable.c:990
-#, fuzzy
 msgid "parasite detached from drawable"
-msgstr "parasitt festet til tegnet objekt"
+msgstr "parasitt løsnet fra tegnet objekt"
 
 #: app/core/gimpdrawable-bucket-fill.c:114 app/tools/gimpclonetool.c:355
 msgid "No patterns available for this operation."
@@ -615,18 +611,16 @@ msgid "Pasted Layer"
 msgstr "Innlimt lag"
 
 #: app/core/gimpimage-mask.c:236
-#, fuzzy
 msgid ""
 "Unable to cut or copy because the\n"
 "selected region is empty."
 msgstr ""
-"Kunne ikke klippe ut/kopiere fordi den\n"
+"Kunne ikke klippe ut eller kopiere fordi den\n"
 "valgte regionen er tom."
 
 #: app/core/gimpimage-mask.c:383
-#, fuzzy
 msgid "Cannot float selection: No selection made."
-msgstr "Flytende utvalg: Ingen utvalg å gjøre flytende."
+msgstr "Kan ikke gjøre utvalg flytende: Ingen utvalg gjort."
 
 #: app/core/gimpimage-mask.c:396 app/gui/layers-commands.c:853
 msgid "Floating Selection"
@@ -649,14 +643,12 @@ msgstr ""
 "å konvertere til et utvalg."
 
 #: app/core/gimpimage-mask.c:604
-#, fuzzy
 msgid "No selection to stroke."
-msgstr "Ingen utvalg til stykning!"
+msgstr "Ingen utvalg til stykning."
 
 #: app/core/gimpimage-mask.c:658
-#, fuzzy
 msgid "Paint operation failed."
-msgstr "Paintbrush operasjon feilet."
+msgstr "Tegneoperasjon feilet."
 
 #: app/core/gimpimage-new.c:52 app/display/gimpdisplayshell.c:2240
 #: app/gui/preferences-dialog.c:1793
@@ -717,64 +709,59 @@ msgid "%.1f MB"
 msgstr "%.1f MB"
 
 #: app/core/gimpimage.c:942 app/core/gimppalette-import.c:206
-#: app/core/gimppalette.c:505 app/widgets/gimpdatafactoryview.c:260
+#: app/core/gimppalette.c:505 app/gui/palette-import-dialog.c:288
+#: app/widgets/gimpdatafactoryview.c:260
 msgid "Untitled"
 msgstr "Uten navn"
 
 #: app/core/gimpimage.c:2525
-#, fuzzy
 msgid "Layer cannot be raised higher."
-msgstr "Laget kan ikke heves mer"
+msgstr "Laget kan ikke heves høyere."
 
 #: app/core/gimpimage.c:2549
-#, fuzzy
 msgid "Layer cannot be lowered more."
-msgstr "Laget kan ikke senkes mer"
+msgstr "Laget kan ikke senkes lavere."
 
 #: app/core/gimpimage.c:2570
-#, fuzzy
 msgid "Layer is already on top."
-msgstr "Laget er allerede øverst"
+msgstr "Laget er allerede øverst."
 
 #: app/core/gimpimage.c:2576
-#, fuzzy
 msgid "Cannot raise a layer without alpha."
-msgstr "Kan ikke heve lag uten alpha"
+msgstr "Kan ikke heve et lag uten alpha."
 
 #: app/core/gimpimage.c:2600
-#, fuzzy
 msgid "Layer is already on the bottom."
-msgstr "Laget er allerede nederst"
+msgstr "Laget er allerede nederst."
 
 #: app/core/gimpimage.c:2647
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Layer \"%s\" has no alpha.\n"
 "Layer was placed above it."
-msgstr "BG har ikke alpha, laget ble plassert over"
+msgstr ""
+"Lag «%s» har ikke alpha.\n"
+"Laget ble plassert over det."
 
 #: app/core/gimpimage.c:2781
-#, fuzzy
 msgid "Channel cannot be raised higher."
-msgstr "Kanalen kan ikke heves mer"
+msgstr "Kanalen kan ikke heves høyere."
 
 #: app/core/gimpimage.c:2801
-#, fuzzy
 msgid "Channel cannot be lowered more."
-msgstr "Kanalen kan ikke senkes mer"
+msgstr "Kanalen kan ikke senkes lavere."
 
 #: app/core/gimplayer.c:295
 msgid "Zero width or height layers not allowed."
 msgstr "Lag uten høyde eller bredde er ikke tillatt."
 
 #: app/core/gimplayer.c:521
-#, fuzzy
 msgid ""
 "Cannot add layer mask to layer\n"
 "which is not part of an image."
 msgstr ""
-"Kan ikke legge til lagmaske til et lag\n"
-"uten en alpha-kanal."
+"Kan ikke legge til lagmaske til lag\n"
+"som ikke er en del av et bilde."
 
 #: app/core/gimplayer.c:528
 msgid ""
@@ -801,13 +788,12 @@ msgstr ""
 "uten en alpha-kanal."
 
 #: app/core/gimplayer.c:552
-#, fuzzy
 msgid ""
 "Cannot add layer mask of different\n"
 "dimensions than specified layer."
 msgstr ""
-"Kan ikke legge til lagmaske med forskjellig dimesjon fra det spesifiserte "
-"laget."
+"Kan ikke legge til lagmaske med forskjellig\n"
+"dimesjon fra det spesifiserte laget."
 
 #: app/core/gimplayer.c:598
 #, c-format
@@ -815,45 +801,44 @@ msgid "%s mask"
 msgstr "%s maske"
 
 #: app/core/gimppalette.c:261
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open palette file '%s': %s"
-msgstr "Kan ikke åpne fil %s"
+msgstr "Kunne ikke åpne palettfil «%s»: %s"
 
 #: app/core/gimppalette.c:275
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Corrupt palette: missing magic header\n"
 "Does this file need converting from DOS?"
 msgstr ""
-"Laster palett %s:\n"
-"Korrupt palett:\n"
-"mangler magisk header\n"
+"Laster palett «%s»:\n"
+"Korrupt palett: mangler magisk header\n"
 "Trenger denne filen konvertering fra DOS?"
 
 #: app/core/gimppalette.c:279
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Corrupt palette: missing magic header"
 msgstr ""
-"Laster palett %s:\n"
+"Laster palett «%s»:\n"
 "Korrupt palett: mangler magisk header"
 
 #: app/core/gimppalette.c:293 app/core/gimppalette.c:318
 #: app/core/gimppalette.c:347 app/core/gimppalette.c:418
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Read error in line %d."
 msgstr ""
-"Laster palett %s (linje %d):\n"
-"Lesefeil"
+"Laster palett «%s»:\n"
+"Lesefeil på linje %d."
 
 #: app/core/gimppalette.c:312
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
-msgstr ""
+msgstr "Ugyldig UTF-8-streng i palettfil «%s»"
 
 #: app/core/gimppalette.c:336
 #, c-format
@@ -864,56 +849,58 @@ msgstr ""
 
 #. maybe we should just abort?
 #: app/core/gimppalette.c:378
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Missing RED component in line %d."
 msgstr ""
-"Laster palett %s (linje %d):\n"
-"Mangler RØD komponent"
+"Laster palett «%s»:\n"
+"Mangler RØD komponent på linje %d."
 
 #: app/core/gimppalette.c:385
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Missing GREEN component in line %d."
 msgstr ""
-"Laster palett %s (linje %d):\n"
-"Mangler GRØNN komponent"
+"Laster palett «%s»:\n"
+"Mangler GRØNN komponent på linje %d."
 
 #: app/core/gimppalette.c:392
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Missing BLUE component in line %d."
 msgstr ""
-"Laster palett %s (linje %d):\n"
-"Mangler BLÅ komponent"
+"Laster palett «%s»:\n"
+"Mangler BLÅ komponent på linje %d."
 
 #: app/core/gimppalette.c:401
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "RGB value out of range in line %d."
 msgstr ""
-"Laster palett %s (linje %d):\n"
-"RGB-verdi utenfor gyldig område"
+"Laster palett «%s»:\n"
+"RGB-verdi utenfor gyldig område på linje %d."
 
 #: app/core/gimppalette.c:456
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot save palette '%s':\n"
 "%s"
-msgstr "Kan ikke lagre palett \"%s\"\n"
+msgstr ""
+"Kan ikke lagre palett «%s»:\n"
+"%s"
 
 #: app/core/gimppalette.c:552
 msgid "Black"
 msgstr "Sort"
 
 #: app/core/gimppattern.c:290
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown pattern format version %d in '%s'."
-msgstr "Ukjent versjon av mønsterformat #%d i \"%s\"."
+msgstr "Ukjent versjon av mønsterformat %d i «%s»."
 
 #: app/core/gimppattern.c:298
 #, c-format
@@ -924,19 +911,19 @@ msgid ""
 msgstr ""
 
 #: app/core/gimppattern.c:312
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file '%s'."
-msgstr "Feil i GIMP mønsterfil \"%s\"."
+msgstr "Feil i GIMP mønsterfil «%s»."
 
 #: app/core/gimppattern.c:318
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr ""
+msgstr "Ugyldig UTF-8-streng i mønsterfil «%s»."
 
 #: app/core/gimppattern.c:336
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parsing error: Pattern file '%s' appears truncated."
-msgstr "GIMP mønsterfil ser ut til å være avkuttet: \"%s\"."
+msgstr "Fatal lesefeil: Mønsterfil «%s» ser ut til å være avkuttet."
 
 #. pseudo unit
 #: app/core/gimpunit.c:60
@@ -988,13 +975,12 @@ msgstr "prosent"
 
 #. create the contents of the right_vbox  ********************************
 #: app/display/gimpdisplayshell.c:628
-#, fuzzy
 msgid "Set Canvas Padding Color"
-msgstr "Sett størrelse på kanvas"
+msgstr "Sett fyllfarge for kanvas"
 
 #: app/display/gimpdisplayshell.c:635
 msgid "Set canvas padding color"
-msgstr ""
+msgstr "Sett fyllfarge for kanvas"
 
 #: app/display/gimpdisplayshell.c:666
 msgid "Toggle QuickMask"
@@ -1006,14 +992,14 @@ msgid "Cancel"
 msgstr "Avbryt"
 
 #: app/display/gimpdisplayshell.c:969
-#, fuzzy, c-format
+#, c-format
 msgid "Undo %s"
-msgstr "Angre"
+msgstr "Angre %s"
 
 #: app/display/gimpdisplayshell.c:972
-#, fuzzy, c-format
+#, c-format
 msgid "Redo %s"
-msgstr "Gjenopprett"
+msgstr "Gjenopprett %s"
 
 #: app/display/gimpdisplayshell.c:2240
 msgid "RGB-empty"
@@ -1045,9 +1031,9 @@ msgstr ""
 "Lukk likevel?"
 
 #: app/display/gimpdisplayshell.c:2364
-#, fuzzy, c-format
+#, c-format
 msgid "Close %s?"
-msgstr "Lukk"
+msgstr "Lukk %s?"
 
 #: app/display/gimpdisplayshell-layer-select.c:107
 msgid "Layer Select"
@@ -1072,13 +1058,13 @@ msgstr ""
 "%s er ikke en vanlig fil."
 
 #: app/file/file-open.c:112
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s failed.\n"
 "%s: %s."
 msgstr ""
-"Åpne feilet.\n"
-"%s"
+"%s feilet.\n"
+"%s: %s."
 
 #: app/file/file-save.c:97
 #, c-format
@@ -1099,16 +1085,15 @@ msgstr ""
 "%s er ikke en vanlig fil."
 
 #: app/file/file-save.c:119
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s: %s."
 msgstr ""
-"Feil under lagring.\n"
-"%s"
+"Lagring feilet.\n"
+"%s: %s."
 
 #: app/gui/about-dialog.c:132
-#, fuzzy
 msgid "About The GIMP"
 msgstr "Om GIMP"
 
@@ -1118,9 +1103,8 @@ msgid "Version %s brought to you by"
 msgstr "Versjon %s leveres til deg av"
 
 #: app/gui/about-dialog.c:247
-#, fuzzy
 msgid "Visit http://www.gimp.org/ for more information"
-msgstr "Vennligst se http://www.gimp.org/ for mer informasjon"
+msgstr "Gå til http://www.gimp.org/ for mer informasjon"
 
 #: app/gui/brush-editor.c:95
 msgid "Brush Editor"
@@ -1168,14 +1152,12 @@ msgid ""
 msgstr ""
 
 #: app/gui/channels-commands.c:366
-#, fuzzy
 msgid "Empty Channel Copy"
-msgstr "Kopiering av lag uten innhold"
+msgstr "Kopiering av tom kanal"
 
 #: app/gui/channels-commands.c:384
-#, fuzzy
 msgid "New Channel Color"
-msgstr "Ny kanal"
+msgstr "Farge på ny kanal"
 
 #: app/gui/channels-commands.c:391
 msgid "New Channel Options"
@@ -1196,9 +1178,8 @@ msgid "Fill Opacity:"
 msgstr "Ugjennomsiktighet for fyll:"
 
 #: app/gui/channels-commands.c:538
-#, fuzzy
 msgid "Edit Channel Color"
-msgstr "Kopier tom kanal"
+msgstr "Rediger farge for kanal"
 
 #: app/gui/channels-commands.c:545
 msgid "Edit Channel Attributes"
@@ -1240,9 +1221,8 @@ msgstr "B"
 
 #. Alpha
 #: app/gui/color-notebook.c:223
-#, fuzzy
 msgid "A"
-msgstr "A:"
+msgstr "A"
 
 #: app/gui/color-notebook.c:227
 msgid "Hue"
@@ -1281,17 +1261,14 @@ msgid "Alpha"
 msgstr "Alfa"
 
 #: app/gui/color-notebook.c:386
-#, fuzzy
 msgid "Current:"
-msgstr "Nåværende bredde:"
+msgstr "Aktiv:"
 
 #: app/gui/color-notebook.c:407
-#, fuzzy
 msgid "Old:"
-msgstr "Blanding:"
+msgstr "Gammel:"
 
 #: app/gui/color-notebook.c:429
-#, fuzzy
 msgid "Revert to old color"
 msgstr "Gå tilbake til gammel farge"
 
@@ -1305,9 +1282,8 @@ msgid "Hex Triplet:"
 msgstr "Hex triplet:"
 
 #: app/gui/colormap-dialog.c:261
-#, fuzzy
 msgid "Color Index:"
-msgstr "Indeks:"
+msgstr "Fargeindeks:"
 
 #: app/gui/colormap-dialog.c:376
 msgid "Add"
@@ -1320,9 +1296,8 @@ msgid "Edit"
 msgstr "Rediger"
 
 #: app/gui/colormap-dialog.c:833
-#, fuzzy
 msgid "Edit Indexed Color"
-msgstr "Indeksert farge"
+msgstr "Rediger indeksert farge"
 
 #: app/gui/convert-dialog.c:147
 msgid "Indexed Color Conversion"
@@ -1333,14 +1308,12 @@ msgid "General Palette Options"
 msgstr "Generelle alternativer for palett"
 
 #: app/gui/convert-dialog.c:181
-#, fuzzy
 msgid "Generate Optimum Palette:"
 msgstr "Generer optimal palett:"
 
 #: app/gui/convert-dialog.c:209
-#, fuzzy
 msgid "Number of Colors:"
-msgstr "Minimum antall farger:"
+msgstr "Antall farger:"
 
 #. create the custom_frame here, it'll be added later
 #: app/gui/convert-dialog.c:225
@@ -1360,12 +1333,10 @@ msgid "Use WWW-Optimized Palette"
 msgstr "Bruk WWW-optimert palett"
 
 #: app/gui/convert-dialog.c:297
-#, fuzzy
 msgid "Use Black and White (1-Bit) Palette"
-msgstr "Bruk sort/hvit (1-bit) palett"
+msgstr "Bruk sort/hvitt (1-bit) palett"
 
 #: app/gui/convert-dialog.c:308
-#, fuzzy
 msgid "Dithering Options"
 msgstr "Alternativer for dithering"
 
@@ -1394,7 +1365,6 @@ msgid "[ Warning ]"
 msgstr " [ Advarsel ]"
 
 #: app/gui/convert-dialog.c:409
-#, fuzzy
 msgid ""
 "You are attempting to convert an image with an alpha channel or layers from "
 "RGB or GRAY to INDEXED.\n"
@@ -1414,19 +1384,18 @@ msgid "Device Status"
 msgstr "Enhetsstatus"
 
 #: app/gui/device-status-dialog.c:413
-#, fuzzy, c-format
+#, c-format
 msgid "Foreground: %d, %d, %d"
-msgstr "Forgrunn"
+msgstr "Forgrunn: %d, %d, %d"
 
 #: app/gui/device-status-dialog.c:427
-#, fuzzy, c-format
+#, c-format
 msgid "Background: %d, %d, %d"
-msgstr "Bakgrunn"
+msgstr "Bakgrunn: %d, %d, %d"
 
-#: app/gui/dialogs-constructors.c:844
-#, fuzzy
+#: app/gui/dialogs-constructors.c:845
 msgid "This brush cannot be edited."
-msgstr "Beklager, denne penselen kan ikke redigeres."
+msgstr "Denne penselen kan ikke redigeres."
 
 #: app/gui/edit-commands.c:194
 msgid "Cut Named"
@@ -1444,20 +1413,17 @@ msgstr "Kopier navngitt"
 #. added at the end followed by the error.  Also something about the GIMP_OBJECT
 #. needs to be changed. --bex
 #: app/gui/file-commands.c:132
-#, fuzzy, c-format
+#, c-format
 msgid "Error opening file '%s'"
-msgstr "Feil under åpning av fil: %s\n"
+msgstr "Feil under åpning av fil «%s»"
 
 #. Error message should be added. --bex
 #: app/gui/file-commands.c:186 app/gui/file-save-dialog.c:464
-#, fuzzy, c-format
+#, c-format
 msgid "Saving '%s' failed."
-msgstr ""
-"Feil under lagring.\n"
-"%s"
+msgstr "Feil under lagring av «%s»."
 
 #: app/gui/file-commands.c:230
-#, fuzzy
 msgid ""
 "Revert failed.\n"
 "No file name associated with this image."
@@ -1466,22 +1432,19 @@ msgstr ""
 "Ingen filnavn assosiert med dette bildet."
 
 #: app/gui/file-commands.c:244
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Revert '%s' to\n"
 "'%s'?(You will lose all your changes,\n"
 "including all undo information)"
 msgstr ""
-"Forkaster %s til\n"
-"%s\n"
-"\n"
-"(Du vil miste alle dine endringer\n"
+"Forkast «%s» til\n"
+"%s?(Du vil miste alle dine endringer,\n"
 "inkludert all angreinformasjon)"
 
 #: app/gui/file-commands.c:252
-#, fuzzy
 msgid "Revert Image"
-msgstr "Forkast bilde?"
+msgstr "Forkast bilde"
 
 #: app/gui/file-commands.c:314
 msgid "Revert"
@@ -1489,11 +1452,9 @@ msgstr "Forkast"
 
 #. Needs error information. --bex
 #: app/gui/file-commands.c:332
-#, fuzzy, c-format
+#, c-format
 msgid "Reverting '%s' failed."
-msgstr ""
-"Forkast feilet.\n"
-"%s"
+msgstr "Forkasting av «%s» feilet."
 
 #: app/gui/file-new-dialog.c:114
 msgid "New Image"
@@ -1582,9 +1543,8 @@ msgid "Image Size: %s"
 msgstr "Bildestørrelse: %s"
 
 #: app/gui/file-open-dialog.c:173 app/gui/file-open-dialog.c:187
-#, fuzzy
 msgid "Open Image"
-msgstr "Nytt bilde"
+msgstr "Åpne bilde"
 
 #. format-chooser frame
 #: app/gui/file-open-dialog.c:237
@@ -1609,48 +1569,38 @@ msgid "Preview"
 msgstr "Forhåndsvis"
 
 #: app/gui/file-open-dialog.c:331
-#, fuzzy
 msgid "No Selection"
-msgstr "Ingen utvalg."
+msgstr "Ingen utvalg"
 
 #: app/gui/file-open-dialog.c:514
-#, fuzzy
 msgid "This thumbnail may be out of date"
-msgstr "(Denne miniatyren kan være gammel)"
+msgstr "Denne miniatyren kan være utdatert"
 
 #: app/gui/file-open-dialog.c:515
-#, fuzzy
 msgid "No Information"
-msgstr "(Ingen informasjon)"
+msgstr "Ingen informasjon"
 
 #: app/gui/file-open-dialog.c:524
-#, fuzzy
 msgid "Could not write thumbnail file."
-msgstr "(Kunne ikke skrive miniatyrfil)"
+msgstr "Kunne ikke skrive miniatyrfil."
 
 #: app/gui/file-open-dialog.c:529
-#, fuzzy
 msgid "Thumbnail saving is disabled."
-msgstr "(Lagring av miniatyrer er slått av)"
+msgstr "Lagring av miniatyrer er slått av."
 
 #: app/gui/file-open-dialog.c:547
 msgid "No preview available"
 msgstr "Ingen forhåndsvisning tilgjengelig"
 
 #: app/gui/file-open-dialog.c:666
-#, fuzzy
 msgid "Failed to generate preview."
-msgstr ""
-"Generer\n"
-"forhåndsvisning"
+msgstr "Feil under generering av forhåndsvisning."
 
 #. Hackery required. Please add error message. --bex
 #: app/gui/file-open-dialog.c:744 app/gui/file-open-dialog.c:786
-#, fuzzy, c-format
+#, c-format
 msgid "Opening '%s' failed."
-msgstr ""
-"Åpne feilet.\n"
-"%s"
+msgstr "Åpning av «%s» feilet."
 
 #: app/gui/file-save-dialog.c:168 app/gui/file-save-dialog.c:225
 msgid "Save Image"
@@ -1658,7 +1608,7 @@ msgstr "Lagre bilde"
 
 #: app/gui/file-save-dialog.c:204
 msgid "Save a Copy of the Image"
-msgstr ""
+msgstr "Lagre en kopi av bildet"
 
 #: app/gui/file-save-dialog.c:261
 msgid "Save Options"
@@ -1670,16 +1620,14 @@ msgstr "Bestem filtype:"
 
 #. Please add error. (: %s) --bex
 #: app/gui/file-save-dialog.c:399
-#, fuzzy, c-format
+#, c-format
 msgid "Saving %s failed."
-msgstr ""
-"Feil under lagring.\n"
-"%s"
+msgstr "Lagring av %s feilet."
 
 #: app/gui/file-save-dialog.c:423
-#, fuzzy, c-format
+#, c-format
 msgid "%s exists. Overwrite?"
-msgstr "%s eksisterer, overskriv?"
+msgstr "%s eksisterer. Overskriv?"
 
 #: app/gui/file-save-dialog.c:425
 msgid "File Exists!"
@@ -1727,28 +1675,22 @@ msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "Bakgrunnsfarge satt til RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
 #: app/gui/gradient-editor.c:1239
-#, fuzzy
 msgid "Drag: move    <Shift>+Drag: move & compress"
-msgstr "Dra: flytt    Shif+dra: flytt og komprimer"
+msgstr "Dra: flytt    <Shift>+dra: flytt og komprimer"
 
 #: app/gui/gradient-editor.c:1243 app/gui/gradient-editor.c:1249
-#, fuzzy
 msgid "Click: select    <Shift>+Click: extend selection"
-msgstr "Klikk: velg    Shift+klikk: utvid utvalg"
+msgstr "Klikk: velg    <Shift>+klikk: utvid utvalg"
 
 #: app/gui/gradient-editor.c:1257
-#, fuzzy
 msgid "Click: select    <Shift>+Click: extend selection    Drag: move"
-msgstr "Klikk: velg    Shift+klikk: utvid utvalg    Dra: flytt"
+msgstr "Klikk: velg    <Shift>+klikk: utvid utvalg    Dra: flytt"
 
 #: app/gui/gradient-editor.c:1272
-#, fuzzy
 msgid ""
 "Click: select    <Shift>+Click: extend selection    Drag: move    <Shift>"
 "+Drag: move & compress"
-msgstr ""
-"Klikk: velg    Shift+klikk: utvid utvalg    Dra: flytt    Shift+dra: flytt "
-"og komprimer"
+msgstr "Klikk: velg    <Shift>+klikk: utvid utvalg    Dra: flytt    <Shift>+dra: flytt og komprimer"
 
 #: app/gui/gradient-editor.c:1530 app/gui/gradient-editor.c:1539
 #, c-format
@@ -1772,35 +1714,33 @@ msgid ""
 msgstr ""
 
 #: app/gui/gradients-commands.c:106
-#, fuzzy, c-format
+#, c-format
 msgid "Save \"%s\" as POV-Ray"
-msgstr "Lagre som POV-ray"
+msgstr "Lagre «%s» som POV-ray"
 
 #: app/gui/gui.c:116
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
-msgstr ""
+msgstr "Legger til tema «%s» (%s)\n"
 
 #: app/gui/gui.c:182 app/gui/gui.c:193
-#, fuzzy, c-format
+#, c-format
 msgid "Parsing '%s'\n"
-msgstr "fortolker \"%s\"\n"
+msgstr "Tolker «%s»\n"
 
 #: app/gui/gui.c:378
-#, fuzzy
 msgid "Quit The GIMP?"
-msgstr "GIMP"
+msgstr "Avslutt GIMP?"
 
 #: app/gui/gui.c:382
-#, fuzzy
 msgid ""
 "Some files are unsaved.\n"
 "\n"
 "Really quit The GIMP?"
 msgstr ""
-"Noen ulagrede filer.\n"
+"Noen filer er ikke lagret.\n"
 "\n"
-"Avslutt GIMP?"
+"Vil du virkelig avslutte GIMP?"
 
 #: app/gui/image-commands.c:226
 msgid "Resize Error: Both width and height must be greater than zero."
@@ -1831,31 +1771,28 @@ msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Skaleringsfeil: Både bredde og høyde må være større enn null."
 
 #: app/gui/indicator-area.c:139
-#, fuzzy
 msgid ""
 "The active brush.\n"
 "Click to open the Brush Dialog."
 msgstr ""
 "Den aktive penselen.\n"
-"Klikk for å åpne dialog for pensler."
+"Klikk for å åpne penseldialogen."
 
 #: app/gui/indicator-area.c:171
-#, fuzzy
 msgid ""
 "The active pattern.\n"
 "Click to open the Pattern Dialog."
 msgstr ""
 "Det aktive mønsteret.\n"
-"Klikk for å åpne dialogen for mønstre."
+"Klikk for å åpne mønsterdialogen."
 
 #: app/gui/indicator-area.c:203
-#, fuzzy
 msgid ""
 "The active gradient.\n"
 "Click to open the Gradient Dialog."
 msgstr ""
 "Den aktive gradienten.\n"
-"Klikk for å åpne dialogen for gradienter."
+"Klikk for å åpne gradientdialogen."
 
 #: app/gui/info-dialog.c:196 app/gui/preferences-dialog.c:1976
 #: app/gui/preferences-dialog.c:2116
@@ -1923,9 +1860,8 @@ msgstr "Utvidet"
 
 #. add the information fields
 #: app/gui/info-window.c:342
-#, fuzzy
 msgid "Dimensions (W x H):"
-msgstr "Dimensjoner (b x h):"
+msgstr "Dimensjoner (B x H):"
 
 #: app/gui/info-window.c:346
 msgid "Resolution:"
@@ -2038,9 +1974,8 @@ msgid "Selection"
 msgstr "Utvalg"
 
 #: app/gui/layers-commands.c:953
-#, fuzzy
 msgid "Inverse Selection"
-msgstr "/Kryss med utvalg"
+msgstr "Omvendt utvalg"
 
 #: app/gui/layers-commands.c:955 app/gui/layers-commands.c:971
 msgid "White (Full Opacity)"
@@ -2120,9 +2055,8 @@ msgid "/File/Dialogs/Layers, Channels & Paths..."
 msgstr "/Fil/Dialoger/Lag, kanaler og stier..."
 
 #: app/gui/menus.c:147
-#, fuzzy
 msgid "/File/Dialogs/Brushes, Patterns & Stuff..."
-msgstr "/Fil/Dialoger/Mønstre..."
+msgstr "/Fil/Dialoger/Pensler, mønstre og annet..."
 
 #: app/gui/menus.c:151
 msgid "/File/Dialogs/Tool Options..."
@@ -2141,23 +2075,20 @@ msgid "/File/Dialogs/Gradients..."
 msgstr "/Fil/Dialoger/Gradienter..."
 
 #: app/gui/menus.c:198
-#, fuzzy
 msgid "/File/Dialogs/Palettes..."
-msgstr "/Fil/Dialoger/Palett..."
+msgstr "/Fil/Dialoger/Paletter..."
 
 #: app/gui/menus.c:203
 msgid "/File/Dialogs/Indexed Palette..."
 msgstr "/Fil/Dialoger/Indeksert palett..."
 
 #: app/gui/menus.c:208
-#, fuzzy
 msgid "/File/Dialogs/Buffers..."
-msgstr "/Fil/Dialoger/Pensler..."
+msgstr "/Fil/Dialoger/Buffere..."
 
 #: app/gui/menus.c:212
-#, fuzzy
 msgid "/File/Dialogs/Images..."
-msgstr "/Fil/Dialoger/Mønstre..."
+msgstr "/Fil/Dialoger/Bilder..."
 
 #: app/gui/menus.c:219
 msgid "/File/Dialogs/Input Devices..."
@@ -2168,9 +2099,8 @@ msgid "/File/Dialogs/Device Status..."
 msgstr "/Fil/Dialoger/Enhetsstatus..."
 
 #: app/gui/menus.c:230
-#, fuzzy
 msgid "/File/Dialogs/Document History..."
-msgstr "/Fil/Dialoger/Dokumentindeks..."
+msgstr "/Fil/Dialoger/Dokumenthistorikk..."
 
 #: app/gui/menus.c:234
 msgid "/File/Dialogs/Error Console..."
@@ -2223,14 +2153,12 @@ msgid "/File/Save"
 msgstr "/Fil/Lagre"
 
 #: app/gui/menus.c:327
-#, fuzzy
 msgid "/File/Save as..."
 msgstr "/Fil/Lagre som..."
 
 #: app/gui/menus.c:332
-#, fuzzy
 msgid "/File/Save a Copy as..."
-msgstr "/Fil/Lagre som..."
+msgstr "/Fil/Lagre kopi som..."
 
 #: app/gui/menus.c:337
 msgid "/File/Revert..."
@@ -2349,9 +2277,8 @@ msgid "/View/Zoom Out"
 msgstr "/Vis/Zoom ut"
 
 #: app/gui/menus.c:503
-#, fuzzy
 msgid "/View/Zoom to Fit Window"
-msgstr "/Vis/Zoom inn"
+msgstr "/Vis/Zoom til vindusstørrelse"
 
 #. <Image>/View/Zoom
 #: app/gui/menus.c:511
@@ -2407,9 +2334,8 @@ msgid "/View/Toggle Selection"
 msgstr "/Vis/Slå av/på utvalg"
 
 #: app/gui/menus.c:581
-#, fuzzy
 msgid "/View/Toggle Layer Boundary"
-msgstr "/Vis/Slå av/på statuslinje"
+msgstr "/Vis/Slå av/på laggrense"
 
 #: app/gui/menus.c:585
 msgid "/View/Toggle Guides"
@@ -2450,9 +2376,8 @@ msgstr "/Bilde/Modus/Indeksert..."
 
 #. <Image>/Image/Transform
 #: app/gui/menus.c:639
-#, fuzzy
 msgid "/Image/Transform"
-msgstr "/Bilde/Transformeringer/Roter"
+msgstr "/Bilde/Transformer"
 
 #: app/gui/menus.c:645
 msgid "/Image/Canvas Size..."
@@ -2469,138 +2394,112 @@ msgstr "/Bilde/Dupliser"
 #. <Image>/Layer
 #. <Image>/Layer/Stack
 #: app/gui/menus.c:666
-#, fuzzy
 msgid "/Layer/Stack/Previous Layer"
 msgstr "/Lag/Stabel/Forrige lag"
 
 #: app/gui/menus.c:670
-#, fuzzy
 msgid "/Layer/Stack/Next Layer"
 msgstr "/Lag/Stabel/Neste lag"
 
 #: app/gui/menus.c:674
-#, fuzzy
 msgid "/Layer/Stack/Raise Layer"
 msgstr "/Lag/Stabel/Hev lag"
 
 #: app/gui/menus.c:679
-#, fuzzy
 msgid "/Layer/Stack/Lower Layer"
 msgstr "/Lag/Stabel/Senk lag"
 
 #: app/gui/menus.c:684
-#, fuzzy
 msgid "/Layer/Stack/Layer to Top"
 msgstr "/Lag/Stabel/Lag til topp"
 
 #: app/gui/menus.c:689
-#, fuzzy
 msgid "/Layer/Stack/Layer to Bottom"
 msgstr "/Lag/Stabel/Lag til bunn"
 
 #: app/gui/menus.c:697
-#, fuzzy
 msgid "/Layer/New Layer..."
-msgstr "/Nytt lag..."
+msgstr "/Lag/Nytt lag..."
 
 #: app/gui/menus.c:702
-#, fuzzy
 msgid "/Layer/Duplicate Layer"
-msgstr "/Dupliser lag"
+msgstr "/Lag/Dupliser lag"
 
 #: app/gui/menus.c:707
-#, fuzzy
 msgid "/Layer/Anchor Layer"
 msgstr "/Lag/Forankre lag"
 
 #: app/gui/menus.c:712
-#, fuzzy
 msgid "/Layer/Delete Layer"
-msgstr "/Slett lag"
+msgstr "/Lag/Slett lag"
 
 #: app/gui/menus.c:720
-#, fuzzy
 msgid "/Layer/Layer Boundary Size..."
 msgstr "/Lag/Grensestørrelse..."
 
 #: app/gui/menus.c:724
-#, fuzzy
 msgid "/Layer/Scale Layer..."
-msgstr "/Skaler lag..."
+msgstr "/Lag/Skaler lag..."
 
 #: app/gui/menus.c:729
-#, fuzzy
 msgid "/Layer/Layer to Imagesize"
 msgstr "/Lag/Lag til bildestørrelse"
 
 #: app/gui/menus.c:738
-#, fuzzy
 msgid "/Layer/Transform/Offset..."
-msgstr "/Bilde/Transformering/Avstand..."
+msgstr "/Lag/Transformer/Avstand..."
 
 #: app/gui/menus.c:745
-#, fuzzy
 msgid "/Layer/Merge Visible Layers..."
 msgstr "/Lag/Flett sammen synlige lag..."
 
 #: app/gui/menus.c:749
-#, fuzzy
 msgid "/Layer/Merge Down"
-msgstr "/Flett sammen nedover"
+msgstr "/Lag/Flett sammen nedover"
 
 #: app/gui/menus.c:753
-#, fuzzy
 msgid "/Layer/Flatten Image"
 msgstr "/Lag/Flat ut bilde"
 
 #. <Image>/Layer/Colors
 #: app/gui/menus.c:762
-#, fuzzy
 msgid "/Layer/Colors/Desaturate"
-msgstr "/Bilde/Farger/Mindre mettet"
+msgstr "/Lag/Farger/Mindre mettet"
 
 #: app/gui/menus.c:766
-#, fuzzy
 msgid "/Layer/Colors/Invert"
-msgstr "/Bilde/Farger/Inverter"
+msgstr "/Lag/Farger/Inverter"
 
 #. <Image>/Layer/Colors/Auto
 #: app/gui/menus.c:775
-#, fuzzy
 msgid "/Layer/Colors/Auto/Equalize"
-msgstr "/Bilde/Farger/Auto/Jevn ut"
+msgstr "/Lag/Farger/Auto/Jevn ut"
 
 #. <Image>/Layer/Mask
 #: app/gui/menus.c:784
-#, fuzzy
 msgid "/Layer/Mask/Add Layer Mask..."
-msgstr "/Legg til maske for lag..."
+msgstr "/Lag/Maske/Legg til lagmaske..."
 
 #: app/gui/menus.c:788
-#, fuzzy
 msgid "/Layer/Mask/Apply Layer Mask"
-msgstr "/Bruk lagmaske"
+msgstr "/Lag/Maske/Påfør lagmaske"
 
 #: app/gui/menus.c:792
-#, fuzzy
 msgid "/Layer/Mask/Delete Layer Mask"
-msgstr "/Slett lagmaske"
+msgstr "/Lag/Maske/Slett lagmaske"
 
 #: app/gui/menus.c:796
-#, fuzzy
 msgid "/Layer/Mask/Mask to Selection"
-msgstr "/Lag/Maske til utvalg"
+msgstr "/Lag/Maske/Maske til utvalg"
 
 #. <Image>/Layer/Alpha
 #: app/gui/menus.c:803
-#, fuzzy
 msgid "/Layer/Alpha/Add Alpha Channel"
-msgstr "/Bilde/Alfa/Legg til alfakanal"
+msgstr "/Lag/Alfa/Legg til alfakanal"
 
 #: app/gui/menus.c:807
-#, fuzzy
 msgid "/Layer/Alpha/Alpha to Selection"
-msgstr "/Lag/Alpha til utvalg"
+msgstr "/Lag/Alpha/Alpha til utvalg"
 
 #. <Image>/Tools
 #: app/gui/menus.c:818
@@ -2616,24 +2515,20 @@ msgid "/Tools/Swap Colors"
 msgstr "/Verktøy/Bytt farger"
 
 #: app/gui/menus.c:830
-#, fuzzy
 msgid "/Tools/Swap Contexts"
-msgstr "/Verktøy/Bytt farger"
+msgstr "/Verktøy/Bytt kontekst"
 
 #: app/gui/menus.c:837
-#, fuzzy
 msgid "/Tools/Selection Tools"
-msgstr "/Verktøy/Utvalgsverktøy/Fritt utvalg"
+msgstr "/Verktøy/Utvalgsverktøy"
 
 #: app/gui/menus.c:838
-#, fuzzy
 msgid "/Tools/Paint Tools"
-msgstr "/Verktøy/Tegneverktøy/Blekk"
+msgstr "/Verktøy/Tegneverktøy"
 
 #: app/gui/menus.c:839
-#, fuzzy
 msgid "/Tools/Transform Tools"
-msgstr "/Verktøy/Transformasjonsverktøy/Transformer"
+msgstr "/Verktøy/Transformasjonsverktøy"
 
 #. <Image>/Dialogs
 #: app/gui/menus.c:843
@@ -2641,9 +2536,8 @@ msgid "/Dialogs/Layers, Channels & Paths..."
 msgstr "/Dialoger/Lag, kanaler og stier..."
 
 #: app/gui/menus.c:847
-#, fuzzy
 msgid "/Dialogs/Brushes, Patterns & Stuff..."
-msgstr "/Dialoger/Mønstre..."
+msgstr "/Dialoger/Pensler, mønstre og annet..."
 
 #: app/gui/menus.c:851
 msgid "/Dialogs/Tool Options..."
@@ -2662,23 +2556,20 @@ msgid "/Dialogs/Gradients..."
 msgstr "/Dialoger/Gradienter..."
 
 #: app/gui/menus.c:870
-#, fuzzy
 msgid "/Dialogs/Palettes..."
-msgstr "/Dialoger/Palett..."
+msgstr "/Dialoger/Paletter..."
 
 #: app/gui/menus.c:875
 msgid "/Dialogs/Indexed Palette..."
 msgstr "/Dialoger/Indeksert palett..."
 
 #: app/gui/menus.c:880
-#, fuzzy
 msgid "/Dialogs/Buffers..."
-msgstr "/Dialoger/Pensler..."
+msgstr "/Dialoger/Buffere..."
 
 #: app/gui/menus.c:884
-#, fuzzy
 msgid "/Dialogs/Images..."
-msgstr "/Dialoger/Mønstre..."
+msgstr "/Dialoger/Bilder..."
 
 #: app/gui/menus.c:891
 msgid "/Dialogs/Input Devices..."
@@ -2689,9 +2580,8 @@ msgid "/Dialogs/Device Status..."
 msgstr "/Dialoger/Enhetsstatus..."
 
 #: app/gui/menus.c:902
-#, fuzzy
 msgid "/Dialogs/Document History..."
-msgstr "/Dialoger/Angrelogg..."
+msgstr "/Dialoger/Dokumenthistorikk..."
 
 #: app/gui/menus.c:906
 msgid "/Dialogs/Error Console..."
@@ -2763,9 +2653,8 @@ msgid "/Filters/Render"
 msgstr "/Filtre/Render"
 
 #: app/gui/menus.c:953
-#, fuzzy
 msgid "/Filters/Text"
-msgstr "/Filtre/Web"
+msgstr "/Filtre/Tekst"
 
 #: app/gui/menus.c:954
 msgid "/Filters/Web"
@@ -2796,24 +2685,20 @@ msgid "/New Layer..."
 msgstr "/Nytt lag..."
 
 #: app/gui/menus.c:1003
-#, fuzzy
 msgid "/Raise Layer"
-msgstr "/Stabel/Hev lag"
+msgstr "/Hev lag"
 
 #: app/gui/menus.c:1008
-#, fuzzy
 msgid "/Layer to Top"
-msgstr "/Stabel/Lag til topp"
+msgstr "/Lag til topp"
 
 #: app/gui/menus.c:1013
-#, fuzzy
 msgid "/Lower Layer"
-msgstr "/Stabel/Senk lag"
+msgstr "/Senk lag"
 
 #: app/gui/menus.c:1018
-#, fuzzy
 msgid "/Layer to Bottom"
-msgstr "/Stabel/Lag til bunn"
+msgstr "/Lag til bunn"
 
 #: app/gui/menus.c:1024
 msgid "/Duplicate Layer"
@@ -2964,76 +2849,64 @@ msgid "/Edit Path Attributes..."
 msgstr "/Rediger attributter for sti..."
 
 #: app/gui/menus.c:1256
-#, fuzzy
 msgid "/Select Tab"
-msgstr "Velg"
+msgstr "/Velg fane"
 
 #: app/gui/menus.c:1261
-#, fuzzy
 msgid "/Add Tab/Layers..."
-msgstr "/Legg til maske for lag..."
+msgstr "/Legg til fane/Lag..."
 
 #: app/gui/menus.c:1262
-#, fuzzy
 msgid "/Add Tab/Channels..."
-msgstr "/Ny kanal..."
+msgstr "/Legg til fane/Kanaler..."
 
 #: app/gui/menus.c:1263
-#, fuzzy
 msgid "/Add Tab/Paths..."
-msgstr "/Legg til maske for lag..."
+msgstr "/Legg til fane/Stier..."
 
 #: app/gui/menus.c:1264
 msgid "/Add Tab/Document History..."
 msgstr ""
 
 #: app/gui/menus.c:1265
-#, fuzzy
 msgid "/Add Tab/Error Console..."
-msgstr "/Dialoger/Feilkonsoll..."
+msgstr "/Legg til fane/Feilkonsoll..."
 
 #: app/gui/menus.c:1269
-#, fuzzy
 msgid "/Add Tab/Brushes..."
-msgstr "/Dialoger/Pensler..."
+msgstr "/Legg til fane/Pensler..."
 
 #: app/gui/menus.c:1270
-#, fuzzy
 msgid "/Add Tab/Patterns..."
-msgstr "/Dialoger/Mønstre..."
+msgstr "/Legg til fane/Mønstre..."
 
 #: app/gui/menus.c:1271
-#, fuzzy
 msgid "/Add Tab/Gradients..."
-msgstr "/Dialoger/Gradienter..."
+msgstr "/Legg til fane/Gradienter..."
 
 #: app/gui/menus.c:1272
-#, fuzzy
 msgid "/Add Tab/Palettes..."
-msgstr "/Dialoger/Palett..."
+msgstr "/Legg til fane/Paletter..."
 
 #: app/gui/menus.c:1274
-#, fuzzy
 msgid "/Add Tab/Indexed Palette..."
-msgstr "/Dialoger/Indeksert palett..."
+msgstr "/Legg til fane/Indeksert palett..."
 
 #: app/gui/menus.c:1276
-#, fuzzy
 msgid "/Add Tab/Buffers..."
-msgstr "/Legg til maske for lag..."
+msgstr "/Legg til fane/Buffere..."
 
 #: app/gui/menus.c:1277
-#, fuzzy
 msgid "/Add Tab/Images..."
-msgstr "/Legg til maske for lag..."
+msgstr "/Legg til fane/Bilder..."
 
 #: app/gui/menus.c:1281
 msgid "/Add Tab/Tools..."
-msgstr ""
+msgstr "/Legg til fane/Verktøy..."
 
 #: app/gui/menus.c:1285
 msgid "/Remove Tab"
-msgstr ""
+msgstr "/Fjern fane"
 
 #: app/gui/menus.c:1290
 #, fuzzy
@@ -3388,87 +3261,87 @@ msgstr ""
 msgid "Module DB"
 msgstr "Modul DB"
 
-#: app/gui/module-browser.c:164 app/widgets/gimpdatafactoryview.c:227
+#: app/gui/module-browser.c:166 app/widgets/gimpdatafactoryview.c:227
 msgid "Refresh"
 msgstr "Oppdater"
 
-#: app/gui/module-browser.c:365
+#: app/gui/module-browser.c:367
 msgid "Module error"
 msgstr "Feil i modul"
 
-#: app/gui/module-browser.c:366
+#: app/gui/module-browser.c:368
 msgid "Loaded OK"
 msgstr "Lastet OK"
 
-#: app/gui/module-browser.c:367
+#: app/gui/module-browser.c:369
 msgid "Load failed"
 msgstr "Lasting feilet"
 
-#: app/gui/module-browser.c:368
+#: app/gui/module-browser.c:370
 msgid "Unload requested"
 msgstr "Utlasting forespurt"
 
-#: app/gui/module-browser.c:369
+#: app/gui/module-browser.c:371
 msgid "Unloaded OK"
 msgstr "Lastet ut OK"
 
-#: app/gui/module-browser.c:380
+#: app/gui/module-browser.c:382
 msgid "<No modules>"
 msgstr "<Ingen moduler>"
 
-#: app/gui/module-browser.c:393 app/gui/module-browser.c:402
+#: app/gui/module-browser.c:395 app/gui/module-browser.c:404
 #, fuzzy
 msgid "On disk"
 msgstr "på disk"
 
-#: app/gui/module-browser.c:393
+#: app/gui/module-browser.c:395
 #, fuzzy
 msgid "Only in memory"
 msgstr "kun i minne"
 
-#: app/gui/module-browser.c:402
+#: app/gui/module-browser.c:404
 #, fuzzy
 msgid "No longer available"
 msgstr "Ingen mønstre tilgjengelig"
 
-#: app/gui/module-browser.c:434 app/tools/gimpcurvestool.c:800
+#: app/gui/module-browser.c:436 app/tools/gimpcurvestool.c:800
 #: app/tools/gimplevelstool.c:677
 msgid "Load"
 msgstr "Last"
 
-#: app/gui/module-browser.c:439 app/gui/module-browser.c:444
+#: app/gui/module-browser.c:441 app/gui/module-browser.c:446
 msgid "Unload"
 msgstr "Frigi"
 
-#: app/gui/module-browser.c:460
+#: app/gui/module-browser.c:462
 msgid "Purpose:"
 msgstr "Beskrivelse:"
 
-#: app/gui/module-browser.c:461
+#: app/gui/module-browser.c:463
 msgid "Author:"
 msgstr "Forfatter:"
 
-#: app/gui/module-browser.c:462
+#: app/gui/module-browser.c:464
 msgid "Version:"
 msgstr "Versjon:"
 
-#: app/gui/module-browser.c:463
+#: app/gui/module-browser.c:465
 msgid "Copyright:"
 msgstr "Kopibeskyttelse:"
 
-#: app/gui/module-browser.c:464
+#: app/gui/module-browser.c:466
 msgid "Date:"
 msgstr "Dato:"
 
-#: app/gui/module-browser.c:465
+#: app/gui/module-browser.c:467
 msgid "Location:"
 msgstr "Plassering:"
 
-#: app/gui/module-browser.c:466
+#: app/gui/module-browser.c:468
 msgid "State:"
 msgstr "Tilstand:"
 
-#: app/gui/module-browser.c:485
+#: app/gui/module-browser.c:487
 #, fuzzy
 msgid "Autoload during start-up"
 msgstr "Autolasting under oppstart"
@@ -3638,49 +3511,55 @@ msgstr "Rediger stiattributter"
 msgid "Enter a new name for the path"
 msgstr "Skriv inn et nytt navn for stien"
 
-#: app/gui/paths-dialog.c:1879 app/tools/gimpcurvestool.c:1781
-#: app/tools/gimpcurvestool.c:1799 app/tools/gimplevelstool.c:1569
-#: app/tools/gimplevelstool.c:1587
-#, c-format
-msgid "Unable to open file %s"
+#: app/gui/paths-dialog.c:1881
+#, fuzzy, c-format
+msgid ""
+"Unable to open file '%s'\n"
+"Error: %s."
 msgstr "Kan ikke åpne fil %s"
 
-#: app/gui/paths-dialog.c:1894
-#, c-format
-msgid "Failed to read from %s"
+#: app/gui/paths-dialog.c:1897
+#, fuzzy, c-format
+msgid "Failed to read from '%s'"
 msgstr "Klarte ikke å lese fra %s"
 
-#: app/gui/paths-dialog.c:1909
-#, c-format
-msgid "Failed to read path from %s"
+#: app/gui/paths-dialog.c:1912
+#, fuzzy, c-format
+msgid "Failed to read path from '%s'"
 msgstr "Klarte ikke å lese sti fra %s"
 
-#: app/gui/paths-dialog.c:1916
-#, c-format
-msgid "No points specified in path file %s"
+#: app/gui/paths-dialog.c:1919
+#, fuzzy, c-format
+msgid "No points specified in path file '%s'"
 msgstr "Ingen punkter spesifisert i stifil %s"
 
-#: app/gui/paths-dialog.c:1927
+#: app/gui/paths-dialog.c:1930
 #, c-format
 msgid "Failed to read path points from %s"
 msgstr "Klarte ikke å lese stipunkter fra %s"
 
-#: app/gui/paths-dialog.c:2000 app/xcf/xcf.c:320
-#, c-format
-msgid "open failed on %s: %s\n"
-msgstr "åpne feilet på %s: %s\n"
+#: app/gui/paths-dialog.c:2006
+#, fuzzy, c-format
+msgid ""
+"Opening '%s' failed:\n"
+"%s"
+msgstr ""
+"Åpne feilet.\n"
+"%s"
 
-#: app/gui/paths-dialog.c:2022
-msgid "Load/Store Bezier Curves"
+#: app/gui/paths-dialog.c:2029
+#, fuzzy
+msgid "Load and Save Bezier Curves"
 msgstr "Last/Lagre Bezier kurver"
 
-#: app/gui/paths-dialog.c:2062
+#: app/gui/paths-dialog.c:2069
 msgid "Load Path"
 msgstr "Last sti"
 
-#: app/gui/paths-dialog.c:2084
-msgid "Store Path"
-msgstr "Lagre sti"
+#: app/gui/paths-dialog.c:2091
+#, fuzzy
+msgid "Save Path"
+msgstr "Lagre til"
 
 #. The shell
 #: app/gui/pattern-select.c:115
@@ -4410,31 +4289,31 @@ msgstr "Fjærvalg"
 msgid "Feather Selection by:"
 msgstr "Fjærvalg etter:"
 
-#: app/gui/select-commands.c:167
+#: app/gui/select-commands.c:166
 msgid "Shrink Selection"
 msgstr "Krymp utvalg"
 
-#: app/gui/select-commands.c:170
+#: app/gui/select-commands.c:169
 msgid "Shrink Selection by:"
 msgstr "Krymp utvalget med:"
 
-#: app/gui/select-commands.c:179
+#: app/gui/select-commands.c:178
 msgid "Shrink from image border"
 msgstr "Krymp fra bildekanten"
 
-#: app/gui/select-commands.c:204
+#: app/gui/select-commands.c:199
 msgid "Grow Selection"
 msgstr "Øk utvalg"
 
-#: app/gui/select-commands.c:207
+#: app/gui/select-commands.c:202
 msgid "Grow Selection by:"
 msgstr "Øk utvalget med:"
 
-#: app/gui/select-commands.c:226
+#: app/gui/select-commands.c:221
 msgid "Border Selection"
 msgstr "Kantvalg"
 
-#: app/gui/select-commands.c:229
+#: app/gui/select-commands.c:224
 msgid "Border Selection by:"
 msgstr "Kantvalg etter:"
 
@@ -4478,7 +4357,7 @@ msgstr ""
 "tips underkatalogen i GIMPs datakatalog. Vennligst\n"
 "sjekk installasjonen."
 
-#: app/gui/toolbox.c:336
+#: app/gui/toolbox.c:338
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
@@ -5791,6 +5670,12 @@ msgstr "Lagre kurver"
 msgid "Load/Save Curves"
 msgstr "Laste/Lagre kurver"
 
+#: app/tools/gimpcurvestool.c:1781 app/tools/gimpcurvestool.c:1799
+#: app/tools/gimplevelstool.c:1569 app/tools/gimplevelstool.c:1587
+#, c-format
+msgid "Unable to open file %s"
+msgstr "Kan ikke åpne fil %s"
+
 #: app/tools/gimpdodgeburntool.c:142
 #, fuzzy
 msgid "Dodge/Burn"
@@ -6774,16 +6659,16 @@ msgstr "Behold gjennomsiktighet"
 msgid "Anchor"
 msgstr "FS forankre"
 
-#: app/widgets/gimpwidgets-utils.c:91
+#: app/widgets/gimpwidgets-utils.c:93
 #, c-format
 msgid "Message repeated %d times"
 msgstr "Melding gjentatt %d ganger"
 
-#: app/widgets/gimpwidgets-utils.c:104
+#: app/widgets/gimpwidgets-utils.c:106
 msgid "Message repeated once"
 msgstr "Melding gjentatt en gang"
 
-#: app/widgets/gimpwidgets-utils.c:118
+#: app/widgets/gimpwidgets-utils.c:120
 msgid ""
 "WARNING:\n"
 "Too many open message dialogs.\n"
@@ -6793,7 +6678,7 @@ msgstr ""
 "For mange åpne meldingsdialoger.\n"
 "Meldinger dirigeres til stderr."
 
-#: app/widgets/gimpwidgets-utils.c:125
+#: app/widgets/gimpwidgets-utils.c:128
 msgid "GIMP Message"
 msgstr "GIMP melding"
 
@@ -6811,6 +6696,11 @@ msgstr ""
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF-feil: ustøttet XCF filversjon %d møtt"
+
+#: app/xcf/xcf.c:320
+#, c-format
+msgid "open failed on %s: %s\n"
+msgstr "åpne feilet på %s: %s\n"
 
 #: modules/colorsel_triangle.c:79
 msgid "Painter-style color selector as a pluggable color selector"
@@ -6832,6 +6722,9 @@ msgstr "Vannfarge"
 #, fuzzy
 msgid "Pressure"
 msgstr "Trykk:"
+
+#~ msgid "Store Path"
+#~ msgstr "Lagre sti"
 
 #~ msgid "error parsing pluginrc"
 #~ msgstr "feil under tolking av pluginrc"
@@ -7090,9 +6983,6 @@ msgstr "Trykk:"
 
 #~ msgid "Right endpoint"
 #~ msgstr "Høyre endepunkt"
-
-#~ msgid "Save to"
-#~ msgstr "Lagre til"
 
 #~ msgid "Left endpoint"
 #~ msgstr "Venstre endepunkt"
