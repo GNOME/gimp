@@ -1,5 +1,5 @@
-/* LIBGIMP - The GIMP Library                                                   
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * gimpunit.c
  * Copyright (C) 1999 Michael Natterer <mitschel@cs.tu-berlin.de>
@@ -268,14 +268,14 @@ void save_unitrc (void)
   if (!fp)
     return;
 
-  fprintf(fp, _("# GIMP unitrc\n"));
-  fprintf(fp, _("# This file contains your user unit database. You can\n"));
-  fprintf(fp, _("# modify this list with the unit editor. You are not\n"));
-  fprintf(fp, _("# supposed to edit it manually, but of course you can do.\n"));
-  fprintf(fp, _("# This file will be entirely rewritten every time you\n")); 
-  fprintf(fp, _("# quit the gimp.\n\n"));
+  fprintf (fp, _("# GIMP unitrc\n"));
+  fprintf (fp, _("# This file contains your user unit database. You can\n"));
+  fprintf (fp, _("# modify this list with the unit editor. You are not\n"));
+  fprintf (fp, _("# supposed to edit it manually, but of course you can do.\n"));
+  fprintf (fp, _("# This file will be entirely rewritten every time you\n")); 
+  fprintf (fp, _("# quit the gimp.\n\n"));
   
-  /* save window geometries */
+  /*  save user defined units  */
   for (i = gimp_unit_get_number_of_built_in_units();
        i < gimp_unit_get_number_of_units ();
        i++)

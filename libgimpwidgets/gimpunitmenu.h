@@ -19,7 +19,6 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-
 #ifndef __GIMP_UNIT_MENU_H__
 #define __GIMP_UNIT_MENU_H__
 
@@ -44,14 +43,16 @@ struct _GimpUnitMenu
 {
   GtkOptionMenu  optionmenu;
 
-  /* private stuff */
+  /* private */
   GtkWidget     *selection;
   GtkWidget     *clist;
 
   /* public */
   gchar         *format;
   GUnit          unit;
-  GUnit          start;
+
+  gboolean       show_pixels;
+  gboolean       show_percent;
 };
 
 struct _GimpUnitMenuClass
@@ -61,13 +62,14 @@ struct _GimpUnitMenuClass
   void (* gimp_unit_menu) (GimpUnitMenu *gum);
 };
 
-guint          gimp_unit_menu_get_type (void);
+guint       gimp_unit_menu_get_type (void);
 
-/* format      -- a printf-like format string for the menu items
- * unit        -- the unit selected on widget creation
- * with_pixels -- should the menu contain 'pixels' ?
- * with_custom -- should the menu contain an item 'More...' to pop up
- *                the custom unit browser (not yet implemented)
+/*  format       -- a printf-like format string for the menu items
+ *  unit         -- the unit selected on widget creation
+ *  show_pixels  -- should the menu contain 'pixels' ?
+ *  show_percent -- should the menu contain 'percent' ?
+ *  show_custom  -- should the menu contain an item 'More...' to pop up
+ *                  the custom unit browser (not yet implemented)
  *
  *            the format string supports the following percent expansions:
  *
@@ -78,18 +80,19 @@ guint          gimp_unit_menu_get_type (void);
  *            %p -- plural
  *            %% -- literal percent
  */
-GtkWidget*     gimp_unit_menu_new      (gchar       *format,
-					GUnit        unit,
-					gboolean     with_pixels,
-					gboolean     with_custom);
+GtkWidget * gimp_unit_menu_new      (gchar       *format,
+				     GUnit        unit,
+				     gboolean     show_pixels,
+				     gboolean     show_percent,
+				     gboolean     show_custom);
 
-void           gimp_unit_menu_set_unit (GimpUnitMenu *gum, 
-					GUnit         unit);
-GUnit          gimp_unit_menu_get_unit (GimpUnitMenu *gum);
+void        gimp_unit_menu_set_unit (GimpUnitMenu *gum, 
+				     GUnit         unit);
+
+GUnit       gimp_unit_menu_get_unit (GimpUnitMenu *gum);
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
-
 
 #endif /* __GIMP_UNIT_MENU_H__ */

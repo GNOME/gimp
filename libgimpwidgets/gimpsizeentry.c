@@ -16,11 +16,10 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-
 #include "gimpsizeentry.h"
 #include "gimpunitmenu.h"
 
-#define SIZE_MAX_VALUE 500000.0     /* is that enough ?? */
+#define SIZE_MAX_VALUE 500000.0
 
 static void gimp_size_entry_unit_callback      (GtkWidget *widget,
 						gpointer   data);
@@ -140,6 +139,7 @@ gimp_size_entry_init (GimpSizeEntry *gse)
   gse->unitmenu = NULL;
   gse->unit = UNIT_PIXEL;
   gse->menu_show_pixels = TRUE;
+  gse->menu_show_percent = TRUE;
   gse->show_refval = FALSE;
   gse->update_policy = GIMP_SIZE_ENTRY_UPDATE_NONE;
 }
@@ -174,9 +174,10 @@ GtkWidget*
 gimp_size_entry_new (gint             number_of_fields,
 		     GUnit            unit,
 		     gchar           *unit_format,
-		     guint            menu_show_pixels,
-		     guint            show_refval,
-		     guint            spinbutton_usize,
+		     gboolean         menu_show_pixels,
+		     gboolean         menu_show_percent,
+		     gboolean         show_refval,
+		     gint             spinbutton_usize,
 		     GimpSizeEntryUP  update_policy)
 {
   GimpSizeEntry *gse;
@@ -189,7 +190,7 @@ gimp_size_entry_new (gint             number_of_fields,
 
   gse->number_of_fields = number_of_fields;
   gse->unit = unit;
-  gse->show_refval = show_refval ? 1 : 0;
+  gse->show_refval = show_refval;
   gse->update_policy = update_policy;
 
   gtk_table_resize (GTK_TABLE (gse),
@@ -199,12 +200,18 @@ gimp_size_entry_new (gint             number_of_fields,
   /*  show the 'pixels' menu entry only if we are a 'size' sizeentry and
    *  don't have the reference value spinbutton
    */
-  if ((update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE) && menu_show_pixels)
-    gse->menu_show_pixels = TRUE;
-  else if (update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION)
+  if ((update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION) ||
+      (show_refval == TRUE))
     gse->menu_show_pixels = FALSE;
   else
     gse->menu_show_pixels = menu_show_pixels;
+
+  /*  show the 'percent' menu entry only if we are a 'size' sizeentry
+   */
+  if (update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION)
+    gse->menu_show_percent = FALSE;
+  else
+    gse->menu_show_percent = menu_show_percent;
 
   for (i = 0; i < number_of_fields; i++)
     {
@@ -296,7 +303,7 @@ gimp_size_entry_new (gint             number_of_fields,
     }
 
   gse->unitmenu = gimp_unit_menu_new (unit_format, unit,
-				      gse->menu_show_pixels, TRUE);
+				      gse->menu_show_pixels, FALSE, TRUE);
   gtk_table_attach_defaults (GTK_TABLE (gse), gse->unitmenu,
 			     i+2, i+3,
 			     gse->show_refval+1, gse->show_refval+2);
@@ -311,23 +318,17 @@ gimp_size_entry_new (gint             number_of_fields,
 /*  add a field to the sizeentry  */
 void
 gimp_size_entry_add_field  (GimpSizeEntry   *gse,
-			    GtkAdjustment   *value_adjustment,
 			    GtkSpinButton   *value_spinbutton,
-			    GtkAdjustment   *refval_adjustment,
 			    GtkSpinButton   *refval_spinbutton)
 {
   GimpSizeEntryField *gsef;
 
   g_return_if_fail (gse != NULL);
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
-  g_return_if_fail (value_adjustment != NULL);
-  g_return_if_fail (GTK_IS_ADJUSTMENT (value_adjustment));
   g_return_if_fail (value_spinbutton != NULL);
   g_return_if_fail (GTK_IS_SPIN_BUTTON (value_spinbutton));
   if (gse->show_refval)
     {
-      g_return_if_fail (refval_adjustment != NULL);
-      g_return_if_fail (GTK_IS_ADJUSTMENT (refval_adjustment));
       g_return_if_fail (refval_spinbutton != NULL);
       g_return_if_fail (GTK_IS_SPIN_BUTTON (refval_spinbutton));
     }
@@ -348,9 +349,10 @@ gimp_size_entry_add_field  (GimpSizeEntry   *gse,
   gsef->refval_digits =
     (gse->update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE) ? 0 : 3;
 
-  gsef->value_adjustment = GTK_OBJECT (value_adjustment);
+  gsef->value_adjustment =
+    GTK_OBJECT (gtk_spin_button_get_adjustment (value_spinbutton));
   gsef->value_spinbutton = GTK_WIDGET (value_spinbutton);
-  gtk_signal_connect (GTK_OBJECT (value_adjustment), "value_changed",
+  gtk_signal_connect (GTK_OBJECT (gsef->value_adjustment), "value_changed",
 		      (GtkSignalFunc) gimp_size_entry_value_callback, gsef);
 
   /* these callbacks are not used
@@ -366,9 +368,10 @@ gimp_size_entry_add_field  (GimpSizeEntry   *gse,
 
   if (gse->show_refval)
     {
-      gsef->refval_adjustment = GTK_OBJECT (refval_adjustment);
+      gsef->refval_adjustment =
+	GTK_OBJECT (gtk_spin_button_get_adjustment (refval_spinbutton));
       gsef->refval_spinbutton = GTK_WIDGET (refval_spinbutton);
-      gtk_signal_connect (GTK_OBJECT (refval_adjustment), "value_changed",
+      gtk_signal_connect (GTK_OBJECT (gsef->refval_adjustment), "value_changed",
 			  (GtkSignalFunc) gimp_size_entry_refval_callback,
 			  gsef);
 

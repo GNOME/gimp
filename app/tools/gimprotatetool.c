@@ -72,7 +72,6 @@ rotate_tool_transform (Tool     *tool,
   GDisplay      *gdisp;
   GtkWidget     *widget;
   GtkWidget     *spinbutton2;
-  GtkAdjustment *adjustment2;
 
   transform_core = (TransformCore *) tool->private;
   gdisp = (GDisplay *) gdisp_ptr;
@@ -101,20 +100,16 @@ rotate_tool_transform (Tool     *tool,
 	  spinbutton2 =
 	    info_dialog_add_spinbutton (transform_info, _("Center X:"), NULL,
 					-1, 1, 1, 10, 1, 1, 2, NULL, NULL);
-	  adjustment2 =
-	    gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton2));
-
 	  widget =
 	    info_dialog_add_sizeentry (transform_info, _("Y:"),
 				       center_vals, 1,
 				       gdisp->dot_for_dot ? 
 				       UNIT_PIXEL : gdisp->gimage->unit, "%a",
-				       TRUE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,
+				       TRUE, FALSE, FALSE,
+				       GIMP_SIZE_ENTRY_UPDATE_SIZE,
 				       rotate_center_changed, tool);
 	  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (widget),
-				     adjustment2,
-				     GTK_SPIN_BUTTON (spinbutton2),
-				     NULL, NULL);
+				     GTK_SPIN_BUTTON (spinbutton2), NULL);
 
 	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (widget), 0,
 						 -4096,

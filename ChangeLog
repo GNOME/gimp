@@ -1,3 +1,33 @@
+1999-04-05  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/action_area.h: #include <gtk/gtk.h>.
+
+	* app/devices.c: made the "Input Devices" dialog follow the action
+	area conventions. Grab pointer in the pattern/brush preview popups.
+
+	* app/errorconsole.c: use the actionarea functions.
+
+	* app/gimpunit.c: had the wrong copyright header.
+
+	* app/info_dialog.c: correctly set the spinbuttons' digits.
+
+	* app/perspectice_tool.c: removed #include <stdio.h> again but
+	didn't forget to s/sprintf/g_snprintf/ this time.
+
+	* app/preferences_dialog.c: unified order of varible definitions,
+	removed some unused variables.
+
+	* app/crop.c
+	* app/file_new_dialog.c
+	* app/info_dialog.[ch]
+	* app/interface.c
+	* app/preferences_dialog.c
+	* app/rotate_tool.c
+	* app/scale_tool.c
+	* libgimp/gimpsizeentry.[ch]
+	* libgimp/gimpunitmenu.[ch]: prepared for "percent" in size
+	entries.
+
 Sat Apr  3 22:58:17 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* tools.h: #include <gtk/gtk.h>

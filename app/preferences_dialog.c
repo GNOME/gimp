@@ -86,11 +86,11 @@ static   int          old_cycled_marching_ants;
 static   int          old_last_opened_size;
 static   char *       old_temp_path;
 static   char *       old_swap_path;
+static   char *       old_plug_in_path;
+static   char *       old_module_path;
 static   char *       old_brush_path;
 static   char *       old_pattern_path;
 static   char *       old_palette_path;
-static   char *       old_plug_in_path;
-static   char *       old_module_path;
 static   char *       old_gradient_path;
 static   float        old_monitor_xres;
 static   float        old_monitor_yres;
@@ -98,20 +98,21 @@ static   int          old_using_xserver_resolution;
 static   int          old_num_processors;
 static   char *       old_image_title_format;
 
-static   char *       edit_temp_path = NULL;
-static   char *       edit_swap_path = NULL;
-static   char *       edit_brush_path = NULL;
-static   char *       edit_pattern_path = NULL;
-static   char *       edit_palette_path = NULL;
-static   char *       edit_plug_in_path = NULL;
-static   char *       edit_module_path = NULL;
-static   char *       edit_gradient_path = NULL;
+/*  variables which can't be changed on the fly  */
 static   int          edit_stingy_memory_use;
 static   int          edit_tile_cache_size;
 static   int          edit_install_cmap;
 static   int          edit_cycled_marching_ants;
 static   int          edit_last_opened_size;
 static   int          edit_num_processors;
+static   char *       edit_temp_path = NULL;
+static   char *       edit_swap_path = NULL;
+static   char *       edit_plug_in_path = NULL;
+static   char *       edit_module_path = NULL;
+static   char *       edit_brush_path = NULL;
+static   char *       edit_pattern_path = NULL;
+static   char *       edit_palette_path = NULL;
+static   char *       edit_gradient_path = NULL;
 
 static   GtkWidget   *prefs_dlg = NULL;
 
@@ -121,10 +122,8 @@ static   int          mem_size_unit;
 
 static   GtkWidget   *default_size_sizeentry = NULL;
 static   GtkWidget   *default_resolution_sizeentry = NULL;
-static   GtkWidget   *default_resolution_force_equal = NULL;
 static   GtkWidget   *resolution_xserver_label = NULL;
 static   GtkWidget   *monitor_resolution_sizeentry = NULL;
-static   GtkWidget   *monitor_resolution_force_equal = NULL;
 
 /* Some information regarding preferences, compiled by Raph Levien 11/3/97.
    updated by Michael Natterer 27/3/99
@@ -133,20 +132,20 @@ static   GtkWidget   *monitor_resolution_force_equal = NULL;
    according to the existing pref code - it may be that changing them
    so they're set on the fly is not hard).
 
-   temp-path
-   swap-path
-   brush-path
-   pattern-path
-   plug-in-path
-   module-path
-   palette-path
-   gradient-path
    stingy-memory-use
    tile-cache-size
    install-cmap
    cycled-marching-ants
    last-opened-size
    num-processors
+   temp-path
+   swap-path
+   plug-in-path
+   module-path
+   brush-path
+   pattern-path
+   palette-path
+   gradient-path
 
    All of these now have variables of the form edit_temp_path, which
    are copied from the actual variables (e.g. temp_path) the first time
@@ -240,7 +239,7 @@ file_prefs_ok_callback (GtkWidget *widget,
   if (default_units < UNIT_INCH ||
       default_units >= gimp_unit_get_number_of_units ())
     {
-      g_message (_("Error: Default units must be within unit range."));
+      g_message (_("Error: Default unit must be within unit range."));
       default_units = old_default_units;
       return;
     }
@@ -254,32 +253,31 @@ file_prefs_ok_callback (GtkWidget *widget,
   if (default_resolution_units < UNIT_INCH ||
       default_resolution_units >= gimp_unit_get_number_of_units ())
     {
-      g_message (_("Error: Default units must be within unit range."));
+      g_message (_("Error: Default resolution unit must be within unit range."));
       default_resolution_units = old_default_resolution_units;
       return;
     }
   if (monitor_xres < 1e-5 || monitor_yres < 1e-5)
     {
-      g_message (_("Error: monitor resolution must not be zero."));
+      g_message (_("Error: Monitor resolution must not be zero."));
       monitor_xres = old_monitor_xres;
       monitor_yres = old_monitor_yres;
       return;
     }
   if (image_title_format == NULL)
     {
-      g_message (_("Error: image_title_format should never be NULL."));
+      g_message (_("Error: Image title format must not be NULL."));
       image_title_format = old_image_title_format;
       return;
     }
 
   gtk_widget_destroy (dlg);
   prefs_dlg = NULL;
+  tile_cache_size_adjustment = NULL;
   default_size_sizeentry = NULL;
   default_resolution_sizeentry = NULL;
-  default_resolution_force_equal = NULL;
   resolution_xserver_label = NULL;
   monitor_resolution_sizeentry = NULL;
-  monitor_resolution_force_equal = NULL;
 
   if (show_tool_tips)
     gtk_tooltips_enable (tool_tips);
@@ -293,20 +291,22 @@ file_prefs_save_callback (GtkWidget *widget,
 {
   GList *update = NULL; /* options that should be updated in .gimprc */
   GList *remove = NULL; /* options that should be commented out */
+
   int    save_stingy_memory_use;
   int    save_tile_cache_size;
-  int    save_num_processors;
   int    save_install_cmap;
   int    save_cycled_marching_ants;
   int    save_last_opened_size;
+  int    save_num_processors;
   gchar *save_temp_path;
   gchar *save_swap_path;
+  gchar *save_plug_in_path;
+  gchar *save_module_path;
   gchar *save_brush_path;
   gchar *save_pattern_path;
   gchar *save_palette_path;
-  gchar *save_plug_in_path;
-  gchar *save_module_path;
   gchar *save_gradient_path;
+
   int    restart_notification = FALSE;
 
   file_prefs_ok_callback (widget, dlg);
@@ -317,15 +317,15 @@ file_prefs_save_callback (GtkWidget *widget,
   save_install_cmap = install_cmap;
   save_cycled_marching_ants = cycled_marching_ants;
   save_last_opened_size = last_opened_size;
+  save_num_processors = num_processors;
   save_temp_path = temp_path;
   save_swap_path = swap_path;
+  save_plug_in_path = plug_in_path;
+  save_module_path = module_path;
   save_brush_path = brush_path;
   save_pattern_path = pattern_path;
   save_palette_path = palette_path;
-  save_plug_in_path = plug_in_path;
-  save_module_path = module_path;
   save_gradient_path = gradient_path;
-  save_num_processors = num_processors;
 
   if (levels_of_undo != old_levels_of_undo)
     update = g_list_append (update, "undo-levels");
@@ -453,6 +453,18 @@ file_prefs_save_callback (GtkWidget *widget,
       swap_path = edit_swap_path;
       restart_notification = TRUE;
     }
+  if (file_prefs_strcmp (plug_in_path, edit_plug_in_path))
+    {
+      update = g_list_append (update, "plug-in-path");
+      plug_in_path = edit_plug_in_path;
+      restart_notification = TRUE;
+    }
+  if (file_prefs_strcmp (module_path, edit_module_path))
+    {
+      update = g_list_append (update, "module-path");
+      module_path = edit_module_path;
+      restart_notification = TRUE;
+    }
   if (file_prefs_strcmp (brush_path, edit_brush_path))
     {
       update = g_list_append (update, "brush-path");
@@ -469,18 +481,6 @@ file_prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "palette-path");
       palette_path = edit_palette_path;
-      restart_notification = TRUE;
-    }
-  if (file_prefs_strcmp (plug_in_path, edit_plug_in_path))
-    {
-      update = g_list_append (update, "plug-in-path");
-      plug_in_path = edit_plug_in_path;
-      restart_notification = TRUE;
-    }
-  if (file_prefs_strcmp (module_path, edit_module_path))
-    {
-      update = g_list_append (update, "module-path");
-      module_path = edit_module_path;
       restart_notification = TRUE;
     }
   if (file_prefs_strcmp (gradient_path, edit_gradient_path))
@@ -510,13 +510,14 @@ file_prefs_save_callback (GtkWidget *widget,
   install_cmap = save_install_cmap;
   cycled_marching_ants = save_cycled_marching_ants;
   last_opened_size = save_last_opened_size;
+  num_processors = save_num_processors;
   temp_path = save_temp_path;
   swap_path = save_swap_path;
+  plug_in_path = save_plug_in_path;
+  module_path = save_module_path;
   brush_path = save_brush_path;
   pattern_path = save_pattern_path;
   palette_path = save_palette_path;
-  plug_in_path = save_plug_in_path;
-  module_path = save_module_path;
   gradient_path = save_gradient_path;
 
   if (restart_notification)
@@ -533,12 +534,11 @@ file_prefs_cancel_callback (GtkWidget *widget,
 {
   gtk_widget_destroy (dlg);
   prefs_dlg = NULL;
+  tile_cache_size_adjustment = NULL;
   default_size_sizeentry = NULL;
   default_resolution_sizeentry = NULL;
-  default_resolution_force_equal = NULL;
   resolution_xserver_label = NULL;
   monitor_resolution_sizeentry = NULL;
-  monitor_resolution_force_equal = NULL;
 
   levels_of_undo = old_levels_of_undo;
   marching_speed = old_marching_speed;
@@ -592,11 +592,11 @@ file_prefs_cancel_callback (GtkWidget *widget,
 
   file_prefs_strset (&edit_temp_path, old_temp_path);
   file_prefs_strset (&edit_swap_path, old_swap_path);
+  file_prefs_strset (&edit_plug_in_path, old_plug_in_path);
+  file_prefs_strset (&edit_module_path, old_module_path);
   file_prefs_strset (&edit_brush_path, old_brush_path);
   file_prefs_strset (&edit_pattern_path, old_pattern_path);
   file_prefs_strset (&edit_palette_path, old_palette_path);
-  file_prefs_strset (&edit_plug_in_path, old_plug_in_path);
-  file_prefs_strset (&edit_module_path, old_module_path);
   file_prefs_strset (&edit_gradient_path, old_gradient_path);
 
   file_prefs_strset (&image_title_format, old_image_title_format);
@@ -811,10 +811,6 @@ file_prefs_res_source_callback (GtkWidget *widget,
     gtk_widget_set_sensitive (monitor_resolution_sizeentry,
 			      ! GTK_TOGGLE_BUTTON (widget)->active);
 
-  if (monitor_resolution_force_equal)
-    gtk_widget_set_sensitive (monitor_resolution_force_equal,
-			      ! GTK_TOGGLE_BUTTON (widget)->active);
-
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
       gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
@@ -926,10 +922,6 @@ gimp_dialog_realize_callback (GtkWidget *widget,
 /*  this is an experimental one
  *  I tried to fold the entire dialog creation and the ActionArea stuff
  *  into one function. Might be not general enough.
- *  todo:
- *   - session management?? (probably not)
- *   - window placement
- *   - policy setting
  */
 GtkWidget*
 gimp_dialog_new (const gchar       *title,
@@ -967,7 +959,7 @@ gimp_dialog_new (const gchar       *title,
   gtk_window_set_policy (GTK_WINDOW (dialog),
 			 allow_grow, allow_shrink, auto_shrink);
 
-  /* prepare the action_area */
+  /*  prepare the action_area  */
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area),
 			      2);
   gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
@@ -978,6 +970,7 @@ gimp_dialog_new (const gchar       *title,
 		    FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
 
+  /*  the action_area buttons  */
   va_start (args, connect_delete);
   while (label)
     {
@@ -985,7 +978,7 @@ gimp_dialog_new (const gchar       *title,
       GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
       gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
 
-      /* pass data as user_data if data != NULL, or the dialog otherwise */
+      /*  pass data as user_data if data != NULL, or the dialog otherwise  */
       if (callback)
 	gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			    GTK_SIGNAL_FUNC (callback),
@@ -1000,7 +993,7 @@ gimp_dialog_new (const gchar       *title,
 			       "gimp_dialog_cancel_widget",
 			       button);
 
-	  /* catch WM delete event */
+	  /*  catch the WM delete event  */
 	  gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
 			      (GdkEventFunc) gimp_dialog_delete_callback,
 			      data ? data : dialog);
@@ -1023,13 +1016,13 @@ gimp_dialog_new (const gchar       *title,
     }
   va_end (args);
 
-  /* catch WM delete event if not already done*/
+  /*  catch the WM delete event if not already done  */
   if (! delete_connected)
     gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
 			(GdkEventFunc) gimp_dialog_delete_callback,
 			NULL);
 
-  /* the realize callback sets the wm icon pixmap */
+  /*  the realize callback sets the WM icon  */
   /*
   gtk_signal_connect (GTK_OBJECT (dialog), "realize",
 		      (GtkSignalFunc) gimp_dialog_realize_callback,
@@ -1041,7 +1034,7 @@ gimp_dialog_new (const gchar       *title,
 
 GtkWidget*
 gimp_option_menu_new (GtkSignalFunc  menu_item_callback,
-		      gpointer       initial,
+		      gpointer       initial,  /* set_data */
 
 		      /* this is a menu item */
 		      gchar         *label,
@@ -1063,6 +1056,7 @@ gimp_option_menu_new (GtkSignalFunc  menu_item_callback,
 
   menu = gtk_menu_new ();
 
+  /*  create the menu items  */
   initial_index = 0;
   va_start (args, set_data);
   for (i = 0; label; i++)
@@ -1074,7 +1068,7 @@ gimp_option_menu_new (GtkSignalFunc  menu_item_callback,
       gtk_object_set_user_data (GTK_OBJECT (menuitem), set_data);
       gtk_widget_show (menuitem);
 
-      /* remember the initial menu item */
+      /*  remember the initial menu item  */
       if (set_data == initial)
 	initial_index = i;
 
@@ -1090,7 +1084,7 @@ gimp_option_menu_new (GtkSignalFunc  menu_item_callback,
   optionmenu = gtk_option_menu_new ();
   gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
 
-  /* select the initial menu item */
+  /*  select the initial menu item  */
   gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), initial_index);
 
   return optionmenu;
@@ -1098,7 +1092,7 @@ gimp_option_menu_new (GtkSignalFunc  menu_item_callback,
 
 GtkWidget*
 gimp_radio_group_new (GtkSignalFunc  radio_button_callback,
-		      gpointer       initial,
+		      gpointer       initial,  /* set_data */
 
 		      /* this is a radio button */
 		      gchar         *label,
@@ -1120,6 +1114,7 @@ gimp_radio_group_new (GtkSignalFunc  radio_button_callback,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   group = NULL;
 
+  /*  create the radio buttons  */
   va_start (args, set_data);
   while (label)
     {
@@ -1131,7 +1126,7 @@ gimp_radio_group_new (GtkSignalFunc  radio_button_callback,
 			  data);
       gtk_object_set_user_data (GTK_OBJECT (button), set_data);
 
-      /* press the initially active radio button */
+      /*  press the initially active radio button  */
       if (set_data == initial)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
@@ -1151,7 +1146,7 @@ gimp_radio_group_new (GtkSignalFunc  radio_button_callback,
 
 /*  this might be the standard gimp spinbutton  */
 GtkWidget*
-gimp_spin_button_new (GtkObject **adjustment, /* return value */
+gimp_spin_button_new (GtkObject **adjustment,  /* return value */
 		      gfloat      value,
 		      gfloat      lower,
 		      gfloat      upper,
@@ -1176,25 +1171,29 @@ gimp_spin_button_new (GtkObject **adjustment, /* return value */
   return spinbutton;
 }
 
-/*  add correctly aligned label & widget to a two-column table  */
+/*  add aligned label & widget to a two-column table  */
 void
 gimp_table_attach_aligned (GtkTable  *table,
 			   gint       row,
 			   gchar     *text,
+			   gfloat     xalign,
+			   gfloat     yalign,
 			   GtkWidget *widget,
 			   gboolean   left_adjust)
 {
   GtkWidget *label;
 
   label = gtk_label_new (text);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
   gtk_table_attach (table, GTK_WIDGET (label), 0, 1, row, row + 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   if (left_adjust)
     {
-      GtkWidget* alignment = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+      GtkWidget *alignment;
+
+      alignment = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
       gtk_table_attach_defaults (table, alignment, 1, 2, row, row + 1);
       gtk_widget_show (alignment);
       gtk_container_add (GTK_CONTAINER (alignment), widget);
@@ -1318,6 +1317,11 @@ file_pref_cmd_callback (GtkWidget *widget,
     {
       /* first time dialog is opened - copy config vals to edit
 	 variables. */
+      edit_stingy_memory_use = stingy_memory_use;
+      edit_tile_cache_size = tile_cache_size;
+      edit_install_cmap = install_cmap;
+      edit_cycled_marching_ants = cycled_marching_ants;
+      edit_last_opened_size = last_opened_size;
       edit_temp_path = file_prefs_strdup (temp_path);	
       edit_swap_path = file_prefs_strdup (swap_path);
       edit_brush_path = file_prefs_strdup (brush_path);
@@ -1326,11 +1330,6 @@ file_pref_cmd_callback (GtkWidget *widget,
       edit_plug_in_path = file_prefs_strdup (plug_in_path);
       edit_module_path = file_prefs_strdup (module_path);
       edit_gradient_path = file_prefs_strdup (gradient_path);
-      edit_stingy_memory_use = stingy_memory_use;
-      edit_tile_cache_size = tile_cache_size;
-      edit_install_cmap = install_cmap;
-      edit_cycled_marching_ants = cycled_marching_ants;
-      edit_last_opened_size = last_opened_size;
     }
   old_perfectmouse = perfectmouse;
   old_transparency_type = transparency_type;
@@ -1369,11 +1368,11 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   file_prefs_strset (&old_temp_path, edit_temp_path);
   file_prefs_strset (&old_swap_path, edit_swap_path);
+  file_prefs_strset (&old_plug_in_path, edit_plug_in_path);
+  file_prefs_strset (&old_module_path, edit_module_path);
   file_prefs_strset (&old_brush_path, edit_brush_path);
   file_prefs_strset (&old_pattern_path, edit_pattern_path);
   file_prefs_strset (&old_palette_path, edit_palette_path);
-  file_prefs_strset (&old_plug_in_path, edit_plug_in_path);
-  file_prefs_strset (&old_module_path, edit_module_path);
   file_prefs_strset (&old_gradient_path, edit_gradient_path);
 
   mem_size_unit = 1;
@@ -1387,8 +1386,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   /* Create the dialog */
   prefs_dlg =
-    gimp_dialog_new (_("Preferences"),
-		     "gimp_preferences",
+    gimp_dialog_new (_("Preferences"), "gimp_preferences",
 		     GTK_WIN_POS_NONE, FALSE, FALSE, FALSE,
 		     _("OK"), file_prefs_ok_callback, NULL,
 		     FALSE, FALSE,
@@ -1454,7 +1452,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (hbox);
 
   default_size_sizeentry = gimp_size_entry_new (2, default_units, "%p",
-						FALSE, TRUE, 75,
+						FALSE, FALSE, TRUE, 75,
 						GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (default_size_sizeentry),
 				  0, default_xresolution, FALSE);
@@ -1490,10 +1488,10 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  default_resolution_force_equal = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-
+  button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
   default_resolution_sizeentry =
-    gimp_size_entry_new (2, default_resolution_units, "%s", FALSE, TRUE, 75,
+    gimp_size_entry_new (2, default_resolution_units, "%s",
+			 FALSE, FALSE, TRUE, 75,
 			 GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 0, 1, 32767);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 1, 1, 32767);
@@ -1512,24 +1510,24 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_signal_connect (GTK_OBJECT (default_resolution_sizeentry),
 		      "unit_changed",
 		      (GtkSignalFunc)file_prefs_default_resolution_callback,
-		      default_resolution_force_equal);
+		      button);
   gtk_signal_connect (GTK_OBJECT (default_resolution_sizeentry),
 		      "value_changed",
 		      (GtkSignalFunc)file_prefs_default_resolution_callback,
-		      default_resolution_force_equal);
+		      button);
   gtk_signal_connect (GTK_OBJECT (default_resolution_sizeentry),
 		      "refval_changed",
 		      (GtkSignalFunc)file_prefs_default_resolution_callback,
-		      default_resolution_force_equal);
+		      button);
   gtk_box_pack_start (GTK_BOX (hbox), default_resolution_sizeentry,
 		      FALSE, FALSE, 0);
   gtk_widget_show (default_resolution_sizeentry);
 
   gtk_table_attach_defaults (GTK_TABLE (default_resolution_sizeentry), 
-			     default_resolution_force_equal, 1, 3, 3, 4);
+			     button, 1, 3, 3, 4);
   if (ABS (default_xresolution - default_yresolution) < 1e-5)
-    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (default_resolution_force_equal), TRUE);
-  gtk_widget_show (default_resolution_force_equal);
+    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (button), TRUE);
+  gtk_widget_show (button);
 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -1549,7 +1547,8 @@ file_pref_cmd_callback (GtkWidget *widget,
 			  _("Grayscale"), &default_type, (gpointer) GRAY,
 			  NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
-			     _("Default Image Type:"), optionmenu, TRUE);
+			     _("Default Image Type:"), 1.0, 0.5,
+			     optionmenu, TRUE);
 
   /* Display page */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
@@ -1594,20 +1593,21 @@ file_pref_cmd_callback (GtkWidget *widget,
 			  &transparency_type, (gpointer) BLACK_ONLY,
 			  NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
-			     _("Transparency Type:"), optionmenu, TRUE);
+			     _("Transparency Type:"), 1.0, 0.5,
+			     optionmenu, TRUE);
 
   optionmenu =
     gimp_option_menu_new (file_prefs_toggle_callback,
 			  (gpointer) transparency_size,
-			  _("Small Checks"),
+			  _("Small"),
 			  &transparency_size, (gpointer) SMALL_CHECKS,
-			  _("Medium Checks"),
+			  _("Medium"),
 			  &transparency_size, (gpointer) MEDIUM_CHECKS,
-			  _("Large Checks"), 
+			  _("Large"), 
 			  &transparency_size, (gpointer) LARGE_CHECKS,
 			  NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 1,
-			     _("Check Size:"), optionmenu, TRUE);
+			     _("Check Size:"), 1.0, 0.5, optionmenu, TRUE);
 
   frame = gtk_frame_new (_("Scaling")); 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -1675,7 +1675,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 			  _("Large"),  (gpointer) 128, (gpointer) 128,
 			  NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
-			     _("Preview Size:"), optionmenu, TRUE);
+			     _("Preview Size:"), 1.0, 0.5, optionmenu, TRUE);
 
   spinbutton =
     gimp_spin_button_new (&adjustment,
@@ -1684,7 +1684,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 		      (GtkSignalFunc) file_prefs_int_adjustment_callback,
 		      &levels_of_undo);
   gimp_table_attach_aligned (GTK_TABLE (table), 1,
-			     _("Levels of Undo:"), spinbutton, TRUE);
+			     _("Levels of Undo:"), 1.0, 0.5, spinbutton, TRUE);
 
   spinbutton =
     gimp_spin_button_new (&adjustment,
@@ -1693,7 +1693,8 @@ file_pref_cmd_callback (GtkWidget *widget,
 		      (GtkSignalFunc) file_prefs_int_adjustment_callback,
 		      &edit_last_opened_size);
   gimp_table_attach_aligned (GTK_TABLE (table), 2,
-			     _("Recent Documents List Size:"), spinbutton, TRUE);
+			     _("Recent Documents List Size:"), 1.0, 0.5,
+			     spinbutton, TRUE);
 
   frame = gtk_frame_new (_("Help System")); 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -1769,13 +1770,14 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   spinbutton =
     gimp_spin_button_new (&adjustment,
-			  marching_speed, 0.0, 32000.0, 50.0, 100.0, 0.0,
+			  marching_speed, 50.0, 32000.0, 10.0, 100.0, 1.0,
 			  1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      (GtkSignalFunc) file_prefs_int_adjustment_callback,
 		      &marching_speed);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
-			     _("Marching Ants Speed:"), spinbutton, TRUE);
+			     _("Marching Ants Speed:"), 1.0, 0.5,
+			     spinbutton, TRUE);
 
   /* The title format string */
   combo = gtk_combo_new ();
@@ -1814,7 +1816,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 		      &image_title_format);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 1,
-			     _("Image Title Format:"), combo, FALSE);
+			     _("Image Title Format:"), 1.0, 0.5, combo, FALSE);
   /* End of the title format string */
 
   frame = gtk_frame_new (_("Pointer Movement Feedback")); 
@@ -1907,7 +1909,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
   gtk_widget_show (optionmenu);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
-			     _("Tile Cache Size:"), hbox, TRUE);
+			     _("Tile Cache Size:"), 1.0, 0.5, hbox, TRUE);
 
 #ifdef ENABLE_MP
   spinbutton =
@@ -1917,7 +1919,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 		      (GtkSignalFunc) file_prefs_int_adjustment_callback,
 		      &num_processors);
   gimp_table_attach_aligned (GTK_TABLE (table), 1,
-			     _("Number of Processors to Use:"),
+			     _("Number of Processors to Use:"), 1.0, 0.5,
 			     spinbutton, TRUE);
 #endif /* ENABLE_MP */
 
@@ -2065,17 +2067,17 @@ file_pref_cmd_callback (GtkWidget *widget,
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-  if (!using_xserver_resolution)
+  if (! using_xserver_resolution)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 1.0);
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (vbox2), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
-  monitor_resolution_force_equal = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-  monitor_resolution_sizeentry = gimp_size_entry_new (2, UNIT_INCH, "%s",
-						      FALSE, TRUE, 75,
-						      GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+  button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
+  monitor_resolution_sizeentry =
+    gimp_size_entry_new (2, UNIT_INCH, "%s", FALSE, FALSE, TRUE, 75,
+			 GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 0, 1, 32767);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 1, 1, 32767);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
@@ -2093,24 +2095,21 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_signal_connect (GTK_OBJECT (monitor_resolution_sizeentry),
 		      "value_changed",
 		      (GtkSignalFunc)file_prefs_monitor_resolution_callback,
-		      monitor_resolution_force_equal);
+		      button);
   gtk_signal_connect (GTK_OBJECT (monitor_resolution_sizeentry),
 		      "refval_changed",
 		      (GtkSignalFunc)file_prefs_monitor_resolution_callback,
-		      monitor_resolution_force_equal);
+		      button);
   gtk_container_add (GTK_CONTAINER (abox), monitor_resolution_sizeentry);
   gtk_widget_show (monitor_resolution_sizeentry);
 
   if (ABS (monitor_xres - monitor_yres) < 1e-5)
-    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (monitor_resolution_force_equal),
-				  TRUE);
+    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (button), TRUE);
   gtk_table_attach_defaults (GTK_TABLE (monitor_resolution_sizeentry), 
-			     monitor_resolution_force_equal, 1, 3, 3, 4);
-  gtk_widget_show (monitor_resolution_force_equal);
+			     button, 1, 3, 3, 4);
+  gtk_widget_show (button);
 
   gtk_widget_set_sensitive (monitor_resolution_sizeentry,
-			    !using_xserver_resolution);
-  gtk_widget_set_sensitive (monitor_resolution_force_equal,
 			    !using_xserver_resolution);
 
   /* Directories */
@@ -2150,7 +2149,8 @@ file_pref_cmd_callback (GtkWidget *widget,
 			    (GtkSignalFunc) file_prefs_filename_callback,
 			    dirs[i].mdir);
 	gimp_table_attach_aligned (GTK_TABLE (table), i,
-				   gettext(dirs[i].label), fileselection, FALSE);
+				   gettext(dirs[i].label), 1.0, 0.5,
+				   fileselection, FALSE);
       }
   }
 
@@ -2164,12 +2164,12 @@ file_pref_cmd_callback (GtkWidget *widget,
     } paths[] = {
       { N_("Brushes"),   N_("Brushes Directories"),   N_("Select Brushes Dir"),
 	&edit_brush_path },
-      { N_("Gradients"), N_("Gradients Directories"), N_("Select Gradients Dir"),
-	&edit_gradient_path },
       { N_("Patterns"),  N_("Patterns Directories"),  N_("Select Patterns Dir"),
 	&edit_pattern_path },
       { N_("Palettes"),  N_("Palettes Directories"),  N_("Select Palettes Dir"),
 	&edit_palette_path },
+      { N_("Gradients"), N_("Gradients Directories"), N_("Select Gradients Dir"),
+	&edit_gradient_path },
       { N_("Plug-Ins"),  N_("Plug-Ins Directories"),  N_("Select Plug-Ins Dir"),
 	&edit_plug_in_path },
       { N_("Modules"),   N_("Modules Directories"),   N_("Select Modules Dir"),

@@ -1019,7 +1019,7 @@ query_size_box (gchar       *title,
                       (GtkSignalFunc) size_query_box_ok_callback,
                       query_box);
 
-  sizeentry = gimp_size_entry_new (1, unit, "%p", TRUE, FALSE, 100,
+  sizeentry = gimp_size_entry_new (1, unit, "%p", TRUE, FALSE, FALSE, 100,
 				   GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
 				  resolution, FALSE);

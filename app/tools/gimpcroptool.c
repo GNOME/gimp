@@ -827,7 +827,6 @@ crop_info_create (Tool *tool)
   GDisplay      *gdisp;
   GtkWidget     *sizeentry;
   GtkWidget     *spinbutton2;
-  GtkAdjustment *adjustment2;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
 
@@ -837,18 +836,14 @@ crop_info_create (Tool *tool)
   /*  add the information fields  */
   spinbutton2 = info_dialog_add_spinbutton (crop_info, _("Origin X:"), NULL,
 					    -1, 1, 1, 10, 1, 1, 2, NULL, NULL);
-  adjustment2 = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton2));
-
   sizeentry =
     info_dialog_add_sizeentry (crop_info, _("Y:"), orig_vals, 1,
 			       gdisp->dot_for_dot ? 
 			       UNIT_PIXEL : gdisp->gimage->unit, "%a",
-			       TRUE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,
+			       TRUE, FALSE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,
 			       crop_orig_changed, tool);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
-			     adjustment2,
-			     GTK_SPIN_BUTTON (spinbutton2),
-			     NULL, NULL);
+			     GTK_SPIN_BUTTON (spinbutton2), NULL);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
 					 -65536, 65536);
@@ -864,18 +859,14 @@ crop_info_create (Tool *tool)
 
   spinbutton2 = info_dialog_add_spinbutton (crop_info, _("Width:"), NULL,
 					    -1, 1, 1, 10, 1, 1, 2, NULL, NULL);
-  adjustment2 = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton2));
-
   sizeentry =
     info_dialog_add_sizeentry (crop_info, _("Height:"), size_vals, 1,
 			       gdisp->dot_for_dot ? 
 			       UNIT_PIXEL : gdisp->gimage->unit, "%a",
-			       TRUE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,
+			       TRUE, FALSE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,
 			       crop_size_changed, tool);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
-			     adjustment2,
-			     GTK_SPIN_BUTTON (spinbutton2),
-			     NULL, NULL);
+			     GTK_SPIN_BUTTON (spinbutton2), NULL);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
 					 -65536, 65536);

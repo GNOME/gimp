@@ -53,7 +53,8 @@ info_field_new (InfoDialog    *idialog,
   label = gtk_label_new (gettext (title));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (idialog->info_table), label, 
-		    0, 1, row - 1, row, GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+		    0, 1, row - 1, row,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   gtk_table_attach_defaults (GTK_TABLE (idialog->info_table), widget, 
@@ -293,7 +294,7 @@ info_dialog_add_spinbutton (InfoDialog    *idialog,
   adjustment = gtk_adjustment_new (value_ptr ? *value_ptr : 0, lower, upper,
 				   step_increment, page_increment, page_size);
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment),
-				    climb_rate, MIN (MAX (digits, 6), 0));
+				    climb_rate, MAX (MIN (digits, 6), 0));
   gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
 				   GTK_SHADOW_NONE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
@@ -320,6 +321,7 @@ info_dialog_add_sizeentry (InfoDialog      *idialog,
 			   GUnit            unit,
 			   gchar           *unit_format,
 			   gboolean         menu_show_pixels,
+			   gboolean         menu_show_percent,
 			   gboolean         show_refval,
 			   GimpSizeEntryUP  update_policy,
 			   GtkSignalFunc    callback,
@@ -334,7 +336,8 @@ info_dialog_add_sizeentry (InfoDialog      *idialog,
   alignment = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
 
   sizeentry = gimp_size_entry_new (nfields, unit, unit_format,
-				   menu_show_pixels, show_refval, 75,
+				   menu_show_pixels, menu_show_percent,
+				   show_refval, 75,
 				   update_policy);
   if (value_ptr)
     for (i = 0; i < nfields; i++)

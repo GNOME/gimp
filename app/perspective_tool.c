@@ -15,8 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdio.h>
-
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
@@ -169,7 +167,8 @@ perspective_info_update (Tool *tool)
       
       for (j = 0; j < 3; j++)
 	{
-	  p += sprintf (p, "%10.3g", transform_core->transform[i][j]);
+	  p += g_snprintf (p, MAX_INFO_BUF - (p - matrix_row_buf[i]),
+			   "%10.3g", transform_core->transform[i][j]);
 	}
     }
 

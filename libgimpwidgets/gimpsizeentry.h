@@ -54,9 +54,10 @@ struct _GimpSizeEntry
 
   GtkWidget       *unitmenu;
   GUnit            unit;
-  guint            menu_show_pixels;
+  gboolean         menu_show_pixels;
+  gboolean         menu_show_percent;
 
-  guint            show_refval;
+  gboolean         show_refval;
   GimpSizeEntryUP  update_policy;
 };
 
@@ -99,9 +100,10 @@ guint gimp_size_entry_get_type (void);
 GtkWidget*  gimp_size_entry_new        (gint             number_of_fields,
 					GUnit            unit,
 					gchar           *unit_format,
-					guint            menu_show_pixels,
-					guint            show_refval,
-					guint            spinbutton_usize,
+					gboolean         menu_show_pixels,
+					gboolean         menu_show_percent,
+					gboolean         show_refval,
+					gint             spinbutton_usize,
 					GimpSizeEntryUP  update_policy);
 
 /* add a field to the sizeentry
@@ -110,9 +112,7 @@ GtkWidget*  gimp_size_entry_new        (gint             number_of_fields,
  * the new field will have the index 0
  */
 void        gimp_size_entry_add_field  (GimpSizeEntry   *gse,
-					GtkAdjustment   *value_adjustment,
 					GtkSpinButton   *value_spinbutton,
-					GtkAdjustment   *refval_adjustment,
 					GtkSpinButton   *refval_spinbutton);
 
 /* this one is just a convenience function if you want to add labels

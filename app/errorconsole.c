@@ -44,6 +44,8 @@
 #endif
 #endif
 
+#include "actionarea.h"
+
 #include <gtk/gtk.h>
 
 #include "commands.h"
@@ -63,10 +65,19 @@ static GtkWidget	*text;
 
 static void
 error_console_close_callback (GtkWidget	*widget,
-			      GdkEvent *event,
-			      gpointer	data)
+			      gpointer	 data)
 {
   gtk_widget_hide (error_console);
+}
+
+static gint
+error_console_delete_callback (GtkWidget *widget,
+			       GdkEvent  *event,
+			       gpointer	  data)
+{
+  error_console_close_callback (NULL, NULL);
+
+  return TRUE;
 }
 
 void
@@ -210,10 +221,15 @@ text_clicked_callback (GtkWidget	*widget,
   return TRUE; 
 }
 
+/*  the action area structure  */
+static ActionAreaItem action_items[] =
+{
+  { N_("Close"), error_console_close_callback, NULL, NULL }
+};
+
 static void
 error_console_create_window (void)
 {
-  GtkWidget	*button;
   GtkWidget	*table;
   GtkWidget	*vscrollbar;
   GtkWidget	*menu;
@@ -230,16 +246,12 @@ error_console_create_window (void)
   gtk_widget_set_usize (error_console, 250, 300);
   gtk_window_set_policy (GTK_WINDOW(error_console), TRUE, TRUE, FALSE);
   gtk_signal_connect (GTK_OBJECT (error_console), "delete_event",
-		      (GtkSignalFunc) error_console_close_callback, NULL);
+		      (GdkEventFunc) error_console_delete_callback, NULL);
   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (error_console)->vbox), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (error_console)->action_area), 2);
 
   /*  Action area  */
-  button = gtk_button_new_with_label (_("Close"));
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) error_console_close_callback, NULL);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (error_console)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  action_items[0].user_data = error_console;
+  build_action_area (GTK_DIALOG (error_console), action_items, 1, 0);
 
   menu = gtk_menu_new ();
 

@@ -367,7 +367,7 @@ file_new_cmd_callback (GtkWidget *widget,
   gtk_widget_show (hbox);
 
   vals->size_sizeentry = gimp_size_entry_new (2, vals->unit, "%p",
-					      FALSE, TRUE, 75,
+					      FALSE, FALSE, TRUE, 75,
 					      GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (vals->size_sizeentry), 0,
 				  vals->xresolution, FALSE);
@@ -401,7 +401,7 @@ file_new_cmd_callback (GtkWidget *widget,
   gtk_widget_show (hbox);
 
   vals->simple_res = gimp_size_entry_new (1, vals->res_unit, "%s",
-					  FALSE, FALSE, 75,
+					  FALSE, FALSE, FALSE, 75,
 					  GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (vals->simple_res),
 					 0, 1, 32767);
@@ -424,7 +424,7 @@ file_new_cmd_callback (GtkWidget *widget,
      (not shown by default, but used to keep track of all the variables) */
   vals->resolution_sizeentry =
     gimp_size_entry_new (2, vals->res_unit, "%s",
-			 FALSE, TRUE, 75,
+			 FALSE, FALSE, TRUE, 75,
 			 GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (vals->resolution_sizeentry),
 					 0, 1, 32767);

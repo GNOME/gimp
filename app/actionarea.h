@@ -18,6 +18,7 @@
 #ifndef __ACTIONAREA_H__
 #define __ACTIONAREA_H__
 
+#include <gtk/gtk.h>
 
 typedef void (*ActionCallback) (GtkWidget *, gpointer);
 
