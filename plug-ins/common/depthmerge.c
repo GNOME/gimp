@@ -640,10 +640,10 @@ DepthMerge_dialog (DepthMerge *dm)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_OK, dialogOkCallback,
-		     dm, NULL, NULL, TRUE, FALSE,
 		     GTK_STOCK_CANCEL, dialogCancelCallback,
 		     dm, NULL, NULL, FALSE, TRUE,
+		     GTK_STOCK_OK, dialogOkCallback,
+		     dm, NULL, NULL, TRUE, FALSE,
 
 		     NULL);
 

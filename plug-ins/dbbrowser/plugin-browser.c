@@ -998,10 +998,10 @@ gimp_plugin_desc (void)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, TRUE,
 
-		     _("Search by Name"), dialog_search_callback,
-		     plugindesc, NULL, NULL, FALSE, FALSE,
 		     GTK_STOCK_CLOSE, dialog_close_callback,
 		     plugindesc, NULL, NULL, TRUE, TRUE,
+		     _("Search by Name"), dialog_search_callback,
+		     plugindesc, NULL, NULL, FALSE, FALSE,
 
 		     NULL);
 

@@ -7,7 +7,7 @@ dnl Test for GIMP, and define GIMP_CFLAGS and GIMP_LIBS
 dnl
 AC_DEFUN(AM_PATH_GIMP_1_4,
 [dnl 
-dnl Get the cflags and libraries from the gimptool-1.4 script
+dnl Get the cflags and libraries from the gimptool-1.3 script
 dnl
 AC_ARG_WITH(gimp-prefix,[  --with-gimp-prefix=PFX  Prefix where GIMP is installed (optional)],
             gimptool_prefix="$withval", gimptool_prefix="")
@@ -19,17 +19,17 @@ AC_ARG_ENABLE(gimptest, [  --disable-gimptest      Do not try to compile and run
   if test x$gimptool_exec_prefix != x ; then
      gimptool_args="$gimptool_args --exec-prefix=$gimptool_exec_prefix"
      if test x${GIMPTOOL+set} != xset ; then
-        GIMPTOOL=$gimptool_exec_prefix/bin/gimptool-1.4
+        GIMPTOOL=$gimptool_exec_prefix/bin/gimptool-1.3
      fi
   fi
   if test x$gimptool_prefix != x ; then
      gimptool_args="$gimptool_args --prefix=$gimptool_prefix"
      if test x${GIMPTOOL+set} != xset ; then
-        GIMPTOOL=$gimptool_prefix/bin/gimptool-1.4
+        GIMPTOOL=$gimptool_prefix/bin/gimptool-1.3
      fi
   fi
 
-  AC_PATH_PROG(GIMPTOOL, gimptool-1.4, no)
+  AC_PATH_PROG(GIMPTOOL, gimptool-1.3, no)
   min_gimp_version=ifelse([$1], ,1.3.0,$1)
   AC_MSG_CHECKING(for GIMP - version >= $min_gimp_version)
   no_gimp=""
@@ -69,7 +69,7 @@ AC_ARG_ENABLE(gimptest, [  --disable-gimptest      Do not try to compile and run
       LIBS="$LIBS $GIMP_LIBS"
 dnl
 dnl Now check if the installed GIMP is sufficiently new. (Also sanity
-dnl checks the results of gimptool-1.4 to some extent
+dnl checks the results of gimptool-1.3 to some extent
 dnl
       rm -f conf.gimptest
       AC_TRY_RUN([
@@ -108,11 +108,11 @@ int main ()
     }
   else
     {
-      printf("\n*** 'gimptool-1.4 --version' returned %d.%d.%d, but the minimum version\n", $gimptool_major_version, $gimptool_minor_version, $gimptool_micro_version);
-      printf("*** of GIMP required is %d.%d.%d. If gimptool-1.4 is correct, then it is\n", major, minor, micro);
+      printf("\n*** 'gimptool-1.3 --version' returned %d.%d.%d, but the minimum version\n", $gimptool_major_version, $gimptool_minor_version, $gimptool_micro_version);
+      printf("*** of GIMP required is %d.%d.%d. If gimptool-1.3 is correct, then it is\n", major, minor, micro);
       printf("*** best to upgrade to the required version.\n");
-      printf("*** If gimptool-1.4 was wrong, set the environment variable GIMPTOOL\n");
-      printf("*** to point to the correct copy of gimptool-1.4, and remove the file\n");
+      printf("*** If gimptool-1.3 was wrong, set the environment variable GIMPTOOL\n");
+      printf("*** to point to the correct copy of gimptool-1.3, and remove the file\n");
       printf("*** config.cache before re-running configure\n");
       return 1;
     }
@@ -129,10 +129,10 @@ int main ()
   else
      AC_MSG_RESULT(no)
      if test "$GIMPTOOL" = "no" ; then
-       echo "*** The gimptool-1.4 script installed by GIMP could not be found"
+       echo "*** The gimptool-1.3 script installed by GIMP could not be found"
        echo "*** If GIMP was installed in PREFIX, make sure PREFIX/bin is in"
        echo "*** your path, or set the GIMPTOOL environment variable to the"
-       echo "*** full path to gimptool-1.4."
+       echo "*** full path to gimptool-1.3."
      else
        if test -f conf.gimptest ; then
         :
@@ -164,7 +164,7 @@ GimpPlugInInfo PLUG_IN_INFO =
         [ echo "*** The test program failed to compile or link. See the file config.log for the"
           echo "*** exact error that occured. This usually means GIMP was incorrectly installed"
           echo "*** or that you have moved GIMP since it was installed. In the latter case, you"
-          echo "*** may want to edit the gimptool-1.4 script: $GIMPTOOL" ])
+          echo "*** may want to edit the gimptool-1.3 script: $GIMPTOOL" ])
           CFLAGS="$ac_save_CFLAGS"
           LIBS="$ac_save_LIBS"
        fi

@@ -369,7 +369,7 @@ gui_really_quit_dialog (GCallback quit_func)
   gimp_menu_item_set_sensitive ("<Toolbox>/File/Quit", FALSE);
   gimp_menu_item_set_sensitive ("<Image>/File/Quit", FALSE);
 
-  dialog = gimp_query_boolean_box (_("Really Quit?"),
+  dialog = gimp_query_boolean_box (_("Quit the GIMP?"),
 				   gimp_standard_help_func,
 				   "dialogs/really_quit.html",
 				   TRUE,

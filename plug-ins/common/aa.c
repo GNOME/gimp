@@ -341,10 +341,11 @@ type_dialog (int selected)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_OK, gtk_widget_destroy,
-			 NULL, 1, NULL, TRUE, FALSE,
 			 GTK_STOCK_CANCEL, type_dialog_cancel_callback,
 			 NULL, NULL, NULL, FALSE, TRUE,
+
+			 GTK_STOCK_OK, gtk_widget_destroy,
+			 NULL, 1, NULL, TRUE, FALSE,
 
 			 NULL);
 

@@ -426,10 +426,10 @@ warp_dialog (GimpDrawable *drawable)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_OK, warp_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
+			 GTK_STOCK_OK, warp_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
 
 			 NULL);
 

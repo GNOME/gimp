@@ -1,3 +1,16 @@
+2001-11-29  Sven Neumann  <sven@gimp.org>
+
+	* m4macros/gimp-1.4.m4: use gimptool-1.3.
+
+	* app/display/gimpdisplayshell.c
+	* app/gui/gui.c: cosmetic changes from Guillermo S. Romero.
+
+	* plug-ins/common/*.c
+	* plug-ins/script-fu/script-fu-scripts.c: applied patches from
+	Guillermo S. Romero that change the button ordering. I had to redo
+	some of the changes by hand since the patches didn't apply cleanly.
+	Hopefully got it all right...
+
 2001-11-28  Kelly Martin  <kmartin@pyrzqxgl.org>
 
 	* base/pixel-region.c base/tile-manager.c: a couple more

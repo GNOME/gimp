@@ -358,10 +358,11 @@ gauss_rle_dialog (void)
 			 GTK_WIN_POS_MOUSE,
 			 TRUE, FALSE, TRUE,
 
-			 GTK_STOCK_OK, gauss_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
+
+			 GTK_STOCK_OK, gauss_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
 
 			 NULL);
 
@@ -441,10 +442,11 @@ gauss_rle2_dialog (gint32        image_ID,
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_OK, gauss_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
+
+			 GTK_STOCK_OK, gauss_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
 
 			 NULL);
 

@@ -1538,6 +1538,15 @@ script_fu_interface (SFScript *script)
   gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
+  button = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_container_add (GTK_CONTAINER (bbox), button);  
+  gtk_widget_show (button);
+
+  g_signal_connect_swapped (G_OBJECT (button), "clicked",
+			    G_CALLBACK (script_fu_interface_quit),
+			    script);
+
   button = gtk_button_new_from_stock (GTK_STOCK_OK);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_container_add (GTK_CONTAINER (bbox), button);  
@@ -1548,14 +1557,6 @@ script_fu_interface (SFScript *script)
 		    G_CALLBACK (script_fu_ok_callback),
 		    script);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_container_add (GTK_CONTAINER (bbox), button);  
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (G_OBJECT (button), "clicked",
-			    G_CALLBACK (script_fu_interface_quit),
-			    script);
 
   /* The statusbar (well it's a faked statusbar...) */
   hbox = gtk_hbox_new (FALSE, 0);

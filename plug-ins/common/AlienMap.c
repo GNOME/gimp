@@ -1394,12 +1394,14 @@ alienmap_dialog (void)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     _("About..."), alienmap_logo_dialog,
+		     _("About"), alienmap_logo_dialog,
 		     NULL, NULL, NULL, FALSE, FALSE,
-		     GTK_STOCK_OK, dialog_ok_callback,
-		     NULL, NULL, NULL, TRUE, FALSE,
+
 		     GTK_STOCK_CANCEL, gtk_widget_destroy,
 		     NULL, 1, NULL, FALSE, TRUE,
+
+		     GTK_STOCK_OK, dialog_ok_callback,
+		     NULL, NULL, NULL, TRUE, FALSE,
 
 		     NULL);
 

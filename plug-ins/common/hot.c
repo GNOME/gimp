@@ -588,6 +588,7 @@ pluginCoreIA (struct piArgs *argp)
 
 			 GTK_STOCK_OK, hot_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
+
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 

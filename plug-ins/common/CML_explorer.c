@@ -1173,10 +1173,10 @@ CML_explorer_dialog (void)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_OK, CML_explorer_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
+			 GTK_STOCK_OK, CML_explorer_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
 
 			 NULL);
 
@@ -2254,10 +2254,10 @@ force_overwrite (const gchar *filename)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, FALSE, FALSE,
 
-			 GTK_STOCK_OK, CML_overwrite_ok_callback,
-			 NULL, NULL, NULL, FALSE, FALSE,
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, TRUE, TRUE,
+			 GTK_STOCK_OK, CML_overwrite_ok_callback,
+			 NULL, NULL, NULL, FALSE, FALSE,
 
 			 NULL);
 
