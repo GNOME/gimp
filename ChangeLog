@@ -1,3 +1,9 @@
+2003-10-20  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpobject.c (gimp_object_name_collate): must use
+	strcmp() not strcoll() on the collation keys obtained from
+	g_utf8_collate_key().
+
 2003-10-19  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/gfig/Makefile.am

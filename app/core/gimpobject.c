@@ -329,7 +329,7 @@ gimp_object_name_collate (GimpObject *object1,
   if (! object2->normalized)
     gimp_object_name_normalize (object2);
 
-  return strcoll (object1->normalized, object2->normalized);
+  return strcmp (object1->normalized, object2->normalized);
 }
 
 static void
