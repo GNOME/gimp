@@ -21,9 +21,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "POT-Creation-Date: 2004-05-12 22:17+0200\n"
-"PO-Revision-Date: 2004-05-14 11:29+0200\n"
+"PO-Revision-Date: 2004-05-17 09:56+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
-"Language-Team: gimp.linux.it\n"
+"Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2653,7 +2653,7 @@ msgstr "Blu"
 
 #: app/base/base-enums.c:79 app/core/core-enums.c:103
 msgid "Alpha"
-msgstr "Alpha"
+msgstr "Alfa"
 
 #: app/base/base-enums.c:97
 msgid "None (Fastest)"
@@ -2686,12 +2686,7 @@ msgid ""
 "swap file. Some parts of your images may be corrupted. Try to save your work "
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
-msgstr ""
-"Impossibile aprire il file di scambio. Gimp ha terminato la memoria "
-"disponibilee non può usare il file di scambio. Alcune parti dell'immagine "
-"potrebbero essere rovinate. Provate a salvare il vostro lavoro usando un "
-"nome differente, quindi riavviate Gimp e controllate la locazione del file "
-"di scambio nelle preferenze."
+msgstr "Impossibile aprire il file di scambio. Gimp ha terminato la memoria disponibile e non può usare il file di scambio. Alcune parti dell'immagine potrebbero essere rovinate. Provate a salvare il vostro lavoro usando un nome differente, quindi riavviate Gimp e controllate la locazione del file di scambio nelle preferenze."
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
@@ -2824,10 +2819,7 @@ msgid ""
 "When enabled, an image will become the active image when its image window "
 "receives the focus. This is useful for window managers using \"click to focus"
 "\"."
-msgstr ""
-"Se abilitato un'immagine diventa un'immagine attiva se la sua finestra "
-"immagine riceve il focus. È utile per i gestori di finestre che usano il "
-"\"focus con clic\"."
+msgstr "Se abilitata, un'immagine diventa attiva se la sua finestra riceve il focus. Utile per i gestori di finestre che usano il \"focus con clic\"."
 
 #: app/config/gimprc-blurbs.h:23
 msgid "Specifies how the area around the image should be drawn."
@@ -2861,9 +2853,7 @@ msgstr ""
 msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
-msgstr ""
-"Se abilitato assicura che ogni punto di un'immagine sia mappato su di un "
-"punto sullo schermo."
+msgstr "Se abilitata, assicura che ogni punto di un'immagine sia mappato su di un punto sullo schermo."
 
 #: app/config/gimprc-blurbs.h:70
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
@@ -2896,18 +2886,15 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:118
 msgid "When enabled, the selected brush will be used for all tools."
-msgstr ""
-"Se abilitato, il pennello selezionato verrà usato per tutti gli strumenti."
+msgstr "Se abilitata, il pennello selezionato verrà usato per tutti gli strumenti."
 
 #: app/config/gimprc-blurbs.h:124
 msgid "When enabled, the selected gradient will be used for all tools."
-msgstr ""
-"Se abilitato, il gradiente selezionato verrà usato per tutti gli strumenti."
+msgstr "Se abilitata, il gradiente selezionato verrà usato per tutti gli strumenti."
 
 #: app/config/gimprc-blurbs.h:127
 msgid "When enabled, the selected pattern will be used for all tools."
-msgstr ""
-"Se abilitato, il gradiente selezionato verrà usato per tutti gli strumenti."
+msgstr "Se abilitata, il gradiente selezionato verrà usato per tutti gli strumenti."
 
 #: app/config/gimprc-blurbs.h:143
 msgid "Sets the browser used by the help system."
@@ -2924,17 +2911,13 @@ msgstr "Imposta il testo che appare nei titoli della finestra immagine"
 
 #: app/config/gimprc-blurbs.h:157
 msgid "When enabled, the GIMP will use a different info window per image view."
-msgstr ""
-"Se abilitato, GIMP userà una finestra informazioni diversa per ogni finestra "
-"immagine."
+msgstr "Se abilitata, GIMP userà una finestra informazioni diversa per ogni finestra immagine."
 
 #: app/config/gimprc-blurbs.h:160
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
-msgstr ""
-"Se abilitato garantirà che la piena immagine sia visibile dopo che il file è "
-"stato aperto, altrimenti sarà visualizzato con scala 1:1."
+msgstr "Se abilitata, garantirà che la piena immagine sia visibile dopo che il file è stato aperto, altrimenti sarà visualizzato con scala 1:1."
 
 #: app/config/gimprc-blurbs.h:164
 msgid "Install a private colormap; might be useful on pseudocolor visuals."
@@ -3001,22 +2984,14 @@ msgid ""
 "painting with large brushes should be more accurate, but it may be slower.  "
 "Perversely, on some X servers enabling this option results in faster "
 "painting."
-msgstr ""
-"Se abilitato il server X verrà interrogato per la posizione corrente del "
-"mouse ogni evento di moto invece che affidarsi ai suggerimenti di posizione. "
-"Ciò significa che il disegno con pennelli grandi sarà più accurato ma più "
-"lento. Per assurdo, su alcuni server X è possibile che il disegno venga "
-"accelerato."
+msgstr "Se abilitata, il server X verrà interrogato per la posizione corrente del mouse ad ogni evento di moto invece che affidarsi ai suggerimenti di posizione. Ciò significa che il disegno con pennelli grandi sarà più accurato ma più lento. Per assurdo, su alcuni server X è possibile che il disegno venga accelerato."
 
 #: app/config/gimprc-blurbs.h:234
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
-msgstr ""
-"Imposta se GIMP debba creare delle anteprime di livelli e canali. Le "
-"anteprime nelle finestre dei livelli e canali sono simpatiche ma possono "
-"rallentare se si lavora con immagini molto grandi."
+msgstr "Imposta se GIMP debba creare delle anteprime di livelli e canali. Le anteprime nelle finestre dei livelli e canali sono utili ma possono rallentare se si lavora con immagini molto grandi."
 
 #: app/config/gimprc-blurbs.h:239
 msgid "Sets the default preview size for layers and channels."
@@ -3026,17 +3001,13 @@ msgstr "Imposta l'ampiezza dell'anteprima per livelli e canali."
 msgid ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
-msgstr ""
-"Se abilitata la finestra immagine verrà automaticamente ridimensionata se "
-"l'ampiezza fisica dell'immagine cambia."
+msgstr "Se abilitata, la finestra immagine verrà automaticamente ridimensionata se l'ampiezza fisica dell'immagine cambia."
 
 #: app/config/gimprc-blurbs.h:246
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
-msgstr ""
-"Se abilitata la finestra immagine verrà automaticamente ridimensionata se si "
-"fa zoom su di un'immagine."
+msgstr "Se abilitata, la finestra immagine verrà automaticamente ridimensionata se si fa zoom su di un'immagine."
 
 #: app/config/gimprc-blurbs.h:250
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -3059,79 +3030,59 @@ msgstr ""
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
-msgstr ""
-"Se abilitata tutti gli strumenti di disegno mostreranno un'anteprima del "
-"profilo del pennello corrente."
+msgstr "Se abilitata, tutti gli strumenti di disegno mostreranno un'anteprima del profilo del pennello corrente."
 
 #: app/config/gimprc-blurbs.h:267
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
-msgstr ""
-"Se abilitata la barra dei menu è visibile. Questo può essere modificato "
-"anche con il comando \"Visualizza->Mostra barra dei menu\"."
+msgstr "Se abilitata, la barra dei menu è visibile. Questo può essere modificato anche con il comando \"Visualizza->Mostra barra dei menu\"."
 
 #: app/config/gimprc-blurbs.h:271
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
-msgstr ""
-"Se abilitata i righelli sono visibili. Questo comportamento può essere "
-"modificato anche con il comando \"Visualizza->Mostra i righelli\""
+msgstr "Se abilitata, i righelli sono visibili. Questo comportamento può essere modificato anche con il comando \"Visualizza->Mostra i righelli\""
 
 #: app/config/gimprc-blurbs.h:275
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
-msgstr ""
-"Se abilitata le barre di scorrimento sono visibili. Questo comportamento può "
-"essere modificato con il comando \"Visualizza->Mostra le barre di scorrimento"
-"\"."
+msgstr "Se abilitata, le barre di scorrimento sono visibili. Questo comportamento può essere modificato con il comando \"Visualizza->Mostra le barre di scorrimento\"."
 
 #: app/config/gimprc-blurbs.h:279
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
-msgstr ""
-"Se abilitata la barra di stato è visibile. Questo comportamento può essere "
-"modificato anche con il comando \"Visualizza->Mostra barra di stato\"."
+msgstr "Se abilitata, la barra di stato è visibile. Questo comportamento può essere modificato anche con il comando \"Visualizza->Mostra barra di stato\"."
 
 #: app/config/gimprc-blurbs.h:283
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
-msgstr ""
-"Se abilitata la selezione è visibile. Questo comportamento può essere "
-"modificato anche con il comando \"Visualizza->Mostra selezione\"."
+msgstr "Se abilitata, la selezione è visibile. Questo comportamento può essere modificato anche con il comando \"Visualizza->Mostra selezione\"."
 
 #: app/config/gimprc-blurbs.h:287
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
-msgstr ""
-"Se abilitata il bordo dei livelli è visibile. Questo comportamento può "
-"essere modificato anche con il comando \"Visualizza->Mostra barra dei menu\"."
+msgstr "Se abilitata, il bordo dei livelli è visibile. Questo comportamento può essere modificato anche con il comando \"Visualizza->Mostra barra dei menu\"."
 
 #: app/config/gimprc-blurbs.h:291
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
-msgstr ""
-"Se abilitata le guide sono visibili. Questo comportamento può essere "
-"modificato anche con il comando \"Visualizza->Mostra le guide\"."
+msgstr "Se abilitata, le guide sono visibili. Questo comportamento può essere modificato anche con il comando \"Visualizza->Mostra le guide\"."
 
 #: app/config/gimprc-blurbs.h:295
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
-msgstr ""
-"Se abilitata la griglia è visibile. Questo comportamento può essere "
-"modificato anche con il comando \"Visualizza->Mostra la griglia\"."
+msgstr "Se abilitata, la griglia è visibile. Questo comportamento può essere modificato anche con il comando \"Visualizza->Mostra la griglia\"."
 
 #: app/config/gimprc-blurbs.h:299
 msgid "Enable to display a handy GIMP tip on startup."
-msgstr ""
-"Abilita la visualizzazione di pratici suggerimenti su GIMP alla partenza."
+msgstr "Abilita la visualizzazione di pratici suggerimenti su GIMP all'avvio."
 
 #: app/config/gimprc-blurbs.h:302
 msgid "Enable to display tooltips."
@@ -3166,15 +3117,13 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:319
 msgid "When enabled, menus can be torn off."
-msgstr "Se abilitata i menu possono essere staccati."
+msgstr "Se abilitata, i menu possono essere staccati."
 
 #: app/config/gimprc-blurbs.h:322
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
-msgstr ""
-"Se abilitata è possibile cambiare i tasti scorciatoia per le voci di menu "
-"premendo una combinazione di tasti mentre la voce del menu è selezionata."
+msgstr "Se abilitata, è possibile cambiare i tasti scorciatoia per le voci di menu premendo una combinazione di tasti mentre la voce del menu è selezionata."
 
 #: app/config/gimprc-blurbs.h:326
 msgid "Save changed keyboard shortcuts when the GIMP exits."
@@ -3303,7 +3252,7 @@ msgstr "_Nero (Trasparenza Totale)"
 
 #: app/core/core-enums.c:15
 msgid "Layer's _Alpha Channel"
-msgstr "Canale _alpha del livello"
+msgstr "Canale _alfa del livello"
 
 #: app/core/core-enums.c:16
 msgid "_Transfer Layer's Alpha Channel"
@@ -3550,7 +3499,7 @@ msgstr "RGB"
 
 #: app/core/core-enums.c:369
 msgid "RGB-Alpha"
-msgstr "Alpha-RGB"
+msgstr "Alfa-RGB"
 
 #: app/core/core-enums.c:371
 msgid "Grayscale-Alpha"
@@ -3558,7 +3507,7 @@ msgstr "Scala di grigi-Alfa"
 
 #: app/core/core-enums.c:373
 msgid "Indexed-Alpha"
-msgstr "Indicizzato-Alpha"
+msgstr "Indicizzato-Alfa"
 
 #: app/core/core-enums.c:391 app/gui/preferences-dialog.c:1739
 #: app/gui/user-install-dialog.c:1275
@@ -3576,7 +3525,7 @@ msgstr "Sconosciuto"
 
 #: app/core/core-enums.c:431
 msgid "Tiny"
-msgstr "Molto piccolo"
+msgstr "Minuscolo"
 
 #: app/core/core-enums.c:432
 msgid "Very Small"
@@ -3828,7 +3777,7 @@ msgstr "Riposiziona canale"
 
 #: app/core/core-enums.c:644
 msgid "Channel Color"
-msgstr "Canale colore"
+msgstr "Colore canale"
 
 #: app/core/core-enums.c:645
 msgid "New Vectors"
@@ -4119,7 +4068,7 @@ msgstr "Selezione ellittica"
 
 #: app/core/gimpchannel-select.c:367
 msgid "Alpha to Selection"
-msgstr "Alpha a selezione"
+msgstr "Alfa a selezione"
 
 #: app/core/gimpchannel-select.c:409
 #, c-format
@@ -4407,7 +4356,7 @@ msgstr "Il livello non può essere alzato ulteriormente."
 
 #: app/core/gimpimage.c:2695 app/core/gimpimage.c:2745
 msgid "Cannot raise a layer without alpha."
-msgstr "Impossibile alzare livello senza alpha."
+msgstr "Impossibile alzare livello senza alfa."
 
 #: app/core/gimpimage.c:2700 app/widgets/gimplayertreeview.c:218
 msgid "Raise Layer"
@@ -4631,8 +4580,7 @@ msgstr ""
 
 #: app/core/gimplayer.c:978
 msgid "Cannot add layer mask to a layer with no alpha channel."
-msgstr ""
-"Impossibile aggiungere una maschera livello ad un livello senza canale alpha."
+msgstr "Impossibile aggiungere una maschera livello ad un livello senza canale alfa."
 
 #: app/core/gimplayer.c:988
 msgid "Cannot add layer mask of different dimensions than specified layer."
@@ -4646,7 +4594,7 @@ msgstr "Trasferimento alfa su maschera"
 
 #: app/core/gimplayer.c:1358
 msgid "Add Alpha Channel"
-msgstr "Aggiunta canale alpha"
+msgstr "Aggiunta canale alfa"
 
 #: app/core/gimplayer.c:1380
 msgid "Layer to Image Size"
@@ -5084,7 +5032,8 @@ msgstr "Tradotto da"
 msgid "translator-credits"
 msgstr ""
 "Marco Ciampa\n"
-"Daniele Medri"
+"Daniele Medri\n"
+"Italian Gimp Translator Team"
 
 #: app/gui/about-dialog.c:59
 msgid "Contributions by"
@@ -5843,7 +5792,7 @@ msgstr "_Aiuto contestuale con \"F1\""
 
 #: app/gui/preferences-dialog.c:1316
 msgid "Show Tips on _Startup"
-msgstr "Mostra suggerimenti alla partenza"
+msgstr "Mostra suggerimenti all'avvio"
 
 #. Help Browser
 #: app/gui/preferences-dialog.c:1320
@@ -6174,7 +6123,7 @@ msgstr "_Salva le posizioni delle finestre all'uscita"
 
 #: app/gui/preferences-dialog.c:1925
 msgid "R_estore Saved Window Positions on Start-up"
-msgstr "R_ecupera alla partenza la posizione delle finestre salvata"
+msgstr "R_ecupera all'avvio la posizione delle finestre salvata"
 
 #: app/gui/preferences-dialog.c:1933
 msgid "Save Window Positions Now"
@@ -6190,7 +6139,7 @@ msgstr "Salva i tasti scorciatoia all'uscita"
 
 #: app/gui/preferences-dialog.c:1958
 msgid "Restore Saved Keyboard Shortcuts on Start-up"
-msgstr "Ripristina i tasti scorciatoia alla partenza"
+msgstr "Ripristina i tasti scorciatoia all'avvio"
 
 #: app/gui/preferences-dialog.c:1966
 msgid "Save Keyboard Shortcuts Now"
@@ -9327,9 +9276,7 @@ msgstr "Auto"
 #: app/widgets/gimpimagedock.c:214
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
-msgstr ""
-"Se abilitata la finestra segue automaticamente l'immagine su cui si sta "
-"lavorando."
+msgstr "Se abilitata, la finestra segue automaticamente l'immagine su cui si sta lavorando."
 
 #: app/widgets/gimpitemtreeview.c:361
 #, c-format
