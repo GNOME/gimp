@@ -127,7 +127,6 @@ static GtkWidget *resolution_page = NULL;
 static GtkWidget *continue_button = NULL;
 
 static GtkStyle *title_style = NULL;
-static GdkFont  *large_font  = NULL;
 
 static GtkStyle    *page_style = NULL;
 static GdkColormap *colormap   = NULL;
@@ -521,6 +520,7 @@ install_dialog_create (InstallCallback callback)
   GtkWidget *darea;
   GtkWidget *page;
   GtkWidget *sep;
+  GdkFont   *large_font;
 
   dialog = install_dialog =
     gimp_dialog_new (_("GIMP User Installation"), "user_installation",
@@ -555,8 +555,9 @@ install_dialog_create (InstallCallback callback)
   page_style->text[GTK_STATE_NORMAL] = black_color;
   page_style->bg[GTK_STATE_NORMAL]   = white_color;
 
+  gdk_font_unref (page_style->font);
   page_style->font = dialog->style->font;
-  /*gdk_font_ref (page_style->font);*/
+  gdk_font_ref (page_style->font);
 
   /*  B/Colored Style for the page title  */
   title_style = gtk_style_copy (page_style);
@@ -570,8 +571,13 @@ install_dialog_create (InstallCallback callback)
   /*  this is a fontset, e.g. multiple comma-separated font definitions  */
   large_font = gdk_fontset_load (_("-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"));
 
-  title_style->font = large_font;
-
+  if (large_font)
+    {
+      gdk_font_unref (title_style->font);
+      title_style->font = large_font;
+      gdk_font_ref (title_style->font);
+    }
+  
   /*  W/W GC for the corner  */
   white_gc = gdk_gc_new (dialog->window);
   gdk_gc_set_foreground (white_gc, &white_color);

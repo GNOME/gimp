@@ -1,3 +1,15 @@
+2000-04-06  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.c: if we cannot load the font we'd like to use,
+	use the gtk+ default font. Fixes bug #8359.
+	
+	* app/about_dialog.c
+	* app/install.c: properly ref/unref fonts
+
+	* app/text_tool.[ch]: code cleanup (do not rely on TRUE being 1)
+
+	* app/tips_dialog.c: code cleanup and less resizing
+
 2000-04-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/ps.c: applied patch provided by Peter

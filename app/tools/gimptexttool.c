@@ -115,8 +115,8 @@ static void   text_gdk_image_to_region (GdkImage *, gint, PixelRegion *);
 static void   text_size_multiply       (gchar **fontname, gint);
 static void   text_set_resolution      (gchar **fontname, gdouble, gdouble);
 
-Layer       * text_render (GImage *, GimpDrawable *,
-			   gint, gint, gchar *, gchar *, gint, gint);
+/*  Layer       * text_render (GImage *, GimpDrawable *, */
+/*  			   gint, gint, gchar *, gchar *, gint, gint); */
 
 
 /*  functions  */
@@ -496,7 +496,7 @@ text_init_render (TextTool *text_tool)
 
 static void
 text_gdk_image_to_region (GdkImage    *image,
-			  int          scale,
+			  gint         scale,
 			  PixelRegion *textPR)
 {
   GdkColor black;
@@ -544,12 +544,12 @@ text_gdk_image_to_region (GdkImage    *image,
 GimpLayer *
 text_render (GimpImage    *gimage,
 	     GimpDrawable *drawable,
-	     int           text_x,
-	     int           text_y,
-	     char         *fontname,
-	     char         *text,
-	     int           border,
-	     int           antialias)
+	     gint          text_x,
+	     gint          text_y,
+	     gchar        *fontname,
+	     gchar        *text,
+	     gint          border,
+	     gint          antialias)
 {
   GdkFont *font;
   GdkPixmap *pixmap;
@@ -563,17 +563,17 @@ text_render (GimpImage    *gimage,
   guchar color[MAX_CHANNELS];
   gchar *str;
   gint nstrs;
-  gint crop;
+  gboolean crop;
   gint line_width, line_height;
   gint pixmap_width, pixmap_height;
   gint text_width, text_height;
   gint width, height;
   gint x, y, k;
-  void * pr;
+  void *pr;
 #ifndef GDK_WINDOWING_WIN32
   XFontStruct *xfs;
 #endif
-  char *fname;
+  gchar *fname;
 
   /*  determine the layer type  */
   if (drawable)
@@ -585,11 +585,12 @@ text_render (GimpImage    *gimage,
   if (antialias)
     antialias = SUPERSAMPLE;
   else
-    antialias = TRUE;
+    antialias = 1;
 
   /* Dont crop the text if border is negative */
   crop = (border >= 0);
-  if (!crop) border = 0;
+  if (!crop) 
+    border = 0;
 
   /* load the font in */
   gdk_error_warnings = 0;
@@ -601,7 +602,7 @@ text_render (GimpImage    *gimage,
       g_message (_("Font '%s' not found."), fontname);
       return NULL;
     }
-  xfs = GDK_FONT_XFONT(font);
+  xfs = GDK_FONT_XFONT (font);
   if (xfs->min_byte1 != 0 || xfs->max_byte1 != 0) {
     gdk_font_unref(font);
     fname = g_strdup_printf("%s,*", fontname);
@@ -619,7 +620,7 @@ text_render (GimpImage    *gimage,
     {
       g_message (_("Font '%s' not found.%s"),
 		 fontname,
-		 antialias ?
+		 antialias > 1 ?
 		 _("\nIf you don't have scalable fonts, "
 		   "try turning off antialiasing in the tool options.") : "");
       return NULL;
@@ -801,13 +802,13 @@ text_render (GimpImage    *gimage,
   return layer;
 }
 
-int
-text_get_extents (char *fontname,
-		  char *text,
-		  int  *width,
-		  int  *height,
-		  int  *ascent,
-		  int  *descent)
+gboolean
+text_get_extents (gchar *fontname,
+		  gchar *text,
+		  gint  *width,
+		  gint  *height,
+		  gint  *ascent,
+		  gint  *descent)
 {
   GdkFont *font;
   gchar *str;

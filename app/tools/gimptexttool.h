@@ -31,11 +31,23 @@ typedef enum {
 #define SUPERSAMPLE  3
 
 /*  text functions  */
-Tool * tools_new_text  (void);
-void   tools_free_text (Tool *);
+Tool      * tools_new_text   (void);
+void        tools_free_text  (Tool *);
 
-int         text_get_extents (char *, char *, int *, int *, int *, int *);
-GimpLayer * text_render      (GimpImage *, GimpDrawable *, int, int, char *,
-			      char *, int, int);
+gboolean    text_get_extents (gchar        *fontname,
+			      gchar        *text,
+			      gint         *width,
+			      gint         *height,
+			      gint         *ascent,
+			      gint         *descent);
+
+GimpLayer * text_render      (GimpImage    *gimage,
+			      GimpDrawable *drawable,
+			      gint          text_x,
+			      gint          text_y,
+			      gchar        *fontname,
+			      gchar        *text,
+			      gint          border,
+			      gint          antialias);
 
 #endif /* __TEXT_TOOL_H__ */
