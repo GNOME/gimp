@@ -73,10 +73,10 @@ typedef struct
   CmChannelType  black;
 
   gboolean       monochrome_flag;
-  gboolean       preview_flag;
   gboolean       preserve_luminosity_flag;
 
   CmModeType     output_channel;
+  gboolean       preview;
 
   GtkAdjustment *red_data;
   GtkAdjustment *green_data;
@@ -87,25 +87,11 @@ typedef struct
   CmModeType     old_output_channel;
 
   GtkWidget     *monochrome_toggle;
-  GtkWidget     *preview;
-  GtkWidget     *preview_toggle;
   GtkWidget     *preserve_luminosity_toggle;
 } CmParamsType;
 
-typedef struct
-{
-  gint     width;
-  gint     height;
-  gint     bpp;
-  gdouble  scale;
-  guchar  *bits;
-} mwPreview;
 
-#define PREVIEW_SIZE 200
-
-
-static mwPreview *mw_preview_build_virgin (GimpDrawable *drw);
-static mwPreview *mw_preview_build        (GimpDrawable *drw);
+static GtkWidget *preview;
 
 static void     query (void);
 static void     run   (const gchar      *name,
@@ -115,15 +101,13 @@ static void     run   (const gchar      *name,
                        GimpParam       **return_vals);
 
 static void     channel_mixer (GimpDrawable *drawable);
-static gboolean cm_dialog     (void);
+static gboolean cm_dialog     (GimpDrawable *drawable);
 
 static void cm_red_scale_callback           (GtkAdjustment    *adjustment,
                                              CmParamsType     *mix);
 static void cm_green_scale_callback         (GtkAdjustment    *adjustment,
                                              CmParamsType     *mix);
 static void cm_blue_scale_callback          (GtkAdjustment    *adjustment,
-                                             CmParamsType     *mix);
-static void cm_preview_callback             (GtkWidget        *widget,
                                              CmParamsType     *mix);
 static void cm_monochrome_callback          (GtkWidget        *widget,
                                              CmParamsType     *mix);
@@ -154,7 +138,8 @@ static inline guchar cm_mix_pixel (CmChannelType *ch,
                                    guchar         b,
                                    gdouble        norm);
 
-static void cm_preview       (CmParamsType *mix);
+static void cm_preview       (CmParamsType *mix,
+                              GimpPreview  *preview);
 static void cm_set_adjusters (CmParamsType *mix);
 
 static void cm_save_file (CmParamsType *mix,
@@ -176,17 +161,10 @@ static CmParamsType mix =
   { 0.0, 0.0, 1.0 },
   { 1.0, 0.0, 0.0 },
   FALSE,
-  TRUE,
   FALSE,
   CM_RED_CHANNEL,
   NULL
 };
-
-static mwPreview *preview;
-
-static gint sel_x1, sel_y1, sel_x2, sel_y2;
-static gint sel_width, sel_height;
-
 
 MAIN ()
 
@@ -256,12 +234,6 @@ run (const gchar      *name,
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
-
-  sel_width  = sel_x2 - sel_x1;
-  sel_height = sel_y2 - sel_y1;
-
   if (gimp_drawable_is_rgb (drawable->drawable_id))
     {
       switch (run_mode)
@@ -269,9 +241,7 @@ run (const gchar      *name,
         case GIMP_RUN_INTERACTIVE:
           gimp_get_data (PLUG_IN_NAME, &mix);
 
-          preview = mw_preview_build (drawable);
-
-          if (! cm_dialog ())
+          if (! cm_dialog (drawable))
             {
               gimp_drawable_detach (drawable);
               return;
@@ -375,17 +345,25 @@ channel_mixer (GimpDrawable *drawable)
   gint          total, processed = 0;
   gboolean      has_alpha;
   gdouble       red_norm, green_norm, blue_norm, black_norm;
+  gint          x1, y1, x2, y2;
+  gint          width, height;
+
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+                             &x1, &y1, &x2, &y2);
+
+  width  = x2 - x1;
+  height = y2 - y1;
 
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
-  total = sel_width * sel_height;
+  total = width * height;
 
   gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
-                       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
+                       x1, y1, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
+                       x1, y1, width, height, TRUE, TRUE);
 
   red_norm   = cm_calculate_norm (&mix, &mix.red);
   green_norm = cm_calculate_norm (&mix, &mix.green);
@@ -449,14 +427,14 @@ channel_mixer (GimpDrawable *drawable)
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id,
-                        sel_x1, sel_y1, sel_width, sel_height);
+                        x1, y1, width, height);
 }
 
 static gboolean
-cm_dialog (void)
+cm_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dialog;
-  GtkWidget *vbox;
+  GtkWidget *main_vbox;
   GtkWidget *frame;
   GtkWidget *hbox;
   GtkWidget *button;
@@ -514,48 +492,20 @@ cm_dialog (void)
 
                             NULL);
 
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
-  gtk_widget_show (hbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
-  /*........................................................... */
-  /* preview */
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  preview = gimp_aspect_preview_new (drawable, &mix.preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (cm_preview),
+                            &mix);
 
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  mix.preview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (mix.preview,
-                               preview->width, preview->height);
-  gtk_container_add (GTK_CONTAINER (frame), mix.preview);
-  gtk_widget_show (mix.preview);
-
-  /*  The preview toggle  */
-  mix.preview_toggle = gtk_check_button_new_with_mnemonic (_("_Preview"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (mix.preview_toggle),
-                                mix.preview_flag);
-  gtk_box_pack_start (GTK_BOX (vbox), mix.preview_toggle, FALSE, FALSE, 0);
-  gtk_widget_show (mix.preview_toggle);
-
-  g_signal_connect (mix.preview_toggle, "toggled",
-                    G_CALLBACK (cm_preview_callback),
-                    &mix);
-
-  /*........................................................... */
-  /* controls */
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  /*........................................................... */
   frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   hbox = gtk_hbox_new (FALSE, 6);
@@ -667,7 +617,7 @@ cm_dialog (void)
   mix.monochrome_toggle = gtk_check_button_new_with_mnemonic (_("_Monochrome"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (mix.monochrome_toggle),
                                 mix.monochrome_flag);
-  gtk_box_pack_start (GTK_BOX (vbox), mix.monochrome_toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), mix.monochrome_toggle, FALSE, FALSE, 0);
   gtk_widget_show (mix.monochrome_toggle);
 
   g_signal_connect (mix.monochrome_toggle, "toggled",
@@ -680,7 +630,7 @@ cm_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
                                 (mix.preserve_luminosity_toggle),
                                 mix.preserve_luminosity_flag);
-  gtk_box_pack_start (GTK_BOX (vbox), mix.preserve_luminosity_toggle,
+  gtk_box_pack_start (GTK_BOX (main_vbox), mix.preserve_luminosity_toggle,
                       FALSE, FALSE, 0);
   gtk_widget_show (mix.preserve_luminosity_toggle);
 
@@ -691,7 +641,7 @@ cm_dialog (void)
   /*........................................................... */
   /*  Horizontal box for file i/o  */
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
@@ -711,9 +661,6 @@ cm_dialog (void)
                     &mix);
 
   gtk_widget_show (dialog);
-
-  if (mix.preview_flag)
-    cm_preview (&mix);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
@@ -742,8 +689,7 @@ cm_red_scale_callback (GtkAdjustment *adjustment,
         break;
       }
 
-  if (mix->preview_flag)
-    cm_preview (mix);
+  gimp_preview_invalidate (GIMP_PREVIEW (preview));
 }
 
 static void
@@ -766,8 +712,7 @@ cm_green_scale_callback (GtkAdjustment *adjustment,
         break;
       }
 
-  if (mix->preview_flag)
-    cm_preview (mix);
+  gimp_preview_invalidate (GIMP_PREVIEW (preview));
 }
 
 static void
@@ -790,31 +735,37 @@ cm_blue_scale_callback (GtkAdjustment *adjustment,
         break;
       }
 
-  if (mix->preview_flag)
-    cm_preview (mix);
+  gimp_preview_invalidate (GIMP_PREVIEW (preview));
 }
 
 static void
-cm_preview (CmParamsType *mix)
+cm_preview (CmParamsType *mix,
+            GimpPreview  *preview)
 {
-  guchar  *dst, *src;
-  gint     x, y;
-  gint     offset, rowsize;
-  gdouble  red_norm, green_norm, blue_norm, black_norm;
+  guchar       *dst, *src;
+  gint          x, y;
+  gint          offset, rowsize;
+  gdouble       red_norm, green_norm, blue_norm, black_norm;
+  gint          width, height, bpp;
+  GimpDrawable *drawable = GIMP_ASPECT_PREVIEW (preview)->drawable;
 
   red_norm   = cm_calculate_norm (mix, &mix->red);
   green_norm = cm_calculate_norm (mix, &mix->green);
   blue_norm  = cm_calculate_norm (mix, &mix->blue);
   black_norm = cm_calculate_norm (mix, &mix->black);
 
-  rowsize = preview->width * preview->bpp;
-  src = preview->bits;
-  dst = g_new (guchar, rowsize * preview->height);
+  gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+  bpp = gimp_drawable_bpp (drawable->drawable_id);
+  src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                          &width, &height, &bpp);
+
+  rowsize = width * bpp;
+  dst = g_new (guchar, rowsize * height);
 
   offset = 0;
-  for (y = 0; y < preview->height; y++)
+  for (y = 0; y < height; y++)
     {
-      for (x = 0; x < preview->width; x++)
+      for (x = 0; x < width; x++)
         {
           guchar r, g, b;
 
@@ -838,97 +789,15 @@ cm_preview (CmParamsType *mix)
               dst[offset + 2] =
                 cm_mix_pixel (&mix->blue, r, g, b, blue_norm);
             }
+          if (bpp == 4)
+            dst[offset + 3] = src[offset + 3];
 
-          offset += preview->bpp;
+          offset += bpp;
         }
     }
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (mix->preview),
-                          0, 0, preview->width, preview->height,
-                          GIMP_RGB_IMAGE,
-                          dst,
-                          3 * preview->width);
+  gimp_preview_draw_buffer (GIMP_PREVIEW (preview), dst, bpp * width);
 
   g_free (dst);
-}
-
-static mwPreview *
-mw_preview_build_virgin (GimpDrawable *drawable)
-{
-  mwPreview *mwp;
-
-  mwp = g_new (mwPreview, 1);
-
-  if (sel_width > sel_height)
-    {
-      mwp->width = MIN (sel_width, PREVIEW_SIZE);
-      mwp->scale = (gdouble) sel_width / (gdouble) mwp->width;
-      mwp->height = sel_height / mwp->scale;
-    }
-  else
-    {
-      mwp->height = MIN (sel_height, PREVIEW_SIZE);
-      mwp->scale = (gdouble) sel_height / (gdouble) mwp->height;
-      mwp->width = sel_width / mwp->scale;
-    }
-
-  mwp->bpp = 3;
-  mwp->bits = NULL;
-
-  return mwp;
-}
-
-static mwPreview *
-mw_preview_build (GimpDrawable *drawable)
-{
-  mwPreview    *mwp;
-  gint          x, y, b;
-  guchar       *bc;
-  guchar       *drwBits;
-  GimpPixelRgn  pr;
-
-  mwp = mw_preview_build_virgin (drawable);
-
-  gimp_pixel_rgn_init (&pr, drawable, sel_x1, sel_y1, sel_width, sel_height,
-                       FALSE, FALSE);
-
-  drwBits = g_new (guchar, sel_width * drawable->bpp);
-
-  bc = mwp->bits = g_new (guchar, mwp->width * mwp->height * mwp->bpp);
-
-  for (y = 0; y < mwp->height; y++)
-    {
-      gimp_pixel_rgn_get_row (&pr, drwBits,
-                              sel_x1,
-                              sel_y1 + (y * sel_height) / mwp->height,
-                              sel_width);
-
-      for (x = 0; x < mwp->width; x++)
-        {
-          for (b = 0; b < 3; b++)
-            {
-              *bc++ = *(drwBits +
-                        ((gint) (x * mwp->scale) * drawable->bpp) +
-                        b % drawable->bpp);
-            }
-        }
-    }
-
-  g_free (drwBits);
-
-  return mwp;
-}
-
-static void
-cm_preview_callback (GtkWidget    *widget,
-                     CmParamsType *mix)
-{
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
-    {
-      mix->preview_flag = TRUE;
-      cm_preview (mix);
-    }
-  else
-    mix->preview_flag = FALSE;
 }
 
 static void
@@ -950,8 +819,7 @@ cm_monochrome_callback (GtkWidget    *widget,
 
   cm_set_adjusters (mix);
 
-  if (mix->preview_flag)
-    cm_preview (mix);
+  gimp_preview_invalidate (GIMP_PREVIEW (preview));
 }
 
 static void
@@ -963,8 +831,7 @@ cm_preserve_luminosity_callback (GtkWidget    *widget,
   else
     mix->preserve_luminosity_flag = FALSE;
 
-  if (mix->preview_flag)
-    cm_preview (mix);
+  gimp_preview_invalidate (GIMP_PREVIEW (preview));
 }
 
 static gchar *
@@ -1047,14 +914,7 @@ cm_load_file_response_callback (GtkWidget    *dialog,
           else if (strcmp (buf[0], "BLUE") == 0)
             mix->output_channel = CM_BLUE_CHANNEL;
 
-          fscanf (fp, "%*s %s", buf[0]);
-          if (strcmp (buf[0], "TRUE") == 0)
-            mix->preview_flag = TRUE;
-          else
-            mix->preview_flag = FALSE;
-
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (mix->preview_toggle),
-                                        mix->preview_flag);
+          fscanf (fp, "%*s %s", buf[0]); /* preview flag, preserved for compatibility */
 
           fscanf (fp, "%*s %s", buf[0]);
           if (strcmp (buf[0], "TRUE") == 0)
@@ -1100,8 +960,7 @@ cm_load_file_response_callback (GtkWidget    *dialog,
                                          mix->output_channel);
           cm_set_adjusters (mix);
 
-          if (mix->preview_flag)
-            cm_preview (mix);
+          gimp_preview_invalidate (GIMP_PREVIEW (preview));
         }
       else
         {
@@ -1266,8 +1125,7 @@ cm_save_file (CmParamsType *mix,
   fprintf (fp, "# Channel Mixer Configuration File\n");
 
   fprintf (fp, "CHANNEL: %s\n", str);
-  fprintf (fp, "PREVIEW: %s\n",
-           mix->preview_flag ? "TRUE" : "FALSE");
+  fprintf (fp, "PREVIEW: %s\n", "TRUE"); /* preserved for compatibility */
   fprintf (fp, "MONOCHROME: %s\n",
            mix->monochrome_flag ? "TRUE" : "FALSE");
   fprintf (fp, "PRESERVE_LUMINOSITY: %s\n",
