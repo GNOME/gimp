@@ -1,5 +1,7 @@
 Revision history for Gimp-Perl extension.
 
+	- enable embedded pod sections in standard register arguments.
+
 1.093 Tue Jun 15 21:48:48 CEST 1999
 	- possible workaround for Gimp::Util::gimp_layer_get_position.
 	- WRAP, SMEAR and BLACK were not being exported.

@@ -10,6 +10,7 @@ make test TEST_VERBOSE=1
 
 bugs
 
+  * podestions are not expanded in dialog help strings etc..
   * Document spawn_options in Gimp::Net.
   * Selection => To Brush.
 [DONE]  * --enable-perl=/tmp/leckmich

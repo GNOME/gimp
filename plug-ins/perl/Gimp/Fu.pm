@@ -130,6 +130,26 @@ sub import {
    }
 }
 
+# expand all the pod directives in string (currently they are only removed)
+sub expand_podsections() {
+   my $pod;
+   for (@scripts) {
+      $_->[2] ||= "=pod(NAME)";
+      $_->[3] ||= "=pod(HELP)";
+      $_->[4] ||= "=pod(AUTHOR)";
+      $_->[5] ||= "=pod(AUTHOR)";
+      $_->[6] ||= "=pod(DATE)";
+
+      for (@{$_}[2,3,4,5,6]) {
+         s/=pod\(([^)]*)\)/
+            require Gimp::Pod;
+            $pod ||= new Gimp::Pod;
+            $pod->section($1) || $pod->format;
+         /eg;
+      }
+   }
+}
+
 # the old value of the trace flag
 my $old_trace;
 
@@ -641,6 +661,7 @@ sub net {
 
 sub query {
    my($type);
+   expand_podsections;
    script:
    for(@scripts) {
       my($perl_sub,$function,$blurb,$help,$author,$copyright,$date,
@@ -649,7 +670,7 @@ sub query {
       for(@$features) {
          next script unless fu_feature_present($_,$function);
       }
-      
+
       if ($menupath=~/^<Image>\//) {
          $type=&Gimp::PROC_PLUG_IN;
          unshift(@$params,@image_params);
@@ -719,22 +740,29 @@ Gimp::Fu plug-in will be found under the common C<perl_fu_>-prefix.
 
 =item blurb
 
-A small description of this script/plug-in.
+A small description of this script/plug-in. Defaults to "=pod(NAME)" (see
+the section on EMBEDDED POD DOCUMENTATION for an explanation of this
+string).
 
 =item help
 
 A help text describing this script. Should be longer and more verbose than
-C<blurb>.
+C<blurb>. Default is "=pod(HELP)".
+
+=item author
+
+The name (and also the e-mail address if possible!) of the
+script-author. Default is "=pod(AUTHOR)".
 
 =item copyright
 
 The copyright designation for this script. Important! Safe your intellectual
-rights!
+rights! The default is "=pod(AUTHOR)".
 
 =item date
 
 The "last modified" time of this script. There is no strict syntax here, but
-I recommend ISO format (yyyymmdd or yyyy-mm-dd).
+I recommend ISO format (yyyymmdd or yyyy-mm-dd). Default value is "=pod(DATE)".
 
 =item menu path
 
@@ -884,6 +912,30 @@ This represents a file system object. It usually is a file, but can be
 anything (directory, link). It might not even exist at all.
 
 =back
+
+=head2 EMBEDDED POD DOCUMENTATION
+
+The register functions expects strings (actually scalars) for
+documentation, and nobody wants to embed long parts of documentation into
+a string, cluttering the whole script.
+
+Therefore, Gimp::Fu utilizes the Gimp::Pod module to display the full text
+of the pod sections that are embedded in your scripts (see L<perlpod> for
+an explanation of the POD documentation format) when the user hits the
+"Help" button in the dialog box.
+
+Since version 1.094, you can embed specific sections or the full pod
+text into any of the blurb, help, author, copyright and date arguments
+to the register functions. Gimp::Fu will look into all these strings
+for sequences of the form "=pod(section-name)". If found, they will
+be replaced by the text of the corresponding section from the pod
+documentation. If the named section is not found (or is empty, as in
+"=pod()"), the full pod documentation is embedded.
+
+Most of the mentioned arguments have default values (see THE REGISTER
+FUNCTION) that are used when the arguments are either undefined or empty
+strings, making the register call itself much shorter and, IMHO, more
+readable.
 
 =cut
 
@@ -1107,7 +1159,7 @@ sub print_switches {
 }
 
 sub main {
-   $old_trace = Gimp::set_trace (0);#d#
+   $old_trace = Gimp::set_trace (0);
    if ($Gimp::help) {
       my $this=this_script;
       print <<EOF;
