@@ -37,14 +37,14 @@ gimp_image_get_cmap (gint32  image_ID,
   return cmap;
 }
 
-void
+gboolean
 gimp_image_set_cmap (gint32  image_ID,
 		     guchar *cmap,
 		     gint    num_colors)
 {
-  _gimp_image_set_cmap (image_ID,
-			num_colors * 3,
-			cmap);
+  return _gimp_image_set_cmap (image_ID,
+			       num_colors * 3,
+			       cmap);
 }
 
 guchar *

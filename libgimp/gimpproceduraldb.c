@@ -86,30 +86,32 @@ gimp_procedural_db_proc_info (gchar            *procedure,
   return success;
 }
 
-void
+gboolean
 gimp_procedural_db_get_data (gchar    *identifier,
 			     gpointer  data)
 {
-  gint    size;
-  guint8 *hack;
+  gint      size;
+  guint8   *hack;
+  gboolean  success;
 
-  _gimp_procedural_db_get_data (identifier,
-				&size,
-				&hack);
-
+  success = _gimp_procedural_db_get_data (identifier,
+					  &size,
+					  &hack);
   if (hack)
     {
       memcpy (data, (gpointer) hack, size * sizeof (guint8));
       g_free (hack);
     }
+  
+  return success;
 }
 
-void
+gboolean
 gimp_procedural_db_set_data (gchar    *identifier,
 			     gpointer  data,
 			     guint32   bytes)
 {
-  _gimp_procedural_db_set_data (identifier,
-				bytes,
-				data);
+  return _gimp_procedural_db_set_data (identifier,
+				       bytes,
+				       data);
 }

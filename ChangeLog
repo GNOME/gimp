@@ -1,5 +1,11 @@
 2000-08-23  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpimage.[ch]
+	* libgimp/gimpproceduraldb.[ch]: pass the return value of the
+	PDB call through the wrapper functions.
+
+2000-08-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/helpbrowser/helpbrowser.c
 	* plug-ins/ifscompose/ifscompose.c
 	* plug-ins/imagemap/imap_main.c

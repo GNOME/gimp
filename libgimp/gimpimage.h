@@ -34,17 +34,17 @@ extern "C" {
 #define gimp_image_duplicate          gimp_channel_ops_duplicate
 
 
-guchar * gimp_image_get_cmap           (gint32  image_ID,
-					gint   *num_colors);
-void     gimp_image_set_cmap           (gint32  image_ID,
-					guchar *cmap,
-					gint    num_colors);
-
-guchar * gimp_image_get_thumbnail_data (gint32  image_ID,
-					gint   *width,
-					gint   *height,
-					gint   *bpp);
-
+guchar   * gimp_image_get_cmap           (gint32  image_ID,
+					  gint   *num_colors);
+gboolean   gimp_image_set_cmap           (gint32  image_ID,
+					  guchar *cmap,
+					  gint    num_colors);
+  
+guchar   * gimp_image_get_thumbnail_data (gint32  image_ID,
+					  gint   *width,
+					  gint   *height,
+					  gint   *bpp);
+  
 
 #ifdef __cplusplus
 }

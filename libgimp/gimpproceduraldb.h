@@ -40,9 +40,9 @@ gboolean gimp_procedural_db_proc_info    (gchar            *procedure,
 					  gint             *num_values,
 					  GimpParamDef    **params,
 					  GimpParamDef    **return_vals);
-void     gimp_procedural_db_get_data     (gchar            *identifier,
+gboolean gimp_procedural_db_get_data     (gchar            *identifier,
 					  gpointer          data);
-void     gimp_procedural_db_set_data     (gchar            *identifier,
+gboolean gimp_procedural_db_set_data     (gchar            *identifier,
 					  gpointer          data,
 					  guint32           length);
 
