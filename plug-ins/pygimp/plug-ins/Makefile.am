@@ -1,8 +1,14 @@
 pluginexecdir = $(gimpplugindir)/plug-ins
 
-pluginexec_SCRIPTS = clothify.py gimpcons.py pdbbrowse.py sphere.py \
-	whirlpinch.py foggify.py shadow_bevel.py
+pluginexec_SCRIPTS = \
+	clothify.py	\
+	foggify.py	\
+	gimpcons.py	\
+	pdbbrowse.py	\
+	shadow_bevel.py	\
+	sphere.py	\
+	whirlpinch.py
 
 pluginexec_DATA = gtkcons.py
 
-EXTRA_DIST = $(pluginexec_SCRIPTS)
+EXTRA_DIST = $(pluginexec_DATA) $(pluginexec_SCRIPTS)
