@@ -1,3 +1,18 @@
+2001-12-09  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-params.[ch]
+	* app/config/gimpconfig-types.[ch]: added new param_spec 
+	GIMP_PARAM_PATH with value_type GIMP_PATH_TYPE.
+
+	* app/config/gimpconfig.[ch]: added code to store and lookup unknown 
+	tokens.
+
+	* app/config/gimpconfig-deserialize.c: improved logic, prepared for 
+	special handling of GIMP_PATH_TYPE; still work in progress...
+
+	* app/config/gimpbaseconfig.c: register temp-path and swap-path as
+	GIMP_PARAM_PATH properties.
+
 2001-12-08  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/enumgen.pl: introduced new trigraph keyword

@@ -56,6 +56,22 @@ gimp_memsize_get_type (void)
   return memsize_type;
 }
 
+GType
+gimp_path_get_type (void)
+{
+  static GType path_type = 0;
+
+  if (!path_type)
+    {
+      static const GTypeInfo type_info = { 0, };
+
+      path_type = g_type_register_static (G_TYPE_STRING, "GimpPath", 
+                                          &type_info, 0);
+    }
+  
+  return path_type;
+}
+
 static void
 memsize_to_string (const GValue *src_value,
                    GValue       *dest_value)

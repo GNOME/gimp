@@ -26,7 +26,6 @@
 #define GIMP_TYPE_PARAM_MEMSIZE           (gimp_param_memsize_get_type ())
 #define GIMP_IS_PARAM_SPEC_MEMSIZE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_SPEC_MEMSIZE))
 
-
 GType        gimp_param_memsize_get_type (void) G_GNUC_CONST;
 
 GParamSpec * gimp_param_spec_memsize     (const gchar    *name,
@@ -35,6 +34,18 @@ GParamSpec * gimp_param_spec_memsize     (const gchar    *name,
                                           guint           minimum,
                                           guint           maximum,
                                           guint           default_value,
+                                          GParamFlags     flags);
+
+
+#define GIMP_TYPE_PARAM_PATH              (gimp_param_path_get_type ())
+#define GIMP_IS_PARAM_SPEC_PATH(pspec)    (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_SPEC_PATH))
+
+GType        gimp_param_path_get_type    (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_path        (const gchar    *name,
+                                          const gchar    *nick,
+                                          const gchar    *blurb,
+                                          gchar          *default_value,
                                           GParamFlags     flags);
 
 

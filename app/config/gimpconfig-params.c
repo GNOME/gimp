@@ -29,7 +29,6 @@
 
 static void  gimp_param_memsize_class_init (GParamSpecClass *class);
 
-
 GType
 gimp_param_memsize_get_type (void)
 {
@@ -62,22 +61,73 @@ gimp_param_memsize_class_init (GParamSpecClass *class)
 }
 
 GParamSpec *
-gimp_param_spec_memsize (const gchar    *name,
-                         const gchar    *nick,
-                         const gchar    *blurb,
-                         guint           minimum,
-                         guint           maximum,
-                         guint           default_value,
-                         GParamFlags     flags)
+gimp_param_spec_memsize (const gchar *name,
+                         const gchar *nick,
+                         const gchar *blurb,
+                         guint        minimum,
+                         guint        maximum,
+                         guint        default_value,
+                         GParamFlags  flags)
 {
-  GParamSpecUInt *mspec;
+  GParamSpecUInt *pspec;
 
-  mspec = g_param_spec_internal (GIMP_TYPE_PARAM_MEMSIZE,
+  pspec = g_param_spec_internal (GIMP_TYPE_PARAM_MEMSIZE,
                                  name, nick, blurb, flags);
   
-  mspec->minimum = minimum;
-  mspec->maximum = maximum;
-  mspec->default_value = default_value;
+  pspec->minimum = minimum;
+  pspec->maximum = maximum;
+  pspec->default_value = default_value;
   
-  return G_PARAM_SPEC (mspec);
+  return G_PARAM_SPEC (pspec);
+}
+
+
+static void  gimp_param_path_class_init (GParamSpecClass *class);
+
+GType
+gimp_param_path_get_type (void)
+{
+  static GType spec_type = 0;
+
+  if (!spec_type)
+    {
+      static const GTypeInfo type_info = 
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL, 
+        (GClassInitFunc) gimp_param_path_class_init, 
+        NULL, NULL,
+        sizeof (GParamSpecString),
+        0, NULL, NULL
+      };
+
+      spec_type = g_type_register_static (G_TYPE_PARAM_STRING,
+                                          "GimpParamPath", 
+                                          &type_info, 0);
+    }
+  
+  return spec_type;
+}
+
+static void
+gimp_param_path_class_init (GParamSpecClass *class)
+{
+  class->value_type = GIMP_TYPE_PATH;
+}
+
+GParamSpec *
+gimp_param_spec_path (const gchar *name,
+                      const gchar *nick,
+                      const gchar *blurb,
+                      gchar       *default_value,
+                      GParamFlags  flags)
+{
+  GParamSpecString *pspec;
+
+  pspec = g_param_spec_internal (GIMP_TYPE_PARAM_PATH,
+                                 name, nick, blurb, flags);
+  
+  pspec->default_value = default_value;
+  
+  return G_PARAM_SPEC (pspec);
 }

@@ -24,8 +24,10 @@
 
 
 #define GIMP_TYPE_MEMSIZE (gimp_memsize_get_type ())
+#define GIMP_TYPE_PATH    (gimp_path_get_type ())
 
 GType  gimp_memsize_get_type (void) G_GNUC_CONST;
+GType  gimp_path_get_type    (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_CONFIG_TYPES_H__ */

@@ -29,26 +29,37 @@
 
 #include <glib-object.h>
 
+#include "gimpconfig.h"
 #include "gimpconfig-deserialize.h"
 #include "gimpconfig-types.h"
 
 
-static void      gimp_config_deserialize_property    (GObject    *object,
-                                                      GScanner   *scanner,
-                                                      GTokenType *token);
-
-static gboolean  gimp_config_deserialize_fundamental (GValue     *value,
-                                                      GParamSpec *prop_spec,
-                                                      GScanner   *scanner,
-                                                      GTokenType *token);
-static gboolean  gimp_config_deserialize_enum        (GValue     *value,
-                                                      GParamSpec *prop_spec,
-                                                      GScanner   *scanner,
-                                                      GTokenType *token);
-static gboolean  gimp_config_deserialize_any         (GValue     *value,
-                                                      GParamSpec *prop_spec,
-                                                      GScanner   *scanner,
-                                                      GTokenType *token);
+/*  
+ *  All functions return G_TOKEN_RIGHT_PAREN on success,
+ *  the GTokenType they would have expected but didn't get
+ *  or G_TOKEN_NONE if they got the expected token but
+ *  couldn't parse it.
+ */
+  
+static GTokenType  gimp_config_deserialize_unknown     (GObject    *object,
+                                                        GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_property    (GObject    *object,
+                                                        GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_fundamental (GValue     *value,
+                                                        GParamSpec *prop_spec,
+                                                        GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_enum        (GValue     *value,
+                                                        GParamSpec *prop_spec,
+                                                        GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_memsize     (GValue     *value,
+                                                        GParamSpec *prop_spec,
+                                                        GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_path        (GValue     *value,
+                                                        GParamSpec *prop_spec,
+                                                        GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_any         (GValue     *value,
+                                                        GParamSpec *prop_spec,
+                                                        GScanner   *scanner);
 
 
 gboolean
@@ -62,6 +73,7 @@ gimp_config_deserialize_properties (GObject  *object,
   guint          scope_id;
   guint          old_scope_id;
   GTokenType	 token;
+  GTokenType	 next;
 
   g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
 
@@ -88,8 +100,16 @@ gimp_config_deserialize_properties (GObject  *object,
   
   do
     {
-      if (g_scanner_peek_next_token (scanner) != token)
-        break;
+      next = g_scanner_peek_next_token (scanner);
+
+      /* if we expected a symbol, but got an identifier,
+         try parsing it with gimp_config_deserialize_unknown */
+
+      if (next != token &&
+         ! (token == G_TOKEN_SYMBOL && next == G_TOKEN_IDENTIFIER))
+        {
+          break;
+        }
 
       token = g_scanner_get_next_token (scanner);
       
@@ -99,8 +119,12 @@ gimp_config_deserialize_properties (GObject  *object,
           token = G_TOKEN_SYMBOL;
           break;
           
+        case G_TOKEN_IDENTIFIER:
+          token = gimp_config_deserialize_unknown (object, scanner);
+          break;
+
         case G_TOKEN_SYMBOL:
-          gimp_config_deserialize_property (object, scanner, &token);
+          token = gimp_config_deserialize_property (object, scanner);
           break;
 
         case G_TOKEN_RIGHT_PAREN:
@@ -128,13 +152,31 @@ gimp_config_deserialize_properties (GObject  *object,
   return (token == G_TOKEN_EOF);
 }
 
-static void
+static GTokenType
+gimp_config_deserialize_unknown (GObject  *object,
+                                 GScanner *scanner)
+{
+  gchar *key;
+
+  if (g_scanner_peek_next_token (scanner) != G_TOKEN_STRING)
+    return G_TOKEN_STRING;
+
+  key = g_strdup (scanner->value.v_identifier);
+
+  g_scanner_get_next_token (scanner);
+  
+  gimp_config_add_unknown_token (object, 
+                                 key, g_strdup (scanner->value.v_string));
+ 
+  return G_TOKEN_RIGHT_PAREN;
+}
+
+static GTokenType
 gimp_config_deserialize_property (GObject    *object,
-                                  GScanner   *scanner,
-                                  GTokenType *token)
+                                  GScanner   *scanner)
 {
   GParamSpec *prop_spec;
-  gboolean    success;
+  GTokenType  token;
   GValue      value = { 0, };
 
   prop_spec = G_PARAM_SPEC (scanner->value.v_symbol);  
@@ -143,63 +185,75 @@ gimp_config_deserialize_property (GObject    *object,
 
   if (G_TYPE_FUNDAMENTAL (prop_spec->value_type) == G_TYPE_ENUM)
     {
-      success = gimp_config_deserialize_enum (&value, prop_spec, 
-                                              scanner, token);
+      token = gimp_config_deserialize_enum (&value, prop_spec, scanner);
     }
   else if (G_TYPE_IS_FUNDAMENTAL (prop_spec->value_type))
     {
-      success = gimp_config_deserialize_fundamental (&value, prop_spec,
-                                                     scanner, token);
+      token = gimp_config_deserialize_fundamental (&value, prop_spec, scanner);
     }
-  else  /* not an enum and not a fundamental type */
+  else if (prop_spec->value_type == GIMP_TYPE_MEMSIZE)
     {
-      success = gimp_config_deserialize_any (&value, prop_spec, 
-                                             scanner, token);
+      token = gimp_config_deserialize_memsize (&value, prop_spec, scanner);
+    }
+  else if (prop_spec->value_type == GIMP_TYPE_PATH)
+    {
+      token = gimp_config_deserialize_path (&value, prop_spec, scanner);
+    }
+  else  /*  This fallback will only work for value_types that  */
+    {   /*  can be transformed from a string value.            */
+      token = gimp_config_deserialize_any (&value, prop_spec, scanner);
     }
 
-  if (!success)
-    g_assert_not_reached ();
+  if (token == G_TOKEN_RIGHT_PAREN)
+    g_object_set_property (object, prop_spec->name, &value);
+  else
+    g_warning ("Couldn't deserialize property %s::%s of type %s.",
+               g_type_name (G_TYPE_FROM_INSTANCE (object)),
+               prop_spec->name, 
+               g_type_name (prop_spec->value_type));
 
-  g_object_set_property (object, prop_spec->name, &value);
   g_value_unset (&value);
   
-  *token = G_TOKEN_RIGHT_PAREN;        
+  return token;
 }
 
-static gboolean
+static GTokenType
 gimp_config_deserialize_fundamental (GValue     *value,
                                      GParamSpec *prop_spec,
-                                     GScanner   *scanner,
-                                     GTokenType *token)
+                                     GScanner   *scanner)
 {
+  GTokenType token;
+
   switch (G_TYPE_FUNDAMENTAL (prop_spec->value_type))
     {
     case G_TYPE_STRING:
-      *token = G_TOKEN_STRING;
+      token = G_TOKEN_STRING;
       break;
       
     case G_TYPE_BOOLEAN:
-      *token = G_TOKEN_IDENTIFIER;
+      token = G_TOKEN_IDENTIFIER;
       break;
       
     case G_TYPE_INT:
     case G_TYPE_UINT:
     case G_TYPE_LONG:
     case G_TYPE_ULONG:
-      *token = G_TOKEN_INT;
+      token = G_TOKEN_INT;
       break;
       
     case G_TYPE_FLOAT:
     case G_TYPE_DOUBLE:
-      *token = G_TOKEN_FLOAT;
+      token = G_TOKEN_FLOAT;
       break;
       
     default:
+      token = G_TOKEN_NONE;
       g_assert_not_reached ();
+      break;
     }
 
-  if (g_scanner_peek_next_token (scanner) != *token)
-    return FALSE;
+  if (g_scanner_peek_next_token (scanner) != token)
+    return token;
 
   g_scanner_get_next_token (scanner);
 
@@ -222,7 +276,7 @@ gimp_config_deserialize_fundamental (GValue     *value,
             (scanner, 
              "expected 'yes' or 'no' for boolean property %s, got '%s'", 
              prop_spec->name, scanner->value.v_identifier);
-          return FALSE;
+          return G_TOKEN_NONE;
         }
       break;
 
@@ -246,25 +300,23 @@ gimp_config_deserialize_fundamental (GValue     *value,
       break;
       
     default:
-      g_assert_not_reached ();          
+      g_assert_not_reached ();
+      break;
     }
 
-  return TRUE;
+  return G_TOKEN_RIGHT_PAREN;
 }
 
-static gboolean
+static GTokenType
 gimp_config_deserialize_enum (GValue     *value,
                               GParamSpec *prop_spec,
-                              GScanner   *scanner,
-                              GTokenType *token)
+                              GScanner   *scanner)
 {
   GEnumClass *enum_class;
   GEnumValue *enum_value;
 
-  *token = G_TOKEN_IDENTIFIER;
-
-  if (g_scanner_peek_next_token (scanner) != *token)
-    return FALSE;
+  if (g_scanner_peek_next_token (scanner) != G_TOKEN_IDENTIFIER)
+    return G_TOKEN_IDENTIFIER;
 
   g_scanner_get_next_token (scanner);
 
@@ -280,56 +332,79 @@ gimp_config_deserialize_enum (GValue     *value,
       g_scanner_warn (scanner, 
                       "invalid value '%s' for enum property %s", 
                       scanner->value.v_identifier, prop_spec->name);
-      return FALSE;
+      return G_TOKEN_NONE;
     }
 
   g_value_set_enum (value, enum_value->value);
 
-  return TRUE;
+  return G_TOKEN_RIGHT_PAREN;
 }
 
-static gboolean
-gimp_config_deserialize_any (GValue     *value,
-                             GParamSpec *prop_spec,
-                             GScanner   *scanner,
-                             GTokenType *token)
+static GTokenType
+gimp_config_deserialize_memsize (GValue     *value,
+                                 GParamSpec *prop_spec,
+                                 GScanner   *scanner)
 {
-  gchar  *orig_cset_first = NULL;
-  gchar  *orig_cset_nth   = NULL;
-  GValue  src             = { 0, };
+  GTokenType  token;
+  gchar      *orig_cset_first = NULL;
+  gchar      *orig_cset_nth   = NULL;
 
-  if (!g_value_type_transformable (G_TYPE_STRING, prop_spec->value_type))
-    {
-      g_warning ("%s: %s can not be transformed from a string",
-                 G_STRLOC, g_type_name (prop_spec->value_type));
-      return FALSE;
-    }
-
-  *token = G_TOKEN_IDENTIFIER;
-
-  if (prop_spec->value_type == GIMP_TYPE_MEMSIZE)
-    {
-      orig_cset_first = scanner->config->cset_identifier_first;
-      orig_cset_nth   = scanner->config->cset_identifier_nth;
-      
-      scanner->config->cset_identifier_first = G_CSET_DIGITS;
-      scanner->config->cset_identifier_nth   = G_CSET_DIGITS "gGmMkKbB";
-    }
-
-  if (g_scanner_peek_next_token (scanner) != *token)
-    return FALSE;
-
-  g_scanner_get_next_token (scanner);
+  orig_cset_first = scanner->config->cset_identifier_first;
+  orig_cset_nth   = scanner->config->cset_identifier_nth;
+  
+  scanner->config->cset_identifier_first = G_CSET_DIGITS;
+  scanner->config->cset_identifier_nth   = G_CSET_DIGITS "gGmMkKbB";
+  
+  token = gimp_config_deserialize_any (value, prop_spec, scanner);
 
   if (orig_cset_first)
     scanner->config->cset_identifier_first = orig_cset_first;
   if (orig_cset_nth)
     scanner->config->cset_identifier_nth = orig_cset_nth;
+  
+  return token;
+}
+
+static GTokenType
+gimp_config_deserialize_path (GValue     *value,
+                              GParamSpec *prop_spec,
+                              GScanner   *scanner)
+{
+  if (g_scanner_peek_next_token (scanner) != G_TOKEN_STRING)
+    return G_TOKEN_STRING;
+
+  g_scanner_get_next_token (scanner);
+
+  /* FIXME: insert transform path voodoo from gimprc here */
+
+  g_value_set_string (value, scanner->value.v_string);
+
+  return G_TOKEN_RIGHT_PAREN;
+}
+
+static GTokenType
+gimp_config_deserialize_any (GValue     *value,
+                             GParamSpec *prop_spec,
+                             GScanner   *scanner)
+{
+  GValue src = { 0, };
+
+  if (!g_value_type_transformable (G_TYPE_STRING, prop_spec->value_type))
+    {
+      g_warning ("%s: %s can not be transformed from a string",
+                 G_STRLOC, g_type_name (prop_spec->value_type));
+      return G_TOKEN_NONE;
+    }
+
+  if (g_scanner_peek_next_token (scanner) != G_TOKEN_IDENTIFIER)
+    return G_TOKEN_IDENTIFIER;
+
+  g_scanner_get_next_token (scanner);
 
   g_value_init (&src, G_TYPE_STRING);
   g_value_set_string (&src, scanner->value.v_identifier);
       
   g_value_transform (&src, value);
 
-  return TRUE;
+  return G_TOKEN_RIGHT_PAREN;
 }

@@ -103,18 +103,18 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
 
   g_object_class_install_property (object_class,
                                    PROP_TEMP_PATH,
-                                   g_param_spec_string ("temp-path",
-                                                        NULL, NULL,
-                                                        NULL,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+                                   gimp_param_spec_path ("temp-path",
+                                                         NULL, NULL,
+                                                         "${gimp_dir}" G_DIR_SEPARATOR_S "tmp",
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class,
                                    PROP_SWAP_PATH,
-                                   g_param_spec_string ("swap-path",
-                                                        NULL, NULL,
-                                                        NULL,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+                                   gimp_param_spec_path ("swap-path",
+                                                         NULL, NULL,
+                                                         "${gimp_dir}",
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class,
                                    PROP_STINGY_MEMORY_USE,
                                    g_param_spec_boolean ("stingy-memory-use",

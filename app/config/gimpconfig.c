@@ -30,6 +30,8 @@
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-deserialize.h"
 
+#define GIMP_CONFIG_UNKNOWN_TOKENS "gimp-config-unknown-tokens"
+
 
 static void  gimp_config_iface_init (GimpConfigInterface  *gimp_config_iface);
 
@@ -149,6 +151,49 @@ gimp_config_deserialize (GObject     *object,
   return success;
 }
 
+void
+gimp_config_add_unknown_token (GObject *object,
+                               gchar   *key,
+                               gchar   *value)
+{
+  GHashTable *unknown_tokens;
+
+  g_return_if_fail (G_IS_OBJECT (object));
+  g_return_if_fail (key != NULL);
+  g_return_if_fail (value != NULL);
+
+  unknown_tokens = 
+    (GHashTable *) g_object_get_data (object, GIMP_CONFIG_UNKNOWN_TOKENS);
+
+  if (!unknown_tokens)
+    {
+      unknown_tokens = g_hash_table_new_full (g_str_hash, g_str_equal, 
+                                              g_free, g_free);
+      g_object_set_data_full (object, GIMP_CONFIG_UNKNOWN_TOKENS,
+                              unknown_tokens, 
+                              (GDestroyNotify) g_hash_table_destroy);
+    }
+
+  g_hash_table_replace (unknown_tokens, key, value);
+}
+
+const gchar *
+gimp_config_lookup_unknown_token (GObject     *object,
+                                  const gchar *key)
+{
+  GHashTable *unknown_tokens;
+
+  g_return_val_if_fail (G_IS_OBJECT (object), NULL);
+  g_return_val_if_fail (key != NULL, NULL);
+  
+  unknown_tokens = 
+    (GHashTable *) g_object_get_data (object, GIMP_CONFIG_UNKNOWN_TOKENS);
+  
+  if (!unknown_tokens)
+    return NULL;
+
+  return (const gchar *) g_hash_table_lookup (unknown_tokens, key);
+}
 
 /* for debugging only */
 
@@ -170,7 +215,7 @@ gimp_config_debug_notify_callback (GObject    *object,
       g_value_init (&dest, G_TYPE_STRING);      
       g_value_transform (&src, &dest);
 
-      g_print ("%s: %s -> %s\n", 
+      g_print ("%s::%s -> %s\n", 
                g_type_name (G_TYPE_FROM_INSTANCE (object)), pspec->name, 
                g_value_get_string (&dest));
 
