@@ -314,8 +314,8 @@ load_image (const gchar *filename)	/* I - File to load */
   sgip = sgiOpen ((char *) filename, SGI_READ, 0, 0, 0, 0, 0);
   if (sgip == NULL)
     {
-      g_message ("Could not open '%s' for reading.",
-                  gimp_filename_to_utf8 (filename));
+      g_message (_("Could not open '%s' for reading."),
+                 gimp_filename_to_utf8 (filename));
       return -1;
     };
 
@@ -382,15 +382,15 @@ load_image (const gchar *filename)	/* I - File to load */
    * Temporary buffers...
    */
 
-  tile_height = gimp_tile_height();
-  pixel       = g_new(guchar, tile_height * sgip->xsize * sgip->zsize);
-  pixels      = g_new(guchar *, tile_height);
+  tile_height = gimp_tile_height ();
+  pixel       = g_new (guchar, tile_height * sgip->xsize * sgip->zsize);
+  pixels      = g_new (guchar *, tile_height);
 
   for (i = 0; i < tile_height; i ++)
     pixels[i] = pixel + sgip->xsize * sgip->zsize * i;
 
-  rows    = g_new(unsigned short *, sgip->zsize);
-  rows[0] = g_new(unsigned short, sgip->xsize * sgip->zsize);
+  rows    = g_new (unsigned short *, sgip->zsize);
+  rows[0] = g_new (unsigned short, sgip->xsize * sgip->zsize);
 
   for (i = 1; i < sgip->zsize; i ++)
     rows[i] = rows[0] + i * sgip->xsize;
@@ -409,11 +409,11 @@ load_image (const gchar *filename)	/* I - File to load */
 				   0, y - count, drawable->width, count);
 	  count = 0;
 
-	  gimp_progress_update((double)y / (double)sgip->ysize);
+	  gimp_progress_update ((double) y / (double) sgip->ysize);
 	}
 
       for (i = 0; i < sgip->zsize; i ++)
-	if (sgiGetRow(sgip, rows[i], sgip->ysize - 1 - y, i) < 0)
+	if (sgiGetRow (sgip, rows[i], sgip->ysize - 1 - y, i) < 0)
 	  printf("sgiGetRow(sgip, rows[i], %d, %d) failed!\n",
 		 sgip->ysize - 1 - y, i);
 
@@ -464,7 +464,7 @@ load_image (const gchar *filename)	/* I - File to load */
   gimp_drawable_flush (drawable);
   gimp_drawable_detach (drawable);
 
-  return (image);
+  return image;
 }
 
 
@@ -543,9 +543,9 @@ save_image (const gchar *filename,
    * Allocate memory for "tile_height" rows...
    */
 
-  tile_height = gimp_tile_height();
-  pixel       = g_new(guchar, tile_height * drawable->width * zsize);
-  pixels      = g_new(guchar *, tile_height);
+  tile_height = gimp_tile_height ();
+  pixel       = g_new (guchar, tile_height * drawable->width * zsize);
+  pixels      = g_new (guchar *, tile_height);
 
   for (i = 0; i < tile_height; i ++)
     pixels[i]= pixel + drawable->width * zsize * i;

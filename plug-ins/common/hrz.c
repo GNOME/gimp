@@ -86,10 +86,9 @@ static gint   save_image  (const gchar      *filename,
 			   gint32            drawable_ID);
 
 /*
-static gint   save_dialog      (void);
-static void   save_ok_callback (GtkWidget *widget,
-				gpointer   data);
+static gboolean save_dialog (void);
 */
+
 
 #define hrzscanner_eof(s) ((s)->eof)
 #define hrzscanner_fp(s)  ((s)->fp)
@@ -401,13 +400,15 @@ static void
 saverow (FILE   *fp,
 	 guchar *data)
 {
-  gint loop = 256*3;
+  gint    loop = 256 * 3;
   guchar *walk = data;
+
   while (loop--)
     {
       *walk = (*walk >> 2);
       walk++;
     }
+
   fwrite (data, 1, 256 * 3, fp);
 }
 
@@ -417,17 +418,17 @@ save_image (const gchar *filename,
 	    gint32       image_ID,
 	    gint32       drawable_ID)
 {
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
-  GimpImageType drawable_type;
-  guchar *data;
-  guchar *d;          /* FIX */
-  guchar *rowbuf;
-  gchar *temp;
-  gint np = 3;
-  gint xres, yres;
-  gint ypos, yend;
-  FILE *fp;
+  GimpPixelRgn   pixel_rgn;
+  GimpDrawable  *drawable;
+  GimpImageType  drawable_type;
+  guchar        *data;
+  guchar        *d;          /* FIX */
+  guchar        *rowbuf;
+  gchar         *temp;
+  gint           np = 3;
+  gint           xres, yres;
+  gint           ypos, yend;
+  FILE          *fp;
 
   /* initialize */
 
@@ -441,16 +442,7 @@ save_image (const gchar *filename,
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
     {
-      /* gimp_message ("HRZ save cannot handle images with alpha channels.");  */
-      return FALSE;
-    }
-
-  /* open the file */
-  fp = fopen (filename, "wb");
-  if (fp == NULL)
-    {
-      g_message ("Could not open '%s' for writing: %s",
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_message (_("Cannot save images with alpha channel."));
       return FALSE;
     }
 
@@ -462,9 +454,19 @@ save_image (const gchar *filename,
       g_message (_("Image must be 256x240"));
       return FALSE;
     }
+
   if (drawable_type == GIMP_INDEXED_IMAGE)
     {
       g_message (_("Image must be RGB or GRAY"));
+      return FALSE;
+    }
+
+  /* open the file */
+  fp = fopen (filename, "wb");
+  if (fp == NULL)
+    {
+      g_message (_("Could not open '%s' for writing: %s"),
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
@@ -495,7 +497,7 @@ save_image (const gchar *filename,
       d += xres * np;
 
       if (!(ypos & 0x0f))
-	gimp_progress_update ((double)ypos / 240.0 );
+	gimp_progress_update ((double) ypos / 240.0);
     }
 
   /* close the file */
@@ -511,39 +513,27 @@ save_image (const gchar *filename,
 
 /*********** Save dialog ************/
 /*
-static gint
+static gboolean
 save_dialog (void)
 {
   GtkWidget *dlg;
+  gboolean   run;
 
   dlg = gimp_dialog_new (_("Save as HRZ"), "hrz",
-			 gimp_standard_help_func, "filters/hrz.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
+			 NULL, 0,
+                         gimp_standard_help_func, "filters/hrz.html",
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, save_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
 
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-		    NULL);
+  gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return psint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-save_ok_callback (GtkWidget *widget,
-		  gpointer   data)
-{
-  psint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 */

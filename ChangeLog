@@ -1,5 +1,15 @@
 2004-01-19  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/bz2.c
+	* plug-ins/common/gz.c
+	* plug-ins/common/hrz.c
+	* plug-ins/common/pnm.c
+	* plug-ins/sgi/sgi.c: marked some forgotten strings for
+	translation and use translated standard file error messages (no
+	new strings introduced), some indentation and cleanup.
+
+2004-01-19  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/bmp/bmpread.c
 	* plug-ins/common/gif.c
 	* plug-ins/common/jpeg.c

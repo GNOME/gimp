@@ -247,7 +247,8 @@ save_image (const gchar *filename,
     {
       if (!(f = fopen (filename, "w")))
         {
-          g_message ("fopen() failed: %s", g_strerror (errno));
+          g_message (_("Could not open '%s' for writing: %s"),
+                     gimp_filename_to_utf8 (filename), g_strerror (errno));
           g_free (tmpname);
           _exit(127);
         }
@@ -316,12 +317,14 @@ load_image (const gchar       *filename,
   else if (pid == 0)  /* child process */
     {
       FILE *f;
-       if (!(f = fopen (tmpname,"w")))
-         {
-           g_message ("fopen() failed: %s", g_strerror (errno));
-           g_free (tmpname);
-           _exit (127);
-         }
+
+      if (!(f = fopen (tmpname,"w")))
+        {
+          g_message (_("Could not open '%s' for writing: %s"),
+                     gimp_filename_to_utf8 (tmpname), g_strerror (errno));
+          g_free (tmpname);
+          _exit (127);
+        }
 
       /* make stdout for this child process be the temp file */
       if (-1 == dup2 (fileno (f), fileno (stdout)))

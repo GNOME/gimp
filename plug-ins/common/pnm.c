@@ -768,7 +768,7 @@ save_image (const gchar *filename,
 
   if (fd == -1)
     {
-      g_message ("Could not open '%s' for writing: %s",
+      g_message (_("Could not open '%s' for writing: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
