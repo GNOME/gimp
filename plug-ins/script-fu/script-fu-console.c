@@ -276,8 +276,7 @@ script_fu_console_interface (void)
 
   cint.cc = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), cint.cc, TRUE, TRUE, 0);
-  GTK_WIDGET_SET_FLAGS (cint.cc, GTK_CAN_DEFAULT);
-  gtk_widget_grab_default (cint.cc);
+  gtk_widget_grab_focus (cint.cc);
   gtk_widget_show (cint.cc);
 
   g_signal_connect (cint.cc, "key_press_event",
