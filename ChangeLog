@@ -1,5 +1,12 @@
 2003-11-15  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimp.def
+	* libgimpcolor/gimpcolor.def
+	* libgimpwdidgets/gimpwidgets.def: updated based on a patch from
+	Michael Schumacher.
+
+2003-11-15  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimcoreconfig.[ch]	
 	* app/plug-in/plug-in-run.c (plug_in_run): removed references to the
 	unused gamma value. If we ever implement proper gamma correction, we
