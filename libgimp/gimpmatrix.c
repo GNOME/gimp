@@ -56,16 +56,17 @@ gimp_matrix_mult (GimpMatrix m1, GimpMatrix m2)
     }
   }
   /*  put the results in m2 */
-  memcpy(&m2[0][0], &tmp[0][0], sizeof(double)*9);
+  memcpy(&m2[0][0], &tmp[0][0], sizeof(GimpMatrix));
 }
 
 void
 gimp_matrix_identity (GimpMatrix m)
 {
-  static GimpMatrix identity = {{1.0, 0.0, 0.0},
-				{0.0, 1.0, 0.0},
-				{0.0, 0.0, 1.0} };
-  memcpy(&m[0][0], &identity[0][0], sizeof(double)*9);
+  static GimpMatrix identity = { {1.0, 0.0, 0.0},
+				 {0.0, 1.0, 0.0},
+				 {0.0, 0.0, 1.0} };
+
+  memcpy(&m[0][0], &identity[0][0], sizeof(GimpMatrix));
 }
 
 void
@@ -173,9 +174,5 @@ gimp_matrix_invert (GimpMatrix m, GimpMatrix m_inv)
 void
 gimp_matrix_duplicate (GimpMatrix src, GimpMatrix target)
 {
-  int i,j;
-
-  for (i=0; i<3; i++)
-    for (j=0; j<3; j++)
-      target[i][j] = src[i][j];
+  memcpy(&target[0][0], &src[0][0], sizeof(GimpMatrix));
 }

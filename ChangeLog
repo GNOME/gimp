@@ -1,3 +1,15 @@
+Wed Feb  3 18:12:19 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* Made 1.1.2 release
+
+	* configure.in: add plugindetails
+
+	* libgimp/Makefile.am: add shared lib deps for glib/gtk
+
+	* libgimp/gimpmatrix.c: use sizeof(GimpMatrix) instead of
+	sizeof(double)*9, memcpy in gimp_matrix_duplicate instead
+	of nested for loop
+
 Thu Feb  4 00:23:26 GMT 1999 Andy Thomas <alt@picnic.demon.co.uk>
 
 	Tried again to add the plugin dir & files.

@@ -4,7 +4,7 @@ AC_INIT(gimprc.in)
 dnl Initialize automake stuff
 GIMP_MAJOR_VERSION=1
 GIMP_MINOR_VERSION=1
-GIMP_MICRO_VERSION=1
+GIMP_MICRO_VERSION=2
 GIMP_INTERFACE_AGE=0
 GIMP_BINARY_AGE=0
 GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
@@ -759,6 +759,7 @@ plug-ins/pcx/Makefile
 plug-ins/pix/Makefile
 plug-ins/pixelize/Makefile
 plug-ins/plasma/Makefile
+plug-ins/plugindetails/Makefile
 plug-ins/pnm/Makefile
 plug-ins/polar/Makefile
 plug-ins/print/Makefile

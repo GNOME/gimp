@@ -2,7 +2,16 @@
 
 gimpincludedir = $(includedir)/libgimp
 
-scriptdata =
+CPPFLAGS = \
+	-DGIMPDIR=\""$(gimpdir)"\"	\
+	@GIMP_THREAD_FLAGS@
+
+INCLUDES = \
+	-I$(top_srcdir)		\
+	-I$(top_srcdir)/intl	\
+	-I../intl		\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)
 
 EXTRA_DIST = gimpfeatures.h.in
 
@@ -77,20 +86,14 @@ gimpinclude_HEADERS = \
 	parasiteP.h
 
 libgimp_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -release $(LT_RELEASE) -lm
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
+	-release $(LT_RELEASE)
+libgimp_la_LIBADD = $(GLIB_LIBS) -lm
+
 libgimpui_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -release $(LT_RELEASE)
-
-CPPFLAGS = \
-	-DGIMPDIR=\""$(gimpdir)"\"	\
-	@GIMP_THREAD_FLAGS@
-
-INCLUDES = \
-	-I$(top_srcdir)		\
-	-I$(top_srcdir)/intl	\
-	-I../intl		\
-	$(GTK_CFLAGS)		\
-	-I$(includedir)
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
+	-release $(LT_RELEASE)
+libgimpui_la_LIBADD = $(GTK_LIBS)
 
 .PHONY: files
 
