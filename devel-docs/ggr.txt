@@ -44,11 +44,18 @@ Field      Meaning
 The left endpoint coordinate of each segment must equal the right
 endpoint coordinate of the preceding segment.
 
-Note: This is a description of the *new* gradient file format.  In
+Note 1: This is a description of the *new* gradient file format.  In
 earlier versions of GIMP a different format was used.
 
-Note: A few of the gradients that are included with Gimp are treated
-as special cases, for which shades of gray are replaced with
+Note 2: A few of the gradients at the top of the list in the Gradients
+Dialog are special ones, for which shades of gray are replaced with
 proportionate blends of the current foreground and background colors.
-There is currently no way to make this happen for a custom gradient,
-though. 
+These special gradients are not represented by .ggr files in the
+"gradients" directory, and there is currently no way to get this
+behavior for a custom gradient.
+
+Note 3: Starting with version 2.1, Gimp now has the ability to load
+gradients in SVG gradient format, if the file is placed in the user's
+personal "gradients" directory, or some other location in the
+gradients search path.
+
