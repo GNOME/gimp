@@ -203,10 +203,10 @@ usr1_handler (int signal)
 }
 
 void
-gimp_writefunc(void *file, const char *buf, size_t bytes)
+gimp_writefunc (void *file, const char *buf, size_t bytes)
 {
-  FILE *prn = (FILE *)file;
-  fwrite(buf, 1, bytes, prn);
+  FILE *prn = (FILE *) file;
+  fwrite (buf, 1, bytes, prn);
 }
 
 /*
@@ -229,18 +229,19 @@ run (gchar      *name,		/* I - Name of print program. */
   GimpDrawable	*drawable;	/* Drawable for image */
   GimpRunMode    run_mode;	/* Current run mode */
   FILE		*prn = NULL;	/* Print file/command */
-  int		 ncolors;	/* Number of colors in colormap */
+  gint		 ncolors;	/* Number of colors in colormap */
   GimpParam	 values[1];	/* Return values */
 #ifdef __EMX__
-  char		*tmpfile;	/* temp filename */
+  gchar		*tmpfile;	/* temp filename */
 #endif
   gint32         drawable_ID;   /* drawable ID */
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;    /* return value of gimp_export_image() */
-  int		ppid = getpid (), /* PID of plugin */
-		opid,		/* PID of output process */
-		cpid = 0,	/* PID of control/monitor process */
-		pipefd[2];	/* Fds of the pipe connecting all the above */
-  int		dummy;
+  gint		ppid = getpid (); /* PID of plugin */
+  gint		opid; 	        /* PID of output process */
+  gint          cpid = 0;	/* PID of control/monitor process */
+  gint          pipefd[2];	/* Fds of the pipe connecting all the above */
+  gint		dummy;
+
 #ifdef DEBUG_STARTUP
   while (SDEBUG)
     ;
@@ -250,13 +251,15 @@ run (gchar      *name,		/* I - Name of print program. */
   * Initialise libgimpprint
   */
 
-  stp_init();
+  stp_init ();
+
+  bind_textdomain_codeset ("gimp-print", "UTF-8");
 
   INIT_I18N();
 
-  vars = stp_allocate_copy(stp_default_settings());
-  stp_set_input_color_model(vars, COLOR_MODEL_RGB);
-  stp_set_output_color_model(vars, COLOR_MODEL_RGB);
+  vars = stp_allocate_copy (stp_default_settings ());
+  stp_set_input_color_model (vars, COLOR_MODEL_RGB);
+  stp_set_output_color_model (vars, COLOR_MODEL_RGB);
   /*
    * Initialize parameter data...
    */
@@ -319,7 +322,7 @@ run (gchar      *name,		/* I - Name of print program. */
 
       if (!do_print_dialog (name))
 	goto cleanup;
-      stp_copy_vars(vars, plist[plist_current].v);
+      stp_copy_vars (vars, plist[plist_current].v);
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -330,62 +333,62 @@ run (gchar      *name,		/* I - Name of print program. */
 	values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
       else
 	{
-	  stp_set_output_to(vars, param[3].data.d_string);
-	  stp_set_driver(vars, param[4].data.d_string);
-	  stp_set_ppd_file(vars, param[5].data.d_string);
-	  stp_set_output_type(vars, param[6].data.d_int32);
-	  stp_set_resolution(vars, param[7].data.d_string);
-	  stp_set_media_size(vars, param[8].data.d_string);
-	  stp_set_media_type(vars, param[9].data.d_string);
-	  stp_set_media_source(vars, param[10].data.d_string);
+	  stp_set_output_to    (vars, param[3].data.d_string);
+	  stp_set_driver       (vars, param[4].data.d_string);
+	  stp_set_ppd_file     (vars, param[5].data.d_string);
+	  stp_set_output_type  (vars, param[6].data.d_int32);
+	  stp_set_resolution   (vars, param[7].data.d_string);
+	  stp_set_media_size   (vars, param[8].data.d_string);
+	  stp_set_media_type   (vars, param[9].data.d_string);
+	  stp_set_media_source (vars, param[10].data.d_string);
 
           if (nparams > 11)
-	    stp_set_brightness(vars, param[11].data.d_float);
+	    stp_set_brightness (vars, param[11].data.d_float);
 
           if (nparams > 12)
-            stp_set_scaling(vars, param[12].data.d_float);
+            stp_set_scaling (vars, param[12].data.d_float);
 
           if (nparams > 13)
-            stp_set_orientation(vars, param[13].data.d_int32);
+            stp_set_orientation (vars, param[13].data.d_int32);
 
           if (nparams > 14)
-            stp_set_left(vars, param[14].data.d_int32);
+            stp_set_left (vars, param[14].data.d_int32);
 
           if (nparams > 15)
-            stp_set_top(vars, param[15].data.d_int32);
+            stp_set_top (vars, param[15].data.d_int32);
 
           if (nparams > 16)
-            stp_set_gamma(vars, param[16].data.d_float);
+            stp_set_gamma (vars, param[16].data.d_float);
 
           if (nparams > 17)
-	    stp_set_contrast(vars, param[17].data.d_float);
+	    stp_set_contrast (vars, param[17].data.d_float);
 
           if (nparams > 18)
-	    stp_set_cyan(vars, param[18].data.d_float);
+	    stp_set_cyan (vars, param[18].data.d_float);
 
           if (nparams > 19)
-	    stp_set_magenta(vars, param[19].data.d_float);
+	    stp_set_magenta (vars, param[19].data.d_float);
 
           if (nparams > 20)
-	    stp_set_yellow(vars, param[20].data.d_float);
+	    stp_set_yellow (vars, param[20].data.d_float);
 
           if (nparams > 21)
-            stp_set_image_type(vars, param[22].data.d_int32);
+            stp_set_image_type (vars, param[22].data.d_int32);
 
           if (nparams > 22)
-            stp_set_saturation(vars, param[23].data.d_float);
+            stp_set_saturation (vars, param[23].data.d_float);
 
           if (nparams > 23)
-            stp_set_density(vars, param[24].data.d_float);
+            stp_set_density (vars, param[24].data.d_float);
 
 	  if (nparams > 24)
-	    stp_set_ink_type(vars, param[25].data.d_string);
+	    stp_set_ink_type (vars, param[25].data.d_string);
 
 	  if (nparams > 25)
-	    stp_set_dither_algorithm(vars, param[26].data.d_string);
+	    stp_set_dither_algorithm (vars, param[26].data.d_string);
 
           if (nparams > 26)
-            stp_set_unit(vars, param[27].data.d_int32);
+            stp_set_unit (vars, param[27].data.d_int32);
 	}
 
       current_printer = stp_get_printer_by_driver (stp_get_driver(vars));
@@ -446,7 +449,8 @@ run (gchar      *name,		/* I - Name of print program. */
 	      dup2 (pipefd[0], 0);
 	      close (pipefd[0]);
 	      close (pipefd[1]);
-	      execl("/bin/sh", "/bin/sh", "-c", stp_get_output_to(vars), NULL);
+	      execl ("/bin/sh", "/bin/sh", "-c",
+                     stp_get_output_to (vars), NULL);
 	      /* NOTREACHED */
 	      exit (1);
 	    } else {
@@ -500,31 +504,32 @@ run (gchar      *name,		/* I - Name of print program. */
 
       if (prn != NULL)
 	{
-	  stp_image_t *image = Image_GimpDrawable_new(drawable);
-	  stp_set_app_gamma(vars, gimp_gamma());
-	  stp_merge_printvars(vars, stp_printer_get_printvars(current_printer));
+	  stp_image_t *image = Image_GimpDrawable_new (drawable);
+	  stp_set_app_gamma (vars, gimp_gamma ());
+	  stp_merge_printvars (vars, 
+                               stp_printer_get_printvars (current_printer));
 
 	  /*
 	   * Is the image an Indexed type?  If so we need the colormap...
 	   */
 
 	  if (gimp_image_base_type (image_ID) == GIMP_INDEXED)
-	    stp_set_cmap(vars, gimp_image_get_cmap (image_ID, &ncolors));
+	    stp_set_cmap (vars, gimp_image_get_cmap (image_ID, &ncolors));
 	  else
-	    stp_set_cmap(vars, NULL);
+	    stp_set_cmap (vars, NULL);
 
 	  /*
 	   * Finally, call the print driver to send the image to the printer
 	   * and close the output file/command...
 	   */
 
-	  stp_set_outfunc(vars, gimp_writefunc);
-	  stp_set_errfunc(vars, gimp_writefunc);
-	  stp_set_outdata(vars, prn);
-	  stp_set_errdata(vars, stderr);
-	  if (stp_printer_get_printfuncs(current_printer)->verify
+	  stp_set_outfunc (vars, gimp_writefunc);
+	  stp_set_errfunc (vars, gimp_writefunc);
+	  stp_set_outdata (vars, prn);
+	  stp_set_errdata (vars, stderr);
+	  if (stp_printer_get_printfuncs (current_printer)->verify
 	      (current_printer, vars))
-	    stp_printer_get_printfuncs(current_printer)->print
+	    stp_printer_get_printfuncs (current_printer)->print
 	      (current_printer, image, vars);
 	  else
 	    values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
@@ -538,9 +543,9 @@ run (gchar      *name,		/* I - Name of print program. */
 	  }
 #else
 	  { /* PRINT temp file */
-	    char *s;
+	    gchar *s;
 	    fclose (prn);
-	    s = g_strconcat (stp_get_output_to(vars), tmpfile, NULL);
+	    s = g_strconcat (stp_get_output_to (vars), tmpfile, NULL);
 	    if (system(s) != 0)
 	      values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	    g_free (s);
@@ -573,7 +578,7 @@ run (gchar      *name,		/* I - Name of print program. */
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image_ID);
 
-  stp_free_vars(vars);
+  stp_free_vars (vars);
 }
 
 /*
@@ -592,7 +597,7 @@ do_print_dialog (gchar *proc_name)
   /*
    * Print dialog window...
    */
-  gimp_create_main_window();
+  gimp_create_main_window ();
 
   gtk_main ();
   gdk_flush ();
@@ -606,15 +611,15 @@ do_print_dialog (gchar *proc_name)
   /*
    * Return ok/cancel...
    */
-  return (runme);
+  return runme;
 }
 
 void
-initialize_printer(gp_plist_t *printer)
+initialize_printer (gp_plist_t *printer)
 {
   printer->name[0] = '\0';
-  printer->active=0;
-  printer->v = stp_allocate_vars();
+  printer->active  = 0;
+  printer->v       = stp_allocate_vars ();
 }
 
 #define GET_MANDATORY_INTERNAL_STRING_PARAM(param)	\
@@ -779,18 +784,18 @@ add_printer(const gp_plist_t *key, int add_only)
  * 'printrc_load()' - Load the printer resource configuration file.
  */
 void
-printrc_load(void)
+printrc_load (void)
 {
-  int		i;		/* Looping var */
+  gint		i;		/* Looping var */
   FILE		*fp;		/* Printrc file */
-  char		*filename;	/* Its name */
-  char		line[1024],	/* Line in printrc file */
+  gchar		*filename;	/* Its name */
+  gchar		line[1024],	/* Line in printrc file */
 		*lineptr,	/* Pointer in line */
 		*commaptr;	/* Pointer to next comma */
   gp_plist_t	key;		/* Search key */
-  int		format = 0;	/* rc file format version */
-  int		system_printers; /* printer count before reading printrc */
-  char *	current_printer = 0; /* printer to select */
+  gint		format = 0;	/* rc file format version */
+  gint		system_printers; /* printer count before reading printrc */
+  gchar *	current_printer = 0; /* printer to select */
 
   check_plist(1);
 
@@ -1045,11 +1050,11 @@ printrc_load(void)
  * 'printrc_save()' - Save the current printer resource configuration.
  */
 void
-printrc_save(void)
+printrc_save (void)
 {
   FILE		*fp;		/* Printrc file */
-  char	       *filename;	/* Printrc filename */
-  int		i;		/* Looping var */
+  gchar	       *filename;	/* Printrc filename */
+  gint		i;		/* Looping var */
   gp_plist_t	*p;		/* Current printer */
 
  /*
@@ -1127,8 +1132,8 @@ printrc_save(void)
  */
 
 static int
-compare_printers(gp_plist_t *p1,	/* I - First printer to compare */
-                 gp_plist_t *p2)	/* I - Second printer to compare */
+compare_printers (gp_plist_t *p1,	/* I - First printer to compare */
+                  gp_plist_t *p2)	/* I - Second printer to compare */
 {
   return (strcmp(p1->name, p2->name));
 }
@@ -1144,7 +1149,7 @@ compare_printers(gp_plist_t *p1,	/* I - First printer to compare */
 extern int asprintf (char **result, const char *format, ...);
 
 static void
-get_system_printers(void)
+get_system_printers (void)
 {
   int   i;			/* Looping var */
   int	type;			/* 0 = none, 1 = lpc, 2 = lpstat */

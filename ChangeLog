@@ -1,3 +1,8 @@
+2002-05-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/print.c (run): call bind_textdomain_codeset() so
+	that we get UTF-8 encoded translations from libgimpprint.
+
 2002-05-08  Michael Natterer  <mitch@gimp.org>
 
 	Started to get rid of the gdisplays_foo() functions in
