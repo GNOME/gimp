@@ -2,8 +2,8 @@
 
 	Fix for #85202:
 
-	Updating the active tool's modifier state on GTK_ENTER_NOTIFY and
-	GTK_LEAVE_NOTIFY was a bad idea because this only works with
+	Updating the active tool's modifier state on GDK_ENTER_NOTIFY and
+	GDK_LEAVE_NOTIFY was a bad idea because this only works with
 	focus-follows-mouse.  Instead, update it during the whole time the
 	canvas can receive key events, namely from FOCUS_IN until
 	FOCUS_OUT. As an ugly side condition, click-to-focus leads to
