@@ -40,16 +40,13 @@
 
 #include "gimp-composite.h"
 #include "gimp-composite-mmx.h"
-#include "gimp-composite-x86.h"
 
-#if defined(USE_MMX)
-#if defined(ARCH_X86)
-#if __GNUC__ >= 3
-#if defined(ARCH_X86_64) || !defined(PIC)
+#ifdef COMPILE_MMX_IS_OKAY
+
+#include "gimp-composite-x86.h"
 
 #define pminub(src,dst,tmp)  "\tmovq %%" #dst ", %%" #tmp ";" "psubusb %%" #src ", %%" #tmp ";" "psubb %%" #tmp ", %%" #dst "\n"
 #define pmaxub(a,b,tmp)      "\tmovq %%" #a ", %%" #tmp ";" "psubusb %%" #b ", %%" #tmp ";" "paddb %%" #tmp ", %%" #b "\n"
-
 
 
 void
@@ -86,6 +83,7 @@ void
 gimp_composite_addition_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
+  uint64 *d = (uint64 *) op.D;
 
   asm volatile ("movq    %0,%%mm0"
                 : /* empty */
@@ -94,28 +92,8 @@ gimp_composite_addition_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 
   for (; op.n_pixels >= 2; op.n_pixels -= 2)
     {
-      asm ("  movq    %0, %%mm2\n"
-           "\tmovq    %1, %%mm3\n"
-           "\tmovq    %%mm2, %%mm4\n"
-           "\tpaddusb %%mm3, %%mm4\n"
-           "\tmovq    %%mm0, %%mm1\n"
-           "\tpandn   %%mm4, %%mm1\n"
-           "\t" pminub(mm3, mm2, mm4) "\n"
-           "\tpand    %%mm0, %%mm2\n"
-           "\tpor     %%mm2, %%mm1\n"
-           "\tmovq    %%mm1, %2\n"
-           : /* empty */
-           : "m" (*op.A), "m" (*op.B), "m" (*op.D)
-           : "0", "1", "2", "%mm0", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
-      op.A += 8;
-      op.B += 8;
-      op.D += 8;
-    }
-
-  if (op.n_pixels)
-    {
-      asm volatile ("  movd    %0, %%mm2\n"
-                    "\tmovd    %1, %%mm3\n"
+      asm volatile ("  movq    %1, %%mm2\n"
+                    "\tmovq    %2, %%mm3\n"
                     "\tmovq    %%mm2, %%mm4\n"
                     "\tpaddusb %%mm3, %%mm4\n"
                     "\tmovq    %%mm0, %%mm1\n"
@@ -123,10 +101,31 @@ gimp_composite_addition_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
                     "\t" pminub(mm3, mm2, mm4) "\n"
                     "\tpand    %%mm0, %%mm2\n"
                     "\tpor     %%mm2, %%mm1\n"
-                    "\tmovd    %%mm1, %2\n"
-                    : /* empty */
-                    : "m" (*op.A), "m" (*op.B), "m" (*op.D)
-                    : "0", "1", "2", "%mm0", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
+                    "\tmovq    %%mm1, %0\n"
+                    : "=m" (*d)
+                    : "m" (*op.A), "m" (*op.B)
+                    : "%mm0", "%mm1", "%mm2", "%mm3", "%mm4");
+      op.A += 8;
+      op.B += 8;
+      /*op.D += 8;*/
+      d++;
+    }
+
+  if (op.n_pixels)
+    {
+      asm volatile ("  movd    %1, %%mm2\n"
+                    "\tmovd    %2, %%mm3\n"
+                    "\tmovq    %%mm2, %%mm4\n"
+                    "\tpaddusb %%mm3, %%mm4\n"
+                    "\tmovq    %%mm0, %%mm1\n"
+                    "\tpandn   %%mm4, %%mm1\n"
+                    "\t" pminub(mm3, mm2, mm4) "\n"
+                    "\tpand    %%mm0, %%mm2\n"
+                    "\tpor     %%mm2, %%mm1\n"
+                    "\tmovd    %%mm1, %0\n"
+                    : "=m" (*d)
+                    : "m" (*op.A), "m" (*op.B)
+                    : "%mm0", "%mm1", "%mm2", "%mm3", "%mm4");
     }
 
   asm("emms");
@@ -2212,15 +2211,12 @@ xxxgimp_composite_valueonly_va8_va8_va8_mmx (GimpCompositeContext *_op)
 }
 #endif
 
-#endif /* ARCH_X86_64 || !PIC */
-#endif /* __GNUC__ > 3 */
-#endif /* ARCH_X86 */
-#endif  /* USE_MMX */
+#endif /* COMPILE_IS_OKAY */
 
 gboolean
 gimp_composite_mmx_init (void)
 {
-#if defined(USE_MMX) && defined(ARCH_X86) && (defined(ARCH_X86_64) || !defined(PIC))
+#ifdef COMPILE_MMX_IS_OKAY
   if (cpu_accel () & CPU_ACCEL_X86_MMX)
     {
       return (TRUE);

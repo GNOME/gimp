@@ -4,7 +4,6 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  *
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -41,12 +40,10 @@
 
 #include "gimp-composite.h"
 #include "gimp-composite-sse.h"
-#include "gimp-composite-x86.h"
 
-#if defined(USE_SSE)
-#if defined(ARCH_X86)
-#if __GNUC__ >= 3
-#if defined(ARCH_X86_64) || !defined(PIC)
+#ifdef COMPILE_SSE_IS_OKAY
+
+#include "gimp-composite-x86.h"
 
 #define pminub(src,dst,tmp)  "pminub " "%%" #src ", %%" #dst
 #define pmaxub(src,dst,tmp)  "pmaxub " "%%" #src ", %%" #dst
@@ -2279,15 +2276,12 @@ xxxgimp_composite_valueonly_va8_va8_va8_sse (GimpCompositeContext *_op)
 }
 #endif
 
-#endif /* ARCH_X86_64 || !PIC */
-#endif /* __GNUC__ > 3 */
-#endif /* ARCH_X86 */
-#endif /* USE_SSE */
+#endif /* COMPILE_SSE_IS_OKAY */
 
 gboolean
 gimp_composite_sse_init (void)
 {
-#if defined(USE_SSE) && defined(ARCH_X86) && (defined(ARCH_X86_64) || !defined(PIC))
+#ifdef COMPILE_SSE_IS_OKAY
   guint32 cpu = cpu_accel ();
 
   if (cpu & CPU_ACCEL_X86_SSE || cpu & CPU_ACCEL_X86_MMXEXT)

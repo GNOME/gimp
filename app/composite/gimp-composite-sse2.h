@@ -9,6 +9,19 @@ extern gboolean gimp_composite_sse2_init (void);
  */
 extern gboolean gimp_composite_sse2_install (void);
 
+#if !defined(__INTEL_COMPILER)
+#if defined(USE_SSE)
+#if defined(ARCH_X86)
+#if __GNUC__ >= 3
+#if defined(ARCH_X86_64) || !defined(PIC)
+#define COMPILE_SSE2_OKAY (1)
+#endif		/* defined(ARCH_X86_64) || !defined(PIC) */
+#endif		/* __GNUC__ >= 3*/
+#endif		/* defined(ARCH_X86) */
+#endif		/* defined(USE_SSE) */
+#endif		/* !defined(__INTEL_COMPILER) */
+
+#ifdef COMPILE_SSE2_OKAY
 extern void gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *ctx);
 extern void gimp_composite_darken_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *ctx);
 extern void gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *ctx);
@@ -17,4 +30,5 @@ extern void gimp_composite_lighten_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext 
 extern void gimp_composite_subtract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *ctx);
 extern void gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *ctx);
 extern void gimp_composite_dodge_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *ctx);
+#endif
 #endif

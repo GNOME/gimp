@@ -9,9 +9,19 @@ extern gboolean gimp_composite_sse_init (void);
  */
 extern gboolean gimp_composite_sse_install (void);
 
-#ifdef USE_MMX
-#ifdef ARCH_X86
+#if !defined(__INTEL_COMPILER)
+#if defined(USE_SSE)
+#if defined(ARCH_X86)
 #if __GNUC__ >= 3
+#if defined(ARCH_X86_64) || !defined(PIC)
+#define COMPILE_SSE_IS_OKAY
+#endif		/* defined(ARCH_X86_64) || !defined(PIC) */
+#endif		/* __GNUC__ >= 3 */
+#endif		/*  */
+#endif		/*  */
+#endif		/*  */
+
+#ifdef COMPILE_SSE_IS_OKAY
 /*
  *
  */
@@ -39,7 +49,5 @@ extern void gimp_composite_swap_rgba8_rgba8_rgba8_sse (GimpCompositeContext *ctx
 extern void gimp_composite_valueonly_rgba8_rgba8_rgba8_sse (GimpCompositeContext *ctx);
 extern void gimp_composite_scale_rgba8_rgba8_rgba8_sse (GimpCompositeContext *ctx);
 
-#endif /* __GNUC__ > 3 */
-#endif /* ARCH_X86 */
-#endif /* USE_MMX */
+#endif /* COMPILE_SSE_IS_OKAY */
 #endif

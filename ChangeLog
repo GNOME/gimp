@@ -1,3 +1,23 @@
+2004-07-16  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-mmx.[ch]
+	* app/composite/gimp-composite-sse.[ch]
+	* app/composite/gimp-composite-sse2.[ch]:
+	
+	We've had trouble compiling with the Intel compiler which
+	identifies itself as GCC, but doesn't support the same extended
+	assembly features/misfeatures as GCC.  With the help of the Intel
+	compiler group, we've determined that the Intel compiler can be
+	identified at compile time by the definition of the preprocessor
+	variable __INTEL_COMPILER.
+
+	These changes make all of the assembly code currently written to
+	simply avoid the Intel compiler.
+
+	This is an interim solution to get a build working despite the
+	Intel compiler.  A more correct solution has been identified, see
+	the discussion of bug #147013 for more information.
+
 2004-07-17  Sven Neumann  <sven@gimp.org>
 
 	* app/xcf/xcf.c (xcf_init): also register the internal XCF
