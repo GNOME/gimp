@@ -14,11 +14,12 @@ register	"layer_apply",
 		[
                  [PF_TEXT,	"expr",	"the perl expression to run for each layer",
                                 '$d->gauss_rle($P*100,1,1)'],
+                 [PF_DRAWABLE,	"drawable2", "an optional extra drawable for use by the code"],
 		],
                 [],
                 ['gimp-1.1'],
 	sub {
-		my($image,$_drawable,$function) = @_;
+		my($image,$_drawable,$function,$d2) = @_;
 
                 my($d,$i,$I,$n,$p,$P);
 
@@ -62,7 +63,7 @@ The image.
 
 =item $d ("drawable")
 
-The current drawable (currently always a layer)
+The current drawable (currently always a layer).
 
 =item $i, $I ("index")
 
@@ -81,5 +82,33 @@ C<$i/($n-1)> and $P is equivalent to C<$I/($n-1)>.
 
 The number of layers in the image.
 
+=item $d2 ("drawable")
+
+The drawable2 argument, entirely optional and can be used for anthing you
+like.
+
 =back
+
+=head2 EXAMPLES
+
+The following expression will gradually fade out an animation.
+
+ $d->brightness_contrast ($P * 127, 0);
+
+This little script can be used to merge two animations, $d2 should
+point to another animation with the same number of frames (only the
+image is of concern). It does it by copying each frame of the other
+animation onto the corresponding frame in the current animation and using
+DARKEN_MODE to combine the frames. You might want to use other modes or
+maybe C<$f->set_opacity(50)> for your animation.
+
+ $d2=$d2->image;
+ $l2=($i2->get_layers)[$i];
+
+ $i2->selection_all;
+ $l2->edit_copy;
+ $f=$d->edit_paste(0);
+ $f->set_mode(DARKEN_ONLY_MODE);
+ $f->anchor;
+
 
