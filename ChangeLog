@@ -1,5 +1,9 @@
 2002-12-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/perl/Gimp.pm: merged fix for #84884 from stable branch.
+
+2002-12-17  Sven Neumann  <sven@gimp.org>
+
 	* app/main.c: merged fix for #71409 from stable branch.
 
 	* plug-ins/common/jpeg.c: merged fix for #75398 from stable branch.

@@ -651,7 +651,11 @@ bad a decision I believe...
 =head2 IMPORT TAGS
 
 If you don't specify any import tags, Gimp assumes C<qw/:consts main xlfd_size/>
-which is usually what you want.
+which may not be what you want. You may want to add :auto as in the following
+example:
+
+    use Gimp qw(:consts main xlfd_size :auto);
+
 
 =over 4
 
