@@ -1,5 +1,9 @@
 2004-09-04  DindinX  <david@dindinx.org>
 
+	* plug-ins/common/sel_gauss.c: ported to GimpDrawablePreview.
+
+2004-09-04  DindinX  <david@dindinx.org>
+
 	* plug-ins/common/sharpen.c: ported to GimpDrawablePreview.
 
 2004-09-03  Sven Neumann  <sven@gimp.org>
