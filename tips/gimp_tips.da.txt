@@ -1,0 +1,305 @@
+#                            Welcome to the GIMP !
+#      
+#Nearly all image operations are performed by right-clicking
+#on the image.  And don't worry, you can undo most mistakes...    
+
+                   Velkommen til Gimp'en!
+
+Næsten alle billedoperationer foregår ved at højreklikke på billedet.
+Og vær ikke nervøs, du kan fortryde de fleste fejltagelser...
+
+#You can get context-sensitive help for most of the GIMP's features by
+#pressing the F1 key at any time.  This also works inside the menus.
+
+Du kan få kontekstsensitiv hjælp til de fleste af Gimp'ens faciliteter
+ved at trykke på F1-tasten på hvilket som helst tidspunkt. Det virker
+også inden i menuer.
+
+#The GIMP uses layers to let you organize your image.  Think of them
+#as a stack of slides or filters, such that looking through them you
+#see a composite of their contents.
+
+Gimp'en bruger lag til at lade dig organisere dit billede. Tænk på dem
+som en stabel lysbilleder eller filtre sådan så at når du kigger
+gennem dem, ser du en bestemt sammensætning af deres indhold.
+
+#You can perform many layer operations by right-clicking on the text
+#label of a layer in the "Layers, Channels and Paths" dialog
+
+Du kan udføre mange lagoperationer ved at højreklikke på
+tekstetiketten til et lag i "Lag, kanaler og baner"-vinduet.
+
+#When you save an image to work on it again later, try using XCF,
+#the GIMP's native file format (use the file extension ".xcf").
+#This preserves the layers and every aspect of your work-in-progress.
+#Once a project is completed, you can save it as JPEG, PNG, GIF, ...
+
+Når du gemmer et billede for at arbejde på det senere, så prøv at
+bruge XCF som er Gimp'ens eget filformat (brug filendelsen ".xcf").
+Dette bevarer lagene og alle andre aspekter af dit igangværende
+arbejde. Når et projekt er færdigt, kan du gemme det som JPEG, PNG,
+GIF, ...
+
+#The layer named "Background" is special because it lacks transparency.
+#This prevents you from adding a layer mask or moving the layer up in
+#the stack.  You may add transparency to it by right-clicking in the
+#"Layers, Channels and Paths" dialog and selecting "Add Alpha Channel".
+
+Laget ved navn "Baggrund" er specielt fordi det mangler
+gennemsigtighed. Dette forhindrer dig i at tilføje en lagmaske eller
+hæve laget. Du kan tilføje gennemsigtighed til det ved at højreklikke
+i "Lag, kanaler og bener"-vinduet og vælge "Tilføj alfakanal".
+
+#Most plug-ins work on the current layer of the current image.  In
+#some cases, you will have to merge all layers (Layers->Flatten Image)
+#if you want the plug-in to work on the whole image.
+
+De fleste udvidelsesmoduler arbejder på det aktive lag eller det
+aktive billede. I nogle tilfælde bliver du nødt til at slå alle lagene
+sammen (Lag->Fladgør billede) hvis du vil have modulet til at virke på
+hele billedet.
+
+#Not all effects can be applied to all kinds of images.  This is
+#indicated by a grayed-out menu-entry.  You may need to change
+#the image mode to RGB (Image->Mode->RGB), add an alpha-channel
+#(Layers->Add Alpha Channel) or flatten it (Layers->Flatten Image).
+
+Ikke alle effekter kan bruges på alle typer billeder. Dette bliver
+indikeret ved et gråtonet menupunkt. Du får måske bruge for at ændre
+billedtilstanden til RGB (Billede->Tilstand->RGB), tilføje en
+alfakanal (Lag->Tilføj alfakanal) eller fladgøre det (Lag->Fladgør
+billede).
+
+#You can drag and drop many things in the GIMP.  For example, dragging
+#a color from the toolbox or from a color palette and dropping it into
+#an image will fill the current image or selection with that color.
+
+Du kan trække og slippe mange ting i Gimp'en. Hvis du f.eks. trækker
+en farve fra værktøjskassen eller fra en farvepalet og slipper det i
+et billede, vil billedet eller det markerede bliver fyldt ud med den
+farve.
+
+#When using a drawing tool (Paintbrush, Airbrush, or Pencil),
+#Shift-click will draw a straight line from your last drawing
+#point to your current cursor position.  If you also press Ctrl,
+#the line will be constrained to 15 degree angles.
+
+Ved brug af et tegneværktøj (malerpensel, sprøjtepensel eller blyant)
+vil et klik med skift-tasten holdt nede tegne en ret linje fra det
+sidste tegnepunkt til den nuværende markørposition. Hvis du også
+trykker på Ctrl, tvinges linjen til at følge 15 graders vinkler.
+
+#The file selection dialog box has command-line completion with
+#Tab, just like the shell.  Type part of a filename, hit tab, and voila!
+#It's completed.
+
+Filvælgervinduet har kommandolinjefuldførelse med tabulatortasten,
+ligesom en kommandoskal. Indtast en del af et filnavn, tryk på
+tabulator, og vupti! Navnet bliver fuldført.
+
+#You can reassign shortcut keys on any menu by bringing up the menu,
+#selecting a menu item, and pressing the new shortcut key combination.
+#This is dynamic and is saved when you exit GIMP.
+
+Du kan omtildele genvejstaster i enhver menu ved at få menuen frem,
+vælge menupunkter og trykke den nye genvejstastekombination ned. Dette
+virker dynamisk og bliver gemt når du afslutter Gimp'en.
+
+#You can use the middle mouse button to pan around
+#the image, if it's larger than its display window.
+
+Du kan bruge den midterste museknap til at flytte rundt i
+vinduet hvis det er større end dets fremvisningsvindue.
+
+#Click and drag on a ruler to place a Guide on an image.  All
+#dragged selections will snap to the guides.  You can remove
+#guides by dragging them off the image with the Move tool.
+
+Klik og træk på en lineal for at placere en hjælpelinje i billedet.
+Alle trukkede markeringer vil følge hjælpelinjerne. Du kan fjerne dem
+igen ved at trække dem af billedet med flytteværktøjet.
+
+#You can drag a layer from the "Layers, Channels and Paths" dialog
+#and drop it onto the toolbox.  This will create a new image
+#containing only that layer.
+
+Du kan trække et lag fra "Lag, kanaler og baner"-vinduet og slippe det
+i værktøjskassen. Dette opretter et nyt billede som kun indeholder det lag.
+
+#A Floating Selection must be anchored to a new layer or to the last
+#active layer before doing other operations on the image.  Click on the
+#New Layer or Anchor Layer buttons in the "Layers, Channels and Paths"
+#dialog, or use the menus to do the same.
+
+En flydende markering skal forankres til et nyt lag eller det sidste
+aktive lag før der kan foretages andre operationer på billedet. Klik
+på Nyt lag- eller Forankr lag-knapperne i "Lag, kanaler og
+baner"-vinduet eller brug menuerne til at gøre det samme.
+
+#The GIMP supports gzip compression on the fly.  Just add
+#".gz" (or ".bz2", if you have bzip2 installed) to the filename
+#and your image will be saved compressed.  Of course loading
+#compressed images works too.
+
+Gimp'en understøtter automatisk gzip-komprimering. Tilføj blot ".gz"
+(eller ".bz2" hvis du har bzip2 installeret) til filnavnet, og
+billedet vil blive gemt komprimeret. Åbning af komprimerede billeder
+virker selvfølgelig også.
+
+#Pressing and holding the Shift key before making a selection allows
+#you to add to the current selection instead of replacing it.  Using
+#Ctrl before making a selection subtracts from the current one.
+
+Hvis du holder skifte-tasten nede før du markerer noget, kan du
+tilføje til den aktuelle markering i stedet for at erstattet den. Brug
+af Ctrl før markering trækker fra markeringen.
+
+#You can press or release the Shift and Ctrl keys while you are
+#making a selection in order to constrain it to a perfect square
+#or circle, or to have it centered on its starting point.
+
+Du kan holde skifte- eller Ctrl-tasterne ned mens du foretager en
+markering før at begrænse den til en perfekt cirkel eller et kvadrat,
+eller til at få den centreret ved startpunktet.
+
+#Using Edit->Stroke allows you to draw simple squares or circles by
+#painting the edge of your current selection with the active brush.
+#More complex shapes can be drawn with Filters->Render->Gfig.
+
+Brug af Rediger->Bestryg lader dig tegne simple firkanter eller
+cirkler ved at male kanten af den aktuelle markering med den aktive
+pensel. Mere komplekse figurer kan tegnes med
+Filtre->Generér->Figurer.
+
+#If you stroke a path (Edit->Stroke), the current drawing tool and its
+#settings are used.  You can use the Paintbrush in gradient mode, the
+#Clone tool with a pattern or even the Eraser or the Smudge tool.
+
+Hvis du bestryger en bane (Redigér->Bestryg bliver det aktive
+tegneværktøj og dets indstillinger brugt. Du kan bruge malerpenslen i
+farveovergangstilstand, kloningsværktøjet med et mønster eller endda
+viskelæderet eller udtværingsværktøjet.
+
+#You can create and edit complex selections using the Bezier tool.
+#The "Paths" tab in the "Layers, Channels and Paths" dialog allows
+#you to work on multiple paths and to convert them to selections.
+
+Du kan oprette og redigere komplekse markeringer med Bezier-værktøjet.
+"Baner"-fanebladet i "Lag, kanaler og baner"-vinduet lader dig arbejde
+på flere baner og så konvertere dem til markeringer.
+
+#You can use the paint tools to change the selection.  Click on the
+#Quick Mask button at the bottom left of an image window.  Change your
+#selection by painting in the image and click on the button again to
+#convert it back to a normal selection.
+
+Du kan bruge tegneværktøjerne til at ændre det markerede. Klik på
+Hurtig maske-knappen for neden til venstre i et billedvindue. Ændr det
+markerede ved at tegne i billedet og klikke på knappen igen for at
+konvertere det tilbage til en normal markering.
+
+#You can save a selection to a channel (Select->Save to Channel) and
+#then modify this channel with any paint tools.  Using the buttons in
+#the "Channels" tab of the "Layers, Channels and Paths" dialog, you can
+#toggle the visibility of this new channel or convert it to a selection.
+
+Du kan gemme en markering som en kanel (Markering->Gem som kanal) og
+så ændre denne kanal med maleværktøjerne. Ved hjælp af kanpperne i
+"Kanaler"-fanebladet i "Lag, kanaler og baner"-vinduet kan du slå
+synligheden af denne nye kanal til eller fra eller konvertere den til
+en markering.
+
+#If your screen is too cluttered, you can press Tab multiple times
+#in an image window to hide or show the toolbox and other dialogs.
+
+Hvis din skærm er for tæt pakket med vinduer kan du trykke på
+tabulator flere gange i et billedvindue for at skjule eller vise
+værktøjskassen eller andre vinduer.
+
+#You can adjust the selection range for fuzzy select
+#by clicking and dragging left and right.
+
+Du kan tilpasse markeringsintervallet for udflydende markering
+ved at klikke og trække til højre eller venstre.
+
+#Shift-click on the eye icon in the Layers dialog to hide all
+#layers but that one.  Shift-click again to show all layers.
+
+Hold skifte-tasten nede og klik på øjeikonet i lagvinduet for at
+skjule alle lag pånær dette. Et klik igen viser alle lag.
+
+#Ctrl-click on the layer mask's preview in the Layers dialog 
+#toggles the effect of the layer mask.
+
+Hold Ctrl nede og klik på lagmaskens miniature i lagvinduet
+for at slå effekten af lagmasken til og fra.
+
+#Alt-click on the layer mask's preview in the Layers dialog 
+#toggles viewing the mask directly.
+
+Hold Ctrl nede og klik på lagmaskens miniature i lagvinduet
+for at vise masken direkte.
+
+#You can use Alt-Tab to cycle through all layers in an image 
+#(if your window manager doesn't trap those keys...).
+
+Du kan bruge Alt + tabulator til at gå gennem alle lagene i et billede
+(hvis din vindueshåndtering ikke bruger den kombination...).
+
+#Ctrl-click with the Bucket Fill tool to have it use 
+#the background color instead of the foreground color.
+
+Et klik med spandudfyldningsværktøjet og Ctrl holdt nede for det til
+at bruge baggrundsfarven i stedet for forgrundsfarven.
+
+#Control-drag with the Transform tool in rotation mode 
+#will constrain the rotation to 15 degree angles.
+
+Træk med Ctrl med transformeringsværktøjet i rotationstilstand vil
+begrænse rotationen til 15 graders vinkler.
+
+#You can adjust and re-place a selection by using Alt-drag.
+
+Du kan tilpasse og flytte en markering med træk med Alt holdt nede.
+
+#If your fonts turn out blocky, that's because they're not scalable 
+#fonts. Most X servers support scalable Type 1 Postscript fonts.  
+#Download and install them.  Some font servers allow you to use 
+#TrueType (.ttf) fonts, which are also scalable.
+
+Hvis dine skrifttyper ser kornede ud skyldes det at de ikke er
+skalérbare. De fleste X-servere understøtter skalérbare Type 1
+Postscript-skrifttyper. Hent og installér dem. Nogle skrifttypeservere
+lader dig bruge TrueType-skrifttyper (.ttf) som også er skalérbare.
+
+#To create a perfect circle, hold Shift while doing an ellipse select. To
+#place a circle precisely, drag horizontal and vertical guides tangent to
+#the circle you want to select, place your cursor at the intersection
+#of the guides, and the resulting selection will just touch the guides.
+
+For at lave en perfekt cirkel skal du holde skifte-tasten nede mens du
+foretager en ellipsemarkering. Cirklen kan placeres præcist hvis du
+trækker vandrette og lodrette hjælpelinjer så de tangerer cirklen du
+ønsker at markere, og placerer markøren ved skæringspunktet mellem
+linjerne. Så vil den resulterende markering lige præcis røre
+hjælpelinjerne.
+
+#If some of your scanned photos do not look colorful enough, you can
+#easily improve their tonal range with the "Auto" button in the Levels
+#tool (Image->Colors->Levels).  If there are any color casts, you can
+#correct them with the Curves tool (Image->Colors->Curves).
+
+Hvis nogle af din indskannede foto ikke ser farverige nok ud,
+kan du let forbedre deres farvetoneinterval med "Auto"-knappen
+i niveauværktøjet (Billede->Farver->Niveauer). Hvis der er
+farveudblødninger, kan du rette dem med kurveværktøjet
+(Billede->Farver->Kurver).
+
+# En sidste tilføjet for egen regning.
+
+Gimp'en er et omfattende program, og det har været et stort arbejde at
+foretage og tilrette den danske oversættelse af teksterne i
+programmet. Derfor kan der også sagtens være smuttet nogle fejl eller
+misforståelser eller andre uhensigtsmæssigheder med; hvis du støder på
+nogen, så lad være med at blive irriteret i det skjulte, men send et
+brev til dansk@klid.dk.
