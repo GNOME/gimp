@@ -1464,9 +1464,11 @@ file_pref_cmd_callback (GtkWidget *widget,
     gimp_option_menu_new (file_prefs_preview_size_callback,
 			  (gpointer) preview_size,
 			  _("None"),   (gpointer)   0, (gpointer)   0,
+			  _("Tiny"),   (gpointer)  24, (gpointer)  24,
 			  _("Small"),  (gpointer)  32, (gpointer)  32,
-			  _("Medium"), (gpointer)  64, (gpointer)  64,
-			  _("Large"),  (gpointer) 128, (gpointer) 128,
+			  _("Medium"), (gpointer)  48, (gpointer)  48,
+			  _("Large"),  (gpointer)  64, (gpointer)  64,
+			  _("Huge"),   (gpointer) 128, (gpointer) 128,
 			  NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
 			     _("Preview Size:"), 1.0, 0.5, optionmenu, TRUE);

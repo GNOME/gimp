@@ -140,23 +140,43 @@
 #  Uncomment this line to disable them.
 # (no-cursor-updating)
 
-# Layer preview sizes:
+# Layer preview sizes (also used for the Undo History):
 #  none:    no previews in layers dialog/layer selector
+#  tiny:    24x24
 #  small:   32x32
-#  medium:  64x64
-#  large:   128x128
-#  #:       #x#
+#  medium:  48x48
+#  large:   64x64
+#  huge:   128x128
+#  #:        #x#
 (preview-size small)
+
+# Navigation window preview sizes:
+#  small:   48x48
+#  medium:  80x80
+#  large:  112x112
+#  #:        #x#
+(nav-preview-size large)
+
 
 # Tooltips
 #  Comment this out to disable the tooltips in the toolbox
 # (dont-show-tool-tips)
+
+# Help System
+#  Comment this out to disable context-sensitive help with F1 key
+# (dont-use-help)
 
 # Controlling ruler visibility
 #  The default behavior is for rulers to be ON.
 #  This can also be toggled with the View->Toggle Rulers command
 #  or shift+control+r
 # (dont-show-rulers)
+
+# Controlling statusbar visibility
+#  The default behavior is to show the statusbar.
+#  This can also be toggled with the View->Toggle Statusbar command
+#  or shift+control+s
+# (dont-show-statusbar)
 
 # Default units
 #  This is the default unit of a new image. It will appear in the
@@ -179,12 +199,6 @@
 #  The default is 72.0 dpi in both x and y direction
 (default-xresolution 72.0)
 (default-yresolution 72.0)
-
-# Controlling statusbar visibility
-#  The default behavior is to show the statusbar.
-#  This can also be toggled with the View->Toggle Statusbar command
-#  or shift+control+s
-# (dont-show-statusbar)
 
 # Disable auto saving
 #  Auto saving is not yet implemented! Nothing will be auto-saved, no matter

@@ -127,7 +127,7 @@ int       default_threshold = 15;
 int       stingy_memory_use = 0;
 int       allow_resize_windows = 0;
 int       no_cursor_updating = 0;
-int       preview_size = 64;
+int       preview_size = 32;
 int       nav_preview_size = 112;
 int       show_rulers = TRUE;
 int       show_statusbar = TRUE;
@@ -1229,11 +1229,15 @@ parse_preview_size (gpointer val1p,
     {
       if (strcmp (token_sym, "none") == 0)
 	preview_size = 0;
+      else if (strcmp (token_sym, "tiny") == 0)
+	preview_size = 24;
       else if (strcmp (token_sym, "small") == 0)
 	preview_size = 32;
       else if (strcmp (token_sym, "medium") == 0)
-	preview_size = 64;
+	preview_size = 48;
       else if (strcmp (token_sym, "large") == 0)
+	preview_size = 64;
+      else if (strcmp (token_sym, "huge") == 0)
 	preview_size = 128;
       else
 	preview_size = 0;

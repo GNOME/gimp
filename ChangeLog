@@ -1,3 +1,11 @@
+Sat Oct  9 15:34:12 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* gimprc.5.in
+	* gimprc.in
+	* app/gimprc.c
+	* app/preferences_dialog.c: changed the preview_size settings to be
+	a bit more finegrained.
+
 Fri Oct  8 18:29:56 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/common/film.c: applied gimp-kirchgessner-991009-0, allow

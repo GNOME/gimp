@@ -54,7 +54,7 @@ by lisp-like assignments of the form:
 .TP
 where:
 .TP 10
-.I propery-name
+.I property-name
 is one of the property names described below.
 .TP
 .I value
@@ -112,8 +112,9 @@ green, blue and grey (respectively) in the color cube.
 .TP
 .I PREVIEWSIZE
 One of
-.BR none ", " small ", " medium ", or " large ", "
-or an INT.  small is 32x32, medium is 64x64, and large is 128x128.
+.BR none ", "tiny ", " small ", " medium ", "large " or " huge ", "
+or an INT.  tiny is 24x24, small is 32x32, medium is 48x48, 
+large is 64x64 and huge is 128x128.
 .TP
 .I UNIT
 One of
