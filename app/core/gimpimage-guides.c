@@ -231,7 +231,7 @@ gimp_image_snap_x (GimpImage *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (tx != NULL, FALSE);
 
-  *tx = x;
+  *tx = ROUND (x);
 
   if (x < 0 || x >= gimage->width)
     return FALSE;
@@ -273,7 +273,7 @@ gimp_image_snap_y (GimpImage *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (ty != NULL, FALSE);
 
-  *ty = y;
+  *ty = ROUND (y);
 
   if (y < 0 || y >= gimage->height)
     return FALSE;
@@ -318,8 +318,8 @@ gimp_image_snap_point (GimpImage *gimage,
   g_return_val_if_fail (tx != NULL, FALSE);
   g_return_val_if_fail (ty != NULL, FALSE);
 
-  *tx = x;
-  *ty = y;
+  *tx = ROUND (x);
+  *ty = ROUND (y);
 
   if (x < 0 || x >= gimage->width ||
       y < 0 || y >= gimage->height)
@@ -386,28 +386,39 @@ gimp_image_snap_rectangle (GimpImage *gimage,
   g_return_val_if_fail (tx1 != NULL, FALSE);
   g_return_val_if_fail (ty1 != NULL, FALSE);
 
-  *tx1 = x1;
-  *ty1 = y1;
+  *tx1 = ROUND (x1);
+  *ty1 = ROUND (y1);
 
   snap1 = gimp_image_snap_x (gimage, x1, &nx1);
   snap2 = gimp_image_snap_x (gimage, x2, &nx2);
   snap3 = gimp_image_snap_y (gimage, y1, &ny1);
   snap4 = gimp_image_snap_y (gimage, y2, &ny2);
 
-  if (snap1 || snap2 || snap3 || snap4)
+  if (snap1 && snap2)
     {
-      if (x1 != nx1)
-	*tx1 = nx1;
-      else if (x2 != nx2)
-	*tx1 = x1 + (nx2 - x2);
-  
-      if (y1 != ny1)
-	*ty1 = ny1;
-      else if (y2 != ny2)
-	*ty1 = y1 + (ny2 - y2);
-
-      return TRUE;
+      if (ABS (x1 - nx1) > ABS (x2 - nx2))
+        snap1 = FALSE;
+      else
+        snap2 = FALSE;
     }
 
-  return FALSE;
+  if (snap1)
+    *tx1 = nx1;
+  else if (snap2)
+    *tx1 = ROUND (x1 + (nx2 - x2));
+  
+  if (snap3 && snap4)
+    {
+      if (ABS (y1 - ny1) > ABS (y2 - ny2))
+        snap3 = FALSE;
+      else
+        snap4 = FALSE;
+    }
+
+  if (snap3)
+    *ty1 = ny1;
+  else if (snap4)
+    *ty1 = ROUND (y1 + (ny2 - y2));
+
+  return (snap1 || snap2 || snap3 || snap4);
 }

@@ -1,5 +1,15 @@
 2003-05-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-guides.c (gimp_image_snap_rectangle): snap
+	correctly to the bottom and right sides of the rectangle. Also
+	snap to the closer guide if we snap twice on one axis.
+	Fixes bug #113233.
+
+	All snapping functions: use ROUND() instead of truncating the
+	double coords.
+
+2003-05-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	(gimp_display_shell_canvas_tool_events): update the cursor on
 	GDK_ENTER_NOTIFY.
