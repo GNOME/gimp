@@ -1,3 +1,9 @@
+2004-11-27  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/jpeg.c: delay the creation of the display for
+	the export image preview until the user requests a preview. Fixes
+	bug #159376.
+
 2004-11-27  Øyvind Kolås  <pippin@gimp.org>
 
 	* libgimp/gimpexport.c: minor layout adjustments for HIG compliance.

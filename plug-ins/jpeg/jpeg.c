@@ -196,13 +196,15 @@
 #define DEFAULT_THUMBNAIL   FALSE
 
 /* sg - these should not be global... */
-static gint32 volatile  image_ID_global       = -1;
-static gint32           orig_image_ID_global  = -1;
-static gint32           drawable_ID_global    = -1;
-static gint32           layer_ID_global       = -1;
-static GtkWidget       *preview_size          = NULL;
-static GimpDrawable    *drawable_global       = NULL;
-static gboolean         undo_touched          = FALSE;
+static  gint32 volatile  image_ID_global       = -1;
+static  gint32           orig_image_ID_global  = -1;
+static  gint32           drawable_ID_global    = -1;
+static  gint32           layer_ID_global       = -1;
+static  GtkWidget       *preview_size          = NULL;
+static  GimpDrawable    *drawable_global       = NULL;
+static  gboolean         undo_touched          = FALSE;
+static  gint32           display_ID            = 0;
+
 
 typedef struct
 {
@@ -428,7 +430,6 @@ run (const gchar      *name,
   gint32             image_ID;
   gint32             drawable_ID;
   gint32             orig_image_ID;
-  gint32             display_ID = -1;
   GimpParasite      *parasite;
   gboolean           err;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -520,8 +521,7 @@ run (const gchar      *name,
                     g_free (tmp);
                   }
 
-                display_ID = gimp_display_new (image_ID);
-                gimp_displays_flush ();
+                display_ID = -1;
               }
               break;
             case GIMP_EXPORT_IGNORE:
@@ -732,7 +732,7 @@ run (const gchar      *name,
           /* If the image was exported, delete the new display. */
           /* This also deletes the image.                       */
 
-          if (display_ID > -1)
+          if (display_ID != -1)
             gimp_display_delete (display_ID);
           else
             gimp_image_delete (image_ID);
@@ -1798,11 +1798,13 @@ make_preview (void)
                   drawable_ID_global,
                   orig_image_ID_global,
                   TRUE);
+
+      if (display_ID == -1)
+        display_ID = gimp_display_new (image_ID_global);
     }
   else
     {
       gtk_label_set_text (GTK_LABEL (preview_size), _("File size: unknown"));
-
       gimp_displays_flush ();
     }
 
