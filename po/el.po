@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.3\n"
-"POT-Creation-Date: 2001-12-04 11:52-0500\n"
+"POT-Creation-Date: 2002-02-03 20:05-0800\n"
 "PO-Revision-Date: 2001-12-30 14:13+0000\n"
 "Last-Translator: Bill Giannakopoulos <BillG@hellug.gr>\n"
 "Language-Team: Greek <nls@hellug.gr>\n"
@@ -132,7 +132,18 @@ msgstr "Τερματισμός"
 
 #
 #. the cancel button
-#: app/app_procs.c:780 app/brightness_contrast.c:230 app/channel_ops.c:99 app/channels_dialog.c:2541 app/channels_dialog.c:2704 app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517 app/curves.c:573 app/file_new_dialog.c:212 app/file_new_dialog.c:362 app/gdisplay_ops.c:310 app/gimphelp.c:197 app/gimpprogress.c:120 app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4944 app/gradient.c:5505 app/hue_saturation.c:383 app/interface.c:1047 app/layers_dialog.c:3563 app/layers_dialog.c:3747 app/layers_dialog.c:3842 app/layers_dialog.c:4103 app/levels.c:350 app/palette.c:1825 app/posterize.c:212 app/preferences_dialog.c:1485 app/qmask.c:282 app/resize.c:225 app/resize.c:1398 app/resolution_calibrate.c:116 app/threshold.c:285 app/user_install.c:597
+#: app/app_procs.c:780 app/brightness_contrast.c:230 app/channel_ops.c:99
+#: app/channels_dialog.c:2541 app/channels_dialog.c:2704
+#: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
+#: app/curves.c:573 app/file_new_dialog.c:212 app/file_new_dialog.c:362
+#: app/gdisplay_ops.c:310 app/gimphelp.c:201 app/gimpprogress.c:120
+#: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4944
+#: app/gradient.c:5505 app/hue_saturation.c:383 app/interface.c:1047
+#: app/layers_dialog.c:3563 app/layers_dialog.c:3747 app/layers_dialog.c:3842
+#: app/layers_dialog.c:4103 app/levels.c:350 app/palette.c:1825
+#: app/posterize.c:212 app/preferences_dialog.c:1485 app/qmask.c:282
+#: app/resize.c:225 app/resize.c:1398 app/resolution_calibrate.c:116
+#: app/threshold.c:285 app/user_install.c:597
 msgid "Cancel"
 msgstr "Άκυρο"
 
@@ -276,7 +287,8 @@ msgstr "Γίνεται ανάμειξη..."
 msgid "Blend: "
 msgstr "Ανάμειξη: "
 
-#: app/brightness_contrast.c:132 app/brightness_contrast.c:221 app/tools.c:1054
+#: app/brightness_contrast.c:132 app/brightness_contrast.c:221
+#: app/tools.c:1054
 msgid "Brightness-Contrast"
 msgstr "Φωτεινότητα-Αντίθεση"
 
@@ -285,11 +297,23 @@ msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "Η Φωτεινότητα-Αντίθεση δε διεξάγεται σε εικόνες καταλόγου χρωμάτων."
 
 #
-#: app/brightness_contrast.c:226 app/channel_ops.c:97 app/channels_dialog.c:2539 app/channels_dialog.c:2702 app/color_balance.c:282 app/color_notebook.c:125 app/convert.c:515 app/curves.c:569 app/file_new_dialog.c:212 app/file_new_dialog.c:358 app/gimpui.c:127 app/hue_saturation.c:379 app/layers_dialog.c:3561 app/layers_dialog.c:3745 app/layers_dialog.c:3840 app/layers_dialog.c:4101 app/levels.c:346 app/module_db.c:315 app/posterize.c:208 app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219 app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
+#: app/brightness_contrast.c:226 app/channel_ops.c:97
+#: app/channels_dialog.c:2539 app/channels_dialog.c:2702
+#: app/color_balance.c:282 app/color_notebook.c:125 app/convert.c:515
+#: app/curves.c:569 app/file_new_dialog.c:212 app/file_new_dialog.c:358
+#: app/gimpui.c:127 app/hue_saturation.c:379 app/layers_dialog.c:3561
+#: app/layers_dialog.c:3745 app/layers_dialog.c:3840 app/layers_dialog.c:4101
+#: app/levels.c:346 app/module_db.c:315 app/posterize.c:208
+#: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
+#: app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
 msgid "OK"
 msgstr "Εντάξει"
 
-#: app/brightness_contrast.c:228 app/by_color_select.c:727 app/color_balance.c:284 app/curves.c:571 app/file_new_dialog.c:360 app/hue_saturation.c:381 app/levels.c:348 app/posterize.c:210 app/resize.c:222 app/threshold.c:283 app/tools.c:1547 app/transform_core.c:411 modules/colorsel_water.c:634
+#: app/brightness_contrast.c:228 app/by_color_select.c:727
+#: app/color_balance.c:284 app/curves.c:571 app/file_new_dialog.c:360
+#: app/hue_saturation.c:381 app/levels.c:348 app/posterize.c:210
+#: app/resize.c:222 app/threshold.c:283 app/tools.c:1547
+#: app/transform_core.c:411 modules/colorsel_water.c:634
 msgid "Reset"
 msgstr "Επαναφορά"
 
@@ -305,7 +329,9 @@ msgstr "Αντίθεση:"
 
 #
 #. The preview toggle
-#: app/brightness_contrast.c:312 app/color_balance.c:452 app/curves.c:693 app/fileops.c:421 app/hue_saturation.c:571 app/levels.c:579 app/palette.c:3229 app/posterize.c:249 app/threshold.c:358
+#: app/brightness_contrast.c:312 app/color_balance.c:452 app/curves.c:693
+#: app/fileops.c:421 app/hue_saturation.c:571 app/levels.c:579
+#: app/palette.c:3229 app/posterize.c:249 app/threshold.c:358
 msgid "Preview"
 msgstr "Προεπισκόπηση"
 
@@ -315,7 +341,15 @@ msgstr "Επεξεργαστής Πινέλου"
 
 #
 #. The close button
-#: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:729 app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173 app/crop.c:1073 app/devices.c:760 app/docindex.c:721 app/errorconsole.c:284 app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161 app/histogram_tool.c:294 app/info_window.c:261 app/lc_dialog.c:217 app/measure.c:333 app/nav_window.c:1426 app/palette.c:2058 app/palette.c:2074 app/palette.c:3111 app/palette_select.c:72 app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163 app/tools.c:1549 app/undo_history.c:759
+#: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:729
+#: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
+#: app/crop.c:1073 app/devices.c:760 app/docindex.c:721 app/errorconsole.c:284
+#: app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161
+#: app/histogram_tool.c:294 app/info_window.c:261 app/lc_dialog.c:217
+#: app/measure.c:333 app/nav_window.c:1426 app/palette.c:2058
+#: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:72
+#: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
+#: app/tools.c:1549 app/undo_history.c:759
 msgid "Close"
 msgstr "Κλείσιμο"
 
@@ -342,7 +376,8 @@ msgid "Brush Selection"
 msgstr "Επιλογή Πινέλου"
 
 #
-#: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:355 app/palette.c:2056 app/pattern_select.c:176
+#: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:355
+#: app/palette.c:2056 app/pattern_select.c:176
 msgid "Refresh"
 msgstr "Ανανέωση"
 
@@ -360,17 +395,21 @@ msgid "Mode:"
 msgstr "Κατάσταση:"
 
 #
-#: app/brush_select.c:473 app/palette.c:1171 app/palette.c:2226 modules/colorsel_water.c:629
+#: app/brush_select.c:473 app/palette.c:1171 app/palette.c:2226
+#: modules/colorsel_water.c:629
 msgid "New"
 msgstr "Νέο"
 
 #
-#: app/brush_select.c:479 app/colormap_dialog.i.c:139 app/gradient_select.c:159 app/palette.c:1178 app/palette.c:2072 app/palette_select.c:70
+#: app/brush_select.c:479 app/colormap_dialog.i.c:139
+#: app/gradient_select.c:159 app/palette.c:1178 app/palette.c:2072
+#: app/palette_select.c:70
 msgid "Edit"
 msgstr "Επεξεργασία"
 
 #
-#: app/brush_select.c:485 app/global_edit.c:790 app/gradient.c:1884 app/palette.c:1188 app/palette.c:1825 app/palette.c:2237
+#: app/brush_select.c:485 app/global_edit.c:790 app/gradient.c:1884
+#: app/palette.c:1188 app/palette.c:1825 app/palette.c:2237
 msgid "Delete"
 msgstr "Διαγραφή"
 
@@ -493,7 +532,9 @@ msgstr "Μετατόπιση"
 msgid "Offset X:"
 msgstr "Μετατόπιση Χ:"
 
-#: app/channel_ops.c:121 app/crop.c:1082 app/file_new_dialog.c:535 app/resize.c:374 app/resize.c:466 app/resize.c:604 app/rotate_tool.c:111 app/scale_tool.c:108 app/shear_tool.c:90 app/user_install.c:1443
+#: app/channel_ops.c:121 app/crop.c:1082 app/file_new_dialog.c:535
+#: app/resize.c:374 app/resize.c:466 app/resize.c:604 app/rotate_tool.c:111
+#: app/scale_tool.c:108 app/shear_tool.c:90 app/user_install.c:1443
 msgid "Y:"
 msgstr "Υ:"
 
@@ -503,7 +544,8 @@ msgid "Wrap Around"
 msgstr "Περιτύλιγμα"
 
 #
-#: app/channel_ops.c:180 app/image_new.c:82 app/image_new.c:296 app/layers_dialog.c:3665
+#: app/channel_ops.c:180 app/image_new.c:82 app/image_new.c:296
+#: app/layers_dialog.c:3665
 msgid "Background"
 msgstr "Φόντο"
 
@@ -548,15 +590,18 @@ msgstr "Διαγραφή Καναλιού"
 msgid "Empty Channel Copy"
 msgstr "Άδειασμα Αντιγράφου Καναλιού"
 
-#: app/channels_dialog.c:1440 app/color_balance.c:354 app/color_select.c:254 app/curves.c:594 app/histogram_tool.c:322 app/levels.c:379
+#: app/channels_dialog.c:1440 app/color_balance.c:354 app/color_select.c:254
+#: app/curves.c:594 app/histogram_tool.c:322 app/levels.c:379
 msgid "Red"
 msgstr "Κόκκινο"
 
-#: app/channels_dialog.c:1444 app/color_balance.c:379 app/color_select.c:255 app/curves.c:595 app/histogram_tool.c:323 app/levels.c:380
+#: app/channels_dialog.c:1444 app/color_balance.c:379 app/color_select.c:255
+#: app/curves.c:595 app/histogram_tool.c:323 app/levels.c:380
 msgid "Green"
 msgstr "Πράσινο"
 
-#: app/channels_dialog.c:1448 app/color_balance.c:404 app/color_select.c:256 app/curves.c:596 app/histogram_tool.c:324 app/levels.c:381
+#: app/channels_dialog.c:1448 app/color_balance.c:404 app/color_select.c:256
+#: app/curves.c:596 app/histogram_tool.c:324 app/levels.c:381
 msgid "Blue"
 msgstr "Μπλε"
 
@@ -707,7 +752,8 @@ msgstr "Μπλε:"
 msgid "Alpha:"
 msgstr "Άλφα:"
 
-#: app/color_picker.c:265 app/color_picker.c:280 app/color_select.c:445 app/colormap_dialog.i.c:278
+#: app/color_picker.c:265 app/color_picker.c:280 app/color_select.c:445
+#: app/colormap_dialog.i.c:278
 msgid "Hex Triplet:"
 msgstr "Τριάδα σε Δεκαεξ. Μορφή:"
 
@@ -723,7 +769,13 @@ msgstr "Τριάδα σε Δεκαεξ. Μορφή"
 msgid "Intensity:"
 msgstr "Ένταση:"
 
-#: app/color_picker.c:639 app/color_picker.c:640 app/color_picker.c:641 app/color_picker.c:642 app/color_picker.c:643 app/color_picker.c:644 app/color_picker.c:645 app/color_picker.c:657 app/color_picker.c:664 app/color_picker.c:682 app/color_picker.c:697 app/info_window.c:191 app/info_window.c:197 app/info_window.c:203 app/info_window.c:209 app/info_window.c:428 app/info_window.c:429 app/info_window.c:430 app/info_window.c:431 app/info_window.c:453
+#: app/color_picker.c:639 app/color_picker.c:640 app/color_picker.c:641
+#: app/color_picker.c:642 app/color_picker.c:643 app/color_picker.c:644
+#: app/color_picker.c:645 app/color_picker.c:657 app/color_picker.c:664
+#: app/color_picker.c:682 app/color_picker.c:697 app/info_window.c:191
+#: app/info_window.c:197 app/info_window.c:203 app/info_window.c:209
+#: app/info_window.c:428 app/info_window.c:429 app/info_window.c:430
+#: app/info_window.c:431 app/info_window.c:453
 msgid "N/A"
 msgstr "Μ/Ε"
 
@@ -752,17 +804,21 @@ msgid "B"
 msgstr "B"
 
 #
-#: app/color_select.c:251 app/layers_dialog.c:391 app/paint_funcs.c:99 app/tool_options.c:934
+#: app/color_select.c:251 app/layers_dialog.c:391 app/paint_funcs.c:99
+#: app/tool_options.c:934
 msgid "Hue"
 msgstr "Απόχρωση"
 
 #
-#: app/color_select.c:252 app/layers_dialog.c:392 app/paint_funcs.c:100 app/tool_options.c:935
+#: app/color_select.c:252 app/layers_dialog.c:392 app/paint_funcs.c:100
+#: app/tool_options.c:935
 msgid "Saturation"
 msgstr "Κορεσμός"
 
 #
-#: app/color_select.c:253 app/curves.c:593 app/histogram_tool.c:321 app/layers_dialog.c:394 app/levels.c:378 app/paint_funcs.c:102 app/tool_options.c:937
+#: app/color_select.c:253 app/curves.c:593 app/histogram_tool.c:321
+#: app/layers_dialog.c:394 app/levels.c:378 app/paint_funcs.c:102
+#: app/tool_options.c:937
 msgid "Value"
 msgstr "Τιμή"
 
@@ -966,11 +1022,14 @@ msgid "Origin X:"
 msgstr "Προέλευση Χ:"
 
 #. the pixel size labels
-#: app/crop.c:1095 app/file_new_dialog.c:394 app/file_new_dialog.c:412 app/tool_options.c:353
+#: app/crop.c:1095 app/file_new_dialog.c:394 app/file_new_dialog.c:412
+#: app/tool_options.c:353
 msgid "Width:"
 msgstr "Πλάτος:"
 
-#: app/crop.c:1098 app/file_new_dialog.c:400 app/file_new_dialog.c:418 app/layers_dialog.c:3605 app/resize.c:284 app/resize.c:309 app/resize.c:541 app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
+#: app/crop.c:1098 app/file_new_dialog.c:400 app/file_new_dialog.c:418
+#: app/layers_dialog.c:3605 app/resize.c:284 app/resize.c:309 app/resize.c:541
+#: app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
 msgid "Height:"
 msgstr "Ύψος:"
 
@@ -1020,7 +1079,8 @@ msgid "Load"
 msgstr "Φόρτωση"
 
 #
-#: app/curves.c:718 app/devices.c:758 app/levels.c:617 app/palette.c:2054 app/preferences_dialog.c:384 app/preferences_dialog.c:1483
+#: app/curves.c:718 app/devices.c:758 app/levels.c:617 app/palette.c:2054
+#: app/preferences_dialog.c:384 app/preferences_dialog.c:1483
 msgid "Save"
 msgstr "Αποθήκευση"
 
@@ -1039,7 +1099,8 @@ msgstr "Αποθήκευση Καμπύλων"
 msgid "Load/Save Curves"
 msgstr "Φόρτωση/Αποθήκευση Καμπύλων"
 
-#: app/curves.c:1668 app/curves.c:1686 app/levels.c:1477 app/levels.c:1495 app/paths_dialog.c:1908
+#: app/curves.c:1668 app/curves.c:1686 app/levels.c:1477 app/levels.c:1495
+#: app/paths_dialog.c:1908
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Αδύνατο το άνοιγμα αρχείου: %s"
@@ -1052,7 +1113,8 @@ msgstr ""
 msgid "Device Status"
 msgstr "Κατάσταση Συσκευής"
 
-#: app/disp_callbacks.c:845 app/global_edit.c:306 app/global_edit.c:312 app/global_edit.c:395
+#: app/disp_callbacks.c:845 app/global_edit.c:306 app/global_edit.c:312
+#: app/global_edit.c:395
 msgid "Pasted Layer"
 msgstr "Επικολλημένο Στρώμα"
 
@@ -1210,7 +1272,8 @@ msgid "New Image"
 msgstr "Νέα Εικόνα"
 
 #
-#: app/file_new_dialog.c:458 app/preferences_dialog.c:1556 app/preferences_dialog.c:1593 app/user_install.c:1430
+#: app/file_new_dialog.c:458 app/preferences_dialog.c:1556
+#: app/preferences_dialog.c:1593 app/user_install.c:1430
 msgid "Pixels"
 msgstr "Εικονοστοιχεία"
 
@@ -1433,11 +1496,13 @@ msgstr ""
 msgid "Flip Tool"
 msgstr "Εργαλείο Αναστροφής"
 
-#: app/flip_tool.c:96 app/preferences_dialog.c:1607 app/preferences_dialog.c:2401
+#: app/flip_tool.c:96 app/preferences_dialog.c:1607
+#: app/preferences_dialog.c:2401
 msgid "Horizontal"
 msgstr "Οριζόντια"
 
-#: app/flip_tool.c:98 app/preferences_dialog.c:1609 app/preferences_dialog.c:2403
+#: app/flip_tool.c:98 app/preferences_dialog.c:1609
+#: app/preferences_dialog.c:2403
 msgid "Vertical"
 msgstr "Κατακόρυφο"
 
@@ -1590,18 +1655,18 @@ msgstr "χωρίς όνομα"
 msgid "Layer type %d not supported."
 msgstr ""
 
-#: app/gimphelp.c:191
+#: app/gimphelp.c:195
 msgid "Could not find GIMP Help Browser"
 msgstr "Αδύνατη η εύρεση του Εξερευνητή Βοήθειας του GIMP"
 
-#: app/gimphelp.c:193
+#: app/gimphelp.c:197
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
 "you don't have GtkXmHTML installed."
 msgstr ""
 
-#: app/gimphelp.c:196
+#: app/gimphelp.c:200
 msgid "Use Netscape instead"
 msgstr "Χρήση Netscape αντίθετα"
 
@@ -1670,7 +1735,8 @@ msgstr ""
 msgid "Channel cannot be lowered any further"
 msgstr ""
 
-#: app/gimpimage.c:3478 app/palette.c:358 app/palette.c:936 app/palette.c:1072 app/palette.c:2014 app/palette.c:2740 app/palette.c:2872
+#: app/gimpimage.c:3478 app/palette.c:358 app/palette.c:936 app/palette.c:1072
+#: app/palette.c:2014 app/palette.c:2740 app/palette.c:2872
 msgid "Untitled"
 msgstr "Ανώνυμο"
 
@@ -1862,12 +1928,14 @@ msgstr ""
 msgid "Gradient Editor"
 msgstr "Επεξεργαστής Διαβαθμίσεων"
 
-#: app/gradient.c:941 app/gradient_select.c:215 app/paintbrush.c:270 app/palette.c:3167
+#: app/gradient.c:941 app/gradient_select.c:215 app/paintbrush.c:270
+#: app/palette.c:3167
 msgid "Gradient"
 msgstr "Διαβάθμιση"
 
 #
-#: app/gradient.c:942 app/gradient_select.c:216 app/palette.c:2198 app/palette_select.c:95
+#: app/gradient.c:942 app/gradient_select.c:216 app/palette.c:2198
+#: app/palette_select.c:95
 msgid "Name"
 msgstr "Όνομα"
 
@@ -2265,7 +2333,8 @@ msgid ""
 "using the default resolution instead."
 msgstr ""
 
-#: app/image_new.c:71 app/info_window.c:71 app/info_window.c:540 app/preferences_dialog.c:1654
+#: app/image_new.c:71 app/info_window.c:71 app/info_window.c:540
+#: app/preferences_dialog.c:1654
 msgid "Grayscale"
 msgstr "Αποχρώσεις του γκρι"
 
@@ -2327,7 +2396,8 @@ msgid ""
 msgstr ""
 
 #
-#: app/info_dialog.c:189 app/preferences_dialog.c:1814 app/preferences_dialog.c:1920
+#: app/info_dialog.c:189 app/preferences_dialog.c:1814
+#: app/preferences_dialog.c:1920
 msgid "General"
 msgstr "Γενικά"
 
@@ -2481,7 +2551,8 @@ msgid "Channel Ops"
 msgstr ""
 
 #
-#: app/internal_procs.c:80 app/layers_dialog.c:393 app/paint_funcs.c:101 app/tool_options.c:821 app/tool_options.c:936
+#: app/internal_procs.c:80 app/layers_dialog.c:393 app/paint_funcs.c:101
+#: app/tool_options.c:821 app/tool_options.c:936
 msgid "Color"
 msgstr "Χρώμα"
 
@@ -2542,7 +2613,8 @@ msgstr "Εικόνα"
 msgid "Layer"
 msgstr "Στρώμα"
 
-#: app/internal_procs.c:122 app/preferences_dialog.c:1804 app/preferences_dialog.c:1806
+#: app/internal_procs.c:122 app/preferences_dialog.c:1804
+#: app/preferences_dialog.c:1806
 msgid "Interface"
 msgstr "Διεπαφή"
 
@@ -2550,7 +2622,8 @@ msgstr "Διεπαφή"
 msgid "Miscellaneous"
 msgstr "Διάφορα"
 
-#: app/internal_procs.c:128 app/palette.c:2184 app/palette.c:2196 app/palette_select.c:93
+#: app/internal_procs.c:128 app/palette.c:2184 app/palette.c:2196
+#: app/palette_select.c:93
 msgid "Palette"
 msgstr "Παλέττα"
 
@@ -4584,15 +4657,18 @@ msgstr "Μόνο μαύρο"
 msgid "Transparency Type:"
 msgstr "Είδος διαφάνειας"
 
-#: app/preferences_dialog.c:1750 app/preferences_dialog.c:1842 app/preferences_dialog.c:1856
+#: app/preferences_dialog.c:1750 app/preferences_dialog.c:1842
+#: app/preferences_dialog.c:1856
 msgid "Small"
 msgstr "Μικρό"
 
-#: app/preferences_dialog.c:1751 app/preferences_dialog.c:1843 app/preferences_dialog.c:1857
+#: app/preferences_dialog.c:1751 app/preferences_dialog.c:1843
+#: app/preferences_dialog.c:1857
 msgid "Medium"
 msgstr "Μεσαίο"
 
-#: app/preferences_dialog.c:1752 app/preferences_dialog.c:1844 app/preferences_dialog.c:1858
+#: app/preferences_dialog.c:1752 app/preferences_dialog.c:1844
+#: app/preferences_dialog.c:1858
 msgid "Large"
 msgstr "Μεγάλο"
 
@@ -4802,7 +4878,8 @@ msgstr "Μόνο γκρι"
 msgid "Cursor Mode:"
 msgstr "Πηγαίος κώδικας C"
 
-#: app/preferences_dialog.c:2116 app/preferences_dialog.c:2118 app/tools.c:1541
+#: app/preferences_dialog.c:2116 app/preferences_dialog.c:2118
+#: app/tools.c:1541
 #, fuzzy
 msgid "Tool Options"
 msgstr "Επιλογές Εργαλειοθήκης"
@@ -5668,7 +5745,8 @@ msgstr "Κλείσιμο συστήματος ή επανεκκίνηση του"
 
 #
 #. the transform type radio buttons
-#: app/tools.c:405 app/tools.c:433 app/tools.c:461 app/tools.c:489 app/transform_core.c:257 app/transform_tool.c:216
+#: app/tools.c:405 app/tools.c:433 app/tools.c:461 app/tools.c:489
+#: app/transform_core.c:257 app/transform_tool.c:216
 #, fuzzy
 msgid "Transform"
 msgstr "Μεταφορά"
@@ -5929,7 +6007,8 @@ msgstr ""
 msgid "View image histogram"
 msgstr "Εμφάνιση καταλόγου"
 
-#: app/tools_cmds.c:2145 app/tools_cmds.c:2417 app/tools_cmds.c:2543 app/tools_cmds.c:2694 app/tools_cmds.c:2975 app/transform_core.c:365
+#: app/tools_cmds.c:2145 app/tools_cmds.c:2417 app/tools_cmds.c:2543
+#: app/tools_cmds.c:2694 app/tools_cmds.c:2975 app/transform_core.c:365
 msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
@@ -6520,10 +6599,10 @@ msgstr ""
 "προαιρετικό ενσωματωμένο ρολόι.\n"
 "\n"
 "Αυτό το πρόγραμμα είναι ελεύθερο λογισμικό (free software); μπορείτε να το "
-"αναδιανείμετε ή/και τροποποιήσετε σύμφωνα με τις συνθήκες της δημόσιας άδειας "
-"χρήσης της GNU (GNU General Public License), όπως εκδόθηκε από το Free "
-"Software Foundation (Ίδρυμα Ελεύθερου Λογισμικού), είτε την έκδοση 2 της "
-"άδειας, ή (κατά την προτίμησή σας) οποιαδήποτε μεταγενέστερη έκδοση."
+"αναδιανείμετε ή/και τροποποιήσετε σύμφωνα με τις συνθήκες της δημόσιας "
+"άδειας χρήσης της GNU (GNU General Public License), όπως εκδόθηκε από το "
+"Free Software Foundation (Ίδρυμα Ελεύθερου Λογισμικού), είτε την έκδοση 2 "
+"της άδειας, ή (κατά την προτίμησή σας) οποιαδήποτε μεταγενέστερη έκδοση."
 
 #: app/user_install.c:753
 msgid ""
@@ -6782,4 +6861,3 @@ msgstr "Χρώμα βάσης"
 #, fuzzy
 msgid "Color History"
 msgstr "Επιλογέας χρώματος"
-

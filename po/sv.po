@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
-"POT-Creation-Date: 2001-11-22 13:31+0100\n"
+"POT-Creation-Date: 2002-02-03 20:05-0800\n"
 "PO-Revision-Date: 2001-11-22 13:37+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -132,7 +132,7 @@ msgstr "Avsluta"
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:573 app/file_new_dialog.c:212 app/file_new_dialog.c:362
-#: app/gdisplay_ops.c:310 app/gimphelp.c:197 app/gimpprogress.c:120
+#: app/gdisplay_ops.c:310 app/gimphelp.c:201 app/gimpprogress.c:120
 #: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4944
 #: app/gradient.c:5505 app/hue_saturation.c:383 app/interface.c:1047
 #: app/layers_dialog.c:3563 app/layers_dialog.c:3747 app/layers_dialog.c:3842
@@ -1608,11 +1608,11 @@ msgstr "namnlös"
 msgid "Layer type %d not supported."
 msgstr "Lagertyp %d stöds inte."
 
-#: app/gimphelp.c:191
+#: app/gimphelp.c:195
 msgid "Could not find GIMP Help Browser"
 msgstr "Kunde inte hitta GIMP-hjälpläsaren"
 
-#: app/gimphelp.c:193
+#: app/gimphelp.c:197
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -1622,35 +1622,35 @@ msgstr ""
 "Den var förmodligen inte kompilerad eftersom\n"
 "du inte har GtkXmHTML installerat."
 
-#: app/gimphelp.c:196
+#: app/gimphelp.c:200
 msgid "Use Netscape instead"
 msgstr "Använd Netscape istället"
 
-#: app/gimpimage.c:2324
+#: app/gimpimage.c:2328
 msgid "Layer cannot be raised any further"
 msgstr "Lagret kan inte höjas mer"
 
-#: app/gimpimage.c:2352
+#: app/gimpimage.c:2356
 msgid "Layer cannot be lowered any further"
 msgstr "Lagret kan inte sänkas mer"
 
-#: app/gimpimage.c:2378
+#: app/gimpimage.c:2382
 msgid "Layer is already on top"
 msgstr "Lagret är redan överst"
 
-#: app/gimpimage.c:2384
+#: app/gimpimage.c:2388
 msgid "Can't raise Layer without alpha"
 msgstr "Kan inte höja lager utan alfakanal"
 
-#: app/gimpimage.c:2412
+#: app/gimpimage.c:2416
 msgid "Layer is already on bottom"
 msgstr "Lagret är redan nederst"
 
-#: app/gimpimage.c:2467
+#: app/gimpimage.c:2471
 msgid "BG has no alpha, layer was placed above"
 msgstr "Bakgrundsfärgen har ingen alfakanal, lagret placerades ovanför"
 
-#: app/gimpimage.c:2539
+#: app/gimpimage.c:2543
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1658,12 +1658,12 @@ msgstr ""
 "Det finns inte tillräckligt många synliga lager för att sammanfoga.\n"
 "Det måste vara minst två."
 
-#: app/gimpimage.c:2623
+#: app/gimpimage.c:2627
 msgid "There are not enough visible layers for a merge down."
 msgstr ""
 "Det finns inte tillräckligt många synliga lager för att sammanfoga neråt."
 
-#: app/gimpimage.c:3073
+#: app/gimpimage.c:3077
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1671,7 +1671,7 @@ msgstr ""
 "Kan inte lägga till lagermask eftersom\n"
 "lagret redan har en."
 
-#: app/gimpimage.c:3079
+#: app/gimpimage.c:3083
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1679,7 +1679,7 @@ msgstr ""
 "Kan inte lägga till en lagermask till\n"
 "ett lager i en indexerad bild."
 
-#: app/gimpimage.c:3085
+#: app/gimpimage.c:3089
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1687,21 +1687,21 @@ msgstr ""
 "Kan inte lägga till lagermask till ett\n"
 "lager utan alfakanal."
 
-#: app/gimpimage.c:3094
+#: app/gimpimage.c:3098
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kan inte lägga till lagermask som har andra dimensioner än det angivna "
 "lagret."
 
-#: app/gimpimage.c:3202
+#: app/gimpimage.c:3206
 msgid "Channel cannot be raised any further"
 msgstr "Kanalen kan inte höjas högre"
 
-#: app/gimpimage.c:3253
+#: app/gimpimage.c:3257
 msgid "Channel cannot be lowered any further"
 msgstr "Kanalen kan inte sänkas längre"
 
-#: app/gimpimage.c:3474 app/palette.c:358 app/palette.c:936 app/palette.c:1072
+#: app/gimpimage.c:3478 app/palette.c:358 app/palette.c:936 app/palette.c:1072
 #: app/palette.c:2014 app/palette.c:2740 app/palette.c:2872
 msgid "Untitled"
 msgstr "Namnlös"

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.3\n"
-"POT-Creation-Date: 2001-11-20 21:47+0100\n"
+"POT-Creation-Date: 2002-02-03 20:05-0800\n"
 "PO-Revision-Date: 2001-11-20 21:48+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -132,7 +132,7 @@ msgstr "Beenden"
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:573 app/file_new_dialog.c:212 app/file_new_dialog.c:362
-#: app/gdisplay_ops.c:310 app/gimphelp.c:197 app/gimpprogress.c:120
+#: app/gdisplay_ops.c:310 app/gimphelp.c:201 app/gimpprogress.c:120
 #: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4944
 #: app/gradient.c:5505 app/hue_saturation.c:383 app/interface.c:1047
 #: app/layers_dialog.c:3563 app/layers_dialog.c:3747 app/layers_dialog.c:3842
@@ -1609,11 +1609,11 @@ msgstr "Unbenannt"
 msgid "Layer type %d not supported."
 msgstr "Ebenentyp %d nicht unterstützt."
 
-#: app/gimphelp.c:191
+#: app/gimphelp.c:195
 msgid "Could not find GIMP Help Browser"
 msgstr "Konnte GIMP Hilfe-Browser nicht finden"
 
-#: app/gimphelp.c:193
+#: app/gimphelp.c:197
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -1623,35 +1623,35 @@ msgstr ""
 "Eventuell ist er nicht kompiliert worden,\n"
 "weil GtkXmHTML nicht installiert ist."
 
-#: app/gimphelp.c:196
+#: app/gimphelp.c:200
 msgid "Use Netscape instead"
 msgstr "Benutze stattdessen Netscape"
 
-#: app/gimpimage.c:2324
+#: app/gimpimage.c:2328
 msgid "Layer cannot be raised any further"
 msgstr "Ebene kann nicht weiter angehoben werden"
 
-#: app/gimpimage.c:2352
+#: app/gimpimage.c:2356
 msgid "Layer cannot be lowered any further"
 msgstr "Ebene kann nicht weiter abgesenkt werden"
 
-#: app/gimpimage.c:2378
+#: app/gimpimage.c:2382
 msgid "Layer is already on top"
 msgstr "Ebene ist schon ganz oben"
 
-#: app/gimpimage.c:2384
+#: app/gimpimage.c:2388
 msgid "Can't raise Layer without alpha"
 msgstr "Kann Ebene ohne Alphakanal nicht anheben"
 
-#: app/gimpimage.c:2412
+#: app/gimpimage.c:2416
 msgid "Layer is already on bottom"
 msgstr "Ebene ist schon ganz unten"
 
-#: app/gimpimage.c:2467
+#: app/gimpimage.c:2471
 msgid "BG has no alpha, layer was placed above"
 msgstr "HG hat keinen Alphakanal, Ebene ist darüber plaziert worden"
 
-#: app/gimpimage.c:2539
+#: app/gimpimage.c:2543
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1660,13 +1660,13 @@ msgstr ""
 "den Vorgang \"Sichtbare Ebenen vereinen\" auszuführen.\n"
 "Es müssen mindestens zwei sein."
 
-#: app/gimpimage.c:2623
+#: app/gimpimage.c:2627
 msgid "There are not enough visible layers for a merge down."
 msgstr ""
 "Es sind nicht genügend Ebenen unter dieser Ebene als \"Sichtbar\"\n"
 "markiert, um den Vorgang \"Nach unten vereinen\" auszuführen."
 
-#: app/gimpimage.c:3073
+#: app/gimpimage.c:3077
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1674,7 +1674,7 @@ msgstr ""
 "Kann keine Ebenenenmaske hinzufügen, da\n"
 "diese Ebene bereits eine Maske hat."
 
-#: app/gimpimage.c:3079
+#: app/gimpimage.c:3083
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1682,7 +1682,7 @@ msgstr ""
 "Kann keine Maske zu einer Ebene in\n"
 "einem indizierten Bild hinzufügen."
 
-#: app/gimpimage.c:3085
+#: app/gimpimage.c:3089
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1690,20 +1690,20 @@ msgstr ""
 "Kann keine Maske zu einer Ebene\n"
 "ohne Alphakanal hinzufügen."
 
-#: app/gimpimage.c:3094
+#: app/gimpimage.c:3098
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kann keine Ebenenmaske mit anderen Abmessungen als die Ebene hinzufügen."
 
-#: app/gimpimage.c:3202
+#: app/gimpimage.c:3206
 msgid "Channel cannot be raised any further"
 msgstr "Kanal kann nicht weiter angehoben werden"
 
-#: app/gimpimage.c:3253
+#: app/gimpimage.c:3257
 msgid "Channel cannot be lowered any further"
 msgstr "Kanal kann nicht weiter abgesenkt werden"
 
-#: app/gimpimage.c:3474 app/palette.c:358 app/palette.c:936 app/palette.c:1072
+#: app/gimpimage.c:3478 app/palette.c:358 app/palette.c:936 app/palette.c:1072
 #: app/palette.c:2014 app/palette.c:2740 app/palette.c:2872
 msgid "Untitled"
 msgstr "Unbenannt"

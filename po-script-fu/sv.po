@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2001-10-30 17:53+0100\n"
+"POT-Creation-Date: 2002-02-03 17:56-0800\n"
 "PO-Revision-Date: 2001-10-30 17:53+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -28,7 +28,7 @@ msgstr "Script-Fu-konsoll"
 #: plug-ins/dbbrowser/dbbrowser_utils.c:159
 #: plug-ins/dbbrowser/dbbrowser_utils.c:176
 #: plug-ins/script-fu/script-fu-console.c:199
-#: plug-ins/script-fu/script-fu-scripts.c:2033
+#: plug-ins/script-fu/script-fu-scripts.c:2002
 msgid "Close"
 msgstr "Stäng"
 
@@ -59,70 +59,70 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu-evalueringsläget tillåter endast interaktiv användning"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1206
-#: plug-ins/script-fu/script-fu-scripts.c:1209
+#: plug-ins/script-fu/script-fu-scripts.c:1175
+#: plug-ins/script-fu/script-fu-scripts.c:1178
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1208
-#: plug-ins/script-fu/script-fu-scripts.c:1211
+#: plug-ins/script-fu/script-fu-scripts.c:1177
+#: plug-ins/script-fu/script-fu-scripts.c:1180
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1234
+#: plug-ins/script-fu/script-fu-scripts.c:1203
 msgid "Script Arguments"
 msgstr "Skriptargument"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1257
+#: plug-ins/script-fu/script-fu-scripts.c:1226
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1304
+#: plug-ins/script-fu/script-fu-scripts.c:1273
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-färgväljare"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1374
+#: plug-ins/script-fu/script-fu-scripts.c:1343
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-filväljare"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1406
+#: plug-ins/script-fu/script-fu-scripts.c:1375
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu-mönsterväljare"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1413
+#: plug-ins/script-fu/script-fu-scripts.c:1382
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu-färgskaleväljare"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1421
+#: plug-ins/script-fu/script-fu-scripts.c:1390
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-penselväljare"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1467
+#: plug-ins/script-fu/script-fu-scripts.c:1436
 msgid "Reset to Defaults"
 msgstr "Återställ till standardvärden"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1493
+#: plug-ins/script-fu/script-fu-scripts.c:1462
 msgid "About"
 msgstr "Om"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1507
-#: plug-ins/script-fu/script-fu-server.c:545
+#: plug-ins/script-fu/script-fu-scripts.c:1476
+#: plug-ins/script-fu/script-fu-server.c:549
 msgid "OK"
 msgstr "OK"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1516
-#: plug-ins/script-fu/script-fu-server.c:547
+#: plug-ins/script-fu/script-fu-scripts.c:1485
+#: plug-ins/script-fu/script-fu-server.c:551
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1682
+#: plug-ins/script-fu/script-fu-scripts.c:1651
 msgid "NOT SET"
 msgstr "INTE SATT"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1711
+#: plug-ins/script-fu/script-fu-scripts.c:1680
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -132,29 +132,29 @@ msgstr ""
 
 #. show the author & the copyright
 #: plug-ins/dbbrowser/dbbrowser_utils.c:518
-#: plug-ins/script-fu/script-fu-scripts.c:2004
+#: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Author:"
 msgstr "Författare:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:548
-#: plug-ins/script-fu/script-fu-scripts.c:2010
+#: plug-ins/script-fu/script-fu-scripts.c:1979
 msgid "Copyright:"
 msgstr "Copyright:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:533
-#: plug-ins/script-fu/script-fu-scripts.c:2016
+#: plug-ins/script-fu/script-fu-scripts.c:1985
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2024
+#: plug-ins/script-fu/script-fu-scripts.c:1993
 msgid "Image Types:"
 msgstr "Bildtyper:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2189
+#: plug-ins/script-fu/script-fu-scripts.c:2158
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu-typsnittsväljare"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2256
+#: plug-ins/script-fu/script-fu-scripts.c:2225
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -165,15 +165,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:540
+#: plug-ins/script-fu/script-fu-server.c:544
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-serveralternativ"
 
-#: plug-ins/script-fu/script-fu-server.c:567
+#: plug-ins/script-fu/script-fu-server.c:571
 msgid "Server Port:"
 msgstr "Serverport:"
 
-#: plug-ins/script-fu/script-fu-server.c:573
+#: plug-ins/script-fu/script-fu-server.c:577
 msgid "Server Logfile:"
 msgstr "Serverloggfil:"
 

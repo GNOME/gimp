@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2001-12-19 06:13-0500\n"
+"POT-Creation-Date: 2002-02-03 20:05-0800\n"
 "PO-Revision-Date: 2002-01-30 13:52GMT+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -132,7 +132,7 @@ msgstr "Koniec"
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:573 app/file_new_dialog.c:212 app/file_new_dialog.c:362
-#: app/gdisplay_ops.c:310 app/gimphelp.c:197 app/gimpprogress.c:120
+#: app/gdisplay_ops.c:310 app/gimphelp.c:201 app/gimpprogress.c:120
 #: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4944
 #: app/gradient.c:5505 app/hue_saturation.c:383 app/interface.c:1047
 #: app/layers_dialog.c:3563 app/layers_dialog.c:3747 app/layers_dialog.c:3842
@@ -1289,8 +1289,7 @@ msgid ""
 "including all undo information)"
 msgstr ""
 "Návrat '%s'\n"
-"k '%s'? "
-"\n"
+"k '%s'? \n"
 "(Stratíte v¹etky svoje zmeny,\n"
 "vrátane v¹etkých informácií pre funkciu Spä»)"
 
@@ -1605,11 +1604,11 @@ msgstr "nepomenovaný"
 msgid "Layer type %d not supported."
 msgstr "Typ vrstvy %d nie je podporovaný."
 
-#: app/gimphelp.c:191
+#: app/gimphelp.c:195
 msgid "Could not find GIMP Help Browser"
 msgstr "Nie je mo¾né nájs» Prehliadaè Pomocníka GIMPu"
 
-#: app/gimphelp.c:193
+#: app/gimphelp.c:197
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -1619,7 +1618,7 @@ msgstr ""
 "Pravdepodobne nebola vytvorená, preto¾e\n"
 "nemáte nain¹talovaný GtkXmHTML."
 
-#: app/gimphelp.c:196
+#: app/gimphelp.c:200
 msgid "Use Netscape instead"
 msgstr "Namiesto neho pou¾ijem Netscape"
 
@@ -2001,7 +2000,8 @@ msgstr "Klepnutie: vybra»    Shift+klepnutie: roz¹íri» selekciu"
 
 #: app/gradient.c:2710
 msgid "Click: select    Shift+click: extend selection    Drag: move"
-msgstr "Klepnutie: vybra»    Shift+klepnutie: roz¹íri» selekciu   «ahanie: posun"
+msgstr ""
+"Klepnutie: vybra»    Shift+klepnutie: roz¹íri» selekciu   «ahanie: posun"
 
 #: app/gradient.c:2722
 msgid ""
@@ -2902,8 +2902,7 @@ msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
 msgstr ""
-"  -d, --no-data            Nenaèíta» vzorky, prechody, palety "
-"a ¹tetce.\n"
+"  -d, --no-data            Nenaèíta» vzorky, prechody, palety a ¹tetce.\n"
 
 #: app/main.c:314
 msgid "  -i, --no-interface       Run without a user interface.\n"
@@ -2950,7 +2949,8 @@ msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm                Nepou¾íva» X roz¹írenia zdieµanej pamäti.\n"
 
 #: app/main.c:324
-msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgid ""
+"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr "  --debug-handlers         Povoli» ladenie obsluhy signálov.\n"
 
 #: app/main.c:325
@@ -2959,7 +2959,8 @@ msgstr "  --display <obrazovka>      Pou¾i» zvolenú X obrazovku.\n"
 
 #: app/main.c:326
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr "  --system-gimprc <gimprc> Pou¾i» alternatívny systémový gimprc súbor.\n"
+msgstr ""
+"  --system-gimprc <gimprc> Pou¾i» alternatívny systémový gimprc súbor.\n"
 
 #: app/main.c:328
 msgid ""
@@ -5823,12 +5824,14 @@ msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
 msgstr ""
-"In¹talácia pre pou¾ívateµov bola preskoèená, preto¾e bolo pou¾ité "
-"'--nointerface'\n"
+"In¹talácia pre pou¾ívateµov bola preskoèená, preto¾e bolo pou¾ité '--"
+"nointerface'\n"
 
 #: app/user_install.c:108
-msgid "To perform user installation, run the GIMP without the '--nointerface' flag\n"
-msgstr "Ak chcete pou¾ívateµskú in¹taláciu, spustite GIMP bez voµby '--nointerface'\n"
+msgid ""
+"To perform user installation, run the GIMP without the '--nointerface' flag\n"
+msgstr ""
+"Ak chcete pou¾ívateµskú in¹taláciu, spustite GIMP bez voµby '--nointerface'\n"
 
 #: app/user_install.c:167
 msgid ""
@@ -6140,7 +6143,8 @@ msgstr ""
 
 #: app/user_install.c:735
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr "Kliknite na \"Pokraèova»\" na vstup do pou¾ívateµskej in¹talácií GIMPu."
+msgstr ""
+"Kliknite na \"Pokraèova»\" na vstup do pou¾ívateµskej in¹talácií GIMPu."
 
 #: app/user_install.c:739
 msgid ""
@@ -6446,4 +6450,3 @@ msgstr "Vodové farby"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Farebná história"
-

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.2\n"
-"POT-Creation-Date: 2001-10-23 14:31+0200\n"
+"POT-Creation-Date: 2001-11-12 22:34-0800\n"
 "PO-Revision-Date: 2001-10-24 12:58+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -237,7 +237,7 @@ msgstr "Pica"
 msgid "percent"
 msgstr "Prozent"
 
-#: libgimp/gimpwidgets.c:715
+#: libgimp/gimpwidgets.c:717
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -246,11 +246,11 @@ msgstr ""
 "Zufallsgenerator - dies ermgöglicht es \"zufällige\" Funktionen zu "
 "wiederholen"
 
-#: libgimp/gimpwidgets.c:720
+#: libgimp/gimpwidgets.c:722
 msgid "Time"
 msgstr "Zeit"
 
-#: libgimp/gimpwidgets.c:729
+#: libgimp/gimpwidgets.c:731
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -258,14 +258,14 @@ msgstr ""
 "Speise Zufallsgenerator mit der aktuellen Zeit - dies garantiert eine "
 "vernünftige Wahrscheinlichkeit"
 
-#: libgimp/gimpwidgets.c:1042
+#: libgimp/gimpwidgets.c:1044
 msgid "Bytes"
 msgstr "Byte"
 
-#: libgimp/gimpwidgets.c:1043
+#: libgimp/gimpwidgets.c:1045
 msgid "KiloBytes"
 msgstr "KiloByte"
 
-#: libgimp/gimpwidgets.c:1044
+#: libgimp/gimpwidgets.c:1046
 msgid "MegaBytes"
 msgstr "MegaByte"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins-1.1.19\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
+"POT-Creation-Date: 2002-02-03 17:56-0800\n"
 "PO-Revision-Date: 2000-03-10 11:26+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -21,8 +21,10 @@ msgid "Script-Fu Console"
 msgstr "Консоль Скрипт-Фу"
 
 #. Action area
+#: plug-ins/dbbrowser/dbbrowser_utils.c:159
+#: plug-ins/dbbrowser/dbbrowser_utils.c:176
 #: plug-ins/script-fu/script-fu-console.c:199
-#: plug-ins/script-fu/script-fu-scripts.c:2033
+#: plug-ins/script-fu/script-fu-scripts.c:2002
 msgid "Close"
 msgstr "Закрити"
 
@@ -53,70 +55,70 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Режим виконання Скрипт-Фу дозволя╓ лише не╕нтерактивну роботу"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1206
-#: plug-ins/script-fu/script-fu-scripts.c:1209
+#: plug-ins/script-fu/script-fu-scripts.c:1175
+#: plug-ins/script-fu/script-fu-scripts.c:1178
 msgid "/Script-Fu/"
 msgstr "/Скрипт-Фу/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1208
-#: plug-ins/script-fu/script-fu-scripts.c:1211
+#: plug-ins/script-fu/script-fu-scripts.c:1177
+#: plug-ins/script-fu/script-fu-scripts.c:1180
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Скрипт-Фу: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1234
+#: plug-ins/script-fu/script-fu-scripts.c:1203
 msgid "Script Arguments"
 msgstr "Аргументи скрипту"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1257
+#: plug-ins/script-fu/script-fu-scripts.c:1226
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1304
+#: plug-ins/script-fu/script-fu-scripts.c:1273
 msgid "Script-Fu Color Selection"
 msgstr "Виб╕р кольору Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1374
+#: plug-ins/script-fu/script-fu-scripts.c:1343
 msgid "Script-Fu File Selection"
 msgstr "Виб╕р файлу Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1406
+#: plug-ins/script-fu/script-fu-scripts.c:1375
 msgid "Script-fu Pattern Selection"
 msgstr "Виб╕р в╕зерунку Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1413
+#: plug-ins/script-fu/script-fu-scripts.c:1382
 msgid "Script-Fu Gradient Selection"
 msgstr "Виб╕р град╕╓нту Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1421
+#: plug-ins/script-fu/script-fu-scripts.c:1390
 msgid "Script-Fu Brush Selection"
 msgstr "Виб╕р пензля Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1467
+#: plug-ins/script-fu/script-fu-scripts.c:1436
 msgid "Reset to Defaults"
 msgstr "Скасувати"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1493
+#: plug-ins/script-fu/script-fu-scripts.c:1462
 msgid "About"
 msgstr "Про"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1507
-#: plug-ins/script-fu/script-fu-server.c:544
+#: plug-ins/script-fu/script-fu-scripts.c:1476
+#: plug-ins/script-fu/script-fu-server.c:549
 msgid "OK"
 msgstr "Гаразд"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1516
-#: plug-ins/script-fu/script-fu-server.c:546
+#: plug-ins/script-fu/script-fu-scripts.c:1485
+#: plug-ins/script-fu/script-fu-server.c:551
 msgid "Cancel"
 msgstr "В╕дмова"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1682
+#: plug-ins/script-fu/script-fu-scripts.c:1651
 msgid "NOT SET"
 msgstr "НЕ ВИЗНАЧЕНО"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1711
+#: plug-ins/script-fu/script-fu-scripts.c:1680
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -124,27 +126,31 @@ msgstr ""
 "Принаймн╕ один з вибраних вами шрифт╕в нев╕рний.\n"
 "Будь ласка, перев╕рте ваш╕ настройки.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2004
+#. show the author & the copyright
+#: plug-ins/dbbrowser/dbbrowser_utils.c:518
+#: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Author:"
 msgstr "Автор:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2010
+#: plug-ins/dbbrowser/dbbrowser_utils.c:548
+#: plug-ins/script-fu/script-fu-scripts.c:1979
 msgid "Copyright:"
 msgstr "Авторське право:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2016
+#: plug-ins/dbbrowser/dbbrowser_utils.c:533
+#: plug-ins/script-fu/script-fu-scripts.c:1985
 msgid "Date:"
 msgstr "Дата:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2024
+#: plug-ins/script-fu/script-fu-scripts.c:1993
 msgid "Image Types:"
 msgstr "Типи зображень:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2189
+#: plug-ins/script-fu/script-fu-scripts.c:2158
 msgid "Script-Fu Font Selection"
 msgstr "Виб╕р шрифту Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2256
+#: plug-ins/script-fu/script-fu-scripts.c:2225
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -155,15 +161,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:539
+#: plug-ins/script-fu/script-fu-server.c:544
 msgid "Script-Fu Server Options"
 msgstr "Параметри сервера Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu-server.c:566
+#: plug-ins/script-fu/script-fu-server.c:571
 msgid "Server Port:"
 msgstr "Порт сервера:"
 
-#: plug-ins/script-fu/script-fu-server.c:572
+#: plug-ins/script-fu/script-fu-server.c:577
 msgid "Server Logfile:"
 msgstr "Журнальний файл сервера:"
 
@@ -182,6 +188,71 @@ msgstr "Перечитати ус╕ ╕снуюч╕ скрипти"
 #: plug-ins/script-fu/script-fu.c:1110
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Розширення/Скрипт-Фу/Поновити"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:148
+#: plug-ins/dbbrowser/dbbrowser_utils.c:167
+#, fuzzy
+msgid "DB Browser (init...)"
+msgstr "Переглянути..."
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:153
+#: plug-ins/dbbrowser/dbbrowser_utils.c:172
+msgid "Search by Name"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:155
+#: plug-ins/dbbrowser/dbbrowser_utils.c:174
+msgid "Search by Blurb"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:157
+msgid "Apply"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:226
+msgid "Search:"
+msgstr ""
+
+#. show the name
+#: plug-ins/dbbrowser/dbbrowser_utils.c:344
+#, fuzzy
+msgid "Name:"
+msgstr "Дата:"
+
+#. show the description
+#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+#, fuzzy
+msgid "Blurb:"
+msgstr "Розмивання по Y"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:382
+msgid "In:"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:429
+msgid "Out:"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:479
+msgid "Help:"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:643
+msgid "DB Browser (by name - please wait)"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:667
+msgid "DB Browser (by blurb - please wait)"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:677
+msgid "DB Browser (please wait)"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:743
+#, fuzzy
+msgid "DB Browser"
+msgstr "Переглянути..."
 
 #: plug-ins/script-fu/scripts/copy-visible.scm:0
 msgid "<Image>/Edit/Copy Visible"
@@ -842,7 +913,8 @@ msgid "Base Color"
 msgstr "Основний кол╕р"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Base Radius (pixel)"
+#, fuzzy
+msgid "Base Radius (pixels)"
 msgstr "Основний рад╕ус (п╕ксел╕)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0

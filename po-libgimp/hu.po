@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2001-10-28 20:23+0100\n"
+"POT-Creation-Date: 2001-11-12 22:34-0800\n"
 "PO-Revision-Date: 2001-10-28 20:28+0100\n"
 "Last-Translator: Andras TIMAR <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"

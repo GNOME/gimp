@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP PlugIns\n"
-"POT-Creation-Date: 2001-12-19 06:12-0500\n"
+"POT-Creation-Date: 2002-02-11 13:34-0800\n"
 "PO-Revision-Date: 2002-02-06 07:55+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -56,7 +56,7 @@ msgstr "O module"
 #: plug-ins/common/grid.c:661 plug-ins/common/gtm.c:375
 #: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:570
 #: plug-ins/common/iwarp.c:1142 plug-ins/common/jigsaw.c:2486
-#: plug-ins/common/jpeg.c:1595 plug-ins/common/lic.c:1021
+#: plug-ins/common/jpeg.c:1627 plug-ins/common/lic.c:1021
 #: plug-ins/common/mail.c:467 plug-ins/common/mapcolor.c:558
 #: plug-ins/common/max_rgb.c:348 plug-ins/common/mblur.c:763
 #: plug-ins/common/newsprint.c:1211 plug-ins/common/nlfilt.c:368
@@ -70,18 +70,18 @@ msgstr "O module"
 #: plug-ins/common/ripple.c:580 plug-ins/common/scatter_hsv.c:375
 #: plug-ins/common/screenshot.c:371 plug-ins/common/sel_gauss.c:242
 #: plug-ins/common/sharpen.c:525 plug-ins/common/shift.c:376
-#: plug-ins/common/sinus.c:1704 plug-ins/common/smooth_palette.c:403
+#: plug-ins/common/sinus.c:1704 plug-ins/common/smooth_palette.c:408
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spread.c:382
 #: plug-ins/common/struc.c:1281 plug-ins/common/sunras.c:1590
-#: plug-ins/common/tga.c:1175 plug-ins/common/threshold_alpha.c:271
-#: plug-ins/common/tiff.c:1585 plug-ins/common/tile.c:405
+#: plug-ins/common/tga.c:1186 plug-ins/common/threshold_alpha.c:271
+#: plug-ins/common/tiff.c:1589 plug-ins/common/tile.c:405
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:173
 #: plug-ins/common/unsharp.c:787 plug-ins/common/video.c:2155
 #: plug-ins/common/vpropagate.c:935 plug-ins/common/warp.c:426
 #: plug-ins/common/waves.c:349 plug-ins/common/whirlpinch.c:808
 #: plug-ins/common/wind.c:1012 plug-ins/common/wmf.c:931
-#: plug-ins/common/xbm.c:1150 plug-ins/common/xpm.c:822
+#: plug-ins/common/xbm.c:1147 plug-ins/common/xpm.c:822
 #: plug-ins/fits/fits.c:987 plug-ins/flame/flame.c:634
 #: plug-ins/flame/flame.c:923 plug-ins/fp/fp_gtk.c:904
 #: plug-ins/gap/gap_arr_dialog.c:768 plug-ins/gap/gap_arr_dialog.c:1010
@@ -137,7 +137,7 @@ msgstr "OK"
 #: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:663
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
 #: plug-ins/common/illusion.c:572 plug-ins/common/iwarp.c:1146
-#: plug-ins/common/jigsaw.c:2488 plug-ins/common/jpeg.c:1597
+#: plug-ins/common/jigsaw.c:2488 plug-ins/common/jpeg.c:1629
 #: plug-ins/common/lic.c:1023 plug-ins/common/mail.c:469
 #: plug-ins/common/mapcolor.c:560 plug-ins/common/max_rgb.c:350
 #: plug-ins/common/mblur.c:765 plug-ins/common/newsprint.c:1213
@@ -152,17 +152,17 @@ msgstr "OK"
 #: plug-ins/common/scatter_hsv.c:377 plug-ins/common/screenshot.c:373
 #: plug-ins/common/sel_gauss.c:244 plug-ins/common/sharpen.c:527
 #: plug-ins/common/shift.c:378 plug-ins/common/sinus.c:1706
-#: plug-ins/common/smooth_palette.c:405 plug-ins/common/snoise.c:514
+#: plug-ins/common/smooth_palette.c:410 plug-ins/common/snoise.c:514
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
 #: plug-ins/common/spread.c:384 plug-ins/common/struc.c:1283
-#: plug-ins/common/sunras.c:1592 plug-ins/common/tga.c:1177
-#: plug-ins/common/threshold_alpha.c:273 plug-ins/common/tiff.c:1587
+#: plug-ins/common/sunras.c:1592 plug-ins/common/tga.c:1188
+#: plug-ins/common/threshold_alpha.c:273 plug-ins/common/tiff.c:1591
 #: plug-ins/common/tile.c:407 plug-ins/common/tileit.c:388
 #: plug-ins/common/uniteditor.c:175 plug-ins/common/unsharp.c:789
 #: plug-ins/common/video.c:2157 plug-ins/common/vpropagate.c:937
 #: plug-ins/common/warp.c:428 plug-ins/common/waves.c:351
 #: plug-ins/common/whirlpinch.c:810 plug-ins/common/wind.c:1014
-#: plug-ins/common/wmf.c:933 plug-ins/common/xbm.c:1152
+#: plug-ins/common/wmf.c:933 plug-ins/common/xbm.c:1149
 #: plug-ins/common/xpm.c:824 plug-ins/fits/fits.c:989
 #: plug-ins/flame/flame.c:636 plug-ins/flame/flame.c:925
 #: plug-ins/fp/fp_gtk.c:908 plug-ins/gap/gap_arr_dialog.c:1012
@@ -222,9 +222,7 @@ msgstr "Realtime náhµad"
 
 #: plug-ins/FractalExplorer/Dialogs.c:359
 msgid "If you enable this option the preview will be redrawn automatically"
-msgstr ""
-"Ak povolíte tú mo¾nos», potom náhµad bude automaticky "
-"prekreslovaný"
+msgstr "Ak povolíte tú mo¾nos», potom náhµad bude automaticky prekreslovaný"
 
 #: plug-ins/FractalExplorer/Dialogs.c:362
 msgid "Redraw"
@@ -317,8 +315,8 @@ msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
 msgstr ""
-"Zmena poètu iterácií. Èím je ich viac, tým viac detailov, ktoré zaberú "
-"viac èasu, bude poèítaných."
+"Zmena poètu iterácií. Èím je ich viac, tým viac detailov, ktoré zaberú viac "
+"èasu, bude poèítaných."
 
 #: plug-ins/FractalExplorer/Dialogs.c:494
 msgid "CX:"
@@ -329,8 +327,8 @@ msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
-"Zmena CX hodnoty (zmení vzhµad v¹etkých fraktálov okrem "
-"Mandelbrotovho a Sierpinskeho)"
+"Zmena CX hodnoty (zmení vzhµad v¹etkých fraktálov okrem Mandelbrotovho a "
+"Sierpinskeho)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:506
 msgid "CY:"
@@ -341,8 +339,8 @@ msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
-"Zmena CY hodnoty (zmení vzhµad v¹etkých fraktálov okrem "
-"Mandelbrotovho a Sierpinskeho)"
+"Zmena CY hodnoty (zmení vzhµad v¹etkých fraktálov okrem Mandelbrotovho a "
+"Sierpinskeho)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:520 plug-ins/common/CML_explorer.c:1229
 #: plug-ins/common/gqbist.c:686 plug-ins/gfig/gfig.c:3548
@@ -444,8 +442,7 @@ msgstr "Pou¾i» loglog vyhladzovanie"
 #: plug-ins/FractalExplorer/Dialogs.c:655
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr ""
-"Na eliminovanie \"páskovania\"vo výsledkoch sa pou¾ije "
-"loglog vyhladzovanie"
+"Na eliminovanie \"páskovania\"vo výsledkoch sa pou¾ije loglog vyhladzovanie"
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:659
@@ -528,7 +525,7 @@ msgstr "Kosínus"
 #: plug-ins/common/AlienMap.c:1518 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2722 plug-ins/common/ps.c:2735
-#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1606
+#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1610
 #: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:299
 msgid "None"
 msgstr "®iadna"
@@ -552,8 +549,8 @@ msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr ""
-"Pou¾ije lineárne mapovanie mamiesto trigonometrických funkcií "
-"pre tento farebný kanál"
+"Pou¾ije lineárne mapovanie mamiesto trigonometrických funkcií pre tento "
+"farebný kanál"
 
 #: plug-ins/FractalExplorer/Dialogs.c:741
 #: plug-ins/FractalExplorer/Dialogs.c:782
@@ -568,8 +565,8 @@ msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr ""
-"Ak povolíte toto nastavenie, tak vy¹¹ie farebné hodnoty budú "
-"nahradené ni¾¹ími a naopak"
+"Ak povolíte toto nastavenie, tak vy¹¹ie farebné hodnoty budú nahradené "
+"ni¾¹ími a naopak"
 
 #. Greenmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:754 plug-ins/common/AlienMap.c:1489
@@ -599,9 +596,8 @@ msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
 msgstr ""
-"Vytvorí farebnú mapu s vy¹¹ie ¹pecifikovanými vlastnos»ami "
-"(farebná intenzia/funkcia). Výsledok je viditeµný na obrázku "
-"v náhµade."
+"Vytvorí farebnú mapu s vy¹¹ie ¹pecifikovanými vlastnos»ami (farebná intenzia/"
+"funkcia). Výsledok je viditeµný na obrázku v náhµade."
 
 #: plug-ins/FractalExplorer/Dialogs.c:868
 msgid "Apply Active Gradient to Final Image"
@@ -738,7 +734,8 @@ msgstr ""
 "do súboru %s."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1167
-msgid "fractalexplorer-path misconfigured - the following directories were not found"
+msgid ""
+"fractalexplorer-path misconfigured - the following directories were not found"
 msgstr ""
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1343
@@ -932,7 +929,7 @@ msgstr "Poloha X svetelného zdroja v XYZ priestore"
 #: plug-ins/MapObject/mapobject_ui.c:1093
 #: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:804
 #: plug-ins/common/nova.c:628 plug-ins/common/papertile.c:294
-#: plug-ins/common/xbm.c:1243 plug-ins/flame/flame.c:1205
+#: plug-ins/common/xbm.c:1240 plug-ins/flame/flame.c:1205
 #: plug-ins/gap/gap_mov_dialog.c:1855 plug-ins/gflare/gflare.c:2880
 #: plug-ins/ifscompose/ifscompose.c:549
 msgid "Y:"
@@ -1354,8 +1351,8 @@ msgstr ""
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:326
 #: plug-ins/common/png.c:426 plug-ins/common/png.c:428
 #: plug-ins/common/pnm.c:411 plug-ins/common/psd.c:1731
-#: plug-ins/common/sunras.c:442 plug-ins/common/tga.c:429
-#: plug-ins/common/tiff.c:454 plug-ins/common/xbm.c:734
+#: plug-ins/common/sunras.c:442 plug-ins/common/tga.c:432
+#: plug-ins/common/tiff.c:454 plug-ins/common/xbm.c:731
 #: plug-ins/common/xpm.c:342 plug-ins/common/xwd.c:439
 #: plug-ins/faxg3/faxg3.c:196 plug-ins/gfli/gfli.c:459 plug-ins/sgi/sgi.c:330
 #: plug-ins/sgi/sgi.c:332 plug-ins/xjt/xjt.c:3246
@@ -1394,15 +1391,15 @@ msgstr ""
 #: plug-ins/common/blinds.c:380 plug-ins/common/compose.c:543
 #: plug-ins/common/decompose.c:465 plug-ins/common/film.c:1002
 #: plug-ins/common/gifload.c:849 plug-ins/common/hrz.c:374
-#: plug-ins/common/jpeg.c:900 plug-ins/common/lic.c:904
+#: plug-ins/common/jpeg.c:914 plug-ins/common/lic.c:904
 #: plug-ins/common/papertile.c:316 plug-ins/common/pat.c:341
 #: plug-ins/common/pcx.c:332 plug-ins/common/pcx.c:338
 #: plug-ins/common/pix.c:370 plug-ins/common/png.c:547
 #: plug-ins/common/pnm.c:499 plug-ins/common/psd.c:2114
-#: plug-ins/common/smooth_palette.c:241 plug-ins/common/sunras.c:932
-#: plug-ins/common/tga.c:915 plug-ins/common/tiff.c:680
+#: plug-ins/common/smooth_palette.c:246 plug-ins/common/sunras.c:932
+#: plug-ins/common/tga.c:918 plug-ins/common/tiff.c:680
 #: plug-ins/common/tile.c:280 plug-ins/common/winclipboard.c:557
-#: plug-ins/common/wmf.c:2350 plug-ins/common/xbm.c:872
+#: plug-ins/common/wmf.c:2350 plug-ins/common/xbm.c:869
 #: plug-ins/faxg3/faxg3.c:448 plug-ins/fits/fits.c:521
 #: plug-ins/gfig/gfig.c:2832 plug-ins/gfig/gfig.c:3185 plug-ins/sgi/sgi.c:378
 #: plug-ins/twain/twain.c:722 plug-ins/winsnap/winsnap.c:1235
@@ -1422,13 +1419,13 @@ msgstr ""
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:510
 #: plug-ins/common/gbr.c:489 plug-ins/common/gif.c:943
 #: plug-ins/common/gih.c:1218 plug-ins/common/gtm.c:247
-#: plug-ins/common/hrz.c:471 plug-ins/common/jpeg.c:1197
+#: plug-ins/common/hrz.c:471 plug-ins/common/jpeg.c:1229
 #: plug-ins/common/pat.c:384 plug-ins/common/pcx.c:547
 #: plug-ins/common/pix.c:532 plug-ins/common/png.c:777
 #: plug-ins/common/png.c:779 plug-ins/common/pnm.c:783
 #: plug-ins/common/ps.c:1003 plug-ins/common/sunras.c:525
-#: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1337
-#: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:675
+#: plug-ins/common/tga.c:1017 plug-ins/common/tiff.c:1341
+#: plug-ins/common/xbm.c:979 plug-ins/common/xpm.c:675
 #: plug-ins/common/xwd.c:543 plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:679
 #: plug-ins/sgi/sgi.c:548 plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
 #, c-format
@@ -1493,7 +1490,8 @@ msgid "Use cosine-function for green component."
 msgstr ""
 
 #: plug-ins/common/AlienMap.c:1504
-msgid "Green channel: use linear mapping instead of any trigonometrical function"
+msgid ""
+"Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 
 #: plug-ins/common/AlienMap.c:1523
@@ -1505,7 +1503,8 @@ msgid "Use cosine-function for blue component."
 msgstr ""
 
 #: plug-ins/common/AlienMap.c:1527
-msgid "Blue channel: use linear mapping instead of any trigonometrical function"
+msgid ""
+"Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 
 #: plug-ins/common/AlienMap.c:1657
@@ -2146,7 +2145,7 @@ msgstr ""
 #: plug-ins/common/emboss.c:559 plug-ins/common/engrave.c:236
 #: plug-ins/common/gauss_iir.c:378 plug-ins/common/gauss_rle.c:373
 #: plug-ins/common/glasstile.c:294 plug-ins/common/grid.c:722
-#: plug-ins/common/illusion.c:606 plug-ins/common/jpeg.c:1643
+#: plug-ins/common/illusion.c:606 plug-ins/common/jpeg.c:1675
 #: plug-ins/common/lic.c:1090 plug-ins/common/max_rgb.c:381
 #: plug-ins/common/nlfilt.c:409 plug-ins/common/noisify.c:524
 #: plug-ins/common/nova.c:478 plug-ins/common/oilify.c:470
@@ -2155,7 +2154,7 @@ msgstr ""
 #: plug-ins/common/randomize.c:720 plug-ins/common/ripple.c:676
 #: plug-ins/common/scatter_hsv.c:428 plug-ins/common/sel_gauss.c:254
 #: plug-ins/common/sharpen.c:612 plug-ins/common/shift.c:389
-#: plug-ins/common/smooth_palette.c:414 plug-ins/common/snoise.c:525
+#: plug-ins/common/smooth_palette.c:419 plug-ins/common/snoise.c:525
 #: plug-ins/common/sobel.c:263 plug-ins/common/sparkle.c:363
 #: plug-ins/common/struc.c:1293 plug-ins/common/threshold_alpha.c:282
 #: plug-ins/common/unsharp.c:798 plug-ins/common/video.c:2167
@@ -2817,7 +2816,7 @@ msgid "Prefixed Name:"
 msgstr ""
 
 #: plug-ins/common/csource.c:689 plug-ins/common/mail.c:529
-#: plug-ins/common/tiff.c:1621 plug-ins/common/xbm.c:1202
+#: plug-ins/common/tiff.c:1625 plug-ins/common/xbm.c:1199
 msgid "Comment:"
 msgstr "Komentár:"
 
@@ -3225,7 +3224,7 @@ msgstr ""
 #. table col, row
 #: plug-ins/common/destripe.c:670 plug-ins/common/gtm.c:551
 #: plug-ins/common/ps.c:2664 plug-ins/common/ps.c:2840
-#: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:428
+#: plug-ins/common/smooth_palette.c:435 plug-ins/common/tile.c:428
 #: plug-ins/gap/gap_mov_dialog.c:1873 plug-ins/imagemap/imap_rectangle.c:391
 #: plug-ins/print/gimp_main_window.c:638
 msgid "Width:"
@@ -3377,7 +3376,7 @@ msgstr ""
 #. table col, row
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1239
 #: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2673
-#: plug-ins/common/ps.c:2849 plug-ins/common/smooth_palette.c:439
+#: plug-ins/common/ps.c:2849 plug-ins/common/smooth_palette.c:444
 #: plug-ins/common/tile.c:432 plug-ins/gap/gap_mov_dialog.c:1890
 #: plug-ins/imagemap/imap_rectangle.c:397
 #: plug-ins/print/gimp_main_window.c:652
@@ -3961,11 +3960,11 @@ msgstr ""
 msgid "G-Qbist 1.10"
 msgstr ""
 
-#: plug-ins/common/gradmap.c:118
+#: plug-ins/common/gradmap.c:123
 msgid "<Image>/Filters/Colors/Map/Gradient Map"
 msgstr ""
 
-#: plug-ins/common/gradmap.c:154
+#: plug-ins/common/gradmap.c:159
 msgid "Gradient Map..."
 msgstr ""
 
@@ -4141,7 +4140,7 @@ msgstr ""
 msgid "gz: no sensible extension, saving as gzip'd xcf\n"
 msgstr ""
 
-#: plug-ins/common/gz.c:446
+#: plug-ins/common/gz.c:448
 msgid "gz: no sensible extension, attempting to load with file magic\n"
 msgstr ""
 
@@ -4360,77 +4359,77 @@ msgstr ""
 msgid "can't open \"%s\"\n"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:893
+#: plug-ins/common/jpeg.c:907
 msgid "JPEG preview"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1115
+#: plug-ins/common/jpeg.c:1147
 #, c-format
 msgid "Size: %lu bytes (%02.01f kB)"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1526 plug-ins/common/jpeg.c:1633
+#: plug-ins/common/jpeg.c:1558 plug-ins/common/jpeg.c:1665
 msgid "Size: unknown"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1590
+#: plug-ins/common/jpeg.c:1622
 msgid "Save as JPEG"
 msgstr ""
 
 #. sg - preview
-#: plug-ins/common/jpeg.c:1613
+#: plug-ins/common/jpeg.c:1645
 msgid "Image Preview"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1622
+#: plug-ins/common/jpeg.c:1654
 msgid "Preview (in image window)"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1653 plug-ins/xjt/xjt.c:836
+#: plug-ins/common/jpeg.c:1685 plug-ins/xjt/xjt.c:836
 msgid "Quality:"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1675 plug-ins/xjt/xjt.c:845
+#: plug-ins/common/jpeg.c:1707 plug-ins/xjt/xjt.c:845
 msgid "Smoothing:"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1702
+#: plug-ins/common/jpeg.c:1734
 msgid "Restart markers"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1710
+#: plug-ins/common/jpeg.c:1742
 msgid "Restart frequency (rows):"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1739 plug-ins/xjt/xjt.c:816
+#: plug-ins/common/jpeg.c:1771 plug-ins/xjt/xjt.c:816
 msgid "Optimize"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1751
+#: plug-ins/common/jpeg.c:1783
 msgid "Progressive"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1797
+#: plug-ins/common/jpeg.c:1829
 msgid "Subsampling:"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1806
+#: plug-ins/common/jpeg.c:1838
 msgid "Fast Integer"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1807
+#: plug-ins/common/jpeg.c:1839
 msgid "Integer"
 msgstr "Celé èíslo"
 
-#: plug-ins/common/jpeg.c:1808
+#: plug-ins/common/jpeg.c:1840
 msgid "Floating-Point"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1812
+#: plug-ins/common/jpeg.c:1844
 msgid "DCT method (Speed/quality tradeoff):"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1820
+#: plug-ins/common/jpeg.c:1852
 msgid "Image comments"
 msgstr ""
 
@@ -5820,19 +5819,19 @@ msgstr ""
 msgid "Blend"
 msgstr "Prechod"
 
-#: plug-ins/common/smooth_palette.c:84
+#: plug-ins/common/smooth_palette.c:91
 msgid "<Image>/Filters/Colors/Smooth Palette..."
 msgstr ""
 
-#: plug-ins/common/smooth_palette.c:173
+#: plug-ins/common/smooth_palette.c:180
 msgid "Deriving smooth palette..."
 msgstr ""
 
-#: plug-ins/common/smooth_palette.c:398
+#: plug-ins/common/smooth_palette.c:403
 msgid "Smooth Palette"
 msgstr ""
 
-#: plug-ins/common/smooth_palette.c:448
+#: plug-ins/common/smooth_palette.c:453
 msgid "Search Time:"
 msgstr ""
 
@@ -6120,33 +6119,38 @@ msgstr ""
 msgid "RunLength Encoded"
 msgstr ""
 
-#: plug-ins/common/tga.c:425
+#: plug-ins/common/tga.c:428
 #, c-format
 msgid "TGA: can't open \"%s\"\n"
 msgstr ""
 
-#: plug-ins/common/tga.c:435
+#: plug-ins/common/tga.c:438
 #, c-format
 msgid "TGA: Cannot read footer from \"%s\"\n"
 msgstr ""
 
-#: plug-ins/common/tga.c:447
+#: plug-ins/common/tga.c:450
 #, c-format
 msgid "TGA: Cannot read extension from \"%s\"\n"
 msgstr ""
 
-#: plug-ins/common/tga.c:1170
+#: plug-ins/common/tga.c:1181
 msgid "Save as TGA"
 msgstr ""
 
 #. regular tga parameter settings
-#: plug-ins/common/tga.c:1187
+#: plug-ins/common/tga.c:1198
 msgid "Targa Options"
 msgstr ""
 
 #. rle
-#: plug-ins/common/tga.c:1197
+#: plug-ins/common/tga.c:1208
 msgid "RLE compression"
+msgstr ""
+
+#. origin
+#: plug-ins/common/tga.c:1217
+msgid "Origin at bottom left"
 msgstr ""
 
 #: plug-ins/common/threshold_alpha.c:104
@@ -6173,27 +6177,27 @@ msgstr ""
 msgid "TIFF Channel"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1580
+#: plug-ins/common/tiff.c:1584
 msgid "Save as TIFF"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1602
+#: plug-ins/common/tiff.c:1606
 msgid "Compression"
 msgstr "Kompresia"
 
-#: plug-ins/common/tiff.c:1607
+#: plug-ins/common/tiff.c:1611
 msgid "LZW"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1608
+#: plug-ins/common/tiff.c:1612
 msgid "Pack Bits"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1609
+#: plug-ins/common/tiff.c:1613
 msgid "Deflate"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1610
+#: plug-ins/common/tiff.c:1614
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -6325,7 +6329,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:539
-msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgid ""
+"This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:541
@@ -6906,30 +6911,30 @@ msgstr ""
 msgid "Created with The GIMP"
 msgstr ""
 
-#: plug-ins/common/xbm.c:730
+#: plug-ins/common/xbm.c:727
 #, c-format
 msgid "XBM: cannot open \"%s\"\n"
 msgstr ""
 
-#: plug-ins/common/xbm.c:813
+#: plug-ins/common/xbm.c:810
 #, c-format
 msgid "XBM: cannot read header (ftell == %ld)\n"
 msgstr ""
 
-#: plug-ins/common/xbm.c:819
+#: plug-ins/common/xbm.c:816
 msgid "XBM: no image width specified\n"
 msgstr ""
 
-#: plug-ins/common/xbm.c:825
+#: plug-ins/common/xbm.c:822
 msgid "XBM: no image height specified\n"
 msgstr ""
 
-#: plug-ins/common/xbm.c:831
+#: plug-ins/common/xbm.c:828
 msgid "XBM: no image data type specified\n"
 msgstr ""
 
 #. The image is not black-and-white.
-#: plug-ins/common/xbm.c:964
+#: plug-ins/common/xbm.c:961
 msgid ""
 "The image which you are trying to save as\n"
 "an XBM contains more than two colors.\n"
@@ -6938,54 +6943,54 @@ msgid ""
 "(1-bit) indexed image and try again."
 msgstr ""
 
-#: plug-ins/common/xbm.c:975
+#: plug-ins/common/xbm.c:972
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
 msgstr ""
 
-#: plug-ins/common/xbm.c:1004
+#: plug-ins/common/xbm.c:1001
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
 msgstr ""
 
-#: plug-ins/common/xbm.c:1145
+#: plug-ins/common/xbm.c:1142
 msgid "Save as XBM"
 msgstr ""
 
 #. parameter settings
-#: plug-ins/common/xbm.c:1162
+#: plug-ins/common/xbm.c:1159
 msgid "XBM Options"
 msgstr ""
 
 #. X10 format
-#: plug-ins/common/xbm.c:1173
+#: plug-ins/common/xbm.c:1170
 msgid "X10 Format Bitmap"
 msgstr ""
 
-#: plug-ins/common/xbm.c:1191
+#: plug-ins/common/xbm.c:1188
 msgid "Identifier Prefix:"
 msgstr ""
 
 #. hotspot toggle
-#: plug-ins/common/xbm.c:1209
+#: plug-ins/common/xbm.c:1206
 msgid "Write Hot Spot Values"
 msgstr ""
 
-#: plug-ins/common/xbm.c:1233
+#: plug-ins/common/xbm.c:1230
 msgid "Hot Spot X:"
 msgstr ""
 
 #. mask file
-#: plug-ins/common/xbm.c:1247
+#: plug-ins/common/xbm.c:1244
 msgid "Mask File"
 msgstr ""
 
-#: plug-ins/common/xbm.c:1258
+#: plug-ins/common/xbm.c:1255
 msgid "Write Extra Mask File"
 msgstr ""
 
-#: plug-ins/common/xbm.c:1269
+#: plug-ins/common/xbm.c:1266
 msgid "Mask File Extension:"
 msgstr ""
 
@@ -7572,7 +7577,8 @@ msgid "    you can get xanim exporting edition at"
 msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:146
-msgid "2.) if your xanim exporting edition is not in your PATH or is not named xanim"
+msgid ""
+"2.) if your xanim exporting edition is not in your PATH or is not named xanim"
 msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:150
@@ -9871,7 +9877,8 @@ msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:975
 #, c-format
-msgid "Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
+msgid ""
+"Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:986
@@ -10884,7 +10891,8 @@ msgid "Shadow depth:"
 msgstr ""
 
 #: plug-ins/gimpressionist/general.c:313
-msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid ""
+"The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 
 #: plug-ins/gimpressionist/general.c:319
@@ -11280,11 +11288,13 @@ msgid "The largest brush to create"
 msgstr ""
 
 #: plug-ins/gimpressionist/size.c:136
-msgid "Let the value (brightness) of the region determine the size of the stroke"
+msgid ""
+"Let the value (brightness) of the region determine the size of the stroke"
 msgstr ""
 
 #: plug-ins/gimpressionist/size.c:146
-msgid "The distance from the center of the image determines the size of the stroke"
+msgid ""
+"The distance from the center of the image determines the size of the stroke"
 msgstr ""
 
 #: plug-ins/gimpressionist/size.c:156

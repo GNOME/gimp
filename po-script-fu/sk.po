@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.2.x\n"
-"POT-Creation-Date: 2001-12-19 06:13-0500\n"
+"POT-Creation-Date: 2002-02-03 17:56-0800\n"
 "PO-Revision-Date: 2002-02-04 22:08+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -677,7 +677,8 @@ msgstr "<Toolbox>/Roz¹./Script-Fu/Pomôcky/Znaková mapa..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Mimozemská ¾iara/©ípka..."
+msgstr ""
+"<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Mimozemská ¾iara/©ípka..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
@@ -685,7 +686,8 @@ msgstr "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Mimozemská ¾iara/Bod..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Mimozemská ¾iara/Tlaèítko..."
+msgstr ""
+"<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Mimozemská ¾iara/Tlaèítko..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
@@ -703,7 +705,8 @@ msgstr "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Skosený vzor/Bod..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Skosený vzor/Tlaèítko..."
+msgstr ""
+"<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Skosený vzor/Tlaèítko..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
@@ -717,10 +720,12 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
-msgstr "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Gimp.org/Veµký nadpis..."
+msgstr ""
+"<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Gimp.org/Veµký nadpis..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
 msgstr ""
 "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Gimp.org/V¹eobecné nápisy na "
 "trubici..."
@@ -736,10 +741,11 @@ msgstr ""
 "trubici..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
 msgstr ""
-"<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Gimp.org/Nápis podtlaèítka "
-"na trubici..."
+"<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Gimp.org/Nápis podtlaèítka na "
+"trubici..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
@@ -2268,4 +2274,3 @@ msgstr "©írka"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Pracova» s kópiou"
-

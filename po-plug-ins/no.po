@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.2.2\n"
-"POT-Creation-Date: 2002-02-01 00:04+0100\n"
+"POT-Creation-Date: 2002-02-11 13:34-0800\n"
 "PO-Revision-Date: 2002-02-01 00:05+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -54,7 +54,7 @@ msgstr "Om"
 #: plug-ins/common/grid.c:661 plug-ins/common/gtm.c:375
 #: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:570
 #: plug-ins/common/iwarp.c:1142 plug-ins/common/jigsaw.c:2486
-#: plug-ins/common/jpeg.c:1595 plug-ins/common/lic.c:1021
+#: plug-ins/common/jpeg.c:1627 plug-ins/common/lic.c:1021
 #: plug-ins/common/mail.c:467 plug-ins/common/mapcolor.c:558
 #: plug-ins/common/max_rgb.c:348 plug-ins/common/mblur.c:763
 #: plug-ins/common/newsprint.c:1211 plug-ins/common/nlfilt.c:368
@@ -68,7 +68,7 @@ msgstr "Om"
 #: plug-ins/common/ripple.c:580 plug-ins/common/scatter_hsv.c:375
 #: plug-ins/common/screenshot.c:371 plug-ins/common/sel_gauss.c:242
 #: plug-ins/common/sharpen.c:525 plug-ins/common/shift.c:376
-#: plug-ins/common/sinus.c:1704 plug-ins/common/smooth_palette.c:403
+#: plug-ins/common/sinus.c:1704 plug-ins/common/smooth_palette.c:408
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spread.c:382
 #: plug-ins/common/struc.c:1281 plug-ins/common/sunras.c:1590
@@ -135,7 +135,7 @@ msgstr "OK"
 #: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:663
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
 #: plug-ins/common/illusion.c:572 plug-ins/common/iwarp.c:1146
-#: plug-ins/common/jigsaw.c:2488 plug-ins/common/jpeg.c:1597
+#: plug-ins/common/jigsaw.c:2488 plug-ins/common/jpeg.c:1629
 #: plug-ins/common/lic.c:1023 plug-ins/common/mail.c:469
 #: plug-ins/common/mapcolor.c:560 plug-ins/common/max_rgb.c:350
 #: plug-ins/common/mblur.c:765 plug-ins/common/newsprint.c:1213
@@ -150,7 +150,7 @@ msgstr "OK"
 #: plug-ins/common/scatter_hsv.c:377 plug-ins/common/screenshot.c:373
 #: plug-ins/common/sel_gauss.c:244 plug-ins/common/sharpen.c:527
 #: plug-ins/common/shift.c:378 plug-ins/common/sinus.c:1706
-#: plug-ins/common/smooth_palette.c:405 plug-ins/common/snoise.c:514
+#: plug-ins/common/smooth_palette.c:410 plug-ins/common/snoise.c:514
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
 #: plug-ins/common/spread.c:384 plug-ins/common/struc.c:1283
 #: plug-ins/common/sunras.c:1592 plug-ins/common/tga.c:1188
@@ -1374,12 +1374,12 @@ msgstr "%s: ugyldig fargekart"
 #: plug-ins/common/blinds.c:380 plug-ins/common/compose.c:543
 #: plug-ins/common/decompose.c:465 plug-ins/common/film.c:1002
 #: plug-ins/common/gifload.c:849 plug-ins/common/hrz.c:374
-#: plug-ins/common/jpeg.c:900 plug-ins/common/lic.c:904
+#: plug-ins/common/jpeg.c:914 plug-ins/common/lic.c:904
 #: plug-ins/common/papertile.c:316 plug-ins/common/pat.c:341
 #: plug-ins/common/pcx.c:332 plug-ins/common/pcx.c:338
 #: plug-ins/common/pix.c:370 plug-ins/common/png.c:547
 #: plug-ins/common/pnm.c:499 plug-ins/common/psd.c:2114
-#: plug-ins/common/smooth_palette.c:241 plug-ins/common/sunras.c:932
+#: plug-ins/common/smooth_palette.c:246 plug-ins/common/sunras.c:932
 #: plug-ins/common/tga.c:918 plug-ins/common/tiff.c:680
 #: plug-ins/common/tile.c:280 plug-ins/common/winclipboard.c:557
 #: plug-ins/common/wmf.c:2350 plug-ins/common/xbm.c:869
@@ -1402,7 +1402,7 @@ msgstr "Kan ikke åpne %s"
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:510
 #: plug-ins/common/gbr.c:489 plug-ins/common/gif.c:943
 #: plug-ins/common/gih.c:1218 plug-ins/common/gtm.c:247
-#: plug-ins/common/hrz.c:471 plug-ins/common/jpeg.c:1197
+#: plug-ins/common/hrz.c:471 plug-ins/common/jpeg.c:1229
 #: plug-ins/common/pat.c:384 plug-ins/common/pcx.c:547
 #: plug-ins/common/pix.c:532 plug-ins/common/png.c:777
 #: plug-ins/common/png.c:779 plug-ins/common/pnm.c:783
@@ -2143,7 +2143,7 @@ msgstr "Juster synlige lag"
 #: plug-ins/common/emboss.c:559 plug-ins/common/engrave.c:236
 #: plug-ins/common/gauss_iir.c:378 plug-ins/common/gauss_rle.c:373
 #: plug-ins/common/glasstile.c:294 plug-ins/common/grid.c:722
-#: plug-ins/common/illusion.c:606 plug-ins/common/jpeg.c:1643
+#: plug-ins/common/illusion.c:606 plug-ins/common/jpeg.c:1675
 #: plug-ins/common/lic.c:1090 plug-ins/common/max_rgb.c:381
 #: plug-ins/common/nlfilt.c:409 plug-ins/common/noisify.c:524
 #: plug-ins/common/nova.c:478 plug-ins/common/oilify.c:470
@@ -2152,7 +2152,7 @@ msgstr "Juster synlige lag"
 #: plug-ins/common/randomize.c:720 plug-ins/common/ripple.c:676
 #: plug-ins/common/scatter_hsv.c:428 plug-ins/common/sel_gauss.c:254
 #: plug-ins/common/sharpen.c:612 plug-ins/common/shift.c:389
-#: plug-ins/common/smooth_palette.c:414 plug-ins/common/snoise.c:525
+#: plug-ins/common/smooth_palette.c:419 plug-ins/common/snoise.c:525
 #: plug-ins/common/sobel.c:263 plug-ins/common/sparkle.c:363
 #: plug-ins/common/struc.c:1293 plug-ins/common/threshold_alpha.c:282
 #: plug-ins/common/unsharp.c:798 plug-ins/common/video.c:2167
@@ -3222,7 +3222,7 @@ msgstr "Lag histogram"
 #. table col, row
 #: plug-ins/common/destripe.c:670 plug-ins/common/gtm.c:551
 #: plug-ins/common/ps.c:2664 plug-ins/common/ps.c:2840
-#: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:428
+#: plug-ins/common/smooth_palette.c:435 plug-ins/common/tile.c:428
 #: plug-ins/gap/gap_mov_dialog.c:1873 plug-ins/imagemap/imap_rectangle.c:391
 #: plug-ins/print/gimp_main_window.c:638
 msgid "Width:"
@@ -3374,7 +3374,7 @@ msgstr "Begrens linjebredde"
 #. table col, row
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1239
 #: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2673
-#: plug-ins/common/ps.c:2849 plug-ins/common/smooth_palette.c:439
+#: plug-ins/common/ps.c:2849 plug-ins/common/smooth_palette.c:444
 #: plug-ins/common/tile.c:432 plug-ins/gap/gap_mov_dialog.c:1890
 #: plug-ins/imagemap/imap_rectangle.c:397
 #: plug-ins/print/gimp_main_window.c:652
@@ -3960,11 +3960,11 @@ msgstr "Lagre (middle transform) som QBE-fil..."
 msgid "G-Qbist 1.10"
 msgstr "G-Qbist 1.10"
 
-#: plug-ins/common/gradmap.c:118
+#: plug-ins/common/gradmap.c:123
 msgid "<Image>/Filters/Colors/Map/Gradient Map"
 msgstr "<Image>/Filtre/Farger/Kart/Gradient-kart"
 
-#: plug-ins/common/gradmap.c:154
+#: plug-ins/common/gradmap.c:159
 msgid "Gradient Map..."
 msgstr "Gradient-kart..."
 
@@ -4369,77 +4369,77 @@ msgstr "Eksporter forhåndsvisning"
 msgid "can't open \"%s\"\n"
 msgstr "kan ikke åpne \"%s\"\n"
 
-#: plug-ins/common/jpeg.c:893
+#: plug-ins/common/jpeg.c:907
 msgid "JPEG preview"
 msgstr "JPEG forhåndsvisning"
 
-#: plug-ins/common/jpeg.c:1115
+#: plug-ins/common/jpeg.c:1147
 #, c-format
 msgid "Size: %lu bytes (%02.01f kB)"
 msgstr "Størrelse: %lu bytes (%02.01f kB)"
 
-#: plug-ins/common/jpeg.c:1526 plug-ins/common/jpeg.c:1633
+#: plug-ins/common/jpeg.c:1558 plug-ins/common/jpeg.c:1665
 msgid "Size: unknown"
 msgstr "Størrelse: ukjent"
 
-#: plug-ins/common/jpeg.c:1590
+#: plug-ins/common/jpeg.c:1622
 msgid "Save as JPEG"
 msgstr "Lagre som JPEG"
 
 #. sg - preview
-#: plug-ins/common/jpeg.c:1613
+#: plug-ins/common/jpeg.c:1645
 msgid "Image Preview"
 msgstr "Forhåndsvisning av bilde"
 
-#: plug-ins/common/jpeg.c:1622
+#: plug-ins/common/jpeg.c:1654
 msgid "Preview (in image window)"
 msgstr "Forhåndsvis (i bildevinduet)"
 
-#: plug-ins/common/jpeg.c:1653 plug-ins/xjt/xjt.c:836
+#: plug-ins/common/jpeg.c:1685 plug-ins/xjt/xjt.c:836
 msgid "Quality:"
 msgstr "Kvalitet:"
 
-#: plug-ins/common/jpeg.c:1675 plug-ins/xjt/xjt.c:845
+#: plug-ins/common/jpeg.c:1707 plug-ins/xjt/xjt.c:845
 msgid "Smoothing:"
 msgstr "Utjevning:"
 
-#: plug-ins/common/jpeg.c:1702
+#: plug-ins/common/jpeg.c:1734
 msgid "Restart markers"
 msgstr "Gjenstart markører"
 
-#: plug-ins/common/jpeg.c:1710
+#: plug-ins/common/jpeg.c:1742
 msgid "Restart frequency (rows):"
 msgstr "Gjenstartingsfrekvens (rader):"
 
-#: plug-ins/common/jpeg.c:1739 plug-ins/xjt/xjt.c:816
+#: plug-ins/common/jpeg.c:1771 plug-ins/xjt/xjt.c:816
 msgid "Optimize"
 msgstr "Optimer"
 
-#: plug-ins/common/jpeg.c:1751
+#: plug-ins/common/jpeg.c:1783
 msgid "Progressive"
 msgstr "Progressiv"
 
-#: plug-ins/common/jpeg.c:1797
+#: plug-ins/common/jpeg.c:1829
 msgid "Subsampling:"
 msgstr "Undersampling:"
 
-#: plug-ins/common/jpeg.c:1806
+#: plug-ins/common/jpeg.c:1838
 msgid "Fast Integer"
 msgstr "Raskt heltall"
 
-#: plug-ins/common/jpeg.c:1807
+#: plug-ins/common/jpeg.c:1839
 msgid "Integer"
 msgstr "Heltall"
 
-#: plug-ins/common/jpeg.c:1808
+#: plug-ins/common/jpeg.c:1840
 msgid "Floating-Point"
 msgstr "Flyttall"
 
-#: plug-ins/common/jpeg.c:1812
+#: plug-ins/common/jpeg.c:1844
 msgid "DCT method (Speed/quality tradeoff):"
 msgstr "DCT-metode (Hastighet/kvalitetsforsakelse):"
 
-#: plug-ins/common/jpeg.c:1820
+#: plug-ins/common/jpeg.c:1852
 msgid "Image comments"
 msgstr "Bildekommentarer"
 
@@ -5841,19 +5841,19 @@ msgstr "Eksponent:"
 msgid "Blend"
 msgstr "Blend"
 
-#: plug-ins/common/smooth_palette.c:84
+#: plug-ins/common/smooth_palette.c:91
 msgid "<Image>/Filters/Colors/Smooth Palette..."
 msgstr "<Image>/Filtre/Farger/Myk palett..."
 
-#: plug-ins/common/smooth_palette.c:173
+#: plug-ins/common/smooth_palette.c:180
 msgid "Deriving smooth palette..."
 msgstr "Regner ut myk palett..."
 
-#: plug-ins/common/smooth_palette.c:398
+#: plug-ins/common/smooth_palette.c:403
 msgid "Smooth Palette"
 msgstr "Myk palett"
 
-#: plug-ins/common/smooth_palette.c:448
+#: plug-ins/common/smooth_palette.c:453
 msgid "Search Time:"
 msgstr "Søketid:"
 

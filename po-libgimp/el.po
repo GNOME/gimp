@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.0\n"
-"POT-Creation-Date: 2001-09-28 15:50+0200\n"
+"POT-Creation-Date: 2001-11-12 22:34-0800\n"
 "PO-Revision-Date: 2001-12-27 15:07+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -124,7 +124,10 @@ msgid "Confirm"
 msgstr "Επιβεβαίωση"
 
 #
-#: libgimp/gimpexport.c:362 libgimp/gimpexport.c:423 libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260 libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383 libgimp/gimpunitmenu.c:505
+#: libgimp/gimpexport.c:362 libgimp/gimpexport.c:423
+#: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
+#: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
+#: libgimp/gimpunitmenu.c:505
 msgid "Cancel"
 msgstr "Ακύρωση"
 
@@ -180,7 +183,9 @@ msgid "Select File"
 msgstr "Επιλογή Αρχείου"
 
 #
-#: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260 libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383 libgimp/gimpunitmenu.c:503
+#: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
+#: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
+#: libgimp/gimpunitmenu.c:503
 msgid "OK"
 msgstr "Εντάξει"
 
@@ -281,4 +286,3 @@ msgstr "Kbyte"
 #, fuzzy
 msgid "MegaBytes"
 msgstr "Byte"
-

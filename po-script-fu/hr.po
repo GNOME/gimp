@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
+"POT-Creation-Date: 2002-02-03 17:56-0800\n"
 "PO-Revision-Date: 2000-11-04 18:50+0100\n"
 "Last-Translator: ®eljan Rikalo <zeljko@linuxfreak.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -22,8 +22,10 @@ msgid "Script-Fu Console"
 msgstr "Script-Fu Konzola"
 
 #. Action area
+#: plug-ins/dbbrowser/dbbrowser_utils.c:159
+#: plug-ins/dbbrowser/dbbrowser_utils.c:176
 #: plug-ins/script-fu/script-fu-console.c:199
-#: plug-ins/script-fu/script-fu-scripts.c:2033
+#: plug-ins/script-fu/script-fu-scripts.c:2002
 msgid "Close"
 msgstr "Zatvori"
 
@@ -54,72 +56,72 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu provjera je dozvoljena samo kao ne-interaktivni poziv"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1206
-#: plug-ins/script-fu/script-fu-scripts.c:1209
+#: plug-ins/script-fu/script-fu-scripts.c:1175
+#: plug-ins/script-fu/script-fu-scripts.c:1178
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1208
-#: plug-ins/script-fu/script-fu-scripts.c:1211
+#: plug-ins/script-fu/script-fu-scripts.c:1177
+#: plug-ins/script-fu/script-fu-scripts.c:1180
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1234
+#: plug-ins/script-fu/script-fu-scripts.c:1203
 msgid "Script Arguments"
 msgstr "Argumenti Skripte"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1257
+#: plug-ins/script-fu/script-fu-scripts.c:1226
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1304
+#: plug-ins/script-fu/script-fu-scripts.c:1273
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu odabir boje"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1374
+#: plug-ins/script-fu/script-fu-scripts.c:1343
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu Odabir Datoteke"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1406
+#: plug-ins/script-fu/script-fu-scripts.c:1375
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu Odabir Uzorka"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1413
+#: plug-ins/script-fu/script-fu-scripts.c:1382
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu Odabir Gradijenta"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1421
+#: plug-ins/script-fu/script-fu-scripts.c:1390
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu Odabir Kista"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1467
+#: plug-ins/script-fu/script-fu-scripts.c:1436
 msgid "Reset to Defaults"
 msgstr "Vrati na standardno"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1493
+#: plug-ins/script-fu/script-fu-scripts.c:1462
 msgid "About"
 msgstr "O..."
 
-#: plug-ins/script-fu/script-fu-scripts.c:1507
-#: plug-ins/script-fu/script-fu-server.c:544
+#: plug-ins/script-fu/script-fu-scripts.c:1476
+#: plug-ins/script-fu/script-fu-server.c:549
 msgid "OK"
 msgstr "OK"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1516
-#: plug-ins/script-fu/script-fu-server.c:546
+#: plug-ins/script-fu/script-fu-scripts.c:1485
+#: plug-ins/script-fu/script-fu-server.c:551
 msgid "Cancel"
 msgstr "Odustani"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1682
+#: plug-ins/script-fu/script-fu-scripts.c:1651
 msgid "NOT SET"
 msgstr "NIJE PODE©ENO"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1711
+#: plug-ins/script-fu/script-fu-scripts.c:1680
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -127,27 +129,31 @@ msgstr ""
 "Najmanje jedan font koji ste izabrali je nepravilan.\n"
 "Molim provjerite postavke.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2004
+#. show the author & the copyright
+#: plug-ins/dbbrowser/dbbrowser_utils.c:518
+#: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2010
+#: plug-ins/dbbrowser/dbbrowser_utils.c:548
+#: plug-ins/script-fu/script-fu-scripts.c:1979
 msgid "Copyright:"
 msgstr "Autorska prava:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2016
+#: plug-ins/dbbrowser/dbbrowser_utils.c:533
+#: plug-ins/script-fu/script-fu-scripts.c:1985
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2024
+#: plug-ins/script-fu/script-fu-scripts.c:1993
 msgid "Image Types:"
 msgstr "Vrste Slika:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2189
+#: plug-ins/script-fu/script-fu-scripts.c:2158
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu Odabir Fonta"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2256
+#: plug-ins/script-fu/script-fu-scripts.c:2225
 #, fuzzy, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -155,15 +161,15 @@ msgid ""
 "%s"
 msgstr "Script-Fu Odabir Datoteke"
 
-#: plug-ins/script-fu/script-fu-server.c:539
+#: plug-ins/script-fu/script-fu-server.c:544
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu postavke Servera"
 
-#: plug-ins/script-fu/script-fu-server.c:566
+#: plug-ins/script-fu/script-fu-server.c:571
 msgid "Server Port:"
 msgstr "Serverski Port:"
 
-#: plug-ins/script-fu/script-fu-server.c:572
+#: plug-ins/script-fu/script-fu-server.c:577
 msgid "Server Logfile:"
 msgstr "Serverska Zabilje¹ka(log):"
 
@@ -182,6 +188,71 @@ msgstr "Ponovno uèitaj sve dostupne skripte"
 #: plug-ins/script-fu/script-fu.c:1110
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Xtns/Script-Fu/Osvje¾i"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:148
+#: plug-ins/dbbrowser/dbbrowser_utils.c:167
+#, fuzzy
+msgid "DB Browser (init...)"
+msgstr "Tra¾i..."
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:153
+#: plug-ins/dbbrowser/dbbrowser_utils.c:172
+msgid "Search by Name"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:155
+#: plug-ins/dbbrowser/dbbrowser_utils.c:174
+msgid "Search by Blurb"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:157
+msgid "Apply"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:226
+msgid "Search:"
+msgstr ""
+
+#. show the name
+#: plug-ins/dbbrowser/dbbrowser_utils.c:344
+#, fuzzy
+msgid "Name:"
+msgstr "Datum:"
+
+#. show the description
+#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+#, fuzzy
+msgid "Blurb:"
+msgstr "Zamuæenje Y"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:382
+msgid "In:"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:429
+msgid "Out:"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:479
+msgid "Help:"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:643
+msgid "DB Browser (by name - please wait)"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:667
+msgid "DB Browser (by blurb - please wait)"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:677
+msgid "DB Browser (please wait)"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:743
+#, fuzzy
+msgid "DB Browser"
+msgstr "Tra¾i..."
 
 #: plug-ins/script-fu/scripts/copy-visible.scm:0
 msgid "<Image>/Edit/Copy Visible"
@@ -840,7 +911,8 @@ msgid "Base Color"
 msgstr "Bazna Boja"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Base Radius (pixel)"
+#, fuzzy
+msgid "Base Radius (pixels)"
 msgstr "Osnovni Polumjer (piksel)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.2\n"
-"POT-Creation-Date: 2001-11-30 02:36+0100\n"
+"POT-Creation-Date: 2002-02-03 20:05-0800\n"
 "PO-Revision-Date: 2001-11-30 04:00+0200\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -131,7 +131,7 @@ msgstr "Afsluiten"
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:573 app/file_new_dialog.c:212 app/file_new_dialog.c:362
-#: app/gdisplay_ops.c:310 app/gimphelp.c:197 app/gimpprogress.c:120
+#: app/gdisplay_ops.c:310 app/gimphelp.c:201 app/gimpprogress.c:120
 #: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4944
 #: app/gradient.c:5505 app/hue_saturation.c:383 app/interface.c:1047
 #: app/layers_dialog.c:3563 app/layers_dialog.c:3747 app/layers_dialog.c:3842
@@ -931,7 +931,8 @@ msgid ""
 "You should not generate a palette of more than 255 colors if you intend to "
 "create a transparent or animated GIF file from this image."
 msgstr ""
-"U probeert een afbeelding met alpha/lagen van RGB/Grijswaarden naar geïndexeerd te converteren.\n"
+"U probeert een afbeelding met alpha/lagen van RGB/Grijswaarden naar "
+"geïndexeerd te converteren.\n"
 "Genereer niet een palet van meer dan 255 kleuren als u van plan bent om een "
 "transparant of geanimeerd GIF-bestand van deze afbeelding te maken."
 
@@ -1644,11 +1645,11 @@ msgstr "naamloos"
 msgid "Layer type %d not supported."
 msgstr "Laagtype %d niet ondersteund."
 
-#: app/gimphelp.c:191
+#: app/gimphelp.c:195
 msgid "Could not find GIMP Help Browser"
 msgstr "Kan de GIMP Helpbrowser niet vinden"
 
-#: app/gimphelp.c:193
+#: app/gimphelp.c:197
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -1658,7 +1659,7 @@ msgstr ""
 "Hij was waarschijnlijk niet gecompileerd, omdat\n"
 "u GtkXmHTML niet hebt geïnstalleerd."
 
-#: app/gimphelp.c:196
+#: app/gimphelp.c:200
 msgid "Use Netscape instead"
 msgstr "Vervang door Netscape"
 

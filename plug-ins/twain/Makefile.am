@@ -18,9 +18,7 @@ EXTRA_DIST = \
 	README		\
 	tw_dump.c	\
 	tw_dump.h	\
-	tw_sess.c	\
-	twain.ico	\
-	twain.rc
+	tw_sess.c
 
 INCLUDES = \
 	-I$(top_srcdir)			\

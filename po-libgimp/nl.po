@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.2\n"
-"POT-Creation-Date: 2001-11-30 02:40+0100\n"
+"POT-Creation-Date: 2001-11-12 22:34-0800\n"
 "PO-Revision-Date: 2001-09-17 00:00+01:00\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -148,7 +148,9 @@ msgstr "Negeren"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "Uw afbeelding moet geëxporteerd worden, voordat het bewaard kan worden, om de volgende redenen :"
+msgstr ""
+"Uw afbeelding moet geëxporteerd worden, voordat het bewaard kan worden, om "
+"de volgende redenen :"
 
 #. the footline
 #: libgimp/gimpexport.c:501

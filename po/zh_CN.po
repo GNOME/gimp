@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2001-12-01 18:57+0800\n"
+"POT-Creation-Date: 2002-02-03 20:05-0800\n"
 "PO-Revision-Date: 2001-10-26 17:30+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -130,7 +130,7 @@ msgstr ""
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:573 app/file_new_dialog.c:212 app/file_new_dialog.c:362
-#: app/gdisplay_ops.c:310 app/gimphelp.c:197 app/gimpprogress.c:120
+#: app/gdisplay_ops.c:310 app/gimphelp.c:201 app/gimpprogress.c:120
 #: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4944
 #: app/gradient.c:5505 app/hue_saturation.c:383 app/interface.c:1047
 #: app/layers_dialog.c:3563 app/layers_dialog.c:3747 app/layers_dialog.c:3842
@@ -1623,11 +1623,11 @@ msgstr "未命名"
 msgid "Layer type %d not supported."
 msgstr "不支持图层类型 %d 。"
 
-#: app/gimphelp.c:191
+#: app/gimphelp.c:195
 msgid "Could not find GIMP Help Browser"
 msgstr "找不到 GIMP 帮助浏览器"
 
-#: app/gimphelp.c:193
+#: app/gimphelp.c:197
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -1637,7 +1637,7 @@ msgstr ""
 "可能是因为你没有安装 GtkXmHTML 所以它没有\n"
 "被编译。"
 
-#: app/gimphelp.c:196
+#: app/gimphelp.c:200
 msgid "Use Netscape instead"
 msgstr "使用 Netscape 替代"
 

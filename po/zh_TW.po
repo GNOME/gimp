@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.3\n"
-"POT-Creation-Date: 2001-11-23 06:18-0500\n"
+"POT-Creation-Date: 2002-02-03 20:05-0800\n"
 "PO-Revision-Date: 2001-11-24 07:32+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional chinese <zh-l10n@linux.org.tw>\n"
@@ -134,7 +134,7 @@ msgstr "離開"
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:573 app/file_new_dialog.c:212 app/file_new_dialog.c:362
-#: app/gdisplay_ops.c:310 app/gimphelp.c:197 app/gimpprogress.c:120
+#: app/gdisplay_ops.c:310 app/gimphelp.c:201 app/gimpprogress.c:120
 #: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4944
 #: app/gradient.c:5505 app/hue_saturation.c:383 app/interface.c:1047
 #: app/layers_dialog.c:3563 app/layers_dialog.c:3747 app/layers_dialog.c:3842
@@ -1606,11 +1606,11 @@ msgstr "未命名"
 msgid "Layer type %d not supported."
 msgstr "不支援圖層類型 %d。"
 
-#: app/gimphelp.c:191
+#: app/gimphelp.c:195
 msgid "Could not find GIMP Help Browser"
 msgstr "找不到 GIMP 說明瀏覽器"
 
-#: app/gimphelp.c:193
+#: app/gimphelp.c:197
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -1620,35 +1620,35 @@ msgstr ""
 "可能是因為系統裡未有安裝 GtkXmHTML\n"
 "令此功能沒有被編譯到程式中。"
 
-#: app/gimphelp.c:196
+#: app/gimphelp.c:200
 msgid "Use Netscape instead"
 msgstr "用 Netscape 替代"
 
-#: app/gimpimage.c:2324
+#: app/gimpimage.c:2328
 msgid "Layer cannot be raised any further"
 msgstr "圖層無法再上移"
 
-#: app/gimpimage.c:2352
+#: app/gimpimage.c:2356
 msgid "Layer cannot be lowered any further"
 msgstr "圖層無法再下移"
 
-#: app/gimpimage.c:2378
+#: app/gimpimage.c:2382
 msgid "Layer is already on top"
 msgstr "圖層已經到最頂層"
 
-#: app/gimpimage.c:2384
+#: app/gimpimage.c:2388
 msgid "Can't raise Layer without alpha"
 msgstr "不可提升沒有透明度的圖層"
 
-#: app/gimpimage.c:2412
+#: app/gimpimage.c:2416
 msgid "Layer is already on bottom"
 msgstr "圖層已經在最底層"
 
-#: app/gimpimage.c:2467
+#: app/gimpimage.c:2471
 msgid "BG has no alpha, layer was placed above"
 msgstr "背景沒有透明度，圖層已放在上面"
 
-#: app/gimpimage.c:2539
+#: app/gimpimage.c:2543
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1656,11 +1656,11 @@ msgstr ""
 "沒有足夠的可見圖層可以合併。\n"
 "至少需要兩層。"
 
-#: app/gimpimage.c:2623
+#: app/gimpimage.c:2627
 msgid "There are not enough visible layers for a merge down."
 msgstr "沒有足夠的可見圖層可以向下合併。"
 
-#: app/gimpimage.c:3073
+#: app/gimpimage.c:3077
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1668,7 +1668,7 @@ msgstr ""
 "無法新增圖層遮罩，因為\n"
 "該圖層已經有一個了。"
 
-#: app/gimpimage.c:3079
+#: app/gimpimage.c:3083
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1676,7 +1676,7 @@ msgstr ""
 "無法新增圖層遮罩到索引色\n"
 "圖像的圖層。"
 
-#: app/gimpimage.c:3085
+#: app/gimpimage.c:3089
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1684,19 +1684,19 @@ msgstr ""
 "無法新增圖層遮罩到沒有\n"
 "透明色版的圖層。"
 
-#: app/gimpimage.c:3094
+#: app/gimpimage.c:3098
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "無法新增與指定圖層的尺寸不同的圖層遮罩"
 
-#: app/gimpimage.c:3202
+#: app/gimpimage.c:3206
 msgid "Channel cannot be raised any further"
 msgstr "色版無法再上移"
 
-#: app/gimpimage.c:3253
+#: app/gimpimage.c:3257
 msgid "Channel cannot be lowered any further"
 msgstr "色版無法再下移"
 
-#: app/gimpimage.c:3474 app/palette.c:358 app/palette.c:936 app/palette.c:1072
+#: app/gimpimage.c:3478 app/palette.c:358 app/palette.c:936 app/palette.c:1072
 #: app/palette.c:2014 app/palette.c:2740 app/palette.c:2872
 msgid "Untitled"
 msgstr "無標題"
