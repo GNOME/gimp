@@ -28,12 +28,6 @@
 /* maximum bits per pixel ... */
 #define MAX_BPP 4
 
-/* part of Hans Breuer's pygimp on win32 patch */
-#if defined(_MSC_VER)
-/* reduce strict checking in glibconfig.h */
-#  pragma warning(default:4047)
-#endif
-
 PyObject *pygimp_error;
 
 #ifndef PG_DEBUG
@@ -217,11 +211,9 @@ pygimp_main(PyObject *self, PyObject *args)
 }
 
 static PyObject *
-pygimp_quit(PyObject *self, PyObject *args)
+pygimp_quit(PyObject *self)
 {
 
-    if (!PyArg_ParseTuple(args, ":quit"))
-	return NULL;
     gimp_quit();
     Py_INCREF(Py_None);
     return Py_None;
@@ -295,13 +287,11 @@ pygimp_progress_update(PyObject *self, PyObject *args)
 }
 
 static PyObject *
-pygimp_image_list(PyObject *self, PyObject *args)
+pygimp_image_list(PyObject *self)
 {
     gint32 *imgs;
     int nimgs, i;
     PyObject *ret;
-    if (!PyArg_ParseTuple(args, ":image_list"))
-	return NULL;
     imgs = gimp_image_list(&nimgs);
     ret = PyList_New(nimgs);
     for (i = 0; i < nimgs; i++)
@@ -454,48 +444,40 @@ pygimp_register_save_handler(PyObject *self, PyObject *args)
 }
 
 static PyObject *
-pygimp_gamma(PyObject *self, PyObject *args)
+pygimp_gamma(PyObject *self)
 {
-    if (!PyArg_ParseTuple(args, ":gamma"))
-	return NULL;
     return PyFloat_FromDouble(gimp_gamma());
 }
 
 static PyObject *
-pygimp_install_cmap(PyObject *self, PyObject *args)
+pygimp_install_cmap(PyObject *self)
 {
-    if (!PyArg_ParseTuple(args, ":install_cmap"))
-	return NULL;
     return PyInt_FromLong(gimp_install_cmap());
 }
 
 static PyObject *
-pygimp_gtkrc(PyObject *self, PyObject *args)
+pygimp_gtkrc(PyObject *self)
 {
-    if (!PyArg_ParseTuple(args, ":gtkrc"))
-	return NULL;
     return PyString_FromString(gimp_gtkrc());
 }
 
 static PyObject *
-pygimp_get_background(PyObject *self, PyObject *args)
+pygimp_get_background(PyObject *self)
 {
     GimpRGB colour;
     guchar r, g, b;
-    if (!PyArg_ParseTuple(args, ":get_background"))
-	return NULL;
+
     gimp_palette_get_background(&colour);
     gimp_rgb_get_uchar(&colour, &r, &g, &b);
     return Py_BuildValue("(iii)", (int)r, (int)g, (int)b);
 }
 
 static PyObject *
-pygimp_get_foreground(PyObject *self, PyObject *args)
+pygimp_get_foreground(PyObject *self)
 {
     GimpRGB colour;
     guchar r, g, b;
-    if (!PyArg_ParseTuple(args, ":get_foreground"))
-	return NULL;
+
     gimp_palette_get_foreground(&colour);
     gimp_rgb_get_uchar(&colour, &r, &g, &b);
     return Py_BuildValue("(iii)", (int)r, (int)g, (int)b);
@@ -540,13 +522,12 @@ pygimp_set_foreground(PyObject *self, PyObject *args)
 }
 
 static PyObject *
-pygimp_gradients_get_list(PyObject *self, PyObject *args)
+pygimp_gradients_get_list(PyObject *self)
 {
     char **list;
     int num, i;
     PyObject *ret;
-    if (!PyArg_ParseTuple(args, ":gradients_get_list"))
-	return NULL;
+
     list = gimp_gradients_get_list(&num);
     ret = PyList_New(num);
     for (i = 0; i < num; i++)
@@ -556,10 +537,8 @@ pygimp_gradients_get_list(PyObject *self, PyObject *args)
 }
 
 static PyObject *
-pygimp_gradients_get_gradient(PyObject *self, PyObject *args)
+pygimp_gradients_get_gradient(PyObject *self)
 {
-    if (!PyArg_ParseTuple(args, ":gradients_get_gradient"))
-	return NULL;
     return PyString_FromString(gimp_gradients_get_gradient());
 }
 
@@ -643,10 +622,8 @@ pygimp_delete(PyObject *self, PyObject *args)
 
 
 static PyObject *
-pygimp_displays_flush(PyObject *self, PyObject *args)
+pygimp_displays_flush(PyObject *self)
 {
-    if (!PyArg_ParseTuple(args, ":flush"))
-	return NULL;
     gimp_displays_flush();
     Py_INCREF(Py_None);
     return Py_None;
@@ -678,19 +655,15 @@ pygimp_tile_cache_ntiles(PyObject *self, PyObject *args)
 
 
 static PyObject *
-pygimp_tile_width(PyObject *self, PyObject *args)
+pygimp_tile_width(PyObject *self)
 {
-    if (PyArg_ParseTuple(args, ":tile_width"))
-	return NULL;
     return PyInt_FromLong(gimp_tile_width());
 }
 
 
 static PyObject *
-pygimp_tile_height(PyObject *self, PyObject *args)
+pygimp_tile_height(PyObject *self)
 {
-    if (PyArg_ParseTuple(args, ":tile_height"))
-	return NULL;
     return PyInt_FromLong(gimp_tile_height());
 }
 
@@ -698,10 +671,8 @@ void gimp_extension_ack     (void);
 void gimp_extension_process (guint timeout);
 
 static PyObject *
-pygimp_extension_ack(PyObject *self, PyObject *args)
+pygimp_extension_ack(PyObject *self)
 {
-    if (!PyArg_ParseTuple(args, ":extension_ack"))
-	return NULL;
     gimp_extension_ack();
     Py_INCREF(Py_None);
     return Py_None;
@@ -765,10 +736,30 @@ pygimp_parasite_detach(PyObject *self, PyObject *args)
 }
 
 static PyObject *
-pygimp_default_display(PyObject *self, PyObject *args)
+pygimp_parasite_list(PyObject *self)
 {
-    if (!PyArg_ParseTuple(args, ":default_display"))
-	return NULL;
+    gint num_parasites;
+    gchar **parasites;
+
+    if (gimp_parasite_list(&num_parasites, &parasites)) {
+	PyObject *ret;
+	gint i;
+
+	ret = PyTuple_New(num_parasites);
+	for (i = 0; i < num_parasites; i++) {
+	    PyTuple_SetItem(ret, i, PyString_FromString(parasites[i]));
+	    g_free(parasites[i]);
+	}
+	g_free(parasites);
+	return ret;
+    }
+    PyErr_SetString(pygimp_error, "could not list parasites");
+    return NULL;
+}
+
+static PyObject *
+pygimp_default_display(PyObject *self)
+{
     return pygimp_display_new(gimp_default_display());
 }
 
@@ -812,43 +803,44 @@ id2display(PyObject *self, PyObject *args)
 
 static struct PyMethodDef gimp_methods[] = {
     {"main",	(PyCFunction)pygimp_main,	METH_VARARGS},
-    {"quit",	(PyCFunction)pygimp_quit,	METH_VARARGS},
+    {"quit",	(PyCFunction)pygimp_quit,	METH_NOARGS},
     {"set_data",	(PyCFunction)pygimp_set_data,	METH_VARARGS},
     {"get_data",	(PyCFunction)pygimp_get_data,	METH_VARARGS},
     {"progress_init",	(PyCFunction)pygimp_progress_init,	METH_VARARGS},
     {"progress_update",	(PyCFunction)pygimp_progress_update,	METH_VARARGS},
-    {"image_list",	(PyCFunction)pygimp_image_list,	METH_VARARGS},
+    {"image_list",	(PyCFunction)pygimp_image_list,	METH_NOARGS},
     {"install_procedure",	(PyCFunction)pygimp_install_procedure,	METH_VARARGS},
     {"install_temp_proc",	(PyCFunction)pygimp_install_temp_proc,	METH_VARARGS},
     {"uninstall_temp_proc",	(PyCFunction)pygimp_uninstall_temp_proc,	METH_VARARGS},
     {"register_magic_load_handler",	(PyCFunction)pygimp_register_magic_load_handler,	METH_VARARGS},
     {"register_load_handler",	(PyCFunction)pygimp_register_load_handler,	METH_VARARGS},
     {"register_save_handler",	(PyCFunction)pygimp_register_save_handler,	METH_VARARGS},
-    {"gamma",	(PyCFunction)pygimp_gamma,	METH_VARARGS},
-    {"install_cmap",	(PyCFunction)pygimp_install_cmap,	METH_VARARGS},
-    {"gtkrc",	(PyCFunction)pygimp_gtkrc,	METH_VARARGS},
-    {"get_background",	(PyCFunction)pygimp_get_background,	METH_VARARGS},
-    {"get_foreground",	(PyCFunction)pygimp_get_foreground,	METH_VARARGS},
+    {"gamma",	(PyCFunction)pygimp_gamma,	METH_NOARGS},
+    {"install_cmap",	(PyCFunction)pygimp_install_cmap,	METH_NOARGS},
+    {"gtkrc",	(PyCFunction)pygimp_gtkrc,	METH_NOARGS},
+    {"get_background",	(PyCFunction)pygimp_get_background,	METH_NOARGS},
+    {"get_foreground",	(PyCFunction)pygimp_get_foreground,	METH_NOARGS},
     {"set_background",	(PyCFunction)pygimp_set_background,	METH_VARARGS},
     {"set_foreground",	(PyCFunction)pygimp_set_foreground,	METH_VARARGS},
-    {"gradients_get_list",	(PyCFunction)pygimp_gradients_get_list,	METH_VARARGS},
-    {"gradients_get_gradient",	(PyCFunction)pygimp_gradients_get_gradient,	METH_VARARGS},
+    {"gradients_get_list",	(PyCFunction)pygimp_gradients_get_list,	METH_NOARGS},
+    {"gradients_get_gradient",	(PyCFunction)pygimp_gradients_get_gradient,	METH_NOARGS},
     {"gradients_set_gradient",	(PyCFunction)pygimp_gradients_set_gradient,	METH_VARARGS},
     {"gradients_sample_uniform",	(PyCFunction)pygimp_gradients_sample_uniform,	METH_VARARGS},
     {"gradients_sample_custom",	(PyCFunction)pygimp_gradients_sample_custom,	METH_VARARGS},
     {"delete", (PyCFunction)pygimp_delete, METH_VARARGS},
-    {"displays_flush", (PyCFunction)pygimp_displays_flush, METH_VARARGS},
+    {"displays_flush", (PyCFunction)pygimp_displays_flush, METH_NOARGS},
     {"tile_cache_size", (PyCFunction)pygimp_tile_cache_size, METH_VARARGS},
     {"tile_cache_ntiles", (PyCFunction)pygimp_tile_cache_ntiles, METH_VARARGS},
-    {"tile_width", (PyCFunction)pygimp_tile_width, METH_VARARGS},
-    {"tile_height", (PyCFunction)pygimp_tile_height, METH_VARARGS},
-    {"extension_ack", (PyCFunction)pygimp_extension_ack, METH_VARARGS},
+    {"tile_width", (PyCFunction)pygimp_tile_width, METH_NOARGS},
+    {"tile_height", (PyCFunction)pygimp_tile_height, METH_NOARGS},
+    {"extension_ack", (PyCFunction)pygimp_extension_ack, METH_NOARGS},
     {"extension_process", (PyCFunction)pygimp_extension_process, METH_VARARGS},
     {"parasite_find",      (PyCFunction)pygimp_parasite_find,      METH_VARARGS},
     {"parasite_attach",    (PyCFunction)pygimp_parasite_attach,    METH_VARARGS},
     {"attach_new_parasite",(PyCFunction)pygimp_attach_new_parasite,METH_VARARGS},
     {"parasite_detach",    (PyCFunction)pygimp_parasite_detach,    METH_VARARGS},
-    {"default_display",  (PyCFunction)pygimp_default_display,  METH_VARARGS},
+    {"parasite_list",    (PyCFunction)pygimp_parasite_list,    METH_NOARGS},
+    {"default_display",  (PyCFunction)pygimp_default_display,  METH_NOARGS},
     {"_id2image", (PyCFunction)id2image, METH_VARARGS},
     {"_id2drawable", (PyCFunction)id2drawable, METH_VARARGS},
     {"_id2display", (PyCFunction)id2display, METH_VARARGS},

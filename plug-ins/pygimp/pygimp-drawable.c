@@ -3,7 +3,7 @@
     Copyright (C) 1997-2002  James Henstridge <james@daa.com.au>
 
     This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
+    it under the terms of the GNU General Public License as published 
     the Free Software Foundation; either version 2 of the License, or
     (at your option) any later version.
 
@@ -30,10 +30,8 @@ ensure_drawable(PyGimpDrawable *self)
 }
 
 static PyObject *
-drw_flush(PyGimpDrawable *self, PyObject *args)
+drw_flush(PyGimpDrawable *self)
 {
-    if (!PyArg_ParseTuple(args, ":flush"))
-	return NULL;
     ensure_drawable(self);
     gimp_drawable_flush(self->drawable);
     Py_INCREF(Py_None);
@@ -114,6 +112,20 @@ drw_get_pixel_rgn(PyGimpDrawable *self, PyObject *args)
 }
 
 static PyObject *
+drw_offset(PyGimpDrawable *self, PyObject *args)
+{
+    gboolean wrap_around;
+    GimpOffsetType fill_type;
+    gint offset_x, offset_y;
+
+    if (!PyArg_ParseTuple(args, "iiii:offset", &wrap_around, &fill_type,
+			   &offset_x, &offset_y))
+	return NULL;
+    return PyInt_FromLong(gimp_drawable_offset(self->ID, wrap_around,
+					       fill_type, offset_x, offset_y));
+}
+
+static PyObject *
 drw_parasite_find(PyGimpDrawable *self, PyObject *args)
 {
     char *name;
@@ -158,19 +170,43 @@ drw_parasite_detach(PyGimpDrawable *self, PyObject *args)
     return Py_None;
 }
 
+static PyObject *
+drw_parasite_list(PyGimpImage *self)
+{
+    gint num_parasites;
+    gchar **parasites;
+
+    if (gimp_drawable_parasite_list(self->ID, &num_parasites, &parasites)) {
+	PyObject *ret;
+	gint i;
+
+	ret = PyTuple_New(num_parasites);
+	for (i = 0; i < num_parasites; i++) {
+	    PyTuple_SetItem(ret, i, PyString_FromString(parasites[i]));
+	    g_free(parasites[i]);
+	}
+	g_free(parasites);
+	return ret;
+    }
+    PyErr_SetString(pygimp_error, "could not list parasites");
+    return NULL;
+}
+
 /* for inclusion with the methods of layer and channel objects */
 static PyMethodDef drw_methods[] = {
-    {"flush",	(PyCFunction)drw_flush,	METH_VARARGS},
+    {"flush",	(PyCFunction)drw_flush,	METH_NOARGS},
     {"update",	(PyCFunction)drw_update,	METH_VARARGS},
     {"merge_shadow",	(PyCFunction)drw_merge_shadow,	METH_VARARGS},
     {"fill",	(PyCFunction)drw_fill,	METH_VARARGS},
     {"get_tile",	(PyCFunction)drw_get_tile,	METH_VARARGS},
     {"get_tile2",	(PyCFunction)drw_get_tile2,	METH_VARARGS},
     {"get_pixel_rgn", (PyCFunction)drw_get_pixel_rgn, METH_VARARGS},
+    {"offset", (PyCFunction)drw_offset, METH_VARARGS},
     {"parasite_find",       (PyCFunction)drw_parasite_find, METH_VARARGS},
     {"parasite_attach",     (PyCFunction)drw_parasite_attach, METH_VARARGS},
     {"attach_new_parasite",(PyCFunction)drw_attach_new_parasite,METH_VARARGS},
     {"parasite_detach",     (PyCFunction)drw_parasite_detach, METH_VARARGS},
+    {"parasite_list",     (PyCFunction)drw_parasite_list, METH_VARARGS},
     {NULL, NULL, 0}
 };
 
@@ -196,6 +232,12 @@ static PyObject *
 drw_get_height(PyGimpDrawable *self, void *closure)
 {
     return PyInt_FromLong(gimp_drawable_height(self->ID));
+}
+
+static PyObject *
+drw_get_image(PyGimpDrawable *self, void *closure)
+{
+    return pygimp_image_new(gimp_drawable_image(self->ID));
 }
 
 static PyObject *
@@ -247,6 +289,12 @@ drw_get_type(PyGimpDrawable *self, void *closure)
 }
 
 static PyObject *
+drw_get_type_with_alpha(PyGimpDrawable *self, void *closure)
+{
+    return PyInt_FromLong(gimp_drawable_type_with_alpha(self->ID));
+}
+
+static PyObject *
 drw_get_width(PyGimpDrawable *self, void *closure)
 {
     return PyInt_FromLong(gimp_drawable_width(self->ID));
@@ -257,6 +305,7 @@ static  PyGetSetDef drw_getsets[] = {
     { "bpp", (getter)drw_get_bpp, (setter)0 },
     { "has_alpha", (getter)drw_get_has_alpha, (setter)0 },
     { "height", (getter)drw_get_height, (setter)0 },
+    { "image", (getter)drw_get_image, (setter)0 },
     { "is_rgb", (getter)drw_get_is_rgb, (setter)0 },
     { "is_gray", (getter)drw_get_is_gray, (setter)0 },
     { "is_grey", (getter)drw_get_is_gray, (setter)0 },
@@ -265,6 +314,7 @@ static  PyGetSetDef drw_getsets[] = {
     { "mask_bounds", (getter)drw_get_mask_bounds, (setter)0 },
     { "offsets", (getter)drw_get_offsets, (setter)0 },
     { "type", (getter)drw_get_type, (setter)0 },
+    { "type_with_alpha", (getter)drw_get_type_with_alpha, (setter)0 },
     { "width", (getter)drw_get_width, (setter)0 },
     { NULL, (getter)0, (setter)0 }
 };
@@ -284,7 +334,7 @@ drw_repr(PyGimpLayer *self)
     gchar *name;
 
     name = gimp_drawable_name(self->ID);
-    s = PyString_FromFormat("<gimp.Drawable '%s'>", name);
+    s = PyString_FromFormat("<gimp.Drawable '%s'>", name?name:"(null)");
     g_free(name);
     return s;
 }
@@ -400,10 +450,8 @@ lay_copy(PyGimpLayer *self, PyObject *args)
 
 
 static PyObject *
-lay_add_alpha(PyGimpLayer *self, PyObject *args)
+lay_add_alpha(PyGimpLayer *self)
 {
-    if (!PyArg_ParseTuple(args, ":add_alpha"))
-	return NULL;
     gimp_layer_add_alpha(self->ID);
     Py_INCREF(Py_None);
     return Py_None;
@@ -472,48 +520,27 @@ lay_set_offsets(PyGimpLayer *self, PyObject *args)
     return Py_None;
 }
 
-static PyObject *
-lay_get_tattoo(PyGimpLayer *self, PyObject *args)
-{
-    if (!PyArg_ParseTuple(args, ":get_tattoo"))
-	return NULL;
-    return PyInt_FromLong(gimp_layer_get_tattoo(self->ID));
-}
-
 static PyMethodDef lay_methods[] = {
     {"copy",	(PyCFunction)lay_copy,	METH_VARARGS},
-    {"add_alpha",	(PyCFunction)lay_add_alpha,	METH_VARARGS},
+    {"add_alpha",	(PyCFunction)lay_add_alpha,	METH_NOARGS},
     {"create_mask",	(PyCFunction)lay_create_mask,	METH_VARARGS},
     {"resize",	(PyCFunction)lay_resize,	METH_VARARGS},
     {"scale",	(PyCFunction)lay_scale,	METH_VARARGS},
     {"translate",	(PyCFunction)lay_translate,	METH_VARARGS},
     {"set_offsets",	(PyCFunction)lay_set_offsets,	METH_VARARGS},
-    {"get_tattoo",      (PyCFunction)lay_get_tattoo,    METH_VARARGS},
     {NULL,		NULL}		/* sentinel */
 };
 
 static PyObject *
-lay_get_image(PyGimpLayer *self, void *closure)
+lay_get_is_floating_sel(PyGimpLayer *self, void *closure)
 {
-    gint32 id = gimp_layer_get_image_id(self->ID);
-
-    if (id == -1) {
-	Py_INCREF(Py_None);
-	return Py_None;
-    }
-    return pygimp_image_new(id);
-}
-
-static PyObject *
-lay_get_is_floating_selection(PyGimpLayer *self, void *closure)
-{
-    return PyInt_FromLong(gimp_layer_is_floating_selection(self->ID));
+    return PyInt_FromLong(gimp_layer_is_floating_sel(self->ID));
 }
 
 static PyObject *
 lay_get_mask(PyGimpLayer *self, void *closure)
 {
-    gint32 id = gimp_layer_get_mask_id(self->ID);
+    gint32 id = gimp_layer_mask(self->ID);
     if (id == -1) {
 	Py_INCREF(Py_None);
 	return Py_None;
@@ -559,6 +586,27 @@ lay_set_edit_mask(PyGimpLayer *self, PyObject *value, void *closure)
 	return -1;
     }
     gimp_layer_set_edit_mask(self->ID, PyInt_AsLong(value));
+    return 0;
+}
+
+static PyObject *
+lay_get_linked(PyGimpLayer *self, void *closure)
+{
+    return PyInt_FromLong(gimp_layer_get_linked(self->ID));
+}
+
+static int
+lay_set_linked(PyGimpLayer *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "can not delete linked.");
+        return -1;
+    }
+    if (!PyInt_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_layer_set_linked(self->ID, PyInt_AsLong(value));
     return 0;
 }
 
@@ -626,14 +674,13 @@ lay_set_opacity(PyGimpLayer *self, PyObject *value, void *closure)
 }
 
 static PyObject *
-lay_get_preserve_transparency(PyGimpLayer *self, void *closure)
+lay_get_preserve_trans(PyGimpLayer *self, void *closure)
 {
-    return PyInt_FromLong(gimp_layer_get_preserve_transparency(self->ID));
+    return PyInt_FromLong(gimp_layer_get_preserve_trans(self->ID));
 }
 
 static int
-lay_set_preserve_transparency(PyGimpLayer *self, PyObject *value,
-			      void *closure)
+lay_set_preserve_trans(PyGimpLayer *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
         PyErr_SetString(PyExc_TypeError,
@@ -644,7 +691,7 @@ lay_set_preserve_transparency(PyGimpLayer *self, PyObject *value,
 	PyErr_SetString(PyExc_TypeError, "type mis-match.");
 	return -1;
     }
-    gimp_layer_set_preserve_transparency(self->ID, PyInt_AsLong(value));
+    gimp_layer_set_preserve_trans(self->ID, PyInt_AsLong(value));
     return 0;
 }
 
@@ -670,6 +717,27 @@ lay_set_show_mask(PyGimpLayer *self, PyObject *value, void *closure)
 }
 
 static PyObject *
+lay_get_tattoo(PyGimpLayer *self, void *closure)
+{
+    return PyInt_FromLong(gimp_layer_get_tattoo(self->ID));
+}
+
+static int
+lay_set_tattoo(PyGimpLayer *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "can not delete tattoo.");
+        return -1;
+    }
+    if (!PyInt_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_layer_set_tattoo(self->ID, PyInt_AsLong(value));
+    return 0;
+}
+
+static PyObject *
 lay_get_visible(PyGimpLayer *self, void *closure)
 {
     return PyInt_FromLong(gimp_layer_get_visible(self->ID));
@@ -691,18 +759,18 @@ lay_set_visible(PyGimpLayer *self, PyObject *value, void *closure)
 }
 
 static PyGetSetDef lay_getsets[] = {
-    { "image", (getter)lay_get_image, (setter)0 },
-    { "is_floating_selection", (getter)lay_get_is_floating_selection,
-      (setter)0 },
+    { "is_floating_sel", (getter)lay_get_is_floating_sel, (setter)0 },
     { "mask", (getter)lay_get_mask, (setter)0 },
     { "apply_mask", (getter)lay_get_apply_mask, (setter)lay_set_apply_mask },
     { "edit_mask", (getter)lay_get_edit_mask, (setter)lay_set_edit_mask },
+    { "linked", (getter)lay_get_linked, (setter)lay_set_linked },
     { "mode", (getter)lay_get_mode, (setter)lay_set_mode },
     { "name", (getter)lay_get_name, (setter)lay_set_name },
     { "opacity", (getter)lay_get_opacity, (setter)lay_set_opacity },
-    { "preserve_transparency", (getter)lay_get_preserve_transparency,
-      (setter)lay_set_preserve_transparency },
+    { "preserve_trans", (getter)lay_get_preserve_trans,
+      (setter)lay_set_preserve_trans },
     { "show_mask", (getter)lay_get_show_mask, (setter)lay_set_show_mask },
+    { "tattoo", (getter)lay_get_tattoo, (setter)lay_set_tattoo },
     { "visible", (getter)lay_get_visible, (setter)lay_set_visible },
     { NULL, (getter)0, (setter)0 }
 };
@@ -809,12 +877,10 @@ pygimp_layer_new(gint32 ID)
 
 
 static PyObject *
-chn_copy(PyGimpChannel *self, PyObject *args)
+chn_copy(PyGimpChannel *self)
 {
     gint32 id;
 	
-    if (!PyArg_ParseTuple(args, ":copy"))
-	return NULL;
     id = gimp_channel_copy(self->ID);
     if (id == -1) {
 	PyErr_SetString(pygimp_error, "can't copy channel");
@@ -824,16 +890,22 @@ chn_copy(PyGimpChannel *self, PyObject *args)
 }
 
 static PyObject *
-chn_get_tattoo(PyGimpChannel *self, PyObject *args)
+chn_combine_masks(PyGimpChannel *self, PyObject *args)
 {
-    if (!PyArg_ParseTuple(args, ":get_tattoo"))
+    PyGimpChannel *channel2;
+    GimpChannelOps operation;
+    gint offx, offy;
+
+    if (!PyArg_ParseTuple(args, "O!iii:combine_masks", &PyGimpChannel_Type,
+			  &channel2, &operation, &offx, &offy))
 	return NULL;
-    return PyInt_FromLong(gimp_channel_get_tattoo(self->ID));
+    return PyInt_FromLong(gimp_channel_combine_masks(self->ID, channel2->ID,
+						     operation, offx, offy));
 }
 
 static PyMethodDef chn_methods[] = {
-    {"copy",	(PyCFunction)chn_copy,	METH_VARARGS},
-    {"get_tattoo", (PyCFunction)chn_get_tattoo, METH_VARARGS},
+    {"copy",	(PyCFunction)chn_copy,	METH_NOARGS},
+    {"combine_masks",	(PyCFunction)chn_combine_masks,	METH_VARARGS},
     {NULL,		NULL}		/* sentinel */
 };
 
@@ -866,17 +938,6 @@ chn_set_color(PyGimpChannel *self, PyObject *value, void *closure)
     gimp_rgb_set_uchar(&colour, r, g, b);
     gimp_channel_set_color(self->ID, &colour);
     return 0;
-}
-
-static PyObject *
-chn_get_image(PyGimpChannel *self, void *closure)
-{
-    gint32 id = gimp_channel_get_image_id(self->ID);
-    if (id == -1) {
-	Py_INCREF(Py_None);
-	return Py_None;
-    }
-    return pygimp_image_new(id);
 }
 
 static PyObject *
@@ -943,6 +1004,27 @@ chn_set_show_masked(PyGimpLayer *self, PyObject *value, void *closure)
 }
 
 static PyObject *
+chn_get_tattoo(PyGimpChannel *self, void *closure)
+{
+    return PyInt_FromLong(gimp_channel_get_tattoo(self->ID));
+}
+
+static int
+chn_set_tattoo(PyGimpChannel *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "can not delete tattoo.");
+        return -1;
+    }
+    if (!PyInt_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_channel_set_tattoo(self->ID, PyInt_AsLong(value));
+    return 0;
+}
+
+static PyObject *
 chn_get_visible(PyGimpLayer *self, void *closure)
 {
     return PyInt_FromLong(gimp_channel_get_visible(self->ID));
@@ -966,10 +1048,10 @@ chn_set_visible(PyGimpLayer *self, PyObject *value, void *closure)
 static PyGetSetDef chn_getsets[] = {
     { "color", (getter)chn_get_color, (setter)chn_set_color },
     { "colour", (getter)chn_get_color, (setter)chn_set_color },
-    { "image", (getter)chn_get_image, (setter)0 },
     { "name", (getter)chn_get_name, (setter)chn_set_name },
     { "opacity", (getter)chn_get_opacity, (setter)chn_set_opacity },
     { "show_masked", (getter)chn_get_show_masked, (setter)chn_set_show_masked},
+    { "tattoo", (getter)chn_get_tattoo, (setter)chn_set_tattoo },
     { "visible", (getter)chn_get_visible, (setter)chn_set_visible },
     { NULL, (getter)0, (setter)0 }
 };

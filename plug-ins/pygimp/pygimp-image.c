@@ -30,9 +30,7 @@ img_add_channel(PyGimpImage *self, PyObject *args)
 	
     if (!PyArg_ParseTuple(args, "O!i:add_channel", &PyGimpChannel_Type, &chn, &pos))
 	return NULL;
-    gimp_image_add_channel(self->ID, chn->ID, pos);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_add_channel(self->ID, chn->ID, pos));
 }
 
 
@@ -42,11 +40,10 @@ img_add_layer(PyGimpImage *self, PyObject *args)
     PyGimpLayer *lay;
     int pos;
 	
-    if (!PyArg_ParseTuple(args, "O!i:add_layer", &PyGimpLayer_Type, &lay, &pos))
+    if (!PyArg_ParseTuple(args, "O!i:add_layer", &PyGimpLayer_Type, &lay,
+			  &pos))
 	return NULL;
-    gimp_image_add_layer(self->ID, lay->ID, pos);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_add_layer(self->ID, lay->ID, pos));
 }
 
 
@@ -58,67 +55,37 @@ img_add_layer_mask(PyGimpImage *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "O!O!:add_layer_mask", &PyGimpLayer_Type, &lay,
 			  &PyGimpChannel_Type, &mask))
 	return NULL;
-    gimp_image_add_layer_mask(self->ID, lay->ID, mask->ID);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_add_layer_mask(self->ID, lay->ID,
+						    mask->ID));
 }
 
 
 static PyObject *
-img_clean_all(PyGimpImage *self, PyObject *args)
+img_clean_all(PyGimpImage *self)
 {
-    if (!PyArg_ParseTuple(args, ":clean_all"))
-	return NULL;
-    gimp_image_clean_all(self->ID);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_clean_all(self->ID));
 }
 
 
 static PyObject *
-img_disable_undo(PyGimpImage *self, PyObject *args)
+img_disable_undo(PyGimpImage *self)
 {
-    /*GimpParam *return_vals;
-    int nreturn_vals;*/
 
-    if (!PyArg_ParseTuple(args, ":disable_undo"))
-	return NULL;
-    /*return_vals = gimp_run_procedure("gimp_undo_push_group_start",
-				     &nreturn_vals, GIMP_PDB_IMAGE, self->ID,
-				     GIMP_PDB_END);
-    gimp_destroy_params(return_vals, nreturn_vals);*/
-    gimp_image_undo_disable(self->ID);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_undo_disable(self->ID));
 }
 
 
 static PyObject *
-img_enable_undo(PyGimpImage *self, PyObject *args)
+img_enable_undo(PyGimpImage *self)
 {
-    /*GimpParam *return_vals;
-    int nreturn_vals;*/
-
-    if (!PyArg_ParseTuple(args, ":enable_undo"))
-	return NULL;
-    /*return_vals = gimp_run_procedure("gimp_undo_push_group_start",
-				     &nreturn_vals, GIMP_PDB_IMAGE, self->ID,
-				     GIMP_PDB_END);
-    gimp_destroy_params(return_vals, nreturn_vals);*/
-    gimp_image_undo_enable(self->ID);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_undo_enable(self->ID));
 }
 
 
 static PyObject *
-img_flatten(PyGimpImage *self, PyObject *args)
+img_flatten(PyGimpImage *self)
 {
-    if (!PyArg_ParseTuple(args, ":flatten"))
-	return NULL;
-    gimp_image_flatten(self->ID);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return pygimp_layer_new(gimp_image_flatten(self->ID));
 }
 
 
@@ -128,11 +95,8 @@ img_lower_channel(PyGimpImage *self, PyObject *args)
     PyGimpChannel *chn;
     if (!PyArg_ParseTuple(args, "O!:lower_channel", &PyGimpChannel_Type, &chn))
 	return NULL;
-    gimp_image_lower_channel(self->ID, chn->ID);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_lower_channel(self->ID, chn->ID));
 }
-
 
 static PyObject *
 img_lower_layer(PyGimpImage *self, PyObject *args)
@@ -140,17 +104,25 @@ img_lower_layer(PyGimpImage *self, PyObject *args)
     PyGimpLayer *lay;
     if (!PyArg_ParseTuple(args, "O!:lower_layer", &PyGimpLayer_Type, &lay))
 	return NULL;
-    gimp_image_lower_layer(self->ID, lay->ID);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_lower_layer(self->ID, lay->ID));
 }
 
+static PyObject *
+img_lower_layer_to_bottom(PyGimpImage *self, PyObject *args)
+{
+    PyGimpLayer *lay;
+    if (!PyArg_ParseTuple(args, "O!:lower_layer_to_bottom",
+			  &PyGimpLayer_Type, &lay))
+	return NULL;
+    return PyInt_FromLong(gimp_image_lower_layer_to_bottom(self->ID, lay->ID));
+}
 
 static PyObject *
 img_merge_visible_layers(PyGimpImage *self, PyObject *args)
 {
     gint32 id;
     int merge;
+
     if (!PyArg_ParseTuple(args, "i:merge_visible_layers", &merge))
 	return NULL;
     id = gimp_image_merge_visible_layers(self->ID, merge);
@@ -161,6 +133,23 @@ img_merge_visible_layers(PyGimpImage *self, PyObject *args)
     return pygimp_layer_new(id);
 }
 
+static PyObject *
+img_merge_down(PyGimpImage *self, PyObject *args)
+{
+    gint32 id;
+    PyGimpLayer *layer;
+    int merge;
+
+    if (!PyArg_ParseTuple(args, "O!i:merge_visible_layers",
+			  &PyGimpLayer_Type, &layer, &merge))
+	return NULL;
+    id = gimp_image_merge_down(self->ID, layer->ID, merge);
+    if (id == -1) {
+	PyErr_SetString(pygimp_error, "Can't merge layers.");
+	return NULL;
+    }
+    return pygimp_layer_new(id);
+}
 
 static PyObject *
 img_pick_correlate_layer(PyGimpImage *self, PyObject *args)
@@ -186,11 +175,8 @@ img_raise_channel(PyGimpImage *self, PyObject *args)
 	
     if (!PyArg_ParseTuple(args, "O!:raise_channel", &PyGimpChannel_Type, &chn))
 	return NULL;
-    gimp_image_raise_channel(self->ID, chn->ID);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_raise_channel(self->ID, chn->ID));
 }
-
 
 static PyObject *
 img_raise_layer(PyGimpImage *self, PyObject *args)
@@ -198,11 +184,18 @@ img_raise_layer(PyGimpImage *self, PyObject *args)
     PyGimpLayer *lay;
     if (!PyArg_ParseTuple(args, "O!:raise_layer", &PyGimpLayer_Type, &lay))
 	return NULL;
-    gimp_image_raise_layer(self->ID, lay->ID);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_raise_layer(self->ID, lay->ID));
 }
 
+static PyObject *
+img_raise_layer_to_top(PyGimpImage *self, PyObject *args)
+{
+    PyGimpLayer *lay;
+    if (!PyArg_ParseTuple(args, "O!:raise_layer_to_top",
+			  &PyGimpLayer_Type, &lay))
+	return NULL;
+    return PyInt_FromLong(gimp_image_raise_layer_to_top(self->ID, lay->ID));
+}
 
 static PyObject *
 img_remove_channel(PyGimpImage *self, PyObject *args)
@@ -210,9 +203,7 @@ img_remove_channel(PyGimpImage *self, PyObject *args)
     PyGimpChannel *chn;
     if (!PyArg_ParseTuple(args, "O!:remove_channel", &PyGimpChannel_Type, &chn))
 	return NULL;
-    gimp_image_remove_channel(self->ID, chn->ID);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_remove_channel(self->ID, chn->ID));
 }
 
 
@@ -222,9 +213,7 @@ img_remove_layer(PyGimpImage *self, PyObject *args)
     PyGimpLayer *lay;
     if (!PyArg_ParseTuple(args, "O!:remove_layer", &PyGimpLayer_Type, &lay))
 	return NULL;
-    gimp_image_remove_layer(self->ID, lay->ID);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_remove_layer(self->ID, lay->ID));
 }
 
 
@@ -236,25 +225,57 @@ img_remove_layer_mask(PyGimpImage *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "O!i:remove_layer_mask", &PyGimpLayer_Type, &lay,
 			  &mode))
 	return NULL;
-    gimp_image_remove_layer_mask(self->ID, lay->ID, mode);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_remove_layer_mask(self->ID, lay->ID,
+						       mode));
 }
 
 
 static PyObject *
 img_resize(PyGimpImage *self, PyObject *args)
 {
-    unsigned int new_w, new_h;
+    int new_w, new_h;
     int offs_x, offs_y;
+
     if (!PyArg_ParseTuple(args, "iiii:resize", &new_w, &new_h,
 			  &offs_x, &offs_y))
 	return NULL;
-    gimp_image_resize(self->ID, new_w, new_h, offs_x, offs_y);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_resize(self->ID, new_w, new_h,
+					    offs_x, offs_y));
 }
 
+static PyObject *
+img_scale(PyGimpImage *self, PyObject *args)
+{
+    gint new_width, new_height;
+
+    if (!PyArg_ParseTuple(args, "ii:scale", &new_width, &new_height))
+	return NULL;
+    return PyInt_FromLong(gimp_image_scale(self->ID, new_width, new_height));
+}
+
+static PyObject *
+img_crop(PyGimpImage *self, PyObject *args)
+{
+    int new_w, new_h;
+    int offs_x, offs_y;
+    if (!PyArg_ParseTuple(args, "iiii:crop", &new_w, &new_h,
+			  &offs_x, &offs_y))
+	return NULL;
+    return PyInt_FromLong(gimp_image_crop(self->ID, new_w, new_h,
+					  offs_x, offs_y));
+}
+
+static PyObject *
+img_free_shadow(PyGimpImage *self)
+{
+    return PyInt_FromLong(gimp_image_free_shadow(self->ID));
+}
+
+static PyObject *
+img_unset_active_channel(PyGimpImage *self)
+{
+    return PyInt_FromLong(gimp_image_unset_active_channel(self->ID));
+}
 
 static PyObject *
 img_get_component_active(PyGimpImage *self, PyObject *args)
@@ -262,8 +283,7 @@ img_get_component_active(PyGimpImage *self, PyObject *args)
     int comp;
     if (!PyArg_ParseTuple(args, "i:get_component_active", &comp))
 	return NULL;
-    return PyInt_FromLong((long)
-			  gimp_image_get_component_active(self->ID, comp));
+    return PyInt_FromLong(gimp_image_get_component_active(self->ID, comp));
 }
 
 
@@ -275,8 +295,7 @@ img_get_component_visible(PyGimpImage *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "i:get_component_visible", &comp))
 	return NULL;
 	
-    return PyInt_FromLong((long)
-			  gimp_image_get_component_visible(self->ID, comp));
+    return PyInt_FromLong(gimp_image_get_component_visible(self->ID, comp));
 }
 
 
@@ -286,9 +305,7 @@ img_set_component_active(PyGimpImage *self, PyObject *args)
     int comp, a;
     if (!PyArg_ParseTuple(args, "ii:set_component_active", &comp, &a))
 	return NULL;
-    gimp_image_set_component_active(self->ID, comp, a);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_set_component_active(self->ID, comp, a));
 }
 
 
@@ -298,9 +315,7 @@ img_set_component_visible(PyGimpImage *self, PyObject *args)
     int comp, v;
     if (!PyArg_ParseTuple(args, "ii:set_component_visible", &comp, &v))
 	return NULL;
-    gimp_image_set_component_visible(self->ID, comp, v);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_set_component_visible(self->ID, comp, v));
 }
 
 static PyObject *
@@ -319,9 +334,7 @@ img_parasite_attach(PyGimpImage *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "O!:parasite_attach", &PyGimpParasite_Type,
 			  &parasite))
 	return NULL;
-    gimp_image_parasite_attach(self->ID, parasite->para);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_parasite_attach(self->ID,parasite->para));
 }
 
 static PyObject *
@@ -343,16 +356,31 @@ img_parasite_detach(PyGimpImage *self, PyObject *args)
     char *name;
     if (!PyArg_ParseTuple(args, "s:parasite_detach", &name))
 	return NULL;
-    gimp_image_parasite_detach(self->ID, name);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_parasite_detach(self->ID, name));
 }
 
-/* gimp_image_set_resolution
- * gimp_image_get_resolution
- * gimp_set_unit
- * gimp_get_unit
- */
+static PyObject *
+img_parasite_list(PyGimpImage *self)
+{
+    gint num_parasites;
+    gchar **parasites;
+
+    if (gimp_image_parasite_list(self->ID, &num_parasites, &parasites)) {
+	PyObject *ret;
+	gint i;
+
+	ret = PyTuple_New(num_parasites);
+	for (i = 0; i < num_parasites; i++) {
+	    PyTuple_SetItem(ret, i, PyString_FromString(parasites[i]));
+	    g_free(parasites[i]);
+	}
+	g_free(parasites);
+	return ret;
+    }
+    PyErr_SetString(pygimp_error, "could not list parasites");
+    return NULL;
+}
+
 static PyObject *
 img_get_layer_by_tattoo(PyGimpImage *self, PyObject *args)
 {
@@ -378,9 +406,7 @@ img_add_hguide(PyGimpImage *self, PyObject *args)
     int ypos;
     if (!PyArg_ParseTuple(args, "i:add_hguide", &ypos))
 	return NULL;
-    gimp_image_add_hguide(self->ID, ypos);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_add_hguide(self->ID, ypos));
 }
 
 static PyObject *
@@ -389,9 +415,7 @@ img_add_vguide(PyGimpImage *self, PyObject *args)
     int xpos;
     if (!PyArg_ParseTuple(args, "i:add_vguide", &xpos))
 	return NULL;
-    gimp_image_add_vguide(self->ID, xpos);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_add_vguide(self->ID, xpos));
 }
 
 static PyObject *
@@ -400,9 +424,7 @@ img_delete_guide(PyGimpImage *self, PyObject *args)
     int guide;
     if (!PyArg_ParseTuple(args, "i:delete_guide", &guide))
 	return NULL;
-    gimp_image_delete_guide(self->ID, guide);
-    Py_INCREF(Py_None);
-    return Py_None;
+    return PyInt_FromLong(gimp_image_delete_guide(self->ID, guide));
 }
 
 static PyObject *
@@ -432,20 +454,47 @@ img_get_guide_position(PyGimpImage *self, PyObject *args)
     return PyInt_FromLong(gimp_image_get_guide_position(self->ID, guide));
 }
 
+static PyObject *
+img_undo_is_enabled(PyGimpImage *self)
+{
+    return PyInt_FromLong(gimp_image_undo_is_enabled(self->ID));
+}
+
+static PyObject *
+img_undo_freeze(PyGimpImage *self)
+{
+    return PyInt_FromLong(gimp_image_undo_freeze(self->ID));
+}
+
+static PyObject *
+img_undo_thaw(PyGimpImage *self)
+{
+    return PyInt_FromLong(gimp_image_undo_thaw(self->ID));
+}
+
+static PyObject *
+img_duplicate(PyGimpImage *self)
+{
+    return pygimp_image_new(gimp_image_duplicate(self->ID));
+}
+
 static PyMethodDef img_methods[] = {
     {"add_channel",	(PyCFunction)img_add_channel,	METH_VARARGS},
     {"add_layer",	(PyCFunction)img_add_layer,	METH_VARARGS},
     {"add_layer_mask",	(PyCFunction)img_add_layer_mask,	METH_VARARGS},
-    {"clean_all",	(PyCFunction)img_clean_all,	METH_VARARGS},
-    {"disable_undo",	(PyCFunction)img_disable_undo,	METH_VARARGS},
-    {"enable_undo",	(PyCFunction)img_enable_undo,	METH_VARARGS},
-    {"flatten",	(PyCFunction)img_flatten,	METH_VARARGS},
+    {"clean_all",	(PyCFunction)img_clean_all,	METH_NOARGS},
+    {"disable_undo",	(PyCFunction)img_disable_undo,	METH_NOARGS},
+    {"enable_undo",	(PyCFunction)img_enable_undo,	METH_NOARGS},
+    {"flatten",	(PyCFunction)img_flatten,	METH_NOARGS},
     {"lower_channel",	(PyCFunction)img_lower_channel,	METH_VARARGS},
     {"lower_layer",	(PyCFunction)img_lower_layer,	METH_VARARGS},
+    {"lower_layer_to_bottom",	(PyCFunction)img_lower_layer_to_bottom,	METH_VARARGS},
     {"merge_visible_layers",	(PyCFunction)img_merge_visible_layers,	METH_VARARGS},
+    {"merge_down",	(PyCFunction)img_merge_down,	METH_VARARGS},
     {"pick_correlate_layer",	(PyCFunction)img_pick_correlate_layer,	METH_VARARGS},
     {"raise_channel",	(PyCFunction)img_raise_channel,	METH_VARARGS},
     {"raise_layer",	(PyCFunction)img_raise_layer,	METH_VARARGS},
+    {"raise_layer_to_top",	(PyCFunction)img_raise_layer_to_top,	METH_VARARGS},
     {"remove_channel",	(PyCFunction)img_remove_channel,	METH_VARARGS},
     {"remove_layer",	(PyCFunction)img_remove_layer,	METH_VARARGS},
     {"remove_layer_mask",	(PyCFunction)img_remove_layer_mask,	METH_VARARGS},
@@ -458,6 +507,7 @@ static PyMethodDef img_methods[] = {
     {"parasite_attach",     (PyCFunction)img_parasite_attach,    METH_VARARGS},
     {"attach_new_parasite", (PyCFunction)img_attach_new_parasite,METH_VARARGS},
     {"parasite_detach",     (PyCFunction)img_parasite_detach,    METH_VARARGS},
+    {"parasite_list", (PyCFunction)img_parasite_list, METH_NOARGS},
     {"get_layer_by_tattoo",(PyCFunction)img_get_layer_by_tattoo,METH_VARARGS},
     {"get_channel_by_tattoo",(PyCFunction)img_get_channel_by_tattoo,METH_VARARGS},
     {"add_hguide", (PyCFunction)img_add_hguide, METH_VARARGS},
@@ -466,6 +516,14 @@ static PyMethodDef img_methods[] = {
     {"find_next_guide", (PyCFunction)img_find_next_guide, METH_VARARGS},
     {"get_guide_orientation",(PyCFunction)img_get_guide_orientation,METH_VARARGS},
     {"get_guide_position", (PyCFunction)img_get_guide_position, METH_VARARGS},
+    {"scale", (PyCFunction)img_scale, METH_VARARGS},
+    {"crop", (PyCFunction)img_crop, METH_VARARGS},
+    {"free_shadow", (PyCFunction)img_free_shadow, METH_NOARGS},
+    {"unset_active_channel", (PyCFunction)img_unset_active_channel, METH_NOARGS},
+    {"undo_is_enabled", (PyCFunction)img_undo_is_enabled, METH_NOARGS},
+    {"undo_freeze", (PyCFunction)img_undo_freeze, METH_NOARGS},
+    {"undo_thaw", (PyCFunction)img_undo_thaw, METH_NOARGS},
+    {"duplicate", (PyCFunction)img_duplicate, METH_NOARGS},
     {NULL,		NULL}		/* sentinel */
 };
 
@@ -500,6 +558,18 @@ img_set_active_channel(PyGimpImage *self, PyObject *value, void *closure)
     }
     gimp_image_set_active_channel(self->ID, ((PyGimpChannel *)value)->ID);
     return 0;
+}
+
+static PyObject *
+img_get_active_drawable(PyGimpImage *self, void *closure)
+{
+    gint32 id = gimp_image_active_drawable(self->ID);
+
+    if (id == -1) {
+	Py_INCREF(Py_None);
+	return Py_None;
+    }
+    return pygimp_drawable_new(NULL, id);
 }
 
 static PyObject *
@@ -623,6 +693,19 @@ img_get_floating_selection(PyGimpImage *self, void *closure)
 }
 
 static PyObject *
+img_get_floating_sel_attached_to(PyGimpImage *self, void *closure)
+{
+    gint32 id;
+
+    id = gimp_image_floating_sel_attached_to(self->ID);
+    if (id == -1) {
+	Py_INCREF(Py_None);
+	return Py_None;
+    }
+    return pygimp_layer_new(id);
+}
+
+static PyObject *
 img_get_layers(PyGimpImage *self, void *closure)
 {
     gint32 *layers;
@@ -638,9 +721,45 @@ img_get_layers(PyGimpImage *self, void *closure)
 }
 
 static PyObject *
+img_get_name(PyGimpImage *self, void *closure)
+{
+    gchar *name;
+
+    name = gimp_image_get_name(self->ID);
+    if (name) {
+	PyObject *ret = PyString_FromString(name);
+	g_free(name);
+	return ret;
+    }
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
 img_get_selection(PyGimpImage *self, void *closure)
 {
     return pygimp_channel_new(gimp_image_get_selection(self->ID));
+}
+
+static PyObject *
+img_get_tattoo_state(PyGimpImage *self, void *closure)
+{
+    return PyInt_FromLong(gimp_image_get_tattoo_state(self->ID));
+}
+
+static int
+img_set_tattoo_state(PyGimpImage *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+	PyErr_SetString(PyExc_TypeError, "can not delete tattoo_state.");
+	return -1;
+    }
+    if (!PyInt_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_image_set_tattoo_state(self->ID, PyInt_AsLong(value));
+    return 0;
 }
 
 static PyObject *
@@ -708,6 +827,7 @@ static PyGetSetDef img_getsets[] = {
     { "ID", (getter)img_get_ID, (setter)0 },
     { "active_channel", (getter)img_get_active_channel,
       (setter)img_set_active_channel },
+    { "active_drawable", (getter)img_get_active_drawable, (setter)0 },
     { "active_layer", (getter)img_get_active_layer,
       (setter)img_set_active_layer },
     { "base_type", (getter)img_get_base_type, (setter)0 },
@@ -715,10 +835,15 @@ static PyGetSetDef img_getsets[] = {
     { "cmap", (getter)img_get_cmap, (setter)img_set_cmap },
     { "filename", (getter)img_get_filename, (setter)img_set_filename },
     { "floating_selection", (getter)img_get_floating_selection, (setter)0 },
+    { "floating_sel_attached_to", (getter)img_get_floating_sel_attached_to,
+      (setter)0 },
     { "height", (getter)img_get_height, (setter)0 },
     { "layers", (getter)img_get_layers, (setter)0 },
+    { "name", (getter)img_get_name, (setter)0 },
     { "resolution", (getter)img_get_resolution, (setter)img_set_resolution },
     { "selection", (getter)img_get_selection, (setter)0 },
+    { "tattoo_state", (getter)img_get_tattoo_state,
+      (setter)img_set_tattoo_state },
     { "unit", (getter)img_get_unit, (setter)img_set_unit },
     { "width", (getter)img_get_width, (setter)0 },
     { NULL, (getter)0, (setter)0 }
