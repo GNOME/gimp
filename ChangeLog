@@ -1,3 +1,11 @@
+2001-10-02  Emese Kovacs  <emese@gnome.hu>
+
+        * tips/Makefile.am|makefile.mingw: Added gimp_tips.hu.txt to the
+        targets.
+
+        * tips/gimp_tips.hu.txt: Added Hungarian tips file in UTF-8
+	encoding.
+
 2001-10-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/sobel.c (sobel_dialog): merged fix for bug #61525
