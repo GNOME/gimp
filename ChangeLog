@@ -1,7 +1,7 @@
 Thu Jul  9 22:04:04 EDT 1998  Michael K. Johnson <johnsonm@redhat.com>
 
-	* app/clone.c: clone_motion: error message instead of segv
-	  if the clone source hasn't been selected or no longer exists.
+	* app/clone.c: clone_motion: silently ignore cloning if the
+	  clone source hasn't been selected or no longer exists.
 
 Wed Jul  8 21:34:31 PDT 1998  Jay Cox <jaycox@earthlink.net>
 

@@ -332,10 +332,7 @@ clone_motion (PaintCore *paint_core,
   if (!src_drawable ||
       (! (src_gimage = drawable_gimage (src_drawable)) && type == ImageClone) ||
       ! (gimage = drawable_gimage (drawable)))
-    {
-      g_message("Select source image before cloning");
-      return;
-    }
+    return;
 
   /*  Get a region which can be used to paint to  */
   if (! (area = paint_core_get_paint_area (paint_core, drawable)))
