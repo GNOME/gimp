@@ -1,3 +1,7 @@
+2004-10-23  Hendrik Brandt  <hebra@cvs.gnome.org>
+                                                                                
+        * de.po: Updated German translation.
+                                                                                
 2004-10-18  David Lodge <dave@cirt.net>
                                                                                 
         * en_GB.po: Updated British English translation.
@@ -48,7 +52,7 @@
 2004-06-08  Jordi Mallach  <jordi@sindominio.net>
 
 	* ca.po: Added Catalan translation by
-	Xavier Beà <xbea@pie.xtec.es>.
+	Xavier BeÃ  <xbea@pie.xtec.es>.
 
 2004-05-28  Andras Timar  <timar@gnome.hu>
 
@@ -64,7 +68,7 @@
 
 	* Makefile.am (tips_POFILES): added lt.po (Lithuanian).
 
-2004-05-23  žygimantas Beručka  <uid0@akl.lt>
+2004-05-23  ÅŸygimantas BeruÄka  <uid0@akl.lt>
 
 	* lt.po: Updated Lithuanian translation.
 
@@ -114,7 +118,7 @@
 
 	* Makefile.am (tips_POFILES): added eu.po (Basque).
 
-2004-04-06  Iñaki Larrañaga  <dooteo@euskalgnu.org>
+2004-04-06  IÃ±aki LarraÃ±aga  <dooteo@euskalgnu.org>
 
 	* eu.po: Added Basque translation.
 
@@ -151,7 +155,7 @@
 
 2004-03-22  Sigurd Gartmann  <sigurd-translate@brogar.org>
 
-	* no.po: Updated Norwegian (Bokmål) translation.
+	* no.po: Updated Norwegian (BokmÃ¥l) translation.
 
 2004-03-17  Gustavo Noronha Silva  <kov@debian.org>
 
@@ -174,11 +178,11 @@
 
 	* sk.po: Updated Slovak translation by Zdenko Podobny.
 
-2004-03-09  Danilo Šegan  <dsegan@gmx.net>
+2004-03-09  Danilo Å egan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Updated Serbian translation.
 
-2004-03-09  Jan Morén  <jan.moren@lucs.lu.se>
+2004-03-09  Jan MorÃ©n  <jan.moren@lucs.lu.se>
  
 	* sv.po: Updated Swedish translation.
 
@@ -233,7 +237,7 @@
 
 	* en_CA.po: Added Canadian English translation.
 
-2004-02-20  Danilo Šegan  <dsegan@gmx.net>
+2004-02-20  Danilo Å egan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Updated Serbian translation.
 
@@ -253,7 +257,7 @@
 
 	* da.po: Updated Danish translation.
 
-2004-02-10  Jan Morén  <jan.moren@lucs.lu.se>
+2004-02-10  Jan MorÃ©n  <jan.moren@lucs.lu.se>
  
 	* sv.po: Updated Swedish translation.
 
@@ -288,7 +292,7 @@
 	* gimp-tips.xml.in: applied patch from Shlomi Fish that fixes a
 	wrong menu path (bug #132028).
 
-2004-01-23  Danilo Šegan  <dsegan@gmx.net>
+2004-01-23  Danilo Å egan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Updated Serbian translation.
 
@@ -301,7 +305,7 @@
 	* fr.po: Updated French translation from
 	Raymond Ostertag <r.ostertag@caramail.com>.
 
-2004-01-15  Danilo Šegan  <dsegan@gmx.net>
+2004-01-15  Danilo Å egan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Updated Serbian translation.
 
@@ -317,7 +321,7 @@
 
 	* pt.po: Updated Portuguese translation.
 
-2004-01-10  Danilo Šegan  <dsegan@gmx.net>
+2004-01-10  Danilo Å egan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Updated Serbian translation.
 
@@ -347,7 +351,7 @@
 
 	* pl.po: Updated Polish translation.
 
-2003-12-08  Danilo Šegan  <dsegan@gmx.net>
+2003-12-08  Danilo Å egan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Updated Serbian translation.
 
@@ -385,11 +389,11 @@
 
 	* gimp_tips.fr.txt: removed since there's a french po file now.
 
-2003-11-08  Danilo Šegan  <dsegan@gmx.net>
+2003-11-08  Danilo Å egan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Updated Serbian translation.
 
-2003-11-07  Danilo Šegan  <dsegan@gmx.net>
+2003-11-07  Danilo Å egan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Updated Serbian translation.
 
@@ -429,7 +433,7 @@
 
 	* sv.po: Updated Swedish translation.
 
-2003-10-18  Danilo Šegan  <dsegan@gmx.net>
+2003-10-18  Danilo Å egan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Updated Serbian translation.
 
@@ -473,13 +477,13 @@
 	* gimp-tips.dtd: use CDATA for language identifiers since sr@Latn
 	is not a valid XML name token (NMTOKEN).
 
-2003-09-02  Danilo Šegan  <dsegan@gmx.net>
+2003-09-02  Danilo Å egan  <dsegan@gmx.net>
 
 	* Makefile.am: Added "sr.po" and "sr@Latn.po" to tips_POFILES.
 
 	* sr.po, sr@Latn.po: Updated Serbian translation.
 
-2003-08-31  Danilo Šegan  <dsegan@gmx.net>
+2003-08-31  Danilo Å egan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Added Serbian translation by Serbian 
 	team (Prevod.org).
