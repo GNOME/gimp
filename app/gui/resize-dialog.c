@@ -289,14 +289,14 @@ resize_dialog_new (GimpViewable *viewable,
   gtk_widget_show (table);
 
   /*  the original width & height labels  */
-  label = gtk_label_new (_("Original Width:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  label = gtk_label_new (_("Current Width:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  label = gtk_label_new (_("Height:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  label = gtk_label_new (_("Current Height:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -315,13 +315,13 @@ resize_dialog_new (GimpViewable *viewable,
 
   /*  the new size labels  */
   label = gtk_label_new (_("New Width:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  label = gtk_label_new (_("Height:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  label = gtk_label_new (_("New Height:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -381,14 +381,14 @@ resize_dialog_new (GimpViewable *viewable,
   orig_labels_update (private->size_se, dialog);
 
   /*  the scale ratio labels  */
-  label = gtk_label_new (_("Ratio X:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  label = gtk_label_new (_("X Ratio:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  label = gtk_label_new (_("Y:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  label = gtk_label_new (_("Y Ratio:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -483,9 +483,9 @@ resize_dialog_new (GimpViewable *viewable,
       gtk_widget_show (spinbutton);
 
       gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (private->offset_se),
-				    _("_X:"), 0, 0, 1.0);
+				    _("_X:"), 0, 0, 0.0);
       gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (private->offset_se),
-				    _("_Y:"), 1, 0, 1.0);
+				    _("_Y:"), 1, 0, 0.0);
       gtk_box_pack_start (GTK_BOX (vbox), private->offset_se, FALSE, FALSE, 0);
       gtk_widget_show (private->offset_se);
 
@@ -570,13 +570,13 @@ resize_dialog_new (GimpViewable *viewable,
 
       /*  the print size labels  */
       label = gtk_label_new (_("New Width:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
-      label = gtk_label_new (_("Height:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      label = gtk_label_new (_("New Height:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
@@ -636,14 +636,14 @@ resize_dialog_new (GimpViewable *viewable,
 			dialog);
 
       /*  the resolution labels  */
-      label = gtk_label_new (_("Resolution X:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      label = gtk_label_new (_("X Resolution:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
-      label = gtk_label_new (_("Y:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      label = gtk_label_new (_("Y Resolution:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);

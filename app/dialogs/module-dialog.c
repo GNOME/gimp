@@ -510,7 +510,7 @@ browser_info_init (ModuleBrowser *browser,
   for (i = 0; i < G_N_ELEMENTS (text); i++)
     {
       label = gtk_label_new (gettext (text[i]));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, i, i + 1,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
       gtk_widget_show (label);

@@ -298,7 +298,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   gtk_widget_show (image);
 
   gimp_table_attach_aligned (GTK_TABLE (view->options_box), 0, 0,
-			     _("Mode:"), 1.0, 0.5,
+			     _("Mode:"), 0.0, 0.5,
 			     hbox, 2, FALSE);
 
   /*  Opacity scale  */

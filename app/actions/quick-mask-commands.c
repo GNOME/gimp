@@ -189,7 +189,7 @@ qmask_channel_query (GimpDisplayShell *shell)
   gtk_scale_set_value_pos (GTK_SCALE (opacity_scale), GTK_POS_TOP);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Mask Opacity:"), 1.0, 1.0,
+			     _("Mask Opacity:"), 0.0, 1.0,
 			     opacity_scale, 1, FALSE);
 
   g_signal_connect (opacity_scale_data, "value_changed",

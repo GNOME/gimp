@@ -387,7 +387,7 @@ channels_new_channel_query (GimpImage   *gimage,
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
 		      (channel_name ? channel_name : _("New Channel")));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Channel Name:"), 1.0, 0.5,
+			     _("Channel Name:"), 0.0, 0.5,
 			     options->name_entry, 2, FALSE);
 
   /*  The opacity scale  */
@@ -550,7 +550,7 @@ channels_edit_channel_query (GimpChannel *channel,
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
 		      gimp_object_get_name (GIMP_OBJECT (channel)));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Channel Name:"), 1.0, 0.5,
+			     _("Channel Name:"), 0.0, 0.5,
 			     options->name_entry, 2, FALSE);
 
   /*  The opacity scale  */

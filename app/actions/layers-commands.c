@@ -772,18 +772,18 @@ layers_new_layer_query (GimpImage *gimage,
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
 		      (layer_name ? layer_name : _("New Layer")));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Layer _Name:"), 1.0, 0.5,
+                             _("Layer _Name:"), 0.0, 0.5,
                              options->name_entry, 1, FALSE);
 
   /*  The size labels  */
-  label = gtk_label_new (_("Layer Width:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  label = gtk_label_new (_("Width:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("Height:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
   gtk_widget_show (label);

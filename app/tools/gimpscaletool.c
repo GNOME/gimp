@@ -179,7 +179,7 @@ gimp_scale_tool_dialog (GimpTransformTool *tr_tool)
                                            NULL, -1, 1, 1, 10, 1, 1, 2,
                                            NULL, NULL);
   sizeentry = info_dialog_add_sizeentry (tr_tool->info_dialog,
-                                         _("Height:"),
+                                         _("Current Height:"),
                                          size_vals, 1,
                                          GIMP_UNIT_PIXEL, "%a",
                                          TRUE, TRUE, FALSE,
@@ -197,7 +197,7 @@ gimp_scale_tool_dialog (GimpTransformTool *tr_tool)
                          _("Scale Ratio X:"),
                          x_ratio_buf);
   info_dialog_add_label (tr_tool->info_dialog,
-                         _("Y:"),
+                         _("Scale Ratio Y:"),
                          y_ratio_buf);
 
   gtk_table_set_row_spacing (GTK_TABLE (tr_tool->info_dialog->info_table),

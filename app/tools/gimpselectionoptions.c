@@ -563,7 +563,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_entry_set_width_chars (GTK_ENTRY (width_spinbutton), 6);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                 _("Width:"), 1.0, 0.5,
+                                 _("Width:"), 0.0, 0.5,
                                  width_spinbutton, 1, FALSE);
 
       height_spinbutton = gimp_prop_spin_button_new (config, "fixed-height",
@@ -571,7 +571,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_entry_set_width_chars (GTK_ENTRY (height_spinbutton), 6);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                 _("Height:"), 1.0, 0.5,
+                                 _("Height:"), 0.0, 0.5,
                                  height_spinbutton, 1, FALSE);
 
       menu = gimp_prop_unit_menu_new (config, "fixed-unit", "%a");

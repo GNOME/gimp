@@ -225,13 +225,13 @@ gimp_stroke_editor_constructor (GType                   type,
   box = gimp_prop_enum_stock_box_new (G_OBJECT (editor->options), "cap-style",
                                       "gimp-cap", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("_Cap Style:"), 1.0, 0.5,
+                             _("_Cap Style:"), 0.0, 0.5,
                              box, 2, TRUE);
 
   box = gimp_prop_enum_stock_box_new (G_OBJECT (editor->options), "join-style",
                                       "gimp-join", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("_Join Style:"), 1.0, 0.5,
+                             _("_Join Style:"), 0.0, 0.5,
                              box, 2, TRUE);
 
   gimp_prop_scale_entry_new (G_OBJECT (editor->options), "miter",
@@ -278,7 +278,7 @@ gimp_stroke_editor_constructor (GType                   type,
   gtk_container_add (GTK_CONTAINER (frame), box);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Dash Pattern:"), 1.0, 0.5, frame, 2, FALSE);
+                             _("Dash Pattern:"), 0.0, 0.5, frame, 2, FALSE);
 
   box = gimp_enum_combo_box_new (GIMP_TYPE_DASH_PRESET);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (box), GIMP_DASH_CUSTOM);
@@ -290,7 +290,7 @@ gimp_stroke_editor_constructor (GType                   type,
                            box, G_CONNECT_SWAPPED);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Dash Preset:"), 1.0, 0.5, box, 2, TRUE);
+                             _("Dash Preset:"), 0.0, 0.5, box, 2, TRUE);
 
   gtk_widget_show (box);
 

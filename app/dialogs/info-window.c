@@ -153,13 +153,13 @@ info_window_create_extended (InfoDialog *info_win,
   iwd->pixel_labels[0] = gtk_label_new (_("n/a"));
   gtk_misc_set_alignment (GTK_MISC (iwd->pixel_labels[0]), 0.0, 0.5);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("X:"), 1.0, 0.5,
+                             _("X:"), 0.0, 0.5,
                              iwd->pixel_labels[0], 1, FALSE);
 
   iwd->pixel_labels[1] = gtk_label_new (_("n/a"));
   gtk_misc_set_alignment (GTK_MISC (iwd->pixel_labels[1]), 0.0, 0.5);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Y:"), 1.0, 0.5,
+                             _("Y:"), 0.0, 0.5,
                              iwd->pixel_labels[1], 1, FALSE);
 
   frame = gimp_frame_new (_("Units"));
@@ -175,13 +175,13 @@ info_window_create_extended (InfoDialog *info_win,
   iwd->unit_labels[0] = gtk_label_new (_("n/a"));
   gtk_misc_set_alignment (GTK_MISC (iwd->unit_labels[0]), 0.0, 0.5);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("X:"), 1.0, 0.5,
+                             _("X:"), 0.0, 0.5,
                              iwd->unit_labels[0], 1, FALSE);
 
   iwd->unit_labels[1] = gtk_label_new (_("n/a"));
   gtk_misc_set_alignment (GTK_MISC (iwd->unit_labels[1]), 0.0, 0.5);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Y:"), 1.0, 0.5,
+                             _("Y:"), 0.0, 0.5,
                              iwd->unit_labels[1], 1, FALSE);
 
 

@@ -161,9 +161,9 @@ offset_dialog_new (GimpDrawable *drawable,
   gtk_widget_show (spinbutton);
 
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (off_d->off_se),
-                                _("_X:"), 0, 0, 1.0);
+                                _("_X:"), 0, 0, 0.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (off_d->off_se),
-                                _("_Y:"), 1, 0, 1.0);
+                                _("_Y:"), 1, 0, 0.0);
 
   gtk_box_pack_start (GTK_BOX (vbox), off_d->off_se, FALSE, FALSE, 0);
   gtk_widget_show (off_d->off_se);

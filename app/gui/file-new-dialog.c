@@ -127,7 +127,7 @@ file_new_dialog_new (Gimp *gimp)
   dialog->combo = gimp_container_combo_box_new (gimp->templates, NULL, 16, 0);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_Template:"),  1.0, 0.5,
+                             _("_Template:"),  0.0, 0.5,
                              dialog->combo, 1, FALSE);
 
   g_signal_connect (dialog->combo, "select_item",

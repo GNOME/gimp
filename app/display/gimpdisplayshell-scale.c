@@ -534,7 +534,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
 
   hbox = gtk_hbox_new (FALSE, 4);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Zoom Ratio:"), 1.0, 0.5,
+                             _("Zoom Ratio:"), 0.0, 0.5,
                              hbox, 1, FALSE);
 
   if (fabs (shell->other_scale) <= 0.0001)
@@ -561,7 +561,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
 
   hbox = gtk_hbox_new (FALSE, 4);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Zoom:"), 1.0, 0.5,
+                             _("Zoom:"), 0.0, 0.5,
                              hbox, 1, FALSE);
 
   spin = gimp_spin_button_new (&data->scale_adj,

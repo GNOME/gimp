@@ -740,7 +740,7 @@ prefs_color_button_add (GObject     *config,
 
   if (button)
     gimp_table_attach_aligned (table, 0, table_row,
-                               label, 1.0, 0.5,
+                               label, 0.0, 0.5,
                                button, 1, TRUE);
 
   return button;
@@ -762,7 +762,7 @@ prefs_enum_combo_box_add (GObject     *config,
 
   if (combo_box)
     gimp_table_attach_aligned (table, 0, table_row,
-                               label, 1.0, 0.5,
+                               label, 0.0, 0.5,
                                combo_box, 1, TRUE);
 
   return combo_box;
@@ -784,7 +784,7 @@ prefs_boolean_combo_box_add (GObject     *config,
 
   if (menu)
     gimp_table_attach_aligned (table, 0, table_row,
-                               label, 1.0, 0.5,
+                               label, 0.0, 0.5,
                                menu, 1, TRUE);
 
   return menu;
@@ -808,7 +808,7 @@ prefs_spin_button_add (GObject     *config,
 
   if (spinbutton)
     gimp_table_attach_aligned (table, 0, table_row,
-                               label, 1.0, 0.5,
+                               label, 0.0, 0.5,
                                spinbutton, 1, TRUE);
 
   return spinbutton;
@@ -827,7 +827,7 @@ prefs_memsize_entry_add (GObject     *config,
 
   if (entry)
     gimp_table_attach_aligned (table, 0, table_row,
-                               label, 1.0, 0.5,
+                               label, 0.0, 0.5,
                                entry, 1, TRUE);
 
   return entry;
@@ -1101,7 +1101,7 @@ prefs_dialog_new (Gimp       *gimp,
 
     combo = gimp_container_combo_box_new (gimp->templates, NULL, 16, 0);
     gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                               _("From _Template:"),  1.0, 0.5,
+                               _("_Template:"),  0.0, 0.5,
                                combo, 1, FALSE);
 
     gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo), NULL);
@@ -1334,7 +1334,7 @@ prefs_dialog_new (Gimp       *gimp,
                                             FALSE, FALSE);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Web Browser to Use:"), 1.0, 0.5,
+                             _("Web Browser to Use:"), 0.0, 0.5,
                              fileselection, 1, TRUE);
 #endif
 
@@ -2048,7 +2048,7 @@ prefs_dialog_new (Gimp       *gimp,
                                                   gettext (dirs[i].fs_label),
                                                   TRUE, TRUE);
 	gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
-				   gettext (dirs[i].label), 1.0, 0.5,
+				   gettext (dirs[i].label), 0.0, 0.5,
 				   fileselection, 1, FALSE);
       }
   }

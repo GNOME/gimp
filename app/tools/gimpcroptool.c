@@ -1018,7 +1018,8 @@ crop_info_create (GimpCropTool *crop)
                                            _("Origin X:"), NULL,
                                            -1, 1, 1, 10, 1, 1, 2, NULL, NULL);
   crop->origin_sizeentry =
-    info_dialog_add_sizeentry (crop->crop_info, _("Y:"), crop->orig_vals, 1,
+    info_dialog_add_sizeentry (crop->crop_info,
+                               _("Origin Y:"), crop->orig_vals, 1,
 			       shell->dot_for_dot ?
 			       GIMP_UNIT_PIXEL : gdisp->gimage->unit, "%a",
 			       TRUE, TRUE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,

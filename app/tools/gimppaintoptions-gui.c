@@ -119,7 +119,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   /*  the paint mode menu  */
   optionmenu = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE);
   mode_label = gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
-                                          _("Mode:"), 1.0, 0.5,
+                                          _("Mode:"), 0.0, 0.5,
                                           optionmenu, 2, TRUE);
 
   if (tool_type == GIMP_TYPE_ERASER_TOOL     ||
@@ -145,7 +145,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                          _("Open the brush selection dialog"));
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
-                                 _("Brush:"), 1.0, 0.5,
+                                 _("Brush:"), 0.0, 0.5,
                                  button, 2, TRUE);
     }
 
@@ -162,7 +162,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                          _("Open the pattern selection dialog"));
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
-                                 _("Pattern:"), 1.0, 0.5,
+                                 _("Pattern:"), 0.0, 0.5,
                                  button, 2, TRUE);
     }
 
@@ -198,7 +198,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (button);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
-                                 _("Gradient:"), 1.0, 0.5,
+                                 _("Gradient:"), 0.0, 0.5,
                                  hbox, 2, FALSE);
 
       preview = GTK_BIN (gradient_button)->child;
@@ -409,7 +409,7 @@ fade_options_gui (GimpFadeOptions  *fade,
       gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 6);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                 _("Length:"), 1.0, 0.5,
+                                 _("Length:"), 0.0, 0.5,
                                  spinbutton, 1, FALSE);
 
       /*  the fade-out unitmenu  */
@@ -467,7 +467,7 @@ gradient_options_gui (GimpGradientOptions *gradient,
       gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 6);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                 _("Length:"), 1.0, 0.5,
+                                 _("Length:"), 0.0, 0.5,
                                  spinbutton, 1, FALSE);
 
       /*  the gradient unitmenu  */
@@ -481,7 +481,7 @@ gradient_options_gui (GimpGradientOptions *gradient,
       /*  the repeat type  */
       combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                 _("Repeat:"), 1.0, 0.5,
+                                 _("Repeat:"), 0.0, 0.5,
                                  combo, 2, TRUE);
 
       gtk_widget_show (table);

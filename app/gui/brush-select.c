@@ -203,7 +203,7 @@ brush_select_new (Gimp                 *gimp,
 			      TRUE,
 			      gimp_context_get_paint_mode (bsp->context));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Mode:"), 1.0, 0.5,
+			     _("Mode:"), 0.0, 0.5,
 			     bsp->paint_mode_menu, 2, TRUE);
 
   spacing_adj = GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment;

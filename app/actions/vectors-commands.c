@@ -509,7 +509,7 @@ vectors_new_vectors_query (GimpImage   *gimage,
 
   /*  The name entry hbox, label and entry  */
   label = gtk_label_new (_("Path name:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -627,7 +627,7 @@ vectors_edit_vectors_query (GimpVectors *vectors,
 
   /*  The name entry  */
   label = gtk_label_new (_("Path name:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (label);

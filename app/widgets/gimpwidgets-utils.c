@@ -446,8 +446,8 @@ gimp_table_attach_stock (GtkTable    *table,
 
   label = gtk_label_new_with_mnemonic (label_text);
 
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, yalign);
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, yalign);
+  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
   gtk_table_attach (table, label, 0, 1, row, row + 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);

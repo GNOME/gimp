@@ -320,13 +320,13 @@ gimp_template_editor_constructor (GType                  type,
   gtk_widget_show (table);
 
   /*  the resolution labels  */
-  label = gtk_label_new (_("Resolution X:"));
+  label = gtk_label_new (_("X Resolution:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  label = gtk_label_new (_("Resolution Y:"));
+  label = gtk_label_new (_("Y Resolution:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);

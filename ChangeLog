@@ -1,3 +1,39 @@
+2004-05-12  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.c (gimp_scale_entry_new_internal)
+	* app/widgets/gimpwidgets-utils.c (gimp_table_attach_stock):
+	left-align the label.
+
+	* app/actions/channels-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/qmask-commands.c
+	* app/actions/vectors-commands.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/gui/brush-select.c
+	* app/gui/file-new-dialog.c
+	* app/gui/info-dialog.c
+	* app/gui/info-window.c
+	* app/gui/module-browser.c
+	* app/gui/offset-dialog.c
+	* app/gui/palette-import-dialog.c
+	* app/gui/preferences-dialog.c
+	* app/gui/resize-dialog.c
+	* app/tools/gimpblendoptions.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpselectionoptions.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimptextoptions.c
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpgrideditor.c
+	* app/widgets/gimphistogrameditor.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpstrokeeditor.c
+	* app/widgets/gimpwidgets-utils.c: left-align labels as suggested
+	by the HIG.
+
 2004-05-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpconfig-deserialize.c

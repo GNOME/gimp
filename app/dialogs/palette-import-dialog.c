@@ -258,21 +258,21 @@ palette_import_dialog_new (Gimp *gimp)
     gimp_container_combo_box_new (gimp->gradient_factory->container,
                                   import_dialog->context, 24, 1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             NULL, 1.0, 0.5,
+                             NULL, 0.0, 0.5,
                              import_dialog->gradient_combo, 1, FALSE);
 
   /*  The image menu  */
   import_dialog->image_combo =
     gimp_container_combo_box_new (gimp->images, import_dialog->context, 24, 1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             NULL, 1.0, 0.5,
+                             NULL, 0.0, 0.5,
                              import_dialog->image_combo, 1, FALSE);
 
   /*  Palette file name entry  */
   import_dialog->filename_entry =
     gimp_file_entry_new (_("Select palette file"), 0, FALSE, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             NULL, 1.0, 0.5,
+                             NULL, 0.0, 0.5,
                              import_dialog->filename_entry, 1, FALSE);
 
   gtk_widget_show (import_dialog->filename_entry);
@@ -316,7 +316,7 @@ palette_import_dialog_new (Gimp *gimp)
   gtk_entry_set_text (GTK_ENTRY (import_dialog->entry),
                       gradient ? GIMP_OBJECT (gradient)->name : _("New Import"));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Palette _Name:"), 1.0, 0.5,
+                             _("Palette _Name:"), 0.0, 0.5,
                              import_dialog->entry, 2, FALSE);
 
   /*  The # of colors  */

@@ -380,7 +380,7 @@ gimp_colormap_editor_new (GimpImage       *gimage,
     gimp_spin_button_new ((GtkObject **) &editor->index_adjustment,
 			  0, 0, 0, 1, 10, 10, 1.0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Color Index:"), 1.0, 0.5,
+			     _("Color Index:"), 0.0, 0.5,
 			     editor->index_spinbutton, 1, TRUE);
 
   g_signal_connect (editor->index_adjustment, "value_changed",
@@ -391,7 +391,7 @@ gimp_colormap_editor_new (GimpImage       *gimage,
   gtk_entry_set_width_chars (GTK_ENTRY (editor->color_entry), 8);
   gtk_entry_set_max_length (GTK_ENTRY (editor->color_entry), 6);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("He_x Triplet:"), 1.0, 0.5,
+			     _("He_x Triplet:"), 0.0, 0.5,
 			     editor->color_entry, 1, TRUE);
 
   g_signal_connect (editor->color_entry, "activate",

@@ -265,13 +265,13 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (combo),
                                         "gimp-gradient");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-			     _("Shape:"), 1.0, 0.5,
+			     _("Shape:"), 0.0, 0.5,
 			     combo, 2, TRUE);
 
   /*  the repeat option  */
   combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
-			     _("Repeat:"), 1.0, 0.5,
+			     _("Repeat:"), 0.0, 0.5,
 			     combo, 2, TRUE);
 
   g_signal_connect (config, "notify::gradient-type",

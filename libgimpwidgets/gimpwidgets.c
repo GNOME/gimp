@@ -494,7 +494,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
   GtkObject *return_adj;
 
   label = gtk_label_new_with_mnemonic (text);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 
   if (tooltip)
     {
@@ -1046,8 +1046,10 @@ gimp_coordinates_new (GimpUnit         unit,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0, x);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1, y);
 
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry), xlabel, 0, 0, 1.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry), ylabel, 1, 0, 1.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
+                                xlabel, 0, 0, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
+                                ylabel, 1, 0, 0.0);
 
   chainbutton = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
   if (chainbutton_active)

@@ -406,7 +406,7 @@ info_dialog_field_new (InfoDialog    *idialog,
   gtk_table_resize (GTK_TABLE (idialog->info_table), 2, row);
 
   label = gtk_label_new (title);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (idialog->info_table), label,
 		    0, 1, row - 1, row,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);

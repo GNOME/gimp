@@ -172,7 +172,7 @@ gimp_shear_tool_dialog (GimpTransformTool *tr_tool)
                               tr_tool);
 
   info_dialog_add_spinbutton (tr_tool->info_dialog,
-                              _("Y:"),
+                              _("Shear Magnitude Y:"),
                               &yshear_val,
                               -65536, 65536, 1, 15, 1, 1, 0,
                               G_CALLBACK (shear_y_mag_changed),
