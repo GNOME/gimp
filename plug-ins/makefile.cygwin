@@ -1,0 +1,388 @@
+# Makefile to build the GIMP plug-ins with cygwin's make and gcc -mno-cygwin
+
+# I don't want to use many hand-written makefiles, so this is quite complex.
+# This same makefile is also included by sub-makes called as subroutines.
+# Various parts of this file are used when makeing from the plug-ins directory,
+# and when building individual plug-ins and the three plug-in libraries.
+
+INSTALL = install
+
+GIMP = /gimp
+
+BIN = $(GIMP)/plug-ins
+
+ifndef LIBRARY
+ifndef PLUGIN
+
+# This part is used when making from the plug-ins directory
+
+FROMPLUGINSDIR=YES		# Used to bypass other parts below
+
+# List plug-ins. Use several lists just so that this makefile looks more like
+# the one used with Microsoft's nmake, which has silly limits.
+
+# The COMMON* ones are in the common subdirectory
+COMMON1 = CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard colorify compose convmatrix cubism
+COMMON2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
+COMMON3 = gauss_iir gauss_rle gbr gee gicon gif gifload glasstile gqbist gradmap grid gtm guillotine header hot hrz gz illusion iwarp jigsaw jpeg laplace lic
+COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify palette papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd randomize ripple rotate rotators
+COMMON5 = scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spread tga threshold_alpha tiff tile tileit tiler video vinvert vpropagate waves whirlpinch wind wmf xbm xwd zealouscrop
+
+# These have own subdirectories each
+SEPARATE = AlienMap FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gfli ifscompose maze mosaic pagecurl print rcm sgi sinus struc unsharp
+
+# These are unofficial, ie not in the CVS. To build these, you should
+# get tml's source snapshot and copy this makefile to the
+# ../unofficial-plug-ins directory, go there, and do "make -f
+# makefile.cygwin unofficial".
+
+UNOFFICIAL = guash user_filter twain
+
+# The main target
+
+all : ../config.h libs-all common-plugins-all separate-plugins-all
+
+../config.h : ../config.h.win32
+	cp ../config.h.win32 ../config.h
+
+install : libs-install common-plugins-install separate-plugins-install scripts-install
+
+unofficial:
+	for d in $(UNOFFICIAL); do $(MAKE) -f makefile.cygwin sub-one-separate DIR=$$d TARGET=install; done
+
+clean : libs-clean common-plugins-clean separate-plugins-clean
+
+libs-all :
+	$(MAKE) -f makefile.cygwin sub-libs TARGET=all
+
+libs-install :
+	$(MAKE) -f makefile.cygwin sub-libs TARGET=install
+
+libs-clean :
+	$(MAKE) -f makefile.cygwin sub-libs TARGET=clean
+
+sub-libs:
+	cd megawidget; $(MAKE) -f ../makefile.cygwin TOP=../.. LIBRARY=megawidget $(TARGET)
+	cd gpc; $(MAKE) -f ../makefile.cygwin TOP=../.. LIBRARY=gpc $(TARGET)
+	cd libgck/gck; $(MAKE) -f ../../makefile.cygwin TOP=../../.. LIBRARY=gck OBJECTS="gckcolor.o gcklistbox.o gckmath.o gckui.o gckvector.o" $(TARGET)
+
+
+
+common-plugins-all :
+	$(MAKE) -f makefile.cygwin sub-common-plugins TARGET=all
+
+common-plugins-install :
+	$(MAKE) -f makefile.cygwin sub-common-plugins TARGET=install
+
+common-plugins-clean :
+	cd common; $(MAKE) -f ../makefile.cygwin LIBRARY=PLUGIN=dummy clean
+
+
+
+sub-common-plugins :
+	for d in $(COMMON1) $(COMMON2) $(COMMON3) $(COMMON4) $(COMMON5); do $(MAKE) -f makefile.cygwin sub-one-common DIR=$$d TARGET=$(TARGET); done
+
+sub-one-common :
+	cd common; $(MAKE) -f ../makefile.cygwin TOP=../.. PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
+
+
+
+separate-plugins-all :
+	$(MAKE) -f makefile.cygwin sub-separate-plugins TARGET=all
+
+separate-plugins-install :
+	$(MAKE) -f makefile.cygwin sub-separate-plugins TARGET=install
+
+separate-plugins-clean :
+	$(MAKE) -f makefile.cygwin sub-separate-plugins TARGET=clean
+
+
+
+sub-separate-plugins :
+	for d in $(SEPARATE); do $(MAKE) -f makefile.cygwin sub-one-separate DIR=$$d TARGET=$(TARGET); done
+# We must handle script-fu separately because of the dash, sigh
+	cd script-fu; $(MAKE) -f ../makefile.cygwin TOP=../.. PLUGIN=script-fu EXTRA_script_fu=1 $(TARGET)
+
+sub-one-separate :
+	cd $(DIR); $(MAKE) -f ../makefile.cygwin TOP=../.. PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
+
+
+scripts-install :
+	$(INSTALL) script-fu/scripts/*.scm $(GIMP)/scripts
+	$(INSTALL) script-fu/scripts/*.jpg $(GIMP)/scripts
+	for d in FractalExplorer/fractalexplorer-examples/*; do if [ -f $$d ]; then $(INSTALL) $$d $(GIMP)/fractalexplorer; fi; done
+	rm $(GIMP)/fractalexplorer/Makefile.am
+
+endif # ifndef PLUGIN
+endif # ifndef LIBRARY
+
+ifndef FROMPLUGINSDIR
+
+# This part is used when building individual plug-ins or one of
+# the libraries. 
+
+ifdef EXTRA_Lighting
+OBJECTS = \
+	lighting_apply.o \
+	lighting_image.o \
+	lighting_main.o \
+	lighting_preview.o \
+	lighting_shade.o \
+	lighting_ui.o
+endif
+
+ifdef EXTRA_MapObject
+OBJECTS = \
+	arcball.o \
+	mapobject_apply.o \
+	mapobject_image.o \
+	mapobject_main.o \
+	mapobject_preview.o \
+	mapobject_shade.o \
+	mapobject_ui.o
+endif
+
+ifdef EXTRA_bmp
+OBJECTS = \
+	bmp.o \
+	bmpread.o \
+	bmpwrite.o
+endif
+
+ifdef EXTRA_dbbrowser
+OBJECTS = \
+	dbbrowser.o \
+	dbbrowser_utils.o
+endif
+
+ifdef EXTRA_faxg3
+OBJECTS = \
+	faxg3.o \
+	g3.o	\
+	run_tbl.o
+endif
+
+ifdef EXTRA_fits
+OBJECTS = \
+	fits.o \
+	fitsrw.o
+endif
+
+ifdef EXTRA_flame
+OBJECTS = \
+	cmap.o	\
+	flame.o	\
+	libifs.o \
+	rect.o
+endif
+
+ifdef EXTRA_fp
+OBJECTS = \
+	fp.o	\
+	fp_gdk.o \
+	fp_gtk.o \
+	fp_hsv.o \
+	fp_misc.o
+endif
+
+ifdef EXTRA_gdyntext
+# Doesn't compile yet, though, so not included in list above
+OBJECTS = \
+	charmap.o \
+	charmap_window.o \
+	font_selection.o \
+	gdyntext.o \
+	gdyntext_ui.o \
+	message_window.o
+endif
+
+ifdef EXTRA_gfli
+OBJECTS = \
+	fli.o	\
+	gfli.o
+endif
+
+ifdef EXTRA_ifscompose
+OBJECTS = \
+	ifscompose.o \
+	ifscompose_storage.o \
+	ifscompose_utils.o
+endif
+
+ifdef EXTRA_jpeg
+# Location of jpeg-6b sources
+JPEG = $(TOP)/../jpeg-6b
+EXTRACFLAGS = -I$(JPEG)
+EXTRALIBS = -L $(JPEG) -ljpeg
+endif
+
+ifdef EXTRA_maze
+OBJECTS = \
+	algorithms.o \
+	handy.o \
+	maze.o	\
+	maze_face.o
+endif
+
+ifdef EXTRA_png
+# Location of libpng sources
+PNG = $(TOP)/../libpng-1.0.3
+# And zlib
+ZLIB = $(TOP)/../zlib-1.1.3
+EXTRACFLAGS = -I$(PNG) -I$(ZLIB)
+EXTRALIBS = -L $(PNG) -lpng -L $(ZLIB) -lz
+endif
+
+ifdef EXTRA_print
+OBJECTS = \
+	print.o \
+	print-escp2.o \
+	print-pcl.o \
+	print-ps.o \
+	print-util.o
+endif
+
+ifdef EXTRA_rcm
+OBJECTS = \
+	rcm.o	\
+	rcm_callback.o \
+	rcm_dialog.o \
+	rcm_gdk.o \
+	rcm_misc.o
+OPTIMIZE = 
+endif
+
+ifdef EXTRA_script_fu
+OBJECTS = \
+	interp_md5.o \
+	interp_regex.o \
+	interp_slib.o \
+	interp_sliba.o \
+	interp_trace.o \
+	script-fu.o \
+	script-fu-console.o \
+	script-fu-scripts.o \
+	regex.o \
+	../dbbrowser/dbbrowser_utils.o
+EXTRACFLAGS = -DREGEX_MALLOC
+HAVE_RESOURCE = YES
+endif
+
+ifdef EXTRA_sgi
+OBJECTS = \
+	sgi.o	\
+	sgilib.o
+endif
+
+ifdef EXTRA_tiff
+# Location of tiff-3.4 sources
+TIFF = $(TOP)/../tiff-v3.4/libtiff
+# Location of jpeg-6b sources
+JPEG = $(TOP)/../jpeg-6b
+# And zlib
+ZLIB = $(TOP)/../zlib-1.1.3
+EXTRACFLAGS = -I$(TIFF)
+EXTRALIBS = -L $(TIFF) -ltiff -L $(JPEG) -ljpeg -L $(ZLIB) -lz -luser32
+endif
+
+ifdef EXTRA_unsharp
+OBJECTS = \
+	dialog_f.o \
+	unsharp.o
+endif
+
+ifdef EXTRA_guash
+HAVE_RESOURCE = YES
+endif
+
+ifdef EXTRA_user_filter
+OBJECTS = \
+	libyywrap.o \
+	uf_eval.o \
+	uf_file.o \
+	uf_gui.o \
+	uf_lexer.o \
+	uf_main.o \
+	uf_parser.tab.o
+endif
+
+ifdef EXTRA_twain
+OBJECTS = \
+	tw_func.o \
+	tw_util.o \
+	twain.o
+EXTRALIBS = -luser32
+endif
+
+GIMP_VER = 1.1
+GTK_VER = 1.3
+GLIB_VER = 1.3
+
+GTK = $(TOP)/../gtk+
+GLIB = $(TOP)/../glib
+GETTEXT = $(TOP)/../gettext-0.10.35
+
+PLUGINDIR = $(TOP)/plug-ins
+
+OPTIMIZE = -O
+
+CC = gcc $(OPTIMIZE) -mno-cygwin -mpentium
+
+CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(TOP) -I$(PLUGINDIR) -I$(PLUGINDIR)/libgck -I$(GLIB) -I$(GTK)/gdk/win32 -I$(GTK) -I$(GETTEXT)/intl
+
+ifdef PLUGIN
+
+# This part is used when building individual plug-ins
+
+all : $(PLUGIN).exe
+
+install : all
+	$(INSTALL) $(PLUGIN).exe $(BIN)
+
+ifndef OBJECTS
+OBJECTS = $(PLUGIN).o
+endif
+
+ifdef HAVE_RESOURCE
+# We have our own resource file (just an icon, usually)
+RESOURCE = $(PLUGIN)res.o
+else
+# Use the Wilber icon otherwise. If gimp.exe eventually gets more resources,
+# this will have to be changed.
+RESOURCE = ../../app/gimpres.o
+endif
+
+$(PLUGIN).exe : $(OBJECTS) $(RESOURCE)
+	$(CC) $(CFLAGS) -mwindows -s -o $(PLUGIN).exe $(OBJECTS) $(RESOURCE) -L $(PLUGINDIR)/megawidget -lmegawidget -L $(PLUGINDIR)/gpc -lgpc  -L $(PLUGINDIR)/libgck/gck -lgck -L ../../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER) -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) $(EXTRALIBS) $(LDFLAGS)
+
+$(PLUGIN)res.o : $(PLUGIN).rc
+	windres $(PLUGIN).rc $(PLUGIN)res.o
+
+endif
+
+ifdef LIBRARY
+
+# This part is used when building a library
+
+all : lib$(LIBRARY).a
+
+install : all
+
+ifndef OBJECTS
+OBJECTS = $(LIBRARY).o
+endif
+
+lib$(LIBRARY).a : $(OBJECTS)
+	-rm $@
+	ar rc $@ $(OBJECTS)
+
+endif
+
+
+.c.o :
+	$(CC) $(CFLAGS) -c $<
+
+clean :
+	-rm *.o *.a *.exe
+
+endif # ifndef FROMPLUGINSDIR

@@ -2277,7 +2277,6 @@ static char *
 value_to_str (char *name)
 {
   int i;
-  printf(" STRING = %s", name);
   for (i = 0; i < nfuncs; i++)
     if (! strcmp (funcs[i].name, name))
       switch (funcs[i].type)

@@ -84,18 +84,6 @@ struct _GPlugInInfo
   GRunProc run_proc;
 };
 
-#if defined (NATIVE_WIN32) && !defined (LIBGIMP_COMPILATION)
-/* Define PLUG_IN_INFO as an exported symbol (when compiling a plug-in).
- * In gimp.c, we don't declare it at all, but fetch the address
- * of it with GetProcAddress.
- */
-#ifdef __GNUC__
-GPlugInInfo PLUG_IN_INFO;
-#else
-__declspec(dllexport) GPlugInInfo PLUG_IN_INFO;
-#endif
-#endif
-
 struct _GTile
 {
   guint ewidth;        /* the effective width of the tile */
@@ -190,7 +178,7 @@ struct _GParam
 
 
 #ifdef NATIVE_WIN32
-/* Define WinMain() as plug-ins are built as GUI applications. Also
+/* Define WinMain() because plug-ins are built as GUI applications. Also
  * define a main() in case some plug-in still is built as a console
  * application.
  */
@@ -202,19 +190,27 @@ struct _GParam
 #  endif
 
 #  define MAIN()			\
+   static int				\
+   win32_gimp_main (int argc, char *argv[])	\
+   {					\
+     extern void set_gimp_PLUG_IN_INFO_PTR(GPlugInInfo *);	\
+     set_gimp_PLUG_IN_INFO_PTR(&PLUG_IN_INFO);	\
+     return gimp_main (argc, argv);	\
+   }					\
+					\
    int _stdcall				\
-   WinMain (int hInstance,		\
-	    int hPrevInstance,		\
+   WinMain (void *hInstance,		\
+	    void *hPrevInstance,	\
 	    char *lpszCmdLine,		\
 	    int nCmdShow)		\
    {					\
-     return gimp_main (__argc, __argv);	\
+     return win32_gimp_main (__argc, __argv);	\
    }					\
 					\
    int					\
    main (int argc, char *argv[])	\
    {					\
-     return gimp_main (argc, argv);	\
+     return win32_gimp_main (argc, argv);	\
    }
 #else
 #ifndef __EMX__

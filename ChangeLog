@@ -1,3 +1,22 @@
+1999-07-03  Tor Lillqvist  <tml@iki.fi>
+
+	* README.win32: Advice about gcc.
+
+	* libgimp/gimp.{c,h,def}: New way to get address of PLUG_IN_INFO
+ 	to the gimp dll, similar as used by the EMX port. Much cleaner.
+	Works well with gcc also now.
+
+	* app/gimprc.c: Remove gratuituous printf.
+
+	* app/makefile.msc: Update with new files.
+
+	* plug-ins/makefile.msc: Small updates.
+
+	* plug-ins/makefile.cygwin: New file.
+
+	* plug-ins/gfig/gfig.c
+	* plug-ins/script-fu/script-fu-scripts.c: Include <glib.h> early.
+
 1999-07-02  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/dodgeburn.c: changed the tool toggle key to <Ctrl>.

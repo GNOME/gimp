@@ -111,6 +111,11 @@ static GHashTable *temp_proc_ht = NULL;
 #ifdef NATIVE_WIN32
 static GPlugInInfo *PLUG_IN_INFO_PTR;
 #define PLUG_IN_INFO (*PLUG_IN_INFO_PTR)
+void
+set_gimp_PLUG_IN_INFO_PTR(GPlugInInfo *p)
+{
+  PLUG_IN_INFO_PTR = p;
+}
 #else
 #ifndef __EMX__
 extern GPlugInInfo PLUG_IN_INFO;
@@ -129,12 +134,8 @@ gimp_main (int   argc,
 	   char *argv[])
 {
 #ifdef NATIVE_WIN32
-  HMODULE handle;
   char *peer, *peer_fd;
   guint32 thread;
-
-  handle = GetModuleHandle (NULL);
-  PLUG_IN_INFO_PTR = (GPlugInInfo *) GetProcAddress (handle, "PLUG_IN_INFO");
 #endif
 
   if ((argc < 4) || (strcmp (argv[1], "-gimp") != 0))

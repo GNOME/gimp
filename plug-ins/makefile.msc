@@ -23,16 +23,17 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 # The COMMON* ones are in the common subdirectory
 COMMON1 = CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard colorify compose convmatrix cubism
 COMMON2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
-COMMON3 = gauss_iir gauss_rle gbr gee gicon gif gifload glasstile gqbist gradmap grid gtm guillotine header hot hrz gz illusion jigsaw jpeg laplace lic
+COMMON3 = gauss_iir gauss_rle gbr gee gicon gif gifload glasstile gqbist gradmap grid gtm guillotine header hot hrz gz illusion iwarp jigsaw jpeg laplace lic
 COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify palette papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd randomize ripple rotate rotators
-COMMON5 = scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spread tga threshold_alpha tiff tile tileit tiler video vinvert vpropagate waves whirlpinch wind wmf xbm zealouscrop
+COMMON5 = scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spread sunras tga threshold_alpha tiff tile tileit tiler video vinvert vpropagate waves whirlpinch wind wmf xbm xwd zealouscrop
 
 # These have own subdirectories each
 SEPARATE = AlienMap FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gfli ifscompose maze mosaic pagecurl print rcm sgi sinus struc unsharp
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
-# ..\unofficial-plug-ins directory, and do "nmake -f makefile.msc unofficial".
+# ..\unofficial-plug-ins directory, go there, and do "nmake -f
+# makefile.msc unofficial".
 
 UNOFFICIAL = guash user_filter twain
 
@@ -217,6 +218,7 @@ OBJECTS = \
 !IFDEF EXTRA_ifscompose
 OBJECTS = \
 	ifscompose.obj \
+	ifscompose_storage.obj \
 	ifscompose_utils.obj
 !ENDIF
 
@@ -273,8 +275,8 @@ OBJECTS = \
 	script-fu.obj \
 	script-fu-console.obj \
 	script-fu-scripts.obj \
-	regex.obj
-EXTRALIBS = ..\dbbrowser\dbbrowser_utils.obj
+	regex.obj \
+	..\dbbrowser\dbbrowser_utils.obj
 EXTRACFLAGS = -DREGEX_MALLOC
 HAVE_RESOURCE = YES
 !ENDIF
@@ -371,10 +373,10 @@ OBJECTS = $(PLUGIN).obj
 !ENDIF
 
 !IFDEF HAVE_RESOURCE
-# Do we have our own resource file (just an icon, usually)
+# We have our own resource file (just an icon, usually)
 RESOURCE = $(PLUGIN).res
 !ELSE
-# Use the Wilber icon otherwise. If gimp.exe sometime gets more resources,
+# Use the Wilber icon otherwise. If gimp.exe eventually gets more resources,
 # this will have to be changed.
 RESOURCE = ..\..\app\gimp.res
 !ENDIF

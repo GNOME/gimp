@@ -48,6 +48,8 @@
 
 #include "config.h"
 
+#include <glib.h>		/* Include early for obscure Win32
+				   build reasons */
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>

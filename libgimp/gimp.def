@@ -252,6 +252,7 @@ EXPORTS
 	parasite_is_type
 	parasite_name
 	parasite_new
+	set_gimp_PLUG_IN_INFO_PTR
 	wire_clear_error
 	wire_destroy
 	wire_error

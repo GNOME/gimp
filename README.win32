@@ -6,10 +6,11 @@ native Windows, and pre-built binary packages, see
 http://www.iki.fi/tml/gimp/win32/ or
 http://www.gimp.org/~tml/gimp/win32/
 
-To build the GIMP on Win32, you will need (for now) the Microsoft
-compiler. Eventually gcc (egcs) on cygwin will also be supported, but
-without the produced executables depending on the cygwin dll (gcc
--mno-cygwin).
+To build the GIMP on Win32, you can use either the Microsoft compiler
+or gcc (egcs) without the produced executables depending on the
+cygwin dll (gcc -mno-cygwin). For more information about the
+preparation necessary for building with gcc, read README.win32 in the
+GLib 1.3 distribution.
 
 The GIMP wants to be built with the GNU gettext library for
 internationalisation (i18n). Get the version ported to Win32 (not a
@@ -18,13 +19,13 @@ any i18n stuff, undefine ENABLE_NLS in the config.h.win32 file, and
 remove references to the gnu-intl library from the makefiles.
 
 First, build in the libgimp directory, then in tools/gcg, then in app,
-plug-ins, and finally in modules. Check the makefile.msc files in said
-directories.
+plug-ins, and finally in modules. Check the makefile.msc or
+makefile.cygwin files in said directories.
 
 The current build setup for Windows is a mess, with complex
 hand-maintained makefiles. I know. Adding parallel makefiles for gcc
-isn't going to make it any better. On the other hand, I don't think
-using the Unix style configuration mechanism (under cygwin) is quite
-feasible, either.
+didn't make it any cleaner. On the other hand, I don't think using the
+Unix style configuration mechanism (under cygwin) is quite feasible,
+either.
 
 --Tor Lillqvist <tml@iki.fi>

@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <glib.h>		/* Include early for obscure Win32
+				   build reasons */
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

@@ -114,6 +114,7 @@ gimp_OBJECTS = \
 	disp_callbacks.obj	\
 	docindex.obj		\
 	docindexif.obj		\
+	dodgeburn.obj		\
 	draw_core.obj		\
 	drawable.obj		\
 	drawable_cmds.obj	\
@@ -143,8 +144,8 @@ gimp_OBJECTS = \
 	gimage_mask_cmds.obj	\
 	gimpbrush.obj		\
 	gimpbrushgenerated.obj	\
-	gimpcontext.obj		\
 	gimpbrushlist.obj	\
+	gimpcontext.obj		\
 	gimphistogram.obj	\
 	gimplist.obj		\
 	gimplut.obj		\
@@ -223,6 +224,7 @@ gimp_OBJECTS = \
 	selection.obj		\
 	session.obj		\
 	shear_tool.obj		\
+	smudge.obj		\
 	temp_buf.obj		\
 	text_tool.obj		\
 	text_tool_cmds.obj	\
