@@ -77,54 +77,51 @@ static void run   (const gchar      *name,
                    gint             *nreturn_vals,
                    GimpParam       **return_vals);
 
-static gint dialog_box       (GimpDrawable   *drawable);
-static void radio_callback   (GtkWidget      *widget,
-                              gpointer        data);
+static gint dialog_box       (GimpDrawable       *drawable);
 
-static gint render_effect    (GimpDrawable   *drawable,
-                              gboolean        preview_mode);
-static void render_wind      (GimpDrawable   *drawable,
-                              gint            threshold,
-                              gint            strength,
-                              direction_t     direction,
-                              edge_t          edge,
-                              gboolean        preview_mode);
-static void render_blast     (GimpDrawable   *drawable,
-                              gint            threshold,
-                              gint            strength,
-                              direction_t     direction,
-                              edge_t          edge,
-                              gboolean        preview_mode);
-static gint render_blast_row (guchar         *buffer,
-                              gint            bytes,
-                              gint            lpi,
-                              gint            threshold,
-                              gint            strength,
-                              edge_t          edge);
-static void render_wind_row  (guchar         *sb,
-                              gint            bytes,
-                              gint            lpi,
-                              gint            threshold,
-                              gint            strength,
-                              edge_t          edge);
+static gint render_effect    (GimpDrawable        *drawable,
+                              GimpDrawablePreview *preview);
+static void render_wind      (GimpDrawable        *drawable,
+                              gint                 threshold,
+                              gint                 strength,
+                              direction_t          direction,
+                              edge_t               edge,
+                              GimpDrawablePreview *preview);
+static void render_blast     (GimpDrawable        *drawable,
+                              gint                 threshold,
+                              gint                 strength,
+                              direction_t          direction,
+                              edge_t               edge,
+                              GimpDrawablePreview *preview);
+static gint render_blast_row (guchar              *buffer,
+                              gint                 bytes,
+                              gint                 lpi,
+                              gint                 threshold,
+                              gint                 strength,
+                              edge_t               edge);
+static void render_wind_row  (guchar              *sb,
+                              gint                 bytes,
+                              gint                 lpi,
+                              gint                 threshold,
+                              gint                 strength,
+                              edge_t               edge);
 
-
-static void get_derivative     (guchar   *pixel_R1,
-                                guchar   *pixel_R2,
-                                edge_t    edge,
-                                gboolean  has_alpha,
-                                gint     *derivative_R,
-                                gint     *derivative_G,
-                                gint     *derivative_B,
-                                gint     *derivative_A);
-static gint threshold_exceeded (guchar   *pixel_R1,
-                                guchar   *pixel_R2,
-                                edge_t    edge,
-                                gint      threshold,
-                                gboolean  has_alpha);
-static void reverse_buffer     (guchar   *buffer,
-                                gint      length,
-                                gint      bytes);
+static void get_derivative         (guchar   *pixel_R1,
+                                    guchar   *pixel_R2,
+                                    edge_t    edge,
+                                    gboolean  has_alpha,
+                                    gint     *derivative_R,
+                                    gint     *derivative_G,
+                                    gint     *derivative_B,
+                                    gint     *derivative_A);
+static gboolean threshold_exceeded (guchar   *pixel_R1,
+                                    guchar   *pixel_R2,
+                                    edge_t    edge,
+                                    gint      threshold,
+                                    gboolean  has_alpha);
+static void reverse_buffer         (guchar   *buffer,
+                                    gint      length,
+                                    gint      bytes);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -141,11 +138,12 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 struct config_tag
 {
-  gint        threshold;     /* derivative comparison for edge detection */
-  direction_t direction;     /* of wind, LEFT or RIGHT */
-  gint        strength;      /* how many pixels to bleed */
-  algorithm_t alg;           /* which algorithm */
-  edge_t      edge;          /* controls abs, negation of derivative */
+  gint        threshold;      /* derivative comparison for edge detection */
+  direction_t direction;      /* of wind, LEFT or RIGHT */
+  gint        strength;       /* how many pixels to bleed */
+  algorithm_t alg;            /* which algorithm */
+  edge_t      edge;           /* controls abs, negation of derivative */
+  gboolean    update_preview; /* should the preview be active? */
 };
 
 typedef struct config_tag config_t;
@@ -155,12 +153,9 @@ config_t config =
   LEFT,        /* bleed to the right */
   10,          /* how many pixels to bleed */
   RENDER_WIND, /* default algorithm */
-  LEADING      /* abs(derivative); */
+  LEADING,     /* abs(derivative); */
+  TRUE         /* update_preview */
 };
-
-#define PREVIEW_SIZE (128)
-
-static GtkWidget *preview;
 
 MAIN ()
 
@@ -228,33 +223,33 @@ run (const gchar      *name,
           config.alg = param[6].data.d_int32;
           config.edge = param[7].data.d_int32;
 
-          if (render_effect(drawable, 0) == -1)
+          if (render_effect (drawable, 0) == -1)
             status = GIMP_PDB_EXECUTION_ERROR;
         }
       break;
 
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data("plug_in_wind", &config);
+      gimp_get_data ("plug_in_wind", &config);
       if (! dialog_box (drawable))
         {
           status = GIMP_PDB_CANCEL;
           break;
         }
-      if (render_effect(drawable, 0) == -1)
+      if (render_effect(drawable, NULL) == -1)
         {
           status = GIMP_PDB_CALLING_ERROR;
           break;
         }
-      gimp_set_data("plug_in_wind", &config, sizeof(config_t));
-      gimp_displays_flush();
+      gimp_set_data ("plug_in_wind", &config, sizeof (config_t));
+      gimp_displays_flush ();
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data("plug_in_wind", &config);
+      gimp_get_data ("plug_in_wind", &config);
       if (render_effect (drawable, FALSE) == -1)
         {
           status = GIMP_PDB_EXECUTION_ERROR;
-          gimp_message("An execution error occured.");
+          gimp_message ("An execution error occured.");
         }
       else
         {
@@ -262,7 +257,7 @@ run (const gchar      *name,
         }
     }
 
-  gimp_drawable_detach(drawable);
+  gimp_drawable_detach (drawable);
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -271,29 +266,29 @@ run (const gchar      *name,
 }
 
 static gint
-render_effect (GimpDrawable *drawable,
-               gboolean      preview_mode)
+render_effect (GimpDrawable        *drawable,
+               GimpDrawablePreview *preview)
 {
   if (config.alg == RENDER_WIND)
     {
       render_wind (drawable, config.threshold, config.strength,
-                   config.direction, config.edge, preview_mode);
+                   config.direction, config.edge, preview);
     }
   else if (config.alg == RENDER_BLAST)
     {
       render_blast (drawable, config.threshold, config.strength,
-                    config.direction, config.edge, preview_mode);
+                    config.direction, config.edge, preview);
     }
   return 0;
 }
 
 static void
-render_blast (GimpDrawable *drawable,
-              gint          threshold,
-              gint          strength,
-              direction_t   direction,
-              edge_t        edge,
-              gboolean      preview_mode)
+render_blast (GimpDrawable        *drawable,
+              gint                 threshold,
+              gint                 strength,
+              direction_t          direction,
+              edge_t               edge,
+              GimpDrawablePreview *preview)
 {
   gint          x1, x2, y1, y2;
   gint          width;
@@ -306,14 +301,13 @@ render_blast (GimpDrawable *drawable,
   gint          marker = 0;
   gint          lpi;
 
-  if (preview_mode)
+  if (preview)
     {
-      width  = PREVIEW_SIZE;
-      height = PREVIEW_SIZE;
+      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      x2 = x1 + width;
+      y2 = y1 + height;
 
-      x1 = y1 = 0;
-      x2 = width;
-      y2 = height;
       preview_buffer = g_new (guchar, width * height * bytes);
     }
   else
@@ -324,10 +318,12 @@ render_blast (GimpDrawable *drawable,
       width = x2 - x1;
       height = y2 - y1;
 
-      gimp_pixel_rgn_init (&dest_region, drawable, x1, y1, width, height, TRUE, TRUE);
+      gimp_pixel_rgn_init (&dest_region, drawable,
+                           x1, y1, width, height, TRUE, TRUE);
     }
 
-  gimp_pixel_rgn_init (&src_region,  drawable, x1, y1, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&src_region,  drawable,
+                       x1, y1, width, height, FALSE, FALSE);
   row_stride = width * bytes;
   lpi = row_stride - bytes;
 
@@ -349,9 +345,11 @@ render_blast (GimpDrawable *drawable,
           reverse_buffer (buffer, row_stride, bytes);
         }
 
-      if (preview_mode)
+      if (preview)
         {
-          memcpy (preview_buffer+row*row_stride, buffer, row_stride);
+          memcpy (preview_buffer + (row - y1) * row_stride,
+                  buffer,
+                  row_stride);
         }
       else
         {
@@ -371,9 +369,11 @@ render_blast (GimpDrawable *drawable,
                 {
                   gimp_pixel_rgn_get_row (&src_region,
                                           buffer, x1, row, width);
-                  if (preview_mode)
+                  if (preview)
                     {
-                      memcpy (preview_buffer+row*row_stride, buffer, row_stride);
+                      memcpy (preview_buffer + (row - y1) * row_stride,
+                              buffer,
+                              row_stride);
                     }
                   else
                     {
@@ -389,13 +389,9 @@ render_blast (GimpDrawable *drawable,
   g_free(buffer);
 
   /*  update the region  */
-  if (preview_mode)
+  if (preview)
     {
-      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                              0, 0, PREVIEW_SIZE, PREVIEW_SIZE,
-                              gimp_drawable_type (drawable->drawable_id),
-                              preview_buffer,
-                              row_stride);
+      gimp_drawable_preview_draw (preview, preview_buffer);
 
       g_free (preview_buffer);
     }
@@ -403,17 +399,17 @@ render_blast (GimpDrawable *drawable,
     {
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
     }
 }
 
 static void
-render_wind (GimpDrawable *drawable,
-             gint          threshold,
-             gint          strength,
-             direction_t   direction,
-             edge_t        edge,
-             gboolean      preview_mode)
+render_wind (GimpDrawable        *drawable,
+             gint                 threshold,
+             gint                 strength,
+             direction_t          direction,
+             edge_t               edge,
+             GimpDrawablePreview *preview)
 {
   GimpPixelRgn  src_region, dest_region;
   gint          width;
@@ -427,15 +423,15 @@ render_wind (GimpDrawable *drawable,
   gint          x1, y1, x2, y2;
 
   bytes = drawable->bpp;
-  if (preview_mode)
-    {
-      width  = PREVIEW_SIZE;
-      height = PREVIEW_SIZE;
 
-      x1 = y1 = 0;
-      x2 = width;
-      y2 = height;
-      preview_buffer = g_new (guchar, PREVIEW_SIZE * PREVIEW_SIZE * bytes);
+  if (preview)
+    {
+      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      x2 = x1 + width;
+      y2 = y1 + height;
+
+      preview_buffer = g_new (guchar, width * height * bytes);
     }
   else
     {
@@ -467,9 +463,9 @@ render_wind (GimpDrawable *drawable,
       if (direction == RIGHT)
         reverse_buffer(sb, row_stride, bytes);
 
-      if (preview_mode)
+      if (preview)
         {
-          memcpy (preview_buffer + row * row_stride, sb, row_stride);
+          memcpy (preview_buffer + (row - y1) * row_stride, sb, row_stride);
         }
       else
         {
@@ -481,13 +477,9 @@ render_wind (GimpDrawable *drawable,
   g_free(sb);
 
   /*  update the region  */
-  if (preview_mode)
+  if (preview)
     {
-      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                              0, 0, PREVIEW_SIZE, PREVIEW_SIZE,
-                              gimp_drawable_type (drawable->drawable_id),
-                              preview_buffer,
-                              row_stride);
+      gimp_drawable_preview_draw (preview, preview_buffer);
 
       g_free (preview_buffer);
     }
@@ -495,7 +487,7 @@ render_wind (GimpDrawable *drawable,
     {
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
     }
 }
 
@@ -507,7 +499,7 @@ render_blast_row (guchar *buffer,
                   gint    strength,
                   edge_t  edge)
 {
-  gint Ri, Gi, Bi, Ai= 0;
+  gint Ri, Gi, Bi, Ai = 0;
   gint sbi, lbi;
   gint bleed_length;
   gint i, j;
@@ -518,10 +510,14 @@ render_blast_row (guchar *buffer,
     {
       Ri = j; Gi = j + 1; Bi = j + 2;
 
-      if(bytes > 3)
+      if (bytes > 3)
         Ai = j + 3;
 
-      if (threshold_exceeded(buffer+Ri, buffer+Ri+bytes, edge, threshold, (bytes > 3)))
+      if (threshold_exceeded (buffer + Ri,
+                              buffer + Ri + bytes,
+                              edge,
+                              threshold,
+                              (bytes > 3)))
         {
           /* we have found an edge, do bleeding */
           sbi = Ri;
@@ -608,10 +604,14 @@ render_wind_row (guchar *sb,
       gint Bi = j + 2;
       gint Ai = 0;
 
-      if(bytes > 3)
+      if (bytes > 3)
         Ai = j + 3;
 
-      if (threshold_exceeded(sb+Ri, sb+Ri+comp_stride, edge, threshold,(bytes > 3)))
+      if (threshold_exceeded (sb + Ri,
+                              sb + Ri + comp_stride,
+                              edge,
+                              threshold,
+                              (bytes > 3)))
         {
           /* we have found an edge, do bleeding */
           sbi = Ri + comp_stride;
@@ -623,7 +623,7 @@ render_wind_row (guchar *sb,
           target_colour_B = sb[sbi+2];
           bleed_length_max = strength;
 
-          if(bytes > 3)
+          if (bytes > 3)
             {
               blend_colour_A = sb[Ai];
               target_colour_A = sb[sbi+3];
@@ -651,19 +651,22 @@ render_wind_row (guchar *sb,
           blend_amt_R = target_colour_R - blend_colour_R;
           blend_amt_G = target_colour_G - blend_colour_G;
           blend_amt_B = target_colour_B - blend_colour_B;
-          if(bytes > 3)
+          if (bytes > 3)
             {
-               blend_amt_A = target_colour_A - blend_colour_A;
+              blend_amt_A = target_colour_A - blend_colour_A;
             }
           denominator = bleed_length * bleed_length + bleed_length;
           denominator = 2.0 / denominator;
           n = bleed_length;
           for (i = sbi; i < lbi; i += bytes)
             {
-
               /* check against original colour */
-              if (!threshold_exceeded(sb+Ri, sb+i, edge, threshold,(bytes>3))
-                  && g_random_boolean())
+              if (!threshold_exceeded (sb + Ri,
+                                       sb + i,
+                                       edge,
+                                       threshold,
+                                       (bytes>3))
+                  && g_random_boolean ())
                 {
                   break;
                 }
@@ -675,32 +678,45 @@ render_wind_row (guchar *sb,
               if(bytes > 3)
                 {
                   blend_colour_A += blend_amt_A * n * denominator;
-                  if (blend_colour_A > 255) blend_colour_A = 255;
-                  else if (blend_colour_A < 0) blend_colour_A = 0;
+                  if (blend_colour_A > 255)
+                    blend_colour_A = 255;
+                  else if (blend_colour_A < 0)
+                    blend_colour_A = 0;
                 }
 
-              if (blend_colour_R > 255) blend_colour_R = 255;
-              else if (blend_colour_R < 0) blend_colour_R = 0;
-              if (blend_colour_G > 255) blend_colour_G = 255;
-              else if (blend_colour_G < 0) blend_colour_G = 0;
-              if (blend_colour_B > 255) blend_colour_B = 255;
-              else if (blend_colour_B < 0) blend_colour_B = 0;
+              if (blend_colour_R > 255)
+                blend_colour_R = 255;
+              else if (blend_colour_R < 0)
+                blend_colour_R = 0;
 
-              sb[i] = (blend_colour_R * 2 + sb[i]) / 3;
-              sb[i+1] = (blend_colour_G * 2 + sb[i+1]) / 3;
-              sb[i+2] = (blend_colour_B * 2 + sb[i+2]) / 3;
+              if (blend_colour_G > 255)
+                blend_colour_G = 255;
+              else if (blend_colour_G < 0)
+                blend_colour_G = 0;
 
-              if(bytes > 3)
-                sb[i+3] = (blend_colour_A * 2 + sb[i+3]) / 3;
+              if (blend_colour_B > 255)
+                blend_colour_B = 255;
+              else if (blend_colour_B < 0)
+                blend_colour_B = 0;
 
-              if (threshold_exceeded(sb+i, sb+i+comp_stride, BOTH,
-                                     threshold,(bytes>3)))
+              sb[i + 0] = (blend_colour_R * 2 + sb[i + 0]) / 3;
+              sb[i + 1] = (blend_colour_G * 2 + sb[i + 1]) / 3;
+              sb[i + 2] = (blend_colour_B * 2 + sb[i + 2]) / 3;
+
+              if (bytes > 3)
+                sb[i + 3] = (blend_colour_A * 2 + sb[i + 3]) / 3;
+
+              if (threshold_exceeded (sb + i,
+                                      sb + i + comp_stride,
+                                      BOTH,
+                                      threshold,
+                                      (bytes>3)))
                 {
-                  target_colour_R = sb[i+comp_stride];
-                  target_colour_G = sb[i+comp_stride+1];
-                  target_colour_B = sb[i+comp_stride+2];
+                  target_colour_R = sb[i + comp_stride + 0];
+                  target_colour_G = sb[i + comp_stride + 1];
+                  target_colour_B = sb[i + comp_stride + 2];
                   if(bytes > 3)
-                    target_colour_A = sb[i+comp_stride+3];
+                    target_colour_A = sb[i + comp_stride + 3];
                   blend_amt_R = target_colour_R - blend_colour_R;
                   blend_amt_G = target_colour_G - blend_colour_G;
                   blend_amt_B = target_colour_B - blend_colour_B;
@@ -715,42 +731,42 @@ render_wind_row (guchar *sb,
     }
 }
 
-static gint
+static gboolean
 threshold_exceeded (guchar  *pixel_R1,
                     guchar  *pixel_R2,
                     edge_t   edge,
                     gint     threshold,
                     gboolean has_alpha)
 {
-  gint derivative_R, derivative_G, derivative_B, derivative_A;
-  gint return_value;
+  gint     derivative_R, derivative_G, derivative_B, derivative_A;
+  gboolean return_value;
 
-  get_derivative(pixel_R1, pixel_R2, edge, has_alpha,
-                 &derivative_R, &derivative_G, &derivative_B, &derivative_A);
+  get_derivative (pixel_R1, pixel_R2, edge, has_alpha,
+                  &derivative_R, &derivative_G, &derivative_B, &derivative_A);
 
   if(((derivative_R +
        derivative_G +
        derivative_B +
        derivative_A) / 4) > threshold)
     {
-      return_value = 1;
+      return_value = TRUE;
     }
   else
     {
-      return_value = 0;
+      return_value = FALSE;
     }
   return return_value;
 }
 
 static void
-get_derivative (guchar  *pixel_R1,
-                guchar  *pixel_R2,
-                edge_t   edge,
-                gboolean has_alpha,
-                gint    *derivative_R,
-                gint    *derivative_G,
-                gint    *derivative_B,
-                gint    *derivative_A)
+get_derivative (guchar   *pixel_R1,
+                guchar   *pixel_R2,
+                edge_t    edge,
+                gboolean  has_alpha,
+                gint     *derivative_R,
+                gint     *derivative_G,
+                gint     *derivative_B,
+                gint     *derivative_A)
 {
   guchar *pixel_G1 = pixel_R1 + 1;
   guchar *pixel_B1 = pixel_R1 + 2;
@@ -759,7 +775,7 @@ get_derivative (guchar  *pixel_R1,
   guchar *pixel_A1;
   guchar *pixel_A2;
 
-  if(has_alpha)
+  if (has_alpha)
     {
       pixel_A1 = pixel_R1 + 3;
       pixel_A2 = pixel_R2 + 3;
@@ -776,10 +792,10 @@ get_derivative (guchar  *pixel_R1,
 
   if (edge == BOTH)
     {
-      *derivative_R = abs(*derivative_R);
-      *derivative_G = abs(*derivative_G);
-      *derivative_B = abs(*derivative_B);
-      *derivative_A = abs(*derivative_A);
+      *derivative_R = abs (*derivative_R);
+      *derivative_G = abs (*derivative_G);
+      *derivative_B = abs (*derivative_B);
+      *derivative_A = abs (*derivative_A);
     }
   else if (edge == LEADING)
     {
@@ -812,54 +828,36 @@ reverse_buffer (guchar *buffer,
       buffer[i] = buffer[si];
       buffer[si] = (guchar) temp;
 
-      temp = buffer[i+1];
-      buffer[i+1] = buffer[si+1];
-      buffer[si+1] = (guchar) temp;
+      temp = buffer[i + 1];
+      buffer[i + 1] = buffer[si + 1];
+      buffer[si + 1] = (guchar) temp;
 
-      temp = buffer[i+2];
-      buffer[i+2] = buffer[si+2];
-      buffer[si+2] = (guchar) temp;
+      temp = buffer[i + 2];
+      buffer[i + 2] = buffer[si + 2];
+      buffer[si + 2] = (guchar) temp;
 
-      if(bytes > 3)
+      if (bytes > 3)
         {
-          temp = buffer[i+3];
-          buffer[i+3] = buffer[si+3];
-          buffer[si+3] = (guchar) temp;
+          temp = buffer[i + 3];
+          buffer[i + 3] = buffer[si + 3];
+          buffer[si + 3] = (guchar) temp;
         }
     }
-
-  return;
 }
 
 /***************************************************
   GUI
  ***************************************************/
 
-static void
-radio_callback (GtkWidget *widget,
-                gpointer   data)
-{
-  gimp_radio_button_update (widget, data);
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    {
-      GimpDrawable *drawable;
-      drawable = g_object_get_data (G_OBJECT (widget), "drawable");
-
-      if (drawable != NULL)
-        render_effect (drawable, TRUE);
-    }
-}
-
 static gint
 dialog_box (GimpDrawable *drawable)
 {
-  GtkWidget *vbox;
-  GtkWidget *hbox;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
   GtkWidget *table;
+  GtkWidget *preview;
   GtkObject *adj;
   GtkWidget *frame;
-  GtkWidget *dlg;
   GtkWidget *style1;
   GtkWidget *style2;
   GtkWidget *dir1;
@@ -871,28 +869,25 @@ dialog_box (GimpDrawable *drawable)
 
   gimp_ui_init ("wind", TRUE);
 
-  dlg = gimp_dialog_new (_("Wind"), "wind",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-wind",
+  dialog = gimp_dialog_new (_("Wind"), "wind",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-wind",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  preview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (preview, PREVIEW_SIZE, PREVIEW_SIZE);
-  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  preview = gimp_drawable_preview_new (drawable, &config.update_preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (render_effect), drawable);
 
   /*****************************************************
     outer frame and table
@@ -901,14 +896,14 @@ dialog_box (GimpDrawable *drawable)
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
 
   /*********************************************************
     radio buttons for choosing wind rendering algorithm
     ******************************************************/
 
   frame = gimp_int_radio_group_new (TRUE, _("Style"),
-                                    G_CALLBACK (radio_callback),
+                                    G_CALLBACK (gimp_radio_button_update),
                                     &config.alg, config.alg,
 
                                     _("_Wind"),  RENDER_WIND,  &style1,
@@ -916,8 +911,12 @@ dialog_box (GimpDrawable *drawable)
 
                                     NULL);
 
-  g_object_set_data (G_OBJECT (style1), "drawable", drawable);
-  g_object_set_data (G_OBJECT (style2), "drawable", drawable);
+  g_signal_connect_swapped (style1, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (style2, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1,
                     GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
@@ -928,7 +927,7 @@ dialog_box (GimpDrawable *drawable)
     **************************************************/
 
   frame = gimp_int_radio_group_new (TRUE, _("Direction"),
-                                    G_CALLBACK (radio_callback),
+                                    G_CALLBACK (gimp_radio_button_update),
                                     &config.direction, config.direction,
 
                                     _("_Left"),  LEFT,  &dir1,
@@ -936,8 +935,12 @@ dialog_box (GimpDrawable *drawable)
 
                                     NULL);
 
-  g_object_set_data (G_OBJECT (dir1), "drawable", drawable);
-  g_object_set_data (G_OBJECT (dir2), "drawable", drawable);
+  g_signal_connect_swapped (dir1, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (dir2, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 1,
                     GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
@@ -948,7 +951,7 @@ dialog_box (GimpDrawable *drawable)
     ***************************************************/
 
   frame = gimp_int_radio_group_new (TRUE, _("Edge Affected"),
-                                    G_CALLBACK (radio_callback),
+                                    G_CALLBACK (gimp_radio_button_update),
                                     &config.edge, config.edge,
 
                                     _("L_eading"),  LEADING,  &edge1,
@@ -957,9 +960,15 @@ dialog_box (GimpDrawable *drawable)
 
                                     NULL);
 
-  g_object_set_data (G_OBJECT (edge1), "drawable", drawable);
-  g_object_set_data (G_OBJECT (edge2), "drawable", drawable);
-  g_object_set_data (G_OBJECT (edge3), "drawable", drawable);
+  g_signal_connect_swapped (edge1, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (edge2, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (edge3, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_table_attach (GTK_TABLE (table), frame, 2, 3, 0, 1,
                     GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
@@ -973,7 +982,7 @@ dialog_box (GimpDrawable *drawable)
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
 
   /*****************************************************
     slider and entry for threshold
@@ -991,8 +1000,8 @@ dialog_box (GimpDrawable *drawable)
                     &config.threshold);
 
   g_signal_connect_swapped (adj, "value_changed",
-                            G_CALLBACK (render_effect),
-                            drawable);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*****************************************************
     slider and entry for strength of wind
@@ -1010,18 +1019,16 @@ dialog_box (GimpDrawable *drawable)
                     &config.strength);
 
   g_signal_connect_swapped (adj, "value_changed",
-                            G_CALLBACK (render_effect),
-                            drawable);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (table);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  render_effect (drawable, TRUE);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
-
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }

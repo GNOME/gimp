@@ -123,9 +123,10 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static EdgeVals evals =
 {
-  2.0,                          /* amount */
-  SOBEL,                        /* Edge detection algorithm */
-  GIMP_PIXEL_FETCHER_EDGE_SMEAR /* wrapmode */
+  2.0,                           /* amount */
+  SOBEL,                         /* Edge detection algorithm */
+  GIMP_PIXEL_FETCHER_EDGE_SMEAR, /* wrapmode */
+  TRUE                           /* update_preview */
 };
 
 /***** Functions *****/

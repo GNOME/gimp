@@ -1,5 +1,13 @@
 2004-09-11  DindinX  <david@dindinx.org>
 
+	* plug-ins/common/edge.c: added a default value (TRUE) for the
+	update_preview toggle.
+
+	* plug-ins/common/wind.c: ported to GimpPreviewArea, so the preview is
+	much more useful now.
+
+2004-09-11  DindinX  <david@dindinx.org>
+
 	* libgimp/gimppixelrgn.c: added some gtk-doc documentation to pixel
 	region related functions. (work in progress)
 
