@@ -113,10 +113,15 @@ file_open_as_layer_cmd_callback (GtkAction *action,
 {
   GimpDisplay *gdisp;
   GtkWidget   *widget;
+  GimpImage   *image;
+  const gchar *uri;
   return_if_no_display (gdisp, data);
   return_if_no_widget (widget, data);
 
-  file_open_dialog_show (widget, gdisp->gimage, NULL, TRUE);
+  image = gdisp->gimage;
+  uri = gimp_object_get_name (GIMP_OBJECT (image));
+
+  file_open_dialog_show (widget, image, uri, TRUE);
 }
 
 void

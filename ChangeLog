@@ -1,3 +1,8 @@
+2005-02-24  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/file-commands.c (file_open_as_layer_cmd_callback):
+	preselect the image just as in file_open_from_image_cmd_callback().
+
 2005-02-24  Michael Natterer  <mitch@gimp.org>
 
 	Allow to resize layers with the image. Fixes bug #87789.
