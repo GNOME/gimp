@@ -20,10 +20,7 @@
 #define __FILE_SAVE_DIALOG_H__
 
 
-void   file_save_dialog_show        (GimpImage *gimage,
-                                     GtkWidget *parent);
-void   file_save_a_copy_dialog_show (GimpImage *gimage,
-                                     GtkWidget *parent);
+GtkWidget * file_save_dialog_new (Gimp *gimp);
 
 
 #endif /* __FILE_SAVE_DIALOG_H__ */

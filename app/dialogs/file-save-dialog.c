@@ -34,13 +34,9 @@
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
-#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpmenufactory.h"
 
-#include "dialogs.h"
-#include "file-dialog-utils.h"
 #include "file-save-dialog.h"
 
 #include "gimp-intl.h"
@@ -48,96 +44,32 @@
 
 /*  local function prototypes  */
 
-static GtkWidget * file_save_dialog_create      (Gimp          *gimp);
-static void        file_save_dialog_response    (GtkWidget     *save_dialog,
-                                                 gint           response_id,
-                                                 Gimp          *gimp);
-static void        file_save_overwrite          (GtkWidget     *save_dialog,
-                                                 const gchar   *uri,
-                                                 const gchar   *raw_filename);
-static void        file_save_overwrite_callback (GtkWidget     *widget,
-                                                 gboolean       overwrite,
-                                                 gpointer       data);
-static gboolean    file_save_dialog_save_image  (GtkWidget     *save_dialog,
-                                                 GimpImage     *gimage,
-                                                 const gchar   *uri,
-                                                 const gchar   *raw_filename,
-                                                 PlugInProcDef *save_proc,
-                                                 gboolean       set_uri_and_proc,
-                                                 gboolean       set_image_clean);
-
-
-/*  private variables  */
-
-static GtkWidget *filesave = NULL;
+static void       file_save_dialog_response    (GtkWidget     *save_dialog,
+                                                gint           response_id,
+                                                Gimp          *gimp);
+static void       file_save_overwrite          (GtkWidget     *save_dialog,
+                                                const gchar   *uri,
+                                                const gchar   *raw_filename);
+static void       file_save_overwrite_callback (GtkWidget     *widget,
+                                                gboolean       overwrite,
+                                                gpointer       data);
+static gboolean   file_save_dialog_save_image  (GtkWidget     *save_dialog,
+                                                GimpImage     *gimage,
+                                                const gchar   *uri,
+                                                const gchar   *raw_filename,
+                                                PlugInProcDef *save_proc,
+                                                gboolean       set_uri_and_proc,
+                                                gboolean       set_image_clean);
 
 
 /*  public functions  */
 
-void
-file_save_dialog_show (GimpImage *gimage,
-                       GtkWidget *parent)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (parent == NULL || GTK_IS_WIDGET (parent));
-
-  if (! gimp_image_active_drawable (gimage))
-    return;
-
-  if (! filesave)
-    filesave = file_save_dialog_create (gimage->gimp);
-
-  gimp_file_dialog_set_sensitive (GIMP_FILE_DIALOG (filesave), TRUE);
-
-  if (GTK_WIDGET_VISIBLE (filesave))
-    {
-      gtk_window_present (GTK_WINDOW (filesave));
-      return;
-    }
-
-  gtk_window_set_title (GTK_WINDOW (filesave), _("Save Image"));
-
-  gimp_file_dialog_set_image (GIMP_FILE_DIALOG (filesave), gimage, TRUE, TRUE);
-
-  file_dialog_show (filesave, parent);
-}
-
-void
-file_save_a_copy_dialog_show (GimpImage *gimage,
-                              GtkWidget *parent)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (parent == NULL || GTK_IS_WIDGET (parent));
-
-  if (! gimp_image_active_drawable (gimage))
-    return;
-
-  if (! filesave)
-    filesave = file_save_dialog_create (gimage->gimp);
-
-  gimp_file_dialog_set_sensitive (GIMP_FILE_DIALOG (filesave), TRUE);
-
-  if (GTK_WIDGET_VISIBLE (filesave))
-    {
-      gtk_window_present (GTK_WINDOW (filesave));
-      return;
-    }
-
-  gtk_window_set_title (GTK_WINDOW (filesave), _("Save a Copy of the Image"));
-
-  gimp_file_dialog_set_image (GIMP_FILE_DIALOG (filesave),
-                              gimage, FALSE, FALSE);
-
-  file_dialog_show (filesave, parent);
-}
-
-
-/*  private functions  */
-
-static GtkWidget *
-file_save_dialog_create (Gimp *gimp)
+GtkWidget *
+file_save_dialog_new (Gimp *gimp)
 {
   GtkWidget *dialog;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   dialog = gimp_file_dialog_new (gimp,
                                  GTK_FILE_CHOOSER_ACTION_SAVE,
@@ -145,15 +77,15 @@ file_save_dialog_create (Gimp *gimp)
                                  GTK_STOCK_SAVE,
                                  GIMP_HELP_FILE_SAVE);
 
-  gimp_dialog_factory_add_foreign (global_dialog_factory,
-                                   "gimp-file-save-dialog", dialog);
-
   g_signal_connect (dialog, "response",
                     G_CALLBACK (file_save_dialog_response),
                     gimp);
 
   return dialog;
 }
+
+
+/*  private functions  */
 
 static void
 file_save_dialog_response (GtkWidget *save_dialog,
@@ -167,7 +99,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
   if (response_id != GTK_RESPONSE_OK)
     {
       if (! dialog->busy)
-        file_dialog_hide (save_dialog);
+        gtk_widget_hide (save_dialog);
 
       return;
     }
@@ -192,7 +124,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
                                        dialog->set_uri_and_proc,
                                        dialog->set_image_clean))
         {
-          file_dialog_hide (save_dialog);
+          gtk_widget_hide (save_dialog);
         }
 
       gimp_file_dialog_set_sensitive (dialog, TRUE);
@@ -279,7 +211,7 @@ file_save_overwrite_callback (GtkWidget *widget,
                                        dialog->set_uri_and_proc,
                                        dialog->set_image_clean))
         {
-          file_dialog_hide (overwrite_data->save_dialog);
+          gtk_widget_hide (overwrite_data->save_dialog);
         }
 
     }

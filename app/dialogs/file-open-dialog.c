@@ -61,6 +61,8 @@ file_open_dialog_new (Gimp *gimp)
 {
   GtkWidget *dialog;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
   dialog = gimp_file_dialog_new (gimp,
                                  GTK_FILE_CHOOSER_ACTION_OPEN,
                                  _("Open Image"), "gimp-file-open",

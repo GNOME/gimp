@@ -41,9 +41,6 @@ GimpDialogFactory *global_toolbox_factory = NULL;
 static const GimpDialogFactoryEntry toplevel_entries[] =
 {
   /*  foreign toplevels without constructor  */
-  { "gimp-file-save-dialog",
-    NULL, 0, TRUE,  TRUE,  TRUE,  FALSE },
-
   { "gimp-brightness-contrast-tool-dialog",
     NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
   { "gimp-color-picker-tool-dialog",
@@ -94,6 +91,8 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
     0, TRUE,  TRUE,  TRUE,  FALSE },
   { "gimp-file-open-location-dialog", dialogs_file_open_location_new,
     0, FALSE, TRUE,  FALSE, FALSE },
+  { "gimp-file-save-dialog",          dialogs_file_save_new,
+    0, FALSE, TRUE,  TRUE,  FALSE },
 
   /*  singleton toplevels  */
   { "gimp-preferences-dialog", dialogs_preferences_get,

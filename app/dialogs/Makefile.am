@@ -15,8 +15,6 @@ libappdialogs_a_SOURCES = \
 	color-dialog.h			\
 	convert-dialog.c		\
 	convert-dialog.h		\
-	file-dialog-utils.c		\
-	file-dialog-utils.h		\
 	file-open-dialog.c		\
 	file-open-dialog.h		\
 	file-open-location-dialog.c	\

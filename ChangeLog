@@ -1,3 +1,24 @@
+2004-09-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/Makefile.am
+	* app/dialogs/file-dialog-utils.[ch]: removed these files.
+
+	* app/dialogs/file-save-dialog.[ch]: removed functions
+	file_save_dialog_show() and file_save_a_copy_dialog_show() and
+	changed internal function file_save_dialog_create() to
+	file_save_dialog_new().
+
+	* app/dialogs/dialogs.c
+	* app/dialogs/dialogs-constructors.[ch]: made it completely
+	managed by the dialog factory.
+
+	* app/actions/file-commands.c: create it using the dialog
+	factory. Attach it to the image so we open only one save
+	dialog per image.
+
+	* app/dialogs/file-open-dialog.c: added precondition checks
+	to file_open_dialog_new().
+
 2004-09-13  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/jpeg.c: some code cleanup.

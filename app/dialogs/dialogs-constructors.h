@@ -31,6 +31,9 @@ GtkWidget * dialogs_file_open_new          (GimpDialogFactory *factory,
 GtkWidget * dialogs_file_open_location_new (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               preview_size);
+GtkWidget * dialogs_file_save_new          (GimpDialogFactory *factory,
+                                            GimpContext       *context,
+                                            gint               preview_size);
 GtkWidget * dialogs_preferences_get        (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               preview_size);
