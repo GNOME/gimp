@@ -1,5 +1,11 @@
 2004-04-14  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: bumped version to 2.1.0, interface age 0, binary
+	age 0. Changed library versioning to include gimp_minor_version
+	similar to how gtk+ does it.
+	
+2004-04-14  Sven Neumann  <sven@gimp.org>
+
 	* Made 2.0.1 release.
 
 2004-04-13  Raphaël Quinet  <quinet@gamers.org>
