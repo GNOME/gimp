@@ -1,3 +1,7 @@
+2004-04-06  Iñaki Larrañaga  <dooteo@euskalgnu.org>
+
+	* eu.po: Added Basque translation.
+
 2004-03-28  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am (tips_POFILES): added en_GB.po (British English).
