@@ -82,6 +82,18 @@ else
   cflags="$CFLAGS"
 fi
 
+if test x${LDFLAGS+set} != xset ; then
+  ldflags='@LDFLAGS@'
+else
+  ldflags="$LDFLAGS"
+fi
+
+if test x${LIBS+set} != xset ; then
+  libs=""
+else
+  libs="$LIBS"
+fi
+
 while test $# -gt 0; do
   case "$1" in
   -*=*) optarg=`echo "$1" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
@@ -224,7 +236,7 @@ while test $# -gt 0; do
       shift
       if test "x$1" != "x"; then
         if test -r "$1"; then
-          cmd="$cc $cflags $gimp_cflags -o $install_dir/`echo $1 | sed 's/\.[^\.]*$//'` $1 $gimp_libs"
+          cmd="$cc $cflags $gimp_cflags -o $install_dir/`echo $1 | sed 's/\.[^\.]*$//'` $1 $ldflags $gimp_libs $libs"
           test $quiet = "yes" || echo $cmd
           test $donothing = "yes" || exec $cmd
         else

@@ -1,3 +1,7 @@
+Tue Aug 25 14:55:25 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* gimptool.in: use LDFLAGS and LIBS for building too
+
 Sun Aug 23 18:33:42 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: make xdelta not built by default, so poor users
