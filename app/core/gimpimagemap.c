@@ -535,8 +535,6 @@ gimp_image_map_do (GimpImageMap *image_map)
       return FALSE;
     }
 
-  pixel_region_init (&shadowPR, gimage->shadow, 0, 0, 0, 0, FALSE);
-
   /*  Process up to 16 tiles in one go. This reduces the overhead
    *  caused by updating the display while the imagemap is being
    *  applied and gives us a tiny speedup.
@@ -554,7 +552,7 @@ gimp_image_map_do (GimpImageMap *image_map)
       w = image_map->destPR.w;
       h = image_map->destPR.h;
 
-      pixel_region_resize (&shadowPR, x, y, w, h);
+      pixel_region_init (&shadowPR, gimage->shadow, x, y, w, h, FALSE);
 
       gimp_drawable_apply_region (image_map->drawable, &shadowPR,
                                   FALSE, NULL,
