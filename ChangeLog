@@ -1,3 +1,8 @@
+2003-09-03  Sven Neumann  <sven@gimp.org>
+
+	* app/batch.c (batch_init): s/extension/plug_in/ for Script-Fu
+	procedures to get batch mode working again.
+
 2003-09-02  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite.c (gimp_composite_init): Turn on

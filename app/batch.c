@@ -57,13 +57,13 @@ batch_init (Gimp         *gimp,
 
   if (batch_cmds[0] && strcmp (batch_cmds[0], "-") == 0)
     {
-      batch_cmds[0] = "(extension-script-fu-text-console RUN-INTERACTIVE)";
+      batch_cmds[0] = "(plug-in-script-fu-text-console RUN-INTERACTIVE)";
       batch_cmds[1] = NULL;
     }
 
   for (i = 0; batch_cmds[i]; i++)
     {
-      /* until --batch-interp=xxx or something similar is implemented 
+      /* until --batch-interp=xxx or something similar is implemented
        * and gimp-1.0 is not extinct use a shortcut to speed up starting the
        * perl-server tremendously. This is also fully compatible with 1.0.
        */
@@ -84,7 +84,7 @@ batch_init (Gimp         *gimp,
       }
 
       if (! eval_proc)
-        eval_proc = procedural_db_lookup (gimp, "extension_script_fu_eval");
+        eval_proc = procedural_db_lookup (gimp, "plug_in_script_fu_eval");
 
       if (! eval_proc)
         {
@@ -118,7 +118,7 @@ batch_run_cmd (Gimp        *gimp,
   args[0].value.pdb_int     = GIMP_RUN_NONINTERACTIVE;
   args[1].value.pdb_pointer = (gpointer) cmd;
 
-  vals = procedural_db_execute (gimp, "extension_script_fu_eval", args);
+  vals = procedural_db_execute (gimp, "plug_in_script_fu_eval", args);
 
   switch (vals[0].value.pdb_int)
     {
@@ -134,7 +134,7 @@ batch_run_cmd (Gimp        *gimp,
     default:
       break;
     }
-  
+
   procedural_db_destroy_args (vals, eval_proc->num_values);
   g_free (args);
 
