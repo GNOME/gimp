@@ -159,8 +159,8 @@ gimp_config_deserialize_properties (GObject   *object,
       next = g_scanner_peek_next_token (scanner);
 
       if (next != token &&
-         ! (store_unknown_tokens &&
-            token == G_TOKEN_SYMBOL && next == G_TOKEN_IDENTIFIER))
+          ! (store_unknown_tokens &&
+             token == G_TOKEN_SYMBOL && next == G_TOKEN_IDENTIFIER))
         {
           break;
         }
@@ -301,7 +301,8 @@ gimp_config_deserialize_property (GObject    *object,
   if (token == G_TOKEN_RIGHT_PAREN &&
       g_scanner_peek_next_token (scanner) == token)
     {
-      if (!G_VALUE_HOLDS_OBJECT (&value))
+      if (!G_VALUE_HOLDS_OBJECT (&value) ||
+          prop_spec->flags & G_PARAM_WRITABLE)
         g_object_set_property (object, prop_spec->name, &value);
     }
 #if CONFIG_DEBUG
