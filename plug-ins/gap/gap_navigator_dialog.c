@@ -352,20 +352,20 @@ static OpsButton frames_ops_buttons[] =
   { play_xpm, navi_dialog_vcr_play_callback, navi_dialog_vcr_play_ext_callbacks,
     N_("Playback         \n"
        "<Shift> optimized"),
-    "video/frames/play_frame.html",
+    "#playback",
     NULL, 0 },
   { update_xpm, navi_dialog_thumb_update_callback, navi_dialog_update_ext_callbacks,
     N_("Smart Update .xvpics\n"
        "<Shift> forced upd"),
-    "video/frames/play_frame.html",
+    "#update",
     NULL, 0 },
   { duplicate_xpm, navi_dialog_frames_duplicate_frame_callback, NULL,
     N_("Duplicate selected Frames"),
-    "video/frames/duplicate_frame.html",
+    "#duplicate",
     NULL, 0 },
   { delete_xpm, navi_dialog_frames_delete_frame_callback, NULL,
     N_("Delete selected Frames"),
-    "video/frames/delete_frame.html",
+    "#delete",
     NULL, 0 },
   { NULL, NULL, NULL, NULL, NULL, NULL, 0 }
 };
@@ -374,21 +374,21 @@ static OpsButton vcr_ops_buttons[] =
 {
   { first_xpm, navi_dialog_vcr_goto_first_callback, NULL,
     N_("Goto 1.st Frame"),
-    "video/frames/goto_frame.html",
+    "#goto_first",
     NULL, 0 },
   { prev_xpm, navi_dialog_vcr_goto_prev_callback, navi_dialog_vcr_goto_prev_ext_callbacks,
     N_("Goto prev Frame\n"
        "<Shift> use timezoom stepsize"),
-    "video/frames/goto_frame.html",
+    "#goto_previous",
     NULL, 0 },
   { next_xpm, navi_dialog_vcr_goto_next_callback, navi_dialog_vcr_goto_next_ext_callbacks,
     N_("Goto next Frame\n"
        "<Shift> use timezoom stepsize"),
-    "video/frames/goto_frame.html",
+    "#goto_next",
     NULL, 0 },
   { last_xpm, navi_dialog_vcr_goto_last_callback, NULL,
     N_("Goto last Frame"),
-    "video/frames/goto_frame.html",
+    "#goto_last",
     NULL, 0 },
 
   { NULL, NULL, NULL, NULL, NULL, NULL, 0 }

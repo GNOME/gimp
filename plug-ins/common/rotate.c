@@ -470,8 +470,8 @@ rotate_drawable (GDrawable *drawable)
 	      gimp_pixel_rgn_set_row (&destPR, buffer, 0, (width - col - 1), 
 				      height);
 
-	      if ((row % 5) == 0)
-		gimp_progress_update ((double) row / (double) height);
+	      if ((col % 5) == 0)
+		gimp_progress_update ((double) col / (double) width);
 	    }
 	}
  
