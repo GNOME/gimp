@@ -4798,7 +4798,7 @@ msgstr "Тимчасова процедура"
 
 #: plug-ins/common/plugindetails.c:98
 msgid "<Toolbox>/Xtns/Plugin Details..."
-msgstr "<Toolbox>/Додаткове/Подробиц╕ доповнення..."
+msgstr "<Toolbox>/Розш./Подробиц╕ доповнення..."
 
 #: plug-ins/common/plugindetails.c:213
 msgid "Details <<"
@@ -6039,7 +6039,7 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:71
 msgid "<Toolbox>/Xtns/Unit Editor..."
-msgstr "<Toolbox>/Додатково/Редактор одиниць..."
+msgstr "<Toolbox>/Розш./Редактор одиниць..."
 
 #: plug-ins/common/uniteditor.c:165 plug-ins/common/uniteditor.c:629
 msgid "New Unit"
@@ -6810,7 +6810,7 @@ msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser.c:89
 msgid "<Toolbox>/Xtns/DB Browser..."
-msgstr "<Toolbox>/Додатково/Перегляд БД..."
+msgstr "<Toolbox>/Розш./Перегляд БД..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:147
 #: plug-ins/dbbrowser/dbbrowser_utils.c:166
@@ -7221,7 +7221,7 @@ msgstr "<Image>/В╕део/Розбити в╕део на кадри"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:102
 msgid "<Toolbox>/Xtns/Split Video to Frames"
-msgstr "<Toolbox>/Додатково/Розбити в╕део на кадри"
+msgstr "<Toolbox>/Розш./Розбити в╕део на кадри"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:178
 msgid "<Image>/Video/Split Video to Frames/MPEG1"
@@ -7229,7 +7229,7 @@ msgstr "<Image>/В╕део/Розбити в╕део на кадри/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:190
 msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
-msgstr "<Toolbox>/Додатково/Розбити в╕део на кадри/MPEG1"
+msgstr "<Toolbox>/Розш./Розбити в╕део на кадри/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:332 plug-ins/gap/gap_decode_xanim.c:336
 #: plug-ins/gap/gap_range_ops.c:1200
@@ -7557,7 +7557,7 @@ msgstr "<Image>/В╕део/Розбити в╕део на кадри/Будь-яке зчитуване XANIM..."
 
 #: plug-ins/gap/gap_frontends_main.c:139
 msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
-msgstr "<Toolbox>/Додатково/Розбити в╕део на кадри/Будь-яке зчитуване XANIM..."
+msgstr "<Toolbox>/Розш./Розбити в╕део на кадри/Будь-яке зчитуване XANIM..."
 
 #: plug-ins/gap/gap_frontends_main.c:151
 msgid "<Image>/Video/Encode/MPEG1..."
@@ -12375,7 +12375,7 @@ msgstr "Передача даних TWAIN"
 
 #: plug-ins/webbrowser/webbrowser.c:130
 msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
-msgstr "<Toolbox>/Додатково/Нав╕гатор WWW/В╕дкрити URL..."
+msgstr "<Toolbox>/Розш./Нав╕гатор WWW/В╕дкрити URL..."
 
 #: plug-ins/webbrowser/webbrowser.c:265
 msgid "Open URL"
