@@ -221,7 +221,7 @@ gimp_viewable_button_new (GimpContainer     *container,
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (preview_size >  0 &&
-                        preview_size <= GIMP_VIEWABLE_MAX_POPUP_SIZE, NULL);
+                        preview_size <= GIMP_VIEWABLE_MAX_BUTTON_SIZE, NULL);
   g_return_val_if_fail (preview_border_width >= 0 &&
                         preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
                         NULL);

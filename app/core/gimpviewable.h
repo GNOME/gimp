@@ -29,7 +29,9 @@
 
 
 #define GIMP_VIEWABLE_MAX_PREVIEW_SIZE 1024
-#define GIMP_VIEWABLE_MAX_POPUP_SIZE   256
+#define GIMP_VIEWABLE_MAX_POPUP_SIZE    256
+#define GIMP_VIEWABLE_MAX_BUTTON_SIZE    64
+#define GIMP_VIEWABLE_MAX_MENU_SIZE      48
 
 
 #define GIMP_TYPE_VIEWABLE            (gimp_viewable_get_type ())

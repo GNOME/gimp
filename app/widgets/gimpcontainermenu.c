@@ -334,7 +334,7 @@ gimp_container_menu_set_preview_size (GimpContainerMenu *menu,
 {
   g_return_if_fail (GIMP_IS_CONTAINER_MENU (menu));
   g_return_if_fail (preview_size  > 0 &&
-                    preview_size <= GIMP_VIEWABLE_MAX_POPUP_SIZE);
+                    preview_size <= GIMP_VIEWABLE_MAX_MENU_SIZE);
   g_return_if_fail (preview_border_width >= 0 &&
                     preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH);
 

@@ -113,7 +113,7 @@ gimp_menu_item_new (GimpViewable  *viewable,
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (preview_size > 0 &&
-                        preview_size <= GIMP_VIEWABLE_MAX_POPUP_SIZE, NULL);
+                        preview_size <= GIMP_VIEWABLE_MAX_MENU_SIZE, NULL);
   g_return_val_if_fail (preview_border_width >= 0 &&
                         preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
                         NULL);

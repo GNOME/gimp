@@ -1,5 +1,26 @@
 2003-10-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpviewable.h: added GIMP_VIEWABLE_MAX_BUTTON_SIZE
+	GIMP_VIEWABLE_MAX_MENU_SIZE.
+
+	* app/core/gimpviewable.c (gimp_viewable_get_popup_size): smarter
+	popup size limitation: limit each axis to 2 * MAX_POPUP_SIZE
+	and the area to MAX_POPUP_SIZE ^ 2.
+
+	* app/core/gimpbuffer.c
+	* app/core/gimpimage-preview.c
+	* app/core/gimpitem-preview.c
+	* app/text/gimpfont.c (GimpViewable::get_popup_size): removed
+	all limitations.
+
+	* app/widgets/gimpcontainermenu.c
+	* app/widgets/gimpcontainermenuimpl.c
+	* app/widgets/gimpmenuitem.c
+	* app/widgets/gimpviewablebutton.c: use the new button and menu
+	size defines.
+
+2003-10-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-types.h: added GimpScanConvert typedef.
 
 	* app/core/gimpscanconvert.h: removed it here.
