@@ -2,6 +2,8 @@
 
 	* gimprc.win32: Remove (again!). The same gimprc as on Unix is used.
 
+	* Makefile.am: Remove from here, too.
+
 2002-02-13  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimp.def: Add a couple of missing entry points.
