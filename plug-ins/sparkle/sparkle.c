@@ -509,6 +509,7 @@ sparkle (GDrawable *drawable,
   gint gray;
   gint has_alpha, alpha;
   gpointer pr;
+  guchar *tmp1;
 
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
   gray = gimp_drawable_gray (drawable->id);
@@ -531,14 +532,18 @@ sparkle (GDrawable *drawable,
 
       while (size --)
 	{
-	  for (b = 0; b < alpha; b++)
+	  if(has_alpha && src[alpha] == 0)
+	     {
+	       memset(dest, 0, alpha * sizeof(guchar));
+	       dest += alpha;
+	     }
+	  else
 	    {
-	      if (has_alpha && src[alpha] == 0)
-		*dest++ = 0;
-	      else
-		*dest++ = src[b];
+	      for (b = 0, tmp1 = src; b < alpha; b++)
+		{
+		  *dest++ = *tmp1++;
+		}
 	    }
-
 	  if (has_alpha)
 	    *dest++ = src[alpha];
 
@@ -617,6 +622,7 @@ fspike (GPixelRgn *dest_rgn,
   gdouble ho, so, vo;
   gdouble theta, efac;
   gdouble sfac;
+  gdouble *gd_tmp1, *gd_tmp2;
   GTile *tile = NULL;
   gint row, col;
   gint i;
@@ -640,8 +646,8 @@ fspike (GPixelRgn *dest_rgn,
 
       gimp_pixel_rgn_get_pixel (dest_rgn, pixel, x, y);
 
-      for (b = 0; b < bytes; b++)
-	val[b] = (gdouble) (gint)pixel[b] / 255.0;
+      for (b = 0, gd_tmp1 = val, gd_tmp2 = pixel; b < bytes; b++)
+	*gd_tmp1++ = (gdouble) (gint)(*gd_tmp2++) / 255.0;
 
       /*  increase saturation to full for color image  */
       if (! gray)
@@ -662,10 +668,11 @@ fspike (GPixelRgn *dest_rgn,
 	  sfac = sfac * inten;
 
 	  ok = FALSE;
-	  for (b = 0; b < bytes; b++)
+	  for (b = 0, gd_tmp1 = in, gd_tmp2 = val; b < bytes;
+	       b++, gd_tmp1++, gd_tmp2++)
 	    {
-	      in[b] = 0.2 * val[b] * sfac;
-	      if (in[b] > 0.01)
+	      *gd_tmp1 = 0.2 * (*gd_tmp2) * sfac;
+	      if (*gd_tmp1 > 0.01)
 		ok = TRUE;
 	    }
 
@@ -677,8 +684,7 @@ fspike (GPixelRgn *dest_rgn,
 	  xrt += dx;
 	  yrt += dy;
 	  rpos += 0.2;
-	}
-      while (ok);
+	} while (ok);
 
       theta += 360.0 / svals.spike_pts;
     }
@@ -705,6 +711,9 @@ rpnt (GDrawable *drawable,
   gdouble dx, dy, rs, fac;
   gdouble val;
   guchar *pixel;
+  guchar *guc_tmp;
+  gdouble *gd_tmp;
+  gint oldrow = row - 1, oldcol = col - 1;
 
   x = (int) (xr);	/* integer coord. to upper left of real point */
   y = (int) (yr);
@@ -713,25 +722,26 @@ rpnt (GDrawable *drawable,
     {
       if ((x >> 6 != *col) || (y >> 6 != *row))
 	{
-	  *col = x / 64;
-	  *row = y / 64;
+	  *col = x >> 6;
+	  *row = y >> 6;
 	  if (tile)
 	    gimp_tile_unref (tile, TRUE);
-	  tile = gimp_drawable_get_tile (drawable, TRUE, *row, *col);
+	  tile = gimp_drawable_get_tile (drawable, TRUE,
+					 *row, *col);
 	  gimp_tile_ref (tile);
 	}
       pixel = tile->data + tile->bpp * (tile->ewidth * (y % 64) + (x % 64));
-
       dx = xr - x; dy = yr - y;
       rs = dx * dx + dy * dy;
       fac = exp (-rs / PSV);
 
-      for (b = 0; b < bytes; b++)
+      for (b = 0, guc_tmp = pixel, gd_tmp = inten; b < bytes;
+	   b++, guc_tmp++, gd_tmp++)
 	{
-	  val = inten[b] * fac;
-	  val += (gdouble) pixel[b] / 255.0;
+	  val = (*gd_tmp) * fac;
+	  val += (gdouble) *guc_tmp / 255.0;
 	  if (val > 1.0) val = 1.0;
-	  pixel[b] = (guchar) (val * 255);
+	  *guc_tmp = (guchar) (val * 255.0);
 	}
     }
 
