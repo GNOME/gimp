@@ -42,7 +42,6 @@
 #include "widgets/gimpdock.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpfiledialog.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -134,15 +133,6 @@ file_new_cmd_callback (GtkAction *action,
 
   if (dialog)
     file_new_dialog_set (dialog, gimage, NULL);
-}
-
-void
-file_type_cmd_callback (GtkAction *action,
-                        gpointer   data)
-{
-  gimp_file_dialog_set_file_proc (GIMP_FILE_DIALOG (data),
-                                  g_object_get_data (G_OBJECT (action),
-                                                     "file-proc"));
 }
 
 void

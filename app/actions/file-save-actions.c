@@ -27,15 +27,12 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpdrawable.h"
-
-#include "plug-in/plug-in-proc.h"
-#include "plug-in/plug-ins.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
 
-#include "file-commands.h"
+#include "file-dialog-actions.h"
+#include "file-dialog-commands.h"
 #include "file-save-actions.h"
 
 #include "gimp-intl.h"
@@ -44,11 +41,14 @@
 static GimpActionEntry file_save_actions[] =
 {
   { "file-save-popup", NULL, N_("File Save Menu"), NULL, NULL, NULL,
-    GIMP_HELP_FILE_SAVE },
+    GIMP_HELP_FILE_SAVE }
+};
 
+static GimpPlugInActionEntry file_save_file_type_actions[] =
+{
   { "file-save-by-extension", NULL,
     N_("By Extension"), NULL, NULL,
-    G_CALLBACK (file_type_cmd_callback),
+    NULL,
     GIMP_HELP_FILE_SAVE_BY_EXTENSION }
 };
 
@@ -56,61 +56,16 @@ static GimpActionEntry file_save_actions[] =
 void
 file_save_actions_setup (GimpActionGroup *group)
 {
-  GSList *list;
-
   gimp_action_group_add_actions (group,
                                  file_save_actions,
                                  G_N_ELEMENTS (file_save_actions));
 
-  for (list = group->gimp->save_procs; list; list = g_slist_next (list))
-    {
-      PlugInProcDef   *file_proc     = list->data;
-      const gchar     *locale_domain = NULL;
-      const gchar     *stock_id      = NULL;
-      gchar           *help_id;
-      GimpActionEntry  entry;
-      gboolean         is_xcf;
-      GtkAction       *action;
+  gimp_action_group_add_plug_in_actions (group,
+                                         file_save_file_type_actions,
+                                         G_N_ELEMENTS (file_save_file_type_actions),
+                                         G_CALLBACK (file_dialog_type_cmd_callback));
 
-      if (! file_proc->menu_path)
-        continue;
-
-      is_xcf = (strcmp (file_proc->db_info.name, "gimp_xcf_save") == 0);
-
-      if (is_xcf)
-        {
-          stock_id = GIMP_STOCK_WILBER;
-          help_id  = g_strdup (GIMP_HELP_FILE_SAVE_XCF);
-        }
-      else
-        {
-          const gchar *progname;
-          const gchar *help_domain;
-
-          progname = plug_in_proc_def_get_progname (file_proc);
-
-          locale_domain = plug_ins_locale_domain (group->gimp, progname, NULL);
-          help_domain   = plug_ins_help_domain (group->gimp, progname, NULL);
-
-          help_id = plug_in_proc_def_get_help_id (file_proc, help_domain);
-        }
-
-      entry.name     = file_proc->db_info.name;
-      entry.stock_id = stock_id;
-      entry.label    = strstr (file_proc->menu_path, "/") + 1;
-      entry.tooltip  = NULL;
-      entry.callback = G_CALLBACK (file_type_cmd_callback);
-      entry.help_id  = help_id;
-
-      gimp_action_group_add_actions (group, &entry, 1);
-
-      g_free (help_id);
-
-      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                            file_proc->db_info.name);
-
-      g_object_set_data (G_OBJECT (action), "file-proc", file_proc);
-    }
+  file_dialog_actions_setup (group, group->gimp->save_procs, "gimp_xcf_save");
 }
 
 void

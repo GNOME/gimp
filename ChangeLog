@@ -1,3 +1,20 @@
+2004-05-02  Michael Natterer  <mitch@convergence.de>
+
+	* app/actions/Makefile.am
+	* app/actions/file-dialog-actions.[ch]: new files containing
+	factored out code to set up the <Load> and <Save> actions.
+	Use GimpPlugInActions instead of just GtkActions.
+
+	* app/actions/file-dialog-commands.[ch]: new files containing
+	file_dialog_type_cmd_callback() which is a
+	GimpPlugInAction::selected() callback now.
+
+	* app/actions/file-commands.[ch]: removed the callback here.
+
+	* app/actions/file-open-actions.c
+	* app/actions/file-save-actions.c: removed code duplication and
+	use file_dialog_actions_setup() instead.
+
 2004-05-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/*-actions.c: added help IDs to all actions

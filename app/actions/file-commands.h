@@ -20,10 +20,8 @@
 #define __FILE_COMMANDS_H__
 
 
-void   file_new_cmd_callback           (GtkAction   *action,
-                                        gpointer     data);
 
-void   file_type_cmd_callback          (GtkAction   *action,
+void   file_new_cmd_callback           (GtkAction   *action,
                                         gpointer     data);
 
 void   file_open_cmd_callback          (GtkAction   *action,
