@@ -1684,8 +1684,8 @@ save_xjt_image (const gchar *filename,
   gimp_progress_init (l_name);
   g_free (l_name);
 
-  /* create temporary directory  <filename>.tmpdir.<PID> */
-  l_dirname = g_strdup_printf ("%s.tmpdir.%d", filename, (int) g_pid);
+  /* create temporary directory */
+  l_dirname = gimp_temp_name (".tmpdir");
   l_prop_file = g_strdup_printf ("%s%cPRP", l_dirname, G_DIR_SEPARATOR);
   l_mode_dir = 0777;
   if (mkdir (l_dirname, l_mode_dir) != 0)
@@ -3314,8 +3314,8 @@ load_xjt_image (const gchar *filename)
   gimp_progress_init (l_name);
   g_free (l_name);
 
-  /* create temporary directory  <filename>.tmpdir.<PID> */
-  l_dirname = g_strdup_printf("%s.tmpdir.%d", filename, (int)g_pid);
+  /* create temporary directory */
+  l_dirname = gimp_temp_name (".tmpdir");
   l_prop_file = g_strdup_printf("%s%cPRP", l_dirname, G_DIR_SEPARATOR);
   l_mode_dir = 0777;
   if(mkdir(l_dirname, l_mode_dir) != 0)
