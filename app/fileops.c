@@ -300,6 +300,16 @@ static PlugInProcDef *save_file_proc = NULL;
 
 static int image_ID = 0;
 
+static void
+file_message_box_close_callback (GtkWidget *w,
+				 gpointer   client_data)
+{
+  GtkFileSelection *fs;
+
+  fs = (GtkFileSelection *) client_data;
+
+  gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
+}
 
 void
 file_ops_pre_init ()
@@ -843,13 +853,11 @@ file_open_ok_callback (GtkWidget *w,
       return;
     }
 
-  gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
-
   s = g_string_new ("Open failed: ");
 
   g_string_append (s, raw_filename);
 
-  message_box (s->str, NULL, NULL);
+  message_box (s->str, file_message_box_close_callback, (void *) fs);
 
   g_string_free (s, TRUE);
 }
@@ -870,7 +878,6 @@ file_save_ok_callback (GtkWidget *w,
   err = stat (filename, &buf);
 
   g_assert (filename && raw_filename);
-  gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
 
   if (err == 0)
     {
@@ -884,6 +891,7 @@ file_save_ok_callback (GtkWidget *w,
 	}
       else if (buf.st_mode & S_IFREG)
 	{
+	  gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
 	  file_overwrite (g_strdup (filename), g_strdup (raw_filename));
 	  return;
 	}
@@ -893,6 +901,7 @@ file_save_ok_callback (GtkWidget *w,
 	  g_string_sprintf (s, "%s is an irregular file (%s)", raw_filename, g_strerror(errno));
 	}
     } else {
+      gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
       if (file_save (image_ID, filename, raw_filename))
 	{
 	  file_dialog_hide (client_data);
@@ -905,10 +914,10 @@ file_save_ok_callback (GtkWidget *w,
 	  g_string_append (s, raw_filename);
 	  g_string_append (s, "\nYou might have tried to save an RGB image with");
 	  g_string_append (s, "\na plug-in that only supports Indexed or Gray images");
-	  gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
 	}
     }
-  message_box (s->str, NULL, NULL);
+  message_box (s->str, file_message_box_close_callback, (void *) fs);
+
 
   g_string_free (s, TRUE);
 }
@@ -1010,8 +1019,7 @@ file_overwrite_yes_callback (GtkWidget *w,
       g_string_append (s, "\nYou might have tried to save an RGB image with");
       g_string_append (s, "\na plug-in that only supports Indexed or Gray images");
 
-      message_box (s->str, NULL, NULL);
-
+      message_box (s->str, file_message_box_close_callback, (void *) filesave);
       g_string_free (s, TRUE);
     }
 
@@ -1019,8 +1027,6 @@ file_overwrite_yes_callback (GtkWidget *w,
   g_free (overwrite_box->full_filename);
   g_free (overwrite_box->raw_filename);
   g_free (overwrite_box);
-
-  gtk_widget_set_sensitive (GTK_WIDGET(filesave), TRUE);
 }
 
 static gint

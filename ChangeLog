@@ -1,3 +1,7 @@
+Thu May  7 15:24:31 EDT 1998  Matthew Wilson <msw@gimp.org>
+
+	* app/fileops.c: more changes to fileselection
+
 Tue May  5 11:40:28 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/psd/psd.c: updates from Adam
