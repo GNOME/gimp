@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-08-20 15:04+0200\n"
-"PO-Revision-Date: 2002-07-10 01:52+0800\n"
+"POT-Creation-Date: 2002-08-28 05:42+0200\n"
+"PO-Revision-Date: 2002-08-28 21:18+0800\n"
 "Last-Translator: Xie Yuheng <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #: app/app_procs.c:108
 msgid "The GIMP is not properly installed for the current user\n"
-msgstr "The GIMP 没有对当前用户进行正确安装\n"
+msgstr "当前用户还没有正确安装 The GIMP\n"
 
 #: app/app_procs.c:109
 msgid ""
@@ -57,7 +57,7 @@ msgstr "无法打开 %s ；%s"
 #: app/gimprc.c:2023
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
-msgstr "无法重命名 %s 到 %s.old ；%s"
+msgstr "无法重命名 %s 为 %s.old ；%s"
 
 #: app/gimprc.c:2029
 #, c-format
@@ -122,7 +122,7 @@ msgstr "  -i, --no-interface       运行时不提供用户界面。\n"
 
 #: app/main.c:340
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
-msgstr "  -g, --gimprc <gimprc>    采用别的 gimprc 文件。\n"
+msgstr "  -g, --gimprc <gimprc>    采用其它 gimprc 文件。\n"
 
 #: app/main.c:341
 msgid "  -h, --help               Output this help.\n"
@@ -169,7 +169,7 @@ msgstr "  --display <display>      使用指定的 X 显示。\n"
 
 #: app/main.c:351
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr "  --system-gimprc <gimprc> 使用别的系统 gimprc 文件。\n"
+msgstr "  --system-gimprc <gimprc> 使用其它系统 gimprc 文件。\n"
 
 #: app/main.c:353
 msgid ""
@@ -183,212 +183,212 @@ msgstr ""
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(这个控制台窗口将在十秒内关闭)\n"
 
-#: app/undo.c:3531
+#: app/undo.c:3550
 #, c-format
 msgid "Can't undo %s"
 msgstr "无法撤销 %s"
 
-#: app/undo.c:3557
+#: app/undo.c:3576
 msgid "<<invalid>>"
 msgstr "<<无效>>"
 
-#: app/gui/resize-dialog.c:185 app/undo.c:3558
+#: app/undo.c:3577 app/gui/resize-dialog.c:185
 msgid "Scale Image"
 msgstr "缩放图像"
 
-#: app/undo.c:3559
+#: app/undo.c:3578
 msgid "Resize Image"
 msgstr "图像重置大小"
 
-#: app/undo.c:3560
+#: app/undo.c:3579
 msgid "Convert Image"
 msgstr "转换图像"
 
-#: app/undo.c:3561
+#: app/undo.c:3580
 msgid "Crop Image"
 msgstr "剪割图像"
 
-#: app/undo.c:3562
+#: app/undo.c:3581
 msgid "Merge Layers"
 msgstr "合并图层"
 
-#: app/undo.c:3563 app/undo.c:3587
+#: app/undo.c:3582 app/undo.c:3606
 msgid "QuickMask"
 msgstr "快速蒙板"
 
-#: app/undo.c:3564 app/undo.c:3588
+#: app/undo.c:3583 app/undo.c:3607
 msgid "Guide"
 msgstr "参考线"
 
-#: app/undo.c:3565
+#: app/undo.c:3584
 msgid "Layer Properties"
 msgstr "图层属性"
 
-#: app/gui/resize-dialog.c:179 app/undo.c:3566
+#: app/undo.c:3585 app/gui/resize-dialog.c:179
 msgid "Scale Layer"
 msgstr "缩放图层"
 
-#: app/undo.c:3567
+#: app/undo.c:3586
 msgid "Resize Layer"
 msgstr "图层重置大小"
 
-#: app/undo.c:3568
+#: app/undo.c:3587
 msgid "Move Layer"
 msgstr "移动图层"
 
-#: app/undo.c:3569
+#: app/undo.c:3588
 msgid "Apply Layer Mask"
 msgstr "应用图层蒙板"
 
-#: app/undo.c:3570
+#: app/undo.c:3589
 #, fuzzy
 msgid "Linked Layer"
 msgstr "连接图层"
 
-#: app/undo.c:3571
+#: app/undo.c:3590
 msgid "Float Selection"
 msgstr "浮动选区"
 
-#: app/undo.c:3572
+#: app/undo.c:3591
 msgid "Anchor Floating Selection"
 msgstr "固定浮动选区"
 
-#: app/undo.c:3573 app/widgets/gimpbufferview.c:147
+#: app/undo.c:3592 app/widgets/gimpbufferview.c:147
 msgid "Paste"
 msgstr "粘贴"
 
-#: app/undo.c:3574
+#: app/undo.c:3593
 msgid "Cut"
 msgstr "剪切"
 
-#: app/undo.c:3575
+#: app/undo.c:3594
 msgid "Text"
 msgstr "文字"
 
-#: app/undo.c:3576 app/undo.c:3609
+#: app/undo.c:3595 app/undo.c:3628
 msgid "Transform"
 msgstr "变换"
 
-#: app/undo.c:3577 app/undo.c:3610
+#: app/undo.c:3596 app/undo.c:3629
 msgid "Paint"
 msgstr "涂画"
 
-#: app/undo.c:3578 app/undo.c:3611
+#: app/undo.c:3597 app/undo.c:3630
 msgid "Attach Parasite"
 msgstr ""
 
-#: app/undo.c:3579 app/undo.c:3612
+#: app/undo.c:3598 app/undo.c:3631
 msgid "Remove Parasite"
 msgstr ""
 
-#: app/undo.c:3580
+#: app/undo.c:3599
 msgid "Plug-In"
 msgstr "插件"
 
-#: app/gui/palette-import-dialog.c:441 app/pdb/internal_procs.c:124
-#: app/undo.c:3582
+#: app/undo.c:3601 app/gui/palette-import-dialog.c:441
+#: app/pdb/internal_procs.c:124
 msgid "Image"
 msgstr "图像"
 
-#: app/undo.c:3583
+#: app/undo.c:3602
 #, fuzzy
 msgid "Image Mod"
 msgstr "图像修改"
 
-#: app/gui/file-new-dialog.c:364 app/undo.c:3584
+#: app/undo.c:3603 app/gui/file-new-dialog.c:364
 msgid "Image Type"
 msgstr "图像类型"
 
 #. Image size frame
-#: app/gui/file-new-dialog.c:140 app/undo.c:3585
+#: app/undo.c:3604 app/gui/file-new-dialog.c:140
 msgid "Image Size"
 msgstr "图像大小"
 
-#: app/undo.c:3586
+#: app/undo.c:3605
 msgid "Resolution Change"
 msgstr "改变分辨率"
 
-#: app/core/gimpchannel.c:503 app/undo.c:3589
+#: app/undo.c:3608 app/core/gimpchannel.c:503
 msgid "Selection Mask"
 msgstr "选区蒙板"
 
-#: app/undo.c:3590
+#: app/undo.c:3609
 #, fuzzy
 msgid "Rename Item"
 msgstr "重命名图层"
 
-#: app/gui/layers-commands.c:621 app/undo.c:3591
+#: app/undo.c:3610 app/gui/layers-commands.c:621
 msgid "New Layer"
 msgstr "新建图层"
 
-#: app/undo.c:3592
+#: app/undo.c:3611
 msgid "Delete Layer"
 msgstr "删除图层"
 
-#: app/undo.c:3593
+#: app/undo.c:3612
 #, fuzzy
 msgid "Layer Mod"
 msgstr "图层修改"
 
-#: app/undo.c:3594
+#: app/undo.c:3613
 msgid "Add Layer Mask"
 msgstr "添加图层蒙板"
 
-#: app/undo.c:3595
+#: app/undo.c:3614
 msgid "Delete Layer Mask"
 msgstr "删除图层蒙板"
 
-#: app/undo.c:3596
+#: app/undo.c:3615
 msgid "Layer Reposition"
 msgstr "图层重定位"
 
-#: app/undo.c:3597
+#: app/undo.c:3616
 msgid "Layer Move"
 msgstr "图层移动"
 
-#: app/gui/channels-commands.c:334 app/undo.c:3598
+#: app/undo.c:3617 app/gui/channels-commands.c:334
 msgid "New Channel"
 msgstr "新建通道"
 
-#: app/undo.c:3599
+#: app/undo.c:3618
 msgid "Delete Channel"
 msgstr "删除通道"
 
-#: app/undo.c:3600
+#: app/undo.c:3619
 #, fuzzy
 msgid "Channel Mod"
 msgstr "通道修改"
 
-#: app/undo.c:3601
+#: app/undo.c:3620
 msgid "Channel Reposition"
 msgstr "通道重定位"
 
-#: app/undo.c:3602
+#: app/undo.c:3621
 msgid "New Vectors"
 msgstr "新建向量"
 
-#: app/undo.c:3603
+#: app/undo.c:3622
 msgid "Delete Vectors"
 msgstr "删除向量"
 
-#: app/undo.c:3604
+#: app/undo.c:3623
 #, fuzzy
 msgid "Vectors Mod"
 msgstr "向量修改"
 
-#: app/undo.c:3605
+#: app/undo.c:3624
 msgid "Vectors Reposition"
 msgstr "向量重定位"
 
-#: app/undo.c:3606
+#: app/undo.c:3625
 msgid "FS to Layer"
 msgstr "浮动选区到图层"
 
-#: app/undo.c:3607
+#: app/undo.c:3626
 msgid "FS Rigor"
 msgstr "浮动选区激活"
 
-#: app/undo.c:3608
+#: app/undo.c:3627
 msgid "FS Relax"
 msgstr "浮动选区释放"
 
@@ -459,19 +459,19 @@ msgid "Value"
 msgstr "亮度"
 
 #: app/base/base-enums.c:114 app/gui/color-notebook.c:229
-#: app/tools/gimpcolorbalancetool.c:385
+#: app/tools/gimpcolorbalancetool.c:299
 #: app/widgets/gimpcomponentlistitem.c:418
 msgid "Red"
 msgstr "红"
 
 #: app/base/base-enums.c:115 app/gui/color-notebook.c:230
-#: app/tools/gimpcolorbalancetool.c:391
+#: app/tools/gimpcolorbalancetool.c:305
 #: app/widgets/gimpcomponentlistitem.c:419
 msgid "Green"
 msgstr "绿"
 
 #: app/base/base-enums.c:116 app/gui/color-notebook.c:231
-#: app/tools/gimpcolorbalancetool.c:397
+#: app/tools/gimpcolorbalancetool.c:311
 #: app/widgets/gimpcomponentlistitem.c:420
 msgid "Blue"
 msgstr "蓝"
@@ -481,11 +481,23 @@ msgstr "蓝"
 msgid "Alpha"
 msgstr "Alpha"
 
+#: app/base/base-enums.c:135
+msgid "Shadows"
+msgstr "暗"
+
+#: app/base/base-enums.c:136
+msgid "Midtones"
+msgstr "中"
+
+#: app/base/base-enums.c:137
+msgid "Highlights"
+msgstr "亮"
+
 #. please don't translate 'yes' and 'no'
 #: app/config/gimpconfig-deserialize.c:391
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "期待布尔值 %s 为“yes”或“no”，却得到“%s”"
+msgstr "期待布尔值 %s 为“yes”或“no”，但得到“%s”"
 
 #: app/config/gimpconfig-deserialize.c:447
 #, c-format
@@ -517,20 +529,20 @@ msgid ""
 msgstr ""
 
 #: app/config/gimpconfig.c:263
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to create file '%s': %s"
-msgstr "无法打开文件“%s”：%s"
+msgstr "无法创建文件“%s”：%s"
 
 #: app/config/gimpconfig.c:337 app/config/gimpconfig.c:350
 #: app/config/gimpscanner.c:306 app/config/gimpscanner.c:369
-#: app/core/gimpunits.c:158 app/gui/session.c:164 app/plug-in/plug-in-rc.c:131
+#: app/core/gimpunits.c:158 app/gui/session.c:166 app/plug-in/plug-in-rc.c:131
 msgid "fatal parse error"
 msgstr "严重解析错误"
 
 #: app/config/gimpscanner.c:73 app/core/gimpbrushpipe.c:308
 #: app/gui/paths-dialog.c:1886 app/gui/paths-dialog.c:2011
-#: app/tools/gimpcurvestool.c:1795 app/tools/gimpcurvestool.c:1814
-#: app/tools/gimplevelstool.c:1575 app/tools/gimplevelstool.c:1594
+#: app/tools/gimpcurvestool.c:1399 app/tools/gimpcurvestool.c:1415
+#: app/tools/gimplevelstool.c:1428 app/tools/gimplevelstool.c:1444
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "无法打开文件：“%s”：%s"
@@ -540,13 +552,13 @@ msgid "invalid UTF-8 string"
 msgstr "无效的 UTF-8 字符串"
 
 #: app/config/gimpscanner.c:394
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error while parsing '%s' in line %d:\n"
 "%s"
 msgstr ""
 "解析“%s”时在第 %d 行出错：\n"
-" %s"
+"%s"
 
 #: app/core/core-enums.c:13 app/core/gimp-gradients.c:68
 msgid "FG to BG (RGB)"
@@ -610,7 +622,7 @@ msgid "Transparent"
 msgstr "透明"
 
 #: app/core/core-enums.c:102 app/core/core-enums.c:191
-#: app/core/core-enums.c:218 app/tools/gimpbycolorselecttool.c:590
+#: app/core/core-enums.c:218
 msgid "None"
 msgstr "无"
 
@@ -670,19 +682,16 @@ msgid "Indexed"
 msgstr "索引"
 
 #: app/core/core-enums.c:169
-#, fuzzy
 msgid "RGB-Alpha"
-msgstr "Alpha"
+msgstr "RGB-Alpha"
 
 #: app/core/core-enums.c:171
-#, fuzzy
 msgid "Grayscale-Alpha"
-msgstr "灰度"
+msgstr "灰度-Alpha"
 
 #: app/core/core-enums.c:173
-#, fuzzy
 msgid "Indexed-Alpha"
-msgstr "索引"
+msgstr "索引-Alpha"
 
 #: app/core/core-enums.c:192
 msgid "Tiny"
@@ -718,33 +727,21 @@ msgstr "三角波"
 
 #: app/core/core-enums.c:260
 msgid "No Thumbnails"
-msgstr ""
+msgstr "无缩略图"
 
 #: app/core/core-enums.c:261
 msgid "Normal (128x128)"
-msgstr ""
+msgstr "普通(128x128)"
 
 #: app/core/core-enums.c:262
 msgid "Large (256x256)"
-msgstr ""
+msgstr "大(256x256)"
 
 #: app/core/core-enums.c:280
-msgid "Shadows"
-msgstr "暗"
-
-#: app/core/core-enums.c:281
-msgid "Midtones"
-msgstr "中"
-
-#: app/core/core-enums.c:282
-msgid "Highlights"
-msgstr "亮"
-
-#: app/core/core-enums.c:300
 msgid "Forward (Traditional)"
 msgstr "正向(传统的)"
 
-#: app/core/core-enums.c:301
+#: app/core/core-enums.c:281
 msgid "Backward (Corrective)"
 msgstr "反向(纠正的)"
 
@@ -763,29 +760,29 @@ msgid "Parasites"
 msgstr ""
 
 #. initialize the list of gimp brushes
-#: app/core/gimp.c:536 app/gui/dialogs-constructors.c:364
-#: app/gui/dialogs-constructors.c:512 app/gui/preferences-dialog.c:2756
+#: app/core/gimp.c:536 app/gui/dialogs-constructors.c:370
+#: app/gui/dialogs-constructors.c:518 app/gui/preferences-dialog.c:2756
 #: app/pdb/internal_procs.c:82
 msgid "Brushes"
 msgstr "画笔"
 
 #. initialize the list of gimp patterns
-#: app/core/gimp.c:540 app/gui/dialogs-constructors.c:385
-#: app/gui/dialogs-constructors.c:533 app/gui/preferences-dialog.c:2760
+#: app/core/gimp.c:540 app/gui/dialogs-constructors.c:391
+#: app/gui/dialogs-constructors.c:539 app/gui/preferences-dialog.c:2760
 #: app/pdb/internal_procs.c:160
 msgid "Patterns"
 msgstr "图案"
 
 #. initialize the list of gimp palettes
-#: app/core/gimp.c:544 app/gui/dialogs-constructors.c:427
-#: app/gui/dialogs-constructors.c:575 app/gui/preferences-dialog.c:2764
+#: app/core/gimp.c:544 app/gui/dialogs-constructors.c:433
+#: app/gui/dialogs-constructors.c:581 app/gui/preferences-dialog.c:2764
 #: app/pdb/internal_procs.c:148
 msgid "Palettes"
 msgstr "色板"
 
 #. initialize the list of gimp gradients
-#: app/core/gimp.c:548 app/gui/dialogs-constructors.c:406
-#: app/gui/dialogs-constructors.c:554 app/gui/preferences-dialog.c:2768
+#: app/core/gimp.c:548 app/gui/dialogs-constructors.c:412
+#: app/gui/dialogs-constructors.c:560 app/gui/preferences-dialog.c:2768
 #: app/pdb/internal_procs.c:115
 msgid "Gradients"
 msgstr "渐变"
@@ -796,14 +793,12 @@ msgid "Documents"
 msgstr "文档"
 
 #: app/core/gimp-gradients.c:73
-#, fuzzy
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr "/着色类型/HSV (逆时针色调)"
+msgstr "前景到背景(HSV 逆时针色调)"
 
 #: app/core/gimp-gradients.c:78
-#, fuzzy
 msgid "FG to BG (HSV clockwise hue)"
-msgstr "前景到背景(HSV)"
+msgstr "前景到背景(HSV 顺时针色调)"
 
 #: app/core/gimpbrush.c:510
 #, c-format
@@ -832,8 +827,9 @@ msgstr "画笔文件“%s”中含有无效的 UTF-8 字符串。"
 #: app/core/gimpcontext.c:1212 app/core/gimpgradient.c:354
 #: app/core/gimppalette.c:343 app/core/gimppattern.c:346
 msgid "Unnamed"
-msgstr "未命名"
+msgstr "Unnamed"
 
+# Do not translate because most file systems doesn't support chinese!
 #: app/core/gimpbrushpipe.c:339 app/core/gimpbrushpipe.c:357
 #: app/core/gimpbrushpipe.c:445
 #, c-format
@@ -900,43 +896,43 @@ msgstr ""
 "无法保存“%s”：\n"
 "%s"
 
-#: app/core/gimpimage-mask.c:223
+#: app/core/gimpimage-mask.c:226
 msgid ""
 "Unable to cut or copy because the\n"
 "selected region is empty."
 msgstr ""
-"无法剪切或复制，因为选择\n"
-"区域为空。"
+"无法剪切或复制，因为\n"
+"选择区域为空。"
 
-#: app/core/gimpimage-mask.c:370
+#: app/core/gimpimage-mask.c:373
 msgid "Cannot float selection: No selection made."
-msgstr "无法浮动选区：还没有作出选择。"
+msgstr "无法浮动选区：没有选区。"
 
-#: app/core/gimpimage-mask.c:384 app/gui/layers-commands.c:810
+#: app/core/gimpimage-mask.c:390 app/gui/layers-commands.c:810
 msgid "Floating Selection"
 msgstr "浮动选区"
 
-#: app/core/gimpimage-mask.c:591
+#: app/core/gimpimage-mask.c:594
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
 msgstr ""
-"活动图层没有 alpha 通道\n"
-"以转换到选区。"
+"活动图层没有可转换到选区\n"
+"的 alpha 通道。"
 
-#: app/core/gimpimage-mask.c:615
+#: app/core/gimpimage-mask.c:618
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
 msgstr ""
-"活动图层没有蒙板\n"
-"以转换到选区。"
+"活动图层没有可转换到选区\n"
+"的蒙板。"
 
-#: app/core/gimpimage-mask.c:668
+#: app/core/gimpimage-mask.c:671
 msgid "No selection to stroke."
-msgstr "没有选区供勾画。"
+msgstr "没有选区可勾画。"
 
-#: app/core/gimpimage-mask.c:722
+#: app/core/gimpimage-mask.c:725
 msgid "Paint operation failed."
 msgstr "涂画操作失败。"
 
@@ -986,8 +982,9 @@ msgstr "%.1f MB"
 #: app/core/gimppalette.c:534 app/gui/palette-import-dialog.c:306
 #: app/pdb/image_cmds.c:3628 app/widgets/gimpdatafactoryview.c:260
 msgid "Untitled"
-msgstr "未命名"
+msgstr "Untitled"
 
+# Do not translate because most file systems doesn't support chinese!
 #: app/core/gimpimage.c:2797
 msgid "Layer cannot be raised higher."
 msgstr "图层无法再升高。"
@@ -1039,19 +1036,17 @@ msgid "Failed to write thumbnail for '%s' as '%s': %s"
 msgstr "无法打开文件“%s”：%s"
 
 #: app/core/gimpimagefile.c:459 app/core/gimpimagefile.c:970
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to set permissions of thumbnail '%s': %s"
-msgstr "无法打开文件“%s”：%s"
+msgstr "无法设置缩略图“%s”的权限：%s"
 
 #: app/core/gimpimagefile.c:658
-#, fuzzy
 msgid "Remote image"
-msgstr "涂抹图像"
+msgstr "远程图像"
 
 #: app/core/gimpimagefile.c:663
-#, fuzzy
 msgid "Failed to open"
-msgstr "无法打开文件“%s”：%s"
+msgstr "无法打开"
 
 #: app/core/gimpimagefile.c:688
 msgid "No preview available"
@@ -1059,16 +1054,15 @@ msgstr "没有可用的预览"
 
 #: app/core/gimpimagefile.c:692
 msgid "Loading preview ..."
-msgstr ""
+msgstr "正在加载预览……"
 
 #: app/core/gimpimagefile.c:696
 msgid "Preview is out of date"
-msgstr ""
+msgstr "预览已经过时"
 
 #: app/core/gimpimagefile.c:700
-#, fuzzy
 msgid "Cannot create preview"
-msgstr "无法生成预览。"
+msgstr "无法生成预览"
 
 #: app/core/gimpimagefile.c:710 app/gui/info-window.c:633
 #, c-format
@@ -1076,24 +1070,23 @@ msgid "%d x %d pixels"
 msgstr "%d x %d 像素"
 
 #: app/core/gimpimagefile.c:728
-#, fuzzy
 msgid "1 Layer"
-msgstr "图层"
+msgstr "1 个图层"
 
 #: app/core/gimpimagefile.c:730
-#, fuzzy, c-format
+#, c-format
 msgid "%d Layers"
-msgstr "图层"
+msgstr "%d 个图层"
 
 #: app/core/gimpimagefile.c:809
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open thumbnail file '%s': %s"
-msgstr "无法打开文件“%s”：%s"
+msgstr "无法打开缩略图文件“%s”：%s"
 
 #: app/core/gimpimagefile.c:1058
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to create thumbnail directory '%s'."
-msgstr "无法从“%s”读入路径"
+msgstr "无法创建缩略图目录“%s”。"
 
 #: app/core/gimpitem.c:368
 msgid "parasite attached to item"
@@ -1177,7 +1170,7 @@ msgstr ""
 
 #: app/core/gimpmoduleinfo.c:304
 msgid "Missing module_init() symbol"
-msgstr ""
+msgstr "缺少 module_init() 标识符"
 
 #: app/core/gimpmodules.c:277
 #, c-format
@@ -1312,12 +1305,12 @@ msgstr "GIMP 图案文件“%s”中有错。"
 #: app/core/gimppattern.c:338
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "色板文件“%s”中含有无效的 UTF-8 字符串。"
+msgstr "图案文件“%s”中含有无效的 UTF-8 字符串。"
 
 #: app/core/gimppattern.c:356
 #, c-format
 msgid "Fatal parsing error: Pattern file '%s' appears truncated."
-msgstr "严重解析错误：GIMP 图案文件“%s”看来已被截断。"
+msgstr "严重解析错误：图案文件“%s”看来已被截断。"
 
 #. pseudo unit
 #: app/core/gimpunit.c:55
@@ -1493,19 +1486,16 @@ msgid "Zoom in"
 msgstr "放大"
 
 #: app/display/gimpnavigationview.c:381
-#, fuzzy
 msgid "Zoom 1:1"
-msgstr "放大"
+msgstr "缩放 1:1"
 
 #: app/display/gimpnavigationview.c:389
-#, fuzzy
 msgid "Zoom to fit window"
-msgstr "/查看/缩放至窗口大小"
+msgstr "缩放至窗口大小"
 
 #: app/display/gimpnavigationview.c:397
-#, fuzzy
 msgid "Shrink Wrap"
-msgstr "/查看/紧贴"
+msgstr "紧贴"
 
 #: app/display/gimpprogress.c:136
 msgid "Progress"
@@ -1520,27 +1510,20 @@ msgid "Cancel"
 msgstr "取消"
 
 #: app/file/file-open.c:89
-#, fuzzy
 msgid "Unknown file type"
-msgstr ""
-"%s失败。\n"
-"%s ：未知文件类型。"
+msgstr "未知文件类型"
 
 #: app/file/file-open.c:103
-#, fuzzy
 msgid "Not a regular file"
-msgstr ""
-"%s失败。\n"
-"%s 不是普通文件。"
+msgstr "不是普通文件"
 
 #: app/file/file-open.c:153
 msgid "Plug-In returned SUCCESS but did not return an image"
-msgstr ""
+msgstr "插件成功返回(SUCCESS)但没有返回图像"
 
 #: app/file/file-open.c:160
-#, fuzzy
 msgid "Plug-In could not open image"
-msgstr "无法打开文件“%s”"
+msgstr "插件无法打开图像"
 
 #: app/file/file-save.c:102
 #, c-format
@@ -1571,7 +1554,7 @@ msgstr ""
 
 #: app/file/file-utils.c:112
 msgid "Invalid character sequence in URI"
-msgstr ""
+msgstr "URI 中有无效的字符序列"
 
 #: app/gui/about-dialog.c:132
 msgid "About The GIMP"
@@ -1646,17 +1629,17 @@ msgid "V"
 msgstr "亮"
 
 #. Red
-#: app/gui/color-notebook.c:216 app/tools/gimphuesaturationtool.c:414
+#: app/gui/color-notebook.c:216 app/tools/gimphuesaturationtool.c:274
 msgid "R"
 msgstr "红"
 
 #. Green
-#: app/gui/color-notebook.c:218 app/tools/gimphuesaturationtool.c:416
+#: app/gui/color-notebook.c:218 app/tools/gimphuesaturationtool.c:276
 msgid "G"
 msgstr "绿"
 
 #. Blue
-#: app/gui/color-notebook.c:220 app/tools/gimphuesaturationtool.c:418
+#: app/gui/color-notebook.c:220 app/tools/gimphuesaturationtool.c:278
 msgid "B"
 msgstr "蓝"
 
@@ -1752,7 +1735,7 @@ msgid ""
 "Do not generate a palette of more than 255 colors if you intend to create a "
 "transparent or animated GIF file."
 msgstr ""
-"你正试图把一幅带有 alpha 通道的图像从 RGB 或灰度转换到索引。\n"
+"你正试图将一幅带有 alpha 通道的图像从 RGB 或灰度转换到索引。\n"
 "如果你准备从这幅图像创建透明或动画的 GIF 文件，你就不能生成一个多于 255 种颜"
 "色的色板。"
 
@@ -1764,193 +1747,175 @@ msgstr "选择自定义色板"
 msgid "Device Status"
 msgstr "设备状态"
 
-#: app/gui/device-status-dialog.c:413
+#: app/gui/device-status-dialog.c:415
 #, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "前景：%d, %d, %d"
 
-#: app/gui/device-status-dialog.c:427
+#: app/gui/device-status-dialog.c:429
 #, c-format
 msgid "Background: %d, %d, %d"
 msgstr "背景：%d, %d, %d"
 
-#: app/gui/dialogs-constructors.c:298 app/gui/preferences-dialog.c:2165
+#: app/gui/dialogs-constructors.c:304 app/gui/preferences-dialog.c:2165
 #: app/gui/preferences-dialog.c:2168
 msgid "Tool Options"
 msgstr "工具选项"
 
-#: app/gui/dialogs-constructors.c:318
-#, fuzzy
+#: app/gui/dialogs-constructors.c:324
 msgid "Error Console"
-msgstr "清除控制台"
+msgstr "错误控制台"
 
-#: app/gui/dialogs-constructors.c:318
+#: app/gui/dialogs-constructors.c:324
 msgid "Errors"
-msgstr ""
+msgstr "错误"
 
-#: app/gui/dialogs-constructors.c:342
-#, fuzzy
+#: app/gui/dialogs-constructors.c:348
 msgid "Image List"
-msgstr "图像蒙板"
+msgstr "图像列表"
 
-#: app/gui/dialogs-constructors.c:342 app/gui/dialogs-constructors.c:490
-#, fuzzy
+#: app/gui/dialogs-constructors.c:348 app/gui/dialogs-constructors.c:496
 msgid "Images"
 msgstr "图像"
 
-#: app/gui/dialogs-constructors.c:364
-#, fuzzy
+#: app/gui/dialogs-constructors.c:370
 msgid "Brush List"
-msgstr "画笔编辑器"
+msgstr "画笔列表"
 
-#: app/gui/dialogs-constructors.c:385
-#, fuzzy
+#: app/gui/dialogs-constructors.c:391
 msgid "Pattern List"
-msgstr "图案"
+msgstr "图案列表"
 
-#: app/gui/dialogs-constructors.c:406
-#, fuzzy
+#: app/gui/dialogs-constructors.c:412
 msgid "Gradient List"
-msgstr "渐变"
+msgstr "渐变列表"
 
-#: app/gui/dialogs-constructors.c:427
-#, fuzzy
+#: app/gui/dialogs-constructors.c:433
 msgid "Palette List"
-msgstr "色板"
+msgstr "色板列表"
 
-#: app/gui/dialogs-constructors.c:446
-#, fuzzy
+#: app/gui/dialogs-constructors.c:452
 msgid "Tool List"
-msgstr "工具选项"
+msgstr "工具列表"
 
-#: app/gui/dialogs-constructors.c:446 app/gui/dialogs-constructors.c:594
-#, fuzzy
+#: app/gui/dialogs-constructors.c:452 app/gui/dialogs-constructors.c:600
 msgid "Tools"
-msgstr "工具箱"
+msgstr "工具"
 
-#: app/gui/dialogs-constructors.c:466
+#: app/gui/dialogs-constructors.c:472
 msgid "Buffer List"
-msgstr ""
+msgstr "缓冲区列表"
 
-#: app/gui/dialogs-constructors.c:466 app/gui/dialogs-constructors.c:614
-#, fuzzy
+#: app/gui/dialogs-constructors.c:472 app/gui/dialogs-constructors.c:620
 msgid "Buffers"
-msgstr "/粘贴缓冲区"
+msgstr "缓冲区"
 
-#: app/gui/dialogs-constructors.c:490
-#, fuzzy
+#: app/gui/dialogs-constructors.c:496
 msgid "Image Grid"
-msgstr "图像修改"
+msgstr "图像阵列"
 
-#: app/gui/dialogs-constructors.c:512
-#, fuzzy
+#: app/gui/dialogs-constructors.c:518
 msgid "Brush Grid"
-msgstr "画笔用户界面"
+msgstr "画笔阵列"
 
-#: app/gui/dialogs-constructors.c:533
-#, fuzzy
+#: app/gui/dialogs-constructors.c:539
 msgid "Pattern Grid"
-msgstr "图案填充"
+msgstr "图案阵列"
 
-#: app/gui/dialogs-constructors.c:554
-#, fuzzy
+#: app/gui/dialogs-constructors.c:560
 msgid "Gradient Grid"
-msgstr "渐变"
+msgstr "渐变阵列"
 
-#: app/gui/dialogs-constructors.c:575
-#, fuzzy
+#: app/gui/dialogs-constructors.c:581
 msgid "Palette Grid"
-msgstr "色板"
+msgstr "色板阵列"
 
-#: app/gui/dialogs-constructors.c:594
-#, fuzzy
+#: app/gui/dialogs-constructors.c:600
 msgid "Tool Grid"
-msgstr "显示网格"
+msgstr "工具阵列"
 
-#: app/gui/dialogs-constructors.c:614
+#: app/gui/dialogs-constructors.c:620
 msgid "Buffer Grid"
-msgstr ""
+msgstr "缓冲区阵列"
 
-#: app/gui/dialogs-constructors.c:658
-#, fuzzy
+#: app/gui/dialogs-constructors.c:664
 msgid "Layer List"
-msgstr "图层宽度："
+msgstr "图层列表"
 
-#: app/gui/dialogs-constructors.c:658
-#, fuzzy
+#: app/gui/dialogs-constructors.c:664
 msgid "Layers"
 msgstr "图层"
 
-#: app/gui/dialogs-constructors.c:697
-#, fuzzy
+#: app/gui/dialogs-constructors.c:703
 msgid "Channel List"
-msgstr "通道"
+msgstr "通道列表"
 
-#: app/gui/dialogs-constructors.c:697
-#, fuzzy
+#: app/gui/dialogs-constructors.c:703
 msgid "Channels"
 msgstr "通道"
 
-#: app/gui/dialogs-constructors.c:752
-#, fuzzy
+#: app/gui/dialogs-constructors.c:758
 msgid "Paths List"
-msgstr "路径"
+msgstr "路径列表"
 
-#: app/gui/dialogs-constructors.c:752 app/pdb/internal_procs.c:154
+#: app/gui/dialogs-constructors.c:758 app/pdb/internal_procs.c:154
 msgid "Paths"
 msgstr "路径"
 
-#: app/gui/dialogs-constructors.c:778
+#: app/gui/dialogs-constructors.c:784
 msgid "Old Path List"
-msgstr ""
+msgstr "旧路径列表"
 
-#: app/gui/dialogs-constructors.c:778
-#, fuzzy
+#: app/gui/dialogs-constructors.c:784
 msgid "Old Paths"
-msgstr "路径"
+msgstr "旧路径"
 
-#: app/gui/dialogs-constructors.c:801
-#, fuzzy
+#: app/gui/dialogs-constructors.c:807
 msgid "Indexed Palette"
-msgstr "/对话框/索引色板..."
+msgstr "索引色板"
 
-#: app/gui/dialogs-constructors.c:801
-#, fuzzy
+#: app/gui/dialogs-constructors.c:807
 msgid "Colormap"
-msgstr "颜色"
+msgstr "颜色表"
 
-#: app/gui/dialogs-constructors.c:832
+#: app/gui/dialogs-constructors.c:834
 #, fuzzy
+msgid "Selection Editor"
+msgstr "选区："
+
+#: app/gui/dialogs-constructors.c:834 app/gui/layers-commands.c:908
+msgid "Selection"
+msgstr "选区"
+
+#: app/gui/dialogs-constructors.c:862
 msgid "Document History"
-msgstr "/对话框/文档历史..."
+msgstr "文档历史"
 
-#: app/gui/dialogs-constructors.c:832
-#, fuzzy
+#: app/gui/dialogs-constructors.c:862
 msgid "History"
-msgstr "柱状图"
+msgstr "历史"
 
-#: app/gui/dialogs-constructors.c:853
+#: app/gui/dialogs-constructors.c:883
 msgid "Brush Editor"
 msgstr "画笔编辑器"
 
-#: app/gui/dialogs-constructors.c:880
+#: app/gui/dialogs-constructors.c:910
 msgid "Gradient Editor"
 msgstr "渐变编辑器"
 
-#: app/gui/dialogs-constructors.c:907
+#: app/gui/dialogs-constructors.c:937
 msgid "Palette Editor"
 msgstr "色板编辑器"
 
-#: app/gui/dialogs-constructors.c:941
+#: app/gui/dialogs-constructors.c:971
 msgid "Display Navigation"
-msgstr ""
+msgstr "显示导航"
 
-#: app/gui/dialogs-constructors.c:941
-#, fuzzy
+#: app/gui/dialogs-constructors.c:971
 msgid "Navigation"
-msgstr "导航：%s-%d.%d"
+msgstr "导航"
 
-#: app/gui/dialogs-constructors.c:1123 app/gui/dialogs-constructors.c:1167
+#: app/gui/dialogs-constructors.c:1153 app/gui/dialogs-constructors.c:1197
 #, c-format
 msgid "%s Options"
 msgstr "%s选项"
@@ -2013,7 +1978,7 @@ msgstr ""
 "%s"
 
 #. Error message should be added. --bex
-#: app/gui/file-commands.c:173 app/gui/file-save-dialog.c:436
+#: app/gui/file-commands.c:173 app/gui/file-save-dialog.c:437
 #, c-format
 msgid "Saving '%s' failed."
 msgstr "保存“%s”失败。"
@@ -2046,11 +2011,13 @@ msgid "Revert Image"
 msgstr "恢复图像"
 
 #: app/gui/file-commands.c:321
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
 "%s"
-msgstr "恢复“%s”失败。"
+msgstr ""
+"恢复到“%s”失败：\n"
+"%s"
 
 #: app/gui/file-dialog-utils.c:102
 msgid "Determine File Type:"
@@ -2095,6 +2062,7 @@ msgid "Y:"
 msgstr "Y："
 
 #: app/gui/file-new-dialog.c:312 app/gui/resize-dialog.c:618
+#, c-format
 msgid "pixels/%a"
 msgstr "像素/%a"
 
@@ -2133,39 +2101,40 @@ msgstr ""
 msgid "Confirm Image Size"
 msgstr "确认图像大小"
 
-#: app/gui/file-open-dialog.c:177 app/gui/file-open-dialog.c:194
+#: app/gui/file-open-dialog.c:180 app/gui/file-open-dialog.c:197
 msgid "Open Image"
 msgstr "打开图像"
 
-#: app/gui/file-open-dialog.c:240
+#: app/gui/file-open-dialog.c:243
 msgid ""
 "Click to update preview\n"
 "<Ctrl> Click to force update even if preview is up-to-date"
 msgstr ""
+"点击 更新预览\n"
+"<Ctrl>点击 在预览已经更新的情况下强制更新"
 
-#: app/gui/file-open-dialog.c:252
-#, fuzzy
+#: app/gui/file-open-dialog.c:255
 msgid "_Preview"
-msgstr "预览"
+msgstr "预览(_P)"
 
-#: app/gui/file-open-dialog.c:305 app/gui/file-open-dialog.c:424
+#: app/gui/file-open-dialog.c:308 app/gui/file-open-dialog.c:427
 msgid "No Selection"
 msgstr "没有选择"
 
-#: app/gui/file-open-dialog.c:513 app/gui/file-open-dialog.c:543
+#: app/gui/file-open-dialog.c:516 app/gui/file-open-dialog.c:546
 #, c-format
 msgid "Thumbnail %d of %d"
-msgstr ""
+msgstr "缩略图 %d / %d"
 
-#: app/gui/file-save-dialog.c:172 app/gui/file-save-dialog.c:232
+#: app/gui/file-save-dialog.c:173 app/gui/file-save-dialog.c:233
 msgid "Save Image"
 msgstr "保存图像"
 
-#: app/gui/file-save-dialog.c:211
+#: app/gui/file-save-dialog.c:212
 msgid "Save a Copy of the Image"
 msgstr "保存图像的一个副本"
 
-#: app/gui/file-save-dialog.c:369
+#: app/gui/file-save-dialog.c:370
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -2174,7 +2143,7 @@ msgstr ""
 "文件“%s”已存在。\n"
 "覆盖吗？"
 
-#: app/gui/file-save-dialog.c:372
+#: app/gui/file-save-dialog.c:373
 msgid "File Exists!"
 msgstr "文件已存在！"
 
@@ -2192,7 +2161,7 @@ msgstr "复制段"
 
 #: app/gui/gradient-editor-commands.c:542
 msgid "Replicate selection"
-msgstr "复制选区"
+msgstr "复制选中区域"
 
 #: app/gui/gradient-editor-commands.c:552
 msgid "Replicate"
@@ -2209,7 +2178,7 @@ msgstr "要复制选中段的次数"
 
 #: app/gui/gradient-editor-commands.c:569
 msgid "to replicate the selection"
-msgstr "要复制选区的次数"
+msgstr "要复制选中区域的次数"
 
 #: app/gui/gradient-editor-commands.c:645
 #: app/gui/gradient-editor-commands.c:1069
@@ -2272,35 +2241,35 @@ msgstr "重置段支点"
 
 #: app/gui/gradient-editor-commands.c:1076
 msgid "Flip Selection"
-msgstr "翻转选区"
+msgstr "翻转选中区域"
 
 #: app/gui/gradient-editor-commands.c:1077
 msgid "Replicate Selection"
-msgstr "复制选区"
+msgstr "复制选中区域"
 
 #: app/gui/gradient-editor-commands.c:1078
 msgid "Blending Function for Selection"
-msgstr "选区混和函数"
+msgstr "选中区域的混和函数"
 
 #: app/gui/gradient-editor-commands.c:1079
 msgid "Coloring Type for Selection"
-msgstr "选区着色类型"
+msgstr "选中区域的着色类型"
 
 #: app/gui/gradient-editor-commands.c:1080
 msgid "Split Segments at Midpoints"
-msgstr "在中点处分割选区"
+msgstr "在选中区域的中点处分割段"
 
 #: app/gui/gradient-editor-commands.c:1082
 msgid "Delete Selection"
-msgstr "删除选区"
+msgstr "删除选中区域"
 
 #: app/gui/gradient-editor-commands.c:1083
 msgid "Re-center Midpoints in Selection"
-msgstr "重置选区中的中点"
+msgstr "重置选中区域的中点"
 
 #: app/gui/gradient-editor-commands.c:1084
 msgid "Re-distribute Handles in Selection"
-msgstr "重置选区中的支点"
+msgstr "重置选中区域的支点"
 
 #. the shell
 #: app/gui/gradient-select.c:123
@@ -2316,7 +2285,7 @@ msgstr ""
 #: app/gui/gradients-commands.c:110
 #, c-format
 msgid "Save \"%s\" as POV-Ray"
-msgstr "将“%s”保存为 POV-Ray..."
+msgstr "将“%s”保存为 POV-Ray"
 
 #: app/gui/gui.c:158 app/gui/gui.c:169
 #, c-format
@@ -2439,17 +2408,17 @@ msgstr "N/A"
 #. Red
 #: app/gui/info-window.c:255
 msgid "R:"
-msgstr "R："
+msgstr "红："
 
 #. Green
 #: app/gui/info-window.c:262
 msgid "G:"
-msgstr "G："
+msgstr "绿："
 
 #. Blue
 #: app/gui/info-window.c:269
 msgid "B:"
-msgstr "B："
+msgstr "蓝："
 
 #. Alpha
 #: app/gui/info-window.c:276
@@ -2506,7 +2475,7 @@ msgstr "索引颜色"
 
 #: app/gui/info-window.c:667
 msgid "colors"
-msgstr "颜色"
+msgstr "色"
 
 #: app/gui/layers-commands.c:557
 msgid "Empty Layer Copy"
@@ -2546,21 +2515,17 @@ msgstr "添加蒙板选项"
 msgid "Initialize Layer Mask to:"
 msgstr "初始化图层蒙板为："
 
-#: app/gui/layers-commands.c:908 app/tools/gimpbycolorselecttool.c:565
-msgid "Selection"
-msgstr "选区"
-
 #: app/gui/layers-commands.c:910
 msgid "Inverse Selection"
 msgstr "反转选区"
 
 #: app/gui/layers-commands.c:913 app/gui/layers-commands.c:935
 msgid "Grayscale Copy of Layer"
-msgstr "灰度复制图层"
+msgstr "图层的灰度副本"
 
 #: app/gui/layers-commands.c:915 app/gui/layers-commands.c:937
 msgid "Inverse Grayscale Copy of Layer"
-msgstr "反转灰度复制图层"
+msgstr "图层的反灰度副本"
 
 #: app/gui/layers-commands.c:918 app/gui/layers-commands.c:940
 msgid "White (Full Opacity)"
@@ -2588,16 +2553,16 @@ msgid "/_File"
 msgstr "/文件(_F)"
 
 #. <Image>/File
-#: app/gui/menus.c:120 app/gui/menus.c:300
+#: app/gui/menus.c:120 app/gui/menus.c:305
 msgid "/File/New..."
 msgstr "/文件/新建..."
 
-#: app/gui/menus.c:125 app/gui/menus.c:305
+#: app/gui/menus.c:125 app/gui/menus.c:310
 msgid "/File/Open..."
 msgstr "/文件/打开..."
 
 #. <Toolbox>/File/Open Recent
-#: app/gui/menus.c:133 app/gui/menus.c:313
+#: app/gui/menus.c:133 app/gui/menus.c:318
 msgid "/File/Open Recent/(None)"
 msgstr "/文件/最近打开/(无)"
 
@@ -2653,1180 +2618,1186 @@ msgstr "/文件/对话框/缓冲区..."
 
 #: app/gui/menus.c:203
 #, fuzzy
-msgid "/File/Dialogs/Navigation..."
-msgstr "/文件/对话框/图案..."
+msgid "/File/Dialogs/Selection Editor..."
+msgstr "/文件/对话框/文档历史..."
 
 #: app/gui/menus.c:208
+msgid "/File/Dialogs/Navigation..."
+msgstr "/文件/对话框/导航..."
+
+#: app/gui/menus.c:213
 msgid "/File/Dialogs/Images..."
 msgstr "/文件/对话框/图像..."
 
-#: app/gui/menus.c:212
+#: app/gui/menus.c:217
 msgid "/File/Dialogs/Document History..."
 msgstr "/文件/对话框/文档历史..."
 
-#: app/gui/menus.c:217
+#: app/gui/menus.c:222
 msgid "/File/Dialogs/Error Console..."
 msgstr "/文件/对话框/错误控制台..."
 
-#: app/gui/menus.c:247 app/gui/menus.c:346
+#: app/gui/menus.c:252 app/gui/menus.c:351
 msgid "/File/Quit"
 msgstr "/文件/退出"
 
 #. <Toolbox>/Xtns
-#: app/gui/menus.c:255
+#: app/gui/menus.c:260
 msgid "/_Xtns"
 msgstr "/_Xtns"
 
-#: app/gui/menus.c:257
+#: app/gui/menus.c:262
 msgid "/Xtns/Module Browser..."
 msgstr "/Xtns/模块浏览器..."
 
 #. <Toolbox>/Help
-#: app/gui/menus.c:266
+#: app/gui/menus.c:271
 msgid "/_Help"
 msgstr "/帮助(_H)"
 
-#: app/gui/menus.c:268
+#: app/gui/menus.c:273
 msgid "/Help/Help..."
 msgstr "/帮助/帮助..."
 
-#: app/gui/menus.c:273
+#: app/gui/menus.c:278
 msgid "/Help/Context Help..."
 msgstr "/帮助/上下文帮助..."
 
-#: app/gui/menus.c:278
+#: app/gui/menus.c:283
 msgid "/Help/Tip of the Day..."
 msgstr "/帮助/每日小提示..."
 
-#: app/gui/menus.c:283
+#: app/gui/menus.c:288
 msgid "/Help/About..."
 msgstr "/帮助/关于..."
 
-#: app/gui/menus.c:318
+#: app/gui/menus.c:323
 msgid "/File/Save"
 msgstr "/文件/保存"
 
-#: app/gui/menus.c:323
+#: app/gui/menus.c:328
 msgid "/File/Save as..."
 msgstr "/文件/另存为..."
 
-#: app/gui/menus.c:328
+#: app/gui/menus.c:333
 msgid "/File/Save a Copy as..."
 msgstr "/文件/副本另存为..."
 
-#: app/gui/menus.c:333
+#: app/gui/menus.c:338
 msgid "/File/Revert..."
 msgstr "/文件/恢复..."
 
-#: app/gui/menus.c:341
+#: app/gui/menus.c:346
 msgid "/File/Close"
 msgstr "/文件/关闭"
 
 #. <Image>/Edit
-#: app/gui/menus.c:356
+#: app/gui/menus.c:361
 msgid "/Edit/Undo"
 msgstr "/编辑/撤销"
 
-#: app/gui/menus.c:361
+#: app/gui/menus.c:366
 msgid "/Edit/Redo"
 msgstr "/编辑/恢复"
 
-#: app/gui/menus.c:369
+#: app/gui/menus.c:374
 msgid "/Edit/Cut"
 msgstr "/编辑/剪切"
 
-#: app/gui/menus.c:374
+#: app/gui/menus.c:379
 msgid "/Edit/Copy"
 msgstr "/编辑/复制"
 
-#: app/gui/menus.c:379
+#: app/gui/menus.c:384
 msgid "/Edit/Paste"
 msgstr "/编辑/粘贴"
 
-#: app/gui/menus.c:384
+#: app/gui/menus.c:389
 msgid "/Edit/Paste Into"
 msgstr "/编辑/粘贴进入"
 
-#: app/gui/menus.c:389
+#: app/gui/menus.c:394
 msgid "/Edit/Paste as New"
 msgstr "/编辑/粘贴为新建"
 
 #. <Image>/Edit/Buffer
-#: app/gui/menus.c:397
+#: app/gui/menus.c:402
 msgid "/Edit/Buffer/Cut Named..."
 msgstr "/编辑/缓冲区/命名剪切..."
 
-#: app/gui/menus.c:402
+#: app/gui/menus.c:407
 msgid "/Edit/Buffer/Copy Named..."
 msgstr "/编辑/缓冲区/命名复制..."
 
-#: app/gui/menus.c:407
+#: app/gui/menus.c:412
 msgid "/Edit/Buffer/Paste Named..."
 msgstr "/编辑/缓冲区/命名粘贴..."
 
-#: app/gui/menus.c:415
+#: app/gui/menus.c:420
 msgid "/Edit/Clear"
 msgstr "/编辑/清除"
 
-#: app/gui/menus.c:420
+#: app/gui/menus.c:425
 msgid "/Edit/Fill with FG Color"
 msgstr "/编辑/以前景色填充"
 
-#: app/gui/menus.c:425
+#: app/gui/menus.c:430
 msgid "/Edit/Fill with BG Color"
 msgstr "/编辑/以背景色填充"
 
-#: app/gui/menus.c:430
+#: app/gui/menus.c:435
 msgid "/Edit/Stroke"
 msgstr "/编辑/勾画"
 
 #. <Image>/Select
-#: app/gui/menus.c:440
+#: app/gui/menus.c:445
 msgid "/Select/Invert"
 msgstr "/选择/反转"
 
-#: app/gui/menus.c:445
+#: app/gui/menus.c:450
 msgid "/Select/All"
 msgstr "/选择/全部"
 
-#: app/gui/menus.c:449
+#: app/gui/menus.c:455
 msgid "/Select/None"
 msgstr "/选择/无"
 
-#: app/gui/menus.c:453
+#: app/gui/menus.c:460
 msgid "/Select/Float"
 msgstr "/选择/浮动"
 
-#: app/gui/menus.c:460
+#: app/gui/menus.c:467
 msgid "/Select/Feather..."
 msgstr "/选择/羽化..."
 
-#: app/gui/menus.c:464
+#: app/gui/menus.c:471
 msgid "/Select/Sharpen"
 msgstr "/选择/锐化"
 
-#: app/gui/menus.c:468
+#: app/gui/menus.c:475
 msgid "/Select/Shrink..."
 msgstr "/选择/收缩..."
 
-#: app/gui/menus.c:472
+#: app/gui/menus.c:480
 msgid "/Select/Grow..."
 msgstr "/选择/增长..."
 
-#: app/gui/menus.c:476
+#: app/gui/menus.c:485
 msgid "/Select/Border..."
 msgstr "/选择/边界..."
 
-#: app/gui/menus.c:483
+#: app/gui/menus.c:492
+#, fuzzy
+msgid "/Select/Toggle QuickMask"
+msgstr "切换快速蒙板"
+
+#: app/gui/menus.c:497
 msgid "/Select/Save to Channel"
 msgstr "/选择/保存到通道"
 
 #. <Image>/View
-#: app/gui/menus.c:491
+#: app/gui/menus.c:505
 msgid "/View/Zoom In"
 msgstr "/查看/放大"
 
-#: app/gui/menus.c:496
+#: app/gui/menus.c:510
 msgid "/View/Zoom Out"
 msgstr "/查看/缩小"
 
-#: app/gui/menus.c:501
+#: app/gui/menus.c:515
 msgid "/View/Zoom to Fit Window"
 msgstr "/查看/缩放至窗口大小"
 
-#: app/gui/menus.c:506
+#: app/gui/menus.c:520
 msgid "/View/Shrink Wrap"
 msgstr "/查看/紧贴"
 
 #. <Image>/View/Zoom
-#: app/gui/menus.c:513
+#: app/gui/menus.c:527
 msgid "/View/Zoom/16:1"
 msgstr "/查看/缩放/16:1"
 
-#: app/gui/menus.c:518
+#: app/gui/menus.c:532
 msgid "/View/Zoom/8:1"
 msgstr "/查看/缩放/8:1"
 
-#: app/gui/menus.c:523
+#: app/gui/menus.c:537
 msgid "/View/Zoom/4:1"
 msgstr "/查看/缩放/4:1"
 
-#: app/gui/menus.c:528
+#: app/gui/menus.c:542
 msgid "/View/Zoom/2:1"
 msgstr "/查看/缩放/2:1"
 
-#: app/gui/menus.c:533
+#: app/gui/menus.c:547
 msgid "/View/Zoom/1:1"
 msgstr "/查看/缩放/1:1"
 
-#: app/gui/menus.c:538
+#: app/gui/menus.c:552
 msgid "/View/Zoom/1:2"
 msgstr "/查看/缩放/1:2"
 
-#: app/gui/menus.c:543
+#: app/gui/menus.c:557
 msgid "/View/Zoom/1:4"
 msgstr "/查看/缩放/1:4"
 
-#: app/gui/menus.c:548
+#: app/gui/menus.c:562
 msgid "/View/Zoom/1:8"
 msgstr "/查看/缩放/1:8"
 
-#: app/gui/menus.c:553
+#: app/gui/menus.c:567
 msgid "/View/Zoom/1:16"
 msgstr "/查看/缩放/1:16"
 
-#: app/gui/menus.c:559
+#: app/gui/menus.c:573
 msgid "/View/Dot for Dot"
 msgstr "/查看/点对点"
 
-#: app/gui/menus.c:566
+#: app/gui/menus.c:580
 msgid "/View/Info Window..."
 msgstr "/查看/信息窗口..."
 
-#: app/gui/menus.c:571
+#: app/gui/menus.c:585
 msgid "/View/Navigation Window..."
 msgstr "/查看/导航窗口..."
 
-#: app/gui/menus.c:576
+#: app/gui/menus.c:590
 msgid "/View/Display Filters..."
 msgstr "/文件/显示滤镜..."
 
-#: app/gui/menus.c:583
+#: app/gui/menus.c:597
 msgid "/View/Toggle Selection"
 msgstr "/查看/显示选区"
 
-#: app/gui/menus.c:587
+#: app/gui/menus.c:601
 msgid "/View/Toggle Layer Boundary"
 msgstr "/查看/显示图层边界"
 
-#: app/gui/menus.c:591
+#: app/gui/menus.c:605
 msgid "/View/Toggle Guides"
 msgstr "/查看/显示参考线"
 
-#: app/gui/menus.c:595
+#: app/gui/menus.c:609
 msgid "/View/Snap to Guides"
 msgstr "/查看/吸附到参考线"
 
-#: app/gui/menus.c:602
+#: app/gui/menus.c:616
 msgid "/View/Toggle Rulers"
 msgstr "/查看/显示标尺"
 
-#: app/gui/menus.c:606
+#: app/gui/menus.c:620
 msgid "/View/Toggle Statusbar"
 msgstr "/查看/显示状态栏"
 
-#: app/gui/menus.c:613
+#: app/gui/menus.c:627
 msgid "/View/New View"
 msgstr "/查看/新查看"
 
 #. <Image>/Image/Mode
-#: app/gui/menus.c:621
+#: app/gui/menus.c:635
 msgid "/Image/Mode/RGB"
 msgstr "/图像/模式/RGB"
 
-#: app/gui/menus.c:626
+#: app/gui/menus.c:640
 msgid "/Image/Mode/Grayscale"
 msgstr "/图像/模式/灰度"
 
-#: app/gui/menus.c:631
+#: app/gui/menus.c:645
 msgid "/Image/Mode/Indexed..."
 msgstr "/图像/模式/索引..."
 
 #. <Image>/Image/Transform
-#: app/gui/menus.c:641
+#: app/gui/menus.c:655
 msgid "/Image/Transform"
 msgstr "/图像/变换"
 
-#: app/gui/menus.c:647
+#: app/gui/menus.c:661
 msgid "/Image/Canvas Size..."
 msgstr "/图像/画布大小..."
 
-#: app/gui/menus.c:652
+#: app/gui/menus.c:666
 msgid "/Image/Scale Image..."
 msgstr "/图像/缩放图像..."
 
-#: app/gui/menus.c:657
+#: app/gui/menus.c:671
 msgid "/Image/Crop Image"
 msgstr "/图像/剪割图像"
 
-#: app/gui/menus.c:662
+#: app/gui/menus.c:676
 msgid "/Image/Duplicate"
 msgstr "/图像/复制"
 
-#: app/gui/menus.c:670
+#: app/gui/menus.c:684
 msgid "/Image/Merge Visible Layers..."
 msgstr "/图像/合并可见的图层..."
 
-#: app/gui/menus.c:674
+#: app/gui/menus.c:688
 msgid "/Image/Flatten Image"
 msgstr "/图像/平整图像"
 
-#: app/gui/menus.c:681
+#: app/gui/menus.c:695
 msgid "/Image/Undo History..."
 msgstr "/图像/撤销历史..."
 
 #. <Image>/Layer
 #. <Image>/Layer/Stack
-#: app/gui/menus.c:690
+#: app/gui/menus.c:704
 msgid "/Layer/Stack/Previous Layer"
 msgstr "/图层/堆栈/前一图层"
 
-#: app/gui/menus.c:694
+#: app/gui/menus.c:708
 msgid "/Layer/Stack/Next Layer"
 msgstr "/图层/堆栈/后一图层"
 
-#: app/gui/menus.c:698
+#: app/gui/menus.c:712
 msgid "/Layer/Stack/Raise Layer"
 msgstr "/图层/堆栈/升高图层"
 
-#: app/gui/menus.c:703
+#: app/gui/menus.c:717
 msgid "/Layer/Stack/Lower Layer"
 msgstr "/图层/堆栈/降低图层"
 
-#: app/gui/menus.c:708
+#: app/gui/menus.c:722
 msgid "/Layer/Stack/Layer to Top"
 msgstr "/图层/堆栈/图层移至顶部"
 
-#: app/gui/menus.c:713
+#: app/gui/menus.c:727
 msgid "/Layer/Stack/Layer to Bottom"
 msgstr "/图层/堆栈/图层移至底部"
 
-#: app/gui/menus.c:721
+#: app/gui/menus.c:735
 msgid "/Layer/New Layer..."
 msgstr "/图层/新建图层..."
 
-#: app/gui/menus.c:726
+#: app/gui/menus.c:740
 msgid "/Layer/Duplicate Layer"
 msgstr "/图层/复制图层"
 
-#: app/gui/menus.c:731
+#: app/gui/menus.c:745
 msgid "/Layer/Anchor Layer"
 msgstr "/图层/固定图层"
 
-#: app/gui/menus.c:736
+#: app/gui/menus.c:750
 msgid "/Layer/Merge Down"
 msgstr "/图层/向下合并"
 
-#: app/gui/menus.c:741
+#: app/gui/menus.c:755
 msgid "/Layer/Delete Layer"
 msgstr "/图层/删除图层"
 
-#: app/gui/menus.c:749
+#: app/gui/menus.c:763
 msgid "/Layer/Layer Boundary Size..."
 msgstr "/图层/图层边界大小..."
 
-#: app/gui/menus.c:754
+#: app/gui/menus.c:768
 msgid "/Layer/Layer to Imagesize"
 msgstr "/图层/图层到图像大小"
 
-#: app/gui/menus.c:759
+#: app/gui/menus.c:773
 msgid "/Layer/Scale Layer..."
 msgstr "/图层/缩放图层..."
 
-#: app/gui/menus.c:764
-#, fuzzy
+#: app/gui/menus.c:778
 msgid "/Layer/Crop Layer"
-msgstr "/图层/固定图层"
+msgstr "/图层/剪割图层"
 
-#: app/gui/menus.c:774
+#: app/gui/menus.c:788
 msgid "/Layer/Transform/Offset..."
 msgstr "/图层/变换/位移..."
 
-#: app/gui/menus.c:785
+#: app/gui/menus.c:799
 msgid "/Layer/Colors/Desaturate"
 msgstr "/图层/颜色/去色"
 
-#: app/gui/menus.c:790
+#: app/gui/menus.c:804
 msgid "/Layer/Colors/Invert"
 msgstr "/图层/颜色/反转"
 
 #. <Image>/Layer/Colors/Auto
-#: app/gui/menus.c:800
+#: app/gui/menus.c:814
 msgid "/Layer/Colors/Auto/Equalize"
 msgstr "/图像/颜色/自动/色调均化"
 
 #. <Image>/Layer/Mask
-#: app/gui/menus.c:809
+#: app/gui/menus.c:823
 msgid "/Layer/Mask/Add Layer Mask..."
 msgstr "/图层/蒙板/添加图层蒙板..."
 
-#: app/gui/menus.c:813
+#: app/gui/menus.c:827
 msgid "/Layer/Mask/Apply Layer Mask"
 msgstr "/图层/蒙板/应用图层蒙板"
 
-#: app/gui/menus.c:817
+#: app/gui/menus.c:831
 msgid "/Layer/Mask/Delete Layer Mask"
 msgstr "/图层/蒙板/删除图层蒙板"
 
-#: app/gui/menus.c:822
+#: app/gui/menus.c:836
 msgid "/Layer/Mask/Mask to Selection"
 msgstr "/图层/蒙板/蒙板到选区"
 
 #. <Image>/Layer/Alpha
-#: app/gui/menus.c:830
+#: app/gui/menus.c:844
 msgid "/Layer/Alpha/Add Alpha Channel"
 msgstr "/图层/Alpha/添加 Alpha 通道"
 
-#: app/gui/menus.c:834
+#: app/gui/menus.c:848
 msgid "/Layer/Alpha/Alpha to Selection"
 msgstr "/图层/Alpha/Alpha 到选区"
 
 #. <Image>/Tools
-#: app/gui/menus.c:846
+#: app/gui/menus.c:860
 msgid "/Tools/Toolbox"
 msgstr "/工具/工具箱"
 
-#: app/gui/menus.c:850
+#: app/gui/menus.c:864
 msgid "/Tools/Default Colors"
 msgstr "/工具/默认颜色"
 
-#: app/gui/menus.c:855
+#: app/gui/menus.c:869
 msgid "/Tools/Swap Colors"
 msgstr "/工具/交换颜色"
 
-#: app/gui/menus.c:860
+#: app/gui/menus.c:874
 msgid "/Tools/Swap Contexts"
 msgstr "/工具/交换上下文"
 
-#: app/gui/menus.c:867
+#: app/gui/menus.c:881
 msgid "/Tools/Selection Tools"
 msgstr "/工具/选择工具"
 
-#: app/gui/menus.c:868
+#: app/gui/menus.c:882
 msgid "/Tools/Paint Tools"
 msgstr "/工具/涂画工具"
 
-#: app/gui/menus.c:869
+#: app/gui/menus.c:883
 msgid "/Tools/Transform Tools"
 msgstr "/工具/变换工具"
 
 #. <Image>/Dialogs
-#: app/gui/menus.c:873
+#: app/gui/menus.c:887
 msgid "/Dialogs/Layers, Channels & Paths..."
 msgstr "/对话框/图层、通道和路径..."
 
-#: app/gui/menus.c:877
+#: app/gui/menus.c:891
 msgid "/Dialogs/Brushes, Patterns & Stuff..."
 msgstr "/对话框/画笔、图案和其它..."
 
-#: app/gui/menus.c:881
+#: app/gui/menus.c:895
 msgid "/Dialogs/Tool Options..."
 msgstr "/对话框/工具选项..."
 
-#: app/gui/menus.c:886
+#: app/gui/menus.c:900
 msgid "/Dialogs/Device Status..."
 msgstr "/对话框/设备状态..."
 
-#: app/gui/menus.c:893
+#: app/gui/menus.c:907
 msgid "/Dialogs/Brushes..."
 msgstr "/对话框/画笔..."
 
-#: app/gui/menus.c:898
+#: app/gui/menus.c:912
 msgid "/Dialogs/Patterns..."
 msgstr "/对话框/图案..."
 
-#: app/gui/menus.c:903
+#: app/gui/menus.c:917
 msgid "/Dialogs/Gradients..."
 msgstr "/对话框/渐变..."
 
-#: app/gui/menus.c:908
+#: app/gui/menus.c:922
 msgid "/Dialogs/Palettes..."
 msgstr "/对话框/色板..."
 
-#: app/gui/menus.c:913
+#: app/gui/menus.c:927
 msgid "/Dialogs/Indexed Palette..."
 msgstr "/对话框/索引色板..."
 
-#: app/gui/menus.c:918
+#: app/gui/menus.c:932
 msgid "/Dialogs/Buffers..."
 msgstr "/对话框/缓冲区..."
 
-#: app/gui/menus.c:926
+#: app/gui/menus.c:940
 #, fuzzy
-msgid "/Dialogs/Navigation..."
-msgstr "/对话框/图案..."
+msgid "/Dialogs/Selection Editor..."
+msgstr "/对话框/文档历史..."
 
-#: app/gui/menus.c:931
+#: app/gui/menus.c:945
+msgid "/Dialogs/Navigation..."
+msgstr "/对话框/导航..."
+
+#: app/gui/menus.c:950
 msgid "/Dialogs/Images..."
 msgstr "/对话框/图像..."
 
-#: app/gui/menus.c:935
+#: app/gui/menus.c:954
 msgid "/Dialogs/Document History..."
 msgstr "/对话框/文档历史..."
 
-#: app/gui/menus.c:940
+#: app/gui/menus.c:959
 msgid "/Dialogs/Error Console..."
 msgstr "/对话框/错误控制台..."
 
 #. <Image>/Filters
-#: app/gui/menus.c:950
+#: app/gui/menus.c:969
 msgid "/Filters/Repeat Last"
 msgstr "/滤镜/重复上次"
 
-#: app/gui/menus.c:955
+#: app/gui/menus.c:974
 msgid "/Filters/Re-Show Last"
-msgstr "/滤镜/显示上次"
+msgstr "/滤镜/调出上次"
 
-#: app/gui/menus.c:963
+#: app/gui/menus.c:982
 msgid "/Filters/Blur"
 msgstr "/滤镜/模糊"
 
-#: app/gui/menus.c:964
+#: app/gui/menus.c:983
 msgid "/Filters/Colors"
 msgstr "/滤镜/颜色"
 
-#: app/gui/menus.c:965
+#: app/gui/menus.c:984
 msgid "/Filters/Noise"
 msgstr "/滤镜/噪音"
 
-#: app/gui/menus.c:966
+#: app/gui/menus.c:985
 msgid "/Filters/Edge-Detect"
 msgstr "/滤镜/边缘检测"
 
-#: app/gui/menus.c:967
+#: app/gui/menus.c:986
 msgid "/Filters/Enhance"
 msgstr "/滤镜/增强"
 
-#: app/gui/menus.c:968
+#: app/gui/menus.c:987
 msgid "/Filters/Generic"
 msgstr "/滤镜/通用"
 
-#: app/gui/menus.c:972
+#: app/gui/menus.c:991
 msgid "/Filters/Glass Effects"
 msgstr "/滤镜/玻璃效果"
 
-#: app/gui/menus.c:973
+#: app/gui/menus.c:992
 msgid "/Filters/Light Effects"
 msgstr "/滤镜/光线效果"
 
-#: app/gui/menus.c:974
+#: app/gui/menus.c:993
 msgid "/Filters/Distorts"
 msgstr "/滤镜/扭曲"
 
-#: app/gui/menus.c:975
+#: app/gui/menus.c:994
 msgid "/Filters/Artistic"
 msgstr "/滤镜/艺术"
 
-#: app/gui/menus.c:976
+#: app/gui/menus.c:995
 msgid "/Filters/Map"
 msgstr "/滤镜/映射"
 
-#: app/gui/menus.c:977
+#: app/gui/menus.c:996
 msgid "/Filters/Render"
 msgstr "/滤镜/绘制"
 
-#: app/gui/menus.c:978
+#: app/gui/menus.c:997
 msgid "/Filters/Text"
 msgstr "/滤镜/文本"
 
-#: app/gui/menus.c:979
+#: app/gui/menus.c:998
 msgid "/Filters/Web"
 msgstr "/滤镜/网页"
 
-#: app/gui/menus.c:983
+#: app/gui/menus.c:1002
 msgid "/Filters/Animation"
 msgstr "/滤镜/动画"
 
-#: app/gui/menus.c:984
+#: app/gui/menus.c:1003
 msgid "/Filters/Combine"
 msgstr "/滤镜/组合"
 
-#: app/gui/menus.c:988
+#: app/gui/menus.c:1007
 msgid "/Filters/Toys"
 msgstr "/滤镜/玩具"
 
-#: app/gui/menus.c:996
+#: app/gui/menus.c:1015
 msgid "/Automatic"
 msgstr "/自动"
 
-#: app/gui/menus.c:1009
+#: app/gui/menus.c:1028
 msgid "/By Extension"
 msgstr "/按扩展名"
 
-#: app/gui/menus.c:1022
+#: app/gui/menus.c:1041
 msgid "/New Layer..."
 msgstr "/新建图层..."
 
-#: app/gui/menus.c:1028
+#: app/gui/menus.c:1047
 msgid "/Raise Layer"
 msgstr "/升高图层"
 
-#: app/gui/menus.c:1033
+#: app/gui/menus.c:1052
 msgid "/Layer to Top"
 msgstr "/图层移至顶部"
 
-#: app/gui/menus.c:1038
+#: app/gui/menus.c:1057
 msgid "/Lower Layer"
 msgstr "/降低图层"
 
-#: app/gui/menus.c:1043
+#: app/gui/menus.c:1062
 msgid "/Layer to Bottom"
 msgstr "/图层移至底部"
 
-#: app/gui/menus.c:1049
+#: app/gui/menus.c:1068
 msgid "/Duplicate Layer"
 msgstr "/复制图层"
 
-#: app/gui/menus.c:1054
+#: app/gui/menus.c:1073
 msgid "/Anchor Layer"
 msgstr "/固定图层"
 
-#: app/gui/menus.c:1059
+#: app/gui/menus.c:1078
 msgid "/Merge Down"
 msgstr "/向下合并"
 
-#: app/gui/menus.c:1064
+#: app/gui/menus.c:1083
 msgid "/Delete Layer"
 msgstr "/删除图层"
 
-#: app/gui/menus.c:1072
+#: app/gui/menus.c:1091
 msgid "/Layer Boundary Size..."
 msgstr "/图层边界大小..."
 
-#: app/gui/menus.c:1077
+#: app/gui/menus.c:1096
 msgid "/Layer to Imagesize"
 msgstr "/图层到图像大小"
 
-#: app/gui/menus.c:1082
+#: app/gui/menus.c:1101
 msgid "/Scale Layer..."
 msgstr "/缩放图层..."
 
-#: app/gui/menus.c:1090
+#: app/gui/menus.c:1109
 msgid "/Add Layer Mask..."
 msgstr "/添加图层蒙板..."
 
-#: app/gui/menus.c:1094
+#: app/gui/menus.c:1113
 msgid "/Apply Layer Mask"
 msgstr "/应用图层蒙板"
 
-#: app/gui/menus.c:1098
+#: app/gui/menus.c:1117
 msgid "/Delete Layer Mask"
 msgstr "/删除图层蒙板"
 
-#: app/gui/menus.c:1103
+#: app/gui/menus.c:1122
 msgid "/Mask to Selection"
 msgstr "/蒙板到选区"
 
-#: app/gui/menus.c:1111
+#: app/gui/menus.c:1130
 msgid "/Add Alpha Channel"
 msgstr "/添加 Alpha 通道"
 
-#: app/gui/menus.c:1115
+#: app/gui/menus.c:1134
 msgid "/Alpha to Selection"
 msgstr "/Alpha 到选区"
 
-#: app/gui/menus.c:1123
+#: app/gui/menus.c:1142
 msgid "/Edit Layer Attributes..."
 msgstr "/编辑图层属性..."
 
-#: app/gui/menus.c:1135
+#: app/gui/menus.c:1154
 msgid "/New Channel..."
 msgstr "/新建通道..."
 
-#: app/gui/menus.c:1140
+#: app/gui/menus.c:1159
 msgid "/Raise Channel"
 msgstr "/升高通道"
 
-#: app/gui/menus.c:1145
+#: app/gui/menus.c:1164
 msgid "/Lower Channel"
 msgstr "/降低通道"
 
-#: app/gui/menus.c:1150
+#: app/gui/menus.c:1169
 msgid "/Duplicate Channel"
 msgstr "/复制通道"
 
-#: app/gui/menus.c:1158
+#: app/gui/menus.c:1177
 msgid "/Channel to Selection"
 msgstr "/通道到选区"
 
-#: app/gui/menus.c:1163 app/gui/menus.c:1229
+#: app/gui/menus.c:1182 app/gui/menus.c:1248
 msgid "/Add to Selection"
-msgstr "/添加到选区"
+msgstr "/合并到选区"
 
-#: app/gui/menus.c:1168 app/gui/menus.c:1234
+#: app/gui/menus.c:1187 app/gui/menus.c:1253
 msgid "/Subtract from Selection"
 msgstr "/从选区中减去"
 
-#: app/gui/menus.c:1173 app/gui/menus.c:1239
+#: app/gui/menus.c:1192 app/gui/menus.c:1258
 msgid "/Intersect with Selection"
 msgstr "/与选区相交"
 
-#: app/gui/menus.c:1181
+#: app/gui/menus.c:1200
 msgid "/Delete Channel"
 msgstr "/删除通道"
 
-#: app/gui/menus.c:1189
+#: app/gui/menus.c:1208
 msgid "/Edit Channel Attributes..."
 msgstr "/编辑通道属性..."
 
-#: app/gui/menus.c:1201
+#: app/gui/menus.c:1220
 msgid "/New Path..."
 msgstr "/新建路径..."
 
-#: app/gui/menus.c:1206
+#: app/gui/menus.c:1225
 msgid "/Raise Path"
 msgstr "/升高路径"
 
-#: app/gui/menus.c:1211
+#: app/gui/menus.c:1230
 msgid "/Lower Path"
 msgstr "/降低路径"
 
-#: app/gui/menus.c:1216 app/gui/menus.c:1311
+#: app/gui/menus.c:1235 app/gui/menus.c:1330
 msgid "/Duplicate Path"
 msgstr "/复制路径"
 
-#: app/gui/menus.c:1224 app/gui/menus.c:1316
+#: app/gui/menus.c:1243 app/gui/menus.c:1335
 msgid "/Path to Selection"
 msgstr "/路径到选区"
 
-#: app/gui/menus.c:1245 app/gui/menus.c:1321
+#: app/gui/menus.c:1264 app/gui/menus.c:1340
 msgid "/Selection to Path"
 msgstr "/选区到路径"
 
-#: app/gui/menus.c:1250 app/gui/menus.c:1326
+#: app/gui/menus.c:1269 app/gui/menus.c:1345
 msgid "/Stroke Path"
 msgstr "/勾画路径"
 
-#: app/gui/menus.c:1258 app/gui/menus.c:1339
+#: app/gui/menus.c:1277 app/gui/menus.c:1358
 msgid "/Copy Path"
 msgstr "/复制路径"
 
-#: app/gui/menus.c:1263 app/gui/menus.c:1344
+#: app/gui/menus.c:1282 app/gui/menus.c:1363
 msgid "/Paste Path"
 msgstr "/粘贴路径"
 
-#: app/gui/menus.c:1268 app/gui/menus.c:1349
+#: app/gui/menus.c:1287 app/gui/menus.c:1368
 msgid "/Import Path..."
 msgstr "/导入路径..."
 
-#: app/gui/menus.c:1273 app/gui/menus.c:1354
+#: app/gui/menus.c:1292 app/gui/menus.c:1373
 msgid "/Export Path..."
 msgstr "/导出路径..."
 
-#: app/gui/menus.c:1281 app/gui/menus.c:1331
+#: app/gui/menus.c:1300 app/gui/menus.c:1350
 msgid "/Delete Path"
 msgstr "/删除路径"
 
-#: app/gui/menus.c:1289
+#: app/gui/menus.c:1308
 msgid "/Path Tool"
 msgstr "/路径工具"
 
-#: app/gui/menus.c:1294 app/gui/menus.c:1362
+#: app/gui/menus.c:1313 app/gui/menus.c:1381
 msgid "/Edit Path Attributes..."
 msgstr "/编辑路径属性..."
 
-#: app/gui/menus.c:1306
+#: app/gui/menus.c:1325
 msgid "/New Path"
 msgstr "/新建路径"
 
-#: app/gui/menus.c:1381
-msgid "/Select Tab"
-msgstr ""
-
-#: app/gui/menus.c:1384
-msgid "/Add Tab/Layers..."
-msgstr ""
-
-#: app/gui/menus.c:1385
-msgid "/Add Tab/Channels..."
-msgstr ""
-
-#: app/gui/menus.c:1386
-msgid "/Add Tab/Paths..."
-msgstr ""
-
-#: app/gui/menus.c:1387
-#, fuzzy
-msgid "/Add Tab/Tool Options..."
-msgstr "/对话框/工具选项..."
-
-#: app/gui/menus.c:1392
-msgid "/Add Tab/Brushes..."
-msgstr ""
-
-#: app/gui/menus.c:1394
-msgid "/Add Tab/Patterns..."
-msgstr ""
-
-#: app/gui/menus.c:1396
-msgid "/Add Tab/Gradients..."
-msgstr ""
-
-#: app/gui/menus.c:1398
-msgid "/Add Tab/Palettes..."
-msgstr ""
-
 #: app/gui/menus.c:1400
-msgid "/Add Tab/Indexed Palette..."
-msgstr ""
+msgid "/Select Tab"
+msgstr "/选择页签"
 
-#: app/gui/menus.c:1402
-msgid "/Add Tab/Buffers..."
-msgstr ""
+#: app/gui/menus.c:1403
+msgid "/Add Tab/Layers..."
+msgstr "/添加页签/图层..."
 
-#: app/gui/menus.c:1407
-#, fuzzy
-msgid "/Add Tab/Navigation..."
-msgstr "/查看/导航窗口..."
+#: app/gui/menus.c:1404
+msgid "/Add Tab/Channels..."
+msgstr "/添加页签/通道..."
 
-#: app/gui/menus.c:1409
-msgid "/Add Tab/Images..."
-msgstr ""
+#: app/gui/menus.c:1405
+msgid "/Add Tab/Paths..."
+msgstr "/添加页签/路径..."
 
-#: app/gui/menus.c:1410
-msgid "/Add Tab/Document History..."
-msgstr ""
+#: app/gui/menus.c:1406
+msgid "/Add Tab/Tool Options..."
+msgstr "/添加页签/工具选项..."
 
-#: app/gui/menus.c:1412
-msgid "/Add Tab/Error Console..."
-msgstr ""
+#: app/gui/menus.c:1411
+msgid "/Add Tab/Brushes..."
+msgstr "/添加页签/画笔..."
+
+#: app/gui/menus.c:1413
+msgid "/Add Tab/Patterns..."
+msgstr "/添加页签/图案..."
+
+#: app/gui/menus.c:1415
+msgid "/Add Tab/Gradients..."
+msgstr "/添加页签/渐变..."
 
 #: app/gui/menus.c:1417
-msgid "/Add Tab/Tools..."
-msgstr ""
+msgid "/Add Tab/Palettes..."
+msgstr "/添加页签/色板..."
 
-#: app/gui/menus.c:1418
-msgid "/Add Tab/Old Paths..."
-msgstr ""
+#: app/gui/menus.c:1419
+msgid "/Add Tab/Indexed Palette..."
+msgstr "/添加页签/索引色板..."
 
-#: app/gui/menus.c:1420
-msgid "/Remove Tab"
-msgstr ""
+#: app/gui/menus.c:1421
+msgid "/Add Tab/Buffers..."
+msgstr "/添加页签/缓冲区..."
+
+#: app/gui/menus.c:1426
+#, fuzzy
+msgid "/Add Tab/Selection Editor..."
+msgstr "/添加页签/文档历史..."
 
 #: app/gui/menus.c:1428
+msgid "/Add Tab/Navigation..."
+msgstr "/添加页签/导航..."
+
+#: app/gui/menus.c:1430
+msgid "/Add Tab/Images..."
+msgstr "/添加页签/图像..."
+
+#: app/gui/menus.c:1431
+msgid "/Add Tab/Document History..."
+msgstr "/添加页签/文档历史..."
+
+#: app/gui/menus.c:1433
+msgid "/Add Tab/Error Console..."
+msgstr "/添加页签/错误控制台..."
+
+#: app/gui/menus.c:1438
+msgid "/Add Tab/Tools..."
+msgstr "/添加页签/工具..."
+
+#: app/gui/menus.c:1439
+msgid "/Add Tab/Old Paths..."
+msgstr "/添加页签/旧路径..."
+
+#: app/gui/menus.c:1441
+msgid "/Remove Tab"
+msgstr "/删除页签"
+
+#: app/gui/menus.c:1449
 msgid "/Preview Size/Tiny"
 msgstr "/预览大小/细小"
 
-#: app/gui/menus.c:1433
+#: app/gui/menus.c:1454
 msgid "/Preview Size/Extra Small"
 msgstr "/预览大小/更小"
 
-#: app/gui/menus.c:1434
+#: app/gui/menus.c:1455
 msgid "/Preview Size/Small"
 msgstr "/预览大小/小"
 
-#: app/gui/menus.c:1435
+#: app/gui/menus.c:1456
 msgid "/Preview Size/Medium"
 msgstr "/预览大小/中"
 
-#: app/gui/menus.c:1436
+#: app/gui/menus.c:1457
 msgid "/Preview Size/Large"
 msgstr "/预览大小/大"
 
-#: app/gui/menus.c:1437
+#: app/gui/menus.c:1458
 msgid "/Preview Size/Extra Large"
 msgstr "/预览大小/加大"
 
-#: app/gui/menus.c:1438
+#: app/gui/menus.c:1459
 msgid "/Preview Size/Huge"
 msgstr "/预览大小/庞大"
 
-#: app/gui/menus.c:1439
+#: app/gui/menus.c:1460
 msgid "/Preview Size/Enormous"
 msgstr "/预览大小/巨大"
 
-#: app/gui/menus.c:1440
+#: app/gui/menus.c:1461
 msgid "/Preview Size/Gigantic"
 msgstr "/预览大小/极大"
 
-#: app/gui/menus.c:1442
-#, fuzzy
+#: app/gui/menus.c:1463
 msgid "/View as List"
-msgstr "/查看柱状图"
+msgstr "/以列表方式查看"
 
-#: app/gui/menus.c:1445
-#, fuzzy
+#: app/gui/menus.c:1466
 msgid "/View as Grid"
-msgstr "/查看参考线"
+msgstr "/以阵列方式查看"
 
-#: app/gui/menus.c:1451
+#: app/gui/menus.c:1472
 msgid "/Show Image Menu"
 msgstr "/显示图像菜单"
 
-#: app/gui/menus.c:1454
+#: app/gui/menus.c:1475
 msgid "/Auto Follow Active Image"
 msgstr "/自动跟随活动图像"
 
-#: app/gui/menus.c:1467
+#: app/gui/menus.c:1488
 msgid "/New Brush"
 msgstr "/新建画笔"
 
-#: app/gui/menus.c:1472
+#: app/gui/menus.c:1493
 msgid "/Duplicate Brush"
 msgstr "/复制画笔"
 
-#: app/gui/menus.c:1477
+#: app/gui/menus.c:1498
 msgid "/Edit Brush..."
 msgstr "/编辑画笔..."
 
-#: app/gui/menus.c:1482
+#: app/gui/menus.c:1503
 msgid "/Delete Brush..."
 msgstr "/删除画笔..."
 
-#: app/gui/menus.c:1490
+#: app/gui/menus.c:1511
 msgid "/Refresh Brushes"
 msgstr "/刷新画笔"
 
-#: app/gui/menus.c:1502
+#: app/gui/menus.c:1523
 msgid "/New Pattern"
 msgstr "/新建图案"
 
-#: app/gui/menus.c:1507
+#: app/gui/menus.c:1528
 msgid "/Duplicate Pattern"
 msgstr "/复制图案"
 
-#: app/gui/menus.c:1512
+#: app/gui/menus.c:1533
 msgid "/Edit Pattern..."
 msgstr "/编辑图案..."
 
-#: app/gui/menus.c:1517
+#: app/gui/menus.c:1538
 msgid "/Delete Pattern..."
 msgstr "/删除图案..."
 
-#: app/gui/menus.c:1525
+#: app/gui/menus.c:1546
 msgid "/Refresh Patterns"
 msgstr "/刷新图案"
 
-#: app/gui/menus.c:1550
+#: app/gui/menus.c:1571
 msgid "/Left Endpoint's Color..."
 msgstr "/左端点的颜色..."
 
-#: app/gui/menus.c:1555
+#: app/gui/menus.c:1576
 msgid "/Load Left Color From/Left Neighbor's Right Endpoint"
 msgstr "/左端颜色加载自/左邻的右端点"
 
-#: app/gui/menus.c:1559
+#: app/gui/menus.c:1580
 msgid "/Load Left Color From/Right Endpoint"
 msgstr "/左端颜色加载自/右端点"
 
-#: app/gui/menus.c:1563
+#: app/gui/menus.c:1584
 msgid "/Load Left Color From/FG Color"
 msgstr "/左端颜色加载自/前景色"
 
-#: app/gui/menus.c:1567
+#: app/gui/menus.c:1588
 msgid "/Load Left Color From/BG Color"
 msgstr "/左端颜色加载自/背景色"
 
-#: app/gui/menus.c:1585
+#: app/gui/menus.c:1606
 msgid "/Save Left Color To"
 msgstr "/保存左端颜色到"
 
-#: app/gui/menus.c:1600
+#: app/gui/menus.c:1621
 msgid "/Right Endpoint's Color..."
 msgstr "/右端点的颜色..."
 
-#: app/gui/menus.c:1605
+#: app/gui/menus.c:1626
 msgid "/Load Right Color From/Right Neighbor's Left Endpoint"
 msgstr "/右端颜色加载自/右邻的左端点"
 
-#: app/gui/menus.c:1609
+#: app/gui/menus.c:1630
 msgid "/Load Right Color From/Left Endpoint"
 msgstr "/右端颜色加载自/左端点"
 
-#: app/gui/menus.c:1613
+#: app/gui/menus.c:1634
 msgid "/Load Right Color From/FG Color"
 msgstr "/右端颜色加载自/前景色"
 
-#: app/gui/menus.c:1617
+#: app/gui/menus.c:1638
 msgid "/Load Right Color From/BG Color"
 msgstr "/右端颜色加载自/背景色"
 
-#: app/gui/menus.c:1635
+#: app/gui/menus.c:1656
 msgid "/Save Right Color To"
 msgstr "/保存右端颜色到"
 
-#: app/gui/menus.c:1650
+#: app/gui/menus.c:1671
 msgid "/blendingfunction/Linear"
 msgstr "/混和函数/线性"
 
-#: app/gui/menus.c:1655
+#: app/gui/menus.c:1676
 msgid "/blendingfunction/Curved"
 msgstr "/混和函数/曲线"
 
-#: app/gui/menus.c:1660
+#: app/gui/menus.c:1681
 msgid "/blendingfunction/Sinusodial"
 msgstr "/混和函数/正弦"
 
-#: app/gui/menus.c:1665
+#: app/gui/menus.c:1686
 msgid "/blendingfunction/Spherical (increasing)"
 msgstr "/混和函数/球状(上升)"
 
-#: app/gui/menus.c:1670
+#: app/gui/menus.c:1691
 msgid "/blendingfunction/Spherical (decreasing)"
 msgstr "/混和函数/球状(下降)"
 
-#: app/gui/menus.c:1675
+#: app/gui/menus.c:1696
 msgid "/blendingfunction/(Varies)"
 msgstr "/混和函数/(多样)"
 
-#: app/gui/menus.c:1680
+#: app/gui/menus.c:1701
 msgid "/coloringtype/RGB"
 msgstr "/着色类型/RGB"
 
-#: app/gui/menus.c:1685
+#: app/gui/menus.c:1706
 msgid "/coloringtype/HSV (counter-clockwise hue)"
 msgstr "/着色类型/HSV (逆时针色调)"
 
-#: app/gui/menus.c:1690
+#: app/gui/menus.c:1711
 msgid "/coloringtype/HSV (clockwise hue)"
 msgstr "/着色类型/HSV (顺时针色调)"
 
-#: app/gui/menus.c:1695
+#: app/gui/menus.c:1716
 msgid "/coloringtype/(Varies)"
 msgstr "/着色类型/(多样)"
 
-#: app/gui/menus.c:1733
+#: app/gui/menus.c:1754
 msgid "/Blend Endpoints' Colors"
 msgstr "/混和端点的颜色"
 
-#: app/gui/menus.c:1737
+#: app/gui/menus.c:1758
 msgid "/Blend Endpoints' Opacity"
 msgstr "/混和端点的不透明度"
 
-#: app/gui/menus.c:1753
+#: app/gui/menus.c:1774
 msgid "/New Gradient"
 msgstr "/新建渐变"
 
-#: app/gui/menus.c:1758
+#: app/gui/menus.c:1779
 msgid "/Duplicate Gradient"
 msgstr "/复制渐变"
 
-#: app/gui/menus.c:1763
+#: app/gui/menus.c:1784
 msgid "/Edit Gradient..."
 msgstr "/编辑渐变..."
 
-#: app/gui/menus.c:1768
+#: app/gui/menus.c:1789
 msgid "/Delete Gradient..."
 msgstr "/删除渐变..."
 
-#: app/gui/menus.c:1776
+#: app/gui/menus.c:1797
 msgid "/Refresh Gradients"
 msgstr "/刷新渐变"
 
-#: app/gui/menus.c:1784
+#: app/gui/menus.c:1805
 msgid "/Save as POV-Ray..."
 msgstr "/保存为 POV-Ray..."
 
-#: app/gui/menus.c:1796
+#: app/gui/menus.c:1817
 msgid "/New Color"
 msgstr "/新建颜色"
 
-#: app/gui/menus.c:1801 app/gui/menus.c:1897
+#: app/gui/menus.c:1822 app/gui/menus.c:1918
 msgid "/Edit Color..."
 msgstr "/编辑颜色..."
 
-#: app/gui/menus.c:1806
+#: app/gui/menus.c:1827
 msgid "/Delete Color"
 msgstr "/删除颜色"
 
-#: app/gui/menus.c:1818
+#: app/gui/menus.c:1839
 msgid "/New Palette"
 msgstr "/新建色板"
 
-#: app/gui/menus.c:1823
+#: app/gui/menus.c:1844
 msgid "/Duplicate Palette"
 msgstr "/复制色板"
 
-#: app/gui/menus.c:1828
+#: app/gui/menus.c:1849
 msgid "/Edit Palette..."
 msgstr "/编辑色板..."
 
-#: app/gui/menus.c:1833
+#: app/gui/menus.c:1854
 msgid "/Delete Palette..."
 msgstr "/删除色板..."
 
-#: app/gui/menus.c:1841
+#: app/gui/menus.c:1862
 msgid "/Refresh Palettes"
 msgstr "/刷新色板"
 
-#: app/gui/menus.c:1849
+#: app/gui/menus.c:1870
 msgid "/Import Palette..."
 msgstr "/导入色板..."
 
-#: app/gui/menus.c:1854
+#: app/gui/menus.c:1875
 msgid "/Merge Palettes..."
 msgstr "/合并色板..."
 
-#: app/gui/menus.c:1865
+#: app/gui/menus.c:1886
 msgid "/Paste Buffer"
 msgstr "/粘贴缓冲区"
 
-#: app/gui/menus.c:1870
+#: app/gui/menus.c:1891
 msgid "/Paste Buffer Into"
 msgstr "/粘贴缓冲区进入"
 
-#: app/gui/menus.c:1875
+#: app/gui/menus.c:1896
 msgid "/Paste Buffer as New"
 msgstr "/粘贴缓冲区为新建"
 
-#: app/gui/menus.c:1880
+#: app/gui/menus.c:1901
 msgid "/Delete Buffer"
 msgstr "/删除缓冲区"
 
-#: app/gui/menus.c:1892
+#: app/gui/menus.c:1913
 msgid "/Add Color"
 msgstr "/添加颜色"
 
-#: app/gui/menus.c:1909
-#, fuzzy
+#: app/gui/menus.c:1930
 msgid "/Raise Displays"
-msgstr "8-位显示"
+msgstr "/升高显示"
 
-#: app/gui/menus.c:1913
-#, fuzzy
+#: app/gui/menus.c:1934
 msgid "/New Display"
-msgstr "显示"
+msgstr "/新建显示"
 
-#: app/gui/menus.c:1917
-#, fuzzy
+#: app/gui/menus.c:1938
 msgid "/Delete Image"
-msgstr "/删除图层"
+msgstr "/删除图像"
 
-#: app/gui/menus.c:1928
+#: app/gui/menus.c:1949
 msgid "/Open Image"
 msgstr "/打开图像"
 
-#: app/gui/menus.c:1932
+#: app/gui/menus.c:1953
 msgid "/Raise or Open Image"
 msgstr "/升高或打开图像"
 
-#: app/gui/menus.c:1936
+#: app/gui/menus.c:1957
 msgid "/File Open Dialog..."
 msgstr "/文件打开对话框..."
 
-#: app/gui/menus.c:1940
+#: app/gui/menus.c:1961
 msgid "/Remove Entry"
 msgstr "/删除项目"
 
-#: app/gui/menus.c:1947
-#, fuzzy
+#: app/gui/menus.c:1968
 msgid "/Recreate Preview"
-msgstr ""
-"生成\n"
-"预览"
+msgstr "/重新生成预览"
 
-#: app/gui/menus.c:1951
+#: app/gui/menus.c:1972
 msgid "/Reload all Previews"
-msgstr ""
+msgstr "/重新加载所有预览"
 
-#: app/gui/menus.c:1955
-#, fuzzy
+#: app/gui/menus.c:1976
 msgid "/Remove Dangling Entries"
-msgstr "/删除项目"
+msgstr "/删除已不存在的项目"
 
-#: app/gui/menus.c:1966
+#: app/gui/menus.c:1987
 msgid "/QMask Active"
 msgstr "/快速蒙板激活"
 
-#: app/gui/menus.c:1972
+#: app/gui/menus.c:1993
 msgid "/Mask Selected Areas"
 msgstr "/掩蔽选中区域"
 
-#: app/gui/menus.c:1975
+#: app/gui/menus.c:1996
 msgid "/Mask Unselected Areas"
 msgstr "/掩蔽非选中区域"
 
-#: app/gui/menus.c:1981
+#: app/gui/menus.c:2002
 msgid "/Configure Color and Opacity..."
 msgstr "/设置颜色和不透明度..."
 
@@ -3874,8 +3845,8 @@ msgstr "仅在内存"
 msgid "No longer available"
 msgstr "已经不可用"
 
-#: app/gui/module-browser.c:436 app/tools/gimpcurvestool.c:792
-#: app/tools/gimplevelstool.c:661
+#: app/gui/module-browser.c:436 app/tools/gimpcurvestool.c:677
+#: app/tools/gimplevelstool.c:591
 msgid "Load"
 msgstr "加载"
 
@@ -3944,7 +3915,7 @@ msgstr "环绕"
 
 #: app/gui/palette-editor-commands.c:103
 msgid "Edit Palette Color"
-msgstr "编译色板"
+msgstr "编辑色板颜色"
 
 #: app/gui/palette-import-dialog.c:106
 msgid "Select a Gradient to Create a Palette from"
@@ -3989,10 +3960,6 @@ msgstr "间隔："
 
 #. The preview frame
 #: app/gui/palette-import-dialog.c:491
-#: app/tools/gimpbrightnesscontrasttool.c:352
-#: app/tools/gimpcolorbalancetool.c:421 app/tools/gimpcurvestool.c:775
-#: app/tools/gimphuesaturationtool.c:626 app/tools/gimplevelstool.c:633
-#: app/tools/gimpposterizetool.c:288 app/tools/gimpthresholdtool.c:409
 msgid "Preview"
 msgstr "预览"
 
@@ -4068,24 +4035,24 @@ msgid "Enter a new name for the path"
 msgstr "给路径输入一个新的名字"
 
 #: app/gui/paths-dialog.c:1902
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to read from '%s'."
-msgstr "无法从“%s”读入"
+msgstr "无法从“%s”读入。"
 
 #: app/gui/paths-dialog.c:1917
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to read path from '%s'."
-msgstr "无法从“%s”读入路径"
+msgstr "无法从“%s”读入路径。"
 
 #: app/gui/paths-dialog.c:1924
-#, fuzzy, c-format
+#, c-format
 msgid "No points specified in path file '%s'."
-msgstr "路径文件“%s”中没有给出点"
+msgstr "路径文件“%s”中没有给出点。"
 
 #: app/gui/paths-dialog.c:1935
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to read path points from '%s'."
-msgstr "无法从 %s 读入路径点"
+msgstr "无法从“%s”读入路径点。"
 
 #: app/gui/paths-dialog.c:2034
 msgid "Load and Save Bezier Curves"
@@ -4105,21 +4072,21 @@ msgid ""
 "The corresponding plug-in may have crashed."
 msgstr ""
 
-#: app/gui/plug-in-menus.c:277
+#: app/gui/plug-in-menus.c:279
 #, c-format
 msgid "Repeat \"%s\""
 msgstr "重复“%s”"
 
-#: app/gui/plug-in-menus.c:278
+#: app/gui/plug-in-menus.c:280
 #, c-format
 msgid "Re-show \"%s\""
 msgstr "调出“%s”"
 
-#: app/gui/plug-in-menus.c:307
+#: app/gui/plug-in-menus.c:309
 msgid "Repeat Last"
 msgstr "重复上次"
 
-#: app/gui/plug-in-menus.c:310
+#: app/gui/plug-in-menus.c:312
 msgid "Re-Show Last"
 msgstr "调出上次"
 
@@ -4494,9 +4461,8 @@ msgid "\"File -> Save\" Saves the Image:"
 msgstr "“文件->保存”保存图像："
 
 #: app/gui/preferences-dialog.c:2694
-#, fuzzy
 msgid "Size of Thumbnails Files:"
-msgstr "尝试写缩略图文件："
+msgstr "缩略图文件大小："
 
 #: app/gui/preferences-dialog.c:2703 app/gui/preferences-dialog.c:2706
 msgid "Folders"
@@ -4600,11 +4566,11 @@ msgstr "选择主题文件夹"
 
 #: app/gui/qmask-commands.c:169
 msgid "Edit Qmask Color"
-msgstr "编辑 Qmask 颜色"
+msgstr "编辑快速蒙板颜色"
 
 #: app/gui/qmask-commands.c:176
 msgid "Edit Qmask Attributes"
-msgstr "编辑 Qmask 属性"
+msgstr "编辑快速蒙板属性"
 
 #: app/gui/qmask-commands.c:217
 msgid "Mask Opacity:"
@@ -4674,39 +4640,39 @@ msgstr "水平："
 msgid "Vertical:"
 msgstr "垂直："
 
-#: app/gui/select-commands.c:131
+#: app/gui/select-commands.c:132
 msgid "Feather Selection"
 msgstr "选区羽化"
 
-#: app/gui/select-commands.c:134
+#: app/gui/select-commands.c:135
 msgid "Feather Selection by:"
 msgstr "羽化半径："
 
-#: app/gui/select-commands.c:166
+#: app/gui/select-commands.c:167
 msgid "Shrink Selection"
 msgstr "选区收缩"
 
-#: app/gui/select-commands.c:169
+#: app/gui/select-commands.c:170
 msgid "Shrink Selection by:"
 msgstr "收缩半径："
 
-#: app/gui/select-commands.c:178
+#: app/gui/select-commands.c:179
 msgid "Shrink from image border"
 msgstr "从图像边界开始收缩"
 
-#: app/gui/select-commands.c:199
+#: app/gui/select-commands.c:200
 msgid "Grow Selection"
 msgstr "选区增长"
 
-#: app/gui/select-commands.c:202
+#: app/gui/select-commands.c:203
 msgid "Grow Selection by:"
 msgstr "增长半径："
 
-#: app/gui/select-commands.c:221
+#: app/gui/select-commands.c:222
 msgid "Border Selection"
 msgstr "选区边界"
 
-#: app/gui/select-commands.c:224
+#: app/gui/select-commands.c:225
 msgid "Border Selection by:"
 msgstr "边界半径："
 
@@ -5262,7 +5228,7 @@ msgstr "对齐"
 
 #: app/paint/paint-enums.c:34
 msgid "Registered"
-msgstr ""
+msgstr "记录"
 
 #: app/paint/paint-enums.c:52 app/widgets/gimpwidgets-constructors.c:55
 #: app/widgets/gimpwidgets-constructors.c:85
@@ -5300,7 +5266,7 @@ msgstr "锐化"
 
 #: app/paint/gimppaintcore.c:378
 msgid "No brushes available for use with this tool."
-msgstr "没有可供此工具使用的画笔"
+msgstr "没有可供此工具使用的画笔。"
 
 #: app/pdb/image_cmds.c:3778
 msgid ""
@@ -5346,7 +5312,7 @@ msgstr "编辑过程"
 
 #: app/pdb/internal_procs.c:103
 msgid "File Operations"
-msgstr "文件过程"
+msgstr "文件操作"
 
 #: app/pdb/internal_procs.c:106
 msgid "Floating selections"
@@ -5466,7 +5432,7 @@ msgstr "临时过程"
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "无法定位插件：“%s”"
 
-#: app/plug-in/plug-in.c:992
+#: app/plug-in/plug-in.c:995
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -5487,44 +5453,49 @@ msgstr ""
 msgid "Resource configuration"
 msgstr "资源配置"
 
-#: app/plug-in/plug-ins.c:123
+#. query any plug-ins that have changed since we last wrote out
+#. *  the pluginrc file.
+#.
+#: app/plug-in/plug-ins.c:122
 #, fuzzy
-msgid "New Plug-ins"
-msgstr "插件"
+msgid "Querying new Plug-ins"
+msgstr "查询插件：“%s”\n"
 
-#: app/plug-in/plug-ins.c:136
-#, fuzzy, c-format
+#: app/plug-in/plug-ins.c:134
+#, c-format
 msgid "querying plug-in: \"%s\"\n"
 msgstr "查询插件：“%s”\n"
 
-#: app/plug-in/plug-ins.c:176
+#: app/plug-in/plug-ins.c:169
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "正在写“%s”\n"
 
 #. initial the plug-ins
-#: app/plug-in/plug-ins.c:193
-msgid "Plug-ins"
-msgstr "插件"
+#: app/plug-in/plug-ins.c:186
+#, fuzzy
+msgid "Initializing Plug-ins"
+msgstr "初始化插件：“%s”\n"
 
-#: app/plug-in/plug-ins.c:206
-#, fuzzy, c-format
+#: app/plug-in/plug-ins.c:195
+#, c-format
 msgid "initializing plug-in: \"%s\"\n"
-msgstr "查询插件：“%s”\n"
+msgstr "初始化插件：“%s”\n"
 
-#: app/plug-in/plug-ins.c:219
+#: app/plug-in/plug-ins.c:207
 msgid "Starting extensions: "
 msgstr "正在启动扩展："
 
-#: app/plug-in/plug-ins.c:221
-msgid "Extensions"
-msgstr "扩展"
+#: app/plug-in/plug-ins.c:209
+#, fuzzy
+msgid "Starting Extensions"
+msgstr "正在启动扩展："
 
-#: app/tools/gimpcroptool.c:983 app/tools/tools-enums.c:13
+#: app/tools/tools-enums.c:13 app/tools/gimpcroptool.c:983
 msgid "Crop"
 msgstr "剪割"
 
-#: app/tools/gimpcroptool.c:980 app/tools/tools-enums.c:14
+#: app/tools/tools-enums.c:14 app/tools/gimpcroptool.c:980
 msgid "Resize"
 msgstr "重置大小"
 
@@ -5615,9 +5586,8 @@ msgid "Gradient:"
 msgstr "渐变："
 
 #: app/tools/gimpblendtool.c:540
-#, fuzzy
 msgid "Shape:"
-msgstr "形状"
+msgstr "形状："
 
 #: app/tools/gimpblendtool.c:551
 msgid "Repeat:"
@@ -5634,32 +5604,30 @@ msgstr "最大深度："
 #: app/tools/gimpblendtool.c:606 app/tools/gimpbucketfilltool.c:415
 #: app/tools/gimpmagnifytool.c:481 app/tools/selection_options.c:316
 msgid "Threshold:"
-msgstr "阈值"
+msgstr "阈值："
 
-#: app/tools/gimpbrightnesscontrasttool.c:122
-#: app/tools/gimpbrightnesscontrasttool.c:259
+#: app/tools/gimpbrightnesscontrasttool.c:83
+#: app/tools/gimpbrightnesscontrasttool.c:148
 msgid "Brightness-Contrast"
 msgstr "亮度-对比度"
 
-#: app/tools/gimpbrightnesscontrasttool.c:123
+#: app/tools/gimpbrightnesscontrasttool.c:84
 msgid "Adjust brightness and contrast"
 msgstr "调整亮度和对比度"
 
-#: app/tools/gimpbrightnesscontrasttool.c:124
+#: app/tools/gimpbrightnesscontrasttool.c:85
 msgid "/Layer/Colors/Brightness-Contrast..."
 msgstr "/图层/颜色/亮度-对比度..."
 
-#: app/tools/gimpbrightnesscontrasttool.c:188
+#: app/tools/gimpbrightnesscontrasttool.c:183
 msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "不能对索引图像进行亮度-对比度操作。"
 
-#. Create the brightness scale widget
-#: app/tools/gimpbrightnesscontrasttool.c:286
+#: app/tools/gimpbrightnesscontrasttool.c:237
 msgid "Brightness:"
 msgstr "亮度："
 
-#. Create the contrast scale widget
-#: app/tools/gimpbrightnesscontrasttool.c:317
+#: app/tools/gimpbrightnesscontrasttool.c:252
 msgid "Contrast:"
 msgstr "对比度："
 
@@ -5702,37 +5670,19 @@ msgstr ""
 
 #: app/tools/gimpbucketfilltool.c:419 app/tools/selection_options.c:320
 msgid "Maximum color difference"
-msgstr ""
+msgstr "最大颜色差异"
 
-#: app/tools/gimpbycolorselecttool.c:166
+#: app/tools/gimpbycolorselecttool.c:78
 msgid "Select By Color"
 msgstr "按颜色选择"
 
-#: app/tools/gimpbycolorselecttool.c:167
+#: app/tools/gimpbycolorselecttool.c:79
 msgid "Select regions by color"
 msgstr "按颜色选择区域"
 
-#: app/tools/gimpbycolorselecttool.c:168
+#: app/tools/gimpbycolorselecttool.c:80
 msgid "/Tools/Selection Tools/By Color Select"
 msgstr "/工具/选择工具/按颜色选择"
-
-#. The shell and main vbox
-#: app/tools/gimpbycolorselecttool.c:513
-msgid "By Color Selection"
-msgstr "按颜色选择"
-
-#. Create the active image label
-#: app/tools/gimpbycolorselecttool.c:533
-msgid "Inactive"
-msgstr "非活动"
-
-#: app/tools/gimpbycolorselecttool.c:574
-msgid "Invert"
-msgstr "反转"
-
-#: app/tools/gimpbycolorselecttool.c:582
-msgid "All"
-msgstr "全部"
 
 #: app/tools/gimpclonetool.c:95
 msgid "Clone"
@@ -5754,44 +5704,43 @@ msgstr "源"
 msgid "Alignment"
 msgstr "对齐"
 
-#. The shell and main vbox
-#: app/tools/gimpcolorbalancetool.c:106 app/tools/gimpcolorbalancetool.c:351
+#: app/tools/gimpcolorbalancetool.c:92 app/tools/gimpcolorbalancetool.c:157
 msgid "Color Balance"
 msgstr "色彩平衡"
 
-#: app/tools/gimpcolorbalancetool.c:107
+#: app/tools/gimpcolorbalancetool.c:93
 msgid "Adjust color balance"
 msgstr "调整色彩平衡"
 
-#: app/tools/gimpcolorbalancetool.c:108
+#: app/tools/gimpcolorbalancetool.c:94
 msgid "/Layer/Colors/Color Balance..."
 msgstr "/图层/颜色/色彩平衡..."
 
-#: app/tools/gimpcolorbalancetool.c:180
+#: app/tools/gimpcolorbalancetool.c:194
 msgid "Color balance operates only on RGB color drawables."
 msgstr "只能对 RGB 颜色的图像进行色彩平衡操作。"
 
-#: app/tools/gimpcolorbalancetool.c:372
+#: app/tools/gimpcolorbalancetool.c:285
 msgid "Color Levels"
 msgstr "颜色色阶"
 
-#: app/tools/gimpcolorbalancetool.c:385
+#: app/tools/gimpcolorbalancetool.c:299
 msgid "Cyan"
 msgstr "青色"
 
-#: app/tools/gimpcolorbalancetool.c:391
+#: app/tools/gimpcolorbalancetool.c:305
 msgid "Magenta"
 msgstr "紫色"
 
-#: app/tools/gimpcolorbalancetool.c:397
+#: app/tools/gimpcolorbalancetool.c:311
 msgid "Yellow"
 msgstr "黄色"
 
-#: app/tools/gimpcolorbalancetool.c:407 app/tools/gimpdodgeburntool.c:216
+#: app/tools/gimpcolorbalancetool.c:322 app/tools/gimpdodgeburntool.c:216
 msgid "Mode"
 msgstr "模式"
 
-#: app/tools/gimpcolorbalancetool.c:429
+#: app/tools/gimpcolorbalancetool.c:336
 msgid "Preserve Luminosity"
 msgstr "保持亮度"
 
@@ -5824,7 +5773,7 @@ msgstr "蓝："
 msgid "Alpha:"
 msgstr "Alpha："
 
-#: app/tools/gimpcolorpickertool.c:294 app/tools/gimphistogramtool.c:348
+#: app/tools/gimpcolorpickertool.c:294 app/tools/gimphistogramtool.c:347
 msgid "Intensity:"
 msgstr "强度："
 
@@ -5918,56 +5867,55 @@ msgstr "仅对当前图层"
 msgid "Allow Enlarging (<Alt>)"
 msgstr "允许放大(<Alt>)"
 
-#. The shell and main vbox
-#: app/tools/gimpcurvestool.c:215 app/tools/gimpcurvestool.c:652
+#: app/tools/gimpcurvestool.c:171 app/tools/gimpcurvestool.c:243
 msgid "Curves"
 msgstr "曲线"
 
-#: app/tools/gimpcurvestool.c:216
+#: app/tools/gimpcurvestool.c:172
 msgid "Adjust color curves"
 msgstr "调整颜色曲线"
 
-#: app/tools/gimpcurvestool.c:217
+#: app/tools/gimpcurvestool.c:173
 msgid "/Layer/Colors/Curves..."
 msgstr "/图层/颜色/曲线..."
 
-#: app/tools/gimpcurvestool.c:286
+#: app/tools/gimpcurvestool.c:311
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "不能调整索引图像的颜色。"
 
-#: app/tools/gimpcurvestool.c:676
+#: app/tools/gimpcurvestool.c:589 app/tools/gimplevelstool.c:366
+#, fuzzy
+msgid "Reset Channel"
+msgstr "通道位移"
+
+#: app/tools/gimpcurvestool.c:598
 msgid "Modify Curves for Channel:"
-msgstr "对通道修改曲线："
+msgstr "要修改曲线的通道："
 
-#. The option menu for selecting the drawing method
-#: app/tools/gimpcurvestool.c:758
-msgid "Curve Type:"
-msgstr "曲线类型："
-
-#: app/tools/gimpcurvestool.c:765
+#: app/tools/gimpcurvestool.c:605
 msgid "Smooth"
 msgstr "光滑"
 
-#: app/tools/gimpcurvestool.c:766
+#: app/tools/gimpcurvestool.c:608
 msgid "Free"
 msgstr "自由"
 
-#: app/tools/gimpcurvestool.c:801 app/tools/gimplevelstool.c:671
+#: app/tools/gimpcurvestool.c:614
+msgid "Curve Type:"
+msgstr "曲线类型："
+
+#: app/tools/gimpcurvestool.c:686 app/tools/gimplevelstool.c:600
 #: app/widgets/gimpdataeditor.c:128
 msgid "Save"
 msgstr "保存"
 
-#: app/tools/gimpcurvestool.c:1434
+#: app/tools/gimpcurvestool.c:1323
 msgid "Load Curves"
 msgstr "加载曲线"
 
-#: app/tools/gimpcurvestool.c:1449
+#: app/tools/gimpcurvestool.c:1342
 msgid "Save Curves"
 msgstr "保存曲线"
-
-#: app/tools/gimpcurvestool.c:1750
-msgid "Load/Save Curves"
-msgstr "加载/保存曲线"
 
 #: app/tools/gimpdodgeburntool.c:67
 msgid "Dodge/Burn"
@@ -6068,99 +6016,98 @@ msgid "/Tools/Selection Tools/Fuzzy Select"
 msgstr "/工具/选择工具/模糊选择"
 
 #. The shell and main vbox
-#: app/tools/gimphistogramtool.c:130 app/tools/gimphistogramtool.c:358
+#: app/tools/gimphistogramtool.c:129 app/tools/gimphistogramtool.c:357
 msgid "Histogram"
 msgstr "柱状图"
 
-#: app/tools/gimphistogramtool.c:131
+#: app/tools/gimphistogramtool.c:130
 msgid "View image histogram"
 msgstr "查看图像的柱状图"
 
-#: app/tools/gimphistogramtool.c:132
+#: app/tools/gimphistogramtool.c:131
 msgid "/Layer/Colors/Histogram..."
 msgstr "/图层/颜色/柱状图..."
 
-#: app/tools/gimphistogramtool.c:192
+#: app/tools/gimphistogramtool.c:191
 msgid "Histogram does not operate on indexed drawables."
 msgstr "索引图像不能显示柱状图。"
 
-#: app/tools/gimphistogramtool.c:344
+#: app/tools/gimphistogramtool.c:343
 msgid "Mean:"
 msgstr "平均值："
 
-#: app/tools/gimphistogramtool.c:345
+#: app/tools/gimphistogramtool.c:344
 msgid "Std Dev:"
 msgstr "标准偏差："
 
-#: app/tools/gimphistogramtool.c:346
+#: app/tools/gimphistogramtool.c:345
 msgid "Median:"
 msgstr "中值："
 
-#: app/tools/gimphistogramtool.c:347
+#: app/tools/gimphistogramtool.c:346
 msgid "Pixels:"
 msgstr "像素："
 
-#: app/tools/gimphistogramtool.c:349
+#: app/tools/gimphistogramtool.c:348
 msgid "Count:"
 msgstr "计数："
 
-#: app/tools/gimphistogramtool.c:350
+#: app/tools/gimphistogramtool.c:349
 msgid "Percentile:"
 msgstr "百分比："
 
-#: app/tools/gimphistogramtool.c:385
+#: app/tools/gimphistogramtool.c:384
 msgid "Information on Channel:"
 msgstr "通道信息："
 
-#. The shell and main vbox
-#: app/tools/gimphuesaturationtool.c:132 app/tools/gimphuesaturationtool.c:427
+#: app/tools/gimphuesaturationtool.c:116 app/tools/gimphuesaturationtool.c:184
 msgid "Hue-Saturation"
 msgstr "色调-饱和度"
 
-#: app/tools/gimphuesaturationtool.c:133
+#: app/tools/gimphuesaturationtool.c:117
 msgid "Adjust hue and saturation"
 msgstr "调整色调和饱和度"
 
-#: app/tools/gimphuesaturationtool.c:134
+#: app/tools/gimphuesaturationtool.c:118
 msgid "/Layer/Colors/Hue-Saturation..."
 msgstr "/图层/颜色/色调-饱和度..."
 
-#: app/tools/gimphuesaturationtool.c:200
+#: app/tools/gimphuesaturationtool.c:219
 msgid "Hue-Saturation operates only on RGB color drawables."
 msgstr "只有 RGB 颜色的图像可以进行色调-饱和度操作。"
 
-#: app/tools/gimphuesaturationtool.c:413
+#: app/tools/gimphuesaturationtool.c:273
 msgid "Master"
 msgstr "主值"
 
-#: app/tools/gimphuesaturationtool.c:415
+#: app/tools/gimphuesaturationtool.c:275
 msgid "Y"
 msgstr "黄"
 
-#: app/tools/gimphuesaturationtool.c:417
+#: app/tools/gimphuesaturationtool.c:277
 msgid "C"
 msgstr "青"
 
-#: app/tools/gimphuesaturationtool.c:419
+#: app/tools/gimphuesaturationtool.c:279
 msgid "M"
 msgstr "紫"
 
-#: app/tools/gimphuesaturationtool.c:506
+#: app/tools/gimphuesaturationtool.c:346
 msgid "Hue / Lightness / Saturation Adjustments"
 msgstr "颜色/亮度/饱和度调整"
 
 #. Create the hue scale widget
-#: app/tools/gimphuesaturationtool.c:518
+#: app/tools/gimphuesaturationtool.c:358
 msgid "Hue:"
 msgstr "色调："
 
 #. Create the lightness scale widget
-#: app/tools/gimphuesaturationtool.c:552
+#: app/tools/gimphuesaturationtool.c:392
 msgid "Lightness:"
 msgstr "亮度："
 
 #. Create the saturation scale widget
-#: app/tools/gimphuesaturationtool.c:586
+#: app/tools/gimphuesaturationtool.c:426
 msgid "Saturation:"
 msgstr "饱和度："
 
@@ -6182,7 +6129,7 @@ msgid "Adjustment"
 msgstr "调整"
 
 #: app/tools/gimpinktool.c:1457 app/tools/gimpinktool.c:1493
-#: app/tools/gimptexttool.c:614
+#: app/tools/gimptexttool.c:615
 msgid "Size:"
 msgstr "大小："
 
@@ -6226,50 +6173,54 @@ msgstr "从图像中选择形状"
 msgid "/Tools/Selection Tools/Intelligent Scissors"
 msgstr "/工具/选择工具/智能剪刀"
 
-#. The shell and main vbox
-#: app/tools/gimplevelstool.c:211 app/tools/gimplevelstool.c:399
+#: app/tools/gimplevelstool.c:155 app/tools/gimplevelstool.c:223
 msgid "Levels"
 msgstr "色阶"
 
-#: app/tools/gimplevelstool.c:212
+#: app/tools/gimplevelstool.c:156
 msgid "Adjust color levels"
 msgstr "调整颜色色阶"
 
-#: app/tools/gimplevelstool.c:213
+#: app/tools/gimplevelstool.c:157
 msgid "/Layer/Colors/Levels..."
 msgstr "/图层/颜色/色阶..."
 
-#: app/tools/gimplevelstool.c:279
+#: app/tools/gimplevelstool.c:266
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr "索引图像不能调整色阶。"
 
-#: app/tools/gimplevelstool.c:430
+#: app/tools/gimplevelstool.c:354
 msgid "Modify Levels for Channel:"
 msgstr "要调整色阶的通道："
 
-#: app/tools/gimplevelstool.c:448
-msgid "Input Levels:"
+#. Input levels frame
+#: app/tools/gimplevelstool.c:376
+#, fuzzy
+msgid "Input Levels"
 msgstr "输入色阶："
 
-#: app/tools/gimplevelstool.c:557
-msgid "Output Levels:"
+#: app/tools/gimplevelstool.c:470 modules/cdisplay_gamma.c:35
+#: modules/cdisplay_gamma.c:331
+msgid "Gamma"
+msgstr "Gamma"
+
+#. Output levels frame
+#: app/tools/gimplevelstool.c:493
+#, fuzzy
+msgid "Output Levels"
 msgstr "输出色阶："
 
-#: app/tools/gimplevelstool.c:651 app/widgets/gimpimagedock.c:162
+#: app/tools/gimplevelstool.c:582 app/widgets/gimpimagedock.c:162
 msgid "Auto"
 msgstr "自动"
 
-#: app/tools/gimplevelstool.c:1182
+#: app/tools/gimplevelstool.c:1352
 msgid "Load Levels"
 msgstr "加载色阶"
 
-#: app/tools/gimplevelstool.c:1197
+#: app/tools/gimplevelstool.c:1371
 msgid "Save Levels"
 msgstr "保存色阶"
-
-#: app/tools/gimplevelstool.c:1530
-msgid "Load/Save Levels"
-msgstr "加载/保存色阶"
 
 #: app/tools/gimpmagnifytool.c:121
 msgid "Magnify"
@@ -6405,23 +6356,24 @@ msgstr "矩阵："
 msgid "Perspective..."
 msgstr "透视..."
 
-#: app/tools/gimpposterizetool.c:105 app/tools/gimpposterizetool.c:240
+#: app/tools/gimpposterizetool.c:76 app/tools/gimpposterizetool.c:141
 msgid "Posterize"
 msgstr "海报效果"
 
-#: app/tools/gimpposterizetool.c:106
-msgid "Reduce image to a fixed numer of colors"
+#: app/tools/gimpposterizetool.c:77
+#, fuzzy
+msgid "Reduce image to a fixed number of colors"
 msgstr "将图像降为固定数量的颜色"
 
-#: app/tools/gimpposterizetool.c:107
+#: app/tools/gimpposterizetool.c:78
 msgid "/Layer/Colors/Posterize..."
 msgstr "/图层/颜色/海报效果..."
 
-#: app/tools/gimpposterizetool.c:171
+#: app/tools/gimpposterizetool.c:175
 msgid "Posterize does not operate on indexed drawables."
 msgstr "不能对索引图像进行海报效果操作。"
 
-#: app/tools/gimpposterizetool.c:264
+#: app/tools/gimpposterizetool.c:228
 msgid "Posterize Levels:"
 msgstr "海报效果级数："
 
@@ -6557,39 +6509,39 @@ msgstr "/工具/文本"
 msgid "No font choosen or font invalid."
 msgstr "没有选择字体或者字体无效"
 
-#: app/tools/gimptexttool.c:471
+#: app/tools/gimptexttool.c:472
 msgid "Text Layer"
 msgstr "文本图层"
 
-#: app/tools/gimptexttool.c:610
+#: app/tools/gimptexttool.c:611
 msgid "Font:"
 msgstr "字体："
 
-#: app/tools/gimptexttool.c:627
+#: app/tools/gimptexttool.c:628
 msgid "Border:"
 msgstr "边界："
 
-#: app/tools/gimptexttool.c:643 app/tools/selection_options.c:431
+#: app/tools/gimptexttool.c:644 app/tools/selection_options.c:431
 msgid "Unit:"
 msgstr "单位："
 
-#: app/tools/gimpthresholdtool.c:112 app/tools/gimpthresholdtool.c:329
+#: app/tools/gimpthresholdtool.c:93 app/tools/gimpthresholdtool.c:161
 msgid "Threshold"
 msgstr "阈值"
 
-#: app/tools/gimpthresholdtool.c:113
+#: app/tools/gimpthresholdtool.c:94
 msgid "Reduce image to two colors using a threshold"
 msgstr "以指定阈值将图像降为两色"
 
-#: app/tools/gimpthresholdtool.c:114
+#: app/tools/gimpthresholdtool.c:95
 msgid "/Layer/Colors/Threshold..."
 msgstr "/图层/颜色/阈值..."
 
-#: app/tools/gimpthresholdtool.c:178
+#: app/tools/gimpthresholdtool.c:205
 msgid "Threshold does not operate on indexed drawables."
 msgstr "索引图像不能进行阈值操作。"
 
-#: app/tools/gimpthresholdtool.c:353
+#: app/tools/gimpthresholdtool.c:266
 msgid "Threshold Range:"
 msgstr "阈值范围："
 
@@ -6614,9 +6566,8 @@ msgid "/Tools/Vector"
 msgstr "/工具/向量"
 
 #: app/tools/paint_options.c:182
-#, fuzzy
 msgid "Brush:"
-msgstr "画笔"
+msgstr "画笔："
 
 #: app/tools/paint_options.c:211
 msgid "Incremental"
@@ -6648,7 +6599,7 @@ msgstr "长度："
 
 #: app/tools/paint_options.c:513
 msgid "Use Color from Gradient"
-msgstr "使用渐变里面的颜色"
+msgstr "使用渐变中的颜色"
 
 #: app/tools/paint_options.c:570
 msgid "Type:"
@@ -6660,7 +6611,7 @@ msgstr "替换当前选区"
 
 #: app/tools/selection_options.c:116
 msgid "Add to the current selection"
-msgstr "添加到当前选区"
+msgstr "合并到当前选区"
 
 #: app/tools/selection_options.c:117
 msgid "Subtract from the current selection"
@@ -6872,6 +6823,9 @@ msgid ""
 "<Shift> Reload all previews\n"
 "<Ctrl> Remove Dangling Entries"
 msgstr ""
+"重新生成预览\n"
+"<Shift> 重新加载所有预览\n"
+"<Ctrl> 删除已不存在的项目"
 
 #: app/widgets/gimpfontselection-dialog.c:123
 msgid "GIMP Font Selection"
@@ -6996,22 +6950,21 @@ msgstr "使用 Netscape 替代"
 #: app/widgets/gimpimagedock.c:261
 #, c-format
 msgid "Gimp Dock #%d"
-msgstr ""
+msgstr "Gimp Dock #%d"
 
 #: app/widgets/gimpimageview.c:143
 msgid "Raise this image's displays"
-msgstr ""
+msgstr "升高此图像的显示"
 
 #: app/widgets/gimpimageview.c:152
 msgid "Create a new display for this image"
-msgstr ""
+msgstr "为此图像创建新的显示"
 
 #: app/widgets/gimpimageview.c:161
-#, fuzzy
 msgid "Delete this image"
-msgstr "删除通道"
+msgstr "删除此图像"
 
-#: app/widgets/gimpitemfactory.c:525
+#: app/widgets/gimpitemfactory.c:533
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -7050,7 +7003,27 @@ msgstr "未定义"
 
 #: app/widgets/gimppaletteeditor.c:260
 msgid "Columns:"
-msgstr "列："
+msgstr "列数："
+
+#: app/widgets/gimpselectioneditor.c:190
+#, fuzzy
+msgid "Invert Selection"
+msgstr "反转选区"
+
+#: app/widgets/gimpselectioneditor.c:198
+#, fuzzy
+msgid "Select All"
+msgstr "/选择/全部"
+
+#: app/widgets/gimpselectioneditor.c:206
+#, fuzzy
+msgid "Select None"
+msgstr "/选择/无"
+
+#: app/widgets/gimpselectioneditor.c:214
+#, fuzzy
+msgid "Save Selection to Channel"
+msgstr "/选择/保存到通道"
 
 #: app/widgets/gimptoolbox-color-area.c:400
 msgid "Color Selection"
@@ -7080,14 +7053,13 @@ msgstr ""
 "活动渐变。\n"
 "点击打开渐变对话框。"
 
-#: app/widgets/gimptoolbox.c:687
-#, fuzzy
+#: app/widgets/gimptoolbox.c:689
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to open the color selection dialog."
 msgstr ""
-"前景色和背景色。黑白小方格可以复位颜色。  箭头可以交换颜色。双击可以从颜色选"
-"择器中选择颜色。"
+"前景色和背景色。 黑白小方格可以复位颜色。 箭头可以交换颜色。 双击可以从颜色选"
+"择对话框中选择颜色。"
 
 #: app/widgets/gimpvectorslistview.c:130
 msgid ""
@@ -7113,7 +7085,7 @@ msgstr "融化"
 
 #: app/widgets/gimpwidgets-constructors.c:47
 msgid "Behind"
-msgstr ""
+msgstr "背后"
 
 #: app/widgets/gimpwidgets-constructors.c:48
 msgid "Color Erase"
@@ -7174,11 +7146,11 @@ msgstr "仅仅白色"
 #: app/widgets/gimpwidgets-utils.c:93
 #, c-format
 msgid "Message repeated %d times"
-msgstr ""
+msgstr "消息重复了 %d 次"
 
 #: app/widgets/gimpwidgets-utils.c:106
 msgid "Message repeated once"
-msgstr ""
+msgstr "消息重复了 1 次"
 
 #: app/widgets/gimpwidgets-utils.c:120
 msgid ""
@@ -7186,10 +7158,13 @@ msgid ""
 "Too many open message dialogs.\n"
 "Messages are redirected to stderr."
 msgstr ""
+"警告：\n"
+"太多打开的消息对话框。\n"
+"消息已被重定向至标准出错输出。"
 
 #: app/widgets/gimpwidgets-utils.c:128
 msgid "GIMP Message"
-msgstr ""
+msgstr "GIMP 消息"
 
 #: app/xcf/xcf-load.c:391
 msgid ""
@@ -7202,9 +7177,8 @@ msgstr ""
 "用灰度颜色表取代。"
 
 #: app/xcf/xcf-read.c:115
-#, fuzzy
 msgid "(invalid UTF-8 string)"
-msgstr "无效的 UTF-8 字符串"
+msgstr "(无效的 UTF-8 字符串)"
 
 #: app/xcf/xcf.c:261
 #, c-format
@@ -7215,10 +7189,6 @@ msgstr "XCF 错误：遇到不支持的 XCF 文件版本 %d"
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "在 %s 上打开失败：%s\n"
-
-#: modules/cdisplay_gamma.c:35 modules/cdisplay_gamma.c:331
-msgid "Gamma"
-msgstr "Gamma"
 
 #: modules/cdisplay_gamma.c:94
 msgid "Gamma color display filter"
@@ -7262,11 +7232,38 @@ msgstr "压力"
 
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
-msgstr ""
+msgstr "创建并编辑图像或照片"
 
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "The GIMP (不稳定)"
+
+#~ msgid "New Plug-ins"
+#~ msgstr "新插件"
+
+#~ msgid "Plug-ins"
+#~ msgstr "插件"
+
+#~ msgid "Extensions"
+#~ msgstr "扩展"
+
+#~ msgid "By Color Selection"
+#~ msgstr "按颜色选择"
+
+#~ msgid "Inactive"
+#~ msgstr "非活动"
+
+#~ msgid "Invert"
+#~ msgstr "反转"
+
+#~ msgid "All"
+#~ msgstr "全部"
+
+#~ msgid "Load/Save Curves"
+#~ msgstr "加载/保存曲线"
+
+#~ msgid "Load/Save Levels"
+#~ msgstr "加载/保存色阶"
 
 #~ msgid "Navigation: No Image"
 #~ msgstr "导航：没有图像"
