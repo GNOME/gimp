@@ -1,3 +1,12 @@
+2003-01-22  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-dump.c
+	* app/config/gimprc-blurbs.h: applied a patch from Carol that adds
+	missing help blurbs and fixes spelling.
+
+	* docs/gimprc-1.3.5.in
+	* etc/gimprc: regenerated using gimpconfig-dump.
+
 2003-01-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimphelp.c (gimp_help_internal): "no display ID"
