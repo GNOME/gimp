@@ -64,7 +64,7 @@ GimpLayerMask * gimp_layer_mask_new	    (GimpImage           *gimage,
 					     const gchar         *name,
 					     const GimpRGB       *color);
 
-void            gimp_layer_mask_set_layer   (GimpLayerMask       *layer_mask, 
+void            gimp_layer_mask_set_layer   (GimpLayerMask       *layer_mask,
 				             GimpLayer           *layer);
 GimpLayer     * gimp_layer_mask_get_layer   (const GimpLayerMask *layer_mask);
 

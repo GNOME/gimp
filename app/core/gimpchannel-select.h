@@ -86,7 +86,7 @@ void   gimp_channel_select_channel      (GimpChannel     *channel,
                                          gdouble          feather_radius_x,
                                          gdouble          feather_radius_y);
 void   gimp_channel_select_alpha        (GimpChannel     *channel,
-                                         GimpLayer       *layer,
+                                         GimpDrawable    *drawable,
                                          GimpChannelOps   op,
                                          gboolean         feather,
                                          gdouble          feather_radius_x,

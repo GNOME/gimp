@@ -40,7 +40,7 @@ struct _GimpChannel
 {
   GimpDrawable  parent_instance;
 
-  GimpRGB       color;             /*  Also stored the opacity        */
+  GimpRGB       color;             /*  Also stores the opacity        */
   gboolean      show_masked;       /*  Show masked areas--as          */
                                    /*  opposed to selected areas      */
 
@@ -129,7 +129,7 @@ GimpChannel * gimp_channel_new                (GimpImage         *gimage,
                                                const GimpRGB     *color);
 
 GimpChannel * gimp_channel_new_from_alpha     (GimpImage         *gimage,
-                                               GimpLayer         *layer,
+                                               GimpDrawable      *drawable,
                                                const gchar       *name,
                                                const GimpRGB     *color);
 GimpChannel * gimp_channel_new_from_component (GimpImage         *gimage,

@@ -590,10 +590,13 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
     gimp_image_undo_push_drawable_mod (gimp_item_get_image (item), undo_desc,
                                        drawable);
 
+  /*  ref new before unrefing old, they might be the same  */
+  tile_manager_ref (tiles);
+
   if (drawable->tiles)
     tile_manager_unref (drawable->tiles);
 
-  drawable->tiles     = tile_manager_ref (tiles);
+  drawable->tiles     = tiles;
   drawable->type      = type;
   drawable->bytes     = tile_manager_bpp (tiles);
   drawable->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);

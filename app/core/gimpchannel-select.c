@@ -28,7 +28,6 @@
 #include "gimpchannel-select.h"
 #include "gimpchannel-combine.h"
 #include "gimpimage-contiguous-region.h"
-#include "gimplayer.h"
 #include "gimpscanconvert.h"
 
 #include "vectors/gimpstroke.h"
@@ -328,7 +327,7 @@ gimp_channel_select_channel (GimpChannel    *channel,
 
 void
 gimp_channel_select_alpha (GimpChannel    *channel,
-                           GimpLayer      *layer,
+                           GimpDrawable   *drawable,
                            GimpChannelOps  op,
                            gboolean        feather,
                            gdouble         feather_radius_x,
@@ -339,18 +338,18 @@ gimp_channel_select_alpha (GimpChannel    *channel,
   gint         off_x, off_y;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
-  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
   item = GIMP_ITEM (channel);
 
-  if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+  if (gimp_drawable_has_alpha (drawable))
     {
       GimpRGB color;
 
       gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
 
       add_on = gimp_channel_new_from_alpha (gimp_item_get_image (item),
-                                            layer, NULL, &color);
+                                            drawable, NULL, &color);
     }
   else
     {
@@ -358,12 +357,12 @@ gimp_channel_select_alpha (GimpChannel    *channel,
        *  so simply select the whole layer's extents.  --mitch
        */
       add_on = gimp_channel_new_mask (gimp_item_get_image (item),
-                                      gimp_item_width (GIMP_ITEM (layer)),
-                                      gimp_item_height (GIMP_ITEM (layer)));
+                                      gimp_item_width (GIMP_ITEM (drawable)),
+                                      gimp_item_height (GIMP_ITEM (drawable)));
       gimp_channel_all (add_on, FALSE);
     }
 
-  gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
   gimp_channel_select_channel (channel, _("Alpha to Selection"), add_on,
                                off_x, off_y,

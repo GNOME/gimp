@@ -73,19 +73,19 @@ gimp_layer_mask_get_type (void)
       static const GTypeInfo layer_mask_info =
       {
         sizeof (GimpLayerMaskClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_layer_mask_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpLayerMask),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_layer_mask_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_layer_mask_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpLayerMask),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_layer_mask_init,
       };
 
       layer_mask_type = g_type_register_static (GIMP_TYPE_CHANNEL,
-						"GimpLayerMask",
-						&layer_mask_info, 0);
+                                                "GimpLayerMask",
+                                                &layer_mask_info, 0);
     }
 
   return layer_mask_type;
@@ -94,42 +94,38 @@ gimp_layer_mask_get_type (void)
 static void
 gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 {
-  GimpObjectClass   *gimp_object_class;
-  GimpViewableClass *viewable_class;
-  GimpItemClass     *item_class;
-
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  item_class        = GIMP_ITEM_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   layer_mask_signals[APPLY_CHANGED] =
     g_signal_new ("apply_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpLayerMaskClass, apply_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpLayerMaskClass, apply_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   layer_mask_signals[EDIT_CHANGED] =
     g_signal_new ("edit_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpLayerMaskClass, edit_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpLayerMaskClass, edit_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   layer_mask_signals[SHOW_CHANGED] =
     g_signal_new ("show_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpLayerMaskClass, show_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpLayerMaskClass, show_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   gimp_object_class->name_changed = gimp_layer_mask_name_changed;
 
@@ -206,10 +202,10 @@ gimp_layer_mask_rename (GimpItem    *item,
 
 GimpLayerMask *
 gimp_layer_mask_new (GimpImage     *gimage,
-		     gint           width,
-		     gint           height,
-		     const gchar   *name,
-		     const GimpRGB *color)
+                     gint           width,
+                     gint           height,
+                     const gchar   *name,
+                     const GimpRGB *color)
 {
   GimpLayerMask *layer_mask;
 
@@ -222,7 +218,6 @@ gimp_layer_mask_new (GimpImage     *gimage,
 
   /*  set the layer_mask color and opacity  */
   GIMP_CHANNEL (layer_mask)->color       = *color;
-
   GIMP_CHANNEL (layer_mask)->show_masked = TRUE;
 
   /*  selection mask variables  */
@@ -275,9 +270,7 @@ gimp_layer_mask_set_apply (GimpLayerMask *layer_mask,
 
       if (layer_mask->layer)
         {
-          GimpDrawable *drawable;
-
-          drawable = GIMP_DRAWABLE (layer_mask->layer);
+          GimpDrawable *drawable = GIMP_DRAWABLE (layer_mask->layer);
 
           gimp_drawable_update (drawable,
 				0, 0,
@@ -331,9 +324,7 @@ gimp_layer_mask_set_show (GimpLayerMask *layer_mask,
 
       if (layer_mask->layer)
         {
-          GimpDrawable *drawable;
-
-          drawable = GIMP_DRAWABLE (layer_mask->layer);
+          GimpDrawable *drawable = GIMP_DRAWABLE (layer_mask->layer);
 
           gimp_drawable_update (drawable,
 				0, 0,

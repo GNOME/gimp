@@ -1,5 +1,27 @@
 2004-03-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable.c (gimp_drawable_set_tiles): ref new
+	tiles before unrefing the old ones.
+
+	* app/core/gimpimage-undo-push.c: keep undo memsize exact by
+	adjusting undo->size when the stored data changes.
+
+	* app/core/gimpchannel.[ch] (gimp_channel_new_from_alpha)
+	* app/core/gimpchannel-select.[ch] (gimp_channel_select_alpha):
+	replaced "layer" parameter by "drawable".
+
+	* app/gui/layers-commands.c
+	* tools/pdbgen/pdb/selection.pdb: changed accordingly.
+
+	* app/pdb/selection_cmds.c: regenerated.
+
+	* app/core/gimpchannel.c
+	* app/core/gimplayer.c
+	* app/core/gimplayermask.[ch]
+	* app/core/gimpselection.c: remdom cleanup & code review.
+
+2004-03-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplist.c (gimp_list_dispose): removed this function.
 	It was removing all items without freezing the container first,
 	which caused excessive signal handler activity in GimpContext.

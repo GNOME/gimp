@@ -159,19 +159,19 @@ gimp_layer_get_type (void)
       static const GTypeInfo layer_info =
       {
         sizeof (GimpLayerClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_layer_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpLayer),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_layer_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_layer_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpLayer),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_layer_init,
       };
 
       layer_type = g_type_register_static (GIMP_TYPE_DRAWABLE,
-					   "GimpLayer",
-					   &layer_info, 0);
+                                           "GimpLayer",
+                                           &layer_info, 0);
     }
 
   return layer_type;
@@ -180,17 +180,11 @@ gimp_layer_get_type (void)
 static void
 gimp_layer_class_init (GimpLayerClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpObjectClass   *gimp_object_class;
-  GimpViewableClass *viewable_class;
-  GimpItemClass     *item_class;
-  GimpDrawableClass *drawable_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  item_class        = GIMP_ITEM_CLASS (klass);
-  drawable_class    = GIMP_DRAWABLE_CLASS (klass);
+  GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
+  GimpDrawableClass *drawable_class    = GIMP_DRAWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -307,18 +301,17 @@ gimp_layer_finalize (GObject *object)
       layer->mask = NULL;
     }
 
+  if (layer->fs.backing_store)
+    {
+      tile_manager_unref (layer->fs.backing_store);
+      layer->fs.backing_store = NULL;
+    }
+
   if (layer->fs.segs)
     {
       g_free (layer->fs.segs);
       layer->fs.segs     = NULL;
       layer->fs.num_segs = 0;
-    }
-
-  /*  free the floating selection if it exists  */
-  if (layer->fs.backing_store)
-    {
-      tile_manager_unref (layer->fs.backing_store);
-      layer->fs.backing_store = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -631,7 +624,6 @@ gimp_layer_translate (GimpItem *item,
       GIMP_ITEM (layer->mask)->offset_x = item->offset_x;
       GIMP_ITEM (layer->mask)->offset_y = item->offset_y;
 
-      /*  invalidate the mask preview  */
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer->mask));
     }
 }
@@ -646,10 +638,8 @@ gimp_layer_scale (GimpItem              *item,
                   GimpProgressFunc       progress_callback,
                   gpointer               progress_data)
 {
-  GimpLayer *layer = GIMP_LAYER (item);
-  GimpImage *gimage;
-
-  gimage = gimp_item_get_image (item);
+  GimpLayer *layer  = GIMP_LAYER (item);
+  GimpImage *gimage = gimp_item_get_image (item);
 
   if (layer->mask)
     gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_SCALE,
@@ -660,7 +650,6 @@ gimp_layer_scale (GimpItem              *item,
                                          interpolation_type,
                                          progress_callback, progress_data);
 
-  /*  If there is a layer mask, make sure it gets scaled also  */
   if (layer->mask)
     {
       gimp_item_scale (GIMP_ITEM (layer->mask),
@@ -679,10 +668,8 @@ gimp_layer_resize (GimpItem *item,
 		   gint      offset_x,
 		   gint      offset_y)
 {
-  GimpLayer *layer = GIMP_LAYER (item);
-  GimpImage *gimage;
-
-  gimage = gimp_item_get_image (item);
+  GimpLayer *layer  = GIMP_LAYER (item);
+  GimpImage *gimage = gimp_item_get_image (item);
 
   if (layer->mask)
     gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
@@ -706,17 +693,14 @@ gimp_layer_flip (GimpItem            *item,
                  gdouble              axis,
                  gboolean             clip_result)
 {
-  GimpLayer *layer = GIMP_LAYER (item);
-  GimpImage *gimage;
-
-  gimage = gimp_item_get_image (item);
+  GimpLayer *layer  = GIMP_LAYER (item);
+  GimpImage *gimage = gimp_item_get_image (item);
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                _("Flip Layer"));
 
   GIMP_ITEM_CLASS (parent_class)->flip (item, flip_type, axis, clip_result);
 
-  /*  If there is a layer mask, make sure it gets flipped as well  */
   if (layer->mask)
     gimp_item_flip (GIMP_ITEM (layer->mask),
                     flip_type, axis, clip_result);
@@ -731,10 +715,8 @@ gimp_layer_rotate (GimpItem         *item,
                    gdouble           center_y,
                    gboolean          clip_result)
 {
-  GimpLayer *layer = GIMP_LAYER (item);
-  GimpImage *gimage;
-
-  gimage = gimp_item_get_image (item);
+  GimpLayer *layer  = GIMP_LAYER (item);
+  GimpImage *gimage = gimp_item_get_image (item);
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                _("Rotate Layer"));
@@ -743,7 +725,6 @@ gimp_layer_rotate (GimpItem         *item,
                                           rotate_type, center_x, center_y,
                                           clip_result);
 
-  /*  If there is a layer mask, make sure it gets rotates as well  */
   if (layer->mask)
     gimp_item_rotate (GIMP_ITEM (layer->mask),
                       rotate_type, center_x, center_y, clip_result);
@@ -762,10 +743,8 @@ gimp_layer_transform (GimpItem               *item,
                       GimpProgressFunc        progress_callback,
                       gpointer                progress_data)
 {
-  GimpLayer *layer = GIMP_LAYER (item);
-  GimpImage *gimage;
-
-  gimage = gimp_item_get_image (item);
+  GimpLayer *layer  = GIMP_LAYER (item);
+  GimpImage *gimage = gimp_item_get_image (item);
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                _("Transform Layer"));
@@ -776,7 +755,6 @@ gimp_layer_transform (GimpItem               *item,
                                              clip_result,
                                              progress_callback, progress_data);
 
-  /*  If there is a layer mask, make sure it gets flipped also  */
   if (layer->mask)
     gimp_item_transform (GIMP_ITEM (layer->mask),
                          matrix, direction,
@@ -943,12 +921,8 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
   width  = tile_manager_width (tiles);
   height = tile_manager_height (tiles);
 
-  new_layer = gimp_layer_new (dest_gimage,
-                              width, height,
-			      type,
-			      name,
-			      opacity,
-			      mode);
+  new_layer = gimp_layer_new (dest_gimage, width, height, type, name,
+			      opacity, mode);
 
   if (! new_layer)
     {
@@ -958,12 +932,10 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
 
   /*  Configure the pixel regions  */
   pixel_region_init (&bufPR, tiles,
-		     0, 0,
-		     width, height,
-		     FALSE);
+		     0, 0, width, height,
+                     FALSE);
   pixel_region_init (&layerPR, GIMP_DRAWABLE (new_layer)->tiles,
-		     0, 0,
-		     width, height,
+		     0, 0, width, height,
 		     TRUE);
 
   if ((tile_manager_bpp (tiles) == 4 &&
@@ -1025,8 +997,8 @@ gimp_layer_add_mask (GimpLayer     *layer,
       (gimp_item_height (GIMP_ITEM (layer)) !=
        gimp_item_height (GIMP_ITEM (mask))))
     {
-      g_message(_("Cannot add layer mask of different "
-                  "dimensions than specified layer."));
+      g_message (_("Cannot add layer mask of different "
+                   "dimensions than specified layer."));
       return NULL;
     }
 
@@ -1400,8 +1372,6 @@ gimp_layer_add_alpha (GimpLayer *layer)
                                 GIMP_ITEM (layer)->offset_x,
                                 GIMP_ITEM (layer)->offset_y);
   tile_manager_unref (new_tiles);
-
-  GIMP_DRAWABLE (layer)->preview_valid = FALSE;
 }
 
 void

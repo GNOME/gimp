@@ -161,15 +161,10 @@ gimp_selection_get_type (void)
 static void
 gimp_selection_class_init (GimpSelectionClass *klass)
 {
-  GimpViewableClass *viewable_class;
-  GimpItemClass     *item_class;
-  GimpDrawableClass *drawable_class;
-  GimpChannelClass  *channel_class;
-
-  viewable_class = GIMP_VIEWABLE_CLASS (klass);
-  item_class     = GIMP_ITEM_CLASS (klass);
-  drawable_class = GIMP_DRAWABLE_CLASS (klass);
-  channel_class  = GIMP_CHANNEL_CLASS (klass);
+  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  GimpItemClass     *item_class     = GIMP_ITEM_CLASS (klass);
+  GimpDrawableClass *drawable_class = GIMP_DRAWABLE_CLASS (klass);
+  GimpChannelClass  *channel_class  = GIMP_CHANNEL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -329,13 +324,9 @@ gimp_selection_stroke (GimpItem     *item,
 static void
 gimp_selection_invalidate_boundary (GimpDrawable *drawable)
 {
-  GimpChannel *selection;
+  GimpChannel *selection = GIMP_CHANNEL (drawable);
+  GimpImage   *gimage    = gimp_item_get_image (GIMP_ITEM (drawable));
   GimpLayer   *layer;
-  GimpImage   *gimage;
-
-  selection = GIMP_CHANNEL (drawable);
-
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 

@@ -49,7 +49,6 @@
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-stroke.h"
-#include "gimplayer.h"
 #include "gimppaintinfo.h"
 #include "gimpstrokeoptions.h"
 
@@ -227,17 +226,11 @@ gimp_channel_get_type (void)
 static void
 gimp_channel_class_init (GimpChannelClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpObjectClass   *gimp_object_class;
-  GimpViewableClass *viewable_class;
-  GimpItemClass     *item_class;
-  GimpDrawableClass *drawable_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  item_class        = GIMP_ITEM_CLASS (klass);
-  drawable_class    = GIMP_DRAWABLE_CLASS (klass);
+  GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
+  GimpDrawableClass *drawable_class    = GIMP_DRAWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -375,9 +368,7 @@ gimp_channel_duplicate (GimpItem *item,
   channel     = GIMP_CHANNEL (item);
   new_channel = GIMP_CHANNEL (new_item);
 
-  /*  set the channel color and opacity  */
   new_channel->color        = channel->color;
-
   new_channel->show_masked  = channel->show_masked;
 
   /*  selection mask variables  */
@@ -397,21 +388,17 @@ gimp_channel_translate (GimpItem *item,
                         gint      off_y,
                         gboolean  push_undo)
 {
-  GimpChannel *channel;
+  GimpChannel *channel  = GIMP_CHANNEL (item);
   GimpChannel *tmp_mask = NULL;
   gint         width, height;
   PixelRegion  srcPR, destPR;
   guchar       empty = TRANSPARENT_OPACITY;
   gint         x1, y1, x2, y2;
 
-  channel = GIMP_CHANNEL (item);
-
   gimp_channel_bounds (channel, &x1, &y1, &x2, &y2);
 
   /*  update the old area  */
-  gimp_drawable_update (GIMP_DRAWABLE (item),
-                        x1, y1,
-                        x2 - x1, y2 - y1);
+  gimp_drawable_update (GIMP_DRAWABLE (item), x1, y1, x2 - x1, y2 - y1);
 
   if (push_undo)
     gimp_channel_push_undo (channel,
@@ -532,11 +519,7 @@ gimp_channel_flip (GimpItem            *item,
                    gdouble              axis,
                    gboolean             clip_result)
 {
-  GimpChannel *channel;
-  GimpImage   *gimage;
-
-  channel = GIMP_CHANNEL (item);
-  gimage  = gimp_item_get_image (item);
+  GimpImage *gimage = gimp_item_get_image (item);
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                _("Flip Channel"));
@@ -547,9 +530,6 @@ gimp_channel_flip (GimpItem            *item,
   GIMP_ITEM_CLASS (parent_class)->flip (item, flip_type, axis, clip_result);
 
   gimp_image_undo_group_end (gimage);
-
-  /*  bounds are now unknown  */
-  channel->bounds_known = FALSE;
 }
 
 static void
@@ -559,11 +539,7 @@ gimp_channel_rotate (GimpItem         *item,
                      gdouble           center_y,
                      gboolean          clip_result)
 {
-  GimpChannel *channel;
-  GimpImage   *gimage;
-
-  channel = GIMP_CHANNEL (item);
-  gimage  = gimp_item_get_image (item);
+  GimpImage *gimage = gimp_item_get_image (item);
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                _("Rotate Channel"));
@@ -575,9 +551,6 @@ gimp_channel_rotate (GimpItem         *item,
                                           clip_result);
 
   gimp_image_undo_group_end (gimage);
-
-  /*  bounds are now unknown  */
-  channel->bounds_known = FALSE;
 }
 
 static void
@@ -591,11 +564,7 @@ gimp_channel_transform (GimpItem               *item,
                         GimpProgressFunc        progress_callback,
                         gpointer                progress_data)
 {
-  GimpChannel *channel;
-  GimpImage   *gimage;
-
-  channel = GIMP_CHANNEL (item);
-  gimage  = gimp_item_get_image (item);
+  GimpImage *gimage = gimp_item_get_image (item);
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                _("Transform Channel"));
@@ -610,9 +579,6 @@ gimp_channel_transform (GimpItem               *item,
                                              progress_callback, progress_data);
 
   gimp_image_undo_group_end (gimage);
-
-  /*  bounds are now unknown  */
-  channel->bounds_known = FALSE;
 }
 
 static gboolean
@@ -693,9 +659,7 @@ gimp_channel_stroke (GimpItem     *item,
 static void
 gimp_channel_invalidate_boundary (GimpDrawable *drawable)
 {
-  GimpChannel *channel = GIMP_CHANNEL (drawable);
-
-  channel->boundary_known = FALSE;
+  GIMP_CHANNEL (drawable)->boundary_known = FALSE;
 }
 
 static void
@@ -809,7 +773,8 @@ gimp_channel_real_boundary (GimpChannel     *channel,
       if (gimp_channel_bounds (channel, &x3, &y3, &x4, &y4))
         {
           pixel_region_init (&bPR, GIMP_DRAWABLE (channel)->tiles,
-                             x3, y3, (x4 - x3), (y4 - y3), FALSE);
+                             x3, y3, x4 - x3, y4 - y3, FALSE);
+
           channel->segs_out = find_mask_boundary (&bPR, &channel->num_segs_out,
                                                   IgnoreBounds,
                                                   x1, y1,
@@ -826,6 +791,7 @@ gimp_channel_real_boundary (GimpChannel     *channel,
                                  0, 0,
                                  GIMP_ITEM (channel)->width,
                                  GIMP_ITEM (channel)->height, FALSE);
+
               channel->segs_in = find_mask_boundary (&bPR, &channel->num_segs_in,
                                                      WithinBounds,
                                                      x1, y1,
@@ -1452,9 +1418,7 @@ gimp_channel_new (GimpImage     *gimage,
                            0, 0, width, height,
                            GIMP_GRAY_IMAGE, name);
 
-  /*  set the channel color and opacity  */
   channel->color       = *color;
-
   channel->show_masked = TRUE;
 
   /*  selection mask variables  */
@@ -1466,7 +1430,7 @@ gimp_channel_new (GimpImage     *gimage,
 
 GimpChannel *
 gimp_channel_new_from_alpha (GimpImage     *gimage,
-                             GimpLayer     *layer,
+                             GimpDrawable  *drawable,
                              const gchar   *name,
                              const GimpRGB *color)
 {
@@ -1476,18 +1440,18 @@ gimp_channel_new_from_alpha (GimpImage     *gimage,
   PixelRegion  srcPR, destPR;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
-  g_return_val_if_fail (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_drawable_has_alpha (drawable), NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
-  width  = gimp_item_width  (GIMP_ITEM (layer));
-  height = gimp_item_height (GIMP_ITEM (layer));
+  width  = gimp_item_width  (GIMP_ITEM (drawable));
+  height = gimp_item_height (GIMP_ITEM (drawable));
 
   channel = gimp_channel_new (gimage, width, height, name, color);
 
   gimp_channel_clear (channel, NULL, FALSE);
 
-  pixel_region_init (&srcPR, gimp_drawable_data (GIMP_DRAWABLE (layer)),
+  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
                      0, 0, width, height, FALSE);
   pixel_region_init (&destPR, gimp_drawable_data (GIMP_DRAWABLE (channel)),
                      0, 0, width, height, TRUE);
@@ -1528,7 +1492,7 @@ gimp_channel_new_from_component (GimpImage       *gimage,
 
   pixel_region_init (&src, projection,
                      0, 0, width, height, FALSE);
-  pixel_region_init (&dest, GIMP_DRAWABLE (channel)->tiles,
+  pixel_region_init (&dest, gimp_drawable_data (GIMP_DRAWABLE (channel)),
                      0, 0, width, height, TRUE);
 
   copy_component (&src, &dest, pixel);
@@ -1668,11 +1632,9 @@ gimp_channel_new_mask (GimpImage *gimage,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  /*  Create the new channel  */
   new_channel = gimp_channel_new (gimage, width, height,
                                   _("Selection Mask"), &black);
 
-  /*  Set the validate procedure  */
   tile_manager_set_validate_proc (GIMP_DRAWABLE (new_channel)->tiles,
                                   gimp_channel_validate);
 
