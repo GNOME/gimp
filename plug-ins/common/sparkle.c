@@ -637,7 +637,7 @@ fspike (GPixelRgn *dest_rgn,
       gimp_pixel_rgn_get_pixel (dest_rgn, pixel, x, y);
 
       for (b = 0; b < bytes; b++)
-	val[b] = (gdouble) pixel[b] / 255.0;
+	val[b] = (gdouble) (gint)pixel[b] / 255.0;
 
       /*  increase saturation to full for color image  */
       if (! gray)

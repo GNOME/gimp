@@ -157,7 +157,7 @@ gimp_pixel_rgn_get_row (GPixelRgn *pr,
       tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
       gimp_tile_ref (tile);
 
-      tile_data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
+      tile_data = tile->data + (int)tile->bpp * (int)(tile->ewidth * (int)(y % TILE_HEIGHT) + (x % TILE_WIDTH));
       boundary = x + (tile->ewidth - (x % TILE_WIDTH));
       bpp = tile->bpp;
 

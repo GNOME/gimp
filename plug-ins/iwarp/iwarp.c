@@ -1355,21 +1355,23 @@ iwarp_motion_callback(GtkWidget *widget,
  int x,y;
  
  mb = (GdkEventButton*) event; 
- x = mb->x;
- y = mb->y;
  switch (event->type) {
    case GDK_BUTTON_PRESS:
-      lastx = x;
-      lasty = y;
+      lastx = mb->x;
+      lasty = mb->y;
    break;
    case GDK_BUTTON_RELEASE:
       if (mb->state & GDK_BUTTON1_MASK) {
+       x = mb->x;
+       y = mb->y;
        if (iwarp_vals.do_move) iwarp_move(x,y,lastx,lasty);
        else iwarp_deform(x, y,0.0,0.0);
       }
    break; 
    case GDK_MOTION_NOTIFY :
      if (mb->state & GDK_BUTTON1_MASK) { 
+      x = mb->x;
+      y = mb->y;
       if (iwarp_vals.do_move) iwarp_move(x,y,lastx,lasty);
       else iwarp_deform(x, y,0.0,0.0);
       lastx = x;
