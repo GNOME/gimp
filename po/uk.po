@@ -1555,12 +1555,10 @@ msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/gradient_editor.c:3477
-#, fuzzy
 msgid "Left Endpoint Color"
 msgstr "Кол╕р л╕во╖ крайньо╖ точки"
 
 #: app/gradient_editor.c:3498
-#, fuzzy
 msgid "Right Endpoint Color"
 msgstr "Кол╕р крайньо╖ право╖ точки"
 
@@ -1930,9 +1928,8 @@ msgid "Selection"
 msgstr "Вид╕лення"
 
 #: app/layers_dialog.c:3894
-#, fuzzy
 msgid "Inverse Selection"
-msgstr "/Перетнути з вид╕ленням"
+msgstr "╤нвертувати вид╕лення"
 
 #: app/layers_dialog.c:3896 app/layers_dialog.c:3911
 msgid "White (Full Opacity)"
@@ -2193,14 +2190,12 @@ msgid "/File/Dialogs/Display Filters..."
 msgstr "/Файл/Д╕алоги/Ф╕льтри в╕дображення..."
 
 #: app/menus.c:163
-#, fuzzy
 msgid "/File/Test Dialogs/Layer List..."
-msgstr "/Файл/Д╕алоги/В╕зерунки..."
+msgstr "/Файл/Тестов╕ д╕алоги/Список шар╕в..."
 
 #: app/menus.c:165
-#, fuzzy
 msgid "/File/Test Dialogs/Channel List..."
-msgstr "/Файл/Д╕алоги/Шари, канали та контури..."
+msgstr "/Файл/Тестов╕ д╕алоги/Список канал╕в..."
 
 #: app/menus.c:215 app/menus.c:278
 msgid "/File/Quit"
@@ -2577,9 +2572,8 @@ msgid "/Tools/Swap Colors"
 msgstr "/╤нструменти/Обм╕няти кольори"
 
 #: app/menus.c:533
-#, fuzzy
 msgid "/Tools/Swap Contexts"
-msgstr "/╤нструменти/Обм╕няти кольори"
+msgstr "/╤нструменти/Обм╕няти контексти"
 
 #. <Image>/Dialogs
 #: app/menus.c:540
@@ -3036,9 +3030,8 @@ msgid "New"
 msgstr "Новий"
 
 #: app/palette.c:636
-#, fuzzy
 msgid "Edit Palette Color"
-msgstr "Пост╕йне кольорове"
+msgstr "Зм╕нити кол╕р пал╕три"
 
 #: app/palette.c:1299
 msgid "Merge Palette"
@@ -3985,13 +3978,12 @@ msgid "Select Modules Dir"
 msgstr "Вибер╕ть каталог модул╕в"
 
 #: app/qmask.c:281
-#, fuzzy
 msgid "Edit Qmask Color"
-msgstr "Редагування атрибут╕в швидко╖ маски"
+msgstr "Зм╕нити кол╕р швидко╖ маски"
 
 #: app/qmask.c:288
 msgid "Edit Qmask Attributes"
-msgstr "Редагування атрибут╕в швидко╖ маски"
+msgstr "Зм╕нити ознаки швидко╖ маски"
 
 #. The opacity scale
 #: app/qmask.c:316
@@ -4581,19 +4573,16 @@ msgid "Auto Shrink"
 msgstr "Автозменшення"
 
 #: app/tools/gimpcroptool.c:1675
-#, fuzzy
 msgid "Crop Tool"
-msgstr "Клонування"
+msgstr "Н╕ж"
 
 #: app/tools/gimpcroptool.c:1676
-#, fuzzy
 msgid "Crop or Resize an image"
 msgstr "Кадрувати чи зм╕нити розм╕р зображення"
 
 #: app/tools/gimpcroptool.c:1677
-#, fuzzy
 msgid "/Tools/Crop Tool"
-msgstr "/╤нструменти/Панель ╕нструмент╕в"
+msgstr "/╤нструменти/Н╕ж"
 
 #: app/tools/gimpdodgeburntool.c:165
 msgid "Exposure:"
@@ -4713,9 +4702,8 @@ msgid "Zoom in & out"
 msgstr "Зб╕льшення та зменшення"
 
 #: app/tools/gimpmagnifytool.c:110
-#, fuzzy
 msgid "/Tools/Magnify"
-msgstr "Лупа"
+msgstr "/╤нструменти/Лупа"
 
 #: app/tools/gimpmagnifytool.c:232
 msgid "Allow Window Resizing"
@@ -4734,7 +4722,6 @@ msgid "Measure Tool"
 msgstr "Вим╕рювач"
 
 #: app/tools/gimpmeasuretool.c:126
-#, fuzzy
 msgid "Measure angles and legnths"
 msgstr "Вим╕рювати в╕дстан╕ та кути"
 
@@ -5095,9 +5082,8 @@ msgid "Rate"
 msgstr "Швидк╕сть"
 
 #: app/tools/paint_options.c:584
-#, fuzzy
 msgid "Gradient Options"
-msgstr "Град╕╓нти"
+msgstr "Параметри град╕╓нта"
 
 #: app/tools/paint_options.c:603
 msgid "Fade Out"
@@ -6021,377 +6007,3 @@ msgstr "Акварель"
 #: modules/colorsel_water.c:479
 msgid "Pressure"
 msgstr "Натиск"
-
-#~ msgid "Sorry, this brush can't be deleted."
-#~ msgstr "Нажаль цей пензель не можна видаляти."
-
-#~ msgid "Crop & Resize"
-#~ msgstr "Кадрування та зм╕на розм╕ру"
-
-#~ msgid "GIMP brush file appears to be corrupted: \"%s\"."
-#~ msgstr "Схоже файл пензля GIMP з╕псований: \"%s\"."
-
-#~ msgid ""
-#~ "Warning: Failed to load brush\n"
-#~ "\"%s\""
-#~ msgstr ""
-#~ "Увага: Не вдалося завантажити пензель\n"
-#~ "\"%s\""
-
-#~ msgid ""
-#~ "Warning: Failed to load brush pipe\n"
-#~ "\"%s\""
-#~ msgstr ""
-#~ "Увага: Не вдалося завантажити канал пензл╕в\n"
-#~ "\"%s\""
-
-#~ msgid "Name"
-#~ msgstr "Назва"
-
-#~ msgid "New Gradient"
-#~ msgstr "Новий град╕╓нт"
-
-#~ msgid "Copy Gradient"
-#~ msgstr "Скоп╕ювати град╕╓нт"
-
-#~ msgid "Delete Gradient"
-#~ msgstr "Видалити град╕╓нт"
-
-#~ msgid "Rename Gradient"
-#~ msgstr "Перейменувати град╕╓нт"
-
-#~ msgid "New gradient"
-#~ msgstr "Новий град╕╓нт"
-
-#~ msgid "Enter a name for the new gradient"
-#~ msgstr "Введ╕ть назву нового град╕╓нту"
-
-#~ msgid "untitled"
-#~ msgstr "неназваний"
-
-#~ msgid "Copy gradient"
-#~ msgstr "Коп╕ювання град╕╓нту"
-
-#~ msgid "Enter a name for the copied gradient"
-#~ msgstr "Введ╕ть назву скоп╕йованого град╕╓нту"
-
-#~ msgid "Rename gradient"
-#~ msgstr "Перейменування град╕╓нту"
-
-#~ msgid "Enter a new name for the gradient"
-#~ msgstr "Введ╕ть нову назву град╕╓нту"
-
-#~ msgid ""
-#~ "Are you sure you want to delete\n"
-#~ "\"%s\" from the list and from disk?"
-#~ msgstr ""
-#~ "Ви справд╕ хочете видалити\n"
-#~ "\"%s\" з списку ╕ диску?"
-
-#~ msgid "Magnify Tool"
-#~ msgstr "Лупа"
-
-#~ msgid "Multiply (Burn)"
-#~ msgstr "Множення"
-
-#~ msgid "Subtraction"
-#~ msgstr "В╕дн╕мання"
-
-#~ msgid "Divide (Dodge)"
-#~ msgstr "Д╕лення"
-
-#~ msgid "Erase"
-#~ msgstr "Очищення"
-
-#~ msgid ""
-#~ "Loading palette %s:\n"
-#~ "Corrupt palette:\n"
-#~ "missing magic header\n"
-#~ "Does this file need converting from DOS?"
-#~ msgstr ""
-#~ "Завантаження пал╕тры %s:\n"
-#~ "З╕псована пал╕тра:\n"
-#~ "в╕дсутн╕й маг╕чний заголовок\n"
-#~ "Цей файл необх╕дно перетворити з DOS?"
-
-#~ msgid ""
-#~ "Loading palette %s:\n"
-#~ "Corrupt palette: missing magic header"
-#~ msgstr ""
-#~ "Завантаження пал╕три %s:\n"
-#~ "З╕псована пал╕тра: в╕дсутн╕й маг╕чний заголовок"
-
-#~ msgid ""
-#~ "Loading palette %s (line %d):\n"
-#~ "Read error"
-#~ msgstr ""
-#~ "Завантаження пал╕три %s (рядок %d):\n"
-#~ "Помилка зчитування"
-
-#~ msgid ""
-#~ "Loading palette %s (line %d):\n"
-#~ "Missing RED component"
-#~ msgstr ""
-#~ "Зчитування пал╕три %s (рядок %d):\n"
-#~ "В╕дсутня ЧЕРВОНА складова"
-
-#~ msgid ""
-#~ "Loading palette %s (line %d):\n"
-#~ "Missing GREEN component"
-#~ msgstr ""
-#~ "Зчитування пал╕три %s (рядок %d):\n"
-#~ "В╕дсутня ЗЕЛЕНА складова"
-
-#~ msgid ""
-#~ "Loading palette %s (line %d):\n"
-#~ "Missing BLUE component"
-#~ msgstr ""
-#~ "Зчитування пал╕три %s (рядок %d):\n"
-#~ "В╕дсутня СИНЯ складова"
-
-#~ msgid ""
-#~ "Loading palette %s (line %d):\n"
-#~ "RGB value out of range"
-#~ msgstr ""
-#~ "Завантаження пал╕три %s (рядок %d):\n"
-#~ "RGB-значення поза д╕апазоном"
-
-#~ msgid "Can't save palette \"%s\"\n"
-#~ msgstr "Неможливо зберегти пал╕тру \"%s\"\n"
-
-#~ msgid "Black"
-#~ msgstr "Чорний"
-
-#~ msgid "New Palette"
-#~ msgstr "Нова пал╕тра"
-
-#~ msgid "Enter a name for new palette"
-#~ msgstr "Введ╕ть назву ново╖ пал╕три"
-
-#~ msgid "Delete Palette"
-#~ msgstr "Видалити пал╕тру"
-
-#~ msgid "Ncols"
-#~ msgstr "К╕льк╕сть кольор╕в"
-
-#~ msgid "Unknown pattern format version #%d in \"%s\"."
-#~ msgstr "Нев╕дома верс╕я формату в╕зерунк╕в #%d в \"%s\"."
-
-#~ msgid "Error in GIMP pattern file \"%s\"."
-#~ msgstr "Помилка у файл╕ в╕зерунку GIMP \"%s\"."
-
-#~ msgid "GIMP pattern file appears to be truncated: \"%s\"."
-#~ msgstr "Схоже файл в╕зерунку GIMP об╕рваний: \"%s\"."
-
-#~ msgid "Generated Brushes"
-#~ msgstr "Згенерован╕ пензл╕"
-
-#~ msgid "Generated Brushes Directories"
-#~ msgstr "Каталог згенерованих пензл╕в"
-
-#~ msgid "Select Generated Brushes Dir"
-#~ msgstr "Вибер╕ть каталог згенерованих пензл╕в"
-
-#~ msgid "Rectangular Selection"
-#~ msgstr "Вид╕лення прямокутником"
-
-#~ msgid "Elliptical Selection"
-#~ msgstr "Вид╕лення ел╕псом"
-
-#~ msgid "Free-Hand Selection"
-#~ msgstr "Дов╕льне вид╕лення"
-
-#~ msgid "Fuzzy Selection"
-#~ msgstr "Чар╕вна паличка"
-
-#~ msgid "Bezier Selection"
-#~ msgstr "Вид╕лення кривими Без'╓"
-
-#~ msgid "Intelligent Scissors"
-#~ msgstr "Розумн╕ ножиц╕"
-
-#~ msgid "By-Color Selection"
-#~ msgstr "Вид╕лення за кольором"
-
-#~ msgid "Blend Tool"
-#~ msgstr "Злиття"
-
-#~ msgid "Pencil"
-#~ msgstr "Ол╕вець"
-
-#~ msgid "Airbrush"
-#~ msgstr "Аерограф"
-
-#~ msgid "Convolver"
-#~ msgstr "Розмивач"
-
-#~ msgid "Dodge or Burn"
-#~ msgstr "Осв╕тлення чи затемнення"
-
-#~ msgid "Smudge Tool"
-#~ msgstr "Палець"
-
-#~ msgid "Ellipse Select"
-#~ msgstr "Вид╕лення ел╕пса"
-
-#~ msgid "/Tools/Select Tools/Ellipse Select"
-#~ msgstr "/╤нструменти/Вид╕лення/Вид╕лення ел╕псом"
-
-#~ msgid "Select elliptical regions"
-#~ msgstr "Вид╕лення д╕лянки у форм╕ ел╕пса"
-
-#~ msgid "Free Select"
-#~ msgstr "Дов╕льне вид╕лення"
-
-#~ msgid "/Tools/Select Tools/Free Select"
-#~ msgstr "/╤нструменти/Вид╕лення/Дов╕льне вид╕лення"
-
-#~ msgid "Select hand-drawn regions"
-#~ msgstr "Вид╕лення дов╕льно╖ д╕лянки"
-
-#~ msgid "Bezier Select"
-#~ msgstr "Вид╕лення Без'╓"
-
-#~ msgid "/Tools/Select Tools/Bezier Select"
-#~ msgstr "/╤нструменти/Вид╕лення/Вид╕лення кривими Без'╓"
-
-#~ msgid "Select regions using Bezier curves"
-#~ msgstr "Вид╕лення д╕лянок використовуючи крив╕ Без'╓"
-
-#~ msgid "/Tools/Select Tools/Intelligent Scissors"
-#~ msgstr "/╤нструменти/Вид╕лення/Розумн╕ ножиц╕"
-
-#~ msgid "Select shapes from image"
-#~ msgstr "Вид╕лення форм в зображенн╕"
-
-#~ msgid "Move"
-#~ msgstr "Перем╕стити"
-
-#~ msgid "/Tools/Transform Tools/Magnify"
-#~ msgstr "/╤нструменти/Перетворення/Лупа"
-
-#~ msgid "/Tools/Transform Tools/Crop & Resize"
-#~ msgstr "/╤нструменти/Перетворення/Кадрування ╕ зм╕на розм╕ру"
-
-#~ msgid "/Tools/Transform Tools/Transform"
-#~ msgstr "/╤нструменти/Перетворення/Перетворення"
-
-#~ msgid "Rotation, scaling, shearing, perspective."
-#~ msgstr "Обертання, масштабування, викривлення, перспектива."
-
-#~ msgid "Flip"
-#~ msgstr "В╕дзеркалення"
-
-#~ msgid "/Tools/Transform Tools/Flip"
-#~ msgstr "/╤нструменти/Перетворення/В╕дзеркалення"
-
-#~ msgid "Flip the layer or selection"
-#~ msgstr "В╕дзеркалити шар чи вид╕лення"
-
-#~ msgid "Text"
-#~ msgstr "Текст"
-
-#~ msgid "/Tools/Paint Tools/Pencil"
-#~ msgstr "/╤нструменти/Малювання/Ол╕вець"
-
-#~ msgid "Draw sharp pencil strokes"
-#~ msgstr "Нанесення ч╕тких контур╕в обвод╕в ол╕вцем"
-
-#~ msgid "/Tools/Paint Tools/Airbrush"
-#~ msgstr "/╤нструменти/Малювання/Аерограф"
-
-#~ msgid "Airbrush with variable pressure"
-#~ msgstr "Аерограф ╕з зм╕нним натиском"
-
-#~ msgid "Ink"
-#~ msgstr "Чорнило"
-
-#~ msgid "Clone"
-#~ msgstr "Клонування"
-
-#~ msgid "/Tools/Paint Tools/Clone"
-#~ msgstr "/╤нструменти/Малювання/Клонування"
-
-#~ msgid "Paint using patterns or image regions"
-#~ msgstr "Малювання в╕зерунками чи д╕лянкою зображення"
-
-#~ msgid "Erase to background or transparency"
-#~ msgstr "Витирання до тла чи прозорост╕"
-
-#~ msgid "Smudge"
-#~ msgstr "Палець"
-
-#~ msgid "/Tools/Paint Tools/Smudge"
-#~ msgstr "/╤нструменти/Малювання/Палець"
-
-#~ msgid "Convolve"
-#~ msgstr "Розмивач"
-
-#~ msgid "/Tools/Paint Tools/Convolve"
-#~ msgstr "/╤нструменти/Малювання/Розмивач"
-
-#~ msgid "Blur or sharpen"
-#~ msgstr "Розмивання чи р╕зк╕сть"
-
-#~ msgid "/Tools/Paint Tools/DodgeBurn"
-#~ msgstr "/╤нструменти/Малювання/Осв╕тлення-Затемнення"
-
-#~ msgid "Measure"
-#~ msgstr "Вим╕рювач"
-
-#~ msgid "By Color Select"
-#~ msgstr "Виб╕р за кольором"
-
-#~ msgid "/Select/By Color..."
-#~ msgstr "/Вид╕лення/За кольором..."
-
-#~ msgid "Select regions by color"
-#~ msgstr "Вид╕лення д╕лянок за кольором"
-
-#~ msgid "/Image/Colors/Color Balance..."
-#~ msgstr "/Зображення/Кольори/Баланс кольор╕в..."
-
-#~ msgid "Adjust color balance"
-#~ msgstr "Налагодження балансу кольор╕в"
-
-#~ msgid "/Image/Colors/Brightness-Contrast..."
-#~ msgstr "/Зображення/Кольори/Яскрав╕сть-контраст..."
-
-#~ msgid "Adjust brightness and contrast"
-#~ msgstr "Налагодження яскравост╕ та контрасту"
-
-#~ msgid "/Image/Colors/Hue-Saturation..."
-#~ msgstr "/Зображення/Кольори/В╕дт╕нок-насичен╕сть..."
-
-#~ msgid "Adjust hue and saturation"
-#~ msgstr "Регулювання в╕дт╕нку та насиченост╕"
-
-#~ msgid "/Image/Colors/Posterize..."
-#~ msgstr "/Зображення/Кольори/Постеризац╕я..."
-
-#~ msgid "Reduce image to a fixed numer of colors"
-#~ msgstr "Зведення зображення до ф╕ксовано╖ к╕лькост╕ кольор╕в"
-
-#~ msgid "/Image/Colors/Threshold..."
-#~ msgstr "/Зображення/Кольори/Пор╕г..."
-
-#~ msgid "Reduce image to two colors using a threshold"
-#~ msgstr "Зведення зображення до двох кольор╕в використовуючи пор╕г"
-
-#~ msgid "/Image/Colors/Curves..."
-#~ msgstr "/Зображення/Кольори/Крив╕..."
-
-#~ msgid "Adjust color curves"
-#~ msgstr "П╕дб╕р кривих кольору"
-
-#~ msgid "/Image/Colors/Levels..."
-#~ msgstr "/Зображення/Кольори/Р╕вн╕..."
-
-#~ msgid "Adjust color levels"
-#~ msgstr "П╕дб╕р р╕вн╕в сольору"
-
-#~ msgid "/Image/Histogram..."
-#~ msgstr "/Зображення/Г╕стограма..."
-
-#~ msgid "View image histogram"
-#~ msgstr "Показати г╕стограму зображення"
