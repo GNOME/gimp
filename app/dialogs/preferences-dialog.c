@@ -1026,17 +1026,25 @@ file_prefs_notebook_append_page (GtkNotebook   *notebook,
 				 gchar         *notebook_label,
 				 GtkCTree      *ctree,
 				 gchar         *tree_label,
+				 gchar         *help_data,
 				 GtkCTreeNode  *parent,
 				 GtkCTreeNode **new_node,
 				 gint           page_index)
 {
+  GtkWidget *event_box;
   GtkWidget *out_vbox;
   GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *label;
   gchar     *titles[1];
 
+  event_box = gtk_event_box_new ();
+  gtk_widget_show (event_box);
+
+  gimp_help_set_help_data (event_box, NULL, help_data);
+
   out_vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (event_box), out_vbox);
   gtk_widget_show (out_vbox);
 
   frame = gtk_frame_new (NULL);
@@ -1061,7 +1069,7 @@ file_prefs_notebook_append_page (GtkNotebook   *notebook,
 				     NULL, NULL, NULL, NULL,
 				     FALSE, TRUE);
   gtk_ctree_node_set_row_data (ctree, *new_node, (gpointer) page_index);
-  gtk_notebook_append_page (notebook, out_vbox, NULL);
+  gtk_notebook_append_page (notebook, event_box, NULL);
 
   return vbox;
 }
@@ -1101,6 +1109,21 @@ file_prefs_frame_new (gchar  *label,
   gtk_widget_show (vbox2);
 
   return vbox2;
+}
+
+static void
+file_prefs_help_func (gchar *help_data)
+{
+  GtkWidget *notebook;
+  GtkWidget *event_box;
+  gint page_num;
+
+  notebook = gtk_object_get_user_data (GTK_OBJECT (prefs_dlg));
+  page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
+  event_box = gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), page_num);
+
+  help_data = gtk_object_get_data (GTK_OBJECT (event_box), "gimp_help_data");
+  gimp_help (help_data);
 }
 
 /************************************************************************
@@ -1224,7 +1247,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   /* Create the dialog */
   prefs_dlg =
     gimp_dialog_new (_("Preferences"), "gimp_preferences",
-		     gimp_standard_help_func,
+		     file_prefs_help_func,
 		     "dialogs/preferences/preferences.html",
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
@@ -1262,7 +1285,9 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
   gtk_container_add (GTK_CONTAINER (frame), notebook);
 
+  gtk_object_set_user_data (GTK_OBJECT (prefs_dlg), notebook);
   gtk_object_set_user_data (GTK_OBJECT (ctree), notebook);
+
   gtk_signal_connect (GTK_OBJECT (ctree), "tree_select_row",
 		      GTK_SIGNAL_FUNC (file_pref_tree_select_callback),
 		      NULL);
@@ -1274,6 +1299,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 					  _("New File Settings"),
 					  GTK_CTREE (ctree),
 					  _("New File"),
+					  "dialogs/preferences/new_file.html",
 					  NULL,
 					  &top_insert,
 					  page_index);
@@ -1407,6 +1433,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 					  _("Display Settings"),
 					  GTK_CTREE (ctree),
 					  _("Display"),
+					  "dialogs/preferences/display.html",
 					  NULL,
 					  &top_insert,
 					  page_index);
@@ -1494,6 +1521,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 					  _("Interface Settings"),
 					  GTK_CTREE (ctree),
 					  _("Interface"),
+					  "dialogs/preferences/interface.html",
 					  NULL,
 					  &top_insert,
 					  page_index);
@@ -1589,6 +1617,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 					  _("Help System Settings"),
 					  GTK_CTREE (ctree),
 					  _("Help System"),
+					  "dialogs/preferences/interface.html#help_system",
 					  top_insert,
 					  &child_insert,
 					  page_index);
@@ -1621,6 +1650,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 					  _("Image Windows Settings"),
 					  GTK_CTREE (ctree),
 					  _("Image Windows"),
+					  "dialogs/preferences/interface.html#image_windows",
 					  top_insert,
 					  &child_insert,
 					  page_index);
@@ -1740,6 +1770,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 					  _("Tool Options Settings"),
 					  GTK_CTREE (ctree),
 					  _("Tool Options"),
+					  "dialogs/preferences/interface.html#tool_options",
 					  top_insert,
 					  &child_insert,
 					  page_index);
@@ -1782,6 +1813,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 					  _("Environment Settings"),
 					  GTK_CTREE (ctree),
 					  _("Environment"),
+					  "dialogs/preferences/environment.html",
 					  NULL,
 					  &top_insert,
 					  page_index);
@@ -1964,6 +1996,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 					  _("Session Management"),
 					  GTK_CTREE (ctree),
 					  _("Session"),
+					  "dialogs/preferences/session.html",
 					  NULL,
 					  &top_insert,
 					  page_index);
@@ -2018,6 +2051,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 					  _("Monitor Information"),
 					  GTK_CTREE (ctree),
 					  _("Monitor"),
+					  "dialogs/preferences/monitor.html",
 					  NULL,
 					  &top_insert,
 					  page_index);
@@ -2110,6 +2144,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 					  _("Directories Settings"),
 					  GTK_CTREE (ctree),
 					  _("Directories"),
+					  "dialogs/preferences/directories.html",
 					  NULL,
 					  &top_insert,
 					  page_index);
@@ -2156,24 +2191,39 @@ file_pref_cmd_callback (GtkWidget *widget,
     {
       gchar  *tree_label;
       gchar  *label;
+      gchar  *help_data;
       gchar  *fs_label;
       gchar **mpath;
     }
     paths[] =
     {
-      { N_("Brushes"),   N_("Brushes Directories"),   N_("Select Brushes Dir"),
+      { N_("Brushes"), N_("Brushes Directories"),
+	"dialogs/preferences/directories.html#brushes",
+	N_("Select Brushes Dir"),
 	&edit_brush_path },
-      { N_("Generated Brushes"),   N_("Generated Brushes Directories"),   N_("Select Generated Brushes Dir"),
+      { N_("Generated Brushes"), N_("Generated Brushes Directories"),
+	"dialogs/preferences/directories.html#generated_brushes",
+	N_("Select Generated Brushes Dir"),
 	&edit_brush_vbr_path },
-      { N_("Patterns"),  N_("Patterns Directories"),  N_("Select Patterns Dir"),
+      { N_("Patterns"), N_("Patterns Directories"),
+	"dialogs/preferences/directories.html#patterns",
+	N_("Select Patterns Dir"),
 	&edit_pattern_path },
-      { N_("Palettes"),  N_("Palettes Directories"),  N_("Select Palettes Dir"),
+      { N_("Palettes"), N_("Palettes Directories"),
+	"dialogs/preferences/directories.html#palettes",
+	N_("Select Palettes Dir"),
 	&edit_palette_path },
-      { N_("Gradients"), N_("Gradients Directories"), N_("Select Gradients Dir"),
+      { N_("Gradients"), N_("Gradients Directories"),
+	"dialogs/preferences/directories.html#gradients",
+	N_("Select Gradients Dir"),
 	&edit_gradient_path },
-      { N_("Plug-Ins"),  N_("Plug-Ins Directories"),  N_("Select Plug-Ins Dir"),
+      { N_("Plug-Ins"), N_("Plug-Ins Directories"),
+	"dialogs/preferences/directories.html#plug_ins",
+	N_("Select Plug-Ins Dir"),
 	&edit_plug_in_path },
-      { N_("Modules"),   N_("Modules Directories"),   N_("Select Modules Dir"),
+      { N_("Modules"), N_("Modules Directories"),
+	"dialogs/preferences/directories.html#modules",
+	N_("Select Modules Dir"),
 	&edit_module_path }
     };
     static int npaths = sizeof (paths) / sizeof (paths[0]);
@@ -2184,6 +2234,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 						gettext (paths[i].label),
 						GTK_CTREE (ctree),
 						gettext (paths[i].tree_label),
+						paths[i].help_data,
 						top_insert,
 						&child_insert,
 						page_index);
