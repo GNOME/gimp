@@ -173,8 +173,9 @@ These are:
      gimp-2.3 the default gimp installation. Otherwise a link called
      gimp pointing to the gimp-2.3 executable will be installed.
 
-  --enable-gimp-console.  In addition to the standard gimp binary,
-     build a console-only binary which does not link GTK+ at all.
+  --disable-gimp-console.  Use this option if you don't want the
+     gimp-console binary to be built in addition to the standard binary.
+     gimp-console is useful for command-line batch mode or as a server.
 
 
 The `make' command builds several things:
