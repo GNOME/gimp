@@ -56,6 +56,18 @@ static GHashTable *gimp_progress_ht = NULL;
 
 /*  public functions  */
 
+/**
+ * gimp_progress_install:
+ * @start_callback: the function to call when progress starts
+ * @end_callback:   the function to call when progress finishes
+ * @text_callback:  the function to call to change the text
+ * @value_callback: the function to call to change the value
+ * @user_data:      a pointer that is returned when uninstalling the progress
+ *
+ * Return value: the name of the temporary procedure that's been installed
+ *
+ * Since: GIMP 2.2
+ **/
 const gchar *
 gimp_progress_install (GimpProgressStartCallback start_callback,
                        GimpProgressEndCallback   end_callback,
@@ -123,6 +135,17 @@ gimp_progress_install (GimpProgressStartCallback start_callback,
   return NULL;
 }
 
+/**
+ * gimp_progress_uninstall:
+ * @progress_callback: the name of the temporary procedure to uninstall
+ *
+ * Uninstalls a temporary progress procedure that was installed using
+ * gimp_progress_install().
+ *
+ * Return value: the @user_data that was passed to gimp_progress_install().
+ *
+ * Since: GIMP 2.2
+ **/
 gpointer
 gimp_progress_uninstall (const gchar *progress_callback)
 {

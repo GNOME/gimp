@@ -87,6 +87,7 @@ gimpprogress
 </para>
 
 @progress_callback: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_progress_cancel ##### -->
