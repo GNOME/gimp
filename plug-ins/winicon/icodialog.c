@@ -172,7 +172,7 @@ ico_create_icon_hbox (GtkWidget *icon_preview,
   GtkWidget *hbox;
   GtkWidget *combo;
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 6);
 
   /* To make life easier for the callbacks, we store the
      layer's ID and stacking number with the hbox. */
@@ -238,15 +238,14 @@ ico_specs_dialog_new (gint num_layers)
 
   vbox = GTK_DIALOG (dialog)->vbox;
 
-  frame = gtk_frame_new (_("Icon details"));
+  frame = gimp_frame_new (_("Icon details"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_widget_show (frame);
 
   scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-  gtk_container_set_border_width (GTK_CONTAINER (scrolledwindow), 5);
   gtk_container_add (GTK_CONTAINER (frame), scrolledwindow);
   gtk_widget_show (scrolledwindow);
 
@@ -254,7 +253,7 @@ ico_specs_dialog_new (gint num_layers)
   gtk_container_add (GTK_CONTAINER (scrolledwindow), viewport);
   gtk_widget_show (viewport);
 
-  vbox = gtk_vbox_new (TRUE, 0);
+  vbox = gtk_vbox_new (TRUE, 6);
   g_object_set_data (G_OBJECT (dialog), "icons_vbox", vbox);
   gtk_container_add (GTK_CONTAINER (viewport), vbox);
   gtk_widget_show (vbox);

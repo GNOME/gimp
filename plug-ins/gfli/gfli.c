@@ -67,31 +67,29 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static void query (void);
-static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+static void      query       (void);
+static void      run         (const gchar      *name,
+                              gint              nparams,
+                              const GimpParam  *param,
+                              gint             *nreturn_vals,
+                              GimpParam       **return_vals);
 
 /* return the image-ID of the new image, or -1 in case of an error */
-static gint32 load_image      (const  gchar *filename,
-			       gint32        from_frame,
-			       gint32         to_frame);
-static gint   load_dialog     (const gchar  *name);
+static gint32    load_image  (const  gchar *filename,
+                              gint32        from_frame,
+                              gint32        to_frame);
+static gboolean  load_dialog (const gchar  *name);
 
-/* return TRUE or FALSE */
-static gint   save_image      (const gchar  *filename,
-			       gint32        image_id,
-			       gint32        from_frame,
-			       gint32        to_frame);
-static gint   save_dialog     (gint32        image_id);
+static gboolean  save_image  (const gchar  *filename,
+                              gint32        image_id,
+                              gint32        from_frame,
+                              gint32        to_frame);
+static gboolean  save_dialog (gint32        image_id);
 
-/* return TRUE or FALSE */
-static gint   get_info        (const gchar  *filename,
-			       gint32       *width,
-			       gint32       *height,
-			       gint32       *frames);
+static gboolean  get_info    (const gchar  *filename,
+                              gint32       *width,
+                              gint32       *height,
+                              gint32       *frames);
 
 /*
  * GIMP interface
@@ -411,7 +409,7 @@ run (const gchar      *name,
 /*
  * Open FLI animation and return header-info
  */
-gint
+static gboolean
 get_info (const gchar *filename,
 	  gint32      *width,
 	  gint32      *height,
@@ -442,7 +440,7 @@ get_info (const gchar *filename,
 /*
  * load fli animation and store as framestack
  */
-gint32
+static gint32
 load_image (const gchar *filename,
 	    gint32       from_frame,
 	    gint32       to_frame)
@@ -579,7 +577,7 @@ load_image (const gchar *filename,
  * get framestack and store as fli animation
  * (some code was taken from the GIF plugin.)
  */
-gint
+static gboolean
 save_image (const gchar *filename,
 	    gint32       image_id,
 	    gint32       from_frame,
@@ -796,7 +794,7 @@ save_image (const gchar *filename,
 /*
  * Dialogs for interactive usage
  */
-gint
+static gboolean
 load_dialog (const gchar *name)
 {
   GtkWidget *dialog;
@@ -823,9 +821,9 @@ load_dialog (const gchar *name)
 			    NULL);
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), table,
 		     FALSE, FALSE, 0);
   gtk_widget_show (table);
@@ -837,7 +835,7 @@ load_dialog (const gchar *name)
   spinbutton = gimp_spin_button_new (&adj,
 				     from_frame, 1, nframes, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("From:"), 1.0, 0.5,
+			     _("From:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -846,7 +844,7 @@ load_dialog (const gchar *name)
   spinbutton = gimp_spin_button_new (&adj,
 				     to_frame, 1, nframes, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("To:"), 1.0, 0.5,
+			     _("To:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -861,7 +859,7 @@ load_dialog (const gchar *name)
   return run;
 }
 
-gint
+static gboolean
 save_dialog (gint32 image_id)
 {
   GtkWidget *dialog;
@@ -886,11 +884,11 @@ save_dialog (gint32 image_id)
 			    NULL);
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), table,
-		     FALSE, FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX(GTK_DIALOG (dialog)->vbox), table,
+                      FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /*
@@ -900,7 +898,7 @@ save_dialog (gint32 image_id)
   spinbutton = gimp_spin_button_new (&adj,
 				     from_frame, 1, nframes, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("From:"), 1.0, 0.5,
+			     _("From:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -909,7 +907,7 @@ save_dialog (gint32 image_id)
   spinbutton = gimp_spin_button_new (&adj,
 				     to_frame, 1, nframes, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("To:"), 1.0, 0.5,
+			     _("To:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),

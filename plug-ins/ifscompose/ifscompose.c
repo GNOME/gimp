@@ -539,7 +539,7 @@ ifs_compose_trans_page (void)
   GtkWidget *table;
   GtkWidget *label;
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   table = gtk_table_new (3, 6, FALSE);
@@ -657,7 +657,7 @@ ifs_compose_color_page (void)
   GSList    *group = NULL;
   GimpRGB    color;
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   table = gtk_table_new (3, 5, FALSE);
@@ -1271,9 +1271,8 @@ ifs_options_dialog (void)
       /* Table of options */
 
       table = gtk_table_new (4, 3, FALSE);
-      gtk_container_set_border_width (GTK_CONTAINER (table), 6);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
       gtk_box_pack_start (GTK_BOX (GTK_DIALOG (ifsOptD->dialog)->vbox), table,
                           FALSE, FALSE, 0);
       gtk_widget_show (table);

@@ -317,7 +317,7 @@ sel2path_dialog (SELVALS *sels)
                     NULL);
 
   table = dialog_create_selection_area (sels);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), table);
   gtk_widget_show (table);
 

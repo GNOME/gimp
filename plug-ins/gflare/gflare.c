@@ -434,7 +434,7 @@ static void     calc_gflare_pix    (guchar  *dest_pix,
 				    gdouble  y,
 				    guchar  *src_pix);
 
-static gint        dlg_run                 (void);
+static gboolean    dlg_run                 (void);
 static void        dlg_preview_calc_window (void);
 static void        ed_preview_calc_window  (void);
 static GtkWidget * ed_mode_menu_new        (GFlareMode *mode_var);
@@ -2264,7 +2264,7 @@ calc_overlay (guchar *dest, guchar *src1, guchar *src2)
 	This is gflare main dialog, one which opens in first.
  */
 
-static gint
+static gboolean
 dlg_run (void)
 {
   GtkWidget *shell;
@@ -2310,8 +2310,8 @@ dlg_run (void)
    *    main hbox
    */
 
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), hbox,
 		      FALSE, FALSE, 0);
   gtk_widget_show (hbox);
@@ -2320,16 +2320,11 @@ dlg_run (void)
    *	Preview
    */
 
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), abox, TRUE, TRUE, 0);
   gtk_widget_show (abox);
 
@@ -2631,10 +2626,10 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gdouble    xres, yres;
   gint       row;
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
 
-  frame = gtk_frame_new (_("Center"));
+  frame = gimp_frame_new (_("Center"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -2656,7 +2651,6 @@ dlg_make_page_settings (GFlareDialog *dlg,
 
   chain = GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (center));
 
-  gtk_container_set_border_width (GTK_CONTAINER (center), 4);
   gtk_container_add (GTK_CONTAINER (frame), center);
   g_signal_connect (center, "value_changed",
                     G_CALLBACK (dlg_position_entry_callback),
@@ -2667,14 +2661,13 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_widget_hide (chain);
   gtk_widget_show (center);
 
-  frame = gtk_frame_new (_("Parameters"));
+  frame = gimp_frame_new (_("Parameters"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (5, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -2747,7 +2740,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   **/
 
   /*  asupsample frame */
-  frame = dlg->asupsample_frame = gtk_frame_new (NULL);
+  frame = dlg->asupsample_frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -2758,9 +2751,8 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_widget_show (button);
 
   asup_table = gtk_table_new (2, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (asup_table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (asup_table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (asup_table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (asup_table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (asup_table), 6);
   gtk_container_add (GTK_CONTAINER (frame), asup_table);
   gtk_widget_show (asup_table);
 
@@ -2853,8 +2845,8 @@ dlg_make_page_selector (GFlareDialog *dlg,
 
   DEBUG_PRINT (("dlg_make_page_selector\n"));
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   /*
    *	List Box
@@ -2880,7 +2872,7 @@ dlg_make_page_selector (GFlareDialog *dlg,
    *	The buttons for the possible listbox operations
    */
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -3228,8 +3220,8 @@ ed_run (GtkWindow            *parent,
    *    main hbox
    */
 
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), hbox,
 		      FALSE, FALSE, 0);
   gtk_widget_show (hbox);
@@ -3238,13 +3230,8 @@ ed_run (GtkWindow            *parent,
    *	Preview
    */
 
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
+  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (hbox), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
   frame = gtk_frame_new (NULL);
@@ -3330,19 +3317,18 @@ ed_make_page_general (GFlareEditor *ed,
   GtkWidget *combo;
   GtkObject *adj;
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   /*  Glow  */
 
-  frame = gtk_frame_new (_("Glow Paint Options"));
+  frame = gimp_frame_new (_("Glow Paint Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (2, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -3360,18 +3346,17 @@ ed_make_page_general (GFlareEditor *ed,
 
   combo = ed_mode_menu_new (&gflare->glow_mode);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Paint Mode:"), 1.0, 0.5, combo, 1, TRUE);
+			     _("Paint Mode:"), 0.0, 0.5, combo, 1, FALSE);
 
   /*  Rays  */
 
-  frame = gtk_frame_new (_("Rays Paint Options"));
+  frame = gimp_frame_new (_("Rays Paint Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (2, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -3389,18 +3374,17 @@ ed_make_page_general (GFlareEditor *ed,
 
   combo = ed_mode_menu_new (&gflare->rays_mode);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Paint Mode:"), 1.0, 0.5, combo, 1, TRUE);
+			     _("Paint Mode:"), 0.0, 0.5, combo, 1, FALSE);
 
   /*  Rays  */
 
-  frame = gtk_frame_new (_("Second Flares Paint Options"));
+  frame = gimp_frame_new (_("Second Flares Paint Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (2, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -3418,7 +3402,7 @@ ed_make_page_general (GFlareEditor *ed,
 
   combo = ed_mode_menu_new (&gflare->sflare_mode);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Paint Mode:"), 1.0, 0.5, combo, 1, TRUE);
+			     _("Paint Mode:"), 0.0, 0.5, combo, 1, FALSE);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
 			    gtk_label_new_with_mnemonic (_("_General")));
@@ -3440,21 +3424,20 @@ ed_make_page_glow (GFlareEditor *ed,
   GtkObject    *adj;
   gint          row;
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   /*
    *  Gradient Menus
    */
 
-  frame = gtk_frame_new (_("Gradients"));
+  frame = gimp_frame_new (_("Gradients"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
@@ -3475,14 +3458,13 @@ ed_make_page_glow (GFlareEditor *ed,
    *  Scales
    */
 
-  frame = gtk_frame_new (_("Parameters"));
+  frame = gimp_frame_new (_("Parameters"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   row = 0;
@@ -3545,21 +3527,20 @@ ed_make_page_rays (GFlareEditor *ed,
   GtkObject    *adj;
   gint          row;
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   /*
    *  Gradient Menus
    */
 
-  frame = gtk_frame_new (_("Gradients"));
+  frame = gimp_frame_new (_("Gradients"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   row = 0;
@@ -3582,14 +3563,13 @@ ed_make_page_rays (GFlareEditor *ed,
    *	Scales
    */
 
-  frame = gtk_frame_new (_("Parameters"));
+  frame = gimp_frame_new (_("Parameters"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (5, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   row = 0;
@@ -3686,21 +3666,20 @@ ed_make_page_sflare (GFlareEditor *ed,
   gchar         buf[256];
   gint          row;
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   /*
    *  Gradient Menus
    */
 
-  frame = gtk_frame_new (_("Gradients"));
+  frame = gimp_frame_new (_("Gradients"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
@@ -3721,14 +3700,13 @@ ed_make_page_sflare (GFlareEditor *ed,
    *	Scales
    */
 
-  frame = gtk_frame_new (_("Parameters"));
+  frame = gimp_frame_new (_("Parameters"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   row = 0;
@@ -3776,12 +3754,11 @@ ed_make_page_sflare (GFlareEditor *ed,
    *	Shape Radio Button Frame
    */
 
-  frame = gtk_frame_new (_("Shape of Second Flares"));
+  frame = gimp_frame_new (_("Shape of Second Flares"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  shape_vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (shape_vbox), 4);
+  shape_vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (frame), shape_vbox);
   gtk_widget_show (shape_vbox);
 
@@ -3797,7 +3774,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (shape_vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
-  polygon_hbox = gtk_hbox_new (FALSE, 4);
+  polygon_hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (shape_vbox), polygon_hbox, FALSE, FALSE, 0);
   gtk_widget_show (polygon_hbox);
 
@@ -3831,7 +3808,7 @@ ed_make_page_sflare (GFlareEditor *ed,
    *	Random Seed Entry
    */
 
-  seed_hbox = gtk_hbox_new (FALSE, 4);
+  seed_hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), seed_hbox, FALSE, FALSE, 0);
   gtk_widget_show (seed_hbox);
 
@@ -4917,9 +4894,10 @@ gradient_report (void)
 {
   double total = (double) get_values_external_clock / CLOCKS_PER_SEC;
 
-  printf ("gradient_get_values_external %.2f sec. / %d times (ave %.2f sec.)\n",
-	  total,
-	  get_values_external_count,
-	  total / get_values_external_count);
+  g_printerr ("gradient_get_values_external "
+              "%.2f sec. / %d times (ave %.2f sec.)\n",
+              total,
+              get_values_external_count,
+              total / get_values_external_count);
 }
 #endif

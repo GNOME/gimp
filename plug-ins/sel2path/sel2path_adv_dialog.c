@@ -90,8 +90,8 @@ dialog_create_selection_area (SELVALS *sels)
   gint       row;
 
   table = gtk_table_new (20, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   row = 0;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
@@ -381,8 +381,5 @@ dialog_create_selection_area (SELVALS *sels)
   adjust_widgets = g_slist_append (adjust_widgets, adj);
   g_object_set_data (G_OBJECT (adj), "default_value", def_val (3.0));
 
-  return GTK_WIDGET (table);
+  return table;
 }
-
-
-

@@ -70,7 +70,7 @@ static gint	save_image  (const gchar      *filename,
 			     gint32            image_ID,
 			     gint32            drawable_ID);
 
-static gint	save_dialog (void);
+static gboolean save_dialog (void);
 
 /*
  * Globals...
@@ -609,7 +609,7 @@ save_image (const gchar *filename,
   return TRUE;
 }
 
-static gint
+static gboolean
 save_dialog (void)
 {
   GtkWidget *dlg;
@@ -638,7 +638,7 @@ save_dialog (void)
 
 				    NULL);
 
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 

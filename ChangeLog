@@ -1,3 +1,13 @@
+2004-05-21  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gfli/gfli.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/sel2path/sel2path.c
+	* plug-ins/sel2path/sel2path_adv_dialog.c
+	* plug-ins/sgi/sgi.c
+	* plug-ins/winicon/icodialog.c: HIG-ification.
+
 2004-05-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/data-commands.c (data_delete_callback): eek, delete
