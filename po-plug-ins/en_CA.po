@@ -1,15 +1,15 @@
 # Canadian English translations for gimp plug-ins
-# Copyright (C) Adam Weinberger and the GNOME Foundation
+# Copyright (C) 2004-2005 Adam Weinberger and the GNOME Foundation
 # This file is distributed under the same licence as the gimp plug-ins package.
-# Maintainer: Adam Weinberger <adamw@FreeBSD.org>
+# Adam Weinberger <adamw@gnome.org>, 2004, 2005.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-22 17:33+0100\n"
-"PO-Revision-Date: 2004-12-12 14:31-0400\n"
+"POT-Creation-Date: 2005-01-26 01:01-0500\n"
+"PO-Revision-Date: 2005-01-26 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -8510,35 +8510,35 @@ msgstr "Show previous object"
 msgid "Show next object"
 msgstr "Show next object"
 
-#: plug-ins/gfig/gfig-dialog.c:899
+#: plug-ins/gfig/gfig-dialog.c:899 plug-ins/gfig/gfig-stock.c:52
 msgid "Show all objects"
 msgstr "Show all objects"
 
-#: plug-ins/gfig/gfig-dialog.c:905
+#: plug-ins/gfig/gfig-dialog.c:905 plug-ins/gfig/gfig-stock.c:47
 msgid "Create line"
 msgstr "Create line"
 
-#: plug-ins/gfig/gfig-dialog.c:908
+#: plug-ins/gfig/gfig-dialog.c:908 plug-ins/gfig/gfig-stock.c:42
 msgid "Create circle"
 msgstr "Create circle"
 
-#: plug-ins/gfig/gfig-dialog.c:911
+#: plug-ins/gfig/gfig-dialog.c:911 plug-ins/gfig/gfig-stock.c:46
 msgid "Create ellipse"
 msgstr "Create ellipse"
 
-#: plug-ins/gfig/gfig-dialog.c:914
+#: plug-ins/gfig/gfig-dialog.c:914 plug-ins/gfig/gfig-stock.c:44
 msgid "Create arc"
 msgstr "Create arc"
 
-#: plug-ins/gfig/gfig-dialog.c:917
+#: plug-ins/gfig/gfig-dialog.c:917 plug-ins/gfig/gfig-stock.c:50
 msgid "Create reg polygon"
 msgstr "Create reg polygon"
 
-#: plug-ins/gfig/gfig-dialog.c:920
+#: plug-ins/gfig/gfig-dialog.c:920 plug-ins/gfig/gfig-stock.c:54
 msgid "Create star"
 msgstr "Create star"
 
-#: plug-ins/gfig/gfig-dialog.c:923
+#: plug-ins/gfig/gfig-dialog.c:923 plug-ins/gfig/gfig-stock.c:53
 msgid "Create spiral"
 msgstr "Create spiral"
 
@@ -8546,23 +8546,23 @@ msgstr "Create spiral"
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Create bezier curve. Shift + Button ends object creation."
 
-#: plug-ins/gfig/gfig-dialog.c:930
+#: plug-ins/gfig/gfig-dialog.c:930 plug-ins/gfig/gfig-stock.c:48
 msgid "Move an object"
 msgstr "Move an object"
 
-#: plug-ins/gfig/gfig-dialog.c:933
+#: plug-ins/gfig/gfig-dialog.c:933 plug-ins/gfig/gfig-stock.c:49
 msgid "Move a single point"
 msgstr "Move a single point"
 
-#: plug-ins/gfig/gfig-dialog.c:936
+#: plug-ins/gfig/gfig-dialog.c:936 plug-ins/gfig/gfig-stock.c:43
 msgid "Copy an object"
 msgstr "Copy an object"
 
-#: plug-ins/gfig/gfig-dialog.c:939
+#: plug-ins/gfig/gfig-dialog.c:939 plug-ins/gfig/gfig-stock.c:45
 msgid "Delete an object"
 msgstr "Delete an object"
 
-#: plug-ins/gfig/gfig-dialog.c:942
+#: plug-ins/gfig/gfig-dialog.c:942 plug-ins/gfig/gfig-stock.c:51
 msgid "Select an object"
 msgstr "Select an object"
 
@@ -8708,6 +8708,10 @@ msgstr "Spiral Number of Turns"
 #: plug-ins/gfig/gfig-star.c:57
 msgid "Star Number of Points"
 msgstr "Star Number of Points"
+
+#: plug-ins/gfig/gfig-stock.c:41
+msgid "Create bezier curve"
+msgstr "Create bezier curve"
 
 #: plug-ins/gfig/gfig.c:132
 msgid "_Gfig..."
@@ -10157,7 +10161,7 @@ msgstr "File already exists"
 msgid "Do you really want to overwrite?"
 msgstr "Do you really want to overwrite?"
 
-#: plug-ins/imagemap/imap_file.c:165
+#: plug-ins/imagemap/imap_file.c:166
 msgid "Save Imagemap"
 msgstr "Save Imagemap"
 
@@ -11622,9 +11626,3 @@ msgstr "Error: Could not read XJT property file '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Error: XJT property file '%s' is empty."
-
-#~ msgid "Before and After"
-#~ msgstr "Before and After"
-
-#~ msgid "Gfig layer %d"
-#~ msgstr "Gfig layer %d"
