@@ -560,7 +560,7 @@ marshall_proc_db_call (LISP a)
 	  if (success)
 	    {
 	      args[i].type = PARAM_INT16;
-	      args[i].data.d_int32 = get_c_long (car (a));
+	      args[i].data.d_int16 = (gint16) get_c_long (car (a));
 	    }
 	  break;
 	case PARAM_INT8:
@@ -569,7 +569,7 @@ marshall_proc_db_call (LISP a)
 	  if (success)
 	    {
 	      args[i].type = PARAM_INT8;
-	      args[i].data.d_int32 = get_c_long (car (a));
+	      args[i].data.d_int8 = (gint8) get_c_long (car (a));
 	    }
 	  break;
 	case PARAM_FLOAT:
@@ -605,7 +605,7 @@ marshall_proc_db_call (LISP a)
 	  if (success)
 	    {
 	      args[i].type = PARAM_INT16ARRAY;
-	      args[i].data.d_int16array = (short *) (car (a))->storage_as.long_array.data;
+	      args[i].data.d_int16array = (gint16*) (car (a))->storage_as.long_array.data;
 	    }
 	  break;
 	case PARAM_INT8ARRAY:
@@ -614,7 +614,7 @@ marshall_proc_db_call (LISP a)
 	  if (success)
 	    {
 	      args[i].type = PARAM_INT8ARRAY;
-	      args[i].data.d_int8array = (gint8 *) (car (a))->storage_as.string.data;
+	      args[i].data.d_int8array = (gint8*) (car (a))->storage_as.string.data;
 	    }
 	  break;
 	case PARAM_FLOATARRAY:

@@ -30,4 +30,4 @@ export filters...
 
 previews in file save (for jpeg compression, etc)
 
-
+save/restore state of major dialogs (exported to the PDB too)
