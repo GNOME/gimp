@@ -265,7 +265,7 @@ run (gchar      *name,
       gimp_get_data ("plug_in_plasma", &pvals);
       /* If we're using a time seed, set it at the start */
       if (pvals.timeseed)
-        pvals.seed = time(NULL);
+        pvals.seed = time (NULL);
       break;
 
     default:
@@ -355,7 +355,7 @@ plasma_dialog (GimpDrawable *drawable, GimpImageType drawable_type)
   gtk_container_add (GTK_CONTAINER (frame), preview);
 
   if (pvals.timeseed)
-    pvals.seed = time(NULL);
+    pvals.seed = time (NULL);
   plasma (drawable, TRUE); /* preview image */
 
   gtk_widget_show (preview);
@@ -425,7 +425,7 @@ plasma_seed_changed_callback (GimpDrawable *drawable,
                               gboolean    preview_mode)
 {
   if (pvals.timeseed)
-    pvals.seed = time(NULL);
+    pvals.seed = time (NULL);
   
   plasma(drawable, preview_mode);
 }
