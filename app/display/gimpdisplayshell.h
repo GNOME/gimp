@@ -131,6 +131,13 @@ GtkWidget * gimp_display_shell_new                  (GimpDisplay *gdisp);
 void        gimp_display_shell_close                (GimpDisplayShell *shell,
                                                      gboolean          kill_it);
 
+void        gimp_display_shell_transform_coords     (GimpDisplayShell *shell,
+                                                     GimpCoords       *image_coords,
+                                                     GimpCoords       *display_coords);
+void        gimp_display_shell_untransform_coords   (GimpDisplayShell *shell,
+                                                     GimpCoords       *display_coords,
+                                                     GimpCoords       *image_coords);
+
 void        gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell);
 
 GimpGuide * gimp_display_shell_find_guide           (GimpDisplayShell *shell,

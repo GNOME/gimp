@@ -53,6 +53,14 @@ struct _SelectionOptions
   GtkObject   *threshold_w;
 
   /*  used by rect., ellipse selection  */
+  gboolean     auto_shrink;
+  gboolean     auto_shrink_d;
+  GtkWidget   *auto_shrink_w;
+
+  gboolean     shrink_merged;
+  gboolean     shrink_merged_d;
+  GtkWidget   *shrink_merged_w;
+
   gboolean     fixed_size;
   gboolean     fixed_size_d;
   GtkWidget   *fixed_size_w;

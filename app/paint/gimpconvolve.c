@@ -276,7 +276,7 @@ gimp_convolve_tool_modifier_key (GimpTool        *tool,
 				 GdkModifierType  state,
 				 GimpDisplay     *gdisp)
 {
-  if ((state & GDK_CONTROL_MASK) &&
+  if ((key == GDK_CONTROL_MASK) &&
       ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
     {
       switch (convolve_options->type)

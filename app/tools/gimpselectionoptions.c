@@ -51,7 +51,6 @@ selection_options_init (SelectionOptions     *options,
   GtkWidget *table;
   GtkWidget *label;
   GtkWidget *scale;
-  GtkWidget *separator;
 
   /*  initialize the tool options structure  */
   tool_options_init ((GimpToolOptions *) options,
@@ -66,6 +65,8 @@ selection_options_init (SelectionOptions     *options,
   options->antialias      = options->antialias_d      = TRUE;
   options->sample_merged  = options->sample_merged_d  = FALSE;
   options->threshold                                  = gimprc.default_threshold;
+  options->auto_shrink    = options->auto_shrink_d    = FALSE;
+  options->shrink_merged  = options->shrink_merged_d  = FALSE;
   options->fixed_size     = options->fixed_size_d     = FALSE;
   options->fixed_height   = options->fixed_height_d   = 1;
   options->fixed_width    = options->fixed_width_d    = 1;
@@ -77,6 +78,8 @@ selection_options_init (SelectionOptions     *options,
   options->antialias_w      = NULL;
   options->sample_merged_w  = NULL;
   options->threshold_w      = NULL;
+  options->auto_shrink_w    = NULL;
+  options->shrink_merged_w  = NULL;
   options->fixed_size_w     = NULL;
   options->fixed_height_w   = NULL;
   options->fixed_width_w    = NULL;
@@ -145,6 +148,7 @@ selection_options_init (SelectionOptions     *options,
                         &options->antialias);
     }
 
+#if 0
   /*  a separator between the common and tool-specific selection options  */
   if (tool_type == GIMP_TYPE_ISCISSORS_TOOL      ||
       tool_type == GIMP_TYPE_RECT_SELECT_TOOL    ||
@@ -152,10 +156,13 @@ selection_options_init (SelectionOptions     *options,
       tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL   ||
       tool_type == GIMP_TYPE_BY_COLOR_SELECT_TOOL)
     {
+      GtkWidget *separator;
+
       separator = gtk_hseparator_new ();
       gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
       gtk_widget_show (separator);
     }
+#endif
 
   /* selection tool with an interactive boundary that can be toggled */
   if (tool_type == GIMP_TYPE_ISCISSORS_TOOL)
@@ -219,36 +226,77 @@ selection_options_init (SelectionOptions     *options,
   if (tool_type == GIMP_TYPE_RECT_SELECT_TOOL    ||
       tool_type == GIMP_TYPE_ELLIPSE_SELECT_TOOL)
     {
+      GtkWidget *frame;
+      GtkWidget *vbox2;
       GtkWidget *alignment;
       GtkWidget *table;
       GtkWidget *width_spinbutton;
       GtkWidget *height_spinbutton;
 
+      frame = gtk_frame_new (NULL);
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+
+      vbox2 = gtk_vbox_new (FALSE, 0);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+      gtk_container_add (GTK_CONTAINER (frame), vbox2);
+      gtk_widget_show (vbox2);
+
+      options->auto_shrink_w =
+	gtk_check_button_new_with_label (_("Auto Shrink Selection"));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->auto_shrink_w),
+				    options->auto_shrink_d);
+      gtk_frame_set_label_widget (GTK_FRAME (frame), options->auto_shrink_w);
+      gtk_widget_show (options->auto_shrink_w);
+
+      g_signal_connect (G_OBJECT (options->auto_shrink_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &options->auto_shrink);
+
+      gtk_widget_set_sensitive (vbox2, options->auto_shrink);
+      g_object_set_data (G_OBJECT (options->auto_shrink_w), "set_sensitive",
+                         vbox2);
+
+      options->shrink_merged_w =
+	gtk_check_button_new_with_label (_("Sample Merged"));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->shrink_merged_w),
+				    options->shrink_merged_d);
+      gtk_box_pack_start (GTK_BOX (vbox2), options->shrink_merged_w,
+                          FALSE, FALSE, 0);
+      gtk_widget_show (options->shrink_merged_w);
+
+      g_signal_connect (G_OBJECT (options->shrink_merged_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &options->shrink_merged);
+
+      frame = gtk_frame_new (NULL);
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+
+      alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+      gtk_container_set_border_width (GTK_CONTAINER (alignment), 2);
+      gtk_container_add (GTK_CONTAINER (frame), alignment);
+      gtk_widget_show (alignment);
+
       options->fixed_size_w =
 	gtk_check_button_new_with_label (_("Fixed Size / Aspect Ratio"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fixed_size_w),
 				    options->fixed_size_d);
-      gtk_box_pack_start (GTK_BOX (vbox), options->fixed_size_w,
-			  FALSE, FALSE, 0);
+      gtk_frame_set_label_widget (GTK_FRAME (frame), options->fixed_size_w);
       gtk_widget_show (options->fixed_size_w);
 
       g_signal_connect (G_OBJECT (options->fixed_size_w), "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &options->fixed_size);
 
-      alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-      gtk_box_pack_start (GTK_BOX (vbox), alignment, FALSE, FALSE, 0);
-      gtk_widget_show (alignment);
+      gtk_widget_set_sensitive (alignment, options->fixed_size_d);
+      g_object_set_data (G_OBJECT (options->fixed_size_w), "set_sensitive",
+                         alignment);
 
       table = gtk_table_new (3, 2, FALSE);
       gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
       gtk_table_set_row_spacings (GTK_TABLE (table), 1);
       gtk_container_add (GTK_CONTAINER (alignment), table);
-
-      /*  grey out the table if fixed size is off  */
-      gtk_widget_set_sensitive (table, options->fixed_size_d);
-      g_object_set_data (G_OBJECT (options->fixed_size_w), "set_sensitive",
-                         table);
 
       options->fixed_width_w =
 	gtk_adjustment_new (options->fixed_width_d, 1e-5, 32767.0,

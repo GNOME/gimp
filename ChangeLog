@@ -1,3 +1,45 @@
+2001-11-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/qmask.c: fixed qmask callbacks to check if the toggle is
+	active before performing any action.
+
+	* app/core/core-types.h: added the GimpCoords type here because it
+	will be used by core functions as soon as the painting stuff is
+	separated from the painting tools.
+
+	* app/core/gimpdrawable-bucket-fill.c: fixed g_return_if_fail()s
+	to not disable any useful operation :-) Still didn't figure out
+	how I broke display color and pattern dropping :-(
+
+	* app/display/gimpdisplayshell.[ch]: added
+	gimp_display_shell_[un]transform_coords() which work on two
+	GimpCoords pointers.
+
+	* app/display/gimpdisplayshell-callbacks.c: use the new functions
+	instead of the gdisplay_* ones.
+
+	* app/gui/image-commands.c: GimpImage emits "disconnect", not
+	"destroy".
+
+	* app/tools/tools-types.h
+	* app/tools/gimptool.h: removed GimpCoords here.
+
+	* app/tools/gimpconvolvetool.c: fixed modifier_key() implementation.
+
+	* app/tools/gimpcroptool.c: cleanup.
+
+	* app/tools/paint_options.c: don't need a separator in the ink
+	tool options.
+
+	* app/tools/gimprectselecttool.c
+	* app/tools/selection_options.[ch]: implemented wish #50352:
+
+	Added "Auto Shrink Selection" and "Sample Merged" toggles to
+	the rect_select and ellipse_select tools. Put the "Fixed size"
+	widgets in a frame. Removed the separators after the common
+	selection tool options because I didn't like them any more
+	(feel free to comment ;)
+
 2001-11-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/resize-dialog.c: added a "Center" button to the "Offset"

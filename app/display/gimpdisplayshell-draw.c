@@ -598,6 +598,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   /*  the qmask buttons  */
   shell->qmaskoff = gtk_radio_button_new (group);
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (shell->qmaskoff));
+  gtk_widget_set_usize (GTK_WIDGET (shell->qmaskoff), 16, 16);
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (shell->qmaskoff), FALSE);
   GTK_WIDGET_UNSET_FLAGS (shell->qmaskoff, GTK_CAN_FOCUS);
 
@@ -609,6 +610,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 
   shell->qmaskon = gtk_radio_button_new (group);
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (shell->qmaskon));
+  gtk_widget_set_usize (GTK_WIDGET (shell->qmaskon), 16, 16);
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (shell->qmaskon), FALSE);
   GTK_WIDGET_UNSET_FLAGS (shell->qmaskon, GTK_CAN_FOCUS);
 
@@ -780,6 +782,50 @@ gimp_display_shell_close (GimpDisplayShell *shell,
     {
       gdisplay_delete (shell->gdisp);
     }
+}
+
+void
+gimp_display_shell_transform_coords (GimpDisplayShell *shell,
+                                     GimpCoords       *image_coords,
+                                     GimpCoords       *display_coords)
+{
+  gdouble scalex;
+  gdouble scaley;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (image_coords != NULL);
+  g_return_if_fail (display_coords != NULL);
+
+  scalex = SCALEFACTOR_X (shell->gdisp);
+  scaley = SCALEFACTOR_Y (shell->gdisp);
+
+  display_coords->x = scalex * image_coords->x;
+  display_coords->y = scaley * image_coords->y;
+
+  display_coords->x += - shell->offset_x + shell->disp_xoffset;
+  display_coords->y += - shell->offset_y + shell->disp_yoffset;
+}
+
+void
+gimp_display_shell_untransform_coords (GimpDisplayShell *shell,
+                                       GimpCoords       *display_coords,
+                                       GimpCoords       *image_coords)
+{
+  gdouble scalex;
+  gdouble scaley;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (display_coords != NULL);
+  g_return_if_fail (image_coords != NULL);
+
+  scalex = SCALEFACTOR_X (shell->gdisp);
+  scaley = SCALEFACTOR_Y (shell->gdisp);
+
+  image_coords->x = display_coords->x - shell->disp_xoffset + shell->offset_x;
+  image_coords->y = display_coords->y - shell->disp_yoffset + shell->offset_y;
+
+  image_coords->x /= scalex;
+  image_coords->y /= scaley;
 }
 
 void

@@ -260,6 +260,8 @@ typedef struct _ImageMap            ImageMap; /* temp_hack, will be an object */
 
 /*  non-object types  */
 
+typedef struct _GimpCoords          GimpCoords;
+
 typedef struct _GimpCoreConfig      GimpCoreConfig;
 
 typedef struct _GimpGuide           GimpGuide;
@@ -291,6 +293,19 @@ typedef void       (* GimpInitStatusFunc)       (const gchar *text1,
 typedef void       (* GimpDataFileLoaderFunc)   (const gchar *filename,
 						 gpointer     loader_data);
 typedef GimpData * (* GimpDataObjectLoaderFunc) (const gchar *filename);
+
+
+/*  structs  */
+
+struct _GimpCoords
+{
+  gdouble x;
+  gdouble y;
+  gdouble pressure;
+  gdouble xtilt;
+  gdouble ytilt;
+  gdouble wheel;
+};
 
 
 #endif /* __CORE_TYPES_H__ */

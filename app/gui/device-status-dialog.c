@@ -1197,8 +1197,8 @@ device_status_data_changed (GimpContext *context,
 }
 
 static void
-device_status_context_connect  (GimpContext *context,
-				GdkDevice   *device)
+device_status_context_connect (GimpContext *context,
+                               GdkDevice   *device)
 {
   g_signal_connect (G_OBJECT (context), "foreground_changed",
                     G_CALLBACK (device_status_data_changed),

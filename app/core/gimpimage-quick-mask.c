@@ -177,17 +177,16 @@ qmask_deactivate_callback (GtkWidget   *widget,
   GimpImage   *gimage;
   GimpChannel *gmask;
 
-  if (gdisp)
+  if (GTK_TOGGLE_BUTTON (widget)->active)
     {
       gimage = gdisp->gimage;
 
-      if (! gimage) 
-	return;
-      
       if (!gdisp->gimage->qmask_state)
-	return; /* if already set do nothing */
+        return; /* if already set do nothing */
 
-      if ( (gmask = gimp_image_get_channel_by_name (gimage, "Qmask")) )
+      gmask = gimp_image_get_channel_by_name (gimage, "Qmask");
+
+      if (gmask)
   	{ 
 	  undo_push_group_start (gimage, QMASK_UNDO);
 	  /*  push the undo here since removing the mask will
@@ -215,20 +214,19 @@ qmask_activate_callback (GtkWidget   *widget,
   GimpLayer   *layer;
   GimpRGB      color;
 
-  if (gdisp)
+  if (GTK_TOGGLE_BUTTON (widget)->active)
     {
       gimage = gdisp->gimage;
 
-      if (! gimage) 
-	return;
-
       if (gdisp->gimage->qmask_state)
-	return; /* If already set, do nothing */
+	return; /* if already set, do nothing */
   
       /* Set the defaults */
       color = gimage->qmask_color;
- 
-      if ((gmask = gimp_image_get_channel_by_name (gimage, "Qmask"))) 
+
+      gmask = gimp_image_get_channel_by_name (gimage, "Qmask");
+
+      if (gmask)
 	{
 	  gimage->qmask_state = TRUE; 
 	  /* if the user was clever and created his own */

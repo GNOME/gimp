@@ -29,17 +29,6 @@
 #define  NON_ACTIVE_LAYER  (1 << 2)
 
 
-struct _GimpCoords
-{
-  gdouble x;
-  gdouble y;
-  gdouble pressure;
-  gdouble xtilt;
-  gdouble ytilt;
-  gdouble wheel;
-};
-
-
 #define GIMP_TYPE_TOOL            (gimp_tool_get_type ())
 #define GIMP_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL, GimpTool))
 #define GIMP_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL, GimpToolClass))

@@ -155,10 +155,10 @@ gimp_drawable_bucket_fill_full (GimpDrawable   *drawable,
   gboolean     new_buf = FALSE;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (fill_mode == PATTERN_BUCKET_FILL &&
+  g_return_if_fail (fill_mode != PATTERN_BUCKET_FILL ||
                     GIMP_IS_PATTERN (pattern));
-  g_return_if_fail ((fill_mode == FG_BUCKET_FILL ||
-                     fill_mode == BG_BUCKET_FILL) && color != NULL);
+  g_return_if_fail ((fill_mode != FG_BUCKET_FILL &&
+                     fill_mode != BG_BUCKET_FILL) || color != NULL);
 
   gimage = gimp_drawable_gimage (drawable);
 
@@ -226,7 +226,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable   *drawable,
   /*  If there is no selection mask, the do a seed bucket
    *  fill...To do this, calculate a new contiguous region
    */
-  if (do_seed_fill && ! gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2))
+  if (! gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) && do_seed_fill)
     {
       mask = gimp_image_contiguous_region_by_seed (gimage, drawable,
                                                    sample_merged,

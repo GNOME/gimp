@@ -40,7 +40,6 @@ typedef struct _GimpBezierSelectTool   GimpBezierSelectTool;
 
 /*  stuff  */
 
-typedef struct _GimpCoords          GimpCoords;
 typedef struct _SelectionOptions    SelectionOptions;
 
 

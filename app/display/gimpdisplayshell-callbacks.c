@@ -322,10 +322,9 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
   image_coords = display_coords;
 
   /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
-  gdisplay_untransform_coords_f (gdisp,
-                                 display_coords.x, display_coords.y,
-                                 &image_coords.x, &image_coords.y,
-                                 FALSE);
+  gimp_display_shell_untransform_coords (shell,
+                                         &display_coords,
+                                         &image_coords);
 
   switch (event->type)
     {
@@ -452,12 +451,9 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
                                                  &display_coords.x,
                                                  &display_coords.y);
 
-                  gdisplay_untransform_coords_f (gdisp,
-                                                 display_coords.x,
-                                                 display_coords.y,
-                                                 &image_coords.x,
-                                                 &image_coords.y,
-                                                 FALSE);
+                  gimp_display_shell_untransform_coords (shell,
+                                                         &display_coords,
+                                                         &image_coords);
 
 		  update_cursor = TRUE;
 		}
@@ -559,12 +555,9 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
                                                      &display_coords.x,
                                                      &display_coords.y);
 
-                      gdisplay_untransform_coords_f (gdisp,
-                                                     display_coords.x,
-                                                     display_coords.y,
-                                                     &image_coords.x,
-                                                     &image_coords.y,
-                                                     FALSE);
+                      gimp_display_shell_untransform_coords (shell,
+                                                             &display_coords,
+                                                             &image_coords);
 
 		      update_cursor = TRUE;
 		    }
@@ -624,6 +617,17 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
 
 	  gtk_adjustment_set_value (adj, value);
 	}
+
+      gimp_display_shell_untransform_coords (shell,
+                                             &display_coords,
+                                             &image_coords);
+
+      if (active_tool)
+        {
+          gimp_tool_oper_update (active_tool,
+                                 &image_coords, state,
+                                 gdisp);
+        }
 
       return_val = TRUE;
       break;
@@ -717,12 +721,9 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
                                                  &display_coords.x,
                                                  &display_coords.y);
 
-                  gdisplay_untransform_coords_f (gdisp,
-                                                 display_coords.x,
-                                                 display_coords.y,
-                                                 &image_coords.x,
-                                                 &image_coords.y,
-                                                 FALSE);
+                  gimp_display_shell_untransform_coords (shell,
+                                                         &display_coords,
+                                                         &image_coords);
 
 		  update_cursor = TRUE;
 		}

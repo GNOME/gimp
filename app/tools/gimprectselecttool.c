@@ -30,6 +30,7 @@
 
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-crop.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-mask-select.h"
 #include "core/gimpmarshal.h"
@@ -599,8 +600,55 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
                                    gint                w,
                                    gint                h)
 {
-  g_return_if_fail (rect_tool != NULL);
+  GimpTool         *tool;
+  SelectionOptions *sel_options;
+
   g_return_if_fail (GIMP_IS_RECT_SELECT_TOOL (rect_tool));
+
+  tool = GIMP_TOOL (rect_tool);
+
+  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+
+  if (sel_options->auto_shrink)
+    {
+      gint x2, y2;
+
+      x = CLAMP (x, 0, tool->gdisp->gimage->width);
+      y = CLAMP (y, 0, tool->gdisp->gimage->height);
+      w = CLAMP (w, 0, tool->gdisp->gimage->width  - x);
+      h = CLAMP (h, 0, tool->gdisp->gimage->height - y);
+
+      if (w < 1 || h < 1)
+        return;
+
+      if (! sel_options->shrink_merged)
+        {
+          GimpDrawable *drawable;
+          gint          off_x, off_y;
+          gint          width, height;
+
+          drawable = gimp_image_active_drawable (tool->gdisp->gimage);
+          gimp_drawable_offsets (drawable, &off_x, &off_y);
+          width  = gimp_drawable_width (drawable);
+          height = gimp_drawable_height (drawable);
+
+          x = CLAMP (x, off_x, off_x + width);
+          y = CLAMP (y, off_y, off_y + height);
+          w = CLAMP (w, 0, off_x + width  - x);
+          h = CLAMP (h, 0, off_y + height - y);
+        }
+
+      if (gimp_image_crop_auto_shrink (tool->gdisp->gimage,
+                                       x, y,
+                                       x + w, y + h,
+                                       ! sel_options->shrink_merged,
+                                       &x, &y,
+                                       &x2, &y2))
+        {
+          w = x2 - x;
+          h = y2 - y;
+        }
+    }
 
   g_signal_emit (G_OBJECT (rect_tool), rect_select_signals[RECT_SELECT], 0,
                  x, y, w, h);
