@@ -26,7 +26,8 @@
 #include "libgimp/gimp.h"
 
 
-#define PROCEDURE_NAME "file_glob"
+#define  PROCEDURE_NAME  "file_glob"
+
 
 static void      query        (void);
 static void      run          (const gchar      *name,
@@ -57,7 +58,7 @@ query (void)
 {
   static GimpParamDef glob_args[] =
   {
-    { GIMP_PDB_STRING,      "pattern",   "The glob pattern" }
+    { GIMP_PDB_STRING,      "pattern" ,  "The glob pattern (in UTF-8 encoding)"}
   };
 
   static GimpParamDef glob_return_vals[] =
@@ -71,7 +72,9 @@ query (void)
                           "Returns a list of matching filenames",
                           "This can be useful in scripts and other plugins "
                           "(e.g., batch-conversion). See the glob(7) manpage "
-                          "for more info.",
+                          "for more info. Note however that this isn't a "
+                          "full-featured glob implementation. It only handles "
+                          "simple patterns like \"/home/foo/bar/*.jpg\".",
                           "Sven Neumann",
                           "Sven Neumann",
                           "2004",
@@ -128,12 +131,79 @@ glob_match (const gchar   *pattern,
             gint          *num_matches,
             gchar       ***matches)
 {
+  GDir        *dir;
+  GPtrArray   *array;
+  const gchar *filename;
+  gchar       *dirname;
+  gchar       *tmp;
+
   g_return_val_if_fail (pattern != NULL, FALSE);
   g_return_val_if_fail (num_matches != NULL, FALSE);
   g_return_val_if_fail (matches != NULL, FALSE);
 
   *num_matches = 0;
   *matches     = NULL;
+
+  /*  This is not a complete glob() implementation but rather a very
+   *  simplistic approach. However it works for the most common use
+   *  case and is better than nothing.
+   */
+
+  tmp = g_filename_from_utf8 (pattern, -1, NULL, NULL, NULL);
+  if (! tmp)
+    return FALSE;
+
+  dirname = g_path_get_dirname (tmp);
+
+  dir = g_dir_open (dirname, 0, NULL);
+  g_free (tmp);
+
+  if (! dir)
+    {
+      g_free (dirname);
+      return TRUE;
+    }
+
+  /*  check if the pattern has a directory part at all  */
+  tmp = g_path_get_basename (pattern);
+  if (strcmp (pattern, tmp) == 0)
+    {
+      g_free (dirname);
+      dirname = NULL;
+    }
+  g_free (tmp);
+
+  array = g_ptr_array_new ();
+
+  for (filename = g_dir_read_name (dir);
+       filename;
+       filename = g_dir_read_name (dir))
+    {
+      gchar *name;
+
+      if (dirname)
+        {
+          gchar *path = g_build_filename (dirname, filename, NULL);
+
+          name = g_filename_to_utf8 (path, -1, NULL, NULL, NULL);
+          g_free (path);
+        }
+      else
+        {
+          name = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+        }
+
+      if (name && glob_fnmatch (pattern, name))
+        g_ptr_array_add (array, name);
+      else
+        g_free (name);
+    }
+
+  g_dir_close (dir);
+  g_free (dirname);
+
+  *num_matches = array->len;
+  *matches     = (gchar **) g_ptr_array_free (array, FALSE);
 
   return TRUE;
 }
@@ -193,9 +263,9 @@ get_unescaped_char (const char **str,
   return c;
 }
 
-/* Match STRING against the filename pattern PATTERN, returning zero if
-   it matches, nonzero if not.  */
-
+/* Match STRING against the filename pattern PATTERN,
+ * returning TRUE if it matches, FALSE otherwise.
+ */
 static gboolean
 fnmatch_intern (const gchar *pattern,
                 const gchar *string,

@@ -1,5 +1,11 @@
 2004-11-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/glob.c: added a naive glob() implementation
+	which handles the most common use case and is certainly better
+	than nothing. Closes bug #143661 again.
+
+2004-11-19  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimp.c: converted a g_warning() to g_printerr().
 
 2004-11-19  Sven Neumann  <sven@gimp.org>
