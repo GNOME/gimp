@@ -179,3 +179,5 @@ current work: I fell into this rabbit hole by writing highly verbose patch docum
 which just goes to show that succinctness is its own reward. My patch documentation 
 archive is http://idt.net/~gosgood/gimp-patch/
 commit access: yes
+
+Email: debbugs-test-submit@bugzilla.gnome.org
