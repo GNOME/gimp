@@ -1,3 +1,18 @@
+2003-11-27  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/common/gifload.c: Clean up or clarify a load of
+	warnings and messages, convert a couple of messages to warnings
+	and mark them for translation, point people to bugzilla instead
+	of me.
+
+2003-11-27  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/common/psd.c:
+	- Raise the layer limit to 300 layers 
+	- Mark some more relatively important warning strings for translation
+	- Warning strings now suggest filing a bug in GIMP's bugzilla
+	  instead of directly telling me.
+
 2003-11-26  Tor Lillqvist  <tml@iki.fi>
 
 	* Makefile.am (SUBDIRS): Drop "build".
