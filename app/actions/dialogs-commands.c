@@ -88,7 +88,6 @@ void
 dialogs_create_lc_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
-  GtkWidget *widget;
   static const gchar *tabs[] =
   {
     "gimp-layer-list",
@@ -97,6 +96,7 @@ dialogs_create_lc_cmd_callback (GtkAction *action,
     "gimp-undo-history"
   };
 
+  GtkWidget *widget;
   return_if_no_widget (widget, data);
 
   dialogs_create_dock (gtk_widget_get_screen (widget), TRUE,
@@ -107,7 +107,6 @@ void
 dialogs_create_data_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
-  GtkWidget *widget;
   static const gchar *tabs[] =
   {
     "gimp-brush-grid",
@@ -117,6 +116,7 @@ dialogs_create_data_cmd_callback (GtkAction *action,
     "gimp-font-list"
   };
 
+  GtkWidget *widget;
   return_if_no_widget (widget, data);
 
   dialogs_create_dock (gtk_widget_get_screen (widget), FALSE,
@@ -127,7 +127,6 @@ void
 dialogs_create_stuff_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
-  GtkWidget *widget;
   static const gchar *tabs[] =
   {
     "gimp-buffer-list",
@@ -136,6 +135,7 @@ dialogs_create_stuff_cmd_callback (GtkAction *action,
     "gimp-template-list"
   };
 
+  GtkWidget *widget;
   return_if_no_widget (widget, data);
 
   dialogs_create_dock (gtk_widget_get_screen (widget), FALSE,

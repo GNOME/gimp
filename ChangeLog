@@ -1,5 +1,9 @@
 2004-10-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/dialogs-commands.c: purely cosmetic.
+
+2004-10-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-enums.[ch]: register GimpConvertPaletteType with
 	the type system.
 
