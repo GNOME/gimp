@@ -24,8 +24,10 @@ API generalization
    gimp_desaturate -> drawable
 
 bugs
+  * --enable-perl-prefix, --with-perl=, --with-perl-cc=
+  * URGENT: podperl doesn't work.
   * try to work around the redhat-undef $fh => no close problem.
-  * .pot file -> add to dist.
+  * .pot file -> add to dist(???)
   * damnit libintl crazy shit
   * font_text with negative size? bug report #5523
   * gimp-perl list archives.. where and add this to the gimp.html page!

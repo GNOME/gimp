@@ -129,7 +129,7 @@ register "seth_spin",
          "Seth Burgess",
          "Seth Burgess <sjburges\@gimp.org>",
          "1.6",
-         N_"<Image>/Filters/Animation/Seth Spin...",
+         N_"<Toolbox>/Xtns/Animation/Seth Spin...",
          "*",
          [
           [PF_DRAWABLE, "source", "What drawable to spin from?"],

@@ -15,17 +15,11 @@ msgstr ""
 msgid "<Image>/Filters/Logulator/Bovination"
 msgstr "<Image>/Ф╕льтри/Logulator/Bovination"
 
-msgid "<Image>/Guides/Center Guide"
-msgstr "<Image>/Направляюч╕/Центрувати"
-
 msgid "<Image>/Filters/Logulator/Blended"
 msgstr "<Image>/Ф╕льтри/Logulator/Зм╕шаний"
 
 msgid "<Image>/Filters/Logulator/Basic I"
 msgstr "<Image>/Ф╕льтри/Logulator/Основний I"
-
-msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Логотипи/Inner Bevel"
 
 msgid "FATAL: unable to create $tmp: $!\n"
 msgstr "ПОМИЛКА: невдалося створити $tmp: $!\n"
@@ -37,8 +31,13 @@ msgstr ""
 msgid "<Image>/Filters/Web/Prepare for GIF..."
 msgstr "<Image>/Ф╕льтри/WWW/П╕дготувати для GIF..."
 
-msgid "<Image>/Filters/Noise/Feedback"
-msgstr "<Image>/Ф╕льтри/Шум/Зворотн╕й зв'язок"
+#, fuzzy
+msgid "<Image>/Filters/Logulator/3D Outline..."
+msgstr "<Image>/Ф╕льтри/Logulator/3D Контур"
+
+#, fuzzy
+msgid "<Image>/Filters/Animation/Animate Cells..."
+msgstr "<Image>/Ф╕льтри/Ан╕мац╕я/Ан╕мувати ком╕рки"
 
 msgid ""
 "       interface-arguments are\n"
@@ -46,6 +45,10 @@ msgid ""
 "           -i | --interact            let the user edit the values first\n"
 "       script-arguments are\n"
 msgstr ""
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Font Table..."
+msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Шрифтова таблица"
 
 msgid "being called as '%s', but '%s' not registered in the pdb"
 msgstr ""
@@ -101,6 +104,10 @@ msgstr "Завантажити"
 msgid "/Xtns/Render"
 msgstr "/Розш./В╕зуал╕зац╕я"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl/Control Center..."
+msgstr "<Toolbox>/Розш./Perl/Центр керування"
+
 msgid "illegal parasite specification, reference expected"
 msgstr ""
 
@@ -119,26 +126,41 @@ msgstr "невдала авторизац╕я, з'╓днання об╕рвано"
 msgid "BG"
 msgstr "ТЛО"
 
-msgid "<Image>/Filters/Colors/Fire"
-msgstr "<Image>/Ф╕льтри/Кольори/Вогонь"
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Bricks..."
+msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Цегла"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
+msgstr "<Toolbox>/Розш./Ан╕мац╕я/Дошка оголошень"
 
 msgid "illegal type for colour specification"
 msgstr "нев╕рний тип специф╕кац╕╖ кольору"
 
-msgid "<Toolbox>/Xtns/Render/Bricks"
-msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Цегла"
-
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr ""
 
-msgid "<Image>/Filters/Logulator/Transparent Logo"
-msgstr "<Image>/Ф╕льтри/Logulator/Прозорий логотип"
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
+msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Povray/Настройки"
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Random Blends..."
+msgstr "<Image>/Фильтры/В╕зуал╕зац╕я/Випадков╕ сум╕ш╕"
 
 msgid "Plug-In Path"
 msgstr "Шлях до доповнення"
 
 msgid "You can't run this script with an INDEXED image!!"
 msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Terral Text..."
+msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Земляний текст"
+
+#, fuzzy
+msgid "<Image>/Guides/Guide Grid..."
+msgstr "<Image>/Направляюч╕/С╕тка"
 
 msgid "accepted unix connection"
 msgstr ""
@@ -147,9 +169,6 @@ msgid "server going down..."
 msgstr ""
 
 msgid "trying to start gimp with options \"$opt\"\n"
-msgstr ""
-
-msgid "<Image>/Filters/Noise/Ditherize"
 msgstr ""
 
 msgid "pdl height != region height"
@@ -161,11 +180,9 @@ msgstr ""
 msgid "received QUIT request"
 msgstr ""
 
-msgid "<Image>/Filters/Web/Webify"
-msgstr "<Image>/Ф╕льтри/WWW/Webify"
-
-msgid "<Toolbox>/Xtns/PDB Explorer"
-msgstr "<Toolbox>/Розш./Досл╕дник ПБД"
+#, fuzzy
+msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
+msgstr "<Toolbox>/Розш./Приклад Gimp::Fu"
 
 msgid " = [argument error]\n"
 msgstr ""
@@ -176,6 +193,10 @@ msgstr ""
 msgid " matching functions"
 msgstr ""
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Random Art #1..."
+msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Випадкове мистецтво #1"
+
 msgid ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
 "       gimp-arguments are\n"
@@ -185,9 +206,6 @@ msgid ""
 "           --host|--tcp HOST[:PORT]   connect to HOST (optionally using PORT)\n"
 "                                      (for more info, see Gimp::Net(3))\n"
 msgstr ""
-
-msgid "<Image>/Filters/Animation/Animate Cells"
-msgstr "<Image>/Ф╕льтри/Ан╕мац╕я/Ан╕мувати ком╕рки"
 
 msgid ""
 "An even number of frames is needed for spin back.\n"
@@ -218,9 +236,6 @@ msgstr ""
 msgid "authorization ok, but: $r[1]\n"
 msgstr "авторизац╕я пройшла усп╕шно, але: $r[1]\n"
 
-msgid "<Image>/Filters/Render/Highlight Edges"
-msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Яскрав╕ кра╖"
-
 msgid "a color must have three components (array elements)"
 msgstr ""
 
@@ -248,8 +263,9 @@ msgstr "<Image>/Ф╕льтри/Logulator/Imigre-26"
 msgid "Text"
 msgstr "Текст"
 
-msgid "<Image>/Select/Round Rectangular Selection"
-msgstr "<Image>/Вид╕лення/Вид╕лення заокругленого прямокутника"
+#, fuzzy
+msgid "<Image>/Filters/Colors/Colour To Alpha..."
+msgstr "<Image>/Ф╕льтри/Кольори/Кол╕р у альфа"
 
 msgid "/Xtns/Perl"
 msgstr "/Розш./Perl"
@@ -257,8 +273,9 @@ msgstr "/Розш./Perl"
 msgid "no additional information available, use --help\n"
 msgstr ""
 
-msgid "<Image>/Filters/Render/Brushed Metal"
-msgstr ""
+#, fuzzy
+msgid "<Toolbox>/Xtns/Parasite Editor..."
+msgstr "<Toolbox>/Розш./Редактор паразит╕в"
 
 msgid "gimp_tile_set_data is not yet implemented\n"
 msgstr "gimp_tile_set_data ще не реал╕зовано\n"
@@ -266,12 +283,17 @@ msgstr "gimp_tile_set_data ще не реал╕зовано\n"
 msgid "Visual Scriptor"
 msgstr ""
 
-msgid "<Image>/Filters/Map/Image Tile"
-msgstr "<Image>/Ф╕льтри/Мапа/Image Tile"
-
 msgid "No horizontal or vertical guides found. Aborted."
 msgstr ""
 "Не знайдено н╕ вертикальних н╕ горизонтальних направляючих. Виконання перервано."
+
+#, fuzzy
+msgid "<Image>/Filters/Map/Image Tile..."
+msgstr "<Image>/Ф╕льтри/Мапа/Image Tile"
+
+#, fuzzy
+msgid "<Image>/Guides/To Selection..."
+msgstr "<Image>/Направляюч╕/У вид╕лення"
 
 msgid "<Image>/Filters/Logulator/Comic Book"
 msgstr "<Image>/Ф╕льтри/Logulator/Ком╕кси"
@@ -281,6 +303,10 @@ msgstr "<Image>/Направляюч╕/Видалити"
 
 msgid "get current background colour from the gimp"
 msgstr ""
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/PDB Explorer..."
+msgstr "<Toolbox>/Розш./Досл╕дник ПБД"
 
 msgid "WARNING: shared locking requested but not implemented"
 msgstr ""
@@ -293,9 +319,6 @@ msgstr ""
 
 msgid "unable to read '$fn': $!"
 msgstr "невдалося зчитати \"$fn\": $!"
-
-msgid "<Toolbox>/Xtns/Perl/Control Center"
-msgstr "<Toolbox>/Розш./Perl/Центр керування"
 
 msgid "[undefined]"
 msgstr "[невизначено]"
@@ -316,6 +339,10 @@ msgstr ""
 msgid "unable to read temporary file $tmp: $!"
 msgstr "нездолося зчитати тимчасовий файл $tmp: $!"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
+msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Yin-Yang"
+
 msgid "PDB Explorer - the olof edition (yet still an alpha version)"
 msgstr "Досл╕дник ПБД - olof-редакц╕я (ще лиша╓ться альфа-верс╕╓ю)"
 
@@ -328,8 +355,9 @@ msgstr "<Image>/Ф╕льтри/Logulator/Крейда"
 msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
 msgstr ""
 
-msgid "<Image>/Filters/Render/Stampify"
-msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Штампувати"
+#, fuzzy
+msgid "<Image>/Select/Round Rectangular Selection..."
+msgstr "<Image>/Вид╕лення/Вид╕лення заокругленого прямокутника"
 
 msgid ""
 "BLURB:\n"
@@ -354,8 +382,9 @@ msgstr ""
 msgid "accepting connections on port $port"
 msgstr ""
 
-msgid "<Image>/Filters/Misc/Border Average"
-msgstr "<Image>/Ф╕льтри/Р╕зне/Border Average"
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Blended II..."
+msgstr "<Image>/Ф╕льтри/Logulator/Зм╕шаний II"
 
 msgid ""
 "$function: function name contains unusual characters, good style is to use only "
@@ -365,11 +394,9 @@ msgstr ""
 msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
 
-msgid "<Image>/Filters/Render/Terral Text"
-msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Земляний текст"
-
-msgid "<Toolbox>/Xtns/Render/Povray/Texture"
-msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Povray/Текстура"
+#, fuzzy
+msgid "<Image>/Filters/Render/Highlight Edges..."
+msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Яскрав╕ кра╖"
 
 msgid "Spin Layer DEST (250ms)"
 msgstr ""
@@ -383,8 +410,13 @@ msgstr ""
 msgid "params and return_vals must be array refs (even if empty)!"
 msgstr ""
 
-msgid "<Toolbox>/Xtns/Render/Yin-Yang"
-msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Yin-Yang"
+#, fuzzy
+msgid "<Image>/Filters/Colors/Map To Gradient..."
+msgstr "<Image>/Ф╕льтри/Кольори/Мапа в град╕╓нт"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
+msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Логотипи/Вогняний текст"
 
 msgid "unable to accept unix connection: $!\n"
 msgstr ""
@@ -407,17 +439,11 @@ msgid ""
 "this plug-in in interactive mode\n"
 msgstr ""
 
-msgid "<Toolbox>/Xtns/Render/Golden Mean"
-msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Золота середина"
-
 msgid "interface '$interface_type' unsupported."
 msgstr ""
 
 msgid "unable to accept tcp connection: $!\n"
 msgstr ""
-
-msgid "<Image>/Filters/Logulator/3D Outline"
-msgstr "<Image>/Ф╕льтри/Logulator/3D Контур"
 
 #, fuzzy
 msgid "<Image>/Image/Alpha/Clear Alpha..."
@@ -430,9 +456,6 @@ msgstr ""
 msgid "[unfinished]\n"
 msgstr "[незавершено]\n"
 
-msgid "<Toolbox>/Xtns/Gimp::Fu Example"
-msgstr "<Toolbox>/Розш./Приклад Gimp::Fu"
-
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
 msgstr ""
 
@@ -442,11 +465,16 @@ msgstr "<Image>/Ф╕льтри/Logulator/Кристал"
 msgid "Cannot call '$AUTOLOAD' at this time"
 msgstr ""
 
-msgid "<Image>/Guides/Guide Grid"
-msgstr "<Image>/Направляюч╕/С╕тка"
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
+msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Povray/Текстура"
 
 msgid "unauthorized command received, aborting connection"
 msgstr ""
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Animation/Billboard..."
+msgstr "<Toolbox>/Розш./Ан╕мац╕я/Дошка оголошень"
 
 msgid "Defaults"
 msgstr ""
@@ -454,26 +482,21 @@ msgstr ""
 msgid "<Image>/Filters/Render/Add Dust..."
 msgstr ""
 
-msgid "<Image>/Filters/Animation/BlowInOut"
-msgstr "<Image>/Ф╕льтри/Ан╕мац╕я/BlowInOut"
-
 msgid "text string is empty"
 msgstr ""
 
 msgid "server requests authorization, but no authorization available\n"
 msgstr ""
 
-msgid "<Toolbox>/Xtns/Render/Logos/Firetext"
-msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Логотипи/Вогняний текст"
+#, fuzzy
+msgid "<Toolbox>/Xtns/Visual Scriptor..."
+msgstr "<Toolbox>/Розш./Visual Scriptor"
 
 msgid "/Xtns/Render/Logos"
 msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Логотипи"
 
 msgid "Image Types"
 msgstr "Типи зображень"
-
-msgid "<Image>/Filters/Map/Xach Blocks"
-msgstr "<Image>/Ф╕льтри/Мапа/Xach-блоки..."
 
 msgid "Menu Path"
 msgstr "Шлях до меню"
@@ -560,14 +583,12 @@ msgstr "<Image>/Ф╕льтри/Застосувати вираз Perl..."
 msgid "DESCRIPTION"
 msgstr "ОПИС"
 
-msgid "<Image>/Filters/Logulator/Blended II"
-msgstr "<Image>/Ф╕льтри/Logulator/Зм╕шаний II"
-
 msgid "Unable to open '$filename' for writing: $!\n"
 msgstr "Невдалося в╕дкрити \"$filename\" для запису: $!\n"
 
-msgid "<Image>/View/3D Surface"
-msgstr "<Image>/Вигляд/3D поверхня"
+#, fuzzy
+msgid "<Image>/Filters/Distorts/MirrorSplit..."
+msgstr "<Image>/Ф╕льтри/Спотворення/MirrorSplit"
 
 msgid "accepting connections in $host"
 msgstr ""
@@ -620,23 +641,18 @@ msgstr "Авторське право"
 msgid "interface=... tag is no longer supported\n"
 msgstr ""
 
-msgid "<Toolbox>/Xtns/Render/Stamps"
-msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Штампи"
-
 msgid ""
 "Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to 'use "
 "strict'"
 msgstr ""
 
-msgid "<Image>/Filters/Misc/Magick"
-msgstr "<Image>/Ф╕льтри/Р╕зне/Маг╕я"
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Transparent Logo..."
+msgstr "<Image>/Ф╕льтри/Logulator/Прозорий логотип"
 
 msgid ""
 "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE"
 msgstr ""
-
-msgid "<Image>/Filters/Distorts/Scratches"
-msgstr "<Image>/Ф╕льтри/Спотворення/Подряпини"
 
 msgid "Background"
 msgstr "Тло"
@@ -644,20 +660,25 @@ msgstr "Тло"
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
 msgstr ""
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Stamps..."
+msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Штампи"
+
 msgid "accepting connections on $unix_path"
 msgstr ""
 
 msgid "Load $name"
 msgstr ""
 
+#, fuzzy
+msgid "<Image>/Filters/Noise/Ditherize..."
+msgstr "<Image>/Ф╕льтри/Шум/Xach-бачення..."
+
 msgid "Saving '$filename' as DATAURL..."
 msgstr ""
 
 msgid ", %d bytes data]"
 msgstr ""
-
-msgid "<Toolbox>/Xtns/Render/Random Art #1"
-msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Випадкове мистецтво #1"
 
 msgid "unable to create listening tcp socket: $!\n"
 msgstr ""
@@ -666,6 +687,10 @@ msgid ""
 "gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-1.1 "
 "and report this error"
 msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Brushed Metal..."
+msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Вибух..."
 
 msgid "Bumpmap"
 msgstr ""
@@ -679,20 +704,11 @@ msgstr ""
 msgid "too many"
 msgstr "надто багато"
 
-msgid "<Toolbox>/Xtns/Animation/Seth Spin"
-msgstr ""
-
 msgid "<Image>/Filters/Render/Add Glow"
 msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Додати сяйво"
 
 msgid "Author"
 msgstr "Автор"
-
-msgid "<Toolbox>/Xtns/Parasite Editor"
-msgstr "<Toolbox>/Розш./Редактор паразит╕в"
-
-msgid "<Toolbox>/Xtns/Render/Povray/Preferences"
-msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Povray/Настройки"
 
 msgid "More..."
 msgstr "Ще..."
@@ -705,9 +721,6 @@ msgstr ""
 
 msgid "<Image>/Filters/Logulator/Newsprint text"
 msgstr "<Image>/Ф╕льтри/Logulator/Газетний текст"
-
-msgid "<Toolbox>/Xtns/Visual Scriptor"
-msgstr "<Toolbox>/Розш./Visual Scriptor"
 
 msgid "<Image>/Filters/Noise/Xach Vision..."
 msgstr "<Image>/Ф╕льтри/Шум/Xach-бачення..."
@@ -730,14 +743,8 @@ msgstr "<Image>/Ф╕льтри/Logulator/Вир╕зка"
 msgid "<Image>/Filters/Logulator/Textured"
 msgstr "<Image>/Ф╕льтри/Logulator/Текстура"
 
-msgid "<Toolbox>/Xtns/Animation/Billboard"
-msgstr "<Toolbox>/Розш./Ан╕мац╕я/Дошка оголошень"
-
 msgid "no font specified, using default"
 msgstr "шрифту не вказано, використову╓ться типовий"
-
-msgid "<Image>/Select/Triangle"
-msgstr "<Image>/Вид╕лення/Трикутник"
 
 msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
 msgstr ""
@@ -748,8 +755,9 @@ msgstr ""
 msgid "<Image>/Filters/Map/Xach Shadows..."
 msgstr "<Image>/Ф╕льтри/Мапа/Xach-т╕н╕..."
 
-msgid "<Image>/Filters/Colors/Map To Gradient"
-msgstr "<Image>/Ф╕льтри/Кольори/Мапа в град╕╓нт"
+#, fuzzy
+msgid "<Image>/Filters/Map/Xach Blocks..."
+msgstr "<Image>/Ф╕льтри/Мапа/Xach-блоки..."
 
 msgid "<Image>/Filters/Logulator/Speed text"
 msgstr "<Image>/Ф╕льтри/Logulator/Швидк╕сний текст"
@@ -760,8 +768,9 @@ msgstr ""
 msgid "You need at least 2 layers to perform prep4gif"
 msgstr ""
 
-msgid "<Image>/Filters/Render/Random Blends"
-msgstr "<Image>/Фильтры/В╕зуал╕зац╕я/Випадков╕ сум╕ш╕"
+#, fuzzy
+msgid "<Image>/Edit/Repeat & Duplicate..."
+msgstr "<Image>/Редагування/Повтор та дублювання"
 
 msgid "too many arguments"
 msgstr "недто багато аргумент╕в"
@@ -784,6 +793,10 @@ msgstr ""
 msgid ", authorization required"
 msgstr ""
 
+#, fuzzy
+msgid "<Image>/Filters/Noise/Feedback..."
+msgstr "<Image>/Ф╕льтри/Шум/Зворотн╕й зв'язок"
+
 msgid "unable to create listening unix socket: $!\n"
 msgstr ""
 
@@ -792,6 +805,10 @@ msgstr ""
 
 msgid "Last Modified"
 msgstr "Востанн╓ зм╕нено"
+
+#, fuzzy
+msgid "<Image>/View/3D Surface..."
+msgstr "<Image>/Вигляд/3D поверхня"
 
 msgid "Shortcuts"
 msgstr "Скорочення"
@@ -804,20 +821,18 @@ msgstr ""
 msgid "<Image>/Filters/Logulator/Web title header"
 msgstr "<Image>/Ф╕льтри/Logulator/Web title header"
 
+#, fuzzy
+msgid "<Image>/Filters/Web/Webify..."
+msgstr "<Image>/Ф╕льтри/WWW/Webify"
+
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
 msgstr ""
 
 msgid "Font Selection Dialog ($desc)"
 msgstr "Д╕алог вибору шрифту ($desc)"
 
-msgid "<Image>/Filters/Distorts/MirrorSplit"
-msgstr "<Image>/Ф╕льтри/Спотворення/MirrorSplit"
-
 msgid "%s: procedural database execution failed on invalid input arguments"
 msgstr ""
-
-msgid "<Image>/Filters/Colors/Colour To Alpha"
-msgstr "<Image>/Ф╕льтри/Кольори/Кол╕р у альфа"
 
 msgid "(UNINITIALIZED)"
 msgstr "(НЕ╤Н╤Ц╤АЛ╤ЗОВАНО)"
@@ -828,14 +843,16 @@ msgstr ""
 msgid "<Image>/Filters/Logulator/Frosty"
 msgstr "<Image>/Ф╕льтри/Logulator/Мороз"
 
-msgid "<Image>/Filters/Render/TeX String"
-msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Рядок TeX"
-
-msgid "<Toolbox>/Xtns/Render/Font Table"
-msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Шрифтова таблица"
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Golden Mean..."
+msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Золота середина"
 
 msgid "authorization failed: $r[1]\n"
 msgstr "авторизац╕я не вдалась: $r[1]\n"
+
+#, fuzzy
+msgid "<Image>/Guides/Center Guide..."
+msgstr "<Image>/Направляюч╕/Центрувати"
 
 msgid "server version $Gimp::VERSION started"
 msgstr "серверну верс╕ю $Gimp::VERSION запущено"
@@ -855,14 +872,23 @@ msgstr "<Image>/Ф╕льтри/Мапа/Xach-т╕н╕..."
 msgid "unable to open Gimp::Net communications socket: $!\n"
 msgstr ""
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
+msgstr "<Toolbox>/Розш./В╕зуал╕зац╕я/Логотипи/Inner Bevel"
+
+#, fuzzy
+msgid "<Image>/Filters/Distorts/Scratches..."
+msgstr "<Image>/Ф╕льтри/Спотворення/Подряпини"
+
 msgid "Close"
 msgstr "Закрити"
 
-msgid "<Image>/Edit/Repeat & Duplicate"
-msgstr "<Image>/Редагування/Повтор та дублювання"
-
 msgid "illegal parasite specification, arrayref expected"
 msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Misc/Border Average..."
+msgstr "<Image>/Ф╕льтри/Р╕зне/Border Average"
 
 msgid "unable to fork: $!"
 msgstr "невдалося розгалудити: $!"
@@ -885,14 +911,19 @@ msgstr "<Image>/Ф╕льтри/Logulator/Неон"
 msgid "<Image>/Filters/Logulator/Chrome"
 msgstr "<Image>/Ф╕льтри/Logulator/Хром"
 
+#, fuzzy
+msgid "<Image>/Filters/Misc/Magick..."
+msgstr "<Image>/Ф╕льтри/Р╕зне/Маг╕я"
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Stampify..."
+msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Штампувати"
+
 msgid "<Image>/Select/Round..."
 msgstr ""
 
 msgid "Unable to read temporary image tile $tmp: $!"
 msgstr ""
-
-msgid "<Image>/Guides/To Selection"
-msgstr "<Image>/Направляюч╕/У вид╕лення"
 
 msgid "export failed"
 msgstr ""
@@ -936,6 +967,14 @@ msgstr ""
 msgid "Edit"
 msgstr "Редагування"
 
+#, fuzzy
+msgid "<Image>/Select/Triangle..."
+msgstr "<Image>/Вид╕лення/Трикутник"
+
+#, fuzzy
+msgid "<Image>/Filters/Animation/BlowInOut..."
+msgstr "<Image>/Ф╕льтри/Ан╕мац╕я/BlowInOut"
+
 msgid "<Image>/Filters/Logulator/Starscape"
 msgstr "<Image>/Ф╕льтри/Logulator/Starscape"
 
@@ -949,6 +988,14 @@ msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z "
 "and _ allowed"
 msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Colors/Fire..."
+msgstr "<Image>/Ф╕льтри/Кольори/Вогонь"
+
+#, fuzzy
+msgid "<Image>/Filters/Render/TeX String..."
+msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Рядок TeX"
 
 msgid "OK"
 msgstr "Гаразд"
