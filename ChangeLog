@@ -1,3 +1,14 @@
+2004-10-10  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcontainerview.c (gimp_container_view_lookup):
+	handle NULL as viewable parameter as a workaround for bug #149906.
+
+	* app/widgets/gimpthumbbox.c (gimp_thumb_box_auto_thumbnail): made
+	the code more robust.
+
+	* app/xcf/xcf-private.h
+	* app/xcf/xcf.c: added a const qualifier.
+
 2004-10-09  DindinX  <dindinx@gimp.org>
 
 	* app/dialogs/dialogs.h: fixed a typo in the double-inclusion guard.

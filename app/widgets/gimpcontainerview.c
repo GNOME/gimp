@@ -694,7 +694,11 @@ gimp_container_view_lookup (GimpContainerView *view,
   GimpContainerViewPrivate *private;
 
   g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), NULL);
-  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable), NULL);
+
+  /*  we handle the NULL viewable here as a workaround for bug #149906 */
+  if (! viewable)
+    return NULL;
 
   private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 

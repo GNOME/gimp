@@ -77,7 +77,7 @@ struct _XcfInfo
 {
   FILE               *fp;
   guint               cp;
-  gchar              *filename;
+  const gchar        *filename;
   GimpTattoo          tattoo_state;
   GimpLayer          *active_layer;
   GimpChannel        *active_channel;

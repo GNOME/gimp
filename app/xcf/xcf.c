@@ -222,18 +222,14 @@ xcf_load_invoker (Gimp         *gimp,
                   GimpProgress *progress,
 		  Argument     *args)
 {
-  XcfInfo    info;
-  Argument  *return_args;
-  GimpImage *gimage;
-  gchar     *filename;
-  gboolean   success;
-  gchar      id[14];
+  XcfInfo      info;
+  Argument    *return_args;
+  GimpImage   *gimage   = NULL;
+  const gchar *filename;
+  gboolean     success  = FALSE;
+  gchar        id[14];
 
   gimp_set_busy (gimp);
-
-  gimage = NULL;
-
-  success = FALSE;
 
   filename = args[1].value.pdb_pointer;
 
@@ -314,15 +310,13 @@ xcf_save_invoker (Gimp         *gimp,
                   GimpProgress *progress,
 		  Argument     *args)
 {
-  XcfInfo    info;
-  Argument  *return_args;
-  GimpImage *gimage;
-  gchar     *filename;
-  gboolean   success;
+  XcfInfo      info;
+  Argument    *return_args;
+  GimpImage   *gimage;
+  const gchar *filename;
+  gboolean     success  = FALSE;
 
   gimp_set_busy (gimp);
-
-  success = FALSE;
 
   gimage   = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
   filename = args[3].value.pdb_pointer;

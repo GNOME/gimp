@@ -689,7 +689,7 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
   GimpThumbnail *thumb = box->imagefile->thumbnail;
   const gchar   *uri   = gimp_object_get_name (GIMP_OBJECT (box->imagefile));
 
-  g_object_add_weak_pointer (G_OBJECT (box), (gpointer) &box);
+  box->idle_id = 0;
 
   switch (thumb->thumb_state)
     {
@@ -701,10 +701,14 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
           /*  This is tricky because gimp_imagefile_create_thumbnail()
            *  may call a plug-in and the progress callback runs the
            *  mainloop. Thus the dialog may change below our feet. For
-           *  that reason we use a seperate GimpImagefile to create the
+           *  that reason we use a separate GimpImagefile to create the
            *  thumbnail.
            */
-          GimpImagefile *local = gimp_imagefile_new (gimp, uri);
+          GimpImagefile *imagefile = box->imagefile;
+          GimpImagefile *local     = gimp_imagefile_new (gimp, uri);
+
+          g_object_add_weak_pointer (G_OBJECT (imagefile),
+                                     (gpointer) &imagefile);
 
           if (thumb->image_filesize > 0)
             {
@@ -731,13 +735,18 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
                                            GIMP_PROGRESS (box),
                                            gimp->config->thumbnail_size);
 
-          if (box)
+          if (imagefile)
             {
-              if (strcmp (gimp_object_get_name (GIMP_OBJECT (box->imagefile)),
-                          gimp_object_get_name (GIMP_OBJECT (local))) == 0)
+              uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+
+              if (uri &&
+                  strcmp (uri, gimp_object_get_name (GIMP_OBJECT (local))) == 0)
                 {
-                  gimp_imagefile_update (box->imagefile);
+                  gimp_imagefile_update (imagefile);
                 }
+
+              g_object_remove_weak_pointer (G_OBJECT (imagefile),
+                                            (gpointer) &imagefile);
             }
 
           g_object_unref (local);
@@ -746,13 +755,6 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
 
     default:
       break;
-    }
-
-  if (box)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (box), (gpointer) &box);
-
-      box->idle_id = 0;
     }
 
   return FALSE;
